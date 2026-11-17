@@ -28,6 +28,8 @@ open LaurentPolynomial Matrix
 
 namespace D5.S3.ContinuousObservables.LaurentLoopFactorization
 
+set_option backward.isDefEq.respectTransparency false
+
 abbrev M₂ := Matrix (Fin 2) (Fin 2) ℂ
 abbrev Loop := Matrix (Fin 2) (Fin 2) (LaurentPolynomial ℂ)
 
@@ -236,11 +238,11 @@ private theorem endpoints {n : ℕ} {F : Loop} (hn : 0 < n) (h : InClass n F) :
   have hdtop : (coefficient F n).det = 0 := by
     rw [← det_top h, hdet]
     change (T 0 : LaurentPolynomial ℂ).coeff ((n : ℤ) + n) = 0
-    simp [Ne.symm hn2]
+    simp only [LaurentPolynomial.T_apply, if_neg (Ne.symm hn2)]
   have hdbot : (coefficient F (-(n : ℤ))).det = 0 := by
     rw [← det_bottom h, hdet]
     change (T 0 : LaurentPolynomial ℂ).coeff (-(n : ℤ) + -(n : ℤ)) = 0
-    simp [Ne.symm hnm2]
+    simp only [LaurentPolynomial.T_apply, if_neg (Ne.symm hnm2)]
   have hl := congrArg (fun A => coefficient A ((n : ℤ) + n)) hleft
   have hr := congrArg (fun A => coefficient A ((n : ℤ) + n)) hright
   rw [coefficient_mul_top _ _ _ _ (adjoint_upper_bound h) (upper_bound h),
@@ -251,8 +253,9 @@ private theorem endpoints {n : ℕ} {F : Loop} (hn : 0 < n) (h : InClass n F) :
     ext a b
     by_cases hab : a = b
     · subst b
+      simp only [coefficient, Matrix.one_apply, Matrix.zero_apply, if_pos rfl]
       change (T 0 : LaurentPolynomial ℂ).coeff ((n : ℤ) + n) = 0
-      simp [Ne.symm hn2]
+      simp only [LaurentPolynomial.T_apply, if_neg (Ne.symm hn2)]
     · simp [coefficient, Matrix.one_apply, hab]
   exact ⟨hdtop, hdbot, hl.trans hz, hr.trans hz⟩
 
@@ -284,8 +287,8 @@ private theorem gram_top {A : M₂} (hA : A.det = 0) :
     simpa only [Matrix.det_fin_two] using hA
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.trace,
-      Fin.sum_univ_two, Matrix.smul_apply, smul_eq_mul]
+    norm_num only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.trace,
+      Matrix.diag_apply, Fin.sum_univ_two, Matrix.smul_apply, smul_eq_mul, Fin.reduceFinMk]
   · linear_combination -(star (A 1 1)) * hd
   · linear_combination (star (A 1 0)) * hd
   · linear_combination (star (A 0 1)) * hd
@@ -303,7 +306,7 @@ private theorem rowProjection_laws {A : M₂} (hne : A ≠ 0) (hd : A.det = 0) :
   have hBB : B * B = B.trace • B := by
     calc
       B * B = Aᴴ * (A * B) := by simp [B, Matrix.mul_assoc]
-      _ = B.trace • B := by rw [hAB, Matrix.mul_smul]; rfl
+      _ = B.trace • B := by rw [hAB, Matrix.mul_smul]
   have hPstar : (rowProjection A)ᴴ = rowProjection A := by
     change (B.trace⁻¹ • B)ᴴ = B.trace⁻¹ • B
     rw [Matrix.conjTranspose_smul, star_inv₀, htrstar, hB]
@@ -351,8 +354,7 @@ private theorem terminal_cancellation {n : ℕ} {F : Loop} (hn : 0 < n)
     · intro P hP
       have he : 1 - P = Q := rowProjection_unique hD hdetD (projector_complement hP.1) (by
         rw [mul_sub, mul_one, hP.2.2, sub_zero])
-      dsimp [Q] at he ⊢
-      linear_combination -he
+      simpa only [sub_sub_cancel] using congrArg (fun X : M₂ => 1 - X) he
   · let P := rowProjection (coefficient F n)
     have hP := rowProjection_laws hA hdetA
     have hDP : coefficient F (-(n : ℤ)) * P = 0 := by
@@ -367,5 +369,191 @@ private theorem terminal_cancellation {n : ℕ} {F : Loop} (hn : 0 < n)
         have := hQ.2.1
         rw [mul_sub, mul_one, sub_eq_zero] at this
         exact this.symm)
+
+private theorem scalar_shift (p : LaurentPolynomial ℂ) (k : ℤ) (a : ℂ) (j : ℤ) :
+    (p * (T k * C a)).coeff j = p.coeff (j - k) * a := by
+  rw [mul_comm (T k), ← single_eq_C_mul_T, AddMonoidAlgebra.coeff_mul_single_apply]
+  rfl
+
+private theorem coefficient_shift (F : Loop) (A : M₂) (k j : ℤ) :
+    coefficient (F * ((T k : LaurentPolynomial ℂ) • constant A)) j =
+      coefficient F (j - k) * A := by
+  ext a b
+  simp only [coefficient, Matrix.mul_apply, Matrix.smul_apply, constant,
+    RingHom.mapMatrix_apply, Matrix.map_apply, smul_eq_mul, AddMonoidAlgebra.coeff_sum,
+    Finsupp.finsetSum_apply, scalar_shift]
+
+private theorem coefficient_step (F : Loop) (P : M₂) (j : ℤ) :
+    coefficient (F * primitive P) j =
+      coefficient F (j - 1) * P + coefficient F (j + 1) * (1 - P) := by
+  rw [primitive, mul_add]
+  change coefficient (F * (T 1 • constant P)) j +
+    coefficient (F * (T (-1) • constant (1 - P))) j = _
+  rw [coefficient_shift, coefficient_shift]
+  rfl
+
+private theorem coefficient_constant (A : M₂) (j : ℤ) :
+    coefficient (constant A) j = if j = 0 then A else 0 := by
+  ext a b
+  by_cases hj : j = 0 <;> simp [coefficient, constant, C_apply, hj]
+
+private theorem coefficient_primitive (P : M₂) (j : ℤ) :
+    coefficient (primitive P) j = (if j = 1 then P else 0) +
+      (if j = -1 then 1 - P else 0) := by
+  have hc : primitive P = (1 : Loop) * primitive P := (one_mul _).symm
+  rw [hc, coefficient_step]
+  have hid : (1 : Loop) = constant 1 := (map_one LaurentPolynomial.C.mapMatrix).symm
+  rw [hid, coefficient_constant, coefficient_constant]
+  have hj1 : j - 1 = 0 ↔ j = 1 := by omega
+  have hjm1 : j + 1 = 0 ↔ j = -1 := by omega
+  by_cases h1 : j = 1 <;> by_cases hm1 : j = -1 <;> simp_all
+
+private theorem primitive_inverse {P : M₂} (hP : RankOneProjector P) :
+    primitive P * primitive (1 - P) = 1 := by
+  apply coefficient_ext
+  intro j
+  rw [coefficient_step, coefficient_primitive, coefficient_primitive]
+  have hid : (1 : Loop) = constant 1 := (map_one LaurentPolynomial.C.mapMatrix).symm
+  rw [hid, coefficient_constant]
+  have hP1 : P * (1 - P) = 0 := by rw [mul_sub, mul_one, hP.2.1, sub_self]
+  have h1P : (1 - P) * P = 0 := by rw [sub_mul, one_mul, hP.2.1, sub_self]
+  have hPP : (1 - P) * (1 - P) = 1 - P := (projector_complement hP).2.1
+  by_cases h0 : j = 0
+  · subst j
+    norm_num [hP.2.1, hPP]
+  · have h01 : j - 1 ≠ -1 := by omega
+    have h02 : j + 1 ≠ 1 := by omega
+    simp only [if_neg h0, if_neg h01, if_neg h02, sub_sub_cancel]
+    split_ifs <;> simp_all
+
+private theorem adjoint_primitive {P : M₂} (hP : RankOneProjector P) :
+    adjoint (primitive P) = primitive (1 - P) := by
+  apply coefficient_ext
+  intro j
+  rw [coefficient_adjoint, coefficient_primitive, coefficient_primitive]
+  have hneg1 : -j = 1 ↔ j = -1 := by omega
+  have hnegm1 : -j = -1 ↔ j = 1 := by omega
+  by_cases h1 : j = 1 <;> by_cases hm1 : j = -1 <;>
+    simp_all [Matrix.conjTranspose_add, Matrix.conjTranspose_sub, hP.1]
+
+private theorem evaluate_primitive (P : M₂) (z : ℂˣ) :
+    evaluate (primitive P) z = (z : ℂ) • P + (↑z⁻¹ : ℂ) • (1 - P) := by
+  ext a b
+  simp [evaluate, primitive, constant, Matrix.smul_apply, smul_eq_mul]
+
+private theorem projector_det {P : M₂} (hP : RankOneProjector P) : P.det = 0 := by
+  have htrace : P 0 0 + P 1 1 = 1 := by
+    simpa [Matrix.trace, Matrix.diag_apply, Fin.sum_univ_two] using projector_trace hP
+  have hsq := congrFun (congrFun hP.2.1 0) 0
+  norm_num only [Matrix.mul_apply, Fin.sum_univ_two, Fin.reduceFinMk] at hsq
+  rw [Matrix.det_fin_two]
+  linear_combination P 0 0 * htrace - hsq
+
+private theorem determinant_affine (P : M₂) (s t : ℂ) :
+    (s • P + t • (1 - P)).det = (s - t) ^ 2 * P.det +
+      t * (s - t) * P.trace + t ^ 2 := by
+  simp [Matrix.det_fin_two, Matrix.trace, Matrix.diag_apply, Fin.sum_univ_two,
+    Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
+  ring
+
+private theorem primitive_circle {P : M₂} (hP : RankOneProjector P) : CircleSU (primitive P) := by
+  intro z hz
+  let w : Circle := ⟨(z : ℂ), Metric.mem_sphere_zero_iff_norm.mpr hz⟩
+  have hw : Circle.toUnits w = z := Units.ext rfl
+  constructor
+  · rw [← hw, ← evaluate_adjoint, adjoint_primitive hP, ← evaluate_mul,
+      primitive_inverse (projector_complement hP)]
+    simp [evaluate]
+  · rw [evaluate_primitive, determinant_affine, projector_det hP, projector_trace hP]
+    have hzi : (z : ℂ) * (↑z⁻¹ : ℂ) = 1 := by exact_mod_cast z.mul_inv
+    linear_combination hzi
+
+private theorem circle_mul {F G : Loop} (hF : CircleSU F) (hG : CircleSU G) :
+    CircleSU (F * G) := by
+  intro z hz
+  rw [evaluate_mul]
+  obtain ⟨hFunit, hFdet⟩ := hF z hz
+  obtain ⟨hGunit, hGdet⟩ := hG z hz
+  constructor
+  · rw [Matrix.conjTranspose_mul, Matrix.mul_assoc,
+      ← Matrix.mul_assoc (evaluate F z)ᴴ, hFunit, one_mul, hGunit]
+  · rw [Matrix.det_mul, hFdet, hGdet, one_mul]
+
+private theorem class_raise {n : ℕ} {F : Loop} (hF : InClass n F)
+    {P : M₂} (hP : RankOneProjector P) : InClass (n + 1) (F * primitive P) := by
+  refine ⟨?_, circle_mul hF.2 (primitive_circle hP)⟩
+  intro j hj
+  rw [coefficient_step]
+  have hleft : coefficient F (j - 1) = 0 := by
+    apply hF.1
+    simp only [lt_abs] at hj ⊢
+    omega
+  have hright : coefficient F (j + 1) = 0 := by
+    apply hF.1
+    simp only [lt_abs] at hj ⊢
+    omega
+  rw [hleft, hright, zero_mul, zero_mul, add_zero]
+
+private theorem class_lower {n : ℕ} {F : Loop} (hF : InClass (n + 1) F)
+    {P : M₂} (hP : RankOneProjector P)
+    (hpos : coefficient F (n + 1 : ℕ) * (1 - P) = 0)
+    (hneg : coefficient F (-(n + 1 : ℕ) : ℤ) * P = 0) :
+    InClass n (F * primitive (1 - P)) := by
+  refine ⟨?_, circle_mul hF.2 (primitive_circle (projector_complement hP))⟩
+  intro j hj
+  rw [coefficient_step, sub_sub_cancel]
+  by_cases hjp : j = (n : ℤ) + 2
+  · subst j
+    rw [show (n : ℤ) + 2 - 1 = (n + 1 : ℕ) by omega, hpos,
+      upper_bound hF _ (by omega), zero_mul, add_zero]
+  by_cases hjm : j = -(n : ℤ) - 2
+  · subst j
+    rw [show -(n : ℤ) - 2 + 1 = -(n + 1 : ℕ) by omega, hneg,
+      lower_bound hF _ (by omega), zero_mul, add_zero]
+  have hleft : coefficient F (j - 1) = 0 := by
+    apply hF.1
+    simp only [lt_abs] at hj ⊢
+    omega
+  have hright : coefficient F (j + 1) = 0 := by
+    apply hF.1
+    simp only [lt_abs] at hj ⊢
+    omega
+  rw [hleft, hright, zero_mul, zero_mul, add_zero]
+
+private theorem terminal_step {n : ℕ} {F : Loop} (hF : InClass (n + 1) F)
+    (hdeg : ActualDegree (n + 1) F) :
+    ∃! P : M₂, RankOneProjector P ∧
+      InClass n (F * primitive (1 - P)) ∧
+      ActualDegree n (F * primitive (1 - P)) ∧
+      F = (F * primitive (1 - P)) * primitive P := by
+  obtain ⟨P, ⟨hP, hpos, hneg⟩, hunique⟩ := terminal_cancellation (by omega) hF hdeg
+  have hclass := class_lower hF hP hpos hneg
+  have hrec : F = (F * primitive (1 - P)) * primitive P := by
+    rw [Matrix.mul_assoc, primitive_inverse (projector_complement hP), mul_one]
+    simp only [sub_sub_cancel]
+  have hactual : ActualDegree n (F * primitive (1 - P)) := by
+    by_contra h
+    simp only [ActualDegree, not_or, not_not] at h
+    have htop : coefficient F (n + 1 : ℕ) = 0 := by
+      rw [hrec, coefficient_step, show (n + 1 : ℕ) - (1 : ℤ) = (n : ℤ) by omega,
+        h.1, upper_bound hclass _ (by omega), zero_mul, zero_mul, add_zero]
+    have hbot : coefficient F (-(n + 1 : ℕ) : ℤ) = 0 := by
+      rw [hrec, coefficient_step, show -(n + 1 : ℕ) + (1 : ℤ) = -(n : ℤ) by omega,
+        h.2, lower_bound hclass _ (by omega), zero_mul, zero_mul, add_zero]
+    exact hdeg.elim (fun hn => hn htop) (fun hn => hn hbot)
+  refine ⟨P, ⟨hP, hclass, hactual, hrec⟩, ?_⟩
+  intro Q hQ
+  apply hunique Q
+  refine ⟨hQ.1, ?_, ?_⟩
+  · have hz := upper_bound hQ.2.1 ((n : ℤ) + 2) (by omega)
+    rw [coefficient_step, sub_sub_cancel,
+      show (n : ℤ) + 2 - 1 = (n + 1 : ℕ) by omega,
+      upper_bound hF _ (by omega), zero_mul, add_zero] at hz
+    exact hz
+  · have hz := lower_bound hQ.2.1 (-(n : ℤ) - 2) (by omega)
+    rw [coefficient_step, sub_sub_cancel,
+      show -(n : ℤ) - 2 + 1 = -(n + 1 : ℕ) by omega,
+      lower_bound hF _ (by omega), zero_mul, zero_add] at hz
+    exact hz
 
 end D5.S3.ContinuousObservables.LaurentLoopFactorization
