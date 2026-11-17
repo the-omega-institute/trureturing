@@ -20,15 +20,15 @@ equations_imply_singular_kernel | proof_shape: bind-only; escape_witness: none; 
 segre_kernel_bilinear | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: actual_image_equations, equations_imply_imageClosure.
 segrePolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: minorPolynomial, cofactorPolynomial, segrePolynomial_homogeneous, minorPolynomial_multihomogeneous, cofactorPolynomial_homogeneous, minorPolynomial_eval.
 minorPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: minorPolynomial_multihomogeneous, minorPolynomial_eval, imageClosure_equations_of_actual.
-cofactorPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eightPointPolynomial, cofactorPolynomial_homogeneous, eightPointPolynomial_multihomogeneous, eightPointPolynomial_eval.
-eightPointPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eightPointPolynomial_multihomogeneous, eightPointPolynomial_eval, imageClosure_equations_of_actual.
+cofactorPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: eightPointPolynomial, cofactorPolynomial_homogeneous, eightPointPolynomial_multihomogeneous, eightPointPolynomial_eval.
+eightPointPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: eightPointPolynomial_multihomogeneous, eightPointPolynomial_eval, imageClosure_equations_of_actual.
 segrePolynomial_homogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: minorPolynomial_multihomogeneous, cofactorPolynomial_homogeneous.
 minorPolynomial_multihomogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
-cofactorPolynomial_homogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eightPointPolynomial_multihomogeneous.
-eightPointPolynomial_multihomogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
+cofactorPolynomial_homogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: eightPointPolynomial_multihomogeneous.
+eightPointPolynomial_multihomogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: imageClosure_equations_of_actual.
 minorPolynomial_eval | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
-eightPointPolynomial_eval | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
-imageClosure_equations_of_actual | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_implies_equations.
+eightPointPolynomial_eval | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: imageClosure_equations_of_actual.
+imageClosure_equations_of_actual | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: imageClosure_implies_equations.
 transpose_injective_of_surjective | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: surjective_cameras_constraint.
 singular_outer_difference | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: surjective_cameras_constraint.
 surjective_cameras_constraint | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: all_cameras_constraint.
@@ -190,7 +190,7 @@ private def minorPolynomial {n : ℕ} (J : Fin 9 ↪ Fin n) : (MvPolynomial ((Fi
   Matrix.det (Matrix.of (fun i k => segrePolynomial (J i) k))
 
 private def cofactorPolynomial {n : ℕ} (I : Fin 8 ↪ Fin n) (k : Fin 9) : (MvPolynomial ((Fin n × Fin 2) × Fin 3) ℂ) :=
-  MvPolynomial.C ((-1 : ℂ) ^ k.val) * Matrix.det (Matrix.of (fun i a => segrePolynomial (I i) (k.succAbove a)))
+  D5.S3.Arith.Lattices.CofactorKernel.cofactor (Matrix.of (fun i a => segrePolynomial (I i) a)) k
 
 private def eightPointPolynomial {n : ℕ} (I : Fin 8 ↪ Fin n) : (MvPolynomial ((Fin n × Fin 2) × Fin 3) ℂ) :=
   Matrix.det (Matrix.of (fun b a : Fin 3 => cofactorPolynomial I (finProdFinEquiv (a,b))))
@@ -218,7 +218,9 @@ private theorem cofactorPolynomial_homogeneous {n : ℕ} (I : Fin 8 ↪ Fin n)
     (cofactorPolynomial I k).IsWeightedHomogeneous
       (fun c => if c.1 = b then (1 : ℕ) else 0)
       (∑ i, if I i = b.1 then (1 : ℕ) else 0) := by
-  unfold cofactorPolynomial
+  unfold cofactorPolynomial D5.S3.Arith.Lattices.CofactorKernel.cofactor
+  rw [show (-1 : MvPolynomial ((Fin n × Fin 2) × Fin 3) ℂ) ^ k.val =
+    MvPolynomial.C ((-1 : ℂ) ^ k.val) by simp]
   apply MvPolynomial.IsWeightedHomogeneous.C_mul
   exact homogeneous_determinant
     (fun c : ((Fin n × Fin 2) × Fin 3) => if c.1 = b then (1 : ℕ) else 0)

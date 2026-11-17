@@ -7,7 +7,9 @@ doi: 10.48550/arXiv.2606.31965
 url: https://arxiv.org/abs/2606.31965v1
 claim: "Example 4.6 asks whether the eight-point constraints and Segre-determinantal minors give set-theoretic equations for the closed image of two varying pinhole cameras for every n > 8."
 strata_touched:
-  - S3
+  - D5/S3/Geometry/FlatlandImageAlgebra
+  - D5/S3/Geometry/FlatlandImageClosure
+  - D5/S3/Geometry/FlatlandImageEquations
 license: citation-only
 triage: anchor
 ---
