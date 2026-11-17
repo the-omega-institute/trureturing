@@ -182,7 +182,9 @@ arXiv:2608.27583v1 and Fu–Lin–Zeng's descent question are separate and
 remain open. Reg/enrollment is owner-paused under
 [issue 12664](https://github.com/the-omega-institute/trureturing/issues/12664);
 the public theorem audit is unfinished under the linked-issue exception,
-and no `declared_validated` or `OpenProblemResolutionClaim` is asserted.
+and no `declared_validated` status is asserted. The typed Scribe resolution
+identifies the mathematical source-v1 target and supplies no novelty
+or priority evidence.
 
 The supplied bounded literature screen reports examination of the primary
 and manuscript bodies, five known citing bodies, and related record, descent,

@@ -79,7 +79,7 @@ and its strict form for every $n\ge3$, on all four actual class/statistic
 pairs. The proof establishes its exact positive quotient and infinite tail
 inside the actual weighted inference.
 
-## Mathematical result
+## Gap
 
 [`RecordAllIndex.actual_ckz_conjecture_two`](../Blueprint/D5/S1/Words/Patterns/Separable/RecordAllIndex.md)
 proves the complete displayed target on literal `Equiv.Perm (Fin n)`
@@ -143,8 +143,17 @@ Conjecture 15 are separate open problems.
 
 Theorem: the literal weak-peak formulation of the published conjecture is
 proved in Lean. This mathematical conclusion does not establish worldwide
-priority or a newly solved-problem KPI. No `OpenProblemResolutionClaim`
-or completed registration audit is asserted.
+priority or a newly solved-problem KPI. The Scribe's typed resolution
+links the theorem to this source-v1 target; it supplies no literature
+priority evidence or completed registration audit.
+
+Proved: the controlling structure is the exact binomial expansion of
+each adjacent difference into nonnegative Newton kernels. The
+right-maximum decline holds at every natural length; the full peak
+theorem uses $n\ge5$. Open in the digestion ledger: separate coverage of
+the stronger all-length four-statistic decline and the multi-clause
+coefficient exposition. No neighbouring descent or Conjecture 15 claim
+is settled by this result.
 
 ## ASSUMED-UNVERIFIED
 

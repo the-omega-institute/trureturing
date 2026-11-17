@@ -86,7 +86,10 @@ internal sealed class RecordAllIndexDocument : IScribeDocumentDefinition
                         + "finite length cutoff. The journal version of record body and "
                         + "exhaustive literature novelty remain unverified; the theorem "
                         + "establishes the stated mathematical inequalities."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chenkitaevzhang-2024-separable-record-peak-three"),
+                    ResolutionKind.Proved)))));
 
     private static Formula CKZFormula()
     {
