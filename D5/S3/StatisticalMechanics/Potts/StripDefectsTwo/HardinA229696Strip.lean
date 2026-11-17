@@ -14,6 +14,7 @@ finite_certificate: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=none (external open-problem-resolution #31299)
 -/
 
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripCut
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripCertificate

@@ -14,14 +14,11 @@ forward_certificate: proof_shape=bind-only; consumers=HardinA229696Strip.finite_
 
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229588Strip
-import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 open scoped BigOperators
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229696StripForward
-open HardinA229588Strip (Row horizontal between)
 open HardinA229696StripData
-open DefectTransfer (bondDefects)
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false

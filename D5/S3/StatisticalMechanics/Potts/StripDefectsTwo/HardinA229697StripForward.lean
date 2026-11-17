@@ -12,16 +12,14 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 forward_certificate: proof_shape=bind-only; consumers=HardinA229697Strip.finite_certificate
 -/
 
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589Strip
-import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 open scoped BigOperators
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 namespace D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripForward
-open HardinA229589StripData (Row horizontal between)
 open HardinA229697StripData
-open DefectTransfer (bondDefects)
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false

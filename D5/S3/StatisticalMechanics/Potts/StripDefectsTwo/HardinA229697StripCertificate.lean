@@ -12,6 +12,7 @@ escape_witness: none (consumed bind-only helpers of the settlement on the live p
 structural_certificate: proof_shape=bind-only; consumers=HardinA229697Strip.finite_certificate
 -/
 
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
