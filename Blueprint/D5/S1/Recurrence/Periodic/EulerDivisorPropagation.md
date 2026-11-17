@@ -83,5 +83,4 @@ Indices zero, one and two have divisor one. For k at least four the proved bound
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerDivisorPropagation.odd_prime_power`
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerDivisorPropagation.particular`
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerDivisorPropagation.signed_zero_transfer`
-- Dependency: [D5/S1/Recurrence/Periodic/EulerSecantBridge](EulerSecantBridge.md)
 - Dependency: [D5/S1/Recurrence/Periodic/EulerTwoPrimary](EulerTwoPrimary.md)

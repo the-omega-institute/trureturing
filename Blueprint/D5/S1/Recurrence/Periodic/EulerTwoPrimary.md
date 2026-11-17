@@ -1,12 +1,200 @@
-# The two-primary Euler component
+# Ordinary Euler coefficients and their two-primary structure
 
 ## Abstract
 
-Ordinary tangent coefficients have power-of-two divisors and secant coefficients are odd.
+The ordinary Euler recurrence and its signed and secant identifications lead to tangent valuation and secant parity.
+
+Integral Euler derivatives admit finite odd-length frequency formulas.
+
+All indices and exponents are natural numbers. A is integer-valued; F and exp are rational formal power series. C embeds constants. The residue function casts an integer or natural value to ZMod of its first argument. All arithmetic inside a residue identity is in that ring. Young supplies the prior ordinary congruence component; the finite derivation here proves the integral identities directly.
+
+**Definition 1.1 (Integral derivatives).**
+
+$$\forall b: \mathbb{N}, ((\operatorname{A}\left(b, 0\right) = 1) \land (\forall n: \mathbb{N}, (\operatorname{A}\left(b, n + 1\right) = b^{n + 1} - \sum_{i \in \operatorname{range}\left(n + 1\right)} (\operatorname{choose}\left(n + 1, i\right) \cdot 2^{n - i} \cdot \operatorname{A}\left(b, i\right)))))$$
+
+*Formalization.* `D5/S1/Recurrence/Periodic/EulerTwoPrimary.A` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer recurrence constructs every derivative before modular reduction. Natural binomial coefficients and b are cast to the integers.
+
+**Definition 1.2 (The signed exponential series).**
+
+$$\forall b: \mathbb{N}, (\operatorname{F}\left(b\right) = \sum_{n \in \mathbb{N}} (\frac{\operatorname{A}\left(b, n\right) \cdot X^{n}}{\operatorname{factorial}\left(n\right)}))$$
+
+*Formalization.* `D5/S1/Recurrence/Periodic/EulerTwoPrimary.F` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+X is the distinguished formal indeterminate. The integer coefficients A are embedded in the rationals; no factorial is inverted in a residue ring.
+
+**Theorem 1.3 (The exact exponential identity).**
+
+$$\forall b: \mathbb{N}, (\left(1 + \operatorname{exp}\left(\mathbb{Q}\right)^{2}\right) \cdot \operatorname{F}\left(b\right) = \operatorname{C}\left(2\right) \cdot \operatorname{exp}\left(\mathbb{Q}\right)^{b})$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.generating_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Factorial-normalized coefficient comparison reduces the identity to the integral recurrence.
+
+**Theorem 1.4 (The finite odd-length identity).**
+
+$$\forall b: \mathbb{N}, (\forall L: \mathbb{N}, ((\operatorname{Odd}\left(L\right)) \implies (\left(1 + \operatorname{exp}\left(\mathbb{Q}\right)^{2 \cdot L}\right) \cdot \operatorname{F}\left(b\right) = \operatorname{C}\left(2\right) \cdot \sum_{h \in \operatorname{range}\left(L\right)} (\operatorname{C}\left((-1)^{h}\right) \cdot \operatorname{exp}\left(\mathbb{Q}\right)^{2 \cdot h + b}))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.finite_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The alternating geometric sum has numerator one plus the Lth power exactly when L is odd.
+
+**Theorem 1.5 (The signed branch equations).**
+
+$$(\operatorname{derivative}\left(\operatorname{F}\left(0\right)\right) = \operatorname{F}\left(0\right) \cdot \left(\operatorname{F}\left(0\right) - 2\right)) \land ((\operatorname{derivative}\left(\operatorname{F}\left(1\right)\right) = \operatorname{F}\left(1\right) \cdot \left(\operatorname{F}\left(0\right) - 1\right)) \land (\operatorname{F}\left(1\right)^{2} = \operatorname{F}\left(0\right) \cdot \left(2 - \operatorname{F}\left(0\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.branch_equations` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Differentiation and cancellation of the nonzero exponential denominator prove both differential equations and the quadratic relation.
+
+**Theorem 1.6 (Integral finite moments modulo an odd modulus).**
+
+$$\forall b: \mathbb{N}, (\forall L: \mathbb{N}, (\forall u: \mathbb{N}, (\forall q: \mathbb{N}, (\forall j: \mathbb{N}, ((\operatorname{Odd}\left(L\right)) \implies ((\operatorname{Odd}\left(q\right)) \implies ((q \mid u \cdot L) \implies (\operatorname{residue}\left(q, u\right)^{j} \cdot \operatorname{residue}\left(q, \operatorname{A}\left(b, j\right)\right) = \sum_{h \in \operatorname{range}\left(L\right)} (\operatorname{residue}\left(q, (-1)\right)^{h} \cdot \operatorname{residue}\left(q, u \cdot \left(2 \cdot h + b\right)\right)^{j})))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.scaled_moment` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Positive-order exponential derivatives contain the modulus. The remaining factor two is cancelled using oddness of q. This includes j=0.
+
+E is ordinary A000111, defined in the naturals by the source recurrence A second derivative equals A times A first derivative. It differs from the weighted Entringer diagonal. U denotes ordinarySeries, a rational formal power series; derivatives and constants below are formal. Complex rescaling reduces the exact signed bridges to Riccati uniqueness. Subtracting the common constant coefficient minus one normalizes both series; PowerSeriesNormalizedContraction.exists_unique_fixed and UnitReversionSquareParity.agree_pow then supply uniqueness with arbitrary common constant coefficient. No EGF or congruence bridge is assumed.
+
+**Definition 1.7 (The offset-zero ordinary recurrence).**
+
+$$(\operatorname{E}\left(0\right) = 1) \land ((\operatorname{E}\left(1\right) = 1) \land (\forall n: \mathbb{N}, (\operatorname{E}\left(n + 2\right) = \sum_{i \in \operatorname{range}\left(n + 1\right)} (\operatorname{choose}\left(n, i\right) \cdot \operatorname{E}\left(i\right) \cdot \operatorname{E}\left(n + 1 - i\right)))))$$
+
+*Formalization.* `D5/S1/Recurrence/Periodic/EulerTwoPrimary.E` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+All subtraction in indices is natural subtraction; each term uses strictly earlier values.
+
+**Definition 1.8 (The ordinary exponential series).**
+
+$$U = \sum_{n \in \mathbb{N}} (\frac{\operatorname{E}\left(n\right) \cdot X^{n}}{\operatorname{factorial}\left(n\right)})$$
+
+*Formalization.* `D5/S1/Recurrence/Periodic/EulerTwoPrimary.ordinarySeries` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+U encodes the natural E coefficients in the rationals. X is the distinguished formal indeterminate.
+
+**Theorem 1.9 (The source differential equation).**
+
+$$(\operatorname{constantCoeff}\left(U\right) = 1) \land ((\operatorname{constantCoeff}\left(\operatorname{derivative}\left(U\right)\right) = 1) \land (\operatorname{derivative}\left(\operatorname{derivative}\left(U\right)\right) = U \cdot \operatorname{derivative}\left(U\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.source_equation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Coefficient multiplication recovers the defining positive recurrence exactly.
+
+**Theorem 1.10 (The ordinary carrier is nondecreasing).**
+
+$$\forall k: \mathbb{N}, (\forall l: \mathbb{N}, ((k \le l) \implies (\operatorname{E}\left(k\right) \le \operatorname{E}\left(l\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.monotone_E` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The zeroth summand of the positive source recurrence bounds the preceding value.
+
+**Theorem 1.11 (The secant-plus-tangent equation).**
+
+$$2 \cdot \operatorname{derivative}\left(U\right) = U^{2} + 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.ordinary_riccati` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The derivative of twice U prime minus U squared vanishes. Its constant coefficient is one.
+
+**Theorem 1.12 (Exact even signed correspondence).**
+
+$$\forall s: \mathbb{N}, (\operatorname{E}\left(2 \cdot s\right) = (-1)^{s} \cdot \operatorname{A}\left(1, 2 \cdot s\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.signed_even` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Equality is in the integers. The source value at zero is included.
+
+**Theorem 1.13 (Exact odd signed correspondence).**
+
+$$\forall s: \mathbb{N}, (\operatorname{E}\left(2 \cdot s + 1\right) = (-1)^{s + 1} \cdot \operatorname{A}\left(0, 2 \cdot s + 1\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.signed_odd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Equality is in the integers. The sign retains the ordinary positive tangent coefficients.
+
+a is the existing integer A000364 carrier in SecantNumberPurePeriodRefutation. E is ordinary A000111. The exponential identity gives the inverse hyperbolic cosine convolution; its even coefficients, combined with the exact ordinary sign bridge, satisfy the original secant recurrence. The existing a_unique theorem identifies the carriers.
+
+**Theorem 1.14 (Exact A000364 correspondence).**
+
+$$\forall s: \mathbb{N}, (\operatorname{E}\left(2 \cdot s\right) = \operatorname{a}\left(s\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.secant_bridge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Equality is in the integers, with the natural E value cast. No independent secant carrier is introduced.
+
+**Theorem 1.15 (All small-value boundaries).**
+
+$$(\operatorname{E}\left(0\right) = 1) \land ((\operatorname{E}\left(1\right) = 1) \land ((\operatorname{E}\left(2\right) = 1) \land ((\operatorname{E}\left(3\right) = 2) \land (\forall k: \mathbb{N}, ((4 \le k) \implies (2 < \operatorname{E}\left(k\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerTwoPrimary.boundary_values` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The source recurrence gives the initial values, and its zeroth summand proves monotonicity.
 
 All indices and powers are natural. Parity projections S and T of the ordinary rational exponential series satisfy S prime equals S times T and T prime equals one plus T squared. The product invariant of U and U at negative X is proved using the existing rational linear ODE uniqueness supplier. Lucas congruence supplies evenness of the odd binomial terms.
 
-**Theorem 1.1 (The tangent power-of-two bound).**
+**Theorem 1.16 (The tangent power-of-two bound).**
 
 $$\forall s: \mathbb{N}, (2^{s} \mid \operatorname{E}\left(2 \cdot s + 1\right))$$
 
@@ -18,7 +206,7 @@ $$\forall s: \mathbb{N}, (2^{s} \mid \operatorname{E}\left(2 \cdot s + 1\right))
 
 Strong induction on s uses the tangent convolution; every odd binomial factor supplies the additional factor two. Zero is included.
 
-**Theorem 1.2 (Secant coefficients are odd).**
+**Theorem 1.17 (Secant coefficients are odd).**
 
 $$\forall s: \mathbb{N}, (\operatorname{Odd}\left(\operatorname{E}\left(2 \cdot s\right)\right))$$
 
@@ -32,7 +220,25 @@ In the secant convolution, all tangent coefficients except E(1) vanish modulo tw
 
 ## References
 
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.A`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.E`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.F`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.boundary_values`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.branch_equations`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.finite_identity`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.generating_identity`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.monotone_E`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.ordinarySeries`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.ordinary_riccati`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.scaled_moment`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.secant_bridge`
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.secant_odd`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.signed_even`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.signed_odd`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.source_equation`
 - Truth anchor: `D5/S1/Recurrence/Periodic/EulerTwoPrimary.tangent_power`
-- Dependency: [D5/S1/Recurrence/Periodic/EulerUpDownSource](EulerUpDownSource.md)
+- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../Invariants/PowerSeriesNormalizedContraction.md)
+- Dependency: [D5/S1/Recurrence/Invariants/UnitReversionSquareParity](../Invariants/UnitReversionSquareParity.md)
+- Dependency: [D5/S1/Recurrence/Periodic/SecantNumberPurePeriodRefutation](SecantNumberPurePeriodRefutation.md)
 - Dependency: [D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence](../Residue/ParametricExponentialSquareCongruence.md)
+- Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](../Residue/QuarticEGFFixedPoint.md)
