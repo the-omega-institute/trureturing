@@ -7,10 +7,12 @@ import LeanInformationAuditInterface.Contract.Registration
 /-! Source-equivalent readout laws for king-graph defect counts. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229753
 
+open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects
+
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229753
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
+open KingTwoGrid
 
 noncomputable section
 
