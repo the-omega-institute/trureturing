@@ -1,3 +1,4 @@
+import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripForward
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
@@ -6,8 +7,6 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripForward
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripForward
 open _root_.D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
-open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData (Row horizontal between)
-open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDefects)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators

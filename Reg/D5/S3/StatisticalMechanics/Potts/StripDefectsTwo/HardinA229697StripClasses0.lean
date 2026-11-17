@@ -1,3 +1,6 @@
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripClasses0
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
