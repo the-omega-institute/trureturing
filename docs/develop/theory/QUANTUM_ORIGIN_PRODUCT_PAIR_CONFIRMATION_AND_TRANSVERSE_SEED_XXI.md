@@ -3273,3 +3273,135 @@ $$
 [Q333F]: https://arxiv.org/pdf/math/0108191v2 "Hermann Flaschka、John Millson，Bending flows for sums of rank one matrices，§§2.1—2.2：秩一轨道辛形式、Hamilton方程及乘积共同共轭动量映射。"
 
 ## 追加锚（本行以下为增补区）
+
+## 334. 每颗球补足三个缺失方向，最少球数达到维数下界
+
+**定义 334.1（二维支持的迹零压缩与球覆盖）。** 在标准复 $d\ge2$ 维空间，置 $H_0=\operatorname{Herm}_0(d)$、$q=d^2-1$。对复二维支持 $W$，定义
+
+$$
+L_W=\{X\in H_0:X=P_WXP_W\},\qquad
+C_W(A)=P_WAP_W-\tfrac12\operatorname{Tr}(P_WA)P_W.
+\tag{334.1}
+$$
+
+$L_W$ 是该实际qubit球的三维迹零方向空间。$C_W$ 是 $H_0\to L_W$ 的Hilbert–Schmidt正交投影：对 $X\in L_W$，有 $\operatorname{Tr}(C_W(A)X)=\operatorname{Tr}(AX)$，且 $C_W(X)=X$。故有限球族覆盖全部迹零方向，当且仅当没有非零迹零Hermitian矩阵在这些二维支持上都压成标量。记所需最少球数为 $b(d)$。这里的“覆盖”是线性空间之和，不是纯射线集合的覆盖，也不是Lie括号生成。
+
+**定理 334.3（任意已覆盖空间上的最大增维与最优球数）。** 对任意真子空间 $S\subset H_0$，若 $r=\operatorname{codim}S$，则存在二维支持 $W$，使
+
+$$
+\dim(S+L_W)-\dim S=\min\{3,r\}.
+\tag{334.2}
+$$
+
+因而
+
+$$
+\boxed{\qquad b(d)=\left\lceil\frac{d^2-1}{3}\right\rceil
+=\left\lfloor\frac{d^2}{3}\right\rfloor.\qquad}
+\tag{334.3}
+$$
+
+证明。先取三个实线性独立 $A_1,A_2,A_3\in H_0$，给出所用的成熟压缩步骤。准确调用Weaver[Q334W]的Theorem3.3：每个包含单位、对伴随封闭且复维数至少四的有限维算子系统 $\mathcal S\subset M_d(\mathbb C)$，都有秩二正交投影 $P$ 满足 $P\mathcal SP=PM_d(\mathbb C)P$。这是二维quantum clique定理，不使用其后需要大维数的通用Ramsey定理。
+
+取 $\mathcal S=\operatorname{span}_{\mathbb C}\{I,A_1,A_2,A_3\}$。迹零性使 $I$ 独立，Hermitian矩阵的实独立使其复独立，故 $\dim_{\mathbb C}\mathcal S=4$。Weaver给出的压缩在此四维空间上是同构。若 $C_W(\sum_jt_jA_j)=0$，则 $P_W(\sum_jt_jA_j)P_W=\lambda P_W$；压缩的单射性使 $\sum_jt_jA_j=\lambda I$，取迹得 $\lambda=0$，再由实独立得全部 $t_j=0$。这就是所需结论，不重证成熟压缩定理。
+
+再令 $E=S^\perp$。正交投影接口给
+
+$$
+(S+L_W)^\perp=E\cap\ker C_W,\qquad
+\dim(S+L_W)-\dim S=\operatorname{rank}(C_W|_E).
+\tag{334.4}
+$$
+
+若 $r\ge3$，从 $E$ 取三个独立元，上述压缩步骤使其压缩独立；值域仅三维，故秩恰为三。若 $r=1,2$，将 $E$ 的基扩成 $H_0$ 中三个独立元，再应用上述压缩步骤，所得压缩在 $E$ 上单射，秩为 $r$。从 $S_0=0$ 逐次加入这些 $L_W$，每步都补足 $\min(3,r)$，所以 $\dim S_k=\min(3k,q)$。这达到每球至多三维的必要下界，得到(334.3)。平方数模三为零或一，给第二种写法。此结论是Weaver定理及压缩对偶的直接应用，不申领新的算子系统分类。$\square$
+
+**推论 334.4（最少球与最少方向可同时达到）。** 最优的 $b(d)$ 颗球内可以恰选 $q=d^2-1$ 根直径，构成 $H_0$ 实基，且同一球内所选直径互相正交。若 $3\nmid d$，每颗球选三轴，$H_0=\bigoplus_jL_{W_j}$；若 $3\mid d$，除最后一球选两轴外，其余各球选三轴。
+
+证明。沿334.3的增维构造，余维至少三时 $L_W\cap S=0$，所以该球任意正交三轴都贡献三个新方向。最后余维 $r=1,2$ 时，在 $L_W$ 内取 $(L_W\cap S)^\perp$ 的正交基，恰贡献 $r$ 个新方向。每个非零 $X\in L_W$ 都有特征值 $\lambda,-\lambda$，缩放后就是一根纯投影直径；正交性也保留。总共选 $q$ 个独立方向。此处 $q\bmod3$ 仅为零或二，给所述两种情形。
+
+对这些方向应用333.5，保留全部中点关系及同一个 $W_*=(1/3,2/3)$，便有
+
+$$
+\ker\beta_0
+=\mathcal A_{\rm loc}
+ +\operatorname{span}_{\mathbb R}\{R_{j,t}:j\le q,\ t\in W_*\}.
+\tag{334.5}
+$$
+
+一条 $m$ 支持关系仍至多使用 $(m-1)q$ 条非中点实例。两个最少数同时在同一个球族、同一组直径中取得，没有拼接分别可达的最优值。$\square$
+
+**命题 334.5（复四维的五颗球）。** 标准基为 $e_1,\ldots,e_4$。以下五个二维支持恰达到 $b(4)=5$：
+
+$$
+\begin{aligned}
+W_1&=\operatorname{span}_{\mathbb C}\{e_1,e_2\},&
+W_2&=\operatorname{span}_{\mathbb C}\{e_3,e_4\},\\
+W_3&=\operatorname{span}_{\mathbb C}\{e_1+e_3,e_2+e_4\},&
+W_4&=\operatorname{span}_{\mathbb C}\{e_1+ie_3,e_2+ie_4\},\\
+W_5&=\operatorname{span}_{\mathbb C}\{e_1,e_2+e_3\}.&&
+\end{aligned}
+\tag{334.6}
+$$
+
+证明。若迹零Hermitian $A$ 在各球上都压成标量，前两球使 $A=\left(\begin{smallmatrix}aI_2&C\\C^*&-aI_2\end{smallmatrix}\right)$。第三、四球分别迫使 $C+C^*$ 与 $i(C-C^*)$ 为实标量矩阵，所以 $C=cI_2$。最后用 $U=(e_1,e_2+e_3)$，其正确标量压缩条件为
+
+$$
+U^*AU=\begin{pmatrix}a&c\\\bar c&0\end{pmatrix}
+=\lambda U^*U
+=\lambda\begin{pmatrix}1&0\\0&2\end{pmatrix}.
+\tag{334.7}
+$$
+
+故 $c=a=0$。334.1给五球覆盖；总维数 $5\cdot3=15$ 又给直和。这是精确消元实例，不以浮点满秩为证明。$\square$
+
+**定义与定理 334.6（最少球标定的完整原量子候选）。** 在333.7的同一强全有限原背景中，只在整个 $K_3$ 保留L2与TF9。用333.6的原反足关系定义有限极大反足框的大小 $d$；328.3的纯提升保证此数存在且与合格框的选择无关。选 $b(d)$ 颗原实际球，在每球中选至多三根相互正交的直径，总计恰好 $d^2-1$ 根；所有点、球与正交性均先在原域定义。以这些方向的(333.9)校准族定义 $\mathcal E_{\mathfrak B}$，并要求
+
+$$
+\mathsf R_{\rm optimal,3}:\qquad
+\ker\beta_{0,3}=\mathcal E_{\mathfrak B,3}
+=\mathcal A_{{\rm loc},3}
+ +\operatorname{span}_{\mathbb R}\{R_{j,t}:j\le d^2-1,\ t\in W_*\}.
+\tag{334.8}
+$$
+
+此处没有先要求所选直径在原 $V^{\otimes3}$ 中线性独立，也没有给 $\Psi$ 单射。该候选与333.7刻画相同的完整量子模型类：同一个 $n\ge2,\theta$ 在每个有限 $N\ge0$ 上满足
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{334.9}
+$$
+
+证明。先由328.3取得纯双射、逐实际球忠实仿射提升和 $\beta_{0,3}=\Psi\widetilde\beta_3$。每条所选关系都提升为零，故
+
+$$
+\mathcal E_{\mathfrak B,3}\subseteq\ker\widetilde\beta_3
+\subseteq\ker\beta_{0,3}.
+\tag{334.10}
+$$
+
+(334.8)夹逼出两核相等；$\widetilde\beta_3$ 满射，遂排除 $\ker\Psi$。然后328.4与328.7给同一坐标的完整三份PSD及全部有限层传播。此外333.5的必要方向判据表明，(334.8)也迫使所选提升方向张成整个 $H_0$，所以所写计数没有掩盖一个未付的张成假设。
+
+反向，在标准三份层 $d=n^3$，334.3—334.4给同一组最少球及最少轴。纯双射及逐球忠实接口把它们传回原实际球；333.5给 $\mathcal E_{\mathfrak B,3}=\ker\widetilde\beta_3$，标准模型的无折叠性给(334.8)。这样先在提升空间取得覆盖，再与原精确核条件接合，不把提升空间的独立当作原载体的先验性质。
+
+完整保留333.7的整个 $V^{\otimes N}$、各层闭尖生成原锥、严格正乘积单位、整个紧底、全部纯点、完整proper菜单及有限单位分解；原乘积配对分离、重括号、正置换及正逆、正单位丢弃，以及任意有限分块用双方全部正泛函和全部相关输入定义的min/max界。各项指定过程的前件也保留，故对应如下：
+
+| 原关系与明确保留的前件 | 同一坐标中的量子公理 |
+| --- | --- |
+| 整个 $K_3$ 的L2、TF9、全域中点及最少球标定满核 | 复射线、密度矩阵与全部有限纠缠PSD锥 |
+| 完整proper菜单、线性评价与有限单位分解 | Born概率、数学POVM及PVM |
+| 强全有限产品、共同坐标、置换与丢弃 | 复张量与偏迹 |
+| 指定线性分支对全部有限相关旁观输入保正 | CP与Kraus表示 |
+| 分支及合计的全输入质量预算 | TNI／TP与数学仪器 |
+| 指定锐事件和整个yes支持逐点中性 | Lüders更新 |
+| 指定连续可逆保单位且全旁观保正的一参数群 | 连续酉共轭及生成元 |
+
+在整个三份层，球数为 $\lfloor n^6/3\rfloor$、方向数为 $n^6-1$。例如单份qubit的三份层 $d=8$，所需球从333.6构造的28颗降到21颗，方向数仍为63。这两个计数的最少性只属于“全域中点加球内固定直径中央弦族”的模板；全域中点及连续参数仍保留。它没有删除TF9、强复合前件或任何过程条件，也没有把有符号证书变为一般非负操作路径。中点总步数、设备、钟与能量及 $\hbar$ 标定、指定Hamiltonian和无限极限保持各自未决范围。
+
+本章的成熟承重输入是Weaver的二维满压缩定理。三算子推论、最大增维及最少球计数是其直接应用，不另申领新分类或全球原创；仓内新增的是将同一个最优球族同时配上最少标定方向，严格传回原关系候选并保留完整量子字典。333的准确中点商、标量平衡及下界、328的HVC和全有限传播均复用。这里是条件纸面理论，不申领Lean核验。$\square$
+
+白话：不必再按每对框点机械地各放一颗小球。先看还有哪些箭头方向没被标定；只要还缺三个独立方向，已有的二维满压缩定理就保证能找到同一颗小球，把这三个缺口一起照出来。补一颗就实实在在多接通三维，最后只剩两个方向时，在最后一颗球里放两根尺即可。于是每颗球的容量都用足，最少球数正好是把 $d^2-1$ 个方向按每组三个装进去所需的数量，而且仍只用 $d^2-1$ 根标定方向。把这套最小球网放到整个三份世界，原满核条件负责不让整体偷偷合并不同配方，保留的三点预算、复合与过程关系再接回完整量子理论；全世界的中点相容性仍在。
+
+[Q334W]: https://arxiv.org/pdf/1601.01259v2 "Nik Weaver，A quantum Ramsey theorem for operator systems，§3 Theorem3.3：至少四维的有限维复算子系统存在二维满压缩；期刊DOI10.1090/proc/13606。"
+
+## 追加锚（本行以下为增补区）
