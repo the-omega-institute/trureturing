@@ -32,7 +32,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h.2.2.2 0
   have ha := structural_certificate.2.2.2 0
   change _ = initial 0 + 1 at hb
-  simp only [Fin.val_zero] at ha hb
   linarith
 def family : Registration arena (type_of% @structural_certificate) where
   actual := readout

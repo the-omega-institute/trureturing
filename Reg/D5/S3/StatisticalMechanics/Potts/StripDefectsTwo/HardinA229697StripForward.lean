@@ -26,7 +26,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := congrFun h.1.1 0
   have ha := congrFun forward_certificate.1.1 0
   change _ = initial 0 + 1 at hb
-  simp only [Fin.val_zero] at ha hb
   linarith
 def family : Registration arena (type_of% @forward_certificate) where
   actual := readout
@@ -63,8 +62,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     readouts := #[{
       path := #["fn", "arg", "fn", "arg", "arg"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

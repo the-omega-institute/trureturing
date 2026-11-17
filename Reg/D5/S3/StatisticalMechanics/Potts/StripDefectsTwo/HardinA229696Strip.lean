@@ -110,7 +110,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h.2.2.1 ![0, 0, 0] ⟨2, by decide⟩ (by decide +kernel) 0
   have ha := finite_certificate.2.2.1 ![0, 0, 0] ⟨2, by decide⟩ (by decide +kernel) 0
   change _ = T (cl ![0, 0, 0] 2) 0 + 1 at hb
-  simp only [Fin.val_zero] at ha hb
+  try simp only [Fin.val_zero] at ha hb
   linarith
 def family : Registration arena (type_of% @finite_certificate) where
   actual := readout

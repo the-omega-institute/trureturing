@@ -29,7 +29,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h 10 (by decide) ![0, 0, 0, 0]
   have ha := transition_counts 10 (by decide) ![0, 0, 0, 0]
   change _ = T (cl ![0, 0, 0, 0] 2) ((10 : Fin 14).natAdd 28) + 1 at hb
-  simp only [Fin.val_zero] at ha hb
   linarith
 def family : Registration arena (type_of% @transition_counts) where
   actual := readout
@@ -43,7 +42,7 @@ def family : Registration arena (type_of% @transition_counts) where
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@transition_counts) (Realization signature) Type Unit where
-  unitName := `Reg.AHardinA229697Strip.transition_counts.auditUnit
+  unitName := `Reg.AHardinA229697StripClasses5.transition_counts.auditUnit
   realizationName := ``family
   realizationSource := none
   generated := false
@@ -65,7 +64,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }

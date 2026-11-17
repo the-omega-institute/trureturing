@@ -28,7 +28,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h ![0, 0, 0, 0] 0 0
   have ha := leading_counts ![0, 0, 0, 0] 0 0
   change _ = T (cl ![0, 0, 0, 0] 0) ((0 : Fin 28).castAdd 14) + 1 at hb
-  simp only [Fin.val_zero] at ha hb
+  try simp only [Fin.val_zero] at ha hb
   linarith
 def family : Registration arena (type_of% @leading_counts) where
   actual := readout
@@ -64,7 +64,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
@@ -89,7 +89,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h ![0, 0, 0, 0] 0 0
   have ha := tail_counts ![0, 0, 0, 0] 0 0
   change _ = T (cl ![0, 0, 0, 0] 0) ((0 : Fin 14).natAdd 28) + 1 at hb
-  simp only [Fin.val_zero] at ha hb
+  try simp only [Fin.val_zero] at ha hb
   linarith
 def family : Registration arena (type_of% @tail_counts) where
   actual := readout
@@ -125,7 +125,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
