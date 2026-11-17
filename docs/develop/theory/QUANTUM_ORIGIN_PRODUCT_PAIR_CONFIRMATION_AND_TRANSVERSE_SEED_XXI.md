@@ -3855,7 +3855,7 @@ $$
 \boxed{\quad
 A_{\star,\mathbb Z}=\ker\widetilde\beta_{\mathbb Z},\qquad
 X\sim_{\star,\rm ret}Y
-\ \Longleftrightarrow\ 
+\ \Longleftrightarrow\
 \widetilde\beta_{\mathbb Z}X=\widetilde\beta_{\mathbb Z}Y.
 \quad}
 \tag{338.2}
