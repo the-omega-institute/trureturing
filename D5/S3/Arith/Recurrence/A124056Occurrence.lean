@@ -184,7 +184,11 @@ private theorem term_eq_one_iff (n : ℕ) : term n = 1 ↔ n = 0 ∨ n = 1 := by
   constructor
   · intro h
     by_contra! hn
-    have := term_ge_two (n := n) (by omega)
+    by_cases hn2 : n = 2
+    · subst n
+      rw [term_two] at h
+      omega
+    have := term_ge_three (n := n) (by omega)
     omega
   · rintro (rfl | rfl)
     · exact term_zero
