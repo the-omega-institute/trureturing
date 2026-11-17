@@ -1,0 +1,10 @@
+#### 反例 5.6：Bloch 方向不能直接按振幅相加
+
+$|0\rangle$ 与 $e^{\mathrm i\phi}|1\rangle$ 的 Bloch 方向始终是 $e_3,-e_3$， 两方向之和恒为零。 但
+
+$$
+\frac{|0\rangle+e^{\mathrm i\phi}|1\rangle}{\sqrt2}
+$$
+
+的 Bloch 方向为 $(\cos\phi,\sin\phi,0)$， 随相对相位遍历整个赤道。 因此两条输入射线的端点不包含相干叠加所需的全部相位信息。
+
