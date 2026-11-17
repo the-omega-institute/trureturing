@@ -571,7 +571,7 @@ private theorem prefix_certificate (E : Finset ℤ) :
         have := Finset.card_pos.mpr hE
         omega
       rw [ha, hi, ← memory_insert E z y hmaxz hzy] at hp' hc'
-      rw [hw] at hc' 
+      rw [hw] at hc'
       have hcount := count_insert E z y hmaxz hzy
       simp only [Nat.add_sub_cancel]
       exact ⟨by omega, hp'⟩
