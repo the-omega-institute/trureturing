@@ -54,7 +54,11 @@ internal sealed class NineteenPointSliceDocument : IScribeDocumentDefinition
                         "The result is a conditional reconstruction for the displayed actual slice "
                             + "bound. It does not establish the original external Q9 classification "
                             + "for arbitrary support or the full 258-point obstruction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem)),
+        [
+            DocumentEdge.Dependency.Create(GidRef.Create(
+                "D5/S3/Combinatorics/Graph/HypercubeCritical/NineteenPointSliceMatching"))
+        ]));
 
     private static Formula ReconstructionFormula()
     {

@@ -27,5 +27,4 @@ The result is a conditional reconstruction for the displayed actual slice bound.
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/NineteenPointSlice.nineteen_point_slice_gray_reconstruction`
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/CubeFiveNeighborGap](CubeFiveNeighborGap.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/EighteenPointSlice](EighteenPointSlice.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/NineteenPointSliceMatching](NineteenPointSliceMatching.md)
