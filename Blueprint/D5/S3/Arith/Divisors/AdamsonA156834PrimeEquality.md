@@ -34,6 +34,10 @@ $$\forall n \in \mathrm{Nat},\; (1 < n) \Rightarrow ((a\left(n\right) = n) \Left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/AdamsonA156834PrimeEquality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/adamson-a156834` (proved) by `D5/S3/Arith/Divisors/AdamsonA156834PrimeEquality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"adamson-a156834","declaration_gid":"D5/S3/Arith/Divisors/AdamsonA156834PrimeEquality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* el Houcein el Abdalaoui; Mohamed Dahmoune; Djelloul Ziadi (2013). *On the transition reduction problem for finite automata*. DOI: [10.48550/arXiv.1301.3751](https://doi.org/10.48550/arXiv.1301.3751). URL: <https://arxiv.org/abs/1301.3751v1>.
