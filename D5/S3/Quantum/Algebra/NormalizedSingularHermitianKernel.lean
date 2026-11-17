@@ -477,4 +477,205 @@ def normalizedGraphTrichotomy : Prop :=
     (∃ C : M, IsUnit C ∧
       ∀ H, H ∈ K ↔ Cᴴ * H * C ∈ (iSkew3 : Set M))
 
+private theorem surjective_cubic_graph_rigidity
+    {V : Type*} [AddCommGroup V] [Module ℝ V]
+    (u z : V →ₗ[ℝ] ℂ) (s : V →ₗ[ℝ] ℝ)
+    (hu : Function.Surjective u)
+    (h : ∀ X, s X * ((u X).re ^ 2 + (u X).im ^ 2) =
+      2 * (z X).re * ((u X).re ^ 2 - (u X).im ^ 2) +
+        4 * (z X).im * (u X).re * (u X).im) :
+    ∃ p : ℂ, ∀ X, z X = p * u X ∧
+      s X = 2 * (p.re * (u X).re + p.im * (u X).im) := by
+  obtain ⟨A, hA⟩ := hu 1
+  obtain ⟨B, hB⟩ := hu Complex.I
+  have h1 := h A
+  have hi := h B
+  have hp := h (A + B)
+  have hm := h (A - B)
+  simp [hA] at h1
+  simp [hB] at hi
+  simp [map_add, hA, hB] at hp
+  simp [map_sub, hA, hB] at hm
+  have hzB : z B = Complex.I * z A := by
+    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> linarith
+  have hi' : s B = 2 * (z A).im := by simpa [hzB] using hi
+  have hker (X : V) (hX : u X = 0) : z X = 0 ∧ s X = 0 := by
+    have hXA := h (X + A)
+    have hXB := h (X + B)
+    have hXAB := h (X + (A + B))
+    simp [map_add, hX, hA] at hXA
+    simp [map_add, hX, hB] at hXB
+    simp [map_add, hX, hA, hB] at hXAB
+    have hs : s X = 0 := by linarith
+    refine ⟨?_, hs⟩
+    apply Complex.ext <;> simp <;> linarith
+  refine ⟨z A, ?_⟩
+  intro X
+  let Q := X - (u X).re • A - (u X).im • B
+  have huQ : u Q = 0 := by
+    apply Complex.ext <;>
+      simp [Q, map_sub, map_smul, hA, hB, Complex.real_smul]
+  obtain ⟨hzQ, hsQ⟩ := hker Q huQ
+  have hzQr := congrArg Complex.re hzQ
+  have hzQi := congrArg Complex.im hzQ
+  simp [Q, map_sub, map_smul, hzB, Complex.real_smul] at hzQr hzQi hsQ
+  constructor
+  · apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> linarith
+  · rw [h1, hi'] at hsQ
+    linarith
+
+private theorem surjective_conjugate_graph_coefficients
+    (K : Submodule ℝ M)
+    (hD : D ∈ K)
+    (hHerm : ∀ H : M, H ∈ K → H.IsHermitian)
+    (hSing : ∀ H : M, H ∈ K → H.det = 0)
+    (c : ℂ)
+    (hgraph : ∀ H ∈ K, H 1 2 = c * conj (H 0 2))
+    (honto : ∀ u : ℂ, ∃ H ∈ K, H 0 2 = u) :
+    ∃ p : ℂ, ∀ H ∈ K,
+      c * H 0 1 = p * H 0 2 ∧
+        ((H 0 0).re + (H 1 1).re : ℂ) =
+          conj p * H 0 2 + p * conj (H 0 2) := by
+  let u : K →ₗ[ℝ] ℂ :=
+    { toFun := fun H => (H : M) 0 2
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  let z : K →ₗ[ℝ] ℂ :=
+    { toFun := fun H => c * (H : M) 0 1
+      map_add' := by intros; simp [mul_add]
+      map_smul' := by intros; simp [smul_eq_mul, mul_left_comm] }
+  let s : K →ₗ[ℝ] ℝ :=
+    { toFun := fun H => ((H : M) 0 0).re + ((H : M) 1 1).re
+      map_add' := by intros; simp; ring
+      map_smul' := by intros; simp [Complex.real_smul, mul_add] }
+  have hu : Function.Surjective u := by
+    intro w
+    obtain ⟨H, hH, hw⟩ := honto w
+    exact ⟨⟨H, hH⟩, hw⟩
+  have heq (X : K) : s X * ((u X).re ^ 2 + (u X).im ^ 2) =
+      2 * (z X).re * ((u X).re ^ 2 - (u X).im ^ 2) +
+        4 * (z X).im * (u X).re * (u X).im := by
+    obtain ⟨a, b, z₀, u₀, v₀, hcoord, _, hcoef⟩ :=
+      universal_faithful_coordinate_representation K hD hHerm hSing X X.property
+    have hv : v₀ = c * conj u₀ := by
+      simpa [hcoord, hermitianMatrix] using hgraph X X.property
+    have hcubic : ((a + b : ℝ) : ℂ) * (conj u₀ * u₀) =
+        (c * z₀) * conj u₀ ^ 2 + conj (c * z₀) * u₀ ^ 2 := by
+      rw [hv] at hcoef
+      convert hcoef using 1 <;> simp [map_mul, pow_two] <;> ring
+    have hr := congrArg Complex.re hcubic
+    simp [pow_two, Complex.mul_re, Complex.mul_im] at hr
+    change (((X : M) 0 0).re + ((X : M) 1 1).re) *
+        (((X : M) 0 2).re ^ 2 + ((X : M) 0 2).im ^ 2) =
+      2 * (c * (X : M) 0 1).re *
+        (((X : M) 0 2).re ^ 2 - ((X : M) 0 2).im ^ 2) +
+      4 * (c * (X : M) 0 1).im * ((X : M) 0 2).re * ((X : M) 0 2).im
+    rw [hcoord]
+    simp [hermitianMatrix, Complex.mul_re, Complex.mul_im]
+    linear_combination hr
+  obtain ⟨p, hp⟩ := surjective_cubic_graph_rigidity u z s hu heq
+  refine ⟨p, ?_⟩
+  intro H hH
+  obtain ⟨hz, hs⟩ := hp ⟨H, hH⟩
+  refine ⟨hz, ?_⟩
+  rw [← Complex.ofReal_add]
+  change (((s ⟨H, hH⟩ : ℝ) : ℂ)) =
+    conj p * u ⟨H, hH⟩ + p * conj (u ⟨H, hH⟩)
+  rw [hs]
+  apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
+
+/-- A surjective conjugate coefficient graph gives the exact primitive space,
+with one congruence matrix working for every ambient complex matrix. -/
+theorem surjective_conjugate_graph_primitive
+    (K : Submodule ℝ M)
+    (hD : D ∈ K)
+    (hHerm : ∀ H : M, H ∈ K → H.IsHermitian)
+    (hSing : ∀ H : M, H ∈ K → H.det = 0)
+    (c : ℂ) (hc : ‖c‖ = 1)
+    (hgraph : ∀ H ∈ K, H 1 2 = c * conj (H 0 2))
+    (honto : ∀ u : ℂ, ∃ H ∈ K, H 0 2 = u) :
+    ∃ C : M, IsUnit C ∧
+      ∀ H : M, H ∈ K ↔ Cᴴ * H * C ∈ (iSkew3 : Set M) := by
+  obtain ⟨p, hp⟩ :=
+    surjective_conjugate_graph_coefficients K hD hHerm hSing c hgraph honto
+  have hc0 : c ≠ 0 := by
+    intro h
+    simpa [h] using hc
+  have hcc : conj c * c = 1 := by
+    rw [← Complex.normSq_eq_conj_mul_self]
+    simp [Complex.normSq_eq_norm_sq, hc]
+  let P : M := !![1, 0, 0; 0, c, 0; 0, 0, 1]
+  have hP : IsUnit P := by
+    apply (Matrix.isUnit_iff_isUnit_det P).mpr
+    simpa [P, Matrix.det_fin_three] using
+      (isUnit_iff_ne_zero.mpr hc0 : IsUnit c)
+  have hS : IsUnit (shear p) := by
+    apply (Matrix.isUnit_iff_isUnit_det _).mpr
+    simp [shear, Matrix.det_fin_three]
+  let C := P * shear p * finalUnitary
+  have hC : IsUnit C := (hP.mul hS).mul finalUnitary_isUnit
+  have hphase (a b : ℝ) (z u : ℂ) :
+      Pᴴ * hermitianMatrix a b z u (c * conj u) * P =
+        hermitianMatrix a b (c * z) u (conj u) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [P, hermitianMatrix, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        Fin.sum_univ_three]
+    all_goals grind
+  have hF (H : M) (hH : H ∈ K) :
+      Cᴴ * H * C = Complex.I •
+        !![0, ((H 0 0).re : ℂ), ((Real.sqrt 2 * (H 0 2).re : ℝ) : ℂ);
+          (-(H 0 0).re : ℂ), 0, ((Real.sqrt 2 * (H 0 2).im : ℝ) : ℂ);
+          -((Real.sqrt 2 * (H 0 2).re : ℝ) : ℂ),
+          -((Real.sqrt 2 * (H 0 2).im : ℝ) : ℂ), 0] := by
+    obtain ⟨a, b, z, u, v, hcoord, _, _⟩ :=
+      universal_faithful_coordinate_representation K hD hHerm hSing H hH
+    have hv : v = c * conj u := by
+      simpa [hcoord, hermitianMatrix] using hgraph H hH
+    obtain ⟨hz, hsum⟩ := hp H hH
+    simp [hcoord, hermitianMatrix] at hz hsum
+    have hphaseH : Pᴴ * H * P = hermitianMatrix a b (p * u) u (conj u) := by
+      rw [hcoord, hv, hphase, hz]
+    have hcomp : Cᴴ * H * C =
+        finalUnitaryᴴ * ((shear p)ᴴ * (Pᴴ * H * P) * shear p) * finalUnitary := by
+      simp [C, Matrix.conjTranspose_mul, Matrix.mul_assoc]
+    have hu : (u.re + Complex.I * u.im : ℂ) = u := by
+      apply Complex.ext <;> simp
+    have hconju : (u.re - Complex.I * u.im : ℂ) = conj u := by
+      apply Complex.ext <;> simp
+    have hnormal : Cᴴ * H * C = Complex.I •
+        !![0, (a : ℂ), (Real.sqrt 2 * u.re : ℂ);
+          (-a : ℂ), 0, (Real.sqrt 2 * u.im : ℂ);
+          (-Real.sqrt 2 * u.re : ℂ), (-Real.sqrt 2 * u.im : ℂ), 0] := by
+      rw [hcomp, hphaseH, shear_identity a b p u hsum]
+      simpa only [hu, hconju] using final_unitary_identity a u.re u.im
+    simpa [hcoord, hermitianMatrix] using hnormal
+  refine ⟨C, hC, ?_⟩
+  intro H
+  constructor
+  · intro hH
+    exact ⟨(H 0 0).re, Real.sqrt 2 * (H 0 2).re,
+      Real.sqrt 2 * (H 0 2).im, hF H hH⟩
+  · rintro ⟨x, y, z, hH⟩
+    have hr0 : Real.sqrt 2 ≠ 0 := by positivity
+    let u : ℂ := (y / Real.sqrt 2 : ℝ) + Complex.I * (z / Real.sqrt 2 : ℝ)
+    obtain ⟨H₀, hH₀, hu₀⟩ := honto u
+    let G := H₀ + (x - (H₀ 0 0).re) • D
+    have hG : G ∈ K := K.add_mem hH₀ (K.smul_mem _ hD)
+    have ha : (G 0 0).re = x := by
+      simp [G, D, Matrix.add_apply, Matrix.smul_apply, Complex.real_smul]
+    have hu : G 0 2 = u := by
+      simp [G, D, Matrix.add_apply, Matrix.smul_apply, hu₀]
+    have hy : Real.sqrt 2 * (G 0 2).re = y := by
+      simp [hu, u]
+      field_simp
+    have hz : Real.sqrt 2 * (G 0 2).im = z := by
+      simp [hu, u]
+      field_simp
+    have hGH : Cᴴ * G * C = Cᴴ * H * C := by
+      rw [hF G hG, hH, ha, hy, hz]
+    have hCstar : IsUnit Cᴴ := hC.star
+    have hGeq : G = H := hCstar.mul_left_cancel (hC.mul_right_cancel hGH)
+    exact hGeq ▸ hG
+
 end D5.S3.Quantum.Algebra.NormalizedSingularHermitianKernel
