@@ -63,6 +63,17 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
         Seq(D(1), Minus, Mul(D(2), Square(SinAt(tp)), Square(SinAt(tm))));
     private static Formula Marginal(Formula g) => Mul(Half, Matrix2(D(1), StarOf(g), g, D(1)));
     private static Formula MinusState => Mul(Half, Matrix2(D(1), NegOne, NegOne, D(1)));
+    private static Formula PrefixParameters() => And(
+        Equal(F.Id("x"), Fraction(F.Id("a"), D(2))),
+        Equal(F.Id("u"), Fraction(F.Id("b"), D(2))),
+        Equal(F.Id("y"), Fraction(F.Id("l"), Mul(D(2), F.Id("a")))),
+        Equal(F.Id("q"), Fraction(Mul(D(3), F.Id("l")), Mul(D(2), F.Id("b")))),
+        Equal(F.Id("r"), Fraction(Mul(Seq(Sqrt, Grp(D(2))), F.Id("t")), F.Id("b"))));
+    private static Formula PrefixBlocks() => And(
+        Equal(F.Id("A"), Matrix2(Seq(F.Id("x"), Plus, Mul(Imag, F.Id("u"))), D(0), D(0),
+            Seq(F.Id("x"), Minus, Mul(Imag, F.Id("u"))))),
+        Equal(F.Id("B"), Matrix2(Seq(F.Id("y"), Plus, Mul(Imag, F.Id("q"))),
+            Mul(Imag, F.Id("r")), Mul(Imag, F.Id("r")), Seq(F.Id("y"), Minus, Mul(Imag, F.Id("q"))))));
     private static Formula P => Call("P", W, Tp, Tm);
     private static Formula Q => Call("Q", W, Tp, Tm);
 
@@ -146,6 +157,38 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
             Theorem("controlled_partial_trace", "Mixed controlled-block trace identity", MixedTrace(),
                 "Q, P and rho are arbitrary complex two-dimensional matrices. branch(Q,P,0) is Q and branch(Q,P,1) is P. "
                 + "The identity directly expands the mixed partial trace; no damping or Gram hypothesis is assumed."),
+            Paragraph(DefinitionDsl.Text(
+                "A finite-prefix application uses the same maximally mixed environment without resetting it. "
+                + "Let l be any real number strictly between minus one and one, including zero and negative values. "
+                + "In the following local notation t is the square root of one minus l squared; "
+                + "a is the square root of one plus t and b is the square root of three minus t. "
+                + "Both denominators a and b are strictly positive.")),
+            new DocumentBlock.DisplayFormula(Disp(PrefixParameters())),
+            new DocumentBlock.DisplayFormula(Disp(PrefixBlocks())),
+            Paragraph(DefinitionDsl.Text(
+                "The parameter equations give x squared plus u squared equal to one, "
+                + "y squared plus q squared plus r squared equal to one, xy equal to l over four, "
+                + "uq equal to three l over four, and x squared plus y squared equal to one half. "
+                + "Thus A and B are unitary. Set W to the controlled matrix with branches A and B. "
+                + "Its nth power has branches A to the nth power and B to the nth power. "
+                + "The normalized overlap tr(A to the nth power times the adjoint of B to the nth power) over two "
+                + "equals l to the nth power for n equal to zero, one, two or three. "
+                + "Expanding the squares and cubes and substituting the five scalar equations proves these identities. "
+                + "The controlled partial-trace identity therefore preserves every diagonal matrix entry "
+                + "and multiplies both off-diagonal entries by l to the nth power throughout this window.")),
+            Paragraph(DefinitionDsl.Text(
+                "This is one joint operator and one initial environment state for every input and every step in the window. "
+                + "It also applies to every finite untouched reference, including initially correlated system-reference states: "
+                + "evolve by the identity on the reference tensored with W to the nth power, and trace out the environment. "
+                + "Each reference matrix block is exactly the already computed system map; the environment must initially be independent. "
+                + "The complete real-parameter and finite-reference assertion has been checked as a transient Lean application "
+                + "using only standard logical axioms. It introduces no new mathematical declaration or frozen identity.")),
+            Paragraph(DefinitionDsl.Text(
+                "The window matters. At l equal to zero, A is (I plus iZ) over the square root of two and B is iX. "
+                + "Their fourth powers are minus I and I, so the fourth overlap is minus one rather than zero. "
+                + "This excludes extending this particular construction to four steps at zero; it excludes neither other constructions "
+                + "nor establishes minimal environment dimension. It concerns the two-level dephasing channel only, "
+                + "not an arbitrary channel or a larger source model.")),
             Theorem("clock_reduced_entries", "All entries of the actual reduced channel", Entries(),
                 "The raw matrix identity specializes to every canonical density state. The conjugate occurs in the upper off-diagonal entry."),
             Theorem("clock_pulse_special_directions", "Special propagators with their global phase", Pulses(),

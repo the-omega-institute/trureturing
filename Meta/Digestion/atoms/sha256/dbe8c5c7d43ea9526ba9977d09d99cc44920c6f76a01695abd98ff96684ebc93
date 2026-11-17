@@ -1,0 +1,36 @@
+#### 定理 7.4：相位曲率及闭路半立体角
+
+取局部代表
+
+$$
+\psi_N(\theta,\varphi)=
+ \begin{pmatrix}
+ \cos(\theta/2)\\ e^{\mathrm i\varphi}\sin(\theta/2)
+ \end{pmatrix},
+ \qquad
+ a=-\mathrm i\psi_N^\dagger\mathrm d\psi_N
+ =\frac{1-\cos\theta}{2}\,\mathrm d\varphi.
+$$
+
+则
+
+$$
+F=\mathrm da=\frac12\sin\theta\,\mathrm d\theta\wedge\mathrm d\varphi.
+$$
+
+规范变换 $\psi_N\mapsto e^{\mathrm i\chi}\psi_N$ 使 $a\mapsto a+\mathrm d\chi$。 对定向闭路的水平提升，回返相位为
+
+$$
+\gamma=-\oint a=-\frac{\Omega}{2}\pmod{2\pi},
+$$
+
+其中 $\Omega$ 是所围有向球面积，按 $4\pi$ 取模。
+
+**证明。**
+
+直接微分归一化旋量得到 $a,F$ 与规范公式。 写水平旋量 $\psi_h=e^{\mathrm i\chi}\psi_N$， 条件 $\psi_h^\dagger\mathrm d\psi_h=0$ 给 $\mathrm d\chi=-a$。 沿闭路积分并使用 Stokes 定理得到相位。 若路径跨越坐标片，加入重叠处的规范变换； 换用球面另一补片改变 $\Omega$ 一个 $4\pi$ 整数倍， 因此不改变 $e^{\mathrm i\gamma}$。
+
+$\square$
+
+Berry 原文以绝热量子历史导出几何相位，并给出自旋情形的立体角公式 [\[2\]](#ref-berry)。上面证明的是所声明连接的水平运输； 它本身不把任意实际驱动自动认定为绝热驱动。
+

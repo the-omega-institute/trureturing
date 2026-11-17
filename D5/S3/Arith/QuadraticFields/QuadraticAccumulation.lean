@@ -50,14 +50,14 @@ private theorem trace_coordinates (D : ℤ) (s : K D) :
   simpa [QuadraticAlgebra.trace_def] using
     QuadraticOrderMaximal.algebra_trace_eq (D : ℚ) 0 s
 
-private theorem norm_coordinates (D : ℤ) (s : K D) :
+theorem norm_coordinates (D : ℤ) (s : K D) :
     Algebra.norm ℚ s = s.re ^ 2 - (D : ℚ) * s.im ^ 2 := by
   rw [Algebra.norm_eq_matrix_det (QuadraticAlgebra.basis (D : ℚ) 0)]
   simp [Matrix.det_fin_two, Algebra.leftMulMatrix_eq_repr_mul,
     QuadraticAlgebra.basis_repr_apply]
   ring
 
-private theorem mem_traceDual_iff (D : ℤ) (A B : ℚ) (s : K D) :
+theorem mem_traceDual_iff (D : ℤ) (A B : ℚ) (s : K D) :
     s ∈ traceDual D A B ↔
       (∃ q : ℤ, (q : ℚ) = 2 * s.re) ∧
       (∃ p : ℤ, (p : ℚ) = 2 * (A * s.re + (D : ℚ) * B * s.im)) := by
@@ -84,7 +84,7 @@ private theorem mem_traceDual_iff (D : ℤ) (A B : ℚ) (s : K D) :
     | smul z x _ hx =>
         simpa only [mul_smul_comm, map_zsmul] using (1 : Submodule ℤ ℚ).smul_mem z hx
 
-private theorem sqrt_nonsquare (D : ℤ) (hD : 2 ≤ D) (hs : Squarefree D) :
+theorem sqrt_nonsquare (D : ℤ) (hD : 2 ≤ D) (hs : Squarefree D) :
     ¬ IsSquare D := by
   rintro ⟨z, hz⟩
   have hzsq : Squarefree (z ^ 2) := by simpa [hz, sq] using hs
@@ -98,7 +98,7 @@ def realEmbedding (D : ℤ) (hD : 0 ≤ D) : K D →ₐ[ℚ] ℝ :=
   QuadraticAlgebra.lift ⟨Real.sqrt (D : ℝ), by
     simpa [smul_eq_mul] using Real.mul_self_sqrt (show (0 : ℝ) ≤ D by exact_mod_cast hD)⟩
 
-private theorem realEmbedding_apply (D : ℤ) (hD : 0 ≤ D) (s : K D) :
+theorem realEmbedding_apply (D : ℤ) (hD : 0 ≤ D) (s : K D) :
     realEmbedding D hD s = (s.re : ℝ) + (s.im : ℝ) * Real.sqrt (D : ℝ) := by
   simp [realEmbedding, QuadraticAlgebra.lift, Algebra.smul_def]
 
@@ -417,7 +417,7 @@ def coordinateEquiv (D : ℤ) (hD : 0 ≤ D) (A B : ℚ) (hB : B ≠ 0)
       exact ⟨alpha D A B, by simp [σ, realEmbedding_apply, alpha]⟩
   exact σ.equivFieldRange.trans (IntermediateField.equivOfEq hrange)
 
-private theorem coordinateEquiv_coe (D : ℤ) (hD : 0 ≤ D) (A B : ℚ) (hB : B ≠ 0)
+theorem coordinateEquiv_coe (D : ℤ) (hD : 0 ≤ D) (A B : ℚ) (hB : B ≠ 0)
     [Fact (¬ IsSquare (D : ℚ))] (s : K D) :
     ((coordinateEquiv D hD A B hB s : RealField D A B) : ℝ) =
       realEmbedding D hD s := rfl

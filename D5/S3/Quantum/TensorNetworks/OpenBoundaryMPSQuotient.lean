@@ -28,7 +28,7 @@ def coreCoordinates (t : Word 3 → ℂ) : Fin 5 → ℂ :=
   ![reconstructedLeft t 0, canonicalCore t 0 0 0, canonicalCore t 0 0 1,
     canonicalCore t 1 0 0, canonicalCore t 1 0 1]
 
-private lemma canonical_shape (t : Word 3 → ℂ) (ht : t ∈ openBoundaryMPS 3)
+lemma canonical_shape (t : Word 3 → ℂ) (ht : t ∈ openBoundaryMPS 3)
     (hg : eval t chartPoly ≠ 0) :
     let θ : OpenBoundaryMPSTwoSiteMinimality.Parameter := (coreCoordinates t, 0, 0)
     OpenBoundaryMPSTwoSiteMinimality.left θ = reconstructedLeft t ∧ OpenBoundaryMPSTwoSiteMinimality.core θ = canonicalCore t := by
@@ -271,9 +271,9 @@ theorem actual_boundary_gram (m : ℕ) (ψ : Word (3 + m) → ℂ)
   rw [hψq, density_factor]
 /-- Observed entries, including entries away from the selected column. -/
 abbrev ObservationIndex := Word 3 × Word 3
-private def polynomialConjugate {ι : Type*} (p : PhasePolynomial.Poly ι) :
+def polynomialConjugate {ι : Type*} (p : PhasePolynomial.Poly ι) :
     PhasePolynomial.Poly ι := rename Sum.swap (map (starRingEnd ℂ) p)
-private lemma polynomialConjugate_eval {ι : Type*} (p : PhasePolynomial.Poly ι)
+lemma polynomialConjugate_eval {ι : Type*} (p : PhasePolynomial.Poly ι)
     (z : ι → ℂ) :
     PhasePolynomial.actual (polynomialConjugate p) z = star (PhasePolynomial.actual p z) := by
   rw [polynomialConjugate, PhasePolynomial.actual, eval_rename]

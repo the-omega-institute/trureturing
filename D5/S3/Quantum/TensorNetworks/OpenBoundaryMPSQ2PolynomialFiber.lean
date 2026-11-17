@@ -134,13 +134,13 @@ def transferPolynomial (H : Matrix (Fin 2) (Fin 2) Poly) : Matrix (Fin 2) (Fin 2
 def q2Polynomial (m : ℕ) : Matrix (Word 2) (Word 2) Poly :=
   prefixPolynomial * transferPolynomial^[m] gramPolynomial * adjoint prefixPolynomial
 
-private abbrev evaluate (x : Coordinates) : Poly →+* ℂ := eval (fun i => (x i : ℂ))
+abbrev evaluate (x : Coordinates) : Poly →+* ℂ := eval (fun i => (x i : ℂ))
 
 private lemma evaluate_coreVariable (x : Coordinates) (i : Fin 5) :
     evaluate x (coreVariable i) = coreCoordinates x i := by
   apply Complex.ext <;> simp [evaluate, coreVariable, coreCoordinates]
 
-private lemma evaluate_eta (x : Coordinates) : evaluate x etaVariable = eta x := by
+lemma evaluate_eta (x : Coordinates) : evaluate x etaVariable = eta x := by
   apply Complex.ext <;> simp [evaluate, etaVariable, eta]
 
 private lemma evaluate_bar (x : Coordinates) (p : Poly) :
@@ -153,7 +153,7 @@ private lemma evaluate_adjoint {n m : Type*} (x : Coordinates) (M : Matrix n m P
   ext i j
   exact evaluate_bar x (M j i)
 
-private lemma evaluate_core (x : Coordinates) (s : Fin 2) :
+lemma evaluate_core (x : Coordinates) (s : Fin 2) :
     (evaluate x).mapMatrix (corePolynomial s) = core (positiveRepresentative x) s := by
   ext i j
   fin_cases s <;> fin_cases i <;> fin_cases j <;>

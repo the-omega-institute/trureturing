@@ -1,0 +1,27 @@
+**定理 270.2（不使用保纯即可得到的整个结构）。** 在270.1的单底背景下，$\mathsf U$ 蕴含 $\mathsf{NR}_m$。只给 $\mathsf{NR}_m$，则单点双极闭，$\mathcal L_m=\{A\subseteq P:c(A)=A\}$ 是完整、原子式、有限高度的正交模格。其原子恰为原纯点，且
+
+$$
+\operatorname{conv}A=\bigcap_{q\in A^\perp}(R_m)_q,\qquad
+P\cap\operatorname{conv}A=A\quad(A\in\mathcal L_m),
+\qquad \operatorname{height}\mathcal L_m\le\dim\operatorname{aff}K+1.
+\tag{270.3}
+$$
+
+闭集到实际面的映射严格保包含，但此时不宣称覆盖性质，也不宣称全部实际面已经落在该映射中。
+
+证明。先不假设NR。任意对称关系的双极闭包均扩张原集合：若 $a\in A$，它与 $A^\perp$ 的每个点相关，故 $a\in A^{\perp\perp}$。固定纯点 $p$，选另一纯点 $q$，令 $m=\tau_{F(p,q)}p\ne p$。有限正权纯分解 $m=\sum_i\lambda_i g_i$ 至少有一个 $g_i\ne p$；种子与行面性给 $pR_mg_i$。若 $pR_mp$，则两个不同点 $p,g_i$ 都在 $c(\{p,g_i\})\cap p^\perp$，违反 $\mathsf U$。因此没有纯点自环。若混态 $xR_mx$，对 $x$ 的正权纯分解先在一行分解，再交换两端并分解，便得到一个纯点自环，亦矛盾。于是 $\mathsf U$ 已经推出整个 $K$ 上的NR，无需先借正交格或保纯。
+
+以下对任一包含全部混合种子的无自环对称面闭扩张 $R$ 同样成立。若 $q\ne p$ 属于 $c(\{p\})$，取 $B=F(p,q)$ 及 $m=\tau_Bp=\sum_i\lambda_i g_i$ 的正权纯分解。种子与行面性给 $pRg_i$；仅在当前反证假设 $q\in c(\{p\})$ 下才有 $qRg_i$。故 $pRm$ 且 $qRm$，行 $R_m$ 含 $p,q$，因而含整个 $B$ 及 $m$，产生自环。于是 $c(\{p\})=\{p\}$，原子准确识别。一般双极构造给完整正交格。
+
+对双极闭 $A$，右侧各行面含 $A$，故含 $\operatorname{conv}A$。若 $x$ 属于右侧，取 $x$ 的有限正权原纯分解；行面性使每个纯分量都与 $A^\perp$ 正交，故都属于 $A$，给反包含。原纯点的极端性再给第二式。空交取 $K$，空凸包取空集。实际面的严格包含使仿射维数严格增长，故得到有限高度；未要求这些行面或 $P$ 在拓扑中另有闭性。
+
+再对任意不同 $p,q$ 写 $m=\sum_i\lambda_i g_i$。内弦穿过 $\operatorname{ri}B$，故 $F(p,m)=B$。共同正交参照的行面在两个方向分别包含 $p,q$ 或 $p,g_1,\ldots,g_s$，给
+
+$$
+\{p,q\}^\perp=\{p,g_1,\ldots,g_s\}^\perp,
+\qquad g_i\perp p,\qquad g_i\in c(\{p,q\}).
+\tag{270.4}
+$$
+
+一般情形没有 $qRg_i$。若闭集 $L$ 含 $p$，遍历其中每个 $q$ 并用(270.4)，得到 $L=p\vee(L\cap p^\perp)$。有限高度允许反复选取残余的一个原子并取其正交交，严格下降直至空集，因而每个 $L$ 有有限两两正交原子基。若 $A\subseteq B$ 均闭，沿 $A$ 的这一基逐次对 $B$ 作刚才的原子分解，准确得到 $B=A\vee(B\cap A^\perp)$。这就是正交模律；没有把有限高度当作覆盖性质。$\square$
+

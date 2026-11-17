@@ -30,7 +30,7 @@ open OpenBoundaryMPSQuotient hiding coreCoordinates
 open OpenBoundaryMPSMarginalBirationality
 open OpenBoundaryMPSQ2PolynomialFiber
 
-private def quotientRawPrefix (m : ℕ) (x : Coordinates) : Matrix (Word 3) (Word 3) ℂ :=
+def quotientRawPrefix (m : ℕ) (x : Coordinates) : Matrix (Word 3) (Word 3) ℂ :=
   OpenBoundaryMPSDensityRecovery.rawPrefix 3 m
     (OpenBoundaryMPSTwoSiteMinimality.state (3 + m) (positiveRepresentative x))
 
@@ -119,20 +119,20 @@ private lemma quotientRawPrefix_continuous (m : ℕ) :
   exact ((continuous_apply (Fin.append u b)).comp hc).mul
     (Continuous.star ((continuous_apply (Fin.append v b)).comp hc))
 
-private lemma positiveRepresentative_witness (m : ℕ) :
+lemma positiveRepresentative_witness (m : ℕ) :
     positiveRepresentative (coordinatesOf (witnessParameter m)) = witnessParameter m := by
   apply representative_coordinatesOf
   dsimp [witnessParameter]
   positivity
 
-private def quotientValidityDomain (m : ℕ) : Set Coordinates :=
+def quotientValidityDomain (m : ℕ) : Set Coordinates :=
   {x | 0 < sigma x ∧
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates
       (fun ij => quotientRawPrefix m x ij.1 ij.2))
       (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0 ∧
     eval x (leadingPolynomial m) ≠ 0}
 
-private lemma quotientValidityDomain_open (m : ℕ) :
+lemma quotientValidityDomain_open (m : ℕ) :
     IsOpen (quotientValidityDomain m) := by
   unfold quotientValidityDomain
   have hcoords : Continuous (fun x : Coordinates =>
@@ -156,7 +156,7 @@ private lemma quotientValidityDomain_open (m : ℕ) :
   · exact isOpen_ne.preimage (MvPolynomial.continuous_eval _)
 
 set_option maxHeartbeats 800000 in
-private lemma quotientValidityDomain_nonempty (m : ℕ) :
+lemma quotientValidityDomain_nonempty (m : ℕ) :
     (quotientValidityDomain m).Nonempty := by
   let x₀ := coordinatesOf (witnessParameter m)
   have hrep : positiveRepresentative x₀ = witnessParameter m := by
@@ -211,7 +211,7 @@ private lemma quotientValidityDomain_nonempty (m : ℕ) :
   obtain ⟨x, hxR, hxL⟩ := hLdense.inter_open_nonempty R hRopen hRne
   exact ⟨x, hxR.1, hxR.2, hxL⟩
 
-private lemma rawPrefix_scale_local (k m : ℕ) (z : ℂ)
+lemma rawPrefix_scale_local (k m : ℕ) (z : ℂ)
     (ψ : Word (k + m) → ℂ) :
     OpenBoundaryMPSDensityRecovery.rawPrefix k m (z • ψ) =
       (Complex.normSq z : ℂ) • OpenBoundaryMPSDensityRecovery.rawPrefix k m ψ := by
@@ -275,7 +275,7 @@ set_option maxHeartbeats 800000 in
 private lemma quotientIndexEquiv_symm_twelve : quotientIndexEquiv.symm 12 = Sum.inr (Sum.inr 2) := by decide
 
 set_option maxHeartbeats 800000 in
-private lemma quotientCoordinates_positiveRepresentative (p : OpenBoundaryMPSQuotient.Quotient)
+lemma quotientCoordinates_positiveRepresentative (p : OpenBoundaryMPSQuotient.Quotient)
     (hp : 0 < p.2.1) :
     positiveRepresentative (quotientCoordinates13 p) =
       (p.1, Real.sqrt p.2.1, (Real.sqrt p.2.1 : ℂ) * p.2.2) := by
@@ -380,7 +380,7 @@ private lemma positiveObservation_local (m : ℕ) (x : Coordinates) (hx : 0 ≤ 
   rw [hz]
   rfl
 
-private lemma quotientCoordinates_retraction_local (m : ℕ) (x : Coordinates)
+lemma quotientCoordinates_retraction_local (m : ℕ) (x : Coordinates)
     (hx : 0 < sigma x)
     (hρ : eval (OpenBoundaryMPSDensityGenericity.realCoordinates
       (fun ij => quotientRawPrefix m x ij.1 ij.2))
@@ -396,11 +396,11 @@ private lemma quotientCoordinates_retraction_local (m : ℕ) (x : Coordinates)
   rw [← hobs] at hp
   rw [hp, quotientParameter_coordinates]
 
-private def quotientNumeratorFamily (m : ℕ) (j : Fin 13) :
+def quotientNumeratorFamily (m : ℕ) (j : Fin 13) :
     MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ :=
   OpenBoundaryMPSQuotient.quotientRealNumerator m (quotientIndexEquiv.symm j)
 
-private def quotientDenominatorFamily (m : ℕ) (j : Fin 13) :
+def quotientDenominatorFamily (m : ℕ) (j : Fin 13) :
     MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ :=
   OpenBoundaryMPSQuotient.quotientRealDenominator m (quotientIndexEquiv.symm j)
 

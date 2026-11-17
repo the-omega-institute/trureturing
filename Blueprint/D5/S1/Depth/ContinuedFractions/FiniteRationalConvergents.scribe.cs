@@ -7,8 +7,17 @@ internal sealed class FiniteRationalConvergentsDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Executable finite rational lists and exact real convergent correspondence",
         H("Finite rational convergents"), Blocks(
-            Paragraph(Text("For any rational x, convergents x starts with its integer floor. If its fractional part is zero the list stops there. Otherwise it recursively computes the list at the reciprocal fractional part, then adds the floor to the reciprocal of each recursive entry. The positive reduced denominator strictly decreases at each recursive call. This construction accepts negative rationals, zero and integers; no positive-input hypothesis is imposed. The list is finite by well-founded recursion, without an asserted length or operation-count bound.")),
+            Paragraph(Text("For any rational x, convergents x starts with its integer floor. If its fractional part is zero the list stops there. Otherwise it recursively computes the list at the reciprocal fractional part, then adds the floor to the reciprocal of each recursive entry. The positive reduced denominator strictly decreases at each recursive call. This construction accepts negative rationals, zero and integers; no positive-input hypothesis is imposed. Well-founded recursion makes the list finite; the separate logarithmic length theorem bounds its number of entries.")),
             Paragraph(Text("The observable list candidates y Q N filters convergents of the rational y / Q by reduced denominator strictly less than N. Its only inputs are natural numbers y, Q and N. It has no order or spectral-numerator input. Rational division totalizes the definition also at Q equal to zero, while the recovery theorem uses a positive resolved clock. reduced s r denotes the rational s / r.")),
+            Describe.Lean(DescribeId.Create("tail-denominator-decrease"),
+                DeclarationHandle.Create("D5/S1/Depth/ContinuedFractions/FiniteRationalConvergents.tail_den_lt"),
+                H("Reciprocal-tail denominator decrease"),
+                StatementSource.FromAuthor(Disp(All(Imp(
+                    new Formula.Not(Eq(C("fract", X("x")), Num(0))),
+                    Rel(C("den", C("inv", C("fract", X("x")))), FormulaRelationOperator.LessThan,
+                        C("den", X("x")))), ("x", X("Rat"))))),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/HilbertOperators/aicyberg2026shor")),
+                Blocks(Paragraph(Text("For a nonzero fractional part, the reciprocal's denominator is the fractional numerator. That nonnegative numerator is strictly below the original denominator because the fractional part is less than one. This decrease both terminates the list recursion and supports the two-step induction for its logarithmic length bound."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exact-list-correspondence"),
                 DeclarationHandle.Create("D5/S1/Depth/ContinuedFractions/FiniteRationalConvergents.mem_convergents_iff"),
                 H("Exact list correspondence"),

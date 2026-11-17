@@ -6,6 +6,160 @@ namespace StrataLint.Tests;
 
 public sealed class SnapshotTests
 {
+    private const string Header = "/- GID: D5/S0/Carrier/Ring\n"
+        + "   generality: G\n"
+        + "   mirror-B: D5/B/S0/Carrier/Ring\n"
+        + "   mirror-E: none(waiver:pure-definition)\n"
+        + "   anchors: []\n"
+        + "   digest: header text -/\n";
+
+    public static IEnumerable<object[]> HeaderCases()
+    {
+        var utility = Header.Replace("   digest:", "   utility: refutation(claim,result)\n   digest:", StringComparison.Ordinal);
+        foreach (var header in new[] { Header, utility })
+        {
+            yield return [header, true];
+            yield return [header.TrimEnd('\n'), true];
+            yield return [header + "def body := 0\n-- body -/\n\n\n\n\n\n", true];
+            yield return [header.TrimEnd('\n') + " suffix -/ trailing\nbody\n", true];
+            yield return [header.Replace("header text", "中文 é 🚀 -/ greedy", StringComparison.Ordinal), true];
+            yield return [header.Replace("Carrier/Ring", "载体/🚀", StringComparison.Ordinal)
+                .Replace("anchors: []", "anchors: [α, 🚀]", StringComparison.Ordinal), true];
+            yield return [header.Replace("header text", new string('界', 128 * 1024) + "🚀", StringComparison.Ordinal), true];
+            yield return [header.Replace("Carrier/Ring", new string('x', 128 * 1024), StringComparison.Ordinal), true];
+            yield return ["\uFEFF" + header, false];
+            yield return [header.Replace("\n", "\r\n", StringComparison.Ordinal), false];
+            yield return [header.TrimEnd('\n') + "\r\nbody\n", true];
+            yield return [header.Replace("header text", " \t", StringComparison.Ordinal), false];
+            yield return [header.Replace("header text", "wrapped\ndigest", StringComparison.Ordinal), false];
+            yield return [header.Replace("generality: G", "generality: X", StringComparison.Ordinal), false];
+            yield return [header.Replace("anchors: []", "anchors: [\n]", StringComparison.Ordinal), false];
+            yield return [header.Replace("anchors: []", "anchors: [α, " + new string('x', 128 * 1024) + ", 🚀]", StringComparison.Ordinal), true];
+            yield return [header.Replace(" -/", "", StringComparison.Ordinal) + "\n -/\n", false];
+        }
+        yield return [utility.Replace("refutation(claim,result)", "中文 🚀", StringComparison.Ordinal), true];
+        yield return [utility.Replace("refutation(claim,result)", "", StringComparison.Ordinal), true];
+        yield return [utility.Replace("refutation(claim,result)", new string('x', 128 * 1024), StringComparison.Ordinal), true];
+        yield return [utility.Replace("refutation(claim,result)", "wrapped\nutility", StringComparison.Ordinal), false];
+        yield return ["", false];
+        yield return ["/- GID: incomplete", false];
+    }
+
+    [Theory]
+    [MemberData(nameof(HeaderCases))]
+    public void FileHeaderParserMatchesCanonicalStringParser(string source, bool accepted)
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(RuleFixture.RingPath, source)]))).Snapshot;
+        var file = Assert.Single(snapshot.Files).Value;
+
+        Assert.Equal(accepted, RepositoryRules.TryHeader(source, out var expected));
+        Assert.Equal(accepted, RepositoryRules.TryHeader(file, out var actual));
+        Assert.Equal(expected.Gid, actual.Gid);
+        Assert.Equal(expected.Generality, actual.Generality);
+        Assert.Equal(expected.MirrorB, actual.MirrorB);
+        Assert.Equal(expected.MirrorE, actual.MirrorE);
+        Assert.Equal(expected.Anchors, actual.Anchors);
+        Assert.Equal(expected.Utility, actual.Utility);
+        Assert.Equal(expected.BodyOffset, actual.BodyOffset);
+        Assert.Equal(file.Text[expected.BodyOffset..], source[actual.BodyOffset..]);
+    }
+
+    [Fact]
+    public void FileHeaderBodyOffsetCountsUtf16AndIncludesGreedyDigestSuffix()
+    {
+        var prefix = Header.TrimEnd('\n').Replace("header text", "é🚀 -/ still digest", StringComparison.Ordinal)
+            + " more -/\n";
+        var file = Assert.Single(Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(RuleFixture.RingPath, prefix + "body\n")]))).Snapshot.Files).Value;
+
+        Assert.True(RepositoryRules.TryHeader(file, out var header));
+        Assert.Equal(prefix.Length, header.BodyOffset);
+        Assert.NotEqual(Encoding.UTF8.GetByteCount(prefix), header.BodyOffset);
+        Assert.Equal("body\n", file.Text[header.BodyOffset..]);
+    }
+
+    [Fact]
+    public void FileHeaderParserPreservesOpaqueAndExplicitTextSemantics()
+    {
+        var path = RepoPath.CreateKnown(RuleFixture.RingPath);
+        var bytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(Header));
+        var opaque = new RepositoryFile(path, bytes, isOpaque: true, gitBlobOid: null);
+        Assert.False(RepositoryRules.TryHeader(opaque, out _));
+        foreach (var isOpaque in new[] { false, true })
+        {
+            var supplied = new RepositoryFile(path, ImmutableArray.Create<byte>(0xff), Header, isOpaque);
+            Assert.True(RepositoryRules.TryHeader(supplied, out var parsed));
+            Assert.Equal(Header.Length, parsed.BodyOffset);
+            var empty = new RepositoryFile(path, bytes, string.Empty, isOpaque);
+            Assert.False(RepositoryRules.TryHeader(empty, out _));
+        }
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void RegisteredHeaderScanDoesNotMaterializeLargeBody(bool utility, bool multiline)
+    {
+        var header = utility ? Header.Replace("   digest:", "   utility: none\n   digest:", StringComparison.Ordinal) : Header;
+        var source = header + string.Concat(Enumerable.Repeat(multiline ? "-- large multiline body 🚀\n" : "x", 300_000));
+        var raw = RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(RuleFixture.RingPath, source)]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var context = HeaderContext(snapshot);
+        _ = RuleCatalog.Default.EvaluateCurrentSingle(RuleId.CreateKnown(12), HeaderContext(
+            Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+                RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(RuleFixture.RingPath, Header)]))).Snapshot));
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        var result = RuleCatalog.Default.EvaluateCurrentSingle(RuleId.CreateKnown(12), context);
+        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        Assert.Empty(result.Diagnostics);
+        Assert.True(allocated < source.Length / 4, $"SL-012 allocated {allocated} bytes for {source.Length} characters.");
+        var file = Assert.Single(snapshot.Files).Value;
+        Assert.Equal(raw.Entries[0].Bytes, file.RawBytes);
+        before = GC.GetAllocatedBytesForCurrentThread();
+        var materialized = file.Text;
+        allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+        Assert.Equal(source, materialized);
+        Assert.True(allocated >= source.Length * 2L, "SL-012 had already materialized the full text.");
+    }
+
+    [Fact]
+    public void RegisteredHeaderScanKeepsGlobalDuplicateGidInfluenceOnMismatchedTarget()
+    {
+        const string target = "D5/S0/Carrier/Target.lean";
+        const string duplicate = "D5/S0/Carrier/Unrelated.lean";
+        var entries = new[] { RawRepositoryEntry.FromText(target, Header), RawRepositoryEntry.FromText(duplicate, Header) };
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries))).Snapshot;
+        Assert.Empty(RuleCatalog.Default.EvaluateCurrentSingle(RuleId.CreateKnown(12), HeaderContext(snapshot)).Diagnostics);
+
+        snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries.Take(1)))).Snapshot;
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateCurrentSingle(RuleId.CreateKnown(12), HeaderContext(snapshot)).Diagnostics);
+        Assert.Equal(target, finding.Path);
+        Assert.Equal("GID 'D5/S0/Carrier/Ring' does not match 'D5/S0/Carrier/Target'", finding.Message);
+    }
+
+    [Fact]
+    public void SnapshotStillRejectsInvalidUtf8BeyondHeaderPrefix()
+    {
+        var bytes = Encoding.UTF8.GetBytes(Header + "\n\nbody\n").Concat(new byte[] { 0xff }).ToImmutableArray();
+        var failure = Assert.IsType<SnapshotDecodeOutcome.InfrastructureFailure>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([new RawRepositoryEntry(RuleFixture.RingPath, bytes)])));
+        Assert.Contains("UTF-8", failure.Message, StringComparison.Ordinal);
+    }
+
+    private static CurrentRuleContext HeaderContext(RepositorySnapshot snapshot)
+    {
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        var selection = CurrentRuleSelection.Create(
+            RuleCatalog.Default.CurrentPredicateIds.Select(id => id.Value).ToArray(), ["SL-012"]);
+        return CurrentRuleContext.CreateWithoutLean(snapshot, policy, null, selection);
+    }
+
     [Fact]
     public void DecodingValidatesUtf8WithoutMaterializingUnusedText()
     {

@@ -5,7 +5,7 @@ year: 2026
 title: Hockey stick f-divergences
 doi: null
 url: https://arxiv.org/abs/2607.08760v1
-claim: "Proposition V.1 gives the maximal positive-overlap hockey formulas and a three-label attaining reverse test; the final equality question concerns maximal hockey-stick versus maximal f-divergence."
+claim: "Proposition V.1 gives the maximal positive-overlap hockey formulas; the p. 62 maximal-hockey/maximal-f equality question is addressed by the repository's compressed-GNS-centralizer classifier for full-curvature-support convex generators, including every nonaffine operator-convex generator."
 strata_touched:
   - D5/S3/Quantum/Divergence/MaximalHockeyStickOperational
   - D5/S3/Quantum/Divergence/MaximalHockeyStickConvex
@@ -15,6 +15,10 @@ strata_touched:
   - D5/S3/Quantum/Divergence/MaximalHockeyStickLoewnerSlopes
   - D5/S3/Quantum/Divergence/MaximalHockeyStickArbitrarySupport
   - D5/S3/Quantum/Divergence/GeneralConvexReverseTestAttainment
+  - D5/S3/Quantum/Divergence/NormalOverlapCompatibility
+  - D5/S3/Quantum/Divergence/NormalOverlapCurvatureEquality
+  - D5/S3/Quantum/Divergence/NormalOverlapOperational
+  - D5/S3/Quantum/Divergence/OriginalCentralizerClassification
 license: citation-only
 triage: anchor
 ---
@@ -281,3 +285,121 @@ maximal hockey-stick f-divergence and maximal f-divergence. The attainment
 endpoint does not supply that classification. Bounded literature searches
 have not identified an exact subsuming theorem; worldwide priority remains
 unresolved.
+
+## Concrete von Neumann arbitrary-support equality
+
+`NormalOverlapOperational.arbitrary_support_classification` treats arbitrary
+concrete von Neumann algebras and positive inputs in the independently defined
+coefficient-series predual. The source universe is independent of the concrete
+Hilbert-space universe. The maximal value is literally the infimum over all
+standard-original sigma-finite sources with algebraic positive complex-linear
+preparations on their entire complex L1 spaces. Assume this infimum is real
+finite; no optimizer or simultaneous overlap family is assumed.
+
+For t>0, let v(t) be the attained maximum of eta(1) over actual positive
+standard-predual functionals eta dominated by rho and t sigma. Equality of
+the original maximal and integrated original operational hockey values is
+equivalent to the following condition: every finite increasing tuple of
+positive knots in the actual curvature support admits optimizers eta_j whose
+functional secants D_j=(eta_j-eta_(j-1))/(t_j-t_(j-1)), with eta_0=t_0=0,
+satisfy sigma>=D_1>=...>=D_m>=0. The optimizers need not be unique.
+`NormalOverlapCompatibility` proves this finite-to-global condition using
+positive functional block interpolation and the compact moment family's finite
+intersection property. `NormalOverlapCurvatureEquality` proves the literal
+endpoint-inclusive cost comparison and necessity from real-finite equality.
+
+Under either equivalent condition, one actual whole-complex-L1 preparation on
+a finite regular Borel measure on [0,1], with p=x and q=1-x, attains every
+curvature-support overlap maximum and the common original finite cost. Its
+total source mass is rho(1)+sigma(1); all preparation outputs lie in the
+coefficient-series predual. Zero, singular and unnormalized inputs, empty or
+unbounded curvature support, and infinite scalar endpoints remain included.
+The complete atom at one uses the negative hinge branch. No finite alphabet,
+spectral optimality, necessity from infinity=infinity, or converse from
+intrinsic order-normality to the abstract predual is asserted. This is separate
+from unconditional minimal-test existence and from the full-support localized
+centralizer classification. Worldwide priority remains unresolved.
+
+## Original equality and the compressed GNS centralizer
+
+`OriginalCentralizerClassification` gives the structural criterion for the
+last equality on HMT PDF p. 62, in the general-convex setting of Section VII
+(p. 57). This is the equality between maximal hockey-stick f-divergence and
+maximal f-divergence. The measured-hockey equality of Theorem VII.3 (p. 60)
+compares different quantities.
+
+Let M be any concrete von Neumann algebra on a complete complex Hilbert space.
+The positive inputs rho,sigma lie in its standard concrete predual, represented
+independently by coefficient series sum_n <xi_n,a eta_n> with both vector
+sequences square-summable. The original values quantify all sigma-finite
+sources in a universe independent of M, with positive complex-linear
+preparations on the entire complex L1 space, preserving the integral mass of
+every complex input and taking every output into this coefficient-series
+class. No continuity premise is imposed on a preparation. The proved predual
+bridge identifies the series class with the norm-closed span of restricted
+vector coefficients; it does not assert the converse from intrinsic
+order-normality to coefficient-series membership.
+
+In the actual completed GNS representation of psi=rho+sigma, let Omega be
+the unnormalized cyclic vector and N the actual commutant. The unique
+coordinate 0<=C<=I has the original coefficients rho and sigma for C and I-C.
+Put P=rangeSupport(C(I-C)), the interior spectral projection E_C((0,1)).
+The condition `CompressedCentralizes` is
+<Omega,(PCP)(PYP)Omega>=<Omega,(PYP)(PCP)Omega> for every Y in N.
+It concerns the Omega functional on PNP, rather than global commutation of
+rho and sigma.
+
+For real f convex on (0,infinity), assume that its actual right-derivative
+Stieltjes curvature measure has full support on that ray.
+`full_support_finite_iff` says that, if the original maximal f-value is real
+finite, equality with the original maximal hockey-stick value holds exactly
+when `CompressedCentralizes` holds. Without the finite-value premise,
+`full_support_iff_top_or_centralizes` says that equality holds exactly when
+`originalHockeyValue=+infinity` or `CompressedCentralizes` holds.
+`operatorConvex_finite_iff` and `operatorConvex_iff_top_or_centralizes` give
+the same conclusions from literal nonaffine all-Hilbert operator convexity:
+scalar convexity and full scalar curvature support are derived, not added
+as hypotheses. Singular, zero and unnormalized pairs, nonseparable and zero
+Hilbert spaces, and infinite scalar endpoints remain in scope. The top branch
+follows from the comparison inequality; infinity=infinity implies no
+centralization. This structural iff does not extend to arbitrary scalar-convex
+generators with restricted curvature support, nor certify all of HMT's broad
+question.
+
+The classical components retain their attribution. HMT Proposition V.1 and
+(V.127), PDF pp. 35--36, supply the positive-overlap operational formulas and
+the maximal-hockey/maximal-f comparison. Hiai, *Quantum f-divergences in von
+Neumann algebras II. Maximal f-divergences*,
+[arXiv:1807.03118v1](https://arxiv.org/abs/1807.03118v1), Theorem 4.2 (p. 18),
+Lemma 6.1 (p. 25) and Theorem 6.3 (p. 26), already gives the arbitrary-von-Neumann
+operator-convex GNS spectral formula and optimal whole-L1 spectral reverse
+test, including singular pairs and infinite endpoints. The coordinate,
+spectral test and that attainment are not new here. Matsumoto's finite-source,
+shorting and spectral antecedents, including the distinct hypotheses of his
+optimizer-uniqueness theorem, are recorded in
+[the Matsumoto entry](matsumoto2018newquantumfdivergence.md).
+Gheondea, Gudder and Peter Jonas, *On the infimum of quantum effects*,
+[doi:10.1063/1.1904704](https://doi.org/10.1063/1.1904704), Proposition 2.4,
+Theorem 3.1 and its proof (PDF pp. 4--6), already localize to common support
+and identify P_{C,I-C}=E_C((0,1)); Section IV (p. 7) gives the affine
+normalization. Existence of an order-greatest lower bound is distinct from
+maximizing a specified functional over all positive common lower bounds.
+
+The structural contribution is the equivalence between simultaneous spectral
+positive-overlap optimality at every threshold and this compressed
+centralization, and its transfer to the original two-divergence equality.
+Neither the classical spectral optimizer nor support localization alone
+provides that equivalence. The bounded primary comparison found no exact
+classifier in the inspected sources; it did not obtain a complete citation
+graph and does not establish worldwide priority or official acceptance.
+
+Related equality theorems retain their own targets. Capel and Costa Rico,
+*Geodesic Quantum f-Divergences*,
+[arXiv:2608.15833v1](https://arxiv.org/abs/2608.15833v1), Theorem 7.2 (p. 53),
+classifies data-processing saturation for finite-dimensional strictly positive
+states and channel outputs under the equality-determining representing-measure
+condition (274) (p. 51). That Loewner-measure condition is not full scalar
+curvature support, and the equality is across a channel, not between these two
+divergences on one pair. Buscemi's Theorem 3.1, cited above, instead optimizes
+a coupled retrodictive objective. Neither cited statement supplies this
+compressed-centralizer classifier.

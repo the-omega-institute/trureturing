@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:029c18582f62e875b97995683f64cc4ec23b18c3b909078f6d8d15e687fc5f5d
+  normalized_sha256: sha256:029c18582f62e875b97995683f64cc4ec23b18c3b909078f6d8d15e687fc5f5d
+cas_ref: sha256:029c18582f62e875b97995683f64cc4ec23b18c3b909078f6d8d15e687fc5f5d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure upstream closure under CLAUDE.md 3.2 and the existing settle-atom contract; this proposition is not being reclassified as lacking mathematical content. No usable clause-complete frozen project GID was found. With the source definitions (FPP 1.5, 2.4 and definition 4.1) expanded, Mathlib Set.notMem_empty and Set.eq_empty_iff_forall_notMem (Mathlib.Data.Set.Basic, manifest revision 56a005855ea17e0b0958f73ec801ae140b0a1679) give P not in N(L0) and neg(P) not in N(L0) from N(L0)=empty, for every P. The state definition therefore reduces to open at L0, independently of P. For each P, L0 belongs to the specified family and its open state is distinct from frozen; Lean Init not_imp_of_and_not and not_forall_of_exists_not (pinned toolchain leanprover/lean4:v4.35.0) negate the bounded universal defining relative essence. Its negation, relative emptiness, thus holds for every P. For any P and Q, including any tautology, both relative-emptiness values are true, so that family predicate cannot distinguish them. This last clause concerns the family predicate, not the states on other ledgers. The assumed family contains L0; an empty family instead satisfies the universal in definition 4.1 vacuously. All clauses use upstream instantiation and definition/logic normalization only; no project wrapper or new Lean declaration is required.
+    previous_atom_id: a587ba9df55d5d95723436af46d92999e777f892fec72ddd3f4b0c783d4d794b
+    next_atom_id: 3982ccae55a1f11411f73817c24056bac7e22a90245beead6d15f3dd1d30ed7f

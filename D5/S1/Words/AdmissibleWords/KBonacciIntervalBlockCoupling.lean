@@ -6,7 +6,7 @@
    utility: none
    digest: Reflection of exact conditional fibers and two-sided interval block couplings. -/
 
-import D5.S1.Words.AdmissibleWords.KBonacciConditionalBlockCoupling
+import D5.S1.Words.AdmissibleWords.KBonacciRightScanHamming
 import D5.S1.Words.AdmissibleWords.KBonacciIntegerInterval
 
 /-! Actual conditional laws are transported by reversal before block restriction. -/

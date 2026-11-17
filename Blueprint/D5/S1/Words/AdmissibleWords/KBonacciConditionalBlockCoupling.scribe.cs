@@ -93,31 +93,72 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "representatives chosen from the actual nonempty fibers. Uniform "
                     + "prefix transport proves both marginals in this stopped branch."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("kbonacci-right-scan-hamming"),
-                DeclarationHandle.Create(
-                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming"),
-                H("Expected internal Hamming cost for an increasing scan"),
-                StatementSource.FromAuthor(Disp(CostFormula())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "ExpectedHamming(J,s) is the sum over full-word pairs w of J(w)H(s,w). "
-                    + "Before(s,i,j) means that i occurs strictly before j in the list s. "
-                    + "H(s,w) denotes scanHamming: the sum of the zero-one disagreement "
-                    + "indicators at the listed sites. The list is strictly increasing "
-                    + "and lists the entire complement of F without repetitions. The "
-                    + "fixed histories agree at every fixed site farther right than any "
-                    + "scanned site. A supported common-zero branch has zero remaining "
-                    + "cost, by screening and the reset law. In every other branch the "
-                    + "current indicator is at most one, and the recursive expected "
-                    + "remaining cost is at most one. Those branches have total mass "
-                    + "at most one half, derived from conditional_step_coupling. "
-                    + "Their weighted cost is therefore at most one. This estimate "
-                    + "uses the same full-word joint law as the marginal theorem. "
-                    + "The theorem covers short words and arbitrary nonempty completion "
-                    + "fibers; it does not assert reflection, the geometric survival "
-                    + "tail, or the final two-orientation contiguous-block assembly."))),
-                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("kbonacci-reset-mean-zero"),
+                DeclarationHandle.Create("D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_mean_zero"),
+                H("Reset transport has zero free-site Hamming mean"), StatementSource.FromAuthor(Disp(ResetMeanFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every coordinate through z is fixed and every scanned site is free. resetMap copies the sampled word at all scanned sites, so their total disagreement has mean zero. The histories are arbitrary and only the x completion fiber is required to be nonempty."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("kbonacci-mean-head"),
+                DeclarationHandle.Create("D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.mean_head"),
+                H("A supported fixed head separates from the remaining mean"), StatementSource.FromAuthor(Disp(MeanHeadFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any full-word-pair probability mass function with supported head bits a and b, the mean scanHamming of i followed by t equals disagreement(a,b), equal to zero when a=b and one otherwise, plus the mean scanHamming of t. No legality, order or distinctness hypothesis is required."))), DescribeRole.Theorem),
+            new DocumentBlock.Section(
+                H("Paper application: first common zero and the emitted scan event"),
+                Blocks(
+                    Paragraph(Text(
+                        "In the Chinese and English Chapter 39 example ex-ch39-p2e-uniform-parent-gap, "
+                        + "fix k>=2, n>=1, two legal full words x,y agreeing off one site u (allow x=y), "
+                        + "and a nonempty interval B excluding u. Keep every coordinate of B-complement fixed. "
+                        + "For a right block scan increasingly; for a left block reverse the sites and both "
+                        + "full words. Put m=card(B), and let (X_j,Y_j) be the emitted bit pair at the j-th "
+                        + "scanned site, for 1<=j<=m. The following is the paper shared-threshold construction "
+                        + "and its finite probability argument, not an additional kernel-verified theorem.")),
+                    Paragraph(Text(
+                        "Given any positive-probability joint sampled history, each marginal next-bit law "
+                        + "is the uniform legal completion law with that chain's sampled prefix and entire "
+                        + "exterior fixed. Deleting the next true bit is an injection into false completions, "
+                        + "so its conditional false mass is at least 1/2. Before a common zero, use a fresh "
+                        + "shared uniform threshold at every step, even if the remaining conditional laws "
+                        + "already agree. The conditional common-zero probability is the minimum of the two "
+                        + "false masses, hence at least 1/2. At the first common zero, every forbidden window "
+                        + "joining earlier history to the remaining suffix crosses that zero. The suffix "
+                        + "laws, including the fixed far exterior, therefore coincide and can be sampled "
+                        + "identically. Each step and this suffix draw preserve the original completion-law "
+                        + "marginals. conditional_step_coupling and reset_law_transport supply the corresponding "
+                        + "native one-step and screening identities; they do not by themselves identify a "
+                        + "multi-step emitted event of prefixCoupling.")),
+                    Paragraph(Text(
+                        "Define T on every output as the first common-zero scan position, or T=m+1 if "
+                        + "there is none. Let G_j be the information generated by the first j emitted pairs "
+                        + "and A_j={T>j}, for 0<=j<=m; A_0 is the whole sample space. All conditional "
+                        + "probabilities refer only to histories of positive probability. For 1<=j<=m, "
+                        + "the finite tower identity gives Pr(A_j)=E[indicator(A_{j-1}) "
+                        + "Pr((X_j,Y_j)!=(false,false) | G_{j-1})]<=Pr(A_{j-1})/2. Induction yields "
+                        + "Pr(A_j)<=2^(-j), including j=0 and j=m. The event permits (true,true); it is "
+                        + "not the event that all preceding pairs disagree. A_m={T=m+1} means that the "
+                        + "whole block contains no common zero.")),
+                    Paragraph(Text(
+                        "On the support of this same paper joint law, a common zero at r forces "
+                        + "X_q=Y_q for every r<=q<=m, including the zero itself. Thus {X_j!=Y_j} is a "
+                        + "subset of A_j, and Pr(X_j!=Y_j)<=Pr(A_j)<=2^(-j). Linearity of the finite "
+                        + "disagreement sum gives E[sum_{j=1}^m indicator(X_j!=Y_j)]<=sum_{j=1}^m "
+                        + "2^(-j)=1-2^(-m)<=1, without independence between positions. Reversing the scan "
+                        + "gives the identical assertion for a left block; exterior coordinates remain fixed. "
+                        + "The empty-block extension has T=1 and zero cost. If the initial block laws "
+                        + "already coincide, an alternative synchronous whole-block draw has cost zero "
+                        + "without requiring any zero in its output.")),
+                    Paragraph(Text(
+                        "The native prefixCoupling tests resetReady before scanning a site and can "
+                        + "transport a shared completion before an emitted common zero. Its no-common-false "
+                        + "event must therefore also be bounded in this initial reset branch; it cannot "
+                        + "be identified with latent survival of the recursion. The native "
+                        + "prefix_coupling_emitted_tail in KBonacciEmittedTail supplies this event estimate by a completion-fiber "
+                        + "count and recursive emitted-event induction. right_scan_hamming separately proves "
+                        + "expected cost at most one. The complete two-orientation event/support assembly "
+                        + "remains a separate obligation. The paper derivation and synchronous alternative do not replace "
+                        + "that native-law obligation.")),
+                    Paragraph(Text("The native emitted-event estimate is "),
+                        Ref("D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail"),
+                        Text(".")))),
             new DocumentBlock.Section(
                 H("Application: actual legal-state refresh, projection and complex energy"),
                 Blocks(
@@ -891,30 +932,21 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
     }
 
-    private static Formula CostFormula()
+    private static Formula ResetMeanFormula()
     {
-        var k = F.Id("k"); var n = F.Id("n"); var f = F.Id("F");
-        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y");
-        var h = F.Id("h"); var g = F.Id("g");
-        var i = F.Id("i"); var j = F.Id("j");
-        var inS = Seq(i, Sp, InMacro, Sp, s);
-        var notF = Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)));
-        var free = All(i, Call("Fin", n), Imp(inS, notF));
-        var cover = All(i, Call("Fin", n), Imp(notF, inS));
-        var order = All(i, Call("Fin", n), All(j, Call("Fin", n),
-            Imp(Call("Before", s, i, j), Rel(Call("val", i), Lt, Call("val", j)))));
-        var far = All(i, Call("Fin", n), All(j, Call("Fin", n), Imp(
-            And(inS, Seq(j, Sp, InMacro, Sp, f), Rel(Call("val", i), Lt, Call("val", j))),
-            Rel(Call("at", x, j), Eq, Call("at", y, j)))));
-        var cost = Rel(Call("ExpectedHamming", Call("P", s, f, x, y, h, g), s), Leq, D(1));
-        var fibers = All(Seq(x, Comma, y), Word(n),
-            All(h, Call("Nonempty", Call("C", k, n, f, x)),
-                All(g, Call("Nonempty", Call("C", k, n, f, y)), Imp(far, cost))));
-        var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(And(free, cover), fibers));
-        var lists = All(s, Call("List", Call("Fin", n)), Imp(And(Call("Nodup", s), order), fixedSet));
-        return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
+        var k=F.Id("k"); var n=F.Id("n"); var s=F.Id("s"); var f=F.Id("F"); var x=F.Id("x"); var y=F.Id("y"); var h=F.Id("h"); var z=F.Id("z"); var i=F.Id("i");
+        var left=All(i,Call("Fin",n),Imp(Rel(i,Leq,z),Seq(i,Sp,InMacro,Sp,f)));
+        var free=All(i,Call("Fin",n),Imp(Seq(i,Sp,InMacro,Sp,s),Seq(Neg,Sp,Par(Seq(i,Sp,InMacro,Sp,f)))));
+        var result=Rel(Call("mean",Call("resetCoupling",f,x,y,h,z),Call("scanHamming",s)),Eq,D(0));
+        return All(Seq(k,Comma,n),Nat,All(s,Call("List",Call("Fin",n)),All(f,Call("Finset",Call("Fin",n)),All(Seq(x,Comma,y),Word(n),All(h,Call("Nonempty",Call("completions",k,n,f,x)),All(z,Call("Fin",n),Imp(left,Imp(free,result))))))));
     }
-
+    private static Formula MeanHeadFormula()
+    {
+        var n=F.Id("n"); var p=F.Id("p"); var i=F.Id("i"); var t=F.Id("t"); var a=F.Id("a"); var b=F.Id("b"); var w=F.Id("w");
+        var support=All(w,Call("Pair",Word(n),Word(n)),Imp(Rel(Call("eval",p,w),Neq,D(0)),And(Rel(Call("fst",w,i),Eq,a),Rel(Call("snd",w,i),Eq,b))));
+        var result=Rel(Call("mean",p,Call("scanHamming",Call("cons",i,t))),Eq,Seq(Call("disagreement",a,b),Sp,Plus,Sp,Call("mean",p,Call("scanHamming",t))));
+        return All(n,Nat,All(p,Call("PMF",Call("Pair",Word(n),Word(n))),All(i,Call("Fin",n),All(t,Call("List",Call("Fin",n)),All(Seq(a,Comma,b),Op("Bool"),Imp(support,result))))));
+    }
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Word(Formula n) => Seq(Open, Call("Fin", n), Sp, To, Sp, Op("Bool"), Close);
     private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));

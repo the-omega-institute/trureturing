@@ -39,6 +39,11 @@ internal sealed class OriginalGaussianDeterminantDocument : IScribeDocumentDefin
                 H("finite_determinants_tendsto"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("At every complex point of the open unit disk, det(1-(finiteSection N z)^2) tends to gaussianDet z as N tends to infinity. This is pointwise spatial cutoff convergence, with no period identity or physical realization premise."))), DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("finite-log-differentiable-on"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_diff"),
+                H("finiteLog_diff"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each finite cutoff, polynomial trace terms and the summable trace-length majorant prove holomorphy of the literal finiteLog on the open unit disk. The original proof supplies the analytic finite sewn source function."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("gaussian-log-det-differentiable-on"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianLogDet_differentiableOn"),
                 H("gaussianLogDet_differentiableOn"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

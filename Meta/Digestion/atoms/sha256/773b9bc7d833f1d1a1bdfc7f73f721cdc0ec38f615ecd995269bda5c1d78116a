@@ -1,0 +1,37 @@
+**定理 264.2（薄线也能接回完整原面格）。** 在一个有限维紧底中，假设 $\mathsf C+\mathsf E$。令 $A^\perp=\{p\in P:pS_Ka\text{ 对每个 }a\in A\}$，$\mathcal L=\{A\subseteq P:A=A^{\perp\perp}\}$。则 $F\mapsto P\cap F$ 给全部原实际面格与 $\mathcal L$ 的序同构，反向是 $A\mapsto\operatorname{conv}A$，空面包含在内。格 $\mathcal L$ 为有限高度的完整原子式正交格，满足Paseka—Vetterlein [Q264P] 的条件(L)，并且
+
+$$
+P\cap F_K(p,q)=\{p,q\}^{\perp\perp}.
+\tag{264.3}
+$$
+
+所有非空真原面都暴露；这里没有先假设第三纯点、Hermitian表示或谱分解。
+
+证明。263.2允许线段的单锥结论先给全部二元体严格凸。262.2恢复 $G(p)=\operatorname{conv}O(p)$ 为原面的论证也适用：若 $q\in G(p)$ 却非 $p$ 的种子邻点，则 $q\ne p$；取 $p$ 在 $B=F(p,q)$ 中的反点 $r$。有 $r\in O(p)$、$r\ne q$，严格凸迫含 $q,r$ 的 $G(p)$ 含整个 $B$，矛盾。若 $B$ 是线段，其另一纯端点本已是 $p$ 的种子邻点，故不会进入这个反证分支。纯分解遂给 $G(p)=\operatorname{conv}O(p)$。同一个正负配方论证给FI：有限两两种子正交纯族仿射独立，所以正交族大小有有限的原维数上界。
+
+对不同纯点 $p,q$，取 $g$ 为 $p$ 在 $B=F(p,q)$ 中的中央反点。行面性和 $F(p,g)=B$ 给
+
+$$
+gS_Kp,\qquad \{p,q\}^{\perp}=\{p,g\}^{\perp}.
+\tag{264.4}
+$$
+
+若 $qS_Kp$，这里可取 $g=q$；不要求替换后恰有一个点正交，所以没有偷偷使用排除薄线的linear-orthoset条件。任意orthoset的双极闭集是完整正交格。其单点已经闭：若 $q\ne p$ 且 $q\in\{p\}^{\perp\perp}$，(264.4)给 $gS_Kp$ 且 $g\in\{p\}^{\perp\perp}$；定义迫 $gS_Kg$，矛盾。故原子恰为原纯点，所有闭集都是这些原子的join；(264.4)准确支付条件(L)。
+
+以下直接复用[Q264P] Lemmas 3.1、3.3—3.5的有限正交消元及覆盖结论，不重证。若有限正交组的join尚非顶元，Lemma3.1可补一个与它正交的原子。原维数上界迫过程有限终止，故顶元是有限个原子的join。Lemma3.5于是使整个 $\mathcal L$ 有覆盖性质及有限高度。
+
+记 $L=\{p,q\}^{\perp\perp}$。任一与 $p,q$ 都正交的纯参照，其原行面包含 $B$，故 $P\cap B\subseteq L$。反过来，取 $r\in L$ 且 $r\ne p$，在 $F(p,r)$ 中取 $p$ 的反点 $g'$。由(264.4)，$g'\in L$ 且 $g'S_Kp$。高度二的区间 $\downarrow L$ 是正交格，$p$ 在其中的相对正交补为唯一原子；$g,g'$ 都在该位置，所以 $g'=g$。于是 $F(p,r)=F(p,g')=B$，得到(264.3)。
+
+现补齐全部面，而非只识别二元面。若原子集合 $A$ 对二点join的全部原子闭合，则它对任意有限join下的原子闭合。为此对生成点数归纳，令 $T=a_1\vee\cdots\vee a_{n-1}$、$a=a_n$、$b\le T\vee a$。若 $a\le T$ 或 $b\le T$，归纳已付；若 $b=a$ 也已付。其余情形置 $J=b\vee a$。由覆盖性质 $T\lessdot T\vee J$，[Q264P] Lemma3.4给 $T\cap J\lessdot J$。$J$ 高度二，所以交是原子 $c$，且 $c\ne a$；覆盖交换给 $J=c\vee a$。归纳给 $c\in A$，二点闭合再给 $b\in A$。有限高度使任意join由有限子集生成，故这样的 $A$ 就是双极闭集。
+
+对任意原面 $F$，(264.3)使 $P\cap F$ 二点闭合，因而属于 $\mathcal L$；有限纯分解给 $F=\operatorname{conv}(P\cap F)$。反向，若 $A\in\mathcal L$，则
+
+$$
+\operatorname{conv}A=\bigcap_{q\in A^\perp}G(q).
+\tag{264.5}
+$$
+
+一侧包含显然；另一侧对任一点作正权纯分解，行面性使每个纯分量都属于 $A^{\perp\perp}=A$。故右侧是原面，空集和空交按空面与整个 $K$ 处理。两个映射互逆，全部面格已对齐。
+
+最后，每个原子补是格的coatom，对应原最大真面。有限维紧凸体的非空最大真面必暴露：在其相对内部点取支撑超平面，所得暴露真面包含它，最大性迫相等。任一非空真格元素的补是有限个原子的join，因此该元素是有限个原子补的交；对应暴露面以其非负支撑函数之和暴露。一般正交格及凸几何工具均仅作上述原面接口的中间步骤。$\square$
+
