@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Computability;
+namespace StrataLint.Scribe.Blueprint.D5.S0.Computability.Diophantine;
 
 internal sealed class DiophantineIntegerToRationalDocument : IScribeDocumentDefinition
 {
