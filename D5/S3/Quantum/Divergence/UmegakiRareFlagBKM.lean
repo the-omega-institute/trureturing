@@ -40,7 +40,7 @@ private lemma block_diag_posDef {iota kappa : Type*} [Fintype iota] [DecidableEq
     rw [Matrix.isUnit_fromBlocks_zero₂₁]
     exact ⟨hZ.isUnit, hD.isUnit⟩)
 
-private lemma pair_kernel_eval (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
+lemma pair_kernel_eval (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     (∫ t in Set.Ioi (0 : ℝ), 1 / ((a + t) * (b + t))) =
       if a = b then 1 / a else (Real.log a - Real.log b) / (a - b) := by
   classical
@@ -227,7 +227,7 @@ set_option maxHeartbeats 1000000 in
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 5000000 in
 set_option maxRecDepth 100000 in
-private lemma trace_cross_spectral
+lemma trace_cross_spectral
     {iota kappa : Type*} [Fintype iota] [DecidableEq iota]
     [Fintype kappa] [DecidableEq kappa]
     (V : Matrix iota kappa ℂ) (UZ : Matrix iota iota ℂ) (UC : Matrix kappa kappa ℂ)
