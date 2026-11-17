@@ -110,15 +110,15 @@ internal sealed class RectangularBlockPartitionDocument : IScribeDocumentDefinit
     private static Formula Statement()
     {
         Formula X = V("X"), Y = V("Y"), T = V("T"), I = V("I"), J = V("J");
-        Formula phi = V("phi"), U = Call("operator", I, J, phi), P = Call("Active", J);
-        Formula A = Call("block", I, J, phi), t = V("t"), q = V("q");
-        Formula M = V("M"), N = V("N"), Q = V("Q"), RU = Call("realign", U);
+        Formula U = V("U"), P = V("Tplus");
+        Formula A = V("A"), t = V("t"), q = V("q");
+        Formula M = V("M"), N = V("N"), Q = V("Q"), RU = Call("R", U);
         Formula upper = Eq(U, Sum("t", P,
-            Call("kronecker", At(A, t), Call("conjTranspose", At(A, t)))));
+            Call("kronecker", At(A, Call("val", t)), Call("conjTranspose", At(A, Call("val", t))))));
         Formula minor = Some("rows", new Formula.TypeArrow(P, Prod(X,Y)),
             Some("cols", new Formula.TypeArrow(P, Prod(Y,X)),
                 Eq(Call("submatrix", RU, V("rows"), V("cols")), D(1))));
-        Formula lower = All("Q", Call("FiniteType"),
+        Formula lower = All("Q", V("FiniteType"),
             All("M", new Formula.TypeArrow(Q, Mat(X,Y)),
                 All("N", new Formula.TypeArrow(Q, Mat(Y,X)),
                     Implies(Eq(U, Sum("q", Q, Call("kronecker", At(M,q), At(N,q)))),
@@ -126,8 +126,8 @@ internal sealed class RectangularBlockPartitionDocument : IScribeDocumentDefinit
         Formula result = And(Eq(Mul(Call("conjTranspose", U), U), D(1)),
             And(Eq(Mul(U, Call("conjTranspose", U)), D(1)),
                 And(Eq(Call("rank", RU), Card(P)), And(upper, And(minor, lower)))));
-        return All("X", Call("FiniteType"), All("Y", Call("FiniteType"),
-            All("T", Call("FiniteType"),
+        return All("X", V("FiniteType"), All("Y", V("FiniteType"),
+            All("T", V("FiniteType"),
                 All("I", new Formula.TypeArrow(T, Call("Finset", X)),
                     All("J", new Formula.TypeArrow(T, Call("Finset", Y)),
                         All("phi", Call("BlockBijections", I, J),
