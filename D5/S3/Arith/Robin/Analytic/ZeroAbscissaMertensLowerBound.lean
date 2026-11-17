@@ -17,14 +17,9 @@ import Mathlib.Tactic
 
 /-! Transport the unconditional actual psi power estimate through the actual
 theta tail and the finite Mertens cancellation. All logarithmic comparisons
-are made on explicitly positive eventual domains. This source packet has not
-been elaborated; canonical registration and acceptance are separate obligations.
-
-The private finite cancellation fragment below follows the arithmetic identity
-in RHSharpArithmeticEnvelope.finite_cancellation and ThetaTailRobinWitness;
-its mathematical endpoint is the public Mertens.sum_M_eq_summand_le'. The
-private half-abscissa argument follows KappaGap's RH/right-strip dichotomy.
-No inaccessible private declaration is used as an input. -/
+are made on explicitly positive eventual domains. The finite cancellation is
+supplied by RHSharpArithmeticEnvelope.finite_cancellation. The half-abscissa
+argument uses KappaGap's RH/right-strip dichotomy. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -120,26 +115,6 @@ private lemma B_tendsto_zero : Tendsto B atTop (𝓝 0) := by
 private lemma B_eventually_lower : ∀ᶠ x : ℝ in atTop, -(1 : ℝ) ≤ B x := by
   exact (B_tendsto_zero.eventually
     (Ioi_mem_nhds (by norm_num : -(1 : ℝ) < 0))).mono (fun _ hx => hx.le)
-
-private lemma finite_cancellation {x : ℝ} (hx : 2 ≤ x) :
-    |Mertens.E₃ x + Mertens.E₂p x| ≤ 4 / x := by
-  have hid : Mertens.E₃ x + Mertens.E₂p x =
-      (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, Mertens.M_eq_summand n) -
-        (Mertens.M - Mertens.γ) := by
-    have hs :
-        (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊ with n.Prime, Real.log (1 - (1 : ℝ) / n)) +
-        (∑ n ∈ Finset.Ioc 0 ⌊x⌋₊ with n.Prime, (1 : ℝ) / n) =
-        ∑ n ∈ Finset.Ioc 0 ⌊x⌋₊, Mertens.M_eq_summand n := by
-      rw [Finset.sum_filter, Finset.sum_filter, ← Finset.sum_add_distrib]
-      apply Finset.sum_congr rfl
-      intro n hn
-      simp only [Mertens.M_eq_summand]
-      split_ifs <;> ring
-    unfold Mertens.E₃ Mertens.E₂p
-    rw [Mertens.γ.eq_eulerMascheroni]
-    linarith [hs]
-  rw [hid]
-  exact Mertens.sum_M_eq_summand_le' hx
 
 private lemma B_decomposition {x : ℝ} (hx : 2 ≤ x) :
     B x = Jtheta x + (Mertens.E₃ x + Mertens.E₂p x) + N x := by
@@ -356,7 +331,7 @@ private theorem lower_power_of_psi {β C X : ℝ} (hβhalf : (1 / 2 : ℝ) < β)
   have hxe : Real.exp 1 ≤ x := hTe.trans hx
   have hJ := theta_tail_abs hβone hK htheta hx2 hxR hxe
   have hN := nonlinear_lower hK hx4 hxe (hW x (hTW.trans hx)).1 (htheta x hxR)
-  have hF := finite_cancellation hx2
+  have hF := D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope.finite_cancellation hx2
   have hpower : (1 : ℝ) / x ≤ x ^ (β - 1) := by
     simpa only [Real.rpow_neg_one, one_div] using
       Real.rpow_le_rpow_of_exponent_le hx1 (show (-1 : ℝ) ≤ β - 1 by linarith)

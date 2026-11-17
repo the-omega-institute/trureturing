@@ -14,6 +14,8 @@ open _root_.D5.S3.Arith.Robin.Analytic.ZeroAbscissaMertensLowerBound
 open _root_.D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope (B)
 open _root_.D5.S3.Arith.Robin.ForwardKernel.KappaGap (zeroAbscissa)
 open _root_.D5.S3.Weil.Mertens.ZeroAbscissaPower
+open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
+open _root_.D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open Filter
 open scoped Topology
 
@@ -60,28 +62,48 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       (le_max_left |C| 2).trans (le_max_right T (max |C| 2))
     linarith [le_abs_self C]
   have hh := hbound x hxT
-  rw [show zeroAbscissa - 1 + (2 - zeroAbscissa) = 1 by ring] at hh
-  dsimp only [rejected, realize] at hh
-  have hh' : -C * x ≤ -(x ^ (3 : ℕ)) := by
-    simpa only [Real.rpow_one] using hh
+  change -C * Real.rpow x (zeroAbscissa - 1 + (2 - zeroAbscissa)) ≤
+    -(x ^ (3 : ℕ)) at hh
+  rw [show zeroAbscissa - 1 + (2 - zeroAbscissa) = 1 by ring,
+    Real.rpow_eq_pow, Real.rpow_one] at hh
   have hmul : C * x < x * x := mul_lt_mul_of_pos_right hxC hx0
   have hpow : x * x ≤ x ^ (3 : ℕ) := by
     nlinarith [mul_nonneg hx0.le (sub_nonneg.mpr hx1)]
-  nlinarith [hh']
+  nlinarith [hh]
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro _i
-  refine ⟨(), 0, Real.exp (-2), ?_⟩
-  dsimp only [actual, realize]
-  change B 0 ≠ B (Real.exp (-2))
-  change Mertens.E₃ 0 ≠ Mertens.E₃ (Real.exp (-2))
-  have hf : ⌊Real.exp (-2)⌋₊ = 0 :=
-    Nat.floor_eq_zero.mpr (Real.exp_lt_one_iff.mpr (by norm_num))
-  have hpos : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
-  simp only [Mertens.E₃, hf, Nat.floor_zero, Finset.Ioc_self, Finset.filter_empty,
-    Finset.sum_empty, Real.log_zero, Real.log_exp, Real.log_neg_eq_log, zero_add]
-  intro heq
-  linarith only [heq, hpos]
+  refine ⟨(), 0, 2, ?_⟩
+  change B 0 ≠ B 2
+  have hzero : B 0 = Real.eulerMascheroniConstant := by
+    simp [B, Mertens.E₃]
+  have htwo : B 2 = Real.log (1 / 2 : ℝ) +
+      Real.eulerMascheroniConstant + Real.log (Real.log (Real.log 2)) := by
+    norm_num [B, Mertens.E₃, Chebyshev.theta,
+      show Finset.Ioc 0 2 = {1, 2} by decide, Finset.sum_filter]
+    ring
+  have hlpos : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hllt : Real.log (2 : ℝ) < 1 := by
+    have := Real.log_lt_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+      (by norm_num : (2 : ℝ) ≠ 1)
+    linarith
+  have hllneg : Real.log (Real.log (2 : ℝ)) < 0 := Real.log_neg hlpos hllt
+  have hllgt : -1 < Real.log (Real.log (2 : ℝ)) := by
+    have hlo := Real.one_sub_inv_le_log_of_pos hlpos
+    have hhalf : (1 / 2 : ℝ) < Real.log 2 := by
+      have := Real.log_two_gt_d9
+      norm_num at this
+      linarith
+    have hinv : (Real.log (2 : ℝ))⁻¹ < 2 := by
+      apply (inv_lt_iff_one_lt_mul₀ hlpos).mpr
+      linarith
+    linarith
+  have houter : Real.log (Real.log (Real.log (2 : ℝ))) < 0 := by
+    rw [← Real.log_neg_eq_log (Real.log (Real.log (2 : ℝ)))]
+    exact Real.log_neg (by linarith) (by linarith)
+  have hhalfneg : Real.log (1 / 2 : ℝ) < 0 := Real.log_neg (by norm_num) (by norm_num)
+  rw [hzero, htwo]
+  linarith
 
 def family : Registration arena (type_of% @actual_B_zero_abscissa_lower_power) where
   actual := actual
@@ -116,15 +138,17 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg"]
+      path := #["body", "body", "arg", "body", "arg", "body", "arg", "arg",
+        "body", "body", "arg", "fn"]
       stateBinder := 0
-      functionOperand := false
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
+#print axioms actual_B_zero_abscissa_lower_power
 #print axioms family
 #print axioms registration
 
