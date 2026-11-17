@@ -15,7 +15,6 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Krylov.Check0
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
-open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
 theorem certificate :

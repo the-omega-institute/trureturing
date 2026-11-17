@@ -27,7 +27,6 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 set_option maxRecDepth 100000
 /-! Width-six transfer data. -/
-open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 abbrev Row := Fin 6 → Fin 4
