@@ -6,10 +6,8 @@ import LeanInformationAuditInterface.Contract.Registration
 /-! Readout registrations for exact defective-strip counts and finite transfer data. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
 open _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
-open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open scoped BigOperators
 noncomputable section
 attribute [local irreducible] a
 
