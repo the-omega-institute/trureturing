@@ -27,8 +27,9 @@ of the two Gram matrices differ by a gauge φ_j − φ_k with
 φ_j = θ_ℓj − θ′_ℓj.
 
 Example 2.5 takes the n-cycle frame graph: vectors e_j + e_{j+1} and
-e_n + z e_1 with |z| = 1. The only nonzero products of distinct vectors are
-the norms, adjacent overlaps and the n-cycle product z, so for n > 3
+e_n + z e_1 with |z| = 1. The only nonzero m-products of distinct vectors are
+the squared norms 2, the squared moduli 1 of adjacent overlaps, the n-cycle
+product z, and their complex conjugates, so for n > 3
 different z give projectively inequivalent sequences with the same triple
 products.
 

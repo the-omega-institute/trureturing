@@ -51,7 +51,8 @@ internal sealed class BargmannRealRephasingDocument : IScribeDocumentDefinition
                         + "cannot be dropped entirely either. Take N = 4 and G equal to the identity "
                         + "plus 1/4 times the adjacency of the 4-cycle 0, 1, 2, 3, with "
                         + "G(0, 1) = G(1, 2) = G(2, 3) = 1/4 and G(3, 0) = i/4, completed "
-                        + "Hermitian. Its eigenvalues are 1 ± (1/2)cos(π/8) and 1 ± (1/2)sin(π/8), "
+                        + "Hermitian. Every row of this G contains a zero entry, so no index i₀ "
+                        + "satisfies the row hypothesis. Its eigenvalues are 1 ± (1/2)cos(π/8) and 1 ± (1/2)sin(π/8), "
                         + "so it is positive definite. Every triple product is real: on three "
                         + "distinct indices it vanishes, and with a repeated index it is "
                         + "|G(i, j)|² G(i, i) or G(i, i)³. The 4-cycle product "
@@ -67,8 +68,9 @@ internal sealed class BargmannRealRephasingDocument : IScribeDocumentDefinition
                         + "the anchor lift of Chaturvedi et al. for positive three-state invariants, "
                         + "and the gauge used by Chien and Waldron to show that triple products "
                         + "determine a family with all overlaps nonzero up to projective unitary "
-                        + "equivalence; their n-cycle example is the reason triple products do not "
-                        + "suffice without a nonvanishing pattern. The N-state statement above was "
+                        + "equivalence; their n-cycle example is the analogue, for projective "
+                        + "unitary equivalence, of the failure of triple products without a "
+                        + "nonvanishing pattern. The N-state statement above was "
                         + "not found verbatim in these four sources; no novelty is claimed."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("bargmann-real-gram-realization"),
