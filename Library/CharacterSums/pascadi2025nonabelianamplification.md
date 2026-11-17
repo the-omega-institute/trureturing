@@ -91,10 +91,42 @@ coordinates and forms the literal coefficient functions of `L₀Q−LQ₀`.
 Its root identity is derived from the actual original word equation, using
 `β=V₁/R₁` and `α=−1/(g*t*R₁)`; it is not supplied as a polynomial-root hypothesis.
 Literal coordinate bounds also give coefficient constant `C=3`, actual pencil
-height `H=18`, and degree at most three. The lattice basis construction,
-exceptional strata, physical multiplicities,
-average/second-moment estimate, plus-center comparison and full original
-prime-cube count remain unformalized here.
+height `H=18`, and degree at most three.
+
+The actual lattice construction and modular-zero partner count are now integrated
+through [PR #31327](https://github.com/the-omega-institute/trureturing/pull/31327).
+`PascadiOriginalLattice` constructs the shortest primitive vector, its Bezout
+completion, the centered reduced basis and the literal coordinate bounds.
+`PascadiModularZeroFieldPartners`, `PascadiModularZeroPartners`,
+`PascadiModularZeroRegularity` and `PascadiOriginalModularPartners` count the
+full modular-zero partner set for a nonaligned retained original baseline,
+including both dividing directions and the nondividing six-candidate case.
+Their explicit coordinate-height and unit hypotheses remain part of the results.
+
+`NumberFieldDivisorSubpower` proves the bounded algebraic-divisor estimate with
+one constant uniform over number fields of degree at most three.
+`PascadiOriginalSingularPartners` constructs the actual algebraic values and
+their nonzero fixed products from the original word. Together with
+`PascadiOriginalLinearFibers`, `PascadiOriginalSingularCount` bounds the actual
+nonzero singular partner set by
+`C_epsilon p^epsilon (1+6H/(p*sigma))`, where sigma is the shortest length of
+the actual index-p-squared lattice. The original word determines the second
+endpoint, so this physical multiplicity is paid once.
+
+`PascadiOriginalWeightAverage` proves the full finite dyadic average of
+`1+H/(p*sigma)` over actual integer `(w,t)` in the literal parameter rectangle.
+For `1<=X<=Y`, `Y<p^3`, `A=XY<2p^4`, `H^2=A` and `p<=H`, its bound is
+`2048[A+(A/p)(1+log(2p)/log(2))+A^2/p^4]`.
+These are explicit sufficient conditions; applying them to the target range
+still requires checking that range's hypotheses.
+
+The full original prime-cube count remains open. The uniform derivative-zero
+bound, exceptional and removed unit-chart pieces, good-record second-moment
+summation, all-scalar-center comparison and final cutoff must still be connected
+to the original literal six-tuples. The supplied paper proof is not a substitute
+for this formal endpoint. Source-bound four-slot escape audits remain unfinished
+under [issue #31176](https://github.com/the-omega-institute/trureturing/issues/31176);
+no completed registration is claimed for these new modules.
 
 The four integrated singular-factor modules retain the proofs from the completed
 research archive `pascadi-prime-cube-singular-cover-formalization-20261116`.

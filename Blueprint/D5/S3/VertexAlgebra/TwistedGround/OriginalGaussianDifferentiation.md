@@ -312,6 +312,18 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiati
 
 For every real 0<r<1, one plus the ordinary bilinear pairing of the first radial source family with the radial column is the complex embedding of radialNormalization r.
 
+**Definition 1.26 (radialOperatorDerivative).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialOperatorDerivative`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialOperatorDerivative` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real r, the actual radial operator derivative is operatorDerivative at the complex embedding of sqrt(r), scaled by the complex embedding of 1/(2 sqrt(r)). The radial rank-one theorem consumes this same operator.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.bilinear_negative_resolvent_weighted_scalar`
@@ -326,6 +338,7 @@ For every real 0<r<1, one plus the ordinary bilinear pairing of the first radial
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialColumn`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialColumnDerivative`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialNormalization`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialOperatorDerivative`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialSourceFamily`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_column_derivative_scaled`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_operator_derivative_rankOne`

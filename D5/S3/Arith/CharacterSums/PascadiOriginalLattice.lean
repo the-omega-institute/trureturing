@@ -174,7 +174,7 @@ theorem weighted_det_identity {X Y : ℝ} (hX : 0 < X) (hY : 0 < Y)
   field_simp [hX0, hY0]
   ring
 
-private theorem weighted_det_sq_le {X Y : ℝ} (hX : 0 < X) (hY : 0 < Y)
+theorem weighted_det_sq_le {X Y : ℝ} (hX : 0 < X) (hY : 0 < Y)
     (z z' : Coordinate) :
     (((z.1 * z'.2 - z'.1 * z.2 : ℤ) : ℝ)) ^ 2 ≤
       weightedSq X Y z * weightedSq X Y z' := by
