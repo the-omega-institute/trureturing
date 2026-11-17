@@ -9,7 +9,7 @@ internal sealed class MO479815Document : IScribeDocumentDefinition
     private const string Prefix =
         "D5/S3/Combinatorics/SignedGraphSpectral/MO479815.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/hameed2025signedspectraldeletion");
+        LibraryNoteRef.Create("D5/L/Eigenstructure/hameed2025signedspectraldeletion");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A pendant-edge counterexample to signed-graph spectral-deviation monotonicity.",
