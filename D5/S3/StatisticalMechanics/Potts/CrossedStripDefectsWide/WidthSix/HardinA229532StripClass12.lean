@@ -47,11 +47,21 @@ theorem transition_counts : ∀ p (d : Fin 2), Valid p d.val → Canonical p →
         cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 12
         then (1 : ℤ) else 0) = T (cl p d.val) 12 := by
     unfold Canonical
-    intro p d
-    fin_cases d <;> revert p <;> decide +kernel
+    intro p
+    generalize h0 : p 0 = c0
+    generalize h1 : p 1 = c1
+    fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
   intro p d hp hn
   by_cases hz : HardinThinGraphTransport.proper p ∧ d.val = 0
-  · simp_rw [HardinA229532StripCut.class_cut p _ d 12 (by right; exact ⟨hz.2, by decide⟩)]
+  · have cut (r : Row) :
+        ((bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+          cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 12) ↔
+          HardinThinGraphTransport.proper r ∧
+            HardinThinGraphTransport.compatible true p r ∧
+            HardinA233172DiagonalStrip.boundaryClass (true, true) r = 3) := by
+      exact HardinA229532StripCut.class_cut p r d 12 (by
+        right; exact ⟨hz.2, by decide⟩)
+    simp_rw [cut]
     have h := raw_successors p hz.1 3
     exact (Int.eq_ediv_of_mul_eq_right (by decide) h).trans (table p d hz)
   · exact remaining p d hp hn hz
