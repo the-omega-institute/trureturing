@@ -224,7 +224,10 @@ private noncomputable def diagonal (a : ℕ) :
 
 private theorem diagonal_apply (a : ℕ) (f : PowerSeries (Polynomial ℚ)) :
     diagonal a f = PowerSeries.eval₂ (Polynomial.eval₂RingHom C X) (X^(a+1)) f := by
-  rfl
+  exact congrFun (PowerSeries.coe_eval₂Hom continuous_of_discreteTopology
+    (show PowerSeries.HasEval ((X : PowerSeries ℚ) ^ (a + 1)) from by
+      rw [pow_succ]
+      exact PowerSeries.HasEval.X.mul_left _)) f
 
 private theorem diagonal_continuous (a : ℕ) : Continuous (diagonal a) := by
   change Continuous (fun f => diagonal a f)
