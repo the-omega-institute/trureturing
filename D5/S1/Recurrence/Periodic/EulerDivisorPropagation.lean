@@ -15,6 +15,8 @@ import Mathlib.RingTheory.Nilpotent.Basic
 
 open D5.S1.Recurrence.Periodic.EulerUpDownSource
 open D5.S1.Recurrence.Periodic.EulerSecantBridge
+open Finset
+open D5.S1.Recurrence.Periodic.EulerSignedFrequency
 
 /-! The correction factor is a unit at every positive index, including early indices. -/
 
