@@ -1,0 +1,53 @@
+**定理 229.2（同一非零外层值的已知平方）。** 定义原
+
+$$
+v=\frac{b-rj}{\sqrt L},\qquad
+\ell=\frac{rb+j}{\sqrt L},\qquad
+x_\pm=tb\pm rk,
+\tag{229.2}
+$$
+
+以及
+
+$$
+y_+=\sqrt L\,b,\qquad
+y_-=\frac{(1-r^2)b-2rj}{\sqrt L}.
+\tag{229.3}
+$$
+
+同一旧响应满足
+
+$$
+K:=D(x_+,y_+)=D(x_-,y_-),\qquad
+K^2=r^2Lt^2R^2,
+\tag{229.4}
+$$
+
+并且
+
+$$
+b\circ K=k\circ K=0,\qquad [R,K]=0.
+\tag{229.5}
+$$
+
+若 $b\ne0$，则 $K\ne0$。不要求第二原对 $(x_-,y_-)$ 满足 224.1 的单坐标 Gram 前件。
+
+证明。原整圆给 $G(v)=\ell$，所以实际 PB $(rh,tb,v)$ 的位移为 $\nu=rk$、$\omega=r\ell$。右端为零，因为 $b\circ k=v\circ\ell=0$。又 $v+r\ell=\sqrt Lb$、$v-r\ell=y_-$，故得到 (229.4) 的共享式，没有展开未知 $D$。
+
+第一原对的完整 Gram 矩阵为
+
+$$
+\operatorname{Gram}_{\circ}(x_+,y_+)
+=\begin{pmatrix}Lt^2&t\sqrt L\\t\sqrt L&L\end{pmatrix}R.
+\tag{229.6}
+$$
+
+224.1 直接适用于这份实际原对，给 $x_+\circ K=y_+\circ K=0$ 和
+
+$$
+K^2=(Lt^2R)(LR)-(t\sqrt L R)^2
+=r^2Lt^2R^2.
+$$
+
+由 $y_+=\sqrt L b$ 得 $b\circ K=0$，再由 $x_+=tb+rk$ 及 $r\ne0$ 得 $k\circ K=0$。已知环境反交换使 $[b^2,K]=0$，即 $[R,K]=0$。若 $K=0$，则 $R^2=0$；自伴平方零给 $R=0$、$b=0$，证明逆否。所有缩放只作用于已知标签或已得输出，未调用输入齐次。∎
+

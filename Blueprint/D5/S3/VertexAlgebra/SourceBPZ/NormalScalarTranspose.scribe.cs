@@ -7,6 +7,24 @@ internal sealed class NormalScalarTransposeDocument : IScribeDocumentDefinition
         "NormalScalarTranspose", H("Original integer scalar insertion transpose"), Blocks(
             Paragraph(Text("The carrier is the original finite-charge direct sum of complex oscillator polynomials. B is complex bilinear, with its input order retained. No half-current or tensor carrier, symmetry, nondegeneracy, positivity, rank restriction, or all-source invariance is assumed. The normal product and divided derivative retain the Carnahan/native adaptation attribution of FieldNormalProduct. This is a classical finite normal-order calculation; no literature novelty is claimed.")),
             Describe.Lean(
+                DescribeId.Create("normalscalartranspose-coefficient"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient"),
+                H("coefficient"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The existing scalar coefficient is integer choose(-k-1,p) cast to the complex numbers, for every natural p and signed integer k."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("normalscalartranspose-derivative-mode"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.derivative_mode"),
+                H("derivative_mode"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every actual lattice, coordinate, natural derivative order and signed integer mode, the divided derivative mode is coefficient(p,m-p) times the actual neutralMode at m-p. This original supporting proof is consumed by the scalar insertion calculation and OriginalWord finite rectangles; it is not new BPZ content."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("normalscalartranspose-coefficient-zero-band"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient_zero_band"),
+                H("coefficient_zero_band"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural p and integer k with -p<=k<0, coefficient(p,k) is zero. This original integer binomial supporting proof is consumed by both scalar interval calculations."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sourcebpz-normal-insertion"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.insertion"),
                 H("insertion"), StatementSource.WithoutFormula(),

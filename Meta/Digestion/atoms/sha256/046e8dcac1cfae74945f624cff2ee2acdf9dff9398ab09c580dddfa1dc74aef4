@@ -1,0 +1,22 @@
+**引理 491.3（四尺度分离）。** 设 $h,M,T,k$ 都满足 (491.1)，$h\ll M\ll T\ll k$。则对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$，
+
+$$
+\Bigl|\int_If_s(x)z_t(x)\,dx\Bigr|\ll A_X^2\sqrt{hk}\Bigl(\sqrt{\frac hM}+\sqrt{\frac MT}+\sqrt{\frac Tk}\Bigr).
+$$
+
+证明。由引理 491.1，$\|f_s\|_2\ll A_X\sqrt h$、$\|z_t\|_2\ll A_X\sqrt k$。令 $\psi(x)=x+tx^b$。对 $0\le r\le R$（$R=M$ 或 $T$），$z_t(x+r)-z_t(x)=\bigl[E(\psi(x+r))-E(\psi(x))\bigr]-D_r(x)$；前一项的端点映射之差为 $O(R)$，由引理 491.1，
+
+$$
+\|z_t(\cdot+r)-z_t\|_2\ll A_X\sqrt R .
+\tag{491.2}
+$$
+
+对长度至多 $M$ 的区间 $J$，把 $z_t(x)^2\le2z_t(x+r)^2+2|z_t(x+r)-z_t(x)|^2$ 对 $r\in[0,T]$ 取平均再在 $J$ 上积分，由 Fubini 与 (491.2)，
+
+$$
+\int_Jz_t^2\ll\frac MT\|z_t\|_2^2+A_X^2T\ll A_X^2\Bigl(\frac{Mk}T+T\Bigr).
+\tag{491.3}
+$$
+
+现在比较 $\int_If_sz_t$ 与 $\int_I(\mathscr A_Mf_s)z_t$。后者由引理 491.2 至多 $\frac hMA_X\sqrt M\cdot A_X\sqrt k=A_X^2\sqrt{hk}\sqrt{h/M}$。对每个 $r\le M$，$\int_If_s(x+r)z_t(x)\,dx$ 经平移变为 $I+r$ 上 $f_s(y)z_t(y-r)$ 的积分；在 $I\cap(I+r)$ 上，与 $\int f_sz_t$ 之差由 (491.2) 与 Cauchy–Schwarz 至多 $A_X\sqrt h\cdot A_X\sqrt M\le A_X^2\sqrt{hk}\sqrt{M/T}\sqrt{T/k}$；其余是长度至多 $M$ 的端点条，由 Cauchy–Schwarz 与 (491.3) 至多 $A_X\sqrt h\cdot A_X\sqrt{Mk/T+T}=A_X^2\sqrt{hk}\sqrt{M/T+T/k}$。对 $r$ 取平均，并用 $\sqrt{M/k}=\sqrt{M/T}\sqrt{T/k}\le\sqrt{M/T}+\sqrt{T/k}$ 吸收重叠项，即得。$|I|<M$ 时同样成立。证毕。
+

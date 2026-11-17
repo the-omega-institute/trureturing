@@ -1,0 +1,110 @@
+**Theorem 43.2 (all native partial-frontier preimages).** There are finite
+effective functions $K_s(y)$ and $U^s_j(y)$ on the following exact domain:
+$y\in\mathcal T_s$ and integer $0\le j\le K_s(y)$. They satisfy
+
+$$
+\begin{aligned}
+\{(u,j):u\in\mathcal T_s,\ 0\le j\le L(u),\ F_j(u)=y\}
+ &=\{(U^s_j(y),j):0\le j\le K_s(y)\},\\
+U^s_j(F_j(u))&=u,\qquad F_j(U^s_j(y))=y,\\
+n(U^s_j(y))&=n(y)-j.
+\end{aligned}
+\tag{43.3}
+$$
+
+In particular $K=K_B$ and $U_j=U^B_j$ give the required entire
+$\mathcal D_+$ fibre, uniformly over different unknown entry trees.
+For $J_s(y)$ there is the additional saturation identity
+
+$$
+K_s(y)=L(\delta y),\qquad U^s_{K_s(y)}(y)=\delta y.
+\tag{43.4}
+$$
+
+An input outside the stated sort, a negative/noninteger progress, or
+$j>K_s(y)$ rejects. The maximum need not be a fully returned frontier;
+(43.4) applies exactly to native full images, not to every $y$.
+
+Proof. Put $C=\langle\beta,\alpha\rangle$. The recursion starts with
+
+$$
+\begin{array}{c|c|c}
+(s,y)&K_s(y)&\text{positive-progress inverse}\\\hline
+(A,\alpha)&0&\text{none}\\
+(A,\beta)&1&U^A_1(\beta)=\alpha\\
+(B,\beta)&0&\text{none}\\
+(s,C)&1&U^s_1(C)=\beta
+\end{array}
+\tag{43.5}
+$$
+
+Always put $U^s_0(y)=y$. For a branch $y=\langle v,w\rangle\ne C$,
+first decide $J_B(v)$. If true put $k=L(\delta v)$ and set
+
+$$
+\begin{aligned}
+K_s(y)&=k+K_A(w),\\
+U^s_j(y)&=
+\begin{cases}
+\langle U^B_j(v),w\rangle,&0\le j\le k,\\
+\langle\delta v,U^A_{j-k}(w)\rangle,&k<j\le k+K_A(w).
+\end{cases}
+\end{aligned}
+\tag{43.6}
+$$
+
+If $J_B(v)$ is false, set instead
+
+$$
+K_s(y)=K_B(v),\qquad
+U^s_j(y)=\langle U^B_j(v),w\rangle\quad(0\le j\le K_B(v)).
+\tag{43.7}
+$$
+
+These are structural recursions on proper subtrees. Membership in $I$,
+$\delta$, sort tests and leaf counts also recurse on finite syntax.
+They terminate on every finite input, including irregular attained trees.
+
+We prove the complete fibre assertion and (43.4) simultaneously by
+structural induction on $y$. At a leaf alpha, no nonempty edit can have
+produced it. At a leaf beta, the only positive prefix is the one alpha
+promotion, admitted in sort $A$ and excluded in sort $B$. At $C$, a
+positive prefix from a single leaf is precisely the beta split. It
+cannot instead come from a branch: that branch's first original leaf
+lies in its left child of sort $B$, whereas the output left child beta
+has no positive-progress preimage of sort $B$. These observations prove
+(43.5), its uniqueness, and its full-image saturation cases.
+
+Consider now $y=\langle v,w\rangle\ne C$. A preimage with positive
+progress cannot be a leaf, since a one-leaf edit gives only beta or $C$.
+Write it $u=\langle x,z\rangle$. If $j\le L(x)$, the prefix acts only
+on the left: $v=F_j(x)$ and $w=z$. The smaller-tree induction gives
+exactly $x=U^B_j(v)$, for $0\le j\le K_B(v)$. If $j>L(x)$, the
+whole left child has been replaced: $v=\rho x$, so necessarily
+$J_B(v)$, $x=\delta v$, and $L(x)=k$. The right child must then be
+$z=U^A_{j-k}(w)$, with $1\le j-k\le K_A(w)$. These conditions are
+also sufficient by the actual left-first prefix rule.
+
+When $J_B(v)$ fails, the second possibility is absent, giving (43.7).
+When it holds, the smaller-tree saturation identity says
+$K_B(v)=k$ and $U^B_k(v)=\delta v$. Thus the possibilities meet at one
+identical boundary value $j=k$ and give exactly (43.6), with no gap,
+duplicate entry at a fixed $j$, or extra accepted value. This proves
+the complete fibre and the two inverse laws for the branch.
+
+For its saturation case, $J_s(y)$ implies that $\delta y$ is a branch
+$\langle\delta v,\delta w\rangle$: neither exceptional leaf image
+is possible here. Its sorts give $J_B(v)$ and $J_A(w)$. Induction in
+(43.6) gives $K_s(y)=L(\delta v)+L(\delta w)=L(\delta y)$ and the
+inverse at that endpoint is exactly $\delta y$. This closes the
+simultaneous induction. Each scheduled $P/S$ increases $n$ by one,
+so $n(y)=n(u)+j$ and the last identity of (43.3) follows. $\square$
+
+The birth restriction is essential to this theorem, rather than merely
+to its operational interpretation. On unrestricted labelled trees,
+$F_1(\beta)=F_1(\langle\alpha,\alpha\rangle)=C$.
+The second entry is excluded by (43.1). At beta itself the native fibre
+of its current syntax is only $(\beta,0)$; the auxiliary alpha case of
+(43.5) does not enlarge that fibre. Full progress is included by (43.4)
+without treating the outer call as returned.
+

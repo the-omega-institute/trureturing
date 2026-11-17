@@ -1,0 +1,30 @@
+### 定义 2：素数乘除的精确收益
+
+令 $T=\log n$，$a=v_p(n)$，定义加入一层的收益
+
+<a id="eq-18"></a>
+
+$$
+D_p^+(n)
+=
+\log R(np)-\log R(n)
+=
+\lambda_{p,a+1}
+-\bigl[f(T+\log p)-f(T)\bigr].
+\tag{18}
+$$
+
+若 $p\mid n$，定义删除一层的收益
+
+<a id="eq-19"></a>
+
+$$
+D_p^-(n)
+=
+\log R(n/p)-\log R(n)
+=
+f(T)-f(T-\log p)-\lambda_{p,a}.
+\tag{19}
+$$
+
+<!-- editorial-note:start deletion-domain -->

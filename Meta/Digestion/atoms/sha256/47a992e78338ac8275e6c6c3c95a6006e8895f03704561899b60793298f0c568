@@ -1,0 +1,24 @@
+**第二步：三个方向锁住复比较。** 约定内积对第二变量线性。记
+
+$$
+\Delta_j(x)=\langle b_j,b(x)\rangle-\langle a_j,a(x)\rangle.
+$$
+
+展开 (D) 并消去已经相等的范数，得
+
+$$
+\Re\bigl(\zeta^{-r}\Delta_j(x)\bigr)\ge0,
+\qquad r=0,1,2.
+\tag{3}
+$$
+
+三个实数之和为零，所以各为零。$r=0$ 给实部为零，$r=1$ 因 $\zeta$ 非实给虚部也为零。因此
+
+$$
+\langle b_j,b(x)\rangle=\langle a_j,a(x)\rangle
+\qquad(\forall j,x).
+\tag{4}
+$$
+
+取 $x=\alpha_k$，输出参照的 Gram 表自动等于输入参照的 Gram 表。
+

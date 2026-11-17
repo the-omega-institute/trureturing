@@ -1,0 +1,111 @@
+**定理 27.2（无饱和的有符号循环提升）。**对任意 $P\in\mathcal P_d(D):=\{P\in M_d(D):P^*=P=P^2\}$，置
+
+$$
+\begin{gathered}
+M_{AB}(P)=\operatorname{diag}(P,I-P,0),\quad
+M_{BC}(P)=\operatorname{diag}(0,P,I-P),\quad
+M_{CA}(P)=\operatorname{diag}(I-P,0,P),\\
+m_{AB}(P)=\widehat\mu(M_{AB}(P)),\qquad
+\nu_{AB}(P)=m_{AB}(P)-\beta,\\
+\nu_{BC}(P)=m_{BC}(P)-\gamma,\qquad
+\nu_{CA}(P)=m_{CA}(P)-\alpha.
+\end{gathered}
+\tag{27.2}
+$$
+
+这些函数在全部 $\mathcal P_d(D)$ 上有定义、取实值且正交可加。它们是有符号的数学函数，不是新准备。若 $P$ 是一张已给 $d$ 维 $D$-单位框架的列子集投影，则
+
+$$
+\nu_{AB}(P)=\widehat\mu(P_A)-\widehat\mu(P_B),
+\tag{27.3}
+$$
+
+其余两式循环取得。一般未框架化 $P$ 不由此成为原事件。
+
+**证明。**先显示承载每项概率等式的完整框架。对正交三分区 $P+Q+R=I_d$，容许零项，取
+
+$$
+\begin{aligned}
+V_{AB}(P)&=\begin{pmatrix}P&I-P&0\\I-P&P&0\\0&0&I\end{pmatrix},\\
+U(P,Q,R)&=\begin{pmatrix}P&R&Q\\Q&P&R\\R&Q&P\end{pmatrix},\\
+W(P,Q,R)&=\begin{pmatrix}P&I-P&0\\Q&P&R\\R&0&I-R\end{pmatrix}.
+\end{aligned}
+\tag{27.4}
+$$
+
+它们全在 $M_{3d}(D)$ 中。为核对两侧酉乘积，下表列出对角块及上三角三块；下三角为伴随。
+
+$$
+\begin{array}{c|c|ccc}
+ &\text{对角三块}&01&02&12\\ \hline
+V_{AB}^*V_{AB}=V_{AB}V_{AB}^*&(I,I,I)&P(I-P)+(I-P)P&0&0\\
+U^*U&(I,I,I)&PR+QP+RQ&PQ+QR+RP&RQ+PR+QP\\
+UU^*&(I,I,I)&PQ+RP+QR&PR+RQ+QP&QR+PQ+RP\\
+W^*W&(I,I,I)&P(I-P)+QP&QR+R(I-R)&PR\\
+WW^*&(I,I,I)&PQ+(I-P)P&PR&QR+R(I-R)
+\end{array}
+\tag{27.5}
+$$
+
+每个非对角块为零；例如 $W^*W$ 的对角为 $P+Q+R,(I-P)+P,R+(I-R)$，$WW^*$ 的对角为 $P+(I-P),Q+P+R,R+(I-R)$。$V$ 的首两列块投影为 $M_{AB}(P),M_{AB}(I-P)$。$U$ 的三列块投影为
+
+$$
+C_0=\operatorname{diag}(P,Q,R),\quad
+C_1=\operatorname{diag}(R,P,Q),\quad
+C_2=\operatorname{diag}(Q,R,P).
+\tag{27.6}
+$$
+
+列外积中的交叉块全为零。$W$ 的三列块投影恰为 $C_0,M_{AB}(I-P),M_{BC}(R)$：例如末列块是 $(0,R,I-R)^{\mathsf T}$，其外积为 $M_{BC}(R)$。循环置换块得到其他 $V,W$。所有框架附上固定 $Z$ 即完整，不调用任意部分框架补全。
+
+记 $c_0=\widehat\mu(C_0)$、$n=m_{AB}(I-P)$。$W$ 与 $I_A\oplus V_{BC}(I-R)$ 两张实际测试分别给
+
+$$
+\begin{aligned}
+c_0+n+m_{BC}(R)+z&=w,\\
+\alpha+m_{BC}(I-R)+m_{BC}(R)+z&=w.
+\end{aligned}
+\tag{27.7}
+$$
+
+再在 $V_{AB}(P)$、$V_{BC}(R)$ 框架中分别保留 $C,Z$ 或 $A,Z$，得
+
+$$
+m_{AB}(P)+n=\alpha+\beta,\qquad
+m_{BC}(R)+m_{BC}(I-R)=\beta+\gamma.
+$$
+
+相减并代入 (27.2)，得到
+
+$$
+c_0=\beta+\nu_{AB}(P)-\nu_{BC}(R).
+\tag{27.8}
+$$
+
+旁观质量 $z$ 在相减之前一直保留，不曾令其为零。同一粗投影在 $V,U,W$ 中的身份由原单值性承担。
+
+$U(P,I-P,0)$ 的三个粗事件正是 $M_{AB}(P),M_{BC}(P),M_{CA}(P)$，故
+
+$$
+\nu_{AB}(P)+\nu_{BC}(P)+\nu_{CA}(P)=0,\qquad
+\nu_{AB}(0)=0,\quad\nu_{AB}(I)=\alpha-\beta,
+\tag{27.9}
+$$
+
+端点循环同理。对一份三分区定义
+$\delta_{AB}=\nu_{AB}(P)+\nu_{AB}(Q)+\nu_{AB}(R)-\nu_{AB}(I)$，其余循环定义。将 (27.8) 用于 $(P,Q,R),(R,P,Q),(Q,R,P)$，左侧为同一 $U$ 的三列块质量，总和 $\alpha+\beta+\gamma$。于是
+$\sum\nu_{AB}-\sum\nu_{BC}=\alpha-2\beta+\gamma=\nu_{AB}(I)-\nu_{BC}(I)$，即 $\delta_{AB}=\delta_{BC}$。循环置换块又得三缺陷全相等。(27.9) 则使三缺陷之和为零，故各为零。
+
+对任意 $PQ=0$，比较两份真正的三分区
+$(P,Q,I-P-Q)$ 与 $(P+Q,I-P-Q,0)$，减去其零缺陷式，得 $\nu_{AB}(P+Q)=\nu_{AB}(P)+\nu_{AB}(Q)$。循环同理，有限归纳给全部正交加法。非负原质量只额外给 $-\beta\le\nu_{AB}(P)\le\alpha$；这不意味着 $\nu_{AB}\ge0$，以下也不以该界作极限。
+
+最后，设 $P$ 有一张已给完整 $F\in U_d(D)$ 的列子集读法。实际块对角框架 $F_A\oplus F_B\oplus I_C\oplus I_Z$ 同时包含 $P_A,P_B,(I-P)_B$；其中
+$m_{AB}(P)=\widehat\mu(P_A)+\widehat\mu((I-P)_B)$、$\beta=\widehat\mu(P_B)+\widehat\mu((I-P)_B)$，给 (27.3)。所需 $Q_s=q_sq_s^*$，$q_s=(e_0+s e_1+e_2)/\eta$，有显式补框架
+
+$$
+F_s=\eta^{-1}\begin{pmatrix}1&1&1\\s&s\zeta&s\zeta^2\\1&\zeta^2&\zeta\end{pmatrix}.
+\tag{27.10}
+$$
+
+三列各平方范数一，异列内积为 $(1+\zeta+\zeta^2)/3=0$，所以 $F_s^*F_s=F_sF_s^*=I_3$。在六维取 $F_s\oplus I_3$，不需补全假设。$\square$
+

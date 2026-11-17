@@ -1,0 +1,39 @@
+**命题 67.1（整体预算的严格放宽与所有实际代表）。** 在 64.2 的形状中，SM50.3 型整体充分量为
+
+$$
+\mathfrak q=L(1+|s|)+|\alpha|s^2.
+\tag{67.1}
+$$
+
+第一连接量满足
+
+$$
+\mathfrak q-\mathfrak b_0=L-|t|+|\alpha|s^2>0.
+\tag{67.2}
+$$
+
+故在这一形状下，$\mathfrak q<2$ 蕴含 $\mathfrak b_0<2$；反向不成立，以下无限符号族通过第一连接预算而不通过整体预算。
+
+具体地，对任意 $n\ge3$、任意 $B=B^*\ne0$、任意实 $\alpha\ge2$，令
+
+$$
+t=\frac12,\qquad
+L=\max\{\sqrt{\alpha^2+1/4},\|B\|\},\qquad
+s=\frac1{4L}.
+\tag{67.3}
+$$
+
+则 $\alpha ts\ne0$，且
+
+$$
+\mathfrak b_0=\frac34<2,
+\qquad \mathfrak q=L+\frac14+\frac{\alpha}{16L^2}>2.
+\tag{67.4}
+$$
+
+若另取未尺度化的第二像 $A_0=Z\oplus0_m$，同一 $R$ 对应的 50.3 型粗整体量为 $2L+\alpha>2$。这只是充分估计的比较，不将 $A_0$ 的实际旧值搬运到 $A$。$\alpha$ 与 $\|B\|$ 均可任意有限大；这里只选择非零小 $s$ 支付当前实际连接。
+
+**证明。** $\alpha\ne0$ 给 $L> |t|$，所以式 (67.2) 严格。式 (67.3) 有 $L\ge\sqrt{\alpha^2+1/4}>2$，各式直接成立。$\pi(E)=H_n(\mathbb C)$ 来自 PB241.1：$\pi(E)$ 是稠密的有限维实线性子空间，因而闭且为全空间。因此每份 $R,A$ 均有实际原代表，$c=\alpha a$ 及 66.2 的全部外层仍在原域。定理 64.3 对每个参数及所有这些代表重新适用；未把 $s=1$ 的某个旧值按未知齐次性缩放。
+
+活动块的特征值为 $\pm\sqrt{\alpha^2+t^2}$，故 $R$ 不定；$[R,A]=-2istY\oplus0\ne0$。$\operatorname{rank}A=2$、$\operatorname{rank}R=2+\operatorname{rank}B\ge3$，所以两输入不是秩一像，也不共同支撑于任一二阶角。式 (67.3) 因而给明确的非共同二阶角不定原对消费者。∎
+

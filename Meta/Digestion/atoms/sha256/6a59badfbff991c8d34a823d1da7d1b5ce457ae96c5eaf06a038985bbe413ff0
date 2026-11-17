@@ -1,0 +1,37 @@
+**定理 41.2（原模型内的对称化保留普遍标定问题）。**取定义 1.1 的任意原模型，要求全部 (R) 及两端第三标记返回 $\mathrm C_3$。沿用[有限正性桥定义 18.1](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md#18-第三标记返回下的单标记标定)：$\mathrm C_1(d)$ 指全部 $a,z$ 上
+
+$$
+\begin{aligned}
+H_d(a,p_1;z)&=H_{d^{\mathsf T}}(a,p_1;z)=0,\\
+H_d(a,u;z)&=d(au,z)-d(a,z)-d(u,z)+d(1,z)\\
+&\quad-d(au,1)+d(a,1)+d(u,1).
+\end{aligned}
+\tag{41.18}
+$$
+
+在完全相同的 $M,1,\cdot,U$ 上置 $k=(c+c^{\mathsf T})/2$。则
+
+$$
+\begin{aligned}
+\mathrm C_1(c)&\Longleftrightarrow\mathrm C_1(k),\\
+\mathrm{UC}(c)&\Longleftrightarrow\mathrm{UC}(k),\\
+\operatorname{Rep}(c)&\Longleftrightarrow\operatorname{Rep}(k),
+\end{aligned}
+\tag{41.19}
+$$
+
+其中 $\mathrm{UC}(d)$ 按核 $d$ 自己的完整双侧根空间定义，$\operatorname{Rep}(d)$ 指定理 14.1 的完整仿射复 Hilbert 表示。上述任一性质成立时都有 $c=k$。这是普遍性质的等价，不声称任意原 $c$ 已对称，也不声称某个指定七项式缺陷的数值在对称化后不变。
+
+**证明。**对原四元组交换 $(a,b,u,v)$ 为 $(b,a,v,u)$，可知 $c^{\mathsf T}$ 满足全部 (R)；转置交换两个第三标记返回。因此 $k$ 在同一个实际对象上处处有限、非负、对称、零对角，满足全部 (R) 及 $\mathrm C_3$。同一对象上的
+
+$$
+D=\frac{c-c^{\mathsf T}}2,\qquad c=k+D,\qquad |D|\le k
+\tag{41.20}
+$$
+
+反对称，且满足全部 $(R_D)$ 和两个第三标记返回。
+
+只在假定 $\mathrm C_1(k)$ 的分支内，调用有限正性桥定理 18.3，将其原核取为这个 $k$，取得 $\mathrm{UC}(k)$。再直接应用该桥定理 8.2，得到 $k(a,b)=\|Fa-Fb\|^2$，其中 $F$ 定义于同一个 $M$，满足 $F1=0$、$F(ab)=Fa+Fb$、$F(Ua)=\omega Fa+t$，漂移 $t$ 任意。这一步的 Hilbert 映射来自条件分类，没有预设在一般原 $c$ 上。现在 (41.20) 支付定理 41.1 的全部残差前件，故 $D=0$、$c=k$，并得到 $\mathrm C_1(c)$。反向，(41.18) 对核线性，而 $k=k^{\mathsf T}$，所以 $\mathrm C_1(c)$ 的两个读数族直接给 $\mathrm C_1(k)$。
+
+对 $d=c,k$ 分别使用有限正性桥定理 18.3 和 8.2，已有 $\mathrm C_3(d)$ 使 $\mathrm C_1(d)$、$\mathrm{UC}(d)$、$\operatorname{Rep}(d)$ 等价，遂得 (41.19) 的其余两项。没有将两个核的根空间预先认同，也没有证明某个局部缺陷在平均下保持非零。证毕。
+

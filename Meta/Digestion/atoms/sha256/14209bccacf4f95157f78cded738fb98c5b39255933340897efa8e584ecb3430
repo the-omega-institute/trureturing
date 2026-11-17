@@ -1,0 +1,37 @@
+**推论 7.3（Confinement on the complete complex half-filled space）。**
+Under Definition 7.1, for every integer $S\geq1$,
+
+$$
+\boxed{\quad K-E_H(2S)I\succeq
+ g(H,2S)(I-P_{\mathrm{sym}}).\quad}
+\tag{7.16}
+$$
+
+For every normalized complex vector $\phi\in\mathcal H_{mS}$,
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2
+\leq\frac{\langle\phi,K\phi\rangle-E_H(2S)}{g(H,2S)}.
+\tag{7.17}
+$$
+
+Proof. On $\operatorname{ran}P_{\mathrm{sym}}$, the left side of
+(7.16) is nonnegative by the definition of the actual full-space
+minimum. On $\ker P_{\mathrm{sym}}$, it is at least $g(H,2S)I$
+by (7.1). These orthogonal reducing subspaces have no cross terms.
+Adding their quadratic forms proves (7.16) for arbitrary complex
+superpositions, equivalently for all the local-spin sectors and every
+multiplicity copy in (6.12). Taking its quadratic form on $\phi$ and
+dividing by the positive number in (7.2) gives (7.17).
+
+The graph and scale hypotheses of this conclusion differ from those
+of Theorem 6.2: no flat mode is required here, while every induced
+open neighborhood must be bipartite. Theorem 6.2 retains its eventual
+explicit linear bound under its separate flat-mode assumption, without
+this neighborhood restriction. No quantitative rate in $S$ follows
+from the finite-spectrum strictness argument above. The present
+statements concern equal even block sizes, unit weights and half
+filling; the proof gives no corresponding theorem for odd block sizes,
+other fillings, weights or unequal blocks. Strictness beyond the
+locally bipartite graph class requires a further argument. $\square$
+

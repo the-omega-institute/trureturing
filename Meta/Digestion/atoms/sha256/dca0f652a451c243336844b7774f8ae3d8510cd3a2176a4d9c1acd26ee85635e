@@ -1,0 +1,38 @@
+**命题 C-22.2（首次非零多项式阶数与任意目标）。** 对 $`0\le k\lt L`$，$`𝔼_\theta Q^k=𝔼_0Q^k`$，而
+
+
+<table><tbody><tr><td>
+
+```math
+𝔼_\theta Q^L-𝔼_0Q^L
+=\frac{\theta(-1)^LL!}{2^L}\prod_jw_j.
+```
+
+</td></tr></tbody></table>
+
+
+对实际有限和集上的任意实函数 𝑓，若 $`\Delta_wf(t)=f(t+w)-f(t)`$，则
+
+
+<table><tbody><tr><td>
+
+```math
+𝔼_\theta f(Q)-𝔼_0 f(Q)
+=\frac{\theta(-1)^L}{2^L}\Delta_{w_1}\cdots\Delta_{w_L}f(0).
+```
+
+</td></tr></tbody></table>
+
+
+若另有 $`f\in C^L([0,\sum w_j])`$，还可写
+
+
+```math
+\Delta_{w_1}\cdots\Delta_{w_L}f(0)=
+\int_0^{w_1}\cdots\int_0^{w_L}
+ f^{(L)}(t_1+\cdots+t_L)\,dt_1\cdots dt_L.
+```
+
+
+**证明。** 展开 $`Q^k`$，每个 $`k\lt L`$ 单项式至少漏一位，其奇偶加权求和为零。𝑘=𝐿 唯一含全部位的项为 $`L!\prod w_j\epsilon_1\cdots\epsilon_L`$，在全一串上的符号 $`(-1)^L`$，给首式。交替角点求和的符号为 $`(-1)^{L-\sum\epsilon}`$，故一般期望差是 $`(-1)^L`$ 乘有限差分。最后一式对正权重逐次使用微积分基本定理，规定整个区间的连续 𝐿 阶导数；只在离散和集定义的 𝑓 无此积分义务。𝐿=2 四角差读取二重交叉，𝐿=3 八角差读取三重交叉，称面积／体积型只说明响应阶数，未声明实际物理空间维数。□
+

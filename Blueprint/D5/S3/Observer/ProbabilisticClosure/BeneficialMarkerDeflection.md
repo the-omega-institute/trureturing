@@ -4,7 +4,31 @@
 
 Beneficial marker deflection under an arbitrary shared-parameter prior.
 
-**Theorem 1.1 (Complete support criterion with all finite and infinite mean consequences).**
+**Theorem 1.1 (Measurable original source family).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.measurable_source_law`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.measurable_source_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every closed-unit-interval alpha, the original sourceLaw is a measurable measure-valued function of the shared unit-interval parameter.
+
+**Theorem 1.2 (Measurable independent-seed source family).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.measurable_joint_law`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.measurable_joint_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every measurable seed space, original probability seed law and closed-unit-interval alpha, jointLaw is a measurable measure-valued function of the shared parameter.
+
+**Theorem 1.3 (Complete support criterion with all finite and infinite mean consequences).**
 
 $$\begin{gathered}\forall \alpha\in[0,1], ((0<\alpha\land\alpha<1)\Rightarrow(\\{}\forall mu:\operatorname{Measure}\left([0,1]\right), (\operatorname{IsProbabilityMeasure}\left(mu\right)\Rightarrow(\operatorname{AE}\left(mu, (0<Q\land Q<1)\right)\Rightarrow(\\{}(\operatorname{firstNegative}\left(\alpha, mu\right)<\infty\Leftrightarrow\frac{\alpha}{(1-\alpha)}<\operatorname{essSup}\left(Q, mu\right))\land\\{}(\operatorname{Summable}\left((n\mapsto\operatorname{abs}\left(\operatorname{coefficient}\left(\alpha, mu, n+1\right)\right))\right)\land(\sum_{n=0}^{\infty}\operatorname{abs}\left(\operatorname{coefficient}\left(\alpha, mu, n+1\right)\right)<1)\land(\forall U:Type, (\operatorname{MeasurableSpace}\left(U\right)\Rightarrow(\forall nu:\operatorname{Measure}\left(U\right), (\operatorname{IsProbabilityMeasure}\left(nu\right)\Rightarrow(\forall p:\operatorname{Policy}\left(U\right), (\operatorname{Summable}\left((n\mapsto\operatorname{lambda}\left(p, nu, n+1\right)\operatorname{coefficient}\left(\alpha, mu, n+1\right))\right))))))))\land\\{}(\forall U:Type, (\operatorname{MeasurableSpace}\left(U\right)\Rightarrow(\forall nu:\operatorname{Measure}\left(U\right), (\operatorname{IsProbabilityMeasure}\left(nu\right)\Rightarrow(\forall p:\operatorname{Policy}\left(U\right), ((\operatorname{ofReal}\left(\alpha\right)\operatorname{reciprocalMoment}\left(mu\right)\leq\operatorname{expectedCost}\left(p, nu, \alpha, mu\right))\land(\operatorname{expectedCost}\left(p, nu, \alpha, mu\right)\leq1+2\operatorname{reciprocalMoment}\left(mu\right))\land(\operatorname{expectedCost}\left(p, nu, \alpha, mu\right)\neq\infty\Leftrightarrow\operatorname{reciprocalMoment}\left(mu\right)\neq\infty)\land(\operatorname{reciprocalMoment}\left(mu\right)\neq\infty\Rightarrow(\operatorname{toReal}\left(\operatorname{expectedCost}\left(p, nu, \alpha, mu\right)\right)=2\operatorname{toReal}\left(\operatorname{reciprocalMoment}\left(mu\right)\right)-(1-\alpha)+\sum_{n=0}^{\infty}(\operatorname{lambda}\left(p, nu, n+1\right)\operatorname{coefficient}\left(\alpha, mu, n+1\right))))))))))\land\\{}(\forall U:Type, (\operatorname{MeasurableSpace}\left(U\right)\Rightarrow(\forall nu:\operatorname{Measure}\left(U\right), (\operatorname{IsProbabilityMeasure}\left(nu\right)\Rightarrow(\operatorname{reciprocalMoment}\left(mu\right)\neq\infty\Rightarrow(\operatorname{toReal}\left(\operatorname{expectedCost}\left(\operatorname{alwaysLeft}\left(U\right), nu, \alpha, mu\right)\right)=2\operatorname{toReal}\left(\operatorname{reciprocalMoment}\left(mu\right)\right)-(1-\alpha)))))))\land\\{}(\forall U:Type, (\operatorname{MeasurableSpace}\left(U\right)\Rightarrow(\forall nu:\operatorname{Measure}\left(U\right), (\operatorname{IsProbabilityMeasure}\left(nu\right)\Rightarrow(\operatorname{reciprocalMoment}\left(mu\right)\neq\infty\Rightarrow((\exists p:\operatorname{Policy}\left(U\right), \operatorname{expectedCost}\left(p, nu, \alpha, mu\right)<\operatorname{expectedCost}\left(\operatorname{alwaysLeft}\left(U\right), nu, \alpha, mu\right))\Leftrightarrow\frac{\alpha}{(1-\alpha)}<\operatorname{essSup}\left(Q, mu\right)))))))\land\\{}(\frac{1}{2}\leq\alpha\Rightarrow((\forall m\in\mathbb{N}, (1\leq m\Rightarrow(0<\operatorname{coefficient}\left(\alpha, mu, m\right))))\land(\operatorname{firstNegative}\left(\alpha, mu\right)=\infty)\land(\forall U:Type, (\operatorname{MeasurableSpace}\left(U\right)\Rightarrow(\forall nu:\operatorname{Measure}\left(U\right), (\operatorname{IsProbabilityMeasure}\left(nu\right)\Rightarrow(\forall p:\operatorname{Policy}\left(U\right), (\operatorname{reciprocalMoment}\left(mu\right)\neq\infty\Rightarrow(\operatorname{expectedCost}\left(\operatorname{alwaysLeft}\left(U\right), nu, \alpha, mu\right)\leq\operatorname{expectedCost}\left(p, nu, \alpha, mu\right))))))))))\land\\{}(\forall U:Type, (\operatorname{MeasurableSpace}\left(U\right)\Rightarrow(\forall nu:\operatorname{Measure}\left(U\right), (\operatorname{IsProbabilityMeasure}\left(nu\right)\Rightarrow(\forall p:\operatorname{Policy}\left(U\right), (\forall V:Type, (\operatorname{MeasurableSpace}\left(V\right)\Rightarrow(\forall rho:\operatorname{Measure}\left(V\right), (\operatorname{IsProbabilityMeasure}\left(rho\right)\Rightarrow(\forall h:\operatorname{Policy}\left(V\right), (\operatorname{expectedCost}\left(p, nu, \alpha, mu\right)\neq\infty\Rightarrow(\operatorname{expectedCost}\left(h, rho, \alpha, mu\right)\neq\infty\Rightarrow(\operatorname{abs}\left(\operatorname{toReal}\left(\operatorname{expectedCost}\left(p, nu, \alpha, mu\right)\right)-\operatorname{toReal}\left(\operatorname{expectedCost}\left(h, rho, \alpha, mu\right)\right)\right)<1)))))))))))))\land\\{}(\operatorname{reciprocalMoment}\left(mu\right)=\infty\Rightarrow(\forall U:Type, (\operatorname{MeasurableSpace}\left(U\right)\Rightarrow(\forall nu:\operatorname{Measure}\left(U\right), (\operatorname{IsProbabilityMeasure}\left(nu\right)\Rightarrow(\forall p:\operatorname{Policy}\left(U\right), ((\operatorname{expectedCost}\left(p, nu, \alpha, mu\right)=\infty)\land(\neg(\operatorname{expectedCost}\left(p, nu, \alpha, mu\right)<\operatorname{expectedCost}\left(\operatorname{alwaysLeft}\left(U\right), nu, \alpha, mu\right))))))))))))))).\end{gathered}$$
 
@@ -27,4 +51,6 @@ Finite costs use their toReal values in the correction formula and comparison. T
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.beneficial_marker_deflection`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.measurable_joint_law`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.measurable_source_law`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails](AdaptiveMarkerStoppingTails.md)

@@ -1,0 +1,4 @@
+**定义 10.1（静态投影、完整候选与比较范围）。** 本增补记本卷 §§1–9 为 A，[小窗口单位桥](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md)为 W，[三标签刚性卷](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)为 Rv，[native 切口配平续卷](AURIC_C128_NATIVE_CUT_BALANCE_CONTINUATION.md)为 NC。沿用 A1.1 的同一原 $E,C,u,N,\mathcal P,S,D$。A1.2 的前三组简称 A1–3，第四组仍称完整 $\mathrm R$。完整候选 $\mathsf A$ 始终是四组原关系连同 A8.3–8.4 及 Rv8.2–8.4 的全部实际来源合同；下列反例只针对它的静态投影中删除 R 的蕴涵，绝不声明已经实现这些来源合同。
+
+这里的“全部有限复正表”准确指每个原正评价 $\alpha$、每个有限 $k\ge1$、每列原实标签 $a_1,\ldots,a_k$ 和每个 $c\in\mathbb C^k$ 都有 $c^*G_\alpha c\ge0$。它包括任意大有限列、零、重复、相消、实平移和全部实缩放；不只检查两两主子式。“共同作用”则要求同一个原复乘法在一个共同载体上按乘法复合，定义见 13.1。前一条件没有包含后一条件。
+

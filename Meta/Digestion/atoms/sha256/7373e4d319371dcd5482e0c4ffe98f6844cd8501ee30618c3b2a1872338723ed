@@ -1,0 +1,17 @@
+#### 定理 16.2：密度与迹配对
+
+标准正锥上的归一正线性泛函恰为
+
+$$
+\omega(a)=\sum_s\operatorname{Tr}(\rho_sa_s),\qquad
+\rho_s\ge0,\quad\sum_s\operatorname{Tr}\rho_s=1.
+$$
+
+效果是 $0\le E\le I$，完整 POVM 满足 $\sum_kE_k=I$。自伴量 $H=\sum_kh_kP_k$ 的谱概率与均值分别为 $\operatorname{Tr}(\rho P_k)$、$\operatorname{Tr}(\rho H)$。
+
+**证明。**
+
+非退化迹配对给唯一自伴 $\rho_s$。在全部秩一正投影上非负等价于 $\rho_s\ge0$，单位评价给总迹一。反向直接成立。自伴谱分解给观测量结论。密度矩阵按谱值为秩一投影的凸组合；一个具有至少两个正谱值的矩阵可沿两谱值作相反小扰动，故不是极点，而秩一正和的各项必须支撑在同一条射线上。因此纯态恰为复秩一投影。
+
+$\square$
+

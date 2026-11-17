@@ -1,0 +1,10 @@
+若再设 von Koch 界 $E(x)\ll\sqrt x\log^2x$，则逐点地 $\mathcal T_{\theta,g}(x)-\sqrt x\,P_{H_x,g}(x)=O\bigl(\log^2x\int_0^1s|g(s)|\,ds\bigr)$。
+
+证明。由引理 489.1 的证明，$0\le1-\rho_x(u)\le4u/x$（$x\ge3$，$0\le u\le H_x$）。于是
+
+$$
+\Bigl|\frac{\mathcal T_{\theta,g}(x)}{\sqrt x}-P_{H_x,g}(x)\Bigr|\le\frac1{x^\theta}\int_0^1|g(s)|\,|D_{sx^\theta}(x)|\,\frac{4sx^\theta}x\,ds=\frac4x\int_0^1s|g(s)|\,|D_{sx^\theta}(x)|\,ds .
+$$
+
+由 Minkowski 不等式与引理 490.1(ii)，其 $L^2[X,2X]$ 范数 $\ll X^{-1}\|sg\|_1\sqrt{X^{1+\theta}\log X}$，与 $\sqrt{S_X}$ 之比为 $O(X^{\theta-1})\to0$。又 $\int_X^{2X}(\mathcal T_{\theta,g}-\sqrt xP_{H_x,g})^2\,dx/x=\int_X^{2X}(\mathcal T_{\theta,g}/\sqrt x-P_{H_x,g})^2\,dx$，得第一结论。逐点结论：von Koch 界给出 $|D_u(x)|\ll\sqrt x\log^2x$（$0\le u\le H_x\le x$），代入上式。证毕。
+

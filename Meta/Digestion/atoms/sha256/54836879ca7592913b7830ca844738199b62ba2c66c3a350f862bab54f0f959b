@@ -1,0 +1,36 @@
+**定义 2.1（固定振幅及原常数）。** 使用 OTF004 式 (25.6)、(25.8) 的固定函数与常数。为明确其定义，对 $|w|<1$ 令
+
+$$
+b=1-|w|^2,\qquad q(w)=e^{-1/b},\qquad\alpha(w)=\bar w/b,
+\qquad F_k(w)=\sqrt{q(w)}e^{-|\alpha(w)|^2/2}
+\frac{\alpha(w)^k}{\sqrt{k!}},\quad k\ge0,
+\tag{2.1}
+$$
+
+$F$ 在 $|w|\ge1$ 延拓为零。置
+
+$$
+\begin{aligned}
+z_0&=\int_{|w|<1}q(w)\,\frac{dA(w)}\pi,&
+M_F&=\sup_w(\|F\|+\|DF\|+\|D^2F\|),\\
+A=B&=10{,}000(1+M_F)/\sqrt{z_0},&R_0&=4(A+B+2),\\
+C_{\rm fail}&=1+256A^2,&
+C_{\rm return}&=3R_0+257A^2+2,&t_*&=256\max\{100,R_0\}.
+\end{aligned}
+\tag{2.2}
+$$
+
+这里及下文的导数为实导数算子范数，序列范数为 $\ell^2$ 范数。沿用 OTF004 式 (26.2) 的常数，写成
+
+$$
+\begin{aligned}
+C_t&=1{,}440{,}000{,}000{,}000,& B_*&=3R_0+2C_{\rm fail},\\
+\Lambda&=\max\{t_*,2C_{\rm fail},A^2,64B_*^2,64C_{\rm return}^2\},\\
+K_{\rm risk}&=3\cdot768^2C_{\rm fail}+1,\\
+e_*&=\min\left\{\frac1{100},\sqrt{\frac{C_t}{768^2\Lambda}},
+\frac{C_t}{6K_{\rm risk}},\frac{C_t}{393216}\right\},\\
+r_{\rm base}&=\max\{7,\lceil\log_2(1/e_*)\rceil\}.
+\end{aligned}
+\tag{2.3}
+$$
+

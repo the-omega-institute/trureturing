@@ -1,0 +1,28 @@
+**定理33.2（全部三元组及全部质量的逆向）。** 对任意30.1的丛和任意连续中央自伴对合 $Q$，$D_Q(a,b)=iQ[a,b]/2$ 满足全部30.2的原关系，保持原 $E,C,u,N,\mathcal P$ 和全部质量，不要求 $L$ 稠密。
+
+证明。令 $p_\pm=(u\pm Q)/2$，在同一复截面空间定义
+
+$$
+A\star_Q B=p_+AB+p_-BA.
+\tag{33.2}
+$$
+
+这是 $p_+M\oplus(p_-M)^{\rm op}$ 的 C* 乘法，同一伴随、正锥、单位和范数不变，且自伴输入满足 $a\star_Q b=a\circ b-iD_Q(a,b)$。每份原正实评价的复延拓在此仍正，Cauchy–Schwarz给
+
+$$
+\gamma(a\circ b)^2+\gamma D_Q(a,b)^2
+\le\gamma(a^2)\gamma(b^2),
+$$
+
+故两向 A1/P2成立。实 Gram 的二次值是 $\gamma((\sum_jt_ja_j)^2)\ge0$；相加三表的指定差向量合成零，所有排列同理。谱演算给 $0\le e\le\vartheta u\Rightarrow e^2\le\vartheta e\le e$，故 A2/A3全部成立。
+
+任取实际 $a,b,d$，以 $D_Q$ 生成30.4的真实 $v,w$。置 $Z=b+Jd$，则直接结合计算给
+
+$$
+(b\pm v)+J(d\pm w)=(u\pm Ja)Z,\qquad
+q_{D_Q}(Y)=Y^*Y\quad(Y\in M).
+\tag{33.3}
+$$
+
+所以两端普通 Gram 都是 $Z^*(u+a^2)Z$。每份原评价读取即30.5。演员 $a$ 在此任意，绝不只核验秩一、局部或无背景三元组。零质量同样保留，未作任何质量除法。∎
+

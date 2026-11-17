@@ -1,0 +1,45 @@
+#### 定理 2.2：满射与精确纤维
+
+式 (4) 满射到 $S^2$，且
+
+$$
+h(\psi)=h(\psi')\quad\Longleftrightarrow\quad
+\psi'=e^{i\chi}\psi.
+$$
+
+因此归一复双元与三元之间是
+
+$$
+S^1\longrightarrow S^3\longrightarrow S^2.
+$$
+
+**证明。**
+
+球面等式来自
+
+$$
+4|\alpha|^2|\beta|^2+(|\alpha|^2-|\beta|^2)^2
+=(|\alpha|^2+|\beta|^2)^2.
+$$
+
+给定 $x\in S^2$ 且 $x_2\ne-1$，取
+
+$$
+\alpha=\sqrt{\frac{1+x_2}{2}},\qquad
+\beta=\frac{x_1+i x_3}{\sqrt{2(1+x_2)}}.
+$$
+
+南极取 $(0,1)$，故满射。相同三元确定相同的 $|\alpha|^2,|\beta|^2,\bar\alpha\beta$。若 $\alpha\ne0$，令 $\lambda=\alpha'/\alpha$，便有 $|\lambda|=1$ 且 $\beta'=\lambda\beta$； 在 $\alpha=0$ 时只需比较第二分量。反向直接代入。
+
+$\square$
+
+这是标准 Hopf 表示，项目 C137 已给出相同结构及其拓扑边界。[\[5\]](#ref-c137), [\[12\]](#ref-mosseri) 维数依次是：$\mathbb C^2$ 四个实参数，归一化后为三维流形 $S^3$，商去共同相位后为二维流形 $S^2$，后者用三个受限实坐标表示。
+
+完整三元固定后，相对比值在北图已确定：
+
+$$
+\frac{\beta}{\alpha}=\frac{x_1+i x_3}{1+x_2}.
+$$
+
+所以此时局部读口没有显示的是共同相位，不是整个第二振幅。共同相位对孤立态是表示冗余；只有把它与另一实际相干分支比较、使之成为联合态中的相对相位，才可能改变读出。整体的绝对共同相位仍不可观测。
+

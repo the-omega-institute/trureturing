@@ -1,0 +1,161 @@
+**Theorem 48.1 (paid fourth scalar).** The scalar $\rho$ of (45.1) satisfies
+
+$$
+\rho=-\frac{C_4}{a\gamma^2\mu},
+\tag{48.1}
+$$
+
+where $C_4$ is exactly (24.5).
+
+Proof. Define fixed reconstructed vectors
+
+$$
+u_0=p,\qquad u_1=v,\qquad
+u_n=\gamma\mu\sum_{i+j=n}G_jg_i\quad(n=2,3),\qquad
+u_4^0=\gamma\mu\sum_{\substack{i+j=4\\i\le3}}G_jg_i.
+\tag{48.2}
+$$
+
+We have $u_2\in\dot{\mathcal H}\subset L^{14/5}$,
+$u_3\in L^4$ and $u_4^0\in L^8+L^4$ by Lemma 43.1 and §38. The coefficient and charge equations give
+
+$$
+\begin{aligned}
+\mathcal Eu_n
+ &=\gamma\mu g_n-\sum_{\ell=1}^n\mathscr D_\ell u_{n-\ell}
+ &&(0\le n\le3),\\
+\mathcal Eu_4^0
+ &=-\sum_{\ell=1}^4\mathscr D_\ell u_{4-\ell},\\
+\mu g_n&=\sum_{k=0}^n\mathcal V_ku_{n-k}
+ &&(0\le n\le3),\\
+\gamma\mu\mathcal R_4
+ &=Vu_4^0+\mathcal V_1u_3+\mathcal V_2u_2
+                       +\mathcal V_3v+\mathcal V_4p.
+\end{aligned}
+\tag{48.3}
+$$
+
+The first two lines hold distributionally; the last two are locally integrable identities. There is no term $g_4$ in $u_4^0$.
+
+We justify all integrations at spatial infinity before using them. On a homogeneous annulus $A_R$ and its fixed enlargement, the owned mode and response bounds give
+
+$$
+\|p\|_{2,A_R}=O(R^{-3/2}),\quad
+\|\nabla_Hp\|_{2,A_R}=O(R^{-5/2}),\quad
+\|v\|_{2,A_R}=O(R^{-1/2}),\quad
+\|\nabla_Hv\|_{2,A_R}=O(R^{-3/2}).
+\tag{48.4}
+$$
+
+The annulus has volume $O(R^7)$. Hölder therefore gives
+
+$$
+\|u_2\|_{2,A_R}=O(R),\qquad
+\|u_3\|_{2,A_R}=O(R^{7/4}),\qquad
+\|u_4^0\|_{2,A_R}=O(R^{21/8}+R^{7/4}).
+\tag{48.5}
+$$
+
+For a local equation $\mathcal Eu=YF+G$ with locally $L^2$ data, the cutoff real-part energy test gives
+
+$$
+\|\nabla_Hu\|_{2,A_R}
+ \le C\left(R^{-1}\|u\|_{2,\widetilde A_R}
+            +\|F\|_{2,\widetilde A_R}
+            +R\|G\|_{2,\widetilde A_R}\right).
+\tag{48.6}
+$$
+
+Here is its local justification without assuming the derivative being estimated. Localize the distributional equation; the cutoff terms can be written as horizontal divergences of $L^2$ fields plus $L^2$ functions. Smooth in the group, perform the real-part test with $\eta^2u$, and absorb each mixed derivative term by $2AB\le\delta A^2+\delta^{-1}B^2$. The cutoff derivative contributes $R^{-1}\|u\|_2$ and the scalar forcing contributes $R\|G\|_2$. Weak closure gives local horizontal energy membership and (48.6) for the original data. This is a local estimate, not global homogeneous energy membership.
+
+The third coefficient equation has explicitly
+
+$$
+\mathcal Eu_3
+ =Y(-2\nu rYu_2+3\nu^2r^2Yv-4\nu^3r^3Yp)
+     +\lambda v+\gamma\mu g_3.
+\tag{48.7}
+$$
+
+Since $u_2\in\dot{\mathcal H}$ and $g_3\in L^2$, (48.4)–(48.6) give
+$\|\nabla_Hu_3\|_{2,A_R}=O(R)$.
+The fourth equation has divergence field
+
+$$
+-2\nu rYu_3+3\nu^2r^2Yu_2
+       -4\nu^3r^3Yv+5\nu^4r^4Yp
+\tag{48.8}
+$$
+
+and scalar forcing $\lambda u_2$. The same estimate gives
+$\|\nabla_Hu_4^0\|_{2,A_R}=O(R^2)$.
+
+Consequently the annular absolute pairings
+$|\nabla_Hv|\,|\nabla_Hu_3|$,
+$|rYp|\,|Yu_3|$ and
+$|\nabla_Hp|\,|\nabla_Hu_4^0|$
+are each $O(R^{-1/2})$. They are summable over dyadic annuli. Cutoff-derivative errors in the $v/u_3$ exchange are bounded by
+
+$$
+C\left(R^{-1}\|u_3\|_{2,A_R}\|\nabla_Hv\|_{2,A_R}
+       +R^{-1}\|v\|_{2,A_R}\|\nabla_Hu_3\|_{2,A_R}\right)
+ =O(R^{-3/4})+O(R^{-1/2}),
+\tag{48.9}
+$$
+
+and those in the $p/u_4^0$ exchange are
+$O(R^{-7/8})+O(R^{-1/2})$. They all vanish. The weighted first-coefficient cutoff pairing with $p,u_3$ is controlled in the same way using $rYp$.
+
+The other kinetic terms are finite by
+$\|rYv\|_2\|Yu_2\|_2$,
+$\|r^2Yp\|_2\|Yu_2\|_2$ and
+$\|r^2Yp\|_2\|rYv\|_2$.
+For potentials, $\mathcal V_1p\in L^{4/3}$ pairs with $u_3\in L^4$;
+$p\mathcal V_2\in L^{14/9}$ pairs with $u_2\in L^{14/5}$;
+bounded $\mathcal V_3$ pairs $p,v\in L^2$.
+The term $Vp$ is in both dual spaces for $L^8+L^4$, and $Vv\in L^{4/3}$. The remaining $\mathcal V_1v/u_2$ pair is the continuous energy-multiplier pairing of Lemma 24.1. The unweighted threshold $p/u_2$ term is paid by $p\in L^{14/9}$. Thus the limiting exchanges include every kinetic, potential and threshold term; neither $u_3$ nor $u_4^0$ has been assigned a global energy norm.
+
+Now test the fourth equation in (48.3) with cutoffs of $p$. Use $\mathcal Ep=\gamma Vp$ and the last line of (48.3). The vanishing boundary terms just proved give
+
+$$
+\rho=-\frac{S_4}{a\gamma^2\mu},\qquad
+S_4=\mathfrak a_4[p]+\mathfrak a_3(p,v)
+          +\mathfrak a_2(p,u_2)+\mathfrak a_1(p,u_3).
+\tag{48.10}
+$$
+
+The first response equation, tested against cutoffs of $u_3$, gives
+$h(v,u_3)=-\mathfrak a_1(p,u_3)$.
+The third equation, tested against cutoffs of $v$, gives
+
+$$
+h(u_3,v)
+ =-\mathfrak a_1(u_2,v)-\mathfrak a_2[v]-\mathfrak a_3(p,v).
+\tag{48.11}
+$$
+
+All these fixed vectors are real. Hermitian symmetry and the paid exchanges imply
+
+$$
+\begin{aligned}
+S_4
+ &=\mathfrak a_4[p]+2\mathfrak a_3(p,v)+\mathfrak a_2[v]
+          +\mathfrak a_2(p,u_2)+\mathfrak a_1(v,u_2)\\
+ &=D_4+\mathcal F_2(u_2).
+\end{aligned}
+\tag{48.12}
+$$
+
+By (44.4), $\mathcal F_2(p)=0$ and (24.2),
+
+$$
+\mathcal F_2(u_2)=\mathcal F_2(\Upsilon)
+ =-h[\Upsilon],\qquad S_4=C_4.
+\tag{48.13}
+$$
+
+This proves (48.1). In particular the field products
+$\nu^2\lambda V_{2t}$ and $\lambda^2V_{tt}/2$ and the threshold term
+$-a\lambda\|v\|_2^2$ in $D_4$ survive unchanged. The normalization is
+$\rho=-C_4/(a\gamma^2\mu)$, not an identification of $\rho$ with $C_4$. $\square$
+

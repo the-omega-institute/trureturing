@@ -1,0 +1,9 @@
+**Corollary 163.3 (finite-horizon successor data have zero coercivity infimum).** For every finite-dimensional $\mathscr R$ and every finite $H$,
+
+$$
+\inf\left\{q(v):v\in W_{\mathscr R,T}^{(H)},\ \|v\|_\infty=1\right\}=0.
+\tag{163.5}
+$$
+
+Thus adjoining the current readout and any prescribed finite list of its successor readouts cannot create a positive lower bound for the weighted heat energy on the full calibrated kernel. If $m(B_n)\to0$, the sequence in Proposition 163.2 is also weak-star null in $L^\infty(m)$ by the argument of (162.5). This is a finite-horizon statement; it does not control an infinite or nonlinear readout.
+

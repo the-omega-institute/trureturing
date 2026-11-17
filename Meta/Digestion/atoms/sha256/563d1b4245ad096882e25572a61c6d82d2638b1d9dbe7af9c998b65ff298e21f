@@ -1,0 +1,64 @@
+**定理 190.1（完整候选及原量子理论）。** 在分别具名的完整原背景中，
+
+$$
+\begin{aligned}
+\mathsf C_{-\rm self}(B)
+&\Longleftrightarrow \mathsf C_{\rm cs}(B)
+\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{-\rm self}(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf C_{\rm cs}(\mathsf B_{\rm cl})
+\Longleftrightarrow
+\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{190.1}
+$$
+
+$\mathsf Q$ 仍取原定义 67.2 的对象及方向可依赖、对全部实际准备、全部数学效果和任意小原质量统一的证书。全部等价保持同一原签名及其完整历史。
+
+证明。两个背景分别由母卷定理 30.1 与引理 67.3 独立供应原右单位。假设 $\mathsf F_{-\rm self}$，固定任意原对象 $A$，取定理 189.1 的同一个实际 $J,i,j_1,j_2,\mathcal V$。对每个 $T\in\mathcal V$，在整个 $E_J$ 使用定理 188.1。非零简单同态 $\pi_Tj_1|_{P_0}$ 单射；取 $b\in P_0$ 使
+
+$$
+y_T=\pi_Tj_1(b)\ne0,\qquad\tau_T(y_T)=0.
+\tag{190.2}
+$$
+
+这样的 $b$ 存在，因为非经典 $P_0$ 的维数大于一，而迹只给一个线性条件。投影原单向交叉零 $D_{i(a)}j_1(b)=0$，再与同一 $y_T$ 作原 $q_T$ 配对。式 (188.1) 的导子项因斜伴随为零，单位方向项因 (188.2) 及迹零为零，留下
+$0=\ell_T(i(a))\|y_T\|_{q_T}^2$。
+正性给 $\ell_Ti=0$，对原 $a^2$ 亦成立。记 $x=i(a)$，则原 Jordan 与 $D$ 保持、(188.1) 的对角式以及 $\delta_T$ 交替给
+
+$$
+\begin{aligned}
+\pi_Ti(D^A_aa)
+&=\pi_TD^J_xx\\
+&=\ell_T(x)x_T-\ell_T(x_R^2)u_T\\
+&=\ell_T(i(a))x_T-\ell_T(i(a^2))u_T
+=0.
+\end{aligned}
+\tag{190.3}
+$$
+
+最后一步使用 $\ell_T|_T=0$ 及 $x_R^2=\pi_R(x^2)$。$\mathcal V$ 分离整个 $A$，所以 $D^A_aa=0$。任意 $A$ 均如此，极化便给所有原对象的交替性；随后才由右单位得到左单位。
+
+对总秩至少三的任意原对象，定理 181.1 仍给 $D_ep=k_{ep}p$。交替性给 $k_{ep}p=-k_{pe}e$；正交非零原子线性无关，故两个系数均零，(181.2) 也给 $D_ee=0$。总秩二时任意正交 primitive 对满足 $e+p=u$，右单位和 $D_ee=0$ 直接给 $D_ep=0$。总秩至多一由右单位处理。因而全部被删的正交切口自身关系都成为 $0=0$，每个原对象及实际联合已恢复同一 $\mathsf F_{\rm ext}$。这一步对秩二原对象同样使用 (189.1) 中实际供应的参考，没有把裸局部命题 185.1 改成高秩局部等价。
+
+现在直接消费定理 178.1 和 183.1 的完整消费者接口，得到 (190.1)。具体地，同一原世界的推导对应为：
+
+| 恢复所得的原关系及资料 | 量子结论与保留范围 |
+| --- | --- |
+| 原 $q,L,D$、SC、原指针 SJ 和已许可参考 | $[D_a,D_b]=-[L_a,L_b]$；$a\cdot b=a\circ b-iD_ab$ 在同空间给有限复矩阵直和，中央标签、经典理想及取向均保留。 |
+| 全部原准备及其原双对偶运输 | $\alpha(e)=\tau_A(\rho_\alpha e)$，$\rho_\alpha\ge0$，$\tau_A(\rho_\alpha)=\alpha(u_A)$；Born 规则连同原零质量、次归一质量与不等正块权保持。 |
+| 原完整 X、同记录执行、全部相关准备与全事件 R | 每份已声明实际联合为普通复张量；各原事件 CP/TNI，每份完整原装置 TP；原设备身份不按响应合并。 |
+| 整个 AC、精确 $N_u$、Xs 和原合法连线 | 每个效果仍有一份原所选的完整有限平方根词，其成功支为 $\rho\mapsto\sqrt e\,\rho\sqrt e$，投影时为 Lüders 支；每个原失败出口、质量、输出及记录保留。 |
+| 原 F、细口、分组和实际遗忘、具名同数支持双返回及反向资料 | $S_\ell=\operatorname{Ad}_{K_\ell}$、$\Phi_f=\sum_\ell S_\ell$、$U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$；保留同一原 $q_\ell>0$、两侧支持复合、零标签和全部合法接续。 |
+| 分别固定的 $B$ 与 $\mathsf B_{\rm cl}$ | 前者仍给原准备有限正生成；后者只给密度锥的闭覆盖，证明中的数学正和及极限没有新增实际准备身份。 |
+
+原端口、细记录、中央细权、失败、实际遗忘与原质量仍逐步进入每条原合法有限顺序、自适应和并行历史。对其响应词 $h=(f_1,\ldots,f_m)$ 及末端效果 $w$，准确保留
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{190.4}
+$$
+
+反向由同一原完整配平缩域得到。数学 Kraus 表示没有供应新实际细口，原所选词也没有供应任意独立仪器的共同组装。∎
+

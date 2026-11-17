@@ -1,0 +1,57 @@
+### 152.E. The thirty-six lower-order rows and the surviving 013 row
+
+Use independent variations of the three components $u_a$, $a\in I$, always compensating their sum in $u_B$. The nine invariant directions $\mathbf1_Eg_j$ in the respective components have marginal differential consisting of three copies of
+
+$$
+G_E=(\langle g_i,\mathbf1_Eg_j\rangle_m)_{0\le i,j\le2}.
+\tag{152.34}
+$$
+
+This matrix is positive definite. If its quadratic form vanished, the corresponding analytic invariant combination of $g,Pg,P^2g$ would vanish almost everywhere on $E$. Quotient uniqueness would make it vanish globally, contradicting Lemma 147.2. The functions are bounded by §133, so these are admissible bounded directions supported in $E$.
+
+For an odd direction $h$ varying component $a$, the pair differential is exactly
+
+$$
+D Q_r(u_i,u_j)[\delta u_a=h]
+ =t\bigl(\mathbf1_{i=a}Q_r(h,x_j)
+              +\mathbf1_{j=a}Q_r(x_i,h)\bigr),
+\qquad i,j\in I.
+\tag{152.35}
+$$
+
+The invariant $f$ terms have vanished by parity. For each diagonal pair $(a,a)$, the three functionals $Q_r(h,x_a)+Q_r(x_a,h)$ are independent on $X_{E,S_a}$: a dependence would be a dependence of the six functionals in (152.31). Choose three dual directions there varying component $a$. They affect precisely its three diagonal pair rows; every other pair row vanishes by frequency separation.
+
+For each unordered distinct pair $\{a,b\}$, choose six directions $h\in X_{E,S_b}$ varying component $a$. By (152.31) for $x_b$, their six rows
+
+$$
+\bigl(Q_r(h,x_b),Q_r(x_b,h)\bigr)_{r\in\mathcal R}
+\tag{152.36}
+$$
+
+can be made an invertible evaluation matrix. They affect precisely the six ordered rows $(a,b),(b,a)$; in particular the $(a,a)$ rows pair their $S_b$ frequencies with $S_a$ and vanish. Every remaining pair row either has no varied component or pairs with a third disjoint sector. These twenty-seven odd directions have zero marginal differential and an invertible pair differential. Together with the nine invariant directions, whose pair entries need not vanish, the lower-order thirty-six-row differential is block triangular with invertible diagonal blocks.
+
+To obtain one more row define the bounded real function
+
+$$
+\psi=gP(x_1Px_3).
+\tag{152.37}
+$$
+
+It is even and has no zero angular frequency. Indeed $x_1$ and $Px_3$ have finite angular spectra in the disjoint positive sets $S_1,S_3$ and their negatives; none of their sums is zero. Multiplication by $g$ and application of $P$ preserve the absence of the zero mode. Also $\psi\ne0$ in $L^2(m)$. The vector $x_3$ is nonzero by its independent functionals, so $Px_3$ is a nonzero analytic function on $\Omega$ by injectivity of $P$ and (122.11). Its zero set is null by analytic uniqueness. Since $x_1\ne0$, the bounded product $x_1Px_3$ is nonzero; injectivity of $P$ and $g>0$ almost everywhere then prove the assertion.
+
+Vary only $u_0$ by $\psi$, and $u_B$ by $-\psi$. All marginal derivatives vanish by its zero angular mean. Its pair derivatives vanish as well: its pairing with the invariant part of each $u_j^*$ has zero angular mean, and its pairing with the odd part is odd. Its triple derivative is
+
+$$
+\begin{aligned}
+D\mathcal C(u_0,u_1,u_3)[(\psi,0,0)]\big|_{u=u^*}
+ &=\mathcal C(\psi,u_1^*,u_3^*)\\
+ &=t^2\mathcal C(\psi,x_1,x_3)
+ =t^2\int_G\psi^2\,dm>0.
+\end{aligned}
+\tag{152.38}
+$$
+
+The constant term vanishes by zero angular mean and the two linear terms by parity. This proves that the full thirty-seven-row differential is onto. Restricting to the thirty-six directions above and this last one makes it an isomorphism.
+
+All directions involving component $3$ are supported in $E$, where that component has uniform slack. The same is true of the other earlier directions. The only new direction outside $E$ varies components $0$ and $B$, which have uniform positive slack on all of $G$. Thus bounded Borel representatives can be chosen, with one common null repair, so that a small closed ball in these thirty-seven directions consists of pointwise simplex tuples on the whole $G$. This pays the domain condition without assuming a global positive lower bound for $f_3$.
+

@@ -1,0 +1,28 @@
+### 21.3. The control-safe quotient criterion
+
+Let $H$ be a finite family of already acquired histories, and let $\eta:H\to M$ be a proposed memory encoding. For a history $h$, let $B_h$ be its target--state candidate relation, and let $\mathcal W_n$ be the depth-$n$ acquisition domain (its candidate
+classes need not be finite). The encoding is safe for an $n$-step task exactly when
+
+$$
+\boxed{
+\bigcup_{h:\eta(h)=m}B_h\in\mathcal W_n
+\quad\text{for every }m\in\eta(H).
+}
+$$
+
+This is the finite-history form of the control-fiber condition: one memory value must admit one common continuation policy. It is a **one-time cut compression** criterion; it does not by itself provide a fixed finite-state controller for later updates. The condition is stronger than equality of the target candidate set, the best remaining step count, a complete-law marginal, or a motion scalar.
+For an exact prescribed-triple task, the memory observation must additionally retain enough of the successor relation to determine the allowed continuation kernels. A sufficient control-complete observation therefore has the form
+
+$$
+\eta_{\mathrm{ctrl}}(h)=
+\bigl(
+\text{target--state candidates},
+\text{legal actions and responses},
+\text{full-law residual cells},
+\text{joint successor relation},
+\text{remaining certificate rank}
+\bigr),
+$$
+
+with the last four components interpreted relative to the declared task contract. There are two contracts. **(a)** A full permitted-action behavioral quotient requires legality, responses and successors to descend and repeated finite-memory updates to close. **(b)** The fixed depth-$n$ cut requires only the displayed common-policy condition; a repeated controller additionally needs policy-relative update closure and a terminating rank. An executable controller must still check $\Xi$, legality, responses, rank and cost explicitly.
+

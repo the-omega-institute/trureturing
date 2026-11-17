@@ -1,0 +1,12 @@
+**Definition 196.1 (joint weighted mode map).** With the notation of Definition 194.1, define
+
+$$
+\mathsf J_u:
+\mathcal W_u\longrightarrow\mathbb R^{4r_u},
+\qquad
+\mathsf J_u(h)=\bigl(\mathsf L_u(h),\mathsf K_u(h)\bigr).
+\tag{196.1}
+$$
+
+Changing the basis of $\mathcal W_u$ changes the coordinate presentation of $\mathsf J_u$ by invertible transformations on its source and target, so its rank and kernel are intrinsic.
+

@@ -1,0 +1,24 @@
+**定义 C-73.1（明确指定的复振幅完成）。** 除五概率外，另给五个相位，采用《辛预测完成》§35 的约定
+
+$$
+\psi_s=\sqrt{p_s}e^{-i\theta_s},\qquad
+\sum_s|\psi_s|^2=1,\qquad
+\theta_s\in\mathbb R/2\pi\mathbb Z.
+\tag{C73.1}
+$$
+
+这是假设一个正交五模式复载体，不从经典概率唯一推出。隐藏角为
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi},
+$$
+
+四角复比值为
+
+$$
+\Xi=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}\in\mathbb C^\times.
+\tag{C73.2}
+$$
+
+全正性确保分母非零；此处 $\chi$ 是角，旧 C-13.3 用于复比值的同形字母改由 $\Xi$ 表示。
+

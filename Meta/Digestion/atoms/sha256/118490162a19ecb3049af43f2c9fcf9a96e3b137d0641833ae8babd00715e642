@@ -1,0 +1,15 @@
+**引理 34.1（保留偏移的原传递式）。** 对实 $\alpha,\beta,\kappa$ 和原 $z\in V_h$，若当前已准确知道 $d=F_\alpha(z+\kappa u)=\alpha Jz$，其中 $J$ 满足自身平面公式，则
+
+$$
+\begin{aligned}
+&F_{\beta+\alpha\kappa}
+ \bigl(z+d+(\kappa-\alpha\beta)u\bigr)\\
+&\quad-F_{\beta-\alpha\kappa}
+ \bigl(z-d+(\kappa+\alpha\beta)u\bigr)
+=-2\alpha\beta z+2\kappa d.
+\end{aligned}
+\tag{34.1}
+$$
+
+证明。实际调用 PB $(\alpha h,z+\kappa u,\beta h)$。比例零行给 $D(\alpha h,\beta h)=0$，所以 $\nu=d-\alpha\beta u,\omega=\alpha\kappa h$。两个外层第二标签准确为 $(\beta\pm\alpha\kappa)h$，两个第一标签就是 (34.1) 所列原标签。用反对称性交换外层槽；$z\circ d=0$ 消去唯一横向交叠，两份单位交叉项互消，得到等式。这里只消费已知的这一份内响应，不预取一般单位平移。∎
+

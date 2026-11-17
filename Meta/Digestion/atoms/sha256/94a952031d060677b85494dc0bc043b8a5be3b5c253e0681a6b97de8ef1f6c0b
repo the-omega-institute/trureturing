@@ -1,0 +1,71 @@
+**Lemma 26.1 (all consumed scalar and cutoff errors).** One has
+
+$$
+\widehat q_s[t_s]=s^4D_4+o_\delta(s^4),\qquad
+\widehat q_s(e_s,t_s)=o_\delta(s^4),\qquad
+\widehat q_s[e_s]=O_\delta(s^5).
+\tag{26.2}
+$$
+
+On every sequence (25.8), additionally,
+
+$$
+\widehat q_s(t_s,w_s)=s^2\mathcal F_2(w_s)+o_\delta(s^4),
+\qquad
+\widehat q_s(e_s,w_s)=o_\delta(s^4).
+\tag{26.3}
+$$
+
+Proof. Decompose $d$ into its even and odd parts in $r$. They satisfy $|d_{\rm even}|\le Cs^2r^2$, $|d_{\rm odd}|\le Cs|r|$ everywhere and $|d|\le C\delta$. On $|r|\le2R$ its Taylor coefficients are $-2\nu sr,3\nu^2s^2r^2,-4\nu^3s^3r^3,5\nu^4s^4r^4$.
+
+For the $t_s$ diagonal, all odd products vanish by reflection. The omitted quadratic $p$ tail is $O(s^2R^{-3})$ by (22.6); the omitted leading $p,v$ cross tail has the same bound by (22.17). Both are $O_\delta(s^5)$. After subtracting these lower-order contributions, the normalized fourth-order kinetic terms are dominated, respectively, by constant multiples of
+
+$$
+r^4|Yp|^2,\qquad |r^2Yp|\,|rYv|,\qquad r^2|Yv|^2.
+\tag{26.4}
+$$
+
+These are integrable by (22.6). To include the expanding transition and exterior explicitly, on $|r|\ge2R$ one has $s^{-1}\le |r|/(2\delta)$. Thus each lost quadratic or linear coefficient, after division by $s^4$ and inclusion of its $s$ cross factor, has the same respective majorant in (26.4), with a fixed $\delta$-dependent constant. On each fixed height strip ordinary Taylor convergence gives the quartic coefficients. Dominated convergence therefore gives $5a\nu^4\int r^4|Yp|^2-8a\nu^3\int r^3YpYv+3a\nu^2\int r^2|Yv|^2$ at fourth order.
+
+The full second-order coefficient on $t_s$ is
+$h[v]+2\mathfrak a_1(p,v)+\mathfrak a_2[p]=C_{\rm resp}=0$.
+The first- and third-order integrals vanish by parity. By (23.2), the fourth-order field coefficient is exactly $-\chi\int(\mathcal V_4p^2+2\mathcal V_3pv+\mathcal V_2v^2)$; all higher products are $o(s^4)$ by boundedness and $p,v\in L^2$. The threshold is exactly $-a\lambda s^2-a\lambda s^4\|v\|_2^2$, since $\langle p,v\rangle=0$. The complete-field remainder costs $O(s^5(1+|\log s|))\|t_s\|_2^2$. These calculations prove the first formula of (26.2), with precisely (24.5).
+
+For the boundary pairing, $h(p,z)=0$ and parity remove the $p$ terms and the mixed $p,v$ term, leaving
+
+$$
+h(e_s,t_s)=s^2h((1-\vartheta_s)v,v)=O(s^2R^{-3}).
+\tag{26.5}
+$$
+
+For its rate use (24.3) on $(1-\vartheta_s)v$. In its kinetic right side $Y\vartheta_s=0$; the two tail norms $\|\mathbf1_{|r|>R/4}rYp\|_2$ and $\|\mathbf1_{|r|>R/4}Yv\|_2$ are $O(R^{-3/2})$. The field right side is at most $CR^{-4}\|\mathbf1_{|r|>R/4}p\|_2\|\mathbf1_{|r|>R/4}v\|_2=O(R^{-6})$. This proves (26.5), including the derivative implicit in $h$.
+
+The rational part of $\widehat q_s(e_s,t_s)$ is $a\int d(1-\vartheta_s)|Yt_s|^2$. The even/odd bounds above and parity bound its three terms by
+
+$$
+Cs^2\int_{|r|>R/4}r^2|Yp|^2
+ +Cs^2\int_{|r|>R/4}|rYp\,Yv|
+ +Cs^4\int_{|r|>R/4}r^2|Yv|^2
+ =O_\delta(s^5)+o_\delta(s^4).
+\tag{26.6}
+$$
+
+For the field part, the first-order base term and every third-order product are odd and integrate to zero. The second-order tails containing $\mathcal V_1pv$ and $\mathcal V_2p^2$ are $O(R^{-6})$: use (3.2)'s height decays $R^{-4},R^{-3}$ and the $L^2$ tails $R^{-3/2},R^{-1/2}$ of $p,v$. The fourth-order field tails tend to zero by integrability of $\mathcal V_4p^2,\mathcal V_3pv,\mathcal V_2v^2$, and hence cost $o(s^4)$. Higher products and the remainder (23.2) also cost $o(s^4)$. The threshold term is bounded by $Cs^2(R^{-3}+s^2R^{-1})=O_\delta(s^5)$, its odd cross term vanishing. Together with (26.5)–(26.6) this proves $\widehat q_s(e_s,t_s)=o_\delta(s^4)$.
+
+For $\widehat q_s[e_s]$, nonnegativity of $h$ and $h\le ab$, together with $|d|\le C\delta$, bound the kinetic and $h$ terms in absolute value by $Cb[e_s]=O_\delta(s^5)$. The first two field coefficients are bounded energy multipliers by (3.4) and cost $C(s+s^2)b[e_s]$. Boundedness of the cubic and higher fields costs $Cs^3\|e_s\|_2^2=O_\delta(s^6)$. The threshold costs $Cs^2\|e_s\|_2^2=O_\delta(s^5)$. This proves the last formula of (26.2).
+
+For the actual cross term, first-order cancellation by (24.3) leaves the second-order kinetic terms in $s^2\mathcal F_2(w_s)$. The remaining kinetic errors have coefficient norms
+
+$$
+\left\|\frac{d+2\nu sr-3\nu^2s^2r^2}{s^2}Yp\right\|_2\longrightarrow0,
+\qquad
+\left\|\frac{d+2\nu sr}{s}Yv\right\|_2\longrightarrow0.
+\tag{26.7}
+$$
+
+For the first limit, on $|r|<2R$ the divided Taylor remainder is bounded by $C\delta r^2|Yp|$ and converges pointwise to zero. On the transition and exterior separate the lost linear term, whose norm is at most $Cs^{-1}\|\mathbf1_{|r|>2R}rYp\|_2=O_\delta(s^{1/2})$. The remaining terms there are bounded by $C_\delta r^2|Yp|$ with tail norm tending to zero. For the second limit, $|d|\le Cs|r|$ gives majorant $C|rYv|$, and the multiplier tends pointwise to zero. Equation (25.9) therefore makes the resulting pairings with $Yw_s$ equal to $o_\delta(s^4)$.
+
+The second-order field terms are exactly $-\chi s^2\int(\mathcal V_2p+\mathcal V_1v)w_s$. The next two terms are $s^3$ times pairings with $\mathcal V_3p$ and $\mathcal V_2v$. Their magnitudes are $O_\delta(s^5)$: for the first use boundedness of $\mathcal V_3$, $p\in L^{14/9}$ and Sobolev (22.7); for the second use the energy multiplier bound and weighted Cauchy–Schwarz. The remaining fields have coefficient $O(s^4)$ in $L^2$ when multiplied by $p$ or $v$, and cost $O_\delta(s^5)$ by $\|w_s\|_2=O_\delta(s)$. The full remainder (23.2) is smaller. Retain $-a\lambda s^2\langle p,w_s\rangle$ inside $s^2\mathcal F_2(w_s)$. Its other threshold term is $-a\lambda s^3\langle v,w_s\rangle=o_\delta(s^4)$ by Corollary 25.2. This is the weak unweighted pairing step; $v$ has not been assigned fictitious homogeneous dual membership. These bounds prove the first formula of (26.3).
+
+Finally, continuity of $h$ and $|d|\le C\delta$ bound the $h$ and rational parts of $\widehat q_s(e_s,w_s)$ by $C\sqrt{b[e_s]}\sqrt{b[w_s]}=O_\delta(s^{9/2})$. The first two field coefficients cost $C(s+s^2)\sqrt{b[e_s]}\sqrt{b[w_s]}$ by (3.4). The bounded cubic and higher fields cost $Cs^3\|e_s\|_2\|w_s\|_2=O_\delta(s^{11/2})$, and the threshold costs $Cs^2\|e_s\|_2\|w_s\|_2=O_\delta(s^{9/2})$. Equation (23.2) handles its remainder. This proves the second formula of (26.3). All these actual pairings allow arbitrary complex $w_s$; parity was applied only to the fixed $p,v$ and their even cutoff products. $\square$
+

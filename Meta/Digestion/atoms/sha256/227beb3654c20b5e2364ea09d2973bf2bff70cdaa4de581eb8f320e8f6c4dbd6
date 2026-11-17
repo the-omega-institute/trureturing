@@ -1,0 +1,41 @@
+**Proposition 11.3 (Wholly nonsingular endpoint approach with $W<\infty$ and universal decay).** In the same actual original system $(a,b,c)=(2,1,3)$, with $t_j=j$, prescribe before choosing any initial vector
+
+$$
+\lambda_{3k}=\frac{k+1}{k+2},\qquad
+\lambda_{3k+1}=\lambda_{3k+2}=1-2^{-k-4},\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}\quad(k\geq0).
+\tag{11.8}
+$$
+
+Then $0<\lambda_j<1$, $\alpha_j\to1$, $W<1$, and every original initial state tends to zero. No nonzero initial state is annihilated at any finite time. Thus (11.1) is genuinely nonnecessary even for wholly nonsingular endpoint-approaching variable histories.
+
+*Proof.* The inverse parameter correspondence (8.1) gives actual $0<\alpha_j<1$ at each event, and $\lambda_j\to1$ along all three residue classes implies $\alpha_j\to1$. The geometry and matrices are exactly (11.6). For $u_0=xe+yq$ the interaction vector is
+
+$$
+F_nu_0=
+\left(\prod_{\substack{0\leq j<n\\j\text{ odd}}}\lambda_j\right)xe+
+\left(\prod_{\substack{0\leq j<n\\j\text{ even}}}\lambda_j\right)yq.
+\tag{11.9}
+$$
+
+This follows because each even event contracts only the $q$ coordinate and each odd event only the $e$ coordinate, exactly as in (11.7). Among the indices $3k$, parity agrees with the parity of $k$. The sums
+
+$$
+\sum_{\substack{k\geq0\\k\text{ even}}}(1-\lambda_{3k})
+=\sum_{r=0}^\infty\frac1{2r+2}=\infty,\qquad
+\sum_{\substack{k\geq0\\k\text{ odd}}}(1-\lambda_{3k})
+=\sum_{r=0}^\infty\frac1{2r+3}=\infty
+$$
+
+both diverge. For example the second is at least one half of $\sum_{r\geq0}1/(r+2)$, and grouping the latter in consecutive dyadic ranges gives a positive lower bound on each group. Since $-\log\lambda\geq1-\lambda$, both parity products in (11.9) tend to zero. It follows that $\|F_nu_0\|_Q\to0$ for every $x,y$, and (8.5) proves actual full-time decay at every initial scale.
+
+To bound $W$, call the indices $3k+1,3k+2$ weak indices. Every consecutive pair of indices contains a weak index, and its minimum loss is at most the sum of the losses of its weak members. Each weak index belongs to at most two such pairs. As every gap has squared sine one,
+
+$$
+W\leq2\sum_{j\text{ weak}}\delta_j
+=4\sum_{k=0}^\infty\left[1-(1-2^{-k-4})^2\right]
+<8\sum_{k=0}^\infty2^{-k-4}=1.
+$$
+
+Every finite event product is invertible since all its $\lambda_j$ are positive. The original $M$ is also invertible, so a nonzero input never becomes zero at a finite time. The decay just proved is therefore asymptotic and is not an annihilation artifact. The history and parameters depend on neither $x$ nor $y$. $\square$
+

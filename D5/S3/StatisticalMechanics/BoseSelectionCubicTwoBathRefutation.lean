@@ -43,7 +43,7 @@ def violating (d : ℝ) (m : ℕ) :
 def claim : Prop :=
   ∀ d : ℝ, 0 < d → ∀ m : ℕ, interior (violating d m) = ∅
 
-private noncomputable def pfaffianVector (a : Matrix (Fin 5) (Fin 5) ℝ) : Fin 5 → ℝ :=
+noncomputable def pfaffianVector (a : Matrix (Fin 5) (Fin 5) ℝ) : Fin 5 → ℝ :=
   ![a 1 2 * a 3 4 - a 1 3 * a 2 4 + a 1 4 * a 2 3,
     -(a 0 2 * a 3 4 - a 0 3 * a 2 4 + a 0 4 * a 2 3),
     a 0 1 * a 3 4 - a 0 3 * a 1 4 + a 0 4 * a 1 3,
@@ -61,13 +61,13 @@ private noncomputable def neighborhood :
     Set ((Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ)) :=
   {p | p ∈ couplingDomain ∧ ∀ i, 0 < pfaffianVector (asym 3 p.1 p.2.1 p.2.2) i}
 
-private theorem spectral_three (x : ℝ) : spow 3 x = x ^ 3 := by
+theorem spectral_three (x : ℝ) : spow 3 x = x ^ 3 := by
   by_cases hx : x = 0
   · simp [spow, hx]
   · simp only [spow, ite_eq_right hx]
     norm_num [Real.rpow_two, sq_abs, pow_succ]; ring
 
-private theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
+theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
     asym 3 ε F G j i = -asym 3 ε F G i j := by
   rw [asym, asym]
   rw [spectral_three, spectral_three]
@@ -75,7 +75,7 @@ private theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
   simp only [FiniteCoordinateTruncation.normalize]
   ring
 
-private theorem pfaffian_kernel (a : Matrix (Fin 5) (Fin 5) ℝ)
+theorem pfaffian_kernel (a : Matrix (Fin 5) (Fin 5) ℝ)
     (h : ∀ i j, a j i = -a i j) : a *ᵥ pfaffianVector a = 0 := by
   have hd (i : Fin 5) : a i i = 0 := CharZero.eq_neg_self_iff.mp (h i i)
   rw [pfaffianVector]

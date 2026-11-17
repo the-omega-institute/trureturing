@@ -1,0 +1,10 @@
+置 $\rho=m/M\in(0,1)$，逐次取 $\lambda=\rho^n$，得到
+
+$$
+h(M)=h(\rho M)=h(\rho^2M)=\cdots
+       \longrightarrow h(0)=0 .
+\tag{2.17}
+$$
+
+这与 $M\in(0,1)$ 及 (2.13) 矛盾，故每条原安全非恒模轨道都满足 B。全部 $z_\lambda$ 仅是 A 已量化的非零数学输入；当 $\lambda\downarrow0$ 只用响应连续性，既不评价零块局部射线或节点率，也不假设率在节点连续或全域有界。∎
+

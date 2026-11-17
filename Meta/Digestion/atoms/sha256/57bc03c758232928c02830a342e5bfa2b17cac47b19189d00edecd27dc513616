@@ -1,0 +1,1 @@
+(c) 设 $0<\theta_1<\theta_2<1$，(490.2) 分别在包含 $\theta_1$、$\theta_2$ 的指数带上成立，$B_{i,X}$ 如 §495。则对每个实值 $\phi\in C([1,2])$，$\sup_{s,t\in[0,1]}|\mathbb E_{\mu_X}[\phi(U_X)B_{1,X}(s)B_{2,X}(t)]|\to0$；

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4d194b0f56250eead990eb2205b9e1bd0c5905b652dcaefa66370499f2e246eb
+  normalized_sha256: sha256:4d194b0f56250eead990eb2205b9e1bd0c5905b652dcaefa66370499f2e246eb
+cas_ref: sha256:4d194b0f56250eead990eb2205b9e1bd0c5905b652dcaefa66370499f2e246eb
+coverage_gids:
+  - gid: D5/S3/Topology/OrderUnitExpFlow.zero_contact_exp
+    target_statement_id: sha256:c5e96099a85877e847e4b6d1c52c1a9902cf47884abbe97c6140b3f6c621b1ac
+receipts:
+  unresolved_subitems: []

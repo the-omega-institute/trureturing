@@ -1,0 +1,71 @@
+**Theorem 36.2 (exact complete spectrum and complete base gap).**
+The spectrum of $\mathcal K_c$ is exactly (36.2), with multiplicities
+added whenever distinct triples $(r,n,m)$ have the same value.
+Its bottom is the simple eigenvalue $\zeta_1(c)=e(c)$ and its actual
+lowest spectral gap is
+
+$$
+\begin{aligned}
+\Gamma(c)&=\zeta_2(c)-e(c)\\
+ &=\min\left\{e_2(c)-e(c),
+       \min_{(n,m)\ne(0,0)}[\nu_1(n,m;c)-e(c)]\right\},\\
+0<\Gamma(c)&\le\min\{e_2(c)-e(c),1/4\}.
+\end{aligned}
+\tag{36.3}
+$$
+
+Proof. In the raw orthonormal expansion
+$h=(2\pi)^{-1}\sum_{n,m}h_{nm}(k)e^{i(n\theta+mv)}$, the complete
+base form domain is precisely
+
+$$
+\left\{h\in L^2(\nu_B):
+ h_{nm}\in H_0^1(I),\quad
+ \sum_{n,m}\left(\varepsilon^2\|h_{nm}'\|_2^2+
+              \|(nA_0+mB_0)h_{nm}\|_2^2\right)<\infty\right\}.
+\tag{36.4}
+$$
+
+This is the $j=0$ completed-domain argument of [G, (26.13)], now
+on the actual base at zero; finite Fourier truncation and scalar
+Dirichlet approximation give both inclusions. Bounded multiplication
+by $c\phi$ leaves it unchanged. Thus $\mathcal K_c$ is the orthogonal
+sum of exactly the scalar operators (36.1), including their complete
+domains. Their normalized eigenfunctions multiplied by
+$e^{i(n\theta+mv)}/(2\pi)$ constitute a complete orthonormal basis.
+The scalar regular separated Dirichlet problem has simple discrete
+eigenvalues by the Wronskian argument; see also [Teschl, §9.2,
+Theorems 9.6 and 9.10, printed pp.187--192]. This scalar simplicity
+does not remove coincidences between different angular modes, including
+the equal spectra at $(n,m)$ and $(-n,-m)$.
+
+The bound [G, (26.6)] at $\kappa=0$, $\eta=(n,m,0)$, implies
+
+$$
+\nu_1(n,m;c)\ge
+ \lambda+C\Psi(\sqrt{n^2+m^2})-c\|\phi\|_\infty
+ \longrightarrow+\infty\quad\text{as }|(n,m)|\to\infty.
+\tag{36.5}
+$$
+
+Here and below $C>0$ is a suitable fixed lower-bound constant and
+$\Psi$ is exactly [G, (26.6)]. Also
+$\nu_r(n,m;c)\ge r^2\lambda-c\|\phi\|_\infty$ by scalar min-max.
+Consequently only finitely many triples contribute below any fixed
+energy; the multiset enumeration is well defined and has no finite
+accumulation point.
+
+Every scalar summand is $H_c$ plus a nonnegative square. Equality of
+its bottom with $e(c)$ would force its normalized minimizer to be
+$u_c$ up to phase and $(nA_0+mB_0)u_c=0$ almost everywhere.
+The positivity of $u_c$ in $I$ would make the affine numerator in
+(36.1) identically zero, forcing $n=m=0$.
+Thus all nonzero angular bottoms are strictly larger than $e(c)$.
+Equation (36.5) makes their infimum an attained positive separation.
+The zero angular block contributes its positive scalar first gap.
+This proves the equality and positivity in (36.3). Finally the actual
+modes $(n,m)=(1,-1),(-1,1)$ have constant square $1/4$ and hence
+eigenvalues $e_r(c)+1/4$. This gives the upper bound $1/4$.
+In particular the scalar height gap alone is not the complete base
+gap. $\square$
+

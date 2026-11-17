@@ -1,0 +1,28 @@
+**Proposition 202.2 (wedge formula for convex combinations).** For every $0<\theta<1$, every two-row set $I=\{i,k\}\subseteq\mathcal L$ and the two column indices $J=\{j,\ell\}\subseteq\{1,2\}$, one has
+
+$$
+\det\!\left(\bigl(\theta A+(1-\theta)B\bigr)_{I,J}\right)
+ =\theta(1-\theta)
+   (u_i s_k-u_k s_i)
+   (v_j t_\ell-v_\ell t_j).
+\tag{202.3}
+$$
+
+Consequently,
+
+$$
+\operatorname{rank}\bigl(\theta A+(1-\theta)B\bigr)=2
+\quad\Longleftrightarrow\quad
+(A,B)\text{ is transverse}.
+\tag{202.4}
+$$
+
+*Proof.* Expand the determinant of the $2\times2$ submatrix in (202.3). The terms quadratic in $A$ and in $B$ vanish because both matrices have rank one. The two cross terms factor as
+
+$$
+\theta(1-\theta)
+ (u_i s_k-u_k s_i)(v_j t_\ell-v_\ell t_j),
+$$
+
+which proves (202.3). All maximal minors of the convex combination vanish exactly when one of the two exterior products in (202.2) vanishes, proving (202.4). \(\square\)
+

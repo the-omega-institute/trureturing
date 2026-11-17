@@ -1,0 +1,5 @@
+source_id = "fib-native-critical-cutoff-spectral-limits"
+path = "docs/develop/theory/FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

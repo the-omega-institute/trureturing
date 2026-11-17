@@ -1,0 +1,34 @@
+**定理50.2的证明：实际外行。** 固定 $d=\pi D(r,a)$，令 $q$ 为 $\ker R$ 上的数学投影。对任意 $\xi\in\ker R$，同一P2的商向量读取有首平方 $\langle\xi,R^2\xi\rangle=0$，故 $\langle\xi,d\xi\rangle=0$。Hermitian极化及一般单位向量读取分别给
+
+$$
+qdq=0,\qquad
+|\langle\xi,d\xi\rangle|^2
+\le\langle\xi,R^2\xi\rangle\langle\xi,A^2\xi\rangle
+\le\|R\|^2\|A\|^2\quad(\|\xi\|=1),
+\qquad \|d\|\le\|R\|\|A\|.
+\tag{51.1}
+$$
+
+这里只丢去P2右端的非负平方项以取充分界；读取来自准确原锥，未添加物理准备。$q$ 没有被提升为实际标签。
+
+取真正的原标签 $c=f(a)\in E$。原多项式零响应卷3.1给实际 $D(a,c)=0$，而 $\pi c=F$、$[A,F]=0$。对实际三元组 $(a;r,c)$ 使用同一完整PB，令
+
+$$
+\begin{gathered}
+x_\pm=r\pm\bigl(D(a,r)-a\circ c\bigr),\qquad
+y_\pm=c\pm(a\circ r),\\
+X_\pm=\pi x_\pm=R\mp d\mp AF,\qquad
+\pi y_\pm=Y_\pm=F\pm C_0.
+\end{gathered}
+\tag{51.2}
+$$
+
+反对称性用于 $D(a,r)=-D(r,a)$，没有按未知 $D$ 拆和。由51.1和50.3，$\|X_\pm\|<2$。每个 $Y_\pm$ 是某个秩一投影的非零实倍数；其正负、幅度均不限。相对于各自投影，$X_\pm$ 的连接范数不超过 $\|X_\pm\|$，故原多项式零响应卷83.1及反对称性准确识别这些刚生成的实际外值：
+
+$$
+\pi D(x_\pm,y_\pm)=K(X_\pm,Y_\pm).
+\tag{51.3}
+$$
+
+没有另选实际提升，也未将一次小幅度结论按旧响应的齐次性放大。
+

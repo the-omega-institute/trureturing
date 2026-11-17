@@ -1,0 +1,40 @@
+**Definition 53.4 (scope and mathematical dependencies).** The new
+negative comparison uses the original identities of source Section 23,
+the restricted positive attainment of Continuation I, Theorem 37.5,
+the same-effect forward transport of Continuation II, Theorem 42.3,
+the common triangle of Lemma 46.2 and the compactness and endpoint
+identities of Section 47. The positive comparator construction is
+fully proved in (52.7)--(52.13); no unproved negative-canonical estimate
+is a premise. The continuous-domain deduction uses Cauchy--Schwarz,
+a quadratic chord, the two-dimensional Sylvester criterion and the
+interval mean-value formula as intermediate standard facts. This is
+a repo-derived synthesis, without a literature-wide priority claim.
+The finite doubly stochastic permutation decomposition is used only
+through the existing forward spectral transport of Theorem 42.3;
+no converse normal-orbit assertion or exact semidefinite relaxation
+is required.
+
+The global consumer uses exactly Theorem 48.5 of Continuation III,
+Theorem 51.2, the new Theorem 52.2, attainment and compactness. Its
+first-boundary statement additionally uses the strict original
+competitors of Theorem 36.5 with the selected sign and crossing proved
+in Theorem 49.1. Its immediate-right classification additionally uses
+the complete local chart, unique all-effect minimization and analytic
+stationary equations (49.20)--(49.25), (49.44)--(49.46).
+Thus the earlier unresolved prefix, endpoint and first-boundary
+questions in Sections 49.10 and 51.7 and Continuation III, Definition
+49.2 have the exact answers (53.1)--(53.3) on the stated ranges.
+Their previously proved conditional and local statements retain their
+hypotheses.
+
+The global minimizing phase endpoint value and all minimizing orbits
+away from the existential immediate-right neighborhood remain to be
+evaluated. Theorem 53.2 gives strict loss on $(\xi_*,4)$, not a
+complete description of the minimizing branches on that interval.
+No extension of purity or phase rigidity beyond $13/4$, no global
+classification at distance four or at larger original levels, and no
+classification of arbitrary-unitary local minima follows. The zero
+level retains its existing optimizer classes. Physical realization,
+whole-POVM acquisition, and a complete reconstruction of AURIC are not
+consequences of these fixed-domain mathematical results.
+

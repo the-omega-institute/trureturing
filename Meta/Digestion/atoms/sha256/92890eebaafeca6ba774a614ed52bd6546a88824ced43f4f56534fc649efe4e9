@@ -1,0 +1,11 @@
+于是全部元素实际属于 $C$，并且
+
+$$
+r=\sum_{\alpha=1}^k l_\alpha,\qquad
+l_\alpha l_\beta=0\ (\alpha\ne\beta),\qquad
+0\ne m\le v,\qquad
+w_\alpha^*w_\alpha=m,\quad
+w_\alpha w_\alpha^*=l_\alpha.
+\tag{30.6}
+$$
+

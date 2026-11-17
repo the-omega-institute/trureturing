@@ -1,0 +1,45 @@
+**命题 21.4（同一个全载体锐利成功事件）。**令
+
+$$
+J=(e_0,e_1,e_2)\in M_{27,3}(A),\quad S=JJ^*,\quad
+UJ=\begin{pmatrix}K_L\\C\end{pmatrix},\quad U\in U_{27}(A),
+\qquad D=W_8\oplus I_{19}\in U_{27}(A').
+\tag{21.8}
+$$
+
+$U$ 的存在及原算术综合复用命题 20.2。置 $P_8=\sum_{j=0}^7P_{e_j}$，并对 $0\le j\le7$ 定义全载体投影
+
+$$
+\begin{aligned}
+M_j&=U^*P_{e_j}U,\\
+N_j&=U^*D^*P_{e_j}DU,\\
+G&=U^*P_8U.
+\end{aligned}
+\tag{21.9}
+$$
+
+则两套各八个正交秩一投影细化同一个全载体锐利投影 $G$，而且
+
+$$
+\begin{gathered}
+DUJ=\begin{pmatrix}K_R\\C\end{pmatrix},\qquad
+\sum_{j=0}^7M_j=G=\sum_{j=0}^7N_j,\\
+J^*M_jJ=\frac19Q_{s_j},\qquad
+J^*N_jJ=\frac19Q_{q_j},\qquad J^*GJ=E.
+\end{gathered}
+\tag{21.10}
+$$
+
+**证明。**$D$ 对后十九行恒等，故第一式来自 (21.7)。酉共轭保持秩和正交。$D$ 保持成功子空间及其正交补，所以 $D^*P_8D=P_8$，从而两套求和确为相同的 $G$，不是仅有相同的角压缩。压缩时保留全部伴随：
+
+$$
+\begin{aligned}
+J^*M_jJ&=(e_j^*UJ)^*(e_j^*UJ)=r_{s_j}^*r_{s_j}=Q_{s_j}/9,\\
+J^*N_jJ&=(e_j^*DUJ)^*(e_j^*DUJ)=r_{q_j}^*r_{q_j}=Q_{q_j}/9.
+\end{aligned}
+$$
+
+最后一式由成功行的 Gram 和给出。$\square$
+
+(21.10) 是精确代数关系。它还不是原概率的压缩定律，亦不是把 $U,D$ 自动认作实际操作的凭据。实际载体、输入嵌入、就绪参考、合法嵌入门、读口和粗事件仍须另供；$27=3^3$ 不供应三个实际 qutrit、张量分解或参考系统。
+

@@ -1,0 +1,8 @@
+**定理 13.2（同一二元关系恢复复结合代数的条件结论）。** 定义 13.1 的每个完备原域中，同一个原 S、旧 D 给复 C* 代数乘法 $a*b=S(a,b)-iD(a,b)$，原 E 恰为自伴部，原准确锥、单位和实范数保持。原全部有限复正表、旧 D 的联合有界与 Jordan Leibniz、单位保持的序等距动力流皆成为结论；不声称原物理仪器、计时或全部量子起源随之构造。
+
+证明。定理 8.2 结合既有 6.1 首先识别同一个原 S 为 JB 乘法；完备性使该识别直接在原 E 上。定理 12.2 与 12.4 然后恢复同一旧 D 的有界双线性及 Leibniz，循环 R 给 $[\delta_a,\delta_b]=-[L_a,L_b]$，反对称性给 $\delta_a a=0$。有界 Jordan 导子指数保持平方锥、单位和原序单位范数，故这些原 $\delta_a$ 构成动力对应。一般含单位 JB 的成熟重建接口准确取 Alfsen–Shultz，[*Orientation in operator algebras*，PNAS 95 (1998), 6596–6601，DOI:10.1073/pnas.95.12.6596](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，Theorem 1 及其 Dynamical Correspondences 定义；该定理不要求原域有前对偶或由投影生成。将其对应记作 $\psi_a b=D(a,b)$，算子交换子条件、对角零条件及定理中的 $\psi_a b=i(ab-ba)/2$ 与此处一致。实部式及已经取得的 Leibniz 也可直接展开验证同一 $S-iD$ 结合。Niestegge, arXiv:1402.0158v2 的一般事件环境不从“原 E 已是 JB”自动取得，不单靠它的 Theorem 1 作为本结论依据。其复范数应取
+$$
+\|a+ib\|_*^2=N(a^2+b^2+2D(a,b)),
+$$
+不能删去交叉项。由 $D(a,b)=i(a*b-b*a)/2$ 得 $N(D(a,b))\le N(a)N(b)$。每个原正实评价唯一复延拓为该 C* 代数上的正泛函，故全部原有限矩阵 $[\alpha(a_i*a_j)]$ 半正定，正是原 g 表；原评价和原质量保持。∎
+

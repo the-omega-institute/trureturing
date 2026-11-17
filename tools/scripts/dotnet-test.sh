@@ -8,8 +8,12 @@ restore_args=()
 # Only this CI entry's projects were restored. Test-created projects retain
 # their own restore behavior and execution/hang budgets.
 unset CI_DOTNET_PREPARED
-RESULTS_DIRECTORY="${TEST_RESULTS_DIRECTORY:-$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")}"
-mkdir -p "$RESULTS_DIRECTORY"
+if [[ -n "${TEST_RESULTS_DIRECTORY:-}" ]]; then
+  mkdir -p "$TEST_RESULTS_DIRECTORY"
+  RESULTS_DIRECTORY="$(mktemp -d "$TEST_RESULTS_DIRECTORY/invocation.XXXXXXXX")"
+else
+  RESULTS_DIRECTORY="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")"
+fi
 completed=0
 
 finish() {

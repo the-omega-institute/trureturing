@@ -1,0 +1,118 @@
+**定理 29.4（任意非零零模像上的平衡残量 PB 分类）。** 沿用定义 17.1、27.1 及 (28.1) 的同一完整有限输入，令
+
+$$
+\mathcal W=\operatorname{ran}(V|_{\ker D_{\rm env}})\ne0,\qquad
+s=\rho T_A\oplus0_m,\quad T_A=\operatorname{diag}(1,-2),\quad
+\rho\in\mathbb R.
+\tag{29.18}
+$$
+
+对每个分别固定的 $\sigma\in\{1,-1\}$，完整原 $M_{m+2}(\mathbb C)$ 上全部正复线性泛函与全部实际 Hermitian 角探针满足原 PB，当且仅当 $\rho=0$。不假设 P2；$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意，环境维数任意有限。对每个 $\rho\ne0$ 及每个指定有限质量 $\mu>0$，同一不变输入上存在一个有限实际探针和一个质量恰为 $\mu$ 的原向量泛函，使两笔原预算同时严格正且 PB 严格失败。因此将全正泛函量词限于任一指定正有限质量，也得到同一允许集 $\{0\}$。
+
+证明。若 $\mathcal W$ 含有两个坐标均非零的向量，全部结论直接消费定理 29.2。下面只构造两条坐标轴所需的核对，再证明这两个分支与定理 29.2 穷尽所有非零像。
+
+先固定 $j\in\{1,2\}$，记 $c_1=1,c_2=2$、$t_j=(T_A)_{jj}$。假设 $\mathcal W=\mathbb C e_j$，选
+
+$$
+\begin{gathered}
+\iota=\sigma i,\qquad \epsilon=1,\qquad
+u=e_j,\qquad X=I_2,\qquad w=-\frac1{c_j}e_j\in\mathcal W,\\
+\alpha_+=\frac13,\quad \alpha_-=1,\qquad
+\beta_+=\frac23\left(c_j-\frac1{c_j}\right),\quad
+\beta_-=-2\left(c_j+\frac1{c_j}\right),\\
+\zeta_+=\frac23\left(c_j-\frac1{c_j}\right)-\frac\iota3,
+\qquad
+\zeta_-=-2\left(c_j+\frac1{c_j}\right)+\iota.
+\end{gathered}
+\tag{29.19}
+$$
+
+这里 $u$ 为单位向量，$X=X^*$，全部参数有限且两份 $\alpha$ 严格正；两份 $\zeta$ 正好符合 (28.2)。因 $X=I_2$，直接有
+
+$$
+Xu=u,\qquad H_\sigma(X)u=0,\qquad
+J_C(X)u=Cu=c_je_j,\qquad Cw=-e_j.
+\tag{29.20}
+$$
+
+在本证明内以 $\mathsf R_\delta,\mathsf S_\delta$ 记 (28.3) 的右括号与左列。逐一代入 (29.20) 得
+
+$$
+\begin{aligned}
+\mathsf R_+&=\frac32e_j,&
+\mathsf S_+&=\left(c_j-\frac1{c_j}-\frac\iota2\right)e_j,\\
+\mathsf R_-&=\frac12e_j,&
+\mathsf S_-&=\left(-c_j-\frac1{c_j}+\frac\iota2\right)e_j.
+\end{aligned}
+\tag{29.21}
+$$
+
+于是两份核等式分别由
+
+$$
+\begin{aligned}
+\zeta_+\mathsf R_+
+ &=\left[\frac32\cdot\frac23\left(c_j-\frac1{c_j}\right)
+          -\frac32\cdot\frac\iota3\right]e_j
+  =\mathsf S_+,\\
+\zeta_-\mathsf R_-
+ &=\left[-\frac12\cdot2\left(c_j+\frac1{c_j}\right)
+          +\frac\iota2\right]e_j
+  =\mathsf S_-
+\end{aligned}
+\tag{29.22}
+$$
+
+同时支付。两份 $\mathsf R$ 均非零；两份 $\mathsf S$ 的虚部也非零。残量配对在这个同一核对上准确为
+
+$$
+\begin{aligned}
+F_j&:=\operatorname{Re}((w-\iota Xu)^*T_Au)
+ =\operatorname{Re}\left[\left(-\frac1{c_j}+\iota\right)t_j\right]
+ =-\frac{t_j}{c_j},\\
+F_1&=-1,\qquad F_2=1.
+\end{aligned}
+\tag{29.23}
+$$
+
+特别地，只需 $F_j\ne0$，不需要它为正。对 $\sigma=-1$，(29.19)–(29.22) 只是 $\sigma=1$ 的演员公式逐项共轭；$X,u,w$ 本身都是实的而保持不变，$\alpha,\beta$ 也不变。(29.23) 对两个分别固定的取向同值。
+
+现在在这份原环境中回收实际核。只用其自己的 (28.1) 逆，令
+
+$$
+y_0=Jw\in N_1\subseteq\mathcal E_0,\qquad
+Vy_0=w,\qquad D_{\rm env}y_0=0.
+$$
+
+$y_0$ 是这份有限环境中的有限向量，允许其范数随原连线改变。由 (28.4) 取唯一的原实坐标 $k=(a^{(0)},v^{(0)})$，使 $X(a^{(0)})=I_2$、$Y(v^{(0)})=y_0$，就有 $k\in\ker A$。由 (28.5)、$\epsilon=1$ 及 (27.24)，
+
+$$
+k^{\mathsf T}b_1=2F_j\ne0,\qquad
+k^{\mathsf T}b_0=0.
+\tag{29.24}
+$$
+
+因此同一系数矩阵的 $b_1\notin\operatorname{ran}A$，每个 $\rho\ne0$ 都已违反 (27.26) 的值域条件。这里 $B,V,D_{\rm env}$ 和 $J$ 对两个取向始终是原来那一份；共轭只发生在上述演员构造中。特别即使原环境含复条目，也保持 $y_0=Jw$，没有将物理环境或其逆共轭成另一份实现。原 $B$、$V^*u$、非零环境谱和 $J$ 的范数仍按 §§27–28 进入完整原作用列与预算。
+
+更明确地，记 (27.23) 的最后对角系数为 $\Gamma_\rho=\gamma_0+\rho\gamma_1+\rho^2\kappa$，取
+
+$$
+\begin{gathered}
+F=F_j\ne0,\qquad
+\Lambda=-\frac{\Gamma_\rho+1}{4\rho F}\in\mathbb R,\qquad
+x=\Lambda I_2\oplus0_m,\qquad \xi=(u,\Lambda y_0),\\
+(\Lambda k,1)^{\mathsf T}
+\mathscr Q_{\sigma,\rho T_A}(\theta)(\Lambda k,1)
+=4\Lambda\rho F+\Gamma_\rho=-1.
+\end{gathered}
+\tag{29.25}
+$$
+
+分母因 $\rho F\ne0$ 而非零，$\Gamma_\rho$ 有限，故这是实际有限尺度；$F_1$ 的负号完整保留。最后一式只使用 $Ak=0$ 和 (29.24)，其二次项为零，交叉项为 $2\Lambda\rho\,k^{\mathsf T}b_1$。(27.10)、(27.13)、(27.17) 遂给同一个有限 $x,\phi_\xi$ 的严格原 PB 违反。所有原平方与 Jordan 乘积仍在完整 $M_{m+2}(\mathbb C)$ 中计算，沿用定理 28.1 的原作用像解释；没有在演员角或读取截面上重算压缩平方。
+
+$\xi$ 的演员分量为单位 $u$，故 $\|\xi\|^2>0$ 且有限。对指定 $0<\mu<\infty$，取 $\xi_\mu=\sqrt\mu\,\xi/\|\xi\|$，保持同一个探针；两边的同次缩放保留严格违反。再消费定理 27.3，保持 $\phi_{\xi_\mu}$ 完全不变，只将该探针作一次充分小的有限实际扰动，使两笔预算同时严格正且仍严格违反。该扰动的两份四次系数均为 $9\mu^2/(16\|\xi\|^4)>0$，所以轴方向也在该定理的原域中。最终的两个预算和左端始终使用同一个扰动探针、同一个质量 $\mu$ 的原泛函与同一原环境。质量零的正泛函只有零泛函，仍给零等式。
+
+最后证明分支穷尽。设非零复子空间 $\mathcal U\subseteq\mathbb C^2$ 不含双非零坐标向量，取其非零成员 $v$。$v$ 必恰有一个非零坐标，故某个 $e_j\in\mathcal U$。若有 $z\in\mathcal U$ 的另一坐标非零，则 $z_j\ne0$ 时 $z$ 已双坐标非零；$z_j=0$ 时 $z+e_j$ 双坐标非零，两者均矛盾。因此 $\mathcal U\subseteq\mathbb C e_j$，结合 $e_j\in\mathcal U$ 得 $\mathcal U=\mathbb C e_j$。将这个初等子空间事实用于原 $\mathcal W$，便知任一非零像或者由定理 29.2 处理，或者恰为本证明的两条轴之一。轴构造由此直接用于全非零像结论，不另设关于像线平衡性的前件。
+
+反向地，$\rho=0$ 的全部原 PB 直接复用 §1 的标准零残量结果，包括全部正泛函和实际角探针。这完成充要结论及每个指定正有限质量上的严格正预算断言。两个取向分别得到允许集 $\{0\}$；同时要求两者时才取交，仍为 $\{0\}$。∎
+

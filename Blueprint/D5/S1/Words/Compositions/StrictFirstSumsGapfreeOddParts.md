@@ -34,7 +34,35 @@ $$\forall m: \operatorname{Multiset}\left(\mathbb{N}\right), \operatorname{Gapfr
 
 The support equals the first k positive odd numbers. The equivalence in the formula requires both absence of other parts and presence of every listed part. The witness k=0 gives the empty multiset.
 
-**Theorem 1.3 (The weight-preserving restriction).**
+**Theorem 1.3 (Bounds on column heights).**
+
+$$\forall d: \operatorname{YoungDiagram}, \forall h: \mathbb{N}, h \in \operatorname{rowLens}\left(\operatorname{transpose}\left(d\right)\right) \implies (0 < h \land h \le \operatorname{colLen}\left(d, 0\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.height_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* OEIS Foundation Inc. (2026). *OEIS A392707*. URL: <https://oeis.org/A392707>.
+
+*Commentary.*
+
+Every column height occurring in the transpose row-length list is positive and at most the height of the first column.
+
+**Theorem 1.4 (Rows beyond the first-column height).**
+
+$$\forall d: \operatorname{YoungDiagram}, \forall i: \mathbb{N}, \operatorname{colLen}\left(d, 0\right) \le i \implies \operatorname{rowLen}\left(d, i\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.rowLen_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* OEIS Foundation Inc. (2026). *OEIS A392707*. URL: <https://oeis.org/A392707>.
+
+*Commentary.*
+
+A row indexed at or beyond the height of the first column has length zero.
+
+**Theorem 1.5 (The weight-preserving restriction).**
 
 $$\forall n: \mathbb{N}, \operatorname{card}\left(\operatorname{filter}\left((p \mapsto \operatorname{IsStrictFirstSums}\left(\operatorname{sort}\left(\operatorname{parts}\left(p\right), (a, b \mapsto a \le b)\right)\right)), (\operatorname{univ}\left(\right): \operatorname{Finset}\left(\operatorname{Partition}\left(n\right)\right))\right)\right) = \operatorname{card}\left(\operatorname{filter}\left((p \mapsto \operatorname{GapfreeOdd}\left(\operatorname{parts}\left(p\right)\right)), (\operatorname{univ}\left(\right): \operatorname{Finset}\left(\operatorname{Partition}\left(n\right)\right))\right)\right)$$
 
@@ -59,4 +87,7 @@ The sibling's auxiliaries are private in a legacy Lean module. A local elaborato
 - Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.GapfreeOdd`
 - Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.IsStrictFirstSums`
 - Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.card_strictFirstSums_eq_gapfreeOdd`
+- Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.height_bounds`
+- Truth anchor: `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.rowLen_zero`
+- Dependency: [D5/S1/Words/Compositions/FirstSumsPartitionCharacterization](FirstSumsPartitionCharacterization.md)
 - Dependency: [D5/S1/Words/Compositions/ZeroPrependedFirstSumsOddParts](ZeroPrependedFirstSumsOddParts.md)

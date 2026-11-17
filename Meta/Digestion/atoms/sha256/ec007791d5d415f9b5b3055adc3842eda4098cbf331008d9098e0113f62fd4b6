@@ -1,0 +1,60 @@
+**命题 15.3（The five-rim wheel with arbitrary even rim leaves）。**
+Let $h$ be joined to every vertex $v_i$ of a five-cycle
+$(v_i)_{i\in\mathbb Z/5\mathbb Z}$. Adjoin $2t$ distinct pendant
+vertices, each with its unique neighbor chosen arbitrarily among
+the $v_i$, where $t\geq0$ is an integer. Let $H_t$ contain exactly
+these cycle, hub and pendant edges. Then $H_t$ satisfies every
+conclusion (15.2) for every integer $S\geq1$, on fibres of size
+$2S$ and the full half-filled complex carrier. Each $H_t$ fails the
+precise hypothesis of Definition 14.1, the block-graph hypothesis of
+Corollary 13.3, the complete multipartite hypothesis of Corollary 11.3
+and the global flat-least-mode hypothesis of Assumption 3.1.
+
+Proof. This is a connected simple unit-weight graph of even order
+$m=6+2t$. The hub neighborhood is exactly $C_5$. At $v_i$ the
+induced neighborhood is the path $v_{i-1}$–$h$–$v_{i+1}$ together
+with its attached pendant vertices as isolated vertices; it is
+bipartite. Every pendant vertex has a singleton neighborhood.
+Condition (a) applies, giving (15.2) also at $t=0,S=1$, the
+six-vertex wheel with the smallest positive even fibre size.
+
+The hub neighborhood has exactly one component, the nonbipartite
+$C_5$. It therefore has no bipartite connected component, disproving
+Definition 14.1's exact requirement, not just wholly bipartite
+neighborhoods. The six-vertex wheel core is two-connected: deleting
+$h$ leaves $C_5$, and deleting a rim vertex leaves $h$ joined to
+the remaining rim path. It is a maximal two-connected subgraph of
+$H_t$, because a pendant vertex cannot belong to any two-connected
+subgraph. It is not a clique, so this graph block contradicts the
+block-graph hypothesis. For complete multipartiteness, $v_0$ is
+nonadjacent to both $v_2$ and $v_3$, while $v_2,v_3$ are adjacent.
+Distinct nonadjacent vertices would have to lie in the same
+independent part, which these three relations prohibit.
+
+Let $\lambda_t=\min\operatorname{spec}A(H_t)$ and
+$\phi=(1+\sqrt5)/2$. Extend the least Fourier vector of $C_5$ by
+zero at the hub and every pendant vertex. Its Rayleigh quotient
+is $-\phi$, so $\lambda_t\leq-\phi<-1$. If $t\geq1$ and a
+modulus-one vector $z$ satisfied $A(H_t)z=\lambda_tz$, the equation
+at any pendant vertex $\ell$ would be
+$\lambda_tz_\ell=z_{v_i}$. Taking moduli forces $|\lambda_t|=1$,
+a contradiction, regardless of the attachment pattern.
+
+For $t=0$, suppose instead that a global flat least vector existed.
+Write $c=z_h\ne0$ and $R=\sum_i z_{v_i}$. The hub equation and
+the sum of the rim equations yield
+
+$$
+\lambda_0c=R,\qquad \lambda_0R=5c+2R,
+\qquad \lambda_0^2-2\lambda_0-5=0.
+\tag{15.14}
+$$
+
+Since $\lambda_0<0$, this would give $\lambda_0=1-\sqrt6$.
+But $(\phi+1)^2=3\phi+2>6$, hence
+$-\phi<1-\sqrt6$, contradicting $\lambda_0\leq-\phi$.
+Thus the exact complex flat least mode fails even without pendants.
+These failures separate this family from the specified earlier
+sufficient domains; they are not counterexamples to those theorems
+or to confinement on other bases. $\square$
+

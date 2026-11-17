@@ -22,7 +22,7 @@ The equivalence is pointwise; invertibility of the gauge map is not assumed.
 
 **Theorem 1.2 (Defect invariance preserves zero defect).**
 
-$$\forall x2 \in \left(\forall x2 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \forall x3 \in \mathord{\cdot},\; \forall x4 \in \left(\forall x4 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \left(\forall x5 \in \mathord{\cdot},\; \mathit{x2}\left(\mathit{x4}\left(\mathit{x5}\right)\right) = \mathit{x2}\left(\mathit{x5}\right)\right) \Rightarrow \left(\forall x6 \in \mathord{\cdot},\; \mathit{x2}\left(\mathit{x6}\right) = \mathit{x3} \Leftrightarrow \mathit{x2}\left(\mathit{x4}\left(\mathit{x6}\right)\right) = \mathit{x3}\right)$$
+$$\forall x2 \in \mathord{\cdot} \to \mathord{\cdot},\; \forall x3 \in \mathord{\cdot},\; \forall x4 \in \mathord{\cdot} \to \mathord{\cdot},\; \left(\forall x5 \in \mathord{\cdot},\; \mathit{x2}\left(\mathit{x4}\left(\mathit{x5}\right)\right) = \mathit{x2}\left(\mathit{x5}\right)\right) \Rightarrow \left(\forall x6 \in \mathord{\cdot},\; \mathit{x2}\left(\mathit{x6}\right) = \mathit{x3} \Leftrightarrow \mathit{x2}\left(\mathit{x4}\left(\mathit{x6}\right)\right) = \mathit{x3}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CompletionPoints/GaugeStableZeroDefect.gauge_preserves_zero_defect` (`✓ std3`). ∎
 

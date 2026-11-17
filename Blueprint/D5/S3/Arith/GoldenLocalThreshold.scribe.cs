@@ -41,7 +41,33 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
                             + "prime checks to the smallest missing prime, or classify all "
                             + "endpoint "
                             + "ties."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-prime-local-objective-increment"),
+                DeclarationHandle.Create(Prefix + "golden_prime_local_objective_diff"),
+                H("The adjacent objective increment"),
+                StatementSource.FromAuthor(IncrementFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every prime p, real price lambda, and natural exponent a, the objective "
+                        + "increment from a to a+1 equals the next marginal minus lambda, "
+                        + "multiplied by log p. This identity supplies the adjacent differences "
+                        + "used in the threshold criterion and in actual integer occupation estimates."))),
                 DescribeRole.Theorem))));
+
+    private static Formula IncrementFormula()
+    {
+        Formula p = F.Id("p");
+        Formula lambda = F.Id("lambda");
+        Formula a = F.Id("a");
+        return Disp(ForAll(
+            [Bound("p", Naturals()), Bound("lambda", Reals()), Bound("a", Naturals())],
+            Implies(Call("Prime", p), Equal(
+                Sub(Call("goldenPrimeLocalObjective", lambda, p, Add(a, D(1))),
+                    Call("goldenPrimeLocalObjective", lambda, p, a)),
+                Mul(Sub(Call("goldenLayerMarginal", p, Add(a, D(1))), lambda),
+                    Call("log", p))))));
+    }
 
     private static Formula ThresholdFormula()
     {
@@ -81,6 +107,12 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
 
     private static Formula Add(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+
+    private static Formula Sub(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+
+    private static Formula Mul(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 
 
 

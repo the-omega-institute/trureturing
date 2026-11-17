@@ -1,0 +1,21 @@
+**Definition 200.4 (persistent active boundary).** Assume $\mathscr P_u$ is nonempty. Let
+
+$$
+\mathcal I_u
+ =\left\{(y,x):
+   \lambda_{y,x}(A)=0\text{ for every }A\in\mathscr P_u\right\}
+\tag{200.6}
+$$
+
+be the set of inequalities active throughout the whole coefficient body, and define its direction space by
+
+$$
+\mathscr V_u
+ =\left\{D\in\mathscr A_u:
+   \sum_{\ell=1}^{d_u}d_{y\ell}r_\ell(x)=0
+   \text{ for every }(y,x)\in\mathcal I_u\right\}.
+\tag{200.7}
+$$
+
+The set $\mathcal I_u$ records constraints that are forced by the entire feasible body, rather than zeros that occur only at one selected lift.
+

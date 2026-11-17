@@ -1,0 +1,37 @@
+**Theorem 15.1 (event-output quadratic no-separator).** No coefficients in the selected class, over the real or rational numbers, produce pointwise bounds
+
+$$
+S_B(Q,W)\ge\kappa_B,\qquad S_A(W,Q)\ge\kappa_A
+$$
+
+on the declared complete level-five domains with $\kappa_B+\kappa_A>0$. No coefficients in the normalized-residual square subfamily produce lower bounds $G_p\ge\kappa_p$, $G_\beta\ge\kappa_\beta$ with $\kappa_p+\kappa_\beta>0$. The claim holds for every permitted $L\le5$ and every finite nonnegative combination of supported target losses.
+
+**Proof.** At the admissible pair $(Q,W)$, the two event residuals vanish:
+
+$$
+b_0(Q)-h(W)=0,\qquad a_0(W)-f(Q)=0.
+$$
+
+The directional point masses
+
+$$
+\widehat\Gamma_B=\delta_{(Q,W)},\qquad
+\widehat\Gamma_A=\delta_{(W,Q)}
+$$
+
+have common unweighted phase marginals $\delta_Q,\delta_W$. Consequently every whole-descriptor multiplier of either displayed event difference integrates to zero, and every marginal potential cancels between the two directions. The centered affine terms vanish by the equalities above. Every allowed loss term is nonpositive because endpoint losses equal their bounds and all interior losses are strictly below them. Therefore any valid pointwise lower bounds imply
+
+$$
+\kappa_B+\kappa_A\le F_p(Q)+F_\beta(W)\le0.
+$$
+
+For the square subfamily, the affine terms vanish and the square terms cancel exactly:
+
+$$
+\lambda_BH^2-\lambda_AC^2+\lambda_AC^2-\lambda_BH^2=0.
+$$
+
+The loss terms again have nonpositive sum, so $\kappa_p+\kappa_\beta\le0$. This is an exact coefficient-independent falsifier. $\square$
+
+The same Dirac pair gives equality of the two scalar event laws, so all scalar convex-order tests of the displayed events pass, including every polynomial degree. This equality does not imply the missing complete-coordinate equation.
+

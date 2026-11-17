@@ -100,6 +100,7 @@ internal sealed class AdaptiveMarkerStoppingTailsDocument : IScribeDocumentDefin
             "Exact adaptive marker tails under a shared-root Markov source and an arbitrary independent seed law.",
             H("Actual stopping, zero replay, and exact tails"),
             Blocks(
+                Fact("zero-replay-length", "zero_replay_length", "Replay depth equals acquired list length", "For every measurable seed space, original Policy, seed value and natural depth n, the zeroReplay action list has length exactly n."),
                 Describe.Lean(
                     DescribeId.Create("stopped-execution-replay-bridge"),
                     DeclarationHandle.Create(Prefix + "stopped_execution_replay_bridge"),

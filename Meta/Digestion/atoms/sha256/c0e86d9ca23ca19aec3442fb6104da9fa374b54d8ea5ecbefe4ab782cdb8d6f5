@@ -1,0 +1,30 @@
+**定理 82.5（完整二份锥的精确判据）。** 对定义 82.1 的全部矩阵直和及每个 $0\le t\le1$，
+$$
+\boxed{\mathcal K_{2,t}(\Phi)\text{ 在整个二份 PSD 锥正}
+\quad\Longleftrightarrow\quad\Phi\text{ CP}.} \tag{82.10}
+$$
+不要求半群、连续时间、TP、局部正性或严格内点权重。
+
+**证明。** 先取单块 $M_d$，用 (82.5)。给任意复矩阵 $W$，存在可逆 $A$ 使 $A^{-1}WA=W^T$：每个复方阵与其转置有相同 Jordan 形，而每个 Jordan 块的转置经倒序基变换回原块。置 $B^*=A^{-1}W$，则
+$$
+AB^*=W,\qquad (B^*A)^T=W.
+$$
+向量化恒等式给每个 $H_a$ 的两个振幅
+$$
+\begin{aligned}
+\langle\operatorname{vec}B,(H_a\otimes I)\operatorname{vec}A\rangle
+ &=\operatorname{Tr}(AB^*H_a)=\operatorname{Tr}(WH_a),\\
+\langle\operatorname{vec}B,(I\otimes H_a)\operatorname{vec}A\rangle
+ &=\operatorname{Tr}((B^*A)^TH_a)=\operatorname{Tr}(WH_a).
+\end{aligned}
+$$
+若整个二份提升正，测试输入 $|\operatorname{vec}A\rangle\langle\operatorname{vec}A|$ 与输出向量 $\operatorname{vec}B$，得到
+$$
+0\le\sum_ac_a|\operatorname{Tr}(WH_a)|^2
+=\langle\operatorname{vec}(W^*),J(\Phi)\operatorname{vec}(W^*)\rangle. \tag{82.11}
+$$
+$W$ 任意，故 $J(\Phi)\ge0$，从而 CP。这里没有要求输入、测试向量正交，也未对 $W$ 加迹零条件。
+对直和，在输入中心块 $ii$、输出 $ii$ 上先用此单块证明取得 $\Phi_{ii}$ CP。对 $j\ne i$，若 $t>0$，输入 $ii$ 的 Bell 正元在输出 $ji$ 恰给正倍数 $J(\Phi_{ji})$；另一个位置输出在不同块 $ij$，不能抵消。若 $t=0$，改用第二位置的 $ij$ 即可。矩形 Choi 判据给所有转移 CP；标量输入同样成立。逆向由一腿 CP 与非负和立即得到。证毕。
+
+上述选择 $A,B$ 的步骤复用 Benatti–Floreanini–Romano [BFR] Lemma 3 的相似于转置方法。该文 Theorem 3 是 **HP、TP、连续半群** $\gamma_\tau$ 的 $\gamma_\tau\otimes\gamma_\tau$ 正性与 CP 的等价；它不是 (82.10) 这个瞬时加权和命题。其生成元证明使用正交、迹零条件，本章对完整 HP 映射的带符号 Choi 二次型无须这些限制。不能把一般张量平方正性改称 CP：转置的张量平方就是整块转置，虽正却非 CP。整个输入锥的量词也不能被有限固定输入表偷换。
+

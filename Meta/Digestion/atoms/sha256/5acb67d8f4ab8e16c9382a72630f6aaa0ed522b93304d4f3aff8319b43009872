@@ -1,0 +1,13 @@
+## 26. Fourth-order pairings and both moving cutoffs
+
+Keep the same fixed $\delta$. Put $\vartheta_s=\eta_{R/4}$ and $e_s=(1-\vartheta_s)t_s$. The vector $\vartheta_st_s$ is supported in $|r|\le R/2$ and is native admissible. The vector $e_s$ is used only in canonical estimating pairings. The decay (22.4) and ball volume $v_dR^7$ imply $\|\mathbf1_{|r|>R}\nabla_Hp\|_2\le CR^{-5/2}$. Combining (22.5)–(22.6) with the cutoff product rule gives
+
+$$
+\sqrt{b[e_s]}\le C(R^{-5/2}+sR^{-3/2})=O_\delta(s^{5/2}),
+\qquad
+\|e_s\|_2\le C(R^{-3/2}+sR^{-1/2})=O_\delta(s^{3/2}).
+\tag{26.1}
+$$
+
+For example the extra $X$ derivative costs $R^{-1}$ times the indicated $L^2$ tail; $Y\vartheta_s=0$.
+

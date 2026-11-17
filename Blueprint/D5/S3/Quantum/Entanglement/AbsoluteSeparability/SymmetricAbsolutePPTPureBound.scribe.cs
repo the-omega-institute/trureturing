@@ -19,6 +19,10 @@ internal sealed class SymmetricAbsolutePPTPureBoundDocument : IScribeDocumentDef
                 H("Partial transpose of finite sums"), StatementSource.FromAuthor(Disp(TransposeSum())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Partial transposition distributes over finite matrix sums."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("lsappt-pt-rank-hermitian"), DeclarationHandle.Create(Prefix + "pt_rank_hermitian"),
+                H("Hermiticity of a rank-one partial transpose"), StatementSource.FromAuthor(Disp(PtRankHermitian())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For arbitrary index types, exchanging the first coordinates of the row and column of Matrix.vecMulVec psi (star psi) gives a Hermitian matrix. Transposing this matrix gives the second-factor partial transpose."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("lsappt-pure-antisymmetric-product-bound"), DeclarationHandle.Create(Prefix + "antisymmetric_product_bound"),
                 H("Antisymmetric product estimate"), StatementSource.FromAuthor(Disp(Antisymmetric())),
                 AssessedProvenance.FromRepo(Source),
@@ -89,6 +93,19 @@ internal sealed class SymmetricAbsolutePPTPureBoundDocument : IScribeDocumentDef
         return PureTypes(All("V", At(Q("Matrix"), X("A"), X("B"), Complexes),
             All("M", At(Q("Matrix"), X("A"), X("B"), Complexes), Leqf(mass,
                 Timesf(Timesf(D(2), Parenthesized(Frobenius(X("V"), X("A"), X("B")))), Parenthesized(Frobenius(X("M"), X("A"), X("B"))))))));
+    }
+    private static Formula PtRankHermitian()
+    {
+        var indices = Parenthesized(Seq(X("A"), Times, Sp, X("B")));
+        var psi = X("psi");
+        var x = X("x");
+        var y = X("y");
+        var rank = At(Q("Matrix", "vecMulVec"), psi, At(Q("star"), psi));
+        var first = Parenthesized(Seq(y, Dot, D(1), Comma, Sp, x, Dot, D(2)));
+        var second = Parenthesized(Seq(x, Dot, D(1), Comma, Sp, y, Dot, D(2)));
+        var matrix = Typed(At(Q("Matrix", "of"),
+            Fn("x", indices, Fn("y", indices, At(rank, first, second)))), Matrix(indices));
+        return All("A", Types, All("B", Types, All("psi", Arr(indices, Complexes), Herm(matrix))));
     }
     private static Formula SitePT() => All("I", Types, All("L", Types, Seq(Inst("DecidableEq", X("I")),
         All("S", At(Q("Finset"), X("I")), All("rho", Matrix(Word), Eqn(PT(X("S"), X("rho")),

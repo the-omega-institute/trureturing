@@ -1,0 +1,66 @@
+**Theorem 8.1 (common-event composition, including selected starts).**
+Predeclare an effectively enumerated countable family of deterministic
+candidate descriptions $\kappa$. Each description specifies rational branch bounds
+$l_\kappa,c_\kappa>0$, integers $S_\kappa,H_\kappa,r_\kappa$ in
+the ranges of Definition 6.1, positive rational tolerances
+$\epsilon_\kappa,\zeta_\kappa$, and an allowance $\delta_\kappa>0$.
+Generate $L_\kappa$ from (7.12)--(7.13) with these deterministic
+values and $\delta_0=\delta_\kappa$. Require
+$\sum_\kappa\delta_\kappa\le\delta$.
+
+Use predeclared acquisition/refinement packets, including startup,
+whose common validity event $\mathcal A_\tau$ has probability
+at least $1-\alpha$. On it, every selected description has
+$l_\kappa\le\tau$, $c_\kappa\le c$ certified by its acquired
+outputs, and its rows pass Proposition 7.3 with
+$\zeta^{\mathrm{gen}}\le\zeta_\kappa$. Packets for the branch
+$l_\kappa$ have deterministic inputs and summable allowances as
+in [SRO, Theorem 22.1]. Then one original-law event of probability
+at least $1-\alpha-\delta$ covers all selected descriptions and,
+within each, all their actual cuts:
+
+$$
+ \operatorname{TV}({\bf R}_{T_\kappa+j}^{H_\kappa},
+                  \widehat Q_{W_{\kappa,j}}^{H_\kappa})
+ \le\epsilon_\kappa+\zeta_\kappa
+ \qquad(0\le j\le r_\kappa).
+ \tag{8.1}
+$$
+
+Selection may use the acquired record, and may include the start cut
+or tolerances, provided it is from this predeclared family with its
+generated lengths and common budgets. It does not require statistical
+independence between calibration, acquisition and the gates.
+
+*Proof.* Fix the true source for the proof, without supplying its
+parameters to the program. For every deterministic candidate satisfying
+$l_\kappa\le\tau$ and $c_\kappa\le c$, Proposition 7.4 and Theorem 6.5
+give an unconditional event $\mathcal D_\kappa$ on which all its
+dynamic errors are at most $\epsilon_\kappa$, with failure at most
+$\delta_\kappa$. Form on this same record
+
+$$
+ \mathcal G_\tau=\mathcal A_\tau\cap
+  \bigcap_{\kappa:\ l_\kappa\le\tau,\ c_\kappa\le c}
+                      \mathcal D_\kappa.
+ \qquad
+ \mathbb P_e(\mathcal G_\tau)\ge1-\alpha-\delta.
+ \tag{8.2}
+$$
+
+The union bound needs only deterministic candidate events. Invalid
+branches are absent from the intersection. On $\mathcal A_\tau$
+every actually selected branch is valid, so on $\mathcal G_\tau$
+its dynamic error and its row error (7.11) hold together.
+Their triangle inequality proves (8.1). The maximum over cuts
+already covers any causal choice of $j$.
+
+This constructs a common event before selection. Conditioning (6.14)
+on the observed branch, or simply substituting a random $S,L$ into it,
+would not be this argument. If an arbitrary finite-precision start
+or tolerance is to be selected, enumerate its possible integer or
+rational values in the candidate family and allocate its allowance
+there. Unselected descriptions need not be computed. No conclusion
+here bounds failure conditional on each selected history, calibration
+output, or gate value. $\square$
+

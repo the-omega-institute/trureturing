@@ -1,0 +1,9 @@
+**Theorem 13.2 (Actual integral-defined order-three formula).** On the physical domain of Convention 13.1,
+
+$$
+\mathrm{GM}^{(3)}_3(x:y:z;a)
+=\frac1{12}\log\frac{(1+\kappa s)^2}{D_xD_yD_z}.
+$$
+
+**Proof.** Apply the integral-to-Fourier product identity of the fully symmetric pure Gaussian family, with the three cuts indexed by parties as in Theorem 10.1. At replica three, $\sin^2(\pi/3)=\sin^2(2\pi/3)=3/4$. The nine tripartite weights comprise one zero weight, two occurrences each of $3x(y+z)/4$, $3y(x+z)/4$ and $3z(x+y)/4$, and two occurrences of $3s/4$. Thus the tripartite product is $D_x^2D_y^2D_z^2(1+\kappa s)^2$, while the three cut products are $D_x^2,D_y^2,D_z^2$. Substitution into $(2\log P_3-3\sum_{i=A,B,C}\log P_i)/24$ gives the stated formula. All factors are positive, including at $a=1$, so the logarithmic steps preserve the original integrals and normalizations. ∎
+

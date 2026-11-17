@@ -1,0 +1,108 @@
+**Theorem 54.1 (explicit finite-horizon bounds with raw compensation).**
+Use exactly the quadrature lists of Theorem 53.1 and write
+
+$$
+\begin{aligned}
+B_n(t)&=\sum_{i=1}^nw_{b,i}^{(n)}T_{c_{b,i}^{(n)}}(t),\\
+A_n(t)&=\sum_{i=1}^na_{s,i}^{(n)}
+                           [T_{d_{s,i}^{(n)}}(t)-S_t],\\
+R_N(z)&=\sum_{j=N}^\infty\frac{z^j}{j!}\quad(z\ge0),&
+M_s&=m_1^s=C_s\sqrt{\beta/\pi}.
+\end{aligned}
+\tag{54.1}
+$$
+
+For every fixed $0\le T<\infty$ the following computable errors are
+valid in operator norm on the entire base, uniformly for
+$0\le t\le T$:
+
+$$
+\begin{aligned}
+\|B_b(t)-B_n(t)\|&\le E_{b,n}(T)
+ :=2R_{2n}(C_bPT)
+ \le2e^{C_bPT}\frac{(C_bPT)^{2n}}{(2n)!},\\
+\|A_s(t)-A_n(t)\|&\le E_{s,n}(T)
+ :=\frac{2M_s}{C_s}R_{2n+1}(C_sPT)
+ \le\frac{2M_s}{C_s}e^{C_sPT}
+                    \frac{(C_sPT)^{2n+1}}{(2n+1)!}.
+\end{aligned}
+\tag{54.2}
+$$
+
+Both tend to zero as $n\to\infty$. The coefficients and nodes
+are determined by the finite positive moment matrices (50.6)
+and the orthogonal polynomials in the proof of Theorem 53.1;
+the bounds require no estimate on their smallest node or on
+$\sum_i a_{s,i}^{(n)}$.
+
+Proof. Since $K\ge\lambda>0$, $\|S_t\|\le1$.
+Define ordered operator integrals on base inputs by
+
+$$
+U_0(t)=S_t,\qquad
+U_j(t)=\int_0^tS_{t-u}M U_{j-1}(u)\,du\quad(j\ge1).
+\tag{54.3}
+$$
+
+These are strong operator integrals and
+$\|U_j(t)\|\le (Pt)^j/j!$ by induction. Bounded-perturbation
+Duhamel expansion gives the norm-convergent series
+
+$$
+T_c(t)=\sum_{j=0}^\infty c^jU_j(t),\qquad
+T_c(t)-S_t=\sum_{j=1}^\infty c^jU_j(t).
+\tag{54.4}
+$$
+
+To justify the formula without any commutativity assumption,
+differentiate $S_{t-u}T_c(u)h$ for $h\in D(K)$.
+The common operator domain $D(K-cM)=D(K)$ gives derivative
+$cS_{t-u}MT_c(u)h$; the factors have their displayed order.
+Integration and density give the Duhamel identity on the whole
+base. Iteration gives (54.4), because its $N$th remainder is
+bounded by $e^{cPt}(cPt)^{N+1}/(N+1)!$ on bounded time and
+coupling intervals. Equivalently the absolutely norm-convergent
+series solves that Volterra equation uniquely by iteration.
+This is the classical ordered bounded-perturbation expansion.
+The selfadjoint common-domain input is Teschl's
+[Theorem 6.4, printed p.135](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf):
+the real bounded $-cM$ has relative operator bound zero.
+The native series (54.3) retains the full $K$ of (36.1).
+
+Integrating (54.4) against $\mu_b$ and subtracting the UNIT
+list cancels all terms through $j=2n-1$. Every later moment
+of either positive measure is at most $C_b^j$, since both are
+probabilities supported in $[\alpha_b,C_b]$. The norm of the
+remaining difference is at most
+$2\sum_{j\ge2n}(C_bPt)^j/j!$, proving the first bound.
+
+On the raw side compensation removes the $j=0$ term before
+integration. For $j\ge1$,
+
+$$
+m_j^s\le M_s C_s^{j-1},\qquad
+\sum_i a_{s,i}^{(n)}(d_{s,i}^{(n)})^j
+ =\sum_i v_{s,i}^{(n)}(d_{s,i}^{(n)})^{j-1}
+ \le M_s C_s^{j-1}.
+\tag{54.5}
+$$
+
+The first estimate integrates $c^{j-1}$ against the finite
+$\eta_s$; the second uses its same total mass and its same
+compact range. Thus the sum of integrated norms in (54.4),
+starting at $j=1$, is finite. This proves termwise integration
+against the original infinite $\nu_s$ and controls its entire
+tail towards $c=0$, rather than deleting a segment of the
+hidden line. The moments through $2n$ cancel by (53.4), leaving
+at most
+$2M_s C_s^{-1}\sum_{j\ge2n+1}(C_sPt)^j/j!$.
+This proves the second bound with the original raw normalization.
+
+Finally $R_N(z)\le e^z z^N/N!$, as is seen by comparing
+$(N+k)!$ with $N!k!$ in the series. For fixed $z$ this tends
+to zero, proving all convergence assertions. All bounds are
+operator bounds, so no restriction on the input or on visible
+Fourier modes is present. Strong derivatives on $\mathscr D$
+in §52 are not being replaced by operator-norm differentiability
+of the unbounded-generator semigroups at zero. $\square$
+

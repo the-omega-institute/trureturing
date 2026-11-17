@@ -1,0 +1,55 @@
+**定理 152.1（紧删域、准确维数与有限点数）。** $\mathcal T_{\rm in}(E)$ 是 $\mathcal T_{\rm diag}(E)$ 的相对开闭紧子集，严格删域当且仅当整个总秩 $m\ge3$；$m\le2$ 时两域相同，零对象两域皆空。
+
+在完整复重构后的同一 $E=\bigoplus_tH_{n_t}(\mathbb C)$ 上，保留原不等块权 $q=\sum_tw_t\operatorname{Tr}$。沿定理 147.1 记 $\mathcal G_{\mathbf k},\mathcal S_t,d(\mathbf k),f(\mathbf k),N$。秩一层的两类关联丛及独立输入射影因子全部不变。秩二层精确为
+
+$$
+\coprod_{\substack{0\le k_t\le n_t,\ \sum_tk_t=2\\t:\ k_t\ge1}}
+\mathbb P_{\mathbb C}(\mathcal S_t)\longrightarrow\mathcal G_{\mathbf k},
+\qquad \dim_{\mathbb R}=d(\mathbf k)+2(k_t-1).
+\tag{152.1}
+$$
+
+纤维的同一条线同时是输入与读回；无外侧射影补丛，也无独立输入因子。不按同时酉共轭取商。若 $E\ne0$，最大分层实维数为
+
+$$
+\begin{aligned}
+M_{\rm in}&=\max\{M_1,M_{2,\rm in}\},\\
+M_1&=2(N-1)+\max_{\sum k_t=1}\{d(\mathbf k)+f(\mathbf k)\},\\
+M_{2,\rm in}&=\max_{\sum k_t=2}\{d(\mathbf k)+2(\max_tk_t-1)\}.
+\end{aligned}
+\tag{152.2}
+$$
+
+各最大值仍限制 $0\le k_t\le n_t$；总秩小于二时略去第二项。单块 $n\ge2$ 的秩二层是成熟部分旗流形
+
+$$
+\operatorname{Flag}_{\mathbb C}(1,2;n)
+\cong U(n)/(U(1)\times U(1)\times U(n-2)),
+\qquad M_{2,\rm in}=4n-6,
+\tag{152.3}
+$$
+
+全域仍为 $M_{\rm in}=6n-8$；$n=1$ 为零维。相对 (147.1)，单块秩二层的最大维数在 $2\le n\le4$ 不变，在 $n\ge5$ 下降 $2n-8$，全域最大维数在所有单块阶数均不变。纯经典 $E=\mathbb R^m$ 有
+
+$$
+|\mathcal T_{\rm in}|=m^3+2\binom m2,\qquad
+|\mathcal T_{\rm diag}|-|\mathcal T_{\rm in}|=(m-2)\binom m2.
+\tag{152.4}
+$$
+
+这些是带原标签的域计数与几何维数，不是独立方程数、最小认证菜单或实际认证成本。
+
+证明。定理 135.2 的角谱事实说明法向 primitive 整颗位于切口内或外，连续比 $q(c,p)/q(p,p)$ 因而只取一或零。秩层由连续整数谱迹区分，亦相对开闭；新域在秩二层恰保留比值一的部分，所以相对开闭，并由旧域紧性得紧。若 $m\ge3$，三颗正交原子 $p,s,t$ 给旧点 $(c,p_{\rm input},r)=(p+s,t,t)$，它在新域中被删。若 $m=2$，秩二切口只能为 $u$，不存在外侧原子；更低秩无秩二层。因此严格性的阈值准确。
+
+复表示中内侧自读回就是切口子空间内的一条线，得到 (152.1) 及维数；与不变的秩一层合并给 (152.2)。单块的内线和二平面构成嵌套旗，稳定子分别保持该线、平面内正交补线及平面外补空间，给 (152.3)。将 $4n-6$ 与秩一最大值 $6n-8$ 比较并沿 (147.1) 相减，得所述准确范围。经典秩一的 $c,p,r$ 各有 $m$ 种选择，秩二每个两元切口仅有两个内部自问，故得 (152.4)，包括 $m=0,1,2$。∎
+
+在这个恢复关系的三维有限截面中，取已重构复块的秩二数学角及其 Pauli 基 $\sigma=(\sigma_1,\sigma_2,\sigma_3)$，无迹响应写成 $x=\mathbf x\cdot\sigma$，原型为 $q(x,y)=2w\mathbf x\cdot\mathbf y$。原 primitive $e=(I+\mathbf n\cdot\sigma)/2$、$\|\mathbf n\|=1$ 给
+
+$$
+P_ex=\bigl(\mathbf x-(\mathbf n\cdot\mathbf x)\mathbf n\bigr)\cdot\sigma,
+\qquad D_ex=-\tfrac12(\mathbf n\times\mathbf x)\cdot\sigma.
+\tag{152.5}
+$$
+
+Pauli 乘法直接给两式，因而 $D_e^2=-P_e/4$。互补原子圆 (151.4) 是该三维截面的一个大圆；内线旗的纤维 $\mathbb {CP}^1\cong S^2$ 是其纯方向球面。这个截面属于原对象的数学角，不将其单位重新声明为原世界的单位，不由此供应实际 $M_2$、新准备或物理时钟。
+

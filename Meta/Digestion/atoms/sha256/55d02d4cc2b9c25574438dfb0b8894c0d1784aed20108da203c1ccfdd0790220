@@ -1,0 +1,15 @@
+### 75.8 完整候选的直观表述与数学来源
+
+**直观白话。** 先保留全部状态与全部测试，用“确定接受纯参照的所有测试，对另一态至少接受多少”定义比较；任意随机纯制备都满足交换端点后平均的规则。完整旧桥先给一般 Jordan 几何。准备与同一个读回在整个正锥上可用，以原参考连续读回两次，并保留两条实张成和全实切片等式。现在只选至多三套完整互斥方向，要求每套内部经 $J$ 后仍零比较，同族形成的每套双份产品方向经 $H_{\mathrm s}$ 后也仍零比较。归一化把这些像变成支撑投影；零平方缺陷域与权重交换域对加法、平方、Jordan 乘积都封闭，于是有限方向生成的全部局部几何都被锁住。双份空间再由两个边缘嵌入及其乘积生成，所以第二层也覆盖纠缠方向。
+最后保留原混态 H13：每个两端非标量块，至少有一张边缘影像铺回后盖不住联合原块；存在一个这样的原总迹一态，其整个原插入输出为正。边缘盖不住保证错误单腿转置会留下负方向，可逆局部拉伸与中间插单位都不能消去它。两表负责全域零关系，H13 负责剩余相对方向。所得是同一实际模型类的完整条件候选；框架和关系的数学存在性不指定自然选择或物理制备，也不构成最少量子公理、全球新意、形式核验或完整量子起源结论。
+
+**数学引文及适用范围。**
+
+[R] [Atlas IV，固定文本版本 64c88225，§§65—72](https://github.com/the-omega-institute/trureturing/blob/64c88225fe7cafc77ec95ef1cfea1e12afcdc706/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：定义 72.1 的 PRE；定理 65.3 的无 $D_H$/C13 第一接口；66.2—66.10 的前交叉复型、权重、原态 Born 几何及方向恢复；72.3、72.7—72.8、72.16—72.18 的原混态资格、非空性、逐成员同原输出检测及有限自然选择障碍。69 的操作、双预算与共同补全仅在其固定旁观者 CP 族和原迹等额外前件下使用；65.10—65.11 的原始滤波逆向保持同 $p$ 两次和原参考。
+[S] [Library 完整 $S$ 桥，同版本](https://github.com/the-omega-institute/trureturing/blob/64c88225fe7cafc77ec95ef1cfea1e12afcdc706/Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge)：从“Reciprocal least confirmation and the spectrality bridge”至“Complete conditional candidate and its scope”；保留全文载体、正对偶、项目性和纯滤波证明链。其外文接口为 Niestegge [2312.13213v2，Lemma 3(iv)、Lemma 5、Theorems 2—3](https://arxiv.org/abs/2312.13213v2) 的 proper-effect 范围，及 Barnum–Müller–Ududec [1403.4147v4，Theorem 16](https://arxiv.org/abs/1403.4147v4) 的项目性、对称转移和纯滤波条件；不将 bit symmetry 或仅自对偶性当作整条分类桥。
+[P] [第五卷第 74 章，指定文本版本 75eb0961](https://github.com/the-omega-institute/trureturing/blob/75eb0961a70894fe335bdc3d29fa62eafd049d12/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)：定义 74.1 的同原 $\mathrm{PRE}_0$ 与符号；本章的生成闭包与两层推广由定理 75.4 自行证明。
+[V] [第五卷第 73 章，固定文本版本 64c88225](https://github.com/the-omega-institute/trureturing/blob/64c88225fe7cafc77ec95ef1cfea1e12afcdc706/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)：定义 73.2 的两个实际位置补全、定义 73.10 的标量锚、定理 73.11 与 73.16 的同数据校准；仅作方向恢复后的可选消费者。
+[D] E. Størmer，[*Multiplicative properties of positive maps*，math/0607090v1，§1 (1)—(2) 后 definite set 段](https://arxiv.org/abs/math/0607090v1)，期刊版 Math. Scand. 100 (2007), 184—192，[DOI](https://doi.org/10.7146/math.scand.a-15020)：正保单位 C* 映射的 Jordan definite domain 与混合乘积工具；该文 C*/JC 范围本身不包含 Albert，本章 (75.12)—(75.13) 给所需有限 EJA 证明。
+[C] J. van de Wetering，[*Commutativity in Jordan Operator Algebras*，1912.01903v1，Definitions 2.6—2.7，Propositions 2.13、2.21、2.25、2.34，Theorem 3.13](https://arxiv.org/abs/1912.01903v1)：算子交换、幂等元交换子、二次表示保正、有限 JB/EJA 范围及交换子闭包；(75.14) 明确给出本章所需重谱和 Peirce 块公式，不借结合嵌入处理例外因子。
+[F] H. Barnum、J. Hilgert，[*Strongly symmetric spectral convex bodies are Jordan algebra state spaces*，1904.03753v1，§4 Definition 4.1、Theorem 4.2](https://arxiv.org/abs/1904.03753v1)：完整本原谱框架与按不同谱值合并的谱幂等元；其定位 Faraut–Korányi, *Analysis on Symmetric Cones* (1994), III.1.1、III.1.3。本章只用有限 EJA 谱工具，不以强对称分类替换 [S]。矩阵单位归纳 (75.19)—(75.20) 属于复矩阵中的直接 Jordan 乘法计算。
+

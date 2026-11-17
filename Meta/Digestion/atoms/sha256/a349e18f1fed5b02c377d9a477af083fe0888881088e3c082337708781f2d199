@@ -1,0 +1,37 @@
+**引理 9.3（$R$-基、显式反演与实分离）。**$\mathcal P$ 是自由 $R$-模 $\operatorname{Herm}_{27}(D)$ 的一组基，也是 $\operatorname{Herm}_{27}(\mathbb C)$ 的实基。对于 $H\in\operatorname{Herm}_{27}(D)$，写 $H_{ab}=a_{ab}+b_{ab}\zeta$、$H_{aa}=d_a$，其中各系数均在 $R$。则
+
+$$
+\begin{aligned}
+\beta_{ab,0}&=\frac{4(2a_{ab}-b_{ab})}{3},&
+\beta_{ab,1}&=\frac{4(a_{ab}-2b_{ab})}{3},\\
+\delta_a&=d_a-\frac14\sum_{b>a}(\beta_{ab,0}+\beta_{ab,1})
+-\frac34\sum_{h<a}(\beta_{ha,0}+\beta_{ha,1}),\\
+H&=\sum_a\delta_aC_a+\sum_{a<b}\sum_{r=0}^1\beta_{ab,r}P_{ab,r}.
+\end{aligned}
+\tag{9.3}
+$$
+
+证明。$D=R\oplus R\zeta$，且共轭固定部分恰为 $R$，故 Hermitian 矩阵的对角元在 $R$，每个上三角元有唯一的上述两个系数。两个探针的上三角元分别为
+
+$$
+(P_{ab,0})_{ab}=\frac{2+\zeta}{4},\qquad
+(P_{ab,1})_{ab}=\frac{-1-2\zeta}{4},\qquad
+\det\left[\frac14\begin{pmatrix}2&-1\\1&-2\end{pmatrix}\right]
+=-\frac3{16}.
+\tag{9.4}
+$$
+
+因此其 $R$-坐标列为 $(2,1)^{\mathsf T}/4$、$(-1,-2)^{\mathsf T}/4$；行列式在 $R$ 中可逆，解出的系数正是 (9.3)。每个探针对位置 $a,b$ 的对角贡献为 $1/4,3/4$，减去这些贡献便得 $\delta_a$。逐对反演、再取对角元，既证存在又证唯一。把 $R$ 换为 $\mathbb R$，$1,\zeta$ 仍为 $\mathbb C$ 的实基，同一反演成立。$\square$
+
+同一结论也可直接按响应恢复矩阵。若 $z_a=\operatorname{Tr}(HC_a)$、$z_{ab,r}=\operatorname{Tr}(HP_{ab,r})$，令
+
+$$
+ t_r=2\left(z_{ab,r}-\frac{z_a+3z_b}{4}\right).
+ \qquad
+ H_{aa}=z_a,\qquad
+ H_{ab}=\eta^{-1}\left(t_0-\frac{i(t_0+2t_1)}{\sqrt3}\right).
+\tag{9.5}
+$$
+
+因为 $t_r=\operatorname{Re}(\eta\zeta^rH_{ab})$，此式逐项成立。任意实响应向量因而只确定一份 Hermitian 矩阵，未必确定正矩阵；有限数据的非负性本身不能替代 (9.1) 的正性来源。式中的 $i,\sqrt3$ 只是恢复实坐标的数学表达，不增加任何实际门或读口。
+

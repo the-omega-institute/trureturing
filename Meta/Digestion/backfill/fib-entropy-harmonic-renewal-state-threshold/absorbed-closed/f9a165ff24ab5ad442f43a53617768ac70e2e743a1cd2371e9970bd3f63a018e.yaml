@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f9a165ff24ab5ad442f43a53617768ac70e2e743a1cd2371e9970bd3f63a018e
+  normalized_sha256: sha256:f9a165ff24ab5ad442f43a53617768ac70e2e743a1cd2371e9970bd3f63a018e
+cas_ref: sha256:f9a165ff24ab5ad442f43a53617768ac70e2e743a1cd2371e9970bd3f63a018e
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/ActualRenewalHistoryLaw.actual_source_cylinders
+    target_statement_id: sha256:bc8877b17af24d3d34d94600b253af3b9b78a393995002e57726e98405c6de69
+receipts:
+  unresolved_subitems: []

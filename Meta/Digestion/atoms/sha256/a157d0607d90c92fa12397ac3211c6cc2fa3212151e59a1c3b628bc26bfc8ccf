@@ -1,0 +1,28 @@
+**定义 64.1（仅原二表、NN 与既有 JB 接口）。** 沿用同一原 $\Omega,E,C,u,N,P,S,D$ 及全部原来源量词。由 UnitBridge 2.2、6.1 已得到忠实、等距、保单位且稠密的 Jordan 嵌入 $i:E\to X$，以下认同 $E$ 与其像；记
+
+$$
+a\circ b=S(a,b),\qquad a^2=a\circ a,\qquad L_a x=a\circ x,
+\qquad K_a=L_a^2-L_{a^2}.
+\tag{64.1}
+$$
+
+$X$ 是同一实含单位 JB 代数，原锥和原范数仍是其忠实限制，原域可以任意维且可以不完备。对每个原正实线性评价 $\alpha\in P$ 和每对原输入 $a,b$，保留实际有向二表
+
+$$
+M_\alpha(a,b)=
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-\mathrm i\alpha(D(a,b))\\
+\alpha(b\circ a)-\mathrm i\alpha(D(b,a))&\alpha(b^2)
+\end{pmatrix}\succeq0.
+\tag{64.2}
+$$
+
+这里两个非对角位置都是原表的实际方向；不先把它们交替化。只增加同一个原总映射的 NN 条件
+
+$$
+D(a,D(a,b))=K_a b\qquad(a,b\in E).
+\tag{64.3}
+$$
+
+$D$ 的可加性、齐次性、连续性、中央平移、Jacobi、实部换括号 $R$、原平方根或逆元闭合均不是本条前提。
+

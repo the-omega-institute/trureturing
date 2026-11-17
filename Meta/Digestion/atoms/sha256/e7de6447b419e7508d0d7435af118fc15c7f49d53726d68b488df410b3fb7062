@@ -1,0 +1,46 @@
+**Proposition 156.2 (one exact relation removes one repeated-label row).** Under the unchanged hypotheses of Definition 156.1, every $D\in\mathscr F_{154}(\theta)$ satisfies
+
+$$
+\sum_{\rho\in\mathcal R_{\mathrm{rep}}}\Gamma_\theta(D)_\rho=0.
+\tag{156.3}
+$$
+
+Consequently the repeated-label residuals on the exact $\mathcal H_{43}$ fiber take values in the twenty-dimensional hyperplane
+
+$$
+V_{20}=\left\{q\in\mathbb R^{21}:\sum_{\rho\in\mathcal R_{\mathrm{rep}}}q_\rho=0\right\}.
+\tag{156.4}
+$$
+
+In particular, no local family that remains in the exact $\mathcal H_{43}$ fiber can have a $21\times21$ Jacobian from its parameters onto all twenty-one repeated-label coordinates.
+
+*Proof.* Equation (154.32) is obtained by expanding the complement $u_B=1-\sum_{a\in I}u_a$ in the three slots. On $\mathscr F_{154}(\theta)$ the pair residuals vanish, the six distinct-label residuals vanish, and the BBB residual vanishes. The remaining term in that complement expansion is exactly the sum in (156.3). Thus every differentiable or polynomial family in the fiber has differential in $V_{20}$, whose dimension is twenty. The conclusion is a rank bound and does not use a choice of coordinates, a rounding construction or a parameterization of the family. $\square$
+
+The rank bound is a route boundary rather than a negative result for the original target. It shows that a proposed $21$-row Schur-complement determinant would be identically singular for the structural reason (156.3). One repeated-label coordinate must be recovered from the other twenty after the calibrated equations have been solved.
+
+**Route condition 156.3 (SRS-20 finite repeated-label completion).** Fix one $\rho_\ast\in\mathcal R_{\mathrm{rep}}$ and put
+
+$$
+\mathcal R_\ast=\mathcal R_{\mathrm{rep}}\setminus\{\rho_\ast\}.
+\tag{156.5}
+$$
+
+A source-specific finite completion certificate for an original $\theta$ consists of a bounded invariant slack set $E$, a positive Section 155 ray $X$, a number $t_\theta>0$, a closed ball $B_{20}\subset\mathbb R^{20}$ and pointwise simplex tuples $u^{(t,z)}$ on the original $G$, for $0<t<t_\theta$ and $z\in B_{20}$, such that
+
+$$
+\begin{aligned}
+&u^{(t,0)}=f^0+tX,\qquad
+  \mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f^0),\\
+&t^{-2}\bigl(\Delta_{\mathcal R_\ast}(u^{(t,z)})\bigr)
+   =r_{\theta,\ast}+S_\theta z+\varepsilon_\theta(t,z),\\
+&\sup_{z\in B_{20}}\|\varepsilon_\theta(t,z)\| \longrightarrow0
+\quad(t\downarrow0),
+ \qquad \det S_\theta\ne0.
+\end{aligned}
+\tag{156.6}
+$$
+
+Here $\Delta_{\mathcal R_\ast}$ is evaluated with the original trilinear form and the common tuple in all three slots. The certificate must also supply a closed-ball degree or boundary estimate that places a zero of the finite map in $B_{20}$; invertibility of $S_\theta$ by itself is not such a degree estimate. Its legal perturbations must preserve the original source marginals, the pointwise simplex inequalities and the actual terminal convention throughout the ball. The constants and the choice of the omitted row may depend on $\theta$, but the original $G$, $m$, $P$, $g$, epochs, source law, readout and permitted representative $b$ may not change.
+
+The intended algebraic mechanism is finite-dimensional. A zero of the twenty rows in (156.6), together with the exact $\mathcal H_{43}$ equations, gives sixty-three exact coordinates. Proposition 156.2 then recovers the omitted $\rho_\ast$ coordinate. Proposition 150.3 and its three-slot complement expansion (150.13) recover every coordinate containing $B$, so all sixty-four ordered equations follow for the same whole-$G$ tuple.
+

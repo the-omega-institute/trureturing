@@ -1,0 +1,47 @@
+**定义与定理 102.9（完整 $\mathsf R_{\rm rank,\le4}$ 候选）。** 固定VII99.10的同一个完整原装饰元组 $\mathcal O$、选定 $J\subseteq\{A,D,E\}$、共同适用域及共同来源合同 $\mathfrak S(\mathcal O)$。对每个原载体 $X$，用其自己的原 $P_X,F_{p,X},E_{p,X}$ 定义
+
+$$
+\begin{gathered}
+d_{p,X}=\dim\operatorname{aff}(\{p\}\cup E_{p,X}),\qquad
+h_{p,X}=\dim\operatorname{aff}F_{p,X},\\
+b_{p,X}=\max\{1,\min\{h_{p,X},d_{p,X}-1\}\},\qquad
+\mathcal G_{{\rm rank},X}:\quad
+\forall p\in P_X,\ \mathrm G_{b_{p,X},X}(p).
+\end{gathered}
+\tag{VII102.24}
+$$
+
+从VII99.10定义的完整 $\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)$ 出发，仅将所选 $X\in J$ 的原几何项 $\mathrm B_X+\mathrm{Z0}_X$ 改写为 $\mathrm B_X+\mathcal G_{{\rm rank},X}$，其余每一项完整继承；所得谓词为 $\mathsf R_{\rm rank,\le4}(\mathcal O)$。它与VII101.11的 $\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)$ 使用同一 $J$、同一 $\mathcal O$ 及同一共同域。于是
+
+$$
+\boxed{\begin{aligned}
+\mathsf R_{\rm rank,\le4}(\mathcal O)
+&\Longleftrightarrow\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm polar}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)
+\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\end{aligned}}
+\tag{VII102.25}
+$$
+
+证明。对所选每个 $X$，102.4在同一个原载体上给
+
+$$
+\mathrm B_X+\mathcal G_{{\rm rank},X}
+\Longleftrightarrow\mathrm B_X+\mathrm{Z0}_X.
+\tag{VII102.26}
+$$
+
+这条逐源替换对任意有限仿射维都成立；它本身没有低维、有限 $P_X$ 或表示前件。但(VII102.25)再回到完整 $S_X$ 和旧包的那一步，仍准确使用VII99.10、VII98.8的原共同适用域：单点、原 $m_X<3\delta_X$ 分支、$1\le m_X\le4$，或正维球形facet等各自已有充分条件。四维分支与VII101.11的原 $\mathrm G_{3,X}$ 等价直接复用VII101.10。域外的一般高维 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 并未由(VII102.26)得到证明。
+
+完整继承具有逐项含义：VI89.7—89.10、VII98.8—98.9和VII101.11规定的全部原准备、测试、过程、参考、读回、装饰及来源数据、原像自身的紧闭与中点／补／有界倍增条件、同一测试对全部准备实现、重复标签、带质量输出和全部非负缩放、零与次归一及不等质量、原过程自身的全部相关联合输入域均保持原量词。它们不是 $\mathcal G_{\rm rank}$ 的推论。
+
+同一个原 $L,p,\omega$ 与两次同一读回、两实张成、全实 $Z$、含秩一分支的完整(83.8)、原单位／迹／伴随／二次表示、VI(89.13)全部两尺度等式、C2、整个 $G=1_E$，以及精确PRE之后同一资格态的整个H13输出仍完整保留。严格负方向、共享总迹一、活跃及非活跃块、零质量和空活跃集继续在其原域；这里的仿射维数 $m_X$ 不改写VI89.7中其他有类型的尺度参数。共同 $\mathfrak S(\mathcal O)$ 的设备／事件／来源绑定、菜单和分支、参考／副本／相关联合、记录／权限／控制／钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、实际混合服务、合法未来、旧支撑及每个中间切口逐项继承。
+
+复型与Born、指定复合和读回、同事件CP、Kraus及实际仪器、条件更新与Lüders、物理时间继续消费VII98.9和VI89.9各自的完整前件；原生来源及细化继续消费VI89.10的原几何、密度、全字、terminal futures、联合菜单／全部有符号关系、原细标签与粗归组、记录后条件未来、source-adoption map及资源合同。已有入口实际导出的后果直接复用，不重新列为缺口。这里只精化原谓词内部的几何检验，不替换原状态体，也不自动减少整个物理包的独立前件。
+
+若另有VI99.7的完整全实ROG前件，原 $\mathrm G_2\Longleftrightarrow\mathrm{Z0}\Longleftrightarrow S$ 可在交集中直接使用；其他实／复低余维分支亦仅按VI99.8自己的原域消费。反过来，双秩准则及本章有限加权模型都不供应ROG表示。证毕。
+

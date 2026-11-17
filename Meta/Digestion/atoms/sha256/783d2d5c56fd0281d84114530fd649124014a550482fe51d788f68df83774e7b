@@ -1,0 +1,6 @@
+**定义 349.1（来源与新增综合的边界）。** 仓内来源固定于 [`8bcd9134655d4c88a93778604e49583d6d9cf736`](https://github.com/the-omega-institute/trureturing/tree/8bcd9134655d4c88a93778604e49583d6d9cf736)。母卷指 [C123 原生互易比较母卷](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)：2.5、10.2、30.1、67.1–67.3 供应完整 R 与右单位；85.2 供应全部静态中心对及逐对普通／相反表示。前卷指 [C128 框架与角关系续卷](AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md)：246.1 将同一静态消费者分别接到闭准备背景。本卷 320.1 的无迹前件缺席证明及 321.1 供应完整来源正常形和整输出局部性；337–338 供应旧匹配等价、共同尺度、同一 sigma 和全部原消费者。
+
+Herbut–Damnjanović，*Mixed-state twin observables*，J. Phys. A 33 (2000) 6023，DOI [10.1088/0305-4470/33/34/308](https://doi.org/10.1088/0305-4470/33/34/308)，[quant-ph/0004085v1 原文](https://arxiv.org/html/quant-ph/0004085v1)，Introduction、§4 的 (8)–(10)、§6 的 (12sa)–(12sb)，给 Hermitian twins 与约化态交换、支持／核分解及纯态 Schmidt 对应。D’Ariano–Lo Presti 的向量化来源沿 341.1。346.1 证明中的交换子、极分解与矩阵交换子代数只作为这些 $\texttt{literature-attested}$ 有限矩阵工具的应用，不借入远程实际测量、通道层析、原状态供应或实际资源结论。320.1 所需交换二次迹与有限 EJA 导子来源仍沿 326.1，不重复作为新增定理。
+
+新增 $\texttt{repo-derived}$ 综合是：由两次原实际身份参考直接取得每个原对象、含经典和秩二源的完整径向正常形；用原中心迹唯一识别全部径向场；以全部静态中心对把原高秩域的中性下降到全域；由此删除公理中的匹配选择并保留同一刻度的完整理论。346.1 还把源像匹配的迹值等同于原中心读数，并区分源匹配和全目标匹配的 Schmidt 要求。这些结论不以检索未命中主张历史优先权。
+

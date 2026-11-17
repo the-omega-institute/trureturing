@@ -1,0 +1,17 @@
+#### 定理 4.3：对记录的无条件局部处理不改系统边缘
+
+对任意联合态 $\rho_{SM}$ 和记录上的保迹通道 $\Lambda_M$，
+
+$$
+\operatorname{tr}_M[(\mathrm{id}\otimes\Lambda_M)(\rho_{SM})]
+ =\operatorname{tr}_M\rho_{SM}.
+$$
+
+**证明。**
+
+对任意系统效应 $G$， 左边的概率等于 $`\operatorname{tr}[\rho_{SM}(G\otimes\Lambda_M^*(I))]`$。 保迹性给出 $`\Lambda_M^*(I)=I`$，故所有系统效应的概率相同。 效应分离状态，得到边缘态相同。
+
+$\square$
+
+条件选取某个记录结果不属于这个无条件等式； 它能改变所讨论子样本的状态，但总统计是各条件状态的加权和。
+

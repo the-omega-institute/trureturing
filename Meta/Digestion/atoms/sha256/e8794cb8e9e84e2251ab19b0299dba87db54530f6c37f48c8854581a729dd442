@@ -1,0 +1,11 @@
+**三、逆向。** 若 $W$ 为三维且 $\mathfrak g$ 为全部反对称算子，取 $e^\perp$ 的正交单位基 $v,w$，令 $K=\sqrt\alpha X_v,L=\sqrt\alpha X_w$，其中 $\alpha>0$。则
+
+$$
+-K^2=\alpha(P_e+P_v),\qquad
+-L^2=\alpha(P_e+P_w).
+$$
+
+两者和为 $\alpha(I+P_e)$，非标量；两者及交换子生成全部 $\mathfrak{so}(3)$。因此 Q17 成立。最后 $SO(3)\subseteq G\subseteq O(3)$，完整群只有所列两种可能。
+
+$\square$
+

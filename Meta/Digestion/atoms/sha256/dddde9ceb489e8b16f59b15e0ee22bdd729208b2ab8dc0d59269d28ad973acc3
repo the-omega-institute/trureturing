@@ -1,0 +1,44 @@
+**定理 4.3（一个运输叶等式的逐态及全态充要判据）。**仍取固定原 $S,J,E,Q$，允许 $g\in U_{27}(D)$ 移动 $S$。定义三维 Hermitian 差算子
+
+$$
+\begin{aligned}
+x_{E,g}&=J^*gv,& y_{E,g}&=J^*gJb,\\
+\Delta_{E,g}
+&=J^*g(E-Q^\uparrow/9)g^*J
+=x_{E,g}x_{E,g}^*-y_{E,g}y_{E,g}^*/9.
+\end{aligned}
+\tag{4.7}
+$$
+
+对一份给定的 $S$ 支撑正输入 $J\tau J^*$，所讨论的精确叶等式及其判据为
+
+$$
+\begin{aligned}
+\mu(gEg^*)=\tfrac19\mu(gQ^\uparrow g^*)
+&\quad\Longleftrightarrow\quad \operatorname{Tr}(\tau\Delta_{E,g})=0\\
+&\quad\Longleftrightarrow\quad
+\|\tau^{1/2}x_{E,g}\|^2=\tfrac19\|\tau^{1/2}y_{E,g}\|^2.
+\end{aligned}
+\tag{4.8}
+$$
+
+它对所有 $\tau\succeq0$ 成立，当且仅当 $\Delta_{E,g}=0$；等价地，$x_{E,g}=y_{E,g}=0$，或存在 $|\lambda|=1$ 使 $x_{E,g}=\lambda y_{E,g}/3$。对任意一个指定正迹 $w$ 的所有三维正输入，判据仍是 $\Delta_{E,g}=0$。这里的全正锥是数学判据；原 $\Omega$ 未声明能实际制备每个这样的输入时，不能把“对其已供准备成立”反推为全正锥结论。
+
+对给定原输入，一个足够的支撑条件是
+
+$$
+g^*\Sigma g=Sg^*\Sigma gS
+\quad\Longleftrightarrow\quad
+\mu(gSg^*)=w.
+\tag{4.9}
+$$
+
+在此条件下两套全部十六条叶等式均成立，并由 (2.1) 接回对应原 $a^{\rm old}_{\xi,g,s}/9$。固定 $\Sigma$ 已支撑于 $S$ 时，(4.9) 要求其支撑同时落在 $gSg^*$ 中；它不由 $\mu(S)=w$ 自动推出。若要求 (4.9) 对所有 $S$ 支撑正输入成立，则等价于 $gSg^*=S$。单条叶的精确判据 (4.7) 可以在其他特定 $g$ 下成立，不把角保持误称为单叶等式的必要条件。
+
+**证明。**对 Born 表示代入两个实际投影，差额就是 $\operatorname{Tr}(\tau\Delta_{E,g})$，并得到平方范数形式。若所有正输入均给零差额，取秩一正输入得到 $a^*\Delta_{E,g}a=0$ 对所有 $a$ 成立；Hermitian 极化给 $\Delta_{E,g}=0$。固定正迹时仅需对所有单位 $a$ 取 $\tau=waa^*$。两个秩一正外积相等，非零时它们的像相同，向量相差模长固定的相位，给上述 $\lambda$；零时两者都零。
+
+(4.9) 的等价由定理 1.6 的 PSD 零补质量论证应用于实际投影 $gSg^*$ 得到。设 $g^*\Sigma g=J\tau_gJ^*$，则
+$\operatorname{Tr}(\Sigma gEg^*)=\operatorname{Tr}(\tau_gQ)/9$
+及
+$\operatorname{Tr}(\Sigma gQ^\uparrow g^*)=\operatorname{Tr}(\tau_gQ)$，所以两套叶均满足 (4.8)。若所有 $S$ 输入都满足此支撑条件，则 $\operatorname{Ran}S\subseteq\operatorname{Ran}(gSg^*)$；两者秩均为三，必相等。全称叶律的真正充要条件仍逐叶为 (4.7)，充分支撑条件没有取代它。$\square$
+

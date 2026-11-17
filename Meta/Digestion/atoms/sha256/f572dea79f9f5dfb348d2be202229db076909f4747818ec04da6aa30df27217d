@@ -1,0 +1,13 @@
+**引理 89.1（先消去带非零标量的单位行）。** 对全部实 $\lambda$ 及 $b=(t,y)$，若 $t\ne0$，则 $D(\lambda u,b)=0$。
+
+证明。88.3给 $D(\lambda u,b)=(0,z)$、$z\perp y$。若 $z\ne0$，置 $Z=|z|,n=z/Z$，在PB取 $a=\lambda u,c=ku$。比例输入使 $D(a,c)=0$。两外层对为
+
+$$
+\begin{aligned}
+r_+&=(t-\lambda k,y+z),&s_+&=(k+\lambda t,\lambda y),\\
+r_-&=(t+\lambda k,y-z),&s_-&=(k-\lambda t,-\lambda y).
+\end{aligned}
+$$
+
+在同一纯评价n下，88.3的两个右端均为 $|y|\,|(1+\lambda^2)k-\lambda Z|$。取有限原标量 $k=\lambda Z/(1+\lambda^2)$，两外层D读数均为零，而88.4右端准确为 $(0,-2tz)$，其读数是 $-2tZ\ne0$，矛盾。∎
+

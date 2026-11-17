@@ -1,0 +1,20 @@
+**命题 13.1（局部化 Eisenstein 环的范数一单位）。**
+$$
+\boxed{\{u\in D:u\bar u=1\}=\mu _6.}
+$$
+
+**证明。** 对 $x+y\zeta\in K$，分别把 $x,y$ 取最近整数，所得余项仍记为 $x+y\zeta$，满足 $|x|,|y|\le 1/2$。其 Eisenstein 范数为
+$$
+N(x+y\zeta)=x^2-xy+y^2\le\frac34<1.
+$$
+因此 $\mathcal O_K$ 是范数 Euclidean 环，因而是唯一分解整环。模 $2$ 时 $X^2+X+1$ 不可约，所以 $2$ 惰性；令 $\eta=1-\zeta$，则
+$$
+\eta^2=-3\zeta,\qquad N(2)=4,\qquad N(\eta)=3.
+$$
+整环单位的范数为 $1$，而方程 $x^2-xy+y^2=1$ 的整数解正好给出 $\mu _6$。
+局部化只反演 $2$ 和 $3$，故
+$$
+D^\times=\{\varepsilon 2^a\eta^b:\varepsilon\in\mu _6, a,b\in\mathbb Z\}.
+$$
+若 $u\bar u=1$，则 $u$ 是单位，且取有理范数得到 $4^a3^b=1$。有理素数分解的唯一性给出 $a=b=0$，故 $u\in\mu _6$；反向包含显然成立。$\square$
+

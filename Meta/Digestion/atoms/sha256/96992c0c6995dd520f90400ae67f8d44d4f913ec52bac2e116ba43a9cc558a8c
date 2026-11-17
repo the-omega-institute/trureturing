@@ -1,0 +1,16 @@
+#### 定义 4.1：相对于记录的逃逸
+
+记相等核 $\ker R=\{(\xi,\eta):R(\xi)=R(\eta)\}$。它是一个等价关系，勿与线性映射零空间混淆。阶段 $n$ 的逃逸集合为
+
+$$
+\mathcal E_n=\{(\xi,\eta)\in\mathcal X^2:\xi\ne\eta,\ R_n(\xi)=R_n(\eta)\}.
+$$
+
+若目标为 $T:\mathcal X\to W$，目标相关逃逸为
+
+$$
+\mathcal E_{n,T}=\{(\xi,\eta):R_n(\xi)=R_n(\eta),\ T(\xi)\ne T(\eta)\}.
+$$
+
+这个定义与仓库首页及 `EscapePairs` 的有限来源版本相接[\[7\]](#ref-escape)。信息“逃逸”指没有进入所选读出的区别，不指信息从全局整体中消失。
+

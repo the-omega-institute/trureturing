@@ -1,0 +1,73 @@
+**引理 18.2（四个原标签返回等价与合法三阶商作用）。**在定义 18.1 的原类及完整 (R) 下，以下四个普遍条件等价：
+
+$$
+\begin{aligned}
+&c(P_3a,b)=c(a,b) &&(a,b\in M),\\
+&c(a,P_3b)=c(a,b) &&(a,b\in M),\\
+&c(U^3a,b)=c(a,b) &&(a,b\in M),\\
+&c(a,U^3b)=c(a,b) &&(a,b\in M).
+\end{aligned}
+\tag{18.3}
+$$
+
+任一个条件都等价于 $\mathrm C_3$，也等价于下列任一个完整行列普遍条件：
+
+$$
+a\cdot(U^3u)\approx a\cdot u,\qquad
+ a\cdot p_{j+3}\approx a\cdot p_j
+\qquad(a,u\in M,\ j\ge0),
+\tag{18.4}
+$$
+
+其中 $\approx$ 是定义 2.2 的全部原行列相等。此时 $Se_a=e_{Ua}-e_{p_1}$ 保持 $\mathcal N$，故在 $V=E/\mathcal N$ 上诱导算子 $T$，满足
+
+$$
+T^3=I,\qquad B(Tx,Ty)=B(x,y).
+\tag{18.5}
+$$
+
+**证明。**为与自由空间上的 $S$ 区分，暂记原对象操作 $G=U^3$、$P=P_3$。直接复用[续卷 W 引理 17.1](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#17-实际单位碰撞与全部探针上的标记消去)的交叉等距：
+
+$$
+c(Ga,Gb)=c(Ga,Pb)=c(Pa,Gb)=c(Pa,Pb)=c(a,b).
+\tag{18.6}
+$$
+
+第一端点的 $P$ 返回与第二端点的 $G$ 返回等价：前者给 $c(a,Gb)=c(Pa,Gb)=c(a,b)$，后者给 $c(Pa,b)=c(Pa,Gb)=c(a,b)$。同样，第二端点的 $P$ 返回与第一端点的 $G$ 返回等价。两个 $G$ 返回也等价：在 $c(Ga,Gb)=c(a,b)$ 中用所给返回消去其中一端，即取得另一端。每次代入均使用普遍量词，未要求 $G$ 或 $P$ 满射。于是 (18.3) 四项等价。
+
+引理 2.1 已给同步 $U$ 等距。完整 (R) 对 $(a,b,U^nu,U^nv)$ 的相邻实例相减，给
+
+$$
+c\bigl(a\cdot(U^3u),b\cdot(U^3v)\bigr)=c(a\cdot u,b\cdot v).
+\tag{18.7}
+$$
+
+取 $v=1$，用第二端点的 $P_3$ 返回，得到 $c(a\cdot(U^3u),b)=c(a\cdot u,b)$；取 $u=1$，另用第一端点返回，得到 $c(a,b\cdot(U^3v))=c(a,b\cdot v)$。这两式分别给 (18.4) 的完整行与完整列；再取 $u=p_j$ 得其第二式。反向，在 (18.4) 的第一项取 $u=1$，或在第二项取 $j=0$，均给 $P_3a\approx a$，也即 $\mathrm C_3$。这里只消去该指定右输入中的三次标记，没有建立 $\approx$ 对任意乘法环境的相容性。
+
+特别 $U^3a\approx a$、$p_3\approx1$。引理 2.3 因而给
+
+$$
+e_{U^3a}-e_a\in\mathcal N,\qquad e_{p_3}\in\mathcal N,\qquad
+(S^3-I)E\subseteq\mathcal N,
+\tag{18.8}
+$$
+
+末式使用 $S^3e_a=e_{U^3a}-e_{p_3}$。在定义任何商标记之前，对 $n\in\mathcal N,y\in E$ 分别计算
+
+$$
+\begin{aligned}
+B(Sn,y)&=B(Sn,S^3y)=B(n,S^2y)=0,\\
+B(y,Sn)&=B(S^3y,Sn)=B(S^2y,n)=0.
+\end{aligned}
+\tag{18.9}
+$$
+
+首个等号使用 (18.8) 的双侧根性，第二个等号使用引理 2.1 的自由空间等距。所以 $S\mathcal N\subseteq\mathcal N$，$T$ 才能下降，(18.8) 给 $T^3=I$，逆算子为 $T^2$。$B$ 因 $\mathcal N$ 在两个槽均为根而下降；商上的确切非退化性只是
+
+$$
+\bigl[B(w,x)=B(x,w)=0\ \text{对每个 }x\in V\bigr]\ \Longrightarrow\ w=0.
+\tag{18.10}
+$$
+
+并未假设任一个单侧根空间为零，也未假设 $B$ 对称或正定。证毕。
+

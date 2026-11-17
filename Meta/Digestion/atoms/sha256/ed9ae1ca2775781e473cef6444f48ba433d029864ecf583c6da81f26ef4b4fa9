@@ -1,0 +1,21 @@
+**定义 193.1（标准六阶模型的准确参数）。** 取 $E=H_6(\mathbb C)$、$u=I_6$、标准锥及范数、全部正评价，$S=\circ$、$D_*(a,b)=i[a,b]/2$。P2和完整PB直接复用原多项式卷6.6–6.7的结合乘法计算，不另计标准模型的新意。用标准Pauli矩阵及三阶矩阵单位，置
+
+$$
+\begin{gathered}
+h=\sigma_z\otimes I_3,\quad e=\sigma_x\otimes I_3,\quad
+j=-\sigma_y\otimes I_3,\quad Q=I_6,\\
+S_0=\operatorname{diag}(1,-1,1),\quad K_0=E_{12}+E_{21},\quad
+s=I_2\otimes S_0,\quad z=\gamma\sigma_x\otimes K_0,\quad\gamma\ne0.
+\end{gathered}
+\tag{193.1}
+$$
+
+它们满足全部实际框架前件，$hz=-zh$、$sz=-zs$，且 $z^2=\gamma^2I_2\otimes\operatorname{diag}(1,1,0)$ 奇异并非全矩阵中心元。对任意实 $R,\lambda,\nu$，同一标准值为
+
+$$
+D_*(Rh,\lambda h+\nu s+z)=-R\gamma\sigma_y\otimes K_0=R iQhz.
+\tag{193.2}
+$$
+
+当 $\nu\ne0$ 时，非零 $z$ 不满足184.1的 $[s,z]=0$，所以192.2确有该已付偶分支之外的实际输入。此例只检验定义域非空和符号，不把标准表替换进一般未知 $D$。
+

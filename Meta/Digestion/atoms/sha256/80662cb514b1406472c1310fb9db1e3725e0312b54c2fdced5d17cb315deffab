@@ -1,0 +1,49 @@
+**命题 86.3（单对静态片段的奇矩形）。** 仅考虑一个二方 P/G、Jordan、准备片段。取
+
+$$
+A=H_3(\mathbb C)\oplus H_4(\mathbb C),\quad
+B=H_5(\mathbb C)\oplus H_6(\mathbb C),\quad
+J=\bigoplus_{s,t}H_{n_sm_t}(\mathbb C),
+\quad (n_1,n_2)=(3,4),\ (m_1,m_2)=(5,6),
+\tag{86.5}
+$$
+
+各用通常矩阵正锥及单位，令
+
+$$
+i(a)_{st}=a_s\otimes I_{m_t},\qquad
+j(b)_{st}=I_{n_s}\otimes b_t^{\mathsf T^{\varepsilon_{st}}},
+\qquad (\varepsilon_{st})=\begin{pmatrix}0&0\\0&1\end{pmatrix}.
+\tag{86.6}
+$$
+
+此片段满足静态嵌入、乘积张成、正乘积准备及 P/G，但没有逐局部块选择能同时消去四个相对转置。
+
+证明。两个原型映射都是单射含幺 Jordan 同态，其范围逐目标块交换，故 $m(a,b)_{st}=a_s\otimes b_t^{\mathsf T^{\varepsilon_{st}}}$。每块实张量映射可逆，且
+
+$$
+(3^2+4^2)(5^2+6^2)=25\cdot61
+=15^2+18^2+20^2+24^2=1525,
+\tag{86.7}
+$$
+
+所以全部乘积张成且局部层析成立。将每个对象全部次归一正密度泛函作为其准备族，有限正锥包便是完整正对偶。任取局部密度 $\rho=(\rho_s)\ge0$、$\sigma=(\sigma_t)\ge0$，设
+
+$$
+\omega_{st}=\rho_s\otimes\sigma_t^{\mathsf T^{\varepsilon_{st}}}.
+\tag{86.8}
+$$
+
+它正，且 $\sum_{st}\operatorname{Tr}\omega_{st}=(\sum_s\operatorname{Tr}\rho_s)(\sum_t\operatorname{Tr}\sigma_t)\le1$。转置保迹配对给
+
+$$
+\sum_{st}\operatorname{Tr}\bigl(\omega_{st}m(a,b)_{st}\bigr)
+=\Bigl(\sum_s\operatorname{Tr}(\rho_sa_s)\Bigr)
+ \Bigl(\sum_t\operatorname{Tr}(\sigma_tb_t)\Bigr).
+\tag{86.9}
+$$
+
+零准备、次归一质量和所有实输入均包括。迹内积自对偶，块保持复 congruence 群是闭、连通、伴随封闭且在正定内点上传递的群，给这个片段的 P/G。矩形位和为一，(86.3) 排除全部局部取向同时普通化；目标整体转置同时改变两条嵌入的符号，不改相对位。局部与联合块大小各不相同，置换块也不能消除奇矩形。
+
+此命题的对象仅是这一个二方静态片段。它没有给出整个原对象域、整个非经典指针及其幂、全称 $R_0$、全部原结合接口、实际历史或固定原 D 的扩张；因此不是定理 85.2 全网前件、完整 C128 或量子起源目标的反模型。所有本例块均非经典；不能借标量转置的空符号制造此障碍。∎
+

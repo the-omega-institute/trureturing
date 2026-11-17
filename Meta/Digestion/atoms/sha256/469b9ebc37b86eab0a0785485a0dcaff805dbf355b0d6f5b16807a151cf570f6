@@ -1,0 +1,26 @@
+**命题 10.3（The labelled $K_4$ and $K_{3,1,1,1}$ applications）。**
+Every labelled realization of $K_4$ and $K_{3,1,1,1}$ satisfies all
+conclusions (10.3)–(10.5) at every even $s\geq2$, on its complete
+original half-filled carrier. Both graphs lie outside Definition 7.1's
+locally bipartite class.
+
+Proof. For $K_4$ take its four singleton parts: $q=m=4$, every
+$p_a=1$, and $2\max p_a=2\leq4$. For $K_{3,1,1,1}$ the four
+nonempty labelled parts have sizes $3,1,1,1$, so $q=4$, $m=6$ and
+$2\max p_a=6=m$. These are finite simple unit-weight graphs with
+exactly the cross-part edges, even order and no isolates. Theorem 10.2
+therefore applies to each at every integer $S\geq1$, with $k=4S$
+and $k=6S$, respectively, and $s=2S$. It retains the original labels
+and each original Boolean block; no identification of equal-sized
+parts is involved.
+
+More generally, in a complete multipartite graph with $q\geq4$,
+the open neighborhood of a vertex in any part contains a triangle:
+choose one vertex from each of three other nonempty parts. Its three
+cross-part edges are present. A bipartite graph cannot contain this
+triangle, so the induced neighborhood is not bipartite. This verifies
+the failure of the locally bipartite hypothesis at every vertex of
+both examples, independently of their labels. The applications use
+the even-scale result just proved; the odd-scale statements of §9
+retain their own hypotheses and conclusions. $\square$
+

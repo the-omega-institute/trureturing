@@ -1,0 +1,52 @@
+**命题 16.3（非空原始子族上的严格实际最坏情形比较；repo-derived）。** 对仍满足全部原始条件且另有
+$$
+\sqrt m\ge\frac{40M}{t}
+\tag{16.13}
+$$
+的元组，同一固定元组、同一全体原始 $n,h$ 上的两个实际上确界满足
+$$
+\bar\delta_{\rm dep}<\frac{61}{100}b_D
+<\frac{13}{20}b_D<\bar\delta_{\rm raw}.
+\tag{16.14}
+$$
+这个原始子族非空：对每个允许的整数 $N$，可取
+$$
+m=(2560M)^2=655{,}360{,}000N^2,\qquad D=m+1,\qquad j=m/2.
+\tag{16.15}
+$$
+
+**证明。** 取 (14.12) 在半径 $1/3$ 开圆盘内的场。它属于 $C^2$，前两个坐标保证秩二，原点两轴导数范数均为一，轴上二阶导数范数为 $(1-s^2)^{-3/2}<2$（$|s|\le1/4$），故满足完整原始场承诺。选一个 $h\perp v=n(+d e_x)$，于是 $p=1/2$；这是上确界中的见证，两个程序均不以它为输入。
+
+对实际获取态和上述理想乘积态施行同一交换，得到
+$$
+D_{\rm tr}(\Omega_{\rm raw},\Gamma)\le e,\qquad
+\Gamma=|w\rangle\langle w|\otimes\Xi^i.
+$$
+在完整 $R K_0 S_t$ 上令 $\mathsf P=\tau_h\otimes I$。任意 Hermitian $X$ 满足
+$$
+\|\mathsf P X(I-\mathsf P)\|_1\le\frac12\|X\|_1,
+\tag{16.16}
+$$
+因为 $Z=2\mathsf P-I$ 是幺正，且
+$\|X-ZXZ\|_1=4\|\mathsf P X(I-\mathsf P)\|_1\le2\|X\|_1$。
+实际乘积 $\tau_h\otimes\omega_{\rm raw}$ 的该交叉块为零，故 (16.16) 先用于返回差、再用于 $\Omega_{\rm raw}-\Gamma$，给出
+$$
+\begin{aligned}
+\Delta_{\rm raw}(n,h)
+&\ge\|\mathsf P\Omega_{\rm raw}(I-\mathsf P)\|_1\\
+&\ge\|\mathsf P\Gamma(I-\mathsf P)\|_1-e\\
+&=b_D\sqrt{\frac12\left(1-\frac{b_D^2}{2}\right)}-e
+>\frac7{10}b_D-e.
+\end{aligned}
+\tag{16.17}
+$$
+最后一步用 $b_D\le1/64$。这里保留了实际 $\omega_{\rm raw}$ 和全部输出，直接估计原协议的交叉块，未把任何原始口下界经收缩移植到处理后的输出。
+
+同一范围内 $\sqrt{1-b_D^2}>63/64$，故
+$g_D<32b_D/63<51b_D/100$。又 $\sin x_D\ge x_D/2$，所以
+$$
+b_D\ge\frac{t}{2\sqrt m},\qquad
+\frac{e}{b_D}<\frac{2M}{t\sqrt m}\le\frac1{20}.
+$$
+将此代入 (16.12) 和 (16.17)，分别得到 (16.14) 两端的严格界。这一步用原协议的实际下见证与新协议的统一上界分离上确界，并非仅由两个充分证书的大小推出严格实际改善。式 (16.15) 是整数 $m$、允许的半整数 $j$，满足 (16.13) 和 $D\ge8{,}000{,}000N^2$，其余 $L,Q$ 及承诺保持原值，故确为非空原始子族。$\square$
+

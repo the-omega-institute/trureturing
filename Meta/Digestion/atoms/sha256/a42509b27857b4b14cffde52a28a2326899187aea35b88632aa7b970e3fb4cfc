@@ -1,0 +1,13 @@
+#### 定理 9.1：qubit 的自足分类
+
+在 $E=\operatorname{Herm}_2(\mathbb C)$ 上，实双线性 $D$ 满足 (T)，当且仅当存在 $\gamma\in\mathbb R$，使
+
+$$
+D(a,b)=\gamma i[a,b].
+\tag{8}
+$$
+
+特别地，两侧单位律和交替性都成为结论。
+
+**证明。**
+

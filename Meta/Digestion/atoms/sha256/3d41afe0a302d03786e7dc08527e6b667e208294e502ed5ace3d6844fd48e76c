@@ -1,0 +1,4 @@
+且对充分大的 $X$，$\|f_{a,X}\|_{X,2}^2\le880M$。
+
+证明。在 $I_j$ 上取 $p(x)=x+h\,a(u_j)$、$q(x)=x+h\,a(x/X)$，则 $f_{a,X}-F_{a,n,X}=E(q)-E(p)$，$p'=1$，$q'\ge\frac12$，$|q-p|\le Lh/n\le R$，两像都含于 $J_j=[u_jX,u_{j+1}X+Mh]\subset[X/2,4X]$，$|J_j|=X/n+Mh$。由引理 496.1(iii)（$m=\frac12$），$\int_{I_j}|f_{a,X}-F_{a,n,X}|^2\le40R\log X\,(3X/n+3Mh+16\varepsilon_XX)$。对 $j$ 求和并除以 $\mathscr N_X$ 得 (496.3)。对固定 $n$，$R=ch$（$c=(1+L)/n$）满足 $R/(4X)^\alpha=c4^{-\alpha}X^{\theta-\alpha}\to\infty$、$4R/(X/2)^\beta=4c2^\beta X^{\theta-\beta}\to0$，故 (496.2) 与其余条件最终成立（$R=Mh$ 同理），门槛只依赖 $E,\alpha,\theta,\beta,M,L,n$。最后在整个 $[X,2X]$ 上取 $p(x)=x$、$q(x)=x+h\,a(x/X)$、$R=Mh$、$J=[X,2X+Mh]$；对充分大的 $X$，$\varepsilon_X\le1$，由引理 496.1(iii)，$\|f_{a,X}\|_{X,2}^2\le40M(3(1+Mh/X)+16\varepsilon_X)\le880M$。证毕。
+

@@ -1,0 +1,16 @@
+**定义 247.1（同一原迹型的读回算子）。** 在 $T=H_n(\mathbb C)$、$q=w\operatorname{Tr}(\,\cdot\,\cdot\,)$、$w>0$ 上，记
+
+$$
+\kappa(a,b)=i(ab-ba).
+\tag{247.1}
+$$
+
+对实双线性 $\delta:T\times T\to T$，由正定 $q$ 唯一定义每个 $z\in T$ 的实线性读回算子 $R_z$：
+
+$$
+q(R_za,b)=q(\delta(a,b),z).
+\tag{247.2}
+$$
+
+这只是同一原 $q$ 的表示记号，不给原 $D_a$ 添加导子、斜伴随或交换子前件。
+

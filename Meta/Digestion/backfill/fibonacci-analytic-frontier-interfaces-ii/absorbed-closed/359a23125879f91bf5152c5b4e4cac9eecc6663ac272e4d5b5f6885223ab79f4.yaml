@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:359a23125879f91bf5152c5b4e4cac9eecc6663ac272e4d5b5f6885223ab79f4
+  normalized_sha256: sha256:359a23125879f91bf5152c5b4e4cac9eecc6663ac272e4d5b5f6885223ab79f4
+cas_ref: sha256:359a23125879f91bf5152c5b4e4cac9eecc6663ac272e4d5b5f6885223ab79f4
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/SecondOrderInterface.weighted_covariance_uniform
+    target_statement_id: sha256:6cab2d35cf6ec16d7ced31be0652ecb16c0c989c53bcd158097aae6047770266
+receipts:
+  unresolved_subitems: []

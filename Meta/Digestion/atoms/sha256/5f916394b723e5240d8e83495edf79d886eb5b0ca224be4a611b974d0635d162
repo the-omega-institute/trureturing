@@ -1,0 +1,15 @@
+**定义 C-27.2.1（完全给定的路径支撑）。** 四记录路径 <span>𝑒<sub>1</sub>-𝑒<sub>2</sub>-𝑒<sub>3</sub>-𝑒<sub>4</sub></span> 的候选关系仅允许相邻条目 <span>𝑔<sub>𝑖</sub>=𝐺<sub>𝑖,𝑖+1</sub></span> 及其共轭非零。三个非邻对的条目明确供应为零。按 §27.5 的路径重标相，令 <span>𝑟<sub>𝑖</sub>=|𝑔<sub>𝑖</sub>|≥0</span>，得到
+
+<div>
+𝐺<sub>4</sub>=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑟<sub>1</sub></td><td>0</td><td>0</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>𝑟<sub>1</sub></td><td>1</td><td>𝑟<sub>2</sub></td><td>0</td><td>⎟</td></tr>
+<tr><td>⎜</td><td>0</td><td>𝑟<sub>2</sub></td><td>1</td><td>𝑟<sub>3</sub></td><td>⎟</td></tr>
+<tr><td>⎝</td><td>0</td><td>0</td><td>𝑟<sub>3</sub></td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+这里的零是声明的模型或来源条件；尚未测量一个条目不能把它写成零。若给的是部分报告，则该条目应作为待补变量保留。
+

@@ -1,0 +1,48 @@
+### 定理 5：反例终点是自身匹配价格下的唯一整数最优点
+
+<a id="eq-24"></a>
+
+$$
+\boxed{
+N
+=
+\operatorname*{arg\,max}_{m\ge1}
+\left\{
+\log Z(m)-\frac{\log m}{T\log T}
+\right\},
+\qquad T=\log N,
+}
+\tag{24}
+$$
+
+且右侧最大点唯一。
+
+**证明。**
+
+式 (22)–(23) 和层收益的严格递减性，确定了每个素数方向上全部正项与负项的分界。
+
+任何不同整数 $m\neq N$，必然至少漏取一个正项，或者加入一个负项。因此其价格目标严格小于 $N$。证毕。
+
+进一步，令 $h=\log p$。利用 $\kappa$ 的严格下降性，还可得到
+
+<a id="eq-25"></a>
+
+$$
+\boxed{
+\lambda_{p,a}>
+\eta h+\frac{\kappa(T)}2h^2,
+}
+\tag{25}
+$$
+
+<a id="eq-26"></a>
+
+$$
+\boxed{
+\lambda_{p,a+1}<
+\eta h-\frac{\kappa(T+h)}2h^2.
+}
+\tag{26}
+$$
+
+<!-- editorial-note:start strict-integral-gaps -->

@@ -6,7 +6,31 @@ LatticeSectorIntertwiner
 
 Construction uses arbitrary ordinary symmetric even integral lattice data, including degenerate forms, zero charges and rank zero. Classification and universality require an explicit two-sided complex inverse Gram matrix, with no positivity or integer unimodularity.
 
-**Definition 1.1 (Sector).**
+**Definition 1.1 (chargeSpace).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.chargeSpace`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.chargeSpace` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original charge submodule at delta is the range of Finsupp.lsingle delta on oscillator polynomials.
+
+**Theorem 1.2 (word_charge).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.word_charge`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.word_charge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every lattice D, charges alpha and beta, original oscillator word w, signed integer mode n and oscillator polynomial v, wordField(alpha,w)[n] applied to single(beta,v) lies in chargeSpace(alpha+beta). The original proof covers both actual normal-product branches without a nonsingularity or nonzero-charge hypothesis. It supports charge_homogeneity and the OriginalWord zero-mode calculation; its exposure adds no independently new BPZ result.
+
+**Definition 1.3 (Sector).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.Sector`
 
@@ -18,7 +42,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.Sector`
 
 Sector on the actual charge-labelled oscillator sectors; the precise parameters and conclusion are the compiled Lean statement.
 
-**Definition 1.2 (inclusion).**
+**Definition 1.4 (inclusion).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.inclusion`
 
@@ -30,7 +54,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.inclusion`
 
 inclusion on the actual charge-labelled oscillator sectors; the precise parameters and conclusion are the compiled Lean statement.
 
-**Definition 1.3 (projection).**
+**Definition 1.5 (projection).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.projection`
 
@@ -42,7 +66,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.projection
 
 projection on the actual charge-labelled oscillator sectors; the precise parameters and conclusion are the compiled Lean statement.
 
-**Theorem 1.4 (charge_homogeneity).**
+**Theorem 1.6 (charge_homogeneity).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.charge_homogeneity`
 
@@ -54,7 +78,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.charge_hom
 
 Every actual ordinary field mode on arbitrary original oscillator inputs has output charge equal to the sum of its two input charges. Both normal-product branches and the polynomial linear extension are covered.
 
-**Definition 1.5 (canonical).**
+**Definition 1.7 (canonical).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.canonical`
 
@@ -66,7 +90,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.canonical`
 
 canonical on the actual charge-labelled oscillator sectors; the precise parameters and conclusion are the compiled Lean statement.
 
-**Theorem 1.6 (inclusion_canonical).**
+**Theorem 1.8 (inclusion_canonical).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.inclusion_canonical`
 
@@ -86,8 +110,10 @@ The category is the neutral Heisenberg sector category. Full charged lattice-VOA
 
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.Sector`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.canonical`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.chargeSpace`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.charge_homogeneity`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.inclusion`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.inclusion_canonical`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.projection`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.word_charge`
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualStateDerivative](../LatticeActualStateDerivative.md)

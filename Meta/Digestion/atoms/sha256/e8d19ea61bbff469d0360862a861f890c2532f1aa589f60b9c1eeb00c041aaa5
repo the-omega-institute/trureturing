@@ -1,0 +1,55 @@
+**Theorem 15.1 (Matching linear endpoint orders for every fixed chain).** Fix any $m\geq1$ and any positive velocity vector. Let $\rho_\alpha$ be the complex spectral radius of the literal $T=A^{-1}B_\alpha$. With $d=d(v)>0$ from (13.1), for all $0<\alpha<1$,
+
+$$
+\frac{d}{2m}\,
+\frac{4\alpha(1-\alpha)v_2s_1}{(v_2+\alpha v_1)^2}
+\leq1-\rho_\alpha\leq1-|q|^{1/m}\leq1-|q|.
+\tag{15.1}
+$$
+
+In particular set
+
+$$
+c_v=\frac{dv_2}{ms_1}>0,\qquad
+\alpha_* =\frac{v_2}{v_1+2v_2}.
+$$
+
+The following explicit two-sided estimates establish linear order at each endpoint:
+
+$$
+\begin{array}{ll}
+c_v\alpha\leq1-\rho_\alpha\leq\dfrac{2s_1}{v_2}\alpha,
+&0<\alpha\leq\min(1/2,\alpha_*),\\[5pt]
+c_v(1-\alpha)\leq1-\rho_\alpha\leq2(1-\alpha),
+&\max(1/2,\alpha_*)\leq\alpha<1.
+\end{array}
+\tag{15.2}
+$$
+
+At the exact endpoint extensions of the original matrices, $\rho_0=\rho_1=1$ and $Q$ is preserved. The constants in (15.2) are fixed-chain bounds, with no assertion of optimal coefficients or an optimal damping parameter.
+
+*Proof.* Put $a=1/(2m)\in(0,1]$. The function $(1-x)^a$ is concave on $[0,1)$ and continuous at one, so its tangent at zero gives $(1-x)^a\leq1-ax$ for $0\leq x\leq1$. Theorem 13.2 therefore implies
+
+$$
+1-\rho_\alpha\geq1-(1-\sigma d)^{1/(2m)}\geq\frac{\sigma d}{2m}.
+$$
+
+By (13.8), the product of the $m$ eigenvalue moduli, counted with algebraic multiplicity, is $|q|$. Each is at most $\rho_\alpha$, hence $\rho_\alpha\geq|q|^{1/m}$. Finally $|q|^{1/m}\geq|q|$ for $|q|\in[0,1]$. This proves (15.1), including $q=0$ and $m=1$.
+
+For $\alpha\leq1/2$, the numerator in $\sigma$ has $\alpha(1-\alpha)\geq\alpha/2$, and its denominator is at most $s_1^2$. Thus $\sigma\geq2\alpha v_2/s_1$, giving the first lower bound of (15.2). For $\alpha\geq1/2$ the same calculation with $\alpha(1-\alpha)\geq(1-\alpha)/2$ gives its second lower bound. If $\alpha\leq\alpha_*$ then $q\leq0$ and
+
+$$
+1-|q|=1+q=2\theta_\alpha
+=\frac{2\alpha s_1}{v_2+\alpha v_1}
+\leq\frac{2s_1}{v_2}\alpha.
+$$
+
+If $\alpha\geq\alpha_*$ then $q\geq0$ and
+
+$$
+1-|q|=1-q=2(1-\theta_\alpha)
+=\frac{2v_2(1-\alpha)}{v_2+\alpha v_1}\leq2(1-\alpha).
+$$
+
+These inequalities prove both upper bounds in (15.2) on the displayed nonempty endpoint neighborhoods. At $\alpha=0,1$, (12.7) makes the endpoint matrices isometries for the positive definite $Q$. Each complex eigenvalue therefore has modulus one, and the nonempty finite-dimensional spectrum gives radius one. This also identifies the exact endpoint obstruction to an interior contraction certificate. $\square$
+

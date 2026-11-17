@@ -1,0 +1,12 @@
+**Definition 176.1 (the $003$ leakage functional).** Retain the complete telescope and the legal family (175.1)--(175.3). For a bounded real Borel function $v$, define
+
+$$
+\ell_{003}(v)
+=\mathcal C(v,F,q)+\mathcal C(F,v,q),
+\qquad
+A_\theta(v)=\mathcal C(v,v,q).
+\tag{176.1}
+$$
+
+The first quantity is the $003$ component of the original first-order map, and $A_\theta(v)>0$ for every nonzero $m$-class by Appendix III Proposition 134.2.
+

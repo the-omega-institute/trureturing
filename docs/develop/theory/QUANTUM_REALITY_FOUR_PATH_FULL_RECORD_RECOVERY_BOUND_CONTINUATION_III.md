@@ -1569,3 +1569,361 @@ certificate-existence conditions discussed in Definition 52.1 are
 neither used nor established by this curvature argument.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 54. Exhaustive fixed-labelled phase preimages and their original aligning effects
+
+**Definition 54.1 (the original slice and its only scalar quotient).**
+Use the parameters of Definition 53.1:
+
+$$
+ \sigma\in\{+,-\},\quad 0<\xi\le13/4,\quad
+ 0<q<\min\{1,\xi/2\},\quad p=1-q,\quad
+ x=1-\xi/4+q/2,\quad y=\sqrt{1-x^2},\quad L=1+x,
+\tag{54.1}
+$$
+
+with $h=1/\sqrt2$, $c=\cos(\pi/8)$, $s=\sin(\pi/8)$ and the
+fixed ordered pairs
+
+$$
+\begin{array}{c|c|c|c}
+ \sigma&J&K&(a,b,\ell,m)\\ \hline
+ +&(1,2)&(3,4)&(h,c,h,s)\\
+ -&(3,4)&(1,2)&(s,h,c,h).
+\end{array}
+\tag{54.2}
+$$
+
+Retain exactly the determinant hypothesis
+
+$$
+\begin{aligned}
+ R_0&=ax+b,\\
+ \mu&=\tfrac12\left(\frac{a(b-a)\sqrt p}{R_0}
+                                      +\frac{\ell\sqrt q}{y}\right),\\
+ \nu&=\tfrac12\left((b-a)\sqrt p+
+                \frac{(\ell^2x-m^2)\sqrt q}{\ell y}\right),\\
+ D_\sigma(x,q)&=\frac{4\mu\nu x^2}{1+x}-m^2q<0.
+\end{aligned}
+\tag{54.3}
+$$
+
+No sign condition is imposed on $\nu$. Let $\mathbb T$ denote the
+complex unit circle, and define
+
+$$
+ \mathcal V_\sigma=\left\{v\in\mathbb T^4:
+                      \left|\sum_{j=1}^4v_j\right|=2L\right\},
+ \qquad H_\sigma(v)=\sqrt p\,|M_\sigma(v)|+\sqrt q\,|N_\sigma(v)|,
+\tag{54.4}
+$$
+
+where in the original coordinate order
+
+$$
+\begin{aligned}
+ M_+(v)&=h(v_1+v_2)+c(v_3+v_4),&
+ N_+(v)&=h(v_1-v_2)+is(v_3-v_4),\\
+ M_-(v)&=h(v_1+v_2)+s(v_3+v_4),&
+ N_-(v)&=h(v_1-v_2)-ic(v_3-v_4).
+\end{aligned}
+\tag{54.5}
+$$
+
+A phase feedback is the single actual matrix
+$U=\operatorname{diag}(v)U_\sigma$, with
+
+$$
+\begin{aligned}
+ U_+&=\operatorname{diag}(1,e^{i\pi/4},e^{i\pi/8},e^{-i\pi/8}),\\
+ U_-&=\operatorname{diag}(1,-e^{i\pi/4},-ie^{i\pi/8},ie^{-i\pi/8}).
+\end{aligned}
+\tag{54.6}
+$$
+
+The equivalence relation is only $v\sim\lambda v$ for
+$|\lambda|=1$. No coordinate permutation or independent pair phase
+is identified. Its ordered squared pair lengths are
+$X=|\sum_{j\in J}v_j|^2/4$ and $Y=|\sum_{j\in K}v_j|^2/4$.
+
+**Definition 54.2 (the unique length pair and its phase data).**
+Let $(X_*,Y_*)$ be the unique maximizer of the unchanged
+$\Gamma_\sigma$ on $\mathcal T_x$ supplied by Theorem 53.4. Put
+
+$$
+\begin{aligned}
+ r&=\sqrt{X_*},&t&=\sqrt{Y_*},&
+ u&=\sqrt{1-X_*},&w&=\sqrt{1-Y_*},\\
+ Z_*&=\frac{L^2-X_*-Y_*}{2rt},&
+ \theta&=\arccos Z_*,\\
+ R_*&=\sqrt{a^2X_*+b^2Y_*+ab(L^2-X_*-Y_*)},\\
+ C_*&=\sqrt{\ell^2u^2+m^2w^2+2\ell m u w\sin\theta},\\
+ G_*&=\sqrt p\,R_*+\sqrt q\,C_*.
+\end{aligned}
+\tag{54.7}
+$$
+
+Here $R_*$ denotes only the main half-modulus in this section.
+Theorem 53.4 and (53.7) give $r,t,u,w>0$ and $0<Z_*<1$:
+$X_*+Y_*<L^2$ gives positivity, and $r+t>L$ gives $Z_*<1$.
+Consequently $0<\theta<\pi/2$. Also $R_*,C_*>0$, since
+$R_*=|ar e^{i\theta}+bt|$ and every term in $C_*^2$ is positive.
+
+**Theorem 54.3 (all maximizing labelled phase vectors).**
+For every tuple in Definition 54.1,
+
+$$
+ \max_{v\in\mathcal V_\sigma}H_\sigma(v)=2G_*.
+\tag{54.8}
+$$
+
+Its maximizing vectors are exactly $\lambda v^\sigma_{\tau,\varepsilon}$,
+where $|\lambda|=1$, $\tau,\varepsilon\in\{+1,-1\}$ and
+
+$$
+\begin{aligned}
+ v^+_{\tau,\varepsilon}
+  =\big(&e^{i\tau\theta}(r+i\varepsilon u),
+         e^{i\tau\theta}(r-i\varepsilon u),
+         t+i\tau\varepsilon w,t-i\tau\varepsilon w\big),\\
+ v^-_{\tau,\varepsilon}
+  =\big(&t+i\tau\varepsilon w,t-i\tau\varepsilon w,
+         e^{i\tau\theta}(r+i\varepsilon u),
+         e^{i\tau\theta}(r-i\varepsilon u)\big).
+\end{aligned}
+\tag{54.9}
+$$
+
+These are exactly four distinct common-scalar orbits in each row.
+Every maximizing vector has ordered lengths $(X_*,Y_*)$.
+
+**Proof.** Lemma 46.2 in
+[Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md)
+gives, for every actual vector in (54.4),
+
+$$
+ (X,Y)\in\mathcal T_x,\qquad |M_\sigma(v)|=2R,
+ \qquad |N_\sigma(v)|\le2C,
+ \qquad H_\sigma(v)\le2\Gamma_\sigma(x,q;X,Y)\le2G_*.
+\tag{54.10}
+$$
+
+The same lemma gives simultaneous attainment on one feedback at
+$(X_*,Y_*)$, so the maximum equals $2G_*$. If $v$ maximizes,
+both inequalities in (54.10) are equalities. Theorem 53.4 forces its
+ordered lengths to be $(X_*,Y_*)$. Since $q>0$ and $|M|=2R$,
+it must also satisfy $|N|=2C_*$.
+
+The $K$-pair sum has modulus $2t>0$. Thus every such common-scalar
+orbit has exactly one representative with $K$-pair sum the positive
+real number $2t$. In this representative, (46.14)--(46.15) give
+
+$$
+\begin{aligned}
+ (v_j)_{j\in J}
+   &=e^{i\alpha}(r+i\varepsilon_Ju,r-i\varepsilon_Ju),\\
+ (v_j)_{j\in K}
+   &=(t+i\varepsilon_Kw,t-i\varepsilon_Kw),
+ \qquad\cos\alpha=Z_*.
+\end{aligned}
+\tag{54.11}
+$$
+
+The two possible centers are $e^{i\alpha}=e^{i\tau\theta}$,
+$\tau\in\{+1,-1\}$; both pair signs initially range independently.
+The exact crossed-square identity (46.17), for each original row, is
+
+$$
+ \frac{|N|^2}{4}=\ell^2u^2+m^2w^2
+       +2\ell m\varepsilon_J\varepsilon_Kuw\,\tau\sin\theta.
+\tag{54.12}
+$$
+
+All factors $\ell,m,u,w,\sin\theta$ are strictly positive.
+Therefore $|N|=2C_*$ holds exactly when
+$\varepsilon_J\varepsilon_K=\tau$.
+Writing $\varepsilon_J=\varepsilon$ gives
+$\varepsilon_K=\tau\varepsilon$, which is precisely (54.9) in
+both original coordinate orders. This proves necessity without
+quotienting any labels.
+
+Conversely every entry in (54.9) has modulus one. Its ordered pair
+sums are $2r e^{i\tau\theta}$ and $2t$, so
+
+$$
+ \left|\sum_jv_j\right|^2
+   =4(r^2+t^2+2rt\cos\theta)=4L^2.
+\tag{54.13}
+$$
+
+It belongs to the original slice, and its sign product gives
+$|N|=2C_*$ by (54.12). The same actual vector gives $|M|=2R_*$;
+thus it attains (54.8).
+
+Finally all four representatives have $K$-pair sum $2t>0$.
+A common scalar mapping any one to another must equal one.
+The $J$-pair sums $2r e^{i\tau\theta}$ distinguish the two values
+of $\tau$, since $r>0$ and $0<\theta<\pi/2$. At fixed $\tau$,
+the $J$-pair differences $2i\varepsilon u e^{i\tau\theta}$
+distinguish the two values of $\varepsilon$, since $u>0$.
+Hence all four orbits are distinct and the necessity argument is
+exhaustive. $\square$
+
+**Proposition 54.4 (the unique aligning original effect on each orbit).**
+For a vector $v$ in Theorem 54.3, evaluate $M=M_\sigma(v)$ and
+$N=N_\sigma(v)$ on that same vector, and set
+
+$$
+ \eta(v)=\frac{M\overline N}{|M||N|},\qquad
+ \beta_+(v)=\begin{pmatrix}\sqrt p\\\eta(v)\sqrt q\end{pmatrix},
+ \qquad
+ \beta_-(v)=\begin{pmatrix}\eta(v)\sqrt q\\\sqrt p\end{pmatrix}.
+\tag{54.14}
+$$
+
+Use exactly the original basis from (3.5), (6.7) of the
+[original volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md):
+
+$$
+ \alpha_0=e^{-i\pi/4},\qquad
+ b_+=h(1,\alpha_0)^{\mathsf T},\quad
+ b_-=h(1,-\alpha_0)^{\mathsf T},\quad T=(b_+\ b_-).
+\tag{54.15}
+$$
+
+The unique aligning normalized rank-one effect with population $q$
+away from the active optimizer is
+
+$$
+ E_\sigma(v)=
+ \left(T\beta_\sigma(v)\beta_\sigma(v)^\dagger T^\dagger\right)^{\mathsf T}.
+\tag{54.16}
+$$
+
+The outer superscript $\mathsf T$ is ordinary transpose.
+This effect is unchanged by $v\mapsto\lambda v$, so (54.16)
+assigns a well-defined unique effect to each of the four feedback
+orbits.
+
+**Proof.** Both recoveries are nonzero: their moduli are $2R_*$ and
+$2C_*$, positive by Definition 54.2. Thus (54.14) is defined and
+$|\eta|=1$. Every normalized rank-one effect with these populations
+has the form (54.16) with $\eta$ replaced by an arbitrary unit
+phase $\eta'$, by (46.5). The global phase of its representing
+vector does not change the effect.
+
+The source recovery row is $(P,Q)=(M,N)$ for $\sigma=+$ and
+$(P,Q)=(N,M)$ for $\sigma=-$, by (46.2)--(46.4).
+Consequently its actual recovery amplitude on this same $U$ is
+
+$$
+ \chi=\sqrt p\,M+\eta'\sqrt q\,N.
+\tag{54.17}
+$$
+
+Since $p,q,|M|,|N|>0$, equality
+$|\chi|=\sqrt p|M|+\sqrt q|N|$ holds exactly when
+$\eta'=M\overline N/(|M||N|)$. This gives uniqueness among all
+such original effects, as both population coordinates are nonzero.
+
+In particular, the original upper-right coherence convention is
+preserved. For $F=T^\dagger E_\sigma(v)^{\mathsf T}T$ one obtains
+
+$$
+ F_+=\begin{pmatrix}p&\sqrt{pq}\,\overline\eta\\
+                  \sqrt{pq}\,\eta&q\end{pmatrix},\qquad
+ F_-=\begin{pmatrix}q&\sqrt{pq}\,\eta\\
+                  \sqrt{pq}\,\overline\eta&p\end{pmatrix}.
+\tag{54.18}
+$$
+
+Writing $z_{\rm coh}=F_{12}$, in either row this gives
+
+$$
+ Pz_{\rm coh}\overline Q=\sqrt{pq}|M||N|,
+ \qquad |z_{\rm coh}|^2=pq,
+\tag{54.19}
+$$
+
+exactly the original alignment in (23.9)--(23.13). Transposing the
+positive rank-one trace-one projector in (54.16) preserves positivity,
+rank and trace; it gives the effect in the original coordinates.
+Multiplying $v$ by $\lambda$ multiplies both $M,N$ by $\lambda$,
+so $\eta$ and the effect do not change. $\square$
+
+**Proposition 54.5 (true original distance, value and conditional endpoint use).**
+Every pair $(E_\sigma(v),\operatorname{diag}(v)U_\sigma)$ from
+Theorem 54.3 and Proposition 54.4 has the original distance
+$\rho(E,U)=\xi$ of (53.34), with unique minimizing sign $\sigma$,
+and on that same actual feedback
+
+$$
+ g(E,U)=K_\sigma^2p+K_{-\sigma}^2q-4G_*^2,
+ \qquad K_+=2(h+c),\quad K_-=2(h+s).
+\tag{54.20}
+$$
+
+If an actual global endpoint in $\mathcal E_\xi(a_\xi)$ contributes
+from a phase slice satisfying Definition 54.1, its feedback and effect
+belong to exactly one of these four paired common-scalar orbits.
+This implication assumes actual contribution of the slice.
+
+**Proof.** Apply Proposition 53.5 to the actual simultaneous
+realizations above. The active original distance branch is
+
+$$
+ \|E-E_\sigma\|_{\mathrm F}^2+
+       \min_{|\zeta|=1}\|U-\zeta U_\sigma\|_{\mathrm F}^2
+ =2q+8-2|\operatorname{Tr}(UU_\sigma^\dagger)|
+ =2q+8-4L=\xi.
+\tag{54.21}
+$$
+
+The other sign branch is strictly larger by the two-sign budget
+(42.17)--(42.20) of Continuation II, throughout $0<\xi\le13/4$.
+Thus (54.21) is the true original distance, with one scalar on the
+entire feedback. The aligned same-feedback identity (53.33), with
+$|\chi|=2G_*$, proves (54.20).
+
+For the conditional endpoint, Corollary 53.6 forces the ordered
+lengths $(X_*,Y_*)$ and the value (53.37), and retains the literal
+coherence equalities (53.38). Equality in the same-slice comparison
+then forces $H_\sigma=2G_*$: otherwise even maximal coherence on
+this feedback would give strictly larger $g$ than (53.37).
+Theorem 54.3 classifies the vector, and Proposition 54.4 fixes its
+effect. Distinctness of the four feedback orbits gives uniqueness
+of its paired orbit. $\square$
+
+**Definition 54.6 (mathematical sources and scope).**
+The length existence, uniqueness and strict inequalities are those of
+Theorem 53.4, used without a new length optimization. The phase
+reconstruction, original row correspondence and crossed-square
+identity are Definition 46.1 and Lemma 46.2 of Continuation II.
+The normalization of the nonzero $K$-pair sum and its equality-case
+sign enumeration in (54.11)--(54.13) give the exhaustive labelled
+preimages. The triangle-inequality equality condition is an elementary
+intermediate step in Proposition 54.4. The original basis, ordinary
+transpose, coherence convention and same-feedback alignment are
+(3.5), (6.3), (6.7), (23.9)--(23.13) of the original volume;
+Proposition 53.5 and Corollary 53.6 supply the distance and conditional
+endpoint correspondence. No literature-wide priority claim is made.
+
+This classification holds for both complete rows of (54.2), includes
+$\xi=13/4$ and requires no additional condition on $\nu$.
+It concerns exactly phase feedbacks and their normalized original
+rank-one effects at the fixed population. It does not classify
+arbitrary nonphase feedbacks or whole POVMs. The four-orbit count
+uses only a common scalar quotient; permutations of the labels have
+not been identified. The cases $q=0$, $q=1$, $\xi=0$ and
+$D_\sigma\ge0$ are outside its hypotheses.
+
+No contributing slice, winning sign, winning population or global
+endpoint value is selected by Theorem 54.3. The global first-boundary
+and immediate-right conclusions remain those of Section 53 of
+[Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md).
+Classification and evaluation of global minimizing branches away
+from that immediate-right neighborhood remain separate questions;
+Proposition 54.5 retains its actual-contribution hypothesis.
+
+## 追加锚（本行以下为增补区）

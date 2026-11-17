@@ -1,0 +1,34 @@
+**Theorem 53.2 (evaluated first-loss boundaries and endpoint inclusion).**
+For the exact original sets and boundaries in (39.3),
+
+$$
+\mathcal B=\mathcal S=(\xi_*,4),\qquad
+\alpha=\beta=\xi_*,\qquad
+\xi_*\notin\mathcal B\cup\mathcal S.
+\tag{53.2}
+$$
+
+Consequently the maximal initial positive-distance prefix with
+exhaustive geometric equality is $(0,\xi_*]$. There is no separated
+additional minimizing contact at its endpoint. At every
+$\xi_*<\xi<4$ the original minimum is strictly below $N(\xi)$,
+and every global minimizer is nongeometric.
+
+*Proof.* Theorem 53.1 excludes both $\mathcal B$ and $\mathcal S$ on
+$(0,\xi_*]$, including the endpoint. For every $\xi_*<\xi<4$,
+Theorem 49.1 gives $D_{\mathrm{sel}}(\xi)<0$. At the selected
+interior scalar point $x,y,p,q>0$, the true-distance calculation
+(37.23) gives $1+2p+2x-2y>0$. These are exactly the hypotheses of
+Theorem 36.5 of Continuation I. It supplies an actual rank-one effect
+and actual phase feedback at this same true original level with
+$f<N(\xi)$. This is also the strict competitor consequence stated in
+Section 49.10; no global status for that competitor is required.
+Therefore $m(\xi)<N(\xi)$ and $\xi\in\mathcal S\subseteq\mathcal B$.
+Both sets are defined inside $(0,4)$, proving their exact values in
+(53.2), and taking their infima proves $\alpha=\beta=\xi_*$.
+The maximal-prefix and endpoint assertions follow directly from
+(53.1)--(53.2). A global minimizer above the boundary cannot be
+geometric because all pairs in $\mathcal G_\xi$ have value $N(\xi)$.
+No identification of an infimum with a zero has been assumed.
+$\square$
+

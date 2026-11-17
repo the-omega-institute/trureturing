@@ -1,0 +1,93 @@
+**定理 116.12（原球族的拓扑前件）。** 在 $\mathsf Q_1$ 下，记
+$n=\dim V,N=n-2,S=\partial_{\rm rel}K\cong S^N,M=S\setminus P$。
+原 $M$ 是 $\xi$ 的开三盘丛；原关联 $\mathcal I$ 的两投影
+$\pi_1,\pi_2:\mathcal I\to P$ 都是实际 $S^2$ 丛，而且
+
+$$
+S\cong\operatorname{DMC}(\pi_1,\pi_2)
+\cong D(\xi)\cup_{\mathcal I}D(\xi).
+\tag{IX116.23}
+$$
+
+$P$ 和 $\mathcal I$ 是紧有限维ENR，均连通、单连通并可定向；
+它们分别是维数 $r=N-3=n-5$ 与 $r+2$ 的整数广义同调流形，$r\ge2$。
+本结论不将它们认定为拓扑流形。
+
+证明。每个非纯边界点的原最小面是唯一的完整非点真面，且该点位于其相对内部。
+标签单射使存在唯一 $\ell(x)\in P$，满足 $x\in\operatorname{ri}D_{\ell(x)}$。
+若 $x_j\to x\in M$，标签任一聚点由整球连续性给出一张含 $x$ 的球，唯一性迫它为 $\ell(x)$。
+故 $\ell$ 连续，映射
+
+$$
+\{(p,v)\in\xi:g_p(v,v)<1\}\longrightarrow M,\qquad(p,v)\longmapsto c_p+v
+\tag{IX116.24}
+$$
+
+是同胚，逆为 $x\mapsto(\ell(x),x-c_{\ell(x)})$。
+两个球心不能相同，否则共同非纯点的标签不唯一；所以 $c:P\to c(P)$ 是同胚。
+实际保标签收缩为 $x\mapsto(1-t)x+t c_{\ell(x)}$。
+
+为直接支付ENR，取 $o\in\operatorname{ri}K$，从 $o$ 沿射线投影到 $S$，记为 $\rho$。
+$\rho^{-1}(M)$ 是仿射环境去掉 $o$ 后的欧氏开集；
+$z\mapsto c_{\ell(\rho(z))}$ 是到 $c(P)$ 的收缩，并逐点固定 $c(P)$。
+于是 $c(P)$ 及 $P$ 为紧ENR。Hatcher [A.7、A.8][Q116H]给它们是有限单纯复形的收缩核，
+特别地局部可缩、局部道路连通，全部同调群有限生成，道路分量有限且开闭。
+
+在 $p$ 附近用116.11的实际标架，将 $M$ 写成 $U\times\mathbb R^3$。
+普通切除及相对乘积Künneth，对点对的局部群给
+
+$$
+\begin{aligned}
+H_i(P,P\setminus\{p\};\mathbb Z)
+&\cong H_{i+3}(M,M\setminus\{c_p\};\mathbb Z)\\
+&=\begin{cases}\mathbb Z,&i=N-3,\\0,&i\ne N-3.\end{cases}
+\end{aligned}
+\tag{IX116.25}
+$$
+
+具体的乘积对是
+$(U\times\mathbb R^3,(U\setminus\{p\})\times\mathbb R^3\ \cup\ U\times(\mathbb R^3\setminus\{0\}))$；
+第二个因子的局部群仅在三次为 $\mathbb Z$，故无Tor项，也没有维数换算的额外假设。
+右端使用的是原 $M$ 为开 $N$ 流形。$P$ 已局部紧、ANR且有限覆盖维数，
+故Kramer [6.3.2、6.3.5][Q116K]恰好把这些整数奇异局部群识别为
+$r=N-3$ 维广义流形，并给覆盖维数也为 $r$、方向层局部常定。
+由于 $n\ge7$，这里 $r\ge2$。局部乘积同样使 $\mathcal I$ 为 $r+2$ 维整数广义流形。
+
+事实上 $\mathcal I\cong S(\xi)$，同胚为 $(p,q)\mapsto(p,q-c_p)$，所以 $\pi_1$ 为实际球丛。
+116.9的真实交换 $\sigma$ 连续，$\pi_2=\pi_1\sigma$ 使第二投影也是球丛。
+$\mathcal I$ 紧且避开对角线，$\sigma$ 无固定点。其局部平凡化使它为局部可缩的欧氏紧子集，
+Hatcher A.7—A.8再给紧ENR及同调有限生成。
+
+在 $\mathcal I\times[0,1]$ 定义
+
+$$
+((p,q),t)\longmapsto c_p+t(q-c_p)\in S.
+\tag{IX116.26}
+$$
+
+$t=0$ 按 $\pi_1$ 的纤维压缩，$t=1$ 按 $\pi_2$ 的纤维压缩。
+当 $0<t<1$ 时，像为非中心的混边界点；唯一标签先恢复 $p$，
+$t=\sqrt{g_p(x-c_p,x-c_p)}$ 再恢复半径，继而恢复 $q$。
+中心由第一端恢复，纯点由第二端恢复。每个纯 $q$ 也在第二端像内：取 $p\in S(D_q)$，
+零对称给 $q\in S(D_p)$。所以所得紧商到Hausdorff原 $S$ 是连续双射，即同胚。
+
+第一半柱用 $(p,2t(q-c_p))$ 识别为 $D(\xi)$；
+第二半柱用 $(q,2(1-t)(p-c_q))$ 识别为另一份 $D(\xi)$。
+共同中层是同一 $\mathcal I$，盘边的径向collar给它的开加厚。
+因此普通Mayer–Vietoris、相对切除及van Kampen均作用于真实原边界。
+这一步不要求球内对径已原正交，第二半柱坐标也不是原仿射球心的断言。
+
+设 $P$ 有 $h$ 个道路分量。每个投影因连通纤维与局部平凡性，在分量集上给双射。
+双映射柱的分量图于是为两份 $h$ 点集合间的完美匹配，有 $h$ 个分量。
+原 $S^N$ 连通，故 $h=1$，$P,\mathcal I$ 均道路连通。
+球丛同伦长正合列及 $\pi_1(S^2)=0$ 给两个基本群同构。
+对两半柱的开加厚用van Kampen，得到
+
+$$
+0=\pi_1(S^N)\cong\pi_1(P)*_{\pi_1(\mathcal I)}\pi_1(P)\cong\pi_1(P).
+\tag{IX116.27}
+$$
+
+所以 $P,\mathcal I$ 单连通。$\xi$ 的定向局部系统、两个广义流形的整数方向层遂均平凡。
+以后使用的对偶是这个ENR广义同调流形类别中的对偶，不需要拓扑流形升级。证毕。
+

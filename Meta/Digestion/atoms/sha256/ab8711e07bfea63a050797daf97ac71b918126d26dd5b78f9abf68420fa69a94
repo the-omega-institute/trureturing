@@ -1,0 +1,59 @@
+**定理 28.3（平衡零模像线的齐次值域归约）。** 在定理 28.1 的输入中，设 $\operatorname{rank}W=1$ 且 $\mathcal W$ 平衡，即对其任一非零生成元 $a=(a_1,a_2)^{\mathsf T}$ 有
+
+$$
+|a_2|^2=2|a_1|^2.
+\tag{28.19}
+$$
+
+这正是定理 13.1 中归一化像 $C^{-1/2}\mathcal W$ 的平衡条件。齐次值域问题的全部输入依赖首先准确降为原像线 $\mathcal W$：不同已知环境数据只要具有同一 $\mathcal W$，其 (28.6) 对同一个 $\sigma,\theta$ 有同一真值，不要求这些环境等距或维数相同。
+
+进一步可选一个与 $C,T_A$ 交换的对角酉矩阵 $U$，使
+
+$$
+U\mathcal W=\mathcal W_*:=\operatorname{span}_{\mathbb C}\ell,
+\qquad \ell=(1,\sqrt2)^{\mathsf T}.
+\tag{28.20}
+$$
+
+记 $\theta'=(Uu,\epsilon,\alpha_+,\alpha_-,\beta_+,\beta_-)$。映射
+
+$$
+(X,w)\longmapsto(UXU^*,Uw)
+\tag{28.21}
+$$
+
+是 $\mathcal K_{\sigma,\theta}(\mathcal W)$ 到 $\mathcal K_{\sigma,\theta'}(\mathcal W_*)$ 的实线性双射，并保持 (28.5) 的配对值。因而原输入是否对全部索引满足值域条件，准确等价于如下单一像线上的全称关系：对每个单位 $u$、每个 $\epsilon$ 和全部有限 $\alpha_\pm>0,\beta_\pm\in\mathbb R$，凡 $X=X^*$、$\lambda\in\mathbb C$ 满足
+
+$$
+\begin{gathered}
+\lambda\ell+\delta\left(J_C(X)u+\frac{\sigma i\lambda}{2}C\ell\right)
+=\zeta_\delta\left(Xu+\delta\left(H_\sigma(X)u-\frac\lambda2C\ell\right)\right)
+\quad(\delta=1,-1),\\
+\text{就有}\qquad
+\operatorname{Re}\left((\lambda\ell-i\sigma Xu)^*T_Au\right)=0.
+\end{gathered}
+\tag{28.22}
+$$
+
+其中 $u$ 遍取全部单位向量，所以 (28.22) 中已重新以 $u$ 表示 $Uu$。这里只归约齐次值域命题，不运输 (27.25) 的 $q_i$、原 PB 预算、环境度量或固定输入 $t$。
+
+证明。对相同 $\mathcal W$，(28.3) 与 (28.5) 完全不含 $B$ 或环境谱、度量；(28.4) 分别用每份原数据自己的 $J$ 和 $Y$ 将同一 $(X,w)$ 双射到实际核。这些双射一般不是等距映射，但配对值由 (28.5) 保持，所以核上的线性泛函是否为零相同。再由 (28.6) 即得同一像线上的断言；没有据此识别两份 $A$ 的谱或伪逆。
+
+由 (28.19)，$a_1,a_2$ 都非零。取
+$U=\operatorname{diag}(\overline{a_1}/|a_1|,\overline{a_2}/|a_2|)$，则 $Ua=|a_1|\ell$，给 (28.20)。因 $U$ 与 $C$ 交换，
+
+$$
+H_\sigma(UXU^*)=UH_\sigma(X)U^*,\qquad
+J_C(UXU^*)=UJ_C(X)U^*.
+$$
+
+将 (28.3) 的两个等式同时左乘 $U$，即得 (28.21)；用 $U^*$ 得其逆。$U$ 还与 $T_A$ 交换，故
+
+$$
+\operatorname{Re}\left((Uw-i\sigma UXU^*Uu)^*T_AUu\right)
+=\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right).
+\tag{28.23}
+$$
+
+这证明配对保持。$u\mapsto Uu$ 在单位球面上双射，而 $\epsilon,\alpha_\pm,\beta_\pm$ 不变，故所有有限索引上的值域条件等价。最后在 $\mathcal W_*$ 中写 $w=\lambda\ell$，(28.3)、(28.6) 正好成为 (28.22)。同一原环境中的实际核仍由 $y=Jw$ 回收；这一步没有将该原环境换成一个一维环境，也没有在原 PB 中替换来源。∎
+

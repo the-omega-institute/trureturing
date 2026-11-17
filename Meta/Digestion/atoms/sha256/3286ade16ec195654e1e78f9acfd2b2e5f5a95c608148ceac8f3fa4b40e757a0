@@ -1,0 +1,77 @@
+**命题 C-70.2（保留接缝偏置的完整串联公式）。** 设两块具有式 (C70.2) 的坐标，写作 $c_k,h_L^{(k)},h_R^{(k)},j_k$，$k=1,2$。设正接缝权为 $W=\operatorname{diag}(w_0,w_1)$，定义
+
+$$
+\ell_w=\tfrac12\log(w_0w_1),\qquad
+h_w=\tfrac12\log(w_0/w_1),\qquad
+\beta=h_R^{(1)}+h_L^{(2)}+h_w.
+\tag{C70.3}
+$$
+
+对外端符号 $s,t\in\{1,-1\}$，置
+
+$$
+L_{st}=\log\cosh(\beta+j_1s+j_2t),\qquad
+C=c_1+c_2+\ell_w+\log2.
+$$
+
+则合成响应的每个格值及全部对数坐标为
+
+$$
+H_{\rm series}(s,t)
+=2e^{c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t}
+\cosh(\beta+j_1s+j_2t),
+\tag{C70.4}
+$$
+
+$$
+\begin{aligned}
+c_{\rm series}&=C+\tfrac14(L_{++}+L_{+-}+L_{-+}+L_{--}),\\
+h_{L,\rm series}&=h_L^{(1)}+\tfrac14(L_{++}+L_{+-}-L_{-+}-L_{--}),\\
+h_{R,\rm series}&=h_R^{(2)}+\tfrac14(L_{++}-L_{+-}+L_{-+}-L_{--}),\\
+j_{\rm series}&=\tfrac14(L_{++}-L_{+-}-L_{-+}+L_{--}),\qquad
+\eta_{\rm series}=j_{\rm series}/2.
+\end{aligned}
+\tag{C70.5}
+$$
+
+特别地，令
+
+$$
+P_\beta=\frac{\cosh(2\beta)+\cosh(2(j_1+j_2))}{2},\qquad
+R_\beta=\frac{\cosh(2\beta)+\cosh(2(j_1-j_2))}{2},
+\tag{C70.6}
+$$
+
+则
+
+$$
+\Omega_{\rm series}=\frac{P_\beta}{R_\beta},\qquad
+\rho_{*,\rm series}=\frac{\sqrt{P_\beta}-\sqrt{R_\beta}}
+{\sqrt{P_\beta}+\sqrt{R_\beta}}.
+\tag{C70.7}
+$$
+
+因此一般串联的椭圆还依赖 $\beta$，下一次串联则仍需式 (C70.5) 的两个输出偏置。
+
+证明。接缝符号记作 $u\in\{1,-1\}$。由于 $w_u=e^{\ell_w+h_wu}$，式 (C69.2) 的逐格和成为
+
+$$
+\begin{aligned}
+H_{\rm series}(s,t)
+&=\sum_{u=\pm1}
+\exp\bigl(c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t
++u(\beta+j_1s+j_2t)\bigr)\\
+&=2e^{c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t}
+\cosh(\beta+j_1s+j_2t).
+\end{aligned}
+$$
+
+这证明式 (C70.4)，且没有删除任何偏置或质量因子。对其对数应用式 (C70.1) 的四个正交投影即得式 (C70.5)。计算四角比时，公共倍数与外端线性偏置消去，剩下
+
+$$
+\frac{\cosh(\beta+j_1+j_2)\cosh(\beta-j_1-j_2)}
+{\cosh(\beta+j_1-j_2)\cosh(\beta-j_1+j_2)}.
+$$
+
+使用 $\cosh(x+y)\cosh(x-y)=[\cosh(2x)+\cosh(2y)]/2$ 得式 (C70.6)–(C70.7)。两项始终正。这个推导所用的二元消元是 C-64.2 的已知拼接，新增的椭圆读法保留了其中无法由 $\eta_1,\eta_2$ 独自确定的接缝信息。证毕。
+

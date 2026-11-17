@@ -1,0 +1,120 @@
+### 52.3. The population chord and the joint matrix on the remaining block
+
+Let $407/1000\le x<1$ and $t=1-x\in(0,593/1000]$. The full triangle
+is the image of the closed square $0\le a,b\le1$ under
+
+$$
+r=\sqrt X=1-ta,\qquad z=\sqrt Y=1-tv,\qquad v=(1-a)b.
+\tag{52.20}
+$$
+
+To prove coverage, $r,z\ge x$ and $r+z\ge1+x$ give
+$a=(1-r)/t\in[0,1]$, $v=(1-z)/t\ge0$ and $a+v\le1$.
+For $a<1$ take $b=v/(1-a)$; for $a=1$, necessarily $v=0,z=1$
+and any $b$ represents the boundary. Conversely $a+v\le1$ gives
+the triangle constraint. Thus no triangle boundary is removed.
+
+The feasible populations obey $q\le Q_p(t)$, where
+
+$$
+\begin{aligned}
+Q_p(t)&=\min\{1,61/50-2t\},\qquad h_0=4/25+2t/3,
+ &H_0&=th_0,\\
+\delta&=2/25+2t/3+Q_p/6,
+ &A_0&=e^2-H_0,\quad B_0=d^2-H_0-\delta.
+\end{aligned}
+\tag{52.21}
+$$
+
+Here $\delta$ is a chord coefficient, not the selected scalar argument
+of Section 49. Its two polynomial expressions are
+
+$$
+\delta=\begin{cases}
+37/150+2t/3,&0\le t\le11/100,\\
+17/60+t/3,&11/100\le t\le593/1000.
+\end{cases}
+\tag{52.22}
+$$
+
+Since $\xi=4t+2q$, direct expansion gives the exact chord identity
+
+$$
+H_0+\delta q-H(4t+2q)=\frac{q(Q_p-q)}6\ge0.
+\tag{52.23}
+$$
+
+For the actual same-point $R,C$ put
+
+$$
+M=\begin{pmatrix}A_0-4R^2&-4RC\\-4RC&B_0-4C^2\end{pmatrix}.
+\tag{52.24}
+$$
+
+Then
+
+$$
+e^2p+d^2q-4\Gamma^2-H(\xi)
+ \ge (\sqrt p,\sqrt q)M(\sqrt p,\sqrt q)^{\mathsf T}.
+\tag{52.25}
+$$
+
+The vector on the right never vanishes, including $q=0,1$. To prove
+positive definiteness, use the following polynomials in $(t,a,b)$:
+
+$$
+\begin{aligned}
+\mathfrak r={}&4sh-2sk_-a+2hk_-v
+       -t[sh-sk_-a^2+hk_-v^2],\\
+W={}&4\mathfrak r-h_0,\\
+C_b={}&c^2a(2-ta)+h^2v(2-tv),\\
+N_b={}&(1-a)^2ab(1-b)(2-ta)(2-tv)\\
+ &\hspace{8mm}\cdot[4-t(1+a+v)][(2-t)^2-t^2(a-v)^2],\\
+P_b={}&WB_0-4A_0C_b,\\
+Q_b={}&r^2z^2P_b^2-16A_0^2c^2h^2tN_b.
+\end{aligned}
+\tag{52.26}
+$$
+
+All factors of $N_b$ are nonnegative on the closed parameter boxes,
+and $r,z\ge407/1000>0$. For example $a+v\le1$ gives
+$4-t(1+a+v)\ge4-2t>0$ and
+$(2-t)^2-t^2(a-v)^2\ge4-4t>0$.
+Substitution into (52.3), with nonnegative roots, gives exactly
+
+$$
+\begin{aligned}
+R^2&=(h+s)^2-t\mathfrak r,\\
+F&=\frac{t^{3/2}\sqrt{N_b}}{2rz},\\
+C^2&=t\left(C_b+\frac{ch\sqrt{tN_b}}{rz}\right),\\
+M_{11}&=tW,\qquad
+\frac{\det M}{t}=P_b-\frac{4A_0ch\sqrt{tN_b}}{rz},\\
+Q_b&=r^2z^2\left[P_b^2-
+       \left(\frac{4A_0ch\sqrt{tN_b}}{rz}\right)^2\right].
+\end{aligned}
+\tag{52.27}
+$$
+
+For the formula for $F$, factor its triangle discriminant as
+$[(r+z)^2-L^2][L^2-(r-z)^2]$ and use
+$1-a-v=(1-a)(1-b)$. This also checks the radical and its sign on
+every boundary. The determinant formula follows by cancellation of
+the two $16R^2C^2$ terms in the determinant of (52.24).
+
+The finite rational certificate in Section 52.4 proves, on both full
+closed boxes,
+
+$$
+A_0>4,\qquad W>12/5,\qquad B_0>49/5,\qquad
+P_b>1/10,\qquad Q_b>3/500.
+\tag{52.28}
+$$
+
+In particular the radical on the last line of (52.27) is nonnegative.
+The simultaneous signs $P_b>0$ and $Q_b>0$ show that $P_b$ exceeds
+that radical, rather than its negative. Consequently $\det M>0$
+and $M_{11}>0$ for every $t>0$. The two-dimensional Sylvester criterion
+makes $M$ positive definite. Equation (52.25) is therefore strict.
+The certificate includes $t=0$ for polynomial closure, but no division
+by $t$ or strict matrix assertion is used there.
+

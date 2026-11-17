@@ -1,0 +1,26 @@
+**定义 37.1（同一原域与完整原条件）。** 以下保持定义 6.1、28.1 的同一个完整 $\mathsf H_A(D)$ 及其全部递归固定引文。$A$ 是含单位复 $C^*$-代数，$E=A_{\rm sa}$，$S(x,y)=x\circ y=(xy+yx)/2$；原单位、范数与准确锥分别为 $1,\|\cdot\|,A_+$。同一 $\Omega/\mathrm{native}$、全部原输入及评价标签保持，原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定锥。每份原评价及质量 $m_\gamma=\gamma(1)$ 保留，包括零、不等、次归一及原表示意义下的非正常评价。未知量仍是同一个任意总映射 $D:E^2\to E$。
+
+全部有向 A1/P2 要求所有原 $x,y$、两种次序和每个 $\gamma\in\mathcal P$ 的
+
+$$
+\begin{pmatrix}
+\gamma(x^2)&\gamma(x\circ y)-i\gamma D(x,y)\\
+\gamma(y\circ x)-i\gamma D(y,x)&\gamma(y^2)
+\end{pmatrix}\succeq0.
+\tag{37.1}
+$$
+
+A2 保留相加三表 $(x+y,x,y)$ 及全部排列 $(x_1,x_2,x_3)$：实矩阵 $(\gamma(x_i\circ x_j))_{i,j=1}^3$ 在全部 $\mathbb R^3$ 上半正定，$(1,-1,-1)$ 及相应排列给指定相加零二次值。A3 保留 $1^2=1$，以及同一个固定有理 $0<\vartheta\le1$ 下全部 $0\le x\le\vartheta1\Rightarrow x^2\le x$。对每个实际原三元组 $(h;x,y)$，完整 PB 仍为
+
+$$
+\begin{gathered}
+v=D(h,x)-h\circ y,\qquad w=h\circ x+D(h,y),\\
+D(x+v,y+w)-D(x-v,y-w)=-2x\circ v-2y\circ w.
+\end{gathered}
+\tag{37.2}
+$$
+
+全部实际内值、外值、零、重复、任意有限实幅度、缩放、平移、背景及由它们再次形成的每个嵌套调用均保留。不附加 $D$ 的输入可加性、齐次性、连续性、可测性、协变性、压缩自然性、商下降、双对偶延拓或有限阶段输出闭合。
+
+AH 的直接身份仍为 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`；W、CC、PT 的原直接身份仍为 `3b10aed60f60e4901bae6cf2e160bf439d642e64`，各内部引文按自身固定身份解析。AH43.1 的反对称性、零槽、比例零值及同表数学正读取直接复用。PT183.2 的完整证明在 PT §§183–184，已由 AH43.3、式 (43.5) 准确实例化到 $X_{\rm JB}=E=A_{\rm sa}$、恒等稠密包含。因此对所有原 $b\in E$、$\mu\in\mathbb R$，**全局单位行 $D(\mu1,b)=0$ 已经成立**，不是未付条件。PT185.1 同时供应全部 $SO(2)$ 标签旋转不变性、各槽奇性、同一仿射轴上的零值及 $D(a,\lambda a^2)=0$；这些既有结果不在这里重证。
+

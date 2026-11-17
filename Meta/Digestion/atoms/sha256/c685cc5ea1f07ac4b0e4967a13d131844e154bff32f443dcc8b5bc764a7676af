@@ -1,0 +1,33 @@
+**定义 108.1（同一个旧关系的准确背景）。** 保留99.1的无R背景及95.2的原来源消费者；只在98.1明确指定的原自旋分支中增加以下模型识别：
+
+$$
+E=\mathbb Ru\oplus V\subset X=\mathbb Ru\oplus H,\qquad
+\overline V=H,
+$$
+
+$$
+(su+x)\circ(tu+y)=(st+\langle x,y\rangle)u+sy+tx,\quad
+C=\{su+x:s\ge\|x\|\},\quad N(su+x)=|s|+\|x\|.
+\tag{108.1}
+$$
+
+这里H为任意实Hilbert空间，V为其稠密实线性子空间；允许无限维及不完备原E，不预设三维。单位和Jordan乘法都是原对象。原评价族准确决定C并分离E，保留零、不等及次归一质量。旧 $D:E^2\to E$ 起初仅为总映射。完整候选要求全部实际有向二表P2及99.1的完整原评价PB：
+
+$$
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-i\alpha D(a,b)\\
+\alpha(b\circ a)-i\alpha D(b,a)&\alpha(b^2)
+\end{pmatrix}\succeq0,
+\qquad
+Q_\alpha(r_+,s_+)=Q_\alpha(r_-,s_-),
+\tag{108.2}
+$$
+
+$$
+Q_\alpha(b,c)=\alpha(b^2+c^2+2D(b,c)),\qquad
+r_\pm=b\pm D(a,b)\mp a\circ c,\qquad
+s_\pm=c\pm a\circ b\pm D(a,c).
+$$
+
+量词为全部原 $a,b,c\in E$ 和原 $\alpha\in\mathcal P$。不输入NN、PY、Jacobi、P3、R、D的任何正则性或中央平移；不将完成新元作为D的输入。任意正数学读取可按99.2作用于同一原二表，并不新增实际准备。目标是同一个旧D的完整分类及原R，既不是另造一张正确关系，也不把指定自旋背景推广为一般JB结论。
+

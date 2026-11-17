@@ -1,0 +1,19 @@
+**Lemma 17.2 (Conditional actual initial law).** Let $\Omega,S,R$ be measurable spaces, with $S$ countable and all its singletons measurable. Let $L\subseteq S$ and $F:S\times\{0,1\}\times R\to S$ be arbitrary, and form the effective absorbing update $E$ in (17.1). Let $P$ be a measure on $\Omega$, $\eta\in\operatorname{PMF}(S)$, $w,f\in\operatorname{PMF}(\mathbb N)$, $\rho$ a probability measure on $R$, and $A,C:S\to\operatorname{PMF}(S)$. Suppose $I,\tau$ and each $\xi_j$ are measurable, and for each bit $b$ the map $(s,r)\mapsto E(s,b,r)$ is measurable and, for every $s$,
+
+$$
+(E(s,b,\cdot))_*\rho
+=\begin{cases}C(s),&b=1,\\A(s),&b=0,\end{cases}
+\tag{17.6}
+$$
+
+where the right side is the induced measure. Assume the complete rectangle condition $\mathcal R(P,I,\tau,K,\xi,\eta,w,f,\rho)$ of (17.3)–(17.4). Then for every measurable $B\subseteq S$,
+
+$$
+P\{\omega:Y_0(\omega)\in B\}=\nu(B),
+\tag{17.7}
+$$
+
+with exactly the first-wait mixture $\nu$ in (17.5). No measurability of $K_j$ or separate probability-measure hypothesis on $P$ is required for this assertion.
+
+Proof. Induction over the actual zero updates identifies $Y_0$ with the word of $\tau$ zeros and its closing tick, using the first $\tau+1$ raw coins. For fixed $u$, split the last coin of the product measure and integrate (17.6); induction on $u$ gives $J_u(s)$ from initial state $s$, and integration against $\eta$ gives $\eta\mathbin{\mathrm{bind}}J_u$. Apply (17.4) with $n=0$, $l=u+1$, $r=0$ and the measurable word preimage of $B$. Summing the disjoint slices $\{\tau=u\}$ gives (17.7). This argument also applies to $u=0$ and to an initially terminal state. $\square$
+

@@ -1,0 +1,190 @@
+**定理 23.2（单个局部谱对识别一整条非对角块）。** 在定义 23.1 下，对任意实际环境输入 $t=t^*\in A$，同一个固定旧输出满足
+
+$$
+\boxed{\quad l\bigl(D(c,t)-K_\sigma(c,t)\bigr)(1-l)=0.\quad}
+\tag{23.4}
+$$
+
+这里 $1-l$ 包括 $m$、同一角的其余谱块及整个补角；不压缩演员 $c$ 或第二输入 $t$。
+
+证明。AH43.1 供应反对称性、零槽和同表正读取。对每个数学正实线性泛函 $\phi$，记
+
+$$
+B_\phi(X,Y)=\phi(X^2)\phi(Y^2)-\phi(X\circ Y)^2,
+\qquad |\phi D(X,Y)|\le\sqrt{B_\phi(X,Y)}.
+\tag{23.5}
+$$
+
+这只读取原输出，未增加物理准备或归一化原质量。若 $l+m=0$，结论为零。否则固定实际 $c,t$ 及同一个
+
+$$
+g=D(c,t),\qquad k=c\circ t,\qquad
+V=\lambda n\circ t-n\circ k,\qquad Z=t+\lambda k.
+\tag{23.6}
+$$
+
+对每个有限实 $T,\alpha$，使用真正原三元组 $\operatorname{PB}(c;Te+\alpha n,t)$。内值准确为 $\lambda Tj,g$，内构造为 $v=\lambda Tj-k,w=\lambda\alpha n+g$，故两份实际外层对是
+
+$$
+\begin{aligned}
+R_+&=T(e+\lambda j)-k+\alpha n,&
+S_+&=t+g+\lambda\alpha n,\\
+R_-&=T(e-\lambda j)+k+\alpha n,&
+S_-&=t-g-\lambda\alpha n.
+\end{aligned}
+\tag{23.7}
+$$
+
+完整 PB 的原右端只按已知 Jordan 乘法展开：
+
+$$
+\begin{aligned}
+D(R_+,S_+)-D(R_-,S_-)
+&=-2(Te+\alpha n)\circ(\lambda Tj-k)
+  -2t\circ(\lambda\alpha n+g)\\
+&=2T e\circ k-2t\circ g-2\alpha(\lambda Tj+V).
+\end{aligned}
+\tag{23.8}
+$$
+
+这里使用的恰是 $e\circ j=0,n\circ j=j$；没有平方 $c$ 的步骤。对两份未知外值分别用同一 $\phi$ 的 (23.5)，得到
+
+$$
+|\phi(2Te\circ k-2t\circ g-2\alpha(\lambda Tj+V))|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{23.9}
+$$
+
+为完整支付首项提取，置实半内积 $\langle X,Y\rangle_\phi=\phi(X\circ Y)$。对固定自伴 $A_0,B_0,n$ 和实 $\theta$，令 $C_0=B_0-\theta A_0$；直接展开 Gram 行列式得
+
+$$
+\begin{aligned}
+B_\phi(A_0+\alpha n,B_0+\theta\alpha n)
+&=B_\phi(A_0+\alpha n,C_0)\\
+&=\alpha^2B_\phi(n,C_0)
+ +2\alpha\{\langle A_0,n\rangle_\phi\langle C_0,C_0\rangle_\phi
+ -\langle A_0,C_0\rangle_\phi\langle n,C_0\rangle_\phi\}
+ +B_\phi(A_0,C_0).
+\end{aligned}
+\tag{23.10}
+$$
+
+在正号对取 $A_0=T(e+\lambda j)-k,B_0=t+g,\theta=\lambda$，有 $C_0=Z+g-\lambda Te-\lambda^2Tj$；在负号对取 $A_0=T(e-\lambda j)+k,B_0=t-g,\theta=-\lambda$，有 $C_0=Z-g+\lambda Te-\lambda^2Tj$。固定 $T,\phi$，将 (23.9) 除以 $|\alpha|$，令 $|\alpha|\to\infty$，得到
+
+$$
+\begin{aligned}
+2|\phi(\lambda Tj+V)|\le{}&
+\sqrt{B_\phi(n,Z+g-\lambda Te-\lambda^2Tj)}\\
+&+\sqrt{B_\phi(n,Z-g+\lambda Te-\lambda^2Tj)}.
+\end{aligned}
+\tag{23.11}
+$$
+
+首项为零时，(23.10) 除以 $\alpha^2$ 仍趋零，其非负平方根亦趋零；没有非零首项或非退化半内积假设。
+
+在一份忠实含单位表示 $A\subseteq B(\mathcal H)$ 中计算，内积第一槽共轭线性。$cl=lc=\lambda l,n=2l$ 逐块给
+
+$$
+\begin{gathered}
+lVl=0,\qquad(1-l)V(1-l)=0,\qquad V=V^*,\\
+lV(1-l)=\lambda lt(1-l)-lk(1-l)
+=\tfrac12l[c,t](1-l).
+\end{gathered}
+\tag{23.12}
+$$
+
+因此 $V$ 相对 $l\oplus(1-l)$ 完全非对角，即使 $c$ 在余块上任意。取单位 $\xi\in(1-l)\mathcal H$，先设 $d=\|m\xi\|>0$。由于 $j$、$e$ 只交换 $l,m$，定义
+
+$$
+\eta=j\xi/d\in l\mathcal H,\quad\|\eta\|=1,
+\qquad j\xi=d\eta,\quad e\xi=-\jmath d\eta.
+\tag{23.13}
+$$
+
+对 $\delta>0$，以 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 作数学向量读取 $\phi_\delta$。记实正交投影
+$\Pi_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta$。任意固定自伴 $W$ 满足
+
+$$
+\begin{aligned}
+\phi_\delta(n^2)&=\frac{4\delta^2}{1+\delta^2},&
+\phi_\delta(W^2)&=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)&=
+\frac{2\delta\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle}{1+\delta^2},&
+B_{\phi_\delta}(n,W)&=
+\frac{4\delta^2}{(1+\delta^2)^2}
+\|\Pi_\eta(W\xi+\delta W\eta)\|^2.
+\end{aligned}
+\tag{23.14}
+$$
+
+又由 (23.12) 和 $j$ 的非对角性，
+
+$$
+\phi_\delta(\lambda Tj+V)
+=\frac{2\delta}{1+\delta^2}
+\bigl(\lambda Td+\operatorname{Re}\langle\eta,V\xi\rangle\bigr).
+\tag{23.15}
+$$
+
+在 (23.11) 逐项代入 (23.14)–(23.15)，约去正因子 $2\delta/(1+\delta^2)$。固定 $T$ 后令 $\delta\downarrow0$，用 $\Pi_\eta(j\xi)=0$，得
+
+$$
+\begin{gathered}
+A_\xi=\operatorname{Re}\langle\eta,V\xi\rangle,
+\quad z_\pm=\Pi_\eta((Z\pm g)\xi),
+\quad u_\xi=e\xi/d=-\jmath\eta,\\
+\|u_\xi\|=1,\quad\operatorname{Re}\langle\eta,u_\xi\rangle=0,\\
+2|\lambda Td+A_\xi|
+\le\|z_+-\lambda Td\,u_\xi\|
+  +\|z_-+\lambda Td\,u_\xi\|.
+\end{gathered}
+\tag{23.16}
+$$
+
+为提取两向范数一次项，对固定 $\|u\|=1,z$ 和实 $\rho\ne0$，有准确有理化等式
+
+$$
+\|\rho L u+z\|-|\rho|L
+=\frac{2\rho L\operatorname{Re}\langle u,z\rangle+\|z\|^2}
+       {\|\rho Lu+z\|+|\rho|L}
+\longrightarrow\operatorname{sgn}(\rho)\operatorname{Re}\langle u,z\rangle
+\quad(L\to+\infty).
+\tag{23.17}
+$$
+
+令 $\epsilon=\operatorname{sgn}\lambda$，$B_\xi=\operatorname{Re}\langle u_\xi,g\xi\rangle$。在 (23.16) 取 $T=L$，左右均减去 $2|\lambda|dL$。左侧极限为 $2\epsilon A_\xi$；右侧两项的极限分别为
+$-\epsilon\operatorname{Re}\langle u_\xi,z_+\rangle$ 和
+$\epsilon\operatorname{Re}\langle u_\xi,z_-\rangle$，和为 $-2\epsilon B_\xi$。取 $T=-L$，左侧极限为 $-2\epsilon A_\xi$，右侧两项依次反号，和为 $2\epsilon B_\xi$。两向不等式一起给
+
+$$
+A_\xi=-B_\xi,\qquad
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,V\xi\rangle.
+\tag{23.18}
+$$
+
+这里 $\operatorname{Re}\langle u_\xi,z_\pm\rangle
+=\operatorname{Re}\langle u_\xi,(Z\pm g)\xi\rangle$，因为被减去的是 $\eta$ 的实倍数；共同的 $Z$ 因而消去。符号 $\epsilon$ 的保留使证明同时覆盖负 $\lambda$。
+
+第二次使用实际伴轴 $e'=j$，仍以同一个 $c$ 为演员、同一个 $t$ 为第二输入。此时 $j'=\jmath(l-m)j=-e$，且 (23.3) 对应为 $D(c,e')=\lambda j',D(c,j')=-\lambda e'$；$n,g,k,V,Z,d$ 全不改变，$\eta'=j'\xi/d=\jmath\eta$。设 $G=\langle\eta,g\xi\rangle$、$L_0=\langle\eta,V\xi\rangle$。第一伴轴给 $\operatorname{Im}G=\sigma\operatorname{Re}L_0$；第二伴轴给
+$\operatorname{Im}(-\jmath G)=\sigma\operatorname{Re}(-\jmath L_0)$，即 $-\sigma\operatorname{Re}G=\operatorname{Im}L_0$。故
+
+$$
+G=\jmath L_0,\qquad
+\langle jm\xi,(g-\jmath V)\xi\rangle=0
+\quad(\xi\in(1-l)\mathcal H).
+\tag{23.19}
+$$
+
+由二次齐次性，单位向量结论扩到全部 $d>0$ 的向量。$d=0$ 时末式左边本来就是零；不在该情形定义 $\eta$ 或除以 $d$。
+
+令 $M=g-\jmath V$、$r_0=1-l-m$。在 (23.19) 取 $\xi=u+z$，其中 $u\in m\mathcal H,z\in r_0\mathcal H$，再减去 $z=0$ 的等式，得 $\langle ju,Mz\rangle=0$。$j:m\mathcal H\to l\mathcal H$ 是满的等距映射，故 $lMr_0=0$。对 $z=0$，算子 $T_0=mjMm$ 的二次型 $Q(u)=\langle u,T_0u\rangle$ 恒零；不要求 $T_0$ 自伴，复极化给
+
+$$
+4\langle u,T_0v\rangle
+=Q(u+v)-Q(u-v)-iQ(u+iv)+iQ(u-iv)=0.
+\tag{23.20}
+$$
+
+故 $T_0=0$，同一满等距性给 $lMm=0$。合并得 $l(g-\jmath V)(1-l)=0$；(23.12) 使它正是 (23.4)。忠实性返回原 $A$。所有极限只作用于显式标量多项式和固定元素 $g,k,V,Z$ 的向量范数；没有把任一变化输入上的未知外响应移入极限。∎
+

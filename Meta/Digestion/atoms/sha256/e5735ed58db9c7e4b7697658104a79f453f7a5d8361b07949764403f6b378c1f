@@ -1,0 +1,23 @@
+**引理 88.2（二表的准确逐对凸体与有限差分）。** P2给反对称、$D(a,a)=D(a,0)=0$，并使任意比例原输入的D为零。写 $a=(s,x),b=(t,y),D(a,b)=(\delta,z)$，令 $p=sy-tx,w=x\times y$。在上述Hermitian关系下，P2剩余的行列式条件准确等价于
+
+$$
+|\delta+n\cdot z|\le |w+n\times p|\qquad(|n|=1).
+\tag{88.3}
+$$
+
+特别地，$w=0$ 时允许值准确为 $\delta=0,z\perp p,|z|\le|p|$；$p=0$ 时准确为 $|\delta|+|z|\le|w|$。若令 $d=D(a,b)-a\circ c,e=a\circ b+D(a,c)$，PB准确等价于原元素式
+
+$$
+D(b+d,c+e)-D(b-d,c-e)=-2b\circ d-2c\circ e.
+\tag{88.4}
+$$
+
+证明。Hermitian性及原评价分离给反对称，零对角的二表给零输入。对纯评价 $\alpha_n=\alpha_{1,n}$ 定义已知实线性图 $L_n(s,x)=x+sn$，则 $\alpha_n(a^2)=|L_na|^2$、$\alpha_n(a\circ b)=L_na\cdot L_nb$。准确行列式保留实非对角项，故
+
+$$
+(\alpha_nD(a,b))^2\le\alpha_n(a^2)\alpha_n(b^2)-\alpha_n(a\circ b)^2
+=|L_na\times L_nb|^2=|w+n\times p|^2.
+$$
+
+所有混评价是纯评价的凸组合，再乘其非负质量，零质量恒零；连同已列Hermitian关系和非负平方对角，88.3也充分。比例输入使右侧为零。若 $w=0,p\ne0$，取 $n=\pm p/|p|$ 给 $\delta=0,z\perp p$，再取沿z的n给长度界；反向由正交投影的Cauchy不等式。$p=0$ 时取全部n即得所述范数球，包括 $p=w=0$。展开已知Jordan平方 $ (b+d)^2-(b-d)^2=4b\circ d$ 及c项，再用原分离性即得88.4。没有展开D的相加输入。∎
+

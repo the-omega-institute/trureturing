@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4e019c088a0578b87c784c6626fe8d570edbc1018590e80a429c456d1db9b7f
+  normalized_sha256: sha256:c4e019c088a0578b87c784c6626fe8d570edbc1018590e80a429c456d1db9b7f
+cas_ref: sha256:c4e019c088a0578b87c784c6626fe8d570edbc1018590e80a429c456d1db9b7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional volume title and boundary prose; it states scope and limitations without a mathematical proposition.
+    previous_atom_id: null
+    next_atom_id: 9e4a08de1e17ee3468b1f255f413fbf6f947e0163df830ab78e6aebc943d1ee3

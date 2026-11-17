@@ -1,0 +1,54 @@
+**定义 17.1（已知环境决定的原空间截面）。** 在原 Hilbert 空间 $\mathcal H=\mathbb C^2\oplus\mathcal E$、$\mathcal E=\mathbb C^m$ 上，取任意有限 $m\ge0$，并令
+
+$$
+\begin{gathered}
+C_A=\operatorname{diag}(1,2),\qquad
+c=C_A\oplus0_m,\qquad P=I_2\oplus0_m,\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix}=t^*,\qquad
+s=\operatorname{diag}(s_1,s_2)\oplus0_m,\qquad s_1,s_2\in\mathbb R.
+\end{gathered}
+\tag{17.1}
+$$
+
+$B$ 和 $D_{\rm env}$ 为任意 Hermitian 矩阵，$V$ 任意；$D_{\rm env}$ 只表示已知输入的环境块。每个 $\sigma\in\{1,-1\}$ 分别给出 $g=K_\sigma(c,t)+s$。沿用本卷 (1.1)–(1.2) 的全部原算子与乘法；以下以承载卷定义 41.1 的原符号 $S_\pm=t\pm(r+g)$ 书写本卷的同一 $V_\pm$，$R_\pm=x\pm(h-k)$、$L$ 和 $B_\phi$ 均不改变。探针始终是每个实际 $x=x^*=PxP$。对 $\xi\in\mathcal H$，记原全矩阵代数上的向量泛函为 $\phi_\xi(a)=\xi^*a\xi$，其质量为 $\|\xi\|^2$。
+
+令 $D_{\rm env}^\dagger$ 取 §13.1 的谱定义，置
+
+$$
+\begin{gathered}
+\mathcal R=\operatorname{ran}D_{\rm env},\qquad
+N=\ker D_{\rm env},\qquad W=V|_N,\\
+N_1=N\ominus\ker W,\qquad
+\mathcal W=\operatorname{ran}W,\qquad r_0=\dim\mathcal W,\qquad
+Q=\text{原 }\mathbb C^2\text{ 中到 }\mathcal W^\perp\text{ 的正交投影}.
+\end{gathered}
+$$
+
+以 $\Pi_{\mathcal R}$ 表示原环境内到 $\mathcal R$ 的正交投影。定义复子空间
+
+$$
+\begin{gathered}
+\mathcal K=\operatorname{ran}(\Pi_{\mathcal R}V^*)
+          +\operatorname{ran}(D_{\rm env}^\dagger V^*Q)
+          \subseteq\mathcal R,\\
+\mathcal E_0=N_1\oplus D_{\rm env}^\dagger\mathcal K,
+\qquad \mathcal H_0=\mathbb C^2\oplus\mathcal E_0
+\subseteq\mathcal H.
+\end{gathered}
+\tag{17.2}
+$$
+
+这里的直和正交，因为 $D_{\rm env}^\dagger\mathcal K\subseteq\mathcal R=N^\perp$。令 $J:\mathcal W\to N_1$ 为同一个 $W|_{N_1}$ 的逆；零空间之间的逆取唯一的零映射。对于 $\xi=(u,y)$，置
+
+$$
+\begin{gathered}
+q=D_{\rm env}y,\qquad q_0=\Pi_{\mathcal K}q,\qquad d=q-q_0,\\
+y_0=D_{\rm env}^\dagger q_0+
+J\bigl(Vy-VD_{\rm env}^\dagger q_0\bigr),\qquad
+T\xi=(u,y_0),\qquad \delta=\|d\|^2.
+\end{gathered}
+\tag{17.3}
+$$
+
+下述证明同时说明 $J$ 的该次实参确实属于 $\mathcal W$。所有正交投影与范数均取原空间度量。
+

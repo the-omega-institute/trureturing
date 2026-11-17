@@ -1,0 +1,41 @@
+**推论 93.2（识别之后的同一对象后果）。** 原 $D$ 此时才取得实双线性、分别范数及超弱连续、单位平移中性和共同有界内导子实现：
+
+$$
+L_a(X)=[\sigma ia/2,X],\qquad L_a(b)=D(a,b),
+\qquad \|D(a,b)\|\le\|a\|\|b\|.
+\tag{93.1}
+$$
+
+全部原 $a,b,c$ 满足同一个原 R：
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)).
+\tag{93.2}
+$$
+
+其完整有限旧复 Gram、$\mathsf P_3$、R及忠实静态表示准确接 A32.2、A23.1、A6.3、A7.1–7.3、A8.1；参数始终为原 $S,D,\mathcal P,C,u,N$。亦可直接读同一个 $M_\sigma$ 的正平方。对每个有限 $n$、全部原 $a_1,\ldots,a_n$、全部 $z_1,\ldots,z_n\in\mathbb C$ 和每份原 $\gamma$，有
+
+$$
+\sum_{j,k=1}^n\overline z_jz_k
+[\gamma(a_j\circ a_k)-i\gamma D(a_j,a_k)]\ge0.
+\tag{93.3}
+$$
+
+全部质量保留，包括 $n=0$、零标签和重复标签。这里没有宣称任意压缩成为原响应的同态：即使已识别 $D$，一般仍不能写 $pD(a,b)p=D(pap,pbp)$；跨越补角的交换子项会使这两式不同。
+
+迹偏斜性限定于合法可积域。令
+
+$$
+\mathfrak m_\tau=\{c\in M:\tau(|c|)<\infty\}=M\cap L^1(M,\tau).
+$$
+
+对全部 $a,b\in M_{\rm sa}$ 和 $c\in\mathfrak m_\tau\cap M_{\rm sa}$，两侧乘积均在 $\mathfrak m_\tau$，并由93.1及迹循环性得
+
+$$
+\tau(D(a,b)c)=-\tau(bD(a,c)).
+\tag{93.4}
+$$
+
+这包括所有有限支撑自伴 $c$，不要求 $a,b$ 可积。一般三个有界自伴元不保证这些乘积可积，不在93.4量词内；不对 $\infty-\infty$ 作运算。93.4是识别后的后果，不是证明旧响应线性的前件。
+

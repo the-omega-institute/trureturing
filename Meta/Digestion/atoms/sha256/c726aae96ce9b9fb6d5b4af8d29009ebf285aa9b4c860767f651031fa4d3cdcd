@@ -1,0 +1,61 @@
+**Theorem 24.4 (the sharp original producer inequality on the cap).**
+For every $E\in\operatorname{Dens}_2$ and every $U\in U(4)$ such that
+
+$$
+|\operatorname{Tr}(UU_+^\dagger)|\ge2+\sqrt{\frac83},
+\tag{24.27}
+$$
+
+one has
+
+$$
+g(E,U)\ge\kappa\rho(E,U).
+\tag{24.28}
+$$
+
+Equality holds exactly when $E=E_+$ and $U=\lambda U_+$ for one common
+scalar $\lambda$ with $|\lambda|=1$.
+
+Proof. Let $w=\operatorname{diag}(UU_+^\dagger)$, so $w\in\mathcal C$
+by Theorem 23.2 and (24.27). For the actual population
+$p=b_+^\dagger E^{\mathsf T}b_+$, that theorem gives
+
+$$
+g(E,U)-\kappa\rho(E,U)
+\ge G(w,p)-\kappa r(w,p)+\kappa\epsilon(E),
+\qquad \epsilon(E)=1-\operatorname{Tr}(E^2)\ge0.
+\tag{24.29}
+$$
+
+Lemma 24.3 makes the right side nonnegative. If $\delta>0$, the vector
+$(\sqrt p,\sqrt{1-p})$ is nonzero, so its quadratic form is strictly
+positive. If $\delta=0$, that form is
+$(e^2-2\kappa)(1-p)$, where $e^2-2\kappa>0$. Equality in (24.28)
+therefore forces $\delta=0$ and $p=1$. Positivity of the matrix (23.9)
+then forces its off-diagonal entry to vanish, so $E=E_+$.
+At $A=4$ the diagonal $w$ is a common scalar multiple of $(1,1,1,1)$;
+a unitary with that diagonal has zero off-diagonal entries by its row
+norms. Thus $U=\lambda U_+$. Conversely these original optimizer pairs
+have $g=\rho=0$ by Lemma 11.2.
+
+The argument uses the original ordinary transpose and the same actual
+$U$ throughout (24.29). It includes all populations, singular and mixed
+normalized effects, zero $Q$, and arbitrary nondiagonal unitary lifts.
+The cap has $A>0$, which justifies its common-phase normalization;
+no individual coordinate phase is fixed. $\square$
+
+Theorem 21.3 supplies an actual sequence approaching the positive
+optimizer with $\rho/g\to\kappa^{-1}$. Its trace modulus tends to $4$,
+so it eventually lies in (24.27). Hence the supremum of $\rho/g$ over
+$g>0$ in this entire cap is exactly $R_*=\kappa^{-1}$.
+
+The realization and mixed-effect transfer are those of Theorem 23.2;
+the scalar cancellation (24.23) reuses Theorem 21.3. Disk support
+functions and Cauchy–Schwarz are standard intermediate tools.
+The additional whole-cap content is the simultaneous envelope
+(24.9)–(24.16), with its uniform complex-phase proof, and its application
+to (24.28). These source correspondences make no literature-priority
+claim. The remaining global obligation is
+$\nu_\kappa(w)\ge0$ for every $w\in\mathcal W$ with $A(w)<A_0$;
+the full sharp global constant is unresolved outside the proved cap.
+

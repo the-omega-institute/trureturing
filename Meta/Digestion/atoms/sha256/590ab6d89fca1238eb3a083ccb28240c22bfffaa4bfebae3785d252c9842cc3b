@@ -1,0 +1,54 @@
+**引理 76.2（单次原 PB 的纯外层运输）。** 对任意原 $x,y\in U$ 和实 $T$，同一个旧关系满足
+
+$$
+\boxed{D(x,Tu+y)=x\times y.}
+\tag{76.1}
+$$
+
+证明。选择原单位 $n\in U$ 同时垂直 $x,y$；三维欧氏空间中总能选择，包含两输入相关或为零的情形。记 $Rx=n\times x,Ry=n\times y$，于是 $R^2x=-x,R^2y=-y$。在原 PB 中准确取
+
+$$
+a_0=n,\qquad
+b_0=\tfrac12(x-Rx+Tn),\qquad
+c_0=\tfrac12(Tu+y-Ry).
+\tag{76.2}
+$$
+
+$b_0$ 是纯 $U$ 输入；$c_0$ 的纯部分横向于 $n$。62–63 的原纯双线性和36.1的横向单位平移给全部实际内值
+
+$$
+\begin{aligned}
+D(n,b_0)&=\tfrac12(x+Rx),& n\circ c_0&=\tfrac T2n,\\
+D(n,c_0)&=\tfrac12(y+Ry),& n\circ b_0&=\tfrac T2u.
+\end{aligned}
+\tag{76.3}
+$$
+
+这里没有把一般 $D(n,tu+z)$ 当成已知，只使用纯部分真正横向的 $c_0$。因此 PB 位移及正负外层准确为
+
+$$
+\begin{aligned}
+\nu&=\tfrac12(x+Rx-Tn),&\omega&=\tfrac12(Tu+y+Ry),\\
+(b_0+\nu,c_0+\omega)&=(x,Tu+y),\\
+(b_0-\nu,c_0-\omega)&=(Tn-Rx,-Ry).
+\end{aligned}
+\tag{76.4}
+$$
+
+两份 Jordan 乘积直接给
+
+$$
+b_0\circ\nu=-\tfrac{T^2}{4}u,\qquad
+c_0\circ\omega=\tfrac{T^2}{4}u+\tfrac T2y.
+\tag{76.5}
+$$
+
+故完整原PB为 $D(x,Tu+y)-D(Tn-Rx,-Ry)=-Ty$。负外层两标签都纯，旧值已知为
+
+$$
+D(Tn-Rx,-Ry)=T y+(Rx)\times(Ry)=Ty+x\times y.
+\tag{76.6}
+$$
+
+最后一式使用 $R$ 在 $n^\perp$ 上为有向四分之一转，或直接用叉积恒等式。代回便得 (76.1)。全部标签为有限个原线性组合；只有一次原PB，没有对未知 $D$ 作输入拆分、缩放或取极限。∎
+

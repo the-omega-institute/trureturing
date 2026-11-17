@@ -1,0 +1,48 @@
+**Theorem 14.2 (An evaluated tolerance certificate with every tolerance branch).** Define the original-coordinate error $E(t)=\max_i|x_i(t)-x_i^*|$. For every initial state and every integer $t\geq0$,
+
+$$
+E(t)\leq A_0 r^{\lfloor t/m\rfloor/2}.
+\tag{14.5}
+$$
+
+For a prescribed real tolerance $\epsilon$, a certificate means an integer $K\geq0$ such that $E(t)\leq\epsilon$ for every integer $t\geq K$. The following complete alternatives apply.
+
+1. If $\epsilon<0$, no such integer exists.
+2. If $\epsilon\geq0$ and $Q_0=0$, take $K=0$.
+3. If $\epsilon=0$ and $Q_0>0$, a certificate exists exactly when the explicit vector $Z$ of (14.4) is zero. In that case $K=m$ is a certificate; otherwise no finite $K$ is a certificate.
+4. If $\epsilon>0$ and $A_0\leq\epsilon$, take $K=0$.
+5. If $\epsilon>0$, $A_0>\epsilon$ and $r=0$, take $K=m$.
+6. If $\epsilon>0$, $A_0>\epsilon$ and $0<r<1$, take
+
+$$
+\boxed{\quad K=m\left\lceil
+\frac{\log(A_0^2/\epsilon^2)}{-\log r}
+\right\rceil.\quad}
+\tag{14.6}
+$$
+
+These are sufficient sweep counts, with no assertion of minimality. Every positive tolerance has a finite certificate. The singular interior parameter (12.5), every finite-annihilation input and the scalar case are included.
+
+*Proof.* Fix an index $i$. Cauchy–Schwarz on the first $i$ edge differences and on the last $m+1-i$ edge differences separately gives, for any complex zero-endpoint vector $w$,
+
+$$
+\sum_{j=1}^i\frac{|w_j-w_{j-1}|^2}{v_j}
+\geq\frac{|w_i|^2}{S_i},\qquad
+\sum_{j=i+1}^{m+1}\frac{|w_j-w_{j-1}|^2}{v_j}
+\geq\frac{|w_i|^2}{S-S_i}.
+$$
+
+Both denominators are positive, including at $i=1,m$. Addition yields
+
+$$
+|w_i|^2\leq h_iQ(w),\qquad
+\max_i|w_i|\leq\sqrt{hQ(w)}.
+\tag{14.7}
+$$
+
+This coefficient is the exact Dirichlet point-evaluation coefficient: equality for a prescribed value $w_i$ is obtained by taking $w_j=(S_j/S_i)w_i$ on the left and $w_j=[(S-S_j)/(S-S_i)]w_i$ on the right. Thus (14.7) uses the original coordinates and both zero endpoints, rather than an unspecified equivalence constant between norms. Applying (13.2) proves (14.5).
+
+The original odd row gives exactly $D_{ij}$, and the original even equation solved for its new coordinate is $w'_i=-w_i+L_iw'_{i-1}+R_iw'_{i+1}$. Consequently $C$ in (14.3) is exactly $T$ in original coordinates. Repeated finite matrix multiplication shows that (14.4) is $T^m z$, with no limit involved. By the individual-state assertion of Theorem 13.2, a nonzero state reaches zero at a finite time precisely when $Z=0$. Zero is invariant under all subsequent powers. This proves branch 3; if $Z\ne0$, the state is nonzero at every finite time, so its maximum coordinate modulus cannot meet zero tolerance.
+
+Branch 1 follows from $E(t)\geq0$. Positive definiteness of $Q$ proves branch 2. In branch 4, (14.5) and $r\leq1$ prove the assertion for all times. In branch 5, (13.2) makes every state zero after $m$ steps. For branch 6 the logarithm in the numerator is positive and $-\log r>0$. The integer in (14.6) ensures $r^{K/m}A_0^2\leq\epsilon^2$. Every $t\geq K$ has $\lfloor t/m\rfloor\geq K/m$, so (14.5) proves the desired all-later-time bound. These alternatives exhaust all real tolerances and initial states. No step divides by $q$; the zero test is finite even at $q=0$, where a general spectral-radius formula would not decide individual finite annihilation. $\square$
+

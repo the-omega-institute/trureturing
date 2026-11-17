@@ -1,0 +1,57 @@
+**定理 9.1（相对误差门的绝对收敛）。**
+
+在同一有限 Hilbert 载体上，令全部 $U_j,V_j$ 为酉算子，并满足
+$\|V_j-U_j\|_{\rm op}\le\epsilon_j$。定义
+
+$$
+A_n=U_n\cdots U_1,\qquad B_n=V_n\cdots V_1,\qquad
+C_n=A_n^*B_n,\qquad A_0=B_0=C_0=I.
+$$
+
+则每个 $C_n$ 仍酉，且
+
+$$
+\|B_n-A_n\|_{\rm op}\le\sum_{j=1}^n\epsilon_j,\qquad
+\|C_n-C_{n-1}\|_{\rm op}\le\epsilon_n .
+$$
+
+若 $\sum_{j\ge1}\epsilon_j<\infty$，则 $C_n$ 收敛到某个酉算子 $C_\infty$，并有
+
+$$
+\boxed{\|C_\infty-C_n\|_{\rm op}\le\sum_{j>n}\epsilon_j.}
+$$
+
+此结论不要求 $A_n$ 或 $B_n$ 自身收敛。
+
+**证明。**
+
+酉性对乘法和取伴随闭合。直接按调用顺序相减给
+
+$$
+\Delta_n:=C_n-C_{n-1}
+=A_{n-1}^*(U_n^*V_n-I)B_{n-1}.
+$$
+
+外侧酉因子不放大算符范数，故 $\|\Delta_n\|\le\epsilon_n$。 于是 $C_n=I+\sum_{j=1}^n\Delta_j$， 并且 $\|B_n-A_n\|=\|C_n-I\|$ 给首个界。 当误差可求和时，此算符级数绝对收敛，尾和给所述界。 酉算子集合在算符范数下闭合，因为取极限保留
+$C_n^*C_n=C_nC_n^*=I$；所以极限也酉。
+
+∎
+
+这个级数保留了一个精确的“结果与误差关系”：
+
+$$
+\boxed{
+C_{n-1}^*\Delta_n+\Delta_n^*C_{n-1}
++\Delta_n^*\Delta_n=0.}
+$$
+
+它由 $(C_{n-1}+\Delta_n)^*(C_{n-1}+\Delta_n)=I$ 减去旧归一化式直接得到。 因此误差增量不必自身酉；它必须与已有结果共同满足线性加二次的归一化约束。 这正是把前轮的派生误差关系提升到门序列后的版本。
+
+若 $\epsilon_j\le c q^{j-1}$、$0<q<1$，则纸面上即有
+
+$$
+\|C_\infty-C_n\|\le \frac{c q^n}{1-q}.
+$$
+
+仅有“每一步误差很小”不足以给此尾界； 所需的是总预算可求和，或另有等效的收敛控制。 收敛的 $C_\infty$ 也不必等于 $I$：稳定偏差仍可能非零。
+

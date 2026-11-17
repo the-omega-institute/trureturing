@@ -1,0 +1,38 @@
+**定理 38.1（点态法向与原核平移）。** 仅 PY+NN 已使同一旧 $D$ 不受两槽中央标量部分影响；其无标量限制 $K:\mathcal A^3\times\mathcal A^3\to\mathcal A^3$ 分别实齐次，且
+
+$$
+K(x,y)\cdot x=K(x,y)\cdot y=0,\quad
+K(x,y)\cdot K(x,y)=(x\times y)\cdot(x\times y),
+$$
+
+$$
+K(x,K(x,y))=x(x\cdot y)-(x\cdot x)y.
+\tag{38.1}
+$$
+
+固定原 $a$，若 $H_ab=H_ab'$，则 $D(a,b)=D(a,b')$。这些是原关系恒等式，尚未定义点评价商上的 $D_\xi$。
+
+证明。逐点令 $a=\alpha u+x$、$b=\beta u+y$、$p=D(a,b)$ 与 $\Gamma=\|x\times y\|^2$。已知 Jordan 多项式给
+
+$$
+Q(a,b)=\Gamma u,\qquad
+H_a(\gamma u+z)=x(x\cdot z)-\|x\|^2z.
+$$
+
+取实纤维上的正定辅助内积 $\langle\gamma u+z,\delta u+w\rangle_0=\gamma\delta+z\cdot w$。PY 的单位分量给 $\|p\|_0^2=\Gamma$。NN 的复合恒等式 $F_a^2=H_a$ 先给 $F_aH_a=H_aF_a$；对原 $(a,H_ab)$ 再用 PY，得到 $\|H_ap\|_0^2=\|x\|^4\Gamma$。若 $x\ne0$，分解 $p=ru+v_\parallel+v_\perp$，两式分别为
+
+$$
+r^2+\|v_\parallel\|^2+\|v_\perp\|^2=\Gamma,
+\qquad \|v_\perp\|^2=\Gamma.
+$$
+
+故 $p$ 无标量且垂直 $x$；$x=0$ 时首式已使 $p=0$。交换输入再得对 $y$ 的正交性。这只读取原输出，不假定它由两份点值决定。
+
+若 $H_ab=H_ab'$，由 $F_a^2b=F_a^2b'$ 再施 $F_a$，准确得到 $H_a(F_ab-F_ab')=0$。差点态垂直 $x$；$x\ne0$ 时 $H_a=-\|x\|^2I$ 在此正交补单射，$x=0$ 时两输出均已为零，故差为零。由此取得中央标量平移和沿原输入的剪切，反对称给另一槽。实初等剪切给 $D(ta,b/t)=D(a,b)$。NN 再给
+
+$$
+F_a(tF_ab)=tH_ab=F_a(F_a(tb)).
+$$
+
+再施 $F_a$ 得 $H_a(F_a(tb)-tF_ab)=0$；同一输出正交机制消去此差，$t=0$ 由 PY。反对称给另一槽齐次。全过程没有使用 $F_a(b-b')=F_ab-F_ab'$ 或未知增量连续性。∎
+

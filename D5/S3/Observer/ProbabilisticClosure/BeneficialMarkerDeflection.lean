@@ -69,6 +69,82 @@ def alwaysLeft {Seed : Type*} [MeasurableSpace Seed] : Policy Seed where
   choose := fun _ _ _ => false
   measurable_section := fun _ _ => measurable_const
 
+theorem measurable_source_law (alpha : unitInterval) : Measurable (sourceLaw alpha) := by
+  have harm (root : Bool) : Measurable (fun q : unitInterval => armLaw q root) := by
+    classical
+    have ht (x y : Bool) : Measurable (fun q : unitInterval => transition q x {y}) := by
+      cases x <;> cases y <;>
+        simp only [transition, bernoulliMeasure_def, Kernel.boolKernel_apply,
+        Bool.false_eq_true, Bool.true_eq_false, ↓reduceIte, Measure.coe_add,
+        Measure.coe_smul, Pi.add_apply, Pi.smul_apply, MeasurableSpace.measurableSet_top,
+        Measure.dirac_apply', Set.mem_singleton_iff, not_false_eq_true,
+        Set.indicator_of_notMem, smul_zero, Set.indicator_of_mem, Pi.one_apply,
+        ENNReal.smul_one, zero_add, add_zero, measurable_coe_nnreal_ennreal_iff,
+        measurable_const] <;> fun_prop
+    have hp (n : ℕ) (w : Fin (n + 1) → Bool) :
+        Measurable (fun q : unitInterval =>
+          (armLaw q root).map (fun x (i : Fin (n + 1)) => x i.val) {w}) := by
+      have he (q : unitInterval) :=
+        markov_chain_law_map_prefix_apply_singleton
+          (Measure.dirac root) (transition q) n w
+      simp only [armLaw] at *
+      simp_rw [he]
+      exact measurable_const.mul (Finset.measurable_fun_prod _ (fun i _ => ht _ _))
+    have hprefix (n : ℕ) (S : Set (Fin (n + 1) → Bool)) :
+        Measurable (fun q : unitInterval =>
+          (armLaw q root).map (fun x (i : Fin (n + 1)) => x i.val) S) := by
+      let F : Finset (Fin (n + 1) → Bool) := S.toFinite.toFinset
+      have he : (F : Set (Fin (n + 1) → Bool)) = S := by simp [F]
+      simp_rw [← he, ← sum_measure_singleton]
+      exact Finset.measurable_fun_sum _ (fun w _ => hp n w)
+    apply Measurable.measure_of_isPiSystem_of_isProbabilityMeasure
+      generateFrom_measurableCylinders.symm isPiSystem_measurableCylinders
+    intro s hs
+    rw [measurableCylinders_nat] at hs
+    simp only [Set.mem_iUnion, Set.mem_singleton_iff] at hs
+    obtain ⟨n, S, hS, rfl⟩ := hs
+    let f : Path → (Fin (n + 1) → Bool) := fun x i => x i.val
+    let g : (Fin (n + 1) → Bool) → (↥(Finset.Iic n) → Bool) :=
+      fun w i => w ⟨i.val, by have := Finset.mem_Iic.mp i.property; omega⟩
+    have he : cylinder (Finset.Iic n) S = f ⁻¹' (g ⁻¹' S) := by
+      ext x
+      rfl
+    have hgS : MeasurableSet (g ⁻¹' S) := hS.preimage (measurable_of_countable g)
+    simp_rw [he, ← Measure.map_apply (by fun_prop : Measurable f) hgS]
+    exact hprefix n (g ⁻¹' S)
+  have hcond (root : Bool) :
+      Measurable (fun q : unitInterval => conditionalSourceLaw q root) := by
+    let k : Kernel unitInterval Path := ⟨fun q => armLaw q root, harm root⟩
+    let : IsMarkovKernel k :=
+      ⟨fun q => inferInstanceAs (IsProbabilityMeasure (armLaw q root))⟩
+    let f : Path × Path → Source :=
+      fun p => (root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1)))
+    have hf : Measurable f := by fun_prop
+    have he : (fun q : unitInterval => conditionalSourceLaw q root) = (k ×ₖ k).map f := by
+      funext q
+      rw [Kernel.map_apply _ hf, Kernel.prod_apply]
+      rfl
+    rw [he]
+    exact Kernel.measurable _
+  apply Measure.measurable_of_measurable_coe
+  intro s hs
+  simp only [sourceLaw, Measure.add_apply, Measure.smul_apply]
+  exact (measurable_const.mul ((Measure.measurable_coe hs).comp (hcond true))).add
+    (measurable_const.mul ((Measure.measurable_coe hs).comp (hcond false)))
+
+theorem measurable_joint_law {Seed : Type*} [MeasurableSpace Seed]
+    (ν : Measure Seed) [IsProbabilityMeasure ν] (alpha : unitInterval) :
+    Measurable (jointLaw ν alpha) := by
+  let k : Kernel unitInterval Source := ⟨sourceLaw alpha, measurable_source_law alpha⟩
+  let : IsMarkovKernel k :=
+    ⟨fun q => inferInstanceAs (IsProbabilityMeasure (sourceLaw alpha q))⟩
+  have he : jointLaw ν alpha = (Kernel.const unitInterval ν ×ₖ k) := by
+    funext q
+    rw [Kernel.prod_apply]
+    rfl
+  rw [he]
+  exact Kernel.measurable _
+
 universe u
 set_option maxHeartbeats 2400000 in
 -- The joint proof elaborates seed measurability, true tail integration, and the support limit.
@@ -422,78 +498,8 @@ theorem beneficial_marker_deflection (alpha : unitInterval)
         expectedCost policy ν alpha μ =
           ∫⁻ q, ∑' n : ℕ, jointLaw ν alpha q
             {p | (n : WithTop ℕ) < stoppingTime policy p.1 p.2} ∂μ := by
-      have hsource : Measurable (sourceLaw alpha) := by
-        have harm (root : Bool) : Measurable (fun q : unitInterval => armLaw q root) := by
-          classical
-          have ht (x y : Bool) : Measurable (fun q : unitInterval => transition q x {y}) := by
-            cases x <;> cases y <;>
-              simp only [transition, bernoulliMeasure_def, Kernel.boolKernel_apply,
-              Bool.false_eq_true, Bool.true_eq_false, ↓reduceIte, Measure.coe_add,
-              Measure.coe_smul, Pi.add_apply, Pi.smul_apply, MeasurableSpace.measurableSet_top,
-              Measure.dirac_apply', Set.mem_singleton_iff, not_false_eq_true,
-              Set.indicator_of_notMem, smul_zero, Set.indicator_of_mem, Pi.one_apply,
-              ENNReal.smul_one, zero_add, add_zero, measurable_coe_nnreal_ennreal_iff,
-              measurable_const] <;> fun_prop
-          have hp (n : ℕ) (w : Fin (n + 1) → Bool) :
-              Measurable (fun q : unitInterval =>
-                (armLaw q root).map (fun x (i : Fin (n + 1)) => x i.val) {w}) := by
-            have he (q : unitInterval) :=
-              markov_chain_law_map_prefix_apply_singleton
-                (Measure.dirac root) (transition q) n w
-            simp only [armLaw] at *
-            simp_rw [he]
-            exact measurable_const.mul (Finset.measurable_fun_prod _ (fun i _ => ht _ _))
-          have hprefix (n : ℕ) (S : Set (Fin (n + 1) → Bool)) :
-              Measurable (fun q : unitInterval =>
-                (armLaw q root).map (fun x (i : Fin (n + 1)) => x i.val) S) := by
-            let F : Finset (Fin (n + 1) → Bool) := S.toFinite.toFinset
-            have he : (F : Set (Fin (n + 1) → Bool)) = S := by simp [F]
-            simp_rw [← he, ← sum_measure_singleton]
-            exact Finset.measurable_fun_sum _ (fun w _ => hp n w)
-          apply Measurable.measure_of_isPiSystem_of_isProbabilityMeasure
-            generateFrom_measurableCylinders.symm isPiSystem_measurableCylinders
-          intro s hs
-          rw [measurableCylinders_nat] at hs
-          simp only [Set.mem_iUnion, Set.mem_singleton_iff] at hs
-          obtain ⟨n, S, hS, rfl⟩ := hs
-          let f : Path → (Fin (n + 1) → Bool) := fun x i => x i.val
-          let g : (Fin (n + 1) → Bool) → (↥(Finset.Iic n) → Bool) :=
-            fun w i => w ⟨i.val, by have := Finset.mem_Iic.mp i.property; omega⟩
-          have he : cylinder (Finset.Iic n) S = f ⁻¹' (g ⁻¹' S) := by
-            ext x
-            rfl
-          have hgS : MeasurableSet (g ⁻¹' S) := hS.preimage (measurable_of_countable g)
-          simp_rw [he, ← Measure.map_apply (by fun_prop : Measurable f) hgS]
-          exact hprefix n (g ⁻¹' S)
-        have hcond (root : Bool) :
-            Measurable (fun q : unitInterval => conditionalSourceLaw q root) := by
-          let k : Kernel unitInterval Path := ⟨fun q => armLaw q root, harm root⟩
-          let : IsMarkovKernel k :=
-            ⟨fun q => inferInstanceAs (IsProbabilityMeasure (armLaw q root))⟩
-          let f : Path × Path → Source :=
-            fun p => (root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1)))
-          have hf : Measurable f := by fun_prop
-          have he : (fun q : unitInterval => conditionalSourceLaw q root) = (k ×ₖ k).map f := by
-            funext q
-            rw [Kernel.map_apply _ hf, Kernel.prod_apply]
-            rfl
-          rw [he]
-          exact Kernel.measurable _
-        apply Measure.measurable_of_measurable_coe
-        intro s hs
-        simp only [sourceLaw, Measure.add_apply, Measure.smul_apply]
-        exact (measurable_const.mul ((Measure.measurable_coe hs).comp (hcond true))).add
-          (measurable_const.mul ((Measure.measurable_coe hs).comp (hcond false)))
-      have hjoint : Measurable (jointLaw ν alpha) := by
-        let k : Kernel unitInterval Source := ⟨sourceLaw alpha, hsource⟩
-        let : IsMarkovKernel k :=
-          ⟨fun q => inferInstanceAs (IsProbabilityMeasure (sourceLaw alpha q))⟩
-        have he : jointLaw ν alpha = (Kernel.const unitInterval ν ×ₖ k) := by
-          funext q
-          rw [Kernel.prod_apply]
-          rfl
-        rw [he]
-        exact Kernel.measurable _
+      have hsource := measurable_source_law alpha
+      have hjoint := measurable_joint_law ν alpha
       have hprob : IsProbabilityMeasure (priorLaw ν alpha μ) :=
         isProbabilityMeasure_bind hjoint.aemeasurable
           (Filter.Eventually.of_forall fun _ => inferInstance)

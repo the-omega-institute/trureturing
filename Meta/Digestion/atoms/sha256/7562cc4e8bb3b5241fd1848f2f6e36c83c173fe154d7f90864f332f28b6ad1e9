@@ -1,0 +1,141 @@
+## 91. 同一实际纯态的两份投影与底面概率成本
+
+**假设 C-91.1（实际制备、单次接口和跨试验条件）。** 每次提供两份独立制备的同一个
+实际五态纯态射线，即 $|\psi\rangle\otimes|\psi\rangle$，
+并提供下述联合投影；“同一个”包括占位相位参照。
+相同概率表或相同商点不足以替代这一假设；它不要求克隆任意未知态。
+
+令 $P_{\rm bot}=\sum_{s\ne2}|s\rangle\langle s|$。
+单次事件公式更一般只需要两份输入密度算子满足充分接口
+
+$$
+(P_{\rm bot}\otimes P_{\rm bot})\rho_{12}
+(P_{\rm bot}\otimes P_{\rm bot})
+=r^2|\phi\otimes\phi\rangle\langle\phi\otimes\phi|,
+\tag{C91.1}
+$$
+
+其中 $\phi=P_{\rm bot}\psi/\sqrt r$ 为同一归一化条件态。
+独立同态制备保证该式；它是本事件在底面双副本子空间实际需要的块。
+下章的等待公式另要求跨试验事件独立同分布，单次接口本身不供应跨试验独立性。
+
+**定理 C-91.2（指定四项事件的宽度界与面积恒等式）。** 定义归一化向量及其效果
+
+$$
+|\Omega\rangle=\frac12\bigl(
+|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle\bigr),
+\qquad E_\Omega=|\Omega\rangle\langle\Omega|.
+\tag{C91.2}
+$$
+
+在假设 C-91.1 下，事件概率为
+
+$$
+q_\Omega
+=|\psi_0\psi_{13}-\psi_1\psi_3|^2
+=\frac{r^2\mathcal C^2}{4},
+$$
+
+$$
+q_{\Omega,\max}=w(r-w)
+=\frac{\mathcal A}{2\pi}\left(r-\frac{\mathcal A}{2\pi}\right).
+\tag{C91.3}
+$$
+
+最大值在闭纤维取得。若只允许全正态，它在 $y>w$ 或 $w=y=r/2$ 时取得，
+在 $y=w<r/2$ 时仅为未取得的上确界。
+
+证明。四个有序五模式基向量互相正交，四个系数模平方之和为一。
+对同一个实际 $\psi$ 的两份输入，
+
+$$
+\langle\Omega|\psi\otimes\psi\rangle
+=\frac12(\psi_0\psi_{13}+\psi_{13}\psi_0
+-\psi_1\psi_3-\psi_3\psi_1)
+=\psi_0\psi_{13}-\psi_1\psi_3.
+$$
+
+式 (C85.1) 给它为 $r\det B$。
+更一般，$E_\Omega$ 支持在底面双副本块内，所以由式 (C91.1) 取迹同样得到
+$r^2|\langle\Omega|\phi\otimes\phi\rangle|^2=r^2\mathcal C^2/4$。
+对状态最大化，消费 C-85.2 的容量和 C-85.3 的取得性，再代入 $\mathcal A=2\pi w$ 即得。证毕。
+
+这一因子分解明确保留成本：
+
+$$
+q_\Omega=
+\underbrace{r^2}_{\text{两份均落在底面的概率}}
+\ \underbrace{\frac{\mathcal C^2}{4}}_{\text{条件底面中的投影概率}}.
+\tag{C91.4}
+$$
+
+因此先条件化再报告大 concurrence，不能删去完整试验的 $r^2$ 因子。
+C-78.3 已给同一投影及其占位对易性质；这些性质并不供应一个原生仪器实现。
+
+数学先例与精确归一化。Aolita–Mintert，
+*Measuring multipartite concurrence with a single factorizable observable*，
+[quant-ph/0608012v2](https://arxiv.org/abs/quant-ph/0608012v2)，式 (1)–(2)，
+给两份纯态上的 $C_N^2=\langle A\rangle$，其中
+$A=4\sum P_{s_1}^{1}\otimes\cdots\otimes P_{s_N}^{N}$，
+求和限于偶数个反对称因子并排除全对称项。
+两个二元因子时只剩 $A=4P_-^L\otimes P_-^R$。
+按实际基序作重排
+
+$$
+R:\ |a,b\rangle\otimes|a',b'\rangle
+\longmapsto |a,a'\rangle\otimes|b,b'\rangle,\qquad
+|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2.
+$$
+
+四项直接展开给
+
+$$
+R|\Omega\rangle=|\varepsilon\rangle_{LL'}\otimes|\varepsilon\rangle_{RR'},
+\qquad RE_\Omega R^\dagger=P_-^L\otimes P_-^R.
+\tag{C91.5}
+$$
+
+故两份归一化条件态的概率为 $\mathcal C^2/4$，与本处完全一致。
+重排只在四维底面各自的两因子结构上定义，不把整个五维载体当作二元张量积。
+Romero、López、Lastra、Solano、Retamal，
+*Direct measurement of concurrence for atomic two-qubit pure states*，
+[quant-ph/0611016v1](https://arxiv.org/abs/quant-ph/0611016v1)，式 (2)–(5)，
+采用另一个含局部操作、CNOT 与旋转的电路：
+$A_-=c_1c_2-c_0c_3$，$P_{gggg}=|A_-|^2/2=\mathcal C^2/8$。
+该输出不是此处归一化 $\Omega$ 的概率；两份资源的经典方向不能抹去这项因子差异。
+
+**命题 C-91.3（相同概率和商点不能替代实际同态）。** 令
+$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$，在既定底面张量识别中取
+
+$$
+|\phi_+\rangle=|+\rangle\otimes|+\rangle,\qquad
+|\phi_-\rangle=|-\rangle\otimes|-\rangle,
+$$
+
+$$
+|\psi_\pm\rangle=\sqrt{1-r}|2\rangle+\sqrt r|\phi_\pm\rangle.
+\tag{C91.6}
+$$
+
+两者五概率相同，均有 $X=Y=r/2$、$\kappa=r/4$、$\chi=0\bmod2\pi$、
+$\mathcal C=0$，但
+
+$$
+|\langle\Omega|\psi_+\otimes\psi_-\rangle|^2=\frac{r^2}4>0.
+\tag{C91.7}
+$$
+
+证明。按 $(0,1,3,13)$ 顺序，两底面系数分别为
+$(1,1,1,1)/2$、$(1,-1,-1,1)/2$。
+各模平方为 $1/4$，后一组相位可取 $(0,\pi,\pi,0)$，交替和为 $-2\pi$。
+每组均为乘积态，故行列式为零。
+混合输入的四项内积却为
+
+$$
+\frac12\left(\frac r4+\frac r4-\left(-\frac r4\right)-\left(-\frac r4\right)\right)
+=\frac r2,
+$$
+
+平方得到所列值。这个输入既没有共同条件态 $\phi\otimes\phi$，
+也不满足式 (C91.1)；不存在与定理 C-91.2 的矛盾。证毕。
+

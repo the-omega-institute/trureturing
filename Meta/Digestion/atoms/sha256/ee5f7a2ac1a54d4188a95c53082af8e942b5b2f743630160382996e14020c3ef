@@ -1,0 +1,42 @@
+#### 命题 13.2：旋转的半角提升
+
+若 $M=R_a$ 是给定原连续生成元，单位振幅满足
+
+$$
+\dot q=\tfrac12Mq,
+$$
+
+则内容满足 $\dot X=[M,X]$，且
+
+$$
+i\hbar\dot q=\tfrac\hbar2\widehat M q.
+$$
+
+单位轴的振幅 $q(t)=\cos(t/2)+M\sin(t/2)$ 在 $2\pi$ 时变号、$4\pi$ 时回到原代表。
+
+**证明。**
+
+微分 $X=q\iota q^*$，四元数乘法的交换子为原 Lie 括号的两倍，故得 $\dot X=[M,X]$。复线性定义 $\widehat M=-L_MR_{\iota}=iL_M$ 给相应振幅方程。最后一式直接由 $M^2=-1$ 的指数展开得到；此处该句取 $\kappa(M,M)=1$。
+
+$\square$
+
+这证明半角表示的结构。实际时钟、原速度与作用量单位仍由原接口承担。
+
+```mermaid
+flowchart LR
+    subgraph PLANES["两张转动平面：三维关系的示意"]
+        E["共同来源直径 ℝe：经过 −e、0、e"] --- MK["span(e,v)：第一张转动平面"]
+        E --- ML["span(e,w)：第二张转动平面"]
+        MK --- V["横向 v"]
+        ML --- W["横向 w"]
+        V -.- ORTH["e、v、w 由 B 定义为正交单位方向"]
+        W -.- ORTH
+    end
+    subgraph LEVEL["总平方量的一个截面：α = 1"]
+        QUAD["2s² + x² = 1：等值椭圆"] --> ES["来源半轴：1/√2"]
+        QUAD --> EX["横向半轴：1"]
+        QUAD --> NOTE["来源系数 2、横向系数 1；等值面截面，非时间轨迹"]
+    end
+    E --> QUAD
+```
+

@@ -1,0 +1,54 @@
+**Definition 8.1 (Event products and tail inputs).** Use the entire domain of Definition 7.1, without (U). In particular the literal matrices are
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\quad
+B=\begin{pmatrix}-1&2a/(a+b)\\0&-(b+c)\end{pmatrix},\quad
+B_\alpha=\begin{pmatrix}
+[b(1-2\alpha)-\alpha a]/(b+\alpha a)&2\alpha a/(b+\alpha a)\\
+0&-(b+c)
+\end{pmatrix},\quad M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha,
+$$
+
+where $a,b,c>0$, and the binary schedule and its interior event parameters are prescribed before $u_0$. Retain the original $Q,G,\theta,t_j,d_j$ of (7.3), and set
+
+$$
+\lambda_j=\frac{\alpha_j(a+2b)-b}{b+\alpha_j a},\qquad
+\delta_j=1-\lambda_j^2\in(0,1],\qquad
+\alpha_j=\frac{b(1+\lambda_j)}{a+2b-a\lambda_j}.
+\tag{8.1}
+$$
+
+The last formula is an increasing bijection from $(-1,1)$ to $(0,1)$: its denominator is positive, its derivative is $2b(a+b)/(a+2b-a\lambda)^2>0$, and its endpoint values are $0,1$. Thus a prescribed sequence in $(-1,1)$ specifies actual original event parameters. Zero $\lambda_j$ means exactly the singular parameter $b/(a+2b)$.
+
+Let $e=h/\|h\|_Q$, $h=(a,a+b)^T$, and $J=(M-\cos\theta I)/\sin\theta$, as in Section 7. For each event set
+
+$$
+e_j=M^{-t_j}e,\quad q_j=Je_j,\quad
+P_j=e_je_j^TG,\quad K_j=P_j+\lambda_j(I-P_j).
+$$
+
+For event indices $s\leq n$ define only the finite products
+
+$$
+\Phi_{s,s}=I,\qquad
+\Phi_{s,n}=K_{n-1}\cdots K_s\quad(n>s),\qquad
+F_n=\Phi_{0,n}.
+\tag{8.2}
+$$
+
+These definitions are also used on a finite list, within its index range. The adjoint of a real matrix $T$ is $T^*=G^{-1}T^TG$. All norms and orthogonality below refer to $Q$. An infinite nonsingular tail starts at an index $s$ such that $\lambda_j\ne0$ for every $j\geq s$; put
+
+$$
+D_s=\sum_{j=s}^\infty-\log|\lambda_j|\in(0,\infty].
+\tag{8.3}
+$$
+
+Its input $z$ is in interaction coordinates. For an actual whole history this input is
+
+$$
+z=M^{-t_s}u_{t_s}=F_su_0.
+\tag{8.4}
+$$
+
+The finite products do not invert any event factor. The source correspondence is the one in Definition 7.1: source $m=2$, velocities $(a,b,c)$, centered coordinates $(x,y)$ and zero exterior coordinates; source indices are reduced by one in Lean. The source $M_\alpha$ is $N_\alpha$, and its private first-event weight `theta` is $\tau_j=\alpha_j(a+b)/(b+\alpha_ja)$, not the rotation angle $\theta$. The local energy decomposition, loss, reflection identities and literal factorization are the complete `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_sweepTheta_eq_iff`, `dampedEvent_eq_of_fixed`, `sweepTheta_of_fixed` and `source_factorization` bodies in [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), with its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs). The same Dirichlet form, zero extension, rigidity, observability and fixed-map power implication occur in [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and its complete [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). The [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) concern repeated fixed $\alpha$. Their primary original is [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections III and IV](https://arxiv.org/html/2608.27085v1#S3): the linear map has positive velocities and zero centered endpoints in the alternating, catch-up-free rotational regime. Arbitrarily prescribed variable histories remain the abstract linear domain (7.2); no collision realization is assumed.
+

@@ -29,6 +29,30 @@ internal sealed class TebniA350759PrimeCongruencesDocument : IScribeDocumentDefi
                 + "For a natural-indexed integer sequence a, the existing HannaLogarithmicPowerClosure.egf "
                 + "has degree-n coefficient (a(n):Q)/n!; its equality with sourceSeries defines IsSourceSequence.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("Expansion.diagonal", "Filtered polynomial diagonal", DiagonalApply(),
+                "Write z for the outer variable and Y for the polynomial coefficient variable. The Q-algebra homomorphism D sends z to X and Y to 1+X. The polynomial coefficient ring has the discrete topology and the power-series ring its coefficientwise topology. Evaluation in outer degree m uses only finitely many indices n<=m. This is the original diagonal used by the A350759 proof and by Bala's A119370 logarithmic specialization.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("Expansion.diagonal_apply", "Diagonal evaluation formula", DiagonalApply(),
+                "The diagonal is exactly the formal eval₂ operation with the coefficient homomorphism evaluating Y at 1+X, and with the outer variable sent to X. In these displays eval2 and eval2RingHom denote Mathlib's eval₂ and eval₂RingHom.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Expansion.diagonal_continuous", "Coefficientwise continuity",
+                Call("Continuous", V("diagonal")),
+                "Continuity is for coefficientwise convergence with the discrete topology on Q[Y] and Q. It justifies transporting formal locally finite sums.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Expansion.diagonal_C", "Constant outer coefficients",
+                All("p", PolyQ(), Equal(Call("diagonal", Call("C", V("p"))), EvalCoefficient(V("p")))),
+                "A constant in the outer variable maps to the polynomial coefficient evaluated at 1+X.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Expansion.diagonal_X", "The outer variable",
+                Equal(Call("diagonal", V("X")), V("X")),
+                "The outer variable maps to the same target X used by the coefficient evaluation.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Expansion.diagonal_subst", "Admissible substitution transport", DiagonalSubst(),
+                "For a rational outer series f, a polynomial-coefficient inner series b, and zero constant coefficients of b and D(b), the diagonal commutes with formal substitution. Both zero-constant hypotheses are part of the statement.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Expansion.diagonal_lift", "Rational series are fixed", DiagonalLift(),
+                "Mapping a rational series coefficientwise into Q[Y] and then applying D returns the original series.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("claim", "The two COMMENTS assertions", Equal(V("claim"), Parenthesized(ClaimBody())),
                 "OEIS A350759, revision 17, COMMENTS (unpaginated): "
                 + "\"Conjectures: For all p prime, (a(p) + a(p+1) - 2) is congruent to 0 (mod p),\" "
@@ -49,8 +73,8 @@ internal sealed class TebniA350759PrimeCongruencesDocument : IScribeDocumentDefi
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-        DescribeId.Create("tebni350759-" + name.ToLowerInvariant()),
-        DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+        DescribeId.Create("tebni350759-" + name.ToLowerInvariant().Replace(".", "-").Replace("_", "-")),
+        DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title), StatementSource.FromAuthor(Disp(formula)),
         provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
@@ -79,6 +103,22 @@ internal sealed class TebniA350759PrimeCongruencesDocument : IScribeDocumentDefi
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+
+    private static Formula PolyQ() => Call("Polynomial", Q());
+    private static Formula PSQ() => Call("PowerSeries", Q());
+    private static Formula PSPoly() => Call("PowerSeries", PolyQ());
+    private static Formula EvalCoefficient(Formula p) => Apply(
+        Qualified("Polynomial", "eval2RingHom", Qualified("PowerSeries", "C"), Add(D(1), V("X"))), p);
+    private static Formula DiagonalApply() => All("f", PSPoly(), Equal(Call("diagonal", V("f")),
+        Qualified("PowerSeries", "eval2",
+            Qualified("Polynomial", "eval2RingHom", Qualified("PowerSeries", "C"), Add(D(1), V("X"))), V("X"), V("f"))));
+    private static Formula DiagonalSubst() => All("f", PSQ(), All("b", PSPoly(),
+        Imp(Equal(Call("constantCoeff", V("b")), D(0)),
+            Imp(Equal(Call("constantCoeff", Call("diagonal", V("b"))), D(0)),
+                Equal(Call("diagonal", Qualified("PowerSeries", "subst", V("b"), V("f"))),
+                    Qualified("PowerSeries", "subst", Call("diagonal", V("b")), V("f")))))));
+    private static Formula DiagonalLift() => All("f", PSQ(), Equal(Call("diagonal",
+        Qualified("PowerSeries", "map", Call("algebraMap", Q(), PolyQ()), V("f"))), V("f")));
 
     private static Formula SourceFormula()
     {

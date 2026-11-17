@@ -1,0 +1,31 @@
+**定义 255.1（跨中央支持的第三点候选）。** 分别固定完整原 $B$ 和另名完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。原 $p_*=\operatorname{rank}E_P$ 不变；每颗 primitive 的中央支持仍为定义 180.1 的 $z(e)$。从定义 251.1 的三层带标签域中，仅删除
+
+$$
+\mathcal O_3^{\rm same}(E)
+=\{(e,p,r):e,p,r\text{ 两两正交 primitive},\ z(e)=z(p)=z(r)\}.
+\tag{255.1}
+$$
+
+记剩余条件为 $\mathsf F_{\rm cross3}$，完整候选为
+
+$$
+\mathsf C_{\rm cross3}(B_*)=B_*+\mathsf F_{\rm cross3}.
+\tag{255.2}
+$$
+
+它仍只在原对象总秩 $>p_*$ 时要求同一关系
+
+$$
+W_c(p)=2q(D_pc,r)+W_c(2D_cp),\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2,
+\tag{255.3}
+$$
+
+其完整保留域如下。
+
+| 层 | 切口及输入 | 读回 |
+| --- | --- | --- |
+| 正交输入自身 | $c=e$，primitive $e\perp p$ | $r=p$ |
+| 跨中央支持第三点 | 同一正交对 | primitive $r\perp e,p$，且 $z(e),z(p),z(r)$ 不全相同 |
+| 二原子内部 | $c^2=c$，整个对象的 $\operatorname{rank}c=2$，primitive $p\le c$ | $r=p$ |
+| 半重叠角外 | $c=e$，primitive $e,p$，$\tau(e\circ p)=1/2$ | 全部 primitive $r\perp e,p$ |

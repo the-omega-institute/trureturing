@@ -1,0 +1,30 @@
+**推论 105.16（同锥同单位的复三能级字典）。** 在105.8等价条件中，
+再要求每个完整 $D_p\simeq B^3$，恰好选出同单位的 $H_3(\mathbb C)$。
+存在 $\Phi:H_3(\mathbb C)\to V$，满足 $\Phi(\mathrm{PSD}_3)=C$、$u\Phi=\operatorname{tr}$，并有
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+[0,u]=\{f_E:f_E(\Phi\rho)=\operatorname{tr}(E\rho),\ 0\preceq E\preceq I_3\},\\
+p=\Phi(vv^*),\quad v^*v=1,\qquad
+T_p(\Phi\rho)=a_p(\Phi\rho)=\operatorname{tr}(vv^*\rho),\\
+q=\Phi(\eta\eta^*),\quad \eta^*\eta=1,\qquad T_p(q)=|v^*\eta|^2.
+\end{gathered}
+\tag{VII105.34}
+$$
+
+证明及成熟结果的应用。105.8先给原rank-three EJA；直接复用103.7的成熟有限分类：
+非简单分支是 $\mathbb R\oplus\operatorname{spin}_d$，含经典三角形，
+简单分支是 $H_3(\mathbb R),H_3(\mathbb C),H_3(\mathbb H),H_3(\mathbb O)$。
+前者存在整排除线段，后四者的完整排除球维数分别为 $2,3,5,9$。
+所以“每个完整排除球三维”恰选复分支；只给一张三球不够，
+$\Delta_0*B^3$ 的旗标背后虽是三球，其他纯点背后仍是线段。
+全部球至少二维仅排除直和，也不单独选择复数。
+
+103.6处理任意原 $u$ 的同单位归一，103.8给整个态锥、全部效应区间和Born字典，
+直接代入即(VII105.34)。
+共同中心在这些矩阵坐标中是 $\Phi(I_3)/3$。
+有限数学测量对应 $E_i\succeq0,\sum_iE_i=I_3$，仍不自动是实际菜单。
+分类、迹配对与纯模方是成熟结果的应用，不另计新分类或新Born证明。
+复合、CP、仪器、更新、Lüders、实际来源及物理钟继续使用105.15保留的合同。证毕。
+

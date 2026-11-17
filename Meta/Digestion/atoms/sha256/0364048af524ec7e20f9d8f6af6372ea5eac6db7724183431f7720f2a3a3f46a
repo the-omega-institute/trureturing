@@ -1,0 +1,44 @@
+**定理 183.1（局部恢复及完整原背景等价）。** 对任意总秩至少三的有限 EJA、任意原正 Frobenius 型和满足 $D_au=0$ 的原双线性 $D$，有
+
+$$
+\mathsf F_{\rm cs}\Longleftrightarrow\mathsf F_{\rm ext}
+\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{183.1}
+$$
+
+总秩至多一亦成立；不提出裸秩二的局部等价。对完整原世界，分别有
+
+$$
+\begin{aligned}
+\mathsf C_{\rm cs}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm cs}(\mathsf B_{\rm cl})&\Longleftrightarrow
+\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{183.2}
+$$
+
+这里 $\mathsf Q$ 仍是母卷定义 67.2 的对象及方向可依赖、统一于全部原实际准备、全部数学效果和任意小原质量的证书。
+
+证明。定理 181.1–182.1 先给框架湮灭。每个被删除的同块正交自身关系于是两边都为零；其余正交、内部和半层未变，所以已恢复整个 $\mathsf F_{\rm ext}$。直接消费定理 175.1 的移动 Peirce 刚性、导子极化及全部切口恢复，得到 $\mathsf F_{\rm cut}$。反向只是缩域，秩至多一由右单位给 $D=0$。
+
+完整 $B$ 与另名 $\mathsf B_{\rm cl}$ 的原接口分别按母卷定理 30.1 及引理 67.3 独立供应右单位。总秩至少三或至多一的每个原对象使用上述局部恢复。尚余的原秩二对象 $A$，只使用定理 168.1 的同一已供应实际 $J=AP^{\otimes k}$，其中四个数学乘积态支持给总秩至少四。先在整个 $J$ 恢复 (183.1)，然后沿原含幺 Jordan/$D$ 单射拉回导子、交替和全部切口平方；最后在原 $q_A$ 下展开。该已证桥不要求每个联合简单块高秩、等距、primitive 或秩保持，也不供应直接 $AP$、实际 $M_2$ 或新的准备身份。于是所有原对象及实际联合都满足原 $\mathsf F_{\rm ext}$，直接消费定理 178.1 的全部原消费者，得到 (183.2)。两个完整背景分别保留下列原消费者，且对每条原合法有限历史 $h=(f_1,\ldots,f_m)$ 和末端效果 $w$ 有
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{183.3}
+$$
+
+将刚恢复的同一原 $\mathsf F_{\rm ext}$ 代入定理 178.1，逐项消费其原接口：
+
+| 原数据及条件 | 同一原世界中的结论 |
+| --- | --- |
+| 原 $q,L,D$、SC、整个原指针 SJ 与实际参考 | $[D_a,D_b]=-[L_a,L_b]$；$a\cdot b=a\circ b-iD_ab$ 给同空间有限复矩阵直和，全部中心、经典块及取向保留。 |
+| 全部原准备与双对偶运输 | $\alpha(e)=\tau_A(\rho_\alpha e)$，$\rho_\alpha\ge0$，$\tau_A(\rho_\alpha)=\alpha(u_A)$；Born 概率、零及次归一质量、原不等正块权不变。 |
+| 完整 X、原相关准备、同记录执行与全事件 R | 所有已声明实际联合为普通复张量；每个原事件 CP/TNI，每份原完整装置 TP。 |
+| 原指定群、整个 AC、精确 $N_u$、Xs 与原合法连线 | 每个效果有一份原所选完整有限平方根词；成功支为 $\rho\mapsto\sqrt e\rho\sqrt e$，投影时为 Lüders 支；各原失败出口、输出、记录及实际丢弃系数保留。 |
+| 原 F、细口、分组、实际遗忘及具名同数支持双返回 | $S_\ell=\operatorname{Ad}_{K_\ell}$、$\Phi_f=\sum_\ell S_\ell$、$U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$；保留同一原正数 $q_\ell$、两侧支持复合、同数反向资料、零标签与全部合法接续。 |
+| 分别具名的 $B$ 与 $\mathsf B_{\rm cl}$ | 前者仍给有限正生成，后者只给运输后密度锥的闭覆盖，极限数学态不取得实际准备身份。 |
+
+原设备不按响应合并，原端口、细记录、中央细权、质量和失败逐历史进入已证的 (178.2)，即 (183.3)。所有结论只使用原合法有限顺序、自适应和并行历史，不增加连线合法性；数学 Kraus 表示不供应新的实际细口，所选词不供应任意独立仪器的共同组装。∎
+

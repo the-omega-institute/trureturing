@@ -1,0 +1,52 @@
+**Theorem 15.1 (quantitative exclusion of a core at the Coulomb endpoint).** Retain the same fixed datum. Define
+
+$$
+m_{\rm core}=\int_{\mathbb R^4}Vp\,d\xi\in(0,\infty),\qquad
+\eta_*=c_*\sqrt{j_0\chi_c}\,\phi(k_0)m_{\rm core}>0,
+\qquad r_C=-\chi_c^2e_C>0.
+\tag{15.1}
+$$
+
+For every prescribed sequence $s_n\downarrow0$ and every actual normalized complex choice with $F_{s_n}\rightharpoonup cp$ globally in $L^2$, one has
+
+$$
+\liminf_{n\to\infty}\frac{e_1(g_{s_n})-E_{s_n}}{g_{s_n}^2}
+ \ge\eta_*|c|,
+\qquad
+\liminf_{n\to\infty}r_{s_n}
+ \ge r_C+\chi_c^2\eta_*|c|.
+\tag{15.2}
+$$
+
+In particular, if also $r_{s_n}\to R<\infty$ and $c\ne0$, then $R\ge r_C+\chi_c^2\eta_*|c|>r_C$.
+
+Proof. N Lemma 5.1 supplies exactly $0<m_{\rm core}<\infty$; its integrability follows from $V\in L^2$, $p\in L^2$ and Cauchy–Schwarz, and its strict positivity from $V,p>0$. Every other factor in $\eta_*$ is strictly positive by (1.1), (2.7) and (13.1).
+
+Actual states have zero variational excess, so the necessity and local compactness assertions of P Theorem 90.1 apply on the exact path. On the given weakly convergent subsequence they yield $F_s\to cp$ in $L^2(K)$ for each compact $K$. Consequently $F_s^+=|F_s|\to|c|p$ there. By (2.9) and boundedness of $W_1$,
+
+$$
+U_s^{<}=U_s-s^5W_1\circ\Xi_s\longrightarrow V
+\quad\text{uniformly on every fixed compact set},\qquad
+\phi(k_0+\varepsilon sr)\longrightarrow\phi(k_0)
+\quad\text{uniformly there}.
+\tag{15.3}
+$$
+
+All factors in the first product other than $F_s^+$ are locally uniformly bounded. Cauchy–Schwarz on $K$ and its finite measure therefore justify the full product limit
+
+$$
+A_s(K)\longrightarrow\phi(k_0)|c|\int_KVp\,d\xi.
+\tag{15.4}
+$$
+
+Apply (14.2) first on each fixed compact box. Only after taking its $s$-limit exhaust $\mathbb R^4$ by increasing boxes; positivity and $Vp\in L^1$ give the first inequality in (15.2). No global product convergence or uniform-in-$K$ threshold is needed. Finally the exact identity
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ =\frac{e_1(g_s)}{g_s^2}+\frac{r_s}{\chi_c^2},
+\qquad e_1(g_s)/g_s^2\longrightarrow e_C
+\tag{15.5}
+$$
+
+gives the second inequality, also if the lower limit is infinite. The statement for finite $R$ follows directly. $\square$
+

@@ -1,0 +1,22 @@
+**定义 88.3（原 primitive 菜单与唯一候选）。** 在每个非零补块中，对全部 $1\le i\le k_s$ 及 $1\le i<j\le k_s$ 取下列原 primitive，所有块的并记为 $\mathcal M_{ep}$：
+
+$$
+\begin{aligned} r_{s,i}&=|v_{s,i}\rangle\langle v_{s,i}|,\\ r^+_{s,ij}&=\tfrac12|v_{s,i}+v_{s,j}\rangle\langle v_{s,i}+v_{s,j}|,\\ r^{\mathrm i}_{s,ij}&=\tfrac12|v_{s,i}+\mathrm i v_{s,j}\rangle\langle v_{s,i}+\mathrm i v_{s,j}|\qquad(i<j). \end{aligned} \tag{88.2}
+$$
+
+向整个原 $E_A$ 中补零，各元仍是原外部域 $\mathcal R_{ep}$ 的元素，未乘权、未改成 POVM 元。每个经典补块恰贡献它自己的一颗中央 primitive。令 $d_A=\dim_{\mathbb R}E_A$；该菜单有
+
+$$
+m_{ep}:=|\mathcal M_{ep}|=\sum_s k_s^2=\dim_{\mathbb R}V_{ep}=d_A-4n_t+4\le d_A.
+\tag{88.3}
+$$
+
+选中对象的总秩大于 $p_*\ge2$，故若半重叠对存在，补秩至少一，$m_{ep}\ge1$。一般零补空间取空菜单，其原外部域亦为空；经典对象没有半重叠对。定义唯一候选 $\mathsf C_{\rm frd}(B_*)=B_*+\mathsf F_{\rm frd}$：保留定义 88.1 与 cross3 完全相同的正交／内部域，并只将其半重叠角外域改为：对**每个**选中原对象的**每个**原有序半重叠对，仅要求
+
+$$
+\boxed{\ W_e(p)=2q_A(D_pe,r)+W_e(2D_ep)\qquad(r\in\mathcal M_{ep}).\ }
+\tag{88.4}
+$$
+
+菜单一次确定后服务该对的全部比较；更换原 $D$ 而保持非 $D$ 数据时，菜单不变。坐标选择不是新增的 $D$ 条件、实际准备或设备供应。不同对象、不同输入对仍保留各自标签，不按读数合并；没有半角自身、SC、Z、导子、斜伴随、互易或复乘法前件。
+

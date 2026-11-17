@@ -1,0 +1,59 @@
+**定理 12.1（残余的满支撑角与两种 Clifford 取向）。** 在 10.1 下，令 $M=\mathfrak B_{y,z}^{**}$，对正中心元置 $s_M(a)=1_{(0,\infty)}(a)\in Z(M)$，并记
+
+$$
+\mathsf C=-\mathrm i\,\mathsf A\mathsf X\mathsf Y,
+\qquad
+z_{\rm res}=s_M(\mathsf T),
+\qquad
+z_{\rm ref}=s_M\bigl(\mathsf T(4\mathsf R-\mathsf T)\bigr).
+\tag{12.1}
+$$
+
+则 $\mathsf C$ 是 $\mathfrak B_{y,z}$ 内的中央自伴元，且
+
+$$
+\mathsf C^2=\mathsf T^2(4\mathsf R-\mathsf T).
+\tag{12.2}
+$$
+
+在 $Z(M)$ 中作有界 Borel 函数演算，令 $\Omega=\operatorname{sgn}(\mathsf C)$，其中 $\operatorname{sgn}(0)=0$。则
+
+$$
+\Omega^2=z_{\rm ref},\qquad
+z_\pm=\frac{z_{\rm ref}\pm\Omega}{2}
+\tag{12.3}
+$$
+
+是两个正交中央投影。在 $0<t<4r$ 的每个不可约表示的正常双对偶延伸下，$\Omega$ 的像恰为 (11.5) 的 $\varepsilon(\pi)$。准确的最大性是：对任一中央投影 $e\in Z(M)$，
+
+$$
+\begin{aligned}
+s_{eM}(e\mathsf T)=e
+&\iff e\le z_{\rm res},\\
+s_{eM}(e\mathsf T)=s_{eM}\bigl(e(4\mathsf R-\mathsf T)\bigr)=e
+&\iff e\le z_{\rm ref}.
+\end{aligned}
+\tag{12.3a}
+$$
+
+故 $z_{\rm res}$ 是 $\mathsf T$ 满支撑的最大中央角，$z_{\rm ref}$ 是两份正元同时满支撑的最大中央角。满支撑表示在该角的忠实正常表示中核为零；不要求谱与零分离或正元可逆。
+
+证明。三生成元两两反交换，故 $\mathsf A\mathsf X\mathsf Y$ 与每个生成元交换；反转三个自伴因子的次序给 $(\mathsf A\mathsf X\mathsf Y)^*=-\mathsf A\mathsf X\mathsf Y$，所以 $\mathsf C$ 中央且自伴。三次反交换的平方恒等式为
+
+$$
+(\mathsf A\mathsf X\mathsf Y)^2=-\mathsf A^2\mathsf X^2\mathsf Y^2,
+$$
+
+代入 (10.5) 得 (12.2)。Borel 函数演算给 $\Omega^2=s_M(\mathsf C^2)$。对交换正元，乘积的支撑是两支撑之交；它们可同时按非负函数读取，乘积非零的集合恰是两者同时非零的集合。因此
+
+$$
+s_M(\mathsf C^2)
+=s_M(\mathsf T)s_M(4\mathsf R-\mathsf T)
+=z_{\rm ref}.
+\tag{12.4}
+$$
+
+于是 (12.3) 的两元自伴、平方等于自身且乘积为零。中央投影 $e$ 与谱投影交换，故 $s_{eM}(ea)=e\,s_M(a)$；分别用于两份正元便得 (12.3a) 及最大性。在这些角上零仍可为谱的聚点。
+
+对内点纤维，(11.6) 给 $\pi(\mathsf C)=\varepsilon\,t\sqrt{4r-t}\,I$；正常延伸保留相应谱支撑，故 $\Omega$ 的像为 $\varepsilon I$。边界 $t=0$ 或 $t=4r$ 的表示消灭 $z_{\rm ref}$；前者无残余，后者有二维 Pauli 对但没有第三轴取向。上述投影属于诊断双对偶，不因此属于原 $E$ 或全环境中心。∎
+

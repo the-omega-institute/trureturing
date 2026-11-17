@@ -1,0 +1,41 @@
+**定理 367.1（保留跨中心域时的局部蕴涵）。** 固定一个复 Hermitian 直和 $E$ 及实双线性 $D$，只假设右单位 $D(a,u)=0$、整个 $\mathsf G_{0h}$。固定任意 (366.2) 的族。在这个单载体层，
+
+$$
+\mathsf X_{\rm HQ}+\mathsf H_{\mathcal F}
+\ \Longrightarrow\
+F_t=0\quad(n_t\ge3)
+\ \Longrightarrow\ \mathsf Z_{\rm fin}
+\tag{367.1}
+$$
+
+对定义 327.1 的每一种先定 ZERO 选择成立。$F_t$ 取定理 320.1 的全部来源正常形；消去后对全部完整输入，恰有
+
+$$
+\pi_tD(a,b)=\alpha_t\,\mathrm i[a_t,b_t]
++\sum_{s:n_s=1}\ell_{ts}a_s(b_t-b_sI_t).
+\tag{367.2}
+$$
+
+不在此断言经典补偿行消失，亦不在此断言低目标或全部 $\mathsf X_{\rm HQ}$ 可由 $\mathsf Z_{\rm fin}$ 恢复。
+
+证明。直接使用 320.1，而不重新分类 $D$。其纯支持证明 (320.3)–(320.4) 还保证：第一输入在非经典源 $t$ 时，同源输入的整个输出及异源输入的整个输出都在 $j_tH_{n_t}$。因此以下是原规范总迹，不是仅取目标压缩后遗漏其他输出的迹。
+
+固定高块 $t$。对另一源 $r\ne t$ 的每颗 primitive $p$，取 $t$ 内任意 primitive $e$。两者正交，(328.2) 给
+
+$$
+\tau(D(j_te,j_rp))=F_t(j_rp).
+\tag{367.3}
+$$
+
+$\mathsf X_{\rm HQ}$ 保留这个次序，包含经典与二阶第二源；primitive 张成各源，遂有 $F_t|_{\bigoplus_{r\ne t}H_{n_r}}=0$。记 $f_t=F_tj_t$。320.1 的原右单位关系现在是 $\eta_t=-f_t(I_t)$。对 (366.2) 的任一半角对，同源整输出局部性及 $\operatorname{Tr}e=\operatorname{Tr}p=1$ 给
+
+$$
+\tau(D(j_te,j_tp))
+=f_t(p)-\tfrac12f_t(I_t).
+\tag{367.4}
+$$
+
+故线性泛函 $g_t(b)=f_t(b)-\tfrac12f_t(I_t)\operatorname{Tr}b$ 在全部所选第二输入上为零。张成整个理想使 $g_t=0$；取 $b=I_t$，得到 $(1-n_t/2)f_t(I_t)=0$。$n_t\ge3$，故 $f_t(I_t)=0$、$f_t=0$，于是整个 $F_t=0$、$\eta_t=0$，(320.1) 恰变成 (367.2)。
+
+对任意 ZERO 标签 $(a_t(p),p)$，首输入在高块且与第二输入正交；再用 (328.2) 得原总迹为 $F_t(p)=0$。这包括 ZERO 第二基的全部外部低块及经典元，故不是仅在 $t\times t$ 上的有限基改写。全程未消去经典第一槽，也未使用 LU、SC、导子或 sigma。∎
+

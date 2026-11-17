@@ -35,6 +35,10 @@ An unfinished registration must not be reported as `declared_validated`. If regi
 
 Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and retain their existing checks. Reuse with no new Lean declaration creates no audit target. Reg proofs are audit evidence, not a new mathematical GID/Scribe/deposit/utility obligation.
 
+## Retiring completed intake
+
+Use [atom-retirement](../atom-retirement/SKILL.md) when the requested result is removal of terminal atoms or archival/deletion of their theory input. It owns whole-source retirement after the existing cover/settle/decompose writers establish completion. Formalization alone does not authorize deleting Lean declarations. An unproved proposition remains open; difficulty, missing prerequisites or resource limits do not make it nonpropositional.
+
 ## State machine
 
 **Pure digestion route** (`CLAUDE.md` §1.2). A delivery that adds or first-freezes no D5 declaration is a pure digestion task. Such a task covers with existing frozen declarations, settles or clears nonpropositional or upstream-only atoms, decomposes into the ledger, or makes a §4.3 private-only exposure with canonical repin and registration. Run Step 0, then:
@@ -62,7 +66,7 @@ Follow these steps in order. Do not pass a step until its postcondition holds.
 
 Observation-only requests, including source/atom inspection and issue work, follow CLAUDE.md §6.1 in the main checkout or a suitable existing worktree without creating a worktree or running a build. Do not run the mutation steps below for such a request; if a chosen inspection command requires building the CLI, report that prerequisite or use available source reads instead of treating the build as read-only.
 
-For formalization and digestion writes, first reuse a suitable linked worktree; create one only when isolation is needed. Check Git registration, repository identity, branch/commit and pin compatibility, existing material and cooperative scopes. A dispatcher-assigned lane can satisfy this check; reuse is not limited to dispatcher assignments or the current session.
+For formalization and digestion writes, first reuse a suitable linked worktree; create one only when isolation is needed. Check Git registration, repository identity, branch/commit and pin compatibility, and existing material. A dispatcher-assigned lane can satisfy this check; reuse is not limited to dispatcher assignments or the current session.
 
 Prepare PATH for the mutation commands:
 
@@ -232,7 +236,7 @@ compilation. Run `make emit PATHS=<NUL-separated selected Lean/Scribe paths>` to
 canonical projections; it builds only the selected Scribe Lean inputs, their named utility inputs and imports. Never hand-write
 a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scope from the GID, and
 `cover-batch` from all batch GIDs. Coverage also selects existing targets of those atoms and their transitive chain atoms, checking current identities before writing. These local doors require no full report or full build. CI and
-explicit whole-repository verification retain `make lean-report`, `make test` and `make gate`.
+explicit whole-repository verification retain their required scope. Do not run full compilation unless an explicit whole-repository request or a concrete integration obligation cannot be met by scoped checks. State the need and pass `FULL_BUILD=1` in every full-build invocation (`make lean FULL_BUILD=1`, `make lean-report FULL_BUILD=1`, `make test FULL_BUILD=1`, `make warm-donor FULL_BUILD=1`), including indirect entries and any gate selected by `make gate-plan` that triggers a full build. Direct scripts use a command-local `FULL_BUILD=1` environment assignment. Make full-build entries and their direct scripts reject calls without `FULL_BUILD=1`; cache failure, retries and final verification do not supply permission to broaden scope. Required CI does not require a duplicate local full build.
 
 Scoped deposit retains SL-031's compiled utility checks. A target's named utility references
 (consumer, instance, premises, result and claim) add their modules and import closures to the scope.
@@ -372,11 +376,10 @@ make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=0   # Wait for the 
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
-If running full local early feedback, start it after `git push` in a separate job, alongside CI and
-the PR door rather than waiting for either to finish:
+Do not run full local early feedback by default. Inspect `make gate-plan` first. Only when full verification is explicitly needed under the scope rule above, start it after `git push` in a separate job alongside CI and the PR door:
 
 ```sh
-make gate BASE=<explicit-existing-40-hex-commit-sha>
+make gate BASE=<explicit-existing-40-hex-commit-sha> FULL_BUILD=1
 ```
 
 Report its raw exit and rejected rules; it does not replace the configured independent workflow required checks or gate

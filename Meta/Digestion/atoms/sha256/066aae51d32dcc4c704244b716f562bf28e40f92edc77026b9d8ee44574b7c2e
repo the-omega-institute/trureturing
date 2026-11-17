@@ -1,0 +1,165 @@
+**Theorem 137.1 (actual odd two-weight index).** For every original $\theta$ and every fixed $E=(S,C,B)\in\mathscr E_\theta$, the form $Q_E$ has infinite positive and negative indices on the real vector space
+
+$$
+\mathcal V_{S,-}=\{v\in L^\infty(G,m;\mathbb R):
+v=0\text{ a.e. on }G\setminus S,\quad v\circ R_\pi=-v\text{ a.e.}\}.
+\tag{137.1}
+$$
+
+Each index remains infinite on the common kernel of any finite family of homogeneous bounded real linear functionals on this space. The cells $S,C,B$ and the terminal factor $q=q_E$ remain fixed in all these assertions.
+
+*Proof.* Use the analytic representatives of $g$ and $q=T_d\mathbf1_C$ on $\Omega$. They are nonnegative and invariant there by continuity, the Markov property and full local support of $m$, and both are strictly positive almost everywhere. Set $\sigma=d/2$, $R=R_\pi$ and let $L^2_-$ be the complex odd subspace. Equip
+
+$$
+\mathcal H_-=T_\sigma L^2_-,\qquad
+\|T_\sigma u\|_{\mathcal H_-}=\|u\|_2
+\tag{137.2}
+$$
+
+with its inverse-heat norm. Injectivity makes this well defined. Use the half-circle section $F=\{r>0,\ 0\le\alpha<\pi\}$. Every odd function is determined by its restriction to $F$. The evaluation and kernel identities of Appendix II §120 show that this restriction is a Hilbert function space with kernel
+
+$$
+k(x,y)=\frac{p_d(x,y)-p_d(x,Ry)}2.
+\tag{137.3}
+$$
+
+Indeed the projection onto $L^2_-$ is $(I-R)/2$, which commutes with heat propagation. For distinct representatives $x_1,\ldots,x_n\in F$, the $2n$ points $x_i,Rx_i$ are distinct. The full heat-kernel Gram quadratic form on coefficients $(a_1,\ldots,a_n,-a_1,\ldots,-a_n)$ is
+
+$$
+4\sum_{i,j}\overline{a_i}a_jk(x_i,x_j)>0
+\quad(a\ne0).
+\tag{137.4}
+$$
+
+Thus $k$ is nonsingular on $F$.
+
+Every member of $\mathcal H_-$ is analytic on the connected open set $\Omega$, by the actual heat-image identity (122.11). This identity uses the analytic coefficients from (122.6)–(122.9), the local weak equation (120.6), and the spectral differential-iterate bounds (122.10). The analytic regularity intermediary is Kotake–Narasimhan, [*Regularity theorems for fractional powers of a linear elliptic operator*, Theorem 1, p. 451](https://www.numdam.org/item/BSMF_1962__90__449_0.pdf). Products and sums of these analytic functions remain analytic. Consequently every positive-measure subset of the interior of $F$ is a uniqueness set both for $\mathcal H_-$ and for $\mathcal H_-\mathcal H_-+\mathcal H_-\mathcal H_-$. Here one applies Mityagin, [*The zero set of a real analytic function*, Proposition 0](https://arxiv.org/html/1512.07276v1), to the real and imaginary parts of the differences on $\Omega$. Local equivalence of $m$ and Lebesgue measure supplies its positive-measure hypothesis. These are attributed analytic intermediates for the actual heat space.
+
+Write $Q^{\rm sym}(u,v)=(Q_E(u,v)+Q_E(v,u))/2$. Suppose that its negative index on $\mathcal V_{S,-}$ were finite, equal to $\kappa$. Choose a positive-measure relatively compact Borel subset $E_0\subset S\cap\operatorname{int}F$ on which $g+q>0$, and let $E_0^*$ consist of those points of $E_0$ which are its density points. Such a subset exists because $\nu_2(S)>0$, $g,q>0$ almost everywhere and $S$ is invariant. At distinct points $x_i\in E_0^*$ choose small disjoint neighborhoods, also disjoint from their reflected neighborhoods, and set
+
+$$
+\phi_{i,\epsilon}=
+\frac{\mathbf1_{E_0\cap B(x_i,\epsilon)}}{m(E_0\cap B(x_i,\epsilon))},
+\qquad v_{i,\epsilon}=\phi_{i,\epsilon}-\phi_{i,\epsilon}\circ R.
+$$
+
+These are bounded odd tests supported in $S$. Local continuity of the two weights and the actual heat kernel, and rotation invariance of the weights, give
+
+$$
+\bigl(Q^{\rm sym}(v_{i,\epsilon},v_{j,\epsilon})\bigr)_{i,j}
+\longrightarrow 4\bigl(s(x_i,x_j)\bigr)_{i,j},
+\qquad
+s(x,y)=\frac{g(x)q(y)+q(x)g(y)}2\,k(x,y).
+\tag{137.5}
+$$
+
+For completeness, the four reflected double integrals have kernel sum $2(p_d(x,y)-p_d(x,Ry))=4k(x,y)$; symmetrizing their weights gives precisely (137.5). Strict negativity of a fixed finite matrix subspace persists under entrywise convergence. Hence every finite Gram matrix of $s$ on $E_0^*$ has at most $\kappa$ negative eigenvalues. Repetitions of points follow by pullback from a distinct-point matrix.
+
+Define the real invariant bounded class
+
+$$
+\gamma=\frac{g-q}{g+q}\quad\text{where }g+q>0,
+\qquad \gamma=0\text{ on its null complement}.
+$$
+
+It satisfies $|\gamma|\le1$. On $E_0^*$ the exact identity is
+
+$$
+s(x,y)=\frac{(g(x)+q(x))(g(y)+q(y))}4
+\bigl(1-\gamma(x)\gamma(y)\bigr)k(x,y).
+\tag{137.6}
+$$
+
+The diagonal congruence is positive and invertible on every such finite point set. Real symmetric and complex Hermitian inertia agree for these real matrices. Therefore $(1-\gamma(x)\overline{\gamma(y)})k(x,y)$ has at most $\kappa$ negative squares on $E_0^*$.
+
+Apply Agler–Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1), to $\mathcal H_-|_F$, with uniqueness domain $E_0^*$, multiplier $\gamma$ and their scalar parameter $t=1$. Nonsingularity is (137.4), and both required uniqueness hypotheses were checked above. The theorem gives a closed finite-codimensional $W\subset\mathcal H_-$ and a bounded $L:W\to\mathcal H_-$ with $Lu=\gamma u$ on $E_0^*$. Extend this relation by using the analytic identity
+
+$$
+(g+q)Lu=(g-q)u.
+\tag{137.7}
+$$
+
+Both sides are analytic on all $\Omega$ because $g$ and $q=T_d\mathbf1_C$ are actual heat images. Positive-measure uniqueness makes (137.7) valid throughout $\Omega$. Since $g+q>0$ almost everywhere, $Lu=\gamma u$ in $L^2(m)$ globally. This argument requires no globally positive lower bound on $q$ or $g+q$.
+
+Consider the actual multiplication domain
+
+$$
+D=\{u\in\mathcal H_-:\gamma u\in\mathcal H_-\}.
+\tag{137.8}
+$$
+
+It contains $W$. Its quotient by $W$ is a subspace of the finite-dimensional space $\mathcal H_-/W$, hence $D$ is closed and finite codimensional. The inclusion $\mathcal H_-\hookrightarrow L^2(m)$ is continuous. If $u_n\to u$ in $\mathcal H_-$ and $\gamma u_n\to v$ there, bounded multiplication in $L^2$ gives $v=\gamma u$. Thus the multiplication map on $D$ has closed graph and is bounded.
+
+The full rotation circle acts unitarily and strongly continuously on $\mathcal H_-$. Since $\gamma$ is invariant, $D$ and $D^\perp$ are invariant. The finite-dimensional circle representation on $D^\perp$ has only finitely many angular characters. Choose a positive odd integer $\ell$ absent from that list. The whole $\ell$ heat sector is contained in $D$. This sector is nonzero: take the heat image of a nonzero punctured smooth compact function of character $\ell$. If $K_\ell$ is the self-adjoint restriction of the full $K$ to this sector, boundedness on $D$ gives
+
+$$
+B_\ell=e^{\sigma K_\ell}M_\gamma e^{-\sigma K_\ell}
+\quad\text{bounded on }L^2_\ell.
+\tag{137.9}
+$$
+
+We give the commutator consequence explicitly. For $\Pi_R=\mathbf1_{[0,R]}(K_\ell)$, interpret
+
+$$
+F_R(z)=\Pi_Re^{zK_\ell}M_\gamma e^{-zK_\ell}\Pi_R
+\tag{137.10}
+$$
+
+with spectral cutoffs on both sides. It is an entire bounded-operator-valued function, bounded on each closed vertical strip. On $\Re z=\sigma$, its norm is at most $\|B_\ell\|$, by unitary imaginary-time conjugation. On $\Re z=-\sigma$, use the adjoint of (137.9), since $\gamma$ is real, to obtain the same bound. Three-lines interpolation and Cauchy's estimate on the circle $|z|=\sigma/2$ give
+
+$$
+\|F_R'(0)\|\le 2\|B_\ell\|/\sigma.
+\tag{137.11}
+$$
+
+For $u,v\in D(K_\ell)$, spectral convergence in the graph norm identifies the limit of the derivative pairing with
+
+$$
+\langle K_\ell u,\gamma v\rangle_m-
+\langle\gamma u,K_\ell v\rangle_m.
+$$
+
+It is bounded by the right-hand constant of (137.11) times $\|u\|_2\|v\|_2$. Thus the commutator is a bounded form; no prior global domain invariance of multiplication is assumed. Whenever $v$ and $\gamma v$ are smooth compact punctured vectors, density of $D(K_\ell)$ identifies this form with the actual vector $[K,M_\gamma]v$ and bounds its norm by the same constant times $\|v\|_2$.
+
+Choose a rotation-saturated compact patch inside $\{r>0,g+q>0\}$. On this patch $\gamma$ is smooth analytic. For an arbitrary compactly supported smooth amplitude $\chi(r,z,\xi)$ there and an arbitrary $\omega\in\mathbb R^3$, use the genuine punctured-core vectors
+
+$$
+u_N=e^{i\ell\alpha}\chi(r,z,\xi)e^{iN\omega\cdot(r,z,\xi)}.
+$$
+
+Both $u_N$ and $\gamma u_N$ belong to the original smooth punctured core. The original local principal symbol is
+
+$$
+a\left[p_r^2+\left(\frac{p_\alpha}{r}+\frac r2p_\xi\right)^2+p_z^2\right]+\eta p_\xi^2.
+\tag{137.12}
+$$
+
+The divergence-form Leibniz identity (122.22), evaluated on these vectors, gives
+
+$$
+\begin{aligned}
+[K,M_\gamma]u_N={}&-2iN e^{i\ell\alpha+iN\omega\cdot(r,z,\xi)}\chi\,
+\left[a\gamma_r\omega_r+a\gamma_z\omega_z+
+\left(\eta+\frac{ar^2}{4}\right)\gamma_\xi\omega_\xi\right]+O_{L^2}(1).
+\end{aligned}
+\tag{137.13}
+$$
+
+For fixed $\ell,\chi,\omega$, the remainder is bounded independently of $N$ and $\|u_N\|_2$ is independent of $N$. The commutator bound therefore makes the bracket vanish on the support of every such $\chi$. Taking the three coordinate directions for $\omega$, and using $a,\eta>0$, proves $\gamma_r=\gamma_z=\gamma_\xi=0$. Invariance gives $\gamma_\alpha=0$. On a connected open patch meeting $\{gq>0\}$ it follows that $\gamma=\gamma_0\in(-1,1)$. The analytic function
+
+$$
+g-q-\gamma_0(g+q)
+$$
+
+vanishes on that open patch, hence on connected $\Omega$. It follows that $q/g=(1-\gamma_0)/(1+\gamma_0)$ almost everywhere, contradicting (136.4). Thus the negative index is infinite. This uses infinitely many nonzero angular characters of the original operator, in addition to analytic uniqueness.
+
+For the positive index, choose a density point $x\in S\cap\Omega$ where $g(x)q(x)>0$. Every rotated point on its orbit is also a density point of $S$: rotations preserve $S$ and have smooth invertible local coordinate maps. For any $n$, choose $n$ distinct representatives of this orbit in $\operatorname{int}F$. Both weights have their same positive values at all these points. The limiting matrix (137.5) is then
+
+$$
+4g(x)q(x)\bigl(k(x_i,x_j)\bigr)_{i,j},
+$$
+
+which is positive definite by (137.4). Small localized odd tests consequently give an $n$-dimensional positive-definite subspace. This proves infinite positive index.
+
+Finally, in either sign choose a definite subspace of dimension $n+r$, where $r$ is the number of prescribed homogeneous scalar linear constraints. Its intersection with their common kernel has dimension at least $n$. Restriction preserves definiteness, proving both finite-constraint index assertions. No assertion about exact signs satisfying those extra constraints is used. $\square$
+

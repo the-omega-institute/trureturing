@@ -1,0 +1,18 @@
+**Proposition 1.3 (recognition on the actual positive domain).** On attained
+complete-label evidence, Definition 1.2 accepts exactly the certificates
+of Definition 1.1, and returns their common $1944$-edge target.
+
+Proof. The support-necessity theorem in §4 shows that a certificate must
+expose all $72$ and $243$ used endpoint labels. At those cardinalities,
+every compatible full injection has image exactly $X$ or $Y$. Thus the
+bijections enumerated in Definition 1.2 are precisely all the compatible
+full maps on the supported branches, with repetitions of the same target
+allowed. The equality test is exactly target constancy on this version set.
+No prior mass is discarded except unsupported branches. $\square$
+
+The generic target-constancy and target-disagreement criteria are already
+supplied by `target_recovery_criterion` and
+`target_sufficiency_iff_pair_cover`, cited in §7. The mathematical issue
+below is the size of positive sets that satisfy this test in the actual
+orbit family, not another abstract factorization criterion.
+

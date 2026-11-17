@@ -1,0 +1,63 @@
+**命题 24.5（全 $D$ 秩一投影的规范形）。**任意秩一 Hermitian 幂等子 $P\in M_d(D)$ 恰属于以下两种互不相交的类型之一：
+
+$$
+\begin{array}{ll}
+\text{类型一：}&P=xx^*,\quad x\in D^d,\quad x^*x=1,\\
+\text{类型二：}&P=xx^*/2,\quad x\in D^d,\quad x^*x=2.
+\end{array}
+\tag{24.11}
+$$
+
+这些 $x$ 都是本原向量，即其坐标生成单位理想。每个类型内，同一投影的规范化本原生成元只相差 $\mu _6$；两种类型之间不存在 $K$ 中的标量转换。这里的“长度”指几何平方范数，不先解释为概率。
+
+**证明。**先交代所需环与模的步骤。Eisenstein 整数的范数为 $N(a+b\zeta)=a^2-ab+b^2$。对 $K$ 中的商在基 $1,\zeta$ 下分别取最近整数，误差坐标在 $[-1/2,1/2]$，误差范数至多 $3/4<1$，给欧几里得除法。因此 $O$ 为 PID。局部化仍是 PID：若 $J$ 是 $D$ 的理想，令 $I=J\cap O$；对 $a/t\in J$，其中 $t$ 为所逆元的乘积，有 $a=t(a/t)\in I$，故 $J=ID$。$I$ 主生成即给 $J$ 主生成。
+
+令 $M=\operatorname{im}_D P$。$P^2=P$ 给 $D^d=M\oplus\ker P$，且 $M$ 的 $K$-秩为一。可直接构造它的生成元：选在该一维 $K$-线上非零的坐标函数 $m\mapsto m_i$，它在 $M$ 上单射，其像为 $D$ 的非零理想 $gD$。该理想由有限个 $P_{ij}$ 生成；清共同分母后用 $O$ 的欧几里得算法求 $g=\sum_jc_jP_{ij}$，$c_j\in D$，即可取 $x=\sum_jc_jPe_j$，满足 $x_i=g$。每个 $m\in M$ 的该坐标是 $tg$，$t\in D$；单射性给 $m=tx$，所以 $M=Dx$。逐列写 $P=x\lambda$，其中 $\lambda\in D^{1\times d}$；$Px=x$ 给
+
+$$
+\lambda x=1.
+\tag{24.12}
+$$
+
+这就是所需 Bézout 左逆，尤其 $x$ 本原。令 $s=x^*x>0$。由 $P=P^*$ 和 $Px=x$，有 $P^*x=\lambda^*s=x$，故
+
+$$
+\lambda=x^*/s,\qquad P=xx^*/s.
+\tag{24.13}
+$$
+
+对 (24.12) 共轭，得到 $\sum_j\bar\lambda_j\bar x_j=1$，因此
+
+$$
+\frac1s=\sum_j\bar\lambda_j\frac{\bar x_j}{s}\in D.
+\tag{24.14}
+$$
+
+式中两种因子分别由 $\lambda\in D^{1\times d}$ 与 (24.13) 保证在 $D$。又 $s\in D\cap\mathbb R=\mathbb Z[1/6]$，其逆也在该实子环，故 $s=2^a3^b$，$a,b\in\mathbb Z$。
+
+$\eta^2=-3\zeta$，而 $2$ 在 $O$ 中惰性，$3$ 只含素因子 $\eta$。由 $O$ 的唯一分解，
+
+$$
+D^\times=\{\epsilon 2^u\eta^v:\epsilon\in\mu _6,\ u,v\in\mathbb Z\},\qquad
+N(\epsilon 2^u\eta^v)=2^{2u}3^v.
+\tag{24.15}
+$$
+
+从而 $D$ 中范数一的单位恰为 $\mu _6$。把 $x$ 乘以单位 $c=2^{-\lfloor a/2\rfloor}\eta^{-b}$，得到本原向量 $x'$，满足
+
+$$
+(x')^*x'=2^{a-2\lfloor a/2\rfloor}\in\{1,2\}.
+\tag{24.16}
+$$
+
+投影不变，给出构造性的两类规范形；负的 $a,b$ 同样由该式处理。
+
+两类不能合并。由 $O/2O=\mathbb F_4$，对 $0\ne\alpha=2^r\beta\in O$、$\beta\notin2O$，$N(\beta)$ 为奇数，故 $v_2(N(\alpha))=2r$。写任意 $c\in K^\times$ 为 $\alpha/m$，得到
+
+$$
+v_2(N(c))\in2\mathbb Z.
+\tag{24.17}
+$$
+
+因此 $N(c)=2$ 或 $1/2$ 都不可能。若两本原生成元 $x,x'$ 产生同一 $D$-模 $\operatorname{im}P$，则 $x'=cx$ 且 $c,c^{-1}\in D$，由 (24.15) 及同范数得到 $N(c)=1$，进而 $u=v=0$，即 $c\in\mu _6$。反之，任意范数为一或二的 $D$ 向量都有 $D$ 左逆 $x^*/(x^*x)$，所以本原，并且 (24.11) 确为 $D$-Hermitian 幂等子。$\square$
+

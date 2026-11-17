@@ -1,0 +1,30 @@
+**Definition 143.1 (the original target and the invariant precursor).** Retain precisely the telescope of Theorem 142.1. In particular $a,\eta,d>0$ are arbitrary original finite parameters and $b$ is any original allowed whole-$G$ Borel representative of $g_d$. The state space, product, raw Haar measure, unit source $L\Gamma=\delta_e$, critical coupling and actual selector are (134.1)–(134.3), with
+
+$$
+\begin{gathered}
+g_c=16\sqrt{a\eta},\qquad h=w_*/\|w_*\|_2,\qquad
+A_{\rm src}(u)=\rho C_{\rm src}(u),\qquad
+K=U_h^{-1}H_{\rm end}U_h,\\
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+m=h^2\mu,\quad P=T_d,\quad g=g_{2d},\quad
+M=1+\|g_d\|_\infty,\quad c=(4M)^{-1},\\
+f_3=cb,\qquad f_B=1/4,\qquad f_0=f_1=(3/4-cb)/2.
+\end{gathered}
+\tag{143.1}
+$$
+
+Use the full conservative endpoint including its source coordinate, the actual start $e$ at time zero, and the original epochs $2d,3d,4d$. Let $\beta$ be the invariant reflection-even representative supplied by Proposition 141.1. On the actual rotation quotient $X$ of (136.5) define, or equivalently lift to $G$,
+
+$$
+u^0=(u_S^0,u_C^0,u_B^0)=(3/4-c\beta,c\beta,1/4).
+\tag{143.2}
+$$
+
+The original tuple $f$ and $\beta$ are identified only as $m$-classes where appropriate, as in Proposition 135.3. Retain $\mathscr D_{12}(\theta)$, $\mathscr E_\theta$ and the actual matrices $A^D,A_E$ of §§135–136. For every common simplex tuple $u$ write
+
+$$
+\nu_u^{(3)}(y,z,w)=\mathcal C(u_y,u_z,u_w),\qquad
+\mathcal C(u,v,w)=\int_Gg\,u\,P(vPw)\,dm.
+\tag{143.3}
+$$
+

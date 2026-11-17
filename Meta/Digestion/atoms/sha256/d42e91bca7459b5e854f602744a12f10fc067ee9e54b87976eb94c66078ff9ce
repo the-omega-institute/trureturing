@@ -1,0 +1,88 @@
+### 27A.2 同一个原四维实现的完整作用列
+
+令 $u=\delta^{-1}$、$v=a\delta^{-2}$。从 (27A.1)–(27A.2) 的原乘积直接得到
+
+$$
+\begin{gathered}
+h=\begin{pmatrix}0&-iu/2&0&0\\iu/2&0&0&0\\0&0&0&0\\0&0&0&0\end{pmatrix},\qquad
+r=\begin{pmatrix}d&3u/2&0&0\\3u/2&2v&0&0\\0&0&0&0\\0&0&0&0\end{pmatrix},\\
+k=\begin{pmatrix}\rho/2&3/2&\varepsilon/2&0\\3/2&2b&0&1\\\varepsilon/2&0&0&0\\0&1&0&0\end{pmatrix},\qquad
+g_1=\begin{pmatrix}\rho&-i/2&i\varepsilon/2&0\\i/2&-2\rho&0&i\\-i\varepsilon/2&0&0&0\\0&-i&0&0\end{pmatrix}.
+\end{gathered}
+\tag{27A.14}
+$$
+
+特别地，两个完整 $R$ 和两个完整 $S$ 为
+
+$$
+\begin{gathered}
+R_+=\begin{pmatrix}
+d-\rho/2&(1-i/2)u-3/2&-\varepsilon/2&0\\
+(1+i/2)u-3/2&v-2b&0&-1\\
+-\varepsilon/2&0&0&0\\0&-1&0&0
+\end{pmatrix},\\
+R_-=\begin{pmatrix}
+d+\rho/2&(1+i/2)u+3/2&\varepsilon/2&0\\
+(1-i/2)u+3/2&v+2b&0&1\\
+\varepsilon/2&0&0&0\\0&1&0&0
+\end{pmatrix},\\
+S_+=\begin{pmatrix}
+d+3\rho/2&1+3u/2-i/2&\varepsilon(1+i/2)&0\\
+1+3u/2+i/2&b+2v-2\rho&0&1+i\\
+\varepsilon(1-i/2)&0&1&0\\0&1-i&0&1
+\end{pmatrix},\\
+S_-=\begin{pmatrix}
+-d-\rho/2&1-3u/2+i/2&\varepsilon(1-i/2)&0\\
+1-3u/2-i/2&b-2v+2\rho&0&1-i\\
+\varepsilon(1+i/2)&0&1&0\\0&1+i&0&1
+\end{pmatrix}.
+\end{gathered}
+\tag{27A.15}
+$$
+
+用 $aU=-3/4-i/2$ 相乘，四个原作用列准确是
+
+$$
+\begin{aligned}
+R_+\xi&=\begin{pmatrix}
+d+(1-i/2)U-\rho/2-3\delta U/2\\
+1/(4\delta)-3/2-2b\delta U\\-\varepsilon/2\\-\delta U
+\end{pmatrix},&
+R_-\xi&=\begin{pmatrix}
+d+(1+i/2)U+\rho/2+3\delta U/2\\
+(1/4-i)/\delta+3/2+2b\delta U\\\varepsilon/2\\\delta U
+\end{pmatrix},\\
+S_+\xi&=\begin{pmatrix}
+d+3U/2+3\rho/2+\delta(1-i/2)U\\
+-i/\delta+1+i/2+(b-2\rho)\delta U\\
+\varepsilon(1-i/2)\\(1-i)\delta U
+\end{pmatrix},&
+S_-\xi&=\begin{pmatrix}
+-d-3U/2-\rho/2+\delta(1+i/2)U\\
+i/\delta+1-i/2+(b+2\rho)\delta U\\
+\varepsilon(1+i/2)\\(1+i)\delta U
+\end{pmatrix}.
+\end{aligned}
+\tag{27A.16}
+$$
+
+这些列同时保留第三、第四坐标。每笔原平方和原配对分别是
+
+$$
+\phi_\xi(R_\pm^2)=\sum_{j=1}^4|(R_\pm\xi)_j|^2,\quad
+\phi_\xi(S_\pm^2)=\sum_{j=1}^4|(S_\pm\xi)_j|^2,\quad
+\phi_\xi(R_\pm\circ S_\pm)
+=\operatorname{Re}\sum_{j=1}^4\overline{(R_\pm\xi)_j}(S_\pm\xi)_j.
+\tag{27A.17}
+$$
+
+左端也始终是同一次原乘法的
+
+$$
+\phi_\xi(L)=-2\operatorname{Re}((x\xi)^*(h-k)\xi)
+             -2\operatorname{Re}((t\xi)^*(r+g_1)\xi).
+\tag{27A.18}
+$$
+
+(27A.10)–(27A.12) 只是该左端的精确改写。没有将 (27A.15) 压到演员角后平方。
+

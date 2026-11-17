@@ -1,0 +1,18 @@
+**Corollary 184.2 (the common-first problem as a tensor-preserving lift).** If $p$ and $F$ are linearly independent as $m$-classes, let $E=\operatorname{span}_{\mathbb R}\{p,F\}$ and define
+
+$$
+S_v(ap+bF)=ap+b(F+v).
+$$
+
+Then a legal common-first tuple has all residuals zero if and only if
+
+$$
+\mathcal C(S_vx,S_vy,S_vz)=\mathcal C(x,y,z)
+\qquad(x,y,z\in E).
+\tag{184.3}
+$$
+
+Thus the only remaining exact-zero route in this slice is a tensor-preserving lift of the two-dimensional baseline span. The coefficient-space statement (184.2) remains valid without the independence assumption; no rigidity or positivity of such a lift is asserted here.
+
+This criterion is equivalent to the seven-coordinate reduction of Section 180, while making the remaining algebraic target explicit. It does not solve the tensor-stabilizer problem, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
+

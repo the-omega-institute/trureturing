@@ -1,0 +1,68 @@
+## 65. 均匀环、Fibonacci 响应与常活动谱
+
+**命题 C-65.1（均匀来源在外部五律中的闭式）。** 取全部 $\lambda_j=1$，以 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$ 定义 Fibonacci 数，并置 $L_n=F_{n-1}+F_{n+1}$。对每个 $n\ge5$，
+
+$$
+H_i=J^{n-2}
+=\begin{pmatrix}F_{n-1}&F_{n-2}\\F_{n-2}&F_{n-3}\end{pmatrix},
+\qquad\mathcal Z=L_n,
+\tag{C65.1}
+$$
+
+所以
+
+$$
+p^{(i)}=\frac{(F_{n-1},F_{n-2},F_{n-1},F_{n-2},F_{n-3})}{L_n},
+\qquad
+\Delta_i=\frac{(-1)^n}{L_n^2},
+\tag{C65.2}
+$$
+
+且
+
+$$
+\Omega_i=\frac{F_{n-1}F_{n-3}}{F_{n-2}^2}.
+\tag{C65.3}
+$$
+
+证明。C-8.3 的等权路径矩阵以路径顶点数 $N=n-1$ 代入，给式 (C65.1) 的矩阵；这个代入具有 $N-1=n-2$ 条边，正是外部路径，不能误用完整环的 $n$ 条边。式 (C60.3) 得五项，其和为
+
+$$
+2F_{n-1}+2F_{n-2}+F_{n-3}
+=F_{n-1}+F_{n+1}=L_n.
+$$
+
+这里使用两次 Fibonacci 递推。也可在同一来源上使用 C-26.11 的迹，$\mathcal Z=\operatorname{tr}(J^n)=F_{n+1}+F_{n-1}$。式 (C60.5) 给残差，式 (C61.2) 给四角比。全部所用 Fibonacci、Lucas 及矩阵幂都是既有中间公式，当前结论是它们在外部窗口五律中的明确参数对应。证毕。
+
+例如 $n=5$ 时，$H_i=\left(\begin{smallmatrix}3&2\\2&1\end{smallmatrix}\right)$，$p=(3,2,3,2,1)/11$，$\Delta=-1/121$、$\Omega=3/4$；$n=6$ 时，$H_i=\left(\begin{smallmatrix}5&3\\3&2\end{smallmatrix}\right)$，$p=(5,3,5,3,2)/18$，$\Delta=1/324$、$\Omega=10/9$。这两组直接代入式 (C65.1)–(C65.3)，分别展示两种严格符号。
+
+**命题 C-65.2（常活动环的完整谱分母）。** 若全部活动为同一个 $\lambda>0$，置
+
+$$
+T=JD(\lambda)=\begin{pmatrix}1&\lambda\\1&0\end{pmatrix},\qquad
+r_\pm=\frac{1\pm\sqrt{1+4\lambda}}2.
+$$
+
+则同一来源的配分总权和窗口残差为
+
+$$
+\mathcal Z=\operatorname{tr}(T^n)=r_+^n+r_-^n,\qquad
+\Delta_i=\frac{(-1)^n\lambda^{n-1}}{(r_+^n+r_-^n)^2},
+\qquad\frac{p_2}{p_0}=\lambda.
+\tag{C65.4}
+$$
+
+单位活动时 $r_+=\varphi=(1+\sqrt5)/2$、$r_-=-\varphi^{-1}$，还原命题 C-65.1。
+
+证明。C-26.11、C-26.12 已给同源迹与谱公式。为确定此处的全部计权，展开
+
+$$
+\operatorname{tr}(T^n)
+=\sum_{b_0,\ldots,b_{n-1}}\prod_{j=0}^{n-1}T_{b_{j-1},b_j},
+\qquad b_{-1}=b_{n-1}.
+$$
+
+每项等于 $\lambda^{\sum_jb_j}\prod_jJ_{b_{j-1},b_j}$，所以合法环配置各出现一次；这保留标号，不除以 $n$。$T$ 的特征多项式为 $t^2-t-\lambda$，两个实根不同，因此可对角化，幂的迹就是两根幂之和。将此分母及 $\prod_{j\ne i}\lambda_j=\lambda^{n-1}$ 代入式 (C60.5)，得到完整残差。活动比由式 (C60.3) 得出。最后代入 $\lambda=1$，两根成为显示的黄金比例值。证毕。
+
+设 $\rho_\lambda=|r_-|/r_+<1$，则 $\mathcal Z=r_+^n[1+(-\rho_\lambda)^n]$。对固定有限 $\lambda$，第二项相对第一项随 $n$ 衰减；当 $\lambda\to\infty$，$\rho_\lambda\to1$，这个结论不是关于无界活动的统一估计。这里 $\rho_\lambda$ 是常活动谱比，命题 C-63.3 的 $q_\Lambda=\Lambda/(1+\Lambda)$ 是另一个路径上界，二者不混用。非齐次活动必须保留 $\prod_jJD_j$ 的有序乘积，不能用一对共同特征根或一组普通 Fibonacci 数替代。
+

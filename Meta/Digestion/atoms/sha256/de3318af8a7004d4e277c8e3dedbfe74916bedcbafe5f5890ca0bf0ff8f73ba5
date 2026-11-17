@@ -1,0 +1,47 @@
+**Definition 1.1 (source, target and evidence).** Use the stationary finite
+prepared source of [UJB §§5, 9](RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md):
+public $N\ge4$, $M=1944$, $\mathcal L=\{0,1\}^7$,
+$\mathcal R=\{0,1\}^8$, and public $\theta\in[0,1]$.
+The positive prior support $\mathcal G_\theta$ consists of exactly the
+supported sources and every full pair of once-shared injections
+$\lambda:A\hookrightarrow\mathcal L$,
+$\varrho:T\hookrightarrow\mathcal R$, with the weights in UJB.9001.
+Thus source zero is supported iff $\theta<1$, and source one iff $\theta>0$.
+The observer has this support information; it requires no numerical
+comparison with an unrepresented arbitrary real.
+
+Here $F=\mathbb F_3$, $A=(F^2\setminus\{0\})\times F^2$,
+$T=F^3\times F^2$, and the literal relations are
+
+$$
+\begin{aligned}
+B_0(v,w)&=(v_1w_1+v_2w_2,\ v_1w_2+v_2w_3),\\
+B_1(v,w)&=(v_1w_1-v_2w_2,\ v_2w_1+v_1w_2),\\
+E_i&=\{((v,s),(w,z)):B_i(v,w)=s\},\\
+\mathcal E_g&=(\lambda\times\varrho)(E_i).
+\end{aligned}
+\tag{PCR.1}
+$$
+
+There are $72$ literal left endpoints, $243$ literal right endpoints,
+left degree $27$, right degree $8$, and exactly $1944$ edges. In particular
+$w_3$ and all nine $z$ values remain in the literal source also for $B_1$.
+Conditional on $g$, the originally prepared $Y_1,\ldots,Y_N$ are iid
+uniform on $\mathcal E_g$. They are not a persistent sampler.
+
+Let $D$ be the set of distinct full label pairs at some completed original
+indices. In this section the only evidence used for certification is the
+positivity of those complete pairs. No absent pair is an observed negative,
+and no partial-bit cache is included in this certification test. Put
+
+$$
+\mathcal V_\theta(D)=\{g\in\mathcal G_\theta:D\subseteq\mathcal E_g\}.
+\tag{PCR.2}
+$$
+
+For a particular $g$, a positive complete-label certificate is a set
+$D\subseteq\mathcal E_g$ for which $\mathcal V_\theta(D)$ is nonempty
+and every member has target relation $\mathcal E_g$. The target is the
+whole transported relation, rather than a unique generator or its source bit.
+The complete ordered samples still cost one slot each, including repetitions.
+

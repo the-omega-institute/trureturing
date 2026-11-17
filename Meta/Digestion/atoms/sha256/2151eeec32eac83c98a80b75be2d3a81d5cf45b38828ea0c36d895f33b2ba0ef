@@ -1,0 +1,61 @@
+**Definition 17.1 (fixed datum, separated spectral parameter and comparison spaces).** Retain Definitions 1.1–3.2, 10.1 and 13.1, including all their analytic antecedents and the parameter applicability conditions of L Definition 35.1, the original signed nonzero $\kappa$, jointly realized rational vector, both height faces, every real phase and the full complex domains (1.5). Fix this one datum before taking any limit. In §§17–19 prescribe any sequence $s_n\downarrow0$ and any actual normalized complex ground-state choices $\psi_s\in D(S)$ on $g_s=\chi_cs^3$, and assume along this sequence that
+
+$$
+r_s\longrightarrow R<\infty,\qquad F_s=\mathcal U_s\psi_s\rightharpoonup cp,
+\qquad c\ne0.
+\tag{17.1}
+$$
+
+Write $\chi=\chi_c$. Theorem 15.1 gives $R>r_C=-\chi^2e_C$. Thus
+
+$$
+t_s=-E_s/g_s^2=r_s/\chi^2\longrightarrow t=R/\chi^2>-e_C>0,
+\qquad m_s=g_s^2t_s/a,\qquad h_s=s^2m_s.
+\tag{17.2}
+$$
+
+On complex $L^2(\mathbb R^3,d\mathbf z)$ put
+
+$$
+H_0=-a\nabla\cdot M\nabla,\qquad U_C(\mathbf z)=\beta_C/d(\mathbf z),
+\qquad H_C=H_0-U_C,
+\tag{17.3}
+$$
+
+where $H_C$ is the original Friedrichs form operator on $H^1$, with $M,d,\beta_C,e_C$ exactly as in (10.1). Let $\iota h(k,\mathbf z)=\phi(k)h(\mathbf z)$, let $\Pi_s$ be restriction to $\Omega_s$ followed by zero extension, and define
+
+$$
+\begin{aligned}
+\mathcal M_sh&=\mathcal U_s\mathcal D_{g_s}^{-1}\iota h,
+&\mathcal N_sf&=\mathcal D_{g_s}\mathcal U_s^{-1}\Pi_sf,\\
+\phi_s(\xi)&=\mathbf1_{\Omega_s}(\xi)\phi(k_0+\varepsilon sr),
+&\mathbf q_s(\xi)&=s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w.
+\end{aligned}
+\tag{17.4}
+$$
+
+In (17.4), extend $\phi$ by zero outside $I$ when evaluating $\phi_s$. The output of $\mathcal M_s$ is zero extended. The maps $\iota$ and $\mathcal M_s$ are isometries; $\|\mathcal N_sf\|_2=\|\Pi_sf\|_2\le\|f\|_2$. These facts follow from $\|\phi\|_2=1$ and the two exact unitaries (2.1), (10.1). In particular,
+
+$$
+(\mathcal M_sh)(\xi)=\sqrt{j_0}s^{7/2}g_s^{3/2}
+ \phi_s(\xi)h(g_s\mathbf q_s(\xi)).
+\tag{17.5}
+$$
+
+These are comparison maps in $L^2$ only. No native form membership or kinetic-energy correspondence for their inputs or outputs is part of this definition.
+
+For $b>0$, $\eta\ge0$, and the original Gaussian $\Gamma_{M,u}$ of L (36.2), set
+
+$$
+\begin{aligned}
+Y_b^{[\eta]}(\mathbf z)&=\frac1a\int_\eta^\infty
+ e^{-bu/a}\Gamma_{M,u}(\mathbf z)du,&Y_b&=Y_b^{[0]},\\
+Y_b(\mathbf z)&=\frac{e^{-\sqrt{b/a}\,d(\mathbf z)}}
+ {4\pi a\sqrt{\det M}\,d(\mathbf z)},&
+Q&=\sqrt{j_0\chi}\,\phi(k_0)m_{\rm core}>0.
+\end{aligned}
+\tag{17.6}
+$$
+
+Here $m_{\rm core}=\int Vp$ is the finite positive charge of (15.1), and $Q$ denotes a scalar source charge in §§17–20. The factor $1/a$ is inside $Y_b$, not inside the native field clock. The singular source $\delta_0$ used below is a distribution on the macroscopic phase space, never an $L^2$ vector or an additional native interaction.
+

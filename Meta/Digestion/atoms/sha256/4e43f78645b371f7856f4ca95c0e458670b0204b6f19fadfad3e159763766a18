@@ -1,0 +1,150 @@
+## 78. 相位操作、两份联合投影与占位标签
+
+**命题 C-78.1（保持五概率的指定相位操作）。** 对实际五模式基施加
+
+$$
+U_\tau=\operatorname{diag}(1,1,1,1,e^{-i\omega\tau}),
+\qquad \omega\in\mathbb R.
+\tag{C78.1}
+$$
+
+则各概率、三个可见均值及 $\kappa$ 不变，而
+$\chi(\tau)=\chi(0)+\omega\tau\bmod2\pi$。
+对式 (C77.2) 中 $\chi(0)=0$ 的均匀初态，
+
+$$
+\mathcal C(\tau)=|\sin(\omega\tau/2)|.
+\tag{C78.2}
+$$
+
+证明。最后一个振幅乘 $e^{-i\omega\tau}$，在 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$ 的约定下
+正是 $\theta_{13}$ 增加 $\omega\tau$。模平方不变，四角交替和只增加同一项。
+代入式 (C77.3) 得 concurrence。与[《辛预测完成》§35.8](SYMPLECTIC_PREDICTIVE_COMPLETION.md#358-目标的四角差与隐藏角的-hamilton-响应)的精确对应为
+
+$$
+(f_0,f_1,f_2,f_3,f_{13})=(0,0,0,0,\omega),\quad
+H_f=\omega\kappa,\quad J_f=\omega,\quad
+\iota_{X_H}\omega_{\rm red}=dH.
+$$
+
+该约定下 $\omega_{\rm red}=d\chi\wedge d\kappa$，故
+$\dot\chi=\partial_\kappa H=\omega$、$\dot\kappa=-\partial_\chi H=0$。
+$\omega$ 在此为实参数，$\omega_{\rm red}$ 为二形式；$\tau$ 是操作参数，未自动指定为物理时间。
+式 (C78.2) 的正弦简式只对所述均匀初态成立，一般初态应将变化后的 $\chi$ 代入式 (C77.1)。证毕。
+
+**假设 C-78.2（实际同一纯态的两份资源与明确仪器）。** 独立制备两份相同的实际纯态
+$|\psi\rangle\otimes|\psi\rangle$，其中每份均满足 C-76，并另供下面的联合投影。
+“相同”指同一个纯态射线及同一占位相位参照，不能只要求两份有相同五概率、相同商坐标而允许不同局部重相位。
+此假设供应两份制备，不要求复制任意未知态。
+
+**命题 C-78.3（四项投影、总占位守恒与读出边界）。** 定义
+
+$$
+|\Omega\rangle=\frac12
+\bigl(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle\bigr),
+\qquad P=|\Omega\rangle\langle\Omega|.
+\tag{C78.3}
+$$
+
+则 $\|\Omega\|=1$，在假设 C-78.2 的输入上
+
+$$
+\langle\Omega|\psi\otimes\psi\rangle
+=\psi_0\psi_{13}-\psi_1\psi_3=r\det\mathsf B,\qquad
+\Pr(P)=\frac{r^2\mathcal C^2}{4}.
+\tag{C78.4}
+$$
+
+记单份占位算子为 $N_x,N_y,N_z$，对角元依次是
+$x=(0,1,0,0,1)$、$y=(0,0,0,1,1)$、$z=(0,0,1,0,0)$；
+两份总占位为 $N_a^{\rm tot}=N_a\otimes I+I\otimes N_a$。则
+
+$$
+[P,N_x^{\rm tot}]=[P,N_y^{\rm tot}]=[P,N_z^{\rm tot}]=0.
+\tag{C78.5}
+$$
+
+若仪器明确取投影 Lüders 的未归一化两分支
+
+$$
+\mathcal L_1(\sigma)=P\sigma P,\qquad
+\mathcal L_0(\sigma)=(I-P)\sigma(I-P),
+\tag{C78.6}
+$$
+
+则各分支不把一个总占位联合本征空间送入另一个，非选择性输出
+$\mathcal L_1(\sigma)+\mathcal L_0(\sigma)$ 保留完整总占位联合分布。
+后选择可以重加权这些标签，且单份一般不保留原固定均值纤维。
+
+证明。四个有序基向量两两正交，故四个系数模平方之和为一。
+取内积所得四项中，同号的两个乘积相等，系数 $1/2$ 抵消重复次数，得到式 (C78.4)。
+四个向量的总占位都是 $(1,1,0)$，所以
+$N_a^{\rm tot}|\Omega\rangle=\nu_a|\Omega\rangle$，其中 $\nu=(1,1,0)$。
+由自伴性，同样有 $\langle\Omega|N_a^{\rm tot}=\nu_a\langle\Omega|$，
+从而 $N_a^{\rm tot}P=PN_a^{\rm tot}=\nu_aP$。
+
+令 $Q_\nu$ 为任意总占位联合谱投影。它与 $P$、$I-P$ 对易；
+两分支 Kraus 算子均为块对角，故不会转移标签。
+对任意密度算子 $\sigma$，迹的循环性及 $P^2=P$ 给
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl(Q_\nu(\mathcal L_1+\mathcal L_0)(\sigma)\bigr)
+&=\operatorname{Tr}\bigl((PQ_\nu P+(I-P)Q_\nu(I-P))\sigma\bigr)\\
+&=\operatorname{Tr}(Q_\nu\sigma).
+\end{aligned}
+$$
+
+这是非选择性联合分布守恒。单一分支再除以成功概率会改变标签权重：
+成功分支仅含 $(1,1,0)$。特别地，若成功概率正，成功后态为 $P$，
+四项的另一份标签互异，取任一份的偏迹会消去全部交叉项，得到
+
+$$
+\operatorname{Tr}_2P=\operatorname{Tr}_1P
+=\frac14\bigl(|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|\bigr).
+$$
+
+每份的三个占位均值因而变为 $(1/2,1/2,0)$，与假设中的 $Z>0$ 已不同。
+因此“保留总占位标签”不等于两份各自留在原 $(X,Y,Z)$ 纤维。
+对易效果本身也不规定任意实现仪器的后态；上述结论使用了式 (C78.6) 的具体两分支。
+
+式 (C77.1) 表明此概率关于 $\chi\mapsto-\chi$ 为偶函数；
+它读取的是行列式模平方，不能恢复有向相位。均匀族中
+$\chi=\pi/2$ 与 $-\pi/2$ 的 $\Xi$ 不同而此概率相同；
+$\chi=0$ 与 $\pi$ 的概率则分别为零与 $4/25$。
+原卷 C-15.2 的两种带参照设置可分别读复交叉项的实部和虚部；
+这里的单个四项投影并不替代那套有向读出。证毕。
+
+数学引文与归一化对应。Aolita、Mintert，*Measuring multipartite concurrence with a single factorizable observable*，
+[arXiv:quant-ph/0608012v2](https://arxiv.org/abs/quant-ph/0608012v2)，式 (1)–(2)，给纯态两份表示
+$C_N^2=\langle\varphi|^{\otimes2}A|\varphi\rangle^{\otimes2}$。
+在两因子二元情形，其求和只剩两个反对称投影，$A=4P_-^A\otimes P_-^B$。
+准确的因子重排为
+
+$$
+R:\ |a,b\rangle\otimes|a',b'\rangle
+\longmapsto |a,a'\rangle\otimes|b,b'\rangle.
+$$
+
+设 $|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2$。
+按式 (C76.5) 展开得
+
+$$
+R|\Omega\rangle=|\varepsilon\rangle_{AA'}\otimes|\varepsilon\rangle_{BB'},
+\qquad RPR^\dagger=P_-^A\otimes P_-^B.
+\tag{C78.7}
+$$
+
+在两份已归一化条件底面态上，故 $\Pr(P)=\mathcal C^2/4$。
+原五态每份落在底面的概率为 $r$，两份独立给 $r^2$，恢复式 (C78.4)。
+这只在底面双副本子空间使用 $R$，不把整个五维空间写成两个二元因子。
+反对称投影的经典先例与本章投影归一化直接相符。
+
+Romero、López、Lastra、Solano、Retamal，*Direct measurement of concurrence for atomic two-qubit pure states*，
+[arXiv:quant-ph/0611016v1](https://arxiv.org/abs/quant-ph/0611016v1)，式 (2)–(5)，
+研究另一个包含局部操作、CNOT 和旋转的两份电路。其
+$A_-=c_1c_2-c_0c_3$、$P_{gggg}=|A_-|^2/2=\mathcal C^2/8$。
+它提供两份纯态 concurrence 测量的背景，不能把它的特定输出概率认作式 (C78.4)。
+这些文献及本章数学投影均不供应 FIB 原生仪器实现。
+

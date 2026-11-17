@@ -1,0 +1,26 @@
+成熟的二阶三角矩曲线凸体
+
+$$
+c_\theta=(\cos\theta,\sin\theta,\cos2\theta,\sin2\theta),\qquad
+K_2=\operatorname{conv}\{c_\theta:\theta\in\mathbb R\}
+\tag{VII99.30}
+$$
+
+给一个 $\mathrm B$ 成立、$\mathrm A$ 失败的完整四维模型。在此同一模型中，令
+
+$$
+p=c_0,\qquad
+x=\frac{c_{\pi/2}+c_{-\pi/2}}2,\qquad y=c_\pi,\qquad
+m_0=\frac{x+y}{2}.
+\tag{VII99.31}
+$$
+
+则 $x,y\in D_p$，但在整个确认区间下准确有
+
+$$
+\boxed{T_p(m_0)=\frac1{10}.}
+\tag{VII99.32}
+$$
+
+因而全混态 $\mathrm{Z0}$ 在这一原模型上失败。
+

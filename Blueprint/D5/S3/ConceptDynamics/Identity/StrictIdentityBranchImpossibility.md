@@ -6,7 +6,7 @@ Two distinct objects cannot both be strictly identical to one object.
 
 **Theorem 1.1 (Strict identity cannot branch).**
 
-$$\mathord{\cdot} \ne \mathord{\cdot} \Rightarrow \left(\neg \left(\mathord{\cdot} = \mathord{\cdot} \land \mathord{\cdot} = \mathord{\cdot}\right)\right)$$
+$$\forall x1 \in \mathord{\cdot},\; \forall x2 \in \mathord{\cdot},\; \forall x3 \in \mathord{\cdot},\; \mathit{x2} \ne \mathit{x3} \Rightarrow \left(\neg \left(\mathit{x2} = \mathit{x1} \land \mathit{x3} = \mathit{x1}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Identity/StrictIdentityBranchImpossibility.strict_identity_branch_impossible` (`✓ std3`). ∎
 

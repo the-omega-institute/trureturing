@@ -1,0 +1,98 @@
+**Lemma 24.2 (simultaneous amplitude envelopes on the cap).** Let
+$w\in\mathcal C$, and put
+
+$$
+\delta=4-A(w),\qquad u_0=d-h\delta,\qquad
+V_\delta=2\delta-\frac{\delta^2}{2}.
+\tag{24.8}
+$$
+
+Then
+
+$$
+0\le u(w)\le u_0,\qquad v(w)^2\le V_\delta,
+\qquad r(w,p)=r_+(w,p)=2(1-p+\delta)
+\quad(0\le p\le1).
+\tag{24.9}
+$$
+
+For each fixed $A\in[A_0,4]$, the two amplitude bounds are attained
+simultaneously by an actual shared-unitary datum with that value of $A$.
+
+Proof. Since $A\ge A_0>0$, multiply $w$ by one common scalar phase so that
+$\sum_jw_j=A$ is real and positive. This preserves every quantity in
+(24.9). With $Y=w_3+w_4$,
+
+$$
+P=hA+(c-h)Y,\qquad
+|P|\le hA+2(c-h)=d-h\delta=u_0.
+\tag{24.10}
+$$
+
+For $A<4$, set
+
+$$
+x=\frac{A-2}{2}=1-\frac\delta2
+\in[\sqrt{2/3},1),\qquad
+\lambda=\frac{hx}{\sqrt{1-x^2}}\ge1.
+\tag{24.11}
+$$
+
+Apply Lemma 24.1 to the normalized $w$. It gives
+
+$$
+\begin{aligned}
+v&\le2\sqrt{\lambda^2+h^2}-\lambda(A-2)
+   =2h\sqrt{1-x^2},\\
+v^2&\le4h^2(1-x^2)=2\delta-\frac{\delta^2}{2}.
+\end{aligned}
+\tag{24.12}
+$$
+
+If $A=4$, the normalized $w_j$ all equal $1$, since their real parts
+are at most $1$ and sum to $4$. Then $u=d$, $v=0$, and the same bounds
+hold without the parameter in (24.11).
+
+To identify the joint sign branch, use $|w_j|\le1$ to obtain
+
+$$
+\sum_j|w_j-1|^2\le 8-2A=2\delta,
+\qquad
+B^2=|(w_1-1)-(w_2-1)+i(w_3-1)-i(w_4-1)|^2
+\le8\delta<4.
+\tag{24.13}
+$$
+
+Since $A\ge A_0>7/2$ and $B<2$, one has $A-B-1>0$. Therefore
+
+$$
+r_-(w,p)-r_+(w,p)=2(A-B-1)+4p>0
+\qquad(0\le p\le1),
+\tag{24.14}
+$$
+
+which proves the last part of (24.9).
+
+Finally, for any $A\in[A_0,4]$, put $x=(A-2)/2$ and take
+
+$$
+w^{(A)}=(x+i\sqrt{1-x^2},\ x-i\sqrt{1-x^2},\ 1,\ 1).
+\tag{24.15}
+$$
+
+All four entries have modulus one, so $w^{(A)}\in\mathcal W$, and
+$U=\operatorname{diag}(w^{(A)})U_+$ is an actual unitary lift. Direct
+substitution gives $A(w^{(A)})=A$, $u(w^{(A)})=u_0$ and
+$v(w^{(A)})^2=V_\delta$. In particular, (24.9) yields the whole-cap
+comparison
+
+$$
+G(w,p)\ge G(w^{(A(w))},p),\qquad
+r(w,p)=r(w^{(A(w))},p)
+\quad(0\le p\le1).
+\tag{24.16}
+$$
+
+This comparison follows from simultaneous envelopes, rather than from
+an assumption about which feedback matrices optimize the quotient. $\square$
+

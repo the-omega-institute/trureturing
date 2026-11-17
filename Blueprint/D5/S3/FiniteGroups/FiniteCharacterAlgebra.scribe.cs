@@ -249,6 +249,87 @@ internal sealed class FiniteCharacterAlgebraDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/FiniteGroups/FiniteCharacterAlgebra.characterPairing_ofFDRep_eq_finrank"), H("Character pairing of fdr ep eq finrank"),
                 StatementSource.FromAuthor(Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("k"), Seq(F.Id("Type"), Star), new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("G"), Seq(F.Id("Type"), Star), Seq(OpenBracket, new Formula.Apply(Seq(Operatorname, Grp(F.Id("Field"))), [F.Id("k")]), CloseBracket, Comma, Sp, Seq(OpenBracket, new Formula.Apply(Seq(Operatorname, Grp(F.Id("Group"))), [F.Id("G")]), CloseBracket, Comma, Sp, Seq(OpenBracket, new Formula.Apply(Seq(Operatorname, Grp(F.Id("Fintype"))), [F.Id("G")]), CloseBracket, Comma, Sp, Seq(OpenBracket, new Formula.Apply(Seq(Operatorname, Grp(F.Id("Invertible"))), [new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("Nat"))), Dot, Seq(Operatorname, Grp(F.Id("cast")))), [new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("Nat"))), Dot, Seq(Operatorname, Grp(F.Id("card")))), [F.Id("G")])])]), CloseBracket, Comma, Sp, new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("V"), new Formula.Apply(Seq(Operatorname, Grp(F.Id("FDRep"))), [F.Id("k"), F.Id("G")]), new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("W"), new Formula.Apply(Seq(Operatorname, Grp(F.Id("FDRep"))), [F.Id("k"), F.Id("G")]), new Formula.Relation(Parenthesized(new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("DFunLike"))), Dot, Seq(Operatorname, Grp(F.Id("coe")))), [new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("DFunLike"))), Dot, Seq(Operatorname, Grp(F.Id("coe")))), [Seq(Seq(Operatorname, Grp(F.Id("D5"))), Dot, Seq(Operatorname, Grp(F.Id("S3"))), Dot, Seq(Operatorname, Grp(F.Id("FiniteGroups"))), Dot, Seq(Operatorname, Grp(F.Id("FiniteCharacterAlgebra"))), Dot, Seq(Operatorname, Grp(F.Id("TauCeti"))), Dot, Seq(Operatorname, Grp(F.Id("ClassFunction"))), Dot, Seq(Operatorname, Grp(F.Id("characterPairing")))), new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("D5"))), Dot, Seq(Operatorname, Grp(F.Id("S3"))), Dot, Seq(Operatorname, Grp(F.Id("FiniteGroups"))), Dot, Seq(Operatorname, Grp(F.Id("FiniteCharacterAlgebra"))), Dot, Seq(Operatorname, Grp(F.Id("TauCeti"))), Dot, Seq(Operatorname, Grp(F.Id("ClassFunction"))), Dot, Seq(Operatorname, Grp(F.Id("ofCharacter")))), [new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("FDRep"))), Dot, Rho), [F.Id("V")])])]), new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("D5"))), Dot, Seq(Operatorname, Grp(F.Id("S3"))), Dot, Seq(Operatorname, Grp(F.Id("FiniteGroups"))), Dot, Seq(Operatorname, Grp(F.Id("FiniteCharacterAlgebra"))), Dot, Seq(Operatorname, Grp(F.Id("TauCeti"))), Dot, Seq(Operatorname, Grp(F.Id("ClassFunction"))), Dot, Seq(Operatorname, Grp(F.Id("ofCharacter")))), [new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("FDRep"))), Dot, Rho), [F.Id("W")])])])), FormulaRelationOperator.Equal, Parenthesized(new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("Nat"))), Dot, Seq(Operatorname, Grp(F.Id("cast")))), [new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("Module"))), Dot, Seq(Operatorname, Grp(F.Id("finrank")))), [F.Id("k"), new Formula.Apply(Seq(Seq(Operatorname, Grp(F.Id("Quiver"))), Dot, Seq(Operatorname, Grp(F.Id("Hom")))), [F.Id("W"), F.Id("V")])])]))))))))))))),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The displayed conclusion holds under the stated hypotheses."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The displayed conclusion holds under the stated hypotheses."))), DescribeRole.Theorem),
+            ModularSimpleTraceNode(), ModularSimpleCharacterNode())));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static DocumentBlock ModularSimpleTraceNode() =>
+        Describe.Lean(DescribeId.Create("finitecharacteralgebra-simple-trace-one-zero"),
+            DeclarationHandle.Create("D5/S3/FiniteGroups/FiniteCharacterAlgebra.exists_trace_one_zero_of_not_nonempty_linearEquiv"),
+            H("Simultaneous trace separation in every characteristic"),
+            StatementSource.FromAuthor(Disp(ModularSimpleTraceStatement())),
+            AssessedProvenance.FromLiterature(Source),
+            Blocks(Paragraph(Text("Here k is algebraically closed, R is a k-algebra, and S and T are finite-dimensional simple R-modules with the displayed compatible k-actions. There is no finite-dimensionality assumption on R and no characteristic restriction. Write theta_S(r) = Module.toModuleEnd k (S := R) S r, an element of Module.End k S, and likewise for T. Schur scalarity makes the commutant on S times T block diagonal when S and T are not isomorphic. The operator that is a rank-one map of trace one on S and zero on T commutes with this commutant. The semisimple density theorem realizes both blocks by the same r in R, giving traces exactly one and zero. Unlike the trace of the identity, a rank-one trace of one cannot vanish in positive characteristic. This is the two-module consequence of the simultaneous density theorem in Etingof et al., Introduction to Representation Theory, Theorem 2.5(ii); the Lean argument is the repository's construction from its Schur and density APIs, not a claim of literature novelty."))),
+            DescribeRole.Theorem);
+
+    private static DocumentBlock ModularSimpleCharacterNode() =>
+        Describe.Lean(DescribeId.Create("finitecharacteralgebra-simple-character-equivalence"),
+            DeclarationHandle.Create("D5/S3/FiniteGroups/FiniteCharacterAlgebra.nonempty_equiv_of_character_eq_of_isIrreducible"),
+            H("Ordinary characters separate simple representations"),
+            StatementSource.FromAuthor(Disp(ModularSimpleCharacterStatement())),
+            AssessedProvenance.FromLiterature(Source),
+            Blocks(Paragraph(Text("G is only a monoid; finiteness of G, division by its order and semisimplicity of its monoid algebra are not assumed. Both representations are finite-dimensional and irreducible. Equality of their ordinary k-valued characters extends by linearity from monoid elements to every element of k[G]. If their associated simple k[G]-modules were not isomorphic, simultaneous trace separation would give an element with traces one and zero, contradicting that equality. A module equivalence then gives the stated representation equivalence. This is the simple-character separation mechanism of Etingof et al., Theorem 2.17(i), applied to the monoid algebra; it does not assert that ordinary traces recover arbitrary integer composition multiplicities in positive characteristic."))),
+            DescribeRole.Theorem);
+
+    private static Formula ModularSimpleTraceStatement()
+    {
+        Formula k = F.Id("k"), r = F.Id("R"), s = F.Id("S"), t = F.Id("T"), x = F.Id("r");
+        Formula equiv = MApp(MQ("LinearEquiv"), r, s, t);
+        Formula conclusion = MExists("r", r, MAnd(
+            MEqual(MApp(MQ("LinearMap", "trace"), k, s, MActionEnd(k, r, s, x)), D(1)),
+            MEqual(MApp(MQ("LinearMap", "trace"), k, t, MActionEnd(k, r, t, x)), D(0))));
+        return MAll("k", MTypeStar(), MAll("R", MTypeStar(),
+            MAll("S", MTypeStar(), MAll("T", MTypeStar(),
+            MInstances([
+                MApp(MQ("Field"), k), MApp(MQ("IsAlgClosed"), k),
+                MApp(MQ("Ring"), r), MApp(MQ("Algebra"), k, r),
+                MApp(MQ("AddCommGroup"), s), MApp(MQ("Module"), k, s),
+                MApp(MQ("Module"), r, s), MApp(MQ("IsScalarTower"), k, r, s),
+                MApp(MQ("AddCommGroup"), t), MApp(MQ("Module"), k, t),
+                MApp(MQ("Module"), r, t), MApp(MQ("IsScalarTower"), k, r, t),
+                MApp(MQ("FiniteDimensional"), k, s), MApp(MQ("FiniteDimensional"), k, t),
+                MApp(MQ("IsSimpleModule"), r, s), MApp(MQ("IsSimpleModule"), r, t)],
+                MAll("hST", new Formula.Not(MApp(MQ("Nonempty"), equiv)), conclusion))))));
+    }
+
+    private static Formula ModularSimpleCharacterStatement()
+    {
+        Formula k = F.Id("k"), g = F.Id("G"), v = F.Id("V"), w = F.Id("W");
+        Formula rho = F.Id("rho"), sigma = F.Id("sigma");
+        return MAll("k", MTypeStar(), MAll("G", MTypeStar(),
+            MAll("V", MTypeStar(), MAll("W", MTypeStar(),
+            MInstances([
+                MApp(MQ("Field"), k), MApp(MQ("IsAlgClosed"), k), MApp(MQ("Monoid"), g),
+                MApp(MQ("AddCommGroup"), v), MApp(MQ("Module"), k, v),
+                MApp(MQ("AddCommGroup"), w), MApp(MQ("Module"), k, w),
+                MApp(MQ("FiniteDimensional"), k, v), MApp(MQ("FiniteDimensional"), k, w)],
+                MAll("rho", MApp(MQ("Representation"), k, g, v),
+                MAll("sigma", MApp(MQ("Representation"), k, g, w),
+                MAll("hRho", MApp(MQ("Representation", "IsIrreducible"), rho),
+                MAll("hSigma", MApp(MQ("Representation", "IsIrreducible"), sigma),
+                MAll("hChi", MEqual(MApp(MQ("Representation", "character"), rho),
+                    MApp(MQ("Representation", "character"), sigma)),
+                    MApp(MQ("Nonempty"), MApp(MQ("Representation", "Equiv"), rho, sigma))))))))))));
+    }
+
+    // The subscript records k, the acting algebra R and the module S explicitly;
+    // it abbreviates exactly Module.toModuleEnd k (S := R) S, not an arbitrary map.
+    private static Formula MActionEnd(Formula k, Formula r, Formula s, Formula x) =>
+        MApp(new Formula.Subscript(MQ("Module", "toModuleEnd"), Seq(k, Comma, r, Comma, s)), x);
+    private static Formula MQ(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula MQ(string owner, string name) => Seq(MQ(owner), Dot, MQ(name));
+    private static Formula MTypeStar() => Seq(F.Id("Type"), Star);
+    private static Formula MApp(Formula f, params Formula[] xs) => new Formula.Apply(f, [.. xs]);
+    private static Formula MAll(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula MExists(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula MInstances(Formula[] types, Formula body)
+    {
+        for (int i = types.Length - 1; i >= 0; --i)
+            body = Seq(OpenBracket, types[i], CloseBracket, Comma, Sp, body);
+        return body;
+    }
+    private static Formula MEqual(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
+    private static Formula MAnd(Formula x, Formula y) =>
+        new Formula.Logic(Parenthesized(x), FormulaLogicOperator.And, Parenthesized(y));
 }

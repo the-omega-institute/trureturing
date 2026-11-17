@@ -1,0 +1,21 @@
+**定义 62.3（纯坐标运输与环境比较）。** 每个 $H_j$ 选一组正交基及其共轭 $J_j$。在 $\eta_j=-1$ 的坐标用复线性转置 $T_j(Z)=J_jZ^*J_j$，其他坐标用恒等；置 $T=\prod_jT_j$。证明中可在 $T(E)$ 上工作，同时运输全部原标签、输出和评价：
+
+$$
+\widetilde D(Ta,Tb)=T D(a,b),\qquad
+\widetilde\alpha(Ta)=\alpha(a).
+\tag{62.4}
+$$
+
+$T$ 等距、保单位、保锥及 Jordan 乘法，故 P2 和完整 PB 逐值保持；$T(E)$ 仍含所有单坐标有限秩核。转置坐标满足 $T_j(i[a_j,b_j]/2)=-i[T_ja_j,T_jb_j]/2$，所以同时运输旧输出确将该坐标的取向变为 $+1$。这里不假设 $T(E)=E$ 或旧 $D$ 转置协变。$T(E)$ 中的标签恰为原标签的坐标像，任何调用均可由 $T^{-1}$ 还原，不生成新原标签或实际箭头。在这些共同取向为 $+1$ 的坐标中暂省略波浪，定义
+
+$$
+\begin{aligned}
+\kappa(a,b)_j&=\frac i2[a_j,b_j],\\
+\mathfrak F(Z)&=D(\operatorname{Re}Z,\operatorname{Im}Z)
+ -\kappa(\operatorname{Re}Z,\operatorname{Im}Z),\qquad Z\in E+iE.
+\tag{62.5}
+\end{aligned}
+$$
+
+$\operatorname{Re}Z=(Z+Z^*)/2$、$\operatorname{Im}Z=(Z-Z^*)/(2i)$。比较 $\kappa$ 和残差起初只取值于环境 $\mathcal M_{\rm sa}$；不先断言 $\kappa(E,E)\subseteq E$ 或 $E+iE$ 对环境乘法闭合。$\kappa$ 不是原 native 或全词的 $K$，也不重定义原 $D$、$q$ 或任何来源接口。
+

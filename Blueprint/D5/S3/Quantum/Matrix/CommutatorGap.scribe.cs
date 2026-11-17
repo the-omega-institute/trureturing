@@ -35,6 +35,12 @@ internal sealed class CommutatorGapDocument : IScribeDocumentDefinition
             Item("opSq_le_frobSq","Operator square is at most Frobenius square",All([B("n",N),B("A",Mat(n))],LeqF(Call("opSq",a),fs)),"The Frobenius multiplication inequality bounds every Euclidean input."),
             Item("gap_nonnegative","Nonnegative commutator gap",All([B("n",N),B("A",Mat(n))],LeqF(Num(0),gg)),"A maximizing pure vector provides a unitary block frame and a nonnegative lower bound. The empty dimension is included."),
             Item("translation_gap","Uniform scalar translation bound",All([B("n",N),B("A",Mat(n)),B("c",C)],scalarTranslation),"A maximizing block frame controls the real comparison matrix by its two-by-two Frobenius norm. Unitary covariance transfers the estimate to A."),
+            Item("rectNorm_sq", "Rectangular Frobenius square", All([B("m",N),B("n",N),B("A",genericRect)],
+                Eqn(Pow(FrobeniusNorm(a),2),Seq(Sum,Underscore,Grp(Seq(i,Colon,Fin(m))),Sp,Sum,Underscore,Grp(Seq(j,Colon,Fin(n))),Sp,Pow(Norm(Apply(a,i,j)),2)))),
+                "The rectangular Frobenius norm is computed with Matrix.frobeniusSeminormedAddCommGroup. Its square is the sum of the squared entry norms."),
+            Item("rectNorm_sq_square", "Frobenius square as real trace", All([B("n",N),B("A",Mat(n))],
+                Eqn(Pow(FrobeniusNorm(a),2),Frob(a))),
+                "For square complex matrices the Frobenius norm squared equals RHLinalg.frobSq, the real trace of the conjugate-transpose product."),
             Publication0())));
     }
 

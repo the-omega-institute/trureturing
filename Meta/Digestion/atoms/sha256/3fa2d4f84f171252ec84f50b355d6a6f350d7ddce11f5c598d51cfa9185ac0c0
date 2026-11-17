@@ -1,0 +1,23 @@
+**定义 2.1（一个完整原域接口模型）。** 令 $I=[-1,1]$，$X=C(I,\mathbb R)$ 取逐点乘法、单位 $u=1$ 和上确界范数，令
+
+$$
+E=\{p|_I:p\in\mathbb R[t]\},\qquad C=E\cap X_+,\qquad S(a,b)=ab,\qquad D(a,b)=0.
+$$
+
+于是 $E$ 是含单位的实 Jordan 子代数，并由 Weierstrass 逼近定理在 $X$ 中范数稠密。取全部数学正读者
+
+$$
+\mathcal P=\{\alpha:E\to\mathbb R:\alpha\text{ 为实线性且 }\alpha(C)\subseteq[0,\infty)\}.
+$$
+
+点评价及其任意非负倍数属于 $\mathcal P$，所以它们分离 $E$ 并准确决定 $C$；每个 $\alpha\in\mathcal P$ 的质量 $m_\alpha=\alpha(u)$ 同时允许零、不等和次归一值。固定任意原候选所要求的正有理数 $0<\theta\le1$。对 $0\le e\le\theta u$ 有逐点 $e^2\le e$，故 $S(e,e)=e^2\le e$。对任意 $a,b$ 和任意 $\alpha\in\mathcal P$，P2 读成
+
+$$
+\begin{pmatrix}
+\alpha(a^2)&\alpha(ab)\\
+\alpha(ab)&\alpha(b^2)
+\end{pmatrix}\succeq0,
+$$
+
+因为对任意复数 $z_1,z_2$，其二次型等于 $\alpha(|z_1a+z_2b|^2)\ge0$。$(a+b,a,b)$ 的实三表同样由 $\alpha$ 读到非负平方和，指定向量 $(1,-1,-1)$ 给出零平方。因此这里保留完整原 A1–A3、P2 及全部数学正读者和质量。
+

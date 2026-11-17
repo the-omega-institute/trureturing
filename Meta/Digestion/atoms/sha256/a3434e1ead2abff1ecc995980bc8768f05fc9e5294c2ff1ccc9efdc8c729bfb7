@@ -1,0 +1,63 @@
+### 17.6 第六步：固定正面积片上的对数分离
+
+取固定球面片
+
+$$
+\mathcal A=\{h:7/8\le\operatorname{Re}z\le9/8,
+                         \ |\operatorname{Im}z|\le1/8\}.
+\tag{17.28}
+$$
+
+其归一面积为固定正数。写 $z'=e^{i\alpha}z$，则对所有充分大的 $J$，在 $\mathcal A$ 上统一有 $c\alpha\le|z'-z|\le2\alpha$。离开 $w$ 写
+
+$$
+\begin{aligned}
+f_w(z)&=F_w(z)+B_w(z),\\
+F_w(z)&=s^2\frac{1+\overline w z}{z-w}=\frac{s^2}{\zeta_w(z)},\\
+B_w(z)&=-\frac{s^4}{\zeta_w(z)(s^2+|\zeta_w(z)|^2)}.
+\end{aligned}
+\tag{17.29}
+$$
+
+主项满足精确恒等式
+
+$$
+|F_w(z')-F_w(z)|
+=\frac{s^2(1+|w|^2)|z'-z|}{|z'-w|\,|z-w|}.
+\tag{17.30}
+$$
+
+固定一个充分大的绝对数 $R$。若
+
+$$
+r\le|z-w|\le2r,\qquad Rs\le r\le1/16,
+\tag{17.31}
+$$
+
+则从 $z$ 到 $z'$ 的整个线段到 $w$ 的距离与 $r$ 可比，且其上的 $|1+\overline w z|$ 有正绝对下界。这里 $|z'-z|\le2\alpha=64s$，故一个固定的大 $R$ 即可保证线段分离。沿此线段对 $B_w$ 求导给
+
+$$
+|B_w(z')-B_w(z)|\le C\frac{s^4|z'-z|}{r^4}.
+\tag{17.32}
+$$
+
+取同一固定 $R$ 足够大，使 $C/R^2$ 小于 (17.30) 主项下界常数的一半，便有
+
+$$
+|f_w(z')-f_w(z)|\ge c\frac{s^2\alpha}{r^2}
+\tag{17.33}
+$$
+
+对全部 (17.31) 环带、所有 $z\in\mathcal A$ 统一成立。$R$ 不依赖 $J,m,z$。
+
+还须给出环带内格点的下界，而非仅上界。对 $r\ge R/J$，每个 $r\le|w-z|\le2r$ 环带包含至少 $cJ^2r^2$ 个格点。给每个格点配一个边长 $1/J$ 的正方形；环带中这些格点的方形覆盖内缩环带
+$r+\sqrt2/J\le|u-z|\le2r-\sqrt2/J$，当固定 $R$ 足够大时其面积至少 $cr^2$。因 $z\in\mathcal A$ 且 $2r\le1/8$，所有相关环带和格点均在 (17.7) 的格点矩形内，边界不损失这个计数。
+
+在 $R/J$ 与 $1/16$ 之间取互不相交的二进环带；例如隔一个二进尺度取一次，保证边界无重叠计数。对充分大的 $J$，可取至少 $c\log J$ 个，且可将计数阈值取为 $J\ge(16R)^2$ 后再增大一个绝对阈值。每个环带由 (17.33) 贡献至少
+$c s^2\alpha J^2=c\alpha$，从而在整个 $\mathcal A$ 上
+
+$$
+\sum_{w\in W_J}|f_w(\rho_\alpha h)-f_w(h)|\ge c\alpha\log J.
+\tag{17.34}
+$$
+

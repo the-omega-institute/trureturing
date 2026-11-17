@@ -68,3 +68,9 @@ PDF p. 12, and the mixed-environment channel definition.
 Journal DOI: https://doi.org/10.1142/S0219749924400033.
 The quoted statement and channel are read from the arXiv source; the journal
 text has not been compared sentence by sentence.
+
+
+## Prior balanced one-photon minimum
+The known exact balanced one-photon minimum and coherent attainment, their
+source locators and the formalization scope are recorded in the canonical
+[prior-result note](../Entropy/he2026energy.md) (`D5/L/Entropy/he2026energy`).

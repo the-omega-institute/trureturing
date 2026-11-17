@@ -1,0 +1,41 @@
+**定义 32.1（完整候选及全强度记号）。** 保持 16.1 的同一原 $(E,C,u,N,\mathcal P,S,D)$：原正实线性评价分离元素并准确决定锥，全部零、不等和次归一质量均保留。A1 是全部实际有向 Hermitian 二表正性；A2 是相加三表及其排列的实部半正定与 $(1,-1,-1)$ 零二次值；A3 是 $S(u,u)=u$ 及同一固定有理小窗口上的平方收缩。消费既得的 $S=\circ$、$E$ 在自身 JB 完成 $X$ 中稠密、准确锥及忠实含单位等距 JC 包含；不要求原域完备或填满环境。全部数学正读取的 P2 与全部实际原标签的 PB 仍为
+
+$$
+|\phi D(a,b)|^2\le\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,
+\qquad
+\begin{aligned}
+\nu&=D(a,b)-a\circ c,&\omega&=a\circ b+D(a,c),\\
+D(b+\nu,c+\omega)-D(b-\nu,c-\omega)
+&=-2b\circ\nu-2c\circ\omega.
+\end{aligned}
+\tag{32.1}
+$$
+
+不另规定 $D$ 的可加、齐次、连续、可测、协变、一般商下降、输出闭合、完成延拓、$\mathsf F$ 或原 R。全部原来源与七项量子消费者保留 30.2 的准确前件与量词。以下补齐 30.2 所列的非中央平方跨参考强度、端点及任意大参考演员，并补齐横向标签的任意实单位平移；一般原域双线性及其它未付项不由这些结论自动取得。
+
+固定实际原 $h^2=u$，记
+
+$$
+V_h=\{b\in E:h\circ b=0\},\qquad
+F_s(x)=D(sh,x)\quad(s\in\mathbb R),\qquad
+G_r(b)=F_r(b)/r\quad(0<r<1,\ b\in V_h).
+$$
+
+20.1、19.1 的整圆与实径向给
+
+$$
+G_r^2=-I,\quad (G_rb)^2=b^2,\quad b\circ G_rb=0,
+\qquad
+G_r(\xi b+\eta G_rb)=\xi G_rb-\eta b
+\quad(\xi,\eta\in\mathbb R).
+\tag{32.2}
+$$
+
+每条公式只在同一个输入及其自身响应的原平面使用；没有预取 $G_r$ 在不同平面之间的可加性。16.3 还对所有实 $s$ 给
+
+$$
+F_s(b)\in V_h,\quad b\circ F_s(b)=0,
+\qquad F_s(b)^2=s^2b^2\quad(b\in V_h).
+\tag{32.3}
+$$
+

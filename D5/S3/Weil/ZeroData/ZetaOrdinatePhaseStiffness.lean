@@ -25,6 +25,158 @@ noncomputable def weight : PositiveZetaZero → ℝ := phaseWeight ordinate mult
 noncomputable def cost : ℝ → ℝ := phaseCost ordinate weight
 noncomputable def slope : ℝ → ℝ := phaseSlope ordinate weight
 
+/- The dyadic estimate has the natural raw count increment as its premise.
+   Cumulative asymptotics are produced by the argument, not assumed. -/
+set_option maxHeartbeats 1600000 in
+lemma cumulative_count_from_dyadic (N : ℝ → ℝ) {U c B : ℝ}
+    (hU : 1 < U) (hc : 0 ≤ c) (hN0 : ∀ u, 0 ≤ N u) (hmono : Monotone N)
+    (hdyadic : ∀ T, U ≤ T → |N (2*T)-N T-c*T*Real.log T| ≤ B*T) :
+    ∃ D : ℝ, 0 ≤ D ∧ ∀ Y, U ≤ Y → |N Y-c*Y*Real.log Y| ≤ D*Y := by
+  have hU0 : 0 < U := zero_lt_one.trans hU
+  have hB : 0 ≤ B := by
+    have h := (abs_nonneg (N (2*U)-N U-c*U*Real.log U)).trans (hdyadic U le_rfl)
+    nlinarith
+  let E := fun T : ℝ => N T-c*T*Real.log T
+  let K := B+2*c*Real.log 2
+  let D0 := N (2*U)/U+2*c*Real.log (2*U)
+  let D := max K D0
+  have hK : 0 ≤ K := by
+    have hlog2 : 0 ≤ Real.log 2 := (Real.log_pos (by norm_num : (1:ℝ)<2)).le
+    dsimp only [K]
+    positivity
+  have hD : 0 ≤ D := hK.trans (le_max_left _ _)
+  have hbase (u : ℝ) (hu : u ∈ Icc U (2*U)) : |E u| ≤ D*u := by
+    have hu0 : 0 < u := hU0.trans_le hu.1
+    have hlog0 : 0 ≤ Real.log u := (Real.log_pos (hU.trans_le hu.1)).le
+    have hlogupper : Real.log u ≤ Real.log (2*U) := Real.log_le_log hu0 hu.2
+    have hmain : c*u*Real.log u ≤ c*(2*U)*Real.log (2*U) := by
+      calc
+        c*u*Real.log u ≤ c*u*Real.log (2*U) :=
+          mul_le_mul_of_nonneg_left hlogupper (mul_nonneg hc hu0.le)
+        _ ≤ c*(2*U)*Real.log (2*U) :=
+          mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hu.2 hc)
+            (hlog0.trans hlogupper)
+    have hlocal : |E u| ≤ N (2*U)+c*(2*U)*Real.log (2*U) := by
+      dsimp only [E]
+      apply abs_le.mpr
+      constructor
+      · linarith [hN0 u, hN0 (2*U)]
+      · linarith [hmono hu.2, mul_nonneg (mul_nonneg hc hu0.le) hlog0]
+    have heq : N (2*U)+c*(2*U)*Real.log (2*U) = D0*U := by
+      dsimp only [D0]
+      field_simp
+    calc
+      |E u| ≤ D0*U := hlocal.trans_eq heq
+      _ ≤ D*U := mul_le_mul_of_nonneg_right (le_max_right _ _) hU0.le
+      _ ≤ D*u := mul_le_mul_of_nonneg_left hu.1 hD
+  have hstep (T : ℝ) (hT : U ≤ T) : |E (2*T)-E T| ≤ K*T := by
+    have hT0 : 0 < T := hU0.trans_le hT
+    have heq : E (2*T)-E T = (N (2*T)-N T-c*T*Real.log T)-2*c*T*Real.log 2 := by
+      dsimp only [E]
+      rw [Real.log_mul (by norm_num : (2:ℝ)≠0) hT0.ne']
+      ring
+    rw [heq]
+    have hrest : 0 ≤ 2*c*T*Real.log 2 := by
+      have hlog2 : 0 ≤ Real.log 2 := (Real.log_pos (by norm_num : (1:ℝ)<2)).le
+      positivity
+    calc
+      _ ≤ |N (2*T)-N T-c*T*Real.log T|+|2*c*T*Real.log 2| :=
+        (abs_sub_le (N (2*T)-N T-c*T*Real.log T) 0 (2*c*T*Real.log 2)).trans_eq (by simp)
+      _ ≤ B*T+2*c*T*Real.log 2 := add_le_add (hdyadic T hT) (by rw [abs_of_nonneg hrest])
+      _ = K*T := by dsimp only [K]; ring
+  have hiter (u : ℝ) (hu : u ∈ Icc U (2*U)) (n : ℕ) :
+      |E ((2:ℝ)^n*u)| ≤ D*((2:ℝ)^n*u) := by
+    induction n with
+    | zero => simpa using hbase u hu
+    | succ n ih =>
+      have hpow : 1 ≤ (2:ℝ)^n := one_le_pow₀ (by norm_num)
+      have hu0 : 0 ≤ u := hU0.le.trans hu.1
+      have hT : U ≤ (2:ℝ)^n*u :=
+        hu.1.trans (by simpa using mul_le_mul_of_nonneg_right hpow hu0)
+      have heq : (2:ℝ)^(n+1)*u = 2*((2:ℝ)^n*u) := by rw [pow_succ]; ring
+      rw [heq]
+      calc
+        |E (2*((2:ℝ)^n*u))| ≤ |E (2*((2:ℝ)^n*u))-E ((2:ℝ)^n*u)|+
+            |E ((2:ℝ)^n*u)| := by
+              simpa using abs_sub_le (E (2*((2:ℝ)^n*u))) (E ((2:ℝ)^n*u)) (0:ℝ)
+        _ ≤ K*((2:ℝ)^n*u)+D*((2:ℝ)^n*u) := add_le_add (hstep _ hT) ih
+        _ ≤ D*((2:ℝ)^n*u)+D*((2:ℝ)^n*u) :=
+          add_le_add (mul_le_mul_of_nonneg_right (le_max_left K D0)
+            (mul_nonneg (pow_nonneg (by norm_num : (0:ℝ)≤2) n) hu0)) le_rfl
+        _ = D*(2*((2:ℝ)^n*u)) := by ring
+  refine ⟨D, hD, ?_⟩
+  intro Y hY
+  have hYdiv : 1 ≤ Y/U := (le_div_iff₀ hU0).mpr (by simpa using hY)
+  obtain ⟨n, hnlo, hnhi⟩ := exists_nat_pow_near hYdiv (by norm_num : (1:ℝ)<2)
+  let u := Y/(2:ℝ)^n
+  have hpow0 : 0 < (2:ℝ)^n := by positivity
+  have huU : U ≤ u := by
+    apply (le_div_iff₀ hpow0).mpr
+    have h := (le_div_iff₀ hU0).mp hnlo
+    nlinarith
+  have hu2U : u ≤ 2*U := by
+    apply (div_le_iff₀ hpow0).mpr
+    have h := (div_lt_iff₀ hU0).mp hnhi
+    rw [pow_succ] at h
+    nlinarith
+  have hid : (2:ℝ)^n*u = Y := by dsimp only [u]; field_simp
+  have h := hiter u ⟨huU,hu2U⟩ n
+  simpa only [hid, E] using h
+/- The existing unconditional zeta RvM source is dyadic. This closes the coarse
+   cumulative positive-ordinate count, retaining every zero's multiplicity. -/
+set_option maxHeartbeats 1600000 in
+lemma zeta_cumulative_count_coarse :
+    ∃ U D : ℝ, 1 < U ∧ 0 ≤ D ∧ ∀ Y, U ≤ Y →
+      |(Zeta23.Ncount 0 Y : ℝ) - (1/(2*Real.pi))*Y*Real.log Y| ≤ D*Y := by
+  let c : ℝ := 1/(2*Real.pi)
+  let d : ℝ := 2*Real.log 2-1-Real.log (2*Real.pi)
+  have hc : 0 ≤ c := by dsimp only [c]; positivity
+  obtain ⟨C,T0,hmain⟩ :=
+    D5.S3.Weil.ZeroData.UnconditionalCanonicalZeroData.zetaRiemannVonMangoldt.main
+  let U := max T0 2
+  have hU : 1 < U := lt_of_lt_of_le (by norm_num : (1:ℝ)<2) (le_max_right _ _)
+  let N := fun T : ℝ => (Zeta23.Ncount 0 T : ℝ)
+  have hN0 (T : ℝ) : 0 ≤ N T := Nat.cast_nonneg _
+  have hmono : Monotone N := by
+    intro u v huv
+    dsimp only [N]
+    exact_mod_cast Zeta23.Ncount_mono (a := 0) (c := 0) le_rfl huv
+  have hdyadic (T : ℝ) (hT : U ≤ T) :
+      |N (2*T)-N T-c*T*Real.log T| ≤ (|C|+c*|d|)*T := by
+    have hT0 : 0 < T := (zero_lt_one.trans hU).trans_le hT
+    have hlog0 : 0 ≤ Real.log T := (Real.log_pos (hU.trans_le hT)).le
+    have hlogT : Real.log T ≤ T := by
+      have h := Real.log_le_sub_one_of_pos hT0
+      linarith
+    have hm : |(Zeta23.Ncount T (2*T):ℝ)-T/(2*Real.pi)*Zeta23.ell1 T| ≤
+        |C| *Real.log T := by
+      have h := hmain T ((le_max_left T0 2).trans hT)
+      simp only [Zeta23.zetaZeroConfig_N] at h
+      exact h.trans (mul_le_mul_of_nonneg_right (le_abs_self C) hlog0)
+    have hn : N (2*T) = N T+(Zeta23.Ncount T (2*T):ℝ) := by
+      dsimp only [N]
+      exact_mod_cast Zeta23.Ncount_add hT0.le (by linarith : T ≤ 2*T)
+    have hell : T/(2*Real.pi)*Zeta23.ell1 T = c*T*(Real.log T+d) := by
+      dsimp only [Zeta23.ell1,Zeta23.l,c,d]
+      rw [Real.log_div hT0.ne' (by positivity : (2*Real.pi)≠0)]
+      ring
+    have heq : N (2*T)-N T-c*T*Real.log T =
+        ((Zeta23.Ncount T (2*T):ℝ)-T/(2*Real.pi)*Zeta23.ell1 T)+c*T*d := by
+      rw [hn,hell]
+      ring
+    have hrest : |c*T*d| = c*T*|d| := by
+      rw [abs_mul,abs_mul,abs_of_nonneg hc,abs_of_pos hT0]
+    rw [heq]
+    calc
+      _ ≤ |(Zeta23.Ncount T (2*T):ℝ)-T/(2*Real.pi)*Zeta23.ell1 T|+|c*T*d| :=
+        abs_add_le _ _
+      _ ≤ |C| *Real.log T+c*T*|d| := add_le_add hm (le_of_eq hrest)
+      _ ≤ |C| *T+c*T*|d| :=
+        add_le_add (mul_le_mul_of_nonneg_left hlogT (abs_nonneg C)) le_rfl
+      _ = (|C|+c*|d|)*T := by ring
+  obtain ⟨D,hD,hbound⟩ := cumulative_count_from_dyadic N hU hc hN0 hmono hdyadic
+  exact ⟨U,D,hU,hD,hbound⟩
+
 set_option maxHeartbeats 1600000 in
 -- The proof joins dyadic counting, strict cutoffs and finite low-frequency restoration.
 /-- Coarse counting produces global C1 regularity and logarithmic square phase
@@ -38,155 +190,6 @@ theorem actual_zeta_phase_stiffness :
       |slope t-(1/(2*Real.pi))*t*(Real.log (|t|⁻¹))^2| ≤
         |t| *B*(Real.log (|t|⁻¹)+1) := by
   classical
-  /- The dyadic estimate has the natural raw count increment as its premise.
-     Cumulative asymptotics are produced by the argument, not assumed. -/
-  have cumulative_count_from_dyadic (N : ℝ → ℝ) {U c B : ℝ}
-      (hU : 1 < U) (hc : 0 ≤ c) (hN0 : ∀ u, 0 ≤ N u) (hmono : Monotone N)
-      (hdyadic : ∀ T, U ≤ T → |N (2*T)-N T-c*T*Real.log T| ≤ B*T) :
-      ∃ D : ℝ, 0 ≤ D ∧ ∀ Y, U ≤ Y → |N Y-c*Y*Real.log Y| ≤ D*Y := by
-    have hU0 : 0 < U := zero_lt_one.trans hU
-    have hB : 0 ≤ B := by
-      have h := (abs_nonneg (N (2*U)-N U-c*U*Real.log U)).trans (hdyadic U le_rfl)
-      nlinarith
-    let E := fun T : ℝ => N T-c*T*Real.log T
-    let K := B+2*c*Real.log 2
-    let D0 := N (2*U)/U+2*c*Real.log (2*U)
-    let D := max K D0
-    have hK : 0 ≤ K := by
-      have hlog2 : 0 ≤ Real.log 2 := (Real.log_pos (by norm_num : (1:ℝ)<2)).le
-      dsimp only [K]
-      positivity
-    have hD : 0 ≤ D := hK.trans (le_max_left _ _)
-    have hbase (u : ℝ) (hu : u ∈ Icc U (2*U)) : |E u| ≤ D*u := by
-      have hu0 : 0 < u := hU0.trans_le hu.1
-      have hlog0 : 0 ≤ Real.log u := (Real.log_pos (hU.trans_le hu.1)).le
-      have hlogupper : Real.log u ≤ Real.log (2*U) := Real.log_le_log hu0 hu.2
-      have hmain : c*u*Real.log u ≤ c*(2*U)*Real.log (2*U) := by
-        calc
-          c*u*Real.log u ≤ c*u*Real.log (2*U) :=
-            mul_le_mul_of_nonneg_left hlogupper (mul_nonneg hc hu0.le)
-          _ ≤ c*(2*U)*Real.log (2*U) :=
-            mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hu.2 hc)
-              (hlog0.trans hlogupper)
-      have hlocal : |E u| ≤ N (2*U)+c*(2*U)*Real.log (2*U) := by
-        dsimp only [E]
-        apply abs_le.mpr
-        constructor
-        · linarith [hN0 u, hN0 (2*U)]
-        · linarith [hmono hu.2, mul_nonneg (mul_nonneg hc hu0.le) hlog0]
-      have heq : N (2*U)+c*(2*U)*Real.log (2*U) = D0*U := by
-        dsimp only [D0]
-        field_simp
-      calc
-        |E u| ≤ D0*U := hlocal.trans_eq heq
-        _ ≤ D*U := mul_le_mul_of_nonneg_right (le_max_right _ _) hU0.le
-        _ ≤ D*u := mul_le_mul_of_nonneg_left hu.1 hD
-    have hstep (T : ℝ) (hT : U ≤ T) : |E (2*T)-E T| ≤ K*T := by
-      have hT0 : 0 < T := hU0.trans_le hT
-      have heq : E (2*T)-E T = (N (2*T)-N T-c*T*Real.log T)-2*c*T*Real.log 2 := by
-        dsimp only [E]
-        rw [Real.log_mul (by norm_num : (2:ℝ)≠0) hT0.ne']
-        ring
-      rw [heq]
-      have hrest : 0 ≤ 2*c*T*Real.log 2 := by
-        have hlog2 : 0 ≤ Real.log 2 := (Real.log_pos (by norm_num : (1:ℝ)<2)).le
-        positivity
-      calc
-        _ ≤ |N (2*T)-N T-c*T*Real.log T|+|2*c*T*Real.log 2| :=
-          (abs_sub_le (N (2*T)-N T-c*T*Real.log T) 0 (2*c*T*Real.log 2)).trans_eq (by simp)
-        _ ≤ B*T+2*c*T*Real.log 2 := add_le_add (hdyadic T hT) (by rw [abs_of_nonneg hrest])
-        _ = K*T := by dsimp only [K]; ring
-    have hiter (u : ℝ) (hu : u ∈ Icc U (2*U)) (n : ℕ) :
-        |E ((2:ℝ)^n*u)| ≤ D*((2:ℝ)^n*u) := by
-      induction n with
-      | zero => simpa using hbase u hu
-      | succ n ih =>
-        have hpow : 1 ≤ (2:ℝ)^n := one_le_pow₀ (by norm_num)
-        have hu0 : 0 ≤ u := hU0.le.trans hu.1
-        have hT : U ≤ (2:ℝ)^n*u :=
-          hu.1.trans (by simpa using mul_le_mul_of_nonneg_right hpow hu0)
-        have heq : (2:ℝ)^(n+1)*u = 2*((2:ℝ)^n*u) := by rw [pow_succ]; ring
-        rw [heq]
-        calc
-          |E (2*((2:ℝ)^n*u))| ≤ |E (2*((2:ℝ)^n*u))-E ((2:ℝ)^n*u)|+
-              |E ((2:ℝ)^n*u)| := by
-                simpa using abs_sub_le (E (2*((2:ℝ)^n*u))) (E ((2:ℝ)^n*u)) (0:ℝ)
-          _ ≤ K*((2:ℝ)^n*u)+D*((2:ℝ)^n*u) := add_le_add (hstep _ hT) ih
-          _ ≤ D*((2:ℝ)^n*u)+D*((2:ℝ)^n*u) :=
-            add_le_add (mul_le_mul_of_nonneg_right (le_max_left K D0)
-              (mul_nonneg (pow_nonneg (by norm_num : (0:ℝ)≤2) n) hu0)) le_rfl
-          _ = D*(2*((2:ℝ)^n*u)) := by ring
-    refine ⟨D, hD, ?_⟩
-    intro Y hY
-    have hYdiv : 1 ≤ Y/U := (le_div_iff₀ hU0).mpr (by simpa using hY)
-    obtain ⟨n, hnlo, hnhi⟩ := exists_nat_pow_near hYdiv (by norm_num : (1:ℝ)<2)
-    let u := Y/(2:ℝ)^n
-    have hpow0 : 0 < (2:ℝ)^n := by positivity
-    have huU : U ≤ u := by
-      apply (le_div_iff₀ hpow0).mpr
-      have h := (le_div_iff₀ hU0).mp hnlo
-      nlinarith
-    have hu2U : u ≤ 2*U := by
-      apply (div_le_iff₀ hpow0).mpr
-      have h := (div_lt_iff₀ hU0).mp hnhi
-      rw [pow_succ] at h
-      nlinarith
-    have hid : (2:ℝ)^n*u = Y := by dsimp only [u]; field_simp
-    have h := hiter u ⟨huU,hu2U⟩ n
-    simpa only [hid, E] using h
-  /- The existing unconditional zeta RvM source is dyadic. This closes the coarse
-     cumulative positive-ordinate count, retaining every zero's multiplicity. -/
-  have zeta_cumulative_count_coarse :
-      ∃ U D : ℝ, 1 < U ∧ 0 ≤ D ∧ ∀ Y, U ≤ Y →
-        |(Zeta23.Ncount 0 Y : ℝ) - (1/(2*Real.pi))*Y*Real.log Y| ≤ D*Y := by
-    let c : ℝ := 1/(2*Real.pi)
-    let d : ℝ := 2*Real.log 2-1-Real.log (2*Real.pi)
-    have hc : 0 ≤ c := by dsimp only [c]; positivity
-    obtain ⟨C,T0,hmain⟩ :=
-      D5.S3.Weil.ZeroData.UnconditionalCanonicalZeroData.zetaRiemannVonMangoldt.main
-    let U := max T0 2
-    have hU : 1 < U := lt_of_lt_of_le (by norm_num : (1:ℝ)<2) (le_max_right _ _)
-    let N := fun T : ℝ => (Zeta23.Ncount 0 T : ℝ)
-    have hN0 (T : ℝ) : 0 ≤ N T := Nat.cast_nonneg _
-    have hmono : Monotone N := by
-      intro u v huv
-      dsimp only [N]
-      exact_mod_cast Zeta23.Ncount_mono (a := 0) (c := 0) le_rfl huv
-    have hdyadic (T : ℝ) (hT : U ≤ T) :
-        |N (2*T)-N T-c*T*Real.log T| ≤ (|C|+c*|d|)*T := by
-      have hT0 : 0 < T := (zero_lt_one.trans hU).trans_le hT
-      have hlog0 : 0 ≤ Real.log T := (Real.log_pos (hU.trans_le hT)).le
-      have hlogT : Real.log T ≤ T := by
-        have h := Real.log_le_sub_one_of_pos hT0
-        linarith
-      have hm : |(Zeta23.Ncount T (2*T):ℝ)-T/(2*Real.pi)*Zeta23.ell1 T| ≤
-          |C| *Real.log T := by
-        have h := hmain T ((le_max_left T0 2).trans hT)
-        simp only [Zeta23.zetaZeroConfig_N] at h
-        exact h.trans (mul_le_mul_of_nonneg_right (le_abs_self C) hlog0)
-      have hn : N (2*T) = N T+(Zeta23.Ncount T (2*T):ℝ) := by
-        dsimp only [N]
-        exact_mod_cast Zeta23.Ncount_add hT0.le (by linarith : T ≤ 2*T)
-      have hell : T/(2*Real.pi)*Zeta23.ell1 T = c*T*(Real.log T+d) := by
-        dsimp only [Zeta23.ell1,Zeta23.l,c,d]
-        rw [Real.log_div hT0.ne' (by positivity : (2*Real.pi)≠0)]
-        ring
-      have heq : N (2*T)-N T-c*T*Real.log T =
-          ((Zeta23.Ncount T (2*T):ℝ)-T/(2*Real.pi)*Zeta23.ell1 T)+c*T*d := by
-        rw [hn,hell]
-        ring
-      have hrest : |c*T*d| = c*T*|d| := by
-        rw [abs_mul,abs_mul,abs_of_nonneg hc,abs_of_pos hT0]
-      rw [heq]
-      calc
-        _ ≤ |(Zeta23.Ncount T (2*T):ℝ)-T/(2*Real.pi)*Zeta23.ell1 T|+|c*T*d| :=
-          abs_add_le _ _
-        _ ≤ |C| *Real.log T+c*T*|d| := add_le_add hm (le_of_eq hrest)
-        _ ≤ |C| *T+c*T*|d| :=
-          add_le_add (mul_le_mul_of_nonneg_left hlogT (abs_nonneg C)) le_rfl
-        _ = (|C|+c*|d|)*T := by ring
-    obtain ⟨D,hD,hbound⟩ := cumulative_count_from_dyadic N hU hc hN0 hmono hdyadic
-    exact ⟨U,D,hU,hD,hbound⟩
   /- Coarse endpoint control needs no separate local-window asymptotic. -/
   have strict_count_from_closed_sandwich (N S : ℝ → ℝ) {L c D : ℝ}
       (hL : 2 ≤ L) (hc : 0 ≤ c) (hD : 0 ≤ D)

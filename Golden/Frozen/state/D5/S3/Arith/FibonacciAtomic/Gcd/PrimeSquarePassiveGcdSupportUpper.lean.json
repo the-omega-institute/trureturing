@@ -1,0 +1,1 @@
+{"statement_id":"sha256:d295a4de747358d4be0b57bd6462400f8889c2082a9aef2ce507709f6e5d0f8e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),3:Gcd),33:PrimeSquarePassiveGcdSupportUpper),6:result)","kind":"theorem"}]}

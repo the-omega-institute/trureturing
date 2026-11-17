@@ -64,7 +64,19 @@ $$\forall q: \mathbb{N}, \forall n: \mathbb{N}, \operatorname{closedZ}\left(q, n
 
 The FORMULA field of OEIS A386655 (unpaginated) reads verbatim: a(n) = Sum_{k=0..n} binomial(n,k) * 2^(k*(k+1)) * (2^k - (n-k))^(n-k-1). Replace 2 by the natural parameter q. Separate the last summand, whose exponent in the source formula is negative, as q^(n*n). Every remaining exponent is a natural number. Subtractions in exponents and in n-k are natural subtraction, followed by the displayed integer cast.
 
-**Theorem 1.6 (Integrality for every q and n).**
+**Theorem 1.6 (Lagrange inversion for a substituted series).**
+
+$$\forall root: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \forall factor: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \forall F: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(root\right) = 0) \implies ((root = (X) \cdot (\operatorname{subst}\left(root, factor\right))) \implies (\forall n: \mathbb{N}, ((n + 1: \mathbb{Q})) \cdot (\operatorname{coeff}\left(n + 1, \operatorname{subst}\left(root, F\right)\right)) = \operatorname{coeff}\left(n, (\operatorname{derivative}\left(F\right)) \cdot ((factor)^{n + 1})\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.lagrange_subst` (`✓ std3`). ∎
+
+*Citation.* Ira M. Gessel (2016). *Lagrange Inversion*. DOI: [10.48550/arXiv.1609.05988](https://doi.org/10.48550/arXiv.1609.05988). URL: <https://arxiv.org/abs/1609.05988v1>.
+
+*Commentary.*
+
+For rational formal power series root, factor and F, suppose root has zero constant coefficient and root=X*PowerSeries.subst root factor. The coefficient of degree n+1 in PowerSeries.subst root F, multiplied by the rational cast of n+1, equals the degree n coefficient of PowerSeries.derivative F times factor^(n+1). This is the general coefficient form of Gessel's Theorem 2.1.1, equation (2.1.1).
+
+**Theorem 1.7 (Integrality for every q and n).**
 
 $$\forall q: \mathbb{N}, \forall n: \mathbb{N}, \operatorname{egf}\left(q, n\right) = (\operatorname{closedZ}\left(q, n\right): \mathbb{Q})$$
 
@@ -78,7 +90,7 @@ $$\forall q: \mathbb{N}, \forall n: \mathbb{N}, \operatorname{egf}\left(q, n\rig
 
 Lagrange inversion evaluates the coefficients of exp(y W). Binomial expansion and triangular reindexing then give the integral finite sum. This identity also supplies the integer z for each of the four coefficient sequences.
 
-**Theorem 1.7 (Period six after the sixth index).**
+**Theorem 1.8 (Period six after the sixth index).**
 
 $$\forall q: \mathbb{N}, \forall n: \mathbb{N}, (6 \le n) \implies (\operatorname{closedZ}\left(q, n\right) \bmod 6 = \operatorname{closedZ}\left(q, (n - 6) \bmod 6 + 6\right) \bmod 6)$$
 
@@ -92,7 +104,7 @@ $$\forall q: \mathbb{N}, \forall n: \mathbb{N}, (6 \le n) \implies (\operatornam
 
 In ZMod(6), x cubed equals x. The binomial transform satisfies B(n+9)=B(n+3), and its endpoint corrections depend only on n modulo six. Casting the resulting identity back to integer remainders gives the displayed formula for every q.
 
-**Theorem 1.8 (Hanna's congruence).**
+**Theorem 1.9 (Hanna's congruence).**
 
 $$\forall n: \mathbb{N}, (6 \le n) \implies (\exists z: \mathbb{Z}, ((z: \mathbb{Q}) = \operatorname{a}\left(n\right)) \land (z \bmod 6 = \operatorname{getD}\left([1, 0, 3, 0, 3, 2], (n - 6) \bmod 6, 0\right)))$$
 
@@ -119,6 +131,7 @@ The integral closed form and its six-term periodicity reduce the assertion to th
 - Truth anchor: `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.closedZ_reduce`
 - Truth anchor: `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.egf`
 - Truth anchor: `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.egf_closed`
+- Truth anchor: `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.lagrange_subst`
 - Truth anchor: `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.result`
 - Dependency: [D5/S1/Recurrence/Invariants/TripleIterateShiftModThree](../../../S1/Recurrence/Invariants/TripleIterateShiftModThree.md)
 - Dependency: [D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree](../../../S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.md)

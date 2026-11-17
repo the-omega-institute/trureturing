@@ -1,0 +1,14 @@
+# AURIC：原 ready 秩二、连续脉冲精确纤维与静默运输／剪切（续卷 XIV）
+
+> 本卷是普通数学散文的参考输入，未经 Lean kernel 验证；采用 `generic-v1`。定义、定理和手算证明不构成经验认证或同一实际来源采用的证明。
+
+本卷延续[续卷 XII][XII] 的编号：§§1–68 及其条目、公式归属 XII，本卷承接 §§69–82，文末保留空的追加锚 83。带 XII 前缀的引用均指该卷；未注明外卷的 69–82 编号属于本卷。其它外卷的章节、条目及公式以各自来源名或链接区分。
+
+同一个完整原来源及其全部保留条件见约定 69.1；规范脉冲纤维、ready 局部结论和剪切族分别按各自前件解释。§78 完整复用已有关系候选与量子消费者，不把数学商、相似或脉冲相等升级为实际菜单、过程或量子起源的同源构造。
+
+[XII]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XII.md
+[EP-IV]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md
+[RB]: AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md
+[EC]: AURIC_C128_EFFECT_SANDWICH_CLOSURE_AND_INTERNAL_UNIT.md
+[XIII]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XIII.md
+

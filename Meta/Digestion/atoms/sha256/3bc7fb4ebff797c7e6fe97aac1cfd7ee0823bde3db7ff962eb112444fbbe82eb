@@ -1,0 +1,45 @@
+### A.4　任意有限历史消去同纤维残余
+
+设 $N=\{a:\gamma(a)=0\}$， $\mathcal K=\{(a,b):\gamma(a)=\gamma(b)\}$。 若 $(a,b)\in\mathcal K$，则 $w=\beta(a)-\beta(b)\in W$； 由 (11) 和非负性， $c(a,b)=c(b,a)=0$。 展开比较差并用 (10)，得到统一有限界
+
+$$
+|B(w,\beta z)|\le\tfrac32r(z),\qquad
+|B(\beta z,w)|\le\tfrac32q(z).
+\tag{15}
+$$
+
+例如 $c(a,b\odot z)-c(b,b\odot z)=-2B(w,\beta z)$， 两项都在 $[0,3r(z)]$ 内；反向配对同理。
+
+令 $J_0=(2R+I)/\sqrt3$，有 $J_0^2=-I$。 对实线性泛函 $\alpha$ 令 $\ell=\alpha-i\alpha J_0$，则 $\ell R=\omega\ell$。 固定 $z$，分别取 $\alpha(x)=B(x,\beta z)$ 与 $\alpha(x)=B(\beta z,x)$。 因 $N$ 在 $U$ 下封闭，(15) 使 $\ell\beta(n)$ 对所有 $n\in N$ 一致有界。
+
+固定 $u\in N$，考虑全部深度 $n$ 的左括号历史
+
+$$
+x_0=e,\qquad x_j=x_{j-1}\odot U^{k_j}u,\qquad k_j\in\{0,1,2\}.
+$$
+
+它们都在 $N$。对一个节点，式 (14) 的三个子值形如 $Z+\omega^kA_u+\omega^{-k}D_x$，故有限 Fourier 正交给
+
+$$
+\frac13\sum_{k=0}^2|Z+\omega^kA_u+\omega^{-k}D_x|^2
+=|Z|^2+|A_u|^2+|D_x|^2.
+$$
+
+逐层平均，
+
+$$
+3^{-n}\sum_{\{0,1,2\}^n}|\ell\beta(x_n)|^2
+\ge n|\ell\beta(u)|^2.
+$$
+
+左侧有统一有限上界，因而 $\ell\beta(u)=0$。 对两个配对次序及全部 $z$ 使用共同非退化性，得到 $\beta(N)=0$。 这里只使用每个有限整数 $n$，没有假设一次实际完成无限历史。
+
+还需处理一般同纤维对。固定 $z$，令 $h(a,b)=B(\beta a-\beta b,\beta z)$ 在 $\mathcal K$ 上定义。 它由 (15) 有界，且
+
+$$
+\sum_k h(a\odot U^ku,b\odot U^kv)=3h(a,b)
+\quad\text{当 }\gamma(u)=\gamma(v).
+$$
+
+对给定 $(a,b)\in\mathcal K$，取 $d=Ua\odot U^2a$ 并用共同增量 $(d,d)$。 第零项的两端都在 $N$，所以为零；其他两项仍在 $\mathcal K$。 于是 $|h(a,b)|\le\frac23\sup_{\mathcal K}|h|$，取上确界得 $h=0$。 另一配对次序相同，故 $\gamma(a)=\gamma(b)\Rightarrow\beta(a)=\beta(b)$。 再由 $c(a,b)=0$ 及 $B$ 的定义得到同纤维 $q,r$ 相同， 于是整个有向比较下降为加法群 $A$ 上的 $C$。
+

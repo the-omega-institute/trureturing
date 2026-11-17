@@ -1,0 +1,36 @@
+**定理 64.1（旧关系恢复后由同一逼近律推出正常性）。** 定义 63.1 的 II₁ 分支在同一原资料上，准确等价于 43.1 与“全部原 $P$ 正常”的合取。因此它与 49.2 已给正常分支描述同一类合格原因子，但正常性现在是结论；这不把它与允许奇异评价的全部旧静态模型混同。
+
+证明。50.1 的正向第一步完全不消费评价正常性：两个原输出的旧后续行相同，同一个有限近似式便给 $|\alpha(p)-\alpha(q)|\le\eta(N(p)+N(q))$。令 $\eta\downarrow0$，原分离性给 (40.1)。此后才消费 43.2，按辅助作用先于旧关系识别的顺序消去中央余项，得到整个原因子的共同符号 $\varepsilon\in\{1,-1\}$、同一个 $D(a,b)=\varepsilon\mathrm i[a,b]/2$ 以及实际输出等式 $A_D=V=\ker(\tau|_{M_{\rm sa}})$。其中逐元素输出覆盖消费 43.2 已用的 Wen–Fang–Yao 有限零对角／单自交换子结果，不以张成或输出差替代实际值。现在才把 (49.1) 读为原实 Banach 空间 $V$ 上的范数逼近。
+
+以下仅在证明中令 $W=M^{**}$，$\iota:M\to W$ 为典范嵌入，$\pi:W\to M$ 为延拓原正常表示的正常满 $*$-同态。成熟包络工具给中央投影 $z$，使 $\ker\pi=(1-z)W$、$zW\cong M$ 正常同构；记 $s=1-z$。准确先例见 Popa–Vaes，[*Unique Cartan decomposition for II₁ factors arising from arbitrary actions of free groups*，Acta Math. 212 (2014), 141–198，Lemma 2.9 证明](https://lirias.kuleuven.be/server/api/core/bitstreams/8eb2be29-9633-4534-b8ee-b7458a4f14bb/content) 中引入 $\pi,z$ 和正常／奇异分解的段落。包络构造本身是 Sherman–Takeda 成熟工具，参 [Takeda，*Conjugate spaces of operator algebras*，Theorem 1](https://projecteuclid.org/journals/proceedings-of-the-japan-academy-series-a-mathematical-sciences/volume-30/issue-2/Conjugate-spaces-of-operator-algebras/10.3792/pja/1195526177.pdf)。不把这些工具另列为新增通用定理，也不更换原载体。
+
+每个原有界泛函 $\gamma$ 有正常延拓 $\widetilde\gamma\in W_*$，无论 $\gamma$ 在原 $M$ 上是否正常。由于原 $\tau$ 正常，$\widetilde\tau=\tau\circ\pi$，故 $\widetilde\tau(s)=0$。在实双对偶的典范等距识别下，
+
+$$
+(M_{\rm sa})^{**}=W_{\rm sa},\qquad
+V^{**}=\{X\in W_{\rm sa}:\widetilde\tau(X)=0\},\qquad
+s\in V^{**},\quad\|s\|\le1.
+\tag{64.1}
+$$
+
+第二式由 $V^\perp=\mathbb R\tau$ 及包含映射的第二伴随给出。对已恢复的有界实线性 $D_t(a)=D(a,t)$，其第二伴随准确为 $D_t^{**}(X)=\varepsilon\mathrm i[X,\iota(t)]/2$：右侧弱星连续并在原自伴部上与 $D_t$ 相同。于是任何原有界正评价 $\beta$，包括奇异者，都满足
+
+$$
+\bigl((\beta\circ D_t)|_V\bigr)^{\sim}(s)
+=\widetilde\beta\bigl(D_t^{**}(s)\bigr)=0.
+\tag{64.2}
+$$
+
+这里的上标 $\sim$ 表示把 $V^*$ 中的泛函典范延拓到 $V^{**}$；右侧 $\widetilde\beta$ 的定义域是 $W$，没有把它误配到原 $M$。成熟正常／奇异正分解在此准确为 $\alpha_{\rm n}(x)=\widetilde\alpha(z\iota(x))$、$\alpha_{\rm s}(x)=\widetilde\alpha(s\iota(x))$。对任意有限原关系读数组合 $g=\sum c_j(\beta_j\circ D_{t_j})|_V$，(64.1)–(64.2) 给
+
+$$
+\|\alpha|_V-g\|_{V^*}
+\ge\left|(\alpha|_V-g)^{\sim}(s)\right|
+=\widetilde\alpha(s)=\alpha_{\rm s}(1)\ge0.
+\tag{64.3}
+$$
+
+这就是同一个原输出逼近问题的奇异质量下界；即使允许供给评价奇异，下界也不变。(49.1) 使左侧可任意小，遂有 $\widetilde\alpha(s)=0$。正性和 Cauchy–Schwarz 给 $|\widetilde\alpha(sX)|^2\le\widetilde\alpha(s)\widetilde\alpha(X^*X)=0$，所以 $\widetilde\alpha$ 支撑于 $zW$。沿 $zW\cong M$ 下降，它正是原 $M$ 上的正常正泛函 $\alpha$。全部原 $P$ 因而正常；没有删除任何原评价。
+
+反向，43.1 先恢复旧 $D$，全部原 $P$ 正常后直接消费 50.2 的原正常前对偶商密度，得到 (49.1)。该反向不能放到上述正常性证明之前。整个论证不需要可分前对偶、满性或有限共同测试族。∎
+

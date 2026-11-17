@@ -1,0 +1,20 @@
+#### 引理 4.2：固定谱值的重数差至多一
+
+设 $A,D$ 是同一有限实正定空间上的自伴算子，且 $\operatorname{rank}(A-D)\le1$。对每个实数 $\lambda$，若 $m_A(\lambda),m_D(\lambda)$ 表示相应特征值的重数，不在谱中时取零，则
+
+$$
+|m_A(\lambda)-m_D(\lambda)|\le1.
+$$
+
+**证明。**
+
+有
+
+$$
+\ker(A-\lambda I)\cap\ker(A-D)\subseteq\ker(D-\lambda I).
+$$
+
+$\ker(A-D)$ 的余维至多一，所以左侧维数至少为 $m_A(\lambda)-1$。得到 $m_D(\lambda)\ge m_A(\lambda)-1$。交换两算子再作同一论证，给出反向不等式。自伴性保证特征值的代数重数就是这些核的维数。
+
+$\square$
+

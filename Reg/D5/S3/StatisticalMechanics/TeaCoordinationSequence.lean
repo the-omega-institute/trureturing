@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
 import Reg.Support.SingleDependentReadout
 
-/-! Source-bound audit of the tea shell count in every coordination residue. -/
+/-! Source-bound audit of the tea shell count; hexagon, hexagon_mem and hexagon_card are shared source interfaces. -/
 
 namespace Reg.D5.S3.StatisticalMechanics.TeaCoordinationSequence
 

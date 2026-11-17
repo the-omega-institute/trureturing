@@ -1,0 +1,13 @@
+**推论 44.4（实际局部纯准备的闭正生成）。** 取局部有序单位空间 $\mathsf E=\operatorname{Herm}(L)$、$C=\mathsf E_+$、$u=I_L$，数学准备泛函为
+
+$$
+\alpha_a(z)=\langle\psi_a,z\psi_a\rangle,
+\quad\mathcal P_L=\{\alpha_a:a\in\mathsf A\},\qquad
+\overline{\operatorname{cone}(\mathcal P_L)}=C^*.
+\tag{44.9}
+$$
+
+闭包取有限维实对偶空间的范数拓扑；锥包只取数学有限非负线性组合。条件端点下，$\alpha_a(e_{f,S})$ 正是 (44.8) 的实际原概率，且 $\alpha_a(u)=1$。
+
+证明。37.2 证明中的原 B45 射线密度 (37.5) 给 $[\psi_a]$ 在 $\mathbb P(L)$ 稠密。迹配对把每个正泛函写成 $\beta(z)=\operatorname{Tr}(Rz)$、$R\succeq0$。有限维谱分解给 $R=\sum_jr_j|\xi_j\rangle\langle\xi_j|$、$r_j\ge0$；每个单位 $\xi_j$ 的射线可由实际 $\psi_{a_{j,n}}$ 逼近，故相应投影及泛函在范数下收敛。于是 $\sum_jr_j\alpha_{a_{j,n}}\to\beta$。反向包含因实际各 $\alpha_a$ 为正及 $C^*$ 闭而成立。零泛函由零组合包括。密度是原矩阵作用的几何事实；识别实际终端概率仍单独依赖推论 44.3 的全部前件。这个闭生成不宣称每个正泛函是一个实际制备，也不宣称准确有限正生成。∎
+

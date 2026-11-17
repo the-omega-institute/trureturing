@@ -1,0 +1,64 @@
+**Proposition 173.1 (strict positive $0BB$ and $1BB$ residuals).** Let $v\in V_-$ be nonzero, let $E$ and $s_t>0$ be supplied by Proposition 171.1, and put
+
+$$
+F=f_0=f_1,
+\qquad p=f_B=\frac14,
+\qquad e=\mathbf1_E,
+\qquad w_t=-s_t e.
+\tag{173.1}
+$$
+
+Define
+
+$$
+H_E=\mathcal C(F,e,p)+\mathcal C(F,p,e),
+\qquad
+J_E=\mathcal C(F,e,e).
+\tag{173.2}
+$$
+
+Then
+
+$$
+H_E
+=p\int_G gF\bigl(Pe+P^2e\bigr)\,dm>0,
+\qquad
+J_E=\int_G gF\,P(ePe)\,dm\ge0.
+\tag{173.3}
+$$
+
+For every sufficiently small nonzero $t$ for which the tuple $u^{(t;v,w_t)}$ is legal,
+
+$$
+\Delta\bigl(u^{(t;v,w_t)}\bigr)_{0BB}
+ =\Delta\bigl(u^{(t;v,w_t)}\bigr)_{1BB}
+ =t^2s_tH_E+t^4s_t^2J_E>0.
+\tag{173.4}
+$$
+
+*Proof.* Put $r=t^2s_t$, so that the two $B$ coordinates in (158.1) equal $p+re$. Expanding the $0BB$ coefficient around $(F,p,p)$ gives
+
+$$
+\begin{aligned}
+\Delta_{0BB}
+={}&t\mathcal C(v,p,p)
++r\bigl[\mathcal C(F,e,p)+\mathcal C(F,p,e)\bigr]\\
+&+tr\bigl[\mathcal C(v,e,p)+\mathcal C(v,p,e)\bigr]
++r^2\mathcal C(F,e,e)
++tr^2\mathcal C(v,e,e).
+\end{aligned}
+\tag{173.5}
+$$
+
+The half-turn preserves $P$, $g$, $F$, $p$ and $e$, while $J^*v=-v$. Every term in (173.5) containing exactly one $v$ therefore vanishes. The remaining terms give the first equality in (173.4). Replacing $u_0=F+tv$ by $u_1=F-tv$ changes only the terms containing one $v$, so the same formula holds for $1BB$.
+
+For (173.3), positivity preservation, self-adjointness and $P1=1$ give $Pe,P^2e\ge0$ and
+
+$$
+\int_G Pe\,dm=\int_G P^2e\,dm=\int_G e\,dm>0.
+$$
+
+Since $gF>0$ almost everywhere, the first integral in (173.3) is strictly positive. Also $ePe\ge0$ and positivity preservation gives $P(ePe)\ge0$, proving $J_E\ge0$. Finally $t\ne0$ and $s_t>0$ imply $t^2s_tH_E>0$, so (173.4) is strict. $\square$
+
+Thus the invariant single-compensator family carries simultaneous strict signs: Section 172 gives negative $013$ and $103$ after exact $003$ cancellation, while (173.4) gives positive $0BB$ and $1BB$ for every nonzero amplitude. These are pointwise obstructions for this ansatz, not a uniform positive lower bound: the displayed quantities can tend to zero under the shrinking variable-ray constructions of Section 171. Multi-direction or non-invariant corrections, full-law partition realization, $H43$, $SRS\text{-}20$, $F_{64}$, physical succession and Lean/kernel formalization remain open.
+

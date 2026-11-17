@@ -1,0 +1,34 @@
+**命题 95.4（规范比较上的入口等价与装饰替换）。** 本命题的新旧入口等价只在同一实际 $H$ 紧且连通的共同域上陈述；
+95.2—95.3的静态定理仍允许断开的 $H$。令旧入口准确指
+[Library 的二元寄存器附录][L95bit] *1. Intrinsic control geometry, comparisons and the static PD alternative*
+中的强球面入口：同一原 $V,C,u,K,P,D,H$ 上，全部选定 $e_r\in D$ proper、自确认、纯互反，
+有全域穷尽对，另给一个使同一 $H$ 正交且在整个 $W$ 单位球面上传递的正定度量。
+在上述共同连通域内，比较装饰识别为 $e_r:=T_r$，并保留95.3的同一实际种子及所需轨道资源时，
+该完整旧静态入口与95.1—95.3相互恢复；连接下面的原寄存器和过程资源后，仍是同一有限寄存器候选。
+
+证明。新入口由95.2取得旧入口的整个球面作用、规范自确认和互反，由95.3取得实际 $e_r\in D$；
+(95.2)给同一对的全域穷尽。反向直接应用旧入口的 *Theorem (original ball before the pairing)*
+及 *Corollary (finite PD, full original menu and genuine leastness)*：它们识别旧原选定 $e_r$
+为整个 proper 区间的最小确认，故 $e_r=T_r$。旧穷尽遂是(95.2)，旧整球面作用蕴含纯态传递。
+两边都保留相同的实际 $H$、种子、所需轨道及下游资源，度量仅作可忘却、可恢复的数学见证。
+在原 $V,C,u$ 的保单位序同构 $J$ 下，效应按 $f\mapsto f\circ J^{-1}$ 运输，
+所以 $T'_{Jr}(Jx)=T_r(x)$；原态、纯点、效应、控制和事件合同按同一映射对应。
+
+若旧数据只是一套任意选定的确认装饰 $\varepsilon=(\varepsilon_r)$，没有证明其最小性，
+所用映射必须明写为
+
+$$
+\mathsf F(\mathcal O,\varepsilon)=\mathcal O,\qquad
+\mathsf R(\mathcal O)=(\mathcal O,(T_r)_{r\in P}),\qquad
+\mathsf R\mathsf F(\mathcal O,\varepsilon)=(\mathcal O,T).
+\tag{95.10}
+$$
+
+这里 $\mathcal O$ 保留原载体、实际效应／菜单、控制及所有过程资源；$\mathsf F$ 只忘掉选定比较。
+$\mathsf R$ 只在满足本章或完整旧入口、从而规范效应已证明实际可用的域上定义。
+它不删除旧实际测试，也不改变该测试的更新与记录；只是把作为比较尺的指定换成 $T$。
+除非 $\varepsilon=T$，这个复合不是原装饰元组的恒等。
+完整旧强球面包恰由其已有定理证明 $\varepsilon=T$，所以在那个域内可说同数据恢复；
+任意自确认装饰不能据此取得同装饰双向蕴涵，见 Library 的 [*Scope tests*][L95scope]。
+证明并未把一个较弱旧条件偷换为上述完整强球面包。证毕。
+

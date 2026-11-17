@@ -1,0 +1,52 @@
+**命题 12.5（The endpoint obstruction and the retained boundary）。**
+The sufficient condition $U=V(H)$ is not necessary for confinement.
+All even-order complete graphs remain covered at every even $s\geq2$.
+At $S=1$, the clique-variance argument in Theorem 12.2 has an
+exception at a three-vertex neighborhood component; it gives no
+exclusion at a vertex incident only to $K_4$ graph blocks.
+
+Proof. For $H=K_m$ with even $m\geq2$, its only graph block has
+order $m$. If $m\ne4$, $U=V(H)$ and Theorem 12.2 applies at all
+$S\geq1$. For $m=4$, $U=\varnothing$, but Theorem 10.2, or
+Corollary 11.3 with four singleton graph parts, supplies every
+conclusion at all these even scales, including $S=1$. Thus the
+incidence condition is sufficient and is not necessary. More generally,
+block graphs already satisfying Definition 7.1 are included: a graph
+block of order at least four puts a triangle in a vertex neighborhood,
+while blocks of orders two and three give only singleton and edge
+components in (12.10). Every vertex is then in $U$.
+
+To see the actual degeneracy of the new strict-trial step, at $S=1$
+on three sites the unit alternating vector
+
+$$
+z=\frac1{\sqrt6}\sum_{\pi\in\mathfrak S_3}
+\operatorname{sgn}(\pi)|\pi(1,0,-1)\rangle
+\tag{12.17}
+$$
+
+is a singlet. Its weight is zero, and its total raising and lowering
+operators kill it: equal resulting weights occur in pairs of opposite
+permutation signs with the same ladder coefficient $\sqrt2$.
+Every nonzero coordinate has $Q_C=1^2+0^2+(-1)^2=2$.
+Equation (12.4) therefore gives $K_{K_3}z=-4z$.
+The three-site singlet is unique, because the two-site coupling
+$V_1\otimes V_1=V_0\oplus V_1\oplus V_2$ can couple the third
+$V_1$ to spin zero only through its single $V_1$ summand.
+Consequently its singlet trial has zero variance, exactly the equality
+$2S^2=2S^2-2S+2$ at $S=1$ in (12.7). This auxiliary eigenvector
+only exhibits the failure of that strict-variance step. It supplies
+no deficient-spin ground vector of the original $H[\overline{K_2}]$
+operator at its actual energy $E$.
+
+Thus for general connected even-order block graphs at $s=2$, vertices
+incident exclusively to $K_4$ graph blocks remain outside the new
+localization exclusion, except where a separate supplied theorem
+applies. No actual defect there is asserted. The original arbitrary-$H$
+problem, other fillings, weights and unequal Boolean fibres remain
+unresolved by these statements. The sufficient results of §§6–11
+retain their own graph and scale hypotheses. The additional inference
+is the ordinary-proof block-graph conclusion (12.2) and its pendant-leaf
+application; no global novelty, optimal threshold or quantitative
+spectral rate is asserted. $\square$
+

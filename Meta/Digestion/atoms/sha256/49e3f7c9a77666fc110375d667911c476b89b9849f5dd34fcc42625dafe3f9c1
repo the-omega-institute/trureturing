@@ -1,0 +1,60 @@
+### 52.2. The complete small-x block
+
+Feasibility gives
+
+$$
+x\ge\frac{39}{100},\qquad q\le2x-\frac{39}{50}.
+\tag{52.14}
+$$
+
+On $39/100\le x\le407/1000$ put $Q_s=17/500$ and
+
+$$
+\begin{aligned}
+R_s&=s\frac{407}{1000}+h,\qquad
+C_s=\sqrt{(c^2+h^2)\left(2-\frac{(139/100)^2}{2}\right)},\\
+A_s&=e^2-4R_s^2,\qquad B_s=d^2-4C_s^2.
+\end{aligned}
+\tag{52.15}
+$$
+
+Equation (46.21) gives $R\le sx+h\le R_s$. Also
+$F\le\sqrt{(1-X)(1-Y)}$ implies
+$C\le c\sqrt{1-X}+h\sqrt{1-Y}$; Cauchy--Schwarz and
+$X+Y\ge L^2/2\ge(139/100)^2/2$ give $C\le C_s$.
+Since $p,q\ge0$, this proves the same-point lower bound
+
+$$
+e^2p+d^2q-4\Gamma^2\ge\ell(q)
+ =A_s+(B_s-A_s)q-8R_sC_s\sqrt{q(1-q)}.
+\tag{52.16}
+$$
+
+Exact rational radical enclosures specified in Section 52.4 give
+
+$$
+R_s>4/5,\qquad C_s>1,\qquad B_s-A_s<4,\qquad
+\ell(17/500)>2/5.
+\tag{52.17}
+$$
+
+For $0<q\le Q_s<1/25$, one has $1-2q>9/10$ and
+$\sqrt{q(1-q)}<1/5$. Therefore
+
+$$
+\ell'(q)=B_s-A_s-4R_sC_s\frac{1-2q}{\sqrt{q(1-q)}}
+                    <4-\frac{72}{5}<0.
+\tag{52.18}
+$$
+
+Continuity includes $q=0$. Since $q\le Q_s$ by (52.14),
+
+$$
+e^2p+d^2q-4\Gamma^2\ge\ell(Q_s)>\frac25
+ >\frac{1037}{3000}=H(61/25)\ge H(\xi).
+\tag{52.19}
+$$
+
+This treats every triangle edge in the small-$x$ block, without a
+positive-population or determinant assumption.
+

@@ -1,0 +1,22 @@
+### A.3　保留全部乘法缺陷
+
+定义 $D(a,u)=\beta(a\odot u)-\beta(a)-\beta(u)$。 由 (13) 解三项线性系统，得
+
+$$
+\beta(a\odot U^ku)
+=\beta(a)+R^k\beta(u)+R^{-k}D(a,u).
+\tag{14}
+$$
+
+具体而言，三个缺陷 $D_k$ 满足 $D_0+D_1+D_2=0$、 $D_0+R^2D_1+RD_2=0$；由 $(R^2-R)^2=-3I$，解为 $D_1=R^2D_0,\ D_2=RD_0$。
+
+代回 (12)，不同字符的交叉项经 $I+R+R^2=0$ 消去，留下 $B(D(a,u),D(b,v))=0$。 令 $W=\operatorname{span}_{\mathbb R}\{D(a,u)\}$，则
+
+$$
+B(W,W)=0,\qquad RW=W.
+$$
+
+这里不能把“内部二次量为零”误当成“与所有向量配对都为零”； 下一步正是证明缺陷不能与其他方向留下可见耦合。
+
+令 $\gamma(a)=\beta(a)\bmod W$、$A=\gamma(M)$。 此时才有 $\gamma(a\odot b)=\gamma(a)+\gamma(b)$； $R$ 诱导 $\rho$，且 $I+\rho+\rho^2=0$。 因 $\gamma(Ua\odot U^2a)=-\gamma(a)$，$A$ 是加法子群。
+

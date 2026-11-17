@@ -1,0 +1,33 @@
+**Theorem 10.2 (Eventually nonsingular histories and exact prefix transport).** Suppose an infinite event list has only finitely many singular events. Take $s=0$ if there are none, and otherwise take $s$ to be one plus the last singular event index. Put $F=\Phi_{0,s}$. Apply the following alternatives to the wholly nonsingular tail beginning at $s$.
+
+1. If $D_s<\infty$, its prescribed matrix $H_s$ from Theorem 8.3 gives
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q
+=\sqrt{u_0^TF^TH_sFu_0},\qquad
+S_{\varepsilon,\boldsymbol\alpha}=\ker F.
+\tag{10.5}
+$$
+
+The dimension is $2-\operatorname{rank}F$. Every nonzero prefix image persists with positive limiting norm.
+
+2. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s=\infty$, every limiting norm is zero and $S_{\varepsilon,\boldsymbol\alpha}=\mathbb R^2$.
+
+3. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s<\infty$, let $\ell_s$ be (9.8) and form the prescribed row $f=\ell_sF$. Then
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=|fu_0|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=
+\begin{cases}
+\ker f,&f\ne0,\\
+\mathbb R^2,&f=0.
+\end{cases}
+\tag{10.6}
+$$
+
+In every alternative an individual state is annihilated in finite time exactly when $Fu_0=0$. Thus $F=0$ means finite all-state annihilation. If $F\ne0$ and $f=0$ in alternative 3, the nonzero prefix image is asymptotically erased even though the tail functional is nonzero. The same distinction applies to alternative 2. If $F$ has rank one and $f\ne0$, then $\ker f=\ker F$; if $F$ has rank two, $f\ne0$ and its kernel is a line. These statements decide all stable-space dimensions, including the possible zero composed functional.
+
+*Proof.* The exact interaction input at index $s$ is $Fu_0$, by (8.4). All later event factors are nonsingular. Consequently a zero in the tail is equivalent to having reached it with zero input, and a vector killed anywhere in the prefix also has $Fu_0=0$. This proves the finite-annihilation assertion without inverting a singular factor.
+
+If $D_s<\infty$, apply Theorem 8.3 to $z=Fu_0$. Positive definiteness of $H_s$ makes its limiting quadratic form zero precisely on $\ker F$, proving (10.5) and its dimension. In particular a rank-one prefix image is not erased unless it was zero. In the second alternative Theorem 9.2 gives zero for every tail input. In the third it gives exactly the composition (10.6). The nonzero functional $\ell_s$ vanishes on a line, but a rank-one image of $F$ may be precisely that line, giving $f=0$ with $F\ne0$. If $F$ is invertible this cannot happen. If $\operatorname{rank}F=1$ and $\ell_s$ is nonzero on its image, both $f$ and $F$ vanish exactly on the same kernel. These facts prove all assertions in the original coordinate plane and at the original initial-state scale. $\square$
+

@@ -1,0 +1,45 @@
+**定理 337.1（两份完整背景各自的无标定等价）。** 对任意一套先定匹配资料，分别有
+
+$$
+\begin{aligned}
+B+\mathsf G_{0h}+\mathsf Z_{\rm bal}
+&\Longleftrightarrow B+\mathrm I+\mathrm{SC}
+\Longleftrightarrow B+\mathsf G_{0h}+\mathsf Z_0,\\
+\mathsf B_{\rm cl}+\mathsf G_{0h}+\mathsf Z_{\rm bal}
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathrm I+\mathrm{SC}
+\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf G_{0h}+\mathsf Z_0.
+\end{aligned}
+\tag{337.1}
+$$
+
+原导子律、SC、LU、交替、原 $q$ 斜伴随及全部原零／半角无迹覆盖整个原范围。
+
+证明。固定任意原非零 $A$。336.1 先由该对象自己的配平给每个所需 $F_U\circ h_A=0$，所以只对原源像已有
+
+$$
+\pi_UD^{K_A}(h_A(a),h_A(b))
+=\alpha_U\,\mathrm i[(h_A(a))_U,(h_A(b))_U]
+\qquad(a,b\in E_A).
+\tag{337.2}
+$$
+
+并未先把右式推广成整个 $E_{K_A}\times E_{K_A}$ 的纯交换子。
+
+对原任意 $a,b,c$，将导子缺陷
+
+$$
+r_A=D^A_a(b\circ c)-(D^A_ab)\circ c-b\circ(D^A_ac)
+\tag{337.3}
+$$
+
+及 $D^A_aa$ 沿同一原含幺 Jordan/$D$ 嵌入 $h_A$ 运输。(337.2) 对源输入、源乘积及源 $D$ 输出均成立，因此交换子的 Leibniz 律逐目标给
+
+$$
+\pi_Uh_A(r_A)=0,\qquad \pi_Uh_A(D^A_aa)=0.
+\tag{337.4}
+$$
+
+静态 (334.4) 的 $x_T\mapsto\rho_U(x_T)\otimes I_{V_A}$ 单射，(334.1) 的同一目标族遂共同分离整个原 $E_A$，得 $r_A=0,D^A_aa=0$。有限 EJA 导子内性给原 I，原 Frobenius $q_A$ 给原斜伴随；SC 极化及右单位再给交替与 LU。零对象平凡，$A$ 任意，所以全部原对象及实际联合均恢复。对某个 $A$ 的证明只使用 $K_A$ 的原支持分类与该源的配平，不以 $K_A$ 已恢复 SC 为前件，因此没有向更大对象递归假设结论。
+
+反向在各自完整背景上复用 323.1、329.1：I+SC 给全部原交换子形式和含零分支的共同曲率，所以整个 $\mathsf G_{0h}$、全部 $\mathsf Z_0$ 成立。每条 (336.3) 随即成立，故 $\mathsf Z_{\rm bal}$ 成立。两份准备背景各用自己的入口；不把数学闭包变成原实际准备。这个等价也表明，完整背景中的候选结论不依赖哪套先定匹配资料。∎
+

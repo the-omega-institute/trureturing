@@ -1,0 +1,42 @@
+**Lemma 11.6 (one finite circulation can be rationalized).** Every finite table produced by Theorem 11.4 has rational regular stationary tables of the same finite label shape converging in all its parameters. Their two unweighted flow identities hold exactly. Their complete configuration losses converge uniformly over all complete targets, and therefore over all original positive histories.
+
+**Proof.** View $F^B,F^A$ in (11.13) as one directed bipartite circulation: edges run from p labels to suspended labels and back. Conservation holds at every vertex, and each directional edge total is one. A finite nonnegative circulation decomposes into finitely many directed simple cycles. To see this, follow positive outgoing edges from a positive edge; conservation prevents a dead end. A repeated vertex gives a directed cycle. Subtract its smallest edge flow, deleting at least one positive edge, and repeat. Finitely many subtractions finish the decomposition.
+
+If cycle $c$ has $m_c$ edges in each direction and its coefficient is $h_c>0$, then
+
+$$
+(F^B,F^A)=\sum_c w_c Z_c,\qquad
+Z_c=\frac1{m_c}\mathbf1_{\text{edges of }c},\qquad
+w_c=m_ch_c,\quad\sum_cw_c=1.
+\tag{11.25}
+$$
+
+Each $Z_c$ is rational, conserved and has each directional total one. Approximate the positive weights by positive rational weights summing exactly to one. This preserves conservation and both directional totals, as well as every positive edge in the given cycle support. The resulting rational vertex masses $\pi',\tau'$ converge to the positive original masses. Dividing incident flows by those masses gives rational stochastic $B',A'$ with $\pi'B'=\tau'$ and $\tau'A'=\pi'$, converging to $B,A$. Approximate $u,v$ rationally inside the same closed rational interval $[a,b]$. Thus the two phase tables are approximated jointly, with no stationary-row repair assumed after separate rounding.
+
+For completeness, put
+
+$$
+x_u=\max_i|u_i-u_i'|,\quad x_v=\max_j|v_j-v_j'|,
+\quad x_B=\max_i\operatorname{TV}(B_{i,\cdot},B'_{i,\cdot}),
+\quad x_A=\max_j\operatorname{TV}(A_{j,\cdot},A'_{j,\cdot}).
+$$
+
+Generate both tables' own normalized complete laws. Their maximal law differences satisfy
+
+$$
+z_p\le x_u+\frac23x_B+\frac23z_\beta,
+\qquad z_\beta\le x_v+\frac25x_A+\frac25z_p.
+\tag{11.26}
+$$
+
+Changing a Bernoulli emission costs its absolute difference; changing a successor row costs its TV by contraction through a probability-law kernel. The remaining terms are the continuing-law differences. Solving (11.26) shows $z_p,z_\beta\to0$. This argument compares the full normalized laws; its geometric stopping justification is the same as in (11.19).
+
+For every complete target $T$, the difference of configuration losses at p is at most
+
+$$
+z_p+\operatorname{TV}(\pi,\pi'),
+\tag{11.27}
+$$
+
+because the law-wise reverse triangle bound is $z_p$, and each remaining loss is a function with values in $[0,1]$. Suspension uses $z_\beta+\operatorname{TV}(\tau,\tau')$. These bounds do not depend on $T$. Both tables have their stationary rows on every acquired fourth history and the identical original posterior targets, so (11.27) gives the claimed full-history uniformity. $\square$
+

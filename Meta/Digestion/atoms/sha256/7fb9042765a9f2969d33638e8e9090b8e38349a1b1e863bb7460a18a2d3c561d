@@ -1,0 +1,10 @@
+**定理 498.1 的证明。** 令 $L=\log N$、$T_{ij}=\#\{d:d/H\in I_i\cap I_j\}=H\sigma(I_i,I_j)+O(1)$。由引理 498.3，对 $s\in[L,L+\log2]$，$R_2(I_i,I_j)+(s-1)T_{ij}=H(s-\log H)\sigma(I_i,I_j)+O_M(H)$。由引理 498.2 的三阶式，$|\Phi_3(s;\mathbf I)|\le C_M[\eta_M(H)(HL)^{3/2}+HL^2]$；由四阶式（重合类型的全部项保留在误差中），$\Phi_4(s;\mathbf I)=\sum_\pi\prod[R_2+(s-1)T]+O_M(\eta_M(H)H^2L^2+HL^3)$，代入上式并用 $HL^3=O_\alpha(H^2L)$，
+
+$$
+\Phi_4(s;\mathbf I)=H^2(s-\log H)^2\,\mathcal W_4(\mathbf I)+O_{\alpha,M}\bigl(\eta_M(H)H^2L^2+H^2L\bigr).
+$$
+
+不同位移的二阶主项为 $-H\log H\,\sigma$，重合位移补回 $H\log n\,\sigma$，四阶配对使用的方差是 $H\log(n/H)$。由引理 498.4，离散三阶矩除以 $N(HL)^{3/2}$ 后至多 $C\|w\|_{\mathrm{BV}}[\eta_M(H)+\sqrt{L/H}+N^{-1/2+\varepsilon}H^{3/2}L^{-3/2}]$；离散四阶矩的归一化误差至多 $C\|w\|_{\mathrm{BV}}[\eta_M(H)+1/L+N^{-1/2+\varepsilon}H^2L^{-2}]$，这里用到 $x\in[N,2N]$ 上 $(\log(x/H)/L)^2=\kappa_{N,H}^2+O(1/L)$。取 $0<\varepsilon<\frac12-2\beta$，则 $N^{-1/2+\varepsilon}H^2\le N^{-1/2+\varepsilon+2\beta}\to0$；这是本方法的界 $\beta<\frac14$。
+
+连续取样：若 $x=n+t$（$0\le t<1$），每个端点至多跨过一个整数，$|\Delta_{H,I}(x)-S_I(n)|\le2\log(4N)+2$，归一化后的 $L^4$ 误差为 $O_M(\sqrt{\log N/H})$；四个相同区间与 $w=1$ 的离散四阶式给出一致 $L^4$ 界，乘积的望远镜展开与 Hölder 不等式允许把离散增量换成连续增量。宏观权的单元误差满足 $\sum_n\int_n^{n+1}|w(x/N)-w(n/N)|\,dx\le\operatorname{Var}w$，结合粗界 $|Z_{N,H}|\ll_M\sqrt{H\log N}$，$k$ 阶乘积的权替换误差至多 $O_M(\|w\|_{\mathrm{BV}}(H\log N)^{k/2}/N)\to0$。实数 $H$ 换成 $\lfloor H\rfloor$ 只使物理端点 $x+aH$、$x+bH$ 移动 $O_M(1)$，增量变化 $O_M(\log N)$，同样处理。证毕。
+

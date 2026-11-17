@@ -1,0 +1,12 @@
+**Theorem 14.1 (All positive-integer extrema, with equality).** For every integer $N\ge3$, every $a>1$, and every positive integer labelled triple $x+y+z=N$, the actual integral-defined value of Convention 13.1 satisfies
+$$
+V(\kappa,b_0,b_1,b_2)\ \le\
+\mathrm{GM}^{(3)}_3(x:y:z;a)\ \le\
+V(\kappa,N-2,1,1),
+$$
+where $q=\lfloor N/3\rfloor$, $r=N\bmod3$, and
+$(b_0,b_1,b_2)=(q+[r>0],q+[r>1],q)$.
+These are exact extremal values by Theorem 13.2, evaluated at the displayed positive integer representatives; in particular exactly $r$ balanced entries equal $q+1$. The lower equality holds if and only if every pair of party sizes differs by at most one. The upper equality holds if and only if the triple is a permutation of $(N-2,1,1)$. All party labels, permutations and tied entries are retained.
+
+**Proof.** Sort any positive integer triple in descending order, calling its largest and smallest entries $u,w$. The total gives $b_0\le u$, $w\le b_2$, $u\le N-2$, and $1\le w$. These are exactly the first and second descending-prefix inequalities for the balanced triple to be more mixed than the given triple, and for the given triple to be more mixed than $(N-2,1,1)$. Apply Theorem 13.6 with the positive fixed parameter $\kappa$. Its equality is permutation equality. A descending integer triple of total $N$ has maximum minus minimum at most one exactly when it is the displayed balanced representative. Theorem 13.2 identifies the scalar expression with the original integrals. Both representatives have positive entries and total $N$, so both bounds are attained. ∎
+

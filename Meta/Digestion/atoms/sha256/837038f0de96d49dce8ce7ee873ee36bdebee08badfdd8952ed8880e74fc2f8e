@@ -1,0 +1,10 @@
+**Definition 2.5 (The unchanged cubic configuration exponent).** Let $\Gamma$ consist of the real numbers $\gamma\ge0$ for which there exist $C_M,C_T,s_0>0$ and, for every real $0<s<s_0$, one compliant observer $\mathcal A_s$ with finite complete count $M(s)$ such that
+
+$$
+M(s)\le C_Ms^{-\gamma},\qquad
+\max_{i=0,1}\mathbb E_{i,e^{-s}}^{\mathcal A_s}T\le C_Ts^{-3}.
+\tag{2.10}
+$$
+
+Set $\gamma_c=\inf\Gamma$. Constants may depend on fixed $H_c,\alpha$ and the chosen exponent, never on $s$. Attainment means $1\in\Gamma$ when $\gamma_c=1$; it does not mean exact finite-parameter optimizers exist. Section 7 proves both assertions.
+

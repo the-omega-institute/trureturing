@@ -1,0 +1,4 @@
+## 164. Countable successor stacks: prefix escape and the exact-kernel boundary
+
+Section 163 treats one finite successor horizon at a time. A countable stack of successor coordinates has a stricter exact kernel, so the finite-horizon argument must be diagonalized with its quantifiers kept visible. The next statements give the diagonal finite-prefix escape and record why it does not by itself produce a vector silent to every coordinate.
+

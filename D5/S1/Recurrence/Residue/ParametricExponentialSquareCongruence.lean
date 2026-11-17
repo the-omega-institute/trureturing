@@ -6,7 +6,11 @@
    utility: none
    digest: Odd parameters transport parity; endpoint separation gives residues modulo eight. -/
 
-/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891; linear_ode_unique. -/
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891; linear_ode_unique.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25663; exp_subst_zero.
+exp_subst_zero: proof_shape: bind-only; escape_witness: none.
+Direct frozen dependencies: none.
+Consumers: BalaQuarticEGFEventualDivisibility.cosh_constant and sourceSinh_constant. -/
 import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.RingTheory.PowerSeries.Exp
@@ -202,7 +206,7 @@ private theorem exponent_shape (q : ℤ) (hq : q ≠ 0) (f : ℕ → ℚ) (n : �
   push_cast
   field_simp
 
-private theorem exp_subst_zero (L : PowerSeries ℚ) (hL : constantCoeff L = 0) :
+theorem exp_subst_zero (L : PowerSeries ℚ) (hL : constantCoeff L = 0) :
     constantCoeff ((exp ℚ).subst L) = 1 := by
   rw [← coeff_zero_eq_constantCoeff_apply,
     coeff_subst' (HasSubst.of_constantCoeff_zero' hL), finsum_eq_single _ 0]
@@ -411,6 +415,7 @@ theorem family_conjectures :
       a 2 n % 8 = if n % 4 = 2 then 4 else if n % 4 = 0 then 0 else 2) :=
   ⟨parity_q5, parity_q3,
     ExponentialSquareWeightCatalanParity.hanna_conjecture, residues_q2⟩
+
 
 #print axioms family_conjectures
 #print axioms source_iff

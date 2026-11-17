@@ -1,0 +1,21 @@
+**引理119.7（紧集上的一侧接触导数）。**
+对紧集 $X$ 上连续函数 $b,h$，设 $U=\operatorname{argmax}_X b$、
+$Z=\operatorname{argmin}_X b$。则 $t\downarrow0$ 时
+
+$$
+\begin{aligned}
+\max_X(b+th)&=\max_Xb+t\max_Uh+o(t),\\
+\min_X(b+th)&=\min_Xb+t\min_Zh+o(t).
+\end{aligned}
+\tag{IX119.19}
+$$
+
+证明。固定 $U$ 中达到 $\max_Uh$ 的点给第一式差商下界。
+若 $x_t$ 达到扰动后的最大值，由 $h$ 有界，
+$b(x_t)\to\max_Xb$，任何极限点在 $U$。
+且
+$(\max_X(b+th)-\max_Xb)/t\le h(x_t)$，
+所以任意趋零序列的上极限不超过 $\max_Uh$。
+上下界一致。对最小值用固定 $Z$ 的点给上界，
+用极小点及 $b(x_t)\ge\min_Xb$ 给下界，完全相同地得到第二式。证毕。
+

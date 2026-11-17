@@ -1,0 +1,18 @@
+## 1. Mathematical scope and ownership
+
+For the fixed rational polynomial and stationary renewal experiment below, [Entropy-harmonic renewal converse and complete-state threshold](https://github.com/the-omega-institute/trureturing/blob/55bd69959604fd168733fbf1ea976765c9303010/docs/develop/theory/FIB_ENTROPY_HARMONIC_RENEWAL_STATE_THRESHOLD.md), abbreviated E, already establishes the all-budget eighth-power entropy lower bound, the necessity of $M(s)=\Omega(s^{-1})$ for a fixed cubic paid-mean target, and conditional matching state growth. Its Theorems 12.1–13.1 give the lower and necessity without its separate upper premise; its Corollary 14.2 gives the matching growth order conditional on that premise.
+
+The distinct contribution here is the two normalized likelihood-cap construction in Section 4, its directed entropy control at every interior $q$ and every finite cutoff, and the resulting explicit quantitative converse in Sections 5–6. Its squared cap-excess charge is bounded by a weighted sum of seventh powers, with both normalization factors included. The eighth-power budget order and necessary exponent one are credited to E; Section 11 compares the two analytical laws and the displayed coefficients exactly.
+
+Combining the established necessity with the counted upper in [Retuned finite-state cubic renewal upper bounds](FIB_RETUNED_FINITE_STATE_CUBIC_RENEWAL_UPPER.md), Theorem 8.1, abbreviated U, gives the credited consequence
+
+$$
+\gamma_c=1,
+$$
+
+and exponent one is attained, in the precise sense of Definition 2.5. Necessity holds even when the uniform cubic bound is imposed under only one fixed target label, while all six compliance conditions remain in force. Sufficiency uses one common observer under both labels at each known common parameter. Section 7 retains an alternative derivation through the paired-cap quantitative bound and an explicit correspondence with U. References to a new converse in the ensuing derivation denote this construction and its quantitative bound, not a previously absent growth exponent or eighth-power budget order.
+
+The exact source, complete-state normal form, initial-row estimate, positive-forest comparison and predictable tick payment are supplied by [Growing state budgets in the renewal paid-mean tradeoff](FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md), Sections 2–7, abbreviated G. Its Theorems 9.1–10.1 give the earlier all-budget eleventh-power lower bound with tenth-power budget deterioration and necessary configuration growth of order $s^{-4/5}$. E already improves that budget order to eighth power. The older deterministic bit-controller bridge uses Sections 28–30 of [Real renewal instruments and detector rank: finite observer memory](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_CONTINUATION.md), abbreviated C. Its logarithmic bit sufficiency, and the consequences of converting that count to configurations, are credited reuse.
+
+This is ordinary mathematical reference theory, conditional on the explicitly credited all-integer envelope and source moment premises. Its proofs are not independent review or Lean kernel certification. Entropy contraction, sequential information charging, directed forest formulas and absorbing random walks are classical methods. No worldwide originality or completion of the broader relational-observation programme is asserted. Existing source statements retain their own hypotheses and remain unchanged.
+

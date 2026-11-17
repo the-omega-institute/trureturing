@@ -1,0 +1,140 @@
+**定理 95.7（唯一有限寄存器候选的新静态入口）。** 在95.1、95.3、95.5的全部原输入下，
+95.5中的同一个 $d$ 必为三；一次固定 Pauli 校准后，对每个给定有限寄存器有
+
+$$
+\begin{gathered}
+V_N\simeq\operatorname{Herm}(2^N,\mathbb C),\qquad
+K_N=\mathcal D(2^N),\qquad C_N=\operatorname{Herm}_+(2^N,\mathbb C),\\
+Q_N=\{\operatorname{Ad}_U:U\in\mathrm{SU}(2^N)\}
+\cong\mathrm{PSU}(2^N)\ \subseteq G_N.
+\end{gathered}
+\tag{95.15}
+$$
+
+$Q_N$ 的每个作用由实际原语的有限字精确实现，不把极限操作宣告为实际。
+每个已有实际仿射效应按唯一矩阵 $E$ 表示，$0\le E\le I$、概率为 $\operatorname{Tr}(E\rho)$；
+原单元有全部这样的效应，全部有限联合 POVM 的实际实现还消费95.6的实现资源。
+每个满足95.6同事件参考条件的指定映射／分支为 CP，其原预算分别给 CPTP／CP-TNI；
+实际完整菜单的分支和给量子仪器。若同时保留95.6全部实现资源，则这些原寄存器间每个有限
+CPTP 映射和每个有限 CP 仪器都有实际的映射及结果标签层面的实现。
+
+证明。先由95.2—95.3取得 Library 二元附录 §1 所需的整个原球、全部原规范比较效应和
+同一实际紧连通整球面传递 $H$。不是对 $K_N$ 作新定义：95.5逐项给该附录 §2 的
+原紧凸全张成基、忠实乘积层析、实际产品和固定校准，(95.11)给其原概率界，
+(95.12)给其全实路径及整个旁观者恒等放置。以下逐段应用该处已经证明的接口，
+保留其前件和结论域，不重证群分类、有限控制、END 或仪器构造。
+
+先令 $\Gamma_2$ 为局域 $H$ 和全部 $g(t)$ 的实际有限字子群，
+$C_2^{\rm an}=\overline{\Gamma_2}$ 仅为数学矩阵闭包。
+Library §2 的 *Analytic compactness lemma* 用原紧凸全张成 $K_2$ 的对称凸包范数，
+给紧连通矩阵 Lie 群 $C_2^{\rm an}$，保原 $K_2$、归一和产品概率；此时闭包仍未被宣布实际。
+其技术分类直接使用 Masanes–Müller–Pérez-García–Augusiak，
+[arXiv:1111.4060v4](https://arxiv.org/abs/1111.4060v4)，PDF 第10页 Theorems 1–2及
+§IV A 第16—18页的球面作用表。95.2给 $H$ 的忠实正交整球面作用，连通性给其 $\mathrm{SO}(d)$
+范围；固定单位 $a$ 的测试给分类所需
+
+$$
+\widehat H\times\widehat H\le C_2^{\rm an},\qquad
+\tfrac14(\widehat a\otimes\widehat a)\cdot
+C_2^{\rm an}(\widehat a\otimes\widehat a)\subseteq[0,1].
+\tag{95.16}
+$$
+
+原非局域路径越出整个局域旋转群，排除 Theorem 1 的非 $\mathrm{SO}(3)$ 情形及
+Theorem 2 的局域选项。故 $d=3,H=\mathrm{SO}(3)$，且
+
+$$
+C_2^{\rm an}=Q_2\quad\text{或}\quad T_1Q_2T_1=:H_2.
+\tag{95.17}
+$$
+
+固定 Pauli 识别把单元 $(1,a)$ 送到 $(I+a\cdot\sigma)/2$。明确地，取
+
+$$
+\begin{gathered}
+\sigma_0=I_2,\quad
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\\
+\rho(\omega)=2^{-N}\sum_{\mu_1,\ldots,\mu_N=0}^3
+\omega_{\mu_1\ldots\mu_N}\,
+\sigma_{\mu_1}\otimes\cdots\otimes\sigma_{\mu_N}.
+\end{gathered}
+$$
+
+这是同一 $F^{\otimes N}$ 后的一次固定识别；在两个集合包含证明之前，每个原态仅被识别为
+迹一 Hermitian 矩阵，尚未预付 PSD。
+此处 $Q/H$ 指普通和部分转置的控制扇区，不是实／复／四元数三种数域。
+在同一 Pauli 坐标中 $T_i$ 只转置第 $i$ 因子、反射其 $y$ 分量；它是解析坐标变换，未被当作物理门。
+
+应用同 §2 的 *Exact-generation lemma*：两种闭包的 Lie 代数均为简单非交换
+$\mathfrak{su}(4)$，实际子群含完整非平凡局域连通 Lie 子群。
+该引理的共轭张成空间是全 Lie 代数的理想；从实际共轭方向取基，反函数定理给实际有限字中的
+开单位邻域，连通性遂使 $\Gamma_2=C_2^{\rm an}$。
+因此(95.17)的整群现在才成为实际有限控制。这里复用引理的全部 subgroup、完整实参数、简单性条件，
+没有用“稠密即精确”的错误替代；该引理的两环面控制已在 Library §2 给出。
+每条给定边可嵌入同一有限字，因为每个原语都满足(95.12)，无需假设任意二体群可搬运。
+
+在选择扇区之前，Library §3 的 *Pair-state lemma before choosing a branch* 已给原整个
+$K_2=\mathcal D(4)$ 或 $T_1\mathcal D(4)$。
+95.5的 END 正好匹配该处预选择接口，因而可应用 *Theorem (END excludes the reflected branch)*。
+其依赖顺序是：若为 $H$，路径上的实际有限 $H_{12},H_{23}$ 字给
+$T_2Q_3T_2$，其中有普通 $Q_{13}$，从原乘积态可制备普通端点 Bell 与中腿纯态的乘积。
+END 的同一原 $K_2$ 范围会含普通 Bell，而此前已得 $K_2=T_1\mathcal D(4)$；
+$T_1(\mathrm{Bell})=\mathrm{SWAP}/2$ 的负特征值 $-1/2$ 排除它，矛盾。
+这只核对原定理在本章数据上的消费次序，END 并非由选出 $Q$ 以后的 SWAP 或酉扩张构造倒推。
+原三角形接口是 Library §3 的替代充分条件；本章已经选 END，不再把第三条原边列为额外原语。
+
+选择 $Q$ 后，每个原有限连通图应用同 §3 的 *Finite graph generation on one carrier*，
+得实际有限字 $Q_N\subseteq G_N$。随后 *All finite original states and controls* 给两个包含，
+其使用条件在这里均保持：原纯乘积态的 $Q_N$ 轨道覆盖全部秩一投影，有限谱混合与原凸性给
+$\mathcal D(2^N)\subseteq K_N$；原全张成层析已把每个原态表示为迹一 Hermitian 矩阵，
+若有负特征值，实际 $Q_N$ 将其特征向量送到原乘积读出方向，(95.11)会读到该负值，故
+$K_N\subseteq\mathcal D(2^N)$。这两个包含针对整个原 $K_N$，不是只描述一个被生成的正子模型。
+$N=1$ 由 $d=3$ 的整球结论给出，锥按正质量齐次化，取得(95.15)。
+没有分类整个 $G_N$ 的离散部分或未供应参考接口的原不可逆事件。
+
+接着对每个指定原事件应用 Library §4 的 *Theorem (rectangular CP and exact budgets)*。
+(95.13)的参考维数恰为输入维数，输出锥由(95.15)已是整个原 PSD 锥，
+原实线性乘积扩张合同识别的仍是同一个 $\widetilde\phi_e$。
+Watrous，[Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，Theorem 2.22、
+Theorem 2.26与 Corollary 2.27，分别在印刷页82—83、87—89，给矩形 CP、Kraus和预算的成熟接口。
+按本章归一 Choi 和因子次序，其结果准确为
+
+$$
+\begin{gathered}
+\widetilde\phi_e(X)=\sum_\alpha A_{e\alpha}X A_{e\alpha}^{\dagger},\qquad
+A_{e\alpha}:\mathbb C^{D_n}\to\mathbb C^{D_m},\qquad
+E_e=\sum_\alpha A_{e\alpha}^{\dagger}A_{e\alpha},\\
+\operatorname{Tr}\phi_e(X)=\operatorname{Tr}(E_eX),\qquad
+\operatorname{Tr}_{\rm out}J_e=E_e^{\mathsf T}/D_n,\\
+\mathrm{TP}\Longleftrightarrow E_e=I_{D_n},\qquad
+\mathrm{TNI}\Longleftrightarrow0\le E_e\le I_{D_n}.
+\end{gathered}
+\tag{95.18}
+$$
+
+每个非零分支应用该接口；零映射直接 CP。原完整菜单的真和与总 TP 给
+$\sum_a E_a=I$ 及总 CP，不再需要总 Choi 探针。
+同一已有联合上下文的参考预算为 $I_R\otimes E_a$；这是原预算的数学后果，
+不制造其它参考上下文。$p_a=\operatorname{Tr}\phi_a(\rho)>0$ 时条件态为
+$\phi_a(\rho)/p_a$，$p_a=0$ 时正输出为零且原零记录／权限保留。
+
+最后，若支付95.6的实现资源，直接应用同 §4 的 *Theorem (all finite register channels and instruments)*。
+为明确矩形尺寸与实际空间的对应，对通道 Kraus 数 $r$ 选有限 $k$ 满足
+$2^k\ge r$、$m+k\ge n$，置 $q=m+k-n\ge0$；对有限仪器使用
+$R=\sum_a\max(1,r_a)$ 并取 $2^k\ge R$，其余条件相同。
+这是同一原定理的参数替换：等距映射占据 $m+k=n+q$ 个二元单元，
+补齐 $q$ 个实际纯辅助单元后，原实际 $Q_{m+k}$ 实现其酉延伸，最后按 typed 合同丢弃或读取 $k$ 个指针单元。
+每个命名零分支占一个零 Kraus 编码，所有未用编码亦补零；(95.14)和真实归组准确还原各原指定 CP 分支。
+先加未归一输出，后在正质量处条件化，空辅助串／环境串采用原定理的恒等约定。
+若输入或输出指数为零，标量质量载体遵循 Library 的 $d=1$、$b=1$ 分支，
+不要求新物理类型；非平凡标量结果仍可用有限二元指针实现。
+这里原二维幂尺寸的补齐条件不能删成仅有 Kraus 秩下界。
+
+任意原仿射 proper 效应在完整 Hermitian 载体上由唯一 $0\le E\le I$ 表示，给所述 Born 公式；
+有限 POVM 可在同一实现定理中取 $A_a=\sqrt{E_a}$，于是全部有限联合 POVM 连同一种 Lüders 实现可用。
+这是可实现的选择，不是对原既有事件更新的唯一性结论，也不增设锐中性前提。
+一个构造的酉扩张与原事件有相同矩阵映射，并不把其原上下文、历史或合法未来识别为同一。
+完整应用因而保留了原资源，且每一步只消费已取得的上游结论。证毕。
+

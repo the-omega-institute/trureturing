@@ -1,0 +1,23 @@
+**Proposition 144.1 (the constant $B$ limit is separated in $L^1$).** For every original $\theta$, the sequence of Theorem 143.2 satisfies
+
+$$
+\mathbf1_{D_{n,B}}\overset{*}{\rightharpoonup}\frac14,\qquad
+m(D_{n,B})\longrightarrow\frac14,\qquad
+\left\|\mathbf1_{D_{n,B}}-\frac14\right\|_{L^1(m)}
+\longrightarrow\frac38.
+\tag{144.1}
+$$
+
+It has no $L^1(m)$-convergent subsequence in its $B$ component, and the four-component sequence is not relatively compact in the product $L^1$ topology.
+
+*Proof.* The first limit is (143.4); pairing it with the constant $1\in L^1(m)$ gives the second. For any Borel $B'\subset G$, $m(G)=1$ gives the exact identity
+
+$$
+\left\|\mathbf1_{B'}-\frac14\right\|_1
+=\frac34m(B')+\frac14(1-m(B'))
+=\frac14+\frac12m(B').
+\tag{144.2}
+$$
+
+This proves the last limit. If a subsequence converged in $L^1$ to $u$, then pairing with every bounded test, together with its weak-star limit, would give $u=1/4$ almost everywhere. This contradicts the last limit in (144.1). Product relative compactness would imply relative compactness of this component, so it fails as well. $\square$
+

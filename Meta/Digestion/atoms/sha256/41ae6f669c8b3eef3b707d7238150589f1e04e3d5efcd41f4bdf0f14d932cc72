@@ -1,0 +1,70 @@
+**定理 C-96.3（该族的凸屋顶精确值）。** 采用标准两二元因子 concurrence 的凸屋顶定义
+
+$$
+\mathcal C(\sigma)=\inf_{\sigma=\sum_jt_j|\phi_j\rangle\langle\phi_j|}
+\sum_jt_j\,2|\det B_j|,
+\quad t_j\ge0,\quad\sum_jt_j=1,\quad\|\phi_j\|=1,
+\tag{C96.7}
+$$
+
+其中 $B_j$ 是 $\phi_j$ 的标准 $2\times2$ 系数矩阵。则
+
+$$
+\mathcal C(\sigma_\gamma)=2\gamma\sqrt{\nu(1-\nu)},\qquad
+\mathcal C(\sigma_\gamma)^2=\frac8{r^2}
+\left(q_\Omega-\tfrac12w(r-w)\right).
+\tag{C96.8}
+$$
+
+定义及一般两量子位凸屋顶的经典来源为 Wootters，
+*Entanglement of Formation of an Arbitrary State of Two Qubits*，
+[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7)、(10)、(19)–(22)
+及等 concurrence 分解的证明。此处对所给支撑另给上下界一致的直接计算，
+不把一般混态事件概率等同于 concurrence。
+
+证明。先以局部酉换基把 $b_0,b_1$ 送到 $|0\rangle,|1\rangle$，
+于是 $e_0,e_1$ 送到 $00,11$。
+纯态系数矩阵在局部酉下变为 $UBV^{\mathsf T}$，其行列式模不变；
+该变换双射地对应所有纯态分解，所以凸屋顶也不变。
+
+对任意分解及任意位于 $\operatorname{span}\{00,11\}$ 正交补内的 $v$，有
+
+$$
+0=\langle v|\sigma_\gamma|v\rangle
+=\sum_jt_j|\langle v|\phi_j\rangle|^2.
+\tag{C96.9}
+$$
+
+每项非负；取正交补的一组基，说明每个 $t_j>0$ 的纯成分都在该二维空间内。
+因此写成 $a_j|00\rangle+b_j|11\rangle$，$|a_j|^2+|b_j|^2=1$，
+纯态 concurrence 恰为 $2|a_jb_j|$。
+这个论证也适用于 $\gamma=1$ 的更小实际支撑。
+用交叉矩阵元及三角不等式，任意分解满足
+
+$$
+\sum_jt_j\,2|a_jb_j|
+\ge2\left|\sum_jt_ja_j\bar b_j\right|
+=2|(\sigma_\gamma)_{00,11}|=2\gamma\sqrt a.
+\tag{C96.10}
+$$
+
+另一方面，下面是含实际归一化纯成分的分解：
+
+$$
+\sigma_\gamma=
+\gamma|\Phi\rangle\langle\Phi|
++(1-\gamma)(1-\nu)|e_0\rangle\langle e_0|
++(1-\gamma)\nu|e_1\rangle\langle e_1|.
+\tag{C96.11}
+$$
+
+三个权重非负且和为一，展开给式 (C96.1)；两个 $e_i$ 是乘积态，
+而 $\Phi$ 的 concurrence 为 $2\sqrt a$。
+所以此分解的平均值是 $2\gamma\sqrt a$，达到下界。
+由式 (C96.3) 的 $q_{--}-h/2=h\gamma^2/2$ 得第二式。证毕。
+
+$\gamma=0$ 可分离，$\gamma>0$ 时任何纯乘积分解都会有零平均 concurrence，
+与式 (C96.10) 矛盾，所以条件态纠缠。
+$\gamma$ 描述密度矩阵中相干项的保留量；$\gamma<1$ 时的混态
+不具有一个由纯振幅唯一决定的 $\chi$。不同纯态分解也不能被指定为唯一隐藏纯相位。
+

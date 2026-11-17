@@ -1,0 +1,11 @@
+**推论 498.5（单长度接口）。** 设 $\mathrm{HL}_4(\beta)$。则 (490.2) 在 $\alpha<\theta<\beta$ 的带上成立，且对 $\mathsf B=1-\gamma-\log(2\pi)$（Montgomery–Soundararajan 2004 定理 3 的次项常数），使在 $Y^\alpha\le v\le Y^\beta$ 上一致地 (497.6) 成立。因此对 $\alpha<\theta<\beta<\frac14$，
+
+$$
+\mathrm{HL}_4(\beta)\ \Longrightarrow\ (490.2),\ (497.6),\ (\mathrm L_4),\ (\mathrm F_3),\ (\mathrm F_4),
+\tag{498.9}
+$$
+
+从而定理 494.2 的结论在 $\mathrm{HL}_4(\beta)$ 下对 $E=\psi-\mathrm{id}$ 与 $\alpha<\theta<\beta<\frac14$ 成立。
+
+证明。Montgomery–Soundararajan 2004 定理 3 在其相关误差假设 (20) 下，对整数长度 $\log Y\le K\le Y^{1/k}$ 给出 $\sum_{n\le Y}D_K(n)^k$（$k=2,4$）带显式误差的渐近；$k=4$ 时主项为 $3K^2\int_1^Y(\log(y/K)+\mathsf B)^2dy$，误差除以 $YK^2\log^2(Y/K)$ 后在 $Y^\alpha\le K\le Y^\beta$ 上一致趋于零（$\beta<\frac14$）。取 $K=\lfloor v\rfloor$；连续取样的替换 $|D_v(x)-D_K(\lfloor x\rfloor)|\ll\log Y$ 由 Hölder 不等式与四阶上界控制，主项中 $K$ 换成 $v$ 的误差为 $O(Yv\log^2Y)$。得 (497.6)；$k=2$ 同理给出 (490.2)。$(\mathrm L_4)$ 由引理 497.5 得到，$(\mathrm F_3)$、$(\mathrm F_4)$ 由定理 498.1 得到；再由推论 497.4 与引理 497.5，定理 494.2 的假设全部成立。证毕。
+

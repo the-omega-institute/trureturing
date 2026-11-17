@@ -1,0 +1,38 @@
+**Proposition 170.1 (rotation-odd classes annihilate the full linear successor stack).** Let $J=R_\pi$ be the half-turn in the $(x,y)$ coordinates, and let $J^*$ denote pullback on functions. Use the pointwise rotation-invariant representative $\beta$ of $g_d$ supplied by Appendix III Proposition 136.2 in the formulas (134.7). Since $[\beta]=[b]$, this replacement leaves the $L^2(m)$ classes of all $f_y$, and hence the plane $W$ of (166.2), unchanged. Define
+
+$$
+V_-:=\{v\in L^\infty(G,m;\mathbb R):J^*v=-v\ \text{$m$-a.e.}\}.
+\tag{170.1}
+$$
+
+Then
+
+$$
+V_-\subseteq W_\infty
+ =L^\infty(G,m;\mathbb R)\cap
+ \overline{W+\mathcal C_R}^{\,H\,\perp},
+\qquad
+\mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
+ \{P^j\psi_{yzw}:j\ge0,\ (y,z,w)\in\mathcal L^3\}}^{\,H}.
+\tag{170.2}
+$$
+
+In particular, every rotation-odd class satisfies all first-order constraints and all their specified heat-successor constraints.
+
+*Proof.* Appendix III §136 gives that $m$, $g_s$ and $T_s$ are invariant under the circle action and that $T_s$ commutes with its pullbacks. With the invariant representative $\beta$, the functions $g$ and $f_y$ are $J^*$-invariant. Each representer in (166.1) is obtained from these functions by multiplication and by $P=T_d$, so
+
+$$
+J^*\psi_{yzw}=\psi_{yzw}.
+\tag{170.3}
+$$
+
+Commutation gives $J^*P^j\psi_{yzw}=P^j\psi_{yzw}$ for every $j$. If $v\in V_-$ and $\psi$ is any one of these invariant classes, invariance of $m$ and the change of variables $x\mapsto Jx$ give
+
+$$
+\langle v,\psi\rangle_H
+ =\langle J^*v,J^*\psi\rangle_H
+ =-\langle v,\psi\rangle_H,
+$$
+
+so the pairing is zero. Thus $v$ is orthogonal to $W$ and to $\mathcal C_R$, hence to their closed sum, proving (170.2). The identity (166.4) and the successor-kernel formula (166.10) give the stated interpretation. $\square$
+

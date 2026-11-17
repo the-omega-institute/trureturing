@@ -1,0 +1,65 @@
+**情形 A：$e\ne0$ 且 $b>0$。** 先由 (38.12) 取 $se>0$。置
+
+$$
+M=-\frac{7e}{2}-s,\qquad
+X=\begin{pmatrix}
+2d+\dfrac{5b^2}{M}&\iota b\\
+-\iota b&-\dfrac e2-s
+\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\\dfrac{(2+\iota)b}{M}\end{pmatrix}.
+\tag{38.15}
+$$
+
+因为 $se>0$，$M$ 不为零；$b>0$ 还保证 $u_2u_3\ne0$。直接计算
+
+$$
+R_+=\begin{pmatrix}
+\dfrac{5b^2}{M}&(-2+\iota)b\\
+(-2-\iota)b&M
+\end{pmatrix},\qquad
+R_+u=0,
+\tag{38.16}
+$$
+
+确切地，第一行乘以 $u$ 是
+$5b^2/M+(-2+\iota)(2+\iota)b^2/M=0$，第二行乘以 $u$ 是
+$(-2-\iota)b+(2+\iota)b=0$。
+
+其中 $( -2+\iota)(2+\iota)=-5$，而第二行满足
+$(-2-\iota)+(2+\iota)=0$。逐项形成的另一列是
+
+$$
+S_-=\begin{pmatrix}
+-3d-\dfrac{10b^2}{M}&(1-2\iota)b\\
+(1+2\iota)b&\dfrac{5e}{2}+2s
+\end{pmatrix}
+=-\frac32X-\frac12R_+ .
+\tag{38.17}
+$$
+
+第一行、第二行的等式分别由
+$-3d-10b^2/M=-3X_{11}/2-5b^2/(2M)$、
+$5e/2+2s=-3X_{22}/2-M/2$ 以及对应的非对角条目直接给出，故
+$S_-u=-3Xu/2$。
+
+系数 $-3/2$、$-1/2$ 都是真实数，所以 (38.5) 可用。令
+
+$$
+ n=|u_3|^2=\frac{5b^2}{M^2},\qquad
+w=\operatorname{Re}(u^*TP_3u)=\frac{2b^2}{M}+en,\qquad
+v=\operatorname{Im}_{\iota}(u^*XP_3u)=\frac{2b^2}{M}.
+\tag{38.18}
+$$
+
+第一项来自 $b u_3$ 的实部，第二项来自
+$\iota b u_3=(-1+2\iota)b^2/M$；$X_{22}$ 项为实数。故
+$w-v=en$，由 (38.6)
+
+$$
+\psi_u(L)=-2sen=-\frac{10seb^2}{M^2}\ne0,\qquad
+\mathcal A_+=\mathcal A_-=0 .
+\tag{38.19}
+$$
+
+所有分母均已在 $M\ne0$ 处核对，$d$ 没有任何限制。
+

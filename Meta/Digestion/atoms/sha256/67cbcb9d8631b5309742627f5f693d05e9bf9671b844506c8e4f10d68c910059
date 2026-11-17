@@ -1,0 +1,27 @@
+#### 定理 8.3：递归二元参考充分恢复完全正性
+
+对复线性 $\Phi:M_d\to M_e$，以下三项等价：
+
+1.  $\mathsf P_{\rm ref}(\Phi)$ 成立；
+
+2.  $C_\Phi=(\Phi\otimes\operatorname{id}_d)(|\Gamma\rangle\langle\Gamma|)\ge0$， 其中 $|\Gamma\rangle=\sum_{i=1}^d|i\rangle|i\rangle$；
+
+3.  存在有限矩阵族 $K_\mu$，使 $`\Phi(X)=\sum_\mu K_\mu XK_\mu^*`$。
+
+而 $\Phi$ 迹不增、保迹，分别等价于 $`\sum_\mu K_\mu^*K_\mu\le I`$、$=I$。
+
+**证明。**
+
+选 $2^n\ge d$，将 $\mathbb C^d$ 等距嵌入参考 $\mathbb C^{2^n}$。 对嵌入后的 $|\Gamma\rangle\langle\Gamma|$ 用第一项，再压回该参考子空间，得到第二项。 将正矩阵 $C_\Phi$ 分解成有限秩一和 $\sum_\mu|v_\mu\rangle\langle v_\mu|$， 按输出、输入两个指标把 $v_\mu$ 重排成矩阵 $K_\mu$。 比较 $C_\Phi$ 中每个输入矩阵单位的系数即得第三项。 反向，任意参考上的 $`\sum_\mu(K_\mu\otimes I)X(K_\mu^*\otimes I)`$ 都保持正性。 最后 $`\operatorname{Tr}\Phi(X)=\operatorname{Tr}[X\sum_\mu K_\mu^*K_\mu]`$， 在全部正 $X$ 上比较迹即得相应算子不等式或等式。
+
+$\square$
+
+这是 Choi–Kraus 表示的完整有限证明，其标准等价式见 Watrous 定理 2.22。[\[20\]](#ref-watrous) 对直和源 $\bigoplus_iM_{d_i}$ 与目标 $\bigoplus_jM_{e_j}$，完全正过程恰为
+
+$$
+\Phi((X_i)_i)_j=\sum_{i,\mu}K_{ji\mu}X_iK_{ji\mu}^*,
+\qquad K_{ji\mu}:\mathbb C^{d_i}\to\mathbb C^{e_j}.
+$$
+
+证明只需将输入块嵌入、输出块压缩与原箭头复合，对每个分量应用单块定理； 反向是这些完全正分量的有限和。 保迹条件为每个 $i$ 的 $`\sum_{j,\mu}K_{ji\mu}^*K_{ji\mu}=I_{d_i}`$， 迹不增将等号换成 $\le$。 只要求局部正性不够：转置 $T$ 保正，但 $(T\otimes\operatorname{id})(|\Gamma\rangle\langle\Gamma|)$ 是交换算子， 在反对称二体向量上取负本征值。二元参考的递归量词不能删除。
+

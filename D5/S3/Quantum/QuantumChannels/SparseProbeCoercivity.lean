@@ -6,7 +6,9 @@
    utility: none
    digest: A full-support complex probe controls the scalar defect of every complex matrix. -/
 
-import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25592. -/
+
+import Mathlib.Tactic
 
 noncomputable section
 open Matrix Complex
@@ -37,7 +39,7 @@ private theorem sub_sq_le (x y : ℂ) :
   simp only [normSq_apply, sub_re, sub_im]
   nlinarith [sq_nonneg (x.re+y.re), sq_nonneg (x.im+y.im)]
 
-private theorem residual_identity (x v : Fin d → ℂ)
+theorem residual_identity (x v : Fin d → ℂ)
     (hv : ∑ i, normSq (v i) = 1) :
     let c := ∑ i, conj (v i) * x i
     ∑ i, normSq (x i - c * v i) = (∑ i, normSq (x i)) - normSq c := by
@@ -170,5 +172,4 @@ theorem sparse_probe_coercivity (C : Matrix (Fin d) (Fin d) ℂ)
   apply (div_le_iff₀ (by linarith : 0 < 2+μ)).mpr
   nlinarith
 
-#print axioms sparse_probe_coercivity
 end D5.S3.Quantum.QuantumChannels.SparseProbeCoercivity

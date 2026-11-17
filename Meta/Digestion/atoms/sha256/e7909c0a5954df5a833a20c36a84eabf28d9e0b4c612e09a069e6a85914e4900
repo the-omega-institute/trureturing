@@ -1,0 +1,6 @@
+**命题 77.2（删去理想性或唯一性会发生什么）。** 准确原代表空间的任意伴随封闭补空间不够；每个词仅有原代表而不要求唯一也不够。这两种弱化都有实际有限矩阵反例。
+
+证明。取 $E=H_2(\mathbb C)$、$B=M_2\oplus M_2^{\rm op}$、$V_0=\{(a,a^{\rm op})\}$。子空间 $W=\{(b,2b^{\rm op}):b\in M_2\}$ 伴随封闭且 $B=V_0\oplus W$，但它不是理想。沿它的投影为 $P(x,y^{\rm op})=j(2x-y)$，所以原代表乘法为 $a\star b=2ab-ba$，74.1响应为标准 $i[a,b]/2$ 的三倍。Pauli输入的原 $B(a,b)=1$，这个响应平方却为 $9$，故PY失败；唯一线性还原自身不保证乘法相容。
+
+再取 $E=H_2(\mathbb C)\oplus\mathbb R$，其包络 $B=M_2\oplus M_2^{\rm op}\oplus\mathbb C$，$V_0=\{(a,a^{\rm op},\lambda)\}$。真双边星理想 $\mathfrak m=0\oplus M_2^{\rm op}\oplus\mathbb C$ 满足 $B=V_0+\mathfrak m$，但 $V_0\cap\mathfrak m=0\oplus0\oplus\mathbb C\ne0$。同一个原经典分量的所有值在商中被合并，原代表不唯一；这破坏原对象的忠实保留，而不只是选取某个符号不便。两例只结算所述弱化，不宣称候选全部条件已逐项证明独立。∎
+

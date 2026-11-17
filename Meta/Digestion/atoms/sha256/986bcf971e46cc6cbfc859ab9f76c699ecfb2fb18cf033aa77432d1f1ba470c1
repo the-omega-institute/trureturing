@@ -1,0 +1,113 @@
+**Proposition 145.2 (the signed-pencil index on every invariant slack set).** For every nonzero $\lambda\in\mathbb R^3$, the symmetric quadratic form $u\mapsto Q_\lambda(u,u)$ has infinite negative index on $\mathcal V_{A,-}$. The same remains true after imposing any finite family of homogeneous real bounded linear constraints on $\mathcal V_{A,-}$.
+
+*Proof.* Use the invariant analytic representatives of $g$ and $q_i$ on the connected set $\Omega=\{x^2+y^2>0\}$ supplied by Appendix II §§120, 122 and 133. Write $q=q_\lambda$. This is a real invariant analytic function. Injectivity of the actual $P$ shows that $q\ne0$: otherwise $r_\lambda=0$ almost everywhere, and the positive measure of each cell in (136.1) forces $\lambda=0$.
+
+The ratio $q/g$ is not constant almost everywhere. Indeed $g=P\beta$ by Proposition 136.2. If $q=c_0g$, injectivity gives $r_\lambda=c_0\beta$. The case $c_0=0$ has just been excluded. For $c_0\ne0$, this identity makes the analytic representative of $g_d=[\beta]$ constant on each positive-measure cell. Analytic uniqueness on $\Omega$ would make $g_d$ constant everywhere there, contradicting Proposition 135.2. This argument concerns the analytic representative of $g_d$, not the arbitrary values of the Borel representative $\beta$ on null sets.
+
+Let $F$ be the half-circle section of Theorem 137.1, and let $k$ be its nonsingular odd heat kernel (137.3). The localized kernel of the symmetric polarization is
+
+$$
+s_\lambda(x,y)=\frac{g(x)q(y)+q(x)g(y)}2\,k(x,y).
+\tag{145.4}
+$$
+
+First suppose $m(A\cap\{q<0\})>0$. Intersect with the density points of $A$ and with $\{g>0\}$. In the quotient coordinates of (136.5), Fubini's theorem gives one rotation orbit containing a positive-angular-measure set of these points in $\operatorname{int}F$. For every $n$, choose $n$ distinct such points $x_1,\ldots,x_n$. Invariance makes $g(x_j)=g_0>0$ and $q(x_j)=q_0<0$ independent of $j$. Half-turn invariance of $A$ makes all reflected points density points as well. The bounded odd localized indicators supported in $A$, constructed as in (137.5), have symmetric Gram matrices tending to
+
+$$
+4g_0q_0\bigl(k(x_i,x_j)\bigr)_{i,j=1}^n.
+$$
+
+Nonsingularity makes this limit negative definite. Small enough neighborhoods therefore give an $n$-dimensional negative subspace. This uses a slice of the density set, not invariance of $A$ under the full rotation circle.
+
+It remains to consider $q\ge0$ almost everywhere on $A$. Since $q$ is nonzero analytic, its zero set is null. Choose a relatively compact positive-measure Borel set $A_0\subset A\cap\operatorname{int}F$ on which $g,q\ge\epsilon_0>0$, and let $A_0^*$ be its density points. Continuity gives the same lower bounds at every point of $A_0^*$. Suppose, for a contradiction, that the negative index on $\mathcal V_{A,-}$ is finite, say $\kappa$. Localization as in (137.5) implies that every finite Gram matrix of $s_\lambda$ on $A_0^*$ has at most $\kappa$ negative eigenvalues.
+
+For each positive scalar $\tau$, define on $A_0^*$
+
+$$
+\gamma_\tau=\frac{\tau g-q}{\tau g+q},\qquad |\gamma_\tau|\le1.
+\tag{145.5}
+$$
+
+The exact identity
+
+$$
+s_\lambda(x,y)=\frac{(\tau g(x)+q(x))(\tau g(y)+q(y))}{4\tau}
+\bigl(1-\gamma_\tau(x)\gamma_\tau(y)\bigr)k(x,y)
+\tag{145.6}
+$$
+
+and positive diagonal congruence give at most $\kappa$ negative squares for the last kernel. Repeated points follow by pullback from a distinct-point matrix; the real symmetric matrices have the same real and complex Hermitian inertia. Use $\mathcal H_-=T_{d/2}L^2_-$ with its inverse-heat norm, restricted to $F$, exactly as in (137.2). Its kernel is nonsingular by (137.4). Every member of $\mathcal H_-$ and every sum of two products of its members is analytic on $\Omega$. Thus $A_0^*$ is a uniqueness set for both classes: apply Mityagin, [*The zero set of a real analytic function*, Proposition 0](https://arxiv.org/html/1512.07276v1), to real and imaginary parts, using local equivalence of $m$ and Lebesgue measure. These are both uniqueness hypotheses of Agler--Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1).
+
+That theorem, with its kernel parameter equal to $1$, gives a closed finite-codimensional $W_\tau\subset\mathcal H_-$ and a bounded $L_\tau:W_\tau\to\mathcal H_-$ satisfying $L_\tau u=\gamma_\tau u$ on $A_0^*$. Analytic uniqueness extends the product identity to all of $\Omega$:
+
+$$
+(\tau g+q)L_\tau u=(\tau g-q)u\qquad(u\in W_\tau).
+\tag{145.7}
+$$
+
+This identity forces $q\ge0$ on all of $\Omega$ under the finite-index supposition. To prove this, if $q<0$ somewhere, continuity and $g>0$ almost everywhere give a point $x_0\in\Omega$ with $g(x_0)>0>q(x_0)$. Choose $\tau=-q(x_0)/g(x_0)>0$. Along the whole rotation orbit of $x_0$, the left coefficient in (145.7) is zero and the right coefficient is the same strictly positive number $2\tau g(x_0)$. Consequently every $u\in W_\tau$ vanishes at every point of that orbit. Choose arbitrarily many distinct representatives $x_1,\ldots,x_n$ in $\operatorname{int}F$. Their evaluation vectors $k(\cdot,x_j)$ are linearly independent by (137.4), and all belong to $W_\tau^\perp$. This contradicts its finite dimension. This is the finite singular-set obstruction underlying Agler--Young Lemma 2.3, applied here to the actual odd heat kernel and the original rotation orbit.
+
+In particular the finite-index supposition now supplies, rather than assumes, a global real invariant multiplier
+
+$$
+\gamma=\frac{g-q}{g+q}\quad\text{where }g+q>0,\qquad
+\gamma=0\quad\text{on its null complement},\qquad |\gamma|\le1.
+$$
+
+A zero of a signed denominator with $g>0$ forces the common orbit vanishing in (145.7). After the deduction $q\ge0$, all zeros of $g+q$ lie in $\{g=0\}$, which is null. With $\tau=1$, (145.7) gives $L_1u=\gamma u$ globally as $L^2(m)$ classes. Here no global lower bound on $g+q$ is used.
+
+For clarity, the operator steps of (137.8)--(137.13) now have the following global premises. The space
+
+$$
+D=\{u\in\mathcal H_-:\gamma u\in\mathcal H_-\}
+$$
+
+contains the closed finite-codimensional $W_1$, so it is itself closed and finite codimensional: $D/W_1$ is a subspace of the finite-dimensional quotient $\mathcal H_-/W_1$. Its multiplication map has closed graph, because convergence in $\mathcal H_-$ implies convergence in $L^2(m)$ and $M_\gamma$ is bounded on that entire $L^2$ space. The closed graph theorem makes multiplication bounded on $D$ in the heat norm. The full rotation circle preserves $D$ and $D^\perp$. Choose a positive odd angular character $\ell$ absent from the finite-dimensional representation on $D^\perp$. Its entire heat sector is contained in $D$ and is nonzero by injectivity of heat propagation on nonzero smooth punctured character-$\ell$ tests. With $\sigma=d/2$ and the original self-adjoint sector restriction $K_\ell$, it follows that
+
+$$
+B_\ell=e^{\sigma K_\ell}M_\gamma e^{-\sigma K_\ell}
+\quad\text{is bounded on }L^2_\ell.
+$$
+
+For $\Pi_R=\mathbf1_{[0,R]}(K_\ell)$ the entire cutoff functions
+
+$$
+F_R(z)=\Pi_Re^{zK_\ell}M_\gamma e^{-zK_\ell}\Pi_R
+$$
+
+are bounded on each closed vertical strip. On $\Re z=\sigma$ their norms are bounded by $\|B_\ell\|$ through imaginary-time unitary conjugation; on $\Re z=-\sigma$ the same follows by adjointness, since $\gamma$ is real. Three-lines interpolation and Cauchy's estimate give $\|F_R'(0)\|\le2\|B_\ell\|/\sigma$, uniformly in $R$. Since $M_\gamma$ is globally bounded in $L^2$, spectral convergence in the graph norm of $K_\ell$ gives the bounded form
+
+$$
+\left|\langle K_\ell u,\gamma v\rangle_m-
+\langle\gamma u,K_\ell v\rangle_m\right|
+\le\frac{2\|B_\ell\|}{\sigma}\|u\|_2\|v\|_2
+\qquad(u,v\in D(K_\ell)).
+$$
+
+On a rotation-saturated compact patch in $\{r>0,g>0,q>0\}$, $\gamma$ is smooth analytic. Such a patch exists because $g,q>0$ almost everywhere. For
+
+$$
+u_N=e^{i\ell\alpha}\chi(r,z,\xi)e^{iN\omega\cdot(r,z,\xi)},
+\qquad\chi\in C_c^\infty,\quad\omega\in\mathbb R^3,
+$$
+
+with amplitude supported there, both $u_N$ and $\gamma u_N$ are genuine original punctured-core vectors. The form bound identifies and bounds the actual vector commutator on these tests. By the original principal symbol (137.12) and the Leibniz identity (137.13), its order-$N$ term is
+
+$$
+-2iN e^{i\ell\alpha+iN\omega\cdot(r,z,\xi)}\chi
+\left[a\gamma_r\omega_r+a\gamma_z\omega_z+
+\left(\eta+\frac{ar^2}{4}\right)\gamma_\xi\omega_\xi\right],
+$$
+
+and the remainder is bounded in $L^2(m)$ independently of $N$. Divide the commutator bound by $N$ and use arbitrary amplitudes and the three coordinate choices of $\omega$. Since $a,\eta>0$, this forces $\gamma_r=\gamma_z=\gamma_\xi=0$; rotation invariance gives $\gamma_\alpha=0$. On a connected nonempty such patch $\gamma=\gamma_0\in(-1,1)$. Analytic continuation of $g-q-\gamma_0(g+q)$ then yields
+
+$$
+q=c_0g\quad\text{on }\Omega,\qquad
+c_0=\frac{1-\gamma_0}{1+\gamma_0}.
+\tag{145.8}
+$$
+
+This contradicts the nonconstant-ratio conclusion above. The negative index is therefore infinite in this branch too.
+
+Finally, for any $n$ and any $r$ homogeneous linear constraints, intersect a negative-definite subspace of dimension $n+r$ with their common kernels. The intersection has dimension at least $n$ and remains negative definite. This proves infinite index after every stated finite family of constraints. No sign restriction on $\lambda$, and no full rotation invariance of $A$, has been imposed. $\square$
+

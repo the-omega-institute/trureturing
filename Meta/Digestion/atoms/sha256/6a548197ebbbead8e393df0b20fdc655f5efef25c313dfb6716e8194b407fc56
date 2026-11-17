@@ -1,0 +1,55 @@
+**定理 C-96.2（固定对角的完整插值读数）。** 这些算子都是密度算子，
+所有五个对角概率与两个约化态均不依赖 $\gamma$。
+置 $a=\nu(1-\nu)$、$h=r^2a=w(r-w)$，则
+
+$$
+\mathcal P_A=\mathcal P_B=1-2a,\qquad
+\mathcal P=1-2a(1-\gamma^2),
+\tag{C96.2}
+$$
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac h2(1+\gamma^2),&
+q_{-+}=q_{+-}&=\tfrac h2(1-\gamma^2),\\
+q_{++}&=r^2-\tfrac h2(3-\gamma^2),&
+q_{\mathrm f}&=1-r^2.
+\end{aligned}
+\tag{C96.3}
+$$
+
+证明。在 $e_0,e_1$ 的支撑子空间中，矩阵是
+
+$$
+\begin{pmatrix}1-\nu&\gamma\sqrt a\\\gamma\sqrt a&\nu\end{pmatrix}.
+\tag{C96.4}
+$$
+
+其迹一、对角正、行列式 $a(1-\gamma^2)\ge0$，所以正半定；
+正交补上为零。$0\le\gamma<1$ 时秩二，$\gamma=1$ 时为 $|\Phi\rangle\langle\Phi|$。
+$\rho_\gamma$ 的正性和归一化由式 (C95.11) 得到。
+由于 $e_0,e_1$ 的 $A$ 基标签不同，它们交叉项在每个计算基向量上的对角元为零。
+非中心分支中，完整五概率明确为
+
+$$
+(p_0,p_1,p_2,p_3,p_{13})=
+\bigl(r(1-\nu)(1-u),\ r\nu u,\ 1-r,\ r(1-\nu)u,\ r\nu(1-u)\bigr).
+\tag{C96.5}
+$$
+
+其 $X=r\nu$、$Y=r[\nu+(1-2\nu)u]$，
+$\kappa=r\nu(1-u)$ 均固定。中心的 $b_0,b_1$ 可写成同样模平方参数
+$u=|\langle1|b_0\rangle|^2$，式 (C96.5) 仍成立。
+两个交叉项在任一侧的偏迹为零，理由与 C-95.1 相同，故
+
+$$
+\sigma_A=(1-\nu)|0\rangle\langle0|+\nu|1\rangle\langle1|,
+\quad
+\sigma_B=(1-\nu)|b_0\rangle\langle b_0|+\nu|b_1\rangle\langle b_1|.
+\tag{C96.6}
+$$
+
+正交性给两个局部纯度 $1-2a$。把式 (C96.4) 平方取迹，得到
+$(1-\nu)^2+\nu^2+2\gamma^2a=1-2a(1-\gamma^2)$。
+将三项纯度代入式 (C94.15)，逐项化简给式 (C96.3)；四项之和恰为 $r^2$。证毕。
+

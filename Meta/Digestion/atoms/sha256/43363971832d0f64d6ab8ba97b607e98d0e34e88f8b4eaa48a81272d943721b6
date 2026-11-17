@@ -1,0 +1,58 @@
+**Proposition 7.3 (generated normalization and row-TV errors).**
+Let $\mathcal W_r=\bigcup_{j=0}^r\mathcal L^j$, and define
+
+$$
+ \ell_x=\max\{0,a(x)-t\},\qquad u_x=\min\{1,a(x)+t\}
+ \quad(x\ne\varepsilon),\qquad
+ \ell_\varepsilon=u_\varepsilon=1.
+ \tag{7.8}
+$$
+
+Check $\ell_w>0$ for every $w\in\mathcal W_r$. When these guards
+pass, form the rational probability rows
+
+$$
+ \widehat Q_w^H(v)=\frac{a(wv)}{a(w)}\quad(|v|=H),\qquad
+ I_{w,v}=\left[\frac{\ell_{wv}}{u_w},
+                       \frac{u_{wv}}{\ell_w}\right].
+ \tag{7.9}
+$$
+
+No guard on a numerator is needed. Generate the rational error
+
+$$
+ \zeta_w^{\mathrm{gen}}
+ =\frac12\sum_{|v|=H}
+ \max\left\{\left|\widehat Q_w^H(v)-\frac{\ell_{wv}}{u_w}\right|,
+             \left|\widehat Q_w^H(v)-\frac{u_{wv}}{\ell_w}\right|\right\},
+ \qquad \zeta^{\mathrm{gen}}=\max_{w\in\mathcal W_r}
+                         \zeta_w^{\mathrm{gen}}.
+ \tag{7.10}
+$$
+
+On the single event $\mathcal E$ of (7.6), these rows satisfy
+
+$$
+ \operatorname{TV}(Q_w^H,\widehat Q_w^H)
+ \le\zeta_w^{\mathrm{gen}}\quad(w\in\mathcal W_r).
+ \tag{7.11}
+$$
+
+For fixed finite $H,r$ and a refining sequence of these packets
+with $t_s\to0$, all the guards and any prescribed rational
+$\zeta^{\mathrm{gen}}\le\zeta$ with $\zeta>0$ eventually pass on
+their common event.
+
+*Proof.* Prefix consistency gives
+$\sum_{|v|=H}a(wv)=a(w)>0$ and nonnegative entries, so each row in
+(7.9) is exactly a rational probability row. In particular the
+normalization uses the acquired marginal, not a rounded or
+inconsistently fitted denominator. On $\mathcal E$, both true
+coefficients lie in (7.8), so $Q_w^H(v)\in I_{w,v}$; summing the
+endpoint bounds gives (7.11). For the final claim, (7.6) implies
+$a_s(x)\to q(x)$ on the common event. Every one of the finitely
+many $q(w)$ is strictly positive. Thus their lower bounds are
+eventually positive, both endpoints of every $I_{w,v}$ converge
+to $Q_w^H(v)$, and $\widehat Q_w^H(v)$ has the same limit.
+The finite sum and maximum in (7.10) tend to zero. $\square$
+

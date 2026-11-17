@@ -1,0 +1,32 @@
+**命题 C-60.3（外部行列式进入局部残差）。** 对同一正活动环的每个中心，
+
+$$
+\det H_i=(-1)^{n-2}\prod_{j\notin\{L,C,R\}}\lambda_j,
+\qquad
+\Delta_i=\frac{(-1)^n\prod_{j\ne i}\lambda_j}{\mathcal Z^2}.
+\tag{C60.5}
+$$
+
+因而偶数 $n$ 时 $\Delta_i>0$，奇数 $n$ 时 $\Delta_i<0$，有限正活动下均非零；并有
+
+$$
+\lambda_i\Delta_i
+=\frac{(-1)^n\prod_j\lambda_j}{\mathcal Z^2},
+\tag{C60.6}
+$$
+
+右边不依赖中心位置。
+
+证明。C-8.2 的行列式乘法在式 (C60.1) 中给 $n-2$ 个 $\det J=-1$ 和 $n-3$ 个 $\det D_{r_k}=\lambda_{r_k}$。式 (C60.3) 的底面表是
+
+$$
+\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}
+=\frac1{\mathcal Z}
+\operatorname{diag}(1,\lambda_L)H_i
+\operatorname{diag}(1,\lambda_R).
+$$
+
+两端活动贡献 $\lambda_L\lambda_R$，归一化贡献 $\mathcal Z^{-2}$，故得式 (C60.5)。$(-1)^{n-2}=(-1)^n$，正活动给严格符号。再乘中心活动即得式 (C60.6)。这个符号来自条件化后剩余路径的边数，不要求在一般图上按最短距离判符号。证毕。
+
+Bencs 的 *Christoffel-Darboux type identities for independence polynomial*，v1 Theorem 1.3，是独立集多项式差的相关经典先例，其求和对象为含指定两点的诱导连通二分子图；Theorem 1.1 讨论匹配多项式。此处非齐次局部残差由上述实际路径乘积承担，不从一般图的最短路径奇偶性推出。[C-66.3](#66-来源范围与三种读数的共同边界) 记录该文的准确范围。
+

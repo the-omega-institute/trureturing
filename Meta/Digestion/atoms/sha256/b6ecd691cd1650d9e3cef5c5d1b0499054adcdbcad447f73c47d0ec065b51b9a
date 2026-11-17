@@ -1,0 +1,93 @@
+**Theorem 20.2 (complete-marginal flow criterion).** For every one fixed pair of Borel probability marginals $\nu_p\in\operatorname{Prob}(\mathcal K_p)$ and $\nu_\beta\in\operatorname{Prob}(\mathcal K_\beta)$, a compatible pair in the sense of Definition 11.2 exists with exactly those entire marginals if and only if, for every $\ell\ge1$, both
+
+$$
+\begin{aligned}
+(X^B_\ell)_\#\nu_p&\preceq_{\mathrm{cx}}(Y^\beta_\ell)_\#\nu_\beta,\\
+(X^A_\ell)_\#\nu_\beta&\preceq_{\mathrm{cx}}(Y^p_\ell)_\#\nu_p
+\end{aligned}
+\tag{20.5}
+$$
+
+hold. Explicitly, the required flows are Borel probabilities $\Gamma_B$ on $\mathcal K_p\times\mathcal K_\beta$ and $\Gamma_A$ on $\mathcal K_\beta\times\mathcal K_p$ with
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta,
+\tag{20.6}
+$$
+
+and, for every bounded Borel real input test $\phi$ or $\psi$ and every complete atom $\eta\in\Omega_\beta$ or $\omega\in\Omega_p$,
+
+$$
+\begin{aligned}
+\int\phi(Q)[\mathcal R_B(Q)(\eta)-W(\eta)]\,d\Gamma_B(Q,W)&=0,\\
+\int\psi(W)[\mathcal R_A(W)(\omega)-Q(\omega)]\,d\Gamma_A(W,Q)&=0.
+\end{aligned}
+\tag{20.7}
+$$
+
+Individually, the first line of (20.5) for all $\ell$ is equivalent to existence of the B flow with these marginals, and the second line is equivalent to existence of the A flow with these marginals. Both directions in the pair use the same $\nu_p,\nu_\beta$. The marginals are unweighted acquired marginals; continuation factors $U,v$ occur only in the synthetic recursions. The assertion requires no finite support, eventual recurrence, graph-successor condition or resource hypothesis.
+
+**Proof.** The continuous-test and bounded-Borel-test versions of (20.7) are equivalent. For each atom, projecting the bounded residual difference onto its input space defines a finite signed Borel measure on a compact metric space. Vanishing against every continuous function forces that signed measure to be zero. This is the argument following Definition 11.2. Disintegration consequently gives
+
+$$
+\mathbb E_{\Gamma_B}[W(\eta)\mid Q]=\mathcal R_B(Q)(\eta),\qquad
+\mathbb E_{\Gamma_A}[Q(\omega)\mid W]=\mathcal R_A(W)(\omega).
+\tag{20.8}
+$$
+
+The conditional equalities hold simultaneously over all atoms, since the carriers are countable. Summation gives the same equalities on every complete event, including remainder cells. In particular,
+
+$$
+\mathbb E_{\Gamma_B}[Y^\beta_\ell(W)\mid Q]=X^B_\ell(Q),\qquad
+\mathbb E_{\Gamma_A}[Y^p_\ell(Q)\mid W]=X^A_\ell(W).
+$$
+
+Conditional Jensen proves both convex inequalities in (20.5), and affine tests give equality of barycentres. This proves necessity while retaining conditioning on the entire input.
+
+For sufficiency, first assume all the B inequalities. At a fixed level $\ell$, abbreviate $X=X^B_\ell$, $Y=Y^\beta_\ell$, $\xi=X_\#\nu_p$ and $\zeta=Y_\#\nu_\beta$. The finite-dimensional martingale-coupling theorem gives a probability $M_\ell(dx,dy)$ with marginals $\xi,\zeta$ and $\mathbb E[y\mid x]=x$. The vectors are bounded, so its finite-first-moment hypothesis holds. The continuous convex tests on the simplex include restrictions of all finite convex functions on the ambient Euclidean space, as required by that theorem. This is the classical Strassen characterization in Leskelä--Vihola, Theorem 1.2(i); no full-space lifting is being assumed at this step.
+
+Disintegrate $M_\ell(dx,dy)=\xi(dx)H_\ell(x,dy)$ and disintegrate $\nu_\beta$ over $Y$ as $K_\ell(y,dW)$. These kernels exist because the spaces are standard Borel. For $\zeta$-almost every $y$, the latter kernel is concentrated on $Y(W)=y$. Define a measure on the full descriptor product by
+
+$$
+\Gamma_{B,\ell}(dQ,dW)
+=\nu_p(dQ)\int H_\ell(X(Q),dy)K_\ell(y,dW).
+\tag{20.9}
+$$
+
+Its first marginal is exactly $\nu_p$. Integrating $Q$ first gives the $y$ law $\zeta$, so its second marginal is exactly $\nu_\beta$. Moreover, for $\nu_p$-almost every $Q$,
+
+$$
+\begin{aligned}
+\mathbb E_{\Gamma_{B,\ell}}[Y(W)\mid Q]
+&=\int H_\ell(X(Q),dy)\int Y(W)K_\ell(y,dW)\\
+&=\int y\,H_\ell(X(Q),dy)=X(Q).
+\end{aligned}
+\tag{20.10}
+$$
+
+Thus a projected coupling has been lifted with the prescribed entire marginals and with the finite vector equation conditioned on the full $Q$. Injectivity of $Q\mapsto X(Q)$, or of $Q\mapsto\mathcal R_B(Q)$, is unnecessary: (20.9) samples $Q$ first and explicitly chooses its conditional successor kernel.
+
+Let $\mathscr C^B_\ell$ be the set of couplings of $\nu_p,\nu_\beta$ satisfying (20.10). Equivalently, each member satisfies
+
+$$
+\int\phi(Q)[Y^\beta_\ell(W)-X^B_\ell(Q)]\,d\Gamma(Q,W)=0
+\quad\text{for every continuous real }\phi\text{ on }\mathcal K_p.
+\tag{20.11}
+$$
+
+The space of couplings of the fixed entire marginals is compact for weak convergence: it is a closed subset of the probability measures on the compact metric product. All integrands in (20.11) are continuous and bounded, since complete-event evaluation and the residual maps are TV-continuous. Hence $\mathscr C^B_\ell$ is closed and compact. Formula (20.9) proves it is nonempty. Refinement gives $\mathscr C^B_{\ell+1}\subseteq\mathscr C^B_\ell$, because coarser cell masses are sums of finer cell masses. The nested compact sets therefore have a common member $\Gamma_B$.
+
+Every atom is a singleton at some level. Applying (20.11) there gives its full $Q$-conditioned equation, and the signed-measure argument extends the input tests to bounded Borel functions. A common full-measure set handles all countably many atoms, including infinity. Countable summation, dominated by the sum of two probability masses, gives equality on every complete event. Thus this one $\Gamma_B$ satisfies the first equation of (20.7) on the whole carrier.
+
+For A, perform the same construction with input $W$, $X^A_\ell(W)$ and output $Y^p_\ell(Q)$. If $H^A_\ell$ disintegrates its finite-vector martingale coupling and $K^p_\ell$ disintegrates $\nu_p$ over $Y^p_\ell$, the lifted measure is
+
+$$
+\Gamma_{A,\ell}(dW,dQ)
+=\nu_\beta(dW)\int H^A_\ell(X^A_\ell(W),dy)K^p_\ell(y,dQ).
+$$
+
+Its marginals are $\nu_\beta,\nu_p$, and the conditional mean of $Y^p_\ell(Q)$ given the entire $W$ is $X^A_\ell(W)$. The corresponding nested compact sets give one $\Gamma_A$ satisfying the second equation of (20.7) on every complete atom. Definition 11.2 imposes no joint constraint on the two measures beyond (20.6) and their respective residual equations, so these two choices give the required compatible pair. $\square$
+
+The compactness argument uses every level for the same entire marginals. It does not infer a full coupling from one partition, from coordinatewise scalar orders, from marginals that vary with the level, or from separately optimized directions. Convex-order comparisons are made in the full probability-vector simplices; no prior membership of a residual in the opposite $\mathcal K_s$ is assumed. The result is an existence correspondence, with no uniqueness or preservation assertion about previously prescribed flows.
+

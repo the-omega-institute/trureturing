@@ -1,0 +1,73 @@
+**Corollary 19.2 (strict generated slack implies symmetric finite attainment).** Assume the installed support is countably infinite. Suppose a zero-level compatible pair has finite suspended marginal with $N$ distinct atoms and $m_a,m_b>0$. Form the excised pair of Theorem 19.1. Then
+
+$$
+1\le N' := |\operatorname{supp}\widehat\nu_\beta|\le N-1,
+\tag{19.15}
+$$
+
+and the excised pair has finite p-target slack at the accumulation parameter
+
+$$
+ r_* =\frac{3-\sqrt5}{2},\qquad c_* =\frac{25}{64},\qquad
+ \delta_p^\circ:=\rho_p-\widehat{\mathcal L}_p(P_{p,r_*})\ge\sigma.
+\tag{19.16}
+$$
+
+Choose $M\ge2$ so that
+
+$$
+ \frac{25}{171}c_*^M<\frac\sigma2,
+ \qquad
+ s_M=|\{k\le M:\mu(k)>0\}|.
+\tag{19.17}
+$$
+
+Then there is an abstract finite original common conf/conf attainer with private table labels satisfying
+
+$$
+ |Y|=N',
+ \qquad
+ |X|\le N'^2+2N'+s_M-1.
+\tag{19.18}
+$$
+
+It preserves the excised suspended marginal exactly. It need not preserve the input p marginal, the input flows, or the original pre-excision pair. The finite table has real stochastic entries; allowed finitely represented exact samplers are a separate requirement for effective attainment.
+
+**Proof.** Because the installed support is infinite, its supported depths are unbounded and $r_k\to r_*$. The complete-target continuity bound (13.19) and the original supported-target budgets give
+
+$$
+\mathcal L_p(P_{p,r_*})\le\rho_p.
+\tag{19.19}
+$$
+
+Taking the limit in (19.14), using the same complete-law continuity, gives
+
+$$
+\mathcal L_p^N(P_{p,r_*})\ge\rho_p+\frac\eta2.
+\tag{19.20}
+$$
+
+Apply (19.9) at $T=P_{p,r_*}$ and use (19.19)--(19.20); this proves (19.16). Since $\theta<1$, the excised suspended marginal has positive total mass and at least one atom. At least one of the two distinct native suspended atoms is removed completely, while no new atom is created, so (19.15) holds.
+
+Use the symmetric direction of Theorem 13.6 on the excised pair, with its $N'$ suspended atoms and the strict slack (19.16). Choose $M$ as in (19.17). Its exact feature menu has
+
+$$
+Q(E_p),\qquad
+\{\operatorname{TV}(Q,P_{p,r_k}):3\le k\le M,\ \mu(k)>0\},
+\qquad
+\operatorname{TV}(Q,P_{p,r_*}),
+\tag{19.21}
+$$
+
+which has $1+(s_M-2)+1=s_M$ entries. The symmetric moment list in Theorem 13.2 therefore gives exactly the bound (19.18), while retaining the complete p endpoint box and every listed loss. For every omitted installed depth $k>M$, the full-law estimate (13.19), not a truncated future, gives
+
+$$
+\widehat{\mathcal L}_p(P_{p,r_k})
+ \le \widehat{\mathcal L}_p(P_{p,r_*})
+      +\frac{25}{171}c_*^M
+ <\rho_p.
+\tag{19.22}
+$$
+
+Thus all supported p losses and the endpoint midpoint are valid in the new finite table, and the entire excised suspended marginal is unchanged. Proposition 13.3 and [PAID, Lemma 2.1.1] install this table with the original $C_0$, both seeds, all paid histories and rejections, source-independent latch initialization, the same acquired/synthetic update, complete noncompletion, completion and matching Stop. They also retain the original records and the once-sampled $K$; no posterior or resampling device is added. This is an abstract finite attainer, with the stated sampler qualification. $\square$
+

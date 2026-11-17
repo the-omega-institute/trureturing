@@ -1,0 +1,89 @@
+**Lemma 57.2 (the remaining spectrum after exact free subtraction).**
+Put $M_\kappa=gM_W$, $\mathsf A=\mathcal H-\xi_\kappa$ and
+$\mathsf B=L_\kappa-\xi_\kappa$. The native bounds imply
+
+$$
+\|M_\kappa\|\le C,\qquad
+\sup_q\int_{\mathbb T}gW(q,D)dD\le Cd,
+\qquad d=r_s\ \hbox{or}\ 1.
+\tag{57.4}
+$$
+
+Let $0\le\chi\le1$ be smooth, zero on
+$(-\infty,\epsilon_0/4]$ and one on $[\epsilon_0/2,\infty)$.
+Choose $\epsilon_0$ also smaller than one quarter of
+$\lambda-e(c_\sigma)>0$. For $t\ge1$,
+
+$$
+\left\|J^*\left[e^{-t\mathsf A}\chi(\mathsf A)-e^{-t\mathsf B}\right]J\right\|
+ \le Cd(1+t)^4e^{-\epsilon_0t/4}.
+\tag{57.5}
+$$
+
+The estimate uses the actual nonaveraged multiplier and entire native
+free evolution.
+
+Proof. The first bound in (57.4) is (32.9). The raw integral bound
+is (45.2); for UNIT it follows from uniform boundedness and the
+original circle length $2\pi$. The exact free marginal intertwining
+is $e^{-i\varpi\mathsf B}J=Je^{-i\varpi(\overline L_\kappa-\xi_\kappa)}$
+for the real Fourier variable $\varpi$, since the entire
+$D$-independent free subspace reduces
+$L_\kappa$ by [G, (23.3)--(23.5), (26.13)]. Hence, for every real Fourier variable $\varpi$,
+
+$$
+\|M_\kappa^{1/2}e^{-i\varpi\mathsf B}J\|^2
+ \le\frac1{2\pi}\sup_q\int gW(q,D)dD\le Cd.
+\tag{57.6}
+$$
+
+Twice applying bounded-perturbation Duhamel, with a free evolution
+at both endpoints, gives for $\varpi\ge0$
+
+$$
+\begin{aligned}
+e^{-i\varpi\mathsf A}-e^{-i\varpi\mathsf B}
+={}&i\int_0^\varpi e^{-i(\varpi-u)\mathsf B}M_\kappa e^{-iu\mathsf B}du\\
+ &-\int_{0\le v\le u\le\varpi}
+ e^{-i(\varpi-u)\mathsf B}M_\kappa e^{-i(u-v)\mathsf A}M_\kappa e^{-iv\mathsf B}\,dv\,du.
+\end{aligned}
+\tag{57.7}
+$$
+
+Both middle evolutions are unitary. Using (57.6) at the two ends,
+and $\|M_\kappa^{1/2}e^{-i(u-v)\mathsf A}M_\kappa^{1/2}\|\le C$,
+therefore gives
+
+$$
+\|J^*(e^{-i\varpi\mathsf A}-e^{-i\varpi\mathsf B})J\|\le Cd(|\varpi|+\varpi^2).
+\tag{57.8}
+$$
+
+Negative $\varpi$ follow by adjoints. The Duhamel integrals are
+strong integrals; their norm bounds follow by testing between arbitrary
+unit vectors. Bounded perturbation preserves the selfadjoint domain.
+There is no heat-kernel or resolvent approximation in this step.
+
+For $f_t(x)=e^{-tx}\chi(x)$, Fourier inversion and the spectral
+theorem now bound the compressed difference $f_t(\mathsf A)-f_t(\mathsf B)$ by
+
+$$
+Cd\int (|\varpi|+\varpi^2)|\widehat f_t(\varpi)|d\varpi
+ \le Cd\|f_t\|_{H^4(\mathbb R)}
+ \le Cd(1+t)^4e^{-\epsilon_0t/4}.
+\tag{57.9}
+$$
+
+Scalar Fourier inversion in each matrix element suffices; (57.8)
+bounds its integral absolutely. The middle inequality is
+Cauchy--Schwarz with $(1+\varpi^2)^{-2}$,
+followed by Plancherel. The last follows by differentiating $f_t$
+up to four times: every term is supported on $x\ge\epsilon_0/4$
+and is an exponentially decreasing function there with bounded
+cutoff derivatives. Fourier-normalization constants are included
+in $C$. Finally $\inf\sigma(L_\kappa)=\lambda$ exactly, while
+$\xi_\kappa\to e(c_\sigma)<\lambda$. Thus $\chi(\mathsf B)=1$ for small
+parameters. This proves (57.5). It is the factor $d$ in (57.5),
+rather than an unscaled whole-semigroup bound, that is essential
+in RAW. $\square$
+

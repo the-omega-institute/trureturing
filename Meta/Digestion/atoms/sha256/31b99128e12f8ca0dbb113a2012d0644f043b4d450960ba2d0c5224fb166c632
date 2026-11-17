@@ -1,0 +1,28 @@
+**定理 84.35（完整同数据候选）。** 对每个指定合格 $\Phi$ 与严格正槽权，在完整 PRE 上逐点有
+$$
+\mathsf C_2+\mathsf E_3(\Phi;t,s)+\mathrm A_0
+\quad\Longleftrightarrow\quad
+\mathsf E_2(\Phi,t)+\mathsf E_3(\Phi;t,s)+\mathrm A_0
+\quad\Longleftrightarrow\quad C_{\rm joint},
+\tag{84.36}
+$$
+其中 $C_{\rm joint}$ 严格是原双迹条件
+$$
+\delta_E+\gamma_E\le2n^3,\qquad
+\delta_E=\tau_EL(1_D,1_A),\quad\gamma_E=\tau_D(p1_E).
+$$
+特别地，定义 84.2 的完整原基底上有主候选
+$$
+\boxed{\mathrm{PRE}_0^{1/2}+(83.8)+\mathsf C_2+
+\mathsf E_3(R_A;1/2,2/3)+\mathrm A_0+\mathrm H13
+\quad\Longleftrightarrow\quad\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.}
+\tag{84.37}
+$$
+其中 (83.8) 就是 (84.5)，H13 仅在该零关系恢复精确 PRE 后定义。对应恒等地保留原 $(A,D,E,C_X,u_X,L,p,\omega)$，不靠先改单位或选择辅助代表实现。
+
+**证明。** (84.36) 的第一等价由命题 84.20。对第二等价，直接应用引理 79.3 于三槽权 $(st,s(1-t),1-s)$，得到 $m_3=\kappa\tau_A^{\otimes3}$；命题 84.10 已给 $m_2=\tau_A^{\otimes2}$。随后按 79.5—79.7 的全实恢复律和两实张成，先于方向取得 $u_{ij}=I_j$、$g_{ijk}=\kappa I_k$，原锚恰读出 $\kappa=1$，从而给原 $C_{\rm joint}$。这是既有质量定理的消费，不另主张新第二尺度分类。反向，67.7／79.7 给 $u=g=I$，同一原质量已为标准乘积迹，对每份指定保迹 $\Phi$ 都满足两条质量关系，并给 C2 和原锚。
+
+对 (84.37)，先按 83.1 及固定来源 [FH] 在各原载体恢复完整 $S$ 与全部实混合权，再经同一一般有限 EJA 条件桥；(83.8) 由 83.4 在同一原域恢复 $D_J$ 且 $D_H$，即精确 PRE。此后 (84.36) 用固定 $R_A$ 给 $C_{\rm joint}$，(84.33)—(84.34) 的原逐成员方向定理给 C13。等价地，此步是在 83.11 中用同一 $R_A,t=1/2$ 的 (84.21) 直接替换 E2。反向，PRE 给原固定对半入口及 (83.8)；PRE+$C_{\rm joint}$ 给标准双、三质量、C2、固定 E3 和原锚；C13 与 72.7 给 H13。全部步骤使用相同原 $L,p,\omega$。证毕。
+
+80.3 的 $\mathcal D=0$ 或 81.4 的 $\mathcal Q=0$ 也可在其原定义和全部前件不变时作为精确 PRE 的入口；这些版本中的 E2 同样只由 C2 替换。主候选直接使用第 83 章显式二阶关系，不退回全族比较入口，也不重新优化几何零集。
+

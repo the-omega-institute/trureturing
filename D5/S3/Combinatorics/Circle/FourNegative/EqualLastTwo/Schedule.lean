@@ -18,7 +18,8 @@ open private rank amplitude delta heads newHeads successor newSuccessor start le
   largeP largeQ largeR largeG adjacentP adjacentQ adjacentR adjacentG
   corner2P corner2Q corner2R corner2G corner3P corner3Q corner3R corner3G
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo.Source
-open private size base oldValue newValue source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base oldValue newValue)
 open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private inserted_perm from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
 

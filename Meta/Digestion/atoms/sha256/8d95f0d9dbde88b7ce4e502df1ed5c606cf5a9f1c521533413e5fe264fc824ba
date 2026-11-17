@@ -1,0 +1,39 @@
+### 28.12 全经典反演之后的相干差异与关系综合
+
+**假设 C-28.12.1（额外供应的相干模式载体）。** N≥1，另供 Hilbert 空间 C<sup>Σ<sub>N</sub></sup>、正交基 |I⟩、同参照制备及允许比较。取非空合法 A，ψ±=(|∅⟩±|A⟩)/√2，经典读口对应对角算子 M<sub>B</sub>=∑<sub>I</sub>m<sub>B</sub>(I)|I⟩⟨I|。此供应不由 FIB 标签或经典混合存在自动取得。
+
+**命题 C-28.12.2（全经典矩仍不确定非对角关系）。** ψ+、ψ− 的全部共同经典矩相同：空矩一，非空 B⊆A 时为 1/2，其余零。另供 Hermitian 比较 O<sub>A</sub>=|∅⟩⟨A|+|A⟩⟨∅| 时，其范数一，两状态的期望准确为 +1、−1。
+
+**证明。** 对角算子仅读取两个基向量各 1/2 的质量，交叉符号不参与，C-28.5.1 因此准确恢复同一经典律。O<sub>A</sub> 在这二维张成空间交换两基，在正交补为零，ψ± 是其本征值 ±1 的单位本征向量；其余谱为零（若有补空间），故算子范数一并给两期望。N=0 没有非空 A，此见证不适用。共同制备、相位参照、允许比较和资源是真实实验前提，不是从对角矩逆式推导的仪器。证毕。
+
+**约定 C-28.12.3（已有共同记录与相干历史拥有者）。** 相干实现使用本卷 C-23.5、C-26.28–C-26.29 和固定源 [C28-R3] §§107–110，特别是共同历史块 Ω<sub>n</sub>≥0、tr Ω<sub>n</sub>=1、同相位等距及递归 Ξ<sup>(n+1)</sup><sub>ha,kb</sub>=K<sub>a|h</sub>Ξ<sup>(n)</sup><sub>hk</sub>K<sub>b|k</sub>†。这些真实拥有者分别承担共同记录、控制相位、隐藏 Kraus 指标和再用环境的义务。§109.3 的全一记录矩阵与单位矩阵对经典对角律作用相同，却分别保留与消去非对角元；抽象 CP 分支不决定交叉相位。若环境会再次作用，须保留同一联合载体；不能把两次同环境作用改成两次新准备环境。该调用不重新证明已有通道或历史定理。
+
+**命题 C-28.12.4（同一选择骨架的有条件综合）。** 本章的四组恢复关系为
+
+> 合法共同事件 → 唯一函数基 → 完整矩 → 唯一非负归一化模式律；
+>
+> 阶数计数 → 独立观察秩 → 满支撑或饱和纤维 → 具体原生目标响应；
+>
+> Z<sub>N</sub>(1)=F<sub>N+2</sub>，χ̃(K<sub>N</sub>)=−Z<sub>N</sub>(−1)，det G<sub>N+1</sub>(r<sub>g</sub>)=Z<sub>N</sub>(−r<sub>g</sub>²)；
+>
+> 声明的实际操作合同 → 全律拉回闭包，或完整联合核下降 → 该合同的有限未来充分边界。
+
+**证明。** 第一组由 C-28.2 和 C-28.5 的两方向相消及全部正性条件承担。第二组由 C-28.3 的独立性、C-28.4 的实际高先读接缝对应及 C-28.6 的 195 三次消费者承担；同一图语法不确定概率，每个目标又可只消费其自己的线性组合。第三组前两式是选择计数和面维交替，末式准确调用 C27 的记录边槽匹配，三种输出不是同一载体；C-28.8 的完整自由余面归纳另给模三同伦型。第四组均值的必要性由全正双律反证承担，有限终止由维数增长承担，强操作语义由已有联合核拥有者承担。六十三态实例逐阶段保持实际初始化和资源，展示同一有限来源上一个均值与全回复律需要不同闭包。证毕。
+
+三角填面表达共同可选位置；棱锥正方底表达均值投影里的混合歧义；复形的圆、球表达同伦关系；Gram 秩表达所给共同内积记录的独立方向。它们各自可恢复而不相互替代。完整经典矩仍可能遗漏另供模式态的非对角相干；精确已取得数量或档案却可能已编码全部有限模式，不得把低阶报告的盲核扩大成原有精确信息不可恢复。
+
+因此“隐藏关系”在这里具有明确的条件含义：所保留读口的核、可行正性限制、尚未取得的同源关系、或所给共同实现的相干部分。采用哪份边界，由实际目标、输入资源、精度、记录和后继合同共同决定。短递推保留标量响应，拓扑塌缩保留同伦型，完整反演保留有限经典律；只有相应操作及相位合同已经供应，才可把这些恢复用于真实后续实验。
+
+[C28-A1]: AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#1-有序原子五种选择与标准窗口
+[C28-A2]: AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#2-三均值关联纤维与目标差分
+[C28-A16]: AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#16-同一有序前缀的接缝余数组成图
+[C28-R1]: https://github.com/the-omega-institute/trureturing/blob/d0e7fe64ca49beed8ea63efa5fbc6a360d51f1bb/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md
+[C28-R2]: https://github.com/the-omega-institute/trureturing/blob/d0e7fe64ca49beed8ea63efa5fbc6a360d51f1bb/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[C28-R3]: https://github.com/the-omega-institute/trureturing/blob/d0e7fe64ca49beed8ea63efa5fbc6a360d51f1bb/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md
+
+**数学引文 C-28.L（使用范围）。** [C28-L1] 为 Richard Ehrenborg、Gábor Hetyei，*The topology of the independence complex*，European Journal of Combinatorics 27 (2006)，906–923，DOI 10.1016/j.ejc.2005.04.010，作者站提供的期刊排版全文；§2 的初等塌缩定义及 §6、Proposition 6.2(ii)、Corollary 6.3 承担本章路径同伦中间先例，n 为顶点数。[C28-L2] 为 Kazuhiro Kawamura，*Homotopy types of independence complexes of forests*，Contributions to Discrete Mathematics 5(2) (2010)，67–75，DOI 10.55016/ojs/cdm.v5i2.62064，期刊九页全文，Example 3.4 的 n 是边数。[C28-L3] 为 Thomas Lam、David E. Speyer，*Cohomology of cluster varieties. II. Acyclic case*，arXiv:2111.12759v1（2021-11-24），§7.3、Corollary 7.8，仅作同伦先例和边数索引对照；所给期刊 DOI 10.1112/jlms.12809 不替代此确切预印本版本，亦不把 cluster variety 的上同调结论移植给 FIB 来源。原始 Kozlov 结果的归属只由上述已读文献的引用给出，不声称直接使用其原证明。包含关联代数、二项计数和球面悬挂均为经典中间工具；本章承重应用为带源的矩—原生目标—可行边界及任务闭包，不主张这些工具的原创性。已有 C26/C27 的证明仍归各自条目。
+
+[C28-L1]: https://www.ms.uky.edu/~jrge/Papers/Independence.pdf
+[C28-L2]: https://cdm.ucalgary.ca/article/download/62064/46709
+[C28-L3]: https://arxiv.org/abs/2111.12759v1
+

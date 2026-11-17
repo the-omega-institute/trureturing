@@ -1,0 +1,60 @@
+**Proposition 43.8 (supplement width for the actual filtered fibre).**
+Fix $(y,n_0,\phi,Z)$ as after Theorem 43.3 and let $q$ be the cardinality
+of its nonempty admissible active-$F$ fibre. A supplementary value
+recovers the target exactly if and only if it separates these $q$
+possibilities. Its least conditional alphabet has $q$ values and its
+least fixed-width binary width is $\lceil\log_2q\rceil$. This reuses
+finite-fibre injection, pigeonhole and ranking, rather than asserting a
+new coding theorem or a way to acquire the rank from syntax alone.
+
+Under the explicit alpha-origin current-event cap $n(y)\le N$, for
+$n_0>1$ one has
+
+$$
+q\le n(y)-n_0+1\le N-n_0+1.
+\tag{43.16}
+$$
+
+An earned exact $j\in\{0,\ldots,N-n_0\}$ gives the matching general
+upper bound on conditional width $\lceil\log_2(N-n_0+1)\rceil$.
+For $n_0=1$, allow additionally the nonempty-prefix first-macro bit;
+$q\le2(n(y)-n_0+1)$ and exact progress plus that bit suffice, leaving
+the empty-prefix case separate rather than doubling it.
+
+For the fixed seed $C$, fixed command $F$ and a common strictly internal
+between-row phase, let $b_N$ be the maximum of the least conditional
+binary widths over attained current sources with $n(y)\le N$, with no
+other distinguishing $Z$. For every $N\ge6$,
+
+$$
+\left\lceil\log_2\left(\left\lfloor\frac{N-6}{2}\right\rfloor+1\right)\right\rceil
+\le b_N\le\lceil\log_2(N-1)\rceil.
+\tag{43.17}
+$$
+
+Thus the worst-case supplementary width is logarithmic in this stated
+current-event cap, up to additive constants, with fixed initial source.
+
+Proof. Equal supplements on distinct members give a decoder identical
+inputs but unequal targets. Distinct ranks of the finite recognized
+fibre suffice. These are exactly the reused conditional coding arguments.
+For every nonempty summand, (43.3) and completed event growth give
+$n(y)-j=n(u)\ge n_0$. Hence only $n(y)-n_0+1$ integer progresses are
+possible. Theorem 42.4 gives at most one target per progress for
+$n_0>1$, or at most two for $n_0=1$ with its single empty-word case.
+This proves (43.16), both upper coding statements and their persistence
+under filtering. With $r=\lfloor(N-6)/2\rfloor$, Theorem 43.7 supplies
+exactly $r+1$ strict-interior alternatives at $y_r$ under the cap.
+Their first next marks can be resolved after ordinary list advancement,
+so they all admit that same between-row phase. Apply the first part
+for the lower bound and (43.16) at $n_0=2$ for the upper. $\square$
+
+These bounds condition on current syntax, exact attachment reference,
+phase and every actually supplied $Z$. An actual cursor, saved request,
+tapes or other acquired record may already separate the candidates.
+There is no compulsory extra counter and no lower bound here on total
+physical memory, syntax acquisition, tape storage or whole-run cost.
+Without a current-event cap no fixed supplementary alphabet works for
+all these finite strict-interior histories. This does not prohibit finite
+backing for each particular finite run.
+

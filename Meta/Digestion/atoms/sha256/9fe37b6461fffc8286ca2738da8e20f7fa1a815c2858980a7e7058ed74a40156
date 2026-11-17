@@ -1,0 +1,18 @@
+**命题 44.1（双角平方关系不能替代实际 PB）。** 21.3 的有限双角约束，加上各自正交和平方保持，仍不能单独推出投影符号相容。令 $\sigma_x,\sigma_y,\sigma_z$ 为标准 Pauli 矩阵，在 $M_4(\mathbb C)_{\rm sa}$ 取
+
+$$
+\begin{aligned}
+h&=\sigma_y\otimes\sigma_y,& b&=\sigma_z\otimes I,& c&=I\otimes\sigma_z,\\
+s&=\sigma_z\otimes\sigma_z,& j&=\sigma_x\otimes I,& k&=I\otimes\sigma_x.
+\end{aligned}
+$$
+
+取 $p=(u+s)/2$。则 $[p,h]=[p,b]=0$、$c=sb$、$b^2=c^2=j^2=k^2=u$，且 $h\circ b=h\circ c=h\circ j=h\circ k=b\circ j=c\circ k=0$。记 $P=b\circ c,Q=j\circ k,U=b\circ k,V=j\circ c$，则 $PQ=-h,UV=h$，且 $P,Q$ 都反交换 $U,V$。因此
+
+$$
+P^2=Q^2=u,\quad (P-Q)^2=(U+V)^2=2(u+h),\quad
+(P-Q)\circ(U+V)=P\circ(U+V)=0.
+$$
+
+但是 $[s,j]=2\mathrm i\sigma_y\otimes\sigma_z\ne0$、$k\ne sj$。这些元素只是一组有限约束的实现，没有定义全域原 $D$，所以不是完整候选的反模型。若试图令它们成为同一原 $J$ 的值，40–42 已经排除它。也可直接看一份 PB：取原 $x=(h+c)/2,y=(b-sh)/2$，有限交换零行使 $D(s,x)=D(s,y)=0$，PB 给 $D(h,b)=D(c,-sh)$；但 $-sh=Q$，右侧正交响应必须反交换 $c$，而 $j$ 与 $c$ 普通交换且乘积非零，矛盾。∎
+

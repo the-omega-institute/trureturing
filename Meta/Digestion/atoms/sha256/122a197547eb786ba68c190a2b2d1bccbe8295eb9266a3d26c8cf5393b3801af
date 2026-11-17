@@ -1,0 +1,115 @@
+**定理 20.1（解耦第一角的有限探针排除）。** 在 (19.1) 的完整原空间中，允许任意有限 $m\ge0$，并设
+
+$$
+V^*e_1=0,\qquad a=B_{11},\qquad b=B_{12},\qquad
+s=\rho\operatorname{diag}(1,-2)\oplus0_m,\qquad
+ a\rho\ne0,\qquad a^2\le\tfrac52\rho^2.
+\tag{20.1}
+$$
+
+对每个分别固定的 $\sigma$，以下实际有限 Hermitian 角探针和原向量 $\xi=e_1\oplus0_m$ 联合严格违反 PB：
+
+$$
+\begin{gathered}
+\tau=\sqrt{\tfrac52\rho^2-a^2},\qquad
+u=\rho+\operatorname{sgn}(\rho)\tau,\qquad
+p_\sigma=1+\sigma i/2,\\
+A_+=(u-a)p_\sigma+\tfrac32(u+a+\rho),\qquad
+B_+=\tfrac32(u-a)-p_\sigma(u+a+\rho),\qquad
+\eta=-A_+/B_+,\\
+x=\begin{pmatrix}u&\bar\eta b\\\eta\bar b&0\end{pmatrix}\oplus0_m.
+\end{gathered}
+\tag{20.2}
+$$
+
+式中的 $u$ 为上述实数。该结论不要求 P2，不限制 $b,B_{22},D_{\rm env}$ 或第二演员的环境连线。
+
+证明。$u$ 与 $\rho$ 同号，且
+
+$$
+ (u-\rho)^2+a^2-\tfrac52\rho^2=0.
+\tag{20.3}
+$$
+
+若 $B_+=0$，其虚部给 $u+a+\rho=0$，再由实部得 $u=a$，从而 $\rho=-2a$。这与 $u$、$\rho$ 同号矛盾。因此 $\eta$ 定义良好，$x=x^*=PxP$ 且有限。
+
+由 $V^*e_1=0$，下列均为完整原算子在同一 $\xi$ 上的作用，所有环境分量恰为零：
+
+$$
+\begin{gathered}
+t\xi=(a,\bar b,0_m),\quad
+k\xi=(a,\tfrac32\bar b,0_m),\quad
+g_\sigma\xi=(\rho,\tfrac{\sigma i}{2}\bar b,0_m),\\
+x\xi=(u,\eta\bar b,0_m),\quad
+h\xi=(0,\tfrac{\sigma i}{2}\eta\bar b,0_m),\quad
+r\xi=(u,\tfrac32\eta\bar b,0_m).
+\end{gathered}
+\tag{20.4}
+$$
+
+特别地，两对完整原标签为
+
+$$
+\begin{aligned}
+R_+\xi&=(u-a,(p_\sigma\eta-3/2)\bar b,0_m),\\
+S_+\xi&=(u+a+\rho,(p_\sigma+3\eta/2)\bar b,0_m),\\
+R_-\xi&=(u+a,(\bar p_\sigma\eta+3/2)\bar b,0_m),\\
+S_-\xi&=(a-u-\rho,(\bar p_\sigma-3\eta/2)\bar b,0_m).
+\end{aligned}
+\tag{20.5}
+$$
+
+为同时证明两笔实 Gram 为零，定义剩下的两个明确系数
+
+$$
+A_-=(u+a)\bar p_\sigma-\tfrac32(a-u-\rho),\qquad
+B_-=-\tfrac32(u+a)-\bar p_\sigma(a-u-\rho).
+\tag{20.6}
+$$
+
+每一对 (20.5) 的前两坐标行列式分别是
+$(A_++\eta B_+)\bar b$ 与 $(A_-+\eta B_-)\bar b$。第一个由定义为零。四个系数的完整实虚部分为
+
+$$
+\begin{aligned}
+2A_+&=5u+a+3\rho+\sigma i(u-a),\\
+2B_+&=u-5a-2\rho-\sigma i(u+a+\rho),\\
+2A_-&=5u-a+3\rho-\sigma i(u+a),\\
+2B_-&=-u-5a+2\rho+\sigma i(a-u-\rho).
+\end{aligned}
+\tag{20.7}
+$$
+
+相乘相减，虚部相消，实部给
+
+$$
+A_+B_--A_-B_+
+=-2u^2+4\rho u+3\rho^2-2a^2
+=-2\bigl((u-\rho)^2+a^2-\tfrac52\rho^2\bigr)=0.
+\tag{20.8}
+$$
+
+故 $A_-+\eta B_-=(A_-B_+-A_+B_-)/B_+=0$。这同时处理 $\tau=0$ 的边界，不使用严格不等号。
+
+第一对的两个实首坐标不能同时为零，否则 $u=a,\rho=-2a$；第二对也不能同时为零，否则 $u=-a,\rho=2a$。两者均与 $u$、$\rho$ 同号矛盾。因此在每一对中，至少有一个非零实首坐标；行列式为零遂保证两个完整作用向量是实比例，而不仅是复比例。于是
+
+$$
+ B_{\phi_\xi}(R_+,S_+)=B_{\phi_\xi}(R_-,S_-)=0.
+\tag{20.9}
+$$
+
+最后，不改变向量或探针，由 (20.4) 得
+
+$$
+\begin{aligned}
+\operatorname{Re}((x\xi)^*(h-k)\xi)
+ &=-au-\tfrac32|b|^2\operatorname{Re}\eta,\\
+\operatorname{Re}((t\xi)^*(r+g_\sigma)\xi)
+ &=a(u+\rho)+\tfrac32|b|^2\operatorname{Re}\eta,\\
+\phi_\xi(L)&=-2a\rho.
+\end{aligned}
+\tag{20.10}
+$$
+
+PB 左端为 $2|a\rho|>0$，右端由 (20.9) 为零，故严格失败。$\xi$ 的质量为一；用 $\sqrt\mu\xi$ 可在任意给定有限质量 $\mu>0$ 得同一严格违反。$B_{22}$ 与环境块未出现在这些原作用列中，是 $V^*e_1=0$ 的准确结果，不是对原输入作 Schur 替换或压缩平方。∎
+

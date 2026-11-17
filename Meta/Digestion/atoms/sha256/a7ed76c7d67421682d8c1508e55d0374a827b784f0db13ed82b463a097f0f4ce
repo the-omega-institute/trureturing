@@ -1,0 +1,115 @@
+**Theorem 146.1 (rank-two common partitions with four exact terminal contrasts).** For every original $\theta\in\Theta$, there is a sequence of whole-$G$ pointwise Borel partitions
+
+$$
+D_n=(D_{n,0},D_{n,1},D_{n,3},D_{n,B})
+\tag{146.1}
+$$
+
+such that
+
+$$
+\begin{gathered}
+D_n\in\mathscr D_{12}(\theta),\qquad \operatorname{rank}A^{D_n}=2,\\
+\mathcal C(v_n,v_n,\mathbf1_{D_{n,w}})=0
+\quad(w=0,1,3,B),\\
+\mathbf1_{D_{n,y}}\overset{*}{\rightharpoonup}f_y
+\quad\text{in }L^\infty(m)\quad(y=0,1,3,B),\\
+\|\nu_{D_n}^{(3)}-\nu_f^{(3)}\|_{\rm TV}\longrightarrow0,
+\end{gathered}
+\tag{146.2}
+$$
+
+where $v_n=\mathbf1_{D_{n,0}}-\mathbf1_{D_{n,1}}$. Each equality in the second line is an equality for the corresponding actual terminal $P\mathbf1_{D_{n,w}}$.
+
+*Proof.* The determinant-sign and proportional-subdivision construction in (143.7)--(143.15), applied with its exact original marginal measures, supplies invariant coarse partitions $E_n=(S_n,C_n,B_n)\in\mathscr E_\theta$ for which
+
+$$
+\operatorname{rank}A_{E_n}=2,\qquad
+\mathbf1_{E_{n,i}}\overset{*}{\rightharpoonup}u_i^0
+\quad(i=S,C,B),\qquad
+A_{E_n}\longrightarrow A(u^0).
+\tag{146.3}
+$$
+
+The positive principal minor in (143.15) is retained when the finite initial segment is discarded and the sequence is relabelled. This is a new choice of the coarse partitions; no sign identity is assumed from the sequence used in Theorem 143.2.
+
+Choose a countable dense family $(\psi_l)_{l\ge1}$ in the real unit ball of $L^1(m)$. Apply Theorem 145.3 to $E_n$ and $\Psi_n=\{\psi_1,\ldots,\psi_n\}$, and call the resulting sign $v_n$. Define
+
+$$
+D_{n,0}=\{v_n=1\},\quad D_{n,1}=\{v_n=-1\},\quad
+D_{n,3}=C_n,\quad D_{n,B}=B_n.
+\tag{146.4}
+$$
+
+Because the three source densities $g_{2d},g_{3d},g_{4d}$ are invariant under $\mathscr R$, oddness gives
+$\int g_{jd}v_n\,dm=0$. Together with the nine equations for $E_n$, this proves all twelve original marginal equations for $D_n$.
+
+The half-turn commutation of $P$ gives $P v_n$ odd. Hence $v_nPv_n$ is invariant, $P(v_nPv_n)$ is invariant, and
+
+$$
+\mathcal C(v_n,v_n,v_n)=\int_Gg\,v_nP(v_nPv_n)\,dm=0.
+\tag{146.5}
+$$
+
+Theorem 145.3 gives the three coarse terminal equalities. Since
+
+$$
+\mathbf1_{D_{n,0}}=\frac{\mathbf1_{S_n}+v_n}{2},\qquad
+\mathbf1_{D_{n,1}}=\frac{\mathbf1_{S_n}-v_n}{2},
+\tag{146.6}
+$$
+
+(146.5) yields
+
+$$
+\mathcal C(v_n,v_n,\mathbf1_{D_{n,0}})=
+\mathcal C(v_n,v_n,\mathbf1_{D_{n,1}})=0.
+\tag{146.7}
+$$
+
+For the other two labels, (145.9) is exactly the same assertion, proving all four actual-terminal contrasts in (146.2).
+
+For any invariant bounded $u$, the two cross pairings with an odd $v_n$ vanish by the half-turn change of variables:
+
+$$
+Q_{E_n}(u,v_n)=Q_{E_n}(v_n,u)=0.
+\tag{146.8}
+$$
+
+The ordered congruence (138.7), with the actual terminal $P\mathbf1_{C_n}$, therefore gives
+
+$$
+\operatorname{rank}A^{D_n}=\operatorname{rank}A_{E_n}=2.
+\tag{146.9}
+$$
+
+The moments imposed in Theorem 145.3 imply $v_n\overset{*}{\rightharpoonup}0$. Equations (146.3) and (146.6) thus give the four weak-star limits in (146.2). The actual path density
+
+$$
+W(x_1,x_2,x_3)=g(x_1)p_d(x_1,x_2)p_d(x_2,x_3)
+\tag{146.10}
+$$
+
+is nonnegative and integrable with mass one. Rectangular-tensor approximation in $L^1(m^3)$, as in Proposition 123.2, makes every one of the 64 trilinear coefficients continuous under these bounded componentwise weak-star limits. Their finite sum is the displayed total-variation convergence.
+
+In the restricted invariant coarse/odd construction, the invertible change of components from $(\mathbf1_{D_0},\mathbf1_{D_1},\mathbf1_{D_3},\mathbf1_{D_B})$ to $(\mathbf1_S,\mathbf1_C,\mathbf1_B,v)$ sends the target tuple to $(u_S^0,u_C^0,u_B^0,0)$ as $m$-classes. Multilinearity makes exact equality of the two 64-coordinate arrays equivalent to equality in these transformed components. There are the 27 coarse equations
+
+$$
+\mathcal C(\mathbf1_{E_i},\mathbf1_{E_j},\mathbf1_{E_k})
+=\mathcal C(u_i^0,u_j^0,u_k^0),
+\qquad i,j,k\in\{S,C,B\},
+\tag{146.11}
+$$
+
+and, after the three equations in (145.9) and the automatic cubic identity (146.5), the six remaining ordered quadratic obligations
+
+$$
+\mathcal C(v,\mathbf1_{E_j},v)=0\quad(j=S,C,B),\qquad
+\mathcal C(\mathbf1_{E_i},v,v)=0\quad(i=S,C,B).
+\tag{146.12}
+$$
+
+The 27 terms with exactly one $v$ and the cubic term vanish by half-turn parity; of the nine terms with exactly two $v$ factors, (145.9) cancels three and (146.12) lists the other six. These counts enumerate ordered coefficients, not independent equations. Thus (146.11)--(146.12) describe the obligations left by this restricted construction; they do not exhaust all possible $F_{64}$ witnesses and do not establish the universal target (144.4). $\square$
+
+The source-specific content of Theorems 145.3 and 146.1 is the signed-pencil-to-extreme-sign composition and its insertion into the actual rank-two coarse sequence. The heat-image analyticity, odd kernel nonsingularity, source boundedness, exact coarse sequence, ordered congruence, and common path density are the supplied results of §§120, 133, 138, 143 and 123. Dvoretzky--Wald--Wolfowitz, [*Relations among certain ranges of vector measures*, §3 Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), is used only for the finite linear proportional subdivisions in the coarse construction. These results give a conditional actual three-terminal sign and its same-partition sequence consumer; they do not prove attainment of (144.4), nonattainment, a physical realization or the universal $\forall\theta\,F_{64}(\theta)$ statement.
+

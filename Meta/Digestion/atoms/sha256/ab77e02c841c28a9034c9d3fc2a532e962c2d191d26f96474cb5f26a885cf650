@@ -1,0 +1,22 @@
+**命题 85.8（强纠缠与局部酉等价均非充分条件）。** 对三腿全活跃的情形，以下边界成立。
+
+乘积向量 $a\otimes b\otimes c$、$d\ge2$ 不满足 (85.7)：可取非零 $H$ 使 $Ha=0$，则 $(H,0,0)$ 的局部作用为零，而求和为 $H\ne0$。
+
+三 qubit 的
+
+$$
+|W\rangle=(|001\rangle+|010\rangle+|100\rangle)/\sqrt3
+$$
+
+在每腿都具有满 Schmidt 秩且真正三方纠缠，却不满足 (85.7)。确实，三个位置都取 $H=\operatorname{diag}(-1/3,2/3)$，每个非零字符串上三个对角数之和均为零，因此 $(H,H,H)\in\ker\mathbb V_W$，但 $3H=\operatorname{diag}(-1,2)\ne0$。满单体 Schmidt 秩不够。
+
+共同可逆 $S$ 在三个位置同时作用保持相容性：对归一化后的 $(S\otimes S\otimes S)\psi$，核关系经 $H_\ell\mapsto S^{-1}H_\ell S$ 对应，求和也经同一共轭对应。独立局部可逆变换则没有这个保证，连独立局部酉也没有。令 $Z=\operatorname{diag}(1,-1)$、$X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，$B=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$。原 $G_2$ 有关系 $(Z,-Z,0)$；在
+
+$$
+\psi'=(I\otimes B\otimes I)|G_2\rangle
+$$
+
+上相应关系为 $(Z,-BZB^*,0)=(Z,-X,0)$，其矩阵和 $Z-X\ne0$，故 $\psi'$ 失败。
+
+**证明与标架含义。** 各展示的核向量均直接违反 (85.7)，推论 85.4 和命题 85.5 分别给不能认证与强正非 CP 反模型。共同 $S$ 的结论由三个局部算子逐腿共轭直接得出。独立 Hadamard 例子并不违反物理的换标架协变性：若独立换三腿物理标架，也必须各自共轭相应局部事件；此时三腿坐标式不再是未经运输的同一份 $\Phi$。本章固定的是“同一个原事件在三个位置用同一份矩阵”这一有来源义务的关系。证毕。
+

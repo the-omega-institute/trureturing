@@ -1,0 +1,72 @@
+### 153.D. An exact stochastic preimage and its thirty-nine directions
+
+For sufficiently small $t>0$ put
+
+$$
+u_a^*=f_a^0+t x_a\quad(a\in I),\qquad
+u_B^*=f_B^0-t(x_0+x_1+x_3).
+\tag{153.24}
+$$
+
+All $x_a$ are supported in $E$, where every original component has a fixed positive lower bound. Their boundedness gives a choice of $t$ retaining positive slack for all four components on $E$. Outside $E$ the tuple equals $f^0$; in particular $u_0^*,u_1^*,u_B^*$ have one uniform positive lower bound on all of $G$.
+
+Relative to the invariant tuple $f^0$, every marginal is unchanged by oddness. In each pair coordinate, the linear terms vanish by invariance and oddness. The quadratic term is zero for equal labels by (153.21) and for distinct labels by disjoint spectra. In every triple in $\mathcal T$ all three labels are distinct. Its single-$x$ terms vanish by oddness. Its two-$x$ terms pair distinct character sets through invariant multipliers and $P$, so vanish by angular orthogonality. Its three-$x$ term is odd under the simultaneous half-turn and vanishes as well. Therefore
+
+$$
+\mathcal H_{39}(u^*)=\mathcal H_{39}(f).
+\tag{153.25}
+$$
+
+Consider variations in components $0,1,3$, always compensating their sum in $B$. For the lower thirty-six rows take the nine invariant directions $\mathbf1_Eg_j$ in their respective components. Their marginal matrix is three copies of the positive definite matrix
+
+$$
+\bigl(\langle g_i,\mathbf1_Eg_j\rangle_m\bigr)_{0\le i,j\le2}.
+\tag{153.26}
+$$
+
+For completeness, a zero quadratic form would make an invariant analytic combination of $g,Pg,P^2g$ vanish on the positive-measure quotient of $E$. Analytic uniqueness makes it zero globally, and Lemma 147.2 then makes all coefficients zero. The functions are bounded by §133, so these directions are admissible and supported in $E$.
+
+For an odd direction $h$ in component $a$, the ordered pair differential at $u^*$ is exactly
+
+$$
+DQ_r(u_i,u_j)[\delta u_a=h]
+ =t\left(\mathbf1_{i=a}Q_r(h,x_j)
+                 +\mathbf1_{j=a}Q_r(x_i,h)\right),
+ \qquad i,j\in I.
+\tag{153.27}
+$$
+
+For each diagonal $(a,a)$ choose three directions in $X_{E,S_a}$ dual to the three sums $Q_r(h,x_a)+Q_r(x_a,h)$. These sums are independent by the six evaluations in (153.21). These directions affect just that diagonal's three pair rows. For each unordered distinct pair $\{a,b\}$ choose six directions in $X_{E,S_b}$ varying component $a$, dual to
+$(Q_r(h,x_b),Q_r(x_b,h))_{r\in\mathcal R}$.
+They affect just the six rows $(a,b),(b,a)$. Indeed every other label's low and high frequencies are disjoint from $S_b$. Altogether these twenty-seven odd directions have zero marginal differential and an invertible twenty-seven-row pair differential. Together with (153.26) they give an invertible lower thirty-six-row restriction.
+
+For each $\omega\in\mathcal T$ add the direction
+
+$$
+\delta_\omega u_0=R_\omega^{(0)}[x],\qquad
+\delta_\omega u_1=R_\omega^{(1)}[x],\qquad
+\delta_\omega u_3=0,\qquad
+\delta_\omega u_B=-R_\omega^{(0)}[x]-R_\omega^{(1)}[x].
+\tag{153.28}
+$$
+
+Each new direction has zero lower thirty-six-row differential: its zero angular mean kills the invariant factors, and its even parity kills its pairings with the odd $x_a$. Its triple differentials are computed using self-adjointness in the actual original $\mathcal C$. For a general two-component direction $h=(h_0,h_1)$ varying only $0,1,B$ with the same even, zero-mean properties, the constant-in-$t$ density is invariant and the linear-in-$t$ density is odd. The remaining densities are precisely
+
+$$
+D\mathcal C(u_y,u_z,u_w)[h]\big|_{u=u^*}
+  =t^2\int_G
+     \left(h_0R_{yzw}^{(0)}[x]+h_1R_{yzw}^{(1)}[x]\right)dm
+ \quad(yzw\in\mathcal T).
+\tag{153.29}
+$$
+
+For example the terminal variation in $031$ is
+$\mathcal C(x_0,x_3,h_1)
+ =\langle h_1,P(x_3P(gx_0))\rangle_m$;
+the middle variation in $013$ is
+$\mathcal C(x_0,h_1,x_3)
+ =\langle h_1,P(gx_0)Px_3\rangle_m$.
+The other four terms give exactly (153.12). Thus the last three columns have triple block $t^2\mathsf G$, which is invertible by (153.23). With rows ordered as marginals, pairs, triples, the full thirty-nine-direction matrix is block triangular with invertible diagonal blocks.
+
+Choose bounded Borel representatives of all these finitely many directions and of the $x_a$. Their finite character representations can be taken pointwise on $\Omega$, with zero values on its null complement. Smoothed factors in (153.12) have their continuous representatives there; the Markov bounds extend pointwise by continuity and full support, so these representatives are bounded. All original null modifications can be combined into one Borel null set. The first thirty-six directions involving component $3$ are supported in $E$. The last three leave that component fixed, and only vary $0,1,B$, which have uniform global slack. Hence there is a closed Euclidean ball of positive radius in these thirty-nine directions consisting entirely of pointwise simplex tuples on the whole original $G$.
+

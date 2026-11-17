@@ -1,0 +1,19 @@
+**定理 3.6（整数参数：条件结论、三重碰撞与有限性）。** 设整数 $k\ge2$。
+- (i) 若 Alaoglu–Erdős 猜想成立（对不同素数 $p,q$，$p^t,q^t\in\mathbb Q$ 蕴含 $t\in\mathbb Z$），则对一切不同素数 $p,q$ 有 $E_p^{[k]}\cap E_q^{[k]}=\varnothing$。四指数猜想蕴含该猜想。
+- (ii) 无条件地，不存在三个不同素数 $p,q,r$ 使 $E_p^{[k]}\cap E_q^{[k]}\cap E_r^{[k]}\ne\varnothing$。
+- (iii) 无条件地，对固定的不同素数 $p,q$，满足 $F_k(p,i)=F_k(q,j)$ 的 $(i,j)$ 只有有限多对。
+
+**证明。** 碰撞 $F_k(p,i)=F_k(q,j)=\epsilon$ 给出 $t=k\epsilon$ 使 $p^t,q^t\in\mathbb Q$。由命题 3.5，$t$ 超越；在至多一个例外 $t=1$（来自 $F_2(2,1)$）的情形，另一侧 $q^{1}$ 须等于 $R_2(q,j)$，而 $v_q(R_2(q,j))<0$，矛盾。
+
+(i) 碰撞会给出不同素数 $p,q$ 与非整数 $t$，使 $p^t,q^t\in\mathbb Q$，与猜想矛盾。若四指数猜想成立，取 $(\log p,\log q)$ 与 $(1,t)$（分别 $\mathbb Q$-线性无关），四个指数 $p,q,p^t,q^t$ 均为有理数，与猜想矛盾。
+
+(ii) 取三个 $\mathbb Q$-线性无关的数 $\log p,\log q,\log r$ 与两个线性无关的数 $1,t$。六个值 $e^{x_ry_s}$ 全为有理数，与六指数定理矛盾。
+
+(iii) 交换 $p,q$ 使 $p$ 为奇素数。$i=1$ 至多对应一个 $j$，因为 $F_k(q,\cdot)$ 严格递减（该文定理 4.3）。对 $i\ge2$ 的碰撞，记 $t=kF_k(p,i)$，有 $v_p(p^t)=c:=1-k$。若无此类碰撞，结论成立；否则固定其中一个 $t_0$。对另一个 $t$：
+- 若 $1,t_0,t$ 在 $\mathbb Q$ 上线性无关，以 $\log p,\log q$ 为两行、$1,t_0,t$ 为三列，六个值全为有理数，与六指数定理矛盾。故 $t=r+st_0$，$r,s\in\mathbb Q$。
+- 取 $N$ 使 $Nr,Ns\in\mathbb Z$，由 $p^{Nt}=p^{Nr}(p^{t_0})^{Ns}$ 比较 $p$ 进赋值得 $c=r+sc$，即 $t=c+s(t_0-c)$。
+- 令 $A=p^{t_0-c}\in\mathbb Q_{>0}\setminus\{1\}$，$d=\gcd\{|v_\ell(A)|:v_\ell(A)\ne0\}$。由 $A^s=p^{t-c}\in\mathbb Q$ 与唯一分解，$s$ 的既约分母整除 $d$。故所有碰撞的 $t$ 属于离散集 $c+\frac{t_0-c}{d}\mathbb Z$。
+- 又 $0<t\le kF_k(p,2)$，故这样的 $t$ 只有有限多个。每个 $t$ 至多对应一个 $i$ 与一个 $j$。
+
+证毕。
+

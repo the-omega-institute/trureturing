@@ -1,0 +1,32 @@
+**Definition 163.1 (finite-horizon successor readout).** Let
+
+$$
+\mathcal X=L^\infty(G,m;\mathbb R),
+$$
+
+let $\mathscr R:\mathcal X\to\mathbb R^r$ be a finite-dimensional real-linear readout, and let
+
+$$
+T:\mathcal X\to\mathcal X
+$$
+
+be a specified real-linear successor operation. Write $T^0=\operatorname{id}$ and, for an integer horizon $H\ge0$, define
+
+$$
+\mathscr R^{[H]}(v)
+ =\bigl(\mathscr R(v),\mathscr R(Tv),\ldots,\mathscr R(T^Hv)\bigr)
+ \in(\mathbb R^r)^{H+1}.
+\tag{163.1}
+$$
+
+The corresponding finite-horizon calibrated kernel is
+
+$$
+W_{\mathscr R,T}^{(H)}
+ =V\cap\ker\mathscr R^{[H]}
+ =V\cap\bigcap_{j=0}^{H}\ker(\mathscr R\circ T^j).
+\tag{163.2}
+$$
+
+No continuity, positivity or physical realizability of $T$ is assumed; only its stated linear action on the same $L^\infty$ classes is used.
+

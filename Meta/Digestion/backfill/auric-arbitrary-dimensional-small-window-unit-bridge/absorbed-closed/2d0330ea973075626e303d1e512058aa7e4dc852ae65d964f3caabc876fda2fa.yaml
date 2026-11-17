@@ -1,0 +1,37 @@
+fingerprints:
+  raw_sha256: sha256:2d0330ea973075626e303d1e512058aa7e4dc852ae65d964f3caabc876fda2fa
+  normalized_sha256: sha256:2d0330ea973075626e303d1e512058aa7e4dc852ae65d964f3caabc876fda2fa
+cas_ref: sha256:2d0330ea973075626e303d1e512058aa7e4dc852ae65d964f3caabc876fda2fa
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/PBIdempotentSupport.original_p2_support
+    target_statement_id: sha256:804b184a0ddfd23efbfa692a4a81927aee3025c9ec0836f810063db4cd11e8b6
+  - gid: D5/S3/Quantum/Algebra/PBOriginalReadoutRealization.positive_table_transfer
+    target_statement_id: sha256:043252c6c8c10a57f5d7a9b56fda7c6f94231ce404ab5e43276469e1ea7a8a4d
+  - gid: D5/S3/Topology/JBAlgebra.generated_algebra
+    target_statement_id: sha256:20aea2cd7bc73d64d6d59809bf87a0d8436916bf7d1fbfc35bb66e5d3e1787f5
+  - gid: D5/S3/Topology/JBAlgebra.lmul
+    target_statement_id: sha256:b050c7404b7c6543205770f9c6db53aea31217aa2d3b5edd2cd8900a30f6b2b5
+  - gid: D5/S3/Topology/JBAlgebra.polarized
+    target_statement_id: sha256:2fb48f89ae2ee52f320c15dbe3b319f07a5fa109d7d192138614874440d1b149
+  - gid: D5/S3/Topology/JBAmbientSupport.corner_square_bound
+    target_statement_id: sha256:2ffbc3b7c2e1525cdadb9dea0085b7ceabcb169b9e0391e1248219fd271f7479
+  - gid: D5/S3/Topology/JBAmbientSupport.squares_of_supported
+    target_statement_id: sha256:5080c6ffa175914aaf04a1b55f1c77585f175deb9ba829cb4b1b466b8f282bf0
+  - gid: D5/S3/Topology/JBAmbientSupport.support_of_squares
+    target_statement_id: sha256:6ea31579369875ebd477d8a1548e5922151a14d13e11214302bbc8d5f98c2c6f
+  - gid: D5/S3/Topology/JBComplexification.complexCommCStarAlgebra
+    target_statement_id: sha256:95202b72abacc417e091632611667cc5e47f6fcde01e9918fbba66e5e5bbb575
+  - gid: D5/S3/Topology/JBComplexification.realEquiv_isometry
+    target_statement_id: sha256:4392a74347b6f4dff4e7d8db4dd43ba2be8455e24c18d8971888e56e77ff9722
+  - gid: D5/S3/Topology/JBComplexification.real_character_scalar
+    target_statement_id: sha256:e09c6a84dba804437ef122bee8af4d161e034751960e25a3ad7eecd7d6a4b564
+  - gid: D5/S3/Topology/JBComplexification.real_character_value
+    target_statement_id: sha256:7bee04d8a021a52ca76646c90cf6578df44f3c3ea4c88f31626444fc9bd61854
+  - gid: D5/S3/Topology/JBComplexification.real_gelfand_norm
+    target_statement_id: sha256:f126bbd86eab1e1cd4ff5acbc9cd7edbddc7aabd47ebfc1ac6a9d03bdbdfdc5f
+  - gid: D5/S3/Topology/JBComplexification.square_iff_center
+    target_statement_id: sha256:8570f7cd28d61269a6e109f540cd95d59ffcc01b127554f387ffdb23e9137f31
+  - gid: D5/S3/Topology/JBComplexification.square_of_ambient_center
+    target_statement_id: sha256:bb65cd9c574fd7fca8ab920c60b343be952e466118212b5a6483a8950375dc28
+receipts:
+  unresolved_subitems: []

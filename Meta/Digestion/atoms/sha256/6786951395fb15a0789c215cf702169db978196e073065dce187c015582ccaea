@@ -1,0 +1,19 @@
+**定义 137.1（原背景、系数与完成层）。** 完整保持130.1的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、全部原P2及完整原PB，并消费133.1–134.1。仍有 $E\subset X\subset\mathcal A_{\rm sa}$、$\overline E=X$、$\mathcal A=C^*(X)$；原 $E$ 可以不完备，$X$ 不要求等于 $\mathcal A_{\rm sa}$。固定同一实际原有向三轴
+
+$$
+s_1=h,\quad s_2=e,\quad s_3=j=D(h,e),\qquad
+s_r^2=u,\quad s_r\circ s_t=0\ (r\ne t),
+\tag{137.1}
+$$
+
+以及134.1的 $U_hU_eU_j=I_E$、$Q=i h e j\in Z(\mathcal A)$、$Q^*=Q$、$Q^2=u$。本节以后的方括号只指给定环境 $\mathcal A$ 的交换子，不是旧 $D$ 的定义。置
+
+$$
+\mathcal B_0=E_{+++}
+=\{c\in E:[c,h]=[c,e]=[c,j]=0\},\qquad
+Y=\overline{\mathcal B_0}^{\,X}.
+\tag{137.2}
+$$
+
+$\mathcal B_0$ 的元素只与三根轴交换，彼此不要求交换，也不要求属于整个原域的中心。$s_rc$ 在下文表示原Jordan乘积 $s_r\circ c$；证明两者交换后，才在环境中写成普通乘积。$E=0$ 时取 $u=h=e=j=Q=0$，全部系数域、复化、完成与矩阵代数均为零；所有等式仍成立，无须非零态。非零矩阵单位的解释只用于 $E\ne0$。
+

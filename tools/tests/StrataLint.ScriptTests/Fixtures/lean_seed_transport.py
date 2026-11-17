@@ -44,7 +44,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
         helper_dir.mkdir(parents=True, exist_ok=True)
         # Exercise the production shell entry point with its declared transport
         # dependencies in the fixture repository.
-        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_topology.py", "lean_actions.py"):
+        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_release_io.py", "lean_cache_topology.py", "lean_actions.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
         prepare_release_report(self.root)
         shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
@@ -70,18 +70,118 @@ exit "${FAKE_BUILD_EXIT:-0}"
     def transport_environment(self, run="123", **extra):
         head = subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "HEAD"], text=True).strip()
         dev = {"name": "dev", "protected": True, "commit": {"sha": head}}
-        return {**os.environ, "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
+        observed = {}
+        if "FAKE_CLOCK_STEP" in extra:
+            # Observe native prerequisites after all fixture setup/commits. The
+            # virtual clock probes transport/I/O, independently of Git startup.
+            observed = dict(FAKE_NATIVE_HEAD=head + "\n",
+                FAKE_NATIVE_STATUS=subprocess.check_output(
+                    ["git", "-C", str(self.root), "status", "--porcelain"], text=True),
+                FAKE_NATIVE_TRACKED_STATUS=subprocess.check_output(
+                    ["git", "-C", str(self.root), "status", "--porcelain", "--untracked-files=no"], text=True))
+        return {**os.environ, "FULL_BUILD": "1", "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
             "HOME": str(self.root), "FAKE_BUILD_LOG": str(self.root / "build-runs"),
             "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": head, "GITHUB_RUN_ID": run,
             "GITHUB_ACTIONS": "true", "FAKE_DEV_BRANCH": json.dumps(dev),
             "FAKE_DEV_COMPARE": json.dumps({"status": "identical", "merge_base_commit": {"sha": head}}),
             "FAKE_REPORT_FACTORY": str(ROOT / "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
             "GITHUB_RUN_ATTEMPT": "1", "GITHUB_EVENT_NAME": "schedule", "GITHUB_REF": "refs/heads/dev",
-            "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
+            "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **observed, **extra}
 
     def transport(self, verb, run="123", arguments=(), **extra):
         return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
                               text=True, capture_output=True, env=self.transport_environment(run, **{"GITHUB_ACTIONS": "false" if verb == "fetch" else "true", **extra}))
+
+    def archive_quota(self, limit):
+        seed = random.Random(31).randbytes(3 * 1024 * 1024)
+        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(seed)
+        owner = self.publisher.with_name("lean_cache_release.py")
+        owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 1048576"))
+        self.commit_fixture()
+        # Enforce resident space before every actual staging write. A completed
+        # archive plus its parts must not fit, while one compressed copy does.
+        write(self.bin / "sitecustomize.py", '''
+import errno, os, pathlib
+original_open = pathlib.Path.open
+limit = int(os.environ["FAKE_ARCHIVE_QUOTA"])
+peak = pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "archive-peak"
+class QuotaOutput:
+    def __init__(self, output, path): self.output, self.path = output, path
+    def __getattr__(self, name): return getattr(self.output, name)
+    def __enter__(self): return self
+    def __exit__(self, *args): return self.output.__exit__(*args)
+    def flush(self):
+        self.output.flush()
+        if os.environ.get("FAKE_ARCHIVE_FAIL") == "flush": raise OSError(errno.EIO, "archive flush failed")
+    def close(self):
+        self.output.close()
+        if os.environ.get("FAKE_ARCHIVE_FAIL") == "close": raise OSError(errno.EIO, "archive close failed")
+    def write(self, block):
+        if os.environ.get("FAKE_ARCHIVE_FAIL") == "short": block = block[:4093]
+        self.output.flush()
+        resident = sum(p.stat().st_size for p in self.path.parent.glob("lean-build.tgz*"))
+        requested = resident + len(block)
+        if requested > limit: raise OSError(errno.ENOSPC, "archive staging quota exhausted")
+        with original_open(peak, "a") as log: log.write(str(requested) + "\\n")
+        return self.output.write(block)
+def open_path(path, mode="r", *args, **kwargs):
+    output = original_open(path, mode, *args, **kwargs)
+    if mode == "wb" and path.parent.name.startswith("lean-release-") and path.name.startswith("lean-build.tgz"):
+        return QuotaOutput(output, path)
+    return output
+pathlib.Path.open = open_path
+''')
+        return seed, dict(PYTHONPATH=str(self.bin), FAKE_ARCHIVE_QUOTA=str(limit))
+
+    def test_multipart_publication_fits_one_archive_staging_quota_and_restores(self):
+        quota = 4 * 1024 * 1024
+        seed, environment = self.archive_quota(quota)
+        result = self.transport("publish", **environment)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        snapshot = next(self.remote.iterdir())
+        manifest = json.loads((snapshot / "manifest.json").read_text())
+        self.assertGreater(len(manifest["parts"]), 1)
+        self.assertLess(manifest["archive_bytes"], quota)
+        self.assertGreater(2 * manifest["archive_bytes"], quota)
+        peak = max(map(int, (self.root / "archive-peak").read_text().splitlines()))
+        self.assertGreaterEqual(peak, manifest["archive_bytes"])
+        self.assertLessEqual(peak, quota)
+        shutil.rmtree(self.root / ".lake/build")
+        restored = self.transport("fetch")
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        self.assertIn('"status":"unpacked"', restored.stdout)
+        self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
+
+    def test_archive_staging_enospc_fails_before_release_creation(self):
+        seed, environment = self.archive_quota(1024 * 1024)
+        result = self.transport("publish", **environment)
+        self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"failed"', result.stdout)
+        self.assertIn("archive staging quota exhausted", result.stdout)
+        self.assertEqual([], list(self.remote.iterdir()))
+        self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
+
+    def test_archive_flush_and_close_fail_before_release_creation(self):
+        seed, environment = self.archive_quota(4 * 1024 * 1024)
+        for phase in ("flush", "close"):
+            with self.subTest(phase=phase):
+                result = self.transport("publish", **environment, FAKE_ARCHIVE_FAIL=phase)
+                self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"failed"', result.stdout)
+                self.assertIn("archive " + phase + " failed", result.stdout)
+                self.assertEqual([], list(self.remote.iterdir()))
+                self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
+
+    def test_short_archive_writes_preserve_digests_and_restored_bytes(self):
+        seed, environment = self.archive_quota(4 * 1024 * 1024)
+        result = self.transport("publish", **environment, FAKE_ARCHIVE_FAIL="short")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        shutil.rmtree(self.root / ".lake/build")
+        restored = self.transport("fetch")
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
 
     def linked_checkout(self):
         self.main_checkout = self.root.resolve()
@@ -124,6 +224,108 @@ exit "${FAKE_BUILD_EXIT:-0}"
 
     def test_linked_production_fetch_refuses_before_gh_or_lake_writes(self):
         self.assert_linked_fetch_guarded()
+
+    def cleanup_fault_environment(self):
+        write(self.bin / "sitecustomize.py", """
+import os, pathlib, tempfile
+original = tempfile.TemporaryDirectory.cleanup
+def cleanup(stage):
+    original(stage)
+    if pathlib.Path(stage.name).name.startswith("lean-fetch-"):
+        root = pathlib.Path(os.environ["FAKE_CLEANUP_ROOT"])
+        assert (root / ".lake/build/lib/lean/D5/A.olean").read_text() == "locally-produced-olean"
+        (root / "cleanup-fault").write_text("post-install cleanup OSError")
+        raise OSError("injected post-install cleanup failure")
+tempfile.TemporaryDirectory.cleanup = cleanup
+""")
+        return dict(PYTHONPATH=str(self.bin), FAKE_CLEANUP_ROOT=str(self.root))
+
+    def backup_cleanup_fault_environment(self):
+        write(self.bin / "sitecustomize.py", """
+import os, pathlib, shutil
+original = shutil.rmtree
+def cleanup(path, *args, **kwargs):
+    if pathlib.Path(path).name.startswith(".release-backup-"):
+        root = pathlib.Path(os.environ["FAKE_CLEANUP_ROOT"])
+        assert (root / ".lake/build/lib/lean/D5/A.olean").read_text() == "locally-produced-olean"
+        (root / "cleanup-fault").write_text("backup cleanup OSError")
+        raise OSError("private backup cleanup diagnostic")
+    return original(path, *args, **kwargs)
+shutil.rmtree = cleanup
+""")
+        return dict(PYTHONPATH=str(self.bin), FAKE_CLEANUP_ROOT=str(self.root))
+
+    def test_committed_backup_cleanup_keeps_fetch_result(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        result = self.transport("fetch", arguments=("--refresh-stale",),
+            **self.backup_cleanup_fault_environment(),
+            TRURETURING_MAINTENANCE_LOG_DIR=str(self.root / "logs"))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipts = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH ")]
+        self.assertEqual(1, len(receipts))
+        self.assertEqual("unpacked", receipts[0]["status"])
+        self.assertEqual("private backup cleanup diagnostic", receipts[0]["cleanup_error"])
+        self.assertTrue(pathlib.Path(receipts[0]["retained_backup"]).is_dir())
+        self.assertNotIn("LEAN_CACHE_FETCH_WARNING", result.stdout)
+        rows = [json.loads(line) for file in (self.root / "logs").glob("*.jsonl") for line in file.read_text().splitlines()]
+        warning = next(row for row in rows if row.get("status") == "cleanup-deferred")
+        self.assertEqual(("cleanup", "OSError", "OSError"),
+                         tuple(warning[key] for key in ("phase", "error_type", "reason_code")))
+        self.assertEqual((0, "unpacked"), (rows[-1]["exit_code"], rows[-1]["status"]))
+        self.assertNotIn("private backup cleanup diagnostic", json.dumps(rows))
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def test_post_install_cleanup_warning_keeps_fetch_result(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.cleanup_fault_environment())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipts = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH ")]
+        self.assertEqual("unpacked", receipts[-1]["status"])
+        warnings = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH_WARNING ")]
+        self.assertEqual(["cleanup-deferred"], [row["status"] for row in warnings])
+        self.assertTrue((self.root / "cleanup-fault").is_file())
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def ensure_post_install_cleanup_consumer(self):
+        for relative, content in json.loads(self.native_setup.read_text()).items():
+            write(self.root / relative, content)
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        self.commit_fixture()
+        self.assertEqual(0, self.transport("publish").returncode)
+        if self.initially_warm:
+            write(self.root / ".lake/build/lib/lean/D5/A.olean", "old active bytes")
+            write(self.root / ".lake/build/.release-refreshed-at", "2000-01-01T00:00:00+00:00")
+        else:
+            shutil.rmtree(self.root / ".lake/build")
+        fault = self.backup_cleanup_fault_environment() if self.backup_cleanup else self.cleanup_fault_environment()
+        environment = self.transport_environment(**self.local_environment(), **fault,
+            TRURETURING_MAINTENANCE_SCRIPT="ensure-cache", TRURETURING_MAINTENANCE_REPOSITORY=str(self.root),
+            TRURETURING_MAINTENANCE_LOG_DIR=str(self.root / "logs"))
+        environment.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        result = subprocess.run(["dotnet", self.native_cli, "worktree", "ensure-cache", "--path", str(self.root)],
+            cwd=self.root, env=environment, capture_output=True, text=True, timeout=60)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipt = json.loads(next(line.partition(" ")[2] for line in result.stdout.splitlines()
+                                 if line.startswith("LEAN_CACHE ")))
+        self.assertEqual("unpacked", receipt["archive_status"], result.stdout)
+        self.assertEqual("warm", receipt["project_olean_state"])
+        self.assertEqual("warm", receipt["mathlib_olean_state"])
+        self.assertTrue((self.root / "cleanup-fault").is_file())
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        rows = [json.loads(line) for file in (self.root / "logs").glob("*.jsonl") for line in file.read_text().splitlines()]
+        final = next(row for row in rows if row["event"] == "run_finished" and row["script"] == "ensure-cache")
+        self.assertEqual((0, "unpacked", False, "none"),
+            tuple(final[key] for key in ("exit_code", "archive_status", "degraded", "cache_fallback")))
+        warning = next(row for row in rows if row.get("status") == "cleanup-deferred")
+        self.assertEqual(("cleanup", "OSError"), (warning["phase"], warning["error_type"]))
+        self.assertNotIn("private backup cleanup diagnostic", json.dumps(rows))
+        fetched = next(row for row in rows if row["event"] == "run_finished" and row.get("operation") == "fetch")
+        self.assertEqual((0, "unpacked"), (fetched["exit_code"], fetched["status"]))
 
     def test_main_production_fetch_reaches_release_listing(self):
         log = self.root / "main-gh-calls"
@@ -256,6 +458,13 @@ clock = 0
 time.monotonic = lambda: clock
 def run(args, *rest, **kwargs):
     global clock
+    root = str(pathlib.Path(os.environ["FAKE_REMOTE"]).parent.resolve())
+    if args[:3] == ["git", "-C", root]:
+        field = {("rev-parse", "--verify", "HEAD"): "FAKE_NATIVE_HEAD",
+                 ("status", "--porcelain"): "FAKE_NATIVE_STATUS",
+                 ("status", "--porcelain", "--untracked-files=no"): "FAKE_NATIVE_TRACKED_STATUS"}.get(tuple(args[3:]))
+        if field:
+            return subprocess.CompletedProcess(args, 0, os.environ[field], "")
     if args[0] != "gh": return original(args, *rest, **kwargs)
     with (pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "gh-budgets").open("a") as log:
         log.write(json.dumps({"args": args[1:], "timeout": kwargs.get("timeout")}) + "\\n")
@@ -270,7 +479,23 @@ def run(args, *rest, **kwargs):
     # Infrastructure hang guard for the pre-fix unbounded call. Whether the
     # production owner supplied a timeout, not elapsed time, decides the test.
     kwargs.setdefault("timeout", 1)
-    try: return original(args, *rest, **kwargs)
+    try:
+        if "FAKE_PREPARATION_PHASE" in os.environ or "FAKE_FETCH_PHASE" in os.environ:
+            # Local I/O probes run the exact nonblocking transport fake inline;
+            # their injected clock advances at reads, independent of startup.
+            import contextlib, io, runpy, shutil, sys
+            from unittest.mock import patch
+            stdout, stderr, status = io.StringIO(), io.StringIO(), 0
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr), patch.object(sys, "argv", args):
+                try:
+                    runpy.run_path(shutil.which(args[0]), run_name="__main__")
+                except SystemExit as error:
+                    status = error.code or 0
+            result = subprocess.CompletedProcess(args, status, stdout.getvalue(), stderr.getvalue())
+            if kwargs.get("check"):
+                result.check_returncode()
+            return result
+        return original(args, *rest, **kwargs)
     finally:
         # Protected-content queries are instantaneous in this transport-clock fixture.
         if args[1] != "api" or "/releases/" in args[2]:
@@ -298,11 +523,14 @@ def record(**event):
 def copytree(source, target, *args, **kwargs):
     record(operation="copytree", source=str(source), target=str(target))
     raise OSError(errno.ENOSPC, "no space for a duplicate unpacked tree")
-original_extract, original_rename = tarfile.TarFile.extractall, pathlib.Path.rename
-def extract(archive, path, *args, **kwargs):
+import sys
+sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
+import lean_cache_release_io
+original_extract, original_rename = lean_cache_release_io.extract_members, pathlib.Path.rename
+def extract(archive, path, members, deadline):
     record(operation="extract", path=str(path))
-    result = original_extract(archive, path, *args, **kwargs)
-    for member in archive.getmembers():
+    result = original_extract(archive, path, members, deadline)
+    for member in members:
         if member.isfile():
             status = (pathlib.Path(path) / member.name).stat()
             record(operation="material", name=member.name, device=status.st_dev, inode=status.st_ino)
@@ -317,10 +545,11 @@ def rename(source, target):
                 and not source.parent.name.startswith(".release-backup-"))):
         raise OSError(errno.EIO, "injected rename failure")
     return original_rename(source, target)
-shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, extract, rename
+shutil.copytree, lean_cache_release_io.extract_members, pathlib.Path.rename = copytree, extract, rename
 ''')
         (self.root / "install-events").unlink(missing_ok=True)
-        return {"PYTHONPATH": str(self.bin), "FAKE_INSTALL_LOG": str(self.root / "install-events"),
+        return {"PYTHONPATH": str(self.bin), "FAKE_RELEASE_HELPER": str(self.publisher.parent),
+                "FAKE_INSTALL_LOG": str(self.root / "install-events"),
                 "FAKE_INSTALL_FAILURE": failure}
 
     def installation_events(self):
@@ -473,10 +702,148 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
                 self.assertIn("invalid cache member", result.stdout)
                 self.assertEqual([], list((self.root / ".lake").iterdir()))
 
+    def test_fetch_local_deadlines_preserve_active_cache_and_name_the_phase(self):
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        material.write_bytes(random.Random(41).randbytes(3 * 1024 * 1024))
+        self.assertEqual(0, self.transport("publish").returncode)
+        self.three_parts(next(self.remote.iterdir()))
+        write(self.root / ".lake/build/keep.txt", "old build")
+        write(self.root / ".lake/lean-report-seed-base.json", "old base")
+        lake = self.root / ".lake"
+        before = {str(path.relative_to(lake)): path.read_bytes() for path in lake.rglob("*") if path.is_file()}
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        for phase in ("part_validation", "reassembly", "archive_validation", "tar_scan", "extraction"):
+            with self.subTest(phase=phase):
+                environment = self.slow_asset_probe(1)
+                with (self.bin / "sitecustomize.py").open("a") as probe:
+                    probe.write('''
+import sys
+original_open = pathlib.Path.open
+class TimedFetchReader:
+    def __init__(self, source): self.source = source
+    def __getattr__(self, name): return getattr(self.source, name)
+    def __enter__(self): return self
+    def __exit__(self, *args): return self.source.__exit__(*args)
+    def read(self, size=-1):
+        global clock
+        block = self.source.read(size)
+        if block and getattr(sys.modules.get("__main__"), "CURRENT_PHASE", None) == os.environ["FAKE_FETCH_PHASE"]:
+            with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "fetch-reads", "a") as log:
+                log.write(str(len(block)) + "\\n")
+            clock += 2
+        return block
+def open_path(path, mode="r", *args, **kwargs):
+    source = original_open(path, mode, *args, **kwargs)
+    return TimedFetchReader(source) if mode == "rb" and path.name.startswith("lean-build.tgz") else source
+pathlib.Path.open = open_path
+''')
+                (self.root / "fetch-reads").unlink(missing_ok=True)
+                logs = self.root / "logs"
+                log = logs / "lean-cache-publish.jsonl"
+                log.unlink(missing_ok=True)
+                result = self.transport("fetch", arguments=("--refresh-stale",), **environment,
+                    FAKE_FETCH_PHASE=phase, TRURETURING_MAINTENANCE_LOG_DIR=str(logs))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("deadline exhausted", result.stdout)
+                self.assertEqual(before, {str(path.relative_to(lake)): path.read_bytes()
+                    for path in lake.rglob("*") if path.is_file()})
+                consumed = sum(map(int, (self.root / "fetch-reads").read_text().splitlines()))
+                self.assertGreater(consumed, 0)
+                self.assertLessEqual(consumed, 1024 * 1024)
+                rows = [json.loads(line) for line in log.read_text().splitlines()]
+                self.assertEqual("fetch", rows[-1]["operation"])
+                self.assertEqual("production", next(row["mode"] for row in rows if "mode" in row))
+                self.assertEqual(phase, rows[-1]["stage"])
+                self.assertEqual("timeout", rows[-1]["error_type"])
+                self.assertTrue(any("phase_duration_seconds" in row for row in rows))
+
+    def slow_asset_probe(self, seconds=5, step=0, failures=0):
+        environment = self.deadline_probe(seconds, step=step)
+        with (self.bin / "sitecustomize.py").open("a") as probe:
+            probe.write('''
+original_transfer_run = subprocess.run
+asset_attempts = 0
+def transfer_run(args, *rest, **kwargs):
+    global clock, asset_attempts
+    if (args[:3] != ["gh", "release", "download"]
+            or not any(value.startswith("lean-build.tgz") for value in args)):
+        return original_transfer_run(args, *rest, **kwargs)
+    asset_attempts += 1
+    if asset_attempts <= int(os.environ["FAKE_ASSET_FAILURES"]):
+        os.environ["FAKE_FAIL_ASSET"] = "1"
+    else:
+        os.environ.pop("FAKE_FAIL_ASSET", None)
+    try:
+        return original_transfer_run(args, *rest, **kwargs)
+    finally:
+        clock += 21601  # Pass the former six-hour asset deadline on every attempt.
+subprocess.run = transfer_run
+''')
+        return {**environment, "FAKE_ASSET_FAILURES": str(failures)}
+
+    def asset_calls(self):
+        return [call for call in self.gh_budgets()
+                if call["args"][:2] == ["release", "download"]
+                and any(value.startswith("lean-build.tgz") for value in call["args"])]
+
+    def test_release_asset_transfer_has_no_total_deadline_in_script_or_make(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        for entry in ("script", "make"):
+            with self.subTest(entry=entry):
+                shutil.rmtree(self.root / ".lake/build")
+                environment = self.slow_asset_probe()
+                # Retired transfer policy cannot silently reintroduce a cutoff.
+                environment["STRATALINT_LEAN_CACHE_RELEASE_TRANSFER_TIMEOUT_SECONDS"] = "1"
+                if entry == "script":
+                    result = self.transport("fetch", **environment)
+                else:
+                    result = subprocess.run([shutil.which("make"), "-C", str(self.root),
+                        "lean-cache-from-github-without-mathlib", "LEAN_CACHE_REPOSITORY=" + str(self.root)],
+                        text=True, capture_output=True,
+                        env=self.transport_environment(GITHUB_ACTIONS="false", **environment))
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"unpacked"', result.stdout)
+                self.assertEqual([None], [call["timeout"] for call in self.asset_calls()])
+                self.assertEqual("locally-produced-olean",
+                    (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def retain_snapshots(self, count):
+        # Suppress remote prune only while creating real, individually valid
+        # fixtures. The subsequent fetch uses the actual unmodified inventory.
+        for run in range(501, 501 + count):
+            result = self.transport("publish", str(run), FAKE_LIST_JSON="[]")
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual(count, len(list(self.remote.glob("*/lean-build.tgz"))))
+
+    def test_failed_long_transfer_preserves_metadata_budget_for_next_candidate(self):
+        self.retain_snapshots(2)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.slow_asset_probe(10, step=1, failures=1))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertEqual([None, None], [call["timeout"] for call in self.asset_calls()])
+        metadata = [call for call in self.gh_budgets() if call not in self.asset_calls()]
+        self.assertEqual([10, 9, 8, 7, 6], [call["timeout"] for call in metadata])
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def test_failed_long_transfers_stop_after_five_of_seven_actual_candidates(self):
+        self.retain_snapshots(7)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.slow_asset_probe(30, step=1, failures=7))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        transfers = self.asset_calls()
+        self.assertEqual(5, len(transfers))
+        self.assertEqual([None] * 5, [call["timeout"] for call in transfers])
+        self.assertEqual(sorted((path.name for path in self.remote.iterdir()), reverse=True)[:5],
+                         [call["args"][2] for call in transfers])
+        self.assertEqual(7, len(list(self.remote.glob("*/lean-build.tgz"))))
+        self.assertFalse((self.root / ".lake/build").exists())
+
     def preparation_deadline_probe(self, phase):
-        # Small incompressible material reaches archive hashing and multipart
-        # splitting without allocating a production-sized Release asset.
-        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(random.Random(31).randbytes(3 * 1024 * 1024))
+        # Small inputs exercise compressed buffering, multipart output and final
+        # close without allocating a production-sized Release asset.
+        payload = bytes(3 * 1024 * 1024) if phase == "archive-compressible" else random.Random(31).randbytes(3 * 1024 * 1024)
+        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(payload)
         owner = self.publisher.with_name("lean_cache_release.py")
         owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 2097152"))
         self.commit_fixture()
@@ -485,29 +852,37 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
             fixture.write('''
 import tarfile
 phase = os.environ["FAKE_PREPARATION_PHASE"]
-archive_opens = 0
 original_open, original_copy = pathlib.Path.open, tarfile.copyfileobj
+def expire(count):
+    global clock
+    with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "preparation-reads", "a") as log:
+        log.write(str(count) + "\\n")
+    clock = 2
 class TimedReader:
     def __init__(self, source): self.source = source
     def __getattr__(self, name): return getattr(self.source, name)
     def __enter__(self): return self
     def __exit__(self, *args): return self.source.__exit__(*args)
     def read(self, size=-1):
-        global clock
         block = self.source.read(size)
-        if block:
-            with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "preparation-reads", "a") as log:
-                log.write(str(len(block)) + "\\n")
-            clock = 2
+        if block: expire(len(block))
         return block
+class TimedOutput:
+    def __init__(self, output, path): self.output, self.path = output, path
+    def __getattr__(self, name): return getattr(self.output, name)
+    def write(self, block):
+        count = self.output.write(block)
+        if block and phase == "write": expire(count)
+        return count
+    def close(self):
+        was_closed = self.output.closed
+        self.output.close()
+        if not was_closed and ((phase == "rollover" and self.path.name.endswith("part-00"))
+                               or (phase == "close" and self.path.name.endswith("part-01"))): expire(1)
 def open_path(path, mode="r", *args, **kwargs):
-    global archive_opens
     source = original_open(path, mode, *args, **kwargs)
-    if mode == "rb" and path.name == "lean-build.tgz":
-        archive_opens += 1
-        if (phase, archive_opens) in (("hash", 1), ("split", 2)): return TimedReader(source)
-    if mode == "rb" and path.name == "lean-build.tgz.part-00" and phase == "part-hash":
-        return TimedReader(source)
+    if mode == "wb" and path.parent.name.startswith("lean-release-") and path.name.startswith("lean-build.tgz"):
+        return TimedOutput(source, path)
     return source
 def copy(source, target, *args, **kwargs):
     if phase == "archive" and str(getattr(source, "name", "")).endswith("A.olean"):
@@ -516,7 +891,7 @@ def copy(source, target, *args, **kwargs):
 pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 ''')
         (self.root / "preparation-reads").unlink(missing_ok=True)
-        return {**environment, "FAKE_PREPARATION_PHASE": phase}
+        return {**environment, "FAKE_PREPARATION_PHASE": phase.split("-")[0]}
 
     def assert_preparation_stopped(self, result, status):
         self.assertEqual(status, result.returncode, result.stdout + result.stderr)
@@ -527,10 +902,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertLessEqual(consumed, 1024 * 1024, "local preparation continued reading after its deadline")
         self.assertEqual([], list(self.remote.iterdir()))
 
-    def test_publication_deadline_stops_local_archive_hash_and_split_work(self):
-        for phase in ("archive", "hash", "split", "part-hash"):
+    def test_publication_deadline_stops_archive_reads_writes_rollover_and_close(self):
+        for phase in ("archive", "write", "rollover", "close"):
             with self.subTest(phase=phase):
-                self.assert_preparation_stopped(self.transport("publish", **self.preparation_deadline_probe(phase)), 0)
+                self.assert_preparation_stopped(self.transport("publish", **self.preparation_deadline_probe(phase)), 2)
+
+    def test_compressible_archive_deadline_stops_reads_before_next_output(self):
+        self.assert_preparation_stopped(
+            self.transport("publish", **self.preparation_deadline_probe("archive-compressible")), 2)
 
     def test_hanging_direct_fetch_is_bounded_and_fallback_preserves_build_exit(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -703,6 +1082,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(0, address.returncode, address.stdout + address.stderr)
         report_path = "build/lean-inspector/report.zip"
         write(self.root / ".lake" / report_path, '{"material":"report-seed"}\n')
+        setup_paths = ["build/A.setup.json", "build/ir/D5/A.setup.json",
+                       "build/reg/ir/Reg/A.setup.json", "build/lean-inspector/producer/ir/A.setup.json"]
+        for path in setup_paths:
+            write(self.root / ".lake" / path, "compiler setup")
+        retained_paths = ["build/ir/D5/A.c", "build/lib/lean/D5/A.trace",
+                          "build/ir/D5/A.setup.json.hash"]
+        for path in retained_paths:
+            write(self.root / ".lake" / path, path)
         saved = self.transport("publish")
         self.assertEqual(0, saved.returncode, saved.stdout + saved.stderr)
         self.assertIn('"status":"published"', saved.stdout.replace(" ", ""))
@@ -719,12 +1106,21 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         with tarfile.open(snapshot / "lean-build.tgz") as archive:
             self.assertEqual(b"locally-produced-olean", archive.extractfile("build/lib/lean/D5/A.olean").read())
             self.assertEqual(b'{"material":"report-seed"}\n', archive.extractfile(report_path).read())
+            for path in setup_paths:
+                self.assertNotIn(path, archive.getnames())
+                self.assertEqual("compiler setup", (self.root / ".lake" / path).read_text())
+            for path in retained_paths:
+                self.assertEqual(path.encode(), archive.extractfile(path).read())
         shutil.rmtree(self.root / ".lake/build")
         write(self.root / "D5/A.lean", "def a := 333\n")
         restored = self.transport("fetch", GITHUB_SHA="e"*40)
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertEqual('{"material":"report-seed"}\n', (self.root / ".lake" / report_path).read_text())
+        for path in setup_paths:
+            self.assertFalse((self.root / ".lake" / path).exists())
+        for path in retained_paths:
+            self.assertEqual(path, (self.root / ".lake" / path).read_text())
         self.assertIn('"mode":"partition"', restored.stdout.replace(" ", ""))
 
     def test_missing_corrupt_and_cross_partition_are_misses_without_target_writes(self):

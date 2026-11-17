@@ -151,7 +151,7 @@ with a continuous onto resolving map and an open composite over the whole base.
 There is no metrizability hypothesis on the resolution. -/
 def HasOpenZeroDimensionalResolution {T B : Type*}
     [TopologicalSpace T] [TopologicalSpace B] (p : T → B) : Prop :=
-  ∃ (Z : Type) (tZ : TopologicalSpace Z),
+  ∃ (Z : Type*) (tZ : TopologicalSpace Z),
     letI := tZ
     CompactSpace Z ∧ T2Space Z ∧ TotallyDisconnectedSpace Z ∧
       ∃ r : Z → T, Continuous r ∧ Function.Surjective r ∧ IsOpenMap (p ∘ r)

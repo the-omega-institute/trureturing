@@ -1,0 +1,17 @@
+**Theorem 152.2 (conditional simultaneous pair laws and the original 013 coefficient).** Under exactly the complete retained suppliers of Definition 152.1, for every original $\theta=(a,\eta,d,b)\in\Theta$ there exists one pointwise Borel partition $D=(D_0,D_1,D_3,D_B)$ of the whole original $G$ such that
+
+$$
+\begin{gathered}
+D\in\mathscr D_{12}(\theta),\\
+Q_r(\mathbf1_{D_y},\mathbf1_{D_z})=Q_r(f_y,f_z)
+ \quad(r\in\mathcal R,\ y,z\in\mathcal L),\\
+\mathcal C(\mathbf1_{D_0},\mathbf1_{D_1},\mathbf1_{D_3})
+ =\mathcal C(f_0,f_1,f_3).
+\end{gathered}
+\tag{152.9}
+$$
+
+The quantifier order is $\forall\theta\ \exists D$, with this same $D$ in all equations. In every triple coefficient its terminal is its own actual $P\mathbf1_{D_w}$.
+
+*Proof.* All intermediate function spaces are spaces of real bounded Borel $m$-classes, except where a complex angular character or a Hilbert completion is explicitly used.
+

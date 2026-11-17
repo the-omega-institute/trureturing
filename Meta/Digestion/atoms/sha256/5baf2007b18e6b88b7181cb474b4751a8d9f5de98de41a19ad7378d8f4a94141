@@ -1,0 +1,24 @@
+**四、真正的七维开球丛在原边界中有开像。** 定义
+
+$$
+\begin{gathered}
+\mathscr E=\{(x,z)\in Q\times K:z\in D_x\},\qquad
+\mathscr E^\circ=\{(x,z)\in\mathscr E:z\in\operatorname{ri}D_x\},\\
+\mathcal B=\bigcup_{x\in Q}D_x,\qquad
+\mathcal O=\bigcup_{x\in Q}\operatorname{ri}D_x.
+\end{gathered}
+\tag{XI142.18}
+$$
+
+(XI142.17)给真实局部平凡化 $(x,v)\mapsto(x,c(x)+L(x)v)$。其逆为连续左逆作用于 $z-c(x)$，故 $\mathscr E$ 为闭三球丛，$\mathscr E^\circ$ 为开三球丛。$Q$ 是四维无边界 Hausdorff、第二可数拓扑流形，因而 $\mathscr E^\circ$ 是七维无边界拓扑流形。整球连续性还使 $\mathscr E$ 在紧 $Q\times K$ 中闭，所以它紧。
+
+每个 $D_x$ 为原真面，故在 $M$ 中。评价映射
+
+$$
+\operatorname{ev}:\mathscr E^\circ\longrightarrow M,
+\qquad (x,z)\longmapsto z
+\tag{XI142.19}
+$$
+
+连续且单射。若两个不同标签的球含同一个相对内点，该点非纯，违反不同完整球的点交规则；球相同又由 Inj 迫标签相同。源、目标均为七维无边界流形，区域不变性逐坐标适用，故 $\mathcal O$ 是 $M$ 的实际非空开子集。另一方面，$\mathscr E$ 的连续像 $\mathcal B$ 紧，故在 $M$ 中闭。此处开放性来自真实球丛的评价映射，不是假设全局点对关联开放。
+

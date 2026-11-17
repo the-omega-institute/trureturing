@@ -1,0 +1,8 @@
+**引理 62.1（未知类型上的准确完整环境）。** $E$ 是含单位实 JB 代数，$C=\{b^2:b\in E\}$，且 $N(a)=\inf\{r\ge0:-ru\le a\le ru\}$。每个 $\operatorname{ev}_x:E\to\mathfrak J_x$ 是满含单位 Jordan 同态，核为闭 Jordan 理想；其商正锥及商范数准确等于纤维正锥及范数。
+
+证明。已知实 JB 代数的单生成连续谱演算、唯一正平方根和准确序单位范数，取 [Hanche-Olsen–Størmer][IFJB-HOS] Theorem 3.2.4、Corollary 3.2.5、Proposition 3.3.10。Jordan 同构及逆保持平方，故双向保锥、保单位并等距。正平方根在局部连续：在共同有界谱区间上一致多项式逼近平方根，Jordan 幂及其局部一致极限连续；同构保持该演算，故根在重叠处相容。这先在任意有限实类型上给 $C=E^2$，没有用矩阵包含。
+
+等距图使截面范数函数连续，紧性使 $N$ 有限。逐点 Jordan 恒等式、$\|a\circ b\|\le\|a\|\|b\|$、$\|a^2\|=\|a\|^2$、$\|a^2\|\le\|a^2+b^2\|$ 取上确界给 JB 公理。局部图中一致 Cauchy 截面的极限连续且保持过渡相容，故 $E$ 完备；逐点序单位夹界给所述准确范数。
+
+给定 $A\in\mathfrak J_x$，选含 $x$ 的图 $O$ 及 $0\le f\le1$，使 $f(x)=1$、$\operatorname{supp}f\subset O$；紧 Hausdorff 正规性供应这样的截断。将图内常值 $A$ 乘 $f$，图外延零，得同一原域的实际截面 $a$，$a(x)=A$、$N(a)\le\|A\|$；若 $A\ge0$，提升也正。评价收缩给反向范数界，于是 $\inf_{a(x)=A}N(a)=\|A\|$ 且 $\operatorname{ev}_x(C)=(\mathfrak J_x)_+$。核的闭性、理想性由逐点评价得到。∎
+

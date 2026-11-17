@@ -6,8 +6,11 @@
    utility: none
    digest: Mean-square kernel approximation and row concentration control the compressed polynomial defects. -/
 
+/- Escape audit unfinished for real_frobenius_sq: https://github.com/the-omega-institute/trureturing/issues/23644 -/
+
 import D5.S3.Combinatorics.Graph.KyFanGap.UniformGap
 import D5.S3.Combinatorics.Graph.KyFanGap.SignedVariational
+import D5.S3.Combinatorics.Graph.KyFanGap.Defs
 import D5.S3.Arith.Lattices.Klartag.Completion.Discharge
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Analysis.Matrix.Normed
@@ -161,7 +164,7 @@ private theorem witnessMatrix_cube {k n : ℕ} (W : SignedWitness k n) :
   simp only [witnessMatrix, Matrix.mul_assoc]
   rw [← Matrix.mul_assoc (witnessColumns W).transpose, witnessColumns_gram, Matrix.one_mul]
 
-private theorem real_frobenius_sq {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) :
+theorem real_frobenius_sq {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) :
     ‖A‖ ^ 2 = ∑ r, ∑ s, A r s ^ 2 := by
   change ‖WithLp.toLp 2 (fun r => WithLp.toLp 2 (A r))‖ ^ 2 = _
   simp [PiLp.norm_sq_eq_of_L2, Real.norm_eq_abs, sq_abs]

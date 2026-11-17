@@ -112,19 +112,7 @@ $$\forall n \in \mathbb{N},\; \forall s \in \operatorname{Fin}\left(n\right) \to
 
 Expand an arbitrary matrix in the orthogonal Pauli basis. The word_hermitian lemma of StabilizerPovmMaximalEntanglementRefutation states that every Pauli word is Hermitian, so its expectations in pure states are real. Expanding the squared modulus produces a double sum of Pauli coefficients; the product covariance removes all unequal pairs. Its factor four to the power n cancels the squared inverse dimension in the coefficients, leaving one third to the Pauli weight times each squared trace coefficient.
 
-**Theorem 1.10 (Kraus survival amplitudes).**
-
-$$\forall a \in \operatorname{finiteSet},\; \forall r \in \mathbb{N},\; \forall v \in a \to \mathbb{C},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(a, a, \mathbb{C}\right),\; \operatorname{real}\left(\operatorname{inner}\left(v, \operatorname{mulVec}\left(\operatorname{kraus}\left(K, \operatorname{rankOneDensity}\left(v\right)\right), v\right)\right)\right) = \sum_{j:\operatorname{Fin}\left(r\right)} \left\lVert \operatorname{inner}\left(v, \operatorname{mulVec}\left(K\left(j\right), v\right)\right) \right\rVert^{2}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.kraus_survival` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Each Kraus term maps a pure projector to the projector of the transformed vector. Its expectation in the original vector is the squared modulus of their inner product. Additivity gives the sum over the Kraus family.
-
-**Theorem 1.11 (Bell amplitude of an operator).**
+**Theorem 1.10 (Bell amplitude of an operator).**
 
 $$\forall n \in \mathbb{N},\; \forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{inner}\left(\operatorname{maxEntangledVector}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right)\right), \operatorname{mulVec}\left(\operatorname{tensor}\left(1, A\right), \operatorname{maxEntangledVector}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right)\right)\right)\right) = \frac{\operatorname{trace}\left(A\right)}{2^{n}}$$
 
@@ -136,7 +124,7 @@ $$\forall n \in \mathbb{N},\; \forall A \in \operatorname{Matrix}\left(\operator
 
 The maximally entangled trace contraction with identity on the first register gives the operator trace divided by the register dimension, which is two to the power n.
 
-**Theorem 1.12 (Total Pauli probability).**
+**Theorem 1.11 (Total Pauli probability).**
 
 $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \Rightarrow (\sum_{b:\operatorname{Fin}\left(n\right) \to \operatorname{Pauli}} (\frac{1}{\left(2^{n}\right)^{2}}) \cdot (\sum_{j:\operatorname{Fin}\left(r\right)} \left\lVert \operatorname{trace}\left((\operatorname{wordOp}\left(b\right)) \cdot (K\left(j\right))\right) \right\rVert^{2}) = 1)$$
 
@@ -148,7 +136,7 @@ $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operato
 
 The Pauli expansion gives the sum of squared trace coefficients as d times the Hilbert-Schmidt squared norm of each Kraus operator. Trace preservation makes the sum of those norms equal to d. Division by d squared gives total probability one.
 
-**Theorem 1.13 (The weighted probability bound).**
+**Theorem 1.12 (The weighted probability bound).**
 
 $$\forall n \in \mathbb{N},\; \forall q \in \left(\operatorname{Fin}\left(n\right) \to \operatorname{Pauli}\right) \to \mathbb{R},\; ((\forall b \in \operatorname{Fin}\left(n\right) \to \operatorname{Pauli},\; 0 \le q\left(b\right)) \land (\sum_{b:\operatorname{Fin}\left(n\right) \to \operatorname{Pauli}} q\left(b\right) = 1)) \Rightarrow (((1) - ((\frac{3}{2}) \cdot ((1) - (\sum_{b:\operatorname{Fin}\left(n\right) \to \operatorname{Pauli}} (\frac{1}{3}^{\operatorname{hammingDist}\left(b, \lambda i \mapsto \operatorname{I}\right)}) \cdot (q\left(b\right))))) \le q\left(\operatorname{identityWord}\left(n\right)\right)) \land (q\left(\operatorname{identityWord}\left(n\right)\right) = (1) - ((\frac{3}{2}) \cdot ((1) - (\sum_{b:\operatorname{Fin}\left(n\right) \to \operatorname{Pauli}} (\frac{1}{3}^{\operatorname{hammingDist}\left(b, \lambda i \mapsto \operatorname{I}\right)}) \cdot (q\left(b\right))))) \Leftrightarrow (\forall b \in \operatorname{Fin}\left(n\right) \to \operatorname{Pauli},\; (2 \le \operatorname{hammingDist}\left(b, \lambda i \mapsto \operatorname{I}\right)) \Rightarrow (q\left(b\right) = 0))))$$
 
@@ -160,7 +148,7 @@ $$\forall n \in \mathbb{N},\; \forall q \in \left(\operatorname{Fin}\left(n\righ
 
 The gap is a sum of nonnegative probability terms. The coefficient vanishes at weights zero and one, and is strictly positive at every weight at least two. The gap vanishes exactly when every such probability vanishes.
 
-**Theorem 1.14 (Process fidelity in trace coordinates).**
+**Theorem 1.13 (Process fidelity in trace coordinates).**
 
 $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{processFidelity}\left(K\right) = (\frac{1}{\left(2^{n}\right)^{2}}) \cdot (\sum_{j:\operatorname{Fin}\left(r\right)} \left\lVert \operatorname{trace}\left(K\left(j\right)\right) \right\rVert^{2})$$
 
@@ -172,7 +160,7 @@ $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operato
 
 Apply the Kraus survival identity to the normalized Bell vector and then use its operator amplitude. The resulting fidelity is the sum of squared Kraus traces divided by d squared.
 
-**Theorem 1.15 (Zero fidelity in Pauli coordinates).**
+**Theorem 1.14 (Zero fidelity in Pauli coordinates).**
 
 $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall s \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right)\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSIC}\left(s\left(i\right)\right)) \Rightarrow (\forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{zeroFidelity}\left(s, K\right) = \sum_{b:\operatorname{Fin}\left(n\right) \to \operatorname{Pauli}} (\frac{1}{3}^{\operatorname{hammingDist}\left(b, \lambda i \mapsto \operatorname{I}\right)}) \cdot ((\frac{1}{\left(2^{n}\right)^{2}}) \cdot (\sum_{j:\operatorname{Fin}\left(r\right)} \left\lVert \operatorname{trace}\left((\operatorname{wordOp}\left(b\right)) \cdot (K\left(j\right))\right) \right\rVert^{2})))$$
 
@@ -184,7 +172,7 @@ $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall s \in \operato
 
 Apply the Kraus survival identity to every product SIC vector. The Pauli second moment and interchange of the two finite sums give one third to the Pauli weight times the normalized coefficient probability.
 
-**Theorem 1.16 (Lower bound and its equality cases).**
+**Theorem 1.15 (Lower bound and its equality cases).**
 
 $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall s \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right)\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSIC}\left(s\left(i\right)\right)) \Rightarrow (\forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \Rightarrow (((1) - ((\frac{3}{2}) \cdot ((1) - (\operatorname{zeroFidelity}\left(s, K\right)))) \le \operatorname{processFidelity}\left(K\right)) \land (\operatorname{processFidelity}\left(K\right) = (1) - ((\frac{3}{2}) \cdot ((1) - (\operatorname{zeroFidelity}\left(s, K\right)))) \Leftrightarrow (\operatorname{HasWeightOneSupport}\left(K\right)))))$$
 
@@ -196,7 +184,7 @@ $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall s \in \operato
 
 Trace preservation supplies a nonnegative Pauli probability distribution. Process fidelity is its identity probability, and zero fidelity is its weighted sum. The scalar bound gives the lower inequality. Equality requires every coefficient probability of weight at least two to vanish; a sum of squared moduli vanishes precisely when every individual Kraus trace coefficient vanishes.
 
-**Theorem 1.17 (A channel attaining every permitted fidelity).**
+**Theorem 1.16 (A channel attaining every permitted fidelity).**
 
 $$\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall s \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right)\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSIC}\left(s\left(i\right)\right)) \Rightarrow (\forall f \in \mathbb{R},\; (\frac{1}{3} \le f) \Rightarrow ((f \le 1) \Rightarrow (\exists r \in \mathbb{N},\; \exists K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \land ((\operatorname{zeroFidelity}\left(s, K\right) = f) \land (\operatorname{processFidelity}\left(K\right) = (1) - ((\frac{3}{2}) \cdot ((1) - (f)))))))))$$
 
@@ -208,7 +196,7 @@ $$\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall s \in \operatorname
 
 Choose p equal to three f minus one divided by two and t equal to one minus p divided by three. Both parameters are nonnegative. The Kraus operators are square root p times identity and square root t times each of the three Pauli operators on position zero. Their squared operators sum to identity. Every Kraus word has weight at most one: every Pauli coefficient of higher weight has a traceless factor at another position. The three nonidentity Kraus traces vanish, so process fidelity is p. The equality characterization then forces zero fidelity to equal f.
 
-**Theorem 1.18 (Mayer's lower inequality).**
+**Theorem 1.17 (Mayer's lower inequality).**
 
 $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall s \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right)\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSIC}\left(s\left(i\right)\right)) \Rightarrow (\forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \Rightarrow ((1) - ((\frac{3}{2}) \cdot ((1) - (\operatorname{zeroFidelity}\left(s, K\right)))) \le \operatorname{processFidelity}\left(K\right)))$$
 
@@ -220,7 +208,7 @@ $$\forall n \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall s \in \operato
 
 The lower inequality in Theorem 1 bounds the process fidelity by one minus three halves of the zero infidelity.
 
-**Definition 1.19 (The sharp lower bound).**
+**Definition 1.18 (The sharp lower bound).**
 
 $$\operatorname{claim} \Leftrightarrow (\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall s \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right)\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSIC}\left(s\left(i\right)\right)) \Rightarrow ((\forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \Rightarrow (((1) - ((\frac{3}{2}) \cdot ((1) - (\operatorname{zeroFidelity}\left(s, K\right)))) \le \operatorname{processFidelity}\left(K\right)) \land (\operatorname{processFidelity}\left(K\right) = (1) - ((\frac{3}{2}) \cdot ((1) - (\operatorname{zeroFidelity}\left(s, K\right)))) \Leftrightarrow (\operatorname{HasWeightOneSupport}\left(K\right))))) \land (\forall f \in \mathbb{R},\; (\frac{1}{3} \le f) \Rightarrow ((f \le 1) \Rightarrow (\exists r \in \mathbb{N},\; \exists K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \land ((\operatorname{zeroFidelity}\left(s, K\right) = f) \land (\operatorname{processFidelity}\left(K\right) = (1) - ((\frac{3}{2}) \cdot ((1) - (f)))))))))))$$
 
@@ -232,7 +220,7 @@ $$\operatorname{claim} \Leftrightarrow (\forall n \in \mathbb{N},\; (1 \le n) \R
 
 For every positive number of qubits and every choice of local SIC vectors, the lower bound has equality precisely for Kraus operators of Pauli weight at most one. Every zero fidelity between one third and one is to be attained at that bound.
 
-**Theorem 1.20 (Tightness in every qubit dimension).**
+**Theorem 1.19 (Tightness in every qubit dimension).**
 
 $$\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall s \in \operatorname{Fin}\left(n\right) \to \left(\operatorname{Fin}\left(4\right) \to \left(\operatorname{Fin}\left(2\right) \to \mathbb{C}\right)\right),\; (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{IsQubitSIC}\left(s\left(i\right)\right)) \Rightarrow ((\forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \Rightarrow (((1) - ((\frac{3}{2}) \cdot ((1) - (\operatorname{zeroFidelity}\left(s, K\right)))) \le \operatorname{processFidelity}\left(K\right)) \land (\operatorname{processFidelity}\left(K\right) = (1) - ((\frac{3}{2}) \cdot ((1) - (\operatorname{zeroFidelity}\left(s, K\right)))) \Leftrightarrow (\operatorname{HasWeightOneSupport}\left(K\right))))) \land (\forall f \in \mathbb{R},\; (\frac{1}{3} \le f) \Rightarrow ((f \le 1) \Rightarrow (\exists r \in \mathbb{N},\; \exists K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\sum_{j:\operatorname{Fin}\left(r\right)} (\operatorname{adjoint}\left(K\left(j\right)\right)) \cdot (K\left(j\right)) = 1) \land ((\operatorname{zeroFidelity}\left(s, K\right) = f) \land (\operatorname{processFidelity}\left(K\right) = (1) - ((\frac{3}{2}) \cdot ((1) - (f))))))))))$$
 
@@ -255,7 +243,6 @@ For every positive number of qubits and every choice of local SIC vectors, the p
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.bell_amplitude`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.channel_bound`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.claim`
-- Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.kraus_survival`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.lower_bound`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.pauli_total_mass`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.processFidelity`
@@ -270,7 +257,11 @@ For every positive number of qubits and every choice of local SIC vectors, the p
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.weight_bound`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.zeroFidelity`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness.zero_trace`
-- Dependency: [D5/S3/Quantum/Measurement/ExactConditionalPreparationCost](../Measurement/ExactConditionalPreparationCost.md)
+- Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
+- Dependency: [D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence](../Information/StabilizerPairLocalUnitaryInequivalence.md)
 - Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](../Measurement/StabilizerPovmMaximalEntanglementRefutation.md)
+- Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/MayerKnillInfidelityScalingCore](MayerKnillInfidelityScalingCore.md)
 - Dependency: [D5/S3/QuantumBounds/PeritoTsirelson](../../QuantumBounds/PeritoTsirelson.md)
 - Dependency: [D5/S3/Resource/CompositeConeProperness](../../Resource/CompositeConeProperness.md)

@@ -1,0 +1,29 @@
+**命题 13.3（全部正 Gram 所给的准确几何）。** 同一原归一态空间是闭七维 Euclidean 球，纯态和数学原子的流形均为 $S^6$，原锥为自对偶齐性 Lorentz 锥。对 $m>0$ 的 $\alpha_{m,r}$，$h_\alpha$ 相对于原 Euclidean 基 $u,e_1,\ldots,e_7$ 的特征值为 $m+|r|,m-|r|$，各重数四；故 $|r|<m$ 时 $\dim_\mathbb C H_\alpha=8$，$|r|=m>0$ 时为 $4$，零质量时为 $0$。原子切空间上的 $J_vX=v\times X$ 是正交概复结构，但其此一标准结构不可积。这些几何数据不供应 (13.2)。
+
+证明。归一态为 $\alpha_{1,r}$、$|r|\le1$，球的极点准确为单位球面。解 $p^2=p$ 得幂等元只有 $0,u,p_v$，$|v|=1$；$p_v+p_{-v}=u$ 且 $p_v\circ p_{-v}=0$，结合秩二便知 $p_v$ 为全部非平凡 primitive 幂等元。原读数为
+
+$$
+\alpha_{m,r}(p_v)=\frac{m+r\cdot v}{2},\qquad
+\frac{\alpha_{m,r}(p_v)}m=\frac{1+(r/m)\cdot v}{2}\quad(m>0).
+\tag{13.4}
+$$
+
+该 Born 形数值不以它自己保证全域量子乘法。$q_w$ 为正 Euclidean 型的常数倍，$C$ 对它自对偶由 Cauchy–Schwarz 及边界测试得到；齐性可用旋转、正缩放和 Lorentz boost 核对：将任意内点 $(s,x)$ 旋到 $(s,\rho e_1)$，令 $\lambda=\sqrt{s^2-\rho^2}>0$，选 $\cosh\eta=s/\lambda,\sinh\eta=\rho/\lambda$。保持 $s^2-|x|^2$ 及正时间片的 boost 将 $u$ 送到 $(s,\rho e_1)/\lambda$，再缩放即到该内点。这里 $q_w$ 的 Euclidean 几何、Lorentz 二次型和原序单位范数 $N$ 是三个明确不同的对象。
+
+为算 Gram 谱，令 $T_ry=r\times y$。$h_\alpha$ 的矩阵是
+
+$$
+\begin{pmatrix}m&r^{\mathsf T}\\r&mI+\mathrm iT_r\end{pmatrix}.
+\tag{13.5}
+$$
+
+$r\ne0$ 时，$\operatorname{span}_\mathbb C\{u,r\}$ 上给 $m\pm|r|$；$r^\perp$ 上 (11.5) 给 $T_r^2=-|r|^2I$，斜实矩阵的 $\pm\mathrm i|r|$ 各有复重数三，故 (13.5) 的其余特征值同样为 $m\pm|r|$、各重数三。$r=0$ 时矩阵为 $mI_8$；$m=0$ 时 $r=0$。这也给出全部边界质量和商维数。
+
+$v^\perp$ 是球面在 $v$ 的切空间；$T_v$ 保此空间，(11.5) 给 $J_v^2=-I$、$|J_vX|=|X|$。不可积在本例可直接计算，无须把非 Jacobi 当作一般等价判据。对固定 $a,b\in V$，取球面切场 $X_a(p)=a-(a\cdot p)p$，则 $JX_a(p)=p\times a$。在 $p=e_4,a=e_1,b=e_2$ 处，按 $[X,Y]=dY(X)-dX(Y)$ 的通常向量场括号和原表，
+
+$$
+[JX_a,JX_b]=2e_7,\quad [JX_a,X_b]=[X_a,JX_b]=e_3,\quad [X_a,X_b]=0,\quad J_{e_4}e_3=-e_7.
+$$
+
+因此 $N_J(X_a,X_b)=[JX_a,JX_b]-J[JX_a,X_b]-J[X_a,JX_b]-[X_a,X_b]=4e_7\ne0$。可积复坐标中的此张量为零，故这个标准概复结构不可积；这里不对 $S^6$ 上其他结构的存在性作结论。每个切平面的四分之一转动、每个实二生成三空间的 Pauli 表和每个态的 Hilbert 商，可以同时存在而无共同原乘法。∎
+

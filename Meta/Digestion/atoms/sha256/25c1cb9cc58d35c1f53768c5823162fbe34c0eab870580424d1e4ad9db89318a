@@ -1,0 +1,18 @@
+**定义 150.1（内侧自读回候选）。** 分别保留母卷定义 41.1 的完整 $B$ 与定义 67.1 的完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。原有限 EJA、正 Frobenius 型 $q$、实双线性 $D$ 及 $P_c,N_c,W_c$ 仍取定义 145.1 的原义。唯一新增关系为
+
+$$
+\boxed{\mathsf F_{\rm in}:\quad
+\begin{gathered}
+c^2=c,\quad\operatorname{rank}_Ec\in\{1,2\},\qquad
+p,r\in\operatorname{Prim}(E),\quad P_cr=0,\\
+\operatorname{rank}_Ec=2\ \Longrightarrow\ (p\le c\ \text{且}\ r=p)
+\end{gathered}
+\quad\Longrightarrow\quad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp).}
+\tag{150.1}
+$$
+
+这里 $p\le c$ 指 $p\circ c=p$。记 $\mathsf C_{\rm in}(B_*)=B_*+\mathsf F_{\rm in}$。与 (145.1) 相比，秩一层完全相同，只删除秩二切口外侧的自读回。整个原对象的 primitive、整个秩以及跨中央块的二原子切口均保留。候选不另加单位、SC、导子、斜伴随、复类型或新的实际读口。
+
+全部原对象与实际联合，包括旧输出、失败输出、经典标签和实际供应的 $AP^{\otimes k}$，都逐一承载关系。原 $q,D,L$、相关准备、零与次归一质量、不等正块权、设备身份、整个 AC、精确 $N_u$、完整 X、Xs、全事件 R、F、细记录、遗忘、具名同数支持双返回、原反向资料及全部合法有限顺序、自适应和并行历史均按原量词保持。完整 X 仍包括含幺 Jordan 嵌入、同一 $D$ 保持、交叉零、乘积张成与每对实际准备的实际乘积准备，不改成独立仪器的任意共同组装。
+

@@ -237,6 +237,33 @@ internal sealed class StabilizerGenuineEntanglementCommutationRankDocument : ISc
         }
     }
 
+    private static Formula WordMultiplicationDefinition
+    {
+        get
+        {
+            Formula a = F.Id("a"), b = F.Id("b");
+            Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
+            Formula record = App(Qualified("PauliWord", "mk"), Add(Projection(a, "phase"), Projection(b, "phase")),
+                Add(Projection(a, "x"), Projection(b, "x")), Add(Projection(a, "z"), Projection(b, "z")));
+            return OverSizes(All(a, Words, All(b, Words, EqF(Call("wordMul", a, b), record))));
+        }
+    }
+
+    private static Formula WordMultiplicationTheorem
+    {
+        get
+        {
+            Formula a = F.Id("a"), b = F.Id("b"), index = F.Id("j");
+            Formula exponent = Seq(Sum, Underscore, Grp(Seq(index, Colon, Sp, Parties)), Sp,
+                Mul(App(Projection(a, "z"), index), App(Projection(b, "x"), index)));
+            Formula phase = new Formula.Power(Call("windowRoot", P), Projection(Parenthesized(exponent), "val"));
+            Formula right = App(Qualified("SMul", "smul"), phase,
+                Call("pauliWordOperator", Call("wordMul", a, b)));
+            return OverSizes(Instance(Call("NeZero", P), All(a, Words, All(b, Words,
+                EqF(Mul(Call("pauliWordOperator", a), Call("pauliWordOperator", b)), right)))));
+        }
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Genuine entanglement forces a lower bound on the dimension of the Pauli commutation space over a prime field.",
         H("Genuine entanglement and commutation rank"),
@@ -259,6 +286,16 @@ internal sealed class StabilizerGenuineEntanglementCommutationRankDocument : ISc
                     + "w.x(n) followed by Z to the power w.z(n). The product gives its entries in the basis "
                     + "indexed by functions from Fin N to ZMod p. The dot denotes complex scalar multiplication "
                     + "of a matrix. See final_5.tex, lines 190–196 and 215–216."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("word-multiplication"), DeclarationHandle.Create(Module + ".wordMul"),
+                H("Addition of Pauli-word coordinates"), StatementSource.FromAuthor(Disp(WordMultiplicationDefinition)),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The phase, shift and clock coordinates are added separately."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("word-operator-multiplication"), DeclarationHandle.Create(Module + ".pauli_word_mul"),
+                H("The phase in a product of Pauli words"), StatementSource.FromAuthor(Disp(WordMultiplicationTheorem)),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The product of the two operators is the operator of their coordinate sum, multiplied by windowRoot raised to the sum of a.z(j) times b.x(j). The natural representative of this residue is the exponent."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("commutation-vector"), DeclarationHandle.Create(Module + ".commutationVector"),
                 H("Local commutation phases"), StatementSource.FromAuthor(Disp(CommutationDefinition)),

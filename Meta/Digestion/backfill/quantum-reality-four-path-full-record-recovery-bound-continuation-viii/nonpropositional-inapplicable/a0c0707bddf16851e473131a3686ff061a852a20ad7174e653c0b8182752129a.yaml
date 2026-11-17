@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a0c0707bddf16851e473131a3686ff061a852a20ad7174e653c0b8182752129a
+  normalized_sha256: sha256:a0c0707bddf16851e473131a3686ff061a852a20ad7174e653c0b8182752129a
+cas_ref: sha256:a0c0707bddf16851e473131a3686ff061a852a20ad7174e653c0b8182752129a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explicit non-claim clause; it records excluded scope and does not assert a mathematical proposition.
+    previous_atom_id: f28de9b24594b8749886551dab093bd7e6aa9dab9e1433a184acb0ee93de4eb8
+    next_atom_id: null

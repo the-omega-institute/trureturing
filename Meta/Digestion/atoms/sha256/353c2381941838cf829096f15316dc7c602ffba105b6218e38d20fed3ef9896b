@@ -1,0 +1,18 @@
+**定理 180.5（忠实恢复赚得严格零分离，并定位替换点）。** 在 L2 加全混态 $\mathsf Z_2$ 下，$\mathsf{PL}$ 蕴含 $\mathsf{Sep}_0$，从而由179.5给每个 $D_p$ 为 coatom 及标签单射。另给 $\mathsf{EX}_0$ 后可推出 $\mathsf J_2$，但本章没有证明 $\mathsf{PL}$ 单独推出 $\mathsf{EX}_0$ 或 AD。
+
+证明。固定纯点 $p$。双零运算保包含，故对每个 $q\ne p$，
+
+$$
+\{p\}^{\perp\perp}\subseteq\{p,q\}^{\perp\perp}
+=P\cap F_K(p,q).
+\tag{180.6}
+$$
+
+若某个 $B=F_K(p,q)$ 等于 $K$，原域就是整颗三球，完整菜单直接给 $\{p\}^{\perp\perp}=\{p\}$。否则取 $q'\in P\setminus B$。两个实际球 $B,F_K(p,q')$ 的交是各自的面，含 $p$；若还含别的点，严格凸球的面结构迫两球相等，与 $q'\notin B$ 矛盾。因此(180.6)使 $\{p\}^{\perp\perp}=\{p\}$。若 $N_p\subseteq N_q$，对称性给 $q\in\{p\}^{\perp\perp}$，所以 $q=p$。这证明严格零分离；178.2给 NC，故179.5适用。
+
+也可不借 $\mathsf{PL}$，直接从 $\mathsf{EX}_0$ 得严格零分离：若 $N_p\subseteq N_q$ 且 $p\ne q$，先由反自反性排除 $p\perp q$；(180.4)给 $r\in N_p$，但 $N_p\cap N_q=N_p\cap N_r$ 又要求 $r\in N_r$，矛盾。
+
+现在固定 $p\ne q$。若 $p\perp q$，直接取 $r=q$ 满足(180.2)。否则(180.4)给 $r\perp p$ 及共同零集相等，所以
+$r\in\{p,r\}^{\perp\perp}=\{p,q\}^{\perp\perp}=P\cap F_K(p,q)$。
+两个不同球面纯点生成同一原球，得到(180.2)，再用180.2。这里恰由(180.5)支付了替换点的原球位置。$\square$
+

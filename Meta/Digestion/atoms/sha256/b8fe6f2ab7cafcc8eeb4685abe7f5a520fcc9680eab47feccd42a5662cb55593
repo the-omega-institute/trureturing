@@ -1,0 +1,21 @@
+**定义 7.3（可扩展合法载体）。**
+
+对 $n\ge1$，供给 $4n+2$ 个内部位置，顺序为
+$b_{-1},b_0,\ldots,b_{4n}$，以及中心 $j=0,\ldots,4n-2$ 的原 $K_j$。
+定义
+
+$$
+\mathcal H_n=\operatorname{span}
+\{|10\,\beta\,010\rangle:
+\beta\in\{0,1\}^{4n-3},\ \beta_j\beta_{j+1}=0\}.
+$$
+
+逻辑编码为
+
+$$
+\widehat J_n|q_1\cdots q_n\rangle
+=|10\,(q_1\,010)(q_2\,010)\cdots(q_n\,010)\rangle .
+$$
+
+<a id="thm:manyuniversal"></a>
+

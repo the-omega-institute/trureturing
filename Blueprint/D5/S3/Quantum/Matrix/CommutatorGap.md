@@ -112,7 +112,31 @@ $$\forall n \in \mathbb{N}, A \in \operatorname{Matrix}\left(\operatorname{Fin}\
 
 A maximizing block frame controls the real comparison matrix by its two-by-two Frobenius norm. Unitary covariance transfers the estimate to A.
 
-**Theorem 1.10 (frobSq unitary left).**
+**Theorem 1.10 (Rectangular Frobenius square).**
+
+$$\forall m \in \mathbb{N}, n \in \mathbb{N}, A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right),\; (\Vert A\Vert _{F})^{2} = \sum_{i:\operatorname{Fin}\left(m\right)} \sum_{j:\operatorname{Fin}\left(n\right)} (\Vert A(i, j)\Vert )^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CommutatorGap.rectNorm_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The rectangular Frobenius norm is computed with Matrix.frobeniusSeminormedAddCommGroup. Its square is the sum of the squared entry norms.
+
+**Theorem 1.11 (Frobenius square as real trace).**
+
+$$\forall n \in \mathbb{N}, A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right),\; (\Vert A\Vert _{F})^{2} = \operatorname{RHLinalg.frobSq}(A)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CommutatorGap.rectNorm_sq_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For square complex matrices the Frobenius norm squared equals RHLinalg.frobSq, the real trace of the conjugate-transpose product.
+
+**Theorem 1.12 (frobSq unitary left).**
 
 $$\forall (n : \mathbb{N}) (A : Matrix (Fin n) (Fin n) \mathbb{C}) (U : Matrix . unitaryGroup (Fin n) \mathbb{C}) , RHLinalg . frobSq ((U : Matrix (Fin n) (Fin n) \mathbb{C}) \cdot A) = RHLinalg . frobSq A$$
 
@@ -135,7 +159,11 @@ Left multiplication by a unitary preserves the squared Frobenius norm.
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.gap_nonnegative`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.opSq`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.opSq_le_frobSq`
+- Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.rectNorm_sq`
+- Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.rectNorm_sq_square`
 - Truth anchor: `D5/S3/Quantum/Matrix/CommutatorGap.translation_gap`
+- Dependency: [D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity](../../Observer/HiddenFlow/ProjectionCommutatorIdentity.md)
 - Dependency: [D5/S3/Quantum/Algebra/GramUnitaryExtension](../Algebra/GramUnitaryExtension.md)
+- Dependency: [D5/S3/Quantum/BlockNorm/EssentiallyHermitian](../BlockNorm/EssentiallyHermitian.md)
 - Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](CartesianVariance.md)

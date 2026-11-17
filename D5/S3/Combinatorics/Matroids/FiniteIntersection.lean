@@ -110,7 +110,7 @@ private lemma contract_eRk_add_of_subset (M : Matroid α) (hXY : X ⊆ Y) :
   rw [basis_contract_eRk_diff_subset hJ hXY hI, ← hI.encard_eq_eRk,
     encard_sdiff_add_encard_inter, hJ.encard_eq_eRk]
 
-private lemma contract_eRk_add (M : Matroid α) (C X : Set α) :
+lemma contract_eRk_add (M : Matroid α) (C X : Set α) :
     (M ／ C).eRk X + M.eRk C = M.eRk (X ∪ C) := by
   rw [contract_eRk_union, contract_eRk_add_of_subset]
   exact subset_union_right

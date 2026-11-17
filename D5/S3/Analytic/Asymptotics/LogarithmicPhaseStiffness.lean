@@ -52,6 +52,116 @@ noncomputable def momentErrorBound (L Y c C mass : ℝ) : ℝ :=
 noncomputable def phaseSlope {ι : Type*} (γ a : ι → ℝ) (t : ℝ) : ℝ :=
   ∑' i, 2*a i*γ i*Real.sin (γ i*t)
 
+/- Temporary analytic primitives for the raw count consumer. -/
+
+theorem inverse_cube_integral {Y w : ℝ} (hY : 0 < Y) (hw : 0 ≤ w) :
+    IntegrableOn (fun u : ℝ => 2 * w / u^3) (Ioi Y) ∧
+      (∫ u in Ioi Y, 2 * w / u^3) = w / Y^2 := by
+  have hd : ∀ u ∈ Ici Y, HasDerivAt (fun v : ℝ => -w / v^2)
+      (2 * w / u^3) u := by
+    intro u hu
+    have hu0 := hY.trans_le hu
+    convert! (hasDerivAt_const u (-w)).div ((hasDerivAt_id u).pow 2)
+      (pow_ne_zero _ hu0.ne') using 1
+    simp only [Pi.pow_apply, id_eq]
+    field_simp
+    ring
+  have ht : Tendsto (fun u : ℝ => -w / u^2) atTop (𝓝 0) := by
+    convert! (tendsto_inv_atTop_zero.pow 2).const_mul (-w) using 1 <;>
+      simp [div_eq_mul_inv, inv_pow]
+  have hn : ∀ u ∈ Ioi Y, 0 ≤ 2 * w / u^3 := by
+    intro u hu
+    exact div_nonneg (mul_nonneg (by norm_num) hw) (pow_nonneg (hY.trans hu).le _)
+  exact ⟨integrableOn_Ioi_deriv_of_nonneg' hd hn ht,
+    by simpa only [zero_sub, neg_div, neg_neg] using
+      integral_Ioi_of_hasDerivAt_of_nonneg' hd hn ht⟩
+
+theorem count_majorant_integral {Y c C : ℝ} (hY : 1 < Y)
+    (hc : 0 ≤ c) (hC : 0 ≤ C) :
+    IntegrableOn (fun u : ℝ => 2 * (c * Real.log u + C) / u^2) (Ioi Y) ∧
+      (∫ u in Ioi Y, 2 * (c * Real.log u + C) / u^2) =
+        2 * (c * (Real.log Y + 1) + C) / Y := by
+  have hd : ∀ u ∈ Ici Y,
+      HasDerivAt (fun v : ℝ => -(2 * (c * (Real.log v + 1) + C)) / v)
+        (2 * (c * Real.log u + C) / u^2) u := by
+    intro u hu
+    have hu0 : 0 < u := zero_lt_one.trans (hY.trans_le hu)
+    convert! (((((Real.hasDerivAt_log hu0.ne').add_const 1).const_mul c).add_const
+      C).const_mul 2).neg.div (hasDerivAt_id u) hu0.ne' using 1
+    simp only [Pi.neg_apply, id_eq]
+    field_simp
+    ring
+  have htlog : Tendsto (fun u : ℝ => Real.log u / u) atTop (𝓝 0) := by
+    simpa using Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
+  have ht : Tendsto (fun u : ℝ => -(2 * (c * (Real.log u + 1) + C)) / u)
+      atTop (𝓝 0) := by
+    convert! ((htlog.const_mul (2*c)).add
+      (tendsto_inv_atTop_zero.const_mul (2*(c+C)))).neg using 1
+    · ext u
+      simp only [div_eq_mul_inv]
+      ring
+    · simp
+  have hn : ∀ u ∈ Ioi Y, 0 ≤ 2 * (c * Real.log u + C) / u^2 := by
+    intro u hu
+    have hlog : 0 ≤ Real.log u := (Real.log_pos (hY.trans hu)).le
+    positivity
+  exact ⟨integrableOn_Ioi_deriv_of_nonneg' hd hn ht,
+    by simpa only [zero_sub, neg_div, neg_neg] using
+      integral_Ioi_of_hasDerivAt_of_nonneg' hd hn ht⟩
+
+/- Arbitrary finite high-frequency sets are bounded by the original full count.
+   In particular no tail sum or tail integrability hypothesis is assumed. -/
+
+theorem finite_high_inverse_square_bound {ι : Type*} (s : Finset ι) (γ m : ι → ℝ)
+    (hfinite : ∀ u : ℝ, Set.Finite {i | γ i < u}) {L Y c C : ℝ}
+    (hL : 1 < L) (hLY : L ≤ Y) (hm : ∀ i, 0 ≤ m i)
+    (hc : 0 ≤ c) (hC : 0 ≤ C)
+    (hhigh : ∀ i ∈ s, Y ≤ γ i)
+    (hcount : ∀ u, L ≤ u → strictCount γ m hfinite u ≤ c*u*Real.log u+C*u) :
+    ∑ i ∈ s, m i / (γ i)^2 ≤ 2 * (c*(Real.log Y+1)+C) / Y := by
+  classical
+  have hY : 1 < Y := hL.trans_le hLY
+  have hY0 : 0 < Y := zero_lt_one.trans hY
+  let kernel := fun (i : ι) (u : ℝ) =>
+    if γ i < u then 2 * m i / u^3 else 0
+  have hk (i : ι) : IntegrableOn (kernel i) (Ioi Y) := by
+    have h := (inverse_cube_integral hY0 (hm i)).1.indicator (t := Ioi (γ i)) measurableSet_Ioi
+    convert! h using 1
+  have heach (i : ι) (hi : i ∈ s) :
+      (∫ u in Ioi Y, kernel i u) = m i / (γ i)^2 := by
+    change (∫ u in Ioi Y, (Ioi (γ i)).indicator (fun u => 2*m i/u^3) u) = _
+    rw [setIntegral_indicator measurableSet_Ioi,
+      inter_eq_right.mpr (Ioi_subset_Ioi (hhigh i hi))]
+    exact (inverse_cube_integral (hY0.trans_le (hhigh i hi)) (hm i)).2
+  have hsint : IntegrableOn (fun u : ℝ => ∑ i ∈ s, kernel i u) (Ioi Y) :=
+    integrable_finsetSum s (fun i _ => hk i)
+  have hmaj := count_majorant_integral hY hc hC
+  have hcomp (u : ℝ) (hu : u ∈ Ioi Y) :
+      (∑ i ∈ s, kernel i u) ≤ 2*(c*Real.log u+C)/u^2 := by
+    have hu0 : 0 < u := hY0.trans hu
+    have hsub : s.filter (fun i => γ i < u) ⊆ realCutoff γ hfinite u := by
+      intro i hi
+      simpa only [realCutoff, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] using
+        (Finset.mem_filter.mp hi).2
+    have hsum := Finset.sum_le_sum_of_subset_of_nonneg hsub (fun i _ _ => hm i)
+    have heq : (∑ i ∈ s, kernel i u) =
+        2 * (∑ i ∈ s.filter (fun i => γ i < u), m i) / u^3 := by
+      rw [← Finset.sum_filter]
+      rw [← Finset.sum_div, ← Finset.mul_sum]
+    rw [heq]
+    apply (div_le_iff₀ (pow_pos hu0 3)).mpr
+    have hn := hsum.trans (hcount u (hLY.trans hu.le))
+    change (∑ i ∈ s.filter (fun i => γ i < u), m i) ≤ _ at hn
+    have heq2 : 2*(c*Real.log u+C)/u^2*u^3 = 2*(c*u*Real.log u+C*u) := by
+      field_simp
+    rw [heq2]
+    linarith
+  have hineq := setIntegral_mono_on hsint hmaj.1 measurableSet_Ioi hcomp
+  rw [integral_finsetSum s (fun i _ => hk i), hmaj.2] at hineq
+  rw [Finset.sum_congr rfl heach] at hineq
+  exact hineq
+
+
 set_option maxHeartbeats 1600000 in
 -- The proof assembles improper integral tails and uniform moving-cutoff estimates.
 /-- A raw weighted real-spectrum count produces C1 cosine phase and uniform
@@ -271,116 +381,6 @@ theorem logarithmic_phase_stiffness {ι : Type*} (γ m : ι → ℝ)
       _ ≤ C + (c * Real.log Y + c / 2 * (Real.log L)^2) +
           C * (Real.log Y - Real.log L) := add_le_add (add_le_add hboundary hmiddle) herror
       _ = _ := by ring
-
-
-  /- Temporary analytic primitives for the raw count consumer. -/
-
-  have inverse_cube_integral {Y w : ℝ} (hY : 0 < Y) (hw : 0 ≤ w) :
-      IntegrableOn (fun u : ℝ => 2 * w / u^3) (Ioi Y) ∧
-        (∫ u in Ioi Y, 2 * w / u^3) = w / Y^2 := by
-    have hd : ∀ u ∈ Ici Y, HasDerivAt (fun v : ℝ => -w / v^2)
-        (2 * w / u^3) u := by
-      intro u hu
-      have hu0 := hY.trans_le hu
-      convert! (hasDerivAt_const u (-w)).div ((hasDerivAt_id u).pow 2)
-        (pow_ne_zero _ hu0.ne') using 1
-      simp only [Pi.pow_apply, id_eq]
-      field_simp
-      ring
-    have ht : Tendsto (fun u : ℝ => -w / u^2) atTop (𝓝 0) := by
-      convert! (tendsto_inv_atTop_zero.pow 2).const_mul (-w) using 1 <;>
-        simp [div_eq_mul_inv, inv_pow]
-    have hn : ∀ u ∈ Ioi Y, 0 ≤ 2 * w / u^3 := by
-      intro u hu
-      exact div_nonneg (mul_nonneg (by norm_num) hw) (pow_nonneg (hY.trans hu).le _)
-    exact ⟨integrableOn_Ioi_deriv_of_nonneg' hd hn ht,
-      by simpa only [zero_sub, neg_div, neg_neg] using
-        integral_Ioi_of_hasDerivAt_of_nonneg' hd hn ht⟩
-
-  have count_majorant_integral {Y c C : ℝ} (hY : 1 < Y)
-      (hc : 0 ≤ c) (hC : 0 ≤ C) :
-      IntegrableOn (fun u : ℝ => 2 * (c * Real.log u + C) / u^2) (Ioi Y) ∧
-        (∫ u in Ioi Y, 2 * (c * Real.log u + C) / u^2) =
-          2 * (c * (Real.log Y + 1) + C) / Y := by
-    have hd : ∀ u ∈ Ici Y,
-        HasDerivAt (fun v : ℝ => -(2 * (c * (Real.log v + 1) + C)) / v)
-          (2 * (c * Real.log u + C) / u^2) u := by
-      intro u hu
-      have hu0 : 0 < u := zero_lt_one.trans (hY.trans_le hu)
-      convert! (((((Real.hasDerivAt_log hu0.ne').add_const 1).const_mul c).add_const
-        C).const_mul 2).neg.div (hasDerivAt_id u) hu0.ne' using 1
-      simp only [Pi.neg_apply, id_eq]
-      field_simp
-      ring
-    have htlog : Tendsto (fun u : ℝ => Real.log u / u) atTop (𝓝 0) := by
-      simpa using Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
-    have ht : Tendsto (fun u : ℝ => -(2 * (c * (Real.log u + 1) + C)) / u)
-        atTop (𝓝 0) := by
-      convert! ((htlog.const_mul (2*c)).add
-        (tendsto_inv_atTop_zero.const_mul (2*(c+C)))).neg using 1
-      · ext u
-        simp only [div_eq_mul_inv]
-        ring
-      · simp
-    have hn : ∀ u ∈ Ioi Y, 0 ≤ 2 * (c * Real.log u + C) / u^2 := by
-      intro u hu
-      have hlog : 0 ≤ Real.log u := (Real.log_pos (hY.trans hu)).le
-      positivity
-    exact ⟨integrableOn_Ioi_deriv_of_nonneg' hd hn ht,
-      by simpa only [zero_sub, neg_div, neg_neg] using
-        integral_Ioi_of_hasDerivAt_of_nonneg' hd hn ht⟩
-
-  /- Arbitrary finite high-frequency sets are bounded by the original full count.
-     In particular no tail sum or tail integrability hypothesis is assumed. -/
-
-  have finite_high_inverse_square_bound (s : Finset ι) (γ m : ι → ℝ)
-      (hfinite : ∀ u : ℝ, Set.Finite {i | γ i < u}) {L Y c C : ℝ}
-      (hL : 1 < L) (hLY : L ≤ Y) (hm : ∀ i, 0 ≤ m i)
-      (hc : 0 ≤ c) (hC : 0 ≤ C)
-      (hhigh : ∀ i ∈ s, Y ≤ γ i)
-      (hcount : ∀ u, L ≤ u → strictCount γ m hfinite u ≤ c*u*Real.log u+C*u) :
-      ∑ i ∈ s, m i / (γ i)^2 ≤ 2 * (c*(Real.log Y+1)+C) / Y := by
-    classical
-    have hY : 1 < Y := hL.trans_le hLY
-    have hY0 : 0 < Y := zero_lt_one.trans hY
-    let kernel := fun (i : ι) (u : ℝ) =>
-      if γ i < u then 2 * m i / u^3 else 0
-    have hk (i : ι) : IntegrableOn (kernel i) (Ioi Y) := by
-      have h := (inverse_cube_integral hY0 (hm i)).1.indicator (t := Ioi (γ i)) measurableSet_Ioi
-      convert! h using 1
-    have heach (i : ι) (hi : i ∈ s) :
-        (∫ u in Ioi Y, kernel i u) = m i / (γ i)^2 := by
-      change (∫ u in Ioi Y, (Ioi (γ i)).indicator (fun u => 2*m i/u^3) u) = _
-      rw [setIntegral_indicator measurableSet_Ioi,
-        inter_eq_right.mpr (Ioi_subset_Ioi (hhigh i hi))]
-      exact (inverse_cube_integral (hY0.trans_le (hhigh i hi)) (hm i)).2
-    have hsint : IntegrableOn (fun u : ℝ => ∑ i ∈ s, kernel i u) (Ioi Y) :=
-      integrable_finsetSum s (fun i _ => hk i)
-    have hmaj := count_majorant_integral hY hc hC
-    have hcomp (u : ℝ) (hu : u ∈ Ioi Y) :
-        (∑ i ∈ s, kernel i u) ≤ 2*(c*Real.log u+C)/u^2 := by
-      have hu0 : 0 < u := hY0.trans hu
-      have hsub : s.filter (fun i => γ i < u) ⊆ realCutoff γ hfinite u := by
-        intro i hi
-        simpa only [realCutoff, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] using
-          (Finset.mem_filter.mp hi).2
-      have hsum := Finset.sum_le_sum_of_subset_of_nonneg hsub (fun i _ _ => hm i)
-      have heq : (∑ i ∈ s, kernel i u) =
-          2 * (∑ i ∈ s.filter (fun i => γ i < u), m i) / u^3 := by
-        rw [← Finset.sum_filter]
-        rw [← Finset.sum_div, ← Finset.mul_sum]
-      rw [heq]
-      apply (div_le_iff₀ (pow_pos hu0 3)).mpr
-      have hn := hsum.trans (hcount u (hLY.trans hu.le))
-      change (∑ i ∈ s.filter (fun i => γ i < u), m i) ≤ _ at hn
-      have heq2 : 2*(c*Real.log u+C)/u^2*u^3 = 2*(c*u*Real.log u+C*u) := by
-        field_simp
-      rw [heq2]
-      linarith
-    have hineq := setIntegral_mono_on hsint hmaj.1 measurableSet_Ioi hcomp
-    rw [integral_finsetSum s (fun i _ => hk i), hmaj.2] at hineq
-    rw [Finset.sum_congr rfl heach] at hineq
-    exact hineq
 
 
   /- Summability is produced from the same finite bounds, including the moving

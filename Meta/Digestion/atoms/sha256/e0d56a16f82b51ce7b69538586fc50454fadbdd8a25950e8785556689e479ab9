@@ -1,0 +1,26 @@
+**定理 158.2（完整原理论的等价恢复）。** 在分别具名的两个完整原背景中，
+
+$$
+\begin{aligned}
+\mathsf C_3(B)&\Longleftrightarrow\mathsf C_{\rm in}(B)
+\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_3(\mathsf B_{\rm cl})&\Longleftrightarrow
+\mathsf C_{\rm in}(\mathsf B_{\rm cl})
+\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{158.1}
+$$
+
+$\mathsf Q$ 仍逐字取母卷定义 67.2；其有限非负 $K(A,a)$ 可依赖原对象与原方向，统一于全部原实际准备和整个数学效果区间，不新增跨网络常数。
+
+| 保留的原前件及其范围 | 同一原数据的量子后果 |
+| --- | --- |
+| 原身份参考供应、定理 156.1、全部原实际联合与母卷定理 64.2 或 71.3 | 全曲率 $[D_a,D_b]=-[L_a,L_b]$；同一原 $a\cdot b=a\circ b-iD_ab$ 给 $\mathcal A_A\cong\bigoplus_tM_{n_t}(\mathbb C)$、$E_A=(\mathcal A_A)_{\rm sa}$、原 $D_ab=i[a,b]/2$。 |
+| 原准备、比较与原双对偶运输 | $\rho_\alpha=B_Ax_\alpha\ge0$，$\alpha(e)=\tau_A(\rho_\alpha e)$，$\tau_A(\rho_\alpha)=\alpha(u_A)$；Born 谱质量保留原零与次归一质量、不等 $q$ 块权。 |
+| 完整原 X 的含幺、同一 $D$ 保持、交叉零、乘积张成和每对实际乘积准备 | 原嵌入成为含幺 $*$-嵌入，每个已声明原联合取得普通复张量；完整相关准备与原设备身份保留。 |
+| 全事件 R、全部原相关准备与同记录参考执行 | 全部原事件 CP/TNI，原完整测试 TP；闭准备分支仍消费母卷定理 69.2 的连续正延拓。 |
+| 指定原群、整个 AC、精确 $N_u$、Xs 与每条所用合法连线 | 每个效果有一个原所选完整有限平方根词，成功支 $\rho\mapsto\sqrt e\rho\sqrt e$；投影时为所选 Lüders 支，原失败输出和记录随完整词保留。 |
+| 原 F、实际细标签、分组、记录与遗忘 | 非零单中心细支 $S_\ell=\operatorname{Ad}_{K_\ell}$，粗事件 $\Phi_f=\sum_\ell S_\ell$；原零标签与可访问细记录保留。 |
+| 具名同数支持双返回、原反向资料、失败完成及其合法接续 | $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$；两侧原支持复合均为同一个具名原 $q_\ell>0$ 倍恒等。 |
+| 完整 $B$ 与另名 $\mathsf B_{\rm cl}$ | 前者保持实际准备的有限正锥生成；后者仅给运输后密度锥闭覆盖，不把极限数学态改称实际准备。 |
+| 全部原准备、端口及合法有限顺序、自适应和并行历史 | 下式逐历史保持原质量、失败、细记录、中央细权与设备身份；原连线合法性保持。 |

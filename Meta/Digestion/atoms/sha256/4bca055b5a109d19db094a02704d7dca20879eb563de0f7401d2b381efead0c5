@@ -1,0 +1,18 @@
+**Proposition 15.2 (Increasing dimensions with a bounded velocity ratio).** For every fixed $\alpha\in(0,1)$ there is a family of actual original chains, with dimensions $m\to\infty$ and velocity ratios at most two, whose fixed-map spectral gaps tend to zero. More explicitly choose
+
+$$
+a=\begin{cases}1,&\alpha\ne1/3,\\2,&\alpha=1/3,\end{cases}
+\qquad v^{(m)}=(a,1,\ldots,1),\qquad
+q_a=\frac{\alpha(a+2)-1}{1+\alpha a}.
+\tag{15.3}
+$$
+
+Then $0<|q_a|<1$ and
+
+$$
+0<1-\rho(T_m)\leq1-|q_a|^{1/m}\longrightarrow0.
+\tag{15.4}
+$$
+
+*Proof.* All $m+1$ velocities are positive and their ratio is $a\leq2$. For $a=1$, $q_a$ vanishes exactly at $\alpha=1/3$. At that excluded value the choice $a=2$ gives $q_a=1/5\ne0$. In either case $-1<q_a<1$ follows from (12.1), independently of $m$. These are the literal first velocities and unchanged tails of the original matrices; (13.8) gives $|\det T_m|=|q_a|$. The spectral-radius lower bound used in (15.1) proves (15.4), and $|q_a|^{1/m}=\exp(\log|q_a|/m)\to1$. Thus even with fixed interior damping and a fixed upper bound on the velocity ratio, a dimension-independent positive gap cannot hold across this family. This is a spectral obstruction for actual source transfers, rather than an inference from a small finite-time loss alone. $\square$
+

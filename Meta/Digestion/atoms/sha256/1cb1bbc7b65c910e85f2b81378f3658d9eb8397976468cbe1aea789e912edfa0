@@ -1,0 +1,12 @@
+**约定 169.1（原域的忠实坐标）。** 在下文的算子公式中，以 $E_\rho=\rho(E)$ 表示原域坐标，以 $\widehat D(\rho a,\rho b)=\rho D(a,b)$ 表示旧映射，以 $\widehat\alpha(\rho a)=\alpha(a)$ 表示原评价。评价的定义域准确是 $E_\rho$，旧映射的定义域准确是 $E_\rho^2$，没有完成域上的 $D$。为简化公式，以下省略帽号并以 $E$ 记 $E_\rho$；每个调用由 $\rho|_E$ 的逆回到同一原输入。单位是 $1=\rho(u)$，锥为 $E\cap B(H)_+$，范数仍为原 $N$。
+
+对任何已经原有的有限秩投影 $k\in E$，因 $K(H)_{\rm sa}\subset\rho(X)$，有
+
+$$
+\rho(X)_2(k)=B(kH)_{\rm sa},\qquad
+E_k=U_kE=B(kH)_{\rm sa}.
+\tag{169.1}
+$$
+
+第二式准确使用[单位桥 119.3](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md) 的角稠密性及有限维线性子空间的闭性。给定的 $p$ 因此先供应其角中的一个原秩一投影 $P=ee^*$，$\|e\|=1$。
+

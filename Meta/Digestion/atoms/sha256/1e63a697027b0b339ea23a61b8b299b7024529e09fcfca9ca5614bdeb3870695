@@ -1,0 +1,138 @@
+**定理 C-95.1（两个固定均值的尖锐上限）。** 对定义 C-94.1 的闭集合，
+并在每个状态上使用假设 C-94.3 的实际同态乘积输入，有
+
+$$
+\max_{\rho\in\mathfrak D(r,X,Y)}q_\Omega=w(r-w),\qquad
+\max_{\substack{\rho\in\mathfrak D(r,X,Y)\\\sigma\ \text{separable}}}q_\Omega
+=\tfrac12w(r-w).
+\tag{C95.1}
+$$
+
+两个最大化都固定 $r,X,Y$，允许 $\kappa$ 变化；不是对任意预先固定的五个对角概率断言取等。
+
+证明。因为对易投影的乘积小于各因子，
+$0\preceq\Pi_{--}\preceq P_-^A$ 且 $\Pi_{--}\preceq P_-^B$。
+对 $\sigma\otimes\sigma\succeq0$ 取迹，并使用式 (C94.14)，得
+
+$$
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_A}{2},\qquad
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_B}{2}.
+\tag{C95.2}
+$$
+
+若 $\sigma_A=\left(\begin{smallmatrix}1-x&z_A\\\bar z_A&x\end{smallmatrix}\right)$，则
+$\mathcal P_A=(1-x)^2+x^2+2|z_A|^2\ge(1-x)^2+x^2$。
+同理 $\mathcal P_B\ge(1-y)^2+y^2$。于是
+
+$$
+\frac{q_\Omega}{r^2}\le\min\{x(1-x),y(1-y)\}=\nu(1-\nu).
+\tag{C95.3}
+$$
+
+最后的等号消费 C-84.2 的瓶颈恒等式：把每个边缘折到
+$\min(x,1-x),\min(y,1-y)\in[0,1/2]$，函数 $t(1-t)$ 在该区间递增，
+故最小值等于 $\nu(1-\nu)$。再乘 $r^2$ 就是 $w(r-w)$。
+
+对可分离态，把式 (C94.6) 中每个 $\alpha_j,\beta_j$ 各作正交谱分解，
+以原权重乘两个谱权重，得到归一化纯乘积向量的有限混合
+
+$$
+\sigma=\sum_j t_j|a_j\rangle\langle a_j|\otimes|b_j\rangle\langle b_j|.
+\tag{C95.4}
+$$
+
+约化后分别是 $\sum_jt_j|a_j\rangle\langle a_j|$ 和
+$\sum_jt_j|b_j\rangle\langle b_j|$，从而
+
+$$
+\begin{aligned}
+\mathcal P&=\sum_{j,k}t_jt_k|\langle a_j|a_k\rangle|^2|\langle b_j|b_k\rangle|^2,\\
+\mathcal P_A&=\sum_{j,k}t_jt_k|\langle a_j|a_k\rangle|^2,\qquad
+\mathcal P_B=\sum_{j,k}t_jt_k|\langle b_j|b_k\rangle|^2.
+\end{aligned}
+\tag{C95.5}
+$$
+
+每个重叠模平方在 $[0,1]$ 内，权重非负，逐项比较证明
+$\mathcal P\le\mathcal P_A$ 及 $\mathcal P\le\mathcal P_B$。
+在式 (C94.15) 中分别用 $\mathcal P\le\mathcal P_B$ 和
+$\mathcal P\le\mathcal P_A$，得
+
+$$
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_A}{4}\le\frac{x(1-x)}2,
+\qquad
+\frac{q_\Omega}{r^2}\le\frac{1-\mathcal P_B}{4}\le\frac{y(1-y)}2.
+\tag{C95.6}
+$$
+
+同一最小量恒等式给因子 $1/2$ 的上界。这一步是经典可分离态纯度比较在本固定边缘问题中的应用；
+以下构造同时承担两个上界的可达性。
+
+用 C-85.2 的标签置换 $L,R,S$，其参数作用仍为
+
+$$
+L:(X,Y,\kappa)\mapsto(r-X,Y,Y-\kappa),\quad
+R:(X,Y,\kappa)\mapsto(X,r-Y,X-\kappa),\quad
+S:(X,Y,\kappa)\mapsto(Y,X,\kappa).
+\tag{C95.7}
+$$
+
+选择实现四项最小值的因子为 $A$，必要时翻转该因子的零一标签，即可安排
+$x=\nu$、$\nu\le y\le1-\nu$。这些置换保留 $r,w$、可分离性及 $q_{--}$：
+在两份上同时作同一局部置换时，交换投影与之对易；交换 $A,B$ 也保留 $--$。
+逆置换把任何构造送回原均值。这是坐标重标记，不是增加原生控制。
+
+先设 $0<\nu<1/2$，令
+
+$$
+u=\frac{y-\nu}{1-2\nu}\in[0,1],\qquad
+|b_0\rangle=\sqrt{1-u}|0\rangle+\sqrt u|1\rangle,\quad
+|b_1\rangle=\sqrt u|0\rangle-\sqrt{1-u}|1\rangle.
+\tag{C95.8}
+$$
+
+二者范数一、内积零。置 $|e_0\rangle=|0\rangle|b_0\rangle$、
+$|e_1\rangle=|1\rangle|b_1\rangle$，它们为正交纯乘积向量，定义
+
+$$
+\sigma_0=(1-\nu)|e_0\rangle\langle e_0|+\nu|e_1\rangle\langle e_1|,
+\qquad
+|\Phi\rangle=\sqrt{1-\nu}|e_0\rangle+\sqrt\nu|e_1\rangle.
+\tag{C95.9}
+$$
+
+两态的 $A$ 约化态都为 $\operatorname{diag}(1-\nu,\nu)$。
+$B$ 约化态都为 $(1-\nu)|b_0\rangle\langle b_0|+\nu|b_1\rangle\langle b_1|$，
+其占位均值为 $(1-\nu)u+\nu(1-u)=\nu+(1-2\nu)u=y$。
+纯态中两个交叉项的任一侧偏迹均零：一侧用 $\langle b_1|b_0\rangle=0$，
+另一侧用 $\langle1|0\rangle=0$。所以两态具有相同所需边缘，且
+
+$$
+\mathcal P_A=\mathcal P_B=(1-\nu)^2+\nu^2,\qquad
+\mathcal P(\sigma_0)=(1-\nu)^2+\nu^2,\quad
+\mathcal P(|\Phi\rangle\langle\Phi|)=1.
+\tag{C95.10}
+$$
+
+代入式 (C94.15)，分别给
+$q_\Omega(\sigma_0)=r^2\nu(1-\nu)/2$ 和
+$q_\Omega(\Phi)=r^2\nu(1-\nu)$。
+
+当 $\nu=1/2$ 时，原边缘必为 $x=y=1/2$。
+另取任意二元正交归一基 $b_0,b_1$，仍按式 (C95.9) 定义，
+两个边缘均为 $I_2/2$。这不使用分母为零的式 (C95.8)，
+并分别给 $q_\Omega=r^2/8,r^2/4$。
+
+最后，对上述任一条件态 $\sigma$，五维实现为
+
+$$
+\rho[\sigma]=(1-r)|2\rangle\langle2|+r\iota\sigma\iota^\dagger.
+\tag{C95.11}
+$$
+
+两个正块支撑正交、迹之和为一；其底面质量与均值是所规定的 $r,X,Y$。
+对纯条件态还可取完整纯态
+$|\psi\rangle=\sqrt{1-r}|2\rangle+\sqrt r\,\iota|\Phi\rangle$，
+它有相同底面压缩，却有底面—中位相干；两种实现的四符号概率相同。
+逆置换后构造对每个原标签下的闭均值纤维均成立，故两个上界都是最大值。证毕。
+

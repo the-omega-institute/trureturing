@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.KyFanGap;
 
@@ -19,5 +21,46 @@ internal sealed class NearExtremalDocument : IScribeDocumentDefinition
                 H("A uniform nonsquare Ky Fan gap"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Eigenstructure/nikiforov2015extrema")),
                 Blocks(Paragraph(Text("Every nonsquare positive integer k admits a positive gap below (1+sqrt(k))/2 for the normalized Ky Fan k-sum of every symmetric zero-one matrix of order at least k. Write c=1/sqrt(k), B=2A-J and T=B/n. An attaining signed orthonormal family defines Q=U diag(signs) U-transpose, with Q cubed equal to Q and squared Frobenius norm k. The two nonnegative variational deficits control both the Frobenius distance from T to cQ and the action of Q-I on the constant vector. Smooth the family by x(r,i)=sqrt(n)(T u(i))(r)/c. Cauchy-Schwarz bounds every coordinate by sqrt(k); the attaining family is supplied by the proved signed spectral formula. Its bilinear kernel satisfies H/n=TQT/c; the identity Q cubed equals Q bounds its approximation error by that of T-cQ. The same variational deficits bound the normalized row-sum error. Their sum would violate the positive bilinear approximation gap if the Ky Fan deficit were arbitrarily small. This produces a positive uniform gap without a numerical value for the optimal constant."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("real-frobenius-squared-coordinate-expansion"),
+                DeclarationHandle.Create(Owner + "real_frobenius_sq"),
+                H("The real Frobenius norm squared is the coordinate square sum"),
+                StatementSource.FromAuthor(Disp(FrobeniusFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every pair of natural dimensions m and n and every real matrix A indexed by Fin(m) and Fin(n), the square of its Frobenius norm equals the sum over both coordinates of the squared entries."))),
                 DescribeRole.Theorem))));
+
+    private static Formula FrobeniusFormula()
+    {
+        var m = F.Id("m");
+        var n = F.Id("n");
+        var a = F.Id("A");
+        var r = F.Id("r");
+        var s = F.Id("s");
+        var matrix = Call("Matrix", Call("Fin", m), Call("Fin", n), Reals());
+        var entry = Apply(a, r, s);
+        var sum = SumOver("r", Call("Fin", m), SumOver("s", Call("Fin", n),
+            new Formula.Power(entry, D(2))));
+        return All("m", Naturals(), All("n", Naturals(), All("A", matrix,
+            Equal(new Formula.Power(new Formula.Norm(a), D(2)), sum))));
+    }
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        App(Name(name), arguments);
+    private static Formula Name(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula App(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+    private static Formula Apply(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Typed(F.Id(name), type), Comma, Sp, Parenthesized(body));
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(Sum, Typed(F.Id(name), type)), Sp, Parenthesized(body));
+    private static Formula Typed(Formula name, Formula type) =>
+        Parenthesized(Seq(name, Sp, Colon, Sp, type));
+    private static Formula Parenthesized(Formula formula) => Seq(Open, formula, Close);
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
 }

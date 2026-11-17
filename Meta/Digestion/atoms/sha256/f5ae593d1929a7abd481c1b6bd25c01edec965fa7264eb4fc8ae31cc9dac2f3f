@@ -1,0 +1,12 @@
+**引理 3.2（首项系数比的单调性）。** 设 $1<p<q$，$R(\kappa)=c_\kappa(p)/c_\kappa(q)$。则 $R$ 在 $(1,\infty)$ 上严格递增，且 $R(1^+)=1$，$R(\infty)=\dfrac{(p-1)q\log q}{(q-1)p\log p}>1$。
+
+**证明。** 令 $s=\log x$。则 $c_\kappa(x)=\dfrac{1-e^{-s}}{s}\cdot\dfrac{1-e^{-(\kappa-1)s}}{1-e^{-\kappa s}}$，因此
+
+$$
+\partial_\kappa\log c_\kappa(x)=\frac{s}{e^{(\kappa-1)s}-1}-\frac{s}{e^{\kappa s}-1}=\int_{\kappa-1}^{\kappa}\Bigl(\frac{s}{2\sinh(vs/2)}\Bigr)^2dv .
+$$
+
+第二个等号成立，因为 $\frac{d}{dv}\frac{s}{e^{vs}-1}=-\frac{s^2e^{vs}}{(e^{vs}-1)^2}=-\bigl(\frac{s}{2\sinh(vs/2)}\bigr)^2$。函数 $z\mapsto z/\sinh z$ 在 $(0,\infty)$ 上严格递减：其导数的分子为 $\sinh z-z\cosh z$，在 $0$ 处为 $0$，导数为 $-z\sinh z<0$。故对每个 $v>0$，被积函数 $\bigl(\frac{1}{v}\cdot\frac{vs/2}{\sinh(vs/2)}\bigr)^2$ 关于 $s$ 严格递减。由 $\log p<\log q$ 得 $\partial_\kappa\log c_\kappa(p)>\partial_\kappa\log c_\kappa(q)$，即 $(\log R)'>0$。
+
+端点值：$\kappa\to1^+$ 时 $c_\kappa(x)\sim(\kappa-1)$，与 $x$ 无关，故 $R\to1$；$\kappa\to\infty$ 时 $c_\kappa(x)\to(x-1)/(x\log x)$。最后，$x\mapsto x\log x/(x-1)$ 在 $(1,\infty)$ 上严格递增，其导数为 $(x-1-\log x)/(x-1)^2>0$，故 $R(\infty)>1$。证毕。
+

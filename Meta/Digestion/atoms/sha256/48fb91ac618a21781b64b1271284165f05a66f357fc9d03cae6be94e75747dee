@@ -1,0 +1,36 @@
+**Definition 5.1 (finite scan and recognition).** Fix an integer cap
+$0\le n\le N$. Starting from the public stationary original root, read
+all fifteen bits of original sample $j$, for $j=1,\ldots,n$, using
+UJB.7706. Retain its complete labels at that original index and form the
+distinct set $D_m$ after each completed sample $m$. Run Definition 1.2
+there; stop on acceptance, or report failure after $n$ samples. The cap is
+public and targetblind. To reserve a wholly unread slot for an unread-law
+inverse or continuation, require $n\le N-1$ and reserve original index
+$N$. The scan never touches it. There is no extra draw after stopping.
+
+For bit $b=15(j-1)+h$, $1\le h\le15$, the actual operand is
+$R^{b-1}LL$. The replies $\beta$ and $\mathsf b$ give zero and one.
+Thus scanning $m$ completed slots uses exactly $15m$ Read invocations,
+with maximum literal operand length $15m+1$ and total operand length
+
+$$
+\frac{15m(15m+3)}2.
+\tag{PCR.6}
+$$
+
+These charge from the original root on every invocation; no cursor or
+rerooting is supplied. A stopped scan uses its actual $m$, bounded by $n$.
+For an empty scan both invocation and address costs are zero. All $N$
+slots were prepared already: UJB Proposition 5.3 gives $75N+4$ legal
+preparation events independently of how many are scanned. The $N$ iid
+edge draws, two full-map choices, preparation operands, installation,
+computation and memory remain separate resources.
+
+At most $n$ recognition calls are made, each with the finite candidate
+bound of Definition 1.2. Storing the full indexed cache as $15N$ mask bits
+and $15N$ value positions is sufficient payload storage; counters,
+operands, controller and recognition working space are additional. A
+$128\times256$ relation bit table uses $32768$ further bits; this is one
+implementation choice, not a memory lower bound. A distinct certificate's
+$576$ or $324$ pairs is neither a slot budget nor a total-resource claim.
+

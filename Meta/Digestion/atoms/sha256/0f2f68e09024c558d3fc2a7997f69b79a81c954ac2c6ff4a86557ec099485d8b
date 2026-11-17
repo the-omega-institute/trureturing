@@ -1,0 +1,39 @@
+**引理 258.1（同一线性泛函的来源）。** 在引理 257.1 的前件下，存在实常数 $A$、实线性泛函 $f,h,k$，其中 $k=f+h$、$h(I)=A$，以及交替、在共同谱子代数上消失的 $\delta$，使
+
+$$
+\begin{aligned}
+D_ab&=\delta(a,b)+D^0_ab,\\
+D^0_ab&=Aa\circ b+k(a)b-h(b)a\\
+&\quad+[\operatorname{Tr}(a)h(b)-k(a\circ b)-A\operatorname{Tr}(ab)]I.
+\end{aligned}
+\tag{258.1}
+$$
+
+证明。复双线性延拓 $D$ 后，$[Q(a),a]=0$ 是在实 Hermitian 空间上成立的多项式恒等式，因而在整个 $M_n(\mathbb C)$ 成立。使用 Brešar–Špenko，*Functional identities of one variable*，[arXiv:1307.2260v1，Lemma 3.2](https://arxiv.org/html/1307.2260v1#S3.Thmtheorem2) 的成熟中间结论：特征零全矩阵代数上，交换的多线性迹是标准多项式形。这里的“迹”是 $Q(a)=D_aa$ 的对角化，不是谱迹。它给
+
+$$
+Q(a)=Aa^2+f(a)a+g(a)I,
+\tag{258.2}
+$$
+
+其中 $f$ 线性、$g$ 二次齐次。$n\ge3$ 时，具有三个不同谱值的元使 $I,a,a^2$ 独立；Hermitian 性先在该开稠密集、再经多项式延拓使系数取实。
+
+对正交 $e,p$ 比较 $Q(e+p)-Q(e)-Q(p)$ 的 $e,p,I$ 系数，(257.1) 给
+
+$$
+\varphi_e(p)=k(p)-f(p)=:h(p).
+\tag{258.3}
+$$
+
+对 $D_eu=0$ 求 frame 和，另有 $\sum_i h(e_i)=A$。以下直接说明 $h$ 的线性来源。任取复二维子空间 $W$，可选 primitive $e\perp W$。在 $W$ 的全部 rank-one 投影上，$h=\varphi_e$，故是同一个线性泛函的限制。定义
+
+$$
+H(x)=\|x\|^2h\!\left(\frac{xx^*}{\|x\|^2}\right)\ (x\ne0),\qquad H(0)=0.
+\tag{258.4}
+$$
+
+任意 $x,y$ 属于一个至多二维复子空间，因此 $H$ 满足全域平行四边形恒等式、实二次齐次及相位不变。标准实二次极化产生双线性型，相位不变使它为一个 Hermitian 二次型；故 $H(x)=x^*C x$，$C=C^*$。于是 $h(a)=\operatorname{Tr}(Ca)$ 在全部 primitive 上一致，且 $h(I)=A$；$k=f+h$ 同时取得线性延拓。此步骤只拼接既有数学子空间，不供应准备或概率公理。
+
+式 (258.1) 的 $D^0$ 与 $D$ 在每颗 primitive 对角及每对正交 primitive 上一致，且 $D^0_aI=0$。共同谱展开给两者的全部共同谱值一致；其差 $\delta$ 遂在共同谱子代数上消失，并由对角极化而交替。∎
+
+

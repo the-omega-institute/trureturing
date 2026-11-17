@@ -1,0 +1,20 @@
+**Definition 2.2 (label-only reconstruction for this witness pattern).**
+The proof also gives a sufficient public test on positive histories.
+Require exactly $72$ exposed left labels and $243$ exposed right labels.
+Find $27$ degree-eight evidence columns with different neighbor sets,
+and group left labels by their membership patterns in those columns. Each anchor names a right type of capacity
+nine. For every other right label, its possible anchor types are the
+intersection of the anchor-type neighborhoods of all its observed left
+neighbors. Assign a singleton domain, and remove types already occupied
+by nine distinct assigned labels from all remaining domains. Reject this
+sufficient test if a domain becomes empty, a capacity is exceeded, or
+assignment stalls; accept only when every right label is assigned and each
+of the $27$ types contains nine distinct labels. Return all pairs incident
+in the inferred type table. Definition 1.2 remains an
+exact recognition test even on certificates outside this sufficient pattern.
+
+On the witness of Theorem 2.1, the initial $18\cdot8$ nonanchor singleton
+domains fill $S$, and capacity elimination assigns the last $9\cdot8$.
+All data in this reconstruction are full words and their evidence
+incidences. The coordinates of $S$ enter only the existence proof.
+

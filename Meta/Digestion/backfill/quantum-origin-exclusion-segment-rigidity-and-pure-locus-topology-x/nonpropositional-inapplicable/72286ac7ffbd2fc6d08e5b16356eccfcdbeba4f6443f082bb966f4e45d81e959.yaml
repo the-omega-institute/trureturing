@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72286ac7ffbd2fc6d08e5b16356eccfcdbeba4f6443f082bb966f4e45d81e959
+  normalized_sha256: sha256:72286ac7ffbd2fc6d08e5b16356eccfcdbeba4f6443f082bb966f4e45d81e959
+cas_ref: sha256:72286ac7ffbd2fc6d08e5b16356eccfcdbeba4f6443f082bb966f4e45d81e959
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope and source-ownership convention only: it records unproved simultaneous configurations and excludes physical closure; it asserts no new mathematical theorem and does not settle those open configurations.'
+    previous_atom_id: e7d5da7d50302ec816c17d57d3e1e4f4d3b46cc6d5805da657d13a3010a45fd6
+    next_atom_id: da8f264162c4cc306bf1e02e14b2426cb870707d181df5d601bbc105ef43c430

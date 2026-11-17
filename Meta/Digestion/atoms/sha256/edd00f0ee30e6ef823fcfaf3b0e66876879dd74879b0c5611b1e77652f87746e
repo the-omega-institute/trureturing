@@ -1,0 +1,41 @@
+### 定理 3：AURIC 的精确递归预算
+
+把式 (9) 中的非负项以及 $\Gamma$，依次记为
+
+$$
+d_1,\ldots,d_s.
+$$
+
+设
+
+$$
+q_0=0,\qquad b_j=1-e^{-d_j},
+$$
+
+并递归定义
+
+<a id="eq-13"></a>
+
+$$
+\boxed{
+q_{j+1}=q_j+(1-q_j)b_j.
+}
+\tag{13}
+$$
+
+每一步形成三项读出
+
+<a id="eq-14"></a>
+
+$$
+\boxed{
+\left(
+q_j,\;
+(1-q_j)b_j,\;
+(1-q_j)(1-b_j)
+\right).
+}
+\tag{14}
+$$
+
+<!-- editorial-note:start recursion-index -->

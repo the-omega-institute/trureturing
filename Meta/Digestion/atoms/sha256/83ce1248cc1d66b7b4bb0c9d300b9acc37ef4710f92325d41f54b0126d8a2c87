@@ -1,0 +1,46 @@
+**第一步：正读取与相对单位。** 固定秩二 $P$，取Pauli坐标 $\alpha P+x\leftrightarrow(\alpha,x)$，$x\in\mathbb R^3$。已知Jordan乘法、锥及Bloch读取为
+
+$$
+(\alpha,x)\circ(\beta,y)=(\alpha\beta+x\cdot y,\alpha y+\beta x),
+\qquad \beta_n(\alpha,x)=\alpha+n\cdot x\quad(\|n\|\le1).
+\tag{44.2}
+$$
+
+$\beta_n(P\pi(\cdot)P)$ 是原 $A$ 上的数学正读取。对 $a,b\in T_P$，输出也支撑于 $P$，故这些读取分离它。每个实际PB的全部内外层仍在 $T_P$，43.2保证读取Jordan表达式的合法性；任意核尾始终保留。
+
+还需PT241.1的反交换结论：若两输入像的Jordan积为零，对实际PB $(a;b,0)$，两个真实第二外槽的像均为零，43.2消去各自输出像，得到 $(\pi b)\circ\pi D(a,b)=0$。交换实际 $a,b$，同样得到 $(\pi a)\circ\pi D(a,b)=0$。
+
+任选实际 $e$ 使 $\pi e=P$。现说明PT242.1的相对单位证明确实适用。若 $\pi a=\mu P$、$\pi b=tP+y$，两枚读取 $n=\pm y/\|y\|$ 先使输出像成为 $h\perp y$ 的纯向量；令 $r=\|y\|,s=\|h\|$，P2给 $s\le|\mu|r$。若 $s>0$，对真实第三标签 $c=ka$、$k=s/(1+\mu^2)$，比例零值给 $D(a,c)=0$。两外层像满足
+
+$$
+S_+-\mu R_+=S_-+\mu R_-=\mu(sP-h).
+\tag{44.3}
+$$
+
+在 $\beta_{h/s}$ 的半内积中右侧为零，故两份实际外层的P2读数都为零；PB右端的读取为 $-2ts$，所以 $t=0$。对实际PB $(b;a,\mu b)$，正侧实际标签
+
+$$
+a-D(a,b)-\mu b^2,\qquad \mu b+b\circ a
+\tag{44.4}
+$$
+
+像为 $\alpha P-h,2\mu y$，$\alpha=\mu(1-r^2)$；负侧第二槽像零，PB给正侧输出像 $2\mu h$。其P2在 $n=q h/s+\sqrt{1-q^2}y/r$ 上给
+
+$$
+s|q|\le r|\alpha q-s|\qquad(-1\le q\le1).
+\tag{44.5}
+$$
+
+若 $0<s\le|\alpha|$，取 $q=s/\alpha$ 矛盾；若 $s>|\alpha|>0$，取 $q=\operatorname{sgn}\alpha$，在 $r\le1$ 时矛盾，在 $r>1$ 时迫使 $s\ge|\mu|r(r+1)>|\mu|r$。只余 $\alpha=0,r=1$。但此时44.4两像反交换，而其首像与输出的Jordan积为 $-2\mu s^2P\ne0$，违反上一段。故 $h=0$。退化的 $\mu=0$、$y=0$ 已由零预算处理。
+
+因此一槽像为角单位倍数时输出像为零；两向量部分共线时，用43.5的实际旋转消去一个向量部分，也得零。特别
+
+$$
+\pi D(a,te)=0,\qquad
+\pi D(a,\gamma e+\tau(a-\alpha e))=0
+\quad(\pi a=(\alpha,x)).
+\tag{44.6}
+$$
+
+这里只断言像为零，从未把这些实际内输出替换成原零。
+

@@ -1,0 +1,9 @@
+**引理 490.3（移动算子的一致界）。** 设 (490.2)。存在常数 $C$（只依赖 $\theta$ 与 (490.2)），使对所有 $g\in L^1(0,1)$ 与所有充分大的 $X$（门槛与 $g$ 无关），
+
+$$
+\Bigl\|P_{H_\cdot,g}\Bigr\|_{L^2[X,2X]}\le C\,\|g\|_1\sqrt{S_X},
+\qquad P_{H_\cdot,g}(x):=P_{H_x,g}(x)=\frac1{x^\theta}\int_0^1g(s)D_{sx^\theta}(x)\,ds .
+$$
+
+证明。由 Minkowski 不等式与引理 490.1(ii)，$\|P_{H_\cdot,g}\|_2\le X^{-\theta}\int_0^1|g(s)|\,\|D_{sx^\theta}(x)\|_{L^2[X,2X]}\,ds\le X^{-\theta}\|g\|_1\sqrt{CX^{1+\theta}\log X}=\sqrt C\,\|g\|_1\sqrt{S_X}$。证毕。
+

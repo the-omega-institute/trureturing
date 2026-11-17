@@ -1,0 +1,13 @@
+其单位、自伴正锥、自伴范数和 Jordan 乘法准确为 $u,X_+,\|\cdot\|,S$。令 $A_E=E\oplus\mathrm iE$，则：
+
+1. $A_E$ 是含单位复 C*-代数 $A$ 的稠密范数化 $*$-子代数，原 $u,N,S,D$ 全部保留，且原 $a,b\in E$ 的积就是 $ab=S(a,b)-\mathrm iD(a,b)$；
+2. 原锥准确为
+
+   $$
+   C=E\cap A_+
+     =\overline{\{S(a,a):a\in E\}}^{\,N\text{ 在 }E\text{ 中}};
+   \tag{6.4}
+   $$
+
+3. $E=A_{\rm sa}$ 当且仅当原 $E$ 在 $N$ 下完备。一般只保证 $E$ 在 $A_{\rm sa}$ 中稠密；根、逆元和镜面值不保证留在原域。
+

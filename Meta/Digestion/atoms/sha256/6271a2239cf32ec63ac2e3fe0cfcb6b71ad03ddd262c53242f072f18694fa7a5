@@ -1,0 +1,27 @@
+**Lemma 27.2 (exact radial boundary).** The set (23.1) is
+$\mathcal W=\{m\le1\}$, its interior is $\{m<1\}$, and
+
+$$
+\begin{aligned}
+\partial\mathcal W=\{m=1\}
+=\{z\in\mathcal W:\ &\max_j|z_j|=1\ \text{or}\\
+ &\sum_j|z_j|-2\min_j|z_j|=2\}.
+\end{aligned}
+\tag{27.2}
+$$
+
+Every nonzero $w\in\mathcal W$ has the unique radial representation
+$w=tz$ with $t=m(w)\in(0,1]$ and $m(z)=1$.
+
+Proof. Formula (27.1) is continuous, $m(w)=0$ exactly when $w=0$,
+and $m(tw)=t m(w)$ for every real $t\ge0$. Its two inequalities are
+exactly (23.1). Continuity makes $\{m<1\}$ open. If $m(z)=1$, the
+points $(1+\eta)z$, $\eta>0$, lie outside $\mathcal W$ and approach $z$;
+thus such a point is on the boundary. These observations prove (27.2)
+and the radial representation, without division at $w=0$.
+The first boundary type requires only one saturated coordinate; the
+second can have all coordinates strictly below one, as at
+$z=(2/3,2/3,2/3,0)$. This example has $m(z)=1$ and is realizable by
+Theorem 23.2. The full boundary is therefore not the coordinate torus.
+$\square$
+

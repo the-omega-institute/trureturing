@@ -37,7 +37,7 @@ private theorem bounded_doubling_zero (a : ℕ → ℝ) (C : ℝ)
   have hgn := (hg n).trans (hb n)
   nlinarith
 
-private theorem nonneg_recurrence_constant (a : ℕ → ℝ)
+theorem nonneg_recurrence_constant (a : ℕ → ℝ)
     (ha : ∀ n, 0 ≤ a n)
     (hr : ∀ n, a (n + 2) + a (n + 1) = 2 * a n) : a 1 = a 0 := by
   have hi (n : ℕ) : a (n + 1) + 2 * a n = a 1 + 2 * a 0 := by

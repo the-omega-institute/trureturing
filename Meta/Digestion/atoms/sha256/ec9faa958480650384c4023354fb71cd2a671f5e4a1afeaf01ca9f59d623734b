@@ -1,0 +1,49 @@
+## 参考来源
+
+<a id="ref-englert"></a>
+
+\[1\] B.-G. Englert. Fringe Visibility and Which-Way Information: An Inequality.  *Physical Review Letters*  **77**, 2154–2157 (1996). [DOI](https://doi.org/10.1103/PhysRevLett.77.2154)； [本轮正文转录来源](https://es.scribd.com/document/463351298/englert1996)。
+
+<a id="ref-misra"></a>
+
+\[2\] B. Misra and E. C. G. Sudarshan. The Zeno’s paradox in quantum theory.  *Journal of Mathematical Physics*  **18**, 756–763 (1977). [DOI](https://doi.org/10.1063/1.523304)； [作者扫描稿](https://web2.ph.utexas.edu/~gsudama/pub/1977_005.pdf)。
+
+<a id="ref-itano"></a>
+
+\[3\] W. M. Itano, D. J. Heinzen, J. J. Bollinger, and D. J. Wineland. Quantum Zeno effect.  *Physical Review A*  **41**, 2295–2300 (1990). [DOI](https://doi.org/10.1103/PhysRevA.41.2295)； [NIST 原文](https://tf.nist.gov/general/pdf/858.pdf)。
+
+<a id="ref-facchi"></a>
+
+\[4\] P. Facchi and S. Pascazio. Quantum Zeno dynamics: mathematical and physical aspects.  *Journal of Physics A: Mathematical and Theoretical*  **41**, 493001 (2008). [DOI](https://doi.org/10.1088/1751-8113/41/49/493001)； [作者稿（2009 年上传）](https://arxiv.org/abs/0903.3297)。
+
+<a id="ref-vaswani"></a>
+
+\[5\] A. Vaswani et al. Attention Is All You Need.  *Advances in Neural Information Processing Systems*  **30** (2017). [作者全文与式 (1)](https://arxiv.org/html/1706.03762v7)。
+
+<a id="ref-bergweiler"></a>
+
+\[6\] W. Bergweiler. Iteration of meromorphic functions.  *Bulletin of the American Mathematical Society (N.S.)*  **29**(2), 151–188 (1993). [DOI](https://doi.org/10.1090/S0273-0979-1993-00432-4)； [作者稿，第 3.1 节](https://arxiv.org/pdf/math/9310226)。
+
+<a id="ref-repov66"></a>
+
+\[7\] 项目理论输入：AURIC v66，同一本体中的测量、退相干与经典记录。 [固定提交原文](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/docs/develop/theory/AURIC_MEASUREMENT_DECOHERENCE_AND_CLASSICAL_RECORDS_IN_ONE_ONTIC_STATE_V66.md)。
+
+<a id="ref-repofiber"></a>
+
+\[8\] 项目理论输入：AURIC $\Omega$ 静态相融纤维理论。 [固定提交原文](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)。
+
+<a id="ref-repov60"></a>
+
+\[9\] 项目理论输入：AURIC v60，参考归一化、完全正更新与内生历史闭包。 [固定提交原文](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/docs/develop/theory/AURIC_REFERENCE_NORMALIZATION_COMPLETELY_POSITIVE_UPDATES_AND_ENDOGENOUS_HISTORY_CLOSURE_V60.md)。
+
+<a id="ref-repoaxes"></a>
+
+\[10\] 项目理论输入：FIB-ATOM，观察者内生的三轴几何与预测接口。 [固定提交原文](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)。
+
+<a id="ref-repooutputs"></a>
+
+\[11\] 项目开放参考输入：FIB-ATOM，输出分辨的 instrument 闭包。 [固定提交原文](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)；本文不提升其证明等级。
+
+<a id="ref-repolean"></a>
+
+\[12\] 项目 Lean 源，固定提交同附录A： [EnvironmentRecords](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/D5/S3/Quantum/EnvironmentRecords.lean)； [ObserverAlgebra](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/D5/S3/Quantum/ObserverAlgebra.lean)； [ObserverCommutator](https://github.com/the-omega-institute/trureturing/blob/6ca7b7300b84a13660977b193b024ca63d92ab06/D5/S3/Quantum/ObserverCommutator.lean)。 本轮全文阅读，未执行构建。

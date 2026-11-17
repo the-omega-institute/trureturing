@@ -1,0 +1,45 @@
+**Definition 12.1 (Fixed transfer, normalized observation and source correspondence).** Let $m\geq1$, $v_1,\ldots,v_{m+1}>0$ and $0<\alpha<1$. Throughout Sections 12–15 set
+
+$$
+T=A^{-1}B_\alpha=N_\alpha,\qquad U=A^{-1}B=M,
+\qquad z_0=z_{m+1}=0,
+$$
+
+with exactly the real matrices of Definition 1.1, acting also on $\mathbb C^m$. Thus $T$ is one fixed map at every iteration. Define
+
+$$
+\begin{gathered}
+s_i=v_i+v_{i+1},\qquad g_i=\frac{s_i}{v_iv_{i+1}},\qquad
+G_{ii}=g_i,\quad G_{i,i+1}=G_{i+1,i}=-\frac1{v_{i+1}},\quad
+G_{ij}=0\quad(|i-j|>1),\\
+\langle x,y\rangle_Q=x^*Gy,\qquad
+Q(z)=z^*Gz=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},\qquad
+f_i=\frac{e_i}{\sqrt{g_i}},\qquad
+\ell(z)=\langle f_1,z\rangle_Q
+=\sqrt{g_1}\left(z_1-\frac{v_1}{s_1}z_2\right),\\
+\theta_\alpha=\frac{\alpha s_1}{v_2+\alpha v_1},\qquad
+q=2\theta_\alpha-1
+=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},\qquad
+\sigma=1-q^2
+=\frac{4\alpha(1-\alpha)v_2s_1}{(v_2+\alpha v_1)^2}>0.
+\end{gathered}
+\tag{12.1}
+$$
+
+Here $e_i$ is the original coordinate vector; $z_2=0$ for $m=1$. A star on a vector or an ordinary matrix means conjugate transpose. For an endomorphism of the state space, $R^{\dagger}=G^{-1}R^*G$ denotes its $Q$-adjoint. Observation output spaces have the standard Hermitian inner product, so $\ell^{\dagger}a=af_1$ and $\mathcal O_T^{\dagger}=G^{-1}\mathcal O_T^*$. The form is positive definite, since its defining sum can vanish only when all consecutive differences, and hence all coordinates, vanish. Put
+
+$$
+\mathcal O_Tz=(\ell(z),\ell(Tz),\ldots,\ell(T^{m-1}z))^T,
+\qquad H_T=\mathcal O_T^{\dagger}\mathcal O_T
+=\sum_{k=0}^{m-1}(T^{\dagger})^k f_1\ell T^k.
+\tag{12.2}
+$$
+
+The determinant of $H_T$ is the normalized boundary-observation Gram determinant: in any $Q$-orthonormal basis it is the usual determinant of $\mathcal O_T^*\mathcal O_T$. Equivalently it is $\det(\mathcal O_T^*\mathcal O_T)/\det G$ when the observation matrix is written in the original coordinates.
+
+The original hypotheses and rows are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Section III and Section IV.A, page 3, and Section IV.B.1, page 4](https://arxiv.org/html/2608.27085v1#S4). Their $u=x-x^*$ is $z$ here, their $M_\alpha$ is $T$, their $M$ is $U$, and their endpoint values after centering are zero. The collision interpretation presupposes the alternating, catch-up-free rotational regime. No entry time into that regime is a hypothesis or conclusion of the estimates below.
+
+For the complete [finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), [damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), and their [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) and [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) expositions, pair $i$ and velocity $v_j$ have indices $i-1$ and $j-1$. The definitions `A`, `B`, `Balpha`, `Malpha` are the literal $A,B,B_\alpha,T$; the private weight `theta` is $\theta_\alpha$. The form, local reflection identity, first-event loss and factorization used below are the intermediates `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_phase`, `sweep_stacked` and `source_factorization`. The rigidity and boundary-zero implications are `harmonic_dirichlet_zero` and `boundary_zero_observability`. The fixed-map qualitative conclusion is `TokenDampedSweepContraction.result`, with its power implication `real_mulVec_powers_tendsto_zero`; the [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) specify the same correspondence. These results are supporting conclusions, rather than additional claims about variable histories.
+
+The homogeneous qualitative antecedent is R. A. Mensing, *Ansätze für Bewegungsplanungs-Probleme mit dem Ziel der verketteten Arbeitsteilung*, bachelor's thesis (2021), credited in [v1, Section II and reference [11]](https://arxiv.org/html/2608.27085v1#bib.bib11). Its full-text quantitative coverage is unknown and no quantitative result from it is used. No non-overlap or publication-priority assertion concerning that thesis is part of these statements.
+

@@ -1,0 +1,15 @@
+**定义 61.3（完整原关系）。** $\mathsf H_{\rm fin}(D)$ 要求全部实际 $a,b\in E$、全部原评价及两种次序的 Hermitian 二表
+
+$$
+\begin{pmatrix}\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)\end{pmatrix}\succeq0.
+$$
+
+A2 是每个相加三表 $(a+b,a,b)$ 及全部排列的实部在整个 $\mathbb R^3$ 上半正定，并由 $(1,-1,-1)$ 及对应排列准确给零；不预付复三表正性。A3 是 $u^2=u$，以及同一固定有理 $0<\vartheta\le1$ 上全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。只用同一个旧映射定义
+
+$$
+v=D(a,b)-a\circ d,\quad w=a\circ b+D(a,d),\quad r_\pm=b\pm v,\quad s_\pm=d\pm w;\qquad
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+$$
+
+末式对每个实际 $a,b,d\in E$、每份原评价成立，即完整 PB；零、重复、任意幅度、缩放、平移、背景、嵌套调用及四个实际外层标签全在域内。不得用同像的另一个标签替换外层输入。这正是41.3的 A1–A3/P2/PB，以当前 JB 平方解释；其中 $i$ 只是二表系数，未给 $E$ 复乘法。
+

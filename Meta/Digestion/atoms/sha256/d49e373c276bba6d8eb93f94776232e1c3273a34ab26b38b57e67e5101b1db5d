@@ -1,0 +1,60 @@
+## 3. The two readouts on one actual circulation
+
+For the regular-table arguments let $X,Y$ be finite p and suspended label sets, with strictly positive probability rows $\pi,\tau$ and stochastic acquired kernels
+
+$$
+B:X\longrightarrow Y,\qquad A:Y\longrightarrow X,
+\qquad \pi B=\tau,\qquad \tau A=\pi.
+\tag{3.1}
+$$
+
+Emissions satisfy $u_x,v_y\in[a,b]$. Put $U_x=1-u_x$, with $U$ denoting a column and $\operatorname{diag}(U)$ its diagonal matrix; put $V=\operatorname{diag}(v)$. The exact own laws satisfy
+
+$$
+Q_x=u_x\delta_\alpha+U_x\beta\sum_yB_{xy}W_y,
+\qquad
+W_y=(1-v_y)\delta_\beta+v_y\alpha\sum_xA_{yx}Q_x.
+\tag{3.2}
+$$
+
+Define
+
+$$
+L=\operatorname{diag}(U)BVA,
+\qquad g=\operatorname{diag}(U)B(1-v).
+$$
+
+Then $Q_x(w_{j,0})=(L^ju)_x$ and $Q_x(w_{j,1})=(L^jg)_x$. Since
+
+$$
+0\le L\le\lambda BA,
+\qquad \lambda=\frac4{15},
+\qquad \pi BA=\pi,
+\tag{3.3}
+$$
+
+both laws complete almost surely, with probability of at least $j$ further returns at most $\lambda^j$ from p and at most $b\lambda^j$ after a suspended alpha. Infinite outcomes remain in their carriers with mass zero.
+
+The readout arrays are
+
+$$
+f_x=Q_x(E_p),\qquad h_y=W_y(E_\beta).
+$$
+
+Their exact equations are
+
+$$
+f=g+Lg+L^2g,\qquad h=1-v+VAg.
+\tag{3.4}
+$$
+
+Here $g\in[9/25,4/9]^X$, and therefore
+
+$$
+0\le f_x\le M_f:=\frac{1204}{2025},
+\qquad h_-:=\frac{93}{125}\le h_y\le h_+:=\frac{22}{27}.
+\tag{3.5}
+$$
+
+Indeed (3.3) bounds each term of $f$ by $(4/9)\lambda^j$ for $j=0,1,2$. For $h$, bound $Ag$ between $9/25$ and $4/9$ in $1-v+vAg$ and use $a\le v\le b$.
+

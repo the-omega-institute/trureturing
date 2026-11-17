@@ -1,0 +1,15 @@
+**Lemma 27.2 (exact radial boundary).** The set (23.1) is
+$\mathcal W=\{m\le1\}$, its interior is $\{m<1\}$, and
+
+$$
+\begin{aligned}
+\partial\mathcal W=\{m=1\}
+=\{z\in\mathcal W:\ &\max_j|z_j|=1\ \text{or}\\
+ &\sum_j|z_j|-2\min_j|z_j|=2\}.
+\end{aligned}
+\tag{27.2}
+$$
+
+Every nonzero $w\in\mathcal W$ has the unique radial representation
+$w=tz$ with $t=m(w)\in(0,1]$ and $m(z)=1$.
+

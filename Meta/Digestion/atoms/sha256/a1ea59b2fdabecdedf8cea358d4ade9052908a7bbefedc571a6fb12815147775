@@ -1,0 +1,43 @@
+#### 定理 6.8：同一分支的完全正表示
+
+C4 中的每个原分支有有限 Kraus 表示
+
+$$
+\Phi_j(\rho)=\sum_\alpha K_{j\alpha}\rho K_{j\alpha}^\dagger.
+$$
+
+完整装置满足
+
+$$
+\sum_{j,\alpha}K_{j\alpha}^\dagger K_{j\alpha}=I.
+$$
+
+该原结果的概率及非零条件态为
+
+$$
+p_j=\operatorname{Tr}\Phi_j(\rho),\qquad
+\rho_j=\Phi_j(\rho)/p_j,\quad p_j>0.
+$$
+
+**证明。**
+
+在正锥上加法与非负齐次性给 Hermitian 空间上的线性延拓，再作唯一复线性延拓。与输入同维参考上的保正使
+
+$$
+J(\Phi)=\sum_{a,b}|a\rangle\langle b|\otimes\Phi(|a\rangle\langle b|)
+$$
+
+正半定，因为它是同一联合映射作用在 $|\Gamma\rangle\langle\Gamma|$、$|\Gamma\rangle=\sum_a|a,a\rangle$ 上的结果。分解 $J=\sum_\alpha|v_\alpha\rangle\langle v_\alpha|$，唯一写 $v_\alpha=\sum_a|a\rangle\otimes K_\alpha|a\rangle$。比较矩阵块即得 Kraus 公式。此公式在任意参考放大下都保正。对全部输入态的总迹守恒等价于显示的算子和为 $I$。最后按同一个原记录的质量条件化。
+
+$\square$
+
+这使用的是同一 $\Phi$ 的 $\operatorname{id}\otimes\Phi$，不是为每个输入另外挑某个正联合输出。标准有限 Choi–Kraus 等价见 Watrous 定理 2.22。[\[13\]](#ref-watrous)
+
+对于一般效果 $E$，许多仪器可有同一 $E$。若另外指定该细分支只有一个正振幅算子 $K\succeq0$，则 $K^\dagger K=E$ 强制 $K=\sqrt E$，得到平方根更新；投影 $P$ 时成为
+
+$$
+\rho\longmapsto\frac{P\rho P}{\operatorname{Tr}(\rho P)}.
+$$
+
+这个 Lüders 特例需要指定相应无额外支内旋转的实现；仅知道结果概率不足以唯一给出状态更新。
+

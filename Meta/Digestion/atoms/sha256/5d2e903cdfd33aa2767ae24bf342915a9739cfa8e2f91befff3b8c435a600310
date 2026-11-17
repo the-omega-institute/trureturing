@@ -1,0 +1,86 @@
+**定理 17.5（平方根对数深度、多项式实缩靶与准确幂指数）。** 独立于定义 13.1 的旧参数范围，取
+
+$$
+c>0,\qquad \beta,\gamma\ge0,\qquad \beta+\gamma>0,
+\tag{17.31}
+$$
+
+并在全部正整数上定义
+
+$$
+\begin{aligned}
+h_c(n)&=\max\left(2,\left\lfloor c\sqrt{\log(n+2)}\right\rfloor\right),\\
+\rho(n)&=(n+2)^{-\beta}(\log(n+2))^{-\gamma},\\
+R(n)&=\min\bigl(1/4,\rho(n)\bigr).
+\end{aligned}
+\tag{17.32}
+$$
+
+$h_c$ 全域非递减且趋于无穷，$\rho$ 全域正、非递增且趋于零。成功集合使用定义 17.3 中 $h=h_c,r=\rho$，不把实半径改成旧卷的某个参数范围。若
+
+$$
+(\mu+1)c^2+(2\mu+6)\beta<1,
+\tag{17.33}
+$$
+
+则存在只依赖固定原数据及 $M,c,\beta,\gamma$ 的整数 $X_0$，使对每个整数 $X\ge X_0$ 和每个 (17.4) 的目标，
+
+$$
+\frac{X R(2X)^2}{4q(h_c(2X),h_c(2X);M)}
+\le C_{h_c,\rho}(X;u,z)
+\le\frac{8X\rho(X)^2}{q(h_c(X),h_c(X);M)}.
+\tag{17.34}
+$$
+
+特别地，令 $s=1-c^2-2\beta>0$，则双边计数给出目标一致的极限
+
+$$
+\begin{aligned}
+\lim_{X\to\infty}
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{\log C_{h_c,\rho}(X;u,z)}{\log X}-s\right|&=0,\\
+\lim_{X\to\infty}
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{\log T_{h_c,\rho}(X;u,z)}{\log X}-s\right|&=0.
+\end{aligned}
+\tag{17.35}
+$$
+
+对足够大的 $X$，对数中的计数均为正。不同目标可以由不同整数命中；本定理不主张一个整数同时命中所有 $z$。
+
+**证明（区域核算）。** 定理 16.7 是这里复用的实际周期输入：对每个固定 $M$，$\log q(H,H;M)\sim H^2$。对 $H_-=h_c(X)$ 和 $H_+=h_c(2X)$ 分别使用它，得
+
+$$
+\frac{\log q_-}{\log X}\longrightarrow c^2,
+\qquad
+\frac{\log q_+}{\log X}\longrightarrow c^2.
+\tag{17.36}
+$$
+
+这是对两端各自的主阶应用，没有估计 $q_+/q_-$ 或相邻阶段周期比。又有
+
+$$
+\frac{-\log\rho(X)}{\log X}\longrightarrow\beta,
+\qquad
+\frac{-\log\rho(2X)}{\log X}\longrightarrow\beta.
+\tag{17.37}
+$$
+
+所以有限预算右端的指数准确地是
+
+$$
+\frac{\log\bigl(K_\mu q_+^{\mu+1}\rho(2X)^{-(2\mu+6)}\bigr)}{\log X}
+\longrightarrow(\mu+1)c^2+(2\mu+6)\beta<1.
+\tag{17.38}
+$$
+
+$\gamma$ 的贡献是 $O(\log\log X)$，在此严格不等式内不增加幂指数。取严格余量后，(17.38) 保证所有足够大整数 $X$ 满足 (17.23)，并同时有 $\rho(X)\le1/4$。这给出共同的 $X_0$；它不含 $u,z,a_0$。定理 17.4 即给出 (17.34)，此时 $R(2X)=\rho(2X)$。$2\mu+6$ 来自 (17.30) 的 $J_R^{\mu+2}R^{-2}$，没有采用未经此预算支付的较小系数。
+
+**证明（下界与上界共同决定指数）。** (17.33) 与 $\mu>0$ 蕴涵 $c^2+2\beta<1$。把 (17.36)–(17.37) 代入 (17.34) 的两端，两端对数除以 $\log X$ 都趋于 $1-c^2-2\beta=s$。其中分母 $q_-$ 的上计数界不可省略；它与 $q_+$ 的下计数界共同夹住实际的 $C_{h_c,\rho}$。两端都独立于目标，因此同时证明第一条一致极限及最终正性。
+
+对累计计数，固定任意 $0<\varepsilon<s$。第一条一致极限给出共同阈值后，每个整数 $Y$ 的块计数介于 $Y^{s-\varepsilon}$ 和 $Y^{s+\varepsilon}$。下界用 $Y=\lfloor X/2\rfloor$ 的整个块，它包含于 $[1,X]$。上界把 $[1,X]$ 包在有限初始段与 $(2^j,2^{j+1}]$ 的并中；其块上界是公比 $2^{s+\varepsilon}>1$ 的几何和，总和为 $O(X^{s+\varepsilon})$，初始段长度也与目标无关。令 $\varepsilon\downarrow0$，得第二条一致极限。
+
+用白话说，有限位的全部锁先把整数筛成一个真实进程，代价由实际共同模数承担；两个实方向再要求这条进程进入面积约为实半径平方的窗口。右端最深、最窄的条件提供一批必然成功的整数，左端最浅、最宽的条件限制全部可能成功的整数。两端的模数未必接近，但它们的对数都有同一主阶，所以足以夹出准确的幂指数。充分区域 (17.33) 说明本面积误差能被支付，不表示区域外没有命中，也不表示该区域或常数最优。
+
+这些是固定算术轨道的同时逼近与计数结论。任一成功整数列趋于无穷时，对每个固定 $v,r$ 最终满足原 $U_v(r)$ 目标，实端同时趋于 $z$，故得到 $\mathbb T^2$ 与 $\eta(a_0+M\widehat{\mathbb Z})$ 中相应目标的联合逼近；这只涉及普通乘积拓扑。它不构成完整的 $\mathbb Z/\mathbb Q$ 丢番图定义，不提供量子物理起源或经验物理同一性的认证。$\square$
+

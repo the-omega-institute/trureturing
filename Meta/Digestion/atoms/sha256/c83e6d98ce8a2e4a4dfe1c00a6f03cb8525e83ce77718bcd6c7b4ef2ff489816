@@ -1,0 +1,20 @@
+**Proposition 37.1 (prepared restriction and actual interfaces).** Use
+AA17/19's native rules and Definition 30.1's current-term recorder.
+For each $k\ge1$ the source-relative preparation bridge uses
+
+$$
+C=\langle\beta,\alpha\rangle,\quad
+D_0=\langle\beta,C\rangle,\quad D_1=\langle C,\beta\rangle,\quad
+M=\langle\langle C,\alpha\rangle,\alpha\rangle.
+\tag{IV.107}
+$$
+
+The marker $M$ has **four** leaves. After a fixed preparation of
+$g_0=3k+4$ events, any distinct-label insertion history is simulated
+with exactly two actual native events per insertion. Its endpoint is
+$F_1$, where $F_{k+1}=M$ and $F_j=\langle B_j,F_{j+1}\rangle$,
+with $B_j=C$ if $j\notin A$ and $B_j=D_{x_j}$ otherwise. Its grade is
+$3k+4+2|A|$, hence $5k+4$ at full assignment. The unordered coloured
+quotient $U_{k,A}$ depends only on $k,A$ at these macro-cuts, while the
+ordered endpoint determines all inserted labelled bits.
+

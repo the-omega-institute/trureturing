@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8c4a16742b7d71820b4a981020798de1eabd048165d2a6c5c68cb7c732ba2f64
+  normalized_sha256: sha256:8c4a16742b7d71820b4a981020798de1eabd048165d2a6c5c68cb7c732ba2f64
+cas_ref: sha256:8c4a16742b7d71820b4a981020798de1eabd048165d2a6c5c68cb7c732ba2f64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section title and navigation anchor only; the mathematical realization statement belongs to the following theorem clause.
+    previous_atom_id: aec2bfb0b5cfdc879eb002de8ac599d3446819c3d47b4cb6bd21f24e1a81ce3f
+    next_atom_id: 8d3932930fb02debf8f3223cfe3b0c48178434a218104f64ee8df9b8d4bfd089

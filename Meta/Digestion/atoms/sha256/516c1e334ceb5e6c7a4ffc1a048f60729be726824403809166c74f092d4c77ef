@@ -1,0 +1,37 @@
+**命题 162.1（原坐标通常乘法闭性的反例）。** 存在满足 157.1、P2 与完整 PB 的不完备原域，其 $V=E+iE$ 对原定向 $\star$ 封闭，却不对环境通常乘法封闭。
+
+证明。取 $H=\ell^2(\mathbb N)\otimes\mathbb C^2$，用实坐标共轭定义转置，记 $\mathcal F(H)$ 为全部有限秩复算子的代数理想。在 $B(H)\oplus B(H)$ 中令
+
+$$
+V=\{(x,y):y-x^{\mathsf T}\in\mathcal F(H)\},\qquad E=V_{\rm sa}.
+\tag{162.1}
+$$
+
+转置保持 Jordan 乘法，有限秩算子构成双侧 $*$ 理想，故 $V$ 是含单位复 Jordan $*$ 子代数，$E$ 是原实 Jordan 子代数并含两块全部单块有限秩 Hermitian。连续的实虚分解保持 (162.1)，所以 $V=E+iE$。取继承锥、范数及其准确分离正评价族，可保留零及不等质量。
+
+第二块转置 $T(x,y)=(x,y^{\mathsf T})$ 将 $V$ 送到通常结合 $*$ 子代数
+
+$$
+V_0=\{(x,z):z-x\in\mathcal F(H)\}.
+$$
+
+从 $V_0$ 的通常 $K=i[,]/2$ 运输整个模型，得到原
+
+$$
+D((a,c),(b,d))=\bigl(i[a,b]/2,\ -i[c,d]/2\bigr).
+\tag{162.2}
+$$
+
+它确实取值于 $E$：$[a^{\mathsf T},b^{\mathsf T}]=-[a,b]^{\mathsf T}$，所有有限秩误差仍有限秩。结合代数见证给 P2 和完整 PB，按同一 Jordan 坐标运输保留。原两块方向分别为 $-1,+1$。
+
+取实对称自伴算子
+
+$$
+a=I\otimes\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+b=I\otimes\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+$[a,b]=I\otimes\begin{pmatrix}0&-2\\2&0\end{pmatrix}$ 有无限秩。原 $(a,a),(b,b)\in E$ 的通常乘积为 $(ab,ab)$；若它属于 $V$，就要求 $ab-(ab)^{\mathsf T}=ab-ba$ 有限秩，矛盾。原定向乘积为 $(ab,ba)$，准确属于 $V$。
+
+此原域也确实不完备：有限秩 Hermitian $k_n$ 可在范数中趋于无限秩紧 Hermitian $k$；$(0,k_n)\in E$，其极限 $(0,k)\notin E$。因此反例具有本轮所需的真实不完备性，而非仅改名的完整环境。∎
+

@@ -1,0 +1,49 @@
+**Proposition 55.2 (fixed labels, one feedback and ordinary transpose).**
+The value in (55.8) is attained in the original negative row.
+Let $r=\sqrt X$, $z=\sqrt Y$, $a=\sqrt{1-X}$,
+$b=\sqrt{1-Y}$ and $\alpha=\arccos Z\in(0,\pi)$. Set
+
+$$
+(v_3,v_4)=e^{i\alpha}(r+ia,r-ia),\qquad
+(v_1,v_2)=(z+ib,z-ib),\qquad U=\operatorname{diag}(v)U_-.
+\tag{55.9}
+$$
+
+*Proof.* Each entry has modulus one. These are the unchanged pairs
+$J=(3,4)$ and $K=(1,2)$. Relative to $U_+$, the original diagonal
+is $w=(v_1,-v_2,-iv_3,iv_4)$. Source (23.2) gives
+
+$$
+Q=2sr e^{i\alpha}+2hz,\qquad
+P=2ca e^{i\alpha}+2ihb,\qquad |Q|=2R,\quad |P|=2C.
+\tag{55.10}
+$$
+
+Indeed the crossed term in $|P|^2/4$ is
+$2chab\sin\alpha=2chF$. Thus both recoveries occur for this
+same feedback, as in Lemma 46.2. They are nonzero by (55.6).
+With the source certificate-basis matrix $T$, define
+
+$$
+\eta=\frac{P\overline Q}{|P||Q|},\qquad
+\beta=\begin{pmatrix}\sqrt q\\\eta\sqrt p\end{pmatrix},\qquad
+E=(T\beta\beta^\dagger T^\dagger)^{\mathsf T}.
+\tag{55.11}
+$$
+
+The transpose is ordinary. This effect is positive, pure and trace
+one, and its first certificate-basis population is $q=1/5$.
+The equality $\eta Q=P|Q|/|P|$ aligns the source recovery summands,
+so (23.12)--(23.13) give $g(E,U)=\mathcal E-4\Gamma^2$.
+Multiplying $\beta$ by $\overline\eta$ gives the negative-row form
+of Definition 46.1 without changing $E$.
+
+The active trace modulus is $|2r e^{i\alpha}+2z|=2L$.
+Equations (23.9)--(23.11) therefore give
+$\rho_-=8-4L+2q=4(1-23/80)+2/5=13/4$, with zero impurity.
+The original budget (42.17)--(42.20), with $\zeta>15/4$, gives
+$\rho_++\rho_->15/2$, hence $\rho_+>17/4>13/4$.
+Thus the true distance is exactly $13/4$, uniquely negative-active.
+One common scalar may multiply all four entries of $v$; no
+independent pair scalar or label permutation is used. $\square$
+

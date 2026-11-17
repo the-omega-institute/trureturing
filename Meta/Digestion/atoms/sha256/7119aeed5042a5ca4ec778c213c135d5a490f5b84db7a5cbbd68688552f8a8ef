@@ -1,0 +1,43 @@
+**定理 381.1（二阶内部映射的半角充分条件）。** 在数学 $H_2(\mathbb C)$ 中，令 $V=H_2(\mathbb C)^0$、$q=w\operatorname{Tr}$、$w>0$。对任意实线性 $F:V\to H_2(\mathbb C)$，以下等价：
+
+$$
+\begin{aligned}
+&q\bigl(e+p,F(\mathrm i[e,p])\bigr)=0
+\quad(e,p\in\operatorname{Prim}(H_2),\ \operatorname{Tr}(ep)=\tfrac12);\\
+&\exists\gamma\in\mathbb R,\quad F(v)=\gamma v
+\quad(v\in V).
+\end{aligned}
+\tag{381.1}
+$$
+
+这里的半角只限定本条局部引理的充分测试族；(379.1) 本身遍历全部原子对，不选择这个角度。
+
+证明。用 Pauli 坐标 $\sigma=(X,Y,Z)$，写
+
+$$
+e=\tfrac12(I+r\cdot\sigma),\quad
+p=\tfrac12(I+s\cdot\sigma),\quad
+|r|=|s|=1,\quad r\cdot s=0,
+\qquad \mathrm i[e,p]=-\tfrac12(r\times s)\cdot\sigma.
+\tag{381.2}
+$$
+
+一般实线性 $F$ 唯一写成 $F(v\cdot\sigma)=f(v)I+(Av)\cdot\sigma$，其中 $f$ 为实线性泛函，$A$ 为实线性算子。置 $v=r\times s$、$h=r+s$；$\operatorname{Tr}(\sigma_j\sigma_k)=2\delta_{jk}$ 给
+
+$$
+q\bigl(e+p,F(\mathrm i[e,p])\bigr)
+=-\frac w2\{2f(v)+h\cdot Av\}.
+\tag{381.3}
+$$
+
+补元 $I-e,I-p$ 也是半重叠 primitive；其 Bloch 方向为 $-r,-s$，叉积仍为 $v$，和方向变为 $-h$。两条读回遂分别给 $2f(v)+h\cdot Av=0$ 与 $2f(v)-h\cdot Av=0$，因此
+
+$$
+f(v)=0,\qquad h\cdot Av=0.
+\tag{381.4}
+$$
+
+给定任意单位 $v$ 及任意单位 $z\perp v$，置 $k=z\times v$、$r=(z+k)/\sqrt2$、$s=(z-k)/\sqrt2$。它们是正交单位向量，且 $r\times s=v$、$r+s=\sqrt2z$。故 (381.4) 对全部单位 $v$ 及全部 $z\perp v$ 成立。实线性使 $f=0$，而 $Av\in\mathbb Rv$ 对每个 $v$ 成立。
+
+取正交基 $v_1,v_2,v_3$，写 $Av_j=\gamma_jv_j$。再用 $v_j+v_k$ 的直线保持性得 $\gamma_j=\gamma_k$，于是 $A=\gamma\operatorname{Id}$。这只是三实维线性代数在原补元读回中的应用，不假设三形式、旋转共变或任何实际流。反向，标量交换子的迹循环直接给第一式。∎
+

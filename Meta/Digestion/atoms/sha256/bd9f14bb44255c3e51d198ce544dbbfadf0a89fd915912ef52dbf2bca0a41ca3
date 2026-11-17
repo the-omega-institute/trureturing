@@ -1,0 +1,14 @@
+**Definition 27.1 (feedback radial functional).** Keep the original record,
+ordinary transpose and producer quantities of Sections 21–26, including
+$A_0=2+\sqrt{8/3}$, $\kappa$ of Theorem 21.3 and $\mathcal O$ of (26.27).
+For $w\in\mathbb C^4$ define the scalar functional
+
+$$
+m(w)=\max\left\{\max_j|w_j|,
+ \frac{\sum_j|w_j|-2\min_j|w_j|}{2}\right\}.
+\tag{27.1}
+$$
+
+This $m$ is a functional of feedback diagonal data, not a protocol measure.
+No triangle inequality or norm property is assumed.
+

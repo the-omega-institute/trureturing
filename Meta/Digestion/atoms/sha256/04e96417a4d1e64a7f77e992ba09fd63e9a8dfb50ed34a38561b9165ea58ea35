@@ -1,0 +1,101 @@
+**命题 123.6（E：每个通过六球测试的非零小候选有原纯外部见证）。**
+取命题 123.3 严格分支的任一充分小非零 $z$，
+或命题 123.4 接触分支的任一充分小非零 $z\in\ker\Theta$。
+对同一个 $h_z=e_y+z$，存在原纯点 $a_{n_\ell}$，使
+
+$$
+\begin{gathered}
+h_z(a_{n_\ell})<0,\qquad
+a_{n_\ell}\notin U_6,\\
+\pi_x(a_{n_\ell})\notin
+\overline{\operatorname{cone}(\pi_x(U_6))}.
+\end{gathered}
+\tag{X123.33}
+$$
+
+该见证由同一个 signed h 的原方向和实际两边路径
+$x-q_{n_\ell}-a_{n_\ell}$ 给出，
+并具有准确读数式 (X123.37)。
+接触零核时不存在本命题的非零局部候选；$z=0$ 为原正 $e_y$，
+没有负见证结论。
+
+证明。
+两种分支都已逐颗证明 $h_z\ge0$ 于全部六颗完整球，
+并由 (X123.12) 给 $h_z\notin C^*$。
+x 是实际 P0 锚，故已有原法向限制同构允许唯一写成
+
+$$
+h_z=\alpha g_x+\ell\cdot H_x.
+\tag{X123.34}
+$$
+
+这里 $H_x$ 是完整 Dx 的原三维法向坐标；
+它与 Dp 图中的 $\Theta$ 目标不混同。
+若 $\ell=0$，在 y 处 $h_z(y)=1$、$g_x(y)=1$ 使 $\alpha=1$，
+所以 $h_z=g_x\in C^*$，矛盾。
+故 $\ell\ne0$。
+已有准确原全局方向判据随原 P0 限制同构给
+
+$$
+\alpha<\rho_x(\ell),\qquad
+n_\ell=\frac{\ell}{\|\ell\|},\qquad
+\rho_x(\ell)=\|\ell\|\rho_x(n_\ell).
+\tag{X123.35}
+$$
+
+这里 $\rho_x$ 是原全局法向体的方向阈值，
+不是只在六球测试域求出的阈值。
+调用位置是
+[校准卷 123.9、定理 123.12](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+与
+[THREE_COPY VII122.2–122.3、定理 122.4](QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md)。
+这些已有接口把正性阈值与实际完整原排除球的读数联系，
+并非本章新设的正延拓假设。
+
+令 $q_{n_\ell}$ 为 Dx 球面上方向 $n_\ell$ 的实际原纯邻点。
+在完整原 $D_{q_{n_\ell}}$ 内，取 x 的实际反端点 $a_{n_\ell}$。
+该点原纯，且两条实际边的 P0 传播使所需锚都保持 P0。
+实际远端取得不依赖正则锚或球族连续性，见
+[EXCLUSION IX120.11–120.13 的实际远端接口](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)。
+完整球的原邻点确认式为
+
+$$
+e_{q_{n_\ell}}
+=\frac{\rho_x(n_\ell)g_x+n_\ell\cdot H_x}
+       {1+\rho_x(n_\ell)}.
+\tag{X123.36}
+$$
+
+该确认式在整个 $D_{q_{n_\ell}}$ 为零，
+所以那里有 $n_\ell\cdot H_x=-\rho_x(n_\ell)g_x$。
+实际反端点不同于 x，原一值面 $\{x\}$ 使 $g_x(a_{n_\ell})>0$。
+代入同一 $h_z$，得到
+
+$$
+\begin{aligned}
+h_z(a_{n_\ell})
+&=g_x(a_{n_\ell})
+  \left[\alpha-\|\ell\|\rho_x(n_\ell)\right]\\
+&=g_x(a_{n_\ell})[\alpha-\rho_x(\ell)]<0.
+\end{aligned}
+\tag{X123.37}
+$$
+
+这直接给实际原纯负见证，
+而不是只用分离定理给出一个未标记的抽象点。
+同一个 $h_z$ 在整个 $U_6$ 非负，故该原纯点不属于其中任何一颗完整球。
+
+最后，在有限维 $S_x^*$ 上，评价于固定 $h_z$ 是连续线性泛函。
+它在每个 $\pi_x(\xi)$、$\xi\in U_6$ 非负，
+所以在这些评价像的锥包及其闭包非负。
+而在 $\pi_x(a_{n_\ell})$ 上，它等于 (X123.37) 的严格负数，
+故后者不在该闭锥包，证明 (X123.33)。证毕。
+
+这里没有假设或推出 $\pi_x(C)$ 闭，
+没有据此判任何锥为 nice 或 non-nice，
+也没有把另一个锥和的闭性偷换为当前评价像的闭性。
+原路径中的每个点和完整排除球都在同一 K 内；
+存在该有限关系路径没有提供一条实现它的原合法门词。
+$h_z$ 是 signed 线性候选，非负测试失败不等于物理负概率，
+本章从未将其宣称为效果或可实施读回。
+

@@ -1,0 +1,4 @@
+## 198. The full-zero fibre is an affine radical lift
+
+The quotient reconstruction makes the remaining radical freedom explicit. Once one full-zero candidate is fixed, every other legal label family in the same candidate span with the same quotient labels differs from it by finitely many common-radical functions, and the residual tensor cannot see those differences.
+

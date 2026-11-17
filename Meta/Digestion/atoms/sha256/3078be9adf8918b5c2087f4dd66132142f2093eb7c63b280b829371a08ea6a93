@@ -1,0 +1,23 @@
+**引理 5.1（两个内值已知时的平方运输）。** 若实际 $a,x,y\in E$ 满足
+
+$$
+D(a,x)=\frac J2[a,x],\qquad D(a,y)=\frac J2[a,y],
+$$
+
+则原 PB 给
+
+$$
+q_D((1+Ja)Z_0)=q_D((1-Ja)Z_0),\qquad Z_0=x+Jy.
+\tag{5.1}
+$$
+
+证明。原增量为 $v=D(a,x)-a\circ y$、$w=a\circ x+D(a,y)$。只展开已知矩阵乘法，
+
+$$
+v+Jw=Jax-ay=JaZ_0,
+\qquad (x\pm v)+J(y\pm w)=(1\pm Ja)Z_0.
+\tag{5.2}
+$$
+
+2.5及原评价分离性给5.1。没有从未知 $q_D$ 提出因子或展开未知外值。∎
+

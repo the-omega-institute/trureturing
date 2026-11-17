@@ -1,0 +1,40 @@
+**定理 74.1（还原核的充分性）。** 取73.2候选，令 $P:B\to V_0$ 为沿 $\mathfrak n$ 的复线性投影。对原 $a,b\in E$ 定义
+
+$$
+\iota(D_{\mathfrak n}(a,b))
+=\frac i2P([\iota(a),\iota(b)])
+=-P\!\left(\frac{[\iota(a),\iota(b)]}{2i}\right).
+\tag{74.1}
+$$
+
+这是实际原 $E$ 上的唯一实交替双线性映射，满足27.1的PY及完整R。它还满足NN、完整Jacobi、Leibniz及锐界 $N(D_{\mathfrak n}(a,b))\le N(a)N(b)$；同一原复化取得相容的含单位pre-$C^\ast$乘法、准确原锥与范数、全部原正评价及其质量。
+
+证明。$V_0$ 与 $\mathfrak n$ 都伴随封闭，故 $P(x^\ast)=P(x)^\ast$。由于 $\iota(E)$ 自伴，$V_0$ 中的自伴元准确是 $\iota(E)$：若 $\iota(a)+i\iota(b)$ 自伴，便有 $\iota(b)=0$，原忠实性给 $b=0$。所以74.1的右边确实为原自伴像，而不是仅为完成中的新输出。实双线性和反对称性由定义得到。
+
+在同一 $V_0$ 上定义 $x\star y=P(xy)$。双边理想性给
+
+$$
+P(P(xy)w)=P(xyw)=P(xP(yw))\qquad(x,y,w\in V_0),
+\tag{74.2}
+$$
+
+因为 $xy-P(xy)$ 及 $yw-P(yw)$ 在 $\mathfrak n$ 中；故 $\star$ 结合。这里 $P$ 由商映射后接其在原代表空间上的逆得到，未把原空间的包含预付为乘法截面，也未把 $P$ 误作原包络乘法到自身的同态。单位在 $V_0$ 中且由 $P$ 固定，伴随反乘法也由原伴随和理想性得到。对原输入，
+
+$$
+\frac{x\star y+y\star x}{2}=\iota(a\circ b),
+\qquad x\star y=\iota(a\circ b)-i\iota(D_{\mathfrak n}(a,b)).
+\tag{74.3}
+$$
+
+所以同一原Jordan乘法与原复化都被保持。
+
+令 $c=[x,y]/(2i)$。在辅助包络内展开27.1的原Jordan多项式给 $c^2=\iota(B(a,b))\in V_0$。在商中相等的词有相同原代表，因此
+
+$$
+\iota(D_{\mathfrak n}(a,b)^2)
+=P(P(c)^2)=P(c^2)=\iota(B(a,b)).
+\tag{74.4}
+$$
+
+忠实性给原PY。结合乘法 $\star$ 中 $D=i[\cdot,\cdot]_{\star}/2$，故两次响应与实部结合子的恒等式逐项给完整R；同一个交换子计算给NN和Jacobi。至此原PY+R已在原域成立，准确复用27.2的后端取得锐界、Leibniz和相容 $C^\ast$ 完成，不给原复范数添新前件。原正锥、实范数、单位及正评价按该同一重构保持。∎
+

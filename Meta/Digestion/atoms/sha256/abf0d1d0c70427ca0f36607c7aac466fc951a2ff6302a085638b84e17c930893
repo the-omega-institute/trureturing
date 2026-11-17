@@ -1,0 +1,12 @@
+**假设 C-15.4（同一分支的真实记录）。** 另供成功分支同一制备中的单位记录 $`e_L,e_R`$，$`\eta_{\rm rec}=\langle e_R,e_L\rangle`$。具体的记录取得合同供应如下等距映射：对所选分支的正交补取正交基 $`|F_k\rangle`$，取单位失败记录 $`f_k`$ 与正交结果旗标，规定
+
+
+```math
+V_{\rm rec}|L\rangle=|{\rm ok}\rangle|L\rangle e_L,\qquad
+V_{\rm rec}|R\rangle=|{\rm ok}\rangle|R\rangle e_R,\qquad
+V_{\rm rec}|F_k\rangle=|{\rm fail}\rangle|F_k\rangle f_k.
+```
+
+
+各像的正交性由分支及旗标保证，即使记录不正交也有 $`V_{\rm rec}^\dagger V_{\rm rec}=I`$。读取旗标得到成功或失败；忽略成功记录后非对角条目为 $`\eta_{\rm rec}W`$。记录相位约定随实际分支共同运输。此映射属于明确供应的实验资源，数学存在不等于已经取得。
+

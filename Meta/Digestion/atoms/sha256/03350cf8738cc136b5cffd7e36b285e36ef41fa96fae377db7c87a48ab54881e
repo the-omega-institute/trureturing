@@ -1,0 +1,6 @@
+**Proof.** At $r=R^{j-1}$, for $j=1,\ldots,k$, the preparation executes
+$P_r,S_r,S_{rL}$. It changes the current alpha continuation into
+$\langle C,\alpha\rangle$ and proceeds into its right alpha. At
+$r=R^k$ execute $P_r,S_r,S_{rL},S_{rLL}$, producing exactly the
+bracketed four-leaf $M$ in (IV.107). Each promotion sees alpha and each
+split sees beta. This accounts for $3k+4$ events. 

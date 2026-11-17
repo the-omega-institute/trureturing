@@ -1,0 +1,54 @@
+**Proposition 7.1 (credited results and the precise added information).** R Theorems 6.1, 9.1, 10.1 and 11.1 already establish corrected-core upper recovery, the whole-domain $O(s^2)$ lower error, the actual unit-profile lower implication and the matching limit
+
+$$
+E_s\longrightarrow\min(0,C_{\rm resp}).
+\tag{7.1}
+$$
+
+P Proposition 100.1 gives only the independent macroscopic upper direction $E_s\le-c_0s^6$, hence $r_s\ge c_0>0$. P Theorem 105.1 supplies, for every prescribed sequence and every actual normalized complex choice in $D(S)$,
+
+$$
+r_{s_n}\to\infty
+\quad\Longleftrightarrow\quad
+\operatorname{dist}(F_{s_n},\mathcal O_c)\to0.
+\tag{7.2}
+$$
+
+Under these credited results, R Theorem 11.2 gives
+
+$$
+\begin{array}{ll}
+C_{\rm resp}<0:&
+E_s\to C_{\rm resp},\quad
+\epsilon_c(s)=C_{\rm resp}s^2+o(s^2),\quad
+r_s\sim(-C_{\rm resp})s^{-6}\to\infty;\\[2pt]
+C_{\rm resp}>0:&
+0<c_0\le r_s\le B_*<\infty,\quad
+-E_s=\Theta(s^6),\quad-\epsilon_c(s)=\Theta(s^8);\\[2pt]
+C_{\rm resp}=0:&E_s\to0,\quad c_0\le r_s=o(s^{-6}).
+\end{array}
+\tag{7.3}
+$$
+
+The negative case gives global unit-orbit convergence for every actual choice by (7.2). In the positive case Theorem 6.1 adds zero microscopic weak profile and the exact orbit-distance limit $\sqrt2$ to the previously proved bounded-$r_s$ defect. At response zero, (5.2) degenerates to $c(0-0)=0$ and selects no branch.
+
+These are credited implications, with the original lower arguments retained. R's upper construction uses compact odd response approximants, each fixed before its $s$-limit, rather than an $L^2$ trial $\Psi$. Its matching argument uses the full-domain lower bound, actual negative attainment and (7.2), not only trial recovery. In fact a hypothetical energy limit strictly below $\min(0,C_{\rm resp})$ is negative, so (7.2) supplies a unit profile and R's unit-profile lower implication forces a contradiction. Positive-response boundedness of $r_s$ follows because an unbounded subsequence would likewise give a unit profile and a strictly positive lower energy, contradicting native negativity. The macroscopic direction independently supplies its positive lower bound. These are existing R proofs, not new matching or negative-branch content of this companion.
+
+N Theorems 6.1, 7.1 and 8.1 already prove strict real nonaffinity and the fixed complex-affine refinement. In their notation,
+
+$$
+\begin{gathered}
+t_0=2A+(\chi/a)B_1,\qquad
+\Delta_{\rm aff}=h[\Psi-t_0rp]=D_{\rm resp}-a t_0^2>0,\\
+C_{\rm aff}(t)=\nu^2\{a t^2-2a t_0t+K_{\rm base}\}-\lambda D_{\rm clock},\\
+C_{\rm resp}=\min_{t\in\mathbb R}C_{\rm aff}(t)-\nu^2\Delta_{\rm aff},\\
+C_{108}-C_{\rm resp}=\nu^2\{\Delta_{\rm aff}+a(t_0-1)^2\}>0,\\
+C_{\rm aff}^{\mathbb C}(z_0)-C_{\rm resp}
+ =\nu^2\{\Delta_{\rm aff}+a|z_0-t_0|^2\}>0
+ \quad(z_0\in\mathbb C\text{ fixed}).
+\end{gathered}
+\tag{7.4}
+$$
+
+Strictness evaluates neither absolute sign. The clock terms remain in every full coefficient and cancel only in these exact differences. A nonpositive affine coefficient forces negative response, including an affine zero boundary. Nonnegative response forces all these affine coefficients to be strictly positive. None of these inherited comparisons imposes an affine competitor class on actual ground states or provides a uniform conclusion for slopes diverging with $s$.
+

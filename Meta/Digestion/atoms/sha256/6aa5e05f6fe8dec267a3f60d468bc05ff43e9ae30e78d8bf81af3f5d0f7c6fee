@@ -1,0 +1,46 @@
+**命题 C-63.2（外部路径的精确相关乘积）。** 条件路径为非齐次一阶 Markov 链，且每个单点边缘非退化。其端点相关系数满足
+
+$$
+\operatorname{Corr}_{\nu_i}(V_0,V_\ell)
+=\prod_{k=0}^{\ell-1}\operatorname{Corr}_{\nu_i}(V_k,V_{k+1}).
+\tag{C63.3}
+$$
+
+每条边的相关系数严格负，因此端点相关的符号为 $(-1)^\ell=(-1)^n$。式 (C63.3) 是对当前外部来源的精确恒等式。
+
+证明。对任意有正概率的合法前缀，式 (C63.1) 的前缀权在条件分子、分母中消去，余下
+
+$$
+\mathbb P_{\nu_i}(V_{k+1}=t\mid V_0=v_0,\ldots,V_k=s)
+=\frac{J_{s,t}\alpha_{k+1}^tR_{k+1}(t)}{R_k(s)}.
+\tag{C63.4}
+$$
+
+它只依赖最后状态 $s$ 及位置 $k$，其两项和为一；这直接证明 Markov 性。非法前缀概率为零，不给它虚构条件概率。全零路径及仅第 $k$ 位占用的路径都有正权，所以 $\mu_k=\mathbb E_{\nu_i}V_k$ 满足 $0<\mu_k<1$，方差 $s_k^2=\mu_k(1-\mu_k)>0$。
+
+二值条件均值必有唯一仿射形式
+
+$$
+\mathbb E_{\nu_i}(V_{k+1}\mid V_k)=a_k+b_kV_k,
+\qquad
+b_k=\frac{\operatorname{Cov}_{\nu_i}(V_k,V_{k+1})}{s_k^2}.
+\tag{C63.5}
+$$
+
+第二式来自与 $V_k-\mu_k$ 相乘后取均值。由 Markov 性与条件期望塔式，在每步均有
+
+$$
+\operatorname{Cov}_{\nu_i}(V_0,V_{k+1})
+=b_k\operatorname{Cov}_{\nu_i}(V_0,V_k).
+$$
+
+从 $\operatorname{Cov}(V_0,V_0)=s_0^2$ 起归纳，端点协方差等于 $s_0^2\prod_kb_k$。而
+
+$$
+\operatorname{Corr}(V_k,V_{k+1})=b_k\frac{s_k}{s_{k+1}},
+$$
+
+连乘时中间标准差消去，得到 $\prod_k\operatorname{Corr}(V_k,V_{k+1})=(s_0/s_\ell)\prod_kb_k$，正是端点协方差除以 $s_0s_\ell$。
+
+最后 $V_kV_{k+1}=0$ 恒成立，所以每条边的协方差为 $-\mu_k\mu_{k+1}<0$。全部标准差为正，边相关也严格负，遂得符号结论。这个推导与 C-8.2 的行列式符号在同一路径上相符；没有对不同来源的最优边界作拼合。证毕。
+

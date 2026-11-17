@@ -1,0 +1,160 @@
+**Theorem 23.2 (exact elimination of mixed effects and unobserved feedback entries).** The following statements hold for the unchanged producer problem.
+
+1. The diagonals of $UU_+^\dagger$, as $U$ ranges over $U(4)$, are exactly $\mathcal W$. In particular, every reduced datum has an actual shared-unitary realization.
+2. For every $E\in\operatorname{Dens}_2$ and every actual $U\in U(4)$, set
+   $w=\operatorname{diag}(UU_+^\dagger)$,
+   $p=b_+^\dagger E^{\mathsf T}b_+$ and
+   $\epsilon(E)=1-\operatorname{Tr}(E^2)$. Then
+
+$$
+\begin{aligned}
+0&\le\epsilon(E),\\
+\rho(E,U)&=r(w,p)-\epsilon(E),\\
+g(E,U)&\ge G(w,p)\ge0.
+\end{aligned}
+\tag{23.5}
+$$
+
+For every $w\in\mathcal W$, every actual $U$ with this diagonal, and every $p\in[0,1]$, there is a rank-one normalized effect $E_{w,p}$ with that population for which both comparisons are equalities:
+
+$$
+\rho(E_{w,p},U)=r(w,p),\qquad
+g(E_{w,p},U)=G(w,p).
+\tag{23.6}
+$$
+
+3. For every real $\gamma\ge0$ and every such actual $U$,
+
+$$
+\min_{E\in\operatorname{Dens}_2}
+ \bigl(g(E,U)-\gamma\rho(E,U)\bigr)
+=
+\min_{0\le p\le1}\bigl(G(w,p)-\gamma r(w,p)\bigr).
+\tag{23.7}
+$$
+
+Consequently,
+
+$$
+\begin{aligned}
+\min_{\substack{E\in\operatorname{Dens}_2\\U\in U(4)}}
+ (g-\gamma\rho)
+&=\min_{\substack{w\in\mathcal W\\0\le p\le1}}
+ (G-\gamma r),\\
+C_{\mathrm{opt}}
+&=\sup_{\substack{w\in\mathcal W,\ 0\le p\le1\\G(w,p)>0}}
+ \frac{r(w,p)}{G(w,p)}.
+\end{aligned}
+\tag{23.8}
+$$
+
+Thus the original supremum is unchanged by restriction to rank-one effects, followed by elimination of their relative phase. No feedback matrix is replaced by independent column controls.
+
+Proof. The finite matrix theorem of R. C. Thompson, *Singular values, diagonal elements, and convexity*, SIAM J. Appl. Math. **32** (1977), 39–63, [DOI 10.1137/0132003](https://doi.org/10.1137/0132003), is used here in the formulation of Jasper–Loreaux–Weiss, *Thompson's theorem for compact operators and diagonals of unitary operators*, [arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3). That formulation characterizes a prescribed complex diagonal and a prescribed singular-value sequence, rather than an eigenvalue sequence. If $t_1\ge t_2\ge t_3\ge t_4$ rearranges the moduli $|w_i|$ and all four prescribed singular values are $1$, its conditions become
+
+$$
+\sum_{i=1}^kt_i\le k\quad(1\le k\le4),
+\qquad t_1+t_2+t_3-t_4\le2.
+$$
+
+The first group is equivalent to $|w_i|\le1$, and the last condition is the second inequality of (23.1). A square matrix with all singular values equal to $1$ satisfies $V^\dagger V=I_4$, hence is unitary. This proves that $\mathcal W$ is precisely the set of unitary diagonals, including all complex phases and zero entries. Taking $U=VU_+$ proves both directions in statement 1. The cited matrix theorem is an intermediate realization result; the producer comparison below also uses the particular $R_0$, the two distinct optimizers and their joint metric.
+
+For statement 2, write the original effect in the certificate basis:
+
+$$
+F:=T^\dagger E^{\mathsf T}T
+ =\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},
+\qquad
+0\le p\le1,\qquad |z|^2\le p(1-p).
+\tag{23.9}
+$$
+
+These conditions are equivalent to positivity and trace one in this basis. They give
+
+$$
+\epsilon(E)=2\bigl(p(1-p)-|z|^2\bigr),\qquad
+\begin{aligned}
+\|E-E_+\|_{\mathrm F}^2&=2(1-p)-\epsilon(E),\\
+\|E-E_-\|_{\mathrm F}^2&=2p-\epsilon(E).
+\end{aligned}
+\tag{23.10}
+$$
+
+Transpose and unitary conjugation preserve the Frobenius norm, so these are distances to precisely the original effects $E_\pm=\bar b_\pm\bar b_\pm^\dagger$.
+
+For any $U,V\in U(4)$, expansion of the squared norm and maximization over the single unit scalar give
+
+$$
+\min_{|\lambda|=1}\|U-\lambda V\|_{\mathrm F}^2
+ =8-2|\operatorname{Tr}(V^\dagger U)|.
+\tag{23.11}
+$$
+
+This formula remains valid when the trace is zero, in which case every scalar phase attains the minimum. Since
+$U_-=\operatorname{diag}(1,-1,-i,i)U_+$, the two trace moduli in (23.11) are $A(w)$ and $B(w)$ respectively. Substitution of (23.10) proves the exact formula for $\rho$ in (23.5). In particular, the same impurity term is subtracted from both sign branches; taking their minimum does not change its sign or replace the joint sign choice by two independent choices.
+
+In (9.12), the two copies of $\|R_0b_j(E)\|_{\ell^1}^2$ cancel between $a$ and $\tau$. With the same original $U$ on both positive-square-root columns, $\sum_jb_j(E)b_j(E)^\dagger=E^{\mathsf T}$ therefore gives the identity (22.1):
+
+$$
+g(E,U)=\operatorname{Tr}
+ \bigl((H_0-\ell(U)^\dagger\ell(U))E^{\mathsf T}\bigr),
+\qquad
+\ell(U)=\sum_{i=1}^4U_{ii}(R_0)_{i,:}.
+$$
+
+Using the fixed row products (3.7) gives $\ell(U)T=(P(w),Q(w))$, hence
+
+$$
+\begin{aligned}
+g(E,U)
+&=d^2p+e^2(1-p)
+  -\bigl(pu^2+(1-p)v^2+2\operatorname{Re}(Pz\bar Q)\bigr)\\
+&\ge d^2p+e^2(1-p)
+  -\bigl(pu^2+(1-p)v^2+2uv\sqrt{p(1-p)}\bigr)\\
+&=G(w,p).
+\end{aligned}
+\tag{23.12}
+$$
+
+The inequality follows from (23.9), with the direction needed for a lower bound on $g$. Its simultaneous attainment with the maximal distance at that population is important. Choose
+
+$$
+b=\sqrt p\,b_++e^{i\varphi}\sqrt{1-p}\,b_-,
+\qquad E_{w,p}=\bar b\bar b^\dagger.
+\tag{23.13}
+$$
+
+When $P,Q\ne0$, take
+$e^{i\varphi}=P\bar Q/(|P||Q|)$. Then the two summands of
+$\ell(U)b=\sqrt p\,P+e^{i\varphi}\sqrt{1-p}\,Q$ have a common phase, so (23.12) is an equality. When $P=0$ or $Q=0$, any $\varphi$ attains it. At $p=0$ or $p=1$, the effect is independent of that relative phase and the same equality holds. Every effect (23.13) has trace one and impurity zero. This proves (23.6); nonnegativity of the original defect in Lemma 9.3 proves $G\ge0$ without a relaxation of the domain.
+
+For $\gamma\ge0$, (23.5) gives the stronger comparison
+
+$$
+g(E,U)-\gamma\rho(E,U)
+ \ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E).
+\tag{23.14}
+$$
+
+For each $p$ the effect (23.13), using the same $U$, attains the right side with $\epsilon=0$. Thus taking minima proves (23.7), and the realization in statement 1 proves the first equality of (23.8). All these minima exist by compactness and continuity.
+
+For completeness, the zero denominators of the reduced quotient are exactly
+
+$$
+\begin{aligned}
+G(w,p)=0\quad\Longleftrightarrow\quad r(w,p)=0
+\quad\Longleftrightarrow\quad&
+ \bigl[p=1,\quad w=\lambda(1,1,1,1)\bigr]\\
+&\text{or }\bigl[p=0,\quad w=\lambda(1,-1,-i,i)\bigr],
+\qquad |\lambda|=1.
+\end{aligned}
+\tag{23.15}
+$$
+
+Indeed, realize $w$ by an actual $U$ and use (23.6) and Lemma 11.2. An optimizer effect forces $p=1$ or $p=0$, and its optimizer feedback gives the displayed diagonal. Conversely, a unitary with either displayed diagonal has every diagonal entry of modulus one; each row's norm then forces all its off-diagonal entries to vanish. The realized $U$ is the corresponding scalar multiple of $U_+$ or $U_-$, and (23.15) follows. This also proves that a reduced point with $r>0$ has $G>0$.
+
+Every reduced quotient with $G>0$ is consequently an original quotient, realized by (23.13). Conversely, if an original pair has $\rho>0$, then $r\ge\rho>0$, so (23.5) and (23.15) give
+$\rho/g\le r/G$; pairs with $\rho=0$ do not enlarge the supremum. This proves the second equality of (23.8).
+
+The calculation includes the singular boundary of $\operatorname{Dens}_2$ and its interior, with no inversion of an effect. A trace-one effect cannot be the zero matrix. For an unnormalized zero original outcome, the convention of Definition 9.1 still omits its zero contribution and imposes no constraint on its feedback. No formula here normalizes that zero matrix. $\square$
+

@@ -1,0 +1,38 @@
+**命题 18.1（读取支撑可以不约化原输入）。** 定理 17.2 的 $\mathcal H_0$ 不必是 $t$ 的不变子空间。令 $\Pi_0$ 为原空间到它的正交投影，$t_0=\Pi_0t|_{\mathcal H_0}$；即使对 $\eta\in\mathcal H_0$，也不总有 $\phi_\eta(t^2)=\eta^*t_0^2\eta$。
+
+证明。取 $m=3$、$B=0$、$s=0$，并置
+
+$$
+D_{\rm env}=\operatorname{diag}(1,2,3),\qquad
+V=\begin{pmatrix}1&1&1\\0&0&0\end{pmatrix},\qquad
+v=(1,1,1)^{\mathsf T}.
+\tag{18.1}
+$$
+
+此时 $N_1=0$、$Q=I_2$，故定义 17.1 的环境支撑准确为
+
+$$
+\mathcal E_0=\operatorname{span}_{\mathbb C}
+\left\{(1,1/2,1/3)^{\mathsf T},(1,1/4,1/9)^{\mathsf T}\right\}.
+\tag{18.2}
+$$
+
+若 $v$ 是这两列以系数 $a,b$ 的组合，前两坐标给 $a+b=1$、$2a+b=4$，所以 $a=3,b=-2$；第三坐标却给 $a/3+b/9=7/9\ne1$。因此 $v\notin\mathcal E_0$。取原演员向量 $\eta=(e_1,0)\in\mathcal H_0$，则 $t\eta=(0,v)\notin\mathcal H_0$，并且
+
+$$
+\phi_\eta(t^2)=\|v\|^2=3
+>\|\Pi_{\mathcal E_0}v\|^2
+=\eta^*t_0^2\eta.
+\tag{18.3}
+$$
+
+一般的差准确是成熟的正交投影恒等式
+
+$$
+\Pi_0t^2|_{\mathcal H_0}-t_0^2
+=\Pi_0t(I-\Pi_0)t|_{\mathcal H_0}\ge0.
+\tag{18.4}
+$$
+
+本例使它在 $\eta$ 上严格正。因此 (17.7) 检验的是原全矩阵算子的原平方与原 Jordan 乘积，只缩小向量的读取范围。将 $t$ 换成 $t_0$ 再在小矩阵代数中作平方会改变这些预算的输入；定理 17.2 不提供这一步等价，也不能据此直接套用旧的小矩阵分类。∎
+

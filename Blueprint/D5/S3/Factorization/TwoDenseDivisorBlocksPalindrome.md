@@ -32,7 +32,19 @@ $$\forall n: \mathbb{N}, \operatorname{row}(n) = \operatorname{twoDenseBlockLeng
 
 Apply the block-length function to the increasing divisor list. Mathlib uses an empty divisor list at n=0.
 
-**Theorem 1.3 (The sum is the divisor count).**
+**Theorem 1.3 (The divisor list has the divisor finset).**
+
+$$\forall n: \mathbb{N}, \operatorname{toFinset}(\operatorname{map}(\operatorname{fst}, \operatorname{divisorsAntidiagonalList}(n))) = \operatorname{divisors}(n)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.divisor_list_finset` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The first coordinates of the antidiagonal divisor list are exactly the positive divisors, with no positivity hypothesis needed for the natural divisor finset.
+
+**Theorem 1.4 (The sum is the divisor count).**
 
 $$\forall n: \mathbb{N}, 0 < n \implies \operatorname{sum}(\operatorname{row}(n)) = \operatorname{card}(\operatorname{divisors}(n))$$
 
@@ -44,7 +56,7 @@ $$\forall n: \mathbb{N}, 0 < n \implies \operatorname{sum}(\operatorname{row}(n)
 
 Flattening splitBy restores the original list. Its distinct entries are exactly the positive divisors, so the sum of the block lengths equals the cardinality of divisors(n).
 
-**Theorem 1.4 (Conjecture 1).**
+**Theorem 1.5 (Conjecture 1).**
 
 $$\forall n: \mathbb{N}, 0 < n \implies \operatorname{reverse}(\operatorname{row}(n)) = \operatorname{row}(n)$$
 
@@ -62,6 +74,7 @@ The divisor complement d maps to n divided by d, using natural integer division,
 
 ## References
 
+- Truth anchor: `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.divisor_list_finset`
 - Truth anchor: `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.row`
 - Truth anchor: `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.row_palindrome`
 - Truth anchor: `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.row_sum`

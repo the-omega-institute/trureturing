@@ -1,0 +1,61 @@
+**Theorem 56.2 (exact coupled fibre ellipse).**
+Fix either row of Definition 46.1, fix $q$ and $x$ with $0<x<1$, and
+write $L=1+x$.  For a point of the closed attained triangle, interchange
+$X,Y$ when necessary so that $X\le Y$; this interchange preserves the
+triangle and $F$, and weakly increases both $R$ and $C$ because
+$b^2-a^2=\ell^2-m^2=h/2>0$.  Put
+
+$$
+u=X+Y,\qquad t=Y-X,\qquad
+B=(2-u)^2,\qquad D=L^2(2u-L^2),\qquad M=\min\{B,D\},
+$$
+
+and
+
+$$
+W=\frac{BD}{u^2},\qquad
+\kappa=1+\frac{4(1-u)(u-L^2)^2}{u^4}\quad(u\le1),
+$$
+
+$$
+T=\begin{cases}W/\kappa,&u\le1,\\M,&u\ge1.
+\end{cases}
+$$
+
+Then $u^2-t^2=4XY>0$, $0\le t^2\le M$, and
+
+$$
+\boxed{\frac{t^2}{T}+\frac{4F^2}{W}\le1}
+\tag{56.5}
+$$
+
+whenever $T,W>0$, with the degenerate boundary values interpreted by
+continuity.  The two definitions of $T$ agree at $u=1$.
+
+*Proof.* The box constraints give $t^2\le B$.  If $u\le L^2$, the
+triangle condition gives $2\sqrt{XY}\ge L^2-u$ and hence
+$t^2\le D$.  If $u\ge L^2$, then $L^2\le2$ and
+$D-B$ is increasing on $[L^2,2]$, with
+$D-B=4(L^2-1)>0$ at $u=L^2$; therefore $t^2\le B\le D$ in this
+case as well.  Directly from the definition of $Z$ and $F$,
+
+$$
+4F^2=f(t^2):=\frac{(B-t^2)(D-t^2)}{u^2-t^2}.
+\tag{56.6}
+$$
+
+For $r=t^2$, direct differentiation gives
+
+$$
+f(r)=B+D-u^2-r+
+ \frac{4(u-1)(u-L^2)^2}{u^2-r},\qquad
+f''(r)=\frac{8(u-1)(u-L^2)^2}{(u^2-r)^3}.
+\tag{56.7}
+$$
+
+If $u\le1$, concavity places $f$ below its tangent at zero:
+$f(r)\le f(0)-\kappa r=W-\kappa r$.  If $u\ge1$, convexity and
+$f(M)=0$ place $f$ below the chord from $(0,W)$ to $(M,0)$:
+$f(r)\le W(1-r/M)$.  These are exactly (56.5).  The endpoint cases
+follow by continuity.  \hfill$\square$
+

@@ -1,0 +1,61 @@
+**定理 152.1（完整有界 type I 原旧关系识别）。** 在 147.1 的全部原前件下，同一个给定旧 $D$ 准确满足
+
+$$
+\boxed{\quad D(a,b)_j=\varepsilon_j\frac{[a_j,b_j]}{2i}
+\quad(a,b\in E,\ j\in I).\quad}
+\tag{152.1}
+$$
+
+经典块输出为零；不同中央块可取不同符号。输出在任意混合中央输入上也成立。
+
+证明。在统一取向坐标中固定任意完整原 $Z$、一个块 $j$ 及任意单位读取向量 $\xi\in H_j$。若 $Z_j=0$，两个 Hermitian 输入在此块都为零，P2 给 $\langle\mathfrak F(Z)_j\xi,\xi\rangle=0$。否则置 $s=\|Z_j\|>0$，由范数定义选单位 $v_n$ 使 $r_n=\|Z_jv_n\|\to s$，并去掉 $r_n=0$ 的项。直接计算
+
+$$
+\begin{aligned}
+\|(Z_j^*Z_j-s^2I)v_n\|^2
+&=\|Z_j^*Z_jv_n\|^2-2s^2r_n^2+s^4\\
+&\le s^2(s^2-r_n^2)\longrightarrow0.
+\end{aligned}
+\tag{152.2}
+$$
+
+令 $w_n=Z_jv_n/r_n$，则 $\|w_n\|=1$、$Z_jv_n=r_nw_n$，并且
+
+$$
+\delta_n:=\|Z_j^*w_n-sv_n\|
+\le\frac{\|(Z_j^*Z_j-s^2I)v_n\|+s|s-r_n|}{r_n}
+\longrightarrow0.
+\tag{152.3}
+$$
+
+选该块有限支持酉 $R_n,L_n$ 使 $R_n\xi=v_n$、$L_nw_n=\xi$；每次单向量匹配在至多二维空间上完成，再于正交补取单位。其他块取单位，得到原有界元 $W_n=L_nZR_n$。150.1 与 151.1 给的是同一个完整旧输出
+
+$$
+\mathfrak F(W_n)=\mathfrak F(Z),\qquad
+(W_n)_j\xi=r_n\xi,\qquad
+\|(W_n)_j^*\xi-s\xi\|=\delta_n.
+\tag{152.4}
+$$
+
+记 $x_n=\operatorname{Re}W_n$、$y_n=\operatorname{Im}W_n$。两侧控制准确给
+
+$$
+\|x_{n,j}\xi\|\le(r_n+s+\delta_n)/2,
+\qquad
+\|y_{n,j}\xi\|\le(|r_n-s|+\delta_n)/2\longrightarrow0.
+\tag{152.5}
+$$
+
+P2 的行列式预算给 $|\langle D(x_n,y_n)_j\xi,\xi\rangle|\le\|x_{n,j}\xi\|\|y_{n,j}\xi\|$。已知 $K=i[,]/2$ 的向量读取也满足同一个界，由内积的虚部与 Cauchy–Schwarz 直接得到。因此
+
+$$
+\begin{aligned}
+|\langle\mathfrak F(Z)_j\xi,\xi\rangle|
+&=|\langle\mathfrak F(W_n)_j\xi,\xi\rangle|\\
+&\le2\|x_{n,j}\xi\|\|y_{n,j}\xi\|\longrightarrow0.
+\end{aligned}
+\tag{152.6}
+$$
+
+左侧从始至终是一个固定旧输出的固定读取，故等于零；未断言 $D(x_n,y_n)$ 连续或收敛。任意单位 $\xi$ 都成立，对固定有界自伴输出极化得 $\mathfrak F(Z)_j=0$，逐块即得 $\mathfrak F(Z)=0$。一维块也在同一证明内，无需非经典角。任取 $Z=a+ib$ 并恢复 147.2 的逐块转置，即得 (152.1)。此处没有把无限维极分解的偏等距擅自补成酉，也没有忽略 Fredholm 指数障碍。∎
+

@@ -1,0 +1,7 @@
+**推论 496.4（二阶 Brownian 接口）。** 对每个实值 $\phi\in C([1,2])$，
+
+$$
+\sup_{s,t\in[0,1]}\Bigl|\mathbb E_{\mu_X}\bigl[\phi(U_X)B_X(s)B_X(t)\bigr]-\kappa\min(s,t)\int_1^2\phi(u)\frac{du}{u\log2}\Bigr|\longrightarrow0 ,
+\tag{496.6}
+$$
+

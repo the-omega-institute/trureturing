@@ -1,0 +1,30 @@
+**定理 1.2（完整原生成功控制器）。** 取第 2 节的固定解析常数和显式整数 $r_0$。对每个 $e=2^{-r}$、$r\ge r_0$，存在第 3–10 节指定的一个有限、与实际 $n,h$ 无关的控制器及有理四坐标解码器。在定义 1.1 的全部场、全部 $h$ 和上述声明有限 CP 实际端口下，同一运行满足
+
+$$
+\begin{gathered}
+\sup_{n,h}\Pr[\|\widehat D-D_h(n)\|_\infty>e]\le2e/3,\\
+\overline\delta\le\frac{C_{\rm final}}{t},\qquad
+C_{\rm final}=2\cdot768^2(C_{\rm return}+3C_{\rm fail})+5,\\
+T_V\le\nu_eq_e+2\le L_e,\qquad
+T_{\rm reset}=15\ell_e+2\le Q_e,\qquad T_R\le\nu_eq_e+3,\\
+q_e=\left\lceil\log_2(D_eL_e/e)\right\rceil,
+\qquad\nu_e\le C_\nu e^{-3}\log(2t/e),\qquad\nu_eq_e\le L_e-2.
+\end{gathered}
+\tag{1.6}
+$$
+
+其中恰执行一次原规定终端。获取前缀使用零次场重置、零次终端；它在自己的全部实际输出 $K_{\rm acq}$ 上满足
+
+$$
+\sup_hD_{\rm tr}\bigl(\Gamma_e(\tau_h),
+\Phi_{{\rm red},e}(\tau_h)\otimes\sigma_e\bigr)
+\le\frac1{16t}\le\frac1t.
+\tag{1.7}
+$$
+
+$\Phi_{{\rm red},e}$ 是第 3 节同一个有限球冠极分解后、在任何经典 $k$ 记录或副本生成之前，把未测量的 $K_{\rm work}$ 替换为同名固定输出 $|0\rangle\langle0|$ 的通道，恰为 OTF004 定义 26.11 的选择。$\sigma_e$ 在相同的额外实际编译、程序及每次原生访问记录空间上，与输入无关。全部标志、非投影块振幅、失败、停止和截止分支都包含在无条件态内。
+
+控制器使用第 10 节的原全场采样、有理四坐标解码器和恰为 OTF004 定义 17.1 的固定后缀。原始全部记录和各个替换后的同名量子输出都保留。辅助混合旁观记忆可原样保留，各通道比较稳定于任意旁观系统，不使用它们的纯化。
+
+证明。第 3 节同时确定唯一有限球冠族；第 4–6 节给出其 Fourier–beta 逻辑字和完整等距误差；第 7–8 节将所有正、逆及受控访问逐个替换为付费前向原生字并列出全部实际口，证明 (1.7) 和获取预算。第 9 节证明该约化接口的自身边缘返回；第 10 节在同一运行中证明全部场上的成功、规定完成后的返回及余下资源界。$\square$
+

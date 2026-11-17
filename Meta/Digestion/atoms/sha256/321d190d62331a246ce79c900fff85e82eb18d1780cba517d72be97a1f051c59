@@ -1,0 +1,42 @@
+**引理 248.1（只在缺陷静止的原子上恢复切向）。** 设简单复块 $T=H_n(\mathbb C)$、$n\ge3$ 上的原 $\bar D$ 满足右单位及全部正交、二原子内部和半角角外三层。引理 211.1 给同一 $\lambda,\delta$，引理 229.1 给同一标量缺陷导子 $S$。存在同一个实线性 $F:T\to T$，使 $\delta=F\kappa$；可选一组数学 frame $(e_i)$，使 $Se_i=0$。对该 frame 的每条实二维 Peirce 边，存在对称的实系数 $\alpha_{ij}=\alpha_{ji}$，使
+
+$$
+\delta(e_i,y)=\alpha_{ij}\kappa(e_i,y),\qquad
+F|_{V_{ij}}=\alpha_{ij}\operatorname{Id}
+\quad(y\in V_{ij},\ i\ne j).
+\tag{248.1}
+$$
+
+证明。先在本引理内部复用成熟的因式分解工具。Haagerup–Laustsen，*Weak amenability of C*-algebras and a theorem of Goldstein*，定理 3.1(1) 与引理 3.4，原文第 237–238 页（[原始 PDF](https://www.isibang.ac.in/~soumyashant/misc/collected-works-of-haagerup/1990s/1998_Weak_amenability_of_C-star_algebras_and_a_theorem_of_Goldstein.pdf)，DOI `10.1515/9783110802009.223`），分别给自伴正交消失双线性型的乘积表示及反对称型的三次极化。其有限维原迹型实现如下。
+
+引理 211.1 的 $\delta$ 交替且在共同谱框架上消失，故每个 $R_z$ 斜伴随，$\delta(a,a^2)=0$ 给 $q(R_za,a^2)=0$。在 $a+tb$ 处取一次项，原 Frobenius 性及斜伴随给
+
+$$
+0=q\bigl(-R_z(a^2)+2a\circ R_za,b\bigr).
+\tag{248.2}
+$$
+
+非退化性、再极化，得到 $R_z$ 的 Jordan 导子律。这正是上述引理 3.4 的实 Hermitian 版本；对标量型 $q(\delta(a,b),z)$ 作唯一复双线性延拓时，有限维性保证有界，Hermitian 输入零乘积保证共同谱消失，因而也满足定理 3.1(1) 的自伴正交前件。不要求延拓在任意复矩阵零乘积处消失。
+
+有限 EJA 导子内性及 (237.3) 给 $R_z(a)=i[H_z,a]$。唯一选取 $\operatorname{Tr}H_z=0$；唯一性来自与全部 Hermitian 元交换的矩阵只有复标量，因此 $z\mapsto H_z$ 实线性。令 $F$ 为此映射的原 $q$ 伴随。迹循环给
+
+$$
+q(\delta(a,b),z)=q(H_z,\kappa(a,b))
+=q(F\kappa(a,b),z).
+\tag{248.3}
+$$
+
+这给同一个 $F$，而非预设各 $\delta_a$ 或原 $\bar D_a$ 为导子。内导子事实的出处仍取定理 237.2 指明的 Tao–Gowda 第二节及其所引来源。
+
+现在将 $S$ 写成 $i[H,\,\cdot\,]$ 并取 $H$ 的本征 frame。固定 $e=e_i$。对正规 $y\in V_{es}$、$y^2=e+s$，引理 221.1 给 $q(\delta(e,y),e)=q(\delta(e,y),s)$ 及全部角外读回为零。补全 frame 后，
+
+$$
+2q(\delta(e,y),e)=q(\delta(e,y),u_T)
+=q(Se,y)=0.
+\tag{248.4}
+$$
+
+每个非零 $y\in T_e$ 都在某个 $V_{es_y}$ 内，缩放给同一结论，零切向亦然。为直接检验下方整个法向块，写 $e=|u\rangle\langle u|$、$y(z)=|u\rangle\langle z|+|z\rangle\langle u|$，$z\perp u$。固定任意 $r=|v\rangle\langle v|\perp e$。实线性泛函 $z\mapsto q(\delta(e,y(z)),r)$ 在 $\mathbb Cv$ 上由 (248.4) 为零，在 $u^\perp\cap v^\perp$ 上由角外零读回为零。正交分解给它在全部 $u^\perp$ 上为零。全部这样的 $r$ 张成下方 Hermitian 块，顶端读回也由 (248.4) 为零，故 $\delta_e(T_e)\subset T_e$。共同谱消失另给 $\delta_e(N_e)=0$。
+
+对 $y\in V_{ij}$，$e_i+e_j$ 与 $y$ 共同可谱化，故 $\delta(e_j,y)=-\delta(e_i,y)$。两端刚取得的切向性给输出落在 $T_{e_i}\cap T_{e_j}=V_{ij}$。引理 221.1 的 $q(\delta(e_i,y),y)=0$ 对该边全部 $y$ 成立，所以二维实线性作用是固定四分之一转动 $\kappa(e_i,\,\cdot\,)$ 的实倍数。交换 $i,j$ 同时使这两个作用反号，故 $\alpha_{ij}=\alpha_{ji}$。最后 $\kappa(e_i,\,\cdot\,)$ 在 $V_{ij}$ 上可逆，$\delta=F\kappa$ 给 (248.1) 的 $F$ 限制。∎
+

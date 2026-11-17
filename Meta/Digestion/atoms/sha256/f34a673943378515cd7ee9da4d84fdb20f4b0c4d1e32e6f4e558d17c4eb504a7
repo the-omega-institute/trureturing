@@ -1,0 +1,41 @@
+**引理 249.1（同一角外能量迫使全部边系数相同）。** 在引理 248.1 的前件下，存在同一实数 $\alpha$，使全部 $\alpha_{ij}=\alpha$，且
+
+$$
+\alpha^2=\tfrac14+\lambda-\lambda^2.
+\tag{249.1}
+$$
+
+证明。在所选本征坐标中，取不同的 $i,k,j$，令 $\xi_\theta=\cos\theta\,|i\rangle+\sin\theta\,|k\rangle$，并定义原数学元
+
+$$
+e_\theta=|\xi_\theta\rangle\langle\xi_\theta|,
+\quad s=e_j,\quad
+y_\theta=|\xi_\theta\rangle\langle j|+|j\rangle\langle\xi_\theta|.
+\tag{249.2}
+$$
+
+它们满足 $y_\theta\in V_{e_\theta s}$、$y_\theta^2=e_\theta+s$。置 $Y_{rj}=i(|r\rangle\langle j|-|j\rangle\langle r|)$。同一个 $F$ 给
+
+$$
+\begin{aligned}
+\kappa(e_\theta,y_\theta)&=\cos\theta\,Y_{ij}+\sin\theta\,Y_{kj},\\
+P_{e_\theta}\delta(e_\theta,y_\theta)
+&=\beta_\theta\kappa(e_\theta,y_\theta),\\
+\beta_\theta&=\alpha_{ij}\cos^2\theta+\alpha_{kj}\sin^2\theta.
+\end{aligned}
+\tag{249.3}
+$$
+
+第二式可直接用 $P_e x=ex+xe-2exe$ 核对：向量 $\alpha_{ij}\cos\theta|i\rangle+\alpha_{kj}\sin\theta|k\rangle$ 在 $\xi_\theta$ 方向的系数为 $\beta_\theta$，余方向与 $|j\rangle$ 之间的边被 $P_{e_\theta}$ 消去。
+
+取任意 primitive $r\perp e_\theta+s$，例如同一三维复支撑内 $-\sin\theta|i\rangle+\cos\theta|k\rangle$ 的投影。引理 221.1 的角外配平 (221.4) 在这一个正规角给
+
+$$
+\frac w4=-\lambda w+
+\frac12\|P_{e_\theta}\delta(e_\theta,y_\theta)+\lambda y_\theta\|_q^2
+=-\lambda w+w(\beta_\theta^2+\lambda^2).
+\tag{249.4}
+$$
+
+两切向 $\kappa(e_\theta,y_\theta)$ 与 $y_\theta$ 正交、范数平方均为 $2w$。故 $\beta_\theta^2$ 对全部 $\theta$ 为同一个常数。$\cos^2\theta$ 遍历 $[0,1]$；实线段 $t\alpha_{ij}+(1-t)\alpha_{kj}$ 的平方恒定，其二次系数 $(\alpha_{ij}-\alpha_{kj})^2$ 必为零。因此共顶点的任意两边系数相同，完整图上 $n\ge3$ 使所有边相同，并得 (249.1)。常数为零时此证明仍成立，不曾除以 $\alpha$ 或其平方根。∎
+

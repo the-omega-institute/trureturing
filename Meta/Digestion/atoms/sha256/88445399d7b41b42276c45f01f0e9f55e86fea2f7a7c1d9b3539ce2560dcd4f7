@@ -1,0 +1,44 @@
+**引理 5.7（逐对标量铅笔子证明的复用接口）。** 在非零含单位复 C*-代数 $\mathcal B$ 中，设 $p,q$ 自伴，
+
+$$
+d_0=\frac{\mathrm i}{2}(pq-qp),\qquad d=d_0+\tau1,
+\qquad\tau\in\mathbb R.
+$$
+
+若每个态看到的二表对角为 $p^2,q^2$、上非对角为 $p\circ q-\mathrm i d$ 且为 PSD，则 $\tau=0$。
+
+复用说明。准确采用三标签卷定理 78.2 证明内的 (78.15)–(78.19) 逐对子论证；不应用该定理的整个 $B(\ell^2(\mathbb N_0))$ 分类。取 $\mathcal B$ 的忠实含单位 GNS 直和表示 $\Pi:\mathcal B\to B(H)$，并令该子证明的
+
+$$
+(a,b,\varepsilon,Q(a,b),r)
+ =\left(\Pi(p),\Pi(q),1,\Pi(d_0),\tau\right).
+$$
+
+对每个单位向量 $\xi\in H$，$\omega_\xi(x)=\langle\xi,\Pi(x)\xi\rangle$ 是 $\mathcal B$ 的态，故本引理前件恰给 (78.15) 的全部向量不等式。记
+
+$$
+\begin{aligned}
+c_\xi&=\langle\xi,\Pi(d_0)\xi\rangle
+       =-\Im\langle\Pi(p)\xi,\Pi(q)\xi\rangle,\\
+\Delta_\xi&=\|\Pi(p)\xi\|^2\|\Pi(q)\xi\|^2
+       -(\Re\langle\Pi(p)\xi,\Pi(q)\xi\rangle)^2,\\
+(\tau+c_\xi)^2&\le\Delta_\xi,\qquad
+\Delta_\xi-c_\xi^2
+ =\|\Pi(p)\xi\|^2\|\Pi(q)\xi\|^2
+   -|\langle\Pi(p)\xi,\Pi(q)\xi\rangle|^2.
+\end{aligned}
+\tag{5.15}
+$$
+
+该子证明在 $\Pi(q)$ 不可逆时，由自伴性取得 $\|\Pi(q)\xi_n\|\to0$，直接消掉 $\tau$。在可逆情形置 $V=\Pi(q)^{-1}\Pi(p)$，则
+
+$$
+V^*=\Pi(q)V\Pi(q)^{-1},\qquad
+\sigma(V)=\overline{\sigma(V)}.
+\tag{5.16}
+$$
+
+谱非空紧性、共轭对称性及 (78.17) 的预解集外侧逼近给共轭谱边界点的单位近似本征向量。(78.18) 在这里的准确参数是 $k_n=\|\Pi(q)\xi_n\|^2$，其下界为 $\|\Pi(q)^{-1}\|^{-2}>0$，且 $c_{\xi_n}=\Im(\lambda)k_n+o(1)$、$\Delta_{\xi_n}-c_{\xi_n}^2\to0$。实边界点使 $c_{\xi_n}\to0$；非实情形若 $\tau\ne0$，选择共轭两点中 $\tau\Im(\lambda)>0$ 的一个，(78.19) 即与 $\tau^2+2\tau c_{\xi_n}\le\Delta_{\xi_n}-c_{\xi_n}^2$ 矛盾。因此该既有子证明准确给 $\tau=0$。
+
+这里匹配的是任意一对有界自伴算子、同一实标量余项及全部向量二表；(78.15)–(78.19) 不使用 $H$ 的可分性、有限秩角、旧 $D$ 的其他行或取向分类。忠实表示只用于这个已经构造的辅助 C* 代数，向量态拉回的正性已由本引理前件支付；没有把原 $E$ 换成全 $B(H)_{\rm sa}$，也没有要求原 $E$ 含有逆元或近似本征向量。所有平方都是该辅助 C* 代数的 $v^*v$ 或向量 Gram；仅在谱边界使用右近似核，不将一般不可逆元都当作有右近似核。此接口及其谱工具不计为本文新增数学。∎
+

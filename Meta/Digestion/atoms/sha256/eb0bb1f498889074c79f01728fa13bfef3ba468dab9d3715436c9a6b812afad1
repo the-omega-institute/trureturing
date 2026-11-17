@@ -1,0 +1,24 @@
+#### 定理 10.7：有限内部历史态与传播约束
+
+给定门序列 $U_1,\ldots,U_N$，令 $V_0=I$、$V_k=U_k\cdots U_1$，
+
+$$
+|\Psi\rangle=\frac1{\sqrt{N+1}}\sum_{k=0}^N|k\rangle_T\otimes V_k|\psi\rangle,
+\quad L_k=\langle k|\otimes I-\langle k-1|\otimes U_k,
+\quad G_{\rm hist}=\sum_{k=1}^NL_k^*L_k.
+$$
+
+则 $G_{\rm hist}\ge0$、$G_{\rm hist}|\Psi\rangle=0$。 条件于内部钟记录 $k$ 的系统态为 $V_k|\psi\rangle$。
+
+**证明。**
+
+平方和给正性。每个 $L_k|\Psi\rangle$ 等于 $(V_k-U_kV_{k-1})|\psi\rangle/\sqrt{N+1}=0$。 钟投影 $|k\rangle\langle k|$ 的概率为 $1/(N+1)$，收缩并归一即得条件态。
+
+$\square$
+
+这属于关系时钟的有限数学实现；门、标签次序及初始数据均留在式中。[\[21\]](#ref-pw), [\[22\]](#ref-trinity), [\[23\]](#ref-baumann) 它不自动选择秒、连续时长或唯一宇宙态；$G_{\rm hist}$ 是传播约束，未被默认为驱动实际装置的 Hamiltonian。
+
+若实验二值结果 $Y\in\{-1,1\}$ 仅满足 $\mathbb E[Y\mid x]=\cos x$， 则单次反馈 $x'=sY$ 一步后只取 $\pm1$，到 $sr$ 的距离至少为 $1-r>0$。 因此理想期望反馈的压缩不等于单次量子结果的轨迹。 重复准备、估计误差和控制资源均须作为内部协议继续保留。
+
+<a id="section-11"></a>
+

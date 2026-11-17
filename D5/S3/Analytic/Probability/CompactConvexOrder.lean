@@ -160,7 +160,7 @@ private lemma integrable_hinge_quantile_Ioc_0_t [IsProbabilityMeasure μ]
   exact ⟨hu.1, lt_of_le_of_lt hu.2 ht1⟩
 
 /-- On `Ioc t 1` (for `0 ≤ t`), the quantile function is integrable. -/
-private lemma integrable_quantile_Ioc [IsProbabilityMeasure μ]
+lemma integrable_quantile_Ioc [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) {t : ℝ} (ht0 : 0 ≤ t) :
     IntegrableOn (quantile μ) (Ioc t 1) volume :=
   (integrable_quantile_Ioo hμ_int (μ := μ)).mono_set_ae
@@ -217,7 +217,7 @@ private lemma integral_hinge_quantile_Ioo_split [IsProbabilityMeasure μ]
 
 /-- Split the integral of `quantile μ` over `Ioo 0 1` into integrals over `Ioc 0 t` and `Ioc t 1`
 (for `0 < t ≤ 1`). -/
-private theorem integral_quantile_Ioo_split [IsProbabilityMeasure μ]
+theorem integral_quantile_Ioo_split [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ) {t : ℝ} (ht0 : 0 < t) (ht1 : t ≤ 1) :
     ∫ u in Ioo (0 : ℝ) 1, quantile μ u =
       (∫ u in Ioc (0 : ℝ) t, quantile μ u) +
@@ -238,7 +238,7 @@ private theorem integral_quantile_Ioo_split [IsProbabilityMeasure μ]
 
 /-- **Universal upper bound (Legendre):** For any `z ∈ ℝ`,
 `∫ u in Ioc t 1, quantile μ u ≤ stopLoss μ z + z · (1 - t)`. -/
-private theorem upperIntegratedQuantile_le_stopLoss_add [IsProbabilityMeasure μ]
+theorem upperIntegratedQuantile_le_stopLoss_add [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ)
     {t : ℝ} (ht : t ∈ Icc (0 : ℝ) 1) (z : ℝ) :
     (∫ u in Ioc t 1, quantile μ u) ≤ stopLoss μ z + z * (1 - t) := by
@@ -298,7 +298,7 @@ private theorem upperIntegratedQuantile_le_stopLoss_add [IsProbabilityMeasure μ
   linarith
 
 /-- **Equality at `z = quantile μ t`:** the Legendre conjugate is attained. -/
-private theorem upperIntegratedQuantile_eq_stopLoss_add [IsProbabilityMeasure μ]
+theorem upperIntegratedQuantile_eq_stopLoss_add [IsProbabilityMeasure μ]
     (hμ_int : Integrable (fun x : ℝ => x) μ)
     {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1) :
     (∫ u in Ioc t 1, quantile μ u) =

@@ -1,0 +1,10 @@
+### 21.7　文献对应、来源缺口与日常几何
+
+Glaudell–Ross–van de Wetering–Yeh，*Exact Synthesis of Multiqutrit Clifford-Cyclotomic Circuits*，[v1 原文](https://arxiv.org/html/2405.08136v1)，Definition 3.1、Lemma 3.7、Proposition 3.8，供应这里复用的 $A$ 单位向量消元和算术酉综合；其 $H=-\zeta^2B$。它不供应 $H_4$，不证明原叶概率绑定。四模门 (21.1) 的正交性和两盒应用由本节直接计算；这是显式应用及接口分析，不据此作原创性或优先权主张。
+
+Caves–Fuchs–Manne–Renes，*Gleason-Type Derivations of the Quantum Probability Rule for Generalized Measurements*，[v1 原文](https://arxiv.org/html/quant-ph/0306179v1)，Introduction 明确把不同测量共享结果的同概率作为非语境假设；§III Theorem 1 的域是全部效果 $\mathcal E_d$ 上对任意 POVM 归一的单值框架函数，§III.1 式 (4)、(5) 才由此得到效果可加和有理齐次。本节没有从 Naimark 补全或有限 $\Gamma$ 推出这项跨实现效果识别。第 17 节已引 Wright–Weigert，*A Gleason-type theorem for qubits based on mixtures of projective measurements*，[原文](https://arxiv.org/pdf/1808.08091)，Theorem 3 的混合实现相容思想；它同样不能免去这里对原实现概率身份的供给，不重复其证明。
+
+Hrushovski–Pitowsky，*Generalizations of Kochen and Specker's Theorem and the Effectiveness of Gleason's Theorem*，[v1 原文](https://arxiv.org/html/quant-ph/0307139v1)，§1 的 F4 讨论给定正误差后的有限逼近，§2 Theorem 2 给非正交射线的有限逻辑不确定性，§3 Corollary 2 给可迭代的有限收缩。其射线取自一般实／复 Hilbert 空间，没有保证落在所需 $A'$ 门菜单内；有限逼近及 KS 型限制也不能直接等同精确逐叶压缩或本原型的有限 QC 证书。定理 21.9 用独立的横向迹扰动证明自己的有限边界，不将该论文当作这项扰动的证明或新意凭据。
+
+具体化的是成功几何：两只四模盒、显示门字、同一个全载体锐利 $G$，以及足以接回原 QC 的有限叶／旗接口形状。没有减少的是完整二十七模载体、原记录信息、全准备／全合法前接的供给责任及完整量子链中的其他前件。新的 $H_4$、实际共同实验、就绪与参考、原角及逐叶概率接口尚未从指定 $\Omega$ 的既有定义关系导出；(T7)、AS、(P9) 不替它们供给。无锚 fullR 到 DT 仍未解决，不能把本节条件推导视为完整量子起源或全局更简前提集。
+

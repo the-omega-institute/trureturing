@@ -1,0 +1,40 @@
+**Convention 42.10 (reused results and the new correspondence).** The
+substantive correspondence here is between the completed native
+macro history with its unknown entry and the final logical source
+with an exact entry event index, uniformly over all attained
+$\mathcal D_+$. Its proof uses the native leftmost-spine overlap in
+Lemma 42.3. LAB9.3–9.4 and 12.2 supply the actual macro/source bridge;
+AA17 and 19–23 supply attainment, alpha-origin event counting,
+all-event tapes and lawful Ready service. FARG supplies the ordered
+syntax and global substitution. PG37.2's (PG.3705) and PG44.6 supply
+the actual-image parser and global substitution injectivity. In
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+the proof of global substitution injectivity is the local
+`have substitution_injective` inside `result`, not a separately
+exported declaration of that name. These are reused mathematical
+suppliers, without a new compilation or kernel-certification claim.
+
+[Native Entry Reference and Graft Order, §3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ENTRY_REFERENCE_AND_GRAFT_ORDER.md)
+reuses the same $\rho$ parser but has a different $G$, a root graft.
+Its disjoint-menu theorem does not apply to LAB's local leftmost
+split: here the images overlap as (42.6) states. The generic
+actual-image inverse, injection, pigeonhole and coding principles
+are existing suppliers; the bounded reference application is
+Proposition 42.5, not a new generic coding theorem.
+
+Engelfriet, *Tree Automata and Tree Grammars*,
+[arXiv:1510.02036v1, Definition 3.62](https://arxiv.org/html/1510.02036v1),
+defines ranked-tree homomorphisms by recursive substitution. It is a
+framework for $\rho$, not a proof of recognizability for this finite
+local-$G$ menu. Berthé, Steiner, Thuswaldner and Yassawi,
+*Recognizability for sequences of morphisms*,
+[arXiv:1705.00167v2, §2](https://arxiv.org/html/1705.00167v2),
+concerns morphism representations of bi-infinite sequences and their
+recognizability; its domain and hypotheses are not those of (42.7).
+Relative to these inspected frameworks and the cited repository
+suppliers, the native recovery correspondence is `repo-derived`.
+No worldwide originality or formal verification of this append is
+asserted. The results concern finite completed runs and explicitly
+projected partial cuts; they leave the broader RRO recovery questions
+and the continuing research objective open.
+

@@ -7,9 +7,12 @@
    digest: Subspace linear stabilizer entropy gap, fourth-moment polynomial, and invariance. -/
 
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Quantum.Algebra.WeylDisplacement
+import D5.S3.Quantum.Algebra.WeylDisplacementAdjoint
 import D5.S3.Quantum.Algebra.WeylDisplacementTrace
 import D5.S3.Quantum.Algebra.WeylDisplacementTwoTorsion
 import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
+import D5.S3.Observer.WindowRegister
 
 /-!
 # Subspace linear stabilizer entropy and fourth-moment operators
@@ -351,7 +354,7 @@ theorem fourth_moment_cycle_and_hermitian_formula (d : ℕ) [NeZero d] {S : Type
       rw [star_pow, ← mul_pow, tau_unit, one_pow]
     rw [Matrix.mul_smul, Matrix.smul_mul, alt_phase _ _ hc]
 
-private theorem displacement_unitary_pair {k : ℕ} [NeZero k] (p q : ZMod k) :
+theorem displacement_unitary_pair {k : ℕ} [NeZero k] (p q : ZMod k) :
     (displacement k p q)ᴴ * displacement k p q = 1 ∧
       displacement k p q * (displacement k p q)ᴴ = 1 := by
   have hleft : star (displacement k p q) * displacement k p q = 1 := by
@@ -739,3 +742,8 @@ theorem subspace_gap_isometry_invariance_and_twirl (d : ℕ) [NeZero d] :
     exact ⟨htwirl, by rw [htwirl]; rfl⟩
 
 end D5.S3.Quantum.Magic.SubspaceStabilizerEntropy
+
+/-
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/20302.
+proof_shape: displacement_unitary_pair: bind-only; consumer: D5.S3.Quantum.Algebra.WeylCliffordDescent.displacement_unitary.
+-/

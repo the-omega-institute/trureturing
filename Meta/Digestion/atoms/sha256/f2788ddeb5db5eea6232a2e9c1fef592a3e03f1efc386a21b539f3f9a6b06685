@@ -1,0 +1,21 @@
+**推论 21.8（同一未归一质量的无除法形式）。**对同一原历史保留总质量 $w\ge0$，若定义 21.6 的实际接口在未归一响应 $\mu_h,\widehat\mu_h$ 上成立，两份完整测试的总质量均为该原 $w$，则
+
+$$
+\mu_h(L_0)=\sum_j\widehat\mu_h(M_j)
+ =\widehat\mu_h(G)=\sum_j\widehat\mu_h(N_j)=\mu_h(R_0).
+\tag{21.14}
+$$
+
+**证明。**按 (21.13) 作有限相加并代入原 $1/9$ 权重即可，全程不除以 $w$。$w=0$ 时，完整测试的非负各分支皆为零；不形成零质量条件准备。$\square$
+
+该候选在标准有限维量子数学中相容：给原密度矩阵 $\rho$，在新载体取 $J\rho J^*$，则
+
+$$
+\operatorname{Tr}(J\rho J^*M_j)
+ =\operatorname{Tr}(\rho Q_{s_j})/9,\qquad
+\operatorname{Tr}(J\rho J^*N_j)
+ =\operatorname{Tr}(\rho Q_{q_j})/9.
+$$
+
+保留原独立旗也给同样联合事件概率；未归一情形用 $J\sigma J^*$、$\sigma\succeq0$。这是非空的数学模型及必要参数对应，不是从原 $\Omega$ 制造新门、参考和接口的构造，更不能用已假定的 Born 模型反证原接口无需供给。
+

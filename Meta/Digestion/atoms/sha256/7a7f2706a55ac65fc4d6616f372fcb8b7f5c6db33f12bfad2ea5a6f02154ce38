@@ -1,0 +1,20 @@
+**Theorem 20.1 (conditional phase-orbit rigidity for every actual choice).** Fix one original datum and all the preceding analytic antecedents. For any prescribed sequence $s_n\downarrow0$ and any actual normalized complex ground-state choices in the unchanged $D(S)$, assume only
+
+$$
+r_{s_n}\longrightarrow R\in(r_C,\infty).
+\tag{20.1}
+$$
+
+With the unique column (17.7) and $\alpha_R=(1+\|\zeta_R\|_2^2)^{-1/2}$, one has
+
+$$
+\inf_{\theta\in\mathbb R}
+ \|F_{s_n}-e^{i\theta}\alpha_R(p+\mathcal M_{s_n}\zeta_R)\|_2
+ \longrightarrow0.
+\tag{20.2}
+$$
+
+In particular any microscopic weak cluster is $cp$ with $|c|=\alpha_R\in(0,1)$, and the datum necessarily has $C_{\rm resp}=0$.
+
+Proof. Every subsequence of the unit vectors $F_s$ has a weakly convergent further subsequence. P Theorem 90.1 identifies its limit as $cp$, and its local compactness gives local strong convergence. If $c=0$, Theorem 10.2 would force $r_s\to r_C$ on that further subsequence, contradicting (20.1). Therefore $c\ne0$. Theorem 19.1 applies and fixes $|c|=\alpha_R$. It also gives convergence to the moving vector in (20.2) with the constant phase $c/|c|$ on this further subsequence. A failure of (20.2) supplies a subsequence with distance bounded below, contradicting that conclusion on a further subsequence. Strict positivity and nonzero norm of $\zeta_R$ give $0<\alpha_R<1$. Finally $E_s=-r_ss^6\to0$, and Theorem 5.1 on any of the nonzero-core subsequences gives $c(0-C_{\rm resp})=0$. This proves the claimed response restriction without asserting that such a datum or $R$ occurs. $\square$
+

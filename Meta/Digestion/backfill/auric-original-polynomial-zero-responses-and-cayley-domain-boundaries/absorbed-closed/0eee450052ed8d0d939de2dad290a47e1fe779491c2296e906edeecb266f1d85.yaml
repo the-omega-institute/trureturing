@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0eee450052ed8d0d939de2dad290a47e1fe779491c2296e906edeecb266f1d85
+  normalized_sha256: sha256:0eee450052ed8d0d939de2dad290a47e1fe779491c2296e906edeecb266f1d85
+cas_ref: sha256:0eee450052ed8d0d939de2dad290a47e1fe779491c2296e906edeecb266f1d85
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/PBPolynomialZero.polynomial_zero
+    target_statement_id: sha256:4388a3ed7cde81226feda64369dd6b1368f6eaee877fd274449e958e71c94938
+receipts:
+  unresolved_subitems: []

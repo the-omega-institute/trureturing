@@ -1,0 +1,71 @@
+，所以 $c$ 按 $r$ 的符号半定，不能统一称为正元。按 $L_p$ 的特征值 $1,1/2,0$ 作 Peirce 分解，写
+
+$$
+k=rp+x+y,\qquad x\in M_{1/2}(p),\quad y\in M_0(p).
+$$
+
+由上述书的 2.6.3 乘法规则，$x^2=(x^2)_1+(x^2)_0$，展开 $U_k(p)$ 得
+
+$$
+U_k(p)=r^2p+rx+(x^2)_0,
+\qquad c-k=\frac{(x^2)_0}r-y\in M_0(p).
+\tag{183.6}
+$$
+
+由于 $\beta=\beta\circ U_p$，$\beta((c-k)^2)=0$。取一致有界的原元网 $e_i\in E$ 强收敛到 $|c|^{1/2}$，令 $c_i=\operatorname{sgn}(r)e_i^2\in E$。有界乘法的强连续性给 $c_i\to c$ 强收敛；每个 $c_i$ 半定，故 (183.3) 给 $D(\mu u,c_i)=0$。于是
+
+$$
+\delta_i=(1+\mu^2)c_i-\mu h,
+\qquad \varepsilon_i=\beta(\delta_i^2)^{1/2}\longrightarrow0.
+\tag{183.7}
+$$
+
+准确地说，$\delta_i$ 强收敛到 $(1+\mu^2)(c-k)$，其 $\beta$ 平方读取为零，故 (183.7) 由强半范数的三角不等式成立。
+
+对每个原 $c_i$ 调用完整 PB $(\mu u,b,c_i)$。正负外层准确为
+
+$$
+r_\pm^{(i)}=b\pm h\mp\mu c_i,
+\qquad s_\pm^{(i)}=c_i\pm\mu b,
+$$
+
+且 $s_+^{(i)}=\mu r_+^{(i)}+\delta_i$、$s_-^{(i)}=-\mu r_-^{(i)}+\delta_i$。在实半内积 $\beta(x\circ y)$ 中，加入第一向量的实倍数不改变 Gram 行列式，因此两张外层 P2 都给
+
+$$
+|\beta D(r_\pm^{(i)},s_\pm^{(i)})|
+\le\beta((r_\pm^{(i)})^2)^{1/2}\varepsilon_i
+\le M_0\varepsilon_i,
+\tag{183.8}
+$$
+
+其中 $M_0$ 是一致有限常数，来自原标签网的范数界。PB 右端则是固定元素
+
+$$
+-2b\circ(h-\mu c_i)-2c_i\circ\mu b=-2b\circ h.
+$$
+
+所以 $2|\beta(b\circ h)|\le2M_0\varepsilon_i$，得 $\beta(b\circ h)=0$。不对变动的外层 $D$ 取极限：若左边非零，取误差足够小的一个原 $c_i$，一次准确 PB 与两张 P2 就已矛盾。
+
+再处理 $\beta(h)=0$ 的纯态。若 $\beta(h^2)=0$，Jordan Cauchy–Schwarz 直接给 $\beta(b\circ h)=0$。若 $\beta(h^2)>0$，对足够小的非零实 $t$，$u+th$ 正且可逆，其二次表示是正锥自同构。于是
+
+$$
+\beta_t(z)=\frac{\beta(U_{u+th}z)}{\beta((u+th)^2)}
+$$
+
+仍是纯态：锥自同构在对偶锥上保持极射线，归一化后保持极端态。由于 $u+th$ 与 $h$ 属于同一交换 Jordan 子代数，
+
+$$
+\beta_t(h)=
+\frac{2t\beta(h^2)+t^2\beta(h^3)}{1+t^2\beta(h^2)}\ne0
+\tag{183.9}
+$$
+
+对足够小的非零 $t$ 成立。已证情形使 $\beta_t(b\circ h)=0$。$U_{u+th}=I+2tL_h+t^2U_h$ 给 $\beta_t\to\beta$ 范数收敛，所以固定元素仍读为零。纯态分离 $X$，最终得到
+
+$$
+\boxed{b\circ h=0.}
+\tag{183.10}
+$$
+
+这里的态变形仅用于固定旧输出的数学读取，不变形原准备族，也不要求 $D$ 在完成或双对偶上定义。
+

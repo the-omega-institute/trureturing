@@ -1,0 +1,34 @@
+**Proposition 167.4 (finite residual Gram criterion).** Let $w_1,\ldots,w_r$ be an $H$-independent bounded basis of $W$, and define
+
+$$
+G_{ij}=\langle w_i,w_j\rangle_H,qquad
+K_{ij}=\langle w_i,Pw_j\rangle_H,qquad
+D_{ij}=\langle Pw_i,Pw_j\rangle_H.
+\tag{167.4}
+$$
+
+Then $G$ is positive definite and
+
+$$
+P(W)\subseteq W
+\quad\Longleftrightarrow\quad
+D-K^{\mathsf T}G^{-1}K=0.
+\tag{167.5}
+$$
+
+*Proof.* Let $S:\mathbb R^r\to H$ be the synthesis map $Se_j=w_j$. Then $G=S^*S$, $K=S^*PS$, and $D=(PS)^*PS$. Self-adjointness of $P$ makes $K$ symmetric. The orthogonal projection onto $W$ is
+
+$$
+\Pi_W=SG^{-1}S^*.
+$$
+
+Consequently the matrix on the right of (167.5) is the Gram matrix of the projection residuals:
+
+$$
+D-K^{\mathsf T}G^{-1}K
+ =(PS)^*(I-\Pi_W)PS.
+\tag{167.6}
+$$
+
+It vanishes exactly when every $(I-\Pi_W)Pw_j$ vanishes, which is equivalent to $P w_j\in W$ for each basis vector and hence to $P(W)\subseteq W$. For the original 64 generators one must first pass to an $H$-independent basis (or use the corresponding Moore--Penrose projection); the possibly singular raw 64-by-64 Gram matrix cannot be inverted. $\square$
+

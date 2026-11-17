@@ -864,7 +864,7 @@ private theorem vectorKernel_fixedPointFree (s : ((Multiplicative (ZMod 11 × ZM
   exact vectorKernelEquiv.symm.injective (by simpa using hz)
 
 private theorem B_degree_dvd (W : FDRep ℂ ((Multiplicative (ZMod 11 × ZMod 11)) ⋊[pairAction] SL(2, ZMod 5))) [Simple W] : Module.finrank ℂ W ∣ 120 := by
-  have hd := D5.S3.FiniteGroups.FrobeniusCharacterDegrees.degree_dvd_or_index_dvd_of_fixedPointFree ((SemidirectProduct.rightHom : ((Multiplicative (ZMod 11 × ZMod 11)) ⋊[pairAction] SL(2, ZMod 5)) →* SL(2, ZMod 5)).ker)
+  have hd := D5.S3.FiniteGroups.FrobeniusCharacterDegrees.degree_dvd_or_index_dvd_of_fixedPointFree_nonabelian ((SemidirectProduct.rightHom : ((Multiplicative (ZMod 11 × ZMod 11)) ⋊[pairAction] SL(2, ZMod 5)) →* SL(2, ZMod 5)).ker)
     vectorKernel_fixedPointFree W
   rw [vectorKernel_index] at hd
   rcases hd with hd | hd

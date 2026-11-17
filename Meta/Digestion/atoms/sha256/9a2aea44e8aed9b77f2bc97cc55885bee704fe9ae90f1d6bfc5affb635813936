@@ -1,0 +1,23 @@
+## 491. 不同指数的移动剖面核的渐近正交
+
+沿用 §490 的 $E,D_u,V,\rho_x,\mathcal T_{\theta,g}$ 与 (490.2)。固定 $0<a<b<1$、实值 $g_1,g_2\in L^1(0,1)$，令
+
+$$
+h=X^a,\qquad k=X^b,\qquad A_X=(X\log X)^{1/2},\qquad N_X=X^{1-(a+b)/2}\log X,
+$$
+
+$$
+f_s(x)=D_{sx^a}(x),\qquad z_t(x)=D_{tx^b}(x)\qquad(s,t\in[0,1]).
+$$
+
+由 (490.1)，$\mathcal T_{\theta,g}(x)=x^{1/2-\theta}\int_0^1g(s)D_{sx^\theta}(x)\rho_x(sx^\theta)\,ds$；由定理 490.6，$\|\mathcal T_{a,g_1}\|_{L^2([X,2X],dx/x)}\|\mathcal T_{b,g_2}\|_{L^2([X,2X],dx/x)}\asymp N_X$（$g_1,g_2$ 非零时）。
+
+下面只用 (490.2) 推出的**上界**。称尺度 $R=R(X)$ 满足**可比长度上界**，若对每组固定的 $0<c_1\le c_2$ 与 $C\ge1$，对充分大的 $X$，
+
+$$
+V(CX,u)\ll XR\log X\qquad(c_1R\le u\le c_2R).
+\tag{491.1}
+$$
+
+若 (490.2) 在某个包含 $\rho$ 的开指数带上成立，则 $R=X^\rho$ 满足 (491.1)。全部范数取在 $[X,2X]$ 的固定放大区间（例如 $[X/2,4X]$）上；下面所有平移都是 $O(k)=o(X)$，故放大区间足够；所有常数对 $s,t\in[0,1]$ 与 $[X,2X]$ 的子区间一致。
+

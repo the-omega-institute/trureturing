@@ -1,0 +1,4 @@
+## 191. The candidate span has a rank--radical trichotomy
+
+The exact radical description in Section 190 also fixes the possible dimensions of the candidate span. The baseline labels have a two-dimensional image, and the candidate label map cannot identify more relations than the baseline map. Thus a full-zero partition can have only ranks two, three or four, with the radical dimension recording the excess rank.
+

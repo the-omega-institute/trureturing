@@ -1,0 +1,9 @@
+**推论 495.4（符号的渐近独立）。** 设 (490.2) 分别在包含 $\theta_1$、$\theta_2$ 的指数带上成立，且对一切 $p,q\ge0$（$p+q\ge1$），$(\mathrm J_{p,q})$ 成立，其极限为二维 Brownian 型：$M_{p,q}=c_{p,q}\sum_{\pi}\prod_{\{a,b\}\in\pi}C_{i_ai_b}(s_a,s_b)$（对 $\{1,\dots,k\}$ 的全部完美配对 $\pi$ 求和，$k$ 奇时为零），其中 $C_{11}=\kappa_1\min$、$C_{22}=\kappa_2\min$、$C_{12}(s,t)=C_{21}(t,s)=C(s,t)$ 有界可测。若 $g_1,g_2$ 都不几乎处处为零，令 $U$ 如上，$G_i\sim N(0,\kappa_iQ_i)$，$U,G_1,G_2$ 相互独立。则 $(Z_{1,X},Z_{2,X})$ 依分布收敛到 $(U^{r_1}G_1,U^{r_2}G_2)$，且四个符号象限的 $\mu_X$-测度都趋于 $\frac14$：
+
+$$
+\lim_{X\to\infty}\mu_X\{\varepsilon_1Z_{1,X}>0,\ \varepsilon_2Z_{2,X}>0\}=\frac14\qquad(\varepsilon_1,\varepsilon_2\in\{\pm1\}).
+\tag{495.7}
+$$
+
+证明。由 $(\mathrm J_{1,1})$ 与定理 495.2，$\iint g_1g_2C=0$。由引理 495.1，$\lim\mathbb E[Z_{1,X}^pZ_{2,X}^q]=c_{p,q}\sum_\pi\prod_{\{a,b\}\in\pi}\iint g_{i_a}g_{i_b}C_{i_ai_b}$（Fubini 把每个配对的积分分解为各对的积分之积）；含交叉对的配对贡献为零，余下为 $c_{p,q}(p-1)!!\,(\kappa_1Q_1)^{p/2}(q-1)!!\,(\kappa_2Q_2)^{q/2}$（$p,q$ 都为偶数，约定 $(-1)!!=1$），否则为 $0$。这正是 $\mathbb E\,U^{\gamma_{p,q}}\,\mathbb EG_1^p\,\mathbb EG_2^q=\mathbb E[(U^{r_1}G_1)^p(U^{r_2}G_2)^q]$。对实数 $a,b$，在 $U$ 上取条件，$aU^{r_1}G_1+bU^{r_2}G_2$ 是方差至多 $2^{2\max(r_1,r_2)}(a^2\kappa_1Q_1+b^2\kappa_2Q_2)$ 的中心高斯变量，故其矩生成函数处处有限，分布由矩确定。由一维矩方法（Billingsley, Probability and Measure, 3rd ed., Theorem 30.2）与 Cramér–Wold 定理（同书 Theorem 29.4），沿任意 $X_n\to\infty$ 依分布收敛。由于 $U>0$，$\operatorname{sgn}(U^{r_i}G_i)=\operatorname{sgn}G_i$；$G_1,G_2$ 独立、对称且无原子，故每个开象限的极限概率为 $\frac14$，坐标轴的极限概率为零，开象限是极限分布的连续集，由 portmanteau 定理得 (495.7)。证毕。
+

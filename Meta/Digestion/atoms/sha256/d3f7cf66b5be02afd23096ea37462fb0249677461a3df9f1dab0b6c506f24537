@@ -1,0 +1,116 @@
+**Theorem 151.1 (source-specific B8 refinement with all two-B coefficients).** Retain precisely the original suppliers and quantifiers of Definitions 134.1, 135.1 and 147.1, including the complete endpoint, source and analytic telescope of Appendix II §§115–117, 123–125 and 133. Thus $a,\eta,d>0$ are arbitrary finite original parameters, and $b$ is any permitted everywhere Borel representative of $g_d$ satisfying $0<b\le M$. Keep the original product on $G=H^1\times\mathbb R$, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, positive normalized $h=w_*/\|w_*\|_{L^2(\mu)}$, actual full self-adjoint endpoint with selector $A_{\rm src}=\rho C_{\rm src}$, and $m=h^2\mu$. The full conservative $K$ retains its source coordinate and form domain $\mathscr V=\mathscr V_0\dotplus\mathbb C1$. Use $T_s=e^{-sK}$, $P=T_d$, the original source-start densities with $g_{s+r}=T_rg_s$, $g=g_{2d}$, and the original epochs $2d,3d,4d$. Put
+
+$$
+\begin{gathered}
+M=1+\|g_d\|_\infty,\quad c=(4M)^{-1},\quad
+p=f_B=\tfrac14,\quad r=f_3=cb,\\
+f_S=f_0+f_1=\tfrac34-r,\qquad f_0=f_1=f_S/2,\qquad
+\mathcal C(u,v,w)=\int_G guP(vPw)\,dm.
+\end{gathered}
+$$
+
+The prescribed stochastic comparison uses this same $f$ at all three epochs, with fresh read noises conditionally independent given the original path. For every such $\theta=(a,\eta,d,b)$ there exists one pointwise Borel partition $D=(D_0,D_1,D_3,D_B)$ of the whole original $G$ such that $D\in\mathscr D_{12}(\theta)$, $D_B$ is an exact B8 witness in the sense of Theorem 148.1, and
+
+$$
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+=\mathcal C(f_y,f_z,f_w)
+\quad\left(y,z,w\in\{0,1,3,B\},
+\#\{j\in\{1,2,3\}:(y,z,w)_j=B\}\ge2\right).
+$$
+
+The quantifier order is $\forall\theta\ \exists D$, with the same $D$ for B8, all twelve source marginals and all ten displayed coefficients. Every terminal is its own actual $P\mathbf1_{D_w}$. The remaining 24 one-$B$ and 26 zero-$B$ equations of Proposition 149.1 remain unresolved. This partition need not be the partition of Theorem 150.2.
+
+*Proof.* Work first with $m$-classes. Replace $r=cb$ by its rotation-invariant heat-density representative $r^0$, with $0<r^0\le1/4$ after a Borel null repair. This changes no target integral. Write $g_j=P^jg$ for $j=0,1,2$, $L(z)=(\langle g_0,z\rangle_m,\langle g_1,z\rangle_m,\langle g_2,z\rangle_m)$, and $t=L(r^0)$. For prospective $B$- and $3$-cell functions $s,z$, set
+
+$$
+H(s,z)=(\mathcal C(z,s,s),\mathcal C(s,z,s),\mathcal C(s,s,z)).
+$$
+
+The first two entries have actual terminal $Ps$, and the third has actual terminal $Pz$. For $s=p+\lambda v$, self-adjointness and $P1=1$ give
+
+$$
+H_i(s,z)=p^2\langle g_{i-1},z\rangle_m
++p\lambda\langle A_iv,z\rangle_m
++\lambda^2\langle J_i(v),z\rangle_m\quad(i=1,2,3),
+\tag{151.1}
+$$
+
+where
+
+$$
+\begin{array}{lll}
+A_1v=g(Pv+P^2v),&A_2v=(Pg)Pv+P(gv),&A_3v=P((Pg)v)+P^2(gv),\\
+J_1(v)=gP(vPv),&J_2(v)=(Pv)P(gv),&J_3(v)=P(vP(gv)).
+\end{array}
+$$
+
+Choose $v_0,L_0,h_*$ from Lemma 147.4 and odd $N>3L_0$. On the space $V_N$ of Lemma 147.3,
+
+$$
+\langle v,(\alpha_1A_1+\alpha_2A_2+\alpha_3A_3)v\rangle_m
+=(\alpha_1+\alpha_2)q_1(v)+(\alpha_1+\alpha_3)q_2(v)
+ +(\alpha_2+\alpha_3)q_3(v).
+\tag{151.2}
+$$
+
+The coefficient map is invertible. By the all-pencil infinite-negative-index argument of Lemma 147.3, every nonzero pencil on the right has infinite-rank polar form. Hence no nonzero combination of the bounded-function operators $A_i:V_N\to V_N$ has finite rank: finite rank of such an operator would give finite rank of its symmetric pairing. Meshulam–Šemrl, Theorem 2.2, therefore supplies $x_A\in V_N$ for which the three $A_ix_A$ are independent. Lemma 147.3 also supplies $x_B\in V_N$ for which the three functionals $B_i(x_B,\cdot)$ are independent. Both independence requirements can be imposed on the same $x$: choose fixed dual test triples at $x_A$ and $x_B$, respectively, and evaluate their two determinants along $x(u)=(1-u)x_A+ux_B$. Each determinant is a polynomial in $u$, nonzero at its respective endpoint. Avoiding their finitely many roots gives $x$ satisfying both requirements. Choose $h_k\in V_N$ with $B_i(x,h_k)=\delta_{ik}$.
+
+Choose odd dual tests for $A_ix$, truncate them by the invariant set $E_\varepsilon=\{r^0\ge\varepsilon\}$, and take $\varepsilon>0$ small enough to retain invertibility. Since $r^0>0$ almost everywhere and Lemma 147.2 gives a positive-definite full Gram matrix, take this $\varepsilon$ small enough also that $(\langle g_i,\mathbf1_{E_\varepsilon}g_j\rangle_m)_{0\le i,j\le2}$ is positive definite. Multiplying the truncated test triple by the inverse pairing matrix gives bounded odd $\eta_k\in V_N$, supported in $E_\varepsilon$, with $\langle A_ix,\eta_k\rangle_m=\delta_{ik}$. Impose on $z\in V_N$ the finite constraints
+
+$$
+B_i(x,z)=B_i(z,h_k)=\langle A_iz,\eta_k\rangle_m=0
+\quad(1\le i,k\le3).
+\tag{151.3}
+$$
+
+The finite-codimensional surjectivity (147.6) supplies such a $z$ with $q(z)=-q(v_0)-q(x)$. Frequency separation gives $B_i(v_0,x+z)=0$ for $i=1,2,3$. Thus $v=v_0+x+z$ satisfies $q(v)=0$, $B_i(v,h_k)=\delta_{ik}$, and $\langle A_iv,\eta_k\rangle_m=\delta_{ik}$. The latter uses both (151.3) and the separation of the frequencies of $A_iv_0$ from $V_N$. Lemma 147.4 gives $\langle h_*,H_v\rangle_m\ne0$. The proof of Theorem 147.5 now gives the regular binary zero $s_*=p+\lambda v$ for small $\lambda>0$, with the same seven binary directions.
+
+Set $\omega=-p^{-1}\sum_i\langle J_i(v),r^0\rangle_m\eta_i$. It is odd, supported in $E_\varepsilon$, and $L(\omega)=0$. Equation (151.1), parity and the dual identities give, for $z_*=r^0+\lambda\omega$,
+
+$$
+L(z_*)=t,\qquad H(s_*,z_*)=p^2t.
+\tag{151.4}
+$$
+
+The only possibly nonzero new order-$\lambda^2$ terms cancel as $p\langle A_iv,\omega\rangle_m+\langle J_i(v),r^0\rangle_m=0$; all other new terms vanish by parity. Shrink $\lambda$ so $s_*,z_*,1-s_*-z_*$ are nonnegative, with uniform slack wherever their respective directions are supported.
+
+Put $\chi=\mathbf1_{E_\varepsilon}$ and $\rho_j=\chi g_j$, $j=0,1,2$. Use these and the $\eta_k$ as six $z$-directions. The derivative of $(L(z),H(s,z))$ in those directions has diagonal blocks $G_\chi=(\langle g_i,\chi g_j\rangle_m)$ and $p\lambda I_3$: the odd $\eta_k$ have zero $L$-pairing, and $J_i(v)$ is even. Together with the seven binary directions this makes the differential of the thirteen-coordinate map
+
+$$
+(s,z)\longmapsto(\mathcal F(s),L(z)-t,H(s,z)-p^2t)
+\tag{151.5}
+$$
+
+invertible at $(s_*,z_*)$. Here invertibility means restriction to these thirteen directions; no differential on an infinite-dimensional space is inverted.
+
+Take a small closed ball in these directions on which $s,z,1-s-z\in[0,1]$. As in Theorem 148.1, use increasing finite Borel partitions and, on each cell $E$, the original $x$-coordinate quantiles to choose a nested family $E(a)$ of mass $a$. Put $a=\int_Es\,dm$ and $b_E=\int_Ez\,dm$, select the $B$-slice $E(a)$ and the disjoint $3$-slice $E(a+b_E)\setminus E(a)$, and assign the remainder to $S$. These three-cell families match all cell masses and are continuous in symmetric difference; for the $3$-slice its change is bounded by $2|a-a'|+|b_E-b_E'|$. The actual joint density $W(x_1,x_2,x_3)=g(x_1)p_d(x_1,x_2)p_d(x_2,x_3)$ lies in $L^1(m^{\otimes3})$. Its conditional expectations on the product partitions converge in $L^1$, so the rectangular-tensor argument of (148.7) gives uniform convergence of all thirteen actual coordinates to (151.5). Their continuity follows from the bounded original source marginals as in (148.8). The same finite-dimensional Brouwer argument as (148.3)–(148.10), using the invertible thirteen-dimensional differential, therefore produces one actual common Borel partition $(S,C,B)$ satisfying
+
+$$
+\mathcal F(\mathbf1_B)=0,\qquad
+L(\mathbf1_C)=t,\qquad H(\mathbf1_B,\mathbf1_C)=p^2t.
+\tag{151.6}
+$$
+
+Thus $B$ is B8, and $C$ has all three prescribed source marginals and all three ordered two-$B$ coefficients. The same remainder $S=G\setminus(B\cup C)$ has source masses $L(\mathbf1_S)=(1-p)\mathbf1-t$, where $\mathbf1=(1,1,1)$.
+
+Finally split this same $S$ by Dvoretzky–Wald–Wolfowitz Theorem 4 with constant selector $1/2$, simultaneously for the six finite atomless measures, restricted to $S$, whose densities are
+
+$$
+g_0,g_1,g_2,\qquad
+\ell_1=gP(\mathbf1_BP\mathbf1_B),\quad
+\ell_2=P(g\mathbf1_B)P\mathbf1_B,\quad
+\ell_3=P(\mathbf1_BP(g\mathbf1_B)).
+$$
+
+The last three densities represent the three linear functionals $z\mapsto H_i(\mathbf1_B,z)$, with their actual terminals retained. The two Borel pieces $D_0,D_1$ each receive half of all six measures. Set $D_3=C$ and $D_B=B$. Since $f_0=f_1=f_S/2$, all twelve source marginals are exact. B8 and (151.6) give
+
+$$
+H(\mathbf1_B,\mathbf1_S)=p^2((1-p)\mathbf1-t),\qquad
+H(\mathbf1_B,\mathbf1_{D_0})
+=H(\mathbf1_B,\mathbf1_{D_1})
+=\tfrac12p^2((1-p)\mathbf1-t).
+\tag{151.7}
+$$
+
+These are exactly the six target coefficients with label $0$ or $1$ and two $B$'s. The three label-$3$ coefficients are (151.6), and $BBB$ is B8. A common Borel null repair completes the pointwise partition without changing any coefficient, because all three positive-time marginals are absolutely continuous with respect to $m$. $\square$
+

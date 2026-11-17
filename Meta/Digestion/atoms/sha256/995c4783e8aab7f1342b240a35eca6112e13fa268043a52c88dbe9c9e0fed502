@@ -1,0 +1,39 @@
+**定义 18.2（同一旧关系的 $\mathsf C^{\mathrm{fin}}_{+,\mathbb R,\theta}$）。** 对所有原标签置
+
+$$
+g_\alpha(a,b)=\alpha(S(a,b))-\mathrm i\alpha(D(a,b)),\qquad
+G_\alpha(a_1,\ldots,a_k)=[g_\alpha(a_i,a_j)].
+\tag{18.2}
+$$
+
+候选要求以下关系同时成立。
+
+1. 对每个原 $\alpha$ 和全部至多二标签，实际复矩阵 $G_\alpha$ 半正定。零、重复、全部实平移及缩放均在量词内；两条有向非对角项都取原值。
+2. 对每个原相加三表 $(a+b,a,b)$ 及其排列，仅要求
+
+   $$
+   x^{\mathsf T}\operatorname{Re}G_\alpha(a+b,a,b)x\ge0
+   \quad(x\in\mathbb R^3),\qquad
+   v^*G_\alpha(a+b,a,b)v=0,
+   \quad v=(1,-1,-1).
+   \tag{18.3}
+   $$
+
+   排列时零方向相应排列。不独立检查任何带虚系数的三标签方向，也不独立检查一般近邻或反向三表。
+3. 同一总事件自组合和原小效果满足
+
+   $$
+   S(u,u)=u,\qquad
+   0\le e\le\theta u\ \Longrightarrow\ S(e,e)\le e.
+   \tag{18.4}
+   $$
+4. 对全部原 $a,b,c$ 保留唯一实部换括号式
+
+   $$
+   S(S(a,b),c)-S(a,S(b,c))
+   =D(D(a,b),c)-D(a,D(b,c)).
+   \tag{18.5}
+   $$
+
+完整候选另逐项保留定义 8.2–8.4 的全部原对应；本定义只缩减静态检查，既不把数学标签视为可制备状态，也不把辅助完成视为原载体。本有限入口替代的是 15.2 中有限维的未证桥；无限维范围按 21.2 原样保留。
+

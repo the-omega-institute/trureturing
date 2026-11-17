@@ -1,0 +1,125 @@
+## 73. 四角复比值、独立相位与条件底面
+
+**定义 C-73.1（明确指定的复振幅完成）。** 除五概率外，另给五个相位，采用《辛预测完成》§35 的约定
+
+$$
+\psi_s=\sqrt{p_s}e^{-i\theta_s},\qquad
+\sum_s|\psi_s|^2=1,\qquad
+\theta_s\in\mathbb R/2\pi\mathbb Z.
+\tag{C73.1}
+$$
+
+这是假设一个正交五模式复载体，不从经典概率唯一推出。隐藏角为
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi},
+$$
+
+四角复比值为
+
+$$
+\Xi=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}\in\mathbb C^\times.
+\tag{C73.2}
+$$
+
+全正性确保分母非零；此处 $\chi$ 是角，旧 C-13.3 用于复比值的同形字母改由 $\Xi$ 表示。
+
+**命题 C-73.2（规范椭圆与剩余相位的联合表示）。** 对定义 C-73.1，
+
+$$
+\Xi=e^{4\eta-i\chi},\qquad
+\eta=\frac14\log|\Xi|,\qquad
+\chi=-\arg\Xi\pmod{2\pi}.
+\tag{C73.3}
+$$
+
+所以同一带标记概率椭圆容许整个独立相位圆周。固定 $(X,Y,Z)$ 后，$\Xi$ 完整参数化概率与指定位置相位商的正内部；没有固定这些均值时，$\Xi$ 不恢复全部五振幅。
+
+证明。直接计算模与相位，
+
+$$
+|\Xi|=\sqrt{\frac{p_0p_{13}}{p_1p_3}}
+=e^{J/2}=e^{4\eta},\qquad
+\frac{\Xi}{|\Xi|}=e^{-i(\theta_0+\theta_{13}-\theta_1-\theta_3)}=e^{-i\chi}.
+$$
+
+这给式 (C73.3)。要核定“剩余”所指的精确等价关系，取共同相位及三个位置相位作用
+
+$$
+\theta_s\longmapsto\theta_s+\gamma_0+x_s\gamma_X+y_s\gamma_Y+z_s\gamma_Z,
+\tag{C73.4}
+$$
+
+其中占位函数在五模式上分别为
+
+$$
+x=(0,1,0,0,1),\quad y=(0,0,0,1,1),\quad z=(0,0,1,0,0).
+$$
+
+交替和 $(1,-1,0,-1,1)$ 与这四个函数正交，故保持 $\chi$。反过来，选 $\gamma_0=-\theta_0$，$\gamma_X=\theta_0-\theta_1$，$\gamma_Y=\theta_0-\theta_3$，$\gamma_Z=\theta_0-\theta_2$，则前四模式相位全部归零，最后相位恰为 $\chi$。所有式子在整周期环面上成立，所以没有残余有限覆盖，余角周期为 $2\pi$。这就是旧 C-13.2 的完整商结论在相反角约定下的应用。
+
+固定均值时，命题 C-68.2 使 $\eta$ 遍历全实轴，$\chi$ 可独立遍历圆周，因此 $(\eta,\chi)\mapsto e^{4\eta-i\chi}$ 双射到 $\mathbb C^\times$。旧相位约定 $c_s=\sqrt{p_s}e^{i\theta_s^{\rm old}}$ 对应 $\theta_s^{\rm old}=-\theta_s$，故 $\Phi_{\rm old}=-\chi$，旧实坐标 $u=\tfrac12\log\Omega=4\eta$。固定均值的商层面上这已完整；在原五振幅层面，它既忘掉位置相位标架，也不提供未知的三个可见均值。证毕。
+
+**命题 C-73.3（相同概率圆的两个不同底面相干结构）。** 按五模式顺序取
+
+$$
+|\Psi_+\rangle=\frac1{\sqrt5}(1,1,1,1,1),\qquad
+|\Psi_-\rangle=\frac1{\sqrt5}(1,1,1,1,-1).
+\tag{C73.5}
+$$
+
+它们具有相同五概率、相同规范圆，但 $\Xi_+=1$、$\Xi_-=-1$。条件于底面并明确识别四个模式为 $\mathbb C^2\otimes\mathbb C^2$ 的 $(00,01,10,11)$ 后，前者是乘积纯态，后者的两侧约化态均为 $I_2/2$。这个实例是原卷 C-12.3 的已知见证在椭圆—复比值坐标中的应用。
+
+证明。两向量均归一化，五个模平方均为 $1/5$。四角比为一，所以 $\eta=\rho_*=0$，而四角复乘积的符号直接给 $\Xi_+=1$、$\Xi_-=-1$；后一情形可取 $\theta_{13}=\pi$，其余为零，故 $\chi=\pi\bmod2\pi$。底面概率为 $r=4/5$。投影到底面并除以 $\sqrt r$，按行左端、列右端排列得到系数矩阵
+
+$$
+B_+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+B_-=\frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+\tag{C73.6}
+$$
+
+前者是 $(1,1)^{\mathsf T}/\sqrt2$ 与 $(1,1)/\sqrt2$ 的外积，秩一，对应 $|+\rangle\otimes|+\rangle$。后者行列式为 $-1/2$，秩二，且
+
+$$
+B_-B_-^\dagger=B_-^\dagger B_-=\frac12 I_2.
+$$
+
+对两因子纯态，系数矩阵秩一恰等价于可写成两个向量的张量积；约化态通过一侧指标求和得到上述矩阵乘积。Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2)，将二部纯态纠缠定义为任一约化态的以二为底的熵。此处 $B_+$ 的约化谱为 $(1,0)$，熵零；$B_-$ 的约化谱为 $(1/2,1/2)$，熵一，达到二元约化态的最大值：任意二元谱 $(t,1-t)$ 的熵 $-t\log_2t-(1-t)\log_2(1-t)$ 在 $0<t<1$ 的导数为 $\log_2((1-t)/t)$，在 $t=1/2$ 左正右负，端点连续值为零，故最大值为一。这里只使用该文的纯态定义，不调用其一般混态优化公式。
+
+同样的概率表还可给经典对角混合
+
+$$
+\rho_{\rm diag}=\frac14\sum_{a,b=0}^1
+|a\rangle\langle a|\otimes|b\rangle\langle b|,
+$$
+
+它显式为乘积态混合，因而可分。故概率圆本身既不供应相干，也不认证纠缠。上述张量积结构是在条件底面的四维空间上明确指定的；整个五模式空间维数为五，不能因此直接当作两个二元因子的张量积，也没有仅凭模式字典获得物理子系统。证毕。
+
+**命题 C-73.4（模与相位共同控制条件纯态行列式）。** 在定义 C-73.1 的全正域，把条件底面系数写为
+
+$$
+B=\frac1{\sqrt r}\begin{pmatrix}\psi_0&\psi_3\\\psi_1&\psi_{13}\end{pmatrix}.
+$$
+
+则
+
+$$
+\begin{aligned}
+r^2|\det B|^2
+&=(\sqrt{p_0p_{13}}-\sqrt{p_1p_3})^2
++4\sqrt{p_0p_1p_3p_{13}}\sin^2(\chi/2),\\
+\det B=0&\quad\Longleftrightarrow\quad\Xi=1
+\quad\Longleftrightarrow\quad\eta=0\ \text{且}\ \chi=0\pmod{2\pi}.
+\end{aligned}
+\tag{C73.7}
+$$
+
+证明。消费 C-12.2 的相位敏感行列式，在当前记号中可直接由
+
+$$
+r\det B=\psi_0\psi_{13}-\psi_1\psi_3
+=\psi_1\psi_3(\Xi-1)
+$$
+
+核对。令两复乘积的模分别为 $a=\sqrt{p_0p_{13}}$、$b=\sqrt{p_1p_3}$，它们的相对相位为 $-\chi$。故模平方为 $a^2+b^2-2ab\cos\chi=(a-b)^2+4ab\sin^2(\chi/2)$。正性给 $ab>0$，两非负项同时为零恰要求 $a=b$ 且 $\chi=0\bmod2\pi$。这证明全部等价。若底角为零，须直接用复乘积差，不定义零振幅的辐角或零分母的 $\Xi$。该式表明规范圆消除的只是第一项，独立相位项仍可非零；其适用载体仍是明确给定的条件两因子纯态。证毕。
+

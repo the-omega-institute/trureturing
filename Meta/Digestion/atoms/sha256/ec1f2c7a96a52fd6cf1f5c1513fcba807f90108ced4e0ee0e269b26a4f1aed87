@@ -1,0 +1,28 @@
+**命题 109.12（原全态、全效应与Born的逐项回接）。** 在W、TFD3及全部三球下，
+有同一个实线性双射 $\Phi:H_3(\mathbb C)\to V$，使
+
+$$
+\begin{gathered}
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,\qquad
+u(\Phi X)=\operatorname{tr}X,\\
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):v\in\mathbb C^3,\ v^*v=1\},\\
+\mathcal E=\{f_E:f_E(\Phi X)=\operatorname{tr}(EX),\quad0\preceq E\preceq I_3\},\\
+a_{\Phi(vv^*)}(\Phi\rho)=\operatorname{tr}(vv^*\rho),\qquad
+T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2.
+\end{gathered}
+\tag{VIII109.43}
+$$
+
+全部有限数学测量恰对应 $E_j\succeq0,\sum_jE_j=I_3$；原纯点几何为
+$\mathbb{CP}^2$，原共同中心为 $\Phi(I_3)/3$。
+这些结论不缩小原态或原效应集，也不更换原单位。
+
+证明。109.10—109.11供应VII106.17的全部静态前件。
+同锥同单位双射将整个对偶锥拉回PSD迹对偶，补效应正性将其区间准确截为
+$0\preceq E\preceq I_3$。least确认在该字典中是秩一投影自身，
+所以原全部混态的确认概率为迹配对，纯—纯时等于模方。
+效应和为原 $u$ 正好对应矩阵和为 $I_3$。
+以上是既有完整字典的同域应用，不是另输入Born概率。
+数学测量是否为实际可调用菜单仍按原过程合同决定。证毕。
+

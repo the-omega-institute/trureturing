@@ -10,9 +10,9 @@ open two-set cover, arbitrary finite closed refinements with repeated labels and
 the absence of a compact Hausdorff zero-dimensional open resolution.
 Whole-source variation and raw occurrence reconstruction/sourceSelection remain
 unfinished under the linked issue; this is not a validated four-slot registration. -/
-abbrev sourceScope := type_of% (@exists_compact_open_map_no_finite_closed_refinement)
+abbrev sourceScope := type_of% (@exists_compact_open_map_no_finite_closed_refinement.{0})
 
 theorem source_actual : sourceScope :=
-  @exists_compact_open_map_no_finite_closed_refinement
+  @exists_compact_open_map_no_finite_closed_refinement.{0}
 
 end Reg.D5.S3.Topology.AlmostDisjoint.AdaptiveRefinementCounterexample

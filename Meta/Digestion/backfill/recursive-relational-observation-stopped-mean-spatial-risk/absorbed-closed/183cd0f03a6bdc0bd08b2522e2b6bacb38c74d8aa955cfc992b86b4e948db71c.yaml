@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:183cd0f03a6bdc0bd08b2522e2b6bacb38c74d8aa955cfc992b86b4e948db71c
+  normalized_sha256: sha256:183cd0f03a6bdc0bd08b2522e2b6bacb38c74d8aa955cfc992b86b4e948db71c
+cas_ref: sha256:183cd0f03a6bdc0bd08b2522e2b6bacb38c74d8aa955cfc992b86b4e948db71c
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/FiniteHorizonJointAttainment.result
+    target_statement_id: sha256:141e9017779d26a2827f88b6b3edc7b41335ea1978395a0a71ae5b4189bcf319
+receipts:
+  unresolved_subitems: []

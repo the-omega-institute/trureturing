@@ -1,0 +1,22 @@
+**二、处理整个原群。** 完整 Lie 生成使 $U$ 被原 $\mathfrak g$ 保持。 任取 $h\in G$，由 $h^{-1}\mathfrak gh=\mathfrak g$，空间 $U'=hU$ 也被 $\mathfrak g$ 保持。因此 $K,L$ 与
+
+$$
+P_e=-K^2-L^2-I
+$$
+
+均保持 $U'$。被 $P_e$ 保持的空间，或者包含 $e$，或者全部垂直于 $e$：只要某个向量与 $e$ 配对非零，投影便把 $e$ 送入该空间。
+
+若 $e\in U'$，共同不变性给 $e,Ke,Le\in U'$，于是 $U\subseteq U'$，两者同为三维，故 $U'=U$。若 $U'\subseteq e^\perp$，原平方等式限制为
+
+$$
+-(K|_{U'})^2-(L|_{U'})^2=I_{U'},
+$$
+
+违背推论 4.4，因为 $\dim U'=3$。所以全部 $h\in G$ 都保持 $U$。来源循环性遂给
+
+$$
+W=\operatorname{span}(Ge)\subseteq U,
+$$
+
+故 $W=U$。三个独立算子 $K,L,[K,L]$ 是三张坐标平面的转动，所以原 $\mathfrak g=\mathfrak{so}(W,B)$。恢复共同尺度便得到式 (5.1)。
+

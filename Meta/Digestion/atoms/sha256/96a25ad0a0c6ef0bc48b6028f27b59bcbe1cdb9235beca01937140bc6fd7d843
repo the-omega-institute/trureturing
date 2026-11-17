@@ -1,0 +1,19 @@
+**【编者局部说明：平方常数与不重复计数】** 当 $T\ge64$ 且 $p^2\le3T/2$ 时，
+
+$$
+\frac pT\le\sqrt{\frac3{2T}}\le\sqrt{\frac3{128}}<\frac5{32},
+\qquad
+\frac1T\le\frac1{64},
+$$
+
+故 $(p^2+p+1)/T<3/2+5/32+1/64=107/64$。又 $(3/2)^8<64\le T$，所以
+
+$$
+\log p\le\tfrac12\log T+\tfrac12\log(3/2)<\tfrac9{16}\log T.
+$$
+
+相乘即得 $963/1024<1$，没有数值近似。$\log\operatorname{lcm}(1,\ldots,\lfloor T\rfloor)=\psi(T)$；新增平方层只计 $\sqrt T<p\le\sqrt{3T/2}$，与其中已有的层不重复，所以 (30) 是同一个 $N$ 的强制对数质量下界，不能被读成矛盾或充分存在条件。
+<!-- editorial-note:end square-constants-and-mass -->
+
+因此，反例终点的尺度必须位于满足这一强制质量约束的位置。
+

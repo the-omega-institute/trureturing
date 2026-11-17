@@ -1,0 +1,55 @@
+**定理 104.1（原响应与可容许取向的对应）。** 固定102.1的 $K,V,E,C,u,N,S$ 和同一准确原正评价族，不预付任何 $D$ 正则性。满足原A1–A3、全部P2/PB的原响应，恰与满足
+
+$$
+(0,v_a\times_o v_b)\in E\qquad(a,b\in E)
+\tag{104.1}
+$$
+
+的连续取向 $o$ 一一对应，公式为 $D_o(a,b)=(0,-v_a\times_o v_b)$。这里分类的是原数学响应条件，不制造固定 $\Omega/\mathrm{native}$ 中的实际准备、箭头或仪器。若 $E=X$，闭合条件自动成立，存在响应当且仅当 $V$ 可定向。一般 $E$ 必须保留104.1。
+
+证明。必要性及单射性已由102.2取得；104.1来自同一原输出落在 $E$。为证明充分性，给取向 $o$ 满足104.1，将点积和叉积复双线性延拓，在 $\mathcal A_o=\mathbb C1\oplus V_{\mathbb C}$ 上定义
+
+$$
+(\alpha,v)\star_o(\beta,w)=
+(\alpha\beta+\langle v,w\rangle,\alpha w+\beta v+i\,v\times_o w),
+\qquad (\alpha,v)^*=(\bar\alpha,\bar v).
+\tag{104.2}
+$$
+
+每个正向局部正交标架的 Pauli 映射 $(\alpha,v)\mapsto\alpha I+v\cdot\tau$ 将此式变为通常 $M_2(\mathbb C)$ 乘法和伴随。正向标架之间的 $SO(3)$ 转移保点积、叉积和实结构，故复延拓为矩阵 $*$-自同构，104.2确实定义一个结合、有幺的矩阵代数丛。这里仅用局部 Pauli 恒等式，不需要全局坐标或相容的 $SU(2)$ 提升。对原自伴输入，
+
+$$
+a\star_o b=S(a,b)-iD_o(a,b).
+\tag{104.3}
+$$
+
+已给 Jordan 闭合与104.1使 $E+iE$ 对这同一乘法闭合。任意正实线性原评价 $\phi$ 复线性延为 $\phi_{\mathbb C}$。对任意有限原 $a_r$ 和复系数 $\lambda_r$，$Z=\sum_r\lambda_ra_r$ 满足 $Z^*\star_o Z\in E$：该积属于 $E+iE$、自伴，且分解的虚部只能为零。它在每点矩阵正，准确锥遂给 $Z^*\star_o Z\in C$。所以
+
+$$
+\sum_{r,s}\bar\lambda_r\lambda_s
+\{\phi(S(a_r,a_s))-i\phi(D_o(a_r,a_s))\}
+=\phi_{\mathbb C}(Z^*\star_o Z)\ge0.
+\tag{104.4}
+$$
+
+这给全部P2及A1。相加三表的实二次型是 $\phi((\sum_rt_ra_r)^2)\ge0$；当列表为 $(a+b,a,b)$ 时指定系数 $(1,-1,-1)$ 给零平方，排列同理，故完整A2成立。$u^2=u$，而 $0\le e\le\theta u$、$\theta\le1$ 使每点矩阵 $e^2\le e$，从而准确锥给同一A3。
+
+再核对完整PB，而非只核对已识别内值。令 $Z=b+ic$，在同一原乘法中写
+
+$$
+\begin{gathered}
+\nu=D_o(a,b)-a\circ c,\quad \eta=a\circ b+D_o(a,c),\quad
+ia\star_o Z=\nu+i\eta,\\
+Z_\pm=(b\pm\nu)+i(c\pm\eta)=(u\pm ia)\star_o Z,\\
+Z_\pm^*\star_o Z_\pm
+=Z^*\star_o(u+a^2)\star_o Z.
+\end{gathered}
+\tag{104.5}
+$$
+
+对任意自伴 $r,s$，$(r+is)^*\star_o(r+is)=r^2+s^2+2D_o(r,s)$。因此104.5的两侧给配平主卷128.4的同一 $Q_\phi(r_+,s_+)=Q_\phi(r_-,s_-)$，对全部实际 $a,b,c$ 及全部原读取成立；所有嵌套输入都在原 $E$，未换成别的代表。充分性完成。
+
+固定一个取向 $o$ 后，全部连续取向唯一写为 $\varepsilon o$，$\varepsilon\in C(K,\{\pm1\})$，相应 $D_{\varepsilon o}=\varepsilon D_o$；可容许者准确为那些使 $\varepsilon D_o(E,E)\subset E$ 的函数。全域恒反向总合法，但一般连续局部反向未必合法。例如取 $K=\{0\}\cup\{1/n:n\ge1\}$、平凡 $V$，令 $E$ 为坐标 $t$ 的实多项式系数 $H_2(\mathbb C)$ 截面。成熟的实 Stone–Weierstrass 定理给其稠密性；Jordan 及标准叉积都保多项式。函数 $\varepsilon(1)=-1$、其余点为 $1$ 连续，却不是多项式限制：若多项式在所有 $1/n$、$n\ge2$ 等于一，就恒等于一。两份常数独立向量的叉积为常数非零向量，乘 $\varepsilon$ 后不在 $E$。故换向可失去104.1；这也展示为何不能把 $E$ 当作 $C(K)$-模。
+
+连续符号只能在开闭分区上选择。一般紧空间的连通分支未必开；上例各点都是连通分支，但向零聚集的符号必须最终等于零点符号，不能独立任意指定。若 $K=\varnothing$，按允许 $u=0$ 的零代数约定，$X=E=0$、响应唯一，空行列式截面也唯一，所有公式为空断言且没有正质量归一态；若“含单位”排除零代数，则102–105的非空前件排除此情形。∎
+

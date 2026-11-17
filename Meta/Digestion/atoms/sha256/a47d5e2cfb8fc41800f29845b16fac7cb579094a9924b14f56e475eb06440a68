@@ -1,0 +1,26 @@
+**Theorem 52.2 (strict all-population negative comparison).** For every
+$0<\xi\le61/25$, every feasible population in (52.2) with $x<1$,
+and every point of the full closed triangle $\mathcal T_x$,
+
+$$
+e^2p+d^2q-4\Gamma^2>H(\xi)>V(\xi).
+\tag{52.5}
+$$
+
+Every normalized pure original effect and every whole $U\in U(4)$
+with $\rho_-(E,U)=\rho(E,U)=\xi$ in this interval satisfy
+
+$$
+                         g(E,U)>H(\xi)>V(\xi).
+\tag{52.6}
+$$
+
+This includes $x=1$, both population endpoints, every effect phase,
+all triangle edges and repeated-pair or zero-coherence cases. There is
+no determinant-sign restriction. In particular it includes $\xi=\xi_*$
+by (51.10), and excludes every negative-active pure equality on the
+entire requested closed prefix.
+
+*Proof.* The proof of the bound on $V$ is given first, followed by two
+closed $x$ ranges and the original-unitary consumer.
+

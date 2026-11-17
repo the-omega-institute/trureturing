@@ -1,0 +1,71 @@
+**Theorem 47.1 (unit limit without a coupling restriction).**
+The unit assertions of (44.5)--(44.7) hold on the whole base.
+Moreover, for every fixed $t>0$,
+
+$$
+B_b(2t)-B_b(t)^2=V_b(t)\ge0,
+\qquad \langle V_b(t)h_*,h_*\rangle>0.
+\tag{47.1}
+$$
+
+Proof. By (32.9), the original unit field converges uniformly on
+the full cylinder to $c_0\phi(k)G_{\beta b}(D)$. The potentials
+are uniformly bounded; all original positive $g$ are allowed.
+Use (46.3) in the bounded-potential path formula. On each fixed
+time interval the hidden displacement $\kappa Y_{\kappa,u}$
+tends to zero in expected supremum, by the martingale maximal
+inequality and bounded $b_\kappa$. The base angular increments
+converge to those at zero as before. Uniform continuity of the
+circle heat density and uniform field convergence show, for bounded
+smooth $h$, convergence of the compressed path formula to
+
+$$
+\frac1{2\pi}\int_{\mathbb T}\mathbb E_q\left[
+ \exp\left(gc_0G_{\beta b}(D)\int_0^t\phi(K_u)du\right)
+ h(q_{0,t});\ t<\zeta\right]dD=B_b(t)h(q).
+\tag{47.2}
+$$
+
+The convergence is uniform in $q$. The uniform semigroup bound
+$e^{gMt}$ and density of those inputs extend it strongly to all
+$\mathscr H_B$. Formula (47.2) is the boundary compression of the
+direct integral of $T_{gc_0G_{\beta b}(D)}(t)$ over the unchanged
+raw hidden circle. It is not evolution in the averaged potential.
+
+Uniform boundedness permits the strong limit of the squared
+compressed operators. With $T_D=T_{gc_0G_{\beta b}(D)}(t)$,
+selfadjointness and the semigroup law in each fixed fibre give
+
+$$
+\begin{aligned}
+B_b(2t)-B_b(t)^2
+ &=\frac1{2\pi}\int_{\mathbb T}T_D^2dD-B_b(t)^2\\
+ &=\frac1{2\pi}\int_{\mathbb T}(T_D-B_b(t))^2dD.
+\end{aligned}
+\tag{47.3}
+$$
+
+Thus the defect equals $V_b(t)$. This is the native evaluation of
+the compression identity already owned by [Free quotient,
+Proposition 5.1](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md),
+not a transfer of the singular attractive hypotheses in
+[Observation quotient, §6](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md).
+Every semigroup here comes from the actual bounded critical field.
+
+For strictness, (46.10) shows that $c\mapsto T_c(t)h_*$ is strictly
+increasing pointwise on the interior for every $t>0$. The circle
+function $G_{\beta b}$ is continuous and nonconstant for every
+finite $b>0$, since its first Fourier coefficient is nonzero.
+Therefore $D\mapsto T_Dh_*$ is a continuous, nonconstant
+$\mathscr H_B$-valued function, and
+
+$$
+\langle V_b(t)h_*,h_*\rangle
+ =\frac1{2\pi}\int_{\mathbb T}
+        \|T_Dh_*-B_b(t)h_*\|_2^2dD>0.
+\tag{47.4}
+$$
+
+This proves strict failure at each fixed positive time, for every
+original $g>0$, and completes the proof of Theorem 44.2. $\square$
+

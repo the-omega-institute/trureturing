@@ -64,7 +64,31 @@ $$(claim) \Leftrightarrow (\forall (n: \mathbb{N}), \forall (G: \operatorname{Si
 
 Appendix D.2, page 39: "In contrast, the following bound was shown to hold on our dataset"; "Conjecture 7. For all G and for all 1 ≤ k ≤ ⌊n/2⌋" followed by "λ_min(A(F_k(G))) ≥ −(C(G)+M_k(G))/2." The formula quantifies all finite simple graphs with decidable adjacency, with unit edge weights. This is a specialization of the source's all-graphs assertion. Fin n labels the n vertices; Nat.div n 2 is floor(n/2). The tokenGraph is the existing finite-subset graph: two equally sized subsets differ by one token moved along an edge. The natural cut and matching cardinalities are coerced to real numbers before division by two. No connectedness or bipartiteness hypothesis is imposed.
 
-**Lemma 1.6 (Real and complex adjacency matrices).**
+**Lemma 1.6 (Count crossing edges from their selected endpoint).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.cut_card_eq_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.cut_card_eq_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n, every simple graph G on Fin n with decidable adjacency, and every finite subset S, the number of unordered graph edges crossing S equals the sum over ordered pairs u,v of the indicator that G.Adj u v, u belongs to S and v does not belong to S. Each crossing edge has a unique such orientation. The map from these oriented crossing pairs to unordered edges is bijective; a swapped pair cannot also start inside S.
+
+Application: exact maximum cuts of uniform independent blow-ups. Let n and s be natural numbers with s at least one, and let H be any simple graph on Fin n. Encode Fin n times Fin s as Fin(n*s) using finProdFinEquiv. Define G_s by pulling back H along the first-coordinate map: two encoded pairs are adjacent exactly when their base vertices are adjacent in H. Each fibre is independent, each base edge gives a complete bipartite graph between its fibres, and all edges have weight one. For a base subset T, its block lift consists of all encoded pairs whose first coordinate belongs to T.
+
+For an arbitrary cut S of G_s, let x_i be the number of selected vertices in block i, so 0 <= x_i <= s. The existing cut_card_eq_sum identity, transported along finProdFinEquiv and summed first over fibre coordinates, gives Q(x) = sum over ordered adjacent i,j of x_i*(s-x_j). Equivalently, every unordered base edge {i,j} contributes x_i*(s-x_j)+x_j*(s-x_i). Thus each crossing blow-up edge is counted once, from its selected endpoint to its unselected endpoint; there is no factor of two.
+
+Reuse the existing CubeSimplexDeterminant.separately_affine_cube_vertex theorem with index type Fin n. Embed s and the integer occupancies into the reals and set r_i = 2*x_i/s - 1. Its function is F(r) = sum over ordered adjacent i,j of [s*(r_i+1)/2]*[s*(1-r_j)/2]. Looplessness excludes a term involving a coordinate twice, so fixing all other coordinates makes F affine in the remaining coordinate. The occupancy bounds imply |r_i| <= 1. Substitution gives F(r) = Q(x). The generic theorem supplies y_i in {-1,1} with |F(r)| <= |F(y)|; its finite-coordinate proof applies to this F.
+
+Decode y to z_i = s when y_i = 1 and z_i = 0 when y_i = -1, and put T = {i : y_i = 1}. Then s*(y_i+1)/2 = z_i and s*(1-y_i)/2 = s-z_i, so F(y) = Q(z). The factors z_i and s-z_j are nonnegative. Consequently Q(x) <= |Q(x)| = |F(r)| <= |F(y)| = Q(z). The block lift of T has occupancy z, hence every cut S is dominated by a cut consisting of whole blocks. This establishes the assertion for every cut, without assuming that S was already a maximum.
+
+A lifted base cut has exactly s squared times its unordered crossing-edge count: every crossing base edge supplies all s squared pairs of fibre vertices. Write C(H) for the existing maxCut H, the Finset.sup of unordered crossing-edge cardinalities over all vertex subsets. The dominating-block-cut result bounds every cut of G_s by s squared times C(H), so C(G_s) <= s squared times C(H). The finite set of base cuts is nonempty because it contains the empty cut, and therefore has a maximum; lifting a maximizing cut gives the reverse inequality. Exactly C(G_s) = s squared times C(H).
+
+The quantifiers include n = 0, edgeless graphs, and s = 1. Empty carriers and edgeless graphs have zero crossing-edge counts and zero maxima; for s = 1 the identity reduces to equality with the base maximum. No connectedness, nonempty edge set, token-state, density, energy or spectral hypothesis is used. Positivity of s is used in the rescaling to the unit cube. This is an application of existing results; no literature novelty is claimed. The energy limit, matching estimate, eventual sign conclusions and full-state defect certificate are separate obligations; this application does not establish them.
+
+**Lemma 1.7 (Real and complex adjacency matrices).**
 
 $$\forall (n: Type), [\operatorname{Fintype}\left(n\right)], [\operatorname{DecidableEq}\left(n\right)], \forall (G: \operatorname{SimpleGraph}\left(n\right)), [\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G\right)\right)], \operatorname{Matrix}.\operatorname{map}\left(\operatorname{SimpleGraph}.\operatorname{adjMatrix}\left(\mathbb{R}, G\right), \operatorname{Complex}.\operatorname{ofReal}\right) = \operatorname{SimpleGraph}.\operatorname{adjMatrix}\left(\mathbb{C}, G\right)$$
 
@@ -78,7 +102,7 @@ $$\forall (n: Type), [\operatorname{Fintype}\left(n\right)], [\operatorname{Deci
 
 Mapping the real zero-one adjacency matrix entrywise by Complex.ofReal gives the complex adjacency matrix. This identity lets lambdaMin40 apply the complex Rayleigh estimate to the real adjacency matrix.
 
-**Theorem 1.7 (A phase test contradicts the bound).**
+**Theorem 1.8 (A phase test contradicts the bound).**
 
 $$\neg claim$$
 
@@ -101,6 +125,7 @@ Take the five-cycle blow-up with five independent blocks of size 40 and complete
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.adjMatrix_complex_map`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.crosses`
+- Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.cut_card_eq_sum`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lambdaMin`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.maxCut`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.maxMatchingLe`

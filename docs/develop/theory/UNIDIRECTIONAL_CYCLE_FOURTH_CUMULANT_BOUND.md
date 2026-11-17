@@ -465,3 +465,518 @@ disjoint fixed time intervals independent. Those hypotheses therefore do
 not supply a fourth winding-cumulant bound for Definition 1.1.
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Quantitative fixed-dimension gap as an application of moment bounds
+
+**Proposition 5.1 (A coarse two-sided gap on the full positive simplex).**
+Let $N\geq2$ be an integer. For one common vector
+$x=(x_1,\ldots,x_N)$ satisfying $x_i>0$ for every $i$ and
+$\sum_{i=1}^N x_i=1$, define
+
+$$
+\begin{aligned}
+p_j(x)&=\sum_{i=1}^N x_i^j\quad(j=2,3,4),\\
+K_N(x)&=15p_2(x)^2-20p_3(x)+6\frac{p_4(x)}{p_2(x)},\\
+\beta_N&=\inf\left\{K_N(x):x_i>0\ \text{for every }i,
+                   \ \sum_{i=1}^N x_i=1\right\},\\
+c&=-\frac{1+\sqrt5}{10},\qquad
+b=\frac{5+\sqrt5}{10},\qquad m=N-1.
+\end{aligned}
+$$
+
+This $\beta_N$ is exactly the infimum in Definition 3.1, and $K_N$ is
+the raw winding-current ratio $C_4/C_2$ in (2.10), with the cycle-link
+convention of Definition 1.1 also when $N=2$. For every such integer $N$,
+
+$$
+\frac{1}{1800N}\leq\beta_N-c\leq\frac{20}{N}.
+\tag{5.1}
+$$
+
+Thus the gap has order $1/N$ on the entire strictly positive simplex;
+the constants in (5.1) are coarse.
+
+The proposition is an ordinary paper deduction applying the existing
+moment suppliers and classical Cauchy–Schwarz. In
+[UnicyclicKurtosisLowerBound](../../../D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound.lean),
+`normalized` supplies the normalized observable, `moments` supplies the
+common-vector moment inequalities, and the proof of the private
+`polynomial_lower_bound` contains the scalar polynomial certificate used
+below. In
+[HermiteMomentBounds](../../../D5/S3/Analytic/Interpolation/HermiteMomentBounds.lean),
+`hermite_moment_bounds` supplies the dimension-sensitive coordinate bound.
+Equations (2.11)–(2.18) supply the corresponding paper inequalities and
+the admissible fixed-$b$ family. This is a bind-only application of these
+suppliers, with no new mathematical primitive or Lean declaration. No
+compiled exact application or kernel verification of (5.1) is asserted.
+
+**Proof.** Fix $N$ and an arbitrary admissible common vector $x$. Put
+
+$$
+s=p_2(x),\qquad t=p_3(x),\qquad u=p_4(x),\qquad
+q=\sqrt{s},\qquad v=\frac{t}{s},\qquad
+M=\max_{1\leq i\leq N}x_i.
+$$
+
+Strict positivity and $N\geq2$ give $s>0$ and $0<q<1$ as in (2.12).
+Since $x_i\leq M$ for all $i$, summing $x_i^3\leq Mx_i^2$ gives
+$v\leq M$. Also $M^2\leq s$, so
+
+$$
+0\leq v\leq M\leq q<1.
+\tag{5.2}
+$$
+
+The common-vector Cauchy–Schwarz inequality (2.11), also supplied by
+`moments`, is $t^2\leq su$. Since $s>0$, it gives
+
+$$
+K_N(x)\geq Q(q,v):=15q^4-20q^2v+6v^2.
+\tag{5.3}
+$$
+
+Write $f(q)=15q^4-20q^3+6q^2$. The exact identity in the proof of
+`polynomial_lower_bound` is
+
+$$
+\begin{aligned}
+f(q)-c&=(q-b)^2H(q),\\
+H(q)&=15q^2+(3\sqrt5-5)q+\frac{\sqrt5-1}{2}.
+\end{aligned}
+\tag{5.4}
+$$
+
+For $q\geq0$, $\sqrt5>2$ implies $H(q)\geq1/2$, and the same
+explicit value of $b$ satisfies $7/10<b<3/4$. Equation (2.15) gives
+
+$$
+Q(q,v)-f(q)
+ =6(q-v)^2+4q(5q-3)(q-v).
+\tag{5.5}
+$$
+
+Both terms on the right are nonnegative for $q\geq3/5$, by (5.2).
+For $0<q\leq3/5$, the square completion (2.14) instead gives
+$Q(q,v)\geq-27/125$.
+
+To retain the dimension in these bounds, apply `hermite_moment_bounds`
+to this same $x$ with its parameter $k=N$, mean
+$\mu=1/N$, and total squared deviation
+
+$$
+V=\sum_{i=1}^N(x_i-\mu)^2=s-\frac1N.
+$$
+
+Its coordinate upper bound, with
+$r=\sqrt{V/(N(N-1))}$, yields
+
+$$
+M\leq\frac1N+(N-1)r,
+\qquad NM-1\leq\sqrt{(N-1)(Ns-1)}.
+\tag{5.6}
+$$
+
+Here $V\geq0$, and $M\geq1/N$ follows from $\sum_i x_i=1$.
+Thus both sides of the second inequality in (5.6) are nonnegative.
+Squaring and rearranging gives
+
+$$
+(NM-1)^2\leq(N-1)(Ns-1),\qquad
+s-M^2\geq\frac{(1-M)^2}{N-1}.
+\tag{5.7}
+$$
+
+This is also the classical Cauchy–Schwarz inequality on the $N-1$
+coordinates other than one maximum, whose sum is $1-M$. It imposes no
+extremal-topology assumption. Because $q>0$, $M>0$ and $N-1\geq1$,
+all denominators in the following chain are strictly positive:
+
+$$
+\begin{aligned}
+q-v&\geq q-M
+ =\frac{s-M^2}{q+M}\\
+&\geq\frac{(1-M)^2}{(N-1)(q+M)}
+ \geq\frac{(1-q)^2}{2q(N-1)}.
+\end{aligned}
+\tag{5.8}
+$$
+
+The last step uses $M\leq q<1$, hence $1-M\geq1-q>0$ and
+$q+M\leq2q$. Every moment and maximum in (5.3)–(5.8) belongs to
+the original common vector.
+
+There are four scalar cases, including their boundary points.
+
+1. If $0<q\leq3/5$, (5.3) and (2.14), together with $c<-3/10$,
+   give
+
+   $$
+   K_N(x)-c\geq-\frac{27}{125}-c
+      >\frac{21}{250}\geq\frac{1}{1800N}.
+   $$
+
+2. If $3/5\leq q\leq2/3$, (5.3)–(5.5) give
+   $K_N(x)-c\geq(q-b)^2/2$. Since
+   $b-q\geq7/10-2/3=1/30$,
+
+   $$
+   K_N(x)-c\geq\frac{1}{1800}
+                  \geq\frac{1}{1800N}.
+   $$
+
+3. If $4/5\leq q<1$, the same inequalities give
+   $K_N(x)-c\geq(q-b)^2/2$. Here
+   $q-b\geq4/5-3/4=1/20$, so
+
+   $$
+   K_N(x)-c\geq\frac{1}{800}
+                  \geq\frac{1}{1800N}.
+   $$
+
+4. If $2/3\leq q\leq4/5$, discard the nonnegative square terms
+   in (5.4)–(5.5) and apply (5.8):
+
+   $$
+   \begin{aligned}
+   K_N(x)-c
+   &\geq4q(5q-3)(q-v)\\
+   &\geq\frac{2(5q-3)(1-q)^2}{N-1}\\
+   &\geq\frac{2}{75(N-1)}
+    \geq\frac{1}{1800N}.
+   \end{aligned}
+   $$
+
+   The multiplication preserves the inequality because $q>0$ and
+   $5q-3\geq1/3>0$. The penultimate step also uses
+   $1-q\geq1/5$, and the final comparison has $N\geq2$ and
+   $N-1>0$.
+
+These cases cover every $0<q<1$; their overlaps at $3/5$, $2/3$
+and $4/5$ leave no missing endpoint. The positive simplex is nonempty,
+for example at $x_i=1/N$, and $K_N$ is finite at every point because
+$s>0$. Its values are uniformly bounded below by
+$c+1/(1800N)$. Taking their infimum therefore yields
+
+$$
+\beta_N-c\geq\frac{1}{1800N}.
+\tag{5.9}
+$$
+
+This uses a uniform bound on the full simplex, rather than inferring an
+infimum gap from pointwise strictness.
+
+For the upper estimate, use precisely the admissible family (2.3)/(2.18).
+Set $d=1-b$ and $m=N-1\geq1$, and take
+
+$$
+x_1=b,\qquad x_2=\cdots=x_N=\frac{d}{m}.
+\tag{5.10}
+$$
+
+Since $1/2<b<1$ and $0<d<1/2$, this vector has strictly positive
+coordinates and sum $b+d=1$, including when $N=2$ and $m=1$.
+Its exact moments from (2.18) are
+
+$$
+p_j=b^j+d^j m^{1-j},\qquad
+s=b^2+\frac{d^2}{m},\quad
+t=b^3+\frac{d^3}{m^2},\quad
+u=b^4+\frac{d^4}{m^3}.
+\tag{5.11}
+$$
+
+Put $e=d^2/m>0$. Using $f(b)=c$ from (2.17), direct subtraction
+in (2.10) gives
+
+$$
+\begin{aligned}
+K_N(x)-c
+={}&15(2b^2e+e^2)-\frac{20d^3}{m^2}\\
+ &+6\left(\frac{b^4+d^4/m^3}{b^2+e}-b^2\right).
+\end{aligned}
+\tag{5.12}
+$$
+
+The denominator $b^2+e$ is strictly positive. The last parenthesis
+satisfies
+
+$$
+\frac{b^4+d^4/m^3}{b^2+e}-b^2
+ =\frac{d^4/m^3-b^2e}{b^2+e}
+ \leq\frac{d^4}{b^2m^3}.
+\tag{5.13}
+$$
+
+Indeed, first discard the negative numerator term, then use
+$b^2+e\geq b^2>0$ with the remaining nonnegative numerator.
+Discarding also the negative cubic term in (5.12), and using
+$m\geq1$ to replace $m^{-2}$ and $m^{-3}$ by at most $m^{-1}$,
+gives
+
+$$
+K_N(x)-c
+ \leq\frac{30b^2d^2+15d^4+6d^4/b^2}{m}.
+\tag{5.14}
+$$
+
+The bounds $1/2<b<1$ and $0<d<1/2$ imply
+
+$$
+30b^2d^2\leq\frac{15}{2},\qquad
+15d^4\leq\frac{15}{16},\qquad
+\frac{6d^4}{b^2}\leq\frac32.
+$$
+
+Their sum is $159/16<10$. Thus the admissible vector (5.10) satisfies
+
+$$
+K_N(x)-c\leq\frac{10}{N-1}\leq\frac{20}{N}
+\qquad(N\geq2),
+\tag{5.15}
+$$
+
+where the last comparison uses $N\leq2(N-1)$ and positive
+denominators. The infimum over the full simplex is at most this one
+competitor value, so $\beta_N-c\leq20/N$. Combining this with
+(5.9) proves (5.1), with $L_-=1/1800$, $L_+=20$ and $N_0=2$.
+$\square$
+
+**Scope and provenance of Proposition 5.1.** The fixed-$b$ competitor
+is the exact theory family (2.3)/(2.18). The private `sourceRates` in
+`UnicyclicKurtosisLowerBound` has a different finite-dimension denominator
+and indexing; it is not identified with (5.10). The all-size endpoint
+and limiting-family inputs are credited to [P] in Theorem 2.1; the present
+quantitative inference reuses those inputs, the cited repository
+suppliers and classical Cauchy–Schwarz. No journal-body nonoverlap or
+worldwide originality claim is made.
+
+For the problem in Definition 3.1, (5.1) supplies a coarse positive gap
+of order $1/N$. The exact value of $\beta_N$, attainment and optimizer
+existence or topology, monotonicity in $N$, sharp constants or a leading
+coefficient, and existence or value of a positive finite limit of
+$N(\beta_N-c)$ remain open here. The upper competitor is not asserted
+to minimize $K_N$. The conclusion uses the full common-vector positive
+simplex and only the unidirectional long-time winding-current
+normalization. It makes no bidirectional, multicyclic, thermal,
+finite-time, standardized-kurtosis, $C_3/C_1$ or $S$–$K$ assertion.
+
+## 追加锚（本行以下为增补区）
+
+## 6. Leading coefficient of the full-simplex gap
+
+**Proposition 6.1 (Positive finite limit of the scaled gap).** For every
+integer $N\geq2$, let
+
+$$
+\begin{aligned}
+p_j(x)&=\sum_{i=1}^N x_i^j\quad(j=2,3,4),\\
+K_N(x)&=15p_2(x)^2-20p_3(x)+6\frac{p_4(x)}{p_2(x)},\\
+\beta_N&=\inf\left\{K_N(x):x_i>0\ \text{for every }i,
+                         \ \sum_{i=1}^N x_i=1\right\},\\
+c&=-\frac{1+\sqrt5}{10},\qquad
+b=\frac{5+\sqrt5}{10},\qquad d=1-b.
+\end{aligned}
+$$
+
+All moments in $K_N(x)$ are those of the same vector $x$. Thus $\beta_N$
+is the unrestricted positive-simplex infimum of Definition 3.1 and
+Proposition 5.1, and $K_N$ is the raw long-time winding-current ratio
+$C_4/C_2$ of (2.10). Then
+
+$$
+\lim_{N\to\infty}N(\beta_N-c)
+ =(30b^2-6)(1-b)^2
+ =\frac{3(\sqrt5-1)}5>0.
+\tag{6.1}
+$$
+
+In particular, writing $\ell=3(\sqrt5-1)/5$, for every real
+$\varepsilon>0$ there is an integer $N_0\geq2$ such that every integer
+$N\geq N_0$ satisfies $|N(\beta_N-c)-\ell|<\varepsilon$.
+No attainment or optimizer hypothesis is imposed.
+
+**Proof.** For any admissible vector, retain the notation
+
+$$
+s=p_2(x),\qquad t=p_3(x),\qquad u=p_4(x),\qquad
+q=\sqrt{s},\qquad v=t/s,\qquad M=\max_i x_i,
+\qquad f(z)=15z^4-20z^3+6z^2.
+$$
+
+The common-vector inequalities (2.11)–(2.15) and (5.2)–(5.5) give
+$0\leq v\leq M\leq q<1$ and $K_N(x)\geq Q(q,v)$. For
+$q\leq3/5$ they give $K_N(x)\geq-27/125>c$. For $q\geq3/5$,
+the nonnegative second term in (5.5), together with the certificate
+(5.4), gives
+
+$$
+K_N(x)-c\geq\frac{(q-b)^2}{2}+6(q-v)^2.
+\tag{6.2}
+$$
+
+The same certificate states $f(z)-c=(z-b)^2H(z)$ with
+$H(z)\geq1/2$ for every $z\geq0$, so $f(z)\geq c$ throughout
+that range. These inequalities reuse the scalar and moment bounds of
+Theorem 2.1 and Proposition 5.1. Their dimension-sensitive input below
+is exactly (5.7), the residual-coordinate Cauchy–Schwarz bound.
+
+First consider any sequence of admissible vectors $x^{(N)}$ for which
+$K_N(x^{(N)})-c\to0$. The fixed positive gap $-27/125-c$ excludes
+$q_N\leq3/5$ for all sufficiently large $N$. Equation (6.2) then
+forces $q_N\to b$ and $q_N-v_N\to0$, hence $v_N\to b$.
+The sandwich $v_N\leq M_N\leq q_N$ gives
+
+$$
+M_N\longrightarrow b,\qquad
+e_N:=s_N-M_N^2=q_N^2-M_N^2\longrightarrow0.
+\tag{6.3}
+$$
+
+This localization concerns arbitrary admissible near-minimizing sequences;
+it does not assume a prescribed number of distinct coordinates.
+
+For a single vector choose one index $i_0$ with $x_{i_0}=M$, and set
+
+$$
+e=\sum_{i\ne i_0}x_i^2,\qquad
+r_3=\sum_{i\ne i_0}x_i^3,\qquad
+r_4=\sum_{i\ne i_0}x_i^4.
+$$
+
+These are nonnegative residual moments of that same vector, and
+$s=M^2+e$, $t=M^3+r_3$, $u=M^4+r_4$. Each residual coordinate
+satisfies $x_i\leq\sqrt e$, so the power-norm comparison on these
+coordinates gives
+
+$$
+r_3\leq e\sqrt e.
+\tag{6.4}
+$$
+
+Substituting the three moment identities into $K_N$ and using
+$M^4/(M^2+e)=M^2-e+e^2/(M^2+e)$ yields the exact identity
+
+$$
+\begin{aligned}
+K_N(x)-c
+={}&f(M)-c+(30M^2-6)e+15e^2-20r_3\\
+ &+6\frac{e^2+r_4}{M^2+e}.
+\end{aligned}
+\tag{6.5}
+$$
+
+Here $M^2+e=s>0$. The terms $f(M)-c$, $15e^2$ and the quotient
+remainder are nonnegative. Discarding them and applying (6.4) with its
+negative coefficient gives
+
+$$
+K_N(x)-c\geq\bigl(30M^2-6-20\sqrt e\bigr)e.
+\tag{6.6}
+$$
+
+To apply this bound to the full infimum, note that the positive simplex
+is nonempty and that $\beta_N$ is a finite real number by Proposition
+5.1. For each integer $N\geq2$, choose an admissible $x^{(N)}$ such
+that
+
+$$
+\beta_N\leq K_N(x^{(N)})<\beta_N+\frac1{N^2}.
+\tag{6.7}
+$$
+
+This is the defining approximation property of the infimum and requires
+no minimizer. Equation (5.1) gives
+$0\leq K_N(x^{(N)})-c\leq20/N+1/N^2$, so (6.3) applies to
+these choices. Put
+
+$$
+A_N=30M_N^2-6-20\sqrt{e_N},\qquad A=30b^2-6.
+$$
+
+Then $A_N\to A=3(1+\sqrt5)>0$. In particular $A_N>0$ for all
+sufficiently large $N$. The residual-square bound (5.7) for these same
+vectors is $e_N\geq(1-M_N)^2/(N-1)$. Multiplication by the now
+positive $A_N$, followed by (6.6) and (6.7), therefore gives
+
+$$
+\begin{aligned}
+N(\beta_N-c)
+&\geq N\bigl(K_N(x^{(N)})-c\bigr)-\frac1N\\
+&\geq A_N\frac{N}{N-1}(1-M_N)^2-\frac1N
+\end{aligned}
+\tag{6.8}
+$$
+
+for every sufficiently large $N$. The last expression tends to
+$Ad^2$, proving the lower asymptotic bound for the unrestricted infimum:
+
+$$
+\liminf_{N\to\infty}N(\beta_N-c)\geq Ad^2.
+\tag{6.9}
+$$
+
+For the matching upper bound, take exactly the family (2.18)/(5.10).
+With $m=N-1\geq1$, its coordinates are
+$y_1^{(N)}=b$ and $y_i^{(N)}=d/m$ for $2\leq i\leq N$.
+Because $0<d<b<1$ and $b+d=1$, this is an admissible strictly
+positive vector with maximum $b$ for every $N\geq2$. Its residual
+moments at the first coordinate are
+
+$$
+e=\frac{d^2}{m},\qquad r_3=\frac{d^3}{m^2},\qquad
+r_4=\frac{d^4}{m^3}.
+$$
+
+Using $f(b)=c$ in (6.5) gives the exact expansion
+
+$$
+K_N(y^{(N)})-c
+ =\frac{Ad^2}{m}
+  +\frac{15d^4-20d^3}{m^2}
+  +6\frac{d^4/m^2+d^4/m^3}{b^2+d^2/m}.
+\tag{6.10}
+$$
+
+After multiplication by $N$, the first term tends to $Ad^2$ because
+$N/(N-1)\to1$. The second tends to zero because
+$N/(N-1)^2\to0$. The last term also tends to zero: its denominator
+is at least $b^2>0$, and both $N/(N-1)^2$ and $N/(N-1)^3$
+tend to zero. Since $\beta_N\leq K_N(y^{(N)})$, this proves
+
+$$
+\limsup_{N\to\infty}N(\beta_N-c)\leq Ad^2.
+\tag{6.11}
+$$
+
+The lower bound (6.9) and upper bound (6.11) establish convergence.
+Finally the explicit values give
+
+$$
+A=30b^2-6=3(1+\sqrt5),\qquad
+d^2=\frac{3-\sqrt5}{10},\qquad
+Ad^2=\frac{3(\sqrt5-1)}5.
+\tag{6.12}
+$$
+
+This is positive and finite. Real-sequence convergence is precisely the
+stated $\varepsilon,N_0$ conclusion. $\square$
+
+The endpoint $c$ and the exceptional-rate limiting family are credited
+to [P, Section III E 1 and Appendix, Eq. (77)] as in Theorem 2.1.
+Proposition 6.1 applies the existing common-vector inequalities and the
+residual-coordinate bound to identify the leading coefficient of the
+full-simplex gap. For the infimum in Definition 3.1, it establishes the
+existence and value of the scaled limit left open at the end of Section 5;
+the coarse bounds (5.1) continue to hold. No additionality relative to
+the unread journal body in [P], or worldwide originality, is asserted.
+
+The exact finite-$N$ value of $\beta_N$, its attainment, existence and
+classification of finite-$N$ optimizers, and monotonicity in $N$ are not
+determined by this argument. In particular, the family used for (6.10)
+is only an admissible upper competitor. The conclusion has the original
+full common-vector strictly positive simplex as its domain and the
+unidirectional long-time raw winding-current ratio as its observable;
+it gives no bidirectional, multicyclic, heat-current, finite-time or
+standardized-kurtosis extension.
+
+## 追加锚（本行以下为增补区）

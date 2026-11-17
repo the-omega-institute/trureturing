@@ -1,0 +1,46 @@
+#### 定理 9.1：qubit 的自足分类
+
+在 $E=\operatorname{Herm}_2(\mathbb C)$ 上，实双线性 $D$ 满足 (T)，当且仅当存在 $\gamma\in\mathbb R$，使
+
+$$
+D(a,b)=\gamma i[a,b].
+\tag{8}
+$$
+
+特别地，两侧单位律和交替性都成为结论。
+
+**证明。**
+
+**自配对。** 当 $p=e$，共同支持角为 $\mathbb Re$。$te$ 若满足 $e(te)+(te)e=te$，则 $2te=te$，故 $t=0$。所以 $D(e,e)=0$。
+
+**左单位。** 写 $e_{\mathbf r}=(I+\mathbf r\cdot\boldsymbol\sigma)/2$，$\|\mathbf r\|=1$。若 $v=a_0I+\mathbf w\cdot\boldsymbol\sigma$，直接乘法给
+
+$$
+v\in E_{1/2}(e_{\mathbf r})
+\Longleftrightarrow a_0=0,\quad\mathbf r\cdot\mathbf w=0.
+$$
+
+互补原子 $e_{-\mathbf r}=I-e_{\mathbf r}$ 有同一切面。对固定原子 $p$，双线性使
+
+$$
+D(I,p)=D(e_{\mathbf r},p)+D(e_{-\mathbf r},p)
+\in E_{1/2}(e_{\mathbf r})
+$$
+
+对每个 $\mathbf r$ 成立。所有这些平面的交为零，所以 $D(I,p)=0$。原子张成 $E$，得 $D(I,b)=0$。
+
+**右单位与交替性。** 展开 $0=D(I-e,I-e)$，结合已得左单位律与 $D(e,e)=0$，得到 $D(e,I)=0$，继而 $D(a,I)=0$。再写任意自伴矩阵 $a=\lambda e+\mu(I-e)$，由单位律知 $D(e,I-e)=D(I-e,e)=0$，故 $D(a,a)=0$。极化得 $D(a,b)=-D(b,a)$。
+
+**各向同性的系数。** 单位部分不参与作用，故 $D$ 只需在三维无迹部分上确定。反对称双线性映射唯一写成
+
+$$
+D(\mathbf a\cdot\boldsymbol\sigma,\mathbf b\cdot\boldsymbol\sigma)
+=F(\mathbf a\times\mathbf b),
+$$
+
+其中 $F:\mathbb R^3\to\operatorname{Herm}_2(\mathbb C)$ 线性。单位律还给 $D(e_{\mathbf r},e_{\mathbf s})=F(\mathbf r\times\mathbf s)/4$。对任意单位 $\mathbf n$，取正交单位 $\mathbf r,\mathbf s$ 使 $\mathbf r\times\mathbf s=\mathbf n$。由 (T)，$D(e_{\mathbf r},e_{\mathbf s})$ 在第一切面；交换顺序并用交替性，又在第二切面。所以 $F(\mathbf n)$ 无迹且向量部分平行于 $\mathbf n$。
+
+于是 $F(\mathbf v)=A\mathbf v\cdot\boldsymbol\sigma$，且线性 $A$ 保每一条实直线。取基向量知 $Ae_i=c_i e_i$，再取 $e_i+e_j$ 迫使 $c_i=c_j$，故 $A=cI$。利用 $i[\mathbf a\cdot\boldsymbol\sigma,\mathbf b\cdot\boldsymbol\sigma]=-2(\mathbf a\times\mathbf b)\cdot\boldsymbol\sigma$，得到式(8)，$\gamma=-c/2$。反过来，交换子显然留在共同支持内，并满足 $e\,i[e,p]+i[e,p]\,e=i[e,p]$。
+
+$\square$
+

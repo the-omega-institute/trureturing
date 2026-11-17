@@ -1,0 +1,66 @@
+**Definition 44.1 (fixed-time response on the whole base).**
+Retain Definition 31.1, the two critical families and every original
+fixed datum, with both signs of $\kappa\to0$. Write
+$\mathscr H_B=L^2(B,d\nu_B)$ and $\mathscr H=L^2(\Omega,d\mu)$.
+The operators below are those of the entire completed forms (25.9),
+not their restrictions:
+
+$$
+\begin{aligned}
+H_{{\rm raw},\kappa}&=L_\kappa-gM_{V_{\kappa,\tau_s}},&
+H_{{\rm unit},\kappa}&=L_\kappa-gM_{W_{\rm unit}(\kappa,\tau_b)},\\
+Jh(q,D)&=(2\pi)^{-1/2}h(q),&
+J^*f(q)&=(2\pi)^{-1/2}\int_{\mathbb T}f(q,D)\,dD,\\
+C_{\sigma,\kappa}(t)&=J^*e^{-tH_{\sigma,\kappa}}J,&
+\mathcal D_{\sigma,\kappa}(t)
+ &=C_{\sigma,\kappa}(2t)-C_{\sigma,\kappa}(t)^2.
+\end{aligned}
+\tag{44.1}
+$$
+
+All fields are bounded at each parameter, and (32.9) bounds them
+uniformly along either critical family. Their selfadjoint generators
+have the original operator domains $D(L_\kappa)$ and form domains
+$\mathcal F_\kappa$, with a common finite lower bound for fixed
+data and $g$; the semigroups act on all of $\mathscr H$. Put, using exactly the
+full-base operators of Definition 36.1,
+
+$$
+S_t=e^{-t\mathcal K_0},\qquad
+T_c(t)=e^{-t\mathcal K_c},\qquad
+F(x)=e^{-x^2/(4\beta)},\qquad
+m_s=c_s\sqrt{4\pi\beta}.
+\tag{44.2}
+$$
+
+Define the following bounded operators independently of the unknown
+native response:
+
+$$
+\begin{aligned}
+A_s(t)&=\frac1{2\pi}\int_{\mathbb R}
+              [T_{gc_sF(x)}(t)-S_t]\,dx,\\
+D_s(t)&=\frac1{2\pi}\int_{\mathbb R}
+              [T_{gc_sF(x)}(t)-S_t]^2\,dx,\\
+B_b(t)&=\frac1{2\pi}\int_{\mathbb T}
+                    T_{gc_0G_{\beta b}(D)}(t)\,dD,\\
+V_b(t)&=\frac1{2\pi}\int_{\mathbb T}
+             [T_{gc_0G_{\beta b}(D)}(t)-B_b(t)]^2\,dD.
+\end{aligned}
+\tag{44.3}
+$$
+
+These are norm Bochner integrals. Indeed bounded-multiplier Duhamel
+estimates give, for $0\le c\le c_{\max}$,
+
+$$
+\|T_c(t)-S_t\|
+ \le t c\|\phi\|_\infty e^{tc_{\max}\|\phi\|_\infty}.
+\tag{44.4}
+$$
+
+Consequently the first two integrands are dominated in norm by
+constants times $F$ and $F^2$, respectively. The circle integrands
+are norm continuous. In particular $D_s(t)$ and $V_b(t)$ are positive
+operators. All modes $(n,m)$ of (36.1) remain in (44.3).
+

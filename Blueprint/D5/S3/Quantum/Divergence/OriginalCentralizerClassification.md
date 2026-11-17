@@ -1,0 +1,73 @@
+# Original equality and the interior GNS corner
+
+## Abstract
+
+The literal original maximal-hockey and maximal-f equality is classified by the actual compressed GNS centralizer, with a separate infinite-value branch.
+
+Let M be any concrete von Neumann algebra on an arbitrary complete complex Hilbert space. The positive inputs rho and sigma belong to its standard concrete predual, independently represented by coefficient series sum_n <xi_n,a eta_n> with both vector sequences square-summable. The original functionals maximalValue and originalHockeyValue quantify all sigma-finite sources in universe u, independent of the operator-algebra universe, and positive complex-linear preparations on the entire complex L1 space. Every output is in this series class and every complex input retains its integral mass; continuity of a preparation is not a premise. No normalization, faithfulness, separability, representation normality or nonzero hypothesis is imposed. The proved predual bridge does not assert the converse from intrinsic order-normality to coefficient-series membership.
+
+Form the actual completed GNS representation of psi=rho+sigma, its unnormalized cyclic vector Omega, and its actual commutant N. The coordinate C is any operator satisfying the complete properties of GNSOrderCoordinates.original_pair_coordinate: 0<=C<=I, commutation with every represented original element, and the exact original coefficients rho and sigma for C and I-C. That existing theorem proves existence and uniqueness; the classifier assumes no coordinate supplier. Put P=rangeSupport(C(I-C)). CompressedCentralizes means equality of the Omega coefficients of (PCP)(PYP) and (PYP)(PCP) for every Y in N. It asserts centralization only in this actual interior corner.
+
+**Theorem 1.1 (Full-support finite-value structural equality).**
+
+Lean statement: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.full_support_finite_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.full_support_finite_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a real function f convex on the positive ray, assume that the support of its actual right-derivative Stieltjes curvature measure is the whole positive ray and that the literal original maximalValue is a real finite EReal. Then maximalValue=originalHockeyValue if and only if CompressedCentralizes(N,C,Omega). Necessity first uses the existing finite-value operational classifier and compactness equivalence to obtain one actual moment Family F optimal at every positive threshold. GNSOverlapRigidity.spectral_moments_of_all_overlap_optima supplies its actual complex spectral homomorphism Phi, scalar spectral optimum, and entire complex-L1 preparation Gamma. Coefficient injectivity identifies its actual pairCoordinate with C. The two commutants have the same actual carrier; real continuous functional calculus commutes with the subtype inclusion. The spectral overlap is feasible by CFC order. Every ambient feasible competitor X is wrapped in this same commutant and sent by coefficientMap to a positive continuous dual eta below rho and t sigma. The existing attained-overlap bound applies to every such eta without a new series hypothesis, so the scalar spectral optimum bounds every ambient X. The existing all_overlap_optimal_iff_compressed_centralizes supplies the claimed compressed criterion. Sufficiency uses the actual constructed spectralFamily and spectral_overlap_optimal, then finite compatibility and the original classifier.
+
+**Theorem 1.2 (The unrestricted extended-value classification).**
+
+Lean statement: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.full_support_iff_top_or_centralizes`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.full_support_iff_top_or_centralizes` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same convexity and full actual curvature support assumptions, with no finite-value hypothesis, original equality holds if and only if originalHockeyValue is top or CompressedCentralizes holds. The original extended-attainment theorem excludes bottom for maximalValue. If equality holds away from top, EReal.coe_toReal gives the real-finite case. If originalHockeyValue is top, the existing hockey lower bound and real-finiteness theorem force maximalValue to be top as well. Centralization constructs one actual spectral family optimal on every positive threshold and hence on every curvature support; unrestricted finite_compatibility_implies_original_equality supplies the sufficient direction. Equality of two infinite values is never used to infer centralization.
+
+**Theorem 1.3 (Literal nonaffine operator-convex finite-value version).**
+
+Lean statement: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.operatorConvex_finite_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.operatorConvex_finite_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The function f satisfies the literal domain-aware OperatorConvexOnAll(Ioi 0) predicate and is not affine on the positive ray. Scalar convexity is derived by OperatorConvexCurvature.convexOn_of_operatorConvexOnAll, and full support of precisely that actual curvature measure is derived by operatorConvex_curvature_full_support. Assuming the literal original maximalValue is real finite, original equality is equivalent to the same actual compressed-centralizer criterion. There is no additional curvature, analyticity or scalar-convexity hypothesis.
+
+**Theorem 1.4 (Literal original nonaffine operator-convex extended version).**
+
+Lean statement: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.operatorConvex_iff_top_or_centralizes`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.operatorConvex_iff_top_or_centralizes` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same literal nonaffine all-Hilbert operator-convex premise derives scalar convexity and full curvature support automatically. Without any finite-value assumption, maximalValue=originalHockeyValue is equivalent to originalHockeyValue=top or CompressedCentralizes(N,C,Omega). The top disjunct is essential. The spectral construction and GNS rigidity results retain actual full complex-L1 realization with coefficient-series outputs, positivity, scalar mass, norm bound and both original posterior moments; no smaller or abstract supplied source class replaces the original one.
+
+The source question is the last maximal-hockey versus maximal-f equality in Hiai–Mosonyi–Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, page 62; the general-convex framework is in Section VII, page 57. Their Proposition V.1 and (V.127), pages 35–36, supply the classical positive-overlap formulas and comparison inequality. The measured-hockey equality in Theorem VII.3, page 60, is different. Hiai, Quantum f-divergences in von Neumann algebras II. Maximal f-divergences, arXiv:1807.03118v1, Theorem 4.2, Lemma 6.1 and Theorem 6.3, pages 18 and 25–26, already gives the arbitrary-von-Neumann operator-convex GNS spectral formula and optimal whole-L1 spectral reverse test, including singular pairs and infinite endpoints. The coordinate and that spectral attainment are classical antecedents.
+
+Matsumoto, A new quantum version of f-divergence, arXiv:1311.4722v4, Lemmas 4.1–4.2 and Theorem 6.1, pages 8–9 and 14, supplies finite-source compression, shorting and the spectral optimum under his finite-dimensional operator-convex hypothesis (F). Gheondea, Gudder and Peter Jonas, On the infimum of quantum effects, doi:10.1063/1.1904704, Proposition 2.4 and the proof of Theorem 3.1, pages 4–6, already localize to common support and identify the interior projection E_C((0,1)); Section IV, page 7, supplies the affine normalization. Their order-infimum problem differs from maximizing a specified coefficient functional. The structural contribution here is the simultaneous spectral positive-overlap optimality iff compressed-centralization link and its transfer to the original two-divergence equality, not the spectral optimizer or localization alone.
+
+Arbitrary convex functions without full curvature support are not covered by this structural iff, and global commutation of rho and sigma is not asserted. The operator-convex results apply the full-support core and the compiled classical curvature supplier. The bounded primary comparison found no exact classifier in the inspected sources but did not obtain a complete citation graph; worldwide priority and final acceptance are not certified.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.full_support_finite_iff`
+- Truth anchor: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.full_support_iff_top_or_centralizes`
+- Truth anchor: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.operatorConvex_finite_iff`
+- Truth anchor: `D5/S3/Quantum/Divergence/OriginalCentralizerClassification.operatorConvex_iff_top_or_centralizes`
+- Dependency: [D5/S3/Quantum/Divergence/GNSOverlapRigidity](GNSOverlapRigidity.md)
+- Dependency: [D5/S3/Quantum/Divergence/SpectralCentralizerEquality](SpectralCentralizerEquality.md)
+- Dependency: [D5/S3/Quantum/Lieb/OperatorConvexCurvature](../Lieb/OperatorConvexCurvature.md)

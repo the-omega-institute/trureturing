@@ -1,0 +1,21 @@
+**命题 67.3（任意自伴旁观谱与全谱共振）。** 命题 67.1、67.2 的消费者允许任意零谱、重谱及非零相反旁观谱。特别 $n\ge4$ 时可取
+
+$$
+B=\operatorname{diag}(b,-b,0_{n-4}),\qquad b>0,
+\tag{67.8}
+$$
+
+再按式 (67.3) 或式 (67.6) 选择参数。定理 64.3 仍识别同一个实际输出，虽然 $M=R-i\sigma F$ 的全 Sylvester 算子存在非零 Hermitian 核。
+
+**证明。** 若 $u,v$ 分别是旁观 $b,-b$ 的单位特征向量，则数学矩阵
+
+$$
+H_{\rm res}=0_2\oplus(uv^*+vu^*)\ne0
+$$
+
+满足 $MH_{\rm res}+H_{\rm res}M^*=0$，且 $q_RH_{\rm res}q_R=0$；但 $q_AH_{\rm res}q_A=H_{\rm res}\ne0$。它被原第二槽零预算排除，并非原 P2 允许的余量。若旁观块有零特征向量，支撑于该方向的秩一矩阵同样给全算子的核，也被 $q_A$ 排除。定理不需要排除这些谱。
+
+成熟 Sylvester 判据说，整个复矩阵空间上的 $H\mapsto MH+HM^*$ 可逆，当且仅当 $\operatorname{spec}(M)\cap(-\overline{\operatorname{spec}(M)})=\varnothing$。其准确经典来源可取 Nicholas J. Higham，[*What Is the Sylvester Equation?*](https://nhigham.com/2020/09/01/what-is-the-sylvester-equation/)，其中对 $AX-XB=C$ 用 Schur／Kronecker 说明唯一性，本文相应代入 $B=-M^*$；该来源亦列 Lyapunov 变体。本文只将其作为内部范围说明，66 的实际证明直接消元，不以它取得新内容名义。
+
+上述 $H_{\rm res}$ 只是单独矩阵方程的核见证，没有构造一个满足 A1–A3、准确锥、全部 P2 与完整 PB 的总 $D$。它不是完整原 PB 的反模型，不能用来声称谱非共振是必要量子公理。∎
+

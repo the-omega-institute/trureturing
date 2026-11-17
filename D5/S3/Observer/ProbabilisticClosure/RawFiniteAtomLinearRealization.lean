@@ -446,17 +446,18 @@ private theorem finite_tests_countable : Countable Test := by
         exact ih mode
   exact hinv.injective.countable
 
-private theorem measurable_native_event {Seed : Type*} [MeasurableSpace Seed]
-    (policy : Policy Seed) (n : ℕ) (h : State) (B : Set Seed) (hB : MeasurableSet B) :
-    MeasurableSet (nativeEvent policy n h B) := by
-  classical
+instance : Countable State :=
+  (show Function.Injective (fun s : State => (s.actions, s.replies, s.stopped)) from by
+    intro s t he
+    cases s
+    cases t
+    simpa using he).countable
+
+theorem measurable_actual_run {Seed : Type*} [MeasurableSpace Seed]
+    (policy : Policy Seed) (n : ℕ) :
+    @Measurable (Seed × Source) State _ ⊤ (fun p => actualRun policy p.1 p.2 n) := by
   letI : MeasurableSpace State := ⊤
-  haveI : Countable State :=
-    (show Function.Injective (fun s : State => (s.actions, s.replies, s.stopped)) from by
-      intro s t he
-      cases s
-      cases t
-      simpa using he).countable
+  classical
   let step (p : (Seed × Source) × State) : State :=
     if p.2.stopped then p.2 else
       let side := policy.choose p.1.1 p.2.actions p.2.replies
@@ -483,7 +484,14 @@ private theorem measurable_native_event {Seed : Type*} [MeasurableSpace Seed]
     induction n with
     | zero => exact measurable_const
     | succ n ih => exact hstep.comp (measurable_id.prodMk ih)
-  exact (hB.preimage measurable_fst).inter ((hrun n) (measurableSet_singleton h))
+  exact hrun n
+
+private theorem measurable_native_event {Seed : Type*} [MeasurableSpace Seed]
+    (policy : Policy Seed) (n : ℕ) (h : State) (B : Set Seed) (hB : MeasurableSet B) :
+    MeasurableSet (nativeEvent policy n h B) := by
+  letI : MeasurableSpace State := ⊤
+  exact (hB.preimage measurable_fst).inter
+    ((measurable_actual_run policy n) (measurableSet_singleton h))
 
 /-- A fresh independent random seed samples a measurable family of finite tests. -/
 def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
@@ -597,7 +605,7 @@ private theorem marker_recovers_root (source : Source) (hn : noAdjacentOnes sour
   cases hr : source.1 <;> rcases hmod with hmod | hmod <;>
     simp [alternatingBit,hr,hmod] at hb ⊢
 
-private theorem stopped_root_recovery {Seed : Type*} [MeasurableSpace Seed]
+theorem stopped_root_recovery {Seed : Type*} [MeasurableSpace Seed]
     (policy : Policy Seed) (seed : Seed) (source : Source) (hn : noAdjacentOnes source)
     (n : ℕ) : (actualRun policy seed source n).stopped = true →
       recoveredRoot (actualRun policy seed source n) = source.1 := by

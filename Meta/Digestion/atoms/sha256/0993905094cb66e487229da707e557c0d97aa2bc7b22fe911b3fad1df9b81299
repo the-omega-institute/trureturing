@@ -1,0 +1,19 @@
+**定理 367.2（与有限 ZERO 的字面域、局部严格蕴涵及全网等价）。** 若 $E$ 有高块，则有限 HALF 与定义 327.1 的有限 ZERO 标量测试域互不包含。尽管如此，在定理 367.1 的单载体背景上，$\mathsf X_{\rm HQ}+\mathsf H_{\mathcal F}$ 蕴涵 $\mathsf Z_{\rm fin}$；反向一般不成立。
+
+证明。HALF 的族非空且全部为同块半重叠，ZERO 全部为正交，故 HALF 有 ZERO 中没有的标签。ZERO 的 (327.2) 含高块自己的对角 primitive，与其配对的首输入是同块另一正交原子；这样的同块零角既非 HALF 标签，也非跨中心 $\mathsf X_{\rm HQ}$ 标签。因此字面上两域不嵌套；跨中心两域可能有交集不影响此结论。
+
+正向是 367.1。反向的局部诊断取
+
+$$
+\begin{gathered}
+E=H_3(\mathbb C)\oplus H_2(\mathbb C)\oplus\mathbb R^k,
+\qquad 5+k>p_*,\\
+D(a,b)=0\oplus
+\left(\frac{\operatorname{Tr}b_3}{3}
+-\frac{\operatorname{Tr}b_2}{2}\right)a_2\oplus0.
+\end{gathered}
+\tag{367.5}
+$$
+
+右单位由 $1-1=0$ 成立。primitive 第一输入不在二阶块时输出为零，在二阶块时输出沿该首原子，故整个零／半角整支持成立。全部高块首输入的输出为零，所以每一种 ZERO 选择及每一种高块 HALF 族均通过。但对二阶首原子 $e$ 和三阶第二原子 $p$，原规范总迹为 $\tau(D(e,p))=1/3$，违反保留的有序 $\mathsf X_{\rm HQ}$。这证明反向失败；没有给出 AC、X/R、原过程或 sigma，因而不是完整 $B_*$ 的反模型。完整背景的反向另由定理 368.1 提供，不能移到此单载体层。∎
+

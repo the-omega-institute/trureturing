@@ -1,0 +1,15 @@
+**定理 497.3（四阶以内的移动长度传递）。** 设 $(\mathrm L_4)$，$k\in\{3,4\}$，$(\mathrm F_k)$ 成立。设 $b_1,\dots,b_k\in C^1([1,2])$，$0\le b_j\le M$，$|b_j'|\le L$，$w\in C([1,2])$ 实值。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[w(U_X)\prod_{j=1}^k\frac{D_{h\,b_j(U_X)}(x)}{\sqrt{h\log X}}\Bigr]=\int_1^2w(u)\,W_k\bigl(b_1(u),\dots,b_k(u)\bigr)\,d\nu(u).
+\tag{497.5}
+$$
+
+证明。令 $A_j=f_{b_j,X}/\sqrt{h\log X}$、$G_j=F_{b_j,n,X}/\sqrt{h\log X}$。由引理 497.2(i)，$\|A_j\|_{L^4(\mu_X)}\le K_M^{1/4}$；对 $G_j$，在每块上对 $p(x)=x$、$q(x)=x+h\,b_j(u_\ell)$、$R=Mh$、$m=\frac12$、$J_\ell=[u_\ell X,u_{\ell+1}X+Mh]$ 用引理 497.1，得 $\mathbb E_{\mu_X}|G_j|^4\le\frac{1312C_4M^2}{3\log2}(1+nMh/X+n\varepsilon'_X)\le K_M$（对固定 $n$ 与充分大的 $X$）。又$\limsup_X\|A_j-G_j\|_{L^4(\mu_X)}\le\bigl(\frac{1312C_4(1+L)^2}{3\log2}\bigr)^{1/4}n^{-1/2}$。由望远镜恒等式 $\prod_jA_j-\prod_jG_j=\sum_i(A_i-G_i)\prod_{j<i}A_j\prod_{j>i}G_j$ 与关于概率测度 $\mu_X$ 的 Hölder 不等式（$k$ 个 $L^k$ 因子，且 $\|\cdot\|_{L^k}\le\|\cdot\|_{L^4}$），$\limsup_X\|\prod_jA_j-\prod_jG_j\|_{L^1(\mu_X)}\le C'n^{-1/2}$，$C'$ 只依赖 $C_4,K_M,L,k$；乘以 $\|w\|_\infty$ 即控制 $\mathbb E[w(U_X)(\prod_jA_j-\prod_jG_j)]$。令 $w_n=w(u_j)$（$u_j\le u<u_{j+1}$），则 $|\mathbb E[(w-w_n)(U_X)\prod_jG_j]|\le\omega_w(1/n)K_M^{k/4}$。在每块上 $G_j=\widetilde B_X(b_j(u_j))$，由 $(\mathrm F_k)$（区间 $[u_j,u_{j+1}]$），
+
+$$
+\mathbb E_{\mu_X}\Bigl[w_n(U_X)\prod_jG_j\Bigr]=\sum_{j'}w(u_{j'})\,\mathbb E_{\mu_X}\Bigl[\mathbf 1_{[u_{j'},u_{j'+1}]}(U_X)\prod_j\widetilde B_X\bigl(b_j(u_{j'})\bigr)\Bigr]\longrightarrow\sum_{j'}w(u_{j'})\,\nu([u_{j'},u_{j'+1}])\,W_k\bigl(\mathbf b(u_{j'})\bigr)
+$$
+
+（块的公共端点是 $\mu_X$-零集）。$W_k\circ\mathbf b$ 在 $[1,2]$ 上连续，右边是 $\int_1^2w\,W_k(\mathbf b)\,d\nu$ 的 Riemann 和。先令 $X\to\infty$，再令 $n\to\infty$。证毕。
+

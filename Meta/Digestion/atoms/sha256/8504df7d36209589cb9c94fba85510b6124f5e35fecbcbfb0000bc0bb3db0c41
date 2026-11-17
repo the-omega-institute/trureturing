@@ -1,0 +1,2 @@
+**定义 180.1（条目地址与中央支持）。** 本卷续接[原生切口配平续卷](AURIC_C128_NATIVE_CUT_BALANCE_CONTINUATION.md)，该卷的 §§83–179 保持原地址；本卷从 §180 开始。对 §§1–82 的引用指[原生互易比较母卷](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)。完整 $B$ 与另名完整 $\mathsf B_{\rm cl}$ 分别保持母卷定义 41.1、67.1 的全部量词。固定原 P/G 已构造的每个有限 EJA $E$、原正 Frobenius 型 $q$、原实双线性 $D$、规范谱迹 $\tau$，仍记 $P_c=4(L_c-L_c^2)$、$T_c=\operatorname{im}P_c$、$N_c=\ker P_c$、$W_c(x)=\|P_cx\|_q^2/2$。每颗 primitive $e$ 的中央支持 $z(e)$ 是满足 $z(e)\circ e=e$ 的唯一中央原子；$z(e)=z(p)$ 准确表示两者属于同一简单理想。这些都是同一原数学载体中的关系，不增添实际系统或读口。
+

@@ -112,5 +112,7 @@ For every actual composite Kraus matrix, the original factorized trace inequalit
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SparseProbePortBound.twoSettingError`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../Foundation/FiniteDiamondDistance.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity](SparseProbeCoercivity.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity](TomiyamaDiagonalKPositivity.md)
 - Dependency: [D5/S3/TotalVariation/Pinsker](../../TotalVariation/Pinsker.md)

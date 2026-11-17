@@ -1,0 +1,79 @@
+**定理 192.1（同一原余量的双偶性）。** 保持182.1的完整原候选及实际 $h,e,j,s$ 条件。本节另取任意实 $R,\lambda,\nu$ 及原 $h$-奇 $z\in E$，置
+
+$$
+\begin{gathered}
+c=\lambda h+\nu s,\quad x=c+z,\quad k=h\circ x=\lambda u+\nu H,\quad H=hs,\\
+t=D(h,z)=iQhz,\quad g=D(Rh,x)=Rt+r.
+\end{gathered}
+\tag{192.1}
+$$
+
+则同一原余量满足
+
+$$
+\boxed{[h,r]=[s,r]=[c,r]=0,\qquad P_s^+z\circ r=0.}
+\tag{192.2}
+$$
+
+这里不要求 $z$ 为 $s$-偶或 $s$-奇；$g=Rt+r$ 是由163.1识别奇投影后的定义，不是第一槽齐次假设。
+
+证明。$R=0$ 时原零输入P2给 $g=r=0$。$\nu=0$ 时166.1给 $g=Rt$，同样成立。以下 $R\nu\ne0$。163.1首先给 $r$ 为 $h$-偶。182.2供应第二实际框架 $(H,e,J)$ 及同一 $Q$。189.1在原 $h$ 框架上给实际 $D(Rh,Rk)=0$，因为 $Rk$ 与 $h$ 交换。准确调用PB $(Rh,x,Rk)$：位移是 $g-R^2c,Rk$，两份完整外层为
+
+$$
+\bigl((1-R^2)c+z+g,2Rk\bigr),\qquad
+\bigl((1+R^2)c+z-g,0\bigr).
+\tag{192.3}
+$$
+
+负外层第二标签实际为零。由 $k^2=c^2$、$x\circ c=c^2+z\circ c$，原PB与反对称性准确给
+
+$$
+D\bigl(2Rk,(1-R^2)c+z+g\bigr)
+=2x\circ g-2R^2z\circ c.
+\tag{192.4}
+$$
+
+用182.4的原有限投影写 $z_{\rm e},z_{\rm o},t_{\rm e},t_{\rm o},r_{\rm e},r_{\rm o}$，并令 $M=z\circ r$、$M_{\rm e}=P_s^+M$。$c$ 为 $H$-偶，$U_H=U_hU_s$，故192.4的实际第二输入的 $H$-奇部分是 $z_{\rm e}+Rt_{\rm e}+r_{\rm o}$。163.1在第二实际框架上，首槽取 $2Rk=2R\lambda u+2R\nu H$，得到同一左值的投影
+
+$$
+P_H^-D\bigl(2Rk,(1-R^2)c+z+g\bigr)
+=2R\nu s(t_{\rm e}-Rz_{\rm e})+2R\nu iQhsr_{\rm o}.
+\tag{192.5}
+$$
+
+这里只用 $iQht_{\rm e}=-z_{\rm e}$，未把未知 $D$ 展开。另一方面，在192.4右端只展开已知Jordan乘法。$z\circ t=h\circ t=0$，且
+
+$$
+\begin{gathered}
+c\circ t=\nu s t_{\rm e},\qquad
+c\circ r=\lambda hr+\nu s r_{\rm e},\qquad
+z\circ c=\nu s z_{\rm e},\\
+P_H^-M=M_{\rm e}.
+\end{gathered}
+\tag{192.6}
+$$
+
+于是该右端的 $H$-奇部分准确为
+
+$$
+2R\nu s t_{\rm e}-2R^2\nu s z_{\rm e}
++2\lambda hr_{\rm o}+2M_{\rm e}.
+\tag{192.7}
+$$
+
+比较192.5、192.7，得
+
+$$
+R\nu iQhsr_{\rm o}=\lambda hr_{\rm o}+M_{\rm e}.
+\tag{192.8}
+$$
+
+含 $r_{\rm o}$ 的两项为 $h$-偶，$M_{\rm e}$ 为 $h$-奇。因此分别投影，再仅在环境代数中左乘 $h$，得到
+
+$$
+M_{\rm e}=0,\qquad (R\nu iQs-\lambda u)r_{\rm o}=0.
+\tag{192.9}
+$$
+
+后式左乘 $-R\nu iQs-\lambda u$，利用 $(iQs)^2=-u$，便有 $((R\nu)^2+\lambda^2)r_{\rm o}=0$。因 $R\nu\ne0$，得 $r_{\rm o}=0$，即 $[s,r]=0$。再结合 $[h,r]=0$ 得 $[c,r]=0$；$r$ 现为 $s$-偶，使 $M_{\rm e}=z_{\rm e}\circ r=0$。没有把环境逆元送进原 $D$，负 $R,\nu$ 及 $R^2=1$ 均已包含。∎
+

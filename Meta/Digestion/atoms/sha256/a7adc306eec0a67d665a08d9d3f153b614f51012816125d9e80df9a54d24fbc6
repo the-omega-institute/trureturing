@@ -1,0 +1,12 @@
+**定义 18.3（态球、原子及 Gram 商的准确对应）。** 18.1 的恢复以后，全部数学正评价写作 $\alpha_{m,r}(su+x)=ms+\langle r,x\rangle$、$m\ge\|r\|$，区别于 (16.4) 采用的 $r=mn$。数学态、原子的经典几何和 Gram 商维数只是该恢复的中间对应：
+
+| $\dim H$ | 归一数学态及原子 | $m>0$ 的 Gram 商复维数 |
+| --- | --- | --- |
+| $0$ | 一个态、唯一非零原子 $u$ | $1$ |
+| $1$ | 闭区间；纯态为两端 $S^0$，原子为 $p_\pm=(u\pm v)/2$ | $|r|<m$ 时 $2$；$|r|=m$ 时 $1$ |
+| $3$ | 闭 Bloch 三球；纯态与原子 $p_v=(u+v)/2$、$\|v\|=1$ 为 $S^2\cong\mathbb{CP}^1$ | $\|r\|<m$ 时 $4$；$\|r\|=m$ 时 $2$ |
+
+零质量时各商均为零。上述商是自由商的有限维实现：由 (18.1) 及 $\ell$ 满射，$\mathcal F/\mathcal N_\alpha\cong A_0/\{a:\alpha(a^*\star a)=0\}$。一轴 Gram 矩阵为 $\left(\begin{smallmatrix}m&r\\r&m\end{smallmatrix}\right)$。三轴时沿 A13.3 证明内的同一个块分解，矩阵为 $\left(\begin{smallmatrix}m&r^{\mathsf T}\\r&mI+\mathrm iT_r\end{smallmatrix}\right)$，$T_ry=\kappa(r,y)$；$m\pm\|r\|$ 各重数二，因此得到表中秩。这里取的是已恢复的三维空间，不把七维商秩四搬到三维纯态上。
+
+原读数为 $\alpha_{m,r}(p_v)=(m+\langle r,v\rangle)/2$，正质量时才除以 $m$。三轴的 $\Phi_\varepsilon(p_v)=(I-\varepsilon v\cdot\sigma)/2$ 为秩一投影，其像射线给 $S^2\cong\mathbb{CP}^1$；纯锚 $\alpha_{m,n}$ 对应密度 $m\Phi_\varepsilon(p_n)$，Gram 商通过 $A\mapsto\sqrt m A\xi_n$ 识别 $\mathbb C^2$，其中 $\xi_n$ 为该投影的单位像向量。三轴纯态商上的左作用忠实；一轴纯态商只看一个经典分量，表示不忠实，取两端点的直和才忠实。三轴的原锥是四实维 Lorentz 锥，原 $N$ 是 $|s|+\|x\|$，不是把它替换成 Euclidean 范数或物理时空度量。实际族 $\mathcal P$ 只占数学态集中的原先指定部分；数学球、射线及辅助向量不制造实际准备、三维物理空间或 qubit 设备。
+

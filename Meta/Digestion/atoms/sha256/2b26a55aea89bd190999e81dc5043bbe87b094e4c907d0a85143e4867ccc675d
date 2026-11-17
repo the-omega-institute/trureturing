@@ -1,0 +1,2 @@
+For any stochastic kernel fixing both labels, the actual probability of ever reaching $d_1$ is a $[0,1]$-valued function with those boundary values. First-step conditioning makes it harmonic, even with reducible or nonabsorbing classes. This supplies $h=h_{W_i}$ in (10.1) without auxiliary termination.
+

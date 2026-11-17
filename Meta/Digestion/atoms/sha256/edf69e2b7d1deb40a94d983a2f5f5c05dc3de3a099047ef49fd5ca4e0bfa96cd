@@ -1,0 +1,151 @@
+**定理 19.1（平衡秩一族的零探针刚性与继承区间）。** 设 $m\ge1$，
+
+$$
+\begin{gathered}
+v=(1,\sqrt2)^{\mathsf T},\qquad
+U=\operatorname{diag}(\zeta_1,\zeta_2),\quad |\zeta_j|=1,\qquad
+V=Uv\ell^*,\qquad P_{\ker D_{\rm env}}\ell\ne0,\\
+B=U\begin{pmatrix}a&z\\\bar z&d\end{pmatrix}U^*,\qquad
+ a,d\in\mathbb R,\quad z\in\mathbb C,\qquad
+ d=3\sqrt2\operatorname{Re}z-4a,\qquad
+ \delta=2a-\sqrt2\operatorname{Re}z\ne0.
+\end{gathered}
+\tag{19.2}
+$$
+
+对任意实对角角残量 $s=\operatorname{diag}(s_1,s_2)\oplus0_m$，固定 P2 的准确条件直接由定理 13.1 给出：
+
+$$
+\begin{gathered}
+s=\rho\operatorname{diag}(1,-2)\oplus0_m,\qquad \rho\in\mathbb R,\\
+\alpha=\|P_{\ker D_{\rm env}}\ell\|>0,\qquad
+\gamma=\sqrt2\alpha,\qquad
+\mathfrak b=\frac34\delta+\frac{i\operatorname{Im}z}{\sqrt2},\qquad
+K=\sqrt{|\mathfrak b|^2+\frac34\gamma^2},\\
+-\frac{\gamma^2}{2(K+\sigma\operatorname{Im}\mathfrak b)}
+\le\rho\le
+\frac{\gamma^2}{2(K-\sigma\operatorname{Im}\mathfrak b)}.
+\end{gathered}
+\tag{19.3}
+$$
+
+若要求两个取向，两个准确区间的交集为
+
+$$
+ |\rho|\le\frac{\gamma^2}{2(K+|\operatorname{Im}\mathfrak b|)}.
+\tag{19.4}
+$$
+
+对每个分别固定的 $\sigma$，全部原 P2 与原 $x=0$ PB 同时成立，当且仅当 $s=0$。更具体地，对任意 $\rho\ne0$，下述同一个有限原空间向量使原零探针的两笔 Gram 预算同时为零，而其左端严格正；不要求 $\rho$ 先属于 (19.3)。
+
+证明。先准确代入定理 13.1，不重证其分类。令
+
+$$
+q=\alpha^{-1}P_{\ker D_{\rm env}}\ell,\qquad
+n=U(1,1)^{\mathsf T}/\sqrt2,\qquad
+e=U(1,-1)^{\mathsf T}/\sqrt2.
+\tag{19.5}
+$$
+
+$q$ 为单位向量，$D_{\rm env}q=0$、$\ell^*q=\alpha$，而
+$C^{-1/2}Vq=\gamma n$，故零模耦合秩为一且平衡。归一化 Schur 矩阵中，被减去的项为
+$(\ell^*D_{\rm env}^\dagger\ell)U(1,1)^{\mathsf T}(1,1)U^*$；其 $e,n$ 条目为零。因此 (13.5) 的 $b$ 准确为
+
+$$
+e^*C^{-1/2}(B-VD_{\rm env}^\dagger V^*)C^{-1/2}n
+=\frac{a-d/2}{2}+\frac{i\operatorname{Im}z}{\sqrt2}
+=\mathfrak b.
+\tag{19.6}
+$$
+
+在 (13.6) 的同一个原行空间中，$e^*C^{-1/2}V=0$，所以
+
+$$
+L=[e^*C^{-1/2},0],\qquad j=\gamma^{-1}[0,q^*],\qquad
+G=\begin{bmatrix}L-\mathfrak b j\\j\end{bmatrix},\qquad
+GG^*=\begin{pmatrix}
+3/4+|\mathfrak b|^2/\gamma^2&-\mathfrak b/\gamma^2\\
+-\overline{\mathfrak b}/\gamma^2&1/\gamma^2
+\end{pmatrix}.
+\tag{19.7}
+$$
+
+其逆及定理 13.1 的标量准确为
+
+$$
+\begin{gathered}
+Q=\begin{pmatrix}4/3&4\mathfrak b/3\\
+4\overline{\mathfrak b}/3&\gamma^2+4|\mathfrak b|^2/3\end{pmatrix},\qquad
+R=4K/3,\quad \Delta=4\gamma^2/3,\quad
+\omega=e^*\operatorname{diag}(1,-1)n=1,\quad
+J=-4\operatorname{Im}\mathfrak b/3.
+\end{gathered}
+\tag{19.8}
+$$
+
+将它们直接代入 (13.9) 和 (13.10)，得到 (19.3) 和 (19.4)，包括全部闭端点及原质量。$K>|\operatorname{Im}\mathfrak b|$，所以分母严格正；两个区间都包含非零内点。这里保留了实际耦合幅度 $\gamma$ 及取向 $\sigma$。
+
+现在给出原零探针的向量。置
+
+$$
+u_0=(-2\sqrt2,1)^{\mathsf T},\qquad
+w=4\sqrt2a-3z,\qquad y=(w/\alpha)q,\qquad
+\xi=(Uu_0,y)\in\mathbb C^2\oplus\mathbb C^m.
+\tag{19.9}
+$$
+
+此处的 $u_0$ 是上述列向量；$U$ 保留在原演员坐标中。$\ell^*y=w$、$D_{\rm env}y=0$。直接用原 $k=c\circ t$ 的三个块行，得到
+
+$$
+\begin{aligned}
+U^*(k\xi)_{\rm actor}
+&=\binom{-2\sqrt2a+3z/2+w/2}
+{-3\sqrt2\bar z+2d+\sqrt2w}=\binom00,\\
+(k\xi)_{\rm env}
+&=\tfrac12\ell\,v^*Cu_0=0.
+\end{aligned}
+\tag{19.10}
+$$
+
+第二演员行使用的准确关系是
+$2d+8a-3\sqrt2(z+\bar z)=0$。令 $\nu=\operatorname{Im}z$，则同一向量还满足
+
+$$
+T=\binom{\sqrt2\delta-2i\nu}{2\delta-i\sqrt2\nu},\qquad
+ t\xi=(UT,-\sqrt2\ell).
+\tag{19.11}
+$$
+
+由 $k\xi=0$，有 $tc\xi=-ct\xi$，故对于任意实 $\rho$，
+
+$$
+Z=\operatorname{diag}(1,-1),\qquad
+ g_\sigma\xi=(U(\sigma iCT+\rho CZu_0),0_m),\qquad
+ CZu_0=(-2\sqrt2,-2)^{\mathsf T}.
+\tag{19.12}
+$$
+
+取实际 $x=0$，则 $h=r=0$。两对完整原标签在这一个向量上的作用分别为
+
+$$
+\begin{gathered}
+R_+\xi=-k\xi=0,\qquad R_-\xi=k\xi=0,\\
+S_\pm\xi=
+\bigl(U[T\pm(\sigma iCT+\rho CZu_0)],-\sqrt2\ell\bigr).
+\end{gathered}
+\tag{19.13}
+$$
+
+因此 $B_{\phi_\xi}(R_+,S_+)=B_{\phi_\xi}(R_-,S_-)=0$。这里两个 $S$ 的环境分量仍是原来的 $-\sqrt2\ell$；零预算来自 $R_\pm\xi=0$，不是删除环境平方。另一方面，$T^*CT$ 为实数，且
+
+$$
+\operatorname{Re}(T^*CZu_0)=-8\delta,\qquad
+\phi_\xi(L)=-2\operatorname{Re}((t\xi)^*g_\sigma\xi)
+=16\rho\delta.
+\tag{19.14}
+$$
+
+这对两种 $\sigma$ 分别成立。$\|\xi\|^2=9+|w|^2/\alpha^2>0$，所有条目均有限；故 $\rho\delta\ne0$ 时左端为 $16|\rho\delta|>0$，两笔预算之和为零。任取质量 $\mu>0$，再用 $\sqrt\mu\xi/\|\xi\|$，两笔预算仍为零，左端为 $16\mu|\rho\delta|/\|\xi\|^2$。零泛函本身满足零等式。
+
+于是 P2 先给 (19.3) 的残量形状，而原零探针排除其中全部非零 $\rho$。$s=0$ 时的 P2 与全部实际角探针 PB 直接复用 §1 的标准零残量结果。这证明充要结论。∎
+

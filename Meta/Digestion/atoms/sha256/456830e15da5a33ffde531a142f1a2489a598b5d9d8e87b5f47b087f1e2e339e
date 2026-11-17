@@ -1,0 +1,48 @@
+**定理 329.1（两份完整背景各自的无标定等价）。** 对定义 327.1 的任意先定静态选择，分别有
+
+$$
+\begin{aligned}
+B+\mathsf G_{0h}+\mathsf Z_{\rm fin}
+&\Longleftrightarrow B+\mathrm I+\mathrm{SC}
+\Longleftrightarrow B+\mathsf G_{0h}+\mathsf Z_0,\\
+\mathsf B_{\rm cl}+\mathsf G_{0h}+\mathsf Z_{\rm fin}
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathrm I+\mathrm{SC}
+\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf G_{0h}+\mathsf Z_0.
+\end{aligned}
+\tag{329.1}
+$$
+
+恢复的 I、SC、LU、交替、导子、原 $q$ 斜伴随、全部零／半角无迹覆盖全部原对象和实际联合，不限于有限测试或高秩块。
+
+证明。原右单位仍独立来自母卷 30.1／67.3，静态表示独立来自前卷 246.1。固定非零原 $A$，按前卷 202.1 取 $N\ge\max\{3,p_*\}$，取得同一个实际 $J$、原含幺 Jordan/$D$ 单射 $i:E_A\to E_J$ 和高简单秩族 $\mathcal V_N$，满足
+
+$$
+n_T>N,\qquad
+\bigcap_{T\in\mathcal V_N}\ker(\pi_Ti)=\{0\}.
+\tag{329.2}
+$$
+
+与 323.1 相同，使用 $J$ 自己由原身份事件与全事件 R 供应的一份实际 $K=JR$，$R=P^{\otimes k}$、$k\ge1$。整个 AC、原指针幂与全部静态中心对给 $R$ 一个非经典块 $V$。每个 $U_T=(T,V)$ 都是同一 $K$ 的高秩目标；$K$ 因而在原选中域。于是 328.1 可用于整个 $E_K$，包括其中全部低秩和经典来源。
+
+设 $k_J,l$ 为这份实际联合的原有序嵌入。每个经典源唯一为经典中心对 $s=(r,d)$；取两个因子对应的数学中心单位 $z_r,z_d$。原交叉零给 $D^K(k_Jz_r,lz_d)=0$。这两个输入在 $U_T$ 上均为零，经典坐标乘积仅在 $s$ 为一，故 (328.1) 恰给 $0=-\ell_{U_Ts}I_{U_T}$。逐个中心对取得 $\ell_{U_Ts}=0$，得到
+
+$$
+\pi_{U_T}D^K(x,y)=\alpha_{U_T}\,\mathrm i[x_{U_T},y_{U_T}]
+\qquad(x,y\in E_K).
+\tag{329.3}
+$$
+
+这是整个输入的式子，不是仅对 $U_T\times U_T$ 的内部限制。所用的是原交叉零，没有反向交叉零前件。
+
+静态表示给单射 $\theta_T:x_T\mapsto x_T\otimes I_V$，允许相应转置，且 $\pi_{U_T}k_J(x)=\theta_T(x_T)$。故 $h=k_Ji$ 的这些目标共同分离整个原 $E_A$。将原任意 $a,b,c$ 的
+
+$$
+r_A=D^A_a(b\circ c)-(D^A_ab)\circ c-b\circ(D^A_ac),
+\qquad D^A_aa
+\tag{329.4}
+$$
+
+沿同一 $h$ 运输。原嵌入保持同一 Jordan 乘法和同一 $D$，(329.3) 的交换子逐目标使两者为零；共同分离给原 $r_A=0,D^A_aa=0$。有限 EJA 导子内性给 I，原 $q$ 的正 Frobenius 性给原斜伴随。零对象平凡，$A$ 任意，故全部原对象成立。
+
+现在才使用前卷 275.2、314.1 或本卷 323.1 的反向桥：完整 I+SC 给全部原交换子结构与含零分支的共同曲率，从而全部 $\mathsf G_{0h},\mathsf Z_0$ 成立；$\mathsf Z_0$ 包含全部有限测试。两份准备背景各自使用自己的原桥，未用闭背景替换有限生成背景。这也证明结论不依赖哪一次先定静态坐标选择。∎
+

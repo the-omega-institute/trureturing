@@ -1,0 +1,10 @@
+#### 定义 6.10：正读出状态与效果
+
+$$
+\operatorname{St}(E)=\{\ell:E\to\mathbb R:\ell\text{ 实线性},\
+\ell(E_+)\ge0,\ \ell(I)=1\},\qquad
+\operatorname{Eff}(E)=\{F:0\le F\le I\}.
+$$
+
+这里定义的是数学读出对象；实际准备、装置与这些对象的对应另需给定。
+

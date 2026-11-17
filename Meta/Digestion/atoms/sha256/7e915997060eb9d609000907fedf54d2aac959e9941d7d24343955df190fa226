@@ -1,0 +1,60 @@
+**引理 36.1（复用N3 23.1的准确原像适配）。** 对任意有限维不可约满商 $\pi:A\to M_n$，$n\ge2$，任意实际 $r,a\in E$，若
+
+$$
+\pi r=\mu p,\qquad p=ee^*,\qquad p(\pi a)p=0,
+\tag{36.1}
+$$
+
+则 $\pi D(r,a)=\sigma_\pi i[\pi r,\pi a]/2$。任意幅度及补角背景保留；不要求 $r$ 属于某个理想。
+
+证明。直接消费N3 23.1的两射线证明，但需核对它在这里的维数与标签前件。该证明只在一次固定有限商内计算，所用所有第三标签都可由满 $\pi$ 精确自伴提升。全部PB仍先在原 $A$ 调用，全部外层由33.1和OP80.2读取；因此没有要求 $A$ 本身是完整矩阵丛。
+
+以下列出该证明中承担维数适配的等式。记 $q=1-p$、$\jmath=i\sigma_\pi$，写
+
+$$
+\pi a=H(z)+B,\quad H(z)=ze^*+ez^*,\quad z\perp e,\quad B=qBq,
+\qquad \pi D(r,a)=\delta p+H(w).
+\tag{36.2}
+$$
+
+这由33.2给出。$\mu=0$ 用零预算；$z=0$ 时，原PB $(a;r,0)$ 的第二外槽像为零，给 $\mu p\circ(\delta p+H(w))=0$，结论亦成立。其余令 $t=\|z\|$、$f=z/t$、$V=\operatorname{span}\{e,f\}$，取
+
+$$
+u_\epsilon=(e-\epsilon\jmath f)/\sqrt2,\quad P_\epsilon=u_\epsilon u_\epsilon^*,
+\qquad C_\epsilon=\epsilon 2tP_\epsilon,
+\qquad \epsilon=\pm1.
+\tag{36.3}
+$$
+
+实际第三标签 $c_\epsilon$ 只须满足 $\pi c_\epsilon=C_\epsilon$。原 $(r,c_\epsilon)$ 两像同在角 $V$，OP80.2识别其旧内值。对 $\operatorname{PB}(r;a,c_\epsilon)$，其实际第二位移的像为零，第一位移的像为
+
+$$
+\Delta-\epsilon\mu t p,\qquad
+\Delta=\pi D(r,a)-\frac\jmath2[\mu p,\pi a].
+$$
+
+两份实际第二外槽像均为 $C_\epsilon$。各自P2经 $R_\epsilon=1-P_\epsilon$ 压缩原PB；因 $(\pi a)\circ p=H(z)/2$ 且两条射线上 $u_\pm^*H(z)u_\pm=0$，有 $R_\epsilon((\pi a)\circ p)R_\epsilon=0$。于是准确得到N3 23.6–23.7：
+
+$$
+R_\epsilon\bigl((\pi a)\circ\Delta\bigr)R_\epsilon=0
+\qquad(\epsilon=\pm1).
+\tag{36.4}
+$$
+
+对任意 $\xi\in V^\perp$，同一个 $((\pi a)\circ\Delta)\xi$ 同时属于两条正交射线，故为零。其 $q$ 分量正是 $zw^*\xi/2$；任意 $B$ 的项在这个压缩中消去。因此 $w\perp V^\perp$，即 $w\in\mathbb Cz$。这是唯一涉及补空间维数的一步，在任意有限 $n$ 都成立；$n=2$ 时该结论已自动成立。
+
+现在原PB $(a;r,0)$ 的两对真实外层像
+
+$$
+(\mu p-\pi D(r,a),\ \mu p\circ\pi a),\qquad
+(\mu p+\pi D(r,a),\ -\mu p\circ\pi a)
+$$
+
+才共同支撑于 $V$。用OP80.2识别这两份实际旧输出，N3 23.9给
+
+$$
+\mu p\circ\Delta=0.
+$$
+
+而 $\Delta\in\mathbb Rp+H(q\mathbb C^n)$，$\mu p\circ$ 在此空间上对 $\mu\ne0$ 单射，故 $\Delta=0$。整个论证没有对未知 $D$ 拆和或换同像代表。∎
+

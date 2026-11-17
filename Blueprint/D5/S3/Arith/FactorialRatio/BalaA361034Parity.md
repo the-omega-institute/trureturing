@@ -4,7 +4,19 @@
 
 Bala's OEIS A361034 parity characterization.
 
-**Theorem 1.1 (quotient_odd).**
+**Theorem 1.1 (binary_factorial_balance).**
+
+$$\forall n \in \mathbb{N},\; \operatorname{Nat}.\operatorname{factorization}\left(\operatorname{Nat}.\operatorname{factorial}\left(n\right), 2\right) + \operatorname{List}.\operatorname{sum}\left(\operatorname{Nat}.\operatorname{digits}\left(2, n\right)\right) = n$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/BalaA361034Parity.binary_factorial_balance` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The factorial exponent of two and the binary digit sum add to the index.
+
+**Theorem 1.2 (quotient_odd).**
 
 $$\forall C \in \mathbb{N},\; \forall j \in \mathbb{N},\; \forall n \in \mathbb{N},\; \left(0 < C \land \left(0 < j \land \left(8 \cdot \operatorname{Nat}.\operatorname{factorial}\left(j\right) \cdot C = \operatorname{Nat}.\operatorname{factorial}\left(4 \cdot j\right) \land \operatorname{Nat}.\operatorname{factorization}\left(C, 2\right) = 3 \cdot j - 3\right)\right)\right) \Rightarrow \left(\operatorname{Odd}\left(\operatorname{Nat}.\operatorname{div}\left(C \cdot \operatorname{Nat}.\operatorname{factorial}\left(4 \cdot n\right), \operatorname{Nat}.\operatorname{factorial}\left(n\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(n + j\right)^{3}\right)\right) \Leftrightarrow \left(\exists k \in \mathbb{N},\; n + j = 2^{k}\right)\right)$$
 
@@ -18,7 +30,7 @@ $$\forall C \in \mathbb{N},\; \forall j \in \mathbb{N},\; \forall n \in \mathbb{
 
 For positive natural numbers C and j, when 8 j! C = (4j)! and the exponent of 2 in C is 3j - 3, the factorial quotient is an integer and is odd exactly when n + j is a power of two. The binary digit sum determines the exponent of 2 in the quotient.
 
-**Definition 1.2 (a).**
+**Definition 1.3 (a).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = \operatorname{Nat}.\operatorname{div}\left(2520 \cdot \operatorname{Nat}.\operatorname{factorial}\left(4 \cdot n\right), \operatorname{Nat}.\operatorname{factorial}\left(n\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(n + 2\right)^{3}\right)$$
 
@@ -30,7 +42,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = \operatorname{Nat
 
 OEIS A361034, NAME (unpaginated): "a(n) = 2520*(4*n)!/(n!*(n+2)!^3)." The index n is a natural number, including zero. Nat.div denotes natural-number division; the factorial denominator divides the numerator.
 
-**Definition 1.3 (claim).**
+**Definition 1.4 (claim).**
 
 $$\operatorname{claim} = (\forall n \in \mathbb{N},\; \operatorname{Odd}\left(\operatorname{a}\left(n\right)\right) \Leftrightarrow \left(\exists k \in \mathbb{N},\; 1 \le k \land n = 2^{k} - 2\right))$$
 
@@ -42,7 +54,7 @@ $$\operatorname{claim} = (\forall n \in \mathbb{N},\; \operatorname{Odd}\left(\o
 
 OEIS A361034, COMMENTS (unpaginated): "Conjecture: a(n) is odd iff n = 2^k - 2 for some k >= 1." Both n and k range over the natural numbers. The lower bound on k makes the subtraction exact.
 
-**Theorem 1.4 (result).**
+**Theorem 1.5 (result).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{Odd}\left(\operatorname{a}\left(n\right)\right) \Leftrightarrow \left(\exists k \in \mathbb{N},\; 1 \le k \land n = 2^{k} - 2\right)$$
 
@@ -63,6 +75,7 @@ The factorial quotient is odd exactly at the stated indices. Its exponent of 2 i
 ## References
 
 - Truth anchor: `D5/S3/Arith/FactorialRatio/BalaA361034Parity.a`
+- Truth anchor: `D5/S3/Arith/FactorialRatio/BalaA361034Parity.binary_factorial_balance`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/BalaA361034Parity.claim`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/BalaA361034Parity.quotient_odd`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/BalaA361034Parity.result`

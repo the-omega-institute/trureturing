@@ -1,0 +1,40 @@
+**定理 10.2（同一原 PB 响应的中心锥关系）。** 在 10.1 下，原两圆接口 2.1 给出的四个等式进一步推出
+
+$$
+\begin{gathered}
+\mathsf A\circ\mathsf X=\mathsf A\circ\mathsf Y
+=\mathsf X\circ\mathsf Y=0,
+\qquad
+\mathsf X^2=\mathsf Y^2=\mathsf T,
+\\
+\mathsf R=\frac{\mathsf A^2+\mathsf X^2}{4},
+\qquad
+\mathsf A^2=4\mathsf R-\mathsf T,
+\\
+0\le \mathsf T\le4\mathsf R,
+\qquad
+\mathsf R,\mathsf T\in Z(\mathfrak B_{y,z}).
+\end{gathered}
+\tag{10.5}
+$$
+
+这三份 Jordan 正交等价于 $\mathsf A,\mathsf X,\mathsf Y$ 在环境结合乘法中两两反交换。这里的中心性只是在诊断代数 $\mathfrak B_{y,z}$ 内成立；不宣称 $\mathsf R$、$\mathsf T$ 或任一取向元在 $A_0$ 或整个原世界中中央。
+
+证明。2.1 给 $P^2=Q^2$、$\mathsf X^2=\mathsf Y^2$、$P\circ\mathsf Y=0$ 与 $\mathsf X\circ\mathsf Y=0$。由
+
+$$
+\mathsf A\circ\mathsf X=P^2-Q^2=0
+\tag{10.6}
+$$
+
+得第一份反交换。又 $\mathsf X\circ\mathsf Y=0$ 与 $P\circ\mathsf Y=0$ 给 $Q\circ\mathsf Y=0$，所以 $\mathsf A\circ\mathsf Y=0$。对自伴元，Jordan 正交正是环境乘法的反交换，故三者两两反交换。
+
+在环境中展开平方，交叉项相消，得
+
+$$
+\mathsf A^2+\mathsf X^2=2(P^2+Q^2)=4P^2=4\mathsf R.
+\tag{10.7}
+$$
+
+自伴平方正性给 $\mathsf R\ge0$、$\mathsf T\ge0$，而 $4\mathsf R-\mathsf T=\mathsf A^2\ge0$。若自伴元 $a$ 与自伴元 $b$ 反交换，则 $a^2b=ba^2$；逐一对三生成元使用此事实，$\mathsf A^2$、$\mathsf X^2$、$\mathsf Y^2$ 与 $\mathfrak B_{y,z}$ 的每个生成元交换。由 (10.7) 得 $\mathsf R,\mathsf T$ 在 $\mathfrak B_{y,z}$ 内中央。全程只用了 2.1 的有限原关系和环境中的固定乘法，没有使用未知 $D$ 的连续性、可加性、闭合性或原域中的谱投影。∎
+

@@ -1,0 +1,75 @@
+**定理 35.1（指定质量的严格内部面积见证）。** 固定 (34.1) 的原完整 $M_4(\mathbb C)$、$t=E_{14}+E_{41}$、$\mathcal W=\mathbb C e_1\ne0$ 和任一个 $\iota=\sigma i$。对每个实 $s\ne0$、每个指定 $0<\mu<\infty$，取
+
+$$
+\begin{gathered}
+E=\operatorname{span}_{\mathbb C}(e_2,e_3),\qquad
+u=e_2+e_3,\qquad d=e_2-e_3,\qquad v=u/\sqrt2,\\
+x|_E=\frac{s}{2}\begin{pmatrix}-5&4+\iota\\4-\iota&-4\end{pmatrix},
+\qquad x|_{E^\perp}=0,\\
+\phi_\mu(a)=\frac\mu2u^*au=\mu v^*av,
+\qquad \phi_\mu(I_4)=\mu .
+\end{gathered}
+\tag{35.1}
+$$
+
+则同一个原探针、同一个泛函上的完整 PB 数据准确为
+
+$$
+\begin{gathered}
+\phi_\mu(L)=\frac{9\mu s^2}{8},\qquad
+\sqrt{B_{\phi_\mu}(R_+,S_+)}=\frac{5\mu s^2}{16},\qquad
+\sqrt{B_{\phi_\mu}(R_-,S_-)}=\frac{5\sqrt5\,\mu s^2}{16},\\
+\Delta_\mu:=|\phi_\mu(L)|-
+ \sum_{\delta=\pm1}\sqrt{B_{\phi_\mu}(R_\delta,S_\delta)}
+=d_0\mu s^2>0,\qquad d_0=\frac{13-5\sqrt5}{16}>0 .
+\end{gathered}
+\tag{35.2}
+$$
+
+特别，$s\ne0$ 时两笔原预算已经同时严格正。两种取向分别得到这些同一实数；$s=0$ 或 $\mu=0$ 时这份构造只给零等式，不再是严格见证。
+
+证明。$x=x^*=PxP$，$u,d$ 为实向量，$\|u\|^2=\|d\|^2=2$。原 $t$ 确实湮灭 $E$，且 $cE\subseteq E$，所以 $k_tu=K_\sigma(c,t)u=tu=0$。完整作用像而非压缩平方给
+
+$$
+\begin{aligned}
+xu&=-\frac{s}{2}e_2+\frac{s}{2}\iota d,\\
+hu&=\frac{s}{4}u-s\iota d,\\
+(r+sE_{33})u&=\frac{5s}{4}\iota d,\\
+R_\delta u&=a_\delta+s(1/2-\delta)\iota d,
+\qquad a_\delta=-\frac{s}{2}e_2+\frac{\delta s}{4}u,\\
+S_\delta u&=\frac{5\delta s}{4}\iota d .
+\end{aligned}
+\tag{35.3}
+$$
+
+逐条核对中，$h_{23}=s(1/4-\iota)$、$h_{32}=s(1/4+\iota)$；$r+sE_{33}$ 的两个对角元均为 $-5s$，非对角元为 $5s\pm5\iota s/4$。这些条目直接给前三行，后两行就是原定义。$t\circ(r+g)$ 在该泛函上的读数为零，因为 $tu=0$；没有将此 Jordan 项宣称为整个原代数中的零算子。
+
+复空间实化后的内积为 $\langle a,b\rangle_{\mathbb R}=\operatorname{Re}(a^*b)$。$a_\delta$ 为实向量，因而与 $\iota d$ 实正交；$R_\delta u$ 的另一分量与 $S_\delta u$ 实平行。故原平方恒等式
+$\phi_\mu(A^2)=(\mu/2)\|Au\|^2$、
+$\phi_\mu(A\circ B)=(\mu/2)\operatorname{Re}((Au)^*Bu)$ 给
+
+$$
+\sqrt{B_{\phi_\mu}(R_\delta,S_\delta)}
+=\frac\mu2\|a_\delta\|\,\|S_\delta u\|,
+\qquad
+\begin{cases}
+a_+=-sd/4,\\
+a_-=-s(3e_2+e_3)/4,
+\end{cases}
+\qquad
+\|S_\delta u\|=5\sqrt2\,|s|/4 .
+\tag{35.4}
+$$
+
+这给 (35.2) 的两份平方根，预算本身分别为 $25\mu^2s^4/256$ 和 $125\mu^2s^4/256$。又由 (35.3)，
+$\operatorname{Re}((xu)^*hu)=-s^2/8-s^2=-9s^2/8$，所以
+$\phi_\mu(L)=-\mu\operatorname{Re}((xu)^*hu)=9\mu s^2/8$。相减得所述差额；$13^2>25\cdot5$ 保证严格正。与 (34.12) 的同质量差额相比，其系数严格增大：
+
+$$
+\frac{10}{29}\left(1-\frac5{\sqrt{29}}\right)
+<\frac{40}{841}<\frac7{64}<d_0 .
+\tag{35.5}
+$$
+
+第一步用 $\sqrt{29}<29/5$，最后一步用 $\sqrt5<9/4$，中间只是正整数交叉相乘。没有声称新探针在全部原探针中最优。取向改变只共轭这份探针；原 $t,c$ 与实向量 $u$ 不变，(35.3)–(35.4) 只用 $\overline\iota=-\iota$、$\iota^2=-1$，故两个 $\sigma$ 各自成立。∎
+

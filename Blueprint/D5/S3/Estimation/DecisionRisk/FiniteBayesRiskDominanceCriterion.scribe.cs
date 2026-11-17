@@ -34,7 +34,69 @@ internal sealed class FiniteBayesRiskDominanceCriterionDocument
                         + "target outside its simulated image has a strict linear separator; a "
                         + "uniform prior and shifted real loss turn that separator into a finite "
                         + "decision problem that reverses the asserted risk order."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("continuous-linear-expansion"),
+                DeclarationHandle.Create("D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.continuous_linear_expansion"),
+                H("Coordinates of a continuous linear functional"),
+                StatementSource.FromAuthor(ExpansionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary finite index types I and J with decidable equality, a real continuous linear functional on I → J → ℝ is the sum of its values on the coordinate singletons, weighted by the corresponding table entries. "
+                    + "This identity expresses strict separating functionals as finite coefficient tables."))),
+                DescribeRole.Lemma))));
+
+    private static Formula ExpansionFormula()
+    {
+        Formula iType = F.Id("I"), jType = F.Id("J");
+        Formula functional = F.Id("functional"), table = F.Id("table");
+        Formula i = F.Id("i"), j = F.Id("j");
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula tableType = new Formula.TypeArrow(iType,
+            new Formula.TypeArrow(jType, real));
+        Formula singleton = ExpansionApply(ExpansionQualified("Pi", "single"), i,
+            ExpansionApply(ExpansionQualified("Pi", "single"), j, D(1)));
+        Formula product = new Formula.Binary(
+            ExpansionApply(functional, singleton), FormulaBinaryOperator.Multiply,
+            ExpansionApply(table, i, j));
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(i, Colon, Sp, iType)), Sp,
+            new Formula.Subscript(Sum, Seq(j, Colon, Sp, jType)), Sp,
+            ExpansionParenthesized(product));
+        Formula body = new Formula.Relation(ExpansionApply(functional, table),
+            FormulaRelationOperator.Equal, sum);
+        body = ExpansionBinder(table, tableType, body);
+        body = ExpansionBinder(functional,
+            ExpansionApply(ExpansionQualified("ContinuousLinearMap"),
+                ExpansionApply(ExpansionQualified("RingHom", "id"), real), tableType, real), body);
+        body = Seq(
+            OpenBracket, ExpansionApply(ExpansionQualified("Fintype"), iType), CloseBracket, Sp,
+            OpenBracket, ExpansionApply(ExpansionQualified("Fintype"), jType), CloseBracket, Sp,
+            OpenBracket, ExpansionApply(ExpansionQualified("DecidableEq"), iType), CloseBracket, Sp,
+            OpenBracket, ExpansionApply(ExpansionQualified("DecidableEq"), jType), CloseBracket, Sp, body);
+        return Disp(ExpansionBinder(iType, ExpansionQualified("Type"),
+            ExpansionBinder(jType, ExpansionQualified("Type"), body)));
+    }
+
+    private static Formula ExpansionQualified(params string[] parts)
+    {
+        var items = new List<Formula>();
+        foreach (var part in parts)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(F.Id(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+
+    private static Formula ExpansionApply(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+
+    private static Formula ExpansionParenthesized(Formula body) =>
+        Seq(Left, Open, body, Right, Close);
+
+    private static Formula ExpansionBinder(Formula variable, Formula type, Formula body) =>
+        Seq(Forall, Sp, ExpansionParenthesized(Seq(variable, Colon, Sp, type)), Comma, Sp,
+            ExpansionParenthesized(body));
 
     private static Formula Call(string name, params Formula[] arguments)
     {

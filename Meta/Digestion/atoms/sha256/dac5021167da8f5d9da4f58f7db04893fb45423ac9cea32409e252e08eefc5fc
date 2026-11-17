@@ -1,0 +1,87 @@
+**Lemma 4.1 (Common-support hitting bound).** Let $P,Q$ be stochastic matrices on the same finite set $\mathcal S$, with $|\mathcal S|\le M$ and the two common absorbing labels. Suppose $\gamma\ge1$ and
+
+$$
+\gamma^{-1}P(x,y)\le Q(x,y)\le\gamma P(x,y)
+\quad(x,y\in\mathcal S).
+\tag{4.1}
+$$
+
+Let $h_P,h_Q$ be the actual probabilities of ever reaching $t=d_1$, allowing time zero. Let $\mathcal Z$ be the common set of vertices with no positive directed path to $t$, let $\partial=\mathcal Z\cup\{t\}$, and put $V=\mathcal S\setminus\partial$, $n=|V|$. Then $d_0\in\mathcal Z$, so $n\le M-2$, and
+
+$$
+\gamma^{-2n}h_P(x)\le h_Q(x)\le\gamma^{2n}h_P(x),
+\qquad |h_Q(x)-h_P(x)|\le\frac{\gamma^n-1}{\gamma^n+1}.
+\tag{4.2}
+$$
+
+This is the growing-budget source's Theorem 5.1, with its positive-forest proof supplied in Sections 4–5. The following argument exhibits that interface independently of global absorption assumptions.
+
+Proof. Entrywise comparison makes the two positive directed supports identical. Each hitting value is zero on $\mathcal Z$ and one at $t$. Indeed, hitting is a countable union of finite-time events, each requiring a positive finite path; conversely a positive path has positive probability. Replace rows on $\mathcal Z$ by identity rows in both matrices. Once $\mathcal Z$ is entered the target is inaccessible, so this replacement preserves hitting probabilities, comparison and the vertex set. All boundary vertices now absorb.
+
+For each $u\in V$, choose one positive edge $u\to\phi(u)$ with $\phi(u)\ne u$, with no directed cycle in $V$. Such a choice is a directed forest rooted in $\partial$. Every forest has exactly $n$ edges. For either matrix $P$, define its weight and three sums
+
+$$
+\begin{aligned}
+w_P(\phi)&=\prod_{u\in V}P(u,\phi(u)),
+&\mathcal D_P&=\sum_\phi w_P(\phi),\\
+\mathcal A_P(x)&=\sum_{\phi:\,x\text{ ends at }t}w_P(\phi),
+&\mathcal C_P(x)&=\sum_{\phi:\,x\text{ ends in }\mathcal Z}w_P(\phi).
+\end{aligned}
+\tag{4.3}
+$$
+
+Thus $\mathcal D_P=\mathcal A_P(x)+\mathcal C_P(x)$. Every vertex in $V$ has a path to $t$. Choosing first edges of shortest such paths gives a forest with every path ending at $t$, since distances decrease along those edges. Hence $\mathcal D_P$ and every $\mathcal A_P(x)$ are positive; the complementary sum may be zero.
+
+Index coordinates by $V$ and put $L_P=I-P_{VV}$ and $r_P(u)=P(u,t)$. Stochastic row sums give
+
+$$
+L_P(u,\cdot)=\sum_{v\ne u}P(u,v)
+\left(e_u^{\mathsf T}-\mathbf1_{\{v\in V\}}e_v^{\mathsf T}\right).
+\tag{4.4}
+$$
+
+Expand the determinant in these rows. A cyclic successor choice contributes zero because its cycle rows sum to zero. For an acyclic choice, order vertices by increasing distance along its chosen path to the boundary. The selected-row matrix is triangular with diagonal one, so its determinant is one. Permuting rows and columns together introduces no sign. Thus $\det L_P=\mathcal D_P>0$. Self-loops are accounted for by $1-P(u,u)=\sum_{v\ne u}P(u,v)$, rather than removed from the stochastic experiment.
+
+For the matrix $L_P^{[x]}$ with column $x$ replaced by $r_P$, expand by the same row coefficients. Cycle rows still sum to zero, including in the replaced column, whose cycle entries are zero. For a forest $\phi$, write $L_\phi$ for its selected-row matrix and $z_\phi(u)$ for the indicator that $u$ ends at $t$. Directly along each edge,
+
+$$
+L_\phi z_\phi=r_\phi,
+\qquad r_\phi(u)=\mathbf1_{\{\phi(u)=t\}}.
+\tag{4.5}
+$$
+
+Replacing column $x$ by $r_\phi$ and expanding it as the weighted sum of columns of $L_\phi$ annihilates every duplicated-column term except $x$. The surviving determinant is $z_\phi(x)\det L_\phi=z_\phi(x)$. Therefore $\det L_P^{[x]}=\mathcal A_P(x)$.
+
+First-step conditioning of the actual hitting probability yields $L_P(h_P|_V)=r_P$ with the stated boundary values. The positive determinant makes this boundary problem invertible. The column-replacement identity then gives
+
+$$
+h_P(x)=\frac{\mathcal A_P(x)}{\mathcal D_P}
+=\frac{\mathcal A_P(x)}{\mathcal A_P(x)+\mathcal C_P(x)}.
+\tag{4.6}
+$$
+
+The same facts hold for $Q$ using the identical forest family. This identifies actual hitting probabilities without imposing uniqueness on arbitrary harmonic functions on the original reducible chain.
+
+Each forest weight changes by a factor between $\gamma^{-n}$ and $\gamma^n$. Summing over the full, marked or complementary forest family gives the same comparison for $\mathcal D$, $\mathcal A$ and $\mathcal C$. Taking the marked-to-full quotient proves the multiplicative assertion with exponent $2n$.
+
+For the additive assertion, if $\mathcal C_P(x)=0$, comparison also makes $\mathcal C_Q(x)=0$ and both values equal one. Otherwise set
+
+$$
+z=\frac{\mathcal A_P(x)}{\mathcal C_P(x)}>0,
+\qquad r=\frac{\mathcal A_Q(x)/\mathcal A_P(x)}
+{\mathcal C_Q(x)/\mathcal C_P(x)}\in[\gamma^{-2n},\gamma^{2n}].
+\tag{4.7}
+$$
+
+Interchanging $P,Q$ when needed reduces to $1\le r\le\gamma^{2n}$. The difference is $(r-1)z/[(1+z)(1+rz)]$. Since $z^{-1}+rz\ge2\sqrt r$,
+
+$$
+\frac{(1+z)(1+rz)}z\ge(1+\sqrt r)^2,
+\qquad h_Q(x)-h_P(x)
+\le\frac{\sqrt r-1}{\sqrt r+1}
+\le\frac{\gamma^n-1}{\gamma^n+1}.
+\tag{4.8}
+$$
+
+The last fraction increases with its nonnegative argument. Boundary values agree. If $V$ is empty, take the empty forest weight to be one; all states already have boundary values and the difference is zero. This also handles $n=0$ and $\gamma=1$. Zero edges, closed non-target classes and arbitrarily small positive exits introduce no exception. $\square$
+

@@ -1,0 +1,48 @@
+**Theorem 49.1 (full residual and every actual weak coefficient).** Define the finite $L^2$ vector
+
+$$
+G_s^{\rm corr}=g_0+sg_1+s^2g_2+s^3g_3+s^4g_4.
+\tag{49.1}
+$$
+
+For every actual sequence with $C_{\rm resp}=0$ and $\epsilon_c(s)=o(s^4)$,
+
+$$
+\left\|(I-\gamma\mathcal B_s(h_s)^\ast)G_s^{\rm corr}
+        -\frac{s^4C_4}{a\gamma\mu}g_0\right\|_2=o(s^4).
+\tag{49.2}
+$$
+
+It follows that every actual microscopic weak coefficient satisfies (42.5).
+
+Proof. Theorems 33.2, 39.1 and 40.1 give the seed and first-charge rows through degrees four and three, including their actual-height errors. Theorems 46.1 and 47.1 give the second and third rows through degrees two and one. The final strong row of Theorem 47.1 is multiplied by $s^4$. Expanding each fixed input only to its consumed degree, the equations for $g_0,g_1,g_2,g_3$ cancel exactly orders zero through three. The fourth row is
+
+$$
+Ag_4-\gamma\mathcal R_4
+ =-\gamma\rho g_0=\frac{C_4}{a\gamma\mu}g_0.
+\tag{49.3}
+$$
+
+Every omitted vector is $o(s^4)$ in the full common $L^2$ space. This proves (49.2), with constants independent of actual choices along the fixed sequence.
+
+For an actual state let $f_s=\mathcal T_s\mathcal U_s\psi_s$. Its exact original-domain equation is (33.6):
+
+$$
+f_s=\gamma\mathcal B_s(h_s)f_s,\qquad \|f_s\|_2=1.
+\tag{49.4}
+$$
+
+At each $h_s>0$ this is a bounded-operator equation. Pair it against the entire vector (49.1). Equations (49.2)–(49.4) give
+
+$$
+0=\frac{s^4C_4}{a\gamma\mu}\langle g_0,f_s\rangle+o(s^4).
+\tag{49.5}
+$$
+
+The test needs no native form-domain membership. In particular, if
+$\alpha_s=\langle g_0,f_s\rangle$ and $z_s=f_s-\alpha_sp$, then
+$\langle g_0,z_s\rangle=0$ exactly. The full residual is paired with the unit vector $f_s$, so every remaining complement term is paid by its full $L^2$ norm. There is no unproved polynomial rate for $z_s$ and no multiplication of an uncontrolled $o(1)$ complement by a negative power of $s$.
+
+If $f_s\rightharpoonup cp$, then $\alpha_s\to c$ because
+$\langle g_0,p\rangle=1$. Division of (49.5) by $s^4$ gives $cC_4=0$. The determinant-one shears $\mathcal T_s$ and their inverses converge strongly to the identity on each fixed $L^2$ test: prove it first on compact smooth tests by their explicit matrices (2.4), then use unitarity and density. Thus $f_s$ and the original $\mathcal U_s\psi_s$ have the same weak limits. This proves (42.5) for all complex choices and weak coefficients, without imposing fixed-charge reality or parity on an actual state. $\square$
+

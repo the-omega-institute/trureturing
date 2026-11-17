@@ -1,0 +1,11 @@
+**引理 498.4（带 BV 权的算术传递）。** 设 $\mathrm{HL}_4(\beta)$，$H$ 为整数，$N^\alpha\le H\le N^\beta$，$S_I(n)=\sum_{d/H\in I}\Lambda_0(n+d)$。对 $k=3,4$ 与 $s\in\mathbb R$，令 $\Phi_k(s;\mathbf I)$ 为按引理 498.2 展开 $\prod_{j\le k}\sum_{d/H\in I_j}Y_d$ 的形式值：不同指标之积赋值 $\mathfrak S_0$，重复指标按 $Y_d^2=(s-2)Y_d+(s-1)$ 化简。则
+
+$$
+\sum_{N<n\le2N}w(n/N)\prod_{j=1}^kS_{I_j}(n)=\int_N^{2N}w(x/N)\,\Phi_k(\log x;\mathbf I)\,dx+O\bigl(\|w\|_{\mathrm{BV}}N^{1/2+\varepsilon}H^k\bigr),
+\tag{498.8}
+$$
+
+常数依赖 $\alpha,\beta,M,\varepsilon$ 与 (498.1) 的常数，关于区间端点一致。
+
+证明。令 $m=n+d$、$\lambda=\log n$。若 $\Lambda(m)\in\{0,\log m\}$，则 $Y=\Lambda(m)-1$ 满足 $Y^2=(z-2)Y+(z-1)$（$z=\log m$），从而 $Y^r=a_r(z)Y+b_r(z)$，其中 $a_r(z)=((z-1)^r-(-1)^r)/z$、$b_r=a_r+(-1)^r$ 为多项式。把 $z$ 换成 $\lambda$ 的误差为 $O_r((H/N)(\log N)^{r-1})$。真素数幂 $p^e$（$e\ge2$）在 $[1,3N]$ 中至多 $O(\sqrt N\log N)$ 个；在真素数幂处使用上述二次化简产生的误差只在化简某个重复指标时出现。把 $k$ 个指标按相等关系分成 $j$ 个不同位移，相应 $\log n$ 系数多项式的次数至多 $k-j$，展开中心化乘积只出现至多 $j\le4$ 个不同位移的相关。对 (498.1) 作分部求和（$w(x/N)p(\log x)$ 的上确界与变差 $\ll\|w\|_{\mathrm{BV}}(\log N)^{k-j}$），相关误差总计 $\ll\|w\|_{\mathrm{BV}}N^{1/2+\varepsilon}\sum_{j\le k}H^j(\log N)^{k-j}$；真素数幂误差 $\ll\|w\|_\infty\sqrt NH^{k-1}(\log N)^{k+1}$；对数替换误差 $\ll\|w\|_\infty H^k(\log N)^{k-1}$。由 $H\ge N^\alpha$，这些都被 (498.8) 的误差控制。证毕。
+

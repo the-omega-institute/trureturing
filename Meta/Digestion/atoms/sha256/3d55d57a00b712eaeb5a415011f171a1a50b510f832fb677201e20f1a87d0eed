@@ -1,0 +1,56 @@
+**定理 24.2（准确局部箭头可识别）。** 在一张合法图 $O$ 内固定常值秩一投影 $p=ee^*$，令 $q=I-p$。若同一实际 $W\in M$ 在整个 $O$ 满足
+
+$$
+qWq=0,
+\tag{24.2}
+$$
+
+则对每个 $x_0\in O$ 有 $F(W)(x_0)=0$。图外的原 $W$ 任意，不截断输入。
+
+证明。先对任意满足24.2的实际当前 $T$ 支付一步。取图内任意常值秩一 $s\le q$ 和实连续 $\lambda$，$\operatorname{supp}\lambda\subset O$，令实际全局演员 $r=Q\lambda s$，图外置零。在 $O$ 内有
+
+$$
+(u-Jr)^{-1}=(I-s)+(1-i\lambda)^{-1}s.
+\tag{24.3}
+$$
+
+该逆元与 $p,q$ 交换，故 $qA_rq=0$，从而
+
+$$
+sX_rs=sY_rs=0.
+\tag{24.4}
+$$
+
+在每个活跃点，定理23.1分别用于实际 $(r,X_r)$、$(r,Y_r)$；非活跃点用22.8的同一实际首槽零预算。于是先得到两份全空间元素等式，才用24.1。$C_r$ 也与 $p,q$ 交换，故 $q(C_rT)q=0$。这同时支付演员由非零连续关闭到零的整个过渡圈，并保留下一步需要的准确箭头条件；不要求连接小于二，不以大参数压缩两侧连接。
+
+在指定点写
+
+$$
+W(x_0)=\begin{pmatrix}\alpha&b^*\\c&0_{2\times2}\end{pmatrix}
+\quad\text{相对 }\mathbb Ce\oplus q\mathbb C^3.
+\tag{24.5}
+$$
+
+若 $b=0$ 或 $c=0$，其实部及 $J$-虚部已共同支撑于 $\operatorname{span}\{e,c\}$ 或 $\operatorname{span}\{e,b\}$，直接消费接口22.4。否则选普通 $V\in U(q\mathbb C^3)=U(2)$，使 $Vc=\kappa b$，$\kappa=\|c\|/\|b\|>0$；单位向量间的等距匹配可扩成酉矩阵。有限酉谱定理给
+
+$$
+V=e^{i\theta_1s_1}e^{i\theta_2s_2},\qquad
+s_j\le q\text{ 秩一},\quad\theta_j\in[-\pi,\pi].
+$$
+
+选实连续 $0\le h\le1$，在 $x_0$ 邻域为一，$\operatorname{supp}h\subset O$。对每个 $j$ 使用两次实际演员
+
+$$
+r_{j,1}=r_{j,2}=Q\tan(\theta_jh/4)s_j,
+\tag{24.6}
+$$
+
+图外延零。参数有限且绝对值不超过一；每次Cayley因子准确为 $e^{i\theta_jh s_j/2}$。全部实际前缀仍满足24.2，上段逐步给全域 $F$ 不变性。至多四步后，实际终点在 $x_0$ 为
+
+$$
+W_m(x_0)=(p+V)W(x_0)=\begin{pmatrix}\alpha&b^*\\\kappa b&0\end{pmatrix}.
+\tag{24.7}
+$$
+
+其两份自伴标签共同支撑于二阶角 $\operatorname{span}_{\mathbb C}\{e,b\}$。接口22.4识别的是这份实际终点自己的旧输出，故 $F(W_m)(x_0)=0$，24.1沿有限链返回即得结论。∎
+

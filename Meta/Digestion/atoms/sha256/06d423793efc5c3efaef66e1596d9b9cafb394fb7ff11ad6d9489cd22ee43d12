@@ -1,0 +1,17 @@
+固定原 $a,b$ 和 $p=D(a,b)$，由原代数恒等式 (15.3)，
+
+$$
+b_n=q_n(H)b\in E,\qquad
+p_n=D(a,b_n)=q_n(H)p\in A_D.
+\tag{15.7}
+$$
+
+写 $1-q_n(z)=zr_n(z)$，则被移去的部分本身是单个真正原输出：
+
+$$
+x_n=b-b_n=Hr_n(H)b
+=D\bigl(a,D(a,r_n(H)b)\bigr)\in A_D.
+\tag{15.8}
+$$
+
+由 (15.4)，$\|p-p_n\|=\|D(a,x_n)\|\le\sqrt3\|a\|\|x_n\|$。

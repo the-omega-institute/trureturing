@@ -1,0 +1,8 @@
+**定义 C-27.3.1（路径行列式与选择响应）。** <span>𝑚</span> 为记录数。对有 <span>𝑚-1</span> 条有序边的单位对角路径候选，记行列式 <span>𝐷<sub>𝑚</sub></span>，并置
+
+<div>
+𝐷<sub>0</sub>=𝐷<sub>1</sub>=1,  𝑃<sub>0</sub>(𝑡)=𝑃<sub>1</sub>(𝑡)=1,  𝑃<sub>𝑚</sub>(𝑡)=𝑃<sub>𝑚-1</sub>(𝑡)+𝑡𝑃<sub>𝑚-2</sub>(𝑡) (𝑚≥2).
+</div>
+
+<span>𝐷<sub>0</sub></span> 是空行列式的代数约定，不是一项空记录实验；<span>𝑚=1</span> 的矩阵为 <span>[1]</span>，没有相邻重叠参数。
+

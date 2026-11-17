@@ -10,7 +10,7 @@ namespace StrataLint.Tests;
 public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
 {
     [Fact]
-    public void RestoreFailureRetainsItsLockedWorktree()
+    public void RestoreFailureRetainsWorktreeForRecovery()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -43,8 +43,7 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
         Assert.True(Directory.Exists(target));
         Assert.Equal(Git(repository.Path, "rev-parse", "HEAD"), Git(repository.Path, "rev-parse", branch));
         var metadata = Git(target, "rev-parse", "--absolute-git-dir").Trim();
-        Assert.StartsWith("worktree-init:", File.ReadAllText(Path.Combine(metadata, "locked")), StringComparison.Ordinal);
-        Assert.Contains("initialization worktree retained", result.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(metadata, "locked")));
     }
 
     [Theory]
@@ -71,7 +70,6 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
             ["--kind", "math", "--name", "failed-restore", "--path", target, "--base", "origin/dev"], runner);
         if (!duringRestore) Compete();
         Assert.False(result.Success);
-        Assert.Contains("initialization worktree retained", result.Error, StringComparison.Ordinal);
         Assert.True(Directory.Exists(target));
         Assert.NotNull(concurrent);
         Assert.False(concurrent.Success, concurrent.Error);
@@ -121,7 +119,6 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
         Assert.False(result.Success);
         Assert.Contains("dotnet restore failed", result.Error, StringComparison.Ordinal);
         Assert.True(Directory.Exists(target));
-        Assert.Contains("initialization worktree retained", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, TestProcessRunner.Run("git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{WorktreeCommand.CreationNamespace}/math/failed-restore"],
             repository.Path, BoundedProcessRunner.HangDetectionBudget, 4096).ExitCode);

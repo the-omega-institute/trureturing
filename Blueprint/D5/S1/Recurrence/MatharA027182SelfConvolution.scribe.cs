@@ -8,7 +8,7 @@ internal sealed class MatharA027182SelfConvolutionDocument : IScribeDocumentDefi
 {
     private const string Prefix = "D5/S1/Recurrence/MatharA027182SelfConvolution.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/matharkimberling2026a027182");
+        LibraryNoteRef.Create("D5/L/Recurrence/matharkimberling2026a027182");
     private const string ArrayQuote =
         "OEIS A027170, revision 32, definition (unpaginated): \"Triangular array T read by rows (4-diamondization of Pascal's triangle). Step 1: t(n,k) = C(n+2,k+1) + C(n+1,k) + C(n+1,k+1) + C(n,k). Step 2: T(n,k) = t(n,k) - t(0,0) + 1. Domain: 0 <= k <= n, n >= 0.\" ";
     private const string SequenceQuote =

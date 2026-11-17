@@ -1,0 +1,43 @@
+**Lemma 4.2 (global bounds and canonical extension of actual states).** On the actual path, $-C\le E_s<0$ for small $s$. For every actual choice, put $F_s=\mathcal U_s\psi_s$ and $f_s=\mathcal T_sF_s$. Their zero extensions satisfy
+
+$$
+\|F_s\|_2=\|f_s\|_2=1,\qquad
+b_s[F_s]\le C,\qquad f_s\in\mathcal Q_E,\qquad
+b[f_s]\le C.
+\tag{4.7}
+$$
+
+The original equation is $(aS-\chi_cs^3W_{s^2})\psi_s=E_s\psi_s$ in $D(S)$. Its exact transported bilinear equation is
+
+$$
+\widetilde q_s^c(k,f_s)=s^2E_s\langle k,f_s\rangle
+\quad\text{for every sheared native form test }k.
+\tag{4.8}
+$$
+
+Proof. The lower energy bound is R Theorem 9.1, not new content here. To check its needed scope, apply the horizontal IMS identity with $\eta_R,\zeta_R$, $R=\delta/s$, to any sheared native $f$. The inner term is bounded below by (4.2). In the outer term retain the exact nonnegative free threshold form $a\mathcal T_s C_s\mathcal T_s^{-1}$; (2.9) bounds its potential below by $-C_\delta s^5\|\zeta_Rf\|_2^2$. The IMS error is at most $C_\delta s^2\|f\|_2^2$. Thus $q_s^c[F]\ge-Cs^2\|F\|_2^2$ on the entire original complex domain after fixing $\delta$. Infimizing and using negative attainment gives $-C\le E_s<0$. Dropping the threshold subtraction from $A_s$ would not justify the outer estimate.
+
+For actual unit vectors, exact conjugacy gives
+
+$$
+a b_s[F_s]=s^2E_s+\chi\int U_s|F_s|^2+a\lambda s^2\le C.
+\tag{4.9}
+$$
+
+On the whole actual interval,
+
+$$
+1+\beta_sr=(k-\alpha_\kappa)/d_0>0,\qquad
+1+\beta_sr\le w_{\max}:=(u-\alpha_\kappa)/d_0<\infty.
+\tag{4.10}
+$$
+
+Equation (2.5) implies
+
+$$
+b[f_s]\le\max(1,w_{\max}^2)b_s[F_s].
+\tag{4.11}
+$$
+
+This also verifies canonical domain membership: approximate by the transported native compact smooth core, extend those core vectors by zero, and use (4.11) on their differences. They are Cauchy in the canonical form norm and converge in $L^2$ to $f_s$. Both Dirichlet traces enter through that core; no boundary distribution or additional phase regularity is inserted. Finally the actual eigenvector belongs to the transported operator domain $D(S)$. Form representation therefore gives (4.8) for every form test, without requiring the test to be an operator-domain vector. $\square$
+

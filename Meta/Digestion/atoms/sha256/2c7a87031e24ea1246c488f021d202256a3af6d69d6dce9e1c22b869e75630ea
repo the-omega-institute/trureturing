@@ -1,0 +1,75 @@
+**推论 25.3（奇数阶段 UHF 的任意完成系数）。** 设非零无限 UHF $B$ 带有实际递增含单位模型 $B_n\cong M_{d_n}(\mathbb C)$，其并在 $B$ 中范数稠密；各 $d_n$ 为奇数。取 $A=M_3(B)$，同一原总映射 $D$ 满足完整 $\mathsf H_A(D)$。则 AH72.1 的同一个普通符号 $\sigma$ 使 (25.3) 对所有实 $R$ 及所有满足正可逆有限谱总右 Gram 的完成 $x,y\in B$ 成立，不另要求任何角分类或 $P$ 位于原有限阶段。
+
+证明。$A_n=M_3(B_n)$ 是 $A$ 的实际满矩阵模型；$p$ 在每个阶段的矩阵秩为 $2d_n$，故 AH71.2 分类整个 $pAp$，AH72.1 供应共同 $\sigma$。这只使用其已有实际偶角结论，不声称整个奇数阶段 $A$ 已分类。
+
+对 (25.2) 的具体实际 $P$，完整原域保证 $P\in E$。W119.2–119.3 准确给
+
+$$
+\begin{gathered}
+D((PAP)_{\rm sa},(PAP)_{\rm sa})\subseteq(PAP)_{\rm sa},\qquad
+(PAP)_+=A_+\cap PAP,\qquad 1_{PAP}=P,\\
+N_P=\|\cdot\|_A|_{PAP},\qquad
+\gamma_P=\gamma|_{(PAP)_{\rm sa}},\qquad m_\gamma^P=\gamma(P).
+\end{gathered}
+\tag{25.10}
+$$
+
+保留每个原评价标签，不合并同值限制、不删零限制、不除以质量。限制评价准确决定角锥并分离角内元素；有向 P2、A2 的全部三表及排列、同一个有理窗口的 A3 均继承。对任意角内原三元组，内层输出由 (25.10) 留在角中，Jordan 运算及实际外标签亦留在角中，外输出再次由同式闭合。因此 W 式 (120.2) 的**全部实际 PB** 逐值继承。
+
+(20.2)–(20.8) 的角供应只用 $u^*u=q,uu^*=P_0\le p$ 及 $B$ 的实际模型，不用总右 Gram 是标量。对本节的实际 $u$，其完整参数仍为
+
+$$
+\begin{aligned}
+\Phi:M_2(B)&\overset{*}{\cong}PAP,\\
+\Phi((z_{ij}))&=u\iota(z_{11})u^*+u\iota(z_{12})
+ +\iota(z_{21})u^*+\iota(z_{22}),\\
+\Phi^{-1}(T)&=
+\begin{pmatrix}
+\iota^{-1}(u^*Tu)&\iota^{-1}(u^*Tq)\\
+\iota^{-1}(qTu)&\iota^{-1}(qTq)
+\end{pmatrix}.
+\end{aligned}
+\tag{25.11}
+$$
+
+实际矩阵单位是 $P_0,u,u^*,q$，单位之和是 $P$。乘法和伴随由 $u^*u=q$ 逐项保持；四个逆坐标在 $qAq$ 内。展开 $T=(P_0+q)T(P_0+q)$，分别用 $P_0=uu^*$，便得 $\Phi\Phi^{-1}(T)=T$；反向逐坐标给恒等。这支付覆盖**整个**实际角的成熟 * 同构，而非仅一份子代数。
+
+因此有真正位于原 $A$ 中的模型
+
+$$
+\mathcal A_n^P=\Phi(M_2(B_n)),\qquad
+\mathcal A_n^P\cong M_{2d_n}(\mathbb C),\quad
+1_{\mathcal A_n^P}=P,\qquad
+PAP=\overline{\bigcup_n\mathcal A_n^P}^{\|\cdot\|}.
+\tag{25.12}
+$$
+
+密度仅来自已知 * 同构的等距性。AH70.1 直接作用于此实际载体、同一个限制总映射 $D_P$ 和刚继承的完整原条件，给唯一普通符号 $\sigma_P$，使
+
+$$
+D(z,t)=\frac{\sigma_P i}{2}[z,t]
+\quad(z,t\in(PAP)_{\rm sa}).
+\tag{25.13}
+$$
+
+没有先声明 $D$ 对 $\Phi$ 协变，没有让输入极限穿过 $D$，也没有有限阶段输出闭合假设。
+
+最后准确重复 (20.6)–(20.8) 的非零交叠比较。$P_0AP_0\subseteq pAp\cap PAP$，且 $z\mapsto u\iota(z)u^*$ 是 $B\overset{*}{\cong}P_0AP_0$。无限 UHF 的某个实际矩阵阶段阶数至少为二，可取其中自伴 $d_B,t_B$ 使 $[d_B,t_B]\ne0$；例如两条矩阵坐标上的对角差和对称非对角元。令
+
+$$
+\alpha=u\iota(d_B)u^*,\quad\beta=u\iota(t_B)u^*,
+\qquad [\alpha,\beta]=u\iota([d_B,t_B])u^*\ne0.
+\tag{25.14}
+$$
+
+非零性可左乘 $u^*$、右乘 $u$ 检验。两份已分类的整个角对**同一原输出**给
+
+$$
+D(\alpha,\beta)=\frac{\sigma i}{2}[\alpha,\beta]
+              =\frac{\sigma_P i}{2}[\alpha,\beta],
+\qquad \sigma_P=\sigma.
+\tag{25.15}
+$$
+
+这支付定义 25.1 的第二整体角及同号前件，故定理 25.2 适用。特别包括 $B=M_{3^\infty}$；$P$、$x$、$y$ 均不必属于原有限阶段。∎
+

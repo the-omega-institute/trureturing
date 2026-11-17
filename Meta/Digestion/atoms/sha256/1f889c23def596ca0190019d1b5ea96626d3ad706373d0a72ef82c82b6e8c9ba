@@ -1,0 +1,11 @@
+#### 定义 12.1：四实维振幅代数
+
+在实空间 $\mathcal Q=\mathbb R1\oplus\mathfrak g$ 上定义
+
+$$
+(a,B)\star(b,K)
+=\bigl(ab-\kappa(B,K),\,aK+bB+[B,K]\bigr),
+\qquad (a,B)^*=(a,-B).
+\tag{12.1}
+$$
+

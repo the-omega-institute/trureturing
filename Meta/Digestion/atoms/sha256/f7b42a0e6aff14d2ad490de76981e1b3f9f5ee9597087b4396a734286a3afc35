@@ -1,0 +1,48 @@
+**Lemma 32.1 (integrated field estimate).** Set $\mathcal V_0=V$ and retain exactly (23.1)'s other coefficients. For $1<p<\infty$ and an integer $0\le n\le4$ satisfying $n<5-7/p$, put $\alpha_p=5-7/p$. Then
+
+$$
+\left\|F_s-\sum_{k=0}^ns^k\mathcal V_k\right\|_p\le C
+\begin{cases}
+s^{n+1},&n+1<\alpha_p,\\
+s^{n+1}(1+|\log s|),&n+1=\alpha_p,\\
+s^{\alpha_p},&n+1>\alpha_p.
+\end{cases}
+\tag{32.1}
+$$
+
+This is an estimate for the early field $F_s$, not for the long Coulomb field $U_s^{>}$.
+
+Proof. Consider a source-started coefficient or Taylor derivative of total order $m$. Its phase $L^p$ norm is bounded, by Minkowski and the inflated-Gaussian estimate, by a constant times
+$h_t(r)\mathbb E[S^m(\det M_0)^{-\alpha/2}]$, where $\alpha=1-1/p$. Concavity, equivalently Hölder, gives
+
+$$
+\mathbb E[S^m(\det M_0)^{-\alpha/2}]
+ \le\left(\mathbb E[S^{m/\alpha}(\det M_0)^{-1/2}]\right)^\alpha.
+\tag{32.2}
+$$
+
+P (107.5), with its layer-cake extension to the nonnegative real moment $m/\alpha$, leaves the factor
+$h_t(r)^{1/p}t^{(m-7\alpha)/2}$.
+Its $L^p(dr)$ norm is $t^{(m-7+7/p)/2}$, since $\int h_t(r)dr=1$. Clock terms have the identical estimate with their total degree. Thus
+
+$$
+\|\text{order-}m\text{ source Gaussian}\|_p
+ \le Ct^{(m-7+7/p)/2}.
+\tag{32.3}
+$$
+
+On the same fixed safe strip $(-L,L)$, $L=\ell/s$, the bound is uniform for the finite Taylor remainder at interpolation parameters $0\le\vartheta\le s$, $1\le t\le T$. Pathwise Taylor expansion through $n$ therefore costs
+$Cs^{n+1}\int_1^Tt^{(n+1-7+7/p)/2}dt$.
+Integrating this power gives the three alternatives in (32.1).
+
+For completeness retain the exit restriction in (32.2). P (107.5) supplies an extra $e^{-cL^2/t}$ after taking its $\alpha$ power; the remaining height density still has unit integral in the calculation above. Hence the integrated deletion cost for coefficient degree $k$ is at most
+
+$$
+C\int_1^Tt^{(k-7+7/p)/2}e^{-cL^2/t}dt
+ \le CL^{k-5+7/p}.
+\tag{32.4}
+$$
+
+The substitution $t=L^2v$ proves this bound. For every retained $k\le n<5-7/p$, its full time tail above $T$ is bounded by $CT^{(k-5+7/p)/2}$. Multiplication by $s^k$ makes both costs $O(s^{5-7/p})$. Original surviving paths leaving the safe strip have comparable covariance by their original denominator margins, so their order-zero deletion has the same estimate. Outside $I_s$, the native field is zero and the retained safe path cannot end; the coefficient deletion bound applies there as well. These controls restore both original faces and the whole output, with the exact $j_0^{-1}$. Only the early integral is compared; no $L^p$ integrability of the full native Coulomb tail is required. $\square$
+
+

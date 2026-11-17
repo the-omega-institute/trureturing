@@ -1,0 +1,45 @@
+**推论 57.1（充分分支、有限谱与任意指标强覆盖）。** 在55.1的完整条件下，若某个原 $h$-偶 $c$ 满足 $K(c,h)=\{0\}$，则对所有原 $h$-奇 $z$ 和每个实 $R$，同一实际旧响应满足
+
+$$
+\boxed{D(Rh,c+z)=RiQhz=R\,D(h,c+z).}
+\tag{57.1}
+$$
+
+该分离有以下两种供应：本卷40.3–40.4的原有限谱背景；或存在任意指标集 $I$ 上的两两正交实际联合本征投影 $q_i\in E$，满足55.3的本征条件，且在某个含单位忠实表示 $\rho:\mathcal A\to B(\mathcal H)$ 中
+
+$$
+P_F=\sum_{i\in F}q_i\in E,\qquad
+\rho(P_F)\xrightarrow[F\in\operatorname{Fin}(I)]{\rm strong}I_{\mathcal H}.
+\tag{57.2}
+$$
+
+有限子集按包含有向；允许不可数指标、无限秩角、任意重数及非孤立谱值。不需要物理正评价正规、指定前对偶或 $D$ 的输入正则性。
+
+证明。56.1和 $K(c,h)=0$ 先给同一原 $v=0$。此时才直接应用[运输续卷119.1](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md#119-一项原-jordan-二元关系的充要判据)，变量逐项为55.5的原 $R,c,z,x,g,r$，全部前件由55.1完整保留。该定理对这个同一实际余量给
+
+$$
+v=0\quad\Longleftrightarrow\quad[c,r]=0
+\quad\Longleftrightarrow\quad cr=0
+\quad\Longleftrightarrow\quad r=0.
+\tag{57.3}
+$$
+
+故得57.1第一等号。分离只依赖 $c,h,E$，对同一 $c,z$ 另取 $R=1$ 也适用，得到第二等号；不预付 $D(h,c+z)=D(h,z)$。119.1的共同输出读取、零谱支撑排除和全部正性前件直接消费，不另重证。
+
+有限谱情形直接沿40.3–40.4：$c$ 的有限Lagrange多项式投影与 $(u\pm h)/2$ 的交换Jordan乘积是真正原联合投影，有限和为 $u$。故 $u\in W(c,h)$，而 $U_u=I_E$，从而 $K(c,h)=0$。这只是已付41.1分支在当前记号中的供应；没有以环境谱投影一般属于 $E$ 为前提。
+
+对57.2的供应，固定任意 $y\in K(c,h)$。每个 $P_F\in W(c,h)$，所以 $P_FyP_F=0$。省略表示记号，对每个固定 $\xi\in\mathcal H$，
+
+$$
+\begin{aligned}
+\|y\xi\|
+&\le\|(I-P_F)y\xi\|+\|P_Fy(I-P_F)\xi\|
+       +\|P_FyP_F\xi\|\\
+&\le\|(I-P_F)y\xi\|+\|y\|\,\|(I-P_F)\xi\|
+\longrightarrow0.
+\end{aligned}
+\tag{57.4}
+$$
+
+只用固定有界算子 $y$、$\|P_F\|\le1$ 及静态强覆盖。故 $\rho(y)=0$，忠实性给原 $y=0$。这里没有把 $P_FcP_F$、截断背景或任何输入网送给 $D$；原域也未被替换成强闭包。零对象及空指标的合法情形同样包含。∎
+

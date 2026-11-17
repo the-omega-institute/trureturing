@@ -1,0 +1,5 @@
+source_id = "auric-spectral-mixed-responses-and-direct-window-boundaries"
+path = "docs/develop/theory/AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

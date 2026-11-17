@@ -1,0 +1,37 @@
+**命题 C-84.2（宽度与两边缘的共同最小量）。** 定义绝对宽度 $w=\kappa_+-\kappa_-$、
+相对宽度 $\nu=w/r$。则
+
+$$
+w=\min\{X,Y,r-X,r-Y\},\qquad 0<\nu\le\frac12,
+$$
+
+$$
+\min\{X(r-X),Y(r-Y)\}=w(r-w).
+\tag{C84.4}
+$$
+
+证明。若 $X+Y\le r$，则 $X\le r-Y$、$Y\le r-X$，故四项最小值为
+$\min(X,Y)=w$。若 $X+Y\ge r$，则
+$w=\min(X,Y)-(X+Y-r)=\min(r-X,r-Y)$，且这两项分别不大于 $Y,X$。
+四项都正，所以 $w>0$。置
+
+$$
+u=\min(X,r-X),\qquad v=\min(Y,r-Y).
+$$
+
+则 $u,v\in(0,r/2]$，$w=\min(u,v)$，给 $\nu$ 的范围。
+又 $X(r-X)=u(r-u)$、$Y(r-Y)=v(r-v)$。
+对 $0\le a<b\le r/2$，
+
+$$
+b(r-b)-a(r-a)=(b-a)(r-a-b)>0.
+$$
+
+故 $t(r-t)$ 在 $[0,r/2]$ 严格递增，取最小量即得最后的精确恒等式。
+特别地 $w=r/2$ 当且仅当 $X=Y=r/2$。证毕。
+
+宽度公式的概率来源为
+[《局部填充》§3.1](AURIC_FIB_ATOM_PYRAMID_LOCAL_FILLINGS_SOFT_TO_RIGID_AND_ODD_CYCLE_OBSTRUCTIONS.md#31-隐藏纤维的宽度)，
+其在相位商面积中的应用由 C-81.2 给出。
+$r$ 表示底面在完整五模式中的质量，$\nu$ 表示固定条件边缘后相对底面质量的余量；两者不能互相替代。
+

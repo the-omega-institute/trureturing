@@ -1,0 +1,37 @@
+**定义 C-85.1（明确的条件两因子结构）。** 采用 C-76.2 的对应
+
+$$
+0\leftrightarrow00,\qquad1\leftrightarrow10,\qquad
+3\leftrightarrow01,\qquad13\leftrightarrow11.
+$$
+
+行指标为左因子、列指标为右因子，均按 $0,1$ 排列。条件底面纯态的标准基序
+$(00,01,10,11)$ 系数向量是 $(\psi_0,\psi_3,\psi_1,\psi_{13})/\sqrt r$，故
+
+$$
+B=\frac1{\sqrt r}\begin{pmatrix}\psi_0&\psi_3\\\psi_1&\psi_{13}\end{pmatrix},
+\qquad \operatorname{Tr}(BB^\dagger)=1,\qquad \mathcal C=2|\det B|.
+\tag{C85.1}
+$$
+
+这是标准两二元因子纯态 concurrence：Wootters，
+[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (6)–(8)，
+使用 spin-flip $|\langle\phi|(\sigma_y\otimes\sigma_y)|\bar\phi\rangle|$；
+把四个标准基系数代入给 $2|\det B|$。
+归一化来自四底角和为 $r$。若 $BB^\dagger$ 的谱为 $\lambda_+,\lambda_-$，
+则 $\lambda_++\lambda_-=1$，$\mathcal C^2=4\lambda_+\lambda_-\le1$。
+
+商作用把代表矩阵变成
+
+$$
+B\longmapsto e^{-i\gamma_0}
+\operatorname{diag}(1,e^{-i\gamma_X})\,
+B\,\operatorname{diag}(1,e^{-i\gamma_Y}).
+\tag{C85.2}
+$$
+
+因左右都是酉矩阵，$\mathcal C$ 及奇异值在商上不变，$B$ 本身却一般变化。
+底面上 $z_s=0$，故 $\gamma_Z$ 不作用于它。
+此条件张量识别是额外数学结构；五个模式名并不自行给出两个实际物理子系统，
+一般经典对角混合也不具有上述纯态公式的意义。
+

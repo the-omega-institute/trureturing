@@ -6,6 +6,8 @@ Star and complete graph Bose symmetric fully PPT extensions of unnormalized Dick
 
 The register set I and local alphabet L are finite; r is the cardinality of I. A computational basis index is a function from I to L, so matrices act on the actual tensor product of the local complex spaces. Two selected registers a and b are distinct and ordered. Every partial trace below is unnormalized.
 
+The marginal-to-global support mechanism is prior Hansenne-Xu-Kraft-Guehne mathematics. The application note has byline Haobo Ma then Wenlin Zhang. Li-Huang-Ruan-Zeng, arXiv:1809.05641v1, Theorem 2, prove existence of a leaf-Bose extension for qubit leaves and arbitrary bipartite inputs by changing the witness. Their result does not assert the same individual witness or full Bose support including the root in arbitrary dimension.
+
 **Definition 1.1 (Splitting the actual tensor factors).**
 
 $$\operatorname{edgeSplit}\left(a, b\right) :   ( I \to L )   \equiv   ( L \times L ) \times ( \operatorname{Rest}\left(a, b\right) \to L )$$
@@ -102,7 +104,141 @@ $$\operatorname{CompleteExtension}\left(\rho, E\right) \iff \operatorname{PSD}\l
 
 E is positive semidefinite on the same r registers and is fixed by the full Bose-projector sandwich. Its marginal is rho on every ordered pair of distinct registers. All proper nonempty PPT cuts use this same E in the original standard basis.
 
-**Theorem 1.9 (Equality of the extension cones).**
+**Definition 1.9 (The actual symmetric pair projector).**
+
+$$\operatorname{pairSymmetricProjector}\left(\right) = \frac{1 + \operatorname{flip}\left(\right)}{2}$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.pairSymmetricProjector` (`✓ std3`).
+
+*Citation.* Aabhas Gulati, Ion Nechita and Sang-Jun Park (2025). *Positive maps and extendibility hierarchies from copositive matrices*. DOI: [10.48550/arXiv.2509.15201](https://doi.org/10.48550/arXiv.2509.15201).
+
+*Commentary.*
+
+The flip exchanges the two local tensor factors in the ordered product basis. This is the orthogonal projector onto their symmetric subspace. Bose support means the two-sided sandwich by this projector equals rho; mere conjugation invariance is weaker.
+
+**Definition 1.10 (Star extensions without a PPT requirement).**
+
+$$\operatorname{StarExtensionCore}\left(root, \rho, E\right) \iff \operatorname{PSD}\left(E\right) \land P_{L} E P_{L} = E \land ( \forall i \neq root , \operatorname{M}\left(root, i, E\right) = \rho )$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.StarExtensionCore` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This predicate requires positivity, the actual root-times-symmetric-leaves support sandwich, and rho on every ordered root-to-leaf marginal. It places no condition on partial transposes and fixes no trace. The original StarExtension predicate still includes FullyPPT.
+
+**Definition 1.11 (Complete extensions without a PPT requirement).**
+
+$$\operatorname{CompleteExtensionCore}\left(\rho, E\right) \iff \operatorname{PSD}\left(E\right) \land \pi_{r} E \pi_{r} = E \land ( \forall a \neq b , \operatorname{M}\left(a, b, E\right) = \rho )$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.CompleteExtensionCore` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This predicate requires positivity, the actual full Bose support sandwich, and rho on every ordered pair of distinct registers. It places no condition on partial transposes and fixes no trace. The original CompleteExtension predicate still includes FullyPPT.
+
+**Theorem 1.12 (Connected graphs of supported marginals).**
+
+$$\operatorname{Connected}\left(G\right) \land \operatorname{PSD}\left(E\right) \land \operatorname{BoseEdges}\left(G, E\right) \implies \operatorname{Bose}\left(E\right) \land \operatorname{AllOrderedMarginalsEqual}\left(E\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_connected_graph` (`✓ std3`). ∎
+
+*Citation.* Aabhas Gulati, Ion Nechita and Sang-Jun Park (2025). *Positive maps and extendibility hierarchies from copositive matrices*. DOI: [10.48550/arXiv.2509.15201](https://doi.org/10.48550/arXiv.2509.15201).
+
+*Commentary.*
+
+For every finite register type and finite local alphabet, each edge of a connected simple graph has its actual two-register marginal supported by the symmetric pair projector. Positivity then forces full Bose support. All ordered marginals are equal, including reversed pairs; the marginal values need not be supplied in advance. The proof inducts over actual graph walks to propagate transposition invariance of every column. This is the Hansenne-Xu-Kraft-Guehne support mechanism, with no new priority claim. Disconnected components, higher-body hypotheses and conjugation-only leaves require their separate bridges; this theorem does not assert them.
+
+**Definition 1.13 (Permutations within connected components).**
+
+$$\operatorname{componentGroup}\left(G\right) = \operatorname{ComponentPreservingPermutations}\left(G\right)$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.componentGroup` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A permutation belongs to this subgroup exactly when every vertex is reachable from its image in G. Vertices cannot move between components; an isolated vertex is fixed. The definition applies also to the empty graph and the empty register type.
+
+**Definition 1.14 (The component permutation projector).**
+
+$$\pi_{G} = \operatorname{Average}\left(\operatorname{componentGroup}\left(G\right), Q\right)$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.componentProjector` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This is the uniform average of the actual tensor-register permutation matrices over componentGroup G. The tensor factorization into symmetric projectors on every connected component is the component-wise finite average identity described in the component projector exposition. All singleton components remain present.
+
+**Theorem 1.15 (Support on every graph component).**
+
+$$\operatorname{PSD}\left(E\right) \land \operatorname{BoseEdges}\left(G, E\right) \implies \pi_{G} E \pi_{G} = E$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.component_support_of_edges` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite simple graph, positive E with Bose-supported edge marginals is supported by the component permutation projector. The proof propagates column invariance along graph walks, generates all component-preserving permutations by reachable transpositions, and uses the existing finite-group averaging theorem. No factor or correlation between distinct components is discarded. The support propagation mechanism is attributed to Hansenne-Xu-Kraft-Guehne.
+
+**Theorem 1.16 (Exact component support characterization).**
+
+$$\operatorname{PSD}\left(E\right) \implies ( \operatorname{BoseEdges}\left(G, E\right) \iff \pi_{G} E \pi_{G} = E )$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.edges_iff_component_support` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The characterization holds for every finite graph and every positive semidefinite E. The reverse direction uses the fact that each graph-edge transposition fixes the component projector, then computes the actual ordered marginal and its symmetric pair-projector sandwich. Connectedness and normalization are not assumed.
+
+**Theorem 1.17 (Support from arbitrary Bose root marginals).**
+
+$$\operatorname{PSD}\left(E\right) \land \operatorname{BosePair}\left(\rho\right) \land ( \forall i \neq root , \operatorname{M}\left(root, i, E\right) = \rho ) \implies \operatorname{Bose}\left(E\right) \land ( \forall a \neq b , \operatorname{M}\left(a, b, E\right) = \rho )$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_bose_root_marginals` (`✓ std3`). ∎
+
+*Citation.* Aabhas Gulati, Ion Nechita and Sang-Jun Park (2025). *Positive maps and extendibility hierarchies from copositive matrices*. DOI: [10.48550/arXiv.2509.15201](https://doi.org/10.48550/arXiv.2509.15201).
+
+*Commentary.*
+
+The register type is any finite type with a chosen root and the local alphabet is any finite type. For a positive semidefinite E, Bose-supported root marginals force full Bose support and equality of all ordered marginals. No leaf support, PPT, strict positivity, inverse, or trace normalization is assumed. The proof lifts zero antisymmetric marginal weight through the existing tensor trace duality and zero-weight support-face theorem, then uses star transpositions and the existing ordered-marginal covariance proof. The marginal-to-global support mechanism is prior work of Hansenne-Xu-Kraft-Guehne, main page 4 and Appendix D Lemma 8 of arXiv:2108.02732v1. This formal generalization is not a priority claim.
+
+For distinct root and leaf registers, positivity and invariance of E under every permutation fixing the root, together with Bose support of one root-leaf marginal, transport that supported marginal to every root edge. The existing root-support theorem then supplies the full symmetric-projector sandwich and equality of every ordered marginal. The argument keeps zero and singular matrices and uses no leaf-subspace premise.
+
+**Theorem 1.18 (The identical matrices without PPT).**
+
+$$\operatorname{BosePair}\left(\rho\right) \implies ( \operatorname{StarExtensionCore}\left(root, \rho, E\right) \iff \operatorname{CompleteExtensionCore}\left(\rho, E\right) )$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.same_matrix_core` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every individual E, on any finite register set with a chosen root and finite local alphabet, the two no-PPT predicates are equivalent whenever rho is supported by the actual pair symmetric projector. The forward direction obtains full support and all ordered marginals from the root marginals; the reverse uses inclusion of the full symmetric subspace in the root-times-symmetric-leaves subspace. The theorem does not assert existence of an extension for every rho. It includes zero and singular rho, local dimension one, exactly two registers and arbitrary unnormalized traces.
+
+**Theorem 1.19 (The identical matrices with fully PPT cuts).**
+
+$$\operatorname{BosePair}\left(\rho\right) \implies ( \operatorname{StarExtension}\left(root, \rho, E\right) \iff \operatorname{CompleteExtension}\left(\rho, E\right) )$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.same_matrix` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same finite-type and actual Bose support hypotheses as same_matrix_core, the original fully PPT predicates select the same individual E. Every nonempty proper cut is retained on that E. This is a pointwise equality, so it preserves the witness, its trace and all singular boundary cases. It does not assert universal extendibility.
+
+**Theorem 1.20 (Equality of the extension cones).**
 
 $$\forall   n \geq 1 ,   \forall   r \geq 2 ,   \forall   Y ,   ( \forall   i , j ,   i \leq j \implies Y_{i j} \geq 0 ) \implies   ( ( \exists   E ,   \operatorname{StarExtension}\left(0, \rho, E\right) ) \iff ( \exists   E ,   \operatorname{CompleteExtension}\left(\rho, E\right) ) )$$
 
@@ -121,14 +257,25 @@ Here n and r are natural numbers, Y is an arbitrary real n by n array, and i and
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.CompleteExtension`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.CompleteExtensionCore`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.FullyPPT`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.StarExtension`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.StarExtensionCore`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.componentGroup`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.componentProjector`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.component_support_of_edges`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.dickeOperator`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.dickeVector`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.edgeMarginal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.edgeSplit`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.edges_iff_component_support`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.leafProjector`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.pairSymmetricProjector`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.result`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.same_matrix`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.same_matrix_core`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_bose_root_marginals`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_connected_graph`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPermutationFloor](../AbsoluteSeparability/SymmetricAbsolutePPTPermutationFloor.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/QuantumStates/ZeroWeightSupportFace](../../../QuantumStates/ZeroWeightSupportFace.md)

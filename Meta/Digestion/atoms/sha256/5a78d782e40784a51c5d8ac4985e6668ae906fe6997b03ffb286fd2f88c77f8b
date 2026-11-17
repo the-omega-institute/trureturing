@@ -1,0 +1,19 @@
+**定义 70.1（规范资料族）。** 任取整数 $k\ge1$。在每个原配置上取同一个已标定的欧氏分解
+
+$$
+V_q=P_q\perp Z_q=\mathbb R^2\perp\mathbb R^k,\qquad
+L_q=J\oplus0,\qquad
+J=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
+\qquad u_*=(e_1,0)\in V_r.
+\tag{70.1}
+$$
+
+每条无向原边独立选取 $O_{qr}\in O(k)$，反向取逆，并令
+
+$$
+T_{qr}=I_2\oplus O_{qr},\qquad O_{rq}=O_{qr}^{-1}.
+\tag{70.2}
+$$
+
+$u_*$ 只在原 ready 给出；其它纤维中的数学向量不是新增实际准备。全部 $B_j$ 都由这些实际边按原 [XII 式 (49.2)][XII] 生成，不另选一个替代投影族。
+

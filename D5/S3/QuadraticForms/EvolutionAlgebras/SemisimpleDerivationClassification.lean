@@ -59,7 +59,7 @@ set_option maxHeartbeats 800000
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.SemisimpleDerivationClassification.RadicalTransfer
 variable {k L N : Type*} [Field k] [LieRing L] [LieAlgebra k L]
 variable [LieRing N] [LieAlgebra k N]
-private theorem trivialRadical_of_equiv [LieAlgebra.HasTrivialRadical k L]
+theorem trivialRadical_of_equiv [LieAlgebra.HasTrivialRadical k L]
     (e : L ≃ₗ⁅k⁆ N) : LieAlgebra.HasTrivialRadical k N := by
   apply (LieAlgebra.hasTrivialRadical_iff_no_abelian_ideals k N).mpr
   intro I hI
@@ -152,7 +152,7 @@ theorem coefficient_skew {n : Type*} [Fintype n] [DecidableEq n]
     (A : LieAlgebra.Orthogonal.so n k) (i j : n) : A.val j i = -A.val i j := by
   exact congrArg (fun M : Matrix n n k => M i j)
     ((LieAlgebra.Orthogonal.mem_so n k A.val).mp A.property)
-private theorem subsingleton_of_dimension_le_one (m : ℕ) (hm : m ≤ 1) :
+theorem subsingleton_of_dimension_le_one (m : ℕ) (hm : m ≤ 1) :
     Subsingleton (LieAlgebra.Orthogonal.so (Fin m) k) := by
   have hz (A : LieAlgebra.Orthogonal.so (Fin m) k) : A.val = 0 := by
     ext i j
@@ -162,7 +162,7 @@ private theorem subsingleton_of_dimension_le_one (m : ℕ) (hm : m ≤ 1) :
   constructor
   intro A B
   exact Subtype.ext ((hz A).trans (hz B).symm)
-private theorem so_two_abelian : IsLieAbelian (LieAlgebra.Orthogonal.so (Fin 2) k) := by
+theorem so_two_abelian : IsLieAbelian (LieAlgebra.Orthogonal.so (Fin 2) k) := by
   have hnormal (C : LieAlgebra.Orthogonal.so (Fin 2) k) :
       C.val = !![0,C.val 0 1;-C.val 0 1,0] := by
     ext i j
@@ -198,12 +198,12 @@ open DirectSum
 variable {k α β : Type*} [Field k]
 variable (H : α → Type*) [∀ a,LieRing (H a)] [∀ a,LieAlgebra k (H a)]
 
-private noncomputable def piCongr {J : α → Type*} [∀ a,LieRing (J a)] [∀ a,LieAlgebra k (J a)]
+noncomputable def piCongr {J : α → Type*} [∀ a,LieRing (J a)] [∀ a,LieAlgebra k (J a)]
     (e : ∀ a,H a ≃ₗ⁅k⁆ J a) : (∀ a,H a) ≃ₗ⁅k⁆ ∀ a,J a :=
   { LinearEquiv.piCongrRight (fun a => (e a).toLinearEquiv) with
     map_lie' := by intro f g; funext a; exact (e a).map_lie (f a) (g a) }
 
-private noncomputable def reindex (e : α ≃ β) :
+noncomputable def reindex (e : α ≃ β) :
     (∀ a,H a) ≃ₗ⁅k⁆ ∀ b,H (e.symm b) :=
   { LinearEquiv.piCongrLeft' k H e with
     map_lie' := by intro f g; funext b; rfl }

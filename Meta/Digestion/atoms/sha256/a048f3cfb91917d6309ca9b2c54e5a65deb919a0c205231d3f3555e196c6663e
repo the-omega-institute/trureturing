@@ -1,0 +1,56 @@
+**Theorem 27.3 (radial inheritance with its sign conditions).** For every
+real $\gamma\ge0$, every $z\in\mathcal W$ and $t\in[0,1]$,
+
+$$
+\nu_\gamma(tz)\ge t^2\nu_\gamma(z)
+ +(1-t^2)(e^2-10\gamma),
+\tag{27.3}
+$$
+
+where $\nu_\gamma$ is precisely (23.20). Nonnegativity, respectively
+positivity, of the right side is sufficient for the corresponding sign
+of $\nu_\gamma(tz)$. In particular, if $0\le\gamma\le e^2/10$ and
+$\nu_\gamma(z)\ge0$, all $tz$ inherit nonnegativity. Under these hypotheses,
+$\nu_\gamma(tz)>0$ whenever $t<1$ and $\gamma<e^2/10$, or whenever
+$t>0$ and $\nu_\gamma(z)>0$. These are sufficient strictness conditions, not
+necessary ones. For $\gamma>e^2/10$, nonnegativity at $z$ alone is
+not asserted to propagate; the quantitative right side remains valid.
+
+Proof. Put $D(p)=d^2p+e^2(1-p)\ge e^2$ for $p\in[0,1]$.
+The exact amplitudes (23.2) give
+
+$$
+G(tz,p)=t^2G(z,p)+(1-t^2)D(p).
+\tag{27.4}
+$$
+
+For the positive distance branch, direct subtraction gives
+
+$$
+\begin{aligned}
+r_+(tz,p)-t^2r_+(z,p)
+ &=(1-t^2)(10-2p)-2t(1-t)A(z)\\
+ &\le10(1-t^2).
+\end{aligned}
+\tag{27.5}
+$$
+
+The negative branch obeys the same bound, replacing $10-2p,A(z)$
+by $8+2p,B(z)$. Taking the minimum of these two inequalities yields
+$r(tz,p)\le t^2r(z,p)+10(1-t^2)$, without requiring the minimizing
+sign at $tz$ to agree with that at $z$. Since $\gamma\ge0$,
+
+$$
+G(tz,p)-\gamma r(tz,p)
+\ge t^2\bigl(G(z,p)-\gamma r(z,p)\bigr)
+ +(1-t^2)(e^2-10\gamma).
+\tag{27.6}
+$$
+
+Minimize over the same full population interval and use Theorem 23.4
+to obtain (27.3). The stated sign conclusions follow from its right side.
+At $t=1$ it is an identity; at $t=0$ it gives
+$\nu_\gamma(0)\ge e^2-10\gamma$, with no normalization or division.
+No step divides by a trace or amplitude, so zeros, endpoint populations,
+sign changes and sign ties are included. $\square$
+

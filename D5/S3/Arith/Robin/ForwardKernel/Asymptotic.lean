@@ -31,7 +31,7 @@ def normalizedBody (t z u : ℝ) (s : ℂ) : ℂ :=
 def kernelConstant (s : ℂ) : ℝ :=
   (2 * ‖-s - 1 / 2‖ + 50) * Real.exp (2 * ‖-s - 1 / 2‖) + 10
 
-private lemma coordinate_power_one {t z : ℝ} (ht : 2 ≤ t)
+lemma coordinate_power_one {t z : ℝ} (ht : 2 ≤ t)
     (hz : z ∈ Icc (0 : ℝ) 1) :
     coordinate t z ^ (-1 / 5 : ℝ) ≤ 2 * t ^ (-1 / 5 : ℝ) := by
   have h := coordinate_neg_power ht hz (show (0 : ℝ) ≤ 1 / 5 by norm_num)
@@ -245,7 +245,7 @@ lemma integrand_measurable {t : ℝ} (ht : 8 ≤ t) (s : ℂ) :
   exact ((body_continuousOn ht s).aestronglyMeasurable hm).indicator
     (measurableSet_le measurable_fst measurable_snd)
 
-private lemma unitSquare_volume : volume.real unitSquare = 1 := by
+lemma unitSquare_volume : volume.real unitSquare = 1 := by
   change (volume.prod volume).real (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1) = 1
   rw [measureReal_prod_prod]
   norm_num [Measure.real]
@@ -273,7 +273,7 @@ lemma integrand_integrable {t : ℝ} (ht : 8 ≤ t) (s : ℂ) :
     unfold kernelConstant
     positivity
 
-private lemma triangle_integral :
+lemma triangle_integral :
     (∫ p in unitSquare, triangle.indicator (fun _ => (1 : ℂ)) p) = 1 / 2 := by
   have hμ : volume unitSquare < ∞ :=
     (isCompact_Icc.prod isCompact_Icc).measure_lt_top

@@ -1,0 +1,9 @@
+#### 定义 2.3：由轨道内生的比较
+
+记 $n=\dim W$。对 $\alpha\in W^*$ 定义
+
+$$
+\mathsf C\alpha=\int_G\alpha(ge)\,ge\,dg,
+\qquad B(v,w)=\frac1n(\mathsf C^{-1}v)(w).
+$$
+

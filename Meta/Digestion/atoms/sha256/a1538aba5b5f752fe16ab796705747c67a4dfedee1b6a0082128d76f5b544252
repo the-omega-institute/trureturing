@@ -1,0 +1,102 @@
+**Theorem 142.1 (exact signs with arbitrary finite moments).** Retain the complete original telescope of Definitions 134.1, 135.1 and 136.1, including every inherited endpoint, source, analytic and clock hypothesis of Appendix II §§115–117, 123–125 and 133. For every original $\theta=(a,\eta,d,b)\in\Theta$, every fixed actual invariant coarse partition $E=(S,C,B)\in\mathscr E_\theta$, and every finite set $\Psi\subset L^1(G,m;\mathbb R)$, there is a bounded whole-$G$ Borel function $v$ such that
+
+$$
+\begin{gathered}
+v^2=\mathbf1_S\quad\text{everywhere},\qquad
+v\circ R_\pi=-v\quad m\text{-a.e.},\\
+\int_G\psi v\,dm=0\quad(\psi\in\Psi),\qquad
+Q_E(v,v)=\int_Gg\,v\,P\bigl((P\mathbf1_C)v\bigr)\,dm=0.
+\end{gathered}
+\tag{142.1}
+$$
+
+Here $P=T_d$, $g=g_{2d}$, $m=h^2\mu$, the source start is $e$, and the original observation epochs are $2d,3d,4d$. The cells of $E$ and its actual terminal factor $q_E=P\mathbf1_C$ remain fixed. The finite moments and quadratic equality hold for the same sign.
+
+*Proof.* Set $R=R_\pi$, $F=\{r>0,\ 0\le\alpha<\pi\}$ and $Y=S\cap F$. The null axis is $N=\{x=y=0\}$, and $S\setminus N=Y\sqcup RY$. Choose Borel representatives for the finitely many $L^1$ tests. For $x\in Y$ put
+
+$$
+\widetilde\psi(x)=\psi(x)-\psi(Rx).
+\tag{142.2}
+$$
+
+Each $\widetilde\psi$ belongs to $L^1(Y,m)$. If $u$ vanishes outside $S$ and is odd off $N$, invariance of $m$ gives
+
+$$
+\int_G\psi u\,dm=\int_Y\widetilde\psi u\,dm.
+\tag{142.3}
+$$
+
+Theorem 137.1, applied with the finitely many bounded linear functionals $u\mapsto\int\psi u\,dm$, gives two bounded odd real tests $u_+,u_-$ supported in $S$, with all these moments zero and
+
+$$
+Q_E(u_+,u_+)>0>Q_E(u_-,u_-).
+\tag{142.4}
+$$
+
+Scale both into the unit ball. Choose Borel representatives exactly odd on $S\setminus N$ and zero outside $S$; the null-axis values do not affect any integral.
+
+We first approximate either such $u$ by signs retaining every moment exactly. Let $\mathcal P_n$ be refining finite Borel partitions of $Y$ generating its Borel sigma-algebra. On this same Borel space use the finite nonnegative measures with densities
+
+$$
+(\widetilde\psi)_+,\ (\widetilde\psi)_-
+\quad(\psi\in\Psi),\qquad
+\mathbf1_A\quad(A\in\mathcal P_n)
+\tag{142.5}
+$$
+
+relative to $m|_Y$. They are finite and atomless. Indeed $m\ll dx\,dy\,dz\,d\zeta$, and so is each measure in (142.5); cutting a positive-measure Borel set by a coordinate with null level sets supplies a proper subdivision. Apply Dvoretzky–Wald–Wolfowitz, [*Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), Theorem 4, printed pp. 66–67](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), to the probability two-vector $((1+u)/2,(1-u)/2)$ on $Y$. The equality of its range with the decomposition range gives a Borel sign $s_n$ on $Y$ satisfying
+
+$$
+\int_Y\widetilde\psi s_n\,dm=\int_Y\widetilde\psi u\,dm=0,
+\qquad
+\int_A s_n\,dm=\int_Au\,dm\quad(A\in\mathcal P_n).
+\tag{142.6}
+$$
+
+The use of positive and negative parts in (142.5) justifies the signed equalities without an extra assumption on the tests. Density of the partition-simple functions in $L^1(Y,m)$ gives $s_n\to u|_Y$ weak-star. Lift $s_n$ oddly to $RY$, set it zero outside $S$, and assign $+1$ on $S\cap N$. These are whole-$G$ Borel signs on $S$, with every required moment zero. Formula (142.3) shows that the lifted signs converge weak-star to $u$ on $G$.
+
+The actual ordered kernel is the one in (138.2):
+
+$$
+a_E(x,y)=g(x)p_d(x,y)q_E(y)\ge0,\qquad
+\int_{G^2}a_E\,dm^2=\int_GgPq_E\,dm\le1.
+\tag{142.7}
+$$
+
+On the unit ball, $Q_E(u,u)$ is continuous for weak-star convergence: approximate $a_E$ in $L^1(m^2)$ by finite sums $\sum_j a_j(x)b_j(y)$ with $a_j,b_j\in L^1(m)$; each tensor pairing is a product of two convergent scalar pairings, and the integral error is uniformly bounded by the $L^1$ kernel error. Applying this to both tests in (142.4) supplies signs $s_+,s_-$ with all the exact moments and with strictly positive and strictly negative quadratic values, respectively.
+
+It remains to connect these two signs without losing their moments. Let $A\subset Y$ be their disagreement set. On $A$, $s_-=-s_+$, and subtraction of their zero moments gives
+
+$$
+\int_A s_+\widetilde\psi\,dm=0\quad(\psi\in\Psi).
+\tag{142.8}
+$$
+
+On $A$ take the finite vector of nonnegative measures consisting of $m|_A$ and the measures with densities $(s_+\widetilde\psi)_+,(s_+\widetilde\psi)_-$. All are finite and atomless for the same reason as (142.5). Lemma 2 of the same Dvoretzky–Wald–Wolfowitz article, printed pp. 66–67, permits simultaneous proportional subdivision. Repeatedly halve every piece for this entire vector, order the resulting pieces by binary words, and take initial unions at dyadic parameters. Their increasing unions at dyadic parameters below $t$ define nested Borel $A_t\subset A$ with
+
+$$
+\lambda(A_t)=t\lambda(A)\quad(0\le t\le1)
+\tag{142.9}
+$$
+
+for each measure $\lambda$ in that vector; set $A_0=\varnothing$ and $A_1=A$. Continuity from below proves (142.9) for all $t$. In particular (142.8) holds with $A_t$ in place of $A$.
+
+Switch from $s_+$ to $s_-$ on $A_t\sqcup RA_t$, keeping the null-axis assignment fixed, and call the resulting whole-$G$ sign $s_t$. Equations (142.3) and (142.8)–(142.9) show that every moment stays zero. Moreover
+
+$$
+\|s_t-s_s\|_1=4m(A)|t-s|.
+\tag{142.10}
+$$
+
+The actual bilinear form obeys, for $|u|,|v|\le1$,
+
+$$
+|Q_E(u,u)-Q_E(v,v)|
+\le2\|g\|_\infty\|q_E\|_\infty\|u-v\|_1,
+\tag{142.11}
+$$
+
+by moving $P$ to the other factor in the second difference term and using its Markov contraction. Here $\|g\|_\infty<\infty$ is supplied by Theorem 133.2 and $\|q_E\|_\infty\le1$. Thus the quadratic value along this moment-preserving path is continuous. Its endpoint signs are opposite, so the intermediate value theorem gives (142.1). The fixed points in $S\cap N$ retain value $+1$; oddness there is only asserted almost everywhere, exactly as in Theorem 138.1.
+
+The finite vector-measure results are attributed linear intermediates. The new source-specific assertion is their composition with the actual two-sided constrained index of Theorem 137.1 and the fixed-terminal kernel (142.7), producing one exact quadratic-zero sign with all the prescribed finite moments. $\square$
+

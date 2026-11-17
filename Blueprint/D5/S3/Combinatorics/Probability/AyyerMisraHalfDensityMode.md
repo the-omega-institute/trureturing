@@ -76,7 +76,91 @@ $$\forall K \in \mathbb{N},\; \forall L \in \mathbb{N},\; \forall n \in \mathbb{
 
 Page 6: “Then the steady state probability of η is”. Equation (13) is π(η) = wtη(t) / ZL,n(t). Summing this distribution over configurations whose s-th value is a gives the displayed marginal. The numerator and denominator use exactly the weights of equation (11).
 
-**Definition 1.7 (The answer to the half-density question).**
+**Definition 1.7 (Evaluation of the Gaussian polynomial).**
+
+$$\forall R \in \operatorname{Type},\; [\operatorname{CommRing}\left(R\right)] \forall q \in R,\; \forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{gaussValue}\left(q, n, k\right) = \operatorname{Polynomial}.\operatorname{eval}_{2}\left(\operatorname{Int}.\operatorname{castRingHom}\left(R\right), q, \operatorname{gauss}\left(n, k\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer Gaussian polynomial is evaluated in an arbitrary commutative ring.
+
+**Theorem 1.8 (The zero-dimensional coefficient).**
+
+$$\forall R \in \operatorname{Type},\; [\operatorname{CommRing}\left(R\right)] \forall q \in R,\; \forall n \in \mathbb{N},\; \operatorname{gaussValue}\left(q, n, 0\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_zero_right` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The Gaussian coefficient with lower index zero is one.
+
+**Theorem 1.9 (The support edge at dimension zero).**
+
+$$\forall R \in \operatorname{Type},\; [\operatorname{CommRing}\left(R\right)] \forall q \in R,\; \forall k \in \mathbb{N},\; \operatorname{gaussValue}\left(q, 0, k + 1\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_zero_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A positive-dimensional coefficient of a zero-dimensional space vanishes.
+
+**Theorem 1.10 (The evaluated Gaussian recursion).**
+
+$$\forall R \in \operatorname{Type},\; [\operatorname{CommRing}\left(R\right)] \forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall q \in R,\; \operatorname{gaussValue}\left(q, n + 1, k + 1\right) = \operatorname{gaussValue}\left(q, n, k + 1\right) + q^{(n - k)} \cdot \operatorname{gaussValue}\left(q, n, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_pascal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The q-Pascal recurrence is preserved by polynomial evaluation. Natural subtraction is truncated.
+
+**Theorem 1.11 (Positivity of the t-factorial).**
+
+$$\forall t \in \mathbb{R},\; (0 < t) \Rightarrow (\forall a \in \mathbb{N},\; 0 < \operatorname{qfact}\left(t, a\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.qfact_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every t-factorial is positive for positive real t, including the empty factorial.
+
+**Theorem 1.12 (The factorial expression for the Gaussian coefficient).**
+
+$$\forall t \in \mathbb{R},\; (0 < t) \Rightarrow (\forall K \in \mathbb{N},\; \forall a \in \mathbb{N},\; \operatorname{gaussValue}\left(t, K, a\right) = \operatorname{qbinom}\left(t, K, a\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_eq_qbinom` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive real t, polynomial evaluation equals the factorial quotient, with zero outside its support.
+
+**Theorem 1.13 (The finite Gaussian product identity).**
+
+$$\forall R \in \operatorname{Type},\; [\operatorname{CommRing}\left(R\right)] \forall q \in R,\; \forall z \in R,\; \forall n \in \mathbb{N},\; \prod_{k\in \operatorname{Finset}.\operatorname{range}\left(n\right)} (1 + z \cdot q^{k}) = \sum_{k\in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} q^{\operatorname{Nat}.\operatorname{choose}\left(k, 2\right)} \cdot \operatorname{gaussValue}\left(q, n, k\right) \cdot z^{k}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.finite_q_binomial_from_gauss` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Expanding the finite product gives the Gaussian coefficients with their triangular powers.
+
+**Definition 1.14 (The answer to the half-density question).**
 
 $$claim = (\forall r \in \mathbb{N},\; \forall K \in \mathbb{N},\; \forall k \in \mathbb{N},\; (2 \le r) \Rightarrow ((1 \le K) \Rightarrow ((k < K) \Rightarrow ((\operatorname{let} s:\operatorname{Fin}\left(2 \cdot r\right)=0; \exists e \in \mathbb{R},\; (0 < e) \land (\forall t \in \mathbb{R},\; (0 < t) \Rightarrow (((t < e) \lor (\frac{1}{e} < t)) \Rightarrow (((2 \cdot k + 1 < K) \Rightarrow (\forall b \in \mathbb{N},\; (b \le K) \Rightarrow ((b \ne k) \Rightarrow (\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, b\right) < \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k\right))))) \land (((K < 2 \cdot k + 1) \Rightarrow (\forall b \in \mathbb{N},\; (b \le K) \Rightarrow ((b \ne k + 1) \Rightarrow (\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, b\right) < \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k + 1\right))))) \land ((2 \cdot k + 1 = K) \Rightarrow ((\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k\right) = \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k + 1\right)) \land (\forall b \in \mathbb{N},\; (b \le K) \Rightarrow ((b \ne k) \Rightarrow ((b \ne k + 1) \Rightarrow (\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, b\right) < \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k\right))))))))))))))))$$
 
@@ -88,7 +172,7 @@ $$claim = (\forall r \in \mathbb{N},\; \forall K \in \mathbb{N},\; \forall k \in
 
 Section 4.5, page 21: “We focus on when t ≪ 1 and t ≫ 1. From the discussion in Sections 4.2 and 4.3, we know that the most likely number of particles is either k or k + 1. The question we want to address is which one is most likely.” The answer concerns L = 2r with r ≥ 2, K ≥ 1, k < K and n = (2k+1)r. The site s is the element of Fin (2r) with value zero. For all sufficiently small positive t and all sufficiently large t, the unique mode is k below half filling and k+1 above half filling. At exact half filling k and k+1 tie and dominate the other occupations in these two regimes.
 
-**Theorem 1.8 (The modal comparisons in both parameter extremes).**
+**Theorem 1.15 (The modal comparisons in both parameter extremes).**
 
 $$\forall r \in \mathbb{N},\; \forall K \in \mathbb{N},\; \forall k \in \mathbb{N},\; (2 \le r) \Rightarrow ((1 \le K) \Rightarrow ((k < K) \Rightarrow ((\operatorname{let} s:\operatorname{Fin}\left(2 \cdot r\right)=0; \exists e \in \mathbb{R},\; (0 < e) \land (\forall t \in \mathbb{R},\; (0 < t) \Rightarrow (((t < e) \lor (\frac{1}{e} < t)) \Rightarrow (((2 \cdot k + 1 < K) \Rightarrow (\forall b \in \mathbb{N},\; (b \le K) \Rightarrow ((b \ne k) \Rightarrow (\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, b\right) < \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k\right))))) \land (((K < 2 \cdot k + 1) \Rightarrow (\forall b \in \mathbb{N},\; (b \le K) \Rightarrow ((b \ne k + 1) \Rightarrow (\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, b\right) < \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k + 1\right))))) \land ((2 \cdot k + 1 = K) \Rightarrow ((\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k\right) = \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k + 1\right)) \land (\forall b \in \mathbb{N},\; (b \le K) \Rightarrow ((b \ne k) \Rightarrow ((b \ne k + 1) \Rightarrow (\operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, b\right) < \operatorname{occProb}\left(K, 2 \cdot r, (2 \cdot k + 1) \cdot r, t, s, k\right)))))))))))))))$$
 
@@ -110,9 +194,16 @@ The finite t-binomial identity expresses the weights as sums over occupied slots
 
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.claim`
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.configs`
+- Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.finite_q_binomial_from_gauss`
+- Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue`
+- Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_eq_qbinom`
+- Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_pascal`
+- Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_zero_right`
+- Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.gaussValue_zero_succ`
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.occProb`
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.qbinom`
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.qfact`
+- Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.qfact_pos`
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.qnum`
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.result`
 - Truth anchor: `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.wt`

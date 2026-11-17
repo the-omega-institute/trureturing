@@ -1,0 +1,51 @@
+**命题 6.3（Product Dicke code and its energy-confinement correspondence）。**
+In the notation of [the collective-oscillator theory, Definitions 1.1–1.2
+and Assumption 1.3](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+take $d=m$, $N=s$, $B=a$ and $\hbar>0$. Identify the two single-cell
+states $g,e$ with Boolean occupations $0,1$. On this complete two-state
+tensor space,
+
+$$
+\mathcal D_s^{\otimes m}=\operatorname{ran}P_{\mathrm{sym}},\qquad
+H_s(a)|_{\mathcal H_{mS}}=\frac{\hbar}{s}K.
+\tag{6.29}
+$$
+
+For every even $s\geq s_H$, its actual half-filled least energy is
+$\mathcal E_s=\hbar E/s$, and every unit half-filled state $\phi$ with
+$\langle\phi,H_s(a)\phi\rangle\leq\mathcal E_s+\epsilon$, $\epsilon\geq0$,
+satisfies
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2\leq\frac{2\epsilon}{\hbar\ell}.
+\tag{6.30}
+$$
+
+The fixed-low-excitation oscillator comparison in that volume's Theorem
+2.1 retains its own hypotheses and fixed excitation cutoff $M$;
+(6.29)–(6.30) assert symmetry and energy confinement only.
+
+Proof. At occupancy $n$ in one block, a permutation-invariant vector has
+one common coefficient on the $n$-subsets. Its unit basis vector is
+$\binom sn^{-1/2}\sum_{|U|=n}|U\rangle=|D_n^{(s)}\rangle$.
+These vectors at all occupancies span precisely the invariant subspace.
+Their normalization and orthogonality are the two-letter specialization
+of `sector_words_card_multinomial` and `sector_gram` in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean),
+with occupation counts $(s-n,n)$, including $n=0,s$.
+Taking the product over blocks gives the first equality in (6.29).
+At half filling it means the intersection with $\mathcal H_{mS}$.
+The consumer's operator $a_{i,s}$ is $L_i/\sqrt s$; its Hamiltonian with
+$B=a$ is therefore $\hbar\sum_{i,j}a_{ij}L_i^*L_j/s$, giving the second
+equality by (2.4). Apply (6.5) with $\delta=s\epsilon/\hbar$ to obtain
+(6.30).
+
+The oscillator comparison uses only the part with total excitation at
+most a fixed $M$, through its map $J_s$ to these same product Dicke
+vectors. Here the total excitation is $ms/2$, which grows with $s$.
+Membership in the product Dicke code does not put that sector in a fixed
+$M$ window, so the symmetry conclusion supplies no oscillator
+approximation on this growing window. Other densities, odd $s$, the
+even integers below $s_H$, and an optimal threshold are not assertions of
+Theorem 6.2. $\square$
+

@@ -1,0 +1,28 @@
+**定义 371.1（唯一统一几何候选）。** 分别固定 358.1–358.2 的完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。同一原 $\Omega,q,D,L,\circ$、全部原对象、原菜单、预选 $t_0$ 及同一原 $\sigma_{t_0}$ 保持。对原正锥中的数学元 $a,b\ge0$，置
+
+$$
+x=a+b,\qquad c=\operatorname{supp}(x),\qquad
+\mathcal T_q(x)=E_1(c)\cap\{v:q(x,v)=0\},\quad
+E_1(c)=Q_cE,\quad Q_c=2L_c^2-L_c.
+\tag{371.1}
+$$
+
+约定 $\mathcal T_q(0)=\{0\}$。只在原选中域 $\operatorname{rank}E_X>p_*$ 上要求
+
+$$
+\boxed{\mathsf F_{\rm fsph}^{>}:\quad
+D^X(a,b)\in\mathcal T_{q_X}(a+b)
+\qquad(a,b\in C_X).}
+\tag{371.2}
+$$
+
+唯一完整新候选为
+
+$$
+\boxed{\mathsf C_{\rm fsph}(B_*)
+:=B_*+\mathsf F_{\rm fsph}^{>}+\sigma_{t_0}.}
+\tag{371.3}
+$$
+
+$\mathsf G_{0h}$ 与 $\mathsf T_{\rm uneq}^{>}$ 均不另列作输入；它们须由 (371.2) 恢复。原右单位 $D(a,u)=0$ 仍只由完整 $B_*$ 的母卷 30.1／67.3 供应。新增关系 (371.2) 本身不另选 primitive、框架、重叠角、固定谱比、中心迹或匹配资料；完整候选仍保留同一原 $\sigma_{t_0}$ 及其原有的预选 primitive 与半重叠标签。$Q_c$ 管整个支持面，不能换成 $4(L_c-L_c^2)$ 或只查角外压缩。
+

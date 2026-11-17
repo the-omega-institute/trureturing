@@ -1,0 +1,16 @@
+### 27.3　保留辅助质量的四面体恒等式
+
+在 $D^6$ 的正交坐标 $(e_0,e_1,e_2,d_1,d_2,d_3)$ 上，令 $\nu:\mathcal P_6(D)\to\mathbb R$ 是任意正交可加函数，因而 $\nu(0)=0$。沿用 §26 的 $x=e_0+e_2,y=e_1,q_s,Q_s$，置
+
+$$
+\begin{gathered}
+X=xx^*/2,\quad Y=yy^*,\quad D_0=\sum_{j=1}^3d_jd_j^*,\quad
+f(v)=\nu(vv^*)\ (v^*v=1),\\
+a_s=\nu(Q_s),\quad C=2\nu(X)+\nu(Y),\quad
+\beta_0=\nu(D_0),\quad b(d)=\nu(dd^*)\ (d\in D_0,\ d^*d=1).
+\end{gathered}
+\tag{27.11}
+$$
+
+$C$ 是本段实数，区别于原网络 $C$；$\beta_0,b(d)$ 可为任意实数，$D_0$ 在本段只是辅助三维块。
+

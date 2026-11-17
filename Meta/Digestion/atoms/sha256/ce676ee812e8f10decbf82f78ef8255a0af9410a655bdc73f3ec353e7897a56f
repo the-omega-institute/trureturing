@@ -1,0 +1,20 @@
+### 8.1 输入与结论
+
+把前两维的真角写成 $C=\operatorname{diag}(c_1,c_2)$，其中 $c_1,c_2>0$，并允许一个有限环境块：
+
+$$
+c=\begin{pmatrix}C&0\\0&0_m\end{pmatrix},\qquad
+t=\begin{pmatrix}B&V\\V^*&D\end{pmatrix},\qquad
+s=\begin{pmatrix}\operatorname{diag}(s_1,s_2)&0\\0&0_m\end{pmatrix},
+$$
+
+其中 $B=B^*\in M_2(\mathbb C)$，$D=D^*\in M_m(\mathbb C)$ 可为不定或负定但必须可逆，$V\in M_{2,m}(\mathbb C)$，其中 $s_1,s_2\in\mathbb R$；$m=0$ 时所有环境块按空矩阵解释。置
+
+$$
+H=B-VD^{-1}V^*,\qquad A=C^{-1/2}HC^{-1/2},\qquad
+g=K_\sigma(c,t)+s,\quad \sigma\in\{1,-1\}.
+\tag{8.1}
+$$
+
+这里的 $D^{-1}$ 只出现在已知输入 $t$ 的 Schur 消元中，不是对未知总映射或物理响应作压缩。
+

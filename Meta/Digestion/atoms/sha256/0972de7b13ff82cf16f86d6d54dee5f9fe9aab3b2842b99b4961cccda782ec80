@@ -1,0 +1,71 @@
+**引理 259.1（只增加一个标量缺陷）。** 在引理 257.1 的前件下，存在同一个实线性 $F:T\to T$ 与实常数 $\lambda,\beta$，使
+
+$$
+\begin{aligned}
+D_ab&=F\kappa(a,b)+\lambda R(a,b)+\beta\Theta_n(a,b),\\
+\kappa(a,b)&=i[a,b],\qquad
+R(a,b)=\operatorname{Tr}(a)b-\operatorname{Tr}(ab)I,\\
+\Theta_n(a,b)&=na\circ b-\operatorname{Tr}(b)a\\
+&\quad+[\operatorname{Tr}(a)\operatorname{Tr}(b)-n\operatorname{Tr}(ab)]I.
+\end{aligned}
+\tag{259.1}
+$$
+
+这是保留关系的必要正常形，不声称任意 $F,\lambda,\beta$ 均满足半角能量关系。特别地，
+
+$$
+D_ep=\lambda p+\beta(I-e)\ (e\perp p),\qquad
+Q(a)\equiv n\beta a^2+(\lambda-\beta)\operatorname{Tr}(a)a
+\pmod{\mathbb RI}.
+\tag{259.2}
+$$
+
+证明。对引理 258.1 的 $\delta$，定义 $q(R_za,b)=q(\delta(a,b),z)$。交替性使 $R_z$ 斜伴随，共同谱消失使 $q(R_za,a^2)=0$。按 (248.2) 的三次极化，$R_z$ 是 Jordan 导子；选唯一无迹 Hermitian 内导子代表，再取原迹型伴随，(248.3) 的同一推导给 $\delta=F\kappa$。这里复用 Haagerup–Laustsen 定理 3.1(1)、引理 3.4 及有限 EJA 导子内性的成熟中间工具，只消费刚证明的 $\delta$ 性质，不以引理 248.1 尚未满足的完整三层前件作跳步。
+
+取 $e\perp s$、$c=e+s$、正规 $y\in V_{es}$，记 $v=\delta(e,y)$。半角 $p_\pm=(c\pm y)/2$ 的两能量相同；直接代入 (258.1)，相减得到
+
+$$
+q(v,r)=-\tfrac w2 k(y)\qquad(r\perp c).
+\tag{259.3}
+$$
+
+令 $h_0=e-s$，同时旋转
+
+$$
+h_\theta=\cos\theta\,h_0+\sin\theta\,y,\quad
+y_\theta=-\sin\theta\,h_0+\cos\theta\,y,\quad
+e_\theta=(c+h_\theta)/2.
+\tag{259.4}
+$$
+
+共同谱消失及交替性使 $\delta(e_\theta,y_\theta)=v$ 与 $\theta$ 无关。在同一个 $r\perp c$ 上，(259.3) 对 $\theta$ 与 $\theta+\pi$ 的左边相同、右边反号，故 $k(y_\theta)=0$，全部角外读回也为零。各 Peirce 边和对角差张成无迹空间，因此 $k=\lambda\operatorname{Tr}$。
+
+置 $\Lambda=\lambda+A/2$。半角的偶部现在精确成为
+
+$$
+\frac w4=2w h(e_\theta)-w(\lambda+A)
++\frac12\|P_{e_\theta}v+\Lambda y_\theta\|_q^2.
+\tag{259.5}
+$$
+
+其二阶角谐波给
+
+$$
+q(v,h_0)=q(v,y)=0.
+\tag{259.6}
+$$
+
+为明确这一结论不预设 $h$ 常数，将 $v$ 分成 $c$ 内的 Hermitian 块、连接 $c$ 与补空间的块及角外块。角外读回已使最后一块为零。连接块投影后的范数平方对 $e_\theta$ 线性，只有常数和一阶谐波；$h(e_\theta)$ 及交叉项 $q(v,y_\theta)$ 也只有这些阶数。$c$ 内块投影的唯一二阶项是
+
+$$
+-\frac{q(v,h_\theta)^2}{2w}.
+\tag{259.7}
+$$
+
+其正弦、余弦二阶系数同时为零，等价于两个实数 $q(v,h_0),q(v,y)$ 的平方相等且乘积为零，遂给 (259.6)。
+
+最后置 $S=R_I=i[H,\,\cdot\,]$，取 $H$ 的本征 frame $(e_i)$。对其中 $e=e_i$，(259.6) 给 $q(v,e)=q(v,s)$；角外零及 $Se=0$ 又给
+$2q(v,e)=q(v,I)=q(Se,y)=0$。沿 (248.4) 后的 $\mathbb Cv\oplus v^\perp$ 下块读回分解，便得 $\delta_e(T_e)\subseteq T_e$。对 $y\in V_{ij}$，$\delta(e_j,y)=-\delta(e_i,y)$，故输出同时切于两端，落在 $V_{ij}$；再用 $q(\delta(e_i,y),y)=0$，得到这条实二维边上 $\delta(e_i,y)=\gamma_{ij}\kappa(e_i,y)$。
+
+在该边的整个旋转 (259.4) 中，$v$ 是固定的第三个 Bloch 方向，$P_{e_\theta}v=v$、$q(v,y_\theta)=0$、$\|y_\theta\|_q^2=2w$。所以 (259.5) 的能量恒定，$h(e_\theta)$ 只能恒定。对全部边及其全部相位取此旋转，$h$ 在本征 frame 上各对角值相同、全部非对角值为零，故 $h=\beta\operatorname{Tr}$、$A=h(I)=n\beta$。代回 (258.1) 即得 (259.1)–(259.2)。∎
+

@@ -1,0 +1,23 @@
+**定理 383.1（原子相切与完整量子候选）。** 分别在完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中，
+
+$$
+\begin{aligned}
+B_*+\mathsf F_{\rm prph}^{>}
+&\Longleftrightarrow B_*+\mathsf F_{\rm fsph}^{>}
+\Longleftrightarrow B_*+\mathrm I+\mathrm{SC},\\
+\mathsf C_{\rm prph}(B_*)
+&\Longleftrightarrow\mathsf C_{\rm fsph}(B_*)
+\Longleftrightarrow\mathsf C_{\rm uneq}(B_*)
+\Longleftrightarrow\mathsf C_{\rm support}(B_*).
+\end{aligned}
+\tag{383.1}
+$$
+
+对应在全部原数据及全部原合法有限历史上为恒等，不重新定义原 $D$ 或原比较。
+
+证明。前卷 246.1 分别在两份完整准备背景中供应原静态复直和，原比较是各块正 Frobenius 型；原右单位由母卷 30.1／67.3 独立供应。故 382.1 在每个原选中对象上将原子相切等价地恢复为全部正输入相切。这里无需假设任一原嵌入保持 primitive，也未将某个数学角增补为实际对象。
+
+随后完整消费 374.1：对任意原对象，用原身份事件及全事件 R 供应的充分大实际参考联合。原含幺 Jordan/$D$ 单射将 SC 与整个 Jordan 导子缺陷逐字运输，单射性将其带回原对象；运输对象是向量和两种乘法，不是 $q$。零对象也包括在内。原 I 的取得仍用该既有前件中的有限 EJA 内性。反向，374.1 已在完整 $B_*+\mathrm I+\mathrm{SC}$ 上取得全部正输入相切，限制到原子即可。
+
+共同尺度仍只由前卷 275.2 消费完整背景取得，包含 $\kappa=0$；局部 382.1 并未要求各 $\gamma_s$ 同步。加入同一字面 $\sigma_{t_0}$ 后，375.1 以原正 $w_0$ 的 $(1-\kappa)w_0/4=0$ 固定 $\kappa=1$。与既有完整候选的其余对应直接复用 374.1、361.1 及 276.2。既有完整 tagged-CP 满足族由反向蕴含满足本候选，含无实际 $M_2$ 对象的子族。两份背景始终分别应用，没有将它们合取为一个更强前提。∎
+

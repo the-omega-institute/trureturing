@@ -1,0 +1,14 @@
+**命题 260.9（限定结论的归属与完整白话图景）。** 260.3的低维支撑—带符号饱和—交叉球反演接合、260.5—260.6的实际乘积零面完整重建，以及260.7的三边奇偶接合，是此处的 repo-derived 普通推导。成熟中间工具直接使用，不申领为新定理：有限维极点分解、相对内部与支撑、Lorentz 锥、Grassmann／圆丛、Alexander 对偶及 cap 自然性、Schur 补、Schmidt 分解和标准矩阵支持面。实际面闭性、支撑满射和八维下界精确来自240.2，qutrit 接口来自240.5，任意不同球的张成交集来自 [B260] 的159.5，全有限固定坐标尾部及过程字典来自 [F260]。没有 Lean／kernel 核验或全球优先性主张。
+
+证明与物理图景。把单个两态系统想成一个实心方向球：球内是混合准备，壳上是纯准备。候选先不把联合准备叫作密度矩阵，只要求在**整个三份准备体**里，任意两种纯准备生成的实际面仍是三维圆球，而且所有这种小球可用同一把正定尺测量；这包括任意纠缠准备，而非只检查产品准备。原局部维数四先使单份球就是完整 Bloch 球。一个产品结果读数为零，在两份联合体里给至多十维的实际约束；低维引理通过连续切平面、带方向符号的对偶和两颗交叉球，把其中外三角迫成八维完整 qutrit。
+
+产品读数的正性随后把这个 qutrit 的三个相干方向拼起来；Schur 补留下的只有标准方向或一个因子转置。方向不是假定的物理旋转，而由连通框架空间上的两个闭而不交的候选覆盖固定。每条标准纯射线都进入一个实际 qutrit 面，接着完整产品零投影张成禁止再藏入一个额外纯点。对 $2\times b$，所有条件态受边缘支持控制，使每个二支持压缩是整个实际面，再沿连通二框架把方向接合。最后同一种原 $C_2$ 同时出现在三份的三条边上；三个相对转置位绕三角相加必须为零，所以各边不能都扭转，初始单份坐标便贯穿 $C_1,C_2,C_3$。全部有限最小／最大界与精确161.4尾部才把它传到任意有限复制数。
+
+这在**原局部维数四及完整强全有限背景**中，给候选“整个 $K_3$ 的实际 L2 加一把共同圆尺”与全有限复 qubit 层级的等价，故 TC、TF9、NC 是重建后的性质，不是此限定候选的另加前件。它不把一般原维数的粘合问题判成已解或已反驳，也不声称相对于所有公理系统减少了独立公理数。已发表240与250的更一般维数结论仍按各自前件成立。静态结果给 Born、全部数学 POVM、纠缠和偏迹；所有旁观者下的正性才给 CP，预算才给仪器，逐点中性才给锐更新，另给的连续群才给数学时间演化。设备实现、物理钟、$\hbar$、无限系统及近似误差都保留自己的桥梁，不能由球的形状冒领。$\square$
+
+[B260]: https://github.com/the-omega-institute/trureturing/blob/6a50b8f5bb4f5bf8b46d270a2bca1ccc4a3e3f85/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XII.md "XII引理159.5：只以实际 L2 为前件的任意不同二点球张成交集。"
+[A260]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Hatcher, Algebraic Topology：印刷页240—241的 cap-product 自然性；定理3.44（页254—255）及推论3.45（页255—256）的紧局部可缩子集 Alexander 对偶，容许 wild embedding。"
+[F260]: https://github.com/the-omega-institute/trureturing/blob/34f5761ee1ccff84afa44f5a906002b13409b7b7/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "XIII(161.1)—(161.3)、固定同一theta的(161.14)、命题161.4及161.6—161.10和161.7.1的条件字典。"
+[V260]: https://github.com/the-omega-institute/trureturing/blob/f5a6211e591351e1a2bdeea0165c2ef29ad21b48/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "VII102.6—102.10及(102.30)后的两锥包含；只消费分类后全有限尾部。"
+[H260]: https://arxiv.org/abs/0806.0631v1 "Harrow, Exact universality from any entangling gate without inverses, Corollary 2：含不等分组维数的精确有限生成，非仅稠密。"
+

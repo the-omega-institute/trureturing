@@ -1,0 +1,24 @@
+定义在 $B$ 上。则：
+
+1. $D$ 已是同一个原 $D$ 的实双线性反对称延拓，且 $N(D(a,b))\le N(a)N(b)$；对每个数学连续正泛函 $\varphi$，$H_\varphi(z,w)=\varphi_{\mathbb C}(z^*\star w)$ 是半正定型。
+2. 对每个原演员 $t\in E$，原常数 $C_t$ 延拓为
+
+   $$
+   0\le q(t\star\zeta)\le C_t^2q(\zeta)\qquad(\zeta\in B).
+   \tag{39.2}
+   $$
+
+3. $D(u,x)=D(x,u)=0$ 对所有 $x\in M$ 成立；因此每个 $\delta_a(x):=D(a,x)$（$a\in M$）是单位湮灭的 Jordan 导子。
+4. 对任意投影 $p\in M$、$e=u-p$ 和任意原 $t\in E$，令
+
+   $$
+   y=P_{1/2}(p)t,\qquad k=\delta_p(t)=\delta_p(y).
+   $$
+
+   则
+
+   $$
+   k^2=\frac14y^2.
+   \tag{39.3}
+   $$
+

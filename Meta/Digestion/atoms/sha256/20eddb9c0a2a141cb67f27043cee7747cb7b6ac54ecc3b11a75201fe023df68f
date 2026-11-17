@@ -1,0 +1,44 @@
+### 20.6 全有理域的绝对常数
+
+由 $\sin^2x\le x^2$ 及 $D=m+1$，
+
+$$
+0\le g_m\le\frac{d^2}{m},\qquad
+\frac m{D^2}\le\frac1m.
+\tag{20.35}
+$$
+
+$g_m$ 是 (20.28) 的跃迁概率，故 $g_m\le1$。Bernoulli 不等式给出
+
+$$
+\begin{aligned}
+r_e
+&\le q\frac m{D^2}+g_m
+ \le\frac{q+d^2}{m}.
+\end{aligned}
+\tag{20.36}
+$$
+
+令 $A_e=e^{-2}\log(18/e)$。在整个原域内 $A_e\ge10{,}000$，而 $d^2=1/4096$。精确上取整给出
+
+$$
+\begin{aligned}
+k&\le2048A_e+1,\\
+q+d^2=3k+d^2
+ &\le6144A_e+3+1/4096\\
+ &\le6145A_e<6400A_e.
+\end{aligned}
+\tag{20.37}
+$$
+
+因此
+
+$$
+B_e\le\min\left\{1,2\sqrt{\frac{q+d^2}{m}}\right\}
+ \le\min\left\{1,
+ \frac{160\sqrt{\log(18/e)}}{e\sqrt m}\right\}.
+\tag{20.38}
+$$
+
+这包括 $e=1/100$、每个上取整端点及全部更小的原正有理精度，不用渐近窗口、二进限制、逐门 diamond 近似、实际历史独立或近纯辅助假设。定理得证。$\square$
+

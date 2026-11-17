@@ -18,4 +18,8 @@ lower index `j`: zero for `j < 0`, and `Nat.choose m j` otherwise (so also zero 
 def binom (m : Nat) (j : Int) : Int :=
   if j < 0 then 0 else (Nat.choose m j.toNat : Int)
 
+/-- The ballot coefficient, with negative lower binomial indices interpreted as zero. -/
+def ballotE (r b : Nat) : Int :=
+  binom (r + b - 1) ((b : Int) - 1) - binom (r + b - 1) ((b : Int) - 2)
+
 end D5.S0.Conventions.IntegerIndexBinomial

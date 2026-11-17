@@ -1,0 +1,147 @@
+**Theorem 18.2 (Finite exact value and every original optimizer).** For every actual chain in Definition 18.1, the polynomial $\Delta_v\in F_v[q]$ is nonzero. Put $L_v=\deg\Delta_v$ and define the polynomial in the unchanged original damping parameter
+
+$$
+\begin{aligned}
+d_v(\alpha)&=v_2+\alpha v_1,\\
+n_v(\alpha)&=\alpha(v_1+2v_2)-v_2,\\
+\Xi_v(\alpha)&=d_v(\alpha)^{L_v}
+                     \Delta_v\bigl(n_v(\alpha)/d_v(\alpha)\bigr),\\
+\mathcal Y_v(X,\alpha)&=d_v(\alpha)^{2m}
+                     \mathcal R_v\bigl(X,n_v(\alpha)/d_v(\alpha)\bigr).
+\end{aligned}
+\tag{18.5}
+$$
+
+The powers clear all denominators, so $\Xi_v\in F_v[\alpha]$ and $\mathcal Y_v\in F_v[X,\alpha]$. They satisfy
+
+$$
+\Xi_v\ne0,\qquad
+1\leq\deg\Xi_v\leq L_v\leq8m^3-4m<8m^3.
+\tag{18.6}
+$$
+
+The original interior candidate set
+
+$$
+C_v^\alpha=\{a\in\mathbb R:0<a<1,\ \Xi_v(a)=0\}
+\tag{18.7}
+$$
+
+is finite and nonempty. For each $a\in C_v^\alpha\cup\{0,1\}$, define solely by ordered real roots
+
+$$
+\begin{aligned}
+S_v(a)&=\max\{x\in\mathbb R:x\geq0,\ \mathcal Y_v(x,a)=0\},\\
+S_v^*&=\min_{a\in C_v^\alpha}S_v(a),\\
+\gamma_v^\alpha&=\text{the nonnegative real root of }Y^2-S_v^*=0,\\
+\mathcal A_v&=\{a\in C_v^\alpha:S_v(a)=S_v^*\}.
+\end{aligned}
+\tag{18.8}
+$$
+
+Each maximum exists. These expressions determine the actual value and the entire fixed-map optimizer set on the full original domain:
+
+$$
+\boxed{\quad
+\gamma_v^\alpha=\min_{0\leq\alpha\leq1}\rho(A^{-1}B_\alpha)=\gamma_v,
+\qquad
+\mathcal A_v=\operatorname*{argmin}_{[0,1]}
+                          \rho(A^{-1}B_\alpha).
+\quad}
+\tag{18.9}
+$$
+
+In particular $\mathcal A_v$ contains every optimizer, has between one and $8m^3-4m$ elements, and is contained in $(0,1)$. Every element of $\mathcal A_v$, and the minimum value, is algebraic over the actual field $F_v$. In normalized coordinates the corresponding complete answer is
+
+$$
+\begin{aligned}
+C_v^q&=\{c\in(-1,1):\Delta_v(c)=0\},\\
+Q_v&=\{c\in C_v^q:
+       \max\{x\geq0:\mathcal R_v(x,c)=0\}=S_v^*\},\\
+\mathcal A_v&=\{\alpha_v(c):c\in Q_v\}.
+\end{aligned}
+\tag{18.10}
+$$
+
+At every parameter, the entire complex spectrum with algebraic multiplicity remains the multiset of roots of (18.4), with $q=q_v(\alpha)$. No roots are removed from that spectral specification by the reduced polynomial $V_v$.
+
+*Proof.* First verify the polynomial and the literal operator. An odd row of $A$ is its coordinate row, and an even row has diagonal $s_i$ and off-diagonal entries only in odd columns. Ordering the odd coordinates before the even coordinates therefore makes $A$ block lower triangular, with identity in the odd block and diagonal entries $s_i$ in the even block. Simultaneously permuting rows and columns leaves its determinant unchanged. Hence
+
+$$
+\det A=\prod_{i\ {\rm even}}s_i>0.
+\tag{18.11}
+$$
+
+This verifies the denominator in (18.4), including an empty even block and the scalar case. All entries are in $F_v$. Equations (16.1)–(16.2), already established for these exact rows, identify $\mathcal B_v(q)=B_{\alpha_v(q)}$. In particular
+
+$$
+p_v(Z,q)=\det\bigl(ZI-A^{-1}B_{\alpha_v(q)}\bigr).
+\tag{18.12}
+$$
+
+Only the first row of $Z A-\mathcal B_v(q)$ depends on $q$, and that row depends affinely on $q$. Multilinearity of the determinant shows that $p_v(Z,q)$ is affine in $q$. Its coefficient of $Z^m$ is $\det A/\det A=1$, independently of $q$, so it has precisely the form (17.1) with $d=m$. The determinant identity (13.8) also gives, with all parity signs retained,
+
+$$
+\det U=(-1)^m,\qquad
+\det T_{v,q}=(-1)^m q,\qquad p_v(0,q)=q.
+\tag{18.13}
+$$
+
+These identities in particular show that the affine dependence is not constant. They do not require a nonzero $q$.
+
+The hypotheses of Assumption 17.2 follow from the supporting fixed-map results, not from a change of spectral objective. More explicitly, retain the same positive definite Hermitian form and first normal as in Definition 12.1:
+
+$$
+Q(z)=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},
+\qquad P_1z=f_1\langle f_1,z\rangle_Q.
+$$
+
+The source reflection and sweep identities, in the normalization already proved in (12.7) and (16.11), are
+
+$$
+T_{v,q}=U\bigl(I-(1-q)P_1\bigr),\qquad
+U^\dagger U=I,\qquad
+Q(T_{v,q}z)=Q(z)-(1-q^2)|\langle f_1,z\rangle_Q|^2.
+\tag{18.14}
+$$
+
+At $q=1$ the second factor is the identity; at $q=-1$ it is a $Q$-orthogonal reflection. Thus both endpoint transfers preserve this very same $Q$, and every complex eigenvalue there has modulus one. For $-1<q<1$, the exact bijection (18.3) gives $0<\alpha_v(q)<1$, and Theorem 13.2 gives $\rho(T_{v,q})<1$. Equivalently this is the qualitative `result` of the damped-sweep source in Definition 18.1, whose proof uses the complete private local loss, reflection, source factorization and boundary-rigidity intermediates. These statements have every positive velocity, both zero endpoints, every dimension $m\geq1$, and one fixed interior parameter as their hypotheses. They are exactly the hypotheses needed here.
+
+Consequently Theorem 17.3 applies over $F_v$ to (18.4). It proves that $\Delta_v$ is nonzero, that
+
+$$
+1\leq L_v\leq8m^3-4m,
+\tag{18.15}
+$$
+
+and that $C_v^q$ contains all normalized optimizers. Its construction concerns the actual entries of the entire original transfer, including their coupling to the damped first row. It does not replace them by undamped spectral data.
+
+The denominators in (18.3) are positive on their closed intervals: $d_v(\alpha)\geq v_2>0$ for $\alpha\in[0,1]$, and $v_1+2v_2-v_1q\geq2v_2>0$ for $q\in[-1,1]$. As proved in (16.10), $q_v$ and $\alpha_v$ are mutually inverse increasing bijections, taking endpoints to endpoints. A polynomial of $q$ degree at most $L_v$ becomes a polynomial in $\alpha$ after multiplication by $d_v^{L_v}$, of degree at most $L_v$. This proves the polynomial assertion for $\Xi_v$. It is nonzero: substitution by a fractional linear transformation with the rational inverse (18.3) is an injective map of rational function fields. If $\Xi_v$ vanished identically, substituting the inverse would make the nonzero polynomial $\Delta_v$ vanish identically. Positivity of $d_v$ then gives the exact set equality
+
+$$
+C_v^\alpha=\{\alpha_v(c):c\in C_v^q\}.
+\tag{18.16}
+$$
+
+Thus this candidate set is finite and nonempty. In particular $\Xi_v$ has a real root and has positive degree, completing (18.6).
+
+By (17.11), $\deg_q\mathcal R_v\leq2m$, so the second denominator clearance in (18.5) also yields a polynomial. Its $X$-leading coefficient at a real $a\in[0,1]$ is $d_v(a)^{2m}>0$. Multiplication by this positive scalar changes none of its $X$ roots. The exact identity (17.12) now says that these roots, with multiplicities, are
+
+$$
+\mu_i(q_v(a))\mu_j(q_v(a)),\qquad 1\leq i,j\leq m,
+\tag{18.17}
+$$
+
+where $\mu_1,\ldots,\mu_m$ are all roots of the actual characteristic polynomial (18.12). By (17.9), the largest nonnegative real root is therefore exactly
+
+$$
+S_v(a)=\rho(A^{-1}B_a)^2.
+\tag{18.18}
+$$
+
+This is an equality with the original spectral radius, not a norm bound. Every global minimizing original parameter belongs to $C_v^\alpha$ by (18.16), and every candidate remains in the original admissible interval. Comparing their finitely many exact ordered roots proves (18.8)–(18.9), including the entire set rather than a selector. The endpoint comparisons are $S_v(0)=S_v(1)=1$, while an interior value is strictly less than one. Hence adding both endpoints to the finite comparison would give precisely the same minimum and optimizer set.
+
+Each root $a$ of $\Xi_v$ is algebraic over $F_v$. At such an $a$, (18.5) is a nonzero polynomial of fixed positive $X$ degree with coefficients in $F_v(a)$, so $S_v(a)$ is algebraic over that field. Transitivity of algebraicity, as cited in Theorem 17.3, proves algebraicity over $F_v$ of every compared value, of $S_v^*$, and of its nonnegative square root. Rational substitution by (18.3) gives the corresponding assertion for all elements of $Q_v$. The ordered-root definitions use the fixed real embedding of $F_v$ and its algebraic extensions; they require no assumption that arbitrary real input data have an effective presentation.
+
+Finally, (18.12) supplies all $m$ eigenvalues at every fixed parameter, with algebraic multiplicity as in (16.3). The auxiliary polynomial $\mathcal R_v$ records their products to express the maximum modulus, and $V_v$ is used only in the critical-parameter proof. Neither is a substituted transfer operator. No eigenvalue has been discarded from $p_v$, and no power with a varying parameter has entered the argument. This proves the full original-operator assertion. $\square$
+

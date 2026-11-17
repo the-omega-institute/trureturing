@@ -1,0 +1,38 @@
+**Definition 54.2 (sources, live use and the remaining comparison).**
+The original recovery identities, alignment phase, normalized effect
+and ordinary transpose are source (23.2), (23.9)--(23.13).
+The two fixed sign rows and simultaneous reconstruction are
+Continuation II, Definition 46.1 and Lemma 46.2; the true-distance
+certificate is (42.17)--(42.20). The new result is the strict rational
+separation (54.1) for these attained original pairs. It supplies an
+original positive competitor below $5081/10000$ at the upper endpoint
+and rules out the uniform $g>H$ route there. It makes no
+literature-priority or global-minimum claim for either displayed pair.
+
+For the remaining full-domain problem put, using the two rows of
+(46.11),
+
+$$
+A_\sigma(\xi)=\min_{\substack{0\le q\le1\\(X,Y)\in\mathcal T_x}}
+ \left(K_\sigma^2(1-q)+K_{-\sigma}^2q
+                 -4\Gamma_\sigma(x,q;X,Y)^2\right),\qquad
+x=1-\xi/4+q/2.
+\tag{54.12}
+$$
+
+For $61/25<\xi\le13/4$, every such $q$ has $0<x<1$ and
+$x\ge3/16$, so the full compact domain and both population endpoints
+are included. By Continuation III, Theorem 48.5, and Lemma 46.2,
+positive-sign selection for every original global minimizer is
+exactly the still unresolved strict inequality
+$A_-(\xi)>A_+(\xi)$ on this interval. No determinant-sign condition
+is imposed. At the upper endpoint (54.1) proves
+$A_+(13/4)<5081/10000$ and $A_-(13/4)<9/16$; neither upper bound
+orders the two minima. A full proof needs a lower bound for the
+entire negative triangle against an attained positive value, or a
+direct strict ordering of these two attained minima. A refutation
+needs a negative-active global minimizer against the entire original
+same-level domain. The pair $W_-$ supplies neither. The completed
+prefix and the immediate-right classification retain their stated
+ranges.
+

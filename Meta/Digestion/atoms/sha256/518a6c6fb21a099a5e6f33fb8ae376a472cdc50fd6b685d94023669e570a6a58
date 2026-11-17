@@ -1,0 +1,11 @@
+## 7. E1: normalized signed difference and exact collapsed entropy
+
+Use natural logarithms throughout. For probability laws $p,r$ on a finite or countable set, relative entropy is
+
+$$
+\operatorname{KL}(p\Vert r)=\sum_zp(z)\log\frac{p(z)}{r(z)},
+\tag{7.1}
+$$
+
+with zero terms interpreted as zero and positive mass against a zero reference giving infinite entropy. All scalar laws below have strictly positive masses and bounded likelihood ratios at fixed interior $q$ and finite $L$, so their entropy series are finite and absolutely convergent.
+

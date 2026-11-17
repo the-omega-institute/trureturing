@@ -1,0 +1,76 @@
+**定理 330.1（唯一完整新候选的恒等重构）。** 对同一原菜单和同一预选 $t_0$，分别在完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中有
+
+$$
+\mathsf C_{\rm fin}(B_*)\Longleftrightarrow\mathsf C_Z(B_*)
+\Longleftrightarrow\mathsf C_{\rm support}(B_*).
+\tag{330.1}
+$$
+
+对应保持全部原数据及全部原合法有限历史。原 $D$ 定向的复表示满足
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_s B(H_{A,s}),\qquad
+ E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+a\cdot b=a\circ b-\mathrm iD_ab,\qquad
+D_ab=\tfrac{\mathrm i}{2}[a,b],\\
+D_ab=-D_ba,\quad D_aa=D_au=D_ua=0,\quad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\quad(c^2=c).
+\end{gathered}
+\tag{330.2}
+$$
+
+全部原实际联合保留经典中心、相关输入及同一取向的普通复张量。全部原准备包括零／奇异／次归一质量，按原两套 Riesz 运输分别表示为
+
+$$
+\begin{aligned}
+\alpha(y)&=g_A^0(x_\alpha,y)=\tau_A(\rho_\alpha y),
+&\rho_\alpha&=B_Ax_\alpha,\\
+g_A^0(x,y)&=\tau_A((B_Ax)y),
+&q_A(x,y)&=\tau_A((\mathcal W_Ax)y),\\
+\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,
+&\alpha(D_ab)&=q_A(\widehat x_\alpha,D_ab),\\
+\Phi_f&=B_B T_f^{\dagger_0}B_A^{-1}
+&& (f:A\to B).
+\end{aligned}
+\tag{330.3}
+$$
+
+一般 $x_\alpha\ne\widehat x_\alpha$。不等正块权和每个联合自己的 $B_A,\mathcal W_A$ 均不因有限测试而改成因子化。每个原事件 $\Phi_f$ 为 CP/TNI，原完整设备事件和为 TP；对数学效果 $0\le e\le u_A$，原所选精确有限平方根词及其原许可相关执行满足
+
+$$
+\Phi_{W_e}(\rho)=\sqrt e\rho\sqrt e,\qquad
+\Phi_{W_e\mid R}(X)=(\sqrt e\otimes I_R)X(\sqrt e\otimes I_R).
+\tag{330.4}
+$$
+
+原占用失败方向 $p_1$ 上每个原失败 $\Psi_\ell:P\to B_\ell$ 的完整输出仍为 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$，其他原方向／中心仍取其原映射。原 F 给同一实现的实际细口和原分组／遗忘；各非零细支保持
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\quad \Phi_f=\sum_\ell S_\ell,
+\quad U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad
+\mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\quad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\quad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{330.5}
+$$
+
+具名原 $q_\ell$ 与原同数反向资料保留。每份原准备及每条原合法有限历史 $h=(f_1,\ldots,f_m)$ 的末端效果 $w$ 满足
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau_{A_m}\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{330.6}
+$$
+
+自适应取原记录分支，并行取原实际联合及完整相关输入；分组、遗忘、零、失败、返回、停止取原有箭头和线性和。条件概率仅在原分母正时取比值。
+
+证明。329.1 先恢复完整 I+SC，不使用 sigma。随后同一 $\sigma_{t_0}$ 经前卷 276.1–276.2 和本卷 324.1 排除共同曲率零分支并把共同系数定为一，得到 (330.1)–(330.2)。现在 324.2 的全部原前件逐字成立，其双 Riesz、全事件 R、整个 AC、精确 $N_u$、Xs 和实 Jordan F 的推导逐项给 (330.3)–(330.6)。没有由数学 Kraus 表示新造设备、细记录或共同仪器，没有用数学极限补实际准备。于是有限测试候选完整返回概率、事件、所选词及其完整失败、同数两侧返回和全历史，而不是只恢复状态空间。
+
+324.3 的三类额外物理来源仍分别保留：连续可逆器件及其物理时钟／Hamiltonian／共同作用量标定；独立成功支的共同完整仪器供应；旧同效果设备自己的理想完整输出校准。上述条件重构不替代这些来源。∎
+

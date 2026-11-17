@@ -1,0 +1,12 @@
+## 25. A retained estimate for every actual complex choice
+
+Fix $\delta>0$ sufficiently small as in Theorem 22.1 and R Lemma 8.1, and put $R=\delta/s$. It remains fixed throughout each small-$s$ argument. Let $d=d_{s,\delta}$ be exactly R (8.1), including its even cutoff $\rho$. On $\mathcal Q_E$ use the estimating form
+
+$$
+\widehat q_s[z]=h[z]+a\int d|Yz|^2
+ -\chi\int(\widetilde U_s-V)|z|^2-a\lambda s^2\|z\|_2^2.
+\tag{25.1}
+$$
+
+On vectors supported in $|r|\le2R$ it agrees exactly with the original sheared form. The rational expression in $d$ is evaluated only on $|r|<3R$. This introduces no replacement native operator.
+

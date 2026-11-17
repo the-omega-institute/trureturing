@@ -1,0 +1,34 @@
+**Corollary 30.2 (same-tolerance expected power comparison).** Along
+any deterministic sequence $\eta_n\to0$, all four costs have the
+necessary expected powers of Theorem 13.2, with explicit comparisons
+
+$$
+\begin{aligned}
+\mathbb ES&\le\liminf_n\eta_n\mathbb EV^a_{\eta_n}
+ \le\limsup_n\eta_n\mathbb EV^a_{\eta_n}
+ \le24\mathbb ES/\mu_\lambda,\\
+\mathbb ES/2&\le\liminf_n\eta_n\mathbb EV^b_{\eta_n}
+ \le\limsup_n\eta_n\mathbb EV^b_{\eta_n}
+ \le24\mathbb ES/\mu_\lambda,\\
+\sqrt5\,\mathbb ES/2&\le\liminf_n\eta_n\mathbb EL_{\eta_n}
+ \le\limsup_n\eta_n\mathbb EL_{\eta_n}
+ \le48\mathbb ES/\mu_\lambda,\\
+5\pi^2\mathbb ES/24&\le\liminf_n\eta_n^2\mathbb EE_{\eta_n}
+ \le\limsup_n\eta_n^2\mathbb EE_{\eta_n}
+ \le\frac{3072\mathbb ES}{c_\lambda\mu_\lambda}.
+\end{aligned}
+\tag{30.4}
+$$
+
+Proof. Intersect the probability-one events for this countable sequence.
+Equations (26.2)–(26.4) give the complete held native accuracy and
+chronological convergence, and (26.3) gives censored lifetime
+convergence as proved explicitly in §31. Thus Theorem 13.2 applies
+with its same $\eta_n$, $d_a=1$ and $d_b=2$. Its lower coefficients
+and Fatou's lemma give the lower inequalities in (30.4); no new
+lower-bound argument is required. For the uppers, eventually
+$\rho_n=\eta_n/8$ in (26.5). Substitute and take the upper limits.
+The additive terminal and mesh constants vanish after normalization.
+This compares the same actual controls and joint target, rather than
+a scalar optimum or an unexecuted enhanced interpolation. $\square$
+

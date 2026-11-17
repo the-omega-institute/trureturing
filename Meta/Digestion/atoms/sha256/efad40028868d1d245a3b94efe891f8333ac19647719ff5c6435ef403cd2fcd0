@@ -1,0 +1,70 @@
+**引理32.3（正向连接阈值、大参数及全部普通相位）。** 固定 $U,\chi,p$ 和实际 $W\in M$。若
+
+$$
+c=\|(1-p)Wp\|_U<4,\qquad d=\|(1-p)W^*p\|_U,
+\tag{32.5}
+$$
+
+则对每个普通实 $\theta$ 有
+
+$$
+F(L_\chi(e^{i\theta p})W)=F(W).
+\tag{32.6}
+$$
+
+证明。选有限 $T>0$ 使 $c+d/\sqrt{1+T^2}<4$。对任意 $|t|>T$，实际演员及逆元准确为
+
+$$
+r|_U=tQp,\quad r|_{X\setminus U}=0,\quad Jr|_U=itp,
+\quad A_t=(u-Jr)^{-1},\quad
+A_t|_U=(1-p)+\alpha_t p,\quad \alpha_t=(1-it)^{-1},
+\quad A_t|_{X\setminus U}=u.
+\tag{32.7}
+$$
+
+显式乘法给左右逆；所有这些都是连续原对象，不要求 $W$ 可逆，也不要求 $Q$ 在窗口同号。令 $Z_0=A_tW=x_0+Jy_0$。在 $U$ 内记 $v_0=(1-p)Wp$、$w_0=(1-p)W^*p$，分块给
+
+$$
+\begin{aligned}
+(1-p)Z_0p&=v_0,&(1-p)Z_0^*p&=\bar\alpha_t w_0,\\
+(1-p)x_0p&=(v_0+\bar\alpha_t w_0)/2,
+&(1-p)y_0p&=-J(v_0-\bar\alpha_t w_0)/2.
+\end{aligned}
+\tag{32.8}
+$$
+
+两个实际自伴输入的连接范数都不超过 $(c+|\alpha_t|d)/2<2$。32.1在窗口内用 OP 小连接，窗口外用 P2 首槽零预算，给32.2所需的两个全域内值。因此实际负端点恰是
+
+$$
+(u-Jr)Z_0=W,
+\tag{32.9}
+$$
+
+正端点是 $L_\chi(C_t)W$，其中
+
+$$
+C_t=(1+itp)(1-itp)^{-1}
+=(1-p)+\frac{1+it}{1-it}p=e^{2i\arctan(t)p}.
+\tag{32.10}
+$$
+
+得到32.6对这些大参数相位成立。演员中的 $Q$ 正是使终点为普通 $e^{i\theta p}$ 的必要接线；仅取 $tp$ 会给 $Q$ 相关的相位，而不是这里的普通相位。
+
+若 $W'=L_\chi(e^{i\beta p})W$，则
+
+$$
+(1-p)W'p=(1-p)Wp,\qquad
+(1-p)W'^*p=e^{-i\beta}(1-p)W^*p.
+\tag{32.11}
+$$
+
+所以同一个 $c,d,T$ 沿该方向整条轨道保持。记 $\theta_0=2\arctan T<\pi$、$\delta=\pi-\theta_0$，取 $\varepsilon>0$ 使 $3\varepsilon/2<\delta$。对 $|\theta|<\varepsilon$，取
+
+$$
+\phi_1=\pi-\varepsilon+\theta/2,\qquad
+\phi_2=-\pi+\varepsilon+\theta/2.
+\tag{32.12}
+$$
+
+分别落在允许的 $(\theta_0,\pi)$、$(-\pi,-\theta_0)$，有限正切参数绝对值均大于 $T$。按顺序作两次32.7–32.10，32.11保证第二次仍合法；两相位和准确为 $\theta$。任意实角再取有限 $N$ 使 $|\theta/N|<\varepsilon$，有限归纳得到32.6。没有用未知 $F$ 的输入极限、相位稠密性或齐次性。正向连接 $c<4$ 一直是前件；大参数只压缩反向连接 $d$。∎
+

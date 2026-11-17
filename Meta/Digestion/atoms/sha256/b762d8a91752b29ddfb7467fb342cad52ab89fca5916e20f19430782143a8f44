@@ -1,0 +1,19 @@
+**Definition 179.1 (the three slot radicals).** For a bounded partition $u$, let
+
+$$
+\mathcal W_u=\operatorname{span}_{\mathbb R}\{u_y:y\in\mathcal L\}\subset L^\infty(m;\mathbb R)
+$$
+
+and define
+
+$$
+\begin{aligned}
+\operatorname{Rad}_1(\mathcal W_u)
+ &=\{h:\mathcal C(h,x,y)=0\ \text{for all }x,y\in\mathcal W_u\},\\
+\operatorname{Rad}_2(\mathcal W_u)
+ &=\{h:\mathcal C(x,h,y)=0\ \text{for all }x,y\in\mathcal W_u\},\\
+\operatorname{Rad}_3(\mathcal W_u)
+ &=\{h:\mathcal C(x,y,h)=0\ \text{for all }x,y\in\mathcal W_u\}.
+\end{aligned}
+$$
+

@@ -1,0 +1,36 @@
+**Proposition 9.3 (what weighting can change).** Let $Z_n$ denote the
+entire finite-horizon killed path in $D([0,T],E)$, and let additional
+nonnegative sampling weights $w_n$ satisfy $\mathbb Ew_n=1$. Suppose
+$(Z_n,w_n)$ converges jointly in distribution to $(Z,w)$ and that the
+weights are uniformly integrable. Then the weighted path laws converge
+weakly to the probability law characterized by
+
+$$
+F\longmapsto\mathbb E[wF(Z)]
+\quad\text{for bounded continuous }F.
+\tag{9.1}
+$$
+
+This law equals the unweighted law of $Z$ if and only if
+$\mathbb E[w\mid Z]=1$ almost surely. A simpler sufficient condition
+not requiring a separate joint weight limit is
+$\mathbb E|w_n-1|\to0$, together with $Z_n\Rightarrow Z$.
+
+Proof. Replace $w_n,w$ first by their truncations at $R$. Joint weak
+convergence applies to the resulting bounded continuous product with
+$F$. Uniform integrability controls the tails and gives $\mathbb Ew=1$;
+let $R\to\infty$ to obtain (9.1). Conditional expectation gives its
+Radon–Nikodym density relative to the law of $Z$ as
+$\mathbb E[w\mid Z]$. Equality of the two probability measures is
+therefore equivalent to that density being one. For the simpler
+condition, the difference of weighted and unweighted expectations is
+at most $\|F\|_\infty\mathbb E|w_n-1|$. $\square$
+
+The proposition concerns this stated joint-limit setting; arbitrary
+weights need not have such a limit. In particular, discarding samples
+which die before $T$ and normalizing the survivors selects a conditioned
+law rather than the killed subprobability evolution. Definition 5.2
+retains every sample and its death event. Selecting a density on a space
+of analytic amplitudes, preparing an $L^2$ function, or calibrating
+physical sampling costs is a different contract and is not supplied here.
+

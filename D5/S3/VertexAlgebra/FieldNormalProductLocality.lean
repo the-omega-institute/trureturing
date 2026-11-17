@@ -376,11 +376,9 @@ private theorem intertwiningPowers {M W : Type u} [AddCommGroup M] [Module ℂ M
     (linear : M →ₗ[ℂ] W) (law : ∀ vector, linear (first vector) = second (linear vector))
     (order : ℕ) (vector : M) : linear ((first ^ order) vector) =
       (second ^ order) (linear vector) := by
-  induction order with
-  | zero => simp
-  | succ order inductionHypothesis =>
-    simp only [pow_succ', Module.End.mul_apply]
-    rw [law, inductionHypothesis]
+  simpa only [Module.End.pow_apply] using
+    (Function.Semiconj.iterate_right law order vector)
+
 private theorem cancellationBound (pair : PairSpace V) (firstOrder secondOrder thirdOrder : ℕ)
     (annihilated : ((((deltaXY : Module.End ℂ (PairSpace V)) + deltaYZ) ^ firstOrder *
       deltaYZ ^ secondOrder : Module.End ℂ (PairSpace V))) pair = 0)
@@ -765,17 +763,19 @@ theorem dividedDerivative_locality (first second : VertexOperator ℂ V) (order 
       ((dividedDerivative 1)^[count] operator) vector =
         HahnModule.of ℂ ((LaurentSeries.derivative ℂ)^[count]
           ((HahnModule.of ℂ).symm (operator vector))) := by
-    intro count
-    induction count with
-    | zero => intro operator; simp
-    | succ count inductionHypothesis =>
-      intro operator
-      rw [Function.iterate_succ_apply']
-      change HahnModule.of ℂ (LaurentSeries.hasseDeriv ℂ 1
-          ((HahnModule.of ℂ).symm (((dividedDerivative 1)^[count] operator) vector))) = _
-      rw [inductionHypothesis operator, Equiv.symm_apply_apply,
-        Function.iterate_succ_apply']
+    intro count operator
+    have law : Function.Semiconj
+        (fun A : VertexOperator ℂ V => (HahnModule.of ℂ).symm (A vector))
+        (dividedDerivative 1) (LaurentSeries.derivative ℂ) := by
+      intro A
+      change (HahnModule.of ℂ).symm
+        (HahnModule.of ℂ (LaurentSeries.hasseDeriv ℂ 1
+          ((HahnModule.of ℂ).symm (A vector)))) = _
+      rw [Equiv.symm_apply_apply]
       rfl
+    exact (HahnModule.of ℂ).symm.injective (by
+      simpa only [Equiv.symm_apply_apply] using
+        (law.iterate_right count operator))
   have identity : (dividedDerivative 1)^[degree] first =
       (degree.factorial : ℂ) • dividedDerivative degree first := by
     apply LinearMap.ext

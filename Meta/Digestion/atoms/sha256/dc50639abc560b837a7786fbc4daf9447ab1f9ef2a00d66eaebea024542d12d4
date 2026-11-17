@@ -1,0 +1,17 @@
+#### 引理 2.4：规范比较及完整轨道恒等式
+
+$\mathsf C$ 可逆，$B$ 正定且 $G$ 不变，并有
+
+$$
+B(e,e)=1,\qquad
+\int_Gge\otimes(ge)^{\flat_B}\,dg=\frac1nI_W.
+$$
+
+**证明。**
+
+完整循环性给 $\alpha(\mathsf C\alpha)=\int\alpha(ge)^2dg>0$ 对全部 $\alpha\ne0$ 成立。Haar 不变性给 $B$ 不变。取迹有 $\int B(ge,ge)dg=\operatorname{Tr}(B\mathsf C)=1$，而轨道上长度相同，故 $B(e,e)=1$。对任意 $w$，积分算子作用于 $w$ 等于 $\mathsf C(w^{\flat_B})=w/n$。 $\square$
+
+若 $T:W\to W'$ 保来源并共轭全部原作用，则 $\mathsf C'=T\mathsf C T^*$，从而 $B'(Tv,Tw)=B(v,w)$。换源到同一轨道点也只共轭后续关系。删去可读坐标的非单射投影不属于这种同构。
+
+后文的算子表达对*任意*不变正定比较、任意单位循环来源成立。上述规范构造只使比较本身完全由原来源确定。本轮使用同一内生比较定义来源投影与二元平方总量；没有另加一份独立度量。
+

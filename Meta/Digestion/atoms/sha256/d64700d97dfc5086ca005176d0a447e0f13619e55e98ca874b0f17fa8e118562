@@ -1,0 +1,15 @@
+**定义 167.1（准确条件分支）。** 保留 128.1–128.4 的同一原 $E\subset X$、$C,u,N,\mathcal P,S,D$、准确锥、全部原评价及全部质量，保留全部原 P2 和完整原 PB。另明确给定
+
+$$
+\begin{gathered}
+I\triangleleft_J X\text{ 是范数闭 Jordan 理想},\qquad
+j:I\xrightarrow{\cong_J}K(H)_{\rm sa},\\
+\operatorname{ann}_X(I)=\{x\in X:x\circ y=0\text{ 对全部 }y\in I\}=0,\\
+p\in I\cap E,\qquad p^2=p\ne0,\qquad
+0<\operatorname{rank}j(p)<\infty .
+\end{gathered}
+\tag{167.1}
+$$
+
+$H$ 是任意无限维复 Hilbert 空间，允许不可分；$j$ 是指定的实 Jordan 同构，其复算子坐标始终固定。$K(H)$ 是全部紧算子。原 $E$ 仍只是 $X$ 中稠密的含单位实 Jordan 子代数，可以不完备。条件 (167.1) 是额外结构前件，不是由一般原 $\Omega$ 推出的事实，也不供应全局表示或全部原有限秩标签。
+

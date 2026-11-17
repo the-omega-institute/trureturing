@@ -18,6 +18,11 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "is a function from I to L, so matrices act on the actual tensor product of the local "
                 + "complex spaces. Two selected registers a and b are distinct and ordered. "
                 + "Every partial trace below is unnormalized.")),
+            Paragraph(Text("The marginal-to-global support mechanism is prior Hansenne-Xu-Kraft-Guehne mathematics. "
+                + "The application note has byline Haobo Ma then Wenlin Zhang. Li-Huang-Ruan-Zeng, "
+                + "arXiv:1809.05641v1, Theorem 2, prove existence of a leaf-Bose extension for qubit leaves "
+                + "and arbitrary bipartite inputs by changing the witness. Their result does not assert "
+                + "the same individual witness or full Bose support including the root in arbitrary dimension.")),
             Node("edgeSplit", "Splitting the actual tensor factors",
                 Seq(Call("edgeSplit", X("a"), X("b")), Colon, Sp, Open, X("I"), To, X("L"), Close,
                     Sp, Equiv, Sp, Open, X("L"), Times, X("L"), Close, Times,
@@ -85,6 +90,110 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "sandwich. Its marginal is rho on every ordered pair of distinct registers. "
                 + "All proper nonempty PPT cuts use this same E in the original standard basis.",
                 DescribeRole.Definition, true),
+            Node("pairSymmetricProjector", "The actual symmetric pair projector",
+                Seq(Call("pairSymmetricProjector"), Eq,
+                    new Formula.Fraction(Seq(D(1), Plus, Call("flip")), D(2))),
+                "The flip exchanges the two local tensor factors in the ordered product basis. "
+                + "This is the orthogonal projector onto their symmetric subspace. Bose support means "
+                + "the two-sided sandwich by this projector equals rho; mere conjugation invariance is weaker.",
+                DescribeRole.Definition, true),
+            Node("StarExtensionCore", "Star extensions without a PPT requirement",
+                CoreFormula(false),
+                "This predicate requires positivity, the actual root-times-symmetric-leaves support sandwich, "
+                + "and rho on every ordered root-to-leaf marginal. It places no condition on partial transposes "
+                + "and fixes no trace. The original StarExtension predicate still includes FullyPPT.",
+                DescribeRole.Definition, false),
+            Node("CompleteExtensionCore", "Complete extensions without a PPT requirement",
+                CoreFormula(true),
+                "This predicate requires positivity, the actual full Bose support sandwich, and rho on every "
+                + "ordered pair of distinct registers. It places no condition on partial transposes and fixes no trace. "
+                + "The original CompleteExtension predicate still includes FullyPPT.",
+                DescribeRole.Definition, false),
+            Node("support_of_connected_graph", "Connected graphs of supported marginals",
+                Seq(Call("Connected", X("G")), Land, Call("PSD", X("E")), Land,
+                    Call("BoseEdges", X("G"), X("E")), Implies,
+                    Call("Bose", X("E")), Land, Call("AllOrderedMarginalsEqual", X("E"))),
+                "For every finite register type and finite local alphabet, each edge of a connected "
+                + "simple graph has its actual two-register marginal supported by the symmetric pair projector. "
+                + "Positivity then forces full Bose support. All ordered marginals are equal, including "
+                + "reversed pairs; the marginal values need not be supplied in advance. The proof inducts "
+                + "over actual graph walks to propagate transposition invariance of every column. "
+                + "This is the Hansenne-Xu-Kraft-Guehne support mechanism, with no new priority claim. "
+                + "Disconnected components, higher-body hypotheses and conjugation-only leaves require "
+                + "their separate bridges; this theorem does not assert them.",
+                DescribeRole.Theorem, true),
+            Node("componentGroup", "Permutations within connected components",
+                Seq(Call("componentGroup", X("G")), Eq,
+                    Call("ComponentPreservingPermutations", X("G"))),
+                "A permutation belongs to this subgroup exactly when every vertex is reachable from "
+                + "its image in G. Vertices cannot move between components; an isolated vertex is fixed. "
+                + "The definition applies also to the empty graph and the empty register type.",
+                DescribeRole.Definition, false),
+            Node("componentProjector", "The component permutation projector",
+                Seq(Sub(Pi, X("G")), Eq, Call("Average", Call("componentGroup", X("G")), X("Q"))),
+                "This is the uniform average of the actual tensor-register permutation matrices over "
+                + "componentGroup G. The tensor factorization into symmetric projectors on every "
+                + "connected component is the component-wise finite average identity described in the component projector exposition. "
+                + "All singleton components remain present.",
+                DescribeRole.Definition, false),
+            Node("component_support_of_edges", "Support on every graph component",
+                Seq(Call("PSD", X("E")), Land, Call("BoseEdges", X("G"), X("E")), Implies,
+                    Sub(Pi, X("G")), X("E"), Sub(Pi, X("G")), Eq, X("E")),
+                "For any finite simple graph, positive E with Bose-supported edge marginals is "
+                + "supported by the component permutation projector. The proof propagates column "
+                + "invariance along graph walks, generates all component-preserving permutations by "
+                + "reachable transpositions, and uses the existing finite-group averaging theorem. "
+                + "No factor or correlation between distinct components is discarded. The support "
+                + "propagation mechanism is attributed to Hansenne-Xu-Kraft-Guehne.",
+                DescribeRole.Theorem, false),
+            Node("edges_iff_component_support", "Exact component support characterization",
+                Seq(Call("PSD", X("E")), Implies, Open,
+                    Call("BoseEdges", X("G"), X("E")), Iff,
+                    Sub(Pi, X("G")), X("E"), Sub(Pi, X("G")), Eq, X("E"), Close),
+                "The characterization holds for every finite graph and every positive semidefinite E. "
+                + "The reverse direction uses the fact that each graph-edge transposition fixes the "
+                + "component projector, then computes the actual ordered marginal and its symmetric "
+                + "pair-projector sandwich. Connectedness and normalization are not assumed.",
+                DescribeRole.Theorem, false),
+            Node("support_of_bose_root_marginals", "Support from arbitrary Bose root marginals",
+                Seq(Call("PSD", X("E")), Land, Call("BosePair", Rho), Land,
+                    Open, Forall, X("i"), Neq, X("root"), Comma,
+                    Call("M", X("root"), X("i"), X("E")), Eq, Rho, Close,
+                    Implies, Call("Bose", X("E")), Land,
+                    Open, Forall, X("a"), Neq, X("b"), Comma,
+                    Call("M", X("a"), X("b"), X("E")), Eq, Rho, Close),
+                "The register type is any finite type with a chosen root and the local alphabet is any finite type. "
+                + "For a positive semidefinite E, Bose-supported root marginals force full Bose support "
+                + "and equality of all ordered marginals. No leaf support, PPT, strict positivity, inverse, "
+                + "or trace normalization is assumed. The proof lifts zero antisymmetric marginal weight "
+                + "through the existing tensor trace duality and zero-weight support-face theorem, then uses "
+                + "star transpositions and the existing ordered-marginal covariance proof. The marginal-to-global "
+                + "support mechanism is prior work of Hansenne-Xu-Kraft-Guehne, main page 4 and Appendix D "
+                + "Lemma 8 of arXiv:2108.02732v1. This formal generalization is not a priority claim.",
+                DescribeRole.Theorem, true),
+            Paragraph(Text("For distinct root and leaf registers, positivity and invariance of E under every permutation fixing the root, together with Bose support of one root-leaf marginal, transport that supported marginal to every root edge. The existing root-support theorem then supplies the full symmetric-projector sandwich and equality of every ordered marginal. The argument keeps zero and singular matrices and uses no leaf-subspace premise.")),
+
+            Node("same_matrix_core", "The identical matrices without PPT",
+                Seq(Call("BosePair", Rho), Implies,
+                    Open, Call("StarExtensionCore", X("root"), Rho, X("E")), Iff,
+                    Call("CompleteExtensionCore", Rho, X("E")), Close),
+                "For every individual E, on any finite register set with a chosen root and finite local alphabet, "
+                + "the two no-PPT predicates are equivalent whenever rho is supported by the actual pair "
+                + "symmetric projector. The forward direction obtains full support and all ordered marginals "
+                + "from the root marginals; the reverse uses inclusion of the full symmetric subspace in "
+                + "the root-times-symmetric-leaves subspace. The theorem does not assert existence of an "
+                + "extension for every rho. It includes zero and singular rho, local dimension one, exactly "
+                + "two registers and arbitrary unnormalized traces.",
+                DescribeRole.Theorem, false),
+            Node("same_matrix", "The identical matrices with fully PPT cuts",
+                Seq(Call("BosePair", Rho), Implies,
+                    Open, Call("StarExtension", X("root"), Rho, X("E")), Iff,
+                    Call("CompleteExtension", Rho, X("E")), Close),
+                "Under the same finite-type and actual Bose support hypotheses as same_matrix_core, "
+                + "the original fully PPT predicates select the same individual E. Every nonempty proper "
+                + "cut is retained on that E. This is a pointwise equality, so it preserves the witness, "
+                + "its trace and all singular boundary cases. It does not assert universal extendibility.",
+                DescribeRole.Theorem, false),
             Node("result", "Equality of the extension cones",
                 Seq(Forall, Sp, X("n"), Geq, D(1), Comma, Sp, Forall, Sp, X("r"), Geq, D(2), Comma, Sp,
                     Forall, Sp, X("Y"), Comma, Sp,
@@ -116,7 +225,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("dicke-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+            DescribeId.Create("dicke-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role, resolution);
@@ -134,6 +243,19 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula value, params Formula[] indices) =>
         new Formula.Subscript(value, Seq(indices));
     private static Formula Tensor(Formula a, Formula b) => Call("tensor", a, b);
+    private static Formula CoreFormula(bool complete)
+    {
+        var p = complete ? Sub(Pi, X("r")) : Sub(X("P"), X("L"));
+        var marginals = complete
+            ? Seq(Forall, X("a"), Neq, X("b"), Comma,
+                Call("M", X("a"), X("b"), X("E")), Eq, Rho)
+            : Seq(Forall, X("i"), Neq, X("root"), Comma,
+                Call("M", X("root"), X("i"), X("E")), Eq, Rho);
+        return Seq(complete ? Call("CompleteExtensionCore", Rho, X("E"))
+                : Call("StarExtensionCore", X("root"), Rho, X("E")),
+            Iff, Call("PSD", X("E")), Land, p, X("E"), p, Eq, X("E"), Land,
+            Open, marginals, Close);
+    }
     private static Formula WitnessFormula(bool complete)
     {
         var p = complete ? Sub(Pi, X("r")) : Sub(X("P"), X("L"));

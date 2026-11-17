@@ -37,6 +37,7 @@ private def dispositions (kind : String) (n : Option Nat) : Json :=
         explanation "not-applicable" "generic contract declares no FIB law semantics"),
       ("continuation_target",
         explanation (if finite then "available" else "unavailable") "supplied task outputs; source and decoding unverified"),
+      ("predictive_closure", explanation "unknown" "compiled source-owned operation evidence required"),
       ("kernel",
         explanation (if finite then "available" else "unavailable") "equivalence of supplied table rows; actual readouts unverified"),
       ("escape_pairs", explanation countKind countReason),
@@ -47,6 +48,9 @@ private def dispositions (kind : String) (n : Option Nat) : Json :=
       ("layered_spectrum",
         explanation (if finite then "available" else "unavailable") "supplied layer intersections; source correspondence unverified"),
       ("residuals", explanation "not-applicable" "no FIB law or response semantics declared")])]
+
+private def unknownPrediction : Json := explanation "unknown"
+  "compiled source-owned operation evidence required; supplied JSON is not a certificate"
 
 private def natural (object : Json) (field : String) : Except String Nat :=
   object.getObjValAs? Nat field
@@ -93,7 +97,7 @@ private def validateMatrices (n : Nat) (tables : Array (Array (Array Bool))) : E
 /-- JSON decoding validates table arithmetic only. Compiler/source descriptions
 are attached by the existing compiler artifact producer after acquisition. -/
 def analyze (request : Json) : Except String Json := do
-  requireKeys request ["arena", "binding", "plan", "acquisition", "finite"]
+  requireKeys request ["arena", "binding", "plan", "acquisition", "finite", "compiled_prediction"]
   let binding ← request.getObjVal? "binding"
   let plan ← request.getObjVal? "plan"
   let roles ← plan.getObjValAs? (Array Json) "roles"
@@ -115,7 +119,7 @@ def analyze (request : Json) : Except String Json := do
   let emptyArena := Json.mkObj [("kind", toJson "unverified-input"), ("cardinality", Json.null),
     ("ordered_pair_denominator", Json.null), ("reason", toJson "no compiled domain evidence supplied")]
   let mut arena := emptyArena
-  let mut continuation := Json.mkObj [("task", if available then toJson task else Json.null), ("outputs", Json.null),
+  let mut continuation := Json.mkObj [("predictive_closure", unknownPrediction), ("task", if available then toJson task else Json.null), ("outputs", Json.null),
     ("scope", toJson "supplied task selection; actual source unverified"), ("plan", plan)]
   let mut kernel := Json.mkObj [("structural", plan), ("finite_tables", Json.null)]
   let mut spectrum := Json.mkObj [("structural", plan), ("layers", Json.null),
@@ -182,7 +186,7 @@ def analyze (request : Json) : Except String Json := do
       ("complete_lattice_materialized", toJson false),
       ("scope",
         toJson "supplied table kernels and layers; actual readouts unverified")]
-    continuation := Json.mkObj [("task", toJson task), ("outputs", toJson taskOutputs),
+    continuation := Json.mkObj [("predictive_closure", unknownPrediction), ("task", toJson task), ("outputs", toJson taskOutputs),
       ("scope",
         toJson "supplied finite task outputs; decoding and source unverified"), ("plan", plan)]
     arena := Json.mkObj [("kind", toJson "supplied-finite-table"),

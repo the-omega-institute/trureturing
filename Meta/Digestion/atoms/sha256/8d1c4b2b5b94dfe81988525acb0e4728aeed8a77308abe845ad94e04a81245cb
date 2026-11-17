@@ -1,0 +1,90 @@
+**Proposition 9.3 (a finite rational guard from earned bounds and
+the fixed reference).** Let earned positive rationals $c_-,l$
+satisfy $c_-\le c$ and $l\le\tau=a^2d/\eta$, and put
+$M_0=1/(4c_-)$. Use only the paid fixed-reference defect service
+at coefficients $1,1$ in [SRO, §§21--22] and (7.1).
+For $k\ge2$ obtain rational lower enclosures and a rational $u\ge0$
+such that
+
+$$
+\begin{gathered}
+0<A^-\le D_k(l),\qquad 0<B^-\le D_{2(k-1)}(l),\qquad
+A^-,B^-<1,\\
+u^2\ge(1-B^-)/B^-,\qquad
+\eta_k^+=M_0[\,2(1-A^-)+u/2\,].
+\end{gathered}
+\tag{9.19}
+$$
+
+Then (9.4)--(9.5) hold with $\eta_k$ replaced by $\eta_k^+$.
+For any positive rational $\epsilon,\delta$, fair search over
+$k$ and reference precision, with rational upper-square-root
+refinement, terminates with
+
+$$
+2\eta_k^+<\epsilon\delta.
+\tag{9.20}
+$$
+
+The resulting all-cut failure bound is strictly smaller than
+$\delta$. The generated certificate is (9.19)--(9.20), not an
+algorithm evaluating any of the complete future laws.
+
+*Proof.* From the original calibration and (7.2),
+
+$$
+\begin{gathered}
+\|g_d\|_\infty=\frac1{4c}-1\le M_0,\qquad
+d_{1/(kd)}=D_k(\tau)\ge A^-,\\
+d_{1/[2(k-1)d]}=D_{2(k-1)}(\tau)\ge B^- .
+\end{gathered}
+\tag{9.21}
+$$
+
+The function $(1-x)/x$ decreases on $(0,1]$ and
+$(1-\exp(-1))^{-1}<2$. Apply Theorem 9.2 with $M=M_0$:
+its $\eta_k$ is at most the rational expression $\eta_k^+$.
+This proves sufficiency, including the strict failure assertion
+under (9.20).
+
+Here is a finite search using exactly the authorized names.
+For each integer $k\ge2$ and precision index $s\ge1$, request
+certified rational intervals of width tending to zero with $s$
+for $D_k(l)$ and $D_{2(k-1)}(l)$. These are the total
+[DPCR, (11.30)] reference calls described in
+[SRO, (SRO.150)--(SRO.151)], at rational discounts $1/(kl)$
+and $1/[2(k-1)l]$. If either lower endpoint is nonpositive,
+this pair $(k,s)$ is inconclusive. Otherwise lower it, if necessary,
+to at most $1-2^{-s}$ to obtain $A^-,B^-$ in (9.19).
+For each fixed $k$, these lower enclosures converge to the strictly
+positive values $D_k(l),D_{2(k-1)}(l)$ and remain below one.
+
+For the rational $x=(1-B^-)/B^-\ge0$, rational bisection on
+$[0,1+x]$, comparing squares to $x$, gives a rational upper
+endpoint $u$ with
+$0\le u-\sqrt x\le2^{-s}$ after finitely many comparisons.
+The initial interval is valid since $(1+x)^2\ge x$.
+Thus every tested pair uses finitely many reference operations
+and rational operations. Enumerating the pairs in increasing
+$k+s$ is fair and never waits for an equality test to resolve.
+
+For fixed $k$, the values $\eta_k^+$ along increasing precision
+converge to
+
+$$
+M_0\left[2(1-D_k(l))+
+ \frac12\sqrt{\frac{1-D_{2(k-1)}(l)}{D_{2(k-1)}(l)}}\right].
+\tag{9.22}
+$$
+
+By (7.2), this expression tends to zero as $k\to\infty$.
+Choose a finite $k$ for which twice (9.22) is strictly below
+$\epsilon\delta$, and then a finite precision preserving that
+strict slack. Fair search reaches such a pair and terminates.
+This uses no numerical name of the physical $a,\eta,d$.
+In particular [DPCR, Theorem 12.4] cannot be called at those
+unknown coefficients: its total coefficient/time names remain
+required there. The selected route needs no global heat-norm
+call, even at the reference; the original centered heat bound
+and the two paid reference defects suffice. $\square$
+

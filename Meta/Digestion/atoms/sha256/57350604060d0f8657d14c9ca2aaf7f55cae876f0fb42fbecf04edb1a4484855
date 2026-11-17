@@ -1,0 +1,18 @@
+**定义 18.1（固定窗口与固定群函数）。** 固定实际 $Z\in M$ 与 $\xi\in L$。连续性及15.3给非空开闭 $U\ni\xi$，使
+
+$$
+\sup_{\eta\in U}\|Z(\eta)-Z(\xi)\|<1/4.
+\tag{18.1}
+$$
+
+具体先在严格小于 $1/4$ 的开邻域内选开闭 $U$，再由 $U$ 紧性取得严格的上确界。取 $\chi=1_U$ 后，以下群论证始终固定这一 $\chi$。对普通有限维酉群定义
+
+$$
+L_\chi:U(n)\longrightarrow\mathcal U(M),\quad
+L_\chi(V)=\chi V+(1-\chi)I_n,
+\qquad G_{\chi,Z}(V)=F(L_\chi(V)Z)\in E.
+\tag{18.2}
+$$
+
+中央幂等性给 $L_\chi(V)L_\chi(W)=L_\chi(VW)$、$L_\chi(V)^*=L_\chi(V^*)$；$U$ 非空给单射性，故它是真正的群嵌入。没有假定集合值函数 $G_{\chi,Z}$ 连续。
+

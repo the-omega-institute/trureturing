@@ -1,0 +1,48 @@
+**引理 8.2（端点的基轴粗响应与实际 R 的二值边界）。** 对每个 $\Pi\in\mathscr C_{\rm end}$，存在 $\lambda_{k,0},\lambda_{k,1}\in[0,1]$，使
+
+$$
+\begin{gathered}
+p_k(e_s)=\sum_{q:k\in q}T(q,s)
+ =\lambda_{k,b_k(s)}\quad(s\in E,\ 1\le k\le9),\\
+\lambda_{k,0}=p_k(e_\varnothing),\qquad
+\lambda_{k,1}=p_k(e_{\{k\}}),\\
+\nu_k(\mu)=\lambda_{k,0}(1-\nu_k(\mu))
+                  +\lambda_{k,1}\nu_k(\mu)
+\quad(\mu\in\mathcal S(T)).
+\end{gathered}
+\tag{8.3}
+$$
+
+这里 $p_k$ 是 (3.2) 的同一粗函数。若另有原实际 R，则
+
+$$
+\lambda_{9,0},\lambda_{9,1}\in\{0,1\}.
+\tag{8.4}
+$$
+
+**证明。** 对 $j\ne k$，每个原 $j$ 分量都保持第 $k$ 位，故 (1.3) 逐分量求和给 (3.3)。引理 2.1 的同源删址字列只在固定 $b_k$ 的配置基射线之间传播；逐字不变性和连续性于是给第一式，两个指定基向量确定其常数。这里只用已经证明的乘积基轨道，不要求整个切口扇区的射影传递性。平稳式直接是有限求和换序：
+
+$$
+\begin{aligned}
+\nu_k(\mu)
+ &=\sum_{q:k\in q}(T\mu)_q
+ =\sum_{s\in E}\mu_s\,p_k(e_s)\\
+ &=\lambda_{k,0}\sum_{s:k\notin s}\mu_s
+   +\lambda_{k,1}\sum_{s:k\in s}\mu_s.
+\end{aligned}
+\tag{8.5}
+$$
+
+为证明 (8.4)，固定任一 $s\in E$，令 $i=b_9(s)$。直接使用固定 III (144.12) 的同一 ready 射线稠密性，选原有限前字 $a_n$，使 $[\chi_{a_n}]\to[e_s]$。由于 $M_i e_s=e_s\ne0$，充分大 $n$ 的 $M_i\chi_{a_n}$ 非零，且 $[M_i\chi_{a_n}]\to[e_s]$。只在这些原实际前缀上，将 (1.7) 对 $q\in E_i$ 求和，得到
+
+$$
+m_i(\chi_{a_n})
+ =m_i(\chi_{a_n})m_i(M_i\chi_{a_n}).
+\tag{8.6}
+$$
+
+两个非零射线映射均可在这里取连续极限，故
+$m_i(e_s)=m_i(e_s)^2$。取 $s=\varnothing$、$i=0$，有 $m_0(e_s)=1-\lambda_{9,0}$；取 $s=\{9\}$、$i=1$，有 $m_1(e_s)=\lambda_{9,1}$，遂得 (8.4)。
+
+此处从未在趋于零的那个记录投影上取乘积极限，也未将 $m_i\Pi_q(M_i\cdot)$ 零延拓为连续函数。实际 R 中若恰有零投影，仍只使用定义 1.4 的字面零值。本步仅提取非零投影邻域内的恒等式，不供应任何极限控制或精确基态准备。∎
+

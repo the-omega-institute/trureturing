@@ -33,7 +33,7 @@ open private disjointGraph restricted_join
   from D5.S3.Geometry.FiniteGraphVertexSubstitution
 open private joinCongr pointJoinContraction twoPoint
   from D5.S3.Geometry.FiniteComponentClosure.Transport
-open private cone_segment from D5.S3.Geometry.FiniteConeCollapse
+open FiniteConeCollapse.ConePair (cone_segment)
 
 universe u
 variable {V : Type u} [Fintype V] [DecidableEq V]

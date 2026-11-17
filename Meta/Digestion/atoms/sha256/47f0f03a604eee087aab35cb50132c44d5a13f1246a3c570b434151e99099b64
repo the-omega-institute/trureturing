@@ -1,0 +1,98 @@
+**引理 34.2（被原 $t$ 湮灭的正谱平面）。** 在同一有限维完整原矩阵代数中，设二维子空间 $Q\mathcal H\subseteq P\mathcal H$ 对原 $c$ 和自伴残量 $\Sigma$ 均约化，且在一组固定正交基下
+
+$$
+ c|_Q=\operatorname{diag}(a,b),\quad 0<a<b,\qquad
+ \Sigma|_Q=\operatorname{diag}(0,s),\qquad tQ=0.
+\tag{34.2}
+$$
+
+仍令 $g=K_\sigma(c,t)+\Sigma$ 并使用 (32.2) 的完整乘积。原算子在 $Q^\perp$ 上可以有其原来的任意作用。若 $s\ne0$，则任给有限 $\mu>0$，同一完整原空间中都有质量恰为 $\mu$ 的向量泛函和一个有限原角探针，严格违反 PB。还可保持该泛函、环境和质量不变，只对探针作任意小的非零实扰动，使两笔预算同时严格为正且违反仍在。
+
+证明。置
+
+$$
+\begin{gathered}
+k=\frac{a+b}{2}>0,\qquad d=\frac{b-a}{2}>0,\qquad
+A_0=1+k^2,\qquad \rho=\frac{s}{2dA_0},\\
+X=\rho\begin{pmatrix}-k^2&k\\k&-k^2-2\end{pmatrix},\qquad
+x=X\oplus0_{Q^\perp},\qquad
+u=\frac{(1,\iota)^{\mathsf T}}{\sqrt2},\qquad
+f=\frac{(1,-\iota)^{\mathsf T}}{\sqrt2},\\
+\phi_\mu(T)=\mu\,u^*Tu,\qquad \phi_\mu(I)=\mu.
+\end{gathered}
+\tag{34.3}
+$$
+
+$u,f$ 在 $Q$ 中取值，并以零延伸到完整原空间；它们单位且正交。$x=x^*=PxP$。为避免把压缩平方当作原平方，先核对实际作用：$cQ=Qc$ 和 $tQ=0$ 给 $ctQ=tcQ=0$，故 $k_tQ=K_\sigma(c,t)Q=0$；$x,h,r,\Sigma$ 都保持 $Q$，所以 $R_\delta,S_\delta$ 在 $u$ 上的完整作用像确实仍在 $Q$。又 $tu=0$，故 $\phi_\mu(t\circ(r+g))=0$。以下范数和内积都是完整原空间中的作用像，因而 $\phi_\mu(T^2)=\mu\|Tu\|^2$ 对所用自伴 $T$ 成立，没有替换原乘法。
+
+令 $Z=\operatorname{diag}(1,-1)$、$J=\begin{pmatrix}0&1\\1&0\end{pmatrix}$、$H=\begin{pmatrix}0&-\iota\\\iota&0\end{pmatrix}$。在该平面上
+
+$$
+\begin{gathered}
+c=kI-dZ,\qquad X=\rho(-A_0I+Z+kJ),\qquad
+Zu=f,\quad Ju=\iota f,\quad Hu=u,\\
+h=K_\sigma(c,x)|_Q=dk\rho H,\qquad
+Xu=\rho[-A_0u+(1+\iota k)f],\\
+r|_Q=\rho[(-kA_0-d)I+(k+dA_0)Z+k^2J],\qquad
+\Sigma|_Q=dA_0\rho(I-Z).
+\end{gathered}
+\tag{34.4}
+$$
+
+例如 $[Z,J]=\begin{pmatrix}0&2\\-2&0\end{pmatrix}$，故 $\iota[-dZ,k\rho J]/2=dk\rho H$；Jordan 乘积中 $ZJ+JZ=0$，给出所列 $r$ 的三个系数。这样 $(r+\Sigma)u$ 的 $u,f$ 系数分别为 $\rho(-kA_0+dk^2)$ 和 $\rho(k+\iota k^2)$，完整作用列准确为
+
+$$
+\begin{aligned}
+R_+u&=\rho[(-A_0+dk)u+(1+\iota k)f],\\
+R_-u&=\rho[(-A_0-dk)u+(1+\iota k)f],\\
+S_+u&=kR_+u,\qquad S_-u=-kR_+u,\\
+\phi_\mu(L)&=-2\mu\operatorname{Re}((Xu)^*hu)
+             =2\mu dkA_0\rho^2>0.
+\end{aligned}
+\tag{34.5}
+$$
+
+特别 $B_{\phi_\mu}(R_+,S_+)=0$，而 $R_+u\ne0$，因为 $\rho\ne0$ 且 $1+\iota k\ne0$。为计算另一笔预算，记 $p=-A_0+dk$、$n=-A_0-dk$、$q=1+\iota k$，于是 $|q|^2=A_0$，并有
+
+$$
+\begin{gathered}
+\|R_-u\|^2=\rho^2(n^2+A_0),\qquad
+\|S_-u\|^2=k^2\rho^2(p^2+A_0),\\
+(R_-u)^*S_-u=-k\rho^2(np+A_0)\in\mathbb R,\\
+(n^2+A_0)(p^2+A_0)-(np+A_0)^2
+=A_0(n-p)^2=4d^2k^2A_0.
+\end{gathered}
+\tag{34.6}
+$$
+
+这里用的是 PB 的实 Gram 行列式；内积实性也已实际核对，未漏掉虚部。由此
+
+$$
+\begin{aligned}
+\sqrt{B_{\phi_\mu}(R_-,S_-)}&=2\mu dk^2\sqrt{A_0}\,\rho^2,\\
+|\phi_\mu(L)|-\sum_{\delta=\pm1}\sqrt{B_{\phi_\mu}(R_\delta,S_\delta)}
+&=2\mu dkA_0\rho^2\left(1-\frac{k}{\sqrt{1+k^2}}\right)>0.
+\end{aligned}
+\tag{34.7}
+$$
+
+严格性只用 $1+k^2>k^2$；没有数值近似或有限枚举。
+
+最后在同一个 $\phi_\mu$ 上令 $x_\varepsilon=x+\varepsilon(J\oplus0_{Q^\perp})$。每份 $B_\delta(\varepsilon)=B_{\phi_\mu}(R_\delta(x_\varepsilon),S_\delta(x_\varepsilon))$ 都是非负实多项式，次数至多四，因为两份作用列关于实 $\varepsilon$ 仿射。直接在完整作用像上，其一次项为
+
+$$
+\dot R_\delta u=\delta d\,u+\iota f,\qquad
+\dot S_\delta u=\delta k\iota f,\qquad
+\operatorname{Re}((\dot R_\delta u)^*\dot S_\delta u)=\delta k.
+$$
+
+所以两份四次系数都准确等于
+
+$$
+\mu^2[(1+d^2)k^2-k^2]
+=\mu^2d^2k^2=\frac{(b^2-a^2)^2}{16}\mu^2>0.
+\tag{34.8}
+$$
+
+这也正是 (32.28) 在单位演员向量 $u$、无环境向量分量及谱值 $a,b$ 上的参数对应。每个预算多项式都不恒为零，其实零点集有限。(34.7) 的 PB 差额关于 $\varepsilon$ 连续，因为两个非负预算的平方根、绝对值和作用列均连续，且在零严格为正。因此存在 $\eta>0$，使 $|\varepsilon|<\eta$ 时仍严格违反；在任意更小的零邻域内，避开两个有限零点集以及零，便同时取得 $B_+(\varepsilon)>0$、$B_-(\varepsilon)>0$。始终没有改变 $\phi_\mu$、$t$、$g$ 或原环境。全部式子只用 $\iota^2=-1$、$\overline\iota=-\iota$，故两个 $\sigma$ 分别成立。∎
+

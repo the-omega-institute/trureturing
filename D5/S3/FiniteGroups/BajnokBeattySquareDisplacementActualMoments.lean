@@ -32,14 +32,14 @@ def D (T : Params → ℕ → ℕ) (p : Params) (k : ℕ) : ℝ :=
 /-- Finite Cesaro average, with the usual totalized value at zero. -/
 def avg (f : ℕ → ℝ) (N : ℕ) : ℝ := (∑ k ∈ Finset.range N, f k) / (N : ℝ)
 
-private theorem param_pos (p : Params) : (0 : ℝ) < (p.val : ℝ) := by
+theorem param_pos (p : Params) : (0 : ℝ) < (p.val : ℝ) := by
   exact_mod_cast (show (0 : ℤ) < p.val by have := p.property.1; omega)
 
-private theorem avg_sub (f g : ℕ → ℝ) (N : ℕ) :
+theorem avg_sub (f g : ℕ → ℝ) (N : ℕ) :
     avg (fun (k : ℕ) => f k - g k) N = avg f N - avg g N := by
   simp only [avg, Finset.sum_sub_distrib, sub_div]
 
-private theorem avg_const_mul (c : ℝ) (f : ℕ → ℝ) (N : ℕ) :
+theorem avg_const_mul (c : ℝ) (f : ℕ → ℝ) (N : ℕ) :
     avg (fun (k : ℕ) => c * f k) N = c * avg f N := by
   rw [avg, ← Finset.mul_sum]
   simp only [avg, mul_div_assoc]

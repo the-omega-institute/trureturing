@@ -1,0 +1,77 @@
+**Theorem 34.2 (source and domain obstruction despite the equality exception).**
+In the unit critical regime the limiting conditional source law of the
+full original problem is
+
+$$
+\frac{\phi(k)}{J_\phi}\,dk\,
+\frac{d\theta\,dv}{(2\pi)^2}\,G_{\beta b}(D)\,dD.
+\tag{34.7}
+$$
+
+The actual zero-leaf conditional source, embedded in the original
+coordinate space, instead tends to
+
+$$
+\frac{\phi(k)}{J_\phi}\,dk\,
+\frac{d\theta\,dv}{(2\pi)^2}\,\delta_0(dD).
+\tag{34.8}
+$$
+
+The source obtained by Haar-smearing the original hidden pole, which
+implements the averaged field appearing in the complete sector, has
+unit conditional limit
+
+$$
+\frac{\phi(k)}{J_\phi}\,dk\,
+\frac{d\theta\,dv}{(2\pi)^2}\,\frac{dD}{2\pi}.
+\tag{34.9}
+$$
+
+For every finite $b>0$ these are three different measures. In particular
+the energy and ground-probability equality at $b_*$ does not identify
+the original source, form domain or killed diffusion with the native
+zero leaf. The complete sector is also not the full limiting
+ground-state theory. In the raw regime the conditional sources have
+the weak zero-leaf limit (34.8), but the full energies and height laws
+still differ as in (34.1). Conditional weak source convergence therefore
+does not imply convergence of these attractive minima to the zero-leaf
+minimum.
+
+Proof. Equation (34.7) is (32.10). Equation (34.4) divided by (32.13)
+gives the actual base conditional source; on the actual native histories
+$D=0$ identically, so its embedding is (34.8). Hidden translation
+averaging commutes with the free operator and height killing; [G,
+Theorem 23.3] identifies its source as
+$\delta_{q_0}\otimes dD/(2\pi)$ before propagation. Its conditional
+density at cutoff is
+$\overline p_\kappa(\tau,q_0,q)/(2\pi S(\tau))$. Integrating
+(32.10) in $D$ proves (34.9). The heat density $G_{\beta b}$ is smooth
+and strictly positive, as is seen from (32.8), and is nonconstant for
+finite $b$ because its first Fourier coefficient is nonzero. Thus
+(34.7) is neither the singular (34.8) nor the uniform (34.9), even
+when its value at zero happens to be one.
+
+These source distinctions use the same raw measures and original
+clock. The actual zero-leaf Hilbert space is $L^2(B,\nu_B)$; its
+$D=0$ embedding is an embedding of measures, not an isometry into
+$L^2(\Omega,\mu)$. The sector, in contrast, is the closed subspace
+$\operatorname{Ran}J\subset L^2(\Omega,\mu)$ with the complete domain
+in [G, (23.5)]. The full amplitudes are in $\mathcal F_\kappa$ and
+have the loss of strong compactness proved in Theorem 33.2. Their
+probabilities concentrate at $D=0$, while every sector amplitude has
+uniform conditional $D$ law. These facts exhibit the domain and law
+obstructions directly, without claiming a general operator-convergence
+theorem. In the raw case (32.11) gives the conditional weak source
+limit, and (33.1), (34.6) prove the asserted failure of continuity of
+the attractive minimum under that weak comparison.
+
+Finally the conditional source is a statement about the original killed
+free law at one time. Its normalization does not remove either height
+death from $L_\kappa^{-1}$, and neither it nor the amplitude ground
+measure specifies a preparation or extra actuator. The finite native
+histories and state dimensions remain those of
+[Probability, phase transport and holonomy, Theorems 8.2 and 10.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md).
+Accordingly none of the measure embeddings or spectral equalities
+asserts an operational identification or a spatial-dimension selection.
+$\square$
+

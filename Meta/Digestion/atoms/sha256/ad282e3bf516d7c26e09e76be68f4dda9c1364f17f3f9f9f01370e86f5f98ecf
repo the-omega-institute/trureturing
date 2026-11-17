@@ -1,0 +1,22 @@
+### 8.1 两个码之间的原生编译
+
+现在取上述 $n=2$ 的同一个十三维载体
+
+$$
+\mathcal H=\operatorname{span}\{e_\beta=|10\,\beta\,010\rangle:
+|\beta|=5,\ \beta\text{ 无相邻 }11\}.
+$$
+
+原七个地址为 $0,\ldots,6$，唯一旧种子为 $v=e_{00100}$， 仍保留原十位终端的全部 $1024$ 个标签。［[continuation](#ref-continuation)］ 令
+
+$$
+\begin{array}{c|ccccc}
+s&0&2&3&5&25\\ \hline
+L|s\rangle&e_{00000}&e_{10000}&e_{01000}&e_{00100}&e_{10100}
+\end{array}
+$$
+
+并取 $R|0\rangle=e_{00100}$、$R|1\rangle=e_{10100}$。 这里 $R$ 是既有两逻辑比特码中第二比特固定为零的子码， 而 $L$ 只是原五模式在同一载体中的固定基嵌入。 记新目标码为 $V=LJ$。
+
+<a id="lem:sudensity"></a>
+

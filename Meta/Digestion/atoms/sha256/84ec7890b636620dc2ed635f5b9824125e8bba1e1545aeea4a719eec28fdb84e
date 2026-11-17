@@ -1,0 +1,56 @@
+**定理 193.2（带权行的形状与上预算）。** 在 193.1 下，存在唯一自伴收缩 $W\in PAP$，使上述准确矩阵坐标中的同一旧值满足
+
+$$
+T=\frac{\alpha\beta}{2}
+\begin{pmatrix}0&iW\\-iW&0\end{pmatrix}.
+\tag{193.1}
+$$
+
+因此
+
+$$
+(2P-u)\circ T=F\circ T=0,\qquad
+0\le T^2\le\frac{\alpha^2\beta^2}{4}u.
+\tag{193.2}
+$$
+
+证明。在 $PAP$ 的忠实表示中用全部第二块支撑向量读取原 P2，得
+
+$$
+T=\begin{pmatrix}A&B\\B^*&0\end{pmatrix},\qquad A=A^*.
+$$
+
+置 $a=\alpha p$、$b=\beta v$，选 $0<\theta\le\pi/4$，使 $\sin2\theta=\alpha/\beta$，记 $k=\cos2\theta$。由已付 185.1 的标签旋转，原输入
+
+$$
+r=a\cos\theta-b\sin\theta,\qquad
+s=a\sin\theta+b\cos\theta
+$$
+
+满足 $D(r,s)=T$，且准确已知乘法给
+
+$$
+r\circ s=-\frac{\alpha\beta}{2}
+\begin{pmatrix}k^2&-k\\-k&1\end{pmatrix}.
+\tag{193.3}
+$$
+
+它消灭每个向量 $\xi=(\eta,k\eta)$。对这些数学正读取，直接消费 (188.3) 的零预算论证，即两份实际 PB $(r,s,0)$、$(s,r,0)$，得 $\phi_\xi(r\circ T)=\phi_\xi(s\circ T)=0$。反解已知实旋转，亦得 $\phi_\xi(a\circ T)=\phi_\xi(b\circ T)=0$。置 $A_\eta=\langle\eta,A\eta\rangle$、$B_\eta=\operatorname{Re}\langle\eta,B\eta\rangle$，两式准确为
+
+$$
+A_\eta+kB_\eta=0,\qquad
+kA_\eta+(1+k^2)B_\eta=0.
+\tag{193.4}
+$$
+
+系数行列式为 $1$，故全部 $A_\eta=B_\eta=0$。固定算子的 Hermitian 极化给 $A=0$、$B^*=-B$，于是唯一写成 (193.1)，其中 $W=W^*$。
+
+以 $\zeta=(\varepsilon\eta,i\eta)$ 读取原 $(\alpha p,\beta v)$ 的 P2。置 $n=\|\eta\|^2$，则
+
+$$
+(\alpha\beta\varepsilon)^2|\langle\eta,W\eta\rangle|^2
+\le\alpha^2\beta^2\varepsilon^2(1+\varepsilon^2)n^2.
+$$
+
+对非零实 $\varepsilon$ 约去公共因子，并令这个已知数值参数足够小，得到 $|\langle\eta,W\eta\rangle|\le\|\eta\|^2$。自伴性和忠实表示给 $\|W\|\le1$，继而得 (193.2)。全部读取的合法性仍来自 129.1 的原准确锥，不是新增实际准备。零代数的结论平凡。∎
+

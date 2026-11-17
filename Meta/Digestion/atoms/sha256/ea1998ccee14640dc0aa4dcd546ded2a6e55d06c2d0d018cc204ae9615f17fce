@@ -1,0 +1,26 @@
+**Definition 198.1 (a normalized quotient section).** Retain the notation of Section 197 for a full-zero bounded partition $u$. Since
+
+$$
+1=u_0+u_1+u_3+u_B\in\mathcal W_u,
+\qquad
+T_u(1)=1,
+$$
+
+choose a linear section
+
+$$
+S_u:E_f\longrightarrow\mathcal W_u,
+\qquad
+T_u\circ S_u=\operatorname{id}_{E_f},
+\qquad
+S_u(1)=1.
+\tag{198.1}
+$$
+
+For each label $y\in\mathcal L$, put
+
+$$
+\rho_y=u_y-S_u(f_y).
+\tag{198.2}
+$$
+

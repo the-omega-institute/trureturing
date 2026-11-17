@@ -1,0 +1,30 @@
+#### 定理 5.2：Q17 的完整三维刻画
+
+在本轮保留的完整有限前端中，以下两项等价：
+
+1.  存在满足 Q17 的 $K,L$；
+
+2.  $\dim W=3$，且 $\mathfrak g=\mathfrak{so}(W,B)$。
+
+此时
+
+$$
+G^\circ=SO(W,B),\qquad G=SO(W,B)\text{ 或 }O(W,B).
+$$
+
+全部 Q17 见证恰为
+
+$$
+K=\sqrt\alpha X_v,\qquad L=\sqrt\alpha X_w,
+\qquad \alpha>0,
+\tag{5.1}
+$$
+
+其中 $(v,w)$ 是 $e^\perp$ 的正交单位基，
+
+$$
+X_t(se+z)=st-B(t,z)e\qquad(t,z\perp e).
+$$
+
+**证明。**
+

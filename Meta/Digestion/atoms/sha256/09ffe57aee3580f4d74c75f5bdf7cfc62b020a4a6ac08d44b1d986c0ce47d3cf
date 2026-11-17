@@ -1,0 +1,44 @@
+**Corollary 155.4 (the coupled full-law obligation).** For every original $\theta$ and every choice of the endpoints in Theorem 155.2, each hypothetical exact full correction $D^*$ of its selected input $D$ satisfies the exact donor identity (155.22) and
+
+$$
+\mathfrak S(D,D^*)>
+ \frac{\gamma^2}{6\mathfrak d_\rho}(t^2\kappa-\delta)>0.
+\tag{155.30}
+$$
+
+Both endpoints are genuinely partially calibrated inputs with their own terminals: they have positive BB3 residual and a strict finite improvement in the complete residual norm, and neither is a full $F_{64}$ witness. No assertion is made that an arbitrary nonproportional table is realizable as a full correction, or that paying this necessary cost suffices.
+
+For the selected input $D$, a sufficient remaining obligation for the original $F_{64}(\theta)$ is a sequence of actual partitions $D_n\in\mathscr F_{154}(\theta)$, starting at $D_1=D$, such that
+
+$$
+\|\Delta(D_n)\|_\infty\longrightarrow0,\qquad
+\sum_{n=1}^{\infty}m(A(D_n,D_{n+1}))<\infty.
+\tag{155.31}
+$$
+
+Under (155.31) there is one whole-$G$ pointwise Borel partition $D_\infty$ attaining the full original law, and
+
+$$
+m(A(D_n,D_\infty))\le
+ \sum_{k=n}^{\infty}m(A(D_k,D_{k+1})).
+\tag{155.32}
+$$
+
+The quantifiers of Theorem 155.2 co-select $D$ and $D'$ after $t,\varepsilon,\delta$ and a common finite refinement have been chosen. They do not supply a successor starting at a previously fixed actual $D$, or a sequence satisfying (155.31). The lower selection cost (155.24) is necessary for an exact repair; it does not assert that such costs fail to be summable.
+
+*Proof.* Apply Theorem 155.3 to (155.6). Positivity of BB3 excludes exact full-law equality for either endpoint. Theorem 155.3 quantifies over every actual full correction, so its conditional necessity does not require the existence of one.
+
+The measure of the union of the change sets from index $n$ onward is at most the right side of (155.32). Finiteness of the series makes the limsup of those sets null. Outside that Borel null set the finite-valued labels are eventually constant. Their eventual values define Borel cells; assign $B$ on the exceptional set to obtain one pointwise partition of all of $G$. This proves (155.32). For any pair of actual partitions $E,F$, telescoping as in (155.27) gives
+
+$$
+\|\Phi_3(\mathbf1_E)-\Phi_3(\mathbf1_F)\|_\infty
+ \le3G_0m(A(E,F)).
+\tag{155.33}
+$$
+
+Thus (155.31)–(155.32) imply $\Delta(D_\infty)=0$, with its own propagated terminals. The same argument for one-slot and two-slot products preserves the calibrated equalities. The finite construction in Theorem 155.2 gives two roots in one newly chosen rounding family; neither root is required to equal any partition fixed before that family was selected. Consequently iteration from an existing endpoint is an additional obligation, even when the numerical upper bounds $\varepsilon t$ could be chosen summably.
+
+Theorem 146.1 supplies actual $\mathscr D_{12}$ partitions of exact rank two, with all four exact terminal contrasts and full-law error tending to zero. It supplies no positive-BB3 hypothesis, and is not required to lie in $\mathscr F_{154}$. The necessity in Theorem 155.3 therefore gives no uniform residual floor on $\mathscr D_{12}$ and no obstruction to those §146 partitions. The universal exact target (155.3) and a fixed-start summable correction chain remain unresolved by these results.
+
+The source-specific composition (155.11), (155.17)–(155.19) and (155.23)–(155.27) is repository-derived relative to the retained conditional suppliers. The spectral positivity is the existing §134 result, the regular directions and finite partition mechanism are those of §§147 and 154, and the fixed-point intermediate is the finite-dimensional closed-ball form of Brouwer, [*Über Abbildung von Mannigfaltigkeiten*, DOI 10.1007/BF01456931](https://doi.org/10.1007/BF01456931). These classical tools and the finite-table variance calculation are consumed within this source application; no historical novelty is asserted for them. The eventual-label limit uses the elementary summable-set argument within this full-law consumer. $\square$
+

@@ -1,0 +1,51 @@
+### 27.2 四记录开放链与五个 FIB 匹配项
+
+**定义 C-27.2.1（完全给定的路径支撑）。** 四记录路径 <span>𝑒<sub>1</sub>-𝑒<sub>2</sub>-𝑒<sub>3</sub>-𝑒<sub>4</sub></span> 的候选关系仅允许相邻条目 <span>𝑔<sub>𝑖</sub>=𝐺<sub>𝑖,𝑖+1</sub></span> 及其共轭非零。三个非邻对的条目明确供应为零。按 §27.5 的路径重标相，令 <span>𝑟<sub>𝑖</sub>=|𝑔<sub>𝑖</sub>|≥0</span>，得到
+
+<div>
+𝐺<sub>4</sub>=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑟<sub>1</sub></td><td>0</td><td>0</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>𝑟<sub>1</sub></td><td>1</td><td>𝑟<sub>2</sub></td><td>0</td><td>⎟</td></tr>
+<tr><td>⎜</td><td>0</td><td>𝑟<sub>2</sub></td><td>1</td><td>𝑟<sub>3</sub></td><td>⎟</td></tr>
+<tr><td>⎝</td><td>0</td><td>0</td><td>𝑟<sub>3</sub></td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+这里的零是声明的模型或来源条件；尚未测量一个条目不能把它写成零。若给的是部分报告，则该条目应作为待补变量保留。
+
+**命题 C-27.2.2（五模式到行列式的逐项桥）。** 对定义 C-27.2.1 的完整候选，
+
+<div>
+ det 𝐺<sub>4</sub>=1-𝑟<sub>1</sub><sup>2</sup>-𝑟<sub>2</sub><sup>2</sup>-𝑟<sub>3</sub><sup>2</sup>+𝑟<sub>1</sub><sup>2</sup>𝑟<sub>3</sub><sup>2</sup>=𝑍(-𝑟<sub>1</sub><sup>2</sup>,-𝑟<sub>2</sub><sup>2</sup>,-𝑟<sub>3</sub><sup>2</sup>),  𝑍(𝑎,𝑏,𝑐)=1+𝑎+𝑏+𝑐+𝑎𝑐.
+</div>
+
+三个位置现在标记三条记录边，而不是四个记录顶点。它们与 [A 卷 §1](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#1-有序原子五种选择与标准窗口) 的低、中、高位置保持顺序对应：
+
+| 位置选择 | 被交换的记录边 | 行列式贡献 | 原生旧标签 | 标准窗原生数量 |
+| --- | --- | ---: | --- | ---: |
+| <span>𝖥[∅]</span> | 无 | <span>1</span> | <span>[𝑛𝑢𝑙𝑙]</span> | <span>0</span> |
+| <span>𝖥[1]</span> | <span>{1,2}</span> | <span>-𝑟<sub>1</sub><sup>2</sup></span> | <span>[2]</span> | <span>2</span> |
+| <span>𝖥[2]</span> | <span>{2,3}</span> | <span>-𝑟<sub>2</sub><sup>2</sup></span> | <span>[3]</span> | <span>3</span> |
+| <span>𝖥[3]</span> | <span>{3,4}</span> | <span>-𝑟<sub>3</sub><sup>2</sup></span> | <span>[5]</span> | <span>5</span> |
+| <span>𝖥[1,3]</span> | <span>{1,2},{3,4}</span> | <span>𝑟<sub>1</sub><sup>2</sup>𝑟<sub>3</sub><sup>2</sup></span> | <span>[25]</span> | <span>7</span> |
+
+**证明。** 将 Leibniz 展开中的置换分解为互不相交的循环。一个非固定循环要沿矩阵支撑中的边走；长度至少三的置换循环会给路径图中的图循环，而路径没有这种循环。因此每个可能非零的置换只含固定点和相邻记录的二换位。
+
+固定点贡献对角一。交换第 <span>𝑖,𝑖+1</span> 个指标贡献置换符号 <span>-1</span> 和权重
+
+<div>
+𝐺<sub>𝑖,𝑖+1</sub>𝐺<sub>𝑖+1,𝑖</sub>=𝑔<sub>𝑖</sub>conj(𝑔<sub>𝑖</sub>)=𝑟<sub>𝑖</sub><sup>2</sup>.
+</div>
+
+换位不能共用记录指标，故相邻两条边不能同时选择。三条边上的合法集合恰为
+
+<div>
+∅, {1}, {2}, {3}, {1,3}.
+</div>
+
+最后一种有两个换位、符号为正。这穷尽全部支撑允许的置换，给出五行贡献；某条边为零时相应贡献为零，有限多项式恒等式仍成立。记录路径边的冲突图是 <span>𝐿(𝑃<sub>4</sub>)=𝑃<sub>3</sub></span>，所以“不许相邻位置同时占用”与“不许换位共用指标”由一个明确双射连接，而不只是项数均为五。<span>□</span>
+
+固定源 [^GL-F] §8.3、[^GL-S] §§2.1–2.2 供应这个五项形式响应及方向字典。代入负实权重是交换环中的多项式评价，不是负概率。表中的原生数量、选择标签、形式权重和归一化概率属于不同类型；例如联合原生数量为 <span>2+5=7</span>，不等于因子化权重 <span>2·5</span>。辅助低到高印字与原生高到低读取的区别继续保留。
+

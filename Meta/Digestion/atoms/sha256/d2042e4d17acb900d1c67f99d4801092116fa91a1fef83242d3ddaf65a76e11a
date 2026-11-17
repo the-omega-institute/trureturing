@@ -1,0 +1,24 @@
+**定理 148.2（同一原世界的全部量子消费者）。** 分别在两条完整原背景上，
+
+$$
+\begin{aligned}
+\mathsf C_{\rm diag}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm diag}(\mathsf B_{\rm cl})&\Longleftrightarrow
+\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{148.3}
+$$
+
+$\mathsf Q$ 仍是母卷定义 67.2 的统一近零证书。与现有量子力学接口的完整对应如下。
+
+| 所消费的原关系 | 所恢复的同一原结构 |
+| --- | --- |
+| 定理 146.1、全部原实际联合、母卷定理 64.2 或 71.3 | 完整曲率 $[D_a,D_b]=-[L_a,L_b]$；同一原乘法 $a\cdot b=a\circ b-iD_ab$ 给 $\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C)$、$E_A=(\mathcal A_A)_{\rm sa}$、$D_ab=i[a,b]/2$。 |
+| 原准备、原比较与其双对偶运输 | $\rho_\alpha=B_Ax_\alpha\ge0$、$\alpha(e)=\tau_A(\rho_\alpha e)$、$\tau_A(\rho_\alpha)=\alpha(u_A)$；谱概率为 Born 评价，原零和次归一质量及不等 $q$ 块权保留。 |
+| 完整原 X 的含幺嵌入、同一 $D$ 保持、交叉零、乘积张成、实际乘积准备 | 原嵌入成为含幺 $*$-嵌入，已声明原实际联合取得普通复张量；完整相关准备继续按原合同，而非只留乘积态。 |
+| 全事件 R、原相关准备与同记录参考执行 | 全部原事件 CP/TNI、原完整测试 TP；闭准备支仍消费母卷定理 69.2 的连续正延拓。 |
+| 指定原群、整个 AC、精确 $N_u$、Xs 与所消费合法连线 | 每个效果有所选完整有限平方根词，成功为 $\rho\mapsto\sqrt e\rho\sqrt e$，投影时为所选 Lüders 支；全部原失败输出和记录仍随完整词保留。 |
+| 原 F、实际细标签、分组、记录和遗忘 | 非零单中心细支 $S_\ell=\operatorname{Ad}_{K_\ell}$、粗事件 $\Phi_f=\sum_\ell S_\ell$；原零标签与可访问细记录保留，数学 Kraus 表示不另供应实际细口。 |
+| 具名同数支持双返回、原反向资料与失败完成 | $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$；原支持角上两侧复合都是同一个原 $q_\ell>0$ 倍恒等，进一步合法接续不变。 |
+| 全部原实际准备、端口、有限顺序、自适应和并行历史 | 下式逐条保留原质量、失败、细记录及中央细权，不增加原本不合法的共同组装。 |
+| 完整 $B$ 与另名 $\mathsf B_{\rm cl}$ | 前者保留实际准备的有限正锥生成；后者只给运输后密度锥的闭覆盖，不将极限数学态授予实际准备身份。 |

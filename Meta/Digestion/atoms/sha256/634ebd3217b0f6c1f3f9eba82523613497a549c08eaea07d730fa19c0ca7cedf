@@ -1,0 +1,32 @@
+**推论 14.3（编译、执行、读出及统计的分层预算）。** 在明确采用本卷 Born/CP 接口时，精确执行 (14.2)–(14.3) 的有限字给 (14.4) 中
+
+$$
+a_j^{\rm err}\le\alpha,\qquad b_j^{\rm err}\le\alpha+\beta.
+\tag{14.7}
+$$
+
+若真实准备、控制和读出使完整律相对这些精确有限字的 Born 律另有 TV 偏差界 $\eta_j^{\rm in},\eta_j^{\rm out}$，则有效预算为
+
+$$
+d_j\le2\alpha+\beta+\eta_j^{\rm in}+\eta_j^{\rm out},\qquad
+\max_jr_j(\mathsf K)\ge
+\delta-2\alpha-\beta-\max_j(\eta_j^{\rm in}+\eta_j^{\rm out}).
+\tag{14.8}
+$$
+
+因此理想数学编译取 $\alpha<\delta/8$、$\beta<\delta/4$ 时，余量严格大于 $\delta/2$；真实偏差还须小于相应余量。有限字存在性本身不供应这些实际偏差界。
+
+证明。归一向量 $x,y$ 的纯态距离满足 $D(|x\rangle\langle x|,|y\rangle\langle y|)\le\|x-y\|$，随后完整终端测量不增加距离。代入 (14.2)–(14.3) 得 (14.7)，再两次使用三角不等式得 (14.8)。精确原门保留 $\mathcal H$，故十三路径之外的 $1011$ 个旧标签在精确模型中质量仍为零；五模式之外还有八条合法路径，其制备后与门后总质量分别至多 $\alpha^2$、$(\alpha+\beta)^2$。这些质量全部留在完整 TV 中，不能另删后声称同一个界。真实误差若产生其它旧标签的质量，也计入 $\eta$，不得将它们作为“无效样本”删除。
+
+原七地址来源没有中间随机仪器或可删失败分支，实际档案仍保留制备字 $a_j$、接续 $g$、调用顺序及原十位终端；这是[续卷 II 定义 77.1、83.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 的原域。字长若为 $\ell_j,m$，两种程序分别花费 $\ell_j$、$\ell_j+m$ 次原门调用，所有调用及档案保留；本推导不给字长上界或免费重置。三种已知目标可以逐精度由旧种子编译，不提供未知态、独立副本、随机混态源或新增测量。完整档案若被用来选择不同的核，便已超出同一个 $\mathsf K$ 的假设，并未被 (14.5) 排除。
+
+有限统计认证又是另一层：若某个已供应的统计方案在同一置信事件上给六个完整经验律 $\widehat P_j^{\rm in},\widehat P_j^{\rm out}$ 及其 TV 半径 $h_j^{\rm in},h_j^{\rm out}$，则在该事件上，同时对所有 $\mathsf K$ 有
+
+$$
+\max_j\operatorname{TV}(\mathsf K\widehat P_j^{\rm in},\widehat P_j^{\rm out})
+\ge\delta-\max_j(d_j+h_j^{\rm in}+h_j^{\rm out}).
+\tag{14.9}
+$$
+
+这是 (14.5) 再用两次三角不等式，故也允许在同一批数据后拟合候选核。严格正认证须右侧为正，并须真实具备所声称的共同置信事件。原生单次 ready／终端合同不自动供应独立重复、平稳抽样或这些置信半径；此处不声称已实际执行或获得统计认证。∎
+

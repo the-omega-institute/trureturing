@@ -1,0 +1,48 @@
+## 四、把贪心偏差与曲率精确送入 AURIC 三轴
+
+定义曲率贡献
+
+$$
+\Gamma_k(\theta)
+=
+f((1-\theta)T_k+\theta T_{k+1})
+-(1-\theta)f(T_k)-\theta f(T_{k+1}).
+$$
+
+凹性给出 $\Gamma_k(\theta)\ge0$，于是有精确恒等式
+
+<a id="eq-11"></a>
+
+$$
+\boxed{
+\begin{aligned}
+\log R(m)
+={}&
+(1-\theta)\log R(N_k)
++\theta\log R(N_{k+1})\\
+&-\Delta(m)-\Gamma_k(\theta).
+\end{aligned}
+}
+\tag{11}
+$$
+
+这里两个减项都有确定的算术来源：
+
+- $\Delta$：实际整数相对于最优层排列的收益缺口；
+- $\Gamma$：Robin 分母的对数曲率贡献。
+
+由于 $\kappa(t)$ 随 $t>1$ 严格下降，
+
+<a id="eq-12"></a>
+
+$$
+\boxed{
+\Gamma_k(\theta)
+\ge
+\frac{\kappa(T_{k+1})}{2}
+\theta(1-\theta)(T_{k+1}-T_k)^2.
+}
+\tag{12}
+$$
+
+<!-- editorial-note:start curvature-bound -->

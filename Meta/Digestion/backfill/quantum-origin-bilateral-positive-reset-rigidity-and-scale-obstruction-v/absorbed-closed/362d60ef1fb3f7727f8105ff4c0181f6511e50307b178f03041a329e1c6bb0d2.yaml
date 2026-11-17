@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:362d60ef1fb3f7727f8105ff4c0181f6511e50307b178f03041a329e1c6bb0d2
+  normalized_sha256: sha256:362d60ef1fb3f7727f8105ff4c0181f6511e50307b178f03041a329e1c6bb0d2
+cas_ref: sha256:362d60ef1fb3f7727f8105ff4c0181f6511e50307b178f03041a329e1c6bb0d2
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/OriginalMassCalibration.original_mass_factorization
+    target_statement_id: sha256:d06c187ab134b847009127dcf9dcfc7e5c6553858f6310af542646bbd63dfb3a
+receipts:
+  unresolved_subitems: []

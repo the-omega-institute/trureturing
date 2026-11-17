@@ -1,0 +1,122 @@
+**Theorem 155.3 (the exact source-ratio donor identity and a necessary selection cost).** Retain Definition 155.1. Let $D\in\mathscr D_{12}(\theta)$ satisfy $r(D)>0$. For every actual whole-$G$ pointwise Borel partition $D^*$ satisfying $\Delta(D^*)=0$, define the coarse cells
+
+$$
+E_S=D_0\cup D_1,\quad E_3=D_3,\quad E_B=D_B,
+\qquad
+E_S^*=D_0^*\cup D_1^*,\quad E_3^*=D_3^*,\quad E_B^*=D_B^*.
+\tag{155.20}
+$$
+
+For $k=0,1,2$ put $\nu_k(A)=\int_Ag_k\,dm$ and $\bar g=(g_0+g_1+g_2)/3$. These are the original three source marginals and their bookkeeping average; every joint coefficient remains the original integral (155.1). Write
+
+$$
+\begin{gathered}
+t_r=\int_Gg_{rd}f_3\,dm\quad(r=2,3,4),\qquad
+\bar t=(t_2+t_3+t_4)/3,\\
+\pi_i=\int_{E_i}\bar g\,dm,\qquad
+\rho_i^{(k)}=\nu_k(E_i)/\pi_i\quad(i=S,3,B),\\
+T_{ij}=\int_{E_i\cap E_j^*}\bar g\,dm,\qquad
+Z_{ij}^{(k)}=\nu_k(E_i\cap E_j^*)-\rho_i^{(k)}T_{ij}.
+\end{gathered}
+\tag{155.21}
+$$
+
+The row reference is always the original donor $E_i$. The exact table identities are
+
+$$
+\begin{gathered}
+\sum_jT_{ij}=\pi_i,\qquad \sum_iT_{ij}=\pi_j,\qquad
+\sum_jZ_{ij}^{(k)}=0,\\
+\sum_i\bigl(\rho_i^{(k)}T_{ij}+Z_{ij}^{(k)}\bigr)
+        =\rho_j^{(k)}\pi_j,\\
+\sum_{i,j}(\rho_i^{(k)}-\rho_j^{(k)})^2T_{ij}
+ =2\sum_{i,j}(\rho_j^{(k)}-\rho_i^{(k)})Z_{ij}^{(k)}
+ \quad(k=0,1,2).
+\end{gathered}
+\tag{155.22}
+$$
+
+In particular put $\rho_i=\rho_i^{(0)}$. Their source-specific values obey
+
+$$
+\begin{gathered}
+\pi_3=\bar t,\quad \pi_B=\tfrac14,\quad \pi_S=\tfrac34-\bar t,\\
+\rho_3=t_2/\bar t>1=\rho_B>
+ \rho_S=(\tfrac34-t_2)/(\tfrac34-\bar t),\\
+\gamma=\min\{\rho_3-1,1-\rho_S\}>0,\qquad
+\mathfrak d_\rho=\rho_3-\rho_S>0.
+\end{gathered}
+\tag{155.23}
+$$
+
+Let $A_c$ be the set where $D,D^*$ have different coarse labels in $\{S,3,B\}$. Every such exact correction must pay
+
+$$
+\begin{gathered}
+\mathfrak S(D,D^*):=\sum_{i\ne j}|Z_{ij}^{(0)}|
+ \ge\frac{\gamma^2}{2\mathfrak d_\rho}\int_{A_c}\bar g\,dm
+ \ge\frac{\gamma^2}{6\mathfrak d_\rho}\,r(D)>0,\\
+ m(A_c)\ge\frac{r(D)}{3G_0}>0.
+\end{gathered}
+\tag{155.24}
+$$
+
+Thus nonproportional selection across coarse labels is necessary. The conclusion applies to every exact full correction, with no restriction on its direction, support, number of pieces or construction.
+
+*Proof.* Summing a full law over its other two labels gives each of its three original source marginals. Therefore $D^*\in\mathscr D_{12}(\theta)$. In fact the table identities (155.22) hold for any two members of $\mathscr D_{12}(\theta)$, independently of their pair or triple laws. Additivity of the intersections gives the first two lines. For fixed $k$, abbreviate $\rho_i^{(k)}$ to $a_i$ and $Z_{ij}^{(k)}$ to $Z_{ij}$. Expansion of the square, the two table margins, and the recipient equations give
+
+$$
+\begin{aligned}
+\sum_{i,j}(a_i-a_j)^2T_{ij}
+ &=2\sum_j a_j^2\pi_j-2\sum_j a_j\sum_i a_iT_{ij}\\
+ &=2\sum_{i,j}a_jZ_{ij}
+ =2\sum_{i,j}(a_j-a_i)Z_{ij}.
+\end{aligned}
+\tag{155.25}
+$$
+
+The last equality uses the zero row sums of $Z$. This is the elementary finite-table variance identity; its general algebra is a classical intermediate, not an additional source theorem.
+
+Proposition 135.2 gives $0<t_4<t_3<t_2\le1/4$ for every original tuple. The prescribed source masses of $3,B,S$ at epoch $rd$ are $t_r,1/4,3/4-t_r$. These facts give (155.23), with positive denominators and three distinct ratios. Hence the $k=0$ identity in (155.22) yields
+
+$$
+\gamma^2\sum_{i\ne j}T_{ij}
+ \le\sum_{i,j}(\rho_i-\rho_j)^2T_{ij}
+ \le2\mathfrak d_\rho\sum_{i\ne j}|Z_{ij}^{(0)}|.
+\tag{155.26}
+$$
+
+The off-diagonal table mass is exactly $\int_{A_c}\bar g\,dm$.
+
+The input and corrected BB3 coefficients differ by $r(D)$. Telescoping their three actual indicator factors against the original $W$ bounds that difference by the probability of a changed $B$ label in the first slot, a changed $B$ label in the second, or a changed $3$ label in the third. Each changed set is contained in $A_c$. Thus
+
+$$
+0<r(D)\le\nu_0(A_c)+\nu_1(A_c)+\nu_2(A_c)
+             =3\int_{A_c}\bar g\,dm\le3G_0m(A_c).
+\tag{155.27}
+$$
+
+This proves (155.24). Every factor used in this telescoping is the actual partition indicator for its own slot; the calculation neither fixes an external terminal nor substitutes $cg$ for $P\mathbf1_{D_3^*}$.
+
+If transfers preserve the original donor source profiles, in the precise sense
+
+$$
+\nu_k(E_i\cap E_j^*)=\rho_i^{(k)}T_{ij}
+       \quad(i,j=S,3,B;\ k=0,1,2),
+\tag{155.28}
+$$
+
+then $Z=0$, so (155.26) forces every off-diagonal $T_{ij}$ to vanish. Already preservation of the single $k=0$ ratio in (155.28) suffices. Since $\bar g>0$ almost everywhere, $E_B^*=E_B$ and $E_3^*=E_3$ modulo $m$. Their own propagated indicators and their BB3 coefficient are consequently unchanged. Such transfers cannot repair this positive-BB3 input.
+
+The same exclusion holds if “preserving the donor source ratio” refers just to the native ratio of epochs $3d$ and $2d$. Indeed these donor ratios are
+
+$$
+\widetilde\rho_3=t_3/t_2<1=\widetilde\rho_B<
+ \widetilde\rho_S=(\tfrac34-t_3)/(\tfrac34-t_2).
+\tag{155.29}
+$$
+
+Apply (155.25) with $T_{ij}$ replaced by $\nu_0(E_i\cap E_j^*)$, margins $\nu_0(E_i)$, and errors $\nu_1(E_i\cap E_j^*)-\widetilde\rho_i\nu_0(E_i\cap E_j^*)$. If all those errors vanish, the distinct ratios again force all off-diagonal masses to vanish. Equivalence of $\nu_0$ and $m$ gives the same conclusion. Null modifications of a partition remain possible, and affect none of the original positive-time laws.
+
+Finite proportional subdivisions of a donor under the three measures $\nu_k$ are the linear operation supplied by Dvoretzky–Wald–Wolfowitz, *Relations among certain ranges of vector measures*, [DOI 10.2140/pjm.1951.1.59, §3 Theorem 4 and Lemma 2, pp. 66–67](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf). Their finite atomless-measure hypotheses hold on every donor, since $\nu_k\ll m\ll\mu$. When a transfer uses one common fraction for all three measures, it satisfies (155.28). The obstruction above concerns combining such transfers with preservation of all recipient source masses and repair of the positive BB3 coefficient; DWW itself prescribes only linear integrals. $\square$
+

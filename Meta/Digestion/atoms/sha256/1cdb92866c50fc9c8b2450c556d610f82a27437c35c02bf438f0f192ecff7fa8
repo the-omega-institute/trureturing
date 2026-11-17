@@ -1,0 +1,19 @@
+**定义 185.3（成熟先例的数学用途）。** 有限Jordan二次表示及JC环境
+恒等式复用van de Wetering，[*Commutativity in Jordan Operator Algebras*](https://arxiv.org/html/1912.01903v1)，
+Proposition 2.21、Proposition 3.2及式(2)。它们解释已知乘法的二次表示
+保正及交换子对应，不给未知 $D$ 的任何正则性。共同读取所用成熟接口
+为Blackadar，[*Operator Algebras*](https://www.bruceblackadar.com/Mathematics/Cycr.pdf)，
+II.6.1.8（不可约交换子为 $\mathbb CI$）、II.6.3.1（正的态延拓）、
+II.6.3.3、II.6.3.5（纯态取范数及态分离）、II.6.4.9（不可约表示
+取范数并分离）。这些文献工具和165的标量排零仅是承重证明的中间
+输入，不各立为新增结果。
+
+Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，
+PNAS 95，6596–6601，DOI [10.1073/pnas.95.12.6596](https://doi.org/10.1073/pnas.95.12.6596)，
+Dynamical Correspondences及Theorem 1的动力对应已是到斜序导子的线性
+映射。Baez，[*Getting to the Bottom of Noether's Theorem*](https://arxiv.org/html/2006.14741v5)，
+动力对应定义及Theorem 12亦明确保留这一线性前件和相容方程。
+这些成熟重构定理不供应182.1中未知原 $D$ 的线性性，因而不能替代
+183.7的同一外值比较。这里的新增身份归于上述原接口的综合，不作
+一般Jordan／Lie–Jordan重构或历史原创性主张。
+

@@ -1,0 +1,41 @@
+**定理 32.2（剪切与齐次性先行）。** 仅 PY+NN 已使 $D(\alpha u+x,\beta u+y)=K(x,y)\in V$；原 $K$ 反对称、分别实齐次，满足
+
+$$
+K(x,y)\perp x,y,\qquad
+\|K(x,y)\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2,
+$$
+
+$$
+K(x,y+tx)=K(x,y),\qquad
+K(x+ty,y)=K(x,y),
+$$
+
+$$
+K(\alpha x+\beta y,\gamma x+\delta y)
+=(\alpha\delta-\beta\gamma)K(x,y).
+\tag{32.2}
+$$
+
+最后一式只给同一二维输入平面内的行列式规律，尚未给跨平面加性。
+
+证明。PY 在单位方向给 $D(\lambda u,c)=0$。对 $a=\alpha u+x,b=\beta u+y$，令 $A^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2$，PY 给 $p=D(a,b)$ 满足 $p^2=A^2u$。$A=0$ 时 $p=0$。若 $A>0$，$p$ 或是纯标量，或是纯向量。前者使 $D(a,p)=0$，但 NN 的 $H_a b=\langle x,y\rangle x-\|x\|^2y$ 非零，矛盾。因此 $p=v\in V$、$\|v\|=A$。对原对 $(a,p)$ 用 PY，并代入 NN，得到
+
+$$
+\|x\|^2A^2
+=\|H_a b\|^2
+=\|x\|^2A^2-\langle x,v\rangle^2,
+$$
+
+故 $v\perp x$；交换 $a,b$，同理 $v\perp y$。纯向量性在这里使用了 NN，不能仅由 PY 比较平方的向量项便作结论。
+
+固定 $a$，$x\ne0$。若原 $b_1,b_2$ 的向量部分有同一个 $x^\perp$ 分量 $y_\perp$，则 $v_i=D(a,b_i)$ 都在 $V\cap x^\perp$，且 NN 使 $D(a,v_i)=-\|x\|^2y_\perp$。再对 $(a,v_i)$ 用 NN，左侧 $D(a,D(a,v_i))$ 两份相同，右侧为 $-\|x\|^2v_i$，所以 $v_1=v_2$。于是第二槽不受标量或沿 $x$ 的平移影响；由反对称性，第一槽的标量也不影响输出，得到 $K$ 与两项剪切不变性。
+
+初等上下剪切生成 $\mathrm{SL}_2(\mathbb R)$，所以同一原输入对经任意行列式一的二维基变换后输出不变；这一步未展开未知 $K$。特别对任意 $t\ne0$，$K(tx,y/t)=K(x,y)=v$。NN 随即给
+
+$$
+K(tx,v)=H_{tx}(y/t)=tH_xy=tK(x,v).
+$$
+
+对任意 $z\in V\cap x^\perp$，选择原 $y=-z/\|x\|^2$，NN 给 $z=K(x,K(x,y))$，故 $K_x$ 对该原正交补满射。上一式的 $v$ 因而可遍历整个正交补；对一般第二输入先减其沿 $x$ 分量，得到 $K(tx,y)=tK(x,y)$。$t=0$ 由 PY 的零方向处理；反对称给第二槽齐次性。结合剪切生成与缩放，取得非零行列式的一般基变换公式；行列式零时两个输入共线，PY 使输出为零。全过程只使用原实线性组合和原输出，没有对新完成输入调用 $D$。∎
+
+

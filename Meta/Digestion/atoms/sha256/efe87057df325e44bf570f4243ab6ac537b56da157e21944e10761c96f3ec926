@@ -1,0 +1,9 @@
+**Assumption 17.2 (Unit-circle endpoints and strict interior roots).** For the polynomial in Definition 17.1, assume that all roots at $t=-1$ and at $t=1$ have modulus one, and that
+
+$$
+|\lambda_j(t)|<1\qquad(-1<t<1,\ 1\leq j\leq d).
+\tag{17.5}
+$$
+
+The parameter is fixed when a root multiset is taken. No simplicity, diagonalizability, nonvanishing constant term or rationality assumption is imposed.
+

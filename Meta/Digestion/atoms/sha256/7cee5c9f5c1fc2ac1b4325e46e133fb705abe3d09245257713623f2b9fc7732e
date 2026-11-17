@@ -1,0 +1,17 @@
+**定义 5.1（反序镜面的图示与直观解释）。** 图中的全部元均在忠实完成的 $\mathcal O=\operatorname{int}C_X$，不是有限维截面；箭头仅表示数学映射。由 (2.12)、(2.14) 及 $K=0$，
+
+$$
+\begin{array}{ccccc}
+\delta u&\le&c&\le&Ru\\
+\big\updownarrow\scriptstyle J&&\big\updownarrow\scriptstyle J&&\big\updownarrow\scriptstyle J\\
+\delta^{-1}u&\ge&J(c)&\ge&R^{-1}u
+\end{array}
+\qquad
+ru\ \xleftrightarrow{\ J\ }\ r^{-1}u,\qquad J(u)=u.
+\tag{5.1}
+$$
+
+同一原平方流把正锥内部做成一面反序镜：沿单位射线，放大变成倒数缩小。证明起初允许缩小之外再带一个 $U_{-2\log s}$ 的扭转，它仅是序单位等距群，不预设 Euclidean 旋转、Hilbert 内积或物理空间维数。反序性与镜面的满射性使缩小后的扭转在整个正锥上夹于零和恒等之间；它在单位上的比例已经固定，二项式刚性遂迫使扭转完全消失。这才锁定原 $S(u,a)=a$，没有借有限对偶积分或另选乘法。
+
+回到原域的只是这个准确单位等式；镜面值及平方根可留在完成中，4.1 给出具体区别。原两张关系中的有向部分、同一复乘法、实际联合和完整设备来源仍承担 3.2 的条件，不由这幅数学镜面代付。
+

@@ -1,0 +1,35 @@
+**Proposition 5.3 (literal native lawfulness).** For every finite sample,
+(5.4) is an original piecewise $C^1$ relative command. It starts at zero,
+has finite phase variation, and obeys the complete source guard. Its
+actual lifted history is (2.5) with
+
+$$
+\widehat J_n^\lambda(t)
+=\int_0^t\widehat a_n\,d\widehat b_n^\lambda
+=J_n^\lambda(t\wedge S_n).
+\tag{5.5}
+$$
+
+Proof. At most one of the finitely many linear legs is cut short; all
+remaining velocities are zero. The held height lies in $[l,u]$, so its
+actual extrema satisfy
+
+$$
+k+\min\widehat a_n\ge l>0,\qquad
+k+\max\widehat a_n\le u<H.
+\tag{5.6}
+$$
+
+Thus these are actual full-support source histories even when they touch
+the killing boundary. Their ordinary phase integral stops at the same
+time, which proves (5.5). The unexecuted comparison extension can leave
+$(0,H)$ and need not have any lawful native interpretation there. Its
+post-cutoff costs are not execution costs. The killed observation of the
+actual history sends it to $\dagger$ at $\tau_n$, whereas the underlying
+source history itself is held at a lawful interior-source state.
+$\square$
+
+Because $a_n$ is independent of $\lambda$, the cutoffs $\tau_n$ are
+identical across variants under the common sampling (5.1). No variant
+is compared with another's conditional survival sample or another clock.
+

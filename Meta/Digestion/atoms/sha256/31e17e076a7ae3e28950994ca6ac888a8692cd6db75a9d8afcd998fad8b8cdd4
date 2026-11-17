@@ -1,0 +1,23 @@
+**定义 94.1（同一个原世界的候选）。** 在模型类 $\Gamma_{\mathrm{II}_\infty}$ 内，完整条件候选为
+
+$$
+\Gamma_{\mathrm{II}_\infty}
++\mathsf H_{\rm orig}+\mathsf{PB}+\mathcal C_{\rm src},
+\tag{94.1}
+$$
+
+其中 $\mathsf H_{\rm orig},\mathsf{PB}$ 逐字取88.2的全部量词，$\mathcal C_{\rm src}$ 是96.1的七项全文及所纳入全部上游量词的合取。特别不以另加90.3或91.4替换原关系，不把全部数学正读取当作物理准备。以给定 SM79.3为纸面前件，88.3、93.2使同域有
+
+$$
+\begin{aligned}
+&\Gamma_{\mathrm{II}_\infty}+\mathsf H_{\rm orig}+\mathsf{PB}
++\mathcal C_{\rm src}\\
+&\quad\Longleftrightarrow\quad
+\Gamma_{\mathrm{II}_\infty}+\mathsf H_{\rm orig}+\mathsf P_3+\mathsf{PB}
++\mathcal C_{\rm src}.
+\end{aligned}
+\tag{94.2}
+$$
+
+因此在这一个明确模型类中，旧 $D$ 双线性、完整有限复 Gram、P3、R和同一个旧结合乘法都不必作为额外独立数学要求；这不是一般 JB 的公理削减，也没有计算原起源任务的最小独立信息量或实际取得成本。
+

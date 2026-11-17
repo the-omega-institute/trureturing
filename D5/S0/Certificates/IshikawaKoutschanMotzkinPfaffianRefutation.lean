@@ -8,7 +8,7 @@
 
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Data.Matrix.Basic
-import Mathlib.GroupTheory.Perm.Sign
+import D5.S0.Certificates.Combinatorics.NormalizedPfaffian
 import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
@@ -47,16 +47,6 @@ def motzkinTriangle (k i : ℕ) : ℕ :=
 def pfaffianMatrix (k n : ℕ) : Matrix (Fin (2 * n)) (Fin (2 * n)) ℤ :=
   fun p q => ((q.val : ℤ) - p.val) * motzkinTriangle k (p.val + q.val)
 
-/-- The Pfaffian as defined in the source: the sum, over the partitions of `[2n]` into
-two-element subsets `{σ(2i), σ(2i+1)}`, of the sign of the listing permutation `σ` times the
-product of the paired entries. Each partition is listed once, with increasing pairs ordered by
-their first elements. -/
-def pfaffian {n : ℕ} (A : Matrix (Fin (2 * n)) (Fin (2 * n)) ℤ) : ℤ :=
-  ∑ σ ∈ (Finset.univ : Finset (Equiv.Perm (Fin (2 * n)))).filter (fun σ =>
-      (∀ i : Fin n, σ ⟨2 * i.val, by omega⟩ < σ ⟨2 * i.val + 1, by omega⟩) ∧
-      ∀ i j : Fin n, i < j → σ ⟨2 * i.val, by omega⟩ < σ ⟨2 * j.val, by omega⟩),
-    (Equiv.Perm.sign σ : ℤ) * ∏ i : Fin n, A (σ ⟨2 * i.val, by omega⟩) (σ ⟨2 * i.val + 1, by omega⟩)
-
 /-- The printed right-hand side of part (i). -/
 def printedValue (k n : ℕ) : ℚ :=
   if k ∣ n then
@@ -68,7 +58,7 @@ def printedValue (k n : ℕ) : ℚ :=
 
 /-- Part (i) of Conjecture `conj.gen`, for all positive integers `k` and `n`. -/
 def claim : Prop :=
-  ∀ k n : ℕ, 0 < k → 0 < n → (pfaffian (pfaffianMatrix k n) : ℚ) = printedValue k n
+  ∀ k n : ℕ, 0 < k → 0 < n → ((pfaffian (pfaffianMatrix k n) : ℤ) : ℚ) = printedValue k n
 
 set_option maxHeartbeats 4000000 in
 set_option maxRecDepth 10000 in

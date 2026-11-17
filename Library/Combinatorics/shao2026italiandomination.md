@@ -5,9 +5,12 @@ year: 2026
 title: Counting Weight-k Italian Dominating Sets on Trees and Cycles
 doi: 10.48550/arXiv.2610.00108
 url: https://arxiv.org/abs/2610.00108v1
-claim: "Definition 2.1 defines Italian dominating functions, Definition 1.1 defines their weight-count polynomial, and Section 9 asks for a complete linear recurrence for their total count on cycles."
+claim: "Definition 2.1 defines Italian dominating functions, Definition 1.1 defines their weight-count polynomial, Corollary 3.2 gives the cycle deficit constraint, and Section 9 asks for a total-count recurrence and explicit general-deficit coefficient formulas on cycles."
 strata_touched:
   - D5/S3/Combinatorics/Graph/CycleItalianDominationRecurrence
+  - D5/S3/Combinatorics/Graph/ItalianDomination/OrdinaryWords
+  - D5/S3/Combinatorics/Graph/ItalianDomination/RootedCycleGaps
+  - D5/S3/Combinatorics/Graph/ItalianDomination/CycleDeficit
 license: citation-only
 triage: anchor
 ---
@@ -46,7 +49,29 @@ Minimal order, the dominant root, the weighted polynomial recurrence,
 unimodality and general near-maximum-weight closed forms are outside that
 statement.
 
+## Cycle coefficient formula
+
+Corollary 3.2 (p. 7):
+
+> For the cycle C_n (n ≥ 3), a vector y ∈ {0,1,2}^n corresponds to an IDF of weight 2n−j if and only if ∑_{i=1}^n y_i=j and
+>
+> y_i = 2 ⟹ y_{i−1} + y_{i+1} ≤ 2 (indices modulo n).
+
+Section 9, fourth future-work bullet (p. 29):
+
+> Deriving explicit closed forms for d_I(C_n,2n−j) for general j via the exclusion-counting method of Theorem 7.1 (the polynomiality of these coefficients in n is already established in Lemma 3.4).
+
+The coefficient count uses the same labelled functions. It separates zero-free
+deficit words, words whose zero gaps are all `[2,2]`, and words with at least
+one ordinary gap. Marking a zero or a one counts labelled vertices, including
+those of periodic words. The same finite subtype at weight zero extends the
+coefficient count to the endpoint of the deficit range.
+
 ## Verified locator
+
+DOI: 10.48550/arXiv.2610.00108
+
+Source: https://arxiv.org/abs/2610.00108v1
 
 - DOI: https://doi.org/10.48550/arXiv.2610.00108
 - URL: https://arxiv.org/abs/2610.00108v1

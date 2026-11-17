@@ -1,0 +1,45 @@
+**Definition 34.2 (the unproved particular-input estimates).** The next needed row estimates on an actual sequence as in Corollary 33.3 are
+
+$$
+\begin{aligned}
+s\left\|\mathcal N_sg_1-\sum_{j=0}^3s^j\mathcal N_jg_1\right\|_2&=o(s^4),\\
+s\|(\mathcal B_s(h_s)^*-\mathcal N_s)g_1\|_2&=o(s^4),
+\end{aligned}
+\tag{34.2}
+$$
+
+including existence of the coefficient rows in the first line. They are not consequences established by Proposition 34.1. To specify the first missing joint integral, let $q_\vartheta^L$ denote the auxiliary killed, combined shifted Gaussian kernel on the fixed safe strip $(-L,L)$, with original endpoint measure. Its Taylor remainder of order three contributes
+
+$$
+sF_s(\xi)\int_0^T\!\int
+ \left[\frac{s^4}{3!}\int_0^1(1-v)^3
+  \left.\partial_\vartheta^4q_\vartheta^L(t;\eta,\xi)
+          \right|_{\vartheta=vs}dv\right]g_1(\eta)d\eta\,dt
+\tag{34.3}
+$$
+
+in full $L^2(d\xi)$. The prefactor is $s^5$, but the endpoint/time integral still requires a quantitative bound. The deleted-path contribution with $|\eta_r|>\ell/(4s)$ and the late return $t\ge s^{-2}$ must also be controlled. These terms retain the original two-face kernel in the comparison; the auxiliary strip estimates it and does not replace it.
+
+For example, the fourth-derivative large-time portion of the seed argument would be integrable for this particular correction under the sufficient input conditions
+
+$$
+g_1,rg_1\in L^1,\qquad r^2g_1\in L^{7/6},\qquad
+r^3g_1\in L^{7/5},\qquad r^4g_1\in L^{7/4},
+\tag{34.4}
+$$
+
+together with the corresponding small-time and source-tail bounds. The time powers for relative degrees $4,3,2,1,0$ would then be $-3/2,-2,-2,-2,-2$. Proposition 34.1 does not prove these memberships or tail bounds. Conditions (34.4) are sufficient for that portion of this method, not necessary conditions for (34.2), for a different proof, or for the original actual-selection target.
+
+P (104.9) gives only
+
+$$
+s\|(\mathcal N_s-\mathcal N_0)g_1\|_2
+ \le s d_s\|g_1\|_2=o(s),\qquad d_s\to0,
+\tag{34.5}
+$$
+
+without a polynomial rate. For the late difference, (29.3) on the dense class $L^1\cap L^2$, $h_s\to0$, and the uniform operator bounds from P (104.2) at $r_s\ge c$ give strong convergence on each fixed $L^2$ input. Its correction factor again supplies only $o(s)$. Neither observation reaches (34.2); neither is a lower bound proving that (34.2) fails.
+
+The remaining finite corrected row would additionally require the actually consumed estimates for $g_2$ through order two, $g_3$ through order one and the final correcting row through order zero. No such chain is constructed here. Its fourth scalar has not been identified with the sole owned quartic scalar $C_4=D_4-h[\Upsilon]$ of (24.5), including the field-clock products and threshold term. Accordingly (33.5) gives no conclusion $cC_4=0$ at a microscopic weak limit $cp$.
+
+

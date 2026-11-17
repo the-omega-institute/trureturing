@@ -1,0 +1,10 @@
+**定义 30.1（准确自旋背景）。** 取 27.1 的完整候选，另假定所识别的同一 JB 完成是实自旋因子 $X=\mathbb Ru\oplus H$，其中 $H$ 为实 Hilbert 空间，乘法和原范数为
+
+$$
+(\alpha u+x)\circ(\beta u+y)
+=(\alpha\beta+\langle x,y\rangle)u+\alpha y+\beta x,
+\qquad N(\alpha u+x)=|\alpha|+\|x\|.
+$$
+
+原 $E$ 仍仅为稠密含单位 Jordan 子代数，旧 $D$ 初始仅为总映射。以下直接从 PY 与 R 证明额外的秩一几何，不预借 27.2 的线性结论。
+

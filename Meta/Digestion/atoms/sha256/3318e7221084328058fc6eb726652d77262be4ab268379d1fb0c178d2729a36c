@@ -1,0 +1,73 @@
+## 参考文献
+
+<a id="ref-q17commit"></a>
+
+\[1\] Trureturing，固定 `dev` 提交 ，2026-11-05 07:22:18 UTC。[固定提交](https://github.com/the-omega-institute/trureturing/commit/00e86d6353be562f0aa7caa23f7544e0fb65e69f)。本轮所有下列项目文稿均固定在此提交；下载字节与该树的 Git blob 标识核对。
+
+<a id="ref-q17compare"></a>
+
+\[2\] Trureturing，[Q16 与本轮两端固定比较](https://github.com/the-omega-institute/trureturing/compare/b1d673668c6d1bc06a152e4607048833d830ca53...00e86d6353be562f0aa7caa23f7544e0fb65e69f)。公开比较页的总计与本文逐字审阅的重点路径是不同统计范围。
+
+<a id="ref-q15"></a>
+
+\[3\] Trureturing，[OmegaQ-015：共源二次闭合与多边形递归](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/OMEGAQ_015_COMMON_SOURCE_QUADRATIC_CLOSURE_AND_POLYGON_RECURSION.md)，第 3–5 节。第 4 节已有 $\alpha I+\gamma P_e$ 形式与连续必要区间；本稿补强其谱约束。
+
+<a id="ref-q16"></a>
+
+\[4\] Trureturing，[OmegaQ-016：共同返回与有限量子理论](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/OMEGAQ_016_COMMON_RETURN_AND_FINITE_QUANTUM_THEORY.md)，第 3–7、16–18 节及附录 A。本文迁移其已建立的完整前端、振幅与有限量子理论，并按本轮共同尺度重证所需关系。
+
+<a id="ref-q010latest"></a>
+
+\[5\] Trureturing，[OmegaQ-010：一种横向顺序差](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/OMEGAQ_010_ONE_TRANSVERSE_COMMUTATOR_RELATION.md)，完整有限前端及全部原准备的半径标定。
+
+<a id="ref-c123"></a>
+
+\[6\] Trureturing，[C123：原生互易比较与有限端点量子关系](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)，定义 41.1、67.1，定理 77.1，定义 80.1、定理 80.2 及第 81–84 节。原方向扭转反例与有限平均入口分别按其完整背景使用。
+
+<a id="ref-c128native"></a>
+
+\[7\] Trureturing，[C128：原生切口配平续卷](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C128_NATIVE_CUT_BALANCE_CONTINUATION.md)，第 166–172 节，特别是定理 167.1、168.1 与 171.1。
+
+<a id="ref-c133"></a>
+
+\[8\] Trureturing，[C133：三读闭合与可见复几何](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY.md)，三读预算及复几何的各层前件。
+
+<a id="ref-c133v"></a>
+
+\[9\] Trureturing，[C133 续卷 V：无结合律的双端三相比较](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md)，原二元来源、完整三读关系与复表示。
+
+<a id="ref-c133n5"></a>
+
+\[10\] Trureturing，[C133：任意标记的五点正性桥梁](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)，定义 1.2、定理 1.3、问题 16.4。
+
+<a id="ref-c133w"></a>
+
+\[11\] Trureturing，[C133 续卷 W：无锚三相配平的有界轨道](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md)，第 23–30 节；有限矩阵归约与完整正性边界。
+
+<a id="ref-c137"></a>
+
+\[12\] Trureturing，[C137：零读极性、射影圆与相位纤维](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C137_ZERO_READOUT_POLARITY_PROJECTIVE_CIRCLE_AND_PHASE_FIBRES.md)，定义 3.1、定理 3.2 及第 4–5 节。
+
+<a id="ref-c138"></a>
+
+\[13\] Trureturing，[C138：互不减、凸多边形与三维平方闭合](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C138_MUTUAL_NONDECREASE_CONVEX_POLYGONS_AND_THREE_DIMENSIONAL_SQUARE_CLOSURE.md)，定义 3.1–3.2、引理 3.4 及第 4 节。其三维窗口刻画不等于本稿整个基本块维数恰为三。
+
+<a id="ref-c139"></a>
+
+\[14\] Trureturing，[C139：互探与原平方几何恢复](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md)，第 21 节，特别是定义 21.6、定理 21.7、21.9 及推论 21.10a。
+
+<a id="ref-c139word"></a>
+
+\[15\] Trureturing，[C139 续卷：固定原门字的连续射线比较障碍](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C139_FIXED_WORD_COMPARATOR_OBSTRUCTION.md)，定理 1.2 及定义 1.5 的范围。
+
+<a id="ref-threelean"></a>
+
+\[16\] Trureturing，[ThreeReadBudget.lean](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S0/Observation/ThreeReadBudget.lean)；[HistoryKernelExtension.lean](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S3/Quantum/Completion/HistoryKernelExtension.lean)。本轮读取原文，未重建 Lean 环境；源码中的预算与核延拓量词不被缩小为一份既有有限日志。
+
+<a id="ref-baez"></a>
+
+\[17\] J. C. Baez，*The Octonions*，[作者全文](https://math.ucr.edu/home/baez/octonions/octonions.pdf)，四元数、射影线及相关几何。本文的四元数乘法与 Hopf 结构是标准数学；不作历史原创主张。
+
+<a id="ref-watrous"></a>
+
+\[18\] J. Watrous，*The Theory of Quantum Information*，[作者第 2 章全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，定理 2.22：有限维完全正性、Choi、Kraus 与 Stinespring 表示的等价。本文给出实际接口所需的有限证明。

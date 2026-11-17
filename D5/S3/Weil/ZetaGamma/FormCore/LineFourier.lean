@@ -142,7 +142,7 @@ private theorem lintegral_dilate (H : ℝ → ℝ≥0∞) {c : ℝ} (hc : c ≠ 
 def angularFourier (f : ℝ → ℂ) (t : ℝ) : ℂ :=
   𝓕 f (t / (2 * Real.pi))
 
-private theorem angularFourier_eq_integral (f : ℝ → ℂ) (t : ℝ) :
+theorem angularFourier_eq_integral (f : ℝ → ℂ) (t : ℝ) :
     angularFourier f t =
       ∫ x : ℝ, Complex.exp ((-(t * x) : ℝ) * Complex.I) * f x := by
   unfold angularFourier

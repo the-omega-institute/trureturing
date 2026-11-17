@@ -1,0 +1,64 @@
+**Definition 38.1 (quantitative data in the original model).**
+Keep all of Definition 31.1 and (35.1), including the two signs of
+$\kappa$, every fixed $s\in\mathbb R$, $b>0$, $g>0$, and the complete
+original domains. The results in §§38--43 concern only these two
+critical families. For $c>0$ define independent scalar data
+
+$$
+\mathfrak b(c)=\int_I b_0(k)^2u_c(k)^2\,dk>0,
+\qquad
+\mathfrak m(c)=\int_I\phi(k)u_c(k)^2\,dk>0.
+\tag{38.1}
+$$
+
+Here $u_c$, $b_0$, $\phi$ and $\beta$ are exactly (31.1)--(31.2).
+In particular $\mathfrak b(c)$ uses the attractive scalar ground,
+whereas $\beta$ uses the free scalar ground $\phi$. Set
+
+$$
+\begin{array}{c|cc}
+ &\mathrm{raw},\ \tau_s&\mathrm{unit},\ \tau_b\\ \hline
+ c_\sigma&gc_s&gc_0G_{\beta b}(0)\\
+ d_{\sigma,\kappa}&r_s&1\\
+ h_{\sigma,\kappa}=a/d_{\sigma,\kappa}&\tau_s^{-1/2}&a\\
+ \ell_{\sigma,\kappa}=d_{\sigma,\kappa}\sqrt{h_{\sigma,\kappa}}
+      &a\tau_s^{1/4}&\sqrt a\\
+ \mathcal B_\sigma&\mathfrak b(gc_s)
+       &\mathfrak b(gc_0G_{\beta b}(0))\\
+ \mathcal C_\sigma&\displaystyle\frac{gc_s}{4\beta}\mathfrak m(gc_s)
+       &\displaystyle-\frac{gc_0}{2}G_{\beta b}''(0)
+                         \mathfrak m(gc_0G_{\beta b}(0)) .
+\end{array}
+\tag{38.2}
+$$
+
+Every entry in the last two rows is finite and strictly positive:
+
+$$
+-G_t''(0)=\frac1\pi\sum_{j\ge1}j^2e^{-tj^2}>0\qquad(t>0).
+\tag{38.3}
+$$
+
+The resulting frequency, Gaussian parameter and original-coordinate
+harmonic length are
+
+$$
+\omega_\sigma=\sqrt{\mathcal B_\sigma\mathcal C_\sigma},
+\qquad
+\gamma_\sigma=\sqrt{\mathcal C_\sigma/\mathcal B_\sigma},
+\qquad
+w_{\sigma,\kappa}
+   =\ell_{\sigma,\kappa}
+       (\mathcal B_\sigma/\mathcal C_\sigma)^{1/4}.
+\tag{38.4}
+$$
+
+These scales are specified by the original parameters and the scalar
+Dirichlet problem (31.2). No full unknown gap, ground width or selected
+Fourier eigenvalue defines them. In the raw family,
+$h_{\rm raw,\kappa}\sim\sqrt{\lambda/L_a}$ and
+$w_{\rm raw,\kappa}/r_s
+=(\mathcal B_{\rm raw}/\mathcal C_{\rm raw})^{1/4}\tau_s^{-1/4}\to0$.
+The field width $r_s$ is therefore distinct from the ground fluctuation
+length. No parameter limit in $s,b,g$ or $\varepsilon$ is implicit.
+

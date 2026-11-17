@@ -1,0 +1,78 @@
+**Theorem 2.1 (uniform G0 certificate).** For every full shared relabeling
+$g=(0,\lambda,\varrho)$ with $\theta<1$, there is a positive complete-label
+certificate of exactly $576$ distinct pairs. It determines every edge of
+$\mathcal E_g$ against all of $\mathcal G_\theta$, including source one
+when $\theta>0$.
+
+Proof. We first construct a literal set $D_0\subseteq E_0$. Use the exact
+geometry of UJB Theorem 15.2. Left types are the $36$ affine lines in
+$F^3$ with directions
+
+$$
+F(0,0,1),\quad F(1,0,0),\quad F(1,2,1),\quad F(1,1,1),
+\tag{PCR.3}
+$$
+
+each with two literal representatives. Right types are the $27$ points
+$w$, each with nine literal representatives $(w,z)$. Every incidence
+lifts to all $2\cdot9$ edges, not one quotient edge in place of them.
+
+For each point $w$, choose the right anchor $r_w=(w,(0,0))$ and put
+all eight edges incident to $r_w$ in $D_0$. These give $27\cdot8=216$
+pairs. Each literal left endpoint meets three anchor columns. The
+columns have distinct eight-element neighborhoods, and each of the $72$
+left endpoints is exposed.
+
+Let $S=\{w:w_1\in\{0,1\}\}$, of size $18$. For every $w\in S$ and
+every $z\ne(0,0)$, add two pairs: join $(w,z)$ to one literal left
+representative of the line through $w$ in direction $F(1,0,0)$ and one
+of the line in direction $F(0,0,1)$. These are different line types.
+For each $w$ with $w_1=2$ and every $z\ne(0,0)$, add just the pair
+to one representative of its $F(1,0,0)$ line. The representatives may be
+chosen in any fixed public ordering of the literal $A$ for this existence
+construction. The three blocks have disjoint right endpoints, and within
+the second block the two left endpoints differ. Consequently
+
+$$
+|D_0|=216+18\cdot8\cdot2+9\cdot8=576.
+\tag{PCR.4}
+$$
+
+All $72$ left and $243$ right endpoints occur. Transport this set by the
+actual $\lambda,\varrho$ to obtain $D$. The observer need not know those
+maps, the set $S$, or the choices of representatives.
+
+Consider any compatible $g'$. Every right anchor has eight acquired
+neighbors, so its whole neighborhood in $\mathcal E_{g'}$ is exactly that
+eight-element set: every candidate right degree is eight. All $27$ such
+sets are different. G1 has only nine distinct right neighborhoods, by UJB
+Theorem 15.2, so $g'$ must have source zero. Its $27$ anchor labels thus
+occupy all $27$ different right types, one apiece.
+
+The saturated anchor columns also determine the entire adjacency pattern
+of every exposed left label to those $27$ right types. Equality of these
+patterns is exactly equality of the candidate's left types, since there
+is an anchor at every right type. The observed patterns are the original
+$36$ patterns, each on two left labels. Thus the two representatives of
+every left type and the whole line-point incidence table are already
+fixed in label coordinates. This argument neither identifies a hidden
+affine frame nor assumes the observer has computed one.
+
+For an added right endpoint above $w\in S$, its two observed neighbors
+occupy the two distinct anchored line types through $w$. Two different
+affine lines meet in at most one point. Their intersection is the point
+type of $r_w$, already incident to both. Hence this right label must have
+that type in every $g'$. Including $r_w$, its nine right labels exhaust
+that point type's literal capacity. This holds at all $18$ points of $S$.
+
+For $w_1=2$, the indicated line in direction $F(1,0,0)$ has exactly two
+points in $S$ and the point $w$ outside it. Its first two right types
+already have all nine labels assigned. The remaining observed right
+label is a new distinct label adjacent to this line and therefore cannot
+occupy either saturated type, by injectivity. It must occupy the third
+point type, that of $r_w$. This assigns all its eight nonanchor labels.
+Every right label has now been placed in its original point type, every
+left type was already fixed, and incidence lifts to precisely the original
+$1944$ pairs. Thus $\mathcal E_{g'}=\mathcal E_g$. The actual $g$ ensures
+nonemptiness. Definition 1.2 accepts and returns that relation. $\square$
+

@@ -1,0 +1,54 @@
+## 来源与参考
+
+<a id="ref-repo"></a>
+
+\[1\] The Omega Institute, [ *trureturing* , pinned dev snapshot](https://github.com/the-omega-institute/trureturing/tree/b0a89a1bdde2386f6c8ff7a959069a2118ecb080). 本轮比对采用完整子树，不以 GitHub compare 的截断文件列表作全量依据。
+
+<a id="ref-c139"></a>
+
+\[2\] [C139：互为探针与平方几何的内生恢复](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md). 核读 §§7–10、§12.1–12.3；定理7.2、9.1及相应证明为本轮承重来源。该文件相对 R5-008 固定版本未变。本文自足重写上述有限证明。
+
+<a id="ref-c140"></a>
+
+\[3\] [C140：同源三路配平与量子几何](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_C140_COMMON_SOURCE_THREE_PATH_BALANCE_AND_QUANTUM_GEOMETRY.md). 原实旋钮、共同标记及完整条件重构。已有 `RealThreePathPolar.lean`、`RealThreePathRepresentation.lean` 的声明被读取，未新编译。此卷为既有对话材料的项目转录，不是独立经验验证。
+
+<a id="ref-c128"></a>
+
+\[4\] [C128：正交迹与支持角关系续篇](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION.md). 本轮新增并核读 §§371–378；局部几何及删除反例。全高阶分类引用[支持角前卷定理274.1](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md)，本文未重审全部前置；二阶情形另给自足证明。
+
+<a id="ref-rro"></a>
+
+\[5\] [RRO：原生有限时域记忆界](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_HORIZON_MEMORY_BOUNDS.md). 新增 §§5–7 的资源结论限于其终端曲线和计费合同；不作新量子公理依据。
+
+<a id="ref-v78"></a>
+
+\[6\] [V78：内生关系量子理论综合](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_ENDOGENOUS_RELATIONAL_QUANTUM_THEORY_UNIFIED_RELATIONAL_AXIOMS_V78_SYNTHESIS.md). §§6–7 的事件二次型与完整效果表示；原先预用总平方标尺，本轮从正配方恢复总标尺。
+
+<a id="ref-v56"></a>
+
+\[7\] [V56：内部二元切口、算子三轴与整体纯度](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_UNIVERSAL_INTERNAL_BINARY_CUTS_OPERATOR_THREE_AXIS_PURITY_AND_ENDOGENOUS_RECURSION_V56.md). §§4–6；局部零读出与整体关系不同。
+
+<a id="ref-v84"></a>
+
+\[8\] [V84：正历史返回与手性原子](https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_POSITIVE_HISTORY_RETURN_CHIRAL_ATOMS_ELLIPTIC_READOUT_V84.md). §2、§8.1；原词历史、可见逆与实际记录可区分性分开。
+
+<a id="ref-patel"></a>
+
+\[9\] B. M. Patel and A. B. Patel,  *Stability of Quadratic Functional Equations in 2-Banach Space* , Gen. Math. Notes 15(2), 1–13 (2013). [原文第2页，式(2)、定理1.1](https://ftp.gwdg.de/pub/EMIS/journals/GMN/yahoo_site_admin/assets/docs/1_GMN-2942-V15N2.120121316.pdf). 该文引用的更早原文未核读，不作优先权判断。
+
+<a id="ref-busch"></a>
+
+\[10\] P. Busch, *Quantum States and Generalized Observables: A Simple Proof of Gleason’s Theorem*, Phys. Rev. Lett. 91, 120403 (2003). [作者预印本](https://arxiv.org/abs/quant-ph/9909073). 本文有限效果证明自足。
+
+<a id="ref-watrous"></a>
+
+\[11\] J. Watrous,  *The Theory of Quantum Information* , Cambridge University Press (2018). [作者公开第2章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，特别是定理2.22，Choi–Kraus 表示及量子仪器。
+
+<a id="ref-englert"></a>
+
+\[12\] B.-G. Englert,  *Fringe Visibility and Which-Way Information: An Inequality* , Phys. Rev. Lett. 77, 2154 (1996). [原论文页](https://doi.org/10.1103/PhysRevLett.77.2154). 本轮读取摘要，本文二路纯态及混合界另完整证明，不声称核读付费全文。
+
+<a id="ref-mgm"></a>
+
+\[13\] L. Masanes, T. D. Galley and M. P. Müller,  *The measurement postulates of quantum mechanics are operationally redundant* , Nature Communications 10, 1361 (2019). [原文](https://doi.org/10.1038/s41467-019-09348-x). 使用其公开的前提及测量重构结论作比较，不将其完整证明链作为本文核心证明。
+

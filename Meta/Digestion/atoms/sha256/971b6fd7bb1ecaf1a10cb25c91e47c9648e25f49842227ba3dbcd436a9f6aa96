@@ -1,0 +1,57 @@
+**定义 63.2（完整原前件）。** 固定 SM50.1、OP80.1 与 PB128.1 的同一原 $\Omega/\mathrm{native}$、$E,C,u,N,\mathcal P,S,D$，完整保留：
+
+- A1：全部原有向 Hermitian 二表正性；
+- A2：每份相加三表 $(a+b,a,b)$ 及其排列的实部在整个 $\mathbb R^3$ 上半正定，并保留指定相加零向量 $(1,-1,-1)$ 的零二次值；
+- A3：$S(u,u)=u$，并对同一个固定有理数 $0<\theta\le1$ 要求 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。
+
+原正实线性评价分离 $E$，准确决定原锥，全部质量 $m_\gamma=\gamma(u)$ 允许零、不等和次归一。消费既有无原 R 的 Jordan 接口
+
+$$
+E\subset X,\quad \overline E=X,\quad C=E\cap X_+,\quad
+S(a,b)=a\circ b,\quad N=\|\cdot\|_X|_E,
+\qquad \pi:X\longrightarrow H_n(\mathbb C),\quad n\ge3.
+\tag{63.1}
+$$
+
+其中 $X$ 是含单位实 JB 完成，$E$ 是含单位稠密实 Jordan 子代数，$\pi$ 是满含单位 Jordan 同态。$E$ 可以无限维、不完备。$D:E^2\to E$ 是同一个未知总映射；反对称性由原 Hermitian 性和分离性取得。全部原 P2 是
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(a\circ b)+i\gamma D(a,b)&\gamma(b^2)
+\end{pmatrix}\succeq0
+\qquad(a,b\in E,\ \gamma\in\mathcal P).
+\tag{63.2}
+$$
+
+完整原 PB 保持为对每个实际 $a,b,c\in E$ 和每个原 $\gamma$，
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ c,\qquad w=a\circ b+D(a,c),\\
+r_\pm=b\pm v,\qquad s_\pm=c\pm w,\\
+\gamma\bigl(r_+^2+s_+^2+2D(r_+,s_+)\bigr)
+=\gamma\bigl(r_-^2+s_-^2+2D(r_-,s_-)\bigr).
+\end{gathered}
+\tag{63.3}
+$$
+
+其由原评价分离性得到的等价元素式为
+
+$$
+D(b+v,c+w)-D(b-v,c-w)=-2b\circ v-2c\circ w.
+\tag{63.4}
+$$
+
+不是只对本文使用的三元组要求 PB。C199.2、C194.2、C186.1–186.7 的逐项全文及全部上游量词，与 SM43.2、SM49.1、SM61.1 的全部来源合同共同作为本定义的组成部分；69 逐项说明消费者边界。本文不预付 $D$ 的一般齐次、可加、连续、可测、协变、单位平移、商下降、输出小代数闭合或完成延拓，也不从商内投影制造实际原投影或原框架。
+
+沿 OP80.2、OP82.1 固定这一简单块的同一符号 $\sigma\in\{1,-1\}$。只定义数学辅助运算
+
+$$
+K(U,V)=\frac{\sigma i}{2}[U,V],\qquad
+U\circ V=\frac{UV+VU}{2}.
+\tag{63.5}
+$$
+
+$K$ 尚不是全域旧响应，也与原全词合同中的同名字母区分。以下向量范数为欧氏范数，矩阵范数为算子范数。
+

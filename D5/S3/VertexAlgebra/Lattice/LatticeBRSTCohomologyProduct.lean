@@ -180,9 +180,12 @@ theorem product_assoc (a b c : Cohomology D H h26 hHG hGH) :
     (u : State D) (v : State D) (w : State D) (-1) (-1)
   dsimp only at original
   obtain ⟨hL, hR0, hR1, hIterate⟩ := original
-  have finiteL : Function.HasFiniteSupport left := cycle_finite D H hL
-  have finiteR0 : Function.HasFiniteSupport right0 := cycle_finite D H hR0
-  have finiteR1 : Function.HasFiniteSupport right1 := cycle_finite D H hR1
+  have finiteL : Function.HasFiniteSupport left :=
+    cycle_finite D H (f := left) hL
+  have finiteR0 : Function.HasFiniteSupport right0 :=
+    cycle_finite D H (f := right0) hR0
+  have finiteR1 : Function.HasFiniteSupport right1 :=
+    cycle_finite D H (f := right1) hR1
   have cycleIdentity :
       cycleMode D H (-1) (cycleMode D H (-1) u v) w =
         (∑ᶠ i : ℕ, left i) - ((-1 : ℂ)^(-1 : ℤ)) •
@@ -192,12 +195,16 @@ theorem product_assoc (a b c : Cohomology D H h26 hHG hGH) :
       (cycles D H).subtype
         ((∑ᶠ i : ℕ, left i) - ((-1 : ℂ)^(-1 : ℤ)) •
           ((∑ᶠ i : ℕ, right0 i) + (∑ᶠ i : ℕ, right1 i)))
-    rw [map_sub, map_smul, map_add, map_finsum _ finiteL,
-      map_finsum _ finiteR0, map_finsum _ finiteR1]
+    rw [map_sub, map_smul, map_add,
+      map_finsum (cycles D H).subtype finiteL,
+      map_finsum (cycles D H).subtype finiteR0,
+      map_finsum (cycles D H).subtype finiteR1]
     exact hIterate
   have descended := congrArg (classOf D H h26 hHG hGH) cycleIdentity
-  rw [map_sub, map_smul, map_add, map_finsum _ finiteL,
-    map_finsum _ finiteR0, map_finsum _ finiteR1] at descended
+  rw [map_sub, map_smul, map_add,
+    map_finsum (classOf D H h26 hHG hGH) finiteL,
+    map_finsum (classOf D H h26 hHG hGH) finiteR0,
+    map_finsum (classOf D H h26 hHG hGH) finiteR1] at descended
   have leftSum : (∑ᶠ i : ℕ, classOf D H h26 hHG hGH (left i)) =
       product D H h26 hHG hGH (classOf D H h26 hHG hGH u)
         (product D H h26 hHG hGH (classOf D H h26 hHG hGH v)

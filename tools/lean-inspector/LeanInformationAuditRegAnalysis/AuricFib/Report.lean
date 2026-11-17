@@ -38,6 +38,8 @@ private def readingReasons (hasLaw : Bool) (continuation : Json) : Json := Id.ru
     ("layered_spectrum",
       available "initial and all ordered successor layers, including collapsed layers"),
     ("continuation_target", available "total same-state high suffix, including rejection"),
+    ("predictive_closure", Json.mkObj [("kind", toJson "unknown"),
+      ("reason", toJson "compiled source-owned operation evidence required")]),
     ("pyramid_coordinates", law), ("association_coordinate", law), ("residuals", law),
     ("conditional_reply_law", conditional),
     ("physical_source_law", Json.mkObj [("kind", toJson "unknown"),
@@ -66,7 +68,7 @@ def unavailableReport (status reason arenaKind : String) : Json := Json.mkObj [
 def analyze (request : Json) : Except String Json := do
   if (request.getObjValAs? String "arena").toOption == some "typed-source" then
     return ← Generic.analyze request
-  requireKeys request ["source_contract", "law", "archive", "initial_readouts", "layers", "arena", "binding", "law_acquisition"]
+  requireKeys request ["source_contract", "law", "archive", "initial_readouts", "layers", "arena", "binding", "law_acquisition", "compiled_prediction"]
   if let some arena := (request.getObjVal? "arena").toOption then
     let arena ← arena.getStr?
     if arena = "unbounded" then
@@ -84,6 +86,8 @@ def analyze (request : Json) : Except String Json := do
         ("unconditional_reply_law", Json.null), ("unconditional_rejection_mass", Json.null),
         ("conditional_rejection_mass", Json.null)]
   let continuation := Json.mkObj <| [
+    ("predictive_closure", Json.mkObj [("kind", toJson "unknown"),
+      ("reason", toJson "compiled source-owned operation evidence required; supplied JSON is not a certificate")]),
     ("reader", toJson "high-to-low rawMachine(0)"),
     ("initial_seam", toJson false), ("initial_composition", toJson ["0", "0"]),
     ("suffix", toJson ["5"]), ("same_state_continuation", toJson true),

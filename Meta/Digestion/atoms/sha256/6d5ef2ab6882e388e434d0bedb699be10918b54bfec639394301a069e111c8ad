@@ -1,0 +1,19 @@
+**假设 C-91.1（实际制备、单次接口和跨试验条件）。** 每次提供两份独立制备的同一个
+实际五态纯态射线，即 $|\psi\rangle\otimes|\psi\rangle$，
+并提供下述联合投影；“同一个”包括占位相位参照。
+相同概率表或相同商点不足以替代这一假设；它不要求克隆任意未知态。
+
+令 $P_{\rm bot}=\sum_{s\ne2}|s\rangle\langle s|$。
+单次事件公式更一般只需要两份输入密度算子满足充分接口
+
+$$
+(P_{\rm bot}\otimes P_{\rm bot})\rho_{12}
+(P_{\rm bot}\otimes P_{\rm bot})
+=r^2|\phi\otimes\phi\rangle\langle\phi\otimes\phi|,
+\tag{C91.1}
+$$
+
+其中 $\phi=P_{\rm bot}\psi/\sqrt r$ 为同一归一化条件态。
+独立同态制备保证该式；它是本事件在底面双副本子空间实际需要的块。
+下章的等待公式另要求跨试验事件独立同分布，单次接口本身不供应跨试验独立性。
+

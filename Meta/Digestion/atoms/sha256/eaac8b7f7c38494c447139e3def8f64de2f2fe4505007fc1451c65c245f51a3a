@@ -1,0 +1,19 @@
+**定理 77.1（无 E1、无 $\mathrm N_{\rm r}$ 的 ready 强制活动面）。** 约定 69.1 的每个完整原来源在**原**度量中满足
+
+$$
+\begin{gathered}
+V_r=K\perp K^\perp,\qquad
+A=0_K\oplus A_{\rm a},\qquad \dim_{\mathbb R}K^\perp=2,\\
+A^\dagger=-A,\qquad A_{\rm a}^2=-I_{K^\perp},\qquad
+A^3=-A,\qquad \operatorname{rank}_{\mathbb R}L_r=2,\\
+\operatorname{spec}_{\mathbb C}A\setminus\{0\}=\{i,-i\},\qquad
+d=2+\dim_{\mathbb R}\ker L_r,\\
+T_{rs}(\ker L_s)=\ker L_r,\qquad
+\operatorname{rank}_{\mathbb R}L_s=2,
+\qquad r=\{3,7\},\quad s=\{1,3,7\}.
+\end{gathered}
+\tag{77.1}
+$$
+
+证明。引理 76.2 给商的两个复特征值为 $i,-i$。在继承度量中再次采用 Schur 不等式，$\|\bar A\|_{\rm F}^2\ge|i|^2+|-i|^2=2$。结合 (76.2) 立即有 $\|\bar A\|_{\rm F}^2=2$、$B=0$。此时商的酉 Schur 三角矩阵严格上三角部分的模平方和为零，故全部该部分为零；$\bar A$ 正规且谱纯虚，所以 $\bar A^\dagger=-\bar A$、$\bar A^2=-I$。$B=0$ 把这个商结论提升为原 $g_r$ 的正交直和 $A=0_K\oplus A_{\rm a}$，进而给前三行全部等式。共同核和原等距来自定理 75.4；$\ker L_s$ 与 $K$ 等维、原两纤维同维，秩零化度公式才给邻响应秩二。没有使用邻响应范数、正规性或反自伴性。∎
+

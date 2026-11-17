@@ -1,0 +1,33 @@
+**命题 13.2（精确稳定子与左商）。** 令
+$$
+H=\{g\in G:g^*C_1g=C_1\}.
+$$
+在 $D^{27}=De_1\oplus e_1^\perp$ 下，
+$$
+\boxed{H=\left\{\begin{pmatrix}\lambda&0\\0&B\end{pmatrix}:\lambda\in\mu _6, B\in U_{26}(D)\right\}\cong\mu _6\times U_{26}(D).}
+$$
+并且
+$$
+\mathscr P(k)=\mathscr P(\ell)
+\quad\Longleftrightarrow\quad
+\ell k^{-1}\in H
+\quad\Longleftrightarrow\quad
+Hk=H\ell.
+$$
+
+**证明。** 由酉性，$g^*C_1g=C_1$ 等价于 $C_1g=gC_1$，所以 $g$ 保持 $De_1$ 及其正交补，具有所示块对角形。第一块的酉条件是 $\lambda\bar\lambda=1$，再用命题 13.1 得 $\lambda\in\mu _6$。反之每个这样的块矩阵都固定 $C_1$。若两个标签相等，令 $h=\ell k^{-1}$，则
+$$
+h^*C_1h=(k^{-1})^*\ell^*C_1\ell k^{-1}=C_1,
+$$
+于是 $\ell=hk$；反向代入同样成立。$\square$
+
+因此正确的对象是左商集合
+$$
+H\backslash G=\{Hk:k\in G\},
+$$
+以及右 $G$-作用
+$$
+(Hk)\cdot a=Hka.
+$$
+这里不能把 $H\backslash G$ 当作商群：$H$ 一般不正规。特别是射线的相位核只说明坐标投影的标签相同，不允许从原程序、控制、记录或未来权限中删去相应的区别。
+

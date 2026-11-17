@@ -1,0 +1,24 @@
+**定义 83.1（同一空间、普通证书与接触速率）。** 设 $(E,C,u)$ 是定理 68.1 的有限维 Archimedean 有序单位空间，$\mathcal P\subseteq C^*$ 满足 $\overline{\operatorname{cone}(\mathcal P)}=C^*$，$H:E\to E$ 为同一个实线性算子，另有独立条件 $Hu=0$。固定一个已指定的效果族 $\mathcal A\subseteq[0,u]$；普通实际效果证书指存在一个有限 $K\ge0$，使
+
+$$
+|\alpha(He)|^2\le K\alpha(e)\alpha(u)
+\qquad(\alpha\in\mathcal P,\ e\in\mathcal A).
+\tag{83.1}
+$$
+
+$K$ 不随准备、效果、原始质量或逼近指标改变。本节不将 (83.1) 重新命名为旧 $\mathsf Q$：后者的效果域仍是整个数学区间 (67.2)。
+
+对 $x\in[0,u]$、$\beta\in C^*$ 且 $\beta(x)=0$，所需接触速率指存在序列
+
+$$
+\begin{gathered}
+0<p_n\le1,\qquad 0\le x_n\le u,\qquad
+e_n=p_nx_n\in\mathcal A,\\
+\|x_n-x\|_u\longrightarrow0,
+\qquad \frac{\beta(x_n)}{p_n}\longrightarrow0.
+\end{gathered}
+\tag{83.2}
+$$
+
+序列可依赖这对 $(x,\beta)$，不要求在所有态上共用同一序列。$x_n=e_n/p_n$ 是同一空间中的数学元素。用于原系统时，$e_n$ 必须来自已经给定的完整实际程序／事件，$p_n$ 必须是该对应中独立校准的原始衰减量；恒等式不除去成功或失败质量，不许可后选择、条件化、随机接受、新控制或新制备。单有几何上的某个正比例数并不建立其原始校准。
+

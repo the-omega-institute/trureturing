@@ -1,0 +1,27 @@
+每个满足式 (6.1) 的有限实反对称对，都可正交分解为以下两类共同不变块的直和：
+
+1.  **二维圆块：** 在某个二维正定平面上，
+
+    $$
+    A=aJ,\qquad D=dJ,\qquad J^2=-I,\quad J^*=-J,
+    \qquad a,d\in\mathbb R,\quad a^2+d^2=1.
+    $$
+
+2.  **四维四元数块：** 在某个四维正定空间上，
+
+    $$
+    \begin{aligned}
+    A&=\sqrt\lambda\,J_1,\\
+    D&=\sqrt{1-\lambda}\bigl(tJ_1+\sqrt{1-t^2}\,J_2\bigr),
+    \end{aligned}
+    \qquad 0<\lambda<1,\quad -1<t<1,
+    \tag{6.2}
+    $$
+
+    其中
+
+    $$
+    J_1^2=J_2^2=-I,\qquad J_1J_2=-J_2J_1,
+    \qquad J_1^*=-J_1,\quad J_2^*=-J_2.
+    $$
+

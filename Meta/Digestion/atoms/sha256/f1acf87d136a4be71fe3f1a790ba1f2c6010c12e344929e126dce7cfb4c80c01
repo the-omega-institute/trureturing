@@ -1,0 +1,86 @@
+**命题 C-74.2（实际约化形式与椭圆—相位换元）。** 在约定 C-74.1 的全正固定矩商中，$\chi$ 的周期为 $2\pi$，且
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+ g_{\rm red}=\frac{\mathcal I}{2}d\kappa^2
++\frac2{\mathcal I}d\chi^2.
+\tag{C74.3}
+$$
+
+改用椭圆参数 $\eta$ 后，
+
+$$
+\omega_{\rm red}=\frac8{\mathcal I}\,d\chi\wedge d\eta,\qquad
+ g_{\rm red}=\frac2{\mathcal I}
+\left(16\,d\eta^2+d\chi^2\right)
+=\frac2{\mathcal I}|d\log\Xi|^2.
+\tag{C74.4}
+$$
+
+最后一个复对数只在局部相位图取值；$\mathcal I$ 是随 $\kappa$、等价地随 $\eta$ 变化的正函数，不能删除。
+
+证明。§35.4–§35.5 已供应真正的固定矩约化，§35.7 已给所选两倍尺度的水平度量。为完整连接到本椭圆，先核定周期与符号。令
+
+$$
+\vartheta_X=\theta_1-\theta_0,\quad
+\vartheta_Y=\theta_3-\theta_0,\quad
+\vartheta_Z=\theta_2-\theta_0.
+$$
+
+其整数逆变换为
+
+$$
+\theta_1=\theta_0+\vartheta_X,\quad
+\theta_3=\theta_0+\vartheta_Y,\quad
+\theta_2=\theta_0+\vartheta_Z,\quad
+\theta_{13}=\theta_0+\vartheta_X+\vartheta_Y+\chi.
+$$
+
+正逆变换在整周期环面上互逆，故 $\chi$ 的周期恰为 $2\pi$。代入式 (C74.2)，共同角项因 $\sum_sdp_s=0$ 消失，余下
+
+$$
+\omega=d\vartheta_X\wedge dX+d\vartheta_Y\wedge dY
++d\vartheta_Z\wedge dZ+d\chi\wedge d\kappa.
+$$
+
+固定 $X,Y,Z$ 使前三项限制为零；沿三个位置角的轨道方向也为零，因而下降为式 (C74.3) 的二形式。这是限制后再取商，不是只固定三个数就丢掉三个相位方向。
+
+对度量，固定矩的概率切向量为
+
+$$
+dp_s=d_s\,d\kappa,\qquad d=(1,-1,0,-1,1),
+$$
+
+所以概率项为 $(\mathcal I/2)d\kappa^2$。相位方向取代表速度 $v_s$，先去共同相位使 $\sum p_sv_s=0$，固定隐藏角速度 $\sum d_sv_s=\dot\chi$。Cauchy–Schwarz 给
+
+$$
+\dot\chi^2
+=\left(\sum_s\frac{d_s}{\sqrt{p_s}}\sqrt{p_s}v_s\right)^2
+\le\mathcal I\sum_s p_sv_s^2.
+$$
+
+取
+
+$$
+v_s=\frac{d_s}{p_s\mathcal I}\dot\chi
+$$
+
+达到等号。它与共同相位及三个位置角方向都正交，因为对于 $f=1,x,y,z$ 均有
+
+$$
+\sum_s p_sv_sf_s=\frac{\dot\chi}{\mathcal I}\sum_s d_sf_s=0.
+$$
+
+所以它确是完整位置标架商中的最短水平代表，相位度量项为 $2\dot\chi^2/\mathcal I$。复振幅微分的概率—相位混合内积纯虚，实度量无交叉项，得到式 (C74.3) 第二式。这也逐项核定相对于 C-14.2 的两倍尺度。
+
+现在用命题 C-68.2 的 $d\eta=(\mathcal I/8)d\kappa$，即 $d\kappa=(8/\mathcal I)d\eta$。代入二形式与度量分别得到
+
+$$
+d\chi\wedge d\kappa=\frac8{\mathcal I}d\chi\wedge d\eta,\qquad
+\frac{\mathcal I}{2}\frac{64}{\mathcal I^2}d\eta^2
++\frac2{\mathcal I}d\chi^2
+=\frac2{\mathcal I}(16d\eta^2+d\chi^2).
+$$
+
+局部选择 $\chi$ 的实提升时，式 (C73.3) 给 $\log\Xi=4\eta-i\chi$ 加一个常数整倍 $2\pi i$，所以 $d\log\Xi=4d\eta-i\,d\chi$，其模平方为 $16d\eta^2+d\chi^2$。不同局部对数分支的微分相同，故度量本身良定义。证毕。
+

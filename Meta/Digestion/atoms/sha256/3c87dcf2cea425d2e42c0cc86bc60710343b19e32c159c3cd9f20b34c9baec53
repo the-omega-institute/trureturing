@@ -1,0 +1,144 @@
+**Theorem 55.1 (complete original relative spectral law).** For each
+separately fixed admitted $b>0$, each $d=b,b_{\rm ref}$ and each
+$q\in\{6,7\}$,
+
+$$
+\begin{aligned}
+k_d(s^q)&=\ell_d+\mathscr A W_{1,d}(o)s^5+o_d(s^5),\\
+k_b(s^q)-k_{\rm ref}(s^q)&=\mathscr A\Delta_b s^5+o_b(s^5),\\
+\lim_{b\downarrow0}b^5\lim_{s\downarrow0}
+ \frac{k_b(s^q)-k_{\rm ref}(s^q)}{s^5}
+ &=-\mathscr A C_E/j_0<0.
+\end{aligned}
+\tag{55.1}
+$$
+
+In particular all sufficiently small separately fixed $b>0$ satisfy
+$k_b(s^q)<k_{\rm ref}(s^q)$ for all sufficiently small $s$ depending
+on $b$, at both probes. No response-zero premise is imposed.
+
+Proof. Fix $d$ and suppress it. Put $h=s^q$, $x=Fu$, $y=Ju$,
+$d_s=\int Ju^2$, $n=m+d_s$, and $z=U^{1/2}u/\sqrt n$.
+These are actual early eigenvectors from Lemma 53.3, not actual ground
+states; $z$ is a unit test for the full selfadjoint operator. Boundedness
+and continuity of the original $W_1$ at $o$ give
+$d_s/s^5\to W_1(o)$, using $u^2\to p^2$ in $L^1$.
+Write
+
+$$
+H^h=\int_0^Te^{-ht}Q(t)dt,\qquad
+L^h=\int_T^\infty e^{-ht}Q(t)dt,\qquad D=H-H^h,
+\qquad R=H^h+L^h.
+\tag{55.2}
+$$
+
+Their kernels and quadratic forms are nonnegative. Exact scaling gives
+
+$$
+s^{-5}L^h(\eta,\xi)=j_0\int_1^\infty
+ e^{-(h/s^2)t}K(t;Y_s\eta,Y_s\xi)dt.
+\tag{55.3}
+$$
+
+L41 bounds the integrand by $Ct^{-3/2}$ over both endpoints.
+Since $h/s^2\to0$, (53.4) and dominated convergence on the full
+product space yield
+$\langle x,L^hx\rangle=j_0W_1(o)A_p^2s^5+o(s^5)$.
+Replacing a moving input by $Vp$ costs at most its $L^1$ error
+ times a bounded $L^1$ norm under this globally bounded kernel.
+
+The damping has the input-specific estimates
+
+$$
+0\le\langle x,Dx\rangle\le
+h\int_0^Tt\|Q(t/2)x\|_2^2dt\le Ch,
+\qquad \|Dx\|_2\le Chs^{-1/2}.
+\tag{55.4}
+$$
+
+For the first, use contraction below time one and
+$\|Q(t/2)x\|_2\le Ct^{-7/4}\|x\|_1$ above it;
+$\int_1^\infty t^{-5/2}dt$ is finite. For the second integrate
+$ht\|Q(t)x\|_2$: its large-time integral up to $T$ is
+$ChT^{1/4}=Chs^{-1/2}$. The time overlap near $T$ only changes $C$.
+Furthermore $\|y\|_2\le Cs^5$ and P (104.14) imply
+
+$$
+0\le\langle y,Ry\rangle\le Cs^9h^{-1/2}=o(s^5).
+\tag{55.5}
+$$
+
+Thus spectral Cauchy–Schwarz gives
+$|\langle x,L^hy\rangle|\le
+\langle x,L^hx\rangle^{1/2}\langle y,Ry\rangle^{1/2}=o(s^5)$,
+and $|\langle y,Dx\rangle|\le Cs^5hs^{-1/2}=o(s^5)$.
+As $Hx=\ell u$, the full quotient, with every long-field term retained,
+is consequently
+
+$$
+\mathcal Q_s:=\langle z,\mathscr K(h)z\rangle
+=\frac{\ell m+2\ell d_s+j_0W_1(o)A_p^2s^5+o(s^5)}{m+d_s}
+=\ell+\mathscr A W_1(o)s^5+o(s^5).
+\tag{55.6}
+$$
+
+In particular division retains one, rather than two, early cross copies.
+The error estimates hold for both $q=6$ and $q=7$.
+
+It remains to control improvement of the full principal value over this
+quotient. P70 gives compactness of $\mathscr K(h)$ at each $s,h>0$.
+P (104.2) gives $R(h)U\to K_{\rm rec}$ in operator norm for either
+$q<8$. The nonzero spectrum of $R(h)U$ equals that of
+$\mathscr K(h)$, with multiplicities, by bounded product factorization.
+Compact spectral perturbation therefore gives $k(h)\to C_*$, a
+single top eigenvalue separated from all the other spectrum by one
+fixed positive gap, and $\|\mathscr K(h)\|\le C$.
+This does not assert norm convergence of $\mathscr K(h)$ itself.
+
+The exact unsandwiched residual is
+$R(h)Uu=\ell u+e$, where $e=-Dx+L^hx+Ry$.
+The early raw mass satisfies $\int F\le Cs^{-2}$: the integral of
+$q(t;0,\cdot)$ is $e^{\lambda s^2t}$ times killed survival, at most
+$e^\lambda$ for $t\le T$. Equation (55.3) and (29.5) give
+$\|L^hx\|_\infty\le Cs^5$ and
+$\|L^hx\|_2\le Cs^2h^{-1/4}\|x\|_1$.
+Splitting its weighted norm into $F$ and $J$ therefore gives
+
+$$
+\begin{aligned}
+\|U^{1/2}L^hx\|_2^2&\le C(s^8+s^9h^{-1/2}),\\
+\|U^{1/2}Dx\|_2^2&\le Ch^2s^{-1},\\
+\|U^{1/2}Ry\|_2^2
+ &\le\|R^{1/2}UR^{1/2}\|\langle y,Ry\rangle
+ \le Cs^9h^{-1/2}.
+\end{aligned}
+\tag{55.7}
+$$
+
+For the last line the middle norm equals $\|\mathscr K(h)\|$.
+All these are bounded operators for fixed $h>0$; $J$ itself is
+never assigned an $L^2$ norm. Since $n\to\mu>0$, (55.7) proves
+
+$$
+\| (\mathscr K(h)-\ell)z\|_2^2
+ \le C(h^2s^{-1}+s^8+s^9h^{-1/2})=o(s^5).
+\tag{55.8}
+$$
+
+The bound is $O(s^6)$ at $h=s^6$ and $O(s^{11/2})$ at $h=s^7$.
+For completeness, if a positive selfadjoint operator has top $k$ and
+remaining spectrum at most $k_2$, integrate
+$(k-t)(t-k_2)\le0$ against the spectral measure of a unit vector
+with quotient $\mathcal Q>k_2$. This gives
+$\|(K-\mathcal Q)z\|^2\ge(k-\mathcal Q)(\mathcal Q-k_2)$.
+Replacing $\ell$ by its quotient minimizes the squared residual.
+The fixed gap and (55.8) thus imply $0\le k-\mathcal Q_s=o(s^5)$.
+This classical variance argument is included inside the source-specific
+proof so that (55.6) is upgraded to a norm equality.
+
+The first line of (55.1) follows. Subtract it for the two fixed datasets
+and apply Theorem 54.1. The exact identity
+$\delta_b^{<}+W_{1,b}(o)-W_{1,\rm ref}(o)=\Delta_b$ gives the
+second line; Theorem 52.2 gives the iterated limit and strict order.
+No joint-uniform remainder in $(b,s)$ is asserted or used. $\square$
+

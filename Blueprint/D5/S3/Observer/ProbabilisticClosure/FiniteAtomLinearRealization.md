@@ -4,7 +4,43 @@
 
 Linear readouts of finite native tests in a shared-parameter marker source.
 
-**Theorem 1.1 (Linear tests and normalized successors).**
+**Theorem 1.1 (One acquired action flips its selected arm parity).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.parity_cons`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.parity_cons` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every acquired action list and next side, the parity of the extended list equals flipParity of the old parity at that side.
+
+**Theorem 1.2 (Conditional original no-marker mass).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.conditional_prefix_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.conditional_prefix_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every closed-unit-interval parameter, Boolean root and acquired action list, the real conditionalSourceLaw mass of prefixNoMarker equals rootCylinderWeight at that root and action list.
+
+**Theorem 1.3 (Original Bernoulli root mixture).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.source_law_real`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.source_law_real` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every closed-unit-interval alpha and q and every source set, its real sourceLaw mass equals alpha times its true-root conditional mass plus one minus alpha times its false-root conditional mass.
+
+**Theorem 1.4 (Linear tests and normalized successors).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.result`
 
@@ -16,7 +52,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For every finite component family, task, strictly positive root parameter and component parameters, and strictly positive weights summing to one, the full carrier has exactly four times the component count plus the task terminal count coordinates. Its action-output columns are normalized and nonnegative, and it preserves every native finite-test probability. For every current history, chosen arm and original source, a native step with positive matrix output mass updates the history feature by dividing its joint matrix pushforward by that output mass. This includes zero replies, marker replies and terminal rejection.
 
-**Theorem 1.2 (Native feature updates).**
+**Theorem 1.5 (Native feature updates).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_feature_updates`
 
@@ -28,7 +64,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For every finite component family, task, strictly positive alpha and component parameters, and positive weights summing to one, the concrete full feature follows the normalized joint output-successor matrix for every history, queried arm and source whenever that output has positive matrix mass.
 
-**Theorem 1.3 (Measurable native marker response).**
+**Theorem 1.6 (Measurable native marker response).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.measurable_marker_response`
 
@@ -40,7 +76,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For each arm and natural edge count, its native marker response is a measurable function of the original source.
 
-**Theorem 1.4 (Measurable native test acceptance).**
+**Theorem 1.7 (Measurable native test acceptance).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.measurable_native_accept`
 
@@ -52,7 +88,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For every task, finite test and acquired history, native test acceptance is a measurable Boolean function of the original source.
 
-**Theorem 1.5 (Positive posterior denominator).**
+**Theorem 1.8 (Positive posterior denominator).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.denominator_pos`
 
@@ -64,7 +100,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For alpha and q in the closed unit interval, if alpha is strictly positive then the denominator alpha plus (one minus alpha) times q to the sum of the two parity bits is strictly positive for every parity pair.
 
-**Theorem 1.6 (Terminal rows agree with terminal execution).**
+**Theorem 1.9 (Terminal rows agree with terminal execution).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_terminal_row`
 
@@ -76,7 +112,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For every component count, task, alpha, parameter family, terminal coordinate and finite test, its fixed test row at that coordinate equals the zero-or-one decision obtained by terminal execution in that coordinate's mode.
 
-**Theorem 1.7 (Active row recursion).**
+**Theorem 1.10 (Active row recursion).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_active_row`
 
@@ -88,7 +124,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For every component, parity pair, queried arm and output continuation, the active test row is the zero-output successor row weighted by one minus the component marker rate, plus the terminal continuation decision weighted by the marker rate. The output and terminal mode obey the selected task and the selected parity bit.
 
-**Theorem 1.8 (Lawful full finite carrier).**
+**Theorem 1.11 (Lawful full finite carrier).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_model_probability`
 
@@ -100,7 +136,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 For every finite component family and task, with strictly positive alpha, the full carrier has four times the component count plus the terminal count coordinates, every joint output-successor entry is nonnegative, and each action column sums to one across all outputs and successor coordinates.
 
-**Theorem 1.9 (Original-history conditional probabilities have fixed linear readouts).**
+**Theorem 1.12 (Original-history conditional probabilities have fixed linear readouts).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.native_finite_test_realization`
 
@@ -122,6 +158,7 @@ The proof separates the old seed replay fiber from its original all-zero source 
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.conditional_prefix_mass`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.denominator_pos`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_active_row`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_feature_updates`
@@ -130,5 +167,7 @@ The proof separates the old seed replay fiber from its original all-zero source 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.measurable_marker_response`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.measurable_native_accept`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.native_finite_test_realization`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.parity_cons`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.result`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.source_law_real`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails](AdaptiveMarkerStoppingTails.md)

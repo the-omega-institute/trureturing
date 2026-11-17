@@ -1,0 +1,55 @@
+### 13.2　一个锚和有限关系的精确轨道呈示
+
+这里新增一个已经核验的代数来源输入，并把它的范围锁在矩阵群层。令
+$$
+K=\mathbb Q(\zeta),\qquad \mathcal O_K=\mathbb Z[\zeta],\qquad
+D=\mathcal O_K[1/6],\qquad
+h(x,y)=\sum_i\overline{x_i}y_i.
+$$
+把 $K^n$ 看成带基 ${1,\zeta}$ 的 $\mathbb Q$-空间，并把
+$\mathcal O_K^n$ 看成相应格。于是标准正定 Hermitian $\mathbb Q$-群
+$U(h)$ 的 $\mathbb Z[1/6]$-整点正是 $U_n(D)$。它是连通约化
+$\mathbb Q$-群；取 $S=\{\infty,2,3\}$，所以这些整点是该群的
+$S$-算术子群。
+
+**有限呈示存在性（Borel--Serre 的精确应用）。** Borel--Serre，
+*Cohomologie d’immeubles et de groupes S-arithmétiques*, Topology 15
+(1976), §6.1(b)、定理 6.2(i)，印刷第 228 页，原文结论为
+“*Le groupe $\Gamma$ est de présentation finie*”；其 §6.11（第
+231--232 页）给出证明。该部分只要求有限 $S$ 含所有无穷处，且代数
+$F$-群的恒等分支约化；无须无挠条件。故直接得到
+$$
+U_{27}(D)\text{ 和 }U_{26}(D)\text{ 都是有限呈示群}.
+$$
+这里的算术识别使用上述 $\mathbb Q$-表示和格，不把复 Lie 群或
+$GL_n(K)$ 当作替代对象；约化群的中心也在该定理的范围内。来源为
+原作者档案的期刊扫描：
+https://doi.org/10.1016/0040-9383(76)90037-9 ，
+https://www.college-de-france.fr/media/jean-pierre-serre/UPL4484639192560084314_Borel_Serre_Cohomologie_d_immeubles.pdf 。
+
+这一定理可以落在本卷的**精确矩阵字母表**上。令
+$$
+B=\eta^{-1}(\zeta^{ij})_{i,j=0}^2,\qquad
+R_2=\frac12\begin{pmatrix}1&-\bar\eta\\\eta&1\end{pmatrix},
+$$
+并令 $X_n^D$ 包含所有坐标上的 $\mu _6$ 相位、坐标交换、所有固定
+有序三坐标放置的 $B$ 及其逆、所有固定有序二坐标放置的 $R_2$ 及其
+逆。对固定 $n$ 这确实是有限字母表。母卷定理 22.5 的二分母下降和
+单位向量逐列消元，连同其显示的 $H_4$--$R_2$ 互换，证明
+$$
+U_n(D)=\langle X_n^D\rangle\qquad(n\ge4),
+$$
+而不是只在 $A=\mathbb Z[\zeta,1/3]$ 上作生成。故 $n=27$（以及补空间
+$n=26$）的有限呈示可由 Borel--Serre 的抽象有限呈示经过 Tietze
+变换改写成以这个 $X_n^D$ 为生成字母的有限呈示。稳定子
+$$
+H=\mu _6\times U_{26}(D)
+$$
+也因此是有限呈示的；其有限生成字可取锚坐标上的 $\mu _6$ 相位和
+补空间 $X_{26}^D$ 的字母。这个结论是矩阵层的有限呈示**存在性**，
+不声称已经列出任何关系字、给出取得关系的算法或资源界。
+
+下述命题仍是纯代数命题；它的直接前件是一次已经选定的有限群呈示
+和有限稳定子生成字。上段来源保证这样的选择在本具体矩阵群及其精确
+字母表上存在，但没有把它们冒充为原实际程序、参考、记录或菜单接线。
+

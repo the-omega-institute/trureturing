@@ -1,0 +1,59 @@
+（五）成熟主子式重建与原域乘数下降。现在应用 Loewy 的无切口重建结论，精确采用 Al Ahmadieh 上引文 Theorem 4.1 的无切口方向；相同充分条件也见 Chatterjee–Ghosh–Gurjar–Raj，[*Characterizing and Testing Principal Minor Equivalence of Matrices*，arXiv:2410.01961v1，Lemma 2.8(2)](https://arxiv.org/html/2410.01961v1)。其陈述是：不可约且无切口的矩阵，其全部对应主子式确定矩阵至可逆对角共轭或转置后的可逆对角共轭。这里的 diagonal equivalence 包含转置，不能删去这一支。
+
+由（三）（四），该定理的前件已满足；(43.18) 给出其主子式相等前件。因此存在分裂域上的可逆对角矩阵 $\Lambda$，使
+
+$$
+N_Y=\Lambda N_W\Lambda^{-1}
+\quad\text{或}\quad
+N_Y=\Lambda N_W^{\mathsf T}\Lambda^{-1}.
+\tag{43.22}
+$$
+
+取像空间，使用 (43.9)，得到
+
+$$
+Y_K=\Lambda W_K
+\quad\text{或}\quad
+Y_K=\Lambda\operatorname{im}N_W^{\mathsf T}
+=\Lambda(W^\perp)_K.
+\tag{43.23}
+$$
+
+最后一个等式来自 $\operatorname{im}N_W^{\mathsf T}=(\ker N_W)^\perp$，以及分裂坐标中原迹配对恰为标准点积 $\sum_\sigma x_\sigma y_\sigma$。因此转置分支准确对应原迹对偶，没有引入新的标签置换。
+
+为将分裂对角乘数收回原域，直接使用 §26、§42 的有限线性核扩底事实。对 $A=W$ 或 $W^\perp$，在原 $F$ 上置
+
+$$
+T(A,Y)=\ker\bigl(D\longrightarrow\operatorname{Hom}_F(A,D/Y)\bigr),
+\qquad c\longmapsto(z\longmapsto cz+Y).
+$$
+
+式 (42.8) 的同一扩底保核事实对任意当前 $F$ 给出
+
+$$
+T(A,Y)\otimes_F K
+=\{c\in D\otimes_F K:cA_K\subseteq Y_K\}.
+\tag{43.24}
+$$
+
+(43.23) 的对角向量是右边的一个非零元素，故原 $T(A,Y)$ 非零。取原 $0\ne\gamma\in T(A,Y)$，原 $D$ 为域使乘 $\gamma$ 单射；$\gamma A\subseteq Y$ 及两边同为四维便给出 $Y=\gamma A$。这里并未断言任意分裂对角向量本身是某个原元素的嵌入像，只利用非零线性核下降取得一个原乘数。
+
+这完成了 $E_W=F$ 时从支持相等到第三项的证明；$E_W\ne F$ 时已由（一）给出更强结论。反向，整体原标量不变性与引理 40.2 在 $n=8,k=4$ 时直接给出
+
+$$
+d_{\gamma W}(r)=d_W(r),\qquad
+d_{\gamma W^\perp}(r)=d_{W^\perp}(r)=d_W(r)
+\qquad(r\in D^\times).
+\tag{43.25}
+$$
+
+因此标量或迹对偶关系推出全部精确交维相等；交维相等再由 $Q_W=\{0\}\cup\{r\in D^\times:d_W(r)>0\}$ 推出支持相等。若 $E_W\ne F$，将 $Y=W^\perp$ 代入（一）还说明两种轨道必然重合。这证明全部结论。$\square$
+
+本定理区分三层信息：支持只记录哪些非零原标签的交维为正；四次行列式还记录一份代数方程；精确交维是各原标签处的核维数。一般行列式相等并不直接给出核维数相等。这里先以原商稠密性取得方程，再由实际域的 Galois 约束排除矩阵切口，应用既有主子式重建并下降到原标量或迹对偶，最后才用 (43.25) 恢复精确交维。
+
+八点分裂几何本身也有精确先例。Howard–Millson–Snowden–Vakil，[*The geometry of eight points in projective space: Representation theory, Lie theory, dualities*，arXiv:1103.5255v1，§8、Propositions 8.1–8.2](https://arxiv.org/html/1103.5255v1)，证明八个带标签的 $\mathbb P^3$ 点配置的不变量环中，由一次不变量生成的子环给出 Gale 对偶的商。这些一次不变量由互补括号积 $p_Ip_{I^c}$ 张成，正是 (41.6) 的系数；行基变换与逐行缩放对应配置的射影等价，取正交补对应 Gale 对偶。式 (43.13) 是等权配置的严格稳定条件，因此稳定分裂配置中“至多原配置与 Gale 对偶”已有该不变量论表述。本节不将这个几何二重性列作新发现；上述原文也不替代从完整原商到几何方程的稠密桥、原乘数下降及非平凡乘子域分支的自动线性性。
+
+所用的矩阵不可约性判据、无切口主子式重建、Sylvester 恒等式、拟阵对偶及回路与余回路正交性都是既有工具。本节的综合推导将它们接到 §26 的实际域严格秩界与最小正交维、§§34、40 的迹对偶和 §42 的原线性核下降，取得同一原八次域中全部四平面的字面支持与交维纤维结论，不依赖特定 $P_8$ 表示。本条只量化固定八次域中的四平面，不将 §42 特定例子中对全部竞争维数的结论扩张到这里。
+
+白话说，完整的原商表在任意特征零八次域中至多留下两种整体形状：窗口本身与它的迹正交补。若窗口有较大的乘子域，同支持的竞争四平面会被迫继承该域的线性结构，两种形状合成一个标量轨道；否则，可能产生额外歧义的矩阵切口会要求把八个共轭标签分成三元组，因而被排除。这个结论保留每一个原标签，且只比较四维窗口。
+

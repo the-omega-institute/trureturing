@@ -1,0 +1,69 @@
+**Lemma 147.4 (an even cubic differential surviving separated angular correction).** There exist a bounded real odd function $v_0$ with finitely many angular frequencies $|n|\le L$, a positive even integer $s\le2L$, and a bounded real pure-frequency-$s$ function $h_*$, such that
+
+$$
+\int h_*H_{v_0}\,dm\ne0,\qquad
+H_v:=gP(vPv)+(Pv)P(gv)+P(vP(gv)).
+\tag{147.10}
+$$
+
+Moreover, if $N>3L$ is odd and $w\in V_N$, then
+
+$$
+\int h_*H_{v_0+w}\,dm=\int h_*H_{v_0}\,dm.
+\tag{147.11}
+$$
+
+*Proof.* The original local smoothing and kernel construction (120.7)–(120.11) give the continuous symmetric kernel $p_d(x,y)$ on the punctured product, its rotation equivariance, and strict positive definiteness on every finite set of distinct punctured points. Choose $x_0\in\Omega$ with $g(x_0)=g_0>0$ and put $R=R_\pi$,
+
+$$
+k(\alpha)=p_d(x_0,R_\alpha x_0),\qquad
+\Delta=k(0)-k(\pi)>0.
+\tag{147.12}
+$$
+
+The strict inequality follows by applying finite Gram strictness to $x_0,Rx_0$ and coefficients $(1,-1)$. Symmetry and equivariance make $k$ a real even continuous positive-definite function on the circle. Its Fourier coefficients satisfy
+
+$$
+k(\alpha)=\sum_{n\in\mathbb Z}a_ne^{in\alpha},\qquad
+a_n=a_{-n}\ge0,\qquad \sum_na_n=k(0).
+\tag{147.13}
+$$
+
+For completeness, nonnegativity of each coefficient follows by integrating the finite Gram inequalities against a character, first as Riemann sums and then by continuity. The nonnegative Fejér kernels have mass one and concentrate at zero, so their convolution with continuous $k$ converges uniformly to $k$. At zero their values are the sums $\sum_{|n|\le M}(1-|n|/(M+1))a_n$. Monotone convergence gives $\sum a_n=k(0)$, absolute convergence follows, and the Fourier representation is (147.13). Since $\Delta>0$, at least one positive odd $\ell$ has $a_\ell>0$.
+
+Let $A_\varepsilon$ be shrinking coordinate balls about $x_0$, with positive mass, disjoint from $RA_\varepsilon$, and with compact closure in $\Omega$. Define the bounded odd function
+
+$$
+v_\varepsilon=
+       \frac{\mathbf1_{A_\varepsilon}-\mathbf1_{RA_\varepsilon}}
+            {m(A_\varepsilon)}.
+\tag{147.14}
+$$
+
+The local joint continuity of the original kernel, continuity of $g$, and rotation invariance give, uniformly for $\alpha$ on the circle,
+
+$$
+H_{v_\varepsilon}(R_\alpha x_0)\longrightarrow
+2g_0\Delta[k(\alpha)+k(\alpha+\pi)]
+       +g_0[k(\alpha)-k(\alpha+\pi)]^2.
+\tag{147.15}
+$$
+
+Indeed $Pv_\varepsilon$ tends uniformly on the compact orbit and on the two shrinking supports to the corresponding difference of kernel values; $P(gv_\varepsilon)$ tends to $g_0$ times that difference. The signed measures $v_\varepsilon Pv_\varepsilon\,m$ and $v_\varepsilon P(gv_\varepsilon)\,m$ tend, respectively, to $\Delta(\delta_{x_0}+\delta_{Rx_0})$ and $g_0\Delta(\delta_{x_0}+\delta_{Rx_0})$. Inserting these limits into the three terms of (147.10) proves (147.15), with uniformity supplied by continuity on compact neighborhoods. These are spatial tests for the same full semigroup, not a replacement for its source law.
+
+All Fourier coefficients of $k(\alpha)+k(\alpha+\pi)$ are nonnegative, and those of $k(\alpha)-k(\alpha+\pi)$ are $2a_n$ at odd $n$ and zero otherwise. Consequently the coefficient at $s=2\ell$ of the right side of (147.15) is at least $4g_0a_\ell^2>0$. Choose one sufficiently small, fixed $\varepsilon$ whose left side has nonzero coefficient at this $s$.
+
+Apply the real angular Fejér means to this fixed $v_\varepsilon$. They remain odd, are uniformly bounded, have finite angular bands, and converge in $L^2(m)$. If $v_n\to v$ in $L^2(m)$ with a uniform bound, the Markov contractions give
+
+$$
+v_nPv_n\to vPv,\qquad
+v_nP(gv_n)\to vP(gv)\quad\hbox{in }L^2(m).
+\tag{147.16}
+$$
+
+For example, split the first difference as $v_n(Pv_n-Pv)+(v_n-v)Pv$; both terms converge in $L^2$, since $Pv$ is bounded. The second uses the bounded original $g$. The local $L^2$-to-continuous bound (120.8) then gives uniform convergence of $H_{v_n}$ on the orbit. Hence one finite-band odd mean $v_0$ retains its nonzero frequency-$s$ coefficient. Enlarge its integer band bound $L$ if needed so $s\le2L$.
+
+Every $H_v$ is smooth on $\Omega$: each smoothed factor has this property by (120.7)–(120.8), and $g$ is smooth there. Its frequency-$s$ coefficient is therefore continuous in the quotient coordinates $(r,z,\xi)$. On a sufficiently small compact quotient neighborhood of the base of $x_0$, choose a fixed real sine/cosine phase for which that coefficient has a strictly nonzero real pairing. Multiplying that sine/cosine by a nonnegative smooth quotient bump produces bounded pure-frequency-$s$ $h_*$ with (147.10), using the positive invariant density $rh^2$ in (120.12). Since $s$ is positive and even, $h_*$ is even and has zero pairing with each rotation-invariant $g_j$.
+
+Finally expand $H_{v_0+w}$ into its two quadratic pure terms and its mixed terms. The term $H_w$ is invariant under $R_{2\pi/N}$, so has only frequencies divisible by $N$. Each mixed term has frequencies congruent modulo $N$ to one of the odd frequencies $n$ of $v_0$, with $|n|\le L$. It cannot have frequency $s$: otherwise $s-n$ is divisible by $N$, whereas $|s-n|\le3L<N$ and $s\ne n$ by parity. Also $0<s<N$, so $H_w$ has no frequency $s$. This calculation is valid for arbitrary bounded $w\in V_N$, without a finite-band assumption on $w$: multiplication by each of the finitely many characters of $v_0$ shifts its closed angular sectors, and $P$ and multiplication by invariant $g$ preserve them. Projection onto frequency $s$ proves (147.11). $\square$
+

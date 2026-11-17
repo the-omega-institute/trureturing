@@ -4,8 +4,9 @@
    mirror-E: none(waiver:finite-component-closure)
    anchors: [mathlib/module/Mathlib.Topology.Homeomorph.Quotient]
    utility: none
-   digest: Explicit cone-cover and disjoint-join quotient decompositions. -/
+   digest: Actual contractible-subcomplex closed-cover and disjoint-join quotient decompositions. -/
 import D5.S3.Geometry.FiniteComponentClosure.Models
+import D5.S3.Geometry.FiniteSubcomplexCylinder
 
 noncomputable section
 open Set Finset Topology ContinuousMap
@@ -20,10 +21,6 @@ open private
   coneBaseSuspensionHomeomorph
   singleton_coordinates
   from D5.S3.Geometry.FiniteComponentClosure.Transport
-
-open private
-  vertexComplex
-  from D5.S3.Geometry.FiniteComponentClosure.Models
 
 section ConeCovers
 
@@ -78,7 +75,8 @@ private def coverCollapseRightHomeomorph {X Y Z : Type*}
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-private def finiteConeCover (X Y C : PreAbstractSimplicialComplex V)
+/-- The original finite closed cover on the native coordinate inclusions. -/
+def finiteConeCover (X Y C : PreAbstractSimplicialComplex V)
     (a b : V) (ha : ({a} : Finset V) ∈ X) (hb : ({b} : Finset V) ∈ Y)
     (haC : ({a} : Finset V) ∈ C) (hbC : ({b} : Finset V) ∈ C)
     (hXY : X ⊓ Y ≤ C) :
@@ -114,6 +112,86 @@ private def finiteConeCover (X Y C : PreAbstractSimplicialComplex V)
     exact ⟨s, hXY hs, hx⟩
   left_base := (FiniteVertexCylinder.vertexPoint C a haC).property
   right_base := (FiniteVertexCylinder.vertexPoint C b hbC).property
+
+/-- Collapse an arbitrary contractible finite subcomplex in the actual closed cover.
+The retraction is constructed from the original coordinate collar, including for
+nonfull, noncone overlaps. The forward map is literally the original collapse
+followed by the original quotient-wedge homeomorphism. -/
+theorem contractible_cover_equivalence (X Y C : PreAbstractSimplicialComplex V)
+    (a b : V) (ha : ({a} : Finset V) ∈ X) (hb : ({b} : Finset V) ∈ Y)
+    (haC : ({a} : Finset V) ∈ C) (hbC : ({b} : Finset V) ∈ C)
+    (hC : C ≤ X ⊔ Y) (hXY : X ⊓ Y ≤ C)
+    [ContractibleSpace (FiniteSimplicialJoin.Space C)] :
+    let P := finiteConeCover X Y C a b ha hb haC hbC hXY
+    ∃ e : FiniteSimplicialJoin.Space (X ⊔ Y) ≃ₕ
+      FiniteConeUnionWedge.Wedge
+        (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (P.left ⁻¹'
+          {z | z.val ∈ FiniteConeCollapse.realization C}))
+          (FiniteVertexCylinder.vertexPoint X a ha))
+        (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (P.right ⁻¹'
+          {z | z.val ∈ FiniteConeCollapse.realization C}))
+          (FiniteVertexCylinder.vertexPoint Y b hb)),
+      e.toFun = P.quotientWedgeHomeomorph.symm.toHomotopyEquiv.toFun.comp
+        (FiniteConeUnionWedge.collapseMap
+          {z : FiniteSimplicialJoin.Space (X ⊔ Y) |
+            z.val ∈ FiniteConeCollapse.realization C}) := by
+  let A : Set (FiniteSimplicialJoin.Space (X ⊔ Y)) :=
+    {z | z.val ∈ FiniteConeCollapse.realization C}
+  let R := FiniteSubcomplexCylinder.retraction (X ⊔ Y) C hC
+  have hR := FiniteSubcomplexCylinder.retraction_fixed (X ⊔ Y) C hC
+  let inc := FiniteConeUnionWedge.realizationInclusion hC
+  -- Transport from the original realization, keeping the original coordinates.
+  let j : FiniteSimplicialJoin.Space C ≃ₜ A :=
+    { toFun := fun x => ⟨inc x, x.property⟩
+      invFun := fun x => ⟨x.val.val, x.property⟩
+      left_inv := fun _ => Subtype.ext rfl
+      right_inv := fun _ => Subtype.ext (Subtype.ext rfl)
+      continuous_toFun := inc.continuous.subtype_mk _
+      continuous_invFun :=
+        (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _ }
+  letI : ContractibleSpace A := j.symm.contractibleSpace
+  let aC := FiniteVertexCylinder.vertexPoint C a haC
+  let aA : A := j aC
+  let RC := nativeCylinder C a haC
+  let jp := j.prodCongr (Homeomorph.refl I)
+  have hmem (z : A × I) :
+      (jp (RC.map (jp.symm z)).val).2 = 0 ∨
+        (jp (RC.map (jp.symm z)).val).1 = aA := by
+    rcases (RC.map (jp.symm z)).property with ht | hx
+    · exact Or.inl ht
+    · exact Or.inr (congrArg j hx)
+  -- This is transport along j×id, not a duplicate nativeCylinder implementation.
+  let Ra : SingletonRetractionBasedInverse.CylinderRetraction aA :=
+    { map :=
+        { toFun := fun z => ⟨jp (RC.map (jp.symm z)).val, hmem z⟩
+          continuous_toFun := (jp.continuous.comp
+            (continuous_subtype_val.comp (RC.map.continuous.comp jp.symm.continuous))).subtype_mk hmem }
+      fixed := by
+        intro z hz
+        have hz' : (jp.symm z).2 = 0 ∨ (jp.symm z).1 = aC := by
+          rcases hz with ht | hx
+          · exact Or.inl ht
+          · apply Or.inr
+            change j.symm z.1 = aC
+            rw [hx]
+            exact j.symm_apply_apply aC
+        change jp (RC.map (jp.symm z)).val = z
+        rw [RC.fixed _ hz']
+        exact jp.apply_symm_apply z }
+  have hA : IsClosed A :=
+    (FiniteConeUnionWedge.realization_closed C).preimage continuous_subtype_val
+  let cert := FiniteConeUnionWedge.contractibleCollapse A hA aA R hR Ra
+  let E := cert.val
+  let H : FiniteSimplicialJoin.Space (X ⊔ Y) ≃ₕ FiniteConeUnionWedge.Collapse A :=
+    { toFun := E.forward
+      invFun := E.backward
+      left_inv := ⟨E.left.toHomotopy⟩
+      right_inv := ⟨E.right.toHomotopy⟩ }
+  let P := finiteConeCover X Y C a b ha hb haC hbC hXY
+  refine ⟨H.trans P.quotientWedgeHomeomorph.symm.toHomotopyEquiv, ?_⟩
+  change P.quotientWedgeHomeomorph.symm.toHomotopyEquiv.toFun.comp E.forward = _
+  rw [show E.forward = FiniteConeUnionWedge.collapseMap A from cert.property]
+
 
 private def coneCoverEquiv (X Y C : PreAbstractSimplicialComplex V)
     (a b : V) (ha : ({a} : Finset V) ∈ X) (hb : ({b} : Finset V) ∈ Y)

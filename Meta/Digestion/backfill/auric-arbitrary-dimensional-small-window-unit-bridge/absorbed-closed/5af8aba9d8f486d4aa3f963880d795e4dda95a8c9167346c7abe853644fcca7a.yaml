@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5af8aba9d8f486d4aa3f963880d795e4dda95a8c9167346c7abe853644fcca7a
+  normalized_sha256: sha256:5af8aba9d8f486d4aa3f963880d795e4dda95a8c9167346c7abe853644fcca7a
+cas_ref: sha256:5af8aba9d8f486d4aa3f963880d795e4dda95a8c9167346c7abe853644fcca7a
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/PBIdempotentSupport.original_p2_support
+    target_statement_id: sha256:804b184a0ddfd23efbfa692a4a81927aee3025c9ec0836f810063db4cd11e8b6
+receipts:
+  unresolved_subitems: []

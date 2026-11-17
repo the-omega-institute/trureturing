@@ -17,6 +17,7 @@ internal sealed class SparseProbeCoercivityDocument : IScribeDocumentDefinition
             Node("off-square","offSq",Definition("offSq",true),"offSq is the corresponding sum over unequal row and column indices."),
             Node("survival-loss","survivalLoss",LossFormula(false),"The survival loss is the squared norm of Cv minus the squared modulus of its inner product with the unit probe v. For a complete Kraus family its sum is the loss of the rank-one survival event."),
             Node("probe-loss","probeLoss",LossFormula(true),"The coordinate losses sum to offSq. The additional probe contributes survivalLoss, so there are d+1 survival events."),
+            Node("residual-identity","residual_identity",ResidualIdentityFormula(),"For a unit vector v, subtracting the orthogonal projection of x onto v reduces its squared norm by exactly the squared modulus of their complex inner product.",DescribeRole.Lemma),
             Node("hs-split","hs_split",SplitFormula(),"Separating the diagonal entries gives the Hilbert--Schmidt decomposition.",DescribeRole.Lemma),
             Node("sparse-probe-coercivity","sparse_probe_coercivity",CoercivityFormula(),
                 "Let c be the complex inner product of v with Cv, and let B be the off-diagonal part of C. The diagonal residual (Cii-c)vi is (Cv-cv)i-(Bv)i. Its squared norm is at most twice the sum of the two squared norms. The unit-vector Cauchy--Schwarz estimate bounds the squared norm of Bv by offSq. Full support bounds the unweighted diagonal residual by its weighted counterpart divided by mu. The trace mean minimizes the unweighted residual, giving the displayed coefficient mu/(2+mu). The argument allows arbitrary complex matrices; no real, Hermitian, or unital condition is present.",DescribeRole.Theorem))));
@@ -72,4 +73,16 @@ internal sealed class SparseProbeCoercivityDocument : IScribeDocumentDefinition
         return All([B("d",N),B("M",Mat(d)),B("v",Vec(d)),B("mu",R)],Imp(h,
             Le(Mul(Frac(mu,Add(Num(2),mu)),Sub(Call("hsSq",m),Frac(Norm(Call("trace",m)),d))),Call("probeLoss",m,v))));
     }
+    private static Formula ResidualIdentityFormula()
+    {
+        Formula d=V("d"), x=V("x"), v=V("v"), i=V("i"), c=V("c");
+        Formula norm=Sum("i",Fin(d),Norm(At(v,i)));
+        Formula value=Sum("i",Fin(d),Mul(Call("conj",At(v,i)),At(x,i)));
+        Formula identity=Eq(Sum("i",Fin(d),Norm(Sub(At(x,i),Mul(c,At(v,i))))),
+            Sub(Sum("i",Fin(d),Norm(At(x,i))),Norm(c)));
+        return All([B("d",N),B("x",Vec(d)),B("v",Vec(d))],
+            Imp(Eq(norm,Num(1)),Seq(Operatorname,Grp(V("let")),Sp,c,Sp,Colon,F.Eq,Sp,value,
+                Semi,Sp,identity)));
+    }
+
 }

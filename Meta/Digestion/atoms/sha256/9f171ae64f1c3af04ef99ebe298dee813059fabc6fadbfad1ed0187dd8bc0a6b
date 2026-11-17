@@ -1,0 +1,31 @@
+**命题 178.3（$d-1$ 不能一般降低）。** 对每个 $r\ge2$，存在 $d=r+1$ 维完整原域与一个原纯目标，其全部少于 $r$ 标签的纯零配方均读零，却有一个 $r$ 标签配方读 $1/r$。
+
+证明。在 $\mathbb R^{r+1}$ 中取标准基 $p=e_0,q_i=e_i$，并置
+
+$$
+z=\frac{\sum_{i=1}^r q_i-p}{r-1},\qquad
+u(x)=\sum_{i=0}^r x_i,\qquad
+K=\operatorname{conv}\{p,q_1,\ldots,q_r,z\},\qquad C=\operatorname{cone}K.
+\tag{178.6}
+$$
+
+这些点都在 $u=1$；紧性给闭锥与严格正单位，基向量给生成性，单位给尖性。$p,z$ 分别唯一最大、最小化 $x_0$；$q_i$ 唯一最大化 $x_i+x_0/2$。故所列点恰为全部原纯点。
+
+一张确认 $p$ 的原效应由 $b_i=f(q_i)$ 完全确定。它的精确条件是
+
+$$
+0\le b_i\le1,\qquad \sum_i b_i\ge1,\qquad
+f(z)=\frac{\sum_i b_i-1}{r-1}.
+\tag{178.7}
+$$
+
+上界 $f(z)\le1$ 已由 $\sum_i b_i\le r$ 给出。在 $b_j=1$、其余为零处得到合法 $f_j$，它同时消去 $z$ 和所有 $q_i$、$i\ne j$。所以 $N_p=\{q_1,\ldots,q_r,z\}$，每个少于 $r$ 标签的配方都留下一个未使用的 $q_j$，由同一 $f_j$ 消去。另一方面(178.7)给
+
+$$
+T_p\!\left(\frac1r\sum_{i=1}^r q_i\right)
+=\min\frac1r\sum_i b_i=\frac1r.
+\tag{178.8}
+$$
+
+这证实有限检查界的尖锐性。该多面体不满足 L2，结论只针对一般原域的有限检查成本。$\square$
+

@@ -1,0 +1,127 @@
+**Theorem 12.2 (Explicit velocity product and damping independence).** For every chain and parameter in Definition 12.1, put
+
+$$
+\boxed{\displaystyle
+\mathcal D(v)=
+\frac{\left(\sum_{j=1}^{m+1}v_j\right)\prod_{j=2}^{m}v_j}
+     {\prod_{i=1}^{m}(v_i+v_{i+1})}
+\prod_{i=1}^{m-1}
+\left(\frac{4v_iv_{i+2}}
+{(v_i+v_{i+1})(v_{i+1}+v_{i+2})}\right)^{m-i}.}
+\tag{12.3}
+$$
+
+Every empty product is one. Then
+
+$$
+\det H_T=\det H_U=\mathcal D(v),\qquad 0<\mathcal D(v)\leq1.
+\tag{12.4}
+$$
+
+In particular this determinant is independent of $\alpha$, including the singular interior parameter
+
+$$
+\alpha_* =\frac{v_2}{v_1+2v_2},\qquad q=0.
+\tag{12.5}
+$$
+
+For $m=1$ it is exactly one. The determinant identity also holds for the endpoint extensions $\alpha=0,1$ of the original rows.
+
+*Proof.* We first use the local reflection identities cited in Definition 12.1 in their present coordinates. Set $P_i z=f_i\langle f_i,z\rangle_Q$ and $E_i=I-2P_i$. Since $\langle f_i,f_i\rangle_Q=1$, $P_i$ is an orthogonal projection for $Q$. Directly,
+
+$$
+(E_i z)_i=-z_i+\frac{2v_{i+1}}{s_i}z_{i-1}
+                         +\frac{2v_i}{s_i}z_{i+1},
+\qquad (E_i z)_j=z_j\quad(j\ne i).
+\tag{12.6}
+$$
+
+The local energy decomposition cited in Definition 12.1 has center $c=(v_{i+1}z_{i-1}+v_i z_{i+1})/s_i$ and coefficient $g_i$ on $|z_i-c|^2$. Consequently it is exactly this $Q$-reflection: $E_i^2=I$ and $Q(E_i z)=Q(z)$, also for complex inputs. Distinct same-parity normals are orthogonal, so same-parity reflections commute. Write
+
+$$
+F=\prod_{i\ {m odd}}E_i,\qquad J_0=\prod_{i\ {m even}}E_i.
+$$
+
+The product over an empty parity class is $I$. The original odd rows give the first phase $Fz$; the original even rows then give the second phase $J_0Fz$. Invertibility of $A$ therefore identifies $U=J_0F$. For the first damped event the original row is precisely $D_1=(1-\theta_\alpha)I+\theta_\alpha E_1$. Indeed its first diagonal coefficient is $1-2\theta_\alpha=-q$ and its right coefficient is $2\theta_\alpha v_1/s_1=2\alpha v_1/(v_2+\alpha v_1)$. Every other odd row and every even relation is unchanged. Since the remaining odd reflections commute with $E_1$ and with $D_1$,
+
+$$
+\begin{gathered}
+U^{\dagger}U=I,\qquad
+T=UK_q,\qquad K_q=E_1D_1=I-(1-q)P_1,\\
+Q(Tz)=Q(z)-(1-q^2)|\ell(z)|^2.
+\end{gathered}
+\tag{12.7}
+$$
+
+This is the source factorization and loss, expressed with a unit normal. It uses no inverse of $T$ or of $K_q$. Positivity of the original parameters gives $0<\theta_\alpha<1$ because the denominator exceeds the numerator by $v_2(1-\alpha)>0$. Thus $-1<q<1$ and every $T$ is nonexpansive for $Q$. At $\alpha=0,1$, $q=-1,1$ respectively; the same factorization is valid and both endpoint transfers are $Q$-isometries.
+
+We next evaluate the undamped observation determinant. The Gram matrix $C$ of $f_1,\ldots,f_m$ has diagonal one and adjacent entries $-c_i$, where
+
+$$
+c_i=\frac{1/v_{i+1}}{\sqrt{g_i g_{i+1}}}
+=\sqrt{\frac{v_iv_{i+2}}{s_i s_{i+1}}}>0
+\qquad(1\leq i<m).
+\tag{12.8}
+$$
+
+For adjacent indices the reflection rule gives $E_i f_j=f_j+2c_{\min(i,j)}f_i$; it gives $E_i f_i=-f_i$ and fixes every other $f_j$. In the ordered list
+
+$$
+w_1=f_1,\quad w_{2r}=U^r f_1\ (r\geq1),\quad
+w_{2r+1}=U^{-r}f_1\ (r\geq1),\qquad 1\leq j\leq m,
+\tag{12.9}
+$$
+
+$w_j$ lies in $\operatorname{span}(f_1,\ldots,f_j)$, and the absolute value of its $f_j$ coefficient is
+
+$$
+a_j=2^{j-1}\prod_{i=1}^{j-1}c_i.
+\tag{12.10}
+$$
+
+Here is an explicit induction that accounts for both parities. First $Uf_1=-J_0f_1=-f_1-2c_1f_2$ when $m\geq2$. On a normal with even index $i$, applying $U=J_0F$ can reach index $i+2$ only through $f_i\mapsto2c_i f_{i+1}\mapsto4c_i c_{i+1}f_{i+2}$. On a normal with odd index $i$, $U$ reaches at most $i+1$. Therefore, for an input supported through an even index $i$, only its last coefficient contributes at index $i+2$, by the multiplier $4c_i c_{i+1}$. This proves (12.10) on all even indices from the displayed base. For $U^{-1}=FJ_0$, an odd index $i$ reaches $i+2$ by the same multiplier $4c_i c_{i+1}$, whereas an even index reaches at most $i+1$. Starting with $f_1$, this proves the odd-index assertion. Every such induction step is used only when its terminal index is at most $m$; no nonexistent endpoint normal is introduced.
+
+The Laurent order (12.9) is the cyclic unitary order $1,z,z^{-1},z^2,z^{-2},\ldots$ used in [Simon, *CMV matrices: Five years after*, arXiv:math/0603093v1, Section 2, (2.15) and (2.33)–(2.34)](https://arxiv.org/pdf/math/0603093v1). Here unitarity is (12.7), and cyclicity follows from the nonzero coefficients (12.10). The coefficients in this calculation are the explicit overlaps (12.8) of the original chain; no identification of original coordinates with an unspecified CMV matrix is required.
+
+Triangularity in (12.9)–(12.10) now gives
+
+$$
+\det\big(\langle w_i,w_j\rangle_Q\big)_{i,j=1}^m
+=\det C\prod_{j=1}^m a_j^2
+=\det C\prod_{i=1}^{m-1}(4c_i^2)^{m-i}.
+\tag{12.11}
+$$
+
+The exponents of $U$ in (12.9) form the consecutive integer interval
+$-\lfloor(m-1)/2\rfloor,\ldots,\lfloor m/2\rfloor$, in a different order. Applying the common isometry $U^{\lfloor m/2\rfloor}$ to $f_1,U^{-1}f_1,\ldots,U^{-(m-1)}f_1$ gives exactly that interval. A common isometry and a simultaneous permutation preserve a Gram determinant. The vectors $U^{-k}f_1$ represent the rows $\ell U^k$, so (12.11) is $\det H_U$.
+
+It remains to evaluate $\det C$. Let $\Delta_k$ be the leading $k\times k$ determinant of $G$ and let $S_k=\sum_{j=1}^k v_j$. Expanding the last row of this tridiagonal determinant gives
+
+$$
+\Delta_0=1,\qquad \Delta_1=\frac{v_1+v_2}{v_1v_2},\qquad
+\Delta_k=g_k\Delta_{k-1}-\frac1{v_k^2}\Delta_{k-2}
+=\frac{S_{k+1}}{\prod_{j=1}^{k+1}v_j}.
+\tag{12.12}
+$$
+
+For the final equality induction substitutes the formulas for $k-1,k-2$; the numerator reduces by
+$(v_k+v_{k+1})S_k-v_{k+1}S_{k-1}=v_kS_{k+1}$.
+Consequently
+
+$$
+\det C=\frac{\det G}{\prod_{i=1}^m g_i}
+=\frac{S_{m+1}\prod_{j=2}^{m}v_j}{\prod_{i=1}^m s_i}.
+\tag{12.13}
+$$
+
+Combining (12.8), (12.11) and (12.13) proves exactly the finite velocity product (12.3), with no remaining determinant or recurrence in that expression.
+
+Finally, the rank-one difference $T-U=-(1-q)Uf_1\ell$ gives, for $k\geq1$, the finite identity
+
+$$
+T^k=U^k-(1-q)\sum_{j=0}^{k-1}U^{k-j}f_1\ell T^j.
+\tag{12.14}
+$$
+
+It follows either by telescoping $T^k-U^k$ or by induction using $T=U-(1-q)Uf_1\ell$. Applying $\ell$ shows that the $k$th damped observation row is the $k$th undamped row minus a linear combination of earlier damped rows. Successive substitution makes the change from $\mathcal O_U$ to $\mathcal O_T$ lower triangular with diagonal entries one. Its determinant is one. Taking the squared absolute determinant in orthonormal coordinates proves $\det H_T=\det H_U$. This argument works for every real $q$, so in particular at zero and at both endpoints. Every factor in (12.3) is positive. The undamped observation rows have norm one, because $U$ is an isometry and $f_1$ is a unit vector. Hadamard's inequality therefore gives $\det H_U\leq1$. When $m=1$, both the prefactor and the empty product in (12.3) equal one. This proves all claims. $\square$
+

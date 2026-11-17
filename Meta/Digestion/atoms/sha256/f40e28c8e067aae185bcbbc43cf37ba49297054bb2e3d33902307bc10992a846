@@ -1,0 +1,111 @@
+**Theorem 36.3 (actual leaf and complete restriction at the moving times).**
+Let $\Lambda^0_{\sigma,N}(\tau)$ denote the ordered eigenvalues on
+the actual native zero leaf with unit pole, raw measure and coupling $g$.
+Let $\Lambda^{\rm sec}_{\sigma,N}(\kappa,\tau)$ denote the ordered
+eigenvalues of the closed form restricted to the entire
+$D$-independent subspace. At every admissible cutoff their exact
+operator identifications on $L^2(B,\nu_B)$ are
+
+$$
+\begin{aligned}
+\mathscr H^0_{\sigma,\tau}
+ &=\overline L_0-gM_{W^0_{\sigma,\tau}},\\
+J^*\mathscr H^{\rm sec}_{\sigma,\kappa,\tau}J
+ &=\overline L_\kappa-\frac{g}{2\pi}
+                         M_{\overline W_{\sigma,\kappa,\tau}},\\
+W^0_{\rm raw,\tau}&=V_{0,\tau},\quad
+W^0_{\rm unit,\tau}=V_{0,\tau}/S(\tau),\\
+\overline W_{{\rm raw},\kappa,\tau}&=\overline V_{\kappa,\tau},\quad
+\overline W_{{\rm unit},\kappa,\tau}
+                         =\overline V_{\kappa,\tau}/S(\tau),\qquad
+Jh=(2\pi)^{-1/2}h.
+\end{aligned}
+\tag{36.6}
+$$
+
+Their form domains are respectively $\overline{\mathcal F}_0$ and
+$\overline{\mathcal F}_\kappa$ under this isometry; their operator
+domains are those of the corresponding free base operators.
+The sector operator here represents the restricted form, without an
+assertion that the full attractive operator preserves that subspace.
+For every fixed $N\ge1$, with all original parameters fixed as before,
+
+$$
+\begin{array}{c|c|c|c}
+\text{family}&\lim\Lambda_{\sigma,N}
+ &\lim\Lambda^0_{\sigma,N}&\lim\Lambda^{\rm sec}_{\sigma,N}\\ \hline
+\mathrm{raw},\ \tau_s&e(gc_s)&\zeta_N(0)&\zeta_N(0)\\
+\mathrm{unit},\ \tau_b&e(gc_0G_{\beta b}(0))
+ &\zeta_N(gc_0)&\zeta_N(gc_0/(2\pi))
+\end{array}
+\tag{36.7}
+$$
+
+All limits involving nonzero $\kappa$ hold through both signs and count
+multiplicity. In particular the actual lowest gaps have limits
+
+$$
+\begin{array}{c|c|c|c}
+\text{family}&\text{full}&\text{actual zero leaf}&\text{complete sector}\\ \hline
+\mathrm{raw},\ \tau_s&0&\Gamma(0)&\Gamma(0)\\
+\mathrm{unit},\ \tau_b&0&\Gamma(gc_0)&\Gamma(gc_0/(2\pi))
+\end{array}
+\tag{36.8}
+$$
+
+Each comparison gap displayed is strictly positive for the stated fixed
+data. The values $\zeta_N$ and $\Gamma$ are the exact complete spectral
+quantities (36.1)--(36.3), rather than scalar-height replacements.
+
+Proof. Equation (36.6) is exactly [G, (23.4)--(23.5)] and its
+surviving-charge version. Both absorbing height faces and the same
+survival function persist. The bounded fields give the stated operator
+domains. Theorem 34.1 already proves the uniform multiplier limits
+
+$$
+\begin{array}{c|cc}
+ &\mathrm{raw},\ \tau_s&\mathrm{unit},\ \tau_b\\ \hline
+W^0_{\sigma,\tau}&0&c_0\phi\\
+\overline W_{\sigma,\kappa,\tau}&0&c_0\phi.
+\end{array}
+\tag{36.9}
+$$
+
+For the actual zero leaf, bounded-multiplier min-max comparison with
+$\mathcal K_0$ or $\mathcal K_{gc_0}$ proves every fixed-index limit
+directly. To handle the changing complete sector domain, consider the
+reference base operator
+$\overline{\mathcal K}_{\kappa,c}=\overline L_\kappa-cM_\phi$.
+Its scalar blocks have potentials $(nA_\kappa+mB_\kappa)^2-c\phi$.
+For each fixed $(n,m)$ these potentials converge uniformly on $[l,u]$
+to (36.1), so every fixed scalar eigenvalue converges by min-max.
+
+There is no loss of angular modes in passing from this statement to the
+ordered complete spectrum. The uniform version of [G, (26.6)], now
+with $\eta=(n,m,0)$, bounds every block bottom from below by the right side
+of (36.5), with $C$ independent of small $\kappa$, including zero.
+Its $r$th eigenvalue is at least
+$r^2\lambda-c\|\phi\|_\infty$ as well. The first $N$ eigenfunctions
+of $H_c$ in the zero angular block provide a uniform $N$th
+eigenvalue upper bound $e_N(c)\le N^2\lambda$.
+Choose an energy strictly above this bound. Only a fixed finite set
+of angular modes and height indices can lie below it, by the two
+lower bounds. On that finite set all eigenvalues converge, and sorting
+finite multisets preserves convergence, including collisions and
+multiplicity. Hence the $N$th eigenvalue of
+$\overline{\mathcal K}_{\kappa,c}$ tends to $\zeta_N(c)$.
+
+Apply this with $c=0$ or $gc_0/(2\pi)$.
+The difference between the actual sector multiplier and its reference
+tends to zero in supremum norm by (36.9). On the same complete
+$\kappa$-domain, min-max bounds the difference of every ordered
+eigenvalue by that multiplier norm, including the factor $g/(2\pi)$.
+This proves the sector limits without identifying varying domains or
+asserting general operator convergence. The full column is Theorem 35.2.
+Subtract the first two limits and use (36.3) to obtain (36.8).
+The actual base and sector operators also have simple ground states at
+each fixed admissible cutoff: their connected base free heat kernels
+are strictly positive, and the bounded-potential argument (35.8)
+applies on $B$. Thus their first ordered differences are their actual
+lowest spectral gaps. $\square$
+

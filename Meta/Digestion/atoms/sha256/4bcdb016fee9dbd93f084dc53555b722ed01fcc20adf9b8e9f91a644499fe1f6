@@ -1,0 +1,58 @@
+**定理 188.2（非原子系数背景中的精确旧行）。** 在 188.1 的条件下，存在唯一 $Z\in N$，满足
+
+$$
+Z=Z^*,\qquad Z^2=1_N,\qquad
+\boxed{D(p,v)=\begin{pmatrix}0&iZ/2\\-iZ/2&0\end{pmatrix}.}
+\tag{188.2}
+$$
+
+这条结论只确定同一个旧 $D$ 在指定原输入上的值，不断言 $Z$ 在 $N$ 中中央，也不断言其他原输入共享该系数。
+
+证明。记 $d=D(p,v)$。先说明一个直接消费完整 PB 的零读取步骤。对任意原 $a,b$，记 $d_0=D(a,b)$、$g=a\circ b$。若数学正泛函 $\phi$ 满足 $\phi(g^2)=0$，PB $(a,b,0)$ 给
+
+$$
+D(b+d_0,g)-D(b-d_0,-g)=-2b\circ d_0.
+\tag{188.3}
+$$
+
+两张外层 P2 使两个 $\phi$ 输出读取均为零，所以 $\phi(b\circ d_0)=0$。交换 $a,b$，再用反对称性，得到 $\phi(a\circ d_0)=0$。此步骤不要求 $a\circ b=0$，只要求这份数学读取看不见 $g^2$。
+
+取 $N$ 的任意忠实 Hilbert 表示。对全部 $q$ 支撑向量读取原 $(p,v)$ 的 P2，第一对角值为零，所以 $qdq=0$。由 183.2 及 185.1 已在一般原域给出的标签旋转，原输入
+
+$$
+r=(p-v)/\sqrt2,\qquad s=(p+v)/\sqrt2
+$$
+
+满足 $D(r,s)=d$，且 $r\circ s=(p-v^2)/2=-q/2$。对任意数学正 $\beta$，取 $\phi(x)=\beta(pxp)$，则 $\phi((r\circ s)^2)=0$。用 (188.3) 及其交换式，再由全部正 $\beta$ 分离，得
+
+$$
+p(r\circ d)p=p(s\circ d)p=0.
+$$
+
+相加与相减，准确得到 $pdp=0$ 和 $p(v\circ d)p=0$。将自伴 $d$ 写成二乘二块矩阵，前两项令其对角块为零，后一项令其右上块为斜自伴。因此唯一存在自伴 $Z\in N$，使
+
+$$
+d=\begin{pmatrix}0&iZ/2\\-iZ/2&0\end{pmatrix},
+\qquad v\circ d=0.
+\tag{188.4}
+$$
+
+这个块形状来自原 P2、旧关系旋转及准确 PB；没有先将 $d$ 放进原标量矩阵子代数。
+
+固定任意表示向量 $\eta$，置 $n=\|\eta\|^2$。用 $\zeta_\varepsilon=(\varepsilon\eta,i\eta)$ 读取原 $(p,v)$ 的 P2，两个实输入作用向量的实内积为零，因而
+
+$$
+\varepsilon^2|\langle\eta,Z\eta\rangle|^2
+\le\varepsilon^2(1+\varepsilon^2)n^2.
+\tag{188.5}
+$$
+
+对任意非零实 $\varepsilon$ 约去 $\varepsilon^2$，再令其足够小，得到 $|\langle\eta,Z\eta\rangle|\le\|\eta\|^2$。自伴性和忠实表示给
+
+$$
+-1_N\le Z\le1_N,\qquad \|Z\|\le1.
+\tag{188.6}
+$$
+
+这只是正表的上预算。下面用同一个固定 $d$ 和完整 PB 支付反向界。
+

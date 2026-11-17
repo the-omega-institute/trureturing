@@ -1,0 +1,11 @@
+**推论 368.2（完整消费者的准确引用对应）。** 在定理 368.1 的条件下，本卷定理 330.1、324.2 与词卷推论 339.1 的全部原范围消费者直接适用于同一数据；其前件对应为：
+
+| 原量词与已取得的关系 | 现有结论及其所有者 |
+| --- | --- |
+| 全域 I+SC、同一 sigma、原 Jordan 乘法和同一 $D$ | 框架卷 277.1、本卷 (330.2)：$\mathcal A_A=\bigoplus_s B(H_{A,s})$，$E_A=(\mathcal A_A)_{\rm sa}$，原正锥和全部中心保持，$a\cdot b=a\circ b-\mathrm iD_ab$、$D_ab=\mathrm i[a,b]/2$，原曲率及每个幂等元的 $D_c^2=-P_c/4$。 |
+| 全部原准备、原 $g^0$ 和原不等权 $q$ | (330.3)、词卷 (339.2)：$\rho_\alpha=B_Ax_\alpha$、$\widehat x_\alpha=\mathcal W_A^{-1}\rho_\alpha$、$\alpha(y)=\tau_A(\rho_\alpha y)=q_A(\widehat x_\alpha,y)$、$\tau_A(\rho_\alpha)=\alpha(u_A)$。一般不把 $x_\alpha$ 当作 $\widehat x_\alpha$；零、奇异及次归一质量保持。 |
+| 原 X 的 Jordan／同一 $D$ 保持、有序交叉零、乘积张成及实际乘积准备分离 | 330.1、词卷 339.1：每个已声明实际联合是保留全部中心对的同取向普通复张量，全部实际相关输入保持；不要求联合的 $q$、$B_A$ 因子化。 |
+| 每个旧事件的全事件 R、同设备同记录旁接及完整相关正锥；原次幺性与完整效果和 | (330.3)、词卷 339.1：$\Phi_f=B_BT_f^{\dagger_0}B_A^{-1}$ 是原事件的 CP/TNI 运输，原完整设备事件和为 TP；闭背景按母卷 69.2 在同一执行上延拓。 |
+| 整个 AC、精确 $N_u$、Xs 及原合法连线 | (330.4)、324.2：对每个数学效果保留原所选精确有限平方根词的 $\sqrt e\rho\sqrt e$ 及原许可相关执行；每个占用失败方向的完整输出为 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$，其他方向／中心用原失败映射，仅原实际丢弃才取质量。 |
+| 实 Jordan F、同实现实际细记录、原分组／遗忘及具名同数双返回和反向资料 | (330.5)、词卷 (339.5)：$S_\ell=\operatorname{Ad}_{K_\ell}$、$U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$，$U_\ell S_\ell=q_\ell\mathsf C_{e_\ell}$、$S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}$，$U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell}$；原 $q_\ell>0$ 不归一，零标签、完整失败及原反向资料不丢失。 |
+| 原箭头、实际记录分支、已供并行联合与所有原合法有限接续 | (330.6)、词卷 (339.6)：$\alpha(T_{f_1}\cdots T_{f_m}w)=\tau_{A_m}(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha))$，含空历史、顺序、自适应、并行、分组／遗忘、零／失败／返回／停止；只在原分母正时取条件概率。 |

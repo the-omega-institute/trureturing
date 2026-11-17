@@ -16,6 +16,7 @@ The scoped report records declaration statement_id values:
   factorial_prod_dvd_of_floor = sha256:50335c191d9334cd159b0c8f8c463c3090bb5624f2a0108461ea86f752952f0e.
 No module pin is used as a declaration ID.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21857
+Escape audit unfinished for binary_factorial_balance: https://github.com/the-omega-institute/trureturing/issues/23611
 The sequence and claim use the source expressions with natural division.
 The shared quotient_odd theorem is also used by BalaA361035Parity.result.
 The bind-only classification includes the upstream route for of_digits_sum_one:
@@ -87,7 +88,7 @@ private lemma rough_integrality (n j : ℕ) :
   simpa only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil,
     mul_one, one_mul, pow_succ, pow_zero, mul_assoc] using h
 
-private lemma binary_factorial_balance (n : ℕ) :
+lemma binary_factorial_balance (n : ℕ) :
     n.factorial.factorization 2 + (Nat.digits 2 n).sum = n := by
   have h := Nat.sub_one_mul_factorization_factorial (n := n) Nat.prime_two
   have hs := Nat.digit_sum_le 2 n

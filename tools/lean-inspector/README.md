@@ -128,6 +128,15 @@ PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支�
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
+Optional `Application.prediction` binds native operation evidence to the complete
+original theorem, separately from its initialized single-window law. The compiled
+producer projects checked closure or a natural-state separation witness into
+`continuation_target.predictive_closure`; missing evidence remains `unknown`.
+Closure covers every finite word of the declared letters, including absorbing
+rejection, by the existing dynamic closure theorem. It supplies no finite state
+count, compression claim, probability law or convergence result. Standalone JSON
+claims remain unverified. See [the prediction contract](../../docs/develop/spec/auric_fib_atom_escape_audit_spec.md#41-指定任务与操作的预测闭包).
+
 The native executables `reportInspector` and `compiledJudgeTests` have no D5,
 Reg or Mathlib modules in their transitive Lean imports. Their static contract
 dependency is the mathematical-dependency-free Core module. Mathematical

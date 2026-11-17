@@ -1,0 +1,21 @@
+**Proposition 10.4 (A nonzero tail functional erased by a surviving prefix image).** There is an actual original history with just one singular event, a nonzero rank-one prefix image, and a nonzero infinite-loss tail functional whose composition with that prefix is zero. The entire history decays for every input, but no finite time annihilates the whole plane.
+
+Take $(a,b,c)=(2,1,3)$, events $t_j=j$, and
+
+$$
+\lambda_0=0,\qquad \lambda_{2k+1}=\frac12,\qquad
+\lambda_{2k+2}=1-2^{-k-3},\qquad
+\alpha_j=\frac{1+\lambda_j}{4-2\lambda_j}\quad(k\geq0).
+\tag{10.8}
+$$
+
+*Proof.* For this triple the literal transfer is $M=\begin{pmatrix}-1&4/3\\-3/2&1\end{pmatrix}$, the angle is $\pi/2$, and the unit vectors $e=(2,3)^T/\sqrt6$, $q=(2,0)^T/\sqrt6$ obey $Me=q$, $Mq=-e$ and $\langle e,q\rangle_Q=0$. Hence the interaction factors at even indices fix $e$ and those at odd indices fix $q$. The first factor is exactly $F_1=P_0=ee^TG$, which has a nonzero rank-one image. The tail starting at $s=1$ is nonsingular and has $D_1=\infty$, since every odd index contributes $\log2$.
+
+For an arbitrary tail input $z=xe+yq$, the odd tail factors multiply its $e$ coordinate by $1/2$, and the even tail factors multiply its $q$ coordinate by $1-2^{-k-3}$. Therefore its exact limiting norm is $p|y|$, where $p=\prod_{k\geq0}(1-2^{-k-3})\geq3/4$, by the finite-product inequality used above. One may take $\ell_1=pq^TG\ne0$, while $\ell_1F_1=0$. For an actual initial input $u_0$, write $\beta=e^TGu_0$. After $n\geq1$ events its interaction vector is
+
+$$
+F_nu_0=2^{-\#\{j<n:j\text{ odd}\}}\beta e.
+$$
+
+It tends to zero for every $u_0$. When $\beta\ne0$ it remains nonzero at every finite $n$, and when $\beta=0$ it is killed at the first event. In particular $F_n$ is never the zero map at a finite time. Identity (8.5) transfers these exact facts to the full original chronological trajectory. This realizes the zero-composition alternative in (10.6) without replacing asymptotic erasure by finite annihilation. $\square$
+

@@ -1,0 +1,42 @@
+**定义 161.1（原候选、实际三轴与结论域）。** 本节及以下各节完整采用130.1、137.1、147.1的同一原 $(E,C,u,N,\mathcal P,S,D)$。$E$ 是实Archimedean序单位空间，$\mathcal P$ 的正实线性评价分离元素并准确决定 $C$；每份质量 $m_\alpha=\alpha(u)$ 保留原值，包括零、不等和次归一质量。A1保留所有原标签的两条有向Hermitian二表正性；A2保留实际相加三表 $(a+b,a,b)$ 及其排列在整个实三空间的实部半正定性和 $(1,-1,-1)$ 的零二次值；A3保留 $S(u,u)=u$ 及同一固定有理 $0<\vartheta_0\le1$ 上的 $0\le z\le\vartheta_0u\Rightarrow S(z,z)\le z$。全部原P2和完整原PB仍对全部原输入成立。
+
+沿前卷16.1–16.2的同一忠实、含单位、等距且准确保锥JC包含，写
+
+$$
+\begin{gathered}
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\qquad\mathcal A=C^*(X),\\
+S(a,b)=a\circ b=(ab+ba)/2,\qquad
+C=E\cap\mathcal A_+,\quad N=\|\cdot\||_E.
+\end{gathered}
+\tag{161.1}
+$$
+
+原 $E$ 可以不完备，$X$ 不必为 $\mathcal A_{\rm sa}$；$D:E^2\to E$ 始终是同一旧总映射。不预付一般齐次、可加、连续、可测、商下降、输入函数演算或完成延拓。固定实际原 $h,e,j=D(h,e)$，直接消费133.1–134.1与147.2–147.3：
+
+$$
+\begin{gathered}
+h^2=e^2=j^2=u,\quad h\circ e=h\circ j=e\circ j=0,\\
+Q=ihej\in Z(\mathcal A),\quad Q^*=Q,\quad Q^2=u,\\
+V_h=\{v\in E:hv=-vh\},\quad
+T=[L_j,L_e],\quad D(h,v)=Tv=iQhv,\quad T^2v=-v,\\
+U_h=2L_h^2-I,\quad
+P_{\rm tr}=(I-U_h)/2,\quad P_{\rm com}=(I+U_h)/2,\\
+\operatorname{Com}_h=P_{\rm com}E=\{c\in E:hc=ch\}.
+\end{gathered}
+\tag{161.2}
+$$
+
+$L_a z=a\circ z$。$T$、两份投影及 $h\circ x$ 都是保持原 $E$ 的有限Jordan表达式。辅助 $Q$ 不要求属于 $E$ 或 $X$；证明中的结合乘法、Hilbert向量及读取代数不扩大原输入域。零原对象的所有等式均为零。
+
+本组定理的完整原值域是
+
+$$
+D(Rh,\mu u+\lambda h+v),\qquad
+D(su+rh,w),\qquad
+R,\mu,\lambda,s,r\in\mathbb R,\quad v,w\in V_h.
+\tag{161.3}
+$$
+
+第二式的第二输入严格为横向；这两个受限域不被合成为 $D(su+rh,\mu u+\lambda h+v)$ 的一般公式。原七项来源合同保持145.1–145.7、155.1及下文171的全部量词。
+

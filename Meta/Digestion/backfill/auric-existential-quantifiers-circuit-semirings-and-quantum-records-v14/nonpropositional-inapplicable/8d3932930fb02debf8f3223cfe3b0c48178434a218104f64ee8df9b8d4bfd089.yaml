@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d3932930fb02debf8f3223cfe3b0c48178434a218104f64ee8df9b8d4bfd089
+  normalized_sha256: sha256:8d3932930fb02debf8f3223cfe3b0c48178434a218104f64ee8df9b8d4bfd089
+cas_ref: sha256:8d3932930fb02debf8f3223cfe3b0c48178434a218104f64ee8df9b8d4bfd089
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only closure; no existing frozen project GID supplies the complete clause. For finite M and D.PosSemidef, Matrix.toSeminormedAddCommGroup and Matrix.toInnerProductSpace give the coefficient seminorm and c-star-D-d form. SeparationQuotient.inner_mk_mk and Matrix.PosSemidef.dotProduct_mulVec_zero_iff identify the separation projection kernel with D.mulVecLin.ker. Submodule.quotEquivOfEq, LinearMap.quotKerEquivOfSurjective and InnerProductSpace.induced transport the Hilbert structure onto the literal algebraic matrix-kernel quotient. LinearMap.quotKerEquivRange.finrank_eq and the definition of Matrix.rank give its dimension; FiniteDimensional.complete gives completeness. Pi.basisFun, Basis.span_eq, Submodule.map_span and quotient surjectivity give the spanning standard-coordinate classes, whose Gram entries follow by normalization. LinearMap.ext_on_range and ext_inner_right make the spanning-family analysis map injective; RKHS.equiv and RKHS.equiv_kerFun then give the labelled unitary equivalence, with uniqueness by LinearMap.ext_on_range. The comparison Hilbert space has arbitrary universe and no finite-dimensional hypothesis. No positive-definite or nonempty-index hypothesis is used, so zero, singular and empty cases are included. All suppliers are from pinned Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; their binding and normalization introduce no new mathematical declaration. The separate direct-sum and tensor appendix is not settled by this receipt.
+    previous_atom_id: 8c4a16742b7d71820b4a981020798de1eabd048165d2a6c5c68cb7c732ba2f64
+    next_atom_id: 24e89337ec5ddb57707a21d9c9cd3a5bdf4f2aeb104dbcd9d40305f2c47fd2dc

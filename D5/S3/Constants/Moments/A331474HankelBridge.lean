@@ -70,10 +70,10 @@ def p (n : Nat) : Int :=
 def u (n : Nat) : Int :=
   S (P n)
 
-private def catalanInt : PowerSeries Int :=
+def catalanInt : PowerSeries Int :=
   PowerSeries.map (Nat.castRingHom Int) PowerSeries.catalanSeries
 
-private def F0 : PowerSeries Int :=
+def F0 : PowerSeries Int :=
   PowerSeries.derivative (R := Int) catalanInt
 
 private def F1 : PowerSeries Int :=
@@ -103,7 +103,7 @@ private def G : Nat → PowerSeries Int
   | 0 => F0
   | n + 1 => -tail (n + 1) * G n
 
-private theorem source_moments :
+theorem source_moments :
     (∀ n, PowerSeries.coeff n F0 = b n) ∧
     (∀ n, b (n + 1) = s (n + 1) + s n) := by
   have hcoeff (n : Nat) : PowerSeries.coeff n F0 = b n := by

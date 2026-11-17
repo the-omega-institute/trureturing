@@ -1,0 +1,49 @@
+**Definition 16.1 (The full complex spectral objective in the original family).** For every integer $m\geq1$ and every $v\in(0,\infty)^{m+1}$, use exactly $A,B,B_\alpha$ of Definition 1.1, with $z_0=z_{m+1}=0$, and put $U_v=A^{-1}B$. Extend the displayed original first row continuously to $\alpha\in[0,1]$. Its denominator $v_2+\alpha v_1$ is positive on this closed interval. Use the increasing normalized parameter from (12.1), with its inverse,
+
+$$
+q_v(\alpha)=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},
+\qquad
+\alpha_v(q)=\frac{v_2(1+q)}{v_1+2v_2-v_1q},
+\qquad -1\leq q\leq1,
+\tag{16.1}
+$$
+
+and write $T_{v,q}=A^{-1}B_{\alpha_v(q)}$. In particular $T_{v,1}=U_v$; $T_{v,-1}$ is the other original endpoint extension. The first row of $B_{\alpha_v(q)}$ is
+
+$$
+(B_{\alpha_v(q)}z)_1=-qz_1+(1+q)\frac{v_1}{v_1+v_2}z_2,
+\tag{16.2}
+$$
+
+where $z_2=0$ if $m=1$, and every other row is unchanged from $B$. Thus no original coordinate or zero endpoint is changed by this notation.
+
+For $q\in[-1,1]$ let
+
+$$
+p_v(\zeta,q)=\det(\zeta I_m-T_{v,q}),\qquad
+\mathsf S_v(q)=\{\mu_1(q),\ldots,\mu_m(q)\}
+\tag{16.3}
+$$
+
+be its monic complex characteristic polynomial and its entire multiset of complex roots, counted with algebraic multiplicities. Define
+
+$$
+\rho_v(q)=\max_{1\leq j\leq m}|\mu_j(q)|,\qquad
+\gamma_v=\min_{q\in[-1,1]}\rho_v(q),\qquad
+Q_v=\{q\in[-1,1]:\rho_v(q)=\gamma_v\}.
+\tag{16.4}
+$$
+
+The observation is
+
+$$
+\mathsf O(v)=(m,\mathsf S_v(1)).
+\tag{16.5}
+$$
+
+Equality of observations means equality of dimensions and equality of the entire undamped complex multisets, including multiplicities. The set $Q_v$ is an optimizer set; the energy form $Q(z)$ retains exactly its meaning in (12.1).
+
+The literal odd/even equations, centering, and Token-1 first row are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Section IV.A, page 3, and Section IV.B.1, page 4](https://arxiv.org/pdf/2608.27085v1). Their pair count is $m=n-1$, their centered $u$ is $z$, their $M$ is $U_v$, and their fixed $M_\alpha$ is $T_{v,q_v(\alpha)}$. Lemma 2 there supplies the undamped positive quadratic invariant, and Lemma 3 supplies determinant contraction in the open damping interval. The explicit energy, rank-one factorization, strict fixed-map contraction, low-dimensional transfers, finite-annihilation criteria and rate bounds in Sections 3 and 12–15 are supporting results here. In the complete [damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) and [finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), source pair $i$ and velocity $v_j$ have indices $i-1$ and $j-1$; `A`, `B`, `Balpha`, `Malpha` denote $A,B,B_\alpha,T_{v,q_v(\alpha)}$. The first-event weight `theta` there is $(1+q)/2$, not an undamped rotation angle. The local energy, loss and literal sweep identities used below are `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_phase`, `sweep_stacked` and `source_factorization`; the strict fixed-map conclusion is `result`, with the finite-path rigidity, boundary observability and power-decay intermediates. Their complete [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) and [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) expositions have the same correspondence.
+
+Polynomial factorization with multiplicities, the elementary symmetric functions of the roots and the quadratic formula are used in their classical sense; see [NIST DLMF, version 1.2.8, §1.11(ii)–(iv), especially (1.11.10), (1.11.11) and (1.11.21)–(1.11.23)](https://dlmf.nist.gov/1.11). These facts and the cited Token identities are intermediates to the information assertion below. Mensing's homogeneous qualitative antecedent is credited in [the same Token v1, Section II and reference [11]](https://arxiv.org/html/2608.27085v1#bib.bib11); its quantitative full-text overlap is unknown and no result from that full text is assumed. The attribution is confined to the stated sources and versions, with no exhaustive-literature or priority assertion.
+

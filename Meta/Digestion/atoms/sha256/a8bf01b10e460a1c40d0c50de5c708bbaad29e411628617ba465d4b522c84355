@@ -1,0 +1,56 @@
+**命题 20.2（全正 P2 相容而被实际探针排除的同一实现）。** 取
+
+$$
+\begin{gathered}
+m=1,\qquad D_{\rm env}=(1),\qquad V=(0,1)^{\mathsf T},\qquad
+B=\begin{pmatrix}\rho/2&1\\1&\rho+1\end{pmatrix},\\
+s=\rho\operatorname{diag}(1,-2,0),\qquad
+0<|\rho|\le1/\sqrt2.
+\end{gathered}
+\tag{20.11}
+$$
+
+对两种分别解释的 $\sigma$，该完整 $M_3(\mathbb C)$ 实现满足全部原正泛函的固定 P2，而下述同一实现的有限原探针与原向量严格违反 PB：
+
+$$
+x_\sigma=\begin{pmatrix}5\rho/2&2+3\sigma i&0\\
+2-3\sigma i&0&0\\0&0&0\end{pmatrix},\qquad
+\xi=(1,0,0)^{\mathsf T}.
+\tag{20.12}
+$$
+
+证明。P2 直接复用定理 8.1。其参数为
+
+$$
+H=B-VV^*=\begin{pmatrix}\rho/2&1\\1&\rho\end{pmatrix},\qquad
+C^{-1/2}HC^{-1/2}
+=\begin{pmatrix}\rho/2&1/\sqrt2\\1/\sqrt2&\rho/2\end{pmatrix},
+\qquad \beta=1/\sqrt2.
+\tag{20.13}
+$$
+
+取其有序正交谱基 $U_0$，则原度量给
+
+$$
+GG^*=U_0^*C^{-1/2}(I_2+VV^*)C^{-1/2}U_0=I_2,
+\quad Q=I_2,\quad R=\Delta=1,\quad h=J=0.
+\tag{20.14}
+$$
+
+故 (8.2) 准确成为 $|\rho|\le\beta=1/\sqrt2$，包含端点；这已是对原全部正复线性泛函、零泛函和任意有限质量的充要证书，不以选定向量读取替代 P2 的全称量词。
+
+对该同一输入，$a=\rho/2$、$b=1$，定理 20.1 的 $\tau=3|\rho|/2$、$u=5\rho/2$、$\eta=2-3\sigma i$，正好得到 (20.12)。其两对完整原作用列明确为
+
+$$
+\begin{aligned}
+R_+\xi&=(2\rho,2-2\sigma i,0)^{\mathsf T},&
+S_+\xi&=2R_+\xi,\\
+R_-\xi&=(3\rho,2-4\sigma i,0)^{\mathsf T},&
+S_-\xi&=-R_-\xi.
+\end{aligned}
+\tag{20.15}
+$$
+
+所以两笔 Gram 预算均为零，而 (20.10) 给
+$|\phi_\xi(L)|=\rho^2>0$。环境矩阵 $1$、连线 $V$、两个演员对角条目及全部原标签均保持 (20.11) 的实际值。∎
+

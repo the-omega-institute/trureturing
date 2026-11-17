@@ -1,0 +1,105 @@
+**Lemma 25.2 (a uniform matrix bound with a rational margin).**
+For $w\in\mathcal C_-$, abbreviate $u=u(w)$, $v=v(w)$,
+$\delta=4-B(w)$, and define
+
+$$
+\begin{aligned}
+L_\delta&=d^2-2\gamma(1+\delta),&
+N_\delta&=e^2-2\gamma\delta,\\
+K(w)&=
+\begin{pmatrix}
+L_\delta-u^2&-uv\\
+-uv&N_\delta-v^2
+\end{pmatrix}.
+\end{aligned}
+\tag{25.14}
+$$
+
+Then $K(w)$ is positive semidefinite. For $\delta>0$ it is positive
+definite and satisfies
+
+$$
+N_\delta-v^2>\frac{937}{600}\delta,\qquad
+\det K(w)>\frac{724}{5625}\delta>\frac{\delta}{8}.
+\tag{25.15}
+$$
+
+At $\delta=0$, it is exactly
+$\operatorname{diag}(d^2-2/25,0)$. For all $p\in[0,1]$,
+
+$$
+G(w,p)-\gamma r(w,p)
+=
+\begin{pmatrix}\sqrt p&\sqrt{1-p}\end{pmatrix}
+K(w)
+\begin{pmatrix}\sqrt p\\\sqrt{1-p}\end{pmatrix}.
+\tag{25.16}
+$$
+
+Proof. The half-angle bounds (22.13), with
+$d=2(h+c)$ and $e=2(h+s)$, give the following rational consequences:
+
+$$
+d^2>\frac{53}{5},\qquad
+e^2<\frac{119}{25},\qquad
+es>\frac56,\qquad
+c^2<\frac{171}{200},\qquad
+s^2<\frac3{20}.
+\tag{25.17}
+$$
+
+For $\gamma=1/25$ and $0\le\delta\le1/6$, these imply
+
+$$
+L_\delta>\frac{53}{5}-\frac7{75}=\frac{788}{75},
+\qquad 0<N_\delta<\frac{119}{25}.
+\tag{25.18}
+$$
+
+The positivity of $N_\delta$ also follows from $e^2>4$ in
+(24.19) and $2\gamma\delta\le1/75$. If $\delta>0$,
+
+$$
+\begin{aligned}
+N_\delta-(e-s\delta)^2
+&=\delta\bigl(2(es-\gamma)-s^2\delta\bigr)\\
+&>\delta\left(2\left(\frac56-\frac1{25}\right)
+                       -\frac3{20}\frac16\right)
+=\frac{937}{600}\delta.
+\end{aligned}
+\tag{25.19}
+$$
+
+The envelope for $v$ proves the first inequality in (25.15).
+Expanding the determinant and applying both simultaneous bounds
+of Lemma 25.1 gives
+
+$$
+\begin{aligned}
+\det K(w)
+&=L_\delta(N_\delta-v^2)-N_\delta u^2\\
+&\ge L_\delta\bigl(N_\delta-(e-s\delta)^2\bigr)
+       -N_\delta c^2(4\delta-\delta^2)\\
+&\ge L_\delta\bigl(N_\delta-(e-s\delta)^2\bigr)
+       -4N_\delta c^2\delta\\
+&>\delta\left(\frac{788}{75}\frac{937}{600}
+          -4\frac{119}{25}\frac{171}{200}\right)
+=\frac{724}{5625}\delta>\frac{\delta}{8}.
+\end{aligned}
+\tag{25.20}
+$$
+
+Thus the lower-right entry and determinant are positive whenever
+$\delta>0$, proving positive definiteness. At $\delta=0$, Lemma 25.1
+gives $u=0$, $v=e$, and the stated boundary matrix has
+$d^2-2/25>0$. Finally, (23.3) and $r=2(p+\delta)$ give
+
+$$
+G-\gamma r
+=L_\delta p+N_\delta(1-p)
+ -(u\sqrt p+v\sqrt{1-p})^2,
+\tag{25.21}
+$$
+
+which is (25.16), including both endpoint populations. $\square$
+

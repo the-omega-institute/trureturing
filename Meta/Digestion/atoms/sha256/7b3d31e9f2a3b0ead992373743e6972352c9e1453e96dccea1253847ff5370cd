@@ -1,0 +1,19 @@
+**定理 96.6（复低余维的完整混态零拼合）。** 在(96.1)的复域中，若 $c\le2$，则
+$\mathrm G_2\Rightarrow\mathrm{Z0}$。
+
+证明。固定任意原 $p=vv^*$。若 $d_p\le1$，96.4已给所有可排除纯点与 $v$ 正交。
+否则只能是 $c=d_p=2$，取96.5给出的原纯 $q_0$ 及唯一提升
+$\mathcal M_{pq_0}=\{M_0\}$。对(96.5)的每个补框架点 $r_j$，均有 $p\perp r_j$。
+把全 $\mathrm G_2$ 分别用于 $(p,q_0,r_j)$，由(96.4)得
+$\mathcal M_{pq_0}\cap\mathcal M_{pr_j}\ne\varnothing$，单点性迫使
+
+$$
+M_0\in\mathcal M_{pr_j}\quad(2\le j\le n),\qquad
+v^*M_0v=1,\qquad M_0v=v.
+\tag{96.25}
+$$
+
+现在任取 $p\perp q=ww^*$。再次把 $\mathrm G_2$ 用于 $q_0,q$，得到同一个 $M_0\in\mathcal M_{pq}$，
+所以 $0=v^*M_0w=v^*w$。这对每个 $p$ 成立，96.3遂给全部原混态的(96.9)和完整 $\mathrm{Z0}$。
+整个论证只在纯三元组上用 $\mathrm G_2$，没有把补态放入其前件，也没有假定任意二维凸集族具有二元Helly性。证毕。
+

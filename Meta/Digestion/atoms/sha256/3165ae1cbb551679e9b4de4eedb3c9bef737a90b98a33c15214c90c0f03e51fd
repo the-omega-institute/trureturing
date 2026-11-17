@@ -1,0 +1,145 @@
+**定理 C-85.2（固定均值的闭容量与完整取值区间）。** 在约定 C-84.1 的全部纯态上，
+
+$$
+\mathcal C_{\max}=\frac{2\sqrt{w(r-w)}}r
+=2\sqrt{\nu(1-\nu)},\qquad
+\{\mathcal C\}=[0,\mathcal C_{\max}].
+\tag{C85.3}
+$$
+
+这里允许闭纤维端点；它是状态集合上的结论，不是原生控制可达性的结论。
+
+证明。左侧约化矩阵 $\rho_L=BB^\dagger$ 的对角为 $(r-X)/r,X/r$。
+右侧约化矩阵为 $\rho_R=B^{\mathsf T}\bar B$，其对角为 $(r-Y)/r,Y/r$；
+它与 $B^\dagger B$ 互为转置，且两侧行列式均为 $|\det B|^2$。因此分别有
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=4\det\rho_L
+=\frac{4X(r-X)}{r^2}-4|(\rho_L)_{01}|^2
+\le\frac{4X(r-X)}{r^2},\\
+\mathcal C^2
+&=4\det\rho_R
+=\frac{4Y(r-Y)}{r^2}-4|(\rho_R)_{01}|^2
+\le\frac{4Y(r-Y)}{r^2}.
+\end{aligned}
+\tag{C85.4}
+$$
+
+C-84.2 的最小量恒等式给所需上界。下面给满足原概率约束的取等构造。
+
+先作有限个可逆坐标重标记。交换左、右二元因子的零一标签以及交换因子，
+对参数的作用分别为
+
+$$
+\begin{aligned}
+L:(X,Y,\kappa)&\longmapsto(r-X,Y,Y-\kappa),\\
+R:(X,Y,\kappa)&\longmapsto(X,r-Y,X-\kappa),\\
+S:(X,Y,\kappa)&\longmapsto(Y,X,\kappa).
+\end{aligned}
+\tag{C85.5}
+$$
+
+$L$ 交换底面表的两行，$R$ 交换两列，$S$ 转置；中模式保持不动。
+这些都是对五个基标签的置换，各自为对合，保持总质量、合法性、$r,w$、
+行列式绝对值及谱。先把两边缘分别折到
+$u=\min(X,r-X)$、$v=\min(Y,r-Y)$，再将较小者放在左边，便有
+
+$$
+X=w,\qquad Y=y,\qquad 0<w\le y\le r/2,\qquad 0\le\kappa\le w.
+\tag{C85.6}
+$$
+
+单侧翻转使 $\chi$ 变号，因子交换保持 $\chi$；$0,\pi$ 这两个相位条件均不变。
+把所得振幅用逆置换送回即恢复原来的 $X,Y$ 及原标签。
+这仅为证明中的坐标变换，没有给原生操作表增加任何控制。
+
+若 $w<r/2$，置 $d=r-2w>0$ 并定义
+
+$$
+\kappa_*=\frac{w(r-w-y)}d.
+\tag{C85.7}
+$$
+
+由 $y\le r/2$ 得 $r-w-y\ge r/2-w=d/2>0$，故 $\kappa_*>0$。
+又 $y\ge w$ 给 $r-w-y\le r-2w=d$，故 $\kappa_*\le w$。
+四底角的完整值为
+
+$$
+\begin{aligned}
+p_0^*&=\frac{(r-w)(r-w-y)}d,&
+p_1^*&=\frac{w(y-w)}d,\\
+p_3^*&=\frac{(r-w)(y-w)}d,&
+p_{13}^*&=\frac{w(r-w-y)}d.
+\end{aligned}
+\tag{C85.8}
+$$
+
+这可由式 (C84.2) 逐项代入；分母为正、两个分子因子非负，故全部合法。
+两行和分别为 $r-w,w$，右边缘为 $y$，所以并未更改折叠后的矩约束。
+另有 $p_0^*p_1^*=p_3^*p_{13}^*$。
+取实际代表
+
+$$
+\psi^*=(\sqrt{p_0^*},\sqrt{p_1^*},\sqrt{1-r},
+\sqrt{p_3^*},-\sqrt{p_{13}^*}).
+$$
+
+在全正处其 $\chi=\pi$，在端点该式仍直接定义振幅。
+$B$ 的行内积为
+$(\sqrt{p_0^*p_1^*}-\sqrt{p_3^*p_{13}^*})/r=0$，故
+
+$$
+\rho_L=\operatorname{diag}((r-w)/r,w/r).
+$$
+
+于是 $\mathcal C=2\sqrt{w(r-w)}/r$，达上界。
+
+若 $w=r/2$，C-84.2 强制原边缘 $X=Y=r/2$。置 $L=r/2$，
+概率是 $(\kappa,L-\kappa,1-r,L-\kappa,\kappa)$。
+每个内部 $\kappa\in(0,L)$ 在 $\chi=\pi$ 时都有
+
+$$
+B=\frac1{\sqrt r}
+\begin{pmatrix}\sqrt\kappa&\sqrt{L-\kappa}\\
+\sqrt{L-\kappa}&-\sqrt\kappa\end{pmatrix},
+\qquad BB^\dagger=\frac12I_2,\qquad\mathcal C=1.
+\tag{C85.9}
+$$
+
+两个端点也由同一振幅表达取到一，但不在零振幅处要求一个内在角。
+
+最后，对原来的任意边缘，在
+
+$$
+\kappa_0=\frac{XY}{r},\qquad \chi=0
+\tag{C85.10}
+$$
+
+取全部底角振幅非负。四底角概率为
+
+$$
+\left(\frac{(r-X)(r-Y)}r,\ 
+\frac{X(r-Y)}r,\ 
+\frac{(r-X)Y}r,\ 
+\frac{XY}r\right).
+\tag{C85.11}
+$$
+
+四者严格正，且条件向量分解为
+
+$$
+|\phi_0\rangle=
+\left(\sqrt{1-X/r}|0\rangle+\sqrt{X/r}|1\rangle\right)
+\otimes
+\left(\sqrt{1-Y/r}|0\rangle+\sqrt{Y/r}|1\rangle\right).
+$$
+
+故 $\mathcal C=0$。在折叠坐标中，从这个点到上述最优点取
+$\kappa(t)=(1-t)wy/r+t\kappa_*$、$\chi(t)=\pi t$；
+对称分支任选一个内部最优高度代替 $\kappa_*$。
+取前三个底角的正平方根、最后一个乘 $e^{-i\pi t}$，中模式恒为 $\sqrt{1-r}$，
+便是一条合法实际振幅连续路径。再逆置换回原标签。
+行列式模连续，从零到上界，由介值定理得到全部中间值；上界排除其他值。证毕。
+

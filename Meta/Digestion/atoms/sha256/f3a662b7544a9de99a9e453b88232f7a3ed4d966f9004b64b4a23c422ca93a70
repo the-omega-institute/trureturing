@@ -1,0 +1,70 @@
+#### 定理 15.1：总量归一后的完全正性与递归
+
+令
+
+$$
+T=\frac{M(K,L)}{B(e,M(K,L)e)}.
+$$
+
+则 Q17 强制
+
+$$
+\boxed{T=\frac{I_W+P_e}{2},\qquad
+\Phi_T(X)=\frac34X+\frac14\sigma_eX\sigma_e.}
+\tag{15.1}
+$$
+
+因此 $\Phi_T$ 完全正、保迹且保单位，保持来源轴的两个端点，横向内容减半。对每个整数 $m\ge0$，有
+
+$$
+\begin{aligned}
+T^m&=P_e+2^{-m}(I_W-P_e),\\
+\Phi_T^m(X)
+&=\frac{1+2^{-m}}2X+\frac{1-2^{-m}}2\sigma_eX\sigma_e.
+\end{aligned}
+\tag{15.2}
+$$
+
+特别地，$\lVert T^m-P_e\rVert_{\rm op}=2^{-m}$。
+
+**证明。**
+
+主定理给 $M=\alpha(I+P_e)$ 及 $B(e,Me)=2\alpha=\lVert M\rVert_{\rm op}$，所以总量按自身来源读数归一即得第一式。 Pauli 关系给
+
+$$
+\sigma_e\sigma_n\sigma_e=\sigma_{2B(e,n)e-n}.
+$$
+
+因此两份酉共轭按权重 $3/4,1/4$ 混合，恰好保留来源分量、把横向分量减半，证明第二式。Kraus 算子为 $\sqrt3 I_2/2$、$\sigma_e/2$，其 $A^*A$ 之和为单位；任意参考上的作用仍是正矩阵的共轭之和，所以完全正且保迹。
+
+因为 $P_e$ 与 $I-P_e$ 为互补投影，幂运算逐块给出 $T^m$。Bloch 提升保复合，遂得过程公式。最后两个块上的本征值分别为 $0,2^{-m}$，给出范数等式。
+
+$\square$
+
+这里的两个端点指归一矩阵球的边界。若全部原准备的外半径为 $R_*>1$，原来源本身位于同一轴的内部；线性缩放不改变 $T$ 保持这条轴的结论。
+
+归一后的两份平面返回为
+
+$$
+P=-\bar K^2=P_e+P_v,\qquad
+Q=-\bar L^2=P_e+P_w,
+\qquad T=\tfrac12(P+Q).
+$$
+
+在 $(v,w,e)=(x,y,z)$ 坐标中，$P=\operatorname{diag}(1,0,1)$、$Q=\operatorname{diag}(0,1,1)$。各自的 Bloch 提升都只有普通正性：其归一 Choi 谱为 $\{3/4,1/4,1/4,-1/4\}$。这里可以直接将
+
+$$
+\tfrac14(I\otimes I+\lambda_x\sigma_x\otimes\sigma_x
+-\lambda_y\sigma_y\otimes\sigma_y+\lambda_z\sigma_z\otimes\sigma_z)
+$$
+
+代入各自的三个 $\lambda$，在 Bell 基逐项求值。 两份负方向不同；等权平均正好得到 $T$ 的 Choi 谱 $\{3/4,1/4,0,0\}$。因此两张形式平面投影各自不能直接作可附接的量子装置，其由 Q17 固定的总量归一却具有完全正实现。
+
+反复作用的极限是来源轴去相干
+
+$$
+\Phi_{P_e}(X)=\frac{X+\sigma_eX\sigma_e}{2}.
+$$
+
+有限次数时 $T^m$ 在实内容空间仍可逆；降秩只发生在极限。极限也保留两个来源端点的 Born 加权混合，并未替代一个指定结果的条件更新。 若把 $m$ 延拓为非负实参数，$2^{-m}$ 给出一条连续去相干半群；这个数学参数与实际时间的关系仍需原时钟供应。
+

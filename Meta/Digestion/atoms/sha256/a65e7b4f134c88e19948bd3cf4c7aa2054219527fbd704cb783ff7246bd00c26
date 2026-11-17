@@ -1,0 +1,26 @@
+**定义 10.1（Labelled parts and the original half-filled operator）。**
+Let $[m]=C_1\sqcup\cdots\sqcup C_q$ be any labelled partition, with
+$p_a=|C_a|\geq1$, and let $H=K_{p_1,\ldots,p_q}$: distinct vertices
+are adjacent exactly when they belong to different parts. Assume
+
+$$
+q\geq4,\qquad m=\sum_{a=1}^q p_a\text{ is even},\qquad
+2\max_a p_a\leq m.
+\tag{10.1}
+$$
+
+For every integer $S\geq1$, set $s=2S$, $k=mS$, and retain the blocks
+$B_i$, graph $H[\overline{K_{2S}}]$, complete complex Boolean space
+$\mathcal H_{mS}$, ordinary positive adjacency $K=K_{mS}$ and original
+within-$B_i$ projection $P_{\mathrm{sym}}$ of Definitions 1.1–1.2.
+Write
+
+$$
+E=\lambda_{\min}(K),\qquad \mathcal N=\ker P_{\mathrm{sym}},\qquad
+L_a=p_aS.
+\tag{10.2}
+$$
+
+Part membership in $C_a$ is distinct from membership in a Boolean block
+$B_i$: the latter always has the original uniform size $2S$.
+

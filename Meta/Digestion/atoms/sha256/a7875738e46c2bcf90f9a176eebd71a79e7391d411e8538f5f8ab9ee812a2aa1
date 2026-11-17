@@ -1,0 +1,10 @@
+**Theorem 13.3 (Scalar strict negativity).** For every $k,x,y,z>0$, $V(k,x,y,z)<0$.
+
+**Proof.** With $N=x+y+z$ and $p=xyz$, direct expansion gives
+
+$$
+D_xD_yD_z-(1+ks)^2=k^2p\,[N+k(Ns-p)].
+$$
+
+Here $Ns-p=x^2y+x^2z+xy^2+xz^2+y^2z+yz^2+2xyz>0$. The quotient in Theorem 13.2's scalar expression therefore lies strictly between zero and one. ∎
+

@@ -1,0 +1,24 @@
+*Proof.* Choose a rational
+$0<\theta<\min\{\epsilon/4,1/16\}$. Reuse precisely Theorem 12.2:
+$S_n>0$, $S_n\to0$ and $S_{n+1}/S_n\to1$ for this fixed source.
+For every fixed integer $L\ge0$ these imply
+
+$$
+\frac{S_{n+L}}{S_n}\longrightarrow1\quad(n\longrightarrow\infty),
+\qquad
+\frac{S_{n+U}}{S_n}\longrightarrow0\quad(U\longrightarrow\infty)
+\quad\hbox{for each fixed }n.
+\tag{13.5}
+$$
+
+The first is the product of $L$ successive ratios, with empty product
+one. The second divides the supplied limit $S_{n+U}\to0$ by a fixed
+positive denominator. No rate or uniformity is used.
+
+Construct the endpoints and positive integers $n_i$ successively.
+Start with $L_1=0$. Having chosen $L_i$, choose $n_i$ larger than
+the preceding $n_j$ and so large that
+$S_{n_i+L_i}/S_{n_i}>1-\theta$. Then choose finite $U_i>L_i$ with
+$S_{n_i+U_i}/S_{n_i}<\theta$. If $i<K$, set $L_{i+1}=U_i$.
+This is possible by (13.5), and finally set $H=U_K$.
+

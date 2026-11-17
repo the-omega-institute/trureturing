@@ -212,7 +212,7 @@ def EndpointRobinEstimates : Prop :=
   ∀ q : ℝ, 0 < q → 5040 < strictInteger q →
     0 < robinLogMargin (strictInteger q) ∧ 0 < robinLogMargin (maximalInteger q)
 
-private theorem boundaryCap_eq_55440 : boundaryCap = 55440 := by
+theorem boundaryCap_eq_55440 : boundaryCap = 55440 := by
   let q11 : ℝ := goldenLayerMarginal 11 1
 
   let targetExponent55440 (p : ℕ) : ℕ :=

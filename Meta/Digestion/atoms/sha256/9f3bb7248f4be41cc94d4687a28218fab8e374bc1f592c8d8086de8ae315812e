@@ -1,0 +1,21 @@
+### 154.F. Complement recovery and the remaining full joint equations
+
+The complement identities (152.45)–(152.46) recover every ordered pair involving $B$ from the fixed $I\times I$ pairs and source marginals of this same $D$. The identity
+$L_j(\mathbf1_{D_B})=1-\sum_{a\in I}L_j(\mathbf1_{D_a})$
+recovers its other three marginals. The last seven coordinates of (154.31) give all six distinct-label coefficients and BBB. Conservation gives $\mathcal C(p,p,p)=p^3=1/64$. Restoring the originally prescribed $b$ affects no target integral, because $b=b^0$ almost everywhere and all three original positive-time slot laws are absolutely continuous with respect to $m$. This proves (154.3) for every permitted representative.
+
+For this same partition put
+$\Delta_{yzw}=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})-\mathcal C(f_y,f_z,f_w)$.
+The pair laws imply $\Delta\in H_0^{\otimes3}$ as in Proposition 150.3. Complement expansion in all three slots therefore gives
+
+$$
+\Delta_{BBB}=-\sum_{a,b,c\in I}\Delta_{abc}=0,\qquad
+\Delta_\sigma=0\quad(\sigma\in\mathcal T_6),\qquad
+\sum_{\substack{a,b,c\in I\\\text{a repeated label occurs}}}\Delta_{abc}=0.
+\tag{154.32}
+$$
+
+The twenty-one repeated-label ambient $I^3$ coordinates are not individually forced to zero by these equations. The last sum is a linear consequence of the jointly attained BBB coordinate; it asserts neither nonlinear independence nor feasibility of the remaining equations. In particular the full equation (153.3), the refined two-$B$ coordinates and the rank-two requirement remain outside the conclusion of this theorem. Every residual still uses $P\mathbf1_{D_w}$ from the one partition in (154.31).
+
+The original-source inputs to this derivation are the exact correction and ordered-functional results 152.A–C, their consumed sphere argument (147.6)–(147.8), the orbit positivity (153.8)–(153.10), the proved folded rank (153.16), and the finite-partition construction 153.E. The classical intermediates in those reused correction results are R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2, and B. S. Mityagin, *The zero set of a real analytic function*, [arXiv:1512.07276v1](https://arxiv.org/abs/1512.07276v1), Proposition 0. The fixed-point intermediate is L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in its finite-dimensional closed-ball form. Their original hypotheses and the retained endpoint, source and analytic suppliers remain in force. The additional coattainment follows from the two-mode reversal separation (154.13)–(154.16), the BBB coefficient (154.17), their exact protected corrections and the single finite partition (154.31). $\square$
+

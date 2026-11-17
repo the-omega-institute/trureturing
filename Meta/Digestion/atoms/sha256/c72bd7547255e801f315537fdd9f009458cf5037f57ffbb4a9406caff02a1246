@@ -1,0 +1,17 @@
+#### 反例 5.6：删除原双线性：一个连续例子
+
+在通常四元数实空间及通常平方范数上，令
+
+$$
+\phi(t)=\frac\pi4t(t-1),\qquad s(x)=e^{i\phi(\operatorname{Re}x)},
+\qquad x\star y=x\,s(x)^{-1}ys(x).
+$$
+
+范数乘性成立，且 $1\star y=y$、$x\star1=x$。 对纯方向 $i,j,2k$，均有 $s(x)=1$，所以同一见证 $a=i,b=j$ 仍给 $T=4L_k$ 忠实。 然而 $s(2)=i$，故
+
+$$
+2\star j=-2j\ne2(1\star j),
+$$
+
+原乘法不对原实线性结构双线性。
+

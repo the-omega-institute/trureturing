@@ -1,0 +1,8 @@
+**定义 61.1（内在有限 JB 丛）。** 固定非空紧 Hausdorff 空间 $X$、整数 $n\ge3$，以及局部平凡的有限维简单含单位实 JB 代数丛 $\mathfrak J\to X$，每点 Jordan 秩均为 $n$。局部模型只要求上述实 JB 结构；图及过渡为含单位实 Jordan 同构，过渡在有限维算子范数拓扑连续。不预设实、复、四元数或 Albert 类型，不预给复结合乘法、乘法取向或全局矩阵单位。置
+
+$$
+E=\Gamma(X,\mathfrak J),\quad S(a,b)=a\circ b,\quad u(x)=1_x,\quad C=\{a:a(x)\in(\mathfrak J_x)_+\ (\forall x)\},\quad N(a)=\sup_x\|a(x)\|.
+$$
+
+这里取全部连续截面。纤维锥为 JB 平方锥，纤维范数为其 JB 范数。记 $L(X)$ 为每个开邻域内都有含该点开闭邻域的点集。
+

@@ -1,0 +1,36 @@
+**定义 1.1（全 PB 图与复编码）。** 沿用原多项式卷 §§8–11 的同一完整矩阵模型
+
+$$
+E_n,\quad X_n,\quad u=I_n,\quad
+D_*(F,G)=\frac {\mathrm i}{2}(FG-GF),
+$$
+
+以及静态重构卷 35.1–35.2 所支付的 A1–A3、P2 与完整 PB。定义无向图
+$\mathcal H_n$，其顶点是全部 $E_n^2$，但对每一个原有自伴三元组
+$p,q,r\in E_n$ 都加入一条边
+
+$$
+ (q+\nu,r+\omega)\ \longleftrightarrow\ (q-\nu,r-\omega),
+\qquad
+\nu=D_*(p,q)-p\circ r,\quad
+\omega=p\circ q+D_*(p,r).
+\tag{1.1}
+$$
+
+这里不要求任何交换性、零内层响应、零 Jordan 预算、共同生成代数、范数、次数、链长或满秩条件。边本身是完整 PB 的实际外层响应比较，$\nu,\omega$ 是该三元组的实际预算，不是把两个旧输出相等写入定义。原多项式卷定义 8.2 的图满足 $\mathcal G_n\subseteq\mathcal H_n$；$\mathcal H_n$ 还包含该外卷 §§8–11 没有授予的非通勤与非零内层边。连通分量只指任意有限条边组成的路径，包含长度零，不取路径极限或完成中的闭包。对有序对写
+
+$$
+\mathbf Z(x,y)=x+\mathrm i y.
+$$
+
+直接展开 (1.1)，没有使用交换性，得到
+
+$$
+\mathbf Z(q+\nu,r+\omega)=(I_n+\mathrm i p)\mathbf Z(q,r),
+\qquad
+\mathbf Z(q-\nu,r-\omega)=(I_n-\mathrm i p)\mathbf Z(q,r).
+\tag{1.2}
+$$
+
+例如，$\nu+\mathrm i\omega=\mathrm i p q-p r=\mathrm i p(q+\mathrm i r)$。因此 (1.2) 是对全部全 PB 边的精确编码，而不是给未知一般 $D$ 增添连续性或完成延拓。
+

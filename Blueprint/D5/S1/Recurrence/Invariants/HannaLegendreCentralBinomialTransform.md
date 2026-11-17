@@ -124,7 +124,19 @@ $$\forall n:\mathbb{N}, \forall t:\mathbb{N}, \sum_{k\in \operatorname{Finset}.\
 
 A denominator-free telescoping certificate gives a recurrence in t. The initial finite sum is one; induction and the choose recurrence give the squared binomial coefficient. Natural subtraction truncates at zero.
 
-**Theorem 1.11 (The exact alternating transform).**
+**Theorem 1.11 (Coefficients of a binomial power).**
+
+$$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \operatorname{PowerSeries}.\operatorname{coeff}\left(k, ((1+\operatorname{PowerSeries}.\operatorname{X}:\operatorname{PowerSeries}\left(\mathbb{Z}\right)))^{n}\right) = (\operatorname{Nat}.\operatorname{choose}\left(n, k\right):\mathbb{Z})$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.coeff_one_add_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The coefficient in degree k of the n-th power of 1+X is Nat.choose n k, cast to the integers.
+
+**Theorem 1.12 (The exact alternating transform).**
 
 $$\forall N:\mathbb{N}, \operatorname{PowerSeries}.\operatorname{coeff}\left(N, \operatorname{weighted}\left(\operatorname{Function}.\operatorname{const}\left(\mathbb{N}, 1\right), (-1:\mathbb{Z}), -1, 0\right)\right) = \operatorname{if} (2\mid N) \operatorname{then} (-1)^{\operatorname{Nat}.\operatorname{div}\left(N, 2\right)} \cdot (\operatorname{Nat}.\operatorname{choose}\left(N, \operatorname{Nat}.\operatorname{div}\left(N, 2\right)\right):\mathbb{Z}) \operatorname{else} 0$$
 
@@ -136,7 +148,7 @@ $$\forall N:\mathbb{N}, \operatorname{PowerSeries}.\operatorname{coeff}\left(N, 
 
 Even coefficients are signed central binomial coefficients and odd coefficients vanish. Nat.div denotes natural integer division.
 
-**Theorem 1.12 (The first moment modulo two).**
+**Theorem 1.13 (The first moment modulo two).**
 
 $$\operatorname{PowerSeries}.\operatorname{map}\left(\operatorname{Int}.\operatorname{castRingHom}\left(\operatorname{ZMod}\left(2\right)\right), \operatorname{weighted}\left(\operatorname{fun} (n:\mathbb{N}) \mapsto (n:\mathbb{Z}), -1, -1, 0\right)\right) = (\operatorname{PowerSeries}.\operatorname{X}:\operatorname{PowerSeries}\left(\operatorname{ZMod}\left(2\right)\right))$$
 
@@ -155,6 +167,7 @@ The derivative of the alternating convolution computes the first moment. Its red
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.Q_zero`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.R_coeff`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.T_mod_two`
+- Truth anchor: `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.coeff_one_add_pow`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.map_series`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.map_weighted`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaLegendreCentralBinomialTransform.rational_den`

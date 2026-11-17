@@ -1,0 +1,129 @@
+**定理 59.1（任意全域输入的有限中央理想局部化）。** 在定义 58.1 和假设 58.2 下，对每个 $i\in I$ 及每个原 $a,b\in E$，都有
+
+$$
+P_iD(a,b)=D(P_i a,P_i b).
+\tag{59.1}
+$$
+
+右端是同一个旧总映射的值。特别是它属于 $E_i$；这一闭合性也是结论。每个限制 $D_i=D|_{E_i\times E_i}$ 及 $S|_{E_i\times E_i}$ 给定理 13.1 的同一有限复 $C^*$ 乘法。局部化对任意无限支撑的原输入成立。
+
+证明。若 $I$ 为空，联合分离使 $E=0$，结论成立。以下固定任意 $i\in I$。先记录原乘法的分量性质。由真正单位，$P_i u=p_i$，所以 $P_jp_i=0$ 对 $j\ne i$ 成立。对 $x\in E_i,c\in E$，(58.1)、双线性及联合分离给
+
+$$
+S(x,c)=S(x,P_i c)\in E_i.
+\tag{59.2}
+$$
+
+因此 $E_i$ 是原实乘法的理想。这里尚未对旧 $D$ 作任何分量展开。
+
+实际二表的 Hermitian 性及原评价分离先给
+
+$$
+D(a,b)=-D(b,a),\qquad D(a,a)=0,\qquad D(0,a)=0.
+\tag{59.3}
+$$
+
+最后一式来自 $S(0,0)=0$ 的二表零行。定理 13.1 证明中三循环方程的消元只要求 $S$ 对称、$D$ 反对称及实部式，因而在整个原 $E$ 上直接适用，给
+
+$$
+D(D(a,b),c)=[L_b,L_a]c,\qquad L_a c=S(a,c)
+\quad(a,b,c\in E).
+\tag{59.4}
+$$
+
+该既有子论证不要求有限维、$D$ 的线性或预先的块闭合。
+
+还须把原二表不等式用于数学分量读数。任取 $a,b\in E$ 和 $z_1,z_2\in\mathbb C$，置原实元素
+
+$$
+\begin{aligned}
+w={}&|z_1|^2S(a,a)+|z_2|^2S(b,b)\\
+&+2\Re(\overline{z_1}z_2)S(a,b)
+ +2\Im(\overline{z_1}z_2)D(a,b).
+\end{aligned}
+\tag{59.5}
+$$
+
+由 (59.3)，$\alpha(w)=(z_1,z_2)^*G_\alpha(a,b)(z_1,z_2)\ge0$ 对每个原 $\alpha$ 成立，故 $w\in E_+$。任取数学正实线性泛函 $\varphi\in(E_i)_+^*$；(58.2) 使 $\varphi P_i$ 在原锥上为正。因此同一二表不等式传到它，准确成为
+
+$$
+\begin{pmatrix}
+\varphi(S(a_i,a_i))&\varphi(S(a_i,b_i))-\mathrm i\varphi(d_i)\\
+\varphi(S(a_i,b_i))+\mathrm i\varphi(d_i)&\varphi(S(b_i,b_i))
+\end{pmatrix}\succeq0,
+\quad
+ a_i=P_i a,\quad b_i=P_i b,\quad d_i=P_iD(a,b).
+\tag{59.6}
+$$
+
+这是任意全域 $a,b$ 的结论，不是只对局部输入的表。泛函 $\varphi P_i$ 只检验原锥不等式，不被增加到实际准备中；原评价无需具有任何有限分量和表示。
+
+若 $a_i=0$，(59.6) 的首对角为零，故 $\varphi(d_i)=0$ 对每个这样的 $\varphi$ 成立。有限 EJA 的正泛函分离元素，所以
+
+$$
+P_i a=0\ \Longrightarrow\ P_iD(a,b)=0.
+\tag{59.7}
+$$
+
+第二槽的相同结论由反对称性得到。对 $x,y\in E_i$，每个 $j\ne i$ 均可应用 (59.7)，得 $P_jD(x,y)=0$。将联合分离用于 $D(x,y)-P_iD(x,y)$，得到
+
+$$
+D(x,y)\in E_i\quad(x,y\in E_i).
+\tag{59.8}
+$$
+
+现在才应用有限定理。原评价的限制 $\alpha|_{E_i}$ 分离 $E_i$，而 (58.2) 在 $E_i$ 上恰给其平方锥；局部质量是 $\alpha(p_i)\ge0$，包括零质量及所有原不等质量。$E_i$ 的序单位是原标签 $p_i$，原二表限制正，(59.8) 使全域实部式可在 $E_i$ 内限制。因此定义 12.1–12.2 的全部有限前件成立，定理 13.1 直接给同一个 $D_i$ 的实交替双线性及有限复 $C^*$ 结构。因 $E_i$ 简单，该结构是某个 $M_{n_i}(\mathbb C)$，$n_i\ge1$；否则有限 $C^*$ 的非平凡直和会分解其自伴 Jordan 理想。固定这一乘法的 $*$-同构，记其自伴限制为 $\eta_i$，则
+
+$$
+\eta_i(S(x,y))=\tfrac12(\eta_i(x)\eta_i(y)+\eta_i(y)\eta_i(x)),
+\qquad
+\eta_i(D_i(x,y))=\tfrac{\mathrm i}{2}[\eta_i(x),\eta_i(y)].
+\tag{59.9}
+$$
+
+还不能从有限限制推断 (59.1)。所需的额外桥梁是：局部无迹方向对任意全域输入的旧作用，已被 (59.4) 固定。记 $V_i=\ker\operatorname{tr}_i$，其中 $\operatorname{tr}_i$ 是有限 EJA 的谱迹。直接使用 13.1 的 (13.3)–(13.6)：对每个 $x\in V_i$，存在 $r,s\in E_i$ 使 $x=D_i(r,s)$。它给单个实际输出，不仅给值域张成；其前件已由 (59.8) 和局部有限 EJA 核对。于是对任意全域 $c\in E$，用 (59.4)、(59.2) 及局部同一恒等式得到
+
+$$
+D(x,c)=[L_s,L_r]c
+       =[L_s,L_r](P_i c)
+       =D_i(x,P_i c)\in E_i
+\quad(x\in V_i).
+\tag{59.10}
+$$
+
+不需要对不同 $i$ 同时选择有界的 $r,s$，也未声称所有全域无迹族是某个全域 $D$ 输出。
+
+任取全域 $a,b$，仍记 $d_i=P_iD(a,b)$。对每个 $x\in V_i$，(59.10) 和反对称性给
+
+$$
+\begin{aligned}
+D_i(d_i,x)
+ &=D(D(a,b),x)=[L_b,L_a]x\\
+ &=[L_{b_i},L_{a_i}]x
+  =D_i(D_i(a_i,b_i),x).
+\end{aligned}
+\tag{59.11}
+$$
+
+式 (59.9) 因而使 $\eta_i(d_i-D_i(a_i,b_i))$ 通勤于全部无迹 Hermitian 矩阵。它只能是实标量矩阵；$n_i=1$ 时整个自伴部本来就是标量，同一结论成立。因此存在一个实数 $\rho_i(a,b)$，尚无任何正则性，满足
+
+$$
+d_i=D_i(a_i,b_i)+\rho_i(a,b)p_i.
+\tag{59.12}
+$$
+
+最后准确复用 13.1 的中央噪声尾段 (13.10)–(13.12)，并核对它在这里的全域参数。置 $A=\eta_i(a_i)$、$B=\eta_i(b_i)$、$\rho=\rho_i(a,b)$。对每个单位列 $\psi\in\mathbb C^{n_i}$，数学正泛函 $\varphi_\psi(x)=\langle\psi,\eta_i(x)\psi\rangle$ 可用于 (59.6)。内积第一槽共轭线性，故其行列式给
+
+$$
+\begin{gathered}
+(\rho+c_\psi)^2\le\Delta_\psi,\\
+c_\psi=\left\langle\psi,\tfrac{\mathrm i}{2}[A,B]\psi\right\rangle
+       =-\Im\langle A\psi,B\psi\rangle,\qquad
+\Delta_\psi=\|A\psi\|^2\|B\psi\|^2
+                  -\Re\langle A\psi,B\psi\rangle^2.
+\end{gathered}
+\tag{59.13}
+$$
+
+这里正是既有尾段的全部假设：固定有限 Hermitian $A,B$、同一个任意实标量 $\rho$，以及每个单位列上的不等式。该尾段对奇异 $B$、可逆 $B$ 的实根和共轭非实根分别适用，包括 $n_i=1$、零或重复输入，不要求 $\rho$ 对输入线性，也不要求两份根向量的尺度相等。其结论直接给 $\rho=0$。所以 (59.12) 对任意全域 $a,b$ 化为 (59.1)。证明始终处理同一旧 $D$；有限限制、无迹测试延伸及中央残差消去共同完成全域识别。∎
+

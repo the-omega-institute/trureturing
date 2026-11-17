@@ -1,0 +1,24 @@
+**Definition 52.1 (relative diagonal and canonical wall constant).** Let
+$B_b$ denote (1.4) on $I_b\times\mathbb R^3$, $S_b=B_b-\lambda$ and
+$K_b(t;Y,Z)=e^{\lambda t}p_t^{B_b}(Y,Z)$, extended by zero.
+Write $K_{\rm ref}=K_{b_{\rm ref}}$, $W_{1,b}(Y)=\int_1^\infty K_b(t;o,Y)dt$,
+$\ell_0=L_0/\varepsilon$, and define differences directly by
+
+$$
+\begin{aligned}
+\delta_b^{<}&=\int_0^1(K_b-K_{\rm ref})(t;o,o)dt,\\
+\Delta_b&=\int_0^\infty(K_b-K_{\rm ref})(t;o,o)dt.
+\end{aligned}
+\tag{52.1}
+$$
+
+For the canonical height bridge with generator $\partial_r^2$ from
+zero to zero, use $M_0,h_t,\gamma_{M_0}$ of (3.1) and put
+
+$$
+D_E(t)=h_t(0)\mathbb E_{0,0}^t
+ [\gamma_{M_0}(0)\mathbf1_{\{\min H\le-1\}}],
+\qquad C_E=\int_0^\infty D_E(t)dt.
+\tag{52.2}
+$$
+

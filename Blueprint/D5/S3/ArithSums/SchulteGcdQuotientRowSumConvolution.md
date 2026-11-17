@@ -12,7 +12,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{rowSum}\left(n\right) = \sum_{i = 1.
 
 *Formalization.* `D5/S3/ArithSums/SchulteGcdQuotientRowSumConvolution.rowSum` (`✓ std3`).
 
-*Citation.* Werner Schulte (2022). *OEIS A350900, T(n,k) = Sum_{i=1..n} gcd(i,n)/gcd(gcd(i,k),n), with the conjectured row sums (n phi(n)) * (Sum_{d|n} d phi(d))*. URL: <https://oeis.org/A350900>.
+*Citation.* Werner Schulte (2022). *OEIS A350900: gcd-quotient triangle, arbitrary arithmetic weights and row sums*. URL: <https://oeis.org/A350900>.
 
 *Commentary.*
 
@@ -28,7 +28,7 @@ $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\operatorname{rowSum}\left(n\
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a350900-schulte-gcd-quotient-row-sum-convolution","declaration_gid":"D5/S3/ArithSums/SchulteGcdQuotientRowSumConvolution.result","resolution_kind":"proved"} -->
 
-*Citation.* Werner Schulte (2022). *OEIS A350900, T(n,k) = Sum_{i=1..n} gcd(i,n)/gcd(gcd(i,k),n), with the conjectured row sums (n phi(n)) * (Sum_{d|n} d phi(d))*. URL: <https://oeis.org/A350900>.
+*Citation.* Werner Schulte (2022). *OEIS A350900: gcd-quotient triangle, arbitrary arithmetic weights and row sums*. URL: <https://oeis.org/A350900>.
 
 *Commentary.*
 

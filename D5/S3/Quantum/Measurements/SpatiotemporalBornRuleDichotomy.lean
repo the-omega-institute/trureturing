@@ -11,6 +11,7 @@ import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
 import D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
+import D5.S3.Quantum.Algebra.UHFOneSidedProjectionMatching
 
 /-! Universal sequential Born representations and their channel dichotomy. -/
 
@@ -43,14 +44,6 @@ def claim : Prop :=
     IsDensity ρ → IsCPTP ε → 1 ≤ d → 1 ≤ e →
     (BornRuleExists ρ ε ↔ ρ = (1 / (d : ℂ)) • 1 ∨ DiscardPrepare ε)
 
-private lemma proj_single {d : ℕ} (i : Fin d) :
-    IsStarProjection (single i i (1 : ℂ)) := by
-  constructor
-  · change single i i (1 : ℂ) * single i i 1 = single i i 1
-    simp only [single_mul_single_same, mul_one]
-  · change (single i i (1 : ℂ)).conjTranspose = single i i 1
-    rw [conjTranspose_single, star_one]
-
 private lemma projections_span (d : ℕ) :
     Submodule.span ℂ {p : Matrix (Fin d) (Fin d) ℂ | IsStarProjection p} = ⊤ := by
   classical
@@ -68,7 +61,8 @@ private lemma projections_span (d : ℕ) :
   change Unitary.conjStarAlgAut ℂ _ hx'.eigenvectorUnitary
     (single i i (hx'.eigenvalues i : ℂ)) ∈ _
   rw [hs, map_smul]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span ((proj_single i).map
+  exact Submodule.smul_mem _ _ (Submodule.subset_span
+    ((D5.S3.Quantum.Algebra.UHFOneSidedProjectionMatching.proj_single i).map
     (Unitary.conjStarAlgAut ℂ _ hx'.eigenvectorUnitary)))
 
 private lemma trace_separates {e : ℕ} (x : Matrix (Fin e) (Fin e) ℂ)

@@ -1,0 +1,23 @@
+**定义 8.1（原生基态响应与逐位正质量）。** 沿用定义 1.1–1.4 的整个原来源、连续射线映射、十一完整门、全部原支撑分量、唯一 ready、全部有限实际前字及原 R，包括零投影时右端为零且不评价 $\Pi(0)$ 的约定。本节在 $\mathscr C_{\rm end}$ 内考察同一个 $\Pi$，不先要求 (1.5) 的两条校准或全部基轴校准。定义数学矩阵及其平稳概率集合
+
+$$
+\begin{gathered}
+T(q,s)=\Pi_q(e_s)\quad(q,s\in E),\qquad
+T(q,s)\ge0,\quad\sum_{q\in E}T(q,s)=1,\\
+\mathcal S(T)=\{\mu\in\Delta(E):T\mu=\mu\},\qquad
+\nu_k(\mu)=\sum_{s:k\in s}\mu_s\quad(1\le k\le9).
+\end{gathered}
+\tag{8.1}
+$$
+
+列指标是输入原配置，行指标是输出原配置。新增的数学见证条件为
+
+$$
+\mathsf S_+:
+\quad\exists\mu\in\mathcal S(T)\quad
+\forall k\in\{1,\ldots,9\},\quad \nu_k(\mu)>0.
+\tag{8.2}
+$$
+
+$\mu$ 不必均匀，不必在全部 $89$ 个配置上正，也不指定任一基轴的确定性响应。它是同一 $\Pi$ 的列响应所满足的有限平衡见证；(8.1) 不把 $T$ 指定为实际反复响应的转移核，不增加准备、读取、重新准备或时间操作。
+

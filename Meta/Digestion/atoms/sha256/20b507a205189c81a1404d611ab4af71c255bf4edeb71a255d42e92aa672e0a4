@@ -1,0 +1,60 @@
+**定义 51.1（完整原合同与取向后的环境）。** 取41.1–41.3的非空紧 Hausdorff 基空间 $X$、固定有限 $n\ge3$、局部平凡实 Jordan 丛 $\mathfrak J$ 及完整原域 $E=\Gamma(X,\mathfrak J)$，$S(a,b)=a\circ b$。保留同一 $C,u,N,\mathcal P$、原世界及每份质量 $m_\gamma=\gamma(u)$，准确要求
+
+$$
+a\in C\iff(\forall\gamma\in\mathcal P)\ \gamma(a)\ge0,
+\qquad [(\forall\gamma)\ \gamma(a)=0]\Longrightarrow a=0.
+\tag{51.1}
+$$
+
+同一任意总映射 $D:E^2\to E$ 满足全部 $\mathsf H_{\mathfrak J}(D)$。特别地，对全部实际 $a,b$、全部原评价及两种次序，要求
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{51.2}
+$$
+
+A2 保留每个实际 $(a+b,a,b)$ 及其全部排列的实部三表在整个 $\mathbb R^3$ 上半正定，原顺序的 $(1,-1,-1)$ 及对应排列准确给零；A3 保留 $u^2=u$ 及同一个固定有理 $0<\vartheta\le1$ 上全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。不预给复三表正性。对每个实际 $a,b,d$，令
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ d,\qquad w=a\circ b+D(a,d),\\
+r_\pm=b\pm v,\qquad s_\pm=d\pm w.
+\end{gathered}
+\tag{51.3}
+$$
+
+全部原 PB 是对每份原评价要求
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+\tag{51.4}
+$$
+
+零、重复、任意缩放、平移、背景和嵌套实际输入均包括，四个外层标签始终是(51.3)生成的实际元素。零、不等、次归一及非正常原评价不删除，不作质量除法。不假定 $D$ 可加、齐次、输入连续、可测、协变、中央局部或商下降。
+
+由43.2，原关系在不要求 $L(X)$ 稠密时已给唯一取向截面 $\sigma_D$。先按44.1–44.2构造 $\mathfrak B_{\sigma_D}$，其自伴域恰为同一 $E$；该构造不假定待证的 $D=K_{\sigma_D}$。以下运输在这份复 C* 代数丛中进行。
+
+也可直接采用30.1的任一复矩阵代数丛 $\mathfrak B$，以31.4已取得的连续中央对合 $Q$ 为共同取向。统一记
+
+$$
+\begin{gathered}
+M=\Gamma(X,\mathfrak B),\quad E=M_{\rm sa},\quad J=iQ,\quad
+K(a,b)=\tfrac J2[a,b],\\
+x(Z)=\tfrac12(Z+Z^*),\qquad
+y(Z)=-\tfrac J2(Z-Z^*),\\
+F(Z)=D(x(Z),y(Z))-K(x(Z),y(Z)),\qquad Z=x(Z)+Jy(Z).
+\end{gathered}
+\tag{51.5}
+$$
+
+对 $\mathfrak B_{\sigma_D}$ 取 $Q=u$，于是 $K=K_{\sigma_D}$。在所选普通 C* 图中所有乘法均为这份已构造的乘法。每个固定 $F(Z)$ 是连续自伴截面，不假定 $Z\mapsto F(Z)$ 连续。剩余原值目标为
+
+$$
+F(Z)(x_0)=0\qquad(\forall Z\in M,\ \forall x_0\in X).
+\tag{51.6}
+$$
+

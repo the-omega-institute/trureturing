@@ -1,0 +1,39 @@
+**定义 33.1（原域缺陷与分量）。** 取 $\mathsf H_{\rm orig}+\mathsf P_3$，不假设 PB。先按 400.1–400.2 支付同一个原 $D$ 的实双线性与全有限正性，随后且仅随后使用 A23 的原数学复化 $A_E=E+\mathrm iE$、复双线性 $\star=S-\mathrm iD$、共轭 $*$、原评价复延拓 $\alpha_{\mathbb C}$ 及
+
+$$
+h_\alpha(z,w)=\alpha_{\mathbb C}(z^*\star w),
+\qquad \lambda_a z=a\star z.
+$$
+
+这些定义不预付结合律。对每个原 $\alpha,a,b,c$ 定义
+
+$$
+\Delta_\alpha(a;b,c)
+=Q_\alpha(r_1,s_1)-Q_\alpha(r_{-1},s_{-1}),
+\tag{33.1}
+$$
+
+其中 $Q_\alpha,r_t,s_t$ 完全沿用 (22.2)–(22.3)，每一差的两边仍由同一个原评价读取。对原实 $x,a,y$，写
+
+$$
+\mathcal A(x,a,y)=(x\star a)\star y-x\star(a\star y)
+=R_0(x,a,y)+\mathrm i I_0(x,a,y),
+\tag{33.2}
+$$
+
+其中两个分量都在原 $E$，准确为
+
+$$
+\begin{aligned}
+R_0(x,a,y)
+&=S(S(x,a),y)-D(D(x,a),y)\\
+&\quad-S(x,S(a,y))+D(x,D(a,y)),\\
+I_0(x,a,y)
+&=-D(S(x,a),y)-S(D(x,a),y)\\
+&\quad+D(x,S(a,y))+S(x,D(a,y)).
+\end{aligned}
+\tag{33.3}
+$$
+
+$R_0$ 正是原 R 左边减右边，没有更换原括号、原尺度或原 $D$。
+

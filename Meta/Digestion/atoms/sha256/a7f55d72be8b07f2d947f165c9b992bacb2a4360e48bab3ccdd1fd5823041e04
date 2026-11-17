@@ -1,0 +1,51 @@
+**定理 260.1（同块第三点的整体恢复）。** 同一原签名上，分别有
+
+$$
+\mathsf C_{\rm cross3}(B_*)\Longleftrightarrow B_*+\mathsf F_3.
+\tag{260.1}
+$$
+
+证明。静态复载体及原实际联合逐中心对的矩阵坐标由定理 246.1 先给出，不识别原 $D$。右单位仍独立取母卷定理 30.1 或引理 67.3。固定总秩 $>p_*$ 的原对象 $A$，及其中秩 $n\ge3$ 的简单块 $S$。引理 256.2 使其内部限制有右单位，且保留测试合法限制到 $S$，故引理 259.1 给该块的 $F_S,\lambda_S,\beta_S$。
+
+只取原 $R_0$ 实际供应的某个 $J=AP^{\otimes k}$。原整体指针及其实际幂有非经典复参考块 $H_m$、$m\ge2$；由母卷定理 85.2，每个原中心对保留，对应目标为 $T=H_N$、$N=nm$。原含幺 Jordan 单射使 $J$ 的总秩仍 $>p_*$；不要求它保持 primitive。引理 259.1 因而也适用于 $T$。
+
+在该原中心对的静态普通或相反张量坐标中，取非零无迹 Hermitian $a\in S$、$b\in H_m$，置原嵌入 $x=i(a)$、$y=j(b)$。转置取向并入 $\widehat a,\widehat b$，于是
+
+$$
+x_T=\widehat a\otimes I_m,\qquad
+y_T=I_n\otimes\widehat b,
+\qquad [x_R,y_R]=0\quad\text{对每个目标块 }R.
+\tag{260.2}
+$$
+
+原单向交叉零给 $D^J_xy=0$。目标内部的 (259.1) 在此化为 $N\beta_T x_Ty_T$；其交换子、径向项和全部迹标量项为零。引理 256.2 的其他块贡献是
+
+$$
+\sum_{R\ne T}\ell_{RT}(x_R)y_T
+-\sum_{R\ne T}\ell_{RT}(x_R\circ y_R)I_T,
+\tag{260.3}
+$$
+
+只在 $\operatorname{span}\{y_T,I_T\}$ 中。以 $\widehat a\otimes\widehat b$ 配迹，后者消失，得到
+
+$$
+0=N\beta_T\operatorname{Tr}(a^2)\operatorname{Tr}(b^2),
+\qquad\beta_T=0.
+\tag{260.4}
+$$
+
+这里只用了实际静态坐标与原交叉零，没有预设原 $D$ 的张量公式。
+
+对任意 $a\in S$ 重新令 $x=i(a)$。引理 256.2 和 (259.2) 给
+
+$$
+\pi_TD^J_xx=Q_T(x_T)
++\sum_{R\ne T}\ell_{RT}(x_R)x_T
+-\sum_{R\ne T}\ell_{RT}(x_R^2)I_T.
+\tag{260.5}
+$$
+
+因为 $\beta_T=0$，右边在 $\operatorname{span}\{x_T,I_T\}$ 中。原同侧 $D$-保持使左边等于源 $Q_S(a)$ 的同一张量像，故 $Q_S(a)\in\operatorname{span}\{a,I_S\}$。选一个具有 $0,1,2$ 三个谱值的数学元，$a^2$ 不在这个线性包中；由 (259.2) 必有 $\beta_S=0$。
+
+于是对同块正交 $e,p\in S$，内部值为 $\lambda_Sp$；全部外块输出由 (256.4) 为零。被删的第三点 $r\perp e,p$ 因而有 $q(D_pe,r)=0$，而 (256.1) 已给能量为零，所以原读回恢复为 $0=0$。秩至多二的简单块没有被删三元组。逐原高秩对象任取，遂恢复整个 $\mathsf F_3$；反向仅为限域。剩余 $\lambda$ 在此不预先归零，仍由定理 251.2 的原整体参考链处理。∎
+

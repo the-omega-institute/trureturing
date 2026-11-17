@@ -1,0 +1,19 @@
+**引理 91.1（纯向量的全局取向）。** 存在同一个 $\varepsilon\in\{1,-1\}$，对全部x,y有
+
+$$
+D((0,x),(0,y))=(0,\varepsilon x\times y).
+\tag{91.1}
+$$
+
+证明。固定非零且 $|x|\ne1$ 的x。取 $y,z\in x^\perp$ 非平行且非正交，记 $\epsilon_y=\kappa(x,y),\epsilon_z=\kappa(x,z)$。纯三元组x,y,z的PB右端为零，两外层叉积准确为
+
+$$
+W_\pm=(1+\epsilon_y\epsilon_z|x|^2)y\times z
+\pm(\epsilon_z-\epsilon_y)(y\cdot z)x.
+\tag{91.2}
+$$
+
+90.2使外层D的范数等于其叉积长度，PB要求 $|W_+|=|W_-|$。若两符号相反，比较长度平方便强迫 $(1-|x|^2)(y\cdot z)x\cdot(y\times z)=0$，矛盾。对任意两条非零平面方向，可插入避开有限条直线的中介向量，所以该x整张正交平面的符号一致。反对称性给 $\kappa(x,y)=\kappa(y,x)$。任意两个长度不为一的非零向量可由一个同时垂直、长度不为一的向量连接，因此这些行共享一个 $\varepsilon$；也覆盖正交对中至少一边长度不为一的情形。
+
+还须处理两边均为单位的正交对。若其符号是 $-\varepsilon$，在PB取 $a=x,b=y,c=2y$，令 $w=x\times y$。两外层对为 $(y-\varepsilon w,2y+2\varepsilon w)$ 及 $(y+\varepsilon w,2y-2\varepsilon w)$。各对正交且长度为 $\sqrt2,2\sqrt2$，已受符号 $\varepsilon$ 控制，于是两输出分别为 $(0,4x)$ 与 $(0,-4x)$，却被PB要求相等，矛盾。最后用89.1正交化任意独立纯向量对；共线对用89.3。∎
+

@@ -147,15 +147,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     private (string Path, RawChangeKind Kind)[] ReadRawChanges(string revision)
     {
-        var changes = ParseChanges(GitBytes(
-                "diff",
-                "--name-status",
-                "-z",
-                "-M",
-                "-C",
-                "--find-copies-harder",
-                revision,
-                "--"))
+        var changes = ParseChanges(ReadNameStatus(revision))
             .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z"))
                 .Select(static path => (Path: path, Kind: RawChangeKind.Added)))
             .GroupBy(static change => change.Path, StringComparer.Ordinal)
@@ -165,6 +157,41 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             .OrderBy(static change => change.Path, StringComparer.Ordinal)
             .ToArray();
         return changes;
+    }
+
+    private byte[] ReadNameStatus(string revision)
+    {
+        var head = GitText("rev-parse", "HEAD").Trim();
+        if (TrackedFilesMatch(head))
+        {
+            // Compare immutable trees outside the checkout so Git reads copy
+            // candidates from its object store rather than reopening worktree files.
+            var gitDirectory = GitText("rev-parse", "--absolute-git-dir").Trim();
+            var changes = GitRaw(
+                ["--git-dir=" + gitDirectory, "--bare", "diff-tree", "--no-commit-id", "-r",
+                    "--name-status", "-z", "-M", "-C", "--find-copies-harder", revision, head, "--"],
+                allowNonzero: false, workingDirectory: gitDirectory).StandardOutput;
+            if (TrackedFilesMatch(head)) return changes;
+        }
+        return GitBytes("diff", "--name-status", "-z", "-M", "-C", "--find-copies-harder", revision, "--");
+    }
+
+    private bool TrackedFilesMatch(string revision)
+    {
+        string[][] probes =
+        [
+            ["diff", "--cached", "--quiet", "--no-ext-diff", "--no-textconv", revision, "--"],
+            ["diff", "--quiet", "--no-ext-diff", "--no-textconv", revision, "--"],
+        ];
+        foreach (var arguments in probes)
+        {
+            var result = GitRaw(arguments, allowNonzero: true);
+            if (result.ExitCode == 1) return false;
+            if (result.ExitCode != 0)
+                throw InfrastructureFailure(GitCommandFailureKind.NonzeroExit, arguments,
+                    exitCode: result.ExitCode, standardError: DecodeFailureText(result.StandardError));
+        }
+        return true;
     }
 
     private static int ChangeKindPriority(RawChangeKind kind) => kind switch
@@ -259,7 +286,8 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         IEnumerable<string> arguments,
         bool allowNonzero,
         int maximumOutputBytes = DefaultGitOutputBytes,
-        ReadOnlyMemory<byte> standardInput = default)
+        ReadOnlyMemory<byte> standardInput = default,
+        string? workingDirectory = null)
     {
         var commandArguments = arguments.ToArray();
         ProcessOutput result;
@@ -268,7 +296,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             result = processRunner.Run(
                 gitExecutable,
                 commandArguments,
-                root,
+                workingDirectory ?? root,
                 gitTimeout,
                 maximumOutputBytes,
                 standardInput);

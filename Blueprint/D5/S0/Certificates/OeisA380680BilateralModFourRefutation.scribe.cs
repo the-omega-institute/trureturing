@@ -8,7 +8,7 @@ internal sealed class OeisA380680BilateralModFourRefutationDocument : IScribeDoc
 {
     private const string Prefix = "D5/S0/Certificates/OeisA380680BilateralModFourRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2025a380680");
+        LibraryNoteRef.Create("D5/L/Certificates/hanna2025a380680");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hanna's square-residue conjecture for OEIS A380680 fails at n = 1.",

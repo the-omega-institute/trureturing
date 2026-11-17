@@ -1,0 +1,83 @@
+### 153.B. Localization and an explicit three-column rank calculation
+
+For bounded real $w=(w_0,w_1,w_3)$ define the two-component densities
+
+$$
+\begin{aligned}
+\mathbf R_{013}[w]&=
+ \bigl(gP(w_1Pw_3),\ P(gw_0)Pw_3\bigr),\\
+\mathbf R_{103}[w]&=
+ \bigl(P(gw_1)Pw_3,\ gP(w_0Pw_3)\bigr),\\
+\mathbf R_{031}[w]&=
+ \bigl(gP(w_3Pw_1),\ P(w_3P(gw_0))\bigr).
+\end{aligned}
+\tag{153.12}
+$$
+
+They are bounded and continuous on $\Omega$: each nonsmooth input inside a heat factor is bounded and in $L^2(m)$, and (120.7)–(120.10) give the continuous representative; the other factors are smoothed inputs or the continuous $g$.
+
+Choose nonnegative $\phi_\epsilon\in C_c^\infty(U)$ with $\int\phi_\epsilon\,d\nu=1$ and supports shrinking to $q_\circ$, and set
+
+$$
+v_a^\epsilon(q,\vartheta)
+   =\phi_\epsilon(q)\cos(n_a\vartheta)\quad(a\in I).
+\tag{153.13}
+$$
+
+Each fixed function is bounded, supported in $E$ and odd under $R_\pi$. To compute (153.12) at the orbit, joint continuity of the original kernel gives, uniformly in $\alpha$ and also uniformly when the output quotient lies in the shrinking supports,
+
+$$
+\begin{aligned}
+Pv_a^\epsilon(p_\alpha)&\longrightarrow
+                          a_{n_a}\cos(n_a\alpha),\\
+P(gv_a^\epsilon)(p_\alpha)&\longrightarrow
+                          g_\circ a_{n_a}\cos(n_a\alpha),
+\qquad p_\alpha=R_\alpha p_\circ.
+\end{aligned}
+\tag{153.14}
+$$
+
+Here the limiting integral is convolution by $k$ on the orbit with normalized angular measure. For the nested terms, the same uniformity on the support of $\phi_\epsilon$ first gives $Pv_b^\epsilon(q,\vartheta)\to a_{n_b}\cos(n_b\vartheta)$. Inserting this in the kernel formula, and using $\int\phi_\epsilon\,d\nu=1$, yields, for distinct positive $n,m$ in use,
+
+$$
+\begin{aligned}
+P\bigl((\phi_\epsilon\cos n\vartheta)
+           P(\phi_\epsilon\cos m\vartheta)\bigr)(p_\alpha)
+ &\longrightarrow
+ \frac{a_m}{2}
+ \left(a_{n+m}\cos((n+m)\alpha)
+            +a_{n-m}\cos((n-m)\alpha)\right),\\
+P\bigl((\phi_\epsilon\cos m\vartheta)
+           P(g\phi_\epsilon\cos n\vartheta)\bigr)(p_\alpha)
+ &\longrightarrow
+ \frac{g_\circ a_n}{2}
+ \left(a_{n+m}\cos((n+m)\alpha)
+            +a_{n-m}\cos((n-m)\alpha)\right).
+\end{aligned}
+\tag{153.15}
+$$
+
+All limits are uniform on the compact orbit. To justify the substitutions directly, restrict both kernel variables to the compact rotation-invariant neighborhood over $\overline U$. The kernels are uniformly continuous and bounded there. The error in each inner integral is bounded by that uniform modulus times $\int\phi_\epsilon\,d\nu$, and the same estimate applies to the outer integral after multiplication by the bounded cosine. Also $g(q)\to g_\circ$ on the shrinking supports. Thus no global bound uniform in $\epsilon$ is required.
+
+For a continuous real $H$ on the orbit put
+$\mathfrak c_sH=2\int_0^{2\pi}H(p_\alpha)\cos(s\alpha)\,d\alpha/(2\pi)$.
+Form the real four-by-three matrix $\mathsf E(w)$ with columns in the order $013,103,031$, using the component-$0$ coefficients at $n_1+1,n_1-1$ followed by the component-$1$ coefficients at $n_0+1,n_0-1$. Equations (153.14)–(153.15) give
+
+$$
+\frac{2}{g_\circ}\mathsf E(v^\epsilon)
+ \longrightarrow
+\begin{pmatrix}
+a_1a_{n_1+1}&a_{n_1}a_1&a_{n_1}a_{n_1+1}\\
+a_1a_{n_1-1}&a_{n_1}a_1&a_{n_1}a_{n_1-1}\\
+a_{n_0}a_1&a_1a_{n_0+1}&a_{n_0}a_{n_0+1}\\
+a_{n_0}a_1&a_1a_{n_0-1}&a_{n_0}a_{n_0-1}
+\end{pmatrix}.
+\tag{153.16}
+$$
+
+This limiting matrix has rank three. If its columns with coefficients $\lambda_{013},\lambda_{103},\lambda_{031}$ sum to zero, subtraction of the first two equations and their unequal $a_{n_1\pm1}$ give
+$a_1\lambda_{013}+a_{n_1}\lambda_{031}=0$.
+Either of those equations then gives $\lambda_{103}=0$. Subtraction of the last two gives
+$a_1\lambda_{103}+a_{n_0}\lambda_{031}=0$,
+so positivity of $a_{n_0}$ gives $\lambda_{031}=0$, and positivity of $a_1$ gives $\lambda_{013}=0$. Some three-by-three minor is therefore nonzero. Uniform convergence preserves that minor for one sufficiently small fixed $\epsilon$. Fix this $\epsilon$ and write $v_a=v_a^\epsilon$. The four low-mode evaluations of these fixed bounded functions have rank three.
+

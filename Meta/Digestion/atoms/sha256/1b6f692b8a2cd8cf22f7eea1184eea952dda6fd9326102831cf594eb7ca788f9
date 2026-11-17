@@ -1,0 +1,49 @@
+**定理 134.1（单对 P2 的准确输出参数）。** 固定 $p=ee^*$，写任意 Hermitian 输入
+
+$$
+a=\beta p+H(z)+B,\qquad B=qBq=B^*.
+$$
+
+对这一对 $(p,a)$，其全部数学正读取的二表正性，准确等价于输出为 $d=\delta p+H(w)$，并存在 $h\in q\mathbb C^n$、$\tau\in\mathbb R$，满足
+
+$$
+\|h\|^2+\tau^2\le1,\qquad
+\delta=\operatorname{Re}\langle h,z\rangle,\qquad
+2w=Bh+i\tau z.
+\tag{134.1}
+$$
+
+反向表的输出取 $-d$。参数 $\beta$ 不进入该单对可行集，辅助参数 $(h,\tau)$ 不要求唯一。
+
+证明。首输入在 $q\mathbb C^n$ 上的零平方预算与固定矩阵极化先给 $qdq=0$，所以 $d=\delta p+H(w)$。取 $\xi=e+y$，$y\in q\mathbb C^n$，则
+
+$$
+p\xi=e,\qquad
+a\xi=(\beta+\langle z,y\rangle)e+z+By.
+$$
+
+故其准确行列式预算为 $\|z+By\|^2+(\operatorname{Im}\langle z,y\rangle)^2$，二表正性要求
+
+$$
+\bigl(\delta+2\operatorname{Re}\langle w,y\rangle\bigr)^2
+\le\|z+By\|^2+(\operatorname{Im}\langle z,y\rangle)^2
+\quad(y\in q\mathbb C^n).
+\tag{134.2}
+$$
+
+在已知有限维实 Hilbert 空间上定义实线性对象
+
+$$
+\ell(s,y)=s\delta+2\operatorname{Re}\langle w,y\rangle,\qquad
+T(s,y)=(sz+By,\operatorname{Im}\langle z,y\rangle).
+$$
+
+对 $s\ne0$，在 (134.2) 中代入 $y/s$ 得 $|\ell(s,y)|\le\|T(s,y)\|$；对 $s=0$，比较 (134.2) 沿 $ty$ 的二次最高系数给同一不等式。这只比较固定矩阵产生的已知多项式。因而 $\ell$ 在 $\ker T$ 上消失，下降为 $\operatorname{ran}T$ 上范数至多一的实线性泛函。有限维实 Hilbert Riesz 表示、再在正交补取零，给范数至多一的 $(h,\tau)$，使
+
+$$
+\ell(s,y)=\operatorname{Re}\langle h,sz+By\rangle
++\tau\operatorname{Im}\langle z,y\rangle.
+$$
+
+比较 $s,y$ 的系数，利用 $B=B^*$ 和 $\operatorname{Re}\langle i z,y\rangle=\operatorname{Im}\langle z,y\rangle$，得到 (134.1)。反向由实 Cauchy–Schwarz 立即得到 (134.2)。一般向量 $te+y$ 在 $t\ne0$ 时通过复标量缩放归入该式，$t=0$ 时零预算已处理。任意正泛函是向量正泛函的非负和，正二表之和仍正，故得到全部数学正读取。这里的核下降只涉及一个固定矩阵对的已知实线性 $T$，不涉及自由标签上的未知 $D$ 算子，也不提供全域可加性。∎
+

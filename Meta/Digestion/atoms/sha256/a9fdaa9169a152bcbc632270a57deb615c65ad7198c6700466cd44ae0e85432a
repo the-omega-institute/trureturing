@@ -1,0 +1,20 @@
+#### 定义 5.1：归一化的二元 Gram 关系
+
+对两份原配方 $x,y$，令
+
+$$
+a=Fx,\quad b=Fy,\quad
+s=\|a\|^2+\|b\|^2=Q(x)+Q(y).
+$$
+
+当 $s>0$ 时定义三个实数
+
+$$
+r_1=\frac{2\operatorname{Re}h(a,b)}s,\qquad
+ r_2=\frac{2\operatorname{Im}h(a,b)}s,\qquad
+ r_3=\frac{\|a\|^2-\|b\|^2}s.
+\tag{15}
+$$
+
+$r_1$ 是同向关系，$r_2$ 是由同一 $U$ 恢复的正交相位关系， $r_3$ 是两份自读数的差。$s=0$ 时两份读数均为零，不作除法或强行指定方向。
+

@@ -26,7 +26,8 @@ def copy_contract_interface(source, target):
     Indexed mathematical contracts compile against D5 in the Reg Lean tests.
     These fixtures exercise transport and discovery with no mathematical library.
     """
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean', 'AuricFib.lean', 'Analysis'))
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns(
+        '.lake', 'Implementation.lean', 'Registration.lean', 'AuricFib.lean', 'NativePrediction.lean', 'Analysis'))
     catalog = target / 'LeanInformationAuditInterface/Contract/Catalog.lean'
     declarations = catalog.read_text().split('/-- Each occurrence retains', 1)[0]
     declarations = declarations.replace(
@@ -235,7 +236,8 @@ defaultFacets = ["static"]
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
                      'tools/scripts/worktree/cache_material.py',
-                     'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_topology.py',
+                     'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_release_io.py',
+                     'tools/scripts/worktree/lean_cache_topology.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/worktree/lean-git/git',
@@ -271,7 +273,7 @@ defaultFacets = ["static"]
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
         # Make's cache wrapper and direct fixture calls use the same resolved Lake.
-        self.env = dict(os.environ, PATH=os.pathsep.join([
+        self.env = dict(os.environ, FULL_BUILD="1", PATH=os.pathsep.join([
             str(self.root / 'bin'), str(Path(self.lake).parent), os.environ['PATH']]), LAKE_BIN=self.lake,
             STRATALINT_LEAN_BUILD_TARGETS='[]',
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',

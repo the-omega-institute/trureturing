@@ -1,0 +1,26 @@
+**Corollary 33.3 (the live row in the actual equation).** Fix any sequence $s\downarrow0$ along which $\epsilon_c(s)=o(s^4)$. For every choice of actual normalized complex ground states $\psi_s\in D(S)$, put $f_s=\mathcal T_s\mathcal U_s\psi_s$, extended by zero. Uniformly over these choices,
+
+$$
+\begin{aligned}
+\langle(I-\gamma\mathcal N_s)g_0,f_s\rangle&=o(s^4),\\
+\left\langle\left(I-\gamma\sum_{m=0}^4s^m\mathcal N_m\right)g_0,f_s\right\rangle&=o(s^4),\\
+\sum_{m=1}^4s^m\langle\mathcal N_mg_0,f_s\rangle&=o(s^4).
+\end{aligned}
+\tag{33.5}
+$$
+
+In particular the premise holds in Theorem 27.1's conditional zero-response, $C_4\ge0$ branch. Neither that branch nor zero-response occurrence is inferred from (33.5).
+
+Proof. P (105.2), conjugated by the exact shear, is the original-domain equation
+
+$$
+f_s=\gamma\mathcal B_s(h_s)f_s,\qquad
+\|f_s\|_2=1,\qquad h_s=-\epsilon_c(s)/a>0.
+\tag{33.6}
+$$
+
+The bounded adjoint pairing at each $h_s>0$ gives
+$\langle(I-\gamma\mathcal B_s(h_s)^*)g_0,f_s\rangle=0$.
+It does not require $g_0$ to belong to a native form domain. By the stated premise $h_s=o(s^4)$; P (100.3) gives $r_s\ge c$. Theorem 29.2 therefore permits replacing the adjoint by $\mathcal N_s$ with error $O(h_s+s^5)=o(s^4)$. Theorem 33.2 and unit norm permit the fourth-order polynomial replacement. Finally $\gamma\mathcal N_0g_0=g_0$ cancels order zero, proving all three identities. Both moving faces, the full actual complement and every complex phase remain in the equation. No divergence of $r_s$ is assumed, so bounded-$r_s$ sequences satisfying the premise are included. The last sentence follows from (27.1) and (1.7). $\square$
+
+

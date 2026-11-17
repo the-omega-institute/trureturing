@@ -1,0 +1,25 @@
+**Lemma 43.2 (distributional return equations and time boundaries).** On the inputs and orders consumed in §§44–48,
+
+$$
+\mathcal EG_0g=g,\qquad
+\mathcal EG_jg=-\sum_{\ell=1}^j\mathscr D_\ell G_{j-\ell}g
+\quad(1\le j\le4)
+\tag{43.6}
+$$
+
+in distributions. Only the seed uses order four; $g_1,g_2,g_3$ use at most orders three, two and one respectively.
+
+Proof. On a finite safe height slab and bounded phase Fourier band the differentiated common Dirichlet heat equation is a bounded-potential variation-of-constants identity:
+
+$$
+(\partial_t+\mathcal E)\mathsf Q_j(t)g
+ =-\sum_{\ell=1}^j\mathscr D_\ell\mathsf Q_{j-\ell}(t)g.
+\tag{43.7}
+$$
+
+The coefficient of $e^{\lambda s^2t}$ gives exactly $-\lambda$ in $\mathscr D_2$. As in Theorem 36.2, remove the safe slab by the deleted-path inflated-Gaussian estimates of §§30 and 36 and then remove the Fourier cutoff against compact tests. This proves (43.7) without defining a nonzero rational parameter through a pole.
+
+At time zero, $\mathsf Q_0(t)g\to g$ in $L^2$. For $j\ge1$, approximate the input simultaneously in its finite weighted $L^2$ norms through degree $j$ by compact-height, bounded-frequency inputs. For such inputs iterated variation of constants is $O(t)$ at time zero; the finite Gaussian height moments and (30.4) bound the approximation uniformly for $0<t\le1$. Therefore $\mathsf Q_j(t)g\to0$ in $L^2$. Every used input has these weights by (31.3), (38.1), or §§44–45.
+
+At infinity use (43.2) with $q=\infty$. For the seed through degree four, $g_1$ through degree three, $g_2$ through degree two and $g_3$ through degree one, the largest powers are respectively $-3/2,-2,-5/2,-29/12$. In particular the supremum bounds tend to zero and are integrable for compact distributional testing. Near time zero the weighted $L^2$ bounds are likewise integrable after moving differential coefficients to the compact test. Thus integration of (43.7) over $(0,\infty)$ is justified and has exactly the time boundaries claimed in (43.6). Return coefficients integrate against unit Lebesgue Haar measure; no $j_0^{-1}$ is inserted into $G_j$. $\square$
+

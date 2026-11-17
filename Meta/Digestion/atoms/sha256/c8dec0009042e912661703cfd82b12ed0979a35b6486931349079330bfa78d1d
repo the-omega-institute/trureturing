@@ -1,0 +1,24 @@
+**定理 153.2（原量子公理与全部原历史的恢复）。** 在分别具名的两个完整原背景上，
+
+$$
+\begin{aligned}
+\mathsf C_{\rm in}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm in}(\mathsf B_{\rm cl})&\Longleftrightarrow
+\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{153.1}
+$$
+
+$\mathsf Q$ 仍是母卷定义 67.2 的统一近零证书。完整消费者为：
+
+| 保留的原关系及适用范围 | 同一原数据的量子结构 |
+| --- | --- |
+| 定理 151.1、全部实际联合及母卷定理 64.2 或 71.3 | 全曲率 $[D_a,D_b]=-[L_a,L_b]$；$a\cdot b=a\circ b-iD_ab$ 给 $\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C)$、原 $E_A=(\mathcal A_A)_{\rm sa}$、$D_ab=i[a,b]/2$。 |
+| 原准备、原比较及双对偶运输 | $\rho_\alpha=B_Ax_\alpha\ge0$、$\alpha(e)=\tau_A(\rho_\alpha e)$、$\tau_A(\rho_\alpha)=\alpha(u_A)$；Born 谱质量包含零与次归一准备，不等原 $q$ 块权保留。 |
+| 原 X 的含幺、同一 $D$ 保持、交叉零、乘积张成和每对实际乘积准备 | 原嵌入成为含幺 $*$-嵌入，原实际联合取得普通复张量；完整相关准备仍在原域。 |
+| 全事件 R、同记录旁接及全部原相关准备 | 每个原事件 CP/TNI，每个完整测试总映射 TP；闭准备支消费母卷定理 69.2 的连续正延拓。 |
+| 指定原群、整个 AC、精确 $N_u$、Xs 与所用合法连线 | 每个效果有一个所选完整有限平方根词，成功支为 $\rho\mapsto\sqrt e\rho\sqrt e$；投影时为所选 Lüders 支，原失败输出和记录随完整词保留。 |
+| 原 F、实际细标签、分组、记录和遗忘 | 非零单中心细支 $S_\ell=\operatorname{Ad}_{K_\ell}$，粗事件 $\Phi_f=\sum_\ell S_\ell$；零标签与实际细记录保留，Kraus 数学表示不新增实际细口。 |
+| 具名同数支持双返回、原反向资料及失败完成 | $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$，原两侧支持复合均为同一个具名 $q_\ell>0$ 倍恒等，连同其后合法接续运输。 |
+| 完整 $B$ 与另名 $\mathsf B_{\rm cl}$ | 前者保持实际准备的有限正锥生成；后者只给运输后密度锥的闭覆盖，不将极限态改称实际准备。 |
+| 全部原准备、端口及合法有限顺序、自适应、并行历史 | 下面等式逐条保存原质量、失败、细记录、中央细权与设备身份，不补原本非法的共同组装。 |

@@ -1,0 +1,45 @@
+**证明 195.2 的续段。** 置 $M=(Y_++Y_-)/2$、$\delta=\rho^3c/4$。由 (195.4)，$Y_+=M+\delta v$、$Y_-=M-\delta v$。将 $E_\pm$ 代入 (195.5)，得到
+
+$$
+s(v\circ M)-c(j\circ M)+\delta s u=0,\qquad
+-s(v\circ M)-c(j\circ M)+\delta s u=0.
+$$
+
+相减与相加分别给
+
+$$
+v\circ M=0,\qquad j\circ M=\frac{\rho^3s}{4}u.
+\tag{196.1}
+$$
+
+再将 $F_+$ 代入 $F_+\circ Y_+=0$，消费 (196.1)，即有
+
+$$
+0=\frac{\rho^3(s^2+c^2)}{4}u-\rho^3(h\circ M),
+\qquad h\circ M=\frac14u.
+$$
+
+定义同一个原自伴残差
+
+$$
+R=M-\frac14h-\frac{\rho^3s}{4}j.
+$$
+
+于是 $h\circ R=v\circ R=j\circ R=0$，且
+
+$$
+Y_+=Y_+^0+R,\quad Y_-=Y_-^0+R,\qquad
+Y_+^0=\frac{h+\rho^3T_+}{4},\quad
+Y_-^0=\frac{h-\rho^3T_-}{4}.
+\tag{196.2}
+$$
+
+这时才比较平方；没有将 $R$ 预先放进三轴线性包。三轴关系给 $(Y_\pm^0)^2=\gamma^2u/16$，并使 $Y_\pm^0\circ R=0$。所以由 (195.5)，
+
+$$
+\boxed{0\le R^2=Y_\pm^2-\frac{\gamma^2}{16}u\le0.}
+\tag{196.3}
+$$
+
+故 $R^2=0$。环境 C* 范数恒等式使自伴 $R=0$，代回 (196.2) 得 (195.2)。全部输入、输出、残差及五次配平标签均在原 $E$，仅对已知环境运算和数学正读取使用表示；不完备性不造成额外前件。∎
+

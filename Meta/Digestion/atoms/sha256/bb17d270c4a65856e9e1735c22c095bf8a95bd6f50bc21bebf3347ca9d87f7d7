@@ -1,0 +1,20 @@
+**Proposition 150.3 (the third-order residual after the three pair laws).** For any common partition $D$ satisfying the pair equalities in (150.3), define
+
+$$
+\Delta_{yzw}=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+               -\mathcal C(f_y,f_z,f_w).
+\tag{150.12}
+$$
+
+Full equality of all 64 coordinates is equivalent to the 27 equations $\Delta_{ijk}=0$ for $i,j,k\in\{0,1,3\}$. These are 27 free coordinates of the ambient linear residual space with all pair marginals zero; no independence or feasibility assertion for their nonlinear pullback to partitions is implied.
+
+*Proof.* Summing $\Delta$ in any one index gives the difference of the corresponding preserved pair laws, and is therefore zero. Let $e_y$ be the standard basis of $\mathbb R^{\mathcal L}$ and $H_0=\{x:\sum_yx_y=0\}$. The tensors with all three pair sums zero are exactly $H_0^{\otimes3}$: split $\mathbb R^{\mathcal L}=H_0\oplus\mathbb Re_B$ and apply the three index-sum maps to the resulting tensor decomposition. The nine one-time and 27 two-time coordinates, together with normalization, account for the complementary 37 ambient coordinates. The vectors $e_i-e_B$, $i\in\{0,1,3\}$, form a basis of $H_0$, and
+
+$$
+\Delta=\sum_{i,j,k\in\{0,1,3\}}
+ \Delta_{ijk}(e_i-e_B)\otimes(e_j-e_B)\otimes(e_k-e_B).
+\tag{150.13}
+$$
+
+Equivalently, replace each occurrence of $\mathbf1_{D_B}$ by $1-\mathbf1_{D_0}-\mathbf1_{D_1}-\mathbf1_{D_3}$ and use the already fixed lower-order sums. This proves the equivalence and the ambient count $\dim H_0^{\otimes3}=3^3=27$. Theorem 150.2 asserts none of these additional triple equations. Its terminal factors in (150.12) remain the actual $P\mathbf1_{D_w}$; no identification with $Pf_w$ is made. Its partition is not required to satisfy B8, to refine a supplied B8 witness, or to have rank-two $A^D$. $\square$
+

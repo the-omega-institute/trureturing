@@ -1,0 +1,23 @@
+**定理 4.2（两条在确定性基态校准类别内最少）。** 保留同一 $\mathscr C_{\rm end}$ 和原实际 R，只允许将校准族换成若干原配置基射线上的确定性校准时，能够充要选择全部 Born 的最小校准射线数为二。具体删除 (1.5) 的任一条，所得裸类严格包含 $\mathscr C_2$，加 R 后仍含非 Born 密度。
+
+**证明。** 对任一 $s\in E$，无相邻占据保证 $1,2$ 中至少有一个 $k\notin s$。取此 $k$，定理 4.1 的同一个固定 $\Pi^{[k]}$ 满足该单条校准、全部原端点及全域 R，却不是 Born。所以任何单条确定性基态校准都不足，零条也不足；定理 3.2 给两条的充分性。
+
+写
+$\mathscr C_O=\{\Pi\in\mathscr C_{\rm end}:\Pi(e_O)=\delta_O\}$、
+$\mathscr C_D=\{\Pi\in\mathscr C_{\rm end}:\Pi(e_D)=\delta_D\}$。
+因为 $1\notin D$，$\Pi^{[1]}\in\mathscr C_D$，但
+$d_1(O)=O\setminus\{1\}$，故 $\Pi_O^{[1]}(e_O)=0$，不在 $\mathscr C_O$。
+因为 $2\notin O$，$\Pi^{[2]}\in\mathscr C_O$，但
+$d_2(D)=D\setminus\{2\}$，故 $\Pi_D^{[2]}(e_D)=0$。
+因此
+
+$$
+\mathscr C_2\subsetneq\mathscr C_O,\qquad
+\mathscr C_2\subsetneq\mathscr C_D,
+\tag{4.5}
+$$
+
+且两个严格性见证各自仍满足原 R。反例保留的是所列数学密度条件，不冒称已构造满足额外实际过程和细档案合同的非 Born 物理模型。
+
+此最小性计的是确定性配置基态射线条数；不涉及任意非基态取值、粗事件种子、任意关系语言的信息量、地址或分量最小性，也不把两条条件连接成一句话后称“一条最小公理”。∎
+

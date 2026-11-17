@@ -1,0 +1,7 @@
+**Corollary 164.5 (the remaining infinite-horizon obligation).** Proposition 164.2 proves coordinatewise finite-prefix escape for any countable family of finite-dimensional successor readouts. To obtain a genuine FIB infinite-horizon energy-collapse statement, one must additionally construct either
+
+1. a sequence in $W_\infty$ with unit norm and shrinking $g^2$-mass, or
+2. an exact correction procedure that converts the prefix sequence into $W_\infty$ while preserving nonzero norm and the energy estimate.
+
+Neither condition follows from rank-nullity applied separately to the finite prefixes. Consequently, a countable successor stack may still control the full calibrated kernel even though every finite horizon has zero coercivity infimum. The statements (164.1)--(164.5) do not construct a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
+

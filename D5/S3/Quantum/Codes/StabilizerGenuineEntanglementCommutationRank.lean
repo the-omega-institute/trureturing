@@ -6,8 +6,16 @@
    utility: none
    digest: Genuine entanglement forces the Makuta--Kuzaka--Augusiak commutation-rank bound. -/
 
+/-
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/20302.
+proof_shape: wordMul: bind-only; consumer: D5.S3.Quantum.Codes.StabilizerGenuineEntanglementCommutationRank.pauli_word_mul.
+proof_shape: pauli_word_mul: bind-only; consumer: D5.S3.Quantum.Algebra.WeylCliffordDescent.weyl_mul.
+-/
+
 import D5.S3.Quantum.Algebra.WeylDisplacementTrace
 import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
+import D5.S3.Quantum.Algebra.WeylDisplacement
+import D5.S3.Observer.WindowRegister
 import Mathlib.Algebra.Lie.LieTheorem
 import Mathlib.FieldTheory.ChevalleyWarning
 import Mathlib.LinearAlgebra.FixedSubmodule
@@ -48,7 +56,7 @@ def pauliWordOperator {N p : ℕ} [NeZero p] (w : PauliWord N p) :
   (windowRoot p ^ w.phase.val) • Matrix.of (fun u v =>
     ∏ n, displacement p (w.x n) (w.z n) (u n) (v n))
 
-private def wordMul {N p : ℕ} (a b : PauliWord N p) : PauliWord N p :=
+def wordMul {N p : ℕ} (a b : PauliWord N p) : PauliWord N p :=
   { phase := a.phase + b.phase
     x := a.x + b.x
     z := a.z + b.z }
@@ -95,7 +103,7 @@ private theorem scalar_word_operator {N p : ℕ} [NeZero p] (r : ZMod p) :
   by_cases huv : u = v <;>
     simp [Matrix.scalar_apply, huv]
 
-private theorem pauli_word_mul {N p : ℕ} [NeZero p] (a b : PauliWord N p) :
+theorem pauli_word_mul {N p : ℕ} [NeZero p] (a b : PauliWord N p) :
     pauliWordOperator a * pauliWordOperator b =
       windowRoot p ^ (∑ n, a.z n * b.x n).val •
         pauliWordOperator (wordMul a b) := by

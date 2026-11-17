@@ -1,0 +1,5 @@
+source_id = "otf-004-endogenous-observation-attention-control-and-cosine-feedback"
+path = "docs/develop/theory/OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

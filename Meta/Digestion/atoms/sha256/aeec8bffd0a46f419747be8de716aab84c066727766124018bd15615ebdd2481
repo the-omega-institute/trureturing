@@ -1,0 +1,95 @@
+#### 定理 4.3：单对内生投影与反射公式
+
+在上节背景中，给定任意不交换对 $a,b$，令
+
+$$
+k=ab-ba,\qquad M=[L_a,L_b],\qquad T=L_k+M,
+\qquad \mathscr A_{a,b}=L_{ab}-L_aL_b.
+$$
+
+则由同一对内生生成一个四维四元数子代数 $H$，其正交投影 $P$ 与补投影 $Q=I-P$ 满足
+
+$$
+\boxed{M=L_k(2P-I),\quad T=2L_kP,\quad\mathscr A_{a,b}=L_kQ.}
+$$
+
+特别地，
+
+$$
+\boxed{P=-\frac{L_kT}{2q(k)},\qquad
+P(c)=-\frac{k\,\bigl(kc+a(bc)-b(ac)\bigr)}{2q(k)}.}
+$$
+
+每个括号均如式中所写。这个公式由原乘法、实标量与原读数在同一可读商上下降得到。
+
+$$
+\operatorname{ran}T=H,\qquad \ker T=H^\perp,
+\qquad\operatorname{rank}_{\mathbb R}T=4.
+$$
+
+算子 $K:=2P-I$ 为正交自伴反射；$K=+I$ 于 $H$，$K=-I$ 于 $H^\perp$。
+
+**证明。**
+
+写 $a=\alpha1+x$、$b=\beta1+y$，其中 $x,y\in W$。 若 $x,y$ 线性相关，则 $a,b$ 交换，故两纯部独立。 Gram–Schmidt 给正交单位纯方向 $u,v$ 及 $r,h>0$、$s\in\mathbb R$，使
+
+$$
+a=\alpha1+ru,\qquad b=\beta1+su+hv.
+$$
+
+令 $w=uv$。配对恒等式与乘性给 $q(w)=1$ 及 $w\perp1,u,v$。 由左右交替性和纯方向反交换，
+
+$$
+u^2=v^2=w^2=-1,\quad uv=w=-vu,\quad
+uw=-v,\quad wu=v,\quad wv=-u,\quad vw=u.
+$$
+
+因此 $H=\operatorname{span}\{1,u,v,w\}$ 为四维四元数子代数。 此处只建立 $H$ 内的乘法表，未把 $L_uL_v$ 误认作整个 $A$ 上的 $L_w$。
+
+定义整个 $A$ 上的算子
+
+$$
+K:=-L_wL_uL_v.
+$$
+
+三个纯方向左乘平方均为 $-I$，且两两反交换。 因此 $K$ 与 $L_u,L_v,L_w$ 分别交换。 又
+
+$$
+K1=-w(uv)=-w^2=1,
+$$
+
+故 $K$ 在 $1,u,v,w$ 上均为恒等，因而在 $H$ 上为 $+I$。
+
+若 $z\perp H$，则 $z\in W$ 且 $L_z$ 与 $L_u,L_v,L_w$ 分别反交换。 三次翻号给
+
+$$
+KL_z=-L_zK.
+$$
+
+作用于单位便得 $Kz=-z$。 任意 $c\in A$ 都可减去在这四个正交单位向量上的有限投影，故 $A=H\oplus H^\perp$，不需预给维数或完备性。 显式地，$P(c)=B(1,c)1+B(u,c)u+B(v,c)v+B(w,c)w$。 所以 $K=2P-I$，它是正交自伴反射。
+
+左乘 $L_w$ 于 $K=-L_wL_uL_v$ 得
+
+$$
+L_uL_v=L_wK.
+$$
+
+双线性展开给
+
+$$
+k=2rh\,w,\qquad
+M=rh[L_u,L_v]=2rhL_uL_v=L_kK.
+$$
+
+因此 $T=L_k(I+K)=2L_kP$。 再令 $F(x,y)=L_xL_y-L_{xy}$。 它双线性，$F(1,y)=F(x,1)=F(x,x)=0$，所以
+
+$$
+\mathscr A_{a,b}=-F(a,b)
+=-rh(L_uL_v-L_w)
+=rhL_w(I-K)=L_kQ.
+$$
+
+$k$ 为纯方向且 $q(k)>0$，故 $L_k^2=-q(k)I$， 给出显示的内生投影公式。 $L_k$ 可逆并保持 $H$ 和 $H^\perp$（因 $K$ 与 $L_w$ 交换）， 所以 $\operatorname{ran}T=H$、$\ker T=H^\perp$，秩恰为四。
+
+$\square$
+

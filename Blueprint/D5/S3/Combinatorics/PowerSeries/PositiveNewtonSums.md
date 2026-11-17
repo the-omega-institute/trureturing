@@ -168,7 +168,21 @@ $$\forall a \in (\mathbb{N})^{+}\to\mathbb{Q},\; \operatorname{recurrence}\left(
 
 The displayed relation is the FORMULA-field recurrence of A301420, interpreted at every n at least one. It makes no asymptotic claim.
 
-**Theorem 1.13 (Generating function and recurrence).**
+**Theorem 1.13 (The formal logarithmic derivative).**
+
+$$\forall p \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorname{constantCoeff}\left(p\right) = 0 \Rightarrow \operatorname{derivative}\left(\operatorname{subst}\left(p, \operatorname{log}\left(\mathbb{Q}\right)\right)\right) \cdot (1 + p) = \operatorname{derivative}\left(p\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.logarithmic_derivative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Gregory Gerard Wojnar (2018). *OEIS A301420: positive coefficients of five-data generalized Chebyshev polynomials*. URL: <https://oeis.org/A301420>.
+
+*Commentary.*
+
+For any rational formal series p with constant coefficient zero, differentiation of log(1+p), followed by multiplication by 1+p, gives the derivative of p. Here subst(p,f) substitutes p into f.
+
+**Theorem 1.14 (Generating function and recurrence).**
 
 $$positiveSeries = \frac{1 - X \cdot (1 + X)^{4}}{\left(1 - X\right) \cdot \left(2 - (1 + X)^{5}\right)}\land\operatorname{recurrence}\left(positiveCoefficient\right)$$
 
@@ -193,6 +207,7 @@ For any rational c, twice its positive part is |c|+c. The two aggregate logarith
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.dataSeries`
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.degree`
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.literalCoefficient`
+- Truth anchor: `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.logarithmic_derivative`
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.multiplicities`
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.positiveCoefficient`
 - Truth anchor: `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.positiveSeries`

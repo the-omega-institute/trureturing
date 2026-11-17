@@ -1,0 +1,35 @@
+**定义 9.1（有限原子前缀与角频率读数）。** 沿用第一节的完整正核 $P$ 和式 (1) 的乘子 $m$，即
+
+$$
+P(t)=\sum_{j\geq1}c_j e^{-\lambda_j|t|},\qquad
+c_j=\frac{1}{2j(2j+1)},\qquad
+\lambda_j=2j+\frac12,
+$$
+
+$$
+m(\xi)=\sum_{j\geq1}\frac{2c_j\lambda_j\xi^2}{\lambda_j^2+\xi^2}.
+$$
+
+对任意有限指标集 $I$、位置 $x:I\to\mathbb R$ 和复系数 $a:I\to\mathbb C$，记
+
+$$
+\mu=\sum_{i\in I}a_i\delta_{x_i},\qquad
+F_{x,a}(u)=\sum_{\substack{i\in I\\x_i\leq u}}a_i,
+$$
+
+$$
+E(x,a)=\int_{\mathbb R}|F_{x,a}(u)|^2\,du,\qquad
+Q_P(x,a)=\sum_{i,j\in I}\overline{a_i}a_jP(x_i-x_j).
+$$
+
+前缀采用包含等号的约定。指标集可以为空，位置可以重复，也可以落在窗口端点。系数不要求为实数或非负数。若所有位置属于 $[0,D]$ 且 $\sum_i a_i=0$，则 $F_{x,a}$ 在窗口外为零，是属于 $L^1(\mathbb R)\cap L^2(\mathbb R)$ 的有限阶梯函数，其分布导数为 $\mu$。
+
+对这样的前缀采用角频率归一化
+
+$$
+\widehat F(\xi)=\int_{\mathbb R}F(u)e^{-i\xi u}\,du,\qquad
+d\rho_F(\xi)=\frac{|\widehat F(\xi)|^2}{2\pi}\,d\xi.
+$$
+
+这里 $\rho_F$ 是非负有限测度；不要求它关于原点对称。
+

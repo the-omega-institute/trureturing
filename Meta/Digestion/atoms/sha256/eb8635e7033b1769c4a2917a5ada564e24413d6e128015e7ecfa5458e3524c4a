@@ -1,0 +1,84 @@
+**Theorem 40.3 (the entire low block spectrum and its actual ground).**
+For every fixed $N\ge1$,
+
+$$
+\nu_{\kappa,N}
+ =\xi_\kappa+h_{\sigma,\kappa}(2N-1)\omega_\sigma
+                     +o(h_{\sigma,\kappa}).
+\tag{40.10}
+$$
+
+The eigenvalues count multiplicity. For any normalized block ground
+$f_\kappa^{\rm bl}$, suitable constant phases make the rescaled
+amplitudes in (40.2) converge strongly to
+
+$$
+u_{c_\sigma}(k)\psi_\sigma(y),
+\qquad
+\psi_\sigma(y)
+  =\left(\frac{\gamma_\sigma}{\pi}\right)^{1/4}
+                 e^{-\gamma_\sigma y^2/2}.
+\tag{40.11}
+$$
+
+Proof. The limiting form in (40.4) is the one-dimensional oscillator
+$-\mathcal B_\sigma\partial_y^2+\mathcal C_\sigma y^2$.
+Rescaling $y=(\mathcal B_\sigma/\mathcal C_\sigma)^{1/4}z$
+identifies it with
+$\omega_\sigma(-\partial_z^2+z^2)$.
+The classical Hermite basis therefore gives its simple ordered
+spectrum $\mu_N=(2N-1)\omega_\sigma$ and the normalized ground
+(40.11). This is precisely the one-dimensional calculation in
+[Teschl, §8.3, (8.35)--(8.41), printed pp.178--179](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+Its form domain is $\{z\in H^1(\mathbb R):yz\in L^2\}$ and
+$C_c^\infty$ is a form core, by cutoff and smoothing. Thus its first
+$N$ eigenfunctions can be approximated by an $N$-dimensional space
+of compactly supported smooth functions whose largest quotient is
+arbitrarily close to $\mu_N$.
+
+Apply the recovery part of Lemma 40.2 to a basis of that space.
+Its exact preservation of norms and convergence of all cross forms,
+followed by min-max, give
+
+$$
+\limsup\frac{\nu_{\kappa,N}-\xi_\kappa}{h}\le\mu_N.
+\tag{40.12}
+$$
+
+For the reverse bound choose the first $N$ orthonormal eigenfunctions
+of the exact block. Their rescaled centered energies are nonnegative
+by (40.3), and bounded by (40.12). On any subsequence realizing a
+lower limit of the $N$th centered eigenvalue, pass to a further
+subsequence so that all first $N$ centered eigenvalues converge and
+Lemma 40.2 applies simultaneously to their eigenfunctions.
+Their strong limits are $u_cz_1,\ldots,u_cz_N$, with the $z_i$
+orthonormal on $\mathbb R$. For any fixed coefficients $t_i$, the
+lower-limit inequality applied to their linear combination gives
+
+$$
+\mathcal R_\sigma\left[\sum_{i=1}^Nt_i z_i\right]
+ \le\lim\sum_{i=1}^N|t_i|^2
+                    \frac{\nu_{\kappa,i}-\xi_\kappa}{h}
+ \le\left(\lim\frac{\nu_{\kappa,N}-\xi_\kappa}{h}\right)
+                       \sum_{i=1}^N|t_i|^2.
+\tag{40.13}
+$$
+
+Min-max for the limiting oscillator implies that the last limit is
+at least $\mu_N$. This proves (40.10). The argument controls every
+possible sequence of low eigenfunctions; it does not assume an
+adiabatic ansatz or discard high hidden Fourier frequencies.
+
+For the block ground, every subsequential strong limit has norm one
+and limiting form at most $\mu_1$. It must be the simple oscillator
+ground times $u_c$, up to a constant phase. Choosing the nonnegative
+block ground fixes that phase: the fixed-parameter block form is
+elliptic with a bounded real potential on the connected cylinder.
+Its free heat kernel is the integral of the original strictly positive
+full heat kernel over the two visible output phases, so it is strictly
+positive. The bounded-potential argument of (35.8) on this block
+therefore gives a simple positive ground.
+Every subsequence then has the same limit, which proves (40.11)
+for the full family and for arbitrary normalized ground choices
+after constant phases. $\square$
+

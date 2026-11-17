@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:30fcd36695b48a507cee56062a94c7531ce1f68eeddf99a6f111218876e203d6
+  normalized_sha256: sha256:30fcd36695b48a507cee56062a94c7531ce1f68eeddf99a6f111218876e203d6
+cas_ref: sha256:30fcd36695b48a507cee56062a94c7531ce1f68eeddf99a6f111218876e203d6
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/UnitBridgeRawGeometry.raw_K_geometry
+    target_statement_id: sha256:abe2292361c975f5a62f2f9937fc480d3fa299101ae88334eac6a326cff2aa3e
+  - gid: D5/S3/Quantum/Algebra/UnitBridgeRawGeometry.raw_K_nested
+    target_statement_id: sha256:73b4a292024fe11c385ed67eaaa3e00c24a70912a65c7e63d73435b6dceea4bb
+  - gid: D5/S3/Quantum/Algebra/UnitBridgeRawGeometry.raw_h_fibre
+    target_statement_id: sha256:1eb2be59de37ff937d491bc77dd773fe644b50736f5aadc438f80a89d068b832
+  - gid: D5/S3/Quantum/Algebra/UnitBridgeRawGeometry.raw_scalar_independent
+    target_statement_id: sha256:34100dc6c8a99b86ea258489b7edcb3ae362fc998751c9c10d82103ea40e9210
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,29 @@
+**定义 8.1（同一静态候选及其全部量词）。** 完整静态比较条件取原词卷定义 385.1–385.2 的 $\mathsf C_{\rm arb}$，逐个原对象沿其原响应商应用。定义 5.1 经定理 6.1 给这些条件的辅助数学实现；若要求保留预先指定的原共同网络及实际同源识别，则仍须逐项满足本定义与定义 8.2，不能以辅助存在取代。固定同一原 $E,\circ,u,q,D$、全部中心及原评价族 $\mathcal P$，满足
+
+$$
+\begin{gathered}
+[\alpha(a)=0\ (\alpha\in\mathcal P)]\Longrightarrow a=0,
+\qquad E_+=\{c:\alpha(c)\ge0\ (\alpha\in\mathcal P)\},\\
+\alpha(u)=m_\alpha\ge0,\qquad
+(\forall a\in E)(\exists r\ge0)\ -ru\le a\le ru,\qquad u\circ a=a.
+\end{gathered}
+\tag{8.1}
+$$
+
+$\circ$ 为原实对称双线性关系，$\alpha$ 为原实线性评价；同一个旧 $D:E^2\to E$ 初始只视为任意总映射。另保留同一个复空间 $V$、第一槽共轭线性的半正定 Hermitian $K$、全部原 $\xi_\alpha$ 和同一族总集合映射 $J_a:V\to V$，要求
+
+$$
+\begin{aligned}
+K(\xi_\alpha,J_a\xi_\alpha)&=\alpha(a),\\
+K(J_a z,J_b w)&=K(z,J_{a\circ b}w)-\mathrm i K(z,J_{D(a,b)}w),\\
+V&=\operatorname{span}_{\mathbb C}
+ \{J_{a_1}\cdots J_{a_n}\xi_\alpha:
+     n\ge0,\ a_j\in E,\ \alpha\in\mathcal P\},\\
+K(\xi_\alpha,\xi_\alpha)&\le m_\alpha,\\
+K(J_a\xi_\alpha,J_c(J_a\xi_\alpha))&\ge0\qquad(c\in E_+).
+\end{aligned}
+\tag{8.2}
+$$
+
+首行量化全部原 $\alpha,a$，第二行量化全部原 $a,b$ 及全部 $z,w\in V$；末两行量化全部原标签，末行还量化全部 $a,c$。生成中的词先按原总映射复合，再取有限复线性包，包含零长度和任意有限长度。共同 $K$ 保留所有有限正表及指定跨评价配对，不能改成每个 $\alpha$ 的独立核。没有独立假设 $D$ 双线性、$D(a,u)=0$、原 $J_a$ 线性、$J_0=0$ 或 $J_u=I_V$。这些条件与原词卷的既有恢复链保持同一逻辑次序。
+

@@ -70,6 +70,8 @@ escape_witness: Stabilizer.quotientLieHom_surjective, Stabilizer.quotientKernel_
     consumers: D5.S3.QuadraticForms.EvolutionAlgebras.SemisimpleDerivationClassification.result
 -/
 
+import D5.S3.QuadraticForms.LieRadicalTransfer
+
 import Mathlib.Algebra.Lie.Nilpotent
 import Mathlib.Algebra.Lie.Semisimple.Basic
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
@@ -87,22 +89,6 @@ set_option maxHeartbeats 800000
 namespace D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer
 attribute [local instance 100] LieRing.ofAssociativeRing
 variable {k V : Type*} [Field k] [AddCommGroup V] [Module k V]
-private theorem nilpotent_of_triple_bracket_zero {L : Type*} [LieRing L] [LieAlgebra k L]
-    (h : ∀ x y z : L, ⁅x, ⁅y, z⁆⁆ = 0) : LieRing.IsNilpotent L := by
-  apply LieModule.IsNilpotent.mk (R := k) (L := L) (M := L) (k := 2)
-  simp only [LieModule.lowerCentralSeries_succ, LieModule.lowerCentralSeries_zero]
-  apply (LieSubmodule.lie_eq_bot_iff _ _).mpr
-  intro x hx y hy
-  have hy' : y ∈ (⁅(⊤ : LieIdeal k L), (⊤ : LieIdeal k L)⁆ : LieIdeal k L).toSubmodule := hy
-  clear hy
-  rw [LieSubmodule.lieIdeal_oper_eq_linear_span] at hy'
-  induction hy' using Submodule.span_induction with
-  | mem z hz =>
-      obtain ⟨a, b, rfl⟩ := hz
-      exact h x a.val b.val
-  | zero => simp
-  | add a b ha hb ia ib => simp [ia, ib]
-  | smul c a ha ia => simp [ia]
 
 variable (B : LinearMap.BilinForm k V) (W : Submodule k V)
 def stabilizer : LieSubalgebra k (Module.End k V) where
@@ -176,25 +162,102 @@ private theorem orthRadical_eq_intersection [FiniteDimensional k V] (hND : B.Non
     ext v
     change B u.val v.val = 0
     exact v.property u.val huW
-private def orthAction : stabilizer B W →ₗ⁅k⁆ Module.End k (B.orthogonal W) where
-  toFun f := f.val.restrict (fun v _ => stabilizer_maps_into_orthogonal B W f v)
+/-- Skew endomorphisms preserving a subspace setwise. This larger algebra is
+needed for full evolution derivations, whose diagonal part need not vanish. -/
+def preserver : LieSubalgebra k (Module.End k V) where
+  carrier := {f | f ∈ skewAdjointLieSubalgebra B ∧ ∀ w ∈ W, f w ∈ W}
+  zero_mem' := ⟨(skewAdjointLieSubalgebra B).zero_mem, by simp⟩
+  add_mem' := by
+    rintro f g ⟨hf,hfW⟩ ⟨hg,hgW⟩
+    exact ⟨(skewAdjointLieSubalgebra B).add_mem hf hg,
+      fun w hw => W.add_mem (hfW w hw) (hgW w hw)⟩
+  smul_mem' := by
+    rintro c f ⟨hf,hfW⟩
+    exact ⟨(skewAdjointLieSubalgebra B).smul_mem c hf,
+      fun w hw => W.smul_mem c (hfW w hw)⟩
+  lie_mem' := by
+    rintro f g ⟨hf,hfW⟩ ⟨hg,hgW⟩
+    refine ⟨(skewAdjointLieSubalgebra B).lie_mem hf hg, ?_⟩
+    intro w hw
+    exact W.sub_mem (hfW _ (hgW w hw)) (hgW _ (hfW w hw))
+
+private def stabilizerToPreserver : stabilizer B W →ₗ⁅k⁆ preserver B W where
+  toFun f := ⟨f.val, f.property.1, fun w hw => by rw [f.property.2 w hw]; exact W.zero_mem⟩
+  map_add' := by intros; rfl
+  map_smul' := by intros; rfl
+  map_lie' := by intros; rfl
+
+private theorem preserver_maps_orthogonal (f : preserver B W)
+    (v : V) (hv : v ∈ B.orthogonal W) : f.val v ∈ B.orthogonal W := by
+  rw [LinearMap.BilinForm.mem_orthogonal_iff] at hv ⊢
+  intro w hw
+  have hf : B.IsSkewAdjoint f.val :=
+    (LinearMap.mem_skewAdjointSubmodule (B := B) f.val).mp f.property.1
+  have hh := hf w v
+  change B (f.val w) v = B w (-(f.val v)) at hh
+  rw [hv _ (f.property.2 w hw), map_neg] at hh
+  exact neg_eq_zero.mp hh.symm
+
+private def preserverOrthAction : preserver B W →ₗ⁅k⁆ Module.End k (B.orthogonal W) where
+  toFun f := f.val.restrict (fun v hv => preserver_maps_orthogonal B W f v hv)
   map_add' := by intro f g; ext v; rfl
   map_smul' := by intro c f; ext v; rfl
   map_lie' := by intro f g; ext v; rfl
-private theorem orthAction_preserves_radical (f : stabilizer B W)
+
+private theorem preserverOrthAction_preserves_radical (f : preserver B W)
     (u : B.orthogonal W) (hu : u ∈ (LinearMap.ker (B.restrict (B.orthogonal W)))) :
-    orthAction B W f u ∈ (LinearMap.ker (B.restrict (B.orthogonal W))) := by
-  change (B.restrict (B.orthogonal W)) (orthAction B W f u) = 0
+    preserverOrthAction B W f u ∈ (LinearMap.ker (B.restrict (B.orthogonal W))) := by
+  change (B.restrict (B.orthogonal W)) (preserverOrthAction B W f u) = 0
   ext v
   have hf : B.IsSkewAdjoint f.val :=
     (LinearMap.mem_skewAdjointSubmodule (B := B) f.val).mp f.property.1
-  have hz : B u.val ((orthAction B W f v).val) = 0 :=
-    LinearMap.congr_fun hu (orthAction B W f v)
+  have hz : B u.val ((preserverOrthAction B W f v).val) = 0 :=
+    LinearMap.congr_fun hu (preserverOrthAction B W f v)
   change B (f.val u.val) v.val = 0
   change B u.val (f.val v.val) = 0 at hz
   rw [hf u.val v.val]
   change B u.val (-(f.val v.val)) = 0
   rw [map_neg, hz, neg_zero]
+
+private def preserverQuotientAction : preserver B W →ₗ⁅k⁆
+    Module.End k ((B.orthogonal W) ⧸ (LinearMap.ker (B.restrict (B.orthogonal W)))) where
+  toFun f := (LinearMap.ker (B.restrict (B.orthogonal W))).mapQ
+    (LinearMap.ker (B.restrict (B.orthogonal W))) (preserverOrthAction B W f)
+    (fun u hu => preserverOrthAction_preserves_radical B W f u hu)
+  map_add' := by intro f g; ext u; rfl
+  map_smul' := by intro c f; ext u; rfl
+  map_lie' := by intro f g; ext u; rfl
+
+private theorem preserverQuotientAction_skew (f : preserver B W) :
+    (LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W))
+      (LinearMap.ker (B.restrict (B.orthogonal W)))
+      (fun x y => hB.isRefl x.val y.val) le_rfl).IsSkewAdjoint
+        (preserverQuotientAction B W f) := by
+  intro u v
+  induction u using Submodule.Quotient.induction_on with
+  | _ u =>
+    induction v using Submodule.Quotient.induction_on with
+    | _ v =>
+      exact (LinearMap.mem_skewAdjointSubmodule (B := B) f.val).mp f.property.1 u.val v.val
+
+/-- The actual action of a setwise orthogonal preserver on the nondegenerate
+quotient of the orthogonal complement. -/
+def preserverQuotientLieHom : preserver B W →ₗ⁅k⁆
+    skewAdjointLieSubalgebra (LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W))
+      (LinearMap.ker (B.restrict (B.orthogonal W)))
+      (fun x y => hB.isRefl x.val y.val) le_rfl) :=
+  { (preserverQuotientAction B W).toLinearMap.codRestrict _
+      (fun f => (LinearMap.mem_skewAdjointSubmodule _).mpr
+        (preserverQuotientAction_skew B W hB f)) with
+    map_lie' := fun {f g} => Subtype.ext ((preserverQuotientAction B W).map_lie f g) }
+
+private def orthAction : stabilizer B W →ₗ⁅k⁆ Module.End k (B.orthogonal W) :=
+  (preserverOrthAction B W).comp (stabilizerToPreserver B W)
+
+private theorem orthAction_preserves_radical (f : stabilizer B W)
+    (u : B.orthogonal W) (hu : u ∈ (LinearMap.ker (B.restrict (B.orthogonal W)))) :
+    orthAction B W f u ∈ (LinearMap.ker (B.restrict (B.orthogonal W))) :=
+  preserverOrthAction_preserves_radical B W (stabilizerToPreserver B W f) u hu
 private def quotientAction : stabilizer B W →ₗ⁅k⁆
     Module.End k ((B.orthogonal W) ⧸ (LinearMap.ker (B.restrict (B.orthogonal W)))) where
   toFun f := ((LinearMap.ker (B.restrict (B.orthogonal W)))).mapQ ((LinearMap.ker (B.restrict (B.orthogonal W)))) (orthAction B W f)
@@ -213,15 +276,8 @@ private def quotientAction : stabilizer B W →ₗ⁅k⁆
     rfl
 private theorem quotientAction_skew (f : stabilizer B W) :
     ((LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W)) (LinearMap.ker (B.restrict (B.orthogonal W))) (fun x y => hB.isRefl x.val y.val) le_rfl)).IsSkewAdjoint (quotientAction B W f) := by
-  intro u v
-  induction u using Submodule.Quotient.induction_on with
-  | _ u =>
-    induction v using Submodule.Quotient.induction_on with
-    | _ v =>
-      have hf : B.IsSkewAdjoint f.val :=
-        (LinearMap.mem_skewAdjointSubmodule (B := B) f.val).mp f.property.1
-      exact hf u.val v.val
-private def quotientLieHom : stabilizer B W →ₗ⁅k⁆
+  exact preserverQuotientAction_skew B W hB (stabilizerToPreserver B W f)
+def quotientLieHom : stabilizer B W →ₗ⁅k⁆
     skewAdjointLieSubalgebra ((LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W)) (LinearMap.ker (B.restrict (B.orthogonal W))) (fun x y => hB.isRefl x.val y.val) le_rfl)) :=
   { (quotientAction B W).toLinearMap.codRestrict
       (skewAdjointLieSubalgebra ((LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W)) (LinearMap.ker (B.restrict (B.orthogonal W))) (fun x y => hB.isRefl x.val y.val) le_rfl))).toSubmodule
@@ -240,9 +296,9 @@ private theorem quotientKernel_maps_into_W [FiniteDimensional k V] (hND : B.Nond
   exact hu'.1
 
 include hB in
-private theorem quotientKernel_nilpotent [FiniteDimensional k V] (hND : B.Nondegenerate) :
-    LieRing.IsNilpotent (quotientAction B W).ker := by
-  apply nilpotent_of_triple_bracket_zero (k := k)
+private theorem quotientKernel_triple_bracket_zero [FiniteDimensional k V]
+    (hND : B.Nondegenerate) :
+    ∀ f g h : (quotientAction B W).ker, ⁅f, ⁅g,h⁆⁆ = 0 := by
   have hc (f g h : (quotientAction B W).ker) : f.val.val * g.val.val * h.val.val = 0 :=
     stabilizer_kernel_triple_zero B W f.val g.val h.val
       (fun u hu => quotientKernel_maps_into_W B W hB hND g ⟨u, hu⟩)
@@ -251,6 +307,27 @@ private theorem quotientKernel_nilpotent [FiniteDimensional k V] (hND : B.Nondeg
   apply Subtype.ext
   change ⁅f.val.val, ⁅g.val.val, h.val.val⁆⁆ = 0
   simp only [Ring.lie_def, mul_sub, sub_mul, ← mul_assoc, hc, sub_self]
+
+include hB in
+private theorem quotientKernel_nilpotent [FiniteDimensional k V] (hND : B.Nondegenerate) :
+    LieRing.IsNilpotent (quotientAction B W).ker :=
+  D5.S3.QuadraticForms.LieRadicalTransfer.nilpotent_of_triple_bracket_zero (k := k)
+    (quotientKernel_triple_bracket_zero B W hB hND)
+
+/-- The actual quotient-action kernel has zero triple brackets. This is the
+canonical pointwise-stabilizer nilpotent-kernel proof, with its stronger bound
+made available to the full derivation-kernel argument. -/
+theorem quotientLieHom_kernel_triple_zero [FiniteDimensional k V]
+    (hND : B.Nondegenerate) (f g h : (quotientLieHom B W hB).ker) :
+    ⁅f, ⁅g,h⁆⁆ = 0 := by
+  let lift (x : (quotientLieHom B W hB).ker) : (quotientAction B W).ker :=
+    ⟨x.val, by
+      rw [LieHom.mem_ker]
+      exact congrArg Subtype.val (LieHom.mem_ker.mp x.property)⟩
+  apply Subtype.ext
+  apply Subtype.ext
+  exact congrArg (fun x : (quotientAction B W).ker => x.val.val)
+    (quotientKernel_triple_bracket_zero B W hB hND (lift f) (lift g) (lift h))
 
 include hB in
 private theorem quotientAction_injective [FiniteDimensional k V] (hND : B.Nondegenerate)
@@ -308,7 +385,7 @@ private theorem extendOrthogonal_skew (f : Module.End k E)
       simpa only [LinearMap.neg_apply, LinearMap.compl₁₂_apply, map_neg] using
         congrArg Neg.neg (orthProjection_pairing B i hC v (f (orthProjection B i hC w)))
 end OrthogonalProjection
-private theorem quotientLieHom_surjective [FiniteDimensional k V] :
+theorem quotientLieHom_surjective [FiniteDimensional k V] :
     Function.Surjective (quotientLieHom B W hB) := by
   classical
   intro F

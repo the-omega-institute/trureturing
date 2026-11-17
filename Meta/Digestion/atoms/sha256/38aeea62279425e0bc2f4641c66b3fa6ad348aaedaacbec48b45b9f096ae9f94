@@ -1,0 +1,49 @@
+**定义 20.1（受限控制类）。** 取正有理数 $0<e\le1/100$，并逐项采用 (19.1) 的精度曲线
+
+$$
+\begin{aligned}
+u_e&=e/8,\qquad
+ k_e=\left\lceil2048e^{-2}\log(18/e)\right\rceil,\qquad
+ \ell_e=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,\qquad
+N_e=\max\left\{N_*,\left\lceil\frac{3k_e+2}{10}\right\rceil,
+ \left\lceil\frac{15\ell_e+1}{18}\right\rceil\right\},\\
+D_e&=\left\lceil\max\{8{,}000{,}000N_e^2,9k_e/e\}\right\rceil,
+\qquad m_e=D_e-1=2j_e,\\
+L_e&=M_e=10N_e,\qquad Q_e=18N_e+1 .
+\end{aligned}
+\tag{20.1}
+$$
+
+公共参数保持 $d=1/64$、$\tau _0=1$、$r=1/4$、$B_{\rm field}=2$、$G=1$。场仍为定义 13.1 的全部 $C^2$、秩二映射 $n:U\to S^2$：$U$ 包含两条完整闭 $r$ 轴段，且
+$\|n_{aa}(t e_a)\|\le2$（$a=x,y,|t|\le r$）及
+$\|n_x(0)\|,\|n_y(0)\|\le1$。场重置独立供应
+$\rho_n(z)=(I+n(z)\cdot\sigma)/2$。目标和原始访问合同分别是
+
+$$
+D_h(n)=\left(\frac{h\cdot[n(0)\times n_x(0)]}{2},
+\frac{h\cdot[n(0)\times n_y(0)]}{4},0,\frac{h\cdot n_y(0)}2\right),
+\tag{20.2}
+$$
+
+以及至多 $L_e$ 次原生
+$V=\sum_{b=\pm}\Pi_b\otimes|bb\rangle_{HE}$、至多 $Q_e$ 次场重置和恰一次规定终端交换
+$U_{\rm term}=\exp[-id\tau _0J\cdot\sigma/m_e]$；其余操作在原始 $R$ 标记上恒等，不直接读取、旋转、拆分、重置、替换或恢复 $R$。控制器、解码器、辅助初态及固定 $n$ 后非 $R$ 来源的完整律均与实际 $n,h$ 无关，且必须对全部上述 $n$ 和 $h\in S^2$ 满足同一运行成功条件
+$\Pr[\|\widehat D-D_h(n)\|_\infty\le e]\ge1-e$，不作后选择。
+
+一个控制器属于本类，当且仅当存在运行前固定的整数 $q$，$0\le q\le L_e-2$，使其前缀与后缀满足下列条件。
+
+1. 前缀与 $R$ 的全部接触恰为 $q$ 个原生 $V$ 槽；每槽输入一枚真正新鲜、与 $R$ 及此前全部寄存器独立的 $I_S/2$，并在该槽后立即施行原定义 (13.7)–(13.8) 的同一个约化通道 $\mathcal C$。新鲜探针不被相关、偏置、替换或接入不可见纯化。槽间允许任意有限的、因果的、$h/n$ 无关的非 $R$ 处理，包括保留全部量子记录、集体存储和最终集体解码；这些处理不得增加前缀的 $R$ 接触，也不得把任何旧前缀寄存器送入后缀。$q$ 不随 $n,h$ 或观测结果自适应改变。
+2. 前缀后接定义 17.1 的完整固定后缀：其 singlet、固定 $\widehat\Phi$ 及三个替换节点、两枚原生 $V$ 槽、原始 $H,E$ 记录与副本，以及一个使用独立且此前未改动的 $+d e_x$ 场令牌和声明的 $\mathcal E$ 节点的规定终端交换。后缀恰有这两个原生槽和这一个终端，不接收旧前缀记录、内存、标签或控制信号；其规定的两枚场令牌和所有前缀场重置合计不超过 $Q_e$。
+3. 每个成员使用自己的完整实际输出口 $K$：所有前缀探针和场令牌、原生 $H,E$ 及原始标签、实际读出和复制环境、保留的处理输出、记忆、程序、计数器、路由、解码工作区、后缀的 $B,A,F,S_t$、两组后缀 $H,E$ 及其实际副本全部计入 $K$。$\mathcal C$、$\widehat\Phi$ 和 $\mathcal E$ 只取各自声明的实际端口；证明用的 dilation 或 Kraus 指标不自动成为实际输出，实际产生的其它系统必须加入 $K$。
+
+对成员的最终实际态 $\Omega_{n,h}\in\mathsf D(R\otimes K)$，仍以其自身的边缘定义
+
+$$
+\overline\delta=\sup_{n,h}\frac12\left\|\Omega_{n,h}-
+ \tau_h\otimes\operatorname{Tr}_R\Omega_{n,h}\right\|_1 .
+\tag{20.3}
+$$
+
+本类非空：取 (19.4) 的成功见证，令 $q=3k_e$。由 (20.1)，$q+2\le L_e$；它使用 $q+3$ 次含终端的 $R$ 接触、$15\ell_e+2$ 次场重置、$q$ 次 $\mathcal C$ 及其规定的固定后缀，并满足原始全部 $n,h$ 的成功事件。因此这里的 $K$、端口和终端条件不是空的形式交集。
+

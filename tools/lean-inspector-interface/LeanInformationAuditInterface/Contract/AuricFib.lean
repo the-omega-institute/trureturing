@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Analysis.Finite
+import LeanInformationAuditInterface.Contract.NativePrediction
 import D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
 
 namespace LeanInformationAudit.AuricFib.Contract
@@ -85,6 +86,12 @@ inductive Evidence {Statement : Prop} (occurrence : Statement) where
       (initial : List Readout) (layers : List Readout)
   | unsupported (reason : String)
 
+/-- This optional downstream reading binds the complete original native
+occurrence independently of a finite single-window numerical acquisition. -/
+structure Prediction {Statement : Prop} (occurrence : Statement) where
+  source : NativeSource occurrence
+  contract : NativePrediction.Contract
+
 /-- Optional source-owned analysis selected by authoring this typed contract
 in Reg. The existing compiled audit/report chain acquires its downstream data;
 without an Application it performs no FIB acquisition or numerical analysis and
@@ -92,5 +99,6 @@ adds no analysis registration obligation. This is neither a proof-escape
 registration nor an admission certificate. -/
 structure Application {Statement : Prop} (occurrence : Statement) where
   evidence : Evidence.{t,s,r,o,a,v} occurrence
+  prediction : Option (Prediction occurrence) := none
 
 end LeanInformationAudit.AuricFib.Contract

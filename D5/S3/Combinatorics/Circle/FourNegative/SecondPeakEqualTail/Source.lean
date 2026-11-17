@@ -17,9 +17,8 @@ open private Submask from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Dilation
 open private submask_iff from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.BitSupports
-open private size base newBase chainLength chainStart oldValue newValue
-  chain_values negatives from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 
 private def bank (a b c alpha M v J : ℕ) : Fin 4 → List ℕ :=
   ![chamberLabels (b-1) (c+c) ((2^(b-1)-1) ^^^ M) ++

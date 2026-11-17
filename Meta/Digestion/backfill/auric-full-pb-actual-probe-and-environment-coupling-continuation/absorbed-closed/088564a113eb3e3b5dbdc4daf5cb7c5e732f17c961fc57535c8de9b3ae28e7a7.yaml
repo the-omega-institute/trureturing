@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:088564a113eb3e3b5dbdc4daf5cb7c5e732f17c961fc57535c8de9b3ae28e7a7
+  normalized_sha256: sha256:088564a113eb3e3b5dbdc4daf5cb7c5e732f17c961fc57535c8de9b3ae28e7a7
+cas_ref: sha256:088564a113eb3e3b5dbdc4daf5cb7c5e732f17c961fc57535c8de9b3ae28e7a7
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/PBMinimalEnvironment.pb_three_moment_minimal_realization
+    target_statement_id: sha256:ffa8373c2ddf578caef8b48642ee2cf43918e310341bca2872bd16ab3f21a5d7
+receipts:
+  unresolved_subitems: []

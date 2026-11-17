@@ -1,0 +1,36 @@
+**定理 160.1（全部原输入的有限秩方向刚性）。** 在 157.1 的完整原前件下，每个非经典块有一个固定符号 $\varepsilon_j$，使
+
+$$
+\boxed{\quad D(a,b)_j=\varepsilon_j\frac{[a_j,b_j]}{2i}
+\quad(a,b\in E).\quad}
+\tag{160.1}
+$$
+
+经典块输出零。结论作用于全部原输入，包括无限秩、无限谱与混合中央背景，不仅有限秩输入。
+
+证明。统一取向坐标中任取 $Z\in V$、块 $j$ 和单位 $\xi\in H_j$。$Z_j=0$ 时原 P2 直接消去该读取。否则 $s=\|Z_j\|>0$，由范数定义选单位 $v_n$ 使 $r_n=\|Z_jv_n\|\to s$，令 $w_n=Z_jv_n/r_n$。152.2–152.3 的已知算子计算给
+
+$$
+\|(Z_j^*Z_j-s^2I)v_n\|^2\le s^2(s^2-r_n^2),\qquad
+\delta_n:=\|Z_j^*w_n-sv_n\|\longrightarrow0.
+\tag{160.2}
+$$
+
+取有限支持酉 $R_n\xi=v_n$、$L_nw_n=\xi$。158.1 支付 $W_n=L_nZR_n\in V$；不把它解释为完成中的近似原输入。159.1 精确给 $\mathfrak F(W_n)=\mathfrak F(Z)$。记 $x_n=\operatorname{Re}W_n$、$y_n=\operatorname{Im}W_n$，则旧输入确在 $E$，且
+
+$$
+\|x_{n,j}\xi\|\le(r_n+s+\delta_n)/2,\qquad
+\|y_{n,j}\xi\|\le(|r_n-s|+\delta_n)/2\longrightarrow0.
+\tag{160.3}
+$$
+
+原 P2 与已知环境 $K$ 的向量界因此给同一个固定读取
+
+$$
+|\langle\mathfrak F(Z)_j\xi,\xi\rangle|
+\le2\|x_{n,j}\xi\|\|y_{n,j}\xi\|\longrightarrow0.
+\tag{160.4}
+$$
+
+对固定环境自伴输出极化，逐块得 $\mathfrak F(Z)=0$。无未知 $D$ 的极限，也无有限支持群闭包。于是 $D=K$ 在统一坐标中对全部原输入成立；这时才推出 $K(E,E)\subset E$。恢复 $T$ 给 (160.1)。一维块和空指标集按 152.1 的零预算处理。∎
+

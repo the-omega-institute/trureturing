@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2774396eb424a508cbe67847cce09c0b88f4aeb9009d3bc8e28d36fe44e7a982
+  normalized_sha256: sha256:2774396eb424a508cbe67847cce09c0b88f4aeb9009d3bc8e28d36fe44e7a982
+cas_ref: sha256:2774396eb424a508cbe67847cce09c0b88f4aeb9009d3bc8e28d36fe44e7a982
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Notation-only preamble fixing theta_1, theta_2 and real L1 profiles and defining kappa_i, r_i, Q_i, B_i,X, Z_i,X, the index selector i_l, gamma_p,q and the integral c_p,q. These formulas introduce symbols and parameter domains; the atom asserts no moment limit, inequality, vanishing cross kernel or positive correlation.
+    previous_atom_id: 3e22ca62d66fbb51eef2e7f75e609d55976b85ff3d620bfa066ce8da15ab0515
+    next_atom_id: 2fe84149a07386f5682eb7612e93488f5ae1a877412b8e5d1acfd9d082677d0e

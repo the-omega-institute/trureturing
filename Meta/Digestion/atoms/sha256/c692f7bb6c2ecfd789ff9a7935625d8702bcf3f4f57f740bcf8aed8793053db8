@@ -1,0 +1,56 @@
+### 证明
+
+记排序后的各层为 $(h_i,\lambda_i,\rho_i)$，其中
+
+$$
+\rho_1\ge\rho_2\ge\cdots.
+$$
+
+对实际整数 $m$，用 $z_i\in\{0,1\}$ 表示其是否包含第 $i$ 个新增层。只有有限多个 $z_i$ 非零。
+
+其新增对数规模满足
+
+$$
+\sum_i h_i z_i
+=
+\sum_{i\le k}h_i+\theta h_{k+1}.
+$$
+
+令 $\rho_*=\rho_{k+1}$。直接移项得到
+
+<a id="eq-9"></a>
+
+$$
+\begin{aligned}
+\Delta(m)
+:={}&
+(1-\theta)\log Z(N_k)
++\theta\log Z(N_{k+1})
+-\log Z(m)\\
+={}&
+\sum_{i\le k}(\rho_i-\rho_*)h_i(1-z_i)\\
+&+
+\sum_{i\ge k+2}(\rho_*-\rho_i)h_i z_i
+\ge0.
+\end{aligned}
+\tag{9}
+$$
+
+每一项都非负。这证明了固定对数规模下的贪心收益上界。
+
+另一方面，
+
+$$
+\log m=(1-\theta)T_k+\theta T_{k+1}.
+$$
+
+由 $f$ 的凹性，
+
+$$
+f(\log m)
+\ge
+(1-\theta)f(T_k)+\theta f(T_{k+1}).
+$$
+
+两式相减、再取指数，即得式 (7)。证毕。
+

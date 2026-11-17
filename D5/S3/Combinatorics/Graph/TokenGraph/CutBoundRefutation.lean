@@ -622,7 +622,7 @@ private lemma phi40_energy :
   rw [hc]
   norm_num
 
-private lemma cut_card_eq_sum {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+lemma cut_card_eq_sum {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (S : Finset (Fin n)) :
     (G.edgeFinset.filter (crosses S)).card =
       ∑ u : Fin n, ∑ v : Fin n, if G.Adj u v ∧ u ∈ S ∧ v ∉ S then 1 else 0 := by

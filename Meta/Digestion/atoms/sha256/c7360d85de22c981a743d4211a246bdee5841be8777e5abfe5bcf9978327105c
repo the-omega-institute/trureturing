@@ -1,0 +1,36 @@
+**定理 250.1（复块上的全部互易由三层推出）。** 在引理 248.1 的前件下，标量双线性型 $q(\bar D_ab,u_T)$ 对称；等价地 $S=0$。因此完整切向奇部 (212.2) 成立，无须输入任何互易比较。
+
+证明。置 $h_{ij}=e_i-e_j$、$x_{ij}=|i\rangle\langle j|+|j\rangle\langle i|$。在同一秩二角内，令
+
+$$
+t_\theta=\cos\theta\,h_{ij}+\sin\theta\,x_{ij},\qquad
+v_\theta=-\sin\theta\,h_{ij}+\cos\theta\,x_{ij}.
+\tag{250.1}
+$$
+
+取 $f_\theta=(e_i+e_j+v_\theta)/2$ 及正规切向 $Y_{ij}$，直接相乘有 $\kappa(f_\theta,Y_{ij})=t_\theta$。引理 221.1 给 $q(Ft_\theta,v_\theta)=0$。在 $\theta=0$ 得 $q(Fh_{ij},x_{ij})=0$；再取 $\theta=\pi/4$，用 $Fx_{ij}=\alpha x_{ij}$ 以及 $q(h_{ij},h_{ij})=q(x_{ij},x_{ij})=2w$，取得
+
+$$
+q(Fh_{ij},h_{ij})=2w\alpha.
+\tag{250.2}
+$$
+
+同一角的全部外读回给 $(Fh_{ij})_{ll}=0$，$l\ne i,j$。所以其两个剩余对角项必形如
+
+$$
+(Fh_{ij})_{ii}=\alpha+\zeta_{ij},\qquad
+(Fh_{ij})_{jj}=-\alpha+\zeta_{ij}.
+\tag{250.3}
+$$
+
+这里允许 $Fh_{ij}$ 仍有跨角非对角项，没有将它们置零。对三个不同指标，原对角关系 $h_{ij}+h_{jk}=h_{ik}$ 与同一个线性 $F$，在 $i,k$ 对角分别给 $\zeta_{ij}=\zeta_{ik}=\zeta_{jk}$，在 $j$ 对角再给 $\zeta_{ij}+\zeta_{jk}=0$。故三者均为零；每一对均可补第三个指标，遂有 $\operatorname{Tr}Fh_{ij}=0$。
+
+无迹对角空间由 $h_{ij}$ 张成，每条 $V_{ij}$ 上 $F=\alpha I$ 也保无迹。它们共同张成全部无迹 Hermitian 空间，而 $\kappa(a,b)$ 始终无迹，因此
+
+$$
+q(\delta(a,b),u_T)=w\operatorname{Tr}F\kappa(a,b)=0.
+\tag{250.4}
+$$
+
+引理 211.1 的原径向项的总读数本来对称，见 (223.2)，故原总读数对称、$S=0$。引理 223.1 的总读数与角外桥才补回全部奇部；此后才消费引理 213.1 的原导子及能量结论。∎
+

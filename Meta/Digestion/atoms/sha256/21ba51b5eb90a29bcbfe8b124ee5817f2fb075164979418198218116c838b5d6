@@ -1,0 +1,29 @@
+### 22.1. An exact cancellation before taking local coordinates
+
+Write $H_0$ for the certificate matrix denoted by $H$ in (3.9), and define the row vector
+
+$$
+\ell(U)=\sum_{i=1}^4U_{ii}(R_0)_{i,:}\in M_{1,2}(\mathbb C).
+$$
+
+For the positive-square-root columns $b_j=(E^{\mathsf T})^{1/2}e_j$ used in (9.12), the two occurrences of $\|R_0b_j\|_{\ell^1}^2$ in $a+\tau$ cancel. Consequently,
+
+$$
+\begin{aligned}
+g(E,U)
+&=\sum_{j=1}^2\left(b_j^\dagger H_0b_j-|\ell(U)b_j|^2\right)\\
+&=\operatorname{Tr}\!\left((H_0-\ell(U)^\dagger\ell(U))E^{\mathsf T}\right).
+\end{aligned}
+\tag{22.1}
+$$
+
+Here $\sum_jb_jb_j^\dagger=E^{\mathsf T}$. Thus (22.1) is linear in $E$ at fixed actual $U$, including at singular effects. It does not assert separate linearity of $a$ or $\tau$. It is invariant under multiplication of $U$ by one scalar unit phase. In particular, for a unit vector $b$ and $E=\bar b\bar b^\dagger$,
+
+$$
+g(E,U)=b^\dagger H_0b
+-\left|\operatorname{Tr}\!\left(U\operatorname{diag}(R_0b)\right)\right|^2.
+\tag{22.2}
+$$
+
+Every feedback matrix in these identities is the same original $U$.
+

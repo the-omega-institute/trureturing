@@ -1,0 +1,64 @@
+**定理 375.1（同一推动、概率、事件和历史）。** 在唯一候选 (371.3) 中，全部 361.1 的原消费者逐字成立。特别地，先由原背景和 I+SC 取得共同 $\kappa\ge0$，再由同一原 $\sigma_{t_0}$ 取得 $\kappa=1$；在由原 $D$ 定向的坐标中有
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_sB(H_{A,s}),\quad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+a\cdot b=a\circ b-\mathrm iD_ab,\quad D_ab=\tfrac{\mathrm i}{2}[a,b],\quad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\ (c^2=c).
+\end{gathered}
+\tag{375.1}
+$$
+
+每个原准备的两套 Riesz 运输与原事件 $f:A\to B$ 的运输仍为
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),&q_A(x,y)&=\tau_A((\mathcal W_Ax)y),\\
+\rho_\alpha&=B_Ax_\alpha,&\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,\\
+\alpha(y)&=\tau_A(\rho_\alpha y),&
+\alpha(D_ab)&=q_A(\widehat x_\alpha,D_ab),\\
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1}.
+\end{aligned}
+\tag{375.2}
+$$
+
+一般 $x_\alpha\ne\widehat x_\alpha$。原 $\tau_A(\rho_\alpha)=\alpha(u_A)$ 保留质量，不将零或次归一输入改成归一态；全部原相关准备均在其实际联合中运输。原不等正权与大小不同的中心保留，实际联合的全体中心对取得同一原取向的普通复张量。
+
+全部原旧事件为 CP/TNI，原完整设备的事件和为 TP。整个 AC、精确 $N_u$、X/Xs 和原合法连线供应的每个原所选有限平方根词及原相关执行仍为
+
+$$
+\rho\longmapsto\sqrt e\rho\sqrt e,\qquad
+X\longmapsto(\sqrt e\otimes I)X(\sqrt e\otimes I).
+\tag{375.3}
+$$
+
+每个原占用方向 $p_1$ 的原失败 $\Psi_\ell$ 保留整个 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$；其余原方向、中心和端口仍为原映射，不以一个失败概率代替输出。原实 Jordan F 给同一实现的实际细口、原分组和遗忘；原具名非零细支及同数反向资料保留
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\quad
+\Phi_f=\sum_\ell S_\ell,\quad
+U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad
+\mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\quad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\quad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{375.4}
+$$
+
+原设备、端口、细记录和失败身份保持，$q_\ell$ 为原数，不另选成功率。对每份原准备、原末端效果 $w$ 和每条原合法有限历史，
+
+$$
+\alpha(T_{f_1}\cdots T_{f_r}w)
+=\tau_{A_r}\!\left(w\,\Phi_{f_r}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{375.5}
+$$
+
+这包含原顺序、按实际记录自适应、实际并行联合、全部相关输入、细化／分组／实际遗忘、零／失败／返回／停止。仅对原分母为正的分支取条件概率。
+
+证明。374.1 在原签名上恢复 361.1 的全部入口，故直接复用其完整对应。共同曲率不是 373.1 的局部结论：局部 $\gamma_s$ 可独立；前卷 275.2 消费完整原实际背景才给共同 $\kappa$，包括 $\kappa=0$。同一原 sigma 再以原正 $w_0$ 的 $(1-\kappa)w_0/4=0$ 强制 $\kappa=1$，未缩放原 $D$ 或重选 $t_0$。两份准备背景的入口分别按该前置成立；闭背景的正延拓只在同一已固定原执行上进行，不添加实际极限准备。全部式子随后沿 353.1、345.1、338.1，既有完整 tagged-CP 满足族也由反向蕴含满足新候选，含无实际 $M_2$ 的子族。∎
+

@@ -1,0 +1,24 @@
+Apply this criterion to the family $(C_s)_{s\in S}$ in the actual
+matroid $N$. Its independent representatives form an independent set
+of size $|S|=r$, hence a basis of $N$. Membership in $C_s$ is exactly
+the required exclusion of $s+f(s)$ from $A$. In the reverse direction,
+the image of $X$ under a matching is an independent $|X|$-subset of
+$C_X$.
+
+Consequently the exact basiswise test is
+
+$$
+S\text{ matches }N
+\quad\Longleftrightarrow\quad
+\rho_N(C_X)\ge |X|\quad(X\subseteq S). \tag{R}
+$$
+
+We now combine these ingredients with the strict size hypothesis.
+For nonempty $X\subseteq S$, (U) gives $|C_X|\ge |X|+1$.
+If $|X|\le r-1$, choose a $|X|$-subset of $C_X$; paving makes
+it independent, so $\rho_N(C_X)\ge |X|$.
+If $|X|=r$, then $|C_X|\ge r+1$, so the hyperplane bound just
+derived gives $\rho_N(C_X)=r$. The empty subset has rank zero.
+Criterion (R) supplies the desired bijection to a basis of $N$.
+Since $S$ was arbitrary, $M$ is matched to $N$.
+

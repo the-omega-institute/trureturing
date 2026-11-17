@@ -1,0 +1,27 @@
+**引理 31.2（真实单位复制中的余项缩放）。**若原模型满足 (S)，则定理 23.2 的实际数组模型，对全部数组 $A,Z\in M^{\Sigma_N}$、$j=1,2$ 和每个 $\varepsilon>0$ 满足
+
+$$
+\Delta_{N,j}(A,Z)\le\varepsilon B_N(A,Z)+\frac{C_\varepsilon}{N}.
+\tag{31.2}
+$$
+
+这里所有下标量均按 (31.1) 在 $c_N$ 和真实数组单位 $\mathbf1$ 上定义，且
+
+$$
+c_N(A,Z)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(A_\sigma,Z_\sigma),\qquad
+U_N^j\mathbf1=(p_j)_{\sigma\in\Sigma_N},\qquad \Sigma_N=\{0,1,2\}^N.
+\tag{31.3}
+$$
+
+**证明。**乘法和标记逐坐标采用原运算，$\mathbf1$ 是常值原单位，故 $A\cdot(U_N^j\mathbf1)$ 的坐标确为 $A_\sigma\cdot p_j$。对两个绝对值分别用有限和的三角不等式，再用原 (S)，得
+
+$$
+\begin{aligned}
+\Delta_{N,j}(A,Z)&\le\frac1{N3^N}\sum_\sigma\Delta_j(A_\sigma,Z_\sigma)\\
+&\le\frac\varepsilon{N3^N}\sum_\sigma B(A_\sigma,Z_\sigma)+\frac{C_\varepsilon}{N}
+=\varepsilon B_N(A,Z)+\frac{C_\varepsilon}{N}.
+\end{aligned}
+$$
+
+预算 $B_N$ 是四个真实单位费用的精确加权和；不要求任一未缩放坐标的费用有统一界，也未把复制来源 $\widetilde\Gamma_N1$ 当作真实单位。证毕。
+

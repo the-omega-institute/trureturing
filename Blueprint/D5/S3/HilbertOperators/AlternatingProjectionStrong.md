@@ -6,7 +6,21 @@ The actual powers of two orthogonal projections converge in norm on every vector
 
 For a closed k-linear subspace U of H, P(U) denotes the actual orthogonal projection onto U from H to H. Comp(A,B) applies B first and then A. Inf(U,V) denotes the closed linear intersection. Powers are powers of bounded endomorphisms: the zeroth power is the identity, and applying the nth power agrees with n iterations of the same map.
 
-**Theorem 1.1 (Actual nonaveraged powers).**
+**Theorem 1.1 (From averages and regularity to powers).**
+
+$$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (H: \operatorname{Type}_{v}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(H)] [\operatorname{NormedSpace}(k, H)] \forall (T: \operatorname{ContinuousLinearMap}(k, H, H)), (\left\lVert T \right\rVert \leq 1) \Rightarrow \forall (x: H), \forall (p: H), (\operatorname{T}(p) = p) \Rightarrow (\operatorname{Tendsto}(\operatorname{IncrementOrbit}(T, x), \operatorname{atTop}(\mathbb{N}), \operatorname{nhds}(0))) \Rightarrow (\operatorname{Tendsto}(\operatorname{CesaroOrbit}(k, T, x), \operatorname{atTop}(\mathbb{N}), \operatorname{nhds}(p))) \Rightarrow \operatorname{Tendsto}(\operatorname{Orbit}(T, x), \operatorname{atTop}(\mathbb{N}), \operatorname{nhds}(p))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/AlternatingProjectionStrong.tendsto_pow_of_regular` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let k be any RCLike field and H any normed k-vector space, with independent universes u and v. Let T be a bounded k-linear endomorphism with operator norm at most one, and let x,p be vectors. Suppose Tp=p, the increments T^(n+1)x-T^n x tend to zero, and the Birkhoff averages of the actual T-orbit of x tend to p. Then the actual powers T^n x tend to p. Completeness and an inner product are not required for this upgrade.
+
+In the formula, Orbit(T,x) is the sequence n mapped to T^n x, IncrementOrbit(T,x) is n mapped to T^(n+1)x-T^n x, and CesaroOrbit(k,T,x) is m mapped to birkhoffAverage k T id m x. Every Tendsto uses the natural atTop filter and the norm topology on H. For a fixed positive averaging window the transported-average error tends to zero by finite telescoping; contractivity bounds the remaining error by the original average error.
+
+**Theorem 1.2 (Actual nonaveraged powers).**
 
 $$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (H: \operatorname{Type}_{v}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(H)] [\operatorname{InnerProductSpace}(k, H)] [\operatorname{CompleteSpace}(H)] \forall (U: \operatorname{ClosedSubmodule}(k, H)), \forall (V: \operatorname{ClosedSubmodule}(k, H)), \forall (x: H), \forall (epsilon: \mathbb{R}), (0 < epsilon) \Rightarrow \exists (N: \mathbb{N}), \forall (n: \mathbb{N}), (N \leq n) \Rightarrow \left\lVert (\operatorname{Comp}(\operatorname{P}(U), \operatorname{P}(V)))^{n}(x) - \operatorname{P}(\operatorname{Inf}(U, V))(x) \right\rVert < epsilon$$
 
@@ -31,3 +45,4 @@ The classical result is von Neumann's alternating-projection theorem, stated in 
 ## References
 
 - Truth anchor: `D5/S3/HilbertOperators/AlternatingProjectionStrong.tendsto_alternating_projection_pow`
+- Truth anchor: `D5/S3/HilbertOperators/AlternatingProjectionStrong.tendsto_pow_of_regular`

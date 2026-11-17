@@ -1,0 +1,74 @@
+**命题 C-82.1（常曲率对称纤维的完整球面表示）。** 取
+$X=Y=r/2$，令 $L=r/2>0$。则
+
+$$
+p_\kappa=(\kappa,L-\kappa,Z,L-\kappa,\kappa),
+\qquad 0<\kappa<L,
+$$
+
+$$
+\mathcal I=\frac2\kappa+\frac2{L-\kappa},\qquad
+f=\frac{\kappa(L-\kappa)}L.
+\tag{C82.1}
+$$
+
+换元
+
+$$
+\kappa=\frac L2(1-\cos\vartheta),\qquad 0<\vartheta<\pi
+\tag{C82.2}
+$$
+
+给
+
+$$
+g=L\left(d\vartheta^2+\frac14\sin^2\vartheta\,d\chi^2\right),
+\qquad \mathcal K=\frac1L=\frac2r.
+\tag{C82.3}
+$$
+
+完备化是半径 $\sqrt L$ 的圆球绕两极旋转半周所得的度量商，
+两个极点的锥角均为 $\pi$；极点距离恰为 $\pi\sqrt L$。
+概率关联圆的位置为整个赤道相位圆：
+
+$$
+\eta=0\ \Longleftrightarrow\ \kappa=L/2
+\ \Longleftrightarrow\ \vartheta=\pi/2,\qquad \chi\in S^1.
+\tag{C82.4}
+$$
+
+证明。将对称均值代入式 (C76.2)，得到概率。
+四倒数求和后取 $2/\mathcal I$，给式 (C82.1)。
+式 (C82.2) 中
+
+$$
+d\kappa=\frac L2\sin\vartheta\,d\vartheta,\qquad
+f=\frac L4\sin^2\vartheta,
+$$
+
+故 $d\kappa^2/f=L\,d\vartheta^2$，角向项如式 (C82.3)。
+对 $f=\kappa-\kappa^2/L$ 有 $-f''/2=1/L$。
+局部令 $\phi=\chi/2$，度量变成
+$L(d\vartheta^2+\sin^2\vartheta\,d\phi^2)$，
+是半径 $\sqrt L$ 的标准圆球度量。
+但原 $\chi$ 周期为 $2\pi$，所以这里 $\phi$ 周期只有 $\pi$。
+从 $\phi$ 周期为 $2\pi$ 的整圆球出发，识别 $\phi$ 和 $\phi+\pi$，
+便得到原内部度量；两极由定理 C-80.2 的半周商延伸，均有角 $\pi$。
+定理 C-81.1 排除其他完成点，所以这一局部表示确给整个完备化的度量商。
+
+任一连接两极的可求长路径在内部满足
+$ds\ge\sqrt L\,|d\vartheta|$。
+从第一极到第二极，连续 $\vartheta$ 的总变差至少为 $\pi$，
+因而长度至少 $\pi\sqrt L$；若路径经过极点，可先在
+$\epsilon\le\vartheta\le\pi-\epsilon$ 截取再令 $\epsilon\downarrow0$，
+仍得同一下界。固定 $\chi$ 的经线长度为
+$\int_0^\pi\sqrt L\,d\vartheta=\pi\sqrt L$，达到下界。
+这也与式 (C81.1) 的 $T$ 完全一致。
+
+最后，
+$p_0p_{13}/(p_1p_3)=\kappa^2/(L-\kappa)^2$，
+故 $\eta=\frac14\log(\kappa/(L-\kappa))$，
+零点恰为 $\kappa=L/2$，换元后即赤道。
+此时 $\chi$ 仍自由遍历整个 $2\pi$ 圆周，不能把一个概率圆读数当成唯一隐藏态。
+常曲率局部圆球与全局带两个锥点的半周商在这里各有明确含义。证毕。
+

@@ -1,0 +1,34 @@
+**定理 35.1（七维非线性、非连续的静态反模型）。** PY+NN 允许一个七维反对称总关系，它在每个两生成三空间内为线性叉积，却在跨平面相加处有确切缺陷，且不满足 $\mathrm J_\perp$。
+
+证明。取 $V=\operatorname{Im}\mathbb O$ 的标准八元数叉积。Baez, [*The Octonions*, §4.1](https://math.ucr.edu/home/baez/octonions/node14.html) 给其正交性、面积范数、双线性和二生成四元数结构；[§2 的 Table 1](https://math.ucr.edu/home/baez/octonions/node3.html) 固定下面全部符号。对独立 $x,y$ 令 $A(x,y)=\operatorname{span}\{x,y,x\times y\}$。它是二生成四元数子代数的虚部，对叉积闭合；该三空间中任意独立的一对仍生成同一个三空间。取 $A_0=\operatorname{span}\{e_1,e_2,e_4\}$，令 $s(A_0)=-1$、其余 $s(A)=1$，并定义
+
+$$
+K_s(x,y)=
+\begin{cases}
+s(A(x,y))(x\times y),&x,y\text{ 独立},\\
+0,&x,y\text{ 共线}.
+\end{cases}
+$$
+
+它反对称、分别齐次且保持面积。标准重复返回在同一四元数子代数内给 $x\times(x\times y)=\langle x,y\rangle x-\|x\|^2y$，且 $A(x,s(A)(x\times y))=A(x,y)$。两次嵌套因而使用同一符号，乘积为一，NN 成立。取全部原 $E=X=\mathbb Ru\oplus\mathbb R^7$ 并令 $D_s(\alpha u+x,\beta u+y)=K_s(x,y)$，面积范数准确给 PY；全部原评价取标准正实线性评价。
+
+Table 1 中 $e_1e_2=e_4,e_1e_3=e_7,e_2e_3=e_5,e_1e_5=e_6,e_2e_7=-e_6,e_3e_4=e_6$。因此
+
+$$
+\begin{aligned}
+&K_s(e_1,e_2+e_3)-K_s(e_1,e_2)-K_s(e_1,e_3)=2e_4,\\
+&K_s(e_1,e_2+te_3)=e_4+te_7\quad(t\ne0),\\
+&K_s(e_1,e_2)=-e_4.
+\end{aligned}
+$$
+
+故跨平面加性失败，在非零原输入对 $(e_1,e_2)$ 处不连续。三次嵌套分别为 $e_6,e_6,-e_6$，所以
+
+$$
+K_s(e_1,K_s(e_2,e_3))+
+K_s(e_2,K_s(e_3,e_1))+
+K_s(e_3,K_s(e_1,e_2))=e_6\ne0.
+$$
+
+这里 $e_2,e_3\perp e_1$，故受限循环亦失败。每个生成三空间上的 $K_s$ 仍是固定符号的标准叉积，局部线性并不能替代跨空间循环。这只构成静态关系反模型，不声明完整原正核 K/J 词实现。∎
+

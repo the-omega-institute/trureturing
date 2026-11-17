@@ -1,0 +1,21 @@
+**Theorem 13.5 (Strict pair mixing).** Fix $k,x,y,z>0$ and $0\le t\le1$. Put $x'=(1-t)x+ty$ and $y'=tx+(1-t)y$. Then
+$$
+V(k,x',y',z)\le V(k,x,y,z),
+$$
+with equality exactly when $t=0$, $t=1$ or $x=y$.
+
+**Proof.** Fix $u=x+y$ and write $p=xy$, $q=x'y'$. The numerator of the positive logarithmic quotient is $A(p)=[1+k(p+uz)]^2$, and its denominator is $(1+kuz)B(p)$, where
+$$
+B(p)=(1+kp)^2+kuz(1+kp)+k^2pz^2.
+$$
+Direct expansion gives
+$$
+A(p)B(q)-A(q)B(p)=k^2z(q-p)\,H,
+$$
+where
+$$
+H=u+z+ku(p+q+2uz+2z^2)
++k^2\big[upq+zp(u^2-q)+zqu^2+u^2z^2(u+z)\big]>0.
+$$
+Indeed $p,q>0$ and $u^2-q=x'^2+x'y'+y'^2>0$. Since $q-p=t(1-t)(x-y)^2$, every proper mixing of an unequal pair strictly reduces the quotient and hence its logarithm. The endpoints are identity and full swap; a tied pair is unchanged. Symmetry of the three labelled factors gives equality in each of these cases. ∎
+

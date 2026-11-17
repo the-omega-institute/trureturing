@@ -1,0 +1,9 @@
+**定义 21.1（成熟工具与新增关系的归属）。** 本文的来源对应如下，不主张文献穷尽、历史优先权或一般 JB 分类：
+
+| 来源 | 准确使用范围 |
+| --- | --- |
+| W27、W32.1–32.2、W34.1–34.2、W50–56 | PY+NN 原总映射背景、同平面规律及面积／重复恒等式直接复用 W32.2 的子证明；W34.2 的 Pauli 与经典同构只在 18.1 已取得原双线性和维数以后使用。W27 的一般恢复保留 R，W50–56 指定原不完备矩阵链的循环恢复保留其原背景；不把这些旧恢复另算增量。 |
+| A1–15、Rv8.2–8.4、C537–540、C13997–102 | 完整 A 的一般原 $D$ 恢复、单位平移、全有限 Gram、既有 Spin7 表／失配／商谱及七项来源合同直接引用。17.2 仅复用 A11.2 中不依赖七维的平方和子计算；19.1 用 A13.2–13.3 的旧值和谱计算新的原内部族边界及精确范数比。19.2 不把旧 Spin7 本身称为新反例。 |
+| John C. Baez, *The Octonions*，[作者 §1](https://math.ucr.edu/home/baez/octonions/node2.html)、[§2 Table 1](https://math.ucr.edu/home/baez/octonions/node3.html)、[§4.1](https://math.ucr.edu/home/baez/octonions/node14.html) | `literature-attested`：二生成交替性、规范表、双线性反交换叉积、面积／正交性及七维叉积非 Lie。原表仍按 A11.4 对应，不将作者编号直接当成本卷编号。17.2 的论证不调用八元数维数分类、Jacobi 或一般二生成到全域的提升。 |
+| John C. Baez, *Getting to the Bottom of Noether's Theorem*，[arXiv:2006.14741v5 §4 Theorem 12](https://arxiv.org/html/2006.14741v5#Thmthm12) | `literature-attested`：有界线性动力对应、自守恒及负交换子前件下，以 $ab=a\circ b-\mathrm i\psi_a(b)$ 恢复 C*，规范为 $\psi_a(b)=\mathrm i[a,b]/2$。本文不从未知总 $D$ 或每态零空间直接调用该恢复定理；17.1 先支付原线性，18.1 再以显式三轴同构取得乘法。 |
+| Peter Schupp and Richard J. Szabo, *An algebraic formulation of nonassociative quantum mechanics*，[arXiv:2311.03647v3，§2 Definition 2.4、(2.3)–(2.6)，§3 (3.9)–(3.14)](https://arxiv.org/html/2311.03647v3) | `literature-attested`：其关联包络 $\mathscr U(\mathcal A)$ 的乘法是作用的 composition product，§3 的 GNS 零核是该关联包络的左理想。其原左乘嵌套不因此等于原乘积的左乘；§5 另有带正性和循环迹前件的原代数商，也不支付本文的纯锚前件。不能用非关联 GNS 或包络存在性跳过同一原 $S-\mathrm iD$ 的恢复，更不能把数学包络认作实际共同实现者。 |

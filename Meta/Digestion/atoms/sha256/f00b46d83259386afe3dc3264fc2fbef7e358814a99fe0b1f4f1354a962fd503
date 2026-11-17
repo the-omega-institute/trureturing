@@ -1,0 +1,5 @@
+继续采用项目中已经核读的两部分：
+
+- [A370630 的 Zeckendorf 贪心排列证明](https://github.com/the-omega-institute/trureturing/blob/9ceb721e13c64eb4b1c71a43238a2b2fc4770093/Blueprint/D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.md)：提供完整遍历。
+- [实际尺度恢复、整数价格优化与 Robin 证书](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/docs/develop/theory/AURIC_RELATION_SCALE_RECOVERY_THREE_CANDIDATE_OPTIMIZATION_AND_ROBIN_CERTIFICATES.md)：提供同一整数上的尺度、局部收益与三轴接口。
+

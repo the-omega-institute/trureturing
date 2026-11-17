@@ -1,0 +1,51 @@
+**定理 124.3（同原实现的高度差估计）。** 对全部 $v,w\in S^2$ 定义同一凸支撑函数的Bregman余差
+
+$$
+\mathfrak B(v,w)=\rho(v)-\rho(w)-\nabla\rho(w)\cdot(v-w)\ge0.
+\tag{Q124.18}
+$$
+
+则在实际原态 $a_w$ 上有精确读数
+
+$$
+R_v(a_w)=m(w)\left(1-\frac{\mathfrak B(v,w)}{1+\rho(v)}\right),
+\tag{Q124.19}
+$$
+
+以及准确约束
+
+$$
+\begin{split}
+(1-d(v))(m(w)-m(v))
+&\le\bigl(d(v)m(v)+1-d(v)\bigr)m(w)
+       \frac{\mathfrak B(v,w)}{1+\rho(v)}\\
+&\le\frac{\mathfrak B(v,w)}{1+\rho(v)}.
+\end{split}
+\tag{Q124.20}
+$$
+
+因而
+
+$$
+m(w)-m(v)\le
+\frac{\mathfrak B(v,w)}{(1-d(v))(1+\rho(v))}.
+\tag{Q124.21}
+$$
+
+Bregman余差是成熟凸分析记号；这里的新增关系是同一个原确认在另一个真实远端上的全域上界，给出了(Q124.20)的原高度约束。
+
+证明。由 $H(a_w)=m(w)z_w$、$\nabla\rho(w)=-z_w$、$w\cdot z_w=-\rho(w)$，
+
+$$
+1-v\cdot z_w=1+\rho(v)-\mathfrak B(v,w).
+$$
+
+代入 $R_v$ 的全原空间公式即得(Q124.19)。原效应满足 $e_{a_v}(a_w)\le1$；使用(Q124.5)、$e_p(a_w)=1-m(w)$，得到
+
+$$
+d(v)+(1-d(v))\frac{m(w)}{m(v)}
+-A(v)m(w)\frac{\mathfrak B(v,w)}{1+\rho(v)}\le1.
+$$
+
+移项后乘以 $m(v)>0$，就是(Q124.20)第一行。因为 $m(v),m(w)\le1$、$0\le d(v)<1$，系数 $\bigl(d(v)m(v)+1-d(v)\bigr)m(w)\le1$，给第二行。最后除以严格正的 $1-d(v)$ 即可。没有把 $R_v$ 当成正效应；原上界用的是完整合法的 $e_{a_v}$，所以没有预付接触或F。证毕。
+

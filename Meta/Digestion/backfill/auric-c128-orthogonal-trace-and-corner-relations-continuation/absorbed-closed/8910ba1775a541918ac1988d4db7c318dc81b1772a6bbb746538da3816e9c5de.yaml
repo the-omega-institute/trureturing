@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8910ba1775a541918ac1988d4db7c318dc81b1772a6bbb746538da3816e9c5de
+  normalized_sha256: sha256:8910ba1775a541918ac1988d4db7c318dc81b1772a6bbb746538da3816e9c5de
+cas_ref: sha256:8910ba1775a541918ac1988d4db7c318dc81b1772a6bbb746538da3816e9c5de
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/GenericMatrixIrreducibility.charpoly_generic_irreducible_fractionRing
+    target_statement_id: sha256:80648dcd59409b7d4ede6c5795054d624ff3cbe5dc452b4de88dd3fa3b21da26
+receipts:
+  unresolved_subitems: []

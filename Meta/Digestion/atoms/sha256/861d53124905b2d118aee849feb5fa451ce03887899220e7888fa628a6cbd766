@@ -1,0 +1,34 @@
+**命题 84.10（精确第一尺度）。** 在 (84.7) 上，以下条件逐原模型等价：
+$$
+\mathsf C_2\quad\Longleftrightarrow\quad \tau_DU=m
+\quad\Longleftrightarrow\quad U=1_D
+\quad\Longleftrightarrow\quad
+\bigl[\forall a,b\in A,\ m_2(a,b)=\tau_A(a)\tau_A(b)\bigr].
+\tag{84.11}
+$$
+末项等价于仅在全部原正输入上要求同式，包括零与不等质量。
+
+**证明。** 二次表示对原迹内积自伴随且 $P_{\sqrt U}1_D=U$，所以对全部实 $a,b$，
+$$
+m_2(a,b)=\langle U,F(a,b)\rangle_D.
+\tag{84.12}
+$$
+另一方面，满迹等距及乘积单位给
+$$
+\tau_DF(a,b)=\langle\widetilde F(1_A\otimes1_A),\widetilde F(a\otimes b)\rangle_D
+=\tau_A(a)\tau_A(b).
+\tag{84.13}
+$$
+由双线性与 $m=n^2$，$m_2(e,e)=\tau_DU/m$，得第一等价。
+
+在任一完整谱框架中写 $U=\sum_{j=1}^m\lambda_jq_j$，$\lambda_j>0$，各本原项迹一，重数按完整本原谱表计算。逆迹恒等式给
+$$
+\tau_DU-m
+=\sum_{j=1}^m(\lambda_j+\lambda_j^{-1}-2)
+=\sum_{j=1}^m\frac{(\lambda_j-1)^2}{\lambda_j}\ge0.
+\tag{84.14}
+$$
+等号恰在每个 $\lambda_j=1$，即 $U=1_D$ 时成立。这是正谱 AM–HM 等号计算在原读数上的应用。由 (84.12)—(84.13)，$U=1_D$ 给全部标准双质量；反向标准双质量在 $e,e$ 给 C2，也可由 $F(A,A)$ 实张成直接读回 $U=1_D$。正锥生成及逐槽线性延拓保证全正与全实版本等价。证毕。
+
+原逆迹固定的是倒数权的总量，C2 固定的是普通权的总量；二者的等号相遇逐项排除所有第一层权重，并非只确定其平均。只有应用完整 PRE 的前 C13 分类后，才能写成各有序块 $u_{ij}=I_j$；本证明没有先假定这些矩阵坐标。第二层 $g_{ijk}$、相对转置位与整个原插入正性尚未由 C2 固定。
+

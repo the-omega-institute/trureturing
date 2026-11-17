@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e73084e97a175a311f20ee94e1fbd2e52bfa03fa2ffc0f1bb5a97d834c69d8c4
+  normalized_sha256: sha256:e73084e97a175a311f20ee94e1fbd2e52bfa03fa2ffc0f1bb5a97d834c69d8c4
+cas_ref: sha256:e73084e97a175a311f20ee94e1fbd2e52bfa03fa2ffc0f1bb5a97d834c69d8c4
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PowerMeanSquare.forward_kernel_power_window_mean_square
+    target_statement_id: sha256:6e7fe3b905afc810c89b3db436f7e94dc352762efe9e604338f1af8093647e2c
+receipts:
+  unresolved_subitems: []

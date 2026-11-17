@@ -1,0 +1,35 @@
+**命题 C-94.5（纯态极限、经典混合和被遗漏的混合性）。** 若条件底面纯，
+写 $|\phi\rangle=\sum_{a,b}B_{ab}|ab\rangle$，$\operatorname{Tr}BB^\dagger=1$，
+则 $\mathcal P=1$，两约化谱相同，且
+
+$$
+\mathcal C(\phi)=2|\det B|,\qquad
+q_{--}=\frac{r^2\mathcal C(\phi)^2}{4},\qquad q_{-+}=q_{+-}=0.
+\tag{C94.16}
+$$
+
+对一般条件混态则只有
+
+$$
+q_{-+}+q_{+-}=\frac{r^2}{2}(1-\mathcal P),
+\tag{C94.17}
+$$
+
+不能用 $q_{--}=r^2\mathcal C^2/4$ 定义混态 concurrence。
+
+证明。纯态的约化矩阵为 $BB^\dagger$ 和 $B^{\mathsf T}\bar B$，
+其相同非零谱由奇异值给出；二阶迹一矩阵满足
+$\operatorname{Tr}\sigma_A^2=1-2\det\sigma_A=1-2|\det B|^2$。
+代入式 (C94.15) 即得纯态式，式 (C94.17) 则由两个异号式相加得到。
+为展示混态边界，取
+
+$$
+\sigma_{\rm cl}=\tfrac12|00\rangle\langle00|+\tfrac12|11\rangle\langle11|.
+\tag{C94.18}
+$$
+
+它是纯乘积态混合，故可分离；其整体及两个局部纯度都是 $1/2$。
+所以 $q_{--}=q_{-+}=q_{+-}=r^2/8$、$q_{++}=5r^2/8$。
+在任意 $r>0$ 时，$q_{--}$ 为正却无底面纠缠。
+经典混合和纯态不可分解性都能贡献同一事件，式 (C94.17) 保留了区分它们所需的一项信息。证毕。
+

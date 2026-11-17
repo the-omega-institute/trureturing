@@ -1,0 +1,25 @@
+**命题 260.6（任意 $2\times b$ 的实际压缩和完整重建）。** 设 $C\subset H_2\otimes_{\mathbb R}H_b$ 为闭尖生成锥，单位为迹，满足两标准局部 PSD 因子的最小／最大界，整个归一底有实际 L2 与共同圆尺。对任意有限 $b\ge2$，整个 $C$ 恰为 $\operatorname{PSD}_{2b}$ 或 $T_1\operatorname{PSD}_{2b}$。$b=1$ 时最小、最大界相同，直接给 $\operatorname{PSD}_2$。
+
+证明。（一）条件支持使整个二支持压缩成为实际 $2\times2$ 域。令 $M_B=\operatorname{Tr}_A$，$S\subset\mathbb C^b$ 为复二维空间，取
+
+$$
+F_S=\{z\in K:M_Bz\in\mathcal D(S)\},\qquad
+L_S=H_2\otimes_{\mathbb R}\operatorname{Herm}(S).
+\tag{260.19}
+$$
+
+边缘为正、$\mathcal D(S)$ 是 PSD 实际面，故 $F_S$ 是实际面；它也等于正泛函 $z\mapsto\operatorname{Tr}((I\otimes P_{S^\perp})z)$ 的零面。但仅有一个零读数尚不足以消去联合交叉支持。对面锥内 $z$ 和每个 $A\succeq0$，条件态 $\sigma_A=\operatorname{Tr}_A((A\otimes I)z)$ 为 PSD。取 $A\preceq cI$，又有
+
+$$
+0\preceq\sigma_A\preceq cM_Bz.
+\tag{260.20}
+$$
+
+右端支持在 $S$，故 $\sigma_A$ 也支持在 $S$；这由正矩阵在零对角方向整行整列为零立即得到。正 $A$ 张成 $H_2$，用其条件态展开联合张量，得 $z\in L_S$，包括全部交叉支持系数消失。反向，$z\in C\cap L_S$ 的正边缘必支持于 $S$。于是该实际面锥准确为 $C\cap L_S$。
+
+支持于 $S$ 的正产品由最小界属于此锥，实张成整个十六维 $L_S$。内禀最大界通过任意 $A\succeq0$ 和 $Q\succeq0$ 于 $S$ 测试：把 $Q$ 用包含映射 $J$ 送为全局正矩阵 $JQJ^*$，即可使用原最大界。故完整压缩域有标准两因子的内禀 min/max、迹单位、实际 L2 及限制的共同尺。内禀正对偶还满足 $\left(C\cap L_S\right)^*_{L_S}=\overline{\operatorname{res}_{L_S}C^*}$，这是有限维双极性的锥恒等式，不是任意联合面效应的同预算延拓。260.5的全部证明可在此域应用，给整个 $F_S$ 为标准 $\mathcal D_4$ 或 $T_1\mathcal D_4$。
+
+（二）以复 Stiefel 空间固定方向。参数取连通的正交二框架空间 $V_2(\mathbb C^b)=U(b)/U(b-2)$；$b=2$ 时为 $U(2)$。令 $D_J$ 为 $\mathbb C^2\otimes\operatorname{ran}J$ 上的标准密度体，两个候选为 $D_J,T_1D_J$，转置始终作用在固定第一因子。候选依框架连续，故在闭 $K$ 中的包含集为闭集；（一）给二者覆盖参数空间。若同一框架同时属于两个包含集，两个候选都在实际边缘支持面 $F_J$ 内，而（一）已把整个 $F_J$ 分类为其中一个，迫使另一个包含在它内。这不可能：在此 $2\times2$ 支持中，Bell 投影 $P_\Omega$ 的部分转置有特征值 $-1/2$，所以 $T_1P_\Omega\notin D_J$；同理 $P_\Omega\notin T_1D_J$。于是闭覆盖不交，连通性给一个全局方向。
+
+（三）若必要暂施全局 $T_1$，所有实际压缩面现为标准 PSD。$2\times b$ 中每个向量的 Schmidt 秩至多二，故都在某个 $\mathbb C^2\otimes S$ 内；秩一时把支持扩为二维即可。因此全部标准秩一态均是原纯点，谱分解给整个标准 PSD 底包含于 $K$。260.5（四）给任意两标准纯点的实际标准二支持球，即使这对点不在同一个压缩面内也成立。260.5（五）的完整 Hermitian 产品零投影张成及一个非零切交点，随后排除每个额外原纯点。有限原纯生成给整个 $C=\operatorname{PSD}_{2b}$，撤销暂时转置即得第二备选。$\square$
+

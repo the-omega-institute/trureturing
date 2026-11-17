@@ -1,0 +1,33 @@
+**推论 12.3（The spectral consequences in the full-confinement cases）。**
+Under Definition 12.1, assume $S\geq2$, or $S=1$ and $U=V(H)$.
+Then $\mathcal N=\ker P_{\mathrm{sym}}$ is nonzero and reduces $K$,
+and, with the very same $E$ and carrier,
+
+$$
+\begin{aligned}
+g&=\lambda_{\min}(K|_{\mathcal N})-E>0,\\
+K-EI&\succeq g(I-P_{\mathrm{sym}}),\\
+\|(I-P_{\mathrm{sym}})\phi\|^2
+&\leq\frac{\langle\phi,K\phi\rangle-E}{g}
+\qquad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{12.15}
+$$
+
+Proof. Original fibre permutations commute with $K$, hence their
+orthogonal invariant projection $P_{\mathrm{sym}}$ commutes with it.
+To see $\mathcal N\ne0$, take a nonzero one-particle vector orthogonal
+to constants in one fibre, occupancy $2S-1$ in another, and occupancy
+$S$ in every remaining fibre. Their tensor has occupancy
+$1+(2S-1)+(m-2)S=mS$ and lies in $\mathcal N$, also when $m=2$
+or $S=1$. Theorem 12.2 excludes $E$ from the finite nonempty
+spectrum on this reducing subspace, so its minimum is strictly above
+$E$. On $\operatorname{ran}P_{\mathrm{sym}}$, $K-EI\succeq0$
+by the definition of the whole-carrier minimum. On $\mathcal N$ it
+is at least $gI$. Adding their quadratic forms, with no cross terms,
+gives the operator inequality on all complex vectors. Its quadratic
+form on a unit vector and division by $g>0$ give the mass bound.
+This is the finite-spectrum finish of Corollary 7.3 with the new
+strictness input; it gives no exact $E$, numerical $g$ or rate.
+$\square$
+

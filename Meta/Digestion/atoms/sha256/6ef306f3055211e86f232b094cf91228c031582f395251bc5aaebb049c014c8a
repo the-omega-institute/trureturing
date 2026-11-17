@@ -1,0 +1,32 @@
+**引理 72.1（只改动原理想的残差运输）。** 在 70.1 的全部前件下，对任意原 $Z=b+\mathrm ic\in V$ 定义环境残差
+
+$$
+\mathfrak F(Z)=D(b,c)-\kappa(b,c)\in M(A)_{\rm sa}.
+\tag{72.1}
+$$
+
+任意 $k\in I$ 都满足
+
+$$
+\exp(\mathrm ik)Z\in V,\qquad
+\mathfrak F\bigl(\exp(\mathrm ik)Z\bigr)=\mathfrak F(Z).
+\tag{72.2}
+$$
+
+证明。对原演员 $h\in I$，71.2 先识别 PB 的两个内层旧值。乘子理想性给 $hZ\in A\subset V$，所以 PB 的两对实际外层输入就是 $(1\pm\mathrm ih)Z$ 的实虚部。原评价先分离两侧的原平方元素，给它们在 $E$ 中相等；再于 $M(A)$ 中减去 (71.5) 的相等环境平方，得到
+
+$$
+\mathfrak F((1+\mathrm ih)Z)=\mathfrak F((1-\mathrm ih)Z).
+\tag{72.3}
+$$
+
+这里只比较环境元素；没有将未知 $\kappa(b,c)$ 冒充原标签。C* 函数演算给 $(1-\mathrm ih)^{-1}-1\in A$，因而 $W=(1-\mathrm ih)^{-1}Z$ 与 $Z$ 之差属于 $A$，$W\in V$ 是合法原复标签。把这个实际 $W$ 代入 (72.3)，得
+
+$$
+\mathfrak F(U_hZ)=\mathfrak F(Z),\qquad
+U_h=(1+\mathrm ih)(1-\mathrm ih)^{-1}\in1+A.
+\tag{72.4}
+$$
+
+给定 $k=k^*\in A$，选正整数 $n$ 使 $\|k/(2n)\|<\pi/2$，令 $h=\tan(k/(2n))\in A_{\rm sa}=I$。正切在所用谱上连续且在零处为零，故确属原理想。标量函数恒等式经同一函数演算给 $U_h^n=\exp(\mathrm ik)$。有限次使用 (72.4) 即得 (72.2)；每一步仅给原输入增加 $A$ 元素，没有使用极限群闭包或未知 $D$ 的连续性。∎
+

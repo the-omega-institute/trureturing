@@ -1,0 +1,20 @@
+**定义 45.1（同一实 Jordan 丛的构造）。** 令 $Y=S^1=[0,1]/(0\sim1)$，以转置 $\tau$ 为粘合定义
+
+$$
+\mathfrak J^\tau
+=([0,1]\times H_n(\mathbb C))/((1,A)\sim(0,\tau A)).
+\tag{45.1}
+$$
+
+端点以固定实线性含单位 Jordan 等距映射粘合。通常的圆弧图在未越接缝处用恒等，在接缝一侧用 $\tau$，给局部平凡实 Jordan/JB 丛；平方、单位、锥和范数均相容。
+
+令 $X=AD(S^1)=S^1\times\{0,1\}$。顶层 $T=S^1\times\{1\}$ 的点孤立；底点 $(p,0)$ 的基本邻域为
+
+$$
+N(V,p)=(V\times\{0,1\})\setminus\{(p,1)\},
+\qquad p\in V\subset S^1\text{ 开}.
+\tag{45.2}
+$$
+
+置 $\pi(p,\epsilon)=p$、$\iota(p)=(p,0)$，取 $\mathfrak J=\pi^*\mathfrak J^\tau$。它是局部平凡实 Jordan 丛，$E$ 及准确序范数仍取41.1。
+

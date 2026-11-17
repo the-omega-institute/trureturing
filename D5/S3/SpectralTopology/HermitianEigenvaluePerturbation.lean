@@ -122,7 +122,7 @@ private theorem re_inner_apply_self_le_of_mem_spanIndices
   · exact mul_le_mul_of_nonneg_right (hc i hp) (sq_nonneg _)
   · rw [repr_zero_of_mem_span b hx hp]; simp
 
-private theorem le_re_inner_apply_self_of_mem_spanIndices
+theorem le_re_inner_apply_self_of_mem_spanIndices
     (hT : T.IsSymmetric) (hn : finrank ℂ E = n) {s : Set (Fin n)} {c : ℝ}
     (hc : ∀ i ∈ s, c ≤ hT.eigenvalues hn i)
     {x : E} (hx : x ∈ Submodule.span ℂ ((hT.eigenvectorBasis hn) '' s)) :
@@ -242,7 +242,7 @@ Copyright (c) 2026 Kitware, Inc. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jon Crall, Claude Opus 4.8
 -/
-private theorem sum_norm_le_sqrt_card_mul_norm {ι : Type*} [Fintype ι]
+theorem sum_norm_le_sqrt_card_mul_norm {ι : Type*} [Fintype ι]
     (x : EuclideanSpace ℂ ι) :
     ∑ i, ‖x i‖ ≤ Real.sqrt (Fintype.card ι) * ‖x‖ := by
   have hcs : (∑ i, ‖x i‖) ^ 2 ≤ (Fintype.card ι : ℝ) * ∑ i, ‖x i‖ ^ 2 := by

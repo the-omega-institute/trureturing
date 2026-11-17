@@ -1,0 +1,22 @@
+**Corollary 165.4 (finite prefixes and their limit).** Define
+
+$$
+\mathcal C_n=\operatorname{span}_{\mathbb R}
+ \{P^j\psi_k:0\le j\le n,\ 1\le k\le r\}.
+$$
+
+Then
+
+$$
+W_{\le n}=V\cap L^\infty(G,m;\mathbb R)\cap\mathcal C_n^\perp,
+\qquad
+W_\infty=\bigcap_{n\ge0}W_{\le n},
+\tag{165.5}
+$$
+
+and $\overline{\bigcup_n\mathcal C_n}=\mathcal C$. The finite-prefix escape of Proposition 164.2 therefore says only that each $\mathcal C_n^\perp$ contains normalized low-energy classes. It supplies no nonzero element of the limiting orthogonal complement $\mathcal C^\perp$ unless an additional orbit-complement or correction argument is proved.
+
+If the readout coordinates are initially given only as real-linear maps on $L^\infty$, the representer hypothesis in Definition 165.1 is an additional bridge: an arbitrary algebraic functional need not extend continuously to $L^2$. In the complex formulation, real and imaginary coordinates must be split before applying the real inner-product calculation above.
+
+The statements (165.1)--(165.5) are an exact functional-analytic boundary for the countable successor question. They do not establish orbit density, a nonzero orbit complement, a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
+

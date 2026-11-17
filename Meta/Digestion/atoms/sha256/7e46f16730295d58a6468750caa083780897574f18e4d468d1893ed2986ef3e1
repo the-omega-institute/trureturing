@@ -1,0 +1,24 @@
+**Corollary 10.3 (Whole-history decision and angle arithmetic).** For every prescribed history in Definition 8.1 the following disjoint cases give the complete stable space and exact full-time norm limit: a finite event list is Theorem 8.2; an infinite list with infinitely many singular indices is Theorem 10.1; an infinite list with finitely many singular indices is Theorem 10.2. In particular universal decay is decided as follows:
+
+$$
+\begin{array}{c|l}
+\text{history}&\text{necessary and sufficient condition for universal decay}\\ \hline
+r<\infty&F_r=0\\
+\text{infinitely many singular indices}&
+\text{some }\kappa_k=0\text{, or all nonzero and }C=\infty\\
+\text{eventually nonsingular, }D_s<\infty&F=0\\
+\text{eventually nonsingular, }D_s=\infty&
+\mathcal B_s+\mathcal A_s=\infty\text{, or }
+[\mathcal B_s+\mathcal A_s<\infty\text{ and }\ell_sF=0].
+\end{array}
+\tag{10.7}
+$$
+
+The stable-space dimensions in these cases are respectively the finite rank-nullity value, one or two, the rank-nullity value for $F$, and one or two. The stable space is zero-dimensional exactly in the finite nonsingular case or the finite-$D_s$ case with rank-two $F$. Every state outside the specified stable space has strictly positive limiting $Q$-norm. Finite annihilation remains the separate finite condition in Theorem 8.2.
+
+All block and series data are prescribed independently of the initial state. Convergent series determine the functionals and their kernels exactly; no uniform finite-time decision procedure for arbitrary real infinite histories is asserted. The cases allow arbitrary signs, arbitrarily small nonzero factors, approaches to either endpoint, every first-event time and all positive integer gaps. They impose no arithmetic restriction on the original angle.
+
+*Proof.* Every event list has exactly one of the three listed types. The corresponding theorems give (10.7), the exact limits and the stable subspaces, so rank-nullity and the kernels of the nonzero rows give the asserted dimensions. In particular, if an infinite list is wholly nonsingular and has infinite $D_s$, its stable space is either the whole plane or a line by Theorem 9.2, never $\{0\}$. Any singular prefix has rank at most one, so cannot produce another zero-dimensional case. The zero and nonzero composed rows in (10.6) are both included.
+
+For the arithmetic boundary, if $\theta/(2\pi)$ is rational, the possible event lines $\mathbb RM^{-t_j}e$ form a finite family. If it is irrational, $d\theta$ is neither an integer multiple of $\pi$ nor an odd multiple of $\pi/2$ for any positive integer $d$, since either equation would force the ratio to be rational. These are precisely the arithmetic observations of Corollary 6.3. None is needed to form the finite products, loss blocks, their principal lines or the singular coefficients (10.1). Consequently both arithmetic types, including exact resonances and orthogonal gaps whenever available, are already covered. Arbitrarily long blocks in (9.1) remain finite by divergence of their prescribed logarithmic loss; no compactness or uniform inverse assumption on the original event factors has been introduced. $\square$
+

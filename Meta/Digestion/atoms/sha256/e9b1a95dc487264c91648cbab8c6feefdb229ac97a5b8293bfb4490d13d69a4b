@@ -1,0 +1,48 @@
+### 14.5 原四坐标成功的同一运行证明
+
+$\mathcal Q_\eta$ 保迹，所以偏迹其选定输出后，其余所有系统的联合边缘与 $\eta=0$ 完全相同，包括原生标志、$L$ 和全部实际经典记录。后续解码、场采样及规定后缀不读取 $E_\eta$ 或固定工作口。因此每个原 $n,h$ 的完整解码律恰为第 10 节的原律，而非只保证某个方向对的二元可区分性。
+
+具体地，按原有理中心舍入取 $\widehat h(l)$，$l=0$ 或无效码取零。由 (10.3)–(10.4) 和原窗口，
+
+$$
+\Pr[\|\widehat h-h\|_\infty>e/16]
+\le K_{\rm risk}/t+4\exp(-t/16384)\le e/3.
+\tag{14.16}
+$$
+
+在 $0,\pm u_e e_x,\pm u_e e_y$ 的三个固定 Pauli 轴各取 $\ell_e$ 次原独立场样本，保留全部 $15\ell_e$ 枚令牌、测后态、原结果、实际副本和均值。每个场坐标估计误差至多 $eu_e/16$ 的共同好事件，其坏概率由原定义给
+
+$$
+30\exp[-\ell_e e^2u_e^2/512]\le e/3.
+\tag{14.17}
+$$
+
+仍令 $\widehat n_0=\widehat n(0)$、
+$\widehat v_a=[\widehat n(u_e e_a)-\widehat n(-u_e e_a)]/(2u_e)$，输出恰为
+
+$$
+\widehat D=\left(
+\frac{\widehat h\cdot[\widehat n_0\times\widehat v_x]}2,
+\frac{\widehat h\cdot[\widehat n_0\times\widehat v_y]}4,
+0,\frac{\widehat h\cdot\widehat v_y}2\right).
+\tag{14.18}
+$$
+
+所有运算有理且精确；旧两坐标解码器和其记录仍保留。轴向 $\|n_{aa}\|_2\le2$ 给中心差分偏差
+$\frac1{2u_e}\int_{-u_e}^{u_e}2|v|\,dv=u_e$。故在两个好事件上，
+
+$$
+\begin{gathered}
+\|\widehat h-h\|_2\le e/8,\qquad
+\|\widehat n_0-n(0)\|_2\le e^2/64,\qquad
+\|\widehat v_a-n_a(0)\|_2\le e/4,\\
+\|\widehat h\|_2,\|\widehat n_0\|_2,\|\widehat v_a\|_2\le2.
+\end{gathered}
+\tag{14.19}
+$$
+
+对 $a=x,y$，展开叉积并用 $\|n(0)\|_2=1$、$\|n_a(0)\|_2\le1$，除以二或四之前的误差至多
+$e/8+2(2e^2/64+e/4)\le11e/16$；最后一个点积的误差至多
+$\bigl(e/8+2(e/4)\bigr)/2=5e/16$。所以四坐标误差分别至多
+$11e/32,11e/64,0,5e/16$，全部小于 $e$。坏事件并集至多 $2e/3$，不要求两个好事件独立。完整后缀保迹且不改已保存解码边缘，故这一成功断言与 (14.2) 是同一无条件运行、全部原始 $n,h$ 上的联合合同。
+

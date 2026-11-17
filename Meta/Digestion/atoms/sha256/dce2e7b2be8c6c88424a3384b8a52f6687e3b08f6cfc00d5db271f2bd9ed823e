@@ -1,0 +1,4 @@
+### 1.3　形式源码的实际范围
+
+[`ParallelogramConstruction.lean`](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S3/QuadraticForms/ParallelogramConstruction.lean) 以加法交换群和目标倍增可消去为前件，从平行四边形律构造 $\mathbb Z$-二次映射。 它给整数平方齐次与双可加极化，没有自动给原实数尺度相容或正性。 [`ThreeReadBudget.lean`](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S0/Observation/ThreeReadBudget.lean) 仍以实双线性 $R$、线性 $U$ 为前件，由全部自然数预算得到非负对角与三读右零关系。 该文件未将后续对称性、等距、读出商及复分类合并认证。 本稿对这些声明作了源码核读，没有执行新的 Lean build。
+

@@ -16,7 +16,7 @@ public sealed class CanonicalFileMapFixture
     // global registry/actor/inventory checks without reading unrelated bodies.
     private readonly Lazy<ImmutableArray<FileMapFinding>> findings = new(() =>
         FileMapPolicy.InspectRepository(TestRepositoryLayout.FindRoot(),
-            FileMapPolicy.DocumentPaths(TestRepositoryLayout.FindRoot()), new FileMapInspectionScope(
+            scope: new FileMapInspectionScope(
             ["lean-report-inputs.json", "Meta/ci-cache-paths.json", "Meta/ci-checks.json", "Meta/engineering-projects.json",
                 "Blueprint/D5/S0/Carrier/Ring.md"], Actors: true, Inventory: true)).ToImmutableArray());
 

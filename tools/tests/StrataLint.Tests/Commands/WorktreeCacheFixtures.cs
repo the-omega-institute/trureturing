@@ -62,6 +62,33 @@ internal sealed record WorktreeProcessInvocation(
     string WorkingDirectory,
     TimeSpan Timeout);
 
+internal delegate ProcessOutput? ProcessScript(
+    string fileName,
+    IReadOnlyList<string> arguments,
+    string workingDirectory);
+
+internal sealed class ScriptedWorktreeProcessRunner(
+    IWorktreeProcessRunner inner,
+    ProcessScript script) : IWorktreeProcessRunner
+{
+    internal List<WorktreeProcessInvocation> Invocations { get; } = [];
+
+    public ProcessOutput Run(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout)
+    {
+        Invocations.Add(new WorktreeProcessInvocation(
+            fileName,
+            arguments.ToArray(),
+            workingDirectory,
+            timeout));
+        return script(fileName, arguments, workingDirectory)
+            ?? inner.Run(fileName, arguments, workingDirectory, timeout);
+    }
+}
+
 internal static class WorktreeHookFixture
 {
     internal static string Install(string repository, string name, string body)

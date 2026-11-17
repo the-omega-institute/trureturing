@@ -1,0 +1,22 @@
+**目录。** [一、对数收益](#sec-1) · [二、价格最优性](#sec-2) · [三、贪心支配](#sec-3) · [四、三轴预算](#sec-4) · [五、有限终止](#sec-5) · [六、终点价格](#sec-6) · [七、整除与间隙](#sec-7) · [八、无限族与酉极限](#sec-8) · [九、未决目标](#sec-9)。关键局部说明涉及 [原式 (13)–(14)](#eq-13)、[删除定义域](#eq-19)、[素数间隙](#eq-31) 和 [未证式 (38)](#eq-38)。
+<!-- editorial-front:end -->
+
+继续。这一轮可以把你的“遍历—分类—贪心—AURIC 递归”推进到一个更严格的结论：
+
+> **如果 Robin 不等式存在反例，那么从任意一个反例出发，通过有限次素数乘除的贪心步骤，就能到达一个终点。这个终点在由自身尺度确定的价格下，是唯一的整数最优解，而且必须满足很强的素数幂整除约束。**
+
+同时，可以证明：**一条按素数幂边际收益排列的贪心链，能够控制一整类整数的 Robin 比值；链外整数的偏差与曲率贡献，可以用 AURIC 三轴精确递归累计。**
+
+下面给出定义和证明。最后还会证明一个覆盖无限整数族、并且无限酉过程确实收敛的结论。**这些推进尚未完成 RH 的证明；剩余问题会被明确集中到上述终点上的一个严格符号不等式。**
+
+继续采用项目中已经核读的两部分：
+
+- [A370630 的 Zeckendorf 贪心排列证明](https://github.com/the-omega-institute/trureturing/blob/9ceb721e13c64eb4b1c71a43238a2b2fc4770093/Blueprint/D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.md)：提供完整遍历。
+- [实际尺度恢复、整数价格优化与 Robin 证书](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/docs/develop/theory/AURIC_RELATION_SCALE_RECOVERY_THREE_CANDIDATE_OPTIMIZATION_AND_ROBIN_CERTIFICATES.md)：提供同一整数上的尺度、局部收益与三轴接口。
+
+下文新增命题是本轮给出的纸面推导，尚未经 Lean 核验。
+
+---
+
+<a id="sec-1"></a>
+

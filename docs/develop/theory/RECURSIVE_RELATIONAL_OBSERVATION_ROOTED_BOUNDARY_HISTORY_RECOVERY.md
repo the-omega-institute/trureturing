@@ -4762,3 +4762,15 @@ claim. Theorems concern finite coherent prefixes and their stated
 logical projections; the continuing RRO recovery problem remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 44. Sparse acquisition of an unknown entry and its native history
+
+**Definition 44.1 (continuation and interface).** The full definitions and proofs are in [Sparse Native Entry Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md). Its instance supplies only the authentic primitive entry-event count $n_0>1$ and the actual stationary four-reply root interface, before absorbing Stop. Current leftmost depth, entry, completed word and expanded syntax are not supplied.
+
+**Theorem 44.2 (earned compact boundary).** Under that continuation's Definition 1.1, its Theorems 3.3–5.1 acquire the unique unknown entry $t$ and completed native word $W$, with an exact current-source description of size $O(n_0+|W|)$. Writing $H$ for the actually acquired current leftmost depth, the raw-call bound is $O(H+n_0^2+n_0\log(H+n_0+2))$, peak submitted-address length is $O(H+n_0)$, and added local work and backing are polynomial in the numeric parameters $n_0+H$, with the explicit accounting of its §§1 and 5.
+
+Proof. The continuation earns $H$, bounds the possible total F count by a window of at most $n_0+2$ values, parses each with a strict node budget using the existing known-lag literal decoder, and proves its candidate list equals the entire promised transcript fibre. Distinguishing addresses computed from finite candidate DAGs are submitted to the same actual source until precisely one pair remains. Its §5 charges calls, all address letters, binary computation, complete records, backing, copying and output. This is ordinary mathematical prose, with no new Lean certification. $\square$
+
+**Convention 44.3 (consumer and unresolved scope).** The continuation's Theorem 6.1 transfers the earned description before Stop into the SAME LAB source binding and existing executor. Only a genuine completed outer F/G return updates the completed word. Actual operand acquisition, phase, saved continuation, rights, maintenance, full responses, ACK/return, records and source-edit costs remain supplied and paid. Its Theorems 5.2 and 6.2 give the deterministic query lower bound, exponential expanded-size comparison, short cases and excluded beta ambiguity. Neither conditional sparse recovery nor completed-history decoding proves off-promise recognition, source provenance, full controller chronology, physical inversion, arbitrary Busy recovery, universal execution, four minimal individual kernels or an infinite coherent thread.
+
+## 追加锚（本行以下为增补区）

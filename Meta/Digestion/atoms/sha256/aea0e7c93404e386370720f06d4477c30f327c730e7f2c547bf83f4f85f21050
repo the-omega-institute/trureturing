@@ -1,0 +1,27 @@
+**定义 155.1（三重叠层候选）。** 分别保留母卷定义 41.1 的完整 $B$ 与定义 67.1 的另名完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。原有限 EJA、正 Frobenius 型 $q$、实双线性 $D$ 及 $P_c,N_c,W_c$ 仍取定义 150.1 的原义。令 $\tau$ 为同一 EJA 的规范 Jordan 谱迹，每颗整个原对象的 primitive 均有迹一，并定义对称关系
+
+$$
+\mathcal A_e=\{p\in\operatorname{Prim}(E):\tau(p\circ e)\in\{0,\tfrac12,1\}\}
+\qquad(e\in\operatorname{Prim}(E)).
+\tag{155.1}
+$$
+
+唯一新增配平要求为
+
+$$
+\boxed{\mathsf F_3:\quad
+\begin{gathered}
+c^2=c,\quad\operatorname{rank}_Ec\in\{1,2\},\qquad
+p,r\in\operatorname{Prim}(E),\quad P_cr=0,\\
+\operatorname{rank}_Ec=1\ \Longrightarrow\ p\in\mathcal A_c,\qquad
+\operatorname{rank}_Ec=2\ \Longrightarrow\ (p\le c\ \text{且}\ r=p)
+\end{gathered}
+\quad\Longrightarrow\quad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp).}
+\tag{155.2}
+$$
+
+记 $\mathsf C_3(B_*)=B_*+\mathsf F_3$，量词逐一覆盖全部原对象与实际联合。相对 (150.1)，只限制秩一层第一输入的重叠值，保留该层全部非零法向 primitive 读回与整个秩二内侧自问。$\tau$ 由原乘法的谱分解确定，仅用于选择数学测试域，不是原不等权 $q$ 的替代品，也未新增一个实际概率读口。
+
+原 $\Omega,q,D,L$、全部相关准备、零与次归一质量、不等正块权、设备身份、整个 AC、精确 $N_u$、X/Xs、全事件 R、F、失败、细记录、遗忘、具名同数支持双返回、原反向资料及全部合法有限顺序、自适应和并行历史均保持。X 的含幺 Jordan 嵌入、同一 $D$ 保持、交叉零、乘积张成与每对实际准备的实际乘积准备也保持；不将其换成任意独立仪器的共同组装。
+

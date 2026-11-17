@@ -1,0 +1,33 @@
+**定理 80.3。** (80.2) 的最大值达到且非负，在固定 EJA 三元组上对原 $L,p$ 连续。它在保持原迹的 Jordan 同构以及框架重标号下不变。在整个原基底中，
+$$
+\mathcal D=0\quad\Longleftrightarrow\quad D_J+D_H,
+\qquad
+\boxed{\mathrm{PRE}_0^{\rm mix}+\mathcal D=0+\mathrm H13}
+\quad\Longleftrightarrow\quad\mathrm{PRE}+\mathrm{C13}. \tag{80.3}
+$$
+删去第二个等价两边的 H13、C13 仍为同一实际模型类的等价。没有三框架生成前件，也没有提前使用复型。
+此外，在任何原 $\mathrm{PRE}_0^{\rm mix}$ 模型中，全部正交正元均有
+$$
+0\le\langle Ja,Jb\rangle_D\le\frac{\mathcal D}{2}\|a\|_\infty\|b\|_\infty
+\qquad(a,b\in A_+,\ a\circ b=0). \tag{80.4}
+$$
+
+**证明。** 一般有限 EJA 的有标签完整本原框架集合非空紧：$e_i^2=e_i$、$\tau e_i=1$、互相正交与和为单位都是闭条件，每个 $e_i$ 的迹二范数一。$U,G>0$ 使 $F$ 连续，故 $q(B)$ 连续并取得最大值。每套 $Je$ 与 $H_{\mathrm s}F(e,f)$ 分别为 $U,G$ 的正分解，78.8 给
+$$
+q_J(B)=2\sum_{e<e'}\langle Je,Je'\rangle_D\ge0,\qquad
+q_H(B)=2\sum_{(e,f)<(e',f')}\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E\ge0. \tag{80.5}
+$$
+此时不要求 $F(e,f)$ 幂等。固定载体时，局部原映射参数及紧框架集的联合连续性给 $\sup_B|q_z(B)-q_{z'}(B)|\to0$，故最大值连续；它不是随模型移动的开生成族上的下确界。Jordan 同构保持单位、规范迹、二次表示及所有完整框架；将 $L,p,\omega$ 同时按原同构运输，(80.1) 的全部派生映射及 (80.2) 的求和与最大值均对应，给不变性。不能只运输一张边缘表而保留不相容的联合映射。
+正交正 $a,b$ 的支撑正交，可在支撑及其补面内谱分解，得到同一个完整框架 $B=(e_i)$ 及不交支持集 $I,J$，使 $a=\sum_{i\in I}\alpha_i e_i$、$b=\sum_{j\in J}\beta_j e_j$，系数非负。零元直接处理。于是
+$$
+\langle Ja,Jb\rangle=\sum_{i\in I,j\in J}\alpha_i\beta_j\langle Je_i,Je_j\rangle
+\le\|a\|_\infty\|b\|_\infty\sum_{i\in I,j\in J}\langle Je_i,Je_j\rangle
+\le\frac{q_J(B)}2\|a\|_\infty\|b\|_\infty,
+$$
+因为每个跨支持无序对只出现一次，其余交叉项非负。$q_J(B)\le q(B)\le\mathcal D$ 给 (80.4)，特别地 $\mathcal D=0$ 先恢复整个 $D_J$。
+现在才用不依赖 $D_H$/C13 的 65.3，取得原归一化的两边缘保单位 Jordan 嵌入 $\alpha=F(-,1),\beta=F(1,-)$、交换乘法算子以及 $F(a,b)=\alpha(a)\circ\beta(b)$；其满规范迹等距使每个 $F(B\times B)$ 为完整本原框架。
+取 $A$ 的任一实线性基，每个基元作谱分解。所得至多 $d=\dim_{\mathbb R}A$ 套完整框架的并集线性张满，因而 Jordan 生成 $A$；这只是证明中取有限子族，不是新的模型输入。$\mathcal D=0$ 使它们每套的 (80.5) 均逐项为零。同标方格的行和、列和分别包含 $\alpha(e),\beta(e)$，故其 Jordan 闭包包含 $\alpha(A),\beta(A)$，再由乘积及第一实张成覆盖整个 $D$。对 $H_{\mathrm s}$ 应用 75.4 的一般 EJA 闭包工具，或者直接用 76.3 的任意有限生成族版本，得到整个纠缠锥上的 $D_H$。
+逆向由 $D_J$ 得每套第一表及这些完整产品框架，由 $D_H$ 得每套第二表，故所有 $q(B)=0$。这证明第一个等价。原 H13 此后按 72.7—72.8 逐原成员检测 C13，取得完整候选及逆向。整个前向闭包没有预设复数、三生成框架或 Albert 的结合矩阵表示。证毕。
+
+第一层界 (80.4) 不需要字典或谱条件数；它使用整个原框架量词。三框架见证的有限压缩仍可按 78.5 等价取回，但从一个特选框架的小缺陷不能推导 (80.4)。$\mathcal D$ 是不变量，最大化框架集合可以有很多成员；标量与集值极值不提供自然有限选框架。标准量子模型的每个 $q(B)=0$，其最大化集就是全部框架，72.16 的自然选择障碍仍保留。
+

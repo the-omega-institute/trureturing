@@ -1,0 +1,33 @@
+## 1. Result, mathematical ownership and reading conventions
+
+For the fixed rational polynomial and stationary binary renewal laws specified below, a finite observer may be retuned arbitrarily at each known common parameter $q=e^{-s}$. Its budget counts every possible persistent configuration, including both internally emitted decision labels. Under the two selected risk bounds, both almost-sure stopping requirements and both finite pointwise paid means, this volume proves, on one neighborhood independent of the finite budget and observer,
+
+$$
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+\ge C_\alpha\max\left\{s^{-3},\frac{s^{-11}}{L_M^8}\right\}
+\ge C_\alpha\max\left\{s^{-3},\frac{s^{-11}}{X_M^8}\right\}
+\quad(i=0,1),
+\tag{1.1}
+$$
+
+where
+
+$$
+\begin{aligned}
+b&=1-2\alpha>0,& C_\alpha&=\frac{b^2}{8B\delta^2},\\
+L_M&=\max\left\{1,\left\lceil\frac{2\delta(M-2)}b\right\rceil\right\},
+&X_M&=1+\frac{2\delta(M-2)}b.
+\end{aligned}
+\tag{1.2}
+$$
+
+Consequently, a family with an eventual cubic paid-mean upper bound $C_Ts^{-3}$ under one fixed target, with one fixed finite $C_T>0$, requires $M(s)=\Omega(s^{-1})$. The opposing source retains all its risk, stopping and finite-mean obligations. No cubic upper bound on that opposing mean is needed for this implication.
+
+The proof compares the actual target epoch kernel with a source-clipped auxiliary kernel in relative entropy. At finite horizons, a bounded harmonic hitting function converts that entropy into a difference of expectations. Actual stopping supplies the limit; auxiliary stopping is unnecessary. The entropy coefficient retains the normalized signed short-law difference and its collapsed tail drift. Its small-cutoff estimate and a separate full-law estimate together cover every finite cutoff, including arbitrarily large $sL$.
+
+The mathematical formulation and entropy argument are supplied by `entropy-proposal.json`, E1–E7, together with the distinct conditional handwritten assessment in `entropy-check.json`. The present E1–E7 give their complete ordinary proofs. The normal form, stationary comparison, directed-forest comparison and actual-read payment interfaces are supplied by the three source texts identified in Section 15 and exhibited here with their mathematical justification. Those existing results retain their ownership. The signed-short refinement supplies overlapping normalization structure; its proposed eighth-ninths growth consequence is not a premise of this proof.
+
+The additional source-relative composition is the entropy-harmonic comparison, its all-cutoff eighth-power coefficient, the simultaneous paid converse and the necessary first-power state growth. Relative entropy, log-sum, Pinsker, chi-square bounds, Cauchy–Schwarz, harmonic hitting probabilities, directed forests, bounded convergence and predictable payment are classical methods. Their use is not a claim of invention or external priority. The classification here is `repo-derived`: ordinary deductions relative to explicitly credited handwritten premises.
+
+All conclusions are conditional ordinary mathematics. In particular, the all-integer polynomial envelope and source moment estimates remain premises; their nested suppliers are not newly certified here. This text is reference theory without a Lean kernel certificate. A supplied proposal and its independent assessment do not constitute approval of this manuscript, or of any unsupplied final upper manuscript. The conditional upper comparison in Section 14 uses only its expressly stated mathematical supplier, and is not a dependency of the lower proof.
+

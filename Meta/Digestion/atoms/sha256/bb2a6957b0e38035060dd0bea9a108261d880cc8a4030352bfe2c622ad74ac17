@@ -1,0 +1,62 @@
+### 152.A. The original invariant slack set and sector localization
+
+Use the symmetric coordinates $(r,\vartheta,z,\xi)$ of (120.4) on the connected full-measure set $\Omega=\{r>0\}$. The rotations act on $\vartheta$, and
+
+$$
+dm=rh^2\,dr\,d\vartheta\,dz\,d\xi
+\tag{152.10}
+$$
+
+has a positive smooth rotation-invariant density there. The retained heat analyticity (122.11) and rotation invariance give an analytic invariant representative $\beta$ of $g_d$ on $\Omega$. It is positive almost everywhere and bounded there by $\|g_d\|_\infty$: the essential bound extends pointwise by continuity and full support. Choose $\tau>0$ such that
+
+$$
+E=\{x\in\Omega:\beta(x)\ge\tau\},\qquad m(E)>0.
+\tag{152.11}
+$$
+
+Such a $\tau$ exists since $\beta>0$ almost everywhere. Choose an everywhere positive invariant bounded Borel representative $b^0$ of $g_d$, agreeing with $\beta$ wherever $\beta>0$ in $\Omega$, by an invariant null repair on its zero set and on $G\setminus\Omega$. Use $b^0$ in (152.6) during the proof. This leaves every target integral unchanged for the originally given $b$. On $E$ it gives $f_3\ge c\tau$, while $f_0,f_1\ge1/4$ and $f_B=1/4$ on all of $G$.
+
+For a positive angular frequency $\ell$, let $H_\ell$ be the complex character sector and $V_{E,\ell}$ its bounded Borel vectors supported in $E$. Let $V_{E,\ell}^{\mathbb R}$ denote the bounded real cosine-sine sector with frequencies $\pm\ell$. For a real pencil
+
+$$
+q_\lambda=\lambda_{12}q_{12}+\lambda_{13}q_{13}+\lambda_{23}q_{23},
+\qquad \varphi=\lambda_{12}g+\lambda_{23}Pg,\qquad A_d=T_{d/2},
+\tag{152.12}
+$$
+
+use the feature map from (127.6), restricted to the sector,
+
+$$
+Z(v)=(A_dv,A_d(\varphi v),Pv,P(gv)).
+\tag{152.13}
+$$
+
+The bounded symmetric matrix $J$ in (127.6), with $\gamma=\lambda_{13}$, represents $q_\lambda$ by $\langle JZ(v),Z(v)\rangle$ on real vectors. All its operators are bounded on $L^2(m)$ by §133.
+
+We prove the sectorwise closure equality needed on this particular $E$. If $z\in H_\ell^4$ is orthogonal to $Z(V_{E,\ell})$, then the adjoint pairing is represented by
+
+$$
+F_z=A_dz_1+\varphi A_dz_2+Pz_3+gPz_4.
+\tag{152.14}
+$$
+
+Every summand has an analytic representative on $\Omega$ by (122.11). It lies in the same character, so $F_z=e^{i\ell\vartheta}F_{z,\ell}(r,z,\xi)$ with an analytic quotient amplitude. Rotation invariance makes $E$ a quotient set times the circle, with quotient of positive Lebesgue measure by (152.10). Testing against every bounded amplitude supported in that quotient makes $F_{z,\ell}$ zero almost everywhere there. Mityagin's analytic zero-set theorem, Proposition 0, applied to its real and imaginary parts on the connected quotient $(0,\infty)\times\mathbb R^2$, makes this amplitude identically zero. Thus $z$ is orthogonal to $Z(V_{G,\ell})$. The opposite orthogonal-complement inclusion follows from $V_{E,\ell}\subset V_{G,\ell}$, proving
+
+$$
+\overline{Z(V_{E,\ell})}=\overline{Z(V_{G,\ell})}.
+\tag{152.15}
+$$
+
+The same pairing calculation on real cosine-sine amplitudes proves (152.15) for $V_{E,\ell}^{\mathbb R}$ and $V_{G,\ell}^{\mathbb R}$. Equivalently, conjugate the character calculation and take its real fixed subspace. On the common closure the form defined by $J$ has the same negative index on either dense image: approximate a basis of any finite strictly negative subspace, and its Gram matrix remains strictly negative for sufficiently close approximants. Passing through $Z$ preserves the index, since $Z$ is injective on a strictly negative subspace and a basis in its image can be lifted. This proves sectorwise equality of the real negative indices.
+
+Corollary 133.3 now supplies a negative vector in $V_{E,\ell}^{\mathbb R}$ for every positive $\ell$ and every nonzero $\lambda$. When $(\lambda_{12},\lambda_{23})\ne(0,0)$, use its source time $2d$, gap $d$ and coefficients $(\lambda_{12},\lambda_{23},\lambda_{13})$. When only $\lambda_{13}\ne0$, use the same supplier with gap $2d$ and coefficients $(\lambda_{13},0,0)$, then the same sectorwise closure argument with $P$ replaced by $P^2$. This is a statement about $q_{13}$ for the original operator; the observation epochs remain (152.5).
+
+For any infinite set $S$ of positive odd frequencies put
+
+$$
+X_{E,S}=\bigoplus_{\ell\in S}V_{E,\ell}^{\mathbb R},
+\tag{152.16}
+$$
+
+where the sum is algebraic, so every vector is bounded, Borel, odd and has finitely many angular frequencies. Distinct positive sectors have zero ordered $Q_r$ cross-pairings, because $P$ and each multiplier in (152.7) preserve sectors. Taking one negative vector in each of arbitrarily many sectors proves infinite negative index of every nonzero $q_\lambda$ on $X_{E,S}$. Intersecting an $N$-dimensional negative subspace with the kernels of $k$ homogeneous linear constraints loses at most $k$ dimensions. Consequently every nonzero pencil still has infinite negative index after any finite list of homogeneous constraints on this space. No sector localization for a non-invariant $E$ has been used.
+

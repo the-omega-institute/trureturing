@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:087eb2fc72516b0e0a2065dbeb303483cb837c590b3031fa2dfefc71905b170b
+  normalized_sha256: sha256:087eb2fc72516b0e0a2065dbeb303483cb837c590b3031fa2dfefc71905b170b
+cas_ref: sha256:087eb2fc72516b0e0a2065dbeb303483cb837c590b3031fa2dfefc71905b170b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Section 69 setup introduces notation: the actual positive block roots, E, F_J, N_J and their empty towers; c_j, d_j, R_J and R_0; radical, integer ring, ramification index, residue degree, nonzero primes and inertia group. These are definitions and conventions, not the following local or Galois theorems. The sole arithmetic clarification, maximality of the positive cube divisor c_j, is upstream-only: for the positive block, the displayed valuation product is Nat.floorRoot 3 B_j by Nat.floorRoot; Nat.floorRoot_ne_zero and Nat.floorRoot_pow_dvd give positivity and cube divisibility, and Nat.pow_dvd_iff_dvd_floorRoot with Nat.le_of_dvd gives maximality. No frozen project GID states that maximality clarification. Existing GoldenCubicBlockPositiveRootTower and GoldenCubicBlockCommonDiscriminants use the actual roots/towers and the same floorRoot/radical expressions; they are not claimed as whole-atom coverage. No new theorem or mathematical verification is asserted by this setup settlement.'
+    previous_atom_id: 966f3815bec5a9eac63711a9d564d6f5703fcb03184f01e4562df013af543093
+    next_atom_id: 5a886c359ecc62edc45f55a8880c6dcba2bcaea49f22af66370040632d3c35bc

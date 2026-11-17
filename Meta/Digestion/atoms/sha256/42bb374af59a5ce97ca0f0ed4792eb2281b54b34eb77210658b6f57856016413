@@ -1,0 +1,29 @@
+**Proposition 10.3 (cofinal finite rational guards from the reference).** For every rational target $\theta>0$, a finite search over positive integer reference times $L$ and reference precisions can return rational $A^-,s^+$ with $l=L$ and
+
+$$
+b^+(A^-,s^+)<\theta.
+\tag{10.13}
+$$
+
+Consequently the passing sources form a nonempty cofinal class in the earned lower-clock coordinate: a source passes the guard whenever it earns $L\le\tau$ and the strict inequalities in (10.4) and (10.13) are certified. This does not say that a fixed source passes every requested $\theta$, and it never enlarges the actual read gap $d$.
+
+*Proof.* The reference defect satisfies $d^{\rm ref}_r\to1$ as $r\downarrow0$ by [DPCR, Definition 9.1]. Also, by the exact source-vector representation in [DPCR, Theorem 12.3],
+
+$$
+v^{\rm ref}_t=(H_{\rm ref}+1)e^{-tH_{\rm ref}}z_{\rm ref}.
+\tag{10.14}
+$$
+
+The normalized source law has $\langle h_{\rm ref},v^{\rm ref}_t\rangle=1$, while $\ker H_{\rm ref}=\mathbb C h_{\rm ref}$. The spectral theorem therefore gives $v^{\rm ref}_t\to h_{\rm ref}$ in global $L^2(\mu_{\rm ref})$: on the zero eigenspace the projection is exactly $h_{\rm ref}$, and on its orthogonal complement the multiplier $(\lambda+1)e^{-t\lambda}$ tends to zero and is uniformly bounded, so dominated convergence applies to the spectral measure of $z_{\rm ref}$.
+
+It follows that
+
+$$
+2(1-d^{\rm ref}_{2/L})
+ +\frac12\|v^{\rm ref}_{L/2}-h_{\rm ref}\|_2\longrightarrow0
+\qquad(L\to\infty).
+\tag{10.15}
+$$
+
+Choose a finite $L$ for which (10.15) has strict margin below $\theta$. The fixed-reference services produce certified intervals of arbitrarily small width for $d^{\rm ref}_{2/L}$ and the global vectors in (10.14). Refine until a positive lower endpoint $A^-$ and an upper norm bound $s^+$ preserve the strict margin. A fair enumeration of $L$ and precisions reaches this pair after finitely many calls. Every call, failed test, precision and rational operation is charged under the existing reference contract. $\square$
+

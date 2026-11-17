@@ -1,0 +1,11 @@
+**Definition 201.1 (the zero-sum coefficient space).** Put
+
+$$
+\mathsf H
+ =\left\{c\in\mathbb R^4:
+   \sum_{y\in\mathcal L}c_y=0\right\}.
+\tag{201.1}
+$$
+
+For $d_u=1$, a coefficient matrix is a single column in $\mathsf H$. For $d_u=2$, it is a $4\times2$ matrix whose two columns lie in $\mathsf H$.
+

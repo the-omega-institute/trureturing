@@ -1,0 +1,9 @@
+**定义 377.1（统一入射的准确几何）。** 对非零正 $x$、$c=\operatorname{supp}(x)$，定义原正面 $\mathcal F_c=C\cap E_1(c)$。$x$ 在该面的相对内部。面内的等长截面
+
+$$
+\mathcal S_x=\{y\in\operatorname{relint}\mathcal F_c:q(y,y)=q(x,x)\}
+\tag{377.1}
+$$
+
+在 $x$ 处的切空间为 $\mathcal T_q(x)$：相对内部在 $E_1(c)$ 中开，平方长度的微分为 $2q(x,\cdot)$，且 $q(x,x)>0$。因此 (371.2) 的两个几何分量构成同一截面的切空间入射；不要求输出本身为正，也不把相切解释为实际可执行流。
+

@@ -1,0 +1,51 @@
+**定理 1.4（每个外坐标九条共同探针锁定 Fourier 交叉项）。**令 $b=B\oplus I_{E^\perp}$、$F'=Fb$。在定义 1.1 下，
+
+$$
+\sigma_{F'}=b^*\sigma_Fb.
+\tag{1.11}
+$$
+
+若 $n>3$，每个外坐标只需定理 1.3 中以下三个方向各配三个相位的九条共同单位探针，便能锁定该坐标与 $E$ 的全部复交叉项：
+
+$$
+v^{(1)}=e_0-e_1,\qquad
+v^{(2)}=e_1-e_2,\qquad
+v^{(3)}=e_0-\zeta e_1.
+\tag{1.12}
+$$
+
+**证明。**记 $A_0=\sigma_F[E,E]$、$A_1=\sigma_{F'}[E,E]$。在同一个实际 $E$ 三角内部，(1.3) 的唯一性已经给
+$A_1=B^*A_0B$。两个外坐标的原射线及双坐标探针完全不变，故外部主块不变。固定一个外坐标 $\ell$，置
+
+$$
+x=\begin{pmatrix}(\sigma_F)_{0\ell}\\(\sigma_F)_{1\ell}\\(\sigma_F)_{2\ell}\end{pmatrix},\qquad
+y=\begin{pmatrix}(\sigma_{F'})_{0\ell}\\(\sigma_{F'})_{1\ell}\\(\sigma_{F'})_{2\ell}\end{pmatrix},\qquad
+d=(\sigma_F)_{\ell\ell}=(\sigma_{F'})_{\ell\ell}.
+\tag{1.13}
+$$
+
+对任一定理 1.3 的 $v$，令 $t=B^*v$。两边各自在自己的实际三维窗口内使用 (1.4)，再用 (1.10) 的同一原读数，得
+
+$$
+\begin{aligned}
+3\mu(P_{Fq_r})
+ &=v^*A_0v+d+2\operatorname{Re}(\zeta^rv^*x)\\
+ &=t^*A_1t+d+2\operatorname{Re}(\zeta^rt^*y),
+ \qquad r=0,1,2.
+\end{aligned}
+\tag{1.14}
+$$
+
+$BB^*=I$ 与 $A_1=B^*A_0B$ 给 $t^*A_1t=v^*A_0v$，且 $t^*y=v^*By$。因此
+$2\operatorname{Re}(\zeta^rv^*(x-By))=0$。对任意 $z\in\mathbb C$ 有精确反演
+
+$$
+\sum_{r=0}^2\zeta^{-r}\,2\operatorname{Re}(\zeta^rz)
+=\sum_{r=0}^2(z+\zeta^{-2r}\bar z)=3z.
+\tag{1.15}
+$$
+
+所以 $v^*(x-By)=0$。令 $z=x-By$，(1.12) 前两式给 $z_0=z_1=z_2$；第三式给 $z_0=\bar\zeta z_1$，故三者全零。也即这三个范数二方向在 $\mathbb C^3$ 中张成，得到 $x=By$、$y=B^*x$。Hermitian 性同时确定反向交叉块。
+
+每个外坐标重复该有限论证，连同内部和外部主块，得到 (1.11)。$n=3$ 时没有外部块，(1.3) 已给全式。若 Fourier 嵌在其他有序三坐标上，先置换标签即可。对前驱 $Fb^{-1}$ 应用正向公式再移项，亦得 $\sigma_{Fb^{-1}}=b\sigma_Fb^*$。没有将原响应作极限，也没有假设新旧窗口各有一份可任意识别的新准备。$\square$
+

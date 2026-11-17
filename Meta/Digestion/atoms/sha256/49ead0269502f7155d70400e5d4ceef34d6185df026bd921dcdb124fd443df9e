@@ -1,0 +1,22 @@
+**定义 26.1（实际窗口与原标签观察）。** 固定特征为零的域 $F$、其有限域扩张 $L/F$、正整数 $m$，满足 $[L:F]=2m$。窗口是原 $L$ 中满足 $\dim_F W=m$ 的 $F$-线性子空间。所有乘积、商及标量作用均使用这个 $L$ 的原乘法。对原标签 $r,s\in L^\times$，定义
+
+$$
+\begin{aligned}
+d_W(r)&=\dim_F(W\cap rW),\\
+J_W(r,s)&=\dim_F(W\cap rW\cap sW),\\
+E_W&=\{a\in L:aW\subseteq W\},\\
+\delta_W&=\min\{d_W(r):r\in L^\times,\ d_W(r)>0\}.
+\end{aligned}
+\tag{26.1}
+$$
+
+由于 $d_W(1)=m>0$，最小值存在。称 $d_W(r_0)=\delta_W$ 的 $r_0\in L^\times$ 为最小正行标签，并定义仅使用该行正支持的集合
+
+$$
+T_{W,r_0}=\{0\}\cup
+\{s^{-1}:s\in L^\times,\ J_W(r_0,s)>0\}\subseteq L.
+\tag{26.2}
+$$
+
+本定义将 [《原有向面积与三重返回》§25](AURIC_R5_022_ORIENTED_AREA_AND_TERNARY_RETURN.md) 的同名观察用于任意上述 $L/F$；标签仍是原 $L^\times$ 的元素，不对标签作域自同构重排。这里的等价关系只允许 $V=xW$、$x\in L^\times$。
+

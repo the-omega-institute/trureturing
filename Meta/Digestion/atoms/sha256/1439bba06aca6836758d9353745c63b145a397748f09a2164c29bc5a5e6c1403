@@ -1,0 +1,30 @@
+**定理 133.1（全原 $V_h$ 上的同一 $D=T$）。** 在130.1下，对每个原 $z\in V_h$，
+
+$$
+\boxed{D(h,z)=Tz,\qquad V_h=A_1\oplus A_2.}
+\tag{133.1}
+$$
+
+此原限制实线性、保持 $V_h$，并对全部原 $y,z\in V_h$ 满足
+
+$$
+\begin{gathered}
+(Ty)^2=y^2,\qquad T^2y=-y,\qquad \|Ty\|=\|y\|,\\
+Ty\circ Tz=y\circ z,\qquad
+y\circ Tz+Ty\circ z=0.
+\end{gathered}
+\tag{133.2}
+$$
+
+证明。131.1、132.1使 $\Pi=I$ 在整个原 $V_h$ 上成立，(130.4)因而给同一实际输出(133.1)。$T=[L_j,L_e]$ 原本就是保持 $E$ 的已知实线性Jordan表达式，前卷101.1还给 $T(A_1)\subset A_2$、$T(A_2)\subset A_1$。
+
+仅为环境计算记 $K_0=je$。前卷102.2给
+
+$$
+K_0^*=-K_0,\qquad K_0^2=-u,\qquad
+Tz=\tfrac12(K_0z-zK_0)=K_0z\quad(z\in V_h),
+\tag{133.3}
+$$
+
+因为原 $V_h=A_1\oplus A_2$ 的全部元素都与 $K_0$ 反交换。于是 $(Ty)(Tz)=yz$、$T^2y=-y$，而左乘酉元 $K_0$ 保范数。取Jordan对称部得到Gram等式；展开并消去 $yK_0=-K_0y$、$zK_0=-K_0z$ 的对应项，得到斜关系。这些计算识别的是(133.1)已经支付的实际旧输出，未由已知 $T$ 的性质反向假定未知 $G$ 的性质。∎
+

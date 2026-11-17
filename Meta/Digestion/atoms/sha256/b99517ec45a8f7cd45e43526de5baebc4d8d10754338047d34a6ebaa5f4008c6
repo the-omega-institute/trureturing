@@ -1,0 +1,13 @@
+**定义 15.1（直接来源、应用与增量）。** 以下来源按其实际接口使用，不作历史优先权或文献穷尽主张。
+
+| 来源 | 本增补实际使用的范围 |
+| --- | --- |
+| NC 命题 100.3 | 直接复用同一个 $\mathbb R\oplus\operatorname{Im}\mathbb O$、同一 $S,D,q_w$，导子、NN、原子配平、Jacobi/曲率失败和 $S^6$ 切空间的背景；八元数、非 Jacobi、NN/PY 和逐点四分之一转动均不是新发现。 |
+| W32–36 | 复用指定自旋背景中 PY+NN 的准确范围、原总映射的取向与维数结论，以及跳变符号反例的区别。11.1 用的是标准双线性连续叉积，不是 W35.1 的非线性跳变模型。 |
+| W37–41 | 连续三轴指定背景、CS、平方分母局部化、同一原 $D$ 的恢复和 Pauli 完成均留在原背景；不从任意连续七轴字段的点态二生成性推固定 $M_2$。 |
+| A1–9，Rv82–85 | 同一原对象保持、完整 R 下原 $D$ 自动正则、C* 重构、全部有限 Gram、七项消费者及全部来源边界直接复用；$\mathsf U_2,\mathsf G_3$ 不另立为新简化。 |
+| John C. Baez, *The Octonions*, Bull. Amer. Math. Soc. 39, 145–205；[作者原文 §1](https://math.ucr.edu/home/baez/octonions/node2.html)、[§2 Table 1](https://math.ucr.edu/home/baez/octonions/node3.html)、[§2.2](https://math.ucr.edu/home/baez/octonions/node5.html)、[§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)，[arXiv:math/0105155v4](https://arxiv.org/abs/math/0105155v4) | `literature-attested`：二生成交替性、规范乘法表、Cayley–Dickson、范数叉积、正交性与非 Lie 性。表的编号通过 (11.4) 对齐；二生成只在证明 12.1 的一对原实输入上消费。经典 spin、Lorentz 锥、Pauli、Gram 商和概复几何只作当前反例推导的中间工具。 |
+| E. M. Alfsen and F. W. Shultz, *Orientation in operator algebras*, PNAS 95, 6596–6601，[原文](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，DOI 10.1073/pnas.95.12.6596；John C. Baez, *Getting to the Bottom of Noether's Theorem*，[arXiv:2006.14741v5 §4](https://arxiv.org/html/2006.14741v5) | `literature-attested`：原文 “Dynamical Correspondences” 明确要求到有界斜顺序导子的线性赋值、自守恒及负交换子式；PNAS Theorem 1、Baez Theorem 12 给相容 C* 乘法与 $D=\mathrm i[\ ,\ ]/2$ 的规范。仅仅每个 $D_a$ 是 Jordan 导子并不满足这些全部前件；本例恰在交换子式失败。这里完整 A 的成熟恢复经 A6.3 复用，不在弱候选中越过缺口调用。 |
+
+$\texttt{repo-derived}$ 的增量是把这一个既有原值模型完整接到 A1–3 的所有量词和任意有限复 PSD，证明其准确实二生成量子子系统及跨子系统 R 失配，并给出正态 Gram 零空间不受同一原左乘保持的具体 $0\mapsto4$ 见证与共同作用后果。10.3 的 $2/3$ 残差恒等式是有前件的代数诊断；它在同一已付双线性和重复式上浓缩剩余循环缺口，不冒称一个独立公理减少。13.3 的商维数和概复结构计算说明此反例的准确几何，经典结构本身不单列为新增一般定理。全文是纸面定义与证明，没有 Lean/kernel 认证，也没有把来源散文升级为冻结真值。
+

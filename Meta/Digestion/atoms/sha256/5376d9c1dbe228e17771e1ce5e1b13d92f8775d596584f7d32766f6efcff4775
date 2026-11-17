@@ -1,0 +1,67 @@
+**Theorem 2.1 (reachable source densities and the passive predictive
+quotient).** Under Assumption 1.1, put
+
+$$
+z_\varepsilon=g,\qquad L_yz=P(f_yz),\qquad z_{uy}=L_yz_u.
+\tag{2.1}
+$$
+
+Then the $z_u$ are nonnegative bounded $L^2(m)$ classes and
+
+$$
+p(uv)=\langle z_u,F_v\rangle_m,\qquad
+\int z_u\,dm=p(u),\qquad
+R_u(v)=\langle \pi_u,F_v\rangle_m,
+\quad\pi_u=\frac{z_u}{p(u)}.
+\tag{2.2}
+$$
+
+The density $\pi_u$ is the conditional density of the same source
+at the next read time $(|u|+2)d$ after the original observed history
+$u$. If $\mathcal Z=\operatorname{span}_{\mathbb R}\{z_u\}$ and
+$\mathcal O(z)(v)=\langle z,F_v\rangle_m$, then
+
+$$
+\mathcal O(\mathcal Z)=\mathcal R_p,\qquad
+\mathcal Z/\ker(\mathcal O|_{\mathcal Z})\simeq\mathcal R_p,
+\qquad \mathcal O(L_yz)(v)=\mathcal O(z)(yv).
+\tag{2.3}
+$$
+
+In particular the kernel in (2.3) is invariant under each $L_y$;
+the quotient retains exactly the reachable linear future responses.
+
+*Proof.* Multiplication by $f_y$ and the Markov operator preserve
+nonnegativity and boundedness. The original Markov/read contract,
+self-adjointness, and (1.3) give
+
+$$
+\langle L_yz,F_v\rangle_m
+ =\langle z,f_yPF_v\rangle_m
+ =\langle z,F_{yv}\rangle_m.
+\tag{2.4}
+$$
+
+Starting from $z_\varepsilon=g$, induction on $u$ proves the first
+identity in (2.2); $v=\varepsilon$ gives its mass. More specifically,
+for every bounded real test $\phi$, the joint integral for a read $y$
+and the next hidden state is $\langle\pi_u f_y,P\phi\rangle_m$.
+It equals $\langle P(f_y\pi_u),\phi\rangle_m$. Its normalizing
+mass is
+
+$$
+a_y(\pi_u)=\int f_y\pi_u\,dm=R_u(y)>0,\qquad
+\pi_{uy}=\frac{P(f_y\pi_u)}{a_y(\pi_u)}.
+\tag{2.5}
+$$
+
+This proves the asserted conditional-density meaning and all future
+identities without changing the preparation. Equation (2.4) proves
+the intertwining in (2.3); the image and quotient identities follow
+by linearity and the first isomorphism theorem. The kernel statement
+uses $\mathcal O(z)(yv)=0$ for all $v$ whenever $\mathcal O(z)=0$.
+This is the original-source correspondence to the existing residual
+and shift constructions [WORD], including their private factorization
+helpers; it does not assert injectivity on the hidden Hilbert space.
+$\square$
+

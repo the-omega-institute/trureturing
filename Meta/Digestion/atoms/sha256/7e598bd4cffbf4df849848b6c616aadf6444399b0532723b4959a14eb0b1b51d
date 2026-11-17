@@ -1,0 +1,28 @@
+**Corollary 166.3 (the calibrated plane and a successor orbit).** Let
+
+$$
+H_{\mathrm{cal}}=\overline{\operatorname{span}_{\mathbb R}V}^{\,H}.
+\tag{166.8}
+$$
+
+Then $H_{\mathrm{cal}}\subseteq W^\perp$. Equality requires an additional density statement and is not supplied by the finite representer calculation. If a finite $L^2(m)$-representable readout has representers $\psi_1,\ldots,\psi_r$ and its specified successor stack is $R_j=R\circ P^j$, put
+
+$$
+\mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
+\{P^j\psi_k:j\ge0, 1\le k\le r\}}^{\,H}.
+\tag{166.9}
+$$
+
+Then the exact common kernel from Section 165 can be written as
+
+$$
+W_\infty
+ =L^\infty(G,m;\mathbb R)\cap
+ \overline{W+\mathcal C_R}^{\,H\,\perp}.
+\tag{166.10}
+$$
+
+Indeed, (166.4) supplies the condition $v\perp W$, while Proposition 165.2 supplies $v\perp\mathcal C_R$; orthogonality to both closed subspaces is equivalent to orthogonality to the closure of their algebraic sum. Formula (166.10) is an interface identity only. It does not prove that $\mathcal C_R$ is dense in $H_{\mathrm{cal}}$, that $\mathcal C_R$ has a nonzero bounded localized complement, or that the successor action maps $V$ into $V$. It also does not construct a physical successor, a nonlinear residual-zero family, a legal simplex partition, an exact $H43$ partition, a terminal compensator, an $SRS\text{-}20$ or $F_{64}$ witness, or a Lean/kernel theorem.
+
+The deductions (166.1)--(166.10) are source-specific consequences of the original bounded equal-gap readout and the self-adjoint heat contraction. They are not a claim that the representer bridge, the successor orbit, or its physical realization is present in the original model beyond the hypotheses displayed here.
+

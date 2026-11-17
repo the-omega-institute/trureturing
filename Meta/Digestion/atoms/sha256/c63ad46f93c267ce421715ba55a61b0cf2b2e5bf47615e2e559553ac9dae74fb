@@ -1,0 +1,26 @@
+## 21. rank-one 共享反馈族的相位与全尺度极值
+
+第 14 节的下界路径选取了相对证书坐标的纯虚方向。这个选择可以在同一个共享反馈族内直接检验，而不需要把它提升为全局最优性的主张。令
+
+$$
+T=\frac1{\sqrt2}\begin{pmatrix}1&1\\e^{-i\pi/4}&-e^{-i\pi/4}\end{pmatrix},\qquad
+h=\frac1{\sqrt2},\qquad
+b(t,\psi)=T\begin{pmatrix}\cos t\\e^{i\psi}\sin t\end{pmatrix},\qquad
+E(t,\psi)=\overline{b(t,\psi)}\,\overline{b(t,\psi)}^{\dagger}.
+$$
+
+保留同一个原始结果的共享反馈，并置
+
+$$
+U(t,x)=\operatorname{diag}(e^{-ixt},e^{ixt},1,1)U_+,\qquad x\in\mathbb R.
+$$
+
+记 $\theta=\pi/8$、$L_0=\sqrt2+2c$，并令
+
+$$
+A=\sqrt2L_0=\sqrt2(\sqrt2+2c),\qquad
+D=2L_0\left(\frac1{\sqrt2}-\frac1{8c^3}\right)>0,
+$$
+
+其中最后的不等式由 $c>1/\sqrt2$ 得到。
+

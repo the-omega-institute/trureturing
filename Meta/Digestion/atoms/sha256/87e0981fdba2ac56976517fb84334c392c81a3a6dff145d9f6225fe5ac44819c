@@ -1,0 +1,8 @@
+### 22.11　文献职责与尚待供应的关系
+
+Glaudell–Ross–van de Wetering–Yeh，*Exact Synthesis of Multiqutrit Clifford-Cyclotomic Circuits*，[v1 原文](https://arxiv.org/html/2405.08136v1)，Definition 3.1、Lemma 3.7、Proposition 3.8，供应 $A=\mathbb Z[\zeta,1/3]$ 的生成元、单位向量消元与酉综合，且其 $H=-\zeta^2B$。这里直接复用该 $A$ 结论；(22.4)–(22.8) 的双模分解、引理 22.3–22.4 的二分母下降以及有限十二射线关系均有本节纸面推导，不归到该文的 $A'$ 定理名下，也不作新意或优先权声明。
+
+Hrushovski–Pitowsky，*Generalizations of Kochen and Specker's Theorem and the Effectiveness of Gleason's Theorem*，[v1 原文](https://arxiv.org/html/quant-ph/0307139v1)，§3 Theorem 3、Corollary 2，给一般实／复框架的有效有限收缩研究路线。它没有替本节构造一个全部见证均落在 $A'$ 单位菜单内的收缩；命题 22.6 又说明不能把单位菜单偷换成所有环内投影。本节没有完成这种菜单内收缩，也不以稠密性补上未假定的概率连续性。第 21.7 节所述效果域／混合域的文献边界仍保留，不额外引入 POVM 效果非语境性。
+
+已具体给出的关系是：双模／四模门的双向精确字、全 $A'$ 单位向量菜单、共享补列的有限框架消去，以及对一份旧模二响应的无叶桥有限排除。仍须从指定同一 $\Omega$ 供应的是实际双模门、就绪与参考、合法宏和读出、保真原角及全准备／参考／历史／前接的原叶九旗接口；本节没有从旧定义构造它们。全 $A'$ 概率刚性、所需菜单内收缩、原叶桥的内生构造及无锚 fullR 到 DT 仍未解决。完整量子链只在表中全部实际前件成立时取得，不以这些局部结果结算原总目标。
+

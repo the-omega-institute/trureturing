@@ -1,0 +1,70 @@
+**Proposition 198.2 (radical-fibre normal form).** The corrections in (198.2) satisfy
+
+$$
+\rho_y\in\mathcal R_u,
+\qquad
+\sum_{y\in\mathcal L}\rho_y=0,
+\qquad
+\mathcal R_u=\operatorname{span}_{\mathbb R}\{\rho_y:y\in\mathcal L\}.
+\tag{198.3}
+$$
+
+Let $(\widetilde\rho_y)_{y\in\mathcal L}$ be any family of elements of $\mathcal R_u$ with
+
+$$
+\sum_{y\in\mathcal L}\widetilde\rho_y=0,
+\tag{198.4}
+$$
+
+and define
+
+$$
+\widetilde u_y=S_u(f_y)+\widetilde\rho_y.
+\tag{198.5}
+$$
+
+If the four functions in (198.5) are pointwise nonnegative and sum to one, then their sixty-four residuals vanish. Consequently, inside the fixed span and quotient data, the full-zero families are exactly the intersection of the affine radical fibre
+
+$$
+\left\{\bigl(S_u(f_y)+\widetilde\rho_y\bigr)_{y\in\mathcal L}:
+\widetilde\rho_y\in\mathcal R_u,\ \sum_y\widetilde\rho_y=0\right\}
+\tag{198.6}
+$$
+
+with the pointwise simplex constraints.
+
+*Proof.* By (197.1),
+
+$$
+T_u(\rho_y)=T_u(u_y)-T_u(S_u(f_y))=f_y-f_y=0,
+$$
+
+so $\rho_y\in\ker T_u=\mathcal R_u$ by Proposition 197.2. The baseline labels satisfy $\sum_yf_y=1$, and (198.1) gives
+
+$$
+\sum_y\rho_y=\sum_yu_y-S_u\left(\sum_yf_y\right)=1-S_u(1)=0.
+$$
+
+To prove the spanning assertion, let $r\in\mathcal R_u$. Choose $x\in\mathcal W_u$ with $T_u(x)=0$ and write $x=\sum_y a_yu_y$. Then
+
+$$
+r=x-S_u(T_u x)=\sum_y a_y\bigl(u_y-S_u(f_y)\bigr)=\sum_y a_y\rho_y,
+$$
+
+which proves (198.3).
+
+For the converse, every $\widetilde u_y$ belongs to $\mathcal W_u$, and (198.4) together with (198.1) gives $\sum_y\widetilde u_y=1$. The pointwise hypotheses therefore make it a legal bounded partition. Since each $\widetilde\rho_y$ is in the common radical, multilinearity removes every term containing a correction from
+
+$$
+\mathcal C(\widetilde u_y,\widetilde u_z,\widetilde u_k).
+$$
+
+The remaining term is
+
+$$
+\mathcal C(S_u(f_y),S_u(f_z),S_u(f_k))
+ =\mathcal C(f_y,f_z,f_k)
+$$
+
+by (197.4). Thus every residual is zero. Conversely, any full-zero family in the fixed $\mathcal W_u$ with the same quotient labels is recovered by (198.2), so it lies in (198.6). $\square$
+

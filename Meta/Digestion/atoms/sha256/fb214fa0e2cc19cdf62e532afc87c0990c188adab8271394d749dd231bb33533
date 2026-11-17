@@ -1,0 +1,66 @@
+**定理 147.1（删去独立槽后的几何）。** $\mathcal T_{\rm diag}(E)$ 为 (145.1) 的数学测试域。对每个非零有限 EJA，它是 $\mathcal T_{211}^{+}(E)$ 的严格紧子集；剔除两边附带的零主切口差异后，实质删域恰在整个总秩至少二时发生。零对象两域皆空。
+
+仅在完整原复重构后，固定同一 $E\cong\bigoplus_tH_{n_t}(\mathbb C)$、原不等块权 $q=\sum_tw_t\operatorname{Tr}$。记
+
+$$
+\mathcal G_{\mathbf k}=\prod_t\operatorname{Gr}_{\mathbb C}(k_t,n_t),\qquad
+d(\mathbf k)=\sum_t2k_t(n_t-k_t),\qquad N=\max_t n_t.
+$$
+
+$\mathcal S_t$ 是该底空间上的秩 $k_t$ 典范子丛，$\mathcal S_t^\perp$ 是原正交补丛。新域的全部带原标签分支为
+
+$$
+\begin{array}{c|c|c}
+\text{主切口}&\text{总空间}&\text{实维数}\\ \hline
+\sum_tk_t=1&\mathbb {CP}^{n_s-1}\times\mathbb P_{\mathbb C}(\mathcal S_t)
+&2(n_s-1)+d(\mathbf k)+2(k_t-1)\\
+\sum_tk_t=1&\mathbb {CP}^{n_s-1}\times\mathbb P_{\mathbb C}(\mathcal S_t^\perp)
+&2(n_s-1)+d(\mathbf k)+2(n_t-k_t-1)\\
+\sum_tk_t=2&\mathbb P_{\mathbb C}(\mathcal S_t)
+&d(\mathbf k)+2(k_t-1)\\
+\sum_tk_t=2&\mathbb P_{\mathbb C}(\mathcal S_t^\perp)
+&d(\mathbf k)+2(n_t-k_t-1).
+\end{array}
+\tag{147.1}
+$$
+
+内分支只在 $k_t\ge1$ 时存在，外分支只在 $k_t<n_t$ 时存在。秩一层的独立射影因子是输入；其关联丛纤维是读回。秩二层的丛纤维同时是输入与读回，没有第二个自由射影因子。表中的乘积只是独立输入因子与整个丛的乘积，不将丛本身宣称为全局直积；联合旗因子仍有 (136.3) 的稳定子，但秩二层不再额外乘独立输入的射影空间。
+
+定义
+
+$$
+f(\mathbf k)=2\max\!\left(0,\max_t(k_t-1),\max_t(n_t-k_t-1)\right).
+$$
+
+非零 $E$ 的最大分层实维数准确为
+
+$$
+M_{\rm diag}=\max\!\left\{
+2(N-1)+\max_{\sum k_t=1}\bigl(d(\mathbf k)+f(\mathbf k)\bigr),\quad
+\max_{\sum k_t=2}\bigl(d(\mathbf k)+f(\mathbf k)\bigr)
+\right\},
+\tag{147.2}
+$$
+
+其中始终要求 $0\le k_t\le n_t$；整个总秩小于二时不取第二项。单个复块的准确结果为
+
+$$
+M_{\rm diag}(1)=0,\qquad M_{\rm diag}(n)=6n-8\quad(n\ge2).
+\tag{147.3}
+$$
+
+相对 (142.3)，最大连续维数在 $n\le4$ 不变，在 $n\ge5$ 严格下降 $2n-8$。多块只按 (147.2) 与 (136.4) 比较，不外推此单块阈值。纯经典 $E=\mathbb R^m$、$m\ge1$ 时，
+
+$$
+|\mathcal T_{\rm diag}(\mathbb R^m)|=m^3+m\binom m2,
+\qquad
+|\mathcal T_{211}^{+}(\mathbb R^m)|=m^2\left(1+m+\binom m2\right).
+\tag{147.4}
+$$
+
+证明。谱迹的秩一、秩二水平集在旧紧域中均闭，第二层的 $r=p$ 是闭条件，故新域紧。对非零 $E$，旧点 $(0,p,p)$ 被删。若整个总秩至少二，取正交 primitive $p,s$，旧点 $(p+s,p,s)$ 的主切口非零且被删；若总秩一，无秩二层，其余测试完全相同。这区分附带删除与实质删除。
+
+复表示中原子是单块的一条复直线，$P_cp=0$ 或 $P_cr=0$ 使对应直线全在该块切口内或外。对秩一层沿 (142.2) 保留独立输入；对秩二层把 $r=p$ 代入，两个射线槽成为一个关联纤维，得到 (147.1)。不按同时酉共轭取商。每个非空射影纤维维数非负，内外最大值给 $f$，再对输入块和切口块秩最大化即得 (147.2)。
+
+单块 $n\ge2$，秩一层最大维数为 $2(n-1)+2(n-1)+2(n-2)=6n-8$；秩二层为 $4(n-2)+2\max(1,n-3)$。后者在 $n=2,3,4$ 分别为二、六、十，在 $n\ge5$ 为 $6n-14$，均不超过前者。$n=1$ 只剩一个零维秩一测试。沿 (142.3) 相减，给准确阈值与差值。经典时，秩一切口有 $m$ 种、输入与读回各 $m$ 种；秩二切口有 $\binom m2$ 种、输入有 $m$ 种且读回随之固定，遂得 (147.4)。除去零主切口的旧点后，两点数之差为 $m(m-1)\binom m2$，在 $m\ge2$ 时严格为正。点数与分层维数均不等于独立方程数、有限认证菜单或实际认证成本。∎
+

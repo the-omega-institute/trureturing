@@ -1,0 +1,34 @@
+### 5.4　同一个球怎样显示有限读口的遗漏
+
+在一个已有复二维矩阵空间中，令
+
+$$
+H_\epsilon=
+\begin{pmatrix}1&\epsilon\\ \epsilon&0\end{pmatrix}
+=\frac12(I+2\epsilon\sigma_x+\sigma_z).
+$$
+
+它在 $z$ 基的概率为 $1,0$，在 $x$ 基为 $1/2+\epsilon,1/2-\epsilon$。 当 $0<|\epsilon|<1/2$，这些有限读数全部合法，两个基内都归一， 但对应向量 $(2\epsilon,0,1)$ 已在单位球外：
+
+$$
+\det H_\epsilon=-\epsilon^2<0.
+$$
+
+因此还有一个未测试斜向读口取得负值。 这是一个有限评价表的反例，$H_\epsilon$ 从来不是正密度矩阵。 第 6 节给出当前仓库第 21.9 定理的高维、任意预定有限菜单版本。
+
+```mermaid
+flowchart TB
+    subgraph AXES["r₂ = 0 的截面：只检查 x、z 两组读口"]
+        BOX["方框：−1 ≤ r₁ ≤ 1，−1 ≤ r₃ ≤ 1"]
+        DISK["共同正关系域：r₁² + r₃² ≤ 1"]
+        GOOD["(0.35,0.42)：圆内的共同正关系"] --> DISK
+        BAD["ε = 1/5；红点 (2/5,1)：两组轴读数均合法"] --> FAIL["位于圆外；存在未测试斜向读口为负"]
+        BOX --> BAD
+        BOX --> DISK
+    end
+    classDef feasible fill:#e3f3ef,stroke:#16796b;
+    classDef invalid fill:#fde6e6,stroke:#b32626;
+    class GOOD,DISK feasible;
+    class BAD,FAIL invalid;
+```
+

@@ -1,0 +1,21 @@
+**Definition 3.1 (Compliant finite observer).** Fix an integer $M\ge2$, a risk $0<\alpha<1/2$, and a known common parameter $q\in(0,1)$. A design may depend arbitrarily on $(q,H,\alpha,M)$, including its state set, real transition probabilities and initialization. The same design and the same source-independent initial distribution serve both true labels. Known $q$ and the public shapes are immutable design information; the true label and source-dependent advice are unavailable.
+
+There are at most $M$ complete persistent configurations over all possible histories. This counts initialization configurations, every active configuration, both emitted labels, all control phases, registers, stored seeds and retained random choices. A counter or program phase is permitted only as part of these counted configurations. Fresh independent randomness may drive updates; every retained consequence of it must be represented by a counted configuration. Immutable real transition probabilities have unrestricted precision, and that precision is unpriced in this abstract model. No continuity in $q$, uniform positive exit bound or spectral-gap assumption is imposed.
+
+An action reads the next actual bit or stops and internally emits $D\in\{0,1\}$. Choices depend only on the current configuration, the bit just read when applicable, and fresh randomness independent of the source and prior fresh randomness. Access is to the one uninterrupted consecutive history of Definition 2.3. There is no additional clock, external age, elapsed-read counter, program state, archive, skipped bit, free gap, source reset, extra source, hidden-state response, probability response or source oracle. The mathematical cost tally is not an input. The emitted label is the decision; no external decoder infers it from stopping time or read length.
+
+If precisely $X_0,\ldots,X_{T-1}$ are read, the paid cost is $T$. It includes every read initial zero, subsequent zero, tick and terminal partial gap. Initial stopping has cost zero. Write $\mathfrak A_M(q,\alpha)$ for designs satisfying all six conditions
+
+$$
+\begin{gathered}
+\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad \mathsf P_{1,q}(D=0)\le\alpha,\\
+\mathsf P_{i,q}(T<\infty)=1,
+\qquad \mathbb E_{i,q}T<\infty
+\quad(i=0,1).
+\end{gathered}
+\tag{3.1}
+$$
+
+These are pointwise selected-pair promises at known common $q$, not a single $q$-free machine's full-family promises over separate unknown nuisance parameters. This class is the uniform companion's Definition 3.1, also retained by the growing-budget source and both entropy suppliers.
+

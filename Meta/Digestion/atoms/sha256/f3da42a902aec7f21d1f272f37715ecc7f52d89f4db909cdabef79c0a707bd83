@@ -1,0 +1,108 @@
+**Theorem 12.8 (cofinal amplification against a universal one-gap
+multiple).** No finite constant $C\ge0$ can replace the timing
+conditions of §§10–11 by arbitrary full-label stopping while
+bounding the selected stationary row deviation by $C\beta_d$
+for every original source. This failure holds both for a
+pathwise uniform bound and for a uniform expectation bound over
+bounded label-stopping indices. It also holds in the actual
+original law for deviations of the actual current posterior from
+the stationary empty-history row. The comparison can use the
+arbitrarily small generated cofinal guards $b^+$ of Proposition
+10.3, rather than an unacquired numerical value of $\beta_d$.
+
+*Proof.* Use the coefficient-one original family $a=\eta=1$,
+with positive integer gaps $d=L\ge1$. Each choice is a separate
+original source. Once chosen, its gap, $g_L$, $c_L$ and emissions
+remain fixed throughout its entire run. Markov contraction and
+the source semigroup identity give
+
+$$
+\|g_L\|_\infty\le\|g_1\|_\infty<\infty,\qquad
+c_L=\frac1{4(1+\|g_L\|_\infty)}\ge
+c_*:=\frac1{4(1+\|g_1\|_\infty)}>0.
+\tag{12.30}
+$$
+
+Proposition 10.3, with exactly its fixed-coefficient reference
+services, gives a cofinal sequence of finite integers $L_n$ and
+rational passing guards $b_n^+\downarrow0$, with $l=L_n=\tau$
+and $\beta_{L_n}\le b_n^+$. To ensure cofinality explicitly,
+require $L_n\ge n$ in its fair search. At the first stage use
+guard target $1/2$; at stage $n>1$ use the rational target
+$\min(2^{-n},b_{n-1}^+/2)$. Formula (10.15) tends to zero on
+every such tail, so these restrictions still terminate and give
+the asserted decreasing guards.
+It is not an adjustment of a gap during any run, nor a claim
+that any one fixed source passes every tolerance.
+Here $l=L_n\le\tau$ is checked mathematically for the comparison
+family. The numerical guard uses only its fixed-reference calls.
+If used as an actual acquired guard, its original earned-clock
+premise must still be met; no claim that startup returns exactly
+$L_n$, and no exact actual coefficient or clock query, is made.
+
+Set $t=c_*/2$ and fix $\delta=1/4$. Proposition 12.4 gives for
+each source a finite prefix-free family and bounded selector
+$(J_n,I_n)$ of Definition 12.6. For every $H\ge1$,
+
+$$
+\begin{aligned}
+Q_n(I_n=1)&>3/4,\\
+I_n=1\quad&\Longrightarrow\quad
+D_{J_n,H}(W_{J_n})>c_{L_n}-t\ge c_*/2,\\
+\mathbb E_{Q_n}D_{J_n,H}(W_{J_n})&>3c_*/8.
+\end{aligned}
+\tag{12.31}
+$$
+
+At the non-hit branch $J_n=N_n$ the deviation is still
+nonnegative; that branch was retained in the expectation.
+For any proposed $C$ choose $n$ with
+$Cb_n^+<3c_*/8$. Then (12.31) is greater than
+$Cb_n^+\ge C\beta_{L_n}$. This contradicts a universal
+expectation bound; its positive-probability hit separation also
+contradicts a pathwise bound when $Cb_n^+<c_*/2$.
+Every finite family admits the genuine certificates of Theorem
+12.5 with rational margins, but (12.31) needs no physical claim
+that the selector has been executed.
+
+For the actual-law assertion, in each of these same sources
+start from the original $e$-start, and let
+
+$$
+K_n=\inf\{j\ge1:R_{W_j}^1(3)<c_*/2\}.
+\tag{12.32}
+$$
+
+The $u=\varepsilon$ case of Theorem 12.3 says that $K_n$ is
+finite almost surely in that actual law. Choose a finite $M_n$
+with actual probability $\mathbb P_e(K_n\le M_n)>3/4$ and
+use the bounded rule $\bar K_n=K_n\wedge M_n$, retaining the
+non-hit flag on $\{K_n>M_n\}$. On its hit event,
+
+$$
+\operatorname{TV}(R_{W_{\bar K_n}}^H,Q_{\emptyset,n}^H)>c_*/2,
+\qquad
+\mathbb E_e\operatorname{TV}
+ (R_{W_{\bar K_n}}^H,Q_{\emptyset,n}^H)>3c_*/8.
+\tag{12.33}
+$$
+
+This is an actual-source mathematical stopping rule defined by
+its true posterior, not an available exact-posterior query.
+It proves the asserted actual-law failure for arbitrary
+mathematical full-label stopping. The finite acquired substitute
+is (12.22) with the actual stopped-law transfer and error terms
+of Theorem 12.7, conditional on its genuine readiness and lawful
+output premises. In particular neither (12.32) nor the finite
+table invents an executor. The reference to $c_*$ is a
+mathematical lower bound for the comparison family; no exact
+$c_*$ or $\|g_1\|_\infty$ is added to an actual menu.
+
+The contradiction concerns a constant uniform over timing and
+over the cofinal original source family. It does not assert an
+unbounded ratio for every fixed source or every acquired guard.
+The deterministic-index expectation bound (10.16), its fully
+independent-completion consumer, and the B-mask-adapted bounds
+of §11 remain unchanged: none of their timing premises authorizes
+the selection in (12.22) or (12.32). $\square$
+

@@ -1,0 +1,51 @@
+**Theorem 11.1 (E5: finite-parameter entropy paid converse).** For any finite $M\ge2$, finite integer $L\ge1$, interior known common $q$, fixed $0<\alpha<1/2$, and actual $\mathcal A\in\mathfrak A_M(q,\alpha)$, define
+
+$$
+b=1-2\alpha,
+\qquad\chi_{M,L}=\frac{\gamma_L^{M-2}-1}{\gamma_L^{M-2}+1}.
+\tag{11.1}
+$$
+
+Separately for each $i\in\{0,1\}$,
+
+$$
+b\le r_H(q)+\chi_{M,L}
++\sqrt{\frac{d_i(q,L)B(1-q)\mathbb E_{i,q}^{\mathcal A}T}{2}}.
+\tag{11.2}
+$$
+
+Proof. Fix target $i$ and opponent $j=1-i$. Take $h=h_{W_i}$ and $h_j=h_{U_j}$ as actual ever-hit probabilities. Lemma 5.3 permits Lemma 4.1 on the same configuration set with interior size $n\le M-2$. Since $(v-1)/(v+1)$ increases for $v\ge1$,
+
+$$
+\sup_x|h(x)-h_j(x)|\le\frac{\gamma_L^n-1}{\gamma_L^n+1}
+\le\chi_{M,L}.
+\tag{11.3}
+$$
+
+Theorem 10.1 gives $|p_i-\nu_ih|\le\sqrt{d_i\mathbb E_iN/2}$. The actual opponent stops almost surely from its actual initial row, so its epoch chain reaches its emitted label almost surely and $p_j=\nu_jh_j$. Decompose the two actual probabilities exactly as
+
+$$
+p_i-p_j=(p_i-\nu_ih)+\nu_i(h-h_j)+(\nu_i-\nu_j)h_j.
+\tag{11.4}
+$$
+
+These are probabilities of the same machine at the same selected $q$. Bounds (5.2), (11.3) and (10.2) give
+
+$$
+|p_i-p_j|\le\sqrt{\frac{d_i\mathbb E_iN}2}+\chi_{M,L}+r_H(q).
+\tag{11.5}
+$$
+
+Both risks imply $p_0\le\alpha$, $p_1\ge1-\alpha$ and $p_1-p_0\ge b$. Lemma 6.2 prices actual target occupation by $\mathbb E_iN\le B(1-q)\mathbb E_iT$. Substitution proves (11.2). For the other target use its own $W_j,d_j$ and its own actual expectation; $\eta,A,C$ and the experiment remain the same. This yields two individual mean bounds, not a bound on their sum or a combination of unrelated designs. The target index chooses a proof comparison, not runtime advice or source-dependent initialization. $\square$
+
+If $d_i(q,L)>0$, rearrangement gives
+
+$$
+\mathbb E_{i,q}^{\mathcal A}T
+\ge\frac{2[b-r_H(q)-\chi_{M,L}]_+^2}{B(1-q)d_i(q,L)},
+\qquad [x]_+=\max\{x,0\}.
+\tag{11.6}
+$$
+
+If $d_i=0$ while $b>r_H+\chi_{M,L}$, (11.2) instead rules out a compliant observer. If $d_i=0$ and the residual separation is nonpositive, the interface gives only the trivial nonnegative mean bound. No division by possibly zero entropy is allowed. A zero signed coefficient $\kappa_L$ in (7.11) supplies no singular exception.
+

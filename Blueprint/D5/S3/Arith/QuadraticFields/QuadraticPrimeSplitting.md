@@ -36,7 +36,21 @@ Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_r
 
 Root count for the half-integral quadratic generator, including the ramified case.
 
-**Theorem 1.3 (quadratic_euler_polynomial).**
+**Theorem 1.3 (General quadratic Euler polynomial).**
+
+Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_euler_polynomial_general`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_euler_polynomial_general` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Deyi Chen and Zhi-Wei Sun (2024). *On determinants involving (j+k/p) plus or minus (j-k/p)*. DOI: [10.48550/arXiv.2409.08213](https://doi.org/10.48550/arXiv.2409.08213). URL: <https://arxiv.org/html/2409.08213v4#S1.E11>.
+
+*Commentary.*
+
+The general polynomial X²-bX-a has local Euler polynomial determined by its discriminant b²+4a, including repeated ramified factors. The half-integral signature is retained as its b=1 application; the imaginary Merca field uses b=0.
+
+**Theorem 1.4 (quadratic_euler_polynomial).**
 
 Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_euler_polynomial`
 
@@ -50,7 +64,7 @@ Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_e
 
 The product over distinct irreducible factors is the local Euler polynomial. Repeated factors contribute only once, so this also handles ramified primes.
 
-**Theorem 1.4 (negative_prime_reciprocity).**
+**Theorem 1.5 (negative_prime_reciprocity).**
 
 Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.negative_prime_reciprocity`
 
@@ -64,7 +78,7 @@ Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.negative_pr
 
 The discriminant character is the conductor-p quadratic character, including at p. The prime two is treated separately because the integral generator has denominator two.
 
-**Theorem 1.5 (integralGenerator_root_card).**
+**Theorem 1.6 (integralGenerator_root_card).**
 
 Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGenerator_root_card`
 
@@ -78,7 +92,7 @@ Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGen
 
 The roots of the actual integral generator polynomial at each odd rational prime. This identifies its linear factors using the same character as the original double sum.
 
-**Theorem 1.6 (integralGenerator_euler_polynomial).**
+**Theorem 1.7 (integralGenerator_euler_polynomial).**
 
 Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGenerator_euler_polynomial`
 
@@ -92,7 +106,7 @@ Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGen
 
 The local factor supplied to Kummer-Dedekind is expressed by the original conductor-p character, at every odd prime including the ramified prime p.
 
-**Theorem 1.7 (integralGenerator_euler_polynomial_two).**
+**Theorem 1.8 (integralGenerator_euler_polynomial_two).**
 
 Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGenerator_euler_polynomial_two`
 
@@ -106,7 +120,7 @@ Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGen
 
 At two the half-integral polynomial is irreducible for p congruent to three mod eight and has two distinct linear factors for p congruent to seven mod eight.
 
-**Theorem 1.8 (integralGenerator_euler_polynomial_all).**
+**Theorem 1.9 (integralGenerator_euler_polynomial_all).**
 
 Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGenerator_euler_polynomial_all`
 
@@ -120,7 +134,7 @@ Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.integralGen
 
 Every rational prime, including two and the ramified prime p.
 
-**Theorem 1.9 (primeIdeal_euler_polynomial).**
+**Theorem 1.10 (primeIdeal_euler_polynomial).**
 
 Lean statement: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.primeIdeal_euler_polynomial`
 
@@ -144,5 +158,6 @@ Actual prime ideals over every rational prime have the quadratic Euler factor. T
 - Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.primeIdeal_euler_polynomial`
 - Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadraticRootEquivSqrts`
 - Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_euler_polynomial`
+- Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_euler_polynomial_general`
 - Truth anchor: `D5/S3/Arith/QuadraticFields/QuadraticPrimeSplitting.quadratic_root_card`
 - Dependency: [D5/S3/Arith/QuadraticFields/QuadraticOrderGenerator](QuadraticOrderGenerator.md)

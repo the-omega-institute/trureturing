@@ -1,0 +1,54 @@
+**Proposition 58.3 (probability, amplitude, time and dimension).**
+For both native critical families, actual ground probability has the
+normalized fluctuation law (42.2), while its amplitude-boundary spectral
+weight is $w/\sqrt\pi+o(w)$ in the direction $\Pi_\sigma$.
+The slow compensated response resolves all limiting even oscillator
+levels with the weights (56.11), rather than just this ground pole.
+UNIT loses the free background on that clock; RAW retains a background
+larger than the compensated response by the factor $B_\kappa(z)$.
+These are distinct predictive requirements and do not select a physical
+spatial dimension or supply a preparation or acquisition operation.
+
+Proof. The probability assertion is Theorem 42.1 and the amplitude
+assertion is (56.12). Integration of an amplitude is not integration
+of its square; Lemma 56.2 is what permits that passage on the growing
+chart. The complete spectral sum (57.14) has a strictly positive term
+for every even level, with limiting odd-level weights zero. In fact
+$h_{\rm raw}=\tau_s^{-1/2}$ and $h_{\rm unit}=a$ resolve the actual
+spacings (41.2), whereas $w_{\rm raw}$ and $w_{\rm unit}$ govern
+boundary visibility. The native RAW propagation time $z\sqrt{\tau_s}$
+is shorter than its source cutoff $\tau_s$; (58.4) quantifies the
+surviving free background. UNIT uses propagation time $z/a$ and source
+cutoff $b/a^2$; its free-background comparison is (57.15).
+
+The phase periods, the two height deaths, the source cutoff clock and
+the later propagation clock have all remained those of Definition
+31.1 and [G, Definition 25.1]. The limiting base direction has the
+original two visible coordinates and height; neither its coordinate
+count, a hidden oscillator index nor covariance rank identifies three
+Euclidean spatial axes. The observation-quotient and free-diffusion
+classification boundaries in §§43,49,55 remain unchanged. There is no
+new physical preparation, reset, actuator, finite-shot acquisition,
+bit count, CPU estimate or infinite-volume law in these conclusions.
+
+The classical inputs are selfadjoint spectral calculus (Teschl,
+Chapters 2--4), form min-max (Theorem 4.10), bounded-form perturbation
+as a relative-bound-zero case of KLMN (Theorem 6.24), and normalized
+Hermite functions (§8.3, (8.35)--(8.41)), in the cited
+[author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The needed bounded-operator Duhamel identity is written explicitly in
+(57.7), and the classical weighted eigenfunction identity in (56.7).
+Simon's [1983 paper, §1, (A1)--(A4), and §§2--3](https://www.numdam.org/item/AIHPA_1983__38_3_295_0.pdf)
+provides the mature harmonic-localization comparison discussed in
+43.3: fixed smooth scalar potentials with nondegenerate minima do
+not by themselves cover this moving RAW field or horizontal full
+operator. Its fixed-index result is not used as an amplitude-tail
+or entire-response supplier. The native additions proved here are
+(56.2)--(56.4), the uniform count (57.1), and the exact compensated
+high-energy bound (57.5), which together close precisely those
+correspondence gaps. The other native suppliers cited in 43.3 retain
+their stated source, quotient and fixed-pole qualifications; none
+is silently substituted for a critical amplitude theorem. These are
+ordinary mathematical proofs, with no Lean-verification, physical
+realization or worldwide-priority claim. $\square$
+

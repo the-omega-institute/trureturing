@@ -1,0 +1,33 @@
+**Definition 36.1 (all visible modes of the actual zero leaf).**
+On exactly $L^2(B,\nu_B)$ of [G, Definition 23.2] define
+$\mathcal K_c=\overline L_0-cM_\phi$ for $c\ge0$, with form domain
+$\overline{\mathcal F}_0$ and operator domain $D(\overline L_0)$.
+For $(n,m)\in\mathbb Z^2$, let $\nu_r(n,m;c)$, $r\ge1$, be the
+increasing Dirichlet eigenvalues of
+
+$$
+\begin{aligned}
+K_{n,m}(c)
+ &=-\varepsilon^2\partial_k^2
+    +\left(\frac{nH-(n+m)k}{2H}\right)^2-c\phi(k),\\
+Q(K_{n,m}(c))&=H_0^1(I),\qquad
+D(K_{n,m}(c))=H^2(I)\cap H_0^1(I).
+\end{aligned}
+\tag{36.1}
+$$
+
+The numerator follows literally from (25.4):
+$A_0=(H-k)/(2H)$ and $B_0=-k/(2H)$.
+Let $e_r(c)=\nu_r(0,0;c)$, so $e_1(c)=e(c)$ and $e_r(0)=r^2\lambda$.
+Denote by $\zeta_N(c)$ the increasing enumeration, with multiplicity,
+of the multiset
+
+$$
+\Sigma(c)=\mathop{\bigsqcup}_{(n,m)\in\mathbb Z^2}
+                     \{\nu_r(n,m;c):r\ge1\}.
+\tag{36.2}
+$$
+
+This uses both visible circles. It is not the smaller two-coordinate
+bottom-output quotient occurring in the observation-quotient volume.
+

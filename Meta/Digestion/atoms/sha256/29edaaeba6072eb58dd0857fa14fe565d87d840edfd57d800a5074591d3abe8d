@@ -1,0 +1,39 @@
+**Proposition 136.2 (nonempty invariant coarse class and the original targets).** For every original $\theta$, the class $\mathscr E_\theta$ is nonempty. There is a bounded pointwise invariant Borel function $\beta$ with $0<\beta\le M$ everywhere and $[\beta]=[b]=g_d$. Replacing $b$ by this representative for a computation changes none of the original marginal targets, prescribed coordinates, or partition classes. For every $E\in\mathscr E_\theta$,
+
+$$
+0<q_E<1\quad m\text{-a.e.},\qquad
+q_E/g\text{ is not constant }m\text{-a.e.}
+\tag{136.4}
+$$
+
+*Proof.* The quotient probability and the three quotient source measures are
+
+$$
+d\bar m=2\pi r h(r,z,\xi)^2\,dr\,dz\,d\xi,
+\qquad d\bar\nu_j=g_{jd}\,d\bar m.
+\tag{136.5}
+$$
+
+Here the invariant smooth representative of $h$ is used. The change from $\zeta$ to $\xi$ has Jacobian one, and angular integration gives (136.5). The omitted axis is null for all four measures. Every invariant Borel cell on $\Omega$ is the inverse image of a Borel subset of $X$: evaluate membership on the Borel section $\alpha=0$ and use invariance on its circular orbit. Each quotient measure is finite and atomless, being absolutely continuous with respect to three-dimensional Lebesgue measure. For example, slicing any Borel set by the $r$ coordinate gives a continuous distribution, hence a proper subdivision of every set of positive measure.
+
+Angular averaging of the original bounded Borel $b$ gives a Borel quotient function
+
+$$
+\bar\beta(r,z,\xi)=\frac1{2\pi}\int_0^{2\pi}b(r,\alpha,z,\xi)\,d\alpha.
+$$
+
+It lies in $(0,M]$ everywhere on $X$. Invariance of the $L^2$ class $g_d$ and Fubini's theorem show that its lift equals $b$ almost everywhere. Give its lift the value $1$ on $N$. This is the asserted $\beta$. On any open patch where the analytic representative of $g_d$ is strictly positive it can, without changing its class, be taken equal to that analytic representative: the latter is invariant, nonnegative and at most $\|g_d\|_\infty<M$ by continuity and full local support of $m$. Repair the remaining exceptional invariant null set within $(0,M]$. All these choices have the same integrals.
+
+Apply the finite atomless vector-measure theorem of Dvoretzky–Wald–Wolfowitz, [*Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), §3 Theorem 4 and Lemma 2, pp. 66–67](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), on $X$, to the three measures $\bar\nu_j$ and the simplex tuple
+
+$$
+u^0=(3/4-c\bar\beta,c\bar\beta,1/4).
+\tag{136.6}
+$$
+
+Their equality of probability-vector and decomposition-vector ranges gives one Borel three-cell partition of $X$ with all nine prescribed integrals. Pull all cells back by $\pi$ and put the whole axis in $S$. This is an invariant whole-$G$ partition satisfying (136.1). This application fixes linear integrals only.
+
+Since $0<t_j\le1/4$, the cells $C$ and $G\setminus C$ both have positive $m$-measure. Positivity improvement and conservation give $0<P\mathbf1_C<1$ almost everywhere, as in Proposition 135.2. If $q_E=\lambda g$, then $g=P\beta$ and injectivity of $P$, proved by spectral calculus in §135, imply $\mathbf1_C=\lambda\beta$ almost everywhere. Positivity forces $\lambda>0$, contradicting the positive measure of $G\setminus C$ and $\beta>0$ almost everywhere. This proves (136.4) without replacing $q_E$ by $cg$.
+
+Finally all allowed representatives of $b$ give the same $M,c$ and bounded classes $f_y$. Proposition 135.3 or direct integration shows that every original target is unchanged. No value of an observation at time zero is inferred from this representative invariance. $\square$
+

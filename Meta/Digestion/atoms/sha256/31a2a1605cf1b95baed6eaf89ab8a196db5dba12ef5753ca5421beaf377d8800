@@ -1,0 +1,15 @@
+**约定 86.7（完整校准 PRE）。** 本节至 86.7 的一般几何只假定 PRE+$C_{\rm joint}$，不借 C13。由 66.2、67.7，$U=G=1$，$M=F,L=N$，它们的实线性化及 $\widetilde Q:A^{\otimes_{\mathbb R}3}\to E$ 都是满迹等距同构。具体地，对全部实输入，
+
+$$
+\begin{aligned}
+\langle M(a,b),M(x,y)\rangle_D&=\langle a,x\rangle_A\langle b,y\rangle_A,\\
+\langle Q(a,b,c),Q(x,y,z)\rangle_E
+&=\langle a,x\rangle_A\langle b,y\rangle_A\langle c,z\rangle_A,\\
+pQ(a,b,c)&=\tau_A(a)M(b,c),\qquad
+M(1_A,1_A)=1_D,\quad Q(1_A,1_A,1_A)=1_E.
+\end{aligned}
+\tag{86.9}
+$$
+
+这些是既有全实接口；等距线性化的逆不被赋予全联合锥正性。记 $\alpha(a)=M(a,1_A)$、$\beta(a)=M(1_A,a)$；66.2 已给它们是算子交换的保单位 Jordan 嵌入，且 $M(a,b)=\alpha(a)\circ\beta(b)$。
+

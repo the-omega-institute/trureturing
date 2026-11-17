@@ -1,0 +1,50 @@
+**定理 30.2（秩一补足、维数与完整取向）。** 在此背景下，$\dim H\in\{0,1,3\}$，原 $E$ 因而等于 $X$。前两种情形 $D=0$；三维情形选定一次正交取向、以 Pauli 坐标识别 $X=M_2(\mathbb C)_{\rm sa}$，记标准 $C_0(a,b)=i[a,b]/2$，则有同一个 $\varepsilon\in\{1,-1\}$ 使 $D=\varepsilon C_0$。几何核心是对任意原独立无标量 $x,y$、$v=D(x,y)$，
+
+$$
+A^2(I-P)=v\otimes v,
+\quad A^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2>0,
+\quad P=P_{\operatorname{span}\{x,y\}}.
+\tag{30.1}
+$$
+
+这里 $(v\otimes v)z=\langle v,z\rangle v$。三维属于响应 Bloch 部，不是物理空间；一般 JB 恢复仍取 27.2，未缩成此受限背景。
+
+证明。PY 在 $(\lambda u,c)$ 上给 $D(\lambda u,c)^2=0$，故 $D(\lambda u,c)=0$，未使用未知 $D$ 的齐次性。自旋乘法直接展开使每对原 $a=\alpha u+x$、$b=\beta u+y$ 满足
+
+$$
+D(a,b)^2=A^2u,
+\qquad A^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2.
+\tag{30.2}
+$$
+
+若原无标量方向都共线，稠密性给 $\dim H\le1$，上式使全部 $D$ 为零。否则取原独立无标量 $x,y$，令 $p=D(x,y)=\lambda u+v$。由 $p^2=A^2u$ 得 $2\lambda v=0$、$\lambda^2+\|v\|^2=A^2$。若 $v=0$，已证单位方向的 $D$ 整行为零；但 R 循环给
+
+$$
+D(p,z)=Tz,\qquad T=[L_y,L_x],\qquad
+Tz=\langle x,z\rangle y-\langle y,z\rangle x
+\tag{30.3}
+$$
+
+对原无标量 $z$ 成立。$T$ 在 $H$ 上是非零已知连续算子，不可能在稠密原无标量部分恒零。因此 $\lambda=0$，$\|v\|=A$。
+
+对原对 $(p,z)$ 再用 PY 和 (30.3)，给
+
+$$
+\|Tz\|^2=A^2\|z\|^2-\langle v,z\rangle^2.
+\tag{30.4}
+$$
+
+原无标量部分在 $H$ 中稠密，因为可从原 $\alpha u+z$ 减去原 $\alpha u$。两边均是已知连续 Hilbert 表达式，故 (30.4) 延到全部 $z\in H$；没有对完成新输入调用旧 $D$。$T^*T=A^2P$，实极化即给 (30.1)。右侧秩一，故 $H=\operatorname{span}\{x,y\}\oplus\mathbb Rv$，$\dim H=3$，且 $v\perp x,y$。有限维稠密实线性子空间闭合，故原 $E=X$，原域完备性在这里成为结论。
+
+对任意原 $a,b$，若 $A=0$ 则 $D(a,b)=0$；若 $A>0$，同一证明使用 $[L_b,L_a]=[L_y,L_x]$ 给其输出是长度 $A$、垂直于 $x,y$ 的无标量向量。因此 $D(a,b)=\pm C_0(a,b)$，其中 $C_0(a,b)=-(x\times y)\cdot\sigma$，每对符号暂未统一。
+
+标准 $C_0$ 可取到每个无迹自伴 $q$。对实现 $C_0(a,b)=q$ 的输入，旧 $D(a,b)=\pm q$，反对称又使其负值同样是实际输出，所以 $Q=\operatorname{ran}D$ 恰为整个无迹自伴部。对非零 $q\in Q$ 选一份真实表示 $q=D(a,b)=\varepsilon_q C_0(a,b)$，R 给整行
+
+$$
+D(q,c)=C_0(C_0(a,b),c)=\varepsilon_q C_0(q,c)
+\qquad(c\in E).
+\tag{30.5}
+$$
+
+若非零无迹 $q,r$ 不共线，则 $C_0(q,r)\ne0$，反对称与 (30.5) 给 $\varepsilon_q=\varepsilon_r$；共线时用第三个不共线方向连接。故所有非零无迹输出共用一个 $\varepsilon$。最后对任意原 $a,b$ 置 $p=D(a,b)$、$q=C_0(a,b)$，R 与 (30.5) 给 $C_0(\varepsilon p-q,c)=0$ 对全部 $c$ 成立。无迹部中与全部矩阵对易的元只有零，故 $p=\varepsilon q$。同一标准或相反复乘法及全部正表于是恢复。这一几何证明未预借旧 $D$ 的线性、连续性或输出覆盖。∎
+

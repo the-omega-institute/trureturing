@@ -1,0 +1,47 @@
+## 10. 一个具有非零环境边的 $M_3(\mathbb C)$ 矩阵实例
+
+取
+
+$$
+c=\operatorname{diag}(1,2,0),\qquad D=(1),\qquad V=\begin{pmatrix}1\\0\end{pmatrix},\qquad
+B=\begin{pmatrix}1&\sqrt2\\\sqrt2&0\end{pmatrix},
+$$
+
+即
+
+$$
+t=\begin{pmatrix}1&\sqrt2&1\\\sqrt2&0&0\\1&0&1\end{pmatrix}.
+\tag{10.1}
+$$
+
+这里 $H=\left(\begin{smallmatrix}0&\sqrt2\\\sqrt2&0\end{smallmatrix}\right)$，故
+
+$$
+A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+\omega=1.
+$$
+
+直接由 (9.3) 得
+
+$$
+G=\frac1{\sqrt2}\begin{pmatrix}1&1/\sqrt2&-1\\1&-1/\sqrt2&-1\end{pmatrix},\qquad
+Q=\begin{pmatrix}5/4&-3/4\\-3/4&5/4\end{pmatrix}.
+\tag{10.2}
+$$
+
+所以 $R=5/4$、$\Delta=1$、$J=0$，而对
+
+$$
+s=\rho\,\operatorname{diag}(1,-2,0)
+$$
+
+固定 P2 的准确范围为
+
+$$
+|\rho|\le\frac45.
+\tag{10.3}
+$$
+
+这是一条真正的角—环境连线（$V\ne0$）上的非零残量区间；它不是把第三坐标删除后得到的二维玩具，也没有用任何未知总映射。它只说明该实际矩阵族的固定 P2 几何，不能升级为完整 $\mathsf H_A(D)$ 或全部 PB 的分类。
+

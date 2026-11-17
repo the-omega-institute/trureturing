@@ -183,7 +183,7 @@ private theorem norm_exp_mul_exp_sub_exp_add_le' (X Y : 𝔸) :
         mul_le_mul_of_nonneg_right hpoly hepos.le
 
 omit [NormedAlgebra ℝ 𝔸] [CompleteSpace 𝔸] in
-private theorem norm_pow_sub_pow_le_of_norm_le {S T : 𝔸} {C : ℝ} (hC : 1 ≤ C)
+theorem norm_pow_sub_pow_le_of_norm_le {S T : 𝔸} {C : ℝ} (hC : 1 ≤ C)
     (hS : ‖S‖ ≤ C) (hT : ‖T‖ ≤ C) (n : ℕ) :
     ‖S ^ n - T ^ n‖ ≤ n * C ^ n * ‖S - T‖ := by
   have hC0 : 0 ≤ C := le_trans zero_le_one hC

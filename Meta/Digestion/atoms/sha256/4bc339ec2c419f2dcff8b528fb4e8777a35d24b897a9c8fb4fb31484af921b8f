@@ -1,0 +1,18 @@
+**Definition 197.1 (the baseline target and the quotient map).** Let
+
+$$
+E_f=\operatorname{im}\Phi_f
+ =\operatorname{span}_{\mathbb R}\{p,q\}
+$$
+
+for the baseline label map of Definition 191.1. For a full-zero bounded partition $u$, define on the candidate span
+
+$$
+T_u:\mathcal W_u\longrightarrow E_f,
+\qquad
+T_u(H_a)=F_a.
+\tag{197.1}
+$$
+
+Here $a$ is any real label vector with $H_a\in\mathcal W_u$.
+

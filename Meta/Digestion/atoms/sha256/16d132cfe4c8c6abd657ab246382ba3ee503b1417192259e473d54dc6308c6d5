@@ -1,0 +1,22 @@
+**Definition 35.1 (ordered spectra of the original attractive forms).**
+Retain every datum, control, preparation, coefficient, raw measure,
+period, source, covariance, clock and boundary of Definition 31.1 and
+[G, Definition 25.1]. For nonzero $\kappa$, let
+
+$$
+\mathscr H_{\sigma,\kappa,\tau}
+ =L_\kappa-gM_{W_\sigma(\kappa,\tau)},\qquad
+Q(\mathscr H_{\sigma,\kappa,\tau})=\mathcal F_\kappa,
+\qquad D(\mathscr H_{\sigma,\kappa,\tau})=D(L_\kappa).
+\tag{35.1}
+$$
+
+Write its eigenvalues in increasing order, with multiplicity, as
+$\Lambda_{\sigma,1}(\kappa,\tau)\le
+\Lambda_{\sigma,2}(\kappa,\tau)\le\cdots$, and set
+$\Delta_\sigma(\kappa,\tau)=
+\Lambda_{\sigma,2}(\kappa,\tau)-\Lambda_{\sigma,1}(\kappa,\tau)$.
+Existence of this discrete enumeration is the compact-resolvent assertion
+of [G, (25.9)], applied separately at each parameter and cutoff.
+In particular $\Lambda_{\sigma,1}=E_\sigma$.
+

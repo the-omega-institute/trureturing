@@ -1,0 +1,29 @@
+**命题 C-64.4（六顶点抵消的完整五律）。** 在命题 C-64.3 中取 $a=1/3$、$b=c=1$，三个局部活动 $\lambda_L=\lambda_C=\lambda_R=1$。顶点集为 $\{L,C,R,A,B,D\}$，边恰为
+
+$$
+\{LC,CR,LA,AR,LB,BD,DR\}.
+$$
+
+这个连通正活动来源有
+
+$$
+H=\begin{pmatrix}4&2\\2&1\end{pmatrix},\quad
+\mathcal Z=13,\quad p=\frac{(4,2,4,2,1)}{13},\quad
+\Delta=0,
+\tag{C64.6}
+$$
+
+而条件端点律 $Q$ 是两个参数 $1/3$ 的 Bernoulli 律的乘积。
+
+证明。短路响应为 $\left(\begin{smallmatrix}4/3&1\\1&1\end{smallmatrix}\right)$，长路为 $\left(\begin{smallmatrix}3&2\\2&1\end{smallmatrix}\right)$，逐格相乘得显示的 $H$。完整局部五项为 $(H_{00},H_{10},H_{00},H_{01},H_{11})=(4,2,4,2,1)$，逐模式加和得 $13$；由填充求和证明，它就是全图的配分总权。底面交叉乘积差为 $(4\cdot1-2\cdot2)/13^2=0$，底面质量为 $9/13$，所以
+
+$$
+Q=\frac19\begin{pmatrix}4&2\\2&1\end{pmatrix}
+=\begin{pmatrix}2/3\\1/3\end{pmatrix}
+\begin{pmatrix}2/3&1/3\end{pmatrix}.
+$$
+
+外部的两条实际路径均保留，所有活动为正，图的边集合明确连通。因此零残差不能推出没有外部连接。无条件端点协方差仍为 $Z\kappa=4/169>0$，也不能把底面独立改说成完整端点独立。证毕。
+
+这里的抵消是两个正概率响应的对数四角项相加为零；每个配置权都非负。单路径的严格残差与这个多路径的零残差具有不同的图假设。
+

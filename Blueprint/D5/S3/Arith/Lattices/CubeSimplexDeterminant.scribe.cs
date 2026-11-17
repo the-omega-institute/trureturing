@@ -10,6 +10,12 @@ internal sealed class CubeSimplexDeterminantDocument : IScribeDocumentDefinition
         "The absolute augmented determinant on a cube is bounded by its largest value on sign matrices.",
         H("CubeSimplexDeterminant"),
         Blocks(
+            Describe.Lean(DescribeId.Create("separately-affine-cube-vertex"),
+                DeclarationHandle.Create("D5/S3/Arith/Lattices/CubeSimplexDeterminant.separately_affine_cube_vertex"),
+                H("A separately affine function is dominated at a cube vertex"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite decidable index type, let F be a real-valued function of real coordinates. Suppose that, for every vector and coordinate, updating that coordinate to t gives a*t+b for suitable real a and b independent of t. Every vector whose coordinates have absolute value at most one admits a sign vector y, with every coordinate equal to minus one or one, such that |F(x)| <= |F(y)|. This existing theorem supplies both determinant bounds and the rescaled ordinary-cut application described in CutBoundRefutation."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("signmatrix"),
                 DeclarationHandle.Create("D5/S3/Arith/Lattices/CubeSimplexDeterminant.signMatrix"),
                 H("signMatrix"),

@@ -1,0 +1,114 @@
+**定理 30.1（任意四角背景的完整原行）。** 保持27.1的同一完整原候选、实际框架 $h,e,j,s,H=hs,Q$ 及28.1全部七项原来源合同。对任意原 $c\in\operatorname{span}_{\mathbb R}\{u,h,s,H\}$、任意原 $h$-奇 $z$ 及任意实 $R$，准确有
+
+$$
+\boxed{D(Rh,c+z)=R\,iQhz=R\,D(h,c+z).}
+\tag{30.1}
+$$
+
+四个背景系数均可任意；不排除任何零角、整角零背景、退化或负参数。不增加原响应的可加、齐次、连续、商下降或一般单位平移前提。
+
+证明。$R=0$ 由原零输入P2成立。以下 $R\ne0$，写
+
+$$
+\begin{gathered}
+c=\mu u+\lambda h+\nu s+\xi H,\quad x=c+z,\quad
+k=hc=\mu h+\lambda u+\nu H+\xi s,\\
+t=iQhz,\quad g=D(Rh,x)=Rt+r,\quad [h,r]=0,\quad
+r_{\rm o}=P_s^-r.
+\end{gathered}
+\tag{30.2}
+$$
+
+分解和 $[h,r]=0$ 只用中央续卷163.1，尚未假定 $[s,r]=0$。所有 $P_a^\pm$ 沿27.1的有限奇偶定义。
+
+在实际PB中取 $(Rh,x,Rk+\beta h+\gamma s+\zeta H+\alpha u)$。第三标签与 $h$ 交换，中央续卷189.1给内值零。完整位移和两份实际外层为
+
+$$
+\begin{gathered}
+v=g-R^2c-R\beta u-R\gamma H-R\zeta s-R\alpha h,\qquad w=Rk,\\
+A_+=(1-R^2)c+z+g-R\beta u-R\gamma H-R\zeta s-R\alpha h,\\
+A_-=(1+R^2)c+z-g+R\beta u+R\gamma H+R\zeta s+R\alpha h,\\
+B_+=2Rk+\beta h+\gamma s+\zeta H+\alpha u,\qquad
+B_-=\beta h+\gamma s+\zeta H+\alpha u.
+\end{gathered}
+\tag{30.3}
+$$
+
+由 $x\circ h=k$、$h\circ k=c$、$s\circ k=Hc$、$H\circ k=sc$ 和 $k^2=c^2$，只展开已知Jordan乘法，准确有
+
+$$
+\begin{gathered}
+D(A_+,B_+)-D(A_-,B_-)
+=K+2R\beta z+2R\gamma(z\circ H)+2R\zeta(z\circ s),\\
+K=-2x\circ g+2R^2z\circ c.
+\end{gathered}
+\tag{30.4}
+$$
+
+固定 $\beta=-2R\mu$、$\gamma=-2R\xi$，仍让 $\alpha,\zeta$ 为实数。于是 $B_+=(2R\lambda+\alpha)u+(2R\nu+\zeta)H$。置真正原输出 $W_{\alpha,\zeta}=D(B_-,A_-)$，保留30.4中的非零负外值。中央续卷163.1在同一实际 $H$ 框架上供应正外值的奇投影。$A_+$ 的 $h$-偶、$s$-奇部分为 $r_{\rm o}$，而30.4新增的三个偏移项均为 $h$-奇。又由 $z\circ t=0$ 得 $P_h^+K=-2c\circ r$；其 $s$-奇部分为 $-2(\mu u+\lambda h)r_{\rm o}$，因为 $s\circ r_{\rm o}=H\circ r_{\rm o}=0$。原反对称性遂给
+
+$$
+P_h^+P_s^-W_{\alpha,\zeta}
+=\bigl[(2R\nu+\zeta)iQH-2(\mu u+\lambda h)\bigr]r_{\rm o}
+=:L_\zeta.
+\tag{30.5}
+$$
+
+这里只说该投影与 $\alpha$ 无关，不说整个输出不变，也不说它与 $\zeta$ 无关。
+
+对每个 $\epsilon=\pm1$，取数学投影和实际实参数
+
+$$
+p_\epsilon=(u+\epsilon h)/2,\qquad
+\alpha_\epsilon=2R\mu\epsilon,\qquad
+\zeta_\epsilon=2R\xi\epsilon.
+\tag{30.6}
+$$
+
+由 $Hp_\epsilon=\epsilon sp_\epsilon$，30.3准确给 $B_-p_\epsilon=p_\epsilon B_-=0$。任意环境正泛函 $\omega$ 的合法原正读取 $\phi_\epsilon(a)=\omega(p_\epsilon a p_\epsilon)$，在实际 $(B_-,A_-,W_{\alpha_\epsilon,\zeta_\epsilon})$ 表的第一平方为零；P2及正泛函分离给该输出的 $p_\epsilon$ 压缩为零。$p_\epsilon$ 与 $s$ 交换，取 $s$-奇投影后，由30.5得到
+
+$$
+\bigl[R(\nu+\epsilon\xi)iQH-(\mu+\epsilon\lambda)u\bigr]
+p_\epsilon r_{\rm o}=0.
+\tag{30.7}
+$$
+
+左乘相应的共轭因子，使用 $(iQH)^2=-u$，得
+
+$$
+d_\epsilon p_\epsilon r_{\rm o}=0,\qquad
+d_\epsilon=(\mu+\epsilon\lambda)^2+R^2(\nu+\epsilon\xi)^2\ge0.
+\tag{30.8}
+$$
+
+若 $d_\epsilon>0$，直接得 $p_\epsilon r_{\rm o}=0$。若 $d_\epsilon=0$，由于 $R\ne0$，两个实平方分别为零，故
+
+$$
+cp_\epsilon=
+\bigl[(\mu+\epsilon\lambda)u+(\nu+\epsilon\xi)s\bigr]p_\epsilon=0,
+\qquad kp_\epsilon=0.
+\tag{30.9}
+$$
+
+此时不除以失效系数，而使用同一实际支撑PB $(x,Rh,0)$：
+
+$$
+D(Rh-g,Rk)-D(Rh+g,-Rk)=2Rhr.
+\tag{30.10}
+$$
+
+两张实际外表的第二输入都在 $p_\epsilon$ 上归零。同一个 $\phi_\epsilon$ 分别使用P2，使两个实际输出的 $p_\epsilon$ 压缩均为零；压缩30.10便给 $2R\epsilon p_\epsilon rp_\epsilon=0$。因此 $p_\epsilon r=0$，再取 $s$-奇投影得到 $p_\epsilon r_{\rm o}=0$。这里仅用了 $d_\epsilon=0\Rightarrow cp_\epsilon=0$；不要求反向成立，也不要求两种 $s$-角都非零。两个符号共同给 $r_{\rm o}=0$，故 $[s,r]=[H,r]=[c,r]=0$。
+
+现在在30.3取 $\beta=\gamma=\zeta=0$。中央续卷161.5消去负外层 $D(A_-,\alpha u)$，所有实 $\alpha$ 的同一个实际旧输出均为 $D(A_+,2Rk+\alpha u)=K$。定义
+
+$$
+q_{\epsilon,\delta}=\tfrac14(u+\epsilon h)(u+\delta s),\qquad
+\alpha_{\epsilon,\delta}
+=-2R(\mu\epsilon+\lambda+\nu\epsilon\delta+\xi\delta).
+\tag{30.11}
+$$
+
+第二输入在对应联合角上归零，故合法正读取和P2给 $q_{\epsilon,\delta}Kq_{\epsilon,\delta}=0$。$cr$ 已与 $h,s$ 交换，30.4的 $K$ 除 $-2cr$ 外均为 $h$-奇，因此四角压缩相加准确给 $cr=0$。没有由四个对角读取推出任意非对角元素为零；保留全乘积的依据是先已生产的共同交换关系。
+
+最后消费中央续卷176.1–176.3在27.10–27.11已经写明的同一强度支撑机制：30.10的两份P2给 $|\phi(hr)|^2\le\phi(c^2)[R^2\phi(u)+\phi(g^2)]$。取 $\phi(a)=\omega(rar)$，$cr=0$ 使右侧为零，所有环境归一数学态遂有 $\omega(hr^3)=0$。态分离固定自伴元素、$h^2=u$ 及自伴性给 $r=0$。整个证明未除以读取质量，未要求态正常，未限制横向平方、维数、可分性或原域完备性。取 $R=1$ 得30.1第二等号，所有分支共同完成证明。∎
+

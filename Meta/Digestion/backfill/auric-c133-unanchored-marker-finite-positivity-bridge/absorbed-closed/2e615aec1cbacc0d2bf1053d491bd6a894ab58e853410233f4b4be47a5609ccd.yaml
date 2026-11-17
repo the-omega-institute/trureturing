@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:2e615aec1cbacc0d2bf1053d491bd6a894ab58e853410233f4b4be47a5609ccd
+  normalized_sha256: sha256:2e615aec1cbacc0d2bf1053d491bd6a894ab58e853410233f4b4be47a5609ccd
+cas_ref: sha256:2e615aec1cbacc0d2bf1053d491bd6a894ab58e853410233f4b4be47a5609ccd
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.anchoredForm
+    target_statement_id: sha256:57962b650347bab2caed863aeaed07f688b2486b457992beeab8a2f6052bb456
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.anchoredSpan_quotient
+    target_statement_id: sha256:ecfe32bb1bb3ea863eb2ca8d7bfab7bf75d68f45b2f1942b36a59bdfcf5d5ab0
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.defect
+    target_statement_id: sha256:68c55f771b075fedac74b88002ed3ef0ba6745e3f39d06962dc1fd9e8642135c
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.e
+    target_statement_id: sha256:859a2fa9473152076674b455367d74d203bbe55152e0206d7ed77f4be4b79b3c
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.kernel
+    target_statement_id: sha256:2fae1888a883b2e5796a5d2b44cedd0e3a4f045014a2c0ada5bf46fc5795c62b
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.quotientForm_beta
+    target_statement_id: sha256:6c55d789ddfe6d318196a30f5571e4bee267d49406ae020faaf3960028686001
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.radical
+    target_statement_id: sha256:4d3ea209958d2bbf02e90ca40c2f31d1c19c2663c3f2668d477372d5b8d0605b
+receipts:
+  unresolved_subitems: []

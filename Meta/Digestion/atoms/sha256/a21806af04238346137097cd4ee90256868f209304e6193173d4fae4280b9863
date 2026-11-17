@@ -1,0 +1,76 @@
+**Complete cubic field and global remainder.** Use the single bridge and matrix notation of (3.1), and additionally define
+
+$$
+\begin{aligned}
+M_3&=\int_0^t H_v^3u(H_v)u(H_v)^{\mathsf T}dv,\\
+p_3(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t\big[
+ -4D\gamma_{M_0}[M_3]-6D^2\gamma_{M_0}[M_1,M_2]
+ -\tfrac43D^3\gamma_{M_0}[M_1,M_1,M_1]\big],\\
+V_3&=j_0^{-1}\int_1^\infty p_3(t;\cdot)dt,
+\qquad V_{1t}=j_0^{-1}\int_1^\infty t p_1(t;\cdot)dt,\\
+\mathcal W_3&=\nu^3V_3+\nu\lambda V_{1t}.
+\end{aligned}
+\tag{22.8}
+$$
+
+These integrals converge absolutely, and
+
+$$
+\mathcal W_3\circ\sigma=-\mathcal W_3,\qquad
+|\mathcal W_3(r,\mathbf z)|\le C(1+|r|)^{-2},
+\tag{22.9}
+$$
+
+$$
+\left\|\widetilde U_s-\left(V+\beta V_1+\beta^2V_2
+ +\lambda s^2V_{\rm t}+s^3\mathcal W_3\right)\right\|_\infty
+ \le Cs^4.
+\tag{22.10}
+$$
+
+To prove these claims, fix $\ell>0$ small enough that $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$, and put $L_s=\ell/s$, $T_s=s^{-2}$. On $S_t<L_s$ define
+
+$$
+M(\nu\vartheta)=\int_0^t(1+\nu\vartheta H_v)^{-2}
+ u(H_v)u(H_v)^{\mathsf T}dv,\qquad 0\le\vartheta\le s.
+$$
+
+The proof of P (107.6) applies also to derivative order four: differentiation of the scalar denominator gives the matrix-order bound $\|M_0^{-1/2}\partial_\vartheta^jM(\nu\vartheta)M_0^{-1/2}\|\le C_jS_t^j$. The covariance is uniformly comparable to $M_0$. Matrix Gaussian differentiation therefore gives, uniformly in $\mathbf z$,
+
+$$
+|\partial_\vartheta^j\gamma_{M(\nu\vartheta)}|
+ \le C_jS_t^j(\det M_0)^{-1/2}\quad(0\le j\le4).
+$$
+
+Indeed each derivative is a polynomial of fixed degree in $M_0^{-1/2}\mathbf z$ times a uniformly decreasing Gaussian; the matrix-order bounds control its coefficients. For $t\le T_s$, $\vartheta\sqrt t\le1$, whence $|\partial_\vartheta^k e^{\lambda\vartheta^2t}|\le C_kt^{k/2}$ for $k\le4$. P (107.5), equivalently (3.3), and the product rule now give
+
+$$
+h_t(r)\mathbb E_{0,r}^t\left[
+ \mathbf1_{S_t<L_s}\sup_{0\le\vartheta\le s}
+ |\partial_\vartheta^4(e^{\lambda\vartheta^2t}
+                       \gamma_{M(\nu\vartheta)})|\right]
+ \le C\sum_{j=0}^4t^{(4-j)/2}t^{(j-7)/2}
+ \le Ct^{-3/2}.
+\tag{22.11}
+$$
+
+Taylor's theorem is applied on each path before averaging. Its integrated remainder on $1\le t\le T_s$ is at most $Cs^4\int_1^{T_s}t^{-3/2}dt\le Cs^4$. The expansion $M(\beta)=M_0-2\beta M_1+3\beta^2M_2-4\beta^3M_3+\cdots$ gives exactly (22.8); the retained combined-clock coefficients are
+
+$$
+p_0+\nu s p_1+s^2(\nu^2p_2+\lambda t p_0)
+             +s^3(\nu^3p_3+\nu\lambda t p_1).
+\tag{22.12}
+$$
+
+In particular the cubic time-field cross term has not been omitted. The same moment estimate at zero parameter bounds $|p_3|+|tp_1|$ by $Ct^{-2}e^{-cr^2/t}$, proving convergence and (22.9)'s decay. Reflection of the bridge, with the phase transformation in $\sigma$, proves its odd parity, exactly as for P (107.8).
+
+It remains to compare the auxiliary strip with the complete native field. On every bridge surviving in the original $I_s$, $1+\beta H_v$ has positive fixed lower and upper bounds: these are the bounds for $(k-\alpha_\kappa)/d_0$ on the original interval. Thus the surviving covariance is comparable to $M_0$, even on paths leaving the auxiliary strip. The supremum of its Gaussian is at most $C(\det M_0)^{-1/2}$. P (107.5) bounds the cost of deleting those paths on $[1,T_s]$ by
+
+$$
+C\int_1^{T_s}t^{-7/2}e^{-cL_s^2/t}dt
+ \le CL_s^{-5}=O(s^5).
+\tag{22.13}
+$$
+
+For each coefficient $t^kp_j$ in (22.12), $j+2k\le3$, the same estimate bounds removal of the auxiliary indicator by $CL_s^{j+2k-5}$ after integration. Its prefactor $s^{j+2k}$ makes this $O(s^5)$. The integral of that coefficient over $t>T_s$ is at most $CT_s^{(j+2k-5)/2}$, again $O(s^5)$ after its prefactor. Finally (2.9a) bounds the original complete native integral over $t>T_s$ by $Cs^5$. All factors $j_0^{-1}$ are unchanged. These bounds are uniform over every real phase and every height endpoint, including zero extension outside $I_s$: there a bridge with $S_t<L_s$ cannot end, and the omitted coefficient paths satisfy the same estimates. This proves (22.10). Only the stated fixed-order bridge moments, surviving-path covariance and native long tail were used; no infinite-time derivative exchange or global conclusion from a local heat expansion is needed.
+

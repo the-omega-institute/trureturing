@@ -1,0 +1,10 @@
+且对充分大的 $X$，$\sup_{s\in[0,1]}\mathbb E_{\mu_X}|B_X(s)|^2\le1760/\log2$。
+
+证明。在 $[X,2X]$ 上 $x^\theta\log x\cdot x=X^{1+\theta}\log X\cdot u^{1+\theta}(1+\log u/\log X)$（$u=x/X$），故
+
+$$
+\mathbb E_{\mu_X}\bigl[\phi(U_X)B_X(s)B_X(t)\bigr]=\frac1{\log2}\cdot\frac1{\mathscr N_X}\int_X^{2X}w_X(x/X)D_{sx^\theta}(x)D_{tx^\theta}(x)\,dx,\qquad w_X(u)=\frac{\phi(u)u^{-1-\theta}\log X}{\log X+\log u},
+$$
+
+且 $\|w_X-w\|_\infty\le\|\phi\|_\infty\log2/\log X$，$w(u)=\phi(u)u^{-1-\theta}$。由引理 496.2 的一致界（$a(u)=su^\theta$ 满足 $0\le a\le2$、$|a'|\le1$），把 $w_X$ 换成 $w$ 的误差至多 $1760\|\phi\|_\infty/\log X$，对 $s,t$ 一致。由定理 496.3（$a(u)=su^\theta$、$b(u)=tu^\theta$，$\min(a,b)=u^\theta\min(s,t)$）得 (496.6) 的逐点形式；二阶矩界由 $x^{1+\theta}\log x\ge X^{1+\theta}\log X$ 与同一一致界得到。对一致性，固定 $0<\delta\le1$，对 $|s-t|\le\delta$ 在引理 496.1(iii) 中取 $p(x)=x+sx^\theta$、$q(x)=x+tx^\theta$、$R=2\delta h$、$m=1$、$J=[X,2X+2h]$，门槛与 $s,t$ 无关，得 $\limsup_X\sup_{|s-t|\le\delta}\|B_X(s)-B_X(t)\|_{L^2(\mu_X)}^2\le120\delta/\log2$。由 Cauchy–Schwarz，$K_X(s,t)=\mathbb E_{\mu_X}[\phi(U_X)B_X(s)B_X(t)]$ 满足 $\limsup_X\sup_{|s-s'|,|t-t'|\le\delta}|K_X(s,t)-K_X(s',t')|\le\frac{2\|\phi\|_\infty}{\log2}\sqrt{1760\cdot120\,\delta}$；在 $[0,1]^2$ 的有限 $\delta$-网上逐点收敛是一致的，极限核在 $\delta$ 尺度上的变化至多 $2\kappa\|\phi\|_\infty\delta$，令 $\delta\downarrow0$。证毕。
+

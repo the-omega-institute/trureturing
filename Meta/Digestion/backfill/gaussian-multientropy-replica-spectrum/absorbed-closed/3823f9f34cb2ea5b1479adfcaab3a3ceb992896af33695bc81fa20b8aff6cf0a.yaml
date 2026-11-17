@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:3823f9f34cb2ea5b1479adfcaab3a3ceb992896af33695bc81fa20b8aff6cf0a
+  normalized_sha256: sha256:3823f9f34cb2ea5b1479adfcaab3a3ceb992896af33695bc81fa20b8aff6cf0a
+cas_ref: sha256:3823f9f34cb2ea5b1479adfcaab3a3ceb992896af33695bc81fa20b8aff6cf0a
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThree.GM3_three_closed
+    target_statement_id: sha256:d36ebed88eb9de77dfd0dd7f92d1b926be66ca635ce9244c1dfbb16b636cfb35
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThree.kappa
+    target_statement_id: sha256:3f4f5c032b0f35bbd798a3d02b7385f37edcd72bbf340a1df2255100694bbd5a
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.cut
+    target_statement_id: sha256:a2c44c5417fdc4ce9ea924d3fecd29f076e0186af4f75cef64a1fd6c71da21ca
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.pairSum
+    target_statement_id: sha256:94523917795d6c986b7686398ef707f5d6f07ce27664758f0a803ab67fdf9c0f
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.value
+    target_statement_id: sha256:3861877c7779029e2a1e3429f1ca2f2b0747ea7b0db2bdf28ca2fb42ad0897f6
+receipts:
+  unresolved_subitems: []

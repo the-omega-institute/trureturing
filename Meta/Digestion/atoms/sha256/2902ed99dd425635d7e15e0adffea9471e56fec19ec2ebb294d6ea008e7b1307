@@ -1,0 +1,27 @@
+**定义 22.3（相反相位平方配平 $\mathsf{PB}$）。** 在尚未假设 $D$ 线性时即可对全部原 $\alpha\in\mathcal P$ 和 $b,c\in E$ 定义实读数
+
+$$
+Q_\alpha(b,c)=\alpha\bigl(S(b,b)+S(c,c)+2D(b,c)\bigr).
+\tag{22.2}
+$$
+
+对全部原 $a,b,c\in E$ 和实 $t$，定义原标签
+
+$$
+\begin{aligned}
+r_t&=b+tD(a,b)-tS(a,c),\\
+s_t&=c+tS(a,b)+tD(a,c).
+\end{aligned}
+\tag{22.3}
+$$
+
+条件 $\mathsf{PB}$ 准确为
+
+$$
+\boxed{Q_\alpha(r_1,s_1)=Q_\alpha(r_{-1},s_{-1})}
+\quad(\alpha\in\mathcal P,\ a,b,c\in E).
+\tag{22.4}
+$$
+
+所有 $r_t,s_t$ 都属于原 $E$；每个等式的两侧由同一个原评价读取，不在不同评价、来源或准备之间拼接。此条件只有 $t=\pm1$ 的平方配平，没有预付实时间流、酉操作、共同实现者或结合乘法。符号“相位”指下面数学复化中的 $\pm\mathrm i$；其实际控制与接续合法性仍属原来源合同。
+

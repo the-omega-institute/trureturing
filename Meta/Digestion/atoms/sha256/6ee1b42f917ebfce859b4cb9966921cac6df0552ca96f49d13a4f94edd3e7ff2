@@ -1,0 +1,29 @@
+**命题 9.3（Complete graph and odd-rim wheels outside the locally
+bipartite class）。** All conclusions of Theorem 9.2 hold for $H=K_4$
+and for the wheel obtained by joining one hub to every vertex of
+$C_{2r+1}$, for every integer $r\geq2$, at every odd $s\geq3$.
+These graphs satisfy (9.1) and have even order and no isolates, but
+are outside the graph class of Definition 7.1 and Theorem 8.2.
+
+Proof. In $K_4$, $m=4$ and every vertex has degree $3$, so the first
+alternative in (9.1) holds everywhere. Every induced open neighborhood
+is $K_3$, whose three-cycle is not bipartite. Thus the locally
+bipartite condition fails at every vertex.
+
+For the wheel, label the rim cyclically by $v_i$, $i\in\mathbb Z/(2r+1)$,
+and denote the hub by $c$. Its order is $2r+2$, which is even.
+The hub has odd degree $2r+1$, and every rim vertex has degree $3$;
+there are no isolates, and (9.1) again holds everywhere without any
+neighborhood restriction. The induced neighborhood of $c$ is exactly
+$C_{2r+1}$, which is not bipartite because colors would alternate and
+fail to close after an odd number of edges. At a rim vertex $v_i$,
+the neighborhood is $\{c,v_{i-1},v_{i+1}\}$. Since $2r+1\geq5$,
+the two rim neighbors are distinct and nonadjacent, so this induced
+graph is the bipartite path $v_{i-1}-c-v_{i+1}$. The hub's
+neighborhood suffices to exclude the wheel from the locally bipartite
+class. Applying Theorem 9.2 on the complete original carrier gives
+all asserted ground-vector, gap, operator and mass conclusions for
+each of these graphs, including $s=3$. These applications do not
+impose a neighborhood restriction at the hub or at any other
+odd-degree vertex. $\square$
+

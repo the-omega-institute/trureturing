@@ -1,0 +1,5 @@
+source_id = "auric-c128-three-label-positivity-and-original-relation-rigidity"
+path = "docs/develop/theory/AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

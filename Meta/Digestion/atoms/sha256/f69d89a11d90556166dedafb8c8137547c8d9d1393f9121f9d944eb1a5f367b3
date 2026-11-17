@@ -1,0 +1,50 @@
+**定义 C-94.2（条件底面及可分离性）。** 令
+
+$$
+P_{\mathrm b}=|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|.
+$$
+
+以等距嵌入 $\iota:\mathbb C_A^2\otimes\mathbb C_B^2\longrightarrow\mathcal H_5$ 指定
+
+$$
+\iota|00\rangle=|0\rangle,\quad
+\iota|10\rangle=|1\rangle,\quad
+\iota|01\rangle=|3\rangle,\quad
+\iota|11\rangle=|13\rangle.
+\tag{C94.3}
+$$
+
+于是 $\iota^\dagger\iota=I_4$、$\iota\iota^\dagger=P_{\mathrm b}$，定义
+
+$$
+\sigma=\frac{\iota^\dagger\rho\iota}{r},\qquad
+\iota\sigma\iota^\dagger=\frac{P_{\mathrm b}\rho P_{\mathrm b}}r,
+\qquad\sigma_A=\operatorname{Tr}_B\sigma,\quad
+\sigma_B=\operatorname{Tr}_A\sigma.
+\tag{C94.4}
+$$
+
+$\sigma$ 是正半定迹一算子，因为压缩保持正性且
+$\operatorname{Tr}(P_{\mathrm b}\rho)=r$。按标准张量基 $(00,01,10,11)$，
+其对角为 $(p_0,p_3,p_1,p_{13})/r$，并有
+
+$$
+(\sigma_A)_{ac}=\sum_b\sigma_{ab,cb},\qquad
+(\sigma_B)_{bd}=\sum_a\sigma_{ab,ad},\qquad
+\operatorname{diag}\sigma_A=(1-x,x),\quad
+\operatorname{diag}\sigma_B=(1-y,y).
+\tag{C94.5}
+$$
+
+本组“底面可分离”恰指存在有限分解
+
+$$
+\sigma=\sum_j t_j\alpha_j\otimes\beta_j,
+\qquad t_j\ge0,\quad\sum_jt_j=1,
+\tag{C94.6}
+$$
+
+其中 $\alpha_j,\beta_j$ 各为二阶密度算子。
+这一定义的对象是已指定的底面两因子；五维载体本身没有被识别为两个物理子系统。
+

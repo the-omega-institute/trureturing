@@ -1,0 +1,69 @@
+**定义 109.1（原域与三元二面可辨）。** 沿用VIII107.1、VIII108.1的同一个非零有限维实空间
+$V$、闭尖生成锥 $C$、严格正原单位 $u$、整个紧基 $K=C\cap\{u=1\}$、
+全部原纯点 $P=\operatorname{ext}K$ 及全部原效应 $\mathcal E=[0,u]_{C^*}$。
+对 $p\in P$，仍取全部确认效应上的最小值
+
+$$
+\begin{gathered}
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad D_p=\{x\in K:T_p(x)=0\},\\
+p\perp q\ \Longleftrightarrow\ T_p(q)=0,\qquad
+\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp},\\
+\mathrm{EB}_{\ge1}:\quad D_p\simeq_{\rm aff}B^{d_p},\quad d_p\ge1\quad(p\in P),\\
+\mathrm{Pair}_{\perp}:\quad p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\end{gathered}
+\tag{VIII109.1}
+$$
+
+$H(p,q)$ 是整个原最小面。以下假设 $\mathsf W$，直接复用VII104.2—104.7、
+VII105.2—105.5：$P$ 紧，每个原纯点有唯一整球零尺 $a_p$，
+它是 $F_p$ 的全锥序least，$T_p=a_p$ 于整个 $K$。
+原joint框架指三个两两原正交的纯点 $F=(p,q,r)$；它们恰有
+$a_p+a_q+a_r=u$，各自在另外两点读零，在自身读一。
+每个纯点进入某个框架，框架任意两点是第三点完整排除球的对径。
+这些是W的后果，不是额外输入的全纯互易或全局内积。
+
+新增关系称为**三元二面可辨**，记 $\mathrm{TFD}_3$：
+
+$$
+\begin{aligned}
+&\text{对每个原joint }F=(p,q,r)\text{ 及任意不同 }x,y\in K,\\
+&\qquad\exists i\in\{p,q,r\}\ \exists f\in\mathcal E:\quad
+f(i)=0,\qquad f(x)\ne f(y).
+\end{aligned}
+\tag{VIII109.2}
+$$
+
+这里联合使用三张完整的原零效应面；不是只使用 $a_p,a_q,a_r$ 三个标量。
+公理陈述只使用原态—原效应二元评价及其零关系，没有另给操作、导数、
+内积、反射正性或滤子保纯性。框架可由原二元正交关系识别，
+不以实际装置菜单中的可实施性定义它。
+
+保留VIII108.1—108.3的原生对象，写球内积为 $g_p$：
+
+$$
+\begin{gathered}
+D_p=c_p+\{y\in L_p:g_p(y,y)\le1\},\qquad n=\dim V,\\
+Z_p=\{f\in C^*:f(p)=0\},\qquad
+\Pi_p^*=\Lambda_p\operatorname{res}_p,\qquad R_p(v)=a_p(v)p,\\
+Q_p=R_p+\Pi_p,\qquad M_p=\mathbb Rp+\operatorname{span}D_p,
+\qquad N_p=\ker Q_p,\\
+V=M_p\oplus N_p,\qquad \dim M_p=d_p+2,\qquad
+T(q\mid p)=\{z\in L_q:a_p(z)=0\}\subseteq N_p.
+\end{gathered}
+\tag{VIII109.3}
+$$
+
+其中 $q\in P\cap D_p$，$\Lambda_p$ 是VII105.4的同一张共同正线性延拓。
+不同球的 $g_p$ 起初互不认同。定义全框架算子条件
+
+$$
+\mathrm{TRI2}:\quad
+I=\Pi_p+\Pi_q+\Pi_r-R_p-R_q-R_r
+\quad\text{对每个原joint }F=(p,q,r).
+\tag{VIII109.4}
+$$
+
+$\mathrm{A3}$ 在本章只作为 $\mathrm{TFD}_3$ 或其待证等价式TRI2的简称，
+不再表示另一条假设。
+

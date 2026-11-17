@@ -1,0 +1,52 @@
+**定理 103.7（分类参数是后果，非输入）。** (VII103.20)的全部模型，在忠实同单位坐标中恰为
+
+$$
+J=\mathbb R\oplus\operatorname{spin}_d\quad(d\ge1),
+\qquad\text{或}\qquad
+H_3(\mathbb R),\ H_3(\mathbb C),\ H_3(\mathbb H),\ H_3(\mathbb O).
+\tag{VII103.26}
+$$
+
+这里 $\operatorname{spin}_d=\mathbb R\oplus\mathbb R^d$ 的积为
+
+$$
+(a,x)\circ(b,y)=(ab+x\cdot y,ay+bx),
+\qquad \tau(a,x)=2a,
+\tag{VII103.27}
+$$
+
+其迹一态空间为 $B^d$；$d=1$ 是 split $\mathbb R^2$，所以 $\mathbb R\oplus\operatorname{spin}_1\simeq\mathbb R^3$ 包含经典三角形。非简单分支的态空间是旗标 join $\Delta_0*B^d$，不是另一种简单三能级。
+
+在此域内，全部 $D_p$ 维数至少二当且仅当 $J$ 简单；此时参数恰为
+
+| 简单代数 $J$ | $\operatorname{affdim}K$ | 每个整个 $D_p$ 的球维数 |
+| --- | --- | --- |
+| $H_3(\mathbb R)$ | $5$ | $2$ |
+| $H_3(\mathbb C)$ | $8$ | $3$ |
+| $H_3(\mathbb H)$ | $14$ | $5$ |
+| $H_3(\mathbb O)$ | $26$ | $9$ |
+
+特别地，无须先给总维数、球维同质性或复结构，
+
+$$
+\boxed{\mathrm{Pair}+\mathrm{EB}_3
+\ \Longleftrightarrow\
+\text{同一原完整载体为复三能级迹态／全效应模型}.}
+\tag{VII103.28}
+$$
+
+证明及成熟分类的应用。有限 EJA 分解为简单理想的直和，秩相加。秩三非简单分解只能是 $1+2$ 或 $1+1+1$；秩一因子为 $\mathbb R$，简单秩二因子为 spin factor，split 秩二即 $\mathbb R^2$，所以统一为(VII103.26)首项。简单秩三分类给其余四项。此处使用成熟 Jordan 分类，不将它或其参数表当作新分类：秩二球／spin 对应可定位到 Alfsen—Shultz [1978原文][Q103AS] Lemma 3.10（印刷pp164—165）；秩三实、复、四元、Cayley 四类在该文 Proposition 7.6的证明（印刷p189）明确调用其文献[4] Proposition 8.3，即 Alfsen—Shultz—Størmer 的 *A Gelfand–Neumark theorem for Jordan algebras*。本章沿该精确既有归属使用有限分类，不声称已另读其[4]全文。
+
+具体核对首项，令旗标纯点为 $f$，球纯点为 $a_n$、$\|n\|=1$，相反点记 $a_{-n}$。全部原纯点恰为 $\{f\}\cup\{a_n\}$，球与旗标在 join 的独立中央坐标中。完整迹效应字典给
+
+$$
+D_f=B^d,\qquad D_{a_n}=[f,a_{-n}].
+\tag{VII103.29}
+$$
+
+因为确认 $f$ 的 least 是旗标中央坐标，确认 $a_n$ 的 least 在球上为 $(1+n\cdot z)/2$、在旗标为零；一个非负读数的混合为零恰要求其全部正权组分为零。因此球源的完整排除集恰为所示线段，不是遗漏了一些非纯排除态的局部图。两球纯点生成整个球面，两点为同一球的不同极点；旗标与一个球纯点生成一条 join 边。它们都是整个 $K$ 的真面，故 $\mathrm{Pair}$ 直接成立。$d=1$ 时就是经典三角形。$d\ge2$ 时旗标的排除球维数为 $d$，球源的排除球维数为一，说明输入不宜擅加维数同质性。
+
+所有非简单分支都存在这些线段 $D_{a_n}$，所以被 $\mathrm{EB}_{\ge2}$ 排除；四个简单分支的 Peirce-zero 子代数分别为 $H_2(\mathbb R),H_2(\mathbb C),H_2(\mathbb H),H_2(\mathbb O)$，其迹一态都是维数 $2,3,5,9$ 的球。若标量代数实维数为 $k=1,2,4,8$，则三阶 Hermitian 空间实维数为 $3+3k$，其迹切片仿射维为 $2+3k$；二阶对应空间实维为 $2+k$，其迹切片维为 $1+k$。这给表内全部参数，且每个纯点具有同样 Peirce 类型，球维同质性在简单域内成为后果。
+
+若所有 $D_p$ 都是三球，(VII103.29)先排除非简单分支，再由表唯一选择 $H_3(\mathbb C)$；反向该模型所有 Peirce-zero 态空间确为三球。只要求存在一个三球不够，$\Delta_0*B^3$ 就只有旗标的 $D_f$ 为三球而仍有大量线段。故(VII103.28)准确要求每个完整 $D_p$，而非一张所选 Bloch 图。证毕。
+

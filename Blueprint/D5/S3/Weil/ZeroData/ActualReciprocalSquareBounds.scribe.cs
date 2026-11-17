@@ -71,6 +71,10 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
             "Actual multiplicity-exact zero mass and unconditional height-ten exclusion from the first xi resolvent at six.",
             H("Actual Zeta Mass and Height"),
             Blocks(
+            Paragraph(Text("Complete Gaussian localization uses exactly this owner's occurrence family. Write rho_k=actualZero(k), eta_k=Im(rho_k), c_k=1/(rho_k*(1-rho_k)) and R=sum_k eta_k^(-2). The public actual_sigma_inverse_square_summable transports through actualOccurrenceEquiv to summability of the natural occurrence series. The existing actual_inverse_square_mass_le_height gives R<=(101/100)*firstLiMass, and the public firstLiMass_lt_one gives R<2. These two publicizations change no proof body. Each coefficient satisfies |c_k|<=eta_k^(-2), so the complete H(y)=sum_k c_k*exp(rho_k*y) is absolutely convergent with |H(y)|<=2*exp(max(y,0)). Conjugation makes H real. No assumption of a simple, separated, rightmost or critical-line zero enters.")),
+            Paragraph(Text("For gamma>10 the finite local set S={k:|eta_k-gamma|<=6} is formed from actualData.symmetricIndices(|gamma|+7), taking every finite multiplicity fiber, mapping by actualOccurrenceEquiv.symm, then filtering by this exact closed condition. The strip gives spectralRadius(rho_k)<=|eta_k|+1; every local occurrence has |eta_k|<=gamma+6 and therefore belongs to that spectral enumeration. All distance-six occurrences belong to S. Every member has |eta_k|<=gamma+10, hence 1<=(gamma+10)^2*eta_k^(-2). Summing and using R<2 yields card(S)<=2*(gamma+10)^2. Both signs remain in the underlying occurrence family; the strict complement |eta_k-gamma|>6 includes every occurrence outside S.")),
+            Paragraph(Text("For any real m>=1 and real gamma put q_k=(rho_k-i*gamma)^2+16*(rho_k-i*gamma) and E=sum_k exp(m*q_k). The strip gives Re(rho_k)^2+16*Re(rho_k)<=17. With r=eta_k-gamma, r^2*exp(-m*r^2)<=1 follows from 1+m*r^2<=exp(m*r^2), and eta_k^2<=2*r^2+2*gamma^2. Consequently |exp(m*q_k)|<=exp(17*m)*(2+2*gamma^2)*eta_k^(-2). This summable majorant proves absolute convergence before splitting E into S and its entire strict complement. It does not assume a lower bound on E or a favorable sign of its complement.")),
+
                 Paragraph(Text(
                     "The exact source family is actualData = zetaZeroData, with " +
                     "the real kernel pairWeight rho = Re(1/(rho*(1-rho))), and " +
@@ -96,21 +100,21 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                 Describe.Lean(
                     DescribeId.Create("actualcomplexpairweighthassum"),
                     DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum"),
-                    H("Complete Complex First Li Mass"), StatementSource.WithoutFormula(),
+                    H("Complete Complex First Li Mass"), StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("The normalized xi resolvent gives the multiplicity-weighted complex first Li mass. Taking real parts yields the real pair-weight mass; transporting the complex sum to every analytic occurrence supplies the complete integrated series."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("firstlimasssplit"),
                     DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split"),
-                    H("First Li Mass Normalization"), StatementSource.WithoutFormula(),
+                    H("First Li Mass Normalization"), StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("The first Li mass equals 2 plus the Euler constant minus twice log 2 minus log pi. This normalization supplies the height estimates and the scalar cancellation in the integrated explicit formula."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("zeroendpointlogderiv"),
                     DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv"),
-                    H("Xi Logarithmic Derivative at Zero"), StatementSource.WithoutFormula(),
+                    H("Xi Logarithmic Derivative at Zero"), StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("The logarithmic derivative of xi at zero is minus half the first Li mass. Reflection gives the endpoint at one, and the zero endpoint normalizes the complete resolvent."))),
                     DescribeRole.Theorem),

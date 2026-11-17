@@ -1,0 +1,23 @@
+**命题 28.3（共同双坐标探针锁定复交叉项）。**固定一张实际完整 $n$ 框架 $f_0,\ldots,f_{n-1}$，$n\ge3$，总质量为 $w$，并假定它的每个坐标三角均有 (28.3) 的局部表示；定义 28.1 的同切口二十七模菜单由定理 28.2 给 $n=27$ 的该实例。对 $i\ne j$ 定义
+
+$$
+\begin{gathered}
+u_{ij}^{(r)}=(f_i+\eta\zeta^r f_j)/2,\quad
+d_i=\mu(P_{f_i}),\quad m_r=\mu(P_{u_{ij}^{(r)}}),\\
+b_r=4m_r-d_i-3d_j,\qquad r=0,1,2.
+\end{gathered}
+\tag{28.9}
+$$
+
+这些探针的平方范数为 $(1+3)/4=1$，由该坐标对上的 $\operatorname{diag}(1,\zeta^r)R_2$ 的第一列实现；任意包含此对的实际坐标三角都含同一探针。存在唯一 Hermitian 矩阵 $\sigma$，其每个三阶坐标主块正是相应局部 PSD 矩阵，且
+
+$$
+\sigma_{ii}=d_i,\qquad
+b_r=2\operatorname{Re}(\eta\zeta^r\sigma_{ij}),\qquad
+\sigma_{ij}=\frac1{3\eta}\sum_{r=0}^2\zeta^{-r}b_r,\qquad
+\operatorname{Tr}\sigma=\sum_i d_i=w.
+\tag{28.10}
+$$
+
+**证明。**在任一包含 $i,j$ 的三角中展开 (28.3)，得 $4m_r=d_i+3d_j+\eta\zeta^r\sigma_{ij}+\bar\eta\zeta^{-r}\overline{\sigma_{ij}}$。乘 $\zeta^{-r}$ 求和，因 $\sum_r\zeta^{-2r}=0$，得 $\sum_r\zeta^{-r}b_r=3\eta\sigma_{ij}$。三个共同读数恢复复交叉项的两个实分量，不需要 $\sqrt2$ 归一的实际双坐标射线。不同第三坐标给同一公式，故全部局部交叉项一致。先对 $i<j$ 定义该元，再以共轭定义反向元；任何共同三角的 Hermitian 性保证反向探针也给同一共轭。对角元亦是同一原射线读数，因此逐项拼成唯一 Hermitian 矩阵，各三阶主块吻合；原完整框架相加给迹。$\square$
+

@@ -1,0 +1,34 @@
+**定理 12.4（一般 JB 原平方上的同一有向关系导子律）。** 在定理 12.2 的前件下，若同一原 $S$ 已是含单位 JB 乘法，则同一原 $D$ 满足全部 Leibniz 律。该推导不要求原有限谱元稠密、JBW 背景或输出覆盖；不另外支付 $D$ 的有界性、连续性、复正二表或保锥流。
+
+证明。定理 12.2 先给原 $D$ 有界实双线性。Jordan 律与实际输出行恒等式给 $p=D(a,a^2)$ 的全部后续行零，同一 (49.1) 及原分离性给 $D(a,a^2)=0$。原实部式在 $(a,a,b)$ 又给
+$$
+\delta_a^2=L_a^2-L_{a^2},\qquad \delta_a=D(a,\cdot).
+$$
+将 $D(a,a^2)=0$ 极化，得 $\delta_{a^2}=2\delta_aL_a$；此时不能把右侧次序交换。
+
+采用 Peralta–Rodríguez Palacios，[ *Grothendieck’s inequalities for real and complex JBW*-triples*, Proc. LMS 83 (2001), 605–625，DOI:10.1112/plms/83.3.605](https://doi.org/10.1112/plms/83.3.605) 的作者版 Lemma 1.1、Lemma 3.3 及后续实数说明：全部实 JB 代数属于实 JB* 三元系，其任意有界实标量双线性型都有唯一分别弱星连续双对偶延拓。对每个 $f\in E^*$，将 $u_f(a,b)=f(D(a,b))$ 延拓为 $\widetilde u_f$，并定义
+$$
+\langle\widetilde D(\xi,\eta),f\rangle=\widetilde u_f(\xi,\eta).
+$$
+唯一性给右侧关于 $f$ 线性，且其绝对值不超过 $\|D\|\|f\|\|\xi\|\|\eta\|$；所以它确实给出 $E^{**}$ 元素。逐个 $f$ 的分别弱星连续性给同一向量值延拓的分别弱星连续性，唯一性同时保持双线性、反对称性及原域限制，且 $\|\widetilde D\|=\|D\|$。原 JB 乘法的成熟双对偶延拓使 $M=E^{**}$ 成为 JBW 代数，准确取 Hanche-Olsen–Størmer，[*Jordan operator algebras* (1984)](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Theorem 4.4.3；故这一实数路线无需先为未知 $D$ 支付复结合结构。这里双对偶只用于证明，不更换原物理载体。
+
+不能把含重复变量的多项式直接说成弱星连续。先分别完全极化上面两式，得到三线性恒等式
+$$
+D(a,b\circ c)+D(b,c\circ a)+D(c,a\circ b)=0,
+$$
+$$
+D(a,D(b,c))+D(b,D(a,c))
+=a\circ(b\circ c)+b\circ(a\circ c)-2(a\circ b)\circ c.
+$$
+每个单项中每个变量只出现一次，原 Jordan 乘法与延拓 D 的分别弱星连续性遂允许逐变量延拓；令变量相等，原两式在同一 JBW 双对偶上仍成立。没有把 (49.1) 用于任何双对偶新输出，也不要求原评价分离双对偶。
+
+在 $M$ 取任意投影 $e$，置 $T=\delta_e$、$L=L_e$。前两式给 $TL=T/2$ 及 $T^2=L^2-L$。成熟 Peirce 多项式 $2L^3-3L^2+L=0$ 及半空间投影 $\Pi=4(L-L^2)$ 给 $L\Pi=\Pi/2$。由 $TL=T/2$ 计算 $T\Pi=T$；而 $\Pi=-4T^2$ 与 T 交换，所以 $\Pi T=T$，故 $LT=TL=T/2$。
+
+定义 $C(a)=[\delta_a,L_a]$。对正交投影 $e,f$，将 $C(e+f)=0$ 减去 $C(e)=C(f)=0$，得 $[\delta_e,L_f]+[\delta_f,L_e]=0$；于是每个有限正交谱和 x 都满足 $C(x)=0$。Hanche-Olsen–Størmer, *Jordan operator algebras* (1984), §2.6.2 与 Proposition 4.2.3 分别供应上述 Peirce 接口及 JBW 中的有限正交谱和范数稠密性。由于延拓 D 有界，$C$ 在算子范数下连续，故 $C(a)=0$ 对全部双对偶 a 成立，再限制回原 E。
+
+最后置
+$$
+F(a,b,c)=D(a,b\circ c)-D(a,b)\circ c-b\circ D(a,c).
+$$
+它在后两槽对称，而 $F(a,a,c)=[\delta_a,L_a]c=0$；极化使其在前两槽反对称。沿这两个对称性换位，$F(a,b,c)=-F(a,b,c)$，故 $F=0$。这在原 E 上给全部 Leibniz 律。∎
+

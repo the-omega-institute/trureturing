@@ -8,6 +8,16 @@ internal sealed class CountableHankelNegativeWitnessDocument : IScribeDocumentDe
         "Complete spectral head isolation",
         H("Complete spectral head isolation"),
         Blocks(Describe.Lean(
+                DescribeId.Create("eval-bound"),
+                DeclarationHandle.Create("D5/S3/Constants/Moments/CountableHankelNegativeWitness.eval_bound"),
+                H("Evaluation on the closed unit disk"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real polynomial p and complex number z with norm at most one, the norm of p evaluated at z, "
+                    + "using the canonical real-to-complex coefficient map, is at most the sum over the support of p of the absolute values "
+                    + "of its real coefficients. The triangle inequality bounds the finite evaluation sum, and every power of z has norm at most one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("exists-real-negative"),
                 DeclarationHandle.Create("D5/S3/Constants/Moments/CountableHankelNegativeWitness.exists_real_negative"),
                 H("Complete countable-spectrum real negative witness"),

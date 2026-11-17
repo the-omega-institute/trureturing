@@ -1,0 +1,38 @@
+### 20.1 保留实现的约化对应及其事件用途
+
+令 $X$ 为 $S,H$ 与任意旁观系统上的联合输入，记 $X_{bb}=\langle b|_H X|b\rangle_H$，旁观系统可包括 $R,E$ 及旧记忆。先复制 $H$ 到空白 $F$，再以负标签控制交换 $S,G$。对该实际酉输出作数学偏迹，得到
+
+$$
+\begin{aligned}
+&\operatorname{Tr}_{GF}\left[
+ U_{\rm cswap}U_{\rm copy}
+ (X\otimes I_G/2\otimes|0\rangle\langle0|_F)
+ U_{\rm copy}^{\dagger}U_{\rm cswap}^{\dagger}\right]\\
+&\quad=X_{++}\otimes|+\rangle\langle+|_H
+ +\frac{I_S}{2}\otimes\operatorname{Tr}_S(X_{--})
+                  \otimes|-\rangle\langle-|_H
+ =\mathcal C(X),
+\end{aligned}
+\tag{20.13}
+$$
+
+其中张量次序按旁观因子重排。对 $F$ 的偏迹消去不同 $H$ 标签间的非对角块；负块中的交换将原先可能与旁观系统相关的 $S$ 内容留在 $G$，把独立 $I/2$ 放在 $S$；正块不变。这正是 OTF004 (13.7)–(13.8)，并对相关输入及全部旁观系统成立。
+
+这里的偏迹仅用于分析记录概率；$G,F$ 在实际电路中均永久保留，并进入 (20.12)。它们不再参与后续接触或解码，所以对任意仅依赖解码记录的事件，电路的约化旧端口律恰为原 $q$ 槽 $\mathcal C$ 前缀，再接所声明的 Pauli 读出、场采样和解码。
+
+直接复用 OTF004 (13.16)–(13.19)，理想单槽和完整旧端口前缀比较为
+
+$$
+\begin{aligned}
+\xi_h&=\frac12P_{h,+}\otimes|++\rangle\langle++|
+       +\frac14I_S\otimes|--\rangle\langle--|,\\
+D_{\rm tr}\left(
+ \text{旧实际 }q\text{ 槽输出},\tau_h\otimes\xi_h^{\otimes q}
+ \right)&\le q\kappa_D,
+\qquad \kappa_D=\frac{2D-1}{2D^2}.
+\end{aligned}
+\tag{20.14}
+$$
+
+共同非参考读出、独立场采样和解码通道保持此距离界，从而保持相同事件概率差的界。无需假设实际槽历史独立，也没有把旧约化 CP 返回界转移到新增 $G,F$ 或读出口。
+

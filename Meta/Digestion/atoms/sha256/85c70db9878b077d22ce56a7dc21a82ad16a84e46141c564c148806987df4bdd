@@ -1,0 +1,10 @@
+**引理 97.1（固定斜收缩给出的两表预算）。** 在复Hilbert空间的实内积 $(x,y)_{\mathbb R}=\operatorname{Re}\langle x,y\rangle$ 下，若 $K^*=-K$、$\|K\|\le1$，则
+
+$$
+|(x,Ky)_{\mathbb R}|^2
+\le\|x\|^2\|y\|^2-(x,y)_{\mathbb R}^2.
+\tag{97.1}
+$$
+
+证明。$x=0$ 时直接成立。否则写 $y=cx+y_\perp$，$c\in\mathbb R$、$(x,y_\perp)_{\mathbb R}=0$。斜伴随给 $(x,Kx)_{\mathbb R}=0$，Cauchy–Schwarz和收缩界给 $|(x,Ky)_{\mathbb R}|\le\|x\|\|y_\perp\|$，平方即得。这里只复用成熟的正交分解工具。∎
+

@@ -1,0 +1,29 @@
+**Definition 165.1 (an $L^2$-representable successor stack).** Retain the original probability space $(G,m)$, the calibrated bounded kernel
+
+$$
+V=\ker\Lambda_{134}\subset L^\infty(G,m;\mathbb R),
+$$
+
+and put $H=L^2(G,m;\mathbb R)$. Let $P=T_d$ be the original self-adjoint contraction on $H$. Suppose a finite-dimensional readout $R$ has scalar coordinates
+
+$$
+R_k(v)=\langle v,\psi_k\rangle_H,
+\qquad 1\le k\le r,
+$$
+
+for fixed $\psi_k\in H$, and define the specified successor stack by
+
+$$
+R_j=R\circ P^j,\qquad j\ge0.
+$$
+
+Let
+
+$$
+\mathcal C=\overline{\operatorname{span}_{\mathbb R}
+ \{P^j\psi_k:j\ge0,\ 1\le k\le r\}}^{\,H}.
+\tag{165.1}
+$$
+
+The closure is in $H$; no density or cyclicity assumption is built into the definition.
+

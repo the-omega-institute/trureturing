@@ -1,0 +1,5 @@
+source_id = "token-damped-sweep-periodic-resonance"
+path = "docs/develop/theory/TOKEN_DAMPED_SWEEP_PERIODIC_RESONANCE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:23381b69005abb2ab182e76fb5dbb153b36a7ee4eda1713a11062964f6853015","declarations":[{"declaration_name_key":"ns(ns(ns(n0,4:ZMod),10:stdAddChar),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),12:ModularForms),32:primitive_dirichlet_gauss_normSq)","kind":"theorem"}]}

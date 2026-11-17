@@ -1,0 +1,13 @@
+**推论 153.1（同一个原关系的完整代数消费者）。** 在 147.1 的指定完整背景中，旧 $D$ 分别实双线性、逐块独立，满足 NN、Jacobi 和原 $R$ (128.5)。原 $\star=\circ-iD$ 的复双线性延拓在每块是通常或相反的结合乘法。对任意有限原 $a_1,\ldots,a_m$、复系数 $\lambda_r$ 和同一原评价 $\alpha$，全部有限有向 Gram 表正性成立。
+
+证明。直接消费 (152.1)。$\varepsilon_j=-1$ 时 $a_j\star b_j=a_jb_j$，$\varepsilon_j=+1$ 时 $a_j\star b_j=b_ja_j$。两种乘法均结合且满足同一范数界；逐块乘积因此定义在完整有界乘积上。取结合律实部给原 $R$，标准交换子给双线性、NN 与 Jacobi。若 $Z=\sum_r\lambda_ra_r$，则仍准确有
+
+$$
+\sum_{r,t}\bar\lambda_r\lambda_t
+\bigl(\alpha(a_r\circ a_t)-i\alpha D(a_r,a_t)\bigr)
+=\alpha_{\mathbb C}(Z^*\star Z)\ge0.
+\tag{153.1}
+$$
+
+正元 $Z^*\star Z$ 在通常块为 $Z_j^*Z_j$、在相反块为 $Z_jZ_j^*$，属于同一原锥。此式直接由原评价的正性得到，包括原质量零，不将无限块评价写成未经支付的无限求和。∎
+

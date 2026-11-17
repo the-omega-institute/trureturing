@@ -12,6 +12,7 @@ escape_witness: none; the module is admitted by its settling result.
 Direct pre-existing frozen dependencies: none.
 Source/provenance reconciliation for these declarations: https://github.com/the-omega-institute/trureturing/issues/21832#issuecomment-6562357166
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22143
+Escape audit unfinished for coeff_cast and eval_diff_iter_apply: https://github.com/the-omega-institute/trureturing/issues/22543; source reconstruction and whole-family sensitivity evidence for iterated forward differences are missing.
 Source: https://oeis.org/A301310/internal, COMMENTS and FORMULA.
 The source series is literal; proofs use Mathlib preHilbertPoly composed with X^2.
 eval_diff: proof_shape: bind-only; escape_witness: none; Direct pre-existing frozen dependencies: none;
@@ -19,7 +20,7 @@ consumers: eval_diff_iter, inverse_half_even.
 eval_diff_iter: proof_shape: bind-only; escape_witness: none; Direct pre-existing frozen dependencies: none;
 consumers: eval_diff_iter_apply, diff_nilpotent.
 eval_diff_iter_apply: proof_shape: bind-only; escape_witness: none; Direct pre-existing frozen dependencies:
-none; consumers: coeff_cast, newton.
+none; consumers: coeff_cast, newton, HannaA320949ModThree.cast_forward_difference.
 diff_nilpotent: proof_shape: bind-only; escape_witness: none; Direct pre-existing frozen dependencies: none;
 consumers: inverse_eq.
 inverse: proof_shape: bind-only (definition); escape_witness: none; Direct pre-existing frozen dependencies:
@@ -37,7 +38,7 @@ consumers: inverse_half_even.
 inverse_half_even: proof_shape: bind-only; escape_witness: none; Direct pre-existing frozen dependencies: none;
 consumers: numerator_neg_one.
 coeff_cast: proof_shape: bind-only; escape_witness: none; Direct pre-existing frozen dependencies: none;
-consumers: numerator_neg_one, series_value.
+consumers: numerator_neg_one, series_value, HannaA320949ModThree.cast_forward_difference.
 numerator: proof_shape: bind-only (definition); escape_witness: none; Direct pre-existing frozen dependencies:
 none; consumers: numerator_degree, numerator_zero, numerator_neg_one, value_homogenize,
 value_divisible.
@@ -120,7 +121,7 @@ private theorem eval_diff_iter (P : ℚ[X]) (j : ℕ) :
     (fun Q => by funext x; exact eval_diff Q x) j) P
 
 
-private theorem eval_diff_iter_apply (P : ℚ[X]) (j : ℕ) (x : ℚ) :
+theorem eval_diff_iter_apply (P : ℚ[X]) (j : ℕ) (x : ℚ) :
     ((fun P : ℚ[X] => fwdDiff (1 : ℚ[X]) (fun Q : ℚ[X] => P.comp Q) X)^[j] P).eval x = (fwdDiff (1:ℚ))^[j] P.eval x :=
   congrFun (eval_diff_iter P j) x
 
@@ -221,7 +222,7 @@ private theorem inverse_half_even (P : ℚ[X]) {d : ℕ} (hd : P.natDegree ≤ d
   simpa only [Q] using (show Q.eval 0 = P.eval 0 by linarith)
 
 
-private theorem coeff_cast (P : ℚ[X]) (f : ℕ → ℤ)
+theorem coeff_cast (P : ℚ[X]) (f : ℕ → ℤ)
     (hf : ∀ k : ℕ, P.eval (k:ℚ) = (f k : ℚ)) (j : ℕ) :
     ((((fwdDiff (1:ℕ))^[j] f 0) : ℤ) : ℚ) = ((fun P : ℚ[X] => fwdDiff (1 : ℚ[X]) (fun Q : ℚ[X] => P.comp Q) X)^[j] P).eval 0 := by
   rw [eval_diff_iter_apply]

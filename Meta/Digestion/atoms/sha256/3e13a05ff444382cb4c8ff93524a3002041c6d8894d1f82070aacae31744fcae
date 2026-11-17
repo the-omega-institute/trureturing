@@ -1,0 +1,92 @@
+Indeed, the coordinate-disk support calculation (24.3), now with
+$q=(h,-h,-ic,ic)$, bounds its left side by
+$\sum_j|\lambda+e^{-i\phi}q_j|$ for a phase $\phi$ aligning the
+amplitude. Use the functions $F_a,D_a$ of (24.4) with $a=c,h$.
+They are differentiable on $[0,1]$ since $\lambda\ge2>c>h$.
+With $t=\sin^2\phi$, the support sum equals $F_c(t)+F_h(1-t)$.
+The derivative formula (24.5) and its monotonicity give
+
+$$
+\frac{d}{dt}\bigl(F_c(t)+F_h(1-t)\bigr)
+\le-\frac{\lambda^2c^2}{(\lambda^2+c^2)^{3/2}}
+    +\frac{\lambda h^2}{\lambda^2-h^2}<0.
+\tag{25.7}
+$$
+
+To verify the strict sign, $h^2=1/2$ and $5/6<c^2<1$ imply
+
+$$
+\begin{aligned}
+c^2\left(1-\frac{h^2}{\lambda^2}\right)
+&>\frac{35}{48},\\
+h^2\left(1+\frac{c^2}{\lambda^2}\right)^{3/2}
+&<\frac12\left(\frac54\right)^{3/2}
+ <\frac7{10}<\frac{35}{48}.
+\end{aligned}
+\tag{25.8}
+$$
+
+Here $(5/4)^{3/2}<7/5$ follows by squaring, since
+$125/64<49/25$. Multiplication by the positive denominators in
+(25.7) shows that (25.8) is precisely the sufficient comparison.
+Thus the maximum support sum occurs at $t=0$, with value
+$2\sqrt{\lambda^2+c^2}+2\lambda$, proving (25.6).
+
+If $\delta>0$, put
+
+$$
+x=1-\frac\delta2\in[11/12,1),\qquad
+\lambda=\frac{cx}{\sqrt{1-x^2}}.
+\tag{25.9}
+$$
+
+Then $\lambda^2\ge121c^2/23>605/138>4$, so (25.6) applies to the
+same normalized $z$. It yields
+
+$$
+u\le2\sqrt{\lambda^2+c^2}-\lambda(B-2)
+  =2c\sqrt{1-x^2},\qquad
+u^2\le c^2(4\delta-\delta^2).
+\tag{25.10}
+$$
+
+When $\delta=0$, all normalized $z_j=1$ because their real parts
+are at most $1$ and sum to $4$. Then $u=0$ and $v=e$, so (25.2)
+holds at that boundary as well.
+
+For the trace and the joint sign, $|z_j|\le1$ gives
+
+$$
+\sum_j|z_j-1|^2\le8-2B=2\delta,\qquad
+A=|(z_1-1)-(z_2-1)-i(z_3-1)+i(z_4-1)|,
+\qquad A^2\le8\delta\le\frac43.
+\tag{25.11}
+$$
+
+In particular $A<2$ and $B-A-1>23/6-2-1=5/6$. Hence, for
+every population,
+
+$$
+r_+(w,p)-r_-(w,p)
+=2(1-A+B-2p)\ge2(B-A-1)>0,
+\tag{25.12}
+$$
+
+which proves the exact branch formula in (25.2).
+
+Finally, let $x=1-\delta/2$, $y=\sqrt{1-x^2}$, and choose
+
+$$
+z^{(\delta)}=(1,1,x+iy,x-iy),\qquad
+w^{(\delta)}=(1,-1,-i(x+iy),i(x-iy)).
+\tag{25.13}
+$$
+
+All four coordinates have modulus one. Thus
+$U=\operatorname{diag}(w^{(\delta)})U_+$ is an actual unitary
+with reduced diagonal $w^{(\delta)}\in\mathcal W$. Equations
+(25.4) give $P=2cy$ and $Q=e-s\delta$, while $B=4-\delta$.
+This proves simultaneous attainment with the same $U$.
+The construction supplies an attaining datum for the envelopes;
+the inequalities above apply to every unitary lift. $\square$
+

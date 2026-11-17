@@ -1,0 +1,21 @@
+### 17.4. A coefficient-specific falsifier and a margin ceiling
+
+For an arbitrary tuple in the original allowed coefficient domain, set
+$\delta=\delta_B+\delta_A$, $L_p=\lambda_{p,r_\star}$,
+$L_\beta=\lambda_{\beta,r_\star}$. Evaluate all multipliers at the single
+law Q of (17.4), and define the rational linear functional
+$$
+\begin{aligned}
+\Phi(\chi)={}&d_0(\chi_{\{\beta\}}(Q)-\chi_{\{\alpha w_{0,1}\}}(Q))\\
+&+\varepsilon[\chi_{\{\alpha w_{2,0}\}}(Q)
+ -\chi_{\{\alpha w_{2,1}\}}(Q)
+ -c\chi_{\{\alpha w_{3,0}\}}(Q)
+ +c\chi_{\{\alpha w_{3,1}\}}(Q)].
+\end{aligned}                                                   \tag{17.14}
+$$
+For $s=p,\beta$, let
+$\tau_s(r)=\rho_s-\operatorname{TV}(\pi_4D_s,\pi_4P_{s,r})$.
+These are exact finite absolute-value expressions, with their complete
+tail cell, and are rational at the symbolic supported rational
+$r=r_\star$.
+

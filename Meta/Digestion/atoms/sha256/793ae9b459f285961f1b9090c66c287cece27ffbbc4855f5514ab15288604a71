@@ -1,0 +1,173 @@
+**定理 17.2（同一截面的精确预算等价）。** 对定义 17.1 的每份环境数据 $V,D_{\rm env}$，$\mathcal H_0$ 仅由这两者决定，且 $\dim_{\mathbb C}\mathcal H_0\le6$。映射 $T$ 良定义、复线性，值域为 $\mathcal H_0$，并在 $\mathcal H_0$ 上为恒等。它同时适用于任意 $B,s_1,s_2$、每个实际 Hermitian 角探针 $x$ 和两种分别解释的取向。
+
+准确地，对每个原空间向量 $\xi$，写 $\eta=T\xi=(u,y_0)$，则
+
+$$
+\begin{gathered}
+Vy_0=Vy,\qquad D_{\rm env}y_0=q_0,\qquad
+VD_{\rm env}y_0=VD_{\rm env}y,\\
+d\perp\operatorname{ran}V^*,\qquad d\perp q_0,\qquad
+\|D_{\rm env}y\|^2=\|D_{\rm env}y_0\|^2+\delta.
+\end{gathered}
+\tag{17.4}
+$$
+
+以下均为同一原算子在两份向量泛函上的恒等式，所有平方仍在原 $M_{m+2}(\mathbb C)$ 中计算：
+
+$$
+\begin{gathered}
+\phi_\xi(g)=\phi_\eta(g),\qquad
+\phi_\xi(c^2)=\phi_\eta(c^2),\qquad
+\phi_\xi(c\circ t)=\phi_\eta(c\circ t),\\
+\phi_\xi(t^2)=\phi_\eta(t^2)+\delta,\qquad
+\phi_\xi(L)=\phi_\eta(L),\\
+\phi_\xi(R_\pm^2)=\phi_\eta(R_\pm^2),\qquad
+\phi_\xi(R_\pm\circ S_\pm)=\phi_\eta(R_\pm\circ S_\pm),\\
+\phi_\xi(S_\pm^2)=\phi_\eta(S_\pm^2)+\delta.
+\end{gathered}
+\tag{17.5}
+$$
+
+因此，同一个 $\delta\ge0$ 给出
+
+$$
+\begin{aligned}
+B_{\phi_\xi}(c,t)
+ &=B_{\phi_\eta}(c,t)+\delta\,\phi_\eta(c^2),\\
+B_{\phi_\xi}(R_\pm,S_\pm)
+ &=B_{\phi_\eta}(R_\pm,S_\pm)+\delta\,\phi_\eta(R_\pm^2).
+\end{aligned}
+\tag{17.6}
+$$
+
+对于每个给定的有限质量 $\mu\ge0$，有两条分别成立的充要关系。其中 $\phi$ 遍取完整 $M_{m+2}(\mathbb C)$ 上全部正复线性泛函，不限制环境密度块：
+
+$$
+\begin{aligned}
+&\bigl[\mathsf{P2}\text{ 对全部 }\phi\ge0,\ \phi(I_{m+2})=\mu\text{ 成立}\bigr]\\
+&\hspace{8mm}\Longleftrightarrow
+\bigl[\mathsf{P2}\text{ 对全部 }\phi_\eta,\ \eta\in\mathcal H_0,
+\ \|\eta\|^2=\mu\text{ 成立}\bigr],\\[1mm]
+&\bigl[\mathsf{PB}_x\text{ 对全部 }\phi\ge0,\ \phi(I_{m+2})=\mu\text{ 成立}\bigr]\\
+&\hspace{8mm}\Longleftrightarrow
+\bigl[\mathsf{PB}_x\text{ 对全部 }\phi_\eta,\ \eta\in\mathcal H_0,
+\ \|\eta\|^2=\mu\text{ 成立}\bigr].
+\end{aligned}
+\tag{17.7}
+$$
+
+第二条对每个原 $x$ 单独成立，不以 P2 为附加前件。故也可以在第二条两侧同时加上全部原 $x$ 的全称量词，并与第一条合取；无需随 $x$、$\sigma$ 或 $\mu$ 改选 $\mathcal H_0$。
+
+证明。先构造截面。$W|_{N_1}$ 单射，且其像为 $\mathcal W$，故 $J$ 存在。因为 $D_{\rm env}$ 自伴，$\mathcal E=\mathcal R\oplus N$，$D_{\rm env}^\dagger$ 在 $\mathcal R$ 上是 $D_{\rm env}$ 的逆。$d\in\mathcal R\cap\mathcal K^\perp$，而 (17.2) 的两份像给
+
+$$
+Vd=0,\qquad QVD_{\rm env}^\dagger d=0.
+\tag{17.8}
+$$
+
+第一式也说明 $d\perp\operatorname{ran}V^*$。更准确地，$\mathcal R$ 内同时被 $V$ 和 $QVD_{\rm env}^\dagger$ 消去的向量恰好组成 $\mathcal R\cap\mathcal K^\perp$；故在保持这两份线性读取的所有环境像中，$q_0$ 是唯一最小范数者。这是正交分解的直接应用。写 $y=D_{\rm env}^\dagger q+n$，$n\in N$，便有
+
+$$
+Q\bigl(Vy-VD_{\rm env}^\dagger q_0\bigr)
+=QVD_{\rm env}^\dagger d+QVn=0.
+$$
+
+故 (17.3) 的 $J$ 实参在 $\ker Q=\mathcal W$ 内。其定义立即给 $Vy_0=Vy$、$D_{\rm env}y_0=q_0$；再用 (17.8)，得到 (17.4)。$q_0\perp d$ 则来自正交投影。所有映射复线性，且 $y_0\in\mathcal E_0$。若 $y\in\mathcal E_0$，则 $q\in\mathcal K$、$q_0=q$，并且 $J(Vy-VD_{\rm env}^\dagger q)$ 正好回收其 $N_1$ 分量，所以 $T$ 在 $\mathcal H_0$ 上为恒等。维数满足
+
+$$
+\dim\mathcal K\le2+(2-r_0)=4-r_0,\qquad
+\dim\mathcal H_0=2+r_0+\dim\mathcal K\le6.
+\tag{17.9}
+$$
+
+这些式子包含 $m=0$、$D_{\rm env}=0$ 和任意零模耦合秩；空块无需另作非零性假设。
+
+其次验证全部原读取。写 $z=\xi-\eta=(0,y-y_0)$。由 (17.4)，$V(y-y_0)=0$，从而
+
+$$
+cz=xz=hz=rz=sz=gz=kz=0,\qquad
+tz=(0,d),\qquad R_\pm z=0,\qquad S_\pm z=(0,d).
+\tag{17.10}
+$$
+
+这里对 $g,k$ 的读取使用同一原矩阵的准确块形状
+
+$$
+\begin{gathered}
+g=\begin{pmatrix}
+\frac{\sigma i}{2}[C_A,B]+\operatorname{diag}(s_1,s_2)
+ &\frac{\sigma i}{2}C_AV\\
+-\frac{\sigma i}{2}V^*C_A&0
+\end{pmatrix},\qquad
+k=\begin{pmatrix}C_A\circ B&C_AV/2\\V^*C_A/2&0\end{pmatrix}.
+\end{gathered}
+\tag{17.11}
+$$
+
+$g,k$ 的环境像在 $\operatorname{ran}V^*$ 内，故 $V(y-y_0)=0$ 还给 $\phi_\xi(g)=\phi_\eta(g)$。$c\eta$ 在演员空间内；$R_\pm\eta$ 的环境分量为 $\mp V^*C_Au/2$。$t\eta$ 的环境分量为 $V^*u+q_0$，$S_\pm\eta$ 的环境分量为
+
+$$
+V^*\left(I_2\mp\frac{\sigma i}{2}C_A\right)u+q_0.
+\tag{17.12}
+$$
+
+因此 (17.4) 使这些环境分量与 $d$ 全部正交。对自伴 $U,V$ 使用
+$\phi_\xi(U^2)=\|U\xi\|^2$ 和 $\phi_\xi(U\circ V)=\operatorname{Re}((U\xi)^*V\xi)$，结合 (17.10)，就得到 (17.5) 中除 $L$ 外的全部恒等式，包含两份平方增加同一个 $\delta$。
+
+对 $L$，准确使用原定义给
+
+$$
+\phi_\xi(L)=-2\operatorname{Re}\bigl((x\xi)^*(h-k)\xi\bigr)
+             -2\operatorname{Re}\bigl((t\xi)^*(r+g)\xi\bigr).
+\tag{17.13}
+$$
+
+第一项在 $\xi,\eta$ 之间完全相同。第二项的差仅为
+$-2\operatorname{Re}((0,d)^*(r+g)\eta)$，而 $(r+g)\eta$ 的环境分量为 $-\sigma iV^*C_Au/2$，故差也为零。这证明完整 (17.5)，代入原标量 $B_\phi$ 即得 (17.6)。所有恒等式对同一个 $\eta,d$ 同时成立，并未为两份符号、两个面积根或不同探针分别优化。
+
+最后证明质量与全正泛函的等价。$\mu=0$ 时，正泛函的有限维谱分解使它只能为零，右侧向量也只能为零，两条关系均成立。以下固定 $\mu>0$。原 P2 关于正泛函的正倍数是二次齐次的，原 PB 的两边是一次齐次的；因 $\phi_{a\eta}=a^2\phi_\eta$ 对每个实 $a>0$ 成立，某条预算在 $\mathcal H_0$ 上所有质量 $\mu$ 的向量成立，就在 $\mathcal H_0$ 上所有向量成立。这里也包含零向量，并不要求 $T$ 保持范数或质量。
+
+现在取任意原空间向量 $\xi$。P2 的左端由 (17.5) 不变，右端由 (17.6) 只增加非负量 $\delta\phi_\eta(c^2)$，所以支撑上的 P2 推出全部原向量上的 P2。同理，PB 的左端不变，每个根内量都增加非负量 $\delta\phi_\eta(R_\pm^2)$，故对固定 $x$ 的支撑预算推出同一 $x$ 在全部原向量上的预算。没有把失败的充分估计解释成预算失败；这里使用的是已证的单向单调性。
+
+还须将全部原向量结论提升到全部原正泛函。任意 $\phi\ge0$ 在完整 $M_{m+2}(\mathbb C)$ 上有有限谱分解
+
+$$
+\phi=\sum_j\phi_{\xi_j},\qquad
+\sum_j\|\xi_j\|^2=\phi(I_{m+2}).
+\tag{17.14}
+$$
+
+这里的 $\xi_j$ 是完整原空间向量，没有去掉环境密度块。对于 P2，全部向量预算准确等价于每个 Hermitian 二阶矩阵
+
+$$
+M_{\phi_{\xi_j}}=
+\begin{pmatrix}
+\phi_{\xi_j}(c^2)&\phi_{\xi_j}(c\circ t)-i\phi_{\xi_j}(g)\\
+\phi_{\xi_j}(c\circ t)+i\phi_{\xi_j}(g)&\phi_{\xi_j}(t^2)
+\end{pmatrix}
+$$
+
+为正：对角元本来非负，行列式正好是 P2 的余量。这是 §2 的既有二表写法。矩阵对泛函线性，故 $M_\phi=\sum_jM_{\phi_{\xi_j}}\ge0$，其行列式给 $\phi$ 的 P2，包括零对角和退化情形。
+
+对于 PB，直接使用[运输卷](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md)式 (9.28)–(9.30) 的成熟二阶正 Gram 行列式根不等式：对任意实际自伴 $U,V$，
+
+$$
+\sqrt{B_\phi(U,V)}\ge\sum_j\sqrt{B_{\phi_{\xi_j}}(U,V)}.
+\tag{17.15}
+$$
+
+该工具只用二阶矩阵相加，与谱分解的项数无关。将它分别用于同一原 $R_+,S_+$ 与 $R_-,S_-$，便有
+
+$$
+\begin{aligned}
+|\phi(L)|
+&\le\sum_j|\phi_{\xi_j}(L)|\\
+&\le\sum_j\left(\sqrt{B_{\phi_{\xi_j}}(R_+,S_+)}
+                 +\sqrt{B_{\phi_{\xi_j}}(R_-,S_-)}\right)\\
+&\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\end{aligned}
+\tag{17.16}
+$$
+
+取 (17.14) 的总质量为给定 $\mu$，即得 (17.7) 的两个反向蕴涵；正向蕴涵只用每个 $\phi_\eta$ 本身就是质量 $\mu$ 的原全空间正复线性泛函。两条证明分别使用自己的预算，没有相互增加前件。$T$ 的定义与任何探针和取向无关，故最后的同时量词断言也成立。∎
+

@@ -1,0 +1,39 @@
+#### 引理 5.2：生成记录的零校准锁定原 PVM
+
+设 $E_s\ge0,\ \sum_s E_s=I$。给定非零向量族 $v_j$ 和固定解码名称 $d(j)$。 若
+
+$$
+\overline{\operatorname{span}_{\mathbb C}\{v_j\}}=H,\qquad
+\langle v_j,E_sv_j\rangle=0\quad(s\ne d(j)),
+$$
+
+则令 $H_s=\overline{\operatorname{span}_{\mathbb C}\{v_j:d(j)=s\}}$，有
+
+$$
+H=\bigoplus_s H_s,\qquad E_s=P_{H_s}.
+$$
+
+不同名称的正交性不需要预先假定。
+
+**证明。**
+
+正性给 $\langle v_j,E_sv_j\rangle=\|E_s^{1/2}v_j\|^2$，故错误事件都满足 $E_sv_j=0$。 完整求和给 $E_{d(j)}v_j=v_j$。若 $d(j)\ne d(l)$，由自伴性
+
+$$
+\langle v_j,v_l\rangle
+=\langle E_{d(j)}v_j,v_l\rangle
+=\langle v_j,E_{d(j)}v_l\rangle=0.
+$$
+
+因此 $H_s$ 两两正交。$E_s$ 在 $H_s$ 上为恒等，在其他 $H_t$ 上为零； 总张成给结论。
+
+$\square$
+
+每个生成记录甚至只需一项二元零关系：
+
+$$
+p_C(\text{不是名称 }d(j)\mid v_j)=0.
+$$
+
+非负性自动把这项粗事件的零拆成全部错名细事件的零。不必逐个给出它对所有其他态的概率。
+

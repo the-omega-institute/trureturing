@@ -1,0 +1,20 @@
+**定理 34.1（限定背景中的完整恢复）。** 在 32.1 的同一自旋背景、原 PY 与反对称总映射入口下，完整 R、NN 加完整 Jacobi、NN 加 $\mathrm J_\perp$ 三者等价。
+
+证明。R 的三次循环给 Jacobi，令前两个输入相等并用 PY 的零方向给 NN，故前者推出后二者。反向由 33.2 的同一 $K=\varepsilon\times$ 或零支，直接有
+
+$$
+K(x,K(y,z))=\langle x,z\rangle y-\langle x,y\rangle z.
+$$
+
+从而对原 $a=\alpha u+x,b=\beta u+y,c=\gamma u+z$，
+
+$$
+\begin{aligned}
+&D(D(a,b),c)-D(a,D(b,c))\\
+&\quad=\langle x,y\rangle z-\langle y,z\rangle x\\
+&\quad=(a\circ b)\circ c-a\circ(b\circ c).
+\end{aligned}
+$$
+
+完整 R 成立。∎
+

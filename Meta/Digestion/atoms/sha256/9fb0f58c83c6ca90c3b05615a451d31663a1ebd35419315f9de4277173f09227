@@ -1,0 +1,9 @@
+**定义 8.9（条件结论的来源与未解范围）。**有限维 Hermitian 分离、测试合成、操作等价及量子网络理论是成熟工具；本节将其作为原 C139 网络的接线推导的中间步骤，不作外部新颖性或优先权主张。所复用的具体输入为：
+
+| 来源 | 此处承担及不承担的内容 |
+| --- | --- |
+| 母卷 §§5.3、9.1–9.2、定理 17.6、22.5、27.5、28.2；本卷定理 1.5、1.6、§§4–6 | 原向量／实际混合域、精确矩阵综合、新菜单内部 QC 及全框架刚性、支撑与原完整条件链；这里不重证综合，也不从它推出实际程序覆盖。 |
+| Chiribella、D’Ariano、Perinotti，*Probabilistic theories with purification*，[arXiv:0908.1583v3](https://arxiv.org/html/0908.1583v3)，§II.2 Definition 3 | 输入输出类型匹配的实际测试顺序合成，复合结果保留各阶段结果标签。此处未采用该文净化公理，也未由合成法则推断原所需适配器或设备存在。 |
+| Chiribella、D’Ariano、Perinotti，*Informational derivation of quantum theory*，[arXiv:1011.6451v2](https://arxiv.org/html/1011.6451v2)，§II 的态／效果操作类定义、§III.1.4 Axiom 4 | 操作态按已允许效果的完整统计函数定义；局域层析是已定义复合态由局域统计区分的条件。它不证明任意旧来源响应通过本节新 $\Sigma$ 因子化，也不将局域层析作为本候选替代准备生成的新公理。 |
+| Spekkens，*Contextuality for preparations, transformations and unsharp measurements*，[quant-ph/0406166](https://arxiv.org/html/quant-ph/0406166)，§II 式 (1)–(3) | 准备等价量化全部测量，变换等价量化前准备与后测量。有限新读数相等没有自动满足这份全域定义；本节不加入本体模型的非语境性假设。 |
+| Chiribella、D’Ariano、Perinotti，*A theoretical framework for quantum networks*，[arXiv:0904.4483](https://arxiv.org/html/0904.4483)，§IV.5 Definition 11、§V.2 | 网络的 comb／tester 与网络层析有自己的输入输出和时间槽；一个当前系统效果的读数不是整个网络的描述。此处没有从有限系统探针推断仪器、参考输出或全历史身份。 |

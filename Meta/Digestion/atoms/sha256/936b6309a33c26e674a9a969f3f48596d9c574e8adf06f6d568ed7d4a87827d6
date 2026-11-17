@@ -1,0 +1,23 @@
+**Definition 5.3 (supplier scopes).** The source-specific deductions
+(2.2)--(4.6) and their consequences are `repo-derived` ordinary
+mathematics under Assumption 1.1. The thermal independence of [RRO,
+Theorems 7.2--7.3] and [FIB, Lemma 169.1], the marked-word identity
+[RRO, Theorem 8.2], generic Gram positivity, finite linear realization
+equivalences [WORD, SEQ, WFA], and predictive quotient/update properties
+[MIN, UPDATE, PSR] are reused suppliers. The rotation-odd kernel of
+[FIB, §170] concerns its specified linear successor stack; it is not
+used as a theorem about the whole passive-word law. [FIB, §171]
+concerns compensation and residual approximation, not all-word
+equality. None of these mathematical source correspondences asserts
+physical acquisition or literature priority for the displayed application.
+
+[RRO]: https://github.com/the-omega-institute/trureturing/blob/02054502fd2c15d3046b26c38182b80a75c8b558/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_DIFFUSION_PHASE_COVER_RIGIDITY.md
+[FIB]: https://github.com/the-omega-institute/trureturing/blob/02054502fd2c15d3046b26c38182b80a75c8b558/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_IV.md
+[WORD]: https://github.com/the-omega-institute/trureturing/blob/02054502fd2c15d3046b26c38182b80a75c8b558/D5/S3/Observer/Hankel/WordHankelRealization.lean
+[SEQ]: https://github.com/the-omega-institute/trureturing/blob/02054502fd2c15d3046b26c38182b80a75c8b558/D5/S3/Observer/Hankel/SequenceHankelRealization.lean
+[MIN]: https://github.com/the-omega-institute/trureturing/blob/02054502fd2c15d3046b26c38182b80a75c8b558/D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUniversalMinimality.lean
+[UPDATE]: https://github.com/the-omega-institute/trureturing/blob/02054502fd2c15d3046b26c38182b80a75c8b558/D5/S3/ObserverMemory/ContextUpdates/PredictiveStateUnifilarUpdate.lean
+[GRAM]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/InnerProductSpace/GramMatrix.lean
+[WFA]: https://arxiv.org/html/1501.06841v3
+[PSR]: https://arxiv.org/pdf/1207.4167
+

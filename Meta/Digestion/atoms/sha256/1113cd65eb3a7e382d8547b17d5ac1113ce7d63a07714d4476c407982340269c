@@ -1,0 +1,28 @@
+**定理 495.2（交叉二阶核的消失）。** 设 $E$ 局部有界 Borel 可测，(490.2) 分别在 $0<\alpha_1<\theta_1<\beta_1<1$ 与 $0<\alpha_2<\theta_2<\beta_2<1$ 上成立，且 $(\mathrm J_{1,1})$(b) 成立。则
+
+$$
+\int_0^1\!\!\int_0^1g_1(s)g_2(t)\,M_{1,1}(s,t)\,ds\,dt=0\qquad(\text{对一切实值 }g_1,g_2\in L^1(0,1)),
+\tag{495.3}
+$$
+
+从而 $M_{1,1}=0$ 在 $[0,1]^2$ 上几乎处处成立。
+
+证明。先验证 $(\mathrm J_{1,1})$(a)：$R=X^{\theta_i}$ 满足 (491.1)，由引理 491.1（取 $p(x)=x$、$q(x)=x+sx^{\theta_i}$），对 $i=1,2$ 与 $s\in[0,1]$ 一致地 $\int_X^{2X}D_{sx^{\theta_i}}(x)^2\,dx\ll X^{1+\theta_i}\log X$，而在 $[X,2X]$ 上 $x^{\theta_i}\log x\ge X^{\theta_i}\log X$、$1/x\le1/X$，故 $\mathbb E_{\mu_X}|B_{i,X}(s)|^2\ll1$。由引理 495.1，$\mathbb E_{\mu_X}[Z_{1,X}Z_{2,X}]$ 收敛到 (495.3) 左边。另一方面
+
+$$
+\mathbb E_{\mu_X}[Z_{1,X}Z_{2,X}]=\frac1{\log2}\cdot\frac1{N_X}\int_X^{2X}\mathcal T_{\theta_1,g_1}\mathcal T_{\theta_2,g_2}\frac{dx}x,\qquad N_X=X^{1-(\theta_1+\theta_2)/2}\log X ,
+$$
+
+由定理 491.6(i)（取 $a=\theta_1$、$b=\theta_2$，并取 $\mu,\nu$ 为 $\theta_1$ 到 $\min(\beta_1,\theta_2)$ 之间的三等分点）它是 $O(X^{-\eta_0})\to0$。这给出 (495.3)。取 $g_1,g_2$ 为区间的示性函数，$M_{1,1}$ 在每个矩形 $[a_1,b_1]\times[a_2,b_2]\subset[0,1]^2$ 上的积分为零；$M_{1,1}$ 有界可测，故有限带号测度 $M_{1,1}\,ds\,dt$ 在生成 $[0,1]^2$ 的 Borel $\sigma$-代数的矩形 $\pi$-系上为零，由 Dynkin $\pi$-$\lambda$ 定理它为零测度，即 $M_{1,1}=0$ 几乎处处。证毕。
+
+因此在 (490.2) 下，两个不同指数的 Brownian 型联合接口中，交叉协方差核只能是零：不同指数的局部增量过程在宏观加权下渐近不相关这一事实不是附加假设，而是 §491 的推论。
+
+**Brownian 型联合四阶接口。** 设 $C:[0,1]^2\to\mathbb R$ 有界可测，称 $E$ 满足以 $C$ 为交叉核的 $(\mathrm W_{2,2})$，若 $(\mathrm J_{1,1})$(b) 以 $M_{1,1}=c_{1,1}C$ 成立，且 $(\mathrm J_{2,2})$(b) 以
+
+$$
+M_{2,2}(s_1,s_2,t_1,t_2)=c_{2,2}\Bigl[\kappa_1\kappa_2\min(s_1,s_2)\min(t_1,t_2)+C(s_1,t_1)C(s_2,t_2)+C(s_1,t_2)C(s_2,t_1)\Bigr]
+\tag{495.4}
+$$
+
+成立（变量顺序 $(s_1,s_2)$ 对应 $\theta_1$，$(t_1,t_2)$ 对应 $\theta_2$）。这是二维 Gauss 过程 $(\sqrt{\kappa_1}B^{(1)},\sqrt{\kappa_2}B^{(2)})$ 在交叉协方差为 $C$ 时的四阶 Isserlis 公式乘以宏观因子 $c_{2,2}$。
+

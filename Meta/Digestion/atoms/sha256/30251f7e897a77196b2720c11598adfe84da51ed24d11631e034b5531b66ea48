@@ -1,0 +1,5 @@
+**七、消费既有同原分类，并检查整个反向。** 至此才用 X133.6 的 EB3+$\mathsf R_1$ 分类，得到(XI142.4)。其既有依赖为 IX120.4—120.5、IX116.17—116.18；真实三角、满宽、全 Pair 到成熟秩三 Jordan／复型选择均按这些源定理的原费用消费，不算作这里的新分类。下一节直接计算完整确认菜单与每个混态上的 minimum，保证这个消费没有缩小原态域或效应域。
+
+反向取整个标准 $\operatorname{Herm}_3(\mathbb C)$、$\mathrm{PSD}_3$、$\operatorname{Tr}$。完整效应恰为 $f_M(X)=\operatorname{Tr}(MX)$、$0\preceq M\preceq I_3$。对任意单位 $v$，全部确认菜单计算给
+$D_{P_v}=\{\rho\succeq0:\operatorname{Tr}\rho=1,\rho v=0\}$，即 $v^\perp$ 上全部二阶密度矩阵的完整三球，所以每个原标签满足 EB3。对任意单位 $v,w$，包括相同射线，$\dim_{\mathbb C}\operatorname{span}\{v,w\}\le2$，可取单位 $z\perp\operatorname{span}\{v,w\}$。同一个原纯点 $P_z$ 给 $P_v\perp P_z\perp P_w$，每条边由原投影效应见证。因此 Conn 成立，而且每个事先指定根都有 $Q(o)=P$，当然满足其局部 $\mathsf G(o)$。整个原域通过同一 $\Phi$ 运输，结论保持。主定理证毕。
+

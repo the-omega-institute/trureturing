@@ -1,0 +1,38 @@
+**Theorem 11.1 (Adjacent-minimum weighted sufficiency).** For every infinite original history in Definition 8.1, including singular events, define
+
+$$
+W=\sum_{j=0}^\infty
+\min(\delta_j,\delta_{j+1})\sin^2(d_j\theta).
+\tag{11.1}
+$$
+
+If $W=\infty$, every original initial state tends to zero. No uniform bound on $|\lambda_j|$, inverse, sign, angle or gaps is required. This condition is sufficient and is not necessary.
+
+*Proof.* Use the prescribed frames (7.9) and the exact recurrences (7.10), whose algebra applies to every $\lambda_j\in(-1,1)$. For an arbitrary actual trajectory put
+
+$$
+L_j=\delta_jB_j^2,\qquad w_j=\min(\delta_j,\delta_{j+1}).
+$$
+
+The loss identity gives $\sum_jL_j\leq Q(u_0)$. The second coordinate recurrence yields
+
+$$
+s_j^2A_j^2=(\lambda_jc_jB_j-B_{j+1})^2
+\leq2\lambda_j^2c_j^2B_j^2+2B_{j+1}^2.
+$$
+
+Multiplying by $w_j$ and using both $w_j\leq\delta_j$ and $w_j\leq\delta_{j+1}$ gives
+
+$$
+w_js_j^2A_j^2\leq2L_j+2L_{j+1}.
+$$
+
+The other coordinate has $w_js_j^2B_j^2\leq L_j$. Hence
+
+$$
+w_js_j^2\|v_j\|_Q^2\leq3L_j+2L_{j+1}.
+\tag{11.2}
+$$
+
+The actual norms decrease to some $l\geq0$. If $l>0$, summing (11.2) would give $l^2W\leq5Q(u_0)<\infty$, a contradiction. Thus $l=0$, and (8.5) gives decay at every chronological time, with no restriction on $\|u_0\|_Q$. Zero factors cause no difficulty in these inequalities. Nonnecessity follows from Propositions 11.3 and 11.4 below. $\square$
+

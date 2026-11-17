@@ -1,0 +1,50 @@
+## 六、终点具有唯一价格最优性，而且存在严格的曲率间隔
+
+设上述过程停止在 $N$，记
+
+$$
+T=\log N,\qquad
+\eta=\frac1{T\log T}.
+$$
+
+对 $p^a\Vert N$，删除不能增加 $R$，所以
+
+$$
+\lambda_{p,a}
+\ge f(T)-f(T-\log p).
+$$
+
+严格凹性给出
+
+$$
+f(T)-f(T-\log p)>\eta\log p.
+$$
+
+故
+
+<a id="eq-22"></a>
+
+$$
+\boxed{\lambda_{p,a}>\eta\log p.}
+\tag{22}
+$$
+
+对任意素数 $p$，加入一层不能增加 $R$，所以
+
+$$
+\lambda_{p,a+1}
+\le f(T+\log p)-f(T)
+<\eta\log p.
+$$
+
+故
+
+<a id="eq-23"></a>
+
+$$
+\boxed{\lambda_{p,a+1}<\eta\log p.}
+\tag{23}
+$$
+
+这说明所有已占用层的价格增益严格为正，所有未占用层严格为负，没有零价格层。
+

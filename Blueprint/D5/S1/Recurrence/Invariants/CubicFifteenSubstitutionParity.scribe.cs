@@ -37,6 +37,12 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
                 "Coefficient n is one in ZMod(2) precisely when n is a power of two, "
                 + "and is zero otherwise. In particular the constant coefficient is "
                 + "zero and the linear coefficient is one.", DescribeRole.Definition),
+            Node("quadratic_unique", "Uniqueness for the characteristic-two quadratic map",
+                QuadraticUniqueFormula(),
+                "For arbitrary series u and v over ZMod(2), zero constant coefficients "
+                + "and equality of u+u² and v+v² force u=v. Factoring their difference "
+                + "gives (u-v)(1+u+v)=0; the second factor has constant coefficient one. "
+                + "This comparison identifies zero-constant quadratic models."),
             Node("thue_series_equation", "The characteristic-two cubic identity", ThueFormula(),
                 "Frobenius and halving a power-of-two exponent give C = X + C squared. "
                 + "Put t = X cubed + X C cubed. Polynomial algebra shows that C cubed "
@@ -146,6 +152,14 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
         Equal(PowerTwo(), Add(X(), Power(PowerTwo(), D(2)))),
         Equal(Power(PowerTwo(), D(3)), Call("subst", PowerTwo(),
             Add(Power(X(), D(3)), Mul(X(), Power(PowerTwo(), D(3))))))));
+
+    private static Formula QuadraticUniqueFormula() => Disp(Seq(
+        Bound("u", Series(ModTwo())), Bound("v", Series(ModTwo())),
+        Implication(Equal(Call("constantCoeff", F.Id("u")), D(0)),
+            Implication(Equal(Call("constantCoeff", F.Id("v")), D(0)),
+                Implication(Equal(Add(F.Id("u"), Power(F.Id("u"), D(2))),
+                    Add(F.Id("v"), Power(F.Id("v"), D(2)))),
+                    Equal(F.Id("u"), F.Id("v")))))));
 
     private static Formula GeneratingFormula() => Disp(Equal(Generating(),
         Call("choose", Seq(Exists, Sp, F.Id("f"), Colon, Sp, Series(Integers()), Comma, Sp,

@@ -1,0 +1,38 @@
+### 43.1 固定输出、原质量与两份近似预算
+
+沿用 §§41.1–41.2 的固定输出接口，以 $\Sigma$ 表示 (41.1) 的支撑投影，避免与原对称响应 $S$ 混淆。设 $A$ 为含单位复 $C^*$-代数，$P$ 为实际投影，$p,q\le P$ 为非零正交投影，置
+$$
+\Sigma=p+q,\quad c=p+2q,\quad K_\sigma(u,v)=\frac{\sigma i}{2}[u,v],\quad \sigma\in\{1,-1\},
+$$
+$$
+T=ptq\in pAq,\quad \tau=T+T^*,\quad t=\tau+b,\quad b=b^*=(1-\Sigma)b(1-\Sigma),
+\qquad s=s_p+s_q,\quad s_p=s_p^*\in pAp,\quad s_q=s_q^*\in qAq,\quad g=K_\sigma(c,t)+s.
+\tag{43.1}
+$$
+不要求 $p\sim q$ 或余量为标量；$b$ 无范数、谱或秩限制，可含 $P-\Sigma$ 与 $1-P$ 之间的任意耦合，禁止的是 $\Sigma$ 与 $1-\Sigma$ 之间的连线。对自伴元素保留 $u\circ v=(uv+vu)/2$，以及原来的
+$$
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2,\qquad
+\phi(g)^2\le B_\phi(c,t)\quad(\phi\ge0).
+\tag{43.2}
+$$
+这里及下文的量词包含全部数学正泛函、零泛函、任意非负有限质量及非正常正泛函，不作原质量归一。固定二表 P2 保持精确。对 $x=x^*\in PAP$，原标签准确仍是 (41.3)：
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\quad R_\pm=x\pm(h-k),\quad S_\pm=t\pm(r+g),\\
+L=-2x\circ(h-k)-2t\circ(r+g).
+\end{gathered}
+$$
+只取 (41.8) 的两份实际探针；其分母非零已由 §41.2 支付：
+$$
+d_\pm=\frac{1\pm\sqrt{10}}3,\qquad v=K_\sigma(c,\tau),\qquad
+x_d=\frac{v}{d-3/2}+z_d,\quad z_d=\frac{s_p}{d-1}+\frac{s_q}{d-2}\quad(d=d_+,d_-).
+\tag{43.3}
+$$
+探针可以依赖同一固定余量。以 $R_{d,\pm},S_{d,\pm},L_d$ 记其完整原标签；对同一 $\eta\ge0$，仅将这两份预算改为
+$$
+|\phi(L_d)|\le\sqrt{B_\phi(R_{d,+},S_{d,+})}+\sqrt{B_\phi(R_{d,-},S_{d,-})}+\eta\phi(1)
+\quad(\phi\ge0,\ d=d_+,d_-).
+\tag{43.4}
+$$
+这不是对完整 $\mathsf H_A(D)$ 的重定义，不假定任何响应映射、外响应值或以 $t$ 为演员的 PB。
+

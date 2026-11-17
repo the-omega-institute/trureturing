@@ -1,0 +1,21 @@
+**定义 132.1（原域、局部标签与源误差）。** 保留[131.1][Q132SR]的整个有限维实空间 $V$、闭尖生成锥 $C$、严格正单位 $u$，以及全部 $K=C\cap\{u=1\}$、$P=\operatorname{ext}K$、$\mathcal E=[0,u]_{C^*}$ 和完整原排除集 $D_r$。全局假设仍为 $\mathrm{EB}_{\ge1}$：每个 $D_r$ 是正维、允许变维的整个仿射欧氏闭球。固定一个原纯点 $p$，置 $F=D_p$、$k=\dim\operatorname{aff}F$；$F$ 的相对球面为 $S(F)=P\cap F$。记
+
+$$
+\begin{aligned}
+I(F)&=\{s\in P:D_s=F\},\\
+\mathcal A_a&=\{h\in\mathcal E:h(a)=1,\ h|_{D_a}=0\},\\
+N_t&=\{b\in C^*:b(t)=0\},\\
+\|b\|_K&=\max_{x\in K}|b(x)|,\qquad
+\|b\|_F=\max_{x\in F}|b(x)|,\\
+R_F(t,h)&=\inf_{b\in N_t}\|b-h\|_F.
+\end{aligned}
+\tag{Q132.1}
+$$
+
+$\|\cdot\|_F$ 可以是半范数；$R_F$ 只测固定原整球上的误差。$N_t$ 包含全部原锥正泛函，没有上界 $b\le u$。每个候选 $b$ 必须同时在整个 $C$ 上非负、精确零于同一个 $t$，并在整个 $F$ 上承担(Q132.1)的误差；不允许逐输入更换延拓。以下固定 $V$ 的任一范数及其对偶范数。由 $K$ 线性张成 $V$，存在 $A>0$ 使
+
+$$
+\|b\|_*\le A\|b\|_K\qquad(b\in V^*).
+\tag{Q132.2}
+$$
+

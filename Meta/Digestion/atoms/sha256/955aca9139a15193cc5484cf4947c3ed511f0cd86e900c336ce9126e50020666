@@ -1,0 +1,26 @@
+**定义 18.2（固定的二支细化）。** 精确取 (17.1) 的原矩阵 $O_i,\Phi$ 及整个三线输出通道 $\widehat\Phi(X)=I_B/2\otimes\Phi(X)_A\otimes I_F/2$。在假设 12.2 允许的固定已知标架中选定单位向量 $k$，令
+$$
+W=\mathrm{SWAP}_{BA},\qquad Q_0=W\otimes(k\cdot\sigma_F),\qquad
+\mu=I_{BAF}/8,\qquad \alpha=1/2.
+$$
+引入固定正交基 $|s\rangle_T$，$s=\pm1$，并置 $Z_T=\sum_s s|s\rangle\langle s|$，
+$$
+\begin{aligned}
+\Gamma_s(X)&=\frac{\widehat\Phi(X)}2+
+                 \frac{s\alpha}{2}\operatorname{Tr}(Q_0X)\mu,\\
+\Gamma(X)&=\sum_s\Gamma_s(X)\otimes|s\rangle\langle s|
+=\widehat\Phi(X)\otimes\frac{I_T}{2}
+ +\alpha\operatorname{Tr}(Q_0X)\mu\otimes\frac{Z_T}{2}.
+\end{aligned}
+\tag{18.3}
+$$
+$\Gamma$ 的输入维数为八、输出维数为十六，矩阵不依赖 $N,D,n,h$。协议 $\mathsf P_\Gamma$ 只把 $\mathsf P_{17}$ 的这一个 $\widehat\Phi$ 节点换成 $\Gamma$；第二原生槽、$B,A,F$ 的原替换、独立且未经改动的终端令牌和终端交换及替换均保持原样，之后恒等作用于 $T$，不以 $s$ 路由或选支。声明本节点的实际输出恰为 $B,A,F,T$。最终
+$$
+K'=K_{\rm old}\otimes T,\quad
+\omega_\Gamma=\operatorname{Tr}_R\Omega_\Gamma,\quad
+\Delta_\Gamma=D_{\rm tr}(\Omega_\Gamma,\tau_h\otimes\omega_\Gamma),
+\qquad D_{\rm tr}=\tfrac12\|\cdot\|_1.
+\tag{18.4}
+$$
+全部原始历史和两个部分 SWAP 输出始终在此口中。
+

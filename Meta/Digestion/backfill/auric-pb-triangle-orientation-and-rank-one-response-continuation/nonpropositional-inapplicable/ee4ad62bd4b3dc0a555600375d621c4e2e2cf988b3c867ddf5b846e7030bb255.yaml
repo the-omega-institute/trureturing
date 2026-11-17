@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee4ad62bd4b3dc0a555600375d621c4e2e2cf988b3c867ddf5b846e7030bb255
+  normalized_sha256: sha256:ee4ad62bd4b3dc0a555600375d621c4e2e2cf988b3c867ddf5b846e7030bb255
+cas_ref: sha256:ee4ad62bd4b3dc0a555600375d621c4e2e2cf988b3c867ddf5b846e7030bb255
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Expository plain-language restatement of Proposition 199.2 and its explicit scope boundaries; it introduces no independent mathematical proposition. This receipt neither supplies proof nor covers the mathematical atoms 199.1-199.3.
+    previous_atom_id: 3247b4233547b6fabce92b3febc3e86dc0ef2cafcd9db9eb4960ad86584244f6
+    next_atom_id: ce5db0e5113a7f37d0647f3c55103ffd07ef463b0b3c4651f905dbe8c8f0ecdd

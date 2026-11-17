@@ -1,0 +1,92 @@
+**Lemma 36.2 (finite service, no mesh overtaking and conditional energy).**
+Conditional on $\mathcal F_s$, the unrestricted service completes in
+finitely many attempts almost surely, before $t_{i+1}$. It traverses
+$g$ once in order, preserving its chronology and geometric variations.
+Its full original-time energy and attempt count satisfy
+
+$$
+\mathbb E(E_i^{\rm full}\mid\mathcal F_s)
+ \le\frac{128}{c\rho^2},\qquad
+\mathbb E(A_i^{\rm full}\mid\mathcal F_s)\le16/15.
+\tag{36.3}
+$$
+
+All issuances and interruptions obey Definition 33.1's information
+contract.
+
+Proof. At each reached $r_j$, strong Markov supplies a fresh joint
+Brownian future. Before the first-level $\epsilon_j$ exits, the
+relative central martingale
+$\int_0^u(W^1_{r_j+w}-W^1_{r_j})\,dW^2_{r_j+w}
+ +\nu(C_{r_j+u}-C_{r_j})$
+has quadratic variation at most
+$2(\epsilon_j^2+\nu^2)h_j\le2(1+\nu^2)h_j$ up to $h_j$.
+Also $|\lambda|h_j\le\epsilon_j/2$, because
+$h_j/\epsilon_j=4c\rho2^{-j}\le4c$.
+Reflection for the two first-level coordinates and the same stopped
+exponential inequality thus yield
+
+$$
+\begin{aligned}
+\mathbb P(\theta_j<h_j\mid\mathcal F_{r_j})
+&\le8e^{-\epsilon_j^2/(4h_j)}
+       +2e^{-\epsilon_j^2/[16(1+\nu^2)h_j]}\\
+&=8e^{-1/(64c)}+2e^{-1/[256c(1+\nu^2)]}\le q<1/16.
+\end{aligned}
+\tag{36.4}
+$$
+
+Here $\epsilon_j^2/h_j=1/(16c)$ is independent of $j$ and $\rho$.
+The independent $C$ term is included in the quadratic variation; an
+area-only Brownian estimate would not justify (36.4).
+
+If $A_j$ is the event of reaching attempt $j$, successive conditioning
+gives $\mathbb P(A_j\mid\mathcal F_s)\le q^j$. Every finite
+threshold delay is positive by continuity. Thus infinitely many attempts
+have probability zero and the expected count is at most
+$\sum_jq^j\le16/15$. Completion takes at most
+$\sum_jh_j=4c\rho^2/3<\rho^2$ units of the original clock.
+At any prefix before completion the target's first-level displacement
+from $s$ is at most $\sum_j\epsilon_j=\rho/2$. Chen's identity
+(16.9), applied to the successive attempt intervals, gives
+
+$$
+|D_{s,t}|\le\sum_j\epsilon_j+
+                     \sum_{j<j'}\epsilon_j\epsilon_{j'}
+ =\rho/2+\rho^2/12\le7\rho/12<\rho.
+\tag{36.5}
+$$
+
+Use a partial last interval for a partial attempt. The infinite sums
+only enlarge the actual finite sums. The same strict bounds hold at
+completion. Neither a target threshold nor the time cap for the next
+mesh knot can therefore have occurred: service finishes before
+$t_{i+1}$. This establishes the schedule without anticipating the next
+cell duration.
+
+Progress increases continuously, and the last attempt reaches $1$;
+there is no repeat of an already traversed geometric prefix. An attempt
+run to its planned end would have energy
+
+$$
+\frac{1-v_j}{h_j}\int_{v_j}^1|g'(v)|^2dv
+ \le64/h_j=\frac{64}{c\rho^2}4^j.
+\tag{36.6}
+$$
+
+Its interrupted prefix has no greater energy at its originally issued
+velocities. Tonelli with the reach probabilities gives
+$\mathbb E(E_i^{\rm full}\mid\mathcal F_s)
+\le64(c\rho^2)^{-1}\sum_j(4q)^j
+\le128(c\rho^2)^{-1}$, proving (36.3).
+
+Every profile in (36.2) is fixed numerically by its issuance-time
+geometry and progress. The threshold processes are continuous and
+adapted after $r_j$, so their first hitting times and their minima with
+planned completion and cutoffs are stopping times. Up to target death
+they use only the supplied past. The unrestricted future is used solely
+for a nonnegative cost bound. No command reads it. The construction is
+the suffix rule of §27 with the new central scale, repeated native
+rectangles and the explicit central-noise probability estimate above.
+$\square$
+

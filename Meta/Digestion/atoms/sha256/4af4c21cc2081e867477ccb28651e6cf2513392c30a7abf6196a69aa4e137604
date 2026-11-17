@@ -1,0 +1,7 @@
+To see the count, the rank-$t$ space, for $t\leq S$, has one vector from
+each chain starting at ranks $0,\ldots,t$ and dimension $\binom st$;
+subtract the rank-$t-1$ count. The chain starting at rank zero is unique
+and consists of the normalized constant vectors on the block's occupancy
+layers. These are exactly its permutation-invariant vectors. Formula
+(6.8) includes the length-one chains at $t=S$.
+

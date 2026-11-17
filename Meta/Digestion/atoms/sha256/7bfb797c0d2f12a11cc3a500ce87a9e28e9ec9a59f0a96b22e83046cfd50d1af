@@ -1,0 +1,69 @@
+**引理 26.3（四个暗顶点锁定对相位总量）。**定义 26.1 的条件下，对每个 $s\in\mu_6$，
+
+$$
+a_s+a_{-s}=\frac{2C}{3}.
+\tag{26.7}
+$$
+
+**证明。**先取任意暗 $D$-单位向量 $d\in D_0$。置
+
+$$
+u_s(d)=\frac{x+s y+d}{2}=\frac{\eta q_s+d}{2},
+\qquad
+v_s(d)=\frac{q_s-\bar\eta d}{2}.
+\tag{26.8}
+$$
+
+由 $q_s\perp d$、$|\eta|^2=3$，两向量范数均为一，内积为
+$(\bar\eta-\bar\eta)/4=0$，外积之和为 $Q_s+dd^*$。它们均在 $D^6$ 内；(26.3)、(26.5) 因此给
+$f(u_s(d))+f(v_s(d))=a_s$。
+
+再令 $H^\pm_{s,d}=(s y\pm d)(s y\pm d)^*/2$。这些是 $M_6(D)$ 幂等子；两者正交，和为 $Y+dd^*$，且都正交于 $X$。四根 $u$ 分成两对：
+
+$$
+\begin{aligned}
+P_{u_s(d)}+P_{u_{-s}(-d)}&=X+H^+_{s,d},\\
+P_{u_s(-d)}+P_{u_{-s}(d)}&=X+H^-_{s,d}.
+\end{aligned}
+\tag{26.9}
+$$
+
+每对内积为 $(2-1-1)/4=0$。这里及下文 $P_v=vv^*$ 只用于单位 $v$。对两行分别用正交可加性，再用
+$\mu(H^+_{s,d})+\mu(H^-_{s,d})=\alpha$，得到四根 $u$ 的质量和为 $C$。记
+
+$$
+\begin{gathered}
+A_s=a_s+a_{-s},\\
+E_s(d)=f(v_s(d))+f(v_{-s}(d))
+       +f(v_s(-d))+f(v_{-s}(-d)).
+\end{gathered}
+$$
+
+把四个已证的 $u/v$ 互补式相加，便有 $2A_s=C+E_s(d)$。
+
+现在取四个暗顶点
+
+$$
+\begin{aligned}
+\delta_0&=(d_1+d_2+d_3)/\eta,&
+\delta_1&=(d_1-d_2-d_3)/\eta,\\
+\delta_2&=(-d_1+d_2-d_3)/\eta,&
+\delta_3&=(-d_1-d_2+d_3)/\eta.
+\end{aligned}
+\tag{26.10}
+$$
+
+它们是 $D$-单位向量；任意两个不同符号行的内积为 $-1$，除以 $\bar\eta\eta=3$ 后为 $-1/3$。并有
+$\sum_i\delta_i=0$、$\sum_i\delta_i\delta_i^*=(4/3)D_0$。所以固定 $s$ 时，四根 $v_s(\delta_i)$ 的不同列内积为
+$[1+3(-1/3)]/4=0$，外积和为 $Q_s+D_0$；四根 $v_s(-\delta_i)$ 同样如此。正交可加性给
+
+$$
+\sum_i f(v_s(\delta_i))
+=\sum_i f(v_s(-\delta_i))=a_s,\qquad
+\sum_i E_s(\delta_i)=2A_s.
+\tag{26.11}
+$$
+
+对四个顶点的 $2A_s=C+E_s(\delta_i)$ 求和，得
+$8A_s=4C+2A_s$，即 (26.7)。所有加法先是六维测度的正交加法；其实际概率来源逐项由 (26.4) 的共同完整框架取得，未把四面体角度直接解释为概率。$\square$
+

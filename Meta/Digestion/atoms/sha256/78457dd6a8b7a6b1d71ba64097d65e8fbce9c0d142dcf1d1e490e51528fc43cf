@@ -1,0 +1,11 @@
+### 14.2 已付实星形不再计作新成果
+
+将 (14.1) 的 $B$ 改为 $\lambda C$，$\lambda\in\mathbb R$，其余 $C,D,V$ 不变，便准确得到运输卷的已付移位实星形。此时 $H=\lambda C$，而归一化的 $A=\lambda I$、$b=0$；直接在 (13.6) 中取
+
+$$
+G=\begin{pmatrix}1/\sqrt2&-1/2&0\\0&0&1/\sqrt2\end{pmatrix},\qquad
+Q=\operatorname{diag}(4/3,2),\qquad h=J=0,\quad\omega=1.
+$$
+
+故 (13.8) 为 $2|\rho|\le\sqrt{8/3}$，恰好是 $\rho^2\le2/3$。这只回收[运输卷定理 11.2](https://github.com/the-omega-institute/trureturing/blob/caab4df341883a38bfc59b17ca04ad2c41af4e32/docs/develop/theory/AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md)在固定提交 `caab4df341883a38bfc59b17ca04ad2c41af4e32` 的全部正泛函阈值，包括所有实 $\lambda$、两种取向和端点；不把这条已付阈值或旧星形证书计作新增。该固定提交中的运输卷定理 11.4 与推论 11.6 分别提供实际非零探针的扩大排除域与必要残余包络，并未给出星形的全部探针充要分类。
+

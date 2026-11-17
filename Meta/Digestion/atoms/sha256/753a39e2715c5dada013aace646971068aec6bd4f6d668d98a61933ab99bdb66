@@ -1,0 +1,23 @@
+### A.1　三相标记与统一比较界
+
+固定 $u,v$，令 $s_n=c(U^nu,U^nv)$。背景取 $(e,e)$，得到 $s_{n+1}+s_{n+2}=2s_n$，其解为 $A+B(-2)^n$。 所有 $s_n\ge0$ 迫使 $B=0$，故
+
+$$
+c(Uu,Uv)=c(u,v).
+\tag{8}
+$$
+
+把平衡式的增量换成 $(Uu,Uv)$ 并相减，得到
+
+$$
+c(a\odot U^3u,b\odot U^3v)=c(a\odot u,b\odot v).
+\tag{9}
+$$
+
+于是 $U^3u$ 与 $u$ 的全部行列比较相同。非负性还给
+
+$$
+c(a\odot u,b\odot v)\le3(c(a,b)+c(u,v)).
+\tag{10}
+$$
+

@@ -1,0 +1,9 @@
+**引理 72.2（原理想元素实现表示中的有限酉插值）。** 令 $\pi:A\to B(H_\pi)$ 是任意非零不可约表示，$\widetilde\pi:M(A)\to B(H_\pi)$ 为其含单位乘子延拓。对任意有限维 $L\subset H_\pi$ 和 $L$ 上酉算子 $W$，存在同一个原理想中的 $k=k^*\in I$，使
+
+$$
+\widetilde\pi(\exp(\mathrm ik))|_L=W.
+\tag{72.5}
+$$
+
+证明。非零不可约表示非退化，其乘子延拓由 $\widetilde\pi(m)\pi(a)\xi=\pi(ma)\xi$ 唯一决定；用正收缩近似单位，$\pi(me_\lambda)$ 一致有界且在稠密的 $\pi(A)H_\pi$ 上强收敛，给出该延拓及其乘法、伴随性质。有限维酉谱定理给 $t=t^*\in B(L)$、$e^{\mathrm it}=W$。将 $t$ 在 $L^\perp$ 上补零后，直接使用 Kadison，[*Irreducible Operator Algebras*，PNAS 43，273–276，Theorem 1，p.274](https://pmc.ncbi.nlm.nih.gov/articles/PMC528430/?page=2)：不可约 C* 算子代数对有限组线性独立向量可作精确插值；若目标来自一个自伴算子，可选自伴插值元。该定理不要求代数含单位。应用于不可约 C* 像 $\pi(A)$，再自伴提升回 $A$，得 $k=k^*\in A$ 且 $\pi(k)|_L=t$。自伴性使 $L$ 还原 $\pi(k)$，所以指数限制为 $e^{\mathrm it}=W$。$k\in I\subset E$ 是由明确前件支付的原演员；$L$ 的投影和 $t$ 自身均未成为旧 $D$ 的输入。∎
+

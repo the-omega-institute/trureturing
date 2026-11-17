@@ -1,0 +1,66 @@
+**定理 13.1（局部对合的整个反对易子空间）。** 设实际投影 $P$ 的整个 $PAP$ 已以符号 $\sigma$ 分类，$\jmath=\sigma i$。取任意
+
+$$
+e=e^*\in PAP,\quad e^2=P,\quad Q=1-P,\quad
+c=c^*\in QAQ,\quad\lambda\in\mathbb R,
+\tag{13.1}
+$$
+
+则对每个 $a=a^*\in PAP$、$ae+ea=0$，有
+
+$$
+\boxed{D(a,\lambda e+c)=\frac{\jmath}{2}[a,\lambda e].}
+\tag{13.2}
+$$
+
+不要求 $a^2$ 为 $P$ 的实倍数，也不要求 $a$ 可逆。
+
+证明。固定 $H=\lambda e+c,T=D(H,a)$。因 $H\circ a=0$，定理 11.2 先给 $T=PTP$。两个真正的零第二外槽 PB 分别为
+
+$$
+\begin{aligned}
+\operatorname{PB}(H;a,0):\quad
+&D(a+T,0)-D(a-T,0)=-2a\circ T,\\
+\operatorname{PB}(a;H,0):\quad
+&D(H-T,0)-D(H+T,0)=2H\circ T.
+\end{aligned}
+\tag{13.3}
+$$
+
+零槽使左边均为零，故 $a\circ T=H\circ T=0$。若 $\lambda=0$，则 $H=c$ 与 $a$ 的乘积双向为零，(11.12) 已给 (13.2)。以下设 $\lambda\ne0$；由 $T=PTP,cT=Tc=0$，有
+
+$$
+eT+Te=0.
+\tag{13.4}
+$$
+
+取实际投影 $r_+=(P+e)/2$。它满足 $Hr_+=r_+H=\lambda r_+$，所以 (11.11) 给 $D(H,r_+)=0$。现在使用实际 $\operatorname{PB}(H;r_+,a)$：
+
+$$
+\begin{gathered}
+v=0,\qquad w=\lambda r_++T,\\
+(r_+,\ a+\lambda r_++T),\qquad
+(r_+,\ a-\lambda r_+-T).
+\end{gathered}
+\tag{13.5}
+$$
+
+全部外标签确在同一已分类的 $PAP$ 内。角公式使左边成为 $\jmath[r_+,T]$；右边由 $a\circ T=0,a\circ r_+=a/2$ 成为 $-\lambda a$。由 (13.4)，$[r_+,T]=eT$，从而
+
+$$
+\jmath eT=-\lambda a,\qquad T=\jmath\lambda ea.
+\tag{13.6}
+$$
+
+第二式由左乘 $e$、$e^2=P$ 和 $\jmath^{-1}=-\jmath$ 得到。反对称性及 $ae=-ea$ 遂给 $D(a,H)=-T=\jmath\lambda ae=\jmath[a,\lambda e]/2$。零角、零 $a$ 和零 $r_+$ 包含于上述等式；没有延拓 $D$ 的定义域。∎
+
+例如在 $M_3(B)$ 的 $12$ 角内，取 $e=E_{12}+E_{21}$。整个反对易自伴子空间准确写成
+
+$$
+a=(E_{11}-E_{22})u+i(E_{12}-E_{21})v,
+\qquad u,v\in B_{\rm sa}.
+\tag{13.7}
+$$
+
+这里 $E_{ij}z$ 表示矩阵单元张量 $z$，不要求 $u,v$ 交换。直接块相乘验证 $a=a^*,ae+ea=0$；反向由一般自伴 $2\times2$ 块的反对易等式得到对角块互负、非对角块反自伴，故 (13.7) 无遗漏。定理 13.1 允许任意 $c=E_{33}w,w=w^*\in B$，但仍明确要求整个 $12$ 角的分类前件。
+

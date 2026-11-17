@@ -1,0 +1,33 @@
+**定义 55.1（完整原资料及其数学环境）。** 完整采用本卷40.1及[原PB运输续卷118.1–118.3](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md#118-任意原偶背景第一实际框架与同一余量)的同一原 $(E,C,u,N,\mathcal P,S,D)$ 和全部前件。$E$ 是实Archimedean序单位空间；全部原正实线性评价分离元素并准确决定锥，全部零、不等及次归一质量保留。A1保留每对原标签的两条实际有向Hermitian二表正性；A2保留相加三表 $(a+b,a,b)$ 及全部排列在整个 $\mathbb R^3$ 上的实部半正定性和相应 $(1,-1,-1)$ 零二次值；A3保留 $S(u,u)=u$ 和同一个固定有理 $0<\vartheta_0\le1$ 上的 $0\le y\le\vartheta_0u\Rightarrow S(y,y)\le y$。全部原P2、完整原PB及全部原输入、评价量词不变。沿同一已付忠实、含单位、等距且准确保锥的JC包含，仍记
+
+$$
+\begin{gathered}
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E^{\|\cdot\|}=X,\qquad \mathcal A=C^*(X),\\
+S(a,b)=a\circ b=(ab+ba)/2,\qquad
+C=E\cap\mathcal A_+,\qquad N=\|\cdot\||_E,\\
+h,e,j=D(h,e)\in E,\qquad h^2=e^2=j^2=u,\qquad
+h\circ e=h\circ j=e\circ j=0,\\
+Q=ihej\in Z(\mathcal A),\qquad Q^*=Q,\qquad Q^2=u.
+\end{gathered}
+\tag{55.1}
+$$
+
+$Q$ 不要求属于 $E$。原域可不完备、无限维、不可分，也不要求 $X=\mathcal A_{\rm sa}$。$D:E^2\to E$ 始终为同一原总映射，不预付一般可加、齐次、连续、可测、单位平移中性、协变、商下降、完成延拓或一般环境交换子输出闭合。七项物理消费者及其各自全部来源前件完整取61.1；数学包含和实际框架不被当成这些来源已获供应的证明。
+
+为明确全部PB及正读取的用途，对任意原 $a,b,d\in E$，有
+
+$$
+\begin{gathered}
+\eta=D(a,b)-a\circ d,\qquad \zeta=a\circ b+D(a,d),\\
+D(b+\eta,d+\zeta)-D(b-\eta,d-\zeta)
+=-2b\circ\eta-2d\circ\zeta,\\
+|\phi D(a,b)|^2\le
+\phi(a^2)\phi(b^2)-\phi(a\circ b)^2
+\qquad(\phi:E\to\mathbb R\text{ 正实线性}).
+\end{gathered}
+\tag{55.2}
+$$
+
+最后一行准确消费运输续卷118.2的同表正读取：准确锥把原二表的正性传给每个数学正泛函，不增添实际准备，不除以读取质量。
+

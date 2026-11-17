@@ -1,0 +1,8 @@
+### 22.2. The complete unitary quadratic form
+
+Fix $\sigma\in\{+,-\}$. The vectors $b_\sigma$ and matrices $U_\sigma$ are exactly (6.7) and (6.3), and $E_\sigma=\bar b_\sigma\bar b_\sigma^\dagger$. Define the row weights and certificate eigenvalues by
+
+| $\sigma$ | $u$ | $v$ | $\chi$ | $L$ | $M$ |
+| --- | --- | --- | --- | --- | --- |
+| $+$ | $c$ | $s$ | $1$ | $d$ | $e$ |
+| $-$ | $s$ | $c$ | $-1$ | $e$ | $d$ |

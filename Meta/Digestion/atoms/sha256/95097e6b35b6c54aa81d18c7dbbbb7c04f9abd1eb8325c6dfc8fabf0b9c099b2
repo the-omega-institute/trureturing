@@ -1,0 +1,14 @@
+**引理 42.5（未选择取向时的忠实 JC 环境）。** 41.1的实 JB 代数有忠实含单位等距 Jordan 嵌入一个 C* 代数的自伴部，不要求 $\mathcal O_{\rm alg}$ 有截面。
+
+证明。取有限 Jordan 图覆盖，索引集 $I=\{(x,\alpha):x\in O_\alpha\}$。定义
+
+$$
+\iota:E\longrightarrow
+\Bigl(\prod_{(x,\alpha)\in I}^{\ell^\infty}M_n(\mathbb C)\Bigr)_{\rm sa},
+\qquad
+\iota(a)_{(x,\alpha)}=\theta_{\alpha,x}(a(x)).
+\tag{42.9}
+$$
+
+它实线性、含单位、保 Jordan 运算，逐点范数给 $\|\iota(a)\|=N(a)$；全部点均被覆盖，故单射。41.4的完备性使像闭，正锥也逐点准确对应。这支付一个忠实 JC 环境。乘积的多个坐标只是同一输入的数学读取，不是新增原标签、物理副本或原相关联合；$\iota(E)$ 也未被证明对乘积的结合乘法闭合。这种环境不预付所求全局乘法。∎
+

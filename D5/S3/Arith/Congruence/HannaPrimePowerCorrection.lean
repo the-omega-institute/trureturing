@@ -25,7 +25,7 @@ result: proof_shape: content; escape_witness: bounded_prime_powers;
 Direct frozen dependencies (same-delivery definitions and proofs inlined):
 F2, F3 and F5 identify the frozen private baseline declarations; their original
 statements and proofs are public in the owner source and require an owner re-pin.
-F1: D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.IntegralSeries
+F1: D5/S1/Recurrence/Algebraic/IntegralPowerSeries.IntegralSeries
   statement_id: sha256:63e70f464749e368856bfaa91133b0adfeda478327572310319dbf6077b632cb
 F2: D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.divisorGhost
   statement_id: sha256:21956ccba4e2bdcbe6fcfaf5b134408727aa6d13d982fd91797da7202f724a89
@@ -45,7 +45,7 @@ The proof is symbolic and quantifies over all primes and positive exponents.
 -/
 
 import D5.S1.Recurrence.Witt.HannaDiagonalGhostPowerIntegrality
-import D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
+import D5.S3.Arith.Congruence.BoundedPowerCorrection
 
 /-! Bounded integral square-weight corrections stabilize on prime-power chains. -/
 
@@ -97,49 +97,7 @@ private theorem bounded_prime_powers (a : ℕ → ℤ)
         ((p ^ (k + 1) : ℕ) : ℤ) ^ 2 - a (p ^ (k + 1)) -
         (((p ^ k : ℕ) : ℤ) ^ 2 - a (p ^ k))) :
     ∀ (p r : ℕ), p.Prime → 1 ≤ r → a (p ^ r) = (p : ℤ) - 1 := by
-  intro p r hp hr
-  have h1 : a 1 = 0 := by
-    have := ha 1 le_rfl
-    norm_num at this
-    omega
-  have hpZ : (1 : ℤ) < p := by exact_mod_cast hp.one_lt
-  have hall : ∀ k : ℕ, a (p ^ (k + 1)) = (p : ℤ) - 1 := by
-    intro k
-    induction k with
-    | zero =>
-      have h := hd p hp 0
-      simp only [Nat.zero_add, pow_one, pow_zero, Nat.cast_one, one_pow, h1, sub_zero] at h
-      have hz : (p : ℤ) ∣ a p - ((p : ℤ) - 1) := by
-        have hsq : (p : ℤ) ∣ (p : ℤ) ^ 2 := dvd_pow_self _ (by omega)
-        convert (hsq.sub h).sub (dvd_refl (p : ℤ)) using 1; ring
-      have hb := ha p hp.pos
-      have hm := (Int.modEq_iff_dvd.mpr hz).symm.eq
-      rw [Int.emod_eq_of_lt hb.1 hb.2,
-        Int.emod_eq_of_lt (by omega : 0 ≤ (p : ℤ) - 1) (by omega)] at hm
-      simpa using hm
-    | succ k ih =>
-      have h := hd p hp (k + 1)
-      simp only [Nat.add_assoc, show 1 + 1 = 2 from Nat.one_add 1] at h
-      have hbig : (p : ℤ) ^ (k + 2) ∣ ((p : ℤ) ^ (k + 2)) ^ 2 := by
-        exact dvd_pow_self _ (by omega)
-      have hsmall : (p : ℤ) ^ (k + 2) ∣ ((p : ℤ) ^ (k + 1)) ^ 2 := by
-        rw [← pow_mul]
-        exact pow_dvd_pow (p : ℤ) (by omega : k + 2 ≤ (k + 1) * 2)
-      have hz : (p : ℤ) ^ (k + 2) ∣ a (p ^ (k + 2)) - a (p ^ (k + 1)) := by
-        push_cast at h
-        convert (hbig.sub hsmall).sub h using 1; ring
-      rw [ih] at hz
-      have hb := ha (p ^ (k + 2)) (Nat.one_le_pow _ _ hp.pos)
-      have hmodpos : 0 < (p : ℤ) ^ (k + 2) := pow_pos (by omega) _
-      have hplt : (p : ℤ) - 1 < (p : ℤ) ^ (k + 2) := by
-        have ht : (p : ℤ) ≤ (p : ℤ) ^ (k + 2) := le_self_pow₀ (by omega) (by omega)
-        omega
-      have hm := (Int.modEq_iff_dvd.mpr hz).symm.eq
-      rw [Int.emod_eq_of_lt hb.1 (by exact_mod_cast hb.2),
-        Int.emod_eq_of_lt (by omega : 0 ≤ (p : ℤ) - 1) hplt] at hm
-      simpa [Nat.add_assoc] using hm
-  obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : r ≠ 0)
-  exact hall k
+  exact bounded_power_corrections 2 (by omega) a ha hd
 
 theorem result : claim := by
   intro a ha

@@ -4,9 +4,21 @@
 
 All-price prime tails for the original strict and maximal resource optimizers.
 
+**Theorem 1.1 (The same integer Euler truncation equality).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.log_sigma_div_eq_eulerMass_sub_tail`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.log_sigma_div_eq_eulerMass_sub_tail` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive integer N, log(sigma(N)/N)=eulerMass(N)-tail(N). This exposes the unchanged canonical finite Euler-product proof for the complete signed margin consumer. No new factorization mechanism or analytic premise is introduced.
+
 Both original endpoints, all positive prices, all primes and layers, and simultaneous ties are retained. The strict EndpointRobinEstimates sign and the original global Robin goal remain open.
 
-**Lemma 1.1 (The existing pointwise endpoint tail estimates).**
+**Lemma 1.2 (The existing pointwise endpoint tail estimates).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
 
 The existing endpoint_local declaration is made public with its statement and proof body unchanged for the weighted upper-scale consumer. For q>0, either original endpoint, a prime p and a_p>=1, its complete local tail is nonnegative, lies between the existing lowerPrice and upperPrice, and is at most both p/(p-1)*(exp(q log(p))-1) and 5/(4p^2). All original layer and tie conditions are retained. This visibility change reuses the original proof.
 
-**Lemma 1.2 (Sharp local prices, the exact residual, and a uniform same-integer tail estimate).**
+**Lemma 1.3 (Sharp local prices, the exact residual, and a uniform same-integer tail estimate).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
 
@@ -56,7 +68,7 @@ Combining the exact original margin decomposition, E3(u)>=-E2p(u), the preceding
 
 These are the original lower-control and equivalent prime-log derivations, not new canonical theorem bindings. Their exact original statements and Lean proof bodies remain transient. The remaining original obligation is strict positivity of E3(u)+T+log(log A)-log(log u) at both endpoints for every q>0 with strictInteger(q)>5040. J>=0 or a local strict gain does not prove that sign. Positivity of E3(u)+B+log(log A)-log(log u) would be sufficient, but is neither necessary nor proved here. The sharp upper-tail estimate cannot supply a lower sign.
 
-**Lemma 1.3 (Shared complete-tail positivity and original margin identity).**
+**Lemma 1.4 (Shared complete-tail positivity and original margin identity).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.tail_robin_data`
 
@@ -68,7 +80,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.tail_robin_data`
 
 For every positive m with literal initial prime support, the full tail(m) is nonnegative and robinLogMargin(m)=E3(P)+tail(m)+log(log(log(m))) -log(log(P)), where P=largestPrime(m). The existing layer nonnegativity and finite Euler/log-sigma calculations are shared by finite_min_tail_robin_bound and the uniform lower correction's complementary clock-gap branch. Every actual prime exponent remains in tail(m); no optimizer or RH premise is used.
 
-**Theorem 1.4 (Finite same-integer min-cost correction and Robin decomposition).**
+**Theorem 1.5 (Finite same-integer min-cost correction and Robin decomposition).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.finite_min_tail_robin_bound`
 
@@ -88,6 +100,7 @@ The same declaration then consumes the canonical Mertens.E3 prefix identity and 
 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.finite_min_tail_robin_bound`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.log_sigma_div_eq_eulerMass_sub_tail`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.tail_robin_data`
 - Dependency: [D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone](../GoldenResource/FirstLayerMarginalAntitone.md)

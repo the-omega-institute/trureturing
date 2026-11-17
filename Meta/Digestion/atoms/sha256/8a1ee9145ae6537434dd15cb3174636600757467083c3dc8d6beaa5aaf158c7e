@@ -1,0 +1,42 @@
+**引理 48.2（共同静态入口及全部质量）。** 在44.3前件下，$M_\sigma$ 的同一乘法给全部有限原复表正性、原换括号、Jacobi、Jordan导子律及保质量忠实 Hilbert 表示。
+
+证明。任取有限 $a_1,\ldots,a_k\in E$、$z_1,\ldots,z_k\in\mathbb C$ 及每份原评价，置 $Y=\sum_jz_ja_j$，由44.2得
+
+$$
+\sum_{j,l}\bar z_jz_l
+\{\gamma(a_j\circ a_l)-i\gamma D(a_j,a_l)\}
+=\gamma_{\mathbb C}(Y^*\cdot_\sigma Y)\ge0.
+\tag{48.3}
+$$
+
+同一结合律给准确原实部换括号式
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)),
+\tag{48.4}
+$$
+
+并给交换子的 Jacobi 和 Jordan 导子律。每个固定 $a$ 的有界数学导子为
+
+$$
+L_a(b)=D(a,b)=\frac i2[a,b]_\sigma,\quad
+e^{tL_a}(b)=e_{\cdot_\sigma}^{ita/2}\cdot_\sigma b
+\cdot_\sigma e_{\cdot_\sigma}^{-ita/2}.
+\tag{48.5}
+$$
+
+直接消费主源33.3的 GNS 构造，先取全部数学态直和保证忠实，再加入每份正质量原评价的归一 GNS 分量，其向量乘 $\sqrt{m_\gamma}$；零质量为零向量。得到含单位保锥等距 $\Pi:M_\sigma\to B(H)$ 及每份原 $\xi_\gamma$，使
+
+$$
+\begin{gathered}
+\Pi(S(a,b))=\{\Pi(a)\Pi(b)+\Pi(b)\Pi(a)\}/2,\\
+\Pi(D(a,b))=i[\Pi(a),\Pi(b)]/2,\\
+\gamma(a)=\langle\xi_\gamma,\Pi(a)\xi_\gamma\rangle,
+\qquad\|\xi_\gamma\|^2=m_\gamma.
+\end{gathered}
+\tag{48.6}
+$$
+
+这些是同一既有静态 C* 接口的直接应用，不是另选替代响应。表示像无需等于全 $B(H)$；一般中心的正常性、全局密度矩阵、全局 Kraus 族或实际准备不由此给出。∎
+

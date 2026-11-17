@@ -1,0 +1,16 @@
+**引理 490.2（固定长度的剖面均方）。** 设 (490.2)。固定 $1\le a<b\le2$、$c>0$，令 $h=cX^\theta$、$\ell_X=\log(X/h)$。则
+
+$$
+\frac1{Xh\ell_X}\int_{aX}^{bX}F_{h,g}(x)^2\,dx\longrightarrow(b-a)\,Q(g),
+\qquad\text{即}\qquad
+\int_{aX}^{bX}P_{h,g}(x)^2\,dx=(b-a)Q(g)\frac Xh\log\frac Xh+o\!\Bigl(\frac Xh\log\frac Xh\Bigr).
+$$
+
+证明。令 $K_X(s,t)=\frac1{Xh\ell_X}\int_{aX}^{bX}D_{sh}(x)D_{th}(x)\,dx$。在包含全部 $x+sh$ 的紧区间上 $|D_{sh}(x)|\le2B$，故未归一化的三重绝对积分至多 $4B^2(b-a)X\|g\|_1^2$，Fubini 给出
+
+$$
+\frac1{Xh\ell_X}\int_{aX}^{bX}F_{h,g}^2\,dx=\int_0^1\!\!\int_0^1g(s)g(t)K_X(s,t)\,ds\,dt .
+$$
+
+对固定 $s,t\in[0,1]$，$K_X(s,t)\to(b-a)\min(s,t)$：这是由普通方差经极化恢复两点相关的经典计算（见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 附注 2.3），其证明与引理 489.2 逐字相同，只需核对所用长度落在 (490.2) 的指数带内。所需端点为 $Y=dX+O(h)$（$d\in[1,2]$ 固定），所需长度为 $qh$（$q\in\{s,t,|s-t|\}$ 为正的固定数），故 $qh/Y^\alpha\asymp X^{\theta-\alpha}\to\infty$、$qh/Y^\beta\asymp X^{\theta-\beta}\to0$，且 $\log(Y/(qh))=\ell_X+O(1)$；$s=t$ 或 $st=0$ 的情形无需长度 $|s-t|h$。另一方面，由引理 490.1(i) 与 Cauchy–Schwarz，存在 $C$ 使对充分大的 $X$，$\sup_{s,t\in[0,1]}|K_X(s,t)|\le C$。于是被积函数受 $C|g(s)g(t)|$ 控制，后者在单位正方形上可积；由控制收敛定理得极限 $(b-a)\iint g(s)g(t)\min(s,t)=(b-a)Q(g)$。证毕。
+

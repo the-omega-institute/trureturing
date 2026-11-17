@@ -1,0 +1,1 @@
+**Corollary 202.3 (pairwise search interface for rank four).** Assume $d_u=2$ and let $A,B\in\mathscr P_u$ be nonzero rank-one matrices. If $(A,B)$ is transverse, then every strict convex combination in (202.3) belongs to $\mathscr P_u$ and has column rank two. 

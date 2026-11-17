@@ -1,0 +1,35 @@
+### 18.1 Standing data and the new restriction
+
+**Standing assumptions 18.1.** Retain the source, the once-sampled finite or countable prior, both endpoint masses, every supported target, both seeds, all paid histories, source-independent initialization, the complete raw carriers (including their infinite noncompletion outcomes), the original records, completion and matching Stop, and the same-update rules of Definition 11.2. Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ have the two full-descriptor residual equations (11.7) and the same unweighted marginals (11.6). Assume that the endpoint coordinate boxes (11.29) hold almost surely for both marginals. The only extra hypothesis in this section is that $\nu_p$ has finite support and that its averaged marker-one masses
+
+$$
+ d_n=\int Q(w_{n,1})\,d\nu_p(Q)
+$$
+
+satisfy, for some integer $N\ge0$,
+
+$$
+ d_{n+2}-\frac{104}{225}d_{n+1}+\frac4{75}d_n=0
+ \qquad(n\ge N).
+ \tag{18.1}
+$$
+
+No atomicity of $\nu_\beta$ is assumed in this standing hypothesis. In particular, (18.1) is a condition on one averaged complete-word sequence; it does not assume native individual laws, native acquired residuals, synchronized four-moment barycentres, a common return rate, reversibility, zero return variation, or a fixed label count.
+
+Put
+
+$$
+ z_a=\frac29,\qquad z_b=\frac6{25},\qquad
+ c_a=(1-a)^2=\frac49,\qquad c_b=(1-b)^2=\frac9{25}.
+$$
+
+Thus the two characteristic roots in (18.1) are $z_a,z_b$, and
+
+$$
+ P_{p,a}(w_{n,1})=c_a z_a^n,\qquad
+ P_{p,b}(w_{n,1})=c_b z_b^n.
+ \tag{18.2}
+$$
+
+The source-relative gap addressed here is the passage from (18.1), a single averaged tail constraint, to the full descriptor and flow classification below. That passage is absent from the supplied native-mixture and synchronized-fibre results.
+

@@ -1,0 +1,11 @@
+#### 定义 6.5：内部复标量与幅度比较
+
+以内部平面 $\mathbb C_e=\operatorname{span}_\mathbb R\{\mathbf 1,e\}$ 表示复数，规定
+
+$$
+(\alpha+i\beta)x:=\alpha x+\beta Jx,
+\qquad h(x,y):=B(x,y)+iB(Jx,y),\qquad H_J=(A,J,h).
+$$
+
+这里的 $i$ 从左作用；下文的 $h$ 第一槽共轭线性、第二槽线性。
+

@@ -1,0 +1,23 @@
+**定义 22.7（十二射线有限几何）。**先在四坐标中工作，嵌入二十七模时其余坐标保持原标签。令
+
+$$
+S=\sum_{i=0}^2P_{e_i},\qquad T=S+P_{e_3},\qquad
+\sigma,\rho\in\{\pm1\},\quad s=\sigma\rho,\quad
+\tau\in\{1,\zeta,\zeta^2\}.
+$$
+
+此处 $S$ 为当前三坐标角；在二十七模候选中可取与 (21.8) 同一原角。定义十二个标签下的三族向量
+
+$$
+\begin{aligned}
+v_{\sigma\rho\tau}&=e_0+\sigma\tau e_1+\rho\tau^2e_2,\\
+q_{\sigma\rho\tau}&=v_{\sigma\rho\tau}/\eta,\\
+h_{\sigma\rho\tau}&=(v_{\sigma\rho\tau}+s e_3)/2,\\
+r_{\sigma\rho\tau}&=(v_{\sigma\rho\tau}-3s e_3)/(2\eta)
+=q_{\sigma\rho\tau}/2-\bar\eta s e_3/2.
+\end{aligned}
+\tag{22.17}
+$$
+
+三族均为 $A'$ 单位向量，$q$ 还在 $A^4$ 中。“十二射线约束”指十二个 $q$ 标签及其相连 $h,r$ 和框架；不把整个有限集合的射线总数误报为十二。
+

@@ -1,0 +1,70 @@
+**Definition 20.2 (the complete finite numerical-command class).** A
+policy in $\mathcal C_T$ has a sequence of active issue times
+$\sigma_0=0,\sigma_1,\ldots$, with unused times set to $\infty$.
+Distinct active times increase strictly; finitely many instructions at
+one instant may be collapsed, since zero elapsed time cannot move the
+state. At $\sigma_j$ the issuer chooses a zero-start numerical pair
+$\gamma_j=(a_j,b_j)$ of absolutely continuous functions of elapsed
+time on $[0,T]$. Measurability means measurability as a random element
+of $C([0,T];\mathbb R^2)$ with its uniform topology, taking values in
+the zero-start AC paths. This admits arbitrary AC
+profiles, including profiles with infinitely many internal bends; it
+does not restrict a command to a constant velocity or a single leg.
+A specified shorter duration is represented by constant continuation.
+
+Until interruption or its own height exit, the actual controls are
+exactly the issued numerical functions, translated from the controls
+already executed. Thus, on an active interval starting at $\sigma_j$,
+
+$$
+A_t=A_{\sigma_j}+a_j(t-\sigma_j),\qquad
+B_t=B_{\sigma_j}+b_j(t-\sigma_j).
+\tag{20.1}
+$$
+
+The next issue time may depend on all subsequently available observations;
+it need not be known at $\sigma_j$. An interruption with no replacement
+means the zero-increment hold, counted as a new segment in this
+representation. Resuming, restarting or changing a
+profile after a pause counts as another issuance of the resulting
+numerical segment. The joins in (20.1) are continuous. A command may
+be interrupted at a predictable time, at a target exit, or at any other
+admissible stopping time; the interruption itself changes neither height
+nor phase and declares no native death. A feedback instruction whose
+future numerical values still depend on future observations is not a
+numerical profile chosen at issuance, even if the instruction has a
+finite description.
+
+Set
+
+$$
+\tau^{\rm N}=\inf\{t\in[0,T]:k+A_t\notin(l,u)\},\qquad
+\inf\varnothing=\infty.
+\tag{20.2}
+$$
+
+At this actual own exit, hold both controls for the rest of $[0,T]$.
+Only then is the native killed observation sent to $\dagger$.
+The recursively executed controls are adapted and continuous, so
+their first exit is a stopping time; the automatic boundary hold
+needs no access to a future target value.
+There are almost surely finitely many active issuances up to
+$\tau^{\rm N}\wedge T$, with no deterministic bound on their number.
+This is finiteness of executions, not finiteness of distinct command
+strings. In particular it excludes infinitely many new issuances
+accumulating at the death endpoint, as well as earlier accumulation.
+Being finite on every compact interval strictly before death would be
+a weaker condition and is not substituted for this one.
+All pathwise execution requirements hold almost surely, on one event
+for the countable sequence of issued profiles.
+
+This class is the union over all seeds and all knowledge filtrations
+in Definition 20.1, all such adaptive issue/interruption rules and all
+such numerical profiles. No bound on variation, speed, quadratic cost,
+profile complexity, observation precision or observation rate is imposed.
+The finite issuance requirement is the declared operational meaning of
+executing finitely many numerical commands. N admits individual AC
+histories; it does not assert that every adapted random AC history has
+such a finite online issuance representation. Section 23 distinguishes
+these two classes inside the same original source.
+

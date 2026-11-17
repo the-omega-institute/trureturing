@@ -1,0 +1,18 @@
+#### 命题 3.2：归一化的稳定边界
+
+若 $M,N\succeq0$，$s=\operatorname{Tr}M>0,t=\operatorname{Tr}N>0$，则
+
+$$
+\left\|\frac Ms-\frac Nt\right\|_1
+\le\frac{\|M-N\|_1+|s-t|}{\max(s,t)}
+\le\frac{2\|M-N\|_1}{\max(s,t)}.
+$$
+
+**证明。**
+
+写 $M/s-N/t=(M-N)/s+N(1/s-1/t)$，得分母为 $s$ 的上界；交换两者再取较小上界。最后用 $|\operatorname{Tr}(M-N)|\le\|M-N\|_1$。
+
+$\square$
+
+取 $M=\varepsilon|0\rangle\langle0|$、$N=\varepsilon|1\rangle\langle1|$，可见分支质量趋零时没有统一有限的归一化误差常数。稳定条件应说明质量下界。
+

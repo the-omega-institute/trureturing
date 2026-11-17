@@ -1,0 +1,63 @@
+**Lemma 8.1 (E2: global scalar entropy bound).** At every $q\in(0,1)$, writing $r=1-q$,
+
+$$
+\frac{R_8}{R_9}\le r,
+\qquad \frac{R_7}{R_9}\le r^2,
+\qquad \epsilon\le\delta r,
+\qquad d_i(q,L)\le4\delta^2r^2
+\tag{8.1}
+$$
+
+for both targets and every finite integer $L\ge1$.
+
+Proof. Absolute convergence permits shifting the power sums. For integers $m\ge1$,
+
+$$
+(1-q)R_m(q)=\sum_{k\ge1}[k^m-(k-1)^m]q^k.
+\tag{8.2}
+$$
+
+Since $(k-1)^m\le(k-1)k^{m-1}$, each bracket is at least $k^{m-1}$. Therefore $R_{m-1}/R_m\le r$. Use $m=9$ and $m=8$ consecutively to obtain $R_8/R_9\le r$ and $R_7/R_9\le r^2$. The envelope gives
+
+$$
+\epsilon=\frac{\sum_{k\ge1}\Delta_H(k)q^k}{R_9}
+\le\delta\frac{R_8}{R_9}\le\delta r.
+\tag{8.3}
+$$
+
+For either reference $j$, $F_j(k)\ge k^9$ and $Z_0\le Z_j\le Z_1$, so $Z_j/Z_1^2\le1/Z_0$. By the exact normalized difference,
+
+$$
+\begin{aligned}
+\sum_{k\ge1}\frac{w_k^2}{f_j(k)}
+&=\sum_{k\ge1}\frac{Z_j}{Z_1^2F_j(k)}
+[\Delta_H(k)-\epsilon k^9]^2q^k\\
+&\le\frac1{Z_0}\sum_{k\ge1}
+\frac{[\Delta_H(k)-\epsilon k^9]^2q^k}{k^9}\\
+&\le\delta^2\frac{R_7+2rR_8+r^2R_9}{R_9}
+\le4\delta^2r^2.
+\end{aligned}
+\tag{8.4}
+$$
+
+Here $|\Delta_H(k)-\epsilon k^9|\le\delta k^8+\delta r k^9$ supplies the third line. All series converge. This calculation covers both reference labels, and hence both entropy directions.
+
+For positive probability masses $p,r_0$, $\log x\le x-1$ gives
+
+$$
+\operatorname{KL}(p\Vert r_0)
+\le\sum_zp(z)\left(\frac{p(z)}{r_0(z)}-1\right)
+=\sum_z\frac{[p(z)-r_0(z)]^2}{r_0(z)}.
+\tag{8.5}
+$$
+
+For the full source laws their ratios are bounded, since the envelope compares both $F_i$ and $Z_i$ by $B$. The sums and equality are therefore legitimate. Their difference is $w$ or $-w$. Applying (8.4)–(8.5), and then (7.9) to the tail masses while retaining the short terms, yields
+
+$$
+d_i(q,L)\le\operatorname{KL}(f_i\Vert f_j)
+\le\sum_{k\ge1}\frac{w_k^2}{f_j(k)}\le4\delta^2r^2.
+\tag{8.6}
+$$
+
+This remains valid when the collapsed reference tail is very small. No endpoint approximation or small-cutoff condition enters. $\square$
+

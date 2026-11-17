@@ -1,0 +1,38 @@
+**引理 46.3（低次数正性）。** 每个 $b_\ell>0$。
+
+**证明。** 若 (46.13) 有非零公共核向量 $v$，则 (46.2) 的每个残差项均为零，因其尾词属于 (46.3)。所以 $T$ 的像空间非零、有限维，并同时对 $\pi_\ell(A)$、$\pi_\ell(C)$ 及其逆元不变。由 $\langle A,C\rangle$ 在 $SO(3)$ 中稠密和作用连续，该像空间为 $SO(3)$ 不变子空间；$\mathcal H_\ell$ 不可约，故像空间等于整个 $\mathcal H_\ell$。
+
+矩阵 $M_s$ 的八个伴随块给出 $R(M_s)=0$，而 (46.2) 因而给出
+
+$$
+R(\pi_\ell(A))T=TR(M_s)=0.
+$$
+
+这将迫使 $R(\pi_\ell(A))$ 在整个 $\mathcal H_\ell$ 上为零。另一方面
+
+$$
+R(z)=(z-1)(z^2+xz+1),
+$$
+
+其根为 $1,e^{\pm3\pi i/5}$；每个 $\ell\ge2$ 的 $A$ 作用含有权 $2$ 的特征值
+$e^{\pm6\pi i/5}$，与这些根均不同，矛盾。因此公共核为零，有限维单位球面紧性给出 $b_\ell>0$。∎
+
+由 §45 的 Benoist--de Saxcé 谱隙结论，令
+
+$$
+\nu=\frac{\delta_I+\delta_A+\delta_{A^{-1}}+\delta_C+\delta_{C^{-1}}}{5},
+\qquad
+0\le\rho=\|T_\nu\|_{L^2_0(SO(3))}<1,
+$$
+
+并置
+
+$$
+\kappa=\min\left\{1,\sqrt{\frac{5(1-\rho)}4}\right\},
+\qquad
+c=\min\left\{\beta,\left(\frac\kappa{785}\right)^{24}\right\}>0.
+\tag{46.14}
+$$
+
+这里 $1-\rho$ 和 $\beta$ 是已证明为正的定性量；(46.14) 是存在性公式，不是数值证书。
+

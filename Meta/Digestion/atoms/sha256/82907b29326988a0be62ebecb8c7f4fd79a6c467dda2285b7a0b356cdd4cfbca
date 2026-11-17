@@ -1,0 +1,28 @@
+**定义 120.1（全部原量词）。** $V\ne0$ 是有限维实空间，$C\subset V$ 是闭、尖、生成凸锥，$u\in V^*$ 在 $C\setminus\{0\}$ 上严格正。置
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\end{gathered}
+\tag{IX120.1}
+$$
+
+$K$ 是整个原紧基，$P$ 是全部原纯点，$\mathcal E$ 是整个原效应区间。线性效应和 $K$ 上的仿射效应通过齐次化识别。效应区间紧：在从 $K$ 选出的一个 $V$ 的线性基上，各效应的读数都在 $[0,1]$。有限维紧凸分解给 $K=\operatorname{conv}P$；这里不是正交谱分解。
+
+仅对纯点定义
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1, f(q)=0.
+\tag{IX120.2}
+$$
+
+这是同一原实现中的真实全域零一边。补效应使关系对称，且 $p\not\perp p$。因而 $p\perp q$ 等价于 $q\in D_p$。三个两两正交纯点使用三条各自真实的边；定义不要求三张边见证来自同一实际仪器，也不预先要求它们的和为 $u$。
+
+$\mathrm{EB3}$ 表示对每个 $p\in P$，整个 $D_p$ 仿射等价于完整闭三球 $\mathbb B^3$。$\mathrm{Inj}$ 表示 $D_p=D_q\Rightarrow p=q$。后者只在120.3—120.9中另加。整个章节不预付 $P$ 闭、全Pair、$\mathrm{Pair}_{\perp}$、共同球心、共同内积、球族连续、正仿射回缩、滤子、动力学或矩阵表示。
+

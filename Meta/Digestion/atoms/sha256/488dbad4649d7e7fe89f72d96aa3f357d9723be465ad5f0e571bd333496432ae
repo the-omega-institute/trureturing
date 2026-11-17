@@ -1,0 +1,36 @@
+**Definition 51.1 (fixed realization and order of limits).** Write G for
+*Native two-control Green stability* and L for *Native long-time phase
+ diffusion*. Retain the ordinary analytic antecedents of Definitions
+1.1–3.2, P §§70,75–76,87–88,97,104–107 and L §§35–36,41.
+Fix $H\in(0,1/2)$, $a,\varepsilon>0$, a prescribed sign of $\kappa$
+and $R_*>0$. Put $x=\sqrt{R_*}/\pi$ and $L_0=H/[4(x+1)]$.
+Choose $b_{\rm ref}>0$ with
+$\varepsilon b_{\rm ref}<\min(xL_0/4,L_0/4)$, and then a sufficiently
+small fixed nonzero $\kappa$ of that sign. Set
+
+$$
+\begin{aligned}
+k_0&=\alpha_\kappa+xL_0,&
+I_b&=(k_0-\varepsilon b,k_0+L_0-\varepsilon b),
+       &&0<b\le b_{\rm ref},\\
+c_\kappa(k)&=\left(
+\frac{(k-2\kappa)(H+\kappa-k)}{2H(k-\alpha_\kappa)},
+-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},
+\frac{H+\kappa-k}{H(k-\alpha_\kappa)}\right),\\
+\lambda&=\varepsilon^2\pi^2/L_0^2,&
+\nu&=\varepsilon/(k_0-\alpha_\kappa),&
+\lambda/\nu^2&=R_*.
+\end{aligned}
+\tag{51.1}
+$$
+
+The original means are $X=Y=H+\kappa$, $Z=1-2H$, and the five
+probabilities, in original order, are
+$(k-2\kappa,H+\kappa-k,1-2H,H+\kappa-k,k)$.
+The lifted real coordinate remains $x_{\rm lift}=D/\kappa$.
+All members use precisely this one vector, raw $dk\,dq$, source
+$o=(k_0,0)$, covariance $\operatorname{diag}(\varepsilon^2,1)$,
+and the original $B$ heat clock, independently of $a$.
+Only the two Dirichlet faces move. A limit in $s$ always fixes $b>0$
+first; $b=0$ is only a coefficient-family closure point.
+
