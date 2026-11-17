@@ -12,9 +12,9 @@ These are concrete finite mode functions with derivatives and analyticity on the
 
 **Theorem 1.1 (a_euler_mode_step).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.a_euler_mode_step`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.a_euler_mode_step`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.a_euler_mode_step` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.a_euler_mode_step` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ The literal finite source polynomials satisfy r*aPrime(p+1,r)=(p+1)*(a(p+1,r)-a(
 
 **Theorem 1.2 (externalT_negative_zero_positive_finite).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,9 +36,9 @@ For real 0<r<1 and every positive mode p, the actual full externalT(false,0,true
 
 **Theorem 1.3 (sourceAmplitude_true_finite).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,9 @@ Exact support reduction of the actual positive source to a finite polynomial.
 
 **Theorem 1.4 (hasDerivAt_L).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_L`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_L`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_L` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_L` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -60,9 +60,9 @@ The finite double convolution satisfies the full product rule for any scalar dif
 
 **Theorem 1.5 (ell_picard_fuchs).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -72,9 +72,9 @@ The existing period equation yields the exact logarithmic equation without divid
 
 **Theorem 1.6 (hasDerivAt_k).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_k`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_k`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_k` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_k` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -84,9 +84,9 @@ The period factor has derivative 1/4-r*(1-r)*ell squared throughout the unit dis
 
 **Theorem 1.7 (hasDerivAt_t).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_t`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_t`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_t` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_t` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -96,9 +96,9 @@ The complete finite candidate has the stated derivative, retaining its full poly
 
 **Theorem 1.8 (candidateT_analyticOnNhd).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_analyticOnNhd`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.candidateT_analyticOnNhd`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_analyticOnNhd` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.candidateT_analyticOnNhd` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -108,9 +108,9 @@ Each fixed positive mode candidate is analytic on the open unit disk in z.
 
 **Theorem 1.9 (hasDerivAt_candidateT).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -120,9 +120,9 @@ The z derivative is the finite r derivative times 2z.
 
 **Theorem 1.10 (candidateT_even).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_even`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.candidateT_even`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_even` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.candidateT_even` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -132,14 +132,14 @@ The explicit z-squared composition is even.
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.a_euler_mode_step`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_analyticOnNhd`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.candidateT_even`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_L`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_k`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.hasDerivAt_t`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite`
-- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalSourceJet](OriginalGaussianExternalSourceJet.md)
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.a_euler_mode_step`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.candidateT_analyticOnNhd`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.candidateT_even`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.ell_picard_fuchs`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.externalT_negative_zero_positive_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_L`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_candidateT`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_k`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.hasDerivAt_t`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFiniteCandidateModes.sourceAmplitude_true_finite`
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalSourceJet](../OriginalGaussianExternalSourceJet.md)

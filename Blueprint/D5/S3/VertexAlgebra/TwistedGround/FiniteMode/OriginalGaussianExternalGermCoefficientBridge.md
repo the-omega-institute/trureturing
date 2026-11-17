@@ -14,9 +14,9 @@ The conclusion gives one complex germ for each pair p,q. It supplies neither a c
 
 **Theorem 1.1 (hasFPowerSeriesAt_euler_ofScalars).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.hasFPowerSeriesAt_euler_ofScalars`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.hasFPowerSeriesAt_euler_ofScalars`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.hasFPowerSeriesAt_euler_ofScalars` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.hasFPowerSeriesAt_euler_ofScalars` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,9 +26,9 @@ A scalar series for the Euler derivative has coefficient n*a(n), including coeff
 
 **Theorem 1.2 (analyticAt_eventually_zero_of_pos_real).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.analyticAt_eventually_zero_of_pos_real`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.analyticAt_eventually_zero_of_pos_real`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.analyticAt_eventually_zero_of_pos_real` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.analyticAt_eventually_zero_of_pos_real` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -38,9 +38,9 @@ Zeros on a positive real interval force a complex analytic germ to vanish.
 
 **Theorem 1.3 (linear_euler_germ_coefficients).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.linear_euler_germ_coefficients`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.linear_euler_germ_coefficients`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.linear_euler_germ_coefficients` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.linear_euler_germ_coefficients` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -50,9 +50,9 @@ A linear Euler differential identity on a positive real interval determines its 
 
 **Theorem 1.4 (two_mul_radial_deriv_eq_euler).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -62,9 +62,9 @@ The real radial derivative is converted to the complex Euler derivative at sqrt 
 
 **Theorem 1.5 (linear_radial_germ_coefficients).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.linear_radial_germ_coefficients`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.linear_radial_germ_coefficients`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.linear_radial_germ_coefficients` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.linear_radial_germ_coefficients` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -74,9 +74,9 @@ Positive real radial identities imply z-Taylor recurrences after shrinking finit
 
 **Theorem 1.6 (externalT_positive_germ_unique_of_pos_real_differential).**
 
-Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.externalT_positive_germ_unique_of_pos_real_differential`
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.externalT_positive_germ_unique_of_pos_real_differential`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.externalT_positive_germ_unique_of_pos_real_differential` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.externalT_positive_germ_unique_of_pos_real_differential` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -86,10 +86,10 @@ Conditional positive-sector identification follows from explicitly boundary-elim
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.analyticAt_eventually_zero_of_pos_real`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.externalT_positive_germ_unique_of_pos_real_differential`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.hasFPowerSeriesAt_euler_ofScalars`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.linear_euler_germ_coefficients`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.linear_radial_germ_coefficients`
-- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler`
-- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalParityUniqueness](OriginalGaussianExternalParityUniqueness.md)
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.analyticAt_eventually_zero_of_pos_real`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.externalT_positive_germ_unique_of_pos_real_differential`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.hasFPowerSeriesAt_euler_ofScalars`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.linear_euler_germ_coefficients`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.linear_radial_germ_coefficients`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianExternalGermCoefficientBridge.two_mul_radial_deriv_eq_euler`
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalParityUniqueness](../OriginalGaussianExternalParityUniqueness.md)
