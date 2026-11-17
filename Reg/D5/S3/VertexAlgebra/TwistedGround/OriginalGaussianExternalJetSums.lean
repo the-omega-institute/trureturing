@@ -171,4 +171,119 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end sourceJetMoment_generators_explicit
 
+
+namespace amplitude_derivative_mode
+abbrev arena : Arena where
+  signature := seriesSignature
+  Law R := ∀ (out : Bool) {u x : ℂ} (_hsmall : ‖u‖ + ‖x‖ < 1),
+    sumObserve R (fun p : ℕ => deriv (sourceAmplitude out p) x * u ^ p)
+      (deriv (fun w => sourceMode out u w) x) ∧
+    DifferentiableAt ℂ (fun w => sourceMode out u w) x ∧
+    ∀ p, DifferentiableAt ℂ (sourceAmplitude out p) x
+private theorem rejected_fails : ¬ arena.Law seriesRejected := by
+  intro h
+  exact (h true (u := 0) (x := 0) (by norm_num)).1
+def family : Registration arena (type_of% (@amplitude_derivative_mode)) where
+  actual := seriesActual
+  bridge := Iff.rfl
+  variation := ⟨@amplitude_derivative_mode, seriesRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨seriesRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := seriesDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@amplitude_derivative_mode) (Realization seriesSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalJetSums.amplitude_derivative_mode.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalJetSums.amplitude_derivative_mode.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize seriesSignature seriesActual.readout seriesActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalJetSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end amplitude_derivative_mode
+
+
+namespace diagonal_derivative_explicit
+abbrev arena : Arena where
+  signature := eqSignature
+  Law R := ∀ (out : Bool) {u x : ℂ} (_hsmall : ‖u‖ + ‖x‖ < 1),
+    let b : ℂ := if out then u else -1
+    R.readout () _ (deriv (fun w => sourceMode out u w) x)
+      (-b * sourceMode out u x / (2 * (1-u+b*x)))
+private theorem rejected_fails : ¬ arena.Law eqRejected := by
+  intro h
+  exact h true (u := 0) (x := 0) (by norm_num)
+def family : Registration arena (type_of% (@diagonal_derivative_explicit)) where
+  actual := eqActual
+  bridge := Iff.rfl
+  variation := ⟨@diagonal_derivative_explicit, eqRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := eqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@diagonal_derivative_explicit) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalJetSums.diagonal_derivative_explicit.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalJetSums.diagonal_derivative_explicit.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalJetSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end diagonal_derivative_explicit
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalJetSums
