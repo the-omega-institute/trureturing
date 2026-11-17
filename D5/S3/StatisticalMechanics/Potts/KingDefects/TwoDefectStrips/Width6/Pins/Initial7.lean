@@ -13,6 +13,7 @@ certificate: proof_shape=content; consumers=Width6.Forward.structural_certificat
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial6
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Finite coordinate identities for exact-budget transfer. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial7

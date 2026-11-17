@@ -11,6 +11,7 @@ escape_witness: none (consumed helpers on the live path of HardinA229753.result)
 certificate: proof_shape=content; consumers=Width6.Pins.Initial2.certificate
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Finite coordinate identities for exact-budget transfer. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Initial1
