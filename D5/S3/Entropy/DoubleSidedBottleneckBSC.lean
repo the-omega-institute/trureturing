@@ -48,6 +48,7 @@ F34: D5/S3/Quantum/Information/QubitEntropyContraction.radialEntropy; statement_
 F35: D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave; statement_id=sha256:8026c9153902c93bfa1487395d7f93f3268e56ab78a89faa6aa82ebcb253cff0
 F36: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv; statement_id=sha256:e8867f89ff5d6dbfe903566df6ee22ac61ad20b965100eb78500fcd8a1d28307
 F37: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2; statement_id=sha256:0d6c93f85b7e4c54a6cc869eee6cc53e301d2b85b55ae58405f8953d16d69a2a
+F38: D5/S3/Observer/ProductMeasures/FinitePmfLikelihood.pmfRealMass_sum; statement_id=sha256:e454f4ffe7f8278bdd1d7328ffaffa03673012acaec70317ba0cacde6a5b2daf
 Declarations (frozen inputs above are followed through same-delivery helpers):
 hbInv: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: bscOptimal,bscOptimal_of_upper_bound,candidate_bias_interior,candidate_rate,claim,full_budget_bscOptimal,full_budget_upper,hbInv_zero,hb_inv_spec,interior_bscOptimal,result,zero_budget_bscOptimal
 dsbs: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,outputJoint,output_joint_nonneg,output_joint_posterior
@@ -61,16 +62,16 @@ R: proof_shape: bind-only; escape_witness: none; dependencies: F6; consumers: bs
 bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F32; consumers: bscOptimal_of_upper_bound,claim,full_budget_bscOptimal,interior_bscOptimal,result,zero_budget_bscOptimal
 claim: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6; consumers: result
 posteriorBias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,mass_mul_bias,objective_bsc_productValue,objective_noiseless_formula,objective_productValue,objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_posterior,output_joint_row_sum,posterior_bias_bsc,posterior_bias_centered,posterior_bias_mem,rate_phi,rate_posterior_formula,zero_budget_bscOptimal
-kernel_real_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,output_mass_probability,posterior_bias_centered,rate_posterior_formula
-output_mass_probability: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,objective_le_noiseless,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_row_sum,rate_posterior_formula
+kernel_real_sum: proof_shape: bind-only; escape_witness: none; dependencies: F38; consumers: objective_le_noiseless,output_mass_probability,posterior_bias_centered,rate_posterior_formula
+output_mass_probability: proof_shape: bind-only; escape_witness: none; dependencies: F38; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal,objective_le_noiseless,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_row_sum,rate_posterior_formula
 posterior_bias_mem: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal
 mass_mul_bias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: output_joint_posterior,posterior_bias_bsc,posterior_bias_centered
-posterior_bias_centered: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: interior_bscOptimal,output_joint_col_sum,output_joint_row_sum
+posterior_bias_centered: proof_shape: bind-only; escape_witness: none; dependencies: F38; consumers: interior_bscOptimal,output_joint_col_sum,output_joint_row_sum
 output_joint_posterior: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_product_formula,objective_symm,objective_zero_of_bias_zero,output_joint_col_sum,output_joint_row_sum
-output_joint_row_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_product_formula
-output_joint_col_sum: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,objective_product_formula
-objective_product_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: objective_productValue
-rate_posterior_formula: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: rate_phi
+output_joint_row_sum: proof_shape: bind-only; escape_witness: none; dependencies: F38; consumers: objective_product_formula
+output_joint_col_sum: proof_shape: bind-only; escape_witness: none; dependencies: F38; consumers: objective_le_noiseless,objective_product_formula
+objective_product_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1,F38; consumers: objective_productValue
+rate_posterior_formula: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12,F38; consumers: rate_phi
 hb_binEntropy: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: candidate_bias_interior,hbInv_zero,hb_inv_spec,phi_crossover
 hb_inv_spec: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: candidate_bias_interior,candidate_rate,full_budget_upper,hbInv_zero,interior_bscOptimal,result
 bsc_apply_formula: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,output_mass_bsc,posterior_bias_bsc,rate_bsc
@@ -78,17 +79,17 @@ rate_bsc: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,
 candidate_rate: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1; consumers: bscOptimal_of_upper_bound,zero_budget_bscOptimal
 bscOptimal_of_upper_bound: proof_shape: bind-only; escape_witness: none; dependencies: F6,F32,F3,F1; consumers: full_budget_bscOptimal,interior_bscOptimal,zero_budget_bscOptimal
 phi_bias: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: phi_crossover,phi_f,rate_phi
-rate_phi: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal
+rate_phi: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12,F38; consumers: bias_zero_of_rate_nonpos,full_budget_upper,interior_bscOptimal
 phi_crossover: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: full_budget_upper,interior_bscOptimal
 output_mass_bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,objective_bsc_productValue,objective_noiseless_formula,posterior_bias_bsc
 posterior_bias_bsc: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,objective_bsc_productValue,objective_noiseless_formula
-objective_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: interior_bscOptimal,objective_bsc_productValue,objective_noiseless_formula
-objective_bsc_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: interior_bscOptimal
+objective_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1,F38; consumers: interior_bscOptimal,objective_bsc_productValue,objective_noiseless_formula
+objective_bsc_productValue: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1,F38; consumers: interior_bscOptimal
 candidate_bias_interior: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: interior_bscOptimal
-interior_bscOptimal: proof_shape: content; escape_witness: none; dependencies: F32,F6,F3,F1,F33,F34,F36,F35,F37,F2,F11,F10,F8,F5,F4,F9,F12; consumers: result
-bias_zero_of_rate_nonpos: proof_shape: bind-only; escape_witness: none; dependencies: F35,F2,F11,F6,F10,F8,F5,F4,F9,F12; consumers: zero_budget_bscOptimal
-objective_zero_of_bias_zero: proof_shape: bind-only; escape_witness: none; dependencies: F6,F7; consumers: zero_budget_bscOptimal
-zero_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1,F35,F2,F11,F10,F8,F5,F4,F9,F12,F7; consumers: result
+interior_bscOptimal: proof_shape: content; escape_witness: none; dependencies: F32,F6,F3,F1,F33,F34,F36,F35,F37,F2,F11,F10,F8,F5,F4,F9,F12,F38; consumers: result
+bias_zero_of_rate_nonpos: proof_shape: bind-only; escape_witness: none; dependencies: F35,F2,F11,F6,F10,F8,F5,F4,F9,F12,F38; consumers: zero_budget_bscOptimal
+objective_zero_of_bias_zero: proof_shape: bind-only; escape_witness: none; dependencies: F6,F7,F38; consumers: zero_budget_bscOptimal
+zero_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1,F35,F2,F11,F10,F8,F5,F4,F9,F12,F7,F38; consumers: result
 Boundary.combining_monotone: proof_shape: bind-only; escape_witness: none; dependencies: F14,F20,F23,F22,F21,F15,F24; consumers: Boundary.scalar_mgl
 Boundary.combining_bias: proof_shape: bind-only; escape_witness: none; dependencies: F14,F23,F17,F26,F18,F19; consumers: Boundary.scalar_mgl
 Boundary.phi_psi: proof_shape: bind-only; escape_witness: none; dependencies: F23,F13; consumers: Boundary.scalar_mgl
@@ -97,12 +98,12 @@ phi_f: proof_shape: bind-only; escape_witness: none; dependencies: none; consume
 output_joint_nonneg: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless
 objective_symm: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8; consumers: full_budget_bscOptimal
 noiseless: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: full_budget_upper,hbInv_zero,objective_le_noiseless,objective_noiseless_formula
-objective_le_noiseless: proof_shape: bind-only; escape_witness: none; dependencies: F30,F31,F1,F29,F27,F6,F28,F8; consumers: full_budget_upper
-objective_noiseless_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1; consumers: full_budget_upper
+objective_le_noiseless: proof_shape: bind-only; escape_witness: none; dependencies: F30,F31,F1,F29,F27,F6,F28,F8,F38; consumers: full_budget_upper
+objective_noiseless_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1,F38; consumers: full_budget_upper
 hbInv_zero: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: full_budget_upper
-full_budget_upper: proof_shape: bind-only; escape_witness: none; dependencies: F32,F30,F31,F1,F29,F27,F6,F28,F8,F3,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F2,F11,F10,F5,F4,F9,F12; consumers: full_budget_bscOptimal
-full_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8,F32,F30,F31,F1,F29,F27,F28,F3,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F2,F11,F10,F5,F4,F9,F12; consumers: result
-result: proof_shape: content; escape_witness: none; dependencies: F32,F6,F3,F1,F33,F34,F36,F35,F37,F2,F11,F10,F8,F5,F4,F9,F12,F30,F31,F29,F27,F28,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F7; consumers: terminal result
+full_budget_upper: proof_shape: bind-only; escape_witness: none; dependencies: F32,F30,F31,F1,F29,F27,F6,F28,F8,F3,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F2,F11,F10,F5,F4,F9,F12,F38; consumers: full_budget_bscOptimal
+full_budget_bscOptimal: proof_shape: bind-only; escape_witness: none; dependencies: F6,F8,F32,F30,F31,F1,F29,F27,F28,F3,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F2,F11,F10,F5,F4,F9,F12,F38; consumers: result
+result: proof_shape: content; escape_witness: none; dependencies: F32,F6,F3,F1,F33,F34,F36,F35,F37,F2,F11,F10,F8,F5,F4,F9,F12,F30,F31,F29,F27,F28,F23,F13,F14,F16,F25,F17,F26,F18,F19,F20,F22,F21,F15,F24,F7,F38; consumers: terminal result
 Definitions specify objects, not proof claims; their bind-only label claims no new theorem.
 The settling result uses the posterior moment estimate and includes all budget endpoints.
 -/
