@@ -10,6 +10,7 @@ import D5.S3.Quantum.Algebra.GramUnitaryExtension
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.FlatSpectrumObstruction
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Matrix.Nondegenerate
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.Tactic
@@ -187,14 +188,7 @@ private theorem common_plane_transport
   · have hi : Function.Injective (A.mulVecLin.domRestrict L) :=
       (Matrix.mulVec_injective_iff_isUnit.mpr hA).comp Subtype.val_injective
     have he := LinearMap.finrank_range_of_inj hi
-    have hr : LinearMap.range (A.mulVecLin.domRestrict L) = L' := by
-      ext y
-      constructor
-      · rintro ⟨x, rfl⟩
-        exact ⟨x, x.property, rfl⟩
-      · rintro ⟨x, hx, rfl⟩
-        exact ⟨⟨x, hx⟩, rfl⟩
-    rw [hr] at he
+    rw [LinearMap.range_domRestrict] at he
     exact he.trans hdim
   · intro T hT u hu v hv
     obtain ⟨u, hu, rfl⟩ := hu
@@ -346,19 +340,8 @@ private theorem linearIndependent_mix {a b : ℕ}
     (A : Matrix (Fin 3) (Fin 3) ℂ) (hA : IsUnit A)
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (hX : LinearIndependent ℂ X) :
     LinearIndependent ℂ (mix A X) := by
-  classical
-  rw [Fintype.linearIndependent_iff]
-  intro z hz r
-  have hsum : (∑ r, z r • mix A X r) = ∑ s, (z ᵥ* A) s • X s := by
-    simp only [mix, Finset.smul_sum, smul_smul, Matrix.vecMul, dotProduct]
-    rw [Finset.sum_comm]
-    simp only [Finset.sum_smul]
-  rw [hsum] at hz
-  have he : z ᵥ* A = 0 := by
-    funext s
-    exact Fintype.linearIndependent_iff.mp hX _ hz s
-  have hzero : z = 0 := Matrix.vecMul_injective_iff_isUnit.mpr hA (by simpa using he)
-  exact congrFun hzero r
+  exact hX.sum_smul_of_nondegenerate
+    (Matrix.nondegenerate_of_det_ne_zero ((Matrix.isUnit_iff_isUnit_det A).mp hA).ne_zero)
 
 private theorem injective_stack_mix {a b : ℕ}
     (A : Matrix (Fin 3) (Fin 3) ℂ) (hA : IsUnit A)

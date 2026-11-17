@@ -503,12 +503,6 @@ private theorem complex_block_neutral
   have hcstar : (stackK M)ᴴ * Matrix.kronecker Tᴴ
         (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
     rw [stackK_compression_conjTranspose, hc, Matrix.conjTranspose_zero]
-  have hc' : (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y) T
-        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
-    simpa [Matrix.kronecker] using hc
-  have hcstar' : (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y) Tᴴ
-        (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
-    simpa [Matrix.kronecker] using hcstar
   have hTr : Tr.IsHermitian := by
     exact (realPart T).property.isHermitian
   have hTi : Ti.IsHermitian := by
@@ -531,34 +525,15 @@ private theorem complex_block_neutral
   have hcTr : (stackK M)ᴴ * Matrix.kronecker Tr
         (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
     rw [hTr_formula]
-    calc
-      _ = (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
-          (((2 : ℝ)⁻¹ : ℂ) • T + ((2 : ℝ)⁻¹ : ℂ) • Tᴴ)
-          (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M := by
-              simp [Matrix.kronecker, Matrix.star_eq_conjTranspose, smul_add]
-      _ = ((2 : ℝ)⁻¹ : ℂ) • ((stackK M)ᴴ * Matrix.kroneckerMap
-          (fun x y : ℂ => x * y) T (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) +
-          ((2 : ℝ)⁻¹ : ℂ) • ((stackK M)ᴴ * Matrix.kroneckerMap
-          (fun x y : ℂ => x * y) Tᴴ (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) := by
-            simpa [Matrix.kronecker] using
-              stackK_compression_smul_add M ((2 : ℝ)⁻¹ : ℂ) ((2 : ℝ)⁻¹ : ℂ) T Tᴴ
-      _ = 0 := by rw [hc', hcstar']; simp
+    have h := stackK_compression_smul_add M ((2 : ℝ)⁻¹ : ℂ) ((2 : ℝ)⁻¹ : ℂ) T Tᴴ
+    rw [hc, hcstar] at h
+    simpa only [smul_add, smul_zero, zero_add] using h
   have hcTi : (stackK M)ᴴ * Matrix.kronecker Ti
         (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M = 0 := by
-    rw [hTi_formula]
+    rw [hTi_formula, sub_eq_add_neg, smul_add, smul_neg]
     have h := stackK_compression_smul_add M c (-c) T Tᴴ
-    calc
-      _ = (stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
-          (c • T + (-c) • Tᴴ) (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M := by
-              simp [Matrix.kronecker, c, Matrix.star_eq_conjTranspose,
-                sub_eq_add_neg, smul_add, smul_sub, smul_neg, smul_smul,
-                smul_eq_mul]
-      _ = c • ((stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
-          T (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) +
-          (-c) • ((stackK M)ᴴ * Matrix.kroneckerMap (fun x y : ℂ => x * y)
-          Tᴴ (1 : Matrix (Fin 3) (Fin 3) ℂ) * stackK M) := by
-            simpa [Matrix.kronecker] using h
-      _ = 0 := by rw [hc', hcstar']; simp
+    rw [hc, hcstar] at h
+    simpa only [smul_sub, sub_eq_add_neg, neg_smul, smul_zero, zero_add] using h
   intro u hu v hv
   have hr := hplane Tr hTr hcTr u hu v hv
   have hi := hplane Ti hTi hcTi u hu v hv
@@ -595,17 +570,7 @@ theorem native_three_refutation
     simpa [M'] using hMGram
   have hF' : (∑ r, Matrix.kronecker (M' r) (N' r))ᴴ *
       (∑ r, Matrix.kronecker (M' r) (N' r)) = 1 := by
-    have hPres0 : (∑ r, Matrix.kronecker (M' r) (N' r)) =
-        ∑ r, Matrix.kronecker (M r) (N r) := by
-      simpa [M', N', Ccoeff] using hPres
-    calc
-      (∑ r, Matrix.kronecker (M' r) (N' r))ᴴ *
-          (∑ r, Matrix.kronecker (M' r) (N' r)) =
-          (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
-            (∑ r, Matrix.kronecker (M r) (N r)) := by
-              exact congrArg
-                (fun A : Matrix (Fin 3 × Fin 5) (Fin 5 × Fin 3) ℂ => Aᴴ * A) hPres0
-      _ = 1 := hF
+    simpa only [M', N', Ccoeff, hPres] using hF
   have hstackGram : (stackK M')ᴴ * stackK M' = 1 := by
     rw [stackK_gram]
     exact hM'Gram
@@ -826,50 +791,9 @@ private theorem exact_k2_native_refutation
     simpa using (concatK N').rank_le_card_height
   omega
 
-
 private abbrev Left := Matrix (Fin 3) (Fin 5) ℂ
 private abbrev Right := Matrix (Fin 5) (Fin 3) ℂ
 private abbrev Native := Matrix (Fin 3 × Fin 5) (Fin 5 × Fin 3) ℂ
-
-private theorem kronecker_sub_left {a b c d : ℕ}
-    (x y : Matrix (Fin a) (Fin b) ℂ) (z : Matrix (Fin c) (Fin d) ℂ) :
-    Matrix.kronecker (x - y) z = Matrix.kronecker x z - Matrix.kronecker y z := by
-  ext i j
-  simp [Matrix.kronecker, Matrix.kroneckerMap_apply, sub_mul]
-
-private theorem kronecker_sub_right {a b c d : ℕ}
-    (x : Matrix (Fin a) (Fin b) ℂ) (y z : Matrix (Fin c) (Fin d) ℂ) :
-    Matrix.kronecker x (y - z) = Matrix.kronecker x y - Matrix.kronecker x z := by
-  ext i j
-  simp [Matrix.kronecker, Matrix.kroneckerMap_apply]
-  ring
-
-private theorem kronecker_smul_left {a b c d : ℕ}
-    (r : ℂ) (x : Matrix (Fin a) (Fin b) ℂ) (y : Matrix (Fin c) (Fin d) ℂ) :
-    Matrix.kronecker (r • x) y = r • Matrix.kronecker x y := by
-  ext i j
-  simp [Matrix.kronecker, Matrix.kroneckerMap_apply, mul_assoc]
-
-private theorem kronecker_smul_right {a b c d : ℕ}
-    (r : ℂ) (x : Matrix (Fin a) (Fin b) ℂ) (y : Matrix (Fin c) (Fin d) ℂ) :
-    Matrix.kronecker x (r • y) = r • Matrix.kronecker x y := by
-  ext i j
-  simp [Matrix.kronecker, Matrix.kroneckerMap_apply]
-  ring
-
-private theorem kronecker_sum_left {a b c d : ℕ} {ι : Type*} [Fintype ι]
-    (x : ι → Matrix (Fin a) (Fin b) ℂ) (y : Matrix (Fin c) (Fin d) ℂ) :
-    Matrix.kronecker (∑ i, x i) y = ∑ i, Matrix.kronecker (x i) y := by
-  ext i j
-  simp only [Matrix.sum_apply, Matrix.kronecker, Matrix.kroneckerMap_apply]
-  rw [Finset.sum_mul]
-
-private theorem kronecker_sum_right {a b c d : ℕ} {ι : Type*} [Fintype ι]
-    (x : Matrix (Fin a) (Fin b) ℂ) (y : ι → Matrix (Fin c) (Fin d) ℂ) :
-    Matrix.kronecker x (∑ i, y i) = ∑ i, Matrix.kronecker x (y i) := by
-  ext i j
-  simp only [Matrix.sum_apply, Matrix.kronecker, Matrix.kroneckerMap_apply]
-  rw [Finset.mul_sum]
 
 private theorem reduce_left {n : ℕ}
     (A : Fin (n + 1) → Left) (D : Fin (n + 1) → Right)
@@ -905,17 +829,17 @@ private theorem reduce_left {n : ℕ}
   refine ⟨A', D', ?_⟩
   rw [hsum, hai]
   simp only [A', D']
-  rw [kronecker_sum_left]
-  simp_rw [kronecker_sub_right, kronecker_smul_right, kronecker_smul_left]
+  change (∑ j, (Matrix.kroneckerBilinear (R := ℂ)) _ _) =
+    (Matrix.kroneckerBilinear (R := ℂ)) (∑ j, _) _ + ∑ j, _
+  simp only [map_sum, LinearMap.sum_apply, map_sub, map_smul, LinearMap.smul_apply]
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro j hj
-  have hs (r : ℂ) (X : Native) :
-      -(r • X) = (-r) • X := by
-    simp [smul_smul]
-  simp only [sub_eq_add_neg]
-  rw [hs]
-  abel
+  ext ⟨r, l⟩ ⟨m, s⟩
+  simp only [sub_eq_add_neg, neg_smul, Matrix.kronecker, Matrix.kroneckerBilinear,
+    Matrix.kroneckerMapBilinear_apply_apply, Matrix.kroneckerMap_apply]
+  simp [Algebra.coe_lmul_eq_mul]
+  ring
 
 private theorem reduce_right {n : ℕ}
     (A : Fin (n + 1) → Left) (D : Fin (n + 1) → Right)
@@ -951,17 +875,17 @@ private theorem reduce_right {n : ℕ}
   refine ⟨A', D', ?_⟩
   rw [hsum, hdi]
   simp only [A', D']
-  rw [kronecker_sum_right]
-  simp_rw [kronecker_sub_left, kronecker_smul_right, kronecker_smul_left]
+  change (∑ j, (Matrix.kroneckerBilinear (R := ℂ)) _ _) =
+    (Matrix.kroneckerBilinear (R := ℂ)) _ (∑ j, _) + ∑ j, _
+  simp only [map_sum, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply]
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro j hj
-  have hs (r : ℂ) (X : Native) :
-      -(r • X) = (-r) • X := by
-    simp [smul_smul]
-  simp only [sub_eq_add_neg]
-  rw [hs]
-  abel
+  ext ⟨r, l⟩ ⟨m, s⟩
+  simp only [sub_eq_add_neg, neg_smul, Matrix.kronecker, Matrix.kroneckerBilinear,
+    Matrix.kroneckerMapBilinear_apply_apply, Matrix.kroneckerMap_apply]
+  simp [Algebra.coe_lmul_eq_mul]
+  ring
 
 private theorem minimal_decomposition (M : Fin 3 → Left) (N : Fin 3 → Right) :
     ∃ k : ℕ, k ≤ 3 ∧ ∃ A : Fin k → Left, ∃ D : Fin k → Right,
@@ -972,9 +896,7 @@ private theorem minimal_decomposition (M : Fin 3 → Left) (N : Fin 3 → Right)
   let p : ℕ → Prop := fun k => ∃ A : Fin k → Left, ∃ D : Fin k → Right,
       (∑ j, Matrix.kronecker (A j) (D j)) =
         (∑ r, Matrix.kronecker (M r) (N r))
-  have h3 : p 3 := by
-    refine ⟨M, N, ?_⟩
-    rfl
+  have h3 : p 3 := ⟨M, N, rfl⟩
   have hp : ∃ k, p k := ⟨3, h3⟩
   have hmin : ∀ n < Nat.find hp, ¬p n := by
     intro n hn hpn
@@ -987,13 +909,7 @@ private theorem minimal_decomposition (M : Fin 3 → Left) (N : Fin 3 → Right)
   rcases Nat.eq_zero_or_pos (Nat.find hp) with hzero | hpos
   · have hk : p 0 := by simpa [hzero] using (Nat.find_spec hp)
     obtain ⟨A, D, hsum⟩ := hk
-    refine ⟨0, by omega, A, D, ?_, ?_, hsum⟩
-    · rw [Fintype.linearIndependent_iff]
-      intro g hg i
-      exact Fin.elim0 i
-    · rw [Fintype.linearIndependent_iff]
-      intro g hg i
-      exact Fin.elim0 i
+    refine ⟨0, by omega, A, D, ?_, ?_, hsum⟩ <;> simp
   · obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hpos)
     have hk : p (n + 1) := by simpa [hn] using (Nat.find_spec hp)
     obtain ⟨A, D, hsum⟩ := hk
@@ -1033,21 +949,12 @@ private theorem normalized_minimal_decomposition
     exact_mod_cast (inv_ne_zero hsqrt_ne)
   let A' : Fin k → Left := fun j => c • A j
   have hA' : LinearIndependent ℂ A' := by
-    rw [Fintype.linearIndependent_iff] at hA ⊢
-    intro g hg i
-    have hc_sum : c • (∑ j, g j • A j) = 0 := by
-      simpa [A', Finset.smul_sum, smul_smul, mul_comm] using hg
-    have hsumg : (∑ j, g j • A j) = 0 :=
-      (smul_eq_zero.mp hc_sum).resolve_left hc
-    have hcg : ∀ j, c * g j = 0 := by
-      apply hA (fun j => c * g j)
-      simp_rw [mul_smul]
-      rw [← Finset.smul_sum, hsumg, smul_zero]
-    exact (mul_eq_zero.mp (hcg i)).resolve_left hc
+    exact hA.units_smul (fun _ => Units.mk0 c hc)
   have hsum' : (∑ j, Matrix.kronecker (A' j) (D j)) = c •
       (∑ r, Matrix.kronecker (M r) (N r)) := by
-    simp only [A', kronecker_smul_left, Finset.smul_sum]
-    simpa only [Finset.smul_sum] using congrArg (fun X : Native => c • X) hsum
+    change (∑ j, (Matrix.kroneckerBilinear (R := ℂ)) (c • A j) (D j)) = _
+    simp only [map_smul, LinearMap.smul_apply, ← Finset.smul_sum]
+    exact congrArg (fun X : Native => c • X) hsum
   have hcc : (star c) * c * (lambda : ℂ) = 1 := by
     have hreal : (Real.sqrt lambda)⁻¹ * (Real.sqrt lambda)⁻¹ * lambda = 1 := by
       field_simp [hsqrt_ne]
@@ -1061,13 +968,10 @@ private theorem normalized_minimal_decomposition
     simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
       smul_smul, hF]
     have hscalar : c * (star c * (lambda : ℂ)) = 1 := by
-      calc
-        c * (star c * (lambda : ℂ)) = star c * c * (lambda : ℂ) := by ring
-        _ = 1 := hcc
+      simpa [mul_assoc, mul_comm, mul_left_comm] using hcc
     rw [hscalar]
     simp
   exact ⟨k, hk, A', D, hA', hD, hsum', hgram⟩
-
 
 /-- Arbitrary native triples cannot have any positive scalar column Gram. -/
 theorem positive_scalar_obstruction (M : MatM 3) (N : MatN 3)
