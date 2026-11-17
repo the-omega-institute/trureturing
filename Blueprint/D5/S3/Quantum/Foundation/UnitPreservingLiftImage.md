@@ -1,0 +1,175 @@
+# Original-unit lift images
+
+## Abstract
+
+Retaining the original unit gives a closed cone lift, its exact minimum-cost perspective and the full compact convex normalized readout image.
+
+This is the cone-geometric theorem used by Proposition 123.8 of Quantum Origin Same Readback and Parallel Reset Calibration, with an arbitrary real normed readout space W. The quantum coordinates use W=R cubed. V is any finite dimensional real normed carrier; C is its entire closed pointed cone and u is strictly positive on every nonzero cone vector. The original p belongs to the whole base K={x in C : u(x)=1}. The original linear g is nonnegative on all C and vanishes at p; the original linear H vanishes at p. Every cone vector with g=0 is a nonnegative multiple of p. These are the original zero-face facts supplied before Proposition 123.8, rather than a hypothesis of attainment or closedness of the projected image. No EB3 model is substituted for those data: the cone theorem applies before the choice of a matrix model, and makes no assertion of the other native quantum hypotheses.
+
+For the exact original application, K is CircuitBalancedConfirmation.base C u, P is its entire pure set, and the effect interval is the entire proper C u interval. D_p is FacetZeroGluing.exclusion C u p, including every original mixed state in that exclusion. The source inputs are the same closed pointed generating cone, strictly positive original unit, a whole three-ball chart for every original pure label, and injectivity of the full exclusion-label map. OriginalNormalRestriction.original_normal_restriction supplies an interior positive annihilator whose restriction to the entire chart is constant one. Its full constant-one fiber identity supplies an original e in OrthogonalJointCompletion.common C u p, so e is proper, e(p)=1 and e vanishes on every point of D_p. OriginalWidthContact.top_subsingleton_of_zero_exclusion applies to every such e, using precisely its properness and its zero values on the entire D_p. Since p belongs to its one-value face, subsingletonness gives the full identity {x in K : e(x)=1}={p}, including all mixed states. At the source anchor p in P_reg, the original singleton property of A_p identifies this supplied e with the specified e_p. Set g literally equal to u-e_p. The continuity part of P_reg is unnecessary for this pointwise application; no Pair or global classification premise is introduced.
+
+Write the original affine chart a as c+B(w), with c=a(0) and B its linear part. Injectivity of a gives injectivity of B, and its whole-image identity is exactly D_p={c+B(w) : norm(w)<=1}. The same normal-restriction theorem makes restriction from the full continuous-dual span of positive annihilators onto all affine functionals on Euclidean R cubed surjective. Apply that surjectivity to each coordinate projection, obtaining three original span elements f_i whose restrictions are w_i for every w. The canonical map from continuous linear functionals to real linear functionals sends this span into S_p=span N_p, where N_p is CommonPositiveExtension.zeroPositive C u p. Assemble H from the three f_i. Thus H(c+B(w))=w on the entire affine chart, and each H_i belongs to the original S_p. These are derived chart/readback data, with no assumed generic zero ray or independently supplied coordinate extension. Properness of e_p gives g>=0 on C, while u(p)=e_p(p)=1 gives g(p)=0. Evaluation at p kills N_p, hence its entire real span by the kernel/span inclusion; this gives each H_i(p)=0 and H(p)=0. For any nonzero original y in C with g(y)=0, strict positivity permits the original normalization x=y/u(y). Then x belongs to the same K and e_p(x)=1, so the full one-value-face identity gives x=p and y=u(y)p. The zero vector supplies the remaining endpoint of the nonnegative p ray.
+
+Under this parameter correspondence, Z_p is exactly all H(x)/g(x) with x in the entire original K except p. The extended cost Lambda_p is the extended-real infimum of the same u over every y in the original C with g(y)=1 and H(y)=z. Attainment identifies that infimum with unitCost on the feasible domain; outside the domain the fiber is empty and both are positive infinity. The perspective and unit-slice formulas therefore use the actual Z_p, Lambda_p and original u. Set L=(span N_p).dualCoannihilator, the original annihilator in V. The same evaluation/kernel argument proves p belongs to this particular L, so the quotient non-descent conclusion applies to V/L itself. The application needs no normal-space restriction isomorphism, positive section, matrix model, residual continuity or boundary support-point cost identity.
+
+In the same whole PSD/trace application, fix ANY actual original pure p and ANY complete original dimension-three chart a. Use the singleton e_p, g=u-e_p and the unique H with components in the full continuous normal span and H(a(w))=w supplied in the OriginalNormalRestriction narrative. Put Z_p={H(x)/g(x):x in K, x!=p}. This is the ENTIRE original normalized image. The original zero face gives g>0 on K except p, and the full-cone compression bound ||H(y)||<=g(y) gives Z_p contained in the closed unit ball, with H(y)=0 when g(y)=0 before normalization. For EVERY z in that closed ball, including EVERY boundary point, x=a(z) is an actual excluded original trace-one state. Since e_p vanishes on the whole D_p, g(x)=1 and H(x)=z. Also x!=p because e_p(p)=1. Consequently Z_p equals the entire INCLUSIVE closed unit ball, using actual original witnesses.
+
+The legal lift set is literally UnitPreservingLiftImage.fiber C g H z={y in C:g(y)=1,H(y)=z}. Its domain is EXACTLY the same closed ball: the bound forces ||z||<=1 for every legal lift, while the actual a(z) above is a legal lift at every ball point. Properness gives 0<=e_p on C, hence EVERY legal lift has u(y)=g(y)+e_p(y)>=1. The witness a(z) has u(a(z))=1, so it is a global minimum among ALL original cone lifts, not a minimum in a selected image subspace. Therefore leastUnit=1 throughout the closed ball and unitCost=1 there; outside it the full fiber is empty and unitCost=+infinity by its original definition. This is exactly the extended-real infimum Lambda_p of the SAME original u, with boundary included, and agrees with the general unit_preserving_lift_image attainment/domain theorem under its stated zero-ray hypotheses.
+
+The frontier of this actual Z_p in R cubed is the nonempty unit sphere. A standard coordinate unit vector supplies a boundary point. Every boundary cost is one and is actually attained by its excluded trace-one lift. Hence the real minimum theta_p=min_(z in frontier Z_p) Lambda_p(z) exists and equals 1, rather than merely being finite. The regular set P_reg consists exactly of the original pure labels whose common family is singleton and whose WHOLE zero-effect fiber is Hausdorff continuous along ALL original pure sequences. HermitianExclusionKernel derives both properties for EVERY p, using the actual state norm and both directed repairs. Thus P_reg=P, and every p belongs to the unit-contact set {p in P_reg:theta_p=1}. Its closure in the ENTIRE original P is P, which is precisely UCreg; closure_univ supplies the final density step.
+
+All six interfaces hold jointly for one literal native model Phi=LinearEquiv.refl on HermitianMat (Fin 3) ℂ, C=HermitianExclusionKernel.cone and u=HermitianExclusionKernel.unit: the nonempty full rank-one pure carrier; all confirmer fibers and attained mixed-state minima with singleton common family; the all-state norm and bidirectional whole-zero-effect continuity; the complete continuous normal span with every-Hermitian compression and every-original-three-chart coordinates; the inclusive whole image and full original cost including empty outside fibers; and hence Inj, EB3, P_reg=P, theta_p=1 for ALL p and UCreg. The same deductions transport jointly through ANY ONE Phi satisfying the whole-cone and trace identities. Closedness, strict positivity and generation used by the existing owners are consequences of that model, not extra inputs replacing any of these outputs. This is the mathematical existing-owner application of the reverse implication (5=>1) of the complete static candidate. It does not establish the other directions for arbitrary EB3+Inj, bare EB3 classification, actual preparation, common instruments, dynamics, independent-assumption reduction or novelty.
+
+**Definition 1.1 (All feasible original lifts).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.fiber`
+
+*Formalization.* `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.fiber` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every z in W, the fiber contains every y in the same C with g(y)=1 and H(y)=z. No selected finite readout, effect menu or sampling is used.
+
+**Definition 1.2 (Entire feasible readout domain).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.domain`
+
+*Formalization.* `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.domain` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The whole domain consists of the z with a nonempty full lift fiber. The theorem identifies it with all H(x)/g(x) for original normalized x distinct from p; g is strictly positive at each such x by the original zero-face hypothesis.
+
+**Definition 1.3 (Feasible original unit infimum).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.leastUnit`
+
+*Formalization.* `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.leastUnit` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take the real infimum of u over the entire original fiber. Its real value is used only on the feasible domain, where the theorem proves an actual global minimizer.
+
+**Definition 1.4 (Extended original unit cost).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.unitCost`
+
+*Formalization.* `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.unitCost` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The extended real cost is the real fiber infimum on its entire feasible domain and positive infinity off the domain. The same original u supplies every cost. It is not a new functional on a quotient.
+
+**Definition 1.5 (Keep the original unit coordinate).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.liftMap`
+
+*Formalization.* `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.liftMap` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The linear map sends every original y to (u(y),g(y),H(y)). In particular p has image (1,0,0), whereas zero has image (0,0,0).
+
+**Theorem 1.6 (Closed cone, exact cost perspective and entire unit slice).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.unit_preserving_lift_image`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.unit_preserving_lift_image` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the stated whole-cone hypotheses, the full image of C under (u,g,H) is closed and convex and is stable under every nonnegative scalar. For all real t,s and every z in W, (t,s,z) belongs exactly when either t>=0 and s=z=0, or s>0, z/s is feasible and s times its least original unit cost is at most t. Thus the zero-mass ray and every positive-mass fiber are both retained, including their endpoints. The entire normalized image (g,H)(K) is compact and convex. Its membership criterion is exactly the preceding criterion at t=1, with the zero point included. Every feasible cost is attained by an actual y in C, and that same y is no more expensive than any other feasible original lift. The domain is exactly the normalized original ratio image. Finally, for every real submodule L containing p, u cannot factor through the quotient by L: the quotient kills p while u(p)=1.
+
+The existing mass_cap_compact and base_compact statements supply full original compact caps. For a fixed feasible readout, intersect one such cap with the closed full readout fiber; its continuous minimum is global because every cheaper candidate lies in that cap. For a convergent sequence of full lifted readings, the retained unit coordinate bounds all original preimages in one such cap. A convergent original subsequence then lifts the limiting reading, proving closedness even though the original cone is unbounded. To realize every point above the cost perspective, scale an actual minimum lift by s and add (t-s times its cost) p. This addition changes only the original unit coordinate and stays inside the same cone. It constructs each required point separately and supplies no linear selection of minimizers.
+
+The exact formulas include the entire original mixed base and every cone point. No positive linear section, positive retraction, common preparation, physical instrument or dynamics follows. Neither a global upper bound on costs nor cost-one contact with an original ball is assumed or proved here. The cost-layer and actual support-point identities of Theorem 123.7 and the boundary minimum of Definition 123.9 remain separate obligations. This is a repository-derived cone statement using pinned compactness and subsequence results; literature priority is not asserted.
+
+Application to regular-anchor width and the entire support shell.
+
+Let V be a finite dimensional real normed space, C its original closed generating convex cone and u a real-linear functional strictly positive on every nonzero x in C. Strict positivity proves salience: x and -x cannot both be nonzero cone elements, since u(-x)=-u(x). The type name PointedCone alone supplies no such assertion. Keep K={x in C:u(x)=1}, P=extremePoints(K), and the entire original real-dual effect interval E={f:0<=f(x)<=u(x) for all x in C}.
+
+For every original p in P, let F_p={f in E:f(p)=1}, T_p(x)=min_{f in F_p} f(x), and D_p={x in K:T_p(x)=0}. ExclusionWidthCompactness.comparison_zero_iff, together with comparison attainment, identifies this whole zero-comparison set with FacetZeroGluing.exclusion C u p. In particular D_p includes every mixed state in that exclusion. Let A_p={e in F_p:e(x)=0 for every x in D_p}.
+
+Assume EB3: for every original pure label q, its entire D_q is the image of the whole closed Euclidean three-ball under an injective affine map. Assume also Inj: D_q=D_r implies q=r on all original pure labels. Fix any original p for which A_p is a singleton, and let e=e_p be its member. Equivalently, common C u p e holds and every original real-linear common confirmer equals e. These are the complete anchor hypotheses. No closedness of P, pair properness, global least-confirmation condition, matrix representation, dimension reduction or continuity across all pure labels is assumed.
+
+Choose any full affine chart a of this D_p. Its coordinate space is EuclideanSpace R (Fin 3), its center is c=a(0), and its injective linear part is B=a.linear. Thus a(w)=c+B(w) for every coordinate vector and D_p=c+B closedBall(0,1). SingleLabelNormalBody.chart_mem gives membership for the whole coordinate ball. SingleLabelNormalBody.chart_unit_linear gives u(B(w))=0 for every w; u(a(w))=1 on the entire affine chart follows from the same affine spanning identity.
+
+Set N_p={h:V->R linear:h>=0 on C and h(p)=0}. OriginalNormalRestriction.original_normal_restriction gives the restriction isomorphism from the full real span of the original positive continuous annihilators onto all affine functions on a. Transport along the finite dimensional linear-to-continuous equivalence identifies that span with span(N_p), preserving the actual restriction map. CommonPositiveExtension.positive_span_difference expresses every signed span member as the difference of two positive annihilators. The restriction has dimension four and its constant and slope are the ordinary affine and Riesz coordinates on the same three-dimensional chart.
+
+Pull back the three coordinate slopes through this restriction isomorphism to obtain one original linear H:V->R^3. Its coordinates belong to span(N_p), H(a(w))=w for every w, and H(p)=0 since every member of N_p vanishes at p. Injectivity of restriction proves uniqueness of these coordinate functionals. Thus H and the normal restriction are derived from the original cone, unit, effects and chart.
+
+Put g=u-e_p. Properness and confirmation give g>=0 on C and g(p)=0, so g belongs to N_p. Vanishing of e_p on D_p and the affine spanning identity give g(a(w))=1 for every w. OriginalWidthContact.top_subsingleton_of_zero_exclusion applies to this actual e_p on the entire exclusion. Its one-value face in K is exactly {p}, so g(x)>0 for every x in K other than p, including every mixed state.
+
+The normal restriction places g in the relative interior of the full positive annihilator cone. Choose a common r>0 for which g plus and minus r times each coordinate functional of H are still nonnegative on all C. Therefore |H_i(x)|<=g(x)/r for every x in C. Summing the three coordinate estimates gives a finite positive M, for example M=3/r, with norm(H(x))<=M*g(x) on the whole original cone. This is an original-domain bound derived from positive normal functionals.
+
+Apply unit_preserving_lift_image with its original V,C,u and p, W=EuclideanSpace R (Fin 3), and precisely g=u-e_p and the derived H. The strict-unit, base, nonnegative-gap and vanishing assumptions are those already established. For its zero-ray premise, take nonzero x in C with g(x)=0. CircuitBalancedConfirmation.normalized_mem gives q=x/u(x) in K. Since g(q)=0 and g is positive on K except p, q=p and x=u(x)p with u(x)>0. The zero vector uses coefficient zero. This discharges the full zero-ray premise without assuming an original-domain bridge.
+
+Consequently the domain of all feasible lifts y in C with g(y)=1 and H(y)=z is exactly Z={H(x)/g(x):x in K, x!=p}. The same original state supplies the numerator and denominator. By the definition of fiber, this domain is also H(C intersect g inverse {1}). The slice is convex and H is linear, so Z is convex using the existing cone-slice and linear-image results. This parameter map directly reuses the normalized-domain clause of unit_preserving_lift_image; the general normalized_domain helper has no cone-closedness premise.
+
+There is also a direct interpretation of this convexity within K. For actual points z_i=H(x_i)/g(x_i) and 0<=lambda<=1, set d=lambda/g(x_1)+(1-lambda)/g(x_2)>0 and x=(lambda*x_1/g(x_1)+(1-lambda)*x_2/g(x_2))/d. CircuitBalancedConfirmation.base_convex supplies x in K at these nonnegative weights with sum one. Linearity gives g(x)=1/d and H(x)/g(x)=lambda*z_1+(1-lambda)*z_2. These are the same feasible-slice identities in the original K.
+
+The uniform H/g bound puts Z in closedBall(0,M). For every norm(w)<=1, a(w) lies in D_p, is distinct from p because g(a(w))=1 and g(p)=0, and has H(a(w))/g(a(w))=w. Thus the entire original coordinate closed unit ball lies in Z. Define S=closure(Z) in R^3. It is compact, convex and contains that ball, hence has nonempty ambient interior. Closedness of Z, smoothness and strict convexity are unnecessary.
+
+For every coordinate direction v, define rho(v)=sup_{z in Z}(-inner(v,z)). The set of readings is nonempty and bounded; its supremum is finite. The same number is the support of S in direction -v, since continuous linear halfspaces are closed and Z is dense in S. In particular, -inner(v,z)<=rho(v) for every z in S. For unit v, the actual point -v in Z gives rho(v)>=1. The estimate |rho(v)-rho(w)|<=M*norm(v-w) follows from Cauchy-Schwarz on the same uniformly bounded Z and the two supremum inequalities. Thus rho is Lipschitz and continuous on the entire coordinate space.
+
+The unit sphere S^2 in R^3 is compact and nonempty. Apply its continuous minimum theorem to rho and write delta=min_{v in S^2} rho(v). There is an actual unit minimizer v_0, rho(v_0)=delta, every unit-direction value is at least delta, and delta>=1. This is a minimum on the entire sphere.
+
+Write W(D_p)=max_{f in E}(max_{x in D_p} f(x)-min_{x in D_p} f(x)). This is ExclusionWidthCompactness.width C u (exclusion C u p). The entire effect interval and D_p are compact. ExclusionWidthCompactness.width_attained supplies an actual original effect attaining the width, and effect_difference_le_width bounds every ordered contrast on D_p by W(D_p). The original exclusion-width theorem also gives W(D_p)<=1.
+
+For an original effect f, SingleLabelNormalBody.slope_formula writes f(a(w))=f(c)+inner(slope(a,f),w). Cauchy-Schwarz puts its extrema on the full ball at antipodal unit directions v and -v; a zero slope can use any unit direction. Therefore an effect attaining width one satisfies f(a(v))-f(a(-v))=1 for an actual unit v. The full original bounds 0<=f<=u and u=1 on D_p force the two values to be exactly one and zero. Thus the two original antipodal states are separated by one full-domain proper effect.
+
+For every v and real r, the supremum bound rho(v)<=r is equivalent to -inner(v,H(x))<=r*g(x) for every x in K except p, by g(x)>0. The directional functional d_v(x)=inner(v,H(x)) belongs to span(N_p) as the sum of the three coordinate functionals. Thus rho(v)<=1 makes b=g+d_v nonnegative on all of K, including p where b=0, and hence on the whole cone by normalization. Its chart restriction is b(a(w))=1+inner(v,w). SingleLabelNormalBody.slope_body_original identifies this with v belonging to the full original normalized slope body.
+
+Conversely, a positive original normal b with that normalized slope restricts to 1+inner(v,w) on the entire chart ball. Its affine spanning property extends the identity to every w. Injectivity of the actual normal restriction forces b=g+d_v on all V, so positivity gives the all-state ratio inequality and rho(v)<=1. For unit v, SingleLabelNormalBody.zero_gap_iff identifies membership in that slope body with zero comparison between a(v) and a(-v). ExclusionWidthCompactness.comparison_zero_iff and attainment supply exactly one original full-domain proper effect f with f(a(v))=1 and f(a(-v))=0. Since rho(v)>=1 for unit v, this proves rho(v)=1 iff such an effect exists. Consequently such an effect gives W(D_p)>=1 by effect_difference_le_width; together with W(D_p)<=1 it proves the reverse width implication.
+
+Since delta>=1 and its minimum is attained, existence of a unit v with rho(v)=1 implies delta=1, while delta=1 supplies such a v through its actual minimizer. Combining these two directions gives W(D_p)=1 iff delta=1. Both directions preserve every original effect, all of K, the actual regular anchor and the arbitrary full chart.
+
+If rho(v)=1 at a unit direction, the actual point -v belongs to Z and satisfies -inner(v,-v)=1. It saturates the supporting inequality on S. An ambient interior neighborhood of -v would contain -(1+epsilon)v for a sufficiently small epsilon>0, contradicting that inequality. Hence -v is in frontier(S), giving a contact of the entire closed unit ball with the actual shell.
+
+Conversely let z be in closedBall(0,1) and frontier(S). The supporting-functional theorem for a convex body with nonempty interior supplies a nonzero continuous real functional supporting S at z. Riesz representation and normalization give a unit vector b such that inner(b,y)<=inner(b,z) for all y in S. The point b lies in the inner ball and hence S, so 1<=inner(b,z)<=norm(z)<=1. Equality in Cauchy-Schwarz gives norm(z)=1 and b=z. The support identity is therefore rho(-z)=1. This is the reverse contact implication, with the actual signs -v and -z retained.
+
+The complete contact equivalences are W(D_p)=1 iff delta=1 iff closedBall(0,1) intersect frontier(S) is nonempty. In particular these supply both directions between every pair of the three conditions. They concern ambient frontier in R^3, not a selected relative boundary or a boundary of the possibly nonclosed Z.
+
+For completeness, closed convex separation reconstructs S from all its unit support halfspaces: z belongs to S iff -inner(v,z)<=rho(v) for every unit v. The forward implication is the support bound. If z lies outside S, geometric_hahn_banach_closed_point supplies a separating nonzero continuous functional and real separation level. Normalize its Riesz vector to a unit direction; the support equality on S contradicts the proposed inequality for z. Thus the reconstruction follows from the same actual compact convex shell.
+
+Every z with norm(z)<=delta satisfies -inner(v,z)<=norm(z)<=delta<=rho(v) in every unit direction. Halfspace reconstruction gives closedBall(0,delta) subset S. Since delta>=1>0, smul_unitClosedBall identifies closedBall(0,delta) with delta times the entire closed unit ball. This proves the scaled containment with the actual minimum support radius.
+
+If delta>1, each point of the original closed unit ball has norm strictly less than delta. The open ball of radius delta is contained in interior(S), by the interior inclusion for closed balls and monotonicity of interior. Thus the whole original closed unit ball lies in the ambient shell interior. Every frontier point y satisfies norm(y)>=delta, because a point of smaller norm would lie in that interior. For every x in the original closed unit ball, the triangle inequality gives dist(x,y)>=norm(y)-norm(x)>=delta-1.
+
+The frontier of S is nonempty. Indeed S contains the nonempty unit ball and is compact and bounded, while R^3 contains vectors of arbitrarily large norm; it is therefore a proper nonempty closed subset. The connected-space frontier theorem gives nonempty frontier. Define dist(closedBall(0,1),frontier(S)) as the ordinary real infimum of all dist(x,y) over the entire two specified sets. Its value set is nonempty and bounded below. The every-pair estimate gives dist(closedBall(0,1),frontier(S))>=delta-1>0 when delta>1. No one-point distance, unattained empty-set convention or selected boundary fiber replaces this whole-set distance.
+
+A simultaneous native realization uses V=HermitianMat(Fin 3,C) with its existing real normed-space and finite-dimensional instances, C=HermitianExclusionKernel.cone and u=HermitianExclusionKernel.unit, the real trace. This is the entire PSD cone and the entire trace-one base. HermitianMat.isClosed_nonneg proves closedness, HermitianMat.trace_pos gives strict positivity on every nonzero PSD matrix, and the positive-part minus negative-part decomposition shows that C spans all V.
+
+Real Riesz representation writes every original real-linear f as X -> inner(E,X) for one Hermitian E. PSD self-duality identifies proper(C,u,f) with 0<=E<=I, retaining the whole original real-dual effect interval. SectionROGFrame.whole_pure_carrier on the whole Hermitian subspace identifies all extreme trace-one PSD matrices with rankOne(v) for unit complex v. In particular v=(1,0,0) gives the actual original pure anchor p=diag(1,0,0).
+
+HermitianExclusionKernel.exclusion_iff_kernel identifies the entire D(rankOne(v)) with the PSD trace-one X satisfying Xv=0, retaining mixed states and the original existential quantification over all proper real-linear effects. For PSD X, the zero-quadratic-form criterion and SectionROGFrame.pair_rankOne identify this with inner(rankOne(v),X)=0. Consequently sigma(v)=(I-rankOne(v))/2 belongs to that same entire exclusion.
+
+If D(rankOne(v))=D(rankOne(w)), sigma(v) lies in both. Its zero pairing with rankOne(w) and the two unit-vector trace identities give inner(rankOne(w),rankOne(v))=1. SectionROGFrame.pairing_one_unique then gives rankOne(v)=rankOne(w). This proves Inj on every original pure label.
+
+The actual common effect at p is e(X)=inner(p,X), equal to Re(X(0,0)) on all V. It confirms p and vanishes on the entire D_p. For any other original common f, write f(X)=inner(E,X). Properness gives 0<=E<=I and confirmation gives inner(E,p)=1. Since f(sigma(v))=0, trace(E)=1. The same pairing_one_unique theorem forces E=p, hence f=e on all V. Thus the complete common-effect family A_p is a singleton, giving the original regular-anchor condition with this same e.
+
+HermitianExclusionBall.all_pure_charts gives an actual ExclusionChart of the entire exclusion of each original pure q, with dimension exactly three. Substitution of that dimension yields EB3 on the whole original pure carrier. Choose any such chart at p. The proved closedness, strict unit, generation, full EB3, Inj, actual common e and regularity satisfy the complete original telescope simultaneously. The normal-coordinate construction and the width, minimum, support-contact and strict-scale arguments above therefore apply to this one actual PSD3 system.
+
+This application establishes the complete conditional contact and strict-scale inference on the stated original domain and a common native realization of all its hypotheses. It supplies no native example with delta>1, no classification of all admissible cones, no separate global regular-pure or triangle condition and no physical realization or literature priority claim. In ordinary convex geometry r times the unit ball for r>1 is smooth and strictly convex without unit-ball contact; this only bounds that convex-geometric inference and is not asserted to realize the complete original cone hypotheses.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.domain`
+- Truth anchor: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.fiber`
+- Truth anchor: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.leastUnit`
+- Truth anchor: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.liftMap`
+- Truth anchor: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.unitCost`
+- Truth anchor: `D5/S3/Quantum/Foundation/UnitPreservingLiftImage.unit_preserving_lift_image`
+- Dependency: [D5/S3/Quantum/Foundation/RealRogFailureQuantitative](RealRogFailureQuantitative.md)

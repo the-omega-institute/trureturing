@@ -1,0 +1,28 @@
+**定义 8.2（二父块的三实几何截面）。**在原平方几何已经由定义 8.1 第一项恢复的域，令
+
+$$
+Q_X=\|FX\|^2,\quad Q_Y=\|FY\|^2,\quad
+\tau=Q_X+Q_Y,\quad c=\langle FX,FY\rangle,
+\quad
+G=\begin{pmatrix}Q_X&c\\\bar c&Q_Y\end{pmatrix}\succeq0,
+\tag{8.1}
+$$
+
+内积第二变量线性。$\tau>0$ 时，原距离关系给
+
+$$
+\pi_k=\frac{\tau-\zeta^kc-\zeta^{-k}\bar c}{3\tau},\qquad
+c=-\tau\sum_{k=0}^2\zeta^{-k}\pi_k,
+\tag{8.2}
+$$
+
+以及
+
+$$
+\left\|\frac{(2\operatorname{Re}c,\,2\operatorname{Im}c,\,Q_X-Q_Y)}\tau\right\|^2
+=1-\frac{4\det G}{\tau^2}\le1.
+\tag{8.3}
+$$
+
+这些等式的证明是展开范数和三相字符和，再用 Gram 的 $|c|^2\le Q_XQ_Y$；正性来自同一 $FX,FY$，没有拼接分别可达的最优值。$S=d^2\tau$，所以 $S=0$ 时不用该归一球。若实际三距事件已供应，$\mu_k=m\pi_k$，则对所有 $m\ge0$ 保留未归一式 $mc=-\tau\sum_k\zeta^{-k}\mu_k$，不除以 $m$。这只是同一个更大关系网的二父块截面，不选择物理三维、不证明实际全球覆盖，也不由归一距离单独恢复尊重原聚合的双线性形或独立强度标尺。
+

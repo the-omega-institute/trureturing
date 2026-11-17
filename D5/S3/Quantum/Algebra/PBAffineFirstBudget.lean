@@ -35,7 +35,7 @@ def gram (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (φ : E →ₗ[ℝ] ℝ) (a b : E) 
 
 /-- Leading coefficients of two square-root budgets, including a zero coefficient.
 Only explicit scalar expressions vary; no response is evaluated at a limiting label. -/
-private theorem leading_budget (c d p₀ p₁ p₂ q₀ q₁ q₂ : ℝ)
+theorem leading_budget (c d p₀ p₁ p₂ q₀ q₁ q₂ : ℝ)
     (h : ∀ a : ℝ, |c - a * d| ≤
       Real.sqrt (p₀ + 2*a*p₁ + a^2*p₂) +
       Real.sqrt (q₀ + 2*a*q₁ + a^2*q₂)) :
@@ -72,7 +72,7 @@ private theorem leading_budget (c d p₀ p₁ p₂ q₀ q₁ q₂ : ℝ)
       mul_le_mul_of_nonneg_left (h δ⁻¹) hd.le
     _ = _ := by rw [mul_add, scale, scale]
 
-private theorem gram_shift (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
+theorem gram_shift (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
     (hs : ∀ a b, J a b = J b a) (φ : E →ₗ[ℝ] ℝ)
     (A B n : E) (θ α : ℝ) :
     gram J φ (A + α • n) (B + (θ*α) • n) =
@@ -189,7 +189,7 @@ theorem actual_affine_first_budget
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
 local notation "⟪" x ", " y "⟫" => inner ℝ x y
 
-private def realPerp (η : H) : H →ₗ[ℝ] H where
+def realPerp (η : H) : H →ₗ[ℝ] H where
   toFun z := z-⟪η,z⟫ • η
   map_add' z w := by simp only [inner_add_right, add_smul]; abel
   map_smul' a z := by
@@ -205,7 +205,7 @@ private theorem norm_first_derivative (w z : H) (hw : ‖w‖ = 1) :
 
 /-- Both ends of the original real parameter become a differentiable minimum
 after reciprocal rescaling. This uses no derivative of a response. -/
-private theorem two_ended_budget (r A : ℝ) (hr : r ≠ 0) (w zp zm : H)
+theorem two_ended_budget (r A : ℝ) (hr : r ≠ 0) (w zp zm : H)
     (hw : ‖w‖ = 1)
     (h : ∀ t : ℝ, 2 * |r| * |t+A| ≤ ‖zp-(r*t) • w‖+‖zm+(r*t) • w‖) :
     2*r*A = ⟪w,zm⟫-⟪w,zp⟫ := by

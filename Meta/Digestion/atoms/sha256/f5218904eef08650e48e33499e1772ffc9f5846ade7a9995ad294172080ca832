@@ -1,0 +1,1 @@
+每个 $S$ 的导子都对 $g$ 斜伴随，直接复用[比较曲率 V95，定理 2.1 第一项](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md)的有限正 Frobenius 论证；这个事实只依赖本定义中的比较前件。

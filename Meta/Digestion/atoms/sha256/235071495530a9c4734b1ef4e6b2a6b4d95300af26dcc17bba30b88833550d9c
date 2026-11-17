@@ -1,0 +1,29 @@
+**Corollary 13.4 (one finite marginal suffices for abstract attainment).** Suppose the original installed support $S=\{k:\mu(k)>0\}$ is finite, of size $s\ge3$. The following are equivalent:
+
+1. A finite abstract original common conf/conf attainer exists.
+2. Some zero-level compatible pair has finitely supported p marginal.
+3. Some zero-level compatible pair has finitely supported suspended marginal.
+
+If a zero-level pair has $N$ p-law atoms, an abstract attainer can have
+
+$$
+|X|=N,\qquad |Y|\le N^2+2N+s-2.
+\tag{13.14}
+$$
+
+If it has $N$ suspended-law atoms, the exchanged bound holds.
+
+**Proof.** At zero level, (11.29) holds almost surely at both phases and (11.30) gives their endpoint-event midpoint means. On the full endpoint coordinate box, with $E_s=\{\omega:P_{s,a}(\omega)>P_{s,b}(\omega)\}$, normalization gives
+
+$$
+\operatorname{TV}(D,P_{s,a})=P_{s,a}(E_s)-D(E_s),\qquad
+\operatorname{TV}(D,P_{s,b})=D(E_s)-P_{s,b}(E_s).
+\tag{13.15}
+$$
+
+Thus both endpoint configuration losses can be preserved by one event-mean integral, rather than two loss integrals. In the p-finite direction apply Theorem 13.2 with $G$ the suspended full endpoint box, the function $W(E_\beta)$, and the $s-2$ functions $\operatorname{TV}(W,P_{\beta,r_k})$ for all supported nonendpoints. There are $q=s-1$ functions, giving (13.14). The event mean remains $H$ and both endpoint losses remain $\rho_\beta$ by (13.15); every nonendpoint suspended loss remains its old value. The entire p marginal, its full box, mean $C$ and all its supported losses are unchanged. The new compatible pair is therefore zero-level. Proposition 13.3 makes it an original abstract attainer with both risks equal to their separate minima.
+
+The symmetric proof uses the p endpoint box, $Q(E_p)$ and every supported nonendpoint p loss, while retaining the entire suspended marginal. Conversely, Theorem 11.8, using the supplied original-to-regular endpoint extraction, embeds any finite abstract original attainer as a compatible zero-level pair with both marginals finite. This proves all three implications. $\square$
+
+For example, a zero-level pair with at most two p-law atoms under a fixed three-depth prior has an abstract realization with at most two p labels and nine suspended labels. This is a conditional branch bound, not a two-law restriction on the original domain or a zero-level witness.
+

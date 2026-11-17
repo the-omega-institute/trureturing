@@ -1,0 +1,35 @@
+**引理 39.3（四维窗口的高交叠形状）。** 设 $\mu\in D\setminus F$，$W\le_F D$ 且 $\dim_F W=4$；令 $K=F(\mu)$、$t=[K:F]$。
+
+1. 若 $d_W(\mu)=4$，则 $W$ 是 $K$-空间，因而 $t\in\{2,4\}$。
+2. 若 $d_W(\mu)=3$，则只有两种形状：
+
+$$
+\begin{array}{ll}
+ t\ge5:& W=w\langle1,\mu,\mu^2,\mu^3\rangle_F,\\[2pt]
+ t=3:& W=wK\oplus Fb,qquad b\notin wK,
+\end{array}
+\tag{39.7}
+$$
+
+其中 $w\in D^\times$。特别地，$t=2,4$ 时交维恰为三不可能。
+
+**证明。** 若 $d_W(\mu)=4$，则 $\mu W=W$，所以 $W$ 是 $K=F[\mu]$-空间，$t$ 必须整除四；因 $\mu\notin F$，得到 $t=2$ 或 $4$。
+
+以下设 $d_W(\mu)=3$。置
+
+$$
+ W_i=\{w\in W:\mu^jw\in W\text{ 对 }0\le j\le i\}.
+$$
+
+则 $W_0=W$。乘以 $\mu$ 将 $W\cap\mu^{-1}W$ 同构地送到 $\mu W\cap W$，所以 $\dim_F W_1=d_W(\mu)=3$。对 $i\ge1$，映射
+$W_{i-1}\to W/W_1$、$w\mapsto\mu^{i-1}w+W_1$ 的核为 $W_i$，所以每次下降至多一维；从而
+
+$$
+ \dim_F W_2\ge2,\qquad \dim_F W_3\ge1.
+\tag{39.8}
+$$
+
+若 $t\ge4$，取 $0\ne w\in W_3$。因为 $1,\mu,\mu^2,\mu^3$ 在 $F$ 上独立，四个向量 $w,\mu w,\mu^2w,\mu^3w$ 构成 $W$ 的基，得到第一种形状。$t=4$ 时它等于 $wK$，于是 $\mu W=W$，与交维三矛盾，故只能有 $t\ge5$。
+
+若 $t=2$，$W_1$ 在乘以 $\mu$ 下稳定：$\mu^2$ 是 $1,\mu$ 的 $F$-线性组合。因此 $W_1$ 是 $K$-空间，三维不可能。若 $t=3$，同理 $W_2$ 在乘以 $\mu$ 下稳定。由 (39.8) 及 $W_2\subseteq W_1$，其维数介于二和三之间，又必须是三的倍数，故 $\dim_F W_2=3$。于是 $W_2=wK$，补上一条 $F$-方向即得第二种形状。证毕。
+

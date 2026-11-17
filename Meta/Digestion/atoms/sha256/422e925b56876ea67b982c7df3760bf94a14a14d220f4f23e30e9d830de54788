@@ -1,0 +1,16 @@
+**定理 489.5（二倍区间均方渐近）。** 设 von Koch 界、(489.1) 与 (489.2)。则
+
+$$
+\lim_{X\to\infty}\frac1{X^{1/5}\log X}\int_X^{2X}\mathcal T(x)^2\,\frac{dx}x=\frac{2^{1/5}-1}3 .
+\tag{489.3}
+$$
+
+因而对每个 $0<c<1/\sqrt{15}$，所有充分大的 $X$ 都有 $x\in[X,2X]$ 使
+
+$$
+|\mathcal T(x)|\ge c\,x^{1/10}\sqrt{\log x}.
+\tag{489.4}
+$$
+
+证明。由引理 489.1，在 $L^2([X,2X],dx/x)$ 中 $\mathcal T$ 与 $\mathcal T_0$ 相差 $O(\log^2X)=o(\sqrt{S_X})$；再由引理 489.4 得 (489.3)。又 $W_X=\int_X^{2X}x^{1/5}\log x\,\frac{dx}x\sim5(2^{1/5}-1)X^{1/5}\log X$，故 $\int_X^{2X}\mathcal T^2\,dx/x\,\big/\,W_X\to1/15$。固定 $c<1/\sqrt{15}$，取 $X_0(c)$ 使 $X\ge X_0(c)$ 时该比值大于 $c^2$。若某个 $X\ge X_0(c)$ 的 $[X,2X]$ 上处处 $|\mathcal T(x)|<cx^{1/10}\sqrt{\log x}$，则 $\mathcal T(x)^2<c^2x^{1/5}\log x$，该比值至多 $c^2$，矛盾。证毕。
+

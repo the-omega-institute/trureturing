@@ -1,0 +1,53 @@
+**定义 6.1（共同多项式辅助行的带符号比较）。** 对任意原 $a,b$、实 $s$，令 $\tau\in\{0,s\}$，记
+
+$$
+a_\tau=a+\tau u,\qquad d_\tau=D(a_\tau,b),\qquad
+\delta=d_s-d_0.
+$$
+
+取原 $c=p(a)$，$p\in\mathbb R[T]$。定理 3.1 已支付 $D(a_\tau,c)=0$。准确外层及其带符号差记为
+
+$$
+\begin{aligned}
+R_{\tau,\pm}&=b\pm d_\tau\mp(a_\tau\circ c),&
+S_{\tau,\pm}&=c\pm(a_\tau\circ b),\\
+\mathcal B_\tau(c)
+&=D(R_{\tau,+},S_{\tau,+})-D(R_{\tau,-},S_{\tau,-}).
+\end{aligned}
+\tag{6.1}
+$$
+
+原 PB 直接给
+
+$$
+\begin{aligned}
+\mathcal B_\tau(c)
+&=-2b\circ d_\tau
+ +2\bigl[b\circ(a_\tau\circ c)-c\circ(a_\tau\circ b)\bigr],\\
+\mathcal B_s(c)-\mathcal B_0(c)&=-2b\circ\delta.
+\end{aligned}
+\tag{6.2}
+$$
+
+第二式中 $s$ 的两个已知项准确抵消；未在任何未知输入和上展开 $D$。对正数学读取 $\beta$，定义
+
+$$
+\begin{aligned}
+\Delta_{\tau,\pm}(c)
+&=\beta(R_{\tau,\pm}^2)\beta(S_{\tau,\pm}^2)
+  -\beta(R_{\tau,\pm}\circ S_{\tau,\pm})^2,\\
+W_\beta(c)&=\sum_{\tau\in\{0,s\},\,\epsilon\in\{+,-\}}
+                 \sqrt{\Delta_{\tau,\epsilon}(c)}.
+\end{aligned}
+\tag{6.3}
+$$
+
+和式按两个演员位置计数；$s=0$ 时即使标签重合也保留两次。四张独立 P2 加三角不等式只供应
+
+$$
+2|\beta(b\circ\delta)|\le W_\beta(c).
+\tag{6.4}
+$$
+
+(6.1)–(6.4) 是现有原接口在当前消费者中的直接代入，不另计为新增刚性结论。下述模型也允许 $c$ 遍历整个共同零辅助行，而不仅是 $\mathbb R[a]$。
+

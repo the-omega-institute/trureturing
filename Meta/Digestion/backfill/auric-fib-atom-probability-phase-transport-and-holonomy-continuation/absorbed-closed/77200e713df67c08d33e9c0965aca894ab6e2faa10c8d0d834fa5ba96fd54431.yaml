@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:77200e713df67c08d33e9c0965aca894ab6e2faa10c8d0d834fa5ba96fd54431
+  normalized_sha256: sha256:77200e713df67c08d33e9c0965aca894ab6e2faa10c8d0d834fa5ba96fd54431
+cas_ref: sha256:77200e713df67c08d33e9c0965aca894ab6e2faa10c8d0d834fa5ba96fd54431
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/FiniteRectangleTransport.finite_rectangles_realize
+    target_statement_id: sha256:348aff1fb2987772b82aafa4a9c4c0b459ee23b18b8f9c19e605cc4b5d8e5720
+  - gid: D5/S3/Quantum/Fibers/FiniteRectangleTransport.polygon_admissible
+    target_statement_id: sha256:1d11ff3bf78d01887458a6488609c313b985cc6559a76848663d23d29b908204
+  - gid: D5/S3/Quantum/Fibers/FiniteRectangleTransport.weight_compatible
+    target_statement_id: sha256:38a9d30b2e6b19ab3f0ee5090b62aba6349d9ccad1457220fd4ed136171201f4
+  - gid: D5/S3/Quantum/Fibers/OriginalControlMarkedJump.p_explicit
+    target_statement_id: sha256:b2babd0f2352fa0305f9a31ca4a60a95c4087af7af9900ef4c07d22cd0049b5e
+  - gid: D5/S3/Quantum/Fibers/OriginalControlMarkedJump.p_pos
+    target_statement_id: sha256:492230fbb0a8059cee4358f5a9da772cb54e87355bc01b279653982f8a8cdb4b
+  - gid: D5/S3/Quantum/Fibers/OriginalControlMarkedJump.p_sum
+    target_statement_id: sha256:1cb4cc590ea08aa8618e14845ebf6d7bd57a1afd98befaa5e23943788ee7a28d
+  - gid: D5/S3/Quantum/Fibers/OriginalControlMarkedJump.source_diagonal
+    target_statement_id: sha256:0c5dc1a16f5157cea5fa51bb250fcca80742b2c141ed150f3ccacf77e362a5c1
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_sub_orthogonal
+    target_statement_id: sha256:18ef8b509c815c9fd03d5b75c4824f802e62d699aba3c330248b42fefe8fbc00
+  - gid: D5/S3/Quantum/PureState/PureStateHandshake.pure_state_handshake
+    target_statement_id: sha256:3f3685dfb0637d23f5f799f8ec2e875fbc8fee9823e2940f31ba7983a7b83b1e
+receipts:
+  unresolved_subitems: []

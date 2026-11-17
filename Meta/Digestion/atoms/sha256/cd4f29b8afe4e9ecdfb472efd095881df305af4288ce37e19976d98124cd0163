@@ -1,0 +1,36 @@
+To obtain actual rows at one actual cut, take $t\ge\max_i n_i$ and
+the complete original words
+
+$$
+u_i(t)=B^{t-n_i}w_i.
+\tag{13.8}
+$$
+
+Equation (4.4), applied to $w_i$ and each $w_iv$, gives
+
+$$
+R_{u_i(t)}^H(v)
+ =\frac{\langle P^{t-n_i}g,F_{w_iv}\rangle_m}
+        {\langle P^{t-n_i}g,F_{w_i}\rangle_m}
+ \longrightarrow\frac{q(w_iv)}{q(w_i)}=Q_{w_i}^H(v).
+\tag{13.9}
+$$
+
+The limiting denominator is strictly positive. There are only
+$K4^H$ entries, so the convergence is also simultaneous in TV.
+Choose one finite $t$ large enough that all these TV errors are
+less than $\theta$. Then
+
+$$
+R_{u_i(t)}^H(E_i)>1-3\theta>1-\epsilon.
+\tag{13.10}
+$$
+
+These masses also exceed $1/2$. Two of the words $u_i(t)$ cannot
+coincide, since their one common probability row would then put
+more than $1/2$ on each of two disjoint events. Each has positive
+original probability by Definition 1.2. The prefix $B^{t-n_i}$ is
+part of the full actual word; it is not forgotten or provided by
+resetting the source. The stationary law and the event-conditioned
+laws were only intermediates in obtaining (13.9). $\square$
+

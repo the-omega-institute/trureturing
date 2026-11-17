@@ -66,7 +66,7 @@ If only all single-qubit $SU(2)$ gates and CNOT are supplied, the same finite de
 
 For local rotations $e^{-itX}$ and $e^{-itY}$, Euler angles are rescaled by the convention that these exponentials have angle $2t$ on the Bloch sphere. They generate each $SU(2)$ element by three rotations. The inference is about ideal real parameters. Their computation, finite precision, physical implementation and errors require separate contracts.
 
-The fixed controlled-S identity used to extract a local phase already appears in [Garion–Cross, equation (12)](garioncross2020cnotdihedral.md). Its application to the constrained physical pulses and the five-mode endpoint code is in [Static compatibility fibers §62](../../docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#62-五模式交互系数与保码端点控制). Existing native compilers with a larger phase-addressable menu are described in the [Numata–Yamanouchi control note](../QuantumChannels/numatayamanouchi2022nativecontrol.md); their control permissions must not be substituted for the fixed-phase menu used there.
+The fixed controlled-S identity used to extract a local phase already appears in [Garion–Cross, equation (12)](garioncross2020cnotdihedral.md). Its application to the constrained physical pulses and the five-mode endpoint code is in [Static compatibility fibers §62](../../docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#62-五模式交互系数与保码端点控制). Existing native compilers with a larger phase-addressable menu are described in the [Numata–Yamanouchi control note](../FiniteGroups/numatayamanouchi2022nativecontrol.md); their control permissions must not be substituted for the fixed-phase menu used there.
 
 ## Static composition retains coherent information
 

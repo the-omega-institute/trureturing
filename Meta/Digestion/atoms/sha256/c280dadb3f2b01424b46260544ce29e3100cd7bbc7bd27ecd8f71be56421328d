@@ -1,0 +1,34 @@
+**引理 3.1（实际代数群与维数）。** 令
+
+$$
+J_k=A^{-k}JA^k,\qquad R_1=J_0J_1,\qquad R_2=J_0J_2,\qquad
+\mathcal G=\{G\in U(2):\det G=\pm1\}=SU(2)\sqcup J SU(2).
+$$
+
+$R_1,R_2$ 为代数 $SU(2)$ 矩阵，生成稠密子群；实际字母 $g_0,g_1$ 生成群的闭包为 $\mathcal G$。其单位分支具有实维数三，并在 $T$ 的单位向量上给出完整 $S^3$ 轨道。
+
+证明。由 (1.1) 的特征多项式与矩阵乘法得到
+
+$$
+\operatorname{tr}A=-i/2,\qquad
+\alpha_\pm=(\pm\sqrt{15}-i)/4,\qquad
+\zeta=\alpha_+/\alpha_-=(-7+i\sqrt{15})/8.
+$$
+
+在 $A$ 的正交特征基中写 $J=\left(\begin{smallmatrix}a&b\\\bar b&-a\end{smallmatrix}\right)$。恒等式 $a(\alpha_+-\alpha_-)=\operatorname{tr}(AJ)=-\sqrt3/2$ 与 $J^2=I$ 给出 $a=-1/\sqrt5$、$|b|=2/\sqrt5$。写 $J_k=n_k\cdot\sigma$，其中 $\sigma$ 为 Pauli 矩阵，$n_k\in\mathbb R^3$ 为单位向量。乘积公式给出
+
+$$
+n_k\cdot n_\ell=\frac15+\frac45\operatorname{Re}(\zeta^{k-\ell}),\qquad
+\operatorname{tr}R_1=-1,\qquad\operatorname{tr}R_2=5/4,
+$$
+
+$$
+\operatorname{Gram}(n_0,n_1,n_2)=
+\begin{pmatrix}1&-1/2&5/8\\-1/2&1&-1/2\\5/8&-1/2&1\end{pmatrix},
+\qquad\det\operatorname{Gram}=27/64>0.
+$$
+
+因此 $R_1,R_2$ 的 Pauli 向量部分分别沿着相互独立的 $n_0\times n_1$ 和 $n_0\times n_2$，二者不交换。$R_2$ 不可能有限阶，否则其迹是代数整数，而有理数 $5/4$ 不是整数。
+
+$\mathfrak{su}(2)$ 可认作带叉乘的 $\mathbb R^3$；非零真 Lie 子代数只能一维，因为二维平面不对叉乘封闭。无限闭子群的单位分支有正维数，零维紧 Lie 群则有限。因此真无限闭子群的单位分支是圆，且整个子群位于该圆的正规化子。圆取对角形后，正规化子中不在圆内的元素均反对角、迹为零。两个 $R_i$ 的迹非零，所以若其闭包是真无限子群，二者都在同一个圆内而交换，矛盾。故闭包为 $SU(2)$。$J=g_0^{-1}g_1$，每个 $R_i$ 均是 $A,J$ 的字；实际闭包因而含 $SU(2)$ 及一个行列式负分支，等于 $\mathcal G$。单位向量决定唯一 $SU(2)$ 矩阵的第一列，故 $SU(2)$ 在单位向量上自由且传递。这里的轨道是含复相位的 $S^3$，不是射线空间。$\square$
+

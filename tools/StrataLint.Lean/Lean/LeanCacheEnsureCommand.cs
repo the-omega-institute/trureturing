@@ -147,7 +147,8 @@ internal static partial class LeanCacheEnsureCommand
         out CacheState? cacheState,
         string? donorRepository,
         bool refreshWarmArchive = true,
-        bool restoreDependencies = false)
+        bool restoreDependencies = false,
+        Func<bool>? readColdBuildConsent = null)
     {
         cacheState = null;
         var archive = LeanArchiveAttempt.Skipped("not reached");
@@ -162,6 +163,16 @@ internal static partial class LeanCacheEnsureCommand
                 return RestoreLinkedDependencies(root, pins, runner, cloner, writerGuard,
                     stateProbe, removePartial, out cacheState);
             var projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
+
+            if (projectWarmth.State == OleanWarmth.Cold
+                && !File.Exists(lake)
+                && readColdBuildConsent is not null
+                && GitWorktreeInventory.Locate(root, runner).IsLinked
+                && readColdBuildConsent())
+            {
+                return PrepareLinkedColdBuild(root, pins, lakeExecutable, runner,
+                    writerGuard, stateProbe, out cacheState);
+            }
 
             string? missReason = null;
             if (Directory.Exists(lake))
@@ -357,7 +368,7 @@ internal static partial class LeanCacheEnsureCommand
                     }
 
                     // Main checkouts retain in-place reproduction for missing or corrupt stamps.
-                    // Linked worktrees return above and provision only from their main checkout.
+                    // Linked worktrees return through their donor or explicit cold-build path.
                     try
                     {
                         var reproduced = LeanCacheProvisioner.ReproduceExisting(
@@ -488,7 +499,7 @@ internal static partial class LeanCacheEnsureCommand
                     : projectWarmth;
 
                 // Main checkouts may use cache-get and the Release archive. Linked worktrees
-                // return before this point and only clone a warm main-checkout cache.
+                // return before this point through their donor or explicit cold-build path.
                 var warmthAfterProvision = provisioned.Strategy == "cloned"
                     ? stateProbe.ProbeOleans(ProjectOleanRoot(lake))
                     : finalProjectWarmth;
@@ -587,6 +598,51 @@ internal static partial class LeanCacheEnsureCommand
                     ? provisionException.Clonefile
                     : missingDonorClonefile);
         }
+    }
+
+    private static CommandResult PrepareLinkedColdBuild(
+        string root,
+        LeanPinSet pins,
+        string lakeExecutable,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        ILeanCacheStateProbe stateProbe,
+        out CacheState? cacheState)
+    {
+        cacheState = null;
+        var lake = Path.Combine(root, ".lake");
+        var stamp = LeanCacheStamp.Inspect(lake, pins);
+        string? warning = null;
+        var status = "present";
+        var method = "none";
+        if (stamp.State != LeanCacheStampState.Match)
+        {
+            if (stamp.State == LeanCacheStampState.Mismatch) RemoveProjection(lake);
+            try
+            {
+                // Keep partial dependency downloads for Lake to complete. No project
+                // archive or donor is involved in an explicitly authorized cold build.
+                var provisioned = LeanCacheProvisioner.ReproduceExisting(
+                    root, pins, lakeExecutable, runner, writerGuard);
+                warning = provisioned.Warning;
+                status = "fetched";
+                method = provisioned.Method;
+            }
+            catch (LeanCacheProvisionException exception)
+            {
+                if (!exception.SafeToContinueToBuild) throw;
+                warning = exception.Message;
+                status = "degraded";
+                method = "cache-get";
+            }
+        }
+        if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+        return SuccessWithState(
+            SuccessReceipt(status, root, donor: null, method, pins.Sha256, warning,
+                LeanCacheProvisioner.InspectMathlibOleans(lake),
+                ReceiptStampMiss(stamp.State), archive: LeanArchiveAttempt.Skipped(LinkedArchiveDisabled)),
+            new CacheState(stateProbe.ProbeOleans(MathlibOleanRoot(lake)),
+                stateProbe.ProbeOleans(ProjectOleanRoot(lake))), out cacheState);
     }
 
     private static CommandResult ProvisionLinkedFromMain(
@@ -851,37 +907,25 @@ internal static partial class LeanCacheEnsureCommand
     }
 
     /// <summary>
-    /// Bounds Release archive retrieval so the main-checkout producer retains time to finish.
-    /// Linked-worktree ensure paths never consume this budget because archive retrieval is disabled.
+    /// Validates the local Release computation policy. Python owns its metadata,
+    /// validation and install deadlines; asset transfers have no total-duration limit.
     /// </summary>
     private const string ReleaseTransportTimeoutVariable =
         "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS";
     private const int ReleaseTransportTimeoutMaximumSeconds = 21600;
-    private const int ReleaseEnclosingHeadroomSeconds = 120;
-
-    /// <summary>
-    /// Resolve the optional Release transport policy only inside the archive fetch
-    /// failure boundary. The default remains 45 minutes minus its two-minute
-    /// post-archive reserve; an explicit transport extension receives bounded
-    /// headroom so the enclosing process does not cut it off first.
-    /// </summary>
     private static TimeSpan ArchiveBudget()
     {
-        var defaultSeconds = (LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
-            - LeanCacheBudgetPolicy.PostArchiveReserveMinutes) * 60;
         var raw = Environment.GetEnvironmentVariable(ReleaseTransportTimeoutVariable);
-        if (raw is null) return TimeSpan.FromSeconds(defaultSeconds);
-        if (!int.TryParse(raw, System.Globalization.NumberStyles.None,
+        if (raw is not null && (!int.TryParse(raw, System.Globalization.NumberStyles.None,
                 System.Globalization.CultureInfo.InvariantCulture, out var configured)
-            || configured < 1 || configured > ReleaseTransportTimeoutMaximumSeconds)
+            || configured < 1 || configured > ReleaseTransportTimeoutMaximumSeconds))
         {
             throw new InvalidOperationException(
                 $"{ReleaseTransportTimeoutVariable} must be 1..{ReleaseTransportTimeoutMaximumSeconds}");
         }
 
-        return TimeSpan.FromSeconds(Math.Max(
-            defaultSeconds,
-            configured + ReleaseEnclosingHeadroomSeconds));
+        // Keep the runner's cancellation token and cooperative child settlement.
+        return Timeout.InfiniteTimeSpan;
     }
 
     private static string RecordColdBuildConsent(string receipt)

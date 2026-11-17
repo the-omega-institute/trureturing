@@ -1,0 +1,4 @@
+- **CLIP:** [Risk-controlled emission moment feasibility](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md),
+  Sections 1--6. Proposition 17.2 uses its endpoint-box TV identity;
+  (17.9) is the elementary complete-tail bound of (12.13), evaluated at
+  the laws (17.4).

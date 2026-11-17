@@ -4,7 +4,19 @@
 
 The fourth moment of finite coefficient sums expands according to index multiplicity.
 
-**Theorem 1.1 (Expansion under a quadratic relation).**
+**Theorem 1.1 (Two distinct indices).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticFourthExpansion.sum_two`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticFourthExpansion.sum_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite index type with decidable equality and every real function F of two indices, the sum of F(x(0),x(1)) over injective functions x from the two-element type equals the iterated sum of F(d,e) over all ordered pairs of unequal indices d,e.
+
+**Theorem 1.2 (Expansion under a quadratic relation).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticFourthExpansion.quadratic_fourth_moment_expansion`
 
@@ -21,6 +33,7 @@ The fifteen equality patterns of an ordered four-tuple give the five multiplicit
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticFourthExpansion.quadratic_fourth_moment_expansion`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticFourthExpansion.sum_two`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/IndexEqualityPatterns](IndexEqualityPatterns.md)
 - Dependency: [D5/S3/Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection](../../../../Combinatorics/Graph/SupportForestMoments/SupportAndEdgeWordReflection.md)
 - Dependency: [D5/S3/Zeros/LeeYang/TreePairStability](../../../../Zeros/LeeYang/TreePairStability.md)

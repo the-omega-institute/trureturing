@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c548732b3532bf24c3248155997166843f038db9ee30e31a077780d9b659c622
+  normalized_sha256: sha256:c548732b3532bf24c3248155997166843f038db9ee30e31a077780d9b659c622
+cas_ref: sha256:c548732b3532bf24c3248155997166843f038db9ee30e31a077780d9b659c622
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the alternative B+H and Z0+B+A hypothesis packages and the intended domains of Z0, B, A and H; these are assumptions, not assertions that any original cone satisfies them. No equivalence with S or least-confirmation conclusion is settled here.
+    previous_atom_id: 830c39350d31ba8f0cb9a6fc6daeb4091869bad5394f90dcf59fd4a51995bae1
+    next_atom_id: 14fb66e26e296128f1dc32e095fda359f71bf898c92157a8aec318afdae26a61

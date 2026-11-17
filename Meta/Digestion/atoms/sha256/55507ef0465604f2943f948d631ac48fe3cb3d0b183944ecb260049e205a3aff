@@ -1,0 +1,64 @@
+**Definition 11.3 (full prefixes, allowed service state and timing).**
+Fix a deterministic gate description as in §9 and write its stopped
+cut as $T$. For a reached stopped history $u=Y_{<T}$, write
+
+$$
+W_j=Y_T\cdots Y_{T+j-1},\qquad
+B_i=\mathbf1_{\{Y_{T+i}=B\}},\qquad W_0=\emptyset.
+\tag{11.3}
+$$
+
+The actual hidden read at local index $i$ is still
+$Z_{(T+i+2)d}$. Conditional on $u$, any allowed pre-gate service
+state $V$ carries no additional information about the joint future
+hidden trajectory and fresh emission noises. Conditional on $u,V=v$,
+a service seed $R$ has a fixed law $\lambda_{u,v}$ independent of
+that entire joint future. More precisely, with $\mathsf H,\mathsf E$
+denoting that hidden trajectory and those fresh noises, require
+
+$$
+\mathop{\rm Law}(\mathsf H,\mathsf E\mid u,V=v)
+ =\mathop{\rm Law}(\mathsf H,\mathsf E\mid u),\qquad
+\mathop{\rm Law}(R,\mathsf H,\mathsf E\mid u,V=v)
+ =\lambda_{u,v}\otimes\mathop{\rm Law}(\mathsf H,\mathsf E\mid u).
+$$
+
+A singleton seed is allowed. Standard Borel service spaces suffice
+for these conditional kernels. Independent
+future service choices may be represented by such a seed; its existence
+does not grant an executable sampler, processor or source control.
+
+A rule $J\in\mathbb N_0\cup\{\infty\}$ is B-mask adapted when,
+for each $j<\infty$, $\{J=j\}$ belongs to
+$\sigma(R,B_0,\ldots,B_{j-1})$, using the same rule at fixed $u,v$
+in the actual and comparison laws. The $j=0$ event uses only $R$;
+the infinite event is the complement of all finite events.
+The rule is predeclared and causal on the actual label prefix.
+Non-B label content is not an allowed timing input. This is an
+explicit timing restriction, not a claim that all causal completion
+rules satisfy it. Whenever it is an actual completion, its cut is
+$C=T+J$; every label through that cut still belongs to the actual
+record and must be captured, retained and assimilated.
+
+Under $Q$, let $\widetilde X_i$ denote the stationary hidden read
+states with transition $P_d$ and the original emissions. For $j\ge1$
+and every full word $w\in\mathcal L^j$, define
+
+$$
+\nu_w=\mathop{\rm Law}_Q(\widetilde X_{j-1}\mid W_j=w),\qquad
+r_d(x)=\operatorname{TV}(P_d(x,\cdot),m),\qquad
+D_j^\infty(w)=\operatorname{TV}(Q_w^\infty,Q),\qquad D_0^\infty=0.
+\tag{11.4}
+$$
+
+All word probabilities $q(w)$ are positive. The posterior $\nu_w$
+conditions on every original label, not merely its mask. It is
+absolutely continuous with respect to $m$, since
+$q(w)\nu_w(A)\le Q(\widetilde X_{j-1}\in A)=m(A)$.
+Use any Borel extension of $r_d\in[0,1]$ on the properly exceptional
+null set of Definition 9.1. Measurability follows from a countable
+generating algebra for $G$. Also $D_j^\infty$ is measurable: by §9
+full-product event-TV is the supremum of its finite-prefix TVs.
+Write $Q_\lambda$ for this stationary comparison with its independent
+seed, and $p_j=Q_\lambda(J=j)$ at the fixed $u,v$.
+

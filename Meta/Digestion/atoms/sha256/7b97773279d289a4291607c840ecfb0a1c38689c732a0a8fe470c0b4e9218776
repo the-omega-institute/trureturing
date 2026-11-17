@@ -1,0 +1,183 @@
+**定理 27.2（联合消元的全称系数判据）。** 对定义 27.1 的每份有限输入、每个分别固定的 $\sigma$，以下两项等价：
+
+1. 每个实际 $x=x^*=PxP$ 和完整 $M_{m+2}(\mathbb C)$ 上每个正复线性泛函 $\phi$ 都满足原 PB，即
+
+   $$
+   |\phi(L)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+   \tag{27.8}
+   $$
+
+2. 对 (27.6) 的每个 $\theta$ 都有 $\mathscr Q_{\sigma,s}(\theta)\succeq0$。
+
+这里不假设 P2，不要求任何环境块、系数块或 Gram 矩阵可逆。对每个指定有限质量 $\mu>0$，第一项可以等价地只量化 $\phi(I_{m+2})=\mu$；所得条件仍是同一第二项。质量 $0$ 时正泛函只有零泛函，(27.8) 总是零等式，本身不对系数矩阵加条件。因此量化全部非负有限质量与第二项等价，并完整保留零质量。
+
+每个 (27.7) 也有如下等价的广义 Schur 写法。按最后一个坐标分块，记
+
+$$
+\mathscr Q_{\sigma,s}(\theta)=
+\begin{pmatrix}A&b\\b^{\mathsf T}&\gamma\end{pmatrix}.
+$$
+
+则该系数测试准确等价于
+
+$$
+A\succeq0,\qquad b\in\operatorname{ran}A,\qquad
+\gamma-b^{\mathsf T}A^\dagger b\ge0.
+\tag{27.9}
+$$
+
+$A^\dagger$ 是这个实对称矩阵的谱 Moore–Penrose 逆。不得在 $A$ 奇异时删掉中间的值域条件。
+
+如果任何一个有限索引 $\theta$ 的系数测试失败，则在同一份不变的 $B,V,D_{\rm env},s,\sigma$ 上存在一个有限实际 Hermitian 角探针和一个原全空间向量泛函，使 (27.8) 严格失败。对每个指定 $\mu>0$ 都能在同一探针上取得质量恰为 $\mu$ 的严格失败；所用泛函的两笔预算和左端始终属于同一个实际实现。
+
+证明。首先确认 (27.4)–(27.5) 所编码的是原算子像。$\tau=1$ 时令
+
+$$
+x=X(a)\oplus0_m,\qquad \eta=(u,Y(v))\in\mathcal H_0.
+$$
+
+原全空间块乘法直接给
+
+$$
+\begin{gathered}
+\mathcal Xz=x\eta,\quad\mathcal H_\sigma z=h\eta,\quad
+\mathcal Jz=r\eta,\quad\mathcal Tz=t\eta,\quad
+\mathcal Kz=k\eta,\quad\mathcal G_sz=g_\sigma\eta,\\
+\mathcal R_\delta z=R_\delta\eta,\qquad
+\mathcal S_{\delta,s}z=S_\delta\eta,\qquad
+\ell_s(z)=\phi_\eta(L).
+\end{gathered}
+\tag{27.10}
+$$
+
+尤其 $\mathcal T$ 中的 $D_{\rm env}Y(v)$、$\mathcal K$ 和 $\mathcal G_s$ 中的环境像全部保留。对任何原自伴 $U,W$，已有的原像恒等式给
+
+$$
+\phi_\eta(U^2)=\|U\eta\|^2,\qquad
+\phi_\eta(U\circ W)=\langle U\eta,W\eta\rangle_{\mathbb R}.
+\tag{27.11}
+$$
+
+这计算的是 $U,W$ 的原全空间乘积，不是它们压缩后的平方或乘积。$\mathcal H_0$ 不必约化它们，命题 18.1 的障碍仍保留。
+
+所消费的变分恒等式是成熟的二阶实 Gram 行列式／算术几何平均关系。为包含退化情形，在这里给出全部所需代数。对同一实 Hilbert 空间中的 $U,W$，置
+
+$$
+a_0=\|U\|^2,\qquad b_0=\langle U,W\rangle_{\mathbb R},\qquad
+c_0=\|W\|^2,\qquad\Delta=a_0c_0-b_0^2\ge0.
+$$
+
+则
+
+$$
+2\sqrt\Delta=
+\inf_{\alpha>0,\ \beta\in\mathbb R}
+\left(\alpha\|U\|^2+\alpha^{-1}\|W-\beta U\|^2\right).
+\tag{27.12}
+$$
+
+确实，$a_0>0$ 时配方为
+
+$$
+\alpha a_0+\alpha^{-1}\left(
+a_0(\beta-b_0/a_0)^2+\Delta/a_0\right)\ge2\sqrt\Delta.
+$$
+
+若 $\Delta>0$，取 $\beta=b_0/a_0$、$\alpha=\sqrt\Delta/a_0$ 达到等号。若 $\Delta=0$，对任意给定 $e>0$，取同一 $\beta$、$\alpha=e/a_0$ 就使该式等于 $e$。$a_0=0$ 时 $U=0$、$b_0=\Delta=0$；若 $c_0>0$，取 $\alpha=c_0/e$ 使该式等于 $e$，若 $c_0=0$ 则任意参数都给零。故所有零 Gram 情形都包括在内，而且每个正容差都由有限参数实现，无须假设下确界取到。
+
+现在对固定的同一 $x,\eta$，将 (27.12) 分别用于 (27.10) 的两对像。每次只有两个实变分参数，所有像仍由共同的 $a,v$ 决定。于是 (27.8) 对这个 $x,\phi_\eta$ 成立，当且仅当对两个 $\epsilon$ 和全部四个变分参数有
+
+$$
+\begin{aligned}
+&\sum_{\delta=\pm1}\left[
+\alpha_\delta\|\mathcal R_\delta z\|^2
++\alpha_\delta^{-1}\|\mathcal S_{\delta,s}z-\beta_\delta\mathcal R_\delta z\|^2
+\right]-2\epsilon\ell_s(z)\\
+&\hspace{30mm}=z^{\mathsf T}\mathscr Q_{\sigma,s}(\theta)z\ge0,
+\qquad z=(a,v,1).
+\end{aligned}
+\tag{27.13}
+$$
+
+这里取两份数值下确界之和，只是在同一固定实现上使用两次 (27.12)；不分别选择探针、向量、环境或质量，也不交换任何极小与极大。
+
+对固定 $\theta$，(27.13) 对全部 $a,v$ 成立，当且仅当 $\mathscr Q_{\sigma,s}(\theta)\succeq0$。一个方向显然；另一个方向对任意 $\tau\ne0$ 使用齐次化恒等式
+
+$$
+z^{\mathsf T}\mathscr Q_{\sigma,s}(\theta)z
+=\tau^2\,(a/\tau,v/\tau,1)^{\mathsf T}
+\mathscr Q_{\sigma,s}(\theta)(a/\tau,v/\tau,1),
+\tag{27.14}
+$$
+
+再由有限二次型的连续性包括 $\tau=0$。这一步同时消去全部四个真实探针坐标和全部 $2d$ 个环境读取坐标，不把它们换成彼此无关的优化变量。
+
+还须处理读取向量的演员分量。对任意 $\eta=(w,y)\in\mathcal H_0$，若 $w\ne0$，则
+
+$$
+\eta=\|w\|\,(u,y/\|w\|),\qquad u=w/\|w\|.
+$$
+
+向量泛函按 $\|w\|^2$ 缩放，PB 两边都按这个相同因子缩放，故单位 $u$ 的测试穷尽所有此类向量，没有除以某个演员坐标。若 $w=0$，原定义直接给
+
+$$
+x\eta=h\eta=r\eta=s\eta=0,\qquad
+g_\sigma\eta=(\tfrac{\sigma i}{2}CVy,0),\qquad
+t\eta=(Vy,D_{\rm env}y),
+$$
+
+所以 $\phi_\eta(L)=-2\operatorname{Re}((Vy)^*(\sigma i CVy/2))=0$，PB 自动成立。这也包含零向量。轴向 $u=e_1,e_2$、空环境和全部奇异块均未被删去。
+
+定理 17.2 的 (17.7) 已将每个原探针在 $\mathcal H_0$ 全部向量上的 PB，与原全代数全部正复线性泛函上的 PB 等价，其 (17.15)–(17.16) 支付混合密度提升；直接消费这条结论，不另加 P2。它没有删掉环境密度块。结合 (27.13)–(27.14) 和刚才的演员分量分析，得到本定理的充要关系。对任意固定 $\mu>0$，任一非零正泛函均可乘以唯一正因子而成为质量 $\mu$，PB 的根与左端都一次齐次，故质量限制不改变判据。$\mu=0$ 时正密度的非负谱值之和为零，只能是零密度，给出所述零等式。
+
+为说明 (27.9) 在奇异处没有缺项，使用成熟的广义 Schur 判别，其来源为 Higham，[*What Is the Schur Complement of a Matrix?*](https://nhigham.com/2023/06/01/what-is-the-schur-complement-of-a-matrix/)，Generalized Schur Complement，Theorem 1。所需实对称特例也可完整验证如下。半正定性首先给 $A\succeq0$。若 $b\notin\operatorname{ran}A=(\ker A)^\perp$，可取 $k\in\ker A$ 使 $b^{\mathsf T}k\ne0$；向量 $(qk,1)$ 上的值是 $2q b^{\mathsf T}k+\gamma$，某个有限实 $q$ 即使它为负。故值域条件必要。在值域条件下，对任何 $w\in\mathbb R^{n-1}$、$\tau\in\mathbb R$ 有准确配方
+
+$$
+\begin{aligned}
+w^{\mathsf T}Aw+2\tau b^{\mathsf T}w+\gamma\tau^2
+&=(w+\tau A^\dagger b)^{\mathsf T}A(w+\tau A^\dagger b)\\
+&\quad+(\gamma-b^{\mathsf T}A^\dagger b)\tau^2.
+\end{aligned}
+\tag{27.15}
+$$
+
+由谱定义 $AA^\dagger b=b$，这个恒等式成立；取 $w=-A^\dagger b,\tau=1$ 又给最后标量条件的必要性。这证明 (27.9)，包括 $A=0$。
+
+最后从系数失败提取一个实际严格见证。令 $Q=\mathscr Q_{\sigma,s}(\theta)$，取有限实向量 $z_0=(a,v,\tau)$ 使 $z_0^{\mathsf T}Qz_0<0$。若 $\tau=0$，令 $e_n$ 为最后一个坐标向量，并记
+
+$$
+\kappa_0=-z_0^{\mathsf T}Qz_0>0,\qquad
+M=2|e_n^{\mathsf T}Qz_0|+|e_n^{\mathsf T}Qe_n|,\qquad
+h_0=\frac{\kappa_0}{2(\kappa_0+M)}>0.
+$$
+
+取 $z_1=z_0+h_0e_n$。因为 $h_0\le1/2$，
+$z_1^{\mathsf T}Qz_1\le-\kappa_0+h_0M<-\kappa_0/2$，且其最后坐标非零。若原 $\tau\ne0$，直接取 $z_1=z_0$。将 $z_1$ 的坐标仍记为 $(a,v,\tau)$，定义一次有限的原探针与向量
+
+$$
+x=X(a/\tau)\oplus0_m,\qquad
+\eta=(u,Y(v/\tau)).
+\tag{27.16}
+$$
+
+(27.13)–(27.14) 及 (27.12) 的下界给
+
+$$
+\epsilon\phi_\eta(L)>
+\frac12\sum_{\delta=\pm1}
+\left[\alpha_\delta\|R_\delta\eta\|^2
++\alpha_\delta^{-1}\|S_\delta\eta-\beta_\delta R_\delta\eta\|^2\right]
+\ge\sum_{\delta=\pm1}\sqrt{B_{\phi_\eta}(R_\delta,S_\delta)}.
+\tag{27.17}
+$$
+
+因此原 PB 严格失败。$\eta$ 的演员分量为单位 $u$，所以它非零且质量有限。对每个给定 $\mu>0$ 使用同一 $x$ 和
+
+$$
+\xi_\mu=\frac{\sqrt\mu}{\|\eta\|}\eta,\qquad
+\phi_{\xi_\mu}(I)=\mu,
+\tag{27.18}
+$$
+
+严格差额按 $\mu/\|\eta\|^2$ 缩放。这里是一个已经取得的有限见证，不是无穷探针极限，也不要求退化 Gram 的变分下确界取到。反向地，若单位演员读取上的原 PB 有严格差额，则 (27.12) 中每笔误差小于这个差额的有限参数就使 (27.13) 严格为负；故充要关系也没有遗漏只在退化根处出现的失败。∎
+

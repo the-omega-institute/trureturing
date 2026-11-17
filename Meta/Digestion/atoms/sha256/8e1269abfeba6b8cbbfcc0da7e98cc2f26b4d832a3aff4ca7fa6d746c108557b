@@ -1,0 +1,41 @@
+### 17.2. A rational complete-law pair
+
+Define the following positive rational constants:
+$$
+c=\frac{467}{2000},\qquad
+v=\frac{c(1+cH)}{C+c}=\frac{201200388183}{546492572000},
+$$
+$$
+u=1-\frac cv=\frac{157589663}{430835949},\qquad U=1-u,
+\qquad q=1-\frac{1-H}{v}=\frac{2177500722109}{5432410480941},
+$$
+$$
+d_0=q-U(1-v)=\frac{1212298469447}{10864820961882000},\qquad
+s=cq-d_0=\frac{21160011224072}{226350436705875},
+$$
+$$
+\varepsilon=sc^2-\frac{1944}{390625}
+=\frac{29150733012563}{242345221312500000}.
+                                                               \tag{17.2}
+$$
+Here $c$ is a law-construction parameter, unrelated to the source
+parameters or an acquired counter. In particular,
+$$
+a<u,v<b,\quad \frac29<c<\frac6{25}<\frac4{15},\quad
+0<d_0<\varepsilon.
+                                                               \tag{17.3}
+$$
+First define an auxiliary law vector by
+$$
+Q^0(w_{n,0})=uc^n\quad(n\ge0),\qquad
+Q^0(w_{0,1})=q,\qquad
+Q^0(w_{n,1})=sc^{n-1}\quad(n\ge1).
+$$
+Set
+$$
+Q=Q^0+\varepsilon(\delta_{w_{3,0}}-\delta_{w_{3,1}}),
+\qquad W=(1-v)\delta_\beta+v\alpha Q,
+\qquad Q(\infty_p)=W(\infty_\beta)=0.                       \tag{17.4}
+$$
+The prefix $\alpha Q$ includes the corresponding infinite outcome.
+

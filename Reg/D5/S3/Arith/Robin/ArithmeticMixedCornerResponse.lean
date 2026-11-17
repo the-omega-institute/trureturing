@@ -128,4 +128,67 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms family
 
+abbrev densityArena : Arena where
+  signature := signature
+  Law R := ∀ {s t : ℝ}, 1 < s → s ≤ t →
+    R.readout () () t ≤ activationDensity s
+
+def raisedDensity : Realization signature :=
+  realize signature (fun _ _ t => activationDensity t + 1) (fun e => nomatch e)
+
+private theorem raised_density_rejected : ¬ densityArena.Law raisedDensity := by
+  intro h
+  have hbad := h (s := 2) (t := 2) (by norm_num) (by norm_num)
+  dsimp only [raisedDensity, realize] at hbad
+  linarith
+
+def densityFamily : Registration densityArena (type_of% (@density_antitone)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@density_antitone, raisedDensity, raised_density_rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨raisedDensity, ?_, rfl, raised_density_rejected⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def densityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@density_antitone) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.ArithmeticMixedCornerResponse.density_antitone.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ArithmeticMixedCornerResponse.densityFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨densityArena⟩
+  objectArena := .source ⟨densityArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source densityArena ⟨densityFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ArithmeticMixedCornerResponse
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms densityFamily
+#print axioms densityRegistration
+
 end Reg.D5.S3.Arith.Robin.ArithmeticMixedCornerResponse

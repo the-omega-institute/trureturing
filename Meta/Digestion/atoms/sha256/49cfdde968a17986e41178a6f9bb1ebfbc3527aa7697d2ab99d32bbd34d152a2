@@ -1,0 +1,46 @@
+**定义 143.1（完整原域、原连通与二元读数界）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$，始终使用整个 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和整个 $\mathcal E=[0,u]_{C^*}$。全部原确认效应定义 $T_p$ 及完整 $D_p$，完整 EB3 要求每个 $D_p$ 是非退化仿射实心三球，中心记为 $c_p$。原边 $p\perp q$ 指一张原全域效应在两端读一、零；补效应使它对称。$\mathsf{Conn}$ 仍指任意两个原纯点之间有有限原零边路，不是拓扑连通。
+
+以下在 EB3+$\mathsf{Conn}$ 下工作。直接复用[THREE_COPY VIII130.2][Q143TC]：原标签 Inj，全部 $P=P_0$，且
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e\in\mathcal E:e(p)=1,\ e|_{D_p}=0\}=\{e_p\},\qquad g_p=u-e_p,\\
+\{e_p=0\}\cap K=D_p,\qquad \{e_p=1\}\cap K=\{p\}.
+\end{gathered}
+\tag{XI143.1}
+$$
+
+这不把全部确认菜单 $\mathcal F_p$ 缩成单点，也不预付 least。对每条有向原边定义实际反射态及其原读数
+
+$$
+s_{pq}=2c_q-p\in P\cap D_q,\qquad
+d_{pq}=e_p(s_{pq})=2e_p(c_q)-1.
+\tag{XI143.2}
+$$
+
+因为 $p$ 是完整球 $D_q$ 的纯球缘点，$s_{pq}$ 是同一原球中的对径纯点。原正性和(XI143.1)给 $0\le d_{pq}<1$；在整个 $D_q$ 上，$e_p$ 的唯一最大点是 $p$，最小点是 $s_{pq}$，故
+
+$$
+d_{pq}=1-\operatorname{osc}_{D_q}e_p.
+\tag{XI143.3}
+$$
+
+先定义用于局部正性估计的二元条件
+
+$$
+\mathsf H:\qquad
+\forall p,q\in P,\quad p\perp q\ \Longrightarrow\ d_{pq}\le\frac12,
+\quad\text{等价于}\quad e_p(c_q)\le\frac34.
+\tag{XI143.4}
+$$
+
+量词包括两个方向，但不要求两个有向数值相等。143.3使用这个固定半刻度界；143.4的主候选只需下述更弱的统一可读差额：
+
+$$
+\mathsf{U}:\qquad\exists\varepsilon>0\ \forall q\in P\ \exists p\in P\cap D_q:\quad
+1-d_{pq}\ge\varepsilon.
+\tag{XI143.4a}
+$$
+
+这里每颗完整球只需一条实际有向反射边，$\varepsilon$ 在全部球之前选定；$\mathsf H$ 给 $\mathsf U$ 的特例 $\varepsilon=1/2$。逐边的 $d_{pq}<1$ 已由原域保证，却不等于这个统一差额。两项都不输入140.1的 $\mathsf{ZC}$、三角种子、所有直径的平均读数恒定或数值比较互易 PR。
+

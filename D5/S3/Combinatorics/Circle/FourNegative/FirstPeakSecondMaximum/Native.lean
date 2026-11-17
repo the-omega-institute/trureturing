@@ -12,9 +12,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum
-open private sourceMod base newBase charge chainLength chainStart nextBase nextNewBase
-  oldValue newValue chain_values
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod charge nextBase nextNewBase chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase chainLength chainStart oldValue newValue)
 open private last_double from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
 
 private theorem native_masses (a b c d : ℕ)

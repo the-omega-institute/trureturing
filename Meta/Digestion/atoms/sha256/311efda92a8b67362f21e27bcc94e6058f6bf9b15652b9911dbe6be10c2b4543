@@ -1,0 +1,14 @@
+### 79.9 完整普通解释、成熟来源与原目标边界
+
+**普通中文图像。** 保留全部状态和全部测试，比较规则先固定状态与测试共用的几何；两层零关系再锁住单份、双份、三份之间的形状。但实际接合仍可能在不同标签和不同矩阵方向上偷偷加上不同倍率。现在只给一个局部变化：它可以周期转动，也可以把质量送到边界；要求的是，在全部实读数中，只有总质量能在它作用后完全不变。然后对同一原准备提出两条关系：双份总质量等于只改第一位置与只改第二位置后的正权平均；三份总质量也等于只改一个位置的三种结果的正权平均。这里是在约束三个原输入之间的读数，不是在宣称有一台能随机切换这些操作的装置。
+为什么这样就能消掉倍率？每个局部变化的谱都在单位圆盘里，正权平均想恰好停在最右端的一，参与的每一项都只能自己是一。因此双份、三份不变的质量读数都只能是各输入总质量的乘积，再乘一个常数。原系统还有一个关键关系：第三份读回后恢复后两份，而且从原参考连续读回两次用的是同一个读回。把这条关系的质量与两条实张成接起来，两次计算同一个双份准备，第一常数被迫为一。三份常数仍可在接合时放大、读回时反向缩小，所以要靠原来的一次总迹锚读出它。到这一步只是所有倍率正确；有没有把某个位置的复方向翻错，还必须由原态的联合—边缘关系和整个原插入输出检查。
+若三个位置一起转动，两个相对位置始终不变，倍率就能藏在“第二位置离第一位置多远、第三位置离第一位置多远”这两个差里。$h$ 周期恰留下 $h^2$ 个正倍率，固定平均也还有 $h^2-1$ 个自由度。逐次只改一个位置的质量关系排除了这些额外固定读数，却不保证周期消失或所有相关都被冲掉。另一边，质量全对也不等于过程合法：qubit 转置混一点均匀化虽然对全部总质量都合格，放到纠缠输入上仍会给负输出。故质量、方向、实际操作和来源必须各守其对应关系，不能把一张正确的标量表当成全部物理接口。
+
+**成熟来源及增量范围。** [Y] Y. Yoshida、M. Hayashi，[*Asymptotic Properties for Markovian Dynamics in Quantum Theory and General Probabilistic Theories*，arXiv:1801.03988v3](https://arxiv.org/abs/1801.03988v3)，Lemma A.2（pp.30—31）的 proper-cone $(K,u)$ 范数收缩，Lemma A.3（pp.31—32）的 dynamical map 外围半单，Proposition 5.16（p.19，证明 p.20）的一维固定空间／遍历等价，Theorem 5.20（p.21）的 $K$-正映射混合／同步张量平方遍历等价。它们适用于这里的一般正归一化保持情形，不要求 CP 或内点稳态。正权和的三角化计算已在引理 79.3 给出，不将一个经典随机扫描或量子通道特例当作全部证明。
+[B] D. Burgarth 等，[*Ergodic and Mixing Quantum Channels in Finite Dimensions*，arXiv:1210.5625v3](https://arxiv.org/abs/1210.5625v3)，属于 CPTP quantum-channel 范围；本章没有把该文结论归为任意正映射版本。
+[R] [第四卷第 65—72 章](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：前 C13 全态几何、66.14—66.18 的完整权重与有序方向、66.7 的同一 $p$ 两次逆向、全实恢复与张成、67.7 的原联合校准、71—72 的 NB/H13；[本卷第 73—78 章](QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)的重置尺度障碍、完整比较入口、生成表与精确缺陷入口均按原范围复用。78 的显式稳定性及生成条件数障碍不是本章质量定理；本章没有从精确质量关系推出近似稳定性。一般 Kronecker 和工具不是原创；新增是两条原质量关系在方向之前的同数据校准、同 $p$ 直接固定第一尺度及其精确同步／删除／解释边界。
+
+**已得原来源与尚未构造的接口。** [原观察卷 §§23—24](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ORIGINAL_INTERFACE_EXPOSURE_AND_RECOVERY.md)在其明示原 $G_V$ 进展域内保留实际获取的有序操作数、独立 guard、真实拒绝和完整绑定、原 Plan/Send 消费、真实下一 Entry、服务返回、历史批次、HandbackResume、Stop／验证／消费及共同 INITIAL 终端答案。[第二卷 §9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ORIGINAL_INTERFACE_EXPOSURE_AND_RECOVERY_II.md#9-attribution-and-the-remaining-recovery-problem)另在新安装的两种模式中、每个有限已达的 completed canonical GuardAcquired 边界取得实际当前调用恢复，保留完整过去 capture/use 历史；不外推任意 Busy、部分 IN／loan／copy 切口、无新 boot 的既有 $G_V$、全终端任务核或无限重复的统一有限资源。已有下降、参考、递归支撑及原 $D$ 恢复同样各按其原域保留，不倒称缺失。
+[固定来源卷 (23.7)](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md)所要求的原具名 analyzer 当前接受接口证书，及[有限返回卷定义 164.1](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md)的原 $B_r$ 到 active-ready 接头，仍未由本章构造。该卷 162 的七项消费者继续带全部递归原前件；数值表、静态密度、矩阵综合、操作逆字、数学见证或扩充源的候选返回均不能填入这两个实际原接头。
+完整原 $\Omega$ 的全部准备、事件、过程、参考、副本、实际相关联合、零与不等质量、时钟、单位、控制、ready／flags、完整记录、失败、停止、销毁、返回与未来，以及全部旧全菜单、固定支撑和每个已量化中间切口义务，一项不缩减。没有免费准备生成、复制、相干控制或实际彩票。完整候选是给定全部原前件的同模型类纸面数学；不主张完整 $\Omega$ 起源已完成、最少独立公理、物理资源减少或形式内核认证。
+

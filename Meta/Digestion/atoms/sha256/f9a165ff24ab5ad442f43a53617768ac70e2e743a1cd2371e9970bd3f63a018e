@@ -1,0 +1,18 @@
+**Lemma 17.3 (Conditional actual source cylinders).** Let $\Omega,S,R$ be measurable spaces, $S$ countable with measurable singletons, $L\subseteq S$, and $F:S\times\{0,1\}\times R\to S$. Let $P$ be a measure, $\eta\in\operatorname{PMF}(S)$, $w,f\in\operatorname{PMF}(\mathbb N)$, $\rho$ a probability measure on $R$, and $A,C:S\to\operatorname{PMF}(S)$. Assume that $I,\tau$, every $K_j$ and every $\xi_j$ are measurable, that each effective map $(s,r)\mapsto E(s,b,r)$ is measurable, that its one-read pushforward has exactly the row (17.6) for every $s,b$, and that the full deterministic-coordinate condition $\mathcal R(P,I,\tau,K,\xi,\eta,w,f,\rho)$ holds. With the literal actual run and $J_k$ defined above, for every $n\in\mathbb N$, $a=(u,v)\in\mathbb N\times\mathbb N^{\{0,\ldots,n-1\}}$ and $x:\{0,\ldots,n\}\to S$,
+
+$$
+\begin{aligned}
+P\{\omega:\ &\tau(\omega)=u,\ K_j(\omega)=v_j\ (j<n),\\
+             &Y_j(\omega)=x_j\ (0\le j\le n)\}\\
+&=w(u)\,(\eta\mathbin{\mathrm{bind}}J_u)(x_0)
+       \prod_{j<n}\bigl(f(v_j)J_{v_j}(x_j)(x_{j+1})\bigr).
+\end{aligned}
+\tag{17.8}
+$$
+
+The probabilities of individual states on the right are PMF masses. The case $n=0$ retains the first-wait factor and the empty gap tuple. No positivity of these masses, eventual stopping, finite moment, or separate probability-measure hypothesis on $P$ is imposed.
+
+Proof. On $H_{n,a}$ the clock is the fixed cut $u+1+\sum_{j<n}(v_j+1)$. Induction through the actual words reconstructs all $Y_0,\ldots,Y_n$ from $I$ and coins strictly before that cut. Thus a measurable event of the source tuple and actual state history is a measurable raw-prefix event on each source slice, without the next gap $K_n$ or any next coin. Applying (17.4) to fixed deterministic intervals and then summing the countable source slices gives the next-gap factor $f(k)$ times the law $J_k(s)$ on any such event fixing $Y_n=s$. At $n=0$, integrate the initial word as in the preceding proof while retaining $\{\tau=u\}$. For the successor, split the cylinder into its shorter actual cylinder, its next gap and its next state, apply the fixed-gap identity, and use induction. Empty zero words, zero row entries and null histories require no division and remain included. $\square$
+
+These are `repo-derived` auxiliary deductions from the operational definitions of Sections 3 and 6, finite product integration and countable additivity, with no external novelty claim. The abstract countable-state probability assertions require precisely the displayed rectangle and effective-row hypotheses. Specializing them to the original $q$-dependent $f_i,w_i$ and the same two-label compliant observer requires the original source normalization, common-observer and joint-realization bridges. They assert no complete-state budget realization, finite occupation or paid mean, predictable-payment estimate, matrix/series transport, or entropy-harmonic E4 conclusion.
+

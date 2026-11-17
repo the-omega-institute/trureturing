@@ -1,0 +1,10 @@
+## 497. 固定尺度四阶矩到移动长度的传递
+
+沿用 §494 的 $\mu_X,U_X,B_X,\kappa,r,c_k$ 与 §496 的 $h=X^\theta$、$\varepsilon_X$ 记号；$E$ 局部有界 Borel 可测，$0<\alpha<\theta<\beta<1$。令 $d\nu(u)=du/(u\log2)$（$1\le u\le2$），
+
+$$
+\widetilde B_X(c,x)=\frac{D_{ch}(x)}{\sqrt{h\log X}}\qquad(c\ge0,\ X\le x\le2X),
+$$
+
+$W_3\equiv0$，$W_4(c_1,c_2,c_3,c_4)=\kappa^2\bigl[\min(c_1,c_2)\min(c_3,c_4)+\min(c_1,c_3)\min(c_2,c_4)+\min(c_1,c_4)\min(c_2,c_3)\bigr]$。
+

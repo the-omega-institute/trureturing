@@ -1,0 +1,13 @@
+在三能级坐标中定义
+
+$$
+U_0=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\quad
+U_1=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},\quad
+W=U_0^\dagger U_1=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},
+$$
+
+$$
+V_0=(\sqrt3U_0+iU_1)/2=U_0e^{i\pi W/6},\qquad
+V_1=(iU_0+\sqrt3U_1)/2=V_0W.
+$$
+

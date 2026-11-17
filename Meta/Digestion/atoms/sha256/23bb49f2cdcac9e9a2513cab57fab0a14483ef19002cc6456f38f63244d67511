@@ -1,0 +1,23 @@
+**引理 129.2（原对偶向量的种子球界及等号零点）。** 对 $h\in C^*$，唯一写 $h=B(\widehat h,\cdot)$，令 $t=h(w)=u(\widehat h)$。若 $h\ne0$，则 $t>0$，且
+
+$$
+T_i\widehat h\in C_i,\qquad \Delta_i(\widehat h)\ge0,\qquad
+\|\widehat h\|_B\le t,\qquad
+\left\|\widehat h-\frac t3w\right\|_B^2\le\frac23t^2.
+\tag{Q129.5}
+$$
+
+若 $\|\widehat h\|_B=t$，则每张完整种子球 $D_i$ 都含实际纯点 $q_i$，使 $h(q_i)=0$。$\widehat h$ 只作为线性对偶向量使用，没有被认作原正态。
+
+证明。因为 $w\in\operatorname{int}C$，非零正泛函在 $w$ 严格正：否则在 $w$ 的一个双侧开邻域上非负且在中心为零，会使该线性泛函恒零。对 $y\in C_i$，正交投影给
+
+$$
+B(T_i\widehat h,y)=h(y)\ge0.
+$$
+
+实际局部Lorentz自对偶性于是给 $T_i\widehat h\in C_i$，进而给三个 $\Delta_i(\widehat h)\ge0$。将全 $V$ 恒等式(Q129.3)用于 $\widehat h$，得到范数界；再以 $B(w,\widehat h)=t$、$\|w\|_B^2=3$ 作正交中心分解，得到最后一式。$h=0$ 时所有式子都按零值成立，不作正迹归一。
+
+等号时三个非负 $\Delta_i(\widehat h)$ 全零。固定 $i$，令 $z=T_i\widehat h$。若 $z=0$，$h$ 零于整个 $D_i$，任选一个球面纯点即可。若 $z\ne0$，则 $m=u(z)>0$，$r=z/m\in P\cap D_i$ 是实际Lorentz边界的归一极射线。在实际球 $D_i$ 中取 $r$ 的对径 $q$；局部球配对给 $B(z,q)=0$，从而 $h(q)=0$。这同时处理零压缩、非零极射线和零端点读数，未把零迹向量除以零。证毕。
+
+状态侧和效应侧的两侧种子范数界在较强W域已有[VIII111.3][Q129VIII]；本引理只从本章已付的三颗实际球和同一 $B$ 核对所需接口，不另立普遍的对偶范数新原理。
+

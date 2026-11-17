@@ -1,0 +1,2 @@
+**定义 C-28.3.1（阶数观察空间）。** 整数 k≥0 时，V<sub>N,k</sub>=span{m<sub>A</sub>：A∈Σ<sub>N</sub>、|A|≤k}，包括常数一。令 a<sub>N,r</sub> 为合法 r 元子集数，Z<sub>N</sub>(t)=∑<sub>I∈Σ<sub>N</sub></sub>t<sup>|I|</sup>。
+

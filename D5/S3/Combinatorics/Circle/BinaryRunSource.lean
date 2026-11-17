@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Circle.SourceWidth
 import D5.S3.Combinatorics.Circle.ExpandingSourcePath
-import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
 import D5.S1.Words.AssociatedMersenne.CircularWords
 import Mathlib.Combinatorics.Colex
 import Mathlib.Data.Fin.Rev

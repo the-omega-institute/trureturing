@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:ab119edb7725d34764884012606de3e10d6ec48ebbd2c8a258a8ed2458129619
+  normalized_sha256: sha256:ab119edb7725d34764884012606de3e10d6ec48ebbd2c8a258a8ed2458129619
+cas_ref: sha256:ab119edb7725d34764884012606de3e10d6ec48ebbd2c8a258a8ed2458129619
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_large_set
+    target_statement_id: sha256:d6b648db3572402463033f9897632f7205bf467f9c681bcece04bc71970bb3cd
+  - gid: D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic
+    target_statement_id: sha256:2643826e6aa6c101de4df3e2576c7b621367677aff29605e5c45de1a7af0d6b8
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 093425c0e08362fdd493d3e4091493ba052d338d0b586e83ed60d1bc2dbfd1b0
+    - 4de85b4b32afd0822437c4d83e7a905df7e18290caf08959a498a53287ce55e5

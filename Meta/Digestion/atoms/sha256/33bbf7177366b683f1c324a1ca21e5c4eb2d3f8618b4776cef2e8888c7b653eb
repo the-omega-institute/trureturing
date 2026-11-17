@@ -1,0 +1,47 @@
+**定义 137.1（全部原对象）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^\ast$。始终取
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+C^\ast=\{h\in V^\ast:h(C)\subseteq\mathbb R_+\},\qquad
+\mathcal E=[0,u]_{C^\ast},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p,\\
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\qquad
+N_p=\{h\in C^\ast:h(p)=0\},\qquad L_p=\operatorname{span}N_p.
+\end{gathered}
+\tag{XI137.1}
+$$
+
+$K$ 是整个原紧基并张成 $V$，$P$ 是全部原纯点，$\mathcal E$ 是完整原效应区间。$\mathcal F_p$ 非空紧，minimum 达到；第二变量 $x$ 遍历全部原混态。故 $x\in D_p$ 准确等价于存在同一原 $f\in\mathcal E$，满足 $f(p)=1,f(x)=0$。完整暴露族 $\mathcal A_p$ 不替代完整确认菜单 $\mathcal F_p$。
+
+只对纯端点定义 $p\perp q\Longleftrightarrow q\in S_p$。补效应给此关系对称且反自反，不给正比较值互易。EB3 要求每个原 $p\in P$ 的整个 $D_p$ 仿射等价于完整闭三球。本章另取原零图连通条件
+
+$$
+\mathsf{Conn}:\quad
+\forall p,q\in P\ \exists n\ge0\ \exists p_0,\ldots,p_n\in P:
+\quad p_0=p,\ p_n=q,\ p_{j-1}\perp p_j\ (1\le j\le n).
+\tag{XI137.2}
+$$
+
+步数可依赖端点；它不是纯域的拓扑连通性或统一半径。
+
+在全部目标之前固定同一个原纯点 $o$。对任意原 $p$ 定义含全部混态端点的二步带及其纯交
+
+$$
+B_2(p)=\bigcup_{s\in S_p}D_s,\qquad
+Q(p)=P\cap B_2(p)=\bigcup_{s\in S_p}S_s.
+\tag{XI137.3}
+$$
+
+这里恰走两条原零边，允许回走，故 $p\in Q(p)$。唯一额外的局部前件为
+
+$$
+\mathsf G(o):\quad
+\exists\ U\subset V\text{ 开},\qquad o\in U,\qquad U\cap P\subseteq Q(o).
+\tag{XI137.4}
+$$
+
+这是在一个固定根处的相对纯邻域条件：每个目标各有一个同时承担两条原零边的中间原纯标签，标签可依目标改变，并非所有目标共用一个见证。它不要求整个关联投影开放、所有根满足同一条件、共同半径、固定效应的延续或同一见证的连续选择。以下证明不输入 PR、紧 $P$、种子三角、正压缩、谱性、Jordan 结构、锥自对偶或齐次性。
+

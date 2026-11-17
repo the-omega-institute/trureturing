@@ -1,0 +1,33 @@
+**证明内构造 67.2（任意实际反射的成熟有限谱供应）。** 设原 $h,e\in E$ 满足 $h^2=e^2=1$、$he=-eh$。对任意原自伴 $c$ 满足 $[h,c]=0$，AH59.7 的实际窗可取
+
+$$
+L=\|c\|+1,\qquad \kappa_N=2L/N,\qquad
+N\kappa_N^2\longrightarrow0.
+\tag{67.2}
+$$
+
+证明。准确复用 AH61.4 的近投影酉共轭。对原投影 $p$，取有限阶段自伴 $b$ 满足 $\|b-p\|<\varepsilon<1/4$，令 $p_0=1_{(1/2,\infty)}(b)$，则 $\|p_0-p\|<2\varepsilon<1$。在原 $A$ 中置
+
+$$
+v=p_0p+(1-p_0)(1-p),\qquad
+\nu=v(v^*v)^{-1/2};\qquad \nu p\nu^*=p_0.
+\tag{67.3}
+$$
+
+$v$ 可逆且 $vp=p_0v$，所以 $\nu$ 是原酉元。取 $p=(1+h)/2$；在包含 $p_0$ 的后续矩阵中逼近 $\nu c\nu^*$，再施加正含单位压缩 $y\mapsto p_0yp_0+(1-p_0)y(1-p_0)$。共轭回去便得到与原 $h$ 交换的有限谱自伴元逼近 $c$。这些谱元属于原 $A$，不要求属于某个原先指定的有限阶段。
+
+如 AH61.5，选这样的 $\widetilde c_N$，使 $\|c-\widetilde c_N\|<\min(1/2,L/N)$、$\|\widetilde c_N\|<L$。把 $[-L,L]$ 等分为 $N$ 段，末段含右端点；以 $a_k=-L+(2k-1)L/N$ 为中心，按区间及 $h$ 符号分组其有限谱投影，得
+
+$$
+\begin{gathered}
+q_{\epsilon k}q_{\delta l}=0\quad((\epsilon,k)\ne(\delta,l)),\qquad
+\sum_{\epsilon,k}q_{\epsilon k}=1,\quad
+hq_{\epsilon k}=\epsilon q_{\epsilon k},\\
+d_N=\sum_{\epsilon,k}a_kq_{\epsilon k},\qquad
+\|c-d_N\|\le2L/N.
+\end{gathered}
+\tag{67.4}
+$$
+
+零窗保留。窗只须减约 $\widetilde c_N,h$，不须减约 $c$。近投影公式、正压缩和分组证明均未用 $d_n=2^n$；共轭只构造已知标签，没有使未知 $D$ 协变。∎
+

@@ -1,0 +1,62 @@
+**Theorem 6.5 (simultaneous full-history prediction in the stopped
+window).** For every source in Definition 6.1, every deterministic
+$S,H,r,L$ as there, every $\epsilon>0$, and $M\ge\|g_d\|_\infty$,
+
+$$
+ \begin{aligned}
+ &\mathbb P_e\left\{
+   \max_{0\le j\le r}
+   \operatorname{TV}({\bf R}_{T+j}^H,Q_{W_j}^H)>\epsilon\right\}\\
+ &\quad\le
+ \min\left\{1,\frac{2(r+1)\sqrt M\,A_{H+r}(L)}{\epsilon}\right\}\\
+ &\quad\le
+ \min\left\{1,
+ \frac{(r+1)4^{H+r}\sqrt{M\Theta(1/(2Ld))}}{\epsilon}\right\}.
+ \end{aligned}
+ \tag{6.14}
+$$
+
+The event is unconditional in the original law. The same numerical
+bound holds for each deterministic $S$, without asserting one event
+simultaneously over all $S$. It is simultaneous for all $r+1$ cuts and
+therefore covers any causal selection among them. It is not a
+history-by-history, gate-value-conditional, or selected-branch
+conditional guarantee.
+
+*Proof.* Fix any stopped history $u=Y_{<T}$. For $j\le r$ apply
+(6.13) to
+
+$$
+ a(w,v)=R_u(wv),\qquad b(w,v)=q(wv),\qquad |w|=j,\quad |v|=H.
+ \tag{6.15}
+$$
+
+Conditioning $a$ on its actual $w$ gives exactly $R_{uw}(v)$,
+the full-history target at $T+j$. The comparison conditional is
+exactly $Q_w^H(v)$. The two joint vectors are marginals of the
+length-$N=H+r$ vectors, so their TV is at most
+$e_N(u)=\operatorname{TV}(R_u|_{\mathcal L^N},q|_{\mathcal L^N})$.
+It follows that
+
+$$
+ \mathbb E_e[
+ \operatorname{TV}({\bf R}_{T+j}^H,Q_{W_j}^H)\mid\mathscr F_T]
+ \le2e_N(Y_{<T})\qquad(0\le j\le r).
+ \tag{6.16}
+$$
+
+For $j=0$ even the factor one suffices. Taking expectations in
+(6.16), using (6.8), and bounding the maximum by the sum gives
+
+$$
+ \mathbb E_e\max_{0\le j\le r}
+ \operatorname{TV}({\bf R}_{T+j}^H,Q_{W_j}^H)
+ \le2(r+1)\sqrt M\,A_N(L).
+ \tag{6.17}
+$$
+
+Markov's inequality proves the first bound in (6.14); (6.5) proves
+the second. Every conditioning in (6.15)--(6.16) is under the same
+actual law, and includes the labels actually consumed after $T$.
+$\square$
+

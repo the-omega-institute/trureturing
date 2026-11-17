@@ -1,0 +1,17 @@
+## 492. 共同指数带交叉界的近最优性：保持方差的端点对数尖峰
+
+沿用 §490 的 $w,\rho_x$。对局部有界 Borel 可测的 $E:[1,\infty)\to\mathbb R$，记 $D^E_u(x)=E(x+u)-E(x)$、$V_E(Y,u)=\int_1^Y(D^E_u)^2$，
+
+$$
+\mathcal T^E_{\theta,1}(x)=x^{1/2-\theta}\int_0^1D^E_{sx^\theta}(x)\,\rho_x(sx^\theta)\,ds .
+$$
+
+固定 $0<\alpha<a<b<\beta<1$。本节的假设恰为 (490.2) 在共同指数带上的形式：
+
+$$
+\sup_{Y^\alpha\le u\le Y^\beta}\left|\frac{V_E(Y,u)}{Yu\log(Y/u)}-1\right|\longrightarrow0 .
+\tag{492.1}
+$$
+
+令 $C_E(X)=\int_X^{2X}\mathcal T^E_{a,1}(x)\mathcal T^E_{b,1}(x)\,\frac{dx}x$ 与 $R_b(X)=X^{1-b}(\log X)^3/\log\log X$（$X>e$）。由定理 491.6(ii)，(492.1) 蕴含 $C_E(X)=O\bigl(X^{1-b}(\log X)^3\bigr)$。
+

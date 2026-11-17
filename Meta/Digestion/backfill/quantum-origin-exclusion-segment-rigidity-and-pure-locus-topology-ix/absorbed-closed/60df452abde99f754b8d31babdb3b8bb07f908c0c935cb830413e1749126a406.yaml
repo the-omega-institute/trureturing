@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:60df452abde99f754b8d31babdb3b8bb07f908c0c935cb830413e1749126a406
+  normalized_sha256: sha256:60df452abde99f754b8d31babdb3b8bb07f908c0c935cb830413e1749126a406
+cas_ref: sha256:60df452abde99f754b8d31babdb3b8bb07f908c0c935cb830413e1749126a406
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.diameter_tendsto_zero_of_mixed_limit
+    target_statement_id: sha256:1e745d29ec231ed8323ff2efbe5a7fcd5778ad829501796f46704ccc682337e6
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.positive_width_layer_compact
+    target_statement_id: sha256:17c2cd10d0f33640f1071799c1827aab166f348d59ea8e4b179fea733c871feb
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.pure_eq_countable_width_layers
+    target_statement_id: sha256:a76d0e105e5d9e9c8a6c56a356e1177b0b41f8d8a9ed0073c3163c527500d252
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width_global_maximum
+    target_statement_id: sha256:b694c4a5ab19eac36e08d9c8dfe5de0b20518c5c0e4853edacca0745e6925342
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width_tendsto_zero_of_mixed_limit
+    target_statement_id: sha256:1cbe578bd080880acb2ac6113994cae556c15b0f250607b553f1df6dc9a63011
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width_upperSemicontinuous
+    target_statement_id: sha256:d03917ad1843616c4e99d989e8f39507b762bd83b05fc6762cf93efa7588bcd3
+receipts:
+  unresolved_subitems: []

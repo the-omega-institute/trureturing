@@ -1,0 +1,57 @@
+**Corollary 18.3 (tail-preserving PAIRED15 repair obstruction).** In the PAIRED15 construction, suppose a proposed repair has finite p support, satisfies the full compatibility equations and endpoint boxes, and preserves the averaged marker-one coordinates for all sufficiently large $n$. Write
+
+$$
+ s_b=\frac12+t,\qquad s_a=\frac12-t,\qquad
+ t=\frac{78975}{2857232}.
+$$
+
+Then (18.1) holds with
+
+$$
+ d_n=s_a c_a z_a^n+s_b c_b z_b^n,
+$$
+
+so Theorem 18.2 forces $\theta=s_b$. Consequently its event means must be
+
+$$
+ \int f\,d\nu_p=C-2t\rho_p,
+ \qquad
+ \int h\,d\nu_\beta=H-2t\rho_\beta,
+ \tag{18.12}
+$$
+
+rather than the two midpoint values $C,H$. In particular, changing only finitely many mean word coordinates cannot repair PAIRED15 while its averaged marker-one coordinates are retained for all sufficiently large $n$.
+
+The p endpoint target already gives the quantitative obstruction
+
+$$
+ \mathcal J\ge2t\rho_p
+ =\frac{14514877}{5357310000}>\frac1{400},
+ \tag{18.13}
+$$
+
+and the suspended midpoint displacement is
+
+$$
+ 2t\rho_\beta=\frac{27963}{14286160}.
+ \tag{18.14}
+$$
+
+**Proof.** Section 15.2 changes only $w_{0,0},w_{0,1},w_{1,1},w_{2,1}$ of its endpoint-mixture p law. Thus its marker-one sequence has the displayed coefficients for every $n\ge3$. Eventual preservation implies (18.1). Theorem 18.2 and the nonzero two-column determinant in its proof give $\theta=s_b$ from any two consecutive retained late values.
+
+The supplied endpoint event masses are $P_{p,a}(E_p)=C+\rho_p$, $P_{p,b}(E_p)=C-\rho_p$ and $P_{\beta,a}(E_\beta)=H+\rho_\beta$, $P_{\beta,b}(E_\beta)=H-\rho_\beta$. Integrating them against the two classified marginals gives (18.12); $t,\rho_p,\rho_\beta>0$, so both original midpoint equations fail. In particular the p endpoint target $a$, which has positive installed mass, gives
+
+$$
+ \mathcal L_p(P_{p,a})-\rho_p
+ =s_b\operatorname{TV}(P_{p,b},P_{p,a})-\rho_p
+ =2t\rho_p.
+$$
+
+Using $\rho_p=1116529/22781250$ and $\rho_\beta=239/6750$ gives (18.13)--(18.14), with
+
+$$
+ 2t\rho_p-\frac1{400}=\frac{560801}{2678655000}>0.
+$$
+
+Enlarging the p support to any other finite size, changing kernels, or changing the coupling cannot evade this conclusion while the same averaged late tail, full compatibility and full boxes are retained. Every successful repair in this class must alter the averaged marker-one sequence at arbitrarily large indices; cancelling only the displayed suspended-coordinate residual of Section 15.6 cannot suffice. $\square$
+

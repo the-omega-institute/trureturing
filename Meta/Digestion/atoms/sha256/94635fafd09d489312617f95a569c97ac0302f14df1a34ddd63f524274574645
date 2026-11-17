@@ -1,0 +1,39 @@
+**定义 102.1（全有限强分块层级）。** 取非零有限维实向量空间 $V$，令
+$W_N=V^{\otimes_{\mathbb R}N}$，$N\ge1$。给定每个 $W_N$ 上的闭、尖、生成凸锥
+$C_N$，以及 $u\in V^*$，使 $u_N=u^{\otimes N}$ 在 $C_N\setminus\{0\}$ 上严格为正。
+写
+
+$$
+K_N=\{x\in C_N:u_N(x)=1\},\qquad
+P_N=\operatorname{ext}K_N,\qquad
+\mathcal E_N=[0,u_N]_{C_N^*}.
+\tag{102.1}
+$$
+
+这里 $P_N$ 是整个原基的全部极点，$\mathcal E_N$ 是整个原 proper 效应区间。
+对每个实际分块 $a+b=N$，在指定的同一实张量坐标中要求
+
+$$
+C_a\otimes_{\min}C_b\ \subseteq\ C_{a+b}\
+ \subseteq\ C_a\otimes_{\max}C_b.
+\tag{102.2}
+$$
+
+左锥是正简单张量生成的闭凸锥；右锥由所有 $f\otimes g$，
+$f\in C_a^*,g\in C_b^*$，的非负半空间相交定义。
+每个因子置换 $\tau_\pi$ 保持 $C_N$；它的逆是另一原置换，因而也是正的。
+任意不连续位置的分块，先用这些指定置换运输，再使用(102.2)。
+重括号是同一实张量空间的规范识别，不另换联合锥。
+原状态乘积、原效应乘积及其校准始终是
+
+$$
+(f\otimes g)(x\otimes y)=f(x)g(y),\qquad
+u_{a+b}=u_a\otimes u_b.
+\tag{102.3}
+$$
+
+特别地，乘积效应分离整个 $W_{a+b}$。这些全有限条件是本章的模型域；
+只指定一对与一个三份对象，不构成此模型域。
+为标记空旁观系统，约定 $W_0=\mathbb R$、$C_0=\mathbb R_+$、$u_0=\mathrm{id}$；
+它只是标量约定。
+

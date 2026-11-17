@@ -1,0 +1,34 @@
+**定理 122.4（有界凸影像、整内球与实际接触纤维）。** $Z$ 有界凸，包含整个原坐标球 $\mathbb B^3$；$S$ 是三维紧凸体。对每个 $v\in S^2$，存在唯一实际值 $z_v$，使
+
+$$
+\begin{gathered}
+h_S(-v)=\rho(v),\qquad Z\cap S_v=\{z_v\},\\
+H|_{F_v}=z_v g|_{F_v},\qquad
+\{x\in K\setminus\{p\}:H(x)/g(x)\in S_v\}=F_v\setminus\{p\}.
+\end{gathered}
+\tag{Q122.10}
+$$
+
+证明。有界性由 $\|H\|\le M_Hg$ 给出。若 $z_i=H(x_i)/g(x_i)$，$x_i\ne p$，给定 $0\le\lambda\le1$，原混态
+
+$$
+x=\frac{\lambda x_1/g(x_1)+(1-\lambda)x_2/g(x_2)}
+{\lambda/g(x_1)+(1-\lambda)/g(x_2)}\in K
+\tag{Q122.11}
+$$
+
+满足 $g(x)>0$，且其比值恰为 $\lambda z_1+(1-\lambda)z_2$。所以 $Z$ 凸。在整个 $D_p$ 上 $g=1,H(c+Bw)=w$，故整颗 $\mathbb B^3$ 属于 $Z$。取闭包不改变有限支撑函数，其定义给 $h_S(-v)=\rho(v)$。
+
+写实际邻球 $F_v=c_v+B_v\mathbb B^3$，$p=c_v+B_vs_v$，$\|s_v\|=1$。任意 $h\in N_p$ 在此球上是非负仿射函数并在 $p$ 为零。若其表达为 $\alpha+\ell\cdot w$，则 $\alpha\ge\|\ell\|$，$\alpha+\ell\cdot s_v=0$；Cauchy–Schwarz等号给
+
+$$
+h(c_v+B_vw)=\alpha(1-s_v\cdot w),\qquad \alpha\ge0.
+\tag{Q122.12}
+$$
+
+$g$ 的系数 $g(c_v)$ 严格正，因为它仅在 $p$ 为零。每个 $H_i$ 是这些原正法向的线性组合，所以其限制也是同一个 $1-s_v\cdot w$ 的倍数。令 $z_v=H(c_v)/g(c_v)$，得到 $H=z_vg$ 于整个 $F_v$，包括其所有混态。
+
+在 $F_v\setminus\{p\}$ 上代入 $e_{q_v}=0$，得 $(-v)\cdot z_v=\rho(v)$，故该值确在 $Z\cap S_v$。反之，若某个原 $x\ne p$ 的比值属于 $S_v$，(Q122.7)使 $e_{q_v}(x)=0$，其完整零面恰为 $F_v$，所以 $x\in F_v$，比值必为 $z_v$。这同时给唯一性与完整纤维等式。证毕。
+
+应区分三个对象：真实邻球 $F_v$ 有三维，实际比值接触 $Z\cap S_v$ 只有一点，而闭影壳的整个 $S_v$ 可以另含非实际极限值。本定理没有把最后一个集合也说成单点。
+

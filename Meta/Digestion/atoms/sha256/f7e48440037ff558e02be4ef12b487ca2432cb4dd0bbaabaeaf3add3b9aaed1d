@@ -1,0 +1,35 @@
+**Definition 28.1 (normal evolution and the paid terminal connector).**
+Issue the zero profile at time zero. Hold until the first mesh knot,
+$\tau$, or $T$. At every $t_i<S$, $i\ge1$, execute the normal connector
+by Definition 27.2; after completion hold until the next knot or cutoff.
+The actual knot computation observes (16.4) only until its next
+threshold, its time cap, $\tau$, or $T$, whichever comes first. A
+normal issuance occurs only strictly before both cutoffs. Target
+death takes priority over a simultaneous knot or retry threshold;
+the horizon stops all execution. Thus no later analytic knot or
+post-death target increment is queried by the policy. Simultaneous
+instructions are represented by this single selected replacement.
+At target death $\tau\le T$, interrupt any normal segment or hold
+continuously. Write the current actual controls and chronological
+integral as $(a_0,b_0,J_0)$ at that time, and prescribe a terminal
+six-leg connector (17.3) of duration $\delta$, with
+
+$$
+\begin{aligned}
+h_0&=k+a_0,\\
+X&=W^1_\tau-a_0,\qquad Y=W^2_\tau-b_0,\\
+C&=J^\lambda_\tau-J_0-a_0Y,\qquad
+ d=\begin{cases}\rho,&h_0\le(l+u)/2,\\-\rho,&h_0>(l+u)/2,
+ \end{cases}\qquad q=C/d.
+\end{aligned}
+\tag{28.1}
+$$
+
+Each leg receives time $\delta/6$, followed by a hold. Every quantity
+in this complete numerical profile is known at $\tau$. If its planned
+completion is later than $T$, execute its original prefix through $T$;
+do not accelerate it to finish at the horizon. If $\tau>T$ there is
+no terminal connector. At own height exit hold both controls and use
+the native cemetery convention, as in Definition 20.3. Target death
+alone changes no native height and supplies no native death flag.
+

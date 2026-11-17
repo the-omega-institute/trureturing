@@ -1,0 +1,119 @@
+**Proposition 29.1 (full held tube and chronological estimates).** The
+policy of Definition 28.1 satisfies (26.2) and (26.4), with common
+initial real phase representatives, before wrapping both phases modulo
+$2\pi$.
+
+Proof. Consider first $v< S$. On the initial hold the target increments
+satisfy (16.5) relative to $p=0$. On a later cell
+$t_i\le v\le t_{i+1}$ before target death, let $p=t_{i-1}$. The
+executed normal connector or its hold has relative coordinates
+$(x,y,j)$ from $z_p$, with $|x|,|y|\le\rho$ and $|j|\le\rho^2$,
+by (27.2). These bounds apply to every interrupted prefix and to every
+suffix speed. The target has relative coordinates
+
+$$
+x_*=W^1_v-W^1_p,\qquad y_*=W^2_v-W^2_p,\qquad c_*=C_{p,v}.
+\tag{29.1}
+$$
+
+Two successive mesh intervals and (16.9) give
+$|x_*|,|y_*|\le2\rho$ and $|c_*|\le3\rho^2$. At a mesh endpoint
+one may use the cell on its right; its connector starts at progress zero.
+Consequently
+
+$$
+|x-x_*|,|y-y_*|\le3\rho,\qquad |j-c_*|\le4\rho^2.
+\tag{29.2}
+$$
+
+The initial hold obeys these same bounds with its stronger one-cell
+estimates. Since the triples agree at $p$, exact translation gives
+
+$$
+J_\eta(v)-J^\lambda_v
+ =W^1_p(y-y_*)+j-c_*.
+\tag{29.3}
+$$
+
+Here $|W^1_p|\le K_*$. More effectively, the direct native phase
+error is
+
+$$
+\Delta\widetilde\alpha=(y-y_*)/2,\qquad
+\Delta\widetilde\beta=
+ (\tfrac12-(k+W^1_p)/r)(y-y_*)-(j-c_*)/r.
+\tag{29.4}
+$$
+
+Its coefficient has absolute value at most $1/2$, because the anchor
+height is in $I\subset(0,H)$. Thus before target death the native
+height error is at most $3\rho$, the alpha error at most $3\rho/2$,
+and the beta error at most $3\rho/2+4\rho^2/r<2\rho$.
+Equations (29.2)–(29.3) give the corresponding triple errors
+$3\rho,3\rho,3K_*\rho+4\rho^2$. All these bounds pass to $\tau$
+from below by continuity when $\tau\le T$.
+
+For the terminal connector use (29.1)–(29.2) at $v=\tau$, so that
+the actual and target triples, relative to the same interior anchor
+$p$, are $(x,y,j)$ and $(x_*,y_*,c_*)$. Substitution into (28.1)
+retains the chronological cross term and gives
+
+$$
+X=x_*-x,\quad Y=y_*-y,\quad C=c_*-j-xY,
+\qquad |X|,|Y|\le3\rho,\quad |C|\le7\rho^2.
+\tag{29.5}
+$$
+
+In particular the terminal geometry is quantitatively bounded even
+when target death interrupts a normal area leg. Let $(x_0(v),y_0(v),j_0(v))$
+be any terminal prefix relative to the actual state at $\tau$.
+The rectangle has $|q|\le7\rho$; all its phase coordinates have
+$|y_0|\le7\rho$, including the subsequent leg to $Y$. Its relative
+integral stays on the line segment between $0$ and $C$ and is then
+constant. Therefore
+
+$$
+|y_0-Y|\le10\rho,\qquad |j_0-C|\le7\rho^2.
+\tag{29.6}
+$$
+
+The terminal height differs from its fixed target boundary height by
+at most $4\rho$: at the inward excursion its difference is at most
+$|X|+\rho$, and the remaining height leg stays between its two
+endpoints. This proves the first-level bounds in (26.4).
+
+Comparing this prefix to its prescribed terminal endpoint, which is
+the held target triple, the exact phase formulas give
+
+$$
+\begin{aligned}
+|\Delta\widetilde\alpha|&\le5\rho,\\
+|\Delta\widetilde\beta|
+ &\le\tfrac12|y_0-Y|+|j_0-C|/r
+ \le5\rho+7\rho^2/r<6\rho.
+\end{aligned}
+\tag{29.7}
+$$
+
+The coefficient in the second line is evaluated at the actual
+terminal starting height $h_0\in I$, so its absolute value is at
+most $1/2$. This computation compares complete chronological states;
+it does not treat target area as an independent native actuator.
+Moreover
+
+$$
+J_\eta(v)-J^\lambda_\tau
+ =a_0(y_0-Y)+j_0-C,
+\tag{29.8}
+$$
+
+and $|a_0|\le K_*$ by (28.2). Equations (29.6)–(29.8) prove the
+last bound in (26.4). They hold even if the terminal connector is
+cut off at $T$, with its original parametrization. After a completed
+terminal connector all triple and phase errors are zero. If the
+target survives past $T$, only (29.2)–(29.4) are needed. Thus the
+bounds are for the full held histories on $[0,T]$, including all
+possible terminal cases. Projection to either original $2\pi$ circle
+is 1-Lipschitz. Together with the height bound, (29.7) proves
+$D_{\max}\le6\rho\le\eta$. $\square$
+

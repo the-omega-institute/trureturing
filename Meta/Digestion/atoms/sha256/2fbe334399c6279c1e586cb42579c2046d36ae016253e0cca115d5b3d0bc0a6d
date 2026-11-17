@@ -1,0 +1,10 @@
+**定义 C-2.1（单窗概率）。** 对实数 $`p_\sigma\ge0,\sum p_\sigma=1`$，按 Σ 顺序记 $`p=(p_0,p_1,p_2,p_3,p_{13})`$，置
+
+
+```math
+X=𝔼 x,\quad Y=𝔼 y,\quad Z=𝔼 z,
+\quad r=1-Z,\quad\kappa=𝔼[xy],\quad
+\Delta=r\kappa-XY.
+```
+
+

@@ -1,0 +1,16 @@
+**Corollary 7.4 (Leading logarithm of mutable encoding capacity).** For any compliant family with a fixed cubic constant $C_T$ under even one fixed target, let $r_s$ be the capacity in mutable bits of an encoding of all its complete persistent configurations, including control and labels. Then, for sufficiently small $s$,
+
+$$
+r_s\ge\log_2(1/s)+\log_2\!\left(\frac{A_T}{4\delta}\right).
+\tag{7.10}
+$$
+
+A compliant family attaining both cubic means has an encoding with
+
+$$
+r_s\le\log_2(1/s)+\log_2 C_M^{\rm up}+1.
+\tag{7.11}
+$$
+
+Proof. Apply Theorem 7.1 to the actual number of complete configurations, not merely an oversized announced budget. Capacity $r_s$ permits at most $2^{r_s}$ configurations, and (7.5) gives (7.10). The supplied upper's $4L+1$ states can be indexed with $\lceil\log_2(4L+1)\rceil$ bits; (7.6) gives (7.11). This encoding is an abstract state index. It supplies no finite-precision exact-coin implementation, bit-local transition cost or physical-storage equivalence. The lower additive constant may depend on the family's cubic constant; the upper constants depend only on fixed $H_c,\alpha$. $\square$
+

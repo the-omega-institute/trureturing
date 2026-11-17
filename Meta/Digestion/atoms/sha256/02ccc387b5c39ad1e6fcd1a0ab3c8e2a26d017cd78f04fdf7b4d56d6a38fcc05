@@ -1,0 +1,60 @@
+**定理 19.2（实际完整等距的正规形与精确 pinching；repo-derived）。** 对定义 19.1 的每个字，存在等距 $A_+,A_-:A\to Z$，使
+
+$$
+\begin{gathered}
+A_b^\dagger A_b=I_A\quad(b=+,-),\qquad A_+^\dagger A_-=0,\\
+W_q=\Pi_+\otimes A_++\Pi_-\otimes A_-.
+\end{gathered}
+\tag{19.2}
+$$
+
+令 $C$ 是证明中使用的二维记录空间，正交基为 $|+\rangle_C,|-\rangle_C$，并置
+
+$$
+\begin{aligned}
+V_0&=\Pi_+\otimes|+\rangle_C+\Pi_-\otimes|-\rangle_C,\\
+T(a\otimes|b\rangle_C)&=A_ba.
+\end{aligned}
+\tag{19.3}
+$$
+
+则 $T:A\otimes C\to Z$ 是等距，并在通常的张量重排下有
+
+$$
+W_q=(I_{RS}\otimes T)(V_0\otimes I_A).
+\tag{19.4}
+$$
+
+对任意 $R\otimes S\otimes A$ 上的联合输入算子 $X$，包括相关或混合输入，有
+
+$$
+\begin{aligned}
+\operatorname{Tr}_Z(W_qXW_q^\dagger)
+&=\Delta_\Pi(\operatorname{Tr}_A X),\\
+\Delta_\Pi(Y)&=\Pi_+Y\Pi_++\Pi_-Y\Pi_-.
+\end{aligned}
+\tag{19.5}
+$$
+
+因此增加任意有限 $q$ 或改变允许的相干历史处理，都不改变约化 $RS$ 通道：它恰为一次原生调用后的同一 pinching。
+
+证明。零次调用前的辅助预处理是一个等距 $B:A\to A_0$，可写作 $\sum_b\Pi_b\otimes B$。归纳假设某前缀为 $\sum_b\Pi_b\otimes B_b$，其中每个 $B_b$ 都是等距。中间操作恒等作用于 $RS$，只把 $B_b$ 后接另一个辅助等距。下一次 forward $V$ 将 $RS$ 因子左乘 $\Pi_d$，并添加新鲜 $|dd\rangle$。由于 $\Pi_d\Pi_b=0$（$d\ne b$），仅留下
+
+$$
+\sum_{b=\pm}\Pi_b\otimes(B_b\otimes|bb\rangle).
+\tag{19.6}
+$$
+
+每个辅助分支仍是等距。最后一次调用之后，两分支辅助映射的像由于该次新鲜 $|++\rangle,|--\rangle$ 正交而正交；其后的任何共同辅助等距都保持此正交性。这给出 (19.2)。在 (19.3) 的两个记录基向量上计算内积，立即得到 $T^\dagger T=I_{A\otimes C}$ 及 (19.4)。$C$ 只是实际 $|++\rangle,|--\rangle$ 二维张成空间的数学标识，不额外供应操作。
+
+将 $W_qXW_q^\dagger$ 展开成四个 $b,d$ 块。对每个 $RS$ 矩阵元，其辅助算子 $Y$ 满足
+
+$$
+\operatorname{Tr}(A_bYA_d^\dagger)
+=\operatorname{Tr}(A_d^\dagger A_bY)
+=\begin{cases}\operatorname{Tr}Y,&b=d,\\0,&b\ne d.\end{cases}
+\tag{19.7}
+$$
+
+故偏迹只留下两个投影对角块，得到 (19.5)。这也证明相关辅助输入的情形。偏迹在这里是计算实际完整等距的约化作用，不是允许控制器物理丢弃输出。$\square$
+

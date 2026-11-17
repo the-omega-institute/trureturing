@@ -6,6 +6,7 @@
    utility: none
    digest: Chinese-remainder finite-sieve moments identify uncentred products with the truncated singular series and centralisation with inclusion–exclusion. -/
 
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CentredProductExpansion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.SingularSeriesTail
 
 open scoped BigOperators Topology
@@ -133,13 +134,8 @@ theorem centered_sieve_moment (y : ℕ) (D : Finset ℕ) :
         (fun x => ∑ J ∈ D.powerset, (-1 : ℝ) ^ (D.card - J.card) *
           ∏ d ∈ J, (sieveVariable Q d x + 1)) := by
     funext x
-    conv_lhs => arg 2; ext d
-                rw [show sieveVariable Q d x = (sieveVariable Q d x + 1) + (-1) by ring]
-    rw [Finset.prod_add]
-    apply Finset.sum_congr rfl
-    intro J hJ
-    rw [Finset.prod_const, Finset.card_sdiff_of_subset (Finset.mem_powerset.mp hJ)]
-    ring
+    simpa only [add_sub_cancel_right] using
+      (prod_sub_one_expansion D (fun d => sieveVariable Q d x + 1))
   change sieveExpectation Q (fun x => ∏ d ∈ D, sieveVariable Q d x) = _
   rw [hpoint]
   have hsum :

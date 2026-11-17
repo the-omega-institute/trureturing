@@ -1,0 +1,67 @@
+**情形 C：$e=0$、$d\ne0$ 且 $b\ge0$。** 先由 (38.12) 取 $ds>0$。置
+
+$$
+H=\sqrt{b^2+\frac{8ds}{5}},\qquad q=b+H,\qquad
+\theta=\frac{b}{2H},
+\tag{38.22}
+$$
+
+以及
+
+$$
+X=\begin{pmatrix}
+-\dfrac{5q^2}{4s}&(2+\iota)b+\dfrac{(6+8\iota)H}{5}\\
+(2-\iota)b+\dfrac{(6-8\iota)H}{5}&-\dfrac{2Hs}{q}
+\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\\dfrac{q(1-\iota/2)}{s}\end{pmatrix}.
+\tag{38.23}
+$$
+
+由于 $ds>0$，$H>b\ge0$、$q>0$、$H,s,q$ 均非零；故根式为实数，矩阵和向量
+的每个条目有限，且两个坐标均非零。利用
+$H^2-b^2=8ds/5$，逐项得到
+
+$$
+R_+=\begin{pmatrix}
+-\dfrac{5Hq}{2s}&(2+\iota)H\\
+(2-\iota)H&-\dfrac{2Hs}{q}
+\end{pmatrix},\qquad R_+u=0,
+\tag{38.24}
+$$
+
+并得到另一个完整的算子恒等式。其逐项矩阵为
+
+$$
+S_-=\begin{pmatrix}
+ d+\dfrac{5q^2}{2s}&(-4-2\iota)b-(3+4\iota)H\\
+ (-4+2\iota)b-(3-4\iota)H&\dfrac{6Hs}{q}-s
+\end{pmatrix}
+=-\frac52X+\theta R_+ .
+\tag{38.25}
+$$
+
+第一行乘以 $u$ 时，
+$-5Hq/(2s)+(2+\iota)Hq(1-\iota/2)/s=0$；第二行乘以 $u$ 时，
+$(2-\iota)H-2H(1-\iota/2)=0$。因此 $R_+u=0$，且
+$S_-u=-5Xu/2$；$-5/2$ 与 $\theta=b/(2H)$ 都是真实数。
+
+计算接触项时，
+
+$$
+ w=\operatorname{Re}(u^*TP_3u)=\frac{bq}{s},\qquad
+ v=\operatorname{Im}_{\iota}(u^*XP_3u)=\frac{Hq}{s},
+\tag{38.26}
+$$
+
+因为
+$ (1-\iota/2)X_{12}=5b/2+(2+\iota)H$，而 $X_{22}|u_3|^2$
+是实数。因此 $w-v=(b-H)q/s=(b^2-H^2)/s=-8d/5$，由 (38.6)
+
+$$
+\psi_u(L)=\frac{16ds}{5}>0,\qquad
+\mathcal A_+=\mathcal A_-=0 .
+\tag{38.27}
+$$
+
+这也覆盖 $b=0$、$d\ne0$，没有小耦合或小对角项的假设。
+

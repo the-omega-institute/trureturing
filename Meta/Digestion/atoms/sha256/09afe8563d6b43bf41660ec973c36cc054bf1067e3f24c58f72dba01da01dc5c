@@ -1,0 +1,20 @@
+**引理 489.3（固定长度的三角平均）。** 在引理 489.2 的记号下，
+
+$$
+\int_{aX}^{bX}P_h(x)^2\,dx\sim\frac{(b-a)X}{3h}\log(X/h).
+$$
+
+证明。令 $U=X^{31/40}$，最终 $U<h$。由 Cauchy–Schwarz 与换元 $u=x\theta$，再用 (489.1)，
+
+$$
+\int_X^{2X}B_U(x)^2\,dx\le2UX\int_0^{U/X}\!\!\int_X^{2X}\bigl(E((1+\theta)x)-E(x)\bigr)^2\,dx\,d\theta\ll UX^3\int_0^{U/X}\theta\log^2(2/\theta)\,d\theta\ll XU^3\log^2X,
+$$
+
+它与 $Xh^3\ell_X$ 之比为 $O(X^{-3/40}\log X)\to0$。对 $u\in[U,h]$，(489.2) 给出 $\int_{aX}^{bX}D_u^2\ll Xu\log X$；故当 $sh,th\ge U$ 时，协方差除以 $Xh\ell_X$ 后受 $C\sqrt{st}$ 控制。在 $[0,1]^2$ 上对 $\mathbf 1_{\{s,t\ge U/h\}}$ 加权的协方差用引理 489.2 与控制收敛，得
+
+$$
+\frac1{Xh^3\ell_X}\int_{aX}^{bX}\Bigl(\int_U^hD_u(x)\,du\Bigr)^2dx\longrightarrow(b-a)\int_0^1\!\!\int_0^1\min(s,t)\,ds\,dt=\frac{b-a}3 .
+$$
+
+由 $L^2$ 三角不等式补回 $[0,U]$ 段，得 $\int_{aX}^{bX}B_h^2\sim\frac{b-a}3Xh^3\ell_X$；除以 $h^4$ 即得结论。证毕。
+

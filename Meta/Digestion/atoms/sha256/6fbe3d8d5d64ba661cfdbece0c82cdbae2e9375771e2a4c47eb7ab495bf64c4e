@@ -1,0 +1,22 @@
+**引理 90.1（有限投影的完整全域行）。** 对每个 $p\in\mathcal F_\tau$ 和每个 $x\in E$，有 $D(p,x)=K(p,x)$。
+
+证明。$p=0$ 用88.5。其余情形固定同一旧值 $r=D(p,x)$，并置 $k=p\circ x$。89.4使 $p,r,k$ 有共同迹有限支撑。在真正原三元组 $\operatorname{PB}(x,p,0)$ 中，$v=-r,w=k$，所以
+
+$$
+D(p-r,k)-D(p+r,-k)=2p\circ r.
+\tag{90.1}
+$$
+
+四个实际外层输入都属于同一个完整有限角；89.5用同一个 $\sigma$ 读它们，故
+
+$$
+\begin{aligned}
+D(p-r,k)-D(p+r,-k)
+&=\frac J2\bigl([p-r,k]+[p+r,k]\bigr)\\
+&=J[p,k]=\frac J2[p,x].
+\end{aligned}
+\tag{90.2}
+$$
+
+于是 $pr+rp=J[p,x]/2$。已知 $K(p,x)$ 也满足 $pK+Kp=J[p,x]/2$。令 $t=r-K(p,x)$，则 $pt+tp=0$；其 $p,p$ 块和两个交叉块均为零。89.4的零补角块又给 $(1-p)t(1-p)=0$，所以 $t=0$。展开的只有已知 $K$，没有对未知 $D$ 使用奇性或可加性。∎
+

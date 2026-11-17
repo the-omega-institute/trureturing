@@ -1,0 +1,12 @@
+**引理 493.1（移动增量与 $L^1$ 剖面的第四矩）。** 设 (493.1)。则存在 $C$（只依赖 $\theta$ 与指数带），使对所有充分大的 $X$，
+
+$$
+\sup_{0\le s\le1}\int_X^{2X}|f_s(x)|^4\,dx\le C\,C_4\,X h^2\log^2X ,
+\qquad
+\int_X^{2X}|\mathcal T_{\theta,g}(x)|^4\,\frac{dx}x\le C\,C_4\,\|g\|_1^4\,S_X^2 .
+$$
+
+证明。令 $L_s(x)=sx^\theta$、$\phi_s(x)=x+L_s(x)$；在 $[X,2X]$ 上 $0\le L_s<2h$、$\phi_s'\ge1$。对 $v\in[3h,4h]$ 有恒等式 $f_s(x)=D_v(x)-D_{v-L_s(x)}(\phi_s(x))$（两个增量终点同为 $x+v$），故 $|f_s(x)|^4\le8\bigl(|D_v(x)|^4+|D_{v-L_s(x)}(\phi_s(x))|^4\bigr)$；对 $v\in[3h,4h]$ 取平均后对 $x$ 积分。第一部分：$v\asymp X^\theta$ 最终落在 $Y=3X$ 的指数带内，由 (493.1) 得 $\int_1^{3X}|D_v|^4\ll C_4Xh^2\log^2X$。第二部分作联合换元 $(x,v)\mapsto(y,w)=(\phi_s(x),\,v-L_s(x))$，其 Jacobian 为 $\phi_s'(x)\ge1$，像含于 $[X,3X]\times[h,4h]$；由 Tonelli，$\int_X^{2X}\!\int_{3h}^{4h}|D_{v-L_s(x)}(\phi_s(x))|^4\,dv\,dx\le\int_h^{4h}\!\int_1^{3X}|D_w(y)|^4\,dy\,dw\ll C_4Xh^3\log^2X$。两部分除以 $h$ 即得第一式，对 $s$ 一致。
+
+对第二式，令 $G=\|g\|_1>0$，$F_g(x)=\int_0^1g(s)f_s(x)\rho_x(sx^\theta)\,ds$。由 $0<\rho\le1$ 与关于概率测度 $|g(s)|ds/G$ 的 Jensen 不等式，$|F_g(x)|^4\le G^3\int_0^1|g(s)|\,|f_s(x)|^4\,ds$；对 $x$ 积分并用第一式得 $\int_X^{2X}|F_g|^4\ll C_4G^4Xh^2\log^2X$。又 $\mathcal T_{\theta,g}=x^{1/2-\theta}F_g$，故 $\int_X^{2X}|\mathcal T_{\theta,g}|^4\,dx/x\ll X^{1-4\theta}\int_X^{2X}|F_g|^4\ll C_4G^4S_X^2$。证毕。
+

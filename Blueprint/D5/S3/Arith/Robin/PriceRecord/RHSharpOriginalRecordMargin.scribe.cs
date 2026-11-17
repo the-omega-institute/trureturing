@@ -10,6 +10,57 @@ internal sealed class RHSharpOriginalRecordMarginDocument : IScribeDocumentDefin
         "Sharp lower Robin-margin endpoint for original positive-price strict records",
         H("The original integer, all positive predecessors, and sharp attainment"),
         Blocks(
+            Describe.Lean(DescribeId.Create("original-record-full-c-leading"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.fullC_leading"),
+                H("The unconditional full correction at original records"),
+                StatementSource.FromAuthor(FullCorrectionClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("C(m) denotes FullArithmeticCorrectionSecondOrder.correction(m). "
+                    + "For every epsilon>0 one T>=2 works for all original positive-price strict "
+                    + "records after the largest-prime cutoff, retaining both logarithmic domains."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-record-prime-prefix-cutoff"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.Pn"),
+                H("The exact last prime of a real cutoff"),
+                StatementSource.FromAuthor(PnDefinition()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Pn(x) is the natural Finset supremum, with the natural empty-set "
+                    + "convention, of all primes at most floorNat(x)."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-record-b-prefix"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.B_prefix"),
+                H("B depends only on this prime prefix"),
+                StatementSource.FromAuthor(Disp(All("x", Real, EqualClaim(
+                    Call("B", Call("Pn", F.Id("x"))), Call("B", F.Id("x")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact identity holds for every real x, with the existing "
+                    + "totalized logarithms; no asymptotic replacement of Pn is made."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-record-cutoff-record"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.cutoff_record"),
+                H("Every real prime prefix has a genuine original record"),
+                StatementSource.FromAuthor(CutoffClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The least positive global optimizer pays strict dominance over "
+                    + "every positive predecessor. Its primeFactors are exactly primesLE(floorNat(x)), "
+                    + "and its largest prime is exactly Pn(x)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-record-pn-at-top"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.Pn_atTop"),
+                H("The exact cutoff prime tends to infinity"),
+                StatementSource.FromAuthor(Disp(Call("Tendsto", F.Id("Pn"),
+                    F.Id("atTop"), F.Id("atTop")))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The natural Pn is cast to Real for this limit."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-record-normalization"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.normalization"),
+                H("The true cutoff has asymptotically identical normalization"),
+                StatementSource.FromAuthor(Disp(Seq(Lim, Underscore,
+                    Grp(F.Id("x"), To, Infty), new Formula.Fraction(
+                        Call("D", Call("Pn", F.Id("x"))), Call("D", F.Id("x"))), Eq, D(1)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("D(x)=sqrt(x)*log(x); the limit is on the real atTop filter."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-record-margin-identity"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.margin_identity"),
+                H("The complete original margin splits exactly"),
+                StatementSource.FromAuthor(MarginClaim()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The correction C is full; the original positive-price and all "
+                    + "positive strict-predecessor hypotheses remain in the public identity."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("original-record-endpoint-constant"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.K"),
@@ -96,6 +147,42 @@ internal sealed class RHSharpOriginalRecordMarginDocument : IScribeDocumentDefin
                         + "The real-B attainment argument also separates the arithmetic, phase and "
                         + "WholeFormula residual errors."))),
                 DescribeRole.Theorem))));
+
+
+    private static Formula EqualClaim(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula FullCorrectionClaim()
+    {
+        var e = F.Id("epsilon"); var t = F.Id("T"); var m = F.Id("m");
+        var price = F.Id("lambda"); var p = Call("largestPrime", m);
+        var conclusion = And(Less(D(1), Call("theta", p)), And(Less(D(1), Call("log", m)),
+            Less(new Formula.Absolute(Subtract(Multiply(Call("D", p), Call("C", m)),
+                Multiply(D(2), Call("sqrt", D(2))))), e)));
+        var records = All("m", Nat, ImpliesClaim(Le(D(2), m), All("lambda", Real,
+            ImpliesClaim(Less(D(0), price), ImpliesClaim(StrictRecord(m, price),
+                ImpliesClaim(Le(t, p), conclusion))))));
+        return Disp(All("epsilon", Real, ImpliesClaim(Less(D(0), e),
+            ExistsOne("T", Real, And(Le(D(2), t), records)))));
+    }
+    private static Formula PnDefinition() => Disp(All("x", Real, EqualClaim(Call("Pn", F.Id("x")),
+        Call("FinsetSup", Call("primesLE", Call("floorNat", F.Id("x"))), F.Id("id")))));
+    private static Formula CutoffClaim()
+    {
+        var x = F.Id("x"); var m = F.Id("m"); var price = F.Id("lambda");
+        var data = And(Le(D(2), m), And(Less(D(0), price), And(StrictRecord(m, price),
+            And(EqualClaim(Call("primeFactors", m), Call("primesLE", Call("floorNat", x))),
+                EqualClaim(Call("largestPrime", m), Call("Pn", x))))));
+        return Disp(All("x", Real, ImpliesClaim(Le(D(2), x),
+            ExistsOne("m", Nat, ExistsOne("lambda", Real, data)))));
+    }
+    private static Formula MarginClaim()
+    {
+        var m = F.Id("m"); var price = F.Id("lambda");
+        var identity = EqualClaim(Call("robinLogMargin", m),
+            Add(Call("B", Call("largestPrime", m)), Call("C", m)));
+        return Disp(All("m", Nat, ImpliesClaim(Le(D(2), m), All("lambda", Real,
+            ImpliesClaim(Less(D(0), price), ImpliesClaim(StrictRecord(m, price), identity))))));
+    }
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));

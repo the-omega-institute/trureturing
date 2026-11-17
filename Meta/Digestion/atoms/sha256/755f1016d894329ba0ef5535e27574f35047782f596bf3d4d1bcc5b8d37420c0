@@ -1,0 +1,57 @@
+**引理 128.2（高维法向层的可数有限测度覆盖）。** 设 $L\subset\mathbb R^n$ 是有非空内部的紧凸体，取 $1\le k\le n$。以通常外法向锥
+
+$$
+\mathcal N_L(x)=\{v:\langle v,z-x\rangle\le0\text{ 对全部 }z\in L\}
+$$
+
+定义
+
+$$
+\Sigma_k(L)=\{x\in\partial L:
+\dim\operatorname{span}\mathcal N_L(x)\ge k\}.
+$$
+
+则 $\Sigma_k(L)$ 可由可数多个紧集 $X_j\subseteq\partial L$ 覆盖，每个 $X_j$ 的 $\mathcal H^{n-k}$ 测度有限。
+
+证明。法向关系单调：$v_x\in\mathcal N_L(x)$、$v_y\in\mathcal N_L(y)$ 时，分别用另一点代入支撑不等式相加，得到
+
+$$
+\langle v_x-v_y,x-y\rangle\ge0.
+\tag{Q128.6}
+$$
+
+选有理向量 $b_0,b_1,\ldots,b_k\in\mathbb Q^n$，其中 $b_1,\ldots,b_k$ 线性无关，并选正有理数 $\varepsilon$。令 $E=\operatorname{span}\{b_1,\ldots,b_k\}$，令 $\sigma>0$ 为映射
+
+$$
+E\longrightarrow\mathbb R^k,\qquad
+v\longmapsto(\langle b_1,v\rangle,\ldots,\langle b_k,v\rangle)
+$$
+
+的最小奇异值。只保留满足 $\sqrt{k}\varepsilon/\sigma<1/2$ 的数据。对此定义 $X$ 为所有满足下列条件的 $x\in\partial L$：对每个 $j$，$\mathcal N_L(x)$ 同时遇到两个闭球 $\overline B(b_0+b_j,\varepsilon)$ 和 $\overline B(b_0-b_j,\varepsilon)$。
+
+$X$ 紧。具体地，将所有 $2k$ 个法向见证一起保存在这些固定紧闭球中；$\partial L$ 紧，法向图闭，因为其定义中的全部支撑不等式在取极限时保持。因此带全部见证的集合紧，其在 $x$ 坐标的投影就是 $X$。
+
+若 $x,y\in X$，记 $d=x-y$。用 $x$ 处靠近 $b_0+b_j$ 的法向与 $y$ 处靠近 $b_0-b_j$ 的法向代入(Q128.6)，两误差的和至多为 $2\varepsilon\|d\|$，得到 $2\langle b_j,d\rangle\ge-2\varepsilon\|d\|$。交换正负选择，得到相反方向。因此
+
+$$
+|\langle b_j,d\rangle|\le\varepsilon\|d\|,\qquad
+\|\operatorname{proj}_E d\|
+\le\frac{\sqrt{k}\varepsilon}{\sigma}\|d\|
+\le\frac12\|d\|.
+\tag{Q128.7}
+$$
+
+两个误差和产生的因子二已经与中心差 $2b_j$ 的因子二相消。由正交勾股式，投影到 $E^\perp$ 在 $X$ 上单射，且其逆满足
+
+$$
+\|x-y\|\le\frac{2}{\sqrt3}
+\|\operatorname{proj}_{E^\perp}(x-y)\|.
+\tag{Q128.8}
+$$
+
+投影像是 $(n-k)$ 维空间中的有界紧集，故其 $\mathcal H^{n-k}$ 有限；Lipschitz逆像的测度不超过 Lipschitz常数的 $(n-k)$ 次方乘该测度，遂有 $\mathcal H^{n-k}(X)<\infty$。$k=n$ 时投影空间为零维，单射性直接使 $X$ 至多为单点。
+
+最后说明这些有理数据确实覆盖全部 $\Sigma_k(L)$。固定该层中的 $x$，法向锥在自身线性张成中的相对内部非空。选其中一点 $c$，再在该张成中选 $k$ 个线性无关且充分短的向量 $v_j$，使 $c\pm v_j$ 全在该锥中。令对应的 $k$ 方向映射的最小奇异值为 $\sigma_0>0$。先选正有理 $\varepsilon$，使 $\sqrt{k}\varepsilon<\sigma_0/4$；再把 $c,v_j$ 分别充分精确地逼近为有理 $b_0,b_j$，使 $\|(c\pm v_j)-(b_0\pm b_j)\|<\varepsilon$，同时保持线性无关及 $\sigma>\sigma_0/2$。这可由有限矩阵最小奇异值的连续性做到。于是全部 $c\pm v_j$ 提供所需见证，且 $\sqrt{k}\varepsilon/\sigma<1/2$。所有有理向量与正有理半径的有限元组只有可数多个，故所构造的紧集形成所需覆盖。证毕。
+
+该引理只取凸法向单调性和正交投影的尺寸结论。成熟的更强结果见[Alberti的原文][Q128Alberti] Theorem 3及Definition 1.7：对 $\mathbb R^h$ 中有非空内部的闭凸集及 $0\le j<h$，边界上单位外法向集合维数至少 $j$ 的点集是 $(h-j-1)$ 维的可数 $C^2$ 可求长集，允许相应Hausdorff零测集。其单位法向集合的Hausdorff维数等于法向锥维数减一；所以本章 $n=8,k=6$ 对应原文 $h=8,j=5$，所得维数为二，不能把原文索引误填为六。下面只消费引理128.2已经给全体点建立的可数紧覆盖，不需额外的可求长正则性。
+

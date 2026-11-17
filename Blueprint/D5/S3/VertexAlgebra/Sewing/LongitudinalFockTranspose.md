@@ -1,0 +1,114 @@
+# The actual finite Fischer transpose of a frequency preserving substitution
+
+## Abstract
+
+Exact finite Fischer transpose and frequency-preserving occupation majorant.
+
+The mathematical namespace is D5.S3.VertexAlgebra.LongitudinalFockTranspose. Variables n is Fin n × Nat, Poly n is the complex multivariate polynomial algebra on those variables, and Occupation n is its finitely supported natural exponent family. Both n and k are arbitrary naturals, including zero. Q is ANY complex n by k matrix: there is no Gram, positivity, invertibility, faithfulness or nonzero hypothesis. The variable (i,r) has oscillator frequency r+1. Every polynomial and every occupation is allowed.
+
+The literal algebra map linearSub Q sends X(j,r) to sum_i Q(i,j) X(i,r). The map transposeSub Q is linearSub of (j,i) ↦ star(Q(i,j)), so sends X(i,r) to sum_j star(Q(i,j)) X(j,r). On monomial d with coefficient 1 its exact symmetric polynomial tensor formula is product over x in d.support of (transposeSub Q (X x)) raised to d(x). This is substitution on the entire polynomial algebra at each frequency; no chosen finite Fock sector replaces that algebra.
+
+**Theorem 1.1 (constantCoeff_linearSub).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.constantCoeff_linearSub`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.constantCoeff_linearSub` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,k,Q and f:Poly k, constantCoeff(linearSub Q f)=constantCoeff f. No additional premise is used.
+
+**Theorem 1.2 (pderiv_linearSub).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.pderiv_linearSub`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.pderiv_linearSub` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,k,Q, x:Fin n × Nat and f:Poly k, pderiv x (linearSub Q f) is sum over j:Fin k of Q(x.1,j) times linearSub Q (pderiv (j,x.2) f). The second coordinate is retained exactly; the result is the chain rule for this literal finite substitution.
+
+**Theorem 1.3 (fock_transpose).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.fock_transpose`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.fock_transpose` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,k,Q, arbitrary p:Poly n and f:Poly k, FactorialFockMetric.inner p (linearSub Q f) = FactorialFockMetric.inner (transposeSub Q p) f. The native factorial pairing is conjugate linear in its first argument and linear in its second. The chain rule and multiplication/derivative pairing prove this algebraic identity; no completed Hilbert space or analytic adjoint is constructed.
+
+**Theorem 1.4 (inner_coefficient_sum).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.inner_coefficient_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.inner_coefficient_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For an arbitrary type sigma (at the source universe Type), and arbitrary complex polynomials p,f on sigma, inner p f is the finite sum over d in p.support of weight(d) star(p.coeff d) f.coeff d. The source keeps the factorial weight, the test support and the conjugation in this order.
+
+**Theorem 1.5 (coefficient_transpose).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.coefficient_transpose`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.coefficient_transpose` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,k,Q,d:Occupation n and f:Poly k, coeff d (linearSub Q f) equals [sum over t in support(transposeSub Q (monomial d 1)) of weight(t) star(coeff t (transposeSub Q (monomial d 1))) coeff t f] divided by weight(d), cast into Complex. Positivity of the natural factorial weight proves this denominator is nonzero inside the proof; no new nonzero premise is imposed on Q, d or f.
+
+For arbitrary sigma:Type, monomialRadius t d is the finite product of (t x)^(d x), and mass t p is sum over d in p.support of norm(p.coeff d) monomialRadius t d. radius_add has NO sign premise and gives radius(t,d+e)=radius(t,d)radius(t,e). mass_monomial likewise has no sign premise and equals norm(z)radius(t,d). radius_nonneg and mass_nonneg assume exactly that every real t x is nonnegative. Under that same pointwise premise mass_add_le, mass_sum_le, mass_mul_le, mass_pow_le and mass_prod_le give the triangle, finite sum, submultiplicative, natural power and finite product estimates. The finite index types in mass_sum_le and mass_prod_le are arbitrary source Type, with an explicit Finset; sigma need not be finite.
+
+rowSumBound Q is exactly 1 + sum_i sum_j norm(Q i j). rowSumBound_one_le and rowSum_le give respectively 1 ≤ that number and the bound on each fixed row sum, without restrictions on Q or either dimension. frequencyRadius A (i,r) is A/(r+1), and frequencyRadius_nonneg assumes only 0 ≤ A. The added 1 covers empty color sets and zero matrices.
+
+**Theorem 1.6 (transpose_monomial_mass).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.transpose_monomial_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.transpose_monomial_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,k,Q, A:Real with hA:0 ≤ A, and every d:Occupation n, mass (frequencyRadius A) (transposeSub Q (monomial d 1)) ≤ monomialRadius (frequencyRadius (A * rowSumBound Q)) d. The proof estimates the entire actual transpose support, which can grow with d. The frequency denominator remains r+1, and the matrix bound grows with occupation degree; it is not raised to oscillator energy.
+
+energy d is Finsupp.weight ((i,r) ↦ r+1) d. It is the oscillator energy of the complete occupation, not its unweighted degree.
+
+**Theorem 1.7 (transpose_monomial_energy).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.transpose_monomial_energy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.transpose_monomial_energy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,k,Q,d:Occupation n and t:Occupation k, the sole premise is that coeff t (transposeSub Q (monomial d 1)) is nonzero. The conclusion is energy t = energy d. Weighted homogeneity of the actual substituted variables proves this support restriction; it is not an assumed cutoff.
+
+Public definitions and abbreviations are Variables, Poly, Occupation, linearSub, transposeSub, monomialRadius, mass, rowSumBound, frequencyRadius and energy. Public theorems are exactly those described above together with radius_nonneg, radius_add, mass_nonneg, mass_monomial, mass_add_le, mass_sum_le, mass_mul_le, mass_pow_le, mass_prod_le, rowSumBound_one_le, rowSum_le and frequencyRadius_nonneg. Private consumed helpers are inner_add_right, inner_smul_left, inner_smul_right, inner_sum_left, inner_sum_right, mass_eq_sum and transpose_variable_mass. They remain private and their literal native proof source is preserved. The scalar/sum pairing helpers are also explicitly opened by the dependent product source.
+
+The coefficient and uniform transpose estimates are consumed by CompressedOccupation.projection_column_transport and W_transpose; the energy result is also consumed by the original compressed-energy proof. Provenance is the final native export D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.lean, SHA256 518543a4ac559b5f5f651e37bb80dbdfe7b974425970e9b129fcb2d4712e745b, with FactorialFockMetric and the imported mathlib matrix/weighted-homogeneous suppliers retaining their attribution. The import-to-EOF bytes, comments and helpers are preserved. Existing native statement/type/axiom evidence identifies the proof suffix only. The generality metadata is G because its D5 import closure is general; this module has no numerical experiment. The incomplete source-bound escape audit is disclosed at https://github.com/the-omega-institute/trureturing/issues/29344. Typed escape registration is a separate obligation and no registration completion is claimed here.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.coefficient_transpose`
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.constantCoeff_linearSub`
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.fock_transpose`
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.inner_coefficient_sum`
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.pderiv_linearSub`
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.transpose_monomial_energy`
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/LongitudinalFockTranspose.transpose_monomial_mass`
+- Dependency: [D5/S3/VertexAlgebra/FactorialFockMetric](../FactorialFockMetric.md)

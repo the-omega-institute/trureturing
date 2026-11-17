@@ -1,0 +1,26 @@
+**二、只在已付域上构造 join，并在每颗 $S_x$ 上取得开放圆片。** 取 $U=U_0\cap Q$。它是 $Q$ 中含 $o$ 的开集；对每个 $p\in U$，已有 $Q(p)=Q$ 及整个 $S_p\subseteq\Lambda$。对 $x\in Q$、$p\in U$、$x\ne p$，二步集合相等给至少一个
+
+$$
+j(x,p)\in S_p\subseteq\Lambda,\qquad x,p\in S_{j(x,p)}.
+\tag{XI142.12}
+$$
+
+若两个不同标签都满足此式，其不同完整球便含两个不同原纯点，与点交规则矛盾；故 $j$ 唯一。它在 $\{(x,p)\in Q\times U:x\ne p\}$ 上连续：若 $(x_i,p_i)\to(x,p)$，紧 $\Lambda$ 使任意标签子列可再收敛到某个 $a\in\Lambda$；$\Lambda$ 上的整球连续性给 $x,p\in D_a$。两者原纯，故在 $S_a$，唯一性给 $a=j(x,p)$。所有聚点相同，遂有整列连续性。未定义未付的远端点对 join。
+
+固定 $x\in Q$。$U$ 为四维流形非空开集，可选 $p\in U\setminus\{x\}$。记 $a=j(x,p)$，在完整球面 $S_p\subseteq\Lambda$ 中选 $b\ne a$。对称性给 $p\in S_b$，而 $x\notin S_b$，否则 $b$ 也是 $x,p$ 的 join。$b\in\Lambda$ 给 $S_b\subseteq Q$，所以可在 $S_b\cap U$ 中取含 $p$ 的二维开圆片 $A_b$。映射
+
+$$
+f_x:A_b\longrightarrow S_x,\qquad t\longmapsto j(x,t)
+\tag{XI142.13}
+$$
+
+处处有定义、连续，像落在 $\Lambda\cap S_x$。它单射：若不同 $t_1,t_2$ 同映到 $c$，则 $D_b,D_c$ 含这两个点，故两球相同、$b=c$；但 $x\in S_c$ 与 $x\notin S_b$ 矛盾。源、目标均为二维无边界流形，故 [Hatcher，Theorem 2B.3，印刷页172][Q142Ha]的区域不变性给
+
+$$
+\varnothing\ne\Omega_x:=f_x(A_b)\subseteq\Lambda\cap S_x,
+\qquad\Omega_x\text{ 在整个原 }S_x\text{ 中开}.
+\tag{XI142.14}
+$$
+
+这时只得到开放圆片，尚未得到 $S_x\subseteq\Lambda$。
+

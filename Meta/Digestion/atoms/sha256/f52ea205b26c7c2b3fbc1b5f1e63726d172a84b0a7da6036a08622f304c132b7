@@ -1,0 +1,53 @@
+**推论 97.3（一般实ROG的不可约分支继承原 $\mathrm G_2$）。** 对任意(97.1)，
+$\mathcal X$ 非退化、约化、全实，且
+
+$$
+\mathcal X(\mathbb R)=\{[v]:vv^{\mathsf T}\in L\},\qquad
+I(\mathcal X)_2=L^\perp.
+\tag{97.9}
+$$
+
+若 $\mathcal X\ne\mathbb P^{n-1}$，它二正则，且有(97.3)的不可约最小次数分支序列。
+原 $\mathrm G_2$ 传到每个分支在自身张成中的完整ROG载体，单位是原 $u$ 的限制，效应是该分支的全部 proper 效应。
+
+证明。$I_n\in L$ 使 $C$ 在 $L$ 中有内部，所以 $\operatorname{span}C=L$。
+ROG因而给
+
+$$
+L=\operatorname{span}_{\mathbb R}\{vv^{\mathsf T}:vv^{\mathsf T}\in L\}.
+\tag{97.10}
+$$
+
+用迹配对将二次型表示为 $q_N(v)=v^{\mathsf T}Nv$。
+它在定义 $\mathcal X$ 的实点集上消失，当且仅当 $N\perp L$，由闭包定义即得(97.9)的理想等式。
+所有这些二次型都在 $\mathcal X$ 上消失，故其实点仍满足原秩一约束；反向包含由闭包定义成立。
+$\mathcal X$ 按构造约化且全实。$I_n$ 的ROG分解中的向量张成整个 $\mathbb R^n$，
+所以 $I(\mathcal X)_1=0$，即非退化。
+
+在 $\mathbb R[\mathcal X]_2$ 中记非负二次型锥为 $\mathcal P_{\mathcal X}$，线性形式平方和锥为
+$\Sigma_{\mathcal X}$。由(97.9)及对平方的非负性，成熟的 Hankel 对偶识别准确给
+
+$$
+\Sigma_{\mathcal X}^*=I(\mathcal X)_2^\perp\cap\operatorname{PSD}_n=C
+=\operatorname{cone}\{vv^{\mathsf T}:[v]\in\mathcal X(\mathbb R)\}
+=\mathcal P_{\mathcal X}^*.
+\tag{97.11}
+$$
+
+最后一个等号也可由紧的实射影点评价集取锥再用有限维双极性得到；迹一截面紧，故此锥闭。
+若 $\mathcal X$ 是整个射影空间，(97.9)给 $L=\operatorname{Sym}_n$。
+否则 [BSV Theorem 3.1][BSV97reg] 的闭、约化、全实及非整个空间前件已满足，故 $\mathcal X$ 二正则；
+其 Theorem 3.11 给(97.3)及各分支在自身张成中的最小次数性质。
+Theorem 3.12 中的“截面穿过正定内部”和“所有极射线秩一”在这里分别由 $I_n\in L$ 和ROG给出，
+其 $L=I(\mathcal X)_2^\perp$ 与(97.9)一致。
+没有在这些定理之外另加稀疏图、坐标单项式或 chordal 前件。
+
+每个不可约分支全实：移去其余有限个分支后所得的非空开子集，其实点仍 Zariski 稠密。
+在(97.3)最后一步，$Y=\bigcup_{i<s}\mathcal X_i(\mathbb R)$ 与
+$Z=\mathcal X_s(\mathbb R)$ 满足97.2的整个交叠条件。
+97.2同时给前缀及最后分支的完整截面、效应延拓和 $\mathrm G_2$ 继承；
+再对前缀递归，便取得每个分支，而不要求中途 $I_{U_j}\in L_j$。
+若须在分支内部使用(96.1)，对其严格正单位 $u|_{L_j}$ 重新应用93.2，双射运输全部局部效应。
+因此不把 $\operatorname{tr}|_{L_j}$ 与一个未经证明属于 $L_j$ 的 $I_{U_j}$ 同时预设。
+整个论证只给(97.3)这些拼接的效应延拓，不断言任意面的效应都可延拓。证毕。
+

@@ -1,0 +1,77 @@
+**引理 45.1（AH23及36的无限背景接线）。** 在44.1的表示中，实际 $r,a\in E$ 若满足
+
+$$
+R=\pi r=\mu p,\quad p=ee^*,\quad\|e\|=1,
+\qquad pTp=0,\quad T=\pi a,
+\tag{45.1}
+$$
+
+则 $\pi D(r,a)=K_{\sigma_\pi}(R,T)$。不要求 $T$ 紧、有限秩或有限支撑。
+
+证明。记 $q=1-p$、$u=qTe$、$H_e(v)=ve^*+ev^*$，则
+
+$$
+T=H_e(u)+B,\quad B=qBq=B^*,\qquad
+ d=\pi D(r,a)=\delta p+H_e(w),\quad w\perp e.
+\tag{45.2}
+$$
+
+最后一式来自43.1在 $qH$ 上的零预算及极化。$\mu=0$ 直接为零。保留实际PB $(a;r,0)$：
+
+$$
+D(r-D(r,a),r\circ a)-D(r+D(r,a),-r\circ a)
+=2r\circ D(r,a).
+\tag{45.3}
+$$
+
+若 $u=0$，两份第二外槽像均为零，故 $R\circ d=0$。$R\circ-$ 在 $\mathbb Rp+H_e(qH)$ 上对 $\mu\ne0$ 单射，给 $d=0$。
+
+若 $t=\|u\|>0$，令 $f=u/t,L=\operatorname{span}\{e,f\},j=\sigma_\pi i$，取
+
+$$
+u_\epsilon=(e-\epsilon j f)/\sqrt2,\quad
+P_\epsilon=u_\epsilon u_\epsilon^*,\qquad
+C_\epsilon=\epsilon2tP_\epsilon
+=\epsilon t(p+ff^*)+H_e(-ju).
+\tag{45.4}
+$$
+
+两条射线正交。精确提升实际 $c_\epsilon$ 使 $\pi c_\epsilon=C_\epsilon$。44.1支付实际 $(r,c_\epsilon)$ 的内值；直接乘法给
+
+$$
+K_j(R,T)=H_e(-j\mu u/2),\quad
+R\circ C_\epsilon=\epsilon\mu t p+K_j(R,T),\quad
+R\circ T+K_j(R,C_\epsilon)=0,
+\tag{45.5}
+$$
+
+其中 $K_j(X,Y)=j[X,Y]/2$。令 $\Delta=d-K_j(R,T)$。实际PB $(r;a,c_\epsilon)$ 的真实位移像为 $\Delta-\epsilon\mu t p,0$；两份真实第二外槽像同为 $C_\epsilon$。令 $R_\epsilon=1-P_\epsilon$，分别用秩一零压缩读取这两份外值，再压缩PB，得
+
+$$
+R_\epsilon(T\circ\Delta)R_\epsilon=0.
+\tag{45.6}
+$$
+
+这里被去掉的项确为零：$T\circ p=H_e(u)/2$ 支撑在 $L$，且 $u_\pm^*H_e(u)u_\pm=0$，所以 $R_\epsilon(T\circ p)R_\epsilon=0$。
+
+对每个 $\zeta\in L^\perp$，同一个 $(T\circ\Delta)\zeta$ 由45.6同时属于两条正交射线，故为零。写 $\Delta=\delta p+H_e(\eta)$、$\eta=w+j\mu u/2$，实际矩阵乘法给
+
+$$
+q(T\circ\Delta)\zeta=\tfrac12u\eta^*\zeta
+=\tfrac12u w^*\zeta.
+\tag{45.7}
+$$
+
+任意 $B$ 未被删去：$q\Delta T\zeta=0$，而 $qT\Delta\zeta=u\eta^*\zeta$，所以其项在这次压缩中消去。由 $u\ne0$ 得 $w\in\mathbb Cu$，于是 $d$ 支撑在 $L$。
+
+现在45.3的两对真实外层像才同时支撑在同一二角 $L$。44.1分别识别它们，得到
+
+$$
+2R\circ d
+=K_j(R-d,R\circ T)-K_j(R+d,-R\circ T)
+=2R\circ K_j(R,T).
+\tag{45.8}
+$$
+
+最后等式只展开已知交换子，利用 $R^2=\mu R$。再用上述行空间单射性得结论。$\dim H=2$ 时 $L^\perp=0$，$w\in\mathbb Cu$ 自动成立；无限维时45.7对每个补空间向量分别成立，没有留下无限尾部条件。∎
+

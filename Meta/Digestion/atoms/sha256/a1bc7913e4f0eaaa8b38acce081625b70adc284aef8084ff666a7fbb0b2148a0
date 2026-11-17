@@ -1,0 +1,18 @@
+**推论 83.7（修复同一对原映射）。** 固定原 EJA 三元组及其全部原比较几何，取 (80.9) 的同一个有界不塌缩类 $\mathscr K$：
+$$
+\begin{gathered}
+\|\widetilde L\|,\|p\|\le R_0,\quad
+\widetilde M\widetilde M^*\succeq\zeta^2I_D,\quad\widetilde L\widetilde L^*\succeq\zeta^2I_E,\\
+\alpha1_D\le U\le\beta1_D,\qquad\alpha1_E\le G\le\beta1_E,\qquad R_0,\zeta,\alpha>0,\qquad\alpha\le\beta.
+\end{gathered}\tag{83.12}
+$$
+该类紧，精确零集仍为 $\mathscr Z=\mathscr K\cap\mathrm{PRE}$。空类无对象；非空而 $\mathscr Z=\varnothing$ 时，$\min_{\mathscr K}\mathcal Q_\times\ge \kappa^{-1}\min_{\mathscr K}\mathcal D_{\rm old}>0$。零集非空时，用 (80.13) 的单调模量，有
+$$
+\operatorname{dist}_{\rm pair}(z,\mathscr Z)\le\eta_{\mathscr K}(\kappa\mathcal Q_\times),\qquad
+r_J\le \kappa\mathcal Q_\times/2,\qquad
+r_H\le2R_0nm\,\eta_{\mathscr K}(\kappa\mathcal Q_\times),\quad m=\operatorname{rank}D.
+\tag{83.13}
+$$
+距离为 (80.11) 的原 $(\widetilde L,p)$ 对的 Hilbert–Schmidt 距离；$r_J,r_H$ 分别在全部谱范数至多一的原正交正元对上取最大值。最近零点仍使用同一个 $p_0$ 两次、同一原 $\omega$、全原锥和全实 $Z$。
+**证明与范围。** 83.4 保持同一零集，83.6 与 $\eta_{\mathscr K}$ 单调性直接运输 80.5；这里用同一比较定理的 $\kappa$ 界，原 $k^2$ 界仍是合法的较弱替代。若 $\dim_{\mathbb R}D=d^2$，行下界使全部 $\widetilde M$ 可逆且逆一致有界；整个原 C13 子类 $\mathscr K_C$ 紧。将 $\mathscr K,\mathscr Z,\eta_{\mathscr K}$ 一并替换为该子类及其零集、模量，便修复到同类 PRE+C13。若维数不等，65.3 排除精确零点，非空类有正间隙。这不提供有噪单混态 H13 桥、统一幂率、修复算法或自然最近点选择。
+

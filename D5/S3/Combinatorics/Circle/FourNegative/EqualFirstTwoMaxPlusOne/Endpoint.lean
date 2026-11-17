@@ -19,8 +19,8 @@ open private Bounds small_chart large_chart
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoMaxPlusOne.Arithmetic
 open private source_table
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
-open private new_base_bounds base newBase sourceMod
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private new_base_bounds sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase)
 open private Gates four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 open private negative_step

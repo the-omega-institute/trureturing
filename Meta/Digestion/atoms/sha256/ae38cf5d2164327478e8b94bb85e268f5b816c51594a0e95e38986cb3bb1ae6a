@@ -1,0 +1,25 @@
+**定理 39.2 的证明。** 由 (39.5) 先得
+
+$$
+ Q(X)\subseteq Q(Z).
+\tag{39.19}
+$$
+固定一个 $\mu$ 使 $d_X(\mu)\ge3$，置 $K=F(\mu)$、$t=[K:F]$。
+
+若 $d_X(\mu)=4$，则 (39.5) 及维数上界给 $d_Z(\mu)=4$。引理 39.3 说明 $X,Z$ 都是 $K$-空间，且 $t=2$ 或 $4$。当 $t=4$ 时二者都是一维 $K$-空间，立即互为标量倍。设 $t=2$，取 $X$ 的 $K$-基 $x,y$，令 $\nu=y/x\notin K$。则 $\nu\in Q(X)\subseteq Q(Z)$，故存在 $0\ne z\in Z$ 使 $z\nu\in Z$。由于 $Z$ 是 $K$-空间，$z(K+K\nu)\subseteq Z$；$1,\nu$ 的 $K$-独立性使左边的 $K$-维数为二，故 $Z=z(K+K\nu)=(z/x)X$。
+
+若 $d_X(\mu)=3$，则 $d_Z(\mu)\ge3$。引理 39.3 排除了 $t=2,4$。同时 $d_Z(\mu)=4$ 不可能：那会使 $Z$ 成为 $K$-空间，要求 $t\mid4$，而此处 $t=3$ 或 $t\ge5$。所以 $d_Z(\mu)=3$。
+
+当 $t\ge5$ 时，引理 39.3 给出
+
+$$
+ X=x\langle1,\mu,\mu^2,\mu^3\rangle_F,qquad
+ Z=z\langle1,\mu,\mu^2,\mu^3\rangle_F,
+$$
+故 $Z=(z/x)X$。当 $t=3$ 时，引理 39.3 给出
+
+$$
+ X=x(K+Fa),qquad Z=z(K+Fb),qquad a,b\notin K.
+$$
+由 (39.4) 可分别缩放两端并保持 (39.19)，得到 $Q(K+Fa)\subseteq Q(K+Fb)$。引理 39.4 应用于 $a$ 及 $a+\kappa_0$（这两个元素都属于 $Q(K+Fa)$），得到 $K+Fb=\lambda(K+Fa)$，从而 $Z=(z\lambda/x)X$。所有情形均已覆盖。最后使用 (39.4) 得到逐标签等式 $d_Z=d_X$。证毕。
+

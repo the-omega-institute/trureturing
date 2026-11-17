@@ -1,0 +1,197 @@
+**定理 60.1（同一原反射行的不减约窗估计）。** 在59.1–59.2下，固定 $R\ne0$，令
+
+$$
+\begin{gathered}
+C_0=\|c\|,\quad Z_0=\|z\|,\quad G_0=\|g\|,\quad\rho=\|r\|,\\
+M=(1+R^2)C_0+Z_0+G_0+2R^2L,\qquad
+K=M+\rho/|R|+(1+R^2)L.
+\end{gathered}
+\tag{60.1}
+$$
+
+每个所给分割及每份 $\tau\in\mathcal T$ 都满足
+
+$$
+\boxed{\begin{aligned}
+\|[d_N,r]\|_{2,\tau}^2
+&\le4\kappa_N^2K^2(N-1)m_\tau,\\
+\|[c,r]\|_{2,\tau}
+&\le2\kappa_N\sqrt{m_\tau}\bigl(K\sqrt{N-1}+\rho\bigr).
+\end{aligned}}
+\tag{60.2}
+$$
+
+若 $N\kappa_N^2\to0$，则同一个原余量 $r=0$，从而
+
+$$
+D(Rh,c+z)=RiQhz=\frac{iQ}{2}[Rh,c+z].
+\tag{60.3}
+$$
+
+$R=0$ 时同式由零槽成立。常数不含随分割变动的未知响应，并有完全已知的界
+
+$$
+\begin{gathered}
+G_0\le|R|(C_0+Z_0),\qquad \|t\|=Z_0,\qquad
+\rho\le|R|(C_0+2Z_0),\\
+K\le(2+R^2+|R|)C_0+(3+|R|)Z_0+(1+3R^2)L.
+\end{gathered}
+\tag{60.4}
+$$
+
+证明。固定 $N,\epsilon$ 及 $k\ne l$，简记 $q_k=q_{\epsilon k}$、$q_l=q_{\epsilon l}$、$q=q_k+q_l$、$a=a_k$、$b=a_l$、$\Delta=\Delta_N$。在同一原域中取
+
+$$
+\begin{gathered}
+p'=q_k+eq_ke,\quad s=1-2p',\quad H=hs,\\
+T=R\epsilon(a+b)1+R(b-a)H,\qquad V=T-2Rhc.
+\end{gathered}
+\tag{60.5}
+$$
+
+$eq_ke=2e\circ(e\circ q_k)-q_k$ 是原标签，处于相反 $h$ 角。因此 $p'$ 为投影，$s^2=1$、$[s,h]=[s,e]=0$，且 $Hq_k=-\epsilon q_k$、$Hq_l=\epsilon q_l$。中央续卷182.2准确给实际旧值 $D(H,e)=sj$ 及同一 $Q$；其182.1参数可取背景 $s$、$\lambda=0,\nu=1,z_0=0$。这仅供应第二框架，不替换当前目标 $c$。中央续卷163.1于是给
+
+$$
+P_H^-D(T,y)=R(b-a)iQH P_H^-y,
+\qquad P_H^-y=(y-HyH)/2
+\quad(y\in E).
+\tag{60.6}
+$$
+
+该式包含 $a=b$；没有使用换轴协变或未知首槽齐次。
+
+由于 $T-Rhc$ 是 $h$-偶，59.6支付实际内值 $D(Rh,T-Rhc)=0$。另一内值始终为固定的 $g$。完整PB取字面三元组 $(Rh;x,T-Rhc)$，定义
+
+$$
+\begin{gathered}
+A_+=x+g+R^2c-RhT,\qquad
+A_-=x-g-R^2c+RhT,\\
+\mathcal J=-2x\circ g-2R^2z\circ c+2Rz\circ(hT),\qquad
+O=D(V,A_-).
+\end{gathered}
+\tag{60.7}
+$$
+
+PB及反对称性准确给
+
+$$
+O=D(T,A_+)+\mathcal J.
+\tag{60.8}
+$$
+
+这里只展开已知Jordan乘法；其中的抵消为
+
+$$
+c\circ(hT)=(hcT+hTc)/2=T\circ(hc),
+$$
+
+它只需 $[h,c]=[h,T]=0$，不需 $[c,T]=0$。
+
+所选角上 $Tq_k=2R\epsilon aq_k$、$Tq_l=2R\epsilon bq_l$，故有一侧的准确等式和序界
+
+$$
+\begin{gathered}
+Vq=-2Rh\Delta q,\qquad qV^2q\le4R^2\kappa_N^2q,\\
+\|T\|\le |R|(|a+b|+|b-a|)\le2|R|L,
+\qquad\|A_-\|\le M.
+\end{gathered}
+\tag{60.9}
+$$
+
+不要求 $q$ 减约 $V$。对每个数学正泛函 $\omega$，用原正读取 $\phi(y)=\omega(qyq)$ 读取实际表 $(V,A_-,O)$。59.3给
+
+$$
+|\omega(qOq)|^2\le
+4R^2\kappa_N^2M^2\omega(q)^2.
+$$
+
+由角 $qAq$ 中的态序分离，得 $\|qOq\|\le2|R|\kappa_NM$。若 $q=0$ 结论直接成立。令 $m_k=\tau(q_k)$、$m_l=\tau(q_l)$；对 $O_{kl}=q_kOq_l$，分别估计 $O_{kl}^*O_{kl}$、$O_{kl}O_{kl}^*$，迹循环性给
+
+$$
+\|O_{kl}\|_{2,\tau}
+\le2|R|\kappa_NM\sqrt{\min(m_k,m_l)}.
+\tag{60.10}
+$$
+
+现在保留不减约造成的两笔误差。令 $X=q_krq_l$、$\Delta_{kl}=q_k\Delta q_l$、$\eta=\epsilon R(a-b)$。因 $z,t$ 为 $h$-奇、$r,c,hT$ 为 $h$-偶、$z\circ t=0$，逐项有
+
+$$
+\begin{gathered}
+q_kA_+q_l=X+(1+R^2)\Delta_{kl},\\
+q_k\mathcal Jq_l=-(cr+rc)_{kl}
+=-(a+b)X-(\Delta r+r\Delta)_{kl}.
+\end{gathered}
+\tag{60.11}
+$$
+
+$q_k,q_l$ 的 $H$ 符号相反，所以60.6读取60.8得到完整矩形恒等式
+
+$$
+\boxed{\begin{aligned}
+O_{kl}={}&[i\eta Q-(a+b)1]X\\
+&+i\eta(1+R^2)Q\Delta_{kl}
+-(\Delta r+r\Delta)_{kl}.
+\end{aligned}}
+\tag{60.12}
+$$
+
+尤其不能把 $q_kA_+q_l$ 写成 $X$。最后一项准确包含所有窗间耦合：若 $q_\alpha$ 遍历59.7的全部 $2N$ 个窗，则
+
+$$
+(\Delta r+r\Delta)_{kl}
+=\sum_\alpha
+(q_k\Delta q_\alpha r q_l+q_krq_\alpha\Delta q_l).
+\tag{60.13}
+$$
+
+此和包括其他同号窗及全部异号窗；其中为零的块由实际奇偶性消失，不由删去索引消失。
+
+$Q^*=Q,Q^2=1$ 给
+
+$$
+\|[i\eta Q-(a+b)1]X\|_{2,\tau}^2
+=(\eta^2+(a+b)^2)\|X\|_{2,\tau}^2.
+\tag{60.14}
+$$
+
+对任一有界 $B$，迹循环性给
+$\|q_kBq_l\|_{2,\tau}\le\|B\|\sqrt{\min(m_k,m_l)}$。
+分别用 $\|\Delta\|\le\kappa_N$、$\|\Delta r+r\Delta\|\le2\kappa_N\rho$，60.10–60.14的三角不等式给
+
+$$
+\begin{aligned}
+|a-b|\|X\|_{2,\tau}
+&\le\kappa_N\{2M+2\rho/|R|+(1+R^2)|a-b|\}
+\sqrt{\min(m_k,m_l)}\\
+&\le2\kappa_NK\sqrt{\min(m_k,m_l)}.
+\end{aligned}
+\tag{60.15}
+$$
+
+只约去非零的 $|R|$，不除以 $a-b$ 或 $a+b$。重心、零心、相反中心和零窗都包括在内。
+
+$[h,r]=0$ 使异号 $h$ 角的 $r$ 块为零；$[d_N,r]$ 的同号块为 $(a_k-a_l)q_{\epsilon k}rq_{\epsilon l}$，对角块为零。不同矩形在迹半范数中正交。全部有序矩形的预算准确为
+
+$$
+\begin{gathered}
+\|[d_N,r]\|_{2,\tau}^2
+=\sum_{\epsilon,k\ne l}|a_k-a_l|^2
+\|q_{\epsilon k}rq_{\epsilon l}\|_{2,\tau}^2,\\
+\sum_{\epsilon,k\ne l}\min(m_{\epsilon k},m_{\epsilon l})
+\le(N-1)\sum_{\epsilon,l}m_{\epsilon l}
+=(N-1)m_\tau.
+\end{gathered}
+\tag{60.16}
+$$
+
+这证明60.2第一式。另在整个代数中一次性估计
+
+$$
+\|[\Delta_N,r]\|_{2,\tau}
+\le2\kappa_N\|r\|_{2,\tau}
+\le2\kappa_N\rho\sqrt{m_\tau}.
+\tag{60.17}
+$$
+
+与 $[c,r]=[d_N,r]+[\Delta_N,r]$ 合并即给第二式，没有漏掉 $N-1$。$N\kappa_N^2\to0$ 时，同一固定非负数 $\tau([c,r]^*[c,r])$ 被任意小的预算所界，故为零。迹族分离正元素，得 $[c,r]=0$；运输续卷119.1在同一 $R,c,z,x,g,r$ 上才给 $r=0$。这里完整消费该处的字符读取和余量支撑证明，不把交换性本身误当作余量消失。60.4由59.3及 $t=iQhz$ 直接给出。零迹、零窗及 $N=1$ 的估计亦保持。∎
+

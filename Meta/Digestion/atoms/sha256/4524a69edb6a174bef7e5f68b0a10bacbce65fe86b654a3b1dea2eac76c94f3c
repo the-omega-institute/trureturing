@@ -1,0 +1,9 @@
+每个 $p$ 还能扩为同一原锥中的完整正交秩一框架
+
+$$
+I_n=p+r_2+\cdots+r_n,\qquad
+r_j=z_jz_j^*\in P,\qquad
+(v,z_2,\ldots,z_n)\text{ 是 }\mathbb F^n\text{ 的正交单位基}.
+\tag{96.5}
+$$
+

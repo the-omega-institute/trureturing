@@ -1,0 +1,14 @@
+## 11. 文献接口
+
+AOM：《AURIC FIB approximate online recovery memory》，模型、全空间回缩、实际前向谱比较、球面小球与随机径向壳舍入的数学来源。本文将其外部正谱隙接口明确列为假设 3.2；其数值未给出。
+
+[OWN]：《AURIC FIB environment record memory》，实际仪器坐标与固定长度字单射的拥有文献；固定修订 `55208d97e98beb34acc9db6cdcd1c9da16331362`，定义 1.3—2.1、定理 2.2、6.1、8.2、9.2—9.3。
+
+[FIVE]：《AURIC FIB five window quantum memory》，同一固定修订，定义 17.2、定理 17.3 与式 (18.4)。
+
+[BG]：J. Bourgain 与 A. Gamburd，*A spectral gap theorem in SU(d)*，JEMS **14**(5) (2012)，1455—1511，DOI `10.4171/JEMS/337`。AOM 所述接口为出版终版第 1455 页定理 1 及其稠密性脚注、归一化式 (0.1)；其适用性在本卷按假设 3.2 处理。
+
+[OWN]: https://github.com/the-omega-institute/trureturing/blob/55208d97e98beb34acc9db6cdcd1c9da16331362/docs/develop/theory/AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md
+[FIVE]: https://github.com/the-omega-institute/trureturing/blob/55208d97e98beb34acc9db6cdcd1c9da16331362/docs/develop/theory/AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md
+[BG]: https://doi.org/10.4171/JEMS/337
+

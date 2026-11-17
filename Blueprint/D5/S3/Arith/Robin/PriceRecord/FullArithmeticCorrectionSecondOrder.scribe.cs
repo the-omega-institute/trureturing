@@ -15,6 +15,42 @@ internal sealed class FullArithmeticCorrectionSecondOrderDocument : IScribeDocum
                 + "CompleteTailSecondOrder supplies its public price_record_complete_tail_second_order endpoint. "
                 + "The additional clock term follows from the exact mass identity and finite remainder bound below.")),
             Describe.Lean(
+                DescribeId.Create("price-record-existing-fixed-layer-filter-ratio"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_layer_ratio"),
+                H("Original fixed-layer limit, exposed for a live consumer"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unchanged original proof retains any index type and filter, m>=2, arbitrary positive prices and the full literal strict predecessor record at each index. With P->infinity it gives Qj^j/P->j for each fixed j>=2. The residual higher-envelope proof consumes j=3. This is visibility-only reuse, not new mathematics."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("price-record-existing-mass-filter-rates"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_mass_limits"),
+                H("Original same-integer relative clock rate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unchanged owner proof gives both same-integer E/sqrt(P) coefficients and X/P=1+o(1/log(P)), with X=log(m). The last conjunction uses the existing private reducible UnitRate; its calculus remains private. higher_layer_negligible consumes X/P->1. No bound X-P=O(sqrt(P)) follows."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("price-record-existing-finite-log-envelope"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_log_envelope"),
+                H("Original finite envelope forces P escape"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unchanged finite proof gives X<=P*log(4P^2) for m>=2 at every positive original price with the full strict predecessor comparison. record_prime_escape consumes this exact bound to convert own-X escape into P escape uniformly over prices."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("price-record-consumed-own-clock-q2-coefficient"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_second_own_clock_limit"),
+                H("Only the needed Q2 coefficient in the existing owner context"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any filter of literal original record pairs with P->infinity, log(X)*(Q2/sqrt(X)-sqrt(2))->-log(2)/sqrt(2). Apply unit_sqrt(unit_inv(record_mass_limits.2.2)), multiply Q2/sqrt(P) with second_mul_unit, and transport the logarithmic ratio with relative_clocks. All four are the original private calculus. In the critical residual proof this limit places the second-layer coefficient in a fixed tube on the record's own clock, uniformly over the original prices."))),
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "The newly visible suppliers and consumed own-clock helper still require complete "
+                + "source-bound four-slot audits; the exact remaining evidence is tracked in "
+                + "https://github.com/the-omega-institute/trureturing/issues/28966.")),
+            Describe.Lean(
                 DescribeId.Create("price-record-same-integer-log-mass"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_log_mass"),
@@ -133,6 +169,72 @@ internal sealed class FullArithmeticCorrectionSecondOrderDocument : IScribeDocum
                     + "the universal theorem continues to quantify over all records, without replacing their m. "
                     + "Choosing such records beyond successive uniform thresholds realizes both first two coefficients."))),
                 DescribeRole.Theorem),
+            Paragraph(Text(
+                "The same private second_layer_limits and record_mass_limits also give the complete second-layer "
+                + "application in the integer's own clock. Put Q=Q2, t=sqrt(2)*sqrt(X), and "
+                + "H(m,t)=sum over ALL primes p<=t with v_p(m)<=1 of log(p). For every epsilon>0 there is "
+                + "ONE X0>=2, chosen BEFORE every m>=2 and every lambda>0, such that the full strict predecessor "
+                + "record premise and X=log(m)>=X0 imply all three conclusions: "
+                + "|log(X)*(Q/sqrt(X)-sqrt(2))+log(2)/sqrt(2)|<epsilon; "
+                + "every prime p>=t has v_p(m)<=1; and "
+                + "|(log(X)/sqrt(X))*H(m,t)-log(2)/sqrt(2)|<epsilon. "
+                + "The record premise compares goldenResourceObjective(lambda,n) strictly with "
+                + "goldenResourceObjective(lambda,m) for EVERY natural n with 0<n<m. "
+                + "There is no actualDefect, support cap, exponent cap, fixed-price, short-interval, "
+                + "RH or P-X bound premise.")),
+            Paragraph(Text(
+                "To obtain this application, index by the subtype of all pairs (m,lambda) satisfying that entire "
+                + "record premise, and use comap(X,atTop). The finite record_log_envelope forces P to infinity "
+                + "as X tends to infinity: P<A would bound X by B*log(4B^2), B=max(A,2). "
+                + "With w=log(P) and r=X/P, record_mass_limits gives r=1+o(1/w). "
+                + "The existing unit_inv followed by unit_sqrt gives sqrt(P)/sqrt(X)=1+o(1/w). "
+                + "Apply second_mul_unit to u=Q/sqrt(P), whose second coefficient is supplied by "
+                + "second_layer_limits, and to this factor. The existing relative_clocks gives "
+                + "log(X)/log(P)->1, so multiplication by that ratio yields exactly "
+                + "log(X)*(Q/sqrt(X)-sqrt(2))->-log(2)/sqrt(2). Its strictly negative limit, together with "
+                + "log(X)>0, gives the strict cutoff Q<t eventually. Thus even a prime equal to t is strictly "
+                + "above Q; valuation_above_layer_prime at j=2 gives its ORIGINAL valuation <=1. "
+                + "Intersect the two epsilon tails and this valuation tail before eventually_comap and "
+                + "eventually_atTop extract X0. Neither extraction requires a NeBot premise.")),
+            Paragraph(Text(
+                "The finite hole identity is valid for every n>0 with antitone prime valuations and every real "
+                + "t>=layerPrime(n,2): H(n,t)=theta(t)-theta(layerPrime(n,2)). "
+                + "Indeed, valuation_below_layer_prime and valuation_above_layer_prime identify the filtered "
+                + "primesLE(floor(t)) exactly with primesLE(floor(t)) minus primesLE(layerPrime(n,2)); "
+                + "Finset.sum_sdiff and the finite theta sums then give the identity. "
+                + "This includes n=1 and the empty second layer Q=1, where theta(1)=0. "
+                + "The holes include ABSENT primes, with valuation zero, as well as primes of valuation one; "
+                + "restricting the sum to occupied prime factors would change the conclusion.")),
+            Paragraph(Text(
+                "For the hole coefficient, apply QuantitativePrimeAbel.theta_error_log_power at N=1 "
+                + "SEPARATELY at y=Q and at y=t. Both endpoints tend to infinity, y/sqrt(X)->sqrt(2), "
+                + "and log(X)/log(y)->2. Multiplying each normalized theta error by these two ratios gives "
+                + "(log(X)/sqrt(X))*(theta(y)-y)->0 at each endpoint, without assuming cancellation. "
+                + "For Q the logarithmic ratio follows from second_layer_limits and relative_clocks; "
+                + "for t it follows from log(t)=log(2)/2+log(X)/2. The exact decomposition is "
+                + "(log(X)/sqrt(X))*H(m,t)=-log(X)*(Q/sqrt(X)-sqrt(2)) "
+                + "+(log(X)/sqrt(X))*(theta(t)-t)-(log(X)/sqrt(X))*(theta(Q)-Q). "
+                + "It gives the positive coefficient log(2)/sqrt(2) for the complete finite holes.")),
+            Paragraph(Text(
+                "The own-X record tail is nonempty arbitrarily far out. For any real R, "
+                + "arbitrarily_large_price_records(exp(R)) supplies m>=2, an actual lambda>0, the full strict "
+                + "predecessor record and exp(R)<P. Since every prime factor of m is <=m, the finite supremum "
+                + "defining largestPrime gives P<=m; taking logarithms yields R<log(m)=X. "
+                + "This constructs positive-price records and does not assert that least crossings exist.")),
+            Paragraph(Text(
+                "For literal least crossings, first choose the preceding X0, then choose "
+                + "Tepsilon=max(Tpr,Tesc), where Tpr is supplied by "
+                + "ActualLeastCrossingPriceRecord.uniform_actual_least_crossing_price_record and Tesc by "
+                + "ActualLeastCrossing5040.uniform_actual_height_escape(X0). Both thresholds precede eta,T,m. "
+                + "For every 0<eta<=1/2, T>=Tepsilon, and m>=3 with T<=actualHeight(eta,m) and "
+                + "actualHeight(eta,n)<T for EVERY 3<=n<m, the escape theorem and "
+                + "ActualIntegerHeightJump.divisor_log_le_log give X0<divisorLog(m)<=X. "
+                + "The record theorem supplies lam0=1/(40*X*log(X))>0, the strict record against EVERY "
+                + "positive predecessor at lam0, and 5040|m. Applying the own-X implication at this very "
+                + "m and lam0 retains all three conclusions, including the complete holes and the weak "
+                + "prime cutoff. This application includes eta=1/2. It remains conditional on the displayed "
+                + "crossing premises: first_crossing_calibration has the separate requirements eta<1/2 "
+                + "and unbounded actualHeight, which record nonvacuity does not supply.")),
             Paragraph(Text(
                 "Applicability limits. The derivation uses classical prime-number estimates and finite factorization "
                 + "identities, with no additional target estimate or Taylor premise. It establishes the first two "

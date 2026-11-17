@@ -1,0 +1,26 @@
+**定理 62.2（同一连续原响应的全纯像公式）。** 存在唯一 $\varepsilon_0\in\{1,-1\}$，使对每个 $0<\xi\le1$ 和每对实际 $a,b\in E$，只要 $a(\xi),b(\xi)$ 均无迹，就有
+
+$$
+D(a,b)(\xi)=\varepsilon_0\frac{\mathrm i}{2}
+[a(\xi),b(\xi)].
+\tag{62.2}
+$$
+
+特别，全部实际 $A,B\in E_0$ 满足整个原域的函数恒等式
+
+$$
+\boxed{D(A,B)=\varepsilon_0\frac{\mathrm i}{2}[A,B].}
+\tag{62.3}
+$$
+
+证明。对每个 $\xi>0$，真正的点 Jordan 商 $\pi_\xi(a)=a(\xi)$ 满到 $H_2(\mathbb C)$；实际提升为 $xH/\xi$。应用 59.2，所有实际纯像旧值都等于该商的辅助 $B_\xi$。按 37.3–37.5 的既有三维面积代数，有 $B_\xi=\varepsilon(\xi)\mathrm i[,]/2$，其中 $\varepsilon(\xi)=\pm1$。
+
+取同一实际原锚 $F=x\sigma_z,G=x\sigma_x$。59.2 现对所有 $\xi>0$ 给
+
+$$
+D(F,G)(\xi)=-\varepsilon(\xi)\xi^2\sigma_y.
+\tag{62.4}
+$$
+
+这一份固定实际输出属于连续原域。因此其 $\sigma_y$ 系数 $r$ 连续，$\varepsilon(\xi)=-r(\xi)/\xi^2$ 在连通区间 $(0,1]$ 上连续而只取 $\pm1$，故为同一个常数 $\varepsilon_0$。这里使用输出所属空间的连续性，不是假定 $D$ 对输入连续。于是得到 (62.2)。在零点，两输入的像都是标量；242.1 给任意旧输出的零端值。对 $A,B\in E_0$，逐点 (62.2) 连同零端值给 (62.3)。锚的非零交换子保证符号唯一。∎
+

@@ -1,0 +1,26 @@
+**定义 45.1（中心、相对窗口与原标签）。** 固定特征零域塔
+
+$$
+F\subset E\subset D,\qquad [E:F]=6,\qquad [D:E]=5.
+\tag{45.1}
+$$
+
+所有窗口都是这个原 $D$ 的 $F$-子空间；原标量等价只指乘以 $D^\times$ 的元素。取 $C\le_F E$、$\dim_F C=3$，以及 $V\le_E E\oplus D$、$\dim_E V=3$。分别使用非退化对称配对
+
+$$
+\langle a,b\rangle_E=\operatorname{Tr}_{E/F}(ab),\qquad
+\beta((a,x),(b,y))=ab+\operatorname{Tr}_{D/E}(xy)
+\tag{45.2}
+$$
+
+定义 $C^\perp$ 和 $V^\perp$；两者仍分别为三维 $F$-空间和三维 $E$-空间。记 $C^0=C,C^1=C^\perp$，$V^0=V,V^1=V^\perp$。称 $V$ 可用，若对 $U=V,V^\perp$，投影 $p_D:U\to D$ 都单射，投影 $p_E:U\to E$ 都满射。置
+
+$$
+W_{ef}=W(C^e,V^f)
+=\{x\in D:\ \exists a\in C^e,\ (a,x)\in V^f\},
+\qquad e,f\in\{0,1\}.
+\tag{45.3}
+$$
+
+仍在逐字相同的原标签上定义 $d_W(r)=\dim_F(W\cap rW)$，$r\in D^\times$；中心的 $d_C(t)$ 同样使用原 $t\in E^\times$。若另容许标签零，则约定 $d_W(0)=d_C(0)=0$。
+

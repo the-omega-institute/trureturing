@@ -1,0 +1,39 @@
+#### 定理 3.2：Bloch 半角与读出互补量
+
+设
+
+$$
+\rho=\frac{I+\mathbf r\cdot\boldsymbol{\sigma}}{2},\quad
+ P_{\mathbf m}=\frac{I+\mathbf m\cdot\boldsymbol{\sigma}}{2},\quad|\mathbf m|=1.
+$$
+
+则
+
+$$
+p_+=\frac{1+\mathbf r\cdot\mathbf m}{2}.
+$$
+
+在允许平衡横向比较时，定义
+
+$$
+\mathcal P_{\mathbf m}=|\mathbf r\cdot\mathbf m|,\qquad
+ \mathcal V_{\mathbf m}
+ =\sqrt{|\mathbf r|^2-(\mathbf r\cdot\mathbf m)^2}.
+$$
+
+有 $\mathcal P_{\mathbf m}^2+\mathcal V_{\mathbf m}^2=|\mathbf r|^2\leq1$。 纯态 Bloch 夹角为 $\theta$ 时，
+
+$$
+p_+=\cos^2(\theta/2),\qquad
+ \mathcal P=|\cos\theta|,\qquad
+ \mathcal V=|\sin\theta|.
+$$
+
+**证明。**
+
+由 $\operatorname{tr}\sigma_i=0$、$\operatorname{tr}(\sigma_i\sigma_j)=2\delta_{ij}$ 得到概率式。取 $\mathbf m$ 为 $z$ 轴， 跨块元为 $(r_x-\mathrm ir_y)/2$， 平衡相位扫描的可见度为其模的两倍。 任意轴由共同幺正共轭得到。余下等式为 Euclidean 分解及半角恒等式。
+
+$\square$
+
+$\theta=\pi/2$ 时回答概率是 $1/2$，不是对象消失。 $\theta=0$ 时某个内部概念确定，也没有推出空间位置确定。 例如在 $\mathcal H_{\rm spin}\otimes\mathcal H_{\rm position}$ 中， 同一个自旋态乘以任意不同空间态， 对 $P_{\mathbf m}\otimes I$ 给出完全相同的读数。
+

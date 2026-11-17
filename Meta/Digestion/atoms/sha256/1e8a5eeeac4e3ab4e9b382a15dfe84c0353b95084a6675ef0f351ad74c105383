@@ -1,0 +1,330 @@
+**定理 43.2（一般八次域的支持、交维与至多两个标量轨道）。** 对定义 43.1 中任意 $F,D,W,Y$，有
+
+$$
+\boxed{\quad
+Q_Y=Q_W
+\quad\Longleftrightarrow\quad
+\bigl[\ \forall r\in D^\times,\ d_Y(r)=d_W(r)\ \bigr]
+\quad\Longleftrightarrow\quad
+\bigl[\ Y=\gamma W\ \text{或}\ Y=\gamma W^\perp
+\text{，某个 }\gamma\in D^\times\ \bigr].
+\quad}
+\tag{43.2}
+$$
+
+因而在四平面类内，完整原商支持纤维与完整原交维函数纤维相同，均至多包含两个原标量轨道；两轨道允许重合。进一步，若 $E_W\ne F$，则有更强的单侧结论
+
+$$
+Q_Y\subseteq Q_W\quad\Longrightarrow\quad
+Y=\gamma W\quad\text{对某个 }\gamma\in D^\times.
+\tag{43.3}
+$$
+
+这里没有预设竞争窗口 $Y$ 对 $E_W$ 线性。因此非平凡乘子域分支的相等支持纤维恰有一个标量轨道。
+
+证明。使用定理 26.2 的实际域结论：$E_W$ 是中间域，$[E_W:F]\mid4$，最小正交维等于 $[E_W:F]$；在 $E_W=F$ 时，其证明中的分裂行拟阵连通性及严格秩界 (26.16) 也直接适用。迹对偶的交维恒等式直接使用 (34.7)、引理 40.2。以下补足一般八次域的支持与表示桥梁。
+
+（一）非平凡乘子域，以及竞争窗口的自动线性性。设 $E=E_W$，$e=[E:F]>1$，则 $e=2$ 或 $4$。对两个窗口各自整体缩放不会改变各自的商支持或乘子域。
+
+若 $e=4$，可将 $W$ 归一化为 $E$，并独立将 $Y$ 归一化为包含 $1$。于是 $Y\subseteq Q_Y\subseteq Q_W=E$；两边的 $F$-维数都是四，所以 $Y=E$，还原缩放即得 (43.3)。
+
+若 $e=2$，将 $W$ 归一化为 $E+Ez$，并仍将 $Y$ 归一化为包含 $1$。由 $[D:E]=4$，$z$ 在 $E$ 上的次数只能为二或四；若为二，则 $W=E(z)$，其乘子域为这个四次于 $F$ 的域，与 $E_W=E$ 矛盾。因此 $D=E(z)$，且 $1,z,z^2,z^3$ 是 $E$-基。写成
+
+$$
+z^4=b_0+b_1z+b_2z^2+b_3z^3,\qquad
+ t=t_0+t_1z+t_2z^2+t_3z^3,\qquad b_i,t_i\in E.
+$$
+
+在 $W$ 的基 $1,z$ 及 $D/W$ 的基 $z^2,z^3$ 下，乘以 $t$ 再投影到 $D/W$ 的矩阵为
+
+$$
+\begin{pmatrix}
+t_2&t_1+b_2t_3\\
+t_3&t_2+b_3t_3
+\end{pmatrix}.
+$$
+
+所以对非零原 $t$，
+
+$$
+t\in Q_W\quad\Longleftrightarrow\quad q(t)=0,
+\qquad
+q(t)=t_2^2+b_3t_2t_3-t_1t_3-b_2t_3^2.
+\tag{43.4}
+$$
+
+这是 $D$ 上的 $E$-值二次型，其根基恰为 $E\cdot1$：在 $t_1,t_2,t_3$ 上的对称矩阵是
+
+$$
+\begin{pmatrix}
+0&0&-1/2\\
+0&1&b_3/2\\
+-1/2&b_3/2&-b_2
+\end{pmatrix},\qquad \det=-1/4.
+$$
+
+模去根基后得到三维非退化二次空间。若其中一个子空间全迷向，则它包含于自己的正交补，故维数至多一；因此原二次空间的全迷向 $E$-子空间维数至多二。
+
+由 $1\in Y$ 及支持包含，对每个 $y\in Y$ 有 $q(y)=0$，其中 $y=0$ 时直接使用二次型的零值。令 $B_q(x,y)=(q(x+y)-q(x)-q(y))/2$；又因 $y+y'\in Y$，极化给出 $B_q(y,y')=0$。二次型的 $E$-齐次性及极化型的 $E$-双线性表明 $EY=\operatorname{span}_E Y$ 仍全迷向。因此
+
+$$
+4=\dim_F Y\le\dim_F(EY)=2\dim_E(EY)\le4,
+\qquad Y=EY.
+\tag{43.5}
+$$
+
+这证明了所需的自动 $E$-线性性，而不是将它加入前件。现在写 $Y=E+Ey$，$y\notin E$。因 $y\in Q_W$，存在 $a,b,c,d\in E$，使
+
+$$
+y=\frac{a+bz}{c+dz},\qquad c+dz\ne0.
+$$
+
+$y\notin E$ 迫使 $ad-bc\ne0$，故
+
+$$
+(c+dz)Y=\operatorname{span}_E\{c+dz,a+bz\}=E+Ez=W.
+$$
+
+还原归一化便得 (43.3)，没有用到 $Y$ 的任何额外乘子假设。
+
+（二）平凡乘子域的归一化矩阵。以下设 $E_W=F$。先找原 $a\in D^\times\setminus Q_W$。将 $D$ 看成八维仿射 $F$-空间，商映射
+
+$$
+\phi:W\times W\dashrightarrow D,\qquad (u,v)\longmapsto u/v
+\tag{43.6}
+$$
+
+在分母范数非零处为有理映射。分母的每个非零基坐标片上，可以同时缩放分子、分母，将该坐标置为一，故其几何像闭包维数至多 $4+3=7$。这给出一个在 $F$ 上定义的真闭子集，包含全部原商；无限域 $F$ 的原坐标点在八维仿射空间中 Zariski 稠密。因此可取上述原 $a$。这一论证也说明并非先假定行列式非零。
+
+记 $i_W:W\hookrightarrow D$、$\pi_W:D\to D/W$，并令 $M_t$ 为原乘法算子。取两端的 $F$-基，置
+
+$$
+A_W(t)=\pi_W M_t i_W,\qquad f_W(t)=\det A_W(t).
+\tag{43.7}
+$$
+
+$f_W$ 是原八个线性坐标上的齐次四次多项式。对非零原 $t$，乘以 $t$ 把 $\ker A_W(t)=W\cap t^{-1}W$ 同构到 $W\cap tW$，从而
+
+$$
+\dim_F\ker A_W(t)=d_W(t),\qquad
+f_W(t)=0\ \Longleftrightarrow\ t\in Q_W.
+\tag{43.8}
+$$
+
+$t=0$ 时 $A_W(0)=0$ 的核维数为四，而 $W\cap0W=\{0\}$；不将这个核维数当作零标签的交维。由所选 $a$，$A_W(a)$ 可逆。定义原 $F$-线性算子
+
+$$
+N_W=i_W A_W(a)^{-1}\pi_W.
+$$
+
+因为 $\pi_W i_W=0$，且两端的嵌入、商映射分别单射、满射，有
+
+$$
+N_W^2=0,\qquad
+\operatorname{im}N_W=\ker N_W=W,\qquad
+\operatorname{rank}N_W=4.
+\tag{43.9}
+$$
+
+取有限 Galois 正规闭包 $K/F$，固定分裂同构 $D\otimes_F K\simeq K^\Omega$，其中 $\Omega=\operatorname{Hom}_F(D,K)$、$|\Omega|=8$。以下两窗口使用同一套嵌入标签。以 $V$ 表示 $W_K$ 的 $8\times4$ 列基矩阵，以 $U$ 表示商映射的 $4\times8$ 矩阵；于是
+
+$$
+UV=0,\qquad A_0=U\operatorname{diag}(\sigma(a))V,\qquad
+N=VA_0^{-1}U.
+\tag{43.10}
+$$
+
+这里 $N$ 就是 $N_W$ 的分裂坐标矩阵。Sylvester 行列式恒等式给出
+
+$$
+\frac{f_W(a+x)}{f_W(a)}
+=\det\bigl(I_4+A_0^{-1}U\operatorname{diag}(x)V\bigr)
+=\det\bigl(I_8+N\operatorname{diag}(x)\bigr).
+\tag{43.11}
+$$
+
+$x$ 在右边是八个独立的分裂坐标，左边经同一个可逆线性坐标变换理解。$G=\operatorname{Gal}(K/F)$ 在 $\Omega$ 上传递，这是原 $D$ 为域且 $D/F$ 可分的结果。$N_W$ 在原 $F$ 上定义，故
+
+$$
+N_{g\sigma,g\tau}=g(N_{\sigma,\tau})\qquad(g\in G).
+\tag{43.12}
+$$
+
+因此其有向零模式与全部带标签子矩阵的秩均被该半线性作用保持。
+
+（三）原支持到不可约四次方程。令 $M$ 为 $V$ 的行拟阵，秩函数为
+
+$$
+\rho(S)=\dim_K\operatorname{pr}_S W_K.
+$$
+
+$E_W=F$ 时，直接由 §26 的 (26.12)–(26.16)，$M$ 连通且
+
+$$
+2\rho(S)\ge |S|+1\qquad
+(\varnothing\ne S\subsetneq\Omega).
+\tag{43.13}
+$$
+
+这些结论控制整个分裂稳定子，不只控制原来逐个列出的乘数。这里使用的是同一原八次域的实际窗口，不另加拟阵一般位置假设。
+
+先证 $N$ 为不可约矩阵，即其非零条目有向图强连通。由 (43.12)，$G$ 传递地置换其强连通分量。分量缩并图是有限有向无环图；它有汇点，而顶点传递性使每个顶点都是汇点，故没有边。若存在多个分量，$N$ 就在这些坐标块上分块对角，由 $\operatorname{im}N=W_K$ 可知 $W_K$ 也按这些块直和分解；于是 $M$ 不连通，矛盾。
+
+现使用 Al Ahmadieh，[*The Fiber of the principal minor map*，arXiv:2309.00806v2，Lemma 5.1](https://arxiv.org/html/2309.00806v2)：在任意域上，矩阵 $N$ 不可约当且仅当
+
+$$
+g(y)=\det\bigl(\operatorname{diag}(y)+N\bigr)
+$$
+
+不可约。非零条目图在扩域后不变，故将该引理应用于代数闭包可知 $g$ 绝对不可约。置 $h(x)=\det(I_8+N\operatorname{diag}(x))$。有
+
+$$
+g(y)=\Bigl(\prod_{\sigma\in\Omega}y_\sigma\Bigr)
+ h\bigl((y_\sigma^{-1})_\sigma\bigr).
+\tag{43.14}
+$$
+
+变量取逆是 Laurent 多项式环的自同构，$g$ 也不是坐标因子；因此 $h$ 在 Laurent 环中不可约。又 $h(0)=1$，排除了将多项式因子在该环中变成单位的非平凡单项式因子。故 $h$ 绝对不可约，(43.11) 遂给出 $f_W$ 的几何不可约性。
+
+还必须证明原商足够稠密，而非将原标签上的零集直接等同于全部几何零集。由定理 26.2 及 $E_W=F$，存在原 $u,v\in W\setminus\{0\}$，使 $r=u/v$ 满足 $d_W(r)=1$。在该原点对处，(43.6) 的微分为
+
+$$
+(h,k)\longmapsto v^{-1}(h-rk),\qquad
+\operatorname{rank}d\phi_{(u,v)}=\dim_F(W+rW)=7.
+\tag{43.15}
+$$
+
+特征零下的 Jacobian 像维数判据及前述七维上界说明商映射的几何像闭包恰为七维。它包含于不可约七维超曲面 $V(f_W)$，所以两者相等。这是 §41 的像维数论证，在这里以定理 26.2 提供原域中的秩七点。原 $F$-坐标点在映射定义域中 Zariski 稠密，理由是无限域上的非零多项式不能在全部原坐标上消失；分母非零的原 $D$ 元素在每个嵌入下均非零。因此即使在代数闭包中取闭包，也有
+
+$$
+\overline{\sigma(Q_W)}^{\mathrm{Zar}}=V(f_W).
+\tag{43.16}
+$$
+
+现在设 $Q_Y=Q_W$。同一原 $a$ 也在 $Q_Y$ 外，所以 $f_Y(a)\ne0$。$f_Y$ 在 (43.16) 的稠密原商上消失，零点定理及 $f_W$ 的几何不可约性给出 $f_W\mid f_Y$。二者同为四次，从而
+
+$$
+f_Y=c f_W,\qquad
+c=f_Y(a)/f_W(a)\in F^\times.
+\tag{43.17}
+$$
+
+分别对 $W,Y$ 在这个同一原 $a$ 处归一化，由 (43.11)、(43.17) 得
+
+$$
+\det(I_8+N_Y\operatorname{diag}(x))
+=\det(I_8+N_W\operatorname{diag}(x)).
+\tag{43.18}
+$$
+
+$\prod_{\sigma\in S}x_\sigma$ 的系数恰为 $S$ 对应的主子式，故两矩阵的全部对应主子式相等。至此只得到了行列式与主子式信息，没有从支持预先推断各点的精确核维数。
+
+（四）Galois 传递性排除八阶矩阵的切口。称 $S\sqcup T=\Omega$ 为 $N$ 的切口，若
+
+$$
+2\le |S|\le6,\qquad
+\operatorname{rank}N[S,T]\le1,\qquad
+\operatorname{rank}N[T,S]\le1.
+\tag{43.19}
+$$
+
+这正是下述主子式重建文献使用的 cut。设存在这样的切口。由 $\ker N=W_K$，
+
+$$
+\dim N(K^T)=|T|-\dim(W_K\cap K^T)
+=|T|-4+\rho(S).
+$$
+
+$N(K^T)$ 在 $K^S$ 上的投影秩至多一；该投影的核包含于 $\operatorname{im}N\cap K^T=W_K\cap K^T$，维数至多 $4-\rho(S)$。因此
+
+$$
+|T|-4+\rho(S)\le1+4-\rho(S),\qquad
+2\rho(S)\le |S|+1.
+$$
+
+交换 $S,T$ 得相同的另一条上界。结合已有的严格下界 (43.13)，两边必须分别取等：
+
+$$
+2\rho(S)=|S|+1,\qquad 2\rho(T)=|T|+1.
+\tag{43.20}
+$$
+
+所以两边大小均为奇数，只能为三和五。设三元侧为 $C$，则
+
+$$
+\rho(C)=2,\qquad \rho(C^c)=3,\qquad
+\rho^*(C)=|C|-4+\rho(C^c)=2,
+\tag{43.21}
+$$
+
+其中 $\rho^*$ 是对偶拟阵的标准秩函数。
+
+由 (43.13)，每个二元集 $H$ 都满足 $\rho(H)=2$，其六元补集满足 $\rho(H^c)=4$，故 $\rho^*(H)=2-4+4=2$。所以 $M$ 及其对偶都简单。式 (43.21) 表明 $C$ 同时是三元回路和三元余回路。
+
+考察两个不同的 Galois 共轭 $C,C'$。它们不可能只交一个元素，因为回路与余回路不能恰交一个元素：在线性表示中，两者分别给出相互正交的依赖向量与行空间向量，若支持只交一点，点积就只有一个非零项。它们也不可能交两个元素：此时二元交集秩二，秩的次模性给出
+
+$$
+\rho(C\cup C')\le\rho(C)+\rho(C')-\rho(C\cap C')=2,
+$$
+
+而四元并集由 (43.13) 必须秩至少三，矛盾。故不同共轭只能互不相交。全部共轭之并是非空的 $G$-不变集合，$G$ 在八个嵌入上传递，所以这些三元组必须分拆全部八个标签，与 $3\nmid8$ 矛盾。这证明 $N_W$ 无切口。
+
+（五）成熟主子式重建与原域乘数下降。现在应用 Loewy 的无切口重建结论，精确采用 Al Ahmadieh 上引文 Theorem 4.1 的无切口方向；相同充分条件也见 Chatterjee–Ghosh–Gurjar–Raj，[*Characterizing and Testing Principal Minor Equivalence of Matrices*，arXiv:2410.01961v1，Lemma 2.8(2)](https://arxiv.org/html/2410.01961v1)。其陈述是：不可约且无切口的矩阵，其全部对应主子式确定矩阵至可逆对角共轭或转置后的可逆对角共轭。这里的 diagonal equivalence 包含转置，不能删去这一支。
+
+由（三）（四），该定理的前件已满足；(43.18) 给出其主子式相等前件。因此存在分裂域上的可逆对角矩阵 $\Lambda$，使
+
+$$
+N_Y=\Lambda N_W\Lambda^{-1}
+\quad\text{或}\quad
+N_Y=\Lambda N_W^{\mathsf T}\Lambda^{-1}.
+\tag{43.22}
+$$
+
+取像空间，使用 (43.9)，得到
+
+$$
+Y_K=\Lambda W_K
+\quad\text{或}\quad
+Y_K=\Lambda\operatorname{im}N_W^{\mathsf T}
+=\Lambda(W^\perp)_K.
+\tag{43.23}
+$$
+
+最后一个等式来自 $\operatorname{im}N_W^{\mathsf T}=(\ker N_W)^\perp$，以及分裂坐标中原迹配对恰为标准点积 $\sum_\sigma x_\sigma y_\sigma$。因此转置分支准确对应原迹对偶，没有引入新的标签置换。
+
+为将分裂对角乘数收回原域，直接使用 §26、§42 的有限线性核扩底事实。对 $A=W$ 或 $W^\perp$，在原 $F$ 上置
+
+$$
+T(A,Y)=\ker\bigl(D\longrightarrow\operatorname{Hom}_F(A,D/Y)\bigr),
+\qquad c\longmapsto(z\longmapsto cz+Y).
+$$
+
+式 (42.8) 的同一扩底保核事实对任意当前 $F$ 给出
+
+$$
+T(A,Y)\otimes_F K
+=\{c\in D\otimes_F K:cA_K\subseteq Y_K\}.
+\tag{43.24}
+$$
+
+(43.23) 的对角向量是右边的一个非零元素，故原 $T(A,Y)$ 非零。取原 $0\ne\gamma\in T(A,Y)$，原 $D$ 为域使乘 $\gamma$ 单射；$\gamma A\subseteq Y$ 及两边同为四维便给出 $Y=\gamma A$。这里并未断言任意分裂对角向量本身是某个原元素的嵌入像，只利用非零线性核下降取得一个原乘数。
+
+这完成了 $E_W=F$ 时从支持相等到第三项的证明；$E_W\ne F$ 时已由（一）给出更强结论。反向，整体原标量不变性与引理 40.2 在 $n=8,k=4$ 时直接给出
+
+$$
+d_{\gamma W}(r)=d_W(r),\qquad
+d_{\gamma W^\perp}(r)=d_{W^\perp}(r)=d_W(r)
+\qquad(r\in D^\times).
+\tag{43.25}
+$$
+
+因此标量或迹对偶关系推出全部精确交维相等；交维相等再由 $Q_W=\{0\}\cup\{r\in D^\times:d_W(r)>0\}$ 推出支持相等。若 $E_W\ne F$，将 $Y=W^\perp$ 代入（一）还说明两种轨道必然重合。这证明全部结论。$\square$
+
+本定理区分三层信息：支持只记录哪些非零原标签的交维为正；四次行列式还记录一份代数方程；精确交维是各原标签处的核维数。一般行列式相等并不直接给出核维数相等。这里先以原商稠密性取得方程，再由实际域的 Galois 约束排除矩阵切口，应用既有主子式重建并下降到原标量或迹对偶，最后才用 (43.25) 恢复精确交维。
+
+八点分裂几何本身也有精确先例。Howard–Millson–Snowden–Vakil，[*The geometry of eight points in projective space: Representation theory, Lie theory, dualities*，arXiv:1103.5255v1，§8、Propositions 8.1–8.2](https://arxiv.org/html/1103.5255v1)，证明八个带标签的 $\mathbb P^3$ 点配置的不变量环中，由一次不变量生成的子环给出 Gale 对偶的商。这些一次不变量由互补括号积 $p_Ip_{I^c}$ 张成，正是 (41.6) 的系数；行基变换与逐行缩放对应配置的射影等价，取正交补对应 Gale 对偶。式 (43.13) 是等权配置的严格稳定条件，因此稳定分裂配置中“至多原配置与 Gale 对偶”已有该不变量论表述。本节不将这个几何二重性列作新发现；上述原文也不替代从完整原商到几何方程的稠密桥、原乘数下降及非平凡乘子域分支的自动线性性。
+
+所用的矩阵不可约性判据、无切口主子式重建、Sylvester 恒等式、拟阵对偶及回路与余回路正交性都是既有工具。本节的综合推导将它们接到 §26 的实际域严格秩界与最小正交维、§§34、40 的迹对偶和 §42 的原线性核下降，取得同一原八次域中全部四平面的字面支持与交维纤维结论，不依赖特定 $P_8$ 表示。本条只量化固定八次域中的四平面，不将 §42 特定例子中对全部竞争维数的结论扩张到这里。
+
+白话说，完整的原商表在任意特征零八次域中至多留下两种整体形状：窗口本身与它的迹正交补。若窗口有较大的乘子域，同支持的竞争四平面会被迫继承该域的线性结构，两种形状合成一个标量轨道；否则，可能产生额外歧义的矩阵切口会要求把八个共轭标签分成三元组，因而被排除。这个结论保留每一个原标签，且只比较四维窗口。
+

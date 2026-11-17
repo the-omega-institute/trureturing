@@ -1,0 +1,79 @@
+## 81. 逐个实际调用支付有限像证明的移植
+
+对 $J_p$ 选标准Pauli坐标 $(\alpha,v)$，$p=(1,0)$，已知Jordan乘法为72.1。59.2已经对全部实际纯像给共同辅助面积；三维面积代数使它在这一固定角中为
+
+$$
+K_p(v,w)=\kappa_p v\times w,\qquad
+\kappa_p=-\sigma(p),\qquad \kappa_p^2=1.
+\tag{81.1}
+$$
+
+这只选择该角的符号，不要求跨角一致。241.2的全部Bloch正读取合法读同一P2；185.1的实际常数SO$(2)$保持同一旧值。242.1给以下全部像上零值：
+
+$$
+\pi D(a,te)=0,\qquad
+\pi D\bigl(a,\gamma e+\tau(a-\alpha e)\bigr)=0
+\quad\bigl(\pi a=(\alpha,v)\bigr).
+\tag{81.2}
+$$
+
+这里只需要像为零，不要求左侧的原 $D$ 值在 $E$ 中为零。
+
+证明80.2。73–76并非作为连续域定理直接套在 $T_p$ 上；以下逐项支付它们的有限像调用。所有第三标签均为实际原元，全部外层标签及其旧输出都由241.1留在 $T_p$。原PB先在 $E$ 中调用，再由Jordan同态 $\pi$ 读取；任何内值属于 $\ker\pi$ 的剩余都保留在实际外层标签中，不作代表替换。
+
+先取 $\pi a=(\lambda,v),\pi b=(0,w)$、$v\perp w$、$v,w\ne0$，写 $h_{a,b}=(\delta,z)$。置 $t=\delta/\|v\|^2$，取实际 $c=t(a-\lambda e)$。81.2给内值像零，故正负外层像准确为
+
+$$
+(w\pm H,\ tv\pm\lambda w),\qquad H=z-t\lambda v.
+\tag{81.3}
+$$
+
+四像均纯；59.2使PB成为 $2tK_p(H,v)=-2(w\cdot z)p$，所以 $w\cdot z=0$。若 $\delta\ne0$，$t\ne0$ 迫使 $z=\zeta v$。再取实际 $c=\zeta e$，两外层向量像分别共线，242.1使两个输出像均零；PB却要求 $0=-2\delta w$。因此 $\delta=0,w\cdot z=0$。零向量像由241.1、242.1处理。这是73的全部有限调用，不使用定号条件。
+
+其次，若两个像的实张成包含严格定号矩阵，74的两枚零预算Bloch读取同样给
+
+$$
+v\cdot z=\alpha\delta,\qquad w\cdot z=\beta\delta
+\quad\bigl(\pi a=(\alpha,v),\pi b=(\beta,w)\bigr).
+\tag{81.4}
+$$
+
+用实际SO$(2)$令标量部分为 $(\lambda,0)$、$\lambda>0$。记 $h=v\cdot w,r=\|w\|^2$；$h=0$ 已由上一段处理。否则取实际 $c=Te$，其中 $T>|h|+\lambda\|w\|+\|w\|+1$。两个外层像为
+
+$$
+P_\pm=(\pm(\delta-T\lambda),w\pm z\mp Tv),\qquad
+Q_\pm=(T\pm h,\pm\lambda w).
+\tag{81.5}
+$$
+
+两份 $Q_\pm$ 都严格正定。PB给旧输出像差 $(0,-2\delta w)$，故写 $Y_\pm=(\eta,m\mp\delta w)$。只对这两份外层使用81.4：两份 $Q$ 约束给 $\eta=-\lambda\delta r/T$、$w\cdot m=-h\delta r/T$，两份 $P$ 约束相加又给 $w\cdot m=-T\delta h$。因此 $\delta h(T^2-r)=0$，故 $\delta=0$，随后81.4给正交。这一步未预付外层输出纯性。
+
+对任意混合像，再用同一实际 $Te$ 和81.5。两份 $Q$ 仍严格正定，刚证结果使实际外层输出像纯且垂直 $w$。PB的像是 $Y_+-Y_-=-2(w\cdot z,\delta w)$；标量比较及与 $w$ 作内积给 $w\cdot z=0,\delta=0$。对交换后的实际 $(b,a)$ 使用同一 $Te$，两份 $Q$ 不变，PB右端为 $2(\pi a)\circ h_{a,b}$，标量比较给 $v\cdot z=0$。因此全部实际对均已满足
+
+$$
+h_{a,b}=(0,z),\qquad z\perp v,w.
+\tag{81.6}
+$$
+
+最后，向量像共线时用242.1，两像都纯时用59.2。其余用76的两次实际SO$(2)$选择 $\alpha,\beta>0$ 且 $N=\beta(1+\alpha^2)+\alpha v\cdot w>0$；该有限选择只用向量范数和原标量部分。置
+
+$$
+\begin{gathered}
+q=\|v\|^2>0,\quad n=v\times w,\quad L=\|n\|^2>0,
+\quad \ell=qw-(v\cdot w)v,\\
+\gamma=-(\alpha\beta+v\cdot w),\quad \tau=N/q\ne0,
+\qquad c=\gamma e+\tau(a-\alpha e).
+\end{gathered}
+\tag{81.7}
+$$
+
+81.2再次只消去内值像。实际正侧两外层像同时纯，负侧可混合，准确像仍是76.3，只将 $u$ 的像换成 $p$。全部实际外层输出已经满足81.6。PB给 $Y_\pm=m\pm(\tau\ell-\beta z)$；两份 $Q_\pm$ 的正交约束相加给 $v\cdot Y_+=-\alpha L$。正侧纯像按59.2识别，普通三重积给
+
+$$
+v\cdot Y_+=\kappa_p v\cdot(P_+^0\times Q_+^0)
+=-\kappa_p\alpha z\cdot n.
+\tag{81.8}
+$$
+
+故 $z\cdot n=\kappa_pL$；81.6使 $z=\kappa_p n$。撤销实际旋转，得到80.3。秩一角的任意两像均为其相对单位倍数，用零Gram预算；零角用241.1。唯一性由任意非零纯像面积给出。全程无原幂等提升、输出多项式性、输入极限、商截面或先定的混合响应。∎
+

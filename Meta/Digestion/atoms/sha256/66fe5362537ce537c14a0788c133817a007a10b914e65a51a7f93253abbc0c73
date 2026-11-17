@@ -1,0 +1,101 @@
+**定理 31.2（三份同一窗口的首次严格超额）。** 在定义 31.1 中取三份同一窗口 $W$，记 $m=\dim_F W$、$D=F(W/W)$、$E=E_W$。当 $m\le8$ 时，
+
+$$
+\delta_3(W)=\max\{e,3m-2N\}.
+\tag{31.3}
+$$
+
+当 $m=9$ 时，$\delta_3(W)>\max\{e,27-2N\}$ 当且仅当 $N\ge15$，且在原 $D$ 内存在实际中间域 $F\subseteq A\subseteq D$，使 $[A:F]=5$、$\dim_F AW=10$。在这两条件成立时，$e=1$、$\delta_3(W)=2$；其余九维窗口仍满足 (31.3)。
+
+证明。先把 §§29–30 的中间域极值用到共同见证。对任意有限个窗口，只要 $w\in I(r)\setminus\{0\}$，就有 $Aw\subseteq r_i AW_i$ 对每个 $i$ 成立。考虑同时取商类的 $F$-线性映射
+
+$$
+Aw\longrightarrow \bigoplus_{i=1}^h r_i AW_i/r_iW_i,\qquad
+x\longmapsto(x+r_iW_i)_i.
+$$
+
+其核为 $Aw\cap I(r)$，值域所在空间的维数为 $\sum_i t_i(A)$，而 $\dim_F Aw=a(A)$。因此每个正原标签元组都满足
+
+$$
+d(r)\ge\Lambda_h(A)\qquad(F\subseteq A\subseteq D).
+\tag{31.4}
+$$
+
+同一个 $w$ 同时支撑所有商空间约束；分别取得的二元最小值不能代替它。
+
+为在原域中取等，沿用 §29 的可分分裂与最优块下降、§30 的独立归一化，但用同一个核约束所有份额。$h=1$ 时，(31.4) 的 $A=D$ 一项已经等于 $m_1$，任意非零原 $p_1\in W_1$ 都见证正交叠。以下设 $h\ge2$。令 $M=\sum_i m_i$，取 $D/F$ 的有限正规闭包 $K$，记 $G=\operatorname{Gal}(K/F)$、$\Omega=\operatorname{Hom}_F(D,K)$。对各 $X_i$ 取 $F$-基 $x_{i1}=1,x_{i2},\ldots,x_{im_i}$。令 $b_{i,\sigma}=(\sigma(x_{ij}))_j$ 为第 $i$ 个坐标块中的行，令 $\widetilde b_{i,\sigma}$ 为在 $K^M$ 的该块外补零的行。对非空 $S\subseteq\Omega$ 记
+
+$$
+P_\sigma=\bigoplus_{i=1}^h K\widetilde b_{i,\sigma},\qquad
+q_i(S)=\dim_K\langle b_{i,\sigma}:\sigma\in S\rangle_K,\qquad
+\dim_K\sum_{\sigma\in S}P_\sigma=\sum_i q_i(S).
+\tag{31.5}
+$$
+
+每个 $P_\sigma$ 维数为 $h$。若两空间相等，则逐块的两行成比例，且首坐标为 $1$ 使比例为一。因 $F(X_1,\ldots,X_h)=D$，对应嵌入相等，故这是一族互异的子空间。
+
+取全部代数独立的不定元 $z=(z_{ij})$，写 $u_i(z)=\sum_j z_{ij}x_{ij}$，并在 $K(z)^M$ 中用法向量 $z$ 的一个超平面 $H_z$。在第 $\sigma$ 处，记 $U_{i,\sigma}=\sum_j z_{ij}\sigma(x_{ij})$；每个 $U_{i,\sigma}$ 非零。切面 $(P_\sigma\otimes_K K(z))\cap H_z$ 的一组基是
+
+$$
+U_{1,\sigma}\widetilde b_{i,\sigma}
+  -U_{i,\sigma}\widetilde b_{1,\sigma},
+\qquad 2\le i\le h.
+\tag{31.6}
+$$
+
+确实，在 $P_\sigma$ 的系数坐标中，唯一方程是 $\sum_i U_{i,\sigma}c_i=0$，且 $U_{1,\sigma}\ne0$，可用后 $h-1$ 个坐标自由表示。这里切面是共同核方程的行空间来源。Raz–Wigderson [arXiv:1901.09423v1，Definition 5.1、Theorems 5.2、7.1](https://arxiv.org/pdf/1901.09423v1) 给出其张成的分拆秩：该子空间族在 $K$ 上定义，法向量取整个参数空间的泛点，特征零下满足该一般位置条件。由 (31.5)，(31.6) 全部行的秩为
+
+$$
+R=\min_{\mathcal P}\sum_{S\in\mathcal P}
+       \left(\sum_i q_i(S)-1\right),
+\tag{31.7}
+$$
+
+其中 $\mathcal P$ 遍历 $\Omega$ 的非空块分拆。两份时，(31.6) 在第一块改符号后正是 §30 的两块行式；这里没有迭代取 Hadamard 积。
+
+由同一原文 Definition 2.1、Corollary 3.2，(31.7) 的最少块取等分拆唯一。$G$ 传递地作用于嵌入，并同时半线性地置换各窗口的行，所以保持各 $q_i$ 及该分拆。依 (29.7)、(30.11)，令 $S_0$ 为含原包含嵌入 $\iota$ 的块，$J_0=\{g\in G:gS_0=S_0\}$。固定 $\iota$ 的 $g$ 保持 $S_0$，所以 $\operatorname{Gal}(K/D)\subseteq J_0$。若 $\sigma=g\iota\in S_0$，则 $gS_0$ 与 $S_0$ 相交从而相等；反之 $g\in J_0$ 蕴含 $g\iota\in S_0$。因此 $A=K^{J_0}$ 是原 $D$ 中的实际中间域，$S_0=\operatorname{Hom}_A(D,K)$；其他块是它的平移，块数为 $[G:J_0]=[A:F]$。
+
+在 $S_0$ 上，$D\otimes_A K\simeq K^{S_0}$ 的分裂把 $(AX_i)\otimes_A K$ 的像张成在列 $(\sigma(x_{ij}))_{\sigma\in S_0}$ 上。这是因为原 $x_{ij}$ 张成 $AX_i$ 作为 $A$-空间，并且扩底保持其维数。因此 $q_i(S_0)=\dim_A AX_i$，每个平移块也有相同的各 $q_i$。代入 (31.7)，得
+
+$$
+R=[A:F]\left(\sum_i\dim_A AX_i-1\right),\qquad
+M-R=\Lambda_h(A).
+\tag{31.8}
+$$
+
+接下来在 $D/F$ 的固定 $F$-基下，写出下列映射对原系数向量 $(v_i)_i$ 的矩阵：
+
+$$
+\bigoplus_{i=1}^h X_i\longrightarrow D^{h-1},\qquad
+(v_i)_i\longmapsto (u_1(z)v_i-u_i(z)v_1)_{i=2}^h .
+\tag{31.9}
+$$
+
+这里以多项式 $z$ 为系数；矩阵条目在 $F[z]$。在每个输出块改用 $D\otimes_F K\simeq K^\Omega$ 的嵌入坐标，所得行恰为 (31.6)。这是可逆的扩底坐标变换，因此 (31.9) 有一个非零 $R$ 阶子式 $f\in F[z]$，且更高阶子式恒零。特征零使 $F$ 无限，非零多元多项式 $f\prod_i z_{i1}$ 在某个原 $F$ 系数元组上非零（逐变量用非零一元多项式根数有限）。在该元组处，各 $u_i\in X_i$ 非零、秩仍为 $R$。此时 (31.9) 的核经第一坐标同构于
+
+$$
+X_1\cap\bigcap_{i=2}^h(u_1/u_i)X_i,\qquad
+v_1\longmapsto\bigl(v_1,\bigl((u_i/u_1)v_1\bigr)_{i=2}^h\bigr).
+$$
+
+确切地说，后 $h-1$ 个坐标各为 $(u_i/u_1)v_1$，而条件正是它们分别落在 $X_i$。核含非零元组 $(u_i)_i$。返回原域取 $p_i=b_i u_i\in W_i\setminus\{0\}$，所有原标签同时取 $r_i=p_1/p_i$，由 (31.2) 得 $d(r)=M-R>0$。连同 (31.4)、(31.8)，这给出本应用所需的精确等式及取等：
+
+$$
+\delta_h=\max_{F\subseteq A\subseteq D}
+   \left([A:F]-\sum_{i=1}^h(\dim_F AW_i-m_i)\right).
+\tag{31.10}
+$$
+
+特别地，$h=2$ 还原 (30.5)。对任意 $h$，若有一个窗口一维，则每个正交维都为一、$F$ 已取等。不同稳定子只通过实际交域 $E$ 给出共同线性，$D$ 可以是 $L$ 的真子域。
+
+现在令三份窗口相同。若严格超出 (31.3) 的右端，取 (31.10) 中一个取等域 $A$。写 $a=[A:F]$、$k=\dim_A AW$、$t=ak-m$。若 $t=0$，则 $AW=W$，所以 $A\subseteq E$，其项至多为 $e$。若 $k=1$，归一化的 $X=b_1^{-1}W$ 含 $1$，故 $AX=A$，从 $D=F(X)$ 得 $A=D$，其项是 $3m-2N$。两种情况均不能严格超额，因而 $t\ge1$、$k\ge2$。又 $a-3t=\delta_3(W)\ge2$，从而
+
+$$
+m=ak-t\ge2a-t\ge 2(3t+2)-t=5t+4\ge9.
+\tag{31.11}
+$$
+
+所以 $m\le8$ 时只能等于端点最大值。若 $m=9$ 而严格超额，(31.11) 各步必须取等，故 $t=1$、$a=5$、$k=2$、$\delta_3(W)=2$，并由 $1\le e<2$ 得 $e=1$。严格超出 $27-2N$ 给出 $2N>25$；实际域塔给出 $5\mid N$，所以 $N\ge15$。
+
+反之，若 $m=9$、$N\ge15$ 且所述实际 $A$ 存在，$W$ 和 $AW$ 都是 $E$-空间：若 $c\in E$，交换乘法给出 $cAW\subseteq AW$。所以 $e$ 同时整除 $9$ 和 $10$，即 $e=1$。两端点的最大值为一，而 (31.4) 对每个正原标签给出 $5-3(10-9)=2$ 的下界，故严格超额。上面取等分析又给出准确值二。这证明了必要及充分两向；次数整除只用于已有的实际域塔。下一个命题在原数域内实现严格超额，故首次维数确为九。$\square$
+

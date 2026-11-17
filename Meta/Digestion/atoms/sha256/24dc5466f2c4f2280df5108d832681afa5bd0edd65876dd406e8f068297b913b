@@ -1,0 +1,32 @@
+**Definition 5.2 (recovery and unresolved quantitative conditions).**
+For the fixed mathematical source, the complete word law determines
+all reached profiles by (1.4); the boundary (5.1), its initial state,
+updates and readouts recover the complete word law by the proof of
+Theorem 5.1. Equation (2.3) identifies this operational boundary's
+linear span with a quotient of reachable source densities. It does
+not invert that quotient to a hidden point, $G$, $H_{\rm end}$,
+$h$, $\rho$ or $d$. Such a spatial, endpoint or clock inverse needs
+a separately proved identifiability correspondence for those objects.
+The original space and boundary enter the displayed memory through
+$P$ and $g$; chronological continuation enters through label append
+and their indexed heat moments.
+
+All words in (3.1) and (4.1) are unconditional cylinder coordinates
+of the original four-outcome law. They require no reset, selected
+outcome, extra label, hidden-coordinate probe or stationary preparation.
+The invariant comparison in (4.4) is joined to actual $e$-start words
+by that exact identity and its proved limit. Cylinder coordinates,
+rare histories, $c$, Gram entries and exact future laws are not new
+observation or evaluation ports for the actual observer. In particular
+the existence of $\ell_0$ does not provide its numerical value or a
+way to force the witnessing histories.
+
+No determinant margin, parameter-uniform bound, finite-data rank
+certificate, sampling lower bound, error tolerance or stopping rule
+is implied. Exact infinite rank is compatible with finite-horizon
+approximation; the latter needs its own error and access assumptions.
+[RRO, §§8--9] retains its fixed-word acquisition and conditional
+quantitative bounds. Those do not evaluate all reached profiles with
+uniform finite resources. Recovery of space, time, boundary and
+usable memory under such resources remains an additional problem.
+

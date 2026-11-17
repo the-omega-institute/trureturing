@@ -1,0 +1,19 @@
+**定理 148.4（每条零边触及最高纯秩足以重构）。** 在定义148.1的完整 EB3+$\mathsf{Conn}$ 及忠实有限 PSD 截面下，若
+
+$$
+\forall p,q\in P:\quad p\perp q\ \Longrightarrow\ p\in P_{\max}\ \text{或}\ q\in P_{\max},
+\tag{XI148.13}
+$$
+
+则同一原锥、同一原单位有复三能级表示；不另要求 ZC、全域连续性或原维数上界。
+
+证明。最高秩点处的任意原纯趋近最终同秩，由147.2给整球连续。若 $p\notin P_{\max}$，(XI148.13)给 $S_p\subseteq P_{\max}$，由148.3取得该处的任意跨秩连续。故整个 $P$ 上 $D$ 连续。Conn 已给 Inj，准确调用[IX118.3、118.5、118.8][Q148IX]的同原分类，得到
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\qquad
+\Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI148.14}
+$$
+
+整球连续是以上推导的中间结论。证毕。
+

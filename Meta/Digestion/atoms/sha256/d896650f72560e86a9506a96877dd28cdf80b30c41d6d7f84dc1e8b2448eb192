@@ -1,0 +1,124 @@
+## 66. 实际网络与不定余量的完整消元
+
+**证明续（64.3，实际原第三标签与原外值）。** 取实际 $c=\alpha a$。OP3.1 作用于同一原生成元 $a$ 的多项式 $T$ 和 $\alpha T$，给
+
+$$
+D(a,c)=0,\qquad \pi c=F=\alpha A.
+\tag{66.1}
+$$
+
+不是先假设 $D(a,\alpha a)=\alpha D(a,a)$。将实际三元组 $(a;r,c)$ 放入完整原 PB，保留刚生成的实际标签
+
+$$
+\begin{aligned}
+x_\pm&=r\pm\bigl(D(a,r)-a\circ c\bigr),&
+y_\pm&=c\pm a\circ r,\\
+\pi x_\pm&=R\mp d\mp AF=X_\pm,&
+\pi y_\pm&=F\pm C_0=Y_\pm.
+\end{aligned}
+\tag{66.2}
+$$
+
+两条连接均已在 65 支付。故 OP83.1 及原反对称性准确识别同一总 $D$ 的这两个实际输出：
+
+$$
+\pi D(x_\pm,y_\pm)=K(X_\pm,Y_\pm).
+\tag{66.3}
+$$
+
+没有把实际外层换成其他同像代表；实际标签中可能属于 $\ker\pi$ 的部分全部保留。OP83.1 本来就包括这些实际代表及任意非零幅度 $\pm2\alpha s$。
+
+同一次 PB 的右端读为
+
+$$
+2R\circ d+2R\circ(AF)-2F\circ C_0.
+$$
+
+只展开辅助双线性 $K$，而不展开未知 $D$，得到
+
+$$
+\begin{aligned}
+K(X_+,Y_+)-K(X_-,Y_-)
+&=2K(R,C_0)-2K(d,F)-2K(AF,F)\\
+&=2K(R,C_0)-2K(d,F),
+\end{aligned}
+$$
+
+最后一步使用 $[AF,F]=0$。所以同一个 $d$ 满足
+
+$$
+R\circ d+K(d,F)=K(R,C_0)-R\circ(AF)+F\circ C_0.
+\tag{66.4}
+$$
+
+这正是 SM51.4 的实际网络方程；半定性未用于该式。令 $d_0=K(R,A)$，仅对已知矩阵交换子使用 SM51.5 的恒等式
+
+$$
+R\circ d_0=K(R,C_0),\qquad
+K(d_0,F)=-R\circ(AF)+F\circ C_0.
+\tag{66.5}
+$$
+
+它们分别由交换子展开及 $[A,F]=0$ 给出。这里还可直接核对 $d_0=\sigma stY\oplus0$，66.5 的第一式两边为零，第二式两边为 $-\alpha s^2tT\oplus0$；一般网络中 66.4 的最后两项不能无故删除。
+
+对同一 Hermitian 余量 $H=d-d_0$，相减即得
+
+$$
+R\circ H+K(H,F)=0,
+\qquad q_AHq_A=0.
+\tag{66.6}
+$$
+
+第二式来自 65.3 与 $q_Ad_0q_A=0$。完整保留了原第二槽的零预算。
+
+**证明续（64.3，活动块和交叉块消元）。** 定义 $M=R-i\sigma F$。准确算子恒等式为
+
+$$
+MH+HM^*=2\bigl(R\circ H+K(H,F)\bigr).
+\tag{66.7}
+$$
+
+因此 66.6 写成
+
+$$
+M=M_2\oplus B,\quad
+M_2=\alpha(1-i\sigma s)Z+tT,\qquad
+H=\begin{pmatrix}U&V\\V^*&W\end{pmatrix},\quad
+MH+HM^*=0,\quad W=0.
+\tag{66.8}
+$$
+
+$W=0$ 已由同一 P2 取得；不能只凭 $BW+WB=0$ 推出它。左上和右上块分别给
+
+$$
+M_2U+UM_2^*=0,\qquad M_2V+VB=0.
+\tag{66.9}
+$$
+
+写 $U=u_0I_2+u_1T+u_2Y+u_3Z$，所有 $u_j\in\mathbb R$。由 $[T,Z]=-2iY$、$[Y,Z]=2iT$，第一式除以二后的 $I_2,T,Y,Z$ 系数准确为
+
+$$
+\begin{cases}
+t u_1+\alpha u_3=0,\\
+t u_0-\sigma\alpha s u_2=0,\\
+\sigma\alpha s u_1=0,\\
+\alpha u_0=0.
+\end{cases}
+\tag{66.10}
+$$
+
+$\alpha s\ne0$ 依次给 $u_0=u_1=u_2=u_3=0$，故 $U=0$。
+
+只对自伴 $B$ 使用成熟有限谱分解。若 $Bv=\beta v$，则 $\beta\in\mathbb R$，第二式给 $(M_2+\beta I_2)Vv=0$。准确行列式为
+
+$$
+\begin{aligned}
+\det(M_2+\beta I_2)
+&=\beta^2-t^2-\alpha^2(1-i\sigma s)^2\\
+&=\beta^2-t^2-\alpha^2(1-s^2)+2i\sigma s\alpha^2\ne0.
+\end{aligned}
+\tag{66.11}
+$$
+
+非零虚部来自 $\alpha s\ne0$，不要求 $\beta$ 非零或同号。因此 $Vv=0$；$B$ 的特征向量张成整个旁观空间，故 $V=0$。结合 $W=0$，得到 $H=0$，即 64.7。没有对非正规 $M_2$ 作 Hermitian 对角化，也没有借全谱条件代替原压缩。∎
+

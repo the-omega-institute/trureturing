@@ -569,7 +569,7 @@ private theorem complete_primitive_eq {x : ℝ} (hx : 2 ≤ x) :
   simp only [elementaryCorrection, Complex.ofReal_div, Complex.ofReal_sub, Complex.ofReal_add]
   ring
 
-private theorem primitive_eq_negative_tail {x : ℝ} (hx : 2 ≤ x) :
+theorem primitive_eq_negative_tail {x : ℝ} (hx : 2 ≤ x) :
     U x / x = -Q x := by
   have h := CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
     WeightedPrimeLimit.chebyshev_error_kernel_integrable hx

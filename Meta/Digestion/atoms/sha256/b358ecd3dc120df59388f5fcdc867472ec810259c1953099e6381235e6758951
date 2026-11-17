@@ -1,0 +1,33 @@
+**引理 7.2（归一化前后的矩）。** 对每个精确目标 $z$，上述条件舍入满足
+
+$$
+\mathbb Ee=0,\qquad\|e\|\le2\delta,\qquad
+\mathbb E\|e\|^2\le\delta^2,
+\tag{7.1}
+$$
+
+$$
+\|\mathbb E(q-z)\|\le4\delta^2,\qquad
+\mathbb E\|q-z\|^2\le4\delta^2.
+\tag{7.2}
+$$
+
+证明。若 $z_i$ 位于相邻格点 $\ell_i,r_i$ 之间，以 $(r_i-z_i)/\delta$ 与 $(z_i-\ell_i)/\delta$ 为两端概率；则 $\mathbb Ee_i=0$，$|e_i|\le\delta$，并且 $\mathbb Ee_i^2=(z_i-\ell_i)(r_i-z_i)\le\delta^2/4$。格点情形误差为零。将四坐标相加即得 (7.1)。于是 $1-2\delta\le\|a\|\le1+2\delta$，$a$ 非零，$q$ 属于所定义的壳。
+
+为控制径向归一化，令 $f(v)=v/\|v\|$，$u=v/\|v\|$，将方向 $e$ 写为 $e=\alpha u+b$，$b\perp u$。沿实方向微分得
+
+$$
+D^2f(v)[e,e]=-
+\frac{\|b\|^2u+2\alpha b}{\|v\|^2},\qquad
+\|D^2f(v)[e,e]\|\le\frac{2\|e\|^2}{\|v\|^2}.
+$$
+
+沿 $z+te$、$0\le t\le1$ 的半径至少为 $1-2\delta\ge1/2$。Taylor 积分余项的范数因而至多 $4\|e\|^2$；一阶项 $Df(z)e$ 的期望为零，得到第一条 (7.2)。另外反三角不等式给出
+
+$$
+\|a/\|a\|-z\|\le\|a/\|a\|-a\|+\|a-z\|
+=|1-\|a\||+\|e\|\le2\|e\|,
+$$
+
+平方取期望即得第二条。归一化之前无偏，归一化之后只主张二阶平均偏差界。$\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:55a001d9706036d26f7740979b076ed35fcdaf369c94f51111a245d8db5a2ffe
+  normalized_sha256: sha256:55a001d9706036d26f7740979b076ed35fcdaf369c94f51111a245d8db5a2ffe
+cas_ref: sha256:55a001d9706036d26f7740979b076ed35fcdaf369c94f51111a245d8db5a2ffe
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/LocalVarianceBand.local_variance_bound
+    target_statement_id: sha256:af9918e7d06d7227ee2746810dc604d163b9f70986770dd0c94c110990b03360
+receipts:
+  unresolved_subitems: []

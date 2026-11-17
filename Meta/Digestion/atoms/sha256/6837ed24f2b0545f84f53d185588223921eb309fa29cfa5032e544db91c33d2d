@@ -1,0 +1,27 @@
+**引理 17.4（固定支持与方向上的全部普通相位）。** 在17.6条件下，对每个实 $\theta$，有
+
+$$
+F\bigl(L_\chi(e^{i\theta p})W\bigr)=F(W).
+\tag{17.12}
+$$
+
+证明。若 $W'=L_\chi(e^{i\beta p})W$，则在 $U$ 上
+
+$$
+(1-p)W'p=(1-p)Wp,\qquad
+(1-p)W'^*p=e^{-i\beta}(1-p)W^*p.
+\tag{17.13}
+$$
+
+因此17.6的 $c,d$ 及17.3的同一个 $T$ 沿这一方向的整条相位轨道保持。令 $\theta_0=2\arctan T<\pi$、$\delta=\pi-\theta_0>0$。17.7先给相位区间 $(\theta_0,\pi)$ 与 $(-\pi,-\theta_0)$。选 $\varepsilon>0$ 使 $3\varepsilon/2<\delta$；对 $|\theta|<\varepsilon$，取
+
+$$
+\phi_1=\pi-\varepsilon+\theta/2,\qquad
+\phi_2=-\pi+\varepsilon+\theta/2.
+\tag{17.14}
+$$
+
+两相位分别严格落在上述区间，正切参数 $\tan(\phi_j/2)$ 都是有限实数且绝对值大于 $T$。先作用 $\phi_1$ 再作用 $\phi_2$，17.13支付第二次输入的同一阈值；乘积恰是 $e^{i\theta p}$，故17.12对小相位成立。
+
+任意 $\theta$ 选有限整数 $N\ge1$ 使 $|\theta/N|<\varepsilon$，逐次作用 $N$ 个小相位。17.13逐步保持允许性，每一步最多两次17.3的实际 PB调用。零相位直接成立。有限归纳给17.12；没有相位稠密性论证，没有未知 $D$ 或 $F$ 的输入极限。∎
+

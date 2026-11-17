@@ -550,3 +550,9 @@ example : S 3 2 6 ∧ ¬ S 3 2 9 := by
 #print axioms conjecture17
 
 end D5.S1.Words.Sumfree.GreedyThreeSumfreeTwoParameter
+
+-- Public name-resolution exports preserve the original kernel declarations.
+namespace D5.S1.Words.Sumfree.GreedyThreeSumfreeTwoParameter.Reuse
+export D5.S1.Words.Sumfree.GreedyThreeSumfreeTwoParameter
+  (sum_two_intervals sum_two_distinct_interval sum_three_distinct_interval Forbidden forbidden forbidden_correct next_exists)
+end D5.S1.Words.Sumfree.GreedyThreeSumfreeTwoParameter.Reuse

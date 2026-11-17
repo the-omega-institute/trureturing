@@ -1,0 +1,16 @@
+### 126.3 重复块的紧层与实际商
+
+对 $\delta>0$ 定义
+
+$$
+ R_\delta=
+ \bigcup\left\{
+ F\in\mathfrak B_{\mathrm r}:
+ \operatorname{diam}F\ge\delta,\
+ \operatorname{diam}\tau F\ge\delta
+ \right\},
+ \qquad
+ R=\bigcup_{n\ge1}R_{1/n}.
+ \tag{Q126.11}
+$$
+

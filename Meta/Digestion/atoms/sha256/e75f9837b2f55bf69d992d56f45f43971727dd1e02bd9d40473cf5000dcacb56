@@ -1,0 +1,52 @@
+**引理 46.4（非均匀中心的五坐标块旗标恢复）。** 在 $K$ 上固定非空有限指标集 $I$，以及两两不交、各有五个带原标签坐标的块 $B_i$。设 $C,C'\le K^I$ 均有满坐标投影且无坐标轴，不要求均匀。对每个 $i$，设 $L_i\le K\oplus K^{B_i}$ 为引理 46.3 所得的好叶。写 $L_i^0=L_i,L_i^1=L_i^\perp$，以外部投影将其写成图形
+
+$$
+L_i^e=\{(\ell_i^e(x),x):x\in M_i^e\},\qquad
+N_i^e=\ker\ell_i^e,\qquad
+\dim M_i^e=3,\quad\dim N_i^e=2,
+\tag{46.8}
+$$
+
+其中 $\ell_i^e$ 满射，$e\in\{0,1\}$ 是所有块共同的新位。定义
+
+$$
+\mathcal W_e(C)=
+\{(x_i)_i\in\bigoplus_i M_i^e:(\ell_i^e(x_i))_i\in C\}.
+\tag{46.9}
+$$
+
+则从窗口本身恢复
+
+$$
+\mathcal W_e(C)\cap K^{B_i}=N_i^e,
+\qquad \operatorname{pr}_{B_i}\mathcal W_e(C)=M_i^e.
+\tag{46.10}
+$$
+
+可逆对角矩阵 $\Delta=\bigoplus_i\Delta_i$ 满足 $\Delta\mathcal W_e(C)=\mathcal W_{e'}(C')$，当且仅当 $e=e'$ 且存在 $t_i\in K^\times$ 使
+
+$$
+\Delta_i=t_iI_5\quad(i\in I),\qquad
+\operatorname{diag}(t_i)C=C'.
+\tag{46.11}
+$$
+
+若 $C$ 另有仅含公共标量的对角稳定子，则 $\mathcal W_e(C)$ 满足 $\mathcal P$。这些断言对任意这样的中心成立，包括非均匀中心。
+
+证明。(46.10) 第一式中，支撑在 $B_i$ 内的窗口向量，其接合像支撑在单个中心坐标上；中心无坐标轴迫使该接合像为零。反之，$N_i^e$ 中的向量用其余块为零即可提升。第二式中，给定任意 $x_i\in M_i^e$，利用中心满坐标投影，选一个中心向量的第 $i$ 项为 $\ell_i^e(x_i)$，再由其余叶泛函的满射性逐块提升。故恢复的正是二维核包含于三维投影的旗标。
+
+任何这样的 $\Delta$ 都保持固定标签块，因而将两个恢复的旗标相互送到。比较商 $M_i^e/N_i^e$ 上的非零泛函，得到唯一 $t_i\ne0$，满足
+
+$$
+\ell_i^{e'}\Delta_i=t_i\ell_i^e,
+\qquad
+\operatorname{diag}(t_i,\Delta_i)L_i^e=L_i^{e'},
+\qquad
+\operatorname{diag}(t_i)C=C'.
+\tag{46.12}
+$$
+
+最后一式使用 (46.9) 的接合像恰为整个中心。若 $e\ne e'$，中间一式违反叶的对角非自对偶性；故 $e=e'$。此时该式是叶的对角稳定式，其稳定子仅有公共标量，故 $\Delta_i=t_iI_5$，得到 (46.11)。反向对各块乘以 $t_i$，由 $\ell_i^e(t_ix)=t_i\ell_i^e(x)$ 立即给出窗口等式。
+
+因此新窗口的对角稳定子精确等于由中心稳定子提升的块标量群；中心稳定子仅有公共标量时，新稳定子也如此。新窗口的每个外坐标投影非零，因为 (46.10) 的块投影为 $M_i^e$，而均匀叶的每行非零。若新窗口含某外坐标轴，则由 (46.10) 该轴位于 $N_i^e$，使叶 $L_i^e$ 含一个外坐标轴，违反均匀性。三项归纳条件遂全部传播。$\square$
+

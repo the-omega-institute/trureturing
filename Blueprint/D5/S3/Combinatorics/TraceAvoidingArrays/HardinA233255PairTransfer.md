@@ -80,7 +80,19 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 The existing HardinA233251TriangleStrip.widthLegal is applied at width seven with rowLegal and bonds. Its scanner normalization uses strict earlier cells.
 
-**Definition 1.7 (The positive-height literal count).**
+**Definition 1.7 (Decidability of horizontal exclusions).**
+
+$$\forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{Row}), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{decidableRowLegal} (c) : \operatorname{Decidable} (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{rowLegal} (c))) = \operatorname{inferInstanceAs} (\operatorname{Decidable} (\forall (j: \operatorname{Fin} (6)), (c (\operatorname{Fin}.\operatorname{castSucc} (j)) \ne c (\operatorname{Fin}.\operatorname{succ} (j))) \land ((\operatorname{Fin}.\operatorname{val} (c (\operatorname{Fin}.\operatorname{castSucc} (j))) + \operatorname{Fin}.\operatorname{val} (c (\operatorname{Fin}.\operatorname{succ} (j)))) \ne 5)))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The instance decides the six adjacent horizontal bonds by finite universal quantification and decidable conjunction. Fin.val explicitly reads each colour as a natural number.
+
+**Definition 1.8 (The positive-height literal count).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.a`
 
@@ -92,7 +104,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 The filter ranges over individual arrays without a quotient.
 
-**Definition 1.8 (The preceding boundary).**
+**Definition 1.9 (The preceding boundary).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.pairs`
 
@@ -104,7 +116,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Apply the existing complementary-pair map after discarding column zero.
 
-**Definition 1.9 (The literal next-row bond test).**
+**Definition 1.10 (The literal next-row bond test).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.compatible`
 
@@ -116,7 +128,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Every preceding boundary label excludes its bonded next-row label.
 
-**Definition 1.10 (Proper pair words).**
+**Definition 1.11 (Proper pair words).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper`
 
@@ -128,7 +140,19 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Consecutive labels differ.
 
-**Definition 1.11 (Compatible pair words).**
+**Definition 1.12 (Decidability of proper pair words).**
+
+$$\forall (q: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{PairRow}), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{decidableRowProper} (q): \operatorname{Decidable} (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{rowProper} (q))) = \operatorname{inferInstanceAs} (\operatorname{Decidable} (\forall (j: \operatorname{Fin} (6)), q (\operatorname{Fin}.\operatorname{castSucc} (j)) \ne q (\operatorname{Fin}.\operatorname{succ} (j))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowProper` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The instance decides the six adjacent inequalities of a seven-label word. Such words also form the full boundaries of seven-column square strips.
+
+**Definition 1.13 (Compatible pair words).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelCompatible`
 
@@ -140,7 +164,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 The six cross-row exclusions are expressed in pair labels.
 
-**Definition 1.12 (The successor boundary).**
+**Definition 1.14 (The successor boundary).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelBoundary`
 
@@ -152,7 +176,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Discard column zero only after scanning the entire row.
 
-**Definition 1.13 (The exact labelled continuation transfer).**
+**Definition 1.15 (The exact labelled continuation transfer).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.pairV`
 
@@ -164,7 +188,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Each actual pair word is weighted by its scanner fibre. The empty continuation has weight one.
 
-**Theorem 1.14 (All continuation heights).**
+**Theorem 1.16 (All continuation heights).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.continuation_pair_bridge`
 
@@ -176,7 +200,19 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Induction on the number of rows replaces the individual-colour row sum by the exact scanner-fibre sum. Both initial scanner flags remain arbitrary.
 
-**Theorem 1.15 (The anchored literal readout).**
+**Theorem 1.17 (The first-row scanner fibres).**
+
+$$\forall (H: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen} \to \left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{PairRow} \to \operatorname{Int}\right)), (\operatorname{Finset}.\operatorname{sum} ((\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset} (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{Row}))) ((\lambda (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{Row}) \mapsto (\operatorname{ite} ((c ((0: \operatorname{Fin} (7))) = (0: \operatorname{Fin} (6))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good} (((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}): \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen})) (c))) (H (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish} (((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}): \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen})) (c)) ((\lambda (j: \operatorname{Fin} (7)) \mapsto (\operatorname{D5}.\operatorname{S3}.\operatorname{Observer}.\operatorname{Separation}.\operatorname{BooleanRankThreeK4}.\operatorname{beta} (c (j)))))) (0: \operatorname{Int}))))) = (\operatorname{Finset}.\operatorname{sum} ((\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset} (\operatorname{Fin} (6) \to \operatorname{Fin} (3)))) ((\lambda (q: \operatorname{Fin} (6) \to \operatorname{Fin} (3)) \mapsto ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255LiteralBridge}.\operatorname{rowWeight} (((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}): \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen})) (q)) \cdot (H (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255LiteralBridge}.\operatorname{rowFinish} (((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}): \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen})) (q)) (\operatorname{Fin}.\operatorname{cons} ((0: \operatorname{Fin} (3))) (q)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.first_fibres` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every integer readout of the final scanner state and the full seven-label word, fixing the first individual colour to zero leaves the exact scanner-weighted sum over the remaining six labels. A square-strip first-row class readout can therefore reuse this equality directly.
+
+**Theorem 1.18 (The anchored literal readout).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.literal_pair_bridge`
 
@@ -198,6 +234,9 @@ The existing literal array decomposition and the continuation identity give this
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.bonds`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.compatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.continuation_pair_bridge`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowLegal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowProper`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.first_fibres`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelBoundary`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelCompatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.literal_pair_bridge`

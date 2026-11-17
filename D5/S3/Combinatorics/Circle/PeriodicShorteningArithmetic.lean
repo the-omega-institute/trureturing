@@ -7,7 +7,7 @@
    digest: Same-phase cross-modulus charges for periodic shortening. -/
 import D5.S3.Combinatorics.Circle.GeometricSourceRelocation
 import D5.S3.Combinatorics.Circle.TwoRunSource
-import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
 import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-! # Actual cross-modulus periodic charges -/

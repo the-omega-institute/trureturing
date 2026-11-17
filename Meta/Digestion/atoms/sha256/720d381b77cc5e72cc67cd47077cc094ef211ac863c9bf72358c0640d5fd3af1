@@ -1,0 +1,21 @@
+#### 定义 3.1：原关系包络及其共同可见商
+
+对任意群 $G$，先给每个 $g\in G$ 一个形式实向量符号 $\langle g\rangle$， 再只商去同一种线性关系
+
+$$
+\langle gh\rangle+\langle gh^{-1}\rangle
+ -2\langle g\rangle-2\langle h\rangle=0.
+$$
+
+所得原实向量空间记为 $\mathcal E(G)$。 令 $\mathcal C$ 为全部 $\langle g\rangle$ 的有限非负实组合锥， 并定义
+
+$$
+\mathcal C^*=\{\lambda\in\mathcal E(G)^*:\lambda(\mathcal C)\ge0\},
+ \quad
+ \mathcal I=\bigcap_{\lambda\in\mathcal C^*}\operatorname{ker}\lambda,
+ \quad
+ \mathcal U(G)=\mathcal E(G)/\mathcal I.
+$$
+
+$\mathcal U(G)$ 只商去所有相容正评价共同不可见的方向。 符号的数量可以无穷，原关系模式只有这一种。
+

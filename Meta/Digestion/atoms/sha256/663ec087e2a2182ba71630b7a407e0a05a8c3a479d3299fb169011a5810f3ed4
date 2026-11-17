@@ -1,0 +1,86 @@
+**定理 92.2（全载体一关系定理）。** 在定义92.1上，若 $\nu\le1$，则
+
+$$
+\boxed{\mathrm{Z0}\quad\Longleftrightarrow\quad K\text{ 是单纯形}.}
+\tag{92.3}
+$$
+
+不假定 $\mathrm B$ 或 $\mathrm A$。在 $\nu=1$ 的任意正权关系(92.2)中，交换两侧并重编号，可使
+
+$$
+t=\alpha_1=\min\{\alpha_1,\ldots,\alpha_r,\beta_1,\ldots,\beta_s\}>0,
+\qquad p=a_1.
+\tag{92.4}
+$$
+
+对任意非空真子集 $J\subset\{1,\ldots,s\}$，令
+
+$$
+b=\sum_{j\in J}\beta_j,\qquad
+x=\frac1b\sum_{j\in J}\beta_jb_j,\qquad
+y=\frac1{1-b}\sum_{j\notin J}\beta_jb_j.
+\tag{92.5}
+$$
+
+则 $x,y$ 是整个原基中的态，且全原效应给出达到的精确值
+
+$$
+T_p(x)=T_p(y)=0,\qquad
+T_p\bigl((x+y)/2\bigr)=\frac{t}{2\max\{b,1-b\}}>0.
+\tag{92.6}
+$$
+
+允许其中一个态纯、另一个混；当某组含多个顶点时，不把它换成纯态量词。任意零系数顶点 $c_k$ 不改变这些结论。特别地，若有限纯点载体满足 $\mathrm B+\mathrm{Z0}$ 而违反 $\mathrm A$，则必要有
+
+$$
+|P|-\dim V\ge2.
+\tag{92.7}
+$$
+
+证明。$\nu=0$ 时，全部纯点是 $V$ 的一组线性基，因而归一基 $K=\operatorname{conv}P$ 为单纯形。其每个纯 $p$ 的重心坐标效应 $e_p$ 属于全 proper 区间，任何确认者在所有其他顶点上非负，故全锥序支配 $e_p$。因此 $D_p$ 正是对面单纯形，给 $\mathrm{Z0}$；单点时 $D_p=\varnothing$。反向任一单纯形的顶点在这个归一嵌入中线性独立，亦有 $\nu=0$。
+
+设 $\nu=1$。先把整个原效应区间写全。任意顶点赋值 $A_i,B_j,Z_k$ 下降为 $V$ 上实线性泛函的充要条件是它消灭整个 $\ker\Phi$，故全 proper 赋值恰为
+
+$$
+0\le A_i,B_j,Z_k\le1,\qquad
+\sum_i\alpha_iA_i=\sum_j\beta_jB_j.
+\tag{92.8}
+$$
+
+充分性还使用 $C=\operatorname{cone}P$：所有顶点值与补值非负就保证在整个原锥上非负。这里列的是全部 $P$ 及其全部关系，故无额外延拓问题；零系数顶点的 $Z_k$ 可独立取遍 $[0,1]$。
+
+按(92.4)选择 $p$。两组均非空且每个 $\beta_j\ge t$，所以 $b,1-b\ge t$。令两张效应都取 $A_1=1$、其余 $A_i=0$、全部 $Z_k=0$，列值分别取
+
+$$
+\begin{array}{c|cc}
+&j\in J&j\notin J\\ \hline
+f_x(b_j)&0&t/(1-b)\\
+f_y(b_j)&t/b&0
+\end{array}
+\tag{92.9}
+$$
+
+所有值都在 $[0,1]$，两张表的列侧加权和均为 $t$，与行侧相同。由(92.8)，这是在全部原顶点及整个原锥上定义的两张 proper 效应，确认 $p$，分别排除 $x,y$，故两个零最小值达到。
+
+任取原 $f\in F_p$，记
+
+$$
+s_J=\sum_{j\in J}\beta_j f(b_j),\qquad
+s_{J^c}=\sum_{j\notin J}\beta_j f(b_j).
+\tag{92.10}
+$$
+
+两数非负，关系与确认给 $s_J+s_{J^c}=\sum_i\alpha_i f(a_i)\ge t$。于是
+
+$$
+f\bigl((x+y)/2\bigr)
+=\frac{s_J}{2b}+\frac{s_{J^c}}{2(1-b)}
+\ge\frac{s_J+s_{J^c}}{2\max\{b,1-b\}}
+\ge\frac{t}{2\max\{b,1-b\}}.
+\tag{92.11}
+$$
+
+若 $b\ge1-b$，(92.9)的 $f_y$ 把全部列质量 $t$ 放在 $J$，达到下界；若 $b\le1-b$，$f_x$ 达到下界，相等分支两者均达到。这证明(92.6)并直接违反原混态 $\mathrm{Z0}$，不依赖球性、纯比较互反或共同零面引理。$c_k$ 的取值既不进入关系也不进入目标态，因而可自由选择；上面取零给出完整可行见证，没有将这些顶点从原基中删除。
+
+最后，若 $\nu\le1$ 而有 $\mathrm{Z0}$，刚证结论使原 $K$ 是单纯形。单纯形任意不同纯对的整个最小面为端点线段，两个端点由重心坐标效应全域区分，所以 $\mathrm A$ 成立；这推出(92.7)。该必要界只涉及纯点有限的整个原载体，不用于无限纯点集。证毕。
+

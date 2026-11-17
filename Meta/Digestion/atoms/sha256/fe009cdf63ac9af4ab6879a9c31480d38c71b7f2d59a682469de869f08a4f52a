@@ -1,0 +1,57 @@
+**Theorem 13.6 (all-supported finite realization with strict accumulation slack).** Suppose the original installed support is countably infinite. Let a zero-level compatible pair have $N$ p-law atoms and put
+
+$$
+r_*=(3-\sqrt5)/2,\qquad c_*=25/64,\qquad
+\delta_\beta=\rho_\beta-\mathcal L_\beta(P_{\beta,r_*}).
+$$
+
+If $\delta_\beta>0$, there is a finite abstract original common conf/conf attainer preserving the entire p marginal. For any integer $M\ge2$ such that
+
+$$
+\zeta_{\beta,M}:=\frac{107}{855}c_*^M<\delta_\beta/2,
+\qquad s_M=|\{k\le M:\mu(k)>0\}|,
+\tag{13.17}
+$$
+
+it can have
+
+$$
+|X|=N,\qquad |Y|\le N^2+2N+s_M-1.
+\tag{13.18}
+$$
+
+Symmetrically, a zero-level pair with $N$ suspended-law atoms and $\delta_p=\rho_p-\mathcal L_p(P_{p,r_*})>0$ has a finite abstract attainer preserving that marginal, using $\zeta_{p,M}=(25/171)c_*^M<\delta_p/2$ and the exchanged bound (13.18).
+
+Consequently, if no finite abstract original attainer exists, every zero-level pair with finite p marginal must satisfy $\mathcal L_\beta(P_{\beta,r_*})=\rho_\beta$, and every such pair with finite suspended marginal must satisfy $\mathcal L_p(P_{p,r_*})=\rho_p$.
+
+**Proof.** Infinite installed support is unbounded in depth, and $r_k\to r_*$. By [CLIP, Proposition 5.3], on the full complete carriers,
+
+$$
+\operatorname{TV}(P_{\beta,r_k},P_{\beta,r_*})\le\zeta_{\beta,M},
+\qquad
+\operatorname{TV}(P_{p,r_k},P_{p,r_*})\le\zeta_{p,M}
+\quad(k>M).
+\tag{13.19}
+$$
+
+Their hypotheses are the original Fibonacci parameters in $[1/3,2/5]$ and the normalized stopped laws, including all future records through their TV-preserving renderer. They do not truncate the future or require a positive floor on countably many prior masses. Configuration loss is 1-Lipschitz in its complete target, by the reverse triangle inequality before configuration integration. Thus each zero-level pair has $\mathcal L_s(P_{s,r_*})\le\rho_s$ by taking supported depths tending to infinity. The accumulation target is a continuity consequence, not a new installed depth or query.
+
+Choose $M$ as in (13.17). In Theorem 13.2 retain the full suspended endpoint box and list $W(E_\beta)$, the $s_M-2$ full losses at actual supported depths $3\le k\le M$, and the loss at $P_{\beta,r_*}$. These are $q=s_M$ functions. The full endpoint boxes and midpoint mean, all listed supported losses, and the limit loss are exact in the new table, giving (13.18). For every omitted but still installed depth $k>M$, configurationwise triangle inequality and (13.19) give
+
+$$
+\begin{aligned}
+\mathcal L'_\beta(P_{\beta,r_k})
+ &\le\mathcal L'_\beta(P_{\beta,r_*})
+          +\operatorname{TV}(P_{\beta,r_k},P_{\beta,r_*})\\
+ &\le\rho_\beta-\delta_\beta+\zeta_{\beta,M}
+   <\rho_\beta-\delta_\beta/2<\rho_\beta .
+\end{aligned}
+\tag{13.20}
+$$
+
+The entire p marginal remains unchanged, including all its installed target losses. Therefore the new pair is zero-level for the original countably infinite support, and Proposition 13.3 gives the full original attainer. No posterior, prior-support oracle or limit depth is installed in that observer.
+
+In the symmetric case retain $Q(E_p)$, the supported p losses up to $M$ and the p limit loss. The symmetric part of Theorem 13.2 and $\zeta_{p,M}$ give the same proof. In either direction the relevant limit slack is nonnegative by continuity. The contrapositive of the proved strict-slack implication therefore makes it exactly zero in the stated nonattainment case. $\square$
+
+If the limit loss is saturated, $\delta_s=0$, the error term in (13.20) supplies no bound at $\rho_s$. Matching finitely many loss functions then does not establish every installed loss inequality. The saturated case is left unresolved. The integer $M$, support menu and exact moment weights above are mathematical existence data; the argument gives no algorithm extracting them from an opaque installed prior.
+

@@ -1,0 +1,23 @@
+**定义 131.1（齐次限制域与完整排除）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原线性单位 $u$。始终取整个原对象
+
+$$
+\begin{gathered}
+K_u=C\cap\{u=1\},\qquad P_u=\operatorname{ext}K_u,\qquad
+\mathcal E_u=[0,u]_{C^*},\\
+\mathcal F^u_p=\{e\in\mathcal E_u:e(p)=1\},\qquad
+D^u_p=\{x\in K_u:\exists e\in\mathcal F^u_p,\ e(x)=0\}.
+\end{gathered}
+\tag{X131.1}
+$$
+
+全局 $\mathrm{EB}_{\ge1}$ 指每个 $p\in P_u$ 的整个 $D^u_p$ 都仿射同构于某个正维欧氏闭球，维数允许随标签变化。齐次性另指 $\operatorname{Aut}(C)$ 在 $\operatorname{int}C$ 上传递，不要求这些自同构保持 $u$。它是本章的额外限制，不是裸 EB 的已知后果。
+
+整个边界次数沿用 [VIII125.1][Q131Degree]：
+
+$$
+\delta(C)=\min\{\deg h:0\ne h\in\mathbb R[V],\ h|_{\partial C}=0\},
+\tag{X131.2}
+$$
+
+没有非零方程时取 $\infty$。边界相对于整个 $V$，次数为总次数。这里不假定 $P_u$ 闭、Inj、$\mathrm{Pair}_{\perp}$、谱性、共同正提升或框架大小的先验上界。
+

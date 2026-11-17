@@ -1,0 +1,66 @@
+**定理 92.3（同一固定缺陷的正平方预算）。** 88.3的正向结论成立于全部原输入。
+
+证明。任取 $Z\in M$，按92.1选 $Y=Z$ 或 $\mathcal T(Z)$，并按92.2取有限支撑酉网。写
+
+$$
+W_e=U_e^*Y=x_e+Jy_e,\qquad x_e,y_e\in E.
+$$
+
+91.4对每个 $e$ 给同一元素的精确等式
+
+$$
+\mathfrak F(W_e)=\mathfrak F(Y).
+\tag{92.4}
+$$
+
+又有 $\|x_e\|,\|y_e\|\le\|Y\|$，$x_e\to A$、$y_e\to0$ 强收敛。为明确正常读数极限只作用于已知预算，给出直接序界。由 $\delta_e e=\delta_e^*e=0$，
+
+$$
+\delta_e^*\delta_e\le4(1-e),\qquad
+\delta_e\delta_e^*\le4(1-e).
+$$
+
+令 $B_e=W_e-A=\delta_e A$；因 $A$ 自伴，$y_e=-J(B_e-B_e^*)/2$。已知算子不等式给
+
+$$
+\begin{aligned}
+y_e^2&\le\tfrac12(B_e^*B_e+B_eB_e^*),\\
+B_e^*B_e&\le4A(1-e)A,\qquad
+B_eB_e^*\le4\|A\|^2(1-e).
+\end{aligned}
+\tag{92.5}
+$$
+
+因此对每个数学正规正泛函 $\phi\in M_*^+$，
+
+$$
+\phi(y_e^2)\le2\phi(A(1-e)A)+2\|A\|^2\phi(1-e)\longrightarrow0.
+\tag{92.6}
+$$
+
+最后一步只用 $e\uparrow1$、$AeA\uparrow A^2$ 和 $\phi$ 正规；没有要求原评价族正规或以序列穷尽投影。
+
+原88.5及已知 C* 正泛函 Cauchy–Schwarz分别给
+
+$$
+|\phi D(x_e,y_e)|\le\sqrt{\phi(x_e^2)\phi(y_e^2)},\qquad
+|\phi K(x_e,y_e)|\le\sqrt{\phi(x_e^2)\phi(y_e^2)}.
+\tag{92.7}
+$$
+
+第二式来自 $|\phi(x_ey_e)|,|\phi(y_ex_e)|\le\sqrt{\phi(x_e^2)\phi(y_e^2)}$，只估计已知交换子。于是
+
+$$
+\begin{aligned}
+|\phi\mathfrak F(Y)|
+&=|\phi\mathfrak F(W_e)|\\
+&\le2\sqrt{\phi(x_e^2)\phi(y_e^2)}\\
+&\le2\|Y\|\sqrt{\phi(1)\phi(y_e^2)}\longrightarrow0.
+\end{aligned}
+\tag{92.8}
+$$
+
+左端从始至终为同一个固定旧缺陷的读数，故等于零。正规正泛函分离 $M_{\rm sa}$，所以 $\mathfrak F(Y)=0$。若 $Y=\mathcal T(Z)$，再用91.5得 $\mathfrak F(Z)=0$；另一分支直接得到。$Z$ 任意，91.1遂给全部 $a,b\in E$ 上的88.6。
+
+$\phi(1)=0$ 时正泛函恒零，上式仍成立且无除法。任何非零固定读数都会在某个足够大的实际有限投影处，已与92.8的有限 PB 运输及 P2 预算矛盾。这里没有 $D(x_e,y_e)\to D(A,0)$ 的断言。∎
+

@@ -42,20 +42,21 @@
        sha256:908a77e52c19378791b1586759e38bf57a8f5795e3c16983c9184dba91a1b789.
      _private.D5.S3.Arith.RoldanCirculantEnergyP2Q3.0.D5.S3.Arith.RoldanCirculantEnergyP2Q3.gcdRow_dft_ramanujan
        sha256:ca22353ffbf79c4e8fc837e7948b6623baaa1342547c9da66522ade278f7427c.
-     _private.D5.S3.Arith.RoldanCirculantEnergyP2Q3.0.D5.S3.Arith.RoldanCirculantEnergyP2Q3.ramanujan_prime_power
+     D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums.ramanujan_prime_power
        sha256:20b64bb2fc5b18dbe67a0f38f373ebb60c92554c3dc6f241bbcc8eef701c3f95.
-     _private.D5.S3.Arith.RoldanCirculantEnergyP2Q3.0.D5.S3.Arith.RoldanCirculantEnergyP2Q3.ramanujan_one
+     D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums.ramanujan_one
        sha256:e327ebb4f79e5bf7da2e3f395cec85aabff1f9e6b52539dc091acaa38616cfd3.
    The source matrix is stated with integer subtraction and Int.gcd.
    Its ZMod implementation uses Matrix.circulant, and the proof applies the original Roldan
-   Fourier and Ramanujan declarations by their public names.
-   The three original private identities above identify the unchanged statements and proofs.
+   Fourier declaration and the shared Ramanujan declarations by their public names.
+   The dependency identities above identify the unchanged statements and proofs.
    The public owner and its frozen importers require canonical re-pinning in Stage B.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22671.
 -/
 
 import D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
 import D5.S3.Arith.RoldanCirculantEnergyP2Q3
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
 import D5.S3.Quantum.Matrix.CirculantCharpoly
 
@@ -280,10 +281,10 @@ private theorem localSpectrum_formula (p a j : ℕ) (hp : Nat.Prime p) :
     simp only [Nat.cast_sub hp.one_lt.le, Nat.cast_one]
   induction a
   case zero =>
-      rw [localSpectrum_succ, D5.S3.Arith.RoldanCirculantEnergyP2Q3.ramanujan_prime_power p j 0 hp]
-      simp [localSpectrum, divCount, D5.S3.Arith.RoldanCirculantEnergyP2Q3.ramanujan_one, hps, Finset.filter_singleton] <;> ring
+      rw [localSpectrum_succ, D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums.ramanujan_prime_power p j 0 hp]
+      simp [localSpectrum, divCount, D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums.ramanujan_one, hps, Finset.filter_singleton] <;> ring
   case succ a ih =>
-      rw [localSpectrum_succ, ih, D5.S3.Arith.RoldanCirculantEnergyP2Q3.ramanujan_prime_power p j (a+1) hp, divCount_succ p (a+1) j]
+      rw [localSpectrum_succ, ih, D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums.ramanujan_prime_power p j (a+1) hp, divCount_succ p (a+1) j]
       push_cast
       rw [hps, pow_succ]
       split_ifs <;> ring

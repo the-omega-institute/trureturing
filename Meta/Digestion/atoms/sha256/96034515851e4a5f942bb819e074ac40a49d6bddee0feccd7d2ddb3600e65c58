@@ -1,0 +1,73 @@
+**定理 17.3（自由项拉回与对称关系商中的两个非成员）。**在定义 12.1 的同一个自由有单位 magma $\mathcal T$ 上，定义结构递归映射
+
+$$
+\eta(1)=0,\qquad \eta(A)=(1,0),\qquad \eta(Z)=(0,1),\qquad
+\eta(s\cdot t)=\eta(s)+\eta(t),\qquad \eta(Vs)=U\eta(s),
+\tag{17.6}
+$$
+
+并置 $E_{\mathcal T}(s,t)=E(\eta(s),\eta(t))$。则 $E_{\mathcal T}$ 是处处有限、对称、零对角并满足全部 (12.4) 的有号核，而且
+
+$$
+E_{\mathcal T}(A\cdot V1,1)=-1,\qquad
+E_{\mathcal T}(Z\cdot V1,1)=1.
+\tag{17.7}
+$$
+
+令 $J_{\mathrm{sym}}$ 为 (14.10) 的 $J$ 与全部交换向量的和：
+
+$$
+J_{\mathrm{sym}}=J+\operatorname{span}_{\mathbb R}
+\{\varepsilon_{s,t}-\varepsilon_{t,s}:s,t\in\mathcal T\}.
+\tag{17.8}
+$$
+
+除 (14.11) 的 $\mathbf h_1=\mathbf h$ 外，定义
+
+$$
+\begin{aligned}
+\mathbf h_2={}&\varepsilon_{A\cdot V^2 1,Z}-\varepsilon_{A,Z}
+-\varepsilon_{V^2 1,Z}+\varepsilon_{1,Z}\\
+&-\varepsilon_{A\cdot V^2 1,1}+\varepsilon_{A,1}+\varepsilon_{V^2 1,1}.
+\end{aligned}
+\tag{17.9}
+$$
+
+则
+
+$$
+\mathbf h_1\notin J_{\mathrm{sym}},\qquad
+\mathbf h_2\notin J_{\mathrm{sym}}.
+\tag{17.10}
+$$
+
+这两个结论分别成立，不断言二者或其混合组合的线性独立性。本定理回答了 §16.2 的有号问题。
+
+**证明。**结构递归 (17.6) 总定义，每个有限原始项的求值均有限，且尊重真正的双侧单位规则。源 $\mathcal T$ 的约化仍只有这些单位规则；$\eta$ 不必单射，求值相同不使原始项相等，也不向 $\mathcal T$ 增添结合律、交换律或 $V$ 的周期关系。由乘法与 $V$ 的递归式，(17.2) 逐项拉回为 (12.4)，对称性与零对角也随即保留。由 $\eta(V1)=(1,1)$，
+
+$$
+\eta(A\cdot V1)=(2,1),\qquad \eta(Z\cdot V1)=(1,2),
+$$
+
+代入 (17.1) 得 (17.7)。
+
+对有限支撑向量 $q=\sum\lambda_{s,t}\varepsilon_{s,t}$ 定义
+
+$$
+\Lambda(q)=\sum\lambda_{s,t}E_{\mathcal T}(s,t).
+$$
+
+零对角、(12.4) 和 $E_{\mathcal T}(s,t)=E_{\mathcal T}(t,s)$ 分别说明 $\Lambda$ 消灭 $J$、交换生成元以及 $J_{\mathrm{sym}}$。另一方面，(17.3) 与
+
+$$
+\eta(V1)=p(1),\qquad \eta(V^2 1)=p(1+\omega)
+$$
+
+给出
+
+$$
+\Lambda(\mathbf h_1)=1,\qquad \Lambda(\mathbf h_2)=\frac12.
+$$
+
+若任一 $\mathbf h_j$ 属于 $J_{\mathrm{sym}}$，则其 $\Lambda$ 值应为零，矛盾；故 (17.10) 成立。证毕。
+

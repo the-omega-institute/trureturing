@@ -1,0 +1,53 @@
+### 18.1 混合压缩与两个交叉块
+
+固定 $\tau_h=|v_h\rangle\langle v_h|$ 的归一代表，置
+
+$$
+V_h=U(v_h\otimes I_P)=v_h\otimes F_h+B_h,
+\qquad (\langle v_h|\otimes I_K)B_h=0.
+\tag{18.6}
+$$
+
+$V_h$ 是等距，正交分解后的堆叠算子
+$W_h=\binom{F_h}{B_h}:P\to K\oplus(v_h^\perp\otimes K)$ 也是等距。因此
+
+$$
+F_h^\dagger F_h+B_h^\dagger B_h=I_P,
+\qquad \|F_h\|\le1.
+\tag{18.7}
+$$
+
+令 $\Pi_h=\tau_h\otimes I_K$、$q_h=\operatorname{Tr}(B_h\sigma B_h^\dagger)$。对 (18.3) 的两个态测量效果 $I-\Pi_h$，第二个态在该效果上的概率为零，故 $q_h\le\delta$。置
+$T_h=\Omega_h-\tau_h\otimes\omega_h$，则 $\|T_h\|_1\le2\delta$。用自伴酉 $S_h=2\Pi_h-I$ 提取非对角块：
+
+$$
+\operatorname{offdiag}(T_h)=\frac{T_h-S_hT_hS_h}{2},
+\qquad \|\operatorname{offdiag}(T_h)\|_1\le2\delta.
+\tag{18.8}
+$$
+
+两个非零块互为伴随，其中一个为
+$C_h=(v_h\otimes F_h)\sigma B_h^\dagger$。自伴非对角矩阵的迹范数是 $2\|C_h\|_1$，左乘等距保持奇异值，所以
+
+$$
+\|F_h\sigma B_h^\dagger\|_1\le\delta,
+\qquad \|B_h\sigma F_h^\dagger\|_1\le\delta.
+\tag{18.9}
+$$
+
+再用 $W_h$ 的等距性、伴随的迹范数相同以及两个堆叠块的三角不等式，得到
+
+$$
+\begin{aligned}
+\|B_h\sigma\|_1
+&=\|\sigma B_h^\dagger\|_1
+ =\|W_h\sigma B_h^\dagger\|_1\\
+&\le\|F_h\sigma B_h^\dagger\|_1
+     +\|B_h\sigma B_h^\dagger\|_1\\
+&\le\delta+q_h\le2\delta.
+\end{aligned}
+\tag{18.10}
+$$
+
+此处没有使用 $\sigma^{-1}$，所以奇异混合态不需要另行处理。
+

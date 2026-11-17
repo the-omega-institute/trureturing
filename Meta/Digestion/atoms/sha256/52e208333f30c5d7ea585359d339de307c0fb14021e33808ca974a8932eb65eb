@@ -1,0 +1,22 @@
+**定理 122.2（稠密接触与全称接触的准确等价）。** 在(Q122.1)的裸完整EB3域，以下等价：$\mathsf{DC}$；121.4的 $\mathsf{MC}$；每个原标签均有 $W(D_p)=1$；存在同原锥、同原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{Q122.3}
+$$
+
+证明。121.2已经逐标签证明 $p\in\mathcal R\Longleftrightarrow W(D_p)=1$，并证明接触端必为原纯点；不重复其面分类证明。固定 $\omega\in\operatorname{ri}K$，121.3及其补充结论给非负下半连续函数
+
+$$
+\beta_\omega(p)=
+\min_{\substack{x\in D_p\\h\in C^*,\ h(\omega)=1}}
+\frac{h(p)+h(x)}2,
+\qquad \mathcal R=\{p\in P:\beta_\omega(p)=0\}.
+\tag{Q122.4}
+$$
+
+故 $P\setminus\mathcal R=\{\beta_\omega>0\}$ 相对开，$\mathcal R$ 相对闭。相对闭且稠密恰为整个 $P$，这给 $\mathsf{DC}\Longleftrightarrow\mathsf{MC}$。121.4再给其余等价，反向已经检验整个矩阵态、效应和每个纯标签。此调用先取得全W1，再取得Inj、纯点紧性和全Pair，最后才消费IX116.17及VII104.2—104.3的共同三结果接口。证毕。
+
+IX118.14还给 $\mathcal R$ 在 $K$ 中紧；这里相对闭性已经足够。三角仍只指三条各自真实的全域零一边；共同三个效应之和为 $u$ 是上述后续结论，不是稠密接触的输入。这是几何与量词压缩，没有证明独立假设更少、逻辑上严格更弱或公理数最少。裸EB3是否自动给 $\mathsf{DC}$，仍未解决。
+

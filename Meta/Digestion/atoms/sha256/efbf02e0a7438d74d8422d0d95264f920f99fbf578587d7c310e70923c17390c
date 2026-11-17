@@ -1,0 +1,26 @@
+### 139.9 已得几何与未付全域覆盖的准确分界
+
+新建立的存在性是 $\Lambda^2\subseteq\mathcal J$：两个端点都是原纯标签，交点是真实原纯共同邻点；标签集的紧性及其整个球族连续性也已推出。虽然 $S_o\subseteq\Lambda$，但 $o\in\Lambda$ 自身要求整个 $S_o\subseteq Q$，尚未得到。因此这个交点定理不能未经新论证用于任意 $(o,a)$，更不能把原部分映射 $\pi_o$ 的定义域改成全部 $P\setminus\{o\}$。
+
+对照[X133.1、133.3][Q139X]，固定根的准确全域条件仍是
+
+$$
+\begin{aligned}
+\mathsf D_2(o):&\quad\forall a\in P:\quad o\perp a\ \lor\ \exists r\in P\ (o\perp r\land a\perp r),\\
+\mathsf R_1:&\quad\exists o\in P\ \mathsf D_2(o).
+\end{aligned}
+\tag{XI139.33}
+$$
+
+它先要求 $P\subseteq S_o\cup Q(o)$；X133.3在该前件下才进一步给 $Q(o)=P$。本章尚未证明存在任何满足(XI139.33)的根，也未证明 $\mathsf{MC}$。$Q\cong\mathbb{CP}^2$ 只识别这个紧纯二步集的拓扑，不产生整个 $K$ 的仿射表示、全效应 least、全态 Born 读数、正限制逆或原锥 Jordan 结构。
+
+无根三角时，137.9中原法向截面的严格嵌套含义继续保持：令 $N_o=\{h\in C^*:h(o)=0\}$、$L_o=\operatorname{span}N_o$，取137.2的唯一完整暴露尺 $e_o$、$g_o=u-e_o$，令 $J(x)(h)=h(x)$、$H=\{\lambda\in L_o^*: \lambda(g_o)=1\}$、$\Omega=N_o^\vee\cap H$，并令 $\iota=J|_{D_o}$。该原接口给
+
+$$
+\neg\mathsf{Tri}(o)\quad\Longleftrightarrow\quad
+\iota(D_o)\Subset\operatorname{int}_H\Omega.
+\tag{XI139.34}
+$$
+
+本章未排除这种严格嵌套；它证明该分支必须带着(XI139.6)的实际完整距离三载体，不能由 $Q,\Lambda$ 两团紧球族封闭整个原域。尚缺的是排除这种遇到 $Q$、避开 $U_0$ 而球缘伸出 $Q$ 的真实原载体，或另行支付全域覆盖的充分桥。即使另有一个根三角，也不能仅以(XI139.28)的接触替代全目标量词。这里没有构造满足全部原前件而失败覆盖的反例，也不宣称该边界逻辑独立。
+

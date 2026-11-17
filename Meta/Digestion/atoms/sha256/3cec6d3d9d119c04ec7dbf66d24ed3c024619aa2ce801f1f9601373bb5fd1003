@@ -1,0 +1,57 @@
+### 15.4 Means and every supported complete-configuration loss
+
+The altered coordinates were chosen so that
+
+$$
+f(Q)=C,\qquad b_0(Q)=H,\qquad h(W)=1-v_0+v_0Q(w_{0,1})=H,\qquad a_0(W)=C.
+$$
+
+The endpoint coordinate-box triangle identities of Chapter 11 give
+
+$$
+\operatorname{TV}(Q,P_{p,a})=P_{p,a}(E_p)-C,\qquad
+\operatorname{TV}(Q,P_{p,b})=C-P_{p,b}(E_p),
+$$
+
+and the corresponding suspended identities with $h(W)=H$. These are complete-law total variations, so all four complete endpoint configuration losses equal $\rho_p$ or $\rho_\beta$ as appropriate. Every coarser level-$L$ word/tail partition is obtained by contraction and therefore has loss at most, rather than necessarily equal to, its corresponding complete endpoint radius.
+
+For every nonendpoint target supported by the original prior, use the source interval $[3/8,5/13]$. A direct complete-word calculation through level five, with the entire remaining mass (including infinity) bounded by the two tail masses, gives
+
+$$
+B_p=\frac{355994686242025987031}{26994670778880000000000}<\frac1{50},
+$$
+
+$$
+B_\beta=\frac{3515477241015883163647}{421791730920000000000000}<\frac1{75},
+$$
+
+where $B_p$ and $B_\beta$ are upper bounds for the complete total variations from $Q,W$ to the native laws at $r_0=3/8$. The complete stopped-parser coupling supplied with the source gives, for $r,t\in[a,b]$,
+
+$$
+\operatorname{TV}(P_{p,r},P_{p,t})\le\frac{125}{57}|r-t|,\qquad
+\operatorname{TV}(P_{\beta,r},P_{\beta,t})\le\frac{107}{57}|r-t|.
+$$
+
+Since $5/13-3/8=1/104$, the triangle inequality yields, uniformly for every $r\in[3/8,5/13]$,
+
+$$
+\operatorname{TV}(Q,P_{p,r})
+<\frac1{50}+\frac{125}{5928}
+=\frac{6089}{148200}<\rho_p,
+$$
+
+$$
+\operatorname{TV}(W,P_{\beta,r})
+<\frac1{75}+\frac{107}{5928}
+=\frac{4651}{148200}<\rho_\beta.
+$$
+
+Indeed,
+
+$$
+\rho_p-\frac{6089}{148200}=\frac{178363777}{22507875000}>0,\qquad
+\rho_\beta-\frac{4651}{148200}=\frac{26837}{6669000}>0.
+$$
+
+Every supported nonendpoint is in this interval, so every complete configuration loss is bounded before any averaging over configurations. Any level-$L$ partition loss with $L\le5$ is no larger by contraction of total variation.
+

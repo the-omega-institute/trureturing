@@ -1,0 +1,202 @@
+**Theorem 12.1 (native executed floors with unequal radii).** There is
+one probability-one event determined by the target Brownian pair such
+that the following assertion holds for every realization in it: every
+sequence of Definition 11.1 satisfying the quantitative contract of
+Assumption 11.3, with any positive errors tending to zero, obeys
+
+$$
+\begin{aligned}
+\liminf_n\epsilon_n V_n^a&\ge S/d_a,&
+\liminf_n\epsilon_n V_n^b&\ge S/d_b,\\
+\liminf_n\epsilon_n L_n&\ge S\sqrt{d_a^{-2}+d_b^{-2}},&
+\liminf_n\epsilon_n^2 E_n&\ge
+ \frac{\pi^2 S}{6}(d_a^{-2}+d_b^{-2}).
+\end{aligned}
+\tag{12.1}
+$$
+
+The event is independent of the command sequence, its access to future
+information, the errors and $\lambda$. For random commands the assertion
+applies wherever their stated pathwise hypotheses hold. In particular
+it does not require taking an uncountable intersection of events indexed
+by approximation algorithms. It bounds all lawful executed prefixes in
+the declared class, rather than only the family of Section 5.
+
+Proof. We use three classical scalar suppliers inside this native
+argument. For a continuous real function $f$ on $[0,t]$, write
+
+$$
+\operatorname{TV}^{c}(f;[0,t])
+ =\sup_{0=t_0<\cdots<t_m=t}
+   \sum_{j=1}^m(|f(t_j)-f(t_{j-1})|-c)_+.
+\tag{12.2}
+$$
+
+Allowing partitions not containing the endpoints gives the same
+supremum, since adjoining endpoints cannot reduce it. If
+$\|h-f\|_{[0,t]}\le e$, each increment gives
+$|h(t_j)-h(t_{j-1})|\ge(|f(t_j)-f(t_{j-1})|-2e)_+$, whence
+
+$$
+\operatorname{TV}(h;[0,t])\ge\operatorname{TV}^{2e}(f;[0,t]).
+\tag{12.3}
+$$
+
+R. M. Łochowski and P. Miłoś, *On truncated variation, upward truncated
+variation and downward truncated variation for diffusions*,
+[arXiv:1109.0043v2](https://arxiv.org/html/1109.0043v2), Theorem 1
+and Remark 2, give, for a continuous semimartingale $X$, the almost
+sure uniform-in-time limit $c\operatorname{TV}^c(X;[0,t])\to[X]_t$
+as $c\downarrow0$. In particular, on one event for our two coordinates,
+
+$$
+\lim_{c\downarrow0}c\operatorname{TV}^c(W^i;[0,t])=2t
+\quad(0\le t\le T,\ i=1,2).
+\tag{12.4}
+$$
+
+The truncation is twice the approximation radius. For a stopped
+coordinate the quadratic variation is $2(t\wedge S)$; alternatively,
+(12.4) on rational intervals before $S$ supplies all the localization
+needed here.
+
+For the stronger energy estimate, let $B$ be standard variance-$t$
+Brownian motion and use the scalar free-terminal-end functional
+
+$$
+I_B(t,\rho)=\inf\left\{
+ \left(\int_0^t|\dot h|^2\,ds\right)^{1/2}:
+ h\in AC[0,t],\ h(0)=0,\ \|h-B\|_{[0,t]}\le\rho\right\}.
+\tag{12.5}
+$$
+
+Its initial value is fixed, and its terminal value is free. This is
+precisely the boundary condition needed for a restriction of a native
+command. M. Lifshits and E. Setterqvist, *Energy of Taut Strings
+Accompanying Wiener Process*,
+[arXiv:1405.1651v1](https://arxiv.org/html/1405.1651v1), Theorems
+1.1–1.2, prove the same constant $\mathcal C$ for free and pinned
+terminal ends, with $\rho I_B(t,\rho)/\sqrt t\to\mathcal C$ in every
+$L_q$ as $\rho/\sqrt t\to0$, and almost surely for fixed radius and
+long time. Their Proposition 2.2 and (2.17), for any median
+$m(t,\rho)$, also give
+
+$$
+\mathbb E|I_B(t,\rho)-m(t,\rho)|^2\le1.
+\tag{12.6}
+$$
+
+The Cameron–Martin Lipschitz constant behind this estimate is one,
+independent of $t$ and $\rho$.
+
+M. A. Lifshits and A. A. Podchishchailov, *Asymptotic distribution of
+the derivative of the taut string accompanying Wiener process*,
+[arXiv:2411.04690v2](https://arxiv.org/html/2411.04690v2), Theorem
+1.1, (4), (9) and §7.2, identify $\mathcal C^2=\pi^2/24$. Their
+parameter $w$ is the full strip width: their pinned string satisfies
+$|h-B|\le w/2$, and its quadratic energy per unit long time tends to
+$\pi^2/(6w^2)$. The quadratic function satisfies their power-growth
+hypothesis by taking any exponent greater than two. To check the
+normalization and the coefficient directly from their density, put
+$v=wx$. Then
+
+$$
+\begin{aligned}
+\int_{\mathbb R}x^2w\frac{wx\coth(wx)-1}{\sinh^2(wx)}\,dx
+ &=w^{-2}\int_{\mathbb R}
+       \frac{v^2(v\coth v-1)}{\sinh^2v}\,dv\\
+ &=\frac{w^{-2}}2\int_{\mathbb R}\frac{v^2}{\sinh^2v}\,dv
+  =\frac{\pi^2}{6w^2}.
+\end{aligned}
+\tag{12.7}
+$$
+
+For the integration by parts use
+$d(\operatorname{csch}^2v)=-2\coth v\operatorname{csch}^2v\,dv$.
+The boundary term $v^3\operatorname{csch}^2v$ vanishes at zero and
+at both infinities. On $v>0$,
+$\operatorname{csch}^2v=4\sum_{j\ge1}j e^{-2jv}$; termwise integration
+of the nonnegative terms gives
+$\int_0^\infty v^2\operatorname{csch}^2v\,dv
+=\sum_{j\ge1}j^{-2}=\pi^2/6$.
+Taking $w=2\rho$ yields $\pi^2/(24\rho^2)$.
+The equality of the pinned and free constants is supplied by
+Lifshits–Setterqvist; a pinned-end minimum alone would not be a lower
+bound for the free-end problem.
+
+Here is the fixed-time, all-radius step needed for native tracking.
+Fix $t>0$. The $L_q$ limit implies
+$\rho m(t,\rho)\to\mathcal C\sqrt t$: convergence in probability
+to a constant forces every median to converge to that constant after
+normalization. For $\rho_j=1/j$ and any $v>0$, (12.6) gives
+
+$$
+\sum_{j=1}^\infty
+\mathbb P\{\rho_j|I_B(t,\rho_j)-m(t,\rho_j)|>v\}
+\le v^{-2}\sum_{j=1}^\infty j^{-2}<\infty.
+\tag{12.8}
+$$
+
+Borel–Cantelli for positive rational $v$ proves
+$\rho_jI_B(t,\rho_j)\to\mathcal C\sqrt t$ almost surely.
+The function $I_B(t,\rho)$ is nonincreasing in $\rho$. For
+$\rho_{j+1}\le\rho\le\rho_j$,
+
+$$
+\frac{\rho_{j+1}}{\rho_j}\rho_jI_B(t,\rho_j)
+\le\rho I_B(t,\rho)
+\le\frac{\rho_j}{\rho_{j+1}}\rho_{j+1}I_B(t,\rho_{j+1}).
+\tag{12.9}
+$$
+
+Both ratios tend to one, proving the limit over all real radii
+$\rho\downarrow0$ on this same fixed-time event. Intersect these
+events for all positive rational $t<T$, and for both standard
+coordinates $W^i/\sqrt2$. This is a countable intersection. Amplitude
+scaling in (12.5) gives
+$I_{\sigma B}(t,e)=\sigma I_B(t,e/\sigma)$ for $\sigma>0$, hence,
+on the resulting event,
+
+$$
+\lim_{e\downarrow0}e^2 I_{W^i}(t,e)^2
+ =4\mathcal C^2t=\frac{\pi^2t}{6},
+\qquad t\in\mathbb Q\cap(0,T),\quad i=1,2.
+\tag{12.10}
+$$
+
+This uses the fourth power of the amplitude scale for squared energy,
+not its second power. Long-time almost sure convergence has not been
+substituted for a fixed-time assertion by an equality in law.
+
+Intersect (12.4), (12.10), Brownian continuity, continuity of the chosen
+Itô integral, and the probability-one lifetime properties of Proposition
+4.5. This defines the required target-only event. Fix one of its
+realizations and a rational $0<t<S$. For all large $n$, (11.8),
+(12.3) and (12.4) give
+
+$$
+\liminf_n\epsilon_n V_n^a\ge t/d_a,
+\qquad
+\liminf_n\epsilon_n V_n^b\ge t/d_b.
+\tag{12.11}
+$$
+
+The same actual restrictions $a_n|_{[0,t]}$ and $b_n|_{[0,t]}$
+are competitors for the free-end scalar problems with radii
+$d_a\epsilon_n,d_b\epsilon_n$. Therefore
+
+$$
+E_n\ge I_{W^1}(t,d_a\epsilon_n)^2
+          +I_{W^2}(t,d_b\epsilon_n)^2.
+\tag{12.12}
+$$
+
+They are restrictions of one jointly realized native history; no two
+separately optimized scalar paths have been spliced into a native
+history. Equation (12.10) proves the energy bound with $t$ in place
+of $S$. Equation (11.5) and (12.11) give the length bound. Finally
+take the supremum over rational $t<S$. Since $S>0$, this supremum
+is $S$, including when $S=T$. Every cost used up to $t$ is actually
+executed. No stopped path is declared to be an unstopped Brownian
+motion, and no cost is assigned after its own exit. $\square$
+

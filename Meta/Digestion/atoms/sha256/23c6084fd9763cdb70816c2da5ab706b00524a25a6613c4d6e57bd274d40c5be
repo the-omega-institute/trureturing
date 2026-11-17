@@ -1,0 +1,57 @@
+**Theorem 16.2 (joint necessity on arbitrary compatible Borel flows).** Every compatible pair in Section 16.1 obeys (16.10), for the fixed installed prior with positive endpoint masses and a supported nonendpoint.
+
+**Proof.** Take any compatible pair (16.1)–(16.2).  Apply the supplied joint finite-flow regeneration to obtain, for $\varepsilon_n\to0$, one finite regular table at each stage whose two own-law flow measures converge jointly to $\Gamma_B$ and $\Gamma_A$.  Its two exact flow identities are (16.4), and its configuration losses against every complete target differ from the compatible-pair losses by a quantity $\delta_n\to0$.  Apply the supplied rationalization to that same table, choosing the rational approximation error to tend to zero as well.  The resulting single rational table still has both exact flows and one pair of own generated full laws.  This is the PAIRED regeneration/rationalization result; no new compactness or one-sided quadrature is being inserted.
+
+Theorem 11.4 gives phase loss errors at most $81\varepsilon_n/44$ and $61\varepsilon_n/44$ on the upper side, uniformly over complete targets, together with joint convergence of its two own-law flows. For each such finite shape, Lemma 11.6 makes the rational flow masses and their own generated law atoms converge. Choose its maximal law displacement and the sum of the absolute flow-weight errors in each direction at most $1/n$. This preserves the joint weak limit: for a bounded continuous test, uniform continuity controls displacement of each law pair, and the sum of the absolute changes of its finitely many flow weights controls the remaining integral. This is a diagonal choice of the supplied two-flow approximation, not a limit assertion about conditional kernels.
+
+For each rational table, use the original-domain product realization.  In the original third-completion update, the complete record is written and latched before the source-independent private row is sampled.  The row is exactly $\pi_n$ at every positive fourth-segment p history and exactly $\tau_n$ after a p-beta return; a suspended-alpha return returns it to $\pi_n$.  The same $(B_n,A_n)$ are used on acquired and synthetic updates.  The installed program, numerical table, sampler states, workspace and persistent randomness are charged to COMPLETE.  The original $C_0$, both seeds, marker and held records, paid histories, every finite fourth return, completion and Stop remain in the product.  The once-sampled $K$ is never resampled.  The decoder laws retain their infinity cells; the geometric $4/15$ bound proves their zero mass without conditioning on completion.
+
+Every rational table has finite nonempty phase label sets, positive probability rows, stochastic $B_n,A_n$, regular emissions and both identities (16.4). These are all the table hypotheses of [PAID, Definition 2.1 and Lemma 2.1.1], with observer period one. Before the latch, retain original control with fair synthesis; completing letters clear the private label and retain the original pendingStop and delivery transitions. A fixed rational categorical sampler uses fresh independent fair bits, finite rational thresholds and reusable finite rejection workspace, as in Corollary 11.7. The identical represented sampler implements actual and synthetic updates. Its internal service adds no source query; its almost-sure termination gives no finite worst-case bit or time bound. Source-independent initial sampling is not a runtime oracle. Neither the Borel flows nor their disintegrations, barycentres or analysis rows are installed as continuous registers.
+
+At every positive fourth-segment history $h$, the target remains $\sum_k\nu_h(k)P_{s,r_k}$ for the same once-sampled $K$. Apply convexity to the target separately inside each configuration's TV, then average and apply the common renderer. The finite paid-history witnesses and the summable likelihood-ratio domination of [PAID, Lemma 14.1] retain every supported depth under a countable prior. They do not require a maximizing depth or a pure-source runtime experiment. Here $e(M)$ is exactly (1.2), and $V(M)$ denotes the unweighted acquired-return statistic $\mathcal V(M)$ of [RETURN9, Definition 9.1] on the seed-1, marker-100 fibre. That fibre is used for a necessary statistic; all other original histories remain in the risks.
+
+PAID initialization and countable-prior domination, together with the configurationwise TV comparison, give an original observer $M_n$ with
+
+$$
+e(M_n)\le \mathcal J(\Gamma_B,\Gamma_A)+\delta_n,
+\qquad \delta_n\longrightarrow0,
+\tag{16.6}
+$$
+
+where $e(M_n)$ is its maximum of the two original configuration excesses.  The actual-return statistic on the designated positive-history fibre is exactly $V_{\pi_n}$, because every positive history has the same source-independent stationary row.  Applying (16.5) to that same table gives
+
+$$
+V(M_n)=V_{\pi_n}
+\le \sqrt{M_{B,n}}+\sqrt{M_{A,n}}.
+\tag{16.7}
+$$
+
+The functions $(Q,W)\mapsto(u(Q)-v(W))^2$ are bounded continuous on the compact descriptor products.  Joint weak convergence of the two own-law flows therefore gives
+
+$$
+M_{B,n}\to M_B,
+\qquad M_{A,n}\to M_A.
+\tag{16.8}
+$$
+
+No convergence of a composed disintegration or of a Markov product is used.
+
+The supplied original risk–return theorem applies to each $M_n$ and gives the strict finite inequality
+
+$$
+g<\frac{61}{11}e(M_n)+\frac{19}{11}\sqrt{V(M_n)}.
+\tag{16.9}
+$$
+
+Insert (16.6) and (16.7), then pass to the limit using (16.8).  The strict sign is thereby correctly weakened to a non-strict sign:
+
+$$
+\boxed{
+\frac{61}{11}\mathcal J(\Gamma_B,\Gamma_A)
+ +\frac{19}{11}\sqrt{\,\sqrt{M_B}+\sqrt{M_A}\,}
+\ge g.}
+\tag{16.10}
+$$
+
+This holds for every compatible Borel pair on the unchanged original domain. $\square$
+

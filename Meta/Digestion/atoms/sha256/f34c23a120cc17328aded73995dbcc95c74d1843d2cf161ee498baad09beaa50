@@ -1,0 +1,41 @@
+### 21.9. Native legal-word counts and the typed FIB bridge
+
+`D5/S3/Combinatorics/Graph/LegalWords/EdgeCount.edge_count` counts only the
+native legal-word graph: its unordered edge finset equals total occupation,
+which equals the occupation-size-fiber sum. This is a combinatorial identity
+on the declared legal-word carrier. It supplies no controller, no successor
+policy, no online-memory minimum and no physical-cost optimum.
+
+The resulting typed bridge keeps the objects that cannot be collapsed:
+
+$$
+\boxed{
+\begin{gathered}
+J_{\mathrm{common}}\ ;\quad
+\text{raw provenance and ordered cache prefix}\ ;\quad
+\Xi(Q,W,Q')\ ;\\
+\text{action legality, response and continuation}\ ;\quad
+(\mathcal Q,\Delta_{\mathcal Q},\tau_{\rm ext})\ ;\\
+R(\Pi,U;T)=
+\bigl(D_{\rm on},K_{\rm nom},B_{\rm peak};
+ W_{\rm joint}^{\rm off},W_{\rm cert}^{\rm off},W_{\rm check}^{\rm off};\\
+ \sum_t(W_{\rm joint}^{\rm on},W_{\rm cert}^{\rm on},W_{\rm check}^{\rm on});
+ L_{\rm exec},C_{\rm phys}\bigr).
+\end{gathered}}
+\tag{21.26}
+$$
+
+Here $D_{\rm on}$ is online acquisition depth, $K_{\rm nom}$ is named
+control memory, and $B_{\rm peak}$ is peak retained bits. The three offline
+work coordinates cover joint-image construction, certificate search and
+static checking; the summed online coordinates cover their per-update
+maintenance. $L_{\rm exec}$ counts selected execution layers and
+$C_{\rm phys}$ is physical cost. EdgeCount constrains a native combinatorial
+count at most as an offline structural input, while RT §48 constrains the
+fixed-menu certificate and its incremental search/maintenance coordinates;
+neither result determines the other coordinates. The reset/codebook,
+raw-correlation, Mellin/Robin and sparse-literal results already cited in
+this volume remain source- and task-specific bridges with their own actual
+history, basis and arithmetic hypotheses; none is a generic controller
+theorem or a resource-preservation theorem.
+

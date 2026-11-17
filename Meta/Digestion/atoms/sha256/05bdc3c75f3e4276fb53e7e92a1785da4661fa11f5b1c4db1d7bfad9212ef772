@@ -1,0 +1,91 @@
+**定理 10.2（成对历史消去零纤维残余）。**在上述条件下，$u\in N_0$ 蕴涵 $\beta(u)=0$。
+
+**证明。**固定任意 $z\in M$，分别考虑实线性泛函和对应常数
+
+$$
+\begin{aligned}
+\alpha(x)=B(x,\beta(z)),&\qquad C=\tfrac32r(z),\\
+\alpha(x)=B(\beta(z),x),&\qquad C=\tfrac32q(z).
+\end{aligned}
+\tag{10.4}
+$$
+
+以下论证对两种选择各作一次。令
+
+$$
+J=\frac{2R+I}{\sqrt3},\qquad
+\ell=\alpha-i\alpha J,\qquad
+\omega=-\frac12+i\frac{\sqrt3}{2}.
+$$
+
+由 (8.9)，$J^2=-I$ 且 $\ell R=\omega\ell$。这只是代数复结构，不要求 $B$ 为正或对称。若 $(a,b)\in K$，则 $(Ua,Ub)\in K$，且
+
+$$
+R(\beta(a)-\beta(b))=\beta(Ua)-\beta(Ub).
+$$
+
+因此 (10.1) 同时界住 $|\alpha(w)|$ 和 $|\alpha(Rw)|$，均不超过 $C$。从而
+
+$$
+|\ell(w)|^2
+=\alpha(w)^2+\frac{(2\alpha(Rw)+\alpha(w))^2}{3}
+\le4C^2\qquad((a,b)\in K).
+\tag{10.5}
+$$
+
+特别，此界并未要求单条零纤维历史在 $U$ 下保持零纤维；仿射项 $\tau$ 可以非零。
+
+固定 $u\in N_0$。对每个整数 $n\ge0$，以 $\mathcal I_n=\{0,1,2\}^n$ 为有限指标集。每个词 $(k_1,\ldots,k_n)$ 索引两条指定的左括号递推：
+
+$$
+\begin{aligned}
+x_0=y_0&=1,\\
+x_j&=x_{j-1}\cdot U^{k_j}u,\\
+y_j&=y_{j-1}\cdot p_{k_j}\qquad(1\le j\le n).
+\end{aligned}
+\tag{10.6}
+$$
+
+两条递推分别保留；不将 $x_j$ 与 $y_j$ 认作同一原始对象。由 $\gamma(u)=0$ 和 (9.6)，$\gamma(U^ku)=\gamma(p_k)$，故每一步都有 $\gamma(x_j)=\gamma(y_j)$。因此这些成对项全属于 $K$。
+
+设某节点的对为 $(x,y)$，差为 $w=\beta(x)-\beta(y)$。由 (9.1) 与 $\mathrm{UC}$，其 $k$ 子节点的差恰为
+
+$$
+\begin{aligned}
+&\beta(x\cdot U^ku)-\beta(y\cdot p_k)\\
+&\quad=w+R^k\beta(u)+R^{-k}T(x,u).
+\end{aligned}
+\tag{10.7}
+$$
+
+这里两个 $t_k$ 相减消失，未将任何单条历史的仿射偏移设为零。令 $Z=\ell(w)$、$A_u=\ell(\beta(u))$、$D_x=\ell(T(x,u))$；三个子值为
+
+$$
+Z+\omega^kA_u+\omega^{-k}D_x\qquad(k=0,1,2).
+$$
+
+有限三字符正交给出确切恒等式
+
+$$
+\frac13\sum_{k=0}^2|Z+\omega^kA_u+\omega^{-k}D_x|^2
+=|Z|^2+|A_u|^2+|D_x|^2.
+\tag{10.8}
+$$
+
+这是前述续卷第 3 节式 (3.4) 的标量平方恒等式；此处它作用于成对差 (10.7)。以深度 $n$ 的全部词作有限平均，记
+
+$$
+E_n=3^{-n}\sum_{\mathcal I_n}|\ell(\beta(x_n)-\beta(y_n))|^2.
+$$
+
+根节点差为零，且 (10.8) 逐层给 $E_{n+1}\ge E_n+|A_u|^2$。于是
+
+$$
+n|A_u|^2\le E_n\le4C^2\qquad(n\ge0),
+\tag{10.9}
+$$
+
+右侧由每个词上的 (10.5) 得到。任意深度的有限恒等式已经迫使 $A_u=0$。取实部得 $\alpha(\beta(u))=0$；对 (10.4) 的两种配对和任意 $z$ 重复，商上共同非退化性给 $\beta(u)=0$。
+
+$\mathcal I_n$ 只是有限 magma 项的证明索引；论证没有引入概率律、无限随机历史或任何对原事件空间的替换。
+

@@ -1,0 +1,25 @@
+**定义 76.1（保留的基底与生成族）。** $\mathrm{PRE}_0$ 精确取定义 75.1：每个 $X=A,D,E$ 保留非零有限维实空间、闭尖生成锥、非零正元上严格正的 $u_X$、整个紧态基 $K_X$、全部效应 $[0,u_X]$、纯态 $P_X=\operatorname{ext}K_X$，以及只以纯态为第一端点的比较和全部有限混合律
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\sum_\ell v_\ell\eta_\ell\right)=\sum_\ell v_\ell T^X_{\eta_\ell}(\xi). \tag{76.1}
+$$
+量词遍及每个纯 $\xi$、每个有限纯态族和每组概率权重。保留 75.1 与其 [S] 引用的完整一般 EJA 条件桥，包括正对偶生成、忠实配对、共同框架、面投影、项目性和滤波纯性；纯端点互反不替代该混合律。在忠实坐标中，原态与效应区间均完整保留，比较为规范迹配对；仍允许一般 EJA、Albert、直和和秩一因子，尚未取得复型。
+令 $n=\tau_A1_A$、$m=\tau_D1_D$，唯一供应的映射与参考仍是全锥正的实双线性 $L:D\times A\to E$、全锥正的实线性 $p:E\to D$ 及 $\omega=1_D/m$。内部量由同一个实际 $p$ 定义：
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),& M(a,b)&=pL(K(a),b),& J(a)&=M(a,1_A),\\
+H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},&U&=M(1_A,1_A),\quad G=H_{\mathrm s}1_D.
+\end{aligned} \tag{76.2}
+$$
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$ 及全实 $Z:B_1M(a,b)=\tau_A(a)Jb$。正性覆盖第一输入的全部纠缠正元和全部原输出锥；两次读回、原参考、原迹和原 $L,p$ 不变。定义 75.2 已仅由这些前件证明 $U,G>0$，因此可先于零表定义 $F=P_{U^{-1/2}}M$。
+取同一原比较几何中的完整本原框架族 $\mathfrak B=(B_r)_{r=1}^s$；$\mathsf{JG}_3$ 表示存在 $1\le s\le3$ 的这种族，其全部成员的最小实 Jordan 子代数为整个 $A$。允许重复框架，不要求这些成员线性张满；存在见证不供应独立制备、读回、自然选择或物理装置。第一表保持 (75.5)，第二表只取同标配对：
+$$
+\mathsf J_{\mathfrak B}:\quad \langle Je,Je'\rangle_D=0\quad(e\ne e'\in B_r), \tag{76.3}
+$$
+$$
+\mathsf H^{\mathrm{diag}}_{\mathfrak B}:\quad
+\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E=0
+\quad((e,f)\ne(e',f')\in B_r\times B_r). \tag{76.4}
+$$
+两式量化所有 $r$，不要求 $r\ne t$ 的 $B_r\times B_t$ 列表，也不要求不同框架间本来非正交的原子零比较。$F(B_r\times B_r)$ 的完整本原框架性质是下述证明的结论。
+

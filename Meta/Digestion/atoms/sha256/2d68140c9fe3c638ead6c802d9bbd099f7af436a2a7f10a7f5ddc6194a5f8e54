@@ -1,0 +1,8 @@
+We now prove the quantitative stochastic step inside this derivation. For any row-stochastic $S\times S$ matrix $P$ and $|w|=1$ with
+$\gamma=\min_{1\le r\le S}|1-w^r|>0$, the induced complex maximum norm satisfies
+
+$$
+\|(I-wP)^{-1}\|_{\infty\to\infty}\le\frac{8S}{\gamma^2}.
+\tag{2.7}
+$$
+

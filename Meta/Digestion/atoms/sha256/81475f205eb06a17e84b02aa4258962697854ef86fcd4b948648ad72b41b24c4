@@ -1,0 +1,31 @@
+**定义 121.11（双向原球图与正确权重）。** 对每个 $a\in S(D_p)$，取 $D_a=c_a+B_a\mathbb B^3$，写 $p=c_a+B_as_a$、$s_a\in S^2$。沿用120.10—120.12在原标签 $a\in P_0$ 的对象
+
+$$
+g_a=u-e_a,\qquad H_a(c_a+B_ai)=i,\qquad
+k_a(i)=1+\rho_a(i)\ge2\quad(i\in S^2).
+\tag{Q121.36}
+$$
+
+$H_a$ 的三个分量是 $\operatorname{span}N_a$ 中由限制同构唯一确定的泛函，$H_a(a)=0$。其方向函数的完整定义为 $\rho_a(i)=\sup_{y\in K\setminus\{a\}}[-i\cdot H_a(y)/g_a(y)]$；Inj及原一值面为 $\{a\}$ 保证分母严格正。120.11已证明它在同一实际球面上有限且Lipschitz。对实际纯点 $x_i=c_a+B_ai$，120.12的全原空间公式准确给
+
+$$
+g_{x_i}=e_a+\frac{g_a-i\cdot H_a}{k_a(i)}.
+\tag{Q121.37}
+$$
+
+置 $E_a=B_a(s_a^\perp)$；这与121.8中的 $E_v$ 是同一真实切平面，只改用邻标签索引。定义其二次内积以及 $L_p$ 上的线性映射
+
+$$
+\begin{gathered}
+\langle B_aD,B_aD'\rangle_a
+       =\frac{D\cdot D'}{k_a(s_a)},\qquad D,D'\perp s_a,\\
+T_af=B_a\operatorname{proj}_{s_a^\perp}H_a(f)
+       \quad(f\in L_p).
+\end{gathered}
+\tag{Q121.38}
+$$
+
+不同标准球图只差正交坐标变换，故这里的内积与投影不依赖球图选择。$T_a(L_p)\subset E_a$ 且 $T_a|_{E_a}=I$；特别地，$T_a$ 是到该平面的线性投影。权重是准确的 $1/(1+\rho_a(s_a))$，不能省略或一律换成 $1/2$。具体地，若换图 $B_a'=B_aO$，其中 $O$ 正交，则 $s_a'=O^{-1}s_a$、$H_a'=O^{-1}H_a$、$\rho_a'(i)=\rho_a(Oi)$；(Q121.38)的内积及 $T_a$ 随之逐项不变。
+
+为核对限制恒等式，$H_a(B_aD)=D$ 来自球图的仿射差。对 $f\in L_p$，$e_a,g_p\in N_p$，所以 $e_a(f)=g_p(f)=u(f)=0$。在(Q121.37)取 $i=s_a$，又得 $g_a(f)-s_a\cdot H_a(f)=0$；事实上 $g_a(f)=0$，从而 $H_a(f)\perp s_a$。这些是原消去关系，不是共同度量输入。
+

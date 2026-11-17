@@ -1,0 +1,108 @@
+**Theorem 21.1 (finite causal issuance misses target death).** For every
+choice of the fixed parameters in Definition 20.1, every allowed seed,
+every allowed knowledge filtration and every individual policy
+$C\in\mathcal C_T$,
+
+$$
+\mathbb P(\tau^{\rm N}=\tau\le T)=0,
+\qquad
+\mathbb P(\zeta^{\rm N}=\zeta)
+ =\mathbb P(\tau>T,\ \zeta^{\rm N}=\infty)
+ \le\mathbb P(\tau>T).
+\tag{21.1}
+$$
+
+The lifetime-only ceiling is sharp:
+
+$$
+\sup_{C\in\mathcal C_T}\mathbb P(\zeta^{\rm N}_C=\zeta)
+ =\mathbb P(\tau>T).
+\tag{21.2}
+$$
+
+There is positive probability of target death before $T$. These are
+issuer-by-issuer statements. For any countable family of admissible
+issuers on the same target coupling, one common probability-one event
+excludes exact death for every member on $\{\tau\le T\}$. No common
+exceptional set for the uncountable class of all issuers is asserted.
+
+Proof. Work at an issue time on
+$\{\sigma_j<T,\ \sigma_j<\tau^{\rm N}\}$, where the native
+height $x_j$ is in $(l,u)$. Define the
+nominal first-exit delay of the prescribed numerical height by
+
+$$
+d_j=\inf\{s\in[0,T-\sigma_j]:x_j+a_j(s)\notin(l,u)\},
+\qquad \inf\varnothing=\infty.
+\tag{21.3}
+$$
+
+Put $d_j=\infty$ off this alive-issuance event. All evaluations at
+$\sigma_j+d_j$ below are restricted to the displayed finite-delay
+event, so no value at an infinite time is used.
+It is $\mathcal F_{\sigma_j}$ measurable. Indeed $x_j$, $\sigma_j$
+and the entire continuous profile are measurable there; first hitting
+of the closed exterior is a Borel function of the continuous path and
+the prescribed horizon. This can be checked by taking the minimum of
+distance to the exterior on compact intervals, using rational times
+and continuity. Every finite $d_j$ is strictly positive, since
+$a_j(0)=0$ and $x_j$ is interior. Infinite $d_j$ cannot produce a death
+before the horizon in this segment.
+
+Conditional on $\mathcal F_{\sigma_j}$, the future path
+$W^1_{\sigma_j+s}-W^1_{\sigma_j}$ is a fresh covariance-$2$ Brownian
+motion. For any fixed positive $d$ and any fixed real $y$,
+$y+W^1_d$ has a Gaussian density and hence gives mass zero to
+$\{l,u\}$. Since $d_j$ and $Y_{\sigma_j}$ are known at issuance,
+the same conclusion applies at the random but already prescribed
+delay $d_j$:
+
+$$
+\mathbb P\bigl(
+ 0<d_j\le T-\sigma_j,\
+ Y_{\sigma_j+d_j}\in\{l,u\}
+ \mid\mathcal F_{\sigma_j}\bigr)=0.
+\tag{21.4}
+$$
+
+For precision, this conditioning integrates the jointly measurable
+evaluation map $(d,y,w)\mapsto y+w(d)$ against the independent future
+Wiener path law, with $d,y$ fixed by the conditioning. It does not
+treat $d_j$ as independent of the past or condition on a future
+interruption event. If an issue time is not finite everywhere, apply
+strong Markov to $\sigma_j\wedge T$ and restrict to
+$\{\sigma_j<T\}$. An issue at $T$ cannot move an interior state
+on the remaining zero-length interval.
+
+Now suppose $0<\tau^{\rm N}=\tau\le T$. Finiteness of the active
+issuances gives a last positive-duration executed segment with start
+$\sigma_j<\tau^{\rm N}$ and with no intervening interruption before
+$\tau^{\rm N}$. Its numerical profile agrees with the actual height
+through that endpoint, and its earlier prefixes are interior. Thus
+
+$$
+\tau^{\rm N}=\sigma_j+d_j.
+\tag{21.5}
+$$
+
+If the death coincides with a new issue or an interruption, continuity
+charges it to the segment ending there. A zero-start replacement
+cannot cause an instantaneous height change. A hold from an interior
+point cannot cause death at all. These observations also cover a
+death at $T$. On target death, continuity gives $Y_\tau\in\{l,u\}$,
+so (21.5) places the event in the probability-zero event (21.4) for
+some integer $j$. A countable union proves the first assertion of
+(21.1); no bound on the random command count was needed. Both
+lifetimes are strictly positive from the fixed interior start.
+
+Equality of death records either means equality of finite deaths or
+means both records are $\infty$. This proves the second assertion.
+The zero command $A=B=0$ is lawful, causal and never exits $I$, so it
+attains (21.2). It is a lifetime-only optimizer, with no native tube
+claim. Finally
+$\{Y_T>u\}\subseteq\{\tau<T\}$, and the former event has positive
+Gaussian probability. Proposition 4.5 supplies
+$\mathbb P(\tau=T)=0$ and almost sure finiteness of $\tau$.
+Intersecting the individual probability-one events over any countable
+family gives the stated family quantifier. $\square$
+

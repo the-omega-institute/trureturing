@@ -1,0 +1,111 @@
+# Mixed exclusion geometry on the original cone base
+
+## Abstract
+
+Original mixed relative-boundary fibers admit continuous labels, reflection and a strong deformation preserving deleted fibers.
+
+V is any nonzero finite-dimensional real normed space. C is the original closed generating pointed cone, u is its original strictly positive linear unit, K is its entire normalized base, and P consists of all extreme points of K. The effect domain is the entire original interval [0,u]. Every full mixed-state exclusion D_p is an injective affine image of a whole positive-dimensional closed Euclidean unit ball. The only pair hypothesis is weakPair: an original orthogonal pure pair generates a proper minimal face. Dimensions may vary and may equal one. Neither full Pair, a common center, a chosen continuous ball chart, a manifold structure nor a label map is assumed.
+
+**Theorem 1.1 (Whole original relative-boundary coverage).**
+
+Lean statement: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.frontier_covered`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/MixedExclusionGeometry.frontier_covered` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Without a Pair premise, every relative-boundary point of the entire original base belongs to some entire original exclusion. Original unique-confirmation density consumes this at the nearest relative-boundary contacts.
+
+**Theorem 1.2 (Entire exclusions lie on the relative boundary).**
+
+Lean statement: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.exclusion_frontier`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/MixedExclusionGeometry.exclusion_frontier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the original closed generating cone, strictly positive unit and entire exclusion balls, every point of each full exclusion lies on the relative boundary of the whole base. No weakPair premise is used. Original unique-confirmation density transports these original points into its auxiliary affine coordinates.
+
+**Theorem 1.3 (Exact chart for the full relative interior).**
+
+Lean statement: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.chart_intrinsic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/MixedExclusionGeometry.chart_intrinsic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original pure p and its entire positive-dimensional exclusion chart, the relative interior of the exclusion is the affine chart image of the whole open unit ball. This chart identity has no Pair premise and is used to propagate a positive functional zero from a relative interior point to the whole face.
+
+**Theorem 1.4 (Nonpure points are exactly exclusion-relative interior points).**
+
+Lean statement: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.exclusion_interior`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/MixedExclusionGeometry.exclusion_interior` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Without a weakPair premise, the relative interior of the entire original exclusion is precisely that exclusion with the original pure points removed. The density proof uses this original-site equality for its nonpure nearest-boundary contacts.
+
+**Definition 1.5 (Actual mixed states and actual maps).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall hc \in \operatorname{IsClosed}\left(C\right),\; \forall hs \in \left(\forall x \in V,\; x\in C \Rightarrow \left(\operatorname{not}\left(x = 0\right) \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right),\; \forall hg \in \operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right),\; \forall hB \in \operatorname{exclusionBalls}\left(C, u\right),\; \left(\forall x \in V,\; x\in \operatorname{mixedExcluded}\left(C, u\right) \Leftrightarrow \left(\operatorname{not}\left(x\in \operatorname{pure}\left(C, u\right)\right) \land \left(\exists p \in \operatorname{pure}\left(C, u\right),\; x\in \operatorname{exclusion}\left(C, u, p\right)\right)\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{value}\left(\operatorname{apply}\left(\operatorname{centerSection}\left(hc, hs, hg, hB\right), p\right)\right) = \operatorname{center}\left(hB, p\right)\right) \land \left(\left(\forall x \in \operatorname{mixedExcluded}\left(C, u\right),\; \operatorname{value}\left(\operatorname{apply}\left(\operatorname{reflection}\left(hc, hs, hg, hB\right), x\right)\right) = \operatorname{subtract}\left(\operatorname{smul}\left(2, \operatorname{center}\left(hB, \operatorname{apply}\left(\operatorname{label}\left(C, u\right), x\right)\right)\right), \operatorname{value}\left(x\right)\right)\right) \land \left(\forall t \in \operatorname{Icc}\left(0, 1\right),\; \forall x \in \operatorname{mixedExcluded}\left(C, u\right),\; \operatorname{value}\left(\operatorname{apply}\left(\operatorname{contraction}\left(hc, hs, hg, hB\right), \operatorname{pair}\left(t, x\right)\right)\right) = \operatorname{add}\left(\operatorname{smul}\left(\operatorname{subtract}\left(1, \operatorname{value}\left(t\right)\right), \operatorname{value}\left(x\right)\right), \operatorname{smul}\left(\operatorname{value}\left(t\right), \operatorname{center}\left(hB, \operatorname{apply}\left(\operatorname{label}\left(C, u\right), x\right)\right)\right)\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/MixedExclusionGeometry.mixedExcluded` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+mixedExcluded initially collects the original nonpure states excluded by some original pure point. label chooses an owner through actual full-effect incidence. centerSection maps each original pure point to the image of zero in its complete exclusion chart; its membership among mixed states is proved. reflection and contraction use the center of the uniquely determined ball. They are maps into the actual mixed-state subset because their values are proved to remain nonpure in that same full exclusion.
+
+**Theorem 1.6 (Unique fibers, reflection and strong deformation).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall hc \in \operatorname{IsClosed}\left(C\right),\; \forall hs \in \left(\forall x \in V,\; x\in C \Rightarrow \left(\operatorname{not}\left(x = 0\right) \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right),\; \forall hg \in \operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right),\; \forall hB \in \operatorname{exclusionBalls}\left(C, u\right),\; \operatorname{weakPair}\left(C, u\right) \Rightarrow \left(\operatorname{subset}\left(\operatorname{pure}\left(C, u\right), \operatorname{intrinsicFrontier}\left(\mathbb{R}, \operatorname{base}\left(C, u\right)\right)\right) \land \left(\operatorname{mixedExcluded}\left(C, u\right) = \operatorname{difference}\left(\operatorname{intrinsicFrontier}\left(\mathbb{R}, \operatorname{base}\left(C, u\right)\right), \operatorname{pure}\left(C, u\right)\right) \land \left(\left(\forall x \in \operatorname{mixedExcluded}\left(C, u\right),\; \forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{apply}\left(\operatorname{label}\left(C, u\right), x\right) = p \Leftrightarrow \operatorname{value}\left(x\right)\in \operatorname{intrinsicInterior}\left(\mathbb{R}, \operatorname{exclusion}\left(C, u, p\right)\right)\right) \land \left(\operatorname{Continuous}\left(\operatorname{reflection}\left(hc, hs, hg, hB\right)\right) \land \left(\operatorname{Involutive}\left(\operatorname{reflection}\left(hc, hs, hg, hB\right)\right) \land \left(\left(\forall x \in \operatorname{mixedExcluded}\left(C, u\right),\; \operatorname{apply}\left(\operatorname{reflection}\left(hc, hs, hg, hB\right), x\right) = x \Leftrightarrow x\in \operatorname{range}\left(\operatorname{centerSection}\left(hc, hs, hg, hB\right)\right)\right) \land \left(\operatorname{Continuous}\left(\operatorname{label}\left(C, u\right)\right) \land \left(\operatorname{Continuous}\left(\operatorname{centerSection}\left(hc, hs, hg, hB\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{apply}\left(\operatorname{label}\left(C, u\right), \operatorname{apply}\left(\operatorname{centerSection}\left(hc, hs, hg, hB\right), p\right)\right) = p\right) \land \left(\operatorname{Continuous}\left(\operatorname{contraction}\left(hc, hs, hg, hB\right)\right) \land \left(\left(\forall x \in \operatorname{mixedExcluded}\left(C, u\right),\; \operatorname{apply}\left(\operatorname{contraction}\left(hc, hs, hg, hB\right), \operatorname{pair}\left(0, x\right)\right) = x \land \operatorname{apply}\left(\operatorname{contraction}\left(hc, hs, hg, hB\right), \operatorname{pair}\left(1, x\right)\right) = \operatorname{apply}\left(\operatorname{centerSection}\left(hc, hs, hg, hB\right), \operatorname{apply}\left(\operatorname{label}\left(C, u\right), x\right)\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall t \in \operatorname{Icc}\left(0, 1\right),\; \operatorname{apply}\left(\operatorname{contraction}\left(hc, hs, hg, hB\right), \operatorname{pair}\left(t, \operatorname{apply}\left(\operatorname{centerSection}\left(hc, hs, hg, hB\right), p\right)\right)\right) = \operatorname{apply}\left(\operatorname{centerSection}\left(hc, hs, hg, hB\right), p\right)\right) \land \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall t \in \operatorname{Icc}\left(0, 1\right),\; \forall x \in \operatorname{mixedExcluded}\left(C, u\right),\; \operatorname{value}\left(\operatorname{apply}\left(\operatorname{contraction}\left(hc, hs, hg, hB\right), \operatorname{pair}\left(t, x\right)\right)\right)\in \operatorname{exclusion}\left(C, u, p\right) \Leftrightarrow \operatorname{value}\left(x\right)\in \operatorname{exclusion}\left(C, u, p\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/MixedExclusionGeometry.original_mixed_exclusion_contraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A point on the intrinsic boundary of K is outside the cone interior: an interior cone neighborhood restricts to a relative base neighborhood. Hahn-Banach supplies a nonzero cone support vanishing at the point. The existing positive_support_confirmer theorem normalizes it at an actual maximizing pure point, so the boundary point lies in a full original exclusion. Conversely a zero confirmer and a line extended beyond a relative interior point would give a negative original effect value. Thus every exclusion lies on the intrinsic boundary. Original joint completion places every pure point on that same boundary.
+
+If two exclusions contain the same nonpure point, their intersection is an extreme convex subset which cannot be a singleton. The existing complete-ball face theorem makes the intersection equal to both exclusions. The existing weakPair exclusion injectivity then identifies their owners. The existing chart_boundary theorem identifies the pure points of each full ball with its whole sphere. Affine restriction to the map range, the native affine-equivalence and affine-isometry intrinsic-interior theorems, and the ordinary unit-ball interior formula identify its nonpure points with its intrinsic interior.
+
+The actual full-effect incidence is closed: the original proper-effect interval is compact, the one-zero evaluation constraints are closed, and projection through a compact factor is closed. With compactness of all original P supplied by original_pure_compact, the native closed-graph theorem gives global continuity of label. original_continuous_frame_sum gives continuity of p plus twice its ball center, hence of the center section. Its composition with label is the identity on all P; in particular the section identifies P homeomorphically with its image.
+
+For every mixed boundary point, coordinates in its entire exclusion have norm strictly below one. Negation preserves that strict inequality, so center reflection preserves the same fiber and is a continuous involution. Its fixed points are precisely the actual centers. Straight motion to zero within the open unit ball proves that the displayed affine contraction stays in that same fiber for every time. It starts at the identity, ends at the center section after label, fixes every center at every time, and preserves each complete exclusion fiber in both directions. Consequently it also preserves the complement of any one such fiber.
+
+**Definition 1.7 (The actual homotopy of deleted-fiber pairs).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall hc \in \operatorname{IsClosed}\left(C\right),\; \forall hs \in \left(\forall x \in V,\; x\in C \Rightarrow \left(\operatorname{not}\left(x = 0\right) \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right),\; \forall hg \in \operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right),\; \forall hB \in \operatorname{exclusionBalls}\left(C, u\right),\; \forall hW \in \operatorname{weakPair}\left(C, u\right),\; \forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{apply}\left(\operatorname{deletedFiberPairHomotopy}\left(hc, hs, hg, hB, hW\right), p\right)\in \operatorname{TopPairHomotopy}\left(\operatorname{identity}\left(\operatorname{deletedFiberPair}\left(C, u, p\right)\right), \operatorname{compose}\left(\operatorname{apply}\left(\operatorname{pairLabelMap}\left(hc, hs, hg, hB, hW\right), p\right), \operatorname{apply}\left(\operatorname{pairCenterMap}\left(hc, hs, hg, hB, hW\right), p\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/MixedExclusionGeometry.deletedFiberPairHomotopy` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each original p, deletedFiberPair has literally the ambient space intrinsicFrontier of K minus P, with the subspace obtained by deleting D_p; deletedPointPair is (P, P minus {p}). The proved equality with mixedExcluded identifies the corresponding pairs; both maps and the homotopy are transported through this identification. Since M meets D_p exactly in its intrinsic interior, this removes the complete mixed fiber. pairLabelMap is induced by the actual continuous label; pairCenterMap is induced by the actual center section. The affine contraction induces a TopPair homotopy from the identity of deletedFiberPair to pairLabelMap followed by pairCenterMap. The pair condition is proved at every time from actual fiber preservation, using the existing TopPair.ofSubsetHomotopy constructor and transport through that proved pair isomorphism.
+
+These are geometric statements about the original full state and effect domain. They supply no local homology computation, Smith fixed-set dimension, ENR-to-local-homology comparison, Alexander duality or constancy of ball dimension. They require none of those conclusions as premises.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.chart_intrinsic`
+- Truth anchor: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.deletedFiberPairHomotopy`
+- Truth anchor: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.exclusion_frontier`
+- Truth anchor: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.exclusion_interior`
+- Truth anchor: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.frontier_covered`
+- Truth anchor: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.mixedExcluded`
+- Truth anchor: `D5/S3/Quantum/Foundation/MixedExclusionGeometry.original_mixed_exclusion_contraction`
+- Dependency: [D5/S3/Quantum/Foundation/ContinuousFrameSum](ContinuousFrameSum.md)
+- Dependency: [D5/S3/Quantum/Foundation/OriginalFacePolarity](OriginalFacePolarity.md)

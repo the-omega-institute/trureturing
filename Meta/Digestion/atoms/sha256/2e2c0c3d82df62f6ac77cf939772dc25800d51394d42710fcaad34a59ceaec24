@@ -1,0 +1,33 @@
+## 16. Joint mismatch necessity and the fixed full-residual certificate
+
+Fix the installed finite or countable prior $\mu$, with $\mu(1),\mu(2)>0$, and choose symbolically one supported $k_\star\ge3$, so $\mu(k_\star)>0$.  Put
+
+$$
+a=\frac13,
+\qquad b=\frac25,
+\qquad r_\star=\frac{F_{k_\star+1}}{F_{k_\star+3}}\in\left[\frac38,\frac5{13}\right],
+\qquad
+\rho_p=\frac{1116529}{22781250},
+\qquad
+\rho_\beta=\frac{239}{6750}.
+$$
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},
+\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+\qquad
+C=\frac{11758471}{22781250},
+\qquad
+H=\frac{5261}{6750}.
+$$
+
+$$
+\eta=\frac{14219478376}{318644812890625},
+\qquad g=\frac{\eta}{400000}.
+$$
+
+The depth $K$ is the one positive integer sampled once by the original source.  All statements below retain the original $m=2,d=1,\ell=2,n=4$ control, both seeds, every paid rejection and finite return, all marker triples and held registers, the third write-before-latch, completion and matching Stop.  Complete carriers include every infinite noncompletion outcome.  The same acquired-letter kernels are used by actual and synthetic updates, and configuration TV is taken before its configuration average.
+
+The full source and observer contract is Section 2. In particular, the full-record renderer $I_{C_0(h)}$ is the same measurable bijection on every actual record fibre, including each future operation block and the matching Stop. No future conditioning, reset, extra Read or measurement, count, clock, posterior, configuration-distribution input or exact-real port is available. Zero and unit emissions and positive noncompletion mass remain allowed in the original unrestricted class; regularity below concerns the compatible-law representation and its approximants. The program, installed numerics, sampler microstates, workspace, output indices and every persistent random choice belong to COMPLETE.
+

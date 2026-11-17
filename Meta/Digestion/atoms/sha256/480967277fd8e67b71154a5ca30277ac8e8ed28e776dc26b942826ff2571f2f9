@@ -1,0 +1,40 @@
+**定理 99.3（全原效应的 Gram 双端点）。** 设 $B(t):\mathbb R^k\to E$ 是在 $0$ 的一个邻域连续的线性单射族，且 $B(t)y$ ($y\ne0$) 均为原纯方向。令 $B_0=B(0)$，并置
+
+$$
+A_M(t)=B(t)^{\mathsf T}MB_0,\qquad G_0=B_0^{\mathsf T}HB_0\succ0.
+\tag{99.4}
+$$
+
+存在 $\delta>0$，使所有 $|t|<\delta$、$M\in\mathcal M_u$ 和 $y\in\mathbb R^k$ 均满足
+$y^{\mathsf T}A_M(t)y\ge\tfrac12\lambda_{\min}(G_0)\|y\|^2$，且 $A_H(t)$ 可逆。固定任意 $N\in L^\perp$，再取满足 $0<|t|<\delta$ 且 $A_N(t):=B(t)^{\mathsf T}NB_0$ 不是 $A_H(t)$ 标量倍的 $t$。则存在原纯点 $p,q_+,q_-$ 使
+
+$$
+T_p(q_+)=T_p(q_-)=0,\qquad
+T_p\!\left(\frac{q_++q_-}{2}\right)
+\ge
+\frac{\mu^2(\beta-\alpha)^2}{2h(B_0y)(D_-+D_+)}>0,
+\tag{99.5}
+$$
+
+其中 $y$ 可取使 $A_H(t)y$ 与 $B(t)^{\mathsf T}NB_0y$ 线性无关的向量，
+$Q_y=\{A_M(t)y:M\in\mathcal M_u\}$，
+$a=y$，$b$ 任取使 $r(z)=b^{\mathsf T}z/(a^{\mathsf T}z)$ 非恒定，
+$\alpha=\min_{Q_y}r<\beta=\max_{Q_y}r$，
+$w_-=b-\alpha a$，$w_+=b-\beta a$，
+$D_\pm=h(B(t)w_\pm)$，且
+$\mu=\min_{M\in\mathcal M_u}y^{\mathsf T}A_M(t)y>0$。
+
+证明。对每个 $N\in L^\perp$，由 $B_0y$ 为纯方向及极化有 $B_0^{\mathsf T}NB_0=0$，故所有 $M\in\mathcal M_u$ 满足 $A_M(0)=G_0$。紧性及 $B(t)$ 的连续性给出一个 $\delta>0$，使
+$\sup_{M\in\mathcal M_u}\|A_M(t)-G_0\|<\lambda_{\min}(G_0)/2$ 对所有 $|t|<\delta$ 成立。这同时给出所述全 $M$、全 $y$ 下界和 $A_H(t)$ 可逆性。以下固定满足定理条件的同一个 $t$。若每个 $y$ 的 $A_H(t)y$ 与 $A_N(t)y$ 都共线，则 $A_H(t)^{-1}A_N(t)$ 将每个向量送入其自身直线，故为标量算子；因此可选上述 $y$。由 $H\pm\eta N\in\mathcal M_u$，$Q_y$ 含非共线向量，故可选使比值 $r$ 非恒定的 $b$。$Q_y$ 紧凸且落在 $\{z:y^{\mathsf T}z>0\}$，其比值 $r$ 的两个端点给出
+$Q_y\cap w_-^\perp\ne\varnothing$、$Q_y\cap w_+^\perp\ne\varnothing$，而共同交点将迫使 $(\beta-\alpha)y^{\mathsf T}z=0$，不可能。
+
+令 $v=B_0y$、$p=p_v$、$q_\pm=p_{B(t)w_\pm}$。引理99.2给两个分别确认 $p$ 的效应，故前两式成立。对任意 $f\in F_p$，用(99.3)并写 $s_M=y^{\mathsf T}A_M(t)y$，得到
+
+$$
+ f\!\left(\frac{q_-+q_+}{2}\right)
+\ge\frac1{2h(v)}\left(\frac{s_M^2(r_M-\alpha)^2}{D_-}+\frac{s_M^2(r_M-\beta)^2}{D_+}\right),
+$$
+
+其中 $r_M=b^{\mathsf T}A_M(t)y/s_M$。加权平方完成给
+$\min_r((r-\alpha)^2/D_-+(r-\beta)^2/D_+)=(\beta-\alpha)^2/(D_-+D_+)$，从而(99.5)。证毕。
+

@@ -59,10 +59,30 @@ internal sealed class HistoryKernelConverseDocument : IScribeDocumentDefinition
                 Frame(Imp(Cover, Law)),
                 "Induction on each individual certificate proves positivity of its actual terminal table, using the original residual-extension positivity lemma. Given any ordered finite list, take a certified chain covering its label set and choose a position for each requested label. Pullback of the terminal table gives the requested Gram table, including repeated requested labels. The finite-support positive-form supplier then yields the global positive kernel, and the preceding equivalence supplies every same-entry extension witness.",
                 DescribeRole.Theorem),
+            FiniteComparisonApplication(),
             Paragraph(Text(
                 "The block range and finite-support suppliers are adapted from TauCetiProject/TauCeti at revision 52f9d081237dadaf6d4eae13629281f7faa37d54, specifically LinearAlgebra/Matrix/PosSemidef.lean and Analysis/Matrix/PosSemidef/Block.lean. They implement standard positive block matrix facts. All results allow empty index types, singular and zero old blocks, zero diagonals and zero residuals. When the history type is empty, the extension obligation has no appended label and is vacuous.")),
             Paragraph(Text(
                 "Certification of a single log only establishes positivity for its represented labels; the finite-cover quantifier is essential for a conclusion on the whole declared label type. The label-preserving minimal Hilbert representation and its uniqueness require the separate completion argument. No CP, Born, physical control or empirical realization follows from the kernel equivalences alone.")))));
+
+    private static DocumentBlock FiniteComparisonApplication() =>
+        new DocumentBlock.Section(H("Application: a single finite-test schema"), Blocks(
+            Paragraph(Text("For an arbitrary finite complex table M, define its entire quadratic evaluation Q_M(z)=sum_{i,j} conjugate(z_i) M_{ij} z_j. If Q_M(z) is real for every complex coefficient vector z, M is Hermitian. If Q_M(z) is real and nonnegative for every z, M is positive semidefinite. Reality of the whole complex value is essential: a nonnegative real part alone does not suffice. For example M=[i] passes that real-part inequality for every z, but M is not Hermitian.")),
+            new DocumentBlock.DisplayFormula(FiniteEvaluationFormula()),
+            Paragraph(Text("These implications directly reuse Mathlib LinearMap.isSymmetric_iff_inner_map_self_real and LinearMap.isPositive_iff_complex through Matrix.isSymmetric_toEuclideanLin_iff and Matrix.isPositive_toEuclideanLin_iff. The first implication supplies endpoint conjugation instead of assuming it as a separate clause. The test already presupposes complex-valued entries and arbitrary complex coefficient vectors; it does not derive the complex field or an operational superposition mechanism.")),
+            Paragraph(Text("For one common kernel K on the entire label type, impose this same evaluation condition on every finite ordered label family and every complex coefficient vector. The resulting positive finiteGram tables give KernelExtensionLaw through extensionLaw_iff_finiteGram_posSemidef. Repeated labels and empty families remain allowed. The universal schema is not one finite experiment, and separately chosen tables cannot substitute for restrictions of the same K. A label-preserving Hilbert realization still uses the separate common-kernel completion construction, such as RKHS.OfKernel; these finite tests do not themselves specify physical operations.")),
+            Paragraph(Text("Two-label legality alone is insufficient. The real symmetric three-label table with diagonal 1 and every off-diagonal -1 has positive semidefinite two-label restrictions, including repeated-label restrictions. At z=(1,1,1), its entire quadratic evaluation is -3, so the three-label table is not positive semidefinite. Pairwise comparisons therefore do not settle simultaneous finite consistency.")),
+            Paragraph(Text("Counting clauses does not show that raw complex positivity is logically weaker than the original three-way characterization: their objects and premises differ. Endpoint reversal K(y,x)=conjugate(K(x,y)) is also distinct from reversing a sequence of measurements. No commutation of measurement updates, operational preparations, Born interpretation, tensor composition, or dynamics follows here.")),
+            Paragraph(Text("白话：每两项单独看都合法，放到一起仍可能矛盾。更准确的简洁要求是：同一张比较表的每个有限部分，对所有复系数作整体检验都得到非负实数；反向比较的共轭关系会随之成立。这是一条普遍检验规则，不是一次有限实验，也还不是量子力学的完整起源。"))));
+
+    private static Formula FiniteEvaluationFormula()
+    {
+        var m = F.Id("M"); var z = F.Id("z");
+        var q = Call("quadraticEvaluation", m, z);
+        var re = Call("Re", q);
+        var real = Eq(Call("ofReal", re), q);
+        return All(z, Arrow(F.Id("I"), C), And(real, Seq(D(0), Sp, Le, Sp, re)));
+    }
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string narrative, DescribeRole role) => Describe.Lean(

@@ -1,0 +1,38 @@
+**定义 3.3（极分解与同名约化工作口）。** 采用 OTF004 式 (26.4) 的 Toeplitz 映射
+
+$$
+T_m(b)=D\int_{S^2}b(u)\tau_u\,d\mu(u),\quad
+A_{lk}=T_m(f_{lk}),\quad
+A_{\rm stack}\psi=\sum_{lk}A_{lk}\psi\otimes|l,k\rangle,
+\quad S_{\rm op}=A_{\rm stack}^\dagger A_{\rm stack},
+\quad W=A_{\rm stack}S_{\rm op}^{-1/2}.
+\tag{3.9}
+$$
+
+由 OTF004 命题 25.5 及式 (26.5)，
+
+$$
+0\le I-S_{\rm op}\le(C_{\rm fail}/\lambda)I,\qquad
+S_{\rm op}\ge I/2,\qquad\|W-A_{\rm stack}\|\le C_{\rm fail}/\lambda.
+\tag{3.10}
+$$
+
+$W$ 是等距。先施行 $W$，在任何 $k$ 测量、原始记录或副本之前，施行声明的非参考 CP 节点
+
+$$
+\mathcal Q_{K_{\rm work}}(X)
+=\operatorname{Tr}_{K_{\rm work}}(X)\otimes|0\rangle\langle0|_{K_{\rm work}}.
+\tag{3.11}
+$$
+
+再对 $L$ 作完整 Lüders 读出，保留 OTF004 式 (26.7) 的同一 $J_l$：测后 $L$、原始 $l$、实际 $l$ 副本、旧两坐标解码器、有理方向 $\widehat h(l)$、固定程序及工作因子。$l=0$ 及无效码的估计固定为零。所得通道为 $\Phi_{{\rm red},e}$。它在上述列明口上恰为
+
+$$
+\Phi_{{\rm red},e}(X)=
+\left(\sum_{lk}A_{lk}S_{\rm op}^{-1/2}X S_{\rm op}^{-1/2}A_{lk}^\dagger
+\otimes|J_l\rangle\langle J_l|\right)\otimes|0\rangle\langle0|_{K_{\rm work}}.
+\tag{3.12}
+$$
+
+替换后的 $K_{\rm work}$ 仍是同名实际输出。没有原始 $k$ 记录存在；(3.12) 中的 $k$ 是 CP 求和指标。这正是定义 26.11 的约化接口，区别于保留相干 $K_{\rm work}$ 的 $\Phi_{\rm keep}$。
+

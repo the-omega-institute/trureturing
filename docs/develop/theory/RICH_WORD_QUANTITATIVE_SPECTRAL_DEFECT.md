@@ -2013,3 +2013,52 @@ The complete-return characterization of richness used in the finite exclusions a
 The conditions in (109), exact cancellation and the eight strict budgets are necessary only, even when imposed together. They establish neither their sufficiency nor nonexistence of a qualifying dictionary at every larger length. The existence of an original $u_9$ image rich on five actual letters with ordinary exponent $e_4$, including its exhaustive ordinary upper bound over all actual factors, remains open here. So does a universal impossibility theorem for such literal dictionaries. Allowing arbitrary nonliteral morphisms and proving the unrestricted lower inequality for $RT(\mathcal C_5)$ remain distinct questions. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Exact literal decoder and original-family occurrence transport
+
+Use the actual one-sided source $u=u_7$ and the dictionary (43), with $a,b,c,d$ represented by the distinct letters $0,1,2,3$. Thus the seven images are $a,ab,abb,ac,acc,accdcc,accdccddccdcc$. Put $q_i=a^{-1}\eta(i)$, $E_0=0$ and $E_{j+1}=E_j+|\eta(u_j)|$, and let $x=\eta(u)$ at these actual intervals. Write $\operatorname{Occ}_u(w,j)$ and $\operatorname{Occ}_x(v,A)$ for equality with the corresponding literal windows. Starts and lengths are natural numbers; empty words and overlapping windows are included.
+
+For marker-free words $s,t$, define $L(s,j)$ to mean $s=\varepsilon$ or $j>0$ with $s$ a suffix of $q_{u_{j-1}}$. Define $R(t,w,j)$ to mean that $t$ is a prefix of $q_{u_{j+|w|}}$. Put $v(w,s,t)=s\eta(w)at$ and $W(z)=\sum_{i=0}^6|\eta(i)|z_i$. In either word, consecutive starts mean $j<k$ with both occurrences and no occurrence strictly between them; there is no disjointness condition. The actual source return interval is $u[j,k)$.
+
+For a source word $w$, decorations $s,t$ and vector $\mu\in\mathbb N^7$, let $\mathcal T(w,s,t,\mu)$ be the conjunction of the following four properties. For every output start $A$, $\operatorname{Occ}_x(v(w,s,t),A)$ holds exactly when there is a unique source index $j$ such that $A+|s|=E_j$ and $\operatorname{Occ}_u(w,j)$. For every $A,B$, the output starts are consecutive exactly when there are consecutive source starts $j,k$ with $A+|s|=E_j$ and $B+|s|=E_k$. For all $A,B,j,k$ with these two equalities and $j\le k$, one has $B-A=W(\vec{u[j,k)})$. Finally there exist such consecutive output and source pairs with $\vec{u[j,k)}=\mu$ and $B-A=W(\mu)$, and every consecutive output pair has gap at least $W(\mu)$. The attaining pair retains both actual output starts, both actual source starts and the exact source return vector.
+
+**Lemma 23.1 (Literal marked-core recovery).** For every $w\in\{0,\ldots,6\}^*$ and every $j\ge0$,
+
+$$
+\operatorname{Occ}_x(\eta(w)a,E_j)\ \Longrightarrow\ \operatorname{Occ}_u(w,j).
+$$
+
+*Proof.* Each image has exactly one marker, at its first position. If the next marker of a candidate first block were earlier or later than the next actual marker, one of the two marker-free tails would contain a marker. Their first block lengths therefore agree. Equality of the complete blocks and injectivity of the seven displayed images recover the first source letter. Induction on $w$ recovers the whole source core. The empty core is the base case; the empty tail $q_0$ permits adjacent markers.
+
+**Theorem 23.2 (Literal decorated occurrence decoder).** For every $w\in\{0,\ldots,6\}^*$, all marker-free $s,t\in\{a,b,c,d\}^*$ and every $A\ge0$,
+
+$$
+\operatorname{Occ}_x(s\eta(w)at,A)
+\ \Longleftrightarrow\
+\exists!j\ge0:\ A+|s|=E_j\ \land\ \operatorname{Occ}_u(w,j)
+\ \land\ L(s,j)\ \land\ R(t,w,j).
+$$
+
+*Proof.* The highlighted first marker is a unique actual block boundary. Lemma 23.1 reconstructs the core. A marker-free left decoration fits precisely in the preceding tail, unless it is empty; a marker-free right decoration fits precisely in the next tail. These conditions also construct the converse occurrence. In particular $A=0$, $j=0$, empty decorations, the empty core and arbitrary overlaps retain their stated conditions.
+
+**Theorem 23.3 (All original Type-I occurrences and exact minimum).** Let $w_I(n)$ be the original Type-I factor of the actual source at index $n$. Define $r(n)$, according to $n\bmod6$, by the six values $(\varepsilon,\varepsilon,\varepsilon,c,cc,ccdcc)$. For every $n\ge0$, every suffix $s$ of $r(n)$ and every prefix $t$ of $r(n)$,
+
+$$
+\mathcal T(w_I(n),s,t,M^n b_6).
+$$
+
+*Proof.* The original Type-I source occurrence theorem excludes the origin and supplies both actual neighboring letters in $\{n\bmod6,6\}$. The displayed $r(n)$ is a suffix and prefix of both corresponding tails, so every source occurrence satisfies both filters of Theorem 23.2. Strict increase of $E_j$ then gives the full consecutive-pair equivalence. The cumulative-length identity gives the exact gap for every aligned pair. Apply the attained componentwise source-return minimum $M^n b_6$ and positivity of the literal image weights to obtain the attaining output pair and the bound for every output consecutive gap.
+
+**Theorem 23.4 (All original Type-II occurrences and exact minimum).** Let $w_{II}(n)$ be the original Type-II factor of the actual source at the original index $n$, and use the same $r(n)$. For every $n\ge6$, every suffix $s$ of $r(n)$ and every prefix $t$ of $r(n)$,
+
+$$
+\mathcal T(w_{II}(n),s,t,M^n b_0).
+$$
+
+*Proof.* The original Type-II source occurrence, positivity and context theorems supply the actual source data at parameter $n-6$, with both neighbors in $\{n\bmod6,6\}$. They pay the same two filters for every occurrence. The consecutive-pair and exact-gap argument of Theorem 23.3 applies, now using the attained componentwise minimum $M^n b_0$. The equality $(n-6)+6=n$ keeps the original matrix exponent and phase. The four properties of $\mathcal T$ hold on this whole index domain.
+
+### 23.5. Applicability and provenance
+
+These are repository-derived consequences for the literal dictionary (43) and the original seven-letter source, reusing the original source occurrence and minimum-return theorems. They provide exact decoding and transport, including all occurrences and attaining pairs. The scalar estimates (50), the exhaustive ordinary-exponent argument and its other inputs remain separate obligations; these auxiliary results alone give no complete ordinary-exponent theorem.
+
+## 追加锚（本行以下为增补区）

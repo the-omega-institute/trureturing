@@ -1,0 +1,27 @@
+**定义 8.1（带标量端点的原矩阵多项式域）。** 以下称[《中央响应平方与径向一致》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md)为中央响应平方卷。对每个整数 $n\ge2$，固定区间坐标 $t\in[0,1]$，令
+
+$$
+\begin{aligned}
+E_n&=\left\{\lambda I_n+\sum_{k=1}^{m}t^kA_k:
+ \lambda\in\mathbb R,\ m\in\mathbb N_0,\ A_k\in M_n(\mathbb C)_{\rm sa}\right\},\\
+\mathcal A_n&=\{F\in C([0,1],M_n(\mathbb C)):F(0)\in\mathbb C I_n\},\\
+X_n&=(\mathcal A_n)_{\rm sa},\qquad u=I_n,\qquad
+F\circ G=(FG+GF)/2,\\
+C_n&=E_n\cap(X_n)_+,\qquad
+N(F)=\sup_{0\le t\le1}\|F(t)\|_{\rm op}.
+\end{aligned}
+\tag{8.1}
+$$
+
+原评价取 $\mathcal A_n$ 上全部数学正泛函在 $E_n$ 的限制及其非负质量倍数。它们分离原域、准确决定锥，并保留零／不等／次归一质量。这里直接复用配平主卷 220.1 的模型结构：把 $M_2$ 换成 $M_n$，将各自伴系数展开于任意实矩阵基，即得到该处同一标量零点条件。逐系数多项式逼近再减去零点误差，给 $E_n$ 在 $X_n$ 中稠密；$e^tu$ 不属于 $E_n$，故原域不完备。连通区间上的投影秩恒定，而零点的标量投影只能是 $0$ 或 $I_n$，所以 $E_n$ 和 $X_n$ 都没有非平凡投影；它们又都不等于 $\mathbb Ru$，故没有非零最小 Jordan 投影。这个原域仍具有任意高有限次数，不被截成有限维窗口。
+
+为确认该原域的完整静态可容许性，取静态重构卷 35.1–35.2 的准确参数
+
+$$
+\mathcal A=\mathcal A_n,\qquad
+\mathcal A_0=E_n+\mathrm iE_n,\qquad \kappa=1,\qquad
+D_*(F,G)=\frac{\mathrm i}{2}(FG-GF).
+$$
+
+$\mathcal A_0$ 是稠密含单位复星子代数，且其自伴部分正是 $E_n$，故该既有定理直接给全部原 A1–A3、P2、全有限复正表与完整 PB，任意固定的原有理 $0<\theta\le1$ 均保留。这个符号与本卷 (6.6) 及配平主卷 220.1 相同；$F\circ G-\mathrm iD_*(F,G)=FG$。标准模型、稠密性和投影稀缺性只是复用的前置，不另计为新的重构或模型定理，也不把 $D_*$ 认作一般原候选的未知旧 $D$。
+

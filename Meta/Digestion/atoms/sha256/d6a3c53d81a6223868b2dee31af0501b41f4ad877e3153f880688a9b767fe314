@@ -1,0 +1,86 @@
+**命题 122.4（C：同一原正法向的两个完整球约束）。**
+对每个非零实际 $h\in N_s$，写 $R_sh=(\alpha,v)$。
+则
+
+$$
+\alpha\ge\|v\|_G,\qquad
+\lambda_N=\alpha+\|v\|_G=\max_Kh>0,\qquad
+f_h=\frac h{\lambda_N}\in\mathcal E.
+\tag{X122.14}
+$$
+
+其完整球振幅准确为
+
+$$
+\operatorname{osc}_G f_h=\frac{2\|v\|_G}{\lambda_N},\qquad
+\operatorname{osc}_F f_h=\frac{2\|T_s(\alpha,v)\|_F}{\lambda_N}.
+\tag{X122.15}
+$$
+
+因而
+
+$$
+\begin{gathered}
+\alpha\ge\left(\frac2{m_s}-1\right)\|v\|_G
+\ge\left(\frac2M-1\right)\|v\|_G,\\
+4\|Lv\|_F^2\le
+M^2\left[(\alpha+\|v\|_G)^2-(\alpha+\eta\cdot v)^2\right].
+\end{gathered}
+\tag{X122.16}
+$$
+
+定义整个实际原法向像切片
+
+$$
+\mathcal B_s=\{v\in\mathbb R_G^3:\exists h\in N_s,\ R_sh=(1,v)\}.
+\tag{X122.17}
+$$
+
+对它的每个 $v$，有
+
+$$
+\begin{gathered}
+\|v\|_G\le\frac{m_s}{2-m_s}\le\frac M{2-M},\\
+(1+\eta\cdot v)^2+\frac4{M^2}\|Lv\|_F^2
+\le(1+\|v\|_G)^2.
+\end{gathered}
+\tag{X122.18}
+$$
+
+证明。
+原正性在整个 G 给仿射球函数 $\alpha+v\cdot z\ge0$，
+所以 $\alpha\ge\|v\|_G$。
+旧原正法向最大值公式给 $\max_Kh=\alpha+\|v\|_G$。
+若这最大值为零，$h$ 在全 $K$ 为零；$K$ 张成 $V$，所以 $h=0$，矛盾。
+故 $\lambda_N>0$，并且按整个 K 的最大值归一真给全 $C$ 上的原效应。
+这里没有把 $R_s$ 的有符号满射当成原正坐标满射。
+
+完整仿射球的振幅是斜率范数的两倍，得到 (X122.15)。
+第一振幅至多 $m_s$，因此
+
+$$
+2\|v\|_G\le m_s(\alpha+\|v\|_G),
+$$
+
+得第一行 (X122.16)。$m_s\le M$ 给第二个不等号。
+第二振幅至多 $M$，所以
+
+$$
+4\|T_s(\alpha,v)\|_F^2
+\le M^2(\alpha+\|v\|_G)^2.
+$$
+
+把 (X122.8) 代入，并用 $Lv\perp n$，其左边为
+$M^2(\alpha+\eta\cdot v)^2+4\|Lv\|_F^2$，得到所列二次约束。
+两个范数各在自己的图中，没有共享度量的假设。
+
+对每个 $v\in\mathcal B_s$，定义提供同一实际正 $h$ 且 $\alpha=1$。
+将其代入 (X122.16)，由 $0<m_s\le M<1$，
+$M,2-m_s,2-M$ 都严格正，合法整理便得 (X122.18)。
+$v=0$、$Lv=0$ 及其他斜率退化全部留在不等式内。
+只在归一步骤排除 $h=0$。证毕。
+
+径向界是旧全域最大值公式与宽度定义的准确改写。
+二次界是旧 F 宽度上界在命题 122.3 的同一共同因子坐标中的表达，
+不是第二个独立数值原理，也没有构造超出可行域的原正法向。
+

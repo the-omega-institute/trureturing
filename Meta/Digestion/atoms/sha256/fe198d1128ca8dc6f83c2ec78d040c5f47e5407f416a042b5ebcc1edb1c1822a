@@ -1,0 +1,41 @@
+**引理 35.2（原 $A$ 中的精确逆标签）。** 固定任意实际当前对 $(a,b)\in E^2$ 和任意 $r\in L_{\rm sa}$。置
+
+$$
+H=(u+r^2)^{-1}\in A_{\rm sa},\qquad R=rH\in L_{\rm sa},
+\qquad H-u\in L_{\rm sa},
+$$
+
+$$
+\begin{aligned}
+X&=H\circ a-R\circ b+\Lambda(R,a)+\Lambda(H-u,b),\\
+Y&=R\circ a+H\circ b-\Lambda(H-u,a)+\Lambda(R,b),\\
+v_0&=\Lambda(r,X)-r\circ Y,\qquad
+w_0=r\circ X+\Lambda(r,Y).
+\end{aligned}
+\tag{35.2}
+$$
+
+这些都是实际原元素，并且在整个原 $A$ 有
+
+$$
+X-v_0=a,\qquad Y-w_0=b.
+\tag{35.3}
+$$
+
+证明。在 $P_\pi\in U_k$ 记 $\jmath_\pi=i\sigma_\pi$。35.2就是把下式取普通自伴实部和 $\jmath_\pi$-虚部：
+
+$$
+\pi X+\jmath_\pi\pi Y
+=(I-\jmath_\pi\pi r)^{-1}(\pi a+\jmath_\pi\pi b).
+\tag{35.4}
+$$
+
+这由 $(I-\jmath_\pi\pi r)^{-1}=(I+\jmath_\pi\pi r)\pi H$ 直接展开；$H$ 的交换子等于 $H-u$ 的交换子，故35.2没有让 $Q$ 作用于理想外元素。再有
+
+$$
+\pi v_0+\jmath_\pi\pi w_0
+=\jmath_\pi\pi r(\pi X+\jmath_\pi\pi Y),
+$$
+
+给出35.3的像。在 $U_k$ 外，$\pi r=\pi R=\pi(H-u)=0$，35.2直接给 $\pi X=\pi a,\pi Y=\pi b,\pi v_0=\pi w_0=0$。全部不可约表示分离原元素，故35.3为真正原元素等式。这里没有读取或展开未知 $D$。∎
+

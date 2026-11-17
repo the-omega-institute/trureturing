@@ -1,0 +1,51 @@
+### 126.0 同一原域与本章前件
+
+本章仍取同一个非零有限维实空间 $V$、闭尖生成锥 $C\subset V$ 及在
+$C\setminus\{0\}$ 上严格正的 $u\in V^{\ast}$，并保留整个原对象
+
+$$
+ K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+ \mathcal E=[0,u]_{C^{\ast}}.
+$$
+
+对每个 $p\in P$ 使用
+
+$$
+ \mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+ T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+ D_p=\{x\in K:T_p(x)=0\},\qquad
+ \mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\}.
+ \tag{Q126.1}
+$$
+
+本章的几何前件是裸 $\mathrm{EB3}$：每个 $D_p$ 都仿射同构于整个闭三球。完全保留
+VII103.2 和 IX116.1 的面分类：每个 $D_p$ 是紧暴露极大真面，全部非空真面只有原纯单点和这些完整球；每个完整球的球边纯点生成整球；不同完整球至多交于一个纯点。这里不假设 $P$ 闭，也不假设
+$\mathrm{Inj}$、全 Pair、正投影、projectivity 或共同仪器。
+
+令
+
+$$
+ A=\operatorname{aff}K=\{u=1\},\qquad
+ S=\partial_{\mathrm{rel}}K,\qquad
+ \mathfrak B=\{D_p:p\in P\}.
+$$
+
+固定方向空间 $\ker u$ 上的任一欧氏范数，在 $A$ 上用其诱导的距离定义直径和 Hausdorff 距离。由 IX116.8，裸 $\mathrm{EB3}$ 已给 $\dim V\ge7$，故
+$S$ 是维数 $m=\dim V-2\ge5$ 的紧拓扑流形，且 $S\cong S^m$。对
+$F\in\mathfrak B$ 写
+
+$$
+ S(F)=P\cap F=\partial_{\mathrm{rel}}F,\qquad
+ I(F)=\{p\in P:D_p=F\}.
+$$
+
+若 $I(F)$ 非单点，IX116.2 给出唯一的对侧完整球 $\tau F$，满足
+
+$$
+ I(F)=S(\tau F),\qquad I(\tau F)=S(F),\qquad F\cap\tau F=\varnothing,
+ \tag{Q126.2}
+$$
+
+并且 $F,\tau F$ 都不与第三颗完整球相交。称这类 $F$ 为重复球，记重复球族为
+$\mathfrak B_{\mathrm r}$。
+

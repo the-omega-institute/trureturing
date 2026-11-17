@@ -483,7 +483,7 @@ public sealed partial class LeanCacheEnsureCommandTests
             new RecordingWorktreeProcessRunner(),
             cloner,
             FileSystemLeanCacheStateProbe.Instance,
-            _ => "1");
+            _ => null);
 
         Assert.False(result.Success);
         Assert.Single(cloner.Invocations);

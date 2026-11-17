@@ -1,0 +1,35 @@
+**推论 114.7（所有锥面的正限制满射与niceness）。** 在EB3加PR下，原 $C$ 的每个面都暴露。
+对每个锥面 $L\unlhd C$，以同一环境对偶空间定义
+
+$$
+L^\perp=\{\ell\in V^{\ast}:\ell|_L=0\},\qquad
+L^{\ast}=\{\ell\in V^{\ast}:\ell(x)\ge0\ (x\in L)\}.
+$$
+
+则有准确恒等式
+
+$$
+C^{\ast}+L^\perp=L^{\ast}\qquad(L\unlhd C).
+\tag{IX114.25}
+$$
+
+所以所有这些和都闭，$C$ 是facially dual complete，亦称nice。
+
+证明。非零真锥面与归一基的非空真面对应。
+114.2处理所有非单点基面，114.3处理纯单点基面，因此每个非零真锥面都由同一原正泛函暴露。
+零面由严格正的 $u$ 暴露，整个 $C$ 由零泛函暴露。
+
+显然 $C^{\ast}+L^\perp\subseteq L^{\ast}$。
+若 $L=\operatorname{cone}F$ 且 $F$ 为一个排除三球，
+任取 $\ell\in L^{\ast}$，则 $\ell|_F$ 是非负仿射函数。
+114.6给 $g\in C^{\ast}$，$g|_F=\ell|_F$，所以 $\ell-g\in L^\perp$。
+若 $L=\mathbb R_+p$ 为纯射线，令 $g=\ell(p)u\in C^{\ast}$，同样有 $\ell-g\in L^\perp$。
+$L=\{0\}$ 时两侧均为 $V^{\ast}$；$L=C$ 时两侧均为 $C^{\ast}$。
+由114.2的面分类，这穷尽全部锥面，证明反向包含。
+
+$L^{\ast}$ 本身闭，所以(IX114.25)确实给出niceness。
+这是[Pataki，arXiv:1202.4043v4，Theorem 2，PDF pp.8—9][Q114P]所讨论的面上正限制性质；
+该文Theorem 3及Corollary 1（PDF pp.10—11）给出它与面暴露的关系及相应条件。
+这里的恒等式和面暴露均由原模型直接推出，并未把文献中的一般性质另作公理。
+有限正延拓不供应 $\beta_F=1$，也不供应同一个全局自对偶内积或锥的perfection。证毕。
+

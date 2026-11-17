@@ -1,0 +1,13 @@
+**定义 41.2（原评价及原总响应）。** 同一原 $\Omega/\mathrm{native}$ 的 $(E,C,u,N,\mathcal P,S,D)$ 满足：每份 $\gamma\in\mathcal P$ 是正实线性评价，
+
+$$
+\begin{gathered}
+a\in C\iff (\forall\gamma\in\mathcal P)\ \gamma(a)\ge0,\\
+[(\forall\gamma\in\mathcal P)\ \gamma(a)=0]\Longrightarrow a=0,
+\qquad m_\gamma=\gamma(u)\ge0.
+\end{gathered}
+\tag{41.3}
+$$
+
+零、不等、次归一及非正常评价仍全部在域内。数学正泛函不被补入原准备族。未知 $D:E\times E\to E$ 仅为同一个总映射；每个输出属于连续截面空间，这是成员资格，而非输入连续性。没有预给可加、齐次、可测、输入连续、协变、中央局部、投影下降、商下降或完成延拓。
+

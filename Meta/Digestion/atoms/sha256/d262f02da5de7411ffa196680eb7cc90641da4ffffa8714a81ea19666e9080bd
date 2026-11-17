@@ -1,0 +1,15 @@
+**推论 27A.3（越过二次尺度的明确同一实现）。** 在 (27A.1) 中取 $\varepsilon=1/8$、$\rho=1/4$。每个分别固定的 $\sigma$，取
+
+$$
+x=\begin{pmatrix}
+625/696&10^6\\
+10^6&29\cdot10^{12}/21
+\end{pmatrix}\oplus0_2,\qquad
+\xi_\sigma=\left(1,-\frac{21(3+2\sigma i)}{116\cdot10^6},0,0\right)^{\mathsf T}.
+\tag{27A.37}
+$$
+
+则该完整 $M_4$ 输入的全正 P2 成立，两笔原 PB 预算严格正，且 $\mathcal G_\sigma(x,\phi_{\xi_\sigma})>1/32$。
+
+证明。它是 (27A.6) 中的 (27A.4)，直接应用定理 27A.2。定理 24.1–25.1 在该 $\rho$ 上所付的小边条件为 $\varepsilon\le\rho^2/16=1/256$；现在 $\varepsilon=1/8>1/256$。更一般地，在 $0<|\rho|\le1/2$ 上，旧条件 $\varepsilon\le\rho^2/16$ 包含在 (27A.6) 内，而 (27A.6) 允许 $\varepsilon$ 与 $|\rho|$ 成正比。(27A.5) 还给出斜率 $\varepsilon/|\rho|<\sqrt{1039/2697}$ 的一般开域；不主张这些常数最优。∎
+

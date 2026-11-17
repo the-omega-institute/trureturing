@@ -1,0 +1,37 @@
+**命题 86.11（指定表示中的转置图）。** 存在完整校准 PRE，在其 66.13 的指定复矩阵直和表示中，$P_{23}$ 正而不完全正，且 $B_{23}$ 的复线性张成不构成结合子代数。
+
+**证明。** 取 $A=H_2\oplus H_2$，中心标签为 $0,1$，全部原锥、迹、态、效应不删，$n=4$、$D=\bigoplus_{i,j}H_4$、$E=\bigoplus_{i,j,k}H_8$。在 66.7 的原逆向中取所有 $u_{ij}=g_{ijk}=I_2$，仅 $\varepsilon_{10}=1$，其余 $\varepsilon_{ij}=0$，并令 $\delta_{ijk}=\varepsilon_{ij}\oplus\varepsilon_{jk}$。只供应
+
+$$
+L(d,c)_{ijk}=d_{ij}\otimes c_k^{T^{\delta_{ijk}}},\qquad
+(pz)_{jk}=\sum_iT_4^{\varepsilon_{ij}}(\operatorname{Tr}_i z_{ijk}),
+\qquad\omega=1_D/16.
+\tag{86.16}
+$$
+
+这里 $T_4$ 是整个保留 $4\times4$ 块的转置。逆迹平衡为 $\sum_{i,j}2\operatorname{Tr}I_2=16=n^2$，方向条件正是 (66.20)。为保留两次同 $p$，记 $\widehat M(a,b)_{ij}=a_i\otimes b_j^{T^{\varepsilon_{ij}}}$、$(sd)_j=\sum_i(\operatorname{Tr}_id_{ij})^{T^{\varepsilon_{ij}}}$。直接代入得
+
+$$
+pL(d,c)=\widehat M(sd,c),\quad
+s\widehat M(a,b)=\tau_A(a)b,\quad s\omega=1_A/4,
+\quad K(a)=\widehat M(1_A/4,a),\quad M(a,b)=\widehat M(a,b).
+$$
+
+末式来自第二次使用原 $p$。66.7 因而给完整 PRE，包括全锥正性、两实张成、全实 $Z$ 与两个全量词零关系。$U=1_D,G=1_E,p1_E=4\,1_D$，故 C2、$\mathsf G_1$ 成立，两联合迹均为 $64$。这只消费既有分类与逆向，不增加一般方向分类。
+
+由原迹伴随，
+
+$$
+(p^*d)_{ijk}=I_2\otimes T_4^{\varepsilon_{ij}}d_{jk},\qquad
+(P_{23}z)_{hjk}=\frac14I_2\otimes
+\sum_iT_4^{\varepsilon_{hj}\oplus\varepsilon_{ij}}
+(\operatorname{Tr}_iz_{ijk}).
+\tag{86.17}
+$$
+
+只在源块 $000$ 放 $q_0\otimes x$，其中 $q_0$ 为首腿迹一秩一投影，$x\in H_4$，其余块为零。输出块 $100$ 为 $I_2\otimes x^T/4$；在其首腿任一单位向量上压缩，得到恰好的映射 $T_4/4$。源包含、取中心输出块和该压缩均 CP。若 $P_{23}$ CP，则 $T_4/4$ CP；但在 $\mathbb C^2\otimes\mathbb C^4$ 的前两维 Bell 投影上，其二倍放大在反对称方向给 $-1/8$。故 $P_{23}$ 不 CP。
+
+再只在源 $D_{00}$ 取复矩阵 $x$，$p^*$ 的复延拓在输出 $000,100$ 给 $(I_2\otimes x,I_2\otimes x^T)$，别块为零。这是 Jordan 转置图。取 $x=E_{12},y=E_{21}\in M_4$，两图像的结合乘积为 $(I_2\otimes E_{11},I_2\otimes E_{22})$；它不在该范围，因为首块迫使源为 $E_{11}$，次块却应为 $I_2\otimes E_{11}$。其他源中心块不能改变这两个输出块。故整个范围的复线性张成不封闭于结合乘法。证毕。
+
+这份指定表示中的控制说明，86.10 的结论确是 Jordan 条件期望；保留原表示时，不能自动升级为结合代数条件期望或 CP 映射。它不判定所有可能 Jordan 坐标下的最优表示，也不供应物理过程。
+

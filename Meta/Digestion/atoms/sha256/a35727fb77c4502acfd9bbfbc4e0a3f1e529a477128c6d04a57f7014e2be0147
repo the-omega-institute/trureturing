@@ -1,0 +1,38 @@
+**引理 102.1（中央比较只选择读数方向）。** 固定任意 $Z\in M$，写极分解 $Z=v|Z|$，$p=v^*v,q=vv^*$。有中央投影 $z$，以及同一个全局等距 $w\in M$、$w^*w=1$，使
+
+$$
+\begin{aligned}
+zZ&=zw|Z|,\\
+(1-z)\mathcal T Z&=(1-z)w|\mathcal T Z|.
+\end{aligned}
+\tag{102.1}
+$$
+
+证明。任意 von Neumann 代数的中央比较给
+
+$$
+z(1-p)\precsim z(1-q),\qquad
+(1-z)(1-q)\precsim(1-z)(1-p).
+\tag{102.2}
+$$
+
+取部分等距 $s_+$、$s_-$，分别满足
+
+$$
+\begin{gathered}
+s_+^*s_+=z(1-p),\quad s_+s_+^*\le z(1-q),\\
+s_-^*s_-=(1-z)(1-q),\quad s_-s_-^*\le(1-z)(1-p).
+\end{gathered}
+$$
+
+$\mathcal T Z=JZ^*$ 的极部分等距是 $Jv^*$，初末投影为 $q,p$，因为 $J$ 中央且酉；其绝对值是 $|Z^*|$。令
+
+$$
+w_+=zv+s_+,\qquad w_-=(1-z)Jv^*+s_-,\qquad w=w_++w_-.
+\tag{102.3}
+$$
+
+各对初末支撑正交，故 $w_+^*w_+=z$、$w_-^*w_-=1-z$；中央正交使 $w^*w=1$。新增部分在相应绝对值上为零，给102.1。$z=0,1$ 和零输入同样成立。
+
+这里仅拼已知极分解的等距元；两个待读对象仍分别是完整的原输入 $Z$ 和完整的原输入 $\mathcal T Z$。不引入混合输入 $zZ+(1-z)\mathcal T Z$ 的未知响应，也不推断 $\mathfrak F(zZ)=z\mathfrak F(Z)$。∎
+

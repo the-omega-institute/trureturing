@@ -25,5 +25,6 @@ Taking b=a and v=0 gives strict positivity of the original odd diagonal differen
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ThetaReflectedKernelComparison.physical_kernel_reflection_comparison`
+- Dependency: [D5/S3/Analytic/Convexity/StrictConcaveSymmetricSum](../../Analytic/Convexity/StrictConcaveSymmetricSum.md)
 - Dependency: [D5/S3/Analytic/Fourier/ThetaRadialCurvature](../../Analytic/Fourier/ThetaRadialCurvature.md)
 - Dependency: [D5/S3/Zeros/Jensen/SourceThetaMomentBounds](../../Zeros/Jensen/SourceThetaMomentBounds.md)

@@ -1,0 +1,24 @@
+**原文对应与应用差额。** 定理 30.2 使用的两空间分拆秩已有完整先例：Bernstein [*Generic symmetry-forced infinitesimal rigidity: translations and rotations*，arXiv:2003.10529v4，Theorem 3.1](https://arxiv.org/pdf/2003.10529v4) 对两个不包含于任何坐标超平面的复线性空间给出 $M(U\star V)=M(r_U+r_V-1)$；Antolini–Dewar–Tanigawa 的 [*Dilworth truncations and Hadamard products of linear spaces*，arXiv:2508.04798v1，Theorem 1.1、§3.2](https://arxiv.org/pdf/2508.04798v1) 已用两个不同基矩阵及独立泛参数给出 (30.9) 的接口。本节的首基向量 $1$ 保证各坐标投影非零，并不要求两个空间相同。该文 §4 反驳的是一般三个或更多因子的猜想，不否定二因子定理。任意特征零 $F$ 上使用的泛超平面秩与最少块唯一性，分别由 Raz–Wigderson [*Subspace arrangements, graph rigidity and derandomization through submodular optimization*，arXiv:1901.09423v1，Theorems 5.2、7.1 及 Corollary 3.2](https://arxiv.org/pdf/1901.09423v1) 承担。它们不是本节新增的基础。
+
+有限域也已有整体取等公式，而非只有若干 mixed 例子。De Beule–Demuys–Polverino–Zullo [*Few-Weight Linear Sets and Divisibility of Rank-Metric Codes*，arXiv:2611.08044v1，Theorem 3.7](https://arxiv.org/pdf/2611.08044v1) 的原假设为：$q\ge M$，$U\le_{\mathbb F_q}\mathcal V$，$S=\langle U\rangle_{\mathbb F_{q^M}}$，$h=\dim_{\mathbb F_{q^M}}S\ge2$，$R_0=\dim_{\mathbb F_q}U\le(h-1)M$，最小正点权 $a_0>1$。它对任意这样的 $h$ 给出实际子域 $B=\mathbb F_{q^b}\subseteq\mathbb F_{q^M}$，使 $U_B=\langle U\rangle_B$ 定义相同点集、具有相对 $B$ 权一的点，并且
+
+$$
+\dim_{\mathbb F_q}U_B=R_0+b-a_0,\qquad
+b\mid(R_0-a_0),\qquad a_0\le b\le R_0-a_0.
+\tag{30.28}
+$$
+
+对原点集的每个正点 $P$，$U_B\cap P$ 至少有 $b$ 个底域方向，而 $(U_B\cap P)/(U\cap P)$ 嵌入 $U_B/U$，所以点权至少为 $b-(\dim_{\mathbb F_q}U_B-R_0)$。该论证对每个实际中间域成立，(30.28) 又给出一个取等域；故原文已经推出其整个适用范围内的最小正点权中间域最大值公式。$a_0=1$ 时底域本身取等，无须应用其 $a_0>1$ 的结论。这一先例不限于 $h=2$，本节不将它作为新定理。
+
+具体对 mixed 窗口改用 $D=\mathbb F_{q^N}$、$U=X\times Y\subseteq D^2$，有 $M=N$、$h=2$、$R_0=m+n$。点 $D(\rho,1)$ 的权由第一坐标同构到 $X\cap\rho Y$；两个坐标轴的权分别为 $m,n$，均不小于 $\delta$，所以最小正点权恰为 $\delta$。上述原假设成为 $q\ge N$、$m+n\le N$。$U_B=(BX)\times(BY)$，代入 (30.28) 正好得到 $\delta=b-(\dim_F BX-m)-(\dim_F BY-n)$；合用逐点的商空间下界即得这个有限域范围内完整的 mixed 公式。Van de Voorde–Zullo [*On the weight distribution of linear sets with complementary weights and related constructions*，arXiv:2511.20057v1，Theorem 3.2、Corollary 3.3、Lemma 3.6](https://arxiv.org/pdf/2511.20057v1) 已给 Cartesian 定义空间的逐权集合刻画及交维接口。若其约定要求先列较大空间，可以交换两个坐标。两轴始终保留其各自权；例如 $(2,6)$ 分支的轴权是二与六，不能将 mixed 非轴点常权二说成所有点都常权二。
+
+Jena–Van de Voorde [*On linear sets of minimum size*，arXiv:2005.10931v2，Theorem 2.7](https://arxiv.org/pdf/2005.10931v2) 已构造可规定重权的有限域最小大小线性集并计算其权分布。Zullo–Polverino–Santonastaso–Sheekey [*Two-weight rank-metric codes*，arXiv:2405.02841v1，Corollary III.3、Remark III.4、Theorem IV.8](https://arxiv.org/pdf/2405.02841v1) 区分常正点权、权皆为某整数的倍数及两重量码；Remark III.4 的 Cartesian 例子已有不同正权，常权结论不能移用于不同轴权的本节构造。有限域的计点、保持点集及码分类假设不承担定理 30.2 在任意特征零原域中的返回。
+
+部分子域方向与截短方向的结构同样已有一般域先例。Napolitano–Polverino–Santonastaso–Zullo [*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Examples 6.2、6.4、Proposition 6.3](https://arxiv.org/pdf/2201.02003v1) 构造并分类 $S+\mu S$ 仅比 $S$ 多一维的临界对；其中 $\mu$ 在底域上代数，Proposition 6.3 另要求 $\dim_F L\ge\dim_F S+2$。Example 6.4 已明确使用三次域 $\mathbb Q(\sqrt[3]{2})$ 及其完整方向加截短方向。命题 30.4 的 $A\oplus\alpha H$ 正属此类形状：$\mu=t$、$S=A\oplus\alpha H$ 时，$S+tS=Z$ 为六维，且原 $L$ 十八维满足该维数前件。Castello–Polverino–Zullo [*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 5.2、式 (13)](https://arxiv.org/pdf/2405.19911v1) 已使用中间域张成、同一一般域临界对分类和补维损失下界。它们给出这些形状及维数机制的先例，不能把本节的窗口构造本身称作首次发现。
+
+相对于这些原文和固定的 §§28–29，本节的仓内应用推导（repo-derived）差额为：在同一原特征零扩张中将两组不同窗口的最优分拆下降到共同的实际中间域，分别计算两边损失并取到原 $W/V$ 见证；由此穷尽总维数八的两种取等形状，确定唯一取等域及不同的个别稳定子；在一个九次真比值子域和十八次原环境中，给出 (30.22)、(30.24) 的全原标签公式。两个独立归一化标签的关系由 (30.3) 保留，域外原标签由 (30.23) 实现。这里不以指定文献中的未覆盖推断全球优先权。
+
+白话说，两扇不同窗口可以借用同一个较大的标量域来补齐，但两边付出的补齐代价不必一样。八维是第一次能够以一个三次域提供三个共同方向、只花一个补维方向、最后强制留下两个共享方向的总规模。这个唯一的一份损失放在小窗口，就得到二维对六维；放在大窗口，就得到三维对五维。分拆秩保证这种补齐下界确实可达，取等分析保证没有遗漏同规模的其他结构。原窗口各自带着的缩放因子仍留在原标签上，因此归一化标签属于比值域，并不妨碍真正取等的原标签在比值域之外。
+
+本节仅讨论精确的原标签交维及其最小正值。所有中间域与张成都取自同一个实际对象，不以次数条件制造子域；可分分裂与泛参数只用于证明，原域非零子式提供合法见证。本节不处理完整窗口轨道或 $J$ 恢复，不给出有限查询、算法、噪声、物理或量子结论，也不外推至 $\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
+

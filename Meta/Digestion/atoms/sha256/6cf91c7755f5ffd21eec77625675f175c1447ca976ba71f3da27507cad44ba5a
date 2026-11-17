@@ -1,0 +1,20 @@
+**定义 C-27.4.1（内部固定、闭合待补）。** 取四条已给相邻边 <span>𝑔<sub>1</sub>=𝑔<sub>2</sub>=𝑔<sub>3</sub>=𝑔<sub>4</sub>=𝑟<sub>𝑔</sub></span>，并明确规定其他非邻条目为零，仅留
+
+<div>
+𝑐=⟨𝑒<sub>5</sub>,𝑒<sub>1</sub>⟩
+</div>
+
+为未知关系。候选矩阵为
+
+<div>
+𝐺<sub>5</sub>(𝑐)=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>0</td><td>conj(𝑐)</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>0</td><td>⎟</td></tr>
+<tr><td>⎜</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>⎟</td></tr>
+<tr><td>⎜</td><td>0</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>⎟</td></tr>
+<tr><td>⎝</td><td>𝑐</td><td>0</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+,  φ=((1+√(5))/(2)).
+</div>
+

@@ -1,0 +1,47 @@
+**定义 42.2（完整原候选）。** 给定含单位复C*代数 $A$，取完整原域及原结构
+
+$$
+E=A_{\rm sa},\qquad S(a,b)=a\circ b=(ab+ba)/2,
+\qquad C=A_+,\quad u=1,\quad N(a)=\|a\|.
+\tag{42.1}
+$$
+
+同一原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定 $C$。保留原世界 $\Omega/\mathrm{native}$、每份评价及其质量 $m_\gamma=\gamma(1)$，包括零、不等、次归一及原表示意义下的非正常评价。未知量是同一个任意总映射 $D:E^2\to E$。
+
+记 $\mathsf H_A(D)$ 为下列全部原关系的合取。A1/P2要求所有实际 $a,b\in E$、两种次序及所有 $\gamma\in\mathcal P$ 的Hermitian二表
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{42.2}
+$$
+
+A2要求相加三表 $(a+b,a,b)$ 及全部排列的实部在整个 $\mathbb R^3$ 上半正定，指定相加向量 $(1,-1,-1)$ 及相应排列给零。A3要求 $1^2=1$，并保留同一个固定有理 $0<\vartheta\le1$ 上的全部 $0\le e\le\vartheta1\Rightarrow e^2\le e$。不预给复三表正性。
+
+对每个实际三元组 $(h;a,b)$，定义的始终是同一旧映射的实际内值及实际外层标签：
+
+$$
+v=D(h,a)-h\circ b,\quad w=h\circ a+D(h,b),
+\qquad r_\pm=a\pm v,\quad s_\pm=b\pm w.
+\tag{42.3}
+$$
+
+完整PB要求全部原评价满足
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+\tag{42.4}
+$$
+
+由分离性及已知Jordan双线性，其元素式等价于
+
+$$
+D(a+v,b+w)-D(a-v,b-w)=-2a\circ v-2b\circ w.
+\tag{42.5}
+$$
+
+零、重复、任意幅度、缩放、平移、背景及全部嵌套调用都在量词内。不给 $D$ 输入线性、连续、可测、协变、局部性、商下降或输出小代数闭合。后文每次只在原 $E$ 中调用PB；输入像相等从不授权更换实际标签。
+

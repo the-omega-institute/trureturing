@@ -1,0 +1,19 @@
+### 34.1 全复参数铅笔与闭区间
+
+对 §33.1 的固定二表关系，令 $z=x+iy$，定义
+
+$$
+F_z=t^2-2x(c\circ t)+|z|^2c^2+2yg.
+$$
+
+准确有
+$(-\bar z,1)M_\phi(c,t;g)(-z,1)^{\mathsf T}=\phi(F_z)$，从而
+
+$$
+\mathsf{P2}(c,t;g)\quad\Longleftrightarrow\quad
+F_z\succeq0\quad(z\in\mathbb C).
+\tag{34.1}
+$$
+
+正泛函分离正锥给右向结论；反向中，任一标量列 $(\alpha,\beta)$ 在 $\beta\ne0$ 时是 $\beta(-z,1)$，在 $\beta=0$ 时二次值为 $|\alpha|^2\phi(c^2)\ge0$。因此等价式包含零首对角项及零泛函，不依赖除以它们。
+

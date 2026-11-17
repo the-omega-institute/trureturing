@@ -1,0 +1,47 @@
+**定义 59.1（同一原候选与数学引文）。** 保持42.2的完整原候选 $\mathsf H_A(D)$：$A$ 是已给的含单位复C*代数，$E=A_{\rm sa}$，$S(a,b)=a\circ b=(ab+ba)/2$，$C=A_+$，$u=1$，$N(a)=\|a\|$。同一原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定锥；原世界、原标签、每份原评价和全部质量 $m_\gamma=\gamma(1)$ 保持，包括零、不等、次归一及原表示意义下的非正常评价。$D:E^2\to E$ 是同一个任意总映射。全部原有向二表为
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(a\circ b)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0
+\qquad(a,b\in E,\ \gamma\in\mathcal P).
+\tag{59.1}
+$$
+
+A2仍要求全部相加三表 $(a+b,a,b)$ 及其排列的实部在整个 $\mathbb R^3$ 上半正定，并有对应的相加零方向。A3仍要求 $1^2=1$，以及同一个固定有理 $0<\vartheta\le1$ 上的全部 $0\le a\le\vartheta1\Rightarrow a^2\le a$。对每个实际原三元组 $(h;a,b)$，完整PB准确为
+
+$$
+\begin{gathered}
+v=D(h,a)-h\circ b,\qquad w=h\circ a+D(h,b),\\
+D(a+v,b+w)-D(a-v,b-w)=-2a\circ v-2b\circ w.
+\end{gathered}
+\tag{59.2}
+$$
+
+不增加复三表正性，不预给 $D$ 的可加、齐次、连续、可测、协变、单位平移、输出闭合、商下降或双对偶延拓。以下数学引文固定取 `75ad65c4dd9ea2d5e066bed6910b76267a8258e6`；各引文内部递归纳入的上游身份仍按其自身定义解释。
+
+| 原数学来源 | 直接消费的准确结论 |
+| --- | --- |
+| [中央卷16.2、62.1、77.1–77.2](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) | 正交面积产生实际三轴；整个标量平方片的原仿射双线性，不预要求输出闭合。 |
+| [中央续卷134.1、159.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md) | 实际框架的全环境中央取向与两个框架的交叠交换子律。 |
+| 中央续卷163.1、182.2 | 任意原第二输入的仿射首轴横向投影；实际反射框架的旧第三值及同一取向。 |
+| [运输续卷118.1–118.3、119.1](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md) | 第一框架下的固定偶余量；完整原条件下 $[c,r]=0\Longleftrightarrow r=0$。 |
+| [谱混合卷55.6](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md) | 原偶第二输入的整条仿射轴零行。 |
+| 本卷43.1、48.1–48.2；[配平续卷142.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md) | 同表正读取；两份实际内值已知后的准确Cayley运输；含奇异矩阵的有限极分解。 |
+
+上述运输续卷与配平续卷的名称只定位本表数学引文，不改变28.1及57.1内部缩写的含义。本节不调用42.4的本质连续迹前件，也不把完整von Neumann原域上的定理套给CAR的范数原域。
+
+由43.1，任意数学正实泛函 $\phi$ 都可读取同一张原二表，且
+
+$$
+\begin{gathered}
+D(b,a)=-D(a,b),\qquad D(0,a)=D(a,0)=0,\\
+|\phi D(a,b)|^2\le\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\\
+\|D(a,b)\|\le\|a\|\|b\|.
+\end{gathered}
+\tag{59.3}
+$$
+
+最后一式只需对数学态读取，再用自伴范数的态分离：$\phi(a^2)\le\|a\|^2\phi(1)$，另一平方同理。正读取先由全部原评价及准确锥取得，不把数学态加入实际准备族，也不除以任何原质量。既有全单位行另给 $D(s1,a)=0$，其中 $s\in\mathbb R$、$a\in E$。
+

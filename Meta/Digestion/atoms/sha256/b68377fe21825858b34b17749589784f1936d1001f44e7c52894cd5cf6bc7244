@@ -1,0 +1,30 @@
+### 14.3 完整规定后缀的上界
+
+后缀恰为 (10.9)–(10.10)。它忽略每个旧口，包括 $E_\eta$。具体地，在固定 singlet $BA$ 上作第一个新前向 $V$，在原标签基退相干 $H$，保留 $H,E$、原始符号及实际副本，只在负标签交换 $B,A$；独立重置 $F$ 于 $+d e_x$，施行 (10.9) 的固定 $\widehat\Phi$，再对其 $A$ 作第二个新前向 $V$ 及同样的标签保留。对 $B,A,F$ 作同名输出保留的 $\mathcal E$。最后于 $+d e_x$ 独立重置此前未经改动的 $S_t$，执行一次 $\exp[-idJ\cdot\sigma/m]$，对 $S_t$ 作同名保留的 $\mathcal E$。$\widehat\Phi,\mathcal E$ 的 CP、TP 性使用 OTF004 引理 17.2；不更换其实际输出。
+
+记此完整通道为 $\mathcal S_v$，$v=n(+d e_x)$。OTF004 定理 17.3 对全部 $h,v$ 给
+
+$$
+\begin{aligned}
+\|\mathcal S_v(\tau_h)-\tau_h\otimes\pi_Z\otimes\sigma_1\|_1
+&<73/D,\\
+\mathcal R_h(\mathcal S_v(\tau_h))&<80/D.
+\end{aligned}
+\tag{14.10}
+$$
+
+对 $\rho_{\rm old}$ 和它自己的乘积比较态
+$\tau_h\otimes\operatorname{Tr}_R\rho_{\rm old}$ 施行同一后缀，其距离至多 $\delta_{\rm old}$。在乘积输入上，后缀的输出是
+$\mathcal S_v(\tau_h)\otimes\operatorname{Tr}_R\rho_{\rm old}$；使用 (14.10)，再将比较边缘改为实际最终 $K_\eta$ 边缘，由偏迹收缩另付至多 $\delta_{\rm old}$。因此
+
+$$
+\begin{aligned}
+\Delta_\eta(n,h)&\le2\delta_{\rm old}+80/D\\
+&\le1536A\sqrt{\eta/t}
++\frac{2\cdot768^2(A^2+B_*+2)+5/4}{t}.
+\end{aligned}
+\tag{14.11}
+$$
+
+这里 $80t/D=80me^2/D<80e^2<1$。因 $A\ge1$，(14.1) 的 $C_{\rm part}$ 同时大于 $1536A$ 和 (14.11) 的余项常数，给 (14.2) 的上界。这一比较包含全部新后缀记录。
+

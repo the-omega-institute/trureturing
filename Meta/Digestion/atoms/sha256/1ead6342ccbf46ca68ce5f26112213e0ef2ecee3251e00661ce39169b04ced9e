@@ -1,0 +1,29 @@
+**引理 26.6（完整工作分辨交叉块）。** 在 (26.7) 的全部实际输出空间上令 $P_h=\tau_h\otimes I$，则
+
+$$
+\begin{aligned}
+ \|P_h\phi_h(I-P_h)\|_1
+ &\ge\frac1{2\sqrt\lambda}-\frac{B_*}{\lambda}
+ \ge\frac1{4\sqrt\lambda},\\
+ d_{\rm keep}(h)&:=D_{\rm tr}(\phi_h,
+                   \tau_h\otimes\operatorname{Tr}_R\phi_h)
+ \ge\frac1{4\sqrt\lambda}=\frac{192}{\sqrt t}.
+\end{aligned}
+\tag{26.13}
+$$
+
+证明。$\Xi_h$ 的第 $l$ 个交叉块是
+$|e_0\rangle\langle e_1|\otimes|f_l\rangle\langle g_l|/\sqrt m$，附有其自己的正交实际码 $|J_l\rangle$。秩一迹范数为 $\|f_l\|\|g_l\|/\sqrt m$，不同 $l$ 块的迹范数相加。因此 (26.9) 给
+
+$$
+ \|P_h\Xi_h(I-P_h)\|_1
+ =\frac1{\sqrt m}\sum_l\|f_l\|\|g_l\|
+ \ge\frac1{2s\sqrt m}=\frac1{2\sqrt\lambda}.
+ \tag{26.14}
+$$
+
+左右压缩收缩迹范数，(26.12) 最多损失 $B_*/\lambda$。由 $\lambda\ge64B_*^2$，这个损失至多 $1/(8\sqrt\lambda)$，强于 (26.13) 所需。
+
+对任意态 $\rho$，乘积 $\tau_h\otimes\rho_K$ 的此交叉块为零。取 $P_h\rho(I-P_h)$ 的极分解部分等距及其伴随构成自伴非对角检验，算子范数为一，在 $\rho-\tau_h\otimes\rho_K$ 上的期望为 $2\|P_h\rho(I-P_h)\|_1$。迹范数对偶给
+$D_{\rm tr}(\rho,\tau_h\otimes\rho_K)\ge\|P_h\rho(I-P_h)\|_1$，并可取 $\rho_K=\operatorname{Tr}_R\rho$。故比较的是同一态自己的全部实际边缘。此处没有删去实际工作口，也没有在不同 $l$ 间抵消。$\square$
+

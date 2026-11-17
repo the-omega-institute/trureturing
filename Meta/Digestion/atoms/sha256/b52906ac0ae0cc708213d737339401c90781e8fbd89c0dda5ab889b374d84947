@@ -1,0 +1,55 @@
+**定理 43.1（标量端点原域的全输入二阶消失）。** 在 41.1 的同一完整候选下，对全部实际原 $a,b\in E$，
+
+$$
+\boxed{[x^0]D(a,b)=[x]D(a,b)=0.}
+\tag{43.1}
+$$
+
+即每一份固定旧输出在端点为 $O(x^2)$，包括任意混合标量输入。这不只限于 $E_0^2$，也不需要先消费 36.2 的无迹交换子识别。
+
+证明。常数项已在 §41 由端点 P2 消去。写
+
+$$
+\begin{gathered}
+a=\alpha u+xA+O(x^2),\qquad b=\beta u+xB+O(x^2),\\
+A^0=\mathbf u\cdot\boldsymbol\sigma,\qquad
+B^0=\mathbf v\cdot\boldsymbol\sigma,\qquad
+[x]D(a,b)=\mathbf e\cdot\boldsymbol\sigma.
+\end{gathered}
+$$
+
+若 $\alpha=\beta=0$，(41.3) 的 $T=0$，直接给 $\mathbf e=0$。以下设 $\rho=\sqrt{\alpha^2+\beta^2}>0$。对普通实常数角度 $\theta$，形成真正的原标签
+
+$$
+\begin{gathered}
+a_\theta=a\cos\theta-b\sin\theta,\qquad
+b_\theta=a\sin\theta+b\cos\theta,\\
+D(a_\theta,b_\theta)=D(a,b).
+\end{gathered}
+\tag{43.2}
+$$
+
+最后一式准确复用配平主卷 185.1；它保持完整旧输出，不只是范数或某份读取。旋转后第二端点和第一输入的一次无迹系数为
+
+$$
+\tau_\theta=\alpha\sin\theta+\beta\cos\theta,\qquad
+\mathbf u_\theta=\mathbf u\cos\theta-\mathbf v\sin\theta,
+\qquad |\mathbf u_\theta|\le M:=\sqrt{|\mathbf u|^2+|\mathbf v|^2}.
+$$
+
+当 $\tau_\theta\ne0$，41.2 给同一个固定向量的界
+
+$$
+|\mathbf e|\le |\tau_\theta|\,|\mathbf u_\theta|
+\le |\tau_\theta|M.
+\tag{43.3}
+$$
+
+$M=0$ 时任选 $\tau_\theta\ne0$ 即得 $\mathbf e=0$。若 $M>0$ 且 $\mathbf e\ne0$，半径 $\rho$ 的端点圆允许选择一个有限常数角，使
+
+$$
+0<|\tau_\theta|<\min\{\rho,|\mathbf e|/(2M)\}.
+$$
+
+(43.3) 遂给 $|\mathbf e|<|\mathbf e|/2$，矛盾。故总有 $\mathbf e=0$。没有对未知 $D$ 求导、取输入连续极限、按角度作多项式假设，或把旋转后第一端点归一成一；41.2 对全部 $\lambda$ 的范围在这里实际被消费。∎
+

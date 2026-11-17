@@ -1,0 +1,18 @@
+**定理 101.10（四维纯元数三的精确替换）。** 在定义101.1的同一个原载体及 $m=4$ 下，
+
+$$
+\boxed{\begin{aligned}
+\mathrm B+\mathrm G_3
+&\Longleftrightarrow\mathrm B+\mathrm{Z0}\\
+&\Longleftrightarrow
+K\cong_{\rm aff}\Delta_4,\ \mathbb B^4,\
+\mathbb B^3*\Delta_0\ \text{或}\ \mathbb B^2*\Delta_1\\
+&\Longleftrightarrow S.
+\end{aligned}}
+\tag{VII101.30}
+$$
+
+四类的全部原效应、least确认和局部proper效应的原全域延拓仍准确取定理99.8的公式；这些结论不是本定理的额外前件。在这一固定维数和 $\mathrm B$ 下，以至多几个原纯目标作统一替代，充分且最小的元数为三；固定确认纯点另算，合计至多四个纯标签。
+
+证明。第一步直接应用101.5的 $m-1=3$，不预设 $\mathrm{Z0}$。第二步及四类的完整 $S$ 直接消费VII99.8，不重复四类证明。反向从 $S$ 复用VI89.4及least零面得到原 $\mathrm B+\mathrm{Z0}$，再由101.2得到 $\mathrm G_3$。101.8的同维 $K_3$ 满足 $\mathrm B+\mathrm G_2$ 却失败 $\mathrm{Z0}$，故元数二不足。这里的最小性只比较(VII101.2)这一族原纯目标检验；不声称整个物理包具有最少独立公理。证毕。
+

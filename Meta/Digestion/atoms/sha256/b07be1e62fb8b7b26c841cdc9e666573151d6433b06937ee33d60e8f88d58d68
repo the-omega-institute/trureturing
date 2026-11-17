@@ -1,0 +1,63 @@
+**定理 111.5（存在一框架等于全部框架）。** 在同一原有限维全态、全效应W域中，
+以下条件等价：
+
+$$
+\boxed{\begin{aligned}
+\mathrm{TFD}_{3,\exists}
+&\Longleftrightarrow\exists F:\mathcal I_F=0
+\Longleftrightarrow\forall F:\mathcal I_F=0\\
+&\Longleftrightarrow\mathrm{TFD}_3
+\Longleftrightarrow\mathrm{TRI2}
+\Longleftrightarrow S\\
+&\Longleftrightarrow\mathrm{PAIRJET2}
+\Longleftrightarrow\mathrm{JET2}
+\Longleftrightarrow\mathrm{H2}
+\Longleftrightarrow\mathrm{CUB3}
+\Longleftrightarrow\mathrm{PL}_3\\
+&\Longleftrightarrow\mathrm{Pair}
+\Longleftrightarrow\mathcal L(K)\text{ 满足原面格覆盖律}\\
+&\Longleftrightarrow\exists\text{有限维秩三EJA }J,\quad
+\Phi:J\overset{\sim}{\longrightarrow}V,\quad
+\Phi(J_+)=C,\quad u\Phi=\operatorname{tr}_J.
+\end{aligned}}
+\tag{VIII111.19}
+$$
+
+两个 $F$ 量词均遍历全部原joint三框架。
+$S$ 指整个 $C^*$ 序中的proper least与全部原纯点的数值互易；
+$\mathrm{H2}$ 指VII106的效应空间 $A=V^*$ 上原 $Q(f)$ 是正定二次型，
+不与状态空间的 $Q_3(v)$ 或本章 $\pi_F$ 混名。
+其余比较条件逐字采用VII106.5、106.10的定义。
+G是这些等价条件的后果；本定理没有把G单独列成一个等价条件。
+
+证明。111.2先给存在式的算子表述，111.4给全纯互易。
+W早已给每个原 $a_p$ 对整个 $F_p$ 的全锥序least，故此时原域满足完整 $S$。
+对任意有限原纯准备 $\sum_\ell t_\ell q_\ell$，包括零权和重复标签，
+$T_p=a_p$ 与刚取得的互易也直接给
+
+$$
+T_p\!\left(\sum_\ell t_\ell q_\ell\right)
+ =\sum_\ell t_\ell a_p(q_\ell)
+ =\sum_\ell t_\ell T_{q_\ell}(p),\qquad
+ t_\ell\ge0,\quad\sum_\ell t_\ell=1.
+\tag{VIII111.20}
+$$
+
+现在直接消费VII106.10及109.10已明确接口的[完整S桥][Q109S]：
+原全proper least与全纯互易先供应正对偶剥离、忠实自对偶配对、
+有符号框架谱性、正面投影、projectivity和滤子保纯，
+再应用[Barnum—Müller—Ududec Theorem 16][Q109BMU]取得有限EJA。
+W已有原面高三，同域归一接口给秩三及 $u\Phi=\operatorname{tr}_J$。
+这一整桥按既有证明复用；没有用正投影存在单独顶替滤子保纯。
+所得迹配对与 $B$ 都把每个原纯点配到同一个 $a_p$，
+所以它们相同；此后才使用Jordan谱与成熟Peirce几何。
+
+EJA反向完全复用109.10的原延拓唯一性与真实Peirce核对：
+在每个完整本原框架中，原 $\Pi_{p_i}$ 确为 $U_{e-e_i}$，
+原 $R_i$ 确为本原射线投影，而(VIII109.40)使 $\mathcal I_F=0$。
+这对全部原joint成立，包括零Peirce块、直和及Albert分支。
+全框架条件当然推出存在框架条件，因为W已有非空框架集。
+109.3给TFD3、TRI2，VII106.10给全部旧比较条件，闭成所列等价。
+并可在所得Peirce分解中读出每个 $h_F$ 都是共同 $B$ 的限制。
+正向没有先使用109章切丛或星锥的全局拼接，也没有预付全纯互易、谱性或保纯。证毕。
+

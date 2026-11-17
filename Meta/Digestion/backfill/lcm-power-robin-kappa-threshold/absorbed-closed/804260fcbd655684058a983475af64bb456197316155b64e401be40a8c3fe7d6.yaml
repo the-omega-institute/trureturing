@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:804260fcbd655684058a983475af64bb456197316155b64e401be40a8c3fe7d6
+  normalized_sha256: sha256:804260fcbd655684058a983475af64bb456197316155b64e401be40a8c3fe7d6
+cas_ref: sha256:804260fcbd655684058a983475af64bb456197316155b64e401be40a8c3fe7d6
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerCollisionDensity.collision_parameters_dense
+    target_statement_id: sha256:5a9a42102284f872999b0dba01d19ba877a8b5ed34761b27372474eb45185506
+receipts:
+  unresolved_subitems: []

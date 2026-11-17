@@ -1,7 +1,4 @@
 import Lake
-import Lake.CLI.Build
-import Lake.Util.StoreInsts
-import Std.Sync.Semaphore
 open Lake DSL System
 open Lean (Json)
 
@@ -63,24 +60,20 @@ private def observePhase (phase boundary : String)
 
 -- Compiler graph fetches may await Lake jobs. A thread mutex held across an
 -- await can deadlock when the runtime runs a contending callback on that same
--- worker. Keep the state exclusive with a task-aware semaphore instead.
+-- worker. Atomically append a promise to a task queue and await its predecessor.
 private structure CompilerMutex (α : Type) where
   value : IO.Ref α
-  gate : Std.Semaphore
+  tail : IO.Ref (Task Unit)
 
 private def CompilerMutex.new (value : α) : BaseIO (CompilerMutex α) :=
-  return ⟨← IO.mkRef value, ← Std.Semaphore.new 1⟩
+  return ⟨← IO.mkRef value, ← IO.mkRef (Task.pure ())⟩
 
 private def CompilerMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
     (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m β := do
-  discard <| IO.wait (← mutex.gate.acquire).result!
-  try action mutex.value finally mutex.gate.release
-
-private def CompilerMutex.tryAtomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
-    (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m (Option β) := do
-  if ← mutex.gate.tryAcquire then
-    try some <$> action mutex.value finally mutex.gate.release
-  else return none
+  let complete ← IO.Promise.new
+  let previous ← (mutex.tail.swap complete.result! : BaseIO (Task Unit))
+  discard <| IO.wait previous
+  try action mutex.value finally complete.resolve ()
 
 private structure ReportState where
   started : IO.Ref Lean.NameSet
@@ -499,23 +492,29 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
   try observePhase "lake-prepare-register" "start" catch _ => pure ()
-  -- Start every compiler projection before awaiting classifications below.
-  -- This keeps compilation parallel while shared graph registration is serial.
-  reportState.graphFetch.atomically fun _ => do
-    for name in names do
-      let some mod := (← getWorkspace).findModule? name.toName
-        | error s!"registered report module is not in the Lake workspace: {name}"
-      unless alreadyStarted.contains mod.name do
-        observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
-        discard <| fetch <| mod.facet `judgeInputs
-        observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
+  -- Complete each projection before starting the next collection root. Lake
+  -- still owns and may parallelize its transitive compiler dependencies.
+  for name in names do
+    let some mod := (← getWorkspace).findModule? name.toName
+      | error s!"registered report module is not in the Lake workspace: {name}"
+    unless alreadyStarted.contains mod.name do
+      observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
+      let projection ← reportState.graphFetch.atomically fun _ =>
+        fetch <| mod.facet `judgeInputs
+      -- A continuation may reenter graphFetch; never hold it while awaiting.
+      discard <| projection.await
+      observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     unless alreadyStarted.contains mod.name do
       members := members.insert mod.name
       observePhase "lake-prepare-module" "start" name "prepared-report-fetch"
-      prepared := prepared.push (← preparedModuleReport mod)
+      let job ← preparedModuleReport mod
+      -- Preparation also fetches utility claims and late judge dependencies.
+      -- Drain those before registering another root, outside graphFetch.
+      discard <| job.await
+      prepared := prepared.push job
       observePhase "lake-prepare-module" "finish" name "prepared-report-fetch"
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
@@ -524,7 +523,7 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
     let requests := (artifacts.filter fun request =>
       request.artifact?.isNone && request.args[6]!.isEmpty).qsort fun a b => a.args[1]! < b.args[1]!
     -- Keep bounded native batches, committing each successful chunk before
-    -- starting the next. Compiler/projection jobs above remain asynchronous.
+    -- starting the next. Compiler/projection preparation above is complete.
     let mut start := 0
     while start < requests.size do
       let chunk := requests.extract start (min (start + 100) requests.size)

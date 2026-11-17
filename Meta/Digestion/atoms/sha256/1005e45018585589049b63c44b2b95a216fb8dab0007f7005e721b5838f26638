@@ -1,0 +1,12 @@
+**注记 1.6（端点与倒数族）。**
+- **端点 $\kappa=3/2$。** 此时 Euler 尾项与局部因子 $p^{-2}$ 层的损失都是 $x^{-1/2}/\log x$ 量级，而定理 1.5 的证明对 RH 下 Mertens 与 $\theta$ 的修正只用了上界 $O(\log x/\sqrt x)$，它比前两项大 $\log^2x$ 倍，所以该论证在 $\kappa=3/2$ 不能判定符号。$\kappa=3/2$ 的情形记为 open。
+- **倒数族。** Molnar [Reciprocal LCM powers and Robin's criterion, arXiv:2610.12816v1] 研究倒数族 $\sigma_{-1}^{[\kappa]}(n)=\sum_{d\mid n}\mu(d)\sigma_{-1}(n/d)^\kappa$。该文的归一化为 $\widehat\rho^{[\kappa]}(n)=\bigl(n\,\sigma_{-1}^{[\kappa]}(n)/\kappa^{\omega(n)}\bigr)^{1/(\kappa-1)}$，对每个整数 $n>1$，它关于 $\kappa$ 严格递增并趋于 $\sigma_{-1}(n)$。由此，对任一无界参数集 $K\subset(1,\infty)$，RH 等价于 $\widehat\rho^{[\kappa]}(n)<e^\gamma\log\log n$ 对一切 $n>5040$ 与 $\kappa\in K$ 成立；而在固定的有界参数区间上，该不等式无条件地终于成立。这些结论针对倒数族的归一化，与 (1.1) 是不同的不等式。定理 1.5 说明原函数族的 (1.1) 在 $(1,3/2)$ 上的行为与之相反：Euler 尾项产生的正偏差使 (1.1) 无条件地无穷多次失败。
+
+**范围。** 外部输入如下：
+- Fan–Kobayashi–Molnar 的定义、其定理 4.3（$F^{[\kappa]}$ 的单调性）、定理 5.2 与引理 5.3（对一切 $\kappa>1$）；
+- Robin 定理；
+- RH 下 Schoenfeld 的 $\theta$ 与 Mertens 估计；
+- Chebyshev 上下界。
+
+本仓推导的是：恒等式 (1.2)、定理 1.2 与推论 1.3（回答该文注记 4.16），局部下界 (1.4)，以及定理 1.5（对 $1<\kappa<3/2$ 回答该文第 8 节关于定理 6.1 的提问：$E_\kappa$ 无条件为假，把定理 6.1 延伸到这些 $\kappa$ 所得的命题等价于 RH 不成立）。所查范围（该文正文、Molnar 2026 的后续论文、arXiv 标题检索“Robin criterion”）内未见这两个问题的解答。
+

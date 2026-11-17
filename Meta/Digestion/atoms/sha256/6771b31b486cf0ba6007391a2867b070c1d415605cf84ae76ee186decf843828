@@ -1,0 +1,31 @@
+**定理 76.3（只需同标产品框架）。** 在定义 76.1 的同一实际数据上，对任意有限 Jordan 生成完整框架族，
+$$
+\mathsf J_{\mathfrak B}+\mathsf H^{\mathrm{diag}}_{\mathfrak B}\quad\Longleftrightarrow\quad D_J+D_H. \tag{76.7}
+$$
+其中 $D_J,D_H$ 分别保持全部 $A_+$、$D_+$ 上的正交正元对。特别地，遗忘框架见证后，
+$$
+\boxed{\mathrm{PRE}_0+\mathsf{JG}_3+\mathsf J_{\mathfrak B}+\mathsf H^{\mathrm{diag}}_{\mathfrak B}+\mathrm H13}
+\quad\Longleftrightarrow\quad\mathrm{PRE}+\mathrm{C13}. \tag{76.8}
+$$
+删去两边的 H13、C13 仍为同实际模型类的等价。两张表分别不超过
+$$
+s\binom n2\le3\binom n2,\qquad s\binom{n^2}2\le3\binom{n^2}2. \tag{76.9}
+$$
+
+**证明。** 第一步仅在一般 EJA 中应用 75.4（三）的生成框架工具于 $J$。其前件是全锥正性、$J1=U>0$ 和第一表，因此取得整个 $D_J$，未使用复型、第二表或 H13。该工具的证明同时使用零平方缺陷域和权重算子交换域的 Jordan 闭包；两者的前件与 Albert、重谱、直和、零像范围完整保留。
+第二步才用不依赖 $D_H$/C13 的第四卷定理 65.3，取得保单位 Jordan 嵌入 $\alpha=F(-,1)$、$\beta=F(1,-)$，其像的乘法算子在 $D$ 中交换，且
+$$
+F(a,b)=\alpha(a)\circ\beta(b),\qquad \widetilde F\text{ 是满规范迹等距},\quad m=n^2. \tag{76.10}
+$$
+所以 $\mathsf C_r=F(B_r\times B_r)$ 是完整本原框架：交换幂等元之积幂等，等距性给每个像范数平方一、迹一，故本原；不同成员正交，双重求和为单位。
+令 $W$ 为全部 $\mathsf C_r$ 成员的 Jordan 闭包。对每个 $e\in B_r$，仅在同一 $r$ 中求行和与列和就得
+$$
+\alpha(e)=\sum_{f\in B_r}F(e,f)\in W,\qquad
+\beta(e)=\sum_{f\in B_r}F(f,e)\in W. \tag{76.11}
+$$
+因此源生成性和同态性分别给 $\alpha(A),\beta(A)\subseteq W$。$W$ 闭 Jordan 乘积，遂含全部 $F(A,A)$；第一条实张成经可逆 $P_{U^{-1/2}}$ 给 $\operatorname{span}_{\mathbb R}F(A,A)=D$，所以 $W=D$。这里不声称有限所选产品成员本身线性张满。不同框架的交叉产品没有参与此生成证明。
+第三步对全锥正的 $H_{\mathrm s}$ 使用同一个工具：$H_{\mathrm s}1=G>0$，而这些同标产品框架已经 Jordan 生成整个 $D$；第二表遂恢复整个 $D_H$，包括纠缠正元。反向，$D_J$ 给第一表和 (76.10)，$D_H$ 给第二表，证明 (76.7)。
+从旧 PRE 出发，第四卷 66.3 先给复 Hermitian 直和；75.4（五）在这个已取得的环境中构造至多三套完整生成框架，包含 qubit 的三个 Pauli 框架、较高秩的非实三角加实尾谱框架及保中心的直和合并。因此前向无需预选复数，逆向不循环使用新候选；也得删去 H13/C13 的等价。恢复 PRE 后，75.4（六）所引 72.7—72.8 保证资格非空及每个合格原态的全输出正性等价 C13，给 (76.8)。最后每套局部框架有 $n$ 个成员，同标产品框架有 $n^2$ 个成员，数各自无序不同成员对即得 (76.9)。证毕。
+
+相对 (75.6) 的 $s^2$ 套产品框架，本定理只保留 $s$ 套；统一上界由 $9\binom{n^2}2$ 降至 $3\binom{n^2}2$。这是同实际模型类内的关系冗余删除，不是三个实验，不保证每套都不可再删，也不证明最少公理。局部三框架的统一尖锐性仍只在 75.4 的完整框架/Jordan 生成签名内成立。
+

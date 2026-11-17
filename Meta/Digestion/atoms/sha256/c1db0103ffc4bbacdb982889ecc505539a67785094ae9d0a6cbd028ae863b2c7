@@ -1,0 +1,69 @@
+**定义与定理 103.10（所选载体共同域内的完整同数据替换）。** 固定VI89.7—89.10／V88.6—88.8的同一个原装饰元组 $\mathcal O$、原来源域与共同 $\mathfrak S(\mathcal O)$。选定非空 $\mathcal J\subseteq\{A,D,E\}$，只在明确共同域
+
+$$
+\mathcal D_{3,\mathcal J}:\quad
+\text{原包的共同载体／来源域，且 }
+\forall X\in\mathcal J,\ h(K_X)=3
+\tag{VII103.32}
+$$
+
+内比较。令 $\mathsf R_S$ 是该旧完整包中将几何项按VI89.4写成全部 $S_X$ 的同数据形式。用 $\mathcal N(\mathcal O)$ 指它除这些几何项外的全部原合同，逐字按原定义继承而不删量词。定义本章完整候选
+
+$$
+\begin{aligned}
+\mathsf R_{\rm exclusion,3}^{\mathcal J}(\mathcal O):\quad
+&\mathcal N(\mathcal O)\ \land\!
+\bigwedge_{X\notin\mathcal J}S_X\\
+&\land\!\bigwedge_{X\in\mathcal J}
+ (\mathrm{Pair}_X+\mathrm{EB}_{\ge1,X}).
+\end{aligned}
+\tag{VII103.33}
+$$
+
+完整继承 $\mathcal N$ 在这里准确包括下列原内容，均不是排除球的推论。
+
+原准备、测试、过程、参考、读回和装饰数据仍是同一组。原概率像 $K_X=\{k_\sigma\}$ 自身非空、有限仿射维、紧、单位为一；全部原中点在原标签内实现，不先取闭凸完成。原测试像自身闭，含零、单位，闭于中点、补和有界倍增，且同一测试对全部原准备实现同一效应表。正带质量输出保留全部原中点实现图，包括重复标签和每个同中点实现；原加权缩放遍及全部非负质量，含零、次归一和不等质量。其他过程及参考只在自身完整相关联合输入域上下降；边缘或乘积输入不代替全部相关输入，不符合中点下降条件者保留原全实下降合同。
+
+同一个原实双线性 $L:D\times A\to E$、同一个原实线性读回 $p:E\to D$、同一个 $\omega=1_D/\tau_D1_D$ 及VI89.7中 $K,M,J,H,B_1,U,G,Q$ 的原定义全部保留，尤其 $K(a)=pL(\omega,a)$、$M(a,b)=pL(K(a),b)$ 两次使用同一个原 $p$。两实张成与全实 $Z$ 保持
+
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\qquad
+B_1M(a,b)=\tau_A(a)Jb\quad(a,b\text{ 全实}).
+\tag{VII103.34}
+$$
+
+原全锥正性、原单位／迹／内积／伴随／二次表示、含秩一分支的完整(83.8)、VI(89.13)中 $\Pi_i,\mathsf C_i,\mathsf D_A,\mathcal T$ 的定义及两尺度Hilbert–Schmidt等式、C2与整个 $G=1_E$ 均保留；$F=\mathsf P_{U^{-1/2}}M$ 仍在原正性和张成给 $U>0$ 后定义，不由新几何预设等距。精确 PRE 之后才读原 H13：存在同一个原资格态 $\rho\in\mathcal H(F)$，其整个原输出 $I^{\rm raw}\rho$ 为正。资格仍用VI89.7原 $c_i,n_i,D_{ik},\pi_{ik},\alpha_{ik},\beta_{ik}$，保留每个活跃块上至少一条严格负方向、原未归一单位和迹伴随、全部块共享总迹一、非活跃块零质量和空活跃集；不逐块换态，不由输出反选资格。这些原式的完整定义直接采用VI89.7，不将面高三误作其中任何有类型尺度参数的重定义。
+
+共同 $\mathfrak S$ 逐项保留设备／事件／来源绑定、全部菜单、过程与分支、参考／副本／相关联合、记录／权限／控制／原钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、零与不等质量、实际混合服务、所有合法未来、旧支撑及每个中间切口。VI89.9的复型和Born、指定复合与读回、实际同事件CP、Kraus、实际仪器和更新、Lüders及时间的各自完整消费者合同，以及VI89.10的原生／细化来源接口，均原样按其有类型适用域继承；没有另行假定其结论已由状态球得到。
+
+在共同域(VII103.32)内，有准确双向
+
+$$
+\boxed{\begin{aligned}
+\mathsf R_{\rm exclusion,3}^{\mathcal J}(\mathcal O)
+&\Longleftrightarrow\mathsf R_S(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm polar}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\end{aligned}}
+\tag{VII103.35}
+$$
+
+证明。逐所选 $X$ 在其同一原 $V_X,C_X,u_X,K_X,[0,u_X]$ 上应用103.6，得到 $\mathrm{Pair}_X+\mathrm{EB}_{\ge1,X}\Longleftrightarrow S_X+h(K_X)=3$。共同域已明确包含后一个高度约束，故可精确替换，非所选几何项与 $\mathcal N$ 不动。余下等价逐项复用VI89.8／V88.7。反向的同锥同单位线性运输保留原全部效应、零关系、整个最小面和面链高；所以返回的是真正原 $D_p$ 与原 $H(p,q)$，不是在新模型中重选资格或效应。若在不先限制高度的旧共同域中书写，准确等式应为
+
+$$
+\mathsf R_{\rm exclusion,3}^{\mathcal J}
+\ \Longleftrightarrow\
+\mathsf R_S\ \land\!\bigwedge_{X\in\mathcal J}h(K_X)=3,
+\tag{VII103.36}
+$$
+
+不能删去右侧的共同域限制并宣称与无秩限制旧包全域等价。
+
+若再把所选 $\mathrm{EB}_{\ge1,X}$ 换成 $\mathrm{EB}_{3,X}$，则由103.7所得是旧包与“每个所选载体为复三能级”的交集。该静态选择不用由复合去选复数，但也不代付任何原复合或来源合同。尤其当旧消费者另给 $D=A\otimes A$、$E=D\otimes A$ 的完整秩乘法时，若 $A$ 秩三，则 $D,E$ 秩分别为九、二十七；不能再同时要求它们面高三。选 $\mathcal J=\{A,D,E\}$ 与这种合同的交集为空。这里的同数据等价仍正确，但不为这个不相容交集伪造物理源或非空模型。
+
+所有消费者继续按VI89.9的准确接口：同事件实线性提升式、实际各输入块探针及全矩阵核条件才认证CP；若原递归参考已给同事件CP则直接复用，不能重复列作未解。Kraus是CP后的矩阵表示，实际仪器还需完整菜单、分支、接线、记录、同族粗粒化、共同重置输入行一致与未校准旁观者预算；条件态仅在分支质量正时归一。Lüders还需同一分支的锐效应、接受态中性和原输出校准。时间还需原物理时间上的连续齐次可逆自同构群、原钟／单位及实际动态来源。VI89.10中原几何、密度、全部原字和terminal futures、联合菜单／全部有符号关系、原细标签／粗归组、记录后条件未来、source-adoption map及资源合同也保持各自量词。已由原入口导出的后果直接复用；数学凸组合、面极性、三元单位尺和全效应字典不自动取得准备、装置、调用权限或这些过程来源。证毕。
+

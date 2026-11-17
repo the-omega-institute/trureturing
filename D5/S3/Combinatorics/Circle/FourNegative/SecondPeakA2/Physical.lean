@@ -12,8 +12,8 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
 open D5.S3.Combinatorics.Circle.FourNegative
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private base newBase charge size sourceMod oldValue newValue
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private charge sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase size oldValue newValue)
 open private rowBase rowHeads rowSeams literalCut source_certificate
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SourceCertificate
 open private word banks banks_inventory

@@ -48,6 +48,10 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
             Thm("finish-seen", "finish_seen", "Encoding commutes with a complete scan",
                 FinishSeenFormula(),
                 "A good word gives the same final record in the Boolean and level encodings."),
+            Def("labels", "Labels", "Column pair labels", LabelsFormula(),
+                "A column of three cells carries one pair label per row."),
+            Def("pairs", "pairs", "Pair labels of a column", PairsFormula(),
+                "Each cell is sent to its complementary pair by BooleanRankThreeK4.beta."),
             Def("digit", "digit", "Ternary digit extraction", DigitFormula(),
                 "Natural quotient and remainder produce a value in Fin 3, including when the divisor is zero."),
             Thm("weighted-sum", "weighted_sum", "Repeated keys as integer weights",
@@ -58,6 +62,10 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
                 "Every 2, 3 or 4 has a strictly earlier 1; every 3 has a strictly earlier "
                 + "2. The existential cell has the same typed finite domain as the "
                 + "current cell. Equal-rank cells cannot serve as predecessors."),
+            Def("decidable-normal", "instDecidableNormal", "Deciding the normalization",
+                DecidableNormalFormula(),
+                "The defining expression is inferInstanceAs for the displayed universally "
+                + "quantified conjunction of the two implications."),
             Def("legal", "Legal", "Literal array conditions", LegalFormula(),
                 "The first-cell existential is false at width zero. The two natural "
                 + "inequalities on row values express absolute row difference at most "
@@ -114,6 +122,17 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
 
     private static Formula Scanner(string name, params Formula[] args) =>
         Call(ScannerPrefix + name, args);
+
+    private static Formula LabelsFormula() =>
+        Eq(Own("Labels"), Arrow(Fin(D(3)), Fin(D(3))));
+
+    private static Formula PairsFormula()
+    {
+        var c = V("c"); var i = V("i");
+        return All("c", Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Row"),
+            Eq(Own("pairs", c), Fn("i", Fin(D(3)),
+                Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta", App(c, i)))));
+    }
 
     private static Formula SeenFormula()
     {
@@ -199,22 +218,38 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
         Parenthesized(Seq(Q("if"), Sp, Parenthesized(condition), Sp,
             Q("then"), Sp, Parenthesized(yes), Sp, Q("else"), Sp, Parenthesized(no)));
 
-    private static Formula NormalFormula()
+    private static Formula NormalCondition(Formula n, Formula a)
     {
-        var n = V("n"); var a = V("A"); var p = V("p"); var q = V("q");
+        var p = V("p"); var q = V("q");
         var cells = Product(Fin(D(3)), Fin(n));
         Formula Rank(Formula x) => Add(Mul(Val(Call("Prod.fst", x)), n),
             Val(Call("Prod.snd", x)));
         Formula Earlier(byte colour) => Ex("q", cells,
             And(Lt(Rank(q), Rank(p)), Eq(App(a, q), Typed(D(colour), Fin(D(6))))));
         var current = App(a, p);
-        var condition = All("p", cells, And(
+        return All("p", cells, And(
             Imp(Or(Eq(current, Typed(D(2), Fin(D(6)))),
                 Or(Eq(current, Typed(D(3), Fin(D(6)))),
                     Eq(current, Typed(D(4), Fin(D(6)))))), Earlier(1)),
             Imp(Eq(current, Typed(D(3), Fin(D(6)))), Earlier(2))));
+    }
+
+    private static Formula NormalFormula()
+    {
+        var n = V("n"); var a = V("A");
+        var cells = Product(Fin(D(3)), Fin(n));
         return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
-            Iff(Own("normal", a), condition)));
+            Iff(Own("normal", a), NormalCondition(n, a))));
+    }
+
+    private static Formula DecidableNormalFormula()
+    {
+        var n = V("n"); var a = V("A");
+        var cells = Product(Fin(D(3)), Fin(n));
+        Formula Decides(Formula proposition) => Call("Decidable", Parenthesized(proposition));
+        return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
+            Eq(Typed(Own("instDecidableNormal", a), Decides(Own("normal", a))),
+                Call("inferInstanceAs", Parenthesized(Decides(NormalCondition(n, a)))))));
     }
 
     private static Formula LegalFormula()

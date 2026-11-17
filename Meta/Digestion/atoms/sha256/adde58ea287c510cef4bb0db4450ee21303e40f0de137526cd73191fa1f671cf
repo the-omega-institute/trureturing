@@ -1,0 +1,49 @@
+**Example 10.1 (A two-point gap law).** To illustrate the stationary initialization in (2.5) and the payment identity (7.9), take $\mathsf P(K=1)=1/3$ and $\mathsf P(K=3)=2/3$. Then
+
+$$
+\mu=\mathbb E(K+1)=\frac13\cdot2+\frac23\cdot4=\frac{10}{3},
+\qquad S(0)=S(1)=1,\qquad S(2)=S(3)=\frac23,
+$$
+
+and $S(b)=0$ for $b\ge4$. Hence the stationary first-wait law and its mean are
+
+$$
+\begin{aligned}
+\bigl(\mathsf P(\tau=0),\ldots,\mathsf P(\tau=3)\bigr)
+&=\frac1\mu\left(1,1,\frac23,\frac23\right)
+=\left(\frac3{10},\frac3{10},\frac15,\frac15\right),\\
+\beta=\mathbb E\tau&=\frac3{10}+2\cdot\frac15+3\cdot\frac15=\frac{13}{10}.
+\end{aligned}
+$$
+
+For subsequent iid gaps $K_r$, form survival marks $Y_r$ using fresh independent coins with $q=2/3$, so $\mathsf P(Y_r=1\mid K_r)=q^{K_r}$. The pairs $(K_r,Y_r)$ are iid, and their success probability is
+
+$$
+p=\mathbb E q^K=\frac13\cdot\frac23+\frac23\left(\frac23\right)^3=\frac{34}{81}.
+$$
+
+The mean interval conditional on its own successful mark is
+
+$$
+\mathbb E[K+1\mid Y=1]
+=\frac{\frac13\cdot2\cdot\frac23+\frac23\cdot4\left(\frac23\right)^3}{34/81}
+=\frac{100/81}{34/81}=\frac{50}{17}\ne\mu.
+$$
+
+Let $J=\min\{r\ge1:Y_r=1\}$. Reading through the closing tick of the first successful gap has paid duration $T=1+\tau+\sum_{r=1}^J(K_r+1)$. The event $\{J\ge r\}$ depends only on earlier marks, so it is independent of $K_r$. Therefore
+
+$$
+\mathbb E\sum_{r=1}^J(K_r+1)
+=\sum_{r\ge1}\mathbb E\bigl[(K_r+1)\mathbf1_{\{J\ge r\}}\bigr]
+=\mu\sum_{r\ge1}(1-p)^{r-1}=\frac\mu p,
+$$
+
+and thus
+
+$$
+\mathbb ET=1+\beta+\frac\mu p
+=1+\frac{13}{10}+\frac{10/3}{34/81}=\frac{1741}{170}.
+$$
+
+The payment identity uses inclusion decided before each interval; it does not require duration to be independent of that interval's own mark.
+

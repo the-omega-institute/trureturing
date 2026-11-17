@@ -1,0 +1,56 @@
+**定义 1.1（精确原曲线及实际端口）。** 使用 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 的原始合同。对正有理数 $0<e\le1/100$，令
+
+$$
+\begin{aligned}
+u_e&=e/8,&
+k_e&=\left\lceil2048e^{-2}\log(18/e)\right\rceil,&
+\ell_e&=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,&
+N_e&=\max\left\{N_*,\left\lceil\frac{3k_e+2}{10}\right\rceil,
+\left\lceil\frac{15\ell_e+1}{18}\right\rceil\right\},\\
+D_e&=\left\lceil\max\{8{,}000{,}000N_e^2,9k_e/e\}\right\rceil,&
+m_e&=D_e-1,& M_e=L_e&=10N_e,&Q_e&=18N_e+1.
+\end{aligned}
+\tag{1.1}
+$$
+
+所有未标底的对数均为自然对数；公共参数仍为 $d=1/64$、$\tau_0=1$、$r=1/4$、$B_{\rm field}=2$、$G=1$。内部尺度固定为
+
+$$
+m=m_e,\quad D=D_e,\quad a=e/64,\quad s=e/768,
+\quad t=me^2,\quad\lambda=ms^2=t/768^2.
+\tag{1.2}
+$$
+
+内部精度 $a$ 不替换 (1.1) 中的 $e$。场遍历全部原始 $C^2$、秩二映射 $n:U\to S^2$，其中 $U$ 包含两条完整闭 $r=1/4$ 轴段，且
+$\|n_{aa}(v e_a)\|_2\le2$（$a=x,y$、$|v|\le1/4$）、$\|n_x(0)\|_2,\|n_y(0)\|_2\le1$。独立场重置供应 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$。初始参考
+$R=\operatorname{Sym}^m(\mathbb C^2)$ 只准备一次，初态 $\tau_h=|e_h\rangle\langle e_h|$、$h\in S^2$，与其余输入独立，是唯一含未知 $h$ 的输入。原目标为
+
+$$
+D_h(n)=\left(
+\frac{h\cdot[n(0)\times n_x(0)]}{2},
+\frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+\frac{h\cdot n_y(0)}2\right).
+\tag{1.3}
+$$
+
+比较类保留原始混合辅助、量子与经典记忆、反馈、纠缠、探针回用和有限因果控制。所有准备、控制及解码程序均不依赖实际 $n,h$；固定 $n$ 后，非参考来源的完整律对全部 $h$ 相同。不供应混合输入的纯化。与 $R$ 的接触仅为至多 $L_e$ 次前向原生等距
+
+$$
+V=\Pi_+\otimes|++\rangle_{HE}+\Pi_-\otimes|--\rangle_{HE}
+\tag{1.4}
+$$
+
+及恰一次规定终端 $U_{\rm term}=\exp[-idJ\cdot\sigma/m]$，其中 $d=1/64$、$\tau_0=1$；终端使用在 $+d e_x$ 独立重置且此前未经改动的原场令牌。场重置至多 $Q_e$ 次。其余操作在原始标记 $R$ 上恒等，不直接读取、旋转、拆分、重置、替换或恢复 $R$，不供应未知射线反射或终端逆。
+
+采用有限 CP 节点的声明实际端口语义。每个实际生成的系统都属于最终非参考口 $K$，包括探针、场令牌、$H,E$、原始记录、实际副本、记忆、程序、计数器、路由、工作空间、补偿及终端输出。形式 Kraus 指标不是自动生成的物理环境。下文指定的非参考替换和 Lüders 节点恰有第 8 节列出的实际口，不通过一个另有未保留浴的酉扩张实现。若另一实现生成额外实际环境，须把它加入 $K$ 并另给完整输出界。
+
+对同一运行的输出定义
+
+$$
+\mathcal R_h(\omega)=D_{\rm tr}(\omega,\tau_h\otimes\operatorname{Tr}_R\omega),
+\quad D_{\rm tr}(X,Y)=\tfrac12\|X-Y\|_1,
+\quad\overline\delta=\sup_{n,h}\mathcal R_h(\Omega_{n,h}).
+\tag{1.5}
+$$
+

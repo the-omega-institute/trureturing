@@ -1,0 +1,2 @@
+**范围与文献归属。** 经典输入：von Koch 界；Saffari–Vaughan 短区间均方上界 (489.1)（见 Chan [More precise pair correlation of zeros and primes in short intervals, J. London Math. Soc. 68 (2003)] 式 (2)）；Goldston–Montgomery 的方差—对相关等价给出的 (489.2)。引理 489.2–489.3 所用的极化与三角平均是经典的方差转移方法。本节的 `repo-derived` 内容：引理 489.1 对原价格权的去除；引理 489.3–489.4 中对移动长度 $H_x=x^{4/5}$ 的转移，包括小长度截断与先 $X$ 后 $n$ 的双重极限；定理 489.5 对原核的渐近式 (489.3)、常数 $(2^{1/5}-1)/3$ 与逐二倍区间的取点结论 (489.4)。
+

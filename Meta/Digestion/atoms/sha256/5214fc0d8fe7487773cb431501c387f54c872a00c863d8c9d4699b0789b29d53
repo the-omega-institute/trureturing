@@ -1,0 +1,74 @@
+**约定 123.7（原域、所有权与仍缺的桥梁）。**
+X123 的新组合是：用同一实际 Dy 定义规范横向代表，
+把严格关联与接触两分支中的六整球测试逐一算清，
+再对同一实际正法向推导必要横向界，
+并将每个已通过局部测试但不全局正的非零候选回接到原纯远端。
+每条结论都保留 X121 的原 EB3、全标签 Inj、实际 P0 种子、
+给定九维、实际纯 s 与 $d_+>0$；没有把它们换成更小域或更弱对象。
+
+严格分支的穿孔二维缺口不证明严格分支有全签名实现，
+也不证明该分支不可能。
+接触分支保留全部 $\operatorname{rank}\Theta=0,1,2$ 情形；
+共同消去空间是否为零、实际正锥横向非线性边界怎样闭合，均未支付。
+秩二圆盘条件只在该附加秩前件下约束每个同一 h，
+不供给全局正性、有限六球充分性、正校准读回或 $d_+=0$。
+三步旧种子框架的 $\mathsf J_\triangle$ 已由实际 P0 种子与九维支付，
+但个别规范种子读回的原全局正性仍按校准卷 125.6 单列。
+
+现有来源的数学所有权保持如下区分。
+
+1. [校准卷 123–125](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   与 [EXCLUSION IX119–120](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+   拥有完整确认菜单、实际全局法向体、P0 限制同构、原球面纯点、
+   实际边传播、反端点取得与种子维数接口。
+   本卷仅在这些接口上形成 X121–X123 的已列组合，
+   不复制旧接口的证明或把它们重命名为新原理。
+2. [校准卷 128](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   的弱分支给 $\nu_p\le1$，无需本卷实际种子；
+   其 E0 下的迹与球内界保留额外 E0 前件。
+   两种作用域既不相互替换，也不为本卷供给 E0。
+3. [校准卷 129](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   拥有 E0 下固定状态体的内球与 IC0 对校准间隙的条件描述。
+   固定状态体、局部法向限制与本卷整球测试缺口是不同对象，
+   不能把其内球当作本卷的共同正延拓或 PC1。
+4. [校准卷 130](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   区分几何覆盖与原反端点/正交实现，
+   其中 Pair 型接口保留自身 $\mathrm{Pair}_{\perp}$ 前件。
+   本卷不借几何覆盖插入 Pair、IC0、全原域同时实现或额外物理源。
+5. [OriginalNormalRestriction](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalNormalRestriction.md)
+   拥有原法向限制的满射、实际常一读数的相对内部点及 P0 下的限制同构。
+   满射不是任意原标签的单射；本卷 X122 的一般核消去不改这一边界。
+6. [ExclusionIncidence](../../../Blueprint/D5/S3/Quantum/Foundation/ExclusionIncidence.md)
+   拥有其精确前件下关联 O、开性及 Hausdorff 球空间之间的条件等价。
+   条件等价不提供 O；X121、X123 的具体两分支均未被该接口自动排除。
+7. [FixedZeroObstruction](../../../Blueprint/D5/S3/Quantum/Foundation/FixedZeroObstruction.md)
+   拥有原全局最大、准确面与稳定零集推出 O 或坍缩的条件接口。
+   稳定零集存在和适用前件仍须实际供给，不能从名称或条件结论倒推。
+8. [UnitPreservingLiftImage](../../../Blueprint/D5/S3/Quantum/Foundation/UnitPreservingLiftImage.md)
+   拥有原单位图像闭性与最小成本接口。
+   该闭图像不供给当前带共同接触的正截面、仪器或球族实现。
+9. [ActualExclusionBoundary](../../../Blueprint/D5/S3/Quantum/Foundation/ActualExclusionBoundary.md)
+   的原单例标签存在、沿实际边传播及连续统多不同整球，
+   仍只说标签纤维为单例。
+   它既不替代全标签 Inj，也不等于单例确认 P0，
+   更不推出纯点传递性或正种子读回。
+
+上述来源均为已有结果；没有在本卷另立它们的证明或新增准入记录。
+凸几何术语中的闭投影背景只按
+[校准卷 123.14 的 Pataki 边界](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+使用。
+当前 $C+S_x^\perp$ 的闭性、正截面或相关 niceness 条件未支付，
+未调用任何要求这些前件的分类结论。
+同样，若与射影面分类、滤子或自对偶文献比较，
+其原复合、滤子、转置与对称性前件必须分别保留，
+本卷没有补成这些前件。
+
+所有推导仍位于同一原 Omega、全部原合法门序列及完整未来读出域。
+既未删去混合点、符号、条件未来或中间切口，
+也未把辅助 $Q_4,Q_6$ 的测试域换为新的物理状态体。
+本卷没有提供原物理源、实际共同操作、原生事件或仪器、任意复合与旁观者兼容，
+没有提供时钟、动力学、Hamiltonian、能量或 $\hbar$。
+EB1 五边形仅为方法控制，未冒充 EB3 全签名反例；
+全部条件几何结果也不构成独立性、最小性或量子起源完备性证明。
+完整量子起源目标保持 active/incomplete。
+

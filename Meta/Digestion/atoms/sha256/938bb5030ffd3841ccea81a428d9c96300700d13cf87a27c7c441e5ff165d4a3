@@ -1,0 +1,27 @@
+**Definition 1.2 (words, residuals and clock cuts).** For finite words,
+including the empty word $\varepsilon$, retain the original recursion
+and cylinder law [RRO, (8.4)]:
+
+$$
+F_\varepsilon=1,\qquad F_{yv}=f_yPF_v,\qquad
+p(w)=\mathbb P_e(Y_0\cdots Y_{|w|-1}=w)=\langle g,F_w\rangle_m,
+\qquad p(\varepsilon)=1.
+\tag{1.3}
+$$
+
+Here $uv$ is chronological concatenation. Define
+
+$$
+H_p(u,v)=p(uv),\qquad R_u(v)=\frac{p(uv)}{p(u)},\qquad
+\mathcal R_p=\operatorname{span}_{\mathbb R}\{H_p(u,\cdot):u\in\mathcal L^*\}.
+\tag{1.4}
+$$
+
+Every $p(u)>0$: conditional on each source path its finitely many
+specified emissions have a strictly positive product. The algebraic
+rank of $H_p$ is the supremum of the ranks of its finite evaluation
+blocks. A cut $t$ is after $t$ labels and before $Y_t$, whose physical
+read time remains $(t+2)d$. Same-cut blocks restrict all histories
+to length $t$. No empirical matrix or bounded Hankel operator is part
+of this definition.
+

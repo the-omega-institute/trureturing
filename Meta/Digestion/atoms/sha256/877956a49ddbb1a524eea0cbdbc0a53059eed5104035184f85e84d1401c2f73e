@@ -1,0 +1,27 @@
+#### 定理 5.3：未确认交集的精确自由度
+
+联合模型中的完整可见交集为
+
+$$
+i_A(H_A)\cap i_B(H_B)
+ =i(K)\oplus
+ \{(0,Cv,0):v\in\operatorname{ker}(I-C^*C)\}.
+$$
+
+记 $k=\dim K$、$p=\dim U$、$q=\dim V$， $m=\dim\operatorname{ker}(I-C^*C)$，则
+
+$$
+\dim H_C=k+p+q-m,\qquad
+ \dim\bigl(i_A(H_A)\cap i_B(H_B)\bigr)=k+m.
+$$
+
+每个 $0\le m\le\min(p,q)$ 都有实现。
+
+**证明。**
+
+等式 $(k,u,0)=(\ell,Cv,Dv)$ 恰要求 $k=\ell$、$u=Cv$、$Dv=0$。 在 $\operatorname{ker}D$ 上，$C$ 保范数，故额外交集与该核等维。 又 $\operatorname{ker}D=\operatorname{ker}(I-C^*C)$，秩零度公式给联合维数。 选一个秩 $m$ 的部分等距 $C$，在正交补上置零，即实现每个所述 $m$。
+
+$\square$
+
+当 $U$ 或 $V$ 为零时唯一收缩是零，公式仍成立。 $C=0$ 给正交拼接，交集只有已确认的 $K$，但联合张成维数在全部选择中*最大*。 “对固定交叉读数的最小表示”不能误写成“所有可能整体中维数最小”。 若以后测得完整的有限交叉 Gram 表，就能确定 $C$，其单位奇异值给出额外共享方向。 这提供有限可见交集的内部证据，无需声称观察者已经包含另一方的全部原始结构。
+

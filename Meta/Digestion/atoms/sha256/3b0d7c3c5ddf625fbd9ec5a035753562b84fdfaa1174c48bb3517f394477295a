@@ -1,0 +1,32 @@
+**定义及条件应用 121.4（每颗半缩球至少一次接触）。** 主候选为
+
+$$
+\boxed{\quad\mathrm{EB3}+\mathsf{MC},\qquad
+\mathsf{MC}:\ \forall p\in P\ \exists x\in D_p:
+                  (p+x)/2\in\operatorname{relbd}K.\quad}
+\tag{Q121.10}
+$$
+
+在定义121.1的完整原域中，以下属于同一条件模型类：EB3+MC；EB3加全 $W(D_p)=1$；EB3加120.3的实际三角顶点在整个 $P$ 中稠密；以及存在同原锥、同原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad\Phi(\mathrm{PSD}_3)=C,
+\qquad u\Phi=\operatorname{Tr}.
+\tag{Q121.11}
+$$
+
+证明。121.2逐标签给MC与全W1等价。120.4已在无需Inj的域证明三角顶点集恰为 $\{p:W(D_p)=1\}$，且该集合在 $P$ 中相对闭；因此其稠密性恰为全W1。取得全W1以后，才调用116.5得Inj及 $P$ 紧，再直接消费116.17，或等价地120.5，取得(Q121.11)。这一调用同时支付全Pair及 $\mathrm{Pair}_{\perp}$；全域三结果共同效应此后才由VII104.2—104.3消费，未预装于MC或三角定义。
+
+反向必须量化整个原复三能级。先在矩阵坐标中取任意单位 $v\in\mathbb C^3$、$p=vv^*$。全部确认效应恰为 $p\oplus B$，$0\preceq B\preceq I_{v^\perp}$；对每个原混态 $\rho$，
+
+$$
+T_p(\rho)=\operatorname{Tr}(p\rho),\qquad
+D_p=\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho v=0\}.
+\tag{Q121.12}
+$$
+
+这个完整集合是 $v^\perp\cong\mathbb C^2$ 上全部密度矩阵，Pauli坐标给整颗三球。任取 $x\in P\cap D_p$；$x$ 的一维像与 $v$ 正交，$\operatorname{rank}(p+x)=2$，故 $(p+x)/2$ 是原迹一PSD体的边界态。因而对每个原纯 $p$ 都有MC，事实上其每个原球面端 $x$ 都接触。经同一 $\Phi$ 运输，保留全部原混态、效应及单位，完成反向量词。证毕。
+
+这把“原标签与其完整排除球”的二元凸关系画得更直接：整球向标签缩一半后至少一点仍贴着整体边界。它不把一族回缩写作输入，也不输入Inj或 $P_0$。上述等价没有证明逻辑上严格更弱、独立假设更少或公理数最少。裸EB3自动推出MC仍为open。
+

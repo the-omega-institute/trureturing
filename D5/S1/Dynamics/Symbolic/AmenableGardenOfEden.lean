@@ -45,11 +45,11 @@ def writePattern (C : Finset G) (p : C → A) (t : G) (x : G → A) : G → A :=
   classical
   exact fun g => if h : t⁻¹ * g ∈ C then p ⟨t⁻¹ * g, h⟩ else x g
 
-private def collar (D S : Finset G) : Finset G := by
+def collar (D S : Finset G) : Finset G := by
   classical
   exact D ∪ D.biUnion (fun a => S.biUnion (fun s => S.image (fun r => a * s⁻¹ * r)))
 
-private theorem mem_collar_core (D S : Finset G) {a : G} (ha : a ∈ D) :
+theorem mem_collar_core (D S : Finset G) {a : G} (ha : a ∈ D) :
     a ∈ collar D S := by
   classical
   exact Finset.mem_union_left _ ha
@@ -60,7 +60,7 @@ private theorem mem_collar_window (D S : Finset G) {a s r : G}
   exact Finset.mem_union_right _ (Finset.mem_biUnion.mpr
     ⟨a, ha, Finset.mem_biUnion.mpr ⟨s, hs, Finset.mem_image.mpr ⟨r, hr, rfl⟩⟩⟩)
 
-private theorem localMap_piecewise_of_collar (D S : Finset G) (φ : (S → A) → A)
+theorem localMap_piecewise_of_collar (D S : Finset G) (φ : (S → A) → A)
     {x y z : G → A} (hout : ∀ a, a ∉ D → x a = y a)
     (himage : localMap S φ x = localMap S φ y)
     (hz : ∀ a ∈ collar D S, z a = x a) :
@@ -171,7 +171,7 @@ private theorem erase_disjoint_patterns (S : Finset G) (φ : (S → A) → A)
         · exact hc
         · exact hay u hu⟩
 
-private theorem exists_dense_packing (C F : Finset G) (hC : C.Nonempty) :
+theorem exists_dense_packing (C F : Finset G) (hC : C.Nonempty) :
     ∃ T : Finset G, T ⊆ F ∧
       (∀ t ∈ T, ∀ u ∈ T, t ≠ u → ∀ c : C, ∀ e : C, t * c ≠ u * e) ∧
       F.card ≤ T.card * C.card ^ 2 := by
@@ -362,7 +362,7 @@ private theorem mul_card_le_boundary (F E : Finset G) :
       exact Nat.add_le_add_left (Finset.sum_le_sum (fun e _ =>
         Finset.card_le_card Finset.symmDiff_subset_sdiff)) _
 
-private theorem mul_ratio_tendsto {ι : Type*} {l : Filter ι} (F : ι → Finset G)
+theorem mul_ratio_tendsto {ι : Type*} {l : Filter ι} (F : ι → Finset G)
     (hpos : ∀ᶠ i in l, (F i).Nonempty)
     (hboundary : ∀ e : G, Tendsto
       (fun i => (((F i).image (fun f => f * e) ∆ F i).card : ℝ) / (F i).card) l (𝓝 0))
@@ -397,10 +397,10 @@ private theorem mul_ratio_tendsto {ι : Type*} {l : Filter ι} (F : ι → Finse
   have hzero := squeeze_zero' hl hu hb
   convert hzero.add_const 1 using 1 <;> simp
 
-private def finiteShape (s : Set G) : Finset G :=
+def finiteShape (s : Set G) : Finset G :=
   if h : s.Finite then h.toFinset else ∅
 
-private theorem maximal_shapes [MeasurableSpace G] [MeasurableSingletonClass G] :
+theorem maximal_shapes [MeasurableSpace G] [MeasurableSingletonClass G] :
     (∀ᶠ s in maxFoelner Gᵐᵒᵖ (Measure.count : Measure G), (finiteShape s).Nonempty) ∧
     ∀ e : G, Tendsto (fun s : Set G =>
       (((finiteShape s).image (fun f => f * e) ∆ finiteShape s).card : ℝ) /

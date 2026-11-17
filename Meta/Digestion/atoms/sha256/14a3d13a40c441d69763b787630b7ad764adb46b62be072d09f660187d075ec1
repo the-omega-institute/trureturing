@@ -1,0 +1,68 @@
+**命题 25.5（静态效果到实际坐标分支的有条件桥）。**在命题 25.3 与假设 25.4 下，全部原输入满足
+
+$$
+F(r_j(a))=P_jFa.
+\tag{25.17}
+$$
+
+特别 $r_0(a)=(a_0,0)$、$r_1(a)=(0,a_1)$ 是这一忠实来源上唯一满足 (25.15) 的接续，且它们是新增运算而非受限原生项。对该接续，预测波定理 7.2 的精确对应为
+
+$$
+H_n=H_{n+1}=\mathbb C^2,\qquad
+\mathcal K_n=\mathcal K_{n+1}=\kappa,\qquad O=\{0,1\},\qquad M_j=P_j.
+\tag{25.18}
+$$
+
+若再有 (25.16)，则在 $L$ 的 Hilbert 表示中，$R$ 的像恰为固定共同参考下的记录等距
+
+$$
+V_{\rm rec}\psi=P_0\psi\otimes|0\rangle+P_1\psi\otimes|1\rangle.
+\tag{25.19}
+$$
+
+这里的相位由混合参考配对固定，不仅由同结果守恒固定。
+
+证明。(25.15) 给
+
+$$
+(Fc)^\dagger\bigl(F(r_j(a))-P_jFa\bigr)=0\qquad(c\in M).
+$$
+
+$F(M)$ 复张成 $\mathbb C^2$，故括号为零。其值仍在 $\mathcal O^2$，所以显示的坐标接续确为总定义；$F$ 忠实又给原标签唯一性。命题 25.3 排除了它们是原项的可能。于是
+
+$$
+\kappa(r_j(a),r_j(b))=\kappa_j(a,b),\qquad
+\sum_j\kappa(r_j(a),r_j(b))=\kappa(a,b).
+\tag{25.20}
+$$
+
+这正好是[《相融预测波与关系谱》定义 7.1、定理 7.2](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md#7-预测波怎样给出概率与观察者的记录增长)的式 (7.1)，合法描述在本例张成全部 $\mathbb C^2$。直接复用该定理，得到 $M_j=P_j$、$\sum_jM_j^\dagger M_j=I$、分支 $\rho\mapsto P_j\rho P_j$ 及数学记录等距；不另输入 CP 假设。完全正、Kraus 分支和记录等距的这部分是既有结论的应用。其一般有限维先例见 Watrous，*The Theory of Quantum Information*，[第 2 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，Theorem 2.22、Corollary 2.27；这些先例不构造本来源的实际 $r_j$ 或 $R$。
+
+为识别实际 $R$，令 $G:N\to H_L$ 为强正核的最小 Gram 表示。(25.16) 第一式给正交等距 $T_j:H\to H_L$，满足 $T_jFc=G(i_j(c))$。将
+
+$$
+s_a=\sum_jT_jP_jFa
+$$
+
+与每个 $T_jFc$ 配对，(25.16) 第二式给 $G(R(a))-s_a$ 正交于两个参考子空间。又有
+
+$$
+\|s_a\|^2=\sum_j\|P_jFa\|^2=\|Fa\|^2=\|G(R(a))\|^2.
+\tag{25.21}
+$$
+
+由正交分解，残差范数为零。因此 $G(R(a))=s_a$，在 $T_j\psi\leftrightarrow\psi\otimes|j\rangle$ 的固定识别下就是 (25.19)。这还从显示配对推出全部 $L(R(a),R(b))$，没有遗留未定的额外记录分量。若只保留 (25.20)，每支重相位 $P_j\mapsto e^{i\gamma_j}P_j$ 仍守恒，故不足以给出 (25.16) 的参考相位。
+
+原漂移仍须逐项保留：
+
+$$
+\begin{aligned}
+F(r_j(Ua))&=\zeta P_jFa+P_jt,\\
+F(U(r_j(a)))&=\zeta P_jFa+t,\\
+F(r_j(V_Ua))&=\zeta F(r_j(a)).
+\end{aligned}
+\tag{25.22}
+$$
+
+在 $t=e_0,j=1$ 时前两行不同；不能以 $r_j$ 与原 $U$ 交换代替正确的纠偏协变性。证毕。
+

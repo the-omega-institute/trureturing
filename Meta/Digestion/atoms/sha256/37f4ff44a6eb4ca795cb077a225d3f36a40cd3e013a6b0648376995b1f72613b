@@ -1,0 +1,86 @@
+### 9.5 全部混合质量、确切有理常数及常值截面接线
+
+**证明，所有正泛函。** 对自伴 $U,V$ 及正泛函 $\psi$，实 Gram 矩阵
+
+$$
+G_\psi(U,V)=\begin{pmatrix}\psi(U^2)&\psi(U\circ V)\\\psi(U\circ V)&\psi(V^2)\end{pmatrix}\succeq0.
+\tag{9.28}
+$$
+
+承重的成熟二阶行列式根不等式为：$M,N\succeq0$ 时
+
+$$
+\sqrt{\det(M+N)}\ge\sqrt{\det M}+\sqrt{\det N}.
+\tag{9.29}
+$$
+
+若 $M>0$，合同变换给 $Q=M^{-1/2}NM^{-1/2}\succeq0$，而 $Q$ 的两个非负特征值给 $\operatorname{tr}Q\ge2\sqrt{\det Q}$；将此代入 $\det(1+Q)=1+\operatorname{tr}Q+\det Q$ 即得(9.29)。以 $M+\delta1$ 替代奇异 $M$，对明确有限矩阵取 $\delta\downarrow0$ 即包含奇异情形。这不涉及未知 $D$ 的任何极限，也不另立新一般定理。
+
+有限维谱分解给每个正泛函 $\phi=\sum_{j=1}^3w_j\phi_{\xi_j}$，其中 $w_j\ge0$、$\|\xi_j\|=1$、$\sum_jw_j=\phi(1_\star)$，零权保留。由(9.28)的线性、行列式根的一次齐次性和(9.29)，
+
+$$
+\sqrt{B_\phi(U,V)}\ge\sum_jw_j\sqrt{B_{\phi_{\xi_j}}(U,V)}.
+\tag{9.30}
+$$
+
+分别用于两对实际原标签，再用 $|\sum_jw_j\phi_{\xi_j}(L_0)|\le\sum_jw_j|\phi_{\xi_j}(L_0)|$，(9.27)给(9.6)。若质量为零，谱权全零、$\phi=0$，结论为 $0\ge0$。至此包含所有混合、次归一、不等及零质量；没有把向量检验直接冒充混合结论。
+
+**证明，有理消费者。** 在 $\lambda=1$，(9.14)给 $I_1=23/12\le2$，且 $\kappa_1=1$、$T_1=\sqrt{11}\le4$、$N_1=\sqrt{43/2}\le5$、$j=3/2\le2$。因此逐个支付分母因子后有
+
+$$
+m_1\ge\frac1{144\cdot64\cdot20\cdot5\cdot6}=\frac1{5529600},\quad
+\varepsilon_1\ge\min\left\{\frac12,\frac1{8\cdot9\cdot5529600}\right\}
+=\frac1{398131200},\quad \frac{m_1}2\ge\frac1{11059200}.
+\tag{9.31}
+$$
+
+这证明(9.7)。两条环境边仍非零，且 $s\ne0$ 时
+
+$$
+c\circ t-ig=\begin{cases}ct-is,&\sigma=1,\\tc-is,&\sigma=-1,\end{cases}
+\tag{9.32}
+$$
+
+所以通过该零探针接口的行确实有非标准余量。$|\rho|=1/2$ 的 P2 证书对所有平移成立，不表示该残差通过零探针 PB。
+
+**证明，同一定理在本卷区间对象上的消费。** 取含单位正嵌入
+
+$$
+\iota:\mathcal A_\star\hookrightarrow M,\qquad (\iota a)(\tau)=a,
+\qquad \iota(1_\star)=u,\qquad\tau\in[0,1],\qquad
+\iota(ab)=\iota(a)\iota(b),\quad\iota(a^*)=\iota(a)^*.
+\tag{9.33}
+$$
+
+它还是忠实的复线性保乘法、保伴随映射。因而平方、Jordan 乘法、交换子、反交换子与(9.3)中的全部原标签逐个交换：若 $\widetilde c=\iota c$、$\widetilde t=\iota t$、$\widetilde g=\iota g$、$X=\iota x$，则实际角为 $\iota(P_\star)M\iota(P_\star)$，且
+
+$$
+\widetilde h=\iota h,\quad\widetilde r=\widetilde c\circ X=\iota r,\quad
+\widetilde k=\iota k,\quad
+\widetilde R_\pm=\iota R_\pm,\quad\widetilde S_\pm=\iota S_\pm,\quad
+\widetilde L_X=\iota L_x.
+\tag{9.34}
+$$
+
+任一数学正泛函 $\Psi$ 给 $\phi=\Psi\circ\iota\ge0$，严格保持
+
+$$
+\phi(1_\star)=\Psi(u),\quad
+B_\Psi(\iota U,\iota V)=B_\phi(U,V),\quad
+\Psi(\widetilde L_X)=\phi(L_x),\quad\Psi(\widetilde g)=\phi(g).
+\tag{9.35}
+$$
+
+于是(9.8)的 P2 剪切不变性及(9.6)的 $X=0$ 余量逐字提升，保留全部质量。这里只传已给常值数据及其乘积，不假定任何未知响应与 $\iota$、压缩或点值交换。
+
+反向比较取同一个非零 $\rho$，在 $\lambda=0$ 直接调用 $\mathsf F$ 定理42.2：取其(42.5)–(42.7)的明确向量 $\xi_{\sigma,\rho}^{(0)}$，其质量为 $1+\varepsilon_\rho^2(1+\theta^2)$，其(42.8)的原零预算违反量至少 $\delta_\rho^2/(4M_\rho)>0$。对任意 $\tau\in[0,1]$，本域的实际点值映射 $\operatorname{ev}_\tau:M\to\mathcal A_\star$ 含单位且正，且 $\operatorname{ev}_\tau\iota=\operatorname{id}$。因此
+
+$$
+\Psi_{\tau,\sigma,\rho}^{(0)}
+=\phi_{\xi_{\sigma,\rho}^{(0)}}\circ\operatorname{ev}_\tau\ge0,\qquad
+\Psi_{\tau,\sigma,\rho}^{(0)}(u)=1+\varepsilon_\rho^2(1+\theta^2)
+\tag{9.36}
+$$
+
+在零平移常值标签上保留同一严格违反量。这里点值是明确已知映射，不是宣告它属于原物理评价族。因而 $t_0$ 与 $t_0+\lambda c$ 的 P2 预算相同，零预算合法性却不同；(9.33)–(9.36)是本卷实际常值截面消费者，不是独立的嵌入包装命题。定理得证。∎
+

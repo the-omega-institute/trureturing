@@ -1,0 +1,12 @@
+**Born 与复态几何。** 完整固定半比较经 $S$ 与一般 EJA 忠实桥，再由同一原精确两接口 66.3 选择有限复 Hermitian 直和。忠实坐标中
+
+$$
+A=\bigoplus_i\operatorname{Herm}_{n_i}(\mathbb C),\qquad
+\rho_i\ge0,\quad\sum_i\operatorname{Tr}\rho_i=1,\quad
+0\le f_i\le I_i,\qquad
+\Pr(f\mid\rho)=\sum_i\operatorname{Tr}(f_i\rho_i).
+\tag{87.19}
+$$
+
+同块纯比较为内积模方，异中心块为零；不是从探针预写的矩阵假设 Born。所有零／不等中心质量和原效应可得前件仍在。
+

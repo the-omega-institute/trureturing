@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2506.14523v6
 claim: "For Hermitian observables H_1,...,H_N, the paper compares the De Palma-Trevisan quantum Wasserstein distance with its variant optimized over separable couplings, and conjectures (Conjecture 1) that the modified separable distance never exceeds the modified De Palma-Trevisan distance for arbitrary mixed states."
 strata_touched:
   - D5/S3/Quantum/Information/SeparableWassersteinComparisonRefutation
+  - D5/S3/Quantum/QuantumChannels/SeparableDecompositionTriangleRefutation
 license: citation-only
 triage: anchor
 ---
@@ -69,6 +70,37 @@ Conjecture 1:
 > \end{align}
 > if $\varrho$ and $\sigma$ are arbitrary mixed states.
 
+## Pure-state decompositions and the triangle question
+
+Equations (18) and (19) use a common finite probability distribution for two pure-state ensembles:
+
+$$
+\varrho_{12}=\sum_k p_k |\Psi_k\rangle\langle\Psi_k|\otimes|\Phi_k\rangle\langle\Phi_k|,
+\qquad
+\varrho=\sum_k p_k |\Psi_k\rangle\langle\Psi_k|,
+\qquad
+\sigma=\sum_k p_k |\Phi_k\rangle\langle\Phi_k|.
+$$
+
+Equation (83) defines the modified decomposition quantity:
+
+$$
+\widetilde D_{\mathrm{DPT,decomp}}(\varrho,\sigma)^2
+=\min_{p_k,|\Psi_k\rangle,|\Phi_k\rangle}
+\sum_k p_k\widetilde D_{\mathrm{DPT}}(|\Psi_k\rangle,|\Phi_k\rangle)^2.
+$$
+
+Section III.3.3 states:
+
+> it would be important to show that these quantities fulfill the triangle inequality. Let us now examine this in the case of D̃_DPT,decomp(ϱ,σ).
+
+Theorem 10, equation (114), states:
+
+> The inequality D̃_DPT,decomp(ϱ,ω) + D̃_DPT,decomp(ω,τ) − D̃_DPT,decomp(ϱ,τ) ≥ 0, where ϱ, ω and τ are density matrices, is fulfilled for the case of a pure ω.
+
+The formulas and the two quotations in this section use the supplied transcription of the same v6 source. The general mixed-middle-state triangle assertion is the question, whereas Theorem 10 has the additional pure-middle-state hypothesis.
+
 ## Verified locator
 
 - URL: https://arxiv.org/abs/2506.14523v6 (v6, 2026-02-12; source `swap_fidelity_and_separability61.tex`, md5 `cf228e87bcfd90de27e7425f05127d95`): the De Palma–Trevisan distance (l. 151–161), its modification (l. 228–232), the separable distance (l. 246–255) and its modification (l. 797–803), and Conjecture 1 (l. 866–870).
+- In the v6 transcription, equations (18) and (19) specify the common-weight pure-state ensembles and their two marginals; equation (83) defines the modified decomposition minimum; Section III.3.3 poses its triangle question; Theorem 10, equation (114), proves the pure-middle-state case. The formulas and quotations under "Pure-state decompositions and the triangle question" are located by these equation, section and theorem numbers.

@@ -1,0 +1,191 @@
+**定理 33.2（固定输出的相反谱对稳定性）。** 对每个有限 $M\ge0$ 和 $\lambda_*>0$，
+
+$$
+\boxed{\displaystyle\lim_{\varepsilon\downarrow0}
+\omega_{M,\lambda_*}(\varepsilon)=0.}
+\tag{33.5}
+$$
+
+结论统一包含两种 $\sigma$。它只针对定义 33.1 的近相反谱对，不声称任意相异 $a,b$ 下具有同一模数。
+
+**证明。** 先在稳定性证明中应用定理 23.2、28.2 的已成精确计算。这里只需说明那份计算如何消费新的固定输出约束，不另立精确行结论为新定理。设类中 $c=c^\flat$。已知代数给
+
+$$
+\begin{gathered}
+c\circ e=c\circ j=0,\qquad c\circ n=\lambda n,\\
+K_\sigma(c,Te+\alpha n)=\lambda Tj,\qquad
+K_\sigma(c,Tj+\alpha n)=-\lambda Te.
+\end{gathered}
+\tag{33.6}
+$$
+
+固定第一轴，置 $V=\lambda n\circ t-n\circ k$、$Z=t+\lambda k$。于是
+$L=2Te\circ k-2t\circ g-2\alpha(\lambda Tj+V)$。为明确极限次序，先固定 $T,\phi$。对自伴 $A_0,B_0,n$ 和实 $\theta$，置 $C_0=B_0-\theta A_0$，则实半内积 $\langle X,Y\rangle_\phi=\phi(X\circ Y)$ 给
+
+$$
+\begin{aligned}
+B_\phi(A_0+\alpha n,B_0+\theta\alpha n)
+&=\alpha^2B_\phi(n,C_0)+B_\phi(A_0,C_0)\\
+&\quad+2\alpha\{\langle A_0,n\rangle_\phi\langle C_0,C_0\rangle_\phi
+-\langle A_0,C_0\rangle_\phi\langle n,C_0\rangle_\phi\}.
+\end{aligned}
+$$
+
+这是 (28.14) 的 Gram 列消元。正号对取 $A_0=T(e+\lambda j)-k$、$B_0=t+g$、$\theta=\lambda$；负号对取 $A_0=T(e-\lambda j)+k$、$B_0=t-g$、$\theta=-\lambda$。(28.15) 在共同中点 $\mu=0$ 时准确成为
+$C_\pm=Z\pm g\mp\lambda Te-\lambda^2Tj$。
+将 (33.2) 除以 $|\alpha|$，只在这个标量多项式中令 $|\alpha|\to\infty$，得到 (28.16) 的同一不等式
+
+$$
+\begin{aligned}
+2|\phi(\lambda Tj+V)|\le{}&
+\sqrt{B_\phi(n,Z+g-\lambda Te-\lambda^2Tj)}\\
+&+\sqrt{B_\phi(n,Z-g+\lambda Te-\lambda^2Tj)}.
+\end{aligned}
+\tag{33.7}
+$$
+
+退化 Gram 也包含：非负多项式除以 $\alpha^2$ 后趋于非负二次系数，平方根在零处连续，故首项为零时对应根号趋零。没有除以首项、质量或谱值。
+
+在忠实含单位表示 $A\subseteq B(\mathcal H)$ 中，内积第一槽共轭线性。(28.17) 给
+
+$$
+V=V^*,\qquad lVl=(1-l)V(1-l)=0,\qquad
+lV(1-l)=\tfrac12l[c,t](1-l).
+$$
+
+取 $\|\xi\|=1$ 的 $\xi\in(1-l)\mathcal H$，先设 $d=\|m\xi\|>0$，置
+$\eta=j\xi/d\in l\mathcal H$、$\nu=e\xi/d=-\jmath\eta$。两者均为单位向量，$j\xi=d\eta$，且 $\operatorname{Re}\langle\eta,\nu\rangle=0$。对 $\delta>0$，
+$\xi_\delta=(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 才是这里所用的单位向量。令
+$\Pi_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta$。
+对应向量态 $\phi_\delta$ 的 (28.19)–(28.20) 明确为
+
+$$
+\begin{gathered}
+\phi_\delta(n^2)=\frac{4\delta^2}{1+\delta^2},\qquad
+\phi_\delta(W^2)=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)=
+\frac{2\delta\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle}{1+\delta^2},\\
+B_{\phi_\delta}(n,W)=\frac{4\delta^2}{(1+\delta^2)^2}
+\|\Pi_\eta(W\xi+\delta W\eta)\|^2,\\
+\phi_\delta(\lambda Tj+V)=\frac{2\delta}{1+\delta^2}
+\bigl(\lambda Td+\operatorname{Re}\langle\eta,V\xi\rangle\bigr)
+\qquad(W=W^*).
+\end{gathered}
+$$
+
+代入 (33.7)，约去正因子 $2\delta/(1+\delta^2)$，仍固定有限 $T$ 后令 $\delta\downarrow0$。
+$\Pi_\eta(j\xi)=0$ 消去两份 $-\lambda^2Tj$ 项。置
+$A_\xi=\operatorname{Re}\langle\eta,V\xi\rangle$、
+$z_\pm=\Pi_\eta((Z\pm g)\xi)$，得到
+
+$$
+2|\lambda Td+A_\xi|
+\le\|z_+-\lambda Td\,\nu\|+\|z_-+\lambda Td\,\nu\|.
+$$
+
+这正是 (28.21)。固定单位 $\nu$、固定 $z$ 和非零实 $\rho$ 时，(28.22) 的有理化给
+
+$$
+\|\rho L\nu+z\|-|\rho|L
+=\frac{2\rho L\operatorname{Re}\langle\nu,z\rangle+\|z\|^2}
+{\|\rho L\nu+z\|+|\rho|L}
+\longrightarrow\operatorname{sgn}(\rho)\operatorname{Re}\langle\nu,z\rangle.
+$$
+
+令 $\epsilon_\lambda=\operatorname{sgn}\lambda$、$B_\xi=\operatorname{Re}\langle\nu,g\xi\rangle$。
+先取 $T=L$，左右减去 $2|\lambda|dL$ 后令 $L\to+\infty$，得
+$2\epsilon_\lambda A_\xi\le-2\epsilon_\lambda B_\xi$；再取 $T=-L$，同法得
+$-2\epsilon_\lambda A_\xi\le2\epsilon_\lambda B_\xi$。实投影不改变与 $\nu$ 的实配对，共同的 $Z$ 相消。两向合为 $A_\xi=-B_\xi$；由于 $\nu=-\jmath\eta$，准确得到 (28.23)
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,V\xi\rangle.
+\tag{33.8}
+$$
+
+保留 $\epsilon_\lambda$ 同时覆盖正负 $\lambda$。整个次序是先固定 $T$ 取 $|\alpha|\to\infty$，再固定 $T$ 取 $\delta\downarrow0$，最后分别取 $T=\pm L$；没有对未知响应取输入极限。
+
+第二轴是 $e'=j$、$j'=\jmath(l-m)j=-e$，同一约束 (33.2) 对它成立。
+$c,t,g,k,V,Z,n,d$ 不变，$\eta'=j'\xi/d=\jmath\eta$。
+写 $G=\langle\eta,g\xi\rangle$、$L_0=\langle\eta,V\xi\rangle$，第二轴给
+$\operatorname{Im}(-\jmath G)=\sigma\operatorname{Re}(-\jmath L_0)$，即
+$-\sigma\operatorname{Re}G=\operatorname{Im}L_0$。
+与 (33.8) 合并为 $G=\jmath L_0$，所以
+
+$$
+\langle j\xi,(g-\jmath V)\xi\rangle=0
+\qquad(\xi\in(1-l)\mathcal H).
+\tag{33.9}
+$$
+
+这里先对单位向量证明，再由固定算子的二次齐次性推广到任意 $\xi$；$d=0$ 时 $j\xi=0$，式子本来成立，不定义 $\eta$、不除以 $d$。
+
+令 $M_0=g-\jmath V$、$r_0=1-l-m$。
+在 (33.9) 取 $\xi=u+z$，$u\in m\mathcal H$、$z\in r_0\mathcal H$，减去 $z=0$ 的式子，得
+$\langle ju,M_0z\rangle=0$。$j:m\mathcal H\to l\mathcal H$ 是满等距，故 $lM_0r_0=0$。
+对 $z=0$，$T_0=mjM_0m$ 的二次型 $Q(u)=\langle u,T_0u\rangle$ 恒零；即使 $T_0$ 非自伴，复极化仍给
+
+$$
+4\langle u,T_0v\rangle
+=Q(u+v)-Q(u-v)-iQ(u+iv)+iQ(u-iv)=0.
+$$
+
+故 $lM_0m=0$。最后由 $l\jmath V(1-l)=lK_\sigma(c,t)(1-l)$，得到零误差行
+$l(g-K_\sigma(c,t))(1-l)=0$。$l=m=0$ 时此式平凡。这份已成计算只应用于固定元素和两轴预算。
+
+现在以 C*-超积证明稳定性。若 (33.5) 不成立，由上确界定义可取 $\delta_0>0$、$\varepsilon_q\downarrow0$ 及各类中的数据，使
+
+$$
+\bigl\|l_q\bigl(g_q-K_{\sigma_q}(c_q,t_q)\bigr)(1-l_q)\bigr\|\ge\delta_0.
+\tag{33.10}
+$$
+
+取子列使 $\sigma_q=\sigma$ 固定，再取自由超滤子 $\mathcal U$。各 $A_q$ 非零，否则该坐标的行范数为零。构造
+$A_{\mathcal U}=\prod_q A_q/\{(a_q):\lim_{\mathcal U}\|a_q\|=0\}$，无下标表示有界序列的商类。投影及 $e^2=l+m,el=me$ 等关系逐坐标传递，且 $c=c^\flat$。
+有界实数列 $\lambda_q$ 有实超极限 $\lambda$；绝对值的连续性给
+
+$$
+|\lambda|=\lim_{\mathcal U}|\lambda_q|\ge\lambda_*>0.
+$$
+
+同时 $\|(\lambda_q-\lambda)l_q\|,\|(\lambda_q-\lambda)m_q\|\to_{\mathcal U}0$，故商中确有
+$cl=\lambda l$、$cm=-\lambda m$。所有范数界保留，$g=[g_q]$ 只是有界自伴元；没有定义任何 $D_{\mathcal U}$。
+
+须把 **(33.1) 和 (33.2) 两者** 传到商代数的所有状态。先取坐标状态的超积
+$\phi_{\mathcal U}([a_q])=\lim_{\mathcal U}\phi_q(a_q)$。
+对任意固定有限 $T,\alpha$ 和任一轴，所有标签都是有界序列的有限乘法与实线性组合；两式中的多项式、绝对值及非负平方根都与超极限相容。平方根在 $[0,\infty)$ 上包括零点连续。因此两式首先对每个超积状态成立。
+
+随后消费 Goldbring–Hart，[*On Tsirelson pairs of C*-algebras*，arXiv:2210.15509v3](https://arxiv.org/pdf/2210.15509v3)，§2.2 Lemma 2.3 的状态弱星稠密性。这里写出所需的分离论证，以明确正谱端点和正代表：超积状态集合是凸的，因为对 $0\le\theta\le1$，
+
+$$
+\theta[\phi_q]_{\mathcal U}+(1-\theta)[\psi_q]_{\mathcal U}
+=[\theta\phi_q+(1-\theta)\psi_q]_{\mathcal U}.
+$$
+
+若其弱星闭包 $X$ 不是全部状态空间，Hahn–Banach 分离给自伴 $a$ 及状态 $\rho$，使
+$\rho(a)>\sup_{\chi\in X}\chi(a)$。
+平移为 $b=a+\|a\|1\ge0$ 保留严格分离。
+正元 $b$ 有有界的坐标正代表：取 $b^{1/2}$ 的任一有界提升 $(y_q)$，置 $b_q=y_q^*y_q$，便有 $b=[b_q]$、$b_q\ge0$。
+每个 $b_q$ 的最大谱值 $\|b_q\|$ 由一个状态 $\chi_q$ 达到（在单生成交换子代数上取端点态，再作状态延拓）。故超积状态 $\chi$ 满足
+
+$$
+\chi(b)=\lim_{\mathcal U}\|b_q\|=\|b\|\ge\rho(b),
+$$
+
+与严格分离矛盾。这里在正元上取最大正谱值，没有把任意自伴元的范数误当正谱端点，也没有声称每个商状态本身具有坐标状态表示。该稠密性是被消费的成熟引理。
+
+对固定 $T,\alpha$ 和一条轴，(33.1) 的两边是关于状态的弱星连续多项式；(33.2) 的两边是有限多项式再接绝对值、连续非负平方根。两式因而同时从超积状态传到所有商状态。任一非零数学正泛函为 $\phi=\phi(1)\rho$；若 $\phi(1)=0$，则 $\phi=0$。用两式的正齐次性便覆盖所有正泛函。每组有限参数分别处理，不需要把实参数可数化、作对角化或假设一致参数收敛。
+
+商中数据于是满足上面的零误差计算，给 $l(g-K_\sigma(c,t))(1-l)=0$。然而 C*-超积范数给
+
+$$
+\begin{aligned}
+\bigl\|l\bigl(g-K_\sigma(c,t)\bigr)(1-l)\bigr\|
+&=\lim_{\mathcal U}
+\bigl\|l_q\bigl(g_q-K_\sigma(c_q,t_q)\bigr)(1-l_q)\bigr\|\\
+&\ge\delta_0>0,
+\end{aligned}
+$$
+
+矛盾。所用范数公式也可直接由商范数得到：加入超滤零序列不改变范数超极限；反向对任意 $\eta>0$，在属于 $\mathcal U$ 的集合上保留范数至多为该极限加 $\eta$ 的代表，其余坐标置零，即得同一商类的相应上界。故矛盾发生在商范数中。证毕。
+

@@ -168,7 +168,7 @@ private theorem toEuclideanLin_outer (x : EuclideanSpace ℝ m) (y : EuclideanSp
     (InnerProductSpace.symm_toEuclideanLin_rankOne x y)
   simpa using h.symm
 
-private theorem dualPairing_outer (Z : EuclideanSpace ℝ n →L[ℝ] EuclideanSpace ℝ m)
+theorem dualPairing_outer (Z : EuclideanSpace ℝ n →L[ℝ] EuclideanSpace ℝ m)
     (x : EuclideanSpace ℝ m) (y : EuclideanSpace ℝ n) :
     dualPairing Z (Matrix.vecMulVec x.ofLp y.ofLp) = ⟪x, Z y⟫_ℝ := by
   unfold dualPairing

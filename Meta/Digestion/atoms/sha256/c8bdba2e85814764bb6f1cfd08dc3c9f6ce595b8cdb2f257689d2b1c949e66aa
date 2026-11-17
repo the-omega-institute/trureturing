@@ -1,0 +1,16 @@
+**推论119.3（原锥的投影暴露与固定面误差界）。**
+在EB3+Inj下，原 $C$ 的每张面都是 $C$ 的线性幂等投影像，
+即 $C$ 是projectionally exposed。
+每个固定锥面 $\mathcal F$ 有有限常数 $\|P\|$，使
+
+$$
+\operatorname{dist}(x,\mathcal F)\le
+\|P\|\operatorname{dist}(x,C)\qquad(x\in\operatorname{span}\mathcal F).
+\tag{IX119.11}
+$$
+
+证明。球锥用定理119.2；纯射线 $\mathbb R_+r$ 用正投影 $x\mapsto u(x)r$；
+零面和整个锥用零映射和恒等。基面分类穷尽全部锥面。
+若 $P(C)=\mathcal F$ 且 $x\in\operatorname{span}\mathcal F$，则对每个 $y\in C$，
+$Py\in\mathcal F$ 且 $x-Py=P(x-y)$。取范数和下确界即得(IX119.11)。证毕。
+

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Continuous integer-length mixed moments inherit uniform discrete asymptotics. -/
+   digest: Mean-square prime correlations: Continuous integer-length mixed moments inherit uniform discrete asymptotics. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteThirdAssembly
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteFourthAssembly
@@ -29,7 +29,7 @@ private theorem weighted_moment_scaling (N H : ℝ) (k : ℕ)
 
 private theorem uniform_continuous_cell_replacement :
 ∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/4 →
-  SS ∅ = 1 → (∀ d, SS {d} = 1) → HL4 SS β → IntervalCorrelations SS → 1 ≤ M →
+  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL4 SS β → IntervalCorrelations SS → 1 ≤ M →
   ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
     ∀ H : ℕ, N^α ≤ (H:ℝ) → (H:ℝ) ≤ N^β →
     ∀ B (w : ℝ → ℝ), BVBound w B → ∀ k : ℕ, (k=3 ∨ k=4) →
@@ -37,9 +37,9 @@ private theorem uniform_continuous_cell_replacement :
       |weightedMoment N H a b w-
         (∫ t in (1:ℝ)..2, w t*(∏ i,
           S H (a i) (b i) ⌊N*t⌋₊/Real.sqrt ((H:ℝ)*Real.log N)))| ≤ B*δ := by
-  intro SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM δ hδ
+  intro SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM δ hδ
   obtain ⟨C, hC, hs⟩ := uniform_sampling_fourth SS α β M
-    hα hαβ hβ hSS hSS1 hHL hcor hM
+    hα hαβ hβ hSS hSS1 hMS hcor hM
   let t := δ / (4 * C)
   have hC0 : 0 < C := zero_lt_one.trans_le hC
   have ht : 0 < t := div_pos hδ (by positivity)
@@ -73,8 +73,46 @@ private theorem uniform_continuous_cell_replacement :
         (mul_le_mul_of_nonneg_left (by exact_mod_cast hk4) hw.2.2.1) ht.le
     _ = B * δ := by dsimp [t]; field_simp
 
+private theorem uniform_continuous_cell_replacement_three :
+∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/3 →
+  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL 3 SS β → IntervalCorrelations SS → 1 ≤ M →
+  ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
+    ∀ H : ℕ, N^α ≤ (H:ℝ) → (H:ℝ) ≤ N^β →
+    ∀ B (w : ℝ → ℝ), BVBound w B →
+    ∀ a b : Fin 3 → ℝ, admissible M a b →
+      |weightedMoment N H a b w-
+        (∫ t in (1:ℝ)..2, w t*(∏ i,
+          S H (a i) (b i) ⌊N*t⌋₊/Real.sqrt ((H:ℝ)*Real.log N)))| ≤ B*δ := by
+  intro SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM δ hδ
+  obtain ⟨C, hC, hs⟩ := uniform_sampling_second SS α β M
+    hα hαβ hβ hSS hSS1 hMS hcor hM
+  let t := δ / (6 * C)
+  have hC0 : 0 < C := zero_lt_one.trans_le hC
+  have ht : 0 < t := div_pos hδ (by positivity)
+  filter_upwards [hs t ht, eventually_ge_atTop (1 : ℝ)] with N hs hN
+  intro H hlo hhi B w hw a b hab
+  have hdata := fun i => hs H hlo hhi (a i) (b i) (hab i).1 (hab i).2.1 (hab i).2.2
+  let f := fun i t => Z H (a i) (b i) (N * t) N
+  let g := fun i t => S H (a i) (b i) ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)
+  have hif : Integrable (fun t => ∏ i, f i t) (volume.restrict (Icc (1 : ℝ) 2)) :=
+    FourthTransfer.FiniteProductMomentBounds.product_integrable (by norm_num : 0 < 3)
+      (fun i => (hdata i).1.1.mono_exponent (by norm_num : (3 : ENNReal) ≤ 4))
+  have hig : Integrable (fun t => ∏ i, g i t) (volume.restrict (Icc (1 : ℝ) 2)) :=
+    FourthTransfer.FiniteProductMomentBounds.product_integrable (by norm_num : 0 < 3)
+      (fun i => (hdata i).1.2.mono_exponent (by norm_num : (3 : ENNReal) ≤ 4))
+  have hp := weighted_cubic_difference f g w C t B ht.le hw.2.2.1
+    (fun i => ⟨(hdata i).1.1.mono_exponent (by norm_num : (2 : ENNReal) ≤ 4),
+      (hdata i).1.2.mono_exponent (by norm_num : (2 : ENNReal) ≤ 4)⟩)
+    hif hig (fun i => (hdata i).2.1) (fun i => (hdata i).2.2.1)
+    (fun i t ht => (hdata i).2.2.2 t ht)
+    (hw.1.intervalIntegrable (subset_univ _)) (fun x _ => bv_sup_bound w B hw x)
+  rw [weighted_moment_scaling N H 3 a b w (zero_lt_one.trans_le hN)]
+  apply hp.trans
+  have hbudget : 6 * B * t * C = B * δ := by dsimp [t]; field_simp
+  exact hbudget.le
+
 private theorem uniform_weighted_cell_error :
-∀ (α β M : ℝ), 0 < α → α < β → β < 1/4 → 1 ≤ M →
+∀ (α β M : ℝ), 0 < α → α < β → β < 1/2 → 1 ≤ M →
   ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
     ∀ H : ℕ, N^α ≤ (H:ℝ) → (H:ℝ) ≤ N^β →
     ∀ B (w : ℝ → ℝ), BVBound w B → ∀ k : ℕ, (k=3 ∨ k=4) →
@@ -147,25 +185,25 @@ private theorem uniform_weighted_cell_error :
 
 /-- Continuous cubic mixed moments vanish uniformly for integer lengths. -/
 theorem integer_third :
-∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/4 →
-  SS ∅ = 1 → (∀ d, SS {d} = 1) → HL4 SS β → IntervalCorrelations SS → 1 ≤ M →
+∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/3 →
+  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL 3 SS β → IntervalCorrelations SS → 1 ≤ M →
   ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
     ∀ H : ℕ, N^α ≤ (H:ℝ) → (H:ℝ) ≤ N^β →
     ∀ B (w : ℝ → ℝ), BVBound w B → ∀ a b : Fin 3 → ℝ, admissible M a b →
       |weightedMoment N H a b w| ≤ B*δ := by
-  intro SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM δ hδ
+  intro SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM δ hδ
   have ht : 0 < δ / 3 := by positivity
-  filter_upwards [uniform_continuous_cell_replacement SS α β M
-      hα hαβ hβ hSS hSS1 hHL hcor hM (δ / 3) ht,
-    uniform_weighted_cell_error α β M hα hαβ hβ hM (δ / 3) ht,
-    eventual_discrete_third SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM (δ / 3) ht,
+  filter_upwards [uniform_continuous_cell_replacement_three SS α β M
+      hα hαβ hβ hSS hSS1 hMS hcor hM (δ / 3) ht,
+    uniform_weighted_cell_error α β M hα hαβ (by linarith) hM (δ / 3) ht,
+    eventual_discrete_third SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM (δ / 3) ht,
     eventually_ge_atTop (2 : ℝ)] with N hr hc hd hN
   intro H hlo hhi B w hw a b hab
   have hN0 : 0 < N := by linarith
   have hH0 : 0 < (H : ℝ) := (Real.rpow_pos_of_pos hN0 α).trans_le hlo
   have hL : 0 < Real.log N := Real.log_pos (by linarith)
   have hn := (normalizer_powers H (Real.log N) hH0 hL).2.2.1
-  have hr' := hr H hlo hhi B w hw 3 (Or.inl rfl) a b hab
+  have hr' := hr H hlo hhi B w hw a b hab
   have hc' := hc H hlo hhi B w hw 3 (Or.inl rfl) a b hab
   rw [hn] at hc'
   have hd' := hd H hlo hhi B w hw a b hab
@@ -180,18 +218,18 @@ theorem integer_third :
 /-- Integer-length fourth mixed moments converge uniformly to the overlap pairing. -/
 theorem integer_fourth :
 ∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/4 →
-  SS ∅ = 1 → (∀ d, SS {d} = 1) → HL4 SS β → IntervalCorrelations SS → 1 ≤ M →
+  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL4 SS β → IntervalCorrelations SS → 1 ≤ M →
   ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
     ∀ H : ℕ, N^α ≤ (H:ℝ) → (H:ℝ) ≤ N^β →
     ∀ B (w : ℝ → ℝ), BVBound w B → ∀ a b : Fin 4 → ℝ, admissible M a b →
       |weightedMoment N H a b w-
         (∫ t in (1:ℝ)..2, w t)*(kappa N H)^2*W4 a b| ≤ B*δ := by
-  intro SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM δ hδ
+  intro SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM δ hδ
   have ht : 0 < δ / 3 := by positivity
   filter_upwards [uniform_continuous_cell_replacement SS α β M
-      hα hαβ hβ hSS hSS1 hHL hcor hM (δ / 3) ht,
-    uniform_weighted_cell_error α β M hα hαβ hβ hM (δ / 3) ht,
-    eventual_discrete_fourth SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM (δ / 3) ht,
+      hα hαβ hβ hSS hSS1 hMS hcor hM (δ / 3) ht,
+    uniform_weighted_cell_error α β M hα hαβ (by linarith) hM (δ / 3) ht,
+    eventual_discrete_fourth SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM (δ / 3) ht,
     eventually_ge_atTop (2 : ℝ)] with N hr hc hd hN
   intro H hlo hhi B w hw a b hab
   have hN0 : 0 < N := by linarith

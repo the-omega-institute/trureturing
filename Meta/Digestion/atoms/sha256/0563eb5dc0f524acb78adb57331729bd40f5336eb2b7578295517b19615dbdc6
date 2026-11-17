@@ -1,0 +1,13 @@
+**Corollary 11.7 (represented infimum and the conditional tolerance family).** Let $\mathfrak S_\mu^{\mathbb Q}$ denote the stationary regular tables with rational latch rows, kernels and emissions, installed using the supplied finite exact categorical-sampling convention. Then
+
+$$
+J(\mathfrak S_\mu^{\mathbb Q})=j_c.
+\tag{11.28}
+$$
+
+If a compatible pair with $\mathcal J=0$ is supplied, then for every $0<\eta\le1$ there is one rational finite COMPLETE observer with both original configuration excesses at most $\eta$.
+
+**Proof.** Rational tables are included in $\mathfrak S_\mu$. Apply Lemma 11.6 to each finite table approaching $j_c$ in Theorem 11.5, choosing an arbitrarily small additional loss. This proves (11.28). For the conditional statement choose $\varepsilon=22\eta/81$ in Theorem 11.4, so its maximal added loss is at most $\eta/2$, and rationalize that one table to add at most $\eta/2$.
+
+A fixed rational categorical distribution can be sampled exactly using fresh independent fair bits, finite rational thresholds and reusable finite rejection workspace. The program, threshold representation, latch selector, cursors and all sampler microstates are finite and charged; the same represented sampler implements acquired and synthetic updates. Almost-sure termination of this internal service adds no source query or operation permission. Unbounded possible rejection attempts, paid source rejections and legal returns still have no finite worst-case bit or time bound. Thus each chosen table is separately represented and finite. This is an existence statement for finite effective members, not an algorithm taking an arbitrary nonatomic real measure as finite input. Without the zero-level premise it provides no vanishing-excess family. $\square$
+

@@ -1,0 +1,42 @@
+**定义 9.1（轴平移星形的固定输出数据）。** 在本节局部记
+
+$$
+\begin{gathered}
+\mathcal A_\star=M_3(\mathbb C),\quad 1_\star=I_3,\quad
+P_\star=\operatorname{diag}(1,1,0),\quad
+\mathcal Q_\star=P_\star\mathcal A_\star P_\star,\\
+c=\operatorname{diag}(1,2,0),\quad d=\operatorname{diag}(1,-2,0),\quad
+t_0=\begin{pmatrix}0&0&1\\0&0&\sqrt2\\1&\sqrt2&0\end{pmatrix},\\
+t=t_\lambda=t_0+\lambda c,\quad s=\rho d,\quad
+K_\sigma(a,b)=\frac{\sigma i}{2}[a,b],\quad
+g_0=K_\sigma(c,t)=K_\sigma(c,t_0),\quad g=g_0+s,
+\qquad \lambda,\rho\in\mathbb R,\quad\sigma\in\{1,-1\}.
+\end{gathered}
+\tag{9.1}
+$$
+
+这里 $\mathcal Q_\star$ 是矩阵角，不是前文正锥 $C$；矩阵乘法、伴随和准确正锥均已给定。局部矩阵符号不替换前文 $E,F,J$。每份 $\phi$ 是 $\mathcal A_\star$ 上的数学正复线性泛函，原质量 $\phi(1_\star)$ 可为任意有限非负实数。对自伴 $U,V$ 置
+
+$$
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2\ge0,
+\qquad U\circ V=(UV+VU)/2.
+\tag{9.2}
+$$
+
+只对实际 $x=x^*\in\mathcal Q_\star$ 定义全部原标签
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\\
+R_+=x+h-k,\quad R_-=x-h+k,\quad
+S_+=t+r+g,\quad S_-=t-r-g,\\
+L_x=-2x\circ(h-k)-2t\circ(r+g),\\
+\mathsf{P2}:\quad \phi(g)^2\le B_\phi(c,t),\qquad
+\mathsf{PB}_x:\quad |\phi(L_x)|\le
+\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}\quad(\phi\ge0).
+\end{gathered}
+\tag{9.3}
+$$
+
+特别是 $r=c\circ x$，不是别的探针变量。该有限接口没有未知总响应 $D$、指定外响应或以 $t$ 为演员的原调用，也没有输入正则性、压缩自然性、相对单位中性或免费 CP 完成。它与定义1.2的 $\mathsf H_I(D)$ 严格分开；若完整模型实际供应已分类角和 $g=D(c,t)$，才按 $\mathsf F$ §41.1 的原 PB 与外层 P2 得到这些必要预算。
+

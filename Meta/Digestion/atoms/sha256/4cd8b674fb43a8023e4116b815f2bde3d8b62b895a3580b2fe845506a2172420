@@ -1,0 +1,66 @@
+**定理 25.1（满行秩 P2 与正预算违反同时实现）。** 取
+
+$$
+\begin{gathered}
+m=2,\qquad D_{\rm env}=I_2,\qquad V=\operatorname{diag}(\varepsilon,1),\\
+B=\begin{pmatrix}\rho/2&1\\1&\rho+1-2\varepsilon^2\end{pmatrix},\qquad
+s=\rho\operatorname{diag}(1,-2)\oplus0_2,\\
+0<|\rho|\le\tfrac12,\qquad0<\varepsilon\le\rho^2/16.
+\end{gathered}
+\tag{25.1}
+$$
+
+实际 $\operatorname{rank}V=2$，而 $\ker D_{\rm env}=0$，故零模耦合秩为零。对两种分别解释的 $\sigma$，同一完整 $M_4(\mathbb C)$ 输入满足全部原正泛函的固定 P2；(24.2) 取 $b=1$ 给该同一输入的实际 PB 严格违反，并有 (24.3) 的严格正差额及两笔正预算。若只保留 (25.1) 的矩阵公式并允许 $\rho\in\mathbb R$，则对每个固定 $\varepsilon>0$，此矩阵族的全正 P2 准确区间为
+
+$$
+|\rho|\le\frac{\sqrt2}{2+\varepsilon^2}.
+\tag{25.2}
+$$
+
+证明。直接应用定理 8.1 的原全正泛函对应；不以选定向量检验代替它。其 Schur 矩阵和归一化矩阵是
+
+$$
+\begin{gathered}
+H=B-VV^*=\begin{pmatrix}\rho/2-\varepsilon^2&1\\1&\rho-2\varepsilon^2\end{pmatrix},\\
+C^{-1/2}HC^{-1/2}=\begin{pmatrix}
+\rho/2-\varepsilon^2&1/\sqrt2\\
+1/\sqrt2&\rho/2-\varepsilon^2
+\end{pmatrix}.
+\end{gathered}
+\tag{25.3}
+$$
+
+故为非对角 Schur 平衡分支，$\beta=1/\sqrt2$。取有序谱基
+
+$$
+U_0=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+\omega=(U_0^*ZU_0)_{12}=1.
+$$
+
+原环境度量准确给
+
+$$
+\begin{gathered}
+GG^*=U_0^*C^{-1/2}(I_2+VV^*)C^{-1/2}U_0
+=\begin{pmatrix}1+\varepsilon^2/2&\varepsilon^2/2\\
+\varepsilon^2/2&1+\varepsilon^2/2\end{pmatrix},\\
+Q=\frac1{1+\varepsilon^2}
+\begin{pmatrix}1+\varepsilon^2/2&-\varepsilon^2/2\\
+-\varepsilon^2/2&1+\varepsilon^2/2\end{pmatrix},\\
+R=\frac{2+\varepsilon^2}{2(1+\varepsilon^2)},\qquad
+h=-\frac{\varepsilon^2}{2(1+\varepsilon^2)},\qquad
+\Delta=\frac1{1+\varepsilon^2},\qquad J=0.
+\end{gathered}
+\tag{25.4}
+$$
+
+代入 (8.3) 得 (25.2)，与 $\sigma$ 无关，包含端点、零泛函和任意有限质量。对 (25.1) 的参数，$\varepsilon\le1/64$，所以
+
+$$
+|\rho|(2+\varepsilon^2)\le\tfrac12(2+1/4096)<\tfrac54<\sqrt2.
+$$
+
+故这些输入均在全正 P2 区间内。
+
+在同一个输入上，$B_{11}=\rho/2$、$b=1$、$\|V^*e_1\|=\varepsilon$，准确满足 (24.1)。直接消费定理 24.1，得实际 $x_\sigma$、同一 $\xi=e_1\oplus0_2$、两笔正预算和严格违反。任意正质量的严格违反由该定理的同一缩放给出。由于 $\varepsilon>0$，实际耦合秩二，定理 22.3 同时保证不存在左端非零的共同零预算接触；这里的违反确实使用正预算。它不是满足全部 PB 的非零残量模型。∎
+

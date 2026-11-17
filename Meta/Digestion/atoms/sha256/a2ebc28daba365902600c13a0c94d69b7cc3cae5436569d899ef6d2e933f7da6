@@ -1,0 +1,76 @@
+**定理 36.1（条件 $\mathrm S_{13}^{-}$ 的分类）。**在定义 35.1 的原始签名及完整 (R) 下，$\mathrm S_{13}^{-}$ 当且仅当存在复 Hilbert 空间 $H$ 与映射 $F:M\to H$，对全部 $a,b$ 满足
+
+$$
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad
+F(Ua)=\omega Fa+t,\quad t=F(U1),\qquad
+c(a,b)=\|Fa-Fb\|^2,\quad \omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
+\tag{36.1}
+$$
+
+最小空间 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 唯一到唯一的保标签酉同构，如定理 32.1；零模型、非忠实来源和任意仿射漂移均包含在内。反向可取 $C_\varepsilon=(4/\varepsilon+2)\|t\|^2$。
+
+**证明。**先设 $\mathrm S_{13}^{-}$。在定理 23.2 的实际数组模型中，$\Sigma_N=\{0,1,2\}^N$，乘法与 $U_N$ 逐坐标采用原运算，真实单位为常值原单位数组 $\mathbf1$，且
+
+$$
+c_N(A,Z)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(A_\sigma,Z_\sigma),\qquad
+U_N^3\mathbf1=(p_3)_{\sigma\in\Sigma_N}.
+\tag{36.2}
+$$
+
+所有下标量均按定义 35.1 在真实数组单位上计算。对 $\Delta_1$ 的两个绝对值分别用有限和三角不等式，对第三项用 $[\sum_i d_i]_+\le\sum_i[d_i]_+$，得到对全部数组 $A,Z$
+
+$$
+\begin{aligned}
+\Xi_N(A,Z)&\le\frac1{N3^N}\sum_\sigma\Xi(A_\sigma,Z_\sigma)\\
+&\le\frac\varepsilon{N3^N}\sum_\sigma B(A_\sigma,Z_\sigma)+\frac{C_\varepsilon}{N}
+=\varepsilon B_N(A,Z)+\frac{C_\varepsilon}{N}.
+\end{aligned}
+\tag{36.3}
+$$
+
+预算是四个真实单位费用的精确加权和；不要求未缩放坐标有共同预算，也未将 $\widetilde\Gamma_N1$ 代作真实单位。
+
+固定任意原三标签 $a,b,d$，允许重复。定理 23.2 给共同相位补齐的来源数组、全部自由含幺 $U$-项 $\mathcal T$ 的实际求值 $s_N$、每个固定项的有限统一预算，以及对全部有序项对同一个有限值点态收敛子列 $N_\ell\to\infty$。只约简双侧单位律，保留括号、次序和 $U1$；即使原标签等于 $1$，来源变量也不与真实单位符号合并。
+
+记共同极限为 $c_\infty$。它仍非负、零对角、满足完整 (R)，并精确保留原三标签全部有向比较矩阵。对每个固定 $s,z\in\mathcal T$，沿同一子列把 (36.3) 的有限个费用、绝对值和正部取极限，得
+
+$$
+\Xi_\infty(s,z)\le\varepsilon B_\infty(s,z)\qquad(\varepsilon>0).
+\tag{36.4}
+$$
+
+每个 $\varepsilon$ 的不等式都沿这个已选子列成立，不另选模型；$C_\varepsilon/N_\ell\to0$，而 $B_\infty(s,z)$ 有限。令 $\varepsilon\downarrow0$，非负各项遂分别为零，即
+
+$$
+s\cdot p_{\infty,1}\approx s,\qquad
+c_\infty(s\cdot p_{\infty,3},z)\ge c_\infty(s,z),\qquad
+p_{\infty,j}=U^j1_{\mathcal T}.
+\tag{36.5}
+$$
+
+此时第三标记仅取得下界，未预设等式。引理 35.2 随即给极限模型的 $\mathrm{UC}$ 和完整表示。平方根 Hilbert 距离在被保留的三标签上给
+
+$$
+\sqrt{c(a,d)}\le\sqrt{c(a,b)}+\sqrt{c(b,d)}.
+\tag{36.6}
+$$
+
+原三标签任意，原核有 $\mathrm{DT}$；定理 14.1 与有限正性桥定理 1.3 恢复原模型的全部 (36.1) 及最小唯一性，包括乘法和原 $U$。这里只回拉三个比较值，不回拉未证的原运算嵌入；不使用零费用商、全局零费用来源的封闭性或 $U$ 满射性。定理 23.2 同时给的零漂移不作为额外推理前件，更未令原模型的 $t$ 为零。
+
+反向设 (36.1)。由仿射标记公式及 $F1=0$ 得
+
+$$
+F(p_3)=(1+\omega+\omega^2)t=0,\qquad
+c(a\cdot p_3,z)=c(a,z).
+\tag{36.7}
+$$
+
+故第三项正部为零，而式 (32.6) 对第一标记直接给
+
+$$
+\Xi(a,z)=\Delta_1(a,z)\le\varepsilon B(a,z)+(4/\varepsilon+2)\|t\|^2.
+\tag{36.8}
+$$
+
+零预算、$t=0$ 及全零核均在此估计内，没有除以预算或范数。漂移任意；表示满足完整 (R) 的核对仍由定理 32.1 的端点差消去漂移给出。证毕。
+

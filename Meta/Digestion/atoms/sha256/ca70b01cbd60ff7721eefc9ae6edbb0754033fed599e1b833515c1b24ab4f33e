@@ -1,0 +1,23 @@
+**定理 113.3（原球维数在纯分量内恒定）。** 对每个原 $p\in P_\alpha$，
+有整数奇异局部同调计算
+
+$$
+H_j(P,P\setminus\{p\};\mathbb Z)
+ \cong
+\begin{cases}
+\mathbb Z,&j=N-d_p,\\
+0,&j\ne N-d_p,
+\end{cases}
+\qquad j\ge0.
+\tag{VIII113.5}
+$$
+
+它与113.2的模二局部维数相比较，严格给出
+
+$$
+d_p=N-r_\alpha\quad(p\in P_\alpha).
+\tag{VIII113.6}
+$$
+
+特别地 $p\mapsto d_p$ 局部常定，只能在有限多个开闭纯分量之间改变。
+

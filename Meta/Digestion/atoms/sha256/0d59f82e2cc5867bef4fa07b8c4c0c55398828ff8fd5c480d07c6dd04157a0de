@@ -1,0 +1,46 @@
+**定义 7.1（每个逻辑字母的新原生字）。** 每次 $Q_D$ 或受控 $Q_D$ 调用，包括逆序逻辑字中的每一个字母，分别采用 OTF004 定理 24.2 的一个新 $q_e$ 截止字，所有记录新鲜且保留。为明确其原生操作，设
+
+$$
+|x_X\rangle=(|+\rangle+(-1)^x|-\rangle)/\sqrt2,
+\qquad F_{cH}=|0\rangle\langle0|_c\otimes I_H
++|1\rangle\langle1|_c\otimes Z_H.
+\tag{7.1}
+$$
+
+第一槽调用 forward $V$，然后施行非参考 $F_{cH}$，对 $H,E$ 作 $X$ 基 Lüders 读出。其完整结果算子为
+
+$$
+L_{xy}=|x_Xy_X\rangle\langle x_Xy_X|_{HE}
+\otimes|xy\rangle_B\otimes|xy\rangle_F,
+\qquad x,y\in\{0,1\}.
+\tag{7.2}
+$$
+
+测后 $H,E$、原始两位结果 $B$、实际两位副本 $F$ 均保留；这里从未先生成总自旋 $b$ 的经典记录。OTF004 式 (24.7) 的完整矩阵恒等式给
+
+$$
+K^{(c)}_{xy}=\tfrac12Q_D^{x\oplus y}C Q_D,
+\qquad C Q_D=|0\rangle\langle0|_c\otimes I+|1\rangle\langle1|_c\otimes Q_D.
+\tag{7.3}
+$$
+
+每个结果效果为 $I/4$，包括控制位相干交叉块。若第一奇偶为零则成功；否则还需校正一个 $Q_D$。校正槽再次用同一个探针调用 forward $V$，不施行 $F_{cH}$，再作同一完整读出，结果作用为
+
+$$
+K^{(u)}_{xy}=\tfrac12Q_D^{x\oplus y}.
+\tag{7.4}
+$$
+
+在首次奇偶一处校正成功并停止；奇偶零则继续，至多总共 $q_e$ 次调用，仍未成功即标截止并保留该支。无 quantum controlled-$V$、$V^\dagger$、直接 $R$ 门、后选择或无限重试。不受控 $Q_D$ 取固定 $c=1$，仍保留该控制口；额外逻辑控制可在非参考位上计算后控制 $c$。控制和逆的每次实际访问都照此支付。
+
+对每个新访问 $i$，预留恰 $q_e$ 组槽，未使用槽保持空白。若 $w$ 为完整历史，令 $\zeta_w$ 包含其全部新实际量子及记录输出，则
+
+$$
+\sigma_{s,q_e}=\sum_{w\ {\rm success}}4^{-|w|}\zeta_w,\qquad
+\sigma_{f,q_e}=\sum_{w\ {\rm cutoff}}4^{-q_e}\zeta_w,
+\qquad\sigma_{Z_i,q_e}=\sigma_{s,q_e}+\sigma_{f,q_e}.
+\tag{7.5}
+$$
+
+这是 OTF004 式 (24.9) 的同一空间历史混合；截止总质量为 $2^{-q_e}$。在任意混合、纠缠的逻辑输入及旧记忆上，新字与理想逻辑门张量 $\sigma_{Z_i,q_e}$ 的半 diamond 距离恰为 $2^{-q_e}$，从而至多 $e/(D_eL_e)$。新记录只用于该本地字内部的停止控制；固定槽屏障之后的逻辑门不读取它们。旧原始记录从不擦除或倒转。
+

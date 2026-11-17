@@ -1,0 +1,36 @@
+## Proof: an exact attaining phase point
+Define
+$$
+ x_* =\frac{23-\sqrt{385}}{64},\qquad
+ r_* =2x_*+\frac54=\frac{63-\sqrt{385}}{32},\qquad
+ k_*=2(r_*-1),\qquad
+ u_* =\frac18,\quad v_*=-\frac{3\sqrt7}{8}.
+$$
+The root $x_*$ of $q(x)=256x^2-184x+9$ is isolated in $(52/1000,53/1000)$. In particular $0<x_*<1/4$, $k_*>0$, and $D(x_*)<0$. For general $x$, writing $r=2x+5/4$ and $k=2(r-1)$ gives the exact identities
+$$
+\begin{aligned}
+ B+r/2-k/8&=q(x)/16,\\
+ D^2-63k^2/64&=-(256x^2-200x+7)q(x)/256,\\
+ r^2-(1+4x+k-r/16)&=q(x)/64.
+\end{aligned}
+$$
+At $x_*$ the first two identities and the signs give $B+r_*/2=k_*/8$ and $D=k_*v_*$. Thus
+$$
+ 1+4x_*+B(x_*)u_*+D(x_*)v_*
+   =1+4x_*+k_*-r_*/16=r_*^2.
+$$
+Set, explicitly,
+$$
+\begin{aligned}
+ b&=2\arccos\sqrt{x_*},& w&=-\arccos(1/8),\\
+ Z&=1+e^{ib}+e^{i(2b-w)},& a&=\pi-\arg Z,\\
+ y&=\arccos\bigl(-\tfrac12\cos(w/2)\bigr),&
+ c&=y+w/2,\qquad d=y-w/2.
+\end{aligned}
+$$
+These are well defined: $|Z|=r_*>0$ and the argument of the last arccosine lies in $[-1/2,1/2]$. Use these $a,b,c,d$ in (3). They obey every integer relation; hence this is a phase point in the positive-time orbit closure $H$. The choices of $a$ and $y$ attain the two eliminated minima, and
+$$
+ S=F=2x_*-\frac94-\frac1{32}-r_*=-\frac{113}{32}.
+$$
+The spectral formula (1) proves $C(15)=(8-113/32)/15=143/480$.
+

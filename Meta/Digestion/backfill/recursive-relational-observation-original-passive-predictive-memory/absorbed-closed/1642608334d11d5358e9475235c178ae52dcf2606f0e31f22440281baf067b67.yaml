@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1642608334d11d5358e9475235c178ae52dcf2606f0e31f22440281baf067b67
+  normalized_sha256: sha256:1642608334d11d5358e9475235c178ae52dcf2606f0e31f22440281baf067b67
+cas_ref: sha256:1642608334d11d5358e9475235c178ae52dcf2606f0e31f22440281baf067b67
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CylinderWaitingWindows.finite_full_word_common_cut
+    target_statement_id: sha256:d309df32fbe38703cb62ed1720c2a9b1ebb9a4354358a8337cd3fe47af752180
+receipts:
+  unresolved_subitems: []

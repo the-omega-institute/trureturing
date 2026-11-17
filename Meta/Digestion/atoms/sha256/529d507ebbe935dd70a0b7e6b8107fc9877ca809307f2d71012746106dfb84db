@@ -1,0 +1,45 @@
+### 43.2 保留背景的零面积读数与两条加权方程
+
+**证明。** 直接复用 (41.13)–(41.17) 的精确探针恒等式，不重证该块代数：
+$$
+\begin{gathered}
+R_{d,\pm}=x_d\pm\tau/d=\Sigma R_{d,\pm}\Sigma,\quad
+S_{d,+}=b+dR_{d,+},\quad S_{d,-}=b-dR_{d,-},\\
+L_d=-2(d+d^{-1})\tau\circ z_d\in\Sigma A\Sigma.
+\end{gathered}
+\tag{43.6}
+$$
+对任意正泛函 $\psi$，取正读取 $\phi_\Sigma(a)=\psi(\Sigma a\Sigma)$，其质量准确为 $\psi(\Sigma)$。$b$ 仍在两个完整 $S$ 标签中；由 (43.6) 的实际乘法及 $\Sigma b^2\Sigma=0$，
+$$
+\phi_\Sigma(S_{d,\pm}^2)=d^2\phi_\Sigma(R_{d,\pm}^2),\qquad
+\phi_\Sigma(R_{d,\pm}\circ S_{d,\pm})=\pm d\phi_\Sigma(R_{d,\pm}^2).
+$$
+因此**两项实际 Gram 同时为零**，(43.4) 给 $|\psi(L_d)|\le\eta\psi(\Sigma)$。每个 $\Sigma A\Sigma$ 的状态均可由 $a\mapsto\omega(\Sigma a\Sigma)$ 正延拓；自伴元素的状态范数公式遂给
+$$
+\|L_d\|\le\eta,\qquad |d+d^{-1}|=\frac{2\sqrt{10}}3,\qquad
+\|\tau\circ z_d\|\le\frac{3\eta}{4\sqrt{10}}.
+\tag{43.7}
+$$
+状态只作数学范数分离；零质量无需除法，未使用正常性。令 $X=s_pT$、$Y=Ts_q$、$F_d=2p(\tau\circ z_d)q$，读取 $pAq$ 块得
+$$
+\frac{X}{d-1}+\frac{Y}{d-2}=F_d,\qquad \|F_d\|\le M:=\frac{3\eta}{2\sqrt{10}}.
+\tag{43.8}
+$$
+置 $r_0=\sqrt{10}$、$\alpha_\pm=(d_\pm-1)^{-1}$、$\beta_\pm=(d_\pm-2)^{-1}$。精确系数及行列式为
+$$
+\begin{gathered}
+\alpha_+=(r_0+2)/2,\quad\alpha_-=-(r_0-2)/2,\quad |\alpha_+|+|\alpha_-|=r_0,\\
+\beta_+=-(r_0+5)/5,\quad\beta_-=(r_0-5)/5,\quad |\beta_+|+|\beta_-|=2,\\
+\Delta=\alpha_+\beta_--\alpha_-\beta_+=-6/r_0.
+\end{gathered}
+$$
+在 Banach 空间 $pAq$ 中解这两条标量系数方程：
+$$
+X=\frac{\beta_-F_{d_+}-\beta_+F_{d_-}}{\Delta},\quad
+Y=\frac{-\alpha_-F_{d_+}+\alpha_+F_{d_-}}{\Delta},\qquad
+\boxed{\ \|s_pT\|\le\frac{2M}{|\Delta|}=\frac\eta2,\quad
+\|Ts_q\|\le\frac{r_0M}{|\Delta|}=\frac{\sqrt{10}}4\eta.\ }
+\tag{43.9}
+$$
+这里仅除以非零标量，从未取消或求逆 $T$。
+

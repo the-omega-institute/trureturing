@@ -27,8 +27,10 @@ def precondition(tree, previous):
     if Path(previous).name.startswith('rework-'):
         return (f'Work on the current head of `{tree}`; do not fast-forward, merge or rebase '
                 f'`origin/dev` in this step. Commit fixes on top of that head.')
-    return (f'Preserve the uncommitted Stage A delivery in `{tree}`. Run `git fetch origin dev && '
-            f'git merge --ff-only origin/dev`; stash and pop around the merge if needed.')
+    return (f'Preserve the Stage A delivery in `{tree}`: commit any uncommitted delivery as a WIP checkpoint first. '
+            f'Then run `git fetch origin dev && git merge --no-edit origin/dev` (an ordinary merge commit; '
+            f'no rebase, reset, cherry-pick or force push). On a conflict keep this lane\'s delivered files and '
+            f'dev\'s version of every other file, and report each resolved path.')
 
 
 def strings(value):

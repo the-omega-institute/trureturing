@@ -1,0 +1,33 @@
+**定理 73.8（两个实际接口的残余分类）。** 在约定 73.1 的完整 PRE+NB 上，对实际 $M$ 的两个输入位置、实际 $L$ 的两个输入位置分别施加定义 73.2 的补全，共四项。则在已经由 NB 付出的同时普通方向中，恰有
+
+$$
+\boxed{
+M(a,b)_{ij}=a_i\otimes b_j,\qquad
+L(d,a)_{ijk}=\kappa\,d_{ij}\otimes a_k,\qquad
+(pz)_{jk}=\kappa^{-1}\sum_i\operatorname{Tr}_i z_{ijk},\quad \kappa>0.}
+\tag{73.21}
+$$
+
+反向，每个正 $\kappa$ 的这组同一实际数据都满足 PRE+NB 和四项补全。
+
+**证明。** 对 $M$ 代入 $B=C=A,w_{ik}=u_{ik}$。73.7 给 $u_{ik}=\lambda I_k$，原已获逆迹平衡立即给
+
+$$
+n^2=\sum_{i,k}n_i\operatorname{Tr}(u_{ik}^{-1})
+ =\lambda^{-1}\sum_{i,k}n_in_k=\lambda^{-1}n^2.
+\tag{73.22}
+$$
+
+因 $n>0$，$\lambda=1$。所以原 $U=1_D$，此处没有调用 $C_{\rm joint}$。
+
+对 $L$ 必须代入 $B=D$，其左标签是整个有序对 $(i,j)$、维数为 $n_in_j$，右载体是 $A$。73.7 因而给 $g_{ijk}=\kappa I_k$，其中同一个 $\kappa$ 跨全部三重标签。没有关于 $g$ 的逆迹平衡可再用；不能把第一接口的 (73.22) 重用到第二接口。
+
+剩下的原 $p$ 由已发表 (65.11)、(71.6a) 的全实恒等式
+
+$$
+pQ(a,b,c)=\tau_A(a)M(b,c),\qquad Q(a,b,c)=L(M(a,b),c)
+\tag{73.23}
+$$
+
+及实际实张成唯一确定。现在 $Q=\kappa(a_i\otimes b_j\otimes c_k)_{ijk}$。每个块的实 Hermitian 简单三张量张满整个 $E$，故 (73.23) 给且只给 (73.21) 的首腿偏迹。这是在同一原 $p$ 上使用全实恢复律，不是任意正读回在一个参考上取对值就获得的唯一性。反向可直接取 65.11 的 $u=I,g=\kappa I$；73.9 还逐项核对同一 $p$ 两次的关键尺度抵消。四项全锥正补全由 73.19 给出。$\square$
+

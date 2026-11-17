@@ -1,0 +1,123 @@
+**定理 95.2（内在一对关系使整个原基成为球）。** 在定义95.1下，$p\ne q$，
+$d=\dim W\ge1$，每个 $r\in P$ 的 $T_r$ 都是一个线性 proper 效应在 $K$ 上的限制。
+记其唯一延伸为 $e_r$。它在整个原锥序中最小，且有唯一的纯补点 $r^\perp$，满足
+
+$$
+\begin{gathered}
+e_r\le f\quad(f\in F_r),\qquad
+\{x\in K:e_r(x)=1\}=\{r\},\qquad e_{r^\perp}=u-e_r,\\
+K=\{c+w:w\in W,\ s_0(w,w)\le1\},\qquad
+P=\{c+w:s_0(w,w)=1\}.
+\end{gathered}
+\tag{95.3}
+$$
+
+$c$ 是原基的唯一中心，$s_0$ 是 $W$ 上由这个椭球确定的正定内积；同一 $H$ 保持它并
+在整个单位球面上传递。用 $tc+w\mapsto(t,x)$、$s_0(w,w)=\|x\|^2$ 校准后，准确地有
+
+$$
+\begin{gathered}
+u(t,x)=t,\qquad C=\{(t,x):t\ge\|x\|\},\qquad
+r_v=(1,v),\quad \|v\|=1,\\
+T_{r_v}(1,x)=e_{r_v}(1,x)=\frac{1+v\cdot x}{2},\qquad
+r_v^\perp=r_{-v},\qquad
+T_r(s)=T_s(r)\quad(r,s\in P).
+\end{gathered}
+\tag{95.4}
+$$
+
+因此 $S$、有限正对偶生成及规范比较配对都是结论。若 $H$ 连通，则 $d\ge2$。
+
+证明。先只用原有限维紧凸几何。$F_r$ 非空，因为包含 $u$。选择一组来自 $K$ 的 $V$ 基，
+在这些点的效应值都介于零一，便使 $\mathcal E$ 在 $V^*$ 中有界；它又闭，故紧。
+$F_r$ 是其闭子集，所以(95.1)的下确界逐点达到，且 $T_r(r)=1$、$0\le T_r\le1$。
+有限维紧凸分解给 $K=\operatorname{conv}P$、$C=\operatorname{cone}P$、$\operatorname{span}P=V$，
+均指有限组合；此处未要求 $P$ 闭或其点暴露。
+
+第一步，从一对下确界取得共同效应。对 $x,y\in K$、$0\le a\le1$，每个 $f\in F_r$ 都给
+
+$$
+f(ax+(1-a)y)\ge aT_r(x)+(1-a)T_r(y),
+$$
+
+取下确界即得 $T_r$ 凹。对 $r=p$ 用此式，再以 $T_p=1-T_q$ 和 $T_q$ 的凹性得到反向不等式，
+故 $T_p,T_q$ 均仿射。$\operatorname{aff}K=\{u=1\}$，仿射函数在其仿射包上的唯一延伸与
+齐次化给原 $V$ 上线性 $e_p,e_q\in\mathcal E$。它们确认各自端点，且对任意 $f\in F_p$，
+$e_p(x)=T_p(x)\le f(x)$ 对所有 $x\in K$ 成立，缩放便给 $e_p\le f$ 于整个 $C$。
+对 $q$ 同理；(95.2)及 $K$ 张成 $V$ 给 $e_p+e_q=u$。在 $p$ 处 $T_p(p)=1$，所以
+$T_q(p)=0$；若 $p=q$ 则有 $2=1$，矛盾。这也排除了单点基。
+反向，若这两个纯点已有全 proper 区间中的最小确认且两效应之和为 $u$，它们逐点实现下确界，
+立即给(95.2)。所以这个全域等式实质上恰好打包了这一对的最小确认与互补，不是一个独立公理计数。
+
+第二步，把最小性传遍全部原纯点。对 $h\in H$，$f\mapsto f\circ h^{-1}$ 双射
+$\mathcal E$，并把 $F_r$ 双射到 $F_{hr}$，因此直接从下确界有
+
+$$
+T_{hr}(x)=T_r(h^{-1}x).
+\tag{95.5}
+$$
+
+纯态传递使每个 $r=hp$ 都有最小确认 $e_r=e_p\circ h^{-1}$；若用另一 $h$，得到的仍是
+同一个内在下确界，故无选取歧义。同时 $hq$ 是纯点，其最小确认为
+$e_q\circ h^{-1}=u-e_r$。这里先只得到至少一个纯补点，没有假设选定比较族等变或互反。
+
+第三步，建立唯一饱和。任选 $o\in\operatorname{aff}K$ 和该仿射空间平行方向上的一个欧氏内积。
+紧性给最远点 $z\in K$，令 $R=\max_{x\in K}\|x-o\|>0$。对所有 $x\in K$，
+
+$$
+\ell(x)=\langle z-o,x-o\rangle\le R\|x-o\|\le R^2=\ell(z).
+\tag{95.6}
+$$
+
+等号要求 $x-o=z-o$，故 $z$ 是 $\ell$ 的唯一最大点，因而是暴露纯点。
+由于 $K$ 非单点且张满其仿射包，$m=\min_K\ell<R^2$。
+$f_z=(\ell-m)/(R^2-m)$ 在 $K$ 上的齐次线性延伸属于 $F_z$，且一值面恰为 $\{z\}$。
+已有最小性给 $0\le e_z\le f_z\le u$，所以 $e_z(x)=1$ 只能在 $x=z$。
+利用(95.5)和传递性，所有 $e_r$ 的一值面都恰为 $\{r\}$。
+特别地，若 $u-e_r=e_s=e_t$，在 $s$ 处评价并用 $e_t$ 的唯一饱和可知 $s=t$；纯补点因而唯一。
+
+第四步，排除任何非纯边界点。任取 $y\in\operatorname{rbd}K$。相对支撑超平面定理给
+原 $\operatorname{aff}K$ 上非恒定的仿射 $g\ge0$，使 $g(y)=0$。
+除以 $\max_K g>0$ 并齐次延伸，得到 $f\in\mathcal E$、$\min_Kf=0$、$\max_Kf=1$。
+最大值面有纯点 $r$，故 $f\in F_r$，并有 $0\le e_r\le f$。
+在整个零面 $Z=\{x\in K:f(x)=0\}$ 上，$e_r=0$，因此 $e_{r^\perp}=u-e_r=1$。
+第三步的唯一饱和使 $Z\subseteq\{r^\perp\}$。$y\in Z$，所以 $y=r^\perp$ 是纯点。
+这证明了每个边界点都纯；尤其每个非空支撑零面为单点，而不是预设严格凸性。
+
+第五步，从等半径纯轨道取得整个原球。用归一 Haar 测度取
+$c=\int_H hp\,dh\in K$，则 $c$ 被 $H$ 固定。
+它在 $\operatorname{ri}K$：否则有非零非恒定支撑高度 $g\ge0$、$g(c)=0$；
+连续非负函数 $h\mapsto g(hp)$ 的 Haar 积分为零，Haar 测度在非空开集上为正，
+故该函数恒零。$Hp=P$ 和 $K=\operatorname{conv}P$ 迫使 $g$ 在 $K$ 上恒零，矛盾。
+在 $W$ 上 Haar 平均任意正定内积得到 $H$ 不变内积 $s$。
+$H$ 固定 $c$ 且在纯点上传递，故所有 $r-c$ 的 $s$ 范数同为某个 $\rho>0$。
+由有限凸分解，$K-c$ 包含在闭半径 $\rho$ 球中。
+
+对每个 $s$ 单位方向 $v\in W$，$c\in\operatorname{ri}K$、紧性和凸性保证射线
+$c+tv$ 与 $K$ 的交恰为 $0\le t\le t_v$，其中 $0<t_v<\infty$，末点在相对边界。
+第四步使该末点纯，故 $t_v=\rho$。于是每个方向的整个半径段都在原 $K$ 中，
+得到反向包含，原基恰为整个球。置 $s_0=s/\rho^2$ 得(95.3)；球面点恰为极点，
+$H$ 遂在整个 $s_0$ 球面上传递。这个 Haar 积分只构造数学中心和度量，未要求实际无限混合。
+有界凸体的对称中心唯一，否则两个中心反射合成非零平移；同一个椭球的单位球唯一决定其范数，
+极化恒等式再唯一决定 $s_0$，所以结论不依赖辅助内积。
+
+最后，在已推出的整球上计算规范尺。任一 $f(t,x)=\alpha t+b\cdot x$ 为 proper，恰当且仅当
+$\|b\|\le\alpha$ 且 $\alpha+\|b\|\le1$。
+若它确认 $r_v$，等号
+$1=\alpha+b\cdot v\le\alpha+\|b\|\le1$ 迫使
+$b=\lambda v$、$\alpha=1-\lambda$、$0\le\lambda\le1/2$。
+因此在全部 $\|x\|\le1$ 上取下确界，得到(95.4)，并给纯端点互反及唯一对径补点。
+这是[Library 原球计算][L95static]中 *1. Intrinsic control geometry, comparisons and the static PD alternative*
+的参数对应，此处没有在取得球之前使用它。
+取 $B((t,x),(z,y))=(tz+x\cdot y)/2$、$L_Bv=B(v,-)$，该处的有限 PD 推论直接给
+
+$$
+L_Br=e_r,\qquad L_B(C)=C^*,\qquad
+B>0,\qquad L_B^{-1}u=2c,\qquad B(2c,2c)=2.
+\tag{95.7}
+$$
+
+纯点张成 $V$ 给配对唯一性。若 $H$ 连通，它在 $W$ 上的作用属于 $\mathrm{SO}(d)$；
+$d=1$ 时连通群不能交换 $S^0$ 的两点，故在此应用中 $d\ge2$。
+上述静态证明未使用 connectedness、Jordan 分类或整个球面可控作为前提。证毕。
+

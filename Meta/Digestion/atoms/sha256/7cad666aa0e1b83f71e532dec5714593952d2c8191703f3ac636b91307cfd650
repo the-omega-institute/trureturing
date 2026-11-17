@@ -1,0 +1,22 @@
+**引理 26.5（该目标的极归一化扰动）。** 令 $\phi_h=\Phi_{\rm keep}(\tau_h)$，并在中心图中置
+
+$$
+ v_l=e_0\otimes f_l+e_1\otimes g_l/\sqrt m,\qquad
+ \Xi_h=\sum_l|v_l\rangle\langle v_l|\otimes|J_l\rangle\langle J_l|.
+ \tag{26.11}
+$$
+
+则 $\|W-A_{\rm stack}\|\le C_{\rm fail}/\lambda$，且
+
+$$
+ \|\phi_h-\Xi_h\|_1\le B_*/\lambda,\qquad
+ \Xi_h\ge0,\qquad\operatorname{Tr}\Xi_h\le1+A^2/\lambda\le2.
+ \tag{26.12}
+$$
+
+证明。写 $d_0=C_{\rm fail}/\lambda\le1/2$。由 $A_{\rm stack}=W\sqrt{S_{\rm op}}$，
+$\|W-A_{\rm stack}\|=\|I-\sqrt{S_{\rm op}}\|\le d_0$。对单位输入 $e_h$，极分解秩一输出与未归一化堆叠秩一输出的迹范数差至多 $2d_0$；这里两向量的范数分别为一及至多一。$L$ 的 Lüders 读出及确定性保留解码收缩此 Hermitian 差。
+
+(26.5) 将堆叠向量与其领先向量之差界为 $r=R_0/\lambda\le1$。前者范数至多一，故秩一差的迹范数至多 $(2+r)r\le3R_0/\lambda$；同一次读出后仍如此。两项相加得到 $B_*/\lambda$。最后由 $e_0\perp e_1$，
+$\operatorname{Tr}\Xi_h=\sum_l(\|f_l\|^2+\|g_l\|^2/m)\le1+A^2/\lambda$。$\Xi_h$ 不必归一化。这里用的是有限极分解和秩一迹范数不等式，结论针对同一目标的 (26.11)。$\square$
+

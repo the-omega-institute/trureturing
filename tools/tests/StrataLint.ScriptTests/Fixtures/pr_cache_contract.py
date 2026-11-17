@@ -327,6 +327,14 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             self.assertFalse(actions.adoption_record(self.root)["merged"])
             self.assertEqual("pull-requests-do-not-publish-project-seeds", actions.project_publication(self.root)[1])
 
+    def test_adoption_reclaims_download_zip_before_native_unpack(self):
+        self.preparation()
+        with mock.patch.object(producer, "unpack", wraps=producer.unpack) as unpack:
+            result, _ = self.adopt()
+        self.assertEqual("adopted", result["status"])
+        native_archive = unpack.call_args.args[1]
+        self.assertFalse(native_archive.with_name("artifact.zip").exists())
+
     def test_merge_activates_at_actual_event_checkout_without_second_publisher(self):
         self.preparation()
         self.merged()

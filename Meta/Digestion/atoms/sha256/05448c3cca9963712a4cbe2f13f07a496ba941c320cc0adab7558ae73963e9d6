@@ -1,0 +1,38 @@
+**Proposition 3.3 (Analytical epochs and paid ticks).** Freeze the emitted label on the unobserved continuation of the actual source. Let $Y_n$ be the configuration immediately after $\tau_n$, and define
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},\qquad
+Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t.
+\tag{3.5}
+$$
+
+Under the actual source $i$, $(Y_n)$ has initial row $\nu_i$ and kernel $U_i$. For a compliant observer,
+
+$$
+Y_N=d_D,\quad N<\infty\ {\rm a.s.},\qquad
+\mathbb E_iN\le\mathbb E_iQ_T
+\le B(1-q)\mathbb E_iT<\infty.
+\tag{3.6}
+$$
+
+Proof and payment audit. Independence of successive gaps and fresh update coins gives (3.1). A stop before or at the first tick has $N=0$. Otherwise the $N$ live configurations $Y_0,\ldots,Y_{N-1}$ follow $N$ distinct actually read ticks, giving $N\le Q_T\le T$. If stopping occurs inside zeros, the next analytical tick records the frozen label; that unread tick is not included in $Q_T$. Almost-sure actual stopping and finite source intervals imply $Y_N=d_D$ and finite $N$.
+
+For the sharper expectation bound, after a read tick and $b\ge1$ read zeros the next-one hazard is
+
+$$
+\frac{F_i(b)q^b}{\sum_{k\ge b}F_i(k)q^k}
+\le\frac{Bb^9q^b}{\sum_{k\ge b}b^9q^k}
+=B(1-q).
+\tag{3.7}
+$$
+
+At age zero the hazard is zero because $K\ge1$. Before any tick, $b$ read zeros instead give hazard $S_i(b)/\sum_{v\ge b}S_i(v)$. From $F_i(k+r)\ge B^{-1}F_i(k)$, shifting tail sums gives $S_i(b+r)\ge B^{-1}q^rS_i(b)$ for $b,r\ge0$, including $b=0$. This stationary hazard is also at most $B(1-q)$. With source-independent fresh coins exposed only for the payment calculation, the event of undertaking read $t+1$ is measurable before seeing $X_t$. Conditional expectation and Tonelli therefore give
+
+$$
+\mathbb E_iQ_T
+=\sum_{t\ge0}\mathbb E_i[\mathbf1_{\{T>t\}}X_t]
+\le B(1-q)\sum_{t\ge0}\mathsf P_i(T>t).
+$$
+
+This is G, Lemmas 7.1–7.2. It charges the actual observed prefix, including an interrupted final gap, and does not substitute a complete mean gap for it. The enlarged payment filtration is not an observer-accessible random tape or the filtration used for the epoch chain. $\square$
+

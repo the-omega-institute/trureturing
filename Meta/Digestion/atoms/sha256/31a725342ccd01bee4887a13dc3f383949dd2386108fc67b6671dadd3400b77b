@@ -1,0 +1,40 @@
+**定义 98.2（完整原关系）。** 同一原总映射 $D:E^2\to E$ 反对称。对每份原 $\gamma$ 及全部原标签，记
+
+$$
+g_\gamma(a,b)=\gamma(a\circ b)-i\gamma D(a,b).
+$$
+
+完整 A1 要求每对有向二表 $G_\gamma(a,b)=(g_\gamma(c_j,c_k))_{j,k=1}^2$ 正半定，$(c_1,c_2)=(a,b)$，并保留反向次序、零、重复及所有实缩放、实平移标签。完整 A2 要求对全部 $a,b\in E$，相加三表 $(a+b,a,b)$ 及其全部相应排列的实部在整个 $\mathbb R^3$ 上半正定，指定向量 $(1,-1,-1)$ 及排列后的相应向量有零二次值。完整 A3 要求 $S(1,1)=1$，并有同一个固定有理 $0<\theta\le1$，使全部原 $0\le y\le\theta1$ 满足 $S(y,y)\le y$。这些条件连同98.1–98.2记为 $\mathsf H_{\rm orig}$；不缩成一个框架或谱标签子域。
+
+特别，全部原 $a,b\in E$、$\gamma\in\mathcal P$ 满足完整 P2：
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(a\circ b)+i\gamma D(a,b)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{98.3}
+$$
+
+完整 PB 对每个实际原三元组 $a,b,d\in E$ 要求
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ d,\qquad w=a\circ b+D(a,d),\\
+D(b+v,d+w)-D(b-v,d-w)=-2b\circ v-2d\circ w.
+\end{gathered}
+\tag{98.4}
+$$
+
+这是全部原评价读取的正反平方配平的元素形式，评价分离性保证两者等价。任意实尺度的原标签及每次嵌套输入仍在完整原域量词中。没有预付 $D$ 的线性、齐次、连续、可测、中央下降、压缩下降、局部共同导子或物理 producer；也不以只含多项式第三槽的子族替换完整 PB。
+
+固定二表的复系数后，其二次型是 $E$ 中的元素；98.2使该元素为正，再由任意数学正实线性泛函 $\phi$ 读取。这是 SM79.2、SF88.5、PT118.2 的既有准确锥机制，给
+
+$$
+|\phi D(a,b)|^2\le\phi(a^2)\phi(b^2)-\phi(a\circ b)^2
+\qquad(\phi\ge0;\ a,b\in E).
+\tag{98.5}
+$$
+
+因此 $D(a,0)=D(0,a)=0$。正实泛函通过唯一复线性延拓成为 $M$ 上的正泛函；其范数是 $\phi(1)$，不要求归一或正规。原评价无须正规。
+

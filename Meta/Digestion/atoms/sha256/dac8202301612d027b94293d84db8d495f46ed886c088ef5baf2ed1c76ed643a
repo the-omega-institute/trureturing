@@ -1,0 +1,20 @@
+**定义 75.3（原混态关系）。** 对恢复 PRE 的数据，采用 72.2—72.3、72.17 的原接口 [R]。令 $c_i$ 为 $A$ 的简单中心单位，$n_i=\tau_Ac_i$、$A_i$ 为其因子，$D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$，$\pi_{ik}$ 为相应中心块投影。置
+$$
+\alpha_{ik}=F(-,c_k)|_{A_i},\quad\beta_{ik}=F(c_i,-)|_{A_k},\quad
+\mathcal Q=\{(i,k):n_i,n_k\ge2\},\qquad
+R_i(x)=\alpha_{ik}\alpha_{ik}^*x-x,\quad R_k(x)=\beta_{ik}\beta_{ik}^*x-x, \tag{75.7}
+$$
+其中伴随取原规范迹内积，并定义
+$$
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal Q,
+\ R_i(\pi_{ik}\rho)\not\succeq0\ \text{或}\ R_k(\pi_{ik}\rho)\not\succeq0\}. \tag{75.8}
+$$
+至少一差不正指存在严格负方向，不指负定，也不改为两差皆不正。活跃块由此自动非零、具有正迹；非活跃块任取正元含零，只受原总迹一约束；$\mathcal Q=\varnothing$ 时取整个 $K_D$。在第一接口坐标中，两差恰是 $(\operatorname{Tr}_k x)\otimes I_{n_k}-x$ 与 $I_{n_i}\otimes(\operatorname{Tr}_i x)-x$，使用未经维数归一化的单位。资格不要求纯性、固定 Schmidt 谱或逐块条件化，只读取第一接口与原序，不读取插入输出。
+由 65.3 已证可逆的 $\widetilde M:A\otimes_{\mathbb R}A\to D$，定义
+$$
+T_{\rm raw}(a,c)=L(Ja,c),\quad I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\qquad
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+,
+\qquad \mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+. \tag{75.9}
+$$
+本候选按“两表恢复 PRE，再读取此关系”解释；资格所用信息仍仅属第一接口。检测输入是同一个原总迹一 $\rho$，检测整个原输出锥，不换成运输态、固定效应或总迹读数。
+

@@ -1,0 +1,96 @@
+### 15.2 The rational complete-law pair
+
+Define
+
+$$
+u_0=\frac{1829}{5000},\qquad U_0=\frac{3171}{5000},\qquad
+v_0=\frac{46}{125},\qquad d=\frac{13}{15000},
+$$
+
+$$
+t=\frac{78975}{2857232}
+ =\frac{d}{2\rho_p-(b-a)},\qquad
+s_a=\frac{1349641}{2857232}=\frac12-t,\qquad
+s_b=\frac{1507591}{2857232}=\frac12+t.
+$$
+
+Set
+
+$$
+Q(w_{0,0})=u_0,
+$$
+
+$$
+Q(w_{0,1})=1-\frac{1-H}{v_0}=\frac{995}{2484},
+$$
+
+$$
+Q(w_{2,1})=C-U_0H=\frac{19907803}{911250000},
+$$
+
+$$
+Q(w_{1,1})=U_0H-Q(w_{0,1})
+=\frac{72763013}{776250000}.
+$$
+
+For every other finite $p$-word set
+
+$$
+Q(w_{n,i})=s_aP_{p,a}(w_{n,i})+s_bP_{p,b}(w_{n,i}),
+$$
+
+and set $Q(\infty_p)=0$. Define the suspended law by
+
+$$
+W=(1-v_0)\delta_\beta+v_0\,\alpha Q,
+\qquad W(\infty_\beta)=0.
+$$
+
+Here $\alpha Q$ prefixes every finite word of $Q$ by $\alpha$ and assigns the corresponding mass to the infinite outcome. This is a pair of mathematical complete laws, not an initialized observer.
+
+The full endpoint mixture $s_aP_{p,a}+s_bP_{p,b}$ has total mass one. Its alpha mass and event mass are respectively
+
+$$
+\frac{a+b}{2}+t(b-a),\qquad C-2t\rho_p.
+$$
+
+The correction on the four altered atoms has total
+
+$$
+u_0-\frac{a+b}{2}-t(b-a)+2t\rho_p
+=-d+t\bigl(2\rho_p-(b-a)\bigr)=0.
+$$
+
+Consequently $Q$ is normalized, and the definition of $W$ makes $W$ normalized without conditioning on completion.
+
+The exceptional endpoint inequalities are
+
+$$
+\frac9{25}\le\frac{995}{2484}\le\frac49,\qquad
+\frac{54}{625}\le\frac{72763013}{776250000}\le\frac8{81},\qquad
+\frac{324}{15625}\le\frac{19907803}{911250000}\le\frac{16}{729},
+$$
+
+and $a\le u_0\le b$. Every unchanged coordinate is a convex endpoint mixture. For marker zero and for marker one with $n\ge3$, the endpoint ratios are
+
+$$
+\frac{P_{p,b}(w_{n,0})}{P_{p,a}(w_{n,0})}
+=\frac65\left(\frac{27}{25}\right)^n,\qquad
+\frac{P_{p,b}(w_{n,1})}{P_{p,a}(w_{n,1})}
+=\frac{81}{100}\left(\frac{27}{25}\right)^n.
+$$
+
+Thus the ordering is fixed on the unchanged ranges. Since $a\le v_0\le b$, the suspended coordinates inherited from them lie in their endpoint intervals. The remaining suspended margins are
+
+$$
+\begin{array}{c|c|c}
+\text{atom} & \text{mass minus lower endpoint} & \text{upper endpoint minus mass}\\ \hline
+\alpha w_{0,0}&66103/2812500&7933/312500\\
+\alpha w_{0,1}&23/6750&1/1350\\
+\alpha w_{1,1}&29867117/18984375000&136987/2109375000\\
+\alpha w_{2,1}&123638407/170859375000&14512531/56953125000
+\end{array}
+$$
+
+and $W(\beta)=79/125\in[3/5,2/3]$. Hence $Q\in F_p$ and $W\in F_\beta$ on the complete carriers.
+

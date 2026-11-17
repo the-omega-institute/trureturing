@@ -1,0 +1,17 @@
+**定理 39.2（单侧支配刚性）。** 设 $X,Z\le_F D$ 且
+
+$$
+ \dim_F X=\dim_F Z=4,
+ \qquad d_X(r)\le d_Z(r)\quad\text{对全部 }r\in D^\times .
+\tag{39.5}
+$$
+
+若存在 $\mu\in D\setminus F$ 使 $d_X(\mu)\ge3$，则存在 $\gamma\in D^\times$ 使
+
+$$
+ \boxed{Z=\gamma X}.
+\tag{39.6}
+$$
+
+因此实际上 $d_X(r)=d_Z(r)$ 对每一个原标签 $r$ 都成立。定理只使用同一 $D$ 内的逐标签交维支配；它不把商支持包含单独提升为完整交维支配。
+

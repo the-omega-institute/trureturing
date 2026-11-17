@@ -1,0 +1,23 @@
+### 38.6 同一原环境中的精确回接
+
+现在回到 §37.1 的同一完整有限环境，固定
+
+$$
+ t=\begin{pmatrix}
+ \beta&a&v\\
+ a^*&T&0\\
+ v^*&0&D
+ \end{pmatrix},\qquad
+ c=\operatorname{diag}(1,C_E,0_m),\qquad
+ S=\bigl(\operatorname{diag}(s_1,s_2,s_3)\bigr)\oplus 0_m,
+\tag{38.33}
+$$
+
+其中 $\beta\in\mathbb R$、$a\in M_{1,2}(\mathbb C)$、$D=D^*$，并且
+$v(\ker D)\ne0$。$B$ 或 $T$、$a$、$v$、$D$ 都是实际原输入的同一份条目，
+不作替换。取同一原环境中的 $z_0\in\ker D$ 满足 $vz_0=1$。为使这里的二维式 (38.1) 与
+完整三格残量逐项一致，以下专门比较取 $s_2=0$ 并写 $s=s_3$；$s_1$ 可任意，因为
+$\xi_1=0$。推论 38.5 的消费者先由 §36.2 取 $s_1=s_2=0$。在这一取值下，
+$S=(\operatorname{diag}(s_1,0,s))\oplus0_m$，其 $E$-块残量正好是 $sP_3$；若保留
+$s_2\ne0$，$g\xi$ 的 $E$-列会多出 $s_2u_2$，故不在本专门运输断言中。
+

@@ -1,0 +1,92 @@
+**定理 109.10（三元二面可辨的同锥同单位重构）。** 在定义109.1的原有限维
+全态、全效应域中，下列条件等价：
+
+$$
+\boxed{\begin{aligned}
+&\mathsf W+\mathrm{TFD}_3;\\
+&\mathsf W+\mathrm{TRI2};\\
+&\exists\text{有限维秩三EJA }J,\quad
+ \Phi:J\overset{\sim}{\longrightarrow}V,\quad
+ \Phi(J_+)=C,\quad u\Phi=\operatorname{tr}_J.
+\end{aligned}}
+\tag{VIII109.37}
+$$
+
+这里 $\operatorname{tr}_J$ 是每个本原幂等元取一的规范迹。
+在固定W域中，TFD3和TRI2还分别等价于VII106.10的
+PAIRJET2、JET2、H2、CUB3、PL3、完整 $S$、全Pair和原面格覆盖律。
+共同中心G、滤子保纯和全部原纯点的数值互易是所得后果。
+
+证明。109.3给前两项的等价。
+从W与TRI2出发，109.6先处理某个 $M_q=V$ 及全部 $d_q=1$ 的分支；
+它们已有同锥同单位秩三EJA表示，不必强行进入非零球丛论证。
+在其余分支，109.5—109.9给原全空间上的正定 $B$，并对全部原纯点给
+
+$$
+a_s(t)=B(s,t)=B(t,s)=a_t(s)\quad(s,t\in P),\qquad
+ a_s\le f\quad(f\in F_s)
+\text{ 于整个 }C^*\text{ 序}.
+\tag{VIII109.38}
+$$
+
+第二部分正是W内VII105.3的全域least，没有把它省略为唯一确认或球上最小。
+所以同一个原 $V,C,u,K,P,[0,u]$ 满足完整 $S$。
+现在直接消费[完整S桥][Q109S]的
+“Reciprocal least confirmation and the spectrality bridge”及
+“Least confirmation forces face-filter purity”，并按VII103.4、VII105.8的原域接口使用：
+原全proper least与全纯数值互易供应正对偶剥离、忠实自对偶配对、
+有符号框架谱性、正面投影、projectivity及面滤波保纯，
+最后才使用[Barnum—Müller—Ududec][Q109BMU] Theorem 16。
+该定理的三个输入是projectivity、transition reciprocity及filter purity，
+这里由完整S桥分别供应；不把第三项藏在无三阶干涉的字眼中。
+W已有原面高三，故所得EJA秩为三；同一原单位由该桥的归一接口对应规范迹。
+这给(VIII109.37)的正向。
+
+反向从同单位秩三EJA出发，VII103.6—103.7已逐项给全部原效应、
+原least、完整排除球及全Pair，因此W成立。
+还须核对本章的原 $\Pi_p$ 确为成熟Peirce压缩。
+在 $J$ 中对本原幂等元 $e_i$，记 $L_a(b)=a\circ b$，
+二次表示为 $U_a=2L_a^2-L_{a^2}$。
+设单位为 $e$，则
+
+$$
+R_i(v)=\operatorname{tr}_J(e_i\circ v)e_i,
+\qquad \Pi_i=U_{e-e_i}.
+\tag{VIII109.39}
+$$
+
+第二式的认同可由原延拓唯一性直接核对。
+$U_{e-e_i}$ 是成熟的正Peirce压缩，杀掉 $e_i$，固定其互补面的整个锥。
+对任意正泛函 $f$，$f\circ U_{e-e_i}$ 正、在 $e_i$ 读零，且在 $D_{e_i}$ 上限制为 $f$；
+VII105.4的限制双射迫它等于 $\Lambda_i\operatorname{res}_if$。
+正对偶锥生成全部对偶空间，故认同对所有泛函成立，得到原算子等式，
+而不是仅找到了同像的另一个投影。
+
+取任一完整Jordan框架 $(e_1,e_2,e_3)$，成熟Peirce公式为
+
+$$
+\begin{gathered}
+J=\bigoplus_{i=1}^3\mathbb Re_i\ \oplus J_{12}\oplus J_{13}\oplus J_{23},\\
+\Pi_1=R_2+R_3+P_{23},\quad
+\Pi_2=R_1+R_3+P_{13},\quad
+\Pi_3=R_1+R_2+P_{12},\\
+I=R_1+R_2+R_3+P_{12}+P_{13}+P_{23}.
+\end{gathered}
+\tag{VIII109.40}
+$$
+
+$P_{ij}$ 是相应Peirce块的投影，允许该块为零。
+例如 $e-e_1$ 的乘法在互补代数、$J_{12}\oplus J_{13}$、$\mathbb Re_1$
+上的特征值分别为 $1,1/2,0$，故 $U_{e-e_1}=2L^2-L$ 分别取 $1,0,0$，
+准确得到第二行。三式相加再减三个 $R_i$ 即为TRI2。
+这些公式适用于所有有限EJA，包括Albert和直和分支，不用结合矩阵公式替代八元分支。
+原joint在同单位字典下正是这些完整本原框架，故量词是全部原joint。
+最后在同一W域直接复用VII106.10的既有等价链，取得所列全部比较条件和G。
+正向推导在取得完整S之前没有使用这条链，故没有循环。证毕。
+
+本定理在109.4—109.9增加的是从原三元滤子关系到共同切度量、全切覆盖、
+全空间原尺和原星锥夹逼的纸面充分推导。
+其最终Jordan桥是上述既有桥与成熟Theorem 16的应用。
+特别地，BMU Proposition 29的“无三阶干涉当且仅当滤子保纯”以其Postulates 1和2为前提，
+其中已含强对称；本证明没有把该命题搬到裸W域，也没有借它预付保纯或互易。
+

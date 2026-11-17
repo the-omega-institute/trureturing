@@ -1,0 +1,17 @@
+**定义 C-58.1.3（角色、优先数值与 Gram 矩阵）。** 令
+$$
+ T_n=\{(p,q,r):0\le p<q<r<n\},
+$$
+并令 $e_\tau$ 表示 $\mathbb R^{T_n}$ 中在角色 $\tau$ 处为一的标准坐标向量；
+并对 $\tau=(p,q,r)$ 定义
+$$
+ C_{pqr}(w)=h_p\ell_q+2h_q\ell_r-2h_p\ell_qh_q\ell_r.
+ \tag{C58.4}
+$$
+这保留原优先教师的标签 $0,1,2$。对 $a=(a_\tau)_{\tau\in T_n}\in\mathbb R^{T_n}$，置
+$$
+ \Phi(a)(w)=\sum_{\tau\in T_n}a_\tau C_\tau(w),
+ G_\lambda(\tau,\sigma)=\sum_{w\in L_n^+}\lambda(w)C_\tau(w)C_\sigma(w).
+ \tag{C58.5}
+$$
+

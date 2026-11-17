@@ -1,0 +1,38 @@
+### 27.2 自然支撑构造
+
+给定 $x,y\in B$，置
+$$
+ c_0=x^*x+y^*y,\qquad v=E_{13}x+E_{23}y,\qquad b=v+v^* .
+$$
+假设 $\operatorname{sp}(c_0)$ 为有限集。若 $c_0\ne0$，写其正谱为 $\{\mu_1,\ldots,\mu_N\}\subset(0,\infty)$，并令
+$$
+ e_c=1_{(0,\infty)}(c_0),\qquad
+ g(0)=0,\quad g(\mu_j)=\mu_j^{-1/2},\qquad
+ Q=\iota(e_c),\quad d=\iota(c_0^{1/2}),\quad u=v\,\iota(g(c_0)).
+$$
+这里 $e_c$ 和 $g(c_0)$ 是实际 $B$ 元素：有限谱函数由有限 Lagrange 多项式给出。记号 $e_c$ 专门避免与固定的 $e_{12}$ 混淆。
+
+由
+$$
+ (1-e_c)c_0(1-e_c)=(x(1-e_c))^*x(1-e_c)+(y(1-e_c))^*y(1-e_c)=0
+$$
+及正元平方为零即元为零，得 $x(1-e_c)=y(1-e_c)=0$。所以 $v=vQ$，$v^*=Qv^*$，并且
+$$
+ g(c_0)c_0g(c_0)=e_c,\qquad
+ u^*u=Q,\qquad P_0:=uu^*\le p,\qquad P:=P_0+Q.
+$$
+因此 $P_0,Q,P$ 是实际投影，且
+$$
+ ud=v,\qquad b=ud+du^*,\qquad f:=P_0-Q=f^*,\qquad f^2=P,\qquad fb=-bf.
+$$
+在 $QAQ\cong e_cBe_c$ 内，$d$ 的逆是 $\iota(g(c_0))$；这只是支撑角内的逆，绝不是 $c_0$ 在整个 $B$ 中可逆。由此
+$$
+ b^{-1}_{PAP}=u\,\iota(g(c_0))+\iota(g(c_0))u^*.
+$$
+若 $z_j=1_{\{\mu_j\}}(c_0)$、$Q_j=\iota(z_j)$，则实际谱块
+$$
+ P_j=uQ_ju^*+Q_j,\quad H_j=uQ_j+Q_ju^*,\quad
+ H_j^2=P_j,\quad b=\sum_j\sqrt{\mu_j}\,H_j,
+$$
+且 $l_j=(P_j+H_j)/2,\ m_j=(P_j-H_j)/2$ 是实际投影，$f l_j=m_jf$。故 $b$ 在单位为 $P$ 的 $PAP$ 中可逆，谱是有限的非零对称集 $\{\pm\sqrt{\mu_j}\}$。这些等式只用已知 $C^*$-乘法。
+

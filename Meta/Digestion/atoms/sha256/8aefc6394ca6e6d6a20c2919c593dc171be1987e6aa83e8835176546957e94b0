@@ -1,0 +1,84 @@
+**定理 109.5（一个剩余空间上的唯一共同内积与等倾）。** 假设TRI2。
+固定 $p$。每对对径 $q,r\in P\cap D_p$ 都有
+$N_p=T_q\oplus T_r$。按这个代数直和定义内积
+
+$$
+G_{q,r}(v_q+v_r,w_q+w_r)=g_q(v_q,w_q)+g_r(v_r,w_r).
+\tag{VIII109.13}
+$$
+
+它与对径对无关，记为 $G$。各 $T_q$ 的原内积是 $G$ 的限制；
+沿 $T_r$ 到 $T_q$ 的代数投影 $P_q$ 成为真正的 $G$ 正交投影，且
+
+$$
+\begin{gathered}
+P_q+P_r=I_{N_p},\qquad
+J_q(v)(z)=G(v,z)\quad(v\in T_q,\ z\in N_p),\\
+P_{q'}P_qP_{q'}=c(q,q')P_{q'},\qquad
+P_qP_{q'}P_q=c(q,q')P_q.
+\end{gathered}
+\tag{VIII109.14}
+$$
+
+允许某个切空间为零；本定理不以非零秩为前提。
+
+证明。109.2及TRI2给 $N_p=T_q\oplus T_r$。
+其代数投影准确是 $P_q=E_{pr}|_{N_p}$，不是预先选的正交投影。
+在109.4中取 $q'=r$，则 $c(q,r)=0$，故 $J_q(v)|_{T_r}=0$。
+在 $T_q$ 上它是 $g_q(v,\cdot)$，因此对所有 $z\in N_p$ 已有
+
+$$
+J_q(v)(z)=g_q(v,P_qz).
+\tag{VIII109.15}
+$$
+
+现在比较另一对径对 $q',r'$。对 $w\in T_{q'}$，在(VIII109.11)中
+对 $g_q$ 单位向量 $v$ 取上确界，并使用(VIII109.15)，得到
+
+$$
+\begin{aligned}
+ g_q(P_qw,P_qw)&\le c(q,q')g_{q'}(w,w),\\
+ g_r(P_rw,P_rw)&\le(1-c(q,q'))g_{q'}(w,w),\\
+ G_{q,r}(w,w)&\le g_{q'}(w,w).
+\end{aligned}
+\tag{VIII109.16}
+$$
+
+若 $T_q=0$，第一式的左侧为零，仍成立；另一零块同理。
+第二式的系数来自 $c(r,q')=1-c(q,q')$，两式针对同一个 $w$。
+对 $w\in T_{r'}$ 同样成立，只交换 $c$ 与 $1-c$。
+
+置 $G'=G_{q',r'}$、$k=\dim N_p$。选一组 $G'$ 正交归一基，
+分别由 $T_{q'}$、$T_{r'}$ 的正交归一基拼成。
+只在这两块上使用(VIII109.16)并相加，准确给出
+
+$$
+\operatorname{tr}(G'^{-1}G_{q,r})\le k.
+\tag{VIII109.17}
+$$
+
+这里没有把块上二次型界擅自提升为整个空间的Loewner界。
+交换两对径对，得到 $\operatorname{tr}(G_{q,r}^{-1}G')\le k$。
+若 $k=0$，结论平凡。否则相对正定算子的正特征值记为 $\lambda_1,\ldots,\lambda_k$；
+两条迹界给
+
+$$
+\sum_j\lambda_j\le k,\quad \sum_j\lambda_j^{-1}\le k,
+\quad 0\le\sum_j(\lambda_j+\lambda_j^{-1}-2)\le0.
+\tag{VIII109.18}
+$$
+
+每一项都非负，故全部 $\lambda_j=1$。
+相对算子与实对称正定矩阵相似，因而可对角化；全部特征值为一迫它是恒等，
+即 $G_{q,r}=G'$。
+
+共同 $G$ 本来就按每一对的直和定义，所以 $P_q$ 真正自伴随，
+且(VIII109.15)成为(VIII109.14)的 $J_q$ 式。
+对 $w\in T_{q'}$，(VIII109.16)前两式的左侧和现为 $G(w,w)=g_{q'}(w,w)$，
+右侧和也相等；两个非负亏量只能分别为零。
+于是 $G(P_qw,P_qw)=c(q,q')G(w,w)$。
+在 $T_{q'}$ 上极化，并用各投影自伴随，得
+$P_{q'}P_qP_{q'}=c(q,q')P_{q'}$。
+交换标签给另一式。此证明不要求交叉配对非退化、相应矩阵为方阵，
+也不在迹比较前假设两个 $G$ 相同。证毕。
+

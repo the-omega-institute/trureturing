@@ -30,7 +30,7 @@ open Lattice.OriginalChargedEnergy OriginalGram SourceBPZ.OriginalMatterHermitia
 open private originalCore original_positive original_nonnegative normD_sq normD_smul from
   D5.S3.VertexAlgebra.Energy.OriginalCurrentEnergy
 open private Hm_grade_orthogonal energy_power_grade energy_bound_of_grades
-  stateEnergies_nonneg from
+  from
   D5.S3.VertexAlgebra.Energy.OriginalNeutralEnergy
 open private negative_grade_eq_zero from D5.S3.VertexAlgebra.Energy.OriginalWordEnergy
 

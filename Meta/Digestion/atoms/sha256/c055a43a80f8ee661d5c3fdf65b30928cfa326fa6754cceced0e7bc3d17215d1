@@ -1,0 +1,25 @@
+#### 定理 6.7：保比较的细分支表示
+
+式 (6.1) 迫使存在唯一实线性 $K_j:H_{\rm in}\to H_{\rm out}$，满足
+
+$$
+K_jF_{\rm in}(g)=F_{\rm out}(T_j(g)),\qquad
+ \sum_jK_j^*K_j=I.
+$$
+
+若实际相位校准还给 $K_jJ_{\rm in}=J_{\rm out}K_j$，则 $K_j$ 为复线性， 按上述原事件校准有 $\sum_{j\in e}K_j^*K_j=E_e$，并给完整量子仪器
+
+$$
+\mathcal T_e(\rho)=\sum_{j\in e}K_j\rho K_j^*,\quad
+ p_e=\operatorname{Tr}\mathcal T_e(\rho),\quad
+ \rho_e=\mathcal T_e(\rho)/p_e\quad(p_e>0).
+$$
+
+**证明。**
+
+令 $Y(g)=\bigoplus_jF_{\rm out}(T_j(g))$。 保单位给 $Y(1)=0$，成对校准给 $\|Y(g)-Y(h)\|^2=\|F_{\rm in}(g)-F_{\rm in}(h)\|^2$。 实极化使两组生成向量的所有 Gram 相等，故任一输入零线性组合在输出也为零。 由此在最小实张成空间上得到唯一等距线性映射 $K$，取其坐标即 $K_j$。 共同相位关系使各 $K_j$ 复线性。Kraus 形式的任意矩阵放大均保正， 归一给总迹保持及各支迹不增。只在非零分支概率下定义条件态。 原粗事件的校准与效果表示唯一性给 $\sum_{j\in e}K_j^*K_j=E_e$， 故这些概率与原事件份额一致。
+
+$\square$
+
+因此，比较词在可见层交换，并不要求 $K_j$ 作为过程彼此交换。 例如 $H=\frac1{\sqrt2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$、 $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 都保总范数， 但 $XH\lvert 0\rangle=\lvert +\rangle$、$HX\lvert 0\rangle=\lvert -\rangle$，两者由同一个 $\lvert +\rangle\langle +\rvert$ 效果区分。 此处字母 $H$ 只在这个矩阵例中表示 Hadamard 门。 形式记录的合并与这些过程的时间接续是两个不同的二元接口。
+

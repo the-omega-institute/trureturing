@@ -1,0 +1,45 @@
+**定义 97.1（原ROG数据与线性拼接）。** 保留96.1的整个原 $(V,C,u,K,P,[0,u]_{C^*})$，
+其中 $u$ 在 $C\setminus\{0\}$ 上严格正。实域只经93.2的共同支撑限制及行列式最大点归一化，
+复域只经94.2的对应归一化，使用96.1的同一个保原单位整锥同构 $\Psi$。
+实域运输后的记号为
+
+$$
+L\subseteq\operatorname{Sym}_n(\mathbb R),\qquad
+C=L\cap\operatorname{PSD}_n,\qquad I_n\in L,\qquad
+u=\operatorname{tr}|_L,\qquad c=\dim_{\mathbb R}L^\perp.
+\tag{97.1}
+$$
+
+$n$ 是共同支撑的实维数；复域的 $n$ 则是复共同支撑维数，$c$ 在 $\operatorname{Herm}_n(\mathbb C)$
+这一实空间中计算。两种余维不混用，复秩一也不实化为实秩一。
+全部纯点、任意混态、全部 proper 效应和确认集均随 $\Psi$ 及其对偶双射运输。
+沿用96.1的 $F_p,T_p,\perp,\mathrm G_2$ 及完整 $\mathrm{Z0}$，特别是
+
+$$
+\mathrm G_2:\quad
+\forall p,q,r\in P,\quad
+p\perp q\ \land\ p\perp r\ \Longrightarrow\ p\perp(q+r)/2.
+\tag{97.2}
+$$
+
+这里各个前件可由不同效应实现，后件须由同一原效应同时实现两个零。
+不把 $[0,u]_{C^*}$ 换成环境正收缩的限制族。
+
+在实域令 $\mathcal X$ 为集合
+$\{[v]\in\mathbb{RP}^{n-1}:vv^{\mathsf T}\in L\}$ 的约化实 Zariski 闭包。
+射影簇与其实点集按上下文区分；向量张成均在 $\mathbb R$ 上取。
+称分支顺序 $\mathcal X_1,\ldots,\mathcal X_s$ 为线性拼接，若令
+$U_j=\operatorname{span}\mathcal X_j$、$U_{<j}=\sum_{i<j}U_i$ 后有
+
+$$
+\mathcal X_j\cap\bigcup_{i<j}\mathcal X_i
+=\mathbb P(U_j\cap U_{<j})\qquad(2\le j\le s).
+\tag{97.3}
+$$
+
+零向量空间的射影化为空集。等号要求整个射影交叠属于两侧，不只是若干交点相同。
+这是 Blekherman–Sinn–Velasco，*Do Sums of Squares Dream of Free Resolutions?*，
+[arXiv:1607.03551v2 §3、Theorems 3.1、3.11、3.12][BSV97reg] 所用的线性拼接。
+二正则性指理想的 Castelnuovo–Mumford 正则性至多二；整个射影空间另行处理。
+这些成熟结构结果只作为下列新推导的前置。
+

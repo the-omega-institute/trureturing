@@ -1,0 +1,115 @@
+**Theorem 13.2 (arbitrarily large near-disjoint actual rows at one cut).**
+For each source fixed in Definition 13.1, every integer $K\ge2$ and
+every positive rational $\epsilon$, there exist finite integers
+$t,H\ge1$, distinct words $u_1,\ldots,u_K\in\mathcal L^t$ with
+$p(u_i)>0$, and integer endpoints
+
+$$
+\begin{gathered}
+L_1=0,\qquad L_i<U_i\quad(1\le i\le K),\\
+U_i=L_{i+1}\quad(1\le i<K),\qquad U_K=H.
+\end{gathered}
+\tag{13.3}
+$$
+
+such that, with $E_i=E^H(L_i,U_i)$,
+
+$$
+R_{u_i}^H(E_i)>1-\epsilon\qquad(1\le i\le K).
+\tag{13.4}
+$$
+
+The $E_i$ are disjoint first-3 waiting-time windows. Every row is
+an actual full-history posterior of the original $e$-start source;
+no stationary preparation or event-only posterior replaces it.
+
+*Proof.* Choose a rational
+$0<\theta<\min\{\epsilon/4,1/16\}$. Reuse precisely Theorem 12.2:
+$S_n>0$, $S_n\to0$ and $S_{n+1}/S_n\to1$ for this fixed source.
+For every fixed integer $L\ge0$ these imply
+
+$$
+\frac{S_{n+L}}{S_n}\longrightarrow1\quad(n\longrightarrow\infty),
+\qquad
+\frac{S_{n+U}}{S_n}\longrightarrow0\quad(U\longrightarrow\infty)
+\quad\hbox{for each fixed }n.
+\tag{13.5}
+$$
+
+The first is the product of $L$ successive ratios, with empty product
+one. The second divides the supplied limit $S_{n+U}\to0$ by a fixed
+positive denominator. No rate or uniformity is used.
+
+Construct the endpoints and positive integers $n_i$ successively.
+Start with $L_1=0$. Having chosen $L_i$, choose $n_i$ larger than
+the preceding $n_j$ and so large that
+$S_{n_i+L_i}/S_{n_i}>1-\theta$. Then choose finite $U_i>L_i$ with
+$S_{n_i+U_i}/S_{n_i}<\theta$. If $i<K$, set $L_{i+1}=U_i$.
+This is possible by (13.5), and finally set $H=U_K$.
+
+For the proof only, condition the stationary comparison law $Q$ on
+its first $n$ labels all lying in $D=\{0,1,B\}$, an event of
+probability $S_n>0$. Denote its length-$H$ continuation law by
+$C_n^H$. Directly from the same no-3 events,
+
+$$
+\begin{aligned}
+C_n^H(T_3>j)&=\frac{S_{n+j}}{S_n}\quad(0\le j\le H),\\
+C_{n_i}^H(E_i)
+ &=\frac{S_{n_i+L_i}-S_{n_i+U_i}}{S_{n_i}}>1-2\theta.
+\end{aligned}
+\tag{13.6}
+$$
+
+This calculation neither asserts that the labels form a renewal
+process nor conditions on a complete word. The latter distinction
+is removed by the finite exact decomposition
+
+$$
+C_{n_i}^H
+ =\sum_{w\in D^{n_i}}\frac{q(w)}{S_{n_i}}Q_w^H,
+\qquad \sum_{w\in D^{n_i}}q(w)=S_{n_i}.
+\tag{13.7}
+$$
+
+All weights are positive and sum to one. Hence some full word
+$w_i\in D^{n_i}$ has $Q_{w_i}^H(E_i)>1-2\theta$; otherwise their
+weighted average could not exceed that number. Retain these finitely
+many words and the already chosen common windows and horizon.
+
+To obtain actual rows at one actual cut, take $t\ge\max_i n_i$ and
+the complete original words
+
+$$
+u_i(t)=B^{t-n_i}w_i.
+\tag{13.8}
+$$
+
+Equation (4.4), applied to $w_i$ and each $w_iv$, gives
+
+$$
+R_{u_i(t)}^H(v)
+ =\frac{\langle P^{t-n_i}g,F_{w_iv}\rangle_m}
+        {\langle P^{t-n_i}g,F_{w_i}\rangle_m}
+ \longrightarrow\frac{q(w_iv)}{q(w_i)}=Q_{w_i}^H(v).
+\tag{13.9}
+$$
+
+The limiting denominator is strictly positive. There are only
+$K4^H$ entries, so the convergence is also simultaneous in TV.
+Choose one finite $t$ large enough that all these TV errors are
+less than $\theta$. Then
+
+$$
+R_{u_i(t)}^H(E_i)>1-3\theta>1-\epsilon.
+\tag{13.10}
+$$
+
+These masses also exceed $1/2$. Two of the words $u_i(t)$ cannot
+coincide, since their one common probability row would then put
+more than $1/2$ on each of two disjoint events. Each has positive
+original probability by Definition 1.2. The prefix $B^{t-n_i}$ is
+part of the full actual word; it is not forgotten or provided by
+resetting the source. The stationary law and the event-conditioned
+laws were only intermediates in obtaining (13.9). $\square$
+

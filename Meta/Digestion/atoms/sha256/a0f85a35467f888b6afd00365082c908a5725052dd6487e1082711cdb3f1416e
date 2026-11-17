@@ -1,0 +1,37 @@
+**定义 66.1（载体、原关系与引文）。** 以下 AH 指本卷，W 指《任意维小窗口单位桥》，CC 指《中央响应平方与径向一致性续卷》。直接引用的仓内正文取提交 `02b9b7f3691360aa745ed531ba77a61c78e60a7b`；各定义递归纳入的上游身份保持其自身规定。完整原候选严格取 AH42.2、59.1 的同一个 $\mathsf H_A(D)$。
+
+设非零含单位复 C* 代数具有实际递增矩阵模型
+
+$$
+A=\overline{\bigcup_n A_n}^{\|\cdot\|},\qquad
+1_{A_n}=1_A,\qquad A_n\cong M_{d_n}(\mathbb C).
+\tag{66.1}
+$$
+
+本节至70节假定各 $d_n$ 为偶数；有一个偶数阶段时，可取其后续共尾模型。这里不要求 $d_n$ 是二的幂，也不要求相邻嵌入重数相同。保留完整原域 $E=A_{\rm sa}$、$S(a,b)=a\circ b$、$C=A_+$、$u=1$、$N=\|\cdot\|$。
+
+原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定 $C$。原世界、标签、每份评价及全部质量 $m_\gamma=\gamma(1)$ 保持，包括零、不等、次归一及原表示意义下的非正常评价。$D:E^2\to E$ 只是同一个任意总映射。全部原 A1/P2 为
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0
+\qquad(a,b\in E,\ \gamma\in\mathcal P).
+\tag{66.2}
+$$
+
+A2 保留全部相加三表 $(a+b,a,b)$ 及其排列在整个 $\mathbb R^3$ 上的实部正性和相加零方向。A3 保留 $1^2=1$，以及同一个固定有理 $0<\vartheta\le1$ 上的全部 $0\le a\le\vartheta1\Rightarrow a^2\le a$。
+
+对每个实际原三元组 $(h;a,b)$，完整 PB 仍是
+
+$$
+\begin{gathered}
+v=D(h,a)-h\circ b,\qquad w=h\circ a+D(h,b),\\
+D(a+v,b+w)-D(a-v,b-w)=-2a\circ v-2b\circ w.
+\end{gathered}
+\tag{66.3}
+$$
+
+这包括全部内值、外值、零、重复、缩放、平移和背景。不给 $D$ 输入连续性、双线性、协变性、压缩自然性、有限矩阵输出闭合或双对偶延拓。
+

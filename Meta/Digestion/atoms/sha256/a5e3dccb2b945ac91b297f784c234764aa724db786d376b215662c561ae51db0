@@ -1,0 +1,10 @@
+因而存在 $c_1>0$，使 $|\mathcal T(x)|\ge c_1x^{1/40}\sqrt{\log x}$ 对任意大的 $x$ 成立；等价地，$|T_\psi(x,x^{4/5})|\ge c_1x^{9/8}\sqrt{\log x}$ 对任意大的 $x$ 成立。
+
+证明。**第一步：从硬截断到高斯权。** 取 $\Delta=M^{1/4}$ 与偶的光滑截断 $\chi_M$：$0\le\chi_M\le1$，$|t|\le M$ 时 $\chi_M=1$，$|t|\ge M+\Delta$ 时 $\chi_M=0$，过渡带上 $|\chi_M^{(r)}|\ll_r\Delta^{-r}$。令 $b_M(t)=e^{t^2/(2M^2)}\chi_M(t)$，$k_M(v)=\frac1{2\pi}\int b_M(t)e^{itv}\,dt$。则 $\|b_M\|_\infty\le e^2$；由 Leibniz 公式，$\|b_M^{(5)}\|_1\ll\Delta^{-4}+M^{-4}\ll M^{-1}$，五次分部积分给出 $\int_{|v|\ge1}|k_M|\ll M^{-1}$。又 $k_M*G_M=\sum_\gamma m_\gamma\chi_M(\gamma)\cos(\gamma y)$，它与 $C_M$ 只在过渡带不同；由 (488.1)，$N(M+\Delta)-N(M)\ll\Delta L$，故 $\|k_M*G_M-C_M\|_\infty\ll M^{1/4}L$。令 $J^+=[16L-1,20L+1]$，$g_M=G_M\mathbf 1_{J^+}$。由 $\|G_M\|_\infty\ll ML$ 与 $k_M$ 的尾部界，在 $J$ 上 $|k_M*g_M-k_M*G_M|\ll L$。结合 (488.4)，
+
+$$
+\|k_M*g_M\|_{L^2(J)}\ge c\sqrt ML-O(M^{1/4}L^{3/2})-O(L^{3/2})\gg\sqrt ML .
+$$
+
+由 Plancherel，$\|k_M*g_M\|_2\le\|b_M\|_\infty\|g_M\|_2\le e^2\|g_M\|_2$，故 $\|G_M\|_{L^2(J^+)}\gg\sqrt ML$。
+

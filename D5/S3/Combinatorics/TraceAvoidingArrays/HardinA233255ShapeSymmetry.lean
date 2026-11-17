@@ -16,11 +16,11 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
 open HardinA233255LiteralBridge (labelAdvance labelWeight rowFinish rowWeight)
 open HardinA233255PairTransfer
 
-private theorem full_cell (q : Fin 3) :
+theorem full_cell (q : Fin 3) :
     labelAdvance (true, true) q = (true, true) ∧ labelWeight (true, true) q = 2 := by
   fin_cases q <;> decide +kernel
 
-private theorem full_row (k : ℕ) (q : Fin k → Fin 3) :
+theorem full_row (k : ℕ) (q : Fin k → Fin 3) :
     rowFinish (true, true) q = (true, true) ∧ rowWeight (true, true) q = (2 : ℤ)^k := by
   induction k with
   | zero => simp [rowFinish, rowWeight]

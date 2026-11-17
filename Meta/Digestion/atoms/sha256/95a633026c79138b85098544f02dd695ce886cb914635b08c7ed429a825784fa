@@ -1,0 +1,96 @@
+**定理 30.2（原 P2 与原 PB 的三矩不变性）。** 取两份任意有限的 (30.1) 环境，其三矩相同，演员块同为任意固定 $B$，并保留相同 $C,S_A$。对每个分别固定的 $\sigma$，下面的等价各自成立：第一份完整原代数上的全部正泛函满足 P2，当且仅当第二份满足；对每个相同的实际 Hermitian 演员矩阵 $X$，第一份完整原代数上的全部正泛函满足原探针 $x=X\oplus0$ 的 PB，当且仅当第二份满足。因此全部实际角探针的全称 PB、以及 P2 与全部 PB 的合取，也分别等价。这些断言均不以另一份预算为附加假设。
+
+对每个指定有限质量 $\mu>0$，把任一全正泛函量词限制为质量恰为 $\mu$，仍有相同等价。质量 $0$ 时两边均只有零泛函，全部预算都是零等式。每份原环境的严格失败均可用同一个演员探针和该环境自己的一个原向量泛函实现；跨环境转移也使用一个共同向量同时读取 PB 左端及两笔预算。
+
+特别地，定理 30.1 的 $M_{2+k_\Gamma}(\mathbb C)$ 代表是整个原问题的真实有限环境归约，其中 $k_\Gamma\le4$。其所有乘积在这个完整代数中计算；原环境中的所有乘积仍在原完整代数中计算。
+
+证明。先在一份原环境内核对投影余项。由 $W=0$，定义 17.1 的 $Q=I_2$、$N_1=0$，所以其中的 $\mathcal K$ 正好是 (30.2)，而读取环境截面是 $\mathcal E_0=T\mathcal K$。对任意原向量 $\xi=(u,y)$，写
+
+$$
+q=D_{\rm env}y=q_0+e,\qquad
+q_0=\Pi_{\mathcal K}q,\quad e\perp\mathcal K,\qquad
+\eta=(u,Tq_0),\quad d_e=\|e\|^2.
+\tag{30.12}
+$$
+
+因为 $y=Tq+n$、$n\in\ker D_{\rm env}$、$Vn=0$，且 $T=T^*$，有
+
+$$
+Vy=G^*q=G^*q_0=VTq_0,\qquad
+Ve=F^*e=0,\qquad VT e=G^*e=0.
+\tag{30.13}
+$$
+
+每个 $q_0\in\mathcal K\subseteq\mathcal R$ 都由原环境自己的实际向量 $y_0=Tq_0$ 实现，因为 $D_{\rm env}Tq_0=q_0$。
+
+为核对两个取向及两笔预算的块方向，在 $q_0\in\mathcal K$ 时记 $v=G^*q_0$、$g_A=\sigma i[C,B]/2+S_A$。对同一个 $\eta=(u,Tq_0)$ 和同一个 $x=X\oplus0$，直接在原全代数相乘得到
+
+$$
+\begin{aligned}
+c\eta&=(Cu,0),&s\eta&=(S_Au,0),\\
+x\eta&=(Xu,0),&h\eta&=(H_\sigma(X)u,0),\\
+r\eta&=(J_C(X)u,0),&t\eta&=(Bu+v,Fu+q_0),\\
+k\eta&=((C\circ B)u+Cv/2,\ FCu/2),\\
+g\eta&=(g_Au+\sigma iCv/2,\ -\sigma iFCu/2),\\
+(R_\delta\eta)_{\rm env}&=-\delta FCu/2,\\
+(S_\delta\eta)_{\rm env}&=F(I_2-\delta\sigma iC/2)u+q_0.
+\end{aligned}
+\tag{30.14}
+$$
+
+这里 $H_\sigma(X)=\sigma i[C,X]/2$、$J_C(X)=C\circ X$ 与 (27.3) 相同。尤其下左块用的是 $F=V^*$，$g$ 的下左块符号是 $-\sigma iFC/2$。
+
+从 $\eta$ 回到 $\xi$，$c,x,h,r,s,k,g,R_\delta$ 的作用列均不变，$t,S_\delta$ 的作用列只多 $(0,e)$。式 (30.14) 中各环境列属于 $\mathcal K$，故它们与 $e$ 正交。此外
+
+$$
+\phi_\eta(g)=u^*g_Au+2\operatorname{Re}\bigl(\sigma i\,u^*Cv/2\bigr)
+=\phi_\xi(g).
+\tag{30.15}
+$$
+
+这项期望用原块乘法验证，不由作用列等距擅自推断读取向量等距。由原 Jordan 乘积的实内积公式及 (17.13)，同一 $\eta,e$ 同时给出
+
+$$
+\begin{gathered}
+\phi_\xi(c^2)=\phi_\eta(c^2),\qquad
+\phi_\xi(c\circ t)=\phi_\eta(c\circ t),\qquad
+\phi_\xi(t^2)=\phi_\eta(t^2)+d_e,\\
+\phi_\xi(L)=\phi_\eta(L),\qquad
+\phi_\xi(R_\delta^2)=\phi_\eta(R_\delta^2),\qquad
+\phi_\xi(R_\delta\circ S_\delta)=\phi_\eta(R_\delta\circ S_\delta),\\
+\phi_\xi(S_\delta^2)=\phi_\eta(S_\delta^2)+d_e,\\
+B_{\phi_\xi}(c,t)=B_{\phi_\eta}(c,t)+d_e\|Cu\|^2,\\
+B_{\phi_\xi}(R_\delta,S_\delta)
+=B_{\phi_\eta}(R_\delta,S_\delta)+d_e\|R_\delta\eta\|^2.
+\end{gathered}
+\tag{30.16}
+$$
+
+$L$ 的第二项中，$(r+g)\eta$ 的环境列为 $-\sigma iFCu/2$，与 $e$ 正交；第一项没有变化。这也直接核对了 $L$ 的等式。以上正是定理 17.2 在 $W=0$ 的原乘法恒等式，余项非负且对两笔预算相同，没有分别优化两个根。
+
+现在比较两份环境，以下标 $j=1,2$ 区分它们。三矩相同给出唯一酉映射
+
+$$
+U:\mathcal K_1\longrightarrow\mathcal K_2,\qquad
+U(F_1a+G_1b)=F_2a+G_2b,
+\qquad UF_1=F_2,\quad UG_1=G_2.
+\tag{30.17}
+$$
+
+良定义、等距和满射均由 (30.5) 的相同 Gram 矩阵及两份像的张成性给出。对任意 $u\in\mathbb C^2$、$q\in\mathcal K_1$，比较两份实际原向量
+
+$$
+\eta_1=(u,T_1q),\qquad \eta_2=(u,T_2Uq).
+\tag{30.18}
+$$
+
+有 $G_2^*Uq=G_1^*q$。将 (30.14) 逐列代入，$c,x,h,r,s,t,k,g,R_\delta,S_\delta$ 的每个第一份作用列，经 $I_2\oplus U$ 恰变成第二份作用列；$I_2\oplus U$ 作用在这些输出所属的 $\mathbb C^2\oplus\mathcal K_1$ 上。这保留全部列内积。结合 (30.15)，便得到两份向量泛函的同一 P2 全部读数，以及同一 PB 的左端和两笔预算，逐项完全相等。
+
+对每份环境，(30.16) 说明截面上的预算成立就推出所有原向量上的预算，反向只是限制向量；若原向量严格失败，将它投到 (30.12) 的同一截面后，左端不变、右端不增，仍严格失败。再由 (30.18) 得到另一份环境中的实际严格失败。任何这类违反所用的 $X$ 都保持不变，两个预算与左端用同一个原向量泛函；并非把独立优化的见证拼合起来。
+
+最后直接消费定理 17.2 的全正泛函提升。有限矩阵代数中的任意正泛函都有完整原空间谱分解 $\phi=\sum_j\phi_{\xi_j}$。P2 的正二表对泛函相加；PB 使用 (17.15) 的二阶 Gram 行列式根超可加性，再按 (17.16) 对同一个 $L,R_\pm,S_\pm$ 求和。这证明所有原向量与全部正泛函之间的等价，并不删掉环境密度块。其逆否命题还说明：一个混合正泛函在固定 $X$ 上的严格失败，必有同一个 $X$ 上的某个原向量严格失败。
+
+质量无需由 (30.18) 保持。对每个 $a>0$，P2 的两边在 $a\phi$ 下同乘 $a^2$，PB 的两边同乘 $a$。故任意非零见证可在自己的原环境中乘以正数，达到每个指定的 $\mu>0$；其探针保持不变，严格性保持，已经严格为正的预算也保持严格正。质量为零的正泛函只有零泛函，单独给出零等式。因而全称成立性和严格失败的上述转移均逐指定正质量成立，但未声称逐读数恒等与质量相等可同时由一个等距向量映射实现。
+
+对定理 30.1 的代表，$\operatorname{ran}F_0+\operatorname{ran}G_0=\mathcal K_\Gamma$ 就是整个新环境，且 $T'$ 可逆，故其读取截面 $T'\mathcal K_\Gamma$ 也是整个新环境。这使代表的量词确实遍及完整 $M_{2+k_\Gamma}(\mathbb C)$。对任一原环境的回提是 (30.18) 的逆向构造 $y=T_jU^{-1}q'$，不是把小代数中的平方解释成原输入的压缩平方。命题 18.1 的反例和障碍因此完整保留。∎
+

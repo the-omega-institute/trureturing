@@ -9,6 +9,7 @@ claim: "Theorem 2.1.1 gives coefficient forms of Lagrange inversion; Section 2.3
 strata_touched:
   - D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo
   - D5/S3/Combinatorics/Nonnesting/CatalanLagrangeBridge
+  - D5/S3/Combinatorics/PowerSeries/BalaA119370Exponential
 license: citation-only
 triage: anchor
 ---
@@ -24,7 +25,8 @@ DOI: 10.48550/arXiv.1609.05988
 
 URL: https://arxiv.org/abs/1609.05988v1
 
-Read the arXiv v1 HTML on 2026-10-06: <https://arxiv.org/html/1609.05988>.
+The v1 text is available at <https://arxiv.org/html/1609.05988>; the PDF is
+<https://arxiv.org/pdf/1609.05988v1>.
 
 - Theorem 2.1.1, equation (2.1.1): if f = xR(f), then for n ≠ 0,
   [x^n]φ(f) = (1/n)[t^(n−1)]φ′(t)R(t)^n. Taking φ(t) = t^k gives
@@ -53,3 +55,17 @@ original 1322 counting problem, not the source of the classical generic inversio
 These classical identities supply the coefficient transform and lawful inverse direction.
 The separate repository-derived `P13Enumeration.actual_A_eq_G` proves the actual matching-carrier
 identification; `P13Enumeration.result` applies the transform to obtain the P13 all-size enumeration.
+
+## Logarithmic specialization
+
+Section 1.1 works over an integral domain containing the rationals and requires
+admissible substitutions: each resulting coefficient receives only finitely many
+contributions. In Section 2.2, R(0)=1. Equation (2.2.9) gives
+[x^n] log(f/x) = [t^n] R(t)^n / n for nonzero n, where f=xR(f).
+Section 3.4 gives the Narayana quadratic family.
+
+For the A119370 application the polynomial coefficient ring is Q[Y], the outer
+variable is z, and R(t)=(1+t)(1+Yt). The diagonal z=X, Y=1+X is a continuous
+formal evaluation; coefficient m receives only outer indices n<=m. This is a
+source-specific application of the published method. Gessel is not cited as printing
+the complete original A119370 identity or its final source transformation.

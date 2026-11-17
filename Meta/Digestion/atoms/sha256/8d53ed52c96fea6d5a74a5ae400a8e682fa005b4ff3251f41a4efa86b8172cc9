@@ -1,0 +1,25 @@
+**命题 C-15.3（条件关系球与非等距性）。** $`A+B\gt 0`$ 的无记录成功态为
+
+
+```math
+\rho_{\rm pair}=\frac1{A+B}\begin{pmatrix}A&W\\\bar W&B\end{pmatrix}.
+```
+
+
+标准 Pauli 坐标是
+
+
+<table><tbody><tr><td>
+
+```math
+𝐛=(\mathrm{sech}u\cos\Phi,
+-\mathrm{sech}u\sin\Phi,\tanh u),\quad\|𝐛\|=1.
+```
+
+</td></tr></tbody></table>
+
+
+其纯态 FS 拉回为 $`\frac14\mathrm{sech}^2u(du^2+d\Phi^2)`$，区别于 §14 的 $`ℐ^{-1}(du^2+d\Phi^2)`$；单位 Bloch 球的圆度量还比此 FS 大四倍。最大熵补全对应整条赤道。
+
+**证明。** 密度的右上元为 $`(b_x-ib_y)/2`$，故 $`b_y`$ 负号不可改；本比较约定的 𝜃=𝜋/2 条件结果差对应 $`-\sigma_y`$，不是 $`\sigma_y`$。$`2\sqrt{AB}/(A+B)=\mathrm{sech}u,(A-B)/(A+B)=\tanh u`$，给单位长度。单位球微分直接为 $`\mathrm{sech}^2u(du^2+d\Phi^2)`$，二级纯态 FS 是其四分之一，亦可直接代入归一化两振幅。均匀五态在 𝑢=0 有 $`ℐ^{-1}=1/20`$，条件 pair FS 系数 1/4，明确否定等距。𝐴-𝐵=Δ，故最大熵 Δ=0 给 𝑢=0、所有 Φ，不是唯一相干态。pair 是成功条件接口，未把整个五维模式态认作一个量子位，也未删成功概率。□
+

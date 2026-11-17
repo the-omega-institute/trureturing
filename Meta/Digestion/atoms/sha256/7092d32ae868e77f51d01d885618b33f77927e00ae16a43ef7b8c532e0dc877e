@@ -1,0 +1,90 @@
+**命题 104.11（任意原旁观者中的完整 qubit 角）。** 只假设 $\mathsf F_{r,2}$，
+允许 $n_r<L$。采用定理104.7对齐后的坐标，令
+$E:\mathbb C^2\to\mathbb C^{n_r}$ 为种子共同实基的等距嵌入，
+$P=EE^*$。对每个 $N\ge1$，记
+$H_N^{(2)}=\operatorname{Herm}((\mathbb C^2)^{\otimes N})$，定义
+
+$$
+j_N=\operatorname{Ad}_E^{\otimes N},\quad
+q_N=\operatorname{Ad}_{E^*}^{\otimes N}\pi_{r,N},\quad
+p_N=j_Nq_N,\quad
+B_N=q_N(C_N).
+\tag{104.10}
+$$
+
+$\pi_{r,N}$ 只表示向量分量；$p_N$ 是原一体真实零扩张
+$x\mapsto Px_rP$ 的张量提升。
+则 $q_Nj_N=\mathrm{id}$，$p_N(C_N)\subseteq C_N$，且
+
+$$
+B_N=j_N^{-1}(C_N),\qquad
+j_N(B_N)=C_N\cap\operatorname{im}j_N=p_N(C_N),\qquad
+B_N=\operatorname{Herm}_+((\mathbb C^2)^{\otimes N}).
+\tag{104.11}
+$$
+
+这些锥继承定义102.1的全部分块 min/max 双界、原置换、迹单位和完整对偶；
+特别地，对每个 $N$，
+
+$$
+j_N^*(C_N^*)=B_N^*,\qquad
+q_N^*(B_N^*)\subseteq C_N^*,\qquad
+j_N^*(\mathcal E_N)=[0,\operatorname{Tr}]_{B_N^*}.
+\tag{104.12}
+$$
+
+在 $N$ 条这类角腿之间的任意通常 CP 映射，其真正角零扩张对所有原纠缠旁观者正。
+
+**证明。** 定理104.7的一体矩形合同先给原全旁观正性，
+故 $p_N$ 是原正幂等，且不增质量；这里不从 $j_N$ 或其伴随的正性作推断。
+$q_Nj_N=\mathrm{id}$ 是线性恒等式。
+对 $x\in C_N$，$j_Nq_Nx=p_Nx\in C_N$；
+反之 $j_Ny\in C_N$ 蕴含 $y=q_Nj_Ny\in B_N$。
+这证明(104.11)的前两个等式，
+并把 $B_N$ 识别为闭锥与一个子空间的交，因此是闭的。
+尖性由 $j_N$ 单射及原尖性给出；
+它包含所有 qubit 正乘积，故生成 $H_N^{(2)}$。
+$\operatorname{Tr}y=u_N(j_Ny)$，在 $B_N\setminus\{0\}$ 上严格正。
+
+若 $f\in B_N^*$，则 $f\circ q_N\in C_N^*$，
+因为 $q_N(C_N)=B_N$；其沿 $j_N$ 的限制恰为 $f$。
+任意原正泛函沿 $j_N$ 限制也正，给(104.12)的前两项。
+更精确地，令 $v_N=u_N\circ p_N=\operatorname{Tr}\circ q_N$，
+原旁观不增质量给 $0\le v_N\le u_N$。
+若 $0\le f\le\operatorname{Tr}$，其延拓满足
+$0\le f\circ q_N\le v_N\le u_N$，
+所以是原 proper 效应，且精确限制为 $f$。
+反向原 proper 效应的限制介于零与 $u_Nj_N=\operatorname{Tr}$ 之间，
+给(104.12)最后一项。
+因此所继承的是全效应与全对偶，不是选定菜单的限制。
+
+为验证每个实际分块，$x\in B_a,y\in B_b$ 的嵌入乘积属于原 $C_{a+b}$，
+再提取回去给最小界；闭包也保持。
+若 $z\in B_{a+b}$，则 $j_{a+b}z\in C_{a+b}$；
+任意 $f\in B_a^*,g\in B_b^*$ 各延拓成
+$fq_a,gq_b$，原最大界给
+$(f\otimes g)(z)=((fq_a)\otimes(gq_b))(j_{a+b}z)\ge0$。
+所以最大界使用了整个新对偶，而非仅产品态上的检查。
+同一个 $E$ 使原置换、重括号和迹单位精确继承。
+$B_1$、$B_2$ 已分别是标准 qubit 一、二份 PSD；
+种子 $\Delta_{r,2}$ 在此 retract 中恰为完整二维叉口。
+对这一原正 retract，复用命题103.7与命题104.9中从已正矩形合同开始的两资源构造：
+唯一块维数二，完整二维种子支付定理103.8所需的两个指定资源，
+该尾部的其余全部输入已在本段逐项证明，故直接应用定理103.8。
+因此得(104.11)最后的全有限等式，不需对 retract 重新调用低二份 PAPER 分类。
+
+最后任取 qubit 寄存器 CP 映射 $\Phi:H_m^{(2)}\to H_n^{(2)}$。
+定义全原向量空间上的真正角零扩张
+$\Phi^0=j_n\Phi q_m$；它压缩掉同一原块内角与角外的交叉矩阵元，
+也消去其他输入扇区。
+其原 Choi 元素为
+$(j_m\otimes j_n)J_2(\Phi)$。
+种子基的 $E$ 为实嵌入，故参考腿没有额外共轭；
+一般基可相应把参考嵌入写为 $\overline E$。
+$J_2(\Phi)\succeq0$ 属于已证明的 $B_{m+n}$，
+(104.11)使其嵌入属于原 $C_{m+n}$，
+全局原 Choi 因而给 $\Phi^0$ 的全部原旁观正性。
+这是对未知全高阶锥中角零扩张的证明，不是把 qubit 内正性直接外推。
+通常 CP 的 Choi 定理在这里仅用于已标准的 qubit 寄存器。
+其他实际块内任意二维角可用已支付的一体矩形合同及其反向压缩运输同一结论。∎
+

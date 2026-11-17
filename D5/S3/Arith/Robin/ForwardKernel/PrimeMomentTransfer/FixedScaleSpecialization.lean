@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Logarithmic weights identify fixed-scale Chebyshev moments and variance factors. -/
+   digest: Mean-square prime correlations: Logarithmic weights identify fixed-scale Chebyshev moments and variance factors. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.RealLengthTransfer
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CutoffWeights
@@ -83,12 +83,12 @@ private theorem p_power_in_band (α θ β : ℝ) (hαθ : α ≤ θ) (hθβ : θ
     Real.rpow_le_rpow_of_exponent_le hX hθβ⟩
 
 private theorem p_fixed_scale_third_limit :
-∀ (β θ M : ℝ), 0 < θ → θ < β → β < 1/4 →
-  HL4 concreteSS β → IntervalCorrelations concreteSS → 0 < M →
+∀ (β θ M : ℝ), 0 < θ → θ < β → β < 1/3 →
+  MeanSquareHL 3 concreteSS β → IntervalCorrelations concreteSS → 0 < M →
   ∀ (c : Fin 3 → ℝ), (∀ i, c i ∈ Icc (0:ℝ) M) →
   ∀ u v : ℝ, 1 ≤ u → u < v → v ≤ 2 →
   Tendsto (fixedBlockMoment (fun x => Chebyshev.psi x-x) θ 3 c u v) atTop (𝓝 (0)) := by
-  intro β θ M hθ hθβ hβ hHL hcor hM c hc u v hu huv hv
+  intro β θ M hθ hθβ hβ hMS hcor hM c hc u v hu huv hv
   have hα : 0 < θ / 2 := half_pos hθ
   have hαβ : θ / 2 < β := by linarith
   have hadm : admissible (max 1 M) (fun _ => 0) c := by
@@ -104,7 +104,7 @@ private theorem p_fixed_scale_third_limit :
     have heq : (B + 1) * (ε / (B + 1)) = ε := by field_simp
     nlinarith
   filter_upwards [real_third concreteSS (θ / 2) β (max 1 M)
-      hα hαβ hβ concreteSS_empty concreteSS_singleton hHL hcor (le_max_left 1 M)
+      hα hαβ hβ concreteSS_empty concreteSS_singleton hMS hcor (le_max_left 1 M)
       (ε / (B + 1)) ht,
     p_power_in_band (θ / 2) θ β (by linarith) hθβ.le,
     eventually_ge_atTop (2 : ℝ)] with X hreal hband hX
@@ -114,13 +114,13 @@ private theorem p_fixed_scale_third_limit :
 
 private theorem p_fixed_scale_fourth_limit :
 ∀ (β θ M : ℝ), 0 < θ → θ < β → β < 1/4 →
-  HL4 concreteSS β → IntervalCorrelations concreteSS → 0 < M →
+  MeanSquareHL4 concreteSS β → IntervalCorrelations concreteSS → 0 < M →
   ∀ (c : Fin 4 → ℝ), (∀ i, c i ∈ Icc (0:ℝ) M) →
   ∀ u v : ℝ, 1 ≤ u → u < v → v ≤ 2 →
   Tendsto (fixedBlockMoment (fun x => Chebyshev.psi x-x) θ 4 c u v) atTop
     (𝓝 ((DyadicProbability.dyadicProbabilityMeasure 1).real (Icc u v)*
       ((1-θ)^2*MomentTransferDefs.brownianW4 c))) := by
-  intro β θ M hθ hθβ hβ hHL hcor hM c hc u v hu huv hv
+  intro β θ M hθ hθβ hβ hMS hcor hM c hc u v hu huv hv
   have hα : 0 < θ / 2 := half_pos hθ
   have hαβ : θ / 2 < β := by linarith
   have hadm : admissible (max 1 M) (fun _ => 0) c := by
@@ -136,7 +136,7 @@ private theorem p_fixed_scale_fourth_limit :
     have heq : (B + 1) * (ε / (B + 1)) = ε := by field_simp
     nlinarith
   filter_upwards [real_fourth concreteSS (θ / 2) β (max 1 M)
-      hα hαβ hβ concreteSS_empty concreteSS_singleton hHL hcor (le_max_left 1 M)
+      hα hαβ hβ concreteSS_empty concreteSS_singleton hMS hcor (le_max_left 1 M)
       (ε / (B + 1)) ht,
     p_power_in_band (θ / 2) θ β (by linarith) hθβ.le,
     eventually_ge_atTop (2 : ℝ)] with X hreal hband hX
@@ -154,21 +154,21 @@ private theorem p_fixed_scale_fourth_limit :
 
 /-- The Chebyshev error satisfies the third fixed-scale mixed-moment interface. -/
 theorem fixed_scale_third :
-∀ β θ : ℝ, 0 < θ → θ < β → β < 1/4 →
-  HL4 concreteSS β → IntervalCorrelations concreteSS →
+∀ β θ : ℝ, 0 < θ → θ < β → β < 1/3 →
+  MeanSquareHL 3 concreteSS β → IntervalCorrelations concreteSS →
   FixedScaleMixedMoments (fun x => Chebyshev.psi x-x) θ 3 (fun _ => 0) := by
-  intro β θ hθ hθβ hβ hHL hcor M hM c hc u v hu huv hv
+  intro β θ hθ hθβ hβ hMS hcor M hM c hc u v hu huv hv
   simpa only [mul_zero] using
-    p_fixed_scale_third_limit β θ M hθ hθβ hβ hHL hcor hM c hc u v hu huv hv
+    p_fixed_scale_third_limit β θ M hθ hθβ hβ hMS hcor hM c hc u v hu huv hv
 
 /-- The Chebyshev error satisfies the fourth fixed-scale mixed-moment interface. -/
 theorem fixed_scale_fourth :
 ∀ β θ : ℝ, 0 < θ → θ < β → β < 1/4 →
-  HL4 concreteSS β → IntervalCorrelations concreteSS →
+  MeanSquareHL4 concreteSS β → IntervalCorrelations concreteSS →
   FixedScaleMixedMoments (fun x => Chebyshev.psi x-x) θ 4
     (fun c => (1-θ)^2*MomentTransferDefs.brownianW4 c) := by
-  intro β θ hθ hθβ hβ hHL hcor M hM c hc u v hu huv hv
-  exact p_fixed_scale_fourth_limit β θ M hθ hθβ hβ hHL hcor hM c hc u v hu huv hv
+  intro β θ hθ hθβ hβ hMS hcor M hM c hc u v hu huv hv
+  exact p_fixed_scale_fourth_limit β θ M hθ hθβ hβ hMS hcor hM c hc u v hu huv hv
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

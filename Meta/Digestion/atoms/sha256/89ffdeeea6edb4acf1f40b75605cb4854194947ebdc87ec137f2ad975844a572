@@ -1,0 +1,39 @@
+**定理 92.1（任意连接幅度的实际外层耦合）。** 取83.1的任意实际 $r,a$，保留任意 $\beta,B$ 及任意其他块背景，$\pi r=\mu p$、$\mu\ne0$，但不要求 $\|z\|<2$。令
+
+$$
+\begin{gathered}
+d=\pi D(r,a)=\delta p+H(w),\qquad
+C_0=p\circ(\pi a)=\beta p+H(z)/2,\\
+\ell_+=\pi D(r-D(r,a),r\circ a),\qquad
+\ell_-=\pi D(r+D(r,a),-r\circ a).
+\end{gathered}
+\tag{92.1}
+$$
+
+第一式的Peirce形及其他块为零，只用83.3的零预算证明，不用83.1的小幅结论。若 $w,z$ 复线性无关，则存在同一个实数 $\chi\in[-1,1]$，使
+
+$$
+q\ell_+q=q\ell_-q=\chi J_0,\qquad
+J_0=-\frac{\mu i}{4}(wz^*-zw^*).
+\tag{92.2}
+$$
+
+证明。83.4仍是准确的同一次实际PB，且给
+
+$$
+\ell_+-\ell_-=2\mu p\circ d
+ =2\mu\delta p+\mu H(w).
+\tag{92.3}
+$$
+
+两对实际外层的像依次为
+
+$$
+\bigl((\mu-\delta)p-H(w),\ \mu\beta p+\mu H(z)/2\bigr),
+\quad
+\bigl((\mu+\delta)p+H(w),\ -\mu\beta p-\mu H(z)/2\bigr).
+\tag{92.4}
+$$
+
+它们都是89.1的两支线输入，且两份91.1中的侧面矩阵恰同为 $J_0$：第一对的腿为 $-w,\mu z/2$，第二对为 $w,-\mu z/2$。因此 $q\ell_\pm q=\chi_\pm J_0$。对92.3取已知矩阵压缩，右侧为零；$J_0\ne0$ 迫使 $\chi_+=\chi_-$。压缩只读同一个原PB的输出像，未被当作Jordan同态，也未对压缩后的新标签调用 $D$。∎
+

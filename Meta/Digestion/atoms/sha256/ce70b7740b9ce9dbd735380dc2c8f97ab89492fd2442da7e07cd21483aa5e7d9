@@ -1,0 +1,10 @@
+**定义 95.1（准确来源及其条件）。** 本组采用以下可定位的纸面接口，不把定理名称或模型回复的成立判断当作证明。
+
+| 来源 | 准确条件、消费与边界 |
+| --- | --- |
+| 固定公开 SM79.3及其79.1–84.1 | 完整有限 continuous 原域、全部原关系及给定忠实正规中心值迹；仅按89.4消费非零有限角的因子特化。有限谱窗行、中央取向和有限全域分类均为给定纸面前件，不在本组重新认领；不使用另一版本的同号74.1替代。 |
+| 固定源 A50.2、A51.1及其来源 W108.2–108.3固定稿 | P2 已给同角旧输出支撑，完整原 A1–A3和PB逐层限制；89.2只作准确参数匹配。这也不新增一般 JB 二次表示保正的证明。 |
+| Claire Anantharaman、Sorin Popa，[*An introduction to II₁ factors*，作者全文](https://www.math.ucla.edu/~popa/Books/IIunV15.pdf)，§2.4，Theorem 2.4.1、Proposition 2.4.5、Theorem 2.4.8、Corollaries 2.4.9、2.4.11 | 该节从任意 Hilbert 空间上的 von Neumann 代数开始，用网和任意索引的正交族。2.4.9是任意因子投影比较；2.4.11额外要求忠实有限 tracial state，故只在 $f_eMf_e$ 等有限角上使用。2.4.5给89.2，2.4.1给有界单调网的强收敛。不能以两边无限迹相等替代等价。 |
+| Shavkat Ayupov、Farkhad Arzikulov，[*2-local derivations on semi-finite von Neumann algebras*，原文](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0017089512000870)，Glasgow Math. J. 56，9–12，DOI 10.1017/S0017089512000870，§§2–3 | §3明确使用忠实正规半有限迹、$\mathfrak m_\tau$ 双侧理想、可积乘积的迹循环律及迹有限投影趋向1的网；这些成熟半有限工具对应89.1、93.4。其主定理还要求每对输入由同一个导子同时实现，即2-local前件，本组并未取得或使用该前件来证明88.6。不能把 P2 的两个标量预算当作共同导子实现。 |
+| Bhat–Nayak–Shankar，[*On products of symmetries in von Neumann algebras*，arXiv:2204.00009v1](https://arxiv.org/pdf/2204.00009v1)，Theorem 3.9 | 原文给 type II₁ von Neumann 代数内六个 symmetry 的精确乘积。它已由给定 SM79–84在有限分类内消费；本组不将它当作 II∞ 的全域反射行或另写一套全酉运输，91只用有限支撑 Borel 对数。 |
+| 固定源 A32.2、A23.1、A6.3、A7、A8、A14.2、A25.1，SM86.1及96.1所列原来源 | 93–94只在识别同一个旧 $D$ 后接回全有限复 Gram、R、表示及七项既有条件消费者。表示、CP、张量、仪器和动力的实际原条件一项也不由成熟工具的名字代付。 |

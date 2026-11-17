@@ -1,0 +1,36 @@
+**定理 97.6（实 $n\le4$、任意实余维的完整桥）。** 对任意原实ROG载体及任意严格正原 $u$，
+若93.2的共同支撑维数 $n\le4$，则在整个原锥、全部原混态与全部原 proper 效应上，
+
+$$
+\mathrm G_2\ \Longleftrightarrow\ \mathrm{Z0}
+\ \Longleftrightarrow\ S
+\ \Longleftrightarrow\
+L\text{ 在原(97.1)中经正交换基成为完整实对称块直和}.
+\tag{97.31}
+$$
+
+它们同时等价于原归一化 $L$ 的谱正负部分闭合、Jordan闭合及96.3的全部可排除纯对矩阵正交。
+成立时
+
+$$
+[0,u]=\{f_E:E\in L,\ 0\preceq E\preceq I_n\},\qquad
+e_p(X)=\operatorname{tr}(pX),\qquad T_p(x)=\operatorname{tr}(px)
+\quad(p\in P,\ x\in K),
+\tag{97.32}
+$$
+
+并给同一原 $\mathrm A,\mathrm H,\mathrm{Boundary},\mathrm Q$ 及89.4的规范商。
+
+证明。97.3将一般实ROG送入不可约最小次数分支的线性拼接，并把原 $\mathrm G_2$ 传给每个分支。
+这里使用的成熟最小次数分类为 [Blekherman–Smith–Velasco 引言所列目录及 Examples 4.3—4.5][BSV97min]，
+其所引 Eisenbud–Harris，*On Varieties of Minimal Degree (a Centennial Account)*，Theorem 1：
+在代数闭域中，非退化不可约最小次数簇是线性空间、二次超曲面、有理正规卷轴，
+或 Veronese 曲面的锥；曲线情形是有理正规曲线。
+对自身射影张成维数 $m\le3$，这个目录精确缩为
+
+| $m$ | 可能的非线性不可约分支 | 在本证明中的排除 |
+| --- | --- | --- |
+| $0,1$ | 无 | 只余线性空间 |
+| $2$ | 光滑平面二次曲线 | 97.4的 $d=2$，也属余维一桥 |
+| $3$ | 二次曲面，含二次锥面 | 自身矩阵载体的实余维一，使用96.8 |
+| $3$ | 扭曲三次曲线 | 97.4的 $d=3$ |

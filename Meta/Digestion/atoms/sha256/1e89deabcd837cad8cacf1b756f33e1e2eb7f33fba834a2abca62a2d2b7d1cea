@@ -1,0 +1,60 @@
+**命题 C-27.4.2（首尾圆盘、行列式及秩）。** 对 <span>0≤𝑟<sub>𝑔</sub>≤φ<sup>-1</sup></span>，置
+
+<div>
+𝐷<sub>3</sub>=1-2𝑟<sub>𝑔</sub><sup>2</sup>,  𝐷<sub>4</sub>=1-3𝑟<sub>𝑔</sub><sup>2</sup>+𝑟<sub>𝑔</sub><sup>4</sup>,  μ=((𝑟<sub>𝑔</sub><sup>4</sup>)/(𝐷<sub>3</sub>)),  α=((𝐷<sub>4</sub>)/(𝐷<sub>3</sub>)).
+</div>
+
+则
+
+<div>
+𝐺<sub>5</sub>(𝑐)≽0⇔|𝑐-μ|≤α,
+</div>
+
+且
+
+<div>
+ det 𝐺<sub>5</sub>(𝑐)=𝐷<sub>3</sub>(α<sup>2</sup>-|𝑐-μ|<sup>2</sup>),   rank 𝐺<sub>5</sub>(𝑐)=3+ rank 𝒮, 𝒮=
+<table><tbody>
+<tr><td>⎛</td><td>α</td><td>conj(𝑐)-μ</td><td>⎞</td></tr>
+<tr><td>⎝</td><td>𝑐-μ</td><td>α</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+在 <span>0≤𝑟<sub>𝑔</sub>&lt;φ<sup>-1</sup></span> 时圆盘内部秩五、圆周秩四；在黄金端点圆盘缩为 <span>𝑐=𝑟<sub>𝑔</sub></span> 一点，秩三。
+
+**证明。** 重排为内部记录 <span>(2,3,4)</span> 与两端 <span>(1,5)</span>。内部块和耦合为
+
+<div>
+𝐴=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>⎟</td></tr>
+<tr><td>⎝</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+, 𝐿=
+<table><tbody>
+<tr><td>⎛</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>0</td><td>0</td><td>⎟</td></tr>
+<tr><td>⎝</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>⎠</td></tr>
+</tbody></table>
+, 𝐶=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>conj(𝑐)</td><td>⎞</td></tr>
+<tr><td>⎝</td><td>𝑐</td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+<span>𝐴</span> 的顺序主子式为 <span>1,1-𝑟<sub>𝑔</sub><sup>2</sup>,𝐷<sub>3</sub></span>，在整个闭区间都严格正，因为 <span>φ<sup>-1</sup>&lt;1/√(2)</span>。其余子式计算给
+
+<div>
+(𝐴<sup>-1</sup>)<sub>11</sub>=(𝐴<sup>-1</sup>)<sub>33</sub>=((1-𝑟<sub>𝑔</sub><sup>2</sup>)/(𝐷<sub>3</sub>)),  (𝐴<sup>-1</sup>)<sub>13</sub>=((𝑟<sub>𝑔</sub><sup>2</sup>)/(𝐷<sub>3</sub>)).
+</div>
+
+代入命题 [C-9.5](#9-共同记录的圆盘与参考递归) 的可逆 Schur 同余，剩余块为 <span>𝐶-𝐿<sup>†</sup>𝐴<sup>-1</sup>𝐿=𝒮</span>；因此 <span>𝐺<sub>5</sub>(𝑐)</span> 的正性等价于 <span>𝒮</span> 的正性，行列式和秩由相同同余给出。这个调用保留了共享参考的完整同余证明，不把概率求和消元换成记录投影。
+
+由于 <span>𝒮</span> 的特征值为 <span>α±|𝑐-μ|</span>，且所给区间内 <span>α≥0</span>，其正性恰为圆盘条件。严格区间内 <span>α&gt;0</span>，故内部两个剩余特征值为正、圆周恰一个为零，得秩五／四。在 <span>𝑟<sub>𝑔</sub>=φ<sup>-1</sup></span>，<span>𝐷<sub>3</sub>=√(5)-2&gt;0</span>，<span>𝐷<sub>4</sub>=0</span>，并由 <span>𝑟<sub>𝑔</sub><sup>2</sup>=1-𝑟<sub>𝑔</sub></span> 得 <span>𝑟<sub>𝑔</sub><sup>4</sup>=𝑟<sub>𝑔</sub>𝐷<sub>3</sub></span>；所以 <span>α=0,μ=𝑟<sub>𝑔</sub></span>，唯一剩余块为零，得秩三。这里只逆 <span>𝐴</span>，没有逆零的 <span>𝐷<sub>4</sub></span>，也没有把严格域的结论未经证明延伸到端点。<span>𝑟<sub>𝑔</sub>=0</span> 则直接是 <span>|𝑐|≤1</span>，同样有内部／圆周秩五／四。<span>□</span>
+
+圆心 <span>μ</span> 是两端投影到共同内部参考后已解释的重叠；半径 <span>α</span> 是两端等长剩余部分所允许的关系余量。这是代数消元，不是测量、删去记录、条件化或准备操作。圆盘是一项复内积自由度，不是物理位置上的圆。
+

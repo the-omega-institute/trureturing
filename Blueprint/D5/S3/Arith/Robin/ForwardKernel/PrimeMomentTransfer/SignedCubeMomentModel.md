@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/SignedCubeM
 
 The finite subset centering transform commutes with transporting all subsets along an injective map.
 
-Let the coordinates on finite subsets B be Y(d,B)=s*1[d in B]-1. Boolean incidence-algebra Mobius inversion prescribes the uncentered moments C(D)/s^|D|. Its inverse-zeta identity gives the required signed functional, with no positivity assertion. The resulting formal values supply the coefficient identities used in interval moment bounds.
+Let the coordinates on finite subsets B be Y(d,B)=s*1[d in B]-1. Boolean incidence-algebra Mobius inversion prescribes the uncentered moments C(D)/s^|D|. Its inverse-zeta identity gives the required signed functional, with no positivity assertion. The commutative-ring centred product expansion applies directly in the algebra of cube functions to identify square-free moments. The resulting formal values supply the coefficient identities used in interval moment bounds.
 
 **Theorem 1.2 (The formal second value).**
 
@@ -74,4 +74,5 @@ On any finite set containing all interval shifts, Phi equals the general formal 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/SignedCubeMomentModel.formal_second_moment_eq`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/SignedCubeMomentModel.formal_third_moment_eq`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs](ArithmeticTransferDefs.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/CentredProductExpansion](CentredProductExpansion.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticFourthDefect](QuadraticFourthDefect.md)

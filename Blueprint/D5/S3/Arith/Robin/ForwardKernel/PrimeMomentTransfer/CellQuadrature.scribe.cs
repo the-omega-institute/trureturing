@@ -11,6 +11,24 @@ internal sealed class CellQuadratureDocument : IScribeDocumentDefinition
         H("Cell quadrature"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("floor-step-interval-integrable"),
+                DeclarationHandle.Create(Prefix + "floor_step_intervalIntegrable"),
+                H("Integrability of a floor step function"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any real sequence F and finite real endpoints a and b with a>=0, the function F(floor x) is interval integrable from a to b. Only finitely many natural floor values occur between the endpoints."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("floor-step-integral"),
+                DeclarationHandle.Create(Prefix + "floor_step_integral"),
+                H("Floor step integral"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a natural a and real y>=a, the integral of F(floor x) from a to y is the sum of F(n) over a<=n<floor y plus (y-floor y) F(floor y)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cell-quadrature"),
                 DeclarationHandle.Create(Prefix + "cell_quadrature"),
                 H("Weighted quadrature with endpoint cells"),

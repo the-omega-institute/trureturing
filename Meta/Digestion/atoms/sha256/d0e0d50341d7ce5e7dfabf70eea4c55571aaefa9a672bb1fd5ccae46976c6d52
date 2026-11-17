@@ -1,0 +1,189 @@
+**Theorem 11.4 (finite common-flow regeneration).** Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ and $0<\varepsilon\le1$. There is one finite regular stationary table with positive rows $\pi,\tau$, acquired kernels $B,A$, and emissions $u,v$ such that
+
+$$
+\pi B=\tau,\qquad\tau A=\pi.
+\tag{11.10}
+$$
+
+Its own complete laws $\widehat Q_i,\widehat W_j$ satisfy, for the cell barycentres $\bar Q_i,\bar W_j$ constructed below,
+
+$$
+\max_i\operatorname{TV}(\widehat Q_i,\bar Q_i)
+ \le d_p^*=\frac{81}{44}\varepsilon,\qquad
+\max_j\operatorname{TV}(\widehat W_j,\bar W_j)
+ \le d_\beta^*=\frac{61}{44}\varepsilon.
+\tag{11.11}
+$$
+
+For every complete probability target $T$ at the relevant phase, the same table has
+
+$$
+-(\varepsilon+d_p^*)\le
+ \sum_i\pi_i\operatorname{TV}(\widehat Q_i,T)-\mathcal L_p(T)
+ \le d_p^*,
+$$
+
+$$
+-(\varepsilon+d_\beta^*)\le
+ \sum_j\tau_j\operatorname{TV}(\widehat W_j,T)-\mathcal L_\beta(T)
+ \le d_\beta^*.
+\tag{11.12}
+$$
+
+The bounds are uniform over targets, including every original supported depth and every original posterior target. They hold after any common measurable projection of the future, using the projected losses. The finite table, rather than its barycentres, is the generator. Its two own-law flow measures can be chosen to converge jointly and weakly to the given pair as $\varepsilon\downarrow0$.
+
+**Proof of the common finite flows.** Choose finite Borel partitions $(C_i)$ of $\mathcal K_p$ and $(D_j)$ of $\mathcal K_\beta$ whose cells have TV diameter at most $\varepsilon$. Finite covers by balls of radius $\varepsilon/2$, made disjoint in a fixed order, suffice. Delete zero-marginal cells. Put
+
+$$
+\pi_i=\nu_p(C_i),\quad\tau_j=\nu_\beta(D_j),\qquad
+\bar Q_i=\frac1{\pi_i}\int_{C_i}Q\,d\nu_p(Q),\quad
+\bar W_j=\frac1{\tau_j}\int_{D_j}W\,d\nu_\beta(W),
+$$
+
+$$
+F^B_{ij}=\Gamma_B(C_i\times D_j),\quad
+F^A_{ji}=\Gamma_A(D_j\times C_i),\qquad
+B_{ij}=F^B_{ij}/\pi_i,\quad A_{ji}=F^A_{ji}/\tau_j,
+$$
+
+$$
+u_i=\bar Q_i(\alpha),\qquad v_j=1-\bar W_j(\beta).
+\tag{11.13}
+$$
+
+All barycentres are normalized complete laws in their respective spaces. Convexity and the cell diameters give
+
+$$
+\operatorname{TV}(Q,\bar Q_i)\le\varepsilon\quad(Q\in C_i),\qquad
+\operatorname{TV}(W,\bar W_j)\le\varepsilon\quad(W\in D_j).
+\tag{11.14}
+$$
+
+The first marginals make $B,A$ stochastic. The other marginals give
+
+$$
+\sum_i\pi_iB_{ij}=\sum_iF^B_{ij}=\tau_j,
+\qquad
+\sum_j\tau_jA_{ji}=\sum_jF^A_{ji}=\pi_i.
+$$
+
+A deleted zero-marginal cell has zero mass under both incident flows, so no positive-row transition enters it. The two flow identities hold exactly. Both emission vectors lie in $[a,b]$. In particular this is a single finite table; its two directional flows have not been optimized separately.
+
+**Proof of the centroid residual bounds.** Use the bounded Borel tests $\mathbf1_{C_i}U(Q)$ and $\mathbf1_{D_j}v(W)$ in (11.7). Combining the resulting full-measure identities with (11.4) gives
+
+$$
+\bar Q_i=u_i\delta_\alpha+
+ \frac1{\pi_i}\int_{C_i\times\mathcal K_\beta}U(Q)\beta W\,d\Gamma_B(Q,W),
+$$
+
+$$
+\bar W_j=(1-v_j)\delta_\beta+
+ \frac1{\tau_j}\int_{D_j\times\mathcal K_p}v(W)\alpha Q\,d\Gamma_A(W,Q).
+\tag{11.15}
+$$
+
+There is no hypothesis that the centroids satisfy the finite-table recursion exactly.
+
+For a probability measure $m$, a scalar $e$ of range width at most $\varepsilon$, its mean $\bar e$, and a measurable family of probability laws $H$, the signed covariance has mass zero and
+
+$$
+\left\|\int(e-\bar e)H\,dm\right\|_{\rm TV}
+ \le\frac12\int|e-\bar e|\,dm\le\frac\varepsilon4.
+\tag{11.16}
+$$
+
+Here the norm is half the $\ell^1$ norm of a zero-mass signed measure. The first inequality follows by summing coordinates and Tonelli. For $e\in[c,d]$ with mean $z$, the chord bound for $|e-z|$ gives
+
+$$
+\int|e-z|\,dm\le\frac{2(z-c)(d-z)}{d-c}\le\frac{d-c}{2};
+$$
+
+the zero-width case is zero. Thus (11.16) applies to integrals, not only finite sums. It is the covariance estimate supplied in [PAID, equation (9.14)].
+
+In the first equation of (11.15), replace $W$ in each $D_j$ by $\bar W_j$. By (11.14) and $U\le2/3$, this costs at most $2\varepsilon/3$. Under the normalized restriction $\Gamma_B|_{C_i\times\mathcal K_\beta}/\pi_i$, the mean of $U$ is $1-u_i$. Its range width is at most $\varepsilon$, because atom evaluation is 1-Lipschitz in TV on $C_i$. Replace $U$ by this mean. Equation (11.16), applied to the probability-law family $\bar W_{j(W)}$, bounds the additional cost by $\varepsilon/4$. Its unweighted mean is exactly $\sum_jB_{ij}\bar W_j$. Therefore
+
+$$
+\operatorname{TV}\left(\bar Q_i,
+ u_i\delta_\alpha+(1-u_i)\beta\sum_jB_{ij}\bar W_j\right)
+ \le\left(\frac23+\frac14\right)\varepsilon=\frac{11}{12}\varepsilon.
+\tag{11.17}
+$$
+
+Apply the same argument to the second equation of (11.15). Replacing $Q$ by its cell centroid costs at most $2\varepsilon/5$. The range of $v(W)$ on $D_j$ has width at most $\varepsilon$ and its conditional mean is $v_j$. Its covariance costs at most $\varepsilon/4$. The remaining unweighted mean is $\sum_iA_{ji}\bar Q_i$. Hence
+
+$$
+\operatorname{TV}\left(\bar W_j,
+ (1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}\bar Q_i\right)
+ \le\left(\frac25+\frac14\right)\varepsilon=\frac{13}{20}\varepsilon.
+\tag{11.18}
+$$
+
+These estimates retain the possible dependence between emission and successor law. Omitting that dependence would give a different, unjustified recursion.
+
+**Proof of own-law generation and contraction.** Generate the finite table's complete laws using exactly its emissions and acquired kernels. With
+
+$$
+L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+\qquad g=\operatorname{diag}(1-u)B(1-v),
+$$
+
+its p word masses are $(L^nu)_i$ and $(L^ng)_i$. Since $L\mathbf1\le\lambda\mathbf1$,
+
+$$
+\sum_{n<L_0}L^n(u+g)=\mathbf1-L^{L_0}\mathbf1,
+\qquad L^{L_0}\mathbf1\le\lambda^{L_0}\mathbf1.
+$$
+
+Thus the word masses sum to one and the infinite outcome has mass zero. Suspension uses $(1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}\widehat Q_i$, also normalized. Its tail in (11.1) is bounded by $b\lambda^{L_0}$. Infinite outcomes remain in both carriers, and no residual is lost by renormalization. These own laws satisfy
+
+$$
+\widehat Q_i=u_i\delta_\alpha+(1-u_i)\beta\sum_jB_{ij}\widehat W_j,
+$$
+
+$$
+\widehat W_j=(1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}\widehat Q_i.
+\tag{11.19}
+$$
+
+These normalized recursions have a unique solution: two solutions with maximal phase distances $z_p,z_\beta$ would obey $z_p\le(2/3)z_\beta$ and $z_\beta\le(2/5)z_p$, so both distances vanish. The contraction is due to synthetic stopping, with no irreducibility or mixing assumption on $BA$.
+
+Let $d_p,d_\beta$ be the maximum distances between these own laws and their centroids. Comparing (11.19) with (11.17)–(11.18) gives
+
+$$
+d_p\le\frac{11}{12}\varepsilon+\frac23d_\beta,
+\qquad d_\beta\le\frac{13}{20}\varepsilon+\frac25d_p.
+\tag{11.20}
+$$
+
+Since $1-(2/3)(2/5)=11/15$, substitution gives
+
+$$
+d_p\le\frac{15}{11}\left(\frac{11}{12}+\frac23\frac{13}{20}\right)\varepsilon
+ =\frac{81}{44}\varepsilon,
+$$
+
+$$
+d_\beta\le\frac{15}{11}\left(\frac{13}{20}+\frac25\frac{11}{12}\right)\varepsilon
+ =\frac{61}{44}\varepsilon.
+$$
+
+Both constants come from (11.13) and its one own-law regeneration.
+
+**Proof of the target-uniform losses.** For every p target $T$, configurationwise triangle inequality and centroid convexity give
+
+$$
+\sum_i\pi_i\operatorname{TV}(\widehat Q_i,T)
+ \le\sum_i\pi_i\operatorname{TV}(\bar Q_i,T)+d_p
+ \le\int\operatorname{TV}(Q,T)\,d\nu_p(Q)+d_p.
+$$
+
+Conversely, for $Q\in C_i$, (11.14) and (11.11) give $\operatorname{TV}(Q,\widehat Q_i)\le\varepsilon+d_p^*$. Integrate the reverse triangle inequality to get the lower bound in (11.12). Use $\tau,W$ for suspension. Every step works after pushing all laws and the target through a common measurable projection, since TV contracts and centroid formation commutes with pushforward. The corresponding marginal-law losses also differ by at most $d_s^*$, since the old mean law is exactly the weighted mean of its centroids. These marginal comparisons do not replace the configuration comparisons.
+
+Finally, push $\Gamma_B$ forward by $(Q,W)\mapsto(\widehat Q_{i(Q)},\widehat W_{j(W)})$, and push $\Gamma_A$ forward by the reversed corresponding map, defining the maps arbitrarily on deleted marginal-null cells. The resulting measures have masses $F^B_{ij},F^A_{ji}$ on the generated law pairs. By (11.10) and (11.19) they are exactly the finite table's compatible own-law flows, even when generated labels share a law. On each product the transport changes the sum-of-phase-TV distance by at most
+
+$$
+2\varepsilon+d_p^*+d_\beta^*=\frac{115}{22}\varepsilon.
+$$
+
+Uniform continuity of every continuous function on the compact products proves joint weak convergence of these two pushforwards to the original pair. Thus $\mathfrak C$ is the weak closure of the compatible flows embedded from finite regular tables; no independent selection of a phase limit is involved. $\square$
+

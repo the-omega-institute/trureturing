@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth
 open private slide_ear_right from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 
-private def blocksWord : List (List ℕ × ℕ) → List ℕ
+def blocksWord : List (List ℕ × ℕ) → List ℕ
   | [] => []
   | (P,n) :: bs => P ++ n :: blocksWord bs
 
@@ -66,7 +66,7 @@ private theorem split_packets (bad : ℕ → Prop) [DecidablePred bad] (l : List
             · exact hp b (by simp [h]) y hy
           · simpa [hx] using hn
 
-private def insertAt (ear : ℕ) (l : List ℕ) (j : ℕ) : List ℕ :=
+def insertAt (ear : ℕ) (l : List ℕ) (j : ℕ) : List ℕ :=
   l.take j ++ ear :: l.drop j
 
 private theorem insertAt_add (ear : ℕ) (pre post : List ℕ) (j : ℕ) :

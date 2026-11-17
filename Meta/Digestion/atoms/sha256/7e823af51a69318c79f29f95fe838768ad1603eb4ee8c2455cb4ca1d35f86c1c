@@ -1,0 +1,91 @@
+**定理 78.4。** 在整个 $\mathrm{PRE}_0$ 上 $\delta\ge0$。对任意固定的有限 Jordan 生成完整框架族，$\delta=0\Longleftrightarrow D_J+D_H$。特别地，遗忘见证后有同一实际模型类的等价
+$$
+\boxed{\mathrm{PRE}_0^{\rm mix}+\exists\mathfrak B\,[\mathsf{JG}_3(\mathfrak B),\ \delta(\mathfrak B)=0]+\mathrm H13}
+\quad\Longleftrightarrow\quad\mathrm{PRE}+\mathrm{C13}. \tag{78.5}
+$$
+删去两边的 H13、C13 仍等价；左侧 $\mathrm{PRE}_0^{\rm mix}$ 可等价换回 $\mathrm{PRE}_0$。
+另设同一个模型上的局部原子字典具有 $(\ell_A,K_A)$，同标正分解 $F(B_r\times B_r)$ 在整个 $D$ 上的字典具有 $(\ell_D,K_D)$，并有
+$$
+\mu1_D\le U\le\mu R1_D,\qquad \mu1_E\le G\le\mu R1_E,\qquad
+0\le\delta\le\varepsilon\le\mu^2,\quad \mu>0, R\ge1. \tag{78.6}
+$$
+令 $r_Y=\operatorname{rank}Y$、$N_Y=r_Y(r_Y+1)/2$，置
+$$
+C_{\ell,r,R}=(1+600R\sqrt r)(2N\sqrt N)^\ell,\quad N=r(r+1)/2,\qquad \eta=\varepsilon/\mu^2.
+$$
+则全部正交正元满足
+$$
+\begin{aligned}
+\langle Ja,Jb\rangle_D&\le\mu^2K_A^2C_{\ell_A,r_D,R}^2\eta^{2^{-\ell_A}}\|a\|_\infty\|b\|_\infty,\\
+\langle H_{\mathrm s}d,H_{\mathrm s}d'\rangle_E&\le\mu^2K_D^2C_{\ell_D,r_E,R}^2\eta^{2^{-\ell_D}}\|d\|_\infty\|d'\|_\infty.
+\end{aligned} \tag{78.7}
+$$
+两个左端均非负；分别量化 $a,b\in A_+,a\circ b=0$ 与 $d,d'\in D_+,d\circ d'=0$。定量前件仅属于受限稳定性结论，不增添到 (78.5) 的精确候选。
+
+**证明。** 每套 $Je$ 都是 $U$ 的正分解，每套 $H_{\mathrm s}F(e,f)$ 都是 $G$ 的正分解。平方范数展开给
+$$
+\delta_J=2\sum_r\sum_{e<e'}\langle Je,Je'\rangle_D,\qquad
+\delta_H=2\sum_r\sum_{(e,f)<(e',f')}\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E. \tag{78.8}
+$$
+自对偶正锥使每项非负，故一个总缺陷为零当且仅当两表逐项为零。77.19 先把混合余项二元入口恢复为同一完整 $S$，所以可在原基底中调用定理 76.3：先在一般 EJA 恢复 $D_J$，再由 65.3 得两边缘嵌入，同标行列和使产品族生成整个 $D$，最后恢复 $D_H$。逆向先用旧 PRE 的分类再取三框架，无复型循环；H13 仍由 72.7—72.8 在恢复 PRE 后逐成员检测同一原输出。至此证明 (78.5)。在辅助内积空间 $D\oplus E$，各 $r$ 的 $(Je,0)$ 与 $(0,H_{\mathrm s}F(e,f))$ 是同一 $(U,G)$ 的正分解；(78.8) 正是这些分解的 Pythagorean 饱和，没有增加物理载体。
+为证明显式界，暂取一般正 $T:X\to Y$，其 $h=T1$ 满足 $\mu1\le h\le\mu R1$，测试分解为 $\sum_i g_{ri}=1$。除 $T$ 以 $\mu$ 后，以下 $1\le h\le R1$，总测试缺陷至多 $\eta\le1$。置 $\Phi=P_{h^{-1/2}}T$、$\Delta(x)=\Phi(x^2)-(\Phi x)^2$，一般 EJA 的平方不等式由 75.4（一）给出。定义
+$$
+v_T(x)=\langle h,T(x^2)\rangle-\|Tx\|_2^2,\qquad
+c_h(z)^2=2\langle z,(\ell_{h^2}-\ell_h^2)z\rangle.
+$$
+$T=P_{\sqrt h}\Phi$、$P_{\sqrt h}h=h^2$、$P_{\sqrt h}^2=P_h$ 及迹结合性给出原缺陷的两项恒等分解：
+$$
+v_T(x)=\langle h^2,\Delta(x)\rangle+c_h(\Phi x)^2,\qquad
+c_h(z)^2=\frac12\sum_{i<j}(\lambda_i-\lambda_j)^2\|z_{ij}\|_2^2,\quad h=\sum_i\lambda_i e_i. \tag{78.9}
+$$
+第二式来自完整本原谱框架的正交 Peirce 分解：$\ell_h$ 在 $ij$ 空间的特征值为 $(\lambda_i+\lambda_j)/2$。因此两项非负，$v_T$ 为非负二次型、$\sqrt{v_T}$ 为半范数。第一项量化归一化平方缺陷，第二项量化权重不交换，均没有免费删除。
+每个正分解项满足 $0\le g\le1$、$g^2\le g$，所以
+$$
+0\le v_T(g)\le\langle Tg,h-Tg\rangle\le\eta,
+\qquad \|\Delta(g)\|_\infty\le\tau_Y\Delta(g)\le v_T(g),\quad c_h(\Phi g)\le\sqrt\eta. \tag{78.10}
+$$
+第一个上界使用 $T$ 正性；第二个上界使用所有分解交叉配对非负；最后用 $h^2\ge1$。这里没有要求 $g$ 幂等。
+令 $q(x)=\sqrt{\|\Delta(x)\|_\infty}$。对每个归一化正态作用于 $\Delta(x+ty)\ge0$，标量二次式的判别式给
+$$
+\|\Phi(x\circ y)-\Phi x\circ\Phi y\|_\infty\le q(x)q(y). \tag{78.11}
+$$
+$q$ 是各态的平方缺陷半范数的上确界，故为半范数；又 $0\le\Delta(x)\le\Phi(x^2)\le\|x\|_\infty^21$，所以 $q(x)\le\|x\|_\infty$。依次在 $x\circ x^3$、$x\circ x^2$ 处分离 (78.11) 的缺陷，再展开 $(\Phi x^2)^2=((\Phi x)^2+\Delta(x))^2$，令 $t=\|x\|_\infty$，得
+$$
+q(x^2)^2\le2t^3q(x)+3t^2q(x)^2+q(x)^4\le6t^3q(x),\qquad
+q(x\circ y)\le\sqrt{12(q(x)+q(y))}\quad(\|x\|_\infty,\|y\|_\infty\le1). \tag{78.12}
+$$
+后一式由 $4x\circ y=(x+y)^2-(x-y)^2$、半范数三角不等式和 $\|x\pm y\|_\infty\le2$ 得到。这里仅使用实自伴 Jordan 乘积，不把正映射升级为完整非自伴 Schwarz 映射。
+还须控制第二项的乘积传播。令 $r=\operatorname{rank}Y$、$N=r(r+1)/2$、$b_r=N\sqrt N$，则
+$$
+c_h(z\circ w)\le b_r[\|z\|_\infty c_h(w)+\|w\|_\infty c_h(z)],\qquad
+c_h(z)\le R\sqrt r\|z\|_\infty. \tag{78.13}
+$$
+给出第一式的具体一般 EJA 证明：每个 Peirce 分量 $z_p$ 满足 $\|z_p\|_\infty\le\|z\|_\infty$。对角投影为 $P_{e_i}$；非对角 $ij$ 投影为 $(P_d-P_s)/2$，$d=e_i+e_j,s=e_i-e_j$。这两个二次表示均正且把单位送到 $d$，所以各为谱范数收缩；不依赖结合矩阵表示。
+$\ell_z$ 的迹内积算子范数至多 $\|z\|_\infty$，因为其谱特征值为 $\lambda_i$ 和 $(\lambda_i+\lambda_j)/2$，故 $\|z_p\circ w_q\|_2\le\|z_p\|_\infty\|w_q\|_2$，也可交换两项。给对角分量权重 $\omega_p=0$，给 $ij$ 权重 $\omega_p=|\lambda_i-\lambda_j|$。Peirce 规则使非零乘积或者只落在对角部分，或者落在单一非对角空间；后一种的输出权重至多 $\omega_p+\omega_q$。因此
+$$
+\begin{aligned}
+c_h(z\circ w)&\le\sum_{p,q}\frac{\omega_p+\omega_q}{\sqrt2}\|z_p\circ w_q\|_2\\
+&\le N\!\left[\|w\|_\infty\sum_p\frac{\omega_p}{\sqrt2}\|z_p\|_2+
+\|z\|_\infty\sum_q\frac{\omega_q}{\sqrt2}\|w_q\|_2\right]
+\le b_r[\|w\|_\infty c_h(z)+\|z\|_\infty c_h(w)].
+\end{aligned}
+$$
+最后一步用至多 $N$ 个正交分量的 Cauchy–Schwarz。第二式由谱差至多 $R$、$\|z\|_2\le\sqrt r\|z\|_\infty$ 得到。重谱只使部分权重为零，全程没有除以谱差；同边乘积落在对角部分，贡献为零，Albert 同样适用。
+对深度至多 $j$ 的字归纳，可取
+$$
+q(w)\le A_j\eta^{1/2^{j+1}},\quad c_h(\Phi w)\le B_j\eta^{1/2^{j+1}},\qquad
+A_0=B_0=1,\quad A_{j+1}=\sqrt{24A_j},\quad B_{j+1}=2b_rB_j+R\sqrt r A_j^2. \tag{78.14}
+$$
+$q$ 的递推用 (78.12)。另一递推把 $\Phi(x\circ y)$ 分为 $\Phi x\circ\Phi y$ 及 (78.11) 的缺陷，再用 (78.13)；$\eta\le1$ 允许以较小指数统一上界。故 $A_j\le24$，$2b_r\ge2$ 给
+$$
+B_j\le(1+576R\sqrt r)(2b_r)^j,\qquad
+\sqrt{v_T(w)}\le[R\sqrt r A_j+B_j]\eta^{1/2^{j+1}}
+\le C_{j,r,R}\eta^{1/2^{j+1}}. \tag{78.15}
+$$
+字典系数界和 $\sqrt{v_T}$ 的三角不等式把此界传到全部 $x$。$v_T$ 的极化为
+$$
+V_T(a,b)=\langle h,T(a\circ b)\rangle-\langle Ta,Tb\rangle.
+$$
+当 $a\circ b=0$ 时，非负二次型的 Cauchy–Schwarz 给 $\langle Ta,Tb\rangle\le\sqrt{v_T(a)v_T(b)}$。恢复 $\mu^2$ 后即得一般 $T$ 的 (78.7) 形式。
+最后，第一层取 $T=J$、分解项为 $B_r$ 原子；第二层取 $T=H_{\mathrm s}$、分解项为 $F(B_r\times B_r)$。后者在尚未恢复 $D_J$ 时已为正单位分解，所以无须先调用精确第一接口或声称其成员幂等。两层总测试缺陷各不超过 $\delta$，分别使用明确支付的字典参数便得 (78.7)。证毕。
+

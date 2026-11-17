@@ -1,0 +1,10 @@
+**推论 496.5（一、二阶接口由 (490.2) 推出）。** (a) $(\mathrm M_2)$ 成立，$M_2(s,t)=c_2\kappa\min(s,t)=\frac{2^\kappa-1}{\log2}\min(s,t)$。
+
+(b) 对每个实值 $\phi\in C([1,2])$，$\sup_{s\in[0,1]}|\mathbb E_{\mu_X}[\phi(U_X)B_X(s)]|\to0$；特别地 $(\mathrm M_1)$ 以 $M_1=0$ 成立。
+
+(c) 设 $0<\theta_1<\theta_2<1$，(490.2) 分别在包含 $\theta_1$、$\theta_2$ 的指数带上成立，$B_{i,X}$ 如 §495。则对每个实值 $\phi\in C([1,2])$，$\sup_{s,t\in[0,1]}|\mathbb E_{\mu_X}[\phi(U_X)B_{1,X}(s)B_{2,X}(t)]|\to0$；特别地 $(\mathrm J_{1,1})$ 成立且 $M_{1,1}\equiv0$。
+
+证明。(a) 取 $\phi(u)=u^\kappa$，由推论 496.4，二阶矩界给出 (a) 部分，极限核连续。(b) 取 $\theta<\nu<\beta$、$M=X^\nu$、$f_s(x)=D_{sx^\theta}(x)$、$P_s(y)=\int_X^yf_s$。引理 493.2 的证明给出 $\sup_{s,y}|P_s(y)|\ll\sqrt{\log X}\bigl(Xh/\sqrt M+\sqrt{XhM}\bigr)$，故 $\sup_{s,y}|P_s(y)|/(X\sqrt{h\log X})\ll X^{-(\nu-\theta)/2}+X^{-(1-\nu)/2}\to0$。$\mathbb E_{\mu_X}[\phi(U_X)B_X(s)]=\frac1{\log2}\int_X^{2X}\phi(x/X)\,\varpi(x)f_s(x)\,dx$，其中 $\varpi(x)=x^{-1-\theta/2}(\log x)^{-1/2}$ 在 $[X,2X]$ 上单调、$\varpi\le X^{-1-\theta/2}(\log X)^{-1/2}$。若 $\phi$ 是 $n$ 块阶梯函数，逐块分部积分（$\varpi$ 递减，故每块 $[a,b]$ 上 $\varpi(a)+\varpi(b)+\int_a^b|\varpi'|=2\varpi(a)\le2\varpi(X)$）给出至多 $\frac{2n}{\log2}\|\phi\|_\infty\sup_{s,y}|P_s(y)|\,X^{-1-\theta/2}(\log X)^{-1/2}\to0$；一般连续 $\phi$ 用阶梯函数 $\phi_n$ 一致逼近，误差由 $|\mathbb E[(\phi-\phi_n)(U_X)B_X(s)]|\le\|\phi-\phi_n\|_\infty(\mathbb EB_X(s)^2)^{1/2}$ 与推论 496.4 的二阶矩界控制。(c) 取 $\theta_1<\mu<\nu<\min(\beta_1,\theta_2)$、$\eta_0=\frac12\min(\mu-\theta_1,\nu-\mu,\theta_2-\nu)$。由引理 491.3（$h=X^{\theta_1}$、$k=X^{\theta_2}$），对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$ 一致地 $|\int_ID_{sx^{\theta_1}}D_{tx^{\theta_2}}|\ll X^{1+(\theta_1+\theta_2)/2}\log X\cdot X^{-\eta_0}$。与推论 496.4 同样写出权 $w_X(u)=\phi(u)u^{-1-(\theta_1+\theta_2)/2}\log X/(\log X+\log u)$；对 $n$ 块阶梯权，上界逐块给出至多 $Cn\|w\|_\infty X^{-\eta_0}$（相对于自然尺度 $X^{1+(\theta_1+\theta_2)/2}\log X$）；连续权的逼近误差由两个指数的二阶矩界与 Cauchy–Schwarz 控制，至多 $C'\omega_w(1/n)$。先令 $X\to\infty$ 再令 $n\to\infty$。证毕。
+
+因此，在相应的 (490.2) 下，§494–§495 各接口中总阶数为一和二的部分都是定理：$M_1=0$、$M_{2,0}=c_{2,0}\kappa_1\min$、$M_{0,2}=c_{0,2}\kappa_2\min$、$M_{1,1}\equiv0$（这加强了定理 495.2 的几乎处处结论），所需的一、二阶矩界也已给出。总阶数三及更高的绝对矩界与相应混合矩极限仍需额外假设，包括 Brownian 型接口所要求的奇阶极限为零；四阶情形还涉及 (493.1) 型上界及四阶混合矩极限。
+

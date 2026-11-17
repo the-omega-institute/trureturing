@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:64184e98a438213ce830d53bf744eb0d743de88afaaf1e107f5f4adb45f48354
+  normalized_sha256: sha256:64184e98a438213ce830d53bf744eb0d743de88afaaf1e107f5f4adb45f48354
+cas_ref: sha256:64184e98a438213ce830d53bf744eb0d743de88afaaf1e107f5f4adb45f48354
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/LogLogOscillation.forward_kernel_omega_pm_loglog
+    target_statement_id: sha256:057418d4bbb54e60ba52079383c2a68fab46bee827064796bdd272a0011d320e
+receipts:
+  unresolved_subitems: []

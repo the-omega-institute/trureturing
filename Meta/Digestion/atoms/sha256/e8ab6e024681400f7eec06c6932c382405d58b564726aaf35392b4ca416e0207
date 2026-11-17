@@ -1,0 +1,70 @@
+**命题 35.1（保留非零角外背景的固定 P2 数据不可延拓）。** 在 $A=M_3(\mathbb C)$ 中，对任意固定实数 $\beta\ne0$ 及任意 $\sigma\in\{1,-1\}$，取
+
+$$
+\begin{gathered}
+\widetilde c=c_0\oplus0,\qquad
+\widetilde t=t_0\oplus\beta,\qquad
+\widetilde s=s_0\oplus0,\\
+\widetilde g=K_\sigma(\widetilde c,\widetilde t)+\widetilde s,
+\qquad P=\operatorname{diag}(1,1,0),\qquad C=PAP.
+\end{gathered}
+\tag{35.1}
+$$
+
+则 $\mathsf{P2}(\widetilde c,\widetilde t;\widetilde g)$ 对全部正泛函成立；但不存在满足完整 $\mathsf H_A(D)$、整个 $C$ 的同号分类 (28.3)，并且在这份实际外部输入上有 $D(\widetilde c,\widetilde t)=\widetilde g$ 的总映射 $D$。
+
+**证明。** 完整算子铅笔准确为
+
+$$
+\widetilde F_z=F_z\oplus\beta^2\succeq0\qquad(z\in\mathbb C).
+\tag{35.2}
+$$
+
+第一块由定理 34.1 及其 (34.5)、(34.7) 的证书给正；第三块为非零常数 $\beta^2$。由 (34.1)，全部正泛函都给正二表，包含跨越三维坐标的向量和全部复相位。第三块始终保留。$\widetilde t\notin C$，所以这份原输入确在角外，不能先压缩背景来套用角内分类。
+
+若所述总映射存在，直接应用原命题 31.1 和定理 31.2 的实际外调用接口。具体地，
+
+$$
+\widetilde k=\widetilde c\circ\widetilde t=(3t_0/2)\oplus0,
+$$
+
+而同一份 $\operatorname{PB}(\widetilde t;\widetilde c,0)$ 的内值是
+$D(\widetilde t,\widetilde c)=-\widetilde g$、$D(\widetilde t,0)=0$。两份实际外层对为
+$(\widetilde c-\widetilde g,\widetilde k)$、$(\widetilde c+\widetilde g,-\widetilde k)$，其中
+
+$$
+\begin{aligned}
+\widetilde c-\widetilde g
+&=\begin{pmatrix}1/2&\sigma i/2\\-\sigma i/2&3\end{pmatrix}\oplus0,\\
+\widetilde c+\widetilde g
+&=\begin{pmatrix}3/2&-\sigma i/2\\\sigma i/2&1\end{pmatrix}\oplus0.
+\end{aligned}
+\tag{35.3}
+$$
+
+它们全部落在 $C_{\rm sa}^2$，没有分解未知 $D$ 的任何输入。记这些实际外值的比较缺陷为
+
+$$
+\begin{aligned}
+E_+&=D(\widetilde c-\widetilde g,\widetilde k)
+-K_\sigma(\widetilde c-\widetilde g,\widetilde k),\\
+E_-&=D(\widetilde c+\widetilde g,-\widetilde k)
+-K_\sigma(\widetilde c+\widetilde g,-\widetilde k).
+\end{aligned}
+$$
+
+整个角分类逐值给 $E_+=E_-=0$。
+然而同一个实际 PB 要求两份外值的差为 $2\widetilde c\circ\widetilde g$；已知比较映射的差为
+$2K_\sigma(\widetilde c,\widetilde k)=2\widetilde c\circ K_\sigma(\widetilde c,\widetilde t)$。
+因此原 (31.2) 在这份数据上准确要求
+
+$$
+E_+-E_-=2\widetilde c\widetilde s
+=\operatorname{diag}(1,-4,0)\ne0,
+\tag{35.4}
+$$
+
+矛盾。这里实际非零谱支撑为 $S=P$，且 $(1-P)\widetilde tS=0$，正是原定理 31.2 的返回条件；补角背景非零并未妨碍实际外调用返回。证毕。
+
+本命题是定理 34.1 的尖锐固定数据族相对于**完整 PB 加整个已分类角**的非延拓应用，没有构造满足完整公理的反模型，也没有重新分类 $M_2$ 或 $M_3$。原 AH42.4 已覆盖的有限维全域分类直接复用；命题 31.1、定理 31.2 是这里被消费的既有接口。
+

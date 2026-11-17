@@ -1,0 +1,19 @@
+**引理 82.6（所用成熟负参数去极化族）。** 固定单块 $d\ge2$，$U$ 酉，$0<\eta<d-1$。令
+$$
+\Phi_{\eta,U}(X)=\frac{d\operatorname{Tr}(X)I_d-(1+\eta)UXU^*}{d^2-1-\eta},\quad
+w=\operatorname{vec}U/\sqrt d,\quad c_\eta=d^2-1-\eta. \tag{82.12}
+$$
+它是严格改善正性的 TP、保单位、非 CP 正映射，且其幂收敛于 $\mathcal R(X)=\operatorname{Tr}(X)I_d/d$；映射及其伴随的固定 Hermitian 空间都只有标量。其 Choi 为
+$$
+J(\Phi_{\eta,U})=\frac d{c_\eta}\bigl[I-(1+\eta)ww^*\bigr], \tag{82.13}
+$$
+沿 $w$ 的特征值为 $-d\eta/c_\eta<0$。
+
+**证明。** $c_\eta>0$。对非零 $X\ge0$，$UXU^*\le\operatorname{Tr}(X)I$，故分子至少为 $(d-1-\eta)\operatorname{Tr}(X)I>0$。取迹及代入 $I$ 分别给 TP 与保单位。$\mathcal R$ 的 Choi 为 $I/d$，酉共轭的 Choi 为 $dww^*$，故得 (82.13) 与非 CP。
+令 $q=-(1+\eta)/c_\eta$，则
+$$
+\Phi_{\eta,U}=(1-q)\mathcal R+q\operatorname{Ad}_U,\qquad
+\Phi_{\eta,U}^{\,N}=\mathcal R+q^N\operatorname{Ad}_{U^N}(\operatorname{id}-\mathcal R). \tag{82.14}
+$$
+由 $\eta<d-1$ 得 $2+2\eta<2d\le d^2$，故 $|q|<1$。$\operatorname{Ad}_U$ 及其伴随在迹二范数上等距，零迹空间的谱半径为 $|q|<1$；固定空间遂均只有标量，并得到幂收敛。这里“混合”只指这个有序空间正映射的幂收敛，**不是**把它称为量子通道或实际量子过程。该族是酉共轭下的标准负参数去极化映射；不把映射族或其阈值当作新数学。证毕。
+

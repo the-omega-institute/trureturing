@@ -1,0 +1,49 @@
+**定理 105.3（全域确认面和对偶谱展开）。** 在 $\mathsf W$ 下，任意 $g\in F_p$
+都有一个原框架 $(p,q,r)$，其中 $q,r$ 为整个 $D_p$ 的对径，使
+
+$$
+g=a_p+\alpha a_q+\beta a_r,\qquad 0\le\alpha,\beta\le1.
+\tag{VII105.7}
+$$
+
+反之，这样的每个式子均在 $F_p$。因此 $a_p$ 是整个 $C^*$ 序中的 least 确认效应，
+$T_p=a_p$ 于整个原 $K$。每个 $f\in C^*$ 都有一个三结果框架内的非负效应展开；
+每个 $f\in V^*$ 都有一个这样的有符号展开。
+
+证明。在球图 $\chi:D_p\to B^d$ 上写
+$g(\chi^{-1}z)=\gamma+b\cdot z$，令 $s=\|b\|$。
+$s>0$ 时取 $q,r$ 对应 $b/s,-b/s$；$s=0$ 时任选直径。
+记 $n=\chi(q)$；104.4给 $a_q,a_r$ 在该球上的限制为 $(1+n\cdot z)/2,(1-n\cdot z)/2$。
+令 $\alpha=\gamma+s,\beta=\gamma-s$。原 proper 性给二者均在 $[0,1]$。
+置 $k=g-\alpha a_q-\beta a_r$，则
+
+$$
+k(p)=1,\qquad k|_{D_p}=0,\qquad k\le g\le u.
+$$
+
+尚须在原全域证 $k\ge0$。若 $m=\min_Kk<0$，在达到点 $x$ 取
+
+$$
+h=\frac{k-mu}{1-m}\in[0,u],\qquad h(p)=1,\quad h(x)=0.
+\tag{VII105.8}
+$$
+
+下界用全域最小值，上界用 $k\le u$。原定义遂使 $x\in D_p$，
+与 $k(x)=m<0=k|_{D_p}$ 矛盾。因此 $k\in\mathcal A_p$，105.2给 $k=a_p$。
+这证明正规形；反向由 $a_p+a_q+a_r=u$ 及系数界直接成立。
+于是 $g-a_p=\alpha a_q+\beta a_r\in C^*$，确是全原锥序least，
+不只是球上的比较，也不只是点态下包络。
+
+对非零 $f\in C^*$，$M=\max_Kf>0$ 的达到面含一个原纯点 $p$。
+$f/M\in F_p$，应用正规形即得
+
+$$
+f=M a_p+M\alpha a_q+M\beta a_r.
+\tag{VII105.9}
+$$
+
+零效应取零系数。对任意 $f\in V^*$，由 $K$ 紧选足够大的 $t$，使 $f+tu\in C^*$；
+对其使用(VII105.9)，再在同一个框架用 $u=a_p+a_q+a_r$ 减回 $tu$。
+因而 $\{a_p:p\in P\}$ 线性张成整个 $V^*$。
+这给后面范数分离性所需的原对偶信息，未使用状态谱性或自对偶。证毕。
+

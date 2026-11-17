@@ -1,0 +1,11 @@
+**假设 $\mathrm{HL}_4(\beta)$。** 对每个 $\varepsilon>0$ 与 $M\ge1$，存在 $A_{\varepsilon,M}$ 与 $N_{\varepsilon,M}$，使对 $N\ge N_{\varepsilon,M}$、$1\le r\le4$、互异整数 $1\le d_1,\dots,d_r\le MN^\beta$ 与 $0\le y\le3N$，
+
+$$
+\Bigl|\sum_{n\le y}\prod_{j=1}^r\Lambda(n+d_j)-y\,\mathfrak S(\{d_1,\dots,d_r\})\Bigr|\le A_{\varepsilon,M}N^{1/2+\varepsilon}.
+\tag{498.1}
+$$
+
+这是 Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 定理 3 的相关误差假设在 $k\le4$、位移至多 $MN^\beta$ 时的形式。
+
+对区间 $I=(a,b]\subseteq[0,M]$ 与 $H\ge1$，令 $\Delta_{H,I}(x)=\psi(x+bH)-\psi(x+aH)-(b-a)H$，$Z_{N,H}(I;x)=\Delta_{H,I}(x)/\sqrt{H\log N}$，$\kappa_{N,H}=\log(N/H)/\log N$，$\sigma(I,J)=|I\cap J|$，$\mathcal W_4(I_1,\dots,I_4)=\sigma(I_1,I_2)\sigma(I_3,I_4)+\sigma(I_1,I_3)\sigma(I_2,I_4)+\sigma(I_1,I_4)\sigma(I_2,I_3)$。对实值有界变差函数 $w$（在 $[1,2]$ 外延拓为零），$\|w\|_{\mathrm{BV}}=\|w\|_\infty+\operatorname{Var}_{\mathbb R}w$，$\langle w\rangle=\int_1^2w$。
+

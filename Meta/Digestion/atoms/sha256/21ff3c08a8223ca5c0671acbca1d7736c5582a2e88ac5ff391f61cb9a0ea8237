@@ -1,0 +1,133 @@
+### 40.4 完整作用列、准确残量与显式有限尺度
+
+对 (40.13) 应用引理 40.3。这里
+
+$$
+\begin{gathered}
+q_\rho=2B_{12}\rho\theta+3B_{13},\qquad
+\ell_\rho=(-\iota q_\rho/(\rho\theta),\iota q_\rho),\\
+\xi_\rho=(0,\rho\theta,1,-(B_{12}\rho\theta+B_{13})/\kappa,0)^{\mathsf T},
+\end{gathered}
+\tag{40.17}
+$$
+
+$x_\rho$ 则由 (40.4) 的同一块公式给出。为展示所有存活列，在完整原五维基中写
+
+$$
+\begin{aligned}
+\mathbf v_\delta&=(0,\theta(P_0+\delta H_0),p-3\delta e,0,0)^{\mathsf T},\\
+\mathbf a_\delta&=\left(0,-2\delta b_0\theta,
+ \overline{Q_0}+\delta(\iota\overline{Q_0}/2-5b/2),0,-\delta\gamma\theta\right)^{\mathsf T},\\
+\mathbf b_\delta&=\left(0,b_0\theta,
+ b+\delta(5\overline{Q_0}/2+\iota b/2),0,
+ \gamma(1-\delta\iota)\theta\right)^{\mathsf T} .
+\end{aligned}
+\tag{40.18}
+$$
+
+将 (40.14) 代回 (40.5)，再用 (40.15)–(40.16)，得到每个 $\rho>0$ 上的准确完整列
+
+$$
+\mathbf R_\delta(\rho):=R_\delta\xi_\rho
+ =\mathbf v_\delta+\rho\mathbf a_\delta,\qquad
+\mathbf S_\delta(\rho):=S_\delta\xi_\rho
+ =\beta_\delta\mathbf v_\delta+\rho\mathbf b_\delta .
+\tag{40.19}
+$$
+
+因此 $\rho\downarrow0$ 时两个作用对分别趋于实平行，且保留的环境分量趋于零。这里尚未以极限探针为见证；下一步直接选择严格正的有限尺度。
+
+引理 38.1 的 (38.4) 是仅用结合乘法与 $\iota^2=-1$ 的恒等式，同样适用于完整原 $c,x_\rho,t$。故
+
+$$
+L=K(R_+,S_+)-K(R_-,S_-)
+ -2K(x_\rho,\mathsf E_s)-2t\circ\mathsf E_s .
+\tag{40.20}
+$$
+
+由 (40.14)、(40.7) 和 $\operatorname{Im}_\iota Q_0=b$，每个 $\rho>0$ 上准确有
+
+$$
+\begin{aligned}
+\chi_{\xi_\rho}(K(x_\rho,\mathsf E_s))
+ &=-s\operatorname{Im}_\iota(p+\rho Q_0)=-s\rho b,\\
+\chi_{\xi_\rho}(t\circ\mathsf E_s)&=s(e+b\rho),\\
+\chi_{\xi_\rho}(K(x_\rho,\mathsf E_s)+t\circ\mathsf E_s)&=se\ne0 .
+\end{aligned}
+\tag{40.21}
+$$
+
+此处 $\operatorname{Im}_\iota w=(w-\overline w)/(2\iota)$，并使用自伴列恒等式
+$\chi_\xi(K(U,Z))=-\operatorname{Im}_\iota((U\xi)^*Z\xi)$。所以残量读数并非只在极限才非零。
+
+记完整原实 Gram 面积为
+
+$$
+\mathcal A_\delta(\rho)=
+\left(\|\mathbf R_\delta(\rho)\|^2\|\mathbf S_\delta(\rho)\|^2
+ -\operatorname{Re}(\mathbf R_\delta(\rho)^*\mathbf S_\delta(\rho))^2\right)^{1/2} .
+$$
+
+因为 $\beta_\delta$ 实，从第二列减去 $\beta_\delta$ 倍第一列不改变这个实 Gram 行列式。由 (40.19)，对 $0<\rho\le1$ 得
+
+$$
+\begin{aligned}
+\mathcal A_\delta(\rho)
+ &\le\|\mathbf v_\delta+\rho\mathbf a_\delta\|
+       \|\rho(\mathbf b_\delta-\beta_\delta\mathbf a_\delta)\|\\
+ &\le\rho(\|\mathbf v_\delta\|+\|\mathbf a_\delta\|)
+             \|\mathbf b_\delta-\beta_\delta\mathbf a_\delta\| .
+\end{aligned}
+\tag{40.22}
+$$
+
+所有系数已由固定输入与 $s,\sigma$ 明确给出，故以下数有限：
+
+$$
+\mathscr C=\sum_{\delta=\pm1}
+ (\|\mathbf v_\delta\|+\|\mathbf a_\delta\|)
+ \|\mathbf b_\delta-\beta_\delta\mathbf a_\delta\|\ge0,
+\qquad
+\rho_* =\min\left\{1,\frac{|se|}{2(1+\mathscr C)}\right\}>0 .
+\tag{40.23}
+$$
+
+这个尺度实际为有限正数，且
+
+$$
+\sum_\delta\mathcal A_\delta(\rho_*)\le\rho_*\mathscr C<\frac{|se|}{2}.
+\tag{40.24}
+$$
+
+为从面积控制左端，对任意两条完整复列 $v,w$，复 Cauchy–Schwarz 给
+$|\operatorname{Im}_\iota(v^*w)|^2\le\|v\|^2\|w\|^2-\operatorname{Re}(v^*w)^2$。将其用于 (40.20) 的两项，并用 (40.21)，得到同一探针和同一向量上的
+
+$$
+\begin{aligned}
+|\chi_{\xi_{\rho_*}}(L)|
+ -\sum_\delta\mathcal A_\delta(\rho_*)
+ &\ge2|se|-2\sum_\delta\mathcal A_\delta(\rho_*)\\
+ &>|se|>0 .
+\end{aligned}
+\tag{40.25}
+$$
+
+另一方面，引理 40.3 没有删除第二条环境列，故对每个符号准确保证
+
+$$
+\mathcal A_\delta(\rho_*)\ge\gamma^2\rho_*^2>0 .
+\tag{40.26}
+$$
+
+最后取完整原向量的范数与指定质量
+
+$$
+N_{\rho_*}=1+\rho_*^2+
+ \frac{|B_{12}\rho_*\theta+B_{13}|^2}{\kappa^2}>0,\qquad
+\phi(A)=\frac{\mu}{N_{\rho_*}}\xi_{\rho_*}^*A\xi_{\rho_*} .
+\tag{40.27}
+$$
+
+$\phi$ 是完整 $M_5$ 上的一个正复线性泛函，$\phi(I_5)=\mu$。将 (40.25)–(40.26) 乘 $\mu/N_{\rho_*}>0$，得到 (40.3)，其中每笔预算平方根至少为
+$\mu\gamma^2\rho_*^2/N_{\rho_*}$，严格差额大于 $\mu|se|/N_{\rho_*}$。这完成必要性及有限双正预算见证。零残量的全正泛函充分性按 §39.6 复用，未由单个向量外推。证毕。
+

@@ -1,0 +1,24 @@
+- **FULL:** Chapter 16, especially (16.17)--(16.22), supplies the exact
+  full-residual coefficient spaces, all six nonnegative risk weights,
+  the 155-entry norm and both universal inequalities. Sections 16.1--16.4
+  supply the joint mismatch necessity with its original-source hypotheses.
+- **PAIRED:** Sections 2--4 and Chapters 11--15 of this volume supply the
+  complete-law domain, native recursions, endpoint geometry, joint
+  regeneration, one-sided realization limits and event counterobject.
+  Their conclusions retain their stated scopes.
+- **CLIP:** [Risk-controlled emission moment feasibility](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md),
+  Sections 1--6. Proposition 17.2 uses its endpoint-box TV identity;
+  (17.9) is the elementary complete-tail bound of (12.13), evaluated at
+  the laws (17.4).
+- **PAID:** [Effective paid-history certificates](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md),
+  Definitions 1.1--2.1, Lemmas 2.1.1, 2.2, 14.1 and Corollary 2.3.
+- **RETURN:** [Acquired-return p-emission variation](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md),
+  Theorems 9.2--9.3. Their necessity is reused through Chapter 16;
+  it is not a risk-only lower bound.
+- **Endpoint-tag coefficient test:** The complete native laws (2.1),
+  their compatible endpoint flows (12.5), and the coordinate triangle
+  identity (5.7) give (17.19) by the full projected sign argument in
+  Corollary 17.5. Conditional finite-feature tests, elimination of
+  redundant terms and polynomial validation provide no evaluated
+  separator or projected null without their own full hypotheses.
+

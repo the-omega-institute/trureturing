@@ -1,0 +1,9 @@
+**引理 2.3（有类型的回缩与复算子收缩）。** 映射
+
+$$
+C(X)=B^\dagger XB+\operatorname{Tr}((I_5-P_R)X)|0\rangle\langle0|:
+M_5\to M_3
+\tag{2.3}
+$$
+
+是 CPTP，且 $C\iota=\operatorname{id}_3$。$\iota\otimes\operatorname{id}_Z$ 对每个有限参考 $Z$ 保持任意复算子的迹范数。

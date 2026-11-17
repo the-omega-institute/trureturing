@@ -1,0 +1,29 @@
+**定义与定理 101.11（$\mathsf R_{\mathrm{BG3},\le4}^{(4)}$）。** 固定定理99.10的同一个完整原装饰元组 $\mathcal O$、选定集合 $J\subseteq\{A,D,E\}$、共同适用域及全部非几何条件，并记
+
+$$
+J_4=\{X\in J:m_X=4\}.
+$$
+
+以99.10的完整 $\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)$ 为定义起点，仅对 $X\in J_4$ 把原几何项 $\mathrm B_X+\mathrm{Z0}_X$ 换为同一原载体的 $\mathrm B_X+\mathrm G_{3,X}$，所得完整谓词记为 $\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)$。$J\setminus J_4$ 的几何项仍按99.10及VII98.8的原分支取 $\mathrm B_X+\mathrm{Z0}_X$；未选中的载体仍取其原几何项。这是精确局部替换定义，原 $\mathcal O$ 的其余每一条件逐项继承，不是只保留几何条件的摘要。于是同数据有
+
+$$
+\boxed{\begin{aligned}
+\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)
+&\Longleftrightarrow\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm polar}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\end{aligned}}
+\tag{VII101.31}
+$$
+
+证明。逐 $X\in J_4$ 应用101.10，便恢复99.10的完整谓词；其余项按定义相同，再直接调用VII(99.37)。所有 $\mathrm G_{3,X}$ 都使用原 $P_X$ 和原整个 $F_{p,X}$，没有另造确认字典或把某个归一支撑子族当成整个确认面。
+
+准确保留的非几何合同就是VI89.7—89.10、VII98.8—98.9和定理99.10的完整合同。特别是，原概率像自身的紧性、有限仿射维与每个原中点实现，原测试像自身的闭性、零、单位、中点、补、有界倍增及同一原测试对全部准备实现，原带质量输出和重复标签、全部非负缩放及零／次归一／不等质量，以及各过程与参考自身的全部相关联合输入域，均保留原量词。原全效应域和这些实际实现条件不能相互代付。
+
+同一个原 $L,p,\omega$、两次使用同一读回、两实张成、全实 $Z$、含秩一分支的完整(83.8)、原迹／伴随／二次表示／单位、VI(89.13)全部两尺度等式、C2与整个 $G=1_E$，以及精确PRE后同一个原资格态的整个H13输出，均保持原定义；全部活跃块、严格负方向、共享总迹一、零质量及空活跃集仍在原域内。共同 $\mathfrak S(\mathcal O)$ 的设备／事件／来源绑定、全部菜单与分支、实际参考／副本／相关联合、记录／权限／控制／钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、实际混合服务、全部合法未来、旧支撑及每个中间切口也全部保留。
+
+VI89.9与VII98.9中复型、Born、指定复合和读回、CP事件、Kraus与实际仪器、条件更新／Lüders、物理时间各自的完整前件继续原义；VI89.10的原生来源各入口、原射影结构与密度、全部字和terminal futures、联合行与菜单、原细标签及粗归组、记录后的条件未来、source-adoption map和资源合同也继续原义。已有入口已经导出的结论无需重付，但 $\mathrm G_3$ 不生成这些非几何对象或来源。故该完整候选压缩的是四维几何入口的目标域，不宣称减少整个包的独立前提或完成量子物理来源。证毕。
+

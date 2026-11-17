@@ -1,0 +1,51 @@
+**定理 118.6（非塌缩结构入口）。** 仅在EB3+Inj下，(IX118.6)推出 $P$ 紧，全部原球三根半轴均有统一正下界，$p\mapsto D_p$ Hausdorff连续，且这些实际球组成真实秩三向量球丛。
+因此在EB3+Inj域内，(O)、整球连续和正直径下界等价。
+
+证明。先证 $P$ 闭。设 $p_n\to x\in K$；在每球选 $y_n,z_n$ 使 $\|y_n-z_n\|\ge d_0$，并选 $e_n\in\mathcal A_{p_n}$。
+取共同子列有 $y_n\to y,z_n\to z,e_n\to e$，于是 $y\ne z,e(x)=1,e(y)=e(z)=0$。
+$x$ 的有限正权纯分解中，每个纯分量 $s_i$ 的 $D_{s_i}$ 均含 $y,z$；交点规则使这些球相同，Inj使全部 $s_i$ 相同，故 $x$ 纯。
+于是 $P$ 在紧 $K$ 中闭而紧。
+
+在 $H=\ker u$ 任取辅助欧氏尺，将球列写成 $c_n+A_n\overline B^3$，列向量为正交主轴。
+最大半轴至少 $d_0/2$，全部半轴至多 $\operatorname{diam}K/2$。
+若最小半轴无统一正下界，取中心、半轴和标架共同收敛子列，得 $c_n\to c,A_n\to A$，且 $1\le\operatorname{rank}A\le2$。
+任取 $v\in(\ker A)^\perp,|v|\le1$，可沿非零核选 $w\in\ker A$ 使 $|v+w|=1$，故
+
+$$
+c_n+A_n(v+w)\in S(D_{p_n})\subset P,\qquad
+c_n+A_n(v+w)\longrightarrow c+Av.
+\tag{IX118.7}
+$$
+
+$P$ 闭使整个非平凡极限盘 $c+A\overline B^3$ 均由纯点组成；其中非平凡线段的中点却不能是 $K$ 的极点，矛盾。
+所以三根半轴都有统一正下界 $a_0$，秩1、秩2退化也被排除。
+
+若 $p_n\to p\in P$，任意子列可再取球参数极限 $F=c+A\overline B^3$。
+三轴下界使 $F$ 满秩；(IX118.4)给 $F\subseteq D_p$，球面参数极限与 $P$ 闭给 $\partial_{\rm rel}F\subset P$。
+二者同维且包含，仿射包相同。
+若严格包含，可从 $\operatorname{ri}F$ 中一点走向 $\operatorname{ri}D_p\setminus F$ 中一点；首次离开 $F$ 的点在 $\partial_{\rm rel}F\cap\operatorname{ri}D_p$，同时应纯与非纯，矛盾。
+所以每个子列极限都是 $D_p$，即得整球连续。
+
+最后必须构造实际丛。每个原球唯一写为
+
+$$
+D_p=c_p+Q_p^{1/2}\overline B_H,\quad Q_p\ge0,\quad\operatorname{rank}Q_p=3,
+\qquad \xi_p=\operatorname{im}Q_p,\quad
+ g_p(v,w)=\langle v,Q_p^\dagger w\rangle.
+\tag{IX118.8}
+$$
+
+选固定 $o\in\operatorname{aff}K$，令 $k_p(v)=\max_{x\in D_p}\langle v,x-o\rangle$。支持函数给
+
+$$
+k_p(v)-k_p(-v)=2\langle v,c_p-o\rangle,\qquad
+\left(\frac{k_p(v)+k_p(-v)}2\right)^2=\langle Q_pv,v\rangle.
+\tag{IX118.9}
+$$
+
+由整球连续及极化，$c_p,Q_p$ 连续；统一正谱隙给像投影、伪逆连续。
+在任意 $p_0$ 选三个环境向量，其像投影在 $\xi_{p_0}$ 独立；邻域内连续Gram–Schmidt再按 $g_p$ 归一，得到真实秩三向量丛的局部标架。
+其闭单位盘逐点恰为 $D_p-c_p$，球面逐点恰为原 $S(D_p)$。
+辅助尺只描述原对象，不输入共同物理度量。
+末项等价由118.3、118.5及本定理首项组成。证毕。
+

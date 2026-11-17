@@ -1,0 +1,25 @@
+**Lemma 10.4 (stationary posterior transfer through one gap).** Let $Q_\emptyset$ be the stationary complete future law of Definition 9.1 and let $D_{j,H}(w)=\operatorname{TV}(Q_w^H,Q_\emptyset^H)$ for a word $w\in\mathcal L^j$. For every deterministic $j\ge0$ and $H\ge1$,
+
+$$
+\mathbb E_{Q_\emptyset}\bigl[D_{j,H}(W_j)\bigr]\le\beta_d.
+\tag{10.16}
+$$
+
+*Proof.* Let $X$ be the hidden state at the cut before the one-gap transition, and let $\nu_w$ be its stationary conditional law given $W_j=w$. The next-read posterior is $\pi_w=\nu_wP_d$. The future-label kernel $\mathcal K_H$ of Definition 9.1 is a Markov kernel, so TV contraction gives
+
+$$
+D_{j,H}(w)
+\le\operatorname{TV}(\pi_w,m).
+\tag{10.17}
+$$
+
+Convexity of TV under the mixture $\pi_w=\int P_d(x,\cdot)\nu_w(dx)$ gives
+
+$$
+\operatorname{TV}(\pi_w,m)
+\le\int_G\operatorname{TV}(P_d(x,\cdot),m)\,\nu_w(dx).
+\tag{10.18}
+$$
+
+The posterior barycentre identity $\int\nu_wQ_\emptyset^j(dw)=m$ now yields (10.16) after integration. This argument keeps the one-gap transition and the original emission kernel; it does not identify two sources merely because their labels have the same alphabet. $\square$
+

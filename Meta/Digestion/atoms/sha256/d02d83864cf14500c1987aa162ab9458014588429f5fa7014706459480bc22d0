@@ -1,0 +1,32 @@
+**命题 96.4（有限界及一维列钉住）。** 对任意(96.1)，有
+
+$$
+\mathrm G_{\min(n,c+1)}\quad\Longleftrightarrow\quad\text{完整 }\mathrm{Z0}.
+\tag{96.10}
+$$
+
+固定 $p=vv^*$，记
+
+$$
+d_p=\dim_{\mathbb R}\{Nv:N\in L^\perp\}.
+\tag{96.11}
+$$
+
+若全 $\mathrm G_2$ 成立且 $d_p\le1$，则每个 $p\perp q$ 都满足(96.8)。
+特别地，两域的 $c\le1$ 已有 $\mathrm G_2\Rightarrow\mathrm{Z0}$。
+
+证明。由(96.4)，$\mathrm G_k$ 恰要求任意至多 $k$ 个非空 $\mathcal M_{pq}$ 相交。
+它们是 $c$ 维仿射空间中的紧凸集。若 $c+1\le n$，普通有限维Helly定理给每个有限子族相交，
+96.3给完整 $\mathrm{Z0}$。若 $n<c+1$，对任意可排除 $q$，只取它和(96.5)的 $n-1$ 个补框架点；
+$\mathrm G_n$ 直接给共同提升，同样推出(96.8)。反向由96.3的共同 $I_n$ 得全部 $\mathrm G_k$。
+维数零的Helly结论就是 $\mathcal M=\{I_n\}$；$n=1$ 按96.3的空零族处理。
+
+若 $d_p=0$，每个 $M\in\mathcal M$ 都有 $Mv=v$，(96.4)立即给结论。
+若 $d_p=1$，写所有这些列为 $Mv=v+\tau a$，其中固定 $0\ne a\in v^\perp$、$\tau\in\mathbb R$。
+在同一补框架中必有一个 $z_j$ 满足 $a^*z_j\ne0$，故
+$M\in\mathcal M_{pr_j}$ 强迫 $\tau=0$。对任意可排除纯 $q$，将 $\mathrm G_2$ 用于 $q,r_j$，
+得到共同提升并锁定 $Mv=v$，从而 $v^*w=0$。
+这里仅钉住这一列，不要求整个 $M$ 唯一。
+当 $c=2,n\ge3$ 时，普通Helly只给 $\mathrm G_3$ 的充分性；
+它不把两两相交升级为总相交，也不说明任意抽象凸交反例能由同一原ROG模型实现。证毕。
+

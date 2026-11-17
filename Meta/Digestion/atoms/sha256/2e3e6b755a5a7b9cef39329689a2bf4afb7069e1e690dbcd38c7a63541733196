@@ -1,0 +1,42 @@
+**定理 21.1（平方纤维与逐点普通酉轨道）。** 在15.4前件下，定义
+
+$$
+Z\sim_D W\iff q_D(Z)=q_D(W).
+\tag{21.1}
+$$
+
+则这是准确的 Gram 等值关系，且
+
+$$
+\begin{aligned}
+Z\sim_D W
+&\iff Z^*Z=W^*W\\
+&\iff(\forall\xi\in X)(\exists V_\xi\in U(n))\quad W(\xi)=V_\xi Z(\xi).
+\end{aligned}
+\tag{21.2}
+$$
+
+每个纤维有唯一正代表 $|Z|=(Z^*Z)^{1/2}\in M_+$。任意实际全局连续酉场 $U\in\mathcal U(M)$ 都保持平方，而
+
+$$
+\begin{gathered}
+q_D(Z)\ge0,\quad q_D(Z)=0\iff Z=0,\quad
+\|q_D(Z)\|=\|Z\|^2,\\
+q_D(ZV)=V^*q_D(Z)V\quad(V\in\mathcal U(M)),\\
+\overline{\{UZ:U\in\mathcal U(M)\}}^{\|\cdot\|}
+\subseteq\{W:W^*W=Z^*Z\}.
+\end{gathered}
+\tag{21.3}
+$$
+
+证明。15.9先给普通 Gram。若两矩阵场的 Gram 相同，在每点取普通有限矩阵的酉极分解 $Z(\xi)=U_{1,\xi}B_\xi$、$W(\xi)=U_{2,\xi}B_\xi$；奇异值分解可在秩亏时补成方阵酉因子。取 $V_\xi=U_{2,\xi}U_{1,\xi}^*$ 得21.2，反向由酉性逐点计算。没有连续选择 $V_\xi$。
+
+连续函数演算给 $|Z|$；另一正 $B$ 若在纤维内，便有 $B^2=Z^*Z$，正平方根唯一性给 $B=|Z|$。其余值界与左右乘法式来自普通 C*恒等式。最后仅对已知 Gram 用
+
+$$
+\|Y^*Y-W^*W\|\le(\|Y\|+\|W\|)\|Y-W\|
+\tag{21.4}
+$$
+
+即可得闭包包含。∎
+

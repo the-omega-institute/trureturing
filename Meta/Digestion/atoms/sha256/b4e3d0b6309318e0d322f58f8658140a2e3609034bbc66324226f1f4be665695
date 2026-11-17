@@ -1,0 +1,40 @@
+### 27A.7 准确剩余域、成熟归属与完整来源边界
+
+对本节族写
+
+$$
+\begin{gathered}
+\mathcal P=\{(\varepsilon,\rho):\varepsilon>0,\ |\rho|\le\sqrt2/(2+\varepsilon^2)\},\\
+\mathcal D_{27A}=\{(\varepsilon,\rho):\varepsilon>0,\ \rho\ne0,
+\ 2697\varepsilon^2<1039\rho^2\}.
+\end{gathered}
+\tag{27A.38}
+$$
+
+全正 P2 区间是已付的 $\mathcal P$；新增的全 PB 排除域是 $\mathcal P\cap\mathcal D_{27A}$。$\rho=0$ 的充分性沿 §1 保留。本节证书在 $\mathcal P$ 内未处理的非零参数准确为
+
+$$
+\varepsilon>0,\qquad
+0<|\rho|\le\frac{\sqrt2}{2+\varepsilon^2},\qquad
+2697\varepsilon^2\ge1039\rho^2.
+\tag{27A.39}
+$$
+
+等号处本证书的 $F_0=0$，没有严格违反结论；它也没有全 PB 充分性结论。其他既有排除定理在其自身准确域中继续有效，不由 (27A.39) 重开。若 $\iota_\sigma$ 表示把参数映到 (27A.1) 同一取向输入的嵌入，则 §26 的整个有限类剩余集准确缩为
+
+$$
+\mathfrak R_{\sigma,27A}
+=\mathfrak R_\sigma\setminus\iota_\sigma(\mathcal P\cap\mathcal D_{27A}).
+\tag{27A.40}
+$$
+
+本节族中实际仍需判定的输入是
+$\mathfrak R_\sigma\cap\iota_\sigma(\mathcal P\setminus(\mathcal D_{27A}\cup\{\rho=0\}))$。
+这同时保留 §26 中其余平衡零模秩一、总耦合满行秩以及 Schur 平衡秩零输入的未决义务。没有得到整个 (25.2) 区间的“全 PB 当且仅当 $\rho=0$”，也没有给出任何非零残量成员对全部实际探针和全部正泛函的 PB 证书。若要后者，仍须在同一实现上覆盖任意原向量及全部原正密度；一份违反泛函不能承担该充分性量词。
+
+成熟归属沿用 §1 的未中心化正 Gram／Schwarz、§22 的原预算解释，以及 (17.14)–(17.15) 所引[运输卷 (9.28)–(9.30)](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md)。实面积、Young 上界、二阶 Gram、正密度谱分解、有限矩阵共轭和连续性都只是成熟工具，不单独计为新增定理。本节的 $\texttt{repo-derived}$ 贡献是 (27A.4) 的实际大探针与复读取、(27A.16) 的完整环境列、有限斜率的精确消去、(27A.25) 的负差额配方及 (27A.33) 的统一有限误差，由此取得超出 (24.1)–(25.1) 的实际排除域。不以检索未命中推断历史原创性，也不以中心化方差替换原未中心化预算。
+
+全部结论仅在原固定输出数学接口中成立。§6 的 (6.1)–(6.2)、定义 47.1 的同一递归全文、§§15、18、21、26 的来源身份及所有原量词完整保留：同一 $\Omega$ 的全部准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、钟与单位、控制、ready／flags、全记录、失败、停止、销毁和所有合法未来均不改变。原固定支持、全菜单和所有已量化中间切口义务不变。这里没有由向量生成实际准备，没有由矩阵综合生成原分析器或接受关联，也没有以旧 Born、CP、QC、密度／历史身份、操作逆或免费相干控制和复制补来源前件。
+
+七项原消费者——复 Hilbert 与实际叠加，Born／效果／全菜单，相关联合／张量，typed CP／Kraus／整台递归参考，完整仪器／更新，历史／真遗忘／Return，动力／物理钟／Hamiltonian／共同正作用量——仍只在 §6 的全部同源前件下消费。特别 CountRead 仍要求同一完整活动输出、实际读后活动 ready、第一合法消费者，以及读后同一完整活动输入对全部合法未来的真实 Return。已有固定来源、下降、参考、递归支持及原 $D$ 恢复结论继续按各自原范围保留；本节不将它们重列为缺失，也不从这个四维结果升级为任意有限环境、未知总 $D$、完整 $\mathsf H$ 或原完整量子起源结论。一般 $E_+^D=E_-^D$、$N_\omega(\varepsilon)^2\to0$ 及其未付原来源桥梁仍保持原未决范围。
+

@@ -1,0 +1,17 @@
+**命题 15.1（一般 CPTP 中的访问外反例）。** 令 $\ell=2j\ge2$。把 $R=\operatorname{Sym}^{\ell}(\mathbb C^2)$ 等距嵌入 $\operatorname{Sym}^{\ell-1}(\mathbb C^2)\otimes\mathbb C^2$，使 $|h\rangle^{\otimes\ell}$ 送到 $|h\rangle^{\otimes(\ell-1)}\otimes|h\rangle_K$。在前一因子施行 universal $(\ell-1)\to\ell$ cloning，保留 $K$。其对对称输入的 CPTP 公式为
+$$
+\mathcal C_{\ell-1\to\ell}(X)=\frac{\ell}{\ell+1}
+P_\ell(X\otimes I_2)P_\ell .
+\tag{15.1}
+$$
+归一化来自 $SU(2)$ 不变性：迹泛函在不可约输入上是迹的常数倍；对 $|0\rangle^{\otimes(\ell-1)}$，两项迹为 $1$ 和 $1/\ell$，乘以 $\ell/(\ell+1)$ 得一。对每个 $h$，输出为
+$$
+\Omega_h=\rho_h\otimes|h\rangle\langle h|_K,\quad
+\rho_h=\frac{\ell}{\ell+1}\tau_h+
+\frac1{\ell+1}|{\rm Dicke}_{\ell,1;h}\rangle
+\langle{\rm Dicke}_{\ell,1;h}|.
+\tag{15.2}
+$$
+Dicke 向量与 $\tau_h$ 正交，所以返回误差为 $1/(\ell+1)$，而 $K$ 的反向边缘距离为一。若仅凭约化 CPTP 性质套用 (14.2)，在 $\ell\ge64$ 时将得到错误的不等式
+$1\le(1+2\pi\sqrt\ell)/(\ell+1)<1$。该通道直接拆分并处理 $R$ 的自旋成分，且把其机器环境约化掉；它不是 (13.5) 的合法槽控制器，也不构成原始任务的反例。它只证明把实际等距定理无条件扩展到抽象 CPTP 的企图必然失败。
+

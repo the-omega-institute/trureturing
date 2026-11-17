@@ -363,10 +363,15 @@ def adopt(root):
     for artifact in sorted(candidates, key=lambda a: a["id"], reverse=True):
         with tempfile.TemporaryDirectory(prefix="lean-pr-preparation-") as temporary:
             directory = pathlib.Path(temporary)
-            download(repository, artifact["id"], directory / "artifact.zip")
-            with zipfile.ZipFile(directory / "artifact.zip") as archive:
+            artifact_zip = directory / "artifact.zip"
+            download(repository, artifact["id"], artifact_zip)
+            with zipfile.ZipFile(artifact_zip) as archive:
                 require(sorted(archive.namelist()) == ["native.tar.gz", "preparation.json"], "invalid preparation artifact members")
                 archive.extractall(directory)
+            # The native archive is the only input needed after validation.  Keep
+            # the downloaded zip from occupying another full cache-sized copy
+            # while the native payload is staged and unpacked.
+            artifact_zip.unlink()
             value = json.loads((directory / "preparation.json").read_text())
             validated = validate_preparation(root, value, context, artifact)
             if validated is None:

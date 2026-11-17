@@ -1,0 +1,66 @@
+**定理 116.9（实际交换—对径桥）。** 仅在原EB域，令 $c_p$ 为每个 $D_p$ 的唯一对称中心，
+定义实际关联及不依赖球图的球内对径
+
+$$
+\mathcal I=\{(p,q)\in P^2:q\in S(D_p)\},\qquad a_p(q)=2c_p-q,\qquad
+\sigma(p,q)=(q,p),\quad\tau(p,q)=(p,a_p(q)),\quad R=\sigma\circ\tau.
+\tag{IX116.14}
+$$
+
+$\sigma,\tau$ 是同一 $\mathcal I$ 上的无不动点对合；这里不输入中心连续性。对 $r=a_p(q)$ 有
+
+$$
+R^3(p,q)=(p,q)\ \Longleftrightarrow\ q\perp r,\qquad
+W(D_p)=1\ \Longleftrightarrow\ \exists q\in S(D_p):R^3(p,q)=(p,q),
+\tag{IX116.15}
+$$
+
+并且 $\mathrm{Pair}_{\perp}\Longleftrightarrow R^3=\operatorname{id}_{\mathcal I}$。
+满足全域恒等式时，两个原对合给Coxeter $A_2\cong S_3$ 在原关联上的真实作用；
+各轨道恰为同一原三元组 $\{p,q,r\}$ 的六种有序边，作用在各六点轨道上自由。
+若存在重复球对 $F,G$，对 $p\in S(G),q\in S(F)$，令 $\bar p=2c_G-p,\bar q=2c_F-q$，则
+
+$$
+(p,q)\xrightarrow{R}(\bar q,p)\xrightarrow{R}(\bar p,\bar q)
+\xrightarrow{R}(q,\bar p)\xrightarrow{R}(p,q)
+\tag{IX116.16}
+$$
+
+是严格四周期。此块上的 $\sigma,\tau$ 整轨道有八条有序跨边，给Coxeter $B_2$ 的二面体八元作用。
+这是重复块的必要几何，不是已构造的 $\mathrm{EB}_{\ge2}$ 反例，也未把全部坏边分类为四周期。
+
+证明。零对称及球边纯性使 $\sigma,\tau$ 都保留原关联；交换平方和中心反射平方均为恒等。
+$p\notin D_p$ 给 $p\ne q,r$，非退化球的对径给 $q\ne r$，也排除两个对合的不动点。
+若同一完整球内两纯点被某原效应读成一、零，该效应的限制是非恒定球上仿射函数，
+必在唯一对径达到这两个极值。因此球内原可区分纯对必为对径，此步不需Pair。
+写 $R(p,q)=(r,p)$、$s=a_r(p)$，则 $R^2(p,q)=(s,r)$、$R^3(p,q)=(a_s(r),s)$。
+若回到原对，必 $s=q$，于是 $q\in D_r$，即 $q\perp r$。
+反之，若 $q\perp r$，则 $p,q\in S(D_r)$，且原 $p\perp q$ 的同一效应在二者取一、零，
+故 $a_r(p)=q$；同理 $r,p\in S(D_q)$ 被原 $p\perp r$ 的效应区分，故 $a_q(r)=p$。
+于是三轮回归。116.4的宽度刻画及此等价，逐个首投影纤维给(IX116.15)第二式。
+
+全域三轮闭合给每条 $p\perp q$ 的 $r\in D_p\cap D_q$，(IX116.3)给 $\mathrm{Pair}_{\perp}$；
+反向直接消费VII104.2的全部原对径满刻度，再用第一式。若某条边已有共同第三点 $t$，
+取 $e_q\in\mathcal A_q$，其在 $D_p$ 内于 $q,t$ 取一、零，便迫 $t=r$；因此三轮取出的正是原唯一第三点。
+此时 $\sigma^2=\tau^2=(\sigma\tau)^3=1$ 是成熟 $S_3$ 呈现，且实际轨道为
+$(p,q),(r,p),(q,r)$ 及其反向三边。三纯点两两不同使这六对不同，故稳定子平凡。
+重复块则由116.2给 $D_p=F,D_q=G$，所有迭代的对径只取相应球的中心反射，直接得(IX116.16)。
+$F,G$ 不交且各对径两端不同，四周期不能缩短；再加交换得到
+$\{p,\bar p\}\times\{q,\bar q\}$ 及其反向，共八对，且没有外部边。
+在此八点集合上 $\sigma^2=\tau^2=(\sigma\tau)^4=1$，实际八点轨道给标准二面体八元群的自由作用。
+
+在额外EB3加PR的分支，直接复用IX114.5—114.8，而不重新证明共同刻度与正提升预算。
+若 $F=D_p$、$q=b_F(v)$、$r=b_F(-v)$，则
+
+$$
+T_q(r)=1-2a_F,\qquad \beta_F=(2a_F)^{-1},\qquad
+R^3(p,q)=(p,q)\ \Longleftrightarrow\ a_F=\tfrac12\ \Longleftrightarrow\ \beta_F=1.
+\tag{IX116.17}
+$$
+
+因此 $\operatorname{Fix}(R^3)$ 与首纤维 $\{p\}\times S(D_p)$ 的交，恰为整条纤维或空集；
+前者对应 $\beta_F=1$，后者对应 $\beta_F>1$。116.4给
+$W(F)=1$ 当且仅当存在一对原可区分对径，所以在此PR分支还恰等价于 $\beta_F=1$。
+这直接连接原R循环与IX114的刻度、预算，不把PR当作EB的后果。
+以下116.10—116.17将不使用PR，另从全三球加每球一条满刻度直径得到全域三轮闭合。证毕。
+

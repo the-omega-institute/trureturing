@@ -1,0 +1,10 @@
+**引理 491.4（移动差的转移）。** 令 $\phi(x)=x+sx^a$，$I\subset[X,2X]$。对放大区间上的 $u\in L^2$ 与 $v\in C^1$，
+
+$$
+\Bigl|\int_I\bigl[u(\phi(x))-u(x)\bigr]v(x)\,dx\Bigr|\ll h\|u\|_2\|v'\|_2+\frac hX\|u\|_2\|v\|_2+\|v\|_\infty\int_{J}|u| ,
+$$
+
+其中 $J$ 是总长 $O(h)$ 的端点条；末项至多 $Ch\|u\|_\infty\|v\|_\infty$，也至多 $C\sqrt h\|u\|_2\|v\|_\infty$。又对 $u\in C^1$，$\|u\circ\phi-u\|_2\ll h\|u'\|_2$；对长映射 $\psi(x)=x+tx^b$（$1\le\psi'\le2$），$\|u\circ\psi-u\|_2\ll\|u\|_2$、$\|(u\circ\psi-u)'\|_2\ll\|u'\|_2$。
+
+证明。对第一项作换元 $y=\phi(x)$。在 $I\cap\phi(I)$ 上令 $\xi=\phi^{-1}$、$q=\xi'$，被积函数之差为 $u(y)\bigl\{v(\xi(y))-v(y)+(q(y)-1)v(\xi(y))\bigr\}$，其中 $0\le y-\xi(y)\ll h$、$|q-1|\ll h/X$，且 $|v(\xi(y))-v(y)|\le\int_{y-Ch}^y|v'|$；由 Fubini 与 Cauchy–Schwarz，后者的 $L^2$ 范数至多 $Ch\|v'\|_2$。$I\triangle\phi(I)$ 的测度为 $O(h)$，给出端点项。其余估计直接由同样的换元得到。证毕。
+

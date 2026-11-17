@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Interval correlation estimates control the formal cubic and fourth moment values. -/
+   digest: Interval correlation estimates control the formal second, cubic and fourth moment values. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SignedCubeMomentModel
 
@@ -490,6 +490,53 @@ private lemma second_approx (SS : Finset ℕ → ℝ) (M H L s C : ℝ)
       grw [abs_sub, abs_add_le, abs_mul, abs_mul, hc', hb,
         hcount, abs_of_nonneg hH0, abs_of_nonneg hsigma.1, hsigma.2]
     _ ≤ _ := by nlinarith
+
+/-- The quadratic formal value has the variance size uniformly on the length band. -/
+theorem formal_interval_second_bound (SS : Finset ℕ → ℝ) (α β M : ℝ)
+    (hα : 0 < α) (hβ : β < 1) (hSS : SS ∅ = 1)
+    (hSS1 : ∀ d, SS {d} = 1) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
+      ∀ H s : ℝ, N ^ α ≤ H → H ≤ N ^ β →
+      Real.log N ≤ s → s ≤ Real.log N + Real.log 2 →
+      ∀ a b : ℝ, 0 ≤ a → a ≤ b → b ≤ M →
+        |Phi SS H s (fun _ : Fin 2 => a) (fun _ => b)| ≤ C * H * Real.log N := by
+  obtain ⟨C, hC, hc, _⟩ := hcor M hM
+  refine ⟨C + 3 * M + 6, by positivity, ?_⟩
+  filter_upwards [scalar_bounds α β hα hβ] with N hN H s hlo hhi hslo hshi a b ha hab hb
+  obtain ⟨hH, hL, hlogH, _, hsb, _, hLH⟩ := hN H s hlo hhi hslo hshi
+  have hH1 : 1 ≤ H := by linarith
+  have hH0 : 0 ≤ H := by linarith
+  have hs : s ≠ 0 := by linarith
+  have hlogH0 : 0 ≤ Real.log H := Real.log_nonneg hH1
+  have hlog2 : Real.log 2 ≤ 1 := (Real.log_le_sub_one_of_pos (by norm_num)).trans (by norm_num)
+  have hsd : |s - Real.log H| ≤ 2 * Real.log N := by
+    rw [abs_le]; constructor <;> linarith
+  have hsig := sigma_bound (d := b) (by linarith : 0 ≤ M) ha hb ha
+  have heq : (fun i : Fin 2 => intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b) =
+      ![intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b,
+        intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b] := by
+    funext i; fin_cases i <;> rfl
+  change (fun (_ : Fin 2) (d : Finset.Iic ⌊M*H⌋₊) =>
+    if d.val ∈ points H a b then (1 : ℝ) else 0) = _ at heq
+  rw [Phi_eq_formalMoment SS H s _ _ _
+    (fun _ => interval_points_subset hH0 hb), heq]
+  have he := second_approx SS M H (Real.log N) s C hs hSS hSS1 hM hH1 hL hLH hsb
+    (hc H hH1) a b a b ha hab hb ha hab hb
+  have hmain : |H * (s - Real.log H) * sigma a b a b| ≤ 2 * M * H * Real.log N := by
+    rw [abs_mul, abs_mul, abs_of_nonneg hH0, abs_of_nonneg hsig.1]
+    calc
+      _ ≤ H * (2 * Real.log N) * M :=
+        mul_le_mul (mul_le_mul_of_nonneg_left hsd hH0) hsig.2 hsig.1 (by positivity)
+      _ = _ := by ring
+  have ht := abs_sub_le
+    (formalMoment (fun J : Finset (Finset.Iic ⌊M*H⌋₊) => SS (J.image Subtype.val)) s
+      ![intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b,
+        intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b])
+    (H * (s - Real.log H) * sigma a b a b) 0
+  simp only [sub_zero] at ht
+  have hrem : (C + M + 6) * H ≤ (C + M + 6) * H * Real.log N :=
+    le_mul_of_one_le_right (by positivity) hL
+  nlinarith
 
 private lemma pairing_approx (SS : Finset ℕ → ℝ) (M H L s C : ℝ)
     (hs : s ≠ 0) (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ccdb66752e141eadbe8fa3c9590f5774aace97d17594d3fe271ae7a5975759e4
+  normalized_sha256: sha256:ccdb66752e141eadbe8fa3c9590f5774aace97d17594d3fe271ae7a5975759e4
+cas_ref: sha256:ccdb66752e141eadbe8fa3c9590f5774aace97d17594d3fe271ae7a5975759e4
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.fixed_length_profile_mean_square_tendsto
+    target_statement_id: sha256:d187ea1297a4eb5c274d9461b137f70f42a39999abc757c9e4dc0f71b22487c8
+receipts:
+  unresolved_subitems: []

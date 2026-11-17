@@ -1,0 +1,40 @@
+### 18.3 维数无关的反全纯导数界
+
+选任一固定正交 qubit 基底，在对应球极投影坐标上写
+
+$$
+\begin{aligned}
+v(z)&=(1+|z|^2)^{-m/2}(|0\rangle+z|1\rangle)^{\otimes m},\\
+F(z)&=(\langle v(z)|\otimes I_K)U(v(z)\otimes I_P),
+\qquad A(z)=F(z)\sigma.
+\end{aligned}
+\tag{18.13}
+$$
+
+由收缩性及 $\|\sigma\|_1=1$，$\|A(z)\|_1\le1$。采用
+$\partial_{\bar z}=(\partial_x+i\partial_y)/2$，令
+$t(z)=(I-\tau_z)\partial_zv(z)$。归一张量幂的微分给
+
+$$
+\partial_{\bar z}v(z)=-\frac{mz}{2(1+|z|^2)}v(z),
+\qquad \|t(z)\|=\frac{\sqrt m}{1+|z|^2}.
+\tag{18.14}
+$$
+
+在 $F$ 的微分中，bra 与 ket 的平行项相消，留下的正交 bra 恰给
+
+$$
+\partial_{\bar z}F(z)=(\langle t(z)|\otimes I_K)B_z.
+$$
+
+于是 (18.10) 给出
+
+$$
+\|\partial_{\bar z}A(z)\|_1
+\le\frac{2\delta\sqrt m}{1+|z|^2}
+\le2\delta\sqrt m.
+\tag{18.15}
+$$
+
+这些是每个有限坐标圆盘上的光滑有限维矩阵值符号。固定基底的选择只改变证明坐标，不是在实现中旋转参考，也不要求 $U$ 协变。
+

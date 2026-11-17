@@ -1,0 +1,9 @@
+**定义 63.1（来源、记号与承重范围）。** 下列缩写只用于指明数学来源；SM 指本卷。
+
+| 缩写 | 准确来源及采用的接口 |
+| --- | --- |
+| OP | [《原多项式零响应与 Cayley 原域边界》](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)，3.1 的原多项式零值、80.1–80.2 的全部实际二阶角、82.1 的同块共同符号、83.1 的秩一小连接原像行、84–85 的已付与未付商接口。 |
+| SM | 本卷 50–54 的完整原候选、实际多项式两射线网络、共同余量方程及半定消费者；43.2、49.1、61.1 的全部来源合同。55–62 的原窗识别保留实际原框架、原投影和分离条件。 |
+| PB | [《配平三角的共同取向与秩一响应续卷》](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)，128.1–128.2 的全原关系、129.1 的数学正读取、142.1–143.1 的完整有限原域识别、240–241 的有限商与实际原像接口。 |
+| C | [《中央响应平方与径向一致续卷》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)，199.2、194.2、186.1–186.7 的七项同源合同及其全部上游对象、条件、来源与量词。 |
+| PT | [《原多项式 PB 输运与纤维边界续卷》](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md)，118–122 的实际框架入口、原响应运输与完整来源边界，以及 126–133 的有限读取和虚拟反射边界。 |

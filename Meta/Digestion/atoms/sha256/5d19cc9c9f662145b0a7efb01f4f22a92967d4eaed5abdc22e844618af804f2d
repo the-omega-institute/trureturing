@@ -1,0 +1,13 @@
+**定义 1.4（环境支撑接口的范围）。** 固定 Git 源 `c19795170b8` 的 [PBIdempotentSupport][PIS] 与 [JBAmbientSupport][JAS] 给实际原幂等角的如下接口：在同一准确锥与全部原有向二表正性下，若 $p\circ p=p$，$p\circ a=a$、$p\circ b=b$，则
+
+$$
+\|a\|\|b\|p\pm D(a,b)\in C,\qquad
+p\circ D(a,b)=D(a,b).
+\tag{1.3}
+$$
+
+后一个接口中的正性是同一完整 JB 环境内的实际平方；其平方根只须在该环境，不须在一般稠密原域。环境支撑结论由 $cp\pm x$ 为环境平方推出 $p\circ x=x$；反向的支持范数界和角平方界亦在同一环境。这里支撑接口中的完整 JB 环境可取 $M_{\rm sa}$（不与本卷底空间 $X$ 混名），故环境成员资格没有缺失。这些接口不供应一般商响应、商角读取正性或物理准备。第3章的数学正读取由准确锥直接给出，第4章的全实际代表行另消费 OP，二者均不从角支撑偷换出来。
+
+[PIS]: https://github.com/the-omega-institute/trureturing/blob/c19795170b8/Blueprint/D5/S3/Quantum/Algebra/PBIdempotentSupport.md
+[JAS]: https://github.com/the-omega-institute/trureturing/blob/c19795170b8/Blueprint/D5/S3/Topology/JBAmbientSupport.md
+

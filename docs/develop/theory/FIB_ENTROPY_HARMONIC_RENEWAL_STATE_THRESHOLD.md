@@ -1070,3 +1070,110 @@ The lower theorem permits unrestricted immutable precision. The separate upper u
 The all-integer envelope, moment orders, geometric-separation and optional upper certificates retain their explicit handwritten source boundaries. The ordinary proofs here certify no generating instrument or nested external reference, carry no Lean kernel verification and establish no external novelty claim. Auxiliary laws, completed-gap indices, source lengths, future coins and post-stop analytical ticks are proof variables only, with no operational extra access. The lower argument prices occupation by actual conditional next-bit hazards, while the particular supplied upper prices its own completed gaps by predictable inclusion. Keeping those two payment arguments distinct is essential to both claims.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Conditional raw-execution deductions for the live-epoch argument
+
+The following auxiliaries separate the pathwise mechanism in Section 6 from the source and observer realization needed in Sections 2 and 3. They allow arbitrary natural zero counts and, for probability statements, a countable measurable state space. Their hypotheses do not assert that the original two stationary sources and one common compliant observer have already been realized by these data.
+
+For arbitrary types $S,R$, a terminal set $L\subseteq S$, an update $F:S\times\{0,1\}\times R\to S$, an initial state $z$, a coin sequence $r:\mathbb N\to R$, a wait $u\in\mathbb N$, and gaps $v:\mathbb N\to\mathbb N$, define
+
+$$
+\begin{aligned}
+c_0&=u+1,&c_{n+1}&=c_n+v_n+1,\\
+X_t&=\mathbf1_{\{\exists n\le t:\ c_n=t+1\}},&Z_0&=z,\\
+Z_{t+1}&=E(Z_t,X_t,r_t),&Y_n&=Z_{c_n},\\
+E(s,b,r)&=\begin{cases}s,&s\in L,\\F(s,b,r),&s\notin L,\end{cases}
+&Q(T)&=\sum_{t<T}X_t.
+\end{aligned}
+\tag{17.1}
+$$
+
+Thus the update receives only the current state, current bit and current coin. The clock is an analytical sampling index, and $Q(T)$ counts exactly already read ticks. Write $\operatorname{hit}_L(H)$ for the least $t\in\mathbb N$ with $H_t\in L$, with value $\mathrm{none}$ if no such $t$ exists; a finite value is written $\mathrm{some}(t)$.
+
+**Lemma 17.1 (Raw stopping correspondence).** For every choice of the types and data in (17.1), for every $T$ with $\operatorname{hit}_L(Z)=\mathrm{some}(T)$ there exists $N$ such that
+
+$$
+\begin{gathered}
+\operatorname{hit}_L(Y)=\mathrm{some}(N),\qquad Y_N=Z_T,\qquad T\le c_N,\\
+\forall n<N:\ c_n<T,\qquad N\le Q(T),\qquad Q(T)\le T,\\
+N=0\ \Longleftrightarrow\ T\le u+1.
+\end{gathered}
+\tag{17.2}
+$$
+
+Moreover $\operatorname{hit}_L(Z)=\mathrm{none}$ if and only if $\operatorname{hit}_L(Y)=\mathrm{none}$. No probability law or eventual stopping is assumed.
+
+Proof. Induction on $t-T$ shows that $Z_t=Z_T$ for every $t\ge T$ once $Z_T\in L$. Since $c_n\ge n+1$, choose the least $N$ with $T\le c_N$. Absorption and first-hit minimality give the first four conclusions. For each $n<N$, the position $c_n-1<T$ is an actual tick; strict increase of $c_n$ makes these positions distinct. They inject into the ticks counted by $Q(T)$, whose positions are contained in $\{0,\ldots,T-1\}$. The endpoint equivalence follows from $c_0=u+1$. A terminal epoch is a terminal raw state, while a finite raw hit supplies a terminal epoch by this construction, proving the nontermination equivalence. $\square$
+
+For the probability auxiliaries, the following deterministic-coordinate rectangle condition will be denoted $\mathcal R(P,I,\tau,K,\xi,\eta,w,f,\rho)$. Let $\Omega,S,R$ have measurable spaces; $P$ is a measure on $\Omega$, $I:\Omega\to S$, $\tau:\Omega\to\mathbb N$, $K:\Omega\to\mathbb N^{\mathbb N}$ and $\xi:\Omega\to R^{\mathbb N}$ are maps, $\eta$ is a probability mass function on $S$, $w,f$ are probability mass functions on $\mathbb N$, and $\rho$ is a probability measure on $R$. For $a=(u,v)\in\mathbb N\times\mathbb N^{\{0,\ldots,n-1\}}$, put
+
+$$
+\begin{aligned}
+H_{n,a}&=\{\omega:\tau(\omega)=u,\ K_j(\omega)=v_j\text{ for every }j<n\},\\
+R_l(\omega)&=(I(\omega),(\xi_j(\omega))_{j<l}),\\
+B_{l,r}(\omega)&=(\xi_{l+j}(\omega))_{j<r}.
+\end{aligned}
+\tag{17.3}
+$$
+
+Here $\eta$ also denotes its induced measure when used in a product measure. The condition $\mathcal R$ is the following equality for every $n,l,r\in\mathbb N$, every $a=(u,v)$ of that finite type, and all measurable $D\subseteq S\times R^{\{0,\ldots,l-1\}}$ and $B\subseteq R^{\{0,\ldots,r-1\}}$:
+
+$$
+P\bigl(H_{n,a}\cap R_l^{-1}(D)\cap B_{l,r}^{-1}(B)\bigr)
+=w(u)\left(\prod_{j<n}f(v_j)\right)
+  (\eta\otimes\rho^{\otimes l})(D)\,\rho^{\otimes r}(B).
+\tag{17.4}
+$$
+
+Both coin intervals have deterministic offset and length. In particular (17.4) contains no epoch transition or random-cut law as a premise. Empty tuples and zero lengths have their usual one-point product measure and empty product one. All measure equalities below take values in $[0,\infty]$.
+
+For rows $A,C:S\to\operatorname{PMF}(S)$ define $A^{[0]}(s)=\delta_s$ and $A^{[k+1]}(s)=A^{[k]}(s)\mathbin{\mathrm{bind}}A$, and put
+
+$$
+J_k(s)=A^{[k]}(s)\mathbin{\mathrm{bind}}C,
+\qquad
+\nu=w\mathbin{\mathrm{bind}}\left(u\mapsto
+       \eta\mathbin{\mathrm{bind}}(s\mapsto J_u(s))\right).
+\tag{17.5}
+$$
+
+For each $\omega$, use the literal run (17.1) with $(z,r,u,v)=(I(\omega),\xi(\omega),\tau(\omega),K(\omega))$, and denote its sampled states by $Y_n(\omega)$.
+
+**Lemma 17.2 (Conditional actual initial law).** Let $\Omega,S,R$ be measurable spaces, with $S$ countable and all its singletons measurable. Let $L\subseteq S$ and $F:S\times\{0,1\}\times R\to S$ be arbitrary, and form the effective absorbing update $E$ in (17.1). Let $P$ be a measure on $\Omega$, $\eta\in\operatorname{PMF}(S)$, $w,f\in\operatorname{PMF}(\mathbb N)$, $\rho$ a probability measure on $R$, and $A,C:S\to\operatorname{PMF}(S)$. Suppose $I,\tau$ and each $\xi_j$ are measurable, and for each bit $b$ the map $(s,r)\mapsto E(s,b,r)$ is measurable and, for every $s$,
+
+$$
+(E(s,b,\cdot))_*\rho
+=\begin{cases}C(s),&b=1,\\A(s),&b=0,\end{cases}
+\tag{17.6}
+$$
+
+where the right side is the induced measure. Assume the complete rectangle condition $\mathcal R(P,I,\tau,K,\xi,\eta,w,f,\rho)$ of (17.3)–(17.4). Then for every measurable $B\subseteq S$,
+
+$$
+P\{\omega:Y_0(\omega)\in B\}=\nu(B),
+\tag{17.7}
+$$
+
+with exactly the first-wait mixture $\nu$ in (17.5). No measurability of $K_j$ or separate probability-measure hypothesis on $P$ is required for this assertion.
+
+Proof. Induction over the actual zero updates identifies $Y_0$ with the word of $\tau$ zeros and its closing tick, using the first $\tau+1$ raw coins. For fixed $u$, split the last coin of the product measure and integrate (17.6); induction on $u$ gives $J_u(s)$ from initial state $s$, and integration against $\eta$ gives $\eta\mathbin{\mathrm{bind}}J_u$. Apply (17.4) with $n=0$, $l=u+1$, $r=0$ and the measurable word preimage of $B$. Summing the disjoint slices $\{\tau=u\}$ gives (17.7). This argument also applies to $u=0$ and to an initially terminal state. $\square$
+
+**Lemma 17.3 (Conditional actual source cylinders).** Let $\Omega,S,R$ be measurable spaces, $S$ countable with measurable singletons, $L\subseteq S$, and $F:S\times\{0,1\}\times R\to S$. Let $P$ be a measure, $\eta\in\operatorname{PMF}(S)$, $w,f\in\operatorname{PMF}(\mathbb N)$, $\rho$ a probability measure on $R$, and $A,C:S\to\operatorname{PMF}(S)$. Assume that $I,\tau$, every $K_j$ and every $\xi_j$ are measurable, that each effective map $(s,r)\mapsto E(s,b,r)$ is measurable, that its one-read pushforward has exactly the row (17.6) for every $s,b$, and that the full deterministic-coordinate condition $\mathcal R(P,I,\tau,K,\xi,\eta,w,f,\rho)$ holds. With the literal actual run and $J_k$ defined above, for every $n\in\mathbb N$, $a=(u,v)\in\mathbb N\times\mathbb N^{\{0,\ldots,n-1\}}$ and $x:\{0,\ldots,n\}\to S$,
+
+$$
+\begin{aligned}
+P\{\omega:\ &\tau(\omega)=u,\ K_j(\omega)=v_j\ (j<n),\\
+             &Y_j(\omega)=x_j\ (0\le j\le n)\}\\
+&=w(u)\,(\eta\mathbin{\mathrm{bind}}J_u)(x_0)
+       \prod_{j<n}\bigl(f(v_j)J_{v_j}(x_j)(x_{j+1})\bigr).
+\end{aligned}
+\tag{17.8}
+$$
+
+The probabilities of individual states on the right are PMF masses. The case $n=0$ retains the first-wait factor and the empty gap tuple. No positivity of these masses, eventual stopping, finite moment, or separate probability-measure hypothesis on $P$ is imposed.
+
+Proof. On $H_{n,a}$ the clock is the fixed cut $u+1+\sum_{j<n}(v_j+1)$. Induction through the actual words reconstructs all $Y_0,\ldots,Y_n$ from $I$ and coins strictly before that cut. Thus a measurable event of the source tuple and actual state history is a measurable raw-prefix event on each source slice, without the next gap $K_n$ or any next coin. Applying (17.4) to fixed deterministic intervals and then summing the countable source slices gives the next-gap factor $f(k)$ times the law $J_k(s)$ on any such event fixing $Y_n=s$. At $n=0$, integrate the initial word as in the preceding proof while retaining $\{\tau=u\}$. For the successor, split the cylinder into its shorter actual cylinder, its next gap and its next state, apply the fixed-gap identity, and use induction. Empty zero words, zero row entries and null histories require no division and remain included. $\square$
+
+These are `repo-derived` auxiliary deductions from the operational definitions of Sections 3 and 6, finite product integration and countable additivity, with no external novelty claim. The abstract countable-state probability assertions require precisely the displayed rectangle and effective-row hypotheses. Specializing them to the original $q$-dependent $f_i,w_i$ and the same two-label compliant observer requires the original source normalization, common-observer and joint-realization bridges. They assert no complete-state budget realization, finite occupation or paid mean, predictable-payment estimate, matrix/series transport, or entropy-harmonic E4 conclusion.
+
+## 追加锚（本行以下为增补区）

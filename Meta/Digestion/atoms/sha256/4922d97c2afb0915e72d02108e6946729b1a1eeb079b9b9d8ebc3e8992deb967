@@ -1,0 +1,39 @@
+**开放问题 110.7（尚缺的路径常值与二阶拼合）。** VII106.11在同一原W域给
+
+$$
+\mathrm G\ \Longleftrightarrow\ \tau\text{ 线性}
+\ \Longleftrightarrow\ \mathrm{J1}.
+\tag{VIII110.17}
+$$
+
+因此110.6把可能的G失败定位到一个道路分支中的真正连续纯路径，
+但110.2—110.6没有证明 $U$ 沿这样的路径常值，也没有证明
+$\tau(f+g)=\tau(f)+\tau(g)$ 对全部 $f,g\in V^*$ 成立。
+原 $\mathsf W\Rightarrow\mathrm G$ 仍未在这里证明或反驳。
+即使另得G，VII106.15的 $\mathsf W+\mathrm G\Rightarrow\mathrm{JET2}$
+仍要求跨方向的共同二次形；本章未由ENR、同调对偶或局部连通性取得它。
+也未推出TCov、常球维数、局部平凡球丛、全局兼容内积或完整PL3。
+
+110.2—110.6是原W几何与标准拓扑的 `repo-derived` 连接；
+Hatcher的邻域收缩与Alexander对偶只在各证明所列参数和假设内使用。
+其他成熟重构结果保持其全部条件：
+Alfsen—Shultz [*State spaces of Jordan algebras*, Corollary 7.5及Theorem 7.2的(i)、(iii)][Q110AS]
+要求Hilbert ball property与每个norm-exposed face的projectivity。
+VII105.5已经供应原数学projectivity，但Hilbert ball property量化任意二纯点的面；
+本章的整个排除球与ENR结论不替代这一量词，不能据此直接调用该分类。
+Müller—Ududec [Theorem 1][Q110MU]的bit symmetry、
+Barnum—Hilgert [Theorem 1.1][Q110BH]的spectrality与strong symmetry，
+以及Niestegge [Theorem 3][Q110N]中包括对称transition probability的全部前件，
+均没有因原纯点成为ENR而自动成立。这些成熟结论不是本章新增的重构定理。
+
+107的无G全线段三角形与108的切方向互斥、维数和低维分类直接保留；
+本章不重证这些结论，也不从其必要条件倒推一般厚球分类。
+[全有限层级VII][Q107Hierarchy]102.1、103.1及104.11—104.13的原强分块域、
+具名低二份供应与rank-two $\mathsf{Fusion}_L$ 合同独立保留：
+二维角寄存器成果不因这里的单载体收缩而供应 $L>2$ 的原融合态。
+指定复合、同事件CP、实际仪器与记录、共同来源、历史和原物理钟／单位仍按各自原合同使用。
+已经从明确动态或时钟前提得到的条件定理继续按那些前提成立；
+这里的辅助道路参数既不提供物理速度，也不识别某个原物理时间作用。
+[OTF-001][Q110OTF]的G/M/S/R/C/J/I明确模型按自身条件评价，
+不把无前提宇宙唯一性添作其数学结论的前件。
+

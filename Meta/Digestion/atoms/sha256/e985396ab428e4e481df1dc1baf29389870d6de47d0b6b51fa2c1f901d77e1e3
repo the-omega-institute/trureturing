@@ -1,0 +1,14 @@
+**推论 9.3（忠实数学表示与全部原质量）。** 同一 $\mathcal A_Q$ 存在忠实含单位保锥等距表示 $\Pi:\mathcal A_Q\to B(H)$，并可为每个原评价选读数向量 $\xi_\gamma$，满足
+
+$$
+\begin{gathered}
+\Pi(D(a,b))=\frac i2[\Pi(a),\Pi(b)],\qquad
+\Pi(a\circ b)=\frac{\Pi(a)\Pi(b)+\Pi(b)\Pi(a)}2,\\
+\gamma(a)=\langle\xi_\gamma,\Pi(a)\xi_\gamma\rangle,
+\qquad \|\xi_\gamma\|^2=m_\gamma.
+\end{gathered}
+\tag{9.5}
+$$
+
+证明。取全部数学态的 GNS 直和使表示忠实，再加入原正质量评价的归一 GNS 分量并将循环向量乘 $\sqrt{m_\gamma}$；零质量取零向量。星同态与式(8.5)给所列乘法式。这是 AQ8.1的成熟表示接口在本模型的应用。它不强迫表示像等于全 $B(H)$，不改原 native，也不给一般非原子中心上的原评价有限密度矩阵或正常性。∎
+

@@ -1,0 +1,41 @@
+**定理 118.15（紧层、上半连续与正最大值）。** 在 $\mathrm{EB}_{\ge1}+\mathrm{Inj}$ 下，对每个 $\varepsilon>0$，
+
+$$
+P_\varepsilon=\{p\in P:W(D_p)\ge\varepsilon\}
+\tag{IX118.26}
+$$
+
+是 $K$ 中紧集，且
+
+$$
+P=\bigcup_{n\ge1}P_{1/n},\qquad
+M:=\sup_{p\in P}W(D_p)=\max_{p\in P}W(D_p)>0.
+\tag{IX118.27}
+$$
+
+$W(D_p)$ 在 $P$ 的相对拓扑上上半连续。
+若 $p_j\to x\notin P$，则 $W(D_{p_j})\to0$，并且 $\operatorname{diam}D_{p_j}\to0$。
+
+证明。设 $p_j\in P_\varepsilon,p_j\to x\in K$。
+选 $b_j,y_j,z_j,e_j$ 如上，使
+$b_j(y_j)-b_j(z_j)=W(D_{p_j})\ge\varepsilon$。
+取共同子列后 $b(y)-b(z)\ge\varepsilon$，故 $y\ne z$；同一极限 $e$ 确认 $x$ 并零于 $y,z$。
+$x$ 的纯分解中所有 $D_{s_i}$ 共同包含 $y,z$，因此相同；Inj迫使 $x=p$ 纯。
+$y,z\in D_p$，于是 $W(D_p)\ge b(y)-b(z)\ge\varepsilon$。
+这证明 $P_\varepsilon$ 在 $K$ 中闭而紧。
+
+若一开始 $p_j\to p\in P$，只须取实现宽度上极限的子列，以上紧性与闭零关联就给
+
+$$
+\limsup_jW(D_{p_j})\le W(D_p).
+\tag{IX118.28}
+$$
+
+这一步本身甚至不需Inj。每球宽度正给可数紧层覆盖。
+$M>0$；取宽度趋 $M$ 的极大化序列，尾项位于紧层 $P_{M/2}$，其子列极限是纯点。
+(IX118.28)使该点的宽度至少 $M$，故达到全局最大值。
+
+若混标签聚点仍有一条子列宽度至少 $\varepsilon>0$，该子列位于紧 $P_\varepsilon$，矛盾。
+若其球直径不趋零，取两点距离统一正的子列与共同零效应；同一有限纯分解和Inj论证会迫使聚点纯，仍矛盾。
+这证明最后两项；没有把宽度趋零当作一个未经证明的直径估计。证毕。
+

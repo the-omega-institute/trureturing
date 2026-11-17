@@ -20,10 +20,9 @@ open private source_certificate literalCut
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SourceCertificate
 open private word banks banks_inventory
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.Banks
-open private size seed sourceMod base oldValue newValue
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open private seed sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base oldValue newValue)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private zero_period_transport

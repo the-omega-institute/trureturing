@@ -1,0 +1,41 @@
+**Definition 10.1 (one-gap coefficient and reference names).** Retain the source of Definition 9.1 and write
+
+$$
+\beta_d=\int_G \operatorname{TV}\bigl(P_d(x,\cdot),m\bigr)\,m(dx),
+\qquad P_d=T_d,
+\tag{10.1}
+$$
+
+where event-TV is normalized as
+$\operatorname{TV}(\nu,\nu')=\sup_A|\nu(A)-\nu'(A)|$, equivalently one half of the $L^1$ distance when both measures have densities. This is a source property, not a new label query.
+
+Use the full-domain scaling of [OWGR, Theorem 5.2, (5.2)--(5.3)], in the invariant-time form of [FEA, Theorem 2.1], to identify the actual source with the coefficient-one reference source at
+
+$$
+\tau=\frac{a^2d}{\eta}.
+\tag{10.2}
+$$
+
+Reference quantities carry a superscript ${\rm ref}$: $m_{\rm ref}$, $T^{\rm ref}_t$, $P^{\rm ref}_t=T^{\rm ref}_t$, the contact defect $d^{\rm ref}_r$ of [DPCR, Definition 9.1], the normalized zero state $h_{\rm ref}$, and the raw source density
+
+$$
+v^{\rm ref}_t=h_{\rm ref}g^{\rm ref}_t .
+\tag{10.3}
+$$
+
+The same scaling transports the complete endpoint, form, source trace, clock and invariant measure. In particular the row-TV integral (10.1) equals the reference row-TV integral at time $\tau$. Let $0<l\le\tau$ be an earned rational lower clock bound. A fixed-reference computation is allowed to return rational numbers $A^-$ and $s^+$ satisfying
+
+$$
+0<A^-\le d^{\rm ref}_{2/l},
+\qquad
+s^+\ge\bigl\|v^{\rm ref}_{l/2}-h_{\rm ref}\bigr\|_{L^2(\mu_{\rm ref})}.
+\tag{10.4}
+$$
+
+The calls producing (10.4) use only the known reference coefficients $(1,1)$, the global raw $L^2$ names and the positive rational time $l/2$ supplied by [DPCR, Theorems 11.4, 12.3 and 12.4]. They do not query the unknown actual $a,\eta,d$. Define the generated guard
+
+$$
+b^+(A^-,s^+)=2(1-A^-)+\frac{s^+}{2}.
+\tag{10.5}
+$$
+

@@ -1,0 +1,25 @@
+### 34.2 有理内点
+
+取定理 34.1 的固定有理数据
+
+$$
+a=1,\quad b=2,\quad v=1,\quad r=\tfrac12,\qquad
+c_0=\operatorname{diag}(1,2),\quad
+t_0=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+s_0=\operatorname{diag}(\tfrac12,-1),\quad
+g_0=K_\sigma(c_0,t_0)+s_0.
+\tag{34.6}
+$$
+
+此时 $|r|=1/2<2\sqrt2/3$，且
+
+$$
+J_\sigma=\begin{pmatrix}2/3&\sigma i/4\\-\sigma i/4&1/3\end{pmatrix},\qquad
+H_\sigma=\begin{pmatrix}1/3&-\sigma i/4\\\sigma i/4&2/3\end{pmatrix},\qquad
+\det J_\sigma=\det H_\sigma=\frac{23}{144}>0.
+\tag{34.7}
+$$
+
+又 $c_0J_\sigma t_0-t_0J_\sigma c_0=\sigma i s_0$。
+所以 (34.5) 对这一非零余量给完整复平面的正证书，而非有限相位检查。
+

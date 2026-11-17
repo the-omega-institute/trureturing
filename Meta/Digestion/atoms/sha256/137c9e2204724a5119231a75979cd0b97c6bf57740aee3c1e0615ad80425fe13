@@ -1,0 +1,31 @@
+**推论 9.2（同一旧乘法、全有限复表与原 R）。** 同一 $S-iD$ 正是8.4中定义的 $\star_Q$ 乘法。对全部有限 $a_1,\ldots,a_k\in E$、复数 $z_1,\ldots,z_k$ 及每份原 $\gamma$，若 $X=\sum_jz_ja_j$，则
+
+$$
+\begin{aligned}
+\sum_{j,\ell}\overline z_jz_\ell
+\{\gamma(a_j\circ a_\ell)-i\gamma D(a_j,a_\ell)\}
+&=\gamma_{\mathbb C}(X^*\star_QX)\\
+&=\gamma(p_+X^*X+p_-XX^*)\ge0.
+\end{aligned}
+\tag{9.2}
+$$
+
+全部 P3和有限 Gram 因此成立。同一原换括号式为
+
+$$
+(x\circ y)\circ z-D(D(x,y),z)
+=x\circ(y\circ z)-D(x,D(y,z)).
+\tag{9.3}
+$$
+
+同一 $D$ 还满足 Jacobi 与 Jordan 导子律；每个固定 $a$ 的数学流为
+
+$$
+L_a(X)=[iQa/2,X],\qquad
+L_a(b)=D(a,b),\qquad
+e^{tL_a}(b)=e^{iQta/2}b\,e^{-iQta/2}.
+\tag{9.4}
+$$
+
+证明。9.2是 $\mathcal A_Q$ 的正平方在相同原评价下的读取。结合律实部给9.3，交换子恒等式给 Jacobi、导子律与9.4。它们没有被用于4–8章。$E=M_{\rm sa}$ 完整，所以这个有界数学流保持原域；其参数尚无物理钟身份。∎
+

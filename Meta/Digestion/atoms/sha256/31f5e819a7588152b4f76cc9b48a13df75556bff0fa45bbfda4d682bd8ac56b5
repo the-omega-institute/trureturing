@@ -1,0 +1,29 @@
+### 32.2 两个比例关系的准确离面可解条件
+
+固定单位 $u\in\mathbb C^3$，其支撑恰为两格 $a,b$，$u_a u_b\ne0$，记 $A_0=c_a$、$B_0=c_b$，$A_0\ne B_0$。本小节的 $a,b$ 是坐标指标，$A_0,B_0$ 是谱值。给定一个该平面上的 Hermitian 块 $X^{ab}$ 和原向量 $w\in\mathcal W$。假设平面上的两份作用列已经满足
+
+$$
+\begin{aligned}
+\mathsf R_\delta&=Xu+\frac\delta2\bigl(\iota(CXu-XCu)-Cw\bigr),\\
+\mathsf S_\delta&=w+\frac\delta2\bigl(CXu+XCu+\iota Cw\bigr),\\
+\mathsf S_\delta&=\zeta_\delta\mathsf R_\delta,\qquad
+\zeta_\delta=\beta_\delta-\delta\iota\alpha_\delta,
+\quad \alpha_\delta>0,\quad\beta_\delta\in\mathbb R.
+\end{aligned}
+\tag{32.5}
+$$
+
+假设的意思只是把前三式限制到 $a,b$ 两坐标，并以 $X^{ab}$ 计算这两行；尚未假定第三行存在。所有斜率均有限。令 $j$ 为剩余坐标、$d=c_j$。若记待定的第三行作用值为 $p_j=(Xu)_j$、$q_j=(XCu)_j$，则它们须且只须满足
+
+$$
+\begin{pmatrix}a_+&b_+\\a_-&b_-\end{pmatrix}
+\begin{pmatrix}p_j\\q_j\end{pmatrix}
+=-w_j\begin{pmatrix}d_+\\d_-\end{pmatrix},\qquad
+\begin{cases}
+a_\delta=d(1-\iota\zeta_\delta)-2\delta\zeta_\delta,\\
+b_\delta=1+\iota\zeta_\delta,\\
+d_\delta=2\delta+d(\iota+\zeta_\delta).
+\end{cases}
+\tag{32.6}
+$$
+

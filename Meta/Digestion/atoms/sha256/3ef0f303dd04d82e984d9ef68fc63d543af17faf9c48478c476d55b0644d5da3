@@ -1,0 +1,15 @@
+**推论 91.3（所有有限支撑酉元的精确作用）。** 令
+
+$$
+\mathcal U_{\rm fs}=\{(1-p)+u:p\in\mathcal F_\tau, u\in\mathcal U(pMp)\}.
+$$
+
+对全部 $U\in\mathcal U_{\rm fs}$ 和全部 $Z\in M$，有
+
+$$
+\boxed{\mathfrak F(UZ)=\mathfrak F(Z).}
+\tag{91.4}
+$$
+
+证明。若 $U=(1-p)+u$，在 $pMp$ 中用有界 Borel 辐角取自伴 $H=pHp$，$\|H\|\le\pi$，使 $U=e^{JH}$。取 $a=\tan(H/4)$，在补角取零。它有迹有限支撑，且 $C_a=e^{JH/2}$，所以 $U=C_a^2$。有限两次91.2给91.4。包括 $u$ 有 $-1$ 谱及 $p=0$ 的情形；$\tan$ 只在 $[-\pi/4,\pi/4]$ 使用，因而有界。这是原代数内的精确两步作用，不使用酉群稠密性或未知响应的极限。∎
+

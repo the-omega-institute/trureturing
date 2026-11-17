@@ -1,0 +1,55 @@
+### 17.1. Definitions and scope
+
+Fix the installed finite or countable prior $\mu$, with
+$\mu(1),\mu(2)>0$, and choose an actually supported
+$k_\star\ge3$. Throughout,
+$$
+a=\frac13,\quad b=\frac25,\quad
+r_\star=\frac{F_{k_\star+1}}{F_{k_\star+3}}\in[3/8,5/13],
+$$
+$$
+\rho_p=\frac{1116529}{22781250},\quad
+\rho_\beta=\frac{239}{6750},\quad
+C=\frac{11758471}{22781250},\quad H=\frac{5261}{6750}.
+$$
+Use exactly the level-five outer domains $Z_p,Z_\beta$, level-four
+complete output partitions, seven-term input and potential bases, and
+coefficient norm of Section 16.5. In particular, all six risk
+coefficients are nonnegative and count in that norm. The atom
+$w_{0,0}=\alpha$ occurs once, so the output partitions have nine p cells
+and ten suspended cells. All tail cells retain infinity.
+
+Write $w_{n,0}=(\beta\alpha)^n\alpha$,
+$w_{n,1}=(\beta\alpha)^n\beta\beta$, and $t_r=r(1-r)$. The native laws are
+$$
+P_{p,r}(w_{n,0})=rt_r^n,\qquad
+P_{p,r}(w_{n,1})=(1-r)^2t_r^n,
+$$
+$$
+P_{\beta,r}(\beta)=1-r,\qquad
+P_{\beta,r}(\alpha w_{n,i})=rP_{p,r}(w_{n,i}).                 \tag{17.1}
+$$
+Their infinite masses are zero. Denote the complete depth-at-least-$j$
+tails by $T_p(j),T_\beta(j)$, with infinity included.
+
+The original source is unchanged: one positive integer $K$ is sampled
+once; $m=2,d=1,\ell=2,n=4$, both seeds, all marker triples and held
+registers, all paid rejections and finite returns, the third write before
+the latch, fourth completion, and matching Stop remain present. The
+full-record renderer is the original $I_{C_0(h)}$, and configuration TV
+precedes averaging. No source reset, future conditioning, additional
+Read, clock, posterior, configuration-distribution input, or numerical
+oracle is introduced.
+The original acquired-letter stochastic kernels must be identical in
+actual and synthetic updates; no count input or auxiliary measurement is
+available. The original COMPLETE carrier includes control, installed
+program and numerics, workspace, represented sampler states and every
+persistent random choice. Source-independent initialization does not
+provide an exact-real runtime port.
+
+The objects below are complete probability laws and their projected
+Dirac edge measures. They are not asserted to be an initialized observer.
+Their complete A residual vanishes; their complete B residual does not.
+This gives a test of arbitrary proposed coefficients, not a null for the
+full ansatz.
+

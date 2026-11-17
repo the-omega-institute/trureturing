@@ -1,0 +1,225 @@
+**定理 56.2（三个实际驻点方程的严格符号）。** 在 (56.1) 中，
+仅由 $N=N_Y=0$ 即有
+
+$$
+c_0<0,\qquad c_2<0,\qquad N_{YY}=2c_2<0,\qquad a_G>0.
+\tag{56.5}
+$$
+
+若再有 $N_q=0$，则 $\nu<0$。
+特别地，任何满足 $P=P_y=P_t=0$ 的实际点都有
+
+$$
+P_{yy}=\frac{N_{YY}}{4x^2}<0,\qquad
+\nu<0,\qquad \nu P_{yy}>0.
+\tag{56.6}
+$$
+
+所以它不能同时满足 $\nu D^2_{x,y,t}P\preceq0$。
+本定理不要求 $P_{tt}=0$，也不要求任何混合二阶导数消失。
+
+**证明。** 首先在整个 (56.1) 系数域证明
+
+$$
+c_0\ge0\quad\Longrightarrow\quad c_2>c_0.
+\tag{56.7}
+$$
+
+这里 $b_F,b_G,d$ 均严格为正。若 $c_0\ge0$，则
+
+$$
+\mathfrak c\ge\frac{eb_G}{b_F}
+=\frac{e(x+1)}{d^2}=\frac{2+xd}{d^2}>\frac2{d^2},
+\qquad q\ge\frac2{d^4}-1.
+\tag{56.8}
+$$
+
+由 $x+d=1$ 和 $(x-d)^2\ge0$ 得 $xd\le1/4$。
+对 $x,d/3,d/3,d/3$ 用算术—几何平均不等式，得
+
+$$
+x\left(\frac d3\right)^3
+\le\left(\frac{x+d}{4}\right)^4=\frac1{256},
+\qquad xd^3\le\frac{27}{256}.
+\tag{56.9}
+$$
+
+所用一般不等式见 NIST *Digital Library of Mathematical Functions*
+[§1.7(iii)，式 (1.7.7)](https://dlmf.nist.gov/1.7.E7)；
+此处只将它用于这四个正数。
+令 $W=-a_F=3dq-5x$。直接相减并使用 (56.8)–(56.9)，有
+
+$$
+\begin{aligned}
+W-\frac43b_F
+ &=d(3-4xd)q-x(5+8d^2)\\
+ &\ge2dq-13x\\
+ &\ge\frac{4-2d^4-13xd^3}{d^3}
+ \ge\frac{161}{256d^3}>0.
+\end{aligned}
+\tag{56.10}
+$$
+
+其中 $0<d<1$ 给 $5+8d^2\le13$、$2d^4\le2$，
+而 $4-2-13\cdot27/256=161/256$。
+故 $W>4b_F/3>0$；以下分支中没有预先假设 $a_F$ 的符号。
+
+若 $a_G<0$，(56.4) 给 $-W=a_F<a_G<0$，故
+$|a_G|<W<\mathfrak cW/2$，最后一步用 (56.8) 的 $\mathfrak c>2$。
+若 $a_G=0$，同一个严格上界由 $W>0$ 立即成立。
+若 $a_G>0$，则
+
+$$
+4x(q+2)-a_G=(3-x)q>0,\qquad
+W>4xd^2(q+2),
+$$
+
+从而
+
+$$
+a_G<4x(q+2)<\frac W{d^2}<\frac{\mathfrak cW}{2}.
+$$
+
+三种分支穷尽 $a_G$ 的全部符号，包括零。因此
+
+$$
+\begin{aligned}
+c_2&>\frac34\mathfrak c^2W^2,\\
+c_0&<\mathfrak c^2b_F^2
+    <\frac9{16}\mathfrak c^2W^2
+    <\frac34\mathfrak c^2W^2<c_2.
+\end{aligned}
+\tag{56.11}
+$$
+
+第二行第一个严格号用 $e^2b_G^2>0$。
+这证明 (56.7)，也覆盖 $c_0=0$。
+
+现在设 $N=N_Y=0$。二次式恒等式
+$N-YN_Y=c_0-c_2Y^2$ 给
+
+$$
+c_0=c_2Y^2.
+\tag{56.12}
+$$
+
+若 $c_0\ge0$，(56.7) 给 $c_2>c_0\ge0$，
+于是 $c_2>0$、$Y>1$ 使 (56.12) 反而给 $c_0>c_2$，矛盾。
+故 $c_0<0$，再由 (56.12) 得 $c_2<0$，从而 $N_{YY}<0$。
+这一步没有除以可能为零的 $c_2$。
+若 $a_G\le0$，则 $a_F<a_G\le0$，所以 $a_F^2>a_G^2$。
+而 $\mathfrak c^2=2(q+1)>1$，会强制
+$c_2=\mathfrak c^2a_F^2-a_G^2>0$，再次矛盾。
+故 $a_G>0$，完成只用 $N=N_Y=0$ 的 (56.5)。
+
+下面核对价格导数。定义正数及辅助价格分子
+
+$$
+\begin{gathered}
+\mathfrak E=(Y+x^2)(Y+d^2),\qquad
+\mathfrak H=Y(4-x)^2+(5Y+6d^2)^2,\\
+\Delta_{\rm pr}=q\mathfrak Q_q-\mathfrak Q.
+\end{gathered}
+\tag{56.13}
+$$
+
+$\mathfrak Q$ 关于 $q$ 的二次首项系数和常数项分别是
+
+$$
+\begin{aligned}
+[q^2]\mathfrak Q
+ &=9d^2\bigl[Y+(Y-xd)^2\bigr]=9d^2\mathfrak E,\\
+[q^0]\mathfrak Q
+ &=x^2\bigl[Y(4-x)^2+(5Y+6d^2)^2\bigr]=x^2\mathfrak H.
+\end{aligned}
+\tag{56.14}
+$$
+
+第一行用 $x+d=1$，故
+$Y+(Y-xd)^2=(Y+x^2)(Y+d^2)$。
+一次项在 $q\mathfrak Q_q-\mathfrak Q$ 中消去，于是
+
+$$
+\Delta_{\rm pr}=9d^2\mathfrak E q^2-x^2\mathfrak H.
+\tag{56.15}
+$$
+
+因 $A=y=\sqrt Y$、$q=4t-1>0$，原价格 (46.7) 精确为
+
+$$
+\mathcal R_0
+=\frac{\mathfrak Q}{12x^2\sqrt Y(Y-1)q},\qquad
+\nu=\frac{\Delta_{\rm pr}}{3x^2\sqrt Y(Y-1)q^2}.
+\tag{56.16}
+$$
+
+导数使用 $dq/dt=4$；其分母严格为正，
+并非将演员模平方参数当作原演员质量。
+
+在 $N=N_q=0$ 处，$N=2(q+1)\mathfrak Q-\mathfrak W$ 给
+
+$$
+\mathfrak Q=\frac{\mathfrak W}{2(q+1)},\qquad
+\mathfrak Q_q=
+\frac{\mathfrak W_q}{2(q+1)}-
+\frac{\mathfrak W}{2(q+1)^2}.
+$$
+
+因此有仅使用这两个方程的恒等式
+
+$$
+2(q+1)^2\Delta_{\rm pr}
+=q(q+1)\mathfrak W_q-(2q+1)\mathfrak W.
+\tag{56.17}
+$$
+
+为逐项计算右侧，记 $m=5x-3$，则 $a_G=8x+mq$，且
+
+$$
+\begin{aligned}
+q(q+1)\partial_q(a_G^2)-(2q+1)a_G^2
+ &=-a_G\bigl[(11x+3)q+8x\bigr],\\
+q(q+1)\partial_q((q+2)^2)-(2q+1)(q+2)^2
+ &=-(q+2)(3q+2).
+\end{aligned}
+\tag{56.18}
+$$
+
+第一行的括号来自
+$2mq(q+1)-(2q+1)(8x+mq)=-(11x+3)q-8x$；
+第二行只需提出 $q+2$。
+代入实际的 $\mathfrak W$，得到因式恒等式
+
+$$
+\begin{aligned}
+2(q+1)^2\Delta_{\rm pr}
+=-(Y+e^2)\bigl\{&Ya_G[(11x+3)q+8x]\\
+ &+9x^2(x+1)^2(q+2)(3q+2)\bigr\}.
+\end{aligned}
+\tag{56.19}
+$$
+
+在 $N=N_Y=N_q=0$ 处，(56.5) 已给 $a_G>0$。
+(56.19) 右侧花括号中的两项均严格正，
+所以 $\Delta_{\rm pr}<0$，(56.16) 遂给 $\nu<0$。
+没有使用 $N_{qq}$ 或 $N_{xq},N_{Yq}$ 的任何条件。
+
+最后令 $\widehat N(x,y,t)=N(x,y^2,4t-1)$。
+(56.4) 及 $y>1$ 给
+
+$$
+P=P_y=P_t=0
+\quad\Longleftrightarrow\quad N=N_Y=N_q=0.
+$$
+
+在这些零点上，二次求导的低阶项消失：
+
+$$
+\widehat N_{yy}=4YN_{YY}=16x^2Y P_{yy}.
+\tag{56.20}
+$$
+
+这证明 (56.6)。实对称矩阵 $\nu D^2P$ 的 $yy$ 对角项此时严格正，
+所以不可能半负定。结论是实际驻点上的符号证书，
+不是宣称 $P=P_x=P_y=P_t=0$ 自身无解。∎
+

@@ -29,7 +29,7 @@ internal sealed class UniformRatesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "arithmetic_rate_three"),
                 H("The cubic arithmetic rate"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("If beta and epsilon are positive and epsilon is less than one half minus twice beta, then N to the power minus one half plus epsilon, times H to the power three halves, times log(N) to the power minus three halves, tends to zero uniformly for real H between one and N to the power beta."))),
+                Blocks(Paragraph(Text("If beta and epsilon are positive and epsilon is less than one half minus three halves times beta, then N to the power minus one half plus epsilon, times H to the power three halves, times log(N) to the power minus three halves, tends to zero uniformly for real H between one and N to the power beta."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("arithmetic-rate-four"),
@@ -57,7 +57,7 @@ internal sealed class UniformRatesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "cell_rate"),
                 H("The cell quadrature rate"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For nonnegative beta less than one quarter and every natural k at most four, (H log(N)) to the power k/2 divided by N tends to zero uniformly for real H between one and N to the power beta."))),
+                Blocks(Paragraph(Text("For nonnegative beta less than one half and every natural k at most four, (H log(N)) to the power k/2 divided by N tends to zero uniformly for real H between one and N to the power beta."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("range-geometry"),

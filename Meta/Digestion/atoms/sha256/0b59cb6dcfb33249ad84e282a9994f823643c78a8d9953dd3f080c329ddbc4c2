@@ -1,0 +1,29 @@
+**定义 26.1（球面 duplicate 与两个实际连续场）。** 令
+
+$$
+K=S^2=\{(s,t,r)\in\mathbb R^3:s^2+t^2+r^2=1\},\qquad
+X=AD(K)=K\times\{0,1\}.
+\tag{26.1}
+$$
+
+拓扑按22.2的相同规则定义：每个顶层点 $(p,1)$ 孤立；底层点 $(p,0)$ 的基本邻域为
+
+$$
+N(V,p)=(V\times\{0,1\})\setminus\{(p,1)\},\qquad p\in V\subset K\text{ 开}.
+\tag{26.2}
+$$
+
+记 $T=K\times\{1\}$、$B=K\times\{0\}$，并置
+
+$$
+\begin{gathered}
+\pi:X\to S^2,\quad \pi(p,\epsilon)=p,\qquad
+\iota:S^2\to X,\quad\iota(p)=(p,0),\\
+\zeta(s,t,r)=s+it,\qquad
+Z=(\zeta\circ\pi)I_n,\qquad W=(|\zeta|\circ\pi)I_n.
+\end{gathered}
+\tag{26.3}
+$$
+
+此处固定任意有限整数 $n\ge1$；范数始终是整个 $X$ 上的一致算子范数。$\pi$ 是空间投影，与16章的矩阵点评价 $\pi_\xi$ 区别。
+

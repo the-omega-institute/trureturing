@@ -1,0 +1,51 @@
+**引理 139.7（每张完整内载球缘都代表生成元）。** 对每个 $a\in\Lambda$，嵌入 $S_a\hookrightarrow Q$ 的整数基本类生成 $H_2(Q;\mathbb Z)$。任意两个这样的球缘必相交；不同原标签的整个球恰交于一个实际原纯点。
+
+证明。若 $a\in S_o$，$S_a$ 正是 $\xi_o$ 的一根纤维加公共无穷远点 $o$。Thom 类在这个纤维紧化 $S^2$ 上限制为生成元，故
+
+$$
+|\langle\tau,[S_a]\rangle|=1.
+\tag{XI139.20}
+$$
+
+若 $a\notin S_o$，则 $o\notin S_a$；引理139.3使 $\pi_o|_{S_a}$ 为到整个 $S_o$ 的同胚。经 $\Psi_o^{-1}$ 后，$S_a$ 是 $\xi_o$ 的一个连续截面的像。沿纤维标量乘法将截面同伦到零截面，Thom 类在零截面限制为 $e(\xi_o)$，所以
+
+$$
+\langle\tau,[S_a]\rangle=\pm\langle e(\xi_o),[S_o]\rangle=\pm1.
+\tag{XI139.21}
+$$
+
+由整数对偶及 $H^3(Q)=0$ 有 $H_1(Q)=0$，再由整系数通用系数定理，$H^2(Q)\to\operatorname{Hom}(H_2(Q),\mathbb Z)$ 为同构。因此(XI139.20)—(XI139.21)确实说明每个 $[S_a]$ 是 $H_2(Q)\cong\mathbb Z$ 的生成元，而非只证明它非零。它们两两的同调交数遂为 $\pm1$。
+
+这里须特别支付“同调交数非零迫实际相交”，不能偷用光滑横截交点计数。反设两个球缘 $S_a,S_b$ 不交。它们是 $Q$ 的不交紧子集，故有不交开邻域 $O_a,O_b\subset Q$。作为可定向四维拓扑流形的开子集，二者也都是可定向四维流形；不要求它们是球面的管状邻域。球面基本类分别给
+
+$$
+z_a\in H_2(O_a;\mathbb Z),\qquad z_b\in H_2(O_b;\mathbb Z).
+$$
+
+[Hatcher，Theorem 3.35及其前后紧支撑构造][Q139AT]给 $\beta_a\in H_c^2(O_a;\mathbb Z)$、$\beta_b\in H_c^2(O_b;\mathbb Z)$，分别对偶于 $z_a,z_b$。取其紧支撑代表所在的紧集 $K_a\subset O_a$、$K_b\subset O_b$。切除给开嵌入的延拓映射
+
+$$
+H_c^2(O_a)\longrightarrow H^2(Q),\qquad H_c^2(O_b)\longrightarrow H^2(Q).
+$$
+
+这些映射将 $\beta_a,\beta_b$ 分别送成 $[S_a],[S_b]$ 的 Poincaré 对偶：在各紧支撑集上限制 $Q$ 的基本定向类，切除识别为相应开集的局部基本类，cap 自然性便给此等式。这是该书印刷页240—241、244—248的同一构造，并非假定嵌入具有法丛。
+
+两个延拓类分别来自 $H^2(Q,Q\setminus K_a)$ 与 $H^2(Q,Q\setminus K_b)$。补集都是开集，故[Hatcher，印刷页209—210的相对 cup 乘积][Q139AT]适用。因 $K_a\cap K_b=\varnothing$，乘积落在
+
+$$
+H^4\bigl(Q,(Q\setminus K_a)\cup(Q\setminus K_b)\bigr)
+=H^4(Q,Q)=0.
+\tag{XI139.22}
+$$
+
+于是同调交数为零，与 $\pm1$ 矛盾。整个论证只用连续球面映射的基本类、开流形对偶及相对乘积；未给 $S_a\hookrightarrow Q$ 添加光滑、局部平坦或管状邻域假设。
+
+故 $S_a\cap S_b\ne\varnothing$。当 $a\ne b$ 时，原标签单射使 $D_a\ne D_b$，原点交接口给唯一 $r\in P$，满足
+
+$$
+D_a\cap D_b=S_a\cap S_b=\{r\},\qquad r\in Q,\quad a\perp r,\quad b\perp r.
+\tag{XI139.23}
+$$
+
+当 $a=b$，任选非空 $S_a\subseteq Q$ 中一点仍给实际共同邻点，所以包括对角线有 $\Lambda^2\subseteq\mathcal J$。这建立的是原标签端点之间的存在性；并未单凭 $S_a\subseteq Q$ 就对标签 $a$ 写 $\pi_o(a)$。证毕。
+

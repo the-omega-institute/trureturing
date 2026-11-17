@@ -1,0 +1,19 @@
+**定义 100.1（有限参考方向入口）。** 使用定义98.1的同一个非零有限维实 $V$、闭尖生成凸锥 $C$、
+严格正原单位 $u$、整个 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$、$W=\ker u$，
+以及整个原 $\mathcal E=[0,u]_{C^*}$、$F_p$、$T_p$；本定义的静态部分不输入群 $H$。
+记 $d=\dim W$，要求
+
+$$
+\begin{aligned}
+\mathrm R &: T_p(r)=T_r(p) &&(p,r\in P),\\
+\mathrm{E2}_i &: T_{p_i}(r)+T_{q_i}(r)=1 &&(r\in P,\ 1\le i\le k),\qquad k\ge1.
+\end{aligned}
+\tag{100.1}
+$$
+
+各 $p_i,q_i$ 均为原纯点。置 $c=(p_1+q_1)/2$ 及
+$S=\operatorname{span}\{(p_i-q_i)/2:1\le i\le k\}\subseteq W$。
+有限方向条件是 $\operatorname{codim}_W S\le1$。重复或反向的纯对允许出现，但不提高秩。
+有限性只指参考对的数量；$\mathrm R$ 仍遍历所有原纯对，每个 $\mathrm{E2}_i$ 仍遍历全部原纯目标，
+不是有限次标量读数。序、确认面和下包络始终在同一个原载体上计算。
+

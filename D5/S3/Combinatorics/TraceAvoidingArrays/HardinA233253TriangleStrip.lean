@@ -168,7 +168,7 @@ private def Legal {n : ℕ} (A : Fin n × Fin 5 → Fin 6) : Prop :=
 private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) :
     Decidable (widthNormal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
-private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
+instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance instDecidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))

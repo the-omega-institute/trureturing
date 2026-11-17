@@ -1,0 +1,28 @@
+**命题 101.8（四维的两个目标确实不足）。** 对 $N=3$，$m=4$ 的同一个原 $K_3$ 满足
+
+$$
+\mathrm B+\mathrm G_2+\mathrm A
+\quad\text{及全部原纯数值互反},\qquad
+\neg\mathrm G_3,\quad\neg\mathrm{Z0},\quad\neg S.
+\tag{VII101.24}
+$$
+
+证明。前半和 $\neg\mathrm G_3$ 已由101.6—101.7在全部原效应上证明。固定 $p=a_1$，取两个原混态
+
+$$
+x=\frac{2b_1+b_2}{3},\qquad
+y=\frac{b_2+2b_3}{3},\qquad
+\frac{x+y}{2}=\frac{b_1+b_2+b_3}{3}=o.
+\tag{VII101.25}
+$$
+
+$e_{13}$ 排除 $x$，$e_{11}$ 排除 $y$，二者都确认同一个 $p$。但对任意原 $f\in F_p$，重心关系给
+
+$$
+f(o)=\frac{\sum_i\alpha_i}{3}\ge\frac13;
+\qquad T_p(o)=\frac13,
+\tag{VII101.26}
+$$
+
+等号由任一 $e_{1j}$ 达到。因此 $x,y\in D_p$，它们的原中点却不在 $D_p$，直接违反完整混态 $\mathrm{Z0}$。无least已由101.7证明，所以完整 $S$ 也失败。所有二纯最小面仍是原暴露边，每两个被排除纯目标仍可由同一确认效应读零；缺失恰发生在三个目标的共同要求。这个反例否定 $\mathrm B+\mathrm G_2\Rightarrow\mathrm{Z0}$ 及其推出 $S$ 的版本，不否定 $\mathrm B+\mathrm G_2\Rightarrow\mathrm A$，因为它自己的 $\mathrm A$ 成立；也不否定 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$。证毕。
+

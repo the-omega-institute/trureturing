@@ -1,0 +1,18 @@
+**Lemma 6.4 (consuming the actual suffix).** For strictly positive
+joint probability vectors $a(w,v),b(w,v)$, with marginals $a_w,b_w$,
+
+$$
+ \sum_w a_w\operatorname{TV}(a(\cdot\mid w),b(\cdot\mid w))
+ \le\operatorname{TV}(a,b)+\operatorname{TV}(a_w,b_w)
+ \le2\operatorname{TV}(a,b).
+ \tag{6.13}
+$$
+
+*Proof.* For each coordinate,
+$|a(w,v)-a_wb(w,v)/b_w|
+\le|a(w,v)-b(w,v)|+|b_w-a_w|b(w,v)/b_w$.
+Sum over $v,w$ and divide by two. Marginalization contracts TV,
+giving the second inequality. The bound has no inverse minimum
+marginal: rare suffixes are weighted by their actual probability.
+$\square$
+

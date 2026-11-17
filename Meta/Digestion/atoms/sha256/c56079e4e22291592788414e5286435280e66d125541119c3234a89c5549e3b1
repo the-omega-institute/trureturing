@@ -1,0 +1,51 @@
+### 33.1 同一原关系与显式固定输出约束
+
+本增补保持定义 6.1、28.1 及 §27.1 的同一个完整 $\mathsf H_A(D)$ 和其中全部递归固定引文：$A$ 是含单位复 $C^*$-代数，$E=A_{\rm sa}$，$S(x,y)=x\circ y=(xy+yx)/2$，原单位、范数、锥准确为 $1,\|\cdot\|,A_+$。同一 $\Omega/\mathrm{native}$、全部原输入与评价标签不变；原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定锥。每份原评价及质量 $m_\gamma=\gamma(1)$ 均保留，包括零、不等、次归一和原表示意义下的非正常评价。未知量仍是同一个任意总映射 $D:E^2\to E$。
+
+全部有向 A1/P2 包含所有 $x,y\in E$、两种次序和每个 $\gamma\in\mathcal P$ 的
+
+$$
+\begin{pmatrix}
+\gamma(x^2)&\gamma(x\circ y)-i\gamma D(x,y)\\
+\gamma(y\circ x)-i\gamma D(y,x)&\gamma(y^2)
+\end{pmatrix}\succeq0.
+$$
+
+A2 保留每份相加三表 $(x+y,x,y)$ 及其全部排列 $(x_1,x_2,x_3)$：实矩阵 $(\gamma(x_i\circ x_j))_{i,j=1}^3$ 在全部 $\mathbb R^3$ 上半正定，$(1,-1,-1)$ 及相应排列给指定零二次值。A3 保留 $1^2=1$ 及同一个固定有理 $0<\vartheta\le1$ 下的全部 $0\le x\le\vartheta1\Rightarrow x^2\le x$。每个实际原三元组 $(h;x,y)$ 的完整 PB 为
+
+$$
+\begin{gathered}
+\nu=D(h,x)-h\circ y,\qquad w=h\circ x+D(h,y),\\
+D(x+\nu,y+w)-D(x-\nu,y-w)=-2x\circ\nu-2y\circ w.
+\end{gathered}
+$$
+
+全部实际内外层调用、零、重复、任意有限实幅度、缩放、平移、背景及由它们再次形成的嵌套调用均保留。不加入 $D$ 的可加性、齐次性、连续性、可测性、协变性、单位平移中性、压缩自然性、商下降、双对偶延拓或有限输出子代数闭合。沿 AH43.1 的同表数学正读取，准确锥将原二表交给每个数学正泛函；Hermitian 性与分离性给反对称性，零对角二表给零槽。
+
+对固定自伴 $c,t,g$，置 $k=c\circ t$，记 $\mathsf{P2}(c,t;g)$ 为
+
+$$
+M_\phi(c,t;g)=
+\begin{pmatrix}
+\phi(c^2)&\phi(k)-i\phi(g)\\
+\phi(k)+i\phi(g)&\phi(t^2)
+\end{pmatrix}\succeq0
+\qquad(\phi\ge0).
+$$
+
+这里及下文的 $\phi\ge0$ 遍取所有数学正泛函，包括零泛函和任意非负质量，且不要求正常性。反向输出取 $-g$ 时，反向二表是同一表的行列同时交换。写
+
+$$
+B_\phi(X,Y)=\phi(X^2)\phi(Y^2)-\phi(X\circ Y)^2\ge0
+\qquad(X=X^*,\ Y=Y^*).
+$$
+
+因平方对角非负，固定二表条件准确等价于
+
+$$
+\phi(g)^2\le B_\phi(c,t)\qquad(\phi\ge0).
+\tag{33.1}
+$$
+
+在实际模型中，$g=D(c,t)$ 满足它，且对全部状态的读取给 $\|g\|\le\|c\|\,\|t\|$。
+

@@ -1,0 +1,65 @@
+**Lemma 6.3 (the stopped gate in the actual law).** For any
+$M\ge\|g_d\|_\infty$ and any integer $N\ge1$,
+
+$$
+ \mathbb E_e\operatorname{TV}({\bf R}_T^N,q|_{\mathcal L^N})
+ \le\sqrt M\,A_N(L).
+ \tag{6.8}
+$$
+
+Here $A_N(L)$ is (6.4) with that $N$, and $S$ is any deterministic
+nonnegative cut.
+
+*Proof.* Put $b_L=4^{-L}$ and $E_{k-1}=\bigcap_{i<k}C_i^c$.
+A prefix $u$ of length $U_k$ satisfying $E_{k-1}$ has, after the
+successful block, precisely the actual posterior
+
+$$
+ \pi_{uB^L}=P^L\pi_u,\qquad
+ p(uB^L)=b_Lp(u),\qquad
+ {\bf R}_{U_k+L}^N(z)-q(z)=\langle\pi_u,h_z\rangle_m,
+ \tag{6.9}
+$$
+
+by (2.5). Thus $|\langle\pi_u,h_z\rangle|
+\le\langle\pi_u,|h_z|\rangle$. Theorem 2.1 identifies $\pi_u$ as
+the conditional density of $X_{U_k}=Z_{(U_k+2)d}$ given $u$.
+Summing the last inequality over all such prefixes, and then over
+the mutually disjoint gate events $\{J=k\}$, bounds the expectation
+in (6.8) by
+
+$$
+ \frac12\sum_{|z|=N}\sum_{k\ge1}
+ b_L\,\mathbb E_e[
+       \mathbf1_{E_{k-1}}|h_z(X_{U_k})|].
+ \tag{6.10}
+$$
+
+Conditional on the entire hidden path, the disjoint blocks have
+independent all-$B$ indicators of constant probability $b_L$.
+Consequently $E_{k-1}$ has conditional probability
+$(1-b_L)^{k-1}$, independent of that path, and (6.10) equals
+
+$$
+ \frac12\sum_{|z|=N}\sum_{k\ge1}
+ b_L(1-b_L)^{k-1}
+ \langle g_{(U_k+2)d},|h_z|\rangle_m.
+ \tag{6.11}
+$$
+
+The actual, unconditioned density at this read epoch satisfies
+
+$$
+ \int g_{(U_k+2)d}\,dm=1,\qquad
+ \|g_{(U_k+2)d}\|_\infty\le\|g_d\|_\infty\le M,\qquad
+ \|g_{(U_k+2)d}\|_2\le\sqrt M.
+ \tag{6.12}
+$$
+
+These follow by the original propagation and Markov contraction.
+Cauchy--Schwarz bounds each pairing in (6.11) by
+$\sqrt M\|h_z\|_2$. The geometric weights sum to one, proving (6.8).
+This argument averages the full actual posteriors. It never replaces
+them by stationary posteriors, bounds each history's posterior
+density by $M$, or conditions the result on a chosen $J$. $\square$
+

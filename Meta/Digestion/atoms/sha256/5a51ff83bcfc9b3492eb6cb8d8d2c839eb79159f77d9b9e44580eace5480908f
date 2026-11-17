@@ -1,0 +1,45 @@
+**命题 121.8（每张真实切二平面的位置）。** 固定 $p\in P_0$，取球图
+
+$$
+D_p=c+B\mathbb B^3,
+\qquad q_v=c+Bv\quad(v\in S^2),
+\qquad F_v=D_{q_v}.
+\tag{Q121.24}
+$$
+
+120.12给所有 $q_v\in P_0$，且其完整确认效应 $e_{q_v}$ 唯一。零对称给 $p\in S(F_v)$；Inj与完整面交规则给
+
+$$
+v\ne w\quad\Longrightarrow\quad F_v\cap F_w=\{p\}.
+\tag{Q121.25}
+$$
+
+令 $E_v=T_pS(F_v)$ 为该实际球面在 $p$ 的普通线性切平面，置
+
+$$
+L_p=\ker u\cap(\operatorname{span}N_p)^\perp,
+\qquad
+(\operatorname{span}N_p)^\perp
+=\{z\in V:h(z)=0\ (h\in\operatorname{span}N_p)\}.
+\tag{Q121.26}
+$$
+
+这里 $\perp$ 表示线性消去子，不是预设的物理内积。则
+
+$$
+\dim E_v=2,\qquad E_v\subset L_p,
+\qquad\dim L_p=\dim V-5.
+\tag{Q121.27}
+$$
+
+证明。写 $F_v=c_v+B_v\mathbb B^3$、$p=c_v+B_vs_v$、$\|s_v\|=1$。则 $E_v=B_v(s_v^\perp)$，维数二，且 $u|_{E_v}=0$。对每个 $h\in N_p$，其在 $F_v$ 上的限制非负，且在 $p$ 为零。若写为 $\alpha+\ell\cdot z$，球上非负性与在 $s_v$ 的零给 $\alpha\ge\|\ell\|$、$\ell\cdot s_v=-\alpha$，所以
+
+$$
+h(c_v+B_vz)=\alpha(1-s_v\cdot z),\qquad\alpha\ge0.
+\tag{Q121.28}
+$$
+
+因此 $h$ 消去 $E_v$；线性张成同样消去它，得到包含。120.8已经在 $p\in P_0$ 证明 $\dim\operatorname{span}N_p=4$。这些泛函全在 $p$ 为零，而 $u(p)=1$，故 $u$ 与该四维空间线性无关，共同消去子维数恰为 $\dim V-5$。证毕。
+
+准确扇是全部 $F_v=D_{q_v}$ 在 $p$ 相遇。始终有 $p\notin D_p$，不能写 $D_p\cap D_{q_v}=\{p\}$。121.8也还没有从点交推出切平面零交。
+

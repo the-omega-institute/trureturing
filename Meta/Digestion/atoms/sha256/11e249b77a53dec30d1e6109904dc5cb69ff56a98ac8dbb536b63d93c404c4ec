@@ -1,0 +1,43 @@
+**定理 20.3（同一完整运行的条件成功与显式自身边缘返回；repo-derived 应用）。** 假设原合同的实际量子准备、前向原生、固定标架非参考控制／读出、独立场重置和规定终端菜单按定义 20.1–20.2 的实际端口供应。对每个原正有理 $0<e\le1/100$，定义 20.2 给出一个与实际 $n,h$ 无关的有限因果控制器 $W_e$ 和有限有理四坐标解码器。对全部原允许场 $n$ 和全部 $h\in S^2$，同一完成运行满足
+
+$$
+\begin{gathered}
+\Pr[\|\widehat D-D_h(n)\|_\infty\le e]\ge1-e,\\
+T_V=q=3k\le L,\qquad
+T_{\rm reset}=15\ell+1\le Q,\qquad
+T_{\rm terminal}=1,\qquad T_R=q+1.
+\end{gathered}
+\tag{20.10}
+$$
+
+置
+
+$$
+\begin{aligned}
+\lambda_m^2&=\frac m{D^2},\\
+g_m&=\frac{4m}{D^2}\sin^2\left(\frac{dD}{2m}\right),\\
+r_e&=1-(1-g_m)(1-\lambda_m^2)^q,\\
+B_e&=\min\{1,2\sqrt{r_e}\}.
+\end{aligned}
+\tag{20.11}
+$$
+
+对同一完整实际输出 $\Omega_{n,h}$，以其全部实际 $K$ 和其自身实际边缘为比较对象，有
+
+$$
+\begin{aligned}
+\overline\delta
+&:=\sup_{n,h}\frac12\left\|
+ \Omega_{n,h}-\tau_h\otimes\operatorname{Tr}_R\Omega_{n,h}
+ \right\|_1\\
+&\le B_e
+ \le\min\left\{1,
+ \frac{160\sqrt{\log(18/e)}}{e\sqrt m}\right\}.
+\end{aligned}
+\tag{20.12}
+$$
+
+$B_e$ 是显式有限上界证书，不是迹距离的精确值。任意独立有限混合旁观态 $\eta_A$，包括奇异态，均可原样保留；不使用输入纯化。实际最终参考泄漏的精确表达式为下文 (20.29)，其一致上确界恰为 (20.30)。
+
+证明。以下分别把同一电路的记录事件和实际参考边缘接回原工具；两者始终属于同一完成运行。
+

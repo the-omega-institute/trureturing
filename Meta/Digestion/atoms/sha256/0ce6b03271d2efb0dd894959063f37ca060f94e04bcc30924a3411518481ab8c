@@ -1,0 +1,48 @@
+**定理 3.1（原子理想的复紧选型）。** 定理 2.1 的每个 $I_\lambda$ 都是 (1.5) 的复紧 Hermitian 理想。选型所用幂等元和角内旧调用全部属于原 $E$。
+
+证明。以下只在本定理证明中消费成熟类型字典：简单对偶 JB 分量或者有限维简单正式实，或者是无限维自旋因子，或者同构于 $K_{\mathbb F}(H)_{\rm sa}$，其中 $\mathbb F=\mathbb R,\mathbb C,\mathbb H$ 且 $\dim_{\mathbb F}H=\infty$。实／四元数算子及伴随按相应 Hilbert 空间理解。先核对该中间分类的来源与紧元对应，随后才用原输入排除非复类型。Bunce Theorem 3(a)，页 356，将简单对偶 JB 列为 Albert 代数、自旋因子和由紧算子组成的简单 JC 代数。有限维部分按单位桥 [122.1](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#122-有限jordan模型的复数域成为准入结论) 所用的成熟有限分类处理。对其余简单紧 JC 代数 $B$，Bunce Theorem 5(iii) 的证明，页 358–359，明确使用其弱算子闭包 $M$ 为类型 I JW 因子。以下说明此处从该包络到紧算子字典的对应，不把包络分类直接套到一般 $X$。
+
+在给出 $B$ 的紧 JC 表示中，任取一维投影 $e\in B$；它是有限秩投影。因 $U_e$ 弱算子连续且 $U_eB=\mathbb Re$，在 $M$ 中仍有 $U_eM=\mathbb Re$。Bunce Theorem 3(b)(ii) 的每个 $B$ 元素的最小投影谱展开，因此也由 $M$ 的最小投影组成。
+
+还需反向对应。记 $B_1(e),M_1(e)$ 为半 Peirce 空间。$B_1(e)$ 范数闭且在 $M_1(e)$ 中弱算子稠密。相对 $e$，这些都是形如
+
+$$
+\begin{pmatrix}0&T^*\\T&0\end{pmatrix},
+\qquad T:e\mathcal H\longrightarrow(1-e)\mathcal H
+
+$$
+
+的有限列算子；$\dim e\mathcal H<\infty$。其算子范数与有限列的 Hilbert 范数等价，弱算子拓扑正是这个实 Hilbert 空间的弱拓扑。因此闭实线性子空间 $B_1(e)$ 在此拓扑下也闭，得到 $B_1(e)=M_1(e)$。
+
+若 $M$ 的秩为一，则它是一维。秩为二时是自旋因子；取非零半 Peirce 元，其平方是正数倍的 $1_M$，故 $1_M\in B$。它在原紧 JC 表示中为有限秩，因而其支撑空间及 $M$ 都有限维。有限秩 $n\ge3$ 的类型 I 因子由 Hanche-Olsen–Størmer [*Jordan Operator Algebras*，Theorem 5.3.8，页 132](https://hanche.folk.ntnu.no/joa/joa-m.pdf) 分类，亦有限维。这些情形没有留下无限维非自旋的 $B$。
+
+无限秩时才使用该书 Theorem 7.5.11（页 169–170）：其前件是类型 $I_n$ 的 JBW 因子且 $4\le n\le\infty$；这里已支付该前件。结合 §7.5.5、7.5.10 的实／四元数识别，$M$ 同构于 $B_{\mathbb F}(H)_{\rm sa}$，$\mathbb F\in\{\mathbb R,\mathbb C,\mathbb H\}$。相对于上述最小 $e$，$B_1(e)=M_1(e)$ 使所有相应单列及其平方都属于 $B$；平方减去 $e$ 的标量倍，给 $e^\perp$ 上任意射线投影。再用同一单列和实线性组合，得到任意射线投影，故得到全部有限秩自伴元。范数闭性给 $K_{\mathbb F}(H)_{\rm sa}\subset B$。反向包含由前述最小投影谱展开给出：每个 $B$ 元素都是这些有限秩投影的范数极限。因此 $B=K_{\mathbb F}(H)_{\rm sa}$，正是上述实／复／四元数紧算子分支。本论证不含可分性前件；有限列和单个向量的论证适用于任意 Hilbert 维数。
+
+现在在这些已知类型中用原标签选型。若 $I=I_\lambda$ 有限维，(2.1) 和有限维线性闭性给 $I\subset E$，特别其单位 $k$ 是原幂等元。由 $I\lhd X$ 及其单位性，$X_2(k)=I$。单位桥 [119.2](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#119-原二表的幂等角遗传与有限复-hermitian-几何)–[119.3](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#119-原二表的幂等角遗传与有限复-hermitian-几何) 支付同一旧 $D$ 的角闭合、准确锥／范数／全部原限制评价，完整 PB 的每次嵌套调用均在原角中；[121.1](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#121-每个真实自旋角只能是经典角或完整量子比特角)、[122.1](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#122-有限jordan模型的复数域成为准入结论) 的有限选型因而适用。$I$ 简单，只能是一个 $H_n(\mathbb C)$，包含 $n=1$。不是先把分类中央单位借给原 $D$；其原有性来自 (2.1)。
+
+若 $I$ 是无限维自旋因子，选一颗 $p\in I\cap\mathscr P$。它是非平凡最小投影。由 $E\cap I$ 稠密及原 $p$ 的半 Peirce 投影，存在非零原 $z\in E\cap I_1(p)$。自旋乘法给
+
+$$
+z^2=c\,1_I,\qquad c>0.
+\tag{3.1}
+$$
+
+故 $k=z^2/c=1_I\in E$，$X_2(k)=I$。单位桥 [121.1](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#121-每个真实自旋角只能是经典角或完整量子比特角) 对这个真实原单位角要求它为一维、两经典维或 $H_2(\mathbb C)$，与无限维矛盾。这也解释为何不能略去原单位供应直接对完成中的自旋因子调用旧 $D$。
+
+其余无限维类型由上述引用分类及紧元对应给出。只在此分支的结构坐标中，将原 $p$ 写成 $ee^*$，$\|e\|=1$，$e\in H_{\mathbb F}$。$(E\cap I)_1(p)$ 在 $I_1(p)$ 中稠密，故可取非零原元 $z$，其坐标为
+
+$$
+z=we^*+ew^*,\qquad w\perp_{\mathbb F}e,\quad w\ne0.
+$$
+
+这里只描述这个原元的坐标，不假定任意此类列都原有。准确平方给
+
+$$
+z^2=\|w\|^2p+ww^*,\qquad
+k=\frac{z^2}{\|w\|^2}=p+\frac{ww^*}{\|w\|^2}\in E,
+\qquad X_2(k)=I_2(k)\cong_J H_2(\mathbb F).
+\tag{3.2}
+$$
+
+这个全实际角是自旋角，其纯向量维数分别为 $2,3,5$。单位桥 [121.1](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#121-每个真实自旋角只能是经典角或完整量子比特角) 对同一个角内旧 $D$ 只允许非经典的三维纯向量支，故 $\mathbb F=\mathbb C$。由此取得 $j_\lambda$ 和复 Hilbert 空间；复数域、完整二级角及特殊性均在此后才成为结论。原实／四元数候选的排除针对它们已证明原有的角，未对不在 $E$ 的投影作旧调用。∎
+

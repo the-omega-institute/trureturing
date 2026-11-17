@@ -52,6 +52,11 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
                 DecidableAllowedFormula(),
                 "The defining expression is inferInstanceAs for the two displayed "
                 + "implications. The colour numerals have type Fin 6."),
+            Def("normal", "normal", "Row-major normalization", NormalFormula(),
+                "Every colour two, three or four has an earlier colour one, and every colour three has an earlier colour two, in the row-major rank r*n+j."),
+            Def("decidablenormal", "instDecidableNormal", "Deciding the normalization",
+                DecidableNormalFormula(),
+                "The defining expression is inferInstanceAs for the displayed universally quantified conjunction of the two implications."),
             Def("decidablegood", "instDecidableGood", "Deciding a word scan",
                 DecidableGoodFormula(),
                 "These are the zero and successor equations of the defining induction on n. "
@@ -195,10 +200,34 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
     private static Formula Rank(Formula p, Formula n) =>
         Add(Mul(Call("val", Proj(p, 1)), n), Call("val", Proj(p, 2)));
 
+    private static Formula NormalBody(Formula n, Formula a)
+    {
+        var p = V("p"); var q = V("q");
+        var cells = Product(Fin(2), Call("Fin", n));
+        Formula Earlier(byte c) => Ex("q", cells, And(Lt(Rank(q, n), Rank(p, n)), Eq(App(a, q), D(c))));
+        return All("p", cells, And(
+            Imp(Or(Eq(App(a, p), D(2)), Or(Eq(App(a, p), D(3)), Eq(App(a, p), D(4)))), Earlier(1)),
+            Imp(Eq(App(a, p), D(3)), Earlier(2))));
+    }
+
+    private static Formula NormalFormula()
+    {
+        var n = V("n"); var a = V("A");
+        return All("n", V("Nat"), All("A", Arrow(Product(Fin(2), Call("Fin", n)), Fin(6)),
+            Iff(Call("normal", a), NormalBody(n, a))));
+    }
+
+    private static Formula DecidableNormalFormula()
+    {
+        var n = V("n"); var a = V("A");
+        return All("n", Qualified("Nat"), All("A", Arrow(Product(Fin(2), Call("Fin", n)), Fin(6)),
+            Eq(TypedDecision(Scanner("instDecidableNormal", a), Scanner("normal", a)),
+                Named("inferInstanceAs", Parenthesized(Decides(NormalBody(n, a)))))));
+    }
+
     private static Formula CountFormula()
     {
         var n = V("n"); var a = V("A"); var j = V("j"); var r = V("r"); var s = V("s");
-        var p = V("p"); var q = V("q");
         var cells = Product(Fin(2), Call("Fin", n));
         var first = Ex("j", Call("Fin", n), And(Eq(Call("val", j), D(0)),
             Eq(App(a, Pair(D(0), j)), D(0))));
@@ -207,10 +236,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
         var bonds = All("j", Call("Fin", n), Imp(Lt(Add(Call("val", j), D(1)), n),
             All("r", Fin(2), All("s", Fin(2), And(Ne(here, next),
                 Ne(Add(Call("val", here), Call("val", next)), D(5)))))));
-        Formula Earlier(byte c) => Ex("q", cells, And(Lt(Rank(q, n), Rank(p, n)), Eq(App(a, q), D(c))));
-        var normal = All("p", cells, And(
-            Imp(Or(Eq(App(a, p), D(2)), Or(Eq(App(a, p), D(3)), Eq(App(a, p), D(4)))), Earlier(1)),
-            Imp(Eq(App(a, p), D(3)), Earlier(2))));
+        var normal = NormalBody(n, a);
         var predicate = Seq(LambdaLower, Sp, a, Colon, Sp, Arrow(cells, Fin(6)), Sp,
             Mapsto, Sp, Parenthesized(And(first, And(bonds, normal))));
         var boards = Call("Finset.filter", predicate, Call("Finset.univ"));

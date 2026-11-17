@@ -29,7 +29,6 @@ open private
 open private
   bouquetInclusion
   bouquetInclusion_base
-  vertexComplex
   bouquetVertex_face
   mem_bouquetComplex
   bouquetInclusion_intersection
@@ -54,8 +53,6 @@ open private
   from D5.S3.Geometry.FiniteComponentClosure.SelectedWedge
 
 open private
-  basedTrans
-  basedHomeomorphism
   nativeSuspensionComplex
   nativeSuspensionPoint
   twoComponentJoinBased

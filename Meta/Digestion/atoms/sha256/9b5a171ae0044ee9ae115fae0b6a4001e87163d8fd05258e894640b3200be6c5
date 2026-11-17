@@ -1,0 +1,73 @@
+**定理 28.2（$W=0$ 的完整齐次核与自动值域）。** 对定理 28.1 的全部输入和全部有限索引，只假设
+
+$$
+V|_{\ker D_{\rm env}}=0.
+\tag{28.12}
+$$
+
+不要求 $D_{\rm env}$ 可逆，不要求 P2，也不限制 $B$ 或 $V$ 的总秩。则
+
+$$
+\boxed{\quad
+\ker A=\{(a,v):\ Y(v)=0,\ X(a)u=0,\ X(a)Cu=0\},
+\qquad b_1\in\operatorname{ran}A.
+\quad}
+\tag{28.13}
+$$
+
+若 $u_1u_2\ne0$，则 $A$ 在全部 $\mathbb R^{4+2d}$ 上正定。若 $u=e^{i\varphi}e_j$，其中 $j\in\{1,2\}$、$\varphi\in\mathbb R$，则核恰好是一条实直线：
+
+$$
+\ker A=\{(a,0):\ X(a)=r e_{kk},\ r\in\mathbb R\},
+\qquad \{j,k\}=\{1,2\}.
+\tag{28.14}
+$$
+
+这条直线是读取方向 $u$ 所看不见的相反对角探针方向；此时 $\operatorname{rank}A=3+2d$。这些结论对每个 $\epsilon$、每组有限 $\alpha_\pm>0,\beta_\pm\in\mathbb R$ 和每个分别固定的 $\sigma$ 成立。
+
+证明。由 $W=0$ 有 $N_1=\mathcal W=0$。定理 28.1 已强制每个核方向的 $y=0$、$w=0$，所以只须分析 (28.3) 中的
+
+$$
+\delta J_C(X)u=\zeta_\delta(X+\delta H_\sigma(X))u
+\qquad(\delta=1,-1).
+\tag{28.15}
+$$
+
+$X,H_\sigma(X),J_C(X)$ 都 Hermitian。用同一个单位 $u$ 左乘 (28.15)，两边除 $\zeta_\delta$ 外的标量均为实数，而 $\operatorname{Im}\zeta_\delta=-\epsilon\sigma\delta\alpha_\delta\ne0$。因此
+
+$$
+u^*(X+\delta H_\sigma(X))u=0,\qquad u^*J_C(X)u=0.
+$$
+
+对两个 $\delta$ 合并，得到 $u^*Xu=u^*H_\sigma(X)u=u^*J_C(X)u=0$。置 $p=Xu$、$q=XCu$。成熟的换位／Jordan 恒等式 $J_C(X)+\sigma iH_\sigma(X)=XC$ 于是给
+
+$$
+p^*u=0,\qquad p^*Cu=u^*XCu=0.
+\tag{28.16}
+$$
+
+若 $u_1u_2\ne0$，$u,Cu$ 线性无关，(28.16) 强制 $p=0$。此时
+
+$$
+(X+\delta H_\sigma(X))u=-\frac{\delta\sigma i}{2}q,
+\qquad \delta J_C(X)u=\frac\delta2q.
+\tag{28.17}
+$$
+
+若 $q\ne0$，(28.15) 就要求 $\zeta_\delta=\sigma i$。但对 $\delta=\epsilon$，$\operatorname{Im}\zeta_\epsilon=-\sigma\alpha_\epsilon$ 与 $\sigma i$ 的虚部符号相反，矛盾。故 $q=0$。$X$ 同时消去基 $u,Cu$，即 $X=0$，所以此时核为零，半正定 $A$ 正定。
+
+若 $u=e^{i\varphi}e_j$，记 $c_1=1,c_2=2$，并令 $k\ne j$。$u^*Xu=0$ 给 $X_{jj}=0$，故 $p=Xu$ 属于 $\mathbb C e_k$，且 $q=c_jp$。若 $p\ne0$，(28.15) 的两个向量比例强制
+
+$$
+\zeta_\delta
+=\frac{\delta(c_j+c_k)/2}{1+\delta\sigma i(c_k-c_j)/2},
+\qquad
+\operatorname{Im}\zeta_\delta
+=-\frac{\sigma(c_j+c_k)(c_k-c_j)}{4+(c_k-c_j)^2}.
+\tag{28.18}
+$$
+
+右侧虚部对两个 $\delta$ 相同且非零；(28.2) 的两个虚部却严格异号。这同时排除两个轴上的 $p\ne0$，所以 $p=q=0$。Hermitian 性随即给 $X=r e_{kk}$、$r\in\mathbb R$。反过来，这些 $X$ 以及非轴情形的 $X=0$ 都满足 $Xu=XCu=0$，使 (28.15) 两边为零。因此 (28.13) 的核等式及 (28.14) 均为充要描述；维数给所述秩。
+
+最后对每个核方向，(28.5) 中的 $w$ 和 $Xu$ 都为零，故核配对恒为零，由 (28.6) 得 $b_1\in\operatorname{ran}A$。这里没有使用 $B$、非零环境谱或 P2；$m=0$、$D_{\rm env}=0$ 且 $V=0$、以及有任意奇异环境但满足 (28.12) 的情况都已包含。∎
+

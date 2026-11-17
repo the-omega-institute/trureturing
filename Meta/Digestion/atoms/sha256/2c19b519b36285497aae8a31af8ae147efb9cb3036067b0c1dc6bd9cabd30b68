@@ -1,0 +1,30 @@
+**引理 4.2（任意中央首系数的实际小连接行）。** 若实际 $p=p^*=p^2\in M$ 满足不归一化矩阵迹 $\operatorname{Tr}(p)=1_A$，则对任意 $\alpha\in A_{\rm sa}$、$x\in E$，
+
+$$
+\|(1-p)xp\|<2
+\quad\Longrightarrow\quad
+\boxed{D(\alpha p,x)=\frac J2[\alpha p,x].}
+\tag{4.2}
+$$
+
+首系数、对角背景和补角背景无幅度限制，所有实际代表都在内。
+
+证明。固定任意 $\chi$，$p_\chi=\pi_\chi(p)$ 是迹一普通投影，故秩一。写 $p_\chi=ee^*$，并将 $x_\chi$ 写成
+
+$$
+x_\chi=\beta p_\chi+H(z)+B,\qquad
+H(z)=ze^*+ez^*,\qquad
+z\perp e,\quad B=(1-p_\chi)B(1-p_\chi).
+$$
+
+有 $\|z\|\le\|(1-p)xp\|<2$。OP83.1准确用于实际 $r=\alpha p,a=x$，给
+
+$$
+\pi_\chi D(\alpha p,x)
+=\chi(\alpha)H(-i\sigma_\chi z/2)
+=\pi_\chi\left(\frac J2[\alpha p,x]\right).
+\tag{4.3}
+$$
+
+最后的分离只比较两份实际 $E$ 元素，给4.2。即使 $\chi(\alpha)=0$、连接为零、背景任意大，OP的原代表量词仍适用；不除以中央函数，不先取得 $D_\chi$。∎
+

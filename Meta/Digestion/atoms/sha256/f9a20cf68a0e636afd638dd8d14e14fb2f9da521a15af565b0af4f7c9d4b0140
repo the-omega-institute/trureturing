@@ -1,0 +1,41 @@
+**推论 22.1（平方差分支的一份共享系数接头）。** 在定义 20.1 的同一单位行中，取任意原 $y,z\in V_h$，假设原等式 $y^2-z^2=\lambda u$，$\lambda\in\mathbb R$。记 $q=z^2$，对任意实多项式 $p$ 置 $c=p(q)$。则 $c$ 普通交换 $h,y,z,Jy,Jz$，全部下列输入原有，实际旧行满足
+
+$$
+\begin{gathered}
+J(c\circ y)=c\circ Jy,\qquad J(c\circ z)=c\circ Jz,\\
+J(c\circ Jy)=-c\circ y,\qquad J(c\circ Jz)=-c\circ z.
+\end{gathered}
+\tag{22.1}
+$$
+
+若沿[谱混合响应卷 10.1–10.2](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)记
+
+$$
+P=y\circ z,\quad Q=Jy\circ Jz,\quad
+\mathsf X=P-Q,\quad
+\mathsf Y=y\circ Jz+Jy\circ z,\quad
+\mathsf T=\mathsf X^2,
+$$
+
+则由实际带权输入 $y_c=cy,z_c=cz$ 及其实际旧输出形成的对应量满足
+
+$$
+P_c=c^2P,\quad Q_c=c^2Q,\quad
+\mathsf X_c=c^2\mathsf X,\quad
+\mathsf Y_c=c^2\mathsf Y,\quad
+\mathsf T_c=c^4\mathsf T.
+\tag{22.2}
+$$
+
+这只支付每一条自身行上的共享系数，不支付一般 $\mathsf T=0$。
+
+证明。$q=y^2-\lambda u$ 同时是两平方的实多项式；它分别交换 $y,Jy$ 与 $z,Jz$，也交换 $h$。令 $\widetilde p(T)=p(T-\lambda)$，则 $c=\widetilde p(y^2)=p(z^2)$。定理 20.2 分别用于真正原 $y$、$z$，给 (22.1) 的四式，绝无比较不同首标签或假定两输入间可加。已知环境乘法中 $c$ 交换这四个固定元素，展开它们的 Jordan 乘积即得 (22.2)。所有带权乘积也是原 Jordan 元。
+
+尤其
+
+$$
+y_c^2-z_c^2=\lambda c^2
+$$
+
+一般不再是实标量倍单位，不能无条件把带权对重新代入仅对标量平方差已证的混合定理。即使某份 $c^4\mathsf T$ 为零，$c$ 的零核也不容许约去；$p=1$ 只返回原来的未付残余，并不证明它消失。原任意 $\lambda$、零平方、退化支撑和两输入的非零交叠均在 (22.1) 的范围内。∎
+

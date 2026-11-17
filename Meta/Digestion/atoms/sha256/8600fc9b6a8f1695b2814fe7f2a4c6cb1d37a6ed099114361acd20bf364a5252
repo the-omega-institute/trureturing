@@ -1,0 +1,38 @@
+**Definition 11.8 (intuition and mathematical attribution).** 普通白话是：
+原来的四种标签里，只有“是不是B”这盏灯在任何隐藏状态下都以四分之一
+点亮。把它分成三个时刻来看，三盏灯在同一条隐藏路径上仍按原噪声独立；
+并没有另换一份世界。若要把一次读数改成完全不透露隐藏状态的确定性记号，
+就不能再把另外三种颜色拆开。这只是单次读数的最大划分，不限制更长历史
+能怎样编码。
+
+现在允许完成时刻等到这盏灯亮，或按灯的历史和独立服务种子来决定。
+首次B规则确实依赖标签，不能再声称整串独立；但它没有按隐藏状态挑选时刻。
+每次仍必须保留另外三种颜色的全部实际内容：它们会改变那一次的后验，
+不能当作没有看见。证明把这些完整后验按同一选择规则加回去，重心恰好
+回到平稳比较分布。原来的一个时间间隔再把这个关系送到整个未来的概率律，
+接上门后原源与比较源的误差。无限等待也留在账内，没有偷偷只挑成功。
+
+这只省去一条过强的时间独立前提。它不让机器免费记住、写入、处理或输出
+不断到来的标签；拿到一张有限行，也没有把无限未来装进那张表。二元灯关系、
+三时刻共同实现和选择后的重心接到的是原被动源预测接口，尚不是具名量子
+分析器、完整菜单或读后同一活动输入的真实返回；完整量子起源目标不变。
+
+Conditional expectation/tower identities, probability-kernel TV
+contraction and convexity, Markov's inequality and countable union
+bounds are mature intermediates. The one-gap coefficient retains the
+absolute-regularity convention and primary reference in Definition
+10.8 (McDonald–Shalizi–Schervish, §2.1); no estimator or queue model
+is transferred. Reused source-specific inputs are the original
+emissions/posteriors (1.2), (2.2)–(2.5), the mask independence and
+waiting proof in §6, [OWGR, Theorem 5.3]'s nonconstancy, §9's complete
+future kernel and dynamic event, and §10's generated dependence
+guard and acquired-row contract. The exact single-read quotient
+(11.1), selected-cut identity (11.5) and their full-future completion
+composition (11.6)–(11.7) are repo-derived ordinary paper deductions.
+They are not fresh Lean verification, a strict global axiom-simplicity
+or physical-dimension result, or a worldwide novelty claim.
+
+[SC]: AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES_CONTINUATION.md
+[SF]: AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md
+[ZC]: AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md
+

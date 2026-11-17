@@ -1,0 +1,15 @@
+**定义 44.1（由截面构造的复代数丛）。** 先取实向量丛的复化 $\mathfrak J_{\mathbb C}=\mathfrak J\otimes_{\mathbb R}\mathbb C$，带伴随 $(a+ib)^*=a-ib$。42.1使每个复化过渡 $G_{\beta\alpha}$ 是矩阵星同构或星反同构，因而是等距映射；局部矩阵范数遂给一个不依赖坐标的复化范数。
+
+给定连续取向截面 $\sigma$，以局部符号 $s_\alpha$ 定义
+
+$$
+A\cdot_{s_\alpha}B=
+\begin{cases}AB,&s_\alpha=+1,\\BA,&s_\alpha=-1,\end{cases}
+\qquad
+K_\sigma(a,b)|_{O_\alpha}
+=s_\alpha\,\kappa(a_\alpha,b_\alpha).
+\tag{44.1}
+$$
+
+右式通过 $\theta_\alpha^{-1}$ 读回实际自伴纤维。这里使用的是已知标准或相反矩阵乘法，还没有将任何未知 $D$ 放入结合律。
+

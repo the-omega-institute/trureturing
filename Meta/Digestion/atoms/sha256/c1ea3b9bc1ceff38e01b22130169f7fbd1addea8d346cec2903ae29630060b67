@@ -1,0 +1,38 @@
+**定理 494.2（固定二倍区间归一化的正超额峰度）。** 设 $E$ 局部有界 Borel 可测，(490.2) 与 (493.1) 在指数带 $\alpha<\theta<\beta$ 上成立，且对每个 $\mathbf s\in[0,1]^4$，
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[U_X^{2\kappa}\prod_{j=1}^4B_X(s_j)\Bigr]=c_4\kappa^2\,W_4(\mathbf s),\qquad c_4=\frac{2^{2\kappa}-1}{2\kappa\log2} .
+\tag{494.3}
+$$
+
+则对每个实值 $g\in L^1(0,1)$，
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}Z_X^2=\frac{(2^\kappa-1)\,Q(g)}{\log2},\qquad
+\lim_{X\to\infty}\mathbb E_{\mu_X}Z_X^4=\frac{3\kappa\,(2^{2\kappa}-1)\,Q(g)^2}{2\log2} .
+\tag{494.4}
+$$
+
+若 $g$ 不几乎处处为零，令 $a=\kappa\log2$，则
+
+$$
+\frac{\lim_X\mathbb E_{\mu_X}Z_X^4}{\bigl(\lim_X\mathbb E_{\mu_X}Z_X^2\bigr)^2}=3\cdot\frac a2\coth\frac a2>3 .
+\tag{494.5}
+$$
+
+证明。第一式是定理 490.6 除以 $\log2$。对第二式验证 $(\mathrm M_4)$：(b) 即 (494.3)；(a) 由引理 493.1 的第一式得到——在 $[X,2X]$ 上 $x^\theta\log x\ge X^\theta\log X$，故
+
+$$
+\mathbb E_{\mu_X}|B_X(s)|^4\le\frac{1}{\log2}\cdot\frac{1}{X\,(X^\theta\log X)^2}\int_X^{2X}|D_{sx^\theta}(x)|^4\,dx\ll C_4 ,
+$$
+
+对 $s\in[0,1]$ 一致。由定理 494.1（$k=4$），$\lim\mathbb E Z_X^4=c_4\kappa^2\int_{[0,1]^4}\prod_jg(s_j)W_4(\mathbf s)\,d\mathbf s$。对 $W_4$ 的每个配对 $\pi$，由 $0\le\min\le1$ 与 $g\in L^1$ 得绝对可积性，再由 Fubini，$\int\prod_jg(s_j)\prod_{\{i,j\}\in\pi}\min(s_i,s_j)\,d\mathbf s=Q(g)^2$；三个配对给出 $3Q(g)^2$（这是 Isserlis 公式对 $\int_0^1g(s)B(s)\,ds$ 的计算），即 (494.4) 第二式。若 $g$ 不几乎处处为零，则 $Q(g)>0$（定理 490.6 的证明），比值为
+
+$$
+\frac{3\kappa(2^{2\kappa}-1)\log2}{2(2^\kappa-1)^2}=\frac{3a\,(e^a+1)}{2(e^a-1)}=3\cdot\frac a2\coth\frac a2 ,
+$$
+
+而 $y\coth y>1$（$y>0$）等价于 $\tanh y<y$。证毕。
+
+若 $g$ 不几乎处处为零，(494.5) 说明 (494.3) 下 $Z_X$ 的二阶、四阶矩极限不是任何中心高斯分布的矩：中心高斯变量的四阶矩恰为二阶矩平方的 $3$ 倍。超额峰度 $3\bigl(\frac a2\coth\frac a2-1\bigr)$ 只依赖 $\theta$，与剖面 $g$ 无关；它是尺度混合的一般机制的显式值：对独立的标准高斯 $N$ 与满足 $\mathbb E\sigma^4<\infty$ 的非常数正尺度 $\sigma$，$\mathbb E(\sigma N)^4/(\mathbb E(\sigma N)^2)^2-3=3\operatorname{Var}(\sigma^2)/(\mathbb E\sigma^2)^2>0$（Andrews–Mallows [Scale mixtures of normal distributions, J. Roy. Statist. Soc. B 36 (1974), 99–102]），这里尺度为 $U^r$。由关于概率测度 $|g(s)|ds/\|g\|_1$ 的 Jensen 不等式，$\sup_{X\ge X_0}\mathbb E_{\mu_X}|Z_X|^4\le\sup_{X\ge X_0}2^{4r}(1+\eta_X)^4C_4\|g\|_1^4<\infty$（$C_4$ 为 $k=4$ 时 (a) 的常数），故 $\mathbb E[Z_X^2\mathbf 1_{\{Z_X^2>R\}}]\le\mathbb EZ_X^4/R$，$\{Z_X^2\}_{X\ge X_0}$ 一致可积（$X_0$ 充分大），任何分布极限的二阶矩等于 (494.4) 的第一式；若再有 $Z_X^4$ 的一致可积性，即可由上述矩比较排除高斯分布极限。推论 494.3 在完整接口下给出极限分布。
+

@@ -1,0 +1,33 @@
+**命题 43.3（$1/2$ 幂次不可统一提高）。** 在 $M_2(\mathbb C)$ 中取 $p=E_{11}$、$q=E_{22}$、$P=1$、$c=\operatorname{diag}(1,2)$、$\tau_0=E_{12}+E_{21}$，并对 $\varepsilon>0$ 置
+$$
+t_\varepsilon=2\varepsilon\tau_0,\qquad s_\varepsilon=\varepsilon\operatorname{diag}(1,-2),\qquad
+b=0,\qquad g_\varepsilon=K_\sigma(c,t_\varepsilon)+s_\varepsilon.
+\tag{43.12}
+$$
+定理 34.1 的精确全正 P2 族直接供应此例：其参数 $(a,b,v,r)=(1,2,2\varepsilon,\varepsilon)$ 满足 $|r|=\varepsilon\le4\sqrt2\varepsilon/3$。这已覆盖两种 $\sigma$、全部复相位、任意质量与零泛函，不重证该尖锐区间。
+
+**证明。** 两份实际探针准确为
+$$
+x_{d,\varepsilon}=\frac{\sigma i\varepsilon}{d-3/2}
+\begin{pmatrix}0&-1\\1&0\end{pmatrix}
++\varepsilon\operatorname{diag}\big((d-1)^{-1},-2(d-2)^{-1}\big).
+$$
+由 (43.6) 且 $b=0$，两个 Gram 对**每个**正泛函均为零。此时 $z_d$ 两个对角元之和为 $-\varepsilon d/((d-1)(d-2))$，故
+$$
+L_d=2\varepsilon^2\frac{d^2+1}{(d-1)(d-2)}\tau_0,\qquad
+\|L_d\|=2\varepsilon^2\kappa_d,\quad
+\kappa_d=\left|\frac{d^2+1}{(d-1)(d-2)}\right|,
+$$
+$$
+\kappa_+=\frac{2(10+\sqrt{10})}{7\sqrt{10}-20},\qquad
+\kappa_-=\frac{2(10-\sqrt{10})}{20+7\sqrt{10}},\qquad
+\kappa=\max\{\kappa_+,\kappa_-\}=\kappa_+.
+\tag{43.13}
+$$
+取 $\eta_\varepsilon=2\kappa\varepsilon^2$。正泛函满足 $|\phi(L_d)|\le\|L_d\|\phi(1)\le\eta_\varepsilon\phi(1)$，故两份完整预算对全部质量成立；不是有限状态抽样。另一方面 $\|s_\varepsilon\|=2\varepsilon$，对任意 $\alpha>1/2$，
+$$
+\frac{\|s_\varepsilon\|}{\eta_\varepsilon^\alpha}
+=2(2\kappa)^{-\alpha}\varepsilon^{1-2\alpha}\longrightarrow\infty\quad(\varepsilon\downarrow0).
+$$
+所以固定 $M_2$ 上也不存在统一的 $C_\alpha\eta^\alpha$ 界。这只证明幂次尖锐性，不证明 (43.5) 的系数最优，也不是块数增长时的收敛率或完整公理反模型。∎
+

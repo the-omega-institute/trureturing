@@ -1,0 +1,29 @@
+**推论 103.2（识别之后才取得的同一对象结构）。** 同一旧 $D$ 现在实双线性、分别范数及超弱连续，并满足
+
+$$
+\begin{gathered}
+L_a(X)=[iQa/2,X],\quad L_a(b)=D(a,b),\qquad
+\|D(a,b)\|\le\|a\|\|b\|,\\
+D(c,a)=0\quad(c\in Z(M)_{\rm sa}),\qquad
+D(za,zb)=zD(a,b)\quad(z=z^*=z^2\in Z(M)).
+\end{gathered}
+\tag{103.1}
+$$
+
+证明。直接读98.6，左右乘固定有界元是正规有界线性映射，中央元与交换子交换，给全部断言。中央下降直到此处才成为结论。它不等于任意压缩下降；一般非中央 $p$ 仍不能写 $pD(a,b)p=D(pap,pbp)$，跨补角交换子项并不消失。∎
+
+同一 $\star$ 乘法是98.7。标准关联代数后果及 A32.2、A23.1、A6.3、A7–8的准确消费者给全部原有限复 Gram、$\mathsf P_3$、原 R和忠实保锥等距含单位 Hilbert 表示。明确地，对每个有限 $n$、全部原 $a_1,\ldots,a_n$、全部复系数 $\lambda_1,\ldots,\lambda_n$ 和每份原 $\gamma$，取 $X=\sum_j\lambda_ja_j$，有
+
+$$
+\begin{aligned}
+\sum_{j,k=1}^n\overline\lambda_j\lambda_k
+[\gamma(a_j\circ a_k)-i\gamma D(a_j,a_k)]
+&=\gamma(X^*\star X)\ge0,\\
+(a\circ b)\circ c-D(D(a,b),c)
+&=a\circ(b\circ c)-D(a,D(b,c)).
+\end{aligned}
+\tag{103.2}
+$$
+
+第二式是同一结合乘法的实部；全部嵌套仍是原值。$n=0$、零标签、重复和每份零、不等、次归一质量均保留。表示不自动满射全 $B(H)$，原评价也不因此变成正规评价。
+

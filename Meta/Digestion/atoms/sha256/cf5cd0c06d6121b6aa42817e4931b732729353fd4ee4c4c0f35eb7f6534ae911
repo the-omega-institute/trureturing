@@ -1,0 +1,45 @@
+**命题 42.3（P2 单独不足）。** 在 (42.1)–(42.2) 中取 $\rho=1/2$，则两种 $\sigma$ 的全部正泛函 P2 均成立，但 (42.7) 的一个正读取违反原零探针 PB。
+
+**证明。** 取任意 $z=X+iY$，记 $\mathcal R=X^2+Y^2$。固定二表与矩阵铅笔为
+
+$$
+H_\phi=\begin{pmatrix}\phi(c^2)&\phi(k)-i\phi(g)\\\phi(k)+i\phi(g)&\phi(t^2)\end{pmatrix},\qquad F_w=t^2-2\operatorname{Re}(w)k+|w|^2c^2+2\operatorname{Im}(w)g.
+\tag{42.22}
+$$
+
+其对角非负，$\det H_\phi=B_\phi(c,t)-\phi(g)^2$，故 P2 等价于 $H_\phi\ge0$。列 $(-w,1)$ 的二次值是 $\phi(F_w)$；其复数倍涵盖第二坐标非零的所有列，第二坐标为零的列由 $\phi(c^2)\ge0$ 处理。因此全部 $w$ 的 $F_w\ge0$ 等价于全部数学正泛函 P2，反向使用正泛函决定准确锥。这是列的齐次参数化，不除以任何质量或表对角。
+
+令 $s=\operatorname{diag}(1/2,-1,0)$，展开得
+
+$$
+Q_z=(t-zc)^*(t-zc)+2\sigma Y s=F_{X+i\sigma Y}.
+\tag{42.23}
+$$
+
+这个参数替换为复平面的双射。$Q_z$ 的右下角为 $3$；若 $c_0=\operatorname{diag}(1,2)$，其左上块为 $vv^*+\mathcal R c_0^2+2\sigma Y s_0$，右上列为 $-\overline zc_0v$。减去 $\mathcal R c_0vv^*c_0/3$，Schur 补准确为
+
+$$
+D_z=\begin{pmatrix}
+1+2\mathcal R/3+\sigma Y&\sqrt2(1-2\mathcal R/3)\\
+\sqrt2(1-2\mathcal R/3)&2+4\mathcal R/3-2\sigma Y
+\end{pmatrix}.
+\tag{42.24}
+$$
+
+$$
+(D_z)_{11}=\frac23X^2+\frac23(Y+3\sigma/4)^2+\frac58>0,\qquad \det D_z=\frac{16}{3}X^2+\frac{10}{3}Y^2\ge0.
+\tag{42.25}
+$$
+
+行列式由 $2[(1+2\mathcal R/3)^2-Y^2]-2(1-2\mathcal R/3)^2=16\mathcal R/3-2Y^2$ 得到。对任意 $a,b\in\mathbb C$，$D_z$ 的二次型可配成 $(D_z)_{11}|a+(D_z)_{12}b/(D_z)_{11}|^2+(\det D_z)/(D_z)_{11}|b|^2$，所以 $D_z\ge0$，包括 $z=0$。再将 $Q_z$ 的环境坐标配方，二次型等于该 Schur 二次型加 $3|b+(-zv^*c_0)a/3|^2$（此处 $a\in\mathbb C^2,b\in\mathbb C$），故 $Q_z\ge0$。这里只除以确定正的系数，全部复参数及全部原质量的 P2 证书成立。
+
+而 (42.6)–(42.7) 准确化为
+
+$$
+\theta=\frac43,\quad \Lambda_{1/2}=\frac{25\sqrt2}{9},\quad A_{1/2}=\frac{\sqrt{93}}3,\quad
+M_{1/2}=\frac{25}{3}\left(\sqrt3+\frac52\right),\quad \varepsilon_{1/2}=\frac{25\sqrt2-3\sqrt{93}}{150(\sqrt3+5/2)}>0.
+\tag{42.26}
+$$
+
+这里 $\Lambda_{1/2}^2-A_{1/2}^2=413/81>0$。取 $x=0$、$\xi=u+\varepsilon_{1/2}(i\sigma e+4f/3)$，质量为 $1+(25/9)\varepsilon_{1/2}^2$；定理 42.2 给实际违反量至少 $\delta_{1/2}^2/(4M_{1/2})>0$。因此这个例子只分离 P2 与固定输出 PB，不是满足完整 PB 或完整原公理的反模型。∎
+

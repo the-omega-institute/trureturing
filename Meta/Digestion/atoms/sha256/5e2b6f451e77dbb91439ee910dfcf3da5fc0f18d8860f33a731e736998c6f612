@@ -1,0 +1,44 @@
+**定理 10.1（同纤维的统一双向界）。**在定理 9.2 的条件下，置
+
+$$
+K=\{(a,b)\in M^2:\gamma(a)=\gamma(b)\},\qquad
+N_0=\{u\in M:\gamma(u)=0\}.
+$$
+
+对每个 $(a,b)\in K$，令 $w=\beta(a)-\beta(b)$。则 $c(a,b)=c(b,a)=0$，且对每个 $z\in M$，
+
+$$
+|B(w,\beta(z))|\le\frac32r(z),\qquad
+|B(\beta(z),w)|\le\frac32q(z).
+\tag{10.1}
+$$
+
+**证明。**$w\in W$，而由 (2.1)
+
+$$
+0=B(w,w)=\frac{c(a,b)+c(b,a)}2.
+$$
+
+两个实际比较非负，故都为零。这里没有从 $B(w,w)=0$ 推出根性。$c(a,b)=0$ 与 (2.1) 给 $q(a)-q(b)=2B(w,\beta(b))$；同理由 $c(b,a)=0$ 得 $r(a)-r(b)=2B(\beta(b),w)$。于是
+
+$$
+\begin{aligned}
+c(a,b\cdot z)-c(b,b\cdot z)
+&=-2B(w,\beta(z)),\\
+c(b\cdot z,a)-c(b\cdot z,b)
+&=-2B(\beta(z),w).
+\end{aligned}
+\tag{10.2}
+$$
+
+计算中使用 $\beta(b\cdot z)=\beta(b)+\beta(z)+T(b,z)$，而 $B(w,T(b,z))=B(T(b,z),w)=0$ 由 (9.2) 给出。
+
+(R) 的 $k=0$ 项与非负性对全部四变量给
+
+$$
+0\le c(x\cdot u,y\cdot v)\le3\bigl(c(x,y)+c(u,v)\bigr).
+\tag{10.3}
+$$
+
+以 $(x,y,u,v)=(a,b,1,z)$ 和 $(b,b,1,z)$ 代入，(10.2) 第一行的两个读数均在 $[0,3r(z)]$。以 $(b,a,z,1)$ 和 $(b,b,z,1)$ 代入，第二行的两个读数均在 $[0,3q(z)]$。这给 (10.1)，并且界不依赖于同纤维对 $(a,b)$。它是前述续卷第 3 节式 (3.2) 的同一实际比较界，适用于此处仍带仿射偏移的纤维。
+

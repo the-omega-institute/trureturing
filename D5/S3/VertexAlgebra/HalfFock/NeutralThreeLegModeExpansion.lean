@@ -876,8 +876,7 @@ theorem nativeNeutralLaurentEntry_raw_normal_expansion
   ring
 
 open LatticeHalfFockCurrentCorrection
-open private pairDerivation_source_partials from
-  D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+open D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation (pairDerivation_source_partials)
 
 def correctionEvaluation (D : LatticeData) (T : ℂˣ) :
     CorrectionPolynomial D →ₐ[ℂ] Oscillator D :=

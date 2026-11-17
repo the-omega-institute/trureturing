@@ -240,7 +240,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
 
     output.parent.mkdir(parents=True, exist_ok=True)
     staged_root = pathlib.Path(tempfile.mkdtemp(prefix=".lean-materials.", dir=output.parent))
-    material_sources: dict[str, pathlib.Path] = {}
+    material_sources: dict[str, tuple[pathlib.Path, int]] = {}
     referenced_spools: set[str] = set()
     modules: list[dict] = []
     previous_module: str | None = None
@@ -337,11 +337,11 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                         f"statement material spool is not strict UTF-8: {material_file}") from error
                 address = type_sha256[7:]
                 if address in material_sources:
-                    with open_material(material_sources[address]) as left, open_material(material_path) as right:
+                    with open_material(material_sources[address][0]) as left, open_material(material_path) as right:
                         if not streams_equal(left, right):
                             raise ValueError(f"statement material address collision: {type_sha256}")
                 else:
-                    material_sources[address] = material_path
+                    material_sources[address] = (material_path, decoded_bytes)
                     material_bytes += decoded_bytes
                 declarations.append({
                     "axioms": require_sorted_strings(
@@ -388,8 +388,9 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
         with zipfile.ZipFile(
                 staged_archive, "w", compression=zipfile.ZIP_DEFLATED,
                 compresslevel=6, allowZip64=True) as archive:
-            for address, source in sorted(material_sources.items()):
+            for address, (source, decoded_bytes) in sorted(material_sources.items()):
                 info = zipfile.ZipInfo(f"sha256/{address}", ARCHIVE_TIMESTAMP)
+                info.file_size = decoded_bytes
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
