@@ -71,7 +71,7 @@ private theorem sparse_injective : Function.Injective (stack sparse).mulVecLin :
   · simpa [stack, sparse, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] using h3
   · simpa [stack, sparse, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] using h4
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨L, hdim, hL⟩ := h sparse sparse_independent sparse_injective
   have hne : L ≠ ⊥ := by
