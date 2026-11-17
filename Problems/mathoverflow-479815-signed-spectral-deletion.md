@@ -1,7 +1,8 @@
 ---
 slug: mathoverflow-479815-signed-spectral-deletion
 bibkey: hameed2025signedspectraldeletion
-url: https://mathoverflow.net/questions/479815
+doi: null
+url: https://ajc.maths.uq.edu.au/v93.p198
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/SignedGraphSpectral/MO479815.result
@@ -11,7 +12,7 @@ motivation_gids:
 
 ## Problem
 
-MathOverflow 479815 asks whether the spectral deviation
+[MathOverflow 479815, “Change in two spectral deviations due to edge deletion in a signed graph”](https://mathoverflow.net/questions/479815), asks whether the spectral deviation
 
 $$
 \beta_A(\Sigma)=\sum_i(\lambda_i-\mu_i)^2
@@ -25,7 +26,7 @@ The proposed monotonicity would control how the signed-versus-underlying spectra
 
 ## Gap
 
-The source question and the cited Hameed–Biju–Stanić paper define the beta quantity, but do not settle the full universal deletion claim. The preregistration is [issue #31231](https://github.com/the-omega-institute/trureturing/issues/31231). The bounded literature screen covered the source, its cited paper, and the directly relevant follow-up records arXiv:2606.11108 and arXiv:2609.11736; no complete supplier of this exact claim was found in that scope.
+The source question and the cited Hameed–Biju–Stanić paper, [*Spectral measures of balance for signed graphs*, Australasian Journal of Combinatorics 93(1) (2025), 198–210, equation (1)](https://ajc.maths.uq.edu.au/v93.p198), define the beta quantity, but do not settle the full universal deletion claim. The dossier's bibliographic metadata identifies this paper through `Library/Eigenstructure/hameed2025signedspectraldeletion.md`; the question being settled is the linked MathOverflow beta assertion. The preregistration is [issue #31231](https://github.com/the-omega-institute/trureturing/issues/31231). The bounded literature screen covered the source, its cited paper, and the directly relevant follow-up records arXiv:2606.11108 and arXiv:2609.11736; no complete supplier of this exact claim was found in that scope.
 
 ## Route
 
