@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/LinearForests/DirectedForestPathOrder
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/LinearForests/DirectedForestCompletion]
+   anchors: [mathlib/module/Mathlib.Order.Preorder.Finite]
    utility: none
    digest: Every finite acyclic partial permutation component has one unique directed path order. -/
 
