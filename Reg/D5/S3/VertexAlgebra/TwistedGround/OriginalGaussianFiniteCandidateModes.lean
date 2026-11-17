@@ -705,4 +705,58 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end P_inverse_stencil
 
+namespace sourceDerivativeConvolution_step
+abbrev arena : Arena where
+  signature := complexSignature
+  Law R := ∀ (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ),
+    R.readout () ()
+      (2 * (sourceDerivativeConvolution H p q r -
+        (1 - r) * shiftY (sourceDerivativeConvolution H) p q r))
+      (-r * shiftY (L H) p q r)
+
+private theorem rejected_fails : ¬ arena.Law complexFalse := by
+  intro h
+  exact h (fun _ _ _ => 0) 0 0 0
+
+def family : Registration arena (type_of% (@sourceDerivativeConvolution_step)) where
+  actual := complexEqual
+  bridge := Iff.rfl
+  variation := ⟨@sourceDerivativeConvolution_step, complexFalse, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law complexEqual complexFalse rejected_fails
+  dependence := complexEqualDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@sourceDerivativeConvolution_step) (Realization complexSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes.sourceDerivativeConvolution_step.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes.sourceDerivativeConvolution_step.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end sourceDerivativeConvolution_step
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes

@@ -488,6 +488,38 @@ private lemma L_shift11 (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) 
     rw [L_shiftY]
     cases q <;> simp [shiftY, shift11]
 
+/-- The actual finite convolution with the second source differentiated by Euler.
+No parameter derivative of an infinite external-mode sum occurs here. -/
+def sourceDerivativeConvolution (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) : ℂ :=
+  ∑ i ∈ Finset.range (p + 1), ∑ j ∈ Finset.range (q + 1),
+    a i r * (r * aPrime j r) * H (p - i) (q - j) r
+
+/-- The source derivative recurrence survives the actual finite rectangular
+convolution, including the q=0 boundary. This is the H_y cancellation needed
+by the asymmetric polynomial stencil. -/
+theorem sourceDerivativeConvolution_step (H : ℕ → ℕ → ℂ → ℂ)
+    (p q : ℕ) (r : ℂ) :
+    2 * (sourceDerivativeConvolution H p q r -
+      (1 - r) * shiftY (sourceDerivativeConvolution H) p q r) =
+      -r * shiftY (L H) p q r := by
+  cases q with
+  | zero => simp [sourceDerivativeConvolution, aPrime, shiftY]
+  | succ q =>
+    simp only [shiftY, Nat.succ_ne_zero, ite_false, Nat.add_sub_cancel]
+    unfold sourceDerivativeConvolution L
+    rw [Finset.mul_sum, ← Finset.sum_sub_distrib, Finset.mul_sum, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [Finset.sum_range_succ']
+    have hz : aPrime 0 r = 0 := by simp [aPrime]
+    simp only [hz, mul_zero, zero_mul, add_zero]
+    rw [Finset.mul_sum, ← Finset.sum_sub_distrib, Finset.mul_sum, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro j hj
+    rw [show q + 1 - (j + 1) = q - j by omega]
+    linear_combination a i r * r * H (p - i) (q - j) r *
+      a_derivative_mode_step j r
+
 private lemma L_denominatorStencil (H : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
     denominatorStencil (L H) p q r = L (denominatorStencil H) p q r := by
   unfold denominatorStencil
