@@ -38,7 +38,7 @@ noncomputable def mix {k m n : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
     (X : Fin k → Matrix (Fin m) (Fin n) ℂ) (r : Fin k) : Matrix (Fin m) (Fin n) ℂ :=
   ∑ s, B r s • X s
 
-private theorem mix_apply {k m n : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
+theorem mix_apply {k m n : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
     (X : Fin k → Matrix (Fin m) (Fin n) ℂ) (r : Fin k) (i : Fin m) (j : Fin n) :
     mix B X r i j = ∑ s, B r s * X s i j := by
   simp [mix, Matrix.sum_apply]
@@ -52,14 +52,14 @@ private theorem flat_mix {k m n : ℕ} (B : Matrix (Fin k) (Fin k) ℂ)
   ext p r
   simp [flat, mix, Matrix.mul_apply, Matrix.sum_apply, mul_comm]
 
-private theorem flat_gram {k m n : ℕ} (X : Fin k → Matrix (Fin m) (Fin n) ℂ) :
+theorem flat_gram {k m n : ℕ} (X : Fin k → Matrix (Fin m) (Fin n) ℂ) :
     (fun r s => trace ((X r)ᴴ * X s)) = (flat X)ᴴ * flat X := by
   ext r s
   simp only [trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, flat,
     Fintype.sum_prod_type]
   exact Finset.sum_comm
 
-private theorem flat_injective {k m n : ℕ} (X : Fin k → Matrix (Fin m) (Fin n) ℂ)
+theorem flat_injective {k m n : ℕ} (X : Fin k → Matrix (Fin m) (Fin n) ℂ)
     (hX : LinearIndependent ℂ X) : Function.Injective (flat X).mulVec := by
   intro x y hxy
   apply hX.fintypeLinearCombination_injective
@@ -260,7 +260,7 @@ private theorem tensor_kernel_vector
     simp
   simpa [Matrix.kronecker] using hvec.trans hv0
 
-private theorem gram_identity_injective
+theorem gram_identity_injective
     {m n : Type*} [Fintype m] [Fintype n] [DecidableEq n]
     (F : Matrix m n ℂ) (hF : Fᴴ * F = 1) : Function.Injective F.mulVecLin := by
   intro u v huv
@@ -305,7 +305,7 @@ private theorem k_one_false
   have hj := congrArg (fun A => A 0 j) hmatzero
   simpa [Matrix.vecMulVec_apply] using hj
 
-private theorem rank_kronecker_one_general
+theorem rank_kronecker_one_general
     {m n : ℕ} (H : Matrix (Fin m) (Fin m) ℂ) :
     (Matrix.kronecker H (1 : Matrix (Fin n) (Fin n) ℂ)).rank = n * H.rank := by
   classical
@@ -676,10 +676,10 @@ theorem native_three_refutation
   rw [hCPC, Matrix.rank_one] at hRank
   norm_num at hRank
 
-private def concatK {k d c : ℕ} (N : Fin k → Matrix (Fin d) (Fin c) ℂ) :
+def concatK {k d c : ℕ} (N : Fin k → Matrix (Fin d) (Fin c) ℂ) :
     Matrix (Fin d) (Fin k × Fin c) ℂ := fun i p => N p.1 i p.2
 
-private theorem concatK_gram {k d c : ℕ}
+theorem concatK_gram {k d c : ℕ}
     (N : Fin k → Matrix (Fin d) (Fin c) ℂ)
     (H : Matrix (Fin k) (Fin k) ℂ)
     (hN : ∀ r s, (N r)ᴴ * N s = H r s • 1) :
