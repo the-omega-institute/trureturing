@@ -72,7 +72,7 @@ internal sealed class KurkovWeightedEntringerDivisibilityDocument : IScribeDocum
                 "The Newton ingredient is classical and reused from the repository and pinned Mathlib. "
                 + "The reflected row construction and full source deduction are repository derived. "
                 + "No external Lean code is transplanted. Bounded literature searches are described "
-                + "in the Library note and issue #31218; global novelty and priority remain "
+                + "in the Library note; global novelty and priority remain "
                 + "ASSUMED-UNVERIFIED.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,

@@ -85,3 +85,11 @@ congruence for all positive n,d. Whole-sequence period d is not needed.
 The universal divisor conclusion includes composite moduli and prime
 powers without inversion or a prime-power reduction. Generalizations to
 other row weights and the two other OEIS assertions remain unproved here.
+
+## ASSUMED-UNVERIFIED
+
+Global novelty, publication priority, and completeness of the bounded
+literature search remain ASSUMED-UNVERIFIED. The cited source and inspected
+search scope do not establish exhaustive absence of an earlier proof or an
+equivalent result. No claim is made beyond the complete first conjecture
+stated above; Conjecture 2 and the A060818 assertion remain excluded.
