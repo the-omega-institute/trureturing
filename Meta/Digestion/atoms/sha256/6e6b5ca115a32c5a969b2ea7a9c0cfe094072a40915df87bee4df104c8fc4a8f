@@ -1,0 +1,68 @@
+**定理 22.4（全测比较的残余边界与原 CM 点的保证函数）。** 对同一固定有限端和同一好阶段族，集合
+
+$$
+\mathcal G=\bigcap_{j,L\ge1}\ \bigcup_{\substack{H\in\mathcal H_-\\H\ge L}}
+ \{\omega:\sigma_H(\omega)<1/j\}
+\tag{22.13}
+$$
+
+是稠密 $G_\delta$、Haar 零测，且恰有
+
+$$
+\omega\in\mathcal G\quad\Longleftrightarrow\quad
+\liminf_{\substack{H\to\infty\\H\in\mathcal H_-}}\sigma_H(\omega)=0.
+\tag{22.14}
+$$
+
+它与 $1,\omega_1,\omega_2$ 有理线性无关的方向集之交仍是稠密 $G_\delta$。这只刻画任意晚阶段中存在短对偶向量，不否定同一方向另有无穷多个 $\sigma_H\ge\delta>0$ 的阶段。
+
+对原固定向量 $\alpha$，令 $A>0,\mu>0$ 是 (17.5) 已有的有限型常数。该下界给出以下明确保证函数，而非 $\sigma_H(\alpha)$ 的等式：
+
+$$
+\begin{gathered}
+\sigma_H(\alpha)\ge g_H:=\min\left\{K_H,
+ \left(\frac{AK_Hr_H^\mu}{q_H^\mu}\right)^{1/(\mu+1)}\right\},\\
+g_H=X_H^{\Delta_{\mathrm{geom}}/(\mu+1)+o(1)}\longrightarrow0,\\
+\Delta_{\mathrm{geom}}=1-(\mu+1)c_0^2-\mu\beta
+ =-\mu c_0^2-(\mu-2)\beta\le-2c_0^2<0.
+\end{gathered}
+\tag{22.15}
+$$
+
+这里的明确值以原有固定 $A,\mu$ 表示，不提供它们的数值。保证函数趋零既不证明实际 $\sigma_H(\alpha)\to0$，也不证明有限型信息在逻辑上绝不够；它只表明这一既有幂下界的直接代入没有支付原临界阶段的统一正下界。
+
+**证明（类别与测度对照）。** 对每个阶段，(22.1) 将 $\{\sigma_H<1/j\}$ 写成连续圆 character 的严格不等式集的并，因而它是开集；$k=0$ 的常数项只会贡献空集或全空间。若 $\omega$ 有共同有理分母 $a\ge1$，取 $k=(a,0)$，则 $q_Hk\cdot\omega\in\mathbb Z$，故 $\sigma_H(\omega)\le ar_H\to0$。$\mathcal H_-$ 无界，所以 (22.13) 中每个尾并集均含全部有理方向，是开稠密集。经典 Baire 定理给出其可数交稠密，定义直接给出 (22.14)。定理 22.3 的全测集合上 $\sigma_H\to\infty$，与 $\mathcal G$ 不交，故 $\mathcal G$ 零测。
+
+对每个 $k\ne0$，闭集 $\{\omega:k\cdot\omega=0\pmod1\}$ 无内点：沿一个非零坐标任意小地移动即可离开它。其开稠密补集对全部非零整数 $k$ 的可数交，正是 $1,\omega_1,\omega_2$ 有理线性无关的方向集。再用 Baire 即得交集声明；这没有赋予这些残余方向任何有限型保证，也未定位原 $\alpha$。
+
+**证明（原有限型保证与未证关系）。** 对原对偶的任一 $k\ne0$，令 $s=\|k\|_\infty\ge1$，向量长度记为 $v$。由 (17.5)，
+
+$$
+v\ge r_Hs,\qquad v\ge K_H\|q_Hk\cdot\alpha\|_{\mathbb T}
+ \ge\frac{AK_H}{q_H^\mu s^\mu},\qquad
+v^{\mu+1}\ge\frac{AK_Hr_H^\mu}{q_H^\mu}.
+$$
+
+$k=0$ 的非零向量长至少为 $K_H$，故得到 (22.15) 的第一式。§19 已用二维抽屉原理从同一 (17.5) 推出 $\mu\ge2$；定理 16.7、$\log X_H\sim H^2/c_0^2$ 和准确的 $MJ_H=X_H+O(M)$ 又给出
+
+$$
+q_H=X_H^{c_0^2+o(1)},\qquad
+K_H=X_H^{1-c_0^2+o(1)},\qquad r_H=X_H^{-\beta+o(1)}.
+$$
+
+因此 (22.15) 中第二个候选项的指数为 $\Delta_{\mathrm{geom}}/(\mu+1)$。临界等式和 $\mu\ge2$ 使该指数严格负；该项趋零，而 $K_H\to\infty$，所以最小值最终取第二项，得到其余各式。这是 §19 保证下界在当前阶段的代入，作为与度量结论比较的中间步骤，不另称一般算术新定理。
+
+沿用 §21 的充分路线，原固定点仍缺的关系是：证明某个 $\delta>0$ 及无界的 $\mathcal H\subseteq\mathcal H_-$ 满足
+
+$$
+K_H^2\|q_Hk\cdot\alpha\|_{\mathbb T}^2+r_H^2\|k\|_2^2\ge\delta^2
+\quad(H\in\mathcal H,\ k\in\mathbb Z^2\setminus\{0\}).
+\tag{22.16}
+$$
+
+这里只需频率 $0<\|k\|_2<\delta/r_H$，$K_H\ge\delta$ 最终自动成立。定理 21.5 已给出该关系到原 $\nu(R)=1$ 的充分接口；该关系仍只作为充分条件，不声称它是原满测的必要条件。方向全测不保证包含指定的 $\alpha$，残余零测也不保证排除它；本节既未证 $\alpha\in\Omega$，也未证 $\alpha\in\mathcal G$，更未判定实际非塌缩子族或实际共振子族。
+
+文献范围如下。覆盖转移复用 §21 所引 Banaszczyk，*New bounds in some transference theorems in the geometry of numbers*，Math. Ann. 296，625–635，[原文 Theorem (2.2)，印刷页 632](https://gdz.sub.uni-goettingen.de/download/pdf/PPN235181684_0296/LOG_0038.pdf)，采用该文的欧氏整数内积对偶版本；Haar 推前、收敛 Borel–Cantelli 与 Baire 是经典中间输入（literature-attested），不作为新的一般理论成果。相邻来源 Nesharim–Rühr–Shi，*Metric Diophantine approximation with congruence conditions*，[arXiv:1902.01381v2 原文](https://arxiv.org/pdf/1902.01381v2)，印刷页 1 的 Theorem 1.2 先固定模数向量 $N$ 和余类向量 $v$；页 2 的 Theorems 1.3–1.4 固定有限多个同余条件，页 3 的 Dani 同余商亦固定 $N$。即使对全部固定模数作可数全测交，也不从该文的无限近似量词得到这里指定增长 $q_H$、指定阶段和窗口上的一致计数；该文只用于标明相邻适用边界，不充当 (22.10) 的直接输入。本节的新增综合是原实际共同模数、临界质量预算、准确整数纤维与方向坏集估计的联结（repo-derived），不主张一般度量逼近、格转移或类别定理的原创性。
+
+用白话说，保留同一批有限端钥匙、同一把钥匙必须同时满足全部条件，只比较它们在两个实圆上前进的方向。坏方向是某个整数联合方向上的窄带，单条窄带的 Haar 宽度与原模数无关，而可能窄带的条数由实窗尺度控制；原好阶段的大质量使这些坏方向的总预算可求和。因此几乎所有比较方向最终在每个好阶段都对所有目标准确均匀计数。但稠密的零测方向仍可在任意晚的某些阶段发生共振，这并不排除它们另有无穷多非塌缩阶段。原 CM 向量是一根指定方向；全测比较和退化的保证下界都没有决定它是否满足 (22.16)，原临界 $R$ 的结论仍未解决。$\square$
+

@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Raw all-window Critch--Morton C9 reconstruction
+Raw all-window recovery and individual-window ambiguity on the actual MPS image
 
 **Theorem 1.1 (One common full-amplitude principal locus).**
 
@@ -10,9 +10,11 @@ $$\forall m \in Nat,\; \exists P \in MvPolynomial\left(Sum\left(Word\left(3 + m\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/critch-morton-2014-open-boundary-mps-raw-c9` (proved) by `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result`.
+*Resolves.* `Problems/critch-morton-2014-open-boundary-mps-raw-c9` (proved) by `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result` and `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSNormalizedC9.result`.
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"critch-morton-2014-open-boundary-mps-raw-c9","declaration_gid":"D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"critch-morton-2014-open-boundary-mps-raw-c9","declaration_gid":"D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSNormalizedC9.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -30,9 +32,9 @@ The original prefix recovery supplies the left Q3. Right recovery reverses the t
 
 At m=0 (N=3), only the whole-chain Q3 and the two boundary Q2 windows occur, and T=A=1. At m=1 (N=4), both Q3 windows are boundary windows, T=1 and A handles the one internal pair. At m>=2 both internal suppliers apply. Positivity of both exterior lengths forces these thresholds; no supplier is called out of range. Every equality proof h is retained in the result telescope. Word(0) is summed as a singleton, never dropped as an empty exterior.
 
-Critch and Morton, SIGMA 10 (2014), 095, Conjecture 9, provide the original assertion and raw displayed partial trace. This result strengthens raw N>=4 prefix recovery and the no-fewer statement to every N>=3 and every placement. N>=3 and the specific real-principal genericity convention are the formal strengthening, not quoted author wording. Reused suppliers include the Ma--Zhang C8 contribution under its license and GVHunter.reverse_word_list. The bounded literature check found no exact C9 settlement in its accessible searched scope and is not a priority or uniqueness certificate.
+Critch and Morton, SIGMA 10 (2014), 095, Conjecture 9, provide the original assertion and raw displayed partial trace. This result is a sufficient strengthening of the raw N>=4 prefix recovery and no-fewer formulation to every N>=3 and every placement. N>=3 and the specific real-principal genericity convention are the formal strengthening, not quoted author wording. The reused suppliers include the Ma--Zhang C8 contribution with its license. Word reversal uses GVHunter.reverse_word_list. Within the bounded accessible literature examined, no exact C9 settlement was identified; this does not establish priority or uniqueness.
 
-This result makes no normalized-state, closure-only, exceptional-target, jointly known marginal, stability, dynamics, energy or thermodynamic claim. Unit-phase saturation alone does not justify a dense normalized slice.
+Unit-phase saturation of this raw locus alone does not justify a dense normalized slice. OpenBoundaryMPSNormalizedC9.result supplies a separately proved dense physical-mass-one slice with both target and competitors normalized for the same physical C9 reading. This result makes no closure-only, exceptional-target, jointly known marginal, stability, dynamics, energy or thermodynamic claim.
 
 ## References
 

@@ -252,7 +252,7 @@ private lemma S_bound {alpha H x : ℝ} (hhalf : alpha ≤ 1 / 2)
     (mul_pos (Real.rpow_pos_of_pos hx0 _) hL0)
     (mul_le_mul_of_nonneg_right (Real.rpow_le_rpow_of_exponent_le hx1 hhalf) hL0.le))
 
-private lemma theta_power_bound {β C X : ℝ} (hβ : (1 / 2 : ℝ) < β)
+lemma theta_power_bound {β C X : ℝ} (hβ : (1 / 2 : ℝ) < β)
     (hpsi : ∀ x : ℝ, X ≤ x → |Chebyshev.psi x - x| ≤ C * x ^ β) :
     ∃ K R : ℝ, 0 ≤ K ∧ 2 ≤ R ∧
       ∀ x : ℝ, R ≤ x → |Chebyshev.theta x - x| ≤ K * x ^ β := by

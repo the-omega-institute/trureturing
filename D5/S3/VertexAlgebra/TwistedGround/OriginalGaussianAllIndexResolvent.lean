@@ -118,7 +118,7 @@ private lemma central_ofReal (r : ℝ) (s : ℕ) :
   push_cast
   rfl
 
-private lemma period_ofReal (r : ℝ) : period (r : ℂ) = (F r : ℂ) := by
+lemma period_ofReal (r : ℝ) : period (r : ℂ) = (F r : ℂ) := by
   rw [period_eq_central, central_ofReal]
   have h := congrArg Complex.re (period_eq_central (r : ℂ))
   rw [central_ofReal] at h
