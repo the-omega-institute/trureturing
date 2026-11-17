@@ -47,12 +47,12 @@ open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
 private theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
   simp only [cl, HardinA229531StripData.cl, HardinA233126SquareStrip.boundaryClass,
-    bondDefects, Function.comp_apply, e.injective.eq_iff]
+    bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
 
 private theorem bond_relabel (e : Equiv.Perm (Fin 3))
     (E : Finset (Fin 5 × Fin 5)) (p r : Row) :
     bondDefects E (e ∘ p) (e ∘ r) = bondDefects E p r := by
-  simp only [bondDefects, Function.comp_apply, e.injective.eq_iff]
+  simp only [bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
 
 theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 33,
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
@@ -71,7 +71,13 @@ theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 33,
       have he : s = j.castAdd 13 := rfl
       rw [he]
       exact HardinA229634StripCut.inherited_counts p' d hv j
-    · interval_cases s <;> first
+    · obtain ⟨j, hj⟩ : ∃ j : Fin 13, s = j.natAdd 20 := by
+        refine ⟨⟨s.val - 20, by omega⟩, ?_⟩
+        apply Fin.ext
+        dsimp
+        omega
+      rw [hj]
+      fin_cases j <;> first
       | exact HardinA229634StripClass0.transition_counts p' d hv hnormal
       | exact HardinA229634StripClass1.transition_counts p' d hv hnormal
       | exact HardinA229634StripClass2.transition_counts p' d hv hnormal
