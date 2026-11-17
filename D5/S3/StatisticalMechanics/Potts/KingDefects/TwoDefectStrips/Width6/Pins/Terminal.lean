@@ -20,10 +20,17 @@ set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
 theorem certificate : ∀ p (d : Fin 3), Valid p d.val →
     terminal (cl p d.val) = (if d.val = 0 then 1 else 0) := by
-  have h : ∀ (i : Fin (4^6)) (d : Fin 3), Valid (finFunctionFinEquiv.symm i) d.val →
-      terminal (cl (finFunctionFinEquiv.symm i) d.val) = (if d.val = 0 then 1 else 0) := by
-    decide +kernel
+  have h : ∀ a b c e f g : Fin 4, ∀ d : Fin 3,
+      Valid (![a, b, c, e, f, g] : Row) d.val →
+      terminal (cl (![a, b, c, e, f, g] : Row) d.val) =
+        (if d.val = 0 then 1 else 0) := by
+    intro a b
+    fin_cases a <;> fin_cases b <;> decide +kernel
   intro p
-  simpa only [Equiv.symm_apply_apply] using h (finFunctionFinEquiv p)
+  have he : p = ![p 0, p 1, p 2, p 3, p 4, p 5] := by
+    funext i
+    fin_cases i <;> rfl
+  rw [he]
+  exact h (p 0) (p 1) (p 2) (p 3) (p 4) (p 5)
 
 end D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Pins.Terminal
