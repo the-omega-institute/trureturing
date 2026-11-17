@@ -34,7 +34,6 @@ set_option maxHeartbeats 2000000
 private def extend (p : Boundary) : Width6.Data.Row := ![p 0,p 1,p 2,p 3,p 2,p 1]
 private def raw (p r : Boundary) : Prop :=
   bondDefects Width4.Data.between p r + bondDefects Width4.Data.horizontal r r = 0
-private local instance (p r : Boundary) : Decidable (raw p r) := inferInstanceAs (Decidable (_ = 0))
 private theorem proper_extend (p : Boundary) :
     bondDefects Width6.Data.horizontal (extend p) (extend p) = 0 ↔
       bondDefects Width4.Data.horizontal p p = 0 := by
