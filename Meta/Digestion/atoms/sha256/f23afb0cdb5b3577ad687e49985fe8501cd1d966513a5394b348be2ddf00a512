@@ -1,0 +1,20 @@
+#### 定义 2.1：丢番图关系
+
+关系 $R\subseteq\mathbb Q^k$ 称为丢番图的，若存在一个固定整数系数多项式 $F$，使
+
+$$
+R(\mathbf x)\iff\exists\mathbf y\in\mathbb Q^r\ F(\mathbf x,\mathbf y)=0.
+$$
+
+允许有理系数时，清除常数分母即得到整数系数版本。
+
+这要求全部辅助变量都在 $\mathbb Q$ 中量化。直接写“存在整数 $a,b$ 且 $t=a/b$”没有消除整数谓词，不能承担这个定义任务。
+
+设 $V_F(\mathbb Q)=\{(\mathbf x,\mathbf y):F(\mathbf x,\mathbf y)=0\}$。上述关系就是坐标投影
+
+$$
+R=\pi\bigl(V_F(\mathbb Q)\bigr).
+$$
+
+这精确表达“输入纤维中存在一个合法见证”。
+
