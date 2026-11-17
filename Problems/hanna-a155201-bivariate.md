@@ -40,8 +40,7 @@ of every polynomial coefficient. The full event requires the exact
 logarithmic shift, the formal exponential correspondence, all candidate
 prime-power divisibility premises and recovery of each original bidegree.
 The route below supplies these bridges; it does not assume coefficient
-integrality. Formal delivery still requires independent pre-freeze approval,
-canonical first-freeze and the remaining publication checks.
+integrality.
 
 ## Route
 
@@ -106,10 +105,9 @@ polynomial-coefficient integrality. This is not a global literature census.
 `theorem` is the problem-pool classification for the exact mathematical
 statement, not a machine proof or publication status. The full-result
 Scribe carries a typed Proved external-resolution claim naming this
-dossier. The new result is intentionally unfrozen; validating that claim's
-frozen source is a later canonical first-freeze obligation. Independent
-pre-freeze approval, required CI and publication remain outstanding.
-No merged delivery, worldwide priority or published settlement is asserted.
+dossier. The mathematical result and its stated source correspondence are
+distinct from worldwide priority and the unfinished registration bindings
+described below.
 
 ## ASSUMED-UNVERIFIED
 

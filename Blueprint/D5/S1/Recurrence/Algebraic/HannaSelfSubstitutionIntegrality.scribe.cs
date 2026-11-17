@@ -92,7 +92,7 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
             Divides(Pow(Cast(p,ips),Call("padicValNat",p,n)),Subtract(App(f,n),correction))))));
         var mapped=Lambda("n",Nat(),App(Q("PowerSeries","map"),
             App(Q("Int","castRingHom"),Rat()),App(f,n)));
-        return All("f",Seq(Nat(),Sp,To,Sp,ips),Imp(hypothesis,
+        return All("f",Seq(Nat(),Sp,To,Sp,ips),Imp(Parenthesized(hypothesis),
             Integral(Exponential(Call("logSum",mapped)))));
     }
 
