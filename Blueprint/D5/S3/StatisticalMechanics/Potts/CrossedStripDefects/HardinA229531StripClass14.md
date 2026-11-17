@@ -16,7 +16,7 @@ $$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit
 
 *Commentary.*
 
-For every actual row p : Fin 5 to Fin 3 and residual d : Fin 2 satisfying Valid p (Fin.val d), the number of successor rows r whose horizontal and cross-bond defects fit Fin.val d and whose new residual class is 14 equals T (cl p (Fin.val d)) 14. Finite kernel evaluation checks this exact column of the 20 by 20 transfer. The combined successor identity applies this column in its corresponding target case.
+For every actual row p : Fin 5 to Fin 3 and residual d : Fin 2 satisfying Valid p (Fin.val d), the number of successor rows r whose horizontal and cross-bond defects fit Fin.val d and whose new residual class is 14 equals T (cl p (Fin.val d)) 14. Nine source-colour fibres partition the finite kernel checks of this exact column of the 20 by 20 transfer. The combined successor identity applies this column in its corresponding target case.
 
 ## References
 

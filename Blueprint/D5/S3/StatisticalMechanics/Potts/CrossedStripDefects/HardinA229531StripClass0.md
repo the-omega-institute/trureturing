@@ -16,9 +16,10 @@ $$\forall p: \operatorname{\mathit{Fin}}\left(5\right) \to \operatorname{\mathit
 
 *Commentary.*
 
-For every actual row p : Fin 5 to Fin 3 and residual d : Fin 2 satisfying Valid p (Fin.val d), the number of successor rows r whose horizontal and cross-bond defects fit Fin.val d and whose new residual class is 0 equals T (cl p (Fin.val d)) 0. Finite kernel evaluation checks this exact column of the 20 by 20 transfer. The combined successor identity applies this column in its corresponding target case.
+For every actual row p : Fin 5 to Fin 3 and residual d : Fin 2 satisfying Valid p (Fin.val d), the number of successor rows r whose horizontal and cross-bond defects fit Fin.val d and whose new residual class is 0 equals T (cl p (Fin.val d)) 0. The shared structural class cut and the published scanner successor count prove the proper block. Nine source-colour fibres partition the remaining finite kernel checks. The combined successor identity applies this column in its corresponding target case.
 
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripClass0.transition_counts`
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripCut](HardinA229531StripCut.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData](HardinA229531StripData.md)
