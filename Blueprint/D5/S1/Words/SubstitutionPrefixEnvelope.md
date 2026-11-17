@@ -47,5 +47,4 @@ Under the same hypotheses, every infix of the concatenation of any two jth image
 - Truth anchor: `D5/S1/Words/SubstitutionPrefixEnvelope.charge`
 - Truth anchor: `D5/S1/Words/SubstitutionPrefixEnvelope.prefix_envelope`
 - Truth anchor: `D5/S1/Words/SubstitutionPrefixEnvelope.two_block_interval_bound`
-- Dependency: [D5/S1/Words/GoldenUniformRecurrence](GoldenUniformRecurrence.md)
 - Dependency: [D5/S1/Words/RankOneMorphismIterationBoundDefs](RankOneMorphismIterationBoundDefs.md)

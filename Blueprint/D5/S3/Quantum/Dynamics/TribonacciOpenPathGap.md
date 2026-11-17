@@ -102,7 +102,7 @@ $$
 
 Given epsilon>0, choose k with rho^k<epsilon and take the fixed odd level n=2k+1. Since (n+1)(n+2)>=k, its spectral bound is below epsilon. The original iterate_growth implies N(j)>=length(U(n))+1 for every sufficiently large j. This proves the displayed epsilon formulation along all j>=J. For a finite nonempty real spectrum, its minimum absolute value is below epsilon if and only if some real spectral value has absolute value below epsilon; nonnegativity then gives the stated limit.
 
-结论针对原始正跃迁开链：固定任意 0<rho<1，沿全部偶数取整长度 N(j)，最小绝对特征值趋于零。证明使用原始实际前缀与电荷闭式，保留所有外部顶点，并通过奇偶坐标置换和交替符号共轭连接完整逆矩阵。先固定一个满足误差要求的奇数层前缀，再用实际迭代长度的增长覆盖所有充分大的 j，因此没有用子序列替代全序列。
+The conclusion concerns the original open chain with positive hoppings: for any fixed 0<rho<1, the minimum absolute eigenvalue tends to zero along the full sequence of lengths N(j) rounded down to even integers. The proof uses the original actual prefixes and closed charge formula, retains all external sites, and connects the full inverse matrix through a parity coordinate permutation and alternating-sign conjugation. First fix an odd-level prefix satisfying the error requirement, then use growth of the actual iterate lengths to cover every sufficiently large j; thus no subsequence replaces the full sequence.
 
 This is a consequence for the specified finite single-particle matrices. It supplies no uniform rate in N, matching lower rate, entropy or filling law, many-body excitation gap, infinite-volume spectral statement or physical realization. No literature novelty or external open-problem resolution is asserted.
 
