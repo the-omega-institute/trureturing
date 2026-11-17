@@ -1,0 +1,25 @@
+#### 定理 3.1：方程求解的直接编译，依赖 $\mathsf H_{\mathbb Z/\mathbb Q}$
+
+给定 $f\in\mathbb Z[x_1,\ldots,x_n]$，令每个 $x_i$ 使用独立见证块 $\mathbf w_i$，并定义
+
+$$
+F_f(\mathbf x,\mathbf w_1,\ldots,\mathbf w_n)
+ =f(\mathbf x)^2+\sum_{i=1}^nP(x_i,\mathbf w_i)^2.
+$$
+
+则
+
+$$
+\exists\mathbf z\in\mathbb Z^n\ f(\mathbf z)=0
+ \iff
+ \exists(\mathbf x,\mathbf w_1,\ldots,\mathbf w_n)\in\mathbb Q^{n(m+1)}\ F_f=0.
+$$
+
+编译过程有效且有限。
+
+**证明。**
+
+有整数解时，为每个整数坐标选取 $P$ 的见证，即得右侧。有理平方均非负；故右侧为零使全部平方项为零。$\mathsf H_{\mathbb Z/\mathbb Q}$ 强制各 $x_i$ 为整数，且 $f(\mathbf x)=0$。固定多项式的替换和平方求和均为有效符号运算。
+
+$\square$
+

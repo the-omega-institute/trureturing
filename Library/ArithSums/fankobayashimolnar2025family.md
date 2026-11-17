@@ -6,18 +6,21 @@ title: A family of analogues to the Robin criterion
 doi: 10.1007/s11139-026-01408-3
 url: https://arxiv.org/abs/2511.02106v1
 claim: "Equations (3)–(4) define exactly the increment source b_s and total moment U(s)=c(s). The κ-Robin criterion concerns a different LCM-power σ^[κ]; the pinned version has an extra e^γ in its introductory Lagarias formulas that is absent from section 7."
-strata_touched: []
+strata_touched:
+  - D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion
+  - D5/S3/Arith/Robin/Analytic/LcmPowerEndpointRH
 license: citation-only
 triage: anchor
 ---
 
 # Fan–Kobayashi–Molnar 2025: the existing increment source
 
-## Locator
+## Verified locator
 
 Fan, Kobayashi and Molnar, *A family of analogues to the Robin criterion*,
 [arXiv:2511.02106v1](https://arxiv.org/abs/2511.02106v1).
-DOI: [10.1007/s11139-026-01408-3](https://doi.org/10.1007/s11139-026-01408-3).
+DOI: 10.1007/s11139-026-01408-3
+Published article: https://doi.org/10.1007/s11139-026-01408-3.
 The cited formula and theorem locators are pinned to arXiv v1: equations
 (3)–(4), page 2; Theorem 1.5, page 3; Proposition 3.1, page 6;
 Proposition 3.4, page 9; Definition 4.2, Theorem 4.3, Lemma 4.15 and

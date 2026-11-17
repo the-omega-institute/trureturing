@@ -426,7 +426,7 @@ open FactorialFockQuadraticEstimate (quadratic gaussianPiece gaussianPiece_pderi
 universe u v
 variable {I : Type u} [Fintype I] [DecidableEq I]
 
-private theorem correctedMatrix_symm (D : LatticeData) (label : I ↪ Index D) :
+theorem correctedMatrix_symm (D : LatticeData) (label : I ↪ Index D) :
     ∀ i j, correctedMatrix D label i j = correctedMatrix D label j i := by
   rintro (i | (i | i)) (j | (j | j)) <;>
     simp only [correctedMatrix] <;>
@@ -451,7 +451,7 @@ def boxOccupation (D : LatticeData) (M : ℕ) (d : Exponent D) :
     (Fin D.rank × Fin M) →₀ ℕ :=
   d.comapDomain (boxLabel D M) (boxLabel D M).injective.injOn
 
-private theorem box_reconstruct (D : LatticeData) (M : ℕ) (d : Exponent D)
+theorem box_reconstruct (D : LatticeData) (M : ℕ) (d : Exponent D)
     (hd : ∀ b ∈ d.support, b.2 < M) :
     (boxOccupation D M d).embDomain (boxLabel D M) = d := by
   apply Finsupp.embDomain_comapDomain
@@ -485,7 +485,7 @@ private theorem energy_degree (D : LatticeData) (d : Exponent D) :
   intro b hb
   nlinarith
 
-private theorem energy_mode (D : LatticeData) (d : Exponent D) (n M : ℕ)
+theorem energy_mode (D : LatticeData) (d : Exponent D) (n M : ℕ)
     (hd : oscillatorEnergy d ≤ n) (hn : n < M) :
     ∀ b ∈ d.support, b.2 < M := by
   intro b hb
@@ -497,7 +497,7 @@ private theorem energy_mode (D : LatticeData) (d : Exponent D) (n M : ℕ)
         d b * (b.2+1) ≤ ∑ x ∈ d.support, d x * (x.2+1))
   nlinarith
 
-private theorem correctedLaurentRow_on_box (D : LatticeData) (a : Charge D)
+theorem correctedLaurentRow_on_box (D : LatticeData) (a : Charge D)
     (delta beta gamma : Exponent D) (M : ℕ)
     (hd : ∀ b ∈ delta.support, b.2 < M)
     (hb : ∀ b ∈ beta.support, b.2 < M)
@@ -603,7 +603,7 @@ private theorem substitution_coeff_energy (D : LatticeData)
     · rw [h delta (hw delta hz), mul_assoc]
 
 
-private theorem box_energy (D : LatticeData) (M : ℕ) (d : Exponent D)
+theorem box_energy (D : LatticeData) (M : ℕ) (d : Exponent D)
     (hd : ∀ b ∈ d.support, b.2 < M) :
     Finsupp.weight (fun i => LatticeHalfFockFiniteCorrection.sourceWeight D (boxLabel D M i))
       (boxOccupation D M d) = oscillatorEnergy d := by
@@ -612,7 +612,7 @@ private theorem box_energy (D : LatticeData) (M : ℕ) (d : Exponent D)
   simpa only [Finsupp.weight_apply, Finsupp.sum_embDomain, oscillatorEnergy,
     LatticeHalfFockFiniteCorrection.sourceWeight] using h
 
-private theorem source_inverse_affine_row_box
+theorem source_inverse_affine_row_box
     (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
     (alpha beta gamma : Exponent D) (e : ℤ) (n M : ℕ)
     (ha : oscillatorEnergy alpha ≤ n) (hn : n < M)
