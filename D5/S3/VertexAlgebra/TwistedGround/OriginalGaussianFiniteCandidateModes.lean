@@ -79,6 +79,34 @@ theorem deriv_sourceAmplitude_true_real (p : ℕ) (r : ℝ) :
     deriv (fun u : ℝ => sourceAmplitude true p (u : ℂ)) r = aPrime p r := by
   simpa only [sourceAmplitude_true_finite] using (hasDerivAt_a_real p r).deriv
 
+
+/-- An exact finite source-mode recurrence.  The factor is the polynomial
+mode p+1, not the signed half-frequency from the original external column. -/
+theorem a_euler_mode_step (p : ℕ) (r : ℂ) :
+    r * aPrime (p + 1) r = (p + 1 : ℂ) * (a (p + 1) r - a p r) := by
+  have hpad : a p r = ∑ n ∈ Finset.range (p + 2),
+      (centralWeight n : ℂ) * (-1 : ℂ) ^ n * (p.choose n : ℂ) * r ^ n := by
+    rw [show p + 2 = (p + 1) + 1 by omega, Finset.sum_range_succ]
+    simp [a]
+  rw [hpad]
+  unfold a aPrime
+  rw [Finset.mul_sum, ← Finset.sum_sub_distrib, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro n hn
+  cases n with
+  | zero => simp
+  | succ n =>
+    have hc : (n + 1 : ℂ) * ((p + 1).choose (n + 1) : ℂ) =
+        (p + 1 : ℂ) * (((p + 1).choose (n + 1) : ℂ) - (p.choose (n + 1) : ℂ)) := by
+      have hh : (p + 1 : ℂ) * (p.choose n : ℂ) =
+          ((p + 1).choose (n + 1) : ℂ) * (n + 1 : ℂ) := by
+        exact_mod_cast Nat.add_one_mul_choose_eq p n
+      simp only [Nat.choose_succ_succ, Nat.cast_add] at hh ⊢
+      linear_combination -hh
+    simp only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel]
+    linear_combination (centralWeight (n + 1) : ℂ) * (-1 : ℂ) ^ (n + 1) *
+      r ^ (n + 1) * hc
+
 theorem analyticAt_a (p : ℕ) (r : ℂ) : AnalyticAt ℂ (a p) r := by
   unfold a
   apply Finset.analyticAt_fun_sum
@@ -337,16 +365,48 @@ theorem hasDerivAt_candidateT (p q : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
   have hz2 : ‖z ^ 2‖ < 1 := by
     rw [norm_pow]
     exact pow_lt_one₀ (norm_nonneg z) hz (by norm_num)
-  convert! (hasDerivAt_t p q hz2).comp z (hasDerivAt_pow 2 z) using 1 <;>
-    simp [candidateT, Function.comp_def]
+  convert! (hasDerivAt_t p q hz2).comp z (hasDerivAt_pow 2 z) using 1
+  norm_num
 
 @[simp] theorem candidateT_even (p q : ℕ) (z : ℂ) :
     candidateT p q (-z) = candidateT p q z := by simp [candidateT]
 
+/-- The genuine negative-zero T row against a positive mode, expressed using
+finite source data and the actual period. It is not the Taylor shift11. -/
+def negativeZeroT : ℕ → ℝ → ℂ
+  | 0, r => -(Real.sqrt (1 - r) : ℂ) * (r : ℂ) * ell r
+  | p + 1, r => (Real.sqrt (1 - r) : ℂ) *
+      ((p + 1 : ℂ) * (a (p + 1) r - a p r) - (r : ℂ) * ell r * a (p + 1) r)
+
+/-- Identification of the actual signed predecessor boundary with finite data.
+The frequency contribution cancels only after adding the actual moment and jet;
+it is never set to zero by an absent-mode convention. -/
+theorem externalT_negative_zero_positive_finite (p : ℕ)
+    {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+    OriginalGaussianExternalResolvent.externalT false 0 true p (Real.sqrt r : ℂ) =
+      negativeZeroT p r := by
+  have hx : ‖(r : ℂ)‖ < 1 := by
+    simpa only [Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr] using hr1
+  rw [(OriginalGaussianExternalEvolution.external_negative_zero_boundary true p hr hr1).2,
+    OriginalGaussianExternalSourceJet.sourceJetMoment_eq_derivative true p hr hr1,
+    OriginalGaussianExternalMoments.sourceMoment_eq_modeFrequency true p hx,
+    deriv_sourceAmplitude_true_real, sourceAmplitude_true_finite]
+  cases p with
+  | zero =>
+    dsimp only [negativeZeroT]
+    rw [ell_eq_shifted hx]
+    norm_num [a, aPrime, centralWeight]
+    ring
+  | succ p =>
+    dsimp only [negativeZeroT]
+    rw [ell_eq_shifted hx]
+    have hs := a_euler_mode_step p (r : ℂ)
+    linear_combination (Real.sqrt (1 - r) : ℂ) * hs
+
 /- Remaining work is recorded only in comments outside theorem bodies:
 finite inverse coefficient identification; candidate PDEs and their transport;
 all signed source and J candidates; original/candidate germ and global equality.
-The companion normalization file supplies real finite values and actual boundary data.
+The true negative-zero row is identified above from the literal original boundary.
 -/
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
