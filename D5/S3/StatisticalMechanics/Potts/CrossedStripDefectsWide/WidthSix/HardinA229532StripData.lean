@@ -23,6 +23,7 @@ raw_successors: proof_shape=bind-only; consumers=HardinA229532Strip.result
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233172DiagonalStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinThinGraphTransport
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
@@ -130,7 +131,7 @@ theorem raw_successors (p : Row) (hp : HardinThinGraphTransport.proper p) (j : F
   have h := HardinA233172DiagonalStrip.class_fibres (true, true) p j
   have hs (r : Row) : HardinA233255LiteralBridge.rowWeight (true, true) r = 64 ∧
       HardinA233255LiteralBridge.rowFinish (true, true) r = (true, true) := by
-    simpa using HardinA233255ShapeSymmetry.full_row 6 r
+    simpa using (HardinA233255ShapeSymmetry.full_row 6 r).symm
   simp_rw [(hs _).1, (hs _).2] at h
   rw [← Finset.mul_sum] at h
   exact h.symm.trans ht
