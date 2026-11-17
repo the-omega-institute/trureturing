@@ -43,7 +43,7 @@ def compression {a b : ℕ} (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (T : Matrix (Fin 3) (Fin 3) ℂ) :=
   (stack X)ᴴ * Matrix.kronecker T (1 : Matrix (Fin a) (Fin a) ℂ) * stack X
 
-private def mix {a b : ℕ} (A : Matrix (Fin 3) (Fin 3) ℂ)
+def mix {a b : ℕ} (A : Matrix (Fin 3) (Fin 3) ℂ)
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ) :
     Fin 3 → Matrix (Fin a) (Fin b) ℂ := fun r => ∑ s, A r s • X s
 
@@ -136,7 +136,7 @@ private theorem semidefinite_coefficient_kernel {a b k : ℕ}
       congrFun (hker i j) r
 
 
-private theorem semidefinite_eq_zero {a b : ℕ}
+theorem semidefinite_eq_zero {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (hX : LinearIndependent ℂ X)
     (T : Matrix (Fin 3) (Fin 3) ℂ) (hT : T.PosSemidef)
     (hPhi : compression X T = 0) : T = 0 := by
@@ -151,7 +151,7 @@ private theorem stack_mix {a b : ℕ} (A : Matrix (Fin 3) (Fin 3) ℂ)
   simp [stack, mix, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kronecker,
     Matrix.kroneckerMap_apply, Matrix.one_apply, Matrix.sum_apply, Matrix.smul_apply]
 
-private theorem compression_mix {a b : ℕ} (A : Matrix (Fin 3) (Fin 3) ℂ)
+theorem compression_mix {a b : ℕ} (A : Matrix (Fin 3) (Fin 3) ℂ)
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (T : Matrix (Fin 3) (Fin 3) ℂ) :
     compression (mix A X) T = compression X (Aᴴ * T * A) := by
@@ -179,7 +179,7 @@ private theorem pairing_congruence {m n : Type*} [Fintype m] [Fintype n]
   rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec]
   rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec]
 
-private theorem common_plane_transport
+theorem common_plane_transport
     (K : Set (Matrix (Fin 3) (Fin 3) ℂ))
     (A : Matrix (Fin 3) (Fin 3) ℂ) (hA : IsUnit A)
     (L : Submodule ℂ (Fin 3 → ℂ)) (hdim : finrank ℂ L = 2)
@@ -274,9 +274,9 @@ private theorem spectral_signs
     omega
   exact ⟨e, hi, hj, hknz⟩
 
-private def signature : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal ![1, -1, 0]
+def signature : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal ![1, -1, 0]
 
-private theorem signature_congruence
+theorem signature_congruence
     (T : Matrix (Fin 3) (Fin 3) ℂ) (hT : T.IsHermitian)
     (e : Fin 3 ≃ Fin 3)
     (hp : 0 < hT.eigenvalues (e 0)) (hn : hT.eigenvalues (e 1) < 0)
@@ -347,7 +347,7 @@ private theorem linearIndependent_mix {a b : ℕ}
   exact hX.sum_smul_of_nondegenerate
     (Matrix.nondegenerate_of_det_ne_zero ((Matrix.isUnit_iff_isUnit_det A).mp hA).ne_zero)
 
-private theorem injective_stack_mix {a b : ℕ}
+theorem injective_stack_mix {a b : ℕ}
     (A : Matrix (Fin 3) (Fin 3) ℂ) (hA : IsUnit A)
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (hinj : Function.Injective (stack X).mulVecLin) :
@@ -380,15 +380,15 @@ private theorem zero_kernel_plane
     rw [hzero T hT hPhi]
     simp
 
-private def phaseVector (w : ℂ) : Fin 3 → ℂ := ![1, w, 0]
+def phaseVector (w : ℂ) : Fin 3 → ℂ := ![1, w, 0]
 
-private theorem phaseVector_quad (T : Matrix (Fin 3) (Fin 3) ℂ) (w : ℂ) :
+theorem phaseVector_quad (T : Matrix (Fin 3) (Fin 3) ℂ) (w : ℂ) :
     star (phaseVector w) ⬝ᵥ (T *ᵥ phaseVector w) =
       T 0 0 + T 0 1 * w + star w * T 1 0 + star w * T 1 1 * w := by
   simp [phaseVector, Matrix.mulVec, dotProduct, Fin.sum_univ_three, mul_add]
   ring
 
-private theorem phase_plane
+theorem phase_plane
     (K : Set (Matrix (Fin 3) (Fin 3) ℂ)) (w : ℂ)
     (hK : ∀ T ∈ K, T.IsHermitian ∧ T 2 2 = 0 ∧
       T 2 0 + w * T 2 1 = 0 ∧
@@ -435,7 +435,7 @@ private theorem cross_pairing {a b : ℕ} (A B : Matrix (Fin a) (Fin b) ℂ)
     star x ⬝ᵥ ((Aᴴ * B) *ᵥ y) = star (A *ᵥ x) ⬝ᵥ (B *ᵥ y) := by
   rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec]
 
-private theorem compression_pairing {a b : ℕ}
+theorem compression_pairing {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (T : Matrix (Fin 3) (Fin 3) ℂ) (x y : Fin b → ℂ) :
     star x ⬝ᵥ (compression X T *ᵥ y) =
@@ -444,7 +444,7 @@ private theorem compression_pairing {a b : ℕ}
   simp only [Matrix.sum_mulVec, dotProduct_sum, Matrix.smul_mulVec,
     dotProduct_smul, smul_eq_mul, cross_pairing]
 
-private theorem gram_eq_of_signature {a b : ℕ}
+theorem gram_eq_of_signature {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (hSig : compression X signature = 0) : (X 1)ᴴ * X 1 = (X 0)ᴴ * X 0 := by
   rw [compression_eq_sum] at hSig
@@ -452,7 +452,7 @@ private theorem gram_eq_of_signature {a b : ℕ}
     simpa [signature, Fin.sum_univ_three, Matrix.diagonal_apply, sub_eq_add_neg] using hSig
   exact (sub_eq_zero.mp he).symm
 
-private theorem stack_injective_on_common_kernel {a b : ℕ}
+theorem stack_injective_on_common_kernel {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (hinj : Function.Injective (stack X).mulVecLin)
     (x : Fin b → ℂ) (hx : ∀ r, X r *ᵥ x = 0) : x = 0 := by
@@ -462,7 +462,7 @@ private theorem stack_injective_on_common_kernel {a b : ℕ}
   ext ⟨r, i⟩
   simpa [stack, Matrix.mulVec, dotProduct] using congrFun (hx r) i
 
-private theorem kernel_restriction_injective {a b : ℕ}
+theorem kernel_restriction_injective {a b : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (hinj : Function.Injective (stack X).mulVecLin)
     (U : Matrix (Fin a) (Fin a) ℂ) (hU : X 1 = U * X 0) :
