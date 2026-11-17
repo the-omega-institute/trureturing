@@ -23,12 +23,16 @@ internal sealed class HannaA155201BivariateIntegralityDocument : IScribeDocument
             Node("kronecker", "Positive-weight coefficient specialization", "The degree-N coefficient is the finite sum over outer degrees a at most N of the coefficient of Y^(N-M*a), restricted to M*a<=N. For positive M this is the ring specialization X=T^M,Y=T.", DescribeRole.Definition),
             Node("kronecker_extract", "Isolation of every triangular coefficient", "For j<=n, the coefficient of T^((n+1)*n+j) after X=T^(n+1),Y=T equals the original X^n Y^j coefficient. Smaller outer degrees require a polynomial degree beyond their support; larger outer degrees already have excessive T degree.", DescribeRole.Theorem),
             Node("weightedGhost", "Shifted series-valued Dwork weights", "The weight is T^(a*r)*(m^r+T)^r in Z[[T]]. The existing logSum inserts an additional T^r, so its total weight is T^((a+1)*r). This shift is essential for agreement with positive-weight specialization.", DescribeRole.Definition),
-            Node("result", "Full bivariate integrality", "Fix n,j with j<=n and put M=n+1. The continuous evaluation ring homomorphism X=T^M,Y=T commutes with the formal exponential. Its logarithm equals logSum of weightedGhost with a=n; the coefficient proof explicitly matches coeff(N-r,f(r))/r with the weighted diagonal sum. For a prime p and positive r, the unit case p not dividing r is automatic. Otherwise write r=p*q and q=p^s*t with s=v_p(q). The polynomial Frobenius congruence gives p^(s+1) dividing the difference of the two weighted ghosts, since their monomial factors agree. Thus the original series-valued exp_logSum_integral_of_divisibility theorem gives an integral diagonal exponential. Coefficient isolation gives the required original coefficient. For j>n it is zero by the support bound. The n=0 boundary is included. These are formal, all-degree statements over Q[Y][[X]] for every signed integer m.", DescribeRole.Theorem))));
+            Node("result", "Full bivariate integrality", "Fix n,j with j<=n and put M=n+1. The continuous evaluation ring homomorphism X=T^M,Y=T commutes with the formal exponential. Its logarithm equals logSum of weightedGhost with a=n; the coefficient proof explicitly matches coeff(N-r,f(r))/r with the weighted diagonal sum. For a prime p and positive r, the unit case p not dividing r is automatic. Otherwise write r=p*q and q=p^s*t with s=v_p(q). The polynomial Frobenius congruence gives p^(s+1) dividing the difference of the two weighted ghosts, since their monomial factors agree. Thus the original series-valued exp_logSum_integral_of_divisibility theorem gives an integral diagonal exponential. Coefficient isolation gives the required original coefficient. For j>n it is zero by the support bound. The n=0 boundary is included. These are formal, all-degree statements over Q[Y][[X]] for every signed integer m.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanna-a155201-bivariate"),
+                    ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hanna-a155201-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(Statement(name))),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string n) => F.Id(n);
     private static Formula Call(string n, params Formula[] a)
