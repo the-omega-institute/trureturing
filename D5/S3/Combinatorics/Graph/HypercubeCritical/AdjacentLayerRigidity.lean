@@ -5,23 +5,17 @@
    anchors: [mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
    utility: none
    digest: Actual adjacent-layer balanced cubic supports of size fifty-four in Q9 have Gray reconstruction. -/
-
 import D5.S3.Combinatorics.Graph.HypercubeCritical.ThinSliceGrayReconstruction
 import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Batteries.Tactic.OpenPrivate
-
 /-! Literal face incidences force a fifteen-vertex coordinate half. -/
-
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-
 noncomputable section
-
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.AdjacentLayerRigidity
-
 open scoped BigOperators
 attribute [local instance] Classical.propDecidable
 open D5.S3.Combinatorics.Graph.Hypercube
@@ -31,13 +25,10 @@ open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private directions directions_card regular_directions exterior_even from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
-
 private abbrev Coord := Fin 9
 private abbrev Face := Finset Coord
-
 private def occupied (x : Q 9) : Face := Finset.univ.filter fun i => x i = true
 private def point (s : Face) : Q 9 := fun i => decide (i ∈ s)
-
 @[simp] private theorem mem_occupied (x : Q 9) (i : Coord) :
     i ∈ occupied x ↔ x i = true := by simp [occupied]
 @[simp] private theorem occupied_point (s : Face) : occupied (point s) = s := by
@@ -50,7 +41,6 @@ private theorem occupied_injective : Function.Injective occupied :=
   Function.LeftInverse.injective point_occupied
 private theorem point_injective : Function.Injective point :=
   Function.LeftInverse.injective occupied_point
-
 private def selected (C : Finset (Q 9)) : Finset Face := C.image occupied
 @[simp] private theorem mem_selected (C : Finset (Q 9)) (s : Face) :
     s ∈ selected C ↔ point s ∈ C := by
@@ -63,7 +53,6 @@ private def selected (C : Finset (Q 9)) : Finset Face := C.image occupied
 private theorem card_selected (C : Finset (Q 9)) : (selected C).card = C.card :=
   Finset.card_image_of_injective C occupied_injective
 private def layer (A : Finset Face) (r : Nat) := A.filter fun s => s.card = r
-
 private theorem occupied_flip (x : Q 9) (i : Coord) :
     occupied (flip x i) = if i ∈ occupied x then (occupied x).erase i
       else insert i (occupied x) := by
@@ -74,7 +63,6 @@ private theorem occupied_flip (x : Q 9) (i : Coord) :
   · by_cases hxi : x i = true
     · simp [occupied, BalancedCriticalSpectrum.flip, hji, hxi]
     · simp [occupied, BalancedCriticalSpectrum.flip, hji, hxi]
-
 private theorem insert_adj (s : Face) (i : Coord) (hi : i ∉ s) :
     (hypercube 9).Adj (point s) (point (insert i s)) := by
   have he : point (insert i s) = flip (point s) i := by
@@ -84,7 +72,6 @@ private theorem insert_adj (s : Face) (i : Coord) (hi : i ∉ s) :
     · simp [point, BalancedCriticalSpectrum.flip, hj]
   rw [he]
   exact BalancedCriticalSpectrum.flip_adj _ _
-
 private theorem subset_succ_adj {s t : Face} (hst : s ⊆ t)
     (hc : s.card + 1 = t.card) : (hypercube 9).Adj (point s) (point t) := by
   have hd : (t \ s).card = 1 := by rw [Finset.card_sdiff_of_subset hst]; omega
@@ -96,7 +83,6 @@ private theorem subset_succ_adj {s t : Face} (hst : s ⊆ t)
     exact hu.symm
   rw [he]
   exact insert_adj s i hni
-
 private theorem adjacent_sets {s t : Face}
     (ha : (hypercube 9).Adj (point s) (point t)) :
     (s ⊆ t ∧ s.card + 1 = t.card) ∨ (t ⊆ s ∧ t.card + 1 = s.card) := by
@@ -112,10 +98,8 @@ private theorem adjacent_sets {s t : Face}
     left
     rw [he]
     exact ⟨Finset.subset_insert _ _, (Finset.card_insert_of_notMem his).symm⟩
-
 private def neighbors (A : Finset Face) (s : Face) :=
   A.filter fun t => (hypercube 9).Adj (point s) (point t)
-
 private theorem neighbors_card (C : Finset (Q 9)) (s : Face) :
     (neighbors (selected C) s).card = (directions C (point s)).card := by
   rw [directions_card]
@@ -128,13 +112,11 @@ private theorem neighbors_card (C : Finset (Q 9)) (s : Face) :
   · intro x hx
     refine ⟨occupied x, ?_, point_occupied x⟩
     simpa [neighbors] using hx
-
 private theorem selected_regular (C : Finset (Q 9))
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     {s : Face} (hs : s ∈ selected C) : (neighbors (selected C) s).card = 3 := by
   rw [neighbors_card]
   exact regular_directions C hr ((mem_selected C s).mp hs)
-
 private theorem selected_exterior (C : Finset (Q 9))
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) {s : Face} (hs : s ∉ selected C) :
