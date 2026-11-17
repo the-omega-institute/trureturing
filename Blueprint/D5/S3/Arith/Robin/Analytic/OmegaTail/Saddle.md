@@ -1,0 +1,113 @@
+# The entropy saddle
+
+## Abstract
+
+The optimized distinct-prime rate has a unique saddle between one and two, and its minimum equals the entropy at that saddle.
+
+**Definition 1.1 (Logarithmic moment).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.m`
+
+*Formalization.* `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.m` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The moment m(s) is log(a(s))-(pi/s)*cot(pi/s), where a(s)=s*sin(pi/s)/pi and s>1.
+
+**Definition 1.2 (Entropy expression).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.H`
+
+*Formalization.* `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.H` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The entropy expression is H(s)=s-pi*cot(pi/s).
+
+**Definition 1.3 (The least exponential rate).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.C0`
+
+*Formalization.* `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.C0` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+C_0 is the infimum of F_0(s)=s*(1-log(a(s))) over all real s>1.
+
+**Definition 1.4 (The zero-moment parameter).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.saddle`
+
+*Formalization.* `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.saddle` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The saddle is chosen as a zero of m in the interval (1,2). Existence follows from the intermediate value theorem between 4/3 and 2.
+
+**Theorem 1.5 (Unique zero and global minimum).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.saddle_characterization`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.saddle_characterization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The saddle lies strictly between one and two, has zero log moment, and is the unique zero throughout s>1. The optimized rate attains its global minimum there, with C_0=F_0(saddle)=H(saddle). Differentiating m gives (1/s)*(1-(pi/s)^2/sin(pi/s)^2), which is strictly negative because 0<sin(t)<t for t=pi/s in (0,pi). Differentiating F_0 gives -m, so the derivative changes from negative to positive at this unique zero.
+
+**Theorem 1.6 (The minimum exceeds one).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.constant_gt_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.constant_gt_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The minimum rate C_0 strictly exceeds one: a(s)<1 on s>1, so F_0(saddle)>saddle>1. No decimal enclosure is asserted.
+
+**Theorem 1.7 (Strict logarithmic budget).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.m_neg_of_saddle_lt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.m_neg_of_saddle_lt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every parameter strictly to the right of the saddle has negative log moment, providing strict slack for selecting prime products below the original cutoff.
+
+**Theorem 1.8 (Continuity of the entropy expression).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.H_continuousAt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.H_continuousAt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+H is continuous at every real parameter s>1. In particular H(s) tends to H(saddle) as s decreases to the saddle from above.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.C0`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.H`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.H_continuousAt`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.constant_gt_one`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.m`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.m_neg_of_saddle_lt`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.saddle`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle.saddle_characterization`
+- Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTailUpper](../OmegaTailUpper.md)
