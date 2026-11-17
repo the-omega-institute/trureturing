@@ -36,7 +36,8 @@ private theorem legal_iff (p : Boundary) (c : Fin 4 → Fin 8) :
     Finset.mem_insert, Finset.mem_singleton, forall_eq_or_imp, forall_eq,
     Prod.fst, Prod.snd]
   simp [rowLegal, compatible, colour_bond_iff, good, saturated, allowed, advance,
-    pairs, Fin.forall_fin_succ, and_assoc, ne_comm]
+    pairs, D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229582Strip.horizontal,
+    Fin.forall_fin_succ, and_assoc, ne_comm]
   <;> tauto
 
 set_option maxRecDepth 100000 in
