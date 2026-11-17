@@ -281,6 +281,65 @@ theorem universal_faithful_coordinate_representation
   rw [Complex.ofReal_add]
   linear_combination -hdetH
 
+/-- One phase and one orientation work simultaneously for the whole real
+submodule, including when its coefficient image has dimension zero or one. -/
+theorem universal_common_graph_orientation
+    (K : Submodule ℝ M)
+    (hD : D ∈ K)
+    (hHerm : ∀ H : M, H ∈ K → H.IsHermitian)
+    (hSing : ∀ H : M, H ∈ K → H.det = 0) :
+    ∃ c : ℂ, ‖c‖ = 1 ∧
+      ((∀ H ∈ K, H 1 2 = c * H 0 2) ∨
+        (∀ H ∈ K, H 1 2 = c * conj (H 0 2))) := by
+  let u : K →ₗ[ℝ] ℂ :=
+    { toFun := fun H => (H : M) 0 2
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  let v : K →ₗ[ℝ] ℂ :=
+    { toFun := fun H => (H : M) 1 2
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  have hnorm (H : K) : ‖u H‖ = ‖v H‖ := by
+    have h := (universal_coefficient_constraints K hD hHerm hSing H H.property).2
+    have hsq := congrArg Complex.re h
+    simp only [← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re,
+      Complex.normSq_eq_norm_sq] at hsq
+    exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp hsq
+  have hker : LinearMap.ker u ≤ LinearMap.ker v := by
+    intro H hH
+    rw [LinearMap.mem_ker] at hH ⊢
+    apply norm_eq_zero.mp
+    rw [← hnorm H, hH, norm_zero]
+  let L : LinearMap.range u →ₗ[ℝ] ℂ :=
+    ((LinearMap.ker u).liftQ v hker).comp u.quotKerEquivRange.symm.toLinearMap
+  have hL (H : K) : L ⟨u H, LinearMap.mem_range_self u H⟩ = v H := by
+    change ((LinearMap.ker u).liftQ v hker)
+      (u.quotKerEquivRange.symm ⟨u H, LinearMap.mem_range_self u H⟩) = v H
+    rw [u.quotKerEquivRange_symm_apply_image]
+    exact Submodule.liftQ_apply _ _ _
+  let Li : LinearMap.range u →ₗᵢ[ℝ] ℂ :=
+    { L with
+      norm_map' := by
+        rintro ⟨x, H, rfl⟩
+        rw [hL]
+        exact (hnorm H).symm }
+  let E : ℂ ≃ₗᵢ[ℝ] ℂ := Li.extend.toLinearIsometryEquiv rfl
+  have hE (H : K) : E (u H) = v H := by
+    change Li.extend (u H) = v H
+    rw [LinearIsometry.extend_apply Li ⟨u H, LinearMap.mem_range_self u H⟩]
+    exact hL H
+  obtain ⟨c, hc | hc⟩ := linear_isometry_complex E
+  · refine ⟨c, Circle.norm_coe c, Or.inl ?_⟩
+    intro H hH
+    have h := hE ⟨H, hH⟩
+    rw [hc, rotation_apply] at h
+    exact h.symm
+  · refine ⟨c, Circle.norm_coe c, Or.inr ?_⟩
+    intro H hH
+    have h := hE ⟨H, hH⟩
+    rw [hc] at h
+    exact h.symm
+
 def normalizedGraphTrichotomy : Prop :=
   ∀ (K : Submodule ℝ M), D ∈ K →
     (∀ H : M, H ∈ K → H.IsHermitian) →
