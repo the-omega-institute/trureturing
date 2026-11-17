@@ -31,12 +31,12 @@ internal sealed class FiniteSectorPhysicalConstructionDocument : IScribeDocument
                         + "The Choi and Kraus argument adapts physlib revision "
                         + "6a09b2d1761a0d4430083045a247eb121d8da260 under Apache-2.0."))),
                 DescribeRole.Theorem),
-            H("Finite-dimensional Schrodinger-picture application"),
             Paragraph(Text(
-                "For a channel from d-dimensional to d'-dimensional complex matrices, take "
+                "Finite-dimensional Schrodinger-picture application. For a channel from "
+                + "d-dimensional to d'-dimensional complex matrices, take "
                 + "the input coordinates a and output coordinates b to have cardinalities d and d'. "
                 + "The environment coordinate type is b times a, so its dimension is exactly d*d'. "
-                + "The dilation in the second conjunct has row coordinates ((k,p),r), where k is "
+                + "The dilation in the second conjunct has matrix coordinates ((k,p),r), where k is "
                 + "an environment label, p is an output label and r is an input label. Thus its "
                 + "tensor order is environment followed by output; the first factor is traced out.")),
             Paragraph(Text(
