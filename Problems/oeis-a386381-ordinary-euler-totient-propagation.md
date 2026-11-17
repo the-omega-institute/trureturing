@@ -83,6 +83,12 @@ closures are produced by the scoped canonical report; this dossier does
 not duplicate machine status. The candidate remains unfrozen pending
 independent review, with no PR, merge or resolution KPI claimed.
 
+## Triage
+
+- **Established:** The retained ordinary proof covers both complete source assertions: the all-modulus divisor propagation law and the particular family with only `k=3` excluded. Its mechanism is the ordinary signed correspondence, corrected odd-prime-power zero transfer, tangent two-primary divisibility, and prime-power assembly.
+- **Boundary:** The result applies to the offset-zero ordinary A000111 carrier. It does not transfer to the weighted A386363 diagonal, to Conjecture 1, or to the separate A060818 assertion; those remain separate source targets.
+- **Open:** The source dossier makes no claim about worldwide priority or exhaustive equivalent literature. Any extension beyond the two literal assertions, including stronger residue periodicity or a different carrier, requires a separate target and proof.
+
 ## ASSUMED-UNVERIFIED
 
 Global priority, exhaustive present openness and uninspected equivalent
