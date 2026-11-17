@@ -17,7 +17,6 @@ import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229581Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
 set_option maxRecDepth 100000
-open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip (Boundary)

@@ -13,7 +13,6 @@ count_filterMap_sum: proof_shape=bind-only; consumers=count_successors
 count_successors: proof_shape=bind-only; consumers=Width5.Certificate.transition_counts
 -/
 
-import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 /-! A list equality supplies every coordinate of a transfer row. -/
 open scoped BigOperators

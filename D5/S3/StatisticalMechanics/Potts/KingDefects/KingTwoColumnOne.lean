@@ -40,17 +40,19 @@ certificate: proof_shape=bind-only; consumers=powers_table, result
 result: proof_shape=content; consumers=none (external open-problem-resolution #30655 C1)
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
-import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
-import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 /-! Canonical paths retain the number of introduced colours and the exact remaining budget. -/
 open scoped BigOperators Matrix
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoColumnOne
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-open KingGrid (Cell Edge mono)
+open D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid (Cell Edge mono)
 
 private def Prefix {n : ℕ} (m : ℕ) (f : Fin n → Fin 4) : Prop :=
   ∀ i b, b < f i → b.val < m ∨ ∃ j, j < i ∧ f j = b

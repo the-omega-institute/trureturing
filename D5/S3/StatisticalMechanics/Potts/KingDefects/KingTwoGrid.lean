@@ -27,12 +27,13 @@ The global slot-count and settlement consumers remain separate obligations.
 The universal normalization is reduced to the verified two-colour obstruction;
 labelled_eq_twentyFour consumes it through twoDefect_usesThree_wide and twoDefect_usesThree.
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 
 /-! Two equal bonds force three occurring colours except on the single 2 by 2 block. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
 
-open KingGrid
+open D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
 def TwoDefect {n k : ℕ} (f : Cell n k → Fin 4) : Prop :=

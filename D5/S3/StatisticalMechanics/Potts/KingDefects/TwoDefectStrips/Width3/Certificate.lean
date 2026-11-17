@@ -16,8 +16,9 @@ class_counts: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229750.result
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.ZeroTemperature
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Classes0
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Classes1
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Classes2
@@ -25,8 +26,9 @@ import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Class
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Classes4
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Classes6
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Classes8
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.ZeroTemperature
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Every admissible boundary has the certified successor multiset. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Certificate

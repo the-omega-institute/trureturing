@@ -30,13 +30,14 @@ literal_words: proof_shape=bind-only; consumers=KingPath.literal_count
 literal_count: proof_shape=bind-only; consumers=KingPath.width_one_large
 width_one_large: proof_shape=content; consumers=HardinA229578.result
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.Logic.Equiv.Prod
 
 /-! Path extension counts and the colour-permutation orbit formula. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
-open KingGrid
+open D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
 def errors {C : Type*} [DecidableEq C] : {n : ℕ} → C → (Fin n → C) → ℕ

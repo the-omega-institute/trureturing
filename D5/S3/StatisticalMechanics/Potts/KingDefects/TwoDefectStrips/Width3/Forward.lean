@@ -12,7 +12,9 @@ escape_witness: none (consumed helpers on the live path of HardinA229750.result)
 structural_certificate: proof_shape=content; consumers=HardinA229750.result
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 /-! Acceptance, initial weights and the forward polynomial relation. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Forward

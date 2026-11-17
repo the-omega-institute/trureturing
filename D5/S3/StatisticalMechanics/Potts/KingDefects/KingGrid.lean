@@ -49,6 +49,7 @@ oneDefect_surjective: proof_shape=bind-only; consumers=KingGrid.labelled_eq_twen
 labelled_eq_twentyFour: proof_shape=bind-only; consumers=KingDifference.fields_eq_six_canonical
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Topology.QuandleMarkovColoring
 import Mathlib.Tactic.DeriveFintype
 import Mathlib.Data.Fin.Rev

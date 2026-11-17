@@ -18,19 +18,23 @@ initial_closed: proof_shape=bind-only; consumers=closed_form
 closed_form: proof_shape=content; consumers=none (external open-problem-resolution #30655)
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Certificate
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Forward
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Certificate
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Forward
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Topology.QuandleMarkovColoring
 import Mathlib.Algebra.LinearRecurrence
 
 /-! An exact-budget transfer proves the recurrence for every row index at least nine. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229750
 open TwoDefectStrips.Width3
-open TwoDefectStrips.Width3.Data
+open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width3.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-open KingTwoGrid (T)
 
 attribute [local irreducible] Data.T initial terminal W cl
 

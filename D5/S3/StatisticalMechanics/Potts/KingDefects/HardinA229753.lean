@@ -12,18 +12,21 @@ escape_witness: none (external open-problem-resolution)
 result: proof_shape=content; consumers=none (external open-problem-resolution #30655)
 -/
 
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Certificate
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Forward
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.GridBridge
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Certificate
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Forward
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Topology.QuandleMarkovColoring
 
 /-! An exact-budget transfer proves the recurrence for every row index at least twelve. -/
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.HardinA229753
 open TwoDefectStrips.Width6
-open TwoDefectStrips.Width6.Data
+open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-open KingTwoGrid (T)
 
 attribute [local irreducible] Data.T initial terminal W cl
 

@@ -13,8 +13,9 @@ defects_rows: proof_shape=content; consumers=literal_bridge
 literal_bridge: proof_shape=content; consumers=HardinA229752.result
 -/
 
-import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingTwoGrid
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 
 /-! Row-list costs split into horizontal and between-row sums. -/
 open scoped BigOperators
