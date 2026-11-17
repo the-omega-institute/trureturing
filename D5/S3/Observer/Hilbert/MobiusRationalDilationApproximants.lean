@@ -121,7 +121,8 @@ private theorem floor_mobius_nat_cutoff (x : ℝ) :
       muR k * ((Nat.floor (x / (k : ℝ)) : ℕ) : ℝ)) =
       if 1 ≤ x then 1 else 0 := by
   by_cases hx : 1 ≤ x
-  · simpa only [ite_eq_left hx, muR, muQ, Rat.cast_intCast] using D5.S3.Arith.MoebiusLogarithmic.floor_cancellation hx
+  · simpa only [ite_eq_left hx, muR, muQ, Rat.cast_intCast] using
+      D5.S3.Arith.MoebiusLogarithmic.floor_cancellation hx
   · have hfloor : Nat.floor x = 0 := Nat.floor_eq_zero.mpr (lt_of_not_ge hx)
     simp [hfloor, hx]
 
