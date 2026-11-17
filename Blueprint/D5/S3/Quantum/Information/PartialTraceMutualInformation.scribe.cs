@@ -43,6 +43,34 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 + "assumption. The argument includes N = 0, k = 0, k = N and "
                 + "ell = 0 or N.")),
             Paragraph(Text(
+                "The ordered-prefix identity in CompoundMatrices has an actual "
+                + "partial-trace consumer. For any complex ell by ell matrix U put "
+                + "B = U directSum I_(N-ell), in the same literal site order. "
+                + "The determinant-amplitude action gives psi(B V) = Gamma_N(B) "
+                + "psi(V). After reindexing by Fin.appendEquiv, ordered-prefix "
+                + "locality identifies Gamma_N(B) with Gamma_ell(U) tensor I on "
+                + "all prefix and tail words. Hence the actual rank-one matrix "
+                + "M_(B V) is (Gamma_ell(U) tensor I) M_V "
+                + "(Gamma_ell(U) tensor I) adjoint. The existing "
+                + "D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.trace_local_right "
+                + "applied with its tail matrix equal to the identity therefore gives "
+                + "R_(B V) = Gamma_ell(U) R_V Gamma_ell(U) adjoint. This derives "
+                + "covariance from the literal minors and the literal partial trace; "
+                + "covariance is not an input assumption. The identity itself holds "
+                + "for arbitrary U and V, with no orthonormality premise.")),
+            Paragraph(Text(
+                "For a change of orthonormal one-particle basis, the exact hypothesis "
+                + "is U adjoint U = I on Fin ell. The full occupation lift then "
+                + "satisfies Gamma_ell(U) adjoint Gamma_ell(U) = I, so it belongs "
+                + "to Matrix.unitaryGroup on every Boolean prefix word. Block "
+                + "multiplication also gives B adjoint B = I, and therefore "
+                + "(B V) adjoint (B V) = V adjoint V = I. This preserves the "
+                + "actual normalized Slater construction. Taking N = ell + n "
+                + "and then n = N - ell preserves arbitrary k at most N and "
+                + "ell at most N, including N = 0, vacuum, full filling, empty "
+                + "prefix and full prefix. This covariance application reuses "
+                + "existing suppliers and introduces no new mathematical declaration.")),
+            Paragraph(Text(
                 "The unresolved spectrum statement concerns this R. Write V_I for "
                 + "the first ell rows of V and P_I = V_I V_I adjoint. It requires "
                 + "a unitary on all Boolean prefix words which conjugates R to a "
@@ -52,9 +80,12 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 + "P_I, with its interval bounds derived from V. All repetitions "
                 + "and zero or one modes must remain. The k by k matrix V_I adjoint "
                 + "V_I cannot substitute its index carrier for these ell spatial "
-                + "modes. Proving this conjugacy from the determinant amplitudes, "
-                + "including the ordered prefix tensor correspondence, is still "
-                + "required before applying complete spectral-permutation and "
+                + "modes. The ordered prefix tensor correspondence and covariance "
+                + "above allow a spatial change of basis. What remains is to prove "
+                + "that diagonalizing P_I makes this same literal marginal diagonal "
+                + "with the stated product entries, without assuming Gaussianity "
+                + "or a diagonal realization. This entry formula is required "
+                + "before applying complete spectral-permutation and "
                 + "entropy results. The product-state entropy theorem below does "
                 + "not provide that correspondence.")),
             Paragraph(Text(
