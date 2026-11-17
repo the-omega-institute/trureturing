@@ -1,7 +1,8 @@
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Forward
-import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
-import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Forward
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
