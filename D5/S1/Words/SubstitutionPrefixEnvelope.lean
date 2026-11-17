@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Block charges control all recursive prefixes and two-block intervals. -/
-import D5.S1.Words.GoldenUniformRecurrence
 import D5.S1.Words.RankOneMorphismIterationBoundDefs
 import Mathlib.Algebra.BigOperators.Group.List.Lemmas
 
@@ -53,25 +52,20 @@ private theorem flatMap_prefix {α : Type*} (w : α → ℤ) (g : α → List α
     (hg : ∀ a, |charge w (g a)| ≤ H)
     (hp : ∀ a t, |charge w ((g a).take t)| ≤ P) (l : List α) (t : ℕ) :
     |charge w ((l.flatMap g).take t)| ≤ (l.length : ℤ) * H + P := by
-  by_cases ht : t < (l.flatMap g).length
-  · obtain ⟨pre, a, post, hl, hlo, hhi⟩ := exists_flatMap_block ht
-    have hlen : pre.length ≤ l.length := by simp [hl]
-    have htake : (l.flatMap g).take t =
-        pre.flatMap g ++ (g a).take (t - (pre.flatMap g).length) := by
-      rw [hl, List.flatMap_append, List.flatMap_cons, List.take_append]
-      rw [List.take_of_length_le hlo, List.take_append_of_le_length]
-      omega
-    rw [htake]
-    have ha := abs_charge_append w (pre.flatMap g)
-      ((g a).take (t - (pre.flatMap g).length))
-    have hb := flatMap_charge w g H hg pre
-    have hc := hp a (t - (pre.flatMap g).length)
-    have hd : (pre.length : ℤ) * H ≤ (l.length : ℤ) * H :=
-      mul_le_mul_of_nonneg_right (by exact_mod_cast hlen) hH
-    omega
-  · rw [List.take_of_length_le (by omega)]
-    have := flatMap_charge w g H hg l
-    omega
+  induction l generalizing t with
+  | nil => simpa [charge] using hP
+  | cons a l ih =>
+    simp only [List.flatMap_cons, List.length_cons, Nat.cast_add, Nat.cast_one]
+    by_cases ht : t ≤ (g a).length
+    · rw [List.take_append_of_le_length ht]
+      have ha := hp a t
+      have hl : 0 ≤ (l.length : ℤ) * H := mul_nonneg (by positivity) hH
+      nlinarith
+    · rw [List.take_append, List.take_of_length_le (by omega)]
+      have ha := abs_charge_append w (g a) ((l.flatMap g).take (t - (g a).length))
+      have hb := hg a
+      have hc := ih (t - (g a).length)
+      nlinarith
 
 /-- A complete-block bound at every level gives a bound for every prefix,
 including empty prefixes and take indices beyond the end of the image. -/
