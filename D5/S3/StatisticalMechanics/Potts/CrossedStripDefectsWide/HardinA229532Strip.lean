@@ -107,7 +107,7 @@ theorem result (n : ℕ) :
   have scale (m : ℕ) (hm : 1 ≤ m) :
       literalCount (q := 3) horizontal between 1 (m + 1) = 6 * a (m + 1) := by
     classical
-    let S : (Fin (m + 1) × Fin 5 → Fin 3) → Prop := fun A =>
+    let S : (Fin (m + 1) × Fin 6 → Fin 3) → Prop := fun A =>
       defects horizontal between (List.ofFn fun i j => A (i, j)) = 1
     have invariant : ∀ e : Equiv.Perm (Fin 3), ∀ A, S (e ∘ A) ↔ S A := by
       intro e A
@@ -127,7 +127,7 @@ theorem result (n : ℕ) :
       have cards : horizontal.card = 5 ∧ between.card = 10 := by decide +kernel
       rw [cards.1, cards.2] at h
       omega
-    have orbit := @canonical_pattern_card (Fin (m + 1) × Fin 5) inferInstance
+    have orbit := @canonical_pattern_card (Fin (m + 1) × Fin 6) inferInstance
       (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) S invariant nonconstant
     simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit
     unfold literalCount a
@@ -167,15 +167,15 @@ theorem result (n : ℕ) :
   have h7 := bridge (n + 8) (by omega)
   have h8 := bridge (n + 9) (by omega)
   have h9 := bridge (n + 10) (by omega)
-  have h10 := bridge (n + 20) (by omega)
-  have h11 := bridge (n + 21) (by omega)
-  have h12 := bridge (n + 22) (by omega)
-  have h13 := bridge (n + 23) (by omega)
-  have h14 := bridge (n + 24) (by omega)
-  have h15 := bridge (n + 25) (by omega)
-  have h16 := bridge (n + 26) (by omega)
-  have h17 := bridge (n + 27) (by omega)
-  have h18 := bridge (n + 28) (by omega)
+  have h10 := bridge (n + 11) (by omega)
+  have h11 := bridge (n + 12) (by omega)
+  have h12 := bridge (n + 13) (by omega)
+  have h13 := bridge (n + 14) (by omega)
+  have h14 := bridge (n + 15) (by omega)
+  have h15 := bridge (n + 16) (by omega)
+  have h16 := bridge (n + 17) (by omega)
+  have h17 := bridge (n + 18) (by omega)
+  have h18 := bridge (n + 19) (by omega)
   simp only [Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] at h h0 h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 h11 h12 h13 h14 h15 h16 h17 h18
   rw [h0, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18] at h
   norm_num only [Nat.reduceAdd, zero_add] at h

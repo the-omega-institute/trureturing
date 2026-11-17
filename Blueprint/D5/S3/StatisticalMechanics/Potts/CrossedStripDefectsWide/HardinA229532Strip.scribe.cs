@@ -7,7 +7,7 @@ internal sealed class HardinA229532StripDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229532Strip.";
     private const string Note = "D5/L/SpinModels/hardin2013a229532";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Literal HDA colourings and exact defect transfer.", H("Hardin A229634: exact defect recurrence"),
+        "Literal HDA colourings and exact defect transfer.", H("Hardin A229532: exact defect recurrence"),
         Blocks(Paragraph(Text("The literal array has n rows, 6 columns and exactly one monochromatic HDA bond. Rows are swept by an exact-budget transfer with 31 equality-and-budget classes, identifying reflection. Every proper-row diagonal block calls the published zero-temperature owner. Finite certificates check the exact image and every defect entry.")),
             Describe.Lean(DescribeId.Create("a"),
                 DeclarationHandle.Create(Prefix + "a"), H("The literal canonical array count"),
