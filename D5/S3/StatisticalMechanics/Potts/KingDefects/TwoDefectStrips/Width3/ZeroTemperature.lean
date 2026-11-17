@@ -14,6 +14,7 @@ class_correspondence: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=Certificate.transition_counts
 -/
 
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233163KingStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.SignedFibres
@@ -34,7 +35,8 @@ private theorem legal_iff (p : Boundary) (c : Fin 3 → Fin 8) :
     (rowLegal c ∧ compatible p c ∧ good saturated c) ↔
       bondDefects between p (pairs c) + bondDefects horizontal (pairs c) (pairs c) = 0 := by
   simp only [bondDefects, Nat.add_eq_zero_iff, Finset.card_eq_zero,
-    Finset.filter_eq_empty_iff, between, horizontal,
+    Finset.filter_eq_empty_iff, between,
+    D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229536Strip.between, horizontal,
     Finset.mem_insert, Finset.mem_singleton, forall_eq_or_imp, forall_eq,
     Prod.fst, Prod.snd]
   simp [rowLegal, compatible, colour_bond_iff, good, saturated, allowed, advance,
