@@ -179,8 +179,8 @@ theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 43) :
       cl r (d - (bondDefects between p r + bondDefects horizontal r r)) = s
       then (1 : ℤ) else 0) = T (cl p d) s := by
   by_cases hzero : d = 0 ∧ bondDefects horizontal p p = 0
-  · subst d
-    simpa only [Nat.zero_sub] using ZeroTemperature.transition_counts p hzero.2 s
+  · rcases hzero with ⟨rfl, hproper⟩
+    simpa only [Nat.zero_sub] using ZeroTemperature.transition_counts p hproper s
   ·
     obtain ⟨p', ⟨hnormal, e, he⟩, _⟩ := canonical_exists_unique p
     have hv : Valid p' d := by
@@ -195,12 +195,21 @@ theorem transition_counts (p : Row) (d : ℕ) (hp : Valid p d) (s : Fin 43) :
       have h := TableBridge.count_successors
         (fun r : Row => bondDefects between p' r + bondDefects horizontal r r ≤ d)
         (fun r => cl r (d - (bondDefects between p' r + bondDefects horizontal r r))) s
-      change (successors p' d).count s = _ at h
-      rw [hlist] at h
+      have hnon : ¬ (d = 0 ∧ bondDefects horizontal p' p' = 0) := by
+        rw [he]
+        simpa only [bond_relabel] using hzero
+      have hcount : ((successors p' d).count s : ℤ) =
+          ∑ r : Row, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
+            cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
+            then (1 : ℤ) else 0 := by
+        unfold successors
+        rw [if_neg hnon]
+        exact_mod_cast h
+      rw [hlist] at hcount
       have hh : (∑ r : Row, if bondDefects between p' r + bondDefects horizontal r r ≤ d ∧
           cl r (d - (bondDefects between p' r + bondDefects horizontal r r)) = s
           then (1 : ℤ) else 0) = ((classList (cl p' d)).count s : ℤ) := by
-        exact_mod_cast h.symm
+        exact hcount.symm
       exact hh.trans (class_counts _ _)
     rw [he] at hT
     let E : Row ≃ Row := Equiv.piCongrRight fun _ : Fin 5 => e

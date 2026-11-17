@@ -16,6 +16,7 @@ exact_image: proof_shape=bind-only; consumers=raw_iff_shift
 offsets: proof_shape=bind-only; consumers=raw_iff_shift,weighted
 raw_iff_shift: proof_shape=bind-only; consumers=weighted
 weighted: proof_shape=bind-only; consumers=transition_counts
+owner_matrix: proof_shape=bind-only; consumers=transition_counts
 transition_counts: proof_shape=bind-only; consumers=Width6.Certificate.transition_counts
 -/
 
@@ -161,8 +162,8 @@ private theorem owner_matrix (p : Row) (hp : bondDefects horizontal p p = 0) (s 
       (cl q 0 = 71 ∧ (offsetChoices q).card = 1) ∨
       (cl q 0 = 75 ∧ (offsetChoices q).card = 2) ∨
       (cl q 0 = 90 ∧ (offsetChoices q).card = 0) := by
-    intro a
-    fin_cases a <;> decide +kernel
+    intro a b
+    fin_cases a <;> fin_cases b <;> decide +kernel
   let q := offsets p
   have heq : q = ![0, q 1, q 2, q 3, q 4, q 5] := by
     funext j
@@ -175,13 +176,16 @@ private theorem owner_matrix (p : Row) (hp : bondDefects horizontal p p = 0) (s 
   rcases hh hpq with ⟨hc, hn⟩ | ⟨hc, hn⟩ | ⟨hc, hn⟩
   · rw [hcl] at hc
     rw [hc, table.1]
-    simp [← hn, q]
+    change (offsetChoices (offsets p)).card = _ at hn
+    simp [hn, ← Finset.card_eq_zero]
   · rw [hcl] at hc
     rw [hc, table.2.1]
-    simp [← hn, q]
+    change (offsetChoices (offsets p)).card = _ at hn
+    simp [hn, ← Finset.card_eq_zero]
   · rw [hcl] at hc
     rw [hc, table.2.2]
-    simp [← hn, q]
+    change (offsetChoices (offsets p)).card = _ at hn
+    simp [hn, ← Finset.card_eq_zero]
 
 theorem transition_counts (p : Row) (hp : bondDefects horizontal p p = 0) (s : Fin 96) :
     (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ 0 ∧

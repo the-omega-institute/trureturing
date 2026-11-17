@@ -40,18 +40,26 @@ def raw5 (p r : Row) : Prop :=
 local instance (p r : Row) : Decidable (raw5 p r) :=
   inferInstanceAs (Decidable (_ = 0))
 
+set_option maxHeartbeats 2000000 in
 theorem proper_extend (p : Row) :
     bondDefects Width6.Data.horizontal (extend p) (extend p) = 0 ↔
       bondDefects Width5.Data.horizontal p p = 0 := by
   simp only [bondDefects, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
-  simp [Width5.Data.horizontal, Width6.Data.horizontal, extend, ne_comm] <;> tauto
+  simp [Width5.Data.horizontal, Width6.Data.horizontal,
+    D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData.horizontal,
+    D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData.horizontal,
+    extend, Fin.forall_fin_succ, ne_comm] <;> tauto
 
+set_option maxHeartbeats 2000000 in
 theorem raw_extend (p r : Row) :
     Width6.ZeroTemperature.raw (extend p) (extend r) ↔ raw5 p r := by
   simp only [Width6.ZeroTemperature.raw, raw5, Nat.add_eq_zero_iff,
     bondDefects, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
   simp [Width5.Data.between, Width6.Data.between,
-    Width5.Data.horizontal, Width6.Data.horizontal, extend, ne_comm] <;> tauto
+    Width5.Data.horizontal, Width6.Data.horizontal,
+    D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229583StripData.horizontal,
+    D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData.horizontal,
+    extend, Fin.forall_fin_succ, ne_comm] <;> tauto
 
 theorem raw_iff_owner (p r : Row)
     (hp : bondDefects Width5.Data.horizontal p p = 0) :
