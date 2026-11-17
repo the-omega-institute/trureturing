@@ -9,6 +9,8 @@
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalSourceJet
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGeneratedSource
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGermCoefficientBridge
+import Mathlib.Analysis.Analytic.Uniqueness
+import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.Analysis.Complex.CauchyIntegral
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.Calculus.FDeriv.Analytic
@@ -22,7 +24,7 @@ Concrete finite positive source modes and the ++ square-resolvent candidate.
 Every parameter derivative of a mode below is a derivative of a finite sum.
 The period is the actual original period. No original/candidate identification,
 mode recurrence, or differentiation of a parameter-dependent tsum is assumed.
-The final theorem derives a separate complex germ equality for each positive pair.
+The positive pair germ extends to equality throughout the complex unit disk.
 -/
 
 set_option backward.isDefEq.respectTransparency false
@@ -1346,8 +1348,20 @@ theorem externalT_positive_finite_germ :
     intro r hr hr1
     simpa only [F] using (positive_difference_equations p q hr hr1).2
 
-/- Remaining obligations: signed source and J candidates, all-sign germ and global
-identification. Positive T germ equality supplies neither a uniform mode radius
-nor any of these remaining conclusions. -/
+/-- The actual positive T modes equal the fixed finite candidate on the complex unit disk. -/
+theorem externalT_positive_finite_eq (p q : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
+    OriginalGaussianExternalResolvent.externalT true p true q z = candidateT p q z := by
+  have hd : DifferentiableOn ℂ (externalT true p true q)
+      (Metric.ball (0 : ℂ) 1) := by
+    intro w hw
+    exact (OriginalGaussianExternalRadialSums.literal_differentiable
+      true true p q (by simpa using hw)).differentiableWithinAt
+  exact (hd.analyticOnNhd Metric.isOpen_ball).eqOn_of_preconnected_of_eventuallyEq
+    (candidateT_analyticOnNhd p q) Metric.isPreconnected_ball
+    (show (0 : ℂ) ∈ Metric.ball (0 : ℂ) 1 by simp)
+    (externalT_positive_finite_germ p q) (by simpa using hz)
+
+/- Remaining obligations: rational T generator reconstruction, J identification,
+and the other sign sectors. -/
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianFiniteCandidateModes
