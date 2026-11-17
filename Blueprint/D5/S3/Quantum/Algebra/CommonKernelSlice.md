@@ -34,3 +34,4 @@ For all k a b : ℕ, every X and hcomm as above, and hcommon : (⨅ i, ker ((X i
 
 - Truth anchor: `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice`
 - Truth anchor: `D5/S3/Quantum/Algebra/CommonKernelSlice.common_kernel_slice_injective_of_common_kernel_bot`
+- Dependency: [D5/S3/Quantum/Algebra/CommonCoefficientPlane](CommonCoefficientPlane.md)

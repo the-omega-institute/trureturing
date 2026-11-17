@@ -6,6 +6,7 @@
    utility: none
    digest: A real coefficient combination realizes the common kernel of an adjoint-symmetric finite matrix family. -/
 
+import D5.S3.Quantum.Algebra.CommonCoefficientPlane
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.LinearAlgebra.Dimension.Finite
@@ -32,11 +33,6 @@ open scoped BigOperators ComplexOrder ComplexConjugate InnerProductSpace
 
 namespace D5.S3.Quantum.Algebra.CommonKernelSlice
 
-private theorem cross_pairing {a b : ℕ} (A B : Matrix (Fin a) (Fin b) ℂ)
-    (x y : Fin b → ℂ) :
-    star x ⬝ᵥ ((Aᴴ * B) *ᵥ y) = star (A *ᵥ x) ⬝ᵥ (B *ᵥ y) := by
-  rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec]
-
 private theorem orthogonal_from_two_kernels {a b : ℕ}
     (A B : Matrix (Fin a) (Fin b) ℂ) (hAB : Aᴴ * B = Bᴴ * A)
     (s t : ℝ) (hst : s ≠ t)
@@ -56,9 +52,11 @@ private theorem orthogonal_from_two_kernels {a b : ℕ}
       star (B *ᵥ x) ⬝ᵥ (A *ᵥ y) := by
     calc
       star (A *ᵥ x) ⬝ᵥ (B *ᵥ y) =
-          star x ⬝ᵥ ((Aᴴ * B) *ᵥ y) := (cross_pairing A B x y).symm
+          star x ⬝ᵥ ((Aᴴ * B) *ᵥ y) :=
+            (D5.S3.Quantum.Algebra.CommonCoefficientPlane.cross_pairing A B x y).symm
       _ = star x ⬝ᵥ ((Bᴴ * A) *ᵥ y) := by rw [hAB]
-      _ = star (B *ᵥ x) ⬝ᵥ (A *ᵥ y) := cross_pairing B A x y
+      _ = star (B *ᵥ x) ⬝ᵥ (A *ᵥ y) :=
+        D5.S3.Quantum.Algebra.CommonCoefficientPlane.cross_pairing B A x y
   rw [hxs, hyt] at he
   rw [star_smul, star_neg, smul_dotProduct, dotProduct_smul] at he
   simp only [Complex.star_def, Complex.conj_ofReal, smul_eq_mul] at he

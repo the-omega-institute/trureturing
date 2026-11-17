@@ -40,19 +40,12 @@ def finalUnitary : M :=
      ((r⁻¹ : ℝ) : ℂ), -Complex.I * ((r⁻¹ : ℝ) : ℂ), 0;
      0, 0, Complex.I]
 
-def skew3 : Set M :=
-  {A | ∃ x y z : ℝ,
-      A = !![0, (x : ℂ), (y : ℂ); (-x : ℂ), 0, (z : ℂ);
-        (-y : ℂ), (-z : ℂ), 0]}
-
 def iSkew3 : Set M :=
   {A | ∃ x y z : ℝ,
       A = Complex.I • !![0, (x : ℂ), (y : ℂ); (-x : ℂ), 0, (z : ℂ);
         (-y : ℂ), (-z : ℂ), 0]}
 
 def e3 : Fin 3 → ℂ := ![0, 0, 1]
-
-def neutralGenerator (c : ℂ) : Fin 3 → ℂ := ![1, -c, 0]
 
 theorem hermitian_coordinates {H : M} (hH : H.IsHermitian) :
     ∃ a b c : ℝ, ∃ z u v : ℂ,

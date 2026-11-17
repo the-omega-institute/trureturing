@@ -27,12 +27,6 @@ private theorem tensor_factor {a b c d : ℕ}
       Matrix.vecMulVec (Y *ᵥ u) (X *ᵥ x) := by
   rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMul_transpose]
 
-private theorem matrix_not_injective_of_dimensions {a b : ℕ} (hab : a < b)
-    (A : Matrix (Fin a) (Fin b) ℂ) : ¬ Function.Injective A.mulVecLin := by
-  have hker : LinearMap.ker A.mulVecLin ≠ ⊥ :=
-    LinearMap.ker_ne_bot_of_finrank_lt (by simpa using hab)
-  exact fun hA => hker (LinearMap.ker_eq_bot.mpr hA)
-
 private theorem complex_block_annihilated {a b c d : ℕ}
     (X : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (Y : Fin 3 → Matrix (Fin d) (Fin c) ℂ)
     (hF : (∑ r, Matrix.kronecker (X r) (Y r))ᴴ *
@@ -195,7 +189,9 @@ theorem original_gram_common_kernel_bound {a b c d : ℕ}
     by_contra hu0
     let A : Matrix (Fin a) (Fin b) ℂ :=
       ∑ r : Fin 3, (star (v r / v i)) • X r
-    have hnot := matrix_not_injective_of_dimensions hab A
+    have hnot :=
+      D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation.matrix_not_injective_of_dimensions
+        (n := a) (m := b) hab A
     obtain ⟨x, y, hxyA, hxy⟩ := Function.not_injective_iff.mp hnot
     let x₀ := x - y
     have hx₀ : x₀ ≠ 0 := sub_ne_zero.mpr hxy
