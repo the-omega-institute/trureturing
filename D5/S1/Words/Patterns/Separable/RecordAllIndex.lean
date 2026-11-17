@@ -511,9 +511,6 @@ def V : PowerSeries (PowerSeries ℚ) := PowerSeries.mk 1
 def wb : PowerSeries (PowerSeries ℚ) := PowerSeries.X * V
 def B : PowerSeries (PowerSeries ℚ) := V * PowerSeries.subst wb M
 
-lemma coeff_V (n : ℕ) : PowerSeries.coeff n V = (1 : PowerSeries ℚ) := by
-  simp [V]
-
 lemma coeff_Vpow (d n : ℕ) :
     PowerSeries.coeff n (V^d) =
       if d = 0 then (if n = 0 then 1 else 0) else
@@ -524,23 +521,6 @@ lemma coeff_Vpow (d n : ℕ) :
       have h := PowerSeries.mk_one_pow_eq_mk_choose_add (PowerSeries ℚ) d
       have hn := congrArg (PowerSeries.coeff n) h
       simpa [V, Nat.succ_eq_add_one, Nat.add_sub_cancel] using hn
-
-lemma coeff_wbpow (d n : ℕ) :
-    PowerSeries.coeff n (wb^d) =
-      if d = 0 then (if n = 0 then 1 else 0) else
-        if d ≤ n then (Nat.choose (n - 1) (d - 1) : PowerSeries ℚ) else 0 := by
-  cases d with
-  | zero => simp [wb]
-  | succ d =>
-      rw [show wb^(d+1) = PowerSeries.X^(d+1) * V^(d+1) by
-        simp [wb, mul_pow]]
-      rw [PowerSeries.coeff_X_pow_mul']
-      simp only [show d + 1 ≠ 0 by omega, if_false]
-      by_cases h : d + 1 ≤ n
-      · rw [coeff_Vpow]
-        simp only [show d + 1 ≠ 0 by omega, if_false, if_pos h]
-        rw [show d+1+(n-(d+1))-1=n-1 by omega, show d+1-1=d by omega]
-      · rw [if_neg h, if_neg h]
 
 theorem coeff_B (n : ℕ) : PowerSeries.coeff n B =
     ∑ d ∈ Finset.range (n+1), (n.choose d : PowerSeries ℚ) * t d := by
