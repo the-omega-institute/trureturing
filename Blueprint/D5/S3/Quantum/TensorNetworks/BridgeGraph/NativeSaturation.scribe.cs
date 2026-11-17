@@ -54,12 +54,18 @@ internal sealed class NativeSaturationDocument : IScribeDocumentDefinition
                         "the Gram equation is vacuous; if a=0, the threshold forces b=0.")),
                     Paragraph(Text(
                         "This whole-parameter construction is a consequence of the native model " +
-                        "with fixed right dimensions c=2q and d=3q. The separate universal " +
-                        "upper-bound question asks whether arbitrary c,d and a<b force 3c≤2d " +
-                        "under the scalar-Gram hypotheses; that question remains unresolved.")),
+                        "with fixed right dimensions c=2q and d=3q. This saturation construction " +
+                        "alone does not prove the separate universal implication that the " +
+                        "scalar-Gram hypotheses and a<b force 3c≤2d for arbitrary c,d.")),
                     Paragraph(Text(
-                        "At a=2, b=3 and q=1 this recovers the existing permutation-coordinate " +
-                        "example: (0,0),(0,1),(1,0),(1,1),(2,0),(2,1) route to " +
+                        "At a=2, b=3 and q=1 this recovers the permutation-coordinate example " +
+                        "ex-bridge-two-three in the earlier book prose, Chapter 19 of " +
+                        "trureturing-books/quantum-geometry, lines 106–140 at " +
+                        "https://github.com/the-omega-institute/trureturing-books/blob/" +
+                        "1f0a6b69198be9aee48c5902e1c60966cddece4d/books/quantum-geometry/zh/" +
+                        "ch19-tensor-networks-and-holography.md#L106-L140. " +
+                        "The supplier is a book prose example, not a frozen D5 theorem. " +
+                        "Here (0,0),(0,1),(1,0),(1,1),(2,0),(2,1) route to " +
                         "(0,0),(0,1),(1,0),(1,1),(0,2),(1,2), respectively. This bijection " +
                         "gives the same six-coordinate permutation and is a reused instance.")),
                     Paragraph(Text(

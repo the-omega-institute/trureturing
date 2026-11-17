@@ -24,9 +24,9 @@ When 2b≤3a, these slices route each input (j,k) to (j,k) if j<a, to (2(j-a),2q
 
 For necessity, an identity column Gram has full column rank. The native matrix has 3aq rows and 2bq columns. Thus 2bq=rank(FᴴF)≤rank(F)≤3aq, and positivity of q gives 2b≤3a. If b=0 the column space is empty and the Gram equation is vacuous; if a=0, the threshold forces b=0.
 
-This whole-parameter construction is a consequence of the native model with fixed right dimensions c=2q and d=3q. The separate universal upper-bound question asks whether arbitrary c,d and a<b force 3c≤2d under the scalar-Gram hypotheses; that question remains unresolved.
+This whole-parameter construction is a consequence of the native model with fixed right dimensions c=2q and d=3q. This saturation construction alone does not prove the separate universal implication that the scalar-Gram hypotheses and a<b force 3c≤2d for arbitrary c,d.
 
-At a=2, b=3 and q=1 this recovers the existing permutation-coordinate example: (0,0),(0,1),(1,0),(1,1),(2,0),(2,1) route to (0,0),(0,1),(1,0),(1,1),(0,2),(1,2), respectively. This bijection gives the same six-coordinate permutation and is a reused instance.
+At a=2, b=3 and q=1 this recovers the permutation-coordinate example ex-bridge-two-three in the earlier book prose, Chapter 19 of trureturing-books/quantum-geometry, lines 106–140 at https://github.com/the-omega-institute/trureturing-books/blob/1f0a6b69198be9aee48c5902e1c60966cddece4d/books/quantum-geometry/zh/ch19-tensor-networks-and-holography.md#L106-L140. The supplier is a book prose example, not a frozen D5 theorem. Here (0,0),(0,1),(1,0),(1,1),(2,0),(2,1) route to (0,0),(0,1),(1,0),(1,1),(0,2),(1,2), respectively. This bijection gives the same six-coordinate permutation and is a reused instance.
 
 A literature search found arXiv:1612.07616v1, whose introduction, Theorem 1.3, Definition 3.1 and Lemma 3.2 concern square local factors; they do not state this rectangular iff. This document makes no external novelty claim.
 
