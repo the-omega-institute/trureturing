@@ -21,7 +21,21 @@ $n$ with $a_n=k$. Indices, multiplicities and the self index are all retained.
 The source is Quet's A124056, Della Corte's question 376929 and Sommacal's
 question 515669; see `Library/RecurrenceComposition/quet2006a124056.md`.
 
-## Exact representation
+## Motivation
+
+The question asks whether the divisibility-count rule reaches every positive
+integer from its specified initial value. Its multiplicities and self index
+are part of the source problem.
+
+## Gap
+
+`D5/S3/Arith/Recurrence/A124056Occurrence.full_positive_occurrence` proves the
+unconditional occurrence assertion. The independent source-fidelity,
+proof-shape and registration boundaries are stated below.
+
+## Route
+
+### Exact representation
 
 `values N` contains exactly the first $N+1$ terms. Internal `term N` is
 $a_{N+1}$, while `sourceTerm n = term (n-1)` is used at positive source
@@ -32,7 +46,7 @@ closed-interval, one-based recurrence; zero never occurs among its indices.
 the maximum through internal index $N$, inclusive. Thus the multiplicity bound
 available at $N$ is applied only to predecessors of this prefix maximum.
 
-## Formal occurrence theorem
+### Formal occurrence theorem
 
 The formal source proves that infinitely many threes imply the full target,
 and that finitely many threes force a fixed missing residue class modulo some
@@ -60,8 +74,8 @@ proper-divisor weight sum. Strong induction in
 For $d\ge2$, `count_le_prime_word_bounds` gives both $c_t(d)\le2W_A(d)$ and
 an injection of its occurrences into the positive predecessor values
 $v\le M_N$ with $d\le2W_A(v)$. Consecutive-pair injectivity makes these
-predecessor values distinct. These are the finite inputs to the remaining
-frequency estimate.
+predecessor values distinct. These are the finite inputs to the frequency
+estimate below.
 
 `prime_word_first_letter` proves the exact recurrence
 
@@ -119,7 +133,42 @@ prove exactly the original all-positive-integer occurrence assertion. No
 extra analytic hypothesis, infinite-fiber premise or cutoff remains in its
 type.
 
-## Admission boundary
+## Falsifier
+
+A positive integer omitted by the exact initialized sequence would refute the
+occurrence assertion. Absence from a finite prefix does not establish such an
+omission.
+
+## Evidence
+
+The Lean source is `D5/S3/Arith/Recurrence/A124056Occurrence.lean`, with matching
+Blueprint Scribe and emitted mathematical exposition. Its
+`source_specification` gives the original recurrence, and
+`full_positive_occurrence` has type
+`∀ k : ℕ, 0 < k → ∃ n : ℕ, 0 < n ∧ sourceTerm n = k`.
+
+## Triage
+
+`theorem` for the explicitly defined recurrence. Independent review and
+freezing of the complete intended unit remain pending.
+
+### What the settlement shows
+
+The decisive estimate is
+`D5/S3/Arith/Recurrence/A124056Occurrence.uniform_count_bound_of_avoidance`:
+avoiding one residue class yields a uniform sublinear multiplicity bound.
+Together with `missing_residue_of_finite_three` and
+`no_uniform_sublinear_count_bound`, it forces infinitely many threes;
+`full_occurrence_of_infinite_three` then yields the original assertion.
+The estimate applies to every finite prefix satisfying its residue-avoidance
+hypothesis, with its constants fixed before the prefix and value are chosen.
+The occurrence theorem retains the specified initialization. No sharpness or
+occurrence-time bound, variant initialization, or other question in the source
+is settled here.
+
+## ASSUMED-UNVERIFIED
+
+### Admission boundary
 
 The exact source representation and the infinite-three implication use new finite-tuple,
 cardinality and threshold arguments. The missing-residue result uses the
