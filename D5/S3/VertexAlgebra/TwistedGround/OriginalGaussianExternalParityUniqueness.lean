@@ -4,9 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Literal external kernel parity and exclusion of the positive-sector coefficient resonance. -/
+   digest: Literal kernel parity and positive-sector coefficient nonresonance. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums
+import Mathlib.Analysis.Analytic.OfScalars
+import Mathlib.Analysis.Analytic.Uniqueness
 
 /-! Parity retains the direct identity pairing in the full square contraction.
 The coefficient theorem is the algebraic uniqueness step for the positive-sector
@@ -80,17 +82,35 @@ theorem kernelMode_neg (square out out' : Bool) (u v z : ℂ) :
   intro pq
   rw [externalT_neg, externalJ_neg]
 
+private lemma even_series_odd_coefficients_zero (f : ℂ → ℂ)
+    (heven : ∀ z, f (-z) = f z) (a : ℕ → ℂ)
+    (ha : HasFPowerSeriesAt f
+      (FormalMultilinearSeries.ofScalars ℂ a) 0) (k : ℕ) (hk : Odd k) :
+    a k = 0 := by
+  have hn : HasFPowerSeriesAt f
+      (FormalMultilinearSeries.ofScalars ℂ (fun n => (-1 : ℂ) ^ n * a n)) 0 := by
+    have ha' : HasFPowerSeriesAt f
+        (FormalMultilinearSeries.ofScalars ℂ a) ((-ContinuousLinearMap.id ℂ ℂ) 0) := by
+      simpa using ha
+    simpa only [neg_apply, ContinuousLinearMap.id_apply, neg_zero,
+      Function.comp_def, heven, FormalMultilinearSeries.ofScalars_comp_neg_id]
+      using ha'.compContinuousLinearMap (u := -ContinuousLinearMap.id ℂ ℂ) (x := 0)
+  have he := congrArg (fun p : FormalMultilinearSeries ℂ ℂ ℂ => p k (fun _ => 1))
+    (ha.eq_formalMultilinearSeries hn)
+  simp [FormalMultilinearSeries.ofScalars, hk.neg_one_pow] at he
+  linear_combination he / 2
+
 /-- The two homogeneous ++T coefficient equations have no even-z solution
 except zero. Missing negative external indices are explicitly zero. The
 induction uses frequency difference off the diagonal and radial nonresonance
 on the diagonal; no initial diagonal data or equality is a hypothesis. -/
 theorem positive_even_coefficients_zero (c : ℕ → ℕ → ℕ → ℂ)
-    (hodd : ∀ p q k, Odd k → c p q k = 0)
-    (hdiff : ∀ p q k,
+    (hodd : ∀ (p q k : ℕ), Odd k → c p q k = 0)
+    (hdiff : ∀ (p q k : ℕ),
       ((p : ℂ) - q) * c p q k -
         (p + 1 / 2) * (if p = 0 then 0 else c (p - 1) q k) +
         (q + 1 / 2) * (if q = 0 then 0 else c p (q - 1) k) = 0)
-    (hrad : ∀ p q k,
+    (hrad : ∀ (p q k : ℕ),
       ((k : ℂ) - p - q - 1) * c p q k +
         (p + 1 / 2) * (if p = 0 then 0 else c (p - 1) q k) +
         (q + 1 / 2) * (if q = 0 then 0 else c p (q - 1) k) = 0) :
@@ -128,5 +148,38 @@ theorem positive_even_coefficients_zero (c : ℕ → ℕ → ℕ → ℂ)
         exact (mul_eq_zero.mp (by simpa using hz)).resolve_left hnonzero
   intro p q k
   exact h (p + q) p q rfl k
+
+/-- Conditional analytic identification of the literal ++T modes. The candidate
+is even, and the Taylor coefficients of its difference from the full original
+T obey both homogeneous equations, including zero negative-index boundaries.
+Extracting these recurrence hypotheses from the differential equations remains
+an explicit analytic obligation; they are not an assumed equality of kernels. -/
+theorem externalT_positive_germ_unique (candidate : ℕ → ℕ → ℂ → ℂ)
+    (heven : ∀ p q z, candidate p q (-z) = candidate p q z)
+    (c : ℕ → ℕ → ℕ → ℂ)
+    (hexp : ∀ p q, HasFPowerSeriesAt
+      (fun z => externalT true p true q z - candidate p q z)
+      (FormalMultilinearSeries.ofScalars ℂ (c p q)) 0)
+    (hdiff : ∀ (p q k : ℕ),
+      ((p : ℂ) - q) * c p q k -
+        (p + 1 / 2) * (if p = 0 then 0 else c (p - 1) q k) +
+        (q + 1 / 2) * (if q = 0 then 0 else c p (q - 1) k) = 0)
+    (hrad : ∀ (p q k : ℕ),
+      ((k : ℂ) - p - q - 1) * c p q k +
+        (p + 1 / 2) * (if p = 0 then 0 else c (p - 1) q k) +
+        (q + 1 / 2) * (if q = 0 then 0 else c p (q - 1) k) = 0) :
+    ∀ p q, ∀ᶠ z in nhds (0 : ℂ), externalT true p true q z = candidate p q z := by
+  have hodd : ∀ p q k, Odd k → c p q k = 0 := by
+    intro p q k hk
+    exact even_series_odd_coefficients_zero _
+      (fun z => by rw [externalT_neg, heven]) _ (hexp p q) k hk
+  have hc := positive_even_coefficients_zero c hodd hdiff hrad
+  intro p q
+  have hp : FormalMultilinearSeries.ofScalars ℂ (c p q) = 0 := by
+    have hz : c p q = 0 := funext (hc p q)
+    simp [hz]
+  have h := hexp p q
+  rw [hp] at h
+  exact h.eventually_eq_zero.mono (fun z hz => sub_eq_zero.mp hz)
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalParityUniqueness
