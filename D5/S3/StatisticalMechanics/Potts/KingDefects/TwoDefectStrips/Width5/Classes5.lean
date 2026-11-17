@@ -15,7 +15,6 @@ class_successors: proof_shape=content; consumers=Width5.Certificate.canonical_su
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 /-! A single output class of the canonical-boundary defect transfer. -/
-open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes5
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
