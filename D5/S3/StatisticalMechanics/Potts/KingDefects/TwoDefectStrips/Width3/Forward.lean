@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Forward
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width3/Forward
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
