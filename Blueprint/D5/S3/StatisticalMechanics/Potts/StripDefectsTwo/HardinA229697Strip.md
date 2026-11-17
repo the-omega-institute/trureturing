@@ -51,6 +51,7 @@ The literal row-major canonical count satisfies the registered recurrence for ev
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697Strip.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229589StripData](../StripDefects/HardinA229589StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697StripCertificate](HardinA229697StripCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697StripClasses0](HardinA229697StripClasses0.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697StripClasses1](HardinA229697StripClasses1.md)

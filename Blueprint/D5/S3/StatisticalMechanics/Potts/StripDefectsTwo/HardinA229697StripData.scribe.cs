@@ -77,13 +77,13 @@ internal sealed class HardinA229697StripDataDocument : IScribeDocumentDefinition
                 Typed(Num(0),MatrixType(Sector,2*Sector)),Call("HardinA233259PairTransferCore.Q")));
     }
     private static Formula Matrix(string[][] rows) => Seq(
-        new[] { Begin,Grp(V("bmatrix")) }
+        new[] { Begin,Grp(F.Id("bmatrix")) }
             .Concat(rows.SelectMany((row,i) =>
                 (i==0 ? Array.Empty<Formula>() : new[] { new Formula.LatexMacro(FormulaLatexMacro.RowBreak) })
                     .Concat(row.SelectMany((entry,j) =>
                         j==0 ? new[] { Num(entry) }
                             : new[] { Amp,Num(entry) }))))
-            .Concat(new[] { End,Grp(V("bmatrix")) }).ToArray());
+            .Concat(new[] { End,Grp(F.Id("bmatrix")) }).ToArray());
     private static Formula Vector(params Formula[] a) => Seq(
         new Formula[] { Bang,OpenBracket }.Concat(a.SelectMany((f,i) =>
             i==0 ? new[] { f } : new[] { Comma,Sp,f })).Append(CloseBracket).ToArray());

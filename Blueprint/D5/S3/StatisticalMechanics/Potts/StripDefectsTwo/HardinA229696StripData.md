@@ -34,7 +34,7 @@ Positive budgets call the frozen one-defect classifier at d minus one. Zero budg
 
 **Definition 1.3 (T).**
 
-$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{T}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(15\right), \operatorname{\mathit{Fin}}\left(15\right), \mathit{Int}\right))$$
+$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{T}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(15\right), \operatorname{\mathit{Fin}}\left(15\right), \mathit{Int}\right)) = \operatorname{\mathit{Matrix}}.\operatorname{\mathit{reindex}}\left((\operatorname{\mathit{finSumFinEquiv}}: \operatorname{\mathit{Equiv}}\left(\operatorname{\mathit{Sum}}\left(\operatorname{\mathit{Fin}}\left(10\right), \operatorname{\mathit{Fin}}\left(5\right)\right), \operatorname{\mathit{Fin}}\left(15\right)\right)), (\operatorname{\mathit{finSumFinEquiv}}: \operatorname{\mathit{Equiv}}\left(\operatorname{\mathit{Sum}}\left(\operatorname{\mathit{Fin}}\left(10\right), \operatorname{\mathit{Fin}}\left(5\right)\right), \operatorname{\mathit{Fin}}\left(15\right)\right)), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{fromBlocks}}\left(\operatorname{\mathit{HardinA229588Strip}}.\operatorname{T}, \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left((\begin{bmatrix}0&0&2&2&4\\1&0&2&2&1\\1&3&2&2&4\\0&1&3&0&2\\2&2&4&1&3\end{bmatrix}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(5\right), \operatorname{\mathit{Fin}}\left(5\right), \mathit{Int}\right)), \operatorname{\mathit{Matrix}}.\operatorname{\mathit{submatrix}}\left(\operatorname{\mathit{HardinA229588Strip}}.\operatorname{T}, (\lambda i: \operatorname{\mathit{Fin}}\left(5\right), (\operatorname{\mathit{Fin}}.\operatorname{\mathit{castAdd}}\left(5, i\right))), (\lambda j: \operatorname{\mathit{Fin}}\left(5\right), (\operatorname{\mathit{Fin}}.\operatorname{\mathit{natAdd}}\left(5, j\right)))\right)\right), (0: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(5\right), \operatorname{\mathit{Fin}}\left(10\right), \mathit{Int}\right)), \operatorname{\mathit{HardinA233258PairTransfer}}.\operatorname{Q}\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229696StripData.T` (`✓ std3`).
 
@@ -48,7 +48,7 @@ The 15 by 15 integer matrix retains HardinA229588Strip.T in its leading 10 by 10
 
 **Definition 1.4 (initial).**
 
-$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{\mathit{initial}}: \operatorname{\mathit{Fin}}\left(15\right) \to \mathit{Int})$$
+$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{\mathit{initial}}: \operatorname{\mathit{Fin}}\left(15\right) \to \mathit{Int}) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229588Strip}}.\operatorname{\mathit{initial}}, ![0, 0, 0, 0, 0]\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229696StripData.initial` (`✓ std3`).
 
@@ -62,7 +62,7 @@ The 15 integer initial weights append 5 zero entries to the frozen initial vecto
 
 **Definition 1.5 (terminal).**
 
-$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{\mathit{terminal}}: \operatorname{\mathit{Fin}}\left(15\right) \to \mathit{Int})$$
+$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{\mathit{terminal}}: \operatorname{\mathit{Fin}}\left(15\right) \to \mathit{Int}) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left((\lambda i: \operatorname{\mathit{Fin}}\left(10\right), ((0: \mathit{Int}))), (\lambda i: \operatorname{\mathit{Fin}}\left(5\right), ((1: \mathit{Int})))\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229696StripData.terminal` (`✓ std3`).
 
@@ -76,7 +76,7 @@ The 15 integer acceptance weights are zero on the leading 10 states and one on t
 
 **Definition 1.6 (W).**
 
-$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{W}: \operatorname{\mathit{Fin}}\left(11\right) \to \left(\operatorname{\mathit{Fin}}\left(15\right) \to \mathit{Int}\right))$$
+$$(\operatorname{\mathit{HardinA229696StripData}}.\operatorname{W}: \operatorname{\mathit{Fin}}\left(11\right) \to \left(\operatorname{\mathit{Fin}}\left(15\right) \to \mathit{Int}\right)) = \operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left((\lambda i: \operatorname{\mathit{Fin}}\left(7\right), (\operatorname{\mathit{Fin}}.\operatorname{\mathit{append}}\left(\operatorname{\mathit{HardinA229588Strip}}.\operatorname{W}\left(i\right), (\begin{bmatrix}0&0&0&0&0\\24&36&72&36&72\\366&816&834&894&846\\4224&7332&5646&7218&6042\\33834&52350&38058&51972&38736\\236910&341058&239400&335202&229728\\1527054&2092122&1436118&2038908&1308276\end{bmatrix}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(7\right), \operatorname{\mathit{Fin}}\left(5\right), \mathit{Int}\right))\left(i\right)\right))), (\begin{bmatrix}218736&218736&140076&201492&61416&1768404&2109972&1353222&2003550&1009140&9318006&12306282&8322696&11917530&7244400\\997776&997776&638964&919116&280152&9266460&10824540&6941118&10244478&4940100&54676854&70181538&46970190&67629276&39274884\\4551408&4551408&2914668&4192596&1277928&47742324&54849588&35167038&51772134&24071172&311516334&390787938&259551624&375074658&209417616\\20761488&20761488&13295412&19124748&5829336&242743932&275164092&176403462&259158006&116811444&1734312126&2134897578&1409796150&2042284812&1101745716\end{bmatrix}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(4\right), \operatorname{\mathit{Fin}}\left(15\right), \mathit{Int}\right))\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229696StripData.W` (`✓ std3`).
 
