@@ -17,6 +17,7 @@ open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer (bondDe
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
+set_option maxRecDepth 100000
 noncomputable section
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Row (fun _ => Fin 2) (fun _ => ℤ)
