@@ -62,10 +62,10 @@ theorem transition_counts (j : Fin 10) : ∀ p (d : Fin 2), Valid p d.val →
     have hm : (j.val % 10 + 1) = j.val + 1 := by rw [Nat.mod_eq_of_lt j.isLt]
     simp only [he, Fin.val_castAdd, hm] at hc
     simp_rw [hc]
-    have h := raw_successors p hp0 ⟨j.val + 1, by omega⟩
+    have h := raw_successors p hp0 ⟨j.val + 1, Nat.succ_lt_succ j.isLt⟩
     have table : ∀ p (d : Fin 2) (j : Fin 10), HardinThinGraphTransport.proper p →
         d.val = 1 → HardinA233172DiagonalStrip.transfer
-          (HardinA233172DiagonalStrip.boundaryClass (true, true) p) ⟨j.val+1, by omega⟩ / 64 =
+          (HardinA233172DiagonalStrip.boundaryClass (true, true) p) ⟨j.val + 1, Nat.succ_lt_succ j.isLt⟩ / 64 =
             T (cl p d.val) (j.castAdd 21) := by decide +kernel
     exact (Int.eq_ediv_of_mul_eq_right (by decide) h).trans (table p d j hp0 hd)
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripTop
