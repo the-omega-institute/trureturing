@@ -6,14 +6,21 @@ title: "Correction to: On Robin's inequality"
 doi: null
 url: https://math.dartmouth.edu/~carlp/robin4.pdf
 claim: Robin violations have global counting function at most exp(O(log x / log log x)); this does not supply a per-progression singleton theorem or exclude a remaining candidate.
-strata_touched: []
+strata_touched:
+  - D5/S3/Arith/Robin/Analytic/OmegaTailUpper
 license: citation-only
 triage: anchor
 ---
 
 # Correction to: On Robin's inequality
 
-The inspected source is the four-page [author-hosted correction](https://math.dartmouth.edu/~carlp/robin4.pdf), linked from [Carl Pomerance's publication list](https://math.dartmouth.edu/~carlp/) as *Integers*, A8 (Corrigendum, 2025). Its header has unfilled editorial date fields; the year and publication description here follow that author list. The original paper is Luca–Solé, *Integers* 25 (2025), A8. The correction explicitly identifies an oversight in its proof of the earlier subpower counting claim and replaces that argument with a stronger explicit estimate. This card uses the corrected argument.
+## Verified locator
+
+https://math.dartmouth.edu/~carlp/robin4.pdf
+
+DOI: null.
+
+The four-page [author-hosted correction](https://math.dartmouth.edu/~carlp/robin4.pdf) is listed on [Carl Pomerance's publication list](https://math.dartmouth.edu/~carlp/) as *Integers*, A8 (Corrigendum, 2025). The original paper is Luca–Solé, *Integers* 25 (2025), A8. The correction identifies an oversight in the proof of the earlier subpower counting claim and replaces that argument with a stronger explicit estimate.
 
 ## Corrected global counting theorem
 
