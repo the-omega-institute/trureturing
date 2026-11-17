@@ -22,6 +22,31 @@ internal sealed class SchurMinimumDocument : IScribeDocumentDefinition
                 + "Mathlib's Schur decomposition and positive-semidefinite quadratic inequality. "
                 + "This is a repository API wrapper of those upstream results."))),
             DescribeRole.Theorem),
+            Paragraph(Text("Complex interior-first block form.")),
+            Paragraph(Text(
+                "Let I and P be finite index types, A an I-by-I positive definite complex matrix, "
+                + "B an I-by-P complex matrix, and D a P-by-P Hermitian complex matrix. Write "
+                + "G = [A B; B† D], S = D − B†A⁻¹B, and E = [1 −A⁻¹B; 0 1], "
+                + "where † denotes conjugate transpose. Positive definiteness makes A invertible "
+                + "and Hermitian. Block multiplication gives E†GE = [A 0; 0 S]. The triangular "
+                + "matrix E is invertible by Matrix.isUnit_fromBlocks_zero₂₁.")),
+            Paragraph(Text(
+                "Matrix.PosDef.fromBlocks₁₁ gives G.PosSemidef if and only if S.PosSemidef. "
+                + "The block invertibility equivalence Matrix.isUnit_fromBlocks_iff_of_invertible₁₁, "
+                + "together with Matrix.PosSemidef.posDef_iff_isUnit, gives G.PosDef if and only if "
+                + "S.PosDef. The invertibility statements identify the nonsingular inverse A⁻¹ "
+                + "with the inverse used in the upstream block formulas.")),
+            Paragraph(Text(
+                "For every x in C^I and y in C^P, Matrix.schur_complement_eq₁₁ gives "
+                + "[x;y]†G[x;y] = (x + A⁻¹By)†A(x + A⁻¹By) + y†Sy. "
+                + "The first summand is the squared norm for the positive inner product weighted "
+                + "by A: it is nonnegative and vanishes precisely when x = −A⁻¹By. "
+                + "Strict positivity away from zero follows from Matrix.PosDef.dotProduct_mulVec_pos. "
+                + "Hence for each fixed y the unique minimum over all x is y†Sy, attained at "
+                + "x = −A⁻¹By. The attained-minimum theorem above applies with its boundary block "
+                + "equal to D, its off-diagonal block equal to B†, and its internal block equal to A, "
+                + "followed by interchange of the two sum coordinates. These assertions impose no "
+                + "rank condition on B and include empty index types.")),
             Paragraph(Text("Real quadratic energy and Gaussian free energy.")),
             Paragraph(Text(
                 "Let x and z range over real Euclidean spaces of positive finite dimensions p and r, "

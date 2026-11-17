@@ -4,11 +4,35 @@
 
 The ordered transition product of a legal binary block separates into a boundary factor and a power of its occupation activity, and is strictly positive.
 
+**Theorem 1.1 (Endpoint normalization separates from the activity partition).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.normalizer_factor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.normalizer_factor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For 0<p<1, m>=1 and both exterior bits, pathNormalizer equals p^r times (1-p)^(m+1-l-r) times activityPartition. The legal path-weight formula is summed over every interior word; illegal summands are zero.
+
+**Theorem 1.2 (Normalized legal-word mass).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.normalized_path`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.normalized_path` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For 0<p<1, m>=1 and every padded legal word, pathMass divided by pathNormalizer equals z^K divided by activityPartition, where z=p/(1-p)^2. Cancellation uses the strictly positive endpoint factor. The persistent mixture minor and conditional count experiment use this same normalization.
+
 A block w is a Boolean function on Fin n. The two exterior bits l and r are observed separately. Adm on Fin.cons l (Fin.snoc w r) requires every adjacent pair in this whole padded path to avoid two ones. No endpoints are identified. Write k(w) for the sum of (w i).toNat, where false.toNat is zero and true.toNat is one.
 
 The hard-core path-weight identity is classical; Lemma 6.1 of Mukhamedov and Suhov gives its endpoint-dependent cylinder form. Here their transition parameters are 1-p and p, their activity is p/(1-p)^2, and their path is the padded block. Dividing their cylinder mass by its positive initial stationary mass gives this ordered transition product. For a parameter p, transition p has entries 1-p, p, 1, 0 in row order (false,false), (false,true), (true,false), (true,true). pathMass p n l w r is the actual ordered product from l through all n bits of w to r. At n=0 it is transition p l r; at n+1 it is transition p l (w 0) times pathMass p n (w 0) (Fin.tail w) r.
 
-**Theorem 1.1 (Boundary factor and activity at every positive length).**
+**Theorem 1.3 (Boundary factor and activity at every positive length).**
 
 $$\forall p \in \mathbb{R},\; (0 < p \land p < 1) \Rightarrow (\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall l \in \mathrm{Bool},\; \forall r \in \mathrm{Bool},\; \forall w \in \mathrm{Fin}\left(n\right) \to \mathrm{Bool},\; (\mathrm{Adm}\left(n + 2, \mathrm{cons}\left(l, \mathrm{snoc}\left(w, r\right)\right)\right)) \Rightarrow (\mathrm{pathMass}\left(p, n, l, w, r\right) = (p)^{\mathrm{toNat}\left(r\right)} \cdot (1 - p)^{n + 1 - \mathrm{toNat}\left(l\right) - \mathrm{toNat}\left(r\right)} \cdot (\frac{p}{(1 - p)^{2}})^{\sum_{i: \mathrm{Fin}\left(n\right)} \mathrm{toNat}\left(\mathrm{w}\left(i\right)\right)} \land 0 < \mathrm{pathMass}\left(p, n, l, w, r\right))))$$
 
@@ -24,7 +48,7 @@ Induct on the block length with the boundary exponent temporarily interpreted as
 
 The formula applies in particular to every component parameter between 1/3 and 3/8. It includes n=1 and forced boundary bits. For l=r=true and n=1, the only legal block is false and its mass is p. This gives the transition-product arithmetic for conditioning an interior interval. A full conditional law also needs cancellation of the exterior factors and normalization over legal completions. Blocks touching an open endpoint require their actual stationary endpoint factors.
 
-**Theorem 1.2 (Positive explicit minor of normalized legal Markov mixtures).**
+**Theorem 1.4 (Positive explicit minor of normalized legal Markov mixtures).**
 
 $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Fin}\left(n + 1\right) \to \mathbb{R},\; \forall t \in \mathrm{Fin}\left(n + 1\right) \to \mathbb{R},\; (\left(\left(\forall k \in \mathrm{Fin}\left(n + 1\right),\; 0 < \mathrm{p}\left(k\right) \land \mathrm{p}\left(k\right) < 1\right) \land \mathrm{StrictMono}\left(p\right)\right) \land \left(\forall k \in \mathrm{Fin}\left(n + 1\right),\; 0 < \mathrm{t}\left(k\right)\right)) \Rightarrow (\forall l \in \mathrm{Bool},\; \forall r \in \mathrm{Bool},\; \mathrm{Injective}\left(\mathrm{halfWord}\left(n\right)\right) \land \left(\mathrm{det}\left(\mathrm{cutMinor}\left(n, p, t, l, r\right)\right) = \prod_{k: \mathrm{Fin}\left(n + 1\right)} \frac{\mathrm{t}\left(k\right)}{\mathrm{activityPartition}\left(\mathrm{p}\left(k\right), 2 \cdot n + 1 + 2 \cdot n + 1, l, r\right)} \cdot (\prod_{i: \mathrm{Fin}\left(n + 1\right)} \prod_{j\in \mathrm{Ioi}\left(i\right)} (\frac{\mathrm{p}\left(j\right)}{(1 - \mathrm{p}\left(j\right))^{2}} - \frac{\mathrm{p}\left(i\right)}{(1 - \mathrm{p}\left(i\right))^{2}}))^{2} \land 0 < \mathrm{det}\left(\mathrm{cutMinor}\left(n, p, t, l, r\right)\right)\right))$$
 
@@ -48,6 +72,8 @@ This is the explicit-minor arithmetic for an interior block with both exterior o
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.normalized_path`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.normalizer_factor`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.path_weight_formula`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.persistent_mixture_minor`
 - Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](../../../../S1/Words/AdmissibleWords/AdmissibleCount.md)

@@ -1,0 +1,4 @@
+- [IBM] IBM Quantum Learning, *Phase-estimation and factoring*, especially *Shor's algorithm*, [course](https://quantum.cloud.ibm.com/learning/en/courses/fundamentals-of-quantum-algorithms/phase-estimation-and-factoring/shor-algorithm) and [implementation tutorial](https://quantum.cloud.ibm.com/docs/en/tutorials/shors-algorithm). Explicit power-access, clock-precision and classical-reconstruction explanation.
+
+Monomial spectral decomposition, tensor-conjugate cancellation, finite Fourier orthogonality and reversible computation are established mathematical tools. The work here supplies their concrete gate-word correspondence, phase-offset counterexample, clean-work criterion and modular companion interface. Their historical novelty has not been established.
+

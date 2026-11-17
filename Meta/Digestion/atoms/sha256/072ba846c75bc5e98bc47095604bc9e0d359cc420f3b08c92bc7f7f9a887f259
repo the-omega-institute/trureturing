@@ -1,0 +1,115 @@
+**定理 276.2（二元共同确认重建全部有限复量子结构）。** 在276.1的完整背景及275.2明示的射影、连续实际面、产品正规形和全有限传播供应下，以下等价：$\mathsf Q_{\mathrm{pair}}$；$\mathsf X_2+\mathsf M_3$；原 $\mathsf X_3$；存在 $r\ge2$ 和同一个保单位实线性序同构 $\theta:V\to H_r$，使
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{r^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}\qquad(N\ge0).
+\tag{276.3}
+$$
+
+整个三份的M、全部实际二态球、数值互易和共同尺均成为结论。这里用成对块产品目标的least条件替代全三份纯目标的M，不宣称保持其余背景时得到了严格不同的模型类。
+
+证明。（一）重复目标支付完整双份M及低二层矩阵类型。固定任意 $b\in P_1$。对每颗 $a\in P_2$，将 $h_{a\otimes b,a\otimes b}$ 限制到 $x\mapsto x\otimes b$，得双份proper确认者 $e_a$。若任意原双份proper $f$ 确认 $a$，则 $f\otimes u_1$ 是原三份proper效应并确认 $a\otimes b$。三份leastness限制后给 $e_a\le f$，所以是针对完整双份菜单的 $\mathsf M_2$。
+
+275.2（一）至（五）的实际证明只使用 $\mathsf X_2$、$\mathsf M_2$ 和原背景；其中唯一的 $\mathsf M_3$ 用途是取得刚刚已付的 $\mathsf M_2$。因此精确复用这些步骤：双份实际面格及秩乘法选择复数与 $\dim_{\mathbb R}V=r^2$；原效应取补给连续正定极性；每个完整基结算同一单位；在双份尺寸 $r^2\ge4$ 上用Gleason给整个双份PSD，再由纯旁观面给整个单份PSD。接275.2（六）中仅使用已付低二层类型与原产品合同的正规形步骤，固定同一个 $\theta$ 后有
+
+$$
+C_1=\operatorname{PSD}_r,\qquad
+C_2=T_1^\varepsilon\operatorname{PSD}_{r^2},\qquad\varepsilon\in\{0,1\}.
+\tag{276.4}
+$$
+
+在真实 $(12)|3$ 上令 $C'_3=T_1^\varepsilon C_3$。两个整个局域块现为 $\operatorname{PSD}_{r^2}$ 和 $\operatorname{PSD}_r$。原独立块纯准备被双射运输为全部秩一产品投影，整个正对偶、proper区间及共同确认leastness也随之运输；故(276.2)在这个原分块坐标中仍成立。以下另证它需要的秩二供应，不调用要求全三份M的274.3。
+
+（二）仅对产品目标取least，已足以作原全域的极端残余减法。先在任意有限 $H_m\otimes_{\mathbb R}H_n$ 中，取 $m,n\ge2$、$\operatorname{Sep}(m|n)\subseteq C\subseteq\operatorname{BP}(m|n)$、原迹单位及完整proper区间，假定每对秩一产品投影都有共同确认least元，包括重复目标。取对偶得同样的Sep/BP夹逼；274.12的GB预算同时给
+
+$$
+\|X\|_2\le\operatorname{Tr}X\quad(X\in C\ \text{或}\ X\in C^*),
+\qquad
+X\ge_{C^*}0,\ \operatorname{Tr}X=0\ \Longrightarrow\ X=0.
+\tag{276.5}
+$$
+
+迹一原底 $K$ 因而包含在HS闭单位球内。任意单位产品投影 $P$ 属于 $C$，且HS范数为一，所以是原纯点：单位球的严格凸性排除它在 $K$ 内的非平凡分解。$P$ 与 $I-P$ 均可分，故 $P$ 本身proper。
+
+令 $e_P=h_{P,P}$。它低于proper确认者 $P$，所以(276.5)给
+
+$$
+1=\operatorname{Tr}(e_PP)
+\le\|e_P\|_2\le\operatorname{Tr}e_P\le\operatorname{Tr}P=1,
+\qquad e_P=P.
+\tag{276.6}
+$$
+
+最后的相等由Cauchy–Schwarz取等号及迹一给出。特别地，对整个原proper区间中的任意 $f$，
+
+$$
+f(P)=1\quad\Longleftrightarrow\quad P\le_{C^*} f.
+\tag{276.7}
+$$
+
+正向由leastness，反向在 $P$ 上评价并用 $f\le I$。因此 $h=h_{P,Q}$ 低于所有共同上界，且 $h\ge P,Q$。它是整个proper区间的极点：若 $h=(f+g)/2$，两个proper效应在 $P,Q$ 上都取一，leastness给 $h\le f,g$，正差的平均为零，故两者等于 $h$。
+
+$d=h-P$ proper，且仍是整个proper区间的极点。若 $d=(d_1+d_2)/2$，则 $d_i(P)=0$；$I-d_i$ 确认 $P$，(276.6)的least性给 $P\le I-d_i$。所以 $P+d_i$ 都proper，并以极端 $h$ 为平均，迫 $d_1=d_2=d$。这一减法只消费产品 $P$ 的最小确认，不消费任何其他三份纯点的M。
+
+（三）迹一极端效应直接成为原纯态，无需另给它的最小确认。若 $d\ne0$ 是整个proper区间极点且 $\operatorname{Tr}d=1$，置 $t=\max_Kd$。正性及原锥生成性给 $t>0$。若 $t<1$，则 $d=t(d/t)+(1-t)0$ 是两个不同proper效应的非平凡分解，矛盾。故 $t=1$，取任意最大点 $x\in K$，由双预算得
+
+$$
+1=\operatorname{Tr}(dx)
+\le\|d\|_2\|x\|_2
+\le\operatorname{Tr}d\,\operatorname{Tr}x=1.
+\tag{276.8}
+$$
+
+所以 $d=x$ 且两者HS范数为一。单位球严格凸性又给 $x\in\operatorname{ext}K$，从而
+
+$$
+d\in\operatorname{ext}K\cap C\cap C^*,\qquad\|d\|_2=1.
+\tag{276.9}
+$$
+
+同样的等号论证使饱和点唯一。这里没有定义或使用 $e_x$，也没有声称 $d=e_x$；后续仅使用(276.9)。迹一与原纯性本身尚未把 $d$ 认作普通PSD秩一矩阵，矩阵方向将在下一步取得。
+
+（四）成对least给统一Schmidt秩二方向。取一般位置产品 $P=P_{a\otimes b},Q=P_{c\otimes d}$，局域重叠 $0<\alpha,\beta<1$。用274.15的同一 $S=\operatorname{span}\{a,c\}$、$T=\operatorname{span}\{b,d\}$ 及四个可分补测试 $Q_A,Q_B,R_1,R_2$。它们的补都共同确认 $P,Q$，所以本证明的产品对角least与成对least直接给
+
+$$
+h\ge_{C^*}P,Q,\qquad
+h\le_{C^*}I-Q_A,I-Q_B,I-R_1,I-R_2,
+\qquad h(P)=h(Q)=1.
+\tag{276.10}
+$$
+
+这恰是274.16—274.17所消费的全部输入。准确复用其两腿块正零边缘、交叉块消去、可逆产品图中的六实维稀疏形及原Gram矩阵计算，得 $\operatorname{Tr}h=2$。这些是矩阵支持与迹计算，不消费实际L2、暴露包least测试或全纯谱剥离。由（二），$h-P$ proper且极端；其迹为一，故（三）直接给原纯性与HS范数一，替换274.18中通过残余最小确认取得的结论。
+
+稀疏线段的两个端点仍为274.19的
+
+$$
+H_0=P_{\operatorname{span}\{a\otimes b,c\otimes d\}},\qquad
+H_1=T_AP_{\operatorname{span}\{\bar a\otimes b,\bar c\otimes d\}}.
+\tag{276.11}
+$$
+
+两个残余 $H_i-P$ 的HS范数均为一；严格凸性迫 $h$ 恰为其中一端。共同方向也直接由同一成对least支付：在连通的一般位置参数域 $U(m)\times U(n)\times(0,1)^2$，两个 $H_i$ 的原proper性集合闭且覆盖。若同属，两者均共同确认 $P,Q$，所以 $h\le H_0,H_1$；原迹均二，(276.5)迫三者全等，与一般位置的两候选不同冲突。因此两闭集不交，一个方向在全域固定。
+
+现在精确复用XX271.36—271.39在任意局域复二维Schmidt支持中的显式残余构造：非最大纠缠的每个Schmidt秩二dyad都是选定方向的 $H_i-P$；(276.9)同时给它属于 $C,C^*$，最大纠缠点由两闭锥的极限补上，产品点已有。故上述任意矩阵分块满足
+
+$$
+\exists\delta\in\{0,1\}:\qquad
+T_A^\delta\mathcal S_2(m|n)\subseteq C\cap C^*.
+\tag{276.12}
+$$
+
+这个结论只由成对产品确认least性得出；没有给所有联合纯点补上M，也没有在两因子均大于二时声称已分类整个 $C$。
+
+（五）三份到全有限的接口完整保留。对（一）的整个 $C'_3$ 用(276.12)，参数为 $m=r^2,n=r$。运输回原同一个局域坐标，第一块整个转置与第三腿转置在 $\mathcal S_2$ 上有相同的像，故得275.14的同一供应
+
+$$
+T_1^\varepsilon T_3^\delta\mathcal S_2((12)|3)\subseteq C_3.
+\tag{276.13}
+$$
+
+275.2（六）的三个明确Bell来源均在此秩二域中，其真实正边缘排掉 $(\varepsilon,\delta)=(1,0),(1,1),(0,1)$，所以两位均零。275.16的 $\tau_r=(\sum_i|ii\rangle)|0\rangle+|01\rangle|1\rangle$ 在同一切分上有两个独立Schmidt方向，故其dyad属于原 $C_3$。同坐标标准 $C_1,C_2$、该明确种子与其余整个强全有限背景，精确支付[Q275T,164.11]的第3项到第4项；遂得(276.3)。六副本、十八条腿及所有相关旁观输入仍在这个尾部中，不用三层截断模型代付。
+
+反向，复PSD模型中的共同确认测试 $0\preceq E\preceq I$ 确认 $P_v,P_w$ 时，$I-E$ 消去 $v,w$，所以 $E$ 在其共同支持 $U=\operatorname{span}\{v,w\}$ 上恒等且 $E\succeq P_U$；$P_U$ 本身proper并确认二者，故为共同least，包括 $v=w$。标准模型亦有 $\mathsf X_2$，所以给(276.2)。275.2已经给 $\mathsf X_2+\mathsf M_3$、$\mathsf X_3$ 与(276.3)的等价，四项遂等价。
+
+一般的全三份M也可直接给成对least：用274.13的有限严格面链，将全部共同确认者的饱和面交化为一个原暴露包，再用XX271.7取得该包的least最大测试。该测试低于全部共同确认者并确认两个原目标。这里的反向并不把任意未知模型的共同包预先认作PSD支持。$\square$
+

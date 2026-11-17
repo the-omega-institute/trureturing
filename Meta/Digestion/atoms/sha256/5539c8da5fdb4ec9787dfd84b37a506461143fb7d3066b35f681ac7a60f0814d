@@ -1,0 +1,10 @@
+## Theorem 1 (Ma–Zhang)
+
+Let $A$ be the adjacency matrix of the path on $1,\ldots,15$ with vertex $16$ joined to vertex $2$, and let $U(t)=e^{itA}$. Then
+$$
+ C(15):=\inf_{t>0}|U(t)_{1,1}|=\frac{143}{480},\qquad
+ \sup_{t>0}|U(t)_{16,1}|^2=\frac{113569}{230400}.
+$$
+The infimum is attained in the closure of the positive-time phase orbit. No assertion of attainment at a finite time is needed.
+
+

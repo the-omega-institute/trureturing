@@ -1,0 +1,6 @@
+外部成熟供应及准确对应为：
+
+* Gerhart Lüders，*Über die Zustandsänderung durch den Meßprozeß*，Ann. Phys. (Leipzig) 8, 322–328 (1951)；K. A. Kirkpatrick译文 [quant-ph/0403007v2][XII146LUD] §2式(1)—(7)，特别式(7)的次归一 $P_kZP_k$。它供应退化投影更新与逐射线细化的标准区别，不供应本装置。
+* M. Horodecki、P. W. Shor、M. B. Ruskai，*Entanglement Breaking Channels*，[quant-ph/0302031v2][XII146HSR] Theorem4(B),(D)。rank-one Kraus 的纠缠破坏／可分性是标准机制；本章点击子仪器的次归一结论由实际算子直接给出，平方根常数还需真实记录和引理146.4。
+* W. R. Clements等，*Optimal design for universal multiport interferometers*，Optica 3, 1460–1465 (2016)，[1603.08788v2][XII146CLE] Background式(1)—(2)及图1。两模式／相位酉分解是标准数学供应；本章不给其多粒子光学或硬件额外权限。迹范数压缩与收缩、纯化、Jensen、可测概率核和有限 hybrid 同为成熟工具。
+

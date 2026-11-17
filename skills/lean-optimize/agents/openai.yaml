@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lean 性能优化"
+  short_description: "Measure and optimize Lean proofs and build performance"
+  default_prompt: "使用 $lean-optimize 测量当前 Lean 构建的瓶颈，保持命题和公理边界，实施并验证有实测收益的优化。"

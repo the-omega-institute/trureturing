@@ -1,0 +1,63 @@
+**Theorem 11 (Three copies restore the missing relations).**
+For $q=1,m\ge3$, actual zero subsets force
+
+$$
+U\cong\mathbb Z/7,\qquad
+G\cong\operatorname{Sym}(m)^3\rtimes C_3,\qquad |G|=3(m!)^3.
+\tag{23}
+$$
+
+There are $3m$ distinct actual zero masks whose rows form an integer
+basis of $L=\ker\Phi$.
+
+*Proof.* Use the triples $T_{a,j}$ of (9), now modulo $3$, the baseline
+triple $R=\{(0,0),(0,1),(0,2)\}$, and the two four-element subsets
+
+$$
+\begin{aligned}
+E_0&=\{(0,0),(1,0),(2,0),(0,2)\},\\
+E_1&=\{(0,1),(1,1),(2,1),(0,0)\}.
+\end{aligned}
+\tag{24}
+$$
+
+Their count vectors are $(3,0,1)$ and $(1,3,0)$, with respective
+integer weight sums $3+4=7$ and $6+1=7$. Copies $0,1,2$ are
+distinct, so these really are $0/1$ masks. The triples have weight $7$.
+They are distinct by their unique nonzero-copy vertex, except for $R$,
+which uses only copy zero. The two four-masks differ in color counts,
+and their cardinality distinguishes them from every triple. Their total
+number is $3(m-1)+1+2=3m$.
+
+Let $X:I\to C$ annihilate these masks, with $C$ any abelian group.
+Subtracting $R$ from $T_{a,j}$ identifies all copies of each color,
+so write their common values as $x_0,x_1,x_2$. The remaining equations
+are exactly
+
+$$
+x_0+x_1+x_2=0,\qquad3x_0+x_2=0,\qquad3x_1+x_0=0.
+$$
+
+The second gives $x_2=-3x_0$; the first then gives $x_1=2x_0$, and
+the third gives $7x_0=0$. Hence, with $c=x_0$,
+$(x_0,x_1,x_2)=(c,2c,4c)$, $7c=0$, uniquely. Conversely every such
+assignment annihilates every actual zero subset: if its counts are
+$0\le c_j\le m$, its integer weight is $c_0+2c_1+4c_2$, and it is
+zero modulo $7$ exactly when that integer is a multiple of $7$.
+Its $X$-sum is the same multiple of $7c$, hence zero.
+
+To determine the integral quotient, let $L_*$ be the selected span and
+$Q=F/L_*$. The just-proved reconstruction applied to coordinate classes
+gives $e_{a,j}+L_*=2^jc$, $7c=0$. The maps
+$\beta:\mathbb Z/7\to Q$, $\bar n\mapsto nc$, and
+$\gamma:Q\to\mathbb Z/7$ induced by the actual weights are inverse:
+$\gamma\beta$ fixes $1$, and $\beta\gamma$ fixes every coordinate
+generator. Therefore $L_*=\ker\Phi$, and since all selected rows are
+actual zero rows, $L_*=L$. There are $3m$ selected rows; each
+$7e_{a,j}$ lies in their span, so the rational-span and independence
+argument of Proposition 7 proves that they form a free integer basis.
+Finally Theorem 8, with $M=7$ and exact order three, proves (23) for the
+full hypergraph. The repeated quotient classes are exactly the copies of
+each color, whereas the three arithmetic values $1,2,4$ are distinct.
+$\square$
+

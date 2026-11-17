@@ -88,7 +88,79 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.rawT
 
 rawThree A r is threeColumns A r times its conjugate transpose. Its entry at u,v is the sum over complement words b of the actual amplitude at ub times the complex conjugate of the amplitude at vb. This is the unnormalized marginal of Definition 1.2; no division by the state norm occurs.
 
-**Theorem 1.8 (Gluing adjacent three-site constraints).**
+**Theorem 1.8 (Ordered products under cons).**
+
+$$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (n: \mathbb{N}), (\forall (i: \operatorname{Fin}\left(2\right)), (\forall (w: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(n\right)), (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.wordMatrix}\left(A, \operatorname{Fin.cons}\left(i, w\right)\right) = \operatorname{HMul.hMul}\left(A\left(i\right), \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.wordMatrix}\left(A, w\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.wordMatrix_cons` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every core, length, first letter and remaining word, the original product at cons(i,w) is A(i) times the original word product. The interior all-coefficient induction uses this orientation.
+
+**Theorem 1.9 (Ordered products under snoc).**
+
+$$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (n: \mathbb{N}), (\forall (i: \operatorname{Fin}\left(2\right)), (\forall (w: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(n\right)), (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.wordMatrix}\left(A, \operatorname{Fin.snoc}\left(w, i\right)\right) = \operatorname{HMul.hMul}\left(\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.wordMatrix}\left(A, w\right), A\left(i\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.wordMatrix_snoc` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every core, length, initial word and last letter, the original product at snoc(w,i) is the word product times A(i). This identity also drives the consumed left-environment Gram induction.
+
+**Theorem 1.10 (Ordered products under append).**
+
+$$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (m: \mathbb{N}), (\forall (n: \mathbb{N}), (\forall (u: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(m\right)), (\forall (v: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(n\right)), (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.wordMatrix}\left(A, \operatorname{Fin.append}\left(u, v\right)\right) = \operatorname{HMul.hMul}\left(\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.wordMatrix}\left(A, u\right), \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.wordMatrix}\left(A, v\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.wordMatrix_append` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every core and both word lengths, the product at append(u,v) is A_u A_v. The interior dictionary applies it twice, preserving both actual exterior words.
+
+**Theorem 1.11 (Trace separation at every length at least two).**
+
+$$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), ((\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.TwoSiteSpanning}\left(A\right)) \to (\forall (m: \mathbb{N}), (\forall (X: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (Y: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), ((\forall (w: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(m + 2\right)), (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, m + 2, X, w\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, m + 2, Y, w\right))) \to (X = Y))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.trace_separates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under TwoSiteSpanning A, equality of gamma A (m+2) X and gamma A (m+2) Y at every word forces X=Y, for every natural m. The interior feature injectivity uses m=1; no individual A(i) is invertible by assumption.
+
+**Theorem 1.12 (Unrestricted adjacent parent intersection).**
+
+$$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), ((\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.TwoSiteSpanning}\left(A\right)) \to (\forall (m: \mathbb{N}), (\forall (f: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(m + 4\right) \to \mathbb{C}), (((\exists (X: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (w: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(m + 3\right)), (\forall (j: \operatorname{Fin}\left(2\right)), (f\left(\operatorname{Fin.snoc}\left(w, j\right)\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, m + 3, X\left(j\right), w\right))))) \land (\exists (Y: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (i: \operatorname{Fin}\left(2\right)), (\forall (w: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(m + 3\right)), (f\left(\operatorname{Fin.cons}\left(i, w\right)\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, m + 3, Y\left(i\right), w\right)))))) \Leftrightarrow (\exists (Z: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (f = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, m + 4, Z\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.parent_intersection` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any function f on m+4 letters, membership of every snoc slice and every cons slice in the length-(m+3) target parent space is equivalent to f=gamma A (m+4) Z for one Z. The same arbitrary f occurs on both sides of the overlap. The interior all-coefficient induction consumes this original theorem without a cyclic-state premise.
+
+**Theorem 1.13 (The range of a raw complex Gram).**
+
+$$\forall (\iota: Type), (\forall (\kappa: Type), ((\operatorname{Fintype}\left(\iota\right)) \to ((\operatorname{Fintype}\left(\kappa\right)) \to (\forall (M: \operatorname{Matrix}\left(\iota, \kappa, \mathbb{C}\right)), (\operatorname{LinearMap.range}\left(\operatorname{Matrix.mulVecLin}\left(\operatorname{HMul.hMul}\left(M, \operatorname{Matrix.conjTranspose}\left(M\right)\right)\right)\right) = \operatorname{LinearMap.range}\left(\operatorname{Matrix.mulVecLin}\left(M\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.gram_range` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite rectangular complex matrix M, range((M M†).mulVecLin)=range(M.mulVecLin). Interior raw equality uses this original supplier to transfer the actual column range, retaining the C C† convention.
+
+**Theorem 1.14 (Gluing adjacent three-site constraints).**
 
 $$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (B: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (r: \mathbb{N}), ((\operatorname{Matrix.rank}\left(\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.twoFlattening}\left(A, r\right)\right) = 4) \to (\forall (b: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(r\right)), ((\exists (X: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (w: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(3\right)), (\forall (j: \operatorname{Fin}\left(2\right)), (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.competitorSlice}\left(B, b, \operatorname{Fin.snoc}\left(w, j\right)\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, 3, X\left(j\right), w\right))))) \to ((\exists (Y: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (i: \operatorname{Fin}\left(2\right)), (\forall (w: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(3\right)), (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.competitorSlice}\left(B, b, \operatorname{Fin.cons}\left(i, w\right)\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, 3, Y\left(i\right), w\right))))) \to (\exists (Z: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.competitorSlice}\left(B, b\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, 4, Z\right)))))))))$$
 
@@ -106,7 +178,7 @@ Rank four forces the two-letter target products to span the matrix algebra. Trac
 
 This is the adjacent-parent overlap bridge in Section 2 of Periodic binary matrix product states: three-site phase recovery. It includes the four-site ring without identifying the range of its three-site marginal with the full three-site parent space. Equality of raw marginals, all-window propagation, finite-ring scalar uniqueness, the unit-modulus conclusion and genericity require their separate arguments; none is asserted by this theorem.
 
-**Theorem 1.9 (Inhabited rank locus and finite-ring phase recovery).**
+**Theorem 1.15 (Inhabited rank locus and finite-ring phase recovery).**
 
 $$\forall (r: \mathbb{N}), ((\exists (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\operatorname{Matrix.rank}\left(\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.twoFlattening}\left(A, r\right)\right) = 4)) \land (\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (B: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), ((\operatorname{Matrix.rank}\left(\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.twoFlattening}\left(A, r\right)\right) = 4) \to ((\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.rawThree}\left(B, r\right) = \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.rawThree}\left(A, r\right)) \Leftrightarrow (\exists (c: \mathbb{C}), ((\operatorname{norm}\left(c\right) = 1) \land (\operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(B, r + 4, 1\right) = \operatorname{HSMul.hSMul}\left(c, \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.gamma}\left(A, r + 4, 1\right)\right)))))))))$$
 
@@ -152,9 +224,15 @@ The existing Lean declaration and its recovery equivalence remain the formalized
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.actual_competitor_gluing`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.competitorSlice`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.gamma`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.gram_range`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.parent_intersection`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.rank_locus_inhabited_and_phase_recovery`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.rawThree`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.threeColumns`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.trace_separates`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.twoFlattening`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.wordMatrix`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.wordMatrix_append`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.wordMatrix_cons`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.wordMatrix_snoc`
 - Dependency: [D5/S3/Quantum/TensorNetworks/UniformMPSExpectedDimensionRefutation](UniformMPSExpectedDimensionRefutation.md)

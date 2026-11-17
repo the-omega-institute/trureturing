@@ -27,11 +27,11 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
 def cyclicSpace (U : E ≃ₗᵢ[ℂ] E) (v : E) : Submodule ℂ E :=
   Submodule.span ℂ (Set.range fun n : ℕ => (U.toLinearMap ^ n) v)
 
-private theorem initial_mem (U : E ≃ₗᵢ[ℂ] E) (v : E) : v ∈ cyclicSpace U v := by
+theorem initial_mem (U : E ≃ₗᵢ[ℂ] E) (v : E) : v ∈ cyclicSpace U v := by
   simpa [cyclicSpace] using (Submodule.subset_span (s := Set.range fun n : ℕ =>
     (U.toLinearMap ^ n) v) ⟨0, rfl⟩)
 
-private theorem unitary_mem (U : E ≃ₗᵢ[ℂ] E) (v : E) :
+theorem unitary_mem (U : E ≃ₗᵢ[ℂ] E) (v : E) :
     Set.MapsTo U (cyclicSpace U v) (cyclicSpace U v) := by
   intro x hx
   induction hx using Submodule.span_induction with
@@ -61,7 +61,7 @@ def cyclicClick (U : E ≃ₗᵢ[ℂ] E) (v : E) : cyclicSpace U v →L[ℂ] cyc
   ((ℂ ∙ v).starProjection.comp U.toLinearIsometry.toContinuousLinearMap).restrict
     (fun x _ => click_mem U v x)
 
-private theorem step_pow_coe (U : E ≃ₗᵢ[ℂ] E) (v : E) (n : ℕ)
+theorem step_pow_coe (U : E ≃ₗᵢ[ℂ] E) (v : E) (n : ℕ)
     (x : cyclicSpace U v) :
     ((cyclicStep U v ^ n) x : E) = (monitoredStep U v ^ n) (x : E) := by
   induction n with

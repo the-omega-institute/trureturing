@@ -8,7 +8,35 @@ The count is the original function count in HardinA233255PairTransfer.a: seven c
 
 The canonical count bridge gives 16 times 128 to the power m plus 32 times the sum of the sixteen completed-state coordinates at continuation height m. The matrix certificate first checks every entry against the actual compatible proper seven-cell row fibres. An extra coordinate retains the exponential correction. The six explicit vectors are checked powers of this actual seventeen-coordinate transfer on the all-ones vector. Their exact degree-five vector identity propagates to every height by multiplication with arbitrary further matrix powers.
 
-**Theorem 1.1 (The all-height five-step recurrence).**
+**Definition 1.1 (The sixteen-class transfer table).**
+
+$$\operatorname{\mathit{HardinA233255Recurrence}}.\operatorname{\mathit{table}}: \operatorname{\mathit{Matrix}}\left(\operatorname{\mathit{Fin}}\left(16\right), \operatorname{\mathit{Fin}}\left(16\right), \mathit{Int}\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233255: seven-column six-colour complementary-pair arrays and an empirical recurrence*. URL: <https://oeis.org/A233255>.
+
+*Commentary.*
+
+This 16 by 16 integer matrix stores the compatible proper boundary-class transition counts, with both indices in the representatives and classOf order of HardinA233255ShapeSymmetry. Entries are defined by the finite row vectors in the Lean owner. The theorem table_matches pins the entire table to the semantic transfer K, including every source and destination class.
+
+**Theorem 1.2 (The table equals the semantic transfer).**
+
+$$\operatorname{\mathit{HardinA233255ShapeSymmetry}}.\operatorname{K} = \operatorname{\mathit{HardinA233255Recurrence}}.\operatorname{\mathit{table}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table_matches` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233255: seven-column six-colour complementary-pair arrays and an empirical recurrence*. URL: <https://oeis.org/A233255>.
+
+*Commentary.*
+
+Equality is of the complete matrices. The kernel-checked finite certificate compares all 256 entries with the compatible-row fibre counts. Consumers reuse this owner table through their class injections.
+
+**Theorem 1.3 (The all-height five-step recurrence).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result`
 
@@ -35,5 +63,7 @@ Information-escape registration remains declared_unresolved for LiteralBridge.sc
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table_matches`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry](HardinA233255ShapeSymmetry.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)

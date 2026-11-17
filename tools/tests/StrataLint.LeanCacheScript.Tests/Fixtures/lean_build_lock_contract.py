@@ -37,7 +37,7 @@ class LeanBuildLockTests(unittest.TestCase):
                             "import sys\nprint('producer entered', flush=True)\n"
                             "raise SystemExit(int(sys.stdin.readline()))\n")
         producer.chmod(0o755)
-        self.env = dict(os.environ, PATH=str(bin_directory) + os.pathsep + os.environ["PATH"],
+        self.env = dict(os.environ, FULL_BUILD="1", PATH=str(bin_directory) + os.pathsep + os.environ["PATH"],
                         STRATALINT_LEAN_PRODUCER_DLL="", STRATALINT_LEAN_CACHE_DONOR_REPOSITORY="")
         for name in ("MAKEFLAGS", "MFLAGS", "MAKELEVEL", "GIT_DIR", "GIT_WORK_TREE", "GIT_COMMON_DIR",
                      "LEAN_SKIP_LOCK"):
