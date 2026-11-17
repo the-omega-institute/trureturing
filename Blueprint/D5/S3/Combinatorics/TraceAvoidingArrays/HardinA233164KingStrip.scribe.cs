@@ -141,9 +141,7 @@ internal sealed class HardinA233164KingStripDocument : IScribeDocumentDefinition
             Sp, Name("in"), Sp, Call("PowerSeries", V("Rat")));
         var closed = All("n", V("Nat"), Imp(Lt(D(1), n),
             Eq(A(n), Mul(Pow(D(4), Sub(Mul(D(2), n), D(3))), Add(Pow(D(2), n), D(1,2))))));
-        var recurrence = All("n", V("Nat"), Imp(Lt(D(3), n),
-            Eq(Seq(A(n), Colon, Sp, V("Int")),
-                Sub(Mul(D(4,8), A(Sub(n,D(1)))), Mul(D(5,1,2), A(Sub(n,D(2))))))));
+        var recurrence = All("n", V("Nat"), Imp(Lt(D(3), V("n")), Eq(Typed(A(V("n")), V("Int")), Sub(Mul(D(4, 8), Call("Int.ofNat", A(Sub(V("n"), D(1))))), Mul(D(5, 1, 2), Call("Int.ofNat", A(Sub(V("n"), D(2)))))))));
         return And(Eq(A(D(1)),D(1,1)), And(Eq(A(D(2)),D(6,4)),
             And(Eq(A(D(3)),D(1,2,8,0)), And(closed,And(recurrence,gf)))));
     }

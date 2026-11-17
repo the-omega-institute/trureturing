@@ -7,20 +7,21 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.KingDefec
 internal sealed class KingTwoGridDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid.";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229755");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal two-defect king colourings and colour-orbit normalization.", H("Two-defect colour normalization"),
         Blocks(
-            Node("TwoDefect","Exactly two equal-colour bonds",DefectFormula(),DescribeRole.Definition,
+            Node("TwoDefect","Exactly two equal-colour bonds",DefectFormula(),DescribeRole.Definition,AssessedProvenance.FromLiterature(Source),
                 "The filter counts the four disjoint king-edge constructors, with no orientation duplication."),
-            Node("L","Labelled two-defect count",CountFormula(false),DescribeRole.Definition,
+            Node("L","Labelled two-defect count",CountFormula(false),DescribeRole.Definition,AssessedProvenance.FromRepo(Source),
                 "All four colour names remain distinguished."),
-            Node("T","Canonical two-defect count",CountFormula(true),DescribeRole.Definition,
+            Node("T","Canonical two-defect count",CountFormula(true),DescribeRole.Definition,AssessedProvenance.FromLiterature(Source),
                 "Row-major restricted growth selects one representative of every colour orbit."),
-            Node("labelled_eq_twentyFour","Twenty-four labelled maps per canonical map",NormalizationFormula(),DescribeRole.Theorem,
+            Node("labelled_eq_twentyFour","Twenty-four labelled maps per canonical map",NormalizationFormula(),DescribeRole.Theorem,AssessedProvenance.FromRepo(Source),
                 "Both dimensions are at least two and the single 2 by 2 block is excluded. Every two-colour 2 by 3 colouring has at least three monochromatic king edges. An injective edge embedding, with transposition for a narrow rectangle, forces three occurring colours. The original KingGrid.canonical_count_three then gives the factor twenty-four. The exceptional 2 by 2 normalization and the global two-defect slot count remain separate obligations."))));
-    private static DocumentBlock Node(string name,string title,Formula formula,DescribeRole role,string prose) =>
+    private static DocumentBlock Node(string name,string title,Formula formula,DescribeRole role,AssessedProvenance provenance,string prose) =>
         Describe.Lean(DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),
-            H(title),StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),role);
+            H(title),StatementSource.FromAuthor(Disp(formula)),provenance,Blocks(Paragraph(Text(prose))),role);
     private static Formula Maps() => Arrow(Call("KingGrid.Cell",V("n"),V("k")),Call("Fin",Num("4")));
     private static Formula Dims(Formula body) => All("n",Q("Nat"),All("k",Q("Nat"),body));
     private static Formula DefectFormula() => Dims(All("f",Maps(),Iff(Call("KingTwoGrid.TwoDefect",V("f")),

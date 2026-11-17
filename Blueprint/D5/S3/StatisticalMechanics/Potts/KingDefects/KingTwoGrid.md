@@ -10,7 +10,7 @@ $$\forall (n: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (\forall (f
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid.TwoDefect` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A229755: four-colour king arrays with exactly two mistakes*. URL: <https://oeis.org/A229755>.
 
 *Commentary.*
 
@@ -24,6 +24,8 @@ $$\forall (n: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (\operatorn
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A229755: four-colour king arrays with exactly two mistakes*. URL: <https://oeis.org/A229755>.
+
 *Commentary.*
 
 All four colour names remain distinguished.
@@ -34,7 +36,7 @@ $$\forall (n: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (\operatorn
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid.T` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A229755: four-colour king arrays with exactly two mistakes*. URL: <https://oeis.org/A229755>.
 
 *Commentary.*
 
@@ -47,6 +49,8 @@ $$\forall (n: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), ((2 \le n) 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/KingTwoGrid.labelled_eq_twentyFour` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A229755: four-colour king arrays with exactly two mistakes*. URL: <https://oeis.org/A229755>.
 
 *Commentary.*
 

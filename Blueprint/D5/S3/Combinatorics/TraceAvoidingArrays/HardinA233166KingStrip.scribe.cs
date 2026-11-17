@@ -197,12 +197,15 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         Formula C(Formula r,Formula t) => App(c,Pair(r,t));
         var u=Seq(LambdaLower,Sp,i,Colon,Sp,Call("Fin",n),Sp,Mapsto,Sp,C(i,D(0)));
         var v=Seq(LambdaLower,Sp,j,Colon,Sp,Fin(6),Sp,Mapsto,Sp,Call("xor",C(D(0),D(0)),C(D(0),j)));
-        var forward=All("c",Arrow(cells,Fin(4)),Imp(Call("Proper",c),Eq(App(equiv,Call("Subtype.mk",c)),Pair(u,v))));
+        var forward=All("c",Arrow(cells,Fin(4)),Imp(Call("Proper",c),Eq(Call("Subtype.val",App(equiv,Call("Subtype.mk",c))),Pair(u,v))));
         var result=Seq(LambdaLower,Sp,p,Colon,Sp,cells,Sp,Mapsto,Sp,
             Call("xor",App(Call("Prod.fst",z),Call("Prod.fst",p)),App(Call("Prod.snd",z),Call("Prod.snd",p))));
         var backward=All("z",Product(Arrow(Call("Fin",n),Fin(4)),Arrow(Fin(6),Fin(4))),
-            Imp(Member(z,Call("zones",n)),Eq(App(Call("Equiv.symm",equiv),Call("Subtype.mk",z)),result)));
-        return All("n",V("Nat"),All("h",Lt(D(0),n),And(forward,backward)));
+            Imp(Member(z,Call("zones",n)),Eq(Call("Subtype.val",App(Call("Equiv.symm",equiv),Call("Subtype.mk",z))),result)));
+        var domain=Seq(OpenBrace,c,Colon,Sp,Arrow(cells,Fin(4)),Sp,Slash,Slash,Sp,Call("Proper",c),CloseBrace);
+        var codomain=Seq(OpenBrace,z,Colon,Sp,Product(Arrow(Call("Fin",n),Fin(4)),Arrow(Fin(6),Fin(4))),Sp,Slash,Slash,Sp,Member(z,Call("zones",n)),CloseBrace);
+        var type=Call("Equiv",domain,codomain);
+        return All("n",V("Nat"),All("h",Lt(D(0),n),And(Parenthesized(Seq(equiv,Colon,Sp,type)),And(forward,backward))));
     }
 
     private static Formula Member(Formula a, Formula b) => Seq(a,Sp,InMacro,Sp,b);
