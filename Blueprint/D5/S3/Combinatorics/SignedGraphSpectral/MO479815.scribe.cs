@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SignedGraphSpectral;
 
@@ -17,7 +19,7 @@ internal sealed class MO479815Document : IScribeDocumentDefinition
                 DescribeId.Create("claim"),
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("The source monotonicity claim"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For every finite simple graph, every Boolean signing of unordered vertex "
@@ -32,7 +34,7 @@ internal sealed class MO479815Document : IScribeDocumentDefinition
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The monotonicity claim is refuted"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -53,4 +55,49 @@ internal sealed class MO479815Document : IScribeDocumentDefinition
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("mathoverflow-479815-signed-spectral-deletion"),
                     ResolutionKind.Refuted)))));
+
+    private static Formula ClaimBody()
+    {
+        Formula n = F.Id("n");
+        Formula vertices = Call("Fin", n);
+        Formula graph = At(Qualified("SimpleGraph"), vertices);
+        Formula signing = new Formula.TypeArrow(At(Qualified("Sym2"), vertices), F.Id("Bool"));
+        Formula edge = At(Qualified("SimpleGraph", "Adj"), F.Id("G"), F.Id("u"), F.Id("v"));
+        Formula deleted = At(Qualified("SimpleGraph", "deleteEdges"), F.Id("G"),
+            At(Qualified("Set", "singleton"), At(Qualified("Sym2", "mk"), F.Id("u"), F.Id("v"))));
+        Formula before = At(F.Id("beta"), F.Id("G"), F.Id("sigma"));
+        Formula after = At(F.Id("beta"), deleted, F.Id("sigma"));
+        Formula inequality = new Formula.Relation(after,
+            FormulaRelationOperator.LessThanOrEqual, before);
+        return All("n", Naturals(), All("G", graph, All("sigma", signing,
+            All("u", vertices, All("v", vertices, Implies(edge, inequality))))));
+    }
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula At(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        At(F.Id(name), arguments);
+
+    private static Formula Qualified(params string[] names)
+    {
+        var items = new List<Formula>();
+        foreach (var name in names)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(F.Id(name));
+        }
+
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
 }

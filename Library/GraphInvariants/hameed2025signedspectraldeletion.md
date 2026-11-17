@@ -1,28 +1,30 @@
 ---
 bibkey: hameed2025signedspectraldeletion
-authors: M. Hameed, K. Biju and A. Stanić
+authors: Shahul Hameed K, Biju K and Zoran Stanić
 year: 2025
-title: Change in two spectral deviations due to edge deletion in a signed graph
+title: Spectral measures of balance for signed graphs
 doi: null
-url: https://ajc.maths.uq.edu.au/download/93/ajc_v93_p198.pdf
-claim: "For every signed graph and every edge, deletion does not increase beta_A(Sigma)."
+url: https://ajc.maths.uq.edu.au/v93.p198
+claim: "Equation (1) defines beta_A as the squared distance between the ordered signed and underlying adjacency spectra; MathOverflow 479815 asks its deletion monotonicity."
 strata_touched:
   - D5/S3/Combinatorics/SignedGraphSpectral/MO479815
 license: citation-only
 triage: anchor
 ---
 
-# Change in two spectral deviations due to edge deletion in a signed graph
+# Spectral measures of balance for signed graphs
 
 ## Verified locator
 
 - DOI: null
-- URL: https://ajc.maths.uq.edu.au/download/93/ajc_v93_p198.pdf
+- URL: https://ajc.maths.uq.edu.au/v93.p198
+
+The publisher identifies the paper's license as CC BY 4.0. This note retains a citation and the mathematical definition, without copying the paper's exposition.
 
 MathOverflow question 479815, revision 2, “Change in two spectral deviations due to edge deletion in a signed graph”:
 https://mathoverflow.net/questions/479815
 
-The cited source paper is M. Hameed, K. Biju and A. Stanić, *Change in two spectral deviations due to edge deletion in a signed graph*, American Journal of Combinatorics 93 (2025), 198–210, equation (1):
+The cited source paper is Shahul Hameed K, Biju K and Zoran Stanić, *Spectral measures of balance for signed graphs*, Australasian Journal of Combinatorics 93(1) (2025), 198–210, equation (1):
 https://ajc.maths.uq.edu.au/download/93/ajc_v93_p198.pdf
 
 The source defines
