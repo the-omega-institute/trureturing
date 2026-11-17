@@ -3762,62 +3762,40 @@ $$
 
 这是XII159.8的小面—核惯性机制在完整实际三点面上的直接使用；一般机制不另申领新意。特别是 $d<8$ 时核已经为零；若有非零核，(337.1)中的 $m(d)=d-4\ge4$。
 
-还须把惯性界转成恰好这么多份的无权重证书，不能直接把任意实谱权重当作整数份数。下面在证明内部给出所需的成熟谱与等范框构造。任取非零迹零 $H$，记 $r=n_+(H)$、$s=n_-(H)$，取正整数 $m\ge\max\{r,s\}$。选 $\varepsilon>0$ 使 $\tau=\varepsilon\operatorname{Tr}H_+<m$，从正、负谱各取一个单位方向 $e,f$，对应特征值为 $\lambda,-\mu$、$\lambda,\mu>0$。令
+还须把惯性界转成恰好这么多份的无权重证书，不能直接把任意实谱权重当作整数份数。任取非零迹零 $H$，记 $r=n_+(H)$、$s=n_-(H)$、$t=\operatorname{Tr}H_+=\operatorname{Tr}H_->0$。对任意正整数 $m\ge\max\{r,s\}$，只须同乘一个比例，置
 
 $$
-\begin{gathered}
-a=\sqrt{\varepsilon\lambda}\,e,\qquad b=\sqrt{\varepsilon\mu}\,f,\qquad a\perp b,\\
-\gamma=\frac{m-\tau}{\|a\|^2+\|b\|^2},\qquad
-c=\sqrt{1+\gamma},\quad q=\sqrt\gamma,\qquad
-\widetilde a=ca+qb,\quad \widetilde b=qa+cb.
-\end{gathered}
+\varepsilon=\frac mt,\qquad A=\varepsilon H_+,\quad B=\varepsilon H_-.
 \tag{337.6}
 $$
 
-因为 $c^2-q^2=1$，交叉项相消，直接有
-
-$$
-\widetilde a\widetilde a^*-\widetilde b\widetilde b^*
-=aa^*-bb^*,\qquad
-\|\widetilde a\|^2-\|a\|^2
-=\|\widetilde b\|^2-\|b\|^2=m-\tau.
-\tag{337.7}
-$$
-
-置 $A=\varepsilon H_+-aa^*+\widetilde a\widetilde a^*$、$B=\varepsilon H_--bb^*+\widetilde b\widetilde b^*$。它们分别是 $r,s$ 个正秩一项之和，故
-
-$$
-A,B\succeq0,\quad \operatorname{rank}A\le r\le m,\quad
-\operatorname{rank}B\le s\le m,\quad
-\operatorname{Tr}A=\operatorname{Tr}B=m,\quad A-B=\varepsilon H.
-\tag{337.8}
-$$
+于是 $A,B\succeq0$，$\operatorname{rank}A=r\le m$、$\operatorname{rank}B=s\le m$，且 $\operatorname{Tr}A=\operatorname{Tr}B=m$、$A-B=\varepsilon H$。缩放只在提升空间构造端点，不要求它已经是原物理过程，也不要求 $\varepsilon$ 小于一。
 
 现在使用有限维等范框的标准构造。若 $A=\sum_{j=0}^{r'-1}\nu_jP_{g_j}$，其中 $g_j$ 正交、$\nu_j>0$、$r'\le m$、$\sum_j\nu_j=m$，令 $\omega=\exp(2\pi i/m)$，取
 
 $$
 w_k=\frac1{\sqrt m}\sum_{j=0}^{r'-1}\sqrt{\nu_j}\,\omega^{jk}g_j,
 \qquad k=0,\ldots,m-1.
-\tag{337.9}
+\tag{337.7}
 $$
 
 正交性给每个 $\|w_k\|=1$；有限Fourier恒等式 $\sum_{k=0}^{m-1}\omega^{(j-\ell)k}=m\delta_{j\ell}$ 给 $A=\sum_kP_{w_k}$。对 $B$ 同样处理，得到
 
 $$
 \varepsilon H=\sum_{k=1}^{m}P_{u_k}-\sum_{k=1}^{m}P_{v_k}.
-\tag{337.10}
+\tag{337.8}
 $$
 
-正矩阵在整数迹不小于秩时可拆成相应数目的单位秩一投影，是Fillmore有限秩投影和判据的成熟情形[Q337F]；(337.9)明确给出本接合需要的等份实现，不将这项一般事实另立为新增定理。二维双曲配平也只承担谱证书构造，不指定任何原物理过程。
+正矩阵在整数迹不小于秩时可拆成相应数目的单位秩一投影，是Fillmore有限秩投影和判据的成熟情形[Q337F]；(337.7)明确给出本接合需要的等份实现，不将这项一般事实另立为新增定理。
 
-对 $H\in\ker\Psi\setminus\{0\}$，取 $m=m(d)$，由(337.5)满足构造条件。通过纯标签双射将(337.10)传回原 $X,Y$，各恰有 $m(d)$ 份且 $\beta_{0,3}X=\beta_{0,3}Y$。新约束(337.2)给有限相触中点借还路径；逐球忠实提升保持每步矩阵和，端点原样归还的辅助库存相消，迫 $\varepsilon H=0$。故 $\Psi$ 单射。$d<8$ 的分支已直接排核，不需要虚构负数或零份的比较。
+对 $H\in\ker\Psi\setminus\{0\}$，取 $m=m(d)$，由(337.5)满足构造条件。通过纯标签双射将(337.8)传回原 $X,Y$，各恰有 $m(d)$ 份且 $\beta_{0,3}X=\beta_{0,3}Y$。新约束(337.2)给有限相触中点借还路径；逐球忠实提升保持每步矩阵和，端点原样归还的辅助库存相消，迫 $\varepsilon H=0$。故 $\Psi$ 单射。$d<8$ 的分支已直接排核，不需要虚构负数或零份的比较。
 
 排核后准确复用336.3：同一 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$ 对全部有限 $N$ 满足
 
 $$
 \theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
 u_N=\operatorname{Tr}\circ\theta^{\otimes N},\qquad d=n^3.
-\tag{337.11}
+\tag{337.9}
 $$
 
 反向标准模型由336.2对任意等长配方的整数核与借还等价，直接满足(337.2)。因此正反两向闭合，全部过程结论保留337.4所列的独立前件。$\square$
@@ -3828,7 +3806,7 @@ $$
 
 $$
 n_+(H)\le\operatorname{rank}(\widetilde\beta_3X)\le k\le3.
-\tag{337.12}
+\tag{337.10}
 $$
 
 (337.5)使 $H=0$。336.2在提升标准空间给相触借还路径，逐球接口传回原域，故全部这些比较自动通过。
