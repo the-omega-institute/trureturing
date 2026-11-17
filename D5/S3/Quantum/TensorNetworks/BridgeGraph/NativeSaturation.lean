@@ -86,7 +86,7 @@ private theorem tensor_route {a b q : ℕ} (h : 2 * b ≤ 3 * a) :
         simp [route, hj, hja, hk, hqk, hij, hi, hl, Fin.ext_iff, eq_comm] <;> omega
 
 /-- Rectangular factors admit an identity column Gram exactly at the dimension threshold. -/
-theorem native_saturation_iff (a b q : ℕ) (_hab : a < b) (hq : 0 < q) :
+theorem native_saturation_iff (a b q : ℕ) (hq : 0 < q) :
     (∃ (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
       (N : Fin 3 → Matrix (Fin (3 * q)) (Fin (2 * q)) ℂ),
       (∑ r, kronecker (M r) (N r))ᴴ *
