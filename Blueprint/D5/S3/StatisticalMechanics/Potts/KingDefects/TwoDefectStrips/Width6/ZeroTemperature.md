@@ -6,7 +6,7 @@ The frozen six-column proper-colouring owner supplies the zero-temperature block
 
 **Definition 1.1 (The two-row rectangle).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.twoRows`
+$$\forall (p: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), (\forall (r: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), (\operatorname{twoRows}\left(p, r\right) = (\lambda (ij: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(6\right))) \mapsto (\operatorname{if} (\operatorname{Prod}.\operatorname{fst}\left(ij\right) = 0) \operatorname{then} p\left(\operatorname{Prod}.\operatorname{snd}\left(ij\right)\right) \operatorname{else} r\left(\operatorname{Prod}.\operatorname{snd}\left(ij\right)\right)))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.twoRows` (`✓ std3`).
 
@@ -20,7 +20,7 @@ Two six-column rows form a height-two rectangle, with the source first and the s
 
 **Definition 1.2 (The zero-defect successor relation).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.raw`
+$$\forall (p: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), (\forall (r: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{raw}\left(p, r\right)) \Leftrightarrow ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{between}, p, r\right)) + (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{horizontal}, r, r\right)) = 0)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.raw` (`✓ std3`).
 
@@ -34,7 +34,7 @@ The between-row and target horizontal defect counts both vanish.
 
 **Definition 1.3 (The translated row offsets).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.offsets`
+$$\forall (p: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), (\operatorname{offsets}\left(p\right) = (\lambda (j: \operatorname{Fin}\left(6\right)) \mapsto \operatorname{Fin}.\operatorname{xor}\left(p\left(0\right), p\left(j\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.offsets` (`✓ std3`).
 
@@ -48,7 +48,7 @@ Offsets translate a proper row by its first entry, producing the owner zone word
 
 **Theorem 1.4 (The exact allowed-shift image).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.raw_iff_shift`
+$$\forall (p: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), (\forall (r: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{horizontal}, p, p\right) = 0) \Rightarrow ((\operatorname{raw}\left(p, r\right)) \Leftrightarrow (\exists (v: \operatorname{Fin}\left(4\right)), ((v \in \operatorname{HardinA233166KingStrip}.\operatorname{offsetChoices}\left(\operatorname{offsets}\left(p\right)\right)) \land (r = (\lambda (j: \operatorname{Fin}\left(6\right)) \mapsto \operatorname{Fin}.\operatorname{xor}\left(v, p\left(j\right)\right))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.raw_iff_shift` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ For a horizontally proper source row, the zero-defect successor rows are exactly
 
 **Theorem 1.5 (The zero-temperature transfer row).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.transition_counts`
+$$\forall (p: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{horizontal}, p, p\right) = 0) \Rightarrow (\forall (s: \operatorname{Fin}\left(96\right)), (\sum_{(r: (\operatorname{Fin}\left(6\right)) \to (\operatorname{Fin}\left(4\right)))} ((\operatorname{if} (((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{between}, p, r\right)) + (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{horizontal}, r, r\right)) \le 0) \land (\operatorname{Width6}.\operatorname{Data}.\operatorname{cl}\left(r, (0) - ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{between}, p, r\right)) + (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{horizontal}, r, r\right)))\right) = s)) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))) = \operatorname{Width6}.\operatorname{Data}.\operatorname{T}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{cl}\left(p, 0\right), s\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/ZeroTemperature.transition_counts` (`✓ std3`). ∎
 

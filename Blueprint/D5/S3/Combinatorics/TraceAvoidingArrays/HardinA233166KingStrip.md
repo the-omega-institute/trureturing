@@ -8,7 +8,7 @@ OEIS A233166, revision 8, NAME: Number of n X 6 0..7 arrays with no element x(i,
 
 **Theorem 1.1 (Cancellation of a common xor).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_cancel`
+$$\forall a: \operatorname{Fin}\left(4\right), (\forall b: \operatorname{Fin}\left(4\right), (\forall c: \operatorname{Fin}\left(4\right), ((\operatorname{Fin}.\operatorname{xor}\left(a, b\right) = \operatorname{Fin}.\operatorname{xor}\left(a, c\right)) \Leftrightarrow (b = c))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_cancel` (`✓ std3`). ∎
 
@@ -22,7 +22,7 @@ For colours in Fin 4, xor with a fixed left colour is cancellable.
 
 **Theorem 1.2 (Nonzero xor detects unequal colours).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_nonzero`
+$$\forall a: \operatorname{Fin}\left(4\right), (\forall b: \operatorname{Fin}\left(4\right), ((\operatorname{Fin}.\operatorname{xor}\left(a, b\right) \neq 0) \Leftrightarrow (a \neq b)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_nonzero` (`✓ std3`). ∎
 
@@ -36,7 +36,7 @@ Two Fin 4 colours have nonzero xor exactly when they differ.
 
 **Theorem 1.3 (Translation of xor differences).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_shift`
+$$\forall a: \operatorname{Fin}\left(4\right), (\forall b: \operatorname{Fin}\left(4\right), (\forall c: \operatorname{Fin}\left(4\right), (\operatorname{Fin}.\operatorname{xor}\left(\operatorname{Fin}.\operatorname{xor}\left(a, b\right), \operatorname{Fin}.\operatorname{xor}\left(a, c\right)\right) = \operatorname{Fin}.\operatorname{xor}\left(b, c\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_shift` (`✓ std3`). ∎
 
@@ -50,7 +50,7 @@ The xor of two translated differences is the original difference.
 
 **Theorem 1.4 (Cancellation of a common right xor).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_right_cancel`
+$$\forall x: \operatorname{Fin}\left(4\right), (\forall d: \operatorname{Fin}\left(4\right), (\operatorname{Fin}.\operatorname{xor}\left(x, \operatorname{Fin}.\operatorname{xor}\left(x, d\right)\right) = d))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.xor_right_cancel` (`✓ std3`). ∎
 
@@ -64,7 +64,7 @@ For Fin 4 colours, applying xor with the same colour twice returns the original 
 
 **Definition 1.5 (Admissible six-column offsets).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.offsetOK`
+$$\forall v: (\operatorname{Fin}\left(6\right)) \to \operatorname{Fin}\left(4\right), ((\operatorname{offsetOK}\left(v\right)) \Leftrightarrow ((v\left(0\right) = 0) \land (\forall j: \operatorname{Fin}\left(5\right), (\operatorname{Fin}.\operatorname{xor}\left(v\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right), v\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)\right) \neq 0))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.offsetOK` (`✓ std3`).
 
@@ -78,7 +78,7 @@ An offset word starts at zero and has no zero adjacent xor increment.
 
 **Definition 1.6 (Allowed vertical shifts).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.offsetChoices`
+$$\forall v: (\operatorname{Fin}\left(6\right)) \to \operatorname{Fin}\left(4\right), (\operatorname{offsetChoices}\left(v\right) = \operatorname{Finset}.\operatorname{filter}\left((\lambda (x: \operatorname{Fin}\left(4\right)) \mapsto ((x \neq 0) \land (\forall j: \operatorname{Fin}\left(5\right), (\operatorname{Fin}.\operatorname{xor}\left(v\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right), v\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)\right) \neq x)))), \operatorname{Finset}.\operatorname{univ}\left(\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.offsetChoices` (`✓ std3`).
 
@@ -92,7 +92,7 @@ The allowed shifts are the nonzero colours absent from all adjacent offset incre
 
 **Definition 1.7 (Decidability of offset admissibility).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.instDecidableOffsetOK`
+$$\forall v: (\operatorname{Fin}\left(6\right)) \to \operatorname{Fin}\left(4\right), (\operatorname{Decidable}\left(\operatorname{offsetOK}\left(v\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.instDecidableOffsetOK` (`✓ std3`).
 
@@ -106,7 +106,7 @@ For each six-column offset word, the zero initial offset and all five nonzero ad
 
 **Theorem 1.8 (Zone data through offset choices).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.zones_iff`
+$$\forall m: \operatorname{Nat}\left(\right), (\forall u: (\operatorname{Fin}\left(m + 1\right)) \to \operatorname{Fin}\left(4\right), (\forall v: (\operatorname{Fin}\left(6\right)) \to \operatorname{Fin}\left(4\right), (((u, v) \in \operatorname{zones}\left(m + 1\right)) \Leftrightarrow ((\operatorname{offsetOK}\left(v\right)) \land (\forall i: \operatorname{Fin}\left(m\right), (\operatorname{Fin}.\operatorname{xor}\left(u\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right), u\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)\right) \in \operatorname{offsetChoices}\left(v\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.zones_iff` (`✓ std3`). ∎
 

@@ -19,7 +19,7 @@ open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Classes20
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width5.Data
 open D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
-local instance (p : Row) : Decidable
+private local instance (p : Row) : Decidable
     (D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical p) := by
   unfold D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
   infer_instance

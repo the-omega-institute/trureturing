@@ -80,7 +80,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
         DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            H(title), StatementSource.FromAuthor(Disp(NodeFormula(declaration))), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula LegalFormula()
@@ -239,4 +239,19 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
         Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
+
+    private static Formula NodeFormula(string declaration) => declaration switch
+    {
+        "xor_cancel" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), All("c", Call("Fin", Digits("4")), Iff(Eq(Call("Fin.xor", V("a"), V("b")), Call("Fin.xor", V("a"), V("c"))), Eq(V("b"), V("c")))))),
+        "xor_nonzero" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), Iff(Ne(Call("Fin.xor", V("a"), V("b")), Digits("0")), Ne(V("a"), V("b"))))),
+        "xor_shift" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), All("c", Call("Fin", Digits("4")), Eq(Call("Fin.xor", Call("Fin.xor", V("a"), V("b")), Call("Fin.xor", V("a"), V("c"))), Call("Fin.xor", V("b"), V("c")))))),
+        "xor_right_cancel" => All("x", Call("Fin", Digits("4")), All("d", Call("Fin", Digits("4")), Eq(Call("Fin.xor", V("x"), Call("Fin.xor", V("x"), V("d"))), V("d")))),
+        "offsetOK" => All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Iff(Call("offsetOK", V("v")), And(Eq(App(V("v"), Digits("0")), Digits("0")), All("j", Call("Fin", Digits("5")), Ne(Call("Fin.xor", App(V("v"), Call("Fin.castSucc", V("j"))), App(V("v"), Call("Fin.succ", V("j")))), Digits("0")))))),
+        "offsetChoices" => All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Eq(Call("offsetChoices", V("v")), Call("Finset.filter", Lam("x", Call("Fin", Digits("4")), And(Ne(V("x"), Digits("0")), All("j", Call("Fin", Digits("5")), Ne(Call("Fin.xor", App(V("v"), Call("Fin.castSucc", V("j"))), App(V("v"), Call("Fin.succ", V("j")))), V("x"))))), Call("Finset.univ")))),
+        "instDecidableOffsetOK" => All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Call("Decidable", Call("offsetOK", V("v")))),
+        "zones_iff" => All("m", Call("Nat"), All("u", Arrow(Call("Fin", Add(V("m"), Digits("1"))), Call("Fin", Digits("4"))), All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Iff(Member(Pair(V("u"), V("v")), Call("zones", Add(V("m"), Digits("1")))), And(Call("offsetOK", V("v")), All("i", Call("Fin", V("m")), Member(Call("Fin.xor", App(V("u"), Call("Fin.castSucc", V("i"))), App(V("u"), Call("Fin.succ", V("i")))), Call("offsetChoices", V("v"))))))))),
+        _ => throw new System.ArgumentOutOfRangeException(nameof(declaration))
+    };
+    private static Formula Digits(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
+    private static Formula Lam(string x, Formula t, Formula b) => Parenthesized(Seq(LambdaLower, Sp, Parenthesized(Seq(V(x), Colon, Sp, t)), Sp, Mapsto, Sp, Parenthesized(b)));
 }

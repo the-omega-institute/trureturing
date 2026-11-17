@@ -38,7 +38,7 @@ def extend (p : Row) : Width6.Data.Row := ![p 0, p 1, p 2, p 3, p 4, p 3]
 def raw5 (p r : Row) : Prop :=
   bondDefects between p r + bondDefects horizontal r r = 0
 
-local instance (p r : Row) : Decidable (raw5 p r) :=
+private local instance (p r : Row) : Decidable (raw5 p r) :=
   inferInstanceAs (Decidable (_ = 0))
 
 set_option maxHeartbeats 2000000 in

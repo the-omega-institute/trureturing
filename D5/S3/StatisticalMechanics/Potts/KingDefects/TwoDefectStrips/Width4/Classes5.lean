@@ -19,7 +19,7 @@ namespace D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Cl
 open D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width4.Data
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip (Boundary)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-local instance (p : Boundary) : Decidable (Canonical p) := by
+private local instance (p : Boundary) : Decidable (Canonical p) := by
   unfold Canonical
   infer_instance
 set_option maxRecDepth 100000 in

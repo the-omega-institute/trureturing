@@ -39,7 +39,7 @@ def twoRows (p r : Row) : Fin 2 × Fin 6 → Fin 4 :=
 def raw (p r : Row) : Prop :=
   bondDefects between p r + bondDefects horizontal r r = 0
 
-local instance (p r : Row) : Decidable (raw p r) :=
+private local instance (p r : Row) : Decidable (raw p r) :=
   inferInstanceAs (Decidable (_ = 0))
 
 set_option maxHeartbeats 2000000 in

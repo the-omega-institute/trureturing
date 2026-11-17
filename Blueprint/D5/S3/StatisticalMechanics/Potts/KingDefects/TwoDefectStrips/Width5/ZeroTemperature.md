@@ -6,7 +6,7 @@ The width-five proper block is the reflected-column restriction of the frozen wi
 
 **Definition 1.1 (The reflected-column extension).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.extend`
+$$\forall (p: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), (\operatorname{extend}\left(p\right) = ![p\left(0\right), p\left(1\right), p\left(2\right), p\left(3\right), p\left(4\right), p\left(3\right)])$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.extend` (`✓ std3`).
 
@@ -20,7 +20,7 @@ A width-five row is extended by reflecting its penultimate column into the sixth
 
 **Definition 1.2 (The width-five zero-defect relation).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.raw5`
+$$\forall (p: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), (\forall (r: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{raw5}\left(p, r\right)) \Leftrightarrow ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{between}, p, r\right)) + (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{horizontal}, r, r\right)) = 0)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.raw5` (`✓ std3`).
 
@@ -34,7 +34,7 @@ The raw successor relation records zero between-row and horizontal defects for w
 
 **Theorem 1.3 (Properness is preserved by extension).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.proper_extend`
+$$\forall (p: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width6}.\operatorname{Data}.\operatorname{horizontal}, \operatorname{extend}\left(p\right), \operatorname{extend}\left(p\right)\right) = 0) \Leftrightarrow (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{horizontal}, p, p\right) = 0))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.proper_extend` (`✓ std3`). ∎
 
@@ -48,7 +48,7 @@ The reflected extension has no horizontal defects exactly when the original widt
 
 **Theorem 1.4 (Raw successors are preserved by extension).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.raw_extend`
+$$\forall (p: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), (\forall (r: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{Width6}.\operatorname{ZeroTemperature}.\operatorname{raw}\left(\operatorname{extend}\left(p\right), \operatorname{extend}\left(r\right)\right)) \Leftrightarrow (\operatorname{raw5}\left(p, r\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.raw_extend` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ The width-six owner relation on reflected extensions is equivalent to the width-
 
 **Theorem 1.5 (The restricted owner image).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.raw_iff_owner`
+$$\forall (p: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), (\forall (r: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{horizontal}, p, p\right) = 0) \Rightarrow ((\operatorname{raw5}\left(p, r\right)) \Leftrightarrow (\exists (v: \operatorname{Fin}\left(4\right)), ((v \in \operatorname{HardinA233166KingStrip}.\operatorname{offsetChoices}\left(\operatorname{Width6}.\operatorname{ZeroTemperature}.\operatorname{offsets}\left(\operatorname{extend}\left(p\right)\right)\right)) \land (r = (\lambda (j: \operatorname{Fin}\left(5\right)) \mapsto \operatorname{Fin}.\operatorname{xor}\left(v, p\left(j\right)\right))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.raw_iff_owner` (`✓ std3`). ∎
 
@@ -72,11 +72,11 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Wi
 
 *Commentary.*
 
-Every width-five zero-defect successor is the restriction of an owner allowed shift, and every such restriction is a successor. The shift is recovered uniquely as r(0) xor p(0), giving fibre multiplicity one.
+For every horizontally proper width-five source, every zero-defect successor is the restriction of an owner allowed shift, and every such restriction is a successor. The shift is recovered uniquely as r(0) xor p(0), giving fibre multiplicity one.
 
 **Theorem 1.6 (The zero-temperature transfer row).**
 
-Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.transition_counts`
+$$\forall (p: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right))), ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{horizontal}, p, p\right) = 0) \Rightarrow (\forall (s: \operatorname{Fin}\left(43\right)), (\sum_{(r: (\operatorname{Fin}\left(5\right)) \to (\operatorname{Fin}\left(4\right)))} ((\operatorname{if} (((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{between}, p, r\right)) + (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{horizontal}, r, r\right)) \le 0) \land (\operatorname{Width5}.\operatorname{Data}.\operatorname{cl}\left(r, (0) - ((\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{between}, p, r\right)) + (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{horizontal}, r, r\right)))\right) = s)) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))) = \operatorname{Width5}.\operatorname{Data}.\operatorname{T}\left(\operatorname{Width5}.\operatorname{Data}.\operatorname{cl}\left(p, 0\right), s\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width5/ZeroTemperature.transition_counts` (`✓ std3`). ∎
 
