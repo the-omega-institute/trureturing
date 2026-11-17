@@ -32,7 +32,7 @@ closed-interval, one-based recurrence; zero never occurs among its indices.
 the maximum through internal index $N$, inclusive. Thus the multiplicity bound
 available at $N$ is applied only to predecessors of this prefix maximum.
 
-## Established implications and open gap
+## Formal occurrence theorem
 
 The formal source proves that infinitely many threes imply the full target,
 and that finitely many threes force a fixed missing residue class modulo some
@@ -63,35 +63,80 @@ $v\le M_N$ with $d\le2W_A(v)$. Consecutive-pair injectivity makes these
 predecessor values distinct. These are the finite inputs to the remaining
 frequency estimate.
 
-The missing formal implication remains: for each fixed $q\ge2$, prefixes
-satisfying this avoidance admit a uniform sublinear multiplicity bound, with
-constants independent of $N$ and $d$. One must choose $r>1$ from $q$ alone with
-$2A\sum_p p^{-r}\le1$, prove $W_{2A}(v)\le v^r$, and for the same
-$s=1/(2r)$ prove
-$\sum_{v\ge1}W_A(v)^s/v^\sigma<\infty$ for every $\sigma>1$.
-The smooth/rough factorization and its nonnegative sums must be justified;
-$W_A$ is not assumed multiplicative. The finite predecessor bound then needs
-its Markov estimate and the split at $d\le M_N^s$, using
-$\delta=s^2/2$ and $\sigma=1+\delta$. The case $d=1$ and the final inference
-from finite threes to a globally uniform bound remain required. No theorem or
-axiom for that missing analytic implication is present. The full original
-target remains open in Lean.
+`prime_word_first_letter` proves the exact recurrence
+
+$$W_C(v)=C\sum_{p\mid v,\ p	ext{ prime}}W_C(v/p)\qquad(v>1).$$
+
+Using the convergent square reciprocal series and geometric decay,
+`prime_word_polynomial_bound` chooses one $r>1$ from $A$ alone with
+$W_{2A}(v)\le v^r$ for every positive $v$. In fact its parameter construction
+makes $2A\sum_{p\in T}p^{-r}\le1$ for every finite prime set $T$.
+Set $s=1/(2r)$, so $0<s<1/2$ and $rs=1/2$.
+
+For each $\sigma>1$, a finite set $S$ is chosen so that every finite prime set
+outside $S$ has weighted reciprocal sum at most one half. The actual
+first-letter recurrence gives a finite rough-prefix sum $R_X\le1+R_X/2$,
+hence $R_X\le2$. Every positive $v$ splits by its prime-factor support into
+$m n=v$, with $m$ supported on $S$ and every prime divisor of $n$ outside $S$.
+The product inequality
+
+$$W_A(mn)\le W_{2A}(m)W_{2A}(n)$$
+
+is proved directly from the first-letter recurrence for all positive $m,n$;
+no multiplicativity assumption is used. It yields
+
+$$W_A(v)^s v^{-\sigma}\le
+  m^{-(\sigma-1/2)}W_{2A}(n)n^{-\sigma}.$$
+
+The finite-prime Euler-product supplier bounds the smooth factor using only
+local prime-power convergence at $	au=\sigma-1/2>0$. The decomposition is
+injective because multiplication recovers $v$. Enlarging to the finite product
+of the smooth and rough prefixes proves `prime_word_finite_moment`:
+
+$$orall\sigma>1\ \exists H_\sigma>0\ orall F\subseteq\mathbb N_{>0}
+	ext{ finite},\qquad
+\sum_{v\in F}W_A(v)^s v^{-\sigma}\le H_\sigma.$$
+
+Thus the same fixed $s$ works for every $\sigma$, with each tail set and
+constant selected before $F$. All rearrangements used here are finite.
+
+The finite Markov inequality on the actual distinct predecessor set gives
+
+$$c_N(d)d^s\le2^s H_\sigma M_N^\sigma\qquad(d\ge2).$$
+
+With $\delta=s^2/2$ and $\sigma=1+\delta$, the split at $d\le M_N^s$
+combines this with $c_N(d)\le2d^r$. The low range has exponent one half;
+the high range has exponent $1-\delta$. The two initial ones handle $d=1$,
+and $M_N\ge1$ includes every small prefix. This proves
+`uniform_count_bound_of_avoidance`, with constants independent of $N,d$.
+
+If three occurred finitely often, `missing_residue_of_finite_three` would
+supply one fixed modulus avoided by every prefix. The uniform count bound
+would then contradict `no_uniform_sublinear_count_bound`. The three fiber
+is therefore infinite and cofinal in the natural indices.
+`full_positive_occurrence` consumes `full_occurrence_of_infinite_three` to
+prove exactly the original all-positive-integer occurrence assertion. No
+extra analytic hypothesis, infinite-fiber premise or cutoff remains in its
+type.
 
 ## Admission boundary
 
-This is partial mathematical content, not an open-problem settlement. The exact
+The exact
 source representation and the infinite-three implication use new finite-tuple,
 cardinality and threshold arguments. The missing-residue result uses the
 earliest seed divisor and one finite LCM. The sublinear-count contradiction
 uses the actual recurrence, the injectivity of consecutive pairs, and the
-existing uniform divisor supplier. No novelty or priority assertion is made.
+existing uniform divisor supplier. No novelty or priority assertion is made. The compiled unconditional theorem
+requires distinct source-fidelity and per-declaration proof-shape review before
+freezing or publication; the implementation worker supplies no self-approval.
 
 The matching Reg source provides dependent-family realization, equivalence,
 variation, sensitivity and observational-dependence evidence for the four
 original public theorems. Its four `Contract.Registration` attempts have no
 `sourceSelection`. The missing evidence is the complete original-source
-reconstruction and its readout path and coordinate bindings. The five
-prime-word and contributor bridges have no completed registration; their
+reconstruction and its readout path and coordinate bindings. The thirteen
+additional contributor, prime-word, analytic and unconditional theorems have no
+completed registration; their
 complete source-family realization, selected readouts, coordinate bindings
 and family-wide evidence remain required. The concrete linked exception is
 [issue 31349](https://github.com/the-omega-institute/trureturing/issues/31349#issuecomment-6957024804).

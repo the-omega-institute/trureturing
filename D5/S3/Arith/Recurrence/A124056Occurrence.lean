@@ -904,7 +904,8 @@ theorem prime_word_pointwise (C : ℕ) (r : ℝ)
         intro p hp
         have hprime := Nat.prime_of_mem_primeFactors hp
         have hd := Nat.dvd_of_mem_primeFactors hp
-        rw [Nat.cast_div hd (by exact_mod_cast hprime.ne_zero : (p : ℝ) ≠ 0), Real.div_rpow (Nat.cast_nonneg _) (Nat.cast_nonneg _),
+        rw [Nat.cast_div hd (by exact_mod_cast hprime.ne_zero : (p : ℝ) ≠ 0),
+          Real.div_rpow (Nat.cast_nonneg _) (Nat.cast_nonneg _),
           Real.rpow_neg (Nat.cast_nonneg _)]
         ring
       _ ≤ _ := by
@@ -931,13 +932,15 @@ private theorem prime_sum_parameter (C : ℕ) :
     rw [show -((k : ℝ) + 2) = -(k : ℝ) + (-2) by ring, Real.rpow_add hp0,
       Real.rpow_neg hp0.le, Real.rpow_natCast, ← inv_pow]
     exact mul_le_mul_of_nonneg_right
-      (pow_le_pow_left₀ (by positivity) (by simpa using (one_div_le_one_div_of_le (by norm_num) hpp)) k)
+      (pow_le_pow_left₀ (by positivity)
+        (by simpa using (one_div_le_one_div_of_le (by norm_num) hpp)) k)
       (Real.rpow_nonneg hp0.le _)
   have hsum : ∑ p ∈ T, (p : ℝ) ^ (-((k : ℝ) + 2)) ≤ (1 / 2 : ℝ) ^ k * Z := by
     calc
       _ ≤ ∑ p ∈ T, (1 / 2 : ℝ) ^ k * (p : ℝ) ^ (-2 : ℝ) := Finset.sum_le_sum hp
       _ = (1 / 2 : ℝ) ^ k * ∑ p ∈ T, (p : ℝ) ^ (-2 : ℝ) := (Finset.mul_sum ..).symm
-      _ ≤ _ := mul_le_mul_of_nonneg_left (hs.sum_le_tsum T (fun n _ => by positivity)) (by positivity)
+      _ ≤ _ := mul_le_mul_of_nonneg_left
+        (hs.sum_le_tsum T (fun n _ => by positivity)) (by positivity)
   have hk' : (1 / 2 : ℝ) ^ k * ((C : ℝ) * Z + 1) < 1 :=
     (lt_div_iff₀ (by positivity)).mp hk
   have hk0 : 0 ≤ (1 / 2 : ℝ) ^ k := by positivity
@@ -1017,7 +1020,8 @@ theorem rough_prime_word_sum (C : ℕ) (σ : ℝ) (S : Finset ℕ)
           have hq : x.1 / x.2 = y.1 / y.2 := congrArg Prod.snd heq
           have hn : x.1 = y.1 := by
             calc
-              x.1 = x.2 * (x.1 / x.2) := (Nat.mul_div_cancel' (Nat.dvd_of_mem_primeFactors hxp)).symm
+              x.1 = x.2 * (x.1 / x.2) :=
+                (Nat.mul_div_cancel' (Nat.dvd_of_mem_primeFactors hxp)).symm
               _ = y.2 * (y.1 / y.2) := by rw [hq, hp]
               _ = y.1 := Nat.mul_div_cancel' (Nat.dvd_of_mem_primeFactors hyp)
           exact Sigma.ext hn (by simpa using hp)
@@ -1028,7 +1032,8 @@ theorem rough_prime_word_sum (C : ℕ) (σ : ℝ) (S : Finset ℕ)
         · intro x hx
           rfl
         · intro z hz _
-          exact mul_nonneg (mul_nonneg (Nat.cast_nonneg _) (Real.rpow_nonneg (Nat.cast_nonneg _) _)) (hf _)
+          exact mul_nonneg
+            (mul_nonneg (Nat.cast_nonneg _) (Real.rpow_nonneg (Nat.cast_nonneg _) _)) (hf _)
   have hproduct : (∑ z ∈ T ×ˢ G, (C : ℝ) * (z.1 : ℝ) ^ (-σ) * f z.2) =
       ((C : ℝ) * ∑ p ∈ T, (p : ℝ) ^ (-σ)) * R := by
     rw [Finset.sum_product]
@@ -1057,7 +1062,7 @@ theorem rough_prime_word_sum (C : ℕ) (σ : ℝ) (S : Finset ℕ)
 
 private theorem prime_word_weight_mono (A B v : ℕ) (hAB : A ≤ B) :
     primeWordWeight A v ≤ primeWordWeight B v := by
-  exact Nat.mul_le_mul_right _ (Nat.pow_le_pow_left hAB)
+  exact Nat.mul_le_mul_right _ (Nat.pow_le_pow_left hAB (omega v))
 
 /-- The doubled weight controls splitting a product into any two positive
 factors, without a multiplicativity assumption. -/
@@ -1085,7 +1090,7 @@ theorem prime_word_product_bound (A m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
       let f : ℕ → ℕ := fun p => primeWordWeight A (m * n / p)
       have hunion : (∑ p ∈ m.primeFactors ∪ n.primeFactors, f p) ≤
           (∑ p ∈ m.primeFactors, f p) + ∑ p ∈ n.primeFactors, f p := by
-        have := Finset.sum_union_inter m.primeFactors n.primeFactors f
+        have := Finset.sum_union_inter (s₁ := m.primeFactors) (s₂ := n.primeFactors) (f := f)
         omega
       have hleft : (∑ p ∈ m.primeFactors, f p) ≤
           ∑ p ∈ m.primeFactors, primeWordWeight (2 * A) (m / p) * primeWordWeight (2 * A) n := by
@@ -1125,6 +1130,305 @@ theorem prime_word_product_bound (A m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
           ring
   exact main (m + n) m n rfl hm hn
 
-/- The fixed fractional moment and uniform multiplicity estimate remain open. -/
+private theorem prime_tail_set (C : ℕ) (σ : ℝ) (hσ : 1 < σ) :
+    ∃ S : Finset ℕ, ∀ T : Finset ℕ, Disjoint T S →
+      (C : ℝ) * ∑ p ∈ T, (p : ℝ) ^ (-σ) ≤ 1 / 2 := by
+  have hs : Summable (fun n : ℕ => (n : ℝ) ^ (-σ)) :=
+    Real.summable_nat_rpow.mpr (by linarith)
+  obtain ⟨S, hS⟩ := hs.vanishing
+    (Iio_mem_nhds (by positivity : (0 : ℝ) < 1 / (2 * ((C : ℝ) + 1))))
+  refine ⟨S, ?_⟩
+  intro T hT
+  have h := hS T hT
+  change (∑ p ∈ T, (p : ℝ) ^ (-σ)) < 1 / (2 * ((C : ℝ) + 1)) at h
+  have h' := (lt_div_iff₀ (by positivity : 0 < 2 * ((C : ℝ) + 1))).mp h
+  have hsum : 0 ≤ ∑ p ∈ T, (p : ℝ) ^ (-σ) := Finset.sum_nonneg (fun p _ => by positivity)
+  nlinarith
+
+private theorem smooth_sum_bound (S : Finset ℕ) (τ : ℝ) (hτ : 0 < τ) :
+    ∃ K : ℝ, 0 < K ∧ ∀ G : Finset ℕ, (∀ n ∈ G, n ∈ Nat.factoredNumbers S) →
+      (∑ n ∈ G, (n : ℝ) ^ (-τ)) ≤ K := by
+  classical
+  let f : ℕ →* ℝ := {
+    toFun := fun n => (n : ℝ) ^ (-τ)
+    map_one' := by simp
+    map_mul' := by intro m n; simp [Real.mul_rpow (Nat.cast_nonneg m) (Nat.cast_nonneg n)] }
+  have hf : ∀ {p : ℕ}, Nat.Prime p → ‖f p‖ < 1 := by
+    intro p hp
+    dsimp [f]
+    rw [abs_of_nonneg (Real.rpow_nonneg (Nat.cast_nonneg _) _)]
+    exact Real.rpow_lt_one_of_one_lt_of_neg (by exact_mod_cast hp.one_lt) (by linarith)
+  have hs := (EulerProduct.summable_and_hasSum_factoredNumbers_prod_filter_prime_geometric hf S).1
+  let K : ℝ := ∑' n : Nat.factoredNumbers S, ‖f n‖
+  have hK : 0 ≤ K := tsum_nonneg (fun _ => norm_nonneg _)
+  refine ⟨K + 1, by linarith, ?_⟩
+  intro G hG
+  let E : Finset (Nat.factoredNumbers S) := G.attach.image (fun n => ⟨n.val, hG n.val n.property⟩)
+  have heq : (∑ n ∈ G, (n : ℝ) ^ (-τ)) = ∑ n ∈ E, ‖f n‖ := by
+    rw [Finset.sum_image]
+    · change (∑ n ∈ G, (n : ℝ) ^ (-τ)) =
+        ∑ n ∈ G.attach, |(n.val : ℝ) ^ (-τ)|
+      simp only [abs_of_nonneg (Real.rpow_nonneg (Nat.cast_nonneg _) _)]
+      exact (Finset.sum_attach G _).symm
+    · intro n hn m hm heq
+      exact Subtype.ext (congrArg (fun z : Nat.factoredNumbers S => z.val) heq)
+  rw [heq]
+  exact (hs.sum_le_tsum E (fun _ _ => norm_nonneg _)).trans (by dsimp [K]; linarith)
+
+private theorem prime_support_split (S : Finset ℕ) (v : ℕ) (hv : 0 < v) :
+    ∃ m n : ℕ, m * n = v ∧ m ∈ Nat.factoredNumbers S ∧
+      0 < n ∧ (∀ p ∈ n.primeFactors, p ∉ S) := by
+  classical
+  let l := v.primeFactorsList
+  let u := l.filter (fun p => decide (p ∈ S))
+  let w := l.filter (fun p => !decide (p ∈ S))
+  have hmul : u.prod * w.prod = v := by
+    rw [← List.prod_append]
+    exact (List.filter_append_perm _ l).prod_eq.trans (Nat.prod_primeFactorsList hv.ne')
+  have hu : 0 < u.prod := Nat.pos_of_mul_pos_right (hmul.symm ▸ hv)
+  have hw : 0 < w.prod := Nat.pos_of_mul_pos_left (hmul.symm ▸ hv)
+  have hup : u ∈ primeWords u.prod := (mem_primeWords hu.ne' _).mpr
+    ⟨rfl, fun p hp => Nat.prime_of_mem_primeFactorsList (List.mem_of_mem_filter hp)⟩
+  have hwp : w ∈ primeWords w.prod := (mem_primeWords hw.ne' _).mpr
+    ⟨rfl, fun p hp => Nat.prime_of_mem_primeFactorsList (List.mem_of_mem_filter hp)⟩
+  have huperm := List.mem_permutations.mp (List.mem_toFinset.mp hup)
+  have hwperm := List.mem_permutations.mp (List.mem_toFinset.mp hwp)
+  refine ⟨u.prod, w.prod, hmul, ⟨hu.ne', ?_⟩, hw, ?_⟩
+  · intro p hp
+    have := (List.mem_filter.mp (huperm.mem_iff.mpr hp)).2
+    simpa [u] using this
+  · intro p hp
+    have hp' : p ∈ w.prod.primeFactorsList := Nat.mem_primeFactors_iff_mem_primeFactorsList.mp hp
+    have := (List.mem_filter.mp (hwperm.mem_iff.mpr hp')).2
+    simpa [w] using this
+
+/-- One fixed fractional exponent works for every Dirichlet exponent above one.
+The conclusion is a bound over arbitrary finite positive sets. -/
+theorem prime_word_finite_moment (A : ℕ) (hA : 1 ≤ A) (r s : ℝ)
+    (hs : 0 < s) (hs1 : s ≤ 1) (hrs : r * s = 1 / 2)
+    (hpoint : ∀ v : ℕ, 0 < v → (primeWordWeight (2 * A) v : ℝ) ≤ (v : ℝ) ^ r)
+    (σ : ℝ) (hσ : 1 < σ) :
+    ∃ H : ℝ, 0 < H ∧ ∀ F : Finset ℕ, (∀ v ∈ F, 0 < v) →
+      (∑ v ∈ F, (primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ)) ≤ H := by
+  classical
+  obtain ⟨S, hS⟩ := prime_tail_set (2 * A) σ hσ
+  obtain ⟨K, hK, hKB⟩ := smooth_sum_bound S (σ - 1 / 2) (by linarith)
+  refine ⟨2 * K, by positivity, ?_⟩
+  intro F hF
+  let X := F.sup id
+  let U := (Finset.range (X + 1)).filter (fun m => m ∈ Nat.factoredNumbers S)
+  let V := roughPrefix S X
+  have hU : (∑ m ∈ U, (m : ℝ) ^ (-(σ - 1 / 2))) ≤ K :=
+    hKB U (fun m hm => (Finset.mem_filter.mp hm).2)
+  have hV : (∑ n ∈ V, (primeWordWeight (2 * A) n : ℝ) * (n : ℝ) ^ (-σ)) ≤ 2 :=
+    rough_prime_word_sum (2 * A) σ S (fun T _ hT => hS T hT) X
+  have hex : ∀ v : ℕ, ∃ z : ℕ × ℕ, 0 < v → z.1 * z.2 = v ∧
+      z.1 ∈ Nat.factoredNumbers S ∧ 0 < z.2 ∧ ∀ p ∈ z.2.primeFactors, p ∉ S := by
+    intro v
+    by_cases hv : 0 < v
+    · obtain ⟨m, n, h⟩ := prime_support_split S v hv
+      exact ⟨(m, n), fun _ => h⟩
+    · exact ⟨(1, 1), fun h => (hv h).elim⟩
+  choose e he using hex
+  have hE (v : ℕ) (hv : v ∈ F) : e v ∈ U ×ˢ V := by
+    obtain ⟨hmn, hm, hn, hnp⟩ := he v (hF v hv)
+    have hmpos : 0 < (e v).1 := Nat.pos_of_ne_zero hm.1
+    have hmle : (e v).1 ≤ v := (Nat.le_mul_of_pos_right _ hn).trans_eq hmn
+    have hnle : (e v).2 ≤ v := (Nat.le_mul_of_pos_left _ hmpos).trans_eq hmn
+    have hvX : v ≤ X := Finset.le_sup (f := id) hv
+    exact Finset.mem_product.mpr ⟨Finset.mem_filter.mpr
+      ⟨Finset.mem_range.mpr (by omega), hm⟩,
+      Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), hn, hnp⟩⟩
+  have hterm (v : ℕ) (hv : v ∈ F) :
+      (primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ) ≤
+        ((e v).1 : ℝ) ^ (-(σ - 1 / 2)) *
+          ((primeWordWeight (2 * A) (e v).2 : ℝ) * ((e v).2 : ℝ) ^ (-σ)) := by
+    obtain ⟨hmn, hm, hn, hnp⟩ := he v (hF v hv)
+    have hmpos : 0 < (e v).1 := Nat.pos_of_ne_zero hm.1
+    have hm0 : (0 : ℝ) < (e v).1 := by exact_mod_cast hmpos
+    have hprod : (primeWordWeight A v : ℝ) ≤
+        (primeWordWeight (2 * A) (e v).1 : ℝ) * primeWordWeight (2 * A) (e v).2 := by
+      exact_mod_cast (hmn ▸ prime_word_product_bound A (e v).1 (e v).2 hmpos hn)
+    have hnW : (1 : ℝ) ≤ primeWordWeight (2 * A) (e v).2 := by
+      have hp : 0 < primeWordWeight (2 * A) (e v).2 :=
+        Nat.mul_pos (pow_pos (by omega) _) (primeWordCount_pos _)
+      exact_mod_cast hp
+    have hpower : (primeWordWeight A v : ℝ) ^ s ≤
+        ((e v).1 : ℝ) ^ (1 / 2 : ℝ) * (primeWordWeight (2 * A) (e v).2 : ℝ) := by
+      calc
+        _ ≤ ((primeWordWeight (2 * A) (e v).1 : ℝ) *
+            primeWordWeight (2 * A) (e v).2) ^ s :=
+          Real.rpow_le_rpow (Nat.cast_nonneg _) hprod hs.le
+        _ = (primeWordWeight (2 * A) (e v).1 : ℝ) ^ s *
+            (primeWordWeight (2 * A) (e v).2 : ℝ) ^ s :=
+          Real.mul_rpow (Nat.cast_nonneg _) (Nat.cast_nonneg _)
+        _ ≤ (((e v).1 : ℝ) ^ r) ^ s * (primeWordWeight (2 * A) (e v).2 : ℝ) :=
+          mul_le_mul (Real.rpow_le_rpow (Nat.cast_nonneg _) (hpoint _ hmpos) hs.le)
+            (Real.rpow_le_self_of_one_le hnW hs1) (by positivity) (by positivity)
+        _ = _ := by rw [← Real.rpow_mul hm0.le, hrs]
+    calc
+      _ ≤ (((e v).1 : ℝ) ^ (1 / 2 : ℝ) * primeWordWeight (2 * A) (e v).2) *
+          (v : ℝ) ^ (-σ) := mul_le_mul_of_nonneg_right hpower (by positivity)
+      _ = _ := by
+        have hmnR : (v : ℝ) = ((e v).1 : ℝ) * ((e v).2 : ℝ) := by
+          exact_mod_cast hmn.symm
+        rw [hmnR, Real.mul_rpow (Nat.cast_nonneg _) (Nat.cast_nonneg _)]
+        rw [show -(σ - 1 / 2) = (1 / 2 : ℝ) + (-σ) by ring, Real.rpow_add hm0]
+        ring
+  have hsum : (∑ v ∈ F, (primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ)) ≤
+      ∑ z ∈ U ×ˢ V, (z.1 : ℝ) ^ (-(σ - 1 / 2)) *
+        ((primeWordWeight (2 * A) z.2 : ℝ) * (z.2 : ℝ) ^ (-σ)) := by
+    apply Finset.sum_le_sum_of_injOn e
+    · intro v hv w hw heq
+      exact ((he v (hF v hv)).1.symm.trans
+        ((congrArg (fun z : ℕ × ℕ => z.1 * z.2) heq).trans (he w (hF w hw)).1))
+    · intro z hz
+      obtain ⟨v, hv, rfl⟩ := Finset.mem_image.mp hz
+      exact hE v hv
+    · exact hterm
+    · intro z hz _
+      positivity
+  have hrect : (∑ z ∈ U ×ˢ V, (z.1 : ℝ) ^ (-(σ - 1 / 2)) *
+        ((primeWordWeight (2 * A) z.2 : ℝ) * (z.2 : ℝ) ^ (-σ))) =
+      (∑ m ∈ U, (m : ℝ) ^ (-(σ - 1 / 2))) *
+        (∑ n ∈ V, (primeWordWeight (2 * A) n : ℝ) * (n : ℝ) ^ (-σ)) := by
+    rw [Finset.sum_product]
+    simp_rw [← Finset.mul_sum]
+    rw [← Finset.sum_mul]
+  rw [hrect] at hsum
+  exact hsum.trans ((mul_le_mul hU hV (by positivity) hK.le).trans_eq (mul_comm K 2))
+
+private theorem finite_predecessor_markov (A M d : ℕ) (s σ H : ℝ)
+    (hs : 0 < s) (hσ : 0 ≤ σ)
+    (hmoment : ∀ F : Finset ℕ, (∀ v ∈ F, 0 < v) →
+      (∑ v ∈ F, (primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ)) ≤ H) :
+    let E := (Finset.range (M + 1)).filter
+      (fun v => 0 < v ∧ d ≤ 2 * primeWordWeight A v)
+    (E.card : ℝ) * (d : ℝ) ^ s ≤ (2 : ℝ) ^ s * H * (M : ℝ) ^ σ := by
+  classical
+  intro E
+  have hE (v : ℕ) (hv : v ∈ E) : 0 < v ∧ v ≤ M ∧ d ≤ 2 * primeWordWeight A v := by
+    have h := Finset.mem_filter.mp hv
+    exact ⟨h.2.1, by have := Finset.mem_range.mp h.1; omega, h.2.2⟩
+  have hterm (v : ℕ) (hv : v ∈ E) : (d : ℝ) ^ s ≤
+      ((2 : ℝ) ^ s * (M : ℝ) ^ σ) *
+        ((primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ)) := by
+    have h := hE v hv
+    have hv0 : (0 : ℝ) < v := by exact_mod_cast h.1
+    calc
+      _ ≤ ((2 : ℝ) * primeWordWeight A v) ^ s :=
+        Real.rpow_le_rpow (Nat.cast_nonneg _) (by exact_mod_cast h.2.2) hs.le
+      _ = (2 : ℝ) ^ s * ((primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ)) *
+          (v : ℝ) ^ σ := by
+        rw [Real.mul_rpow (by norm_num) (Nat.cast_nonneg _)]
+        have he : (v : ℝ) ^ (-σ) * (v : ℝ) ^ σ = 1 := by
+          rw [← Real.rpow_add hv0]; simp
+        calc
+          _ = ((2 : ℝ) ^ s * (primeWordWeight A v : ℝ) ^ s) * 1 := by ring
+          _ = _ := by rw [← he]; ring
+      _ ≤ (2 : ℝ) ^ s * ((primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ)) *
+          (M : ℝ) ^ σ := mul_le_mul_of_nonneg_left
+        (Real.rpow_le_rpow hv0.le (by exact_mod_cast h.2.1) hσ) (by positivity)
+      _ = _ := by ring
+  calc
+    _ = ∑ v ∈ E, (d : ℝ) ^ s := by simp
+    _ ≤ ∑ v ∈ E, ((2 : ℝ) ^ s * (M : ℝ) ^ σ) *
+        ((primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ)) := Finset.sum_le_sum hterm
+    _ = ((2 : ℝ) ^ s * (M : ℝ) ^ σ) *
+        ∑ v ∈ E, (primeWordWeight A v : ℝ) ^ s * (v : ℝ) ^ (-σ) := (Finset.mul_sum ..).symm
+    _ ≤ ((2 : ℝ) ^ s * (M : ℝ) ^ σ) * H :=
+      mul_le_mul_of_nonneg_left (hmoment E (fun v hv => (hE v hv).1)) (by positivity)
+    _ = _ := by ring
+
+/-- Prefix residue avoidance yields one sublinear bound for all prefixes and
+all positive target values, with constants depending only on the modulus. -/
+theorem uniform_count_bound_of_avoidance (q : ℕ) (hq : 2 ≤ q) :
+    ∃ C δ : ℝ, 0 < C ∧ 0 < δ ∧ ∀ N d : ℕ, 0 < d → AvoidsResidue q N →
+      (count N d : ℝ) ≤ C * (prefixMax N : ℝ) ^ (1 - δ) := by
+  obtain ⟨r, hr, hpoint⟩ := prime_word_polynomial_bound (q + 1)
+  let s : ℝ := 1 / (2 * r)
+  have hs : 0 < s := by dsimp [s]; positivity
+  have hs2 : s < 1 / 2 := by
+    dsimp [s]
+    apply (div_lt_iff₀ (by linarith : 0 < 2 * r)).mpr
+    linarith
+  have hrs : r * s = 1 / 2 := by dsimp [s]; field_simp
+  let δ : ℝ := s * s / 2
+  have hδ : 0 < δ := by dsimp [δ]; positivity
+  have hδsmall : δ < 1 / 2 := by dsimp [δ]; nlinarith
+  obtain ⟨H, hH, hmoment⟩ := prime_word_finite_moment (q + 1) (by omega) r s
+    hs (by linarith) hrs hpoint (1 + δ) (by linarith)
+  let B : ℝ := (2 : ℝ) ^ s * H
+  have hB : 0 < B := by dsimp [B]; positivity
+  refine ⟨max 2 B, δ, lt_of_lt_of_le (by norm_num) (le_max_left _ _), hδ, ?_⟩
+  intro N d hd havoid
+  let M := prefixMax N
+  have hM : 1 ≤ M := by
+    have h := Finset.le_sup (f := term) (Finset.mem_range.mpr (show 0 < N + 1 by omega))
+    change 1 ≤ (Finset.range (N + 1)).sup term
+    simpa only [term_zero] using h
+  have hM1 : (1 : ℝ) ≤ M := by exact_mod_cast hM
+  have hM0 : (0 : ℝ) < M := by linarith
+  have hpow1 : 1 ≤ (M : ℝ) ^ (1 - δ) := Real.one_le_rpow hM1 (by linarith)
+  by_cases hd1 : d = 1
+  · subst d
+    have hc : (count N 1 : ℝ) ≤ 2 := by
+      exact_mod_cast (count_le_divisor_card N 1).trans (divisor_card_one N)
+    exact hc.trans (by nlinarith [le_max_left (2 : ℝ) B])
+  have hd2 : 2 ≤ d := by omega
+  obtain ⟨hsmall, hlarge⟩ := count_le_prime_word_bounds q N N d hq havoid le_rfl hd2
+  by_cases hdM : (d : ℝ) ≤ (M : ℝ) ^ s
+  · have hbase : (count N d : ℝ) ≤ 2 * (d : ℝ) ^ r := by
+      have hm := prime_word_weight_mono (q + 1) (2 * (q + 1)) d (by omega)
+      have hc : (count N d : ℝ) ≤ 2 * (primeWordWeight (2 * (q + 1)) d : ℝ) := by
+        exact_mod_cast hsmall.trans (Nat.mul_le_mul_left 2 hm)
+      exact hc.trans (mul_le_mul_of_nonneg_left (hpoint d hd) (by norm_num))
+    have hp : (d : ℝ) ^ r ≤ (M : ℝ) ^ (1 / 2 : ℝ) := by
+      have h := Real.rpow_le_rpow (Nat.cast_nonneg d) hdM (by linarith : 0 ≤ r)
+      rw [← Real.rpow_mul hM0.le, mul_comm s r, hrs] at h
+      exact h
+    have hexp : (M : ℝ) ^ (1 / 2 : ℝ) ≤ (M : ℝ) ^ (1 - δ) :=
+      Real.rpow_le_rpow_of_exponent_le hM1 (by linarith)
+    exact hbase.trans ((mul_le_mul_of_nonneg_left (hp.trans hexp) (by norm_num)).trans
+      (mul_le_mul_of_nonneg_right (le_max_left _ _) (by positivity)))
+  · have hmark := finite_predecessor_markov (q + 1) M d s (1 + δ) H hs
+        (by linarith) hmoment
+    have hc : (count N d : ℝ) * (d : ℝ) ^ s ≤ B * (M : ℝ) ^ (1 + δ) := by
+      have hcard : (count N d : ℝ) ≤
+          (((Finset.range (M + 1)).filter
+            (fun v => 0 < v ∧ d ≤ 2 * primeWordWeight (q + 1) v)).card : ℝ) := by
+        exact_mod_cast hlarge
+      exact (mul_le_mul_of_nonneg_right hcard (by positivity)).trans hmark
+    have hdsp : (M : ℝ) ^ (s * s) ≤ (d : ℝ) ^ s := by
+      rw [Real.rpow_mul hM0.le]
+      exact Real.rpow_le_rpow (by positivity) (le_of_lt (lt_of_not_ge hdM)) hs.le
+    have hcalc : B * (M : ℝ) ^ (1 + δ) =
+        (B * (M : ℝ) ^ (1 - δ)) * (M : ℝ) ^ (s * s) := by
+      calc
+        _ = B * ((M : ℝ) ^ (1 - δ) * (M : ℝ) ^ (s * s)) := by
+          rw [← Real.rpow_add hM0]
+          congr 2
+          dsimp [δ]
+          ring
+        _ = _ := by ring
+    have hmul : (count N d : ℝ) * (M : ℝ) ^ (s * s) ≤
+        (B * (M : ℝ) ^ (1 - δ)) * (M : ℝ) ^ (s * s) := by
+      exact (mul_le_mul_of_nonneg_left hdsp (Nat.cast_nonneg _)).trans (hc.trans_eq hcalc)
+    have hbound := (mul_le_mul_iff_left₀ (Real.rpow_pos_of_pos hM0 (s * s))).mp hmul
+    exact hbound.trans (mul_le_mul_of_nonneg_right (le_max_right _ _) (by positivity))
+
+/-- The exact original recurrence attains every positive integer. -/
+theorem full_positive_occurrence :
+    ∀ k : ℕ, 0 < k → ∃ n : ℕ, 0 < n ∧ sourceTerm n = k := by
+  apply full_occurrence_of_infinite_three
+  have hinfinite : Set.Infinite {n : ℕ | term n = 3} := by
+    intro hfinite
+    obtain ⟨q, hq, havoid⟩ := missing_residue_of_finite_three hfinite
+    obtain ⟨C, δ, hC, hδ, hbound⟩ := uniform_count_bound_of_avoidance q hq
+    apply no_uniform_sublinear_count_bound
+    exact ⟨C, δ, hC, hδ, fun N d hd => hbound N d hd (fun i _ hi => havoid i hi)⟩
+  intro B
+  obtain ⟨n, hn, hBn⟩ := hinfinite.exists_gt B
+  exact ⟨n, hBn.le, hn⟩
 
 end D5.S3.Arith.Recurrence.A124056Occurrence
