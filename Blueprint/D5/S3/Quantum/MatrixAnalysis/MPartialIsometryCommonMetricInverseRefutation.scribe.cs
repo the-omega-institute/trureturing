@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.MatrixAnalysis;
 
 internal sealed class MPartialIsometryCommonMetricInverseRefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Matrix/MPartialIsometryCommonMetricInverseRefutation.";
+    private const string Prefix = "D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/HilbertOperators/aouichaouibuchalagarcia2026mpartial");
     private const string Question = "Question 6, page 17: “If T is a 2-partial isometry, is 2T∗ − T∗²T the Moore–Penrose inverse of T with respect to some inner product?” ";
@@ -16,7 +16,7 @@ internal sealed class MPartialIsometryCommonMetricInverseRefutationDocument : IS
         H("A prescribed generalized inverse with no common inner product"),
         Blocks(
             Node("beta", "The alternating operator sum", BetaFormula(),
-                "Equation (2.1), page 2: “For T ∈ B(H) and integer m ≥ 1, define the selfadjoint operator” βₘ(T) := Σₖ₌₀ᵐ (−1)ᵐ⁻ᵏ binom(m,k) T*ᵏTᵏ. The finite sum uses Finset.range (m + 1), so its natural exponents agree with the nonnegative exponents in the paper. The adjoint is computed using the original Hilbert space structure.",
+                "The operator definition preceding equation (2.1), page 2: “For T ∈ B(H) and integer m ≥ 1, define the selfadjoint operator” βₘ(T) := Σₖ₌₀ᵐ (−1)ᵐ⁻ᵏ binom(m,k) T*ᵏTᵏ. The finite sum uses Finset.range (m + 1), so its natural exponents agree with the nonnegative exponents in the paper. The adjoint is computed using the original Hilbert space structure.",
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("IsMPartialIsometry", "The source operator condition", PartialFormula(),
                 "Section 2, page 2: “More generally, T is an m-partial isometry if T βₘ(T) = 0; it is strict if it is not an (m − 1)-partial isometry.” The order restriction m ≥ 1 is included in the predicate.",

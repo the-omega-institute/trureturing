@@ -1,9 +1,9 @@
-/- GID: D5/S3/Quantum/Matrix/MPartialIsometryCommonMetricInverseRefutation
+/- GID: D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation
    generality: G
-   mirror-B: D5/B/S3/Quantum/Matrix/MPartialIsometryCommonMetricInverseRefutation
+   mirror-B: D5/B/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/MPartialIsometryCommonMetricInverseRefutation.claim; result=D5/S3/Quantum/Matrix/MPartialIsometryCommonMetricInverseRefutation.result; claim=D5/S3/Quantum/Matrix/MPartialIsometryCommonMetricInverseRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation.claim; result=D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation.result; claim=D5/S3/Quantum/MatrixAnalysis/MPartialIsometryCommonMetricInverseRefutation.claim
    digest: The prescribed inverse of a 2-partial isometry need not admit a common inner product. -/
 
 /-
@@ -38,11 +38,11 @@ import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 /-! A fixed generalized inverse of a 2-partial isometry with no common inner product. -/
 
-namespace D5.S3.Quantum.Matrix.MPartialIsometryCommonMetricInverseRefutation
+namespace D5.S3.Quantum.MatrixAnalysis.MPartialIsometryCommonMetricInverseRefutation
 
 open scoped BigOperators
 
-/-- Equation (2.1). Only m ≥ 1 is used as a source parameter. -/
+/-- The operator definition preceding equation (2.1), page 2. Only m ≥ 1 is used. -/
 noncomputable def beta {H : Type} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] [CompleteSpace H]
     (m : ℕ) (T : H →L[ℂ] H) : H →L[ℂ] H :=
@@ -212,4 +212,4 @@ theorem result : ¬ claim := by
   intro h
   obtain ⟨g,hg⟩ := h (EuclideanSpace ℂ (Fin 2)) (familyT 25) (family_refutes 25 (by norm_num)).1
   exact (family_refutes 25 (by norm_num)).2 g hg
-end D5.S3.Quantum.Matrix.MPartialIsometryCommonMetricInverseRefutation
+end D5.S3.Quantum.MatrixAnalysis.MPartialIsometryCommonMetricInverseRefutation
