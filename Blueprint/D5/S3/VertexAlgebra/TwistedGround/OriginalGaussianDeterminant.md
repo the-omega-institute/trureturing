@@ -74,7 +74,19 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.f
 
 At every complex point of the open unit disk, det(1-(finiteSection N z)^2) tends to gaussianDet z as N tends to infinity. This is pointwise spatial cutoff convergence, with no period identity or physical realization premise.
 
-**Theorem 1.6 (gaussianLogDet_differentiableOn).**
+**Theorem 1.6 (finiteLog_diff).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_diff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_diff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each finite cutoff, polynomial trace terms and the summable trace-length majorant prove holomorphy of the literal finiteLog on the open unit disk. The original proof supplies the analytic finite sewn source function.
+
+**Theorem 1.7 (gaussianLogDet_differentiableOn).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianLogDet_differentiableOn`
 
@@ -86,7 +98,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.g
 
 Complex differentiability of the actual infinite signed-cycle logarithm gaussianLogDet on the full open unit disk. Summable majorants on each smaller disk control the internal vertices, the outer diagonal vertex, and the cycle length.
 
-**Theorem 1.7 (gaussianDet_differentiableOn).**
+**Theorem 1.8 (gaussianDet_differentiableOn).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianDet_differentiableOn`
 
@@ -98,7 +110,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.g
 
 Complex differentiability of gaussianDet on the full open unit disk, by composition of the actual infinite signed-cycle logarithm with the complex exponential. No period identity or physical realization premise is used.
 
-**Definition 1.8 (unit1Geo).**
+**Definition 1.9 (unit1Geo).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo`
 
@@ -110,7 +122,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.u
 
 The two-coordinate geometric majorant used by compact-uniform operator cutoffs.
 
-**Theorem 1.9 (unit1Geo_summable).**
+**Theorem 1.10 (unit1Geo_summable).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo_summable`
 
@@ -122,7 +134,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.u
 
 The geometric coordinate majorant is summable at every nonnegative radius below one.
 
-**Theorem 1.10 (unit1Power_coordinate_bound).**
+**Theorem 1.11 (unit1Power_coordinate_bound).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Power_coordinate_bound`
 
@@ -134,7 +146,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.u
 
 Each coordinate of an operator power applied to a unit basis vector is bounded by the corresponding power of the operator norm.
 
-**Theorem 1.11 (unit1Section_power_coordinate).**
+**Theorem 1.12 (unit1Section_power_coordinate).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Section_power_coordinate`
 
@@ -146,7 +158,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.u
 
 Each finite matrix-power coordinate agrees with the corresponding embedded section-operator power coordinate, including power zero.
 
-**Theorem 1.12 (unit1Majorant_summable).**
+**Theorem 1.13 (unit1Majorant_summable).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Majorant_summable`
 
@@ -158,7 +170,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.u
 
 The cycle-length majorant is summable on each smaller disk.
 
-**Theorem 1.13 (finiteLogTerm_bound).**
+**Theorem 1.14 (finiteLogTerm_bound).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLogTerm_bound`
 
@@ -170,7 +182,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.f
 
 Each literal finite logarithm term is bounded by the same cycle-length majorant independently of the section dimension.
 
-**Theorem 1.14 (finiteLog_tendsto).**
+**Theorem 1.15 (finiteLog_tendsto).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_tendsto`
 
@@ -186,6 +198,7 @@ The actual finite logarithms converge pointwise to the infinite signed-cycle log
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLogTerm_bound`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_diff`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_tendsto`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finite_determinant_identity`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finite_determinants_tendsto`

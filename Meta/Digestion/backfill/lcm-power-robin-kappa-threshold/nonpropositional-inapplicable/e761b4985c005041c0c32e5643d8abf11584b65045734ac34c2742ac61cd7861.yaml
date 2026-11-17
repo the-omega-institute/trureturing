@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e761b4985c005041c0c32e5643d8abf11584b65045734ac34c2742ac61cd7861
+  normalized_sha256: sha256:e761b4985c005041c0c32e5643d8abf11584b65045734ac34c2742ac61cd7861
+cas_ref: sha256:e761b4985c005041c0c32e5643d8abf11584b65045734ac34c2742ac61cd7861
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This paragraph specifies attribution and the scope of the preceding theorem. It introduces no mathematical claim beyond that theorem and asserts no priority.
+    previous_atom_id: c0e40e2ce83f334d9cc22360c1ca8ed41227895b61ca6f0c4c3ad94c41494b7f
+    next_atom_id: null

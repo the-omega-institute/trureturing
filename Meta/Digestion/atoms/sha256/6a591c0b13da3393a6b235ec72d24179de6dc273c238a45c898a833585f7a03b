@@ -1,0 +1,12 @@
+#### 定义 1.1：本札记的条件接口
+
+$\mathsf H_{\mathbb Z/\mathbb Q}$ 表示：已给定一个具体有限描述的整数多项式 $P(t,\mathbf w)$，并且对每个 $t\in\mathbb Q$，
+
+$$
+t\in\mathbb Z\iff\exists\mathbf w\in\mathbb Q^m\ P(t,\mathbf w)=0.
+$$
+
+此处的条件化是本文使用证据的方式；它不把原稿的无条件定理陈述改写成作者自称的条件定理。
+
+<a id="section-2"></a>
+

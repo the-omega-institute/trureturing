@@ -112,7 +112,7 @@ private def diagHom (n : Type*) [Fintype n] [DecidableEq n] :
   toAlgHom := diagonalAlgHom (n := n) (α := ℂ) ℂ
   map_star' a := by ext i j; simp [diagonal]; split_ifs <;> simp_all
 
-private lemma cfc_diag [Nonempty n] (f : ℝ → ℝ) (d : n → ℝ) :
+lemma cfc_diag [Nonempty n] (f : ℝ → ℝ) (d : n → ℝ) :
     cfc f (diagonal (fun i => (d i : ℂ))) = diagonal (fun i => (f (d i) : ℂ)) := by
   let : ContinuousFunctionalCalculus ℂ ℂ IsStarNormal := IsStarNormal.instContinuousFunctionalCalculus
   let : ContinuousFunctionalCalculus ℂ (n → ℂ) IsStarNormal := IsStarNormal.instContinuousFunctionalCalculus

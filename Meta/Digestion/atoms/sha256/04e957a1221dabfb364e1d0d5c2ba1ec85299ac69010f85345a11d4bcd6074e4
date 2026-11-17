@@ -1,0 +1,80 @@
+**定理 16.4（实际半点、共同 Frobenius 核及下降支持）。** 对每个 $p\ne2,7$，令 $\pi$ 为 $E_0/\mathbb F_p$ 的 $p$ 次 Frobenius，$a_p=p+1-\#E_0(\mathbb F_p)$。置
+
+$$
+\begin{aligned}
+\varepsilon_p&=-1\quad\Longleftrightarrow\quad
+ \left(\frac2p\right)=\left(\frac7p\right)=-1,
+ \qquad \varepsilon_p=1\text{ 在其余情形},\\
+C_p&=
+\begin{cases}
+(p+1)^2-a_p^2,&\varepsilon_p=1,\\
+(p-1)^2+a_p^2,&\varepsilon_p=-1.
+\end{cases}
+\end{aligned}
+\tag{16.9}
+$$
+
+在同一个 $\overline{\mathbb F}_p$ 中，$\overline P_1,[i]\overline P_1,\overline P_2,[i]\overline P_2$ 都属于同一个群
+
+$$
+[2]G_p,\qquad
+G_p=\ker(\pi^2-[\varepsilon_p]),\qquad
+\#G_p=C_p,\quad \#[2]G_p=C_p/4\le p^2.
+\tag{16.10}
+$$
+
+特别地，这是整数整除式而非大小比较：
+
+$$
+n_p\mid C_p/4,\qquad n_p\le p^2.
+\tag{16.11}
+$$
+
+若 $p\ge11$，$n_p$ 的每个素因子均严格小于 $p$；小素数的实际值为
+
+$$
+n_3=2,\qquad n_5=5.
+\tag{16.12}
+$$
+
+**证明（半点及同一个核）。** 从 Brox 固定源码 “The quadratic-field elliptic curve” 中的 $R_0=(1+a,2a)$ 及其共轭，经原归一化取得一对半点
+
+$$
+R_1=\left(\frac{1+a}{b^2},\frac{2a}{b^3}\right),\qquad
+R_2=\left(\frac{1-a}{c^2},\frac{-2a}{c^3}\right),\qquad
+[2]R_j=P_j.
+\tag{16.13}
+$$
+
+其合法性也由 $E$ 上的 $R_0$ 代入及定义 11.1 的保群同构直接保证；两点的纵坐标符号同时按共轭运输。这对半点与原点对具有相同的带符号排列作用。
+
+在 $v\mid p$ 取算术 Frobenius $g\in\operatorname{Gal}(F/\mathbb Q)$。若 $g(a)=a$，则 $g$ 分别给 $b,c$ 换号，故 $g^2$ 为恒等。若 $g(a)=-a$，写 $g(b)=u c,g(c)=v b$，其中 $u,v\in\{1,-1\}$；于是 $g^2$ 同时把 $b,c$ 乘以 $uv$，且 $g(bc)=uv\,bc$。在不分歧的二次子域中，$g(a)/a=(2/p)$、$g(bc)/(bc)=(7/p)$。因此 $g^2$ 对两个半点的共同作用恰为 $[\varepsilon_p]$。约化与 Frobenius 相容，故两者的约化都在 $G_p$ 中；这同时处理剩余次数为 $1,2,4$ 的情形，而没有假设所有半点已在 $\mathbb F_{p^2}$ 上。
+
+无论 $p\bmod4$ 如何，$\pi^2$ 与 $[i]$ 交换，因为 $i^{p^2}=i$；故 $G_p$ 及其倍二像均在 $[i]$ 下稳定。Frobenius 特征多项式及 Hasse 界给出 $\deg(\pi^2-[\varepsilon_p])=C_p$。该同源的微分是 $-\varepsilon_p$，非零，故可分，几何核确有 $C_p$ 个点。$E_0[2]=\{O,(0,0),(1,0),(-1,0)\}$ 都在 $\mathbb F_p$ 上，故全在 $G_p$ 中。$p$ 为奇数保证倍二可分且其核正好这四点，因此有限群 $G_p$ 的倍二像的阶为 $C_p/4$。由 Lagrange 定理，两点的阶及其最小公倍数整除这个整数。
+
+这里使用的经典工具仅是 Silverman [III.6、V.2.3.1、V.3–4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的同源、Frobenius 和普通/超奇异分类；$\varepsilon_p$ 来自实际 $D_4$ 作用，不是普通性的判据。由 $a_p^2\le4p$，两种符号均有 $C_p\le(p+1)^2\le4p^2$，得大小界。
+
+**证明（支持与小素数）。** 对 $\varepsilon_p=1$，$a_p$ 是偶数，因为有理二挠群使 $4\mid\#E_0(\mathbb F_p)$，于是
+
+$$
+\frac{C_p}{4}=
+ \frac{p+1-a_p}{2}\,\frac{p+1+a_p}{2}.
+\tag{16.14}
+$$
+
+当 $p\ge7$ 时，两因子均为正整数，且至多 $(p+1+2\sqrt p)/2<p$。若 $\varepsilon_p=-1$ 且 $p\equiv3\pmod4$，则 $(X^3-X)^{(p-1)/2}$ 仅含奇次幂，其 $X^{p-1}$ 系数为零，故由 Silverman V.4.1(a) 知 $E_0$ 超奇异。又因二次特征 $\chi$ 满足 $\chi(-1)=-1$，$x$ 与 $-x$ 对 $\sum_{x\in\mathbb F_p}\chi(x^3-x)$ 的贡献相消，故 $a_p=0$。从而 $C_p/4=((p-1)/2)^2$，仍只有严格较小的素因子。
+
+剩下的分支是 $\varepsilon_p=-1$ 且 $p\equiv1\pmod4$；$\varepsilon_p=1$ 时无论普通或超奇异，均已由 (16.14) 处理。在这个剩余分支，$(X^3-X)^{(p-1)/2}=X^{(p-1)/2}(X^2-1)^{(p-1)/2}$ 的 $X^{p-1}$ 系数为 $(-1)^{(p-1)/4}\binom{(p-1)/2}{(p-1)/4}\not\equiv0\pmod p$，因为所涉阶乘的指标均小于 $p$。因此 Silverman V.4.1(a) 判定这条曲线的约化普通。由 V.3.1(b)，其几何自同源环是某个虚二次域中的序（满秩的 $\mathbb Z$-子环），且包含由 $[i]$ 给出的 $\mathbb Z[i]$，故该虚二次域就是 $\mathbb Q(i)$。$\mathbb Z[i]$ 已是该域的极大整环，故几何自同源环正是 $\mathbb Z[i]$。Frobenius 的迹与范数遂给出 $\pi=u+vi$，其中 $u,v\in\mathbb Z$、$u^2+v^2=p$、$a_p=2u$。又由 $4\mid\#E_0(\mathbb F_p)$，有 $2u\equiv p+1\equiv2\pmod4$，所以 $u$ 为奇数、$v$ 为偶数。在此 $\varepsilon_p=-1$ 的分支中，
+
+$$
+\frac{C_p}{4}
+=\frac{(p-1)^2+4u^2}{4}
+=\frac{(p+1)^2-4v^2}{4}
+=\frac{p+1-2v}{2}\,\frac{p+1+2v}{2}.
+\tag{16.15}
+$$
+
+两因子是正整数，因 $v$ 为偶数且 $p$ 为奇数；由 $|v|\le\sqrt p$，$p\ge7$ 时它们同样严格小于 $p$。这些整数因子分解而非单独的 $n_p\le p^2$，才给出下降支持。
+
+$p=3$ 时 $\varepsilon_3=1,a_3=0$，且实际 $X_j\equiv-1$、$Y_j\equiv0$，两点约化都是非零二挠点，故 $n_3=2$。$p=5$ 时 $(2/5)=(7/5)=-1$；在 $\mathbb F_5$ 逐个 $X$ 的 $X^3-X$ 为 $0,0,1,4,0$，故 $\#E_0(\mathbb F_5)=8,a_5=-2$，得到 $C_5/4=5$。原坐标分母在 $5$ 为单位，两点均为仿射点而非 $O$；它们属于阶 $5$ 的倍二像群，故各自阶为 $5$。这证明两个例外及全部支持声明。$\square$
+

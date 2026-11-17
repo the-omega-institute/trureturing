@@ -1,0 +1,109 @@
+**定理 15.5（正确标号两点的初始深度、全整数倍及模型无关性）。** 对 $j=1,2$，$\iota_*(P_j)$ 都约化至 $O$，并且以 $t_*=-x/y$ 为形式参数时，
+
+$$
+v_L(t_*(\iota_*(P_j)))=15.
+\tag{15.17}
+$$
+
+沿用定义 13.1 已允许的任意极小整模型 $\mathcal E_v$、原来固定的保单位元同构 $\iota_v$ 及其参数 $t_v$。对每个非零整数 $m$，有
+
+$$
+\iota_v([m]P_j)\in\mathcal E_{v,1}(L),\qquad
+v_L\bigl(t_v(\iota_v([m]P_j))\bigr)
+=15+8v_2(m),\qquad j=1,2.
+\tag{15.18}
+$$
+
+这里 $v_2(m)=v_2(|m|)$；$m=0$ 时两点的倍数都是 $O$，参数赋值为 $+\infty$。对所有整数 $r\ge1$，定义 13.1 的原有子群及精确阶满足
+
+$$
+\begin{aligned}
+[m]P_j\in U_v(r)
+&\quad\Longleftrightarrow\quad
+2^{\kappa(r)}\mid m\qquad(m\in\mathbb Z),\\
+d_{v,1}(r)=d_{v,2}(r)
+&=2^{\kappa(r)},\qquad
+\kappa(r)=\max\left(0,\left\lceil\frac{r-15}{8}\right\rceil\right).
+\end{aligned}
+\tag{15.19}
+$$
+
+因此两个点在该二进地方的共同精确返回周期也是 $2^{\kappa(r)}$。这些结论对原先任意极小模型和原同构成立，没有改定义 (13.1) 的过滤。
+
+**证明（先判约化，再求参数）。** 按定义 11.1 的标号，实际坐标是
+
+$$
+\begin{aligned}
+X(P_1)&=\frac{115-27a}{56},&
+Y(P_1)&=\frac{-660+417a}{32b^3},\\
+X(P_2)&=\frac{115+27a}{56},&
+Y(P_2)&=\frac{-660-417a}{32c^3}.
+\end{aligned}
+\tag{15.20}
+$$
+
+特别地，$P_2$ 的纵坐标含 $-417a$，不是 $P_1$ 的纵坐标只替换分母。$b,c$ 均为单位；$115\pm27a$ 为单位；$v_L(660)=16$、$v_L(417a)=4$。故两个点均有
+
+$$
+v_L(X)=-24,\qquad v_L(Y)=-36.
+\tag{15.21}
+$$
+
+由式 (15.7) 的逆变换
+
+$$
+x=\frac{X-i}{u^2},\qquad
+y=\frac{Y-s(X-i)-t}{u^3},
+$$
+
+因 $i,s$ 为单位、$v_L(t)=4$，分子中最低赋值项分别唯一为 $X,Y$，得到
+
+$$
+v_L(x)=-30,\qquad v_L(y)=-45.
+\tag{15.22}
+$$
+
+将射影坐标 $[x:y:1]$ 乘以 $\varpi^{45}$，三个坐标的赋值依次为 $15,0,45$，所以约化恰为 $[0:1:0]=O$。这先建立了约化核的成员资格，随后才可用 $-x/y$ 作为形式参数，得其赋值 $15$。这里没有用一个仿射比值的正赋值替代约化至 $O$ 的检验。
+
+**证明（全部整数倍的精确深度）。** 在这个整模型的形式群上，Silverman [IV.2.3(a) 及 VII.2.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 给出整系数级数及约化核识别
+
+$$
+[n](T)=nT+\sum_{\ell\ge2}c_{n,\ell}T^\ell,
+\qquad c_{n,\ell}\in\mathcal O,\qquad n\in\mathbb Z.
+\tag{15.23}
+$$
+
+形式群、形式逆元和约化记号按作者[印刷页 122–124、188–191 的勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)理解。若 $v_L(T)=s_0>8$，对倍点而言，线性项赋值为 $8+s_0$，其余各项赋值至少为 $2s_0>8+s_0$；级数收敛且最低项唯一，故
+
+$$
+v_L([2](T))=s_0+8.
+\tag{15.24}
+$$
+
+若 $n$ 为奇整数，包括负奇整数，线性项系数为单位，其赋值为 $s_0$，严格小于其余各项的赋值。因此 $v_L([n](T))=s_0$。将任意 $m\ne0$ 唯一写成 $m=2^kn$，其中 $k=v_2(m)\ge0$、$n$ 为奇整数，从初始 $s_0=15$ 反复应用式 (15.24)，始终留在 $s_0>8$ 的范围内，给出 $15+8k$。每一步参数均非零，且倍点与该形式群的识别交换。
+
+**证明（回到任意原极小模型）。** 比较 $\mathcal E_*$ 与定义 13.1 中已固定的 $\mathcal E_v$，使用的正是 $\iota_*\circ\iota_v^{-1}$，所以也涵盖原同构的任意选择。两者均已证明或已假定为极小整模型；Silverman [VII.1.3(b)](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 此时才给出
+
+$$
+x=\varepsilon^2x_v+R_0,\qquad
+y=\varepsilon^3y_v+\varepsilon^2S_0x_v+T_0,
+\qquad \varepsilon\in\mathcal O^\times,\quad R_0,S_0,T_0\in\mathcal O.
+\tag{15.25}
+$$
+
+该齐次线性坐标变换及其逆变换的系数都整、行列式均为单位，并固定 $O$。故一个点在某一模型约化至 $O$ 当且仅当它在另一模型约化至 $O$。
+
+还须检查全部深度，而不仅是约化核。令 $Z=t_v$，$W=-1/y_v$。形式展开 $W=W(Z)\in Z^3\mathcal O[[Z]]$ 的首项为 $Z^3$，来自 VII.2.2 所用的 IV.1.1 展开。代入式 (15.25)，得到确切的参数变换
+
+$$
+t_*
+=\frac{\varepsilon^2Z+R_0W(Z)}
+ {\varepsilon^3-\varepsilon^2S_0Z-T_0W(Z)}
+=\varepsilon^{-1}Z+Z^2\mathcal O[[Z]].
+\tag{15.26}
+$$
+
+分母常数项为单位，所以此式具有整系数；逆坐标变换同理给出 $Z=\varepsilon t_*+t_*^2\mathcal O[[t_*]]$。两式均在 $\mathfrak m$ 上收敛，且线性项赋值严格小于其余项，因而两参数的非零赋值完全相同。由此对每个 $r\ge1$，两个极小模型拉回 $\mathfrak m^r$ 所得的子群相同。这证明式 (15.18) 确实使用原来的 $U_v(r)$，而非另设的过滤。
+
+最后，对 $m\ne0$，成员条件就是 $15+8v_2(m)\ge r$，等价于 $v_2(m)\ge\kappa(r)$；$m=0$ 时两边也都成立。商群中 $P_j$ 的阶是满足该条件的最小正整数，故为式 (15.19)。两个点的阶相同，取最小公倍数不再增大周期。特别地，$1\le r\le15$ 时周期为 $1$，$16\le r\le23$ 时为 $2$，$24\le r\le31$ 时为 $4$；边界 $r=15,16,23,24$ 均由同一公式包含。$\square$
+
