@@ -32,17 +32,19 @@ $$\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \operatorname{proposed
 
 The smaller dimension selects the factorial and power-of-two cases. The remaining positive cases give 72 for three by three and zero otherwise.
 
-**Definition 1.3 (The referee's counting and characterization question).**
+**Definition 1.3 (The proposed count and characterization).**
 
 $$claim = (\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; (0 < m) \Rightarrow ((0 < n) \Rightarrow ((\operatorname{goodCount}\left(m, n\right) = \operatorname{proposedCount}\left(m, n\right)) \land (\forall s \in ((\operatorname{Fin}\left(m\right)\times\operatorname{Fin}\left(n\right))\equiv\operatorname{Fin}\left(m \cdot n\right)),\; (\operatorname{Good}\left(s\right)) \Leftrightarrow (\operatorname{Structure}\left(s\right))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Permutation/OnnGoodPermutationCount.claim` (`✓ std3`).
 
-*Citation.* Shmuel Onn (2023). *On Supmodular Matrices*. DOI: [10.48550/arXiv.2309.07700](https://doi.org/10.48550/arXiv.2309.07700). URL: <https://arxiv.org/abs/2309.07700v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Shmuel Onn (2023). *On Supmodular Matrices*. DOI: [10.48550/arXiv.2309.07700](https://doi.org/10.48550/arXiv.2309.07700). URL: <https://arxiv.org/abs/2309.07700v1>.
 
 *Commentary.*
 
-Section 2, page 4, immediately before Lemma 2.2: “An interesting question suggested by a referee is to count and characterize, for every m and n, those permutations which are good for all 1≤i<m and 1≤j<n.” The quantifiers range over all positive natural dimensions and every rank array in either orientation. The two-row split is unique, including its endpoint cases; the three-by-three alternatives are the two ordered-list types.
+Section 2, page 4, immediately before Lemma 2.2: “An interesting question suggested by a referee is to count and characterize, for every m and n, those permutations which are good for all 1≤i<m and 1≤j<n.” The published source asks the question; the proposed answer displayed here supplies the exact counts and characterization. The quantifiers range over all positive natural dimensions and every rank array in either orientation. The two-row split is unique, including its endpoint cases; the three-by-three alternatives are the two ordered-list types.
 
 **Theorem 1.4 (The count and characterization in all dimensions).**
 

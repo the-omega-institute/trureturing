@@ -21,9 +21,10 @@ internal sealed class OnnGoodPermutationCountDocument : IScribeDocumentDefinitio
                 Question + "Each equivalence supplies exactly one placement of the labels 1,…,mn.", true, true),
             Node("proposedCount", "The four counting cases", CountFormula(),
                 "The smaller dimension selects the factorial and power-of-two cases. The remaining positive cases give 72 for three by three and zero otherwise.", true),
-            Node("claim", "The referee's counting and characterization question", Equal(V("claim"), Parenthesized(ClaimBody())),
-                Question + "The quantifiers range over all positive natural dimensions and every rank array in either orientation. "
-                + "The two-row split is unique, including its endpoint cases; the three-by-three alternatives are the two ordered-list types.", true, true),
+            Node("claim", "The proposed count and characterization", Equal(V("claim"), Parenthesized(ClaimBody())),
+                Question + "The published source asks the question; the proposed answer displayed here supplies the exact counts and characterization. "
+                + "The quantifiers range over all positive natural dimensions and every rank array in either orientation. "
+                + "The two-row split is unique, including its endpoint cases; the three-by-three alternatives are the two ordered-list types.", true, false),
             Node("result", "The count and characterization in all dimensions", ClaimBody(),
                 "A unique sign transition splits a good two-row array into two disjoint chains. Their label sets run through all even subsets of Fin (2*n), giving 2^(2*n−1). "
                 + "The two three-by-three types have center label 5 and two independent interleavings of two ordered pairs, hence 36 each. "
