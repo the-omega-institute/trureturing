@@ -4,6 +4,8 @@
 
 Exact successor multisets at canonical boundary states.
 
+The finite certificate establishes the domain successor multiset and its labelled-row multiplicities. These transition facts supply content for the later transfer proof.
+
 **Theorem 1.1 (Source states 0 through 182).**
 
 $$\forall (i: \operatorname{Fin}\left(183\right)), (\operatorname{Data}.\operatorname{successors}\left(\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right), \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right)\right)\right) = \operatorname{Data}.\operatorname{classList}\left(\operatorname{Data}.\operatorname{cl}\left(\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right), \operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Sources}.\operatorname{sources}\left(\operatorname{Fin}.\operatorname{mk}\left(0+\operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right)\right)\right)\right)\right))$$

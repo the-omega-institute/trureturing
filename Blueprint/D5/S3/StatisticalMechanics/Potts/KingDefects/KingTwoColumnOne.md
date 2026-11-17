@@ -4,6 +4,8 @@
 
 Canonical four-colour paths with exactly two equal adjacent pairs.
 
+The prefix and adjacent-edge reconstructions, finite state transition counts and count-to-matrix induction establish the domain counting correspondence. The recurrence consumes this content together with the arithmetic matrix certificate.
+
 **Theorem 1.1 (The width-one six-term recurrence).**
 
 $$\forall (n: \operatorname{Nat}), ((10 \le n) \Rightarrow (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingTwoGrid}.\operatorname{T}\left(n, 1\right)\right) = ((((((12) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingTwoGrid}.\operatorname{T}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 1\right), 1\right)\right))) - ((57) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingTwoGrid}.\operatorname{T}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 2\right), 1\right)\right)))) + ((136) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingTwoGrid}.\operatorname{T}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 3\right), 1\right)\right)))) - ((171) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingTwoGrid}.\operatorname{T}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 4\right), 1\right)\right)))) + ((108) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingTwoGrid}.\operatorname{T}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 5\right), 1\right)\right)))) - ((27) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{KingTwoGrid}.\operatorname{T}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 6\right), 1\right)\right)))))$$

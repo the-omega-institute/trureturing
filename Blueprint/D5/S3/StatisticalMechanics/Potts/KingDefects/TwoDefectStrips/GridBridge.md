@@ -4,6 +4,8 @@
 
 The finite data support the literal width-five king-grid recurrence.
 
+The list-length induction establishes the decomposition of the defect count into row and interface sums. The literal bridge uses that decomposition on its live counting path.
+
 **Theorem 1.1 (Row-list costs as two finite sums).**
 
 $$\forall (q: \operatorname{Nat}), (\forall (k: \operatorname{Nat}), (\forall (H: \operatorname{Finset}\left((\operatorname{Fin}\left(k\right)) \cdot (\operatorname{Fin}\left(k\right))\right)), (\forall (V: \operatorname{Finset}\left((\operatorname{Fin}\left(k\right)) \cdot (\operatorname{Fin}\left(k\right))\right)), (\forall (n: \operatorname{Nat}), (\forall (f: (\operatorname{Fin}\left((n) + (1)\right)) \to (\operatorname{DefectTransfer}.\operatorname{Row}\left(q, k\right))), (\operatorname{DefectTransfer}.\operatorname{defects}\left(H, V, \operatorname{List}.\operatorname{ofFn}\left(f\right)\right) = (\sum_{(i: \operatorname{Fin}\left((n) + (1)\right))} (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(H, \operatorname{f}\left(i\right), \operatorname{f}\left(i\right)\right))) + (\sum_{(i: \operatorname{Fin}\left(n\right))} (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(V, \operatorname{f}\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right), \operatorname{f}\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)\right)))))))))$$

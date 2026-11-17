@@ -4,6 +4,8 @@
 
 Canonical width-six boundary rows.
 
+The row table and equality-pattern index are data definitions. Reconstruction is the content certificate that every canonical boundary is represented by its selected entry.
+
 **Remark 1.1 (Canonical rows).**
 
 Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Rows.rows`
@@ -44,7 +46,7 @@ $$\forall (p: \operatorname{Data}.\operatorname{Row}), ((\operatorname{Canonical
 
 *Commentary.*
 
-Every canonical row is the entry selected by its equality-pattern index. Thus successor identities can be checked on the canonical table before colour-permutation transport.
+Canonicality forces the first coordinate to be zero. The remaining five coordinates determine the row, and finite checks partitioned by the next two coordinates identify its equality-pattern representative. This reconstructs every canonical boundary before colour-permutation transport.
 
 ## References
 

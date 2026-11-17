@@ -4,6 +4,8 @@
 
 Coordinate identities for width-six king transfers.
 
+This is a domain enumeration of admissible initial rows by class and exact defect budget. Its sum counts labelled rows, and supplies the initial part of the structural transfer certificate.
+
 **Theorem 1.1 (Initial4).**
 
 $$\forall (s: \operatorname{Fin}\left(48\right)), (\sum_{(r: \operatorname{Data}.\operatorname{Row})} ((\operatorname{if} (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Data}.\operatorname{horizontal}, r, r\right) \le 2 \land \operatorname{Data}.\operatorname{cl}\left(r, (2) - (\operatorname{DefectTransfer}.\operatorname{bondDefects}\left(\operatorname{Data}.\operatorname{horizontal}, r, r\right))\right) = \operatorname{Fin}.\operatorname{mk}\left((12) + (\operatorname{Fin}.\operatorname{val}\left(s\right))\right)) \operatorname{then} 1 \operatorname{else} 0)) = \operatorname{Data}.\operatorname{initial}\left(\operatorname{Fin}.\operatorname{mk}\left((12) + (\operatorname{Fin}.\operatorname{val}\left(s\right))\right)\right))$$
