@@ -42,7 +42,8 @@ priority remain ASSUMED-UNVERIFIED.
 -/
 
 import Mathlib.Algebra.Algebra.Hom.Rat
-import D5.S3.Combinatorics.PowerSeries.LaurentSpecialization
+import Mathlib.RingTheory.PowerSeries.Evaluation
+import Mathlib.RingTheory.MvPowerSeries.LinearTopology
 import D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality
 import Mathlib.RingTheory.PowerSeries.Exp
 import Mathlib.Algebra.Polynomial.Expand
@@ -214,12 +215,16 @@ private local instance : DiscreteUniformity (Polynomial ℚ) := ⟨rfl⟩
 
 private noncomputable def diagonal (a : ℕ) :
     PowerSeries (Polynomial ℚ) →ₐ[ℚ] PowerSeries ℚ :=
-  (D5.S3.Combinatorics.PowerSeries.LaurentSpecialization.diagonal a 1).toRatAlgHom
+  (PowerSeries.eval₂Hom
+    (φ := Polynomial.eval₂RingHom C (X ^ 1))
+    continuous_of_discreteTopology
+    (show PowerSeries.HasEval ((X : PowerSeries ℚ) ^ (a + 1)) from by
+      rw [pow_succ]
+      exact PowerSeries.HasEval.X.mul_left _)).toRatAlgHom
 
 private theorem diagonal_apply (a : ℕ) (f : PowerSeries (Polynomial ℚ)) :
     diagonal a f = PowerSeries.eval₂ (Polynomial.eval₂RingHom C X) (X^(a+1)) f := by
   simp only [diagonal, RingHom.toRatAlgHom_apply,
-    D5.S3.Combinatorics.PowerSeries.LaurentSpecialization.diagonal,
     PowerSeries.coe_eval₂Hom, pow_one]
 
 private theorem diagonal_continuous (a : ℕ) : Continuous (diagonal a) := by
