@@ -8,6 +8,15 @@ url: https://math.dartmouth.edu/~carlp/robin4.pdf
 claim: Robin violations have global counting function at most exp(O(log x / log log x)); this does not supply a per-progression singleton theorem or exclude a remaining candidate.
 strata_touched:
   - D5/S3/Arith/Robin/Analytic/OmegaTailUpper
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Density
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Truncation
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Binning
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Selection
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Entropy
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Lower
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Counting
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Asymptotic
 license: citation-only
 triage: anchor
 ---
@@ -45,6 +54,18 @@ $$
 where $\omega$ counts distinct prime divisors. The proof combines the Euler-product bound for $\sigma(n)/n$, a strong Mertens estimate and the expansion of the $k$th prime. The counting step uses Pomerance, “On the distribution of round numbers,” *Lecture Notes in Mathematics* 1122 (1985), Theorem 6.1. That older theorem is cited through the inspected correction; this card does not claim a fresh inspection of its full original proof.
 
 The last section also notes that a violation of the Lagarias inequality, for sufficiently large $n$, violates Robin: the Lagarias right-hand side exceeds $e^\gamma n\log\log n$ by a positive term of order $n/\log n$. Its exceptional set therefore inherits the same asymptotic counting bound. This is a comparison of necessary conditions on failures, not an equivalence between the two pointwise failure predicates.
+
+## Section 3 counting question
+
+Section 3, “Conclusion and Open Problems,” printed page 3 of the
+[correction](https://math.dartmouth.edu/~carlp/robin4.pdf), asks:
+
+> It is interesting to consider the set S(x) of numbers n ≤ x with ω(n) > y.
+
+Here $y=\log x/\log\log x$ and $\omega$ counts distinct prime divisors.
+The section then asks:
+
+> How good is this estimate?
 
 ## Comparison with the FIB source estimates
 
