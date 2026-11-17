@@ -129,7 +129,8 @@ private theorem owner_matrix (p : Row) (hp : bondDefects horizontal p p = 0)
   have hoff : Width6.ZeroTemperature.offsets (extend q) =
       Width6.ZeroTemperature.offsets (extend p) := by
     funext j
-    fin_cases j <;> simp [Width6.ZeroTemperature.offsets, extend, q]
+    fin_cases j <;> simp [Width6.ZeroTemperature.offsets, extend, q] <;>
+      exact (Fin.xor_comm 0 _).trans (Fin.xor_zero _)
   have hh := h (q 1) (q 2) (q 3) (q 4)
   rw [← heq] at hh
   rcases hh hpq with ⟨hc, hn⟩ | ⟨hc, hn⟩ | ⟨hc, hn⟩
