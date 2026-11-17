@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: An injective independent rectangular triple above the three-halves threshold
-     has a common neutral complex coefficient plane. -/
+   digest: An injective independent rectangular triple above the three-halves threshold has a common neutral complex coefficient plane. -/
 
 import D5.S3.Quantum.Algebra.CommonCoefficientPlane
 import D5.S3.Quantum.BlockNorm.EssentiallyHermitian

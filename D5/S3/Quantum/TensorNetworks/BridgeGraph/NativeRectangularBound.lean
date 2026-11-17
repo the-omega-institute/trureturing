@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A native rectangular width-three positive scalar column Gram above the
-     three-halves threshold forces twice the opposite input dimension. -/
+   digest: A native rectangular width-three positive scalar column Gram above the three-halves threshold forces twice the opposite input dimension. -/
 
 import D5.S3.Quantum.Algebra.GenericCommonCoefficientPlane
 import D5.S3.Quantum.Algebra.NativeWidthAtMostThreeRefutation
