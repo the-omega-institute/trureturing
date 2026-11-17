@@ -138,6 +138,10 @@ $$\forall m: \mathbb{Z}, \forall n: \mathbb{N}, \forall j: \mathbb{N}, \exists z
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA155201BivariateIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a155201-bivariate` (proved) by `D5/S1/Recurrence/Algebraic/HannaA155201BivariateIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a155201-bivariate","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaA155201BivariateIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2009). *OEIS A155201: full bivariate exponential integrality*. URL: <https://oeis.org/A155201>.
