@@ -10,6 +10,8 @@ import D5.S3.Arith.Divisors.DivisorSubpower
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Fintype.Pigeonhole
+import Mathlib.Data.List.Permutation
+import Mathlib.Data.Nat.Factors
 import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Tactic
 
@@ -480,8 +482,75 @@ theorem missing_residue_of_finite_three
   have := Nat.le_of_dvd Nat.zero_lt_one hdm
   omega
 
-/- The uniform missing-residue multiplicity estimate is not established here.
-It requires the residue-rank majorant, prime-word convolution, fractional
-Dirichlet moment, and the distinct-predecessor estimate. -/
+/-- The prefix includes every successor of an index less than `t`. -/
+def AvoidsResidue (q N : ℕ) : Prop :=
+  ∀ i : ℕ, i ≤ N → 1 < term i → term i % q ≠ 1
+
+private theorem divisor_card_succ (t v : ℕ) :
+    (divisorIndices (t + 1) v).card = (divisorIndices t v).card +
+      if term t ∣ v then 1 else 0 := by
+  classical
+  by_cases h : term t ∣ v <;>
+    simp [divisorIndices, Finset.range_add_one, Finset.filter_insert, h,
+      show t ∉ divisorIndices t v by simp [divisorIndices]]
+
+/-- The ranks congruent to one must be proper-divisor contributors.  The
+induction retains their spacing without constructing a sorted contributor list. -/
+theorem contributor_rank_bound (q N t v : ℕ) (hq : 2 ≤ q)
+    (havoid : AvoidsResidue q N) (ht : t ≤ N) (hv : 2 ≤ v) :
+    (divisorIndices t v).card ≤ q * ∑ d ∈ v.properDivisors, count t d := by
+  classical
+  induction t with
+  | zero => simp [divisorIndices, count]
+  | succ t ih =>
+    have htN : t ≤ N := by omega
+    have hi := ih htN
+    rw [divisor_card_succ]
+    by_cases hd : term t ∣ v
+    · rw [if_pos hd]
+      by_cases he : term t = v
+      · have hproper : ∑ d ∈ v.properDivisors, count (t + 1) d =
+            ∑ d ∈ v.properDivisors, count t d := by
+          apply Finset.sum_congr rfl
+          intro d hmem
+          rw [count_succ, if_neg]
+          · omega
+          · have := (Nat.mem_properDivisors.mp hmem).2
+            omega
+        rw [hproper]
+        by_contra! hbad
+        have hrank : (divisorIndices t v).card + 1 =
+            q * ∑ d ∈ v.properDivisors, count t d + 1 := by omega
+        have htpos : 0 < t := by
+          by_contra! hz
+          have : t = 0 := by omega
+          subst t
+          rw [term_zero] at he
+          omega
+        have hnonempty : 0 < (divisorIndices t v).card := by
+          apply Finset.card_pos.mpr
+          exact ⟨0, by simp [divisorIndices, htpos, term_zero]⟩
+        have hs : term (t + 1) = (divisorIndices t v).card + 1 := by
+          rw [recurrence, he, divisor_card_succ, he, if_pos (dvd_refl v)]
+        have hmod := havoid (t + 1) ht (by omega)
+        rw [hs, hrank] at hmod
+        have : (q * ∑ d ∈ v.properDivisors, count t d + 1) % q = 1 := by
+          simp [Nat.add_mod, Nat.mod_eq_of_lt (show 1 < q by omega)]
+        exact hmod this
+      · have hp : term t ∈ v.properDivisors :=
+          Nat.mem_properDivisors.mpr ⟨hd,
+            lt_of_le_of_ne (Nat.le_of_dvd (by omega) hd) he⟩
+        have hsum : (∑ d ∈ v.properDivisors, count t d) + 1 =
+            ∑ d ∈ v.properDivisors, count (t + 1) d := by
+          simp_rw [count_succ, Finset.sum_add_distrib]
+          simp [hp]
+        rw [← hsum, Nat.mul_add, Nat.mul_one]
+        omega
+    · rw [if_neg hd, Nat.add_zero]
+      exact hi.trans (Nat.mul_le_mul_left q (Finset.sum_le_sum
+        (fun d _ => count_mono (Nat.le_succ t) d)))
+
+/- The fractional Dirichlet moment and the uniform missing-residue multiplicity
+estimate are not established here. -/
 
 end D5.S3.Arith.Recurrence.A124056Occurrence
