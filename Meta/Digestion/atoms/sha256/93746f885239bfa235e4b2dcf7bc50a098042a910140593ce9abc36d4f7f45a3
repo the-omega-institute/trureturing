@@ -1,0 +1,17 @@
+#### 命题 9.4：共同参考变换与主动操作不同
+
+若所有态、效果、门共同作酉坐标变换，全部概率不变。 若内部移动参考为 $W(t)$，则
+
+$$
+\psi_{\rm rel}=W^\dagger\psi,\qquad
+ H_{\rm rel}=W^\dagger HW-\mathrm i\hbar W^\dagger\dot W.
+$$
+
+**证明。**
+
+概率由迹的循环性保持。 微分 $W^\dagger\psi$ 并用 $\dot W^\dagger W=-W^\dagger\dot W$ 即得生成元式。
+
+$\square$
+
+该项是相对运动的必要部分，不需要场外参考 [\[8\]](#ref-repo_v74), [\[12\]](#ref-repo_v21)。 同时改变坐标描述，并不等于实际改变目标与装置的相对耦合。
+
