@@ -10,7 +10,7 @@ All indices and exponents are natural numbers. A is integer-valued; F and exp ar
 
 $$\forall b: \mathbb{N}, ((\operatorname{A}\left(b, 0\right) = 1) \land (\forall n: \mathbb{N}, (\operatorname{A}\left(b, n + 1\right) = b^{n + 1} - \sum_{i \in \operatorname{range}\left(n + 1\right)} (\operatorname{choose}\left(n + 1, i\right) \cdot 2^{n - i} \cdot \operatorname{A}\left(b, i\right)))))$$
 
-*Formalization.* `D5/S1/Recurrence/Periodic/EulerSignedFrequency.A` (`✓ std3`).
+*Formalization.* `D5/S1/Recurrence/Periodic/EulerUpDownSource.A` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ The integer recurrence constructs every derivative before modular reduction. Nat
 
 $$\forall b: \mathbb{N}, (\operatorname{F}\left(b\right) = \sum_{n \in \mathbb{N}} (\frac{\operatorname{A}\left(b, n\right) \cdot X^{n}}{\operatorname{factorial}\left(n\right)}))$$
 
-*Formalization.* `D5/S1/Recurrence/Periodic/EulerSignedFrequency.F` (`✓ std3`).
+*Formalization.* `D5/S1/Recurrence/Periodic/EulerUpDownSource.F` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ X is the distinguished formal indeterminate. The integer coefficients A are embe
 
 $$\forall b: \mathbb{N}, (\left(1 + \operatorname{exp}\left(\mathbb{Q}\right)^{2}\right) \cdot \operatorname{F}\left(b\right) = \operatorname{C}\left(2\right) \cdot \operatorname{exp}\left(\mathbb{Q}\right)^{b})$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerSignedFrequency.generating_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerUpDownSource.generating_identity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ Factorial-normalized coefficient comparison reduces the identity to the integral
 
 $$\forall b: \mathbb{N}, (\forall L: \mathbb{N}, ((\operatorname{Odd}\left(L\right)) \implies (\left(1 + \operatorname{exp}\left(\mathbb{Q}\right)^{2 \cdot L}\right) \cdot \operatorname{F}\left(b\right) = \operatorname{C}\left(2\right) \cdot \sum_{h \in \operatorname{range}\left(L\right)} (\operatorname{C}\left((-1)^{h}\right) \cdot \operatorname{exp}\left(\mathbb{Q}\right)^{2 \cdot h + b}))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerSignedFrequency.finite_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerUpDownSource.finite_identity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ The alternating geometric sum has numerator one plus the Lth power exactly when 
 
 $$(\operatorname{derivative}\left(\operatorname{F}\left(0\right)\right) = \operatorname{F}\left(0\right) \cdot \left(\operatorname{F}\left(0\right) - 2\right)) \land ((\operatorname{derivative}\left(\operatorname{F}\left(1\right)\right) = \operatorname{F}\left(1\right) \cdot \left(\operatorname{F}\left(0\right) - 1\right)) \land (\operatorname{F}\left(1\right)^{2} = \operatorname{F}\left(0\right) \cdot \left(2 - \operatorname{F}\left(0\right)\right)))$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerSignedFrequency.branch_equations` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerUpDownSource.branch_equations` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -70,7 +70,7 @@ Differentiation and cancellation of the nonzero exponential denominator prove bo
 
 $$\forall b: \mathbb{N}, (\forall L: \mathbb{N}, (\forall u: \mathbb{N}, (\forall q: \mathbb{N}, (\forall j: \mathbb{N}, ((\operatorname{Odd}\left(L\right)) \implies ((\operatorname{Odd}\left(q\right)) \implies ((q \mid u \cdot L) \implies (\operatorname{residue}\left(q, u\right)^{j} \cdot \operatorname{residue}\left(q, \operatorname{A}\left(b, j\right)\right) = \sum_{h \in \operatorname{range}\left(L\right)} (\operatorname{residue}\left(q, (-1)\right)^{h} \cdot \operatorname{residue}\left(q, u \cdot \left(2 \cdot h + b\right)\right)^{j})))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerSignedFrequency.scaled_moment` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/EulerUpDownSource.scaled_moment` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,10 +80,10 @@ Positive-order exponential derivatives contain the modulus. The remaining factor
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Periodic/EulerSignedFrequency.A`
-- Truth anchor: `D5/S1/Recurrence/Periodic/EulerSignedFrequency.F`
-- Truth anchor: `D5/S1/Recurrence/Periodic/EulerSignedFrequency.branch_equations`
-- Truth anchor: `D5/S1/Recurrence/Periodic/EulerSignedFrequency.finite_identity`
-- Truth anchor: `D5/S1/Recurrence/Periodic/EulerSignedFrequency.generating_identity`
-- Truth anchor: `D5/S1/Recurrence/Periodic/EulerSignedFrequency.scaled_moment`
-- Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](../Residue/QuarticEGFFixedPoint.md)
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.A`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.F`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.branch_equations`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.finite_identity`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.generating_identity`
+- Truth anchor: `D5/S1/Recurrence/Periodic/EulerUpDownSource.scaled_moment`
+- Dependency: [D5/S1/Recurrence/Periodic/EulerUpDownSource](EulerUpDownSource.md)
