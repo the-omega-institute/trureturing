@@ -440,6 +440,7 @@ private theorem evaluate_primitive (P : M₂) (z : ℂˣ) :
     evaluate (primitive P) z = (z : ℂ) • P + (↑z⁻¹ : ℂ) • (1 - P) := by
   ext a b
   simp [evaluate, primitive, constant, Matrix.smul_apply, smul_eq_mul]
+  ring
 
 private theorem projector_det {P : M₂} (hP : RankOneProjector P) : P.det = 0 := by
   have htrace : P 0 0 + P 1 1 = 1 := by
@@ -458,11 +459,11 @@ private theorem determinant_affine (P : M₂) (s t : ℂ) :
 
 private theorem primitive_circle {P : M₂} (hP : RankOneProjector P) : CircleSU (primitive P) := by
   intro z hz
-  let w : Circle := ⟨(z : ℂ), Metric.mem_sphere_zero_iff_norm.mpr hz⟩
+  let w : Circle := ⟨(z : ℂ), mem_sphere_zero_iff_norm.mpr hz⟩
   have hw : Circle.toUnits w = z := Units.ext rfl
   constructor
   · rw [← hw, ← evaluate_adjoint, adjoint_primitive hP, ← evaluate_mul,
-      primitive_inverse (projector_complement hP)]
+      mul_eq_one_comm.mp (primitive_inverse hP)]
     simp [evaluate]
   · rw [evaluate_primitive, determinant_affine, projector_det hP, projector_trace hP]
     have hzi : (z : ℂ) * (↑z⁻¹ : ℂ) = 1 := by exact_mod_cast z.mul_inv
@@ -529,8 +530,7 @@ private theorem terminal_step {n : ℕ} {F : Loop} (hF : InClass (n + 1) F)
   obtain ⟨P, ⟨hP, hpos, hneg⟩, hunique⟩ := terminal_cancellation (by omega) hF hdeg
   have hclass := class_lower hF hP hpos hneg
   have hrec : F = (F * primitive (1 - P)) * primitive P := by
-    rw [Matrix.mul_assoc, primitive_inverse (projector_complement hP), mul_one]
-    simp only [sub_sub_cancel]
+    rw [Matrix.mul_assoc, mul_eq_one_comm.mp (primitive_inverse hP), mul_one]
   have hactual : ActualDegree n (F * primitive (1 - P)) := by
     by_contra h
     simp only [ActualDegree, not_or, not_not] at h
@@ -548,7 +548,7 @@ private theorem terminal_step {n : ℕ} {F : Loop} (hF : InClass (n + 1) F)
   · have hz := upper_bound hQ.2.1 ((n : ℤ) + 2) (by omega)
     rw [coefficient_step, sub_sub_cancel,
       show (n : ℤ) + 2 - 1 = (n + 1 : ℕ) by omega,
-      upper_bound hF _ (by omega), zero_mul, add_zero] at hz
+      upper_bound hF ((n : ℤ) + 2 + 1) (by omega), zero_mul, add_zero] at hz
     exact hz
   · have hz := lower_bound hQ.2.1 (-(n : ℤ) - 2) (by omega)
     rw [coefficient_step, sub_sub_cancel,
@@ -556,4 +556,185 @@ private theorem terminal_step {n : ℕ} {F : Loop} (hF : InClass (n + 1) F)
       lower_bound hF _ (by omega), zero_mul, zero_add] at hz
     exact hz
 
+/-- The constant factor is any special-unitary matrix. -/
+def SpecialUnitary (A : M₂) : Prop := Aᴴ * A = 1 ∧ A.det = 1
+
+/-- The product follows the list order, with the constant on the left. -/
+def orderedProduct (A : M₂) (Ps : List M₂) : Loop :=
+  constant A * (Ps.map primitive).prod
+
+def Factorization (n : ℕ) (F : Loop) (r : M₂ × List M₂) : Prop :=
+  SpecialUnitary r.1 ∧ r.2.length = n ∧
+    (∀ P ∈ r.2, RankOneProjector P) ∧ F = orderedProduct r.1 r.2
+
+private theorem orderedProduct_append (A P : M₂) (Ps : List M₂) :
+    orderedProduct A (Ps ++ [P]) = orderedProduct A Ps * primitive P := by
+  simp [orderedProduct, List.map_append, List.prod_append, mul_assoc]
+
+private theorem class_constant {A : M₂} (hA : SpecialUnitary A) : InClass 0 (constant A) := by
+  refine ⟨?_, ?_⟩
+  · intro j hj
+    rw [coefficient_constant]
+    have hj0 : j ≠ 0 := by intro h; subst j; norm_num at hj
+    exact ite_eq_right hj0
+  · intro z _
+    simpa only [evaluate_constant, SpecialUnitary] using hA
+
+private theorem class_orderedProduct {A : M₂} (hA : SpecialUnitary A) (Ps : List M₂)
+    (hPs : ∀ P ∈ Ps, RankOneProjector P) : InClass Ps.length (orderedProduct A Ps) := by
+  induction Ps using List.reverseRecOn with
+  | nil => simpa [orderedProduct] using class_constant hA
+  | append_singleton Ps P ih =>
+    rw [List.length_append, List.length_singleton, orderedProduct_append]
+    apply class_raise (ih (fun Q hQ => hPs Q (List.mem_append_left _ hQ)))
+    exact hPs P (by simp)
+
+private theorem zero_class_constant {F : Loop} (hF : InClass 0 F) :
+    F = constant (coefficient F 0) := by
+  apply coefficient_ext
+  intro j
+  rw [coefficient_constant]
+  by_cases hj : j = 0
+  · subst j; simp
+  · rw [ite_eq_right hj]
+    exact hF.1 j (Or.inl (by simpa using abs_pos.mpr hj))
+
+private theorem zero_constant_su {F : Loop} (hF : InClass 0 F) :
+    SpecialUnitary (coefficient F 0) := by
+  have he := hF.2 1 (by simp)
+  rw [zero_class_constant hF, evaluate_constant] at he
+  exact he
+
+/-- Recursively remove the unique terminal factor at each exact input degree. -/
+def decompose : (n : ℕ) → (F : Loop) → InClass n F → ActualDegree n F → M₂ × List M₂
+  | 0, F, _, _ => (coefficient F 0, [])
+  | n + 1, F, hF, hdeg =>
+    let h := (terminal_step hF hdeg).exists
+    let P := Classical.choose h
+    let hp := Classical.choose_spec h
+    let r := decompose n (F * primitive (1 - P)) hp.2.1 hp.2.2.1
+    (r.1, r.2 ++ [P])
+
+private theorem decompose_spec (n : ℕ) (F : Loop) (hF : InClass n F)
+    (hdeg : ActualDegree n F) : Factorization n F (decompose n F hF hdeg) := by
+  induction n generalizing F with
+  | zero =>
+    change Factorization 0 F (coefficient F 0, [])
+    exact ⟨zero_constant_su hF, rfl, by simp, by simpa [orderedProduct] using zero_class_constant hF⟩
+  | succ n ih =>
+    let h := (terminal_step hF hdeg).exists
+    let P := Classical.choose h
+    have hp := Classical.choose_spec h
+    let r := decompose n (F * primitive (1 - P)) hp.2.1 hp.2.2.1
+    have hr : Factorization n (F * primitive (1 - P)) r := ih _ hp.2.1 hp.2.2.1
+    change Factorization (n + 1) F (r.1, r.2 ++ [P])
+    refine ⟨hr.1, by simp [hr.2.1], ?_, ?_⟩
+    · intro Q hQ
+      rcases List.mem_append.mp hQ with hQ | hQ
+      · exact hr.2.2.1 Q hQ
+      · have heq := List.mem_singleton.mp hQ
+        simpa only [heq] using hp.1
+    · rw [orderedProduct_append, ← hr.2.2.2]
+      exact hp.2.2.2
+
+private theorem last_cancellation {n : ℕ} {G : Loop} (hG : InClass n G)
+    {P : M₂} (hP : RankOneProjector P) :
+    coefficient (G * primitive P) (n + 1 : ℕ) * (1 - P) = 0 ∧
+      coefficient (G * primitive P) (-(n + 1 : ℕ) : ℤ) * P = 0 := by
+  have hP1 : P * (1 - P) = 0 := by rw [mul_sub, mul_one, hP.2.1, sub_self]
+  have h1P : (1 - P) * P = 0 := by rw [sub_mul, one_mul, hP.2.1, sub_self]
+  constructor
+  · rw [coefficient_step, upper_bound hG ((n + 1 : ℕ) + (1 : ℤ)) (by omega),
+      zero_mul, add_zero, mul_assoc, hP1, mul_zero]
+  · rw [coefficient_step, lower_bound hG (-(n + 1 : ℕ) - (1 : ℤ)) (by omega),
+      zero_mul, zero_add, mul_assoc, h1P, mul_zero]
+
+private theorem factorization_unique (n : ℕ) (F : Loop) (hF : InClass n F)
+    (hdeg : ActualDegree n F) (r s : M₂ × List M₂)
+    (hr : Factorization n F r) (hs : Factorization n F s) : r = s := by
+  induction n generalizing F r s with
+  | zero =>
+    have hrnil : r.2 = [] := List.length_eq_zero_iff.mp hr.2.1
+    have hsnil : s.2 = [] := List.length_eq_zero_iff.mp hs.2.1
+    have he : constant r.1 = constant s.1 := by
+      simpa [orderedProduct, hrnil, hsnil] using hr.2.2.2.symm.trans hs.2.2.2
+    have hA : r.1 = s.1 := by
+      simpa [coefficient_constant] using congrArg (fun X => coefficient X 0) he
+    exact Prod.ext hA (hrnil.trans hsnil.symm)
+  | succ n ih =>
+    have hrne : r.2 ≠ [] := by
+      intro he
+      have hh := hr.2.1
+      rw [he] at hh
+      simp at hh
+    have hsne : s.2 ≠ [] := by
+      intro he
+      have hh := hs.2.1
+      rw [he] at hh
+      simp at hh
+    obtain ⟨R, P, hrlist⟩ : ∃ R P, r.2 = R ++ [P] := by
+      rcases List.eq_nil_or_concat r.2 with h | ⟨R, P, h⟩
+      · exact False.elim (hrne h)
+      · exact ⟨R, P, by simpa using h⟩
+    obtain ⟨S, Q, hslist⟩ : ∃ S Q, s.2 = S ++ [Q] := by
+      rcases List.eq_nil_or_concat s.2 with h | ⟨S, Q, h⟩
+      · exact False.elim (hsne h)
+      · exact ⟨S, Q, by simpa using h⟩
+    have hRlen : R.length = n := by
+      have hh := hr.2.1
+      rw [hrlist, List.length_append, List.length_singleton] at hh
+      omega
+    have hSlen : S.length = n := by
+      have hh := hs.2.1
+      rw [hslist, List.length_append, List.length_singleton] at hh
+      omega
+    have hP : RankOneProjector P := hr.2.2.1 P (by simp [hrlist])
+    have hQ : RankOneProjector Q := hs.2.2.1 Q (by simp [hslist])
+    have hRall : ∀ X ∈ R, RankOneProjector X := fun X hX => hr.2.2.1 X (by simp [hrlist, hX])
+    have hSall : ∀ X ∈ S, RankOneProjector X := fun X hX => hs.2.2.1 X (by simp [hslist, hX])
+    have hRc : InClass n (orderedProduct r.1 R) := hRlen ▸ class_orderedProduct hr.1 R hRall
+    have hSc : InClass n (orderedProduct s.1 S) := hSlen ▸ class_orderedProduct hs.1 S hSall
+    have heR : F = orderedProduct r.1 R * primitive P := by
+      simpa [hrlist, orderedProduct_append] using hr.2.2.2
+    have heS : F = orderedProduct s.1 S * primitive Q := by
+      simpa [hslist, orderedProduct_append] using hs.2.2.2
+    obtain ⟨T, hT, huniq⟩ := terminal_cancellation (by omega) hF hdeg
+    have hPeq : P = T := huniq P ⟨hP, by rw [heR]; exact (last_cancellation hRc hP).1,
+      by rw [heR]; exact (last_cancellation hRc hP).2⟩
+    have hQeq : Q = T := huniq Q ⟨hQ, by rw [heS]; exact (last_cancellation hSc hQ).1,
+      by rw [heS]; exact (last_cancellation hSc hQ).2⟩
+    have hPQ : P = Q := hPeq.trans hQeq.symm
+    obtain ⟨U, hU, _⟩ := terminal_step hF hdeg
+    have hPU : P = U := by
+      have hUc := last_cancellation hU.2.1 hU.1
+      exact hPeq.trans (huniq U ⟨hU.1, by rw [hU.2.2.2]; exact hUc.1,
+        by rw [hU.2.2.2]; exact hUc.2⟩).symm
+    rw [← hPU] at hU
+    have hFredR : F * primitive (1 - P) = orderedProduct r.1 R := by
+      rw [heR, mul_assoc, primitive_inverse hP, mul_one]
+    have hFredS : F * primitive (1 - P) = orderedProduct s.1 S := by
+      rw [heS, ← hPQ, mul_assoc, primitive_inverse hP, mul_one]
+    have hprefix := ih _ hU.2.1 hU.2.2.1 (r.1, R) (s.1, S)
+      ⟨hr.1, hRlen, hRall, hFredR⟩ ⟨hs.1, hSlen, hSall, hFredS⟩
+    have hfst : r.1 = s.1 := congrArg (fun x : M₂ × List M₂ => x.1) hprefix
+    have htail : R = S := congrArg (fun x : M₂ × List M₂ => x.2) hprefix
+    exact Prod.ext hfst (by rw [hrlist, hslist, htail, hPQ])
+
+/-- Haah's exact-degree ordered factorization, with the forward class assertion. -/
+theorem haah_factorization :
+    (∀ Ps : List M₂, (∀ P ∈ Ps, RankOneProjector P) →
+      InClass Ps.length (Ps.map primitive).prod) ∧
+    ∀ (n : ℕ) (C : ℤ →₀ M₂),
+      (∀ j : ℤ, (n : ℤ) < |j| ∨ j % 2 ≠ (n : ℤ) % 2 → C j = 0) →
+      (C n ≠ 0 ∨ C (-(n : ℤ)) ≠ 0) → CircleSU (ofCoefficients C) →
+      ∃! r : M₂ × List M₂, Factorization n (ofCoefficients C) r := by
+  constructor
+  · intro Ps hPs
+    simpa [orderedProduct, constant] using
+      class_orderedProduct (A := 1) ⟨by simp, by simp⟩ Ps hPs
+  · intro n C hbound hdeg hcircle
+    have hF : InClass n (ofCoefficients C) := ⟨hbound, hcircle⟩
+    have hD : ActualDegree n (ofCoefficients C) := hdeg
+    exact ⟨decompose n _ hF hD, decompose_spec n _ hF hD,
+      fun r hr => factorization_unique n _ hF hD _ _ hr (decompose_spec n _ hF hD)⟩
 end D5.S3.ContinuousObservables.LaurentLoopFactorization
