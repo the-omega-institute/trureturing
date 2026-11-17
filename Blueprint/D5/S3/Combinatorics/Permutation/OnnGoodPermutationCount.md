@@ -52,6 +52,10 @@ $$\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; (0 < m) \Rightarrow ((
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/OnnGoodPermutationCount.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-onn2023good` (proved) by `D5/S3/Combinatorics/Permutation/OnnGoodPermutationCount.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-onn2023good","declaration_gid":"D5/S3/Combinatorics/Permutation/OnnGoodPermutationCount.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shmuel Onn (2023). *On Supmodular Matrices*. DOI: [10.48550/arXiv.2309.07700](https://doi.org/10.48550/arXiv.2309.07700). URL: <https://arxiv.org/abs/2309.07700v1>.
