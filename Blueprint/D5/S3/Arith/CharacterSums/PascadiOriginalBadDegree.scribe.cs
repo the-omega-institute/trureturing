@@ -12,6 +12,12 @@ internal sealed class PascadiOriginalBadDegreeDocument : IScribeDocumentDefiniti
         H("The actual bad degree is bounded"),
         Blocks(
             Paragraph(Text("For the actual finite retained endpoint chart E, actualRecordBadPartners(E,base) filters E by vanishing of the actual pencil derivative at the genuine physical ratio V1/R1 modulo p. The natural number actualRecordBadDegree is the finite maximum of these cardinalities over actual baselines in E, with value zero for the empty chart. It is an intrinsic count, not a supplied degree estimate.")),
+            Describe.Lean(DescribeId.Create("pascadi-original-record-bad-degree-subpower-seventh"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree.actual_record_bad_degree_subpower_seventh"),
+                H("The maximum actual bad degree under seventh height"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every epsilon>0 choose C>0 before p and all original data. Under the original word, actual retained chart, basis and endpoint units, literal boxes and 1<=J2<=J1, the single condition seventhHeightConstant*(J1*J2)^7<p^5 implies actualRecordBadDegree<=C*p^epsilon*(1+6H/(p*sigma)). The empty chart has degree zero; for a nonempty chart select a literal baseline attaining the finite maximum and apply the complete derivative-zero seventh-height bound to its actual filtered partners. The original theorem and its complete original interface are retained by deriving the seventh-height gap from its old cutoffs. This statement supplies the actual defect term and does not by itself prove the full original conjecture."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pascadi-original-record-bad-degree-subpower"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree.actual_record_bad_degree_subpower"),
                 H("Consume the complete partner bound for the actual maximum"),

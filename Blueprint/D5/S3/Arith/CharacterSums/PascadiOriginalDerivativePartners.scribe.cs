@@ -11,6 +11,12 @@ internal sealed class PascadiOriginalDerivativePartnersDocument : IScribeDocumen
         "Every actual derivative-zero partner is counted, with one physical fiber weight and no nonalignment or assumed counting supplier.",
         H("The complete actual derivative-zero layer"),
         Blocks(
+            Describe.Lean(DescribeId.Create("pascadi-original-derivative-zero-partners-subpower-seventh"),
+                DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners.actual_derivative_zero_partners_subpower_seventh"),
+                H("All actual derivative-zero partners under seventh height"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every epsilon>0 choose C>0 before all primes and original physical chart data. With the same actual bases, original word, anchor, endpoint units, derivative test and physical boxes as the preserved theorem, replace its three numerical cutoffs by seventhHeightConstant*(J1*J2)^7<p^5. Then card(S)<=C*p^epsilon*(1+6H/(p*sigma)). Partition the literal endpoint set into coefficientwise zero and nonzero reductions. The seventh-height gap supplies the zero-reduction small determinant separations, while the structural factor cover and squared real envelope bound the nonzero singular values. Both strata preserve the original endpoints and use the physical linear-fiber weight once. The original public theorem remains as a consequence with its full original type; no full arbitrary-modulus conjecture is asserted."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pascadi-original-derivative-zero-partners-subpower"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners.actual_derivative_zero_partners_subpower"),
                 H("Uniform weighted count of all actual bad partners"),
