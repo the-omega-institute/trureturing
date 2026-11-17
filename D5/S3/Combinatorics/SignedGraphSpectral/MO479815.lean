@@ -26,10 +26,10 @@ All private proof helpers are consumed on the refutation's live proof path.
 /-
 Public declaration audit:
   claim: source definition; proof_shape: definition.
-  result: proof_shape: content (explicit paw witness, characteristic-polynomial
-    factorization, ordered spectra, and strict beta increase); admission_basis:
-    open-problem-resolution (issue #31231). The designated refutation result is
-    the module's escape-bearing declaration.
+  result: proof_shape: bind-only (pinned intermediate-value, characteristic-root,
+    and Hermitian-spectrum applications with normalization); admission_basis:
+    open-problem-resolution (issue #31231). The designated refutation settles
+    the external source assertion without claiming an independent escape witness.
 Direct frozen dependencies: none (pinned Mathlib only).
 -/
 
