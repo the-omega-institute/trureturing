@@ -1,0 +1,14 @@
+#### 推论 3.4：拓扑后果，依赖 $\mathsf H_{\mathbb Z/\mathbb Q}$
+
+存在定义于 $\mathbb Q$ 的仿射代数集，其有理点在实点中的闭包有无穷多个连通分支。
+
+**证明。**
+
+取 $V=\{P(t,\mathbf w)=0\}$，$C=\overline{V(\mathbb Q)}\subset V(\mathbb R)$，$\pi$ 为 $t$ 坐标投影。因 $\mathbb Z$ 在 $\mathbb R$ 中闭且 $\pi$ 连续，$\pi(C)\subseteq\mathbb Z$；每个整数已由一个有理点实现，故 $\pi(C)=\mathbb Z$。每个连通分支的像是 $\mathbb Z$ 的连通子集，只能是单点。不同整数因此需要不同分支。
+
+$\square$
+
+这是Mazur有限连通分支猜想所遇到的经典投影障碍；V13也明确列出该条件后果。[\[1\]](#ref-v13)
+
+<a id="section-4"></a>
+

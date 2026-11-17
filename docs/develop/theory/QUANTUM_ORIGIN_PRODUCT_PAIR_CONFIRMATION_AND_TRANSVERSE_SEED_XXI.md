@@ -2050,3 +2050,1226 @@ $$
 [Q325Half]: QUANTUM_ORIGIN_COMMON_RULER_AND_LEAST_CONFIRMATION_XX.md "271.1的完整单点M定义；277.2—277.3在原M1与实际暴露二纯三球上识别全部least为半球刻度。"
 
 ## 追加锚（本行以下为增补区）
+
+## 326. 稠密参照只定一张配对，真面留下四点障碍
+
+**定义 326.1（稠密成功参照）。** 完整保留325.1的原有限维闭尖生成锥 $C\subset V$、严格正单位 $u$、整个紧底 $K$、全部原纯点 $P$、完整proper菜单、实际暴露二纯三球及实际对称半球刻度 $\tau$。沿用 $\mathcal F_0,\beta_0,\mathcal A_B,J_B^{(1)},U_A$，固定非空有限原锚集 $A$。定义
+
+$$
+G_A=\left\{x\in U_A:
+\sum_pc_p\tau(x,p)=0\ \text{对所有 }c\in\mathcal A_A\right\},
+\qquad
+\mathsf{DG}_A:\quad\overline{G_A}^{\,P}=P.
+\tag{326.1}
+$$
+
+成功参照既能以自身补锚生成原核，又在主干锚关系上保持读数。只要求成功者稠密，不先要求所有 $U_A$ 都满足读数相容。由于 $P$ 取有限维子空间拓扑，$\mathsf{DG}_A$ 也等价于存在可数稠密成功参照族；每行仍须检验全部原锚球关系，不是有限读数条件。
+
+**定理 326.2（有限基统一稠密行与所有原三球的共同半径）。** 若 $\mathsf{DG}_A$ 成立，则存在唯一线性映射 $T:V\to V^*$，使
+
+$$
+b(v,w)=(Tv)(w),\qquad
+e_p=Tp,\qquad b(p,q)=\tau(p,q)\quad(p,q\in P),
+\tag{326.2}
+$$
+
+其中 $e_p$ 是原完整菜单中确认 $p$ 的least。$b$ 对称；通过既有proper最小确认谱性桥，它正定且使原 $C$ 自对偶。全部实际二纯球在这个同一内积下都有半径 $1/\sqrt2$，不需先取得Hilbert坐标。对固定 $A$，还有
+
+$$
+\mathsf{DG}_A
+\Longleftrightarrow\mathsf D_A+\mathsf M_A^{\mathrm{sa}}
+\Longleftrightarrow\mathsf D_A+\mathsf M_A.
+\tag{326.3}
+$$
+
+证明。对 $x\in G_A$，实际半球刻度自动消灭自锚关系，相容性消灭 $\mathcal A_A$；有界性与 $x\in U_A$ 遂使该行消灭全部 $\ker\beta_0$。321.2及325.2的同原下降给唯一 $e_x\in\mathcal E$，$e_x(q)=\tau(x,q)$；式(325.4)的球内下界给其least性。这里仅在成功参照上下降。
+
+$G_A$ 稠密且 $P$ 张成 $V$，故可从 $G_A$ 取实线性基 $x_1,\ldots,x_d$，$d=\dim V$。定义 $Tx_i=e_{x_i}$。实际互易给 $(Tx_i)(x_j)=(Tx_j)(x_i)$，故 $b$ 在整个 $V$ 对称。对任意 $x\in G_A$ 和每个基点，
+
+$$
+(Tx)(x_j)=(Tx_j)(x)=e_{x_j}(x)
+=\tau(x_j,x)=e_x(x_j).
+\tag{326.4}
+$$
+
+基点分离 $V^*$，所以 $Tx=e_x$ 对全部成功参照成立。稠密族已经由一个有限维线性映射统一，无需为每个缺失参照另选极限子列。
+
+任取 $p\in P$，选 $x_k\in G_A$ 趋于 $p$。$T$ 连续，原效应区间闭，所以 $Tp=\lim_k e_{x_k}\in\mathcal E$；同时 $b(p,p)=\lim_kb(x_k,x_k)=1$。若原效应 $f$ 确认 $p$，则对 $t\in G_A$，仅用球内下界及互易得
+
+$$
+f(t)\ge\tau(p,t)=e_t(p)=(Tt)(p)=(Tp)(t).
+\tag{326.5}
+$$
+
+原仿射连续性和稠密性使不等式延到全部 $P$，有限纯分解再延到 $K$。因此 $Tp$ 是原least，完整M1已得。[XX277.3][Q325Half]此时识别其在每张实际暴露三球上的限制，给全部 $b(p,q)=\tau(p,q)$。纯点张成使 $T,b$ 唯一，故它们不依赖所选成功基；全部行现在消灭每条原等重心关系，特别是完整 $\mathsf M_A$。由 $G_A\subset U_A$ 得 $\mathsf D_A$，反向若 $\mathsf D_A+\mathsf M_A^{\mathrm{sa}}$，则 $G_A=U_A$；这证明(326.3)。
+
+现在复用[proper最小确认与谱性桥][Q326S]：完整M1、纯点互易、有限维紧底和整个proper菜单，给唯一状态—效应映射 $L$、正定自对偶内积及共同框架有符号谱分解。该桥不额外输入谱性、强对称或滤波纯性；它的正对偶剥离、共同框架与文献分类各保留原归属。$Lp=e_p=Tp$ 在张成族上成立，故 $L=T$。这里得到的正定性并非仅由一个对称矩阵直接宣称。特别地，
+
+$$
+C=\{v:b(v,w)\ge0\ (w\in C)\},\qquad
+\|p-q\|_b^2=2(1-\tau(p,q)),\qquad
+P=K\cap\{v:\|v\|_b=1\}.
+\tag{326.6}
+$$
+
+最后一个等式也可由有限纯分解直接看出：所有纯点范数为一；不同纯点间 $\tau<1$，所以真正混合的凸组合范数严格小于一。
+
+固定任一实际二纯球，取其对跖纯点 $r,s$ 和原球心 $c=(r+s)/2$。实际刻度给 $b(r,s)=0$，所以 $b(c,c)=1/2$。每个该球壳纯点 $q$ 满足 $b(r,q)+b(s,q)=1$，故 $b(c,q)=1/2$、$\|q-c\|_b^2=1/2$。把原球写成 $c+L\overline{\mathbb B}^3$，这个常范数条件使 $b(Lv,Lw)=\tfrac12v\cdot w$，所以其完整闭球就是原仿射包中的同一 $b$-欧氏半径球。于是所有原球尺的半径在同一整体配对内相同。$\square$
+
+**定理 326.3（真面上未被锚锁住的仿射方向给四点反证）。** 设原实际L2成立，非空有限锚集 $B$ 包含在原真面 $F\subsetneq K$，且 $\operatorname{aff}B\ne\operatorname{aff}F$。则 $J_B^{(1)}\ne\ker\beta_0$。更具体地，存在有界 $h:P\to\mathbb R$ 消灭 $J_B^{(1)}$，以及原实际球中的四点关系 $c\in\ker\beta_0$，使 $\langle h,c\rangle\ne0$。此结论不消费M1、数值互易、纯域闭性或矩阵表示。
+
+证明。取 $\operatorname{aff}F$ 上非零仿射函数 $g$，使 $g|_B=0$，并作原有限维仿射延拓。定义
+
+$$
+h(p)=\begin{cases}g(p),&p\in P\cap F,\\0,&p\in P\setminus F.\end{cases}
+\tag{326.7}
+$$
+
+紧 $K$ 上的仿射延拓有界，故 $h$ 有界；无需预给其连续性或可测性。对任一经过锚 $a\in B$ 的实际三球 $D$，若 $D\subset F$，$h$ 在其壳上是 $g$。若 $D\not\subset F$，$D\cap F$ 是严格凸球的非空真面，只能是 $\{a\}$；因 $g(a)=0$，$h$ 在整个球壳上为零。因此 $h$ 消灭全部固定锚中点关系及其范数闭包。
+
+非零 $g$ 在 $F$ 上某处非零，有限原纯分解及面性给 $p\in P\cap F$ 使 $g(p)\ne0$。真面之外有原纯点 $z$，否则 $K=\operatorname{conv}P\subset F$。实际球 $D_*=F_K(p,z)$ 与 $F$ 只交于 $p$。在该三球上选另一对弦端 $q,r$，满足 $q+r=p+z$ 且 $q,r\ne p$：固定非退化弦的中点后，可在三维球壳上旋转该弦。于是 $z,q,r$ 都在 $F$ 外，并且
+
+$$
+c=\delta_p+\delta_z-\delta_q-\delta_r\in\ker\beta_0,
+\qquad\langle h,c\rangle=g(p)\ne0.
+\tag{326.8}
+$$
+
+故 $c\notin J_B^{(1)}$。辅助 $h$ 只分离关系闭包，不被当作原实际 $\tau$。证明也不要求原真面先为暴露面。$\square$
+
+**定理 326.4（单锚的重建前完全结算）。** 在非平凡原有限维紧底、完整菜单及实际暴露二纯三球背景中，固定 $A=\{a\}$，则
+
+$$
+U_A\ne\varnothing
+\Longleftrightarrow\mathsf D_A
+\Longleftrightarrow\mathsf{DG}_A
+\Longleftrightarrow K\text{ 本身是完整仿射闭三球}.
+\tag{326.9}
+$$
+
+因此单锚分支无需输入读数相容、连续性或一般Jordan分类。相对于同一有限复合尾部，它给全部 $\operatorname{PSD}_{2^N}$；一般有限锚的任意 $n$ 分支仍由326.5完整保留。
+
+证明。若 $K$ 不是三球，对 $x\ne a$，实际 $F_K(a,x)$ 必为原真三球；增强锚 $\{a,x\}$ 的仿射维数为一，小于该面的三。326.3排除 $x\in U_A$。对 $x=a$，任取另一个纯点 $z$，在原真三球 $F_K(a,z)$ 中用同一障碍排除它。所以 $U_A=\varnothing$。
+
+若 $K$ 就是一颗三球，322.2使每个消灭单锚关系的有界壳函数都为原仿射函数；范数对偶分离给 $J_{\{a\}}^{(1)}=\ker\beta_0$。所有实际行本身就在整个 $K$ 上仿射，所以 $G_A=U_A=P$。三球的标准Bloch仿射同构直接给单体 $\operatorname{PSD}_2$、迹单位与半球迹概率，无需先调用一般Jordan类型分类。326.2支付原least，随后320.6中相同的两框架产品least、相位joint least和全有限供应，在这个已得单体坐标上继续适用。$\square$
+
+**定义 326.5（稠密单配对的完整候选）。** 保留325.5的强全有限背景，要求存在非空有限原锚集 $A$ 满足 $\mathsf{DG}_A$。先由326.2获得原M1、实际互易与唯一正定自对偶配对，再使用同一具名单体表示桥；之后才选择320.5的两框架有限产品singleton least、同一个相位joint least和全部全有限供应。记为 $\mathsf Q_{\mathrm{dense\text{-}pair}}$。此候选不限制 $|A|=1$，也不预给矩阵维数、可区分框架或锚正交性。
+
+**定理 326.6（同原全部有限量子理论及准确简化）。** 相对于326.5的同一完整背景与具名供应，$\mathsf Q_{\mathrm{dense\text{-}pair}}$ 等价于同一 $n\ge2,\theta$ 下全部有限 $N\ge0$ 的
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{326.10}
+$$
+
+证明。式(326.3)的固定锚等价与325.6给完整正向，既有单体、两框架、相位和全有限尾部不重复证明。反向在标准单体选择 $n-1$ 条独立锚射线，325.4给 $\mathsf D_A$，标准迹行给全部锚关系相容，所以 $G_A=U_A$ 稠密；标准PSD支持投影支付指定有限least，其余反向沿320.6。对任意非空有限标准锚集，325.4还准确给出 $\mathsf{DG}_A\iff\dim_{\mathbb C}\operatorname{span}A\ge n-1$。
+
+一般分支的简化是只预检验一批稠密成功参照，并以一个有限基统一成唯一配对；(326.3)表明两种关系负担并未仅因合写一式而消失。326.4则在单锚分支真正删除读数相容输入，直接把原整体锁成单个三球。原核范数闭包、原拓扑稠密性、实际暴露性、完整菜单和全部复合前件仍明确承担。
+
+原完整迹对偶、有限单位分解及原产品／丢弃分别给复射线与密度矩阵、Born迹配对、全部数学POVM／PVM、通常复张量和偏迹。指定分支在全部有限相关旁观输入上的正性仍负责CP／Kraus，全部正输入及合计质量预算仍负责TNI／TP及仪器；指定锐事件的整个yes支持中性仍负责Lüders；指定连续可逆保单位且全旁观保正的一参数群仍负责连续酉动力学。具体Hamiltonian、物理钟、$\hbar$、设备、无限极限和有限精度／操作成本各保留自己的前件。
+
+对一般有限 $A$，本章未证明裸 $\mathsf D_A\Rightarrow\mathsf{DG}_A$，也未证明重建前的裸 $\mathsf D_A\Rightarrow\mathsf R_A^c$。前者缺实际行对主干锚关系的相容；后者缺任意连续锚球仿射函数的全域仿射性。326.3给出原真面内的必要仿射跨度约束，326.4完全解决单锚特例；辅助换尺函数不是这些完整蕴含的反模型。
+
+本章承重接合为稠密成功行的有限基统一、原真面上的四点闭包障碍及单锚重建前等价。正定自对偶配对、谱性、滤波与单体分类复用[既有proper谱性桥][Q326S]及其Niestegge、Barnum–Müller–Ududec来源；Bloch表示、有限维线性延拓与范数对偶分离为成熟工具。一般完整量子尾部保留320.6的归属。这是条件纸面综合，不申领成熟结果发明、全球原创或Lean核验。$\square$
+
+白话：不必先让每颗参照都过关，只要过关的参照在原世界里处处可逼近。先从它们中抽一组基，交换谁照谁的读数都不变，就把全部成功参照锁在同一张双线性尺上；其他纯点沿这张尺取得自己的最低门。已有的最小确认理论随后把这张尺变成真正的内积，原整体与它的测试成为同一个自对偶几何，每张二纯小球的半径都相同。反过来，若锚躲在一张真面里，没撑满那张面的仿射方向，就能只在面内换尺；所有经过锚的小球都看不见，但跨出去的一条四点关系会露馅。只有一颗主干锚时，只要有参照真能补齐，整个世界就只能是那一颗三球；更多锚的完整候选继续覆盖任意有限复量子维数，并由原有限产品门与相位共同门接通全部有限层。
+
+[Q326S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Reciprocal least confirmation and the spectrality bridge：完整proper最小确认与互易给正定自对偶配对、共同框架、滤波和归属明确的Jordan桥；不额外输入谱性或强对称。"
+
+## 追加锚（本行以下为增补区）
+
+## 327. 球的可筛性由共同尺给出，三点沿实际球生成整体
+
+**定义 327.1（不预置暴露面的稠密参照候选）。** 原单体仍为有限维闭尖生成锥 $C\subset V$、严格正单位 $u$、整个紧底 $K$、全部 $P=\operatorname{ext}K$ 及完整proper区间 $\mathcal E=[0,u]$，并要求 $|P|\ge2$。只要求每两个不同纯点的整个实际最小面 $B(p,q)$ 是非退化仿射闭三球，记为 $\mathrm{L2}$；不预给该面暴露。$\tau$ 是该原球的对称半球刻度。$\mathcal F_0,\beta_0,\mathcal A_B,J_B^{(1)},U_A,G_A,\mathsf{DG}_A$ 均按325.1、326.1的同一原关系定义，删去其背景中的预暴露要求，不改变这些集合或闭包的公式。
+
+**定理 327.2（稠密成功行先给least，再给所有实际面的可筛性）。** 在327.1的原域中，若某个非空有限 $A$ 满足 $\mathsf{DG}_A$，则存在唯一正定对称双线性型 $b$，使全部原纯点满足
+
+$$
+e_p=b(p,\cdot)\in\mathcal E,\qquad
+e_p\text{ 是原proper确认纤维的least},\qquad
+b(p,q)=\tau(p,q).
+\tag{327.1}
+$$
+
+原 $C$ 关于 $b$ 自对偶，每个实际面暴露且在自身张成中自对偶；到任一锥面的 $b$-正交投影为正且质量不增。这些结论先于Jordan类型分类。
+
+证明。326.2从成功行下降到取得全部 $Tp$ 为least的部分，只消费球内确认下界、实际互易、原范数关系、有限实基、闭效应区间与稠密性，没有消费预暴露。具体地，成功行消灭 $\ker\beta_0$，下降为proper $e_x$；取 $G_A$ 中实基定义 $Tx_i=e_{x_i}$，互易使 $b(v,w)=(Tv)(w)$ 对称且 $Tx=e_x$ 对全部 $x\in G_A$ 成立。闭区间给任意纯 $p$ 的 $Tp$ proper并确认它。对任何原proper确认者 $f$ 和 $x\in G_A$，
+
+$$
+f(x)\ge\tau(p,x)=e_x(p)=(Tp)(x).
+\tag{327.2}
+$$
+
+原连续性与纯分解使比较延到 $C$，故全部 $Tp$ 为least。到这里尚未识别两个任意非成功纯点之间的 $b(p,q)$ 与 $\tau(p,q)$。
+
+现在准确复用[proper最小确认谱性及面几何桥][Q327S]。全部proper least、互易、有限维紧底与整个菜单给共同框架有符号谱分解、正定自对偶配对，以及面内自对偶。其唯一状态—效应映射在纯点上等于 $T$，故该配对就是 $b$。若 $D$ 是非零锥面，令 $\omega=T^{-1}u$，取 $z\in\operatorname{ri}D$ 的正谱分解 $z=\sum_i\lambda_i p_i$，并令 $s_D=\sum_i p_i$。该既有桥给
+
+$$
+D=C\cap(\omega-s_D)^{\perp_b},\qquad
+s_D=Q_D\omega,\qquad
+Q_D(C)\subset D,\qquad uQ_D\le u,
+\tag{327.3}
+$$
+
+其中 $Q_D$ 是到 $\operatorname{span}D$ 的 $b$-正交投影。第一式使每个实际面暴露；这些性质不是从一个任意自对偶锥免费取得，而由least桥的共同框架及面论证供应。
+
+对实际球 $H=B(p,q)$ 取其锥面 $D$。球内北极半效应 $t_p$ 在 $D$ 上齐次延拓，由 $Q_D$ 的正性及质量不增，$t_pQ_D$ 是原全域proper确认者。因此 $e_p\le t_pQ_D$。反向，$e_p|_D$ 是球内proper确认者，球内least给 $t_p\le e_p|_D$。$Q_D$ 在 $D$ 上恒等，两式合得 $e_p|_D=t_p$，遂有(327.1)。这里用已构造的面投影支付原全域延拓，没有预先调用要求暴露性的XX277.3。$\square$
+
+**推论 327.3（原准备关系恰为一张正定尺的零方向）。** 在327.2的前件下，对所有有限实配方 $c,d\in\mathcal F_0$，
+
+$$
+\Gamma(c,d):=\sum_{p,q}c_pd_q\tau(p,q)
+=b(\beta_0c,\beta_0d),\qquad
+\Gamma(c,c)\ge0,\qquad
+\Gamma(c,c)=0\Longleftrightarrow\beta_0c=0.
+\tag{327.4}
+$$
+
+因此完整二元读数Gram的根基恰为原准备核，不只是原核包含于一个更大的读数零空间。任一完整框架长度都是同一个整数 $r=u(\omega)=b(\omega,\omega)$。置 $m=\omega/r$，则
+
+$$
+m\in K,\qquad
+b(x,x)=\frac1r+\|x-m\|_b^2\quad(x\in K),\qquad
+P=K\cap\left\{x:\|x-m\|_b^2=1-\frac1r\right\}.
+\tag{327.5}
+$$
+
+$m$ 是该二次纯度在整个原 $K$ 上的唯一最小点。每个实际二纯球仍在同一个 $b$ 下有半径 $1/\sqrt2$。
+
+证明。代入(327.1)并双线性展开给(327.4)，正定性给准确零集合。既有共同框架桥使每个完整框架的纯点和都等于 $\omega$，其成员 $b$-正交且各有平方一，故长度为 $u(\omega)$；这给同一个整数，并使 $m$ 是框架的均匀原混合。$b(\omega,x)=u(x)=1$ 给(327.5)的正交移心恒等式。有限纯分解及严格凸性给 $P=K\cap\{x:b(x,x)=1\}$，代入即得纯壳。二纯球的半径复用326.2在取得实际刻度后的几何计算。这里的二次纯度是由原关系构造出的数学量；未输入一台双份SWAP装置。$\square$
+
+**定义 327.4（实际球生成）。** 称 $Y\subset P$ 球封闭，若它包含任意两个不同成员所生成实际三球的全部原纯壳。记 $\langle B\rangle_{\rm ball}$ 为包含 $B$ 的最小球封闭纯点集；不要求 $Y$ 拓扑闭或先为实际面。等价地，从 $Y_0=B$ 开始，反复置
+
+$$
+Y_{j+1}=Y_j\cup\bigcup_{p\ne q\in Y_j}(P\cap B(p,q)),
+\qquad \langle B\rangle_{\rm ball}=\bigcup_{j\ge0}Y_j.
+\tag{327.6}
+$$
+
+**定理 327.5（真球封闭区域上的关系障碍）。** 在原有限维紧底与实际L2下，若 $Y\subsetneq P$ 球封闭，非空有限 $B\subset Y$ 且 $\operatorname{aff}B\ne\operatorname{aff}Y$，则 $J_B^{(1)}\ne\ker\beta_0$。这加强326.3的真面障碍，不消费M1、互易、纯域闭性或矩阵坐标。
+
+证明。选 $\operatorname{aff}Y$ 上非零仿射 $g$，使 $g|_B=0$，并仿射延拓到原有限维空间。令 $h=g$ 于 $Y$，在 $P\setminus Y$ 为零；原紧底使 $h$ 有界。经过锚 $a\in B$ 的任一实际球 $H$，因 $H$ 是 $K$ 的面，$P\cap H=\operatorname{ext}H$。若纯壳与 $Y$ 另有一个交点，则这两个不同极点的最小实际面就是 $H$：它包含于 $H$，而严格凸球没有包含两点的真面。球封闭性使 $P\cap H\subset Y$，故 $h$ 在壳上仿射。否则交集仅为 $a$，因 $g(a)=0$，$h$ 在整个壳上为零。两种情况均消灭全部固定锚中点关系及其范数闭包。
+
+选 $p\in Y$ 使 $g(p)\ne0$，并选 $z\in P\setminus Y$。球封闭性给 $P\cap B(p,z)\cap Y=\{p\}$。在这颗球内取 $p$ 的对径点 $\bar p$，再取不同的一对对径点 $q,t$；三点 $\bar p,q,t$ 均在 $Y$ 外。因此
+
+$$
+c=\delta_p+\delta_{\bar p}-\delta_q-\delta_t\in\ker\beta_0,
+\qquad \langle h,c\rangle=g(p)\ne0.
+\tag{327.7}
+$$
+
+有界分离给结论。辅助 $h$ 不被当作实际 $\tau$ 行。$\square$
+
+**推论 327.6（两锚的每个成功补点通过实际三球生成全部纯域）。** 若有限 $B$ 至多含三颗纯点、至少含两个不同纯点，且 $J_B^{(1)}=\ker\beta_0$，则 $\langle B\rangle_{\rm ball}=P$。特别地，对不同两锚 $A=\{a,b\}$ 及任意 $x\in U_A$，
+
+$$
+\langle a,b,x\rangle_{\rm ball}=P,
+\qquad\operatorname{face}_K(a,b,x)=K.
+\tag{327.8}
+$$
+
+若 $K$ 本身不是三球，则 $x\notin B(a,b)$。
+
+证明。若 $Y=\langle B\rangle_{\rm ball}$ 为真集，它含一颗完整实际三球的纯壳，故仿射维数至少三；$B$ 的仿射维数至多二。327.5与满核矛盾。任何含 $B$ 的实际面都对球生成封闭，因此也含全部 $P$，即为 $K$。若 $x\in B(a,b)$，该球的纯壳本身是包含 $A\cup\{x\}$ 的球封闭集；这个锚集至少有两个不同点，也允许 $x=a$ 或 $x=b$。其最小球封闭集已经是 $P$，故 $P\subseteq B(a,b)$，再由 $K=\operatorname{conv}P$ 得 $K=B(a,b)$。式(327.6)保证每个目标各自可在有限层球生成中到达，未证明统一层数上界、非负配方的可执行改写、三纯面九维上界或TC。$\square$
+
+**定义 327.7（暴露性转为输出的完整候选）。** 保留326.5的同一强全有限背景、全部原菜单和过程供应，将单体入口改为327.1的实际L2与某个非空有限 $A$ 的 $\mathsf{DG}_A$。随后才以已得单体坐标命名320.5的两框架有限产品singleton least、指定相位joint least及全部有限传播供应。记完整候选为 $\mathsf Q_{\mathrm{intrinsic\text{-}faces}}$。有限锚、原核的范数闭包、成功者稠密性和这些复合供应仍为输入；预暴露性被删除。
+
+**定理 327.8（同原全部有限复量子理论）。** 相对于327.7完整保留的背景及具名供应，$\mathsf Q_{\mathrm{intrinsic\text{-}faces}}$ 当且仅当存在同一个 $n\ge2$ 与保单位坐标 $\theta$，使所有有限 $N\ge0$ 都满足
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{327.9}
+$$
+
+证明。327.2先在原域给所有面的暴露性，特别补齐326.1中删去的二纯面前件，而同一个 $A,G_A$ 及其稠密性均未改变。故326.6完整适用，原单体表示、两框架、相位和全有限尾部的消费顺序保持。反向，标准复模型本来具有实际L2；取 $n-1$ 条独立锚射线，325.4与迹行给 $\mathsf{DG}_A$，其余有限来源仍由原支持投影支付。
+
+简化准确在于把球的预暴露性改为共同least几何的结论，没有以定义把暴露性藏进“实际三球”。原单体的正定、自对偶、全体面与准确Gram零核已经在类型分类前取得；327.6另给重建前的实际三点球生成约束。一般裸 $\mathsf D_A\Rightarrow\mathsf{DG}_A$、一般裸 $\mathsf D_A\Rightarrow\mathsf R_A^c$ 及三点球生成是否足以支付TC，均未由这些结论解决。既有XVIII201–202的自重合与最小回路入口直接保留其原归属，不把二次展开另计新公理。
+
+| 原关系与另外保留的前件 | 同一坐标中的量子公理 |
+| --- | --- |
+| 原全部纯点、整个紧底及单体表示 | 复射线、迹一密度矩阵；二纯球为完整Bloch球 |
+| 原完整proper菜单与线性评价 | $0\preceq E\preceq I$ 与Born配对 $\operatorname{Tr}(E\rho)$ |
+| 全部有限原单位分解 | POVM；正交投影分解给PVM |
+| 同一全有限背景、有限least来源及传播 | 通常复张量、全部纠缠PSD锥、置换与偏迹 |
+| 指定线性分支在全部有限相关旁观输入保正 | CP及Kraus表示；单体正性不单独支付它 |
+| 全输入分支质量预算及合计预算 | TNI／TP与数学仪器 |
+| 指定锐事件及整个yes支持的逐点中性 | 指定分支为Lüders更新 $X\mapsto PXP$ |
+| 指定连续可逆、保单位、全旁观保正的一参数群 | 连续酉共轭；具体Hamiltonian、钟及 $\hbar$ 标定另有前件 |
+
+本章新增综合为不预给暴露性的成功行下降、由既有面投影恢复实际球尺，以及球封闭区域的四点关系障碍。谱性、自对偶、面投影、滤波纯性与Jordan表示完整复用[既有proper谱性桥][Q327S]及其Niestegge、Barnum–Barrett–Krumm–Müller、Barnum–Müller–Ududec来源；有限基、二次展开和仿射分离为成熟工具。这里是条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：仍从原世界里每两颗纯准备真正撑起的小三球出发，但不先保证能把小球单独筛出来。让一批稠密成功参照把同一套准备关系和读数接住，从中抽一组基就固定整把尺；其他纯点取得自己的最低确认门。已有的最小确认理论再让这把尺变成内积，为每张面长出支持门和正投影，于是原本另加的“能筛出这颗球”自己成为结论。整体的纯点落在同一个球壳，各颗二纯小球的半径也一致。反过来，只要三颗参照真的补齐关系，就不能还躲在某个对小球生成封闭的真区域里，否则区域内的一次换尺会被跨界的四点关系揭穿；两锚加一个成功补点必须沿实际小球生成整个纯域。最后仍由原有限产品门、相位共同门及全有限供应接通全部复量子层，过程条件分别给测量更新与运动。
+
+[Q327S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md "Reciprocal least confirmation and the spectrality bridge；Face geometry and the projective interface；Least confirmation forces face-filter purity。完整proper最小确认与互易的成熟方法及项目接口，未整体形式化。"
+
+## 追加锚（本行以下为增补区）
+
+## 328. 只按小球内的等同取商：原准备空间不再额外折叠
+
+**定义 328.1（全部实际球的关系商）。** 原单体仍为327.1的有限维闭尖生成锥、严格正单位、整个紧底 $K$、全部 $P=\operatorname{ext}K$、$|P|\ge2$ 及完整proper菜单。保留实际L2，不要求球预暴露。另取[XVIII240.1][Q328TF]的全称 $\mathsf{TF9}$：任意三个原纯标签生成的整个实际面的实齐次张成维数至多九；不是三个标记向量的张成维数上界。
+
+在同一有限支撑空间 $\mathcal F_0=\mathbb R^{(P)}$ 内，仍用 $\|c\|_1=\sum_p|c_p|$ 与 $\beta_0c=\sum_pc_pp$。定义
+
+$$
+\begin{aligned}
+\mathcal A_{\rm loc}
+ &=\operatorname{span}_{\mathbb R}\{\delta_p+\delta_q-\delta_r-\delta_s:
+ p,q,r,s\in P\cap H,\ p+q=r+s,\ H\text{ 为实际二纯球}\},\\
+J_{\rm loc}&=\operatorname{cl}_{\mathcal F_0,\|\cdot\|_1}\mathcal A_{\rm loc},
+\qquad \mathcal U=\mathcal F_0/J_{\rm loc},\qquad q:\mathcal F_0\to\mathcal U,\\
+\|q(c)\|_{\mathcal U}&=\inf_{d\in J_{\rm loc}}\|c+d\|_1,
+\qquad \mathcal U_+=q(\mathcal F_{0,+}),\qquad \widehat u(qc)=\sum_pc_p.
+\end{aligned}
+\tag{328.1}
+$$
+
+所有四端点及中点等式都在同一原实际球中。原准备映射连续，故 $J_{\rm loc}\subseteq\ker\beta_0$，$\widehat u$ 良定义。闭子空间的商范数是范数；此时尚未宣称 $\mathcal F_0$ 或 $\mathcal U$ 完备。候选的单体关系约束为
+
+$$
+\mathsf R_{\rm loc}:\qquad J_{\rm loc}=\ker\beta_0.
+\tag{328.2}
+$$
+
+它比较原准备等同与实际球内等同生成的闭关系，不指定有限锚、不读取 $\tau$ 行，也不假设成功参照稠密。
+
+**引理 328.2（有界局部提升的普遍性与排核）。** 设 $W$ 是任意实赋范空间，$\iota:P\to W$ 有界，且其线性延拓 $\widetilde\beta(c)=\sum_pc_p\iota(p)$ 消灭 $\mathcal A_{\rm loc}$。则存在唯一有界线性 $L:\mathcal U\to W$ 满足 $Lq(\delta_p)=\iota(p)$。若另有线性 $\pi:W\to V$ 满足 $\pi\iota(p)=p$，$W=\operatorname{span}\iota(P)$，且 $\mathsf R_{\rm loc}$ 成立，则 $\pi$ 单射。
+
+证明。若 $M=\sup_p\|\iota(p)\|<\infty$，则 $\|\widetilde\beta(c)\|\le M\|c\|_1$。连续性使其消灭 $J_{\rm loc}$，因此下降到商且 $\|L\|\le M$；$q(\delta_p)$ 张成商，给唯一性。对 $w\in\ker\pi$，取有限 $c$ 使 $w=\widetilde\beta(c)$，则 $\beta_0c=\pi w=0$。关系约束给 $c\in J_{\rm loc}$，所以 $w=0$。证明不使用 $W$ 完备、内积或 $\pi$ 的正逆。$\square$
+
+**定理 328.3（L2 与三点预算已决定普遍提升）。** 只在328.1的原域假设 L2 与 $\mathsf{TF9}$，尚不要求 $\mathsf R_{\rm loc}$。存在有限 $n\ge2$ 及满射
+
+$$
+\Psi:\operatorname{Herm}_n(\mathbb C)\to V,\qquad
+\Psi(\operatorname{PSD}_n)=C,\qquad u\Psi=\operatorname{Tr},
+\tag{328.3}
+$$
+
+每个原纯点有唯一迹一秩一提升 $\iota(p)$，每颗实际二纯球在同一二维复支持上忠实仿射提升。并且同一个提升给出保单位等距序同构
+
+$$
+\widehat\beta:\mathcal U\overset\sim\longrightarrow
+\bigl(\operatorname{Herm}_n(\mathbb C),\|\cdot\|_{\rm tr}\bigr),\qquad
+\widehat\beta(\mathcal U_+)=\operatorname{PSD}_n,\qquad
+\widehat u=\operatorname{Tr}\circ\widehat\beta.
+\tag{328.4}
+$$
+
+这里 $\|H\|_{\rm tr}=\operatorname{Tr}|H|$。因此这个由原标签与局部等同定义的商已经有限维、完备，未再完成或添加新纯标签。
+
+证明。准确复用[XVIII240.2—240.3][Q328TF]的支撑锥与维数证明：外三角中四维横向空间和至少四维切方向空间不相交；实际面的八维仿射上界迫全部切方向落在两个端点的四维直和中，即TC。再复用[XIII160.3—160.4][Q328HVC]：L2经XII159.5支付不同球的准确张成交H2，TC支付准确射影切四空间H3，实际最小面支付H1。Schillewaert–Van Maldeghem的Hermitian Veronesean cap一般域分类先给商，原单位正定合同归一化给(328.3)、纯射线双射与全部实际小面接口。整球端点直接用Pauli表示。这里不再输入H1—H3、原NC、共同内积、谱性或Jordan分类；一般商尚未被排除。
+
+每个 $\iota(p)$ 的迹范数与Hilbert–Schmidt范数都为一，故 $\widetilde\beta$ 对原 $\ell^1$ 范数有界。实际球上的忠实仿射逆使所有局部中点关系提升为零，得到
+
+$$
+J_{\rm loc}\subseteq\ker\widetilde\beta.
+\tag{328.5}
+$$
+
+反向，取提升空间的一组复基射线，其原标签构成有限 $B$。在纯标签双射下，经过 $B$ 的原固定锚关系恰对应标准复密度体相同球束中的关系：每颗实际球及其全部纯壳都由同一二维支持保真。现在只在**提升后的标准准备映射**上应用325.3，得到
+
+$$
+\ker\widetilde\beta=J_B^{(1)}\subseteq J_{\rm loc}.
+\tag{328.6}
+$$
+
+这没有把325.3直接套在尚可折叠的 $\beta_0$ 上。两式给等核；秩一投影实张成Hermitian空间，遂得线性双射 $\widehat\beta$。
+
+对 $H=\widetilde\beta c$，迹范数三角不等式给 $\|H\|_{\rm tr}\le\sum_p|c_p|$。另一方面，Hermitian谱分解 $H=\sum_i\lambda_iP_i$ 在同一标签集中给有限配方 $c_H$，且
+
+$$
+\widetilde\beta c_H=H,\qquad
+\|c_H\|_1=\sum_i|\lambda_i|=\|H\|_{\rm tr}.
+\tag{328.7}
+$$
+
+任何两个提升为 $H$ 的配方差均在 $J_{\rm loc}$，所以商范数恰等于迹范数，且下确界由谱配方达到。非负有限配方的提升恰为全部PSD，质量为迹，给(328.4)。有限维完备性现在是结论。整个证明只复用325.3的标准有界刚性，不把任意球函数预先假设连续或当作原可用效应。$\square$
+
+**定理 328.4（原关系完备恰好禁止额外混合折叠）。** 在328.3的同一原域，下列三项等价：$\mathsf R_{\rm loc}$；存在非空有限原 $B$ 满足 $J_B^{(1)}=\ker\beta_0$；原单体存在保单位实线性序同构 $\theta:V\to\operatorname{Herm}_n(\mathbb C)$、$\theta C=\operatorname{PSD}_n$。等价成立时，同一个 $\theta=\Psi^{-1}$ 满足
+
+$$
+\theta p=\iota(p),\qquad
+\tau(p,q)=\operatorname{Tr}(\theta p\,\theta q),\qquad
+e_p(x)=\operatorname{Tr}(\theta p\,\theta x).
+\tag{328.8}
+$$
+
+$e_p$ 是原完整proper确认纤维的least；原正定自对偶、全部面暴露、共同球尺及纯域紧性都是输出。
+
+证明。原映射下降为满射 $\overline\beta:\mathcal U\to V$，且 $\beta_0=\overline\beta q=\Psi\widetilde\beta$。由328.3，$\mathsf R_{\rm loc}$ 恰是 $\ker\overline\beta=0$，也恰是 $\ker\Psi=0$；这也可直接用328.2排核。正锥与单位的等式使其逆成为保单位序同构。标准反向用325.3的复基锚给有限 $B$；若已有这样的有限 $B$，则
+
+$$
+\ker\beta_0=J_B^{(1)}\subseteq J_{\rm loc}\subseteq\ker\beta_0,
+\tag{328.9}
+$$
+
+给第一项。因此有限锚证书不必预选，存在性已成为关系商重建后的结论。
+
+球内仿射同构保中心和归一化半球刻度，标准Bloch公式给(328.8)的 $\tau$；这一局部公式在328.3的商分支中本已成立，但不保证各行能下降到原混合等同。排核后全部Hermitian迹行均为原线性泛函。完整proper菜单恰为 $0\preceq E\preceq I$；确认纯投影 $P$ 的效应恰为 $P+B$、$B=(I-P)B(I-P)$、$0\preceq B\preceq I-P$，所以 $P$ 为least。其余静态几何为完整PSD的标准性质，不再调用proper谱性桥来取得矩阵空间。$\square$
+
+**命题 328.5（局部球不能替整体多认一条关系）。** 若328.3的商有 $0\ne H\in\ker\Psi$，则原准备核含一个局部闭关系不能生成的有限元；其有界分离见证可显式取为
+
+$$
+h_H(p)=\operatorname{Tr}(H\iota(p)).
+\tag{328.10}
+$$
+
+证明。$u\Psi=\operatorname{Tr}$ 给 $\operatorname{Tr}H=0$。对 $H$ 作有符号谱分解并取原纯标签，得到有限 $c$ 满足
+
+$$
+\beta_0c=0,\qquad \widetilde\beta c=H,\qquad
+\langle h_H,c\rangle=\operatorname{Tr}(H^2)>0.
+\tag{328.11}
+$$
+
+$|h_H(p)|\le\|H\|_{\rm op}$，且它消灭所有实际球内关系及其范数闭包，故 $c\notin J_{\rm loc}$。正负谱质量相等且为正，除以该共同质量还给两份原等态概率配方，其提升仍不同。这是辅助关系见证，不把 $h_H$ 冒充原可用效应。
+
+具体模型直接复用[XVIII240.10及其XIV165来源][Q328TF]的 $m=4$ 全有限平衡商：$H=\operatorname{diag}(I_4,-I_4)$、$V=\operatorname{Herm}_8(\mathbb C)/\mathbb RH$。该既有模型在每个有限非标量层保留L2、TF9、全部原纯标签及实际小面。单体取 $c=\sum_{i=1}^4\delta_{\pi P_{e_i}}-\sum_{j=1}^4\delta_{\pi P_{f_j}}$，则(328.11)的读数为八。因此全有限实际三点几何及强复合背景本身也不支付 $\mathsf R_{\rm loc}$。这是既有反模型对本关系条件的应用，不申领新的商构造；未据此声称有限least尾部的每项独立性。$\square$
+
+**定义 328.6（整个三份系统上的局部关系候选）。** 完整保留[XVIII240.8][Q328TF]的强全有限背景：同一有限实 $V$、$\dim V>1$，每个有限 $N\ge0$ 的整个 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正乘积单位 $u_N$、整个归一底 $K_N$、全部 $P_N=\operatorname{ext}K_N$、完整proper菜单及全部有限单位分解；标量层标准。保留分离联合空间的原乘积配对、规范重括号、全部正置换及其正逆、正的单位丢弃，以及任意有限分块 $a|b$ 的全称min/max界，最大锥使用两块全部正泛函，包含全部相关及纠缠输入。只在整个原 $K_3$ 上定义328.1的关系商并要求
+
+$$
+\mathsf Q_{\rm local\ quotient}^{(3)}:\qquad
+\mathrm{L2}_3+\mathsf{TF9}_3+\mathsf R_{{\rm loc},3}.
+\tag{328.12}
+$$
+
+下标 $3$ 指三份系统；TF9仍指该系统内任意三个原纯标签，包括纠缠纯态，而非只检查三个产品标签。这里不再输入两框架产品singleton least、相位joint least或GB控制供应，改由整个三份系统的完整表示接通既有共同坐标与全有限传播。指定过程仍分别保留原全部旁观正性、全输入及合计质量预算、yes支持中性与连续可逆保单位群条件。
+
+**定理 328.7（同一原全有限量子理论与准确简化）。** 在328.6完整保留的强全有限背景下，该候选当且仅当存在同一个 $n\ge2,\theta$ 使每个有限 $N\ge0$ 都有
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{328.13}
+$$
+
+证明。先在整个 $(W_3,C_3,u_3)$ 应用328.4，取得完整迹归一化PSD表示。此时原least与零邻面均为完整PSD的标准对象，特别给原 $\mathsf{NC}_3$。于是已经满足XVIII240.9的准确入口 $\mathrm{L2}_3+\mathsf{TF9}_3+\mathsf{NC}_3$，其强背景也正是328.6。直接复用该定理及XIII161.1—161.4：原纯旁观面先恢复完整低层，正态／正效应产品、重括号和交换选择同一个局部方向，再以任意有限分块min/max和置换传播到所有有限 $N$。因此得到的是同一 $\theta^{\otimes N}$，没有逐层另选坐标，也没有消费旧两框架或相位来源。
+
+反向，标准三份PSD的每对纯点生成Bloch球，每三个纯点的支持复维数至多三，所以实际面齐次维数至多九。325.3在维数 $n^3$ 的整个三份系统中给有限复基锚证书，(328.9)即付 $\mathsf R_{{\rm loc},3}$；强背景标准成立。$\dim V>1$ 排除标量单体，$N=0$ 取标准恒等坐标。
+
+| 原关系、菜单与保留的供应 | 同一坐标中的量子公理 |
+| --- | --- |
+| 整个三份系统的L2、实际TF9、局部关系满核 | 完整三份PSD；共同坐标桥恢复单体，有限锚证书为输出 |
+| 整个原紧底、完整proper菜单与评价 | 迹一密度矩阵、$0\preceq E\preceq I$ 与Born概率 $\operatorname{Tr}(E\rho)$ |
+| 全部有限原单位分解 | 全部数学POVM；正交投影分解给PVM |
+| 完整三份表示、强全有限产品及共同坐标传播 | 通常复张量、全部纠缠PSD锥、置换与偏迹 |
+| 指定线性分支对全部有限相关旁观输入保正 | CP及有限Kraus表示 |
+| 每个正输入的分支预算与合计预算 | TNI／TP及数学仪器；零概率支不定义归一条件态 |
+| 指定锐事件及整个yes支持逐点中性 | Lüders分支 $X\mapsto PXP$ |
+| 指定连续可逆保单位、全旁观保正的一参数群 | 连续酉共轭及群的生成元；钟、能量与 $\hbar$ 标定另给 |
+
+简化的是入口对象：用一张由原标签和球内等同定义的普遍商，替代有限锚选择、稠密成功集及另给的实际行相容；把同一入口放在整个三份系统后，两框架、相位及其有限least也改为输出，不再作独立来源。几何上，$\mathcal U$ 只识别局部闭关系并保留完整复密度体，原世界只能再把它取商；$\mathsf R_{\rm loc}$ 恰好禁止这第二次折叠。代价是L2与TF9作用于整个原 $K_3$，覆盖全部纠缠纯态；这不是把327的单体前件原样弱化。TF9是明确承担的三元几何输入，不是由裸关系满核或327.6的球生成证明所得；没有证明独立公理总数严格减少。也未证明一般裸 $\mathsf D_A\Rightarrow\mathsf{DG}_A$、裸L2或球生成推出TF9／TC。闭包没有给有限非负改写链、统一深度、逼近速度、实际设备或操作成本；无限极限仍另有前件。
+
+本章新增综合为：由既有实际几何商与标准有界关系刚性，识别原局部关系商的准确核、迹范数、正锥及普遍性，再把完整重建锁成“原准备不额外认同”的定义间约束，并在整个三份系统接入既有全有限传播。HVC分类、实际H2／TC接口、TF9的维数接合、标准325.3刚性及XIII161／XVIII240.9的全有限尾部均保留既有归属；谱分解、商范数、线性下降和有界分离为成熟工具。XVIII201—202的自重合入口、221—223及232的读数提升不被另计新公理；本章不以预给二元读数构造提升。此为条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：把整个三份系统里的每颗纯准备当作一颗珠子，纠缠准备也全部算在内；每两颗珠子真正撑起一颗实心小三球。先只允许在同一小球里把两对中点相同的珠子配方认成相同，再把这些等同能逼近的关系一起收齐；由此得到一个不先指定参照、不先放进读数的整体。三颗珠子撑起的实际面不能超过九个齐次方向，这笔预算让所有小球属于同一套复射影几何；已有分类和局部关系刚性随后把刚才的整体认成完整复量子密度体。原世界仍可能把其中两份不同的大混合额外压成同一点：小球和三点面都完好，这个差别却被藏起来。新关系约束只说，原世界认作相同的配方，必须已经由小球里的等同生成，不能再偷偷多认一次。这样额外折叠被排掉，Born读数与最低确认门都回到原空间；整个三份结构再经原产品和丢弃锁定同一份局部坐标，传到全部有限层，无须另外先交两张框架和相位最低门。测量怎样更新、哪个群代表时间运动，仍由各自明确的过程条件决定。
+
+[Q328TF]: QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md "240.1—240.5：实际TF9给TC与qutrit小面；240.10：复用XIV165的m≥4全有限商，L2与TF9仍可同时保留。"
+[Q328HVC]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md "160.3—160.4：实际H1—H3、Schillewaert–Van Maldeghem一般域Hermitian Veronesean cap商分类、原单位归一化及忠实实际二纯球；H2复用XII159.5。"
+
+## 追加锚（本行以下为增补区）
+
+## 329. 有限球网的预算与三球闭环的精确障碍
+
+**定义 329.1（只粘共同纯点的有限球网）。** 采用328.1的有限维闭尖生成原锥、严格正单位、整个紧底 $K$、全部纯点 $P$、$|P|\ge2$ 与实际L2；本条不输入TF9或 $\mathsf R_{\rm loc}$。记原实维数为 $d$。每颗实际球选自己的仿射坐标
+
+$$
+H_i=m_i+T_i\overline{\mathbb B}^{\,3},\qquad
+W_i=\mathbb Rm_i\oplus T_i\mathbb R^3,\qquad
+\|\alpha m_i+T_i z\|_i=\max\{|\alpha|,\|z\|_2\}.
+\tag{329.1}
+$$
+
+这是球锥、原质量的内在基范数；不以原环境范数替代它。对非空有限实际球族 $\mathscr H=(H_i)_{i\in I}$，令
+
+$$
+\begin{aligned}
+\mathcal D_{\mathscr H}
+ &=\left(\bigoplus_{i\in I}^{\ell^1}W_i\right)/Y_{\mathscr H},\\
+Y_{\mathscr H}
+ &=\operatorname{span}_{\mathbb R}\{j_i(p)-j_j(p):p\in P\cap H_i\cap H_j\},\\
+\|[w]\|_{\mathscr H}
+ &=\min_{y\in Y_{\mathscr H}}\sum_i\|w_i+y_i\|_i.
+\end{aligned}
+\tag{329.2}
+$$
+
+$j_i$ 是直和注入；只识别同一原纯标签的两份副本，不先识别原载体中的其他跨球线性关系。不同实际球最多共用一个纯点，准确复用XII159.5，故这是有限维商，最小值达到。所有粘合关系质量为零，质量泛函在商上良定义。记 $\mathcal F_0(\mathscr H)=\mathbb R^{(P\cap\bigcup_iH_i)}$，$\kappa_{\mathscr H}$ 将纯标签送入任一包含它的球副本；原向量求和给自然收缩映射 $b_{\mathscr H}:\mathcal D_{\mathscr H}\to(V,\|\cdot\|_K)$，其中 $\|\cdot\|_K$ 是原基范数。有限族按包含取共同细化，故不同有限球网之间也有自然收缩映射。
+
+**定理 329.2（闭关系商是有限球网预算的下确界）。** 对328.1的同一个 $\mathcal U=\mathcal F_0/J_{\rm loc}$，任意有限配方 $c$ 满足
+
+$$
+\boxed{\quad
+\|q(c)\|_{\mathcal U}
+ =\inf_{\substack{\mathscr H\text{ 有限实际球族}\\
+                    \operatorname{supp}c\subseteq\bigcup\mathscr H}}
+   \|\kappa_{\mathscr H}c\|_{\mathscr H}.
+\quad}
+\tag{329.3}
+$$
+
+若另有 $\mathsf R_{\rm loc}$，则同一 $\overline\beta:\mathcal U\to V$ 已是保正锥、保质量的等距同构，准确范数为原 $\|\cdot\|_K$，无需TF9、预给内积或谱性。
+
+证明。先只处理有限球族。每颗单球的有限纯配方按其全部中点关系取 $\ell^1$ 闭商，得到(329.1)：XVIII221.2的有界球壳中点刚性给对偶恰为球上仿射函数，Hahn–Banach给准确核，球内对径正负分解给准确范数。这些是既有单球工具。一个 $h\in\ell^\infty(P\cap\bigcup\mathscr H)$ 消灭各球中点关系，当且仅当其每球限制仿射；同一标签上的值天然相等。这恰为(329.2)的对偶：各球仿射泛函的对偶范数至多一，并在共同纯点取相同值。因此范数空间的Hahn–Banach分离将有限球网识别为只用指定球中点关系的闭商，商范数相同；未增加原跨球等同。
+
+向全体球网的商映射给(329.3)左侧不大于右侧。反向，对任意 $\varepsilon>0$，商范数定义与 $J_{\rm loc}=\operatorname{cl}\mathcal A_{\rm loc}$ 给一个有限局部中点关系组合 $r\in\mathcal A_{\rm loc}$，使
+
+$$
+\|c+r\|_1<\|q(c)\|_{\mathcal U}+\varepsilon.
+\tag{329.4}
+$$
+
+选择有限球族包含该组合用到的球并覆盖 $\operatorname{supp}c$；在此球网 $\kappa_{\mathscr H}r=0$，故预算不大于 $\|c+r\|_1$，得到反向。这里没有声称下确界由某个统一有限球族达到。
+
+在 $\mathsf R_{\rm loc}$ 下，$\overline\beta$ 单射且满射，商范数等于 $\inf_{\beta_0a=x}\|a\|_1$。有符号配方的正负部分给 $x=x_+-x_-$，质量预算为 $\|a\|_1$；反向对任意原正负分解的两项作有限纯分解。有限维紧凸生成保证这些分解存在，不要求 $P$ 预先闭。两边取下确界得原基范数；非负配方恰满射 $C$，质量为 $u$。因此有限维、完备性与正锥闭性此时才成为输出。这部分使用成熟基范数／全效应对偶[Q329BN]，新增接合在于(329.3)把原局部闭关系的预算准确分解到有限球网。$\square$
+
+**定理 329.3（树不会降预算，严格失败必有有限闭环）。** 有限球族的二部交叠图以实际球和被两颗以上球共用的纯点为两类顶点，包含关系为边。若此图是森林，每颗球都等距嵌入 $\mathcal D_{\mathscr H}$。对任意原实际球 $H$ 及其对径纯点 $a,b$，若 $\|q(\delta_a-\delta_b)\|_{\mathcal U}<2$，则某个包含 $H$ 的有限球族已经给严格小于二的预算，且含 $H$ 的连通分量必有闭环。
+
+证明。固定一颗根球及其任意对偶范数至多一的局部仿射函数。沿树扩展：一颗新球只通过一个已有共享纯点接入，便在整颗新球取该点既有读数的常函数；绝对值仍至多一。其余连通分量取零。所得函数在每球仿射且共享点相容，因而给商上范数至多一的泛函。为根球内指定向量选择赋范泛函，得到商范数不小于原局部范数；自然收缩给反向。根球任取，得森林结论。这是成熟一次推送等距引理[Q329PO]在本球族接口上的应用，没有把循环拼接也当作一次等距推送。
+
+严格失败由(329.3)—(329.4)给有限球族；加入 $H$ 只会进一步收缩。若其根分量为树，上段的赋范泛函仍可在其他分量取零，矛盾。因此闭包不会制造一种只能在无限球族出现的严格降预算；但没有统一球数、关系系数界或逼近速度。
+
+对给定有限族，这个障碍还有不借原全域效应的准确表达。球上有符号读数写为 $g_i(m_i+T_i z)=s_i+v_i\cdot z$，其对偶范数至多一当且仅当
+
+$$
+|s_i|+\|v_i\|_2\le1,\qquad
+s_i+v_i\cdot z_i(p)=s_j+v_j\cdot z_j(p)
+\quad(p\in P\cap H_i\cap H_j).
+\tag{329.5}
+$$
+
+固定根球的 $a=m_H+T_Hn,b=m_H-T_Hn$。$\|\kappa_{\mathscr H}(\delta_a-\delta_b)\|_{\mathscr H}=2$ 当且仅当(329.5)连同 $s_H=0,v_H=n$ 可行：局部对偶单位球中在 $a-b$ 达到二的泛函唯一，必须是 $z\mapsto n\cdot z$；有限维商对偶保证全域赋范者达到。故全部有限球网的问题成为有限个球上范数约束和共同纯点的线性等式，而不是预付 $\tau$ 的全域仿射性。$\square$
+
+**定理 329.4（三球闭环的准确预算）。** 只假设实际L2。设 $a,b$ 是 $H_0=B(a,b)$ 的对径纯点，$c\in P\setminus H_0$；三球为 $H_0,H_1=B(a,c),H_2=B(b,c)$。令 $A=\tau(a,c),B=\tau(b,c)$，其中 $\tau$ 仍是原球内禀半球刻度。仅粘这三颗球所得 $\mathcal D_\triangle$ 满足
+
+$$
+\boxed{\quad
+\|\kappa_\triangle(\delta_a-\delta_b)\|_\triangle
+=\begin{cases}
+2,&A+B\le1,\\
+2\bigl(\sqrt{A(1-B)}+\sqrt{B(1-A)}\bigr),&A+B>1.
+\end{cases}\quad}
+\tag{329.6}
+$$
+
+若 $\delta=A+B-1>0$，原实际向量 $a-b$ 有至多四项纯配方，其预算为(329.6)第二行，且
+
+$$
+\|a-b\|_K\le
+\|\kappa_\triangle(\delta_a-\delta_b)\|_\triangle
+\le2-\delta^2<2.
+\tag{329.7}
+$$
+
+证明。三球互异，XII159.5使其两两纯交恰为 $a,b,c$。若 $A+B\le1$，选 $\eta\in[A,1-B]$。在 $H_0$ 取确认 $a$、排除 $b$ 的半球效应；在 $H_1$ 取确认 $a$ 且在 $c$ 取 $\eta$ 的proper仿射效应，在 $H_2$ 取排除 $b$ 且在 $c$ 取 $\eta$ 的proper仿射效应。存在性由球上确认者在另一纯点的准确取值区间 $[A,1]$、排除者的区间 $[0,1-B]$ 给出；这是XVII184.1的球内极值公式。三只效应在共享点相容，$2e-u$ 给对偶下界二；原两项配方给上界。
+
+若 $A+B>1$，因 $c$ 在球外而 $\tau(p,q)=1$ 只在重合时成立，有 $0<A,B<1$。写
+
+$$
+A=\cos^2\alpha,\quad B=\cos^2\beta,\quad
+0<\alpha,\beta<\pi/2,\quad\alpha+\beta<\pi/2.
+\tag{329.8}
+$$
+
+任意 $t\ge0$，先在粘合商也成立的等式 $a-b=(a-tc)+(tc-b)$ 中，分别对两项用所属球的对径分解，给至多四个纯原子及预算
+
+$$
+f(t)=\sqrt{(1+t)^2-4tA}+\sqrt{(1+t)^2-4tB}.
+\tag{329.9}
+$$
+
+各根号不小于相应质量绝对值 $|1-t|$，故确为(329.1)的准确局部范数。平面点 $Q_1=(\cos2\alpha,\sin2\alpha)$、$Q_2=(\cos2\beta,-\sin2\beta)$ 到 $(t,0)$ 的距离之和正是 $f(t)$。连接线段在
+
+$$
+t_*={\cos(\alpha+\beta)\over\cos(\alpha-\beta)}>0
+\tag{329.10}
+$$
+
+穿过横轴，所以 $f(t_*)=|Q_1-Q_2|=2\sin(\alpha+\beta)$。这给(329.6)的上界和实际四项配方；全部关系都在两颗实际连接球内，未用 $\mathsf R_{\rm loc}$。
+
+为证此上界也是三球商的下界，令 $\vartheta=\pi/4+(\alpha-\beta)/2$。在 $H_1$ 选半球效应，使其在 $a,c$ 分别取 $x=\cos^2(\vartheta-\alpha)$、$\eta=\cos^2\vartheta$；在 $H_2$ 选半球效应，使其在 $b,c$ 分别取 $y=\cos^2(\vartheta+\beta)$、同一 $\eta$。这些值由两球内经过端点的平面圆和半角公式直接实现，不预给Hilbert坐标。$0\le x,y\le1$，所以在 $H_0$ 上也存在端点值为 $x,y$ 的proper仿射效应：取中心值 $(x+y)/2$、径向系数 $(x-y)/2$ 即可。三者相容，且
+
+$$
+x-y=\sin(\alpha+\beta),\qquad
+\sin(\alpha+\beta)=\sqrt{A(1-B)}+\sqrt{B(1-A)}.
+\tag{329.11}
+$$
+
+$2e-u$ 遂给下界 $2(x-y)$，证明准确式。最后从(329.9)用 $\sqrt{1+s}\le1+s/2$ 得 $f(t)\le2-2\delta t+t^2$；取 $t=\delta$ 给(329.7)。这里是**仅三球商**的等式和原域的上界；原域另有其他关系时，不能将后者冒称等式，也未构造出满足整个实际L2而 $A+B>1$ 的模型。$\square$
+
+**定理 329.5（两种缺口必须分开）。** 对任一实际球 $H$，下列三项等价，无须 $\mathsf R_{\rm loc}$：$W_H\hookrightarrow(V,\|\cdot\|_K)$ 等距；$H$ 的每个proper效应可保同一单位预算延拓到原域；$H$ 的所有对径纯点可由原proper效应区分。另加 $\mathsf R_{\rm loc}$ 时，它们也等价于定理329.3的根半球约束在每个有限球族都可行。前三项若失败，无须 $\mathsf R_{\rm loc}$ 即可用总支持数 $k$ 满足 $4\le k\le d$ 的原纯配方严格降低某条对径差的预算；但这些局部等距要求不替代 $\mathsf R_{\rm loc}$。
+
+证明。等距时，对局部 $t\in[0,u_H]$ 的 $2t-u_H$ 用保范数Hahn–Banach延拓，再与原 $u$ 取半和，给 $0\le e\le u$。这里原基范数的对偶单位球恰为 $[-u,u]$，不把任意线性延拓当作正延拓。效应延拓直接给对径区分。反向，对 $x=\gamma m_H+T_Hz$，若 $\|z\|\le|\gamma|$，则 $x$ 或 $-x$ 在原正锥，原范数为 $|\gamma|$；其余情形用径向两对径点的区分效应，$2e-u$ 在 $x$ 上给 $\|z\|$，恢复(329.1)。这复用成熟基范数对偶，将其用于同一原实际球。在 $\mathsf R_{\rm loc}$ 下，定理329.2与定理329.3给有限球族等价。
+
+原基范数的单位球是紧凸体 $\operatorname{conv}(K\cup-K)$。对一个非零差向量的最优单位球表示，支撑超平面与其中的Carathéodory给至多 $d$ 个有符号纯原子；支撑超平面上的有限纯表示由 $K=\operatorname{conv}P$ 取得，不要求 $P$ 紧。严格降低对径差 $a-b$ 的预算时，质量零使两侧共同质量小于一。若其中一侧只含一个纯点，归一后有 $r-s=\lambda(a-b)$、$r\in P,s\in K,\lambda>1$。改写为 $r+\lambda b=s+\lambda a$；$r=b$ 会使纯点 $b$ 成非平凡混合，故排除。其余情形，实际面 $B(r,b)$ 的面性质迫使 $s,a$ 也在该球，进而该球等于 $H$，与球内直径最长矛盾。另一侧同理，故 $k\ge4$。
+
+最后准确复用XVII193.7—193.8及328.5的同一个 $m=4$ 强全有限平衡商。其全部有限层实际L2、TF9和AD都成立，因而所有实际球在原基范数中等距；但 $\mathsf R_{\rm loc}$ 失败，仍有原等态配方的不同完整提升。因此“没有小球预算捷径”与“整体不额外折叠”是不同约束；这个既有模型不是裸L2加 $\mathsf R_{\rm loc}$ 的反模型。$\square$
+
+**定义 329.6（用有限球网表述同一完整候选）。** 强全有限背景完整保留328.6：同一个有限实 $V$、整个 $V^{\otimes N}$、各层闭尖生成原锥与严格正乘积单位、整个紧底、全部纯点及完整proper菜单和有限单位分解，原乘积配对分离、规范重括号、正置换及正逆、正单位丢弃，以及全部有限分块用双方全部正泛函和相关输入定义的min/max界。只在整个 $K_3$ 要求实际L2、实际TF9，并要求以下有限球网预算关系：
+
+$$
+\mathsf R_{\rm net,3}:\quad
+\beta_{0,3}c=0\Longrightarrow
+\inf_{\substack{\mathscr H\text{ 有限实际球族于 }K_3\\
+\operatorname{supp}c\subseteq\bigcup\mathscr H}}
+\|\kappa_{\mathscr H}c\|_{\mathscr H}=0
+\quad(c\in\mathbb R^{(P_3)}).
+\tag{329.12}
+$$
+
+量词包括全部纠缠纯点和全部有限配方，且仍有下确界；不是固定规模球网，也不承诺有限精确中点改写。指定过程继续各自保留全部有限相关旁观正性、全输入及合计质量预算、整个yes支持中性与连续可逆保单位群前件。
+
+**定理 329.7（完整量子字典、准确简化与未付桥梁）。** 329.6的候选当且仅当存在同一 $n\ge2,\theta$ 使全部有限 $N\ge0$ 同时满足 $\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N}$、$u_N=\operatorname{Tr}\circ\theta^{\otimes N}$。
+
+证明。由(329.3)，$\mathsf R_{\rm net,3}$ 恰为 $\ker\beta_{0,3}\subseteq J_{{\rm loc},3}$；反向包含始终成立，因此它与 $\mathsf R_{{\rm loc},3}$ 等价。于是328.3—328.7的统一HVC提升、排核、完整三份表示、共同局部坐标及全有限传播直接适用；未另消费两框架singleton、相位joint least或GB来源。
+
+| 原关系、菜单及明确保留的过程条件 | 同一坐标中的量子结构 |
+| --- | --- |
+| 整个 $K_3$ 的L2、TF9、有限球网满核预算 | 复射线、完整迹一密度矩阵及所有有限PSD层 |
+| 整个原proper菜单及线性评价 | $0\preceq E\preceq I$、Born概率 $\operatorname{Tr}(E\rho)$ |
+| 全部原有限单位分解 | 数学POVM；正交投影分解给PVM |
+| 强全有限产品、共同坐标、置换和丢弃 | 通常复张量、全部纠缠态及偏迹 |
+| 指定线性分支对所有有限相关旁观输入保正 | CP与有限Kraus表示 |
+| 分支与合计的全输入质量预算 | TNI／TP与数学仪器 |
+| 指定锐事件及整个yes支持逐点中性 | Lüders分支 $X\mapsto PXP$ |
+| 指定连续可逆保单位且全旁观保正的一参数群 | 连续酉共轭及其生成元 |
+
+本候选与328严格等价，没有减少独立前件数。简化的是几何接口：把一个全域闭关系商展开为只由四维球锥、共享纯点和预算组成的有限球网；树形部分已付，严格球内范数失败必须落在有限闭环，最小三球环由(329.6)准确计算。完整候选中这些预算无损当然成为输出，但329.5表明仅保住每颗球的预算还不能排除整体混合折叠。
+
+裸L2加 $\mathsf R_{\rm loc}$ 是否禁止所有有限闭环降预算、是否推出原AD，以及是否推出TC／TF9，均未由本章证明；也没有符合这组裸前件的反模型。即使先取得AD，逐对输入的最小确认值等于 $\tau$，仍不等于同一个效应同时取得整行；V77.12的共同最小者／Helly接口已有归属，不另计新结果。TF9仍明确保留；具体设备、物理时间、Hamiltonian的选择、能量与 $\hbar$ 标定、无限极限继续另有前件。
+
+本章的repo-derived接合是有限实际球网的准确商预算、严格失败的有限闭环定位，以及三球闭环的分段精确成本与四原子见证。单球有界刚性、Hahn–Banach、基范数对偶、Carathéodory、一次推送等距、球内极值和三角恒等式作为成熟或既有中间工具；328的完整重建、XVII193的AD平衡商及其全有限结论不重计。这里给条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：仍把每两颗纯准备真正撑起的小三球当作原件，纠缠准备也不能漏掉。现在把复杂的整体关系拆成一张有限球网：同一颗珠子在两只球里出现，就把它们接在一起，每只球自带一把计算正负配方成本的尺。树枝怎样接都不会让原来的路变便宜；若绕路真的省下成本，有限张球构成的闭环就能见证，不必躲到无限过程里。最小的三球环甚至能算准：一颗外部珠子对一对对径端点的重叠总和一旦超过一，四项纯配方就能严格压低原直径的预算。但守住小球的尺，还不等于整体没有把两份大混合偷偷折成同一点。因此完整规则仍要求：三颗珠子的实际面不超过九个齐次方向，原世界认同的每条配方关系，都能在越来越充分的有限球网里把残余预算压到零。这样接回同一套完整复量子结构；这一轮算清了闭环怎样出问题，还没有把三点预算从公理中删掉。
+
+[Q329BN]: https://arxiv.org/pdf/1703.03392v2 "Lami–Palazuelos–Winter，Ultimate data hiding in quantum mechanics and beyond，§II.A Definition 2、Lemma 3；成熟基范数及全效应对偶，沿XVII193来源。"
+[Q329PO]: https://arxiv.org/pdf/1708.02431v3 "Castillo–Moreno，Banach Spaces of Almost Universal Complemented Disposition，§9.3.1、Lemma 9.9(c)：l1直和的闭子空间推送与一次等距保持；不供应循环无损。"
+
+## 追加锚（本行以下为增补区）
+
+## 330. 中点商的标量缺口与有限精确二项关系
+
+**定义 330.1（标准球的整数关系与权重菜单）。** 标准qubit纯点写为 $P_x=(I+x\cdot\sigma)/2$、$x\in S^2$。令 $F_{\mathbb Z}=\mathbb Z^{(S^2)}$，$A_{\mathbb Z}$ 为全部 $x+y=z+w$ 对应的 $\delta_x+\delta_y-\delta_z-\delta_w$ 的整数生成子群；令 $F_0=\mathbb R^{(S^2)}$、$A_{\rm loc}=\operatorname{span}_{\mathbb R}A_{\mathbb Z}$，此处不取闭包。
+
+对任意有限标准复维数 $n\ge2$，另记其全部纯投影为 $P_n$、$F_{0,n}=\mathbb R^{(P_n)}$、$\beta_n(\delta_P)=P$，并令 $A_{{\rm loc},n}$ 为遍历全部实际二纯球的中点关系实线性张成。一般维数结论中省略下标 $n$；$n=2$ 时与上述qubit记号一致。对任意 $W\subset(0,1)$ 定义
+
+$$
+\begin{aligned}
+A_W=A_{\rm loc}+\operatorname{span}_{\mathbb R}\{&
+t\delta_P+(1-t)\delta_Q-t\delta_R-(1-t)\delta_S:\\
+&t\in W,\quad tP+(1-t)Q=tR+(1-t)S,\\
+&P,Q,R,S\text{ 属于同一个实际二纯球}\}.
+\end{aligned}
+\tag{330.1}
+$$
+
+中点关系仍全部保留；新增关系左右两侧使用同一个权重 $t$。记 $k_W=\mathbb Q(W)$，$\beta(\delta_P)=P$，$H_0=\operatorname{Herm}_0(2)$ 为迹零Hermitian实空间。下述张量积 $\mathbb R\otimes_k H_0$ 将 $H_0$ 限制为 $k$ 向量空间，左因子赋予结果实线性结构；不先将 $1\otimes(tX)$ 与 $t\otimes X$ 认同，除非 $t\in k$。
+
+**定理 330.2（qubit中点商的准确剩余自由度）。** 有自然同构
+
+$$
+\begin{aligned}
+F_{\mathbb Z}/A_{\mathbb Z}&\cong\mathbb Z\oplus(\mathbb R^3,+),
+&[\delta_x]&\longmapsto(1,x),\\
+F_0/A_{\rm loc}&\cong\mathbb R\oplus(\mathbb R\otimes_{\mathbb Q}H_0),
+&[\delta_P]&\longmapsto(1,1\otimes(P-I/2)).
+\end{aligned}
+\tag{330.2}
+$$
+
+因此原准备核中尚未由有限中点关系生成的全部自由度，准确为乘法映射的核
+
+$$
+\ker\beta/A_{\rm loc}\cong
+\ker\bigl(\mu:\mathbb R\otimes_{\mathbb Q}H_0\to H_0\bigr),
+\qquad\mu(a\otimes X)=aX.
+\tag{330.3}
+$$
+
+证明。先给本接合所需的无正则性球面步骤。设 $G$ 为任意Abel群，$f:S^2\to G$ 保持同中点和。对 $\|v\|\le2$，选择单位点 $p,q$ 使 $p-q=v$，定义 $a(v)=f(p)-f(q)$。另一份选择满足 $p+q'=p'+q$，所以良定义，且 $a(-v)=-a(v)$。若三角形 $(0,v,v+w)$ 的外接圆半径至多一，它能平移到 $S^2$ 上；沿三个球面顶点的弦相加给 $a(v+w)=a(v)+a(w)$。
+
+对任意 $\|v\|,\|w\|\le1$，选单位 $e\perp\operatorname{span}\{v,w\}$。三角形 $(0,v,v+e)$、$(0,w,w-e)$ 是直角三角形，外接圆半径至多 $\sqrt2/2$。若 $v+w\ne0$，三角形 $(0,v+e,v+w)$ 对底边的高至少一，外接圆半径为 $\|v+e\|\|w-e\|/(2h)\le1$。逐个应用弦加法得
+
+$$
+a(v+w)=a(v+e)+a(w-e)
+=a(v)+a(e)+a(w)+a(-e)=a(v)+a(w).
+\tag{330.4}
+$$
+
+$v+w=0$ 时由反号律直接成立；退化或重合顶点同样直接处理。对任意 $z\in\mathbb R^3$，取正整数 $N$ 使 $\|z/N\|\le1$，置 $A(z)=N a(z/N)$。用共同细分 $MN$ 及(330.4)可知与选择无关；共同充分细分又给全域加法性，并在 $\|z\|\le2$ 时等于 $a(z)$。故 $f(x)-A(x)$ 在球面恒为同一个 $c\in G$。若另有这种分解，其差在全部球面弦差上为零，因而在半径二的球及整个空间为零，给唯一性。反向由加法性直接成立。无界加法映射的成熟背景见Rätz[Q330R]；这里使用的是球面弦的具体接合，不将整空间正交可加定理直接当作球面命题。
+
+将此结论用于通用函数 $x\mapsto[\delta_x]$，得到(330.2)第一行的双向映射；$(1,x)$ 生成 $\mathbb Z\oplus\mathbb R^3$，因为每个小向量都是球面弦差，任意向量可作整数细分。扩张实标量并用张量积右正合性，给第二行。$\beta$ 在这些坐标为 $(m,T)\mapsto mI/2+\mu(T)$，故得(330.3)。这里整数商和张量积为成熟代数工具；新增量子关系接合是准确刻画全部闭包前标量缺陷，不只给一个病态分离例子。$\square$
+
+**定理 330.3（同权重菜单的准确域判据）。** 对qubit有
+
+$$
+F_0/A_W\cong\mathbb R\oplus
+(\mathbb R\otimes_{k_W}H_0).
+\tag{330.5}
+$$
+
+对每个有限标准复维数 $n\ge2$，都有
+
+$$
+\boxed{\quad A_W=\ker\beta\quad\Longleftrightarrow\quad
+\mathbb Q(W)=\mathbb R.\quad}
+\tag{330.6}
+$$
+
+证明。330.2使任何消灭中点关系的实值函数写成 $h(P_x)=c+A(x)$，$A:\mathbb R^3\to\mathbb R$ 为 $\mathbb Q$ 线性。固定 $t\in W$，置 $r=t/(1-t)$。对任意充分小的 $v$，分别选择两条单位球弦 $x-z=v$、$y-w=-rv$，便有 $tx+(1-t)y=tz+(1-t)w$。新增关系迫使 $A(rv)=rA(v)$；有理细分把此等式扩到全部 $v$。对任意加法 $A$，满足 $A(av)=aA(v)$ 对全部 $v$ 的标量 $a$ 组成子域：加减、乘法由代入得到，非零逆元由 $v=a^{-1}w$ 得到。因此新增关系恰将 $A$ 的 $\mathbb Q$ 线性提升为 $k_W$ 线性。反向任何 $k_W$ 线性 $A$ 都消灭这些关系。对应的标量平衡张量商给(330.5)；也可直接用全部代数线性泛函的分离性取得其准确核，不借有界双对偶。
+
+若 $k_W=\mathbb R$，qubit上消灭 $A_W$ 的函数遂为Hermitian迹行。任意 $n$ 时，在每个复二维支持应用此结论。对纯投影函数 $h$ 定义 $Q(z)=\|z\|^2h(P_z)$、$Q(0)=0$，它在每个二维复子空间上为Hermitian二次型。任意两向量同属这样的子空间，给全局平行四边形恒等式及 $i$ 不变性。实极化先给全局加法双线性型；每对向量所在的同一二维子空间再给其准确实标量线性，故无须以有界性消去Cauchy解。所得形式由唯一 $H\in\operatorname{Herm}_n$ 表示，$h(P)=\operatorname{Tr}(HP)$。因此所有消灭 $A_W$ 的代数线性泛函都消灭 $\ker\beta$，代数分离给相等。
+
+若 $k_W\ne\mathbb R$，选 $\lambda\in(0,1)\setminus k_W$ 及 $k_W$ 线性 $\phi:\mathbb R\to\mathbb R$，使 $\phi(1)=0,\phi(\lambda)=1$。取正交纯点 $P_1,P_2$，令 $P_\pm$ 为 $\sqrt\lambda e_1\pm\sqrt{1-\lambda}e_2$ 的投影，定义
+
+$$
+h(P)=\phi(\operatorname{Tr}(P_1P)),\qquad
+c_\lambda=\delta_{P_+}+\delta_{P_-}
+-2\lambda\delta_{P_1}-2(1-\lambda)\delta_{P_2}.
+\tag{330.7}
+$$
+
+$h$ 消灭所有允许的局部关系，而 $\beta c_\lambda=0$、$h(c_\lambda)=2$，所以不等。这个见证沿X128的Hamel分离方法；新增是其与充分性合起来给整个权重菜单的充要条件。它是无界代数分离函数，不是原proper效应。$\square$
+
+**定理 330.4（统一权重菜单与单条配方的不同成本）。** 统一服务全部有限关系的 $W$ 必须具有连续统基数；任何有限、可数或全部代数实数构成的菜单均不足，即使稠密。任一非空开区间 $W\subset(0,1)$ 则足够。另一方面，qubit每条非零核关系 $c=\sum_{i=1}^m a_i\delta_{P_i}$ 都有只由系数比例决定的有限菜单 $W_c$，满足 $|W_c|\le m-2$ 且 $c\in A_{W_c}$。
+
+证明。生成域的基数至多 $\max(\aleph_0,|W|)$，(330.6)给必要性；代数实数域是 $\mathbb R$ 的真子域。非空开区间的差集含零邻域，其生成域经整数倍包含每个实数，给充分性。单条关系选择 $a_m\ne0$，取 $k_c=\mathbb Q(a_1/a_m,\ldots,a_{m-1}/a_m)$。质量零给一个非平凡有理仿射约束，所以可用至多 $m-2$ 个系数比例生成此域；以非零有理缩放和平移把生成元放入 $(0,1)$，得 $W_c$。在(330.5)中令 $b_i=a_i/a_m\in k_c$，则 $\sum_i b_i=0$ 且
+
+$$
+\sum_i b_i\otimes(P_i-I/2)
+=1\otimes\sum_i b_i(P_i-I/2)=0,
+\tag{330.8}
+$$
+
+故 $c\in A_{W_c}$。每条关系因而有有限线性证书，但没有统一有限菜单；有理层上的中点关系也可以按330.2有限生成，未给一般实系数证书的统一长度界。这里的有限线性证书不等于保持非负性的配方路径。$\square$
+
+**定义 330.5（不取闭包的三份关系候选）。** 完整保留329.6的强全有限背景、全部原纯点、整个底与完整菜单，以及指定过程的全部前件。固定一个数值区间 $W_*=(1/3,2/3)$。只在整个原 $K_3$ 要求实际L2、实际TF9，并将 $A_{W_*,3}$ 定义为(330.1)的原实际球关系实线性张成，要求
+
+$$
+\mathsf R_{\rm exact,3}:\qquad
+\ker\beta_{0,3}=A_{W_*,3}.
+\tag{330.9}
+$$
+
+生成条件遍历整个 $K_3$ 的全部纠缠纯标签；没有给 $A_{W_*,3}$ 加范数闭包。每条等同因而要求有限精确线性证书，不把它称作实际可执行改写链。
+
+**定理 330.6（有限精确关系支付同一完整量子理论）。** 330.5的候选当且仅当存在同一个 $n\ge2,\theta$ 使所有有限 $N\ge0$ 满足 $\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N}$、$u_N=\operatorname{Tr}\circ\theta^{\otimes N}$。新入口与328／329的完整候选等价；去掉的是关系条件中的分析闭包，没有删TF9或减少独立前件数。
+
+证明。先只用原L2与TF9调用328.3，取得同一标准纯提升 $\iota$、忠实实际球对应及 $J_{\rm loc}=\ker\widetilde\beta$。所有 $A_{W_*}$ 关系在同一二维支持忠实提升，因此在纯标签双射下，原 $A_{W_*}$ 恰对应标准 $A_{W_*}$。$\mathbb Q(W_*)=\mathbb R$，330.3给
+
+$$
+A_{W_*}=\ker\widetilde\beta=J_{\rm loc}.
+\tag{330.10}
+$$
+
+这里首先识别的是提升准备核，不是尚可折叠的原 $\ker\beta_0$。于是(330.9)恰等于原 $\mathsf R_{{\rm loc},3}$；328.4排除额外混合折叠，328.7／329.7的共同局部坐标与强全有限传播完整适用。反向标准复模型由330.3给有限精确关系核，实际L2与TF9及全有限背景标准成立。
+
+| 原条件与明确保留的供应 | 同一坐标中的量子结构 |
+| --- | --- |
+| 整个三份系统的L2、TF9、有限精确关系满核 | 复射线、全部有限迹一密度矩阵及纠缠PSD锥 |
+| 原完整proper菜单、配对及有限单位分解 | Born概率、全部数学POVM与PVM |
+| 同一强全有限产品、置换与丢弃 | 通常复张量与偏迹 |
+| 指定线性分支对全部有限相关旁观输入保正 | CP与Kraus表示 |
+| 分支与合计的全输入质量预算 | TNI／TP及数学仪器 |
+| 指定锐事件与整个yes支持中性 | Lüders更新 |
+| 指定连续可逆保单位且全旁观保正的一参数群 | 连续酉共轭及其生成元 |
+
+有限证书仍可包含任意实系数；统一权重区间具有连续统基数。330.4的有限菜单结论仅在qubit中按单条关系取得，不提升为高维统一步数、原长度不变的非负连通或设备实现。TF9、裸L2加关系满核是否推出AD／TC、钟与能量及 $\hbar$ 的标定、具体Hamiltonian与无限极限，继续保留原边界。代数标量平衡不被冒充物理数域的无前提证明。
+
+本章的repo-derived接合是qubit的整数／实张量关系商、全部标准有限复维数上的权重域充要判据、单条qubit关系的系数菜单界，以及同一原HVC提升中的有限精确核接口。加法映射、张量积、代数分离及极化为成熟工具；X128的Hamel分离、320.4／321.3的任意加权配方结果、328的提升与完整传播不重计。本章不计算一般 $n\ge3$ 的完整未加权中点代数商，也不以逐二维限制替代那项未证兼容；此为条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：一颗小球里的中点等同，已经认得箭头怎样相加，却还没有自动认同两种写法：“把箭头先缩放再放入配方”和“把同一个数写到配方系数上”。这两个位置之间的全部缺口，现在可以准确写出来。原来用闭包把它们一起压掉；新的入口改成同一小球内、左右采用相同比例的二项等同，让比例能在一个固定小区间里变化，就能把缺口用有限精确关系消去。只选有限甚至可数张比例表仍不够，哪怕它很稠密；但一条具体qubit关系只需要有限个由自身系数决定的比例。把同样规则放到整个三份世界，再保留原三点面预算和全有限组合关系，就仍得到同一套复量子态、Born概率、测量和复合结构。简化的是不用“无限逼近后才算相同”，不是已经删掉三点几何或证明每条线性证书都能实际执行。
+
+[Q330R]: https://publi.math.unideb.hu/paper/384/download/10_5486_PMD_1997_1795.pdf "Jürg Rätz，Orthogonally additive mappings on free inner product Z-modules，Publ. Math. Debrecen51 (1997),97–110，p.98 Theorem1：无正则性、Abel群值的整空间正交可加分类；不将其直接作为固定球面的字面定理。"
+
+## 追加锚（本行以下为增补区）
+
+## 331. 三组中心弦生成有限精确关系
+
+**定义 331.1（实际球内的三轴中心弦）。** 保留330.1的有限实纯配方、原准备映射及全部实际L2球。本条不输入TF9或关系满核。对每颗实际球选一个仿射球坐标 $H=m_H+T_H\overline{\mathbb B}^{\,3}$，并在该球坐标内选正交单位基 $(\varepsilon_1,\varepsilon_2,\varepsilon_3)$；每个 $j$ 再选单位 $\zeta_j\perp\varepsilon_j$。这些选择只给单颗实际球的辅助几何标架，不输入原效应或全域内积。令
+
+$$
+\begin{aligned}
+p_{H,j}^{\pm}&=m_H\pm T_H\varepsilon_j,\\
+q_{H,j}^{\pm}(t)&=m_H+T_H\bigl(t\varepsilon_j
+ \pm\sqrt{1-t^2}\,\zeta_j\bigr),\qquad |t|<\tfrac12,\\
+R_{H,j,t}&=\delta_{q_{H,j}^+(t)}+\delta_{q_{H,j}^-(t)}
+ -(1+t)\delta_{p_{H,j}^+}-(1-t)\delta_{p_{H,j}^-}.
+\end{aligned}
+\tag{331.1}
+$$
+
+弦的中心只在直径的中央一半移动；弦长不要求趋于零。全部标签都是同一个原实际球的纯点。关系左右质量均为二，向量和均为 $2m_H+2tT_H\varepsilon_j$；除以二，就是等权弦端配方与轴端比例配方的原等同。
+
+记 $F_H=\mathbb R^{(P\cap H)}$、$\beta_H:F_H\to W_H$ 为实际球内求和，$A_H$ 为该球全部四纯同中点关系的实线性张成。对全体球的任一上述辅助选择 $\mathfrak f$，定义
+
+$$
+\mathcal C_{\mathfrak f}
+=\mathcal A_{\rm loc}
+ +\operatorname{span}_{\mathbb R}
+ \{R_{H,j,t}:H\text{ 为实际球},\ j=1,2,3,\ |t|<\tfrac12\}.
+\tag{331.2}
+$$
+
+此处全是有限实线性张成，不取闭包。每球只有三组一参数校准族；球的总数及每族参数数目不被称为有限。
+
+**定理 331.2（单球的准确生成与 $3m$ 校准界）。** 对任一实际球及任意331.1的选择，有
+
+$$
+\ker\beta_H
+=A_H+\operatorname{span}_{\mathbb R}
+\{R_{H,j,t}:j=1,2,3,\ |t|<\tfrac12\}.
+\tag{331.3}
+$$
+
+更准确地，若 $c=\sum_{i=1}^m a_i\delta_{p_i}\in\ker\beta_H$，写 $p_i=m_H+T_H\sum_jx_{ij}\varepsilon_j$，则 $|x_{ij}|\le1$，并有有限精确证书
+
+$$
+\boxed{\quad
+c-\frac32\sum_{i=1}^m\sum_{j=1}^3
+ a_iR_{H,j,x_{ij}/3}\ \in A_H.
+\quad}
+\tag{331.4}
+$$
+
+因而至多 $3m$ 条非中点校准关系已经足够；余项是有限中点关系组合。此界不计中点关系条数，不要求组合系数非负。
+
+证明。只把330.2已证明的球面商移到同一实际球，得到
+
+$$
+F_H/A_H\cong\mathbb R\oplus
+ (\mathbb R\otimes_{\mathbb Q}\mathbb R^3),\qquad
+[\delta_{m_H+T_Hx}]\longmapsto(1,1\otimes x).
+\tag{331.5}
+$$
+
+未重新证明球面刚性，也未用原全域效应。加性使 $\zeta_j$ 项在(331.1)的两端相消，故校准关系在此商中的像为
+
+$$
+[R_{H,j,t}]
+=\bigl(0,2(1\otimes t\varepsilon_j-t\otimes\varepsilon_j)\bigr).
+\tag{331.6}
+$$
+
+原 $\beta_Hc=0$ 给 $\sum_i a_i=0$ 与每个 $j$ 的 $\sum_i a_ix_{ij}=0$。将(331.6)代入(331.4)，整数三可跨过 $\mathbb Q$ 张量，剩余第二分量正是
+
+$$
+\sum_{i,j}a_ix_{ij}\otimes\varepsilon_j=0.
+\tag{331.7}
+$$
+
+而 $|x_{ij}/3|\le1/3<1/2$，所以只用已允许的中央参数；这是有限恒等式，不用极限或由稠密性补点。反向所有生成元都在原核，给(331.3)。每个 $A_H$ 元按定义都有有限中点证书，完成证明。$\square$
+
+**命题 331.3（单球方向下界与选择独立性）。** 在“固定若干轴、每轴允许331.1中央弦校准、并保留全部中点关系”的独立单球模板内，若所选轴未张成三维空间，便不能生成整个 $\ker\beta_H$。三根独立方向足够；331.1采用正交基以统一取得(331.4)的中央参数界。更换球坐标、正交轴或任一 $\zeta_j$，不改变(331.3)生成的关系空间。
+
+证明。设全部所选单位轴属于真子空间 $D\subsetneq\mathbb R^3$。选单位 $n\perp D$、单位 $w\perp n$ 和无理 $\lambda\in(0,1/2)$，取 $\mathbb Q$ 线性 $\phi:\mathbb R\to\mathbb R$，使 $\phi(1)=0,\phi(\lambda)=1$。在球面置 $h(m_H+T_Hx)=\phi(n\cdot x)$。加性使它消灭全部中点关系；每条已选轴校准的两弦端读数相加为 $\phi(2t\,n\cdot\varepsilon)=0$，而轴端读数也为零。因此 $h$ 消灭全部允许生成元。
+
+沿遗漏方向 $n$ 用同一公式构造 $R_{H,n,\lambda}$，其两弦端分别为 $m_H+T_H(\lambda n\pm\sqrt{1-\lambda^2}w)$。这是原准备核内的四纯关系，但
+
+$$
+\langle h,R_{H,n,\lambda}\rangle=2.
+\tag{331.8}
+$$
+
+故它不在所选关系空间。$h$ 是无界代数分离函数，不是proper效应；本反例只给单球有限精确证书的方向下界，不推出任意重建至少需要三个独立公理，也不证明大球网中某球少轴不能被其他球关系补偿。
+
+对任意三个独立方向，中央区间上的齐次关系经有理细分扩到整根实轴；330.2的加法性再给整个三维空间上的实线性，代数分离给同样满核。正交基情形已有331.2的显式证书。所有合格选择因而都生成同一原核。单独改变 $\zeta_j$ 时，两条校准关系之差本身就是同中点四纯关系，也可直接看出选择独立性。$\square$
+
+**定理 331.4（原L2域上的关系压缩，不消费TF9）。** 在同一完整实际L2原域，记 $\mathcal R_{\rm bin}$ 为全部实际球内非负等质量二项配方等同的实线性张成，即321.3的二项关系空间。对任一辅助选择 $\mathfrak f$，均有
+
+$$
+\boxed{\quad
+\mathcal C_{\mathfrak f}
+=\sum_H\ker\beta_H
+=\mathcal R_{\rm bin}
+=A_{(1/3,2/3)}.
+\quad}
+\tag{331.9}
+$$
+
+所有局部关系均按原纯标签嵌入 $F_0$；和号表示有限代数和。此等式不先要求原准备核由这些空间生成，也不要求TF9、AD或HVC表示。
+
+证明。331.2逐实际球给第一个等式。中点及每条中央弦关系本身都是非负等质量二项等同，给 $\mathcal C_{\mathfrak f}\subseteq\mathcal R_{\rm bin}$；反向每条球内二项关系属于对应 $\ker\beta_H$。若按321.3不预写共同球，非退化二项混合位于其实际三球的内部；面性质迫使另一份正权端点也在此球。纯点或零权退化项直接处理，所以是同一空间。
+
+最后只在单颗实际球应用330.3的qubit结论及 $\mathbb Q((1/3,2/3))=\mathbb R$，取得该球的同权重区间关系恰生成 $\ker\beta_H$；再取有限代数和，给末项相等。没有在尚可折叠的原全域上预设标准复坐标。$\square$
+
+**定义 331.5（三组中心弦的完整候选）。** 完整保留328.6／330.5的强全有限原背景：整个 $V^{\otimes N}$、各层闭尖生成原锥、严格正乘积单位、整个紧底、全部纯点、完整proper菜单和全部有限单位分解，原乘积配对分离、规范重括号、正置换及正逆、正单位丢弃，以及使用双方全部正泛函和全部相关输入的每个有限分块min/max界。只在整个 $K_3$ 要求实际L2、实际TF9，取331.1的辅助选择并要求
+
+$$
+\mathsf R_{\rm chord,3}:\qquad
+\ker\beta_{0,3}=\mathcal C_{\mathfrak f,3}.
+\tag{331.10}
+$$
+
+遍历的是整个三份系统的所有实际球及所有纠缠纯点；不能用产品球或有限球表代替。由331.9，要求存在合格辅助选择与要求每个合格选择都满足(331.10)等价，不增加具有物理内容的标架输入。指定过程分别继续保留全部有限相关旁观正性、分支和合计的全输入质量预算、整个yes支持中性，以及连续可逆保单位且全旁观保正的一参数群前件。
+
+**定理 331.6（完整量子字典及准确简化）。** 331.5的候选当且仅当存在同一个 $n\ge2,\theta$，使每个有限 $N\ge0$ 都满足 $\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N}$、$u_N=\operatorname{Tr}\circ\theta^{\otimes N}$。它与330.5严格等价；简化的是局部生成关系的几何参数，不是删除TF9或减少独立前件。
+
+证明。331.9先在原实际球上识别 $\mathcal C_{\mathfrak f,3}=A_{(1/3,2/3),3}$，所以(331.10)恰是330.9，直接消费330.6。若追踪核的次序，原L2与TF9先给328.3的忠实纯提升，继而330.10识别
+
+$$
+\mathcal C_{\mathfrak f,3}
+=\ker\widetilde\beta_3=J_{{\rm loc},3};
+\tag{331.11}
+$$
+
+最后才由(331.10)排除原 $\beta_{0,3}$ 的额外混合折叠。反向标准复模型中任意辅助球标架都由331.9满足关系满核，三点预算与强全有限背景沿330.6成立。没有重做HVC或全有限传播。
+
+| 原几何、菜单及保留的过程前件 | 同一坐标中的量子结构 |
+| --- | --- |
+| 整个 $K_3$ 的L2、TF9、三组中央弦关系满核 | 复射线、迹一密度矩阵及全部有限纠缠PSD锥 |
+| 完整proper菜单、线性评价及有限单位分解 | Born概率 $\operatorname{Tr}(E\rho)$、数学POVM与PVM |
+| 强全有限产品、共同坐标、置换及丢弃 | 复张量、因子交换与偏迹 |
+| 指定线性分支对全部有限相关旁观输入保正 | CP及有限Kraus表示 |
+| 分支与合计的全输入质量预算 | TNI／TP及数学仪器 |
+| 指定锐事件和整个yes支持逐点中性 | Lüders分支 $X\mapsto PXP$ |
+| 指定连续可逆保单位且全旁观保正的一参数群 | 连续酉共轭及生成元 |
+
+本轮将任意四端点、可变权重的局部关系表，换成每球三组固定方向、仅中心参数变化的校准族；参数甚至只需中央一半。选择独立性与局部生成在裸实际L2阶段已经成立。$3m$ 只界单球证书的非中点条数，不是整个高维世界的统一证书长度；每球三族也不是全域有限族。一般 $n\ge3$ 的未加权中点代数商、全域有限校准族的最小数量、裸L2加关系满核能否推出AD／TC／TF9，仍未由本章解决。有限线性组合仍不等于非负操作路径；实际设备、钟、能量、$\hbar$ 标定、具体Hamiltonian和无限极限保留各自边界。
+
+本章的repo-derived接合是三组中央弦的显式局部满核与 $3m$ 校准证书、该单球轴模板的方向下界、辅助标架独立性，以及在原L2域中不经HVC的关系空间等同。330.2的准确商、330.3的单球权重域判据、X128的Hamel分离方法、320.4／321.3的二项关系与330.6的完整量子尾部均保留既有归属；张量标量平衡与基展开作为成熟工具，不另计分类定理。这里给条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：每颗实际小三球里放三根互相垂直的直径，把六个轴端当作固定刻度。现在不用逐条检查任意四颗珠子的比例等同：只选三组对称弦，让弦中心沿对应直径在球心附近移动，要求弦两端的等权配方，等于那根直径两端的相应比例配方。中点规则管箭头相加，这三组关系再把箭头缩放与配方系数接成同一件事；一条含 $m$ 个纯项的单球零关系，至多用 $3m$ 条这样的标定，其余交给中点。少掉独立方向时，这种单球证书会漏下一层代数差别。三根尺怎样摆不改变最终关系空间，也没有给原世界多添测量。把同样生成方式用于整个三份世界，再保留三点面预算、原全有限复合关系和各项过程条件，就接回同一套复量子理论；这一轮省下的是庞杂的局部关系表，三点预算还没有删去。
+
+## 追加锚（本行以下为增补区）
+
+## 332. 有限锚球束支付精确标定，全域中点接回边界
+
+**定义 332.1（只在有限锚球束上标定）。** 保留331.1的完整原L2域、有限实纯配方 $F_0$、原准备映射 $\beta_0$ 和全域中点空间 $\mathcal A_{\rm loc}$。选非空有限原纯标签集 $A\subset P$，令 $\mathscr H(A)$ 为包含至少一颗锚点的全部实际二纯球。只对这些球选择331.1的三轴标架 $\mathfrak f$，并置
+
+$$
+\mathcal D_{A,\mathfrak f}
+=\mathcal A_{\rm loc}
+ +\operatorname{span}_{\mathbb R}
+ \{R_{H,j,t}:H\in\mathscr H(A),\ j=1,2,3,\ |t|<\tfrac12\}.
+\tag{332.1}
+$$
+
+中点关系仍遍历整个原纯域；只有非中点标定限于所选球束。所有张成与求和均为有限代数运算，不取闭包。331.2逐球给
+
+$$
+\mathcal D_{A,\mathfrak f}
+=\mathcal A_{\rm loc}+\sum_{H\in\mathscr H(A)}\ker\beta_H
+\subseteq\mathcal C_{\mathfrak f'}\subseteq\ker\beta_0,
+\tag{332.2}
+$$
+
+其中 $\mathfrak f'$ 为全体实际球上的任意合格标架。因此左侧与各球的辅助轴及子午线选择无关，以下记为 $\mathcal D_A$。有限的是锚标签数；经过锚点的球及各族参数仍可无限。
+
+**定理 332.2（全域中点与少一方向球束的精确全核）。** 在标准复 $d\ge2$ 维密度体中，若有限纯锚集 $A$ 的射线复跨度至少为 $d-1$，则
+
+$$
+\boxed{\qquad \mathcal D_A=\ker\beta_0.\qquad}
+\tag{332.3}
+$$
+
+不要求消灭子有界、Borel或连续。此为充分锚跨度，不主张其必要性或最小性。
+
+证明。先给本接合所需的开片正规性步骤。若 $g:S^2\to\mathbb R$ 保持全部同中点和，且在某个非空相对开片有界，复用330.2的无正则性球面结论，写 $g(x)=c+B(x)$，其中 $B:\mathbb R^3\to\mathbb R$ 为加法映射。旋转坐标，使该开片包含 $e_3$；取 $0<\eta<1$，使 $e_3$ 及
+
+$$
+x_1^\pm(t)=\pm t e_1+\sqrt{1-t^2}\,e_3,
+\qquad
+x_2^\pm(t)=\pm t e_2+\sqrt{1-t^2}\,e_3
+\tag{332.4}
+$$
+
+在 $|t|<\eta$ 时都落在同一有界开片。于是这些点上的 $B$ 一致有界。两端相减给 $B(2te_i)$ 在零附近有界，$i=1,2$；两端相加再减 $2B(e_3)$ 给
+
+$$
+B\bigl(2(\sqrt{1-t^2}-1)e_3\bigr)
+=B(x_1^+(t))+B(x_1^-(t))-2B(e_3).
+\tag{332.5}
+$$
+
+其参数覆盖一个非平凡单侧零邻域，反号律补齐另一侧。故 $B$ 在三条坐标轴的零邻域均有界，加法性使它在一个三维零邻域有界。标准Cauchy有界性论证给零点连续，再以有理数逼近任意实数，得到实线性。这里的正则性工具是成熟的加法函数有界性；承重用途是把射影坐标片的局部界传到未标定的完整实际球。
+
+现取任意代数函数 $h:P\to\mathbb R$ 消灭 $\mathcal D_A$。全域中点关系使它在每颗实际球上满足330.2；上述开片步骤尚不立即适用，因为尚未取得球壳开片上的界。另一方面，(332.2)的局部核恒等式使它在每个 $H\in\mathscr H(A)$ 的整个纯壳上已经普通实仿射。
+
+从 $A$ 取 $d-1$ 条独立射线的非零代表 $a_1,\ldots,a_{d-1}$，置 $S=\operatorname{span}_{\mathbb C}\{a_i\}$，补 $b$ 成复基，并令
+
+$$
+Q(z)=\|z\|^2h(P_z)\ (z\ne0),\quad Q(0)=0,
+\qquad T(x,y)=\sum_{i=1}^{d-1}x_i a_i+yb,
+\qquad f(x)=Q(T(x,1)).
+\tag{332.6}
+$$
+
+固定除 $x_i$ 外的坐标时，$T(x,1)$ 位于包含 $a_i$ 的复二维平面。该球的普通实仿射性等价于 $Q$ 在此平面为Hermitian二次型。因此 $f$ 对 $2(d-1)$ 个实坐标分别是次数至多二的多项式。准确复用323.3的节点 $-1,0,1$ 有限张量插值，$f$ 成为一个全域有限实多项式。这里不据此断言其总次数为二，也不先加入324.3的全域增长界或边界连续性。
+
+在射影开片 $U=\mathbb P(\mathbb C^d)\setminus\mathbb P(S)$ 上，
+
+$$
+h(P_{T(x,1)})=\frac{f(x)}{\|T(x,1)\|^2}.
+\tag{332.7}
+$$
+
+分母处处正，故 $h|_U$ 连续且局部有界。任取复二维支持 $W\not\subset S$，其纯球壳与 $U$ 相交于非空相对开片；全域中点前件和上述开片步骤使 $h$ 在该完整球壳上普通实仿射。这样局部界确实穿过了 $\mathbb P(S)$，不是把稠密性本身当延拓。
+
+选任意射线 $r\notin\mathbb P(S)$。每个经过 $r$ 的复二维支持都不包含于 $S$，所以其全部球束刚取得普通实仿射性。原 $d-1$ 条锚射线与 $r$ 构成复基。此时复用323.3／325.3证明中在球壳仿射性之后的有限插值：$Q$ 在经过每根基射线的二维平面上Hermitian二次，使 $Q$ 对全部 $2d$ 个实基坐标分别次数至多二；有限张量插值给全域多项式，$Q(tz)=t^2Q(z)$ 排除非总次数二的项，$Q(iz)=Q(z)$ 及实极化给唯一Hermitian矩阵 $H$，满足
+
+$$
+h(P)=\operatorname{Tr}(HP).
+\tag{332.8}
+$$
+
+所复用的插值段落不消费有界性；旧证明在进入该段前用有界性取得球壳仿射，这里已经由实际标定及开片传播支付。反向任意迹行都消灭(332.1)。因此 $\mathcal D_A$ 与 $\ker\beta_0$ 有相同的全部代数线性消灭子；代数分离给(332.3)。这不是Banach闭包或连续弱闭包结论。$\square$
+
+**定义 332.3（有限锚标定的完整候选）。** 完整保留331.5的强全有限原背景、整个 $K_3$ 的实际L2与TF9，以及各项指定过程的独立前件。只将331.10的关系条件换成：存在非空有限 $A\subset P_3$，使
+
+$$
+\mathsf R_{\rm pencil,3}:\qquad
+\ker\beta_{0,3}=\mathcal D_{A,3}.
+\tag{332.9}
+$$
+
+中点遍历整个三份世界的全部纯点及全部实际球；标定遍历经过所选锚的全部实际球，不截去其中的纠缠纯点。锚在原域选择，不预给矩阵坐标、正交性或维数。(332.2)保证其关系空间不依赖标架。其余背景仍为整个 $V^{\otimes N}$、各层闭尖生成原锥、严格正乘积单位、整个紧底、全部纯点、完整proper菜单及有限单位分解，原乘积配对分离、规范重括号、正置换及正逆、正单位丢弃，以及双方全部正泛函和全部相关输入上的所有有限分块min/max界。
+
+**定理 332.4（完整量子字典与准确的缩减）。** 332.3刻画与331.5相同的完整模型类：存在同一个 $n\ge2,\theta$，使全部有限 $N\ge0$ 均有
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},
+\qquad u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{332.10}
+$$
+
+在标准三份层可用 $n^3-1$ 条独立纯锚射线支付(332.9)；可取自一个乘积基，但标定球与中点关系的范围仍是整个三份层。
+
+证明。正向由(332.2)与(332.9)立即有
+
+$$
+\ker\beta_{0,3}=\mathcal D_{A,3}
+\subseteq\mathcal C_{\mathfrak f,3}
+\subseteq\ker\beta_{0,3}.
+\tag{332.11}
+$$
+
+因此331.5的完整前件成立；331.6给同一坐标的全部有限PSD层，没有在此前假定原提升单射。反向标准 $K_3$ 的复维数为 $d=n^3$，从一个乘积正交基取除最后一条以外的全部纯射线，332.2给精确全核。标准L2、TF9及强全有限背景沿331.6成立。
+
+完整proper菜单与有限单位分解仍给复射线／密度矩阵、Born概率 $\operatorname{Tr}(E\rho)$、POVM／PVM；原产品、置换、共同坐标与丢弃仍给复张量及偏迹。指定分支在全部有限相关旁观输入上保正才给CP／Kraus；全输入质量预算及分支合计才给TNI／TP与数学仪器；指定锐事件在整个yes支持逐点中性才给Lüders；指定连续可逆保单位且全旁观保正的一参数群才给连续酉共轭及生成元。这些过程前件均沿331.5保留。
+
+相对331，本条将非中点三轴标定从每颗实际球缩到有限锚展开的球束；全域中点没有缩减。标准 $d\ge3$ 时确有不含任何有限锚的复二维支持：选一个对所有锚代表均非零的复线性泛函，在其核中取二维子空间即可。因此被省去标定的球确实存在。相对324，本条不输入全域连续性，而由全域中点和已标定坐标片的局部界，恢复所需的球内正则性；代价是中点关系仍需全域支付。它没有证明只用有限颗球或有限条关系，也不主张 $d-1$ 为此新组合的最少锚数。
+
+本章的repo-derived接合是有限锚球束标定、全域中点与开片有界性传播共同给有限精确全核，再接回同一完整量子候选。330.2的球面商、331.2的三轴生成、323.3／325.3的有限插值、324的射影图及331.6的完整重建保留既有归属；Cauchy有界性、有限插值与代数分离是成熟工具，不另申领。一般高维中点代数商、全域有限条校准族、最少锚数及裸L2加满核能否推出TF9仍未解决。有限有符号证书不等于非负操作路径；设备、钟、能量、$\hbar$、具体Hamiltonian和无限极限仍保留各自条件。这里是条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：不用再给每颗小球都装三把标定尺。先钉有限颗独立珠子，只给经过这些珠子的小球装尺；整个世界仍保留“中点相同，合起来的读数就相同”。这些球束先在一张射影坐标片上织出一把正常的尺。别的小球只要擦过这张片，就有一小片读数不能乱跳；中点规则于是把整颗小球的刻度锁直，连坐标片漏掉的边界也接回来。在标准复 $d$ 维世界，$d-1$ 颗独立锚已经足够，但还没证明这是最少。把这套有限锚规则放在完整三份世界，再保留三点面预算、全有限复合和过程条件，就接回同一套态、Born概率、测量、张量与量子演化；省下的是其余球上的非中点标定，不是把全域相容性藏掉。
+
+## 追加锚（本行以下为增补区）
+
+## 333. 有限方向接通全域中点商，标定只留有限颗球
+
+**定义 333.1（标准纯投影的整数中点群）。** 令 $d\ge2$，$H=\operatorname{Herm}_d(\mathbb C)$、$H_0=\ker\operatorname{Tr}$、$D=d^2$，$\mathcal P_d$ 为全部迹一秩一正交投影。取Hilbert–Schmidt内积 $\langle X,Y\rangle=\operatorname{Tr}(XY)$，并定义
+
+$$
+F_{\mathbb Z}=\mathbb Z^{(\mathcal P_d)},\quad
+\beta_{\mathbb Z}(\delta_P)=P,\quad
+A_{\mathbb Z}=\operatorname{span}_{\mathbb Z}
+\{\delta_P+\delta_Q-\delta_R-\delta_S:P+Q=R+S\}.
+\tag{333.1}
+$$
+
+所有张成均为有限代数张成。等和四纯投影都支撑于共同和的至多二维支持；秩一退化关系平凡，其余正是同一实际三球中的未加权中点关系。本章不对消灭子或未知读数输入有界性、可测性或连续性。
+
+**引理 333.2（有限辅助点给全域Gram无穷小刚性）。** 存在固定有限 $\mathcal A\subset\mathcal P_d$，$|\mathcal A|\le D(D+1)/2$，使每个包含 $\mathcal A$ 的有序纯投影组 $Z=(P_1,\ldots,P_M)$ 满足
+
+$$
+\ker dG_Z
+=\{(i[B,P_1],\ldots,i[B,P_M]):B\in H\},\qquad
+G(Z)=(\operatorname{Tr}(P_iP_j))_{i<j}.
+\tag{333.2}
+$$
+
+证明。令 $\mathscr Q$ 为齐次二次实多项式在 $\mathcal P_d$ 上的限制空间，维数至多 $D(D+1)/2$。因 $\operatorname{Tr}P=1$，次数至多二的多项式限制也都在其中。点评价张成 $\mathscr Q^*$；否则存在非零限制函数在所有纯点为零，矛盾。从中选评价基，得到 $\mathcal A$：次数至多二的多项式只要在这些点为零，就在全部纯点为零。一次函数也被决定，故 $\mathcal A$ 实张成 $H$。
+
+取 $Y=(Y_i)\in\ker dG_Z$。纯投影的切向条件及Gram条件给
+
+$$
+P_iY_i+Y_iP_i=Y_i,\qquad
+\langle Y_i,P_j\rangle+\langle P_i,Y_j\rangle=0\quad(\text{全部 }i,j).
+\tag{333.3}
+$$
+
+对角情形由切向条件的 $\langle P_i,Y_i\rangle=0$ 支付。从辅助点中取 $H$ 的一组实基，在基上规定 $L(P_i)=Y_i$。基间的(333.3)使 $L$ 斜伴随；任意指标与基指标的(333.3)再给 $Y_i=L(P_i)$。矩阵值多项式 $PL(P)+L(P)P-L(P)$ 次数至多二，在全部辅助点为零，因而在全部纯投影为零。所以线性向量场 $L$ 处处切于紧流形 $\mathcal P_d$，其完整流 $e^{tL}$ 对正负时间都保持该流形。斜伴随性又使其保持全部转移概率。
+
+准确使用Geher的Wigner定理[Q333W]：在复空间全部纯射线上保持所有转移概率的映射由线性或反线性等距实现；有限维及双射使其为酉或反酉。纯投影实张成 $H$，故此处的实线性流是这些实现的共同共轭作用。该作用群的恒等连通分支为 $\operatorname{Ad}U(d)$：酉分支紧且连通，反酉分支为它与转置的陪集，两者不交；不交可由二维支持上Pauli三轴的转置反向检出。因此从恒等出发的流留在酉分支，其Lie代数给 $L(X)=i[B,X]$。这里没有选取全局连续相位的酉实现，也没有预设任何原物理过程。反向包含直接由共同共轭保持Gram读数得到。$\square$
+
+**定理 333.3（同加同减有限辅助点后的有限二元改写）。** 若 $\sum_{i=1}^mP_i=\sum_{i=1}^mQ_i$，则追加同一组333.2的辅助点后，两组有序纯投影可经有限次球内同中点改写相连，且端点处辅助点逐项恢复。因而
+
+$$
+\boxed{\ \ker\beta_{\mathbb Z}=A_{\mathbb Z},\qquad
+\operatorname{im}\beta_{\mathbb Z}=\{X\in H:\operatorname{Tr}X\in\mathbb Z\}.\ }
+\tag{333.4}
+$$
+
+证明。在乘积纯投影流形 $\mathcal P_d^M$ 上取标准秩一轨道辛形式，约定 $P\mapsto\operatorname{Tr}(BP)$ 的Hamilton向量场为 $i[B,P]$。共同酉共轭的动量映射为 $\mu(Z)=\sum_iP_i$，像位于迹为 $M$ 的超平面。这些是成熟的轨道公式，准确出处为Flaschka–Millson的§§2.1—2.2[Q333F]。对 $g_{ij}=\operatorname{Tr}(P_iP_j)$，直接计算得两个非零分量及完整流
+
+$$
+\begin{aligned}
+(X_{ij})_i&=i[P_j,P_i],& (X_{ij})_j&=i[P_i,P_j],\\
+P_i(t)&=e^{itS_{ij}}P_ie^{-itS_{ij}},&
+P_j(t)&=e^{itS_{ij}}P_je^{-itS_{ij}},\qquad S_{ij}=P_i+P_j.
+\end{aligned}
+\tag{333.5}
+$$
+
+其余项不动；两项总和与二维支持恒定，所以每个有限时间步都是一条允许的二元中点改写。辛线性代数、333.2及动量映射恒等式依次给
+
+$$
+\operatorname{span}\{X_{ij}(Z)\}
+=(\ker dG_Z)^\omega
+=\bigl(T_Z(U(d)\cdot Z)\bigr)^\omega
+=\ker d\mu_Z.
+\tag{333.6}
+$$
+
+若 $Z$ 包含 $\mathcal A$，共同对易子只有标量，因为 $\mathcal A$ 张成 $H$。$d\mu_Z$ 的余核由这些对易子模标量给出，故它满射到 $H_0$。固定总和纤维在 $Z$ 附近是光滑流形。从(333.6)选一组切向量基，按顺序复合对应的短时间二元流，其参数映射在零点导数可逆。逆函数定理给固定和纤维中的一个相对开邻域，其中每点都由有限次二元流到达。
+
+现记共同总和为 $S$，并令 $C_0=\{(R_1,\ldots,R_m)\in\mathcal P_d^m:\sum_iR_i=S\}$。各项都支撑于 $\operatorname{supp}S$；在该支持上 $S$ 正定。Needham–Shonkwiler的Main Theorem[Q333N]说，给定任意复frame operator及任意可实现的列平方范数，完整frame空间路径连通。应用于 $S$ 和全部列范数一，再以 $v_i\mapsto P_{v_i}$ 连续满射，得到 $C_0$ 连通；秩一支持的退化情形也直接成立。
+
+在扩大的固定和纤维中，以“有限次(333.5)可达”定义等价关系，考察 $C=C_0\times\{\mathcal A\}$。$C$ 的每一点均含同一辅助组，所以上述局部结论使每个可达类与 $C$ 的交相对开。这些交将连通的 $C$ 分为不交开集，只能有一个非空类。故两端点有限可达，辅助点在终点恢复。连通性只用来证明有限可达类唯一，没有对未知函数取极限，也没有把关系空间换成闭包。
+
+对任意整数零关系，取迹使正负系数总数相等，展开重复项后应用上述结论；辅助项在形式群中相消，得到(333.4)的核等式。像的包含方向由迹立即给出。反向，对正交单位向量 $e,f$ 和任意 $a\in\mathbb R$，取正整数 $q\ge|a|$，置 $s=a/q$ 及
+
+$$
+u=\sqrt{\frac{1+s}{2}}e+\sqrt{\frac{1-s}{2}}f,\qquad
+v=\sqrt{\frac{1-s}{2}}e+\sqrt{\frac{1+s}{2}}f.
+\tag{333.7}
+$$
+
+直接展开得 $a(P_e-P_f)=q(P_u-P_v)$。谱分解将每个迹零Hermitian矩阵写成有限个这种项，故纯投影差整生成 $H_0$；再加任一固定纯投影的整数倍即得所述像。$\square$
+
+**推论 333.4（全部有限复维数的准确中点商）。** 对标准模型的 $F_0=\mathbb R^{(\mathcal P_d)}$ 及全域中点关系空间 $\mathcal A_{\rm loc}$，有
+
+$$
+\boxed{\quad
+F_{\mathbb Z}/A_{\mathbb Z}\cong\mathbb Z\oplus(H_0,+),\qquad
+F_0/\mathcal A_{\rm loc}\cong
+\mathbb R\oplus(\mathbb R\otimes_{\mathbb Q}H_0),\qquad
+[\delta_P]\longmapsto(1,1\otimes(P-I/d)).
+\quad}
+\tag{333.8}
+$$
+
+证明。(333.4)的像以 $X\mapsto(\operatorname{Tr}X,X-\operatorname{Tr}(X)I/d)$ 分裂。对整数商作 $\mathbb R$ 标量扩张；$H_0$ 是 $\mathbb Q$ 向量空间，故 $\mathbb R\otimes_{\mathbb Z}H_0=\mathbb R\otimes_{\mathbb Q}H_0$，得到第二式。原准备映射在此商上为 $(c,z)\mapsto cI/d+\mu_0(z)$，其中 $\mu_0(a\otimes X)=aX$。这支付330—332所保留的一般高维中点兼容缺口，而非仅将逐qubit分类并排放置。$\square$
+
+**定理 333.5（有限直径标定与准确方向下界）。** 选有限条标准qubit直径 $D_j=P_j^+-P_j^-$。在各自实际球中取与半径 $d_j=D_j/2$ 正交等长的 $e_j$，中心为 $c_j=(P_j^++P_j^-)/2$，只用 $t\in W_*=(1/3,2/3)$，置
+
+$$
+Q_{j,t}^{\pm}=c_j+(2t-1)d_j\pm2\sqrt{t(1-t)}e_j,\qquad
+R_{j,t}=\delta_{Q_{j,t}^+}+\delta_{Q_{j,t}^-}
+ -2t\delta_{P_j^+}-2(1-t)\delta_{P_j^-}.
+\tag{333.9}
+$$
+
+这些点均在原球壳上；令 $U=\operatorname{span}_{\mathbb R}\{D_j\}$。则
+
+$$
+\mathcal A_{\rm loc}+\operatorname{span}_{\mathbb R}\{R_{j,t}:t\in W_*\}
+=\ker\beta_0
+\quad\Longleftrightarrow\quad U=H_0.
+\tag{333.10}
+$$
+
+因此在“固定直径、每径一个中央开区间的对称弦族”模板内，最少方向数恰为 $d^2-1$。
+
+证明。记 $k(a,X)=1\otimes aX-a\otimes X$。(333.8)中直接计算给 $[R_{j,t}]=2k(t,D_j)$。任取 $a\in\mathbb R$ 及正整数 $N>3|a|$，$t=1/2+a/(2N)\in W_*$，有
+
+$$
+k(a,D_j)=N[R_{j,t}],\qquad
+k(a,\textstyle\sum_j r_jD_j)
+=\sum_j\bigl(k(ar_j,D_j)-a\,k(r_j,D_j)\bigr).
+\tag{333.11}
+$$
+
+$\ker\mu_0$ 由全部 $k(a,X)$ 实张成：若 $\sum_i a_iX_i=0$，则 $\sum_i a_i\otimes X_i=-\sum_i k(a_i,X_i)$。故 $U=H_0$ 时生成整个核。
+
+反向若 $U\ne H_0$，取非零 $A\in H_0\cap U^\perp$，缩放使其某两特征值之差为一。取 $t_0=\sqrt2/3\in W_*$ 及 $\mathbb Q$ 线性 $\phi:\mathbb R\to\mathbb R$，满足 $\phi(1)=0,\phi(t_0)=1$。$h(P)=\phi(\operatorname{Tr}(AP))$ 消灭全部中点关系。已选直径两端的 $A$ 期望相等，加法性使 $h(R_{j,t})=0$。但在上述特征向量所张球的直径上，$h(R_{D,t_0})=2$。所以仍有原准备核内的关系不能生成。此为代数分离读数，不是proper效应。
+
+若所选方向恰为实基，一条 $m$ 支持零关系 $r=\sum_{i=1}^m a_i\delta_{P_i}$ 有显式计数：固定 $P_m$，展开 $P_i-P_m=\sum_jx_{ij}D_j$；取迹及基坐标得 $\sum_i a_i=0$、$\sum_{i<m}a_ix_{ij}=0$，因而
+
+$$
+[r]=\sum_{i<m,j}a_i k(x_{ij},D_j).
+\tag{333.12}
+$$
+
+逐项用(333.11)，至多 $(m-1)(d^2-1)$ 条非中点实例已足够，余项是有限中点组合。未给中点总步数的统一上界。$\square$
+
+**定义与命题 333.6（原域中的有限反足框与树形标定）。** 在328.1的实际L2原域中，称有限纯框 $p_1,\ldots,p_d$ 合格，是指每对都在其实际最小三球中反足，且在全部原纯点中不能再添一个同时反足的点。每个球的仿射椭球体确定自身中心及半径内积，故反足与正交均可内禀定义，不输入原效应或全域内积。对每对 $i<j$ 的实际球 $B_{ij}$，选两根相互正交且垂直于 $p_i-p_j$ 的赤道直径；再从框完全图取一棵生成树 $T$。所选标定方向为全部赤道两轴及全部树边的框点直径。用(333.9)的原球坐标写其校准族，并定义
+
+$$
+\mathcal E_{\mathfrak S}
+=\mathcal A_{\rm loc}
+ +\operatorname{span}_{\mathbb R}\{R_{j,t}:j\text{ 为所选方向},\ t\in W_*\}.
+\tag{333.13}
+$$
+
+有限的是 $\binom d2$ 颗球与 $d^2-1$ 个方向族；中点仍遍历全部原纯点与全部实际球，每族参数仍不可数。在L2与TF9下合格框存在，且对328.3的同一纯提升及准备映射有
+
+$$
+\boxed{\quad
+\mathcal E_{\mathfrak S}=\ker\widetilde\beta,\qquad
+\beta_0=\Psi\widetilde\beta,
+\qquad
+\ker\beta_0=\mathcal E_{\mathfrak S}\ \Longleftrightarrow\ \Psi\text{ 单射}.
+\quad}
+\tag{333.14}
+$$
+
+证明。先用328.3取得纯标签双射和各球忠实仿射提升，不要求 $\Psi$ 单射。反足框提升为正交纯框；若未满基，正交补的纯射线经双射返回原域可扩张它，违背极大性。反向从完整正交基取原像，给合格框存在。故此处 $d$ 确为该提升的整个复维数。
+
+提升后，每对赤道轴构成 $\operatorname{span}_{\mathbb R}\{E_{ij}+E_{ji},iE_{ij}-iE_{ji}\}$ 的基，不同对的空间直和；树边差构成对角迹零空间的一组基，可逐叶消去检验。因此所选 $2\binom d2+(d-1)=d^2-1$ 个方向组成 $H_0$ 实基。333.5识别提升准备核，得到(333.14)。从纯投影实张成 $H$ 与分解式推出最后等价；没有在提升前偷用原方向线性独立。
+
+自由选取的纯点为 $d$ 个框点及每对赤道两正端，共 $d^2$ 个；派生反足也计入时共 $2d^2-d$ 个固定点。横向半径可用同球已选轴，不需额外纯锚。改换弦的横向方向时，两条关系之差为同中点关系；更换树或赤道基时，提升后仍为 $H_0$ 实基，故生成相同原关系空间，不输入跨球相位同步。
+
+另外，若完整标定 $b$ 颗标准球，每球迹零方向空间仅三维，333.5给
+
+$$
+\left\lceil\frac{d^2-1}{3}\right\rceil\le b(d)\le\binom d2.
+\tag{333.15}
+$$
+
+故 $b(2)=1$、$b(3)=3$；$d\ge4$ 的准确值本章未定。全标定球可用331.2的三轴取代，所以下界同样作用于该球模板。不是任意重建公理的通用球数下界。
+
+作为332.2的进一步充分性结果，标准模型中任意单颗纯锚 $a$ 已有 $\mathcal D_{\{a\}}=\ker\beta_0$：对任意纯 $P\ne P_a$，$P-P_a$ 属于经过 $a$ 的二维支持球的迹零方向空间，而全部这些差实张成 $H_0$。沿各球的局部核施加标量平衡，333.8即给满核。这不把无限球束称为有限颗球；有限颗球由上述框与树另行支付。$\square$
+
+**定义与定理 333.7（有限球标定的完整量子候选）。** 完整保留331.5的强全有限原背景：同一有限实 $V$、各个有限 $N\ge0$ 的整个 $V^{\otimes N}$、闭尖生成原锥、严格正乘积单位、整个紧归一底、全部纯点、完整proper菜单及全部有限单位分解，分离联合空间的原乘积配对、规范重括号、正置换及其正逆、正单位丢弃，以及对任意有限分块、双方全部正泛函及全部相关输入的min/max界。只在整个 $K_3$ 要求实际L2、实际TF9，并将关系条件写成：存在333.6的有限合格结构 $\mathfrak S$，使
+
+$$
+\mathsf R_{\rm finite,3}:\qquad
+\ker\beta_{0,3}=\mathcal E_{\mathfrak S,3}.
+\tag{333.16}
+$$
+
+全部中点仍包括整个三份层的纠缠纯点；有限标定球也在整个原域选择。指定过程保留331.5的各自独立前件。该候选当且仅当存在同一个 $n\ge2$ 及 $\theta$，使每个有限 $N\ge0$ 都有
+
+$$
+\theta^{\otimes N}C_N=\operatorname{PSD}_{n^N},\qquad
+u_N=\operatorname{Tr}\circ\theta^{\otimes N}.
+\tag{333.17}
+$$
+
+证明。先只用 $K_3$ 的L2与TF9取得328.3的提升，333.14使(333.16)恰好排除原混合空间的额外折叠。328.4给完整三份PSD，328.7给同一局部坐标的全部有限层传播。反向标准模型应用333.5—333.6；在整个三份层 $d=n^3$，故可用 $\binom{n^3}{2}$ 颗球、$n^6-1$ 个方向族。此处不得将 $d$ 换成单份的 $n$。
+
+| 新候选内的关系或明确保留的前件 | 推得的现有量子结构 |
+| --- | --- |
+| 整个 $K_3$ 的L2、TF9、全域中点及有限球标定满核 | 复射线、迹一密度矩阵、全部有限纠缠PSD锥 |
+| 完整proper菜单、线性评价与有限单位分解 | Born概率 $\operatorname{Tr}(E\rho)$、数学POVM及PVM |
+| 同一强全有限产品、重括号、置换与单位丢弃 | 通常复张量、因子交换与偏迹 |
+| 指定线性分支对全部有限相关旁观输入保正 | CP与有限Kraus表示 |
+| 分支及合计的全输入质量预算 | TNI／TP与数学仪器 |
+| 指定锐事件与整个yes支持逐点中性 | Lüders分支 $X\mapsto PXP$ |
+| 指定连续可逆保单位且全旁观保正的一参数群 | 连续酉共轭与生成元 |
+
+本章减少的是需要非中点标定的实际球及方向族：由有限锚的无限球束收缩到有限框的球网；同时给出一般高维未加权商与模板内准确方向数。全域中点、TF9、强复合背景及各项过程前件仍各自承重。333.3的等权整数配方确有同加同减辅助点后的非负有限改写；一般实系数关系只取得有符号线性证书，不据此声称设备可执行、一般非负路径或统一总长度界。TF9能否从更弱原关系推出、$d\ge4$ 的最少球数、钟与能量及 $\hbar$ 标定、指定Hamiltonian及无限极限保留为具体未决边界。
+
+文献归属：复frame固定算子及列范数空间的路径连通性[Q333N]、Wigner分类[Q333W]及秩一轨道动量公式[Q333F]为成熟输入；有限二次决定、逆函数定理、矩阵单位与树边基、标量扩张及Hamel分离均为成熟工具。repo-derived接合是有限辅助点的Gram刚性、二元流局部可达与frame连通性合成有限整群关系，再用准确商支付原有限球标定候选。330／331的局部分类与328的HVC及全有限传播保留既有归属。这里给条件纸面理论，不申领全球原创或Lean核验。$\square$
+
+白话：先保留整个世界的一条共同规矩：两对珠子的中点相同，就允许把这一对换成另一对。现在证明，两份等权珠串只要总和相同，临时借来同一小包辅助珠子，就能靠有限次两珠换位互相变成，最后把借来的珠子原样还回；不同小球之间不再藏着另一层加法接缝。剩下的只是“缩放箭头”和“把比例写在配方上”是否用同一把尺。为此摆一框两两反足的珠子，每对之间的小球放两根横尺，再沿一棵连接全框的树放纵尺；总共有限颗球、恰好 $d^2-1$ 个方向族，就把这两种比例写法锁成同一件事。把这张球网放在完整三份世界，保留三点预算与复合、过程条件，就接回态、Born概率、测量、张量和量子演化。球网有限，中点相容性仍遍及整个世界。
+
+[Q333N]: https://arxiv.org/pdf/1804.05899v2 "Tom Needham、Clayton Shonkwiler，Symplectic geometry and connectivity of spaces of frames，Main Theorem与§4.3：复frame固定算子及可实现列平方范数的完整空间路径连通。"
+[Q333W]: https://arxiv.org/pdf/1407.0527v1 "György Pál Geher，An elementary proof for the non-bijective version of Wigner's theorem，p.2 Wigner's theorem及式(1)：全部纯射线转移概率保持的线性或反线性等距实现。"
+[Q333F]: https://arxiv.org/pdf/math/0108191v2 "Hermann Flaschka、John Millson，Bending flows for sums of rank one matrices，§§2.1—2.2：秩一轨道辛形式、Hamilton方程及乘积共同共轭动量映射。"
+
+## 追加锚（本行以下为增补区）
