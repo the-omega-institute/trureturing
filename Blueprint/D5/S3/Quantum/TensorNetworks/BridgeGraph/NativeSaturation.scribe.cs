@@ -13,9 +13,10 @@ internal sealed class NativeSaturationDocument : IScribeDocumentDefinition
         H("Native saturation at the three-halves threshold"),
         Blocks(
             Paragraph(Text(
-                "All dimensions are natural numbers. For every positive q, a width-three sum of " +
-                "complex a-by-b and (3q)-by-(2q) tensor factors has identity column Gram exactly " +
-                "when 2b is at most 3a. The family includes a=0 or b=0.")),
+                "For every natural a and b and every positive natural q, suitable width-three " +
+                "families of complex a-by-b and (3q)-by-(2q) factors exist whose tensor sum has " +
+                "identity column Gram if and only if 2b is at most 3a. The family includes " +
+                "a=0 or b=0.")),
             Describe.Lean(
                 DescribeId.Create("native-saturation-iff"),
                 DeclarationHandle.Create(Owner + ".native_saturation_iff"),
@@ -105,9 +106,10 @@ internal sealed class NativeSaturationDocument : IScribeDocumentDefinition
                 Product(Fin(b), Fin(Mul(D(2), q))))));
         Formula witness = Some("M", Factors(Fin(a), Fin(b)),
             Some("N", Factors(Fin(Mul(D(3), q)), Fin(Mul(D(2), q))), gram));
-        Formula body = All("hq", Lt(D(0), q),
-            new Formula.Logic(Parenthesized(witness), FormulaLogicOperator.Iff,
-                Parenthesized(Le(Mul(D(2), b), Mul(D(3), a)))));
+        Formula body = new Formula.Logic(Parenthesized(Lt(D(0), q)),
+            FormulaLogicOperator.Implies,
+            Parenthesized(new Formula.Logic(Parenthesized(witness), FormulaLogicOperator.Iff,
+                Parenthesized(Le(Mul(D(2), b), Mul(D(3), a))))));
         return All("a", V("Nat"), All("b", V("Nat"), All("q", V("Nat"), body)));
     }
 

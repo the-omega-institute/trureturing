@@ -4,11 +4,11 @@
 
 A coordinate routing realizes the complete rectangular width-three native saturation family.
 
-All dimensions are natural numbers. For every positive q, a width-three sum of complex a-by-b and (3q)-by-(2q) tensor factors has identity column Gram exactly when 2b is at most 3a. The family includes a=0 or b=0.
+For every natural a and b and every positive natural q, suitable width-three families of complex a-by-b and (3q)-by-(2q) factors exist whose tensor sum has identity column Gram if and only if 2b is at most 3a. The family includes a=0 or b=0.
 
 **Theorem 1.1 (Rectangular native saturation iff).**
 
-$$\forall a \in Nat,\; \forall b \in Nat,\; \forall q \in Nat,\; \forall hq \in 0 < q,\; (\exists M \in \operatorname{Fin}\left(3\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right), Complex\right),\; \exists N \in \operatorname{Fin}\left(3\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(3 \cdot q\right), \operatorname{Fin}\left(2 \cdot q\right), Complex\right),\; \operatorname{conjTranspose}\left(\sum_{r:\operatorname{Fin}\left(3\right)} \operatorname{kronecker}\left(M\left(r\right), N\left(r\right)\right)\right) \cdot \sum_{r:\operatorname{Fin}\left(3\right)} \operatorname{kronecker}\left(M\left(r\right), N\left(r\right)\right) = (1: \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(b\right), \operatorname{Fin}\left(2 \cdot q\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(b\right), \operatorname{Fin}\left(2 \cdot q\right)\right), Complex\right))) \Leftrightarrow (2 \cdot b \le 3 \cdot a)$$
+$$\forall a \in Nat,\; \forall b \in Nat,\; \forall q \in Nat,\; (0 < q) \Rightarrow ((\exists M \in \operatorname{Fin}\left(3\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right), Complex\right),\; \exists N \in \operatorname{Fin}\left(3\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(3 \cdot q\right), \operatorname{Fin}\left(2 \cdot q\right), Complex\right),\; \operatorname{conjTranspose}\left(\sum_{r:\operatorname{Fin}\left(3\right)} \operatorname{kronecker}\left(M\left(r\right), N\left(r\right)\right)\right) \cdot \sum_{r:\operatorname{Fin}\left(3\right)} \operatorname{kronecker}\left(M\left(r\right), N\left(r\right)\right) = (1: \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(b\right), \operatorname{Fin}\left(2 \cdot q\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(b\right), \operatorname{Fin}\left(2 \cdot q\right)\right), Complex\right))) \Leftrightarrow (2 \cdot b \le 3 \cdot a))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/BridgeGraph/NativeSaturation.native_saturation_iff` (`✓ std3`). ∎
 
