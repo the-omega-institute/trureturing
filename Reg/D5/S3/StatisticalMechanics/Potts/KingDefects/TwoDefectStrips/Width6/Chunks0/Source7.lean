@@ -1,5 +1,8 @@
 import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source6
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0.Source7
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
+import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Sources
 import Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import Reg.Support.UniverseSingleReadout
 import LeanInformationAuditInterface.Contract.Registration
