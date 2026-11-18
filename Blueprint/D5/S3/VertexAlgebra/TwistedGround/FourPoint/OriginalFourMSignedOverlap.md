@@ -184,8 +184,34 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 With the chosen source roots and actual period corrections, every signed covariance is jointly analytic at the pair of mode origins in A, B and D.
 
+**Theorem 1.16 (Signed source on the D lip).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chartD_source_boundary`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chartD_source_boundary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The selected source is the one-sided limit of the normalized slit source from the matched D half-plane, with the actual root and its sign.
+
+**Theorem 1.17 (Signed covariance on the D lip).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chartD_covariance_boundary`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chartD_covariance_boundary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The signed covariance has the corresponding one-sided limit using the actual D period and derivative. The branch and denominator conditions specify its spatial domain.
+
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chartD_covariance_boundary`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chartD_source_boundary`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_chosen_source_signs`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_analytic`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_eq_native`

@@ -945,4 +945,122 @@ theorem chart_covariance_analytic {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
     simp only [chartCovariance, hl, ite_false]
     exact (hm.mul (hrT.sub analyticAt_const)).neg
 
+open OriginalFourMPeriodSource (dLip)
+open private dPeriod_ne_zero from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPeriodSource
+
+private def slitSource (e : Bool) (u r : ℂ) : ℂ :=
+  normalizedSource e r ((1 - r) ^ (1 / 2 : ℂ)) u
+
+private theorem normalizedBranch_radial_continuous (e : Bool) {u r : ℂ}
+    (hb : b u ≠ 0) (hr : 1 - r ≠ 0) :
+    ContinuousAt (fun t => normalizedBranch e u t) r := by
+  have h₁ : ContinuousAt (fun t : ℂ => 1 - t) r := continuous_const.sub continuous_id |>.continuousAt
+  cases e
+  · exact (h₁.sub continuousAt_const).div (continuousAt_const.mul h₁) (mul_ne_zero hb hr)
+  · exact (continuousAt_const.sub (h₁.mul continuousAt_const)).div continuousAt_const hb
+
+/-- The spatial source on the matched D lip converges to the chosen D
+source. The sign of the root is supplied by the actual D period chart. -/
+theorem chartD_source_boundary {z : ℝ} (hz : 0 < z) (hz1 : z < 1) (e : Bool)
+    {u : ℂ} (hb : b u ≠ 0)
+    (hu : normalizedBranch e u (parameter .D (z : ℂ)) ∈ Complex.slitPlane) :
+    Tendsto (slitSource e u) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (chosenChartSource .D z e u)) := by
+  let r := parameter .D (z : ℂ)
+  have hroot : Tendsto (fun t : ℂ => (1 - t) ^ (1 / 2 : ℂ))
+      (𝓝[dLip true] r) (𝓝 (periodRoot .D z)) := by
+    have h := OriginalFourMPeriodSource.chartD_root_boundary true hz hz1
+    change Tendsto _ (𝓝[dLip true] r) (𝓝 ((if true then 1 else -1) * periodRoot .D z)) at h
+    simpa using h
+  have hne : periodRoot .D z ≠ 0 := by
+    have hsq : periodRoot .D z ^ 2 = 1 - r :=
+      (OriginalFourMActualChart.chosen_roots hz hz1 .D .S).2
+    exact fun h => chart_parameter_ne_one hz hz1 .D (by simpa [h] using hsq.symm)
+  have ha := normalizedBranch_radial_continuous e hb (chart_parameter_ne_one hz hz1 .D)
+  have hp := (ha.cpow (g := fun _ => (-1 / 2 : ℂ)) continuousAt_const hu).tendsto.mono_left
+    (nhdsWithin_le_nhds (s := dLip true) (a := r))
+  cases e
+  · have hd := hroot.const_mul (b u)
+    change Tendsto (fun t => (1 / (b u * (1 - t) ^ (1 / 2 : ℂ))) *
+        normalizedBranch false u t ^ (-1 / 2 : ℂ)) (𝓝[dLip true] r)
+      (𝓝 ((1 / (b u * periodRoot .D z)) * normalizedBranch false u r ^ (-1 / 2 : ℂ)))
+    exact (tendsto_const_nhds.div hd (mul_ne_zero hb hne)).mul hp
+  · change Tendsto (fun t => slitSource true u t) _ _
+    simp only [slitSource, normalizedSource, chosenChartSource, ite_true, mul_one]
+    exact hp.const_mul (1 / b u)
+
+private theorem dCorrection_boundary {z : ℝ} (hz : 0 < z) (hz1 : z < 1) :
+    Tendsto (periodCorrection slitPeriod) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (chartCorrection true .D z)) := by
+  have ht : 1 < z⁻¹ := (one_lt_inv₀ hz).2 hz1
+  obtain ⟨hP, hP'⟩ := OriginalFourMPeriodSource.dPeriod_boundary true ht
+  rw [Complex.ofReal_inv] at hP hP'
+  have hI : Tendsto (fun t : ℂ => t) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (parameter .D (z : ℂ))) := nhdsWithin_le_nhds
+  have hne := dPeriod_ne_zero true ht
+  rw [Complex.ofReal_inv] at hne
+  exact ((hI.mul (tendsto_const_nhds.sub hI)).mul hP').div hP hne
+
+private def slitCovariance (l k e f : Bool) (u v r : ℂ) : ℂ :=
+  let m := slitSource e u r * slitSource f v r
+  let C := periodCorrection slitPeriod r
+  let Wu := h e u r * slitSource e u r
+  let Wv := h f v r * slitSource f v r
+  if l = k then
+    m * (r / 4 - C + r ^ 2 * rho e f u v / (4 * b u * b v * (Wu + Wv) ^ 2)) +
+      (if e = f then 0 else cauchy e f u v)
+  else -(m * (rationalT e f u v r - C))
+
+/-- One-sided continuation of the literal signed covariance to the
+matched D lip. The branch and denominator conditions hold on a
+neighborhood of the pair of native mode origins. -/
+theorem chartD_covariance_boundary {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (l k e f : Bool) {u v : ℂ} (hbu : b u ≠ 0) (hbv : b v ≠ 0)
+    (hu : normalizedBranch e u (parameter .D (z : ℂ)) ∈ Complex.slitPlane)
+    (hv : normalizedBranch f v (parameter .D (z : ℂ)) ∈ Complex.slitPlane)
+    (hJ : chartW .D z e u + chartW .D z f v ≠ 0)
+    (hT : E e f u v (parameter .D (z : ℂ)) ≠ 0) :
+    Tendsto (slitCovariance l k e f u v) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (chartCovariance true .D z l k e f u v)) := by
+  let r := parameter .D (z : ℂ)
+  have hI : Tendsto (fun t : ℂ => t) (𝓝[dLip true] r) (𝓝 r) := nhdsWithin_le_nhds
+  have h₁ : Tendsto (fun t : ℂ => 1 - t) (𝓝[dLip true] r) (𝓝 (1 - r)) :=
+    tendsto_const_nhds.sub hI
+  have hc := dCorrection_boundary hz hz1
+  have hMu := chartD_source_boundary hz hz1 e hbu hu
+  have hMv := chartD_source_boundary hz hz1 f hbv hv
+  have hm := hMu.mul hMv
+  change Tendsto (fun t => slitCovariance l k e f u v t) _ _
+  by_cases hl : l = k
+  · have hH (s : Bool) (w : ℂ) :
+        Tendsto (fun t => h s w t) (𝓝[dLip true] r) (𝓝 (h s w r)) := by
+      cases s
+      · exact h₁.sub tendsto_const_nhds
+      · exact tendsto_const_nhds.sub (h₁.mul tendsto_const_nhds)
+    have hW := ((hH e u).mul hMu).add ((hH f v).mul hMv)
+    have hden : 4 * b u * b v * (chartW .D z e u + chartW .D z f v) ^ 2 ≠ 0 :=
+      mul_ne_zero (mul_ne_zero (mul_ne_zero (by norm_num) hbu) hbv) (pow_ne_zero 2 hJ)
+    simpa only [slitCovariance, chartCovariance, chartW, hl, ite_true, Pi.div_apply] using
+      (hm.mul (((hI.div_const 4).sub hc).add
+        (((hI.pow 2).mul (tendsto_const_nhds (x := rho e f u v))).div
+          (tendsto_const_nhds.mul (hW.pow 2)) hden))).add
+            (tendsto_const_nhds (x := if e = f then 0 else cauchy e f u v))
+  · have hE : Tendsto (fun t => E e f u v t) (𝓝[dLip true] r) (𝓝 (E e f u v r)) :=
+      tendsto_const_nhds.sub (hI.mul tendsto_const_nhds)
+    have hN : Tendsto (fun t => N e f u v t) (𝓝[dLip true] r) (𝓝 (N e f u v r)) := by
+      cases e <;> cases f <;> simp only [N, Bool.false_eq_true, ite_false, ite_true]
+      exact h₁.add tendsto_const_nhds
+      exact (tendsto_const_nhds.add (h₁.mul tendsto_const_nhds)).neg
+      exact ((h₁.mul tendsto_const_nhds).add tendsto_const_nhds).neg
+      exact tendsto_const_nhds.add ((h₁.mul tendsto_const_nhds).mul tendsto_const_nhds)
+    have hRat : Tendsto (fun t => rationalT e f u v t) (𝓝[dLip true] r)
+        (𝓝 (rationalT e f u v r)) := by
+      exact ((hI.mul hN).div (tendsto_const_nhds.mul hE)
+        (mul_ne_zero (by norm_num) hT)).add
+          ((((hI.pow 2).mul tendsto_const_nhds).mul tendsto_const_nhds).div
+            (hE.pow 2) (pow_ne_zero 2 hT))
+    simpa only [slitCovariance, chartCovariance, hl, ite_false] using
+      (hm.mul (hRat.sub hc)).neg
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSignedOverlap

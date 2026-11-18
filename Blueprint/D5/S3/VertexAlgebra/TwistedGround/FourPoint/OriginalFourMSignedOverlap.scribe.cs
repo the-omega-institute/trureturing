@@ -60,5 +60,11 @@ internal sealed class OriginalFourMSignedOverlapDocument : IScribeDocumentDefini
                 + "A and B convergence overlaps, including both mode origins."),
             Result("chart-covariance-analytic", "chart_covariance_analytic", "Regular chart covariance",
                 "With the chosen source roots and actual period corrections, every signed covariance is "
-                + "jointly analytic at the pair of mode origins in A, B and D."))));
+                + "jointly analytic at the pair of mode origins in A, B and D."),
+            Result("chart-d-source-boundary", "chartD_source_boundary", "Signed source on the D lip",
+                "The selected source is the one-sided limit of the normalized slit source from the "
+                + "matched D half-plane, with the actual root and its sign."),
+            Result("chart-d-covariance-boundary", "chartD_covariance_boundary", "Signed covariance on the D lip",
+                "The signed covariance has the corresponding one-sided limit using the actual D "
+                + "period and derivative. The branch and denominator conditions specify its spatial domain."))));
 }
