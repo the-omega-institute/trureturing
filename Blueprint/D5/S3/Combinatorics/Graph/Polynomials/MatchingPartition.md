@@ -116,7 +116,7 @@ For every natural r, there exists an unweighted simple graph G on Fin(2(r+3)) wi
 
 The exact source Problem 4.7 was reread in the fixed-version text. Repository and pinned Mathlib searches found the native count bridge and binomial suppliers, but no matching partition or sharp rigidity theorem in the searched scope. Crossref metadata identifies Farrell's 1992 paper On the theory of matching equivalent graphs and rook equivalent chessboards, DOI 10.1016/0016-0032(92)90095-X. Its primary text and the Kennedy primary text have not been verified here. No novelty or priority claim is made.
 
-The four-slot escape audit remains unfinished under issue #31461. The dependent-family enrollment requires complete reconstruction of the varying graph, matching and count telescope, an exact readout bridge, whole-family variation and sensitivity, and actual observational dependence for all seven public theorems, including sharp_gap_attained. Those audit data are not supplied by the combinatorial proof. No declared_validated registration is claimed.
+The four-slot escape audit remains unfinished. The dependent-family enrollment requires complete reconstruction of the varying graph, matching and count telescope, an exact readout bridge, whole-family variation and sensitivity, and actual observational dependence for all seven public theorems, including sharp_gap_attained. Those audit data are not supplied by the combinatorial proof. No declared_validated registration is claimed.
 
 ## References
 
