@@ -72,10 +72,10 @@ attribute [local instance 2000] Pi.instFintype
 
 private def labels (c : Row) : Boundary := fun j => beta (c j)
 
-private def Valid (s : Seen) (p : Boundary) : Prop :=
+def Valid (s : Seen) (p : Boundary) : Prop :=
   s.1 = true ∧ proper p ∧ (s.2 = false → ∀ j, p j ≠ 2)
 
-private def boundaryClass (s : Seen) (p : Boundary) : Fin 11 :=
+def boundaryClass (s : Seen) (p : Boundary) : Fin 11 :=
   if s.2 then
     ![1, 2, 3, 4, 3, 5, 6, 7, 2, 8, 5, 9, 4, 9, 7, 10]
       ((if p 0 = p 2 then 8 else 0) + (if p 1 = p 3 then 4 else 0) +
@@ -108,7 +108,7 @@ private abbrev v := widthV rowLegal labels compatible
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = widthTotal rowLegal labels (v n) :=
   width_counting_bridge rowLegal labels compatible bonds bonds_iff n
 
-private def transfer (i k : Fin 11) : ℤ :=
+def transfer (i k : Fin 11) : ℤ :=
   ![![64, 0, 0, 64, 64, 128, 32, 128, 32, 128, 64],
     ![0, 64, 128, 0, 0, 0, 0, 0, 64, 0, 0],
     ![0, 64, 128, 0, 64, 0, 0, 0, 64, 64, 0],
@@ -168,11 +168,11 @@ private def firstCount (k : Fin 11) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     boundaryClass (finish (false, false) c) (labels c) = k then 1 else 0
 
-private def classCount (s : Seen) (p : Boundary) (k : Fin 11) : ℤ :=
+def classCount (s : Seen) (p : Boundary) (k : Fin 11) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
     boundaryClass (finish s c) (labels c) = k then 1 else 0
 
-private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 11) :
+theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 11) :
     classCount s p k = ∑ q : Boundary,
       rowWeight s q * if (∀ j : Fin 5, q j.castSucc ≠ q j.succ) ∧
         (∀ j : Fin 5, p j.castSucc ≠ q j.succ ∧ p j.succ ≠ q j.castSucc) ∧
@@ -193,7 +193,7 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 11) :
 
 set_option maxHeartbeats 0 in
 -- The certificate enumerates the finite scanner states and all labelled rows.
-private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
+theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
   suffices h : ∀ k : Fin 11, ∀ s p, Valid s p →
       classCount s p k = transfer (boundaryClass s p) k by

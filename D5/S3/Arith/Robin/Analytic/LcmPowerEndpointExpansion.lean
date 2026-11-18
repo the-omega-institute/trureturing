@@ -112,7 +112,7 @@ private lemma sigmaKappa_sum_divisors (κ : ℝ) (n : ℕ) :
   rw [← ArithmeticFunction.coe_zeta_mul_apply, ← mul_assoc,
     ArithmeticFunction.coe_zeta_mul_coe_moebius, one_mul]
 
-private lemma sigmaKappa_prime_power (κ : ℝ) {p a : ℕ} (hp : p.Prime) :
+lemma sigmaKappa_prime_power (κ : ℝ) {p a : ℕ} (hp : p.Prime) :
     sigmaKappa κ (p ^ (a + 1)) =
       (ArithmeticFunction.sigma 1 (p ^ (a + 1)) : ℝ) ^ κ -
         (ArithmeticFunction.sigma 1 (p ^ a) : ℝ) ^ κ := by
@@ -123,7 +123,7 @@ private lemma sigmaKappa_prime_power (κ : ℝ) {p a : ℕ} (hp : p.Prime) :
     sigmaPower_apply (pow_ne_zero (a + 1) hp.ne_zero), sum_range_succ] at hb
   linarith
 
-private lemma sigmaKappa_factorization (κ : ℝ) {n : ℕ} (hn : n ≠ 0) :
+lemma sigmaKappa_factorization (κ : ℝ) {n : ℕ} (hn : n ≠ 0) :
     sigmaKappa κ n = ∏ p ∈ n.primeFactors, sigmaKappa κ (p ^ n.factorization p) := by
   simp_rw [sigmaKappa_eq_convolution]
   rw [(sigmaKappa_multiplicative κ).multiplicative_factorization _ hn,
@@ -169,7 +169,7 @@ private lemma sigmaKappa_prime_power_pos {κ : ℝ} (hκ : 0 < κ) {p a : ℕ}
   exact_mod_cast (show ArithmeticFunction.sigma 1 (p ^ (a - 1)) <
     ArithmeticFunction.sigma 1 (p ^ a) by nlinarith)
 
-private lemma sigmaKappa_pos {κ : ℝ} (hκ : 0 < κ) {n : ℕ} (hn : n ≠ 0) :
+lemma sigmaKappa_pos {κ : ℝ} (hκ : 0 < κ) {n : ℕ} (hn : n ≠ 0) :
     0 < sigmaKappa κ n := by
   rw [sigmaKappa_factorization κ hn]
   apply prod_pos

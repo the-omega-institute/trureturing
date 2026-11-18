@@ -20,7 +20,7 @@ open OriginalGaussianExternalEvolution OriginalGaussianAllIndexResolvent
 open OriginalGaussianWeightedResolvent
 open OriginalGaussianBilinearTranspose OriginalGaussianDifferentiation
 
-private lemma literal_symmetry (square out out' : Bool) (p q : ℕ) {z : ℂ}
+lemma literal_symmetry (square out out' : Bool) (p q : ℕ) {z : ℂ}
     (hz : ‖z‖ < 1) :
     (if square then externalT out p out' q z else externalJ out p out' q z) =
       (if square then externalT out' q out p z else externalJ out' q out p z) := by

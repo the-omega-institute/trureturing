@@ -44,11 +44,11 @@ def fullPrimePowerResidual (z : ℝ) : ℝ :=
   ∑ p ∈ Nat.primesLE ⌊z⌋₊, ∑' k : ℕ,
     if 2 ≤ k ∧ z < (p : ℝ) ^ k then (p : ℝ)⁻¹ ^ k / (k : ℝ) else 0
 
-private def shiftedTail (q : ℝ) (b : ℕ) : ℝ :=
+def shiftedTail (q : ℝ) (b : ℕ) : ℝ :=
   ∑' r : ℕ, q ^ (r + (b + 1)) / (r + (b + 1) : ℕ)
 
 /-- Integer-log and real-floor cutoffs agree, with BOTH power endpoints. -/
-private theorem cutoff_spec {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
+theorem cutoff_spec {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
     (hp : p.Prime) (hpz : (p : ℝ) ≤ z) :
     1 ≤ cutoffExponent z p ∧
       (p : ℝ) ^ cutoffExponent z p ≤ z ∧
@@ -98,7 +98,7 @@ private theorem cutoff_lt_iff {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
 
 /-- A genuine strict estimate for the WHOLE shifted series.  Strictness uses
 r=1; all other summands are compared to a summable geometric series. -/
-private theorem shifted_tail_bound {q : ℝ} (hq0 : 0 < q) (hq1 : q < 1) (b : ℕ) :
+theorem shifted_tail_bound {q : ℝ} (hq0 : 0 < q) (hq1 : q < 1) (b : ℕ) :
     Summable (fun r : ℕ => q ^ (r + (b + 1)) / (r + (b + 1) : ℕ)) ∧
       shiftedTail q b < (q ^ (b + 1) / (b + 1 : ℕ)) / (1 - q) := by
   let A : ℝ := q ^ (b + 1) / (b + 1 : ℕ)
@@ -130,7 +130,7 @@ private theorem shifted_tail_bound {q : ℝ} (hq0 : 0 < q) (hq1 : q < 1) (b : �
 /-- Reindex the actual full residual. Summability is established before the
 prefix/tail identity is used, so the real tsum default-zero convention cannot
 silently discard an infinite tail. -/
-private theorem residual_prime_eq_shift {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
+theorem residual_prime_eq_shift {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
     (hp : p.Prime) (hpz : (p : ℝ) ≤ z) :
     (∑' k : ℕ, if 2 ≤ k ∧ z < (p : ℝ) ^ k then
       (p : ℝ)⁻¹ ^ k / (k : ℝ) else 0) =

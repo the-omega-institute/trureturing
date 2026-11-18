@@ -6,7 +6,8 @@ year: 2013
 url: https://arxiv.org/abs/1302.0206v1
 doi: 10.1063/1.4811346
 claim: Positive three-state Bargmann invariants characterize null-phase curves and yield a globally in-phase lift; its real Gram data admit real-coordinate representations.
-strata_touched: []
+strata_touched:
+  - D5/S3/Quantum/PureState/BargmannRealRephasing
 license: citation-only
 triage: anchor
 ---
@@ -37,3 +38,16 @@ supplies the obstruction to a common real structure.
 
 This note paraphrases the cited construction and scope. No article PDF,
 figure or extended excerpt is redistributed.
+
+## Verified locator
+
+DOI: https://doi.org/10.1063/1.4811346
+Source: https://arxiv.org/abs/1302.0206v1
+
+The DOI resolves in Crossref to J. Math. Phys. 54, 062106 (2013) by the
+seven listed authors; the published version was not compared with v1. In
+v1, equation (2.10) defines a null-phase curve by strictly positive
+three-state Bargmann invariants. The paragraph before equation (3.6) builds
+an in-phase lift from a fiducial vector ψ0 by setting ψ = ρψ0/√Tr(ρρ0) for
+each ray ρ. Equations (4.11)-(4.13) choose an orthonormal basis in which the
+lifted vectors have real coefficients.

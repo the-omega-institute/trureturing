@@ -24,12 +24,12 @@ open D5.S3.Arith.Robin.PrimeFiberPropagation
 
 noncomputable section
 
-private abbrev primeCutoff (u : ℝ) : Finset ℕ := (Ioc 0 ⌊u⌋₊).filter Nat.Prime
+abbrev primeCutoff (u : ℝ) : Finset ℕ := (Ioc 0 ⌊u⌋₊).filter Nat.Prime
 
-private abbrev tailFactor (u : ℝ) (p : ℕ) : ℝ :=
+abbrev tailFactor (u : ℝ) (p : ℕ) : ℝ :=
   1 / (p : ℝ) ^ (p.log ⌊u⌋₊ + 1)
 
-private theorem lcm_tail_bound {u : ℝ} (hu : 10000 ≤ u) :
+theorem lcm_tail_bound {u : ℝ} (hu : 10000 ≤ u) :
     -∑ p ∈ primeCutoff u, Real.log (1 - tailFactor u p) ≤ 4 / Real.sqrt u := by
   let n := ⌊u⌋₊
   let S := primeCutoff u
