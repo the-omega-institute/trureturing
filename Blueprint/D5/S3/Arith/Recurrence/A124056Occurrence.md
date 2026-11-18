@@ -204,6 +204,10 @@ Lean statement: `D5/S3/Arith/Recurrence/A124056Occurrence.full_positive_occurren
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Recurrence/A124056Occurrence.full_positive_occurrence` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a124056-positive-integer-occurrence` (proved) by `D5/S3/Arith/Recurrence/A124056Occurrence.full_positive_occurrence`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a124056-positive-integer-occurrence","declaration_gid":"D5/S3/Arith/Recurrence/A124056Occurrence.full_positive_occurrence","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
