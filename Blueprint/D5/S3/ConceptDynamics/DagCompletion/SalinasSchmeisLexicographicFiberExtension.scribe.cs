@@ -12,7 +12,7 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
         LibraryNoteRef.Create("D5/L/ConceptDynamics/salinasschmeis2026omega");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Lexicographic extensions partitioned into inherited fibers.",
+        "Lexicographic extensions, inherited fiber partitions and explicit Noetherian lifting.",
         H("Extensions by lexicographic fibers"),
         Blocks(
             Describe.Lean(
@@ -77,6 +77,34 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
                         + "Singapore and ChronoAI Pte Ltd, Singapore). The countable partition "
                         + "theorem and the general partition and lifting results remain credited "
                         + "to Remi Salinas Schmeis."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("lex-nat-fiber-lifting"), DeclarationHandle.Create(Prefix + "lexNatFiberLifting"),
+                H("Lifting Noetherian subsets of the natural-number extension"),
+                StatementSource.FromAuthor(Disp(LiftingFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "Let E be the lexicographic product of an arbitrary partial order with the "
+                        + "natural numbers. The premise says that K contains no subset order-isomorphic "
+                        + "to the natural numbers with its inherited order. An infinite section of K "
+                        + "would have an increasing enumeration by Nat.Subtype.orderIsoOfNat. Composing "
+                        + "it with lexFiberOrderIso and taking its inherited range in E would give "
+                        + "such a subset of K. Thus every section is finite. P and K may be uncountable.")),
+                    Paragraph(Text(
+                        "An empty section has offset zero. In a nonempty section the offset is one plus "
+                        + "its maximum. Adding this offset to the second coordinate sends an input above "
+                        + "the entire section. The image lies outside K, and the original input witnesses "
+                        + "membership in the strict upset. Equal images give the same first coordinate and "
+                        + "therefore the same offset, which can then be cancelled from the second coordinates. "
+                        + "This gives a single injection on K, including the empty injection when K is empty.")),
+                    Paragraph(Text(
+                        "Every point of E has a strict successor obtained by adding one in its fiber. "
+                        + "The no-maximal-element condition is vacuous when P is empty. The global injection "
+                        + "and its strict upwardness give the lifting property of Definition 2.26. Its "
+                        + "injectivity gives the cardinal inequality of local shortness in Definition 2.14. "
+                        + "This is the explicit lifting corollary in the revision-2 note by Haobo Ma and "
+                        + "Wenlin Zhang. The general equivalence in Theorem 2.27 is due to Remi Salinas Schmeis."))),
                 DescribeRole.Theorem))));
 
     private static Formula FiberFormula()
@@ -122,6 +150,45 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
             partition, Sp, Land, Sp, Parenthesized(inherited)));
     }
 
+    private static Formula LiftingFormula()
+    {
+        var p = F.Id("P");
+        var point = F.Id("p");
+        var k = F.Id("K");
+        var c = F.Id("C");
+        var x = F.Id("x");
+        var y = F.Id("y");
+        var n = F.Id("n");
+        var m = F.Id("m");
+        var naturals = Seq(Mathbb, Grp(F.Id("N")));
+        var extension = Call("Lex", Call("Prod", p, naturals));
+        var sets = Call("Set", extension);
+        var section = Seq(OpenBrace, n, Sp, InMacro, Sp, naturals, Sp, Mid, Sp,
+            Call("toLex", Pair(point, n)), Sp, InMacro, Sp, k, CloseBrace);
+        var difference = Seq(OpenBrace, y, Sp, InMacro, Sp, extension, Sp, Mid, Sp,
+            Exists("x", k, Seq(x, Sp, Lt, Sp, y)), CloseBrace, Sp, Setminus, Sp, k);
+        var noetherian = All("C", sets, Seq(c, Sp, Subseteq, Sp, k, Sp, Rightarrow, Sp,
+            Neg, Sp, Call("IsOmegaChain", c)));
+        var finite = All("p", p, Call("Finite", section));
+        var emptyOffset = All("p", p, Seq(Equal(section, Emptyset), Sp, Rightarrow, Sp,
+            Equal(Call("b", point), D(0))));
+        var maxOffset = All("p", p, Seq(Call("Nonempty", section), Sp, Rightarrow, Sp,
+            Exists("m", naturals, Seq(Call("IsGreatest", section, m), Sp, Land, Sp,
+                Equal(Call("b", point), Seq(D(1), Sp, Plus, Sp, m))))));
+        var lifted = Call("val", Call("L", x));
+        var first = Call("fst", Call("ofLex", Call("val", x)));
+        var second = Call("snd", Call("ofLex", Call("val", x)));
+        var map = Exists("L", Call("Embedding", k, difference), All("x", k, Seq(
+            Call("val", x), Sp, Lt, Sp, lifted, Sp, Land, Sp,
+            Equal(lifted, Call("toLex", Pair(first, Seq(Call("b", first), Sp, Plus, Sp, second)))))));
+        return All("P", TypeAt("u"), Seq(OpenBracket, Call("PartialOrder", p), CloseBracket, Sp,
+            All("K", sets, Seq(Parenthesized(noetherian), Sp, Rightarrow, RowBreak,
+                Exists("b", Seq(p, Sp, To, Sp, naturals), Seq(
+                    Parenthesized(finite), Sp, Land, RowBreak,
+                    Parenthesized(emptyOffset), Sp, Land, RowBreak,
+                    Parenthesized(maxOffset), Sp, Land, RowBreak, map))))));
+    }
+
     private static Formula Carriers(Formula body) =>
         All("P", TypeAt("u"), All("A", TypeAt("v"), body));
 
@@ -143,4 +210,7 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
 
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+
+    private static Formula Exists(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
 }
