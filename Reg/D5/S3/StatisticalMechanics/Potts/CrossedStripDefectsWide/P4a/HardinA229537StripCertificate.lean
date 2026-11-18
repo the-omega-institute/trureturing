@@ -64,7 +64,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "arg"]
+    readouts := #[{
+      path := #["body", "body", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -97,7 +98,7 @@ def family : Registration arena (type_of% @one_counts) where
   dependence := by
     intro i
     refine ⟨(![0,0,0,1] : Fin 4 → Fin 3), 1, 2, ?_⟩
-    change (fun _ p j => T ((cls (p 0,p 1,p 2,p 3)).castAdd 14) (j.natAdd 14)) () ![0,0,0,1] 1 ≠ (fun _ p j => T ((cls (p 0,p 1,p 2,p 3)).castAdd 14) (j.natAdd 14)) () ![0,0,0,1] 2
+    change (fun (_ : Unit) (p : Fin 4 → Fin 3) (j : Fin 14) => T ((cls (p 0,p 1,p 2,p 3)).castAdd 14) (j.natAdd 14)) () ![0,0,0,1] 1 ≠ (fun (_ : Unit) (p : Fin 4 → Fin 3) (j : Fin 14) => T ((cls (p 0,p 1,p 2,p 3)).castAdd 14) (j.natAdd 14)) () ![0,0,0,1] 2
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@one_counts) (Realization signature) Type Unit where
@@ -121,7 +122,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "arg"]
+    readouts := #[{
+      path := #["body", "body", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -143,7 +145,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := congrFun (h 0) 0
   have ha := congrFun (zero_powers 0) 0
-  simp only [rejected, realize, Pi.add_apply, Pi.one_apply] at hb
+  simp only [rejected, realize, Pi.add_apply, Pi.one_apply, Pi.ofNat_apply] at hb
+  change _ = Z 0 0 + (1 : ℤ) at hb
   linarith
 def family : Registration arena (type_of% @zero_powers) where
   actual := actual
@@ -177,7 +180,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "arg"]
+    readouts := #[{
+      path := #["body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -190,8 +194,8 @@ end CertifiedZeropowers
 namespace CertifiedPowers
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 22) (fun _ => (Fin 28 → ℤ))
-def actual : Realization signature := realize signature (fun _ _ i => W i) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun w a b => (fun _ _ i => W i) w a b + 1) (fun e => nomatch e)
+def actual : Realization signature := realize signature (fun _ _ i => _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate.W i) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun w a b => (fun _ _ i => _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate.W i) w a b + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ i : Fin 22, (T ^ i.val).mulVec terminal = R.readout () () i
@@ -199,7 +203,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := congrFun (h 0) 0
   have ha := congrFun (powers 0) 0
-  simp only [rejected, realize, Pi.add_apply, Pi.one_apply] at hb
+  simp only [rejected, realize, Pi.add_apply, Pi.one_apply, Pi.ofNat_apply] at hb
+  change _ = _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate.W 0 0 + (1 : ℤ) at hb
   linarith
 def family : Registration arena (type_of% @powers) where
   actual := actual
@@ -209,7 +214,7 @@ def family : Registration arena (type_of% @powers) where
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
-    change W 0 ≠ W 1
+    change _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate.W 0 ≠ _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate.W 1
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@powers) (Realization signature) Type Unit where
@@ -224,7 +229,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ i => W i) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ i => _root_.D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate.W i) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -233,7 +238,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "arg"]
+    readouts := #[{
+      path := #["body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

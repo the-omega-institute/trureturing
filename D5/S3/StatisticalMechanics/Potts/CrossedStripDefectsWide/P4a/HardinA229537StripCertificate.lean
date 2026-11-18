@@ -37,7 +37,6 @@ open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229537StripData
 open DefectTransfer (bondDefects)
-set_option pp.maxSteps 1000
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
@@ -46,7 +45,7 @@ set_option Elab.async false
 private theorem tuple_column (p : Fin 4 → Fin 3) :
     HardinA233177PairTransfer.column (p 0, p 1, p 2, p 3) = p := by
   funext i
-  fin_cases i <;> rfl
+  exact HardinA233177PairTransfer.column_grid 1 (fun x => p x.1) 0 i
 
 private theorem zero_cut (p r : Fin 4 → Fin 3) :
     bondDefects between p r = 0 ↔

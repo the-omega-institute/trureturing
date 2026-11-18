@@ -462,7 +462,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "arg"]
+    readouts := #[{
+      path := #["body", "body", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -484,7 +485,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := congrFun (h 0) 0
   have ha := congrFun (powers_table 0) 0
-  simp only [rejected, realize, Pi.add_apply, Pi.one_apply] at hb
+  simp only [rejected, realize, Pi.add_apply, Pi.one_apply, Pi.ofNat_apply] at hb
+  change _ = W 0 0 + (1 : ℤ) at hb
   linarith
 def family : Registration arena (type_of% @powers_table) where
   actual := actual
@@ -518,7 +520,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "arg"]
+    readouts := #[{
+      path := #["body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

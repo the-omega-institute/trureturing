@@ -77,7 +77,7 @@ private theorem two_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
   have ht := transport (p 0,p 1,p 2,p 3)
   have hc : HardinA233177PairTransfer.column (p 0,p 1,p 2,p 3) = p := by
     funext k
-    fin_cases k <;> rfl
+    exact HardinA233177PairTransfer.column_grid 1 (fun x => p x.1) 0 k
   rw [hc] at ht
   simpa only [Fintype.sum_prod_type, HardinA233177PairTransfer.column,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_one, Matrix.cons_val_two,

@@ -62,17 +62,10 @@ theorem result (n : ℕ) :
       (fun _ d => d ≤ 2) cl T initial terminal 2 (fun _ _ => rfl)
     · intro p d hd
       have cases : d = 0 ∨ d = 1 ∨ d = 2 := by omega
-      rcases cases with rfl | rfl | rfl
-      · simp only [cl, show (0 : ℕ) ≠ 2 by decide, if_neg, terminal,
-          Fin.append_right, HardinA229537StripData.cl, if_pos rfl,
-          HardinA229537StripData.terminal, Fin.append_right]
-        rfl
-      · simp only [cl, show (1 : ℕ) ≠ 2 by decide, if_neg, terminal,
-          Fin.append_right, HardinA229537StripData.cl, show (1 : ℕ) ≠ 0 by decide,
-          if_neg, HardinA229537StripData.terminal, Fin.append_left]
-        rfl
-      · simp only [cl, if_pos rfl, terminal, Fin.append_left]
-        rfl
+      rcases cases with rfl | rfl | rfl <;>
+        simp only [cl, terminal, HardinA229537StripData.cl,
+          HardinA229537StripData.terminal, Nat.reduceEqDiff, ite_true, ite_false,
+          Fin.append_left, Fin.append_right] <;> rfl
     · intro p d hd r hr
       omega
     · intro p d hd s
@@ -112,7 +105,7 @@ theorem result (n : ℕ) :
       (LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective) S invariant nonconstant
     let e := Equiv.arrowCongr (Equiv.prodComm (Fin (m + 1)) (Fin 4)) (Equiv.refl (Fin 3))
     have card := Fintype.card_congr (e.subtypeEquiv (p := fun A =>
-      defects horizontal between (List.ofFn fun i j => A (i, j)) = 1) (q := S) (fun _ => Iff.rfl))
+      defects horizontal between (List.ofFn fun i j => A (i, j)) = 2) (q := S) (fun _ => Iff.rfl))
     simp only [Nat.card_eq_fintype_card, Fintype.card_subtype] at orbit card
     unfold literalCount a
     convert card.trans orbit using 1
