@@ -29,7 +29,8 @@ internal sealed class OnnGoodPermutationCountDocument : IScribeDocumentDefinitio
                 "A unique sign transition splits a good two-row array into two disjoint chains. Their label sets run through all even subsets of Fin (2*n), giving 2^(2*n−1). "
                 + "The two three-by-three types have center label 5 and two independent interleavings of two ordered pairs, hence 36 each. "
                 + "One-dimensional arrays contribute every permutation; overlapping three-by-three blocks exclude the remaining dimensions.",
-                resolution: null))));
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-onn2023good"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         bool definition = false, bool literature = false,
