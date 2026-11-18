@@ -52,8 +52,6 @@ private lemma base_lens : b ∈ lens := by
 private lemma base_exp : Complex.exp baseLog = b :=
   Complex.exp_log (by norm_num [b])
 
-private lemma base_E : baseLog ∈ E := (native_initial_germ b base_lens).1
-
 private lemma native_certificate (γ L : C(I, ℂ)) (hD : ∀ t, ‖γ t‖ < 1)
     (he : ∀ t, Complex.exp (L t) = γ t) (hL0 : L 0 = baseLog) : NativeCharts γ L := by
   have hE (t : I) : L t ∈ E := by
