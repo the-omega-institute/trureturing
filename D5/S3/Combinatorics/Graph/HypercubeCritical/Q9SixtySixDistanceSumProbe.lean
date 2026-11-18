@@ -259,3 +259,87 @@ private lemma coordinate_profile_moment_bound {C : Finset (Q 9)} (hc : C.card = 
   linarith
 
 #print axioms coordinate_profile_moment_bound
+
+open BalancedCubeLowerBound (coordinateSlice)
+open GirthSliceCounting (degreeTwo degreeThree)
+open private reindex reindex_regular reindex_balanced reindex_slice from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
+open private coordinate_slice_degree_cases low_slice_card_eq_q parts_card sum_degrees_parts from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
+open private sixty_six_half_card_ge_twenty_one from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+
+private lemma sixty_six_odd_coordinate_half {C : Finset (Q 9)} (hc : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (i : Fin 9) (b : Bool) : (C.filter (fun x => x i = b)).card % 2 = 1 := by
+  let p := Equiv.swap i (0 : Fin 9)
+  let T := C.image (reindex p)
+  let S := coordinateSlice T b
+  let G := (hypercube 9).induce (S : Set (Q 9))
+  have hreg' := reindex_regular hreg p
+  have hb' := reindex_balanced hb p
+  have ht : T.card = 66 := by
+    simpa [T,card_image_of_injective _ (reindex p).injective] using hc
+  have hsize : S.card = (C.filter (fun x => x i = b)).card := by
+    dsimp [S,T,p]
+    rw [reindex_slice,card_image_of_injective _ (reindex _).injective]
+  have hd : ∀ v, G.degree v = 2 ∨ G.degree v = 3 :=
+    fun v => coordinate_slice_degree_cases v.property hreg'
+  have hdir : 6 * directionEdges T 0 = 66 := by
+    simpa [ht] using direction_edge_count (d := 3) T hreg' hb' 0
+  have htwo := low_slice_card_eq_q (b := b) hreg'
+  change (degreeTwo G univ).card = directionEdges T 0 at htwo
+  have hcard := parts_card G hd univ
+  rw [card_univ,show Fintype.card (S : Set (Q 9)) = S.card by simp] at hcard
+  have hsum : 2 * (degreeTwo G univ).card + 3 * (degreeThree G univ).card =
+      2 * G.edgeFinset.card := by
+    rw [← sum_degrees_parts G hd univ]
+    exact G.sum_degrees_eq_twice_card_edges
+  omega
+
+private lemma smaller_half_deficits {C : Finset (Q 9)} (hc : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C) :
+    ∃ (b : Fin 9 → Bool) (r : Fin 9 → ℤ),
+      (∀ i, 0 ≤ r i ∧ r i ≤ 6) ∧
+        ∀ i, ((C.filter (fun y => y i = b i)).card : ℤ) + 2 * r i = 33 := by
+  let b (i : Fin 9) : Bool := if (C.filter (fun x => x i = false)).card ≤ 33 then false else true
+  let r (i : Fin 9) : ℤ := (33 - ((C.filter (fun x => x i = b i)).card : ℤ)) / 2
+  have hsmall (i : Fin 9) : (C.filter (fun x => x i = b i)).card ≤ 33 := by
+    have hs := card_filter_add_card_filter_not (s := C) (fun x => x i = false)
+    have hn : (C.filter (fun x => ¬ x i = false)) = C.filter (fun x => x i = true) := by
+      ext x
+      cases x i <;> simp
+    rw [hn,hc] at hs
+    dsimp only [b]
+    split_ifs <;> omega
+  have hexact (i : Fin 9) : ((C.filter (fun x => x i = b i)).card : ℤ) + 2 * r i = 33 := by
+    have ho := sixty_six_odd_coordinate_half hc hreg hb i (b i)
+    have hs := hsmall i
+    dsimp only [r]
+    omega
+  refine ⟨b,r,?_,hexact⟩
+  intro i
+  have hlo := sixty_six_half_card_ge_twenty_one hc hreg hb i (b i)
+  have hhi := hsmall i
+  have he := hexact i
+  omega
+
+private lemma coordinate_profile_for_partner_cap {C : Finset (Q 9)} (hc : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (cap : ℕ) (hcap : ∀ x ∈ C, (shell C x 7).card ≤ cap) :
+    ∃ (b : Fin 9 → Bool) (r : Fin 9 → ℤ),
+      (∀ i, 0 ≤ r i ∧ r i ≤ 6) ∧
+      (∀ i, ((C.filter (fun y => y i = b i)).card : ℤ) + 2 * r i = 33) ∧
+      (∀ x ∈ C, (∑ i : Fin 9, if x i = b i then r i else 0) ≤ ((∑ i, r i) - 12 + cap) / 2) ∧
+      110 * (∑ i, r i) ≤ 198 * (((∑ i, r i) - 12 + cap) / 2) + 6 * (∑ i, (r i)^2) := by
+  obtain ⟨b,r,hrange,hr⟩ := smaller_half_deficits hc hreg hb
+  let K : ℤ := ((∑ i, r i) - 12 + cap) / 2
+  have hK (x : Q 9) (hx : x ∈ C) :
+      (∑ i : Fin 9, if x i = b i then r i else 0) ≤ K := by
+    have hp := coordinate_profile_weight_bound hc hreg hb b r hr hx
+    have hcap' := hcap x hx
+    dsimp only [K]
+    omega
+  exact ⟨b,r,hrange,hr,hK,coordinate_profile_moment_bound hc hreg hb b r K hr hK⟩
+
+#print axioms coordinate_profile_for_partner_cap
