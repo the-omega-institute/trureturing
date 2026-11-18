@@ -856,7 +856,7 @@ private lemma self_log_regularization_tendsto {A : Matrix d d ℂ} (hA : A.PosSe
     tendsto_id.mono_left nhdsWithin_le_nhds
   exact Real.continuous_mul_log.continuousAt.tendsto.comp (by simpa using
     (tendsto_const_nhds.add hid : Tendsto (fun ε : ℝ => x + ε) _ (𝓝 (x + 0))))
-private lemma cross_log_regularization_tendsto {ρ σ : Matrix d d ℂ}
+lemma cross_log_regularization_tendsto {ρ σ : Matrix d d ℂ}
     (hσ : σ.PosSemidef)
     (hs : ∀ x : d → ℂ, σ *ᵥ x = 0 → ρ *ᵥ x = 0) :
     Tendsto (fun ε : ℝ => (ρ + ε • 1) * CFC.log (σ + ε • 1))
