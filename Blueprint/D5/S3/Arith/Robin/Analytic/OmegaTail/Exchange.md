@@ -44,7 +44,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower`
 
 Use the grid above with interior densities q(i), positive eta, c = pi/(2 sqrt(3)), C = (1+eta)c, s = C sqrt(log(P)), W = (P/log(P))/s, and Z = (P/log(P))/sqrt(log(P)). Let delta(i) be the width of bin i. Twice the sum of t(i+1) delta(i) q(i) must be less than (pi^2/6)(1+eta)^2.
 
-The quantitative prime-counting expansion gives both moving bin sizes asymptotic to W times delta(i). Delete exactly primeCount(P) minus k(P) primes from the interval (P/2, 3P/4], where k(P) is floor(T_2(exp(P)))+1. There are eventually enough primes in that interval and it lies below every donor bin. The remaining base has size k(P) and log sum at most P minus the safe reserve from Lemma 7.3. The reserve is P minus theta(P) plus the number of deletions times log(P/2). Its ratio to W/s tends to (pi^2/6)(1+eta)^2.
+The quantitative prime-counting expansion gives both moving bin sizes asymptotic to W times delta(i). Delete exactly primeCount(P) minus k(P) primes from the interval (P/2, 3P/4], where k(P) is floor(T_2(exp(P)))+1. The far deletion theorem supplies a deletion of that size and gives every such retained base size k(P) and log sum at most P minus the safe reserve. The window lies eventually below every donor bin, so all donors survive. The centered reserve theorem gives the limit 2 after normalizing the safe reserve by P/log(P)^2. Normalizing by W/s gives the limit (pi^2/6)(1+eta)^2.
 
 Take h(i) to be the floor of q(i) times the smaller of the two bin sizes. Its ratio to W tends to delta(i) q(i). The finite grid bound applies eventually by strict normalized slack. The two log binomial coefficients in each bin contribute 2 delta(i) H(q(i)) on scale W, with H the binary entropy. For each positive zeta, the log of the second-threshold count at exp(P) is eventually at least Z times the coefficient 2 sum(delta(i) H(q(i)))/C minus zeta, with the subtraction inside the coefficient.
 
@@ -54,4 +54,4 @@ Take h(i) to be the floor of q(i) times the smaller of the two bin sizes. Its ra
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.paired_exchange`
 - Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTail/Entropy](Entropy.md)
-- Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTail/Selection](Selection.md)
+- Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion](FarDeletion.md)
