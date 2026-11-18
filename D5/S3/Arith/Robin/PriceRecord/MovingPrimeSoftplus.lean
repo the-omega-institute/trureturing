@@ -316,7 +316,8 @@ private theorem fermi_mass :
     norm_num [Complex.ofReal_div, Complex.ofReal_add]
   have hf : IntegrableOn f (Ioi 0) := by
     apply hC.re.congr
-    exact Eventually.of_forall (fun u => by simp only [hcast, RCLike.re_eq_complex_re, Complex.ofReal_re])
+    exact Eventually.of_forall (fun u => by
+      simp only [hcast, RCLike.re_eq_complex_re, Complex.ofReal_re])
   have hCmass : (∫ u in Ioi (0 : ℝ), cf u) = ((π ^ 2 / 12 : ℝ) : ℂ) := by
     open D5.S3.Weil.ZetaBridge.FermiMellin in
     have h := fermi_mellin_eq_of_ne_one 1 one_pos (2 : ℂ) (by norm_num) (by norm_num)
@@ -339,7 +340,6 @@ private theorem fermi_mass :
     · rfl
     · rw [exp_neg]
       field_simp [(exp_pos u).ne', show exp u + 1 ≠ 0 by positivity]
-      <;> ring
   have hb0 : Tendsto (softplus * id) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
     have h : Continuous (softplus * id) := softplus_continuous.mul continuous_id
     have ht := (h.continuousAt (x := (0 : ℝ))).tendsto.mono_left
@@ -618,7 +618,9 @@ private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
   have ht := hprime.sum_add_tsum_nat_add (N + 1)
   rw [← hsplit] at ht
   refine ⟨hprime, ?_, ?_⟩
-  · linarith only [ht, Finset.sum_nonneg (fun n _ => primeWeight_nonneg P s n),
+  · have hnonneg : 0 ≤ ∑ n ∈ Finset.range (M + 1), primeWeight P s n :=
+      Finset.sum_nonneg (fun n _ => primeWeight_nonneg P s n)
+    linarith only [ht, hnonneg,
       tsum_nonneg (fun n : ℕ => primeWeight_nonneg P s (n + (N + 1)))]
   · linarith only [ht, hsmall, hright]
 
@@ -679,7 +681,7 @@ private theorem remove_prime_logs {s : ℝ → ℝ}
         dsimp only [A, S, w]
         simp_rw [show ∀ p : ℕ, weight P (s P) p * (2 * log 2 / log P * log p) =
           (2 * log 2 / log P) * (weight P (s P) p * log p) from fun _ => by ring,
-          Finset.mul_sum]
+          ← Finset.mul_sum]
         ring
   have hB := herr.add hweighted
   simp only [zero_add] at hB
@@ -699,7 +701,8 @@ theorem prime_softplus_asymptotic {a C₁ C₂ : ℝ} (ha : 0 < a) (hC₁ : 0 < 
   have hlogpow : Tendsto (fun P : ℝ => log P ^ a) atTop atTop :=
     (tendsto_rpow_atTop ha).comp tendsto_log_atTop
   have hsTop : Tendsto s atTop atTop :=
-    tendsto_atTop_mono' _ (hs.mono fun _ h => h.1) ((tendsto_const_mul_atTop_of_pos hC₁).mpr hlogpow)
+    tendsto_atTop_mono' _ (hs.mono fun _ h => h.1)
+      ((tendsto_const_mul_atTop_of_pos hC₁).mpr hlogpow)
   have hn : ∀ᶠ P in atTop, 0 ≤ s P := (hsTop.eventually_ge_atTop 0)
   have hθ := theta_comparison_tendsto (hn.and (hs.mono fun _ h => h.2)) hC₂
   have hc := softplus_continuum_tendsto hsTop
