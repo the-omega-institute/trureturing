@@ -4,14 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim; result=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.result; claim=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim
-   digest: Pappus dissociation obstruction and C4-free representative rigidity. -/
+   digest: Pappus dissociation refutation of the cubic C4-free half-order bound. -/
 
 import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
+import Mathlib.Data.Int.CardIntervalMod
 
-/-! The actual Pappus certificates use the exact received Sahbi source revision
+/-! The actual Pappus certificates use Sahbi source PR #28593 at revision
 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0.
 The Pappus dissociation ten-set refutes the cubic C4-free half-order claim.
-The representative and coloring results use the general pair-packing bounds. -/
+Its parity coloring comes from the certified adjacency table. The side counts
+used in the representative bounds are an application of the general parity count. -/
 
 namespace D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
 open StarFormingDissociationRefutation
@@ -95,6 +97,34 @@ private theorem pappus_selection_bridge : ∀ v : Fin 18,
       ((pappusNeighbors v).filter (fun w => pappusSelected.contains w)).length := by
   decide +kernel
 
+def pappusColor (v : Fin 18) : Bool := decide (v.val % 2 = 1)
+
+theorem pappusColor_valid : ∀ v w, pappusGraph.Adj v w → pappusColor v ≠ pappusColor w := by
+  intro v w hadj hcolor
+  have hparity := ((pappus_regular_bipartite_certificate.1 v).2.2 w.val hadj).2
+  simp only [pappusColor] at hcolor
+  have hv := Nat.mod_lt v.val (by decide : 0 < 2)
+  have hw := Nat.mod_lt w.val (by decide : 0 < 2)
+  by_cases h : v.val % 2 = 1
+  · have he : w.val % 2 = 1 := by simpa [h, eq_comm] using hcolor
+    exact hparity (he.trans h.symm)
+  · have he : w.val % 2 ≠ 1 := by simpa [h, eq_comm] using hcolor
+    omega
+
+/-- The two parity classes on an even initial interval have equal size. -/
+theorem paritySide_card (n : ℕ) (c : Bool) :
+    (Finset.univ.filter (fun v : Fin (2 * n) => decide (v.val % 2 = 1) = c)).card = n := by
+  let p (i : ℕ) : Prop := i ≡ c.toNat [MOD 2]
+  have hp (v : Fin (2 * n)) : decide (v.val % 2 = 1) = c ↔ p v.val := by
+    have hv := Nat.mod_lt v.val (by decide : 0 < 2)
+    cases c <;> simp [p, Nat.ModEq] <;> omega
+  simp_rw [hp]
+  have hcard := Nat.count_modEq_card (b := 2 * n) (r := 2) (by decide) c.toNat
+  rw [Nat.count_eq_card_filter_range] at hcard
+  rw [← Finset.card_map Fin.valEmbedding, ← Finset.filter_map,
+    Fin.map_valEmbedding_univ, Nat.Iio_eq_range]
+  simpa [Nat.mul_comm n 2] using hcard
+
 /-- The exact supplier table gives actual cubic bipartiteness and no four-cycle. -/
 theorem pappus_class : pappusGraph.Colorable 2 ∧
     (∀ v, DegreeCapacity.degree pappusGraph v = 3) ∧ NoFourCycle pappusGraph.Adj := by
@@ -102,8 +132,9 @@ theorem pappus_class : pappusGraph.Colorable 2 ∧
   · refine ⟨SimpleGraph.Coloring.mk
       (fun v => (⟨v.val % 2, Nat.mod_lt _ (by decide)⟩ : Fin 2)) ?_⟩
     intro a b hab he
-    have h := (pappus_regular_bipartite_certificate.1 a).2.2 b.val hab
-    exact h.2 (congrArg Fin.val he).symm
+    apply pappusColor_valid a b hab
+    unfold pappusColor
+    rw [congrArg Fin.val he]
   · intro v
     rw [pappus_degree_bridge]
     exact (pappus_regular_bipartite_certificate.1 v).1
@@ -123,7 +154,7 @@ theorem pappus_selection : IsKIndependent pappusGraph 2 pappusSet ∧ pappusSet.
     omega
   · decide +kernel
 
-/-- The canonical maximum is exactly10, without enumerating all graph subsets. -/
+/-- The canonical maximum is exactly 10, without enumerating all graph subsets. -/
 theorem beta_pappus : beta pappusGraph 2 = 10 := by
   have hlo : pappusSet.card ≤ beta pappusGraph 2 :=
     Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,pappus_selection.1⟩)
@@ -133,7 +164,7 @@ theorem beta_pappus : beta pappusGraph 2 = 10 := by
   norm_num at hu
   omega
 
-/-- The cubic C4-free half-order identification cannot extend to order18. -/
+/-- The cubic C4-free half-order identification cannot extend to order 18. -/
 def claim : Prop := ∀ (G : SimpleGraph (Fin 18)) [DecidableRel G.Adj],
   G.Colorable 2 → (∀ v, DegreeCapacity.degree G v = 3) → NoFourCycle G.Adj →
     2 * beta G 2 ≤ 18
@@ -144,92 +175,5 @@ theorem result : ¬ claim := by
   have hh := h pappusGraph pappus_class.1 pappus_class.2.1 pappus_class.2.2
   rw [beta_pappus] at hh
   omega
-
-section RepresentativeConsequences
-variable {V : Type} [Fintype V] [DecidableEq V]
-variable (G : SimpleGraph V) [DecidableRel G.Adj]
-
-private def pappusColor (v : Fin 18) : Bool := decide (v.val % 2 = 1)
-private theorem pappusColor_valid : ∀ v w, pappusGraph.Adj v w → pappusColor v ≠ pappusColor w := by
-  decide +kernel
-private theorem pappusColor_sides : ∀ c, (Finset.univ.filter (fun v => pappusColor v = c)).card = 9 := by
-  decide +kernel
-
-set_option maxRecDepth 8192 in
-/-- The Pappus representative upper bound is a general pair-packing consequence,
-not an enumeration of representative pairs. -/
-theorem omega_pappus : Omega pappusGraph = 10 := by
-  classical
-  have hu : Omega pappusGraph ≤ 10 := by
-    apply omega_upper_of_objective_bound
-    intro T M hf
-    by_cases he : T.card + M.card ≤ 9
-    · omega
-    · have hh := positive_excess_budget pappusGraph pappusColor pappusColor_valid
-        pappus_class.2.2 3 9 (by decide) pappus_class.2.1 pappusColor_sides T M hf (by omega)
-      norm_num at hh
-      omega
-  have hh := parameter_comparison pappusGraph
-  rw [beta_pappus] at hh
-  omega
-
-/-- Pappus attains ten in all three distinct parameters. -/
-theorem pappus_parameters : beta pappusGraph 2 = 10 ∧
-    psiSq pappusGraph = 10 ∧ Omega pappusGraph = 10 := by
-  have hh := parameter_comparison pappusGraph
-  rw [beta_pappus,omega_pappus] at hh
-  exact ⟨beta_pappus,by omega,omega_pappus⟩
-
-/-- Every Pappus optimum has no matching representative, preserving the full
-support-rigidity assertion beyond the numerical value ten. -/
-theorem pappus_optimal_matching_empty (T : Finset (Fin 18)) (M : Finset (Fin 18 × Fin 18))
-    (hf : Feasible pappusGraph T M) (hc : T.card + M.card = 10) : M = ∅ := by
-  have hh := positive_excess_budget pappusGraph pappusColor pappusColor_valid
-    pappus_class.2.2 3 9 (by decide) pappus_class.2.1 pappusColor_sides T M hf (by omega)
-  norm_num at hh
-  apply Finset.card_eq_zero.mp
-  omega
-
-/-- Every ten-color Pappus coloring has an actual ten-vertex dissociation support
-and is injective on that support; this is a statement about every optimum. -/
-theorem pappus_coloring_rigidity (c : Fin 18 → Option ℕ)
-    (hc : IsSubQuorum pappusGraph c) (hp : (palette c Finset.univ).card = 10) :
-    IsKIndependent pappusGraph 2 (coloredSupport c Finset.univ) ∧
-    (coloredSupport c Finset.univ).card = 10 ∧
-    Set.InjOn c (coloredSupport c Finset.univ) := by
-  classical
-  obtain ⟨T,M,hf,he,hclasses⟩ := coloring_representatives pappusGraph c hc
-  have hm := pappus_optimal_matching_empty T M hf (he.trans hp)
-  have hclass := hclasses hm
-  have hi : IsKIndependent pappusGraph 2 (coloredSupport c Finset.univ) := by
-    intro v hv
-    have hvc := (Finset.mem_filter.mp hv).2
-    have hsame : ((Finset.univ.filter (pappusGraph.Adj v)).filter
-        (fun w => c w = c v)) = ∅ := by
-      apply Finset.filter_eq_empty_iff.mpr
-      intro w hw he
-      exact hclass v w hvc he (Finset.mem_filter.mp hw).2
-    have hh := hc v hvc
-    have hneigh : @Finset.filter (Fin 18) (pappusGraph.Adj v)
-        (fun _ => Classical.propDecidable _) Finset.univ =
-        Finset.univ.filter (pappusGraph.Adj v) := by ext w; simp
-    have hs : ((Finset.univ.filter (pappusGraph.Adj v)).filter (fun w => c w ≠ none)) =
-        (coloredSupport c Finset.univ).filter (pappusGraph.Adj v) := by
-      ext w
-      simp [coloredSupport,and_comm]
-    rw [hneigh,hsame,hs] at hh
-    simp only [Finset.card_empty] at hh
-    omega
-  have hu : (coloredSupport c Finset.univ).card ≤ beta pappusGraph 2 :=
-    Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,hi⟩)
-  have hl : (palette c Finset.univ).card ≤ (coloredSupport c Finset.univ).card :=
-    Finset.card_image_le
-  rw [beta_pappus] at hu
-  have hcard : (coloredSupport c Finset.univ).card = 10 := by omega
-  refine ⟨hi,hcard,?_⟩
-  apply Finset.card_image_iff.mp
-  exact hp.trans hcard.symm
-
-end RepresentativeConsequences
 
 end D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
