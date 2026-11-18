@@ -70,6 +70,28 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         with self.assertRaises((ValueError, EOFError)):
             indexed.extract_frame(io.BytesIO(encoded[:-1]), row, self.root / "truncated", set(), None)
 
+    def test_scoped_release_probe_requires_the_entire_requested_closure(self):
+        from lean_artifact_inventory import Module
+        import lean_release_index as indexed
+
+        root = self.root / "probe-source"
+        build = self.root / "probe-build"
+        modules = {"D5.Base": Module("fixture", pathlib.Path("D5/Base.lean"), pathlib.Path(".")),
+                   "D5.Probe": Module("fixture", pathlib.Path("D5/Probe.lean"), pathlib.Path("."))}
+        for module in modules.values():
+            write(root / module.source, "fixture source")
+        graph = {"D5.Base": set(), "D5.Probe": {"D5.Base"}}
+        indexed_base = {
+            "module": "D5.Base", "paths": ["lib/lean/D5/Base.olean"],
+            "source_sha256": digest((root / modules["D5.Base"].source).read_bytes()),
+        }
+        with patch.object(indexed, "workspace_modules", return_value=modules), \
+                patch.object(indexed, "project_imports", return_value=graph):
+            subset = indexed.scoped_members(root, [indexed_base], ["D5.Probe"], build)
+            self.assertEqual([indexed_base], subset)
+            with self.assertRaisesRegex(ValueError, "D5.Probe"):
+                indexed.scoped_members(root, [indexed_base], ["D5.Probe"], build, require_complete=True)
+
     def test_scoped_rollback_removes_only_directories_it_created(self):
         from lean_cache_release import install_scoped
 

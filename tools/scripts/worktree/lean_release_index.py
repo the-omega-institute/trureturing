@@ -278,7 +278,7 @@ def restore_full(stage, manifest, rows, destination, deadline):
         raise ValueError("Release archive checksum mismatch")
 
 
-def scoped_members(root, rows, targets, target_build):
+def scoped_members(root, rows, targets, target_build, *, require_complete=False):
     modules = workspace_modules(root)
     graph = project_imports(root, modules)
     unknown = set(targets) - modules.keys()
@@ -303,6 +303,9 @@ def scoped_members(root, rows, targets, target_build):
         compatible.add(name)
         if any(not os.path.lexists(target_build / path) for path in paths):
             needed.add(name)
+    if require_complete and needed != requested:
+        raise ValueError("scoped verification did not cover the requested import closure: "
+                         + ", ".join(sorted(requested - needed)))
     return [row for row in rows if row["module"] in needed]
 
 

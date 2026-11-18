@@ -642,7 +642,7 @@ def publish(root, partition, verification=None, *, build_report=True, indexed=Fa
                     (stage / name).unlink(missing_ok=True)
                 downloaded = stage / "downloaded"
                 downloaded.mkdir()
-                if indexed and "workflow_run_id" in verification:
+                if indexed:
                     lifetime.enter_context(cache_guard(root))
                     with tempfile.TemporaryDirectory(prefix=".release-scoped-", dir=root / ".lake") as empty:
                         control = pathlib.Path(empty)
@@ -651,7 +651,7 @@ def publish(root, partition, verification=None, *, build_report=True, indexed=Fa
                         modules, transferred = restore_scoped(root, partition, tag, transport, deadline,
                             cache_key=cache_key, producer=identity["producer_commit_sha"],
                             targets=["D5.S0.Tower.GoldenGapWord"], verification=True,
-                            destination_root=control, release_metadata=draft)
+                            destination_root=control, release_metadata=draft, require_complete=True)
                         if not modules or not 0 < transferred < metadata["archive_bytes"]:
                             raise ValueError("indexed verification did not restore a strict subset")
                         recovered = control / ".lake/build"
@@ -766,6 +766,9 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
         raise ValueError("snapshot asset set is incomplete")
     assets_by_name = {asset["name"]: asset for asset in assets}
     if indexed:
+        manifest_asset = assets_by_name[manifest_name]
+        if type(manifest_asset.get("size")) is not int or manifest_asset["size"] != (stage / MANIFEST).stat().st_size:
+            raise ValueError("transferred manifest size mismatch")
         ids = [asset.get("id") for asset in assets]
         if any(type(value) is not int or value <= 0 for value in ids) or len(set(ids)) != len(ids):
             raise ValueError("invalid indexed Release asset identities")
@@ -825,7 +828,7 @@ def download_range(asset, offset, length, output, deadline):
 
 
 def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer, targets, verification,
-                   destination_root=None, release_metadata=None):
+                   destination_root=None, release_metadata=None, require_complete=False):
     metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
         expected={"producer_commit_sha": producer} if producer else None,
         verification=verification, cache_key=cache_key, metadata=release_metadata,
@@ -842,7 +845,8 @@ def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer
         raise ValueError("Release index checksum or size mismatch")
     lake = (root if destination_root is None else destination_root) / ".lake"
     rows = indexed_release.scoped_members(root,
-        indexed_release.read_index(index_path, manifest["archive_bytes"]), targets, lake / "build")
+        indexed_release.read_index(index_path, manifest["archive_bytes"]),
+        targets, lake / "build", require_complete=require_complete)
     if lake.is_symlink() or (lake / "build").is_symlink():
         raise ValueError("scoped restore requires a private project build")
     lake.mkdir(exist_ok=True)
