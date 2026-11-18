@@ -14,7 +14,8 @@ open BalancedCriticalSpectrum (Q IsBalanced flip flip_adj)
 attribute [local instance] Classical.propDecidable
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private coordinate_profile_for_partner_cap from
+open private coordinate_profile_for_partner_cap orderedDeficits orderedDeficits_complete
+  sum_ofFn_int from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private shell from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
@@ -187,5 +188,43 @@ theorem exists_sorted_minority_cube_support {C : Finset (Q 9)} (hC : C.card = 66
     simpa only [harg] using hm
 
 #print axioms exists_sorted_minority_cube_support
+
+private def capEightMoment (profile : List ℤ) : Prop :=
+  110 * profile.sum ≤ 198 * ((profile.sum - 4) / 2) + 6 * (profile.map (· ^ 2)).sum
+
+private instance (profile : List ℤ) : Decidable (capEightMoment profile) := by
+  unfold capEightMoment
+  infer_instance
+
+/-- The sorted profiles satisfying the exact half bound and the eighth-partner
+moment bound. -/
+def sixtySixCandidateProfiles : List (List ℤ) :=
+  (orderedDeficits 9 0).filter fun profile => decide (capEightMoment profile)
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 2000000 in
+-- The kernel checks the count of all nine-coordinate profiles.
+theorem sixtySixCandidateProfiles_length : sixtySixCandidateProfiles.length = 251 := by
+  decide +kernel
+
+theorem sorted_deficits_mem_sixtySixCandidateProfiles (r : Fin 9 → ℤ)
+    (hs : Monotone r) (hr : ∀ i, 0 ≤ r i ∧ r i ≤ 5)
+    (hm : 110 * (∑ i, r i) ≤ 198 * (((∑ i, r i) - 4) / 2) + 6 * ∑ i, (r i) ^ 2) :
+    List.ofFn r ∈ sixtySixCandidateProfiles := by
+  have hb : ∀ x ∈ List.ofFn r, 0 ≤ x ∧ x ≤ 5 := by
+    intro x hx
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hx
+    exact hr i
+  have hordered := orderedDeficits_complete (le_refl (0 : ℤ))
+    hs.sortedLE_ofFn.pairwise hb
+  unfold sixtySixCandidateProfiles
+  rw [List.mem_filter, decide_eq_true_eq]
+  refine ⟨by simpa using hordered, ?_⟩
+  unfold capEightMoment
+  rw [List.map_ofFn, sum_ofFn_int, sum_ofFn_int]
+  exact hm
+
+#print axioms sixtySixCandidateProfiles_length
+#print axioms sorted_deficits_mem_sixtySixCandidateProfiles
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
