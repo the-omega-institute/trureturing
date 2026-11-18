@@ -23,5 +23,9 @@ internal sealed class OriginalHalfCurrentFiniteLoweringDocument : IScribeDocumen
                 "Finite creation and pair contraction",
                 "An unpaired oscillator contributes the finite binomial creator. A paired "
                 + "oscillator contributes the original Gram entry times the ordinary coefficient "
-                + "of the regular Cauchy correction."))));
+                + "of the regular Cauchy correction."),
+            Result("half-current-pullback-coefficient", "half_pullback_coefficient",
+                "Ordinary Möbius pullback coefficient",
+                "The formal local coordinate and its half-current Jacobian produce the same "
+                + "finite binomial creator coefficients, with the scale at the surviving mode."))));
 }

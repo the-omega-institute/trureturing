@@ -146,4 +146,78 @@ theorem evaluate_word_step (D : LatticeData) (x : Index D) (xs : List (Index D))
   congr 1
   ring
 
+open PowerSeries
+open private unitPower_add unitPower_nat_mul from
+  D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentCauchy
+open private binomial_reflection from
+  D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
+
+/-- Formal half-current pullback along the local map
+`u ↦ lambda*u/(1-eta*u)` with the chosen half-coordinate lift. -/
+def halfPullback (root lambda eta : ℂ) (F : PowerSeries ℂ) : PowerSeries ℂ :=
+  PowerSeries.C root * unitPower eta (-3/2) * F.subst (PowerSeries.X * (PowerSeries.C lambda * unitPower eta (-1)))
+
+private theorem pullback_coeff_sum (H F A : PowerSeries ℂ) (n : ℕ) :
+    coeff n (H * F.subst (PowerSeries.X * A)) =
+      ∑ p ∈ Finset.range (n+1), coeff p F * coeff n (H*(PowerSeries.X*A)^p) := by
+  have hz : HasSubst (PowerSeries.X*A) := HasSubst.X'.mul_left
+  have hp (j : ℕ) (hj : j ≤ n) :
+      coeff j (F.subst (PowerSeries.X*A)) =
+      ∑ p ∈ Finset.range (n+1), coeff p F * coeff j ((PowerSeries.X*A)^p) := by
+    rw [coeff_subst' hz]
+    simp only [smul_eq_mul]
+    apply finsum_eq_sum_of_support_subset
+    intro p h
+    apply Finset.mem_range.mpr
+    by_contra! hn
+    apply h
+    dsimp only
+    rw [mul_pow, mul_comm (PowerSeries.X^p) (A^p), coeff_mul_X_pow',
+      ite_eq_right (by omega : ¬ p ≤ j), mul_zero]
+  rw [PowerSeries.coeff_mul]
+  calc
+    _ = ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal n, ∑ p ∈ Finset.range (n+1),
+        coeff p F * (coeff ij.1 H * coeff ij.2 ((PowerSeries.X*A)^p)) := by
+      apply Finset.sum_congr rfl
+      intro ij hij
+      have hi := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
+      rw [hp ij.2 (by omega), Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro p _
+      ring
+    _ = _ := by
+      rw [Finset.sum_comm]
+      simp only [← Finset.mul_sum, ← PowerSeries.coeff_mul]
+
+/-- Each ordinary coefficient of the actual Möbius half-current pullback
+is the finite binomial creator sum, with the selected scale at each mode. -/
+theorem half_pullback_coefficient (root lambda eta : ℂ) (F : PowerSeries ℂ) (n : ℕ) :
+    coeff n (halfPullback root lambda eta F) =
+      ∑ p ∈ Finset.range (n+1), coeff p F *
+        (root * lambda^p * eta^(n-p) * Ring.choose ((n:ℂ)+1/2) (n-p)) := by
+  rw [halfPullback, pullback_coeff_sum]
+  apply Finset.sum_congr rfl
+  intro p hp
+  have hp' : p ≤ n := by simpa using hp
+  have he :
+      PowerSeries.C root * unitPower eta (-3/2) * (PowerSeries.X * (PowerSeries.C lambda * unitPower eta (-1)))^p =
+        PowerSeries.C (root*lambda^p) * unitPower eta (-(p:ℂ)-3/2) * PowerSeries.X^p := by
+    rw [mul_pow, mul_pow, ← map_pow, ← unitPower_nat_mul]
+    rw [show (-1:ℂ)*(p:ℂ) = -(p:ℂ) by ring]
+    calc
+      _ = (PowerSeries.C root * PowerSeries.C (lambda^p)) *
+          (unitPower eta (-3/2) * unitPower eta (-(p:ℂ))) * PowerSeries.X^p := by ring
+      _ = _ := by
+        rw [← map_mul, ← unitPower_add, show (-3/2:ℂ) + -(p:ℂ) = -(p:ℂ)-3/2 by ring]
+  rw [he, coeff_mul_X_pow', ite_eq_left hp', PowerSeries.coeff_C_mul, unitPower, coeff_rescale,
+    binomialSeries_coeff, smul_eq_mul, mul_one]
+  rw [show -eta = eta * (-1) by ring, mul_pow]
+  rw [show (root * lambda^p) * (eta^(n-p) * (-1:ℂ)^(n-p) *
+      Ring.choose (-(p:ℂ)-3/2) (n-p)) =
+      root * lambda^p * eta^(n-p) *
+        ((-1:ℂ)^(n-p) * Ring.choose (-(p:ℂ)-3/2) (n-p)) by ring,
+    binomial_reflection, show -(-(p:ℂ)-3/2) + ((n-p:ℕ):ℂ)-1 = (n:ℂ)+1/2 by
+      rw [Nat.cast_sub hp']
+      ring]
+
 end D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentFiniteLowering
