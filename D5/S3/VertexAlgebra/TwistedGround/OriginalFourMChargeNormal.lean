@@ -19,12 +19,16 @@ set_option maxRecDepth 4096
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
-open scoped BigOperators Topology
+open scoped BigOperators Topology TensorProduct VertexOperator
 open Set Filter Metric
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeNormal
 
 open LatticeGeneratingFieldLocality LatticeHalfFock LatticePositiveEnergy
+open LatticeTwistedGroundRealization LatticeInvolution LatticeHalfFockGradedTrace
+open LatticeHalfFockCorrectedField OriginalFourMChargeCoset MvPolynomial
+open HalfFock.LatticeHalfFockParityField OperatorAlgebra
+open FactorialFockMetric (weight)
 open LatticeTwistedGroundRealization.SignQuotient OriginalFourMEnergyCoefficient
 open LatticeHalfFockChargedTensorCoefficients OriginalGaussianExternalRadial
 open OriginalChargedRowSource OriginalGaussianExternalBlocks OriginalGaussianSourceMeans
@@ -43,6 +47,7 @@ open private affine_coefficient_differentiableOn finite_data_differentiableOn
   from D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic
 open private chargeScalar_pair chargeSeries_coeff
   from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMEnergyCoefficient
+open private groundForm from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset
 
 private lemma affine_bound {I : Type*} [Fintype I]
     (d : I →₀ ℕ) (C : ℝ) :
@@ -464,5 +469,113 @@ theorem sewn_charge_coefficient (D : LatticeData) (hunit : IsUnit D.G.det)
     · rw [ite_eq_right hE, ite_eq_right (by omega : ¬ 2 * (chargeEnergy D q).toNat ≤ 2 * E),
         mul_zero]
   · simp [f, hq, coefficient]
+
+
+private lemma selector_charge_sublevel (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (E : ℕ) (q : Charge D)
+    (hq : chargeEnergy D q ≤ E) (e : ℤ) (beta gamma : Exponent D) :
+    selector D q e (E - (chargeEnergy D q).toNat) beta gamma = selector D 0 e E beta gamma ∧
+      selector D (-q) e (E - (chargeEnergy D q).toNat) beta gamma =
+        selector D 0 e E beta gamma := by
+  have hm := chargeEnergy_nonneg D hD q
+  have hn : chargeNorm D q = 2 * chargeEnergy D q := (two_chargeEnergy D q).symm
+  have hn' : chargeNorm D (-q) = chargeNorm D q := bilinear_neg_neg D q q
+  have hzero : chargeNorm D 0 = 0 := by simp [chargeNorm, bilinear]
+  constructor <;> unfold selector
+  · rw [hn, hzero]
+    split_ifs <;> first | rfl | omega
+  · rw [hn', hn, hzero]
+    split_ifs <;> first | rfl | omega
+
+/-- The coefficient computed from the holomorphic charge sums, with the
+original finite lowerings and Laurent selectors in the positive square coordinate. -/
+def cosetSewnTaylor (D : LatticeData) (H K E : ℕ) (t : ℤ)
+    (P Q R S : Oscillator D) (a : ModTwoCharge D) : ℂ :=
+  ∑ i ∈ Finset.range (K-1), ∑ j ∈ Finset.range (H-1),
+    let PL := (oscillatorLower D ^ j) P
+    let QL := (oscillatorLower D ^ i) Q
+    ((-1 : ℂ)^((K : ℤ)-(i : ℤ)+(j : ℤ)) / ((i.factorial : ℂ)*(j.factorial : ℂ))) *
+      ∑ betaL ∈ PL.support, ∑ gammaL ∈ QL.support,
+        ∑ betaR ∈ R.support, ∑ gammaR ∈ S.support,
+          (PL.coeff betaL * QL.coeff gammaL * R.coeff betaR * S.coeff gammaR) *
+            (weight betaL : ℂ) * (weight gammaL : ℂ) *
+            (weight betaR : ℂ) * (weight gammaR : ℂ) *
+            selector D 0 (leftExponent H K E i j) E betaL gammaL *
+            selector D 0 (-2*t-2) E betaR gammaR *
+            coefficient (2 * E) (fun z => ∑' q : Charge D, if reduceCharge D q = a then
+              sewnChargeTerm D betaL gammaL betaR gammaR q z else 0)
+
+private lemma cosetSeries_sewnTaylor (D : LatticeData) (hunit : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (H K E : ℕ) (t : ℤ)
+    (P Q R S : Oscillator D) (a : ModTwoCharge D) :
+    PowerSeries.coeff E (cosetSeries D hD H K t P Q R S a) =
+      cosetSewnTaylor D H K E t P Q R S a := by
+  classical
+  let charges : Set (Charge D) := {q | chargeEnergy D q ≤ E}
+  let C := ↥charges
+  let : Finite C := (chargeSublevel_finite D hD E).to_subtype
+  let := Fintype.ofFinite C
+  let χ (q : Charge D) : ℂ := if reduceCharge D q = a then 1 else 0
+  have hcoeff (betaL gammaL betaR gammaR : Exponent D) :
+      coefficient (2 * E) (fun z => ∑' q : Charge D, if reduceCharge D q = a then
+        sewnChargeTerm D betaL gammaL betaR gammaR q z else 0) =
+      ∑ q : C, χ q * PowerSeries.coeff E (chargeSeries D q betaL gammaL betaR gammaR) := by
+    let g (q : Charge D) := χ q * PowerSeries.coeff E (chargeSeries D q betaL gammaL betaR gammaR)
+    rw [sewn_charge_coefficient D hunit hD]
+    calc
+      _ = ∑' q : Charge D, charges.indicator g q := by
+        apply tsum_congr
+        intro q
+        by_cases hE : chargeEnergy D q ≤ E <;> by_cases ha : reduceCharge D q = a <;>
+          simp [charges, g, Set.indicator, hE, χ, ha]
+      _ = ∑' q : C, g q := (tsum_subtype charges g).symm
+      _ = _ := tsum_fintype (fun q : C => g q)
+  rw [cosetSeries, PowerSeries.coeff_mk]
+  change (∑ q : C, _) = cosetSewnTaylor D H K E t P Q R S a
+  unfold cosetSewnTaylor
+  simp only [hcoeff]
+  symm
+  -- Move the finite charge sum through the original external and lowering sums.
+  simp only [Finset.mul_sum, Finset.sum_comm (t := (Finset.univ : Finset C))]
+  apply Finset.sum_congr rfl
+  intro q hq
+  by_cases ha : reduceCharge D q.val = a
+  · simp only [ha, ite_true, χ, one_mul]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    unfold polynomialCoefficient
+    simp only [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro betaL hb
+    apply Finset.sum_congr rfl
+    intro gammaL hg
+    apply Finset.sum_congr rfl
+    intro betaR hb'
+    apply Finset.sum_congr rfl
+    intro gammaR hg'
+    rw [(selector_charge_sublevel D hD E q q.property
+      (leftExponent H K E i j) betaL gammaL).1,
+      (selector_charge_sublevel D hD E q q.property (-2*t-2) betaR gammaR).2]
+  · simp [χ, ha]
+
+/-- The original scalar is the selected Taylor coefficient of the literal
+sewn charge sums, with the two ordered ground factors and the final sign
+from rescaling to the negative square coordinate. -/
+theorem fourM_scalar_sewnTaylor (D : LatticeData) (hunit : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (H K E : ℕ) (t : ℤ) (u v : paritySpace D hunit (-1))
+    (P Q R S : Oscillator D) (x y z d : ActualGround D hunit)
+    (huP : u.val = P ⊗ₜ[ℂ] x) (hvQ : v.val = Q ⊗ₜ[ℂ] y)
+    (huH : actualTensorL0 D hunit u.val = (H : ℂ) • u.val)
+    (hvK : actualTensorL0 D hunit v.val = (K : ℂ) • v.val) :
+    fourMScalar D hunit hD ((H : ℤ)+(K : ℤ)-E-1) t u v (R ⊗ₜ[ℂ] z) (S ⊗ₜ[ℂ] d) =
+      ∑ a : ModTwoCharge D,
+        ((-1 : ℂ) ^ E * cosetSewnTaylor D H K E t P Q R S a) *
+          groundForm D hunit y (chargeOperator D (groundRepresentation D hunit) a x) *
+          groundForm D hunit d (chargeOperator D (groundRepresentation D hunit) a z) := by
+  rw [fourM_energy_coefficient D hunit hD h24 H K E t u v P Q R S x y z d huP hvQ huH hvK]
+  simp only [PowerSeries.coeff_rescale, cosetSeries_sewnTaylor D hunit hD, mul_comm]
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeNormal

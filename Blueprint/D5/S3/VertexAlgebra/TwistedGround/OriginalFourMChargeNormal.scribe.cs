@@ -30,5 +30,11 @@ internal sealed class OriginalFourMChargeNormalDocument : IScribeDocumentDefinit
                 "At order 2E in the sewing coordinate, local uniform convergence permits the "
                 + "Taylor coefficient to pass through the charge sum. Only charges of energy at "
                 + "most E contribute. Each surviving coefficient is the degree-E coefficient of "
-                + "the original square-coordinate charge series in that charge class."))));
+                + "the original square-coordinate charge series in that charge class."),
+            Result("fourm-scalar-sewn-taylor", "fourM_scalar_sewnTaylor",
+                "Taylor extraction for the original four-point scalar",
+                "At fixed total energy the two original Laurent selectors are independent of "
+                + "the charge on its finite sublevel. The finite lowerings and occupation sums "
+                + "therefore consume the Taylor coefficients of the charge-class sums. The two "
+                + "ordered ground factors and the final negative-square sign give the original scalar."))));
 }

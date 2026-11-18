@@ -40,9 +40,22 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeNormal.sew
 
 At order 2E in the sewing coordinate, local uniform convergence permits the Taylor coefficient to pass through the charge sum. Only charges of energy at most E contribute. Each surviving coefficient is the degree-E coefficient of the original square-coordinate charge series in that charge class.
 
+**Theorem 1.4 (Taylor extraction for the original four-point scalar).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At fixed total energy the two original Laurent selectors are independent of the charge on its finite sublevel. The finite lowerings and occupation sums therefore consume the Taylor coefficients of the charge-class sums. The two ordered ground factors and the final negative-square sign give the original scalar.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeNormal.compact_charge_normal`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeNormal.fourM_scalar_sewnTaylor`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeNormal.sewn_charge_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeNormal.sewn_charge_normal_at_zero`
 - Dependency: [D5/S3/Analytic/OriginalHalfBinomialNome](../../Analytic/OriginalHalfBinomialNome.md)
