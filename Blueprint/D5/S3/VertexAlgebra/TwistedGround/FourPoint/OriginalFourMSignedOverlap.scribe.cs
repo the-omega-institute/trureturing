@@ -49,5 +49,16 @@ internal sealed class OriginalFourMSignedOverlapDocument : IScribeDocumentDefini
                 + "the chart's half-differential at the corresponding puncture."),
             Result("chart-chosen-source-signs", "chart_chosen_source_signs", "Relative puncture signs",
                 "In the common physical puncture order, the A to B signs are positive except at S "
-                + "and the A to D signs are negative at Q and R."))));
+                + "and the A to D signs are negative at Q and R."),
+            Result("chosen-chart-source-native", "chosen_chart_source_eq_native", "Native source germ on A and B",
+                "The selected normalized root agrees with the literal signed source germ wherever "
+                + "the A or B period parameter belongs to the native disk."),
+            Result("chosen-chart-source-analytic", "chosen_chart_source_analytic", "Source at all three puncture charts",
+                "The normalized square root defines an analytic germ at the origin of each spatial coordinate."),
+            Result("chart-covariance-native", "chart_covariance_eq_native", "Native covariance germ on A and B",
+                "The chart kernels agree with the native J-plus-free and minus-T series on their initial "
+                + "A and B convergence overlaps, including both mode origins."),
+            Result("chart-covariance-analytic", "chart_covariance_analytic", "Regular chart covariance",
+                "With the chosen source roots and actual period corrections, every signed covariance is "
+                + "jointly analytic at the pair of mode origins in A, B and D."))));
 }

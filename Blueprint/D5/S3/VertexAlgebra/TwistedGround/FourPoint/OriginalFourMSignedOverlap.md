@@ -136,10 +136,62 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSigned
 
 In the common physical puncture order, the A to B signs are positive except at S and the A to D signs are negative at Q and R.
 
+**Theorem 1.12 (Native source germ on A and B).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chosen_chart_source_eq_native`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chosen_chart_source_eq_native` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The selected normalized root agrees with the literal signed source germ wherever the A or B period parameter belongs to the native disk.
+
+**Theorem 1.13 (Source at all three puncture charts).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chosen_chart_source_analytic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chosen_chart_source_analytic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The normalized square root defines an analytic germ at the origin of each spatial coordinate.
+
+**Theorem 1.14 (Native covariance germ on A and B).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_eq_native`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_eq_native` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The chart kernels agree with the native J-plus-free and minus-T series on their initial A and B convergence overlaps, including both mode origins.
+
+**Theorem 1.15 (Regular chart covariance).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_analytic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_analytic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+With the chosen source roots and actual period corrections, every signed covariance is jointly analytic at the pair of mode origins in A, B and D.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_chosen_source_signs`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_analytic`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_covariance_eq_native`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chart_source_at_puncture`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chosen_chart_source_analytic`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.chosen_chart_source_eq_native`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.half_coordinate_pullback`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.native_A_covariance_discrepancy`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap.native_covariance_hasSum`
