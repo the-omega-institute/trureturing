@@ -86,7 +86,7 @@ internal sealed class AceskaLortRippergerSparsest14Document : IScribeDocumentDef
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Or(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
-    private static Formula CastInt(Formula a) => Seq(Open, a, Sp, Colon, Sp, F.Id("Int"), Close);
+    private static Formula CastInt(Formula a) => Parenthesized(Seq(a, Sp, Colon, Sp, F.Id("Int")));
     private static Formula Adj(Formula d, Formula u, Formula v) => App(Q("Digraph", "Adj"), d, u, v);
     private static Formula WithFinite(Formula v, Formula body) =>
         Seq(OpenBracket, Call("Fintype", v), CloseBracket, Sp, body);
