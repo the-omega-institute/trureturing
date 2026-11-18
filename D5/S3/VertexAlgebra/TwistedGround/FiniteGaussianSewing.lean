@@ -399,7 +399,7 @@ transpose of the upper cross block for symmetric A and B. -/
 def covariance (A B : Matrix H H ℂ) : Matrix (H ⊕ H) (H ⊕ H) ℂ :=
   Matrix.fromBlocks ((1 - B * A)⁻¹ʳ * B) ((1 - B * A)⁻¹ʳ)
     ((1 - A * B)⁻¹ʳ) ((1 - A * B)⁻¹ʳ * A)
-private theorem covariance_symm (A B : Matrix H H ℂ)
+theorem covariance_symm (A B : Matrix H H ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) :
@@ -778,7 +778,7 @@ def effectiveKernel {X : Type v} {Y : Type w}
     (R * (1 - B * A)⁻¹ʳ * S)
     (S.transpose * (1 - A * B)⁻¹ʳ * R.transpose)
     (Q + S.transpose * (1 - A * B)⁻¹ʳ * A * S)
-private theorem effectiveKernel_symm {X : Type v} {Y : Type w}
+theorem effectiveKernel_symm {X : Type v} {Y : Type w}
     [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
     (P : Matrix X X ℂ) (Q : Matrix Y Y ℂ)
     (A B : Matrix H H ℂ) (R : Matrix X H ℂ) (S : Matrix H Y ℂ)

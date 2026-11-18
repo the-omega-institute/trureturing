@@ -36,13 +36,13 @@ open OriginalGaussianDeterminant
 open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
 /- Zero normalization is a consequence of the ACTUAL section logarithms. -/
-private lemma finiteSection_zero (N : ℕ) : finiteSection N 0 = 0 := by
+lemma finiteSection_zero (N : ℕ) : finiteSection N 0 = 0 := by
   ext i j
   change matrixEntry 0 (i.val + 1) (j.val + 1) = 0
   have hpos : 0 < (i.val + 1) + (j.val + 1) := by omega
   simp only [matrixEntry, zero_pow (Nat.ne_of_gt hpos), mul_zero, Matrix.zero_apply]
 
-private lemma finiteLog_zero (N : ℕ) : finiteLog N 0 = 0 := by
+lemma finiteLog_zero (N : ℕ) : finiteLog N 0 = 0 := by
   have hterm (k : ℕ) :
       Matrix.trace (finiteSection N 0 ^ (2 * (k + 1))) / (k + 1 : ℂ) = 0 := by
     rw [finiteSection_zero, zero_pow (by omega : 2 * (k + 1) ≠ 0)]

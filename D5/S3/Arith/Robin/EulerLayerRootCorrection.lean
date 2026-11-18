@@ -259,7 +259,7 @@ private theorem psi_small_power {r : ℝ} (hr : 0 < r) (hr2 : r < 1 / 2) :
   rw [Real.sqrt_eq_rpow, neg_sub, Real.rpow_sub ht]
   field_simp
 
-private theorem psi_theta_root_limit :
+theorem psi_theta_root_limit :
     Tendsto (fun t : ℝ => (ψ t - θ t) / Real.sqrt t) atTop (𝓝 1) := by
   have hroot : Tendsto (fun t : ℝ => ψ (t ^ (2 : ℝ)⁻¹) / Real.sqrt t)
       atTop (𝓝 1) := by

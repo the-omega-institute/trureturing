@@ -15,6 +15,12 @@ internal sealed class MBonacciFactorWindowDocument : IScribeDocumentDefinition
                 + "infinite word obtained from these nested, unbounded iterates. A factor "
                 + "at q of length n is the list u_m(q),...,u_m(q+n-1).")),
             Describe.Lean(
+                DescribeId.Create("literal-finite-slice"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciFactorWindow.factor_eq_take_drop"),
+                H("The literal finite slice"), StatementSource.FromAuthor(FiniteSlice()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every order m>=2, level L and natural q,n whose endpoint q+n is within image(phi(m),L,zero(m)), the actual factor of word(m) at q of length n is exactly take(n,drop(q,image(phi(m),L,zero(m)))). This includes zero length and arbitrary starts. In particular order 3 is precisely the literal Tribonacci substitution and word."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("factor-window"),
                 DeclarationHandle.Create("D5/S1/Words/MBonacciFactorWindow.factor_window"),
                 H("Every start is represented by the bounded window"),
@@ -61,6 +67,14 @@ internal sealed class MBonacciFactorWindowDocument : IScribeDocumentDefinition
                 + "and can be moved to the initial copy. These are statements about "
                 + "the literal word and its factors; they assert neither a minimal "
                 + "window nor an optimal enumeration algorithm.")))));
+
+    private static Formula FiniteSlice()
+    {
+        Formula m=F.Id("m"),l=F.Id("L"),q=F.Id("q"),n=F.Id("n");
+        Formula image=Call("image",Call("phi",m),l,Call("zero",m));
+        Formula body=Imp(Le(Add(q,n),Call("length",image)),Eq(Call("factor",Call("word",m),q,n),Call("take",n,Call("drop",q,image))));
+        return F.Disp(All("m",N(),Imp(Le(F.D(2),m),All("L",N(),All("q",N(),All("n",N(),body))))));
+    }
 
     private static Formula Statement()
     {

@@ -1,0 +1,28 @@
+**定理 273.2（全部实际面、纯域与各自重心）。** $C$ 是十维闭尖生成锥，$u$ 在其非零正向量上严格正，$K$ 为九仿射维紧底。其非空真面恰为全部 $F_U$ 及 $\Gamma_+\cup\Gamma_-$ 中的单点。因此
+
+$$
+P=\{(0,P_v):[v]\in\mathbb{CP}^2\}\ \sqcup\ \Gamma_+\ \sqcup\ \Gamma_-,
+\qquad b_K=(0,I/3),\qquad
+b_{F_U}=(0,\Pi_U/\dim_{\mathbb C}U).
+\tag{273.3}
+$$
+
+$P_v=vv^\dagger/(v^\dagger v)$，$\Pi_U$ 为正交投影。两个不同PSD秩一纯点生成整个 $F_{\operatorname{span}(v,w)}$，即Bloch三球；只要其中一个点属于曲面，两个不同纯点生成的实际面便是整个 $K$。所以所有实际二元面均非线段，但不全严格凸。
+
+证明。Minkowski行列式不等式给 $f(X+Y)\ge f(X)+f(Y)$，加上一次齐次性，得到 $C$ 凸。闭性由连续性给出；若正负两向同在 $C$，矩阵正负半定迫 $X=0,s=0$。$(0,I)$ 为内点，故锥生成。迹一PSD紧，$0\le f(X)\le1/3$，故底紧；非零PSD的迹严格正。
+
+根行列式在正定迹一截面严格凹。具体地，对Hermitian方向 $H$，
+
+$$
+D^2f_X[H,H]=\frac{f(X)}9
+\left((\operatorname{Tr}X^{-1}H)^2
+-3\operatorname{Tr}(X^{-1}HX^{-1}H)\right).
+\tag{273.4}
+$$
+
+将 $X^{-1/2}HX^{-1/2}$ 对角化后用Cauchy–Schwarz，等号要求 $H$ 与 $X$ 成比例；再加 $\operatorname{Tr}H=0$ 就只剩 $H=0$。一端正定、另一端奇异且迹同为一时，沿开弦仍正定；严格凹性及连续性给同样的严格弦不等式。因此任一曲面点与任意不同态的开弦都进入 $\operatorname{ri}K$。若矩阵部分相同，则直接由 $s$ 的严格内插得到这一点。含曲面点的真面因而只能是该单点。
+
+其余真面全由 $s=0$ 的奇异PSD态组成。在这样的面 $F$ 的相对内部取 $(0,X)$，令 $U=\operatorname{ran}X$。对任意 $(0,Y)\in F$，相对内部性允许将穿过 $Y,X$ 的线段略微越过 $X$，PSD性于是迫 $\operatorname{ran}Y\subseteq U$。另一方面，$F_U$ 由正泛函 $\operatorname{Tr}(\Pi_{U^\perp}X)$ 的零集暴露，且 $(0,X)\in\operatorname{ri}F_U$；最小面唯一给 $F=F_U$。这也列尽纯点及二元面。特别地，整个 $s=0$ 的PSD截面不是一个面，因为其正定点属于 $\operatorname{ri}K$。
+
+酉共轭与 $s\mapsto-s$ 均保持 $K$ 和相对体积，迹归一迫整体重心为 $(0,I/3)$。在 $U$ 内作同样的酉不变性论证得到 $b_{F_U}$。各二元面使用自己的这个重心，不能用整体重心替代。$\square$
+

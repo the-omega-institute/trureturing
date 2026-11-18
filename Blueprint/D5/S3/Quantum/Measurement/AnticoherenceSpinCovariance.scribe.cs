@@ -76,7 +76,8 @@ internal sealed class AnticoherenceSpinCovarianceDocument : IScribeDocumentDefin
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("anticoherence-spin-" + name.ToLowerInvariant().Replace('_', '-')),
-            DeclarationHandle.Create(Module + "." + name), H(title),
+            DeclarationHandle.Create((name == "partialTrace_isometries"
+                ? "D5/S3/Quantum/Information/PartialTrace/Isometries" : Module) + "." + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 
