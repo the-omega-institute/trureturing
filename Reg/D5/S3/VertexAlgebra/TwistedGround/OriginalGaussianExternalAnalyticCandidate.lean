@@ -324,18 +324,19 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end positiveJ_eq_candidateJ
 
 abbrev correctionDerivativeSignature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℂ × ℂ)
-    (fun _ => ℂ → ℂ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => ℂ → ℂ) (fun _ => ℂ → ℂ → Prop)
 def correctionDerivativeActual : Realization correctionDerivativeSignature :=
-  realize _ (fun _ a f => HasDerivAt f a.2 a.1) (fun e => nomatch e)
+  realize _ (fun _ _ f d r => HasDerivAt f d r) (fun e => nomatch e)
 def correctionDerivativeBad : Realization correctionDerivativeSignature :=
-  realize _ (fun _ _ _ => False) (fun e => nomatch e)
+  realize _ (fun _ _ _ _ _ => False) (fun e => nomatch e)
 private theorem correctionDerivativeDependence :
     ObservationalDependence correctionDerivativeSignature correctionDerivativeActual := by
   intro i
-  refine ⟨(0,0), (fun _ => 0), (fun z => z), ?_⟩
+  refine ⟨(), (fun _ => 0), (fun z => z), ?_⟩
   intro h
-  have hf : HasDerivAt (fun z : ℂ => z) 0 0 := Eq.mp h (hasDerivAt_const _ _)
+  have hf : HasDerivAt (fun z : ℂ => z) 0 0  :=
+    Eq.mp (congrFun (congrFun h 0) 0) (hasDerivAt_const _ _)
   have hg : HasDerivAt (fun z : ℂ => z) 1 0 := hasDerivAt_id 0
   exact zero_ne_one (hf.unique hg)
 
@@ -343,7 +344,7 @@ namespace correction_hasDerivAt
 abbrev arena : Arena where
   signature := correctionDerivativeSignature
   Law R := ∀ {r : ℂ} (_hr : ‖r‖ < 1),
-    R.readout () (r, 1 / 4 - r * (1 - r) * ell r ^ 2) correction
+    R.readout () () correction (1 / 4 - r * (1 - r) * ell r ^ 2) r
 private theorem rejected_fails : ¬ arena.Law correctionDerivativeBad := by
   intro h
   exact h (r := 0) (by norm_num)
@@ -377,7 +378,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "fn", "fn", "arg"]
+      path := #["body", "body", "fn", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
