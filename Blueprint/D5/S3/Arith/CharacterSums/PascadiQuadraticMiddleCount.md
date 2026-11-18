@@ -22,8 +22,6 @@ The theorem includes split quadratic forms with rational zero lines, the zero fu
 
 Research use: the proposed physical-kernel average supplies c=p squared, q=p to the power 6-j and M of order (XY) squared divided by p to the power 3+j. Both j=3 and j=4 then have the same boundary scale (XY) to the power 3/2 divided by p to the power 9/2. Those arithmetic supplies, the two-root cover, and the global original six-word count are separate obligations. This module alone does not improve the delivered alpha<26/7 theorem or settle the nonsplit branch. The motivating ordinary lattice argument was proposed through the oracle broker; the kernel-checked implementation is by Codex.
 
-Source-bound four-slot registration remains incomplete under issue #31176, https://github.com/the-omega-institute/trureturing/issues/31176. The Reg mirror retains a full-telescope typed positive-law attempt; it is not a Contract.Registration or declared_validated evidence.
-
 ## References
 
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiQuadraticMiddleCount.quadratic_nonzero_middle_box_count`
