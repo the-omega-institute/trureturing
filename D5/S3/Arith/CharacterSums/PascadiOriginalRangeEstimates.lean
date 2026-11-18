@@ -14,11 +14,11 @@ logarithmic bound is proved from the real logarithm, not supplied by a caller. -
 
 namespace D5.S3.Arith.CharacterSums.Original
 
-/-- The original area cap absorbs the weighted chart errors and the square-root
-moment term into A p^epsilon, uniformly in all real p>=2 and actual areas A. -/
-theorem original_range_error_absorption (ε C K : ℝ)
-    (hε : 0 < ε) (hC : 1 ≤ C) (hK : 0 < K) :
-    ∃ D : ℝ, 0 < D ∧ ∀ (p A : ℝ), 2 ≤ p → 0 ≤ A → A ≤ C*p^((18 : ℝ)/5) →
+/-- Every area exponent at most fifteen quarters absorbs the actual weighted
+chart and square-root moment errors, uniformly in the real parameter. -/
+theorem range_error_absorption_of_exponent (ε C K α : ℝ)
+    (hε : 0 < ε) (hC : 1 ≤ C) (hK : 0 < K) (hα : α ≤ 15/4) :
+    ∃ D : ℝ, 0 < D ∧ ∀ (p A : ℝ), 2 ≤ p → 0 ≤ A → A ≤ C*p^α →
       let L := 1+Real.log (2*p)/Real.log 2
       K*p^(ε/2)*(A*(1+L)+A^2/p^4)+
         Real.sqrt (K*p^(ε/2)*A^6/p^15*L) ≤ D*A*p^ε := by
@@ -71,9 +71,9 @@ theorem original_range_error_absorption (ε C K : ℝ)
     have hlog : 0 ≤ Real.log (2*p) := Real.log_nonneg (by linarith)
     dsimp [L]
     positivity
-  have hp18 : p^((18 : ℝ)/5) ≤ p^4 := by
+  have hp18 : p^α ≤ p^4 := by
     simpa only [Real.rpow_ofNat] using
-      Real.rpow_le_rpow_of_exponent_le hp1 (by norm_num : (18 : ℝ)/5 ≤ 4)
+      Real.rpow_le_rpow_of_exponent_le hp1 (by linarith : α ≤ 4)
   have hAp4 : A/p^4 ≤ C := by
     apply (div_le_iff₀ (pow_pos hp0 4)).mpr
     exact harea.trans (mul_le_mul_of_nonneg_left hp18 hC0)
@@ -82,15 +82,15 @@ theorem original_range_error_absorption (ε C K : ℝ)
       _ = A*(A/p^4) := by ring
       _ ≤ A*C := mul_le_mul_of_nonneg_left hAp4 hA
       _ = _ := by ring
-  have hp72 : (p^((18 : ℝ)/5))^4 ≤ p^15 := by
+  have hp72 : (p^α)^4 ≤ p^15 := by
     rw [← Real.rpow_mul_natCast hp0.le]
     simpa only [Real.rpow_ofNat, Nat.cast_ofNat] using
-      Real.rpow_le_rpow_of_exponent_le hp1 (by norm_num : (18 : ℝ)/5*4 ≤ 15)
+      Real.rpow_le_rpow_of_exponent_le hp1 (by linarith : α*4 ≤ 15)
   have hA4p15 : A^4/p^15 ≤ C^4 := by
     apply (div_le_iff₀ (pow_pos hp0 15)).mpr
     calc
-      A^4 ≤ (C*p^((18 : ℝ)/5))^4 := pow_le_pow_left₀ hA harea 4
-      _ = C^4*(p^((18 : ℝ)/5))^4 := mul_pow _ _ _
+      A^4 ≤ (C*p^α)^4 := pow_le_pow_left₀ hA harea 4
+      _ = C^4*(p^α)^4 := mul_pow _ _ _
       _ ≤ C^4*p^15 := mul_le_mul_of_nonneg_left hp72 (pow_nonneg hC0 4)
   have hA6p15 : A^6/p^15 ≤ C^4*A^2 := by
     calc
@@ -127,5 +127,15 @@ theorem original_range_error_absorption (ε C K : ℝ)
   calc
     _ ≤ K*(1+B+C)*A*T^2+E*A*T^2 := add_le_add hfirst hsqrt'
     _ = _ := by rw [← hT2]; dsimp [D]; ring
+
+/-- The original area cap absorbs the weighted chart errors and the square-root
+moment term into A p^epsilon, uniformly in all real p>=2 and actual areas A. -/
+theorem original_range_error_absorption (ε C K : ℝ)
+    (hε : 0 < ε) (hC : 1 ≤ C) (hK : 0 < K) :
+    ∃ D : ℝ, 0 < D ∧ ∀ (p A : ℝ), 2 ≤ p → 0 ≤ A → A ≤ C*p^((18 : ℝ)/5) →
+      let L := 1+Real.log (2*p)/Real.log 2
+      K*p^(ε/2)*(A*(1+L)+A^2/p^4)+
+        Real.sqrt (K*p^(ε/2)*A^6/p^15*L) ≤ D*A*p^ε :=
+  range_error_absorption_of_exponent ε C K ((18 : ℝ)/5) hε hC hK (by norm_num)
 
 end D5.S3.Arith.CharacterSums.Original
