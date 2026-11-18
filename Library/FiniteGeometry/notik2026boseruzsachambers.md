@@ -16,7 +16,9 @@ triage: anchor
 
 ## Verified locator
 
-Esther Notik, arXiv:2611.22656v1. [PDF](https://arxiv.org/pdf/2611.22656v1#page=8)
+Esther Notik, [arXiv:2611.22656v1](https://arxiv.org/abs/2611.22656v1),
+DOI [10.48550/arXiv.2611.22656](https://doi.org/10.48550/arXiv.2611.22656).
+[PDF](https://arxiv.org/pdf/2611.22656v1#page=8)
 
 The last bullet of §10, page 8, asks
 

@@ -90,7 +90,7 @@ Increasing offsets from the starting residue exhaust the cyclic set. Their total
 
 **Definition 1.7 (Scaled affine-line exponent).**
 
-$$\forall F: \operatorname{Type}, \forall K: \operatorname{Type}, [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(K\right)] [\operatorname{Algebra}\left(F, K\right)] \forall M: \mathbb{N}, \forall \theta: K, \forall u: \mathbb{N}, \forall r: \operatorname{Fin}\left(M\right), \operatorname{BoseResidue}\left(\theta, u, r\right)\iff \exists e: \operatorname{Fin}\left(M\right), (r.\operatorname{val}=\operatorname{mod}\left(u\cdot e.\operatorname{val}, M\right)) \land (\exists a: F, \theta^{e.\operatorname{val}}=\theta+\operatorname{algebraMap}\left(F, K, a\right))$$
+$$\forall F: \operatorname{Type}, \forall K: \operatorname{Type}, [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(K\right)] [\alpha: \operatorname{Algebra}\left(F, K\right)] \forall M: \mathbb{N}, \forall \theta: K, \forall u: \mathbb{N}, \forall r: \operatorname{Fin}\left(M\right), \left(\operatorname{BoseResidue}_{F, K, \alpha}\right)\left(\theta, u, r\right)\iff \exists e: \operatorname{Fin}\left(M\right), (r.\operatorname{val}=\operatorname{mod}\left(u\cdot e.\operatorname{val}, M\right)) \land (\exists a: F, \theta^{e.\operatorname{val}}=\theta+\operatorname{algebraMap}\left(F, K, a\right))$$
 
 *Formalization.* `D5/S3/Geometry/FiniteGeometry/NotikBoseRuzsaChamber.BoseResidue` (`✓ std3`).
 
@@ -118,7 +118,7 @@ The cast to ZMod p and the remainder modulo p minus one specify the two congruen
 
 **Definition 1.9 (Bose universal assertion).**
 
-$$\operatorname{Bose}\iff \forall q: \mathbb{N}, \forall F: \operatorname{Type}, \forall K: \operatorname{Type}, [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(K\right)] [\operatorname{Algebra}\left(F, K\right)] [\operatorname{Finite}\left(F\right)] \operatorname{card}\left(F\right)=q \implies \operatorname{card}\left(K\right)=q^{2} \implies \forall \theta: K, \forall u: \mathbb{N}, \operatorname{orderOf}\left(\theta\right)=q^{2}-1 \implies \operatorname{Coprime}\left(u, q^{2}-1\right) \implies \forall b: \operatorname{Fin}\left(q^{2}-1\right), \forall g: \operatorname{Fin}\left(q-1\right) \to \mathbb{N}, \operatorname{LargestGapCut}\left((\operatorname{BoseResidue}\left(\theta, u\right)), b, g\right) \implies \operatorname{UniqueShortest}\left(g\right)$$
+$$\operatorname{Bose}\iff \forall q: \mathbb{N}, \forall F: \operatorname{Type}, \forall K: \operatorname{Type}, [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(K\right)] [\alpha: \operatorname{Algebra}\left(F, K\right)] [\operatorname{Finite}\left(F\right)] \operatorname{card}\left(F\right)=q \implies \operatorname{card}\left(K\right)=q^{2} \implies \forall \theta: K, \forall u: \mathbb{N}, \operatorname{orderOf}\left(\theta\right)=q^{2}-1 \implies \operatorname{Coprime}\left(u, q^{2}-1\right) \implies \forall b: \operatorname{Fin}\left(q^{2}-1\right), \forall g: \operatorname{Fin}\left(q-1\right) \to \mathbb{N}, \operatorname{LargestGapCut}\left((\left(\operatorname{BoseResidue}_{F, K, \alpha}\right)\left(\theta, u\right)), b, g\right) \implies \operatorname{UniqueShortest}\left(g\right)$$
 
 *Formalization.* `D5/S3/Geometry/FiniteGeometry/NotikBoseRuzsaChamber.Bose` (`✓ std3`).
 

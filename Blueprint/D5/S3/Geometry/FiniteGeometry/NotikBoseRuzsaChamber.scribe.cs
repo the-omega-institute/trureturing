@@ -34,7 +34,10 @@ internal sealed class NotikBoseRuzsaChamberDocument : IScribeDocumentDefinition
     private static Formula Cast(Formula f, Formula t) => Par(Seq(f, Colon, Sp, t));
     private static Formula FieldTypes(Formula f, Formula k, Formula body) =>
         All(f, Type, All(k, Type,
-            Seq(Instance("Field", f), Instance("Field", k), Instance("Algebra", f, k), body)));
+            Seq(Instance("Field", f), Instance("Field", k),
+                OpenBracket, Alpha, Colon, Sp, Call("Algebra", f, k), CloseBracket, Sp, body)));
+    private static Formula BoseResidue(Formula f, Formula k) =>
+        new Formula.Subscript(Named("BoseResidue"), Seq(f, Comma, Sp, k, Comma, Sp, Alpha));
 
     private static Formula LabelFormula()
     {
@@ -117,7 +120,7 @@ internal sealed class NotikBoseRuzsaChamberDocument : IScribeDocumentDefinition
             Call("algebraMap", f, k, a)));
         var exponent = Some(e, Fin(m), And(Seq(Val(r), Eq, Mod(Seq(u, Cdot, Sp, Val(e)), m)), onLine));
         return FieldTypes(f, k, All(m, Nat, All(theta, k, All(u, Nat, All(r, Fin(m),
-            Seq(Call("BoseResidue", theta, u, r), Iff, Sp, exponent))))));
+            Seq(Apply(BoseResidue(f, k), theta, u, r), Iff, Sp, exponent))))));
     }
 
     private static Formula RuzsaResidueFormula()
@@ -139,7 +142,7 @@ internal sealed class NotikBoseRuzsaChamberDocument : IScribeDocumentDefinition
         var u = F.Id("u"); var start = F.Id("b"); var g = F.Id("g");
         var square = new Formula.Power(q, D(2));
         var modulus = MinusOne(square);
-        var residues = Par(Call("BoseResidue", theta, u));
+        var residues = Par(Apply(BoseResidue(f, k), theta, u));
         var cuts = All(start, Fin(modulus), All(g, Gaps(MinusOne(q), Nat),
             Imp(Call("LargestGapCut", residues, start, g), Call("UniqueShortest", g))));
         var generators = All(theta, k, All(u, Nat,
