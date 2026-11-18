@@ -80,7 +80,7 @@ Naturally labelled posets of sizes $1,\ldots,5$ have counts $1,2,7,40,357$ (407 
 5. The bounded-height theorem and its exact applications give the finite classification, self-leastness of admissible orders, and leastness of the merged tail when the base has a greatest point.
 6. The inspection recorded in #23817 located Question 2.32 in the closing future-question list and identified no dependence on an affirmative answer. Effects on other primary claims lack a formal dependency audit.
 
-## Revision 2 and its formal counterparts
+### Revision 2 and its formal counterparts
 
 The revision-2 note, *Bounded-height classification for Salinas Schmeis’s omega-chain extension question*, is by Haobo Ma (ChronoAI Pte Ltd, Singapore) and Wenlin Zhang (National University of Singapore and ChronoAI Pte Ltd, Singapore). Release 445258020 contains the same manuscript as 445172937. The retained revision 1, release 444952904, already contains the two-point argument, duality, arbitrary-base existence and the finite classification. Revision 2 proves the countable bounded-height theorem and the lifting and skeleton corollaries. The original Fork, Rays and Tail proof and #23817 keep the settlement credit for Question 2.32.
 
@@ -100,7 +100,7 @@ The revision-2 note, *Bounded-height classification for Salinas Schmeis’s omeg
 
 Each cited Blueprint contains the arguments and source conditions for its own results. Exact specializations and boundary applications use these declarations. The manuscript’s finite `verify.py` checks bounded order and partition examples, including finite orders on at most five points. The inherited finite experiment above has its own scope and custody.
 
-### Primary provenance and limits
+#### Primary provenance and limits
 
 - Salinas Schmeis’s Question 2.3 (p. 3) asks the general partition question. Theorem 2.5 (p. 4) proves the partition result for countable posets with no maximal element. Theorem 2.27 (p. 12) gives the equivalence of lifting and partitionability for posets with no maximal element. Definitions 2.14 (p. 7) and 2.26 (p. 12) give the local-shortness and lifting conditions.
 - Salinas Schmeis’s Corollaries 2.23 (p. 10) and 2.25 (p. 11) give locally short posets without an omega partition. The statement and discussion of the uncountable chain in Example 2.10 span pp. 5–6. Remark 2.29 (p. 13) gives the duality convention.
