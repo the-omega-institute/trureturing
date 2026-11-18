@@ -204,10 +204,11 @@ private theorem fiber_card {N : ℕ} (f : Fin N → ℤ) (t : ℤ) :
     rw [Fin.sum_univ_succ]
     have ht := ih (fun i => f i.succ)
     rw [Finset.card_filter] at ht
-    simp only [Finset.mem_univ, true_and] at ht ⊢
-    simp only [Fin.cons_zero, Fin.cons_succ]
     rw [ht]
-    split_ifs <;> simp_all [eq_comm]
+    by_cases h : f 0 = t
+    · simp only [h, BEq.rfl, ↓reduceIte, Nat.add_comm]
+    · have h' : (f 0 == t) = false := beq_eq_false_iff_ne.mpr h
+      simp only [h, h', Bool.false_eq_true, ↓reduceIte, Nat.zero_add, Nat.add_zero]
 
 private theorem perm_iff_orbit {N : ℕ} (z a : Fin N → ℤ) :
     (List.ofFn a).Perm (List.ofFn z) ↔
@@ -232,6 +233,7 @@ private theorem permutations_card {N : ℕ} (z : Fin N → ℤ) :
     (rootPermutations z).card = N.factorial / multiplicityFactor z := by
   classical
   let G := (Equiv.Perm (Fin N))ᵈᵐᵃ
+  letI : Fintype G := Fintype.ofEquiv (Equiv.Perm (Fin N)) DomMulAct.mk
   let O := MulAction.orbit G z
   letI : Fintype O := (Finite.finite_mulAction_orbit (M := G) z).fintype
   let e : ↥(rootPermutations z) ≃ O :=
