@@ -175,7 +175,7 @@ private theorem smooth_theta_comparison {P k a b E : ℝ} (hP : 0 < P)
 
 /-- The absolute error of the moving softplus sum against theta, compared to
 its Lebesgue integral, is controlled by the uniform theta discrepancy. -/
-theorem softplus_theta_window {P s E : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
+private theorem softplus_theta_window {P s E : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
     (hE : 0 ≤ E) (hθ : ∀ t ∈ Icc (P / 2) (2 * P), |Chebyshev.theta t - t| ≤ E) :
     |(∑ p ∈ primeInterval (P / 2) (2 * P), weight P s p * log p) -
         ∫ t in P / 2..2 * P, weight P s t| ≤ 6 * log 2 * E := by
@@ -352,7 +352,7 @@ private theorem fermi_mass :
     · filter_upwards [eventually_ge_atTop (0 : ℝ)] with u hu
       exact mul_le_mul_of_nonneg_right (softplus_le_exp u) hu
     · have h := tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 1 one_pos
-      simpa only [rpow_one, neg_mul, one_mul, mul_neg, mul_comm] using h
+      simpa only [rpow_one, neg_mul, one_mul, mul_neg, mul_one, mul_comm] using h
   have hi' : IntegrableOn (fun u => -(exp u + 1)⁻¹ * id u) (Ioi 0) := by
     convert hf.neg using 1
     funext u
@@ -412,7 +412,8 @@ private theorem softplus_continuum_tendsto {s : ℝ → ℝ} (hs : Tendsto s atT
       have he : exp (u / s P) ≤ 2 := by
         rw [← exp_log (show (0 : ℝ) < 2 by norm_num)]
         exact exp_le_exp.mpr ((div_le_iff₀ hp).mpr (by simpa only [mul_comm] using hu.2))
-      exact (mul_le_mul (softplus_le_exp _) he (exp_pos _).le (exp_pos _).le).trans_eq (mul_comm _ _)
+      exact (mul_le_mul (softplus_le_exp _) he (exp_pos _).le (exp_pos _).le).trans_eq
+        (mul_comm _ _)
     · rw [indicator_of_notMem hu, norm_zero]
       positivity
   have hpoint : ∀ᵐ u ∂volume, Tendsto (fun P => F P u) atTop (𝓝 (g u)) := by
@@ -535,9 +536,13 @@ private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
         exp_le_exp.mpr (mul_le_mul_of_nonpos_left hl (by linarith))
       refine (mul_le_mul_of_nonneg_left hexp (exp_pos _).le).trans_eq ?_
       rw [show -(s - 2) * log 2 = -s * log 2 + 2 * log 2 by ring, exp_add]
-      rw [show (-2 : ℝ) * log ((n : ℝ) / P) = -(log ((n : ℝ) / P) * 2) by ring,
-        exp_neg, exp_mul, exp_log (div_pos hn0 hp), rpow_two]
-      rw [show (2 : ℝ) * log 2 = log 2 * 2 by ring, exp_mul, exp_log (by norm_num), rpow_two]
+      have hratioExp : exp ((-2 : ℝ) * log ((n : ℝ) / P)) = (((n : ℝ) / P) ^ 2)⁻¹ := by
+        rw [show (-2 : ℝ) * log ((n : ℝ) / P) = -(log ((n : ℝ) / P) * 2) by ring,
+          exp_neg, exp_mul, exp_log (div_pos hn0 hp), rpow_two]
+      have htwo : exp (2 * log 2) = 4 := by
+        rw [mul_comm, exp_mul, exp_log (by norm_num : (0 : ℝ) < 2), rpow_two]
+        norm_num
+      rw [hratioExp, htwo]
       dsimp only [g, b]
       rw [rpow_neg hn0.le, rpow_two]
       field_simp
@@ -590,7 +595,7 @@ private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
       simp only [softplus, ← neg_mul] at hw
       refine hw.trans ?_
       dsimp only [b]
-      rw [abs_of_nonpos (by linarith : log ((n : ℝ) / P) ≤ 0), ← neg_mul]
+      rw [abs_of_nonpos (by linarith : log ((n : ℝ) / P) ≤ 0)]
       exact exp_le_exp.mpr (mul_le_mul_of_nonpos_left (by linarith) (by linarith))
     · exact (exp_pos _).le
   have hsmall : ∑ n ∈ Finset.range (M + 1), primeWeight P s n ≤ P * b := by
@@ -694,7 +699,7 @@ theorem prime_softplus_asymptotic {a C₁ C₂ : ℝ} (ha : 0 < a) (hC₁ : 0 < 
   have hlogpow : Tendsto (fun P : ℝ => log P ^ a) atTop atTop :=
     (tendsto_rpow_atTop ha).comp tendsto_log_atTop
   have hsTop : Tendsto s atTop atTop :=
-    tendsto_atTop_mono' _ (hs.mono fun _ h => h.1) (hlogpow.atTop_const_mul hC₁)
+    tendsto_atTop_mono' _ (hs.mono fun _ h => h.1) ((tendsto_const_mul_atTop_of_pos hC₁).mpr hlogpow)
   have hn : ∀ᶠ P in atTop, 0 ≤ s P := (hsTop.eventually_ge_atTop 0)
   have hθ := theta_comparison_tendsto (hn.and (hs.mono fun _ h => h.2)) hC₂
   have hc := softplus_continuum_tendsto hsTop
