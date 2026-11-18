@@ -4,7 +4,7 @@
    mirror-E: none(waiver:physical-kernel-average-in-progress)
    anchors: []
    utility: none
-   digest: Quantized quadratic values remove the shortest null direction from a middle-lattice count. -/
+   digest: Quantized quadratic values control nonzero middle-lattice sections. -/
 
 import D5.S3.Arith.CharacterSums.PascadiOriginalWeightAverage
 
@@ -88,11 +88,11 @@ theorem quadratic_nonzero_middle_box_count {c q : ℕ} {t w : ℤ} {X Y H M : �
     have hcoord (z : Coordinate) (hz : physical B.R B.V z ∈ literalBox X Y) :
         |(z.1 : ℝ)| ≤ U ∧ |(z.2 : ℝ)| ≤ V := by
       obtain ⟨hi, hj⟩ := B.coordinate_sq_bounds hc hX hY z hz
-      have hfirst : |(z.1 : ℝ)|*σ ≤ 2*H := by
+      have hfirst : |(z.1 : ℝ)| * σ ≤ 2*H := by
         apply (sq_le_sq₀ (by positivity) (by positivity)).mp
         rw [mul_pow, sq_abs, hσsq]
         nlinarith
-      have hsecond : |(z.2 : ℝ)|*(c : ℝ) ≤ 2*H*σ := by
+      have hsecond : |(z.2 : ℝ)| * (c : ℝ) ≤ 2*H*σ := by
         apply (sq_le_sq₀ (by positivity) (by positivity)).mp
         rw [mul_pow, sq_abs]
         nlinarith [sq_nonneg H, sq_nonneg σ]
@@ -107,8 +107,10 @@ theorem quadratic_nonzero_middle_box_count {c q : ℕ} {t w : ℤ} {X Y H M : �
         rw [he, hhom, h, mul_zero]
       have hqabs : (q : ℝ) ≤ |(Q B.R : ℝ)| := by
         have hh := Int.natAbs_le_of_dvd_ne_zero (hquant B.R B.memR) hqn
-        have hh' : ((q : ℤ).natAbs : ℝ) ≤ ((Q B.R).natAbs : ℝ) := by exact_mod_cast hh
-        simpa only [Int.natAbs_natCast, Int.cast_natCast, Int.natCast_natAbs] using hh'
+        have hn : q ≤ (Q B.R).natAbs := by simpa only [Int.natAbs_natCast] using hh
+        have hz : (q : ℤ) ≤ ((Q B.R).natAbs : ℤ) := by exact_mod_cast hn
+        rw [Int.natCast_natAbs] at hz
+        exact_mod_cast hz
       have hlow : (q : ℝ) ≤ M*σ^2 := by
         rw [hσsq]
         exact hqabs.trans (hbound B.R)
@@ -137,7 +139,8 @@ theorem quadratic_nonzero_middle_box_count {c q : ℕ} {t w : ℤ} {X Y H M : �
       · apply Finset.mem_union_left
         apply Finset.mem_image.mpr
         refine ⟨(i,j), ?_, hij⟩
-        have hh := hcentral i (by simpa only [hj, hij] using hz)
+        have hij0 : physical B.R B.V (i,0) = z := by simpa only [hj] using hij
+        have hh := hcentral i (by rw [hij0]; exact hz)
         exact Finset.mem_product.mpr ⟨symmetricInterval_mem hh, by simp [hj]⟩
       · apply Finset.mem_union_right
         apply Finset.mem_image.mpr
