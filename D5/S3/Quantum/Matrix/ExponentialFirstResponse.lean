@@ -10,6 +10,11 @@ import D5.S3.Quantum.Analysis.MeasurableFirstResponse
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.SpecialFunctions.Exponential
 
+/-! # The derivative of the matrix exponential from measurable evolution -/
+
+noncomputable section
+
+
 open scoped Matrix.Norms.L2Operator Topology
 open MeasureTheory Set Filter Asymptotics NormedSpace
 open D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
@@ -23,18 +28,25 @@ private abbrev Mat (n : Type*) := Matrix n n ℂ
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
+local instance : NormedAlgebra ℚ (Mat n) := .restrictScalars ℚ ℂ _
+local instance : NormedAlgebra ℚ (EuclideanSpace ℂ n →L[ℂ] EuclideanSpace ℂ n) :=
+  .restrictScalars ℚ ℂ _
+
+private noncomputable abbrev operatorEquiv :=
+  (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).toAlgEquiv
+
 private noncomputable def identityContraction : Contraction (EuclideanSpace ℂ n) where
   operator _ := 1
   zero := rfl
-  add _ _ := by simp
+  add _ _ := by ext x; rfl
   norm_le _ := ContinuousLinearMap.norm_id_le
   continuous _ := continuous_const
 
 private theorem constantEvolution (A : Mat n) {r t : ℝ} (hr : 0 ≤ r) (hrt : r ≤ t) :
-    measurableEvolution identityContraction (fun _ => Matrix.toEuclideanCLM A) t r =
-      Matrix.toEuclideanCLM (exp ((t - r) • A)) := by
+    measurableEvolution identityContraction (fun _ => operatorEquiv A) t r =
+      operatorEquiv (exp ((t - r) • A)) := by
   let S : Contraction (EuclideanSpace ℂ n) := identityContraction
-  let C := Matrix.toEuclideanCLM A
+  let C := operatorEquiv A
   let B : ℝ → EuclideanSpace ℂ n →L[ℂ] EuclideanSpace ℂ n := fun _ => C
   let g : ℝ → ℝ := fun _ => ‖C‖
   have hB : ∀ x, AEStronglyMeasurable (fun s => B s x) (volume.restrict (Icc 0 t)) :=
@@ -43,14 +55,15 @@ private theorem constantEvolution (A : Mat n) {r t : ℝ} (hr : 0 ≤ r) (hrt : 
   have hd := native_data S B (hr.trans hrt) hB g hg
     (fun _ _ => norm_nonneg C) (fun _ _ => le_rfl)
   have hop (u : ℝ) : S.action u = 1 := rfl
-  have hmap : Matrix.toEuclideanCLM (exp ((t - r) • A)) = exp ((t - r) • C) := by
-    rw [NormedSpace.map_exp Matrix.toEuclideanCLM
-      (Matrix.toEuclideanCLM.toLinearEquiv.toContinuousLinearEquiv.continuous)]
+  have hmap : operatorEquiv (exp ((t - r) • A)) = exp ((t - r) • C) := by
+    rw [NormedSpace.map_exp (operatorEquiv (n := n))
+      ((operatorEquiv (n := n)).toLinearEquiv.toContinuousLinearEquiv.continuous)]
     congr 1
-    exact (Matrix.toEuclideanCLM.toLinearEquiv.toLinearMap.restrictScalars ℝ).map_smul _ _
+    exact ((operatorEquiv (n := n)).toLinearEquiv.toLinearMap.restrictScalars ℝ).map_smul _ _
   change measurableEvolution S B t r = _
   rw [hmap]
-  ext x
+  apply ContinuousLinearMap.ext
+  intro x
   let F : ℝ → EuclideanSpace ℂ n := fun s => measurableEvolution S B s r x
   let X : ℝ → EuclideanSpace ℂ n := fun s => exp ((s - r) • C) x
   have hF : ContinuousOn F (Icc r t) :=
@@ -60,8 +73,11 @@ private theorem constantEvolution (A : Mat n) {r t : ℝ} (hr : 0 ≤ r) (hrt : 
     dsimp [X]
     fun_prop
   have hX' (s : ℝ) : HasDerivAt X (C (X s)) s := by
-    have he := (NormedSpace.hasDerivAt_exp_smul_const' C (s - r)).comp s
-      ((hasDerivAt_id s).sub_const r)
+    have hs : HasDerivAt (fun y : ℝ => y - r) 1 s := (hasDerivAt_id s).sub_const r
+    have he : HasDerivAt (fun y : ℝ => exp ((y - r) • C))
+        (C * exp ((s - r) • C)) s := by
+      simpa only [Function.comp_def, one_smul] using
+        (hasDerivAt_exp_smul_const' C (s - r)).scomp s hs
     simpa [X, Function.comp_def] using
       ((ContinuousLinearMap.apply ℂ (EuclideanSpace ℂ n) x).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt s he
   have hm (u : ℝ) (hu : u ∈ Icc r t) :
@@ -69,9 +85,10 @@ private theorem constantEvolution (A : Mat n) {r t : ℝ} (hr : 0 ≤ r) (hrt : 
     simpa [F, B, hop] using hd.2.2 u r ⟨hr, hu.1, hu.2⟩ x
   have hx (u : ℝ) : X u = x + ∫ s in r..u, C (X s) := by
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun s _ => hX' s)
-      (C.continuous.comp hX).intervalIntegrable]
+      ((C.continuous.comp hX).intervalIntegrable r u)]
     have hstart : X r = x := by simp [X]
-    rw [hstart, add_sub_cancel_comm]
+    rw [hstart]
+    abel
   have hy : ∀ u ∈ Icc r t, F u - X u = causal S B r (fun s => F s - X s) u := by
     intro u hu
     have hiF : IntervalIntegrable (fun s => C (F s)) volume r u :=
@@ -94,7 +111,9 @@ private theorem derivativeIntegrable (A : Mat n) :
     IntervalIntegrable (fun u : ℝ => ContinuousLinearMap.mulLeftRight ℂ (Mat n)
       (exp ((1 - u) • A)) (exp (u • A))) volume 0 1 := by
   apply Continuous.intervalIntegrable
-  fun_prop
+  apply (ContinuousLinearMap.mulLeftRight ℂ (Mat n)).continuous.comp
+    (NormedSpace.exp_continuous.comp (continuous_const.sub continuous_id |>.smul continuous_const)) |>.clm_apply
+  exact NormedSpace.exp_continuous.comp (continuous_id.smul continuous_const)
 
 /-- Evaluation of the continuous linear derivative commutes with the Bochner integral. -/
 theorem derivative_apply (A J : Matrix n n ℂ) :
@@ -104,9 +123,9 @@ theorem derivative_apply (A J : Matrix n n ℂ) :
   simp only [ContinuousLinearMap.mulLeftRight_apply]
 
 private theorem response_eq (A J : Mat n) (x : EuclideanSpace ℂ n) :
-    response identityContraction (fun _ => Matrix.toEuclideanCLM A)
-      (fun _ => Matrix.toEuclideanCLM J) 1 0 x = Matrix.toEuclideanCLM (derivative A J) x := by
-  let U := (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).toLinearEquiv.toContinuousLinearEquiv
+    response identityContraction (fun _ => operatorEquiv A)
+      (fun _ => operatorEquiv J) 1 0 x = operatorEquiv (derivative A J) x := by
+  let U := (operatorEquiv (n := n)).toLinearEquiv.toContinuousLinearEquiv
   let L := (ContinuousLinearMap.apply ℂ (EuclideanSpace ℂ n) x).comp U.toContinuousLinearMap
   have hi : IntervalIntegrable (fun u : ℝ => exp ((1 - u) • A) * J * exp (u • A)) volume 0 1 := by
     apply Continuous.intervalIntegrable
@@ -119,12 +138,12 @@ private theorem response_eq (A J : Mat n) (x : EuclideanSpace ℂ n) :
   rw [uIcc_of_le zero_le_one] at hu
   dsimp only
   rw [constantEvolution A hu.1 hu.2, constantEvolution A le_rfl hu.1]
-  simp [L, U, map_mul, ContinuousLinearMap.mul_apply]
+  simp [L, U, map_mul]
 
 private theorem remainder (A J : Mat n) :
     ‖exp (A + J) - exp A - derivative A J‖ ≤
       (1 / 2 : ℝ) * Real.exp (‖A‖ + ‖J‖) * ‖J‖ ^ 2 := by
-  let C := Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)
+  let C := operatorEquiv (n := n)
   rw [← Matrix.l2_opNorm_toEuclideanCLM]
   apply ContinuousLinearMap.opNorm_le_bound _ (by positivity)
   intro x
@@ -134,7 +153,7 @@ private theorem remainder (A J : Mat n) :
     (integrableOn_const (by simp)) (integrableOn_const (by simp))
     (fun _ _ => norm_nonneg _) (fun _ _ => norm_nonneg _)
     (fun _ _ => le_rfl) (fun _ _ => le_rfl)).1 0 1 le_rfl zero_le_one le_rfl x
-  have hsum : (fun _ : ℝ => C A) + (fun _ => C J) = fun _ => Matrix.toEuclideanCLM (A + J) := by
+  have hsum : (fun _ : ℝ => C A) + (fun _ => C J) = fun _ => operatorEquiv (A + J) := by
     ext s : 1
     exact (map_add C A J).symm
   have h := hb.trans hc
@@ -153,7 +172,8 @@ theorem hasFDerivAt_exp (A : Matrix n n ℂ) :
   filter_upwards [(continuous_norm.continuousAt : ContinuousAt (fun J : Mat n => ‖J‖) 0)
     (eventually_le_nhds (show ‖(0 : Mat n)‖ < (1 : ℝ) by simp))] with J hJ
   rw [Real.norm_of_nonneg (by positivity)]
-  refine (by simpa [add_comm] using remainder A J : _).trans ?_
+  apply (remainder A J).trans
+  dsimp [c]
   gcongr
   exact hJ
 
