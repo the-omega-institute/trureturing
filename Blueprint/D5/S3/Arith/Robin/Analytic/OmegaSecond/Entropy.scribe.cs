@@ -39,7 +39,7 @@ Describe.Lean(
                 H("Explicit limiting majorant"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The correction majorant tends to pi^2/6 as s tends to positive infinity. This coefficient controls the localized prime-weight upper estimate. A matching lower bound for the second distinct-prime counting threshold is not established here."))),
-                DescribeRole.Theorem,
+                DescribeRole.Theorem),
 Describe.Lean(
                 DescribeId.Create("finite-power-tail"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaSecond/Entropy.Tail.finite_power_tail"),
