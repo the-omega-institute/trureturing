@@ -24,7 +24,24 @@ Induced preservation follows by partitioning a section event according to its le
 
 The first-return framework is classical. The entropy transfer for a sweeping section is the Abramov formula; a finite-partition proof is in Downarowicz, Kwietniak and Lacka, Uniform continuity of entropy rate with respect to the f-bar-pseudometric, Propositions 3.1-3.2 and Theorem 5.1, DOI 10.1109/TIT.2021.3111831. The statement here identifies the native section and occupation measure; it makes no entropy assertion.
 
+**Theorem 1.2 (Joint law of consecutive return times).**
+
+Lean statement: `D5/S3/TotalVariation/ParryFirstReturn.return_time_cylinder_probability`
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParryFirstReturn.return_time_cylinder_probability` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Use the same bilateral Parry coding and probability. Write p for parryParameter(k). For a list of durations d_0, ..., d_(m-1) in {1, ..., k}, the normalized section probability of observing these first m successive return times is the product of p raised to each duration. The Lean list stores each duration minus one in Fin k. The empty list has conditional probability one.
+
+A return of duration d has suffix coordinates 0, 1, ..., d-1, 0. These statements hold on each actual path in the section. The nearest zero determines the next increment or reset, and the terminal zero starts the next block at the same path shifted by the first return. Concatenating these blocks with their common zeros identified gives one exact suffix cylinder on the original path space.
+
+On an allowed transition from suffix i to suffix j, the kernel is p times the ratio of the positive suffix weights at j and i. The initial and terminal suffixes of the cylinder are zero, so the weight ratios telescope. The one-coordinate initial mass cancels with the section normalization. The remaining power of p splits into one factor per duration.
+
 ## References
 
 - Truth anchor: `D5/S3/TotalVariation/ParryFirstReturn.actual_first_return_system`
+- Truth anchor: `D5/S3/TotalVariation/ParryFirstReturn.return_time_cylinder_probability`
 - Dependency: [D5/S3/TotalVariation/ParryBilateralLaw](ParryBilateralLaw.md)
