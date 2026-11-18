@@ -286,8 +286,10 @@ theorem central_prime_weight_upper :
     simp only [primeInterval, sum_filter]
     exact Finset.sum_Ioc_consecutive _ (Nat.floor_le_floor hleft) (Nat.floor_le_floor hright)
   have hInt := intervalIntegral.integral_add_adjacent_intervals
-    ((MovingWeight.weight_continuousOn (s := s) hP0 hhalf).intervalIntegrable_of_Icc hleft)
-    ((MovingWeight.weight_continuousOn (s := s) hP0 hP0).intervalIntegrable_of_Icc hright)
+    ((MovingWeight.weight_continuousOn (s := s) hP0 hhalf).intervalIntegrable_of_Icc
+      (μ := volume) hleft)
+    ((MovingWeight.weight_continuousOn (s := s) hP0 hP0).intervalIntegrable_of_Icc
+      (μ := volume) hright)
   have h := add_le_add hL hR
   rw [hsum] at h
   have heq :
