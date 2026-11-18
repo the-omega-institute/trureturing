@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.FiniteGeometry;
 internal sealed class NotikBoseRuzsaChamberDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Geometry/FiniteGeometry/NotikBoseRuzsaChamber";
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/FiniteGeometry/notik2026boseruzsachambers");
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/FiniteGeometry/notik2026singergolomb");
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Type => Named("Type");

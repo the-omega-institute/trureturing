@@ -1,5 +1,5 @@
 ---
-bibkey: notik2026boseruzsachambers
+bibkey: notik2026singergolomb
 authors: Esther Notik
 year: 2026
 title: "Golomb rulers with real marks: the real and integer optima agree up to ten marks"
