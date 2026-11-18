@@ -387,4 +387,71 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end LogarithmicPrefactor
 
+namespace IntervalCard
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {a b : ℝ} (hab : a ≤ b),
+    R.readout () () ((primeInterval a b).card : ℝ) (primeCount b - primeCount a)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (a := 0) (b := 0) le_rfl
+
+def family : Registration arena (type_of% @_root_.D5.S3.Arith.Robin.Analytic.OmegaTail.Selection.primeInterval_card) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Arith.Robin.Analytic.OmegaTail.Selection.primeInterval_card, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (0 : ℝ), 1, ?_⟩
+    intro he
+    have hh : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
+    norm_num at hh
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.Robin.Analytic.OmegaTail.Selection.primeInterval_card) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaTail.Selection.primeInterval_card.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Selection.IntervalCard.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaTail.Selection
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end IntervalCard
+
 end Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Selection
