@@ -23,13 +23,13 @@ internal sealed class CZXParentLindbladianAnnealedGrowthDocument : IScribeDocume
             Node("annealed_growth", "All-length Euclidean growth estimate", GrowthStatement(), "For every rho strictly between zero and one, every natural length k, and every real row v, the normalized average is at most q to the power k times the Euclidean norm of v. The factor satisfies 1<q<sqrt(1+3rho squared)<2, so this is a growth estimate.", DescribeRole.Theorem),
             Paragraph(Text("Write s=a squared+b squared, d=a squared-b squared, mu=1+3rho squared, and K=1+3rho. The four squared output norms Y have mean mu s and variance 4rho squared(1-rho) squared s squared+16rho cubed d squared. Each lies between zero and K squared s. On a unit row, the quantitative inequality sqrt(y)<=sqrt(mu)+(y-mu)/(2sqrt(mu))-(y-mu) squared/(8K cubed) applies even at y=0. To see this, set u=sqrt(y), z=sqrt(mu). The remainder has numerator (u-z) squared times [4K cubed-z(u+z) squared], and the bracket equals 4K squared(K-z)+z(2K-u-z)(2K+u+z), which is nonnegative. Averaging cancels the linear term; the positive variance floor supplies the explicit subtraction in q. Positive homogeneity extends the estimate to arbitrary rows. Splitting a word into its prefix and final letter applies that estimate to the actual prefix row at every induction step.")),
             Paragraph(Text("At k=0 the bound is equality for every row, and at v=0 it is equality at every length. At rho=0 the formula gives q=1, and at rho=1 it gives q=2; the strict interior inequalities exclude these endpoints.")),
-            H("Prospective CZX trace-distance consequence"),
+            Paragraph(Text("Prospective CZX trace-distance consequence.")),
             Paragraph(Text("The intended quantum application uses exactly the original even-window rate-one CZX evolution, n=2m>=4, t>0, rho=exp(-t), A0=4^(-m)(I+tensorX(n)), and sigma=4^(-m)(I+2^(1-m)czxUnitary(n)). For Delta=FiniteTraceDistance.traceNorm(evolution(n,t,A0)-sigma)/2, the intended consequence is Delta<=2sqrt(2)(q(rho)/2)^m. This quantum statement is not established by the present formal theorem.")),
             Paragraph(Text("The missing formal steps are the actual finite-time coefficient action and exponential product on the original even starts; the all-size cyclic pair bijection and variable-real ordered transfer contraction, retaining both ordered windows when m=2; the canonical trace-norm evaluation on U diag(f), with the exact normalization and stationary subtraction; and combination on those original quantum endpoints. A projective pressure operator and spectral-radius limit are separate questions. The improved exponential base comes with a larger prefactor than the older Hilbert-Schmidt asymptotic estimate, so it does not imply dominance at every finite size."))
         ), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role = DescribeRole.Definition) =>
-        Describe.Lean(DescribeId.Create("czx-growth-" + name.ToLowerInvariant().Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("czx-growth-" + name.ToLowerInvariant().Replace("_", "-") + (name == "Row" || name == "Letter" ? "-type" : "")),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
@@ -57,7 +57,7 @@ internal sealed class CZXParentLindbladianAnnealedGrowthDocument : IScribeDocume
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(P(x), FormulaBinaryOperator.Multiply, P(y));
     private static Formula Div(Formula x, Formula y) => new Formula.Fraction(x, y);
     private static Formula Pow(Formula x, Formula y) => new Formula.Power(P(x), y);
-    private static Formula Product(Formula x, Formula y) => new Formula.Binary(P(x), FormulaBinaryOperator.Multiply, P(y));
+    private static Formula Product(Formula x, Formula y) => Call("Prod", x, y);
     private static Formula Arrow(Formula x, Formula y) => new Formula.TypeArrow(P(x), P(y));
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
@@ -80,7 +80,7 @@ internal sealed class CZXParentLindbladianAnnealedGrowthDocument : IScribeDocume
         Formula a=Seq(Begin,Grp(F.Id("pmatrix")),Add(D(1),r),Amp,Mul(Mul(D(2),e),r),RowBreak,D(0),Amp,Sub(D(1),r),End,Grp(F.Id("pmatrix")));
         Formula b=Seq(Begin,Grp(F.Id("pmatrix")),Sub(D(1),r),Amp,D(0),RowBreak,Mul(Mul(D(2),e),r),Amp,Add(D(1),r),End,Grp(F.Id("pmatrix")));
         return All("rho",Real(),All("c",Alphabet(),Eqn(At(Local("letter"),r,c),
-            At(Lam("e",Real(),Call("ite",Eqn(Call("Prod.fst",c),D(0)),a,b)),sign))));
+            At(P(Lam("e",Real(),Call("ite",Eqn(Call("Prod.fst",c),D(0)),a,b))),sign))));
     }
     private static Formula ActionStatement()
     {

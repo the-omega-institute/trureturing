@@ -14,7 +14,7 @@ open _root_.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAnnealedGrowth
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (ℝ × ℕ) (fun _ => Row) (fun _ => ℝ)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : ℝ, ℕ) (fun _ => Row) (fun _ => ℝ)
 
 def actual : Realization signature :=
   realize signature (fun _ p v => average p.1 p.2 v) (fun e => nomatch e)
@@ -27,7 +27,7 @@ abbrev arena : Arena where
   Law R := ∀ (ρ : ℝ) (_hρ : 0 < ρ) (_hρ₁ : ρ < 1) (k : ℕ) (v : Row),
     0 < growthFactor ρ ∧ growthFactor ρ < Real.sqrt (1 + 3 * ρ ^ 2) ∧
       Real.sqrt (1 + 3 * ρ ^ 2) < 2 ∧ 1 < growthFactor ρ ∧
-      R.readout () (ρ, k) v ≤ growthFactor ρ ^ k * ‖v‖
+      R.readout () ⟨ρ, k⟩ v ≤ growthFactor ρ ^ k * ‖v‖
 
 private lemma rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -36,8 +36,8 @@ private lemma rejected_law : ¬ arena.Law rejected := by
 
 private lemma dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(0, 0), 0, WithLp.toLp 2 ![1, 0], ?_⟩
-  change average 0 0 0 ≠ average 0 0 (WithLp.toLp 2 ![1, 0])
+  refine ⟨⟨1/2, 0⟩, 0, WithLp.toLp 2 ![1, 0], ?_⟩
+  change average (1/2) 0 0 ≠ average (1/2) 0 (WithLp.toLp 2 ![1, 0])
   simp [average, word, rowAction, EuclideanSpace.norm_eq, Fin.sum_univ_two]
 
 def family : Registration arena (type_of% (@annealed_growth)) where

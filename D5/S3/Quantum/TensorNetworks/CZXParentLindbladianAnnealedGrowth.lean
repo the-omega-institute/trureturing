@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/TensorNetworks/CZXParentLindbladianAnnealedGrowth
    generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/CZXParentLindbladianAnnealedGrowth
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Quantitative annealed Euclidean row growth for the four CZX transfer letters. -/
