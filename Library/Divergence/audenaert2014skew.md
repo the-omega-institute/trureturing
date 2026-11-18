@@ -81,8 +81,10 @@ The four pairs lie in the finite support branch. Their individually
 normalized traces cancel the trace corrections. The mathematical argument
 uses the resolvent and path ingredients supported by this reference and
 the repository's common positive state and matrix transport results.
-Singular support removal, supported regularization and the full ratio
-comparison remain open.
+`UmegakiChannelSupportedExtension` extends the contraction to the finite
+support branch for arbitrary channels by output regularization. Its
+`conditionalCoefficient_eq_completeCoefficient` proves the all-channel
+coefficient equality.
 
 The associated finite semidefinite supplier
 `UniversalCommonCenter.exists_common_center_of_posDef_trace_inf_le` concerns
@@ -97,8 +99,8 @@ then uses Hermitian-matrix PSD self-duality and strict separation.
 This common-center inference is derived from the supplied repository-first
 assessment, not attributed to Audenaert's article. It is step 3 support for the
 same Umegaki complete-versus-conditional contraction problem served by the BKM
-path identity. The final coefficient comparison remains open. No originality or solution of
-that original problem is asserted.
+path identity. The subsequent coefficient equality is a repository result
+for the Umegaki case of the question in arXiv:2608.27171v1, §9.
 
 The actual selected-column inference is formalized in
 `UniversalPositiveScalarizer.selected_column_joint_gram`. For finite nonempty
@@ -130,6 +132,6 @@ Hilbert-space Douglas theorem on a direct sum and extracts the appropriate
 block. `UniversalPositiveScalarizer` amplifies the fixed replacement to give both
 Gram bounds for every finite reference.
 
-This is an intermediate on the original route. The all-channel coefficient
-theorem, its support and regularization steps, and the final ratio comparison
-remain open; no literature-priority or open-problem resolution is asserted.
+These results supply the common-state bounds used in the faithful contraction.
+The supported extension combines that contraction with output regularization
+and the density-pair lower bound to obtain the all-channel comparison.
