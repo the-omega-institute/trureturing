@@ -96,6 +96,25 @@ private lemma translated_far_midpoint_excluded
 
 #print axioms translated_far_midpoint_excluded
 
+/-- The two neighbors shared by distinct spokes are the center and the far corner. -/
+private lemma far_common_midpoint {n : ℕ} {u m : Q n} {a c : Fin n}
+    (hac : a ≠ c) (hne : m ≠ u) (ham : (hypercube n).Adj (flip u a) m)
+    (hcm : (hypercube n).Adj (flip u c) m) : m = flip (flip u a) c := by
+  classical
+  have hma : a ∈ diff u m ∧ (diff u m).card = 2 :=
+    diff_of_adj_flip (Ne.symm hne) a ham
+  have hmc : c ∈ diff u m ∧ (diff u m).card = 2 :=
+    diff_of_adj_flip (Ne.symm hne) c hcm
+  have hdiff : diff u m = {a, c} := by
+    apply (Finset.eq_of_subset_of_card_le ?_ ?_).symm
+    · simp only [Finset.insert_subset_iff, Finset.singleton_subset_iff]
+      exact ⟨hma.1, hmc.1⟩
+    · simp [hac, hma.2]
+  apply diff_injective u
+  change diff m u = diff (flip (flip u a) c) u
+  rw [diff_symm m u, hdiff, diff_flip, diff_flip, diff_self]
+  simp [Ne.symm hac, Finset.pair_comm]
+
 /-- If a selected point joins the translated opposite spokes, it is the
 translated center itself. The other common neighbor has the wrong phase. -/
 private lemma translated_opposite_midpoint
@@ -110,21 +129,7 @@ private lemma translated_opposite_midpoint
     (hcm : (hypercube n).Adj (flip (flip z f) c) m) : m = flip z f := by
   classical
   by_contra hne
-  let u := flip z f
-  have hma : a ∈ diff u m ∧ (diff u m).card = 2 :=
-    diff_of_adj_flip (Ne.symm hne) a ham
-  have hmc : c ∈ diff u m ∧ (diff u m).card = 2 :=
-    diff_of_adj_flip (Ne.symm hne) c hcm
-  have hdiff : diff u m = {a, c} := by
-    apply (Finset.eq_of_subset_of_card_le ?_ ?_).symm
-    · simp only [Finset.insert_subset_iff, Finset.singleton_subset_iff]
-      exact ⟨hma.1, hmc.1⟩
-    · simp [hac, hma.2]
-  have hmfar : m = flip (flip u a) c := by
-    apply diff_injective u
-    change diff m u = diff (flip (flip u a) c) u
-    rw [diff_symm m u, hdiff, diff_flip, diff_flip, diff_self]
-    simp [Ne.symm hac, Finset.pair_comm]
+  have hmfar := far_common_midpoint hac hne ham hcm
   exact translated_far_midpoint_excluded hs z hab hbc hac haf hcf ha hb hc
     habS hbcS hafS hcfS (hmfar ▸ hm)
 
