@@ -24,6 +24,7 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Divergence.UmegakiConditionalKernel
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport
 open D5.S3.Quantum.Divergence.UmegakiKernelContraction
+open HilbertSchmidtOperatorSpace
 open D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
 open D5.S3.Quantum.Divergence.UmegakiBKMPath
 open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
@@ -106,6 +107,34 @@ private lemma amp_residual (N : QuantumChannel a b)
       amp N (A-B) = amp N A - amp N B := by
     simpa only [one_smul] using amp_sub_smul N 1 A B
   simp only [residual, hsub, hp, arithmetic, hadd, amp_smul, amp_mul_embed, amp_embed_mul]
+
+section ArithmeticIntegrability
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+private lemma arithmetic_inverse_pairing_intervalIntegrable (Z H : Matrix ι ι ℂ)
+    (hZ : Z.PosDef) :
+    IntervalIntegrable (fun u : ℝ =>
+      (inner ℂ (matrixHS H) ((hsArithmeticMap Z u).inverse (matrixHS H))).re)
+      volume 0 1 := by
+  let U : Matrix ι ι ℂ := hZ.isHermitian.eigenvectorUnitary
+  let W := Uᴴ * H * U
+  let f := fun (i j : ι) (u : ℝ) => Complex.normSq (W i j) *
+    ((1-u) * hZ.isHermitian.eigenvalues i + u * hZ.isHermitian.eigenvalues j)⁻¹
+  have hi (i j : ι) : IntervalIntegrable (f i j) volume 0 1 :=
+    (affineKernel_integrable _ _ (hZ.eigenvalues_pos i)
+      (hZ.eigenvalues_pos j)).const_mul _
+  have hs : IntervalIntegrable (∑ i, ∑ j, f i j) volume 0 1 :=
+    IntervalIntegrable.sum Finset.univ (fun i _ =>
+      IntervalIntegrable.sum Finset.univ (fun j _ => hi i j))
+  apply hs.congr
+  intro u hu
+  have hm : matrixHS H = ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) H) := rfl
+  simp only [hm, Finset.sum_apply, f, W, U]
+  exact (hs_pair_spectral Z H hZ u (Set.Ioc_subset_Icc_self
+      (by simpa only [Set.uIoc_of_le zero_le_one] using hu))).symm
+
+end ArithmeticIntegrability
 
 private lemma bkm_difference_contraction [Nonempty a] [Nonempty b]
     (N : QuantumChannel a b) (c : ℝ) (hN : (act N 1).PosDef)

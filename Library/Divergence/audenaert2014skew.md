@@ -13,7 +13,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/UmegakiArithmeticBKM
   - D5/S3/Quantum/Divergence/UniversalCommonCenter
   - D5/S3/Quantum/Divergence/UniversalPositiveScalarizer
-  - D5/S3/Quantum/Divergence/ScalarizerMatrixTransport
+  - D5/S3/Quantum/Divergence/PositiveKrausCompression
   - D5/S3/Quantum/Divergence/UmegakiConditionalBKM
 license: citation-only
 triage: anchor
@@ -124,10 +124,11 @@ complex-linear trace duality, the singular polar factor, and the supported Gram
 flip; no faithful-state, invertibility, unitary-polar, or dimension
 normalization assumption is added.
 
-`ScalarizerMatrixTransport` contains the finite Euclidean matrix transports
-used by this construction, including the Hilbert direct-sum application of the
-existing Douglas supplier. These transports are auxiliary to the common-state
-theorem and carry no separate novelty claim.
+`PositiveKrausCompression` contains the supported factor and its positive
+trace-one replacement. Its rectangular Euclidean transport applies the existing
+Hilbert-space Douglas theorem on a direct sum and extracts the appropriate
+block. `UniversalPositiveScalarizer` amplifies the fixed replacement to give both
+Gram bounds for every finite reference.
 
 This is an intermediate on the original route. The all-channel coefficient
 theorem, its support and regularization steps, and the final ratio comparison
