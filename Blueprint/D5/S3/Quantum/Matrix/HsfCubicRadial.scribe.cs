@@ -15,6 +15,16 @@ internal sealed class HsfCubicRadialDocument : IScribeDocumentDefinition
                 + "f(t)=Re Tr((A+tB)^3)/(1+kt)^2. This is the actual scalar function, "
                 + "with its usual real derivatives. Its denominator is nonzero on a neighborhood of zero.",
                 DescribeRole.Definition),
+            Entry("trace_cubic", "Cyclic cubic expansion",
+                "For every finite index type, arbitrary complex square matrices A,B and real t, "
+                + "Re Tr((A+tB)^3)=Re Tr(A^3)+3t Re Tr(AAB)+3t^2 Re Tr(ABB) "
+                + "+t^3 Re Tr(B^3). Trace cyclicity identifies the ordered cross terms; "
+                + "no matrix factors are assumed to commute.", DescribeRole.Theorem),
+            Entry("trace_weight_square_nonneg", "A PSD weight and a Hermitian square",
+                "For every finite index type, complex positive semidefinite W and Hermitian E, "
+                + "0<=Re Tr(W E^2). Indeed E* W E is positive semidefinite and its "
+                + "trace equals Tr(W E^2). The statement includes singular W and empty dimensions.",
+                DescribeRole.Theorem),
             Entry("cubic_derivatives", "Second and third derivatives",
                 "For every finite index type, arbitrary complex square matrices A and B, and real k, "
                 + "put E=B-kA. Then f''(0)=6 Re Tr(A E^2) and "
