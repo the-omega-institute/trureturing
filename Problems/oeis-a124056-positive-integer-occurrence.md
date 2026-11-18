@@ -192,7 +192,9 @@ reconstruction and its readout path and coordinate bindings. The five
 additional contributor and unconditional theorems remain owned by
 `A124056Occurrence`; the eight prime-word and analytic theorems are owned by
 `D5/S3/Arith/Factorization/PrimeWordWeight`. The weight monotonicity helper is
-public for its actual cross-module consumer and adds no mathematical target.
+public for its actual cross-module consumers and adds no scientific novelty
+claim. It is an additional §3.9 audit target owned by the supplier; its missing
+mirror and registration evidence are covered by the linked exception below.
 These declarations have no completed registration; their complete
 source-family realization, selected readouts, coordinate bindings
 and family-wide evidence remain required. The concrete linked exception is
