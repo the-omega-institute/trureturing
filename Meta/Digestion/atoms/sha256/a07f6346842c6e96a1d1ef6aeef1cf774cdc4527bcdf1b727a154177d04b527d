@@ -1,0 +1,57 @@
+### 147.9 局部结论与仍未支付的全局箭头
+
+本章结论的准确强度是
+
+$$
+\begin{gathered}
+\mathrm{EB3}\Longrightarrow\dim_{\mathbb R}V\ge9,\\
+\mathrm{EB3}+\dim_{\mathbb R}V=9
+\Longrightarrow
+\left\{
+\begin{array}{l}
+P_{\rm s}\ne\varnothing,\quad P_{\rm s}\text{ 沿原零边封闭};\\
+\forall p\in P_{\rm s}:\ \text{式(XII147.2)—(XII147.3)、}\\
+\qquad\text{式(XII147.15)—(XII147.17)的完整原法向接口};\\
+\forall p\in P_{\rm s},\ \forall\,\varnothing\ne U\subseteq S_p
+   \text{ 相对开}:\\
+\qquad\text{式(XII147.12)含四维紧块，且有命题147.7的紧层连续性}.
+\end{array}\right.
+\end{gathered}
+\tag{XII147.19}
+$$
+
+单标签非空性和邻点闭包归 IX 定理116.6；有限层和尺寸工具归上述来源。本章的承重迁移是将第二层极限纯性接回这一单标签域，得到**每一个**单标签处的唯一完整确认和四维完整原法向，并在不使用九维等号的同一四维紧块上给出裸 EB3 的九维下界。相应法向消费者只在 $P_{\rm s}$ 上取得已付前件；全局 Inj 未隐藏在局部记号中。
+
+仍未证明的全局箭头是
+
+$$
+\mathrm{EB3}+\dim_{\mathbb R}V=9\
+\mathrel{\mathop{\Longrightarrow}^{?}}\ P_{\rm s}=P.
+\tag{XII147.20}
+$$
+
+在本域 $P_{\rm s}=P$ 准确等价于全局 Inj；若另得到它，才可直接消费 EXCLUSION XI 定理145.2的既有完整等价，其 Inj 分支的充分接口迁移见 XI 命题145.8。下面的 $\Phi$ 遍历实线性双射：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathrm{Inj}+\dim_{\mathbb R}V=9\\
+\Longleftrightarrow\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\qquad
+\Phi(\operatorname{PSD}_3(\mathbb C))=C,\quad u\circ\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{XII147.21}
+$$
+
+本章复用此分类。没有推出 $P_{\rm s}$ 闭或 $P$ 紧。SAME_READBACK 定理126.7已证明：若存在重复球，它必与单标签纯点在原边界中的闭包相交；故不能未经证明把 $P_{\rm s}$ 当作闭域。
+
+相对于 $P_{\rm s}$ 的四维紧块、$P_{\rm s}$-开四维图、$P$-开四维图和原根芽均不同。本章只取得第一项及命题147.7的指定紧层连续。XI 引理145.5的 $P$-开层使用覆盖**全部原纯点**的四维法向接口和原 $P$ 的 Baire 性；本章不能将其直接移给 $P_{\rm s}$，也不能移回整个 $P$。更不能在 XI 第145.5—145.6节的后续推导中借入未付的全纯域邻域、局部纯闭性或原根芽
+
+$$
+\mathsf G(o):\quad\exists W\subset V\text{ 开},\quad o\in W,\quad
+W\cap P\subseteq\bigcup_{q\in S_o}S_q.
+$$
+
+同样，EXCLUSION X 定理127.4、推论127.5的重复球二分仍须保留：若球缘某点存在在本侧整个球上非恒定的原确认，就有实际整球塌缩；否则该点的全部确认在本侧球上恒一，法向平坦且该点非暴露。这里既没有一个满足裸 EB3 加九维的反模型，也没有消灭该二分。仅凭式(XII147.19)不能支付 Conn、全 Pair、PR、least、统一满宽、正限制逆、共同中心、种子三角或自动 PSD。
+
+**二元与三元的界线。** $P_{\rm s}$、式(XII147.10)和式(XII147.12)均由原二元零一关系、原效应和有限见证定义。四维块的见证是两条真实边 $p\perp q\perp r$，不是三角；未取得 $p\perp r$ 或三张效应之和为 $u$。若将来式(XII147.20)闭合，式(XII147.21)及既有 FINITE_PURE VII 定理104.2—104.3、EXCLUSION IX 定理116.9才给每条原零边的唯一第三纯点和实际有限三元框架提升。在这之前，完整三元素提升没有由本章取得。
+

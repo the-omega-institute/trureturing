@@ -117,4 +117,82 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms audit
 
+namespace FourParity
+
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := Fin 3
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature
+    (fun _ k a => (_root_.D5.S1.Words.RankOneMorphismIterationBound.image sigma (4*k) a).length)
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ k : ℕ, ∀ a : Fin 3, R.readout () k a % 2 = 1
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h0 := h 0 0
+  change 0 % 2 = 1 at h0
+  contradiction
+
+def family : Registration arena
+    (type_of% (@_root_.D5.S1.Words.TribonacciAlignedWindows.four_parity)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.TribonacciAlignedWindows.four_parity,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact False.elim (hj (by cases j; cases i; rfl))
+    · intro e; exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(1 : ℕ), (0 : Fin 3), (1 : Fin 3), ?_⟩
+    change (_root_.D5.S1.Words.RankOneMorphismIterationBound.image sigma (4*1) 0).length ≠
+      (_root_.D5.S1.Words.RankOneMorphismIterationBound.image sigma (4*1) 1).length
+    decide
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.TribonacciAlignedWindows.four_parity)
+    (type_of% actual) Unit Unit := {
+  unitName := `D5.S1.Words.TribonacciAlignedWindows.four_parity.__information_unit,
+  realizationName := `Reg.D5.S1.Words.TribonacciAlignedWindows.FourParity.family,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Words.TribonacciAlignedWindows, definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg"],
+      stateBinder := 1, functionOperand := false, stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms family
+#print axioms audit
+
+end FourParity
+
 end Reg.D5.S1.Words.TribonacciAlignedWindows

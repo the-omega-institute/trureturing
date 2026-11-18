@@ -1,0 +1,21 @@
+**定理 148.5（复五阶、实七阶迫出真实三角）。** 在完整 EB3+$\mathsf{Conn}$ 及忠实有效 PSD 截面下，若 $\mathbb F=\mathbb C,m\le5$ 或 $\mathbb F=\mathbb R,m\le7$，则原零图存在三个不同、两两零比较的原纯标签。再加146.1的原义 ZC，即有(XI148.14)。
+
+证明。令 $k_p=\dim_{\mathbb F}J_p$。由 $\dim L_p=4$ 及(XI148.4)，复情形 $4\le k_p^2$，实情形 $4\le k_p(k_p+1)/2$，故
+
+$$
+R\le m-2\quad(\mathbb F=\mathbb C),\qquad
+R\le m-3\quad(\mathbb F=\mathbb R).
+\tag{XI148.15}
+$$
+
+反设没有实际三角 Seed。复用147.5的共同核机制：对实际零边 $p\perp q$，非零共同核向量 $v$ 会给非零原正 $h_v(x)=v^*A(x)v$ 在两端同零；其整个非点真面按原面分类为某个 $D_a$，从而产生实际第三纯标签 $a$。因此无 Seed 时每条零边满足
+
+$$
+J_p\cap J_q=\{0\},\qquad r(p)+r(q)\ge m.
+\tag{XI148.16}
+$$
+
+若该边两端均非最高秩，则 $r(p)+r(q)\le2(R-1)$。复 $m\le5$ 时由(XI148.15)有 $2(R-1)\le2m-6<m$；实 $m\le7$ 时有 $2(R-1)\le2m-8<m$。均矛盾。所以每条零边至少一端最高秩，148.4给同原 qutrit。标准 qutrit 的三个正交秩一投影运输回整个原域又给 Seed，违反反设。因此这些阶数必有实际 Seed。
+
+最后才在原义 ZC 下调用140.4的 Seed 传播，得到(XI148.14)。阶数迫出 Seed 不使用 ZC；一般已有 Seed 之后的全域传播仍保留该额外前件。证毕。
+

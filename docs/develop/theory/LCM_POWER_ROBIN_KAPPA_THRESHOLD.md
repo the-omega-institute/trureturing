@@ -494,3 +494,810 @@ $$
 **范围。** 外部输入为 Fan–Kobayashi–Molnar 定义 4.2、定理 4.3（单调性）、引理 4.12 及附录。本仓推导的是：引理 4.1 的增量表示，定理 4.3（对 $\ell$ 一致的显式阈值），以及注记 4.4 中阈值不能取 $2$（$1<\kappa<2$）与 $\kappa\to1^+$ 时阈值发散的论证。在所查范围（该文、Molnar arXiv:2610.12816v1、arXiv 检索）内未见此结论，本节不主张文献优先权。
 
 ## 追加锚（本行以下为增补区）
+
+## 5. 推论 6.5 的参数门槛不能降到 3/2
+
+Fan–Kobayashi–Molnar 推论 6.5 表明：若 RH 成立，则对一切 $\kappa\ge2$，(1.1) 对一切 $n>2162160$ 成立。其第 8 节问：“can we reduce the threshold for κ in Corollary 6.5 to 3/2?”。本节说明：若要求 $n$ 的阈值是一个对参数一致的有限数 $N$，则参数门槛不能降到 $3/2$；在 RH 下，依赖参数的最终成立阈值在 $\kappa\to3/2^+$ 时必须发散。
+
+**定理 5.1。** 对每个正整数 $N$，存在 $\delta=\delta(N)>0$，使得对一切 $\kappa\in[3/2,3/2+\delta)$，都有某个 $n>N$ 使 (1.1) 不成立。特别地：不存在有限的 $N$ 使“(1.1) 对一切 $\kappa>3/2$ 与一切 $n>N$ 成立”；对每个固定的 $N$（例如推论 6.5 中的 $N=2162160$），满足“(1.1) 对一切 $\kappa\ge\kappa_0$ 与一切 $n>N$ 成立”的 $\kappa_0$ 都满足 $\kappa_0\ge3/2+\delta(N)$。这里的 $\delta(N)$ 依赖于预先固定的 $N$；本定理不排除对每个 $\kappa_0>3/2$ 取依赖于 $\kappa_0$ 的阈值。本结论不依赖 RH。
+
+**证明。** 由定理 2.3，存在整数 $n_0>\max(N,2)$ 使
+
+$$
+\zeta(3/2)\,\sigma^{[3/2]}(n_0)>\bigl(e^\gamma n_0\log\log n_0\bigr)^{3/2}.
+$$
+
+固定 $n_0$。$\sigma^{[\kappa]}(n_0)=\sum_{d\mid n_0}\mu(n_0/d)\sigma(d)^\kappa$ 是有限和，关于 $\kappa$ 连续；$\zeta(\kappa)$ 在 $(1,\infty)$ 上连续；$(e^\gamma n_0\log\log n_0)^\kappa$ 关于 $\kappa$ 连续。严格不等式在 $\kappa=3/2$ 处成立，故它在 $3/2$ 的某个邻域内仍成立。取 $\delta$ 使该邻域包含 $[3/2,3/2+\delta)$ 即得结论。证毕。
+
+**定理 5.2（最终成立阈值的发散）。** 设 RH 成立，对实数 $\kappa>3/2$ 令
+
+$$
+N(\kappa)=\min\{N\in\mathbb Z_{\ge2}:\ (1.1)\ \text{对一切整数}\ n>N\ \text{成立}\}
+$$
+
+（由该文定理 6.1，$N(\kappa)<\infty$）。则 $N(\kappa)\to\infty$（$\kappa\to3/2^+$）。
+
+**证明。** 反设存在正整数 $M$ 及实数 $\kappa_k\downarrow3/2$（$\kappa_k>3/2$）使 $N(\kappa_k)\le M$。由定理 5.1（取 $N=M$），存在 $\delta>0$，使对每个 $\kappa\in[3/2,3/2+\delta)$ 都有某个 $n>M$ 违反 (1.1)。取 $k$ 足够大使 $\kappa_k\in(3/2,3/2+\delta)$，则存在 $n>M\ge N(\kappa_k)$ 违反 (1.1)，与 $N(\kappa_k)$ 的定义矛盾。证毕。
+
+**注记 5.3。** 定理 5.1 回答了第 8 节关于推论 6.5 的提问中“端点”与“对参数一致的有限阈值”这两种理解：门槛 $3/2$ 不可达；对任何固定的 $n$ 阈值 $N$，适用的参数区间都与 $3/2$ 有正距离 $\delta(N)$。若允许 $n$ 的阈值随 $\kappa$ 变化，则 RH 下由该文定理 6.1，对每个 $\kappa>3/2$ 都有有限阈值 $N(\kappa)$，定理 5.2 说明它随 $\kappa\to3/2^+$ 发散。在推论 6.5 的形式 $n>2162160$ 下，令
+
+$$
+K=\{\kappa_0>1:\ (1.1)\ \text{对一切}\ \kappa\ge\kappa_0\ \text{与一切}\ n>2162160\ \text{成立}\},\qquad \kappa^\ast=\inf K .
+$$
+
+- RH 下，推论 6.5 给出 $2\in K$，故 $K$ 非空且 $\kappa^\ast\le2$。
+- 无条件地，定理 5.1（取 $N=2162160$）给出 $K\subset[3/2+\delta(2162160),\infty)$，故在 $K$ 非空时 $\kappa^\ast\ge3/2+\delta(2162160)>3/2$。
+
+本节未确定 $\kappa^\ast$ 的确切值。
+
+**范围。** 外部输入为 Fan–Kobayashi–Molnar 推论 6.5、定理 6.1 与第 8 节问题。本仓推导的是定理 5.1 与 5.2；它们由本卷定理 2.3 与 $\kappa$ 方向的连续性得到。在所查范围（该文、Molnar arXiv:2610.12816v1、arXiv 检索）内未见此结论。本节不主张文献优先权。
+
+## 追加锚（本行以下为增补区）
+
+## 6. RH 下 lcm 序列上的端点失败
+
+记 $L_m=\operatorname{lcm}(1,\ldots,m)$，并采用定义 1.2 的实参数除数函数
+
+$$
+\sigma^{[\kappa]}(n)=\sum_{d\mid n}\mu(n/d)\sigma(d)^\kappa,
+\qquad
+G_\kappa(n)=\frac{\zeta(\kappa)\sigma^{[\kappa]}(n)}{(e^\gamma n\log\log n)^\kappa}.
+$$
+
+**定理 6.1。** 假设 RH 成立。存在整数 $M_0\ge3$，使对每个整数 $m\ge M_0$，都有
+
+$$
+\frac{(e^\gamma L_m\log\log L_m)^{3/2}}{\zeta(3/2)}
+<\sigma^{[3/2]}(L_m).
+$$
+
+**证明。** 对实数 $x\ge3$，令 $N_x=L_{\lfloor x\rfloor}$，并对素数 $p\le x$ 令 $a_p=\max\{a\in\mathbb Z_{\ge1}:p^a\le x\}$。记
+
+$$
+\theta(x)=\sum_{p\le x}\log p,\qquad
+\psi(x)=\sum_{p^j\le x}\log p=\log N_x,\qquad
+P(x)=\prod_{p\le x}(1-p^{-1})^{-1},
+$$
+
+$$
+D(x)=\sqrt x\log x,\qquad
+B(x)=\gamma+\log\log\theta(x)-\log P(x).
+$$
+
+以下所有对数恒等式均限于充分大的 $x$，此时 $\theta(x)>1$、$\psi(x)>1$，各乘积因子均为正。
+
+首先定义
+
+$$
+A(x)=-\sum_{p\le x}\log(1-p^{-a_p-1}),\qquad
+J(x)=\log\log\psi(x)-\log\log\theta(x).
+$$
+
+由 $\sigma(p^a)/p^a=(1-p^{-a-1})/(1-p^{-1})$ 及可乘性，得到精确等式
+
+$$
+\log\frac{\sigma(N_x)}{e^\gamma N_x\log\log N_x}
+=-B(x)-A(x)-J(x).
+\tag{6.1}
+$$
+
+对于 $\kappa>1$，令
+
+$$
+r_{p,a}=\frac{p^a-1}{p^{a+1}-1},\quad
+T_\kappa(x)=-\sum_{p>x}\log(1-p^{-\kappa}),\quad
+C_\kappa(x)=\sum_{p\le x}\log\frac{1-r_{p,a_p}^{\kappa}}{1-p^{-\kappa}}.
+$$
+
+因为 $0\le r_{p,a}<1/p$，所以 $C_\kappa(x)\ge0$。实幂保持正数的乘法，故 $\sigma^{[\kappa]}$ 可乘，且
+
+$$
+\sigma^{[\kappa]}(p^a)
+=\sigma(p^a)^\kappa-\sigma(p^{a-1})^\kappa
+=\sigma(p^a)^\kappa(1-r_{p,a}^{\kappa})>0.
+$$
+
+结合 $\zeta(\kappa)$ 的绝对收敛 Euler 乘积与 (6.1)，得到另一个精确等式
+
+$$
+\log G_\kappa(N_x)
+=-\kappa B(x)-\kappa A(x)-\kappa J(x)+T_\kappa(x)+C_\kappa(x).
+\tag{6.2}
+$$
+
+接着只用素数定理 $\theta(t)/t\to1$ 和部分求和估计这三个修正项。对每个固定的 $s>1$，部分求和给出
+
+$$
+\sum_{p>y}p^{-s}\sim\frac{y^{1-s}}{(s-1)\log y}.
+\tag{6.3}
+$$
+
+例如先对 $\theta$ 与 $t^{-s}$ 作部分求和，得到 $\sum_{p>y}(\log p)p^{-s}\sim y^{1-s}/(s-1)$；再对权 $1/\log t$ 作部分求和，所得积分余项为 $O(y^{1-s}/\log^2 y)$，即得 (6.3)。这里每一尾和的下端均为严格不等号，包含素数端点时也适用。
+
+由 $-\log(1-u)=u+O(u^2)$，一致地对 $0\le u\le1/2$ 成立，(6.3) 在 $s=3/2$ 时给出
+
+$$
+D(x)T_{3/2}(x)\longrightarrow2.
+\tag{6.4}
+$$
+
+其中对数展开的误差不超过常数倍 $\sum_{n>x}n^{-3}=O(x^{-2})$。
+
+令 $u_p=p^{-a_p-1}$。由 $p^{a_p+1}>x$，有 $0<u_p<1/x$。当 $\sqrt x<p\le x$ 时 $a_p=1$，于是这部分的和为 $\sum_{\sqrt x<p\le x}p^{-2}$。其余两段分别满足
+
+$$
+\sum_{p\le x^{1/3}}u_p\le x^{-1}\lfloor x^{1/3}\rfloor=O(x^{-2/3}),
+\qquad
+\sum_{x^{1/3}<p\le\sqrt x}u_p
+\le\sum_{n>x^{1/3}}n^{-3}=O(x^{-2/3}).
+$$
+
+此外 $\sum_{p\le x}u_p^2\le x^{-1}\sum_{p\le x}u_p$。因此 (6.3) 在 $s=2$ 时给出
+
+$$
+A(x)\sim\sum_{\sqrt x<p\le x}p^{-2}
+\sim\frac{2}{\sqrt x\log x},\qquad D(x)A(x)\longrightarrow2.
+\tag{6.5}
+$$
+
+素数幂的逐层展开还给出
+
+$$
+\psi(x)-\theta(x)=\theta(\sqrt x)+O(x^{1/3}\log x)\sim\sqrt x.
+$$
+
+确实，次数至少三的层数至多 $\log_2x$，每层由 $\theta(t)=O(t)$ 控制为 $O(x^{1/3})$。对函数 $\log\log t$ 使用中值定理，结合 $\theta(x)\sim\psi(x)\sim x$，得到
+
+$$
+J(x)\sim\frac{\psi(x)-\theta(x)}{\theta(x)\log\theta(x)},
+\qquad D(x)J(x)\longrightarrow1.
+\tag{6.6}
+$$
+
+由 (6.2)、(6.4)–(6.6) 和 $C_{3/2}(x)\ge0$，对任意 $\varepsilon>0$，最终都有
+
+$$
+D(x)\log G_{3/2}(N_x)
+\ge-\frac32D(x)B(x)-\frac52-\varepsilon.
+\tag{6.7}
+$$
+
+最后应用 RH 下的实际算术包络。记 $b=\mathrm{firstLiMass}$；已有 $b<1/3$，且对每个 $\eta>0$，最终都有
+
+$$
+|D(x)B(x)+2|<b+\eta.
+$$
+
+这里的 $B$ 与该包络中的定义完全一致：展开
+$E_3(x)=\sum_{p\le x}\log(1-p^{-1})+\log\log x+\gamma$，便有
+$E_3(x)+\log\log\theta(x)-\log\log x=B(x)$。因此 (6.7) 蕴含
+
+$$
+D(x)\log G_{3/2}(N_x)
+>\frac12-\frac32b-\frac32\eta-\varepsilon.
+$$
+
+因为 $1/2-3b/2>0$，可先固定充分小的正数 $\eta,\varepsilon$，使右端为正。于是最终 $\log G_{3/2}(N_x)>0$，即 $G_{3/2}(N_x)>1$。取 $x=m$ 为整数，并用 $\zeta(3/2)>0$，即得所需严格不等式。证毕。
+
+**范围。** 实参数除数函数及归一化采用 Fan–Kobayashi–Molnar，arXiv:2511.02106v1，定义 1.2 与式 (1.1)。本节的 lcm 序列端点结论由实际 RH 算术包络及无条件的素数尾和估计推导；不据此断言 RH，也不主张文献优先权。
+
+## 追加锚（本行以下为增补区）
+
+## 7. 第二阈值 ω 尾计数的精确对数渐近
+
+### 7.1 计数定义与精确极限
+
+**定义 7.1（严格阈值与尺度）。** 对正整数 $n$，令 $\omega(n)=\#\{p:p\text{ 为素数},\ p\mid n\}$，特别地 $\omega(1)=0$。本章所有对数均为自然对数。对实数 $x>e$，记
+
+$$
+L=\log x,\qquad \ell=\log L,\qquad
+T_2(x)=\frac L\ell+\frac L{\ell^2},\qquad
+N_2(x)=\#\{n\in\mathbb Z:1\le n\le x,\ \omega(n)>T_2(x)\}.
+$$
+
+在变量 $P=L\to\infty$ 下，使用下列记号：
+
+$$
+\begin{aligned}
+a(P)&=\frac P{\log P}+\frac P{(\log P)^2},&
+k(P)&=\lfloor a(P)\rfloor+1,\\
+g(P)&=\frac P{\log P},&
+Z(P)&=\frac P{(\log P)^{3/2}},\\
+A&=\frac{\pi^2}{6},&
+c&=\frac{\pi}{2\sqrt3},\qquad K=\frac{2\pi}{\sqrt3}.
+\end{aligned}
+$$
+
+因此 $N_2(e^P)$ 精确地计数 $\omega(n)\ge k(P)$ 的整数，包括 $a(P)$ 恰为整数的情形。另记 $\pi(t)=\#\{p\le t:p\text{ 为素数}\}$、$\theta(t)=\sum_{p\le t}\log p$；素数求和中的 $p$ 总遍历正素数。圆周率与素数计数函数由是否带自变量区分。
+
+**定理 7.2（第二阈值的精确常数）。** 无条件地，$N_2(x)>0$ 对所有充分大的实数 $x$ 成立，且
+
+$$
+\lim_{x\to\infty}\frac{\log N_2(x)}{L/\ell^{3/2}}
+=\frac{2\pi}{\sqrt3}.
+$$
+
+等价地，对每个 $\varepsilon>0$，存在 $X_\varepsilon>e$，使对所有实数 $x\ge X_\varepsilon$，
+
+$$
+\exp\!\left((K-\varepsilon)\frac L{\ell^{3/2}}\right)
+\le N_2(x)\le
+\exp\!\left((K+\varepsilon)\frac L{\ell^{3/2}}\right).
+$$
+
+问题来源是 F. Luca, C. Pomerance, P. Solé, *Correction to: On Robin's inequality*, Integers 25 (2025), A8 Corrigendum, Section 3："Presumably there are not many values of n ≤ x with ω(n) > y + y/log₂ x"。在这里 $y=L/\ell$，$\log_2x=\ell$。本定理给出的对数规模特别为 $o(y)$。
+
+在已查的 Erdős–Nicolas (1981)、Norton (1982)、Nicolas (1984)、Pomerance (1985)、Hildebrand–Tenenbaum (1988)、Balazard (1989/1990)、Balazard–Nicolas–Pomerance–Tenenbaum (1992)、Norton (1994)、Hwang (1996/1998) 中，未见上述精确渐近。这个文献范围内的未见结论不作完整优先权断言；Nicolas (1984) 原文未逐页核对，其被引用结果的对象为 $\Omega$，即按重数计素因子。
+
+具体地，Erdős–Nicolas, *Sur la fonction: nombre de facteurs premiers de N*, Enseign. Math. 27 (1981), 3–27, Theorem 2 的固定比例阈值为 $c_0L/\ell$，其中 $0<c_0<1$ 固定；其 §1 已有 primorial 两侧等数交换与分拆常数机制。Norton, *On the number of restricted prime factors of an integer. III*, Enseign. Math. 28 (1982), 31–52, Theorem 1.11 的相关下界只到 $L/\ell+(1-\varepsilon)L/\ell^2$，其中 $\varepsilon>0$ 固定，不能直接取本定理的端点。
+
+Nicolas, *Sur la distribution des nombres entiers ayant une quantité fixée de facteurs premiers*, Acta Arith. 44 (1984), 191–200 的相关引用范围针对 $\Omega$。Pomerance, *On the distribution of round numbers*, LNM 1122 (1985), 173–200, Theorem 6.1 给本区域的 $e^{O(k)}$ 上界，不能确定这里的更小对数尺度。Hildebrand–Tenenbaum, *On the number of prime factors of an integer*, Duke Math. J. 56 (1988), 471–501 的一致渐近范围为 $1\le k\ll L/\ell^2$，不覆盖本阈值。
+
+Balazard, *Remarques sur un théorème de G. Halász et A. Sárközy*, Bull. SMF 117 (1989), 389–413 的主对象为按重数计数的 $\Omega_E$；*Unimodalité de la distribution du nombre de diviseurs premiers d'un entier*, AIF 40 (1990), 255–270 已有最大可能素因子数的阶乘展开和单峰性，未给这里的尾计数主项。Balazard–Nicolas–Pomerance–Tenenbaum, *Grandes déviations pour certaines fonctions arithmétiques*, JNT 40 (1992), 146–164 的核心范围为正常尺度的固定倍数，不到 $L/\ell$。
+
+Norton, *On the frequencies of large values of divisor functions*, Acta Arith. 68 (1994), 219–244 的精细界止于 $L/(3\ell)$。Hwang, *Asymptotic behaviour of some infinite products involving prime numbers*, Acta Arith. 75 (1996), 339–350 的 $p^{-1}$ 型乘积展开不直接给本章的移动权重估计；*Sur la répartition des valeurs des fonctions arithmétiques. Le nombre de facteurs premiers d'un entier*, JNT 69 (1998), 135–152 的相关全大参数结论针对 $\Omega$。
+
+**证明。** 命题 7.5 给出对任意正 $\varepsilon$ 的所述上界；命题 7.8 给出所述下界及最终非空性。对充分大的 $x$ 取对数并除以正数 $L/\ell^{3/2}$，再令 $\varepsilon\downarrow0$ 即得极限。两命题的证明只使用下述无条件的素数定理与有限交换计数。精确常数、引理 7.4 的移动权重估计、引理 7.6 的预算可行交换熵下界及命题 7.9 的固定阶推广是本章的新增承重结论；Rankin 方法、上述等数交换思想及证明内逐条注明的经典中间结果保留其原有归属。证毕。
+
+### 7.2 三项素数展开与远端删集预算
+
+**引理 7.3（中心 $P=L$ 的两种预算）。** 记 $\ell=\log P$、$d(P)=k(P)-a(P)\in(0,1]$，并定义
+
+$$
+\begin{aligned}
+e(P)&=\pi(P)-k(P),\\
+B_0(P)&=P-\theta(P)+(\pi(P)-a(P))\ell,\\
+B_k(P)&=P-\theta(P)+e(P)\ell,\\
+D_{\mathrm{safe}}(P)&=P-\theta(P)+e(P)\log(P/2).
+\end{aligned}
+$$
+
+则 $e(P)$ 最终为非负整数，且
+
+$$
+e(P)\sim\frac{2P}{\ell^3},\qquad
+B_0(P)\sim B_k(P)\sim D_{\mathrm{safe}}(P)\sim\frac{2P}{\ell^2}.
+$$
+
+对所有充分大的 $P$，存在素数集
+
+$$
+R(P)\subseteq J(P):=\{p:P/2<p\le3P/4\},\qquad |R(P)|=e(P).
+$$
+
+任选这样的 $R(P)$ 并令 $S_0(P)=\{p\le P\}\setminus R(P)$，则
+
+$$
+|S_0(P)|=k(P),\qquad
+\sum_{p\in S_0(P)}\log p\le P-D_{\mathrm{safe}}(P).
+$$
+
+**证明。** 使用经典的 de la Vallée Poussin 型强素数定理作为中间输入：存在常数 $b>0$，当 $t\to\infty$ 时，
+
+$$
+\theta(t)=t+O\!\left(t e^{-b(\log t)^{1/10}}\right),\qquad
+\pi(t)=\operatorname{li}(t)+O\!\left(t e^{-b(\log t)^{1/10}}\right).
+$$
+
+这里可取 $\operatorname{li}(t)=\int_2^t du/\log u$，改变固定加性常数不影响误差；缩小 $b$ 可使两式同时成立。第二式也可由第一式和部分求和得到：
+
+$$
+\pi(t)=\frac{\theta(t)}{\log t}
++\int_2^t\frac{\theta(u)}{u(\log u)^2}\,du.
+$$
+
+在积分中分割于 $\sqrt t$，较低段为 $O(\sqrt t)$，较高段的指数误差由缩小后的 $b$ 控制。这些是经典素数定理的应用，不作为本章独立结论。
+
+对每个固定整数 $m\ge0$，直接求导得
+
+$$
+\frac{d}{dt}\left(t\sum_{j=0}^{m}\frac{j!}{(\log t)^{j+1}}\right)
+=\frac1{\log t}-\frac{(m+1)!}{(\log t)^{m+2}}.
+$$
+
+积分后，余项 $\int_2^t du/(\log u)^{m+2}=O_m(t/(\log t)^{m+2})$，可同样在 $\sqrt t$ 分段证明。因此
+
+$$
+\pi(P)=\frac P\ell+\frac P{\ell^2}+\frac{2P}{\ell^3}
++O\!\left(\frac P{\ell^4}\right).
+$$
+
+有限阶阶乘展开本身已有 Balazard (1990), pp.256–257 的先例。由 $0<d(P)\le1$ 与 $P/\ell^3\to\infty$，得到 $e(P)\sim2P/\ell^3>0$。强素数定理的误差小于任意固定负对数幂，故 $P-\theta(P)=o(P/\ell^2)$，进而 $B_0(P)\sim2P/\ell^2$。精确恒等式为
+
+$$
+B_k=B_0-d\ell,\qquad
+D_{\mathrm{safe}}=B_0-d\ell-e\log2.
+$$
+
+其中 $d\ell/(P/\ell^2)\le\ell^3/P\to0$，$e\log2/(P/\ell^2)\to0$，证明了三个预算的渐近。
+
+再由素数定理，$|J(P)|\sim P/(4\ell)$，所以 $e(P)/|J(P)|\to0$。最终可选出所需 $R(P)$，且
+
+$$
+\begin{aligned}
+\sum_{p\in S_0(P)}\log p
+&=\theta(P)-\sum_{p\in R(P)}\log p\\
+&\le\theta(P)-e(P)\log(P/2)
+=P-D_{\mathrm{safe}}(P).
+\end{aligned}
+$$
+
+此式对每个容许的删集均成立；无需假定 $P-\theta(P)>0$。证毕。
+
+### 7.3 移动权重素数和与 Rankin 上界
+
+**引理 7.4（移动权重素数和）。** 固定实数 $a>0$ 及 $0<C_1\le C_2$。设 $s=s(P)$ 对所有充分大的实数 $P$ 满足
+
+$$
+C_1(\log P)^a\le s(P)\le C_2(\log P)^a.
+$$
+
+则下列素数和最终绝对收敛，且
+
+$$
+R(P,s):=\sum_p\log\!\left(1+e^{-s|\log(p/P)|}\right)
+=\left(\frac{\pi^2}{6}+o(1)\right)\frac{P}{s\log P}
+\qquad(P\to\infty).
+$$
+
+**证明。** 写 $f(t)=\log(1+e^{-s|\log(t/P)|})$。最终 $s>1$，且 $\log(1+v)\le v$ 对 $v\ge0$ 成立。因此两侧远尾可由整数和控制：
+
+$$
+\begin{aligned}
+\sum_{p\le P/2}f(p)&\le P2^{-s},\\
+\sum_{p>2P}f(p)&\le\sum_{n>2P}(P/n)^s
+\le2^{-s}+\frac{P2^{1-s}}{s-1}.
+\end{aligned}
+$$
+
+这既证明无穷和收敛，也因 $s\asymp(\log P)^a$ 证明两尾均为 $o(P/(s\log P))$。
+
+在 $[P/2,2P]$ 上，引理 7.3 证明中的强素数定理一致给出
+
+$$
+\pi(t)-\operatorname{li}(t)
+=O\!\left(Pe^{-b_1(\log P)^{1/10}}\right)
+$$
+
+其中 $b_1>0$ 固定。$f$ 在 $[P/2,P]$ 上递增，在 $[P,2P]$ 上递减，其总变差不超过 $2\log2$。对两段分别作部分求和，边界值与导数绝对值积分之和一致有界，所以
+
+$$
+\sum_{P/2<p\le2P}f(p)
+=\int_{P/2}^{2P}\frac{f(t)}{\log t}\,dt
++O\!\left(Pe^{-b_1(\log P)^{1/10}}\right).
+$$
+
+误差除以主尺度后为 $O(s\log P\,e^{-b_1(\log P)^{1/10}})=o(1)$。权重虽随 $P$ 移动并变陡，总变差界仍不依赖 $s$。
+
+令 $u=s\log(t/P)$，则
+
+$$
+\int_{P/2}^{2P}\frac{f(t)}{\log t}\,dt
+=\frac{P}{s\log P}
+\int_{-s\log2}^{s\log2}
+\log(1+e^{-|u|})\frac{e^{u/s}}{1+u/(s\log P)}\,du.
+$$
+
+将被积函数在积分区间外延为零。区间内附加因子最终不超过 $4$，对每个固定的 $u\in\mathbb R$ 趋于 $1$，而 $\log(1+e^{-|u|})\le e^{-|u|}$ 可积。支配收敛定理将极限化为 $2\int_0^\infty\log(1+e^{-u})\,du$。
+
+这里使用经典 Fermi–Dirac 对数积分的值 $\pi^2/12$ 作为中间步骤：对 $u>0$ 展开
+
+$$
+\log(1+e^{-u})=\sum_{j\ge1}\frac{(-1)^{j+1}e^{-ju}}j.
+$$
+
+各项绝对积分之和为 $\sum_{j\ge1}j^{-2}<\infty$，故可逐项积分；再用经典 Basel 和 $\sum j^{-2}=\pi^2/6$，得到
+
+$$
+\int_0^\infty\log(1+e^{-u})\,du
+=\sum_{j\ge1}\frac{(-1)^{j+1}}{j^2}
+=\left(1-\frac12\right)\frac{\pi^2}{6}
+=\frac{\pi^2}{12}.
+$$
+
+合并中央区间与两尾即得结论。证毕。
+
+**命题 7.5（第二阈值的尖锐上界）。** 对每个 $\varepsilon>0$，存在 $P_\varepsilon$，使对所有实数 $P\ge P_\varepsilon$，
+
+$$
+N_2(e^P)\le\exp\!\left((K+\varepsilon)Z(P)\right).
+$$
+
+**证明。** 应用经典 Rankin 方法。对 $x=e^P$、$s>1$、$z\ge1$，每个被计数的 $n$ 满足 $x^sn^{-s}z^{\omega(n)-k}\ge1$。唯一分解与各素数幂的几何级数给出有限素数乘积界
+
+$$
+N_2(x)\le x^sz^{-k}
+\prod_{p\le x}\left(1+\frac z{p^s-1}\right)
+\le x^sz^{-k}
+\prod_{p\le x}\frac{1+zp^{-s}}{1-p^{-s}}.
+$$
+
+取 $z=P^s$。最终 $P<x$，并且逐项有
+
+$$
+\begin{aligned}
+\sum_{p\le x}\log(1+(P/p)^s)
+&=s\sum_{p\le P}\log(P/p)
++\sum_{p\le x}\log(1+e^{-s|\log(p/P)|})\\
+&\le s(\pi(P)\ell-\theta(P))+R(P,s).
+\end{aligned}
+$$
+
+故当 $N_2(x)>0$ 时，Rankin 主项精确抵消为
+
+$$
+\log N_2(e^P)\le sB_k(P)+R(P,s)+C(s),\qquad
+C(s)=\sum_p-\log(1-p^{-s}).
+$$
+
+最终 $s\ge2$ 时，$0\le C(s)\le2\sum_{n\ge2}n^{-s}\le2(2^{-s}+2^{1-s}/(s-1))\to0$；这也说明无需对无限 Euler 乘积另作假设。
+
+选择显式尺度 $s=c\sqrt\ell$，其中 $c=\pi/(2\sqrt3)=\sqrt{A/2}$。由引理 7.3、7.4，
+
+$$
+\frac{sB_k(P)}{Z(P)}\longrightarrow2c,\qquad
+\frac{R(P,s)}{Z(P)}\longrightarrow\frac Ac,
+\qquad C(s)=o(1).
+$$
+
+两项之和 $2c+A/c=2\pi/\sqrt3=K$。此 $c$ 也使函数 $2c+A/c$ 在 $c>0$ 上达到最小值，因为 $2c+A/c\ge2\sqrt{2A}$，等号恰在 $c^2=A/2$。于是得到所述上界；若 $N_2(e^P)=0$，计数上界直接成立。证毕。
+
+### 7.4 有限素数箱与预算可行交换的熵下界
+
+**引理 7.6（固定网格的可行交换与熵规模）。** 固定 $\eta>0$、整数 $m\ge1$、网格 $0=t_0<t_1<\cdots<t_m=U$ 及实数 $q_i\in(0,1)$，其中 $1\le i\le m$。记
+
+$$
+\Delta_i=t_i-t_{i-1},\qquad
+C_{\mathrm{grid}}=2\sum_{i=1}^m\Delta_i t_iq_i,\qquad
+E_{\mathrm{grid}}=2\sum_{i=1}^m\Delta_i H(q_i),
+$$
+
+其中 $H(v)=-v\log v-(1-v)\log(1-v)$，在 $0,1$ 处连续延拓为零。若 $C_{\mathrm{grid}}<A(1+\eta)^2$，则对每个 $\zeta>0$，存在 $P_0$，使对所有实数 $P\ge P_0$，
+
+$$
+\log N_2(e^P)\ge
+\left(\frac{E_{\mathrm{grid}}}{(1+\eta)c}-\zeta\right)Z(P).
+$$
+
+下界中所有被构造的整数均平方自由，并且恰有 $k(P)$ 个不同素因子。
+
+**证明。** 固定引理 7.3 的一个删集 $R(P)$ 与基底 $S_0(P)$，令
+
+$$
+s=(1+\eta)c\sqrt\ell,\qquad W=\frac gs,
+$$
+
+并定义半开素数箱
+
+$$
+\begin{aligned}
+I_i^-&=\{p:Pe^{-t_i/s}<p\le Pe^{-t_{i-1}/s}\},\\
+I_i^+&=\{p:Pe^{t_{i-1}/s}<p\le Pe^{t_i/s}\},\qquad
+m_i^\pm=|I_i^\pm|.
+\end{aligned}
+$$
+
+同一侧的箱两两不交，两侧也不交。因 $U$ 固定且 $s\to\infty$，最终 $Pe^{-U/s}>3P/4$，故每个负箱都包含于 $S_0(P)$，而每个正箱都与基底不交。半开端点保证即使某端点为素数，也只属于唯一的箱。
+
+由三项展开，最终 $|\pi(t)-t/\log t|\le3t/(\log t)^2$。对 $P/2\le t\le2P$，有 $|\log t-\ell|\le\log2$；最终 $\log t\ge\ell/2$，从而
+
+$$
+|\pi(t)-t/\ell|
+\le\frac{3t}{(\log t)^2}
++\frac{t\log2}{\ell\log t}
+\le\frac{28P}{\ell^2}.
+$$
+
+两端相减并对指数函数使用中值定理，得到对所有 $i$ 同时成立的界
+
+$$
+W\Delta_i e^{-U/s}-\frac{56P}{\ell^2}
+\le m_i^\pm\le
+W\Delta_i e^{U/s}+\frac{56P}{\ell^2}.
+$$
+
+由于 $(P/\ell^2)/W=s/\ell\to0$，所以 $m_i^\pm/W\to\Delta_i$。令
+
+$$
+M_i=\min(m_i^-,m_i^+),\qquad h_i=\lfloor q_iM_i\rfloor.
+$$
+
+则 $0\le h_i\le M_i\le m_i^\pm$，并且因 $W\to\infty$，对每个固定的 $i$ 有
+
+$$
+\frac{M_i}{W}\to\Delta_i,\qquad
+\frac{h_i}{W}\to\Delta_iq_i,\qquad
+\frac{h_i}{M_i}\to q_i.
+$$
+
+最后一个比值只在最终 $M_i>0$ 时使用；此前的有限区间不参与极限。
+
+从每个负箱任取 $A_i\subseteq I_i^-$，从对应正箱任取 $B_i\subseteq I_i^+$，使 $|A_i|=|B_i|=h_i$。构造
+
+$$
+S=\left(S_0(P)\setminus\bigcup_iA_i\right)\cup\bigcup_iB_i,
+\qquad n(S)=\prod_{p\in S}p.
+$$
+
+不交性保证 $|S|=|S_0(P)|=k(P)$，故 $\omega(n(S))=k(P)>a(P)$，并且 $n(S)$ 平方自由。每个负箱中 $\log p>\ell-t_i/s$，每个正箱中 $\log p\le\ell+t_i/s$。所以每一组选择都满足
+
+$$
+\log n(S)\le P-D_{\mathrm{safe}}+V(P),\qquad
+V(P)=\frac2s\sum_i t_ih_i.
+$$
+
+由上述取整极限，
+
+$$
+\frac{V(P)}{g/s^2}\longrightarrow C_{\mathrm{grid}},\qquad
+\frac{s^2D_{\mathrm{safe}}(P)}g\longrightarrow A(1+\eta)^2.
+$$
+
+于是 $V(P)/D_{\mathrm{safe}}(P)\to C_{\mathrm{grid}}/[A(1+\eta)^2]<1$。对所有充分大的 $P$，每组选择均有 $n(S)\le e^P$，并非仅在平均意义上满足预算。
+
+唯一分解从 $n(S)$ 恢复整个素数集 $S$，然后
+
+$$
+B_i=S\cap I_i^+,\qquad A_i=I_i^-\setminus S
+$$
+
+恢复全部选择。因此选择到整数的映射为单射，得到确定性的计数界
+
+$$
+N_2(e^P)\ge\prod_{i=1}^m
+\binom{m_i^-}{h_i}\binom{m_i^+}{h_i}
+\ge\prod_{i=1}^m\binom{M_i}{h_i}^{\,2}\ge1.
+$$
+
+作为中间步骤，使用经典的 Cover–Thomas 型二项式熵界
+
+$$
+\log\binom Ma\ge MH(a/M)-\log(M+1)\qquad(0\le a\le M).
+$$
+
+其有限证明如下。$a=0,M$ 时直接成立；$M=0$ 时将 $MH(a/M)$ 理解为零。其余情形令 $v=a/M$，$T_j=\binom Mjv^j(1-v)^{M-j}$。相邻项之比为
+
+$$
+\frac{T_{j+1}}{T_j}=\frac{M-j}{j+1}\frac a{M-a}.
+$$
+
+与 $1$ 比较后的分子差为 $M(a-j-1)+a$，在 $j<a$ 时为正，在 $j\ge a$ 时为负。因此 $T_a$ 是最大项。由二项式定理，$1=\sum_{j=0}^M T_j\le(M+1)T_a$；取对数即得该经典熵界。
+
+定义
+
+$$
+\Psi(P)=2\sum_{i=1}^m
+\left[M_iH(h_i/M_i)-\log(M_i+1)\right].
+$$
+
+最终 $\log N_2(e^P)\ge\Psi(P)$。熵函数连续，且
+
+$$
+\frac{\log(M_i+1)}W
+=\frac{\log(M_i+1)}{M_i+1}\frac{M_i+1}W\longrightarrow0.
+$$
+
+因 $m$ 固定有限，可逐项取极限，得到
+
+$$
+\frac{\Psi(P)}W\longrightarrow E_{\mathrm{grid}},\qquad
+\frac W{Z(P)}=\frac1{(1+\eta)c}.
+$$
+
+这证明所述任意 $\zeta>0$ 的下界。其熵项是总计数的对数下界；成本已用于确保每个整数可行，不再从该熵项扣除成本。证毕。
+
+### 7.5 Logistic 网格与精确下界
+
+**引理 7.7（熵与成本同时逼近的有限网格）。** 令 $q(u)=(1+e^u)^{-1}$，$u\ge0$。对任意有限网格 $0=t_0<\cdots<t_m=U$，取 $q_i=q(t_i)$、$\delta=\max_i\Delta_i$，并沿用引理 7.6 的 $C_{\mathrm{grid}},E_{\mathrm{grid}}$。则
+
+$$
+\begin{aligned}
+C_{\mathrm{grid}}&\le A+2\delta\log2,\\
+E_{\mathrm{grid}}&\ge2A-2(U+2)e^{-U}-2\delta\log2.
+\end{aligned}
+$$
+
+特别地，对任意 $\eta>0$、$\rho>0$，存在固定的 $U\ge1$、整数 $m\ge1$ 及均匀网格，使
+
+$$
+C_{\mathrm{grid}}\le A(1+\eta/2),\qquad
+E_{\mathrm{grid}}\ge2A-\rho.
+$$
+
+**证明。** 先说明占据率的选择。对固定 $u\ge0$，严格凹函数 $H(v)-uv$ 在 $0<v<1$ 的导数为 $\log((1-v)/v)-u$，故唯一最大点为 $v=q(u)$，并且
+
+$$
+H(v)-uv\le J(u):=\log(1+e^{-u}),\qquad
+H(q(u))=J(u)+uq(u).
+$$
+
+此为二项式熵的经典对偶恒等式，以下只用于构造有限网格。由引理 7.4 证明中的经典对数积分与 $J'(u)=-q(u)$，有限区间分部积分给出
+
+$$
+\begin{aligned}
+\int_0^\infty J(u)\,du&=\frac{\pi^2}{12},&
+\int_0^\infty q(u)\,du&=\log2,\\
+\int_0^T uq(u)\,du&=-TJ(T)+\int_0^T J(u)\,du,&
+\int_0^\infty uq(u)\,du&=\frac{\pi^2}{12}.
+\end{aligned}
+$$
+
+最后一式因 $0\le TJ(T)\le Te^{-T}\to0$ 得到。记 $f(u)=H(q(u))$，于是
+
+$$
+\int_0^\infty f(u)\,du=A,\qquad
+f'(u)=-uq(u)(1-q(u))\le0,\qquad
+0\le f(u)\le(1+u)e^{-u}.
+$$
+
+全部积分绝对收敛；这些经典积分只在本引理的网格估计中承担中间步骤。
+
+对 $u\in[t_{i-1},t_i]$，有 $q(t_i)\le q(u)$ 与 $t_i\le u+\delta$，所以
+
+$$
+\Delta_i t_iq(t_i)
+\le\int_{t_{i-1}}^{t_i}uq(u)\,du
++\delta\int_{t_{i-1}}^{t_i}q(u)\,du.
+$$
+
+求和再乘以 $2$，得到成本上界。另一方面，$f$ 递减，故
+
+$$
+0\le\int_{t_{i-1}}^{t_i}f(u)\,du-\Delta_i f(t_i)
+\le\delta\bigl(f(t_{i-1})-f(t_i)\bigr).
+$$
+
+求和后右端不超过 $\delta\log2$，而尾积分不超过
+
+$$
+\int_U^\infty(1+u)e^{-u}\,du=(U+2)e^{-U}.
+$$
+
+这就证明熵下界。给定 $\eta,\rho>0$，先固定 $U\ge1$ 使 $2(U+2)e^{-U}\le\rho/2$，再固定整数 $m$ 充分大，使均匀网格的宽度满足
+
+$$
+\delta=U/m\le
+\min\left\{\frac{A\eta}{4\log2},\frac{\rho}{4\log2}\right\}.
+$$
+
+代入两条显式估计即得结论。所有这些有限参数都独立于 $P$。证毕。
+
+**命题 7.8（第二阈值的尖锐下界）。** 对每个 $\varepsilon>0$，存在 $P_\varepsilon$，使对所有实数 $P\ge P_\varepsilon$，
+
+$$
+N_2(e^P)>0,\qquad
+\log N_2(e^P)\ge(K-\varepsilon)Z(P).
+$$
+
+**证明。** 缩小 $\varepsilon$ 只会加强结论，故可先设 $0<\varepsilon<K$。令 $\gamma=1/c$，并一次性固定
+
+$$
+\eta=\frac{\varepsilon}{8K},\qquad
+\rho=\frac{\varepsilon}{8\gamma}.
+$$
+
+由引理 7.7 选定 $U,m$ 与有限均匀网格，再取 $q_i=q(t_i)$。有
+
+$$
+\frac{C_{\mathrm{grid}}}{A(1+\eta)^2}
+\le\frac{1+\eta/2}{(1+\eta)^2}<1.
+$$
+
+因此引理 7.6 的每个交换选择最终均满足预算，所生成的整数恰有 $k(P)$ 个素因子。特别地，计数最终非空。利用 $2A\gamma=K$ 与 $1/(1+\eta)\ge1-\eta$，有
+
+$$
+\begin{aligned}
+\Lambda:=\frac{\gamma E_{\mathrm{grid}}}{1+\eta}
+&\ge\frac{\gamma(2A-\rho)}{1+\eta}\\
+&\ge K-K\eta-\varepsilon/8
+=K-\varepsilon/4.
+\end{aligned}
+$$
+
+在引理 7.6 中取 $\zeta=\varepsilon/2$，便对所有充分大的 $P$ 得到 $\log N_2(e^P)\ge(K-3\varepsilon/4)Z(P)\ge(K-\varepsilon)Z(P)$。
+
+量词顺序为：先给定 $\varepsilon$，再固定 $\eta,\rho,U,m,q_i$，最后选取单一的 $P_\varepsilon$，使有限多个箱容量极限、取整极限、远端分离、成本与熵估计同时成立。这里没有令网格随 $P$ 增长，也没有互换无限网格极限与 $P\to\infty$。代回 $P=\log x$ 即得定理 7.2 所需的下界。证毕。
+
+### 7.6 固定阶乘阈值的推广
+
+**命题 7.9（任意固定整数阶的精确渐近）。** 对每个固定整数 $r\ge2$，令 $L=\log x$、$\ell=\log L$，并定义
+
+$$
+T_r(x)=L\sum_{j=0}^{r-1}\frac{j!}{\ell^{j+1}},\qquad
+N_r(x)=\#\{n\in\mathbb Z:1\le n\le x,\ \omega(n)>T_r(x)\}.
+$$
+
+则 $N_r(x)$ 最终非零，且
+
+$$
+\log N_r(x)\sim
+\pi\sqrt{\frac{2r!}{3}}\,\frac L{\ell^{(r+1)/2}}
+\qquad(x\to\infty).
+$$
+
+这里 $r$ 在取极限前固定；结论不声称对增长的 $r=r(x)$ 一致。
+
+**证明。** 以下逐项给出相对于 $r=2$ 的替换，始终取中心 $P=L$、$\ell=\log P$。令
+
+$$
+\begin{aligned}
+a_r(P)&=P\sum_{j=0}^{r-1}\frac{j!}{\ell^{j+1}},&
+k_r(P)&=\lfloor a_r(P)\rfloor+1,\\
+e_r(P)&=\pi(P)-k_r(P),&
+Z_r(P)&=\frac P{\ell^{(r+1)/2}},\\
+c_r&=\frac{\pi}{\sqrt{6r!}},&
+K_r&=\pi\sqrt{\frac{2r!}{3}}=\frac{2A}{c_r}.
+\end{aligned}
+$$
+
+第一处替换是阈值展开的阶数。引理 7.3 证明中取 $m=r$ 的经典有限阶展开给出
+
+$$
+\pi(P)=a_r(P)+\frac{r!P}{\ell^{r+1}}
++O_r\!\left(\frac P{\ell^{r+2}}\right),\qquad
+e_r(P)\sim\frac{r!P}{\ell^{r+1}}.
+$$
+
+取整误差仍不超过 $1$。定义
+
+$$
+B_{k,r}(P)=P-\theta(P)+e_r(P)\ell,\qquad
+D_{\mathrm{safe},r}(P)=P-\theta(P)+e_r(P)\log(P/2).
+$$
+
+强素数定理使 $P-\theta(P)=o_r(P/\ell^r)$，故两个预算均满足
+
+$$
+B_{k,r}(P)\sim D_{\mathrm{safe},r}(P)\sim\frac{r!P}{\ell^r}.
+$$
+
+仍在 $J(P)=(P/2,3P/4]\cap\{p:p\text{ 为素数}\}$ 中删去恰好 $e_r(P)$ 个素数；由于 $|J(P)|\sim P/(4\ell)$ 且 $e_r(P)/|J(P)|\to0$，删集存在。得到大小为 $k_r(P)$、对数乘积不超过 $P-D_{\mathrm{safe},r}(P)$ 的基底，完全保持引理 7.3 的确定性保证。
+
+第二处替换是鞍点尺度。取
+
+$$
+s_r(P)=c_r\ell^{(r-1)/2}
+\sim\sqrt{\frac{Ag(P)}{B_{k,r}(P)}}.
+$$
+
+因 $r\ge2$，$s_r\to\infty$，引理 7.4 适用于固定指数 $a=(r-1)/2$。命题 7.5 的有限乘积 Rankin 抵消逐字适用，只将 $k,B_k$ 换成 $k_r,B_{k,r}$，得到在计数非零时
+
+$$
+\log N_r(e^P)\le s_r B_{k,r}+R(P,s_r)+C(s_r).
+$$
+
+两个主项除以 $Z_r(P)$ 后分别趋于 $r!c_r$ 与 $A/c_r$；因 $r!c_r^2=A$，其和为 $K_r$，而 $C(s_r)\to0$。这证明所需的上极限不超过 $K_r$。
+
+第三处替换是素数箱误差的精度。固定 $\eta>0$、有限网格及 $U$ 后，令 $s=(1+\eta)s_r$、$W=g/s$，仍使用引理 7.6 的半开箱、共同容量和取整选择。此时不能沿用误差 $O(P/\ell^2)$：它除以 $W$ 后为 $O(s/\ell)$，在 $r\ge3$ 时不再保证趋零。改用引理 7.3 中的强素数定理，箱的两个端点均在 $[P/2,2P]$，从而
+
+$$
+|I_i^\pm|=\int_{I_{i,\mathbb R}^\pm}\frac{dt}{\log t}
++O\!\left(Pe^{-b_1\ell^{1/10}}\right).
+$$
+
+这里 $I_{i,\mathbb R}^\pm$ 表示定义素数箱的实区间。令 $u=s\log(t/P)$，正箱的主积分精确为
+
+$$
+\frac P{s\ell}\int_{t_{i-1}}^{t_i}
+\frac{e^{u/s}}{1+u/(s\ell)}\,du,
+$$
+
+负箱则将积分端点改为 $-t_i,-t_{i-1}$。固定有限区间上的被积因子一致趋于 $1$；强误差除以 $W$ 后为 $O(s\ell\,e^{-b_1\ell^{1/10}})=o(1)$。故两侧容量仍有 $|I_i^\pm|/W\to\Delta_i$，且 $W\to\infty$。活动负箱最终仍在 $3P/4$ 以上，与远端删集分离。
+
+第四处替换是成本归一化，其极限保持不变：
+
+$$
+\frac{s^2D_{\mathrm{safe},r}}g\longrightarrow A(1+\eta)^2,
+\qquad \frac W{Z_r(P)}=\frac1{(1+\eta)c_r}.
+$$
+
+引理 7.6 的有限交换单射、精确等数约束、二项式熵下界及取整证明无需改变；因此对固定网格，若 $C_{\mathrm{grid}}<A(1+\eta)^2$，每个交换整数最终均被 $N_r(e^P)$ 计入，并且
+
+$$
+\liminf_{P\to\infty}\frac{\log N_r(e^P)}{Z_r(P)}
+\ge\frac{E_{\mathrm{grid}}}{(1+\eta)c_r}.
+$$
+
+为明确最后的极限顺序，给定 $\varepsilon>0$，固定 $\eta=\varepsilon/(8K_r)$、$\rho=\varepsilon c_r/8$，再由引理 7.7 固定满足 $C_{\mathrm{grid}}\le A(1+\eta/2)$、$E_{\mathrm{grid}}\ge2A-\rho$ 的有限网格。与命题 7.8 相同的代数计算给出 $E_{\mathrm{grid}}/[(1+\eta)c_r]\ge K_r-\varepsilon/4$。取 $P$ 充分大，使所有有限个极限与成本不等式同时成立，即得最终非空性与 $\log N_r(e^P)\ge(K_r-\varepsilon)Z_r(P)$。结合上界并令 $\varepsilon\downarrow0$，证明了命题。证毕。
+
+## 追加锚（本行以下为增补区）

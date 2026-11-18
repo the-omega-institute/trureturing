@@ -1,0 +1,52 @@
+**定理 148.2（最高纯秩点不能是整球的单点极限）。** 在定义148.1的完整 EB3+$\mathsf{Conn}$ 和忠实截面下，不存在 $a_j\in P$、$s\in P_{\max}$ 使 $D_{a_j}\to\{s\}$ 于 Hausdorff 距离；不要求 $a_j$ 有纯极限。
+
+证明。先建立该证明所需的同秩法向边界稳定性。设 $p_j\to p\in P$ 且 $r(p_j)=r(p)$，并有 $h_j\in\partial_{L_{p_j}}N_{p_j}$、$h_j\to h$。核投影收敛允许选等距同构 $U_j:J_p\to J_{p_j}$ 趋于 $J_p$ 的包含映射。在固定实空间 $\operatorname{Herm}(J_p)$ 上置
+
+$$
+\Psi_j(B)=A^*(U_jBU_j^*),\qquad \Psi(B)=A^*B.
+\tag{XI148.5}
+$$
+
+由(XI148.4)，$\Psi_j(\operatorname{PSD}(J_p))=N_{p_j}$、$\operatorname{im}\Psi_j=L_{p_j}$，且像维数始终为四。评价闭性给 $h\in N_p$。若 $h\in\operatorname{ri}N_p$，取足够小 $\varepsilon>0$，使 $h-\varepsilon\Psi(I_{J_p})\in N_p$；选该差的正代表 $B_0$，得到
+
+$$
+G=B_0+\varepsilon I_{J_p}\succ0,\qquad \Psi(G)=h.
+\tag{XI148.6}
+$$
+
+选 $B_1,\ldots,B_4\in\operatorname{Herm}(J_p)$，使 $\Psi(B_\ell)$ 是 $L_p$ 的基。充分大 $j$ 时，$\Psi_j(B_\ell)$ 仍是 $L_{p_j}$ 的基；四个极限基向量独立给相应坐标逆统一有界。因此存在 $b_{\ell j}\to0$ 使
+
+$$
+h_j-\Psi_j(G)=\sum_{\ell=1}^4 b_{\ell j}\Psi_j(B_\ell),\qquad
+G_j=G+\sum_{\ell=1}^4 b_{\ell j}B_\ell\succ0,\qquad \Psi_j(G_j)=h_j.
+\tag{XI148.7}
+$$
+
+满射线性图把正定矩阵的开邻域送到像空间的开邻域，迫 $h_j\in\operatorname{ri}N_{p_j}$，矛盾。所以
+
+$$
+p_j\to p,\ r(p_j)=r(p),\ h_j\in\partial_{L_{p_j}}N_{p_j},\ h_j\to h
+\quad\Longrightarrow\quad h\in\partial_{L_p}N_p.
+\tag{XI148.8}
+$$
+
+对 $s\in P_{\max}$，一个非零 $R$ 阶子式在其附近仍非零，而全部原纯秩不超过 $R$，故所有充分靠近 $s$ 的原纯点均秩 $R$。147.2给该处对任意原纯趋近的整球连续；任何效应聚点在 $s$ 读一、在整个 $D_s$ 读零，由唯一整球零确认即为 $e_s$。故 $e$ 也在 $s$ 对全部原纯趋近连续。
+
+反设 $D_{a_j}\to\{s\}$。整个 $S_{a_j}$ 的点趋于 $s$，刚得的连续性给
+
+$$
+\sup_{t\in S_{a_j}}\|\widehat e_t-\widehat e_s\|\to0.
+\tag{XI148.9}
+$$
+
+若一致性失败，选违反它的 $t_j\in S_{a_j}$ 就与 $t_j\to s$ 的效应连续矛盾。归一化合法：$z\in\operatorname{int}C$ 给所有正 $h$ 的 $h(z)\ge\delta\|h\|$，且 $e_t(t)=1$ 使这些效应的范数统一远离零。完整法向基(XI148.3)于是使 $\widehat g_{a_j}\to\widehat e_s$。
+
+任选 $t_j\in S_{a_j}$。$g_{a_j}(t_j)=1$、$t_j\to s$，且 $g_{a_j}\in\mathcal E$。任取聚点 $g$，则 $g(s)=1$；归一化极限使 $g$ 与 $e_s$ 正比例，两者在 $s$ 都读一，故 $g=e_s$。因此
+
+$$
+g_{a_j}\to e_s,\qquad e_{a_j}\to g_s.
+\tag{XI148.10}
+$$
+
+原零对称给 $a_j\in S_{t_j}$，全部边界射线公式给 $e_{a_j}\in\partial_{L_{t_j}}N_{t_j}$。由于 $t_j\to s$ 最终同为最高秩，(XI148.8)迫 $g_s\in\partial_{L_s}N_s$，违反 $g_s\in\operatorname{ri}N_s$。证毕。
+

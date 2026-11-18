@@ -1,0 +1,30 @@
+**Proposition 6.4 (pointwise protection and asymptotic order).** For each fixed $\varepsilon$ and fixed admissible $k$, the hybrid cutoff satisfies
+
+$$
+N_{\rm hyb}=O_{\varepsilon,k}(S^{2K_0+1}),
+\qquad
+N_{\rm hyb}\le N_{\rm nat}\quad(S\ge1).
+\tag{6.11}
+$$
+
+A sufficient, deliberately conservative condition for strict improvement after integer rounding is
+
+$$
+LS\ge16K_0^2\quad\Longrightarrow\quad
+N_{\rm hyb}<N_{\rm nat}.
+\tag{6.12}
+$$
+
+This condition is not a least crossover or a useful practical exposure bound.
+
+**Proof.** The polynomial bound follows from $D_{\rm hyb}\le D_{\rm int}$ and $a_k>0$; the pointwise bound is (6.3). To certify (6.12), set $M=LS\ge16K_0^2$. The elementary bound $\log M\le\sqrt M$ follows by minimizing $\sqrt t-\log t$ for $t\ge1$. Hence
+
+$$
+\log(4M^{2K_0})
+ \le\log4+2K_0\sqrt M
+ \le\log4+M/2<M\log70.
+\tag{6.13}
+$$
+
+Here $M\ge16$ and $\log4<2< M/2$, while $\log70>1$. Thus $4M^{2K_0}<70^M$. Both sides are integers, so their difference is at least one. The first minimum in (6.1) consequently decreases $D_{\rm nat}$ by at least $16S$, and the second cannot increase it. Since $0<a_k\le1/2$, division by $a_k$ decreases the value inside the floor by more than one; (6.12) follows. The large certified exponent supplies an asymptotic order improvement over the exponential elementary cutoff, while the minimum retains its finite-parameter advantages. $\square$
+

@@ -33,7 +33,7 @@ open InverseMeanVariational
 variable {d : Type*} [Fintype d] [DecidableEq d]
 local instance : Pow (Matrix d d ℂ) ℝ := ⟨CFC.rpow⟩
 
-private lemma rpow_smul {A : Matrix d d ℂ} (hA : A.PosSemidef)
+lemma rpow_smul {A : Matrix d d ℂ} (hA : A.PosSemidef)
     (c : ℝ) (hc : 0 ≤ c) (q : ℝ) : (c • A) ^ q = c ^ q • (A ^ q) := by
   rw [CFC.rpow_eq_cfc_real (smul_nonneg hc hA.nonneg),
     ← cfc_comp_smul c (fun x : ℝ => x ^ q) A

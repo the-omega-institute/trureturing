@@ -1,0 +1,11 @@
+**命题 8.3（One retained environment has different balanced repetitions）。** For the interaction $\mathsf U$ in (2.10), throughout (8.1),
+
+$$
+\mathsf U^2=I_{H\otimes E_2}.
+\tag{8.14}
+$$
+
+With the same initially prepared $|\mathrm{ready}\rangle$ and the same retained $E_2$, applying $\mathsf U$ $N$ times and tracing only at the end gives the identity channel for even $N$ and $\Phi$ for odd $N$. Its terminal Choi rank is one for even $N$ and two for odd $N$. It is not the fresh-environment channel power in Theorem 8.2 when $N\ge2$.
+
+**证明。** Equations (8.5)–(8.7) imply $T_0^2=T_1^2=I_H$. Squaring (2.10) eliminates cross terms through the orthogonality of its two control projections and gives (8.14). Even powers restore the complete joint input $x\otimes|\mathrm{ready}\rangle$; odd powers give the one-step dilation (2.5). The same operator identities hold after tensoring with every untouched reference. The identity channel has rank one, and the published one-step rank is two by Theorem 2.1. Fresh independent environments instead produce (8.13), whose rank is three at $N=2$ and four at every $N\ge3$. $\square$
+

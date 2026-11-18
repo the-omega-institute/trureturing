@@ -1,0 +1,16 @@
+**定义 280.3（确认菜单的内在维数）。** 在279.2—279.3的任意同一原有限维单层背景中，固定任意 $S\subseteq K$，令 $F=\mathcal E(S)$、$t=t_S$，并沿用279.4的 $\delta_S$ 与 $J_S$。写
+
+$$
+\begin{aligned}
+d&=\dim_{\mathbb R}V,\qquad
+r_S=\dim\operatorname{aff}F
+=\dim\operatorname{span}\{u-f:f\in F\},\\
+W_S&=\{v\in V:f(v)=u(v)\text{ 对所有 }f\in F\},\qquad
+\dim(V/W_S)=r_S,\qquad
+r_S\le d-\dim\operatorname{span}S.
+\end{aligned}
+\tag{280.5}
+$$
+
+等号使用 $u\in F$；每个 $u-f$ 在 $S$ 上消失给最后的界。空目标集允许存在。商空间只用于证明中消去所有确认者共同饱和的线性方向，不把商像另当原状态空间。VII102.1已在单纯源上引入相同的确认效应维数，VII102.2用它限制共同零目标的最小不相容组；这里沿用这个内在量，研究的是全部读数的最大Jensen缺口。
+

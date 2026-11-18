@@ -1,0 +1,28 @@
+**定理 2.2（Conditional entire-input and reference recovery for the named $V_2$）。** The realization of Theorem 2.1 can be supplied with one pure initial state in the same $E_2$ and a unitary interaction on $H\otimes E_2$. If the environment basis $f_0,f_1$ is actually measured and its outcome is supplied to a controller permitted to apply $T_0^\dagger$ or $T_1^\dagger$, the entire input density operator on $H\otimes R$ is recovered, for every untouched reference and every input density operator. This is an existence statement for the named minimizing realization, not a statement that every minimizer is unital or admits this recovery.
+
+**证明。** Prepare
+
+$$
+|\mathrm{ready}\rangle=\sqrt B f_0+\sqrt t f_1
+$$
+
+in $E_2$ and apply
+
+$$
+\mathsf U=T_0\otimes|f_0\rangle\langle f_0|
++T_1\otimes|f_1\rangle\langle f_1|.
+\tag{2.10}
+$$
+
+Orthogonal control projections and the unitarity of $T_0,T_1$ give $\mathsf U^\dagger\mathsf U=\mathsf U\mathsf U^\dagger=I$. On $x\otimes|\mathrm{ready}\rangle$, its output is (2.5). Thus no second control flag, source register or hidden purification is needed for this one-step interaction.
+
+Write $w_0=B,w_1=t$. Environment outcome $\mu$ gives the unnormalized system-reference branch
+
+$$
+w_\mu(T_\mu\otimes I_R)\rho_{HR}
+(T_\mu^\dagger\otimes I_R).
+\tag{2.11}
+$$
+
+Its probability is $w_\mu$, independent of the entire input. The permitted inverse conjugation maps it to $w_\mu\rho_{HR}$. Normalizing either positive branch recovers $\rho_{HR}$; summing the corrected branches also recovers it. This calculation is the finite-dimensional correction criterion of M. Gregoratti and R. F. Werner, [Quantum Lost and Found, arXiv:quant-ph/0209025v1, Proposition 2 and §II.C.1](https://arxiv.org/abs/quant-ph/0209025v1), applied to the specific (2.6). It preserves arbitrary configuration coherence, arbitrary internal input and all reference correlations. $\square$
+

@@ -1,0 +1,17 @@
+**Definition 5.1 (native logarithmic constants).** Retain exactly Definitions 1.1–1.4, including the $89$-configuration source, the alternating positive word $g^n=(0^5 1^5)^n$ and the unconditional terminal event $W=w_*$. All logarithms below are natural. Let $R>1$ be the expanding real conjugate in (2.5), and put
+
+$$
+\begin{aligned}
+\phi&=2\theta-2\pi\in(-\pi,0),&
+\ell_z&=i\phi,&\ell_{-1}&=i\pi,\\
+\chi&=\max\{\log R,|\phi|,1\},&
+C_0&=18\cdot3!\cdot2^3\cdot128^4\log16
+     =864\cdot128^4\log16,\\
+\kappa&=\frac{C_0\pi\chi}{16},&
+K_0&=2^{40}=1099511627776.
+\end{aligned}
+\tag{5.1}
+$$
+
+Here $d=\sqrt5-2>0$ in (1.3), so $\pi/2<\theta<\pi$ and the displayed interval for $\phi$ follows. The values $\ell_z$ and $\ell_{-1}$ are fixed determinations of the logarithms of $z$ and $-1$. They are arithmetic proof data and change neither the word nor its physical calls.
+

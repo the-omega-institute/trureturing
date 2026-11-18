@@ -1,0 +1,35 @@
+**定义 130.1（完整原域与两步条件）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{X130.1}
+$$
+
+$K$ 是整个原紧基，$P$ 是全部原纯点，$\mathcal E$ 是全部原效应；不取截面、所选纯点或测试子菜单代替它们。对 $p,q\in P$ 定义
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0.
+\tag{X130.2}
+$$
+
+补效应给对称性，且 $p\not\perp p$。沿用[VII103.1—103.2][Q130VII]的 $\mathrm{EB}_{\ge2}$：对每个原 $p$，整个 $D_p$ 仿射同构于某个完整闭球 $B^{d_p}$，$d_p\ge2$，允许维数随标签改变；$\mathrm{EB3}$ 表示全部 $d_p=3$。在此域记
+
+$$
+\begin{aligned}
+\mathsf D_2(p):&\quad
+\forall q\in P:\ p\perp q\ \lor
+\exists r\in P:\ p\perp r\ \land\ q\perp r,\\
+\mathsf D_2:&\quad\forall p\in P\ \mathsf D_2(p).
+\end{aligned}
+\tag{X130.3}
+$$
+
+每个存在量词中的 $r$ 是同一原纯点，两条边均由原全域效应见证。$D_p$ 有纯球缘，故 $q=p$ 时的共同邻点自动存在。因此 $\mathsf D_2$ 正是原简单零图直径至多二，也等价于每对不同且不相邻的原纯点有共同邻点。它不要求一条已经指定的边有共同邻点。
+

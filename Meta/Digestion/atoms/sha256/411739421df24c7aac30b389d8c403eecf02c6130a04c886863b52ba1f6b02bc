@@ -1,0 +1,16 @@
+## Definition 1: graph, coefficient matrix, and state
+
+Let K=F13. The graph has central vertex O, outer vertices A_j,B_j for j=0,1,2, and edges OA_j, OB_j, A_jB_j. Each outer vertex has two boundary legs, all of dimension 13. Thus the graph is planar, with seven vertices, nine internal edges, and twelve boundary legs. All edges, including boundary legs, have unit cut weight.
+
+Write the six rows of the following matrix as a_0,b_0,a_1,b_1,a_2,b_2:
+
+    C = [[7,4,8], [11,12,3], [11,6,5],
+         [4,9,8], [4,7,12], [2,4,1]].
+
+For lambda in K^3 and z=(z_0,z_1,z_2) in K^3, define the four boundary labels of loop j, in order, by
+
+    (a_j lambda + z_j, a_j lambda - z_j,
+     b_j lambda + z_j, b_j lambda - z_j).
+
+The loop multiplier is 1 at every outer tensor. Define Psi to be the sum over all lambda,z of these computational-basis vectors, with identical positive amplitude 13^(-3). No variable-dependent phases are present.
+

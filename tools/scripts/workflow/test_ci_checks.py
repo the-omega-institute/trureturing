@@ -47,7 +47,7 @@ class CheckTests(unittest.TestCase):
         data, _ = contract.load(ROOT)
         for path, selected in (("tools/scripts/compiled-fib-test.sh", True), ("Reg/D5/Owner.lean", False)):
             plan = contract.selection(data, [path], "pull-request")
-            with self.subTest(path=path), patch.dict(os.environ, STRATALINT_FIB_REGRESSIONS_SELECTED=str(not selected).lower()), \
+            with self.subTest(path=path), patch.dict(os.environ, FULL_BUILD="1", STRATALINT_FIB_REGRESSIONS_SELECTED=str(not selected).lower()), \
                     patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "producer")), \
                     patch.object(checks, "execute", return_value=0) as execute:
                 self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 0)
@@ -72,10 +72,19 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(record["raw_exit"], 2)
 
+    def test_full_report_rejects_without_confirmation_before_producer_build(self):
+        data, _ = contract.load(ROOT)
+        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        with patch.dict(os.environ, FULL_BUILD="0"), patch.object(checks.subprocess, "run") as run, \
+                patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
+        run.assert_not_called()
+        execute.assert_not_called()
+
     def test_failed_report_producer_probe_preserves_failure_without_raising(self):
         data, _ = contract.load(ROOT)
         plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
-        with patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 2, "")), \
+        with patch.dict(os.environ, FULL_BUILD="1"), patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 2, "")), \
                 patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
         execute.assert_not_called()
@@ -278,7 +287,7 @@ class CheckTests(unittest.TestCase):
                 path = root / changed
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("candidate\n")
-            env = dict(os.environ, PATH=str(bindir) + os.pathsep + os.environ["PATH"], CALLS=str(root / "calls"),
+            env = dict(os.environ, FULL_BUILD="1", PATH=str(bindir) + os.pathsep + os.environ["PATH"], CALLS=str(root / "calls"),
                        SOURCE=str(source), CURRENT=str(current), JUDGE=str(judge), JUDGE_HIT="false",
                        STRATALINT_CI_COMPUTE_ACTIVE="0", PYTHONDONTWRITEBYTECODE="1")
             result = subprocess.run([sys.executable, str(runner), "local", "--base", "HEAD", "--purpose", purpose],

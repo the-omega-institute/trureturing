@@ -1,0 +1,17 @@
+**引理 147.3（端面接触的纯性桥）。** 在 EB3 下，设 $q\in P_{\rm s}$、$x\in D_q$、$g\in\mathcal E$，且 $g(x)=1$。若 $Z=K\cap\ker g$ 非空且非点，则存在 $z\in P_{\rm s}$，使
+
+$$
+Z=D_z,\qquad K\cap\{g=1\}=\{z\},\qquad x=z,\qquad g\in\mathcal A_z.
+\tag{XII147.8}
+$$
+
+特别地，假设中的 $x$ 不必先纯。
+
+证明。$g(x)=1$ 及非空零集使 $g$ 非恒定；原面分类给 $Z\in\mathscr B$。记紧一值面为 $M$。其任一原纯点 $t$ 满足 $Z\subseteq D_t$，故由极大性 $D_t=Z$，即 $\operatorname{ext}M\subseteq I(Z)$。
+
+若 $Z$ 重复，IX 定理116.2给配对球 $G$，$I(Z)=S(G)$，从而 $M\subseteq\operatorname{conv}S(G)=G$。但 $x\in M\cap D_q$，所以 $G\cap D_q\ne\varnothing$。重复球 $G$ 不交第三球，且其配对球 $Z$ 与它不交，故只能 $D_q=G$。这使 $D_q$ 重复，与 $q\in P_{\rm s}$ 矛盾。此步明确处理了极限零球可能变成重复球的分支。
+
+因此 $I(Z)=\{z\}$。$M$ 的全部原极点只有 $z$，故 $M=\{z\}$。于是 $x=z\in P$、$D_z=Z$，$z\in P_{\rm s}$，而 $g\in\mathcal A_z$。证毕。
+
+此引理所付的是**原域有限见证极限的纯性**。它不是以“极限本来纯”重写定义，也没有把 $\bigcup_{f\in F_q}\{f=0\}$ 换成各零面的交。另一路同样有效的供应是既有 LOCAL_PURE_LIMIT_CONTINUATION 引理132.3：若上述接触极限落在 $\operatorname{ri}D_q$，对应纯采样标签的下一层整球须缩到 $q$，与保留的非退化四面体矛盾。
+

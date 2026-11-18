@@ -292,6 +292,18 @@ $$\forall \{d : \mathbb{N}\}, \forall (U : \operatorname{Matrix} (\operatorname{
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
+**Theorem 1.25 (Determinant expansion along the top row).**
+
+$$\forall (R : \operatorname{Type}) (\operatorname{CommRing} R) (d : \mathbb{N}), \forall (M : \operatorname{Matrix} (\operatorname{Fin} d) (\operatorname{Fin} (d+1)) R) (a : \operatorname{Fin} (d+1) \to R), \operatorname{det}(\operatorname{updateRow}(\operatorname{augment}(M)) 0 a) = \sum_{j} a(j) \cdot \operatorname{cofactor}(M,j)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/CofactorKernel.det_topRow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sum ranges over all columns. The top row is paired with the signed cofactors of the remaining rows.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.IsMinimalZeroSum`
@@ -304,6 +316,7 @@ Primitive positive integer kernels give the multiplicities and lengths of minima
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.cofactor_gcd_one_mul_left`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.cofactor_gcd_one_mul_right`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.cofactor_mulVec_eq_zero`
+- Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.det_topRow`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.fromWeights`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.fromWeights_apply`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.fromWeights_minimal_of_primitive`

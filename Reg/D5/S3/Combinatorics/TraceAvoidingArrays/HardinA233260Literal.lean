@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -209,5 +210,147 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 end Result
 
+namespace PairBase
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
+def actual : Realization signature :=
+  realize signature (fun _ _ n => (L n : ℤ)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ n => (L n : ℤ) + if n = 12 then 1 else 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := (R.readout () () (12) + 6) =
+    16 * (R.readout () () (11) + 6) - 64 * (R.readout () () (10) + 6) + 76 * (R.readout () () (9) + 6) +
+    17 * (R.readout () () (8) + 6) - 84 * (R.readout () () (7) + 6) + 48 * (R.readout () () (6) + 6) - 8 * (R.readout () () (5) + 6)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have ha := pair_base
+  have hb := h
+  change ((L 12 : ℤ) + 1 + 6) =
+    16 * ((L 11 : ℤ) + 0 + 6) - 64 * ((L 10 : ℤ) + 0 + 6) + 76 * ((L 9 : ℤ) + 0 + 6) +
+    17 * ((L 8 : ℤ) + 0 + 6) - 84 * ((L 7 : ℤ) + 0 + 6) + 48 * ((L 6 : ℤ) + 0 + 6) - 8 * ((L 5 : ℤ) + 0 + 6) at hb
+  norm_num only [Nat.zero_add, add_zero] at ha hb
+  linarith only [ha, hb]
+private theorem actual_dependence :
+    actual.readout () () 0 ≠ actual.readout () () 1 := by
+  have h0 : L 0 = 1 := by decide +kernel
+  have h1 : L 1 = 243 := by decide +kernel
+  change (L 0 : ℤ) ≠ (L 1 : ℤ)
+  rw [h0, h1]
+  decide +kernel
+def family : Registration arena (type_of% @pair_base) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@pair_base, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, actual_dependence⟩
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@pair_base) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal.PairBase.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal.PairBase.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => (L n : ℤ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end PairBase
+namespace PairTail
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
+def actual : Realization signature :=
+  realize signature (fun _ _ n => (L n : ℤ)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ n => (L n : ℤ) + if n = 13 then 1 else 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ n : ℕ, (R.readout () () (n+13) + 6) =
+    16 * (R.readout () () (n+12) + 6) - 64 * (R.readout () () (n+11) + 6) + 76 * (R.readout () () (n+10) + 6) +
+    17 * (R.readout () () (n+9) + 6) - 84 * (R.readout () () (n+8) + 6) + 48 * (R.readout () () (n+7) + 6) - 8 * (R.readout () () (n+6) + 6)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have ha := pair_tail 0
+  have hb := h 0
+  change ((L 13 : ℤ) + 1 + 6) =
+    16 * ((L 12 : ℤ) + 0 + 6) - 64 * ((L 11 : ℤ) + 0 + 6) + 76 * ((L 10 : ℤ) + 0 + 6) +
+    17 * ((L 9 : ℤ) + 0 + 6) - 84 * ((L 8 : ℤ) + 0 + 6) + 48 * ((L 7 : ℤ) + 0 + 6) - 8 * ((L 6 : ℤ) + 0 + 6) at hb
+  norm_num only [Nat.zero_add, add_zero] at ha hb
+  linarith only [ha, hb]
+private theorem actual_dependence :
+    actual.readout () () 0 ≠ actual.readout () () 1 := by
+  have h0 : L 0 = 1 := by decide +kernel
+  have h1 : L 1 = 243 := by decide +kernel
+  change (L 0 : ℤ) ≠ (L 1 : ℤ)
+  rw [h0, h1]
+  decide +kernel
+def family : Registration arena (type_of% @pair_tail) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@pair_tail, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, actual_dependence⟩
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@pair_tail) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal.PairTail.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal.PairTail.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => (L n : ℤ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end PairTail
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal

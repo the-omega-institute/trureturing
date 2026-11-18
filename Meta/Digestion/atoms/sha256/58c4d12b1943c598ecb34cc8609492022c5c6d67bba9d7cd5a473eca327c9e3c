@@ -1,0 +1,59 @@
+**定理 148.5（同根、同阈值的两个闭带）。** 在定义148.1的完整原域中，另假设
+对这个事先固定的同一个 $o$ 成立的原条件 $L_\varepsilon(o)$，$0<\varepsilon<1$：
+
+$$
+\forall z\in P:\quad 0<h(z)<\varepsilon
+\ \Longrightarrow\ \exists s\in P:\ T_o(s)=T_z(s)=0.
+\tag{XII148.14}
+$$
+
+则对定义148.1的同一个 $B$ 有
+
+$$
+\{p\in P:h(p)\le\varepsilon\}
+\ \cup\ \{p\in P:h(p)\ge1-\varepsilon\}\ \subseteq B.
+\tag{XII148.15}
+$$
+
+证明。先消费推论145.4的准确接口：相同的完整 EB3、纯 PR 与 $L_\varepsilon(o)$
+给根合同 $R_o$，包括 $S\subseteq B$、$o\in B$、$B$ 紧，以及根和根邻球的单标签性。
+它还给出：对任何 $q\in P\setminus(A\cup\{o\})$，若整个真实 $S_q\subseteq B$，
+则全部实际邻边完成 $C_q$ 与所需反向纯比较成立，定理145.3使 $q\in B$。
+这里未向未覆盖目标预定义 $\pi_o(q)$。
+
+紧性的原对象可明确写为
+
+$$
+\Gamma=\{(s,x,f)\in S\times K\times\mathcal E:
+f(s)=1,\ f(x)=0\},\qquad B=\operatorname{pr}_K\Gamma.
+\tag{XII148.16}
+$$
+
+完整原 $S\cong S^2$、$K$、$\mathcal E$ 均紧，评价连续，故 $\Gamma$ 紧。
+原 minimum 达到使该投影准确等于 $B$，包括每个 $D_s$ 的全部混态；所以 $B$ 在 $K$ 中闭。
+这不需要整族球的连续性或移动标签选择。
+
+由 (XII148.14) 和零对称，$0<h<\varepsilon$ 的全部纯点在 $B$。
+定理148.4的真实原纯逼近列与 $B$ 闭性补上 $h=\varepsilon$。
+零层准确为 $\{p\in P:h(p)=0\}=S$，其成员资格已由推论145.4另付。
+于是整个闭低带 $\{h\le\varepsilon\}\cap P$ 均在 $B$。
+
+再取任意原纯 $q$ 满足 $h(q)\ge1-\varepsilon$。
+若 $q=o$，已付 $o\in B$；其余因 $1-\varepsilon>0$，有
+$q\in P\setminus(A\cup\{o\})$。
+对整个实际 $S_q$ 的任意 $x$，原达到性给 $f\in\mathcal F_q$，满足 $f(x)=0$。
+原补效应 $u-f$ 属于 $\mathcal F_x$。在同一个原纯根 $o$ 上评价，仅对纯对用 PR，得到
+
+$$
+h(q)+h(x)=T_q(o)+T_x(o)
+\le f(o)+(u-f)(o)=1.
+\tag{XII148.17}
+$$
+
+这正是 (XII145.27) 的原互补不等式。故每个实际 $x\in S_q$ 都满足
+$0\le h(x)\le1-h(q)\le\varepsilon$，已由闭低带进入 $B$。
+至此才得到整个 $S_q\subseteq B$，进而消费上述推论145.4的 $C_q$、反向比较和真实标签返回，
+得到 $q\in B$。这里没有要求存在读数恰为 $1-h(q)$ 的伙伴，也没有用假想的伙伴标签合同。
+原严格高带已含 $h=1$；同一不等式也处理这一情形，无需另证 $h=1$ 的纯点刻画。
+根与阈值从始至终未变。证毕。
+

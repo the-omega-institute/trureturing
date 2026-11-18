@@ -4357,3 +4357,644 @@ Global resource minima, net savings, universal generator minimality and
 an unconditional common physical realization remain unproved. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 32. An unknown coarse code on the actual native fork
+
+**Definition 32.1 (actual operands and the unknown-code contract).**
+At a coherent returned configuration of §§25–27, select the actual fork
+after $P_\varepsilon S_\varepsilon$ in §30, before its optional Next.
+Its acquired root is $o$, its activated left marker is $m=o.L$, its
+right child is $y=o.R$, and $m$ has its actual dormant marker $z$.
+Keep the separately acquired reference $r$. The same local configuration
+can be selected in a larger commissioned source on either original
+entrance; its actual prehistory and separate seed preparations remain.
+The descriptors, roles, wires and source token are those actually acquired,
+not references converted from these letters. Put
+
+$$
+\begin{gathered}
+H=\operatorname{span}\{|r\rangle,|o\rangle,|m\rangle,|y\rangle\},\qquad
+Q_0=|r\rangle\langle r|+|o\rangle\langle o|,\quad
+Q_1=|m\rangle\langle m|+|y\rangle\langle y|,\\
+\mathcal L(\rho)=\sum_{a=0}^1|a\rangle\langle a|_A\otimes
+ Q_a\rho Q_a.
+\end{gathered}
+\tag{V.40}
+$$
+
+The coarse bit distinguishes the old reference/root plane from the two
+activated child modes. It is an apparatus occupation label, not a new
+meaning of native Tag. Let $E:H\to\mathcal Q_M$ be the actual bit-vector
+embedding, with every other commissioned qubit, including $z$, in vacuum.
+The input family consists of every density matrix $\rho_{HR}$, with any
+untouched reference $R$, supplied through §25.1's supported coherent ingress.
+The laboratory has no operation on $R$. All its initial classical and
+auxiliary backing $C$ is common and independent of this unknown input:
+the full native source, source tapes, preparation labels, archives,
+samples, rights, enrollment, versions, controls and external command
+sources are included. Correlations among those classical source data are
+allowed; an independent product of bilateral seeds is not assumed.
+Any supplied randomness has a common input-independent law. The initial
+joint state is $C\otimes(E\otimes I_R)\rho(E^\dagger\otimes I_R)$,
+with the additional vacuum factors specified below. One may condition on
+any fixed actual $C$; a common input-independent mixture is also allowed.
+
+This family is a preparation premise, not a consequence of having prepared
+one known vector in §30. One admissible entrance keeps the QNew carrier
+vacuum during classical fork creation and performs its sole coherent
+ingress at that returned fork, leaving the acquired input port vacuum.
+Growth of an earlier unknown $r/o$ input alone does not supply this whole
+four-dimensional family, and no older unknown state is reset or overwritten.
+Every actually accessible preparation label stays
+in $C$. If the actual preparation service instead exposes input-dependent
+labels, it does not satisfy this common-backing premise; those labels
+must not be deleted to invoke the results below.
+
+**Definition 32.2 (complete comparison and the one-excitation catalogue).**
+A protocol returns a bit $A$ and retains its actual bank, every acquired
+system, source successor and full record. It is total on all positive
+branches and has finite depth and finite resources on every branch.
+It may execute arbitrary finite native growth, genuine Next, source reads,
+lawful refusals, output service and adaptive classical control. No bound
+on future lawful source size is imposed. Its quantum resources are all
+the coherently accessible qubits, initially with exactly one excitation
+in total, already carried by $EH$; all other accessible qubits are vacuum.
+QNew appends independent vacuum. Quantum actions are number-preserving
+bank unitaries, identity holds, these growth isometries, and the actual
+single-site occupation instrument of §25.1. For the obstruction one may
+even enlarge the allowed unitaries to *all* number-preserving unitaries.
+Every accessible ingress/delivery-port qubit and quantum controller is
+included in the counted bank; their permitted number-preserving controls
+are included too. There is no uncounted interactive quantum work system,
+extra coherent measurement primitive, compound detector, reset, discard
+or postselection. Any input-independent assistance with permitted access
+is part of this bank or $C$, rather than omitted from the account.
+An inaccessible $R$
+may itself contain excitations; it is not an addressable auxiliary.
+
+For comparison, put all branches in their finite union of bank coordinates,
+padding unused coordinates mathematically by vacuum, and use orthogonal
+blocks for their actual classical records. This is no physical allocation
+or erasure. A full ideal lift $\widehat{\mathcal L}$ may retain additional
+systems and records in this common space, but its $A$, original source-bank
+factors and $R$ marginal must be exactly $(\mathcal L\otimes I_R)(\rho)$
+with the code embedded by $E$. This is a physical tensor-factor marginal,
+not a projection onto the code followed by renormalization.
+For each such lift define
+
+$$
+\Delta(\Pi,\widehat{\mathcal L})=
+\sup_{R,\rho_{HR}}\frac12\left\|
+ \Omega_\Pi(\rho)-\Omega_{\widehat{\mathcal L}}(\rho)\right\|_1.
+\tag{V.41}
+$$
+
+The code is returned on the same acquired modes, embedded into the enlarged
+bank. Records are not physically removed by taking a marginal in a proof.
+A protocol with no specified ideal extra-record interface must still
+satisfy this necessary marginal condition to implement (V.40).
+
+## 33. A uniform adaptive obstruction with all backing retained
+
+**Theorem 33.1 (one addressable excitation has a quarter error floor).**
+Under Definitions 32.1–32.2, every finite adaptive protocol and every full
+ideal lift obey
+
+$$
+\Delta(\Pi,\widehat{\mathcal L})\ge\frac14.
+\tag{V.42}
+$$
+
+The bound is uniform in bank size, finite native growth, number of reads,
+choice of number-preserving unitaries, feedback and input-independent
+randomization. It tests the retained quantum state jointly with a reference,
+not just the two label probabilities.
+
+**Proof.** Fix all input-independent classical randomness in a tape $t$,
+including any common random source backing. Conditional on $t$ and actual
+observed occupation results, every classical guard, request, record and
+native successor is determined. There is precisely one formal path on
+which all occupation reads return zero, possibly with no reads at all.
+Let $a(t)$ be its returned bit. Impossible paths may be assigned their
+specified terminal bit too; no normalized zero-probability state is used.
+
+On the entire current one-excitation bank, a click at acquired site $q$
+has projector $|q\rangle\langle q|$, of rank one. This includes reads
+of $r$, markers and newly acquired sites. Before the first click, all
+unitaries, vacuum extensions and zero-read projectors compose linearly
+with the initial embedding. Composing with that click makes the branch
+operator from $H$ rank at most one. Later unitaries, growth and reads
+cannot increase that rank. A resolved terminal branch containing a click
+therefore has an operator $|u_h\rangle\langle v_h|$. Acting on half of
+an entangled input gives a product across laboratory and untouched $R$;
+sums over such branches give subnormalized separable outputs. All source
+records and auxiliary qubits are on the laboratory side of this cut.
+
+This is the rank-one Kraus/entanglement-breaking mechanism of Horodecki,
+Shor and Ruskai, *Entanglement Breaking Channels*,
+[arXiv:quant-ph/0302031v2, Theorem 4(B),(D)](https://arxiv.org/html/quant-ph/0302031v2).
+Here the click subinstrument need not preserve trace; the displayed
+rank-one factorization proves the required subnormalized statement directly.
+We do not claim that the whole protocol is entanglement breaking: its
+all-zero path may preserve quantum information.
+
+Take a fresh two-dimensional $R$, independent of $C$, and the two supported
+inputs
+
+$$
+|\Phi_0\rangle=\frac{|r\rangle|0\rangle+|o\rangle|1\rangle}{\sqrt2},
+\qquad
+|\Phi_1\rangle=\frac{|m\rangle|0\rangle+|y\rangle|1\rangle}{\sqrt2}.
+\tag{V.43}
+$$
+
+For input $\Phi_b$, test the output bit $b$ and the returned-code/$R$
+projector $|\Phi_b\rangle\langle\Phi_b|$, with identity on every other
+actual output. Its ideal probability is one for *every* ideal lift.
+For a separable positive output $\sigma$ its probability is at most
+$\operatorname{tr}\sigma/2$. Indeed for a positive product on the code
+and $R$ the overlap is $\operatorname{tr}(X^TY)/2\le
+\operatorname{tr}X\operatorname{tr}Y/2$; projection to the two-dimensional
+code and summation over positive products prove the claim also with
+arbitrary additional laboratory systems. This mathematical test/marginal
+does not supply an extra physical measurement or remove any actual record.
+
+If $a(t)\ne b$, every path with returned bit $b$ contains a click.
+Their combined test probability is at most half their total trace,
+hence at most $1/2$. Other tapes have test probability at most one.
+Write $w_a=\Pr_t[a(t)=a]$, so $w_0+w_1=1$. The actual test probability
+$s_b$ and the joint half-trace-distance $d_b$ on input $\Phi_b$ satisfy
+
+$$
+s_b\le1-\frac{w_{1-b}}2,\qquad
+d_b\ge1-s_b\ge\frac{w_{1-b}}2,\qquad
+\max(d_0,d_1)\ge\frac14.
+\tag{V.44}
+$$
+
+The weights are the same for the two inputs because $C$ and the random
+tape are common. Trace-distance testing on the full output proves (V.42).
+Integration over a measurable random tape changes none of these bounds.
+An arbitrarily long finite zero path remains a single path; no uniform
+depth bound across different protocols was used. $\square$
+
+**Proposition 33.2 (the family and the instrument both matter).**
+The common-backing and unknown-family requirements cannot be inferred
+from a known singleton experiment. Exact coarse probabilities obtained
+by fine occupation reads do not implement (V.40).
+
+**Proof.** If the sole promised input is a known vector in $Q_bH$, return
+the known bit $b$ and hold the bank: the desired instrument is exact with
+one excitation. The same strategy works for an unknown within-block family
+when an actually supplied classical preparation label gives its block.
+That input-dependent label violates Definition 32.1; it is an additional
+resource, not a reason to erase the preparation record. In contrast, a
+fine read distinguishing $r$ and $o$, followed by forgetting their names
+in the coarse bit, maps $\Phi_0$ to its dephased mixture. Its overlap
+with $\Phi_0$ is $1/2$, although its coarse bit is always correct.
+Keeping the fine record makes the full instrument different as well.
+The distinct C5 contract in
+[Measurement-relative quantum boundary, Definition 1.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口)
+already separates these two kinds of read. Its C5 state/preparation and
+action domain is not being transferred to the present native bank.
+$\square$
+
+## 34. Two acquired meter qubits earn the coarse instrument
+
+**Definition 34.1 (paid meter installation and the literal supplier).**
+Retain the actual source, input and rights of Definition 32.1. At native
+Ready, lock the coherent $(v,\mathfrak a)$ and acquire two distinct QNew
+qubits $u,v_m$, typed as apparatus meters, with their real references,
+exclusive controls and retained acquisition records. Below write $v_m=d$
+to distinguish this meter from the native version $v$. They are not
+native occurrences. Supply one separately paid *known* excitation at
+the fresh vacuum $u$, giving $|10\rangle_{ud}$; this is §25.1's known
+excitation-preparation permission, not excitation creation by $P/B$ or
+reset of an unknown qubit. Keep its actual source, preparation labels
+and any supplied delivery apparatus/output. The construction requires
+no further quantum work qubit; a physical excitation-delivery device
+has its own additional backing and price if present.
+
+Acquire five controllable computational wires on the actual endpoint pairs
+$\{m,u\},\{m,d\},\{y,u\},\{y,d\},\{u,d\}$ and the four one-site
+phase controls at $m,y,u,d$. They are not new material seams. The exact
+canonical supplier abbreviated as FARG continuation in §§25–31 is
+[FIB atom recursive holographic boundary geometry continuation, Definition 60.1, (60.2)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#60-a-source-owned-finite-actuator-for-the-installed-whole-rho-interaction).
+With enable one its literal full-qubit matrices are
+
+$$
+P_a(\theta)=\operatorname{diag}(1,e^{-i\theta})_a,\qquad
+B_{ab}(\theta)|_{10,01}=
+\begin{pmatrix}\cos\theta&i\sin\theta\\i\sin\theta&\cos\theta\end{pmatrix},
+\qquad B_{ab}(\theta)|_{00,11}=I.
+\tag{V.45}
+$$
+
+Only finite signed-dyadic angle blocks are executed. Real angles in the
+following proof define a mathematical reference, approximated in §35.
+No PR57 packet source, fixed cap, whole-$\rho$ guard, three-auxiliary
+density-phase actuator or PR57 tariff is imported with these matrices.
+
+**Theorem 34.2 (a full-space word and its source-faithful instrument).**
+There is a 26-angle-block reference word using precisely these acquired
+controls which, followed by one actual occupation read at $d$, has full
+output
+
+$$
+\sum_{a=0}^1 |h_a\rangle\langle h_a|\otimes
+ (E Q_a\otimes I_R)\rho(Q_a E^\dagger\otimes I_R)
+ \otimes |\mu_a\rangle\langle\mu_a|,
+\qquad \mu_0=10,\quad\mu_1=01.
+\tag{V.46}
+$$
+
+Here $h_a$ contains the delivered detector bit $a$ and *all* actual
+source, acquisition, preparation, control, hold and output records;
+the original source successor is unchanged by this extra transaction.
+Any unchanged independent delivery systems are included as retained
+factors. Thus (V.46) is a full ideal lift of (V.40), preserving every
+unknown within-block coherence and arbitrary reference correlation.
+
+**Proof.** First reuse the full fermionic-swap matrix, not its
+one-excitation restriction. On any two acquired qubits put
+
+$$
+F_{ab}=P_a(\pi/2)P_b(\pi/2)B_{ab}(\pi/2).
+\tag{V.47}
+$$
+
+A single-occupation hop has phase $i$, cancelled by its occupied site's
+phase $-i$; $00$ is fixed and $11$ gets $(-i)^2=-1$. Thus
+$F_{ab}|x_ax_b\rangle=(-1)^{x_ax_b}|x_bx_a\rangle$ on all four inputs.
+This mature matrix is Brod–Childs,
+[*The computational power of matchgates and the XY interaction on arbitrary graphs*, equation (4)](https://arxiv.org/html/1308.1463v1),
+already consumed by the canonical continuation's Theorem 62.7. Its
+universality theorem is unnecessary here and supplies no unlisted gate.
+
+For $q=m,y$ execute the chronological four-swap word
+$F_{qu},F_{ud},F_{qu},F_{qd}$, whose operator is
+
+$$
+D_q=F_{qd}F_{qu}F_{ud}F_{qu},\qquad
+D_q|x_qx_ux_d\rangle=(-1)^{x_u(x_q+x_d)}|x_qx_ux_d\rangle.
+\tag{V.48}
+$$
+
+Indeed the first three swaps permute $(x_q,x_u,x_d)$ to
+$(x_d,x_u,x_q)$ and accumulate exponent
+$x_qx_u+x_qx_d+x_ux_d$. The last swaps the outside bits back and
+adds $x_qx_d$, proving the stated sign modulo two. This checks also
+double and triple occupation. Consequently the two diagonal words obey
+
+$$
+C_*=D_yD_m=(-1)^{n_u(n_m+n_y)}
+\tag{V.49}
+$$
+
+on the *entire* four-qubit tensor product: the two unwanted $n_un_d$
+terms cancel, leaving identity action on $d$ and on all untouched qubits.
+This cancellation needs neither a clean third qubit nor a fictitious
+one-excitation interpretation of the total-two-excitation apparatus.
+
+Set $A_*=B_{ud}(\pi/4)$ and $U_*=A_*^\dagger C_*A_*$. On the
+meter basis $(10,01)$,
+
+$$
+A_*=\frac1{\sqrt2}\begin{pmatrix}1&i\\i&1\end{pmatrix},\qquad
+Z_u=\begin{pmatrix}-1&0\\0&1\end{pmatrix},\qquad
+A_*^\dagger Z_u A_*=\begin{pmatrix}0&-i\\i&0\end{pmatrix}.
+\tag{V.50}
+$$
+
+For $Q_0H$, $n_m+n_y=0$; for $Q_1H$ it is one. Hence, for every
+vector $\psi\in H$,
+
+$$
+U_*(E\psi\otimes|10\rangle)=
+ E Q_0\psi\otimes|10\rangle+iE Q_1\psi\otimes|01\rangle.
+\tag{V.51}
+$$
+
+The actual detector is exactly $I-n_d,n_d$ on the full bank, not an
+extra POVM or a purified detector. Multiplying (V.51) by these two
+projectors gives its two branch operators. The factor $i$ is common
+to all of $Q_1H$ and cancels in that branch density matrix, including
+off-diagonal $m/y$ terms. The $r/o$ terms are untouched. Linearity on
+matrix units and tensoring identity on $R$ proves (V.46) for every
+mixed/reference input. During gates the source and meter occupations
+may exchange; only their total of two is invariant. At the ideal return,
+the source has one excitation and the meter has the other.
+
+All gates are commanded in a fixed schedule, independent of unknown
+amplitudes, with no intervening occupation read. The only outcome is
+the final bit at $d$. In particular the apparatus does not record which
+of $m,y$ was occupied. Each of eight $F$ occurrences uses two $P$ and
+one $B$ blocks; $A_*$ and its inverse add two $B$ blocks. The count is
+$16$ phase plus $10$ hopping blocks, totaling $26$. $\square$
+
+## 35. Finite precision on the complete enlarged output
+
+**Theorem 35.1 (dyadic synthesis, leakage and uniform joint error).**
+Given a requested $\varepsilon>0$ and a supplied positive rational
+$\varepsilon_-\le\varepsilon$, choose an integer $b\ge2$ such that
+$e_b=26\,2^{-b}\le\varepsilon_-$. Replace each real angle of §34 by
+a signed dyadic within $2^{-b}$. The executed finite instrument then
+differs from the lift (V.46) by joint half-trace-distance at most $e_b$,
+uniformly over $\rho_{HR}$ and arbitrary $R$. The probability of output
+outside the ideal outcome/code/meter support is at most
+$\min(1,e_b^2)$. Leakage is retained in the comparison space.
+
+**Proof.** Finite rational angle computation is available without an
+exact irrational gate. For example put
+$T_N(x)=\sum_{j=0}^{N-1}(-1)^jx^{2j+1}/(2j+1)$ and use the classical
+Machin identity $\pi=16\arctan(1/5)-4\arctan(1/239)$.
+The alternating-series bound gives
+
+$$
+\left|\pi-16T_N(1/5)+4T_N(1/239)\right|
+\le\frac{16\,5^{-(2N+1)}+4\,239^{-(2N+1)}}{2N+1}.
+\tag{V.52}
+$$
+
+Taking $N=b+3$ makes this less than $2^{-(b+2)}$: the coarser bound
+$20\,5^{-(2b+7)}$ has ratio $320/5^{11}<1$ to $2^{-(b+2)}$ at $b=2$,
+and that ratio is multiplied by $2/25$ at every increment of $b$.
+Divide the rational
+approximation by two or four, round to the nearest $2^{-b}$ and negate
+when required. The rounding error plus the series error is less than
+$2^{-b}$. The magnitudes are below two, so exponents $-b,\ldots,0$
+give exactly $J=b+1$ padded magnitude-digit slots per block. Computing
+the $2N$ rational summands, rounding and storing all descriptions is
+finite paid arithmetic, not a native probability read.
+
+On their full qubit spaces the Hermitian generators of $P$ and $B$
+have norm one: they are respectively $n_a$ and the signed exchange
+matrix on $10,01$, zero on $00,11$. Integration of the derivative gives
+$\|G(\theta)-G(\widetilde\theta)\|\le
+|\theta-\widetilde\theta|$. Telescoping the 26 unitary factors yields
+
+$$
+\|\widetilde U-U_*\|_{\mathcal Q_M\otimes\mathbb C^2\otimes\mathbb C^2}
+\le e_b.
+\tag{V.53}
+$$
+
+This norm is on the full tensor product, including all its excitation
+sectors. It is not the norm in (V.32). Appending identity on any reference
+preserves it. Expanding the difference of the two unitary sandwiches
+gives half-trace-distance at most $e_b$ on any normalized input.
+The same actual full-space occupation instrument, record construction
+and output channel contract that distance. The comparison lift carries
+the *same written dyadic command labels* as the executed schedule;
+its real-angle action is a mathematical comparator, not a claim that
+those angles were executed or printed as dyadic values.
+
+For the leakage statement, the detector has the mathematical isometry
+$T=\sum_a|a\rangle_A\otimes\Pi_a$, with
+$\Pi_0=I-n_d$, $\Pi_1=n_d$. This is only a norm proof for the already
+specified instrument, not an assumed physical detector purification.
+Let $S$ be the output subspace with bit $a$, source in $EQ_aH$ and meter
+$\mu_a$, and every other bank mode vacuum. Then
+$(I-P_S)TU_*$ annihilates the supplied input subspace, whereas
+$\|(I-P_S)T\widetilde U\|$ there is at most $e_b$. Squaring and
+purifying an arbitrary mixed input bounds the leakage probability by
+$e_b^2$. Dephasing the classical bit leaves that probability unchanged.
+No conditioning on a rare outcome or deletion of leaked states is used.
+$\square$
+
+**Proposition 35.2 (actual finite supplies and calibrated deviations).**
+The dyadic construction uses exactly $26(b+1)$ elementary catalog
+rotation slots and magnitude-digit fetches, including disabled digits,
+five added wires, two QNew meters, one known-excitation preparation and one occupation
+read. A sufficient endpoint-specific catalog has $10(b+1)$ entries:
+four positive phase controls, five positive hopping controls and the
+negative $u,d$ hopping control, at each of the $b+1$ exponents.
+Gate execution occupies $26(b+1)$ logical rotation ticks, in addition
+to acquisition, arithmetic, fetch, preparation, detector and output work.
+
+**Proof.** Use the expansion counted in Theorem 34.2 and the digit
+execution rule of the actual (60.2) supplier. Phases within a block and
+hops on its one wire commute, so its digit product is exactly the written
+dyadic block. Every $F$ has positive $\pi/2$ blocks; only $A_*^\dagger$
+requires a negative hopping angle. The stated catalog covers precisely
+these types, including repeated uses of the same entries.
+
+If the commissioned native/reference bank has $q$ qubits, the retained
+application carrier after installation has $q+2$ qubits. At the displayed
+minimal fork $q=5$, including $z$, hence it has seven, not six. Preparation
+and coherent input ingress have their own source/reference backing;
+additional physical supply systems, if any, add to this count. At every
+actual tick charge holding for every then-installed bank, meter and other
+retained quantum system, including $r$, dormant modes and delivery systems.
+Equivalently retention is $\sum_t Q_{\rm installed}(t)$ in logical
+qubit-ticks, or its supplied duration-weighted version. Both meter
+occupations, their real references and the detector record remain after
+return; no free reset, disposal or repeated-use readiness is asserted.
+
+The total resource account also includes wire/control and catalog
+installation/calibration, descriptor and version storage, all rational
+arithmetic and digit descriptions/fetches, source locks and cursor saves,
+pending state, excitation delivery, detector coupling, outcome latch,
+immutable record allocation, Print/End/ACK/Return and charged scratch
+clearing. Use their actually supplied prices; no PR57 fee or native
+Read tariff pays these items. Their finiteness follows from the finite
+lists and finite progress premises, not from a claimed uniform price.
+
+If ingress/preparation has complete joint error $e_0$, each elementary
+rotation has full-space operator-norm deviation $\zeta_j$, and hold and
+detector/output instruments have complete half-diamond errors $h_i$ and
+$\kappa_i$, the same standard hybrid estimate used in AAV29 gives
+
+$$
+\frac12\|\Omega_{\rm actual}-\Omega_{\rm ideal}\|_1
+\le e_b+e_0+\sum_j\zeta_j+\sum_i(h_i+\kappa_i).
+\tag{V.54}
+$$
+
+These certificates must cover the full enlarged output and every observable
+side channel, including leakage. They need not preserve an ideal sector.
+Without such physical certificates only the conditional ideal-catalog
+approximation is established. Accuracy $\varepsilon$ with imperfections
+requires choosing finite budgets whose displayed sum is at most
+$\varepsilon$; no independence of faults is used. $\square$
+
+## 36. Complete original service and the exact capability boundary
+
+**Theorem 36.1 (full-space maintenance and every original finite future).**
+With the paid full-bank holds, rights, finite supplies and progress of
+§§25–27 and 34–35, the installed meter transaction and its approximation
+retain the complete original all-phase service on both entrances.
+This includes approximate states outside the supported code, every
+untouched reference and every subsequent finite lawful growth/Next.
+
+**Proof.** Acquire $m,y$ through the actual guarded parent fields and
+their immutable source/qubit descriptors. Acquire $u,d$ separately;
+their typed identities never become source children or replace $r,z$.
+Save borrowed cursors and retain the actual locked configuration while
+installing and executing the finite word. Its pending state contains
+acquisition/preparation progress, angle descriptions, current block/digit,
+held systems, detector latch and emitted/unprinted output. Until all
+its obligations finish it is a busy extra transaction, not native Ready.
+Its immutable record binds the actual source/acquisition versions and
+the meter/wire identities; old samples and records are not rewritten.
+
+The extra operations do not write native source, history or sample fields.
+They finish their own sealing, Print, End, local ACK, root Return and
+scratch clearing before releasing service. During original Receive,
+parser prefixes, Navigate/Guard, query, reserve/edit/maintain and output
+subphases, hold the *entire enlarged bank*, retaining the original
+pending/parser state and every meter and source record. Disabled protected
+operations remain unexecuted. An actual grant denial keeps its denial
+record and executes no gate; a completed original wrong-type refusal
+retains its different original meaning and reply. Neither creates a
+successful native event or substitutes for original OutOfRange/BadFrame.
+
+Crucially, a material acquisition or growth appends vacuum by the full
+isometry $W:\xi\mapsto\xi\otimes|0\cdots0\rangle$. For *every*
+joint enlarged-bank/reference density matrix $\sigma$, not only one
+excitation, its actual action is
+
+$$
+\sigma\longmapsto(W\otimes I_R)\sigma(W^\dagger\otimes I_R).
+\tag{V.55}
+$$
+
+Reading the literal bit strings proves this identity; it requires no
+use of $WE_D=E_{D'}J$ on a total-two-excitation input. The latter remains
+the correct restriction on the source's ideal one-excitation factor.
+Marker activation only changes its recorded role and wire enables;
+every old qubit identity and state stays. Thus the actual $P/S$ templates
+and genuine Next target/left-descent continue exactly as in §27. Quantum
+leakage can occupy dormant modes but changes no classical native guard.
+Original Tag, promotion/split tests, FetchGrowth, all original outputs,
+versions, refusals and sample equality therefore keep the same operands.
+
+This verifies the full-space quantum premise for reusing Theorem 27.2's
+already proved phase cases. Each added source component or edit incurs
+its actual commissioning and growth costs; no finite roster, height or
+stationary observer replaces the original goal. The lock is local to
+this finite extra transaction. Every later original finite continuation
+is again available with its actual resources and the held meters.
+
+Subsequent source $P/B$ circuits are their literal full-space unitaries,
+with identity on the meters; native service is hold/vacuum extension.
+They therefore act legally also on leaked states. The reference ideal
+source output has one excitation and can reuse §28's sector estimate,
+but that Hamiltonian estimate is not asserted for leaked source sectors.
+Applying the same finite adaptive continuation channel to actual and
+ideal full outputs contracts (V.53)–(V.54); additional certified errors
+add by AAV29's finite instrument composition. Record-conditioned future
+requests retain their actual source successors in their separate blocks,
+not pathwise agreement under differing outcomes. No postselection bound,
+infinite physical bank or uniformly finite unbounded-time hold follows.
+$\square$
+
+**Proposition 36.2 (what has been supplied and what remains distinct).**
+Theorems 33.1 and 34.2–35.1 establish a catalogue-relative threshold:
+one total addressable excitation cannot uniformly approximate (V.40)
+below $1/4$, while two acquired meter qubits and one additional known
+excitation, with the declared paid controls, permit every specified
+positive accuracy. This is neither a global energy/qubit minimum nor
+a universal impossibility of coarse measurement.
+
+**Proof.** The lower theorem ranges over every protocol in its stated
+one-excitation catalogue and common unknown-input family, including all
+accessible source assistance. The upper theorem supplies a particular
+finite enlarged apparatus, with no assertion that its meters or its 26
+blocks are optimal. Other detectors, coherent controls, excitation sectors,
+preparation side information and physical implementations have different
+contracts. A rank-two occupation instrument granted as a primitive would
+already change the lower theorem's catalogue.
+
+For each block the full-record correction criterion in
+[AURIC optimal measurement quantum recovery, §6](AURIC_FIB_OPTIMAL_MEASUREMENT_QUANTUM_RECOVERY.md#6-全输入与全部参考的复-kraus-判据)
+explains the target: a retained fine effect nonscalar on that block cannot
+be corrected on its entire unknown code. That criterion and the mature
+rank-one and gate facts are suppliers, not new general results here.
+The source-specific adaptive quarter bound, two-loop cancellation with
+its actual meter embedding, and full-output/native-service application
+are repo-derived mathematical synthesis; no literature priority or
+Lean verification is asserted. AAV25–31's commissioning, activation,
+growth and full original service are reused rather than claimed anew.
+
+[Acquisition III §35](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md#35-finite-dyadic-actuator-words-and-the-full-return-ready-column)
+addresses exact finite dyadic synthesis of a different
+full-return ready column; it gives no error floor for the present finite
+approximations. [XI142–143's static boundary geometry](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md)
+and [finite-time central-defect endpoint estimates](../../../Blueprint/D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap.md)
+supply no native occupation instrument
+or meter permission. Conversely this conditional native construction
+does not identify C5, original-control $M_3$, path/field interfaces or
+the whole EB3/PSD3 domain. Unknown-code preparation/ingress, real gate
+and detector hardware, calibration, clocks, holds, physical supply and
+unlisted observable channels remain their explicit physical obligations.
+Neither this increment nor its conditional instrument completes the
+full common relational-recovery objective. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 37. A regular interior target with a remote boundary bit
+
+**Definition 37.1 (normalized actual family).** All physical indices below are qubit occupation indices, not the native symbols $\alpha,\beta$. For an integer $p\ge1$ put $N=p+4$, $x=4^{-p}$, $e_0=(1,0)^{\mathsf T}$ and $e_1=(0,1)^{\mathsf T}$. For $w\in\{0,1\}^N$, use the original ordered product $A_w=A_{w_1}\cdots A_{w_N}$ and define the following two actual free-boundary states, with no closure or limiting points:
+
+$$
+A_0=\begin{pmatrix}\sqrt3/2&0\\0&1/\sqrt2\end{pmatrix},\quad A_1=\begin{pmatrix}0&1/\sqrt2\\1/2&0\end{pmatrix},\qquad \psi_s(w)=\frac{e_s^{\mathsf T}A_we_0}{\sqrt{Z_s}},\quad Z_0=\frac{512+x}{768},\quad Z_1=\frac{256-x}{768},\quad s\in\{0,1\}. \tag{V.56}
+$$
+
+The designated observation is $\sigma_s=\operatorname{rawInterior}(p,3,1,\psi_s)$: the actual partial trace over the first $p$ and final one tensor factors, keeping the three ordered factors $p+1,p+2,p+3$. This is exactly the repository's $CC^\dagger$ observation, with both exterior words in their original positions. Because $\psi_s$ is normalized, its trace is one; no unknown normalization scale is discarded. The observer knows $p$, both candidate descriptions and the observation channel, but receives neither $s$ nor an exact classical matrix $\sigma_s$ as a free input. A copy supplies physical systems on which the declared instrument can act. The bit $s$ is a preparation parameter in a virtual boundary, and is not a native tag, event, seed coordinate or serial-history bit.
+
+**Theorem 37.2 (uniform regularity and the existing exact identification).** For every $p\ge1$, (V.56) consists of normalized orthogonal states. Each target has two-site spanning, injective transfer and positive definite actual left/right environments at $(p,3,1)$, precisely as required by `OpenBoundaryMPSInteriorCommonCore.interior_phase_recovery`. Consequently equality of its complete exact raw interior matrix with that of any actual homogeneous binary bond-two competitor of the same length implies equality of full states up to a unit complex phase. This uses the existing conditional theorem; it is not a new general identification theorem. Both $\sigma_s$ have the same four-dimensional support $\mathcal S$, independent of $s$ and $p$, and on that support $\sigma_s\succeq(41/33280)I_{\mathcal S}$.
+
+Proof. Write $E(X)=\sum_iA_iXA_i^\dagger$ and $E^*(X)=\sum_iA_i^\dagger XA_i$. On diagonal coordinates, $E$ has matrix $\left(\begin{smallmatrix}3/4&1/2\\1/4&1/2\end{smallmatrix}\right)$ with eigenvalues $1,1/4$; on coordinates $(X_{01},X_{10})$ its matrix is $\left(\begin{smallmatrix}\sqrt6/4&\sqrt2/4\\\sqrt2/4&\sqrt6/4\end{smallmatrix}\right)$. Thus its other eigenvalues are $(\sqrt6\pm\sqrt2)/4$ and $\det E=1/16\ne0$. The rows formed by the transposed entries of $A_{00},A_{01},A_{10},A_{11}$, with columns ordered $(0,0),(0,1),(1,0),(1,1)$, form $M=\left(\begin{smallmatrix}3/4&0&0&1/2\\0&\sqrt2/4&\sqrt6/4&0\\0&\sqrt3/4&1/2&0\\\sqrt2/4&0&0&\sqrt2/4\end{smallmatrix}\right)$, whose determinant is $-1/128$. This proves two-site spanning, including its complex-linear version. Put $D=\operatorname{diag}(1/3,-2/3)$. Direct multiplication gives $E^*(I)=I$, $E^*(D)=D/4$, $e_0e_0^{\mathsf T}=2I/3+D$ and $e_1e_1^{\mathsf T}=I/3-D$. Therefore the unnormalized left environments are $P_0=2I/3+xD$ and $P_1=I/3-xD$, while $H=E(e_0e_0^{\mathsf T})=\operatorname{diag}(3/4,1/4)$. Since $0<x\le1/4$, $P_0\succeq I/2$ and $P_1\succeq I/4$. The normalized target uses the bilinear left boundary $l_s=e_s/\sqrt{Z_s}$, so its actual left environment is $P_s/Z_s$, and its actual right boundary is $r=e_0$, with environment $H$. All required positivity is actual, not a competitor assumption. The decaying mode selected here is the diagonal eigenvalue $1/4$, not the largest subleading transfer eigenvalue.
+
+For completeness, use exactly the transposed feature dictionary $F_{u,(i,j)}=(A_u)_{j,i}$ for three-letter $u$, and $W_s=H\otimes P_s^{\mathsf T}$. The existing exterior-word factorization gives the unnormalized observation $FW_sF^\dagger$. Its trace is $Z_s$ as displayed in (V.56): explicitly, for $G=F^\dagger F$ the diagonal is $(43/64,21/64,21/32,11/32)$ and $\operatorname{Tr}(W_sG)=Z_s$. This trace is also $\sum_w|e_s^{\mathsf T}A_we_0|^2$, proving normalization. Each $A_0$ preserves and each $A_1$ flips the virtual index, so $e_s^{\mathsf T}A_we_0$ vanishes unless the number of ones in $w$ has parity $s$; the two normalized states are orthogonal. Appending the letter $0$ to the four two-letter words multiplies their matrices by invertible $A_0$, so $F$ has full column rank. More explicitly, $G$ has even block $\left(\begin{smallmatrix}43/64&3\sqrt6/16\\3\sqrt6/16&11/32\end{smallmatrix}\right)$ on columns $(0,0),(1,1)$ and odd block $\left(\begin{smallmatrix}21/64&5\sqrt2/16\\5\sqrt2/16&21/32\end{smallmatrix}\right)$ on the other columns, with all cross-block entries zero. Both determinants are $41/2048$, and the traces are $65/64$ and $63/64$. A positive two-by-two matrix has smallest eigenvalue at least its determinant divided by its trace, hence $G\succeq(41/2080)I$. Since $Z_s<1$, $W_s/Z_s\succeq I/16$, so $\sigma_s=F(W_s/Z_s)F^\dagger$ has range $\mathcal S=\operatorname{range}F$ and the asserted lower bound there. This proves every target hypothesis before applying the existing phase-recovery conclusion. $\square$
+
+## 38. Uniform finite-copy cost of the declared interior interface
+
+**Definition 38.1 (interior acquisition task and complete accessible backing).** Conditional on the same unknown $s$, each paid input is an independent copy of $|\psi_s\rangle\langle\psi_s|$; only its designated three factors may convey input-dependent information to the consumer. At the input to a protocol using at most $m$ copies, the *joint* accessible quantum/classical state is $\sigma_s^{\otimes m}\otimes\tau_B$, with the same $\tau_B$ for both labels. This includes every initially accessible reference, sample, source field, grant, descriptor, clock reading and preparation/control record. Equality only of backing marginals would be insufficient; correlations with the blocks must also obey this product promise. Exterior factors and any preparation-label memory remain retained, with their true correlations, outside this accessible interface. Every later accessible output, including timing, allocation, intermediate outcomes, refusals and unfinished records, must be produced by the same label-independent instrument on these inputs and backing. Arbitrary collective quantum operations, ancillas and adaptive control are allowed for the lower bound. Stopping with a deterministic cap $m$ is included by padding unused slots; postselection does not remove its failed or inconclusive branches. Let $m_*(p)$ be the least such cap attaining error at most $1/3$ separately for each label. The same bounds below apply to any protocol class containing the occupation readout and contained in this complete-interface class; an unrestricted exterior read is a different task.
+
+**Theorem 38.2 (finite uniform bounds and the zero-error boundary).** For every integer $p\ge1$, with trace distance $T(\rho,\eta)=\|\rho-\eta\|_1/2$, the following inequalities hold. The upper bound is achieved with three ordinary occupation measurements per copy and finite rational classical processing. No finite cap permits zero error for both labels, even with collective measurements.
+
+$$
+\frac38\,4^{-p}\ \le\ T(\sigma_0,\sigma_1)\ \le\ 4^{-p},\qquad \frac4{81}\,16^p\ \le\ m_*(p)\ \le\ 32\,16^p. \tag{V.57}
+$$
+
+Proof. Normalize each feature column by $g_{ij}=G_{(i,j),(i,j)}>0$ and write $|f_{ij}\rangle=F_{\cdot,(i,j)}/\sqrt{g_{ij}}$. These four vectors are fixed, normalized and independent of $p,s$; orthogonality is neither assumed nor needed. The dictionary gives $\sigma_s=\sum_{ij}w_{s,ij}|f_{ij}\rangle\langle f_{ij}|$, where $w_{s,ij}=H_{ii}(P_s)_{jj}g_{ij}/Z_s$. In the same column order as above, the weights are
+
+$$
+w_0=\frac{(129(x+2),\ 126(1-x),\ 42(x+2),\ 44(1-x))}{512+x},\qquad w_1=\frac{(129(1-x),\ 63(1+2x),\ 42(1-x),\ 22(1+2x))}{256-x}. \tag{V.58}
+$$
+
+All four weights are strictly positive and sum to one throughout $0<x\le1/4$. These are a mathematical classical simulation, not an uncharged accessible ensemble label. With natural logarithms, the mature inequality $D(a\|b)\le\chi^2(a\|b)=\sum_i(a_i-b_i)^2/b_i$ follows from $\log t\le t-1$. Substitution of (V.58) gives $\chi^2(w_0\|w_1)=1177335x^2/((1-x)(512+x)^2(1+2x))\le(9/2)x^2$: here $(1-x)(1+2x)=1+x-2x^2\ge1$, $(512+x)^2\ge512^2$, and $1177335<(9/2)512^2$. A product latent label sampled from $w_s^{\otimes m}$ followed by preparation of the corresponding product feature vectors and the fixed backing exactly simulates the complete input of Definition 38.1. Any adaptive or collective receiver, including all its public records, is thus a label-independent channel after this classical experiment. In particular its final binary decision is a stochastic function of the latent labels. Classical total-variation contraction, product KL additivity and Pinsker in natural-log normalization imply $\operatorname{TV}(\text{decision}_0,\text{decision}_1)\le\operatorname{TV}(w_0^{\otimes m},w_1^{\otimes m})\le\sqrt{mD(w_0\|w_1)/2}\le(3/2)x\sqrt m$. These are established finite-distribution tools, not new statistical theorems; Pinsker is also supplied by the repository's `TotalVariation.Pinsker`, and its independent-copy application by `Estimation.SampleComplexity.iid_testing_error_pinsker`. Errors at most $1/3$ on both labels require the decision probability of $0$ to be at least $2/3$ under $s=0$ and at most $1/3$ under $s=1$. Thus the left side is at least $1/3$, giving $m\ge4/(81x^2)$. No fixed-state asymptotic exponent or interchange of limits is used.
+
+For the one-copy upper bound in (V.57), preparation of fixed feature vectors contracts trace distance: directly, the triangle inequality gives $T(\sigma_0,\sigma_1)\le\operatorname{TV}(w_0,w_1)=130815x/d_x$, where $d_x=(512+x)(256-x)=131072-256x-x^2$. The positive differences occur exactly in the first and third weights. On $0<x\le1/4$ one has $130815<2096127/16\le d_x\le131072$, so this is at most $x$. For a lower bound use the actual computational outcome $000$, whose probabilities are $a_0=(178+65x)/(512+x)$ and $a_1=(89-65x)/(256-x)$. These follow either by selecting the row $u=000$ in $FW_sF^\dagger/Z_s$, or by multiplying $A_0^3$. Their gap is $\Delta=a_0-a_1=49653x/d_x\ge(3/8)x$, since $49653>3\cdot131072/8=49152$. The effect $|000\rangle\langle000|$ therefore witnesses $T(\sigma_0,\sigma_1)\ge\Delta$. All probabilities and denominators here are positive finite rationals for each admitted $p$.
+
+Measure all three block occupations on every copy, retain the full triple, and let $Y_j$ indicate the event $000$. Conditional on $s$, the $Y_j$ are independent Bernoulli variables with mean $a_s$. Decide $0$ exactly when their average is at least the rational midpoint $(a_0+a_1)/2$. Each label's error is at most $\exp(-m\Delta^2/2)\le\exp(-9mx^2/128)$ by the usual bounded-variable exponential estimate. One may verify the needed estimate directly inside this argument: the log moment generating function of a centered Bernoulli has value and derivative zero at the origin and second derivative equal to a tilted Bernoulli variance, at most $1/4$; integrating twice gives $\log\mathbb E e^{t(Y-\mathbb EY)}\le t^2/8$. Independence and Markov's inequality, optimized at $t=4h$, give either tail $\Pr(\pm(\overline Y-\mathbb EY)\ge h)\le e^{-2mh^2}$; set $h=\Delta/2$. With the integer $m=32\,16^p$ the error is at most $e^{-9/4}<1/3$. The midpoint and comparisons can be computed by integer arithmetic from $x=1/4^p$; no analog precision, matrix tomography, inaccessible fine outcome or coherent reference is needed for this upper procedure. The three individual outcomes remain in the record even though the decision only uses their conjunction.
+
+For zero error, both tensor powers are positive definite on the same support $\mathcal S^{\otimes m}$. For any positive decision effect $Q$, $\operatorname{Tr}(Q\sigma_0^{\otimes m})=0$ holds exactly when its compression to this support is zero, which also gives $\operatorname{Tr}(Q\sigma_1^{\otimes m})=0$. An effect cannot therefore occur with positive probability for just one label. The same conclusion holds with the fixed backing and for effects obtained by composing any allowed receiver with its final decision. Perfect binary discrimination, and any finite-budget unambiguous conclusive discrimination, are excluded. The upper procedure provides positive-error statistical acquisition of the bit; it is not a channel restoring an unknown full quantum input from measured samples. $\square$
+
+## 39. Mounting on actual occurrences with complete native service
+
+**Definition 39.1 (conditional mounting contract).** Fix one actual source at either authentic entrance of Definitions 1.2–1.3, including its real finite prehistory, selected bilateral binding when applicable, and each selected root's own empty or $P_\varepsilon$ preparation. The same source and backing are used for both values of $s$; the hidden bit is independent of these original data. Keep all current original grants, references, immutable samples and obligations. Use only the separately supplied apparatus of Definition 25.1 for commissioning, full-bank holds, coherent ingress and occupation readout, together with the full-space maintenance of Theorem 36.1. Supply $m$ unknown input registers, conditionally in the product state $|\psi_s\rangle\langle\psi_s|^{\otimes m}$, through acquired ingress endpoints. This is a finite many-excitation preparation/ingress promise, not a consequence of the one-excitation sector in Definition 26.1, of native syntax, or of the finite-control reconstruction candidates. The supplier's true preparation memory and all systems correlated with it are retained; a label record, exterior output, variable ingress duration or reference readable by the consumer must be included in Definition 38.1's complete accessible input. In this instance the preparation-label memory is not in that interface, and every observable ingress/control/acquisition record is label-independent. Neither erasing a record nor calling it an environmental channel can enforce this promise if it fails in an actual apparatus.
+
+**Theorem 39.2 (actual mounting and preservation of all original finite futures).** For every finite $p,m$ and every source of Definition 39.1, the supplied finite rights, material and progress permit acquisition of $m$ disjoint ordered lists of $N$ actual logical-occurrence qubits, coherent ingress of the promised states into those lists, and the occupation protocol of Theorem 38.2 on their designated blocks. Theorems 27.2 and 36.1 preserve all original finite request/service continuations on both entrances, including genuine addressed $P/S/\operatorname{Next}$ in every phase. If further input-dependent access is confined to the declared blocks, complete public native/apparatus records are downstream of the same interior experiment, so the lower bound also holds for every such interleaving. This changes no original guard or grant and replaces neither the authentic source nor the whole original task.
+
+Proof. At a returned native Ready cut, obtain the actual selected component root by its current authority; bilaterally, use the paid header links and the retained source/component binding, not an integer cast to a reference. Commission by Theorem 25.2, saving and restoring borrowed cursors. Enough new logical occurrences can be earned by a concrete original continuation: navigate to a real current leaf, execute $P$ first if its tag is alpha, then execute its lawful $S$; continue from the actual fresh right alpha child, with $P$ then $S$ again. Each split introduces the genuinely fresh logical right child $y$ and its QNew qubit in vacuum. After $mN$ such splits there are $mN$ distinct fresh right-child identities, all retained; later use of one as a branch root changes its role but not its qubit identity. This is a finite sequence of the original addressed operations with their real allocation, tapes, versions and replies. It needs at most $mN$ splits and $mN$ promotions after reaching the first leaf. Full-bank hold and the vacuum extension of Theorem 36.1 preserve these vacuum factors until ingress, even if other previously installed systems are occupied or entangled. Traverse the actual updated source to acquire and verify the descriptors $(F,c,x,q_x)$ and their current retention rights. Partition this paid roster into ordered groups of $N$, keeping the allocation and ordering records. An order on this finite roster specifies MPS tensor-factor order; native parent edges are not identified with MPS-chain edges. Here $p$ counts preceding inaccessible tensor factors in this paid roster, not a proved native metric distance or elapsed service time. No rotation or physical carrier is obtained by reading alpha/beta.
+
+Use the actual SWAP ingress of Definition 25.1 on each acquired list. Its input support contract is the full finite register family (V.56); other carrier factors, including the already held phase-reference qubit $r$, are left in their existing state. The port becomes vacuum and does not leave a second copy. All $N$ factors of each copy, including its unobserved first $p$ and final one, stay installed with their actual correlations. New copies use disjoint freshly acquired systems and separately supplied inputs; no old measured sample, carrier or immutable record is replaced or reset. Pure candidate registers are conditionally independent of the previously held backing; any supplier purification or classical preparation memory remains outside the consumer's access, with its actual identity and rights. Choosing the two hypotheses on the same native installation and using the same label-independent growth, roster, port and ingress service gives exactly the accessible product input required in Definition 38.1. Any preparation promise instead accompanied by an accessible label, an input-dependent acquisition record, or correlated accessible backing falls outside this conclusion. Existing exterior owners keep their acquired rights: the interior task restricts what information this consumer uses, and does not revoke those rights or assert a lower bound for an owner exercising them.
+
+Run the extra measurement only from a coherent published $(v,\mathfrak a)$ in native Ready, borrowing its actual three qubit rights and returning them before native service resumes. Occupation projectors on different factors commute, so the three sequential instruments give exactly the computational triple law used above, including the postmeasurement global state. Retain all outcome bits, versions, descriptor identities, controls, holds and actual charge readouts. Between these steps, any original finite service word has the literal implementation already proved in §§27 and 36. Original Receive retains its actual supplied prefix and parser continuation; Navigate/Guard and queries use the same source and authentic birth facts; reserve/edit/maintain retain their actual pending targets, references, old pairs and unfinished writes; FetchGrowth and Next use the real tapes, historical recalled address and current left descent. The bank is held, and new systems are appended in independent vacuum on the entire Hilbert space, including the present many-excitation states. Marker activation alters roles and enables without measuring or copying old systems. Wrong-type refusals, OutOfRange and BadFrame retain their original meanings; missing authority or wrong-phase primitives stay unexecuted, and an available denial has its real denial record. No incomplete configuration is published as current.
+
+For an adaptive consumer, its observed outcomes can affect later native requests, service lengths and allocations. Their laws need not be equal under the two labels; they must instead be retained as outputs of the same controlled channel. Conditioned on a complete interior transcript and the common initial native backing, original service contains no operation reading an exterior quantum factor or supplier label: it is the classical original transition together with a full-bank identity hold and vacuum extensions. Induction over the actual phase steps therefore factors the entire accessible native/apparatus record, including endogenous timings and pending prefixes, through the receiver's interior inputs and its label-independent control. It cannot create a second information source about $s$. Extra answers complete their own backed sealing, Print, End, local ACK, root Return and scratch clearing in Definition 27.1's disjoint namespace; original output prefixes and owed Print/End/ACK/Return remain literal. A pause retains the real pending state and held bank, not the eventual answer. Finite completion uses the stated progress, actual local ACK and resource premises. This proves the all-phase assertion and the record condition needed for Theorem 38.2. $\square$
+
+The upper protocol pays for $m=32\,16^p$ independent full inputs, $mN$ selected retained occurrence systems and every other material qubit introduced by its growth (at most $3mN$ new material qubits altogether in this construction), actual commissioning/growth/ingress, $3m$ occupation calls and delivered outcome bits, backed threshold computation and output, and holds of the entire enlarged bank/reference for every actual service duration. Counts and rational thresholds have finite integer descriptions, while full records keep the individual triples and acquisition/service details. Scratch clearing does not clear immutable samples or quantum/exterior systems. Reservation, source traversal, roster equality scans, control installation, clocks, fees and output delivery have their existing additional finite costs; no bound $\Theta(16^p)$ for total runtime, total native service work or fees follows from the copy bound. Every original finite future remains available with its own actual finite supply, including later remote-component acquisition bilaterally. This gives neither a preinstalled infinite bank nor a uniformly finite unbounded-time hold.
+
+## 40. Exact recovery, statistical cost and the remaining correspondence
+
+**Corollary 40.1 (no polynomial-copy guarantee through this interior interface).** There is no bound polynomial in target length $N$ that recovers the boundary bit with error at most $1/3$ uniformly over these actual regular targets using Definition 38.1's independent-copy interface. There is also no family of inverse maps from these local observations to the corresponding whole pure-state densities with a common modulus of continuity as target lengths grow. These assertions concern the declared quantum acquisition task and not the unchanged original native task $\mathcal R_H(e)$.
+
+Proof. The lower bound is $(4/81)16^{N-4}$ for every $N\ge5$. Whole-state trace distance is exactly one by parity orthogonality, whereas the local distance is at most $4^{-(N-4)}$. Thus no modulus tending to zero with local distance can bound whole-state distance uniformly in this family; any Lipschitz constants would be at least $4^{N-4}$. Conversely an observer allowed to measure all $N$ occupations obtains their parity and learns $s$ perfectly in one copy. The exterior factors, or a preparation record containing $s$, therefore cannot be silently included in the lower-bound interface. Native queries alone still inspect the same actual classical source under the two hypotheses. Neither this bit nor a measured estimate of it substitutes for the source's authentic brackets, joint origin, serial history, usable references, boundary rights or original future service. The result separates exact mathematical determination, acquisition of information and operational authority on the same specified installation. $\square$
+
+The exact static supplier is [the interior-MPS Blueprint](../../../Blueprint/D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore.md), specifically its actual exterior-word dictionary and `interior_phase_recovery`; the normalized target correspondence is $l_s=e_s/\sqrt{Z_s}$, $r=e_0$, $(p,k,q)=(p,3,1)$. Its source is read as the existing conditional statement, without claiming a new Lean application or verification. [XVII §§198–200](QUANTUM_ORIGIN_BINARY_NORMAL_DIFFERENCES_AND_ORIENTATION_XVII.md) supply topology, the single-label critical qutrit and Star/pair-face-incidence correspondences on their complete original domains. [XVIII §§199–201](QUANTUM_ORIGIN_HALF_TURN_PREPARATION_AND_GLOBAL_EFFECTS_XVIII.md) supply all-label preparation-half-turn, whole-body-distance and self-overlap correspondences with their full convex/effect and finite-composite backgrounds. They do not discharge the actual many-excitation input supply, ingress, fresh-copy independence or finite statistical acquisition premises used here; none of those full-domain backgrounds is inferred from a two-state native example. Native mounting instead uses precisely this volume's separately paid §§25–27 and full-space §36.1, without importing a one-excitation Hamiltonian estimate into the present sectors. Transfer-mode exponential behavior is literature-attested background: [Cirac, Perez-Garcia, Schuch and Verstraete, *Matrix Product States and Projected Entangled Pair States: Concepts, Symmetries, and Theorems*, §II.2.3](https://arxiv.org/html/2011.12127v2). Finite-dimensional binary quantum discrimination and classical Pinsker are mature tools, with their precise probability normalization in [Watrous, *The Theory of Quantum Information*, Theorem 3.4](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf) and [Theorem 5.15](https://cs.uwaterloo.ca/~watrous/TQI/TQI.5.pdf); natural-log conversion gives the factor used in §38. [Audenaert et al., *The Quantum Chernoff Bound*, equations (1)–(2)](https://arxiv.org/html/quant-ph/0610027v1) addresses the iid fixed-pair asymptotic exponent, which alone does not provide a uniform finite-$p,m$ estimate. The present contribution is the explicit finite normalized family, uniform positive-support and mixture calculation, finite constants, occupation-only attainment and faithful conditional occurrence/complete-record mounting. It is repo-derived synthesis, without a literature-priority, physical-ontology, reduced-independent-assumption or fresh Lean claim. The rates assume the exact ideal ingress and occupation instruments declared above; no fixed-noise or uncalibrated-preparation guarantee is supplied. No general MPS genericity, arbitrary correlated-copy guarantee, native preparation from bare syntax, quantum recovery from classical samples, time/energy identification, or completion of the enduring common-relational-recovery objective follows.
+
+## 追加锚（本行以下为增补区）
