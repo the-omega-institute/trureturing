@@ -18,7 +18,7 @@ open scoped Topology
 namespace D5.S3.Arith.Robin.Analytic.ExceptionCount.PrimeCutoff
 open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 
-private lemma second_order_count :
+lemma second_order_count :
     Tendsto (fun x : ℝ => log x * (log x * primeCount x / x - 1))
       atTop (𝓝 1) := by
   have hi : Tendsto (fun x : ℝ => 1 / log x) atTop (𝓝 0) :=

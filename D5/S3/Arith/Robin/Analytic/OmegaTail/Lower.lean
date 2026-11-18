@@ -19,20 +19,20 @@ open scoped Topology BigOperators
 namespace D5.S3.Arith.Robin.Analytic.OmegaTail.Lower
 open D5.S3.Arith.Robin.Analytic.OmegaTailUpper
 
-private lemma prime_product_injective {S T : Finset ℕ}
+lemma prime_product_injective {S T : Finset ℕ}
     (hS : ∀ p ∈ S, Nat.Prime p) (hT : ∀ p ∈ T, Nat.Prime p)
     (h : ∏ p ∈ S, p = ∏ p ∈ T, p) : S = T := by
   simpa only [Nat.primeFactors_prod hS, Nat.primeFactors_prod hT] using
     congrArg Nat.primeFactors h
 
-private lemma omega_prime_product {S : Finset ℕ} (hS : ∀ p ∈ S, Nat.Prime p) :
+lemma omega_prime_product {S : Finset ℕ} (hS : ∀ p ∈ S, Nat.Prime p) :
     ArithmeticFunction.cardDistinctFactors (∏ p ∈ S, p) = S.card := by
   rw [ArithmeticFunction.cardDistinctFactors_apply, ← List.card_toFinset,
     Nat.toFinset_factors, Nat.primeFactors_prod hS]
 
 /-- A family of distinct prime subsets with the required logarithmic cost gives
 an injective family of integers in the literal distinct-prime tail. -/
-private theorem prime_family_bound (lambda x : ℝ) (C : Finset (Finset ℕ))
+theorem prime_family_bound (lambda x : ℝ) (C : Finset (Finset ℕ))
     (hprime : ∀ S ∈ C, ∀ p ∈ S, Nat.Prime p)
     (hsize : ∀ S ∈ C, threshold lambda x < (S.card : ℝ))
     (hcost : ∀ S ∈ C, ∑ p ∈ S, log (p : ℝ) ≤ log x)
@@ -60,7 +60,7 @@ private theorem prime_family_bound (lambda x : ℝ) (C : Finset (Finset ℕ))
     simpa only [f, omega_prime_product (hprime S hS)] using hsize S hS
   simpa only [card_image_of_injOn hinj, tailCount] using card_le_card hsub
 
-private lemma bin_union_inter {ι : Type*} [Fintype ι] [DecidableEq ι]
+lemma bin_union_inter {ι : Type*} [Fintype ι] [DecidableEq ι]
     (P f : ι → Finset ℕ) (hP : Pairwise (fun i j => Disjoint (P i) (P j)))
     (hf : ∀ j, f j ⊆ P j) (j : ι) :
     (univ.biUnion f) ∩ P j = f j := by

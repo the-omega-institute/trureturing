@@ -6,7 +6,7 @@
    utility: none
    digest: Prime-counting expansion and the exact second-threshold Rankin budget. -/
 
-import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
+import D5.S3.Arith.Robin.Analytic.ExceptionCount.PrimeCutoff
 import Mathlib.Analysis.Complex.ExponentialBounds
 
 set_option autoImplicit false
@@ -41,14 +41,8 @@ private lemma prime_counting_error_limit :
     Tendsto (fun P : ℝ =>
       (primeCount P - P / log P) / (P / log P ^ 2))
       atTop (𝓝 1) := by
-  have hi : Tendsto (fun P : ℝ => 1 / log P) atTop (𝓝 0) :=
-    tendsto_log_atTop.const_div_atTop 1
-  have h := ((prime_counting_three_terms.mul (hi.pow 2)).add
-    (hi.const_mul 2)).add_const 1
-  norm_num only [zero_pow, mul_zero, zero_add, add_zero] at h
-  apply h.congr'
+  apply D5.S3.Arith.Robin.Analytic.ExceptionCount.PrimeCutoff.second_order_count.congr'
   filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
-  dsimp only [countingThreeTerms]
   field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
   <;> ring
 

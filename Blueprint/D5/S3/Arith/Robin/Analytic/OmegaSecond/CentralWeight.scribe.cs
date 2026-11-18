@@ -13,7 +13,7 @@ internal sealed class CentralWeightDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaSecond/CentralWeight.prime_quadrature_upper"),
                 H("Finite prime quadrature upper bound"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("On every real interval [a,b] with 0<=a<=b, let d be continuous and let f have derivative d throughout the interval. If abs(primeCount(t)-C*t)<=E there for E>=0, the prime sum of f over a<p<=b is at most C times the integral of f plus E times abs(f(a))+abs(f(b))+the integral of abs(d). Both endpoints and the full variation are retained."))),
+                Blocks(Paragraph(Text("On every real interval [a,b] with 0<=a<=b, let d be continuous and let f have derivative d throughout the interval. If abs(primeCount(t)-C*t)<=E there for E>=0, the prime sum of f over a<p<=b is at most C times the integral of f plus E*(abs(f(a))+abs(f(b))+the integral of abs(d)), with E multiplying the entire parenthesized expression. Both endpoints and the full variation are retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("central-prime-weight-upper"),
