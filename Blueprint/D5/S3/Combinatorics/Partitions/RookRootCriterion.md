@@ -48,9 +48,11 @@ $$\forall m \in Nat,\; 0 < m \Rightarrow \left(\forall n \in Nat,\; \forall d \i
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Kenneth Barrese, Nicholas Loehr, Jeffrey Remmel, Bruce E. Sagan (2013). *m-level rook placements*. URL: <https://arxiv.org/abs/1308.4081v1>.
+
 *Commentary.*
 
-For every positive m and every weakly increasing nonnegative padded tuple d, the root floor test is equivalent to SingletonColumns. For a partial column, floor((mi-d(i))/m)=i-floor(d(i)/m)-1. The adjacent root inequality therefore forces a strict increase in the partial-top level. If two separated partial columns had the same level, monotonicity would put their intervening successor in that same level and contradict the adjacent condition. Conversely, geometric uniqueness forces every adjacent pair of partial tops into different levels. Zero padding and an empty index type need no exceptions. This formalizes the geometric content of the root criterion; equality of native rook numbers and root multisets is a separate unproved interface.
+For every positive m and every weakly increasing nonnegative padded tuple d, the root floor test is equivalent to SingletonColumns. This is the conditional geometric clause of Proposition 4.4 of Barrese, Loehr, Remmel and Sagan, arXiv:1308.4081v1, with the nonnegative Ferrers columns supplied explicitly. For a partial column, floor((mi-d(i))/m)=i-floor(d(i)/m)-1. The adjacent root inequality therefore forces a strict increase in the partial-top level. If two separated partial columns had the same level, monotonicity would put their intervening successor in that same level and contradict the adjacent condition. Conversely, geometric uniqueness forces every adjacent pair of partial tops into different levels. Zero padding and an empty index type need no exceptions. Equality of native rook numbers and root multisets is a separate unproved interface; this dictionary is not a claim of literature novelty.
 
 ## References
 

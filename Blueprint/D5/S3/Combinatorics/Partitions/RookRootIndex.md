@@ -4,6 +4,8 @@
 
 Distinct root sequences reconstruct normalized singleton boards with a finite multinomial bound.
 
+In the displayed formulas, Member(S) is the finite subtype of members of the Finset S, boardMap(m,z) is the map a to board(m,a) on indices(m,z), and sum(d) sums the entries over its finite index type. A subtype index a is read as its underlying root tuple when used by decode or compared with paddedRoots.
+
 **Definition 1.1 (Integer heights).**
 
 Lean statement: `D5/S3/Combinatorics/Partitions/RookRootIndex.heights`
