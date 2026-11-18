@@ -90,6 +90,18 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchin
 
 For every natural N, unweighted simple graph G on Fin N with decidable adjacency, and natural k with 2k at most matchingNumber G, matchingCount G k is at most matchingCount G (matchingNumber G−k). A maximum matching exists by the native count definition. Each exact fiber contributes a nonnegative complementary difference, by binomial symmetry and monotonicity. The theorem includes zero and the middle coefficient.
 
+**Theorem 1.8 (Uniform positive complementary gap).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchingCount_rigidity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchingCount_rigidity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N and unweighted simple graph G on Fin N, put n=matchingNumber G and assume n is at least three. Either m(k)=m(n−k) for every k from zero through n, or, simultaneously for every k with 1≤k and 2k<n, the integer d=choose(n−3,k−1)−b is positive and m(k)+d≤m(n−k), where b=choose(n−3,k−2) when k≥2 and b=0 otherwise. The zero guard is essential at k=1. The proof shows that any defect has a one-edge witness touching one Q-edge or a two-edge witness touching two or three Q-edges. If every singleton and disjoint pair is balanced, the touched-edge sets are disjoint and all fibers are palindromic. Each possible small defect contributes at least d; every other fiber contributes a nonnegative gap. This is a universal graph theorem. The attaining family P6 plus n−3 independent edges has not yet been formalized here.
+
 The exact source Problem 4.7 was reread in the fixed-version text. Repository and pinned Mathlib searches found the native count bridge and binomial suppliers, but no matching partition or sharp rigidity theorem in the searched scope. Crossref metadata identifies Farrell's 1992 paper On the theory of matching equivalent graphs and rook equivalent chessboards, DOI 10.1016/0016-0032(92)90095-X. Its primary text and the Kennedy primary text have not been verified here. No novelty or priority claim is made.
 
 The four-slot escape audit remains unfinished under issue #31461. The dependent-family enrollment requires complete reconstruction of the varying graph, matching and count telescope, an exact readout bridge, whole-family variation and sensitivity, and actual observational dependence. Those audit data are not supplied by the combinatorial proof. No declared_validated registration is claimed.
@@ -99,6 +111,7 @@ The four-slot escape audit remains unfinished under issue #31461. The dependent-
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.count_partition`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchingCount_complement_le`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchingCount_partition`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchingCount_rigidity`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matching_fiber_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.maximum_outside_bounds`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.outsideMatchings`

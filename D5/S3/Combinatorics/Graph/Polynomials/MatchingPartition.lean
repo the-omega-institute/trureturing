@@ -16,10 +16,11 @@ admission_basis: escape-witness
 proof_shape: matching_fiber_card: content; count_partition: bind-only, consumed by
   matchingCount_partition; matchingCount_partition: bind-only, consumed by
   matchingCount_complement_le; maximum_outside_bounds: content;
-  matchingCount_complement_le: content.
+  matchingCount_complement_le: content; matchingCount_rigidity: content.
 escape_witness: matching_fiber_card constructs the inverse fiber bijection M ↦ M ∩ Q;
   maximum_outside_bounds injects touched Q-edges into vertices of the outside matching.
-The native graph comparison consumes both constructions. No weighted graph or bound on
+matchingCount_rigidity additionally consumes the live small-defect construction and
+  the three defect-gap estimates. The native graph comparison consumes both constructions. No weighted graph or bound on
 vertex order is assumed. These prerequisites do not characterize matching permutations.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31461
 -/
@@ -302,5 +303,214 @@ theorem matchingCount_complement_le {N : ℕ} (G : SimpleGraph (Fin N))
   have hterm := complementary_term Q.card F.card (Q.card - (untouched Q F).card) k
     hb.1 (le_trans hb.2 (min_le_left _ _)) (Nat.sub_le _ _) hk
   simpa only [Nat.sub_sub_self hU] using hterm
+
+private noncomputable def blocked (Q F : Finset (Sym2 V)) : Finset (Sym2 V) := Q \ untouched Q F
+
+private theorem blocked_card (Q F : Finset (Sym2 V)) :
+    (blocked Q F).card = Q.card - (untouched Q F).card := by
+  classical
+  exact card_sdiff_of_subset (filter_subset _ _)
+
+private theorem outside_subset {E Q F A : Finset (Sym2 V)}
+    (hF : F ∈ outsideMatchings E Q) (hA : A ⊆ F) : A ∈ outsideMatchings E Q := by
+  obtain ⟨hFE, hFm⟩ := mem_outside.mp hF
+  exact mem_outside.mpr ⟨hA.trans hFE,
+    fun e he f hf hef => hFm e (hA he) f (hA hf) hef⟩
+
+private theorem blocked_biUnion (Q F : Finset (Sym2 V)) :
+    blocked Q F = F.biUnion (fun e => blocked Q {e}) := by
+  classical
+  ext q
+  simp only [blocked, mem_sdiff, untouched, mem_filter, mem_biUnion,
+    mem_singleton, forall_eq]
+  aesop
+
+private theorem blocked_pair (Q : Finset (Sym2 V)) (e f : Sym2 V) :
+    blocked Q {e, f} = blocked Q {e} ∪ blocked Q {f} := by
+  classical
+  rw [blocked_biUnion]
+  simp
+
+private theorem balanced_of_small (E Q : Finset (Sym2 V))
+    (hQ : Q ∈ matchingsIn E Q.card)
+    (hsmall : ∀ A ∈ outsideMatchings E Q, A.card ≤ 2 →
+      (blocked Q A).card = 2 * A.card) :
+    ∀ F ∈ outsideMatchings E Q, (blocked Q F).card = 2 * F.card := by
+  classical
+  intro F hF
+  have hs : ∀ e ∈ F, (blocked Q {e}).card = 2 := by
+    intro e he
+    simpa using hsmall {e} (outside_subset hF (singleton_subset_iff.mpr he)) (by simp)
+  rw [blocked_biUnion, card_biUnion]
+  · simp only [sum_congr rfl hs, sum_const, smul_eq_mul, mul_comm]
+  · intro e he f hf hef
+    have hpair : ({e, f} : Finset (Sym2 V)).card = 2 := card_pair hef
+    have hp := hsmall {e, f} (outside_subset hF (by simp only [insert_subset_iff, singleton_subset_iff]; exact ⟨he, hf⟩)) (by omega)
+    rw [hpair, blocked_pair] at hp
+    have hc := card_union_add_card_inter (blocked Q {e}) (blocked Q {f})
+    rw [hs e he, hs f hf, hp] at hc
+    rw [Function.onFun, disjoint_iff_inter_eq_empty, ← card_eq_zero]
+    omega
+
+private theorem small_defect_or_balanced {N : ℕ} (G : SimpleGraph (Fin N))
+    [DecidableRel G.Adj] (Q : Finset (Sym2 (Fin N)))
+    (hQ : Q ∈ matchingsIn G.edgeFinset Q.card) (hmax : matchingNumber G = Q.card) :
+    (∀ F ∈ outsideMatchings G.edgeFinset Q, (blocked Q F).card = 2 * F.card) ∨
+      ∃ F ∈ outsideMatchings G.edgeFinset Q,
+        (F.card = 1 ∧ (blocked Q F).card = 1) ∨
+        (F.card = 2 ∧ ((blocked Q F).card = 2 ∨ (blocked Q F).card = 3)) := by
+  classical
+  by_cases hd : ∃ F ∈ outsideMatchings G.edgeFinset Q,
+      F.card ≤ 2 ∧ (blocked Q F).card < 2 * F.card
+  · obtain ⟨F, hF, hc, hd⟩ := hd
+    right
+    refine ⟨F, hF, ?_⟩
+    have hb := maximum_outside_bounds G Q F hQ hmax hF
+    rw [← blocked_card] at hb
+    omega
+  · left
+    apply balanced_of_small _ _ hQ
+    intro F hF hc
+    have hb := touched_card_le G.edgeFinset Q F hQ
+    rw [← blocked_card] at hb
+    have hn : ¬ (blocked Q F).card < 2 * F.card := fun h => hd ⟨F, hF, hc, h⟩
+    omega
+
+private def sc (a t k : ℕ) : ℕ := if t ≤ k then a.choose (k - t) else 0
+
+private theorem sc_pascal (a t k : ℕ) :
+    sc (a + 1) t k = sc a t k + sc a (t + 1) k := by
+  unfold sc
+  by_cases ht : t ≤ k
+  · by_cases ht' : t + 1 ≤ k
+    · rw [if_pos ht, if_pos ht, if_pos ht']
+      have he : k - t = (k - (t + 1)) + 1 := by omega
+      rw [he, Nat.choose_succ_succ]
+      simp only [Nat.succ_eq_add_one]
+      omega
+    · have he : k = t := by omega
+      subst k
+      simp
+  · simp [ht, show ¬t + 1 ≤ k by omega]
+
+private theorem sc_reflect (a t u k : ℕ) (hk : k ≤ a + t + u) :
+    sc a t (a + t + u - k) = sc a u k := by
+  unfold sc
+  by_cases ht : t ≤ a + t + u - k <;> by_cases hu : u ≤ k
+  · rw [if_pos ht, if_pos hu]
+    have hi : k - u ≤ a := by omega
+    have he : a + t + u - k - t = a - (k - u) := by omega
+    rw [he, Nat.choose_symm hi]
+  · rw [if_pos ht, if_neg hu, Nat.choose_eq_zero_of_lt (by omega)]
+  · rw [if_neg ht, if_pos hu, Nat.choose_eq_zero_of_lt (by omega)]
+  · simp [ht, hu]
+
+private theorem choose_strict (a r : ℕ) (h : 2 * r + 1 < a) :
+    a.choose r < a.choose (r + 1) := by
+  have hp := Nat.choose_pos (show r ≤ a by omega)
+  have he := Nat.choose_succ_right_eq a r
+  have hstep : r + 1 < a - r := by omega
+  by_contra hn
+  have hh := Nat.mul_le_mul_right (r + 1) (show a.choose (r + 1) ≤ a.choose r by omega)
+  have hm := Nat.mul_lt_mul_of_pos_left hstep hp
+  omega
+
+private theorem gap_positive (n k : ℕ) (hn : 3 ≤ n) (hk : 1 ≤ k) (hkn : 2 * k < n) :
+    0 < sc (n - 3) 1 k - sc (n - 3) 2 k := by
+  by_cases hk2 : 2 ≤ k
+  · have h := choose_strict (n - 3) (k - 2) (by omega)
+    have he : k - 2 + 1 = k - 1 := by omega
+    rw [he] at h
+    simpa [sc, hk, hk2] using Nat.sub_pos_of_lt h
+  · have he : k = 1 := by omega
+    subst k
+    simp [sc]
+
+private theorem small_term_gap (n t s k : ℕ) (hn : 3 ≤ n) (hk : 1 ≤ k)
+    (hkn : 2 * k < n)
+    (hd : (t = 1 ∧ s = 1) ∨ (t = 2 ∧ (s = 2 ∨ s = 3))) :
+    sc (n - s) t k + (sc (n - 3) 1 k - sc (n - 3) 2 k) ≤
+      sc (n - s) t (n - k) := by
+  have hpos := gap_positive n k hn hk hkn
+  have hmono : sc (n - 3) 3 k ≤ sc (n - 3) 0 k := by
+    have h := complementary_term n 3 3 k (by omega) (by omega) hn (by omega)
+    change sc (n - 3) 3 k ≤ sc (n - 3) 3 (n - k) at h
+    have he : n - 3 + 3 + 0 = n := by omega
+    have hh := sc_reflect (n - 3) 3 0 k (by omega)
+    rw [he] at hh
+    rwa [hh] at h
+  rcases hd with ⟨rfl, rfl⟩ | ⟨rfl, rfl | rfl⟩
+  · have he : n - 1 = (n - 3) + 1 + 1 := by omega
+    have hr := sc_reflect (n - 1) 1 0 k (by omega)
+    have hrn : n - 1 + 1 + 0 = n := by omega
+    rw [hrn] at hr
+    rw [hr, he]
+    simp only [sc_pascal, Nat.reduceAdd]
+    omega
+  · have he : n - 2 = (n - 3) + 1 := by omega
+    have hr := sc_reflect (n - 2) 2 0 k (by omega)
+    have hrn : n - 2 + 2 + 0 = n := by omega
+    rw [hrn] at hr
+    rw [hr, he]
+    simp only [sc_pascal, Nat.reduceAdd]
+    omega
+  · have hr := sc_reflect (n - 3) 2 1 k (by omega)
+    have hrn : n - 3 + 2 + 1 = n := by omega
+    rw [hrn] at hr
+    rw [hr]
+    omega
+
+private theorem sum_extra_le {α : Type*} [DecidableEq α] (S : Finset α)
+    (a b : α → ℕ) (x : α) (hx : x ∈ S) (d : ℕ)
+    (hab : ∀ y ∈ S, a y ≤ b y) (hxd : a x + d ≤ b x) :
+    (∑ y ∈ S, a y) + d ≤ ∑ y ∈ S, b y := by
+  rw [← sum_erase_add S a hx, ← sum_erase_add S b hx]
+  have he : (∑ y ∈ S.erase x, a y) ≤ ∑ y ∈ S.erase x, b y :=
+    sum_le_sum (fun y hy => hab y (mem_of_mem_erase hy))
+  omega
+
+/-- A native graph is palindromic, or every lower-half complementary gap is at least
+the positive P6 gap. The guards implement zero binomial coefficients at negative indices. -/
+theorem matchingCount_rigidity {N : ℕ} (G : SimpleGraph (Fin N))
+    (hn : 3 ≤ matchingNumber G) :
+    (∀ k ≤ matchingNumber G, matchingCount G k = matchingCount G (matchingNumber G - k)) ∨
+      ∀ k, 1 ≤ k → 2 * k < matchingNumber G →
+        let d := (matchingNumber G - 3).choose (k - 1) -
+          (if 2 ≤ k then (matchingNumber G - 3).choose (k - 2) else 0)
+        0 < d ∧ matchingCount G k + d ≤ matchingCount G (matchingNumber G - k) := by
+  classical
+  obtain ⟨Q, hQ, hmax⟩ := exists_maximum G
+  rw [hmax] at hn ⊢
+  rcases small_defect_or_balanced G Q hQ hmax with hb | ⟨F, hF, hd⟩
+  · left
+    intro k hk
+    rw [matchingCount_partition G Q k hQ, matchingCount_partition G Q (Q.card - k) hQ]
+    apply sum_congr rfl
+    intro F hF
+    have hbal := hb F hF
+    rw [blocked_card] at hbal
+    have hU : (untouched Q F).card ≤ Q.card := card_le_card (filter_subset _ _)
+    have he : (untouched Q F).card + F.card + F.card = Q.card := by omega
+    have hs := sc_reflect (untouched Q F).card F.card F.card k (by omega)
+    rw [he] at hs
+    exact hs.symm
+  · right
+    intro k hk hkn
+    dsimp only
+    have hp := gap_positive Q.card k hn hk hkn
+    simp only [sc, if_pos hk] at hp
+    refine ⟨hp, ?_⟩
+    rw [matchingCount_partition G Q k hQ, matchingCount_partition G Q (Q.card - k) hQ]
+    apply sum_extra_le _ _ _ F hF
+    · intro A hA
+      have hb := maximum_outside_bounds G Q A hQ hmax hA
+      have hU : (untouched Q A).card ≤ Q.card := card_le_card (filter_subset _ _)
+      have ht := complementary_term Q.card A.card (Q.card - (untouched Q A).card) k
+        hb.1 (le_trans hb.2 (min_le_left _ _)) (Nat.sub_le _ _) (by omega)
+      simpa only [Nat.sub_sub_self hU] using ht
+    · have hU : (untouched Q F).card ≤ Q.card := card_le_card (filter_subset _ _)
+      have ht := small_term_gap Q.card F.card (blocked Q F).card k hn hk hkn hd
+      rw [blocked_card, Nat.sub_sub_self hU] at ht
+      simpa only [sc, if_pos hk] using ht
 
 end D5.S3.Combinatorics.Graph.Polynomials.MatchingPartition
