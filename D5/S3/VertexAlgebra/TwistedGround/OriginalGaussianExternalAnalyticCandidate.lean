@@ -300,7 +300,7 @@ private lemma W_zero {u : ℂ} (hu : ‖u‖ < 1) : W u 0 = 1 := by
   simp only [sub_zero, zero_mul, zero_div, add_zero, Complex.one_cpow, mul_one, one_mul]
   exact mul_one_div_cancel hbu
 
-private lemma W_sum_ne_zero {u v r : ℂ}
+lemma W_sum_ne_zero {u v r : ℂ}
     (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1) :
     W u r + W v r ≠ 0 := by
   by_cases hr : r = 0
@@ -579,7 +579,7 @@ private lemma source_analytic {u r : ℂ} (hu : ‖u‖ + ‖r‖ < 1) :
     change dist u 0 < 1 - ‖r‖
     simpa only [dist_zero_right] using (show ‖u‖ < 1 - ‖r‖ by linarith))
 
-private lemma candidateJ_joint_analytic {u v r : ℂ}
+lemma candidateJ_joint_analytic {u v r : ℂ}
     (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1)
     (hs : W u r + W v r ≠ 0) :
     AnalyticAt ℂ (fun p : ℂ × ℂ => candidateJ p.1 p.2 r) (u, v) := by
