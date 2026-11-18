@@ -100,12 +100,17 @@ private lemma chart_shift (z : ℂ) (k : ℤ) :
     Complex.exp_eq_exp_iff_exists_int.mpr ⟨k, rfl⟩
   have ht : ∀ r, chartT (z + deck k) r = chartT z r + 2 * k := by
     intro r
-    dsimp [chartT, localLog]
+    have hd := (cover_periods.2.2.2 (localLog z r) k).1
+    have hep : Complex.exp (localLog z r + k * (2 * (Real.pi : ℂ) * Complex.I)) =
+        Complex.exp (localLog z r) :=
+      Complex.exp_eq_exp_iff_exists_int.mpr ⟨k, rfl⟩
+    dsimp only [T] at hd
+    rw [hep] at hd
+    dsimp only [chartT, localLog]
     rw [he]
-    have hpi : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
-    dsimp [deck]
-    field_simp [hpi]
-    linear_combination -2 * (k : ℂ) * (Real.pi : ℂ) * Complex.I_sq
+    dsimp only [localLog] at hd
+    dsimp only [deck]
+    linear_combination hd
   exact ⟨funext ht, funext (fun r => by rw [chartN, ht]; dsimp [chartN]; ring)⟩
 
 /-- A loop's endpoint integer is obtained from exp equality. Its returned
