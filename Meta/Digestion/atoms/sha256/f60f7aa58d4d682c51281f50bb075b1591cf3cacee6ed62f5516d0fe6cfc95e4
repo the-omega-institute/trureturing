@@ -1,0 +1,21 @@
+现取 $p_j\to p$。任意子列可再取中心、轴标架及共同零确认效应收敛，记极限球为
+$F=c+AB^3$、效应为 $e$。非塌陷保证 $F$ 仍是三维椭球；连续评价给
+$e(p)=1,e|_F=0$，故 $F\subseteq D_p$。每个 $\partial F$ 点又是原球面纯点的极限，故在 $P$。
+二者同维且包含，仿射包相同。若严格包含，可从 $\operatorname{ri}F$ 内一点走向
+$\operatorname{ri}D_p\setminus F$ 的一点；首次离开 $F$ 的点在
+$\partial F\cap\operatorname{ri}D_p$，同时被要求纯与非纯，矛盾。
+所以每个子列极限均为 $D_p$，即得整球连续。
+
+对辅助坐标中的支持函数 $h_p(v)=\max_{x\in D_p}\langle v,x\rangle$，有
+
+$$
+h_p(v)-h_p(-v)=2\langle v,c_p\rangle,\qquad
+\left(\frac{h_p(v)+h_p(-v)}2\right)^2=\langle Q_pv,v\rangle.
+\tag{IX116.22}
+$$
+
+支持函数连续及极化确定连续的 $c_p,Q_p$。正谱与零谱有统一间隙，连续函数演算
+给像投影与伪逆连续。在任意 $p_0$ 选三个环境向量，其像投影在 $\xi_{p_0}$ 独立；
+在邻域内仍独立，连续Gram–Schmidt给局部标架。按 $g_p$ 归一给实际盘、球的局部平凡化。
+辅助欧氏尺只为描述这些原球，不是共同物理内积的输入。证毕。
+

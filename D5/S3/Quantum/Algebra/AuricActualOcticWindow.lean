@@ -19,6 +19,9 @@ import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.FieldTheory.PrimitiveElement
 import Mathlib.Algebra.Algebra.Pi
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
+import Mathlib.Algebra.Module.LinearMap.Polynomial
+import Mathlib.Algebra.MvPolynomial.Funext
+import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import D5.S3.Quantum.Algebra.AuricOcticRanks
 import Mathlib.Tactic
 
@@ -639,5 +642,240 @@ theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
     exact he ▸ hr
 
 end ActualCutFree
+
+section AffinePolynomialChange
+
+open MvPolynomial
+
+variable {K ι κ : Type*} [Field K] [Infinite K] [Fintype ι] [Fintype κ]
+
+private def forms (T : (κ → K) →ₗ[K] (ι → K)) : ι → MvPolynomial κ K :=
+  (LinearMap.toMatrix' T).toMvPolynomial
+private theorem eval_forms (T : (κ → K) →ₗ[K] (ι → K)) (x : κ → K) (i : ι) :
+    eval x (forms T i) = T x i := by
+  rw [forms, Matrix.toMvPolynomial_eval_eq_apply]
+  exact congrArg (fun f : (κ → K) →ₗ[K] (ι → K) => f x i) (Matrix.toLin'_toMatrix' T)
+private def shiftForward (T : (κ → K) ≃ₗ[K] (ι → K)) (a : ι → K) :
+    MvPolynomial ι K →ₐ[K] MvPolynomial κ K :=
+  aeval (fun i => C (a i) + forms T.toLinearMap i)
+private def shiftBackward (T : (κ → K) ≃ₗ[K] (ι → K)) (a : ι → K) :
+    MvPolynomial κ K →ₐ[K] MvPolynomial ι K :=
+  aeval (fun i => forms T.symm.toLinearMap i - C (T.symm a i))
+private theorem eval_forward (T : (κ → K) ≃ₗ[K] (ι → K)) (a : ι → K)
+    (p : MvPolynomial ι K) (x : κ → K) :
+    eval x (shiftForward T a p) = eval (a + T x) p := by
+  change eval x (eval₂ (C : K →+* MvPolynomial κ K) _ p) = _
+  rw [eval_eval₂]
+  have hc : (eval x).comp (C : K →+* MvPolynomial κ K) = RingHom.id K := by ext c; simp
+  rw [hc, eval₂_id]
+  apply congrArg (fun v => eval v p)
+  funext i
+  simp [eval_forms]
+private theorem eval_backward (T : (κ → K) ≃ₗ[K] (ι → K)) (a : ι → K)
+    (p : MvPolynomial κ K) (x : ι → K) :
+    eval x (shiftBackward T a p) = eval (T.symm (x - a)) p := by
+  change eval x (eval₂ (C : K →+* MvPolynomial ι K) _ p) = _
+  rw [eval_eval₂]
+  have hc : (eval x).comp (C : K →+* MvPolynomial ι K) = RingHom.id K := by ext c; simp
+  rw [hc, eval₂_id]
+  apply congrArg (fun v => eval v p)
+  funext i
+  simp [eval_forms]
+private def affinePolyEquiv (T : (κ → K) ≃ₗ[K] (ι → K)) (a : ι → K) :
+    MvPolynomial ι K ≃ₐ[K] MvPolynomial κ K :=
+  AlgEquiv.ofAlgHom (shiftForward T a) (shiftBackward T a)
+    (by
+      apply MvPolynomial.algHom_ext
+      intro i
+      apply MvPolynomial.funext
+      intro x
+      rw [AlgHom.comp_apply, eval_forward, eval_backward]
+      simp)
+    (by
+      apply MvPolynomial.algHom_ext
+      intro i
+      apply MvPolynomial.funext
+      intro x
+      rw [AlgHom.comp_apply, eval_backward, eval_forward]
+      simp)
+end AffinePolynomialChange
+
+section OriginalPolynomial
+
+open MvPolynomial
+
+variable (W : Submodule F D)
+
+/-- The determinant in the original eight coordinates and the two original endpoint bases. -/
+def obstructionPolynomial (bD : Basis (Fin 8) F D)
+    (bW : Basis (Fin 4) F W) (bQ : Basis (Fin 4) F (D ⧸ W)) :
+    MvPolynomial (Fin 8) F :=
+  Matrix.det (fun r c => ∑ i : Fin 8,
+    C (LinearMap.toMatrix bW bQ (obstruction W (bD i)) r c) * X i)
+
+variable (K : Type*) [Field K] [Algebra F K]
+
+private def tensorObstruction : (K ⊗[F] D) →ₗ[K]
+    ((K ⊗[F] W) →ₗ[K] (K ⊗[F] (D ⧸ W))) where
+  toFun t := W.mkQ.baseChange K ∘ₗ LinearMap.mulLeft K t ∘ₗ W.subtype.baseChange K
+  map_add' x y := by ext z; simp [add_mul]
+  map_smul' c x := by ext z; simp [smul_mul_assoc]
+
+private theorem tensorObstruction_tmul (c : K) (d : D) :
+    tensorObstruction W K (c ⊗ₜ[F] d) = c • (obstruction W d).baseChange K := by
+  apply LinearMap.ext
+  intro z
+  induction z using TensorProduct.inductionOn with
+  | tmul k w =>
+      simp [tensorObstruction, obstruction, Algebra.TensorProduct.tmul_mul_tmul,
+        TensorProduct.smul_tmul', TensorProduct.smul_tmul, mul_comm]
+  | add x y hx hy => simp_all
+
+private theorem obstructionPolynomial_eval (bD : Basis (Fin 8) F D)
+    (bW : Basis (Fin 4) F W) (bQ : Basis (Fin 4) F (D ⧸ W))
+    (t : K ⊗[F] D) :
+    eval₂ (algebraMap F K) ((Algebra.TensorProduct.basis K bD).repr t)
+      (obstructionPolynomial W bD bW bQ) =
+      (LinearMap.toMatrix (Algebra.TensorProduct.basis K bW)
+        (Algebra.TensorProduct.basis K bQ) (tensorObstruction W K t)).det := by
+  unfold obstructionPolynomial
+  change (eval₂Hom (algebraMap F K) ((Algebra.TensorProduct.basis K bD).repr t)) _ = _
+  refine ((eval₂Hom (algebraMap F K) ((Algebra.TensorProduct.basis K bD).repr t)).map_det _).trans ?_
+  congr 1
+  have ht := (Algebra.TensorProduct.basis K bD).sum_repr t
+  conv_rhs => rw [← ht]
+  simp only [map_sum, map_smul, Algebra.TensorProduct.basis_apply,
+    tensorObstruction_tmul, one_smul, LinearMap.toMatrix_baseChange]
+  ext r c
+  change (eval₂Hom _ _) (∑ i : Fin 8, C _ * X i) = _
+  simp [Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, mul_comm]
+
+/-- The affine change from literal split coordinates to the original basis coordinates. -/
+def originalAffineCoordinates [FiniteDimensional F D] (bD : Basis (Fin 8) F D) (a : D)
+    (e : K ⊗[F] D ≃ₐ[K] ((D →ₐ[F] K) → K)) :
+    Fin 8 → MvPolynomial (D →ₐ[F] K) K :=
+  fun i => C (algebraMap F K (bD.repr a i)) +
+    forms (e.symm.toLinearEquiv.trans (Algebra.TensorProduct.basis K bD).equivFun).toLinearMap i
+
+/-- The split-to-original affine substitution is an algebra equivalence. -/
+def originalPolynomialEquiv [FiniteDimensional F D] [Infinite K]
+    (bD : Basis (Fin 8) F D) (a : D)
+    (e : K ⊗[F] D ≃ₐ[K] ((D →ₐ[F] K) → K)) :
+    MvPolynomial (Fin 8) K ≃ₐ[K] MvPolynomial (D →ₐ[F] K) K :=
+  affinePolyEquiv (e.symm.toLinearEquiv.trans (Algebra.TensorProduct.basis K bD).equivFun)
+    (fun i => algebraMap F K (bD.repr a i))
+
+
+/-- Exact normalization of the original polynomial, in the same splitting as the actual operator. -/
+theorem original_polynomial_normalization [FiniteDimensional F D] [CharZero F]
+    (hD : finrank F D = 8) (hW : finrank F W = 4)
+    (bD : Basis (Fin 8) F D) (bW : Basis (Fin 4) F W)
+    (bQ : Basis (Fin 4) F (D ⧸ W)) (a : D) (ha : a ∉ quotientSet W)
+    (e : K ⊗[F] D ≃ₐ[K] ((D →ₐ[F] K) → K)) :
+    let f := obstructionPolynomial W bD bW bQ
+    let n := e.toLinearMap ∘ₗ (actualOperator W hD hW a ha).baseChange K ∘ₗ
+      e.symm.toLinearMap
+    let N := LinearMap.toMatrix' n
+    eval₂ (algebraMap F K) (fun i => algebraMap F K (bD.repr a i)) f ≠ 0 ∧
+    eval₂Hom (C.comp (algebraMap F K)) (originalAffineCoordinates K bD a e) f =
+      C (eval₂ (algebraMap F K) (fun i => algebraMap F K (bD.repr a i)) f) *
+        (1 + N.map C * Matrix.diagonal (fun σ => X σ)).det := by
+  classical
+  letI : CharZero K := charZero_of_injective_algebraMap (algebraMap F K).injective
+  dsimp only
+  let bw := Algebra.TensorProduct.basis K bW
+  let bq := Algebra.TensorProduct.basis K bQ
+  let bp := Pi.basisFun K (D →ₐ[F] K)
+  let I := LinearMap.toMatrix bw bp (e.toLinearMap ∘ₗ W.subtype.baseChange K)
+  let Q := LinearMap.toMatrix bp bq (W.mkQ.baseChange K ∘ₗ e.symm.toLinearMap)
+  let J := LinearMap.toMatrix bq bw
+    ((obstructionEquiv W hD hW a ha).symm.toLinearMap.baseChange K)
+  let A := LinearMap.toMatrix bw bq ((obstruction W a).baseChange K)
+  have hAJ : A * J = 1 := by
+    rw [← LinearMap.toMatrix_comp]
+    have hh : (obstruction W a).baseChange K ∘ₗ
+        (obstructionEquiv W hD hW a ha).symm.toLinearMap.baseChange K = LinearMap.id := by
+      rw [← LinearMap.baseChange_comp]
+      have hh : obstruction W a ∘ₗ
+          (obstructionEquiv W hD hW a ha).symm.toLinearMap = LinearMap.id := by
+        apply LinearMap.ext
+        intro x
+        exact (obstructionEquiv W hD hW a ha).apply_symm_apply x
+      rw [hh, LinearMap.baseChange_id]
+    rw [hh, LinearMap.toMatrix_id]
+  have hN : LinearMap.toMatrix' (e.toLinearMap ∘ₗ
+      (actualOperator W hD hW a ha).baseChange K ∘ₗ e.symm.toLinearMap) = I * J * Q := by
+    change LinearMap.toMatrix bp bp _ = _
+    dsimp [I, J, Q, actualOperator]
+    simp only [LinearMap.baseChange_comp, ← LinearMap.toMatrix_comp]
+    congr 1
+  have hconstant : eval₂ (algebraMap F K) (fun i => algebraMap F K (bD.repr a i))
+      (obstructionPolynomial W bD bW bQ) = A.det := by
+    have hc : (fun i => algebraMap F K (bD.repr a i)) =
+        (Algebra.TensorProduct.basis K bD).repr (1 ⊗ₜ[F] a) := by
+      ext i
+      simp [Algebra.TensorProduct.basis_repr_tmul, Algebra.smul_def]
+    rw [hc, obstructionPolynomial_eval, tensorObstruction_tmul, one_smul]
+  refine ⟨?_, ?_⟩
+  · rw [hconstant]
+    have hd := congrArg Matrix.det hAJ
+    rw [Matrix.det_mul, Matrix.det_one] at hd
+    exact left_ne_zero_of_mul_eq_one hd
+  apply MvPolynomial.funext
+  intro z
+  let t := e.symm z
+  have hdiag : LinearMap.toMatrix bp bp
+      (e.toLinearMap ∘ₗ LinearMap.mulLeft K t ∘ₗ e.symm.toLinearMap) =
+      Matrix.diagonal z := by
+    ext σ τ
+    simp [LinearMap.toMatrix_apply, bp, t, map_mul, Pi.single_apply, Matrix.diagonal_apply]
+  have hG : LinearMap.toMatrix bw bq (tensorObstruction W K t) =
+      Q * Matrix.diagonal z * I := by
+    rw [← hdiag]
+    simp only [Q, I, ← LinearMap.toMatrix_comp]
+    congr 1
+    ext x
+    simp [tensorObstruction]
+  have hcoords : (fun i => eval z (originalAffineCoordinates K bD a e i)) =
+      (Algebra.TensorProduct.basis K bD).repr (1 ⊗ₜ[F] a + t) := by
+    funext i
+    simp only [originalAffineCoordinates, map_add, eval_C, eval_forms]
+    simp [LinearEquiv.trans_apply, Module.Basis.equivFun_apply, t,
+      Algebra.TensorProduct.basis_repr_tmul]
+  have hleft : eval z (eval₂Hom (C.comp (algebraMap F K))
+      (originalAffineCoordinates K bD a e) (obstructionPolynomial W bD bW bQ)) =
+      (A + Q * Matrix.diagonal z * I).det := by
+    change eval z (eval₂ _ _ _) = _
+    rw [eval_eval₂]
+    have hec : (eval z).comp (C.comp (algebraMap F K)) = algebraMap F K := by
+      ext c
+      simp
+    rw [hec, hcoords, obstructionPolynomial_eval]
+    change (LinearMap.toMatrix bw bq
+      (tensorObstruction W K (1 ⊗ₜ[F] a + t))).det = _
+    rw [map_add, tensorObstruction_tmul, one_smul, map_add, hG]
+  rw [hleft, hconstant, map_mul, eval_C, hN, RingHom.map_det]
+  have heval : (1 + (I * J * Q).map C * Matrix.diagonal (fun σ => X σ)).map (eval z) =
+      1 + (I * J * Q) * Matrix.diagonal z := by
+    ext σ τ
+    simp [Matrix.mul_apply, Matrix.diagonal, Matrix.one_apply]
+  change (A + Q * Matrix.diagonal z * I).det =
+    A.det * ((1 + (I * J * Q).map C * Matrix.diagonal (fun σ => X σ)).map (eval z)).det
+  rw [heval]
+  calc
+    (A + Q * Matrix.diagonal z * I).det =
+        (A * (1 + J * (Q * Matrix.diagonal z * I))).det := by
+      congr 1
+      simp only [Matrix.mul_add, Matrix.mul_one, ← Matrix.mul_assoc, hAJ, Matrix.one_mul]
+    _ = A.det * (1 + J * (Q * Matrix.diagonal z * I)).det := Matrix.det_mul _ _
+    _ = A.det * (1 + (I * J * Q) * Matrix.diagonal z).det := by
+      congr 1
+      rw [show J * (Q * Matrix.diagonal z * I) = (J * Q * Matrix.diagonal z) * I by
+        simp only [Matrix.mul_assoc], Matrix.det_one_add_mul_comm]
+      simp only [Matrix.mul_assoc]
+    _ = _ := rfl
+  all_goals rfl
+
+end OriginalPolynomial
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow

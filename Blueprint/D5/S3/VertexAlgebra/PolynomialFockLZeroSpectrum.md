@@ -36,4 +36,5 @@ For every natural N, the kernel of L_0 minus N times the identity is precisely t
 
 - Truth anchor: `D5/S3/VertexAlgebra/PolynomialFockLZeroSpectrum.energyFiber_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/PolynomialFockLZeroSpectrum.lZero_spectrum`
+- Dependency: [D5/S3/Combinatorics/Partitions/PositiveEnergyPartition](../Combinatorics/Partitions/PositiveEnergyPartition.md)
 - Dependency: [D5/S3/VertexAlgebra/PolynomialFockSugawaraCommutators](PolynomialFockSugawaraCommutators.md)

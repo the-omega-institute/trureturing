@@ -89,4 +89,74 @@ theorem full_telescope_bridge :
   · intro h F D _ _ _ K _ _ _ _ _ _ _ _ W hD hW hE a ha
     exact h { F := F, D := D, K := K, W := W, hD := hD, hW := hW, hE := hE } ⟨a, ha⟩
 
+namespace PolynomialNormalization
+
+structure Parameters where
+  F : Type u
+  D : Type v
+  K : Type w
+  [fieldF : Field F]
+  [fieldD : Field D]
+  [fieldK : Field K]
+  [algebraFD : Algebra F D]
+  [algebraFK : Algebra F K]
+  [finiteD : FiniteDimensional F D]
+  [zeroCharacteristic : CharZero F]
+  W : Submodule F D
+  hD : finrank F D = 8
+  hW : finrank F W = 4
+
+attribute [instance] Parameters.fieldF Parameters.fieldD Parameters.fieldK
+  Parameters.algebraFD Parameters.algebraFK Parameters.finiteD Parameters.zeroCharacteristic
+
+structure State (p : Parameters.{u, v, w}) where
+  bD : Basis (Fin 8) p.F p.D
+  bW : Basis (Fin 4) p.F p.W
+  bQ : Basis (Fin 4) p.F (p.D ⧸ p.W)
+  a : p.D
+  ha : a ∉ quotientSet p.W
+  e : p.K ⊗[p.F] p.D ≃ₐ[p.K] ((p.D →ₐ[p.F] p.K) → p.K)
+
+abbrev signature : Signature where
+  Params := Parameters.{u, v, w}
+  State := State
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := MvPolynomial (Fin 8) p.F
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+/-- The polynomial readout uses all three original bases in the source state. -/
+def actual : Realization signature.{u, v, w} := realize signature
+  (fun _ p s => obstructionPolynomial p.W s.bD s.bW s.bQ)
+  (fun e => nomatch e)
+
+open MvPolynomial in
+def conclusion (p : Parameters.{u, v, w}) (s : State p) (f : MvPolynomial (Fin 8) p.F) : Prop :=
+  let n := s.e.toLinearMap ∘ₗ (actualOperator p.W p.hD p.hW s.a s.ha).baseChange p.K ∘ₗ
+    s.e.symm.toLinearMap
+  let N := LinearMap.toMatrix' n
+  let c := eval₂ (algebraMap p.F p.K) (fun i => algebraMap p.F p.K (s.bD.repr s.a i)) f
+  c ≠ 0 ∧ eval₂Hom (C.comp (algebraMap p.F p.K))
+    (originalAffineCoordinates p.K s.bD s.a s.e) f =
+    C c * (1 + N.map C * Matrix.diagonal (fun σ => X σ)).det
+
+abbrev arena : Arena where
+  signature := signature.{u, v, w}
+  Law R := ∀ (p : Parameters.{u, v, w}) (s : State p), conclusion p s (R.readout () p s)
+
+/-- Exact reconstruction of the original normalization theorem without normal-field premises. -/
+theorem full_telescope_bridge :
+    (type_of% (@original_polynomial_normalization.{u, v, w})) ↔ arena.{u, v, w}.Law actual := by
+  constructor
+  · intro h p s
+    exact @h p.F p.D p.fieldF p.fieldD p.algebraFD p.W p.K p.fieldK p.algebraFK
+      p.finiteD p.zeroCharacteristic p.hD p.hW s.bD s.bW s.bQ s.a s.ha s.e
+  · intro h F D _ _ _ W K _ _ _ _ hD hW bD bW bQ a ha e
+    exact h { F := F, D := D, K := K, W := W, hD := hD, hW := hW }
+      { bD := bD, bW := bW, bQ := bQ, a := a, ha := ha, e := e }
+
+end PolynomialNormalization
+
 end Reg.D5.S3.Quantum.Algebra.AuricActualOcticWindow

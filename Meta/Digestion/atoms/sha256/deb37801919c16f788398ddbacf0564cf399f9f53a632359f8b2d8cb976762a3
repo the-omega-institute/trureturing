@@ -1,0 +1,41 @@
+**Definition 1.1 (Constant-delay history operator).** Let $\ell\ge1$, let
+$n_1,\ldots,n_\ell$ be positive integers, and put
+$E=\bigoplus_{i=1}^{\ell}\mathbb R^{n_i}$. For a real block matrix
+$M=(M_{ij})$ on $E$ and a constant array
+$\delta\in\mathbb Z_{\ge0}^{\ell\times\ell}$ with $\delta_{ii}=0$, choose
+an integer $K\ge\max_{i,j}\delta_{ij}$. The history operator
+$B_{\delta,K}$ on $E^{K+1}$, with slot zero newest, is
+
+$$
+\begin{aligned}
+(B_{\delta,K}y)_{0,i}
+  &=\sum_{j=1}^{\ell}M_{ij}y_{\delta_{ji},j},\\
+(B_{\delta,K}y)_{s,i}&=y_{s-1,i}\qquad(1\le s\le K).
+\end{aligned}
+\tag{1.1}
+$$
+
+Thus $x_i(t+1)=\sum_jM_{ij}x_j(t-\delta_{ji})$ for $t\ge0$,
+with arbitrary prescribed real history $x(-K),\ldots,x(0)$.
+Convergence means $x(t)\longrightarrow0$ for every such history.
+The spectrum and spectral radius are taken after complexification;
+$\rho(T)=\max\{|z|:z\in\operatorname{spec}_{\mathbb C}(T)\}$.
+A positive remote-delay array has $\delta_{ij}\ge1$ whenever $i\ne j$.
+The larger class of nonnegative remote-delay arrays permits zero there.
+
+This is the recurrence and history convention of Ortiz Marrero and Young,
+“Price of Asynchrony,” in Aksoy et al., *Seven open problems in applied
+combinatorics*, [arXiv:2303.11464v1, source
+`Sections/ratfish.tex`, Problem Statement and Lemmas `L:spectra`,
+`L:uniform`](https://arxiv.org/src/2303.11464v1).
+In the existing block-coordinate definition
+[`Vtx`](../../../D5/S3/Combinatorics/Graph/MultipartiteCHS/Defs.lean),
+$E$ has coordinates $(i,a)$ with $1\le i\le\ell$ and
+$1\le a\le n_i$, corresponding to the zero-based pair
+$(i-1,a-1)$ in `Vtx`; (1.1) is the same entry rule as
+[`asyncMatrix`](../../../D5/S3/Quantum/Matrix/AsynchronousIterationSpectralRadiusRefutation.lean).
+The parameter correspondence is $\ell\leftrightarrow\ell$,
+$n_i\leftrightarrow n(i-1)$, $K\leftrightarrow k$, and source-to-destination
+delay $j\to i\leftrightarrow\delta_{ji}$, with history coordinates
+$(s,(i,a))$.
+

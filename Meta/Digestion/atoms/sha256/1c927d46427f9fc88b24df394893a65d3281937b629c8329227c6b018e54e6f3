@@ -1,0 +1,36 @@
+**定义 131.1（同一原框架内的近似集合）。** 取非零有限维实范数空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的实线性泛函 $u\in V^*$。沿用(Q130.1)的整个原域
+
+$$
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},
+$$
+
+其中 $\mathcal E$ 包含全部在 $C$ 上满足 $e\ge0$、$u-e\ge0$ 的实线性效应。对每个 $r\in P$，取完整原排除集合
+
+$$
+D_r=\{x\in K:\exists e\in\mathcal E,\ e(r)=1,\ e(x)=0\}.
+$$
+
+假设全局条件 $\mathrm{EB}_{\ge1}$：对每个 $r\in P$，存在有限整数 $d_r\ge1$ 和单射仿射映射 $\phi_r:\mathbb R^{d_r}\to V$，使 $D_r=\phi_r(\overline B^{d_r})$，其中 $\overline B^{d_r}$ 是整个欧氏闭单位球；维数 $d_r$ 允许随标签变化。
+
+固定 $p\in P$ 及其一个球图，取该完整球的一对不同对径 $q,\bar q\in P\cap D_p$，且没有 $e\in\mathcal E$ 满足 $e(q)=1,e(\bar q)=0$。置 $y=(3q+\bar q)/4$。由[VII103.2][Q130VII]在上述全局 $\mathrm{EB}_{\ge1}$ 下的结论，$D_p$ 是紧暴露真面，且 $P\cap D_p=\partial_{\rm rel}D_p$；特别地，$y\in\operatorname{ri}D_p$ 且不是球心。
+
+对 $\eta\ge0$，一个 $\eta$-框架是任意有限的 $N\ge1$、两两不同的
+$q_1,\ldots,q_N\in P$ 及线性泛函 $b_1,\ldots,b_N$，满足
+
+$$
+ b_i\ge0\ \text{于 }C,\qquad \sum_{i=1}^N b_i=u,\qquad
+ \max_{i,j}|b_i(q_j)-\delta_{ij}|\le\eta .
+\tag{Q131.1}
+$$
+
+这里每个 $b_i$ 都是完整原效应：确实
+$u-b_i=\sum_{j\ne i}b_j\ge0$ 于 $C$，故 $b_i\in\mathcal E$。定义
+
+$$
+ M_\eta:=\bigcup_{N\ge1}\left\{
+ \sum_{i=1}^N\lambda_iq_i: (q_i,b_i)_{i=1}^N\text{ 满足(Q131.1)}, \lambda_i\ge0,\ \sum_i\lambda_i=1\right\} .
+\tag{Q131.2}
+$$
+
+每个混合只在一个同一框架内形成；(Q131.2)不是不同框架并集的凸包。单例框架、零权重、任意有限 $N$ 均保留，标签允许随序列移动，也不要求距离的下确界达到。所有闭包均在原空间 $V$ 中取，所有距离均取其固定的原范数。
+

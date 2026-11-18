@@ -30,7 +30,7 @@ def unit : HermitianMat ι ℂ →ₗ[ℝ] ℝ where
   map_add' := HermitianMat.trace_add
   map_smul' r X := HermitianMat.trace_smul X r
 
-private theorem positive_representative (f : HermitianMat ι ℂ →ₗ[ℝ] ℝ)
+theorem positive_representative (f : HermitianMat ι ℂ →ₗ[ℝ] ℝ)
     (hf : ∀ X ∈ cone, 0 ≤ f X) :
     ∃ A : HermitianMat ι ℂ, 0 ≤ A ∧ ∀ X, f X = ⟪A, X⟫_ℝ := by
   let A := (InnerProductSpace.toDual ℝ (HermitianMat ι ℂ)).symm

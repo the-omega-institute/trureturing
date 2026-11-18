@@ -106,7 +106,7 @@ private def liftNFA (eH : H → H → Prop) (q : H → P) : NFA P H where
   start := Set.univ
   accept := Set.univ
 
-private theorem reachable_endpoints (eH : H → H → Prop) (q : H → P)
+theorem reachable_endpoints (eH : H → H → Prop) (q : H → P)
     (a : ℕ → P) (m : ℕ) (t : H) :
     t ∈ (liftNFA eH q).evalFrom {h | q h = a 0} (tailWord a m) ↔
       ∃ b : prefixWitness eH q a m, b.1 (Fin.last m) = t := by

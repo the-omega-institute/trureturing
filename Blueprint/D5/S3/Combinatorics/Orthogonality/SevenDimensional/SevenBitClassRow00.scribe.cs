@@ -1,0 +1,10 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Orthogonality.SevenDimensional;
+internal sealed class SevenBitClassRow00Document : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The original seven-dimensional written lower-bound proof.",
+        H("SevenBitClassRow00"),
+        Blocks(Describe.Lean(DescribeId.Create("law-0"), DeclarationHandle.Create("D5/S3/Combinatorics/Orthogonality/SevenDimensional/SevenBitClassRow00.row_0"), H("row_0"), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/binarysubspace2026complete")), Blocks(Paragraph(Text("This block checks every compatible extension for its listed exact minimum vectors. The assembly combines all126 minima of the original full domain and consumes the resulting quadratic and Lagrangian data in the universal hole argument. Every finite identity is an ordinary kernel check with full-domain soundness. The written lower bound is distinct from the paused19-color case exclusions, exactn7 remains open, and no upper bound is asserted."))), DescribeRole.Theorem)),
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Orthogonality/SevenBitGeometry"))]));
+}

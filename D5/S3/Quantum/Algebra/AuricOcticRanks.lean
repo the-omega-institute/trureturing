@@ -439,7 +439,7 @@ theorem crossRank_matrix (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Finset Ω) :
   exact (Submodule.equivMapOfInjective (coordinateExtend S)
     (coordinateExtend_injective S) M.mulVecLin.range).finrank_eq
 
-private theorem cross_rank_bound (U : Submodule K (Ω → K))
+theorem cross_rank_bound (U : Submodule K (Ω → K))
     (n : (Ω → K) →ₗ[K] (Ω → K)) (hker : n.ker = U) (hrange : n.range = U)
     (hΩ : Fintype.card Ω = 8) (hU : finrank K U = 4) (S : Finset Ω) :
     2 * rowRank U S ≤ S.card + crossRank n S := by

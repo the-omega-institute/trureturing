@@ -5,14 +5,15 @@ year: 2026
 title: Lemmas and Conjectures in Spectral Graph Theory
 doi: null
 url: https://arxiv.org/abs/2611.03879v1
-claim: "Conjecture 4 (#112951): λ₁ ≤ R + µ₂ for every connected simple undirected graph of order at least two."
+claim: "Conjectures 4 (#112951) and 5 (#239534): λ₁ ≤ R + µ₂ and µ₂ + rk(A) ≤ 2m for connected simple undirected graphs of order at least two."
 strata_touched:
   - D5/S3/Combinatorics/SpectralGraph/CazenaveRandicSpectralBound
+  - D5/S3/Combinatorics/SpectralGraph/CazenaveLaplacianRankBound
 license: citation-only
 triage: anchor
 ---
 
-# Cazenave's adjacency–Randić–Laplacian inequality
+# Cazenave's spectral graph inequalities
 
 ## Verified locator
 
@@ -47,3 +48,20 @@ In the Lean statement, `Fin (n + 2)` ranges over every allowed graph order;
 `LinWangCaiBroomSpectralRatio.lapEig G 1` denotes the second-largest ordinary
 Laplacian eigenvalue. The scalar reciprocal square root is evaluated only on
 edges, whose endpoint degrees are positive.
+
+
+## Laplacian–rank conjecture
+
+The same Section 7 states:
+
+> Conjecture 5 (#239534). $\mu_2+\operatorname{rk}(A)\le2m$.
+
+The source TeX gives this statement at main.tex lines 752–754 and the
+conventions at lines 48–69. The arXiv v1 source archive has SHA-256
+aebb9213f3b0158c9b0dc52155886fcc663a830367bdad713a9133eb52729975.
+The Laplacian is the ordinary unnormalized matrix $D-A$. Its eigenvalues
+are decreasing, with multiplicity; the rank is real adjacency rank and
+$m$ counts unordered edges once. In the corresponding Lean statement,
+LinWangCaiBroomSpectralRatio.lapEig G 1 is exactly this second largest
+Laplacian eigenvalue, including the smaller eigenvalue at order two.
+The parameter Fin (n + 2) covers every order at least two.

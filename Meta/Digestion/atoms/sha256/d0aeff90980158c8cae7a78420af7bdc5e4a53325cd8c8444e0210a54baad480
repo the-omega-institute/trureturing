@@ -1,0 +1,17 @@
+**Theorem 7.2 (logarithmic terminal-register bit order).** For the cost (7.1), each fixed $0\le\varepsilon<1/2$ and any fixed admissible $k$ satisfy
+
+$$
+\frac{\log_2(H/C_\varepsilon^{\rm pol})}{\nu_0}
+ <B^*_\varepsilon(H)\le\lceil\log_2 H\rceil,
+\qquad
+B^*_\varepsilon(H)=\Theta_\varepsilon(\log H)
+\quad(H\longrightarrow\infty).
+\tag{7.2}
+$$
+
+For the asymptotic notation one may fix the definite $k$ in Definition 1.4 as a function of $\varepsilon$. This determines the bit order for precisely the terminal-curve contract (7.1); it does not determine a matching exponent for the necessary state count in (6.8).
+
+**Proof.** Apply (6.7) to a minimizing comparator and set $B=B^*_\varepsilon(H)$, so $S^*_\varepsilon(H)\le2^B$. This gives the strict lower inequality. For the upper inequality reuse the original finite counter of Corollary 3.1 and [PhaseBoundary350.9][PB]: take states $0,\ldots,H-1$, initial state zero, transition $j\mapsto\min(j+1,H-1)$ and the fixed table $b_j=p_j$. Then $\alpha P^n b=p_n$ for $0\le n<H$, so $S^*_\varepsilon(H)\le H$. Its index is carried by its counted register, without an external free input $n$. This construction includes $H=1$ and $\varepsilon=0$.
+
+For sufficiently large $H$, $\log_2(H/C_\varepsilon^{\rm pol})\ge\tfrac12\log_2 H$, while $\lceil\log_2 H\rceil\le2\log_2 H$ for $H\ge2$. These inequalities prove the stated order. The upper comparison is this same original terminal counter with a fixed horizon-dependent table. It supplies no per-address realization for every allowed stochastic $P$, full readable-joint approximation or conditional-history matching. In particular a sufficient workspace bound for a different recurrent approximation of a full joint law is not an upper bound used in this proof. The $H$ table entries and their description precision remain outside the cost (7.1). $\square$
+

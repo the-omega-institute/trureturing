@@ -1,0 +1,45 @@
+**引理 278.3（M-only的正对偶实际面与单位支持）。** 在任意非零有限维闭尖生成 $C$、严格正 $u$、整个紧底及完整proper菜单上，只假定每个原纯点有least确认。则 $C^*$ 的每个实际锥面 $F$ 都闭且暴露，存在确认全部满足 $e_q\in F$ 的原纯点 $q$ 的唯一least共同确认效应 $h_F\in[0,u]$，称为该面的支持效应；它满足
+
+$$
+\operatorname{face}(h_F)=F,\qquad e_q\in F\quad\Longleftrightarrow\quad h_F(q)=1,
+\qquad
+F\subseteq G\quad\Longleftrightarrow\quad h_F\le h_G.
+\tag{278.3}
+$$
+
+支持取补 $h_F\mapsto u-h_F$ 定义全部正对偶实际面格的正交补。若再有278.2的唯一确认，则全部正对偶极射线恰为互不相同的 $\mathbb R_+e_p$，其正交关系恰是 $\perp_e$；该格准确为 $P$ 的双极闭格。
+
+证明。直接复用[Q278M]及XX271.5的M-only正对偶剥离和共同frame补全：任意 $f\in C^*$ 可在某个同一完整frame中写成
+
+$$
+f=\sum_i\lambda_i e_{p_i},\qquad
+\lambda_i\ge0,\quad e_{p_i}(p_j)=\delta_{ij},\quad
+\sum_i e_{p_i}=u.
+\tag{278.4}
+$$
+
+这里只复用零互易与least减法，不使用数值互易、态谱分解、L2或自对偶。取非零实际面 $F$ 的相对内部点 $f$，在(278.4)中令 $I=\{i:\lambda_i>0\}$，置
+
+$$
+h=\sum_{i\in I}e_{p_i},\qquad
+ y=\sum_{j\notin I}p_j.
+\tag{278.5}
+$$
+
+正系数的上下界给 $\operatorname{face}(f)=\operatorname{face}(h)=F$。该面包含于 $\{a\in C^*:a(y)=0\}$。反之，对其中任意正 $a$ 用(278.4)展开。每个正系数项 $e_q$ 在全部未选 $p_j$ 取零，零互易给 $e_{p_j}(q)=0$，故 $h(q)=1$。leastness于是给 $e_q\le h$，使 $e_q\in F$，从而 $a\in F$。所以
+
+$$
+F=\{a\in C^*:a(y)=0\}.
+\tag{278.6}
+$$
+
+这是整个实际面，不是预先只处理暴露面的证明。空和 $y=0$ 对应整个 $C^*$；零面单独用任意内部 $y$ 暴露，并取 $h_0=0$。这也证明所有正对偶面都闭。
+
+(278.6)及零互易给 $e_q\in F\Longleftrightarrow h(q)=1$。在 $F$ 中的每个 $e_q$ 因而都不大于 $h$。若proper $g$ 确认全部选中 $p_i$，逐个用leastness减去 $e_{p_i}$；交叉零读数使残余仍确认下一点，故 $h\le g$。所以 $h$ 是这些点的least共同确认。换另一展开得到同一 $F$ 时，各自支持均确认对方全部选中点，故互相不大于，唯一性成立。相同论证给(278.3)的正向；反向由 $e_q\le h_F\le h_G$ 及正对偶生成得到。
+
+未选frame的和 $u-h_F$ 同样是其生成面的支持效应。因支持唯一，取补与展开无关；它保序反向且对合。两个补面没有公共非零极生成元，因为那会在同一 $q$ 上给 $h_F(q)=(u-h_F)(q)=1$；其join含 $u\in\operatorname{int}C^*$，故是全锥。这给实际面格的正交补。
+
+对 $f=e_p$，用含 $p$ 的完整frame，(278.5)可取 $h=e_p$。若其生成面含 $e_q$，则 $e_p(q)=1$；唯一确认迫 $q=p$。正对偶生成因此使该面就是极射线 $\mathbb R_+e_p$。反过来任一极射线的(278.4)展开只能含同一射线，故是某 $e_p$；不同 $p$ 不会同射线，因为各自最大值均一且唯一最大点不同。
+
+任意 $A\subseteq P$ 的共同正交原子，恰为实际面 $\{a\in C^*:a(p)=0\ (p\in A)\}$ 的全部原子。每个实际面又是某补面的正交补。故这些实际面的原子集恰是全部双极闭集，格对应完整。$\square$
+

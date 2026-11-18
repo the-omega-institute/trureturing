@@ -1,0 +1,30 @@
+**Theorem 4.1 (Minimal block count and positive delay bound).** Among
+real zero-diagonal block matrices with spectral radius
+$\lambda\in(0,1)$ and constant strictly positive remote delays,
+three blocks and maximum delay two are simultaneously sufficient and
+minimal for a delayed spectral radius at least one. More precisely:
+
+1. For arbitrary positive integers $m,n$, arbitrary real rectangular
+   matrices $U\in\mathbb R^{m\times n}$,
+   $V\in\mathbb R^{n\times m}$, and
+   $M_0=\begin{pmatrix}0&U\\V&0\end{pmatrix}$ with
+   $\rho(M_0)=\lambda\in(0,1)$, let the remote delays from the second
+   block to the first and from the first to the second be respectively
+   integers $1\le a,b\le k$. For any history length at least
+   $\max\{a,b\}$,
+
+   $$
+   \rho(M_0^{(\delta)})
+    =\lambda^{2/(a+b+2)}
+    \le\lambda^{1/(k+1)}<1.
+   \tag{4.1}
+   $$
+
+2. For any finite positive number of positive-sized blocks and any
+   real zero-diagonal block matrix $N$ with $\rho(N)=\lambda\in(0,1)$,
+   if every remote delay is a positive integer at most one, then
+   $\rho(N^{(\delta)})=\sqrt\lambda<1$.
+3. The family (1.3) has three scalar coordinates and attains radius
+   one at $c=(1+\lambda^2)/2$, and arbitrarily large radii as in (2.8),
+   with maximum positive remote delay two.
+

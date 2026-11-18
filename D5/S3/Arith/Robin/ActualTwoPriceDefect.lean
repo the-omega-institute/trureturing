@@ -309,7 +309,7 @@ private theorem price_hasDerivAt {x : ℝ} (hx : 1 < x) :
     field_simp [hx0, hl0]
     <;> ring
 
-private theorem weight_continuousAt {x : ℝ} (hx : 1 < x) : ContinuousAt weight x := by
+theorem weight_continuousAt {x : ℝ} (hx : 1 < x) : ContinuousAt weight x := by
   have hx0 : x ≠ 0 := ne_of_gt (by linarith : 0 < x)
   have hl0 : Real.log x ≠ 0 := (Real.log_pos hx).ne'
   exact (continuousAt_const.add (Real.continuousAt_log hx0)).div
@@ -521,7 +521,7 @@ private theorem interval_above_one {a b u : ℝ} (ha : 1 < a) (hb : 1 < b)
     (hu : u ∈ Set.uIcc a b) : 1 < u :=
   (lt_min ha hb).trans_le hu.1
 
-private theorem clock_weight_integrable {a b : ℝ} (ha : 1 < a) (hb : 1 < b) :
+theorem clock_weight_integrable {a b : ℝ} (ha : 1 < a) (hb : 1 < b) :
     IntervalIntegrable (fun u => clock u * weight u) volume a b := by
   have hm : MonotoneOn clock (Set.uIcc a b) :=
     clock_monotone.mono fun u hu => interval_above_one ha hb hu
@@ -566,7 +566,7 @@ theorem pressure_integral {a b : ℝ} (ha : 1 < a) (hb : 1 < b) :
   rw [hreflect] at hn
   simpa only [neg_neg] using hn
 
-private theorem weight_integral {a b : ℝ} (ha : 1 < a) (hb : 1 < b) :
+theorem weight_integral {a b : ℝ} (ha : 1 < a) (hb : 1 < b) :
     (∫ u in a..b, weight u) = price a - price b := by
   have hd : ∀ u ∈ Set.uIcc a b,
       HasDerivAt (fun u => -price u) (weight u) u := by

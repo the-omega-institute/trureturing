@@ -1,0 +1,10 @@
+### 7.2. An explicit clean large-power architecture
+
+Let n=ceil(log_2 N). Encode each residue in n bits and extend a matrix permutation by the identity when either register is an invalid residue. Compute M_j=A^(2^j) modulo N by repeated squaring. M_j and M_j^{-1} have descriptions of O(n) bits because their matrix size is fixed. Reversible modular arithmetic can implement the extended bijection f_j and its inverse.
+
+The clean in-place construction uses a blank second pair of residue registers: compute f_j(x) into it, swap the two pair registers, and XOR the reversible computation of f_j^{-1} into the old-input register to return that register to zero. Arithmetic scratch must be uncomputed in both computations. This realizes |x>|0> -> |f_j(x)>|0>, not an oracle leaving hidden x-dependent work. A control is added to the specified reversible elementary circuit. The padding rule is preserved on the full bit-string domain.
+
+For r<=N^2-1, a binary clock with Q>=2(N^2-1)^2 uses O(log N) clock bits. Repeated squaring and classical modular arithmetic have polynomial bit complexity; standard reversible compilation gives a polynomial-size circuit family for this arithmetic target, followed by the established phase-estimation and classical postprocessing framework [S97,K95,IBM]. This is an architectural application of known algorithms. A primitive gate list, gate count and physical error correction are additional implementation requirements. By contrast, no such fast-power construction is supplied here for an arbitrary no11 sweep or fusion-chain QCA.
+
+The Fibonacci matrix also satisfies q(A(x,y))=-q(x,y) for q=x^2-xy-y^2, so its square preserves a hyperbolic quadratic form over the reals. This real-coordinate identity and the finite permutation unitary concern different representations. Neither determines the other carrier's Hilbert norm, physical dimension or quantum speed advantage.
+

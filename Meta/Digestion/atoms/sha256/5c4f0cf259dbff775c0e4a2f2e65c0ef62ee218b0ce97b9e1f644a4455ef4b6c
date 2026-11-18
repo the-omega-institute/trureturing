@@ -1,0 +1,33 @@
+**推论 148.6（临界阈值与尚余的开中带）。** 在定理148.5的相同前件下，
+若 $\varepsilon=1/2$，则 $P\subseteq B$，从而同一根满足 X133.1 的 $\mathsf D_2(o)$。
+若 $0<\varepsilon<1/2$，(XII148.15) 唯一尚未支付的读数范围是
+
+$$
+\varepsilon<h(p)<1-\varepsilon.
+\tag{XII148.18}
+$$
+
+若 $\varepsilon>1/2$，全覆盖已经由 (XII145.25) 的两条严格带及其另付零层取得，
+不作为新的覆盖增量。
+
+证明。临界值时两个闭区间覆盖 $[0,1]$，而 $0\le h\le1$，故 $P\subseteq B$。
+每个 $q\in P\cap B$ 都有实际同一个 $s\in S$ 满足 $q\in D_s$；
+零对称给 $o\perp s\perp q$，包括 $q=o$，所以原 $\mathsf D_2(o)$ 的共同邻点支成立。
+若需要静态表示，此时才可直接消费 [X133.6][Q148X]：其原前件为完整 EB3 加一个固定根的
+$\mathsf D_2(o)$，结论为同原锥、同原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad \Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XII148.19}
+$$
+
+X133.6的链先由该固定覆盖根取得全部原三角，再调用 IX120.4—120.5及116.17—116.18的既有分类。
+这里未把表示预用于引理148.2、定理148.4或148.5；(XII148.19) 是该旧结果的条件应用，
+其前件仍包含同根 $L_{1/2}(o)$，不是 EB3 加纯 PR 的自动分类。
+
+小于临界值时，两个闭带的补集正是 (XII148.18)。这只说明所述包含关系的剩余范围，
+不声称中带必有点或必不在 $B$。
+大于临界值时，$h=0$ 由 $S$ 处理；$h>0$ 且不在严格低带意味着
+$h\ge\varepsilon>1-\varepsilon$，已在原严格高带，故覆盖早由145.4成立。证毕。
+

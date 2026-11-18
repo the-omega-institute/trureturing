@@ -152,7 +152,7 @@ theorem chart_of_full_frame (v : EuclideanSpace ℂ (Fin 3)) (hv : ‖v‖ = 1)
         (by rw [hYtr]; rfl)).symm
     rw [heq, hrestore X hXv]
 
-private theorem whole_rog {ι : Type*} [Fintype ι] [DecidableEq ι] :
+theorem whole_rog {ι : Type*} [Fintype ι] [DecidableEq ι] :
     ROG (⊤ : Submodule ℝ (HermitianMat ι ℂ)) := by
   classical
   intro X _ hX

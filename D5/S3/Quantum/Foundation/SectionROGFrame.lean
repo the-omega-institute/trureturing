@@ -122,7 +122,7 @@ lemma rankOne_self (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1) :
     (Matrix.vecMulVec (v : ι → 𝕜) (star (v : ι → 𝕜)) *ᵥ (v : ι → 𝕜)) = _
   simp [Matrix.vecMulVec_mulVec, hunit]
 
-private lemma pairing_one_unique (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1)
+lemma pairing_one_unique (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1)
     (X : HermitianMat ι 𝕜) (hX : 0 ≤ X) (ht : X.trace = 1)
     (heq : ⟪rankOne v, X⟫_ℝ = 1) : X = rankOne v := by
   have hxx := HermitianMat.inner_le_mul_trace hX hX

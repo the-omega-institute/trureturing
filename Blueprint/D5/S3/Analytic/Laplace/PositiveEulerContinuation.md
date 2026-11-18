@@ -24,8 +24,36 @@ If sigma is nonzero, EulerLocalContinuation.exists_extension_of_ne_zero construc
 
 This combines the classical positive-measure Landau mechanism with a meromorphic Euler equation. It makes no literature originality claim and proves no unconditional statement about zeta zeros or RH. In the Robin route, the finite positive measure, the actual transformed theta-tail equation, and the real regularity of its meromorphic forcing must still be supplied by their own mathematical results. Robin's inequality for integers above 5040 and the eventual theta-tail comparison are separate application hypotheses.
 
+**Theorem 1.2 (Regularity on the possible convergence-cut corridor).**
+
+Lean statement: `D5/S3/Analytic/Laplace/PositiveEulerContinuation.integrable_and_analytic_of_euler_corridor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Laplace/PositiveEulerContinuation.integrable_and_analytic_of_euler_corridor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same conclusion holds when real regularity of R is assumed only at a<x<=0. The actual convergence cut is nonpositive because the positive measure is finite, so the proof needs regularity only on that corridor. The original theorem requiring regularity at every real x>a follows from this shared proof.
+
+The proof retains both branches: a nonzero cut uses the ordinary Euler extension, and a zero cut uses dominated convergence of the actual finite-measure Laplace integral followed by the complex extension at zero. No boundary limit or moment estimate is assumed.
+
+**Theorem 1.3 (Analyticity of the actual transform).**
+
+Lean statement: `D5/S3/Analytic/Laplace/PositiveEulerContinuation.analytic_laplace`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Laplace/PositiveEulerContinuation.analytic_laplace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any measure mu on a measurable space and real observable X, if exp(-x X) is integrable for every real x>c, the actual function z maps to complexMGF X mu (-z) is AnalyticOnNhd on Re z>c. The measure need not be finite and X need not be nonnegative. Reflection identifies an open interval inside the exponential integrability set, and the complex MGF analyticity theorem applies. Both the abscissa argument and the common signed Euler comparison use this supplier.
+
 ## References
 
+- Truth anchor: `D5/S3/Analytic/Laplace/PositiveEulerContinuation.analytic_laplace`
 - Truth anchor: `D5/S3/Analytic/Laplace/PositiveEulerContinuation.integrable_and_analytic_of_euler`
+- Truth anchor: `D5/S3/Analytic/Laplace/PositiveEulerContinuation.integrable_and_analytic_of_euler_corridor`
 - Dependency: [D5/S3/Analytic/Laplace/AbscissaSingularity](AbscissaSingularity.md)
 - Dependency: [D5/S3/Analytic/Laplace/EulerLocalContinuation](EulerLocalContinuation.md)

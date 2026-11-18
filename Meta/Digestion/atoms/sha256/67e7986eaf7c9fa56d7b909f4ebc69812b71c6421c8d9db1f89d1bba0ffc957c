@@ -1,0 +1,46 @@
+**定义 126.5（唯一完整零确认分支及原法向坐标）。** 以下另加
+
+$$
+\mathrm{Inj}:\quad D_s=D_t\Longrightarrow s=t,
+\qquad
+p\in P_0:=\{s\in P:\mathcal A_s\text{ 为单点}\}.
+\tag{X126.16}
+$$
+
+写 $\mathcal A_p=\{e_p\}$、$g=u-e_p$，并选完整旧球图 $G=D_p=b(\overline B^3)$。这不是 $F_p=\{e_p\}$：整个 $F_p$ 始终保留，且包含 $u$。
+
+按 [IX120.2、120.8、120.10—120.13][Q126IX]，令 $N_p=\{n\in C^{\ast}:n(p)=0\}$，则限制 $\operatorname{span}N_p\to\operatorname{Aff}(G)$ 是同构，$g\in\operatorname{ri}N_p$，$g>0$ 于 $K\setminus\{p\}$。存在唯一原线性 $H:V\to\mathbb R^3$，其各分量属于 $\operatorname{span}N_p$，且
+
+$$
+H(p)=0,\qquad H(b(z))=z,\qquad g(b(z))=1.
+\tag{X126.17}
+$$
+
+对每个已经属于原正锥的 $n=\alpha g+t\cdot H\in N_p$，准确最大值为
+
+$$
+\max_K n=\alpha+\|t\|.
+\tag{X126.18}
+$$
+
+正性必须先支付，不能仅凭右端不大于一就把一个有符号泛函称为效应。对 $v\in S^2$，置
+
+$$
+\rho_p(v)=\sup_{x\in K\setminus\{p\}}\frac{-v\cdot H(x)}{g(x)}\ge1.
+\tag{X126.19}
+$$
+
+该函数有限。若 $q=b(v)$，则 $q\in P_0$，记 $\mathcal A_q=\{e_q\}$；既有全空间公式及完整原边区间为
+
+$$
+\begin{gathered}
+e_q=(1-\lambda)g+\lambda v\cdot H,\qquad
+\lambda=\frac1{1+\rho_p(v)}\in(0,\tfrac12],\\
+\{n\in\mathcal E:n(p)=0,\ n(q)=1\}=[g,e_q],\qquad
+J(p,q)=[e_p,u-e_q].
+\end{gathered}
+\tag{X126.20}
+$$
+
+区间在整个 $V^{\ast}$ 中，不只是旧球上的限制。其末式由前式取补得到。相对内部、全域正性、边传播及区间公式均按上述来源使用，不另列为新的分类结果。
+

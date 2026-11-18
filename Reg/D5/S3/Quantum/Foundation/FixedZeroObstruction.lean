@@ -200,4 +200,47 @@ theorem obstruction_source_bridge : obstructionScope.{u} ↔ obstructionArena.{u
 theorem obstruction_actual_positive : obstructionArena.{u}.Law actual.{u} :=
   obstruction_source_bridge.mp (@fixed_zero_distance_obstruction.{u})
 
+namespace CompactMembership
+
+structure Inputs where
+  V : Type u
+  [add : NormedAddCommGroup V]
+
+attribute [instance] Inputs.add
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := TopologicalSpace.NonemptyCompacts P.V
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := Set P.V
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ F => (F : Set _)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law O := ∀ P : Inputs.{u}, ∀ (F : ℕ → TopologicalSpace.NonemptyCompacts P.V)
+    (G : TopologicalSpace.NonemptyCompacts P.V),
+    Filter.Tendsto F Filter.atTop (nhds G) → ∀ {yn : ℕ → P.V} {y : P.V},
+    (∀ n, yn n ∈ O.readout () P (F n)) →
+    Filter.Tendsto yn Filter.atTop (nhds y) → y ∈ O.readout () P G
+
+abbrev sourceScope : Prop := type_of% (@mem_compact_limit.{u})
+
+theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
+  constructor
+  · intro h P F G hF yn y hyn hy
+    exact @h P.V P.add F G hF yn y hyn hy
+  · intro h V add F G hF yn y hyn hy
+    exact h (@Inputs.mk V add) F G hF hyn hy
+
+theorem actual_positive : arena.{u}.Law actual.{u} :=
+  source_bridge.mp (@mem_compact_limit.{u})
+
+end CompactMembership
+
 end Reg.D5.S3.Quantum.Foundation.FixedZeroObstruction

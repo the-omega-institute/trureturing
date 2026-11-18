@@ -1,0 +1,1 @@
+{"statement_id":"sha256:fc98ac2c24b2d1135fc1241d973cf6a077de0f11e3984d3bf6a3425b28ced32c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),28:FiniteSubsetCompressionBound),33:exists_compressing_word_length_le)","kind":"theorem"}]}

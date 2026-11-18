@@ -1,0 +1,60 @@
+using StrataLint.Scribe;
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.FourierCircuit.Util.FinPow;
+
+internal sealed class BitReverseDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Addressed quantum circuit: Util FinPow BitReverse", H("Util FinPow BitReverse"), Blocks(
+            Describe.Lean(DescribeId.Create("declaration0"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftReverseBits"),
+                H("qftReverseBits"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Reverse the n significant bits of a computational-basis label."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration1"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftReverseBits_testBit"),
+                H("qftReverseBits testBit"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma qftReverseBits_testBit (n : Nat) (label : Fin (2 ^ n)) (bit : Fin n) : (qftReverseBits n label).val.testBit bit.val = label.val.testBit (Fin.rev bit).val."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration2"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftReverseBits_involutive"),
+                H("qftReverseBits involutive"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma qftReverseBits_involutive (n : Nat) (label : Fin (2 ^ n)) : qftReverseBits n (qftReverseBits n label) = label."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration3"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftReverseBitsPerm"),
+                H("qftReverseBitsPerm"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Bit reversal as a self-inverse basis-label permutation."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration4"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftPairEquiv"),
+                H("qftPairEquiv"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Big-endian splitting of an (n+1)-qubit basis label into its leading bit and lower n-bit tail."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("declaration5"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftPairEquiv_apply_val"),
+                H("qftPairEquiv apply val"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma qftPairEquiv_apply_val (n : Nat) (head : Fin 2) (tail : Fin (2 ^ n)) : (qftPairEquiv n (head, tail)).val = tail.val + 2 ^ n * head.val."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration6"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftPairEquiv_testBit_high"),
+                H("qftPairEquiv testBit high"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma qftPairEquiv_testBit_high (n : Nat) (head : Fin 2) (tail : Fin (2 ^ n)) : (qftPairEquiv n (head, tail)).val.testBit n = decide (head = 1)."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration7"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftPairEquiv_mod_tail"),
+                H("qftPairEquiv mod tail"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma qftPairEquiv_mod_tail (n : Nat) (head : Fin 2) (tail : Fin (2 ^ n)) : (qftPairEquiv n (head, tail)).val % 2 ^ n = tail.val."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration8"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftPairEquiv_testBit_low"),
+                H("qftPairEquiv testBit low"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("lemma qftPairEquiv_testBit_low (n : Nat) (head : Fin 2) (tail : Fin (2 ^ n)) (bit : Fin n) : (qftPairEquiv n (head, tail)).val.testBit bit.val = tail.val.testBit bit.val."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("declaration9"),
+                DeclarationHandle.Create("D5/S3/Quantum/FourierCircuit/Util/FinPow/BitReverse.qftReverseBits_pair"),
+                H("qftReverseBits pair"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/qudeleap2026qft")),
+                Blocks(Paragraph(Text("Bit reversal moves the leading bit to the least-significant position and recursively reverses the lower label."))), DescribeRole.Lemma))));
+}

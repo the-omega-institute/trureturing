@@ -154,7 +154,21 @@ $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\oper
 
 stableZeroWitness quantifies every original s,r with r in D(s), then chooses one h in fullZeroConfirmers(s), then quantifies every sequence of original pure t(n) tending to r, and finally chooses proper g(n) zero at each t(n), with stateNorm(g(n)-h) tending to zero. openEdges quantifies every original p,s with s in D(p), every pure t(n) tending to p, and returns pure v(n) in D(t(n)) for every index with v(n) tending to s. Original zero symmetry first reverses the input edge. The repair bound forces the maxima of h on D(t(n)) to tend to one. Pure maximizers exist on every compact exposed face, including every initial index. Compactness of K and the singleton one-face force the full sequence to converge to s. No pure-point closedness, ball continuity, continuous selector, rate, Hilbert representation, or selected effect menu is assumed.
 
-**Theorem 1.13 (Whole-limit labels without closed pure points).**
+**Theorem 1.13 (A convergent selection belongs to the common whole compact limit).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction.mem_compact_limit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FixedZeroObstruction.mem_compact_limit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every normed additive commutative group V, every sequence F(n) and every G of nonempty compact subsets of V, suppose F(n) tends to G in the native nonempty compact topology. For every sequence yn in V and every y in V, if yn(n) belongs to the actual whole F(n) for every n and yn tends to y along those same natural indices, then y belongs to G. No real scalar structure, finite dimensionality, convexity, rank condition or pure state domain is required.
+
+The infimum distance from a point to a nonempty compact set is jointly continuous in the native point and compact-set variables. Evaluating it on the common pair sequence (yn(n),F(n)) gives the constant zero sequence, so the distance from y to G is zero. Compactness makes G closed, which gives membership.
+
+**Theorem 1.14 (Whole-limit labels without closed pure points).**
 
 Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction.exclusion_limit_labels`
 
@@ -168,7 +182,7 @@ For every finite dimensional real normed V, original closed generating pointed c
 
 Choose an original full zero confirmer for every whole D(pn(n)). Compactness of the entire effect interval gives one convergent effect subsequence. Every point of the same whole compact limit is recovered by nearest points along those indices, so one actual limit effect e satisfies e(x)=1 and vanishes on all G. The existing common_zero_pure declaration in ExclusionWidthCompactness is used directly: two distinct common zeros force the confirmed state pure. For singleton G and mixed x, the compact exposed one-face of e contains an actual pure p distinct from x. The complementary effect u-e confirms q and has the two distinct zeros x,p, so the same original declaration forces q pure. It also places x in the entire D(q). The original chart_boundary identity and intrinsic frontier transport identify the whole relative boundary with the actual pure points of D(q); mixed x therefore lies in its intrinsic interior. The proof uses the closed convex hull and extreme points directly, without an extra finite pure decomposition or an inner product on V.
 
-**Theorem 1.14 (One common edge obstructs every fixed zero test).**
+**Theorem 1.15 (One common edge obstructs every fixed zero test).**
 
 Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction.fixed_zero_distance_obstruction`
 
@@ -202,6 +216,7 @@ The mathematical conclusions are conditional on the original geometric hypothese
 - Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction.fixed_zero_distance_obstruction`
 - Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction.fullZeroConfirmers`
 - Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction.full_zero_faces`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction.mem_compact_limit`
 - Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction.openEdges`
 - Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction.stableZeroWitness`
 - Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction.stable_zero_implies_open_edges`

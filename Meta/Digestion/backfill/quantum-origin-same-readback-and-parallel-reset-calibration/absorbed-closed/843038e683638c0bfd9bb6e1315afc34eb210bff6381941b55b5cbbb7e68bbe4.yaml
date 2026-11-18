@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:843038e683638c0bfd9bb6e1315afc34eb210bff6381941b55b5cbbb7e68bbe4
+  normalized_sha256: sha256:843038e683638c0bfd9bb6e1315afc34eb210bff6381941b55b5cbbb7e68bbe4
+cas_ref: sha256:843038e683638c0bfd9bb6e1315afc34eb210bff6381941b55b5cbbb7e68bbe4
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/OriginalFacePolarity.chart_boundary
+    target_statement_id: sha256:e674c21245bdd878fc7aae554ecaca6685d6428a6507fae65b457c5ec96fabfe
+receipts:
+  unresolved_subitems: []

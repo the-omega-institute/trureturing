@@ -1,0 +1,17 @@
+**定义 152.1（同原菜单、最优面与实际落点）。** 保留定义151.1的全部原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p,S_p$，假设完整 EB3 与纯 PR。第二变量始终遍历整个原混态域 $K$。沿用 [X125.3][Q152X] 的整球零确认面，并定义辅助下包络、完整最优面和实际塌缩落点集：
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\qquad
+B_p(x)=\min_{e\in\mathcal A_p}e(x),\\
+M_p(x)=\{f\in\mathcal F_p:f(x)=T_p(x)\},\qquad
+\Delta_p(x)=B_p(x)-T_p(x),\\
+\mathscr L(p)=
+\{r\in K:\exists(p_i)\subset P,\ p_i\to p,\
+d_H(D_{p_i},\{r\})\to0\}.
+\end{gathered}
+\tag{XII152.1}
+$$
+
+$d_H$ 使用任一固定辅助欧氏范数。$\mathcal A_p$ 非空紧凸，其每个成员的整个原零面恰为 $D_p$；$M_p(x)$ 非空紧凸。因此 $0\le T_p(x)\le B_p(x)\le1$，两种 minimum 均达到，且固定标签的两种下包络都在整个 $K$ 上连续。$B_p$ 仅比较原菜单的一个子面，没有替换原 $T_p$。按 [IX115.5][Q152IX]，$\mathscr L(p)\subseteq S_p$；它可以为空。以下不输入全域 Inj、$\mathcal A_p$ 单点性、least 或 Conn。
+

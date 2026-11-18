@@ -1,0 +1,18 @@
+**定理 122.12（逐方向与全方向的准确连续性判据）。** 对固定 $p$ 定义实际接触映射 $\zeta_p:S^2\to S$，$\zeta_p(v)=z_v$。则
+
+$$
+\begin{gathered}
+\zeta_p\text{ 在 }v\text{ 连续}\quad\Longleftrightarrow\quad S_v=\{z_v\},\\
+\zeta_p\text{ 在全部 }S^2\text{ 连续}
+\quad\Longleftrightarrow\quad Z\text{ 闭}
+\quad\Longleftrightarrow\quad S\text{ 严格凸}
+\quad\Longleftrightarrow\quad C+L\text{ 闭}.
+\end{gathered}
+\tag{Q122.33}
+$$
+
+证明。若 $S_v$ 单点，任取全部方向中的序列 $w_n\to v$。紧 $S$ 中任一 $z_{w_n}$ 的聚点 $z$ 都满足
+$(-v)\cdot z=\lim\rho(w_n)=\rho(v)$，故在 $S_v$，只能等于 $z_v$。紧性使整个序列收敛，给通常连续性。反之，若 $S_v$ 非单点，定理122.8的同一 $w_t$ 有固定 $a$-方向分离量，不能趋于 $z_v$；所以不连续。全方向单点支撑等价于严格凸，再用定理122.6。证毕。
+
+由定理122.11，该映射在 $\Omega_p$ 每一点连续。这里的每个连续性都量化该固定 $S^2$ 中的全部趋近方向，而非一个特选序列。它仍不是原 $P$ 上全部邻标签、全部原零效应或全部整球的连续性。121.7在 $P$ 中的一个稠密 $G_\delta$ 上给 $\mathcal B$ 稳定；仅把这个残余集限制到固定 $\partial D_p$，不能取得相交稠密性或 $\zeta_p$ 全方向连续。一般的稠密残余集可以完全避开一个闭无处稠密子集。若要通过其他原域关系取得全方向结论，仍须另给证明，不能用这个限制步骤代替。
+

@@ -27,7 +27,7 @@ public static class LeanCompiledArtifactReports
         ArgumentNullException.ThrowIfNull(targetPaths);
         var root = Path.GetFullPath(repositoryRoot);
         var artifactPath = reportPath is null ? ResolveReportPath(root) : Path.GetFullPath(reportPath, root);
-        var scope = LeanReportScope.Create(ReadScopedSources(root), targetPaths.Select(RepoPath.CreateKnown));
+        var scope = ReadScopedSources(root, targetPaths.Select(RepoPath.CreateKnown));
         var report = RawLeanReportArtifact.ReadFileForScope(artifactPath, scope, validateMaterials: true);
         return LeanClosureValidator.Validate(scope.SourceSnapshot, report) switch
         {
@@ -37,20 +37,36 @@ public static class LeanCompiledArtifactReports
         };
     }
 
-    // Source indexing does not compile or extract unselected modules.
-    private static RepositorySnapshot ReadScopedSources(string root)
+    // Inventory and link validation are complete; the source-derived traversal
+    // acquires bodies only for the requested utility and import closure.
+    private static LeanReportScope ReadScopedSources(string root, IEnumerable<RepoPath> targets)
     {
-        if (!File.Exists(Path.Combine(root, ReportProducerScope.InputManifest))) return ReadSources(root);
-        var projected = SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrentProjection(root,
-            static path => path.EndsWith(".lean", StringComparison.Ordinal)
-                || path == ReportProducerScope.InputManifest));
-        return projected switch
+        if (!File.Exists(Path.Combine(root, ReportProducerScope.InputManifest)))
+            return LeanReportScope.Create(ReadSources(root), targets);
+        var snapshot = Decode(GitRepositorySnapshotReader.ReadCurrentProjection(root,
+            static path => path == ReportProducerScope.InputManifest));
+        var policyPaths = snapshot.Files.Keys.Where(static path => FileMapDocuments.IsPolicyPath(path.Value))
+            .Select(static path => ":(literal)" + path.Value).ToArray();
+        return LeanReportScope.Create(snapshot, targets, path =>
+        {
+            if (snapshot.Files[path].ContentWasRead) return snapshot.Files[path];
+            var selected = Decode(GitRepositorySnapshotReader.ReadCurrent(root,
+                include: candidate => candidate == path.Value || FileMapDocuments.IsPolicyPath(candidate),
+                readContents: candidate => candidate == path.Value,
+                pathspecs: [":(literal)" + path.Value, .. policyPaths]));
+            if (!selected.Files.TryGetValue(path, out var source))
+                throw new InvalidOperationException("scoped Lean report source is missing: " + path.Value);
+            return source;
+        });
+    }
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
+        SnapshotDecoder.Decode(raw) switch
         {
             SnapshotDecodeOutcome.Decoded scopedDecoded => scopedDecoded.Snapshot,
             SnapshotDecodeOutcome.InfrastructureFailure scopedFailure => throw new InvalidOperationException(
                 "Repository snapshot for Lean inspection is unavailable: " + scopedFailure.Message),
         };
-    }
 
     private static RepositorySnapshot ReadSources(string root)
     {

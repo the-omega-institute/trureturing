@@ -1,0 +1,45 @@
+**定理 184.4（实际三点证书给有限方向及整颗影体上界）。** 保留184.3的完整背景。固定实际球 $B$。对某个 $a=(1,n)\in P_B$，若找到同域原纯点 $b\in N_a$、$c\in P_B\setminus\{a\}$，使
+
+$$
+r=q(a,c),\qquad s=q(b,c)>0,\qquad \varepsilon=1-r-s,
+$$
+
+则
+
+$$
+d_B(a)\le\frac{\varepsilon}{1-r}<1,\qquad
+h_{\widehat B}(-n)-1
+=\frac{2d_B(a)}{1-d_B(a)}
+\le\frac{2\varepsilon}{s}.
+\tag{184.7}
+$$
+
+若有限个 $a_i=(1,n_i)$ 的方向 $-n_i$ 满足
+
+$$
+\forall\omega\in S^2\ \exists i:\quad
+\langle\omega,-n_i\rangle\ge\cos\theta>0,
+\tag{184.8}
+$$
+
+并且每个 $i$ 都有上述实际三点证书，记
+$\rho=\max_i2\varepsilon_i/s_i$，则
+
+$$
+\boxed{\quad
+d_H(\widehat B,B)\le\frac{1+\rho}{\cos\theta}-1.
+\quad}
+\tag{184.9}
+$$
+
+证明。(184.4)给 $s\le(1-d_B(a))(1-r)$，故 $\varepsilon\ge(1-r)d_B(a)$。因 $c\ne a$，$1-r>0$；又 $1-r-\varepsilon=s>0$，分式的单调性及183.3给(184.7)。它也允许 $b=c$，不需为此定义 $B_{bc}$。
+
+对有限覆盖，取影体中达到 $R_B=\max_{y\in\widehat B}\|y\|$ 的 $y$。由(184.8)选方向，得到
+
+$$
+R_B\cos\theta\le\langle y,-n_i\rangle
+\le h_{\widehat B}(-n_i)\le1+\rho.
+$$
+
+最后消费183.4的 $d_H(\widehat B,B)=R_B-1$。方向覆盖的支撑函数估计是成熟凸几何工具；新增接口是各支撑上界由同域原零邻点和三点几何余量支付。这里没有证明这些证书自动存在、$\rho$ 自动小或可趋零；$\cos\theta=0$、$s_i=0$ 时不使用该公式。与183.4的有限罚参数下界不同，(184.9)是具备所列实际三点配置后的有限上界，不依赖罚项收敛模量。$\square$
+

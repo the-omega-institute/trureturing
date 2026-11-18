@@ -1,0 +1,4 @@
+## 9. Remaining mathematical interfaces
+
+The remaining implementation obligations are a primitive reversible arithmetic circuit with cleaned scratch and explicit costs; controlled-pulse or decontrolled-task compilation in the declared hardware model; finite-clock extraction with a complete validation policy. No arbitrary-QCA fast-forwarding, optimal resource theorem, new factoring speedup, WSS exclusion, original HS4 proof or universal state tomography is claimed.
+
