@@ -39,12 +39,14 @@ theorem kernel_correction_upper {s : ℝ} (hs : π ≤ s) :
     apply (div_le_div_iff₀ hsin hd).mpr
     nlinarith
   have hnonneg : 0 ≤ t / sin t - 1 := by
-    have h := (le_div_iff₀ hsin).mpr (by simpa using sin_le ht0.le)
+    have h : 1 ≤ t / sin t := (le_div_iff₀ hsin).mpr
+      (by simpa only [one_mul] using sin_le ht0.le)
     linarith
   have hbound : t / sin t - 1 ≤ t ^ 2 / (6 * (1 - t ^ 2 / 6)) := by
     have hid : 1 / (1 - t ^ 2 / 6) - 1 =
         t ^ 2 / (6 * (1 - t ^ 2 / 6)) := by
-      field_simp [hd.ne']
+      have hd' : 6 - t ^ 2 ≠ 0 := by nlinarith
+      field_simp [hd.ne', hd']
       <;> ring
     linarith
   have hid : s * (π / sin (π / s) - s) = s ^ 2 * (t / sin t - 1) := by
@@ -65,14 +67,16 @@ theorem correction_majorant_limit :
     Tendsto correctionMajorant atTop (𝓝 (π ^ 2 / 6)) := by
   have hi : Tendsto (fun s : ℝ => 1 / s) atTop (𝓝 0) :=
     tendsto_id.const_div_atTop 1
-  have h := tendsto_const_nhds.div
-    ((tendsto_const_nhds.sub ((hi.pow 2).const_mul (π ^ 2 / 6))).const_mul 6)
-    (by norm_num : (1 - π ^ 2 / 6 * 0 ^ 2) * 6 ≠ 0)
+  have h := (tendsto_const_nhds (x := π ^ 2)).div
+    (((tendsto_const_nhds (x := (1 : ℝ))).sub
+      ((hi.pow 2).const_mul (π ^ 2 / 6))).const_mul 6)
+    (by norm_num : 6 * (1 - π ^ 2 / 6 * 0 ^ 2) ≠ 0)
   norm_num only [zero_pow, mul_zero, sub_zero, one_mul] at h
   apply h.congr'
   filter_upwards [eventually_gt_atTop (0 : ℝ)] with s hs
-  dsimp only [correctionMajorant]
-  field_simp [hs.ne']
-  <;> ring
+  change π ^ 2 / (6 * (1 - π ^ 2 / 6 * (1 / s) ^ 2)) =
+    π ^ 2 / (6 * (1 - π ^ 2 / (6 * s ^ 2)))
+  congr 1
+  ring
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.KernelLimit

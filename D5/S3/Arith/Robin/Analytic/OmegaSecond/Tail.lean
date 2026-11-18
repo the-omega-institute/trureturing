@@ -36,7 +36,7 @@ theorem finite_power_tail {s : ℝ} (hs : 1 < s) {N : ℕ} (hN : 0 < N)
     exact rpow_le_rpow_of_nonpos (hN0.trans_le ha.1) hab (by linarith)
   have hsum : (∑ n ∈ Finset.Ioc N M, (n : ℝ) ^ (-s)) =
       ∑ n ∈ Finset.Ico N M, ((n + 1 : ℕ) : ℝ) ^ (-s) := by
-    rw [← Finset.Ico_add_one_add_one_eq_Ioc, Finset.sum_Ico_add']
+    rw [← Finset.Ico_add_one_add_one_eq_Ioc, ← Finset.sum_Ico_add']
   calc
     _ ≤ ∑ n ∈ Finset.Ioc N M, (n : ℝ) ^ (-s) :=
       Finset.sum_le_sum_of_subset_of_nonneg hsub (fun n _ _ => rpow_nonneg (Nat.cast_nonneg _) _)
@@ -46,7 +46,11 @@ theorem finite_power_tail {s : ℝ} (hs : 1 < s) {N : ℕ} (hN : 0 < N)
         (fun t ht => rpow_nonneg (hN0.trans ht).le _)
     _ = (N : ℝ) ^ (1 - s) / (s - 1) := by
       rw [integral_Ioi_rpow_of_lt (by linarith : -s < -1) hN0]
-      congr 1 <;> ring
+      rw [show -s + 1 = 1 - s by ring]
+      have h1 : s - 1 ≠ 0 := by linarith
+      have h2 : 1 - s ≠ 0 := by linarith
+      field_simp [h1, h2]
+      ring
 
 /-- The small side is bounded by the number of integers times geometric decay. -/
 theorem small_weight_tail {P s : ℝ} (hP : 2 ≤ P) (hs : 0 ≤ s)
@@ -70,7 +74,7 @@ theorem small_weight_tail {P s : ℝ} (hP : 2 ≤ P) (hs : 0 ≤ s)
     have hl0 : log ((n : ℝ) / P) ≤ 0 :=
       log_nonpos (div_nonneg hn0.le hP0.le) (hratio.trans (by norm_num))
     refine (log_softplus_le_exp _).trans ?_
-    rw [abs_of_nonpos hl0, neg_mul, neg_neg,
+    rw [abs_of_nonpos hl0, neg_mul_neg,
       rpow_def_of_pos (by norm_num : (0 : ℝ) < 1 / 2)]
     exact exp_le_exp.mpr (by nlinarith)
   calc
@@ -109,18 +113,24 @@ theorem large_weight_tail {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s)
     rpow_le_rpow_of_nonpos (by positivity) hNlo (by linarith)
   have hid : P ^ s * (3 * P / 2) ^ (1 - s) =
       (3 * P / 2) * (2 / 3 : ℝ) ^ s := by
-    rw [rpow_sub (by positivity), rpow_one,
-      mul_div_assoc, ← div_rpow hP0.le (by positivity)]
-    congr 2
-    field_simp [hP0.ne']
-    <;> ring
+    rw [rpow_sub (by positivity), rpow_one]
+    calc
+      P ^ s * ((3 * P / 2) / (3 * P / 2) ^ s) =
+          (3 * P / 2) * (P ^ s / (3 * P / 2) ^ s) := by ring
+      _ = (3 * P / 2) * (P / (3 * P / 2)) ^ s := by
+        rw [div_rpow hP0.le (by positivity)]
+      _ = _ := by
+        congr 2
+        field_simp [hP0.ne']
+        <;> ring
   calc
     _ ≤ ∑ n ∈ S, P ^ s * (n : ℝ) ^ (-s) := Finset.sum_le_sum hpoint
     _ = P ^ s * ∑ n ∈ S, (n : ℝ) ^ (-s) := by rw [Finset.mul_sum]
     _ ≤ P ^ s * ((N : ℝ) ^ (1 - s) / (s - 1)) :=
       mul_le_mul_of_nonneg_left hfinite (rpow_nonneg hP0.le _)
-    _ ≤ P ^ s * ((3 * P / 2) ^ (1 - s) / (s - 1)) := by
-      gcongr
+    _ ≤ P ^ s * ((3 * P / 2) ^ (1 - s) / (s - 1)) :=
+      mul_le_mul_of_nonneg_left
+        (div_le_div_of_nonneg_right hmono (by linarith)) (rpow_nonneg hP0.le _)
     _ = ((3 * P / 2) * (2 / 3 : ℝ) ^ s) / (s - 1) := by rw [← mul_div_assoc, hid]
     _ ≤ (3 * P / 2) * (2 / 3 : ℝ) ^ s :=
       div_le_self (by positivity) (by linarith)

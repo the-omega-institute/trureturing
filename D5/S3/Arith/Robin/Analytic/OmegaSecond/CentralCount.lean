@@ -51,6 +51,7 @@ theorem central_prime_counting_bound :
     calc
       3 * (t / log t ^ 2) ≤ 3 * ((2 * P) / (log P ^ 2 / 4)) := by
         gcongr
+        exact ht.2
       _ = 24 * (P / log P ^ 2) := by ring
   have hchange : |t / log t - t / log P| ≤ 4 * (P / log P ^ 2) := by
     have hid : t / log t - t / log P =
