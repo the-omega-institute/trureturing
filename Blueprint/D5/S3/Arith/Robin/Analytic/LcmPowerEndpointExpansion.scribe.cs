@@ -11,6 +11,18 @@ internal sealed class LcmPowerEndpointExpansionDocument : IScribeDocumentDefinit
         "The actual real-power divisor transform has an exact logarithmic decomposition on prefix least common multiples.",
         H("Exact real-power prefix-lcm expansion"),
         Blocks(
+            Describe.Lean(DescribeId.Create("prime-power-transform"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_prime_power"), H("Exact transform on a prime power"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real kappa, prime p and natural a, sigmaKappa(kappa,p^(a+1)) equals sigma(p^(a+1))^kappa-sigma(p^a)^kappa. The convolution telescopes over the divisors of a prime power. The real-power Robin reduction uses this exact identity before estimating each local factor."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("transform-factorization"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_factorization"), H("Multiplicative factorization of the transform"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real kappa and nonzero natural n, sigmaKappa(kappa,n) is the product of sigmaKappa(kappa,p^v_p(n)) over its distinct prime divisors. The real-power Robin reduction combines this factorization with the corresponding factorization of n^kappa."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("transform-positivity"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_pos"), H("Positive transform for positive exponent"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive real kappa and nonzero natural n, sigmaKappa(kappa,n) is strictly positive. Prime-power divisor sums strictly increase, and multiplicativity passes positivity to the whole transform. The normalized real-power Robin product comparison uses this positivity."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sigma-transform"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa"),

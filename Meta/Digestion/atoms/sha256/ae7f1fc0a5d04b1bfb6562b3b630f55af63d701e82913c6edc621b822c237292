@@ -1,0 +1,31 @@
+#### 定理 8.3：密集正投影可保留有限几何相位
+
+设 $\psi(t)$ 为 $C^2$ 归一化闭合代表，$\psi(T)=\psi(0)$， $P(t)=\psi(t)\psi(t)^\dagger$。 令 $t_k=kT/N$，并选定各步成功分支的 Kraus 算子恰为 $P(t_k)$。 则
+
+$$
+P(t_N)\cdots P(t_0)\psi(0) =
+ \psi(0)\prod_{k=0}^{N-1}
+ \langle\psi(t_{k+1})|\psi(t_k)\rangle
+ \ \longrightarrow\
+ e^{-\int_0^T\langle\psi|\dot\psi\rangle\,dt}\psi(0).
+$$
+
+成功概率趋于一；相位可为 $e^{-\mathrm i\Omega/2}\ne1$。
+
+**证明。**
+
+秩一乘积逐项收缩得到乘积式。 令 $\delta=T/N$，每项展开为
+
+$$
+\langle\psi(t+\delta)|\psi(t)\rangle
+ =1-\delta\langle\psi(t)|\dot\psi(t)\rangle+O(\delta^2).
+$$
+
+取连续对数，求和余项为 $O(N\delta^2)=O(1/N)$； Riemann 和给指数极限。 归一化使 $\langle\psi|\dot\psi\rangle$ 纯虚， 而每项模方为 $1-O(\delta^2)$，故总成功概率趋一。 再由连接定义得到闭路相位。
+
+$\square$
+
+该命题涉及已指定的成功分支实现及其相干运输。 若仅保存归一化分支密度矩阵，共同相位不可见； 要比较这条相位，须保持内部相干参考。 任意实现同一密度矩阵通道的装置也不自动给出相同的受控相位。 所以“密集测量”既可抑制离开某固定子空间， 也可在移动的子空间中运输状态，不能一概解释为抽走全部时间。
+
+<a id="section-9"></a>
+

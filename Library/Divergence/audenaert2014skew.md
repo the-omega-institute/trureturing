@@ -56,13 +56,37 @@ evaluation and spectral trace expansion are reused; Bochner integrability and
 finite-sum interchange connect the two representations. This formal assembly
 is repository-derived support, not an originality claim attributed to the paper.
 
-For arbitrary correlated bipartite quantum references, the downstream route
-uses the ordinary `relativeEntropy_eq_integral_bkm` independently on the joint
-and actual partial-trace marginal matrices, cancels their trace corrections
-using `trace_partialTraceRight`, and consumes the actual HS partial-trace
-residual. The conditional finite block-family path identity alone does not cover
-that quantum reference. The original all-finite Umegaki coefficient equality
-remains unproved; the open-problem KPI remains zero.
+For arbitrary correlated finite quantum references, the faithful conditional
+application assumes a uniform arithmetic-kernel bound
+`q(TZ,TV,u) ≤ c q(Z,V,u)` for every complex direction with actual partial trace
+zero, every `u ∈ [0,1]`, and positive definite `Z,TZ`, with unchanged `c ≥ 0`.
+Here `T` is the canonical channel's actual reference action. For canonical
+density-state endpoints `rho,sigma,T rho,T sigma` that are positive definite,
+the application gives
+`D_fin(T rho,T sigma)-D_fin(rho_R,sigma_R) ≤
+c (D_fin(rho,sigma)-D_fin(rho_R,sigma_R))`, using the actual
+`SupportAwareRelativeEntropy.finiteTraceLogRelativeEntropy` branch and native
+partial-trace marginals. The amplified trace-preservation theorem proves the
+input and output marginals coincide for both states.
+
+The same-center residual has zero partial trace and identifies the difference
+of joint and marginal inverse pairings. Canonical channel module covariance
+comes from complex blockwise linearity. Native inverse continuity supplies
+inner interval integrability; the ordinary `relativeEntropy_eq_integral_bkm`
+is applied separately to the actual joint and marginal pairs, with the native
+weighted BKM integrability and cancellation of trace corrections by
+`trace_partialTraceRight`. Iterated integration keeps the weight `1-t` and
+requires no Fubini exchange. The conditional block-family theorem does not
+supply this correlated-reference application.
+
+This application is a bind-only consequence of the existing analytic suppliers
+and finite matrix normalization, not a new standalone mathematical declaration
+or a result attributed to Audenaert. The uniform metric bound is an explicit
+intermediate premise. Support removal, singular limits, rare-flag ratios and
+the remaining coefficient comparisons are not established. Final coefficient
+division still requires the original strictly positive finite denominator.
+The all-finite Umegaki coefficient equality remains unproved; the open-problem
+KPI remains zero.
 
 The associated finite semidefinite supplier
 `UniversalCommonCenter.exists_common_center_of_posDef_trace_inf_le` concerns
