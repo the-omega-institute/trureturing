@@ -1,4 +1,5 @@
 """Release transport behavior contracts using private local fixtures."""
+import io
 import json
 import hashlib
 import os
@@ -11,6 +12,7 @@ import shutil
 import sys
 import tarfile
 import unittest
+from unittest.mock import patch
 
 from lean_seed_support import INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
 from lean_seed_transport import FAKE_GH, ReleaseTransportCases
@@ -20,6 +22,53 @@ from lean_release_legacy import ReleaseLegacyCases
 
 class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransportCases, unittest.TestCase):
     """Release transport cases exposed under their existing test identity."""
+
+    def test_indexed_release_members_roundtrip_across_volumes(self):
+        from lean_artifact_inventory import Module
+        import lean_release_index as indexed
+
+        module = "D5.Fixture"
+        source = pathlib.Path("D5/Fixture.lean")
+        producer = self.root / "indexed-producer"
+        write(producer / source, "def fixture : Nat := 1\n")
+        build = producer / ".lake/build"
+        artifacts = {
+            "lib/lean/D5/Fixture.olean": random.Random(20).randbytes(2331),
+            "lib/lean/D5/Fixture.olean.hash": b"olean-hash\n",
+            "lib/lean/D5/Fixture.trace": b"lake-input-trace\n",
+            "ir/D5/Fixture.c": b"compiler output\n",
+            "bin/inspector": b"full restore only\n",
+        }
+        for name, data in artifacts.items():
+            path = build / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+        (build / "bin/inspector").chmod(0o755)
+        write(build / "ir/D5/Fixture.setup.json", "not portable")
+        stage = self.root / "stage"
+        stage.mkdir()
+        with patch.object(indexed, "workspace_modules", return_value={module: Module("fixture", source, pathlib.Path("."))}), \
+                patch.object(indexed, "project_imports", return_value={module: set()}):
+            manifest = indexed.pack(producer, stage, 512, None)
+        rows = indexed.read_index(stage / indexed.INDEX, manifest["archive_bytes"])
+        self.assertGreater(len(manifest["parts"]), 1)
+        target = self.root / "full"
+        indexed.restore_full(stage, manifest, rows, target, None)
+        self.assertEqual(artifacts, {path.relative_to(target).as_posix(): path.read_bytes()
+                                   for path in target.rglob("*") if path.is_file()})
+        self.assertEqual(0o755, (target / "bin/inspector").stat().st_mode & 0o777)
+        partial = self.root / "partial"
+        row = rows[0]
+        ranges = list(indexed.volume_ranges(manifest["parts"], row["offset"], row["bytes"]))
+        self.assertGreater(len(ranges), 1)
+        encoded = b"".join((stage / part["name"]).read_bytes()[start:start + length]
+                           for part, start, length in ranges)
+        indexed.extract_frame(io.BytesIO(encoded), row, partial, set(), None)
+        self.assertEqual({name: data for name, data in artifacts.items() if name != "bin/inspector"},
+                         {path.relative_to(partial).as_posix(): path.read_bytes()
+                          for path in partial.rglob("*") if path.is_file()})
+        with self.assertRaises((ValueError, EOFError)):
+            indexed.extract_frame(io.BytesIO(encoded[:-1]), row, self.root / "truncated", set(), None)
 
     def local_environment(self, **changes):
         return dict(GITHUB_ACTIONS="false", GITHUB_EVENT_NAME="", GITHUB_REF="", GITHUB_REPOSITORY="",
