@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Square-summable positive-index sequences give natural-floor step functions in half-line L2. -/
+   digest: Square-summable sequences give natural-floor step functions in half-line L2. -/
 
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.MeasureTheory.Function.Floor
@@ -75,6 +75,7 @@ theorem memLp_nat_floor_of_summable_sq (a : ℕ → ℝ)
           ∫ _ in s n, (a (n + 1)) ^ 2 := by
         apply setIntegral_congr_fun measurableSet_Ico
         intro x hx
+        change ‖(a (Nat.floor x)) ^ 2‖ = (a (n + 1)) ^ 2
         rw [hfloor n x hx, Real.norm_eq_abs,
           abs_of_nonneg (sq_nonneg (a (n + 1)))]
       _ = (a (n + 1)) ^ 2 := by
@@ -93,7 +94,7 @@ theorem memLp_nat_floor_of_summable_sq (a : ℕ → ℝ)
     exact hsq_union
   have hsq_Ioi :
       IntegrableOn (fun x : ℝ => (a (Nat.floor x)) ^ 2) (Ioi (1 : ℝ)) volume :=
-    hsq_Ici.mono_set (fun _ hx => le_of_lt hx)
+    hsq_Ici.mono_set Ioi_subset_Ici_self
   have hm : Measurable (fun x : ℝ => a (Nat.floor x)) :=
     (measurable_of_countable a).comp Nat.measurable_floor
   exact (memLp_two_iff_integrable_sq hm.aestronglyMeasurable).2 hsq_Ioi
