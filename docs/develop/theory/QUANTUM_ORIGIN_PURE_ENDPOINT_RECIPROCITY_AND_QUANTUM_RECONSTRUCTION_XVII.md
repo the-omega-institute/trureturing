@@ -2175,3 +2175,986 @@ $$
 本结论是完整候选在同一原数值和实际见证上的等价，不是独立物理公理数减少、任意锥呈示的有限判定算法、实际可控性或物理资料满足性的证明。幂结合、自伴随谱和Lie群事实只作上述中间供应；没有以预设EJA的Lie代数分解反向赚取Jordan前件，也不以这里的综合推导主张文献优先权。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 182. 原二元伙伴与准备零配对秩的同数据量子候选
+
+### 182.1 原零接触与完整候选
+
+**定义 182.1（原二元伙伴与零配对秩候选）。** 在定义181.1的同一份原资料上，以(182.R)的二元关系左全性替换(181.2)的群值恒等伙伴入口，以(182.3)替换(181.3)的原单位处自伴Lie方向评价满射。所得唯一候选记为 $\mathcal C_{182}$。定义181.1的其他全部条件及其纳入的定义180.1、179.1、178.1和C124定义10.2完整保留，不恢复已删除的明列自对偶、全群伙伴全性或内点传递性。
+
+逐个所需原对象 $A$，仍用原非零有限维实空间 $E_A$、闭凸尖生成锥 $C_A$、内点单位 $u_A$、有限实值 $q_A$、已命名数值 $g_A^0$ 和原双线性有向关系 $D$。所需对象包括全部局部、实际联合、整个实际指针 $P$ 及每个原有限幂、原输出、被消费参考及其已声明联合，每个对象各自满足全部条件。为区别指针对象 $P$，用 $\mathcal P_A\subseteq E_A^*$ 表示全部原实际正准备的响应泛函；实际装置身份和重合响应的不同标签仍保留。精确要求
+
+$$
+\alpha\in\mathcal P_A\Longrightarrow
+\alpha\in C_A^*,\quad 0\le m_\alpha:=\alpha(u_A)\le1,
+\qquad
+\operatorname{cone}_{\mathrm{fin},+}(\mathcal P_A)
+=\left\{\sum_{j=1}^k t_j\alpha_j:k<\infty,\ t_j\ge0,\ \alpha_j\in\mathcal P_A\right\}
+=C_A^*.
+\tag{182.1}
+$$
+
+这里 $C_A^*\subseteq E_A^*$ 是原代数对偶中的正锥，尚不与 $C_A$ 识别；空和为零。原响应仍量化全部带符号 $x,y\in E_A$，有限右响应、逐径向下界、探针分离及已命名数值 $g_A^0=F_A/2$ 仍为(181.1)。直接由这一个原 $q_A$ 定义并要求
+
+$$
+\Xi_{q_A}(y,z)\ \Longleftrightarrow\quad
+\forall x\in E_A:\ F_A(x;y)=F_A(z;x),
+\qquad
+\boxed{\forall y\in E_A\ \exists z\in E_A:\ \Xi_{q_A}(y,z).}
+\tag{182.R}
+$$
+
+这是原向量之间二元关系的左全性，不给选定伙伴函数，也不要求伙伴的线性、连续、奇性、可逆或保锥性质。典范群仍由原锥定义为 $G_C(A)=\operatorname{Aut}(C_A)^\circ$，供原 $N_u$ 及后续结论使用；$\Gamma_{q_A}$ 仍只在原域 $S,R\in G_C(A)$ 上定义，不把这两个域混同于 $\Xi_{q_A}$ 的 $E_A\times E_A$。引理182.1a只用原响应条件和(182.R)，先恢复正定对称双线性型 $g_A^0=F_A/2$，然后才解释以下空间。
+
+省略对象下标，置 $n=\dim E>0$、$N=n(n+1)/2$，并只在该原型上定义
+
+$$
+\begin{gathered}
+V=\operatorname{Sym}(E,g^0),\qquad \dim V=N,\\
+\ell_{\alpha,c}\in V^*,\qquad
+\ell_{\alpha,c}(X)=\alpha(Xc)
+\quad(\alpha\in\mathcal P,\ c\in C,\ \alpha(c)=0),\\
+W=\operatorname{span}_{\mathbb R}
+\{\ell_{\alpha,c}:\alpha\in\mathcal P,\ c\in C,\ \alpha(c)=0\},\qquad
+Z=\operatorname{ann}_V W
+=\{X\in V:\lambda(X)=0\text{ 对全部 }\lambda\in W\}.
+\end{gathered}
+\tag{182.2}
+$$
+
+$V^*$ 及 $\operatorname{ann}$ 都是代数对偶与消去子，不另选内积。新几何条款为
+
+$$
+\boxed{\dim W=N-n=\frac{n(n-1)}2.}
+\tag{182.3}
+$$
+
+二元伙伴入口和新几何条款自身都没有Lie代数或群输入；完整候选的 $N_u$ 仍保留原典范群的精确控制合同，不能说所有群条件已经消失。零接触中 $\alpha$ 必须是原实际准备，$c$ 则遍历整个数学正锥，既不缩成旧可读菜单，也不假定每个 $c$ 可被实际实现。
+
+其余原合同的完整保留具体如下；表中每个量词都仍在定义181.1所纳入的原签名 $\Omega$、原全语境响应商、原可访问性及合法性谓词内。
+
+| 保留的原条件 | 对象与见证的量词 |
+| --- | --- |
+| 正准备与事件 | 每个实际联合也满足(182.1)；每个原事件 $f:A\to B$ 有原正映射 $T_f:E_B\to E_A$，$T_f(u_B)\le u_A$，每个完整原装置求和为 $u_A$。原质量、实际子菜单、补事件、失败端及原装置身份均保留。 |
+| 原单位适配和 $D$ | 保留181.4的原选择资料、原 $u_A$ 适配乘法；原 $D_a$ 在全载体上是导子，且对全部 $a,b,c$ 有 $([L_a,L_c]+[D_a,D_c])b=0$。证明用平均单位不替代此单位或原 $D$。 |
+| X、Xs及联合 | 每个原含幺嵌入保持原乘法和 $D$，交叉 $D$ 为零、乘积张成；原乘积准备、结合、交换、标量、经典标签接口均保留。每个实际 $AP$ 自身满足所有对象条件；被消费旁接、准备—比较—测试及失败输出丢弃仍须是同装置、同记录的原合法执行。 |
+| $N_u$ | 对每个所需原对象和每个 $T\in(G_C(A))_{u_A}$，仍须同一 $\Omega$ 中系数一且响应恰为 $T$ 的完整有限原装置指定事件，连同原细记录、零响应补事件、失败端及输出。 |
+| AC | 仍在整个实际 $P$ 上有原完整准备、系数一破坏性成功读口和完整测试；$d=T_m(u_I)\ne0$ 张成整个 $C_P$ 的极射线，原 $\alpha(d)=1$，且存在 $h\in E_P$ 使 $[L_d,L_h]\ne0$。原准备、原失败输出对象 $B_\ell$、细记录和实际丢弃均保留；不改成Q1。 |
+| 全事件R | 对每个原事件、细支、失败、标签、遗忘、具名返回及全部有限合法接续，保留充分大的实际 $P^{\otimes k}$ 上同记录执行、原乘积律及完整原联合准备锥上的保正，不只检验乘积准备或选中新词。 |
+| F及支持双返回 | 保留整个原菜单及新有限词各自的原有限联合细记录与遗忘求和。每个非零指定返回细支有原单中心输入/输出支持角、原返回、同一个原 $q_{F,a}>0$、同系数双返回等式和原反向资料；零支标签不丢失。 |
+
+上述条件包括所有原端口、记录可访问关系、丢弃和全部有限合法历史；未声明的连线不因(182.3)变成合法。共有P的原自对偶等式仍是待推结论，既不另取商，也不另加齐性、群伴随封闭或自由选择的变形族。
+
+**引理 182.1a（原二元伙伴的对角刚性）。** 在(181.1)的全部有限右响应、逐径向下界和探针分离下，(182.R)左全性等价于存在一个不附加结构的集合函数 $r:E\to E$，使 $F(x;y)=F(r(y);x)$ 对全部 $x,y\in E$ 成立，也等价于原(181.2)的群值恒等伙伴入口。任一入口成立时，原关系恰为对角关系：
+
+$$
+\Xi_q(y,z)\ \Longleftrightarrow\ z=y\qquad(y,z\in E).
+\tag{182.R1}
+$$
+
+原数值 $g^0=F/2$ 因而是正定对称实双线性型，且有(182.7)的精确恢复式。所有已给函数伙伴必为 $r=\mathrm{id}_E$，所有已给群伙伴必为 $R_0=I$；不预先选择或协调(182.R)中的存在见证。
+
+证明。省略对象下标，记 $q_0=q(0)$、$Q=q-q_0$。正、负方向的有限右响应分别给每条仿射线上 $q$ 的右连续和左连续。因此可以应用[C139引理3.2][Q180C139Unique]的连续函数右导数积分唯一性；这不预设两个单侧响应互为相反数。
+
+先假设关系左全。原右极限给 $F(x;\lambda y)=\lambda F(x;y)$，$\lambda\ge0$。对固定 $y$ 取一个局部见证 $\Xi_q(y,z)$，则
+
+$$
+F(\lambda x;y)=F(z;\lambda x)=\lambda F(z;x)=\lambda F(x;y),
+\qquad F(0;y)=F(z;0)=0.
+\tag{182.R2}
+$$
+
+这对每个 $y$ 分别成立，不要求这些 $z$ 构成函数。连续函数 $s\mapsto q(sx)$ 在 $s\ge0$ 的右导数为 $sF(x;x)$。由一元唯一性，在任意 $[0,T]$ 积分并取 $s=1$，得到
+
+$$
+F(x;x)=2Q(x),\qquad Q(sx)=s^2Q(x)\quad(s\ge0),
+\qquad Q(x)\ge0\quad(x\in E).
+\tag{182.R3}
+$$
+
+末项由逐径向下界支付：若某个 $Q(x)<0$，则 $q(sx)=q_0+s^2Q(x)$ 在正半径上无下界。对任一 $\Xi_q(y,z)$，分别在其全称等式中取 $x=y$ 和 $x=z$，有 $F(y;y)=F(z;y)=F(z;z)$，所以 $Q(z)=Q(y)$。这里不需要给 $z$ 再指定伙伴。
+
+对任意固定 $a,b\in E$、$c\in\mathbb R$，取充分小的 $t>0$ 使 $1+ct>0$，置 $\tau=t/(1+ct)$。正径向式给
+
+$$
+Q(a+t(b+ca))=(1+ct)^2Q(a+\tau b).
+$$
+
+减去 $Q(a)$、除以 $t$ 并取这一次固定方向 $b$ 的右极限，得 $F(a;b+ca)=F(a;b)+2cQ(a)$。故每个局部见证 $\Xi_q(y,z)$ 都给
+
+$$
+F(x+cz;y)=F(z;x+cz)=F(x;y)+2cQ(y).
+$$
+
+固定 $x,s,y,z$，连续函数 $t\mapsto Q(x+sz+ty)-Q(x+ty)$ 的右导数处处为 $2sQ(y)$。再由C139引理3.2，对全部实 $s,t$ 有
+
+$$
+Q(x+sz+ty)-Q(x+sz)-Q(x+ty)+Q(x)=2stQ(y)
+\quad\text{只要 }\Xi_q(y,z).
+\tag{182.R4}
+$$
+
+没有假定 $F$ 的方向可加性，也没有交换极限。取 $x=0,s=1,t=-1$，用 $Q(z)=Q(y)$，得到 $Q(z-y)=Q(-y)-Q(y)\ge0$。左全性另给一个独立见证 $\Xi_q(-y,w)$；对这一对使用同一公式，得到 $Q(w+y)=Q(y)-Q(-y)\ge0$。两个下界相合，故
+
+$$
+Q(-y)=Q(y),\qquad
+\Xi_q(y,z)\Longrightarrow Q(z-y)=0.
+\tag{182.R5}
+$$
+
+这一论证没有使用 $w=-z$，也没有先建立任何伙伴的奇性。
+
+现在设任意 $v$ 满足 $Q(v)=0$。对 $v$ 和 $-v$ 分别取见证 $\Xi_q(v,z_+)$、$\Xi_q(-v,z_-)$。由偶性及伙伴保持 $Q$，$Q(z_+)=Q(z_-)=0$，所以这两个点都是原 $q$ 的全局最小点。有限右响应只先给 $F(z_+;a),F(z_-;a)\ge0$，进而
+
+$$
+F(a;v)=F(z_+;a)\ge0,\qquad F(a;-v)=F(z_-;a)\ge0
+\quad(a\in E).
+$$
+
+所需单侧单调性可直接证明：若连续 $h$ 的有限右导数处处非负，却有 $h(a)>h(b)$、$a<b$，取 $0<\varepsilon<(h(a)-h(b))/(b-a)$。连续 $h(t)+\varepsilon t$ 的最大值在某个 $c<b$ 取得，右导数应非正，却至少为 $\varepsilon$，矛盾。因此 $t\mapsto q(a+tv)$ 与 $t\mapsto q(a-tv)$ 都单调不减；它们是反向参数，故
+
+$$
+q(a+tv)=q(a)\quad(a\in E,\ t\in\mathbb R),
+\qquad F(a;v)=0\quad(a\in E).
+\tag{182.R6}
+$$
+
+对任意探针 $b$，左全性只在此刻取一个 $\Xi_q(b,z_b)$，于是 $F(v;b)=F(z_b;v)=0$。原探针分离给 $v=0$。所以 $Q(v)=0$ 仅在零点发生，将此结论用于(182.R5)便得每个关系对都有 $z=y$。再用左全性，对每个 $y$ 都有 $\Xi_q(y,y)$，即 $F(x;y)=F(y;x)$。至此才满足[C139定理3.3][Q178C139]的全部有限右响应互易前件，直接应用其对称双线性恢复；结合(182.R3)及零点唯一性，取得原正定 $g^0=F/2$ 和(182.7)。未取商，未替换原基线、空间或尺子。
+
+最后核对入口等价。任意集合函数伙伴或原群伙伴显然逐点给关系左全性；反向刚证的关系对角性直接供应 $r(y)=y$ 和 $R_0=I\in G_C$，无须用选择函数把局部存在见证拼成线性算子。任一已给伙伴的每个值都在原关系内，故也被迫为上述同一个值。这证明全部等价与唯一性。$\square$
+
+### 182.2 同原数据的双向等价、阈值与有限见证
+
+**定理 182.2（零接触秩替代原局部评价）。** 对定义182.1保留的同一原资料及全部共有实际见证，
+
+$$
+\mathcal C_{182}\ \Longleftrightarrow\ \mathcal C_{181}
+\ \Longleftrightarrow\ \mathcal C_{180}
+\ \Longleftrightarrow\ \mathcal C_{179}
+\ \Longleftrightarrow\ \text{存在定义178.1的扩张}.
+\tag{182.4}
+$$
+
+逐个对象，在只用原响应入口恢复原 $g^0$、并具有(182.1)和原proper锥时，已有下列恒等及锐界，不预用(182.3)：
+
+$$
+\begin{gathered}
+Z=\{X\in\operatorname{Sym}(E,g^0):
+\exp(tX)C=C\text{ 对全部 }t\in\mathbb R\}
+=\operatorname{Lie}(\operatorname{Aut}(C)^\circ)\cap\operatorname{Sym}(E,g^0),\\
+\operatorname{ev}_v:Z\longrightarrow E,\quad X\longmapsto Xv
+\quad\text{对每个 }v\in C^\circ\text{ 单射},\\
+1\le\dim Z\le n,\qquad N-n\le\dim W\le N-1,\\
+\dim W=N-n
+\ \Longleftrightarrow\ \dim W\le N-n
+\ \Longleftrightarrow\ \dim Z=n
+\ \Longleftrightarrow\ \operatorname{ev}_u\text{ 满射}.
+\end{gathered}
+\tag{182.5}
+$$
+
+$N-n$ 是允许秩的下界；新条款要求达到这个下界，不能将更大秩当作通过。对每个整数 $n\ge1$，上下界都能在上述几何前件内达到；不据此断言每个中间整数都可达到，或极端例子满足完整量子合同。若(182.3)成立，则每个内点评价均为同构，(181.6)的原数值、自对偶、传递性及原伙伴伴随等式全部恢复。
+
+此外令 $m=N-n$。在同一对象上，(182.3)等价于下列有限见证陈述，量词次序是先选一族、再覆盖全部接触：
+
+$$
+\begin{gathered}
+\exists(\alpha_i,c_i)_{i=1}^{m}:\quad
+\bigl(\forall i\in\{1,\ldots,m\}:\quad
+\alpha_i\in\mathcal P,\ c_i\in C,\ \alpha_i(c_i)=0\bigr),\\
+\ell_1,\ldots,\ell_m\text{ 在 }V^*\text{ 中线性独立},
+\qquad \ell_i:=\ell_{\alpha_i,c_i},\\
+\forall\alpha\in\mathcal P\ \forall c\in C:\quad
+\alpha(c)=0\ \Longrightarrow\\
+\exists(\lambda_i)_{i=1}^m\in\mathbb R^m\ \forall X\in V:\quad
+\alpha(Xc)=\sum_{i=1}^m\lambda_i\alpha_i(Xc_i).
+\end{gathered}
+\tag{182.6}
+$$
+
+系数可依赖 $(\alpha,c)$，不能再依赖 $X$；系数可有正有负。只取 $m$ 个独立接触而不要求最后一行，不是见证。$n=1$ 时 $m=0$，空族的独立性按通常约定成立，末行要求每个接触泛函为零；这时确实 $W=0$，不强求存在非零接触。每个对象分别可选这样的数学有限族，不要求跨对象同一族、统一选取规则、旧菜单可读性或有限判定算法。
+
+证明。先逐对象使用引理182.1a。它只消费全部有限右响应、逐径向下界、探针分离及原关系(182.R)的左全性，不消费(182.3)、(181.3)或任何伙伴结构。局部见证的四角差量、两个独立反向见证的下界、单侧单调性及分离先给 $\Xi_q(y,z)\Longleftrightarrow z=y$；此后C139定理3.3的对称型恢复才合法应用，得到同一原数值
+
+$$
+g^0(x,y)=\tfrac12F(x;y)
+=\frac{q(x+y)-q(x-y)}4,\qquad
+q(x)=q(0)+g^0(x,x),\qquad g^0>0.
+\tag{182.7}
+$$
+
+故(182.2)确实在原尺子上解释，没有假定所需几何结论，也没有改变 $q(0)$。
+
+现在固定 $X\in V$。若 $X\in Z$，对任意 $\beta\in C^*$、$c\in C$ 且 $\beta(c)=0$，由(182.1)写成有限和 $\beta=\sum_j t_j\alpha_j$。每个 $t_j\alpha_j(c)\ge0$，总和为零，因此 $t_j>0$ 的每一项满足 $\alpha_j(c)=0$。原接触条件给 $\alpha_j(Xc)=0$，所以
+
+$$
+\beta(c)=0\ \Longrightarrow\ \beta(Xc)=0
+\quad(\beta\in C^*,\ c\in C).
+\tag{182.8}
+$$
+
+反向只需 $\mathcal P\subseteq C^*$。这里有限非负锥包的精确等式支付从实际准备到全部正对偶的桥，不用闭锥包近似或未经声明的准备归一化。
+
+接下来使用一个既有的一般proper锥机制，作为本等价证明的中间供应。Gowda–Tao《On the bilinearity rank of a proper cone and Lyapunov-like transformations》，Mathematical Programming **147** (2014), 155–170，[作者版本][Q182GT]引言第(4)项、页3，给出：全正对偶上的零接触等价于所有实参数指数属于原锥自同构群，亦等价于其Lie代数；其中指数方向援引Schneider–Vidyasagar《Cross-positive matrices》(1970)定理3。其前件只是有限维proper锥及线性算子；此处在原 $g^0$ 的Hilbert空间中，以 $\beta=g^0(y_\beta,\cdot)$ 表示正泛函，恰与(182.8)逐项相同。没有预设原锥自对偶或Jordan代数。等价地，(182.8)同时给 $X$ 与 $-X$ 的交叉正性，分别取得两个时间方向的指数保锥；以 $\exp(-tX)$ 为逆才取得等号。作者版本下一项(5)另需EJA，本证明没有在这一步使用它。
+
+反向也可直接核对：若全部实 $t$ 的 $\exp(tX)$ 保锥，则 $t\mapsto\beta(\exp(tX)c)\ge0$ 在 $0$ 处取零，是双侧可微的极小值，导数 $\beta(Xc)=0$。指数路径 $s\mapsto\exp(stX)$ 位于 $\operatorname{Aut}(C)$，故每个指数都在恒等分支；闭子群定理及矩阵Lie代数的指数刻画给(182.5)首行。这里全Lie代数的维数不是 $\dim Z$；后者是原 $g^0$ 自伴随切片的维数，不能以文献的全Lyapunov rank代替。
+
+再给出评价单射的全部前件。对每个原内点 $v$，181.10的序单位范数 $\|\cdot\|_v$ 是有限维真范数。若 $X\in Z$ 且 $Xv=0$，则全部 $\exp(tX)$ 保序、逆也保序且固定 $v$，从而都是此范数的等距。有限维范数等价使整族算子在原 $g^0$ 范数下有界。$X$ 原型自伴随，任一实特征值 $\mu\ne0$ 会使 $e^{t\mu}$ 在一个实参数方向无界，故所有特征值为零，$X=0$。这正是181.11的原对象论证，既不需齐性、伴随封闭，也不适用于任意边界点。
+
+恒等算子 $I\in Z$，因为每个接触都有 $\alpha(Ic)=\alpha(c)=0$；$n>0$ 保证 $I\ne0$。故 $1\le\dim Z\le n$，而有限维消去子公式给 $\dim W+\dim Z=N$。这证明全部界和等价，特别是由 $I\in Z$ 得到的上界 $N-1$ 比裸上界 $N$ 严格强。界的锐性如下直接计算，并不作为新的经典定理单列：取 $C=\mathbb R_+^n$、$u=(1,\ldots,1)$、$\mathcal P=\{e_i^*:1\le i\le n\}$。接触 $(e_i^*,e_j)$、$i\ne j$ 迫使所有非对角项为零；任意对角算子又满足全部接触，所以完整零接触算子恰是任意实对角矩阵。原标准型时 $\dim Z=n$、$\dim W=N-n$。若原 $q(x)=q(0)+x^TM_rx$，$M_r=(1-r)I+r\mathbf1\mathbf1^T$、$0<r<1$，则原 $g^0(x,y)=x^TM_ry$；对角 $X=\operatorname{diag}(d_i)$ 的原自伴随条件是 $M_rX=XM_r$，即 $r(d_i-d_j)=0$。因此 $Z=\mathbb RI$，$\dim W=N-1$。$n=1$ 时两端同为零，空接触基正好涵盖该情形。
+
+现在(182.5)把(182.3)严格变成原单位 $u$ 处的(181.3)，引理182.1a又在同一原响应资料上把关系左全性严格变成(181.2)，故 $\mathcal C_{182}\Longrightarrow\mathcal C_{181}$。反向，181的原群伙伴逐点供应关系左全性，其原单位满射由(182.5)给(182.3)，其余前件和共有实际见证完全相同。由此得到 $\mathcal C_{182}\Longleftrightarrow\mathcal C_{181}$，此后才消费181.2的完整等价，取得(182.4)其余各项；定义178.1的指定群仍逐对象唯一且字面等于 $G_C(A)$。遗忘、补回及秩重述对原 $E,C,u,q,g^0,D$、原单位适配选择和全部共有实际见证均为恒等。若181资料已附原 $R_0$，引理强制它本来就是 $I$，补回不改变其算子值；182不另选函数见证。伙伴值的唯一性不声称原装置见证唯一。
+
+有限见证来自有限维线性代数：任何生成 $W$ 的集合都含有恰 $\dim W$ 个元素的一组基，故可从原接触族内取基，且每个接触在此基中有不依赖 $X$ 的线性展开。反向(182.6)同时给独立性与全族张成，故 $\dim W=m$。若 $m=0$，最后一行就是全族均为零；由刚证锐界在 $n=1$ 时自动成立。取独立子族只证明 $\dim W\ge m$，结合普遍下界仍不能给上界，故不能省去全族张成。$\square$
+
+### 182.3 原锥识别和完整量子消费者
+
+**定理 182.3（同原单位、原概率与全部原过程）。** 在 $\mathcal C_{182}$ 下，181.3–181.4的全部原锥识别和量子结论在原数值与实际见证上成立，具体范围如下。
+
+证明。定理182.2已给原 $\mathfrak p^0=Z$ 及原单位处评价同构，正好支付181.3的入口。该节的证明先取紧正交稳定平均内点 $e$，由评价唯一性构造 $L_xe=x$ 和 $x\circ_e y=L_xy$；交换子导子关系给Jordan恒等式，原正Frobenius型给形式实性。此时才使用有限Jordan谱论，随后181.16及181.17分别给 $Q\subseteq C$ 和 $C\subseteq Q$。因此在同一原空间和原型中
+
+$$
+C=Q:=\{x\circ_e x:x\in E\}=Q_{g^0}^*=C_{g^0}^*.
+\tag{182.9}
+$$
+
+这里的 $C_{g^0}^*$ 是以原 $g^0$ 将代数正对偶拉回原 $E$ 的锥；不是把(182.1)的 $C^*$ 当成先验相同对象。原尖性在反向包含中排除负谱系数，不能以抽象锥同构替代这一步。181.18于是恢复原典范群的传递性、原伴随封闭及 $\Gamma_q(S,R)\Longleftrightarrow R=S^{\dagger_0}$。以上直接复用181.3已支付的推导，不把一般锥的零接触指数供应误作EJA表示定理。
+
+回到原单位与原 $D$，精确沿181.4的181.19–181.20及C123(3.3)–(3.5)：保留原选择 $e_{*,A},h_A$，其中 $h_Au_A=e_{*,A}$，并在原 $u_A$ 上适配乘法，使用
+
+$$
+\widehat g_A(x,y)=g_A^0(h_Ax,h_Ay),\qquad
+D_a(b\circ c)=(D_ab)\circ c+b\circ D_ac,\qquad
+([L_a,L_c]+[D_a,D_c])b=0.
+\tag{182.10}
+$$
+
+$\widehat g_A$ 是单位适配时的型，不替换(182.2)或原概率里的 $g_A^0$。证明用平均 $e$ 从未替换原 $u_A$，也不拿 $\circ_e$ 检验原 $D$。此时181.4/C124命题11.1的参数逐项同一，给同一原载体的坐标识别
+
+$$
+a\cdot b=a\circ b-iD_ab,\qquad
+\mathcal A_A\cong\bigoplus_s M_{d_s}(\mathbb C),\qquad
+(E_A,C_A,u_A)=((\mathcal A_A)_{\rm sa},(\mathcal A_A)_+,I_A).
+\tag{182.11}
+$$
+
+原X、Xs的含幺嵌入、乘法和 $D$ 保持、交叉 $D$ 为零及乘积张成给全部已声明联合的普通复张量结构和全部中心对。每个实际联合自身的对象条件与 $N_u$ 仍承担联合内酉的数学包含及系数一原调用，局部秩条款不供应这些实际控制。
+
+原概率和完整效果范围精确使用181.21/178.5/C124(11.1)，对每个原对象取原 $\tau_A=\sum_s\operatorname{Tr}_{d_s}$ 及唯一迹自伴随正定算子 $B_A$，对每个原准备 $\alpha$、数学效果 $e$ 及原事件 $f:A\to B$ 有
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),& B_A(C_A)&=C_A,\\
+\alpha&=g_A^0(x_\alpha,\cdot),&
+\rho_\alpha&=B_Ax_\alpha,\quad m_\alpha=\tau_A(\rho_\alpha)=\alpha(u_A),\\
+v_\alpha&=B_A^{-1/2}\rho_\alpha,& w_e&=B_A^{-1/2}e,\\
+\alpha(e)&=\tau_A(\rho_\alpha e)=g_A^0(v_\alpha,w_e),&
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1},\\
+\tau_B(\Phi_f(\rho)e)&=\tau_A(\rho T_f(e)).
+\end{aligned}
+\tag{182.12}
+$$
+
+$B_A^{-1/2}$ 是原实响应空间上算子的逆平方根，运输了状态和效果两端，不是只换状态或把原Riesz向量直接当密度。每个联合使用自己的 $B_{AB}$，不要求 $B_{AB}=B_A\otimes B_B$。数学归一底为全部密度矩阵，数学效果为 $[0,I_A]$，数学有限POVM为有限正效果的单位分解；这不将全部底点供应为原质量一准备。原 $m_\alpha\le1$ 和每段历史的成功因子均保留，正质量才可条件化，零质量不作除法。
+
+对数学归一底的任意纯点 $p,r$，即各在单块中的迹一秩一投影，完整数学效果区间上精确有
+
+$$
+T_p(r):=\min_{0\le e\le I_A,\ \tau_A(pe)=1}\tau_A(re)
+=\tau_A(pr)=\tau_A(rp)=T_r(p)
+=g_A^0(B_A^{-1/2}p,B_A^{-1/2}r).
+\tag{182.13}
+$$
+
+不同中心块读数为零；旧实际可读子菜单上的最小值不由此确定。式(182.13)交换比较端点；原历史逐次复合 $\Phi_f$，不由此交换两个更新过程的执行次序。
+
+全事件结论仍精确消费181.4/C124命题11.3：整个实际 $P$ 的AC给某块维数 $r\ge2$ 的原质量一纯准备和系数一破坏性读口，实际 $P^{\otimes k}$ 的参考块 $r^k$ 无界。对每个输入块，全事件R在充分大参考层上的同记录执行和完整原联合准备锥保正给CP。故(182.12)中的每个原事件、细支、失败、标签、遗忘、返回及全部有限合法历史均为CP/TNI，完整原装置求和TP；此量词不缩成新选词、乘积输入或某一套Kraus分解。
+
+对每个数学 $0\le e\le I_A$，含奇异、零及零中心分量，181.4/C124定理12.1给同一原签名内选中的完整有限装置 $W_e$，对每个已声明实际相关参考 $R$ 有
+
+$$
+\Phi_{W_e}(\rho)=a\rho a,\qquad
+\Phi_{W_e\mid R}(X)=(a\otimes I_R)X(a\otimes I_R),\qquad
+ a=\sqrt e,\quad b=\sqrt{I_A-e}.
+\tag{182.14}
+$$
+
+它只附接整个原 $P$，不将一个数学矩阵角变成新原对象。完整失败与记录精确沿用C124(12.5)–(12.8)：以原成功指针 $p$、同块正交 $p_1$ 及原失败映射 $\Psi_\ell:P\to B_\ell$ 定义
+
+$$
+\begin{gathered}
+d_\ell=\Psi_\ell^\dagger(I_{B_\ell}),\qquad
+\sum_\ell d_\ell=I_P-p,\quad 0\le d_\ell\le I_P-p,\\
+\omega_\ell=\Psi_\ell(p_1),\quad
+ t_\ell=\tau_{B_\ell}(\omega_\ell)\ge0,\quad \sum_\ell t_\ell=1,\\
+\rho\longmapsto b\rho b\otimes\omega_\ell
+\quad\text{于原 }AB_\ell,\qquad
+\rho\longmapsto t_\ell b\rho b\quad\text{在实际丢弃后}.
+\end{gathered}
+\tag{182.15}
+$$
+
+相关参考上的未丢弃输出为 $(b\otimes I_R)X(b\otimes I_R)\otimes\omega_\ell$，按原交换接口排列端口。若原丢弃有细口 $z_{\ell k}$，则其原系数为 $z_{\ell k}(\omega_\ell)$，和为 $t_\ell$。$\omega_\ell$ 可混合、跨中心或为零，原输出和零标签全保留；丢弃前不能先取迹。只在该构造占用的失败方向有(182.15)，原 $\Psi_\ell$ 在其他方向和中心的完整作用不变，不被改成全局标量读口。准备与比较的零响应补事件仍保留，成功与全部失败的总迹仍为 $\tau_A(\rho)$。
+
+原F及具名支持双返回精确消费181.22/C124命题12.2：对每个非零指定返回细支，
+
+$$
+S_a=\operatorname{Ad}_{K_a},\qquad
+U_a=q_{F,a}\operatorname{Ad}_{K_a^+},\qquad q_{F,a}>0,\qquad
+U_aS_a=q_{F,a}\mathrm{id}_{P_a},\quad
+S_aU_a=q_{F,a}\mathrm{id}_{Q_a}.
+\tag{182.16}
+$$
+
+这里 $P_a,Q_a$ 是原单中心输入/输出支持角，$K_a^+$ 是相应支撑间逆，原系数、支持约束及反向资料均同一。零支标签保留，原遗忘仍为原细支求和；任意数学Kraus指标不成为原记录。阶段细支仅在原连线合法时相乘，此时原准备、比较、读口和丢弃细系数按C124命题12.2逐项保留，各输入中心的权重不强制相同。若这些细口未被声明可相连，就用整个 $W_e$ 或整个原词自己的全称F，不扩张合法性谓词。
+
+因(182.12)最后一行逐段相容，对每个原准备、每段原合法有限历史 $f_1,\ldots,f_k$（含原联合标签、失败和返回）及末端原效果 $e$，
+
+$$
+\alpha(T_{f_1}\cdots T_{f_k}e)
+=\tau_{A_k}\!\left(
+(\Phi_{f_k}\circ\cdots\circ\Phi_{f_1})(\rho_\alpha)e\right).
+\tag{182.17}
+$$
+
+逐个原细记录使用同一等式，原输出、原成功质量、返回数和正条件分母全部保留，不仅保留遗忘后的概率。选中 $W_e$ 的正成功质量才给条件态 $a\rho a/\tau_A(\rho e)$；旧同效果设备要等于此更新仍须其自身完整输出校准。逐效果供应 $W_e$ 不自动组装任意指定原POVM仪器。
+
+Bloch与全有限的资格也精确沿181.4：复结构取得后，大小至少二的块中二维复支撑面的数学底是 $\rho=(\Pi_S+\mathbf r\cdot\boldsymbol\sigma)/2$、$|\mathbf r|\le1$ 的闭三球，其纯态球面比较为 $(1+\mathbf r\cdot\mathbf s)/2$；这不是自动可附接的原 $M_2$ 对象或全质量实际准备集。只有另保留原 $C_A$ 不可约、$\dim E_A=d^2$、固定整数 $d\ge2$，并实际声明所有 $A^{\otimes k}$ 及其全部联合、准备、原 $D$ 和原接口，才对每个有限 $k\ge1$ 得 $C_{A^{\otimes k}}=\operatorname{PSD}_{d^k}$。这里 $d$ 是矩阵大小，区别于(182.2)的实维数 $n$；指针 $P$ 的参考幂不代替任意 $A$ 的全有限幂。
+
+最后，仍只在C123命题4.1的额外原连续、确定、可逆一参数动态和物理钟标定下取得 $\rho_s(t)=e^{-itH_s/\hbar}\rho_s(0)e^{itH_s/\hbar}$。式(182.3)不指定 $H_s$、$\hbar$ 或钟，几何指数参数不因此成为物理时间。以上为181.4全部消费者的同原参数应用。$\square$
+
+### 182.4 二维、三维图景与必要性边界
+
+**命题 182.4（分离、原准备、原尺子及双向性的边界）。** 二元伙伴刚性需要分离，正型恢复需要下界；(182.5)的完整准备前件和原型自伴随切片不能随意更换。零接触是无穷小条件，不是某一接触沿有限指数轨道恒为零。其二维、三维实例及纯比较边界如下。
+
+证明。先核对首响应桥的两个边界。在 $E=\mathbb R^2$ 取 $q(x_1,x_2)=x_1^2$，则全部右响应为 $F(x;y)=2x_1y_1$，逐径向下界成立，且 $\Xi_q(y,z)$ 恰等价于 $z_1=y_1$。故 $r(y_1,y_2)=(y_1,y_2+1)$ 是非恒等的集合函数伙伴，关系左全却不等于对角；缺失的正是原探针分离，第二坐标非零位移对所有探针不可见。这里不取商或把该伙伴线性化。
+
+另在非零欧氏空间取 $q(x)=-\|x\|_2^2$，则 $F(x;y)=-2\langle x,y\rangle$，全部有限响应和探针分离成立，$r=\mathrm{id}$ 给左全关系，但原 $g^0=F/2$ 为负定，逐径向下界失败。这说明没有下界不能取得原正型；此例的伙伴仍为恒等，不声称下界对恒等性单独必要。两例只检验首响应桥，不声称满足完整量子合同。
+
+再取二维正象限、$u=(1,1)$ 和原标准型。若只留下准备 $\alpha(x)=x_1+x_2$，则 $\alpha(c)=0$、$c\in C$ 只有 $c=0$，所以全部接触泛函为零，$Z=\operatorname{Sym}_2$ 的维数为三；完整接触却强制任意零接触算子对角，原自伴随切片维数为二。这是删除准备完整性的反模型。若还要求单个准备质量不超过一，改取 $\alpha/2$，同一零集和结论不变；它仍不生成完整对偶锥。这不声称只保留一个坐标准备就必然遗漏自伴随约束。
+
+现在恢复完整原坐标准备 $\mathcal P=\{e_1^*,e_2^*\}$，各原质量为一，却固定另一份原读数
+
+$$
+q(x)=q(0)+x^TMx,\qquad
+M=\begin{pmatrix}1&r\\r&1\end{pmatrix},\quad 0<r<1,
+\qquad g^0(x,y)=x^TMy.
+\tag{182.18}
+$$
+
+完整零接触仍给任意实对角算子；$M$ 自伴随切片只剩 $\mathbb RI$。所以 $\dim Z=1<2$、$\dim W=2>N-n=1$，原几何条款不成立。若改成欧氏型，它才变成 $\dim Z=2$、$\dim W=1$；那会更改原数值，不能用于本候选。在原 $M$ 切片中写 $X=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$，自伴随要求 $c=b+r(d-a)$，两个接触正是 $b$ 和 $c$，彼此独立。只选接触 $b$ 虽已得到目标个数一，却遗漏 $c$；例如 $X=\left(\begin{smallmatrix}0&0\\r&1\end{smallmatrix}\right)$ 满足 $b=0$ 而 $c\ne0$。这同时显示(182.6)全族张成的必要性。它检验原型保持，不是完整等价定理的反例。
+
+在原标准型的 $n$ 维正象限，$N-n=n(n-1)/2$ 个独立约束就是自伴随矩阵的非对角项。二维中只有一项，留下两种沿边界射线的独立伸缩；三维中有三项，留下三种坐标伸缩。三维圆锥也能达到同一阈值：取
+
+$$
+C=\{(s,z_1,z_2):s\ge\sqrt{z_1^2+z_2^2}\},\qquad
+u=(1,0,0),\qquad g^0\text{ 为标准型},
+\quad\mathcal P=\{\alpha\in C^*: \alpha(u)=1\}.
+\tag{182.19}
+$$
+
+此 $\mathcal P$ 的有限非负锥包为 $C^*$，原质量均为一。由Cauchy不等式，所有非平凡接触可正缩放为 $c=(1,v)$、$\alpha=(1,-v)$、$|v|=1$。对原自伴随 $X=\left(\begin{smallmatrix}a&b^T\\b&D\end{smallmatrix}\right)$，接触为 $a-v^TDv$。全部接触为零当且仅当 $D=aI_2$，故
+
+$$
+Z=\left\{\begin{pmatrix}a&b_1&b_2\\b_1&a&0\\b_2&0&a\end{pmatrix}:a,b_1,b_2\in\mathbb R\right\},
+\qquad \dim Z=3,\quad \dim W=3=6-3.
+\tag{182.20}
+$$
+
+截面 $s=1$ 是圆盘；这幅实三维锥图不等于量子比特的三维归一Bloch球，后者的整个实响应空间维数为四，且须先取得182.3的复类型。
+
+双向零接触也不能换成一侧不等式。在二维正象限，原标准型自伴随 $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 满足交叉正性，$\exp(tX)$ 在 $t\ge0$ 保正，但 $t<0$ 的非对角元为负，不能双向保锥。另一方面，在(182.19)取 $H=\left(\begin{smallmatrix}0&1&0\\1&0&0\\0&0&0\end{smallmatrix}\right)\in Z$、$c=(1,0,1)$ 和 $\alpha=(1,0,-1)$，有
+
+$$
+\begin{gathered}
+\alpha(c)=\alpha(Hc)=0,\qquad
+\exp(tH)c=(\cosh t,\sinh t,1)\in C,\\
+\alpha(\exp(tH)c)=\cosh t-1>0\quad(t\ne0),\qquad
+(I+tH)c=(1,t,1)\notin C\quad(t\ne0).
+\end{gathered}
+\tag{182.21}
+$$
+
+$Hc=(0,1,0)\notin C$ 也显示生成元本身不必保正。原零接触只要求此时的导数为零，轨道可以离开原支撑超平面而使该读数变正；不能将它改写成有限流恒保持该接触读数为零。181.23的矩阵锥例子给同样的Euler步边界。
+
+最后，标准正象限配 $q(x)=q(0)+\sum_i x_i^2$ 满足原响应入口及(182.3)，其数学纯点 $e_i$ 的确认读数为 $T_{e_i}(e_j)=\delta_{ij}$，交换端点仍对称。它的逐点乘法有 $[L_d,L_h]=0$，不能满足AC的非经典指针条件。故静态零接触几何及纯比较对称仍容纳经典结构；原 $D$ 的复类型职责、AC的非经典端点、实际联合及全事件R的职责不能互相代替，更不能由端点对称推出更新次序可交换。$\square$
+
+### 182.5 候选的中文释义与来源范围
+
+**定义 182.5（几何读法及主张范围）。** 先只说同一个原 $q$ 给每个端点一个反向首响应伙伴，伙伴怎样随端点变化完全不指定。两个相反端点各自的四角差量和下界先迫使 $q$ 偶对称；最低读数位移再被双向单调性和探针分离排除，所以伙伴只能是原端点自身，原尺子随之恢复。在这把尺子上，(182.2)的一次零接触是：某个原准备 $\alpha$ 对原正对象 $c$ 的读数恰好为零，要求候选自伴方向 $X$ 在这一瞬间不产生一阶读数 $\alpha(Xc)$。把所有这样的线性限制合起来，它们的独立个数就是 $\dim W$。原自伴方向总有 $N$ 个；完整正准备保证剩下的方向确实能双向指数保原锥，固定任一内点的非零自伴方向又不可能藏在有界的序区间里，所以至多剩 $n$ 个。恰好只限制 $N-n$ 个时，全部零接触留下恰好 $n$ 个原自伴方向，它们在原单位 $u$ 处既不重复又覆盖全部方向；这才接回181的Jordan构造和原锥识别。二维两条边和三维正象限的坐标伸缩最容易看见这个计数，三维圆锥则显示同一阈值容纳弯曲边界。有限见证是这些限制的一组数学基，既要独立又要管住全部零接触，绝不是有限操作菜单。
+
+本章新增的项目内综合是原二元关系左全性的对角刚性，以及它连同(182.3)与181完整候选在同一原准备、原数值及实际见证上的等价，包括有限接触见证与完整消费者的衔接，属于repo-derived的候选重述。C139引理3.2和定理3.3分别供应一元唯一性及赚得对称互易后的原型恢复，不以旧群伙伴证明代替引理182.1a。有限维消去子、抽取基、序单位有界性、自伴随谱及一般proper锥的零接触指数机制只作中间供应；尤其[Q182GT]第(4)项已给一般锥机制，下一项的EJA表示不能反向用于获得EJA前件。181.3的原锥两向识别及181.4的原量子尾部按其精确前件复用，不另立同名经典结果，不主张文献优先权或穷尽检索。
+
+这里的等价不证明原物理资料满足这些条件，不供应实际控制、旧器件更新校准、任意指定仪器或物理时间，不给任意锥呈示的有限算法，也不证明独立物理公理更少。伙伴入口仅为原二元关系左全性，不再输入伙伴的群归属或任何函数结构；$N_u$ 的原典范群控制、全部原 $D$ 及实际合同仍在，原域上的群伙伴全性和伴随识别是后续结论。交换两个比较端点只保持(182.13)的静态数值；过程先后、输出与记录仍按原历史的次序处理。
+
+[Q182GT]: https://userpages.umbc.edu/~gowda/papers/trGOW13-01.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 183. 原实际极端准备与全局暴露正对象零配对的完整量子候选
+
+### 183.1 同一原签名上的唯一候选
+
+**定义 183.1（原实际极端准备与单侧全局暴露零接触候选）。** 完整采用定义182.1的同一原签名 $\Omega$ 及其纳入的定义181.1、180.1、179.1、178.1和C124定义10.2，只把(182.3)替换为下述(183.4)。所得唯一候选记为 $\mathcal C_{183}$。全部局部对象、实际联合、整个实际指针 $P$、每个原有限参考幂、原输出、被消费参考及其已声明联合仍分别满足全部对象条件。以下极端准备与暴露对象域只缩小几何条款的量词域，不缩小实际准备、事件或历史的域。
+
+逐对象仍取原非零有限维实空间 $E$、原闭凸尖生成锥 $C$、原内点单位 $u$、原有限实值读数 $q$ 和原有向双线性关系 $D$。原全语境响应商及全部带符号向量不变，完整保留
+
+$$
+\begin{gathered}
+F(x;y)=\lim_{t\downarrow0}\frac{q(x+ty)-q(x)}t\in\mathbb R
+\quad(x,y\in E),\qquad
+\inf_{t\in\mathbb R}q(tx)>-\infty\quad(x\in E),\\
+x\ne0\Longrightarrow\exists y\in E:\ F(x;y)\ne0,
+\qquad g^0(x,y)=\tfrac12F(x;y),\\
+\Xi_q(y,z)\Longleftrightarrow
+\bigl(\forall x\in E:\ F(x;y)=F(z;x)\bigr),
+\qquad \forall y\in E\ \exists z\in E:\ \Xi_q(y,z).
+\end{gathered}
+\tag{183.1}
+$$
+
+不选伙伴函数，不输入伙伴线性、保锥性或群归属。先直接应用引理182.1a：$\Xi_q(y,z)\Longleftrightarrow z=y$，且原数值 $g^0=F/2$ 是正定对称双线性型，满足(182.7)。以下自伴随空间只在这个结论取得后解释，既不另选内积，也不预用几何秩结论。
+
+以 $\mathcal P$ 表示全部原实际准备，保留原身份；不同原标签即使响应相同也不合并。其泛函仍在原代数对偶中，并完整保留(182.1)：
+
+$$
+\mathcal P\subseteq C^*\subset E^*,\qquad
+m_\alpha=\alpha(u)\in[0,1],\qquad
+\operatorname{cone}_{\mathrm{fin},+}(\mathcal P)=C^*.
+\tag{183.2}
+$$
+
+这里是精确有限非负和等式，既无取闭包，也无把准备重标为质量一的操作。对任一锥 $K$，非零 $r\in K$ 的射线 $\mathbb R_+r$ 称为极射线，是指 $x,y\in K$ 且 $x+y\in\mathbb R_+r$ 时 $x,y\in\mathbb R_+r$。非零 $c\in C$ 的射线称为原锥的全局暴露射线，是指存在非零 $\beta\in C^*$ 满足 $C\cap\ker\beta=\mathbb R_+c$。这是存在一个支撑条件单独挑出该射线，不要求暴露泛函或支撑超平面唯一。定义
+
+$$
+\begin{gathered}
+\mathcal P_{\rm ext}
+=\{\alpha\in\mathcal P:\alpha\ne0,\ \mathbb R_+\alpha
+\text{ 是原 }C^*\text{ 的极射线}\},\\
+C_{\rm ext}
+=\{c\in C:c\ne0,\ \mathbb R_+c
+\text{ 是原 }C\text{ 的极射线}\},\\
+C_{\rm exp}
+=\{c\in C:c\ne0,\ \mathbb R_+c
+\text{ 是原 }C\text{ 的全局暴露射线}\},\\
+n=\dim E>0,\qquad N=\frac{n(n+1)}2,\qquad
+V=\operatorname{Sym}(E,g^0),\\
+\ell_{\alpha,c}\in V^*,\qquad \ell_{\alpha,c}(X)=\alpha(Xc),\\
+W_{\rm ext,ext}=\operatorname{span}_{\mathbb R}
+\{\ell_{\alpha,c}:\alpha\in\mathcal P_{\rm ext},\ c\in C_{\rm ext},\ \alpha(c)=0\},\\
+W_{\rm ext,exp}=\operatorname{span}_{\mathbb R}
+\{\ell_{\alpha,c}:\alpha\in\mathcal P_{\rm ext},\ c\in C_{\rm exp},\ \alpha(c)=0\},
+\qquad Z_{\rm ext,exp}=\operatorname{ann}_V W_{\rm ext,exp}.
+\end{gathered}
+\tag{183.3}
+$$
+
+$\mathcal P_{\rm ext}$ 是原实际准备的子族，不是对偶锥中另添的数学泛函。它保留每个成员的原质量、标签和装置身份；非零成员因 $u\in C^\circ$ 有 $0<m_\alpha\le1$。$C_{\rm ext}$ 和 $C_{\rm exp}$ 都是非零数学向量的集合，不是射线的商空间；后者要求在整个原 $C$ 中暴露，不只在某个面内相对暴露。两者都不被声明为实际准备、效果读口或端口。接触中的实际 $\alpha$ 只须对 $c$ 报零，不必就是单独暴露 $c$ 的那个支撑泛函。$W_{\rm ext,ext}$ 只作证明中间空间，不是另一个最终候选。$n=1$ 时非零正对象与非零正准备不可能零配对，故两个接触空间均为零；此结论不依赖是否把整个一维锥称为暴露射线的约定。$V^*$、张成及消去子均为原实空间的代数运算，没有新配对、射影归一或闭包。候选唯一的新几何要求为逐对象
+
+$$
+\boxed{\dim W_{\rm ext,exp}=N-n=\frac{n(n-1)}2.}
+\tag{183.4}
+$$
+
+全部原合同的保留具有以下精确范围；它们与(183.1)–(183.4)合起来才是完整候选，而非单独一个秩条件。
+
+| 原合同 | 本候选保留的对象、量词与见证 |
+| --- | --- |
+| 完整准备及原事件 | 每个原实际准备均保留(183.2)，每个实际联合也保留完整有限正锥包。每个原事件 $f:A\to B$ 的原正映射仍为 $T_f:E_B\to E_A$，$T_f(u_B)\le u_A$；每个完整原装置的效果和仍为 $u_A$。不以 $\mathcal P_{\rm ext}$ 取代完整 $\mathcal P$。 |
+| 原单位适配及 $D$ | 保留原选择 $e_{*,A},h_A$、原 $u_A$ 适配乘法；同一个原 $D_a$ 在全载体上满足导子律及 $([L_a,L_c]+[D_a,D_c])b=0$，对所有 $a,b,c$ 成立。证明平均单位不替代原单位或检验原 $D$ 的乘法。 |
+| X、Xs、原联合 | 原含幺嵌入保持乘法及 $D$，交叉 $D$ 为零、乘积张成，原乘积准备、结合、交换、标量和经典标签接口全部保留。每个实际 $AP$ 自身满足全部对象条件；旁接、准备—比较—测试及失败输出丢弃均须有原同装置、同记录的合法执行。 |
+| $N_u$ | $G_C(A)=\operatorname{Aut}(C_A)^\circ$ 仍是原典范群；每个所需对象及每个 $T\in(G_C(A))_{u_A}$ 仍有同一 $\Omega$ 内系数一、响应恰为 $T$ 的完整有限原装置指定事件，包括原细记录、零响应补事件、失败端和输出。因此原群控制合同并未删除。 |
+| AC | 整个原实际 $P$ 上仍有原完整准备、系数一破坏性成功读口及完整测试；$d=T_m(u_I)\ne0$ 张成原 $C_P$ 的极射线，原 $\alpha(d)=1$，并有 $h\in E_P$ 使 $[L_d,L_h]\ne0$。保留原准备、全部失败输出 $B_\ell$、细记录和实际丢弃，不替换为Q1或数学角。 |
+| 全事件R | 对每个原事件、细支、失败、标签、遗忘、具名返回及全部有限合法接续，仍有充分大的实际 $P^{\otimes k}$ 上的同记录执行、原乘积律和完整原联合准备锥上的保正；不是只对极端菜单、乘积输入或选中新词。 |
+| F及支持双返回 | 整个原菜单及各新有限词仍有各自的原有限联合细记录、遗忘求和。每个非零指定返回细支仍有原单中心输入/输出支持角、原返回、同一个原 $q_{F,a}>0$、两条同系数支持等式及原反向资料；零支标签也保留。 |
+
+原实际子菜单、补事件、失败输出对象、记录可访问关系、标签、遗忘、丢弃和全部合法有限历史均不变，未声明的连线仍未声明。共有P中的自对偶等式仍待推出；不预加齐性、群伴随封闭、自由变形族或新的准备操作。
+
+### 183.2 有限极端分解与单侧全局暴露同步接触
+
+**定理 183.2（同原资料上的单侧暴露接触桥）。** 只要原 $C\subset E\ne0$ 是有限维proper锥、(183.2)成立且原 $g^0$ 已由(183.1)恢复，就有
+
+$$
+\operatorname{cone}_{\mathrm{fin},+}(\mathcal P_{\rm ext})=C^*,
+\qquad W_{\rm ext,exp}=W_{\rm ext,ext}=W_{182},\qquad Z_{\rm ext,exp}=Z_{182},
+\tag{183.5}
+$$
+
+其中 $W_{182},Z_{182}$ 字面指(182.2)在同一 $E,C,g^0,\mathcal P$ 上的 $W,Z$。特别是对每个原实际 $\alpha\in\mathcal P$ 和每个数学 $c\in C$，若 $\alpha(c)=0$，其整个泛函 $X\mapsto\alpha(Xc)$ 是两端极端的原实际零接触泛函的精确有限非负和，系数不依赖 $X$。每个两端极端零接触泛函又是原实际极端准备与全局暴露对象接触泛函的数学实倍数的极限，因而属于后者的有限实线性张成；后一论证不声称非负有限分解。结论不需(183.4)、自对偶、EJA、所有极射线都暴露或任何过程条件。
+
+证明。先说明每条非零对偶极射线的原实际见证。给定原 $C^*$ 的一条极射线 $R$，取任意 $0\ne\gamma\in R$。由精确等式(183.2)，存在有限个原实际准备使
+
+$$
+\gamma=\sum_{j=1}^k t_j\alpha_j,
+\qquad t_j\ge0,\quad\alpha_j\in\mathcal P.
+\tag{183.6}
+$$
+
+每个加项属于 $C^*$。对每个 $j$ 将该项与其余项分开，极射线定义给 $t_j\alpha_j\in R$；至少一项非零。取这一项，则 $t_j>0$、$\alpha_j\ne0$ 且 $\alpha_j\in R\cap\mathcal P_{\rm ext}$。所选对象就是原实际 $\alpha_j$，并未把 $t_j\alpha_j$ 或 $\gamma$ 声称为另一个实际准备，其原质量仍为 $\alpha_j(u)$。
+
+接着仅在本桥的证明内部使用有限维紧凸底的Minkowski分解，正如[C128引理507.1证明][Q183Minkowski]所用的成熟中间工具：proper锥 $K$ 取严格正泛函 $\eta\in\operatorname{int}K^*$，底 $\{x\in K:\eta(x)=1\}$ 紧凸，每点是有限个极点的凸组合，底极点恰对应锥极射线。因此每个锥向量是有限个极射线向量的和；不要求极点集闭，也不取无限极限。用于原 $C$ 时可取任意这样的数学泛函；用于原 $C^*$ 时可直接以原 $u$ 评价取紧底。这里只做数学分解，不改变候选中的原 $g^0$、$u$ 或任何实际准备的质量。
+
+一般锥的算子对偶表述见[Gritzmann、Klee、Tam，*Cross-positive matrices revisited*，Linear Algebra Appl. 223–224 (1995), 285–305][Q183GKT]（[DOI:10.1016/0024-3795(93)00364-6](https://doi.org/10.1016/0024-3795(93)00364-6)）。该文第286页的proper锥是任意有限维闭凸尖生成锥；第289页引理2.1说明保锥算子锥的对偶由 $T\mapsto\beta(Tc)$（$\beta\in C^*,c\in C$）这些秩一泛函精确有限非负生成，其极射线对应两端各一条极射线；引理2.2(i)说明与恒等算子互补的对偶面由其中满足 $\beta(c)=0$ 的秩一泛函精确有限非负生成。该文将这些作为已知结论使用，并引Tam (1977)为其文献[21]，不以此主张本章的新定理或优先权。
+
+这项成熟的一般锥供应不要求EJA或自对偶；文献中的矩阵内积仅用于表示算子对偶，不替换原数值 $g^0=F/2$ 或原自伴随切片 $V=\operatorname{Sym}(E,g^0)$。它本身也不提供原实际准备的标签身份或原质量；每条对偶极射线中的原实际成员仍须由(183.2)及(183.6)取得，下述有限分解保留这些成员。本章完整候选的同一原签名量子等价仍是repo-derived综合。
+
+于是任意非零 $\beta\in C^*$ 先有限分解为对偶极射线向量，再对其中每条射线使用(183.6)取得原实际代表 $\alpha_i$。吸收每条射线内的正比例，有
+
+$$
+\beta=\sum_{i=1}^r a_i\alpha_i,
+\quad a_i>0,\quad\alpha_i\in\mathcal P_{\rm ext};
+\qquad
+c=\sum_{j=1}^s b_jc_j,
+\quad b_j>0,\quad c_j\in C_{\rm ext}
+\quad(0\ne c\in C).
+\tag{183.7}
+$$
+
+这是有限精确等式，直接证明(183.5)的首项；零向量用空和。它并未删掉任何非极端的原实际准备，也不把数学系数 $a_i,b_j$ 当作可执行的缩放、混合或额外实际资源。
+
+现在令 $\beta=\alpha$ 是任意一个原实际准备，且 $\alpha(c)=0$。若 $\alpha=0$ 或 $c=0$，对应泛函本来为零，取空和即可。否则使用(183.7)，正性给
+
+$$
+0=\alpha(c)=\sum_{i=1}^r\sum_{j=1}^s
+ a_i b_j\alpha_i(c_j),
+\qquad a_i b_j>0,\quad\alpha_i(c_j)\ge0.
+\tag{183.8}
+$$
+
+有限个非负数之和为零，故每个 $\alpha_i(c_j)=0$。双线性随即给出在同一个 $V^*$ 中的字面恒等式
+
+$$
+\ell_{\alpha,c}=\sum_{i=1}^r\sum_{j=1}^s
+ a_i b_j\ell_{\alpha_i,c_j},
+\quad\text{即}\quad
+\forall X\in V:\ \alpha(Xc)=
+\sum_{i,j}a_i b_j\alpha_i(Xc_j).
+\tag{183.9}
+$$
+
+若保留了零系数项，先删去它们；不从零系数项推断零配对。式中所有 $\alpha_i$ 均是(183.6)实际找到的原成员，所有 $c_j$ 均是原数学锥中的极端向量，全部正系数在 $X$ 之前选定。故 $W_{182}\subseteq W_{\rm ext,ext}$。反向包含由 $\mathcal P_{\rm ext}\subseteq\mathcal P$、$C_{\rm ext}\subseteq C$ 直接成立，先得 $W_{\rm ext,ext}=W_{182}$；在同一个 $V$ 取消去子也相同。$n=1$ 时非零正泛函在非零正向量上严格为正，所有非零零接触族为空，三个空间均为零，已证(183.5)。以下只处理 $n\ge2$。
+
+继续证明对象端可收缩到全局暴露域。所有归一化只在本证明的数学锥中进行。取证明用的 $s\in\operatorname{int}C^*$，保留原 $u\in C^\circ$，则
+
+$$
+K=\{z\in C:s(z)=1\},\qquad
+L=\{\delta\in C^*: \delta(u)=1\}
+\tag{183.9a}
+$$
+
+是紧凸底，各自仿射维数为 $n-1$，极点分别对应原锥的极射线。$s$ 不是新的内积或实际准备；$L$ 中归一化元素也不是新增实际准备。给定任意原两端极端零接触 $(p,c)$，其中 $p\in\mathcal P_{\rm ext}$、$c\in C_{\rm ext}$，置
+
+$$
+\alpha=\frac{p}{p(u)}\in\operatorname{Ext}L,\qquad
+x=\frac{c}{s(c)}\in\operatorname{Ext}K,\qquad
+\alpha(x)=0,\qquad H=K\cap\ker\alpha.
+\tag{183.9b}
+$$
+
+$H$ 是非空紧暴露面，且 $x\in\operatorname{Ext}H$：在 $H$ 内的非平凡凸分解也是 $K$ 内的分解。此时只消费成熟的相对Straszewicz结论，即有限维紧凸集的暴露点在其极点中稠密（Rockafellar，*Convex Analysis*，Princeton University Press，1970，定理18.6）；将该结论应用于 $\operatorname{aff}H$，得到 $x_j\in\operatorname{Exp}H$、$x_j\to x$，以及在 $H$ 上唯一最大于 $x_j$ 的仿射泛函 $b_j$。若 $H$ 为单点，直接取常序列和零泛函；若 $\dim H=1$，$H$ 是线段，极点是端点，取选中端点的线性坐标即可。其他低维面也只在自己的仿射包内应用同一结果，不要求 $H$ 在 $\{s=1\}$ 中有内点。把 $b_j$ 仿射延伸到 $\{s=1\}$，再用 $s$ 表示其常数项，就得到 $E$ 上的线性泛函，仍记为 $b_j$。这里 $x_j$ 只在 $H$ 中相对暴露，尚未宣称它在原 $C$ 中暴露。
+
+固定 $j$，记 $Q(z)=g^0(z,z)=q(z)-q(0)$；这是原读数的二次部分，不是另选的型。对每个 $\varepsilon>0$，在同一个紧底 $K$ 上选取一个最大点
+
+$$
+x_{j,\varepsilon}\in\operatorname*{arg\,max}_{z\in K}
+f_{j,\varepsilon}(z),\qquad
+f_{j,\varepsilon}(z)=-\alpha(z)+\varepsilon b_j(z)+\varepsilon^2Q(z).
+\tag{183.9c}
+$$
+
+无需最大点选取唯一或连续。与 $x_j\in H$ 比较，极大性和 $\alpha\ge0$ 给
+
+$$
+\begin{aligned}
+0\le\alpha(x_{j,\varepsilon})
+&\le\varepsilon\bigl(b_j(x_{j,\varepsilon})-b_j(x_j)\bigr)
++\varepsilon^2\bigl(Q(x_{j,\varepsilon})-Q(x_j)\bigr)
+=O_j(\varepsilon),\\
+b_j(x_{j,\varepsilon})+\varepsilon Q(x_{j,\varepsilon})
+&\ge b_j(x_j)+\varepsilon Q(x_j)
++\frac{\alpha(x_{j,\varepsilon})}{\varepsilon}
+\ge b_j(x_j)+\varepsilon Q(x_j).
+\end{aligned}
+\tag{183.9d}
+$$
+
+首行的界来自 $K$ 上两个连续函数的有界性。任意 $\varepsilon\downarrow0$ 子列都有聚点，首行使它落入 $H$；第二行除以 $\varepsilon$ 后丢去非负项，给该聚点的 $b_j$ 值至少为 $b_j(x_j)$。$H$ 上最大点唯一，故所有聚点均为 $x_j$，于是 $x_{j,\varepsilon}\to x_j$。这里没有断言 $\alpha(x_{j,\varepsilon})/\varepsilon\to0$；所需结论只来自它非负。
+
+在每一个所选最大点取线性泛函
+
+$$
+\begin{gathered}
+d_{j,\varepsilon}=-\alpha+\varepsilon b_j
++2\varepsilon^2 g^0(x_{j,\varepsilon},\cdot),\qquad
+M_{j,\varepsilon}=\max_{z\in K}d_{j,\varepsilon}(z),\\
+d_{j,\varepsilon}(x_{j,\varepsilon}-z)
+\ge\varepsilon^2g^0(x_{j,\varepsilon}-z,x_{j,\varepsilon}-z)
+\quad(z\in K),\\
+\beta_{j,\varepsilon}=M_{j,\varepsilon}s-d_{j,\varepsilon}\in C^*,\qquad
+\beta_{j,\varepsilon}(x_{j,\varepsilon})=0,\qquad
+C\cap\ker\beta_{j,\varepsilon}=\mathbb R_+x_{j,\varepsilon}.
+\end{gathered}
+\tag{183.9e}
+$$
+
+中间不等式由精确二次余项得到：$f_{j,\varepsilon}(x_{j,\varepsilon})-f_{j,\varepsilon}(z)$ 等于其左端减去右端，极大性使该差非负。原 $g^0$ 正定，故 $d_{j,\varepsilon}$ 在整个 $K$ 上唯一最大于 $x_{j,\varepsilon}$。对 $K$ 中每个 $z$，$\beta_{j,\varepsilon}(z)=M_{j,\varepsilon}-d_{j,\varepsilon}(z)\ge0$，且只在该点取零；由正齐次性得到最后一行的原锥全局暴露。$n\ge2$ 时 $K$ 非单点，精确严格余项也排除了 $d_{j,\varepsilon}$ 在 $K$ 上恒定，故 $\beta_{j,\varepsilon}\ne0$。这只用原 $g^0$ 的正定性，不用它与 $C$ 之间的自对偶关系。
+
+固定 $j$ 时，紧性还给 $d_{j,\varepsilon}\to-\alpha$，在 $K$ 上一致收敛。因为 $H\ne\varnothing$，$\max_K(-\alpha)=0$，故 $M_{j,\varepsilon}\to0$、$\beta_{j,\varepsilon}\to\alpha$。逐个 $j$ 选足够小的 $0<\varepsilon_j<1/j$，同时使 $x_{j,\varepsilon_j}$ 离 $x_j$ 和 $\beta_{j,\varepsilon_j}$ 离 $\alpha$ 的原型诱导范数各小于 $1/j$。置 $x_k=x_{k,\varepsilon_k}$、$\beta_k=\beta_{k,\varepsilon_k}$，得到
+
+$$
+x_k\in C_{\rm exp}\cap K,\qquad x_k\to x,\qquad
+\beta_k\in C^*\setminus\{0\},\qquad \beta_k\to\alpha,\qquad
+\beta_k(x_k)=0\quad\text{对每个 }k.
+\tag{183.9f}
+$$
+
+这种对角选取允许 $b_j$ 的大小随 $j$ 增长，不把固定 $j$ 的估计当作一致估计。因 $\beta_k(u)\to\alpha(u)=1$，将 $\beta_k$ 除以 $\beta_k(u)>0$ 得 $\widehat\beta_k\in L$，仍收敛到 $\alpha$ 且逐步精确零配对。
+
+现在用紧底的有限Minkowski分解及Carathéodory定理：$\dim\operatorname{aff}L=n-1$，故每个 $\widehat\beta_k$ 都是至多 $n$ 个 $L$ 极点的凸组合。删去零权重，选最大权重的一项，写为
+
+$$
+\begin{gathered}
+\widehat\beta_k=\lambda_k\gamma_k+(1-\lambda_k)\delta_k,\qquad
+\gamma_k\in\operatorname{Ext}L,\quad \delta_k\in L,\quad
+1/n\le\lambda_k\le1,\\
+\gamma_k(x_k)=0,\qquad \gamma_k\longrightarrow\alpha.
+\end{gathered}
+\tag{183.9g}
+$$
+
+若 $\lambda_k<1$，$\delta_k$ 是其余各项的归一凸组合；若 $\lambda_k=1$，任选 $\delta_k=\alpha$。各极点在 $x_k\in C$ 上非负，而其凸组合值为零，故每个正权重项、特别是 $\gamma_k$ 精确零配对。为证收敛，从任意子列用 $L$ 紧性和权重区间紧性抽取共同收敛子列，极限记为 $\gamma,\delta\in L$、$\lambda\in[1/n,1]$，于是 $\alpha=\lambda\gamma+(1-\lambda)\delta$。若 $\lambda=1$ 则 $\gamma=\alpha$；若 $0<\lambda<1$，由原 $\alpha\in\operatorname{Ext}L$ 也得 $\gamma=\alpha$。因此所有聚点都为 $\alpha$。没有假定极点集闭，也没有声称 $\gamma$ 或 $\delta$ 作为分解项的极限仍是极点；极端性只用在目标 $\alpha$ 上。
+
+每条 $\mathbb R_+\gamma_k$ 是原对偶极射线，已证的(183.6)逐条供应一个原实际成员 $p_k=t_k\gamma_k\in\mathcal P_{\rm ext}$、$t_k>0$。其身份与原质量 $p_k(u)=t_k\le1$ 保持原样。即使 $t_k\to0$ 或原 $\mathcal P$ 不闭，下列推导也不变：
+
+$$
+p_k(x_k)=0,\qquad
+\ell_{\gamma_k,x_k}=\frac1{t_k}\ell_{p_k,x_k}\in W_{\rm ext,exp},\qquad
+\ell_{\gamma_k,x_k}\longrightarrow\ell_{\alpha,x}\quad\text{于 }V^*.
+\tag{183.9h}
+$$
+
+$1/t_k$ 只是线性张成中的数学系数，不是物理缩放或新准备；无需实际质量有正下界。最后的收敛来自 $(\delta,z)\mapsto(X\mapsto\delta(Xz))$ 在有限维空间上的双线性连续性。$W_{\rm ext,exp}$ 是有限维 $V^*$ 的线性子空间，因而闭，故 $\ell_{\alpha,x}\in W_{\rm ext,exp}$。恢复原比例得 $\ell_{p,c}=p(u)s(c)\ell_{\alpha,x}\in W_{\rm ext,exp}$，没有对原 $p$ 作归一实际操作。因此 $W_{\rm ext,ext}\subseteq W_{\rm ext,exp}$。全局暴露射线必极端：正泛函在两项和上为零时每项均在该核射线上；反向包含遂直接成立。结合前半段的有限非负分解，取得(183.5)的全部空间等式及消去子等式。这里只收缩对象端；没有要求或推出准备端也全局暴露。$\square$
+
+### 183.3 完整同数据等价、原单位阈值与有限单侧暴露见证
+
+**定理 183.3（完整候选等价及有限原实际单侧暴露见证）。** 在定义183.1的同一份全部原资料及共有实际见证上，
+
+$$
+\mathcal C_{183}\Longleftrightarrow\mathcal C_{182}
+\Longleftrightarrow\mathcal C_{181}
+\Longleftrightarrow\mathcal C_{180}
+\Longleftrightarrow\mathcal C_{179}
+\Longleftrightarrow\text{存在定义178.1的扩张}.
+\tag{183.10}
+$$
+
+它是逐点同数据等价，原 $E,C,u,q,g^0,D$、完整准备及原质量、单位适配选择、全部联合和实际过程见证保持恒等。178扩张的群逐对象唯一且字面等于 $G_C(A)$；伙伴的算子值唯一不等于实际装置见证唯一。
+
+逐对象，只用(183.1)–(183.2)及原proper锥，未加(183.4)时已有
+
+$$
+\begin{gathered}
+Z_{\rm ext,exp}=Z_{182}
+=\{X\in V:\exp(tX)C=C\ \forall t\in\mathbb R\}
+=\operatorname{Lie}(\operatorname{Aut}(C)^\circ)\cap V,\\
+\operatorname{ev}_v:Z_{\rm ext,exp}\to E,\quad X\mapsto Xv
+\quad\text{对每个原 }v\in C^\circ\text{ 单射},\\
+\dim W_{\rm ext,exp}+\dim Z_{\rm ext,exp}=N,
+\qquad 1\le\dim Z_{\rm ext,exp}\le n,
+\qquad N-n\le\dim W_{\rm ext,exp}\le N-1,\\
+\dim W_{\rm ext,exp}=N-n
+\Longleftrightarrow\dim W_{\rm ext,exp}\le N-n
+\Longleftrightarrow\dim Z_{\rm ext,exp}=n
+\Longleftrightarrow\operatorname{ev}_u\text{ 满射}.
+\end{gathered}
+\tag{183.11}
+$$
+
+两端界的锐性继承182.2在每个 $n\ge1$ 的原锥、原型实例，不声称每个中间整数可达，也不声称这些几何实例满足完整过程合同。候选要求秩达到允许的下界；达到它时，每个原内点评价都是同构。
+
+令 $m=N-n$。条款(183.4)还等价于以下有限见证，既含独立性，也含整个原接触族的张成：
+
+$$
+\begin{gathered}
+\exists(\alpha_i,c_i)_{i=1}^m:\quad
+\forall i\in\{1,\ldots,m\}:\quad
+\alpha_i\in\mathcal P_{\rm ext},\quad c_i\in C_{\rm exp},\quad
+\alpha_i(c_i)=0,\\
+\ell_i:=\ell_{\alpha_i,c_i},\qquad
+\ell_1,\ldots,\ell_m\text{ 在同一 }V^*\text{ 中线性独立},\\
+\forall\alpha\in\mathcal P\ \forall c\in C:\quad
+\alpha(c)=0\Longrightarrow
+\exists(\lambda_i)_{i=1}^m\in\mathbb R^m\ \forall X\in V:\quad
+\alpha(Xc)=\sum_{i=1}^m\lambda_i\alpha_i(Xc_i).
+\end{gathered}
+\tag{183.12}
+$$
+
+所有 $c_i$ 都在整个原 $C$ 中暴露；准备端只要求极端。系数依赖接触对而不依赖 $X$；抽取基后的 $\lambda_i$ 可有负数，区别于(183.9)在抽基前的非负分解。$n=1$ 时 $m=0$，空族独立，末行要求每个接触泛函为零；定理183.2已经证明这一点。每个对象各自存在这样的数学有限族，不要求跨对象同一族、统一选取规则或共同可读性。
+
+证明。定理183.2给出不依赖秩条款的 $W_{\rm ext,exp}=W_{\rm ext,ext}=W_{182}$。因此(183.4)与(182.3)在同一数据上互相推出，其他条件逐字相同，先得到 $\mathcal C_{183}\Longleftrightarrow\mathcal C_{182}$。再直接消费定理182.2的(182.4)及181.2的完整等价，得到(183.10)；没有用所求量子结论反推桥的前件，也没有另选伙伴函数。
+
+为明确(183.11)中零接触到指数的合法接口，$X\in Z_{\rm ext,exp}$ 先经(183.5)的空间等式及(183.9)满足所有原实际准备的零接触，再由(183.2)及182.2证明的(182.8)满足
+
+$$
+\beta(c)=0\Longrightarrow\beta(Xc)=0
+\qquad(\beta\in C^*,\ c\in C).
+\tag{183.13}
+$$
+
+对 $X$ 和 $-X$ 同时成立，恰是[Q182GT]第(4)项及其所引Schneider–Vidyasagar交叉正指数结果的前件：有限维proper锥上两个方向的指数分别保锥，以 $\exp(-tX)$ 为逆才给全部实 $t$ 的等号。用原 $g^0$ 的Riesz表示只把 $\beta$ 写成原型中的向量，不假定该向量在原 $C$ 中。没有使用文献下一项需EJA的表示。反向由非负函数 $t\mapsto\beta(\exp(tX)c)$ 在零点的双侧极小导数得(183.13)。这正是182.2已经支付的一般锥接口，而非本章另立的锥表示定理。
+
+原内点评价单射也精确消费(182.5)：保序可逆且固定 $v\in C^\circ$ 的指数族在原序单位范数中等距；原型自伴随算子若有非零实特征值，其指数在一个时间方向无界。故 $Xv=0$ 只可能有 $X=0$，不把此结论用于任意边界点。$I\in Z_{\rm ext,exp}$、有限维消去子公式和单射给(183.11)的全部界与等价；这里算的是原自伴随切片，不是整个锥Lie代数的维数。阈值取得后再消费181.3的重构，不先假设Jordan结构或内点传递性。
+
+最后，有限维线性代数从生成 $W_{\rm ext,exp}$ 的原实际极端准备×全局暴露对象接触集合中抽取恰 $m$ 个基元素；定理183.2使其张成整个原接触族，得到(183.12)。反向，独立性给维数至少 $m$，末行对该单侧暴露接触本身也成立，给维数至多 $m$。只有独立性不足以给后一个方向。整个有限见证是对所有 $X$ 同时成立的泛函恒等式，不是为各 $X$ 临时寻找不同的系数或不同的基。$\square$
+
+### 183.4 原单位、Born比较及全部原量子过程的对应
+
+**定理 183.4（原完整签名的量子消费者）。** 在 $\mathcal C_{183}$ 下，182.3的全部结论在同一原载体、数值、实际见证和合法性谓词上成立。其条件对应与方程如下；各式量化完整原准备和完整原事件，不只量化极端子族。
+
+证明。定理183.3先将原 $Z_{\rm ext,exp}$ 识别为原 $\mathfrak p^0$ 并给原单位处评价同构。因此181.3及182.3的入口已全部满足：在证明用的紧正交稳定平均内点 $\bar e$ 构造 $L_x\bar e=x$、$x\circ_{\bar e}y=L_xy$，其Jordan恒等式及原正Frobenius型之后才可使用有限Jordan谱论。181.16–181.17的两个包含分别供应
+
+$$
+C=Q:=\{x\circ_{\bar e}x:x\in E\}
+=Q_{g^0}^*=C_{g^0}^*,\qquad
+G_C^{\dagger_0}=G_C,\qquad G_C\curvearrowright C^\circ\text{ 传递},\qquad
+\Gamma_q(S,R)\Longleftrightarrow R=S^{\dagger_0}
+\quad(S,R\in G_C).
+\tag{183.14}
+$$
+
+这识别的是原锥及原型，不是抽象同构后换一把尺子；$C^*\subset E^*$ 与以原 $g^0$ 拉回的 $C_{g^0}^*\subset E$ 在此才建立对应。反向锥包含仍靠原尖性排除负谱系数。上述推导直接复用181.3，不把成熟谱论或一般锥指数机制另报为新结果。
+
+平均 $\bar e$ 仅在证明中使用。仍保留原 $e_{*,A},h_A$，$h_Au_A=e_{*,A}$，精确沿181.19–181.20、182.10及C123(3.3)–(3.5)构造原 $u_A$ 适配乘法 $\circ$，以
+
+$$
+\begin{gathered}
+\widehat g_A(x,y)=g_A^0(h_Ax,h_Ay),\qquad L_ab=a\circ b,\\
+D_a(b\circ c)=(D_ab)\circ c+b\circ D_ac,
+\qquad ([L_a,L_c]+[D_a,D_c])b=0,\\
+a\cdot b=a\circ b-iD_ab,\qquad
+\mathcal A_A\cong\bigoplus_sM_{d_s}(\mathbb C),\qquad
+(E_A,C_A,u_A)=((\mathcal A_A)_{\rm sa},(\mathcal A_A)_+,I_A).
+\end{gathered}
+\tag{183.15}
+$$
+
+原 $D$ 的全载体前件正作用在这个原单位适配乘法上，故可应用181.4/C124命题11.1；不要求 $h_A$ 交织原 $D$，也不拿 $\circ_{\bar e}$ 检验原 $D$。$\widehat g_A$ 不替换几何条款或概率中的 $g_A^0$。复类型由原 $D$ 选择。原X、Xs的含幺嵌入、乘法和 $D$ 保持、交叉 $D$ 为零、乘积张成及原乘积准备，给所有已声明联合的普通复张量结构和全部中心对。每个实际联合自身的对象条件及 $N_u$ 仍供应联合内酉的数学包含与系数一原完整调用，局部极端秩没有替它们供应实际控制。
+
+对每个原对象，令 $\tau_A=\sum_s\operatorname{Tr}_{d_s}$，沿181.21/182.12取得同一个唯一迹自伴随正定算子 $B_A:E_A\to E_A$。对任意原准备 $\alpha$、数学效果 $e$ 和原事件 $f:A\to B$，其原数值、质量与事件类型为
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),& B_A(C_A)&=C_A,\\
+\alpha&=g_A^0(x_\alpha,\cdot),&
+\rho_\alpha&=B_Ax_\alpha\ge0,\\
+m_\alpha&=\alpha(u_A)=\tau_A(\rho_\alpha)\le1,&
+v_\alpha&=B_A^{-1/2}\rho_\alpha,\quad w_e=B_A^{-1/2}e,\\
+\alpha(e)&=\tau_A(\rho_\alpha e)=g_A^0(v_\alpha,w_e),&
+T_f&:E_B\to E_A,\quad T_f^{\dagger_0}:E_A\to E_B,\\
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1}:E_A\to E_B,&
+\tau_B(\Phi_f(\rho)e)&=\tau_A(\rho T_f(e)).
+\end{aligned}
+\tag{183.16}
+$$
+
+$B_A^{-1/2}$ 是实响应空间上算子的逆平方根，双运输状态和效果，既不是矩阵左乘，也不是原Riesz向量的裸重叠。每个原联合分别使用自己的 $B_{AB}$，不假定 $B_{AB}=B_A\otimes B_B$。数学归一正泛函底恰为全部密度矩阵，效果为全部 $[0,I_A]$，数学有限POVM为有限正效果的单位分解；完整实际准备锥包不把每个底点变成质量一的实际准备。每个原极端准备的原 $m_\alpha$ 也仍照此保留，只有正质量可条件归一，零质量不除法。
+
+在完整数学效果区间，对任意数学纯点 $p,r$，即各在一个中心块的迹一秩一投影，沿182.13有
+
+$$
+T_p(r):=\min_{0\le e\le I_A,\ \tau_A(pe)=1}\tau_A(re)
+=\tau_A(pr)=\tau_A(rp)=T_r(p)
+=g_A^0(B_A^{-1/2}p,B_A^{-1/2}r).
+\tag{183.17}
+$$
+
+不同中心块为零；旧实际可读子菜单上的最小值不能由此确定。它只交换静态比较端点，不交换原更新历史的先后。
+
+全事件CP结论精确消费181.4/182.3及C124命题11.3：整个实际 $P$ 的AC在某个维数 $r\ge2$ 的块中供应原质量一纯准备和系数一破坏性读口；实际 $P^{\otimes k}$ 的参考块大小 $r^k$ 无界。对每个原输入块，R在充分大实际参考层上的同记录执行、原乘积律和完整联合准备锥保正给完全正性。因此(183.16)的每个原事件、细支、失败、标签、遗忘、具名返回及全部合法有限历史的状态映射均CP/TNI，完整原装置求和TP。证明用的是完整原联合正锥，不是只检验乘积输入，也不把事件域缩为(183.12)的有限接触族。
+
+沿182.14–182.15及C124定理12.1，对每个数学 $0\le e\le I_A$，包括奇异、零和零中心分量，存在同一原签名内选中的完整有限装置 $W_e$。置 $a=\sqrt e$、$b=\sqrt{I_A-e}$，则对每个已声明实际相关参考 $R$，
+
+$$
+\Phi_{W_e}(\rho)=a\rho a,\qquad
+\Phi_{W_e\mid R}(X)=(a\otimes I_R)X(a\otimes I_R).
+\tag{183.18}
+$$
+
+这里仍附接整个原 $P$，不把一个数学支撑角当作新原对象。完整失败必须在原输出上保留为算子值：用原成功指针 $p$、同块正交 $p_1$ 及原失败映射 $\Psi_\ell:P\to B_\ell$，
+
+$$
+\begin{gathered}
+d_\ell=\Psi_\ell^\dagger(I_{B_\ell}),\quad
+0\le d_\ell\le I_P-p,\quad\sum_\ell d_\ell=I_P-p,\\
+\omega_\ell=\Psi_\ell(p_1)\ge0,\qquad
+ t_\ell=\tau_{B_\ell}(\omega_\ell),\quad\sum_\ell t_\ell=1,\\
+\rho\longmapsto b\rho b\otimes\omega_\ell
+\quad\text{于原 }AB_\ell,\qquad
+X\longmapsto(b\otimes I_R)X(b\otimes I_R)\otimes\omega_\ell,\\
+\rho\longmapsto t_\ell b\rho b
+\quad\text{仅在原实际丢弃 }B_\ell\text{ 后}.
+\end{gathered}
+\tag{183.19}
+$$
+
+此处 $\Psi_\ell$ 是原失败事件的状态映射，$\Psi_\ell^\dagger:E_{B_\ell}\to E_P$ 是相对于 $\tau_P,\tau_{B_\ell}$ 的迹对偶，区别于(183.16)的原型伴随 $T_f^{\dagger_0}$。端口按原交换接口排列。若原丢弃有细口 $z_{\ell k}$，其原系数是 $z_{\ell k}(\omega_\ell)$，求和为 $t_\ell$。$\omega_\ell$ 可混合、跨中心或为零；保留原失败输出和零标签，丢弃前不能先取迹。式(183.19)只规定该构造占用的失败方向，原 $\Psi_\ell$ 在其他方向、其他中心的完整作用不被改成标量读口。原准备和比较的零响应补事件仍在，成功及全部失败总迹仍为 $\tau_A(\rho)$。
+
+原F、原遗忘和支持双返回按182.16/C124命题12.2逐项运输。对每个非零指定返回细支，连同原单中心输入/输出支持角 $P_a,Q_a$、同一个原系数及原反向资料，有
+
+$$
+S_a=\operatorname{Ad}_{K_a},\qquad
+U_a=q_{F,a}\operatorname{Ad}_{K_a^+},\quad q_{F,a}>0,\qquad
+U_aS_a=q_{F,a}\mathrm{id}_{P_a},\quad
+S_aU_a=q_{F,a}\mathrm{id}_{Q_a}.
+\tag{183.20}
+$$
+
+$K_a^+$ 是相应支撑间的逆。零支保留标签，原遗忘是原细支求和，任意数学Kraus分解的指标不变成原细记录。阶段细口仅在原连线合法时相乘，此时原准备、比较、读口和丢弃的细系数均按原值相乘，各输入中心的权重不强制相同；没有这些连线时，使用整个原词自己的全称F。
+
+对每个原准备、每段原合法有限历史 $f_j:A_{j-1}\to A_j$、$j=1,\ldots,k$ 和每个末端原效果 $e$，(183.16)的迹对偶逐次给
+
+$$
+\alpha(T_{f_1}\cdots T_{f_k}e)
+=\tau_{A_k}\!\left(
+(\Phi_{f_k}\circ\cdots\circ\Phi_{f_1})(\rho_\alpha)e\right).
+\tag{183.21}
+$$
+
+$k=0$ 是原准备读数。每个原联合标签、失败、返回和细记录都分别用此式，保留原输出、成功质量、返回数及正条件分母，随后原遗忘仍按原规则求和。选中 $W_e$ 的成功质量严格正时才有条件态 $a\rho a/\tau_A(\rho e)$。旧同效果设备要具有这个更新，仍需其自身完整输出校准；逐效果供应 $W_e$ 不自动组装任意指定原POVM仪器。
+
+Bloch及全有限幂的资格不变：取得(183.15)的复结构后，大小至少二的原块内二维复支撑面 $S$ 的数学底为
+
+$$
+\rho=\tfrac12(\Pi_S+\mathbf r\cdot\boldsymbol\sigma),\quad
+|\mathbf r|\le1,\qquad
+T_{p_{\mathbf r}}(p_{\mathbf s})=\tfrac12(1+\mathbf r\cdot\mathbf s)
+\quad(|\mathbf r|=|\mathbf s|=1).
+\tag{183.22}
+$$
+
+这是闭Bloch三球及纯点球面，不自动供应单独可附接的原 $M_2$ 对象或球中全质量实际准备。只有另保留原 $C_A$ 不可约、$\dim E_A=d^2$、固定整数 $d\ge2$，并实际声明所有 $A^{\otimes k}$ 及其全部原联合、准备、$D$ 和原接口，才对每个有限 $k\ge1$ 得 $C_{A^{\otimes k}}=\operatorname{PSD}_{d^k}$。$d$ 是矩阵大小，区别于(183.3)的实维数 $n$；指针的参考幂不替任意 $A$ 供应全有限幂。
+
+物理时间也仍需C123命题4.1的额外原连续、确定、可逆一参数动态及物理钟标定，才有逐块 $\rho_s(t)=e^{-itH_s/\hbar}\rho_s(0)e^{itH_s/\hbar}$。几何指数参数不因此成为物理时间，(183.4)不指定 $H_s,\hbar$ 或钟。以上每个供应的前件都在(183.10)的同数据对应中保持，故全部消费者成立，而无额外的实际可控性或物理满足性结论。$\square$
+
+### 183.5 从二元零配对到二维、三维几何及必要性边界
+
+**命题 183.5（原质量不变的有限几何与边界）。** 原实际极端准备×全局暴露对象零配对族可以在同一原自伴随空间中给出有限、全局张成的接触见证。二维正象限、三维标准正象限和三维Lorentz锥的具体形式如下；它们只用于展示几何前件，不据此供应完整原 $D$、AC或实际联合合同。
+
+证明。先取原 $E=\mathbb R^2$、$C=\mathbb R_+^2$、$u=(1,1)$、$g^0$ 为标准型，原实际极端代表为 $\alpha_i=m_ie_i^*$，其中原 $0<m_i\le1$。数学极端向量可取 $c=e_j$；另一个坐标泛函在原锥中恰切出 $\mathbb R_+e_j$，故它也是全局暴露向量，零配对当且仅当 $i\ne j$。对原对称矩阵 $X$，两个接触分别是 $m_1X_{12}$、$m_2X_{12}$；一项已张成整个接触族。故 $N=3$、$\dim W_{\rm ext,exp}=1=N-n$，消去子为二维对角伸缩。归一截面是线段；两条边的零配对限制同一个非对角方向，未把原 $m_i$ 改成一。
+
+在原标准三维正象限、$u=(1,1,1)$ 中，取原实际代表 $\alpha_i=m_ie_i^*$，$0<m_i\le1$，数学 $c=e_j$，则
+
+$$
+\alpha_i(e_j)=m_i\delta_{ij},\qquad
+\ell_{\alpha_i,e_j}(X)=m_iX_{ij}\quad(i\ne j),
+\qquad
+\ell_{\alpha_1,e_2},\ \ell_{\alpha_1,e_3},\ \ell_{\alpha_2,e_3}
+\text{ 线性独立并张成 }W_{\rm ext,exp}.
+\tag{183.23}
+$$
+
+原锥两侧的极射线只有这三种坐标方向，其他实际代表或数学极端向量只在同一射线上乘正数。对称性 $X_{ij}=X_{ji}$ 因而使全部六种有向零配对都在这三个泛函的张成中；由定理183.2，非极端的原接触也在其中。于是 $N=6$、$\dim W_{\rm ext,exp}=3=N-n$、$\dim Z_{\rm ext,exp}=3$。每个对象射线 $\mathbb R_+e_j$ 均由 $\beta_j=\sum_{i\ne j}e_i^*$ 全局暴露，因为 $\beta_j\ge0$ 且 $C\cap\ker\beta_j=\mathbb R_+e_j$。注意接触 $\alpha_i(e_j)=0$ 中的单个 $e_i^*$ 可以暴露更大的面；本候选只要求另有某个支撑条件单独选出对象射线。截面 $x_1+x_2+x_3=1$ 是三角形，该支撑平面只触及选中的顶点，平面本身无需唯一；剩余方向是三个坐标独立伸缩，不是新增可控装置。
+
+另取同一原标准型的三维Lorentz锥
+
+$$
+E=\mathbb R\oplus\mathbb R^2,\quad
+C=\{(s,z):s\ge\|z\|\},\quad u=(1,0),\quad
+c_v=(1,v),\quad \|v\|=1.
+\tag{183.24}
+$$
+
+三角不等式的等号条件说明非零边界向量恰给极射线，内点则可沿两个不同方向分拆；Cauchy–Schwarz及边界测试给标准型下同一个Lorentz正对偶。因此两侧极射线分别由 $(1,v)$ 和 $(1,-v)\cdot$ 表示；定理183.2的(183.6)保证每个所需对偶极射线中都有某个原实际准备
+
+$$
+\alpha_v=\kappa_v(1,-v)\cdot,\qquad
+0<\kappa_v=\alpha_v(u)\le1,
+\qquad \alpha_v(c_w)=\kappa_v(1-v\cdot w).
+\tag{183.25}
+$$
+
+此处 $\kappa_v$ 是所取原实际成员的原数，不选择新的物理缩放。由 $\kappa_v>0$，原锥中的零集精确为 $\mathbb R_+c_v$：若 $s\ge\|z\|$ 且 $s-v\cdot z=0$，Cauchy–Schwarz的等号条件强制 $z=sv$、$s\ge0$。故 $c_v$ 全局暴露，圆盘截面上的支撑线只触及该圆周点。零配对恰有 $w=v$；不同原标签或同射线其他代表仍各自保留。写原自伴随矩阵为
+
+$$
+X=\begin{pmatrix}a&b^T\\ b&D\end{pmatrix},\qquad
+D=D^T\in M_2(\mathbb R),\qquad
+\ell_{\alpha_v,c_v}(X)=\kappa_v(a-v^TDv).
+\tag{183.26}
+$$
+
+这里的矩阵块 $D$ 只表示该 $X$ 的右下角，不是候选的原有向关系 $D_a$。$b$ 在配对中精确抵消。取 $v_1=e_1$、$v_2=e_2$、$v_3=(e_1+e_2)/\sqrt2$，在相应原实际成员上记 $L_i=\ell_{\alpha_{v_i},c_{v_i}}$、$\kappa_i=\kappa_{v_i}$。对任意 $v=(x,y)$、$x^2+y^2=1$，有泛函恒等式
+
+$$
+\ell_{\alpha_v,c_v}
+=\kappa_v\left(
+\frac{x^2-xy}{\kappa_1}L_1+
+\frac{y^2-xy}{\kappa_2}L_2+
+\frac{2xy}{\kappa_3}L_3\right).
+\tag{183.27}
+$$
+
+三个非零原比例不改变独立性：$L_1/\kappa_1=a-D_{11}$、$L_2/\kappa_2=a-D_{22}$、$L_3/\kappa_3=a-(D_{11}+D_{22})/2-D_{12}$，第三项独有 $D_{12}$，前两项独立。其他非零极端正对象只是某个 $c_v$ 的正倍数，故(183.27)同时证明全部极端接触的全局张成，而非三个方向上的局部测试。因而
+
+$$
+\dim W_{\rm ext,exp}=3=N-n,\qquad
+Z_{\rm ext,exp}=
+\left\{\begin{pmatrix}a&b^T\\ b&aI_2\end{pmatrix}:a\in\mathbb R,\ b\in\mathbb R^2\right\},
+\qquad \dim Z_{\rm ext,exp}=3.
+\tag{183.28}
+$$
+
+归一截面 $s=1$ 是二维圆盘，极点是圆周。它展示弯曲的非单纯形端点几何，但不等于量子比特的三维归一Bloch球；后者实响应空间维数四，且需先取得复结构。正象限的纯确认数值为 $\delta_{ij}$，比较端点也对称，却有逐点乘法的 $[L_d,L_h]=0$，不满足AC的非经典指针条件。Lorentz三维图本身也没有支付原复类型或实际AC；静态秩和端点对称不能替代这些条件。
+
+极端与全局暴露在一般三维锥中确有区别。令 $B\subset\mathbb R^2$ 为闭单位圆盘，$a=(2,0)$，$K'=\operatorname{conv}(B\cup\{a\})$，并取三维锥 $C'=\{(t,ty):t\ge0,\ y\in K'\}$。$K'$ 紧且有内点，故 $C'$ 闭、尖、生成。两切点 $y_\pm=(1/2,\pm\sqrt3/2)$ 是 $K'$ 的极点：其圆的切线将相应暴露面切成线段 $[y_\pm,a]$，而它们是该线段的端点。但任何在 $y_\pm$ 支撑 $K'$ 的直线也支撑圆盘，圆盘在该点的支撑线唯一，且恰含 $a$，所以没有支撑线只触及 $y_\pm$。因此 $(1,y_\pm)$ 给极端而非全局暴露射线。这没有推翻(183.5)：例如沿圆周可见弧取 $y_k\to y_+$、$(y_k)_1<1/2$，则 $\beta_k(t,z)=t-y_k\cdot z$ 在 $C'$ 上非负，零集恰为 $\mathbb R_+(1,y_k)$，且 $\beta_k(1,y_k)=0$ 对每一步精确成立。极端目标的零接触要靠定理183.2的同步论证恢复，不能直接把“极端”改称“暴露”。
+
+完整准备等式及全族张成不能省略。例如在二维正象限保留标准原型，若实际准备只有 $\alpha_s=(s,1-s)$、$0<s<1$，原质量均为一，其有限正锥包仅为严格正象限并零点，闭包才是 $C^*$。实际极端准备族为空，全部实际零接触也只有零泛函，于是 $W_{\rm ext,exp}=0$，不再有(183.11)的下界。两条非零对偶极射线没有原实际见证；取极限不能补成实际身份。此例不满足(183.2)，具体说明精确等式的职责，而不是定理183.2的反例。
+
+即使(183.2)完整成立，取足目标个数的独立极端接触也不够。取182.4的原二维正象限、$u=(1,1)$、实际 $e_1^*,e_2^*$ 及原数值型
+
+$$
+g^0(x,y)=x^TMy,\quad
+M=\begin{pmatrix}1&r\\r&1\end{pmatrix},\quad 0<r<1.
+\tag{183.29}
+$$
+
+在同一个原自伴随空间中，$X=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$ 满足 $c=b+r(d-a)$。两个原极端接触分别是 $b$、$c$，线性独立，故 $\dim W_{\rm ext,exp}=2>N-n=1$。只取接触 $b$ 已有目标个数一，却漏掉 $c$；原自伴随 $X=\left(\begin{smallmatrix}0&0\\r&1\end{smallmatrix}\right)$ 就有 $b=0$、$c=r\ne0$。因此(183.12)不能删全族张成，也不能把原型改成标准型来通过阈值。
+
+同理，极端零配对必须保持零等式而非单侧不等式。标准二维正象限上的 $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 只有正时间指数保锥，负时间非对角项为负；这是182.4的交叉正性边界。零导数也不要求同一配对在整个有限指数轨道上恒为零，或生成元本身保正，精确边界仍为182.21及181.23。
+
+最后，(183.17)的端点对称不约束过程次序。在复类型取得后的一个二维支撑面中，取 $p=|0\rangle\langle0|$、$r=|+\rangle\langle+|$，其数学纯比较双向都是 $1/2$，但两个选中滤波成功映射满足
+
+$$
+(\operatorname{Ad}_r\circ\operatorname{Ad}_p)(p)=\tfrac12r,
+\qquad
+(\operatorname{Ad}_p\circ\operatorname{Ad}_r)(p)=\tfrac14p.
+\tag{183.30}
+$$
+
+这已在数学映射上给不同的输出和成功质量；若原合法性谓词声明相应两种接续，(183.21)才将它们识别为原历史。没有从这项计算扩张原可接线关系，也没有把该数学支撑面变成一个新实际对象。$\square$
+
+### 183.6 中文几何读法及主张范围
+
+**定义 183.6（单侧暴露零接触的中文读法与来源）。** 原正锥可理解为从原点伸出的正方向，原正准备对它们不报负数。“极端”指不能拆成不同正射线的边缘方向；“全局暴露”还要求存在一个支撑条件，在整个原锥中只切出这一条射线。在归一截面上，就是有一张支撑平面只触及那个点，不是说支撑平面唯一。候选只将数学对象端缩到这个暴露域；准备端仍是原实际极端子族，不要求其对偶射线也暴露，实际接触泛函也不必就是对象射线的暴露见证。
+
+先由原 $q$ 的首响应二元关系左全性恢复同一把原尺子，伙伴被迫就是端点自身。再取一个原实际极端准备与一个全局暴露正对象的精确零读数，考察候选原型自伴方向 $X$ 是否使这个读数的一阶变化仍为零。所有这样的泛函共同形成 $W_{\rm ext,exp}$。正、反两个指数方向都保原锥才是全部零接触消去子的几何含义；只准往内走不够，也不要求整条轨道永远停在同一个支撑面。
+
+两端极端的中间分解是精确有限的。完整原实际准备锥包保证每条对偶极射线上已有一件原实际准备，即使它只具有自己的小质量。把一般原准备与一般正对象各作有限数学分解，零读数成为有限个非负读数之和，总数为零就逼出每一对的零读数。这样先取得 $W_{\rm ext,ext}=W_{182}$，不把分解系数变成装置，也不把准备归一成质量一。
+
+对象端再缩到全局暴露时，不能仅让两端分别靠近目标。定理183.2先在目标零接触面内找相对暴露点，再用越来越小的倾斜及原 $g^0$ 的严格正二次项选出整个截面上的全局暴露点；精确二次余项给一张只触及该点的支撑平面。随之调整的正泛函每次都与新对象精确零配对，再从有限极端分解中选最大权重项。紧性与目标准备射线的极端性使这项趋回目标射线。每一步都有原实际准备代表，原质量不动，数学张成中的倒质量系数也不是实际放大。最后只用有限维线性空间的闭性回收原限制；不用原实际准备族闭或其质量有正下界。
+
+因此唯一最终秩条款是 $\dim W_{\rm ext,exp}=N-n$。原自伴随方向有 $N$ 维，留下的方向在任一原内点上不能重叠，故至多剩原空间的 $n$ 维；恰剩 $n$ 维时，原单位处每个方向都能唯一取得，才接回181的Jordan构造、同一原锥识别及完整量子字典。二维线段的端点限制一个剪切，三维三角锥的三个接触限制三个非对角方向；三维圆锥的整圈相切配对也由三个独立泛函张成。圆锥的截面是二维圆盘，不能当作量子比特的Bloch三球。
+
+有限族是从原实际极端准备×全局暴露数学对象对中抽取的一组泛函基，须既独立又张成全部原接触；$n=1$ 时为空基。这是逐对象的存在结论，不供应共同可读菜单、有限判定算法、测量成本界、原准备的实际缩放混合或控制。数学锥包可由极端实际成员生成，完整实际准备族仍为原 $\mathcal P$，数学正对象也不自动可读。原单位、$D$、原质量、实际联合和参考、$N_u$、AC、全事件R、失败、记录、返回与全部合法历史各守原合同。Born数值保留原型中的双端运输；静态纯比较交换端点不使测量过程交换次序。
+
+本章承重内容是repo-derived的同一完整原签名候选等价：在原 $g^0=F/2$ 上，将全部原接触的自伴随限制收缩为原实际极端准备×全局暴露数学对象的精确零接触，保持原身份、原质量并接回全部量子消费者。有限维Minkowski与Carathéodory分解、proper锥的紧底、相对Straszewicz稠密性、紧性及子空间闭性都是成熟供应，不单列为本章新定理。一般锥的保锥算子对偶与秩一互补生成主要沿[Q183GKT]引理2.1–2.2归属，原实际准备接口由(183.2)支付；Straszewicz的精确应用与原型二次余项见定理183.2。零接触指数、序单位有界性、自伴随谱、消去子与抽基沿182.2使用，原锥两向识别及量子对应沿181.3–181.4、182.3使用。本章的同步精确零接触及同原签名组合是纸面综合，不主张文献优先权、穷尽文献或更少独立物理公理。
+
+一般proper锥上，若再要求准备的对偶射线也全局暴露，所得零接触泛函是否仍张成同一个 $W_{182}$，这里既未证明也未反驳；分别稠密不保证每一步共同零配对，这一边界不属于候选或其前提。完整候选的等价不证明原物理资料实际满足这些前提，不供应旧设备的更新校准、任意指定仪器、Hamiltonian或物理钟；条件归一、Bloch球及任意对象全有限幂仍各有定理183.4的资格条件。
+
+用白话说，仍用原来的尺子和原来的准备，只需对象一端能被某个支撑平面单独触到的接触。它没有漏掉原来只极端而不暴露的接触，因为可以让对象与准备射线一起靠近，每一步都真正报零，再在有限维限制空间中收回原限制。准备的小质量不被抬高，支撑平面也不用唯一；这缩短的是完整候选的几何表述，原来的量子过程和适用条件仍须逐项满足。
+
+[Q183Minkowski]: AURIC_C128_CLOSED_TRIANGLE_AND_SPARSE_SCALE_RELATIONS.md#507-一般原锥上的双向序流恢复同一个旧实部
+
+[Q183GKT]: https://tkuir.lib.tku.edu.tw/dspace/retrieve/119982/Cross-positive+matrices+revisted.pdf
+
+## 追加锚（本行以下为增补区）

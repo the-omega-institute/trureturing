@@ -93,31 +93,72 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                     + "representatives chosen from the actual nonempty fibers. Uniform "
                     + "prefix transport proves both marginals in this stopped branch."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("kbonacci-right-scan-hamming"),
-                DeclarationHandle.Create(
-                    "D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming"),
-                H("Expected internal Hamming cost for an increasing scan"),
-                StatementSource.FromAuthor(Disp(CostFormula())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "ExpectedHamming(J,s) is the sum over full-word pairs w of J(w)H(s,w). "
-                    + "Before(s,i,j) means that i occurs strictly before j in the list s. "
-                    + "H(s,w) denotes scanHamming: the sum of the zero-one disagreement "
-                    + "indicators at the listed sites. The list is strictly increasing "
-                    + "and lists the entire complement of F without repetitions. The "
-                    + "fixed histories agree at every fixed site farther right than any "
-                    + "scanned site. A supported common-zero branch has zero remaining "
-                    + "cost, by screening and the reset law. In every other branch the "
-                    + "current indicator is at most one, and the recursive expected "
-                    + "remaining cost is at most one. Those branches have total mass "
-                    + "at most one half, derived from conditional_step_coupling. "
-                    + "Their weighted cost is therefore at most one. This estimate "
-                    + "uses the same full-word joint law as the marginal theorem. "
-                    + "The theorem covers short words and arbitrary nonempty completion "
-                    + "fibers; it does not assert reflection, the geometric survival "
-                    + "tail, or the final two-orientation contiguous-block assembly."))),
-                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("kbonacci-reset-mean-zero"),
+                DeclarationHandle.Create("D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.reset_mean_zero"),
+                H("Reset transport has zero free-site Hamming mean"), StatementSource.FromAuthor(Disp(ResetMeanFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every coordinate through z is fixed and every scanned site is free. resetMap copies the sampled word at all scanned sites, so their total disagreement has mean zero. The histories are arbitrary and only the x completion fiber is required to be nonempty."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("kbonacci-mean-head"),
+                DeclarationHandle.Create("D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.mean_head"),
+                H("A supported fixed head separates from the remaining mean"), StatementSource.FromAuthor(Disp(MeanHeadFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any full-word-pair probability mass function with supported head bits a and b, the mean scanHamming of i followed by t equals disagreement(a,b), equal to zero when a=b and one otherwise, plus the mean scanHamming of t. No legality, order or distinctness hypothesis is required."))), DescribeRole.Theorem),
+            new DocumentBlock.Section(
+                H("Paper application: first common zero and the emitted scan event"),
+                Blocks(
+                    Paragraph(Text(
+                        "In the Chinese and English Chapter 39 example ex-ch39-p2e-uniform-parent-gap, "
+                        + "fix k>=2, n>=1, two legal full words x,y agreeing off one site u (allow x=y), "
+                        + "and a nonempty interval B excluding u. Keep every coordinate of B-complement fixed. "
+                        + "For a right block scan increasingly; for a left block reverse the sites and both "
+                        + "full words. Put m=card(B), and let (X_j,Y_j) be the emitted bit pair at the j-th "
+                        + "scanned site, for 1<=j<=m. The following is the paper shared-threshold construction "
+                        + "and its finite probability argument, not an additional kernel-verified theorem.")),
+                    Paragraph(Text(
+                        "Given any positive-probability joint sampled history, each marginal next-bit law "
+                        + "is the uniform legal completion law with that chain's sampled prefix and entire "
+                        + "exterior fixed. Deleting the next true bit is an injection into false completions, "
+                        + "so its conditional false mass is at least 1/2. Before a common zero, use a fresh "
+                        + "shared uniform threshold at every step, even if the remaining conditional laws "
+                        + "already agree. The conditional common-zero probability is the minimum of the two "
+                        + "false masses, hence at least 1/2. At the first common zero, every forbidden window "
+                        + "joining earlier history to the remaining suffix crosses that zero. The suffix "
+                        + "laws, including the fixed far exterior, therefore coincide and can be sampled "
+                        + "identically. Each step and this suffix draw preserve the original completion-law "
+                        + "marginals. conditional_step_coupling and reset_law_transport supply the corresponding "
+                        + "native one-step and screening identities; they do not by themselves identify a "
+                        + "multi-step emitted event of prefixCoupling.")),
+                    Paragraph(Text(
+                        "Define T on every output as the first common-zero scan position, or T=m+1 if "
+                        + "there is none. Let G_j be the information generated by the first j emitted pairs "
+                        + "and A_j={T>j}, for 0<=j<=m; A_0 is the whole sample space. All conditional "
+                        + "probabilities refer only to histories of positive probability. For 1<=j<=m, "
+                        + "the finite tower identity gives Pr(A_j)=E[indicator(A_{j-1}) "
+                        + "Pr((X_j,Y_j)!=(false,false) | G_{j-1})]<=Pr(A_{j-1})/2. Induction yields "
+                        + "Pr(A_j)<=2^(-j), including j=0 and j=m. The event permits (true,true); it is "
+                        + "not the event that all preceding pairs disagree. A_m={T=m+1} means that the "
+                        + "whole block contains no common zero.")),
+                    Paragraph(Text(
+                        "On the support of this same paper joint law, a common zero at r forces "
+                        + "X_q=Y_q for every r<=q<=m, including the zero itself. Thus {X_j!=Y_j} is a "
+                        + "subset of A_j, and Pr(X_j!=Y_j)<=Pr(A_j)<=2^(-j). Linearity of the finite "
+                        + "disagreement sum gives E[sum_{j=1}^m indicator(X_j!=Y_j)]<=sum_{j=1}^m "
+                        + "2^(-j)=1-2^(-m)<=1, without independence between positions. Reversing the scan "
+                        + "gives the identical assertion for a left block; exterior coordinates remain fixed. "
+                        + "The empty-block extension has T=1 and zero cost. If the initial block laws "
+                        + "already coincide, an alternative synchronous whole-block draw has cost zero "
+                        + "without requiring any zero in its output.")),
+                    Paragraph(Text(
+                        "The native prefixCoupling tests resetReady before scanning a site and can "
+                        + "transport a shared completion before an emitted common zero. Its no-common-false "
+                        + "event must therefore also be bounded in this initial reset branch; it cannot "
+                        + "be identified with latent survival of the recursion. The native "
+                        + "prefix_coupling_emitted_tail in KBonacciEmittedTail supplies this event estimate by a completion-fiber "
+                        + "count and recursive emitted-event induction. right_scan_hamming separately proves "
+                        + "expected cost at most one. The complete two-orientation event/support assembly "
+                        + "remains a separate obligation. The paper derivation and synchronous alternative do not replace "
+                        + "that native-law obligation.")),
+                    Paragraph(Text("The native emitted-event estimate is "),
+                        Ref("D5/S1/Words/AdmissibleWords/KBonacciEmittedTail.prefix_coupling_emitted_tail"),
+                        Text(".")))),
             new DocumentBlock.Section(
                 H("Application: actual legal-state refresh, projection and complex energy"),
                 Blocks(
@@ -378,7 +419,7 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "the block comparison are zero. At n=0 every block is empty and every indexed block "
                         + "and singleton energy sum is zero, without supplying an excited gap.")),
                     new DocumentBlock.Section(
-                        H("Adjacent-edge eigenfunctions for the original indexed refresh"),
+                        H("Original indexed refresh: from edge eigenfunctions to complex Poincare"),
                         Blocks(
                             Paragraph(Text(
                                 "For this spectral argument assume k>=2 and n>=1, keep S=DBonacciName k n and "
@@ -455,18 +496,334 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                                 + "division by m and no change of stationary measure: this is the original "
                                 + "rate-one indexed generator on the original legal subtype.")),
                             Paragraph(Text(
-                                "This conclusion concerns nonconstant real eigenfunctions of that actual "
-                                + "generator. CostCoupling's generic symmetric-matrix application explains the "
-                                + "separate passage through a real orthonormal eigenbasis, centering and the "
-                                + "real/imaginary split to a complex Poincare inequality. That generic spectral "
-                                + "step is distinct from the actual-state marginal, Hamming and clock "
-                                + "identifications made here; a complete native complex actual-model assembly "
-                                + "is outside this exposition's verification claim. A native full-space parent "
-                                + "Hamiltonian or a physical realization additionally needs its own operator and "
-                                + "sector or realization bridges. At n=0 every refresh is the identity, the "
-                                + "generator and energy sums vanish, and there is no nonconstant function or "
-                                + "excited-gap assertion. This derivation applies the named frozen suppliers and "
-                                + "finite-sum reasoning, without a claim of mathematical novelty."))
+                                "To pass to arbitrary complex functions, identify the actual real matrix A(x,y)=m*delta(x,y)-sum_{a in "
+                                + "I}T_a(x,y), where delta(x,y) is one when the legal states x and y are equal and zero otherwise. "
+                                + "Finite sum interchange gives (Af)(x)=sum_y A(x,y)f(y)=-L_refresh f(x), also for complex f by "
+                                + "embedding the real entries in C. The actual fiber symmetry gives A(x,y)=A(y,x), and the stochastic "
+                                + "row sums give sum_y A(x,y)=m-m=0. Symmetry also gives sum_x A(x,y)=0. Thus A annihilates constants "
+                                + "and sum_x (Ag)(x)=0 for every g. These are identities of the original indexed refresh, with its "
+                                + "original uniform legal-state law.")),
+                            Paragraph(Text(
+                                "View real functions on S as the Euclidean space with inner product sum_x u(x)v(x). The real symmetric "
+                                + "A is Hermitian. The pinned Matrix.IsHermitian.eigenvectorBasis and "
+                                + "Matrix.IsHermitian.mulVec_eigenvectorBasis give a real orthonormal eigenbasis e_j with "
+                                + "Ae_j=lambda_j*e_j. If sum_x u(x)=0, put alpha_j=sum_x e_j(x)u(x). A constant e_j has alpha_j=0; every "
+                                + "nonconstant e_j has lambda_j>=1 by the actual eigenfunction argument above. Consequently "
+                                + "alpha_j^2<=lambda_j*alpha_j^2 in every direction. The pinned OrthonormalBasis.sum_sq_inner_right and "
+                                + "OrthonormalBasis.sum_inner_mul_inner identities, using symmetry to move A across the inner product, "
+                                + "now give sum_x u(x)^2=sum_j alpha_j^2<=sum_j lambda_j*alpha_j^2=sum_x u(x)(Au)(x). This is the "
+                                + "spectral passage used in CostCoupling's coupled-generator application, here with all its matrix "
+                                + "hypotheses identified on S.")),
+                            Paragraph(Text(
+                                "For any real g set gbar=(1/Z)sum_x g(x) and u=g-gbar. Since Z>0, sum_x u(x)=0. The zero row sums give "
+                                + "Au=Ag, and the zero column sums give sum_x (Ag)(x)=0. Hence sum_x u(x)(Au)(x)=sum_x g(x)(Ag)(x): "
+                                + "centering preserves the quadratic energy. We obtain sum_x (g(x)-gbar)^2<=sum_x g(x)(Ag)(x), without "
+                                + "assuming g has mean zero.")),
+                            Paragraph(Text(
+                                "Write an arbitrary complex f as r+is with real r,s. Because A is real, Af=Ar+iAs and fbar=(sum_x "
+                                + "f(x))/Z=rbar+i*sbar. Pointwise, |f(x)-fbar|^2=(r(x)-rbar)^2+(s(x)-sbar)^2 and "
+                                + "Re(conj(f(x))(Af)(x))=r(x)(Ar)(x)+s(x)(As)(x). Adding the two real bounds and dividing once by Z "
+                                + "therefore gives (1/Z)sum_x |f(x)-fbar|^2<=(1/Z)sum_x Re(conj(f(x))(Af)(x)). The actual "
+                                + "TerminalSampling.uniformPmf masses are pi(x)=1/Z, so fbar=sum_x pi(x)f(x)=pi[f] and the left side is "
+                                + "exactly Var_pi(f)=sum_x pi(x)|f(x)-pi[f]|^2. No change to the stationary measure or normalization is "
+                                + "made in this passage.")),
+                            Paragraph(Text(
+                                "On the right, substitute the actual complex generator action and interchange the finite state and "
+                                + "clock sums. This gives the exact quadratic identity (1/Z)sum_x Re(conj(f(x))sum_y A(x,y)f(y))=sum_{a "
+                                + "in I} Re<f,(Id-E_{B_a})f>_pi=sum_{a in I} energy_{B_a}(f). Equivalently one may sum over the finite "
+                                + "subtype {a : Int // a in I}; forgetting its membership proof gives exactly the integer sum over "
+                                + "I=Icc(1-ell,n-1), with the same B_a and one summand per start. This is an equality of clock sums, not "
+                                + "a sum over distinct block values. Combining with the earlier site comparison yields, for k>=2, n>=1 "
+                                + "and every complex f, Var_pi(f)<=sum_{a in I} energy_{B_a}(f)<=ell^2*2^ell*sum_{i : Fin n} "
+                                + "energy_i(f), where ell=2k-1. The block gap bound is one and the singleton Poincare constant is "
+                                + "C(k)=ell^2*2^ell for these rate-one generators. Repeated clipped blocks remain counted and no factor "
+                                + "1/m is inserted."))
+                        )),
+                    new DocumentBlock.Section(
+                        H("Native control and the scalar singleton coefficient"),
+                        Blocks(
+                            Paragraph(Text(
+                                "Keep k>=2, now allowing every n>=0. For an arbitrary full Boolean word w, write "
+                                + "flip_i(w)=Function.update w i (!w(i)). A full length-k window containing i has an integer start s>=0 "
+                                + "with s+k<=n and s<=i.val<s+k. Define the original control c_i(w) to be one exactly when every such "
+                                + "window contains a site j different from i with w(j)=false, and zero otherwise. Only full windows are "
+                                + "tested; there are no padded boundary windows. The tested bits exclude i, so c_i(flip_i(w))=c_i(w). "
+                                + "This definition concerns full words, not just legal names.")),
+                            Paragraph(Text(
+                                "If c_i(w)=1, no containing window can be all true either before or after the flip, because its "
+                                + "off-center false bit remains. Every window not containing i is unchanged. Thus the set of "
+                                + "forbidden-window starts is unchanged, and KBonacciIntegerInterval.scanner_iff_literal gives "
+                                + "DBonacciAdmissible k n (flip_i(w)) iff DBonacciAdmissible k n w. This equivalence applies even when w "
+                                + "is illegal: enabled does not mean legal. For example, at k=2,n=4 the word 1100 is enabled at "
+                                + "one-based site 4, since its only containing full window is sites 3,4 and site 3 is false. Its flip is "
+                                + "1101. Both words remain illegal because the unchanged window at sites 1,2 is all true.")),
+                            Paragraph(Text(
+                                "For a legal x in S the converse is also available: c_i(x.val)=1 iff flip_i(x.val) is legal. Indeed, "
+                                + "if control fails, some containing full window has all off-center bits true. Legality forces "
+                                + "x.val(i)=false, and the flip makes this window all true. Also a legal true center is always enabled: "
+                                + "legal_delete makes its false flip legal. Consequently a disabled legal center is false. These "
+                                + "statements identify the native control with availability of the other legal singleton completion.")),
+                            Paragraph(Text(
+                                "A word agreeing with x.val outside {i} is either x.val or flip_i(x.val), and these two words differ "
+                                + "at i. The original full-exterior completion fiber is therefore {x.val,flip_i(x.val)}, of cardinality "
+                                + "two, when c_i(x.val)=1; it is {x.val}, of cardinality one, when c_i(x.val)=0. Apply "
+                                + "completionLaw_apply on {i}-complement with the nonemptiness proof completion_nonempty from "
+                                + "x.property. At any ambient word w the enabled PMF mass is (2 : ENNReal)^(-1) if w=x.val or "
+                                + "w=flip_i(x.val), and zero otherwise; the disabled mass is one at w=x.val and zero elsewhere. Pushing "
+                                + "supported words to legal names preserves these masses: Subtype.ext identifies equality of names with "
+                                + "equality of their words. Taking toReal gives T_i(x,y)=1/2 at the two enabled legal completions and "
+                                + "zero elsewhere, or T_i(x,y)=delta(x,y) for a disabled row, where T_i=T_{ {i} }. Each original row "
+                                + "sums to one and uses its actual fiber denominator.")),
+                            Paragraph(Text(
+                                "For legal x,y the resulting scalar identity, with its coefficient on the refresh side, is "
+                                + "c_i(x.val)*(delta(x,y)-indicator(y.val=flip_i(x.val)))*c_i(y.val)=2*(delta(x,y)-T_i(x,y)). Here "
+                                + "indicator is one when its equality holds and zero otherwise. For an enabled diagonal entry x=y, the "
+                                + "flip indicator is zero and the two sides are 1 and 2*(1-1/2)=1. For the enabled flip entry, x differs "
+                                + "from y, flip invariance makes c_i(y.val)=1, and both sides are -1=2*(0-1/2). At every other enabled "
+                                + "entry the delta, flip indicator and transition mass vanish, giving zero. For a disabled row the left "
+                                + "factor c_i(x.val) vanishes, while T_i(x,y)=delta(x,y), so both sides are zero for every legal y.")),
+                            Paragraph(Text(
+                                "At k=2,n=2 the legal words are 00,01,10, with coordinates read from one-based site 1 to site 2. At "
+                                + "site 2, x=00 is enabled because site 1 is false: its original completion fiber is {00,01}, its masses "
+                                + "are 1/2,1/2,0 in this legal-word order, and its scalar row is 1,-1,0. For x=10 the same site is "
+                                + "disabled and false; its flip 11 is illegal, its fiber is {10}, its masses are 0,0,1, and its scalar "
+                                + "row is 0,0,0. The enabled row at 01 has the same two refresh masses as 00. These rows use legal-state "
+                                + "normalization and do not assign probability to 11.")),
+                            Paragraph(Text(
+                                "For 1<=n<k no full length-k window exists. Every full word is legal and every control is one; each "
+                                + "singleton fiber has the two distinct flips and the original PMF puts mass 1/2 on each. This follows "
+                                + "from the empty window condition and completionLaw, without an independent-bit assumption. At n=0 "
+                                + "there is just the empty word and its completion fiber has cardinality one; there are no sites, so the "
+                                + "local scalar assertions are vacuous and all block and singleton energies vanish. No excited gap is "
+                                + "asserted there. The short-chain singleton calculation by itself does not establish a native "
+                                + "full-space gap for 1<=n<k.")),
+                            Paragraph(Text(
+                                "The scalar identity identifies legal-word entries and the factor two. The following full-word calculation "
+                                + "supplies the actual matrix multiplication, complex quadratic energy, complete-window penalties and "
+                                + "legal/illegal sector invariance. The subsequent normalization uses the inverse map f(x)=sqrt(Z)*psi(x.val) "
+                                + "for arbitrary legal-supported native amplitudes, and combines the original Poincare chain with the "
+                                + "illegal-sector unit bound. All native norms and energies remain unweighted."))
+                        )),
+                    new DocumentBlock.Section(
+                        H("Native full-word matrices and the ordered flip energy"),
+                        Blocks(
+                            Paragraph(Text(
+                                "Keep k>=2 and n>=0, and now work on the full finite word space W(n)=Fin n to Bool, of cardinality 2^n. A "
+                                + "native amplitude psi:W(n) to C is arbitrary, including at illegal words. All sums over v,w,u,t in this "
+                                + "native calculation run over W(n). Define delta(v,w)=1 if v=w and zero otherwise, with these real scalars "
+                                + "embedded in C. Matrix multiplication means (AD)(v,w)=sum_u A(v,u)D(u,w), and (A psi)(w)=sum_u "
+                                + "A(w,u)psi(u). Use the conjugate-first unweighted pairing <psi,phi>=sum_w conj(psi(w))phi(w), Q(A,psi)=Re "
+                                + "sum_w conj(psi(w))(A psi)(w), and ||psi||^2=sum_w |psi(w)|^2. There is no division by 2^n or by the "
+                                + "legal-state count Z in these native quantities.")),
+                            Paragraph(Text(
+                                "For each i:Fin n, let F_i=flip_i. Updating the same Boolean coordinate twice gives F_i(F_i(w))=w, and "
+                                + "F_i(w) differs from w at i. Thus F_i is a permutation and v=F_i(w) iff F_i(v)=w, equivalently w=F_i(v). "
+                                + "Define X_i(v,w)=delta(v,F_i(w)), so column w is the basis vector at F_i(w). Reindexing by the involution "
+                                + "gives (X_i psi)(w)=sum_u delta(w,F_i(u))psi(u)=psi(F_i(w)). The two flip-entry orientations therefore "
+                                + "specify the same matrix, rather than a transpose convention being assumed.")),
+                            Paragraph(Text(
+                                "Use exactly the full-window, off-center Boolean control c_i defined above, embedded as zero or one in C, "
+                                + "and put C_i(v,w)=delta(v,w)c_i(w). Hence (C_i psi)(w)=c_i(w)psi(w), c_i(w)^2=c_i(w), and "
+                                + "c_i(F_i(w))=c_i(w). Define the actual native local matrix h_i=C_i*(Id-X_i)*C_i, where Id(v,w)=delta(v,w). "
+                                + "To identify this with the book's ordered product, for each complete window a containing i let L_(a,i) "
+                                + "be its increasing site list with i deleted. The ordered inner product D_(a,i)=product_(j in L_(a,i)) P_j "
+                                + "is diagonal by the same ordered-projection rule used below for B_a, with diagonal value "
+                                + "product_(j in L_(a,i)) indicator(w(j)=true). Its complement Id-D_(a,i) is therefore diagonal with value "
+                                + "one exactly when some off-center site in that window is false. Multiply these complements in increasing "
+                                + "window-start order. Each step multiplies their diagonal values, so the outer product is diagonal with "
+                                + "value one exactly when every complete containing window has such a false site: precisely c_i(w). "
+                                + "The one-based book start a+1 corresponds to the natural start a here, preserving both orders. Empty "
+                                + "outer products are Id; an empty inner product is Id and its complement is zero. Thus this argument "
+                                + "identifies the actual ordered product with C_i on every full word, including illegal words, without "
+                                + "assuming that similarly named controls agree or using a commuting-product shortcut.")),
+                            Paragraph(Text(
+                                "To evaluate the actual product, first expand its inner matrix multiplication: (C_i*(Id-X_i))(v,u)=sum_t "
+                                + "C_i(v,t)*(delta(t,u)-delta(t,F_i(u)))=c_i(v)*(delta(v,u)-delta(v,F_i(u))). Only t=v survives the diagonal "
+                                + "factor. The outer multiplication is then h_i(v,w)=sum_u (sum_t "
+                                + "C_i(v,t)*(delta(t,u)-delta(t,F_i(u))))*C_i(u,w)=c_i(v)*(delta(v,w)-delta(v,F_i(w)))*c_i(w), since only "
+                                + "u=w survives. These are the two finite intermediate sums in the matrix product. In particular the earlier "
+                                + "legal scalar expression is the restriction of these entries: delta(v,F_i(w))=indicator(w=F_i(v)) by "
+                                + "involution.")),
+                            Paragraph(Text(
+                                "Apply the same product to a full-word amplitude. Successive action of the right C_i, Id-X_i and left C_i "
+                                + "gives (h_i psi)(w)=c_i(w)*(c_i(w)psi(w)-c_i(F_i(w))psi(F_i(w)))=c_i(w)*(psi(w)-psi(F_i(w))). The final "
+                                + "equality uses both control invariance and c_i^2=c_i. Equivalently, it is psi(w)-psi(F_i(w)) on an enabled "
+                                + "coordinate and zero on a disabled one. No legal-support restriction has entered either matrix "
+                                + "multiplication or action.")),
+                            Paragraph(Text(
+                                "For the quadratic energy write r_i(w)=c_i(w)*Re(conj(psi(w))*(psi(w)-psi(F_i(w)))). The action gives "
+                                + "Q(h_i,psi)=sum_w r_i(w). Since F_i is a permutation, sum_w r_i(F_i(w))=sum_w r_i(w). Put a=psi(w) and "
+                                + "b=psi(F_i(w)); using F_i^2=Id and c_i(F_i(w))=c_i(w), the paired summand is "
+                                + "r_i(w)+r_i(F_i(w))=c_i(w)*Re(conj(a)*(a-b)+conj(b)*(b-a))=c_i(w)*|a-b|^2. Indeed the two cross terms are "
+                                + "-conj(a)b and -conj(b)a, whose sum is -2 Re(conj(a)b), while the remaining terms are |a|^2+|b|^2. This "
+                                + "computation applies to arbitrary complex a,b.")),
+                            Paragraph(Text(
+                                "Summing that paired identity gives 2Q(h_i,psi)=sum_w c_i(w)|psi(w)-psi(F_i(w))|^2, hence "
+                                + "Q(h_i,psi)=(1/2)sum_w c_i(w)|psi(w)-psi(F_i(w))|^2>=0. The sum counts both orientations of every enabled "
+                                + "flip pair. Its one-half comes from this ordered-pair count, with no one-half inserted into h_i or the "
+                                + "Hamiltonian. The entries are real and symmetric by the flip and control identities, so h_i is Hermitian; "
+                                + "the displayed nonnegative quadratic form establishes positive semidefiniteness on the entire full-word "
+                                + "space, without a legality premise or an assumed PSD hypothesis.")),
+                            Paragraph(Text(
+                                "For example, at k=2,n=2 and one-based site 2, use the full-word order 00,01,10,11. The actual C_i is "
+                                + "diag(1,1,0,0), X_i exchanges 00 with 01 and 10 with 11, and h_i has matrix "
+                                + "[[1,-1,0,0],[-1,1,0,0],[0,0,0,0],[0,0,0,0]]. Its action on amplitudes (alpha,beta,gamma,delta) is "
+                                + "(alpha-beta,beta-alpha,0,0). Its energy is |alpha-beta|^2, also when all four amplitudes are complex. The "
+                                + "zero row at illegal 11 comes from this site's disabled control, not from removing 11 from the full-word "
+                                + "basis."))
+                        )),
+                    new DocumentBlock.Section(
+                        H("Ordered complete-window penalties and invariant sectors"),
+                        Blocks(
+                            Paragraph(Text(
+                                "Let Window(k,n) be the finite set of natural starts a with a+k<=n, equivalently the subtype {a:Fin(n+1) "
+                                + "// a.val+k<=n}. For k>0 every such a corresponds one-to-one to the book's one-based complete interval "
+                                + "[a+1,a+k]; conversely the interval's left endpoint minus one recovers a. These are complete forbidden "
+                                + "windows only. They are distinct from the earlier clipped refresh-block clock indices Icc(1-ell,n-1); no "
+                                + "padded, partial or negative-start window is introduced into the penalty.")),
+                            Paragraph(Text(
+                                "For j:Fin n define the actual on-site true-bit projection P_j(v,w)=delta(v,w)*indicator(w(j)=true). Let "
+                                + "L_a be List.finRange n filtered by a<=j.val<a+k, retaining its increasing order, and define B_a as the "
+                                + "matrix product of the P_j along L_a in that order. The empty-list product is Id. To evaluate any such "
+                                + "ordered list L, use induction: its empty product is diag(1); if the tail product is diag(d), "
+                                + "multiplication by the head projection gives (P_j*diag(d))(v,w)=sum_u "
+                                + "delta(v,u)*indicator(u(j)=true)*delta(u,w)*d(w)=delta(v,w)*indicator(w(j)=true)*d(w). This is the pinned "
+                                + "diagonal-multiplication rule at each inductive step. Thus the full product is diagonal with value "
+                                + "product_{j in L} indicator(w(j)=true), equal to one exactly when every listed bit is true. The argument "
+                                + "follows the actual order and assumes no commuting-product identity.")),
+                            Paragraph(Text(
+                                "For L=L_a, membership is precisely a<=j.val<a+k. Since a+k<=n is part of Window(k,n), all k sites of the "
+                                + "natural window occur, each once. Therefore B_a(v,w)=delta(v,w)*indicator(TrueBlock w a k), where "
+                                + "TrueBlock means a+k<=n and w(j)=true for every j:Fin n in that interval. This derives the full-window "
+                                + "projection from the ordered on-site product, rather than replacing it by an unrelated diagonal penalty.")),
+                            Paragraph(Text(
+                                "Define count_forbidden(w)=sum_{a in Window(k,n)} indicator(TrueBlock w a k), a nonnegative integer, and "
+                                + "P_forbid=sum_{a in Window(k,n)} B_a. The bijection of starts to book intervals ensures that each original "
+                                + "forbidden window contributes exactly once, even when several overlapping windows are forbidden in the "
+                                + "same word. Finite sum interchange and the diagonal formula give "
+                                + "P_forbid(v,w)=delta(v,w)*count_forbidden(w) and (P_forbid psi)(w)=count_forbidden(w)*psi(w), with the "
+                                + "integer embedded in C. Consequently Q(P_forbid,psi)=sum_w count_forbidden(w)|psi(w)|^2, or equivalently "
+                                + "sum_w sum_a indicator(TrueBlock w a k)|psi(w)|^2. No probability or fiber-size denominator appears.")),
+                            Paragraph(Text(
+                                "For k>0, KBonacciIntegerInterval.scanner_iff_literal identifies DBonacciAdmissible k n w with the absence "
+                                + "of every complete TrueBlock w a k. Negating this finite condition says that w is illegal iff some a in "
+                                + "Window(k,n) has TrueBlock w a k. Any natural TrueBlock start lies in Fin(n+1) because a+k<=n; conversely "
+                                + "every subtype start is a natural start, so this reformulation loses no boundary case. Hence "
+                                + "count_forbidden(w)=0 exactly on legal words, and count_forbidden(w)>=1 on every illegal word.")),
+                            Paragraph(Text(
+                                "Call psi legal-supported when psi(w)=0 at every illegal w. At a legal coordinate count_forbidden(w)=0; at "
+                                + "an illegal coordinate psi(w)=0. The action formula therefore gives P_forbid psi=0 coordinate by "
+                                + "coordinate, not merely zero expected energy. Call psi illegal-supported when psi(w)=0 at every legal w. "
+                                + "Now count_forbidden(w)|psi(w)|^2>=|psi(w)|^2 at an illegal coordinate since the count is at least one, "
+                                + "and both sides are zero at a legal coordinate. Summing yields Q(P_forbid,psi)=sum_w "
+                                + "count_forbidden(w)|psi(w)|^2>=sum_w |psi(w)|^2=||psi||^2. These support conditions allow arbitrary "
+                                + "complex phases and zero amplitudes.")),
+                            Paragraph(Text(
+                                "The actual full native matrix is H=sum_{i:Fin n} h_i+P_forbid, with unit coefficients on the original "
+                                + "local matrices and complete-window products. Linearity of finite matrix action, sum interchange and Re "
+                                + "give Q(H,psi)=sum_i Q(h_i,psi)+Q(P_forbid,psi). Since every local energy is nonnegative on every "
+                                + "amplitude, an illegal-supported psi satisfies Q(H,psi)>=Q(P_forbid,psi)>=||psi||^2. In particular the "
+                                + "unit lower bound uses the unweighted full-word norm. It is not a lower bound on Q(H,psi) for every "
+                                + "full-word amplitude: take a nonzero constant amplitude on legal words and zero on illegal words. Enabled "
+                                + "flips preserve legality, so every enabled difference vanishes, and the legal-supported penalty action "
+                                + "vanishes; this amplitude has zero energy and positive norm.")),
+                            Paragraph(Text(
+                                "To check sector invariance entry by entry, take v,w with opposite legality. They are distinct, so "
+                                + "delta(v,w)=0. In the h_i entry formula, if c_i(w)=0 the right control already gives zero. If c_i(w)=1 and "
+                                + "v=F_i(w), the enabled-flip legality equivalence proved above would give the same legality at v and w, a "
+                                + "contradiction. Thus delta(v,F_i(w))=0 as well and h_i(v,w)=0. Every B_a is diagonal, so B_a(v,w)=0 for "
+                                + "these distinct words. Summing gives H(v,w)=0 in both cross-sector orientations.")),
+                            Paragraph(Text(
+                                "Let V_legal and V_illegal be the subspaces of full-word amplitudes supported on the legal and illegal "
+                                + "words respectively. Coordinate restriction splits every psi uniquely as psi_legal+psi_illegal, with "
+                                + "disjoint support and <psi_legal,psi_illegal>=0. The vanishing cross-sector entries make each subspace "
+                                + "invariant under the actual H, so H is their orthogonal direct sum and "
+                                + "Q(H,psi)=Q(H,psi_legal)+Q(H,psi_illegal). The illegal summand has the unit bound just derived. This is an "
+                                + "invariant direct-sum statement. The normalization and quadratic estimate below use this same actual H.")),
+                            Paragraph(Text(
+                                "At n=0 there is exactly one full word, the empty function. There are no sites and, for k>=2, no complete "
+                                + "forbidden windows, so both sums defining H are empty and H=0. Every word is legal, and there is no "
+                                + "excited state or excited gap. For 0<=n<k more generally, Window(k,n) is empty, every word is legal, and "
+                                + "the control condition is vacuous. Hence C_i=Id, h_i=Id-X_i, P_forbid=0 and H=sum_i(Id-X_i). An "
+                                + "illegal-supported amplitude must then be zero, so its unit inequality is vacuous. The displayed "
+                                + "short-chain formula alone is not used to claim gap two.")),
+                            Paragraph(Text(
+                                "The enabled illegal pair is visible in the actual penalty as well. At k=2,n=4 and one-based site 4 "
+                                + "(i.val=3), let w=1100 and v=1101=F_i(w). The only complete containing window is sites 3,4, whose "
+                                + "off-center bit at site 3 is false, so both controls are one. The first complete window, sites 1,2 (a=0), "
+                                + "is all true in both words; B_0(w,w)=B_0(v,v)=1. The other complete windows, sites 2,3 and 3,4, each "
+                                + "contain the false bit at site 3, so count_forbidden(w)=count_forbidden(v)=1. On the ordered pair (w,v), "
+                                + "h_i is exactly [[1,-1],[-1,1]], while the retained penalty is diag(1,1).")),
+                            Paragraph(Text(
+                                "For arbitrary complex amplitudes alpha at w and beta at v, extended by zero off this pair, the local "
+                                + "action is (alpha-beta,beta-alpha), and its conjugate-first energy is "
+                                + "Re(conj(alpha)*(alpha-beta)+conj(beta)*(beta-alpha))=|alpha-beta|^2. The ordered flip formula gives "
+                                + "(1/2)(|alpha-beta|^2+|beta-alpha|^2), the same value. The complete-window penalty contributes "
+                                + "|alpha|^2+|beta|^2. Thus the h_i-plus-penalty energy is |alpha-beta|^2+|alpha|^2+|beta|^2; the other "
+                                + "local terms have nonnegative energies. This example retains an enabled transition entirely within the "
+                                + "illegal sector and its original forbidden window, instead of equating enabled with legal."))
+                        )),
+                    new DocumentBlock.Section(
+                        H("Uniform legal L2 and the bound for every native amplitude"),
+                        Blocks(
+                            Paragraph(Text(
+                                "Put S=DBonacciName k n, Z=|S|>0 and pi(x)=1/Z. Equip complex functions on S with "
+                                + "<f,g>_pi=(1/Z)sum_x conj(f(x))g(x); the native pairing is <psi,chi>=sum_w conj(psi(w))chi(w). "
+                                + "Define (Uf)(w)=f(x)/sqrt(Z) when w=x.val is legal, and zero otherwise. Restriction gives the inverse "
+                                + "f(x)=sqrt(Z)*psi(x.val) for every legal-supported psi. It is different from the unscaled restriction "
+                                + "g(x)=psi(x.val): f=sqrt(Z)*g. Both compositions are identities on their stated domains. Finite support "
+                                + "restriction and sqrt(Z)^2=Z give <Uf,Ug>=<f,g>_pi, hence ||Uf||^2=||f||_pi^2; there is no native "
+                                + "1/2^n weight.")),
+                            Paragraph(Text(
+                                "The normalized uniform legal vector is Omega=U1, so Omega(w)=1/sqrt(Z) on legal words and zero "
+                                + "otherwise, and ||Omega||^2=1. For an arbitrary full amplitude psi, put g(x)=psi(x.val), "
+                                + "m=(1/Z)sum_x g(x), and a=<Omega,psi>=(1/sqrt(Z))sum_x g(x)=sqrt(Z)*m. The illegal part contributes "
+                                + "nothing to a. For legal-supported psi and its inverse f=sqrt(Z)*g, pi[f]=a. Thus zero mean of f is "
+                                + "equivalent to orthogonality to Omega, but neither is required in the final inequality.")),
+                            Paragraph(Text(
+                                "Expand |g(x)-m|^2=|g(x)|^2+|m|^2-2 Re(g(x)conj(m)) and sum. Since sum_x g(x)=Z*m, the result is "
+                                + "sum_x |g(x)-m|^2=sum_x |g(x)|^2-Z*|m|^2. Consequently, for legal-supported psi, "
+                                + "Z*Var_pi(g)=||psi||^2-|a|^2, whereas Var_pi(f)=||psi||^2-|a|^2 for f=sqrt(Z)*g. The right side is "
+                                + "also ||psi-a*Omega||^2 and is nonnegative. This is the nonzero-mean variance identity; replacing "
+                                + "variance by the norm without subtracting the ground overlap would be false.")),
+                            Paragraph(Text(
+                                "The exact legal local action above gives (h_i psi)(x.val)=2*(g(x)-E_i g(x)), with zero action on "
+                                + "illegal coordinates. The complete-window penalty annihilates psi. The same formulas after division "
+                                + "by sqrt(Z) give H U f=U(2 sum_i(Id-E_i)f)=U(-2 L_site f), since E_i is complex-linear. Finite pairing "
+                                + "and clock sums give Q(h_i,psi)=2Z*energy_i(g)=2*energy_i(f) and "
+                                + "Q(H,psi)=2Z*sum_i energy_i(g)=2*sum_i energy_i(f). The coefficient 2Z belongs to unscaled restriction "
+                                + "g; coefficient 2 belongs to the isometric inverse f. Every singleton clock still has rate one. The "
+                                + "rescaled local and total energy equalities are finite-sum exposition; their direct exact Lean "
+                                + "application remains unverified. The full quadratic bound below instead uses the unscaled 2Z identity.")),
+                            Paragraph(Text(
+                                "For k>=2,n>=1 apply the original complex Poincare inequality to g, with C(k)=(2k-1)^2*2^(2k-1). "
+                                + "Multiplying Var_pi(g)<=C(k)*sum_i energy_i(g) by 2Z/C(k) and substituting the two identities yields "
+                                + "Q(H,psi)>=(2/C(k))*(||psi||^2-|<Omega,psi>|^2) for every legal-supported psi, including a nonzero "
+                                + "mean and arbitrary complex phases. Equivalently apply Poincare to f and use coefficient two. "
+                                + "No desired coercivity or positive-semidefinite conclusion is inserted as a premise.")),
+                            Paragraph(Text(
+                                "For an arbitrary full psi let l(w)=psi(w) on legal words and zero otherwise, and r(w)=psi(w) on "
+                                + "illegal words and zero otherwise. Then psi=l+r, ||psi||^2=||l||^2+||r||^2 and <Omega,psi>=<Omega,l>. "
+                                + "The actual cross-sector entries vanish in both orientations. Expanding each finite pairing therefore "
+                                + "gives <l,Hr>=<r,Hl>=0 and Q(H,psi)=Q(H,l)+Q(H,r). Apply the legal estimate to l and the illegal "
+                                + "unit estimate to r. With c=2/C(k) the result is Q(H,psi)>=c*(||l||^2-|<Omega,l>|^2)+||r||^2 "
+                                + ">=min(1,c)*(||psi||^2-|<Omega,psi>|^2). The last comparison uses the nonnegative centered legal "
+                                + "norm and the nonnegative illegal norm; it makes no support or orthogonality assumption on psi.")),
+                            Paragraph(Text(
+                                "Here ell=2k-1>=3, so ell^2>=9 and 2^ell>=8. Thus C(k)>=72, 0<c<=1/36<1, and min(1,c)=c. "
+                                + "In particular the full native quadratic estimate is Q(H,psi)>=(2/C(k))*(||psi||^2-|<Omega,psi>|^2). "
+                                + "At k=2 it gives 1/36 and at k=3 it gives 1/400, uniformly over n>=1 at each fixed k. These are lower "
+                                + "bounds, without an optimality or uniform-in-k claim. On vectors orthogonal to Omega this is the "
+                                + "usual coercive lower bound. A separate formal eigenvalue theorem is not needed for the displayed "
+                                + "quadratic statement.")),
+                            Paragraph(Text(
+                                "The finite support, pairing, variance and energy identities also apply at n=0. There Z=1, H=0 and "
+                                + "every amplitude lies along Omega, so the centered squared norm is zero. This is a zero-energy "
+                                + "boundary identity, with no excited gap. For 1<=n<k the forbidden-window sum is empty, all words are "
+                                + "legal, C_i=Id and H=sum_i(Id-X_i); the bound above remains valid. The quadratic application makes no "
+                                + "claim of physical, Rydberg, anyon, geometric or Rauzy realization. It adds application exposition "
+                                + "to the existing formal suppliers and does not add a separately retained Lean theorem or extend their "
+                                + "independent verification status."))
                         )),
                     Paragraph(Text(
                         "This application gives the actual-law, conditional-projection and complex-energy "
@@ -479,16 +836,19 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
                         + "applications of these suppliers and finite-sum estimates, without a claim of "
                         + "mathematical novelty.")),
                     Paragraph(Text(
-                        "The coupled-generator application in CostCoupling supplies the generic route from actual"
-                        + " adjacent-state couplings and a summed drift bound to a uniform Poincare inequality. The"
-                        + " fiber calculation here supplies the specific legal-state kernel, its projection and its"
-                        + " variance normalization, together with the actual block-to-single-site energy comparison "
-                        + "and the legal-state graph/Hamming correspondence. The complete actual block Poincare "
-                        + "inequality and the original uniform-gap assembly remain unfinished; these comparison "
-                        + "and metric identities alone supply no complete uniform heat-bath gap. The application "
-                        + "also establishes no parent-Hamiltonian or full-sector gap and"
-                        + " no physical or Rauzy realization; those require their own operator identification and "
-                        + "sector comparison or realization hypotheses."))
+                        "The coupled-generator application in CostCoupling supplies the route from actual adjacent-state couplings "
+                        + "and summed drift to a uniform Poincare inequality. The fiber calculation here supplies the specific "
+                        + "legal-state kernel, its projection and variance normalization, the actual block-to-single-site comparison "
+                        + "and the legal-state graph/Hamming correspondence. The real spectral bound, centering, complex split and "
+                        + "exact indexed quadratic sum give the complete original complex block/singleton Poincare chain for "
+                        + "k>=2,n>=1. The native scalar singleton calculation keeps its coefficient two for k>=2,n>=0; the full-word "
+                        + "application now also derives the actual diagonal-control matrix product, ordered flip energy, ordered "
+                        + "complete-window penalties, illegal-sector unit energy bound and zero cross-sector entries. These are "
+                        + "applications of the reused definitions and finite-sum identities, without a claim of mathematical "
+                        + "novelty. The ordered off-center-window product is identified with the diagonal C_i above. The "
+                        + "uniform-L2 isometry, ground-overlap variance identity and legal/illegal energy split give the direct "
+                        + "full-space quadratic bound for k>=2,n>=1 as application consequences. Physical or Rydberg realization "
+                        + "and geometric, Rauzy or anyon realization remain outside this result. No excited gap is asserted at n=0."))
                 )))));
 
     private static Formula StepFormula()
@@ -572,30 +932,21 @@ internal sealed class KBonacciConditionalBlockCouplingDocument : IScribeDocument
         return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
     }
 
-    private static Formula CostFormula()
+    private static Formula ResetMeanFormula()
     {
-        var k = F.Id("k"); var n = F.Id("n"); var f = F.Id("F");
-        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y");
-        var h = F.Id("h"); var g = F.Id("g");
-        var i = F.Id("i"); var j = F.Id("j");
-        var inS = Seq(i, Sp, InMacro, Sp, s);
-        var notF = Seq(Neg, Sp, Par(Seq(i, Sp, InMacro, Sp, f)));
-        var free = All(i, Call("Fin", n), Imp(inS, notF));
-        var cover = All(i, Call("Fin", n), Imp(notF, inS));
-        var order = All(i, Call("Fin", n), All(j, Call("Fin", n),
-            Imp(Call("Before", s, i, j), Rel(Call("val", i), Lt, Call("val", j)))));
-        var far = All(i, Call("Fin", n), All(j, Call("Fin", n), Imp(
-            And(inS, Seq(j, Sp, InMacro, Sp, f), Rel(Call("val", i), Lt, Call("val", j))),
-            Rel(Call("at", x, j), Eq, Call("at", y, j)))));
-        var cost = Rel(Call("ExpectedHamming", Call("P", s, f, x, y, h, g), s), Leq, D(1));
-        var fibers = All(Seq(x, Comma, y), Word(n),
-            All(h, Call("Nonempty", Call("C", k, n, f, x)),
-                All(g, Call("Nonempty", Call("C", k, n, f, y)), Imp(far, cost))));
-        var fixedSet = All(f, Call("Finset", Call("Fin", n)), Imp(And(free, cover), fibers));
-        var lists = All(s, Call("List", Call("Fin", n)), Imp(And(Call("Nodup", s), order), fixedSet));
-        return All(Seq(k, Comma, n), Nat, Imp(Rel(D(0), Lt, k), lists));
+        var k=F.Id("k"); var n=F.Id("n"); var s=F.Id("s"); var f=F.Id("F"); var x=F.Id("x"); var y=F.Id("y"); var h=F.Id("h"); var z=F.Id("z"); var i=F.Id("i");
+        var left=All(i,Call("Fin",n),Imp(Rel(i,Leq,z),Seq(i,Sp,InMacro,Sp,f)));
+        var free=All(i,Call("Fin",n),Imp(Seq(i,Sp,InMacro,Sp,s),Seq(Neg,Sp,Par(Seq(i,Sp,InMacro,Sp,f)))));
+        var result=Rel(Call("mean",Call("resetCoupling",f,x,y,h,z),Call("scanHamming",s)),Eq,D(0));
+        return All(Seq(k,Comma,n),Nat,All(s,Call("List",Call("Fin",n)),All(f,Call("Finset",Call("Fin",n)),All(Seq(x,Comma,y),Word(n),All(h,Call("Nonempty",Call("completions",k,n,f,x)),All(z,Call("Fin",n),Imp(left,Imp(free,result))))))));
     }
-
+    private static Formula MeanHeadFormula()
+    {
+        var n=F.Id("n"); var p=F.Id("p"); var i=F.Id("i"); var t=F.Id("t"); var a=F.Id("a"); var b=F.Id("b"); var w=F.Id("w");
+        var support=All(w,Call("Pair",Word(n),Word(n)),Imp(Rel(Call("eval",p,w),Neq,D(0)),And(Rel(Call("fst",w,i),Eq,a),Rel(Call("snd",w,i),Eq,b))));
+        var result=Rel(Call("mean",p,Call("scanHamming",Call("cons",i,t))),Eq,Seq(Call("disagreement",a,b),Sp,Plus,Sp,Call("mean",p,Call("scanHamming",t))));
+        return All(n,Nat,All(p,Call("PMF",Call("Pair",Word(n),Word(n))),All(i,Call("Fin",n),All(t,Call("List",Call("Fin",n)),All(Seq(a,Comma,b),Op("Bool"),Imp(support,result))))));
+    }
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Word(Formula n) => Seq(Open, Call("Fin", n), Sp, To, Sp, Op("Bool"), Close);
     private static Formula Op(string name) => Seq(Operatorname, Grp(F.Id(name)));

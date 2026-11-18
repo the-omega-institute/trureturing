@@ -3868,3 +3868,567 @@ the real internal observer, complete records and every declared lawful
 future; it remains unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 122. Approximate recovery with a joint success-mass target
+
+**Definition 122.1 (the unchanged apparatus and return domain).** Keep
+Definitions 105.1 and 116.1 in full. Thus the original input space is
+$H=\mathbb C|r\rangle\oplus B$, of dimension four, and the actual first
+selected event is exactly $A=P_r+K$, where $K$ is a full-rank contraction
+on the original three-dimensional $B$ and
+$0<\sigma=s_{\min}(K)<1$. Invertibility is linear-matrix invertibility;
+it supplies no native inverse command. The first event is the actual
+Theorem 108.1 success, with its literal $000$ record, consumed preparation
+grant and retained systems. The subsequent policy has the actual
+input-independent post-success backing law of Definition 116.1,
+including its internal correlations.
+
+The same initially independent pure $\eta$ and promised original vacua
+are supplied once. The isolated $r$ has no computation edge. Allowed
+quantum actions are exactly the enabled original hopping primitives,
+occupation reads at the same $d$, complete-bank identity holds and
+actual independent-vacuum growth, interleaved with the original native
+and service actions. Raw adaptive words are allowed; they need not be
+returned macros. Every use retains its real readiness, rights,
+enrollment, calibration, controls, clocks, supplies and progress
+requirements. No reset, disposer, renewed preparation, additional
+interactive excitation, quantum access to noninteracting preparation
+or detector archives, or additional reference coupling is granted.
+
+Histories, classical kernels and finite-bank CP instruments have the
+standard-Borel measurability of Definition 116.1. For every admitted
+post-first-success input, finite returning histories have total mass
+one. Every returning history uses finite resources, without a common
+horizon, bank-size bound or stopping-time moment assumption. No
+factorization of correlated initial classical backing into independent
+seeds is imposed. No accessible Kraus refinement is assumed.
+
+Both original entrances and all-phase contracts of Definition 121.1
+remain: the finite epoch cut from an actual known-alpha history, and
+the selected bilateral fixed-slope joint source with genuine separate
+empty/$P_\varepsilon$ preparations. Keep the free ordered alpha/beta
+grammar, arbitrary lawful addressed $P/S$, genuine Next, actual acquired
+identities and seams, root/header/gap/anchor/epoch bindings, immutable
+samples and versions, source successors, refusals, locks, borrowed
+references and owed publication. Receive/Parse retains its occupied
+input latch and unsupplied suffix; Navigate/Guard and
+Reserve/Edit/Maintain retain their actual operands and partial work;
+FetchGrowth/Next retains the indexed source and descent;
+BuildAnswer/Print/End/ACK/Return retains the sealed answer, emitted
+prefix, unprinted suffix, cursor and same-root return. Quantum work
+retains its actual word, digit, read, phase and latch. Pending cuts
+are executed prefixes, with outstanding obligations intact.
+
+**Definition 122.2 (subnormalized approximation on the old bank).**
+Fix one such apparatus instance. Let $\mathcal H_{\rm old}$ be its fixed
+original physical bank, and let $F:H\to\mathcal H_{\rm old}$ be exactly
+Definition 105.1's isometry, containing the SAME $\eta$ on $u,d$, clean
+$z,w$ and every other promised original vacuum. For a measurable selected
+terminal event $\mathsf S$, let $\mathcal M_{\mathsf S}$ be the composite
+CP map from the ORIGINAL normalized input to this old bank: it includes
+the first $A$ event and the subsequent selected correction. All acquired
+extra factors, records and other retained systems are traced only
+mathematically in this marginal. They remain in the actual output.
+
+For $p,\delta\ge0$, the approximate success specification is
+
+$$
+\left\|(\mathcal M_{\mathsf S}\otimes\operatorname{id}_R)(\rho_{HR})
+ -p(F\otimes I_R)\rho_{HR}(F^\dagger\otimes I_R)\right\|_1
+ \le\delta
+\quad\text{for every original }\rho_{HR}\text{ and untouched }R.
+\tag{VII.94}
+$$
+
+The norm in (VII.94) is UNHALVED. The common advertised $p$ is a JOINT
+target mass from before the first event. Actual selected masses may
+depend on the input and need not equal $p$. Neither the first-event mass
+nor a selected success mass is divided out. Approximate normalized
+successful states alone do not specify this mass-sensitive condition.
+Leakage into the rest of $\mathcal H_{\rm old}$ is included in its error;
+there is no projection onto the code followed by renormalization.
+
+On the original $r$ input use exactly $q_r,\tau_{ud}^{(r)}$ and
+$\epsilon_\eta=\tfrac12\|\tau_{ud}^{(r)}-\eta\|_1$ of (VII.86).
+This is the unconditional normalized terminal marginal of the same
+physical $u,d$, including all correction failures. The exact first
+instrument succeeds on $r$ with mass one and has no first-stage click
+there, so this is also the complete process's marginal on $r$.
+The approximation in (VII.94) imposes no exact pure-factor or exact
+decoupling assertion on a successful approximate output.
+
+## 123. Clicked success is small on two original inputs
+
+**Lemma 123.1 (the approximate two-input consequence).** In the domain
+of Definition 122.1, let $\mathsf C$ be the event of any raw $d$ click
+after the first $A$ success. Define old-bank maps and masses by
+
+$$
+\begin{gathered}
+\mathcal C=\mathcal M_{\mathsf S\cap\mathsf C},\qquad
+\mathcal N=\mathcal M_{\mathsf S\setminus\mathsf C},\qquad
+\mathcal M_{\mathsf S}=\mathcal C+\mathcal N,\\
+c_x=\operatorname{Tr}\mathcal C(|x\rangle\langle x|),\qquad
+n_x=\operatorname{Tr}\mathcal N(|x\rangle\langle x|).
+\end{gathered}
+\tag{VII.95}
+$$
+
+Choose any unit right minimum-singular vector $v\in B$ of $K$, so that
+$\|Av\|=\sigma$ and $v\perp r$. If (VII.94) holds, then
+
+$$
+c_r\le2\delta,\qquad
+c_v\le(6+4\sqrt2)\delta\le12\delta.
+\tag{VII.96}
+$$
+
+Proof. First the event maps in (VII.95) exist on one fixed finite output
+even when histories allocate different banks. On each finite returning
+history, trace the added factors and all other systems while keeping the
+original factors by their actual identities. This is a trace-preserving
+mathematical marginal of that history's CP output. Integrate over a
+measurable event. The positive finite-dimensional Choi matrices have
+total trace bounded by $4$, since their trace is four times the event
+probability on $I_H/4$. Positive integrals therefore converge; finite
+matrix entries define a countably additive CP event measure on this
+fixed old output. Disjoint events add, and event inclusion gives CP
+domination. In particular $\mathcal C,\mathcal N$ are CP and
+$\mathcal C\le_{\rm CP}\mathcal M_{\mathsf S}$.
+This construction requires neither a common terminal laboratory nor
+a history-indexed Kraus density on its full retained output.
+
+On $\mathcal H_{\rm old}$ use the mathematical effect
+$E_\eta=I_{\rm rest}\otimes(I_{ud}-\eta)$. It annihilates $Fr$.
+Lemma 117.1, which has no recovery hypothesis, applies to the clicked
+selected subevent on $r$. It gives
+
+$$
+\frac{c_r}{2}
+ \le\operatorname{Tr}\bigl(E_\eta\mathcal C(|r\rangle\langle r|)\bigr)
+ \le\operatorname{Tr}\bigl(E_\eta\mathcal M_{\mathsf S}
+                                      (|r\rangle\langle r|)\bigr)
+ \le\delta.
+\tag{VII.97}
+$$
+
+The middle inequality is positivity of the complementary subevent;
+the last is (VII.94) and trace-norm duality for $0\le E_\eta\le I$.
+Its target expectation is zero even when the actual success mass
+differs from $p$. This proves the first inequality in (VII.96).
+
+For the second, use a two-dimensional untouched mathematical reference
+and set
+
+$$
+\begin{gathered}
+|\Phi\rangle=(|r\rangle|0\rangle+|v\rangle|1\rangle)/\sqrt2,
+\qquad |\Psi\rangle=(F\otimes I_2)|\Phi\rangle,\\
+\Xi_{\mathcal C}=(\mathcal C\otimes\operatorname{id}_2)
+                         (|\Phi\rangle\langle\Phi|),\qquad
+\Xi_{\mathsf S}=(\mathcal M_{\mathsf S}\otimes\operatorname{id}_2)
+                         (|\Phi\rangle\langle\Phi|),\\
+b=\operatorname{Tr}\bigl[(I-|\Psi\rangle\langle\Psi|)
+                                      \Xi_{\mathcal C}\bigr].
+\end{gathered}
+\tag{VII.98}
+$$
+
+CP domination gives $0\preceq\Xi_{\mathcal C}\preceq\Xi_{\mathsf S}$.
+The projection in (VII.98) annihilates the target
+$p|\Psi\rangle\langle\Psi|$, so (VII.94) gives $0\le b\le\delta$.
+The projection is on the ENTIRE old-bank/reference output; leakage
+outside the code contributes to $b$.
+
+Use the existing finite rectangular CP/Choi/Kraus representation for
+$\mathcal C$ restricted to $\operatorname{span}\{r,v\}$, writing its
+mathematical Kraus operators as $L_j$ with values in
+$\mathcal H_{\rm old}$. This is the finite representation supplied by
+[FiniteKrausRepresentation](../../../D5/S3/Quantum/Foundation/FiniteKrausRepresentation.lean),
+in particular $\mathtt{exists\_kraus\_of\_choi\_PSD}$ and
+$\mathtt{IsCompletelyPositive.exists\_kraus}$. No Kraus index becomes
+an accessible record. Choose a mathematical unitary $W$ on
+$\mathcal H_{\rm old}$ with $WFr=Fv$; such a unitary exists because
+$Fr,Fv$ are orthonormal. Under the reference-block identification
+$\mathcal H_{\rm old}\otimes\mathbb C^2
+ =\mathcal H_{\rm old}\oplus\mathcal H_{\rm old}$, put
+
+$$
+D(x\oplus y)=\sqrt2(y-Wx).
+\quad D|\Psi\rangle=0,\quad \|D\|=2,\quad
+D^\dagger D\preceq4(I-|\Psi\rangle\langle\Psi|).
+\tag{VII.99}
+$$
+
+Indeed $DD^\dagger=2(WW^\dagger+I)=4I$. The last inequality follows
+from the norm and the annihilated line: restrict the positive operator
+$D^\dagger D$ to its orthogonal complement. The finite representation
+has $\Xi_{\mathcal C}=\tfrac12\sum_j
+|L_jr\oplus L_jv\rangle\langle L_jr\oplus L_jv|$, so
+
+$$
+\begin{aligned}
+\sum_j\|L_jv-WL_jr\|^2
+ &=\operatorname{Tr}(D\Xi_{\mathcal C}D^\dagger)\le4b,\\
+\sqrt{c_v}
+ &=\|(L_jv)_j\|
+ \le\|(WL_jr)_j\|+\|(L_jv-WL_jr)_j\|\\
+ &\le\sqrt{c_r}+2\sqrt b
+ \le(\sqrt2+2)\sqrt\delta.
+\end{aligned}
+\tag{VII.100}
+$$
+
+Here the middle norm is the ordinary finite Hilbert direct-sum norm.
+Squaring proves (VII.96), including $\delta=0$. The vector $v$, reference
+probe, effect $E_\eta$, unitary $W$ and operator $D$ are proof devices.
+None grants a native gate, new measurement, reference preparation,
+physical disposal or quantum access to a retained archive. This argument
+uses approximate concentration around the returned code line, rather
+than the exact scalar-event conclusion of Lemma 118.1. $\square$
+
+## 124. The accepted no-click bound without exact recovery
+
+**Lemma 124.1 (tape inequalities for the two masses).** Under Definition
+122.1, choose a unit $v\in B$ with $\|Av\|=\sigma$ and use the masses
+of (VII.95). For any selected event $\mathsf S$ there is an
+input-independent classical probability space $(\Omega,\mu)$ and a
+measurable set $E\subseteq\Omega$, with $w=\mu(E)\le1$, such that
+
+$$
+n_v\le\sigma^2w,\qquad q_r\ge w-n_r.
+\tag{VII.101}
+$$
+
+This statement requires no exact or approximate success-recovery
+assumption; $n_v,n_r$ are the actual masses of (VII.95).
+
+Proof. Use the classical construction inside Lemma 119.1 before its
+scalar-recovery step. Carry the actual JOINT initial classical backing
+law, with its conditional retained quantum systems. Realize each
+subsequent standard-Borel classical conditional kernel using a fresh
+uniform coordinate, retaining dependence on the actual past. A
+countable sequence suffices for all finite step indices. This samples
+classical decisions only; occupation outcomes remain quantum instrument
+outcomes, not preassigned input-independent bits. No independent-seed
+factorization of the original backing is made.
+
+At fixed tape $\omega$, the formal all-no-click path is unique,
+including its actual native requests, refusals, control words and stop
+decisions. Let $E$ be the tapes where this path legally returns in
+$\mathsf S$ after finitely many steps. It is a measurable countable
+union of finite-return events. An infinite formal path is outside $E$;
+a zero-mass path is never assigned a conditional quantum state.
+
+For $\omega\in E$, the no-click correction BEFORE inserting the first
+$A$ is CP and trace nonincreasing: it consists of a finite product of
+the supplied unitary actions, no-click projections, holds and vacuum
+isometries, with the permitted native/service outputs. Its old-bank
+marginal is still CP and trace nonincreasing. On the unnormalized
+encoded input $FA|v\rangle\langle v|A^\dagger F^\dagger$ its selected
+output trace is therefore at most $\|Av\|^2=\sigma^2$.
+Integrating over $E$ gives $n_v\le\sigma^2\mu(E)$.
+The common post-first-success classical law used here is supplied by
+the exact first single-Kraus event in Definition 116.1, independently
+of any later approximate recovery. No scalar density
+$p_\omega\,\operatorname{id}_H$ for correction success is inferred.
+
+On the original $r$, the first event has mass one. Let
+$n_{r,\omega}$ be the probability of the unique finite selected
+no-click path on $\omega\in E$, extended by zero elsewhere. Thus
+$n_r=\int_E n_{r,\omega}\,d\mu$. Normalized total return on $r$
+and Fubini imply that almost every tape has conditional finite-return
+mass one. On such a tape in $E$, all returned histories other than
+its unique no-click history contain a raw click. The conditional click
+mass is consequently $1-n_{r,\omega}$. Tapes outside $E$ add
+nonnegative click mass. Integration gives $q_r\ge\mu(E)-n_r$.
+
+The no-click contraction and this complement argument concern different
+inputs on the same tape probability space. Their joint use is legitimate
+because the original backing and the fresh classical-kernel coordinates
+have an input-independent law; no independent realization of their
+separate extrema is being combined. All integrals involve probabilities
+or finite positive matrix measures. Countable additivity over finite
+returns suffices; a common depth, common allocated bank and integrable
+running cost are unnecessary. Positive nonreturn mass on an infinite
+no-click path would violate the explicit normalized-return premise,
+and is not converted into a completed failure. $\square$
+
+## 125. Quantitative full-original-space recovery obstruction
+
+**Theorem 125.1 (joint success, recovery error and standard disturbance).**
+For every original apparatus and backing of Definition 122.1, every
+measurable normalized-total-return adaptive native policy in that domain,
+and every $p,\delta\ge0$ satisfying (VII.94),
+
+$$
+\begin{gathered}
+p\le\sigma^2+\delta,\\
+q_r\ge\max\{0,\ p(\sigma^{-2}-1)
+                         -(13\sigma^{-2}+1)\delta\},
+\qquad \epsilon_\eta\ge q_r/2,\\
+\boxed{\quad
+p(1-\sigma^2)\le2\sigma^2\epsilon_\eta+(13+\sigma^2)\delta.
+\quad}
+\end{gathered}
+\tag{VII.102}
+$$
+
+The error $\delta$ is unhalved, $\epsilon_\eta$ is halved, and all
+success masses start from the original normalized input. No common
+resource bound is part of the assertion.
+
+Proof. Trace-norm duality applied to (VII.94) on a unit original vector
+$x$ gives
+$|\operatorname{Tr}\mathcal M_{\mathsf S}(|x\rangle\langle x|)-p|
+\le\delta$. On the minimum-singular vector $v$, all selected success
+lies after a first event of mass $\sigma^2$. Therefore
+$p-\delta\le\operatorname{Tr}\mathcal M_{\mathsf S}
+(|v\rangle\langle v|)\le\sigma^2$, proving the first bound.
+Using Lemma 123.1 on $v$ and positivity on $r$ gives
+
+$$
+\begin{aligned}
+n_v&=\operatorname{Tr}\mathcal M_{\mathsf S}(|v\rangle\langle v|)-c_v
+       \ge p-\delta-12\delta=p-13\delta,\\
+n_r&\le\operatorname{Tr}\mathcal M_{\mathsf S}(|r\rangle\langle r|)
+       \le p+\delta.
+\end{aligned}
+\tag{VII.103}
+$$
+
+Lemma 124.1 implies $w\ge n_v/\sigma^2$, so
+$q_r\ge w-n_r\ge(p-13\delta)/\sigma^2-(p+\delta)$.
+Combine with $q_r\ge0$ to obtain its stated lower bound. This remains
+valid when $p-13\delta<0$ and uses no normalization of a rare branch.
+
+For the unconditional standard, split the trace-one terminal marginal
+on $r$ into clicked and unclicked parts of masses $q_r$ and $1-q_r$.
+Lemma 117.1 bounds the clicked eta expectation by $q_r/2$; positivity
+bounds the other by $1-q_r$. Hence
+$\operatorname{Tr}(\eta\tau_{ud}^{(r)})\le1-q_r/2$.
+Since $\tau_{ud}^{(r)}-\eta$ has trace zero, the mathematical two-outcome
+test $\{\eta,I-\eta\}$ gives
+$\epsilon_\eta\ge1-\operatorname{Tr}(\eta\tau_{ud}^{(r)})\ge q_r/2$.
+Finally multiply the lower bound on $q_r$ by $\sigma^2$ and use
+$q_r\le2\epsilon_\eta$ to get the boxed inequality. $\square$
+
+**Corollary 125.2 (growing finite resources cannot remove both errors).**
+Fix $0<\sigma<1$ and $p_0>0$. For any sequence of policies in the same
+original domain with advertised joint masses $p\ge p_0$, the errors
+$\delta$ and $\epsilon_\eta$ cannot both tend to zero, even when policy
+depths and acquired banks grow without a common bound. In particular,
+
+$$
+\epsilon_\eta=0\ \Longrightarrow\
+\delta\ge\frac{p_0(1-\sigma^2)}{13+\sigma^2},\qquad
+\delta=0\ \Longrightarrow\
+\epsilon_\eta\ge\frac{p_0(1-\sigma^2)}{2\sigma^2}.
+\tag{VII.104}
+$$
+
+Proof. The boxed bound of Theorem 125.1 has left side at least
+$p_0(1-\sigma^2)>0$ and coefficients independent of those resources.
+Taking a hypothetical simultaneous zero-error limit is a contradiction;
+setting either error to zero gives the displayed bounds. At $\delta=0$
+the exact result of Theorem 120.1 is recovered, rather than a positive
+corrector or a new attainable success probability. No optimality of
+the constants in the approximate estimate is asserted. $\square$
+
+## 126. Conditional transfer for a complete finite commission
+
+**Definition 126.1 (matched actual and exact-menu outputs).** Fix one
+finite commission using the original apparatus namespace, and let
+$\mathcal T_{\rm act},\mathcal T_{\rm ref}$ be its complete normalized
+actual output channel and an exact-menu reference channel. The reference
+satisfies Definition 122.1, including the exact first $A$ and total
+return. Both channels start BEFORE the first-stage instrument and
+include all its failures, every correction outcome and the same original
+$H/R$ input. They retain the commission's own matched literal records
+and original identities, not only a final coarse label or quantum
+marginal. Suppose the uniform complete-output comparison is
+
+$$
+\sup_{R,\rho_{HR}}\frac12
+\left\|[(\mathcal T_{\rm act}-\mathcal T_{\rm ref})
+                       \otimes\operatorname{id}_R](\rho_{HR})\right\|_1
+\le\zeta.
+\tag{VII.105}
+$$
+
+Each side includes the common initial backing with its correlations,
+actual preparation/grant and detector outputs, command endpoints,
+signs, digits, enable fields and catalogue identifiers, native versions,
+source/root/header/gap bindings, controls, refusals, locks, phase/latch,
+pending input/output, actual successor and Print/End/ACK/Return fields
+required by Definition 112.1. The selected event is the SAME measurable
+event $\mathsf S$ on these matched records, restricted to first success.
+The old-bank target $F$ and advertised joint mass $p$ are common to the
+comparison. Added systems remain actual outputs even when subsequently
+marginalized mathematically. No matching of labels between DIFFERENT
+commissions is required.
+
+Define $\delta_{\rm act}$ and $\delta_{\rm ref}$ as the suprema of the
+unhalved success-map errors in (VII.94), using these channels, this
+event and the same $p,F$. Define $\epsilon_{\rm act}$ and
+$\epsilon_{\rm ref}$ as their unconditional terminal same-$u,d$
+half-trace errors from $\eta$ on original $r$. Actual first-stage
+failures are included in $\epsilon_{\rm act}$ even though their
+reference mass on $r$ is zero.
+
+**Theorem 126.2 (complete-output perturbation of the obstruction).**
+Under Definition 126.1,
+
+$$
+\begin{gathered}
+\delta_{\rm ref}\le\delta_{\rm act}+2\zeta,\qquad
+\epsilon_{\rm ref}\le\epsilon_{\rm act}+\zeta,\\
+\boxed{\quad
+p(1-\sigma^2)
+\le2\sigma^2\epsilon_{\rm act}
+ +(13+\sigma^2)\delta_{\rm act}
+ +2(13+2\sigma^2)\zeta.
+\quad}
+\end{gathered}
+\tag{VII.106}
+$$
+
+Proof. Select $\mathsf S$ on the matched classical records and take
+the old-bank marginal by the same CP trace-nonincreasing map on both
+outputs. Such a map contracts the trace norm of a Hermitian input:
+decompose it into positive and negative parts, use positivity and
+trace nonincrease on each part, and apply the triangle inequality.
+Thus (VII.105) bounds the UNHALVED discrepancy of the selected success
+outputs by $2\zeta$, uniformly with the same untouched reference.
+Triangle inequality with the common $pF\rho F^\dagger$ target gives
+the first bound in (VII.106). Taking the unconditional same-$u,d$
+marginal on $r$ instead is trace preserving and gives a HALF-trace
+discrepancy at most $\zeta$. Its triangle inequality gives the second.
+Apply Theorem 125.1 to the exact-menu reference, then substitute these
+two bounds. The coefficient of $\zeta$ is
+$2\sigma^2+2(13+\sigma^2)=2(13+2\sigma^2)$. $\square$
+
+The complete-channel premise (VII.105) is essential to this consumer.
+Definition 112.1 and Theorem 112.2 supply the finite accounting pattern:
+matched records, one joint ingress budget, every expanded slot and
+detector, and the actual finite native interleaving. A particular
+commission may use that pattern when its full interfaces and separate
+physical accuracy certificates are supplied. It does not automatically
+certify an arbitrary raw correction policy, and a small resource-marginal
+preparation error is not its joint ingress premise. No uniform hardware
+noise bound over all unbounded policies follows. Across commissions,
+arbitrarily long command records need not converge to one record label;
+each application of (VII.106) uses only its own matched comparison.
+
+At a pending cut the reference remains the actually executed prefix,
+as in Theorem 112.2, including dirty helpers and owed actions. Its
+prefix comparison does not turn it into a normalized completed return
+or authorize applying (VII.102) or (VII.106) to that unfinished cut.
+A completed channel must first satisfy the return premise of the
+corresponding theorem.
+
+## 127. The retained-call consumer and mathematical scope
+
+**Definition 127.1 (the original recovery consumer).** The consumer is
+the proposed strengthening of Theorem 109.1's existing $B/R$ inverse
+recovery to the entire original $H/R$, while keeping the SAME $u,d$
+standard for a further returned VI48 or VI66 call. Theorem 109.1 already
+returns $\eta$ on every leaf, with $Q=P_r+\sigma P_B$ on double success;
+its full-$H$ coherence and mass blocks remain exactly (VII.71).
+Theorem 125.1 is the necessary quantitative restriction on a native
+replacement correction satisfying the stronger mass-sensitive target.
+Theorem 126.2 gives its conditional finite-commission consequence when
+the complete actual/reference comparison is supplied. Neither result
+constructs a successful full-$H$ corrector.
+
+Small $\delta$ and a small unconditional $\epsilon_\eta$ are not a
+sufficient returned-call interface. They alone do not certify all next
+call inputs, same-factor decoupling from the retained laboratory, clean
+helpers, detector readiness, current rights, enrollment, controls,
+supplies or progress. Approximate old-bank marginals in particular do
+not assert the exact pure-factor return used by the ideal macros.
+No claim that the next call is executable or accurate follows without
+its own complete premises. Raw hopping and the original native
+requests retain their legal domains; a disturbed standard does not
+remove $P/S$, Next or their pending obligations.
+
+**Definition 127.2 (attribution and supplier domains).** The
+repo-derived inference in §§123--126 combines the source-specific
+clicked-$r$ ceiling with a two-input leakage estimate and an
+accepted-no-click mass comparison. Exact recovery no longer supplies
+event scalarity; (VII.98)--(VII.100) are the approximate replacement.
+Finite-dimensional CP/Choi/Kraus representation, Hilbert-space norm
+inequalities, trace-distance duality and complete-channel contraction
+are standard intermediate tools, not new general proof packaging.
+
+The rectangular representation is reused from
+[FiniteKrausRepresentation](../../../D5/S3/Quantum/Foundation/FiniteKrausRepresentation.lean).
+[KrausLeftInverseNecessity](../../../D5/S3/Quantum/Recovery/KrausLeftInverseNecessity.lean)
+supplies exact represented identity scalarity, not an approximate
+scalar-event law.
+[SparseProbeCoercivity](../../../D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.lean),
+including its private squared-difference, matrix-vector and diagonal
+minimum support, bounds scalar defects for its finite square-matrix
+probes; it does not supply the native click/tape relation.
+[FiniteDiamondDistance](../../../D5/S3/Quantum/Foundation/FiniteDiamondDistance.lean)
+uses stabilized unhalved finite-channel distance, whereas
+[OriginalCompleteOutputStability](../../../D5/S3/Quantum/Fibers/OriginalCompleteOutputStability.lean)
+and its private norm/congruence support concern their specified
+five-mode process. None changes the present source or controls.
+
+The primary-source boundaries of Definition 121.2 continue to matter.
+Wu and coauthors,
+[*Operational Resource Theory of Imaginarity*, Theorem 2, (5)](https://arxiv.org/html/2007.14847v2),
+give the finite-dimensional fidelity-of-imaginarity formula and hence
+the real-state ceiling $1/2$. Lemma 117.1 supplies its actual native
+first-click applicability here. Jordan--Korotkov,
+[*Uncollapsing the wavefunction by undoing quantum measurements*,
+§§II.2--II.3, (6)--(8)](https://arxiv.org/html/0906.3468v1),
+bound the scaled inverse's joint numerator by the minimum first-event
+eigenvalue; their conditional probability divides by that input's
+first-event mass. This distinction is retained in (VII.94), and their
+allowed recovery controls do not supply this same-standard obstruction.
+Son and coauthors,
+[Supplement IV.3, (S17)--(S18)](https://arxiv.org/html/2412.06900v2),
+give strict catalytic replication using real CNOT and H. Those controls
+are outside the present sole-excitation native menu. Thus the present
+bound is not a general no-catalysis principle. These sources supply
+standard mechanisms; no exhaustive literature or priority claim for
+the quantitative synthesis is made.
+
+The full-filename
+[QUANTUM_ORIGIN_PURE_ENDPOINT_RECIPROCITY_AND_QUANTUM_RECONSTRUCTION_XVII](QUANTUM_ORIGIN_PURE_ENDPOINT_RECIPROCITY_AND_QUANTUM_RECONSTRUCTION_XVII.md),
+§182, retains its original universal zero contacts and complete actual
+control/reference contracts in its reconstruction. The distinct
+[QUANTUM_ORIGIN_BINARY_NORMAL_DIFFERENCES_AND_ORIENTATION_XVII](QUANTUM_ORIGIN_BINARY_NORMAL_DIFFERENCES_AND_ORIENTATION_XVII.md),
+§§184--185, uses its full original zero-test menu, common positive
+deletion maps and, for §185's reconstruction, exposed actual two-point
+balls. Its finite-composite quantum dictionary still separates
+mathematical CP/TNI from event saturation and actual instruments.
+These are positive suppliers on their declared domains; their deletion
+maps or full controls do not become a reset, disposer, $r$ edge or
+extra effect in Definition 122.1.
+
+**Definition 127.3 (remaining boundaries).** The unbounded-policy
+inequality keeps exact original ingress, an independent pure initial
+$\eta$, the exact first $A$, the native instruments and normalized
+finite total return. Only selected recovery and unconditional terminal
+standard return are measured approximately there. No robustness to
+arbitrary noisy unbounded controls, approximate first-click localization,
+nonreturning executions, renewed standards or enlarged menus is inferred.
+The finite actual-device transfer has precisely the additional complete
+comparison premise (VII.105). Physical preparation, calibration and
+apparatus existence remain conditional inputs.
+
+The original all-layout immutable-recorder question is separate and
+remains open. IV19 supplies a full effective recorder with linear
+additive overhead; VII100--104 refute logarithmic excess for that fixed
+$J$ only. Another admissible logarithmic recorder and a class-wide
+impossibility remain unresolved. V's finite annotated and all-phase
+recoveries, VI47/66 and VII105--121 retain their existing positive and
+negative results on their actual carriers. The full common-recovery
+objective, both authentic entrances and every declared lawful future
+are unchanged. No acquisition theorem, constant optimality or enduring
+goal completion is claimed by this obstruction.
+
+## 追加锚（本行以下为增补区）

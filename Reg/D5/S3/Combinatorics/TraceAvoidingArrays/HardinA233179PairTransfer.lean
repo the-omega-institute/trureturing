@@ -172,5 +172,71 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end Recurrence
+namespace ClassRep
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer (Col relabel)
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Col) (fun _ => Col)
+def actual : Realization signature :=
+  realize signature (fun _ _ c => representatives (orbit c)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (0,0,0,0,0,1)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ c : Col, ∃ e : Equiv.Perm (Fin 3), relabel e c = R.readout () () c
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨e, he⟩ := h (0,0,0,0,0,0)
+  have h0 := congrArg Prod.fst he
+  have h1 := congrArg (fun c : Col => c.2.2.2.2.2) he
+  change e 0 = 0 at h0
+  change e 0 = 1 at h1
+  exact (by decide : (0 : Fin 3) ≠ 1) (h0.symm.trans h1)
+private theorem actual_dependence :
+    actual.readout () () (0,0,0,0,0,0) ≠ actual.readout () () (0,0,0,0,0,1) := by
+  decide
+
+def family : Registration arena (type_of% @class_rep) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@class_rep, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    exact ⟨(), (0,0,0,0,0,0), (0,0,0,0,0,1), actual_dependence⟩
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@class_rep) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer.ClassRep.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer.ClassRep.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end ClassRep
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer
