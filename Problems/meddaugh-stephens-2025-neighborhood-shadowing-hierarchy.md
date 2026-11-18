@@ -113,3 +113,13 @@ Baylor's November 6, 2026 announcement confirms Ellie Stephens' dissertation
 concerns neighborhood shadowing, but does not state a hierarchy theorem;
 the full dissertation was unavailable. Whether it contains an earlier
 answer remains unverified.
+
+## ASSUMED-UNVERIFIED
+
+The primary correspondence uses Definition 2.1's fixed finite tracing set
+and initial diameter, with a genuine compatible product metric. The
+inspected primary v1 poses Questions 5.1 and 5.2. The full Stephens
+dissertation and exhaustive worldwide priority comparison remain
+unverified; the announced defense is not a theorem-level comparison.
+Native Lean proofs and canonical freezes do not assert remote CI success,
+merged publication, unique status or completed four-slot registration.
