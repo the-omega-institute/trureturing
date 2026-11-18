@@ -47,7 +47,7 @@ private lemma square_differentiable {z : ℂ} (hz : ‖z‖ < 1) :
   filter_upwards [(isOpen_lt continuous_norm continuous_const).mem_nhds hz] with w hw
   exact square_half hw
 
-private lemma literal_differentiable (out out' : Bool) (p q : ℕ) {z : ℂ}
+lemma literal_differentiable (out out' : Bool) (p q : ℕ) {z : ℂ}
     (hz : ‖z‖ < 1) : DifferentiableAt ℂ (externalT out p out' q) z := by
   have hX := (hasDerivAt_externalVector out p hz).differentiableAt
   have hY := (hasDerivAt_externalVector out' q hz).differentiableAt
