@@ -10,10 +10,25 @@ open scoped BigOperators
 open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical
-open BalancedCriticalSpectrum (Q IsBalanced switchingVector flip_adj)
+open BalancedCriticalSpectrum (Q IsBalanced switchingVector flip_adj directionEdges
+  direction_edge_count)
 local notation "flip" => BalancedCriticalSpectrum.flip
 attribute [local instance] Classical.propDecidable
-open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+open private huangMatrix cubeParity from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+open private paritySide parity_bipartite parity_union from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
+open private directions mem_directions from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+open private shell from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+open private sixty_six_distance_seven_le_eight from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+open private coordinate_profile_weight_bound from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
+open private distance_seven_agreement_excludes_minority from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerWeightsProbe
+open private agreeing_coordinate_unused unusedDirections from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9PartnerGraphProbe
 open private matrix_flip_prefix from D5.S3.Combinatorics.Graph.HypercubeCritical.GrayGridComponent
 open private theta theta_flip theta_unit prod_true_sign from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GridWedgeSigning
@@ -41,7 +56,8 @@ private lemma matrix_true_prefix {n : ℕ} (x : Q n) (i : Fin n) :
   have hcount : ((univ : Finset (Fin n)).filter (· < i)).card = i.val := by
     rw [show univ.filter (· < i) = Iio i by ext j; simp, Fin.card_Iio]
   rw [hcount]
-  push_cast [truePrefixSign] <;> rfl
+  push_cast [truePrefixSign]
+  rfl
 
 /-- A balanced cubic support has integral TRUE-prefix switching signs and
 obeys the signed neighbor equation at every vertex of the nine-cube. -/
@@ -94,5 +110,68 @@ theorem q9_integral_true_prefix_switching {C : Finset (Q 9)}
     exact_mod_cast heq
 
 #print axioms q9_integral_true_prefix_switching
+
+private lemma cubic_parity_half_card {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (b : Bool) :
+    (C.filter (fun x => cubeParity x = b)).card = 33 := by
+  have hdegrees := SimpleGraph.isBipartiteWith_sum_degrees_eq (parity_bipartite C)
+  simp only [hreg.degree_eq, sum_const, smul_eq_mul] at hdegrees
+  have hunion := congrArg Finset.card (parity_union C)
+  rw [card_union_of_disjoint (by
+    apply Finset.disjoint_left.mpr
+    intro x hx hy
+    exact Bool.false_ne_true ((mem_filter.mp hx).2.symm.trans (mem_filter.mp hy).2)),
+    card_univ, show Fintype.card (C : Set (Q 9)) = 66 by simpa using hC] at hunion
+  have himage : (paritySide C b).image Subtype.val = C.filter (fun x => cubeParity x = b) := by
+    ext x
+    constructor
+    · intro hx
+      obtain ⟨y, hy, rfl⟩ := mem_image.mp hx
+      exact mem_filter.mpr ⟨y.property, (mem_filter.mp hy).2⟩
+    · intro hx
+      exact mem_image.mpr
+        ⟨⟨x, (mem_filter.mp hx).1⟩, mem_filter.mpr ⟨mem_univ _, (mem_filter.mp hx).2⟩, rfl⟩
+  rw [← himage, card_image_of_injective _ Subtype.val_injective]
+  cases b <;> omega
+
+/-- The support of a 66-point balanced cubic component gives a candidate profile
+and integer labels satisfying the signed equations and distance constraints. -/
+theorem q9_sixty_six_normalized_signed_constraints {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C) :
+    ∃ (S : Finset (Q 9)) (r : Fin 9 → ℤ) (z : Q 9 → ℤ),
+      List.ofFn r ∈ sixtySixCandidateProfiles ∧ S.card = 66 ∧
+      ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3 ∧ IsBalanced S ∧
+      (∀ b, (S.filter (fun x => cubeParity x = b)).card = 33) ∧
+      (∀ i, ((S.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33) ∧
+      (∀ i, directionEdges S i = 11) ∧
+      (∀ x ∈ S, ∀ y ∈ S, hammingDist x y ≤ 7) ∧
+      (∀ x ∈ S, (∑ i, if x i then r i else 0) ≤ ((∑ i, r i) - 4) / 2) ∧
+      (∀ x ∈ S, (shell S x 7).card ≤ 8 ∧
+        2 * (∑ i, if x i then r i else 0) + 12 ≤ (∑ i, r i) + (shell S x 7).card) ∧
+      (∀ x ∈ S, ∀ y ∈ S, hammingDist x y = 7 → ∀ i, x i = y i →
+        flip x i ∉ S ∧ (x i = true → r i ≤ 1)) ∧
+      (∀ x ∈ S, z x = 1 ∨ z x = -1) ∧ (∀ x ∉ S, z x = 0) ∧
+      (∀ x ∈ S, ∀ i, flip x i ∈ S → truePrefixSign x i = z x * z (flip x i)) ∧
+      ∀ x, (∑ i, truePrefixSign x i * z (flip x i)) = 3 * z x := by
+  obtain ⟨S, r, hS, hregS, hbS, hd, hmono, hr, hhalf, hw, hm⟩ :=
+    exists_sorted_minority_cube_support hC hreg hb
+      (huang_balanced_cubic_sixty_six_diameter_le_seven hC hreg hb)
+  obtain ⟨z, hsign, hzero, hedge, hsum⟩ := q9_integral_true_prefix_switching hregS hbS
+  refine ⟨S, r, z, sorted_deficits_mem_sixtySixCandidateProfiles r hmono hr hm,
+    hS, hregS, hbS, cubic_parity_half_card hS hregS, hhalf, ?_, hd, hw, ?_, ?_,
+    hsign, hzero, hedge, hsum⟩
+  · intro i
+    have h := direction_edge_count (d := 3) S hregS hbS i
+    omega
+  · intro x hx
+    exact ⟨sixty_six_distance_seven_le_eight hS hregS hbS hd hx,
+      coordinate_profile_weight_bound hS hregS hbS (fun _ => true) r hhalf hx⟩
+  · intro x hx y hy hxy i hi
+    have hunused := agreeing_coordinate_unused hd hy hxy hi
+    refine ⟨fun hflip => (mem_sdiff.mp hunused).2 ((mem_directions S x i).mpr hflip), ?_⟩
+    exact distance_seven_agreement_excludes_minority hS hregS hbS hd
+      (fun _ => true) r hr hhalf hx hy hxy hi
+
+#print axioms q9_sixty_six_normalized_signed_constraints
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
