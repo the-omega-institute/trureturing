@@ -25,17 +25,17 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Weil.ZetaBridge.FermiMellin
 noncomputable section
 
-private def fermi (t : ℝ) : ℝ := (1 + Real.exp t)⁻¹
+def fermi (t : ℝ) : ℝ := (1 + Real.exp t)⁻¹
 
 private def fermiOne (t : ℝ) : ℝ := fermi t * (fermi t - 1)
 
-private theorem fermi_bounds (t : ℝ) : 0 < fermi t ∧ fermi t < 1 := by
+theorem fermi_bounds (t : ℝ) : 0 < fermi t ∧ fermi t < 1 := by
   have he := Real.exp_pos t
   constructor
   · exact inv_pos.mpr (by linarith)
   · exact inv_lt_one_of_one_lt₀ (by linarith)
 
-private theorem fermi_le_exp_neg (t : ℝ) : fermi t ≤ Real.exp (-t) := by
+theorem fermi_le_exp_neg (t : ℝ) : fermi t ≤ Real.exp (-t) := by
   rw [fermi, Real.exp_neg]
   simpa only [one_div] using one_div_le_one_div_of_le (Real.exp_pos t)
     (by linarith : Real.exp t ≤ 1 + Real.exp t)
@@ -47,7 +47,7 @@ private theorem hasDerivAt_fermi (t : ℝ) : HasDerivAt fermi (fermiOne t) t := 
   field_simp
   ring
 
-private theorem continuous_fermi : Continuous fermi :=
+theorem continuous_fermi : Continuous fermi :=
   continuous_iff_continuousAt.mpr fun t ↦ (hasDerivAt_fermi t).continuousAt
 
 private def mellinExponential (s : ℂ) (n : ℕ) (t : ℝ) : ℂ :=

@@ -27,17 +27,14 @@ def fermiLog (u : ℝ) : ℝ := log (1 + exp (-u))
 /-- Entropy of the logistic occupancy. -/
 def entropy (u : ℝ) : ℝ := binEntropy (logistic u)
 
-private lemma logistic_range (u : ℝ) : 0 < logistic u ∧ logistic u < 1 := by
-  have he := exp_pos u
-  exact ⟨inv_pos.mpr (by linarith), inv_lt_one_of_one_lt₀ (by linarith)⟩
+private lemma logistic_range (u : ℝ) : 0 < logistic u ∧ logistic u < 1 :=
+  D5.S3.Weil.ZetaBridge.FermiMellin.fermi_bounds u
 
-private lemma logistic_le_exp (u : ℝ) : logistic u ≤ exp (-u) := by
-  rw [logistic, exp_neg]
-  exact inv_anti₀ (exp_pos u) (by linarith)
+private lemma logistic_le_exp (u : ℝ) : logistic u ≤ exp (-u) :=
+  D5.S3.Weil.ZetaBridge.FermiMellin.fermi_le_exp_neg u
 
-private lemma logistic_continuous : Continuous logistic := by
-  unfold logistic
-  exact (continuous_const.add continuous_exp).inv₀ (fun u => by positivity)
+private lemma logistic_continuous : Continuous logistic :=
+  D5.S3.Weil.ZetaBridge.FermiMellin.continuous_fermi
 
 private lemma fermiLog_deriv (u : ℝ) : HasDerivAt fermiLog (-logistic u) u := by
   have h := (((hasDerivAt_id u).neg.exp).const_add 1).log (by positivity : 1 + exp (-u) ≠ 0)
@@ -75,11 +72,16 @@ private lemma fermi_real_one : IntegrableOn logistic (Ioi 0) ∧
     1 (by norm_num) 1 (by norm_num)
   have he := D5.S3.Weil.ZetaBridge.FermiMellin.fermi_mellin_at_one 1 (by norm_num)
   have hp (u : ℝ) : ((u : ℂ) ^ ((1 : ℂ) - 1) / ((exp (1 * u) : ℂ) + 1)).re = logistic u := by
-    simp [logistic, one_div, add_comm]
+    norm_num only [sub_self, Complex.cpow_zero, one_mul]
+    rw [← Complex.ofReal_one, ← Complex.ofReal_add, ← Complex.ofReal_div, Complex.ofReal_re]
+    simp only [logistic, one_div, add_comm]
   refine ⟨hi.re.congr (Eventually.of_forall hp), ?_⟩
-  have h := congrArg Complex.re he
-  rw [← integral_re hi] at h
-  simpa only [hp, Complex.ofReal_one, div_one, Complex.ofReal_re] using h
+  calc
+    (∫ u in Ioi (0 : ℝ), logistic u) = ∫ u in Ioi (0 : ℝ),
+        ((u : ℂ) ^ ((1 : ℂ) - 1) / ((exp (1 * u) : ℂ) + 1)).re := by
+      exact integral_congr_ae (Eventually.of_forall (fun u => (hp u).symm))
+    _ = _ := integral_re hi
+    _ = log 2 := by rw [he]; norm_num
 
 private lemma fermi_real_two : IntegrableOn (fun u => u * logistic u) (Ioi 0) ∧
     (∫ u in Ioi (0 : ℝ), u * logistic u) = π ^ 2 / 12 := by
@@ -89,13 +91,20 @@ private lemma fermi_real_two : IntegrableOn (fun u => u * logistic u) (Ioi 0) �
     1 (by norm_num) 2 (by norm_num) (by norm_num)
   have hp (u : ℝ) : ((u : ℂ) ^ ((2 : ℂ) - 1) / ((exp (1 * u) : ℂ) + 1)).re =
       u * logistic u := by
-    norm_num [logistic, div_eq_mul_inv, add_comm, Complex.mul_re, Complex.inv_re]
+    norm_num only [show (2 : ℂ) - 1 = 1 by norm_num, Complex.cpow_one, one_mul]
+    rw [← Complex.ofReal_one, ← Complex.ofReal_add, ← Complex.ofReal_div, Complex.ofReal_re]
+    simp only [logistic, div_eq_mul_inv, add_comm]
   refine ⟨hi.re.congr (Eventually.of_forall hp), ?_⟩
-  have h := congrArg Complex.re he
-  rw [← integral_re hi] at h
-  norm_num [hp, Complex.Gamma_nat_eq_factorial, riemannZeta_two,
-    Complex.cpow_neg_one, Complex.mul_re, Complex.div_re] at h
-  convert h using 1 <;> ring
+  calc
+    (∫ u in Ioi (0 : ℝ), u * logistic u) = ∫ u in Ioi (0 : ℝ),
+        ((u : ℂ) ^ ((2 : ℂ) - 1) / ((exp (1 * u) : ℂ) + 1)).re := by
+      exact integral_congr_ae (Eventually.of_forall (fun u => (hp u).symm))
+    _ = _ := integral_re hi
+    _ = π ^ 2 / 12 := by
+      rw [he, show Complex.Gamma 2 = 1 by simpa using Complex.Gamma_nat_eq_factorial 1,
+        riemannZeta_two, show (1 : ℂ) - 2 = -1 by norm_num, Complex.cpow_neg_one]
+      norm_num [Complex.div_re, Complex.mul_re]
+      <;> ring
 
 private lemma exp_integrable : IntegrableOn (fun u : ℝ => exp (-u)) (Ioi 0) := by
   simpa using integrableOn_exp_mul_Ioi (a := -1) (by norm_num) 0
@@ -120,7 +129,7 @@ private lemma mul_fermiLog_limit : Tendsto (fun u : ℝ => u * fermiLog u) atTop
 private lemma integral_fermiLog : (∫ u in Ioi (0 : ℝ), fermiLog u) = π ^ 2 / 12 := by
   have hd (u : ℝ) : HasDerivAt (fun v => v * fermiLog v)
       (fermiLog u - u * logistic u) u := by
-    convert (hasDerivAt_id u).mul (fermiLog_deriv u) using 1 <;> simp <;> ring
+    convert (hasDerivAt_id u).mul (fermiLog_deriv u) using 1 <;> dsimp <;> ring
   have h := integral_Ioi_of_hasDerivAt_of_tendsto'
     (fun u _ => hd u) (fermiLog_integrable.sub fermi_real_two.1) mul_fermiLog_limit
   rw [integral_sub fermiLog_integrable fermi_real_two.1, fermi_real_two.2] at h
@@ -140,24 +149,28 @@ private lemma entropy_integral : IntegrableOn entropy (Ioi 0) ∧
 
 private lemma logistic_antitone : Antitone logistic := by
   intro u v huv
-  exact inv_anti₀ (by positivity) (add_le_add_left (exp_le_exp.mpr huv) 1)
+  exact inv_anti₀ (by positivity) (add_le_add_right (exp_le_exp.mpr huv) 1)
 
 private lemma entropy_antitone : AntitoneOn entropy (Ici 0) := by
   intro u hu v hv huv
   apply binEntropy_strictMonoOn.monotoneOn
   · exact ⟨(logistic_range v).1.le, by
       have h := logistic_antitone hv
-      simpa [logistic] using h⟩
+      norm_num [logistic] at h
+      exact h⟩
   · exact ⟨(logistic_range u).1.le, by
       have h := logistic_antitone hu
-      simpa [logistic] using h⟩
+      norm_num [logistic] at h
+      exact h⟩
   · exact logistic_antitone huv
 
 private lemma envelope_integrable :
     IntegrableOn (fun u : ℝ => (1 + u) * exp (-u)) (Ioi 0) := by
   have h : IntegrableOn (fun u : ℝ => u * exp (-u)) (Ioi 0) := by
-    simpa [mul_comm] using (GammaIntegral_convergent (s := 2) (by norm_num))
-  simpa [add_mul] using exp_integrable.add h
+    have h := GammaIntegral_convergent (s := 2) (by norm_num)
+    norm_num at h
+    simpa only [mul_comm] using h
+  simpa only [Pi.add_apply, add_mul, one_mul] using exp_integrable.add h
 
 private lemma envelope_tail {U : ℝ} (hU : 0 ≤ U) :
     (∫ u in Ioi U, (1 + u) * exp (-u)) = (U + 2) * exp (-U) := by
@@ -169,9 +182,9 @@ private lemma envelope_tail {U : ℝ} (hU : 0 ≤ U) :
   have hd (u : ℝ) : HasDerivAt (fun v : ℝ => -(v + 2) * exp (-v))
       ((1 + u) * exp (-u)) u := by
     convert (((hasDerivAt_id u).add_const 2).neg).mul ((hasDerivAt_id u).neg.exp) using 1
-    <;> simp <;> ring
+    <;> dsimp <;> ring
   have h := integral_Ioi_of_hasDerivAt_of_tendsto' (fun u _ => hd u) hi hl
-  simpa using h
+  convert h using 1 <;> ring
 
 private lemma entropy_truncated {U : ℝ} (hU : 0 ≤ U) :
     π ^ 2 / 6 - (U + 2) * exp (-U) ≤ ∫ u in (0 : ℝ)..U, entropy u := by
@@ -204,7 +217,7 @@ def Mesh.mass (G : Mesh) : ℝ :=
 private lemma step_pos (G : Mesh) : 0 < G.step := by
   exact div_pos G.U_pos (by exact_mod_cast G.n_pos)
 private lemma node_nonneg (G : Mesh) (i : ℕ) : 0 ≤ G.node i := by
-  dsimp [Mesh.node]; positivity
+  exact mul_nonneg (Nat.cast_nonneg i) (step_pos G).le
 private lemma node_step (G : Mesh) (i : ℕ) : G.node (i+1) - G.node i = G.step := by
   simp [Mesh.node, Nat.cast_add, Nat.cast_one]; ring
 private lemma node_end (G : Mesh) : G.node G.n = G.U := by
@@ -217,15 +230,16 @@ private lemma cell_cost (G : Mesh) (i : ℕ) :
       (∫ u in G.node i..G.node (i+1), u * logistic u) +
       G.step * ∫ u in G.node i..G.node (i+1), logistic u := by
   have hab : G.node i ≤ G.node (i+1) := by linarith [step_pos G, node_step G i]
-  have hq := logistic_continuous.intervalIntegrable (a := G.node i) (b := G.node (i+1))
+  have hq := logistic_continuous.intervalIntegrable (μ := volume) (G.node i) (G.node (i+1))
   have huq := (continuous_id.mul logistic_continuous).intervalIntegrable
-    (a := G.node i) (b := G.node (i+1))
-  have h := intervalIntegral.integral_mono_on_of_le_Ioo hab intervalIntegrable_const
-    (huq.add (hq.const_mul G.step)) (fun u hu => ?_)
-  · rw [intervalIntegral.integral_const, intervalIntegral.integral_add huq (hq.const_mul _),
-      intervalIntegral.integral_const_mul, node_step, smul_eq_mul] at h
-    simpa [mul_assoc] using h
-  · have hqu := logistic_antitone hu.2.le
+    (μ := volume) (G.node i) (G.node (i+1))
+  have h : (∫ _ in G.node i..G.node (i+1),
+      G.node (i+1) * logistic (G.node (i+1))) ≤
+      ∫ u in G.node i..G.node (i+1), u * logistic u + G.step * logistic u := by
+    apply intervalIntegral.integral_mono_on_of_le_Ioo hab intervalIntegrable_const
+      (huq.add (hq.const_mul G.step))
+    intro u hu
+    have hqu := logistic_antitone hu.2.le
     have hbu : G.node (i+1) ≤ u + G.step := by linarith [node_step G i, hu.1]
     calc
       G.node (i+1) * logistic (G.node (i+1)) ≤ G.node (i+1) * logistic u :=
@@ -233,15 +247,21 @@ private lemma cell_cost (G : Mesh) (i : ℕ) :
       _ ≤ (u + G.step) * logistic u :=
         mul_le_mul_of_nonneg_right hbu (logistic_range u).1.le
       _ = u * logistic u + G.step * logistic u := by ring
+  rw [intervalIntegral.integral_const, intervalIntegral.integral_add huq (hq.const_mul _),
+    intervalIntegral.integral_const_mul, node_step, smul_eq_mul] at h
+  simpa [mul_assoc] using h
 
 private lemma cell_entropy (G : Mesh) (i : ℕ) :
     (∫ u in G.node i..G.node (i+1), entropy u) -
       G.step * entropy (G.node (i+1)) ≤
       G.step * (entropy (G.node i) - entropy (G.node (i+1))) := by
   have hab : G.node i ≤ G.node (i+1) := by linarith [step_pos G, node_step G i]
-  have h := intervalIntegral.integral_mono_on_of_le_Ioo hab
-    entropy_continuous.intervalIntegrable intervalIntegrable_const
-    (fun u hu => entropy_antitone (node_nonneg G i) ((node_nonneg G i).trans hu.1.le) hu.1.le)
+  have h : (∫ u in G.node i..G.node (i+1), entropy u) ≤
+      ∫ _ in G.node i..G.node (i+1), entropy (G.node i) := by
+    apply intervalIntegral.integral_mono_on_of_le_Ioo hab
+      (entropy_continuous.intervalIntegrable (μ := volume) _ _) intervalIntegrable_const
+    intro u hu
+    exact entropy_antitone (node_nonneg G i) ((node_nonneg G i).trans hu.1.le) hu.1.le
   rw [intervalIntegral.integral_const, node_step, smul_eq_mul] at h
   linarith
 
@@ -259,13 +279,13 @@ theorem grid_bounds (G : Mesh) :
     π ^ 2 / 3 - 2 * (G.U + 2) * exp (-G.U) - 2 * G.step * log 2 ≤ G.mass := by
   have hq := intervalIntegral.sum_integral_adjacent_intervals
     (a := G.node) (n := G.n) (f := logistic)
-    (fun _ _ => logistic_continuous.intervalIntegrable)
+    (fun _ _ => logistic_continuous.intervalIntegrable (μ := volume) _ _)
   have huq := intervalIntegral.sum_integral_adjacent_intervals
     (a := G.node) (n := G.n) (f := fun u => u * logistic u)
-    (fun _ _ => (continuous_id.mul logistic_continuous).intervalIntegrable)
+    (fun _ _ => (continuous_id.mul logistic_continuous).intervalIntegrable (μ := volume) _ _)
   have hf := intervalIntegral.sum_integral_adjacent_intervals
     (a := G.node) (n := G.n) (f := entropy)
-    (fun _ _ => entropy_continuous.intervalIntegrable)
+    (fun _ _ => entropy_continuous.intervalIntegrable (μ := volume) _ _)
   rw [node_zero, node_end] at hq huq hf
   constructor
   · have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.range G.n) => cell_cost G i)
@@ -301,8 +321,9 @@ theorem exists_good_grid {η ρ : ℝ} (hη : 0 < η) (hρ : 0 < ρ) :
   let d := min ((π ^ 2 / 6) * η / (4 * log 2)) (ρ / (4 * log 2))
   have hd : 0 < d := lt_min (by positivity) (by positivity)
   obtain ⟨n, hn⟩ := exists_nat_gt (max 1 (U / d))
-  have hn1 : 0 < n := by exact_mod_cast (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1)
-    (le_max_left _ _).trans_lt hn).le
+  have hn1 : 0 < n := by
+    have hnR : (1 : ℝ) < n := (le_max_left _ _).trans_lt hn
+    exact_mod_cast (lt_trans zero_lt_one hnR)
   let G : Mesh := ⟨U, n, by linarith, hn1⟩
   have hs : G.step ≤ d := by
     have hnR : (0 : ℝ) < n := by exact_mod_cast hn1
