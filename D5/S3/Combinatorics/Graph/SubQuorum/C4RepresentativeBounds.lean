@@ -17,8 +17,7 @@ All declarations concern arbitrary graph predicates, exact finite suprema or
 symbolic bounds and their graph-level derivation. No finite instance table,
 bounded enumeration, checker, or conditional arithmetic interface is supplied
 as new content in this module: utility fields are not-applicable(kind=none).
-The actual finite Pappus/Heawood instances remain in C4FreeRepresentatives.
-The split preserves every mathematical statement and proof body. -/
+The Pappus and Heawood applications use these bounds at their respective graph orders. -/
 
 namespace D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
 open StarFormingDissociationRefutation
@@ -202,13 +201,6 @@ theorem objective_le_omega (T : Finset V) (M : Finset (V × V)) (h : Feasible G 
       (fun p : Finset V × Finset (V × V) => Feasible G p.1 p.2) :=
     Finset.mem_filter.mpr ⟨Finset.mem_product.mpr ⟨by simp,by simp⟩,h⟩
   exact Finset.le_sup (f := fun p : Finset V × Finset (V × V) => p.1.card + p.2.card) hm
-
-theorem omega_upper_of_objective_bound (n : ℕ)
-    (h : ∀ T M, Feasible G T M → T.card + M.card ≤ n) : Omega G ≤ n := by
-  classical
-  apply Finset.sup_le
-  intro p hp
-  exact h p.1 p.2 (Finset.mem_filter.mp hp).2
 
 /-- Every actual dissociation selection is a feasible empty-matching pair. -/
 theorem dissociation_feasible (T : Finset V) (hT : IsKIndependent G 2 T) :
