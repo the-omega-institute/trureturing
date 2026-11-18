@@ -13,6 +13,8 @@ jobs:
     name: verify cache publication and restore
     runs-on: runner-for-trureturing-cache-release-publish
     timeout-minutes: 120
+    outputs:
+      indexed-tag: ${{ steps.publish.outputs.indexed_tag }}
     permissions:
       contents: write
       actions: read
@@ -132,11 +134,55 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - if: steps.entry.outputs.hit == 'true'
+      - id: publish
+        if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
+        run: |
+          set -o pipefail
+          receipt="$RUNNER_TEMP/indexed-cache-publish.log"
+          make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA" | tee "$receipt"
+          tag="$(sed -n 's/^LEAN_CACHE_PUBLISH //p' "$receipt" | jq -er 'select(.status == "published") | .tag')"
+          [[ "$tag" == lean-cache-verify-v2-* ]]
+          echo "indexed_tag=$tag" >> "$GITHUB_OUTPUT"
+
+  indexed-consumer:
+    name: Verify indexed Release recovery in a clean checkout
+    needs: cache
+    if: needs.cache.outputs.indexed-tag != ''
+    runs-on: runner-for-trureturing-cache-release-publish
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        restore: [full, scoped]
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      LEAN_CACHE_TAG: ${{ needs.cache.outputs.indexed-tag }}
+      LEAN_CACHE_SOURCE_COMMIT: ${{ github.sha }}
+      LEAN_CACHE_MODE: candidate
+      RESTORE: ${{ matrix.restore }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore from Release assets
+        run: |
+          test ! -e .lake/build
+          if [[ "$RESTORE" == scoped ]]; then
+            export LEAN_CACHE_TARGETS=D5.S0.Tower.GoldenGapWord
+          fi
+          env -u GITHUB_ACTIONS -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_CACHE_URL -u ACTIONS_RESULTS_URL \
+            make lean-cache-from-github-without-mathlib
+          test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          if [[ "$RESTORE" == full ]]; then
+            test -s .lake/build/stratalint/raw-lean-report.json.reuse.json
+          fi
 
   scribe:
     name: verify Scribe publication and fetch

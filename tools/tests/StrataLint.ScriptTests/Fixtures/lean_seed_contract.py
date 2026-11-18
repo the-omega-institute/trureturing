@@ -35,7 +35,8 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         artifacts = {
             "lib/lean/D5/Fixture.olean": random.Random(20).randbytes(2331),
             "lib/lean/D5/Fixture.olean.hash": b"olean-hash\n",
-            "lib/lean/D5/Fixture.trace": b"lake-input-trace\n",
+            "lib/lean/D5/Fixture.trace": b'{"outputs":{"m":false,"o":["aa.olean"],"i":"bb.ilean","c":"cc.c"}}',
+            "lib/lean/D5/Fixture.ilean": b"ilean bytes",
             "ir/D5/Fixture.c": b"compiler output\n",
             "bin/inspector": b"full restore only\n",
         }
@@ -64,6 +65,10 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         encoded = b"".join((stage / part["name"]).read_bytes()[start:start + length]
                            for part, start, length in ranges)
         indexed.extract_frame(io.BytesIO(encoded), row, partial, set(), None)
+        indexed.check_compiler_outputs(partial, row)
+        incomplete = {**row, "paths": [path for path in row["paths"] if not path.endswith(".olean")]}
+        with self.assertRaisesRegex(ValueError, "omits Lake compiler outputs"):
+            indexed.check_compiler_outputs(partial, incomplete)
         self.assertEqual({name: data for name, data in artifacts.items() if name != "bin/inspector"},
                          {path.relative_to(partial).as_posix(): path.read_bytes()
                           for path in partial.rglob("*") if path.is_file()})
@@ -82,7 +87,10 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
             write(root / module.source, "fixture source")
         graph = {"D5.Base": set(), "D5.Probe": {"D5.Base"}}
         indexed_base = {
-            "module": "D5.Base", "paths": ["lib/lean/D5/Base.olean"],
+            "module": "D5.Base", "paths": [
+                "lib/lean/D5/Base.olean", "lib/lean/D5/Base.ilean",
+                "lib/lean/D5/Base.trace", "ir/D5/Base.c",
+            ],
             "source_sha256": digest((root / modules["D5.Base"].source).read_bytes()),
         }
         with patch.object(indexed, "workspace_modules", return_value=modules), \

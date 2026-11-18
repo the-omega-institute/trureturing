@@ -866,6 +866,7 @@ def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer
                 payload.seek(0)
                 for row in group:
                     indexed_release.extract_frame(payload, row, unpacked, extracted, deadline)
+                    indexed_release.check_compiler_outputs(unpacked, row)
         target = lake / "build"
         supplemental = set()
         restored_modules, deferred_modules = [], []

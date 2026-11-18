@@ -14,7 +14,7 @@ import tarfile
 
 from lean_artifact_inventory import (
     PROJECT_BUILD, build_inventory, import_closure, lake_configuration, lean_artifact_paths,
-    project_imports, workspace_modules,
+    project_imports, required_compiler_paths, workspace_modules,
 )
 from lean_cache_release_io import ArchiveInput, MultipartArchiveOutput, archive_sha, copy_chunks, remaining
 
@@ -300,6 +300,8 @@ def scoped_members(root, rows, targets, target_build, *, require_complete=False)
         paths = {PurePosixPath(path) for path in row["paths"]}
         if not paths.issubset(allowed):
             raise ValueError("indexed module paths disagree with the Lake workspace: " + name)
+        if not required_compiler_paths(name, module).issubset(paths):
+            continue
         compatible.add(name)
         if any(not os.path.lexists(target_build / path) for path in paths):
             needed.add(name)
@@ -307,6 +309,35 @@ def scoped_members(root, rows, targets, target_build, *, require_complete=False)
         raise ValueError("scoped verification did not cover the requested import closure: "
                          + ", ".join(sorted(requested - needed)))
     return [row for row in rows if row["module"] in needed]
+
+
+def check_compiler_outputs(destination, row):
+    """Verify that the staged frame contains the outputs declared by its Lake trace."""
+    paths = {PurePosixPath(path) for path in row["paths"]}
+    traces = [path for path in paths if path.suffix == ".trace"]
+    if len(traces) != 1:
+        raise ValueError("module frame needs one compiler trace: " + row["module"])
+    trace = traces[0]
+    data = json.loads((destination / trace).read_bytes())
+    outputs = data.get("outputs") if isinstance(data, dict) else None
+    if not isinstance(outputs, dict) or not valid_artifact_description(outputs):
+        raise ValueError("invalid Lake compiler trace: " + row["module"])
+    library = ["olean", "ilean"]
+    if outputs.get("m") is True:
+        library.extend(("olean.server", "olean.private"))
+    library.extend(suffix for field, suffix in (("r", "ir"), ("rs", "ir.sig")) if field in outputs)
+    required = {trace.with_suffix("." + suffix) for suffix in library}
+    if "b" in outputs and not any(path.name == trace.with_suffix(".bc").name for path in paths):
+        raise ValueError("module frame omits the Lake bitcode output: " + row["module"])
+    if not required.issubset(paths):
+        raise ValueError("module frame omits Lake compiler outputs: " + row["module"])
+
+
+def valid_artifact_description(outputs):
+    oleans = outputs.get("o")
+    return (isinstance(oleans, list) and len(oleans) == (3 if outputs.get("m") is True else 1)
+            and all(isinstance(value, str) and value for value in oleans)
+            and all(isinstance(outputs.get(field), str) and outputs[field] for field in ("i", "c")))
 
 
 def adjacent_members(rows):
