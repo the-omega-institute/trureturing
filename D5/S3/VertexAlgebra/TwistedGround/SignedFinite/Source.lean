@@ -101,7 +101,7 @@ theorem sourceAmplitude_false_finite (p : ℕ) {r : ℂ} (hr : ‖r‖ < 1) :
     ext p
     simp only [sourceAmplitude_true_finite, div_pow, div_eq_mul_inv, inv_pow]
     ring
-  exact congrFun ((source_scalarSeries false hr).unique hs (source_negative_local hr)) p
+  exact congrFun ((source_scalarSeries false hr).scalar_unique hs (source_negative_local hr)) p
 
 theorem sourceAmplitude_eq_m (e : Bool) (p : ℕ) {r : ℂ} (hr : ‖r‖ < 1) :
     sourceAmplitude e p r = m e p r := by

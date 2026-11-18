@@ -49,7 +49,7 @@ theorem ScalarSeries.hasFPowerSeriesAt {F a} (h : ScalarSeries F a) :
   simpa only [FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul, zero_add] using
     hh u (hu'.trans (by dsimp [s]; linarith))
 
-theorem ScalarSeries.unique {F G a b} (ha : ScalarSeries F a) (hb : ScalarSeries G b)
+theorem ScalarSeries.scalar_unique {F G a b} (ha : ScalarSeries F a) (hb : ScalarSeries G b)
     (he : ∀ᶠ u in 𝓝 (0 : ℂ), F u = G u) : a = b :=
   FormalMultilinearSeries.ofScalars_series_injective ℂ ℂ
     (ha.hasFPowerSeriesAt.eq_formalMultilinearSeries_of_eventually hb.hasFPowerSeriesAt he)
@@ -78,7 +78,7 @@ theorem JointSeries.unique {F G a b} (ha : JointSeries F a) (hb : JointSeries G 
   have hT : 0 < T := lt_min hR hS
   have houter (v : ℂ) (hv : ‖v‖ < T) :
       (fun p => ∑' q, a p q * v ^ q) = (fun p => ∑' q, b p q * v ^ q) := by
-    apply ScalarSeries.unique (F := fun u => F u v) (G := fun u => G u v)
+    apply ScalarSeries.scalar_unique (F := fun u => F u v) (G := fun u => G u v)
     · exact ⟨T, hT, fun u hu => grouped ha (hu.trans_le (min_le_left _ _))
         (hv.trans_le (min_le_left _ _))⟩
     · exact ⟨T, hT, fun u hu => grouped hb (hu.trans_le (min_le_right _ _))
@@ -103,7 +103,7 @@ theorem JointSeries.unique {F G a b} (ha : JointSeries F a) (hb : JointSeries G 
       field_simp
     exact ht'.hasSum
   funext p
-  apply ScalarSeries.unique (hrow a F (fun u v hu hv =>
+  apply ScalarSeries.scalar_unique (hrow a F (fun u v hu hv =>
       ha u v (hu.trans_le (min_le_left _ _)) (hv.trans_le (min_le_left _ _))) p)
     (hrow b G (fun u v hu hv =>
       hb u v (hu.trans_le (min_le_right _ _)) (hv.trans_le (min_le_right _ _))) p)
@@ -153,7 +153,7 @@ theorem JointSeries.scale {F a} (h : JointSeries F a) (c : ℂ) :
   ext pq
   ring
 
-theorem JointSeries.shift {F a} (h : JointSeries F a) (i j : ℕ) :
+theorem JointSeries.mul_monomial {F a} (h : JointSeries F a) (i j : ℕ) :
     JointSeries (fun u v => u ^ i * v ^ j * F u v) (shift i j a) := by
   obtain ⟨R, hR, hh⟩ := h
   refine ⟨R, hR, fun u v hu hv => ?_⟩

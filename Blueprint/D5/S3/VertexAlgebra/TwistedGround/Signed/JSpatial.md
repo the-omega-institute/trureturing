@@ -18,7 +18,20 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.candidateJ_or
 
 For every Boolean label pair and real 0<r<1, with norm(u)+sqrt(r)<1 and norm(v)+sqrt(r)<1, the signed J candidate satisfies the exact original spatial displacement equation, with the original sources, modeA, modeH, central derivative divided by period, and the additive term modeB(e)*modeB(f). Axes, origin and diagonal are included.
 
+**Theorem 1.2 (candidateJ_cleared).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.candidateJ_cleared`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.candidateJ_cleared` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The all-domain polynomial-cleared J identity consumes the existing private chart. Same-sign diagonals follow directly from the actual source square; mixed poles are excluded by the source domain. This helper is consumed by all-natural-mode finite identification.
+
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.candidateJ_cleared`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Signed/JSpatial.candidateJ_original_displacement`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/Signed/CandidateSource](CandidateSource.md)

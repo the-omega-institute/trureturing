@@ -69,4 +69,62 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end candidateJ_original_displacement
 
+namespace candidateJ_cleared
+abbrev arena : Arena where
+  signature := complexSignature
+  Law R := ∀ (e f : Bool) {u v r : ℂ} (_hu : ‖u‖+‖r‖<1) (_hv : ‖v‖+‖r‖<1),
+    R.readout () ()
+      (2*OriginalGaussianExternalSignedCandidate.G e f u v^2*
+        (OriginalGaussianExternalSignedCandidate.candidateJ e f u v r-
+          (OriginalGaussianExternalSignedCandidate.Qconstant e f r-
+            OriginalGaussianExternalAnalyticCandidate.correction r)*
+              OriginalGaussianExternalGenerators.sourceMode e u r*
+              OriginalGaussianExternalGenerators.sourceMode f v r))
+      (OriginalGaussianExternalSignedCandidate.jN e f u v r*
+        OriginalGaussianExternalGenerators.sourceMode e u r*
+        OriginalGaussianExternalGenerators.sourceMode f v r-
+          OriginalGaussianExternalSignedCandidate.rho e f u v)
+private theorem rejected_fails : ¬ arena.Law complexFalse := by
+  intro hh
+  exact hh false false (u := 0) (v := 0) (r := 0) (by norm_num) (by norm_num)
+def family : Registration arena (type_of% (@candidateJ_cleared)) where
+  actual := complexEqual
+  bridge := Iff.rfl
+  variation := ⟨@candidateJ_cleared, complexFalse, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law complexEqual complexFalse rejected_fails
+  dependence := complexEqualDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@candidateJ_cleared) (Realization complexSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.Signed.JSpatial.candidateJ_cleared.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.Signed.JSpatial.candidateJ_cleared.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.Signed.JSpatial
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end candidateJ_cleared
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.Signed.JSpatial
