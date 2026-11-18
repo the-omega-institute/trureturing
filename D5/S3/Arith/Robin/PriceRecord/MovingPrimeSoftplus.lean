@@ -8,6 +8,8 @@
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 
+/-! A uniform Abel comparison for a softplus centered at a real prime cutoff. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -34,9 +36,12 @@ private theorem smooth_derivative {P k t : ℝ} (hP : 0 < P) (ht : 0 < t) :
   have hlog := hdiv.log (div_ne_zero ht.ne' hP.ne')
   have hexp := (hlog.const_mul k).exp
   convert (hexp.const_add 1).log (by positivity) using 1
-  simp only [smoothSlope, id_eq]
-  field_simp [ht.ne', hP.ne']
-  <;> ring
+  · rfl
+  · simp only [smoothSlope, id_eq]
+    have he : 1 / P / (t / P) = 1 / t := by
+      field_simp
+    rw [he]
+    ring
 
 private theorem continuousOn_smoothSlope (P k : ℝ) (hP : 0 < P) :
     ContinuousOn (smoothSlope P k) (Ioi 0) := by
@@ -44,7 +49,7 @@ private theorem continuousOn_smoothSlope (P k : ℝ) (hP : 0 < P) :
     (continuous_id.continuousOn.div_const P).log fun t ht =>
       div_ne_zero (mem_Ioi.mp ht).ne' hP.ne'
   have hexp : ContinuousOn (fun t : ℝ => exp (k * log (t / P))) (Ioi 0) :=
-    (continuousOn_const.mul hlog).exp
+    continuous_exp.comp_continuousOn (continuousOn_const.mul hlog)
   exact ((continuousOn_const.div continuousOn_id (fun t ht => (mem_Ioi.mp ht).ne')).mul
     hexp).div (continuousOn_const.add hexp) fun t _ => by positivity
 
@@ -52,7 +57,7 @@ private theorem weight_bounds (P t : ℝ) {s : ℝ} (hs : 0 ≤ s) :
     0 ≤ weight P s t ∧ weight P s t ≤ log 2 := by
   have he : exp (-s * |log (t / P)|) ≤ 1 := exp_le_one_iff.mpr (by
     exact mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hs) (abs_nonneg _))
-  exact ⟨log_nonneg (by positivity : 1 ≤ 1 + exp (-s * |log (t / P)|)),
+  exact ⟨log_nonneg (le_add_of_nonneg_right (exp_pos _).le),
     log_le_log (by positivity) (by linarith)⟩
 
 private theorem weight_eq_left {P s t : ℝ} (ht : 0 < t) (htP : t ≤ P) :
@@ -60,8 +65,7 @@ private theorem weight_eq_left {P s t : ℝ} (ht : 0 < t) (htP : t ≤ P) :
   have hP := ht.trans_le htP
   have hlog := log_nonpos (div_nonneg ht.le hP.le) ((div_le_one hP).mpr htP)
   rw [weight, smoothWeight, abs_of_nonpos hlog]
-  congr 2
-  ring
+  congr 2 <;> ring
 
 private theorem weight_eq_right {P s t : ℝ} (hP : 0 < P) (hPt : P ≤ t) :
     weight P s t = smoothWeight P (-s) t := by
@@ -90,34 +94,31 @@ private theorem smooth_theta_comparison {P k a b E : ℝ} (hP : 0 < P)
       (fun t ht => (hd' ht).symm) measurableSet_Icc
   have hc (t : ℝ) : ∑ n ∈ Finset.Icc 0 ⌊t⌋₊, c n = Chebyshev.theta t := by
     rw [Chebyshev.theta_eq_sum_Icc, Finset.sum_filter]
-    rfl
   have hs : (∑ p ∈ primeInterval a b, f p * log p) =
       f b * Chebyshev.theta b - f a * Chebyshev.theta a -
         ∫ t in a..b, g t * Chebyshev.theta t := by
     have h := sum_mul_eq_sub_sub_integral_mul (c := c) ha.le hab
       (fun t ht => (hd t ht).differentiableAt) hdi
     simp only [hc, ← intervalIntegral.integral_of_le hab] at h
-    rw [← h]
-    · simp only [primeInterval, Finset.sum_filter, c, mul_ite, mul_zero]
-    · exact intervalIntegral.integral_congr (fun t ht => by
+    have hInt : (∫ t in a..b, deriv f t * Chebyshev.theta t) =
+        ∫ t in a..b, g t * Chebyshev.theta t :=
+      intervalIntegral.integral_congr (fun t ht => by
         rw [uIcc_of_le hab] at ht
         rw [hd' ht])
+    rw [hInt] at h
+    simpa only [primeInterval, Finset.sum_filter, c, mul_ite, mul_zero] using h
   have hi : (∫ t in a..b, f t) =
       f b * b - f a * a - ∫ t in a..b, g t * t := by
     have h := intervalIntegral.integral_mul_deriv_eq_deriv_mul_of_hasDerivAt
       (u := f) (v := id) (u' := g) (v' := fun _ => 1)
       (by rwa [uIcc_of_le hab]) continuous_id.continuousOn
-      (fun t ht => hd t (by simpa [min_eq_left hab, max_eq_right hab] using Ioo_subset_Icc_self ht))
+      (fun t ht => hd t (by
+        rw [min_eq_left hab, max_eq_right hab] at ht
+        exact Ioo_subset_Icc_self ht))
       (fun t _ => hasDerivAt_id t) hgi (intervalIntegrable_const)
     simpa only [id_eq, mul_one] using h
-  have htθ : IntervalIntegrable Chebyshev.theta volume a b := by
-    simp_rw [← hc]
-    simpa only [one_mul] using
-      (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr
-        (integrableOn_mul_sum_Icc c ha.le
-          (g := fun _ => (1 : ℝ)) (continuousOn_const.integrableOn_Icc))
-  have hm := hgc.mul (continuous_id.continuousOn) |>.intervalIntegrable_of_Icc
-    (μ := volume) hab
+  have hm : IntervalIntegrable (fun t => g t * t) volume a b :=
+    (hgc.mul continuous_id.continuousOn).intervalIntegrable_of_Icc hab
   have hmθ : IntervalIntegrable (fun t => g t * Chebyshev.theta t) volume a b := by
     have h := integrableOn_mul_sum_Icc c ha.le
       (g := g) ((intervalIntegrable_iff_integrableOn_Icc_of_le hab).mp hgi)
@@ -202,8 +203,9 @@ theorem softplus_theta_window {P s E : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
     have hlog : ContinuousOn (fun t : ℝ => log (t / P)) (Icc a b) :=
       (continuous_id.continuousOn.div_const P).log fun t ht =>
         div_ne_zero (ha.trans_le ht.1).ne' hP.ne'
-    exact (continuousOn_const.add (continuousOn_const.mul hlog.abs).exp).log
-      (fun t _ => by positivity)
+    have hexp : ContinuousOn (fun t : ℝ => exp (-s * |log (t / P)|)) (Icc a b) :=
+      continuous_exp.comp_continuousOn (continuousOn_const.mul hlog.abs)
+    exact (continuousOn_const.add hexp).log (fun t _ => by positivity)
   have hint := intervalIntegral.integral_add_adjacent_intervals
     ((hC (P / 2) P hhalf).intervalIntegrable_of_Icc hleft)
     ((hC P (2 * P) hP).intervalIntegrable_of_Icc hright)
