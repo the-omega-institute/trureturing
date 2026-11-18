@@ -477,111 +477,12 @@ theorem witnessIndex14327 : 530 < Archive10.witnesses.size := by decide +kernel
 def path15841 : List (Row 9) :=
   path14327 ++ [branchRow false (Archive10.witnesses[530]'witnessIndex14327).normal]
 
-private theorem witnessIndex15841 : 526 < Archive10.witnesses.size := by decide +kernel
-def path16789 : List (Row 9) :=
-  path15841 ++ [branchRow false (Archive10.witnesses[526]'witnessIndex15841).normal]
-
-private theorem witnessIndex16789 : 454 < Archive10.witnesses.size := by decide +kernel
-def path17507 : List (Row 9) :=
-  path16789 ++ [branchRow false (Archive10.witnesses[454]'witnessIndex16789).normal]
-
-private theorem witnessIndex17507 : 73 < Archive10.witnesses.size := by decide +kernel
-def path17647 : List (Row 9) :=
-  path17507 ++ [branchRow false (Archive10.witnesses[73]'witnessIndex17507).normal]
-
-private theorem witnessIndex17647 : 503 < Archive10.witnesses.size := by decide +kernel
-def path18031 : List (Row 9) :=
-  path17647 ++ [branchRow false (Archive10.witnesses[503]'witnessIndex17647).normal]
-def path18032 : List (Row 9) :=
-  path17647 ++ [branchRow true (Archive10.witnesses[503]'witnessIndex17647).normal]
-def path17648 : List (Row 9) :=
-  path17507 ++ [branchRow true (Archive10.witnesses[73]'witnessIndex17507).normal]
-def path17508 : List (Row 9) :=
-  path16789 ++ [branchRow true (Archive10.witnesses[454]'witnessIndex16789).normal]
-def path16790 : List (Row 9) :=
-  path15841 ++ [branchRow true (Archive10.witnesses[526]'witnessIndex15841).normal]
-
-private theorem witnessIndex16790 : 313 < Archive10.witnesses.size := by decide +kernel
-def path16791 : List (Row 9) :=
-  path16790 ++ [branchRow false (Archive10.witnesses[313]'witnessIndex16790).normal]
-def path16792 : List (Row 9) :=
-  path16790 ++ [branchRow true (Archive10.witnesses[313]'witnessIndex16790).normal]
-
-private theorem witnessIndex16792 : 454 < Archive10.witnesses.size := by decide +kernel
-def path16793 : List (Row 9) :=
-  path16792 ++ [branchRow false (Archive10.witnesses[454]'witnessIndex16792).normal]
-def path16794 : List (Row 9) :=
-  path16792 ++ [branchRow true (Archive10.witnesses[454]'witnessIndex16792).normal]
 def path15842 : List (Row 9) :=
   path14327 ++ [branchRow true (Archive10.witnesses[530]'witnessIndex14327).normal]
 
-private theorem witnessIndex15842 : 278 < Archive10.witnesses.size := by decide +kernel
-def path15843 : List (Row 9) :=
-  path15842 ++ [branchRow false (Archive10.witnesses[278]'witnessIndex15842).normal]
-
-private theorem witnessIndex15843 : 491 < Archive10.witnesses.size := by decide +kernel
-def path16083 : List (Row 9) :=
-  path15843 ++ [branchRow false (Archive10.witnesses[491]'witnessIndex15843).normal]
-
-private theorem witnessIndex16083 : 317 < Archive10.witnesses.size := by decide +kernel
-def path16173 : List (Row 9) :=
-  path16083 ++ [branchRow false (Archive10.witnesses[317]'witnessIndex16083).normal]
-def path16174 : List (Row 9) :=
-  path16083 ++ [branchRow true (Archive10.witnesses[317]'witnessIndex16083).normal]
-
-private theorem witnessIndex16174 : 529 < Archive10.witnesses.size := by decide +kernel
-def path16175 : List (Row 9) :=
-  path16174 ++ [branchRow false (Archive10.witnesses[529]'witnessIndex16174).normal]
-def path16176 : List (Row 9) :=
-  path16174 ++ [branchRow true (Archive10.witnesses[529]'witnessIndex16174).normal]
-
-private theorem witnessIndex16176 : 33 < Archive10.witnesses.size := by decide +kernel
-def path16177 : List (Row 9) :=
-  path16176 ++ [branchRow false (Archive10.witnesses[33]'witnessIndex16176).normal]
-def path16178 : List (Row 9) :=
-  path16176 ++ [branchRow true (Archive10.witnesses[33]'witnessIndex16176).normal]
-def path16084 : List (Row 9) :=
-  path15843 ++ [branchRow true (Archive10.witnesses[491]'witnessIndex15843).normal]
-def path15844 : List (Row 9) :=
-  path15842 ++ [branchRow true (Archive10.witnesses[278]'witnessIndex15842).normal]
 def path14328 : List (Row 9) :=
   path11675 ++ [branchRow true (Archive10.witnesses[38]'witnessIndex11675).normal]
 
-private theorem witnessIndex14328 : 503 < Archive10.witnesses.size := by decide +kernel
-def path14329 : List (Row 9) :=
-  path14328 ++ [branchRow false (Archive10.witnesses[503]'witnessIndex14328).normal]
-
-private theorem witnessIndex14329 : 529 < Archive10.witnesses.size := by decide +kernel
-def path14541 : List (Row 9) :=
-  path14329 ++ [branchRow false (Archive10.witnesses[529]'witnessIndex14329).normal]
-
-private theorem witnessIndex14541 : 283 < Archive10.witnesses.size := by decide +kernel
-def path14743 : List (Row 9) :=
-  path14541 ++ [branchRow false (Archive10.witnesses[283]'witnessIndex14541).normal]
-
-private theorem witnessIndex14743 : 278 < Archive10.witnesses.size := by decide +kernel
-def path15079 : List (Row 9) :=
-  path14743 ++ [branchRow false (Archive10.witnesses[278]'witnessIndex14743).normal]
-
-private theorem witnessIndex15079 : 496 < Archive10.witnesses.size := by decide +kernel
-def path15127 : List (Row 9) :=
-  path15079 ++ [branchRow false (Archive10.witnesses[496]'witnessIndex15079).normal]
-
-private theorem witnessIndex15127 : 69 < Archive10.witnesses.size := by decide +kernel
-def path15305 : List (Row 9) :=
-  path15127 ++ [branchRow false (Archive10.witnesses[69]'witnessIndex15127).normal]
-def path15306 : List (Row 9) :=
-  path15127 ++ [branchRow true (Archive10.witnesses[69]'witnessIndex15127).normal]
-def path15128 : List (Row 9) :=
-  path15079 ++ [branchRow true (Archive10.witnesses[496]'witnessIndex15079).normal]
-def path15080 : List (Row 9) :=
-  path14743 ++ [branchRow true (Archive10.witnesses[278]'witnessIndex14743).normal]
-def path14744 : List (Row 9) :=
-  path14541 ++ [branchRow true (Archive10.witnesses[283]'witnessIndex14541).normal]
-def path14542 : List (Row 9) :=
-  path14329 ++ [branchRow true (Archive10.witnesses[529]'witnessIndex14329).normal]
-def path14330 : List (Row 9) :=
-  path14328 ++ [branchRow true (Archive10.witnesses[503]'witnessIndex14328).normal]
 def path11676 : List (Row 9) :=
   path10323 ++ [branchRow true (Archive10.witnesses[290]'witnessIndex10323).normal]
 
@@ -589,99 +490,12 @@ theorem witnessIndex11676 : 502 < Archive10.witnesses.size := by decide +kernel
 def path11677 : List (Row 9) :=
   path11676 ++ [branchRow false (Archive10.witnesses[502]'witnessIndex11676).normal]
 
-private theorem witnessIndex11677 : 526 < Archive10.witnesses.size := by decide +kernel
-def path13385 : List (Row 9) :=
-  path11677 ++ [branchRow false (Archive10.witnesses[526]'witnessIndex11677).normal]
-def path13386 : List (Row 9) :=
-  path11677 ++ [branchRow true (Archive10.witnesses[526]'witnessIndex11677).normal]
-
-private theorem witnessIndex13386 : 313 < Archive10.witnesses.size := by decide +kernel
-def path13387 : List (Row 9) :=
-  path13386 ++ [branchRow false (Archive10.witnesses[313]'witnessIndex13386).normal]
-def path13388 : List (Row 9) :=
-  path13386 ++ [branchRow true (Archive10.witnesses[313]'witnessIndex13386).normal]
-
-private theorem witnessIndex13388 : 96 < Archive10.witnesses.size := by decide +kernel
-def path13389 : List (Row 9) :=
-  path13388 ++ [branchRow false (Archive10.witnesses[96]'witnessIndex13388).normal]
-def path13390 : List (Row 9) :=
-  path13388 ++ [branchRow true (Archive10.witnesses[96]'witnessIndex13388).normal]
 def path11678 : List (Row 9) :=
   path11676 ++ [branchRow true (Archive10.witnesses[502]'witnessIndex11676).normal]
 
-private theorem witnessIndex11678 : 289 < Archive10.witnesses.size := by decide +kernel
-def path11679 : List (Row 9) :=
-  path11678 ++ [branchRow false (Archive10.witnesses[289]'witnessIndex11678).normal]
-def path11680 : List (Row 9) :=
-  path11678 ++ [branchRow true (Archive10.witnesses[289]'witnessIndex11678).normal]
-
-private theorem witnessIndex11680 : 500 < Archive10.witnesses.size := by decide +kernel
-def path11681 : List (Row 9) :=
-  path11680 ++ [branchRow false (Archive10.witnesses[500]'witnessIndex11680).normal]
-def path11682 : List (Row 9) :=
-  path11680 ++ [branchRow true (Archive10.witnesses[500]'witnessIndex11680).normal]
-
-private theorem witnessIndex11682 : 47 < Archive10.witnesses.size := by decide +kernel
-def path11683 : List (Row 9) :=
-  path11682 ++ [branchRow false (Archive10.witnesses[47]'witnessIndex11682).normal]
-
-private theorem witnessIndex11683 : 287 < Archive10.witnesses.size := by decide +kernel
-def path12141 : List (Row 9) :=
-  path11683 ++ [branchRow false (Archive10.witnesses[287]'witnessIndex11683).normal]
-def path12142 : List (Row 9) :=
-  path11683 ++ [branchRow true (Archive10.witnesses[287]'witnessIndex11683).normal]
-
-private theorem witnessIndex12142 : 454 < Archive10.witnesses.size := by decide +kernel
-def path12143 : List (Row 9) :=
-  path12142 ++ [branchRow false (Archive10.witnesses[454]'witnessIndex12142).normal]
-def path12144 : List (Row 9) :=
-  path12142 ++ [branchRow true (Archive10.witnesses[454]'witnessIndex12142).normal]
-def path11684 : List (Row 9) :=
-  path11682 ++ [branchRow true (Archive10.witnesses[47]'witnessIndex11682).normal]
-
-private theorem witnessIndex11684 : 287 < Archive10.witnesses.size := by decide +kernel
-def path11685 : List (Row 9) :=
-  path11684 ++ [branchRow false (Archive10.witnesses[287]'witnessIndex11684).normal]
-def path11686 : List (Row 9) :=
-  path11684 ++ [branchRow true (Archive10.witnesses[287]'witnessIndex11684).normal]
-
-private theorem witnessIndex11686 : 454 < Archive10.witnesses.size := by decide +kernel
-def path11687 : List (Row 9) :=
-  path11686 ++ [branchRow false (Archive10.witnesses[454]'witnessIndex11686).normal]
-def path11688 : List (Row 9) :=
-  path11686 ++ [branchRow true (Archive10.witnesses[454]'witnessIndex11686).normal]
 def path10324 : List (Row 9) :=
   path6597 ++ [branchRow true (Archive10.witnesses[37]'witnessIndex6597).normal]
 
-private theorem witnessIndex10324 : 189 < Archive10.witnesses.size := by decide +kernel
-def path10325 : List (Row 9) :=
-  path10324 ++ [branchRow false (Archive10.witnesses[189]'witnessIndex10324).normal]
-def path10326 : List (Row 9) :=
-  path10324 ++ [branchRow true (Archive10.witnesses[189]'witnessIndex10324).normal]
-
-private theorem witnessIndex10326 : 170 < Archive10.witnesses.size := by decide +kernel
-def path10327 : List (Row 9) :=
-  path10326 ++ [branchRow false (Archive10.witnesses[170]'witnessIndex10326).normal]
-def path10328 : List (Row 9) :=
-  path10326 ++ [branchRow true (Archive10.witnesses[170]'witnessIndex10326).normal]
-
-private theorem witnessIndex10328 : 500 < Archive10.witnesses.size := by decide +kernel
-def path10329 : List (Row 9) :=
-  path10328 ++ [branchRow false (Archive10.witnesses[500]'witnessIndex10328).normal]
-
-private theorem witnessIndex10329 : 502 < Archive10.witnesses.size := by decide +kernel
-def path10695 : List (Row 9) :=
-  path10329 ++ [branchRow false (Archive10.witnesses[502]'witnessIndex10329).normal]
-
-private theorem witnessIndex10695 : 290 < Archive10.witnesses.size := by decide +kernel
-def path10729 : List (Row 9) :=
-  path10695 ++ [branchRow false (Archive10.witnesses[290]'witnessIndex10695).normal]
-def path10730 : List (Row 9) :=
-  path10695 ++ [branchRow true (Archive10.witnesses[290]'witnessIndex10695).normal]
-def path10696 : List (Row 9) :=
-  path10329 ++ [branchRow true (Archive10.witnesses[502]'witnessIndex10329).normal]
-def path10330 : List (Row 9) :=
-  path10328 ++ [branchRow true (Archive10.witnesses[500]'witnessIndex10328).normal]
 def path6598 : List (Row 9) :=
   path1 ++ [branchRow true (Archive10.witnesses[449]'witnessIndex1).normal]
 
@@ -689,11 +503,6 @@ theorem witnessIndex6598 : 236 < Archive10.witnesses.size := by decide +kernel
 def path6599 : List (Row 9) :=
   path6598 ++ [branchRow false (Archive10.witnesses[236]'witnessIndex6598).normal]
 
-private theorem witnessIndex6599 : 529 < Archive10.witnesses.size := by decide +kernel
-def path9779 : List (Row 9) :=
-  path6599 ++ [branchRow false (Archive10.witnesses[529]'witnessIndex6599).normal]
-def path9780 : List (Row 9) :=
-  path6599 ++ [branchRow true (Archive10.witnesses[529]'witnessIndex6599).normal]
 def path6600 : List (Row 9) :=
   path6598 ++ [branchRow true (Archive10.witnesses[236]'witnessIndex6598).normal]
 
@@ -701,73 +510,9 @@ theorem witnessIndex6600 : 317 < Archive10.witnesses.size := by decide +kernel
 def path6601 : List (Row 9) :=
   path6600 ++ [branchRow false (Archive10.witnesses[317]'witnessIndex6600).normal]
 
-private theorem witnessIndex6601 : 530 < Archive10.witnesses.size := by decide +kernel
-def path8113 : List (Row 9) :=
-  path6601 ++ [branchRow false (Archive10.witnesses[530]'witnessIndex6601).normal]
-
-private theorem witnessIndex8113 : 37 < Archive10.witnesses.size := by decide +kernel
-def path8285 : List (Row 9) :=
-  path8113 ++ [branchRow false (Archive10.witnesses[37]'witnessIndex8113).normal]
-
-private theorem witnessIndex8285 : 283 < Archive10.witnesses.size := by decide +kernel
-def path8793 : List (Row 9) :=
-  path8285 ++ [branchRow false (Archive10.witnesses[283]'witnessIndex8285).normal]
-def path8794 : List (Row 9) :=
-  path8285 ++ [branchRow true (Archive10.witnesses[283]'witnessIndex8285).normal]
-
-private theorem witnessIndex8794 : 166 < Archive10.witnesses.size := by decide +kernel
-def path8795 : List (Row 9) :=
-  path8794 ++ [branchRow false (Archive10.witnesses[166]'witnessIndex8794).normal]
-def path8796 : List (Row 9) :=
-  path8794 ++ [branchRow true (Archive10.witnesses[166]'witnessIndex8794).normal]
-def path8286 : List (Row 9) :=
-  path8113 ++ [branchRow true (Archive10.witnesses[37]'witnessIndex8113).normal]
-
-private theorem witnessIndex8286 : 140 < Archive10.witnesses.size := by decide +kernel
-def path8287 : List (Row 9) :=
-  path8286 ++ [branchRow false (Archive10.witnesses[140]'witnessIndex8286).normal]
-def path8288 : List (Row 9) :=
-  path8286 ++ [branchRow true (Archive10.witnesses[140]'witnessIndex8286).normal]
-def path8114 : List (Row 9) :=
-  path6601 ++ [branchRow true (Archive10.witnesses[530]'witnessIndex6601).normal]
 def path6602 : List (Row 9) :=
   path6600 ++ [branchRow true (Archive10.witnesses[317]'witnessIndex6600).normal]
 
-private theorem witnessIndex6602 : 529 < Archive10.witnesses.size := by decide +kernel
-def path6603 : List (Row 9) :=
-  path6602 ++ [branchRow false (Archive10.witnesses[529]'witnessIndex6602).normal]
-def path6604 : List (Row 9) :=
-  path6602 ++ [branchRow true (Archive10.witnesses[529]'witnessIndex6602).normal]
-
-private theorem witnessIndex6604 : 316 < Archive10.witnesses.size := by decide +kernel
-def path6605 : List (Row 9) :=
-  path6604 ++ [branchRow false (Archive10.witnesses[316]'witnessIndex6604).normal]
-def path6606 : List (Row 9) :=
-  path6604 ++ [branchRow true (Archive10.witnesses[316]'witnessIndex6604).normal]
-
-private theorem witnessIndex6606 : 313 < Archive10.witnesses.size := by decide +kernel
-def path6607 : List (Row 9) :=
-  path6606 ++ [branchRow false (Archive10.witnesses[313]'witnessIndex6606).normal]
-def path6608 : List (Row 9) :=
-  path6606 ++ [branchRow true (Archive10.witnesses[313]'witnessIndex6606).normal]
-
-private theorem witnessIndex6608 : 490 < Archive10.witnesses.size := by decide +kernel
-def path6609 : List (Row 9) :=
-  path6608 ++ [branchRow false (Archive10.witnesses[490]'witnessIndex6608).normal]
-def path6610 : List (Row 9) :=
-  path6608 ++ [branchRow true (Archive10.witnesses[490]'witnessIndex6608).normal]
-
-private theorem witnessIndex6610 : 277 < Archive10.witnesses.size := by decide +kernel
-def path6611 : List (Row 9) :=
-  path6610 ++ [branchRow false (Archive10.witnesses[277]'witnessIndex6610).normal]
-def path6612 : List (Row 9) :=
-  path6610 ++ [branchRow true (Archive10.witnesses[277]'witnessIndex6610).normal]
-
-private theorem witnessIndex6612 : 130 < Archive10.witnesses.size := by decide +kernel
-def path6613 : List (Row 9) :=
-  path6612 ++ [branchRow false (Archive10.witnesses[130]'witnessIndex6612).normal]
-def path6614 : List (Row 9) :=
-  path6612 ++ [branchRow true (Archive10.witnesses[130]'witnessIndex6612).normal]
 def path2 : List (Row 9) :=
   [] ++ [branchRow true (Archive10.witnesses[443]'witnessIndex0).normal]
 
@@ -779,11 +524,6 @@ theorem witnessIndex3 : 230 < Archive10.witnesses.size := by decide +kernel
 def path399 : List (Row 9) :=
   path3 ++ [branchRow false (Archive10.witnesses[230]'witnessIndex3).normal]
 
-private theorem witnessIndex399 : 49 < Archive10.witnesses.size := by decide +kernel
-def path6203 : List (Row 9) :=
-  path399 ++ [branchRow false (Archive10.witnesses[49]'witnessIndex399).normal]
-def path6204 : List (Row 9) :=
-  path399 ++ [branchRow true (Archive10.witnesses[49]'witnessIndex399).normal]
 def path400 : List (Row 9) :=
   path3 ++ [branchRow true (Archive10.witnesses[230]'witnessIndex3).normal]
 
@@ -791,35 +531,6 @@ theorem witnessIndex400 : 49 < Archive10.witnesses.size := by decide +kernel
 def path401 : List (Row 9) :=
   path400 ++ [branchRow false (Archive10.witnesses[49]'witnessIndex400).normal]
 
-private theorem witnessIndex401 : 313 < Archive10.witnesses.size := by decide +kernel
-def path5143 : List (Row 9) :=
-  path401 ++ [branchRow false (Archive10.witnesses[313]'witnessIndex401).normal]
-
-private theorem witnessIndex5143 : 526 < Archive10.witnesses.size := by decide +kernel
-def path5717 : List (Row 9) :=
-  path5143 ++ [branchRow false (Archive10.witnesses[526]'witnessIndex5143).normal]
-
-private theorem witnessIndex5717 : 190 < Archive10.witnesses.size := by decide +kernel
-def path5737 : List (Row 9) :=
-  path5717 ++ [branchRow false (Archive10.witnesses[190]'witnessIndex5717).normal]
-def path5738 : List (Row 9) :=
-  path5717 ++ [branchRow true (Archive10.witnesses[190]'witnessIndex5717).normal]
-def path5718 : List (Row 9) :=
-  path5143 ++ [branchRow true (Archive10.witnesses[526]'witnessIndex5143).normal]
-def path5144 : List (Row 9) :=
-  path401 ++ [branchRow true (Archive10.witnesses[313]'witnessIndex401).normal]
-
-private theorem witnessIndex5144 : 503 < Archive10.witnesses.size := by decide +kernel
-def path5145 : List (Row 9) :=
-  path5144 ++ [branchRow false (Archive10.witnesses[503]'witnessIndex5144).normal]
-
-private theorem witnessIndex5145 : 189 < Archive10.witnesses.size := by decide +kernel
-def path5279 : List (Row 9) :=
-  path5145 ++ [branchRow false (Archive10.witnesses[189]'witnessIndex5145).normal]
-def path5280 : List (Row 9) :=
-  path5145 ++ [branchRow true (Archive10.witnesses[189]'witnessIndex5145).normal]
-def path5146 : List (Row 9) :=
-  path5144 ++ [branchRow true (Archive10.witnesses[503]'witnessIndex5144).normal]
 def path402 : List (Row 9) :=
   path400 ++ [branchRow true (Archive10.witnesses[49]'witnessIndex400).normal]
 
@@ -827,65 +538,6 @@ theorem witnessIndex402 : 96 < Archive10.witnesses.size := by decide +kernel
 def path403 : List (Row 9) :=
   path402 ++ [branchRow false (Archive10.witnesses[96]'witnessIndex402).normal]
 
-private theorem witnessIndex403 : 245 < Archive10.witnesses.size := by decide +kernel
-def path3115 : List (Row 9) :=
-  path403 ++ [branchRow false (Archive10.witnesses[245]'witnessIndex403).normal]
-
-private theorem witnessIndex3115 : 458 < Archive10.witnesses.size := by decide +kernel
-def path4387 : List (Row 9) :=
-  path3115 ++ [branchRow false (Archive10.witnesses[458]'witnessIndex3115).normal]
-
-private theorem witnessIndex4387 : 77 < Archive10.witnesses.size := by decide +kernel
-def path4411 : List (Row 9) :=
-  path4387 ++ [branchRow false (Archive10.witnesses[77]'witnessIndex4387).normal]
-
-private theorem witnessIndex4411 : 37 < Archive10.witnesses.size := by decide +kernel
-def path4641 : List (Row 9) :=
-  path4411 ++ [branchRow false (Archive10.witnesses[37]'witnessIndex4411).normal]
-
-private theorem witnessIndex4641 : 69 < Archive10.witnesses.size := by decide +kernel
-def path4673 : List (Row 9) :=
-  path4641 ++ [branchRow false (Archive10.witnesses[69]'witnessIndex4641).normal]
-def path4674 : List (Row 9) :=
-  path4641 ++ [branchRow true (Archive10.witnesses[69]'witnessIndex4641).normal]
-def path4642 : List (Row 9) :=
-  path4411 ++ [branchRow true (Archive10.witnesses[37]'witnessIndex4411).normal]
-def path4412 : List (Row 9) :=
-  path4387 ++ [branchRow true (Archive10.witnesses[77]'witnessIndex4387).normal]
-def path4388 : List (Row 9) :=
-  path3115 ++ [branchRow true (Archive10.witnesses[458]'witnessIndex3115).normal]
-def path3116 : List (Row 9) :=
-  path403 ++ [branchRow true (Archive10.witnesses[245]'witnessIndex403).normal]
-
-private theorem witnessIndex3116 : 140 < Archive10.witnesses.size := by decide +kernel
-def path3117 : List (Row 9) :=
-  path3116 ++ [branchRow false (Archive10.witnesses[140]'witnessIndex3116).normal]
-
-private theorem witnessIndex3117 : 236 < Archive10.witnesses.size := by decide +kernel
-def path3619 : List (Row 9) :=
-  path3117 ++ [branchRow false (Archive10.witnesses[236]'witnessIndex3117).normal]
-def path3620 : List (Row 9) :=
-  path3117 ++ [branchRow true (Archive10.witnesses[236]'witnessIndex3117).normal]
-
-private theorem witnessIndex3620 : 73 < Archive10.witnesses.size := by decide +kernel
-def path3621 : List (Row 9) :=
-  path3620 ++ [branchRow false (Archive10.witnesses[73]'witnessIndex3620).normal]
-
-private theorem witnessIndex3621 : 131 < Archive10.witnesses.size := by decide +kernel
-def path3739 : List (Row 9) :=
-  path3621 ++ [branchRow false (Archive10.witnesses[131]'witnessIndex3621).normal]
-def path3740 : List (Row 9) :=
-  path3621 ++ [branchRow true (Archive10.witnesses[131]'witnessIndex3621).normal]
-def path3622 : List (Row 9) :=
-  path3620 ++ [branchRow true (Archive10.witnesses[73]'witnessIndex3620).normal]
-def path3118 : List (Row 9) :=
-  path3116 ++ [branchRow true (Archive10.witnesses[140]'witnessIndex3116).normal]
-
-private theorem witnessIndex3118 : 190 < Archive10.witnesses.size := by decide +kernel
-def path3119 : List (Row 9) :=
-  path3118 ++ [branchRow false (Archive10.witnesses[190]'witnessIndex3118).normal]
-def path3120 : List (Row 9) :=
-  path3118 ++ [branchRow true (Archive10.witnesses[190]'witnessIndex3118).normal]
 def path404 : List (Row 9) :=
   path402 ++ [branchRow true (Archive10.witnesses[96]'witnessIndex402).normal]
 
@@ -893,75 +545,11 @@ theorem witnessIndex404 : 140 < Archive10.witnesses.size := by decide +kernel
 def path405 : List (Row 9) :=
   path404 ++ [branchRow false (Archive10.witnesses[140]'witnessIndex404).normal]
 
-private theorem witnessIndex405 : 190 < Archive10.witnesses.size := by decide +kernel
-def path1243 : List (Row 9) :=
-  path405 ++ [branchRow false (Archive10.witnesses[190]'witnessIndex405).normal]
-
-private theorem witnessIndex1243 : 458 < Archive10.witnesses.size := by decide +kernel
-def path2151 : List (Row 9) :=
-  path1243 ++ [branchRow false (Archive10.witnesses[458]'witnessIndex1243).normal]
-
-private theorem witnessIndex2151 : 316 < Archive10.witnesses.size := by decide +kernel
-def path2729 : List (Row 9) :=
-  path2151 ++ [branchRow false (Archive10.witnesses[316]'witnessIndex2151).normal]
-def path2730 : List (Row 9) :=
-  path2151 ++ [branchRow true (Archive10.witnesses[316]'witnessIndex2151).normal]
-def path2152 : List (Row 9) :=
-  path1243 ++ [branchRow true (Archive10.witnesses[458]'witnessIndex1243).normal]
-
-private theorem witnessIndex2152 : 245 < Archive10.witnesses.size := by decide +kernel
-def path2153 : List (Row 9) :=
-  path2152 ++ [branchRow false (Archive10.witnesses[245]'witnessIndex2152).normal]
-def path2154 : List (Row 9) :=
-  path2152 ++ [branchRow true (Archive10.witnesses[245]'witnessIndex2152).normal]
-
-private theorem witnessIndex2154 : 290 < Archive10.witnesses.size := by decide +kernel
-def path2155 : List (Row 9) :=
-  path2154 ++ [branchRow false (Archive10.witnesses[290]'witnessIndex2154).normal]
-def path2156 : List (Row 9) :=
-  path2154 ++ [branchRow true (Archive10.witnesses[290]'witnessIndex2154).normal]
-def path1244 : List (Row 9) :=
-  path405 ++ [branchRow true (Archive10.witnesses[190]'witnessIndex405).normal]
-
-private theorem witnessIndex1244 : 245 < Archive10.witnesses.size := by decide +kernel
-def path1245 : List (Row 9) :=
-  path1244 ++ [branchRow false (Archive10.witnesses[245]'witnessIndex1244).normal]
-def path1246 : List (Row 9) :=
-  path1244 ++ [branchRow true (Archive10.witnesses[245]'witnessIndex1244).normal]
-
-private theorem witnessIndex1246 : 95 < Archive10.witnesses.size := by decide +kernel
-def path1247 : List (Row 9) :=
-  path1246 ++ [branchRow false (Archive10.witnesses[95]'witnessIndex1246).normal]
-def path1248 : List (Row 9) :=
-  path1246 ++ [branchRow true (Archive10.witnesses[95]'witnessIndex1246).normal]
-
-private theorem witnessIndex1248 : 461 < Archive10.witnesses.size := by decide +kernel
-def path1249 : List (Row 9) :=
-  path1248 ++ [branchRow false (Archive10.witnesses[461]'witnessIndex1248).normal]
-def path1250 : List (Row 9) :=
-  path1248 ++ [branchRow true (Archive10.witnesses[461]'witnessIndex1248).normal]
 def path406 : List (Row 9) :=
   path404 ++ [branchRow true (Archive10.witnesses[140]'witnessIndex404).normal]
 
-private theorem witnessIndex406 : 449 < Archive10.witnesses.size := by decide +kernel
-def path407 : List (Row 9) :=
-  path406 ++ [branchRow false (Archive10.witnesses[449]'witnessIndex406).normal]
-def path408 : List (Row 9) :=
-  path406 ++ [branchRow true (Archive10.witnesses[449]'witnessIndex406).normal]
-
-private theorem witnessIndex408 : 313 < Archive10.witnesses.size := by decide +kernel
-def path409 : List (Row 9) :=
-  path408 ++ [branchRow false (Archive10.witnesses[313]'witnessIndex408).normal]
-def path410 : List (Row 9) :=
-  path408 ++ [branchRow true (Archive10.witnesses[313]'witnessIndex408).normal]
 def path4 : List (Row 9) :=
   path2 ++ [branchRow true (Archive10.witnesses[406]'witnessIndex2).normal]
-
-private theorem witnessIndex4 : 245 < Archive10.witnesses.size := by decide +kernel
-def path5 : List (Row 9) :=
-  path4 ++ [branchRow false (Archive10.witnesses[245]'witnessIndex4).normal]
-def path6 : List (Row 9) :=
-  path4 ++ [branchRow true (Archive10.witnesses[245]'witnessIndex4).normal]
 
 end Group10
 
