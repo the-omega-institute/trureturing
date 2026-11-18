@@ -8,11 +8,19 @@ noncomputable section
 open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical
-open BalancedCriticalSpectrum (Q IsBalanced flip)
+open BalancedCriticalSpectrum (Q IsBalanced IsSwitching flip)
+open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+open private switching_sq from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
+open private switching_ne_zero from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open private spokePhase translate_spoke_phase spoke_phase_neg far_common_midpoint from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwentyOneCenterProbe
+attribute [local instance] Classical.propDecidable
 open private armTypes arm_coordinates flip_direction_unique from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareExclusion
 open private diff diff_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private diff_self from D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
+open private diff_self low_not_three from D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
+open private SideHigh compressed from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 
@@ -62,3 +70,141 @@ private lemma two_high_arm_label
     exact Or.inr ⟨he, g 3, d_ne_a, d_ne_b, d_ne_c, hcore, hlow⟩
 
 #print axioms two_high_arm_label
+
+/-- Realize the signed eight-cycle from a core vertex and its two matched
+neighbors. Every midpoint comes from a compressed edge of the actual graph. -/
+private lemma actual_core_arm_label
+    {n : ℕ} {S : Finset (Q n)} (hb : IsBalanced S)
+    {L R : Finset (S : Set (Q n))}
+    (hp : ((hypercube n).induce (S : Set (Q n))).IsBipartiteWith
+      (L : Set (S : Set (Q n))) (R : Set (S : Set (Q n))))
+    (x y : SideHigh ((hypercube n).induce (S : Set (Q n))) L)
+    (u w h : SideHigh ((hypercube n).induce (S : Set (Q n))) R)
+    (huw : u ≠ w) (m : (S : Set (Q n)))
+    (hm : ((hypercube n).induce (S : Set (Q n))).degree m = 2)
+    (hxm : ((hypercube n).induce (S : Set (Q n))).Adj x.val m)
+    (hym : ((hypercube n).induce (S : Set (Q n))).Adj y.val m)
+    (hxy : x ≠ y)
+    (hxu : ((hypercube n).induce (S : Set (Q n))).Adj x.val u.val)
+    (hyw : ((hypercube n).induce (S : Set (Q n))).Adj y.val w.val)
+    (hhu : (compressed ((hypercube n).induce (S : Set (Q n))) R).Adj h u)
+    (hhw : (compressed ((hypercube n).induce (S : Set (Q n))) R).Adj h w)
+    {a b c d : Fin n}
+    (ha : m.val = flip x.val.val a)
+    (hb' : y.val.val = flip m.val b)
+    (hc : w.val.val = flip y.val.val c)
+    (hd : u.val.val = flip x.val.val d) :
+    let D := fun v : Q n => diff v x.val.val
+    (d ≠ c ∧ D h.val.val = {b, c, d}) ∨
+      (d = c ∧ ∃ (t : Fin n) (p : (S : Set (Q n))),
+        t ≠ a ∧ t ≠ b ∧ t ≠ c ∧ D h.val.val = {a, c, t} ∧ D p.val = {c, t} ∧
+        ((hypercube n).induce (S : Set (Q n))).degree p = 2 ∧
+        ((hypercube n).induce (S : Set (Q n))).Adj h.val p ∧
+        ((hypercube n).induce (S : Set (Q n))).Adj u.val p) := by
+  classical
+  let G := (hypercube n).induce (S : Set (Q n))
+  obtain ⟨hnu, p, hp2, hhp, hup⟩ := hhu
+  obtain ⟨hnw, q, hq2, hhq, hwq⟩ := hhw
+  have hL (r : SideHigh G L) : r.val ∈ L := (mem_filter.mp r.property).1
+  have hR (r : SideHigh G R) : r.val ∈ R := (mem_filter.mp r.property).1
+  have hpL : p ∈ L := hp.mem_of_mem_adj' (hR u) hup.symm
+  have hqL : q ∈ L := hp.mem_of_mem_adj' (hR w) hwq.symm
+  have hmR : m ∈ R := hp.mem_of_mem_adj (hL x) hxm
+  have lr {l r : (S : Set (Q n))} (hl : l ∈ L) (hr : r ∈ R) : l ≠ r :=
+    fun he => Set.disjoint_left.mp hp.disjoint hl (he ▸ hr)
+  have low_high {l : (S : Set (Q n))} (hl : G.degree l = 2) {r : (S : Set (Q n))}
+      (hr : G.degree r = 3) : l ≠ r := by
+    intro he
+    rw [he, hr] at hl
+    omega
+  have degL (r : SideHigh G L) : G.degree r.val = 3 := (mem_filter.mp r.property).2
+  have degR (r : SideHigh G R) : G.degree r.val = 3 := (mem_filter.mp r.property).2
+  have hnPQ : p ≠ q := by
+    intro he
+    exact low_not_three hp2 (fun hx => hnu (Subtype.ext hx)) (fun hx => hnw (Subtype.ext hx))
+      (fun hx => huw (Subtype.ext hx)) hhp.symm hup.symm (he ▸ hwq.symm)
+  let v : Fin 8 → (S : Set (Q n)) := ![x.val, m, y.val, w.val, q, h.val, p, u.val]
+  have hv : Function.Injective v := by
+    apply List.nodup_ofFn.mp
+    change [x.val, m, y.val, w.val, q, h.val, p, u.val].Nodup
+    have h01 : x.val ≠ m := lr (hL x) hmR
+    have h02 : x.val ≠ y.val := fun he => hxy (Subtype.ext he)
+    have h03 : x.val ≠ w.val := lr (hL x) (hR w)
+    have h04 : x.val ≠ q := Ne.symm (low_high hq2 (degL x))
+    have h05 : x.val ≠ h.val := lr (hL x) (hR h)
+    have h06 : x.val ≠ p := Ne.symm (low_high hp2 (degL x))
+    have h07 : x.val ≠ u.val := lr (hL x) (hR u)
+    have h12 : m ≠ y.val := Ne.symm (lr (hL y) hmR)
+    have h13 : m ≠ w.val := low_high hm (degR w)
+    have h14 : m ≠ q := Ne.symm (lr hqL hmR)
+    have h15 : m ≠ h.val := low_high hm (degR h)
+    have h16 : m ≠ p := Ne.symm (lr hpL hmR)
+    have h17 : m ≠ u.val := low_high hm (degR u)
+    have h23 : y.val ≠ w.val := lr (hL y) (hR w)
+    have h24 : y.val ≠ q := Ne.symm (low_high hq2 (degL y))
+    have h25 : y.val ≠ h.val := lr (hL y) (hR h)
+    have h26 : y.val ≠ p := Ne.symm (low_high hp2 (degL y))
+    have h27 : y.val ≠ u.val := lr (hL y) (hR u)
+    have h34 : w.val ≠ q := Ne.symm (lr hqL (hR w))
+    have h35 : w.val ≠ h.val := fun he => hnw (Subtype.ext he.symm)
+    have h36 : w.val ≠ p := Ne.symm (lr hpL (hR w))
+    have h37 : w.val ≠ u.val := fun he => huw (Subtype.ext he.symm)
+    have h45 : q ≠ h.val := lr hqL (hR h)
+    have h46 : q ≠ p := Ne.symm hnPQ
+    have h47 : q ≠ u.val := lr hqL (hR u)
+    have h56 : h.val ≠ p := Ne.symm (lr hpL (hR h))
+    have h57 : h.val ≠ u.val := fun he => hnu (Subtype.ext he)
+    have h67 : p ≠ u.val := lr hpL (hR u)
+    simp [List.nodup_cons, h01, h02, h03, h04, h05, h06, h07, h12, h13, h14, h15, h16, h17, h23, h24, h25, h26, h27, h34, h35, h36, h37, h45, h46, h47, h56, h57, h67]
+  have hvAdj (i : Fin 8) : G.Adj (v i) (v (i + 1)) := by
+    fin_cases i
+    · exact hxm
+    · exact hym.symm
+    · exact hyw
+    · exact hwq
+    · exact hhq.symm
+    · exact hhp
+    · exact hup.symm
+    · exact hxu.symm
+  rcases two_high_arm_label hb v hv hvAdj ha hb' hc hd with h | ⟨he, t, hta, htb, htc, hcore, hp'⟩
+  · exact Or.inl h
+  · exact Or.inr ⟨he, t, p, hta, htb, htc, hcore, hp', hp2, hhp, hup⟩
+
+#print axioms actual_core_arm_label
+
+/-- Starting at a selected center, two parallel translations preserve equal
+spoke phase. A selected middle of the final spokes must be their center. -/
+private lemma doubly_translated_spokes_middle
+    {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
+    (hs : IsSwitching S sigma) (x : Q n) {c d t a : Fin n}
+    (hcd : c ≠ d) (hct : c ≠ t) (hdt : d ≠ t) (hca : c ≠ a) (hda : d ≠ a)
+    (hx : x ∈ S) (hc : flip x c ∈ S) (hd : flip x d ∈ S)
+    (hctS : flip (flip x t) c ∈ S) (hdtS : flip (flip x t) d ∈ S)
+    (hcaS : flip (flip (flip x t) a) c ∈ S) (hdaS : flip (flip (flip x t) a) d ∈ S)
+    {m : Q n} (hm : m ∈ S)
+    (hcm : (hypercube n).Adj (flip (flip (flip x t) a) c) m)
+    (hdm : (hypercube n).Adj (flip (flip (flip x t) a) d) m) :
+    m = flip (flip x t) a := by
+  by_contra hne
+  let z := flip (flip x t) a
+  have base (r : Fin n) (hr : flip x r ∈ S) : spokePhase sigma x r = sigma x := by
+    unfold spokePhase
+    rw [hs.2 x hx _ hr (BalancedCriticalSpectrum.flip_adj _ _), mul_assoc,
+      ← pow_two, switching_sq hs hr, mul_one]
+  have hbase : spokePhase sigma x c = spokePhase sigma x d := (base c hc).trans (base d hd).symm
+  have hfirst : spokePhase sigma (flip x t) c = spokePhase sigma (flip x t) d := by
+    rw [translate_spoke_phase hs x hct hc hctS, translate_spoke_phase hs x hdt hd hdtS, hbase]
+  have hlast : spokePhase sigma z c = spokePhase sigma z d := by
+    dsimp [z]
+    rw [translate_spoke_phase hs _ hca hctS hcaS, translate_spoke_phase hs _ hda hdtS hdaS, hfirst]
+  have hfar := far_common_midpoint hcd hne hcm hdm
+  have hsign := spoke_phase_neg hs z hcd hcaS hdaS (hfar ▸ hm)
+  have hzero : spokePhase sigma z c = 0 := by linarith
+  have hsq := SupportedEigenSaturation.matrix_sq_of_adj (BalancedCriticalSpectrum.flip_adj z c)
+  have hnon : huangMatrix n z (flip z c) ≠ 0 := by
+    intro h
+    rw [h] at hsq
+    norm_num at hsq
+  exact mul_ne_zero hnon (switching_ne_zero hs hcaS) hzero
+
+#print axioms doubly_translated_spokes_middle
