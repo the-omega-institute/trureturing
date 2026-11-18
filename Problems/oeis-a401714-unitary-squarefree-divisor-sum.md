@@ -38,6 +38,13 @@ the least missing prime, and the two actual sums. A finite table or a
 proof for only some support sizes cannot establish the assertion.
 Literature absence beyond the inspected sources and independent
 certification remain unverified.
+The original preregistration records the bounded literature search and the
+positive-integer scope. The synthesis preregistration identifies the exact
+finite residual as a proof obligation. The certification issue identifies
+the candidate and protected baseline.
+[#31140](https://github.com/the-omega-institute/trureturing/issues/31140)
+[#31151](https://github.com/the-omega-institute/trureturing/issues/31151)
+[#31441](https://github.com/the-omega-institute/trureturing/issues/31441)
 
 ## Route
 
@@ -46,13 +53,20 @@ prime-power choices give U(N)=product(p^v_p(N)+1), while the squarefree
 sum is product(p+1). After division by N, mandatory small primes give
 a lower bound for the joint normalized sum.
 
-For 1<=m<=999, retain the factors 1+1/p^(v_p(m)+1); ten private consumed
-kernel certificates establish the required rational bound. For m>=1000,
+For 1<=m<=999, retain the factors 1+1/p^(v_p(m)+1). Ten private kernel
+premises establish that the resulting product plus P(m)/m is at least
+two, where P(m) is the product of 1+1/p over all primes at most m.
+The intervals partition 1 through 999, and the unbounded support theorem
+uses the matching premise for each m in this range. For m>=1000,
 the product of 1+1/p over primes p<=m not dividing m is at least two.
 The latter estimate splits by whether m has at most nine prime divisors.
-Small supports are controlled by the first nine primes and an exact
-product comparison at 1000. Large supports use a harmonic-sum lower
-bound, a support-cardinality upper bound and logarithmic growth.
+The small-support branch uses the cardinality of the primes through 23
+and compares twice their reciprocal product with P(1000). The
+large-support branch uses the cardinality of the primes through 29
+and the strict lower bound 3^20 for their ordinary product, then applies
+harmonic, support-cardinality and logarithmic estimates. Each set of
+numerical premises is private to its module and has a named unbounded
+consumer in that module.
 These ranges cover every positive m, with no cutoff on N.
 
 ## Falsifier
@@ -67,7 +81,9 @@ change the problem rather than settle it.
 `D5/S3/Arith/Divisors/KarttunenA401714.result` states the implication for
 every natural N with 0<N, using the existing actual divisor sums.
 `leastMissingPrime` is defined by `Nat.find` on primes not dividing N;
-existence follows from a prime greater than N. The result derives
+existence is projected from the frozen
+`GoldenSmallestMissingPrime.exists_smallest_missing_prime_threshold`.
+The result derives
 mandatory support from the strict least-prime comparison and invokes
 `UnitaryProductBridge.unitary_squarefree_ge_twice_of_support`.
 
