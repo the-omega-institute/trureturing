@@ -30,6 +30,13 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
             Node("L", "Literal pair-pattern count", CountFormula(), false),
             Node("Col", "Four-label columns", ColFormula(), false),
             Node("column", "Column coordinates", ColumnFormula(), false),
+            Node("compatible", "Compatibility of columns", CompatibleFormula(), false),
+            Node("Q", "Zero-defect transfer matrix", QFormula(), false),
+            Node("quotient_rows", "Compatible successor counts", QuotientFormula(), true),
+            Node("W", "Zero-defect continuation vectors", WFormula(), false),
+            Node("coefficients", "Sextic coefficients", CoefficientsFormula(), false),
+            Node("powers_table", "Continuation powers", PowersFormula(), true),
+            Node("power_polynomial", "Sextic vector relation", PolynomialFormula(), true),
             Node("cls", "The fourteen equality classes", ClassFormula(), false),
             Node("representatives", "First-appearance representatives", RepresentativesFormula(), false),
             Node("relabel", "Coordinatewise label permutations", RelabelFormula(), false),
@@ -55,6 +62,30 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+
+
+    private static Formula MatrixFormula(int[][] rows) => Matrix(rows.Select(r => r.Select(n => Num(n)).ToArray()).ToArray());
+    private static Formula Matrix(params Formula[][] rows)
+    {
+        var a = new List<Formula> { Begin, Grp(F.Id("pmatrix")) };
+        for (int i=0; i<rows.Length; i++) { if(i>0) a.Add(RowBreak); for(int j=0;j<rows[i].Length;j++){if(j>0)a.Add(Amp);a.Add(rows[i][j]);}}
+        a.AddRange([End,Grp(F.Id("pmatrix"))]); return Seq(a.ToArray());
+    }
+    private static Formula SumOver(string n, Formula t, Formula b) => Seq(F.Sum,Underscore,Grp(Typed(V(n),t)),Sp,Parenthesized(b));
+    private static Formula IntVector(Formula v,int size) => Typed(v,Arrow(Fin(Num(size)),Q("Int")));
+    private static Formula Power(Formula n) => Call("Matrix.mulVec",Call("HPow.hPow",Own("Q"),n),IntVector(Num(1),14));
+    private static Formula CompatibleFormula() => All("a",Own("Col"),All("b",Own("Col"),
+        Eq(Own("compatible",V("a"),V("b")),Parenthesized(All("r",Fin(Num(4)),All("s",Fin(Num(4)),
+            Imp(And(Le(Val(V("r")),Add(Val(V("s")),Num(1))),Le(Val(V("s")),Add(Val(V("r")),Num(1)))),
+                Ne(Own("column",V("a"),V("r")),Own("column",V("b"),V("s")))))))));
+    private static Formula QuotientFormula() => All("b",Own("Col"),All("s",Fin(Num(14)),
+        Eq(SumOver("c",Own("Col"),If(And(Own("compatible",V("b"),V("c")),Eq(Own("cls",V("c")),V("s"))),Typed(Num(1),Q("Int")),Typed(Num(0),Q("Int")))),Own("Q",Own("cls",V("b")),V("s")))));
+    private static Formula PowersFormula() => All("k",Fin(Num(8)),Eq(Power(Val(V("k"))),Own("W",V("k"))));
+    private static Formula CoefficientsFormula() => Eq(Own("coefficients"),IntVector(Vector(Num(4),Num(2),Num(-25),Num(-3),Num(16),Num(3)),6));
+    private static Formula PolynomialFormula() => Eq(Power(Add(Num(1),Num(6))),SumOver("j",Fin(Num(6)),Call("HSMul.hSMul",Own("coefficients",V("j")),Power(Add(Num(1),Val(V("j")))))));
+    private static Formula QFormula() => Eq(Own("Q"),Typed(MatrixFormula(new int[][] { [2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }),Call("Matrix",Fin(Num(14)),Fin(Num(14)),Q("Int"))));
+    private static Formula WFormula() => Eq(Own("W"),Typed(MatrixFormula(new int[][] { [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [16, 4, 2, 4, 0, 2, 1, 0, 1, 4, 1, 0, 0, 0], [68, 26, 20, 25, 0, 20, 16, 0, 16, 26, 4, 0, 0, 0], [434, 139, 94, 124, 0, 94, 68, 0, 68, 139, 25, 0, 0, 0], [2320, 791, 573, 737, 0, 573, 434, 0, 434, 791, 124, 0, 0, 0], [13306, 4421, 3111, 4026, 0, 3111, 2320, 0, 2320, 4421, 737, 0, 0, 0], [74072, 24864, 17727, 22885, 0, 17727, 13306, 0, 13306, 24864, 4026, 0, 0, 0], [417502, 139548, 98936, 127826, 0, 98936, 74072, 0, 74072, 139548, 22885, 0, 0, 0] }),Arrow(Fin(Num(8)),Arrow(Fin(Num(14)),Q("Int")))));
+    private static Formula Num(int n) => n<0 ? Parenthesized(Seq(Minus,Num(-n))) : new Formula.Number(n);
 
     private static Formula ColFormula() =>
         Eq(Own("Col"), Product(Fin(D(3)), Product(Fin(D(3)), Product(Fin(D(3)), Fin(D(3))))));

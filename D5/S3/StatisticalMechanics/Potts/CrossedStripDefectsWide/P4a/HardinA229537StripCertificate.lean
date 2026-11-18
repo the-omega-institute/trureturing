@@ -37,6 +37,8 @@ open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.StatisticalMechanics.Potts.StripDefects
 open HardinA229537StripData
 open DefectTransfer (bondDefects)
+set_option pp.maxSteps 1000
+set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
@@ -54,7 +56,7 @@ private theorem zero_cut (p r : Fin 4 → Fin 3) :
     HardinA233177PairTransfer.compatible, tuple_column]
   constructor
   · intro h i j hij
-    exact h (i, j) hij
+    exact @h (i, j) hij
   · intro h e he
     exact h e.1 e.2 he
 
@@ -64,7 +66,7 @@ private theorem zero_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
       HardinA233177PairTransfer.Q (HardinA233177PairTransfer.cls (p 0, p 1, p 2, p 3)) j := by
   simp_rw [zero_cut]
   rw [HardinA233125SquareStrip.label_sum]
-  simpa only [Fintype.sum_prod_type] using
+  simpa only [Fintype.sum_prod_type, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons, Fin.succ_zero_eq_one, Fin.reduceFinMk] using
     HardinA233177PairTransfer.quotient_rows (p 0, p 1, p 2, p 3) j
 
 private theorem cost_relabel (e : Equiv.Perm (Fin 3)) (p r : HardinA233177PairTransfer.Col) :
@@ -84,82 +86,84 @@ private theorem one_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
     (∑ r : Fin 4 → Fin 3, if bondDefects between p r = 1 ∧
       HardinA233177PairTransfer.cls (r 0, r 1, r 2, r 3) = j then (1 : ℤ) else 0) =
       T ((HardinA233177PairTransfer.cls (p 0, p 1, p 2, p 3)).castAdd 14) (j.natAdd 14) := by
+  have transport (b : HardinA233177PairTransfer.Col) :
+      (∑ r : HardinA233177PairTransfer.Col,
+        if bondDefects between (HardinA233177PairTransfer.column b)
+          (HardinA233177PairTransfer.column r) = 1 ∧ HardinA233177PairTransfer.cls r = j
+        then (1 : ℤ) else 0) = T ((HardinA233177PairTransfer.cls b).castAdd 14)
+          (j.natAdd 14) := by
+    obtain ⟨e, he⟩ := HardinA233177PairTransfer.class_rep b
+    calc
+      _ = ∑ r : HardinA233177PairTransfer.Col,
+        if bondDefects between
+          (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e b))
+          (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e r)) = 1 ∧
+          HardinA233177PairTransfer.cls (HardinA233177PairTransfer.relabel e r) = j
+        then (1 : ℤ) else 0 := by
+          simp only [cost_relabel, HardinA233177PairTransfer.class_relabel]
+      _ = _ := by
+        rw [he]
+        exact ((HardinA233177PairTransfer.relabel e).sum_comp (fun r =>
+          if bondDefects between
+            (HardinA233177PairTransfer.column (HardinA233177PairTransfer.representatives (HardinA233177PairTransfer.cls b)))
+            (HardinA233177PairTransfer.column r) = 1 ∧ HardinA233177PairTransfer.cls r = j
+          then (1 : ℤ) else 0)).trans (one_representatives _ _)
   rw [HardinA233125SquareStrip.label_sum]
-  let b : HardinA233177PairTransfer.Col := (p 0, p 1, p 2, p 3)
-  change (∑ a : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3, ∑ e : Fin 3, _) = _
-  have hc := tuple_column p
-  change HardinA233177PairTransfer.column b = p at hc
-  rw [← hc]
-  change (∑ a : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3, ∑ e : Fin 3,
-    if bondDefects between (HardinA233177PairTransfer.column b)
-      (HardinA233177PairTransfer.column (a,c,d,e)) = 1 ∧
-      HardinA233177PairTransfer.cls (a,c,d,e) = j then (1 : ℤ) else 0) = _
-  rw [← Fintype.sum_prod_type, ← Fintype.sum_prod_type, ← Fintype.sum_prod_type]
-  obtain ⟨e, he⟩ := HardinA233177PairTransfer.class_rep b
-  calc
-    _ = ∑ r : HardinA233177PairTransfer.Col,
-      if bondDefects between
-        (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e b))
-        (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e r)) = 1 ∧
-        HardinA233177PairTransfer.cls (HardinA233177PairTransfer.relabel e r) = j
-      then (1 : ℤ) else 0 := by simp only [cost_relabel, HardinA233177PairTransfer.class_relabel]
-    _ = _ := by
-      rw [he]
-      rw [(HardinA233177PairTransfer.relabel e).sum_comp]
-      exact one_representatives _ _
+  have ht := transport (p 0, p 1, p 2, p 3)
+  rw [tuple_column] at ht
+  simpa only [Fintype.sum_prod_type, HardinA233177PairTransfer.column,
+    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons, Fin.succ_zero_eq_one, Fin.reduceFinMk] using ht
 
 private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 2) (s : Fin 28) :
     (∑ r : Fin 4 → Fin 3, if bondDefects between p r ≤ d.val ∧
       cl r (d.val - bondDefects between p r) = s then (1 : ℤ) else 0) = T (cl p d.val) s := by
+  have tt (i j : Fin 14) : T (i.castAdd 14) (j.castAdd 14) = HardinA233177PairTransfer.Q i j := by
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_castAdd]
+    rfl
+  have bb (i j : Fin 14) : T (i.natAdd 14) (j.natAdd 14) = HardinA233177PairTransfer.Q i j := by
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_apply_natAdd]
+    rfl
+  have bt (i j : Fin 14) : T (i.natAdd 14) (j.castAdd 14) = 0 := by
+    simp only [T, Matrix.reindex_apply, Matrix.submatrix_apply,
+      finSumFinEquiv_symm_apply_castAdd, finSumFinEquiv_symm_apply_natAdd]
+    rfl
   induction s using Fin.addCases (m := 14) (n := 14) with
   | left j =>
     have cut (r : Fin 4 → Fin 3) :
       (bondDefects between p r ≤ d.val ∧ cl r (d.val - bondDefects between p r) = j.castAdd 14) ↔
       d.val = 1 ∧ bondDefects between p r = 0 ∧
         HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3) = j := by
+      have hi := (HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3)).isLt
+      have hj := j.isLt
+      have hd := d.isLt
       unfold cl
-      split_ifs with h
-      · have hn : (HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3)).natAdd 14 ≠ j.castAdd 14 := by
-          intro he
-          have := congrArg Fin.val he
-          have := j.isLt
-          simp only [Fin.val_natAdd, Fin.val_castAdd] at *
-          omega
-        simp only [hn, and_false]
-        omega
-      · simp only [Fin.castAdd_inj]
-        have := d.isLt
-        constructor <;> rintro ⟨h1,h2⟩
-        · exact ⟨by omega, by omega, h2⟩
-        · exact ⟨by omega, h2.2⟩
+      split_ifs with h <;>
+        simp only [Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
     simp_rw [cut]
     fin_cases d
-    · simp [cl, T, Finset.sum_const_zero, Matrix.reindex_apply]
-    · simpa only [true_and, cl, show (1 : ℕ) ≠ 0 by decide, if_false,
-        T, Matrix.reindex_apply, Matrix.submatrix_apply,
-        finSumFinEquiv_symm_apply_castAdd, Matrix.fromBlocks_apply₁₁] using zero_counts p j
+    · simp only [Fin.val_zero, cl, ite_true]
+      rw [bt]
+      simp
+    · simp only [Fin.val_one, cl, show (1 : ℕ) ≠ 0 by decide, ite_false]
+      rw [tt]
+      simpa only [true_and] using zero_counts p j
   | right j =>
     have cut (r : Fin 4 → Fin 3) :
-      (bondDefects between p r ≤ d.val ∧ cl r (d.val - bondDefects between p r) = j.natAdd 14) ↔
+      (bondDefects between p r ≤ d.val ∧
+        cl r (d.val - bondDefects between p r) = j.natAdd 14) ↔
       bondDefects between p r = d.val ∧
         HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3) = j := by
+      have hi := (HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3)).isLt
+      have hj := j.isLt
       unfold cl
-      split_ifs with h
-      · simp only [Fin.natAdd_inj]
-        constructor <;> rintro ⟨h1,h2⟩ <;> exact ⟨by omega, h2⟩
-      · have hn : (HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3)).castAdd 14 ≠ j.natAdd 14 := by
-          intro he
-          have := congrArg Fin.val he
-          have := (HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3)).isLt
-          simp only [Fin.val_natAdd, Fin.val_castAdd] at *
-          omega
-        simp only [hn, and_false]
-        omega
+      split_ifs with h <;>
+        simp only [Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
     simp_rw [cut]
     fin_cases d
-    · simpa only [cl, if_true, T, Matrix.reindex_apply, Matrix.submatrix_apply,
-        finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₂] using zero_counts p j
-    · simpa only [cl, show (1 : ℕ) ≠ 0 by decide, if_false] using one_counts p j
+    · simp only [Fin.val_zero, cl, ite_true]
+      rw [bb]
+      exact zero_counts p j
+    · simpa only [Fin.val_one, cl, show (1 : ℕ) ≠ 0 by decide, ite_false] using one_counts p j
 
 private def Z : Fin 22 → Fin 14 → ℤ :=
   Fin.append HardinA233177PairTransfer.W
@@ -193,7 +197,8 @@ private theorem zero_powers (i : Fin 22) :
     induction n using Nat.strong_induction_on with
     | h n ih =>
       by_cases hsmall : n < 8
-      · exact HardinA233177PairTransfer.powers_table ⟨n, hsmall⟩
+      · have h := HardinA233177PairTransfer.powers_table ⟨n, hsmall⟩
+        simpa only [Z, Fin.append, Fin.addCases, dif_pos hsmall, Fin.castLT] using h
       · have hrec := recurrence (n - 7)
         rw [show n - 7 + 7 = n by omega] at hrec
         rw [hrec]
@@ -203,7 +208,7 @@ private theorem zero_powers (i : Fin 22) :
           ih _ (by omega) (by omega)
         simp_rw [earlier]
         interval_cases n <;> funext k <;> fin_cases k <;>
-          norm_num [Z, HardinA233177PairTransfer.W,
+          norm_num [Z, Fin.append, Fin.addCases, HardinA233177PairTransfer.W,
             HardinA233177PairTransfer.coefficients, Fin.sum_univ_succ]
   exact go i.val i.isLt
 
@@ -227,23 +232,34 @@ private def W (i : Fin 15) : Fin 28 → ℤ :=
 
 private theorem tail_step (i : Fin 14) (j : Fin 14) :
     W i.succ (j.natAdd 14) = T.mulVec (W i.castSucc) (j.natAdd 14) := by
+  have block_tail (A B D : Matrix (Fin 14) (Fin 14) ℤ) (v : Fin 28 → ℤ) :
+      (Matrix.reindex finSumFinEquiv finSumFinEquiv
+        (Matrix.fromBlocks A B (0 : Matrix (Fin 14) (Fin 14) ℤ) D)).mulVec v
+          (j.natAdd 14) = D.mulVec (fun k : Fin 14 => v (k.natAdd 14)) j := by
+    simp only [Matrix.reindex_apply]
+    rw [Matrix.submatrix_mulVec_equiv]
+    simp only [Equiv.symm_symm]
+    rw [Matrix.fromBlocks_mulVec]
+    simp only [Function.comp_apply, finSumFinEquiv_symm_apply_natAdd, Sum.elim_inr,
+      Matrix.zero_mulVec, zero_add]
+    rfl
+  rw [show T.mulVec (W i.castSucc) (j.natAdd 14) =
+    HardinA233177PairTransfer.Q.mulVec
+      (fun k : Fin 14 => W i.castSucc (k.natAdd 14)) j from block_tail _ _ _ _]
   simp only [W, Fin.append_right]
-  rw [← zero_powers, ← zero_powers]
-  simp only [T, Matrix.reindex_apply]
-  rw [Matrix.submatrix_mulVec_equiv, Matrix.fromBlocks_mulVec]
-  simp only [Function.comp_apply, finSumFinEquiv_symm_apply_natAdd,
-    Sum.elim_inr, Matrix.zero_mulVec, zero_add, Equiv.symm_symm]
+  simp_rw [← zero_powers]
   simp only [Fin.val_succ, Fin.val_castSucc, pow_succ', Matrix.mulVec_mulVec]
-  rfl
 
 private theorem powers (i : Fin 15) :
     (T ^ i.val).mulVec terminal = W i := by
   have hzero : W 0 = terminal := by
-    have hz := HardinA233177PairTransfer.powers_table 0
-    change (1 : Fin 14 → ℤ) = HardinA233177PairTransfer.W 0 at hz
-    change Fin.append (0 : Fin 14 → ℤ) (HardinA233177PairTransfer.W 0) = terminal
-    rw [← hz]
-    rfl
+    funext j
+    induction j using Fin.addCases (m := 14) (n := 14) with
+    | left j => fin_cases j <;> rfl
+    | right j =>
+      simp only [W, Fin.append_right, terminal]
+      rw [← zero_powers]
+      norm_num
   have step (k : Fin 14) : W k.succ = T.mulVec (W k.castSucc) := by
     funext j
     induction j using Fin.addCases (m := 14) (n := 14) with
@@ -289,7 +305,10 @@ private theorem tail_polynomial (j : Fin 14) :
     Fin.mk_zero']
   simp_rw [← zero_powers]
   norm_num [HardinA233177PairTransfer.coefficients, Fin.sum_univ_succ] at h0 h1 h2 h3 h4 h5 h6
-  linear_combination 4 * h0 + 2 * h1 - 25 * h2 - 3 * h3 + 16 * h4 + 3 * h5 + h6
+  norm_num only [Fin.reduceFinMk, Fin.val_ofNat, Nat.reduceMod, Fin.val_natCast]
+  simp only [show (14 : Fin 15).val = 14 from rfl,
+    show (14 : Fin 22).val = 14 from rfl]
+  linear_combination h6 - 4 * h0 - 2 * h1 + 25 * h2 + 3 * h3 - 16 * h4 - 3 * h5
 
 /-- Exact-budget transition counts and the eventual order-twelve vector relation. -/
 theorem finite_certificate :
