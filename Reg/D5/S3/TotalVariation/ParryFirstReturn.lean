@@ -154,15 +154,15 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p r => hasReturnTimes r p.2) (fun e => nomatch e)
+  realize signature (fun _ p r => matchesReturnTimes r p.2) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -181,7 +181,7 @@ abbrev arena : Arena where
         ENNReal.ofReal (suffixLaw k (v 0)) * ∏ i : Fin m,
           ENNReal.ofReal (suffixKernel k (v i.castSucc) (v i.succ)))
     (ns : List (Fin k)),
-    sectionMeasure (μ : Measure (RelationPath k)) {r | F.readout () ⟨k, ns⟩ r} =
+    sectionMeasure (μ : Measure (RelationPath k)) {r | F.readout () ⟨k, ns⟩ r = true} =
       ENNReal.ofReal ((ns.map fun n => parryParameter k ^ (n.val + 1)).prod)
 
 private theorem positive : arena.Law actual := @return_time_cylinder_probability
@@ -202,11 +202,8 @@ def evidence : Registration arena (type_of% (@return_time_cylinder_probability))
   dependence := by
     intro i
     refine ⟨⟨2, [0]⟩, zeroPath, alternatingPath, ?_⟩
-    change hasReturnTimes zeroPath [0] ≠ hasReturnTimes alternatingPath [0]
-    intro equal
-    have yes : hasReturnTimes zeroPath [0] := by simp [hasReturnTimes, zeroTime]
-    have no : ¬hasReturnTimes alternatingPath [0] := by simp [hasReturnTimes, alternatingTime]
-    exact no (Eq.mp equal yes)
+    change matchesReturnTimes zeroPath [0] ≠ matchesReturnTimes alternatingPath [0]
+    simp [matchesReturnTimes, zeroTime, alternatingTime]
 
 def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@return_time_cylinder_probability) (Realization signature) Unit Unit := {
@@ -221,7 +218,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   realization := .source arena ⟨evidence⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p r => hasReturnTimes r p.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p r => matchesReturnTimes r p.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -232,7 +229,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     coordinates := #[0, 7]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "arg", "arg", "body"]
+        "fn", "arg", "arg", "arg", "body", "fn", "arg"]
       stateBinder := 8
       functionOperand := false
       stateOperand := none

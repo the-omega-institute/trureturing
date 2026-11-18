@@ -728,9 +728,14 @@ private theorem returnWord_allowed (hk : 0 < k) (ns : List (Fin k)) :
 
 /-- Match the first successive positive return times, with each entry stored
 one below its duration so that the alphabet is `Fin k`. -/
-def hasReturnTimes (r : RelationPath k) : List (Fin k) → Prop
-  | [] => True
-  | n :: ns => returnTime r = n.val + 1 ∧ hasReturnTimes (returnMap r) ns
+noncomputable def matchesReturnTimes (r : RelationPath k) : List (Fin k) → Bool
+  | [] => true
+  | n :: ns => decide (returnTime r = n.val + 1) && matchesReturnTimes (returnMap r) ns
+
+private theorem matchesReturnTimes_cons (r : RelationPath k) (n : Fin k) (ns : List (Fin k)) :
+    matchesReturnTimes r (n :: ns) = true ↔
+      returnTime r = n.val + 1 ∧ matchesReturnTimes (returnMap r) ns = true := by
+  simp [matchesReturnTimes, Bool.and_eq_true]
 
 private theorem returnWord_head (hk : 0 < k) (n : Fin k) (ns : List (Fin k))
     (t : Fin (n.val + 2)) (u : Fin (returnSpan (n :: ns) + 1))
@@ -761,7 +766,7 @@ private theorem return_word_iff (hk : 0 < k)
       z.2.val (t - (j : ℤ) - 1) = false ∧
       ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
     (ns : List (Fin k)) (r : RelationPath k) :
-    (r ∈ zeroSection k ∧ hasReturnTimes r ns) ↔
+    (r ∈ zeroSection k ∧ matchesReturnTimes r ns = true) ↔
       ∀ i : Fin (returnSpan ns + 1), ((e (false, r)).val (i.val : ℤ)).2 =
         returnWord hk ns i := by
   induction ns generalizing r with
@@ -775,12 +780,12 @@ private theorem return_word_iff (hk : 0 < k)
       apply Fin.ext
       simpa [returnWord, index] using (suffix_zero_iff e hsuffix r 0).2 hr
     · intro h
-      refine ⟨(suffix_zero_iff e hsuffix r 0).1 ?_, trivial⟩
+      refine ⟨(suffix_zero_iff e hsuffix r 0).1 ?_, rfl⟩
       simpa [returnWord] using congrArg Fin.val (h 0)
   | cons n ns ih =>
     constructor
     · rintro ⟨hsection, htimes⟩ i
-      obtain ⟨hreturn, htail⟩ := htimes
+      obtain ⟨hreturn, htail⟩ := (matchesReturnTimes_cons r n ns).1 htimes
       by_cases hhead : i.val ≤ n.val
       · let t : Fin (n.val + 2) := ⟨i.val, by omega⟩
         rw [returnWord_head hk n ns t i rfl]
@@ -805,7 +810,8 @@ private theorem return_word_iff (hk : 0 < k)
           omega⟩
         simpa only [returnWord_head hk n ns t u rfl] using h u
       obtain ⟨hsection, hreturn⟩ := (return_suffix_block_iff e hsuffix r n).2 hblock
-      refine ⟨hsection, hreturn, ((ih (returnMap r)).2 (fun t => ?_)).2⟩
+      refine ⟨hsection, (matchesReturnTimes_cons r n ns).2
+        ⟨hreturn, ((ih (returnMap r)).2 (fun t => ?_)).2⟩⟩
       let u : Fin (returnSpan (n :: ns) + 1) := ⟨t.val + (n.val + 1), by
         have ht := t.isLt
         simp only [returnSpan]
@@ -837,21 +843,21 @@ theorem return_time_cylinder_probability (hk : 2 ≤ k)
         ENNReal.ofReal (suffixLaw k (v 0)) * ∏ i : Fin m,
           ENNReal.ofReal (suffixKernel k (v i.castSucc) (v i.succ)))
     (ns : List (Fin k)) :
-    sectionMeasure (μ : Measure (RelationPath k)) {r | hasReturnTimes r ns} =
+    sectionMeasure (μ : Measure (RelationPath k)) {r | matchesReturnTimes r ns = true} =
       ENNReal.ofReal ((ns.map fun n => parryParameter k ^ (n.val + 1)).prod) := by
   have hkpos : 0 < k := by omega
   have events :
-      zeroSection k ∩ {r | hasReturnTimes r ns} =
+      zeroSection k ∩ {r | matchesReturnTimes r ns = true} =
       {r | (fun i : Fin (returnSpan ns + 1) => ((e (false, r)).val (i.val : ℤ)).2) =
         returnWord hkpos ns} := by
     ext r
-    change (r ∈ zeroSection k ∧ hasReturnTimes r ns) ↔ _
+    change (r ∈ zeroSection k ∧ matchesReturnTimes r ns = true) ↔ _
     rw [return_word_iff hkpos e hsuffix]
     exact ⟨funext, fun h i => congrFun h i⟩
   have support :
       sectionMeasure (μ : Measure (RelationPath k))
-        (zeroSection k ∩ {r | hasReturnTimes r ns}) =
-      sectionMeasure (μ : Measure (RelationPath k)) {r | hasReturnTimes r ns} :=
+        (zeroSection k ∩ {r | matchesReturnTimes r ns = true}) =
+      sectionMeasure (μ : Measure (RelationPath k)) {r | matchesReturnTimes r ns = true} :=
     ProbabilityTheory.cond_inter_self measurable_zeroSection _ _
   rw [← support, events,
     conditioned_reset_loop hk e μ hsuffix hμ hcylinder (returnWord hkpos ns)
