@@ -165,7 +165,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () (fun P : ℝ => (primeCount P - countingSecondOrder P) / (P / log P ^ 4)) atTop (𝓝 6)
+  Law R := R.readout () () (fun P : ℝ => log P * (log P * primeCount P / P - 1)) atTop (𝓝 1)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   exact id
