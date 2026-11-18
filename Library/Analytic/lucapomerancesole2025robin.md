@@ -10,7 +10,6 @@ strata_touched:
   - D5/S3/Arith/Robin/Analytic/RobinExceptionCount
   - D5/S3/Arith/Robin/Analytic/OmegaTailUpper
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/PrimeExpansion
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/CentralCount
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/KernelLimit
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/Tail
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/CentralWeight

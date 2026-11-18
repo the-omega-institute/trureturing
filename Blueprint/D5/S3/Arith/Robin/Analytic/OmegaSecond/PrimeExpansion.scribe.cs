@@ -44,5 +44,14 @@ internal sealed class PrimeExpansionDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("The budget divided by P/log(P)^2 tends to two. The first two prime-counting terms cancel the threshold exactly; the third coefficient supplies two, while the Chebyshev error vanishes on this scale.")),
                     Paragraph(Text("These estimates support an upper bound for integers whose number of distinct prime factors exceeds the second threshold. A matching lower bound is not established here."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("central-prime-counting-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaSecond/PrimeExpansion.central_prime_counting_bound"),
+                H("Uniform central prime-counting error"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every sufficiently large real P and every real t in the closed interval [P/2,2P], the absolute difference between primeCount(t) and t/log(P) is at most 28P/log(P)^2. The prime count includes primes at the floored real endpoint.")),
+                    Paragraph(Text("The constant density uses the same central endpoint P throughout the interval. The bound combines the uniform eventual error at t with the change from log(t) to log(P). It supports the moving prime-weight upper estimate; no matching lower bound for the second distinct-prime threshold is asserted."))),
                 DescribeRole.Theorem))));
 }
