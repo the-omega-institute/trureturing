@@ -267,3 +267,52 @@ private lemma sixty_six_distance_seven_le_eight {C : Finset (Q 9)}
   exact partner_edges_le_eight G hV (distanceSeven_partner_degree hr hb hd hx) hcap
 
 #print axioms sixty_six_distance_seven_le_eight
+
+open BalancedCriticalSpectrum (directionEdges direction_edge_count)
+open BalancedCubeLowerBound (coordinateSlice)
+open GirthSliceCounting (degreeTwo degreeThree)
+open private reindex reindex_regular reindex_balanced reindex_slice from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
+open private coordinate_slice_degree_cases low_slice_card_eq_q parts_card sum_degrees_parts from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
+
+private lemma sixty_six_half_card_ge_twenty_one {C : Finset (Q 9)} (hc : C.card = 66)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (i : Fin 9) (b : Bool) :
+    21 ≤ (C.filter (fun x => x i = b)).card := by
+  let p := Equiv.swap i (0 : Fin 9)
+  let T := C.image (reindex p)
+  let S := coordinateSlice T b
+  let G := (hypercube 9).induce (S : Set (Q 9))
+  have hr' := reindex_regular hr p
+  have hb' := reindex_balanced hb p
+  have ht : T.card = 66 := by
+    simpa [T, card_image_of_injective _ (reindex p).injective] using hc
+  have hsize : S.card = (C.filter (fun x => x i = b)).card := by
+    dsimp [S,T,p]
+    rw [reindex_slice, card_image_of_injective _ (reindex _).injective]
+  rw [← hsize]
+  by_contra! hsmall
+  by_cases hthin : S.card ≤ 19
+  · have hT : T.Nonempty := card_pos.mp (by omega)
+    obtain ⟨g, _, _, hGray⟩ :=
+      NineteenPointSlice.nineteen_point_slice_gray_reconstruction hT hr' hb' b hthin
+    have hGrayCard : (GrayGridComponent.support 3).card = 54 := by
+      simpa using GrayGridComponent.card_support (d := 3) (by decide)
+    rw [hGray, card_image_of_injective _ g.injective, hGrayCard] at ht
+    omega
+  have hd : ∀ v, G.degree v = 2 ∨ G.degree v = 3 :=
+    fun v => coordinate_slice_degree_cases v.property hr'
+  have hdir : 6 * directionEdges T 0 = 66 := by
+    simpa [ht] using direction_edge_count (d := 3) T hr' hb' 0
+  have htwo := low_slice_card_eq_q (b := b) hr'
+  change (degreeTwo G univ).card = directionEdges T 0 at htwo
+  have hcard := parts_card G hd univ
+  have hsum : 2 * (degreeTwo G univ).card + 3 * (degreeThree G univ).card =
+      2 * G.edgeFinset.card := by
+    rw [← sum_degrees_parts G hd univ]
+    exact G.sum_degrees_eq_twice_card_edges
+  rw [card_univ, show Fintype.card (S : Set (Q 9)) = S.card by simp] at hcard
+  omega
+
+#print axioms sixty_six_half_card_ge_twenty_one
