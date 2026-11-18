@@ -6,14 +6,6 @@
    utility: none
    digest: Partitions lexicographic extensions and lifts Noetherian subsets. -/
 
-/- lexFiberExtension: The literal fibers are exactly the classes of the first-projection kernel.
-   To identify the class of each given fiber, the proof uses the induced base embedding as a
-   section of first projection. The second-coordinate isomorphisms use the inherited order.
-   Escape audit for lexFiberExtension is unfinished. The linked source-family issue is
-   https://github.com/the-omega-institute/trureturing/issues/28004 (original result audit).
-   A faithful registration would require an enrolled readout and lawful observational variation
-   for this construction. The construction supplies neither of those pieces of evidence. -/
-
 import D5.S3.ConceptDynamics.DagCompletion.SalinasSchmeisOmegaChainExtensionRefutation
 import Mathlib.Data.Finset.Max
 import Mathlib.Order.OrderIsoNat
@@ -26,7 +18,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ConceptDynamics.DagCompletion.SalinasSchmeisLexicographicFiberExtension
 
-open SalinasSchmeisOmegaChainExtensionRefutation (IsExtension IsOmegaChain)
+open SalinasSchmeisOmegaChainExtensionRefutation (IsOmegaChain)
 
 universe u v
 
@@ -35,12 +27,6 @@ variable {P : Type u} {A : Type v} [PartialOrder P] [PartialOrder A]
 /-- The first-coordinate fiber, with the order induced from the lexicographic product. -/
 def lexFiber (p : P) : Set (P ×ₗ A) :=
   {x | (ofLex x).1 = p}
-
-/-- Fixing the second coordinate gives an induced copy of the base order. -/
-def lexBaseEmbedding (a₀ : A) : P ↪o (P ×ₗ A) :=
-  OrderEmbedding.ofMapLEIff (fun p => toLex (p, a₀)) fun p q => by
-    rw [Prod.Lex.toLex_le_toLex']
-    exact ⟨And.left, fun h => ⟨h, fun _ => le_rfl⟩⟩
 
 /-- The second coordinate is the inverse of the inclusion into the inherited fiber. -/
 def lexFiberOrderIso (p : P) : A ≃o lexFiber (A := A) p where
@@ -53,20 +39,6 @@ def lexFiberOrderIso (p : P) : A ≃o lexFiber (A := A) p where
   map_rel_iff' {a b} := by
     change toLex (p, a) ≤ toLex (p, b) ↔ a ≤ b
     simp [Prod.Lex.toLex_le_toLex]
-
-/-- The literal family of inherited fibers partitions the induced lexicographic extension. -/
-theorem lexFiberExtension (a₀ : A) :
-    IsExtension P (P ×ₗ A) ∧ Setoid.IsPartition (Set.range (lexFiber (P := P) (A := A))) ∧
-      ∀ p : P, Nonempty (A ≃o lexFiber (A := A) p) := by
-  let base : P ↪o (P ×ₗ A) := lexBaseEmbedding a₀
-  refine ⟨⟨base⟩, ?_, fun p => ⟨lexFiberOrderIso p⟩⟩
-  let first : P ×ₗ A → P := fun x => (ofLex x).1
-  have classes_eq : (Setoid.ker first).classes = Set.range (lexFiber (A := A)) := by
-    refine Set.Subset.antisymm (Setoid.classes_ker_subset_fiber_set first) ?_
-    rintro _ ⟨p, rfl⟩
-    exact ⟨base p, rfl⟩
-  rw [← classes_eq]
-  exact Setoid.isPartition_classes _
 
 /-- Every natural-number section of a Noetherian subset is finite. Shifting past the
 section maximum gives one strictly upward injection on the entire subset.

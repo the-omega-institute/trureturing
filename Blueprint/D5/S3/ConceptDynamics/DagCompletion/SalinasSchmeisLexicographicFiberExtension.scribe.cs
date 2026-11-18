@@ -25,16 +25,6 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
                     + "equals the index, with the order inherited from the product."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("lex-base-embedding"),
-                DeclarationHandle.Create(Prefix + "lexBaseEmbedding"),
-                H("The induced base embedding"), StatementSource.FromAuthor(Disp(BaseFormula())),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text(
-                    "Fix a point of A. The map preserves and reflects the base order since the "
-                    + "two second coordinates are the same. Equality of the lifted first "
-                    + "coordinates also gives injectivity."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("lex-fiber-order-iso"),
                 DeclarationHandle.Create(Prefix + "lexFiberOrderIso"),
                 H("The inherited fiber order"), StatementSource.FromAuthor(Disp(FiberIsoFormula())),
@@ -45,17 +35,18 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
                     + "is impossible within the fiber. The resulting comparison is exactly "
                     + "the comparison in A."))),
                 DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("lex-fiber-extension"),
-                DeclarationHandle.Create(Prefix + "lexFiberExtension"),
-                H("The literal fiber partition"), StatementSource.FromAuthor(Disp(ExtensionFormula())),
-                AssessedProvenance.FromRepo(Source),
+            new DocumentBlock.Section(
+                H("The literal fiber partition"),
                 Blocks(
+                    new DocumentBlock.DisplayFormula(Disp(ExtensionFormula())),
                     Paragraph(Text(
-                        "The base map is a section of first projection. Each literal fiber is the "
-                        + "equivalence class of the corresponding base image for the kernel setoid "
-                        + "of that projection. These classes partition the whole carrier. If P is "
-                        + "empty, the carrier and the family of parts are both empty.")),
+                        "For the fixed point a of A, the map p ↦ toLex(p,a) preserves and reflects "
+                        + "the order by the lexicographic comparison law. The map is a section of "
+                        + "first projection. Each literal fiber is the kernel class of the corresponding "
+                        + "base image by Setoid.mem_classes, and every kernel class is a fiber by "
+                        + "Setoid.classes_ker_subset_fiber_set. Setoid.isPartition_classes therefore "
+                        + "gives a partition of the whole carrier. If P is empty, the carrier and "
+                        + "the family of parts are both empty.")),
                     Paragraph(Text(
                         "Taking A to be the natural numbers and the distinguished point to be zero "
                         + "gives an induced extension of every partial order and an omega partition "
@@ -76,8 +67,7 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
                         + "(ChronoAI Pte Ltd, Singapore) and Wenlin Zhang (National University of "
                         + "Singapore and ChronoAI Pte Ltd, Singapore). The countable partition "
                         + "theorem and the general partition and lifting results remain credited "
-                        + "to Remi Salinas Schmeis."))),
-                DescribeRole.Theorem),
+                        + "to Remi Salinas Schmeis.")))),
             Describe.Lean(
                 DescribeId.Create("lex-nat-fiber-lifting"), DeclarationHandle.Create(Prefix + "lexNatFiberLifting"),
                 H("Lifting Noetherian subsets of the natural-number extension"),
@@ -115,14 +105,6 @@ internal sealed class SalinasSchmeisLexicographicFiberExtensionDocument : IScrib
             Equal(Call("lexFiber", p), Seq(
                 OpenBrace, x, Sp, InMacro, Sp, Product(), Sp, Mid, Sp,
                 Equal(Seq(Call("ofLex", x), Dot, D(1)), p), CloseBrace))));
-    }
-
-    private static Formula BaseFormula()
-    {
-        var a = F.Id("a");
-        var p = F.Id("p");
-        return OrderedCarriers(All("a", F.Id("A"), All("p", F.Id("P"),
-            Equal(App(Call("lexBaseEmbedding", a), p), Call("toLex", Pair(p, a))))));
     }
 
     private static Formula FiberIsoFormula()

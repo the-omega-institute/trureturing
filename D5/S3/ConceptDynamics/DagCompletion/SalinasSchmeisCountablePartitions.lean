@@ -29,7 +29,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.DagCompletion.SalinasSchmeisCountablePartitions
 
 open SalinasSchmeisOmegaChainExtensionRefutation (IsExtension IsOmegaChain)
-open SalinasSchmeisLexicographicFiberExtension (lexFiber lexFiberExtension lexFiberOrderIso)
+open SalinasSchmeisLexicographicFiberExtension (lexFiber lexFiberOrderIso)
 
 universe u v
 
@@ -301,34 +301,26 @@ theorem maximalRayPartition [Countable P] (a : P → MaximalPoints P)
       rcases Set.mem_insert_iff.mp hq with h | ⟨_, _, h⟩
       · exact Sum.inl.inj h.symm
       · cases h
-    · obtain ⟨C, ⟨⟨m, rfl⟩, hx⟩, _⟩ :=
-        (lexFiberExtension (P := MaximalPoints P) (0 : ℕ)).2.1.2 x
-      change (ofLex x).1 = m at hx
-      rcases x with ⟨i, n⟩
-      change i = m at hx
-      subst i
-      have rayCover (m : MaximalPoints P) (n : ℕ) :
-          ∃! q : P, (Sum.inr (toLex (m, n)) : MaximalRayExtension P) ∈ maximalRayPart a S q := by
-        have memRay (q : P) (hq : a q = m) :
-            n ∈ S m ⟨q, hq⟩ ↔
-              (Sum.inr (toLex (m, n)) : MaximalRayExtension P) ∈ maximalRayPart a S q := by
-          subst m
-          constructor
-          · intro h
-            exact Set.mem_insert_of_mem _ ⟨n, h, rfl⟩
-          · intro h
-            rcases Set.mem_insert_iff.mp h with hm | ⟨k, hk, hm⟩
-            · cases hm
-            · have : k = n := congrArg Prod.snd (Sum.inr.inj hm)
-              exact this ▸ hk
-        obtain ⟨⟨p, hp⟩, hpn, hup⟩ := (hS m).1 n
-        refine ⟨p, (memRay p hp).mp hpn, ?_⟩
-        intro q hq
-        obtain ⟨k, _, heq⟩ :=
-          (Set.mem_insert_iff.mp hq).resolve_left (by intro h; cases h)
-        have htag : a q = m := congrArg Prod.fst (Sum.inr.inj heq)
-        exact congrArg Subtype.val (hup ⟨q, htag⟩ ((memRay q htag).mpr hq))
-      exact rayCover m n
+    · rcases x with ⟨m, n⟩
+      have memRay (q : P) (hq : a q = m) :
+          n ∈ S m ⟨q, hq⟩ ↔
+            (Sum.inr (toLex (m, n)) : MaximalRayExtension P) ∈ maximalRayPart a S q := by
+        subst m
+        constructor
+        · intro h
+          exact Set.mem_insert_of_mem _ ⟨n, h, rfl⟩
+        · intro h
+          rcases Set.mem_insert_iff.mp h with hm | ⟨k, hk, hm⟩
+          · cases hm
+          · have : k = n := congrArg Prod.snd (Sum.inr.inj hm)
+            exact this ▸ hk
+      obtain ⟨⟨p, hp⟩, hpn, hup⟩ := (hS m).1 n
+      refine ⟨p, (memRay p hp).mp hpn, ?_⟩
+      intro q hq
+      obtain ⟨k, _, heq⟩ :=
+        (Set.mem_insert_iff.mp hq).resolve_left (by intro h; cases h)
+      have htag : a q = m := congrArg Prod.fst (Sum.inr.inj heq)
+      exact congrArg Subtype.val (hup ⟨q, htag⟩ ((memRay q htag).mpr hq))
   · intro p
     let e : ℕ ↪o MaximalRayExtension P := ((lexFiberOrderIso (A := ℕ) (a p)).toOrderEmbedding.trans
       (OrderEmbedding.subtype (· ∈ lexFiber (A := ℕ) (a p)))).trans rayInclusion

@@ -78,7 +78,7 @@ A countable carrier has a Mathlib Shrink copy in the prescribed universe. orderI
 
 **Theorem 1.6 (The countable bounded-height classification).**
 
-$$\forall P \in Type u,\; [\operatorname{PartialOrder}\left(P\right)] [\operatorname{Nonempty}\left(P\right)] [\operatorname{Countable}\left(P\right)] \operatorname{chainHeight}\left(\operatorname{univ}\left(P\right), \operatorname{le}\left(P\right)\right) \neq \infty \Rightarrow\\\operatorname{HasLeastExtension}\left(v, w, \mathbb{N}, P\right) \Leftrightarrow \exists t \in P,\; \operatorname{IsTop}\left(t\right)$$
+$$\forall P \in Type u,\; [\operatorname{PartialOrder}\left(P\right)] [\operatorname{Nonempty}\left(P\right)] [\operatorname{Countable}\left(P\right)] \operatorname{chainHeight}\left(\operatorname{univ}\left(P\right), \operatorname{le}\left(P\right)\right) \neq \infty \Rightarrow\\(\operatorname{HasLeastExtension}\left(v, w, \mathbb{N}, P\right) \Leftrightarrow (\exists t \in P,\; \operatorname{IsTop}\left(t\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.hasLeastOmegaExtension_iff` (`✓ std3`). ∎
 
@@ -106,21 +106,15 @@ The naturals have the single full part as an omega partition. The identity makes
 
 This is the bounded-height theorem and its applications in the revision-2 note by Haobo Ma (ChronoAI Pte Ltd, Singapore) and Wenlin Zhang (National University of Singapore and ChronoAI Pte Ltd, Singapore). The original Fork, Rays and Tail refutation and its settlement retain their credit. Remi Salinas Schmeis owns the posing question and the cited prior partition and lifting results.
 
-**Theorem 1.7 (A cofinal inherited chain without a partition).**
+## A cofinal inherited chain without a partition
 
-$$\forall n \in \mathbb{N},\; 2 \le n \Rightarrow\\\operatorname{IsCofinal}\left(\operatorname{Ioi}\left(0 : \operatorname{Fin}\left(n + 1\right)\right)\right) \land \operatorname{Nonempty}\left(\operatorname{OrderIso}\left(\operatorname{Fin}\left(n\right), \operatorname{Ioi}\left(0 : \operatorname{Fin}\left(n + 1\right)\right)\right)\right) \land\\\neg \operatorname{PartitionableBy}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n + 1\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.finiteSkeletonObstruction` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Remi Salinas Schmeis (2026). *General Criterion for a Poset to Admit a Partition Into omega-Chains*. URL: <https://arxiv.org/abs/2610.29056v1>.
-
-*Commentary.*
+$$
+\forall n \in \mathbb{N},\; 2 \le n \Rightarrow\\\operatorname{IsCofinal}\left(\operatorname{Ioi}\left(0 : \operatorname{Fin}\left(n + 1\right)\right)\right) \land \operatorname{Nonempty}\left(\operatorname{OrderIso}\left(\operatorname{Fin}\left(n\right), \operatorname{Ioi}\left(0 : \operatorname{Fin}\left(n + 1\right)\right)\right)\right) \land\\\neg \operatorname{PartitionableBy}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n + 1\right)\right)
+$$
 
 For each natural n at least two, use the chain Fin(n+1) with its usual order. The strict interval above zero is the literal tail {1, …, n}, isomorphic to Fin(n) under successor. It contains the greatest point, so the one-member family consisting of this interval is pairwise disjoint with a cofinal union, as in Definition 2.33.
 
-In any proposed partition, take the inherited isomorphism from Fin(n) to each part. The product of the type of parts with Fin(n) maps bijectively to Fin(n+1). Surjectivity uses coverage and injectivity uses unique membership followed by injectivity within the part. If there are m parts, counting gives n+1 = nm, so n divides 1. This contradicts n at least two.
+In any proposed partition, each part has cardinality n by its inherited order isomorphism with Fin(n). Setoid.IsPartition.ncard_eq_finsum applied to the whole finite carrier gives the sum of the cardinalities of all parts. If there are m parts this gives n+1 = nm, so n divides 1. This contradicts n at least two.
 
 For n = 1, singleton parts partition every partial order. A one-point order has no inherited two-point chain and therefore no 2-skeleton. The finite obstruction is the second clause of the skeleton corollary in revision 2 by Haobo Ma and Wenlin Zhang. Its first clause, concerning extensions for every nonzero ordinal, is in the lexicographic fiber document.
 
@@ -129,7 +123,6 @@ For n = 1, singleton parts partition every partial order. A one-point order has 
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.HasLeastExtension`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.IsLeastExtension`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.PartitionableBy`
-- Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.finiteSkeletonObstruction`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.hasLeastOmegaExtension_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.hasLeastOmegaExtension_of_top`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisBoundedHeightLeastExtension.ordinalSum_isLeastExtension`

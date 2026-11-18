@@ -154,13 +154,10 @@ internal sealed class SalinasSchmeisBoundedHeightLeastExtensionDocument : IScrib
                         + "Remi Salinas Schmeis owns the posing question and the cited prior "
                         + "partition and lifting results."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("finite-skeleton-obstruction"),
-                DeclarationHandle.Create(Prefix + "finiteSkeletonObstruction"),
+            new DocumentBlock.Section(
                 H("A cofinal inherited chain without a partition"),
-                StatementSource.FromAuthor(Disp(FiniteSkeletonFormula())),
-                AssessedProvenance.FromRepo(Source),
                 Blocks(
+                    new DocumentBlock.DisplayFormula(Disp(FiniteSkeletonFormula())),
                     Paragraph(Text(
                         "For each natural n at least two, use the chain Fin(n+1) with its usual "
                         + "order. The strict interval above zero is the literal tail {1, …, n}, "
@@ -168,19 +165,17 @@ internal sealed class SalinasSchmeisBoundedHeightLeastExtensionDocument : IScrib
                         + "so the one-member family consisting of this interval is pairwise "
                         + "disjoint with a cofinal union, as in Definition 2.33.")),
                     Paragraph(Text(
-                        "In any proposed partition, take the inherited isomorphism from Fin(n) "
-                        + "to each part. The product of the type of parts with Fin(n) maps "
-                        + "bijectively to Fin(n+1). Surjectivity uses coverage and injectivity "
-                        + "uses unique membership followed by injectivity within the part. "
-                        + "If there are m parts, counting gives n+1 = nm, so n divides 1. "
+                        "In any proposed partition, each part has cardinality n by its inherited "
+                        + "order isomorphism with Fin(n). Setoid.IsPartition.ncard_eq_finsum "
+                        + "applied to the whole finite carrier gives the sum of the cardinalities "
+                        + "of all parts. If there are m parts this gives n+1 = nm, so n divides 1. "
                         + "This contradicts n at least two.")),
                     Paragraph(Text(
                         "For n = 1, singleton parts partition every partial order. A one-point "
                         + "order has no inherited two-point chain and therefore no 2-skeleton. "
                         + "The finite obstruction is the second clause of the skeleton corollary "
                         + "in revision 2 by Haobo Ma and Wenlin Zhang. Its first clause, concerning "
-                        + "extensions for every nonzero ordinal, is in the lexicographic fiber document."))),
-                DescribeRole.Theorem))));
+                        + "extensions for every nonzero ordinal, is in the lexicographic fiber document.")))))));
 
     private static Formula FiniteSkeletonFormula()
     {
@@ -250,11 +245,11 @@ internal sealed class SalinasSchmeisBoundedHeightLeastExtensionDocument : IScrib
     private static Formula ClassificationFormula()
     {
         var p = F.Id("P");
+        var greatest = Exists("t", p, Call("IsTop", F.Id("t")));
+        var classification = Eqv(HasLeast(Naturals(), p), Parenthesized(greatest));
         return Carriers(Seq(Instance("Nonempty", p), Sp, Instance("Countable", p), Sp,
-            Seq(Call("chainHeight", Call("univ", p), Call("le", p)), Sp, Neq, Sp, Infty,
-                Sp, Rightarrow, RowBreak,
-                Eqv(HasLeast(Naturals(), p), Exists("t", p, Call("IsTop", F.Id("t")))))),
-            ("P", "u"));
+            Call("chainHeight", Call("univ", p), Call("le", p)), Sp, Neq, Sp, Infty,
+            Sp, Rightarrow, RowBreak, Parenthesized(classification)), ("P", "u"));
     }
 
     private static Formula Carriers(Formula body, params (string Name, string Level)[] carriers)
@@ -271,6 +266,8 @@ internal sealed class SalinasSchmeisBoundedHeightLeastExtensionDocument : IScrib
 
     private static Formula Instance(string name, Formula carrier) =>
         Seq(OpenBracket, Call(name, carrier), CloseBracket);
+
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
 
     private static Formula Eqv(Formula left, Formula right) => Seq(left, Sp, Leftrightarrow, Sp, right);
     private static Formula TypeAt(string level) => Seq(F.Id("Type"), Sp, F.Id(level));
