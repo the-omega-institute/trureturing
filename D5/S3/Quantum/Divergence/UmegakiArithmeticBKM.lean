@@ -47,10 +47,10 @@ private lemma affine_pos (a b u : ℝ) (ha : 0 < a) (hb : 0 < b)
   · have hp : 0 < 1-u := sub_pos.mpr (lt_of_le_of_ne hu.2 h)
     exact add_pos_of_pos_of_nonneg (mul_pos hp ha) (mul_nonneg hu.1 hb.le)
 
-private def matrixHS : Matrix ι ι ℂ ≃ₗ[ℂ] HSOp (EuclideanSpace ℂ ι) :=
+def matrixHS : Matrix ι ι ℂ ≃ₗ[ℂ] HSOp (EuclideanSpace ℂ ι) :=
   Matrix.toEuclideanLin.trans hsLinearMapEquiv.symm
 
-private lemma arithmetic_apply (Z X : Matrix ι ι ℂ) (u : ℝ) :
+lemma arithmetic_apply (Z X : Matrix ι ι ℂ) (u : ℝ) :
     hsArithmeticMap Z u (matrixHS X) =
       matrixHS ((1-u) • (Z * X) + u • (X * Z)) := by
   apply hsLinearMapEquiv.injective
@@ -151,7 +151,7 @@ private lemma inverseCandidate_left (Z : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : 
   rw [matrixHS.symm_apply_apply, arithmetic_apply, schurInverse_left Z X hZ u hu]
   rfl
 
-private lemma hsArithmeticMap_isInvertible (Z : Matrix ι ι ℂ) (u : ℝ) (hZ : Z.PosDef)
+lemma hsArithmeticMap_isInvertible (Z : Matrix ι ι ℂ) (u : ℝ) (hZ : Z.PosDef)
     (hu : u ∈ Set.Icc (0 : ℝ) 1) :
     (hsArithmeticMap Z u).IsInvertible := by
   let M := hsArithmeticMap Z u
@@ -222,7 +222,7 @@ private lemma affineKernel_eq_pair (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     field_simp
     ring
 
-private lemma hsInner_matrix (X Y : Matrix ι ι ℂ) :
+lemma hsInner_matrix (X Y : Matrix ι ι ℂ) :
     inner ℂ (ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) X))
       (matrixHS Y) = (Xᴴ * Y).trace := by
   change inner ℂ (ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) X))
