@@ -6,6 +6,7 @@
    utility: none
    digest: Rankin reduction at the exact second distinct-prime threshold. -/
 
+import D5.S3.Arith.Robin.Analytic.OmegaTail.Selection
 import D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight
 import D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingEstimate
 
@@ -14,6 +15,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 open Real Filter Finset
 open scoped Topology BigOperators
+open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
+open D5.S3.Arith.Robin.Analytic.OmegaTail.Selection
 
 namespace D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper
 open D5.S3.Arith.Robin.Analytic.OmegaTailUpper
@@ -168,5 +171,179 @@ theorem result : ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop,
     _ ≤ (π / sqrt 3 + ε / 2) * secondScale x +
         (π / sqrt 3 + ε / 2) * secondScale x := add_le_add hfront hrem
     _ = _ := by ring
+
+/-- The integer strictly above the second threshold at the real prime center. -/
+def thresholdK (P : ℝ) : ℕ := ⌊P / log P + P / log P ^ 2⌋₊ + 1
+
+/-- The number of primes removed far below the active boxes. -/
+def excess (P : ℝ) : ℕ := Nat.primeCounting ⌊P⌋₊ - thresholdK P
+
+/-- The deterministic budget guaranteed after the remote deletion. -/
+def coreBudget (P : ℝ) : ℝ :=
+  P - Chebyshev.theta P + (excess P : ℝ) * log (P / 2)
+
+private lemma inverse_log_scale (n : ℕ) :
+    Tendsto (fun P : ℝ => log P ^ n / P) atTop (𝓝 0) := by
+  simpa only [rpow_natCast, rpow_one] using
+    (isLittleO_log_rpow_rpow_atTop (n : ℝ)
+      (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
+
+private lemma rounding_error {P : ℝ} (hP : 1 < P) :
+    0 ≤ (thresholdK P : ℝ) - (P / log P + P / log P ^ 2) ∧
+    (thresholdK P : ℝ) - (P / log P + P / log P ^ 2) ≤ 1 := by
+  have hpos : 0 ≤ P / log P + P / log P ^ 2 := by positivity
+  have hl := Nat.floor_le hpos
+  have hu := Nat.lt_floor_add_one (P / log P + P / log P ^ 2)
+  simp only [thresholdK, Nat.cast_add, Nat.cast_one]
+  exact ⟨by linarith, by linarith⟩
+
+private lemma rounding_scaled (n : ℕ) :
+    Tendsto (fun P : ℝ =>
+      ((thresholdK P : ℝ) - (P / log P + P / log P ^ 2)) /
+        (P / log P ^ n)) atTop (𝓝 0) := by
+  apply squeeze_zero' _ _ (inverse_log_scale n)
+  · filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    exact div_nonneg (rounding_error hP).1 (by positivity)
+  · filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    have hscale : 0 < P / log P ^ n := by positivity
+    calc
+      _ ≤ 1 / (P / log P ^ n) :=
+        div_le_div_of_nonneg_right (rounding_error hP).2 hscale.le
+      _ = _ := by ring
+
+private lemma excess_real_limit :
+    Tendsto (fun P : ℝ =>
+      (D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel.primeCount P - thresholdK P) /
+        (P / log P ^ 3)) atTop (𝓝 2) := by
+  have hi : Tendsto (fun P : ℝ => 1 / log P) atTop (𝓝 0) :=
+    tendsto_log_atTop.const_div_atTop 1
+  have h := ((prime_counting_three_terms.mul hi).add_const 2).sub (rounding_scaled 3)
+  norm_num only [mul_zero, zero_add, sub_zero] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+  dsimp only [countingThreeTerms]
+  field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
+  <;> ring
+
+/-- There are eventually enough primes at the real center for the strict threshold. -/
+theorem thresholdK_le_primeCount :
+    ∀ᶠ P : ℝ in atTop, thresholdK P ≤ Nat.primeCounting ⌊P⌋₊ := by
+  filter_upwards [excess_real_limit.eventually_const_lt (by norm_num : (0 : ℝ) < 2),
+    eventually_gt_atTop (1 : ℝ)] with P h hP
+  have hscale : 0 < P / log P ^ 3 := by positivity
+  have hd := (div_pos_iff_of_pos_right hscale).mp h
+  exact_mod_cast (sub_pos.mp hd).le
+
+/-- The remote deletion has asymptotic size 2P/log(P)^3. -/
+theorem excess_limit :
+    Tendsto (fun P : ℝ => (excess P : ℝ) / (P / log P ^ 3)) atTop (𝓝 2) := by
+  apply excess_real_limit.congr'
+  filter_upwards [thresholdK_le_primeCount] with P hP
+  simp only [excess, Nat.cast_sub hP,
+    D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel.primeCount]
+
+/-- The cost saved by remote deletion has the same leading budget as Rankin's expression. -/
+theorem coreBudget_limit :
+    Tendsto (fun P : ℝ => coreBudget P / (P / log P ^ 2)) atTop (𝓝 2) := by
+  have hi : Tendsto (fun P : ℝ => log 2 / log P) atTop (𝓝 0) :=
+    tendsto_log_atTop.const_div_atTop (log 2)
+  have h := (budget_limit.sub (rounding_scaled 3)).sub (excess_limit.mul hi)
+  norm_num only [sub_zero, mul_zero] at h
+  apply h.congr'
+  filter_upwards [thresholdK_le_primeCount, eventually_gt_atTop (1 : ℝ)] with P hk hP
+  have hp : P ≠ 0 := by linarith
+  rw [coreBudget, log_div hp (by norm_num : (2 : ℝ) ≠ 0)]
+  dsimp only [budget, excess, D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel.primeCount]
+  rw [Nat.cast_sub hk]
+  field_simp [hp, (log_pos hP).ne']
+  <;> ring
+
+/-- A reserve separated from every fixed active logarithmic box. -/
+def reserve (P : ℝ) : Finset ℕ := primeInterval (P / 2) (3 * P / 4)
+
+private lemma reserve_limit :
+    Tendsto (fun P : ℝ => ((reserve P).card : ℝ) / (P / log P))
+      atTop (𝓝 (1 / 4 : ℝ)) := by
+  have hi : Tendsto (fun P : ℝ => 56 / log P) atTop (𝓝 0) :=
+    tendsto_log_atTop.const_div_atTop 56
+  have he : Tendsto (fun P : ℝ =>
+      ((reserve P).card : ℝ) / (P / log P) - 1 / 4) atTop (𝓝 0) := by
+    apply squeeze_zero_norm' _ hi
+    filter_upwards [central_prime_counting_bound, eventually_gt_atTop (1 : ℝ)] with P h hP
+    have hp : 0 < P := by linarith
+    have hl := log_pos hP
+    have h1 := h (P / 2) ⟨le_rfl, by linarith⟩
+    have h2 := h (3 * P / 4) ⟨by linarith, by linarith⟩
+    have heq := primeInterval_card (show P / 2 ≤ 3 * P / 4 by linarith)
+    change ((reserve P).card : ℝ) = _ at heq
+    rw [Real.norm_eq_abs, heq]
+    have habs : |(primeCount (3 * P / 4) - primeCount (P / 2)) - P / (4 * log P)| ≤
+        56 * (P / log P ^ 2) := by
+      have htri := abs_sub_le (primeCount (3 * P / 4) - (3 * P / 4) / log P)
+        (primeCount (P / 2) - (P / 2) / log P) 0
+      rw [sub_zero, sub_zero] at htri
+      have hid : (primeCount (3 * P / 4) - (3 * P / 4) / log P) -
+          (primeCount (P / 2) - (P / 2) / log P) =
+          (primeCount (3 * P / 4) - primeCount (P / 2)) - P / (4 * log P) := by ring
+      rw [hid] at htri
+      linarith
+    have hid : (primeCount (3 * P / 4) - primeCount (P / 2)) / (P / log P) - 1 / 4 =
+        ((primeCount (3 * P / 4) - primeCount (P / 2)) - P / (4 * log P)) / (P / log P) := by
+      field_simp [hp.ne', hl.ne']
+      <;> ring
+    rw [hid, abs_div, abs_of_pos (div_pos hp hl)]
+    apply (div_le_iff₀ (div_pos hp hl)).mpr
+    convert habs using 1 <;> field_simp [hl.ne'] <;> ring
+  have h := he.add_const (1 / 4 : ℝ)
+  simpa only [sub_add_cancel, zero_add] using h
+
+private lemma reserve_enough :
+    ∀ᶠ P : ℝ in atTop, excess P ≤ (reserve P).card := by
+  have hi : Tendsto (fun P : ℝ => 1 / log P ^ 2) atTop (𝓝 0) := by
+    simpa only [one_pow] using ((tendsto_log_atTop.const_div_atTop 1).pow 2)
+  have hr : Tendsto (fun P : ℝ => (excess P : ℝ) / (P / log P)) atTop (𝓝 0) := by
+    have h := excess_limit.mul hi
+    norm_num only [mul_zero] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
+    <;> ring
+  filter_upwards [hr.eventually_lt reserve_limit (by norm_num : (0 : ℝ) < 1 / 4),
+    eventually_gt_atTop (1 : ℝ)] with P h hP
+  have hscale : 0 < P / log P := by positivity
+  exact_mod_cast ((div_lt_div_iff_of_pos_right hscale).mp h).le
+
+/-- A remote deletion gives an actual prime base with the exact threshold size
+and the deterministic logarithmic budget. -/
+private theorem trimmed_core :
+    ∀ᶠ P : ℝ in atTop, ∃ R : Finset ℕ,
+      R ⊆ reserve P ∧ R.card = excess P ∧
+      (Nat.primesLE ⌊P⌋₊ \ R).card = thresholdK P ∧
+      (∑ p ∈ Nat.primesLE ⌊P⌋₊ \ R, log (p : ℝ)) ≤ P - coreBudget P := by
+  filter_upwards [reserve_enough, thresholdK_le_primeCount,
+    eventually_gt_atTop (1 : ℝ)] with P hR hk hP
+  obtain ⟨R, hsub, hcard⟩ := exists_subset_card_eq hR
+  have hsub' : R ⊆ Nat.primesLE ⌊P⌋₊ := by
+    intro p hp
+    obtain ⟨hmem, hprime⟩ := mem_filter.mp (hsub hp)
+    apply Nat.mem_primesLE.mpr
+    exact ⟨(mem_Ioc.mp hmem).2.trans (Nat.floor_mono (by linarith : 3 * P / 4 ≤ P)), hprime⟩
+  refine ⟨R, hsub, hcard, ?_, ?_⟩
+  · rw [card_sdiff_of_subset hsub', Nat.primesLE_card_eq_primeCounting, hcard, excess]
+    omega
+  · have hsum : (∑ p ∈ R, log (p : ℝ)) +
+        (∑ p ∈ Nat.primesLE ⌊P⌋₊ \ R, log (p : ℝ)) = Chebyshev.theta P := by
+      rw [add_comm, sum_sdiff hsub', Chebyshev.theta_eq_sum_primesLE]
+    have hsumlo : (excess P : ℝ) * log (P / 2) ≤ ∑ p ∈ R, log (p : ℝ) := by
+      rw [← hcard]
+      calc
+        _ = ∑ _p ∈ R, log (P / 2) := by simp
+        _ ≤ _ := by
+          apply sum_le_sum
+          intro p hp
+          have hpmem := (mem_Ioc.mp (mem_filter.mp (hsub hp)).1).1
+          exact log_le_log (by positivity : 0 < P / 2) (Nat.lt_of_floor_lt hpmem).le
+    dsimp only [coreBudget]
+    linarith
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper

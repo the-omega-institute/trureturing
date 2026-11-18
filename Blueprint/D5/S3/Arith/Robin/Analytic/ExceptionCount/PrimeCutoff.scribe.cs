@@ -9,6 +9,13 @@ internal sealed class PrimeCutoffDocument : IScribeDocumentDefinition
         H("Prime cutoff and its capacity"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("second-order-count"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ExceptionCount/PrimeCutoff.second_order_count"),
+                H("Second prime-counting coefficient"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The normalized second-order prime-counting error log(x)*(log(x)*primeCount(x)/x-1) tends to one. The same result supplies the uniform central density estimate used for prime exchanges."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cutoff"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/ExceptionCount/PrimeCutoff.cutoff"),
                 H("Prime cutoff"),
