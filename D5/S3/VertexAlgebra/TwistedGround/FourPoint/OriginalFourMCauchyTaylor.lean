@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMAnalyticPullback
 import D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentCauchy
+import D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentFiniteLowering
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPhysicalCovariance
 
 /-! Bivariate Taylor extraction for the ordinary regular Cauchy correction. -/
@@ -724,7 +725,7 @@ open OriginalFourMActualChart (parameter)
 
 private theorem radial_chart_entry (D : LatticeData) {a : ℝ} (ha : 0 < a) (ha₁ : a < 1)
     (upperA : Bool) (c : Chart) (hc : c = .A ∨ c = .B) (i j : Puncture)
-    (x y : Index D) {w : ℂ} (hw : ‖w‖ < 1) (hwc : w^2 = parameter c a) :
+    (x y : Index D) {w : ℂ} (hw : ‖w‖ < 1) (hwc : w ^ 2 = parameter c a) :
     let label : Bool → External D :=
       fun k => if k then ((flags c j).2, y) else ((flags c i).2, x)
     (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u =>
@@ -749,7 +750,7 @@ literal signed sewn matrix entries and the original same-puncture contraction. -
 theorem selected_radial_physical_covariance (D : LatticeData) (hu : IsUnit D.G.det)
     {a : ℝ} (ha : 0 < a) (ha₁ : a < 1) (upperA : Bool)
     (c : Chart) (hc : c = .A ∨ c = .B) (i j : Puncture)
-    (x y : Index D) {w : ℂ} (hw : ‖w‖ < 1) (hwc : w^2 = parameter c a) :
+    (x y : Index D) {w : ℂ} (hw : ‖w‖ < 1) (hwc : w ^ 2 = parameter c a) :
     (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u =>
       physicalCovariance upperA c a i j u v)) =
       (∑ k ∈ Finset.range (x.2+1), ∑ l ∈ Finset.range (y.2+1),
@@ -773,5 +774,135 @@ theorem selected_radial_physical_covariance (D : LatticeData) (hu : IsUnit D.G.d
   intro l _
   rw [← radial_chart_entry D ha ha₁ upperA c hc i j (x.1, k) (y.1, l) hw hwc]
   ring
+
+
+open OriginalFourMChargeCoset (oscillatorLower)
+open LatticeHalfFock (current current_negative)
+open D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport (modeScale scaleOscillator)
+open D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentFiniteLowering
+  (wordPolynomial evaluate_lowering_word evaluate_word_step)
+open private evalLower from D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentFiniteLowering
+
+private def incomingScale (c : Chart) (a : ℝ) (i : Puncture) (n : ℕ) : ℂ :=
+  (scaleRoot c a i)⁻¹ ^ (2*n+1)
+
+private theorem incomingScale_eq (c : Chart) {a : ℝ} (ha : 0 < a) (ha₁ : a < 1)
+    (i : Puncture) (n : ℕ) :
+    modeScale (scaleRoot c a i)⁻¹ (scale c a i)⁻¹ (-(n:ℤ)-1) = incomingScale c a i n := by
+  unfold modeScale incomingScale
+  rw [show -(-(n:ℤ)-1)-1 = (n:ℤ) by omega, zpow_natCast,
+    ← (chosen_roots ha ha₁ c i).1, ← inv_pow, ← pow_mul, pow_succ, mul_comm]
+
+private def wordScale (D : LatticeData) (c : Chart) (a : ℝ) (i : Puncture)
+    (xs : List (Index D)) : ℂ :=
+  (xs.map (fun x => incomingScale c a i x.2)).prod
+
+/-- The original finite inverse lowering on a word at one actual puncture. -/
+def inverseLoweredWord (D : LatticeData) (c : Chart) (a : ℝ) (i : Puncture)
+    (xs : List (Index D)) : Oscillator D :=
+  wordScale D c a i xs • evalLower D (-loweringParameter c i) (wordPolynomial D xs) 1
+
+private theorem scale_creation_word (D : LatticeData) (c : Chart) {a : ℝ} (ha : 0 < a)
+    (ha₁ : a < 1) (i : Puncture) (xs : List (Index D)) :
+    scaleOscillator D (scaleRoot c a i)⁻¹ (scale c a i)⁻¹
+      ((xs.map (fun x => (MvPolynomial.X x : Oscillator D))).prod) =
+      wordScale D c a i xs • (xs.map (fun x => (MvPolynomial.X x : Oscillator D))).prod := by
+  induction xs with
+  | nil => simp [wordScale]
+  | cons x xs ih =>
+    simp only [List.map_cons, List.prod_cons, map_mul, ih, wordScale]
+    rw [show scaleOscillator D (scaleRoot c a i)⁻¹ (scale c a i)⁻¹
+      (MvPolynomial.X x) = incomingScale c a i x.2 • (MvPolynomial.X x : Oscillator D) by
+        rw [← incomingScale_eq c ha ha₁ i x.2]
+        exact MvPolynomial.aeval_X _ _]
+    rw [smul_mul_smul_comm]
+
+/-- The scale acts on the original incoming oscillator polynomial before
+the finite negative lowering sum. The original homogeneous cutoff is allowed. -/
+theorem inverse_lowered_word_eq_original (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : Chart) {a : ℝ} (ha : 0 < a) (ha₁ : a < 1) (i : Puncture)
+    (xs : List (Index D)) (cutoff : ℕ)
+    (hcut : ∀ n, cutoff ≤ n →
+      (oscillatorLower D ^ n) ((xs.map (fun x => (MvPolynomial.X x : Oscillator D))).prod) = 0) :
+    inverseLoweredWord D c a i xs =
+      ∑ n ∈ Finset.range cutoff, ((-loweringParameter c i)^n / (n.factorial : ℂ)) •
+        (oscillatorLower D ^ n) (scaleOscillator D (scaleRoot c a i)⁻¹ (scale c a i)⁻¹
+          ((xs.map (fun x => (MvPolynomial.X x : Oscillator D))).prod)) := by
+  unfold inverseLoweredWord
+  rw [evaluate_lowering_word D hu xs _ cutoff hcut, scale_creation_word D c ha ha₁ i xs,
+    Finset.smul_sum]
+  apply Finset.sum_congr rfl
+  intro n _
+  rw [map_smul, smul_comm (wordScale D c a i xs)]
+
+private theorem creation_word_step (D : LatticeData) (c : Chart) (a : ℝ)
+    (i : Puncture) (x : Index D) (P : Oscillator D) :
+    incomingScale c a i x.2 •
+      (∑ n ∈ Finset.range (x.2+1), ((-loweringParameter c i)^n *
+        Ring.choose ((x.2:ℂ)+1/2) n) • current D x.1 ((n:ℤ)-x.2-1)) P =
+      (∑ n ∈ Finset.range (x.2+1), creatorEntry c a i x.2 n •
+        (MvPolynomial.X (x.1, n) : Oscillator D)) * P := by
+  simp only [LinearMap.sum_apply, LinearMap.smul_apply, Finset.smul_sum, Finset.sum_mul]
+  rw [← Finset.sum_range_reflect (fun n =>
+    (creatorEntry c a i x.2 n • (MvPolynomial.X (x.1, n) : Oscillator D)) * P) (x.2+1)]
+  apply Finset.sum_congr rfl
+  intro n hn
+  have h : n ≤ x.2 := by simpa using hn
+  rw [show ((n:ℤ)-x.2-1) = -((x.2-n:ℕ):ℤ)-1 by omega, current_negative]
+  change _ = _
+  have he : x.2+1-1-n = x.2-n := by omega
+  rw [he, LinearMap.mulLeft_apply, smul_smul, smul_mul_assoc]
+  congr 1
+  unfold creatorEntry incomingScale
+  rw [show x.2-(x.2-n) = n by omega]
+  ring
+
+private theorem wordScale_eraseIdx (D : LatticeData) (c : Chart) (a : ℝ) (i : Puncture)
+    (xs : List (Index D)) (j : Fin xs.length) :
+    wordScale D c a i xs =
+      incomingScale c a i (xs.get j).2 * wordScale D c a i (xs.eraseIdx j) := by
+  unfold wordScale
+  have h := List.CommMonoid.mul_prod_eraseIdx (l := xs.map (fun x => incomingScale c a i x.2))
+    (i := j.val) (by simp)
+  rw [List.eraseIdx_map] at h
+  simpa using h.symm
+
+/-- The original inverse lowering either keeps the first marked oscillator
+with its finite creator coefficients or contracts it with one later mark.
+The correction uses the two incoming scale factors and the literal finite
+Cauchy coefficient. The recursion permits repetitions of annihilated modes. -/
+theorem inverse_lowered_word_step (D : LatticeData) (c : Chart) (a : ℝ) (i : Puncture)
+    (x : Index D) (xs : List (Index D)) :
+    inverseLoweredWord D c a i (x :: xs) =
+      (∑ n ∈ Finset.range (x.2+1), creatorEntry c a i x.2 n •
+        (MvPolynomial.X (x.1, n) : Oscillator D)) * inverseLoweredWord D c a i xs +
+      ∑ j : Fin xs.length,
+        (incomingScale c a i x.2 * incomingScale c a i (xs.get j).2 *
+          ((D.G x.1 (xs.get j).1 : ℂ) *
+            ((-loweringParameter c i)^(x.2+(xs.get j).2+1) *
+              contractionScalar x.2 (xs.get j).2))) •
+          inverseLoweredWord D c a i (xs.eraseIdx j) := by
+  unfold inverseLoweredWord
+  rw [evaluate_word_step]
+  simp only [wordScale, List.map_cons, List.prod_cons, LinearMap.add_apply,
+    Module.End.mul_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    smul_add, Finset.smul_sum, ← smul_smul]
+  congr 1
+  · rw [mul_smul_comm, ← creation_word_step D c a i]
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, Finset.smul_sum]
+    apply Finset.sum_congr rfl
+    intro n _
+    simp only [smul_smul]
+    rw [mul_comm (incomingScale c a i x.2)]
+    congr 1
+    ring
+  · apply Finset.sum_congr rfl
+    intro j _
+    have he := wordScale_eraseIdx D c a i xs j
+    unfold wordScale at he
+    rw [he, D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentCauchy.regular_series_coefficient]
+    simp only [smul_smul]
+    congr 1
+    ring
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCauchyTaylor
