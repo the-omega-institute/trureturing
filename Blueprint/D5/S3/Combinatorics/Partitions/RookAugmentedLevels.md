@@ -58,11 +58,11 @@ Lean statement: `D5/S3/Combinatorics/Partitions/RookAugmentedLevels.native_facto
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/RookAugmentedLevels.native_factorization` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Kenneth Barrese, Nicholas Loehr, Jeffrey Remmel, Bruce E. Sagan (2015). *Bijections on m-level Rook Placements*. DOI: [10.1016/j.ejc.2016.03.005](https://doi.org/10.1016/j.ejc.2016.03.005). URL: <https://arxiv.org/abs/1508.05944v1>.
 
 *Commentary.*
 
-rookPolynomial(m,N,B) is the sum of C(rookCount(m,B,k) m^(N-k)) times the descending Pochhammer polynomial of degree N-k. levelPolynomial(m,N,B) is the product of C(columnLevel(m,B,N-1-i)) + C(m) X - C(mi). For positive m and N at least area(B)+1 these integer polynomials are equal. Both evaluations count the same augmented selections at every integer t=N+n. At those values each natural subtraction is justified by mi at most mt, so casting preserves each product factor. Polynomial.eq_of_infinite_eval_eq gives the identity on the same original board.
+rookPolynomial(m,N,B) is the sum of C(rookCount(m,B,k) m^(N-k)) times the descending Pochhammer polynomial of degree N-k. levelPolynomial(m,N,B) is the product of C(columnLevel(m,B,N-1-i)) + C(m) X - C(mi). This is Barrese, Loehr, Remmel and Sagan, arXiv:1508.05944v1 §6.1, Theorem 26 at x=mt. The source takes N at least the width and the number of nonempty levels. For positive m the Lean identity uses the stronger common bound N at least area(B)+1. Its proof counts the same selections through the native Lean bijections completionEquiv and nativePartialEquiv. Both evaluations count the same augmented selections at every integer t=N+n. At those values each natural subtraction is justified by mi at most mt, so casting preserves each product factor. Polynomial.eq_of_infinite_eval_eq gives the identity on the same original board.
 
 **Definition 1.6 (Actual original choices at fixed levels).**
 
@@ -220,7 +220,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/RookAugmentedLevels.level_totals
 
 For positive m and every N at least area(B)+1, the sum over all N top-down columnLevel totals is area(B). An explicit finite bijection maps every valid level, source column and row triple to the genuine cells(B); row division and remainder and the reflected source column give its inverse.
 
-These are symbolic results for arbitrary boards, including the empty board. They supply the native class identification in RookClassCandidate. The exact registered UniversalFormula and weight Q are unchanged. The proofs reuse the pinned Mathlib embedding cardinality, descending Pochhammer sequence and root-product identities. The sources correspond to arXiv:1308.4081v1 Lemma 4.3 and Propositions 4.4 and 7.4(iii), and arXiv:1508.05944v1 section 6.2; literature results are not assumed as axioms. Escape registration and independent pre-freeze audit remain unfinished under https://github.com/the-omega-institute/trureturing/issues/31465; these results are not frozen.
+These are symbolic results for arbitrary boards, including the empty board. They supply the native class identification in RookClassCandidate. The exact registered UniversalFormula and weight Q are unchanged. The proofs reuse the pinned Mathlib embedding cardinality, descending Pochhammer sequence and root-product identities. In arXiv:1508.05944v1, §6.1 gives the factorization and §6.2 asks for the whole-class count. The admissibility test for singleton root vectors is Proposition 4.4 of arXiv:1308.4081v1.
 
 ## References
 

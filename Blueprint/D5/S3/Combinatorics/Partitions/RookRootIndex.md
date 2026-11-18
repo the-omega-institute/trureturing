@@ -112,7 +112,7 @@ $$\forall m \in Nat,\; 0 < m \Rightarrow \left(\forall n \in Nat,\; \forall z \i
 
 *Commentary.*
 
-At every positive m and every finite root seed z, each admissible index re-pads to its full decoded tuple, recovers its entire original root sequence, and satisfies the geometric singleton condition. This does not assert native rook equivalence to an input board.
+At every positive m and every finite root seed z, each admissible index re-pads to its full decoded tuple, recovers its entire original root sequence, and satisfies the geometric singleton condition. For the seed of an input board, RookClassCandidate uses this reconstruction to recover each class member’s ordered level totals.
 
 **Definition 1.10 (Root multiplicity factorials).**
 
@@ -136,7 +136,7 @@ $$\forall m \in Nat,\; 0 < m \Rightarrow \left(\forall n \in Nat,\; \forall d \i
 
 *Commentary.*
 
-For any natural seed columns d, every admissible permutation reconstructs a board of exactly the sum of d. The same family has distinct normalized representatives, satisfies the exact padding and geometric singleton properties, and has cardinality at most N! divided by the product of the root multiplicity factorials. The bound reuses Mathlib's orbit-stabilizer theorem and DomMulAct.stabilizer_card', identifying the orbit with root-multiset sequences. Sum equality of roots proves area equality for the same reconstructed board. There is no singleton, positivity or sortedness restriction on the seed d; only the reconstructed columns are filtered. The unproved interface is whether the native rook class maps exactly onto this root family.
+For any natural seed columns d, every admissible permutation reconstructs a board of exactly the sum of d. The same family has distinct normalized representatives, satisfies the exact padding and geometric singleton properties, and has cardinality at most N! divided by the product of the root multiplicity factorials. The bound reuses Mathlib's orbit-stabilizer theorem and DomMulAct.stabilizer_card', identifying the orbit with root-multiset sequences. Sum equality of roots proves area equality for the same reconstructed board. There is no singleton, positivity or sortedness restriction on the seed d; only the reconstructed columns are filtered. For a seed obtained from a normalized input board and a common length at least its area plus one, RookClassCandidate.universal_formula counts the native class by summing the sizes of these representatives’ ordered-level fibers.
 
 ## References
 

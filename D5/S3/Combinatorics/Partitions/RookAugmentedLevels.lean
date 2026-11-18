@@ -745,4 +745,3 @@ theorem level_totals_sum (m N : ℕ) (hm : 0 < m) (b : PositiveColumns)
   rw [← hc, Fintype.card_congr (Equiv.ofBijective f hf), Fintype.card_coe, cells_card]
 
 end D5.S3.Combinatorics.Partitions.RookAugmentedLevels
-

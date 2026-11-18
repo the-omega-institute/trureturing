@@ -142,13 +142,17 @@ $$\forall m \in Nat,\; 0 < m \Rightarrow \left(\forall b \in PositiveColumns,\; 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/RookClassCandidate.universal_formula` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barrese-m-level-rook-equivalence-class` (proved) by `D5/S3/Combinatorics/Partitions/RookClassCandidate.universal_formula`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barrese-m-level-rook-equivalence-class","declaration_gid":"D5/S3/Combinatorics/Partitions/RookClassCandidate.universal_formula","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
 
 For every positive m, every normalized B including the empty and nonsingleton boards, and every N at least area(B)+1, the ordinary finite native class count K equals the exact registered Q in the integers. The native completion bijection first establishes the same-board polynomial factorization. Linear independence of descending Pochhammer polynomials recovers every rook count, and the root-product identity preserves all multiplicities. Actual level totals are singleton and sum to the actual area. Forward class identification assigns to each native class member A its own seedRoots; equality of rook numbers gives the required root permutation, and reconstruction recovers precisely lOperator(m,A). Conversely, a root-family witness recovers its complete seed function, and reconstructed area plus the actual lOperator sum proves area(A)=area(B), so the same common padding is legitimate. The two subtypes contain the same original normalized shapes. Nat.card_congr transports that carrier equality, and rootFamily_count evaluates the disjoint fibers with the unchanged weight. No singleton restriction is imposed on original source shapes, and no lOperator identity or literature theorem is assumed as an axiom.
 
-The mathematical statement is proved in Lean. The reference scope is arXiv:1308.4081v1 Lemma 4.3 and Propositions 4.4 and 7.4(iii), and arXiv:1508.05944v1 section 6.2. The proof obtains native class identification directly from original level data; it does not replace the normalized lOperator by the identity or assert that a singleton input is fixed by it. Escape registration and independent pre-freeze audit remain unfinished under https://github.com/the-omega-institute/trureturing/issues/31465. No freeze or publication is claimed.
+The formula answers the whole-class counting question of Barrese, Loehr, Remmel and Sagan in arXiv:1508.05944v1 §6.2. The native proof uses the original level data of each class member. The factorization is Theorem 26 of §6.1 evaluated at x=mt. The singleton root-vector test is Proposition 4.4 of arXiv:1308.4081v1.
 
 ## References
 
