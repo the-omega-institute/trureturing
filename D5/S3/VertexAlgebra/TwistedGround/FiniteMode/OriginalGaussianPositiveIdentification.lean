@@ -4,10 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual positive T modes on the unit disk and J generator on the full source bidisk. -/
+   digest: Full-disk positive T mode helper and actual positive J kernel for the J/T unit. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFinitePositiveGerm
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
+import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums
 import Mathlib.Analysis.Analytic.Uniqueness
 import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.Analysis.Calculus.MeanValue
@@ -15,8 +16,9 @@ import Mathlib.Analysis.Calculus.MeanValue
 /-! The literal original resolvents are identified with the existing finite T
 candidate and analytic J candidate. The J argument derives actual regularity
 from vector mode sums and uses a squared characteristic invariant, including
-both axes and the diagonal. Finite J mode extraction, rational T generator
-reconstruction and the other sign sectors remain separate obligations. -/
+both axes and the diagonal. PositiveT.GeneratorIdentification consumes the
+full-disk T mode helper and constructs the actual positive T kernel sum.
+Finite J mode extraction and the other sign sectors remain separate obligations. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -26,7 +28,9 @@ open scoped Topology
 namespace D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
 open OriginalGaussianExternalResolvent
 
-/-- The actual positive T modes equal the fixed finite candidate on the complex unit disk. -/
+/-- The actual positive T modes equal the fixed finite candidate on the complex unit disk.
+    proof_shape: bind-only; consumed by
+    PositiveT.GeneratorIdentification.positiveT_eq_candidateT. -/
 theorem externalT_positive_finite_eq (p q : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
     OriginalGaussianExternalResolvent.externalT true p true q z = candidateT p q z := by
   have hd : DifferentiableOn ℂ (externalT true p true q)
@@ -53,24 +57,7 @@ open OriginalGaussianDifferentiation OriginalGaussianAllIndexResolvent
 open OriginalGaussianBilinearTranspose OriginalGaussianExternalNormal
 open OriginalGaussianExternalEquations
 
--- Continuous bilinear source pairing for the actual vector mode sums.
-private def pairing : H →L[ℂ] H →L[ℂ] ℂ :=
-  ({ toFun := sourceBilinearFunctional
-     map_add' := by
-       intro x y
-       ext w
-       rw [sourceBilinearFunctional_comm (x + y) w, map_add]
-       simp only [add_apply]
-       rw [sourceBilinearFunctional_comm w x, sourceBilinearFunctional_comm w y]
-     map_smul' := by
-       intro a x
-       ext w
-       simp only [RingHom.id_apply, smul_apply, smul_eq_mul]
-       exact sourceBilinearFunctional_smul_left a x w } : H →ₗ[ℂ] H →L[ℂ] ℂ).mkContinuous
-    1 (by
-      intro x
-      change ‖sourceBilinearFunctional x‖ ≤ 1 * ‖x‖
-      simp only [sourceBilinearFunctional, innerSL_apply_norm, norm_star, one_mul, le_refl])
+open OriginalGaussianExternalRadialSums (pairing)
 
 private def modeVector (out : Bool) (u z : ℂ) : H :=
   ∑' p : ℕ, u ^ p • externalVector out p z

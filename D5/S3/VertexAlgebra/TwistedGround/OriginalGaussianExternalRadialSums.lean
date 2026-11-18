@@ -21,7 +21,7 @@ open OriginalGaussianBilinearTranspose OriginalGaussianExternalEvolution
 open OriginalGaussianExternalNormal OriginalGaussianExternalGeneratedSource
 open OriginalGaussianExternalEquations OriginalGaussianExternalRadial
 
-private def pairing : H →L[ℂ] H →L[ℂ] ℂ :=
+def pairing : H →L[ℂ] H →L[ℂ] ℂ :=
   ({ toFun := sourceBilinearFunctional
      map_add' := by
        intro x y
