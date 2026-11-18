@@ -14,6 +14,22 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         H("Literal normalization, zone counting and the formal generating series"),
         Blocks(
             Paragraph(Text("OEIS A233166, revision 8, NAME: Number of n X 6 0..7 arrays with no element x(i,j) adjacent to itself or value 7-x(i,j) horizontally, diagonally, antidiagonally or vertically, top left element zero, and 1 appearing before 2 3 4 5 and 6, 2 appearing before 3 4 and 5, and 3 appearing before 4 in row major order (unlabelled 8-colorings with no clashing color pairs).")),
+            Node("xor-cancel", "Cancellation of a common xor", "xor_cancel",
+                "For colours in Fin 4, xor with a fixed left colour is cancellable.", DescribeRole.Theorem),
+            Node("xor-nonzero", "Nonzero xor detects unequal colours", "xor_nonzero",
+                "Two Fin 4 colours have nonzero xor exactly when they differ.", DescribeRole.Theorem),
+            Node("xor-shift", "Translation of xor differences", "xor_shift",
+                "The xor of two translated differences is the original difference.", DescribeRole.Theorem),
+            Node("xor-right-cancel", "Cancellation of a common right xor", "xor_right_cancel",
+                "For Fin 4 colours, applying xor with the same colour twice returns the original colour.", DescribeRole.Theorem),
+            Node("offset-ok", "Admissible six-column offsets", "offsetOK",
+                "An offset word starts at zero and has no zero adjacent xor increment.", DescribeRole.Definition),
+            Node("offset-choices", "Allowed vertical shifts", "offsetChoices",
+                "The allowed shifts are the nonzero colours absent from all adjacent offset increments.", DescribeRole.Definition),
+            Node("offset-decidable", "Decidability of offset admissibility", "instDecidableOffsetOK",
+                "For each six-column offset word, the zero initial offset and all five nonzero adjacent increments are decidable.", DescribeRole.Definition),
+            Node("zones-iff", "Zone data through offset choices", "zones_iff",
+                "A zone is equivalent to an admissible offset word whose adjacent first-column increments lie in its allowed shift set.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("legal"), DeclarationHandle.Create(Prefix + "Legal"),
                 H("Literal functions with free boundaries"), StatementSource.FromAuthor(Disp(LegalFormula())),
                 AssessedProvenance.FromLiterature(Source),
@@ -60,6 +76,12 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("hardin233166"), ResolutionKind.Proved)))));
+
+    private static DocumentBlock Node(string id, string title, string declaration, string prose,
+        DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
+            H(title), StatementSource.FromAuthor(Disp(NodeFormula(declaration))), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula LegalFormula()
     {
@@ -115,13 +137,13 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
     {
         var x=V("X"); var n=V("n");
         Formula A(Formula k) => Call("a",k);
-        var series=Call("PowerSeries.mk",Seq(LambdaLower,Sp,n,Colon,Sp,V("Nat"),Sp,Mapsto,Sp,Par(Seq(A(n),Colon,Sp,V("Rat")))));
+        var series=Call("PowerSeries.mk",Seq(LambdaLower,Sp,n,Colon,Sp,V("Nat"),Sp,Mapsto,Sp,Parenthesized(Seq(A(n),Colon,Sp,V("Rat")))));
         var numerator=Mul(Mul(D(4),x),Add(Sub(D(5,9),Mul(D(1,0,3,0,4),x)),Mul(D(3,5,6,3,5,2),Pow(x,D(2)))));
         var denominator=Mul(Sub(D(1),Mul(D(6,4),x)),Sub(D(1),Mul(D(1,2,8),x)));
         var gf=Seq(Eq(series,Mul(numerator,Pow(denominator,new Formula.Negate(Num(1))))),Sp,Name("in"),Sp,Call("PowerSeries",V("Rat")));
         var closed=All("n",V("Nat"),Imp(Le(D(2),n),Eq(A(n),Mul(Pow(D(6,4),Sub(n,D(1))),Add(Pow(D(2),n),D(6,0))))));
-        var recurrence=All("n",V("Nat"),Imp(Le(D(4),n),Eq(Par(Seq(A(n),Colon,Sp,V("Int"))),
-            Sub(Mul(D(1,9,2),Par(Seq(A(Sub(n,D(1))),Colon,Sp,V("Int")))),Mul(D(8,1,9,2),Par(Seq(A(Sub(n,D(2))),Colon,Sp,V("Int"))))))));
+        var recurrence=All("n",V("Nat"),Imp(Le(D(4),n),Eq(Parenthesized(Seq(A(n),Colon,Sp,V("Int"))),
+            Sub(Mul(D(1,9,2),Parenthesized(Seq(A(Sub(n,D(1))),Colon,Sp,V("Int")))),Mul(D(8,1,9,2),Parenthesized(Seq(A(Sub(n,D(2))),Colon,Sp,V("Int"))))))));
         return And(Eq(A(D(1)),D(2,3,6)),And(gf,And(closed,recurrence)));
     }
 
@@ -138,7 +160,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         var seen=All("d",Fin(3),Ex("p",Product(Call("Fin",n),Fin(6)),And(Le(Val(Call("Prod.fst",p)),D(1)),Eq(Val(App(f,p)),Add(Val(V("d")),D(1))))));
         var w=V("w");
         var available=Call("Finset.card",Call("Finset.filter",Seq(LambdaLower,Sp,w,Colon,Sp,Fin(4),Sp,Mapsto,Sp,
-            Par(And(Ne(w,D(0)),All("j",Fin(5),Ne(H(j),w))))),Call("Finset.univ")));
+            Parenthesized(And(Ne(w,D(0)),All("j",Fin(5),Ne(H(j),w))))),Call("Finset.univ")));
         var rate=Eq(available,Call("ite",All("j",Fin(5),Eq(H(j),H(D(0)))),D(2),D(1)));
         return All("n",V("Nat"),Imp(Le(D(2),n),All("f",Arrow(Product(Call("Fin",n),Fin(6)),Fin(8)),
             Imp(Call("Legal",f),And(reconstruction,And(horizontal,And(vertical,And(exhaustive,And(seen,rate)))))))));
@@ -175,17 +197,20 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         Formula C(Formula r,Formula t) => App(c,Pair(r,t));
         var u=Seq(LambdaLower,Sp,i,Colon,Sp,Call("Fin",n),Sp,Mapsto,Sp,C(i,D(0)));
         var v=Seq(LambdaLower,Sp,j,Colon,Sp,Fin(6),Sp,Mapsto,Sp,Call("xor",C(D(0),D(0)),C(D(0),j)));
-        var forward=All("c",Arrow(cells,Fin(4)),Imp(Call("Proper",c),Eq(App(equiv,Call("Subtype.mk",c)),Pair(u,v))));
+        var forward=All("c",Arrow(cells,Fin(4)),Imp(Call("Proper",c),Eq(Call("Subtype.val",App(equiv,Call("Subtype.mk",c))),Pair(u,v))));
         var result=Seq(LambdaLower,Sp,p,Colon,Sp,cells,Sp,Mapsto,Sp,
             Call("xor",App(Call("Prod.fst",z),Call("Prod.fst",p)),App(Call("Prod.snd",z),Call("Prod.snd",p))));
         var backward=All("z",Product(Arrow(Call("Fin",n),Fin(4)),Arrow(Fin(6),Fin(4))),
-            Imp(Member(z,Call("zones",n)),Eq(App(Call("Equiv.symm",equiv),Call("Subtype.mk",z)),result)));
-        return All("n",V("Nat"),All("h",Lt(D(0),n),And(forward,backward)));
+            Imp(Member(z,Call("zones",n)),Eq(Call("Subtype.val",App(Call("Equiv.symm",equiv),Call("Subtype.mk",z))),result)));
+        var domain=Seq(OpenBrace,c,Colon,Sp,Arrow(cells,Fin(4)),Sp,Slash,Slash,Sp,Call("Proper",c),CloseBrace);
+        var codomain=Seq(OpenBrace,z,Colon,Sp,Product(Arrow(Call("Fin",n),Fin(4)),Arrow(Fin(6),Fin(4))),Sp,Slash,Slash,Sp,Member(z,Call("zones",n)),CloseBrace);
+        var type=Call("Equiv",domain,codomain);
+        return All("n",V("Nat"),All("h",Lt(D(0),n),And(Parenthesized(Seq(equiv,Colon,Sp,type)),And(forward,backward))));
     }
 
     private static Formula Member(Formula a, Formula b) => Seq(a,Sp,InMacro,Sp,b);
 
-    private static Formula Iff(Formula a, Formula b) => Seq(Par(a),Sp,Leftrightarrow,Sp,Par(b));
+    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a),Sp,Leftrightarrow,Sp,Parenthesized(b));
     private static Formula Le(Formula a, Formula b) => Seq(a,Sp,Leq,Sp,b);
     private static Formula V(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(name.Split('.').SelectMany((part, i) =>
@@ -194,24 +219,39 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Name(name), args);
     private static Formula Fin(byte n) => Call("Fin", D(n));
-    private static Formula Par(Formula f) => Seq(Open, f, Close);
-    private static Formula Product(Formula a, Formula b) => Seq(Par(a), Sp, Times, Sp, Par(b));
-    private static Formula Arrow(Formula a, Formula b) => Seq(Par(a), Sp, To, Sp, b);
-    private static Formula Pair(Formula a, Formula b) => Par(Seq(a, Comma, Sp, b));
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, b);
+    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Val(Formula a) => Call("Fin.val", a);
     private static Formula Rank(Formula p) => Add(Mul(D(6), Val(Call("Prod.fst", p))), Val(Call("Prod.snd", p)));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
-    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
-    private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
-    private static Formula Or(Formula a, Formula b) => Seq(Par(a), Sp, Lor, Sp, Par(b));
+    private static Formula Imp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
+    private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Lor, Sp, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Par(a), b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
+        Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
+
+    private static Formula NodeFormula(string declaration) => declaration switch
+    {
+        "xor_cancel" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), All("c", Call("Fin", Digits("4")), Iff(Eq(Call("Fin.xor", V("a"), V("b")), Call("Fin.xor", V("a"), V("c"))), Eq(V("b"), V("c")))))),
+        "xor_nonzero" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), Iff(Ne(Call("Fin.xor", V("a"), V("b")), Digits("0")), Ne(V("a"), V("b"))))),
+        "xor_shift" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), All("c", Call("Fin", Digits("4")), Eq(Call("Fin.xor", Call("Fin.xor", V("a"), V("b")), Call("Fin.xor", V("a"), V("c"))), Call("Fin.xor", V("b"), V("c")))))),
+        "xor_right_cancel" => All("x", Call("Fin", Digits("4")), All("d", Call("Fin", Digits("4")), Eq(Call("Fin.xor", V("x"), Call("Fin.xor", V("x"), V("d"))), V("d")))),
+        "offsetOK" => All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Iff(Call("offsetOK", V("v")), And(Eq(App(V("v"), Digits("0")), Digits("0")), All("j", Call("Fin", Digits("5")), Ne(Call("Fin.xor", App(V("v"), Call("Fin.castSucc", V("j"))), App(V("v"), Call("Fin.succ", V("j")))), Digits("0")))))),
+        "offsetChoices" => All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Eq(Call("offsetChoices", V("v")), Call("Finset.filter", Lam("x", Call("Fin", Digits("4")), And(Ne(V("x"), Digits("0")), All("j", Call("Fin", Digits("5")), Ne(Call("Fin.xor", App(V("v"), Call("Fin.castSucc", V("j"))), App(V("v"), Call("Fin.succ", V("j")))), V("x"))))), Call("Finset.univ")))),
+        "instDecidableOffsetOK" => All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Call("Decidable", Call("offsetOK", V("v")))),
+        "zones_iff" => All("m", Call("Nat"), All("u", Arrow(Call("Fin", Add(V("m"), Digits("1"))), Call("Fin", Digits("4"))), All("v", Arrow(Call("Fin", Digits("6")), Call("Fin", Digits("4"))), Iff(Member(Pair(V("u"), V("v")), Call("zones", Add(V("m"), Digits("1")))), And(Call("offsetOK", V("v")), All("i", Call("Fin", V("m")), Member(Call("Fin.xor", App(V("u"), Call("Fin.castSucc", V("i"))), App(V("u"), Call("Fin.succ", V("i")))), Call("offsetChoices", V("v"))))))))),
+        _ => throw new System.ArgumentOutOfRangeException(nameof(declaration))
+    };
+    private static Formula Digits(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
+    private static Formula Lam(string x, Formula t, Formula b) => Parenthesized(Seq(LambdaLower, Sp, Parenthesized(Seq(V(x), Colon, Sp, t)), Sp, Mapsto, Sp, Parenthesized(b)));
 }

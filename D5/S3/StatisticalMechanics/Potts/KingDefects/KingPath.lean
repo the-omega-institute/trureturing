@@ -25,21 +25,22 @@ fixedCard: proof_shape=bind-only; consumers=KingPath.permutation_sum,KingPath.wi
 permutation_sum: proof_shape=bind-only; consumers=KingPath.width_one_large
 edge_path: proof_shape=bind-only; consumers=KingPath.oneDefect_path
 oneDefect_path: proof_shape=bind-only; consumers=KingPath.literal_words
-normal_path: proof_shape=bind-only; consumers=KingPath.literal_words
+normal_path: proof_shape=bind-only; consumers=KingPath.literal_words,KingTwoColumnOne.literal_bridge
 literal_words: proof_shape=bind-only; consumers=KingPath.literal_count
 literal_count: proof_shape=bind-only; consumers=KingPath.width_one_large
 width_one_large: proof_shape=content; consumers=HardinA229578.result
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.Logic.Equiv.Prod
 
 /-! Path extension counts and the colour-permutation orbit formula. -/
 namespace D5.S3.StatisticalMechanics.Potts.KingDefects.KingPath
-open KingGrid
+open D5.S3.StatisticalMechanics.Potts.KingDefects.KingGrid
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
-private def errors {C : Type*} [DecidableEq C] : {n : ℕ} → C → (Fin n → C) → ℕ
+def errors {C : Type*} [DecidableEq C] : {n : ℕ} → C → (Fin n → C) → ℕ
   | 0, _, _ => 0
   | _+1, p, f => (if p = f 0 then 1 else 0) + errors (f 0) (Fin.tail f)
 
@@ -93,10 +94,10 @@ private theorem tail_counts {C : Type*} [Fintype C] [DecidableEq C]
       | zero => simp
       | succ n => simp only [Nat.add_sub_cancel, pow_succ]; ring
 
-private def bad {C : Type*} [DecidableEq C] {n : ℕ} (f : Fin n → C) : ℕ :=
+def bad {C : Type*} [DecidableEq C] {n : ℕ} (f : Fin n → C) : ℕ :=
   ∑ i : Fin (n-1), if f (lo i) = f (hi i) then 1 else 0
 
-private theorem errors_eq {C : Type*} [DecidableEq C] (n : ℕ)
+theorem errors_eq {C : Type*} [DecidableEq C] (n : ℕ)
     (f : Fin (n + 1) → C) : bad f = errors (f 0) (Fin.tail f) := by
   induction n with
   | zero => simp [bad, errors]
@@ -248,7 +249,7 @@ private theorem oneDefect_path {n : ℕ} (f : Fin n → Fin 4) :
     rfl
   rw [h]
 
-private theorem normal_path {n : ℕ} (f : Fin n → Fin 4) :
+theorem normal_path {n : ℕ} (f : Fin n → Fin 4) :
     normal (fun p : Cell n 1 => f p.1) ↔ Canonical f := by
   simp only [normal,Canonical]
   constructor
