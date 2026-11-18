@@ -40,5 +40,13 @@ internal sealed class OriginalFourMChartProductDocument : IScribeDocumentDefinit
             Result("fourm-chart-product-b-from-d", "chart_product_B_from_D",
                 "The common B and D sector expression",
                 "The rank-24 finite Weil relations give the B product from the D products. "
-                + "The summand uses the original quadratic sign of the sum of the two sectors."))));
+                + "The summand uses the original quadratic sign of the sum of the two sectors."),
+            Result("fourm-pulled-sample-differentials", "pulled_sample_differentials",
+                "Signed half-differentials at native samples",
+                "The source at each nonpunctured sample is the pullback of the half-differential "
+                + "on the target elliptic cubic for both lifts."),
+            Result("fourm-physical-free-subtraction-difference", "physical_free_subtraction_difference",
+                "Free subtraction in common physical coordinates",
+                "For any two of the actual charts the difference of the same-puncture free kernels "
+                + "is the difference of the two regular lowering corrections."))));
 }

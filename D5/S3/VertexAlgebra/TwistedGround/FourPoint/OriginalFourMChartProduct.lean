@@ -663,10 +663,123 @@ theorem chart_product_B_from_D (D : LatticeData) (hu : IsUnit D.G.det)
   unfold fourierRow at h ⊢
   simpa only [mul_assoc, f] using h
 
+open OriginalFourMActualChart
+  (Puncture scale scaleRoot loweringParameter localCoordinate cubic)
+open private nativeHalfY legendre from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSignedOverlap
+open private transition_slopes scale_ne from
+  D5.S3.VertexAlgebra.TwistedGround.OriginalFourMActualChart
+
+/-- At a nonpunctured native sample the sources in the B and D product
+are the actual pullbacks of the two elliptic half-differentials. -/
+theorem pulled_sample_differentials (D : LatticeData) (s : Sample D)
+    {x : ℝ} (hx : 0 < x) (hx1 : x < 1) {w : ℂ}
+    (hwA : w ^ 2 = parameter .A (x : ℂ)) (hw : w ≠ 0)
+    (hq : s.q ≠ 0) (hsmall : ‖s.q ^ 2‖ + ‖w ^ 2‖ < 1)
+    (hX : (x : ℂ) * nativeHalfX s.right s.outgoing (w ^ 2) s.q - 1 ≠ 0) :
+    let X := nativeHalfX s.right s.outgoing (w ^ 2)
+    let y := nativeHalfY s.right s.outgoing (w ^ 2) s.q
+    let yB := bLift x * deriv (pullB x) (X s.q) * y
+    let yD := I * deriv (pullD x) (X s.q) * y
+    (yB ^ 2 = cubic .B x (pullB x (X s.q)) ∧
+      HasDerivAt (fun q => pullB x (X q)) (2 * yB * pulledDifferential D .B x w s) s.q) ∧
+    (yD ^ 2 = cubic .D x (pullD x (X s.q)) ∧
+      HasDerivAt (fun q => pullD x (X q)) (2 * yD * pulledDifferential D .D x w s) s.q) := by
+  dsimp only
+  obtain ⟨hcurve, hy, hder⟩ := OriginalFourMSignedOverlap.half_coordinate_pullback
+    s.right s.outgoing hq (pow_ne_zero 2 hw) hsmall
+  have hc : nativeHalfY s.right s.outgoing (w ^ 2) s.q ^ 2 =
+      cubic .A x (nativeHalfX s.right s.outgoing (w ^ 2) s.q) := by
+    change _ = legendre (parameter .A (x : ℂ)) _
+    convert hcurve using 1
+    rw [hwA]
+  obtain ⟨hB, hD, _, _⟩ := OriginalFourMActualChart.chart_lifts hx hx1 hX hc hy
+  have hslopes := transition_slopes hX
+  have hs : (Real.sqrt x : ℂ) ≠ 0 := ofReal_ne_zero.mpr (Real.sqrt_pos.2 hx).ne'
+  have hl : bLift x ≠ 0 := mul_ne_zero (neg_ne_zero.mpr I_ne_zero) hs
+  refine ⟨⟨hB, (hslopes.1.comp s.q hder).congr_deriv ?_⟩,
+    ⟨hD, (hslopes.2.comp s.q hder).congr_deriv ?_⟩⟩
+  · rw [← hslopes.1.deriv, pulledDifferential, chartScale, differential]
+    field_simp [hl] <;> ring
+  · rw [← hslopes.2.deriv, pulledDifferential, chartScale, differential]
+    field_simp [I_ne_zero] <;> ring
+
+private def rawLocal (c : Chart) (x : ℝ) (i : Puncture) (u : ℂ) : ℂ :=
+  u / (scale c x i + loweringParameter c i * u)
+
+private def freeCorrection (c : Chart) (i : Puncture) (b d : ℂ) : ℂ :=
+  loweringParameter c i * (1 + b * d) / (2*b * d*(b + d)^2)
+
+private def halfJacobian (c : Chart) (x : ℝ) (i : Puncture) (b : ℂ) : ℂ :=
+  scaleRoot c x i / b ^ 3
+
+/-- In common physical coordinates the regular discrepancy of the native
+same-puncture free subtractions is exactly the difference of their two
+lowering corrections. This applies to every physical puncture and any
+pair of the three charts. -/
+theorem physical_free_subtraction_difference (D : LatticeData) (hu : IsUnit D.G.det)
+    {x : ℝ} (hx : 0 < x) (hx1 : x < 1) (c C : Chart) (i : Puncture)
+    (e E : Bool) {u v b d B H : ℂ}
+    (hcu : scale c x i + loweringParameter c i * u ≠ 0)
+    (hcv : scale c x i + loweringParameter c i * v ≠ 0)
+    (hCu : scale C x i + loweringParameter C i * u ≠ 0)
+    (hCv : scale C x i + loweringParameter C i * v ≠ 0)
+    (huv : u ≠ v)
+    (hb : b ^ 2 = 1 - loweringParameter c i * rawLocal c x i u)
+    (hd : d ^ 2 = 1 - loweringParameter c i * rawLocal c x i v)
+    (hB : B ^ 2 = 1 - loweringParameter C i * rawLocal C x i u)
+    (hH : H ^ 2 = 1 - loweringParameter C i * rawLocal C x i v)
+    (hb₀ : b ≠ 0) (hd₀ : d ≠ 0) (hB₀ : B ≠ 0) (hH₀ : H ≠ 0)
+    (hbd : b + d ≠ 0) (hBH : B + H ≠ 0) :
+    let J := halfJacobian c x i b * halfJacobian c x i d
+    let K := halfJacobian C x i B * halfJacobian C x i H
+    cauchy E E (rawLocal C x i u) (rawLocal C x i v) / K -
+        cauchy e e (rawLocal c x i u) (rawLocal c x i v) / J =
+      freeCorrection c i b d / J - freeCorrection C i B H / K := by
+  have step (a : Chart) (f : Bool) {p q : ℂ}
+      (hu₀ : scale a x i + loweringParameter a i * u ≠ 0)
+      (hv₀ : scale a x i + loweringParameter a i * v ≠ 0)
+      (hp : p ^ 2 = 1 - loweringParameter a i * rawLocal a x i u)
+      (hq : q ^ 2 = 1 - loweringParameter a i * rawLocal a x i v)
+      (hp₀ : p ≠ 0) (hq₀ : q ≠ 0) (hpq : p + q ≠ 0) :
+      let J := halfJacobian a x i p * halfJacobian a x i q
+      cauchy f f (rawLocal a x i u) (rawLocal a x i v) / J +
+        freeCorrection a i p q / J = (u + v)/(2*(u - v)^2) := by
+    dsimp only
+    have hlocal := (OriginalFourMActualChart.puncture_lowering hx hx1 D hu a i 0 0).1
+    have h1 : localCoordinate a x i (rawLocal a x i u) = u := hlocal u hu₀
+    have h2 : localCoordinate a x i (rawLocal a x i v) = v := hlocal v hv₀
+    have hsep : rawLocal a x i u ≠ rawLocal a x i v := by
+      intro he
+      exact huv (h1.symm.trans ((congrArg (localCoordinate a x i) he).trans h2))
+    have hc := OriginalFourMActualChart.puncture_cauchy_correction hx hx1 a i
+      hp hq hp₀ hq₀ hpq hsep
+    dsimp only at hc
+    rw [h1, h2] at hc
+    have hroot : scaleRoot a x i ≠ 0 := by
+      intro he
+      have hs := (OriginalFourMActualChart.chosen_roots hx hx1 a i).1
+      rw [he, zero_pow (by decide)] at hs
+      exact scale_ne hx hx1 a i hs.symm
+    have hJ : halfJacobian a x i p * halfJacobian a x i q ≠ 0 :=
+      mul_ne_zero (div_ne_zero hroot (pow_ne_zero _ hp₀))
+        (div_ne_zero hroot (pow_ne_zero _ hq₀))
+    rw [← add_div, div_eq_iff hJ]
+    simp only [cauchy, OriginalGaussianExternalSignedCandidate.G,
+      OriginalGaussianExternalSignedCandidate.rho, ite_true, halfJacobian, freeCorrection]
+    linear_combination -hc
+  dsimp only
+  have h := step c e hcu hcv hb hd hb₀ hd₀ hbd
+  have h' := step C E hCu hCv hB hH hB₀ hH₀ hBH
+  dsimp only at h h'
+  linear_combination h' - h
+
 #print axioms pulled_covariance_off_diagonal
 #print axioms chart_product_charge_sum
 #print axioms native_rank24_determinant
 #print axioms native_chart_product
 #print axioms chart_product_B_from_D
+#print axioms pulled_sample_differentials
+#print axioms physical_free_subtraction_difference
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChartProduct

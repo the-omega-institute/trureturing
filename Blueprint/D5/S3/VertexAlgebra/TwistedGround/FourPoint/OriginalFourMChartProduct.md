@@ -88,6 +88,30 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartP
 
 The rank-24 finite Weil relations give the B product from the D products. The summand uses the original quadratic sign of the sum of the two sectors.
 
+**Theorem 1.8 (Signed half-differentials at native samples).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.pulled_sample_differentials`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.pulled_sample_differentials` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The source at each nonpunctured sample is the pullback of the half-differential on the target elliptic cubic for both lifts.
+
+**Theorem 1.9 (Free subtraction in common physical coordinates).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.physical_free_subtraction_difference`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.physical_free_subtraction_difference` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any two of the actual charts the difference of the same-puncture free kernels is the difference of the two regular lowering corrections.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chart_product_B_from_D`
@@ -95,8 +119,10 @@ The rank-24 finite Weil relations give the B product from the D products. The su
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.native_chart_product`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.native_rank24_determinant`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.native_sample_mean`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.physical_free_subtraction_difference`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.physical_source_signs`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.pulled_covariance_off_diagonal`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.pulled_sample_differentials`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMShiftedTheta](OriginalFourMShiftedTheta.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSignedOverlap](OriginalFourMSignedOverlap.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianPeriodIdentity](../OriginalGaussianPeriodIdentity.md)
