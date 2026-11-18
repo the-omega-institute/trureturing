@@ -20,13 +20,15 @@ local notation "logDeriv" => _root_.D5.S3.Divergence.LogDerivTrace.logDeriv
 
 abbrev signature : Signature :=
   Reg.Support.UniverseSingleReadout.signature
-    (Σ n : Type u, Σ _ : Fintype n, DecidableEq n) (fun _ => ℝ) (fun _ => Bool)
+    (Σ n : Type u, Σ _ : Fintype n, n → ℂ) (fun p => Mat p.1) (fun _ => ℝ)
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ q => decide (q < 0)) (fun e => nomatch e)
+  realize signature (fun _ p X => by
+    let _ := p.2.1
+    exact quadratic p.2.2 X) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -56,7 +58,7 @@ abbrev arena : Arena where
       (∀ r s, (r = i ∨ r = j) → (s = i ∨ s = j) →
         (basisChange U).symm (E P) r s = (logMean (eigen r) (eigen s) / (eigen i + eigen j) : ℝ)) ∧
       quadratic z (E P) = (2 * eigen i * eigen j - 2 * logMean (eigen i) (eigen j) *
-        Real.sqrt (eigen i * eigen j)) / (eigen i + eigen j) ∧ R.readout () ⟨n, inferInstance, inferInstance⟩ (quadratic z (E P)) = true ∧
+        Real.sqrt (eigen i * eigen j)) / (eigen i + eigen j) ∧ R.readout () ⟨n, inferInstance, z⟩ (E P) < 0 ∧
       (∀ᶠ t : ℝ in 𝓝 0, (w t).PosDef ∧ (w t).trace = 1 ∧
         (ρ t).PosDef ∧ (ρ t).trace = 1 ∧ N (ρ t) = w t) ∧
       gibbs a τ V τ = a ∧ HasDerivAt (fun t : ℝ => gibbs a τ V (w t)) (E P - a) 0 ∧
@@ -87,21 +89,20 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     linarith
   obtain ⟨_, _, _, _, _, _, _, law⟩ := h a ha ht hf
   rcases law with ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, impossible, _⟩
-  exact Bool.noConfusion impossible
+  exact (lt_irrefl (0 : ℝ)) impossible
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro _
-  refine ⟨⟨ULift.{u} Unit, inferInstance, inferInstance⟩, -1, 0, ?_⟩
-  change decide ((-1 : ℝ) < 0) ≠ decide ((0 : ℝ) < 0)
-  simp
+  let n := ULift.{u} Unit
+  let z : n → ℂ := fun _ => 1
+  refine ⟨⟨n, inferInstance, z⟩, 0, 1, ?_⟩
+  change quadratic z (0 : Mat n) ≠ quadratic z (1 : Mat n)
+  simp [quadratic, z, dotProduct]
 
 def family : Registration arena.{u} (type_of% (@measurement_order_obstruction.{u})) where
   actual := actual
-  bridge := by
-    simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by
-    simpa only [arena, actual, realize, decide_eq_true_eq] using
-      (@measurement_order_obstruction.{u}), rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@measurement_order_obstruction.{u}, rejected, rejected_law⟩
   sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
@@ -126,7 +127,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 13]
     readouts := #[{
       path := #[
         "body", "body", "body", "body", "body", "body", "body",
@@ -135,11 +136,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
         "body", "body", "body", "body", "body", "body", "body",
         "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg",
         "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg",
-        "fn", "arg"]
+        "fn", "arg", "fn", "arg", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
