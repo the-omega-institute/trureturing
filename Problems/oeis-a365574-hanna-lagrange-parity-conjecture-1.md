@@ -51,7 +51,7 @@ A solution of the literal generating predicate with a nonintegral coefficient or
 ## Evidence
 
 - Lean owner: `D5/S3/Combinatorics/PowerSeries/HannaLagrangeParity.lean`; settling theorem: `D5.S3.Combinatorics.PowerSeries.HannaLagrangeParity.result`.
-- Source note: `Library/RecurrenceComposition/hanna2023a365574.md`.
+- Source note: `Library/RecurrenceAlgebraic/hanna2023a365574.md`.
 - Blueprint: `Blueprint/D5/S3/Combinatorics/PowerSeries/HannaLagrangeParity.md`.
 - Classification: `result` has `proof_shape: content`; admission is the named open-problem resolution. The header records `escape_witness: none`; no validated escape registration is asserted.
 - The four-slot audit is unfinished for both settling results and the published owner suppliers, under [#19951](https://github.com/the-omega-institute/trureturing/issues/19951). Complete-statement source reconstruction, an enrolled readout, intervention, sensitivity and observational-dependence evidence are missing.

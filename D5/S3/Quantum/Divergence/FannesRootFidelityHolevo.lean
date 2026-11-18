@@ -528,7 +528,7 @@ section
 variable {n ι : Type*} [Fintype n] [DecidableEq n] [Fintype ι] [DecidableEq ι]
 
 
-private theorem supported_of_le {A B : Matrix n n ℂ}
+theorem supported_of_le {A B : Matrix n n ℂ}
     (hA : A.PosSemidef) (hAB : A ≤ B) : (∀ x, B *ᵥ x = 0 → A *ᵥ x = 0) := by
   intro x hx
   apply hA.dotProduct_mulVec_zero_iff.mp

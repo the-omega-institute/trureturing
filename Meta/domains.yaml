@@ -62,6 +62,9 @@ domains:
   Conventions:
     stratum: S0
     definition: Canonical W-digit and notation conventions used by later strata.
+  Convexity:
+    stratum: S3
+    definition: Convex geometry, barycenters, and exact finite representations of measurable moments.
   Deficit:
     stratum: S1
     definition: Normalized beta deficits and signed carry accounting of golden addition.
@@ -233,6 +236,9 @@ domains:
   SpectralTopology:
     stratum: S3
     definition: Finite spectral localizers, point gaps, and chiral inertia counts for doubled Hermitian block operators.
+  SpinModels:
+    stratum: S3
+    definition: Potts and Ising spin models on finite graphs and lattice strips, including frustration, ground-state constructions and their healing procedures, and counts of states with a given number of unsatisfied bonds.
   StatisticalMechanics:
     stratum: S3
     definition: Hard-core lattice gas on grids and trees — mask data, branching potentials and the clamped certificates that bound their message maps.

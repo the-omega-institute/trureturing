@@ -67,7 +67,10 @@ internal static partial class RawLeanReportArtifact
             scope);
     }
 
-    internal static LeanAxiomReport ReadFileForScopeOrFull(string path, LeanReportScope scope)
+    internal static LeanAxiomReport ReadFileForScopeOrFull(
+        string path,
+        LeanReportScope scope,
+        Func<RepositorySnapshot>? fullSource = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         ArgumentNullException.ThrowIfNull(scope);
@@ -84,7 +87,22 @@ internal static partial class RawLeanReportArtifact
             throw new FormatException("Raw Lean report is not valid JSON.", exception);
         }
         if (!isFull) return Read(bytes, scope.SourceSnapshot, MaterialsPath(fullPath), validateMaterials: true, scope);
-        var full = Read(bytes, scope.SourceSnapshot, MaterialsPath(fullPath), validateMaterials: true, scope: null);
+        var fullSnapshot = fullSource?.Invoke() ?? scope.SourceSnapshot;
+        // The scoped consumer keeps using its original hydrated inputs after fallback.
+        // A full report must therefore bind those same bytes as well as the full source.
+        foreach (var (sourcePath, source) in scope.SourceSnapshot.Files)
+        {
+            if (!source.ContentWasRead) continue;
+            if (!fullSnapshot.Files.TryGetValue(sourcePath, out var fullSourceFile)
+                || !fullSourceFile.ContentWasRead)
+                throw new FormatException(
+                    $"Full Lean report input consistency check failed for {sourcePath.Value}: full snapshot bytes are unavailable.");
+            if (!source.RawBytes.AsSpan().SequenceEqual(fullSourceFile.RawBytes.AsSpan()))
+                throw new FormatException(
+                    $"Full Lean report input consistency check failed for {sourcePath.Value}: bytes differ from the scoped snapshot.");
+        }
+        var full = Read(bytes, fullSnapshot,
+            MaterialsPath(fullPath), validateMaterials: true, scope: null);
         var selected = full.Files.Where(item => scope.Paths.Contains(item.Key))
             .ToDictionary(static item => item.Key.Value, static item => item.Value, StringComparer.Ordinal);
         foreach (var (sourcePath, report) in selected)
@@ -519,11 +537,15 @@ internal static partial class RawLeanReportArtifact
                 throw new InvalidDataException($"Lean statement material archive is missing: {path}");
             }
 
+            FileStream? stream = null;
+            ZipArchive? archive = null;
             try
             {
-                var archive = new ZipArchive(
-                    new MemoryStream(File.ReadAllBytes(path), writable: false),
-                    ZipArchiveMode.Read);
+                // The archive can exceed the managed array limit. Keep its
+                // seekable file open for lazy reads, including after a producer
+                // replaces the pathname with a newer completed archive.
+                stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete);
+                archive = new ZipArchive(stream, ZipArchiveMode.Read);
                 var builder = ImmutableDictionary.CreateBuilder<string, ZipArchiveEntry>(StringComparer.Ordinal);
                 foreach (var entry in archive.Entries)
                 {
@@ -536,7 +558,10 @@ internal static partial class RawLeanReportArtifact
                     }
                 }
 
-                return new ArchiveContents(archive, builder.ToImmutable());
+                var contents = new ArchiveContents(archive, builder.ToImmutable());
+                archive = null;
+                stream = null;
+                return contents;
             }
             catch (InvalidDataException exception)
             {
@@ -547,6 +572,13 @@ internal static partial class RawLeanReportArtifact
             {
                 throw new InvalidDataException(
                     $"Lean statement material archive cannot be read: {path}", exception);
+            }
+            finally
+            {
+                // Ownership moves to ArchiveContents only after the complete
+                // entry index has been validated. Failed loads retain no handle.
+                archive?.Dispose();
+                stream?.Dispose();
             }
         }
 

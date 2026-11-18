@@ -1,0 +1,10 @@
+## 13. A clean encoded circuit compiler inside the existing legal pulse model
+
+For m>=1 set n=2m-1 and define the isometry
+
+$$J_m|b_1\cdots b_m\rangle=|b_1\,0\,b_2\,0\cdots0\,b_m\rangle. \tag{13.1}$$
+
+Odd sites carry data; the m-1 even sites are separators initialized to zero. Every encoded word is legal. During an entangling pulse a separator may be excited, but no11 legality is maintained and the separator is restored at the gate boundary. This is an explicit map from ordinary qubit registers into the no11 carrier. It makes no identification with Fibonacci fusion-category gates.
+
+Write R_x(t)=exp(-itX), R_y(t)=exp(-itY). On the encoded space, R_{2q-1}(0,t) and R_{2q-1}(pi/2,t) implement those single-qubit rotations at data bit q, because both neighboring separators are zero. Euler decomposition implements any one-qubit SU(2) gate with at most three such pulses.
+

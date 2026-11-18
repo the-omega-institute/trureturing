@@ -804,7 +804,7 @@ class ReuseTests(unittest.TestCase):
         self.seed_before = {path: path.read_bytes() for path in self.report.parent.iterdir()}
         producer = self.root / 'producer.dll'
         producer.write_text('fixture executable')
-        environment = dict(os.environ, LAKE_BIN=str(self.lake),
+        environment = dict(os.environ, FULL_BUILD="1", LAKE_BIN=str(self.lake),
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.report),
             STRATALINT_LEAN_BUILD_TARGETS=targets if isinstance(targets, str) else json.dumps(targets))

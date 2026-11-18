@@ -1,0 +1,26 @@
+**Definition 1 (Actual zero subsets and their integer relation quotient).**
+Let $I$ be finite, let $A$ be an additive abelian group, and let
+
+$$
+w:I\longrightarrow A,\qquad
+F=\mathbb Z^I,\qquad
+\Phi:F\longrightarrow A,\quad \Phi(e_i)=w_i.
+$$
+
+For $S\subseteq I$, put $r_S=\sum_{i\in S}e_i$. Define
+
+$$
+\mathcal H=\{S\subseteq I:\textstyle\sum_{i\in S}w_i=0\},\qquad
+L=\langle r_S:S\in\mathcal H\rangle_{\mathbb Z},\qquad
+U=F/L,\quad u_i=e_i+L.
+$$
+
+Thus every defining row is an actual $0/1$ subset indicator. Write
+
+$$
+G=\{p\in\operatorname{Sym}(I):
+ S\in\mathcal H\Longleftrightarrow p(S)\in\mathcal H\text{ for all }S\subseteq I\}.
+$$
+
+Products of permutations mean composition: $pq=p\circ q$.
+

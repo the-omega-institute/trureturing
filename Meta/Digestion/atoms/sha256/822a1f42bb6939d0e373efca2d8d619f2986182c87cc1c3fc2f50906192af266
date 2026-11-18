@@ -1,0 +1,17 @@
+### 2.4. The ternary generating function
+Lagrange inversion gives
+$F(x)=\sum_{n\geq0}R_{3,1}(n)x^n=1+xF(x)^3$.
+In characteristic $3$, Frobenius yields $F(x)=1+xF(x^3)$.
+Comparison of coefficients, beginning with the constant term $1$,
+determines the unique series
+$$
+ F(x)=\sum_{h\geq0}x^{s_h},\qquad s_h=(3^h-1)/2.
+$$
+Indeed $s_{h+1}=1+3s_h$, so substituting the displayed series verifies
+the equation and its constant term. All these nonzero coefficients
+are $1$. Consecutive support indices satisfy
+$s_{h+1}-s_h=3^h$. For $h=0$ the gap is empty; for every $h\geq1$
+the gap is precisely $[s_h+1,s_{h+1}-1]$ with length $3^h-1$.
+These gaps exhaust the sequence and strictly increase, proving the
+$p=3$ assertion, including the prime dividing $k=3$. $\square$
+

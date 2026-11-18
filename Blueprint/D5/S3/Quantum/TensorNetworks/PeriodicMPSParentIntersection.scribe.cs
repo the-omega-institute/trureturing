@@ -26,6 +26,18 @@ internal sealed class PeriodicMPSParentIntersectionDocument : IScribeDocumentDef
                 "For a ring of length r+4, rows are words w of length three and columns are complement words b of length r+1. The entry is trace(wordMatrix A b times wordMatrix A w). Trace cyclicity identifies this entry with the actual native traceWord amplitude at the concatenation of w and b."),
             Definition("rawThree", "Raw three-site marginal",
                 "rawThree A r is threeColumns A r times its conjugate transpose. Its entry at u,v is the sum over complement words b of the actual amplitude at ub times the complex conjugate of the amplitude at vb. This is the unnormalized marginal of Definition 1.2; no division by the state norm occurs."),
+            Helper("wordMatrix_cons", "Ordered products under cons", WordFormula("cons"),
+                "For every core, length, first letter and remaining word, the original product at cons(i,w) is A(i) times the original word product. The interior all-coefficient induction uses this orientation."),
+            Helper("wordMatrix_snoc", "Ordered products under snoc", WordFormula("snoc"),
+                "For every core, length, initial word and last letter, the original product at snoc(w,i) is the word product times A(i). This identity also drives the consumed left-environment Gram induction."),
+            Helper("wordMatrix_append", "Ordered products under append", WordFormula("append"),
+                "For every core and both word lengths, the product at append(u,v) is A_u A_v. The interior dictionary applies it twice, preserving both actual exterior words."),
+            Helper("trace_separates", "Trace separation at every length at least two", SeparationFormula(),
+                "Under TwoSiteSpanning A, equality of gamma A (m+2) X and gamma A (m+2) Y at every word forces X=Y, for every natural m. The interior feature injectivity uses m=1; no individual A(i) is invertible by assumption."),
+            Helper("parent_intersection", "Unrestricted adjacent parent intersection", ParentFormula(),
+                "For any function f on m+4 letters, membership of every snoc slice and every cons slice in the length-(m+3) target parent space is equivalent to f=gamma A (m+4) Z for one Z. The same arbitrary f occurs on both sides of the overlap. The interior all-coefficient induction consumes this original theorem without a cyclic-state premise."),
+            Helper("gram_range", "The range of a raw complex Gram", GramFormula(),
+                "For every finite rectangular complex matrix M, range((M M†).mulVecLin)=range(M.mulVecLin). Interior raw equality uses this original supplier to transfer the actual column range, retaining the C C† convention."),
             Describe.Lean(
                 DescribeId.Create("periodic-mps-actual-competitor-gluing"),
                 DeclarationHandle.Create(Module + ".actual_competitor_gluing"),
@@ -68,6 +80,61 @@ internal sealed class PeriodicMPSParentIntersectionDocument : IScribeDocumentDef
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
+    private static DocumentBlock Helper(string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create("periodic-mps-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Module + "." + name), H(title),
+            StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula WordFormula(string mode)
+    {
+        Formula a = X("A"), n = X("n"), w = X("w"), i = X("i");
+        Formula wm(Formula v) => At(Local("wordMatrix"), a, v);
+        Formula mul(Formula u, Formula v) => At(Q("HMul", "hMul"), u, v);
+        if (mode == "append")
+            return Disp(All("A", Arrow(Bit(), Bond()), All("m", Naturals(), All("n", Naturals(),
+                All("u", Word(X("m")), All("v", Word(n), Eq(wm(At(Q("Fin", "append"), X("u"), X("v"))),
+                    mul(wm(X("u")), wm(X("v"))))))))));
+        Formula lhs = wm(mode == "cons" ? At(Q("Fin", "cons"), i, w) : At(Q("Fin", "snoc"), w, i));
+        Formula rhs = mode == "cons" ? mul(At(a, i), wm(w)) : mul(wm(w), At(a, i));
+        return Disp(All("A", Arrow(Bit(), Bond()), All("n", Naturals(), All("i", Bit(), All("w", Word(n), Eq(lhs, rhs))))));
+    }
+
+    private static Formula SeparationFormula()
+    {
+        Formula a = X("A"), m = X("m"), x = X("X"), y = X("Y");
+        Formula n = new Formula.Binary(m, FormulaBinaryOperator.Add, D(2));
+        return Disp(All("A", Arrow(Bit(), Bond()), Imp(At(Local("TwoSiteSpanning"), a),
+            All("m", Naturals(), All("X", Bond(), All("Y", Bond(),
+                Imp(All("w", Word(n), Eq(At(Local("gamma"), a, n, x, X("w")),
+                    At(Local("gamma"), a, n, y, X("w")))), Eq(x, y))))))));
+    }
+
+    private static Formula ParentFormula()
+    {
+        Formula a = X("A"), m = X("m"), f = X("f");
+        Formula n = new Formula.Binary(m, FormulaBinaryOperator.Add, D(3));
+        Formula nn = new Formula.Binary(m, FormulaBinaryOperator.Add, D(4));
+        Formula left = Exists("X", Arrow(Bit(), Bond()), All("w", Word(n), All("j", Bit(),
+            Eq(At(f, At(Q("Fin", "snoc"), X("w"), X("j"))), At(Local("gamma"), a, n, At(X("X"), X("j")), X("w"))))));
+        Formula right = Exists("Y", Arrow(Bit(), Bond()), All("i", Bit(), All("w", Word(n),
+            Eq(At(f, At(Q("Fin", "cons"), X("i"), X("w"))), At(Local("gamma"), a, n, At(X("Y"), X("i")), X("w"))))));
+        return Disp(All("A", Arrow(Bit(), Bond()), Imp(At(Local("TwoSiteSpanning"), a),
+            All("m", Naturals(), All("f", Arrow(Word(nn), Seq(Mathbb, Grp(X("C")))),
+                new Formula.Logic(Par(And(left, right)), FormulaLogicOperator.Iff,
+                    Par(Exists("Z", Bond(), Eq(f, At(Local("gamma"), a, nn, X("Z")))))))))));
+    }
+
+    private static Formula GramFormula()
+    {
+        Formula i = X("ι"), k = X("κ"), m = X("M");
+        Formula range(Formula v) => At(Q("LinearMap", "range"), At(Q("Matrix", "mulVecLin"), v));
+        Formula gram = At(Q("HMul", "hMul"), m, At(Q("Matrix", "conjTranspose"), m));
+        return Disp(All("ι", X("Type"), All("κ", X("Type"),
+            Imp(At(Q("Fintype"), i), Imp(At(Q("Fintype"), k),
+                All("M", At(Q("Matrix"), i, k, Seq(Mathbb, Grp(X("C")))), Eq(range(gram), range(m))))))));
+    }
+
     private static Formula TheoremFormula()
     {
         Formula a = X("A"), b = X("B"), r = X("r"), tail = X("b");
@@ -102,7 +169,7 @@ internal sealed class PeriodicMPSParentIntersectionDocument : IScribeDocumentDef
         return Disp(All("r", Naturals(), And(inhabited, recovery)));
     }
 
-    private static Formula X(string value) => F.Id(value);
+    private static Formula X(string value) => value switch { "ι" => Iota, "κ" => Kappa, _ => F.Id(value) };
     private static Formula Q(params string[] names)
     {
         var parts = new List<Formula>();

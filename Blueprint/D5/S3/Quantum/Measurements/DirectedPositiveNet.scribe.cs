@@ -9,7 +9,15 @@ internal sealed class DirectedPositiveNetDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An increasing positive operator net converges strongly to its operator-order least upper bound.",
         H("Directed positive operator nets"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("directed-positive-net-bounded-existence"),
+                DeclarationHandle.Create("D5/S3/Quantum/Measurements/DirectedPositiveNet.exists_lub_strong_of_bdd"),
+                H("Construction from an upper bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any complete complex Hilbert space H, nonempty directed preorder J, positive monotone net X:J->B(H), and arbitrary operator upper bound U, there exists an actual ambient operator-order least upper bound S of range X. Every ||X(j)|| is at most ||U||, and X(j)v converges in vector norm to Sv for every v. The construction requires only the upper-bound inequalities X(j)<=U, not a prior ambient least upper bound. The specified-LUB theorem consumes this construction and uniqueness. ConcreteCoefficientPredual.internal_lub_strong uses it to handle an M-internal least upper bound, with bicommutant membership proved by passing commutation identities to the vector limits."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("directed-positive-net-strong-order-lub"),
             DeclarationHandle.Create(
                 "D5/S3/Quantum/Measurements/DirectedPositiveNet.directed_positive_net_strong_of_isLUB"),

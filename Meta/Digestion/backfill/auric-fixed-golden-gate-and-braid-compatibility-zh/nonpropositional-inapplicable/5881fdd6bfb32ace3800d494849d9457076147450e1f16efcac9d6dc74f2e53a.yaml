@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5881fdd6bfb32ace3800d494849d9457076147450e1f16efcac9d6dc74f2e53a
+  normalized_sha256: sha256:5881fdd6bfb32ace3800d494849d9457076147450e1f16efcac9d6dc74f2e53a
+cas_ref: sha256:5881fdd6bfb32ace3800d494849d9457076147450e1f16efcac9d6dc74f2e53a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic citation under the references heading, identifying a pinned source and theorem number; contains no mathematical assertion to formalize. This receipt makes no probability or Shor coverage claim.
+    previous_atom_id: 39c9a337c0b215027019d41819d9bc78e442fe09118d1019324f0e910e83c011
+    next_atom_id: 21e57df70ea95f4e4c5d8341ea1948a1efc9a466beb8ca0ed3aa19f2eabafc14
