@@ -440,7 +440,7 @@ FILEMAP conformance 使用既有候选快照 reader 的当前路径和模式，�
 
 选中 current 时，共享 executor 的 source 前缀先恢复/构建候选判官，再用既有快照与策略 loader 检查实际候选字节。current 容量保留 materials/excludes、800/1000 行及目录 192 容差；仅原 delta 适用时检查 touched 目录 96 上限和候选/基线成员包含、Library added/modified 3000 行与理论 added/modified 5000 行。源码混面仅运行这个前置子集，不能把完整无报告 check-delta 扩张到混面。FILEMAP、快照、配置及判官 bootstrap 保留原基础设施失败分类；只有完成的确定性源码拒绝阻止受守护后继，bootstrap 或输入失败不冒充这种拒绝，输入仍有效的原报告 fallback 与独立检查保留可达性。
 
-hosted 的 source 作业是同一个 current 的前置 phase，直接读取 detect 的 current 命中，不新增 CI_UNITS 项。所有原单元保留命中谓词；current 未命中时 source 跳过，不能给其它变更新加全局检查。其余选中作业等待这个窄边界的原生 job 完成后并行 fan-out；source 拒绝、取消或超时阻止其启动，缺失输出不能放行。source 新构建判官仅在既有 writer/cache-miss 资格、judge-ready 与 continuation 输出均满足，且 continuation 仍需报告判官或重试未 accepted 的纯理论检查时，按原 key/path 保存以供同次运行的 current 恢复；基础设施失败的有效 continuation 不以 source 整步成功为条件。这个必要交接属于原生 job 完成依赖，保留其释放成本；无消费 continuation 的拒绝、超时、取消不上传该判官。纯理论已 accepted 时没有剩余判官消费者，source 不保存，current 不恢复、准备或重编判官，仍保留 current 的成功执行身份。required 直接核对 source 的实际结果、accepted/continuation 输出与全部原命中作业；前置失败、blocked、cancelled、缺失和未命中不能相互替代。source 与 current continuation 共用原累计 7200s：ci_compute 导出已扣除判官编译和源码执行的剩余秒数，continuation 仅接受有限的 [0,7200] 剩余量并独占初始化新 job 的本地预算文件；缺失/非法输出失败，不能重置已有文件或重新分配 120m。两个作业之间的准备、下载与运输不计费，不新增持久账本；各单元默认 120m、平台 360m、长 producer 360m 与 Release 120m 仍独立。
+hosted 的 source 作业是同一个 current 的前置 phase，直接读取 detect 的 current 命中，不新增 CI_UNITS 项。所有原单元保留命中谓词；current 未命中时 source 跳过，不能给其它变更新加全局检查。其余选中作业等待这个窄边界的原生 job 完成后并行 fan-out；source 拒绝、取消或超时阻止其启动，缺失输出不能放行。source 新构建判官仅在既有 writer/cache-miss 资格、judge-ready 与 continuation 输出均满足，且 continuation 仍需报告判官或重试未 accepted 的纯理论检查时，按原 key/path 保存以供同次运行的 current 恢复；基础设施失败的有效 continuation 不以 source 整步成功为条件。这个必要交接属于原生 job 完成依赖，保留其释放成本；无消费 continuation 的拒绝、超时、取消不上传该判官。纯理论已 accepted 时没有剩余判官消费者，source 不保存，current 不恢复、准备或重编判官，仍保留 current 的成功执行身份。required 直接核对 source 的实际结果、accepted/continuation 输出与全部原命中作业；前置失败、blocked、cancelled、缺失和未命中不能相互替代。source 与 current continuation 共用原累计 7200s：ci_compute 导出已扣除判官编译和源码执行的剩余秒数，continuation 仅接受有限的 [0,7200] 剩余量并独占初始化新 job 的本地预算文件；缺失/非法输出失败，不能重置已有文件或重新分配 120m。两个作业之间的准备、下载与运输不计费，不新增持久账本；各单元默认 120m，外层 job 上限 360m。长 producer、定时 Release 和手动 Release 各有独立的 job 上限。
 
 报告就绪后按固定顺序运行 source evidence、Scribe content、check-current、原本适用的 check-delta、compiled audit。这些检查消费已验证报告与判官，互不消费对方的通过判词；顺序依据既有完整 job 的 9s、15s、85s、426s phase 读数，delta 样本无可比耗时，保留其在 current/Scribe 之后的位置。上述为历史成本依据，不是候选性能承诺；嵌套 timing 不重复求和，缺失的 <1s 记录不当作零。任何独立验证器拒绝后，其余具备前置的验证器仍执行。current continuation 在这些已就绪诊断之后才保存其 fallback 新构建的判官；资格为未取消、明确成功的 judge 构建、原 writer 与 cache-miss，不额外要求报告有效或整个 job 成功，构建失败或取消不能取得成功资格。project snapshot、上传与确认也在这些诊断之后，仍仅按原 report/work/adoption/writer 资格及既有顺序执行；独立规则拒绝不使有效报告失去发布资格。运输仍可推迟最终 required，诊断提前与 required 总耗时分别验收。
 
@@ -527,7 +527,7 @@ source 在 judge cache 恢复后初始化余额；judge 与命中测试的 NuGet
 
 `ci-unit` 按 project 或所声明锁文件闭包先 restore NuGet，再由同一预算 owner 初始化 job 本地余额文件，用一次 GNU `timeout` 调用包住所选 test/command；`timeout-minutes` 输入为 1..360 的整数，默认 120；相应 canonical .NET 入口使用 `--no-restore`，测试新建项目保留自身 restore 行为。嵌套的计费入口继承外层测试计时，不重复扣费，也不暂停测试计时。普通缓存恢复不触发完整冷报告、扫描或迁移；缺失/不兼容仍由现有入口失败。纯理论路径只做适用文件/容量规则和所需 judge 准备、编译，不触发 Lean/toolchain/artifact 工作。
 
-PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，不设固定 600s 整包截止；控制面 API 超时保留。平台 360m 上限涵盖准备、计算、上传和清理，可能在准备阶段终止 job，不承诺无限下载时间；缓存 producer 的既有 360m 与定时 Release 的 120m 仍是各自独立 job 上限。
+PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，不设固定 600s 整包截止；控制面 API 超时保留。平台 360m 上限涵盖准备、计算、上传和清理，可能在准备阶段终止 job，不承诺无限下载时间；长 producer 与定时 Release 各有独立的 360m job 上限。
 
 普通 compiled-judge 检查与可选 `make compiled-fib-test` 分离，后者保留编译夹具、compiledFibTests、通用 FIB 行为与 analyzer 测试。`tests-declared-template` 使用 `lean:none`，仅执行不含 FourierBridgeSourceEvidenceTests 的补集；current 在报告产物就绪后执行该 Fourier 子集。两端使用 `Meta/ci-units.json` 中同一执行声明。
 
@@ -546,14 +546,14 @@ PR artifact `gh api` 保留流式输出、原生网络错误及非零退出，�
 | `workflow_dispatch`，`operation=pr` | workflow/runtime 为受保护目标 ref 的固定提交 `T`；源码检出 `source_sha=M`，`pr_source` 绑定事件 PR/H/M/B/run/attempt/target；不要求 M 已合入 | 共享核心仅构建并严格校验；原生路径打包上传 Actions artifact，不保存普通 cache key；编译 job 的 contents/actions token 只读；完成确认 immutable artifact ID | 360m |
 | `workflow_dispatch`，`operation=release` | 原始 `actor` 与当前 `triggering_actor` 均须为 `loning`；runtime 为受保护 dev/integration ref；`source_ref` 固定为 `refs/heads/dev`，非零完整 `source_sha` 须属于受保护 dev 的固定快照，检出该 SHA | 只读授权 job 先验证；独立发布 job 在任何发布操作前再次检查两个账号，单 job 重跑不复用身份授权；沿既有 Release 发布程序，不写 Actions 种子 | 授权 5m；发布 120m |
 | 自动 protected dev/integration push | current 结束后且未取消，`lean_required=true`、`project_seed_available!=true`；使用实际 push SHA | 同一 branch scope，复用长 Actions 核心 | 360m |
-| schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 120m |
+| schedule `0 */6 * * *` | 仅 `refs/heads/dev`；固定事件 SHA，发布入口另校验受保护 dev 来源；可先恢复 Actions 种子 | 独立 Release 发布入口；不写 Actions 种子 | 单 job 360m，内部报告构建上限 21600s |
 | 显式本地发布 / 取回 | `make lean-cache-to-github-without-mathlib` / `make lean-cache-from-github-without-mathlib`；沿既有来源、分区与锁校验 | 发布项目 buildDir / 取回本地 buildDir | 非 Actions job |
 
 本地已完成的 buildDir 可用 `make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_SOURCE_COMMIT=<完整SHA> LEAN_CACHE_PUBLISH_ONLY=1` 发布。该模式要求干净且已存在于本仓 GitHub 的固定提交，并验证当前完整报告与资产；`LEAN_CACHE_PUBLISH_ONLY=1` 禁止调用报告构建，缺失或陈旧报告直接失败。候选使用隔离的 verification Release 名称，不进入普通 production 查找或裁剪。`LEAN_CACHE_REPOSITORY` 可显式指定产物所在仓库目录。
 
 长 producer 的手动输入 `release_seed_tag` 与 `release_seed_producer` 共同选择一个本地候选种子。恢复核对完整 producer SHA、报告格式/执行分区、全部资产摘要与安全归档成员，支持已声明的 ARM64 平台族；失败保留原 buildDir 并退出，不改投其它 Release。只有来源已核验的长任务可以在 CI 使用该显式入口；普通 CI 的 Release 自动恢复仍关闭。恢复后继续执行当前树的 Lake 增量构建和报告核验；其成功报告可将该显式输入写入 Actions 缓存，即使本次增量计算量为零。缓存输入不签发检查结论，完整 required、冻结与 Scribe 检查仍分别执行。
 
-每 6 小时是 schedule 触发间隔，不是 120 分钟 job 的运行预算，也不是 360 分钟 Actions 核心的触发周期。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
+GitHub 按 schedule 每 6 小时触发定时 Release，每次作业独立计时。定时 job 独立占用资源、产生结果并调用自己的 Release 发布入口，不等待或复用长 producer 的成功判词。manual 与自动 producer 按 branch concurrency 串行，`cancel-in-progress: false`；目标上下文的 PR producer 按源 PR concurrency，`cancel-in-progress: true`；标签 dispatch 本身不等待长构建，占用的短 job 只返回具体 run ID，由调用者等待该 run。
 
 手动 Release 使用 `lean-cache-publish.yml` 的 `operation=release`，与默认的 `operation=build` 分开。运行分支与发布源码分别记录；integration runtime 也只发布已校验的 dev 内容。GitHub 的触发按钮仍遵循仓库原生权限；非 `loning` 请求由入口拒绝，未获授权不运行发布。定时发布的入口与账号策略保持独立。
 
