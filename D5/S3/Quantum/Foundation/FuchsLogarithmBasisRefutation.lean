@@ -202,7 +202,7 @@ private lemma HP : H * P + P * H = 0 := by
 open Matrix
 open scoped MatrixOrder ComplexOrder Kronecker
 
-private lemma sqrt_diag {ι : Type*} [Fintype ι] [DecidableEq ι] (r : ι → ℝ) (hr : ∀ i, 0 ≤ r i) :
+lemma sqrt_diag {ι : Type*} [Fintype ι] [DecidableEq ι] (r : ι → ℝ) (hr : ∀ i, 0 ≤ r i) :
     CFC.sqrt (diagonal (fun i => (r i : ℂ))) =
       diagonal (fun i => (Real.sqrt (r i) : ℂ)) := by
   have hP : (Matrix.diagonal (fun i => (r i : ℂ))).PosSemidef :=
