@@ -7,7 +7,7 @@
    digest: The radical quotient condition implies the joint divisor-sum inequality. -/
 
 import D5.S3.Arith.Divisors.UnitaryProductBridge
-import Mathlib.Data.Nat.Prime.Infinite
+import D5.S3.Arith.GoldenResource.GoldenSmallestMissingPrime
 
 /-! # Karttunen's unitary and squarefree divisor-sum implication -/
 
@@ -17,8 +17,9 @@ open D5.S3.Arith.EulerFormDivisorSum
 
 private theorem missing_prime_exists (N : ℕ) (hn : 0 < N) :
     ∃ p : ℕ, Nat.Prime p ∧ ¬ p ∣ N := by
-  obtain ⟨p, hNp, hp⟩ := Nat.exists_infinite_primes (N + 1)
-  exact ⟨p, hp, fun hd => by have := Nat.le_of_dvd hn hd; omega⟩
+  obtain ⟨p, hp, -⟩ :=
+    GoldenSmallestMissingPrime.exists_smallest_missing_prime_threshold (Nat.succ_le_of_lt hn)
+  exact ⟨p, hp.1⟩
 
 /-- The least prime not dividing a positive integer. -/
 def leastMissingPrime (N : ℕ) (hn : 0 < N) : ℕ :=

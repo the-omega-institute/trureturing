@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/Divisors/UnitaryProductBridge
    mirror-E: none(waiver:symbolic-divisor-product-identity)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Arith/Divisors/UnitaryProductBridge.unitary_squarefree_ge_twice_of_support; premises=D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_0,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_1,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_2,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_3,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_4,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_5,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_6,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_7,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_8,D5/S3/Arith/Divisors/UnitaryProductBridge.finite_mandatory_block_9
    digest: Unitary divisor sums are products of complete prime-power choices. -/
 
 import D5.S3.Arith.EulerFormDivisorSum

@@ -20,7 +20,7 @@ internal sealed class EulerFormDivisorSumDocument : IScribeDocumentDefinition
                 + "The two functions below sum actual divisors of N, including one.")),
             Node("unitarySum", "The unitary divisor sum", UnitaryFormula(),
                 "A divisor d is unitary when d and N/d are coprime. The quotient is exact "
-                + "on the divisor set. This definition also includes N itself.",
+                + "on the divisor set. For positive N, this definition also includes N itself.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("squarefreeSum", "The squarefree divisor sum", SquarefreeFormula(),
                 "The sum ranges over divisors containing no square factor greater than one. "
@@ -51,7 +51,7 @@ internal sealed class EulerFormDivisorSumDocument : IScribeDocumentDefinition
                 + "A finite reciprocal-square product bound, with separate cases for whether "
                 + "the support contains three and another prime, bounds the remaining sum "
                 + "strictly below five thirds. Their product is strictly below two. "
-                + "The hypothesis r>1 supplies a nonempty support; for r=1 and p=5 the "
+                + "The hypothesis r>1 supplies a nonempty support. For r=1, p=5 and a=0 the "
                 + "claimed inequality would fail.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(

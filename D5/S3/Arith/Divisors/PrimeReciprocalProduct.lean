@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/Divisors/PrimeReciprocalProduct
    mirror-E: none(waiver:symbolic-prime-product-estimate)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Arith/Divisors/PrimeReciprocalProduct.missing_support_product_ge_two; premises=D5/S3/Arith/Divisors/PrimeReciprocalProduct.primes_le_23_card,D5/S3/Arith/Divisors/PrimeReciprocalProduct.primes_le_29_card,D5/S3/Arith/Divisors/PrimeReciprocalProduct.prime_product_29_lower,D5/S3/Arith/Divisors/PrimeReciprocalProduct.prime_product_cutoff
    digest: Squarefree decomposition bounds harmonic sums by finite prime products. -/
 
 import Mathlib.NumberTheory.Primorial
@@ -158,6 +158,8 @@ theorem prime_support_product_sq_le (F : Finset ℕ) (hne : F.Nonempty)
     have hc : (1 : ℚ) ≤ F.card := by exact_mod_cast hne.card_pos
     nlinarith
 
+private theorem primes_le_23_card : (Nat.primesLE 23).card = 9 := by decide
+
 private theorem reciprocal_product_small_support (F : Finset ℕ)
     (hF : ∀ p ∈ F, Nat.Prime p) (hc : F.card ≤ 9) :
     (∏ p ∈ F, (1 + (p : ℚ)⁻¹)) ≤
@@ -166,7 +168,7 @@ private theorem reciprocal_product_small_support (F : Finset ℕ)
   let A := Nat.primesLE 23
   let f : ℕ → ℚ := fun p => 1 + (p : ℚ)⁻¹
   let c : ℚ := 1 + (23 : ℚ)⁻¹
-  have hAc : A.card = 9 := by decide
+  have hAc : A.card = 9 := primes_le_23_card
   have hcard : (F \ A).card ≤ (A \ F).card := by
     have h1 := card_sdiff_add_card_inter F A
     have h2 := card_sdiff_add_card_inter A F
@@ -203,13 +205,17 @@ private theorem reciprocal_product_small_support (F : Finset ℕ)
   rw [← h1, ← h2]
   exact mul_le_mul_of_nonneg_left hmid (prod_nonneg (fun _ _ => by positivity))
 
+private theorem primes_le_29_card : (Nat.primesLE 29).card = 10 := by decide
+
+private theorem prime_product_29_lower :
+    3 ^ 20 < ∏ p ∈ Nat.primesLE 29, p := by decide
+
 private theorem prime_product_large_support (F : Finset ℕ)
     (hF : ∀ p ∈ F, Nat.Prime p) (hc : 10 ≤ F.card) :
     3 ^ (3 * F.card - 10) < ∏ p ∈ F, p := by
   classical
   let A := Nat.primesLE 29
-  have hAc : A.card = 10 := by decide
-  have hAp : (∏ p ∈ A, p) = 6469693230 := by decide
+  have hAc : A.card = 10 := primes_le_29_card
   have hcard : (F \ A).card = (A \ F).card + (F.card - 10) := by
     have h1 := card_sdiff_add_card_inter F A
     have h2 := card_sdiff_add_card_inter A F
@@ -240,15 +246,15 @@ private theorem prime_product_large_support (F : Finset ℕ)
   have h1 := prod_inter_mul_prod_sdiff F A (fun p : ℕ => p)
   have h2 := prod_inter_mul_prod_sdiff A F (fun p : ℕ => p)
   rw [inter_comm A F] at h2
-  have hprod : 6469693230 * 31 ^ (F.card - 10) ≤ ∏ p ∈ F, p := by
-    rw [← hAp, ← h1, ← h2, mul_assoc]
+  have hprod : (∏ p ∈ A, p) * 31 ^ (F.card - 10) ≤ ∏ p ∈ F, p := by
+    rw [← h1, ← h2, mul_assoc]
     exact Nat.mul_le_mul_left _ hmid
   have hexp : 3 * F.card - 10 = 20 + 3 * (F.card - 10) := by omega
   calc
     _ = 3 ^ 20 * 27 ^ (F.card - 10) := by rw [hexp, pow_add, pow_mul]; norm_num
     _ ≤ 3 ^ 20 * 31 ^ (F.card - 10) := Nat.mul_le_mul_left _ (Nat.pow_le_pow_left (by decide) _)
-    _ < 6469693230 * 31 ^ (F.card - 10) :=
-      Nat.mul_lt_mul_of_pos_right (by decide) (by positivity)
+    _ < (∏ p ∈ A, p) * 31 ^ (F.card - 10) :=
+      Nat.mul_lt_mul_of_pos_right prime_product_29_lower (by positivity)
     _ ≤ _ := hprod
 
 private theorem large_support_prime_quotient (m : ℕ) (hm : 0 < m)
