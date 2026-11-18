@@ -282,7 +282,7 @@ theorem fixed_grid_bound {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
 /-- Fixed-grid entropy bound with the moving-bin capacities and safe-base
 estimates as inputs. The floor, signed slack, full product count, and
 conversion to the source scale are derived within the proof. -/
-theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
     (ht0 : t 0 = 0) (q : Fin m → ℝ) (hq0 : ∀ i, 0 < q i) (hq1 : ∀ i, q i < 1)
     (eta : ℝ) (heta : 0 < eta) (base : ℝ → Finset ℕ) (reserve : ℝ → ℝ)
     (zeta : ℝ) (hzeta : 0 < zeta) :
@@ -405,5 +405,363 @@ theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : S
     field_simp [hC.ne', (sqrt_pos.2 (log_pos hP)).ne']
   rw [hscale, ← mul_assoc, sub_mul, div_mul_cancel₀ _ hC.ne']
   exact (lt_div_iff₀ hWP).mp hsum
+
+open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
+  (primeCount countingPolynomial prime_counting_four_terms theta_error_log_power)
+open D5.S3.Arith.Robin.PriceRecord.PrimeBoundarySecondOrder (pi_normalized)
+
+private lemma interval_card_as_difference {a b : ℝ} (hab : a ≤ b) :
+    ((primeInterval a b).card : ℝ) = primeCount b - primeCount a := by
+  have hset : primeInterval a b = Nat.primesLE ⌊b⌋₊ \ Nat.primesLE ⌊a⌋₊ := by
+    apply Finset.ext
+    intro p
+    simp only [primeInterval, Finset.mem_filter, Finset.mem_Ioc, Finset.mem_sdiff, Nat.mem_primesLE]
+    constructor
+    · rintro ⟨⟨ha, hb⟩, hp⟩
+      exact ⟨⟨hb, hp⟩, fun hs => ha.not_ge hs.1⟩
+    · rintro ⟨⟨hb, hp⟩, ha⟩
+      exact ⟨⟨lt_of_not_ge fun hs => ha ⟨hs, hp⟩, hb⟩, hp⟩
+  have hsub : Nat.primesLE ⌊a⌋₊ ⊆ Nat.primesLE ⌊b⌋₊ := by
+    intro p hp
+    obtain ⟨hpa, hprime⟩ := Nat.mem_primesLE.mp hp
+    exact Nat.mem_primesLE.mpr ⟨hpa.trans (Nat.floor_mono hab), hprime⟩
+  rw [hset, card_sdiff_of_subset hsub, Nat.primesLE_card_eq_primeCounting,
+    Nat.primesLE_card_eq_primeCounting,
+    Nat.cast_sub (Nat.monotone_primeCounting (Nat.floor_mono hab))]
+  rfl
+
+private lemma prime_count_remainder (twoTerms : Bool) :
+    Tendsto (fun P : ℝ => (primeCount P -
+      (P / log P + if twoTerms then P / log P ^ 2 else 0)) /
+        (P / log P ^ (if twoTerms then 3 else 2 : ℕ)))
+      atTop (𝓝 (if twoTerms then 2 else 1)) := by
+  have hi := tendsto_log_atTop.const_div_atTop (1 : ℝ)
+  cases twoTerms
+  · have hh := ((((hi.const_mul 2).add ((hi.pow 2).const_mul 6)).add
+      (prime_counting_four_terms.mul (hi.pow 3))).const_add 1)
+    norm_num at hh ⊢
+    apply hh.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    dsimp [countingPolynomial]
+    field_simp [(zero_lt_one.trans hP).ne', (log_pos hP).ne']
+    <;> ring
+  · have hh := (((hi.const_mul 6).add (prime_counting_four_terms.mul (hi.pow 2))).const_add 2)
+    norm_num at hh ⊢
+    apply hh.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    dsimp [countingPolynomial]
+    field_simp [(zero_lt_one.trans hP).ne', (log_pos hP).ne']
+    <;> ring
+
+private lemma prime_count_fixed_ratio {a : ℝ} (ha : 0 < a) :
+    Tendsto (fun P : ℝ => primeCount (a * P) / (P / log P)) atTop (𝓝 a) := by
+  have hY := tendsto_id.const_mul_atTop ha
+  have hlog := (tendsto_log_atTop.const_div_atTop (log a)).const_add 1
+  rw [add_zero] at hlog
+  have h := ((pi_normalized.comp hY).div hlog one_ne_zero).const_mul a
+  simp only [div_one, mul_one] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ), hY.eventually_gt_atTop 1] with P hP hYp
+  change 1 < a * P at hYp
+  dsimp
+  rw [log_mul ha.ne' (zero_lt_one.trans hP).ne']
+  have hn : log a + log P ≠ 0 := by
+    rw [← log_mul ha.ne' (zero_lt_one.trans hP).ne']
+    exact (log_pos hYp).ne'
+  rw [show 1 + log a / log P = (log a + log P) / log P by
+    rw [add_div, div_self (log_pos hP).ne', add_comm]]
+  field_simp [ha.ne', (zero_lt_one.trans hP).ne', (log_pos hP).ne', hn]
+
+
+private def excess (P : ℝ) : ℕ := Nat.primeCounting ⌊P⌋₊ - Selection.selectedCount 1 (exp P)
+
+private def safeReserve (P : ℝ) : ℝ :=
+  P - Chebyshev.theta P + (excess P : ℝ) * log (P / 2)
+
+private lemma excess_spec :
+    (∀ᶠ P : ℝ in atTop, Selection.selectedCount 1 (exp P) ≤ Nat.primeCounting ⌊P⌋₊) ∧
+    Tendsto (fun P : ℝ => (excess P : ℝ) / (P / log P ^ 3)) atTop (𝓝 2) := by
+  let a := fun P : ℝ => P / log P + P / log P ^ 2
+  let k := fun P : ℝ => Selection.selectedCount 1 (exp P)
+  have ha : ∀ᶠ P : ℝ in atTop, threshold 1 (exp P) = a P := by
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    simp only [threshold, scale, log_exp, one_mul, a, div_div, pow_two]
+  have hr := prime_count_remainder true
+  simp only [ite_true] at hr
+  have hm : Tendsto (fun P : ℝ => log P ^ (3 : ℕ) / P) atTop (𝓝 0) := by
+    simpa only [rpow_natCast, rpow_one] using
+      (isLittleO_log_rpow_rpow_atTop ((3 : ℕ) : ℝ) (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
+  have hround : Tendsto (fun P => ((k P : ℝ) - a P) / (P / log P ^ 3)) atTop (𝓝 0) := by
+    apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hm
+    · filter_upwards [eventually_gt_atTop (1 : ℝ), ha] with P hP haP
+      have hp := zero_lt_one.trans hP
+      have hd := div_pos hp (pow_pos (log_pos hP) 3)
+      apply div_nonneg _ hd.le
+      have hlt := Nat.lt_floor_add_one (threshold 1 (exp P))
+      simpa only [k, Selection.selectedCount, Nat.cast_add, Nat.cast_one, haP,
+        sub_nonneg] using hlt.le
+    · filter_upwards [eventually_gt_atTop (1 : ℝ), ha] with P hP haP
+      have hp := zero_lt_one.trans hP
+      have hl := log_pos hP
+      have hd := div_pos hp (pow_pos hl 3)
+      have hm : (k P : ℝ) - a P ≤ 1 := by
+        have hnonneg : 0 ≤ a P := by dsimp [a]; positivity
+        have hh := Nat.floor_le hnonneg
+        simp only [k, Selection.selectedCount, haP, Nat.cast_add, Nat.cast_one]
+        linarith
+      calc
+        _ ≤ 1 / (P / log P ^ 3) := div_le_div_of_nonneg_right hm hd.le
+        _ = _ := one_div_div _ _
+  have hdiff : Tendsto (fun P => (primeCount P - (k P : ℝ)) / (P / log P ^ 3))
+      atTop (𝓝 2) := by
+    have h := hr.sub hround
+    rw [sub_zero] at h
+    apply h.congr'
+    exact Eventually.of_forall fun P => by dsimp [a]; rw [← sub_div]; congr 1; ring
+  have hfit : ∀ᶠ P : ℝ in atTop, k P ≤ Nat.primeCounting ⌊P⌋₊ := by
+    filter_upwards [hdiff.eventually_const_lt (show (0 : ℝ) < 2 by norm_num),
+      eventually_gt_atTop (1 : ℝ)] with P hd hP
+    have h := (div_pos_iff_of_pos_right (div_pos (zero_lt_one.trans hP)
+      (pow_pos (log_pos hP) 3))).mp hd
+    have hs := (sub_pos.mp h).le
+    exact_mod_cast (show (k P : ℝ) ≤ (Nat.primeCounting ⌊P⌋₊ : ℝ) from hs)
+  refine ⟨hfit, hdiff.congr' ?_⟩
+  filter_upwards [hfit] with P hP
+  rw [excess, Nat.cast_sub hP]
+  rfl
+
+private lemma safe_reserve_normalized :
+    Tendsto (fun P : ℝ => safeReserve P / (P / log P ^ 2)) atTop (𝓝 2) := by
+  have htheta := (theta_error_log_power 2).tendsto_div_nhds_zero.neg
+  have hlog := (tendsto_log_atTop.const_div_atTop (log 2)).const_sub 1
+  rw [sub_zero] at hlog
+  have h := htheta.add (excess_spec.2.mul hlog)
+  norm_num at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+  change -((Chebyshev.theta P - P) / (P / log P ^ 2)) +
+    (excess P : ℝ) / (P / log P ^ 3) * (1 - log 2 / log P) =
+      safeReserve P / (P / log P ^ 2)
+  rw [safeReserve, log_div (zero_lt_one.trans hP).ne' (by norm_num : (2 : ℝ) ≠ 0)]
+  field_simp [(zero_lt_one.trans hP).ne', (log_pos hP).ne'] <;> ring
+
+private lemma safe_base {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t) (ht0 : t 0 = 0)
+    {C : ℝ} (hC : 0 < C) :
+    ∃ base : ℝ → Finset ℕ, ∀ᶠ P in atTop,
+      base P ⊆ Nat.primesLE ⌊P⌋₊ ∧
+      (∀ i, donorBin t P (C * sqrt (log P)) i ⊆ base P) ∧
+      (base P).card = Selection.selectedCount 1 (exp P) ∧
+      (∑ p ∈ base P, log (p : ℝ)) ≤ P - safeReserve P := by
+  classical
+  have hwindow :
+      Tendsto (fun P : ℝ => ((primeInterval (P / 2) (3 * P / 4)).card : ℝ) /
+        (P / log P)) atTop (𝓝 (1 / 4 : ℝ)) := by
+    have hh := (prime_count_fixed_ratio (show (0 : ℝ) < 3 / 4 by norm_num)).sub
+      (prime_count_fixed_ratio (show (0 : ℝ) < 1 / 2 by norm_num))
+    norm_num at hh
+    apply hh.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    rw [interval_card_as_difference (by linarith : P / 2 ≤ 3 * P / 4), sub_div]
+    congr 2 <;> ring
+  have hsmall := excess_spec.2.mul ((tendsto_log_atTop.const_div_atTop (1 : ℝ)).pow 2)
+  norm_num at hsmall
+  have hsmall' : Tendsto (fun P : ℝ => (excess P : ℝ) / (P / log P)) atTop (𝓝 0) := by
+    apply hsmall.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    field_simp [(zero_lt_one.trans hP).ne', (log_pos hP).ne'] <;> ring
+  have hroom := hsmall'.eventually_lt hwindow (show (0 : ℝ) < 1 / 4 by norm_num)
+  have hs : Tendsto (fun P : ℝ => C * sqrt (log P)) atTop atTop :=
+    (tendsto_sqrt_atTop.comp tendsto_log_atTop).const_mul_atTop hC
+  have houter := (hs.const_div_atTop (-t (Fin.last m))).exp
+  rw [← Real.exp_eq_exp_ℝ, exp_zero] at houter
+  have houter' := houter.eventually_const_lt (show (3 / 4 : ℝ) < 1 by norm_num)
+  have hex : ∀ᶠ P : ℝ in atTop, ∃ B : Finset ℕ, B ⊆ Nat.primesLE ⌊P⌋₊ ∧
+      (∀ i, donorBin t P (C * sqrt (log P)) i ⊆ B) ∧
+      B.card = Selection.selectedCount 1 (exp P) ∧
+      (∑ p ∈ B, log (p : ℝ)) ≤ P - safeReserve P := by
+    filter_upwards [hroom, excess_spec.1, houter', eventually_gt_atTop (1 : ℝ)]
+      with P hroomP hsize houterP hP
+    have hp := zero_lt_one.trans hP
+    have hsP := mul_pos hC (sqrt_pos.2 (log_pos hP))
+    have hroomNat : excess P ≤ (primeInterval (P / 2) (3 * P / 4)).card := by
+      exact_mod_cast (div_lt_div_iff_of_pos_right (div_pos hp (log_pos hP))).mp hroomP |>.le
+    obtain ⟨del, hdel, hdelcard⟩ := exists_subset_card_eq hroomNat
+    let all := Nat.primesLE ⌊P⌋₊
+    have hdel' : del ⊆ all := by
+      intro p hpD
+      obtain ⟨_, hhi, hprime⟩ := primeInterval_endpoints (by linarith) (hdel hpD)
+      exact Nat.mem_primesLE.mpr ⟨(Nat.le_floor_iff hp.le).mpr (hhi.trans (by linarith)), hprime⟩
+    refine ⟨all \ del, sdiff_subset, ?_, ?_, ?_⟩
+    · intro i p hmem
+      obtain ⟨hlo, hhi, hprime⟩ := primeInterval_endpoints
+        (mul_nonneg hp.le (exp_pos _).le) hmem
+      have hbound : (p : ℝ) ≤ P := by
+        apply hhi.trans
+        apply mul_le_of_le_one_right hp.le
+        rw [exp_le_one_iff]
+        exact div_nonpos_of_nonpos_of_nonneg
+          (neg_nonpos.mpr (by
+            have := ht.monotone (Fin.zero_le i.castSucc)
+            simpa only [ht0] using this)) hsP.le
+      have hnear : 3 * P / 4 < (p : ℝ) := by
+        have hh : 3 / 4 < exp (-t i.succ / (C * sqrt (log P))) := houterP.trans_le <|
+          exp_le_exp.mpr (div_le_div_of_nonneg_right
+            (neg_le_neg (ht.monotone (Fin.le_last i.succ))) hsP.le)
+        have hh' := mul_lt_mul_of_pos_left hh hp
+        exact (show 3 * P / 4 < P * exp (-t i.succ / (C * sqrt (log P))) by linarith).trans hlo
+      refine mem_sdiff.mpr ⟨Nat.mem_primesLE.mpr ⟨(Nat.le_floor_iff hp.le).mpr hbound, hprime⟩, ?_⟩
+      intro hpDel
+      exact hnear.not_ge (primeInterval_endpoints (by linarith) (hdel hpDel)).2.1
+    · rw [card_sdiff_of_subset hdel', show all = Nat.primesLE ⌊P⌋₊ from rfl,
+        Nat.primesLE_card_eq_primeCounting, hdelcard, excess, Nat.sub_sub_self hsize]
+    · have hlogDel : (excess P : ℝ) * log (P / 2) ≤ ∑ p ∈ del, log (p : ℝ) := by
+        calc
+          _ = ∑ _p ∈ del, log (P / 2) := by simp [hdelcard]
+          _ ≤ _ := sum_le_sum fun p hpDel =>
+            log_le_log (by positivity) (primeInterval_endpoints (by linarith) (hdel hpDel)).1.le
+      rw [sum_sdiff_eq_sub hdel', show all = Nat.primesLE ⌊P⌋₊ from rfl,
+        ← Chebyshev.theta_eq_sum_primesLE, safeReserve]
+      linarith
+  let base (P : ℝ) := if h : ∃ B : Finset ℕ, B ⊆ Nat.primesLE ⌊P⌋₊ ∧
+      (∀ i, donorBin t P (C * sqrt (log P)) i ⊆ B) ∧
+      B.card = Selection.selectedCount 1 (exp P) ∧
+      (∑ p ∈ B, log (p : ℝ)) ≤ P - safeReserve P then h.choose else ∅
+  refine ⟨base, hex.mono fun P hP => ?_⟩
+  rw [show base P = hP.choose from dif_pos hP]
+  exact hP.choose_spec
+
+private lemma moving_prime_capacity {C a b : ℝ} (hC : 0 < C) (hab : a < b) :
+    Tendsto (fun P : ℝ =>
+      let s := C * sqrt (log P)
+      ((primeInterval (P * exp (a / s)) (P * exp (b / s))).card : ℝ) /
+        ((P / log P) / s))
+      atTop (𝓝 (b - a)) := by
+  let s (P : ℝ) := C * sqrt (log P)
+  let W (P : ℝ) := (P / log P) / s P
+  let Y (a P : ℝ) := P * exp (a / s P)
+  have hs : Tendsto s atTop atTop := (tendsto_sqrt_atTop.comp tendsto_log_atTop).const_mul_atTop hC
+  have hsP : ∀ᶠ P in atTop, 0 < s P := hs.eventually_gt_atTop 0
+  have hsinv : Tendsto (fun P => (s P)⁻¹) atTop (𝓝 0) := hs.inv_tendsto_atTop
+  have hslow : Tendsto (fun P => s P / log P) atTop (𝓝 0) := by
+    have h := ((tendsto_sqrt_atTop.comp tendsto_log_atTop).const_div_atTop C)
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    change C / sqrt (log P) = C * sqrt (log P) / log P
+    have hsq := sq_sqrt (log_pos hP).le
+    field_simp [(sqrt_pos.2 (log_pos hP)).ne', (log_pos hP).ne']
+    nlinarith
+  have hYrel (a : ℝ) : Tendsto (fun P => exp (a / s P)) atTop (𝓝 1) := by
+    simpa only [← Real.exp_eq_exp_ℝ, exp_zero] using (hs.const_div_atTop a).exp
+  have hY (a : ℝ) : Tendsto (Y a) atTop atTop :=
+    tendsto_id.atTop_mul_pos one_pos (hYrel a)
+  have hYp (a : ℝ) : ∀ᶠ P in atTop, 1 < Y a P := (hY a).eventually_gt_atTop 1
+  have hlog (a : ℝ) :
+      ∀ᶠ P : ℝ in atTop, log (Y a P) = log P + a / s P := by
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with P hP
+    change log (P * exp (a / s P)) = _
+    rw [log_mul hP.ne' (exp_pos _).ne', log_exp]
+  have hlogRatio (a : ℝ) :
+      Tendsto (fun P => log P / log (Y a P)) atTop (𝓝 1) := by
+    have h := ((hs.const_div_atTop a).div_atTop tendsto_log_atTop).const_add 1
+    rw [add_zero] at h
+    have hh := h.inv₀ one_ne_zero
+    rw [inv_one] at hh
+    apply hh.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ), hlog a, hYp a] with P hP he hYP
+    have hn : log P + a / s P ≠ 0 := he ▸ (log_pos hYP).ne'
+    change (1 + (a / s P) / log P)⁻¹ = _
+    rw [← show log (Y a P) / log P = 1 + (a / s P) / log P by
+      rw [he, add_div, div_self (log_pos hP).ne'], inv_div]
+  have hErr (a : ℝ) :
+      Tendsto (fun P => (primeCount (Y a P) - Y a P / log P) / W P) atTop (𝓝 0) := by
+    have hR := (prime_count_remainder false).comp (hY a)
+    simp only [Bool.false_eq_true, ite_false, add_zero] at hR
+    have h := hR.mul (((hYrel a).mul ((hlogRatio a).pow 2)).mul hslow)
+    simp only [one_pow, mul_one, one_mul, mul_zero] at h
+    have hcorr := ((hYrel a).mul ((tendsto_log_atTop.comp (hY a)).const_div_atTop (-a)))
+    rw [mul_zero] at hcorr
+    have hh := h.add hcorr
+    rw [add_zero] at hh
+    apply hh.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ), hsP, hlog a, hYp a]
+      with P hP hs0 he hy
+    have hpos := (zero_lt_one.trans hP).ne'
+    change
+      (primeCount (Y a P) - Y a P / log (Y a P)) / (Y a P / log (Y a P) ^ 2) *
+        (exp (a / s P) * (log P / log (Y a P)) ^ 2 * (s P / log P)) +
+          exp (a / s P) * (-a / log (Y a P)) =
+        (primeCount (Y a P) - Y a P / log P) / W P
+    have haux : a = s P * (log (Y a P) - log P) := by
+      rw [he, add_sub_cancel_left, mul_div_cancel₀ _ hs0.ne']
+    have hneg : -a = -(s P * (log (Y a P) - log P)) := congrArg Neg.neg haux
+    rw [show exp (a / s P) = Y a P / P by simp [Y, mul_comm P, hpos], hneg]
+    dsimp only [W]
+    field_simp [hpos, hs0.ne', (log_pos hP).ne', (log_pos hy).ne',
+      (zero_lt_one.trans hy).ne']
+    <;> ring
+  have hlin : Tendsto (fun P => s P * (exp (b / s P) - exp (a / s P))) atTop
+      (𝓝 (b - a)) := by
+    have hb : HasDerivAt (fun z : ℝ => exp (b * z)) b 0 := by
+      simpa using (((hasDerivAt_id (0 : ℝ)).const_mul b).exp)
+    have ha : HasDerivAt (fun z : ℝ => exp (a * z)) a 0 := by
+      simpa using (((hasDerivAt_id (0 : ℝ)).const_mul a).exp)
+    have hnh : Tendsto (fun P => (s P)⁻¹) atTop (𝓝[≠] (0 : ℝ)) := by
+      refine tendsto_nhdsWithin_iff.2 ⟨hsinv, hsP.mono fun P hP => ?_⟩
+      simpa using (inv_ne_zero hP.ne')
+    simpa only [Function.comp_def, Pi.sub_apply, zero_add, add_zero, mul_zero, sub_self, sub_zero,
+      smul_eq_mul, inv_inv, div_eq_mul_inv] using (hb.sub ha).tendsto_slope_zero.comp hnh
+  have h := ((hErr b).sub (hErr a)).add hlin
+  rw [sub_self, zero_add] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ), hsP] with P hP hs0
+  have hpos := zero_lt_one.trans hP
+  have habY : Y a P ≤ Y b P := mul_le_mul_of_nonneg_left
+    (exp_le_exp.mpr (div_le_div_of_nonneg_right hab.le hs0.le)) hpos.le
+  change
+    ((primeCount (Y b P) - Y b P / log P) / W P -
+      (primeCount (Y a P) - Y a P / log P) / W P) +
+      s P * (exp (b / s P) - exp (a / s P)) =
+      ((primeInterval (Y a P) (Y b P)).card : ℝ) / W P
+  rw [interval_card_as_difference habY]
+  dsimp only [W, Y]
+  field_simp [hpos.ne', hs0.ne', (log_pos hP).ne'] <;> ring
+
+/-- Lemma 7.6 on the literal second-threshold count. -/
+theorem fixed_grid_lower {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+    (ht0 : t 0 = 0) (q : Fin m → ℝ) (hq0 : ∀ i, 0 < q i) (hq1 : ∀ i, q i < 1)
+    (eta : ℝ) (heta : 0 < eta) (zeta : ℝ) (hzeta : 0 < zeta)
+    (hslack : 2 * ∑ i, t i.succ * ((t i.succ - t i.castSucc) * q i) <
+      (π ^ 2 / 6) * (1 + eta) ^ 2) :
+    ∀ᶠ P : ℝ in atTop,
+      ((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) /
+        ((1 + eta) * (π / (2 * sqrt 3))) - zeta) *
+        ((P / log P) / sqrt (log P)) ≤ log (tailCount 1 (exp P) : ℝ) := by
+  let C := (1 + eta) * (π / (2 * sqrt 3))
+  have hC : 0 < C := mul_pos (by linarith) (div_pos pi_pos (by positivity))
+  obtain ⟨base, hbase⟩ := safe_base t ht ht0 hC
+  have hres : Tendsto (fun P : ℝ => safeReserve P /
+      (((P / log P) / (C * sqrt (log P))) / (C * sqrt (log P))))
+      atTop (𝓝 ((π ^ 2 / 6) * (1 + eta) ^ 2)) := by
+    have h := safe_reserve_normalized.const_mul (C ^ 2)
+    have hconst : C ^ 2 * 2 = (π ^ 2 / 6) * (1 + eta) ^ 2 := by
+      have hsq := sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
+      dsimp [C]
+      rw [mul_pow, div_pow, mul_pow, hsq]
+      ring
+    rw [hconst] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    have hl := log_pos hP
+    rw [div_div, div_div,
+      show log P * (C * sqrt (log P) * (C * sqrt (log P))) =
+          C ^ 2 * log P ^ 2 by
+        rw [← pow_two, mul_pow, sq_sqrt hl.le]
+        ring]
+    field_simp [(zero_lt_one.trans hP).ne', hC.ne', hl.ne'] <;> ring
+  refine fixed_grid_lower_of_capacity t ht ht0 q hq0 hq1 eta heta base safeReserve zeta hzeta
+    hslack (fun i => ?_) (fun i => ?_) hres hbase
+  · have h := moving_prime_capacity hC (neg_lt_neg (ht i.castSucc_lt_succ))
+    simpa only [donorBin, neg_sub_neg] using h
+  · exact moving_prime_capacity hC (ht i.castSucc_lt_succ)
 
 end D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange

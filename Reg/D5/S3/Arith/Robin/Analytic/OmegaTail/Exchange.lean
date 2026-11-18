@@ -174,4 +174,81 @@ def gridAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+
+abbrev entropySignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+
+def entropyLowerBound : Realization entropySignature :=
+  realize entropySignature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+def entropyRejected : Realization entropySignature :=
+  realize entropySignature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev entropyArena : Arena where
+  signature := entropySignature
+  Law O := ∀ {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+    (ht0 : t 0 = 0) (q : Fin m → ℝ) (hq0 : ∀ i, 0 < q i) (hq1 : ∀ i, q i < 1)
+    (eta : ℝ) (heta : 0 < eta) (zeta : ℝ) (hzeta : 0 < zeta)
+    (hslack : 2 * ∑ i, t i.succ * ((t i.succ - t i.castSucc) * q i) <
+      (π ^ 2 / 6) * (1 + eta) ^ 2),
+    ∀ᶠ P : ℝ in atTop, O.readout () ()
+      (((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) /
+        ((1 + eta) * (π / (2 * sqrt 3))) - zeta) * ((P / log P) / sqrt (log P)))
+      (log (tailCount 1 (exp P) : ℝ))
+
+private theorem entropy_rejected : ¬ entropyArena.Law entropyRejected := by
+  intro h
+  have hcost : (0 : ℝ) < (π ^ 2 / 6) * (1 + 1) ^ 2 :=
+    mul_pos (div_pos (pow_pos pi_pos 2) (by norm_num)) (by norm_num)
+  have hbad : ∀ᶠ _ : ℝ in atTop, False := h (m := 0) (fun _ => 0)
+    (fun i j hij => by omega) rfl Fin.elim0 (fun i => i.elim0) (fun i => i.elim0)
+    1 (by norm_num) 1 (by norm_num) (by simpa using hcost)
+  exact hbad.exists.choose_spec
+
+def entropyFamily : Registration entropyArena (type_of% @fixed_grid_lower) where
+  actual := entropyLowerBound
+  bridge := Iff.rfl
+  variation := ⟨@fixed_grid_lower, entropyRejected, entropy_rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    entropyArena.Law entropyLowerBound entropyRejected entropy_rejected
+  dependence := by
+    intro i
+    refine ⟨(), (0 : ℝ), 1, ?_⟩
+    intro he
+    have hh : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) (le_refl 0)
+    norm_num at hh
+
+def entropyAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@fixed_grid_lower) (Realization entropySignature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange.fixed_grid_lower.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange.entropyFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨entropyArena⟩
+  objectArena := .source ⟨entropyArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source entropyArena ⟨entropyFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize entropySignature entropyLowerBound.readout entropyLowerBound.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "fn", "arg", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
