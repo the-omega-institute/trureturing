@@ -33,6 +33,7 @@ private theorem operator_length_le_area (m : ℕ) (hm : 0 < m) (b : PositiveColu
     (lOperator m b).length ≤ area b := by
   let c := lOperator m b
   have hs := operator_data m b
+  change c.length ≤ area b
   by_cases hc : c.length = 0
   · omega
   let p := c.length - 1
@@ -44,7 +45,7 @@ private theorem operator_length_le_area (m : ℕ) (hm : 0 < m) (b : PositiveColu
       0 < Fintype.card {i : Fin b.val.length // m*p+j.val < b.val[i.val]} := by
     by_contra! hh
     have hz : columnLevel m b p = 0 := Finset.sum_eq_zero (fun j _ => by
-      exact Nat.eq_zero_of_not_pos (hh j))
+      exact Nat.eq_zero_of_le_zero (hh j))
     omega
   obtain ⟨j,hj⟩ := hex
   obtain ⟨⟨i,hi⟩⟩ := Fintype.card_pos_iff.mp hj
@@ -85,6 +86,61 @@ def K (m : ℕ) (b : PositiveColumns) : ℕ := Nat.card (RookClass m b)
 def UniversalFormula : Prop :=
   ∀ (m : ℕ), 0 < m → ∀ (b : PositiveColumns) (N : ℕ), area b + 1 ≤ N →
     (K m b : ℤ) = Q m N b
+
+private theorem operator_fiber_finite (m : ℕ) (hm : 0 < m) (c : List ℕ) :
+    Finite {b : PositiveColumns // lOperator m b = c} := by
+  classical
+  by_cases hc : ∀ x ∈ c, 0 < x
+  · obtain ⟨r,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hm)
+    let e := ((operatorFiberEquiv (r+1) c).trans (sourceShapeEquiv (r+1) c hc)).trans
+      (D5.S3.Combinatorics.Partitions.BarreseAllWidths.normalizedPaddingEquiv r c.reverse)
+    exact Finite.of_equiv _ e.symm
+  · haveI : IsEmpty {b : PositiveColumns // lOperator m b = c} := ⟨by
+      rintro ⟨b,hb⟩
+      apply hc
+      rw [← hb]
+      exact (operator_data m b).1⟩
+    infer_instance
+
+/-- The actual normalized source shapes whose l-data occur in the root index.
+    Equality of this carrier with the native rook class is not assumed here. -/
+abbrev RootFamily (m : ℕ) {N : ℕ} (z : Fin N → ℤ) :=
+  {b : PositiveColumns // ∃ a : ↥(indices m z), lOperator m b = (board m a).val}
+
+/-- Forgetting the index gives a bijection because reconstruction is injective.
+    Every fiber contains the same actual normalized source shapes as its image. -/
+def rootFiberEquiv (m : ℕ) {N : ℕ} (z : Fin N → ℤ) :
+    ((a : ↥(indices m z)) × {b : PositiveColumns // lOperator m b = (board m a).val}) ≃
+      RootFamily m z := by
+  let f : ((a : ↥(indices m z)) × {b : PositiveColumns // lOperator m b = (board m a).val}) →
+      RootFamily m z := fun x => ⟨x.2.val,⟨x.1,x.2.property⟩⟩
+  apply Equiv.ofBijective f
+  constructor
+  · rintro ⟨a,b⟩ ⟨a',b'⟩ h
+    have hb : b.val = b'.val := congrArg Subtype.val h
+    have ha : a = a' := board_injective m z (Subtype.ext (by
+      rw [← b.property, ← b'.property, hb]))
+    subst a'
+    have hb' : b = b' := Subtype.ext hb
+    subst b'
+    rfl
+  · rintro ⟨b,⟨a,ha⟩⟩
+    exact ⟨⟨a,⟨b,ha⟩⟩,rfl⟩
+
+/-- The union over all distinct root indices is finite and its ordinary finite
+    cardinality is the evaluated weight sum. This is the fiber-assembly interface;
+    identifying the union with a native rook class remains a separate theorem. -/
+theorem rootFamily_count (m : ℕ) (hm : 0 < m) {N : ℕ} (z : Fin N → ℤ) :
+    Finite (RootFamily m z) ∧
+      (Nat.card (RootFamily m z) : ℤ) =
+        ∑ a : ↥(indices m z), weight m (board m a).val := by
+  classical
+  letI : ∀ a : ↥(indices m z), Finite {b : PositiveColumns // lOperator m b = (board m a).val} :=
+    fun a => operator_fiber_finite m hm (board m a).val
+  have hf : Finite (RootFamily m z) := Finite.of_equiv _ (rootFiberEquiv m z)
+  refine ⟨hf, ?_⟩
+  rw [← Nat.card_congr (rootFiberEquiv m z), Nat.card_sigma, Nat.cast_sum]
+  exact Finset.sum_congr rfl (fun a _ => lOperator_count m hm (board m a).val)
 
 /-- All registered lengths accommodate the actual ordered l-data, with a leading
     zero. This holds for arbitrary nonsingleton inputs and for the empty board. -/

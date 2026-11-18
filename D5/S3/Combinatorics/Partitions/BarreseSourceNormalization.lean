@@ -98,7 +98,8 @@ abbrev LFiber (m : ℕ) (c : List ℕ) :=
   {b : PositiveColumns // (∀ x ∈ c, 0 < x) ∧
     ∀ p : ℕ, columnLevel m b p = c.reverse.getD p 0}
 
-private def sourceShapeEquiv (m : ℕ) (c : List ℕ) (hc : ∀ x ∈ c, 0 < x) :
+/-- Positive source level data and the existing unrestricted Young-diagram fiber. -/
+def sourceShapeEquiv (m : ℕ) (c : List ℕ) (hc : ∀ x ∈ c, 0 < x) :
     LFiber m c ≃ ShapeFiber m c.reverse :=
   normalizedColumnsEquiv.symm.subtypeEquiv (fun b => by
     constructor
