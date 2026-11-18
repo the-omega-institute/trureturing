@@ -5,9 +5,7 @@ year: 2024
 title: On a conjecture related to the geometric mean and norm inequalities
 doi: 10.7153/mia-2024-27-15
 url: https://files.ele-math.com/articles/mia-27-15.pdf
-claim: >-
-  Conjecture 2 compares sums of powers of weighted geometric means with a mixed power of the
-  aggregate inputs in every unitarily invariant norm.
+claim: Conjecture 2 bounds sums of weighted geometric-mean powers in all unitarily invariant norms.
 strata_touched:
   - D5/S3/Quantum/Matrix/FreewanHayajnehConjectureRefutation
 license: citation-only
