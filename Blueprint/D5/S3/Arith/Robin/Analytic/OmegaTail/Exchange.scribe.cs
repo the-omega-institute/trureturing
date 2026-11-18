@@ -33,6 +33,17 @@ internal sealed class ExchangeDocument : IScribeDocumentDefinition
                         "The Lower lemmas recover the prime support from the product, recover each bin choice, and identify the number of distinct factors with the support cardinality. Therefore the number of outputs equals the product over bins of both binomial coefficients. " +
                         "The statement allows an empty index type, zero choices, and choices filling a bin."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fixed-grid-outputs"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_outputs"),
+                H("Exact signed grid output family"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a strictly increasing grid starting at zero, take the paired donor and recipient bins with positive centre and scale. " +
+                    "The base must consist of primes at most the centre and contain every donor bin. " +
+                    "Its log sum is at most the centre minus the reserve, and the sum of the exchange cost bounds must fit strictly within that reserve. " +
+                    "The family has cardinality equal to the product of both binomial coefficients over all bins. " +
+                    "Every output is positive and squarefree, has exactly the number of distinct prime factors of the base, and is strictly below the exponential of the centre."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fixed-grid-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_bound"),
                 H("Finite count on the exponential grid"),
