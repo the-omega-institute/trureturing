@@ -18,5 +18,23 @@ internal sealed class LogisticGridDocument : IScribeDocumentDefinition
                     Paragraph(Text("The cost is at most twice the integral of u*q(u) on [0,U] plus twice delta times the integral of q. The deficit of the grid entropy from twice the integral of f lies between zero and 2*delta*(log(2)-f(U)), which is at most 2*delta*log(2).")),
                     Paragraph(Text("For a point u in a bin, the right-endpoint occupancy is at most q(u) and the right endpoint is at most u+delta. The entropy rectangles are ordered by monotonicity on the nonnegative axis. The error in each bin is bounded by delta times the drop of f across that bin. Summing cancels the intermediate endpoint values.")),
                     Paragraph(Text("The two sums use the cost and entropy inputs of the fixed-grid exchange argument. Their finite-interval bounds allow the integrated cost and missing entropy tail to be estimated before the prime-counting limit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("right-endpoint-explicit-bounds"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTail/LogisticGrid.rightEndpoint_explicit_bounds"),
+                H("Explicit cost and entropy estimates"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For the same finite grid, put A = pi squared divided by six. The cost is at most A + 2*delta*log(2). The entropy is at least 2*A - 2*(U+2)*exp(-U) - 2*delta*log(2).")),
+                    Paragraph(Text("The Fermi Mellin integral gives total occupancy log(2) and first moment A/2. Binary entropy is the sum of the first-moment integrand and log(1+exp(-u)). Integration by parts gives the latter term the same total mass A/2. The entropy integrand is bounded by (1+u)*exp(-u) on the nonnegative axis, so the missing entropy integral from U onward is at most (U+2)*exp(-U)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("exists-uniform-right-endpoint-grid"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTail/LogisticGrid.exists_uniform_rightEndpoint_grid"),
+                H("A fixed uniform grid meeting both tolerances"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every eta > 0 and rho > 0, there exist U at least one and a positive integer m. The uniform grid with endpoints i*U/m has cost at most A*(1+eta/2) and entropy at least 2*A-rho.")),
+                    Paragraph(Text("Choose U large enough for the exponential tail and then choose m large enough for both mesh errors. This supplies the cost input and the entropy input of the lower bound for the second omega threshold and for each fixed higher threshold. Both grid parameters are fixed before the prime-counting limit."))),
                 DescribeRole.Theorem))));
 }
