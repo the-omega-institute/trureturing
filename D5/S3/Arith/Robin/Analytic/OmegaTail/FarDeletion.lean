@@ -152,41 +152,29 @@ theorem centered_reserve :
     dsimp only [safeReserve]
     field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne'] <;> ring
 
-/-- There is a far deletion of the required size. Every such deletion has the same retained
-cardinality and satisfies the stated log budget. -/
-theorem far_deletion :
-    ∀ᶠ P : ℝ in atTop,
-      (∀ p : ℕ, p ∈ primeInterval (P / 2) (3 / 4 * P) ↔
-        P / 2 < (p : ℝ) ∧ (p : ℝ) ≤ 3 / 4 * P ∧ p.Prime) ∧
-      (∃ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = deletionCount P) ∧
-      ∀ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = deletionCount P →
-        (Nat.primesLE ⌊P⌋₊ \ R).card = centeredCount P ∧
-          (∑ p ∈ Nat.primesLE ⌊P⌋₊ \ R, log (p : ℝ)) ≤ P - safeReserve P := by
-  have hcap : Tendsto
-      (fun P : ℝ => ((primeInterval (P / 2) (3 / 4 * P)).card : ℝ) / (P / log P))
-      atTop (𝓝 (1 / 4)) := by
-    have h := (primeInterval_capacity (a := 1 / 2) (b := 3 / 4)
-      (by norm_num) (by norm_num)).comp tendsto_exp_atTop
-    rw [show (3 / 4 : ℝ) - 1 / 2 = 1 / 4 by norm_num] at h
-    simpa only [Function.comp_def, scale, log_exp, div_eq_mul_inv, one_mul,
-      mul_comm (2 : ℝ)⁻¹] using h
-  obtain ⟨hE, _, hcast, _⟩ := centered_reserve
-  have hinv : Tendsto (fun P : ℝ => 1 / log P) atTop (𝓝 0) :=
-    tendsto_log_atTop.const_div_atTop 1
-  have hexcess : Tendsto (fun P : ℝ => (deletionCount P : ℝ) / (P / log P))
-      atTop (𝓝 0) := by
-    have h := hE.mul (hinv.pow 2)
-    norm_num at h
-    apply h.congr'
-    filter_upwards [eventually_gt_atTop (1 : ℝ), hcast] with P hP hcastP
-    rw [hcastP.2]
-    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne'] <;> ring
-  filter_upwards [hexcess.eventually_lt hcap (by norm_num), hcast,
-    eventually_gt_atTop (1 : ℝ)] with P hfit hcastP hP
+/-- The exact capacity constant for the far prime window. -/
+theorem far_window_capacity : Tendsto
+    (fun P : ℝ => ((primeInterval (P / 2) (3 / 4 * P)).card : ℝ) / (P / log P))
+    atTop (𝓝 (1 / 4)) := by
+  have h := (primeInterval_capacity (a := 1 / 2) (b := 3 / 4)
+    (by norm_num) (by norm_num)).comp tendsto_exp_atTop
+  rw [show (3 / 4 : ℝ) - 1 / 2 = 1 / 4 by norm_num] at h
+  simpa only [Function.comp_def, scale, log_exp, div_eq_mul_inv, one_mul,
+    mul_comm (2 : ℝ)⁻¹] using h
+
+/-- Any feasible deletion count can be realized inside the far window. Every selection
+leaves the prescribed cardinality and pays at least the lower endpoint per deleted prime. -/
+theorem far_deletion_of_card_le {P : ℝ} {k : ℕ} (hP : 1 < P)
+    (hk : k ≤ Nat.primeCounting ⌊P⌋₊)
+    (hroom : Nat.primeCounting ⌊P⌋₊ - k ≤ (primeInterval (P / 2) (3 / 4 * P)).card) :
+    (∀ p : ℕ, p ∈ primeInterval (P / 2) (3 / 4 * P) ↔
+      P / 2 < (p : ℝ) ∧ (p : ℝ) ≤ 3 / 4 * P ∧ p.Prime) ∧
+    (∃ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = Nat.primeCounting ⌊P⌋₊ - k) ∧
+    ∀ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = Nat.primeCounting ⌊P⌋₊ - k →
+      (Nat.primesLE ⌊P⌋₊ \ R).card = k ∧
+        (∑ p ∈ Nat.primesLE ⌊P⌋₊ \ R, log (p : ℝ)) ≤
+          P - (P - Chebyshev.theta P + (primeCount P - k) * log (P / 2)) := by
   have hPpos : 0 < P := by linarith
-  have hscale : 0 < P / log P := div_pos hPpos (log_pos hP)
-  have hroom : deletionCount P ≤ (primeInterval (P / 2) (3 / 4 * P)).card := by
-    exact_mod_cast ((div_lt_div_iff_of_pos_right hscale).mp hfit).le
   have hmem (p : ℕ) : p ∈ primeInterval (P / 2) (3 / 4 * P) ↔
       P / 2 < (p : ℝ) ∧ (p : ℝ) ≤ 3 / 4 * P ∧ p.Prime := by
     simp only [primeInterval, Finset.mem_filter, Finset.mem_Ioc, and_assoc]
@@ -198,22 +186,53 @@ theorem far_deletion :
     intro p hp
     obtain ⟨_, hhi, hprime⟩ := (hmem p).mp (hR hp)
     exact Nat.mem_primesLE.mpr ⟨Nat.le_floor (by linarith), hprime⟩
-  have hk : centeredCount P ≤ Nat.primeCounting ⌊P⌋₊ := by
-    have h : (centeredCount P : ℝ) ≤ (Nat.primeCounting ⌊P⌋₊ : ℝ) :=
-      sub_nonneg.mp hcastP.1
-    exact_mod_cast h
   constructor
   · rw [Finset.card_sdiff_of_subset hsub, Nat.primesLE_card_eq_primeCounting, hcard,
-      deletionCount, Nat.sub_sub_self hk]
-  · have hremoved : primeExcess P * log (P / 2) ≤ ∑ p ∈ R, log (p : ℝ) := by
-      rw [← hcastP.2, ← hcard]
+      Nat.sub_sub_self hk]
+  · have hcast : ((Nat.primeCounting ⌊P⌋₊ - k : ℕ) : ℝ) = primeCount P - k :=
+      Nat.cast_sub hk
+    have hremoved : (primeCount P - k) * log (P / 2) ≤ ∑ p ∈ R, log (p : ℝ) := by
+      rw [← hcast, ← hcard]
       calc
         _ = ∑ _p ∈ R, log (P / 2) := by rw [Finset.sum_const, nsmul_eq_mul]
         _ ≤ _ := Finset.sum_le_sum fun p hp =>
           log_le_log (by positivity) ((hmem p).mp (hR hp)).1.le
     have hsplit := Finset.sum_sdiff hsub (f := fun p : ℕ => log (p : ℝ))
     rw [← Chebyshev.theta_eq_sum_primesLE] at hsplit
-    unfold safeReserve
     linarith
+
+/-- There is a far deletion of the required size. Every such deletion has the same retained
+cardinality and satisfies the stated log budget. -/
+theorem far_deletion :
+    ∀ᶠ P : ℝ in atTop,
+      (∀ p : ℕ, p ∈ primeInterval (P / 2) (3 / 4 * P) ↔
+        P / 2 < (p : ℝ) ∧ (p : ℝ) ≤ 3 / 4 * P ∧ p.Prime) ∧
+      (∃ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = deletionCount P) ∧
+      ∀ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = deletionCount P →
+        (Nat.primesLE ⌊P⌋₊ \ R).card = centeredCount P ∧
+          (∑ p ∈ Nat.primesLE ⌊P⌋₊ \ R, log (p : ℝ)) ≤ P - safeReserve P := by
+  obtain ⟨hE, _, hcast, _⟩ := centered_reserve
+  have hinv : Tendsto (fun P : ℝ => 1 / log P) atTop (𝓝 0) :=
+    tendsto_log_atTop.const_div_atTop 1
+  have hexcess : Tendsto (fun P : ℝ => (deletionCount P : ℝ) / (P / log P))
+      atTop (𝓝 0) := by
+    have h := hE.mul (hinv.pow 2)
+    norm_num at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ), hcast] with P hP hcastP
+    rw [hcastP.2]
+    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne'] <;> ring
+  filter_upwards [hexcess.eventually_lt far_window_capacity (by norm_num), hcast,
+    eventually_gt_atTop (1 : ℝ)] with P hfit hcastP hP
+  have hPpos : 0 < P := by linarith
+  have hscale : 0 < P / log P := div_pos hPpos (log_pos hP)
+  have hroom : deletionCount P ≤ (primeInterval (P / 2) (3 / 4 * P)).card := by
+    exact_mod_cast ((div_lt_div_iff_of_pos_right hscale).mp hfit).le
+  have hk : centeredCount P ≤ Nat.primeCounting ⌊P⌋₊ := by
+    have h : (centeredCount P : ℝ) ≤ (Nat.primeCounting ⌊P⌋₊ : ℝ) :=
+      sub_nonneg.mp hcastP.1
+    exact_mod_cast h
+  simpa only [deletionCount, safeReserve, primeExcess] using
+    far_deletion_of_card_le hP hk hroom
 
 end D5.S3.Arith.Robin.Analytic.OmegaTail.FarDeletion

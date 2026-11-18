@@ -37,6 +37,18 @@ internal sealed class FarDeletionDocument : IScribeDocumentDefinition
                         + "The floor error is bounded on the same scale. The theta error divided by P/l^2 "
                         + "tends to zero, and log(P/2)/l tends to one."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("far-window-capacity"),
+                DeclarationHandle.Create(Prefix + "far_window_capacity"), H("Far window capacity"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The number of primes in (P/2, 3P/4] divided by P/log(P) tends to 1/4."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("far-deletion-of-card-le"),
+                DeclarationHandle.Create(Prefix + "far_deletion_of_card_le"), H("Uniform budget for feasible deletions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If the window can accommodate the difference between the prime count and a prescribed cardinality, "
+                    + "choose a subset of precisely that size. Every such subset leaves the prescribed cardinality. "
+                    + "Each deleted prime pays at least log(P/2) toward the logarithmic reserve."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("far-deletion"),
                 DeclarationHandle.Create(Prefix + "far_deletion"), H("Existence and uniform log budget"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
