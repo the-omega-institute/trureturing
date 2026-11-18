@@ -6,7 +6,7 @@
    utility: none
    digest: The actual binary flag map and vertex-switching quotient. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodCertificates
+import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.LinearAlgebra.Dimension.Constructions
@@ -14,6 +14,8 @@ import Mathlib.LinearAlgebra.Dimension.DivisionRing
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Basic.ExistsUnique
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.ReduceModChar
 

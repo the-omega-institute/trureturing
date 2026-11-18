@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodParameters
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodCertificates
+import D5.S3.Combinatorics.Graph.StarForming.HeawoodIncidence
 
 /-! Actual finite Pappus and Heawood certificates from the exact received Sahbi
 source revision 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0.

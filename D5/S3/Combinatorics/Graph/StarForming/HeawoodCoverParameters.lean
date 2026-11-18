@@ -4,16 +4,18 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
-   digest: Exact SF and the connected/disconnected beta dichotomy for Heawood double lifts. -/
+   digest: Exact SF for all Heawood double lifts and exact beta for disconnected lifts. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodActions
+import D5.S3.Combinatorics.Graph.StarForming.HeawoodLift
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodParameters
-import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodCoverDensity
+import D5.S3.Combinatorics.Graph.StarForming.CoverDensity
+import D5.S3.Combinatorics.Graph.StarForming.DisjointUnion
 
 /-! The whole two-sheet theorem of HEAWOOD_DOUBLE_COVER_GAIN, at
 subquorum-colorings 48728b42d39ab3de5de251c61da5a404ec418a69,
 Apache-2.0. The binary and cyclic labels are related by an explicit graph
-isomorphism. Original six fifteen-sets are transported as actual selections. -/
+isomorphism. The conclusions here concern SF for all signings and beta for
+disconnected lifts. -/
 
 namespace D5.S3.Combinatorics.Graph.StarForming.HeawoodCoverParameters
 open StarFormingDissociationRefutation HeawoodSwitching HeawoodLift
@@ -64,25 +66,6 @@ theorem sf_all (s : Signing) : SF (graph s) 2=16 := by
 def pack : (Fin 14 × F2) ≃ Fin 28 :=
   ((Equiv.refl (Fin 14)).prodCongr (ZMod.finEquiv 2).symm.toEquiv).trans finProdFinEquiv
 
-private theorem six_adjacency : ∀ k : Fin 6, ∀ x y : Fin 14 × F2,
-    HeawoodCertificates.adjacency (HeawoodCertificates.sixTwists k) (pack x) (pack y) ↔
-      (base.Adj x.1 y.1 ∧ x.2+y.2=HeawoodActions.representative k (edgeIndex x.1 y.1)) := by
-  decide +kernel
-
-/-- The six supplier graphs are exactly the six binary voltage graphs. -/
-def sixIso (k : Fin 6) : graph (HeawoodActions.representative k) ≃g
-    HeawoodCertificates.sixGraph k where
-  toEquiv := pack
-  map_rel_iff' := by intro x y; exact six_adjacency k x y
-
-/-- Connected binary Heawood lifts have beta fifteen or sixteen. -/
-theorem connected_beta (s : Signing) (hs : (graph s).Preconnected) :
-    15 ≤ beta (graph s) 2 ∧ beta (graph s) 2 ≤ 16 := by
-  obtain ⟨k,⟨e⟩⟩ := HeawoodActions.six_isomorphism s ((HeawoodLift.preconnected_iff s).mp hs)
-  have h := Isomorphism.parameters (e.trans (sixIso k))
-  rw [h.1]
-  exact HeawoodCertificates.six_beta_bounds k
-
 private def zeroEquiv : (Fin 14 × F2) ≃ (Fin 14 ⊕ Fin 14) where
   toFun x := if x.2=0 then .inl x.1 else .inr x.1
   invFun x := match x with | .inl v => (v,0) | .inr v => (v,1)
@@ -109,21 +92,5 @@ theorem disconnected_beta (s : Signing) (hs : ¬ (graph s).Preconnected) :
   have h := (Isomorphism.parameters (e.trans zeroIso)).1
   rw [beta_sum,base_parameters.1] at h
   exact h
-
-/-- The complete two-sheet dichotomy uses actual connectedness and finite maxima. -/
-theorem parameters (s : Signing) :
-    SF (graph s) 2=16 ∧
-    (beta (graph s) 2=14 ↔ ¬ (graph s).Preconnected) ∧
-    ((graph s).Preconnected →
-      (beta (graph s) 2=15 ∨ beta (graph s) 2=16) ∧ SF (graph s) 2-beta (graph s) 2≤1) := by
-  classical
-  refine ⟨sf_all s,⟨?_,disconnected_beta s⟩,?_⟩
-  · intro hb hc
-    have h := (connected_beta s hc).1
-    omega
-  · intro hc
-    have hb := connected_beta s hc
-    rw [sf_all]
-    omega
 
 end D5.S3.Combinatorics.Graph.StarForming.HeawoodCoverParameters
