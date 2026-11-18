@@ -102,7 +102,31 @@ As the real cutoff P tends to infinity, e(P)/(P/l^3) tends to 2. On P > 1 the ro
 
 Subtract the first two terms of the frozen prime-counting expansion and divide by P/l^3. The fourth term and the normalized remainder tend to zero. The floor error is bounded on the same scale. The theta error divided by P/l^2 tends to zero, and log(P/2)/l tends to one.
 
-**Theorem 1.9 (Existence and uniform log budget).**
+**Theorem 1.9 (Far window capacity).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_window_capacity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_window_capacity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The number of primes in (P/2, 3P/4] divided by P/log(P) tends to 1/4.
+
+**Theorem 1.10 (Uniform budget for feasible deletions).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_deletion_of_card_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_deletion_of_card_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If the window can accommodate the difference between the prime count and a prescribed cardinality, choose a subset of precisely that size. Every such subset leaves the prescribed cardinality. Each deleted prime pays at least log(P/2) toward the logarithmic reserve.
+
+**Theorem 1.11 (Existence and uniform log budget).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_deletion`
 
@@ -124,6 +148,8 @@ On the common scale P/l the window capacity tends to 1/4 and the deletion count 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.continuousReserve`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.deletionCount`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_deletion`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_deletion_of_card_le`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_window_capacity`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.primeExcess`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.roundedReserve`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.safeReserve`
