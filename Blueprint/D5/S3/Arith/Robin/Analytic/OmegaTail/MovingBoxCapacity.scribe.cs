@@ -61,9 +61,11 @@ internal sealed class MovingBoxCapacityDocument : IScribeDocumentDefinition
             Seq(Abs(Sub(Seq(Theta, Open, t, Close), t)), Leq, Sp, e)));
         var integral = Seq(Int, Underscore, Grp(y), Caret, Grp(z),
             Div(D(1), Ln(t)), Thin, F.Id("d"), Sp, t);
-        return Disp(All("y", All("z", All("E", Implies(
-            And(Seq(D(2), Leq, Sp, y), And(Seq(y, Leq, Sp, z), Seq(Open, error, Close))),
-            Seq(Abs(Sub(Call("primeIntervalCard", y, z), integral)), Leq, Sp, Div(Seq(D(2), e), Ln(y)))))));
+        var assumptions = And(Seq(D(2), Leq, Sp, y),
+            And(Seq(y, Leq, Sp, z), Seq(Open, error, Close)));
+        var bound = Seq(Abs(Sub(Call("primeIntervalCard", y, z), integral)),
+            Leq, Sp, Div(Seq(D(2), e), Ln(y)));
+        return Disp(All("y", All("z", All("E", Implies(assumptions, bound)))));
     }
 
     private static Formula Capacity()
