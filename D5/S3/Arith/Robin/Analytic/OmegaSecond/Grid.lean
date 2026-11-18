@@ -81,7 +81,7 @@ private lemma fermi_real_one : IntegrableOn logistic (Ioi 0) ∧
         ((u : ℂ) ^ ((1 : ℂ) - 1) / ((exp (1 * u) : ℂ) + 1)).re := by
       exact integral_congr_ae (Eventually.of_forall (fun u => (hp u).symm))
     _ = _ := integral_re hi
-    _ = log 2 := by rw [he]; norm_num
+    _ = log 2 := by rw [he]; simp only [Complex.ofReal_one, div_one, Complex.ofReal_re]
 
 private lemma fermi_real_two : IntegrableOn (fun u => u * logistic u) (Ioi 0) ∧
     (∫ u in Ioi (0 : ℝ), u * logistic u) = π ^ 2 / 12 := by
@@ -103,7 +103,7 @@ private lemma fermi_real_two : IntegrableOn (fun u => u * logistic u) (Ioi 0) �
     _ = π ^ 2 / 12 := by
       rw [he, show Complex.Gamma 2 = 1 by simpa using Complex.Gamma_nat_eq_factorial 1,
         riemannZeta_two, show (1 : ℂ) - 2 = -1 by norm_num, Complex.cpow_neg_one]
-      norm_num [Complex.div_re, Complex.mul_re]
+      norm_num [Complex.div_re, Complex.mul_re, ← Complex.ofReal_pow]
       <;> ring
 
 private lemma exp_integrable : IntegrableOn (fun u : ℝ => exp (-u)) (Ioi 0) := by
@@ -129,7 +129,7 @@ private lemma mul_fermiLog_limit : Tendsto (fun u : ℝ => u * fermiLog u) atTop
 private lemma integral_fermiLog : (∫ u in Ioi (0 : ℝ), fermiLog u) = π ^ 2 / 12 := by
   have hd (u : ℝ) : HasDerivAt (fun v => v * fermiLog v)
       (fermiLog u - u * logistic u) u := by
-    convert (hasDerivAt_id u).mul (fermiLog_deriv u) using 1 <;> dsimp <;> ring
+    convert (hasDerivAt_id u).mul (fermiLog_deriv u) using 1 <;> ring
   have h := integral_Ioi_of_hasDerivAt_of_tendsto'
     (fun u _ => hd u) (fermiLog_integrable.sub fermi_real_two.1) mul_fermiLog_limit
   rw [integral_sub fermiLog_integrable fermi_real_two.1, fermi_real_two.2] at h
@@ -157,11 +157,11 @@ private lemma entropy_antitone : AntitoneOn entropy (Ici 0) := by
   · exact ⟨(logistic_range v).1.le, by
       have h := logistic_antitone hv
       norm_num [logistic] at h
-      exact h⟩
+      simpa only [logistic, one_div] using h⟩
   · exact ⟨(logistic_range u).1.le, by
       have h := logistic_antitone hu
       norm_num [logistic] at h
-      exact h⟩
+      simpa only [logistic, one_div] using h⟩
   · exact logistic_antitone huv
 
 private lemma envelope_integrable :
@@ -170,7 +170,10 @@ private lemma envelope_integrable :
     have h := GammaIntegral_convergent (s := 2) (by norm_num)
     norm_num at h
     simpa only [mul_comm] using h
-  simpa only [Pi.add_apply, add_mul, one_mul] using exp_integrable.add h
+  apply (exp_integrable.add h).congr
+  filter_upwards with u
+  change exp (-u) + u * exp (-u) = (1 + u) * exp (-u)
+  ring
 
 private lemma envelope_tail {U : ℝ} (hU : 0 ≤ U) :
     (∫ u in Ioi U, (1 + u) * exp (-u)) = (U + 2) * exp (-U) := by
@@ -182,7 +185,7 @@ private lemma envelope_tail {U : ℝ} (hU : 0 ≤ U) :
   have hd (u : ℝ) : HasDerivAt (fun v : ℝ => -(v + 2) * exp (-v))
       ((1 + u) * exp (-u)) u := by
     convert (((hasDerivAt_id u).add_const 2).neg).mul ((hasDerivAt_id u).neg.exp) using 1
-    <;> dsimp <;> ring
+    all_goals first | (funext v; dsimp; ring) | ring
   have h := integral_Ioi_of_hasDerivAt_of_tendsto' (fun u _ => hd u) hi hl
   convert h using 1 <;> ring
 
@@ -214,16 +217,16 @@ def Mesh.cost (G : Mesh) : ℝ :=
 def Mesh.mass (G : Mesh) : ℝ :=
   2 * ∑ i ∈ Finset.range G.n, G.step * entropy (G.node (i + 1))
 
-private lemma step_pos (G : Mesh) : 0 < G.step := by
+lemma step_pos (G : Mesh) : 0 < G.step := by
   exact div_pos G.U_pos (by exact_mod_cast G.n_pos)
 private lemma node_nonneg (G : Mesh) (i : ℕ) : 0 ≤ G.node i := by
   exact mul_nonneg (Nat.cast_nonneg i) (step_pos G).le
-private lemma node_step (G : Mesh) (i : ℕ) : G.node (i+1) - G.node i = G.step := by
+lemma node_step (G : Mesh) (i : ℕ) : G.node (i+1) - G.node i = G.step := by
   simp [Mesh.node, Nat.cast_add, Nat.cast_one]; ring
-private lemma node_end (G : Mesh) : G.node G.n = G.U := by
+lemma node_end (G : Mesh) : G.node G.n = G.U := by
   dsimp [Mesh.node, Mesh.step]
   exact mul_div_cancel₀ _ (by exact_mod_cast G.n_pos.ne')
-private lemma node_zero (G : Mesh) : G.node 0 = 0 := by simp [Mesh.node]
+lemma node_zero (G : Mesh) : G.node 0 = 0 := by simp [Mesh.node]
 
 private lemma cell_cost (G : Mesh) (i : ℕ) :
     G.step * G.node (i+1) * logistic (G.node (i+1)) ≤
@@ -231,8 +234,9 @@ private lemma cell_cost (G : Mesh) (i : ℕ) :
       G.step * ∫ u in G.node i..G.node (i+1), logistic u := by
   have hab : G.node i ≤ G.node (i+1) := by linarith [step_pos G, node_step G i]
   have hq := logistic_continuous.intervalIntegrable (μ := volume) (G.node i) (G.node (i+1))
-  have huq := (continuous_id.mul logistic_continuous).intervalIntegrable
-    (μ := volume) (G.node i) (G.node (i+1))
+  have huq : IntervalIntegrable (fun u : ℝ => u * logistic u) volume
+      (G.node i) (G.node (i+1)) :=
+    (continuous_id.mul logistic_continuous).intervalIntegrable (μ := volume) _ _
   have h : (∫ _ in G.node i..G.node (i+1),
       G.node (i+1) * logistic (G.node (i+1))) ≤
       ∫ u in G.node i..G.node (i+1), u * logistic u + G.step * logistic u := by
@@ -300,11 +304,15 @@ theorem grid_bounds (G : Mesh) :
   · have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.range G.n) => cell_entropy G i)
     rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
       Finset.sum_range_sub', node_zero, node_end, hf] at h
-    have hfU := binEntropy_nonneg (logistic_range G.U).1.le (logistic_range G.U).2.le
-    have h0 : entropy 0 = log 2 := by simp [entropy, logistic]
+    have hfU : 0 ≤ entropy G.U :=
+      binEntropy_nonneg (logistic_range G.U).1.le (logistic_range G.U).2.le
+    have h0 : entropy 0 = log 2 := by
+      rw [entropy, logistic, exp_zero, show (1 : ℝ) + 1 = 2 by norm_num]
+      exact binEntropy_two_inv
     rw [h0] at h
     have ht := entropy_truncated G.U_pos.le
     dsimp [Mesh.mass]
+    rw [← Finset.mul_sum]
     nlinarith [mul_nonneg (step_pos G).le hfU]
 
 /-- A fixed grid achieves any prescribed positive cost slack and entropy loss. -/
