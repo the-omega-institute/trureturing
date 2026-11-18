@@ -118,17 +118,69 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResol
 
 The actual_left_mixed statement is verified on its displayed full domain and consumed by the original Gaussian source calculation.
 
+**Theorem 1.10 (choose_bound).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.choose_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.choose_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural p and complex a with norm(a)<=p+1, and every natural s, norm(choose(a,s)) is at most Nat.choose(p+s,s).
+
+**Theorem 1.11 (externalColumn_bound).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalColumn_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalColumn_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either sign, natural p and nonnegative rho, every complex z with norm(z)<=rho and every natural n, norm of the original externalColumn is bounded by (p+1)^p (n+1)^(p+1) rho^(n+1).
+
+**Theorem 1.12 (external_double_summable).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.external_double_summable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.external_double_summable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all signed input and output modes, every complex z in the unit disk and every bounded operator on the actual carrier, the coordinate double contraction with the two original external columns is norm summable.
+
+**Theorem 1.13 (external_bilinear_expansion).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.external_bilinear_expansion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.external_bilinear_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all signed external modes, complex z in the unit disk and every bounded carrier operator, the ordinary bilinear contraction of the two actual vectors equals its coordinate double series.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.actual_left_mixed`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.choose_bound`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalBinomial`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalColumn`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalColumn_bound`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalColumn_l1`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalCutoff_control`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalJ`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalT`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.externalVector_apply`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.external_bilinear_expansion`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.external_contractions_explicit`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalResolvent.external_double_summable`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing](FiniteGaussianSewing.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent](OriginalGaussianAllIndexResolvent.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalSourceInverseCoefficient](OriginalSourceInverseCoefficient.md)

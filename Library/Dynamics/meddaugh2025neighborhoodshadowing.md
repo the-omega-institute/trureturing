@@ -5,10 +5,11 @@ year: 2025
 title: Shadowing with small diameter sets of bounded cardinality
 doi: null
 url: https://arxiv.org/abs/2509.04312v1
-claim: Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type; Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
+claim: Questions 5.1 and 5.2 ask for strict finite neighborhood-shadowing levels; Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type; Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
 strata_touched:
   - D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances
   - D5/S1/Dynamics/Shadowing/ProgressionExample
+  - D5/S1/Dynamics/Shadowing/LacunaryShadowingHierarchy
 license: citation-only
 triage: anchor
 ---
@@ -77,6 +78,35 @@ are attributed to the supplied completed Pro proposal. Native implementation
 and its verification are separate from its isolated ordinary mathematical
 review. The current arXiv metadata lookup returns v1; no exhaustive
 literature novelty or priority exclusion is claimed.
+
+## Every positive finite neighborhood level
+
+Questions 5.1 and 5.2 ask which N admit neighborhood (N+1)-shadowing
+without neighborhood N-shadowing, for systems and for subshifts. The
+primary text explicitly says its authors had not found three-but-not-two.
+
+`LacunaryShadowingHierarchy.lacunary_shadowing_hierarchy` gives every
+positive finite level. For m=N+2, its binary two-sided subshift X_m
+requires at most two ones in each m-term progression of step (m+1)^k.
+It is compact, nonempty and invariant under the continuous invertible
+shift. The upper bound uses m-1 explicit periodic masks with a common
+initial window and a complete future-window cover; all long progression
+phases reduce to one regular m-gon. The lower bound forces all tracers
+to retain the initial one and each to cover at most one later target.
+The exact original fixed-set, initial-diameter and natural-time contract
+is retained, using the existing compatible product metric.
+
+The construction is attributed to the supplied Pro proposal, with native
+Lean implementation by Codex. The complete endpoint has passed a scoped
+Lean build. Its [problem entry](../../Problems/meddaugh-stephens-2025-neighborhood-shadowing-hierarchy.md)
+retains the source questions, construction and limits.
+
+An independent bounded followup read Baylor's November 6, 2026
+[dissertation-defense announcement](https://math.artsandsciences.baylor.edu/news/story/2026/two-mathematics-phd-students-successfully-defend-dissertations)
+for Ellie Stephens, *Local Variations of Shadowing*, advised by Jonathan
+Meddaugh. The announcement discusses neighborhood shadowing but states no
+hierarchy theorem, and the full dissertation was inaccessible. Priority
+relative to that dissertation remains unverified.
 
 ## Literature boundary
 

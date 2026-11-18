@@ -24,9 +24,9 @@ abbrev Letter := Fin 3
 /-- The fourth substitution iterate, used as the renormalized substitution. -/
 def tau (a : Letter) : List Letter := image sigma 4 a
 
-private theorem tau_A : tau 0 = [0,1,0,2,0,1,0,0,1,0,2,0,1] := by decide
-private theorem tau_B : tau 1 = [0,1,0,2,0,1,0,0,1,0,2] := by decide
-private theorem tau_C : tau 2 = [0,1,0,2,0,1,0] := by decide
+theorem tau_A : tau 0 = [0,1,0,2,0,1,0,0,1,0,2,0,1] := by decide
+theorem tau_B : tau 1 = [0,1,0,2,0,1,0,0,1,0,2] := by decide
+theorem tau_C : tau 2 = [0,1,0,2,0,1,0] := by decide
 
 def weight (a : Letter) : ℤ := if a = 0 then 2 else if a = 1 then 1 else 0
 
@@ -55,7 +55,7 @@ def a (n : ℕ) : ℤ := signedWordSum (image sigma (4*n) 0)
 def b (n : ℕ) : ℤ := signedWordSum (image sigma (4*n) 1)
 def c (n : ℕ) : ℤ := signedWordSum (image sigma (4*n) 2)
 
-private theorem four_odd (n : ℕ) (x : Letter) : Odd (image sigma (4*n) x).length := by
+theorem four_odd (n : ℕ) (x : Letter) : Odd (image sigma (4*n) x).length := by
   rw [Nat.odd_iff]
   exact D5.S1.Words.TribonacciAlignedWindows.four_parity n x
 
@@ -78,7 +78,7 @@ private theorem abc_step (n : ℕ) :
   norm_num
   constructor <;> ring_nf
 
-private theorem abc_closed (n : ℕ) :
+theorem abc_closed (n : ℕ) :
     a n = 2 ∧ b n = 2 - (-1 : ℤ)^n ∧ c n = 2 - (2*(n:ℤ)+2)*(-1 : ℤ)^n := by
   induction n with
   | zero => exact abc_zero
@@ -179,7 +179,7 @@ private theorem prefixCharge_step (n : ℕ) : prefixCharge (n+1) = c (n+1) - pre
   rw [signedWordSum_append_odd _ _ (four_odd (n+1) 2)]
   rfl
 
-private theorem prefixCharge_closed (n : ℕ) :
+theorem prefixCharge_closed (n : ℕ) :
     prefixCharge n = 1 - (-1 : ℤ)^n * ((n:ℤ)^2 + 3*(n:ℤ) + 1) := by
   induction n with
   | zero => simp [prefixCharge, prefixWord]
@@ -189,7 +189,7 @@ private theorem prefixCharge_closed (n : ℕ) :
     push_cast
     ring
 
-private theorem prefixWord_actual (n : ℕ) :
+theorem prefixWord_actual (n : ℕ) :
     factor W 0 (prefixLength n) = prefixWord n := by
   exact MBonacciSentinelDesubstitution.factor_of_prefix (by omega : 2 ≤ 3)
     (k := 4*n) (s := prefixWord n) (prefixWord_prefix n)

@@ -7,6 +7,7 @@ doi: 10.1007/s11139-026-01408-3
 url: https://arxiv.org/abs/2511.02106v1
 claim: "Equations (3)–(4) define exactly the increment source b_s and total moment U(s)=c(s). The κ-Robin criterion concerns a different LCM-power σ^[κ]; the pinned version has an extra e^γ in its introductory Lagarias formulas that is absent from section 7."
 strata_touched:
+  - D5/S3/Arith/Robin/Analytic/RobinExceptionCount
   - D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion
   - D5/S3/Arith/Robin/Analytic/LcmPowerEndpointRH
 license: citation-only
