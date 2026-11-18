@@ -9,7 +9,6 @@ variation, sensitivity and dependence remain open under issue #31456. -/
 
 namespace Reg.D5.S3.Arith.Lattices.CofactorKernel
 
-universe u
 
 abbrev det_topRow_scope.{u} :=
   type_of% (@_root_.D5.S3.Arith.Lattices.CofactorKernel.det_topRow.{u})

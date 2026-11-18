@@ -10,7 +10,6 @@ sensitivity and observational dependence remain open under issue #31456. -/
 
 namespace Reg.D5.S3.Arith.CharacterSums.PascadiRankFourFactor
 
-universe u
 
 abbrev rank_four_root_relevant_factor_scope.{u} :=
   type_of% (@_root_.D5.S3.Arith.CharacterSums.PrimeCube.rank_four_root_relevant_factor.{u})
