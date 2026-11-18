@@ -30,7 +30,19 @@ Let the donor bins be pairwise disjoint subsets of a finite prime base. Let the 
 
 The product of the resulting prime support is positive, squarefree, below x, and has exactly as many distinct prime factors as the base. The donor choice is the part of its bin missing from the support. The recipient choice is the intersection of its bin with the support. The Lower lemmas recover the prime support from the product, recover each bin choice, and identify the number of distinct factors with the support cardinality. Therefore the number of outputs equals the product over bins of both binomial coefficients. The statement allows an empty index type, zero choices, and choices filling a bin.
 
-**Theorem 1.3 (Finite count on the exponential grid).**
+**Theorem 1.3 (Exact signed grid output family).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_outputs`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_outputs` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a strictly increasing grid starting at zero, take the paired donor and recipient bins with positive centre and scale. The base must consist of primes at most the centre and contain every donor bin. Its log sum is at most the centre minus the reserve, and the sum of the exchange cost bounds must fit strictly within that reserve. The family has cardinality equal to the product of both binomial coefficients over all bins. Every output is positive and squarefree, has exactly the number of distinct prime factors of the base, and is strictly below the exponential of the centre.
+
+**Theorem 1.4 (Finite count on the exponential grid).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_bound`
 
@@ -44,7 +56,7 @@ Fix a strictly increasing grid t starting at zero and positive real parameters P
 
 The signed exchange gives a lower bound on the literal distinct-prime tail at exp(P), equal to the product of the two binomial coefficients for each bin. The exponential endpoints provide the donor lower and recipient upper log bounds, and the common log(P) cancels within each pair.
 
-**Theorem 1.4 (Actual fixed-grid family and its entropy).**
+**Theorem 1.5 (Actual fixed-grid family and its entropy).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower`
 
@@ -66,6 +78,7 @@ The two log binomial coefficients in each bin contribute 2 delta(i) H(q(i)) on s
 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_bound`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_outputs`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.pairedOutputs`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.paired_exchange`
 - Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTail/Entropy](Entropy.md)
