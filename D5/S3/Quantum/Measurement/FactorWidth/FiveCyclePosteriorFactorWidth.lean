@@ -11,6 +11,7 @@ admission_basis: escape-witness
 escape_witness: grouped_integer_gram gives a signed cyclic Gram identity whose nonedge terms cancel.
 The width-three construction consumes this identity after rescaling the vectors.
 proof_shape: cycle_moment_width_exactly_three: content
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31522
 -/
 
 import D5.S3.Quantum.Measurement.FactorWidthTwoCone
