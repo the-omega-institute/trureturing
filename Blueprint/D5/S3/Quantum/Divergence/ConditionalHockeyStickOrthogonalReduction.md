@@ -30,19 +30,7 @@ Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduct
 
 For a finite carrier, positive semidefiniteness and complex trace one imply nonemptiness. The faithful input and output states supply the local nonemptiness needed for positivity of their partial traces.
 
-**Theorem 1.3 (Trace under reindexing).**
-
-Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Reindexing an arbitrary complex square matrix along a finite equivalence preserves its complex trace. The faithful BKM path uses this to transport traces back from Fin coordinates.
-
-**Theorem 1.4 (Real homogeneity of the amplification).**
+**Theorem 1.3 (Real homogeneity of the amplification).**
 
 Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_smul`
 
@@ -54,7 +42,7 @@ Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduct
 
 For a finite channel, arbitrary joint X and real t, amplification sends t times X to t times the amplified X. The lower bound and the residual transport use this identity.
 
-**Theorem 1.5 (Amplification of an affine difference).**
+**Theorem 1.4 (Amplification of an affine difference).**
 
 Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_sub_smul`
 
@@ -66,7 +54,7 @@ Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduct
 
 For a finite channel, arbitrary joint X,Y and real t, amplification sends X minus t times Y to the corresponding difference of their images. The output residual and affine path use this law.
 
-**Theorem 1.6 (Partial trace of an affine difference).**
+**Theorem 1.5 (Partial trace of an affine difference).**
 
 Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.ptr_sub_smul`
 
@@ -78,7 +66,7 @@ Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduct
 
 For arbitrary finite joint X,Y and real t, ordinary partial trace sends X minus t times Y to the corresponding difference of their partial traces. The endpoint kernel test and faithful path use this law.
 
-**Theorem 1.7 (Positive semidefinite dependent block matrices).**
+**Theorem 1.6 (Positive semidefinite dependent block matrices).**
 
 $$\forall (iota: \operatorname{Type}), [\operatorname{Fintype}\left(iota\right)] [\operatorname{DecidableEq}\left(iota\right)] \forall (kappa: iota \to \operatorname{Type}), [\forall (i: iota), \operatorname{Fintype}\left(kappa\left(i\right)\right)] [\forall (i: iota), \operatorname{DecidableEq}\left(kappa\left(i\right)\right)] \forall (M: \forall (i: iota), \operatorname{Matrix}\left(kappa\left(i\right), kappa\left(i\right), \mathbb{C}\right)), (\forall (i: iota), \operatorname{Matrix.PosSemidef}\left(M\left(i\right)\right)) \Rightarrow (\operatorname{Matrix.PosSemidef}\left(\operatorname{Matrix.blockDiagonal}'\left(M\right)\right))$$
 
@@ -90,7 +78,7 @@ $$\forall (iota: \operatorname{Type}), [\operatorname{Fintype}\left(iota\right)]
 
 For every finite family of finite square complex matrices, positivity of every block implies positivity of Matrix.blockDiagonal'. Each block may have its own index type, including an empty one.
 
-**Theorem 1.8 (Scalar multiplication commutes with the right partial trace).**
+**Theorem 1.7 (Scalar multiplication commutes with the right partial trace).**
 
 $$\forall (S: \operatorname{Type}), \forall (R: \operatorname{Type}), \forall (A: \operatorname{Type}), [\operatorname{DistribSMul}\left(S, \mathbb{C}\right)] [\operatorname{Fintype}\left(A\right)] \forall (c: S), \forall (X: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), \operatorname{PartialTraceMutualInformation.partialTraceRight}\left(c \cdot (X)\right) = c \cdot (\operatorname{PartialTraceMutualInformation.partialTraceRight}\left(X\right))$$
 
@@ -102,7 +90,7 @@ $$\forall (S: \operatorname{Type}), \forall (R: \operatorname{Type}), \forall (A
 
 PartialTraceMutualInformation.partialTraceRight sums the diagonal A coordinate and retains R. Any scalar action on C distributing over addition commutes with this finite sum. Neither finiteness of R nor decidable equality on R is assumed.
 
-**Definition 1.9 (Trace of the positive part).**
+**Definition 1.8 (Trace of the positive part).**
 
 $$\forall (n: \operatorname{Type}), [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall (X: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.posTrace}\left(X\right) = \operatorname{RHLinalg.rtrace}\left(X^{+}\right)$$
 
@@ -116,7 +104,7 @@ $$\forall (n: \operatorname{Type}), [\operatorname{Fintype}\left(n\right)] [\ope
 
 posTrace(X) is the real trace of the CFC positive part X+. For Hermitian X this is the sum of its positive eigenvalues, with multiplicity. The definition itself accepts every square matrix.
 
-**Definition 1.10 (Hockey-stick divergence).**
+**Definition 1.9 (Hockey-stick divergence).**
 
 $$\forall (n: \operatorname{Type}), [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall (gamma: \mathbb{R}), \forall (rho: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \forall (sigma: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.E}\left(gamma, rho, sigma\right) = \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.posTrace}\left(rho - gamma \cdot (sigma)\right)$$
 
@@ -130,7 +118,7 @@ $$\forall (n: \operatorname{Type}), [\operatorname{Fintype}\left(n\right)] [\ope
 
 For density matrices rho and sigma, E_gamma(rho||sigma) is Tr(rho - gamma sigma)+, the hockey-stick divergence of Eq. (5.1). The matrix definition permits every real gamma and every pair of square matrices; positivity and normalization enter the ratio set.
 
-**Definition 1.11 (Reference amplification of a quantum channel).**
+**Definition 1.10 (Reference amplification of a quantum channel).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\operatorname{DecidableEq}\left(R\right)] \forall (N: \operatorname{FiniteStateChannel.QuantumChannel}\left(A, B\right)), \forall (X: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.amp}\left(N, X\right) = \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{FiniteDiamondDistance.referenceLinear}\left(N, \operatorname{CStarMatrix.ofMatrix}\left(X\right)\right)\right)$$
 
@@ -144,7 +132,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 amp(N,X) is (id_R tensor N)(X). CStarMatrix.ofMatrix converts ordinary matrices to the C*-matrix coordinates of FiniteDiamondDistance.referenceLinear, and its inverse returns the output matrix on R times B. Every reference block is acted on by the same channel N.
 
-**Definition 1.12 (The channel action in ordinary matrix coordinates).**
+**Definition 1.11 (The channel action in ordinary matrix coordinates).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (N: \operatorname{FiniteStateChannel.QuantumChannel}\left(A, B\right)), \forall (X: \operatorname{Matrix}\left(A, A, \mathbb{C}\right)), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.act}\left(N, X\right) = \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap}\left(N, \operatorname{CStarMatrix.ofMatrix}\left(X\right)\right)\right)$$
 
@@ -156,7 +144,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 act(N,X) converts X to CStarMatrix coordinates, applies the channel's completely positive map, and converts back. It accepts every complex matrix, without a positivity or normalization hypothesis. FaithfulConditionalGap uses this original action directly.
 
-**Theorem 1.13 (Every reference block receives the original channel action).**
+**Theorem 1.12 (Every reference block receives the original channel action).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\operatorname{DecidableEq}\left(R\right)] \forall (N: \operatorname{FiniteStateChannel.QuantumChannel}\left(A, B\right)), \forall (X: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), \forall (r: R), \forall (s: R), \forall (b: B), \forall (d: B), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.amp}\left(N, X\right)\left((r,b), (s,d)\right) = \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.act}\left(N, \lambda a aPrime \mapsto X\left((r,a), (s,aPrime)\right)\right)\left(b, d\right)$$
 
@@ -168,7 +156,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 For every finite A, B and R, every channel N, every matrix X, all reference indices r,s and output indices b,d, the amplified entry is the channel action on the corresponding A block. This includes off-diagonal reference blocks. The existing identity is consumed by FaithfulConditionalGap.
 
-**Theorem 1.14 (Amplification preserves the reference partial trace).**
+**Theorem 1.13 (Amplification preserves the reference partial trace).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\operatorname{DecidableEq}\left(R\right)] \forall (N: \operatorname{FiniteStateChannel.QuantumChannel}\left(A, B\right)), \forall (X: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), \operatorname{PartialTraceMutualInformation.partialTraceRight}\left(\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.amp}\left(N, X\right)\right) = \operatorname{PartialTraceMutualInformation.partialTraceRight}\left(X\right)$$
 
@@ -180,7 +168,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 For every finite A, B and R, every channel N and every complex matrix X on R times A, tracing out B after amplification equals tracing out A before amplification. No state hypothesis is needed. The public definition ptr in the Lean statement is precisely PartialTraceMutualInformation.partialTraceRight. FaithfulConditionalGap consumes this existing trace-preservation identity.
 
-**Definition 1.15 (Conditional hockey-stick gap).**
+**Definition 1.14 (Conditional hockey-stick gap).**
 
 $$\forall (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\operatorname{DecidableEq}\left(R\right)] \forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (gamma: \mathbb{R}), \forall (rho: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), \forall (sigma: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.gap}\left(gamma, rho, sigma\right) = \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.E}\left(gamma, rho, sigma\right) - \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.E}\left(gamma, \operatorname{PartialTraceMutualInformation.partialTraceRight}\left(rho\right), \operatorname{PartialTraceMutualInformation.partialTraceRight}\left(sigma\right)\right)$$
 
@@ -194,7 +182,7 @@ $$\forall (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\ope
 
 The conditional gap is E_gamma(rho||sigma) minus E_gamma(rho_R||sigma_R), where both reference marginals are taken by PartialTraceMutualInformation.partialTraceRight. Trace preservation makes the reference marginals of the amplified outputs equal the input reference marginals.
 
-**Definition 1.16 (Ratios over all finite reference systems).**
+**Definition 1.15 (Ratios over all finite reference systems).**
 
 $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (N: \operatorname{FiniteStateChannel.QuantumChannel}\left(A, B\right)), \forall (gamma: \mathbb{R}), \forall (orth: \operatorname{Bool}), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.ratios}\left(N, gamma, orth\right) = \{(x: \mathbb{R}) \mid \exists (R: \operatorname{Type}), [\operatorname{Fintype}\left(R\right)] [\operatorname{DecidableEq}\left(R\right)] \exists (rho: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), \exists (sigma: \operatorname{Matrix}\left(R \times A, R \times A, \mathbb{C}\right)), (\operatorname{Matrix.PosSemidef}\left(rho\right)) \land ((\operatorname{Matrix.trace}\left(rho\right) = 1) \land ((\operatorname{Matrix.PosSemidef}\left(sigma\right)) \land ((\operatorname{Matrix.trace}\left(sigma\right) = 1) \land (((orth = \operatorname{true}) \Rightarrow (rho \cdot sigma = 0)) \land ((0 < \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.gap}\left(gamma, rho, sigma\right)) \land (x = \frac{\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.gap}\left(gamma, \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.amp}\left(N, rho\right), \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.amp}\left(N, sigma\right)\right)}{\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.gap}\left(gamma, rho, sigma\right)}))))))\}$$
 
@@ -208,7 +196,7 @@ $$\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\ope
 
 The set ranges over every finite reference type R and every pair of positive semidefinite trace-one matrices on R times A. Its denominator is strictly positive as required by Remark 2; all quantities are finite real numbers in finite dimension. The choice orth=true adds rho sigma=0, giving the orthogonal subset; orth=false imposes no extra condition. The numerator is the conditional output gap, so these are the ratios in Eq. (2.14). The existential brackets choose the finite-type structures for each reference type.
 
-**Definition 1.17 (Orthogonal reduction and independence of the parameter).**
+**Definition 1.16 (Orthogonal reduction and independence of the parameter).**
 
 $$(\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.claim}) \Leftrightarrow (\forall (A: \operatorname{Type}), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] \forall (B: \operatorname{Type}), [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (N: \operatorname{FiniteStateChannel.QuantumChannel}\left(A, B\right)), (\forall (gamma: \mathbb{R}), (1 \le gamma) \Rightarrow (\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.ratios}\left(N, gamma, \operatorname{false}\right) = \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.ratios}\left(N, gamma, \operatorname{true}\right))) \land (\forall (gamma: \mathbb{R}), \forall (delta: \mathbb{R}), (1 \le gamma) \Rightarrow ((1 \le delta) \Rightarrow (\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.ratios}\left(N, gamma, \operatorname{false}\right) = \operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.ratios}\left(N, delta, \operatorname{false}\right)))))$$
 
@@ -222,7 +210,7 @@ $$(\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduct
 
 Section 9 asks whether the hockey-stick contraction coefficient can be optimized over orthogonal states, extending the trace-distance conclusion of Proposition 8. Here the conditional coefficient is considered: equality holds for the full sets of attainable ratios, and the second conjunct strengthens monotonicity to independence of gamma for gamma at least one. Equality of the sets gives equality of their suprema, including the source's zero convention when no positive denominator exists.
 
-**Theorem 1.18 (Orthogonal states attain exactly the same ratios).**
+**Theorem 1.17 (Orthogonal states attain exactly the same ratios).**
 
 $$\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.claim}$$
 
@@ -243,6 +231,18 @@ Given density matrices rho and sigma and a positive target parameter delta, writ
 Choose a pure density matrix tau on A and enlarge the reference to R direct-sum C direct-sum C. The two C summands are one-dimensional reference spaces, represented by singleton index types. After distributing the tensor product, set rho' = cP direct-sum a tau direct-sum 0 and sigma' = (c/delta)Q direct-sum 0 direct-sum (b/delta)tau. They are orthogonal density matrices, and their difference rho' - delta sigma' is cH direct-sum a tau direct-sum (-b tau).
 
 Positive-part traces add across the three blocks. Both the reference amplification and the partial trace respect the three blocks. Consequently the input divergence, output divergence and reference-marginal divergence each become c times their original value plus a. Subtracting the marginal term cancels a, so both conditional gaps are multiplied by the same positive c. The denominator stays positive and the ratio is unchanged. Taking delta=gamma yields the orthogonal reduction; transferring in both directions between any gamma,delta at least one yields parameter independence. Thus the conditional coefficient equals its trace-distance value throughout this range.
+
+**Theorem 1.18 (Simultaneous reindexing preserves the trace).**
+
+Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary finite types n and m, an equivalence e from n to m, and any square complex matrix X on n, the complex trace of Matrix.reindex e e X is the complex trace of X. The statement requires only the two Fintype instances and includes empty types. The identity supplies the trace step for orthogonal reduction and for coordinate changes in UmegakiFaithfulLowerRatio and the faithful conditional BKM path.
 
 ## References
 
