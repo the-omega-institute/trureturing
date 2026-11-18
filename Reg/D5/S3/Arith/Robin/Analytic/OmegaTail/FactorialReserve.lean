@@ -7,8 +7,8 @@ import Reg.Support.SingleDependentReadout
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-open Filter Real LeanInformationAudit
-open scoped Topology
+open Filter Real Finset LeanInformationAudit
+open scoped Topology BigOperators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Robin.Analytic.OmegaTail.FactorialReserve
 open _root_.D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel (primeInterval)
@@ -143,5 +143,81 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end Rounded
+
+namespace RetainedProduct
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
+    (fun _ => ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law O := ∀ (r : ℕ), 2 ≤ r → ∀ᶠ P : ℝ in atTop,
+    (∃ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = deletionCount r P) ∧
+    ∀ R ⊆ primeInterval (P / 2) (3 / 4 * P), R.card = deletionCount r P →
+      (∀ p ∈ R, P / 2 < (p : ℝ) ∧ (p : ℝ) ≤ 3 / 4 * P ∧ p.Prime) ∧
+      ∃ S : Finset ℕ, S = Nat.primesLE ⌊P⌋₊ \ R ∧ S.card = cutoff r P ∧
+        (∀ p ∈ S, p.Prime ∧ (p : ℝ) ≤ P) ∧
+        (Nat.primesLE ⌊P⌋₊ \ primeInterval (P / 2) (3 / 4 * P)) ⊆ S ∧
+        O.readout () () (log (∏ p ∈ S, (p : ℝ))) (P - safeReserve r P)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨P, ⟨R, hR, hcard⟩, hbudget⟩ := (h 2 (by decide)).exists
+  obtain ⟨_, S, _, _, _, _, hfalse⟩ := hbudget R hR hcard
+  exact hfalse
+
+def family : Registration arena (type_of% @factorial_far_deletion) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@factorial_far_deletion, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (0 : ℝ), 1, ?_⟩
+    intro he
+    have h : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) le_rfl
+    norm_num at h
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@factorial_far_deletion) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaTail.FactorialReserve.factorial_far_deletion.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.FactorialReserve.RetainedProduct.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaTail.FactorialReserve
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "body", "arg", "body", "body", "body", "arg", "arg", "body", "arg", "arg", "arg", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end RetainedProduct
 
 end Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.FactorialReserve
