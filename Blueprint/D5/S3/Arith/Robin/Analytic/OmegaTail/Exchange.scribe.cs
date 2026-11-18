@@ -51,9 +51,10 @@ internal sealed class ExchangeDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The quantitative prime-counting expansion gives both moving bin sizes asymptotic to W times delta(i). " +
                         "Delete exactly primeCount(P) minus k(P) primes from the interval (P/2, 3P/4], where k(P) is floor(T_2(exp(P)))+1. " +
-                        "There are eventually enough primes in that interval and it lies below every donor bin. " +
-                        "The remaining base has size k(P) and log sum at most P minus the safe reserve from Lemma 7.3. " +
-                        "The reserve is P minus theta(P) plus the number of deletions times log(P/2). Its ratio to W/s tends to (pi^2/6)(1+eta)^2.")),
+                        "The far deletion theorem supplies a deletion of that size and gives every such retained base size k(P) and log sum at most P minus the safe reserve. " +
+                        "The window lies eventually below every donor bin, so all donors survive. " +
+                        "The centered reserve theorem gives the limit 2 after normalizing the safe reserve by P/log(P)^2. " +
+                        "Normalizing by W/s gives the limit (pi^2/6)(1+eta)^2.")),
                     Paragraph(Text(
                         "Take h(i) to be the floor of q(i) times the smaller of the two bin sizes. Its ratio to W tends to delta(i) q(i). " +
                         "The finite grid bound applies eventually by strict normalized slack. The two log binomial coefficients in each bin contribute " +
