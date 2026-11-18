@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchin
 
 *Commentary.*
 
-For every natural N, unweighted simple graph G on Fin N with decidable adjacency, and natural k with 2k at most matchingNumber G, matchingCount G k is at most matchingCount G (matchingNumber G−k). A maximum matching exists by the native count definition. Each exact fiber contributes a nonnegative complementary difference, by binomial symmetry and monotonicity. The theorem includes zero and the middle coefficient.
+For every natural N, unweighted simple graph G on Fin N and natural k with 2k at most matchingNumber G, matchingCount G k is at most matchingCount G (matchingNumber G−k). A maximum matching exists by the native count definition. Each exact fiber contributes a nonnegative complementary difference, by binomial symmetry and monotonicity. The theorem includes zero and the middle coefficient.
 
 **Theorem 1.8 (Uniform positive complementary gap).**
 
@@ -100,11 +100,23 @@ Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matchin
 
 *Commentary.*
 
-For every natural N and unweighted simple graph G on Fin N, put n=matchingNumber G and assume n is at least three. Either m(k)=m(n−k) for every k from zero through n, or, simultaneously for every k with 1≤k and 2k<n, the integer d=choose(n−3,k−1)−b is positive and m(k)+d≤m(n−k), where b=choose(n−3,k−2) when k≥2 and b=0 otherwise. The zero guard is essential at k=1. The proof shows that any defect has a one-edge witness touching one Q-edge or a two-edge witness touching two or three Q-edges. If every singleton and disjoint pair is balanced, the touched-edge sets are disjoint and all fibers are palindromic. Each possible small defect contributes at least d; every other fiber contributes a nonnegative gap. This is a universal graph theorem. The attaining family P6 plus n−3 independent edges has not yet been formalized here.
+For every natural N and unweighted simple graph G on Fin N, put n=matchingNumber G and assume n is at least three. Either m(k)=m(n−k) for every k from zero through n, or, simultaneously for every k with 1≤k and 2k<n, the integer d=choose(n−3,k−1)−b is positive and m(k)+d≤m(n−k), where b=choose(n−3,k−2) when k≥2 and b=0 otherwise. The zero guard is essential at k=1. The proof shows that any defect has a one-edge witness touching one Q-edge or a two-edge witness touching two or three Q-edges. If every singleton and disjoint pair is balanced, the touched-edge sets are disjoint and all fibers are palindromic. Each possible small defect contributes at least d; every other fiber contributes a nonnegative gap. This is a universal graph theorem. The attaining family is supplied by sharp_gap_attained.
+
+**Theorem 1.9 (One graph attains all gaps).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.sharp_gap_attained`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.sharp_gap_attained` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural r, there exists an unweighted simple graph G on Fin(2(r+3)) with matchingNumber G=r+3, such that for every k with 1≤k and 2k<r+3, m(r+3−k)=m(k)+choose(r,k−1)−b, where b=choose(r,k−2) if k≥2 and b=0 otherwise. This single graph simultaneously attains all the bounds. It has matching edges joining 2i to 2i+1 for i<r+3 and the additional edges {1,2} and {3,4}; hence it is P6 together with r independent edges. Its outside matchings are exactly the empty set, either added edge, and their pair. The resulting coefficient formula is choose(r+3,k)+2 choose(r+1,k−1)+choose(r,k−2), with out-of-range terms zero. The original matchingCount and matchingNumber are used throughout; no graph-order cutoff is assumed for the universal bound.
 
 The exact source Problem 4.7 was reread in the fixed-version text. Repository and pinned Mathlib searches found the native count bridge and binomial suppliers, but no matching partition or sharp rigidity theorem in the searched scope. Crossref metadata identifies Farrell's 1992 paper On the theory of matching equivalent graphs and rook equivalent chessboards, DOI 10.1016/0016-0032(92)90095-X. Its primary text and the Kennedy primary text have not been verified here. No novelty or priority claim is made.
 
-The four-slot escape audit remains unfinished under issue #31461. The dependent-family enrollment requires complete reconstruction of the varying graph, matching and count telescope, an exact readout bridge, whole-family variation and sensitivity, and actual observational dependence. Those audit data are not supplied by the combinatorial proof. No declared_validated registration is claimed.
+The four-slot escape audit remains unfinished under issue #31461. The dependent-family enrollment requires complete reconstruction of the varying graph, matching and count telescope, an exact readout bridge, whole-family variation and sensitivity, and actual observational dependence for all seven public theorems, including sharp_gap_attained. Those audit data are not supplied by the combinatorial proof. No declared_validated registration is claimed.
 
 ## References
 
@@ -115,5 +127,6 @@ The four-slot escape audit remains unfinished under issue #31461. The dependent-
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.matching_fiber_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.maximum_outside_bounds`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.outsideMatchings`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.sharp_gap_attained`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Polynomials/MatchingPartition.untouched`
 - Dependency: [D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching](../ComponentPacking/FactorCriticalMatching.md)
