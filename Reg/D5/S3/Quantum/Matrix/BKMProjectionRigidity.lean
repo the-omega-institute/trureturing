@@ -6,6 +6,7 @@ import D5.S3.Quantum.Matrix.BKMProjectionRigidity
 
 open LeanInformationAudit Matrix
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Quantum.Matrix.BKMLogarithmicMeanInverse (inverse_identities)
 open _root_.D5.S3.Quantum.Matrix.BKMProjectionRigidity
 open _root_.D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction (omega)
 open scoped MatrixOrder ComplexOrder Matrix.Norms.L2Operator CStarAlgebra
@@ -173,4 +174,139 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+namespace Power
+
+abbrev signature : Signature :=
+  Reg.Support.UniverseSingleReadout.signature
+    (Σ n : Type u, Σ _ : Fintype n, Σ _ : DecidableEq n, Mat n)
+    (fun p => Mat p.1) (fun p => Mat p.1)
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p X => by
+    letI := p.2.1
+    letI := p.2.2.1
+    exact omega p.2.2.2 X) (fun e => nomatch e)
+
+def zero : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro _
+  refine ⟨⟨I, inferInstance, inferInstance, D⟩, 0, 1, ?_⟩
+  exact fun h => zero_ne_one ((inverse_identities (D : Mat I) Dpos).1.injective h)
+
+
+namespace CommutingDirection
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (D X : Mat n) (_hD : D.PosDef) (_hDX : Commute D X),
+    R.readout () ⟨n, inferInstance, inferInstance, D⟩ X = D * X
+
+private theorem zero_fails : ¬ arena.{u}.Law zero := by
+  intro h
+  have hz := h (1 : Mat I) 1 Matrix.PosDef.one (Commute.refl _)
+  change (0 : Mat I) = 1 * 1 at hz
+  exact zero_ne_one (hz.trans (one_mul _))
+
+
+def family : Registration arena.{u} (type_of% (@omega_of_commute.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@omega_of_commute.{u}, zero, zero_fails⟩
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual zero zero_fails
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@omega_of_commute.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.BKMProjectionRigidity.Power.CommutingDirection.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.BKMProjectionRigidity.Power.CommutingDirection.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.BKMProjectionRigidity
+    definition := none
+    coordinates := #[0, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end CommutingDirection
+
+namespace Positivity
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (D P : Mat n) (_hD : D.PosDef) (_hp : P.IsHermitian) (_hp2 : P * P = P),
+    (R.readout () ⟨n, inferInstance, inferInstance, D⟩ P).PosSemidef ↔ Commute D P
+
+private theorem zero_fails : ¬ arena.{u}.Law zero := by
+  intro h
+  have hz := (h (D : Mat I) P Dpos Pherm Pproj).1 Matrix.PosSemidef.zero
+  apply corner_ne
+  rw [← hz.eq, mul_assoc, Matrix.mul_sub, mul_one, Pproj, sub_self, mul_zero]
+
+
+def family : Registration arena.{u} (type_of% (@omega_projection_posSemidef_iff.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@omega_projection_posSemidef_iff.{u}, zero, zero_fails⟩
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual zero zero_fails
+  dependence := dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@omega_projection_posSemidef_iff.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.BKMProjectionRigidity.Power.Positivity.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.BKMProjectionRigidity.Power.Positivity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.BKMProjectionRigidity
+    definition := none
+    coordinates := #[0, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Positivity
+
+end Power
 end Reg.D5.S3.Quantum.Matrix.BKMProjectionRigidity
