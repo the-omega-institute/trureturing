@@ -127,8 +127,8 @@ theorem result : ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop,
   have he := secondScale_top.const_div_atTop eulerCost
   have hsum := (hb.add he).eventually_lt_const
     (by linarith : π / sqrt 3 + 0 < π / sqrt 3 + ε / 2)
-  have hR := (MovingEstimate.moving_weight_upper hc (by linarith : 0 < ε / 2)).comp_tendsto
-    tendsto_log_atTop
+  have hR := tendsto_log_atTop.eventually
+    (MovingEstimate.moving_weight_upper hc (by linarith : 0 < ε / 2))
   have hcoef : π ^ 2 / (6 * (π / (2 * sqrt 3))) = π / sqrt 3 := by
     have hsqrt := sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
     have hp := pi_pos.ne'

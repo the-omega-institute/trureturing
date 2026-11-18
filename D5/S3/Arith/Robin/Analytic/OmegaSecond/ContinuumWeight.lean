@@ -52,11 +52,11 @@ private lemma left_integral {P s a : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
     intro t ht
     rw [uIcc_of_le haP] at ht
     have ht0 : 0 < t := ha.trans_le ht.1
-    have hd := ((hasDerivAt_id t).mul (leftWeight_deriv hP ht0)).sub
+    have hd := ((hasDerivAt_id t).mul (leftWeight_deriv (s := s) hP ht0)).sub
       ((hasDerivAt_id t).const_mul s)
     convert hd using 1
-    · funext t; ring
-    · dsimp only [kernel, abelKernel]
+    · rfl
+    · dsimp only [kernel, abelKernel, id_eq]
       field_simp [ht0.ne', (by positivity : t ^ s + P ^ s ≠ 0)]
       <;> ring
   have heq : (∫ t in a..P, leftWeight P s t) = ∫ t in a..P, weight P s t := by
@@ -93,8 +93,8 @@ private lemma right_integral {P s b : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
     have ht0 : 0 < t := hP.trans_le ht.1
     have hd := (hasDerivAt_id t).mul (logWeight_deriv (s := s) hPP ht0)
     convert hd using 1
-    · funext t; ring
-    · dsimp only [kernel, abelKernel]
+    · rfl
+    · dsimp only [kernel, abelKernel, id_eq]
       field_simp [ht0.ne', (by positivity : t ^ s + P ^ s ≠ 0)]
       <;> ring
   have heq : (∫ t in P..b, logWeight s (P ^ s) t) = ∫ t in P..b, weight P s t := by
@@ -169,6 +169,7 @@ private lemma kernel_middle_upper {P s : ℝ} (hP : 0 < P) (hs : 1 < s) :
     rw [intervalIntegral.integral_of_le (by positivity : (0 : ℝ) ≤ 2 * P)]
     apply setIntegral_mono_set hki
     · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+      have ht0 : 0 < t := ht
       dsimp only [kernel]
       have hs0 : 0 < s := zero_lt_one.trans hs
       positivity
@@ -213,7 +214,7 @@ theorem central_integral_upper {P s : ℝ} (hP : 0 < P) (hs : 1 < s) :
   have hhead := weight_nonneg P s (P / 2)
   have ht := mul_le_mul_of_nonneg_left htail (by positivity : 0 ≤ 2 * P)
   have hh := mul_nonneg ha.le hhead
-  simp only [div_eq_mul_inv] at hk ⊢
+  simp only [div_eq_mul_inv] at hsplit hksplit hk hh ht ⊢
   nlinarith only [hsplit, hksplit, hk, ht, hh]
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.ContinuumWeight
