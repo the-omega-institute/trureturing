@@ -16,6 +16,7 @@ open Real Filter MeasureTheory Finset
 open scoped Topology BigOperators
 
 namespace D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight
+open D5.S3.Arith.Robin.Analytic.OmegaTailUpper
 
 /-- The localized weight around the moving prime cutoff. -/
 def weight (P s t : ℝ) : ℝ :=
@@ -62,10 +63,82 @@ private lemma logWeight_split {P s t : ℝ} (hP : 0 < P) (ht : 0 < t)
         (sub_nonpos.mpr (log_le_log hP (le_of_not_ge h))))
 
 /-- The moving remainder is nonnegative. -/
-private lemma weight_nonneg (P s t : ℝ) : 0 ≤ weight P s t := by
+theorem weight_nonneg (P s t : ℝ) : 0 ≤ weight P s t := by
   apply log_nonneg
   have := exp_nonneg (-s * |log (t / P)|)
   linarith
+
+/-- The localized peak has height log two, independently of the parameters. -/
+theorem weight_le_log_two {P s t : ℝ} (hs : 0 ≤ s) : weight P s t ≤ log 2 := by
+  apply log_le_log (by positivity : 0 < 1 + exp (-s * |log (t / P)|))
+  have he : exp (-s * |log (t / P)|) ≤ 1 := by
+    rw [← exp_zero]
+    exact exp_le_exp.mpr (by nlinarith [abs_nonneg (log (t / P))])
+  linarith
+
+theorem weight_continuousOn {P s a b : ℝ} (hP : 0 < P) (ha : 0 < a) :
+    ContinuousOn (weight P s) (Set.Icc a b) := by
+  intro t ht
+  have ht0 : 0 < t := ha.trans_le ht.1
+  have hl : ContinuousAt (fun u : ℝ => log (u / P)) t :=
+    (continuousAt_id.div_const P).log (div_pos ht0 hP).ne'
+  have he : ContinuousAt (fun u : ℝ => 1 + exp (-s * |log (u / P)|)) t :=
+    continuousAt_const.add ((hl.abs.const_mul (-s)).rexp)
+  exact (he.log (by positivity)).continuousWithinAt
+
+/-- The smooth extension of the weight on the left of its peak. -/
+def leftWeight (P s t : ℝ) : ℝ :=
+  logWeight s (P ^ s) t - s * (log P - log t)
+
+theorem leftWeight_eq_weight {P s t : ℝ} (hP : 0 < P) (ht : 0 < t)
+    (hs : 0 ≤ s) (htP : t ≤ P) : leftWeight P s t = weight P s t := by
+  have h := logWeight_split hP ht hs
+  rw [if_pos htP] at h
+  dsimp only [leftWeight, logWeight]
+  rw [div_eq_mul_inv, ← rpow_neg ht.le]
+  linarith only [h]
+
+theorem rightWeight_eq_weight {P s t : ℝ} (hP : 0 < P) (ht : 0 < t)
+    (hs : 0 ≤ s) (hPt : P ≤ t) : logWeight s (P ^ s) t = weight P s t := by
+  rcases hPt.eq_or_lt with rfl | hPt
+  · have h := logWeight_split hP hP hs
+    simp only [le_refl, ↓reduceIte, sub_self, mul_zero, zero_add] at h
+    dsimp only [logWeight]
+    rwa [div_eq_mul_inv, ← rpow_neg hP.le]
+  · have h := logWeight_split hP ht hs
+    rw [if_neg hPt.not_ge, zero_add] at h
+    dsimp only [logWeight]
+    rwa [div_eq_mul_inv, ← rpow_neg ht.le]
+
+theorem leftWeight_deriv {P s t : ℝ} (hP : 0 < P) (ht : 0 < t) :
+    HasDerivAt (leftWeight P s)
+      (s / t - abelKernel s (P ^ s) t) t := by
+  have h := (logWeight_deriv (s := s) (rpow_pos_of_pos hP s) ht).sub
+    (((hasDerivAt_const t (log P)).sub (hasDerivAt_log ht.ne')).const_mul s)
+  convert h using 1
+  · rfl
+  · simp only [div_eq_mul_inv]
+    ring
+
+theorem leftWeight_at_cutoff {P s : ℝ} (hP : 0 < P) : leftWeight P s P = log 2 := by
+  dsimp only [leftWeight, logWeight]
+  rw [div_self (rpow_pos_of_pos hP s).ne']
+  norm_num
+
+theorem rightWeight_at_cutoff {P s : ℝ} (hP : 0 < P) :
+    logWeight s (P ^ s) P = log 2 := by
+  dsimp only [logWeight]
+  rw [div_self (rpow_pos_of_pos hP s).ne']
+  norm_num
+
+theorem leftWeight_deriv_nonneg {P s t : ℝ} (hP : 0 < P) (ht : 0 < t)
+    (hs : 0 ≤ s) : 0 ≤ s / t - abelKernel s (P ^ s) t := by
+  have htp : 0 < t ^ s := rpow_pos_of_pos ht s
+  have hPP : 0 < P ^ s := rpow_pos_of_pos hP s
+  dsimp only [abelKernel]
+  apply sub_nonneg.mpr
+  apply (div_le_div_iff₀ (by positivity : 0 < t * (t ^ s + P ^ s)) ht).mpr
+  nlinarith [mul_nonneg hs htp.le]
 
 /-- The localized prime sum is the exact remainder after subtracting the
 prime-counting ramp, with no asymptotic or endpoint error. -/

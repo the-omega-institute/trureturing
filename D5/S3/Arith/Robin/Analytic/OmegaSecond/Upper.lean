@@ -7,6 +7,7 @@
    digest: Rankin reduction at the exact second distinct-prime threshold. -/
 
 import D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight
+import D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingEstimate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -109,5 +110,55 @@ theorem saddle_budget_limit :
     dsimp only [saddle]
     field_simp [(show P ≠ 0 by linarith), hlog.ne', (sqrt_pos.mpr hlog).ne']
     nlinarith [sq_sqrt hlog.le]
+
+private lemma saddle_top : Tendsto saddle atTop atTop := by
+  have hc : 0 < π / (2 * sqrt 3) := by positivity
+  exact (tendsto_const_mul_atTop_of_pos hc).mpr
+    (tendsto_sqrt_atTop.comp tendsto_log_atTop)
+
+/-- At the second threshold the integer count has upper coefficient two pi
+over square root three on the finer logarithmic scale. -/
+theorem result : ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop,
+    (tailCount 1 x : ℝ) ≤
+      exp ((2 * π / sqrt 3 + ε) * log x / (log (log x)) ^ (3 / 2 : ℝ)) := by
+  intro ε hε
+  have hc : 0 < π / (2 * sqrt 3) := by positivity
+  have hb := saddle_budget_limit.comp tendsto_log_atTop
+  have he := secondScale_top.const_div_atTop eulerCost
+  have hsum := (hb.add he).eventually_lt_const
+    (by linarith : π / sqrt 3 + 0 < π / sqrt 3 + ε / 2)
+  have hR := (MovingEstimate.moving_weight_upper hc (by linarith : 0 < ε / 2)).comp_tendsto
+    tendsto_log_atTop
+  have hcoef : π ^ 2 / (6 * (π / (2 * sqrt 3))) = π / sqrt 3 := by
+    have hsqrt := sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+    have hp := pi_pos.ne'
+    have hs := (sqrt_pos.mpr (by norm_num : (0 : ℝ) < 3)).ne'
+    field_simp
+    nlinarith
+  filter_upwards [hsum, hR,
+    (saddle_top.comp tendsto_log_atTop).eventually_ge_atTop 2,
+    eventually_gt_atTop (exp 1)] with x hsum hR hs hx
+  have hx0 : 0 < x := (exp_pos 1).trans hx
+  have hL : 1 < log x := (lt_log_iff_exp_lt hx0).mpr hx
+  have hell : 0 < log (log x) := log_pos hL
+  have hscale : 0 < secondScale x := by dsimp [secondScale]; positivity
+  have hfront : saddle (log x) * budget (log x) + eulerCost ≤
+      (π / sqrt 3 + ε / 2) * secondScale x := by
+    have hsum' : (saddle (log x) * budget (log x) + eulerCost) / secondScale x <
+        π / sqrt 3 + ε / 2 := by
+      simpa only [secondScale, Function.comp_def, ← add_div] using hsum
+    exact ((div_lt_iff₀ hscale).mp hsum').le
+  have hrem : remainder (log x) (saddle (log x)) x ≤
+      (π / sqrt 3 + ε / 2) * secondScale x := by
+    simpa only [saddle, secondScale, hcoef] using hR x
+  refine (rankin_reduction hx hs).trans (exp_le_exp.mpr ?_)
+  have heq : (log (log x)) ^ (3 / 2 : ℝ) =
+      log (log x) * sqrt (log (log x)) := by
+    rw [show (3 / 2 : ℝ) = 1 + 1 / 2 by norm_num, rpow_add hell,
+      rpow_one, ← sqrt_eq_rpow]
+  rw [heq, show (2 * π / sqrt 3 + ε) * log x /
+      (log (log x) * sqrt (log (log x))) =
+      (2 * π / sqrt 3 + ε) * secondScale x by dsimp [secondScale]; ring]
+  linarith only [hfront, hrem]
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper

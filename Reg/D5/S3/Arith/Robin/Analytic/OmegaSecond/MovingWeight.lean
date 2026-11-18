@@ -115,7 +115,7 @@ def family : Registration arena (type_of% @weight_continuousOn) where
     intro he
     have hc : ContinuousOn Real.log Set.univ :=
       Eq.mp (congrFun he Set.univ) continuousOn_const
-    have hc0 : ContinuousAt Real.log (0 : ℝ) := (continuousOn_univ.mp hc) (0 : ℝ)
+    have hc0 : ContinuousAt Real.log (0 : ℝ) := (continuousOn_univ.mp hc).continuousAt
     exact (Real.continuousAt_log_iff.mp hc0) rfl
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

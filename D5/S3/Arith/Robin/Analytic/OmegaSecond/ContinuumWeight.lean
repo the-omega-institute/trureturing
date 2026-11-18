@@ -47,7 +47,8 @@ private lemma left_integral {P s a : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
   have hki := hcontK.intervalIntegrable_of_Icc (μ := volume) haP
   have hFTC : (∫ t in a..P, leftWeight P s t - kernel P s t) =
       (P * leftWeight P s P - s * P) - (a * leftWeight P s a - s * a) := by
-    apply intervalIntegral.integral_eq_sub_of_hasDerivAt _ (hli.sub hki)
+    apply intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (f := fun t => t * leftWeight P s t - s * t) _ (hli.sub hki)
     intro t ht
     rw [uIcc_of_le haP] at ht
     have ht0 : 0 < t := ha.trans_le ht.1
@@ -85,11 +86,12 @@ private lemma right_integral {P s b : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
   have hki := hcontK.intervalIntegrable_of_Icc (μ := volume) hPb
   have hFTC : (∫ t in P..b, logWeight s (P ^ s) t - kernel P s t) =
       b * logWeight s (P ^ s) b - P * logWeight s (P ^ s) P := by
-    apply intervalIntegral.integral_eq_sub_of_hasDerivAt _ (hri.sub hki)
+    apply intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (f := fun t => t * logWeight s (P ^ s) t) _ (hri.sub hki)
     intro t ht
     rw [uIcc_of_le hPb] at ht
     have ht0 : 0 < t := hP.trans_le ht.1
-    have hd := (hasDerivAt_id t).mul (logWeight_deriv hPP ht0)
+    have hd := (hasDerivAt_id t).mul (logWeight_deriv (s := s) hPP ht0)
     convert hd using 1
     · funext t; ring
     · dsimp only [kernel, abelKernel]
@@ -168,6 +170,7 @@ private lemma kernel_middle_upper {P s : ℝ} (hP : 0 < P) (hs : 1 < s) :
     apply setIntegral_mono_set hki
     · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
       dsimp only [kernel]
+      have hs0 : 0 < s := zero_lt_one.trans hs
       positivity
     · exact Eventually.of_forall (fun t ht => ht.1)
   have heval := (power_kernel_integral hs (rpow_pos_of_pos hP s)).2
@@ -201,14 +204,16 @@ theorem central_integral_upper {P s : ℝ} (hP : 0 < P) (hs : 1 < s) :
     dsimp only [logWeight]
     have hpow : P ^ s / (2 * P) ^ s = (2 : ℝ) ^ (-s) := by
       rw [mul_rpow (by norm_num : (0 : ℝ) ≤ 2) hP.le,
-        div_mul_eq_div_div, div_self (rpow_pos_of_pos hP s).ne', one_div,
-        ← rpow_neg (by norm_num : (0 : ℝ) ≤ 2)]
+        rpow_neg (by norm_num : (0 : ℝ) ≤ 2)]
+      field_simp [(rpow_pos_of_pos hP s).ne', (rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) s).ne']
     rw [hpow]
     have h := log_le_sub_one_of_pos (by positivity : 0 < 1 + (2 : ℝ) ^ (-s))
     linarith
   have hk := kernel_middle_upper hP hs
   have hhead := weight_nonneg P s (P / 2)
   have ht := mul_le_mul_of_nonneg_left htail (by positivity : 0 ≤ 2 * P)
-  nlinarith only [hsplit, hksplit, hk, hhead, ht, mul_nonneg ha.le hhead]
+  have hh := mul_nonneg ha.le hhead
+  simp only [div_eq_mul_inv] at hk ⊢
+  nlinarith only [hsplit, hksplit, hk, ht, hh]
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.ContinuumWeight

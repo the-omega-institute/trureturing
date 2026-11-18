@@ -535,7 +535,7 @@ lemma abelKernel_continuousOn {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a) :
   have ht0 := ha.trans_le ht.1
   exact mul_ne_zero ht0.ne' (add_pos (rpow_pos_of_pos ht0 _) hz).ne'
 
-lemma finite_prime_abel {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a)
+private lemma finite_prime_abel {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a)
     (hab : a ≤ b) :
     (∑ p ∈ (Ioc ⌊a⌋₊ ⌊b⌋₊).filter Nat.Prime, logWeight s z p) =
       logWeight s z b * (Nat.primeCounting ⌊b⌋₊ : ℝ) -
