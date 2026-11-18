@@ -45,7 +45,7 @@ Remark 2 (p. 9): "The optimization is should be over states such that ∞ > D(ρ
 
 Proposition 8 (p. 40): "For a channel N : A → B, the coefficients ηc_Tr(N) and η∆_Tr(N) are optimized by orthogonal states".
 
-§9 (p. 72): "When considering the hockey-stick divergence, can the optimization in the contraction coefficient be restricted to orthogonal states, similar to Proposition 8? This would directly imply that the associated contraction coefficient is monotone in γ, which in turn would have applications similar to the results in [38]."
+§9 (p. 72): "When considering the hockey-stick divergence, can the optimization in the contraction coefficient be restricted to orthogonal states, similar to Proposition 8? This would directly imply that the associated contraction coefficient is monotone in γ, which in turn would have applications similar to the results in [7]."
 
 ## Reading used by the repository
 

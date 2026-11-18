@@ -59,7 +59,7 @@ internal sealed class UmegakiChannelSupportedExtensionDocument : IScribeDocument
                 H("Arithmetic metric coefficient at t"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Take ratios over every finite reference, faithful correlated input bases and complex zero-partial-trace directions of positive input inverse form. Use the actual output variational form and adjoin zero before taking the supremum. The supported Moore–Penrose form is its exact output representation."))),
+                    Paragraph(Text("For t in [0,1], take ratios over every finite reference, faithful correlated input bases and complex zero-partial-trace directions of positive input inverse form. Use the actual output variational form and adjoin zero before taking the supremum. The supported Moore–Penrose form is its exact output representation."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("variationalmetriccoefficient-bounds"),
                 DeclarationHandle.Create(Prefix + "variationalMetricCoefficient_bounds"),

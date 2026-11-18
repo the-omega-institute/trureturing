@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose.variation
 
 *Commentary.*
 
-For a positive semidefinite input base and a complex direction of zero partial trace, a finite input variational form puts the amplified direction in the range of the arithmetic map of the actual amplified base. The output value is its supported Moore–Penrose pairing.
+For t in [0,1], a positive semidefinite input base and a complex direction of zero partial trace, bounded input test values put the amplified direction in the range of the arithmetic map of the actual amplified base. The output value is its supported Moore–Penrose pairing.
 
 **Theorem 1.3 (Metric ratios in Moore–Penrose coordinates).**
 

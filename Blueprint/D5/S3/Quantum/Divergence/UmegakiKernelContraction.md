@@ -296,7 +296,7 @@ For c < 1, take the endpoint reference center X = (PZ) inverse P(Z PhiR(Y)). The
 
 The scalarizer supplies one state and both residual Gram bounds. With p the input inverse form, q the output inverse form, f the uncentered input energy and d = q-f, the two pairings bound q squared by f p and k d p. For q > 0 their combination yields (1+k)q ≤ k p. The proof handles q = 0 before cancellation, includes c = 0, and at c = 1 uses the uncentered bound and d ≥ 0.
 
-This estimate is used on the actual joint-minus-marginal residual in the faithful density-state theorem. The premise still requires a uniform endpoint bound for all references and complex kernel directions. The coefficient equality for all supported pairs and all channels remains open.
+The faithful density-state theorem applies this estimate to the actual joint-minus-marginal residual. Its premise requires a uniform endpoint bound for all references and complex kernel directions. The supported extension applies the faithful theorem to output-regularized channels and proves the coefficient equality for arbitrary finite channels.
 
 ## References
 
