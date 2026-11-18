@@ -31,7 +31,7 @@ internal sealed class WallmanFlammiaTwoContractivityDocument : IScribeDocumentDe
             Node("result", "Unrestricted two-contractivity", Disp(ClaimBody()),
                 "The second moment makes both averaged Gram matrices scalar multiples of the traceless projection. A rectangular factorization bounds the full traceless tensor square, including complex non-Hermitian directions. Choi purity makes the scalar strictly less than one for every nonunitary channel. In trace-adapted coordinates the four diagonal tensor sectors are the scalar identity, two strictly contractive one-copy blocks, and the strictly contractive traceless tensor square. Their characteristic polynomials leave exactly one root on the unit circle. The nonunital entries occupy lower blocks and do not change this factorization.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                null))));
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("wf1404"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, DescribeRole role, AssessedProvenance provenance,
