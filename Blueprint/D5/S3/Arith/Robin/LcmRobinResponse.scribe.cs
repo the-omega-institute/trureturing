@@ -10,6 +10,18 @@ internal sealed class LcmRobinResponseDocument : IScribeDocumentDefinition
         "A negative Mertens response gives a strict Robin violation at the actual prefix lcm.",
         H("Robin response of the actual lcm"),
         Blocks(
+            Describe.Lean(DescribeId.Create("prime-cutoff"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/LcmRobinResponse.primeCutoff"), H("The finite prime cutoff"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cutoff consists of the positive natural primes at most floor(u). It is the exact support of the lcm Euler-tail estimate reused in the quantitative Mertens residual comparison."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("omitted-lcm-factor"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/LcmRobinResponse.tailFactor"), H("The first omitted lcm Euler factor"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a real cutoff u and natural p, tailFactor(u,p)=1/p^(Nat.log(p,floor(u))+1). On the prime cutoff it is the first power omitted by the prefix least common multiple. The quantitative Mertens residual comparison uses this exact exponent."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("lcm-euler-tail-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/LcmRobinResponse.lcm_tail_bound"), H("A square-root bound on the omitted lcm Euler tail"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real u>=10000, the sum over p<=u of -log(1-tailFactor(u,p)) is at most 4/sqrt(u). Splitting primes at sqrt(u) bounds the small-prime factors by 1/u and the large-prime factors by 1/p^2. The quantitative Mertens proof uses the bound to control the complete omitted prime-power residual."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("common-robin-response"),
                 DeclarationHandle.Create(Prefix + "common_robin_response"),

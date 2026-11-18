@@ -430,7 +430,7 @@ theorem phase_plane
     rw [hcomp]
     simp
 
-private theorem cross_pairing {a b : ℕ} (A B : Matrix (Fin a) (Fin b) ℂ)
+theorem cross_pairing {a b : ℕ} (A B : Matrix (Fin a) (Fin b) ℂ)
     (x y : Fin b → ℂ) :
     star x ⬝ᵥ ((Aᴴ * B) *ᵥ y) = star (A *ᵥ x) ⬝ᵥ (B *ᵥ y) := by
   rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec]
