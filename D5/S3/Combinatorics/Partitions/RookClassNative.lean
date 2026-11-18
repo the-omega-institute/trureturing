@@ -49,7 +49,11 @@ def rookCount (m : ℕ) (b : PositiveColumns) (k : ℕ) : ℕ :=
   (placements m b k).card
 
 theorem rookCount_zero (m : ℕ) (b : PositiveColumns) : rookCount m b 0 = 1 := by
-  simp [rookCount, placements, Nonattacking]
+  classical
+  have h : Nonattacking m ∅ := by simp [Nonattacking]
+  rw [rookCount, placements, Finset.powersetCard_zero,
+    Finset.filter_singleton]
+  simp [h]
 
 theorem rookCount_one (m : ℕ) (b : PositiveColumns) : rookCount m b 1 = area b := by
   classical
