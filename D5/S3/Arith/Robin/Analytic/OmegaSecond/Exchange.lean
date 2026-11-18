@@ -109,10 +109,10 @@ private lemma removed_subset (E : ExchangeSystem ι) (h : ι → ℕ) (z : Choic
   obtain ⟨i, _, hi⟩ := mem_biUnion.mp hp
   exact E.neg_subset i ((neg_selection E h z i).1 hi)
 private lemma inserted_disjoint (E : ExchangeSystem ι) (h : ι → ℕ) (z : Choices E h) : Disjoint (inserted E h z) E.base := by
-  apply disjoint_left.mpr
+  apply Finset.disjoint_left.mpr
   intro p hp hb
   obtain ⟨i, _, hi⟩ := mem_biUnion.mp hp
-  exact disjoint_left.mp (E.pos_base i) ((pos_selection E h z i).1 hi) hb
+  exact Finset.disjoint_left.mp (E.pos_base i) ((pos_selection E h z i).1 hi) hb
 private lemma support_prime (E : ExchangeSystem ι) (h : ι → ℕ) (z : Choices E h) : ∀ p ∈ support E h z, Nat.Prime p := by
   intro p hp
   rcases mem_union.mp hp with hp | hp
@@ -133,7 +133,7 @@ private lemma inserted_card (E : ExchangeSystem ι) (h : ι → ℕ) (z : Choice
   exact sum_congr rfl (fun i _ => (pos_selection E h z i).2)
 private lemma support_card (E : ExchangeSystem ι) (h : ι → ℕ) (z : Choices E h) : (support E h z).card = E.base.card := by
   have hd : Disjoint (E.base \ removed E h z) (inserted E h z) := (inserted_disjoint E h z).symm.mono_left sdiff_subset
-  have hc := card_le_card (removed_subset E h z)
+  have hc := Finset.card_le_card (removed_subset E h z)
   rw [support, card_union_of_disjoint hd, card_sdiff_of_subset (removed_subset E h z),
     removed_card, inserted_card]
   rw [removed_card] at hc
@@ -146,11 +146,11 @@ theorem exchange_value_injective (E : ExchangeSystem ι) (h : ι → ℕ) : Func
     ext p
     by_cases hp : p ∈ E.base
     · have hz : p ∉ inserted E h z := fun hh =>
-        disjoint_left.mp (inserted_disjoint E h z) hh hp
+        Finset.disjoint_left.mp (inserted_disjoint E h z) hh hp
       have hw : p ∉ inserted E h w := fun hh =>
-        disjoint_left.mp (inserted_disjoint E h w) hh hp
+        Finset.disjoint_left.mp (inserted_disjoint E h w) hh hp
       have hh := Finset.ext_iff.mp hs p
-      simp only [support, mem_union, Finset.mem_sdiff, hp, true_and, hz, hw, or_false] at hh
+      simp only [support, Finset.mem_union, Finset.mem_sdiff, hp, true_and, hz, hw, or_false] at hh
       exact not_iff_not.mp hh
     · exact iff_of_false (fun hh => hp (removed_subset E h z hh))
         (fun hh => hp (removed_subset E h w hh))
@@ -158,10 +158,10 @@ theorem exchange_value_injective (E : ExchangeSystem ι) (h : ι → ℕ) : Func
     ext p
     by_cases hp : p ∈ E.base
     · exact iff_of_false
-        (fun hh => disjoint_left.mp (inserted_disjoint E h z) hh hp)
-        (fun hh => disjoint_left.mp (inserted_disjoint E h w) hh hp)
+        (fun hh => Finset.disjoint_left.mp (inserted_disjoint E h z) hh hp)
+        (fun hh => Finset.disjoint_left.mp (inserted_disjoint E h w) hh hp)
     · have hh := Finset.ext_iff.mp hs p
-      simpa only [support, mem_union, Finset.mem_sdiff, hp, false_and, false_or] using hh
+      simpa only [support, Finset.mem_union, Finset.mem_sdiff, hp, false_and, false_or] using hh
   apply Prod.ext
   · funext i
     apply Subtype.ext
@@ -817,7 +817,7 @@ private lemma fermi_real_one : IntegrableOn logistic (Ioi 0) ∧ (∫ u in Ioi (
   calc
     (∫ u in Ioi (0 : ℝ), logistic u) = ∫ u in Ioi (0 : ℝ), ((u : ℂ) ^ ((1 : ℂ) - 1) / ((exp (1 * u) : ℂ) + 1)).re := by exact integral_congr_ae (Eventually.of_forall (fun u => (hp u).symm))
     _ = _ := integral_re hi
-    _ = log 2 := by rw [he]; simp only [Complex.ofReal_one, div_one, Complex.ofReal_re]
+    _ = log 2 := by rw [he]; norm_num [Complex.log_re]
 private lemma fermi_real_two : IntegrableOn (fun u => u * logistic u) (Ioi 0) ∧ (∫ u in Ioi (0 : ℝ), u * logistic u) = π ^ 2 / 12 := by
   have hi := D5.S3.Weil.ZetaBridge.FermiMellin.fermi_mellin_integrable 1 (by norm_num) 2 (by norm_num); have he := D5.S3.Weil.ZetaBridge.FermiMellin.fermi_mellin_eq_of_ne_one 1 (by norm_num) 2 (by norm_num) (by norm_num)
   have hp (u : ℝ) : ((u : ℂ) ^ ((2 : ℂ) - 1) / ((exp (1 * u) : ℂ) + 1)).re = u * logistic u := by
@@ -845,7 +845,7 @@ private lemma mul_fermiLog_limit : Tendsto (fun u : ℝ => u * fermiLog u) atTop
   · filter_upwards [eventually_ge_atTop (0 : ℝ)] with u hu
     exact mul_le_mul_of_nonneg_left (fermiLog_bounds u).2 hu
 private lemma integral_fermiLog : (∫ u in Ioi (0 : ℝ), fermiLog u) = π ^ 2 / 12 := by
-  have hd (u : ℝ) : HasDerivAt (fun v => v * fermiLog v) (fermiLog u - u * logistic u) u := by convert (hasDerivAt_id u).mul (fermiLog_deriv u) using 1 <;> ring
+  have hd (u : ℝ) : HasDerivAt (fun v => v * fermiLog v) (fermiLog u - u * logistic u) u := by convert (hasDerivAt_id u).mul (fermiLog_deriv u) using 1 <;> simp only [id_eq, Pi.mul_apply, Pi.neg_apply] <;> ring
   have h := integral_Ioi_of_hasDerivAt_of_tendsto' (fun u _ => hd u) (fermiLog_integrable.sub fermi_real_two.1) mul_fermiLog_limit
   rw [integral_sub fermiLog_integrable fermi_real_two.1, fermi_real_two.2] at h
   simp only [zero_mul, sub_zero] at h
@@ -885,7 +885,7 @@ private lemma envelope_tail {U : ℝ} (hU : 0 ≤ U) : (∫ u in Ioi U, (1 + u) 
     simpa [add_mul, neg_add, neg_mul] using (mul_exp_limit.add (he.const_mul 2)).neg
   have hd (u : ℝ) : HasDerivAt (fun v : ℝ => -(v + 2) * exp (-v)) ((1 + u) * exp (-u)) u := by
     convert (((hasDerivAt_id u).add_const 2).neg).mul ((hasDerivAt_id u).neg.exp) using 1
-    all_goals first | (funext v; dsimp; ring) | ring
+    all_goals first | (funext v; simp only [id_eq, Pi.mul_apply, Pi.neg_apply]; ring) | (simp only [id_eq, Pi.mul_apply, Pi.neg_apply]; ring)
   have h := integral_Ioi_of_hasDerivAt_of_tendsto' (fun u _ => hd u) hi hl
   convert h using 1 <;> ring
 private lemma entropy_truncated {U : ℝ} (hU : 0 ≤ U) : π ^ 2 / 6 - (U + 2) * exp (-U) ≤ ∫ u in (0 : ℝ)..U, entropy u := by
