@@ -850,7 +850,7 @@ private lemma kernelMode_pairing (square out out' : Bool) {u v z : ℂ}
     _ = _ := hc.tsum_prod.symm
 
 -- The original kernel regularity follows from its actual vector mode sums.
-private theorem kernelMode_joint_differentiable (square out out' : Bool) {u v z : ℂ}
+theorem kernelMode_joint_differentiable (square out out' : Bool) {u v z : ℂ}
     (hu : ‖u‖ + ‖z‖ < 1) (hv : ‖v‖ + ‖z‖ < 1) :
     DifferentiableAt ℂ (fun p : ℂ × ℂ => kernelMode square out out' p.1 p.2 z) (u, v) := by
   let A : H →L[ℂ] H := if square then squareResolvent z else oddResolvent z

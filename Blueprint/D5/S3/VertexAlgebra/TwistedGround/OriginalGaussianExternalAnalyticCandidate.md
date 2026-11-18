@@ -200,7 +200,19 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnaly
 
 Under the two source-disk inequalities alone, the regular J candidate satisfies the positive frequency-sum PDE with the original modeA/modeH source and constant 1/4, including u=v and zero coordinates. Off the diagonal the proof consumes the rational J certificate and the Cauchy derivative identity. Joint analyticity makes both partial derivatives continuous, so their equation extends to the removable diagonal. The logarithmic derivative is the actual shiftedCentralDerivative/period ratio.
 
-**Theorem 1.17 (candidateT_original_differential).**
+**Theorem 1.17 (kernelMode_joint_differentiable).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.kernelMode_joint_differentiable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.kernelMode_joint_differentiable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either resolvent power and every pair of Boolean source labels, the original kernelMode is jointly complex differentiable in u,v whenever norm(u)+norm(z)<1 and norm(v)+norm(z)<1. Banach-valued differentiable mode vectors enter the original continuous bilinear resolvent pairing.
+
+**Theorem 1.18 (candidateT_original_differential).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.candidateT_original_differential`
 
@@ -228,6 +240,7 @@ For real 0<=r<1 and the original convergence inequalities norm(u)+sqrt(r)<1 and 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.cauchy`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.correction`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.ell`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.kernelMode_joint_differentiable`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.positiveJ_eq_candidateJ`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.rationalJ`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.rationalT`
