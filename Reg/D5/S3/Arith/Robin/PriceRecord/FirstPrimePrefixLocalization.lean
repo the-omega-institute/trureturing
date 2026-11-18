@@ -1,6 +1,7 @@
 import D5.S3.Arith.Robin.PriceRecord.FirstPrimePrefixLocalization
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 import Reg.D5.S3.Arith.Robin.PriceRecord.ActualIntegerOccupationCoercivity
 
 set_option autoImplicit false
@@ -110,6 +111,97 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 
 end Windows
+
+namespace UniformTheta
+
+def actual : Realization signature :=
+  realize signature (fun _ _ y => Chebyshev.theta y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ y => 4 * y) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {T z : ℝ}, 1 < z → 2 * log 2 ≤ log z → T ≤ z / 2 → ∀ (N : ℕ),
+    (∀ y : ℝ, T ≤ y → |Chebyshev.theta y - y| ≤ y / log y ^ N) →
+    ∀ {y : ℝ}, z / 2 ≤ y → y ≤ 2 * z →
+      |R.readout () () y - y| ≤ 2 ^ (N + 1) * z / log z ^ N
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hθev : ∀ᶠ y : ℝ in atTop, |Chebyshev.theta y - y| ≤ y / log y ^ (0 : ℕ) := by
+    have hbound :=
+      (_root_.D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel.theta_error_log_power 0).bound
+        (by norm_num : (0 : ℝ) < 1)
+    filter_upwards [hbound, eventually_gt_atTop (1 : ℝ)] with y hy hy1
+    simpa only [pow_zero, div_one, one_mul, Real.norm_eq_abs, abs_of_nonneg
+      (show 0 ≤ y by linarith)] using hy
+  obtain ⟨T, hθ⟩ := eventually_atTop.mp hθev
+  let z : ℝ := max 4 (2 * T)
+  have hz4 : 4 ≤ z := le_max_left _ _
+  have hT : T ≤ z / 2 := by
+    linarith [show 2 * T ≤ z from le_max_right _ _]
+  have hlog : 2 * log 2 ≤ log z := by
+    have hz := log_le_log (by norm_num : (0 : ℝ) < 4) hz4
+    rw [show (4 : ℝ) = 2 * 2 by norm_num, log_mul (by norm_num) (by norm_num)] at hz
+    linarith
+  have hb := h (z := z) (by linarith) hlog hT 0 hθ (y := z) (by linarith) (by linarith)
+  change |4 * z - z| ≤ 2 ^ (0 + 1 : ℕ) * z / log z ^ (0 : ℕ) at hb
+  norm_num at hb
+  linarith [(le_abs_self (4 * z - z)).trans hb]
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 2, ?_⟩
+  change Chebyshev.theta 0 ≠ Chebyshev.theta 2
+  rw [Chebyshev.theta_zero]
+  exact Ne.symm (Chebyshev.theta_eq_zero_iff.not.mpr (by norm_num))
+
+def family : Registration arena (type_of% (@uniform_theta_error)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@uniform_theta_error, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@uniform_theta_error) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.PriceRecord.FirstPrimePrefixLocalization.uniform_theta_error.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.FirstPrimePrefixLocalization.UniformTheta.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ y => Chebyshev.theta y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.PriceRecord.FirstPrimePrefixLocalization
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end UniformTheta
 
 namespace Localization
 

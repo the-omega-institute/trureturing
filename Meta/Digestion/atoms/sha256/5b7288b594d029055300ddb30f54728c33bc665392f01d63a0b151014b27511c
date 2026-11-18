@@ -1,0 +1,83 @@
+**引理 7.3（中心 $P=L$ 的两种预算）。** 记 $\ell=\log P$、$d(P)=k(P)-a(P)\in(0,1]$，并定义
+
+$$
+\begin{aligned}
+e(P)&=\pi(P)-k(P),\\
+B_0(P)&=P-\theta(P)+(\pi(P)-a(P))\ell,\\
+B_k(P)&=P-\theta(P)+e(P)\ell,\\
+D_{\mathrm{safe}}(P)&=P-\theta(P)+e(P)\log(P/2).
+\end{aligned}
+$$
+
+则 $e(P)$ 最终为非负整数，且
+
+$$
+e(P)\sim\frac{2P}{\ell^3},\qquad
+B_0(P)\sim B_k(P)\sim D_{\mathrm{safe}}(P)\sim\frac{2P}{\ell^2}.
+$$
+
+对所有充分大的 $P$，存在素数集
+
+$$
+R(P)\subseteq J(P):=\{p:P/2<p\le3P/4\},\qquad |R(P)|=e(P).
+$$
+
+任选这样的 $R(P)$ 并令 $S_0(P)=\{p\le P\}\setminus R(P)$，则
+
+$$
+|S_0(P)|=k(P),\qquad
+\sum_{p\in S_0(P)}\log p\le P-D_{\mathrm{safe}}(P).
+$$
+
+**证明。** 使用经典的 de la Vallée Poussin 型强素数定理作为中间输入：存在常数 $b>0$，当 $t\to\infty$ 时，
+
+$$
+\theta(t)=t+O\!\left(t e^{-b(\log t)^{1/10}}\right),\qquad
+\pi(t)=\operatorname{li}(t)+O\!\left(t e^{-b(\log t)^{1/10}}\right).
+$$
+
+这里可取 $\operatorname{li}(t)=\int_2^t du/\log u$，改变固定加性常数不影响误差；缩小 $b$ 可使两式同时成立。第二式也可由第一式和部分求和得到：
+
+$$
+\pi(t)=\frac{\theta(t)}{\log t}
++\int_2^t\frac{\theta(u)}{u(\log u)^2}\,du.
+$$
+
+在积分中分割于 $\sqrt t$，较低段为 $O(\sqrt t)$，较高段的指数误差由缩小后的 $b$ 控制。这些是经典素数定理的应用，不作为本章独立结论。
+
+对每个固定整数 $m\ge0$，直接求导得
+
+$$
+\frac{d}{dt}\left(t\sum_{j=0}^{m}\frac{j!}{(\log t)^{j+1}}\right)
+=\frac1{\log t}-\frac{(m+1)!}{(\log t)^{m+2}}.
+$$
+
+积分后，余项 $\int_2^t du/(\log u)^{m+2}=O_m(t/(\log t)^{m+2})$，可同样在 $\sqrt t$ 分段证明。因此
+
+$$
+\pi(P)=\frac P\ell+\frac P{\ell^2}+\frac{2P}{\ell^3}
++O\!\left(\frac P{\ell^4}\right).
+$$
+
+有限阶阶乘展开本身已有 Balazard (1990), pp.256–257 的先例。由 $0<d(P)\le1$ 与 $P/\ell^3\to\infty$，得到 $e(P)\sim2P/\ell^3>0$。强素数定理的误差小于任意固定负对数幂，故 $P-\theta(P)=o(P/\ell^2)$，进而 $B_0(P)\sim2P/\ell^2$。精确恒等式为
+
+$$
+B_k=B_0-d\ell,\qquad
+D_{\mathrm{safe}}=B_0-d\ell-e\log2.
+$$
+
+其中 $d\ell/(P/\ell^2)\le\ell^3/P\to0$，$e\log2/(P/\ell^2)\to0$，证明了三个预算的渐近。
+
+再由素数定理，$|J(P)|\sim P/(4\ell)$，所以 $e(P)/|J(P)|\to0$。最终可选出所需 $R(P)$，且
+
+$$
+\begin{aligned}
+\sum_{p\in S_0(P)}\log p
+&=\theta(P)-\sum_{p\in R(P)}\log p\\
+&\le\theta(P)-e(P)\log(P/2)
+=P-D_{\mathrm{safe}}(P).
+\end{aligned}
+$$
+
+此式对每个容许的删集均成立；无需假定 $P-\theta(P)>0$。证毕。
+

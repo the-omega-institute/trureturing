@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8691d84fdf6661f60e14f1fa1e5fcaee631259d38dbb1ebfc327f90942f4e59b
+  normalized_sha256: sha256:8691d84fdf6661f60e14f1fa1e5fcaee631259d38dbb1ebfc327f90942f4e59b
+cas_ref: sha256:8691d84fdf6661f60e14f1fa1e5fcaee631259d38dbb1ebfc327f90942f4e59b
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower
+    target_statement_id: sha256:1090afa3a44578697ec520e98849b5671d1e3c2aefab564e2ff791b35dba409f
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/LogisticGrid.exists_uniform_rightEndpoint_grid
+    target_statement_id: sha256:0f00d61b7e8c749c787e525fcc9aa89537825cbb3436a7d9faaaf6c6bdfcf070
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/RankinUpper.sharp_upper_bound
+    target_statement_id: sha256:3f8b097670abb198fd8c841b75221181df930590f06f76950a83c7558801698e
+receipts:
+  unresolved_subitems: []
