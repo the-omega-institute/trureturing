@@ -36,5 +36,6 @@ The substitution t = P exp(u/s(P)) gives dominated convergence to the even softp
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/MovingPrimeSoftplus.prime_softplus_asymptotic`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/MovingPrimeSoftplus.weight`
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/FirstPrimePrefixLocalization](FirstPrimePrefixLocalization.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel](QuantitativePrimeAbel.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/FermiMellin](../../../Weil/ZetaBridge/FermiMellin.md)
