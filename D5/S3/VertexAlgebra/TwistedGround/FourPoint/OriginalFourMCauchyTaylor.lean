@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMAnalyticPullback
 import D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentCauchy
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPhysicalCovariance
 
 /-! Bivariate Taylor extraction for the ordinary regular Cauchy correction. -/
 
@@ -534,5 +535,185 @@ theorem inverse_physical_free_correction_coefficient (D : LatticeData) (hu : IsU
   rw [← pow_add, show 2*x.2+1+(2*y.2+1) = 2*(x.2+y.2+1) by omega, pow_mul,
     div_eq_mul_inv, ← inv_pow, ← inv_pow]
   ring
+
+open OriginalFourMAnalyticPullback (inverse_physical_source_coefficient)
+open private rawLocal_analytic inverseRoot_analytic from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMOccupationTransport
+
+private def inverseJac (c : Chart) (a : ℝ) (i : Puncture) (u : ℂ) : ℂ :=
+  (halfJacobian c a i (inverseRoot c a i u))⁻¹
+
+private def creatorEntry (c : Chart) (a : ℝ) (i : Puncture) (n k : ℕ) : ℂ :=
+  (scaleRoot c a i)⁻¹ ^ (2*n+1) *
+    (-loweringParameter c i)^(n-k) * Ring.choose ((n:ℂ)+1/2) (n-k)
+
+private theorem inverseJac_analytic {a : ℝ} (ha : 0 < a) (ha₁ : a < 1)
+    (c : Chart) (i : Puncture) : AnalyticAt ℂ (inverseJac c a i) 0 := by
+  change AnalyticAt ℂ (fun u => (scaleRoot c a i / (inverseRoot c a i u)^3)⁻¹) 0
+  simp only [inv_div]
+  exact ((inverseRoot_analytic ha ha₁ c i).pow 3).div_const
+
+private theorem inverse_pullback_entry {a : ℝ} (ha : 0 < a) (ha₁ : a < 1)
+    (c : Chart) (i : Puncture) {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (n : ℕ) :
+    coefficient n (fun u => inverseJac c a i u * f (rawLocal c a i u)) =
+      ∑ k ∈ Finset.range (n+1), creatorEntry c a i n k * coefficient k f := by
+  unfold inverseJac
+  rw [inverse_physical_source_coefficient ha ha₁ c i hf, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro k _
+  unfold creatorEntry
+  ring
+
+private theorem coefficient_mul_scalar (z : ℂ) (n : ℕ) (f : ℂ → ℂ) :
+    coefficient n (fun u => z*f u) = z*coefficient n f := by
+  simp only [coefficient, iteratedDeriv_const_mul_field, mul_div_assoc]
+
+/-- Each leg of a regular covariance carries its own finite creator
+transform, with the chosen local lift and the native order of selectors. -/
+theorem inverse_physical_two_leg_coefficient {a : ℝ} (ha : 0 < a) (ha₁ : a < 1)
+    (c : Chart) (i j : Puncture) {F : ℂ × ℂ → ℂ} (hF : AnalyticAt ℂ F (0, 0))
+    (m n : ℕ) :
+    coefficient n (fun v => coefficient m (fun u =>
+      inverseJac c a i u * inverseJac c a j v * F (rawLocal c a i u, rawLocal c a j v))) =
+      ∑ k ∈ Finset.range (m+1), ∑ l ∈ Finset.range (n+1),
+        creatorEntry c a i m k * creatorEntry c a j n l *
+          coefficient l (fun v => coefficient k (fun u => F (u, v))) := by
+  let g := rawLocal c a j
+  have hg : AnalyticAt ℂ g 0 := rawLocal_analytic ha ha₁ c j
+  have hg₀ : g 0 = 0 := by simp [g, rawLocal]
+  have ht : Tendsto (fun v => ((0:ℂ), g v)) (𝓝 0) (𝓝 (0, 0)) := by
+    simpa only [hg₀] using (continuousAt_const.prodMk hg.continuousAt).tendsto
+  have he : (fun v => coefficient m (fun u =>
+      inverseJac c a i u * inverseJac c a j v * F (rawLocal c a i u, rawLocal c a j v))) =ᶠ[𝓝 0]
+      (fun v => ∑ k ∈ Finset.range (m+1),
+        creatorEntry c a i m k * (inverseJac c a j v * slice F k (g v))) := by
+    filter_upwards [ht hF.eventually_analyticAt] with v hv
+    have hv' : AnalyticAt ℂ (fun u => F (u, g v)) 0 := hv.curry_left
+    rw [show (fun u => inverseJac c a i u * inverseJac c a j v *
+        F (rawLocal c a i u, rawLocal c a j v)) =
+      (fun u => inverseJac c a j v * (inverseJac c a i u *
+        F (rawLocal c a i u, g v))) from by funext u; dsimp [g]; ring,
+      coefficient_mul_scalar, inverse_pullback_entry ha ha₁ c i hv', Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro k _
+    unfold slice
+    ring
+  have hterms (k : ℕ) : AnalyticAt ℂ
+      (fun v => creatorEntry c a i m k * (inverseJac c a j v * slice F k (g v))) 0 :=
+    analyticAt_const.mul ((inverseJac_analytic ha ha₁ c j).mul
+      ((slice_analytic hF k).comp_of_eq hg hg₀))
+  have hjet := he.iteratedDeriv_eq (n := n)
+  unfold coefficient at hjet ⊢
+  rw [hjet, iteratedDeriv_fun_sum (fun k _ => (hterms k).contDiffAt), Finset.sum_div]
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [iteratedDeriv_const_mul_field, mul_div_assoc]
+  change creatorEntry c a i m k * coefficient n
+    (fun v => inverseJac c a j v * (slice F k) (rawLocal c a j v)) = _
+  rw [inverse_pullback_entry ha ha₁ c j (slice_analytic hF k), Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro l _
+  unfold slice coefficient
+  ring
+
+open OriginalFourMOccupationTransport (flags)
+open OriginalFourMSignedOverlap (chartCovariance chart_covariance_analytic)
+open OriginalFourMPhysicalCovariance (physicalCovariance)
+open private jac slotCorrection same_flags physicalCovariance_analytic from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPhysicalCovariance
+
+private theorem pair_coefficient_add {F G : ℂ × ℂ → ℂ}
+    (hF : AnalyticAt ℂ F (0, 0)) (hG : AnalyticAt ℂ G (0, 0)) (m n : ℕ) :
+    coefficient n (slice (fun uv => F uv + G uv) m) =
+      coefficient n (slice F m) + coefficient n (slice G m) := by
+  have ht : Tendsto (fun v : ℂ => ((0 : ℂ), v)) (𝓝 0) (𝓝 (0, 0)) :=
+    (continuousAt_const.prodMk continuousAt_id).tendsto
+  have he : slice (fun uv => F uv + G uv) m =ᶠ[𝓝 0]
+      (fun v => slice F m v + slice G m v) := by
+    filter_upwards [ht hF.eventually_analyticAt, ht hG.eventually_analyticAt] with v hfv hgv
+    exact coefficient_add hfv.curry_left hgv.curry_left m
+  have hh : coefficient n (slice (fun uv => F uv + G uv) m) =
+      coefficient n (fun v => slice F m v + slice G m v) :=
+    congrArg (fun z : ℂ => z / (n.factorial : ℂ)) (he.iteratedDeriv_eq (n := n))
+  rw [hh, coefficient_add (slice_analytic hF m) (slice_analytic hG m)]
+
+/-- All native chart blocks use the two finite creator transforms in
+physical coordinates. The actual same-puncture block adds precisely the
+original Gram-weighted contraction with the inverse lowering parameter. -/
+theorem selected_physical_covariance (D : LatticeData) (hu : IsUnit D.G.det)
+    {a : ℝ} (ha : 0 < a) (ha₁ : a < 1) (upperA : Bool)
+    (c : Chart) (i j : Puncture) (x y : Index D) :
+    let K := fun u v => chartCovariance upperA c a
+      (flags c i).1 (flags c j).1 (flags c i).2 (flags c j).2 u v
+    (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u =>
+      physicalCovariance upperA c a i j u v)) =
+    (D.G x.1 y.1 : ℂ) *
+      (∑ k ∈ Finset.range (x.2+1), ∑ l ∈ Finset.range (y.2+1),
+        creatorEntry c a i x.2 k * creatorEntry c a j y.2 l *
+          coefficient l (fun v => coefficient k (fun u => K u v))) +
+    (if (flags c i).1 = (flags c j).1 ∧ (flags c i).2 = (flags c j).2 then
+      ((scaleRoot c a i)⁻¹)^(2*x.2+1) * ((scaleRoot c a i)⁻¹)^(2*y.2+1) *
+        ((D.G x.1 y.1 : ℂ) * ((-loweringParameter c i)^(x.2+y.2+1) *
+          contractionScalar x.2 y.2))
+    else 0) := by
+  dsimp only
+  let K : ℂ × ℂ → ℂ := fun uv => chartCovariance upperA c a
+    (flags c i).1 (flags c j).1 (flags c i).2 (flags c j).2 uv.1 uv.2
+  have hK : AnalyticAt ℂ K (0, 0) := chart_covariance_analytic ha ha₁ upperA c _ _ _ _
+  let F : ℂ × ℂ → ℂ := fun uv => inverseJac c a i uv.1 * inverseJac c a j uv.2 *
+    K (rawLocal c a i uv.1, rawLocal c a j uv.2)
+  let G : ℂ × ℂ → ℂ := fun uv => -slotCorrection c a i j uv.1 uv.2 /
+    (jac c a i uv.1 * jac c a j uv.2)
+  have hF : AnalyticAt ℂ F (0, 0) := by
+    have h₁ := (inverseJac_analytic ha ha₁ c i).comp_of_eq
+      (analyticAt_fst (𝕜 := ℂ) (p := ((0, 0) : ℂ × ℂ))) rfl
+    have h₂ := (inverseJac_analytic ha ha₁ c j).comp_of_eq
+      (analyticAt_snd (𝕜 := ℂ) (p := ((0, 0) : ℂ × ℂ))) rfl
+    have hp := ((rawLocal_analytic ha ha₁ c i).comp_of_eq
+      (analyticAt_fst (𝕜 := ℂ) (p := ((0, 0) : ℂ × ℂ))) rfl).prod
+      ((rawLocal_analytic ha ha₁ c j).comp_of_eq
+      (analyticAt_snd (𝕜 := ℂ) (p := ((0, 0) : ℂ × ℂ))) rfl)
+    exact (h₁.mul h₂).mul (hK.comp_of_eq hp (by simp [rawLocal]))
+  have hp : (fun uv : ℂ × ℂ => physicalCovariance upperA c a i j uv.1 uv.2) =
+      fun uv => F uv + G uv := by
+    funext uv
+    simp only [F, G, K, physicalCovariance]
+    change (_ - slotCorrection c a i j uv.1 uv.2) / (jac c a i uv.1 * jac c a j uv.2) =
+      (jac c a i uv.1)⁻¹ * (jac c a j uv.2)⁻¹ * _ +
+        -slotCorrection c a i j uv.1 uv.2 / (jac c a i uv.1 * jac c a j uv.2)
+    simp only [div_eq_mul_inv, mul_inv]
+    ring
+  have hF' := inverse_physical_two_leg_coefficient ha ha₁ c i j hK x.2 y.2
+  change coefficient y.2 (slice F x.2) = _ at hF'
+  have hleft : (fun v => coefficient x.2 (fun u => physicalCovariance upperA c a i j u v)) =
+      slice (fun uv => F uv + G uv) x.2 := by
+    exact congrArg (fun W => slice W x.2) hp
+  have hG : AnalyticAt ℂ G (0, 0) := by
+    have hP := physicalCovariance_analytic upperA ha ha₁ c i j
+    rw [hp] at hP
+    have hdiff := hP.sub hF
+    exact hdiff.congr (Eventually.of_forall (fun uv => by
+      change F uv + G uv - F uv = G uv
+      ring))
+  rw [hleft, pair_coefficient_add hF hG x.2 y.2, hF', mul_add]
+  congr 1
+  by_cases hij : i = j
+  · subst j
+    simp only [G, slotCorrection, and_self, ite_true, jac]
+    exact inverse_physical_free_correction_coefficient D hu ha ha₁ c i x y
+  · have hf : ¬ ((flags c i).1 = (flags c j).1 ∧ (flags c i).2 = (flags c j).2) :=
+      fun h => hij (same_flags c h)
+    rw [ite_eq_right hf]
+    have hG₀ : G = 0 := by
+      funext uv
+      simp [G, slotCorrection, hf]
+    have hz : slice G x.2 = fun _ => 0 := by
+      rw [hG₀]
+      funext v
+      change coefficient x.2 (fun _ => 0) = 0
+      rw [coefficient_const]
+      split_ifs <;> rfl
+    rw [hz, coefficient_const]
+    split_ifs <;> simp
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCauchyTaylor
