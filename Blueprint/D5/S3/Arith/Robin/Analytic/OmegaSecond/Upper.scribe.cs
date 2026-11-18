@@ -56,7 +56,7 @@ internal sealed class UpperDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("result"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaSecond/Upper.result"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaSecond/Upper.upper"),
                 H("Explicit second-threshold upper coefficient"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(

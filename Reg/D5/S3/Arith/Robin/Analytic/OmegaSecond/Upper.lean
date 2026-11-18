@@ -247,10 +247,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨x, hx⟩ := (h 1 (by norm_num)).exists
   exact hx
 
-def family : Registration arena (type_of% @_root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.result) where
+def family : Registration arena (type_of% @_root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.upper) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.result, rejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.upper, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -261,8 +261,8 @@ def family : Registration arena (type_of% @_root_.D5.S3.Arith.Robin.Analytic.Ome
     norm_num at hh
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.result) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.result.audit
+    (@_root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.upper) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.upper.audit
   realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper.Result.family
   realizationSource := none
   generated := false
