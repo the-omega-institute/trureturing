@@ -291,15 +291,12 @@ theorem fixed_grid_bound {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
   rw [← hcard]
   exact family_card_le_tail (exp_pos P) hsize hout
 
-/-- Fixed-grid entropy bound with the moving-bin capacities and safe-base
-estimates as inputs. The floor, signed slack, full product count, and
-conversion to the source scale are derived within the proof. -/
-private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
-    (ht0 : t 0 = 0) (q : Fin m → ℝ) (hq0 : ∀ i, 0 < q i) (hq1 : ∀ i, q i < 1)
-    (eta : ℝ) (heta : 0 < eta) (base : ℝ → Finset ℕ) (reserve : ℝ → ℝ)
+/-- The paired floor choices fit the reserve and give the stated entropy on the grid scale. -/
+private theorem fixed_grid_estimates {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+    (q : Fin m → ℝ) (hq0 : ∀ i, 0 < q i) (hq1 : ∀ i, q i < 1)
+    (eta : ℝ) (heta : 0 < eta) (reserve : ℝ → ℝ)
     (zeta : ℝ) (hzeta : 0 < zeta) :
-    let c := π / (2 * sqrt 3)
-    let C := (1 + eta) * c
+    let C := (1 + eta) * (π / (2 * sqrt 3))
     let s := fun P : ℝ => C * sqrt (log P)
     let W := fun P : ℝ => (P / log P) / s P
     let Z := fun P : ℝ => (P / log P) / sqrt (log P)
@@ -308,22 +305,15 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
     (∀ i, Tendsto (fun P => ((donorBin t P (s P) i).card : ℝ) / W P) atTop (𝓝 (delta i))) →
     (∀ i, Tendsto (fun P => ((recipientBin t P (s P) i).card : ℝ) / W P) atTop (𝓝 (delta i))) →
     (Tendsto (fun P => reserve P / (W P / s P)) atTop (𝓝 ((π ^ 2 / 6) * (1 + eta) ^ 2))) →
-    (∀ᶠ P in atTop, base P ⊆ Nat.primesLE ⌊P⌋₊ ∧
-      (∀ i, donorBin t P (s P) i ⊆ base P) ∧
-      (base P).card = Selection.selectedCount 1 (exp P) ∧
-      (∑ p ∈ base P, log (p : ℝ)) ≤ P - reserve P) →
     ∀ᶠ P in atTop,
       let h := fun i => ⌊q i * (min (donorBin t P (s P) i).card
-        (recipientBin t P (s P) i).card : ℝ)⌋₊
-      let bound := ((2 * ∑ i, delta i * binEntropy (q i)) / C - zeta) * Z P
-      let outputs := pairedOutputs (base P) (donorBin t P (s P)) (recipientBin t P (s P)) h
-      outputs.card = (∏ i, (donorBin t P (s P) i).card.choose (h i) *
-        (recipientBin t P (s P) i).card.choose (h i)) ∧
-      0 < outputs.card ∧
-      (∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
-        Selection.selectedCount 1 (exp P) ∧ (n : ℝ) < exp P) ∧
-      bound ≤ log (outputs.card : ℝ) ∧ bound ≤ log (tailCount 1 (exp P) : ℝ) := by
-  intro c C s W Z delta hslack hd hr hreserve hbase
+        (recipientBin t P (s P) i).card : ℕ)⌋₊
+      let count := ∏ i, (donorBin t P (s P) i).card.choose (h i) *
+        (recipientBin t P (s P) i).card.choose (h i)
+      0 < s P ∧ (2 / s P) * (∑ i, t i.succ * (h i : ℝ)) < reserve P ∧
+        0 < count ∧
+        ((2 * ∑ i, delta i * binEntropy (q i)) / C - zeta) * Z P ≤ log (count : ℝ) := by
+  intro C s W Z delta hslack hd hr hreserve
   have hC : 0 < C := mul_pos (by linarith) (div_pos pi_pos (by positivity))
   have hdelta (i : Fin m) : 0 < delta i := sub_pos.mpr (ht i.castSucc_lt_succ)
   have hZ : Tendsto Z atTop atTop := by
@@ -381,8 +371,8 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
   simp only [heq, ← two_mul, ← mul_sum] at hentropy
   have hlow := hentropy.eventually_const_lt
     (sub_lt_self (2 * ∑ i, delta i * binEntropy (q i)) (mul_pos hzeta hC))
-  filter_upwards [hbudget, hlow, hbase, hW.eventually_gt_atTop 0, eventually_gt_atTop 1]
-    with P hbudgetP hlowP hbaseP hWP hP
+  filter_upwards [hbudget, hlow, hW.eventually_gt_atTop 0, eventually_gt_atTop 1]
+    with P hbudgetP hlowP hWP hP
   have hsP : 0 < s P := mul_pos hC (sqrt_pos.2 (log_pos hP))
   have hcost : (2 / s P) * (∑ i, t i.succ * (h i P : ℝ)) < reserve P := by
     have hh := (lt_div_iff₀ (div_pos hWP hsP)).mp hbudgetP
@@ -392,20 +382,8 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
     intro i _
     field_simp [hsP.ne', hWP.ne']
     <;> ring
-  have hsize : threshold 1 (exp P) < ((base P).card : ℝ) := by
-    rw [hbaseP.2.2.1, Selection.selectedCount, Nat.cast_add, Nat.cast_one]
-    exact Nat.lt_floor_add_one _
-  let outputs := pairedOutputs (base P) (donorBin t P (s P)) (recipientBin t P (s P)) (fun i => h i P)
   let d : Fin m → ℕ := fun i => (donorBin t P (s P) i).card.choose (h i P)
   let r : Fin m → ℕ := fun i => (recipientBin t P (s P) i).card.choose (h i P)
-  have hexchange : outputs.card = (∏ i, d i * r i) ∧
-      ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
-        (base P).card ∧ (n : ℝ) < exp P :=
-    fixed_grid_outputs t ht ht0 P (s P) (reserve P)
-      (zero_lt_one.trans hP) hsP (base P) (fun i => h i P) hbaseP.1 hbaseP.2.1
-      hbaseP.2.2.2 hcost
-  have hcount : outputs.card ≤ tailCount 1 (exp P) :=
-    family_card_le_tail (exp_pos P) hsize hexchange.2
   have hdp (i : Fin m) : (0 : ℝ) < d i := by
     dsimp [d]
     exact_mod_cast Nat.choose_pos ((hfit i P).trans (min_le_left _ _))
@@ -434,15 +412,7 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
       field_simp [hC.ne', (sqrt_pos.2 (log_pos hP)).ne']
     rw [hscale, ← mul_assoc, sub_mul, div_mul_cancel₀ _ hC.ne']
     exact le_of_lt ((lt_div_iff₀ hWP).mp hsum)
-  have hpos : 0 < outputs.card :=
-    (congrArg (fun k : ℕ => 0 < k) hexchange.1).mpr (by exact_mod_cast hprod)
-  have hlogCard := congrArg (fun k : ℕ => log (k : ℝ)) hexchange.1
-  have hfamily' := hfamily.trans_eq hlogCard.symm
-  refine ⟨hexchange.1, hpos, ?_, hfamily', ?_⟩
-  · intro n hn
-    obtain ⟨hnpos, hsf, hk, hlt⟩ := hexchange.2 n hn
-    exact ⟨hnpos, hsf, hk.trans hbaseP.2.2.1, hlt⟩
-  · exact hfamily'.trans (log_le_log (by exact_mod_cast hpos) (by exact_mod_cast hcount))
+  exact ⟨hsP, hcost, Nat.cast_pos.mp hprod, hfamily⟩
 
 open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
   (primeCount countingPolynomial prime_counting_four_terms)
@@ -615,7 +585,7 @@ theorem fixed_grid_lower {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
     ∀ᶠ P : ℝ in atTop,
       let C := (1 + eta) * (π / (2 * sqrt 3))
       let s := C * sqrt (log P)
-      let h := fun i => ⌊q i * (min (donorBin t P s i).card (recipientBin t P s i).card : ℝ)⌋₊
+      let h := fun i => ⌊q i * (min (donorBin t P s i).card (recipientBin t P s i).card : ℕ)⌋₊
       let bound := ((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) / C - zeta) *
         ((P / log P) / sqrt (log P))
       ∃ base : Finset ℕ, base ⊆ Nat.primesLE ⌊P⌋₊ ∧
@@ -652,13 +622,24 @@ theorem fixed_grid_lower {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
         rw [← pow_two, mul_pow, sq_sqrt hl.le]
         ring]
     field_simp [(zero_lt_one.trans hP).ne', hC.ne', hl.ne'] <;> ring
-  have hfamily := fixed_grid_lower_of_capacity t ht ht0 q hq0 hq1 eta heta base FarDeletion.safeReserve
-    zeta hzeta
-    hslack (fun i => ?_) (fun i => ?_) hres hbase
-  · filter_upwards [hbase, hfamily] with P hbaseP hfamilyP
-    exact ⟨base P, hbaseP.1, hbaseP.2.1, hbaseP.2.2.1, hbaseP.2.2.2, hfamilyP⟩
-  · have h := moving_prime_capacity hC (neg_lt_neg (ht i.castSucc_lt_succ))
-    simpa only [donorBin, neg_sub_neg] using h
-  · exact moving_prime_capacity hC (ht i.castSucc_lt_succ)
+  have hd (i : Fin m) := moving_prime_capacity hC (neg_lt_neg (ht i.castSucc_lt_succ))
+  have hr (i : Fin m) := moving_prime_capacity hC (ht i.castSucc_lt_succ)
+  have hest := fixed_grid_estimates t ht q hq0 hq1 eta heta FarDeletion.safeReserve zeta hzeta
+    hslack (fun i => by simpa only [donorBin, neg_sub_neg] using hd i) hr hres
+  filter_upwards [hbase, hest, eventually_gt_atTop (0 : ℝ)] with P hbaseP hestP hP
+  obtain ⟨hsP, hcost, hprod, hentropy⟩ := hestP
+  obtain ⟨hcard, hout⟩ := fixed_grid_outputs t ht ht0 P (C * sqrt (log P))
+    (FarDeletion.safeReserve P) hP hsP (base P) _ hbaseP.1 hbaseP.2.1 hbaseP.2.2.2 hcost
+  have hsize : threshold 1 (exp P) < ((base P).card : ℝ) := by
+    rw [hbaseP.2.2.1, Selection.selectedCount, Nat.cast_add, Nat.cast_one]
+    exact Nat.lt_floor_add_one _
+  have hcount := family_card_le_tail (exp_pos P) hsize hout
+  have hpos := (congrArg (fun k : ℕ => 0 < k) hcard).mpr hprod
+  have hfamily := hentropy.trans_eq (congrArg (fun k : ℕ => log (k : ℝ)) hcard).symm
+  refine ⟨base P, hbaseP.1, hbaseP.2.1, hbaseP.2.2.1, hbaseP.2.2.2,
+    hcard, hpos, ?_, hfamily, hfamily.trans (log_le_log (Nat.cast_pos.mpr hpos) (Nat.cast_le.mpr hcount))⟩
+  intro n hn
+  obtain ⟨hnpos, hsf, hk, hlt⟩ := hout n hn
+  exact ⟨hnpos, hsf, hk.trans hbaseP.2.2.1, hlt⟩
 
 end D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange

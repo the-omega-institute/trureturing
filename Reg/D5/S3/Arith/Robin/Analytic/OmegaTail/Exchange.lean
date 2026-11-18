@@ -193,7 +193,7 @@ abbrev entropyArena : Arena where
     ∀ᶠ P : ℝ in atTop,
       let C := (1 + eta) * (π / (2 * sqrt 3))
       let s := C * sqrt (log P)
-      let h := fun i => ⌊q i * (min (donorBin t P s i).card (recipientBin t P s i).card : ℝ)⌋₊
+      let h := fun i => ⌊q i * (min (donorBin t P s i).card (recipientBin t P s i).card : ℕ)⌋₊
       let bound := ((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) / C - zeta) *
         ((P / log P) / sqrt (log P))
       ∃ base : Finset ℕ, base ⊆ Nat.primesLE ⌊P⌋₊ ∧
