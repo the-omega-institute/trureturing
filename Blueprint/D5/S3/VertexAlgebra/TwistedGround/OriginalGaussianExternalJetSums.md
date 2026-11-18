@@ -28,8 +28,34 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSu
 
 Under those same conditions the positive Vjet amplitude is Mplus times [-xu/(1-(1-x)u) -(1-2u+(1-x)u squared)/(2(1-(1-x)u)) -2x lambdaRatio] plus Aminus(0)/2. The negative Vjet sum multiplied by u is Mminus times [xu/(1-x-u) -(u(1-u)/(2(1-x-u))-1/2) -2xu lambdaRatio] minus Aminus(0)/2. Its diagonal derivative has the positive xi-minus sign. These are source-jet identifications, not the terminal J/T kernel identification.
 
+**Theorem 1.3 (amplitude_derivative_mode).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.amplitude_derivative_mode`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.amplitude_derivative_mode` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either sign on norm(u)+norm(x)<1, differentiating every actual sourceAmplitude in x and summing against u powers gives the x derivative of sourceMode. Both sourceMode in x and every individual sourceAmplitude are complex differentiable there.
+
+**Theorem 1.4 (diagonal_derivative_explicit).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.diagonal_derivative_explicit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.diagonal_derivative_explicit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either sign on that joint disk, with b=u in the positive case and b=-1 in the negative case, the x derivative of the actual sourceMode equals -b sourceMode/[2(1-u+bx)].
+
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.amplitude_derivative_mode`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.diagonal_derivative_explicit`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.sourceJetMoment_generators`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalJetSums.sourceJetMoment_generators_explicit`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalModeSums](OriginalGaussianExternalModeSums.md)

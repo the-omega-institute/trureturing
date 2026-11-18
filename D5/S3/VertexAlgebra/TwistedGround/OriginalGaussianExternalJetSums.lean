@@ -55,7 +55,7 @@ private lemma amplitude_normal (out : Bool) (p : ℕ) {R : ℝ} (hR0 : 0 < R)
       hs.of_nonneg_of_le (fun _ => norm_nonneg _) (fun n => hb n w hw)
     exact (norm_tsum_le_tsum_norm hh).trans (hh.tsum_le_tsum (fun n => hb n w hw) hs)
 
-private lemma amplitude_derivative_mode (out : Bool) {u x : ℂ}
+lemma amplitude_derivative_mode (out : Bool) {u x : ℂ}
     (hsmall : ‖u‖ + ‖x‖ < 1) :
     HasSum (fun p : ℕ => deriv (sourceAmplitude out p) x * u ^ p)
       (deriv (fun w => sourceMode out u w) x) ∧
@@ -141,7 +141,7 @@ theorem sourceJetMoment_generators {u : ℂ} {r : ℝ} (hr : 0 < r) (hr1 : r < 1
       ring
     · ring
 
-private lemma diagonal_derivative_explicit (out : Bool) {u x : ℂ}
+lemma diagonal_derivative_explicit (out : Bool) {u x : ℂ}
     (hsmall : ‖u‖ + ‖x‖ < 1) :
     let b : ℂ := if out then u else -1
     deriv (fun w => sourceMode out u w) x =
