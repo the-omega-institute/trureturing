@@ -103,4 +103,70 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms source_equivalence
 #print axioms audit
 
+open scoped BigOperators in
+private abbrev spectralArena : Arena where
+  signature := signature
+  Law F := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
+    (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1),
+    F.readout () ()
+      (Complex.re (inner ℂ
+        (HilbertSchmidtOperatorSpace.ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) H))
+        ((hsArithmeticMap Z u).inverse
+          (HilbertSchmidtOperatorSpace.ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) H)))))
+      (∑ i, ∑ j,
+        Complex.normSq (((hZ.isHermitian.eigenvectorUnitary : Matrix ι ι ℂ)ᴴ * H *
+          (hZ.isHermitian.eigenvectorUnitary : Matrix ι ι ℂ)) i j) *
+          ((1-u) * hZ.isHermitian.eigenvalues i + u * hZ.isHermitian.eigenvalues j)⁻¹)
+
+private theorem spectralEquivalence :
+    (type_of% @hs_pair_spectral.{u}) ↔ spectralArena.{u}.Law actual :=
+  Iff.rfl
+
+private theorem spectralRejected : ¬ spectralArena.{u}.Law rejected := by
+  intro h
+  exact h (ι := ULift.{u} Unit) 1 0 Matrix.PosDef.one 0 (by simp)
+
+def spectralFamily : Registration spectralArena.{u} (type_of% @hs_pair_spectral.{u}) where
+  actual := actual
+  bridge := spectralEquivalence
+  variation := ⟨@hs_pair_spectral, rejected, spectralRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    spectralArena.{u}.Law actual rejected spectralRejected
+  dependence := dependence
+
+def spectralAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@hs_pair_spectral)
+    (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.UmegakiArithmeticBKM.hs_pair_spectral.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.UmegakiArithmeticBKM.spectralFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨spectralArena.{u}⟩
+  objectArena := .source ⟨spectralArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source spectralArena.{u} ⟨spectralFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms spectralAudit
+
 end Reg.D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
