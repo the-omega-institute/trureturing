@@ -8,7 +8,6 @@
 
 import Mathlib.Data.Nat.ModEq
 import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
