@@ -8,6 +8,11 @@ internal sealed class OriginalHalfBinomialNomeDocument : IScribeDocumentDefiniti
         "The same original period has a normalized holomorphic correction, continuation and nome.",
         H("The normalized disk nome and its Taylor coefficients"),
         Blocks(
+            Describe.Lean(DescribeId.Create("q0-definition"),
+                DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialNome.Q0"),
+                H("The original normalized nome on the disk"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Q0(r)=(r/16)exp(i pi H(r)) uses the same native H. This formula extends the whole source-normalized nome expression across zero."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("actual-nome-disk"),
                 DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialNome.actual_nome_disk"),
                 H("The normalized disk nome and its Taylor coefficients"), StatementSource.WithoutFormula(),
