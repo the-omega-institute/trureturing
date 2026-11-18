@@ -3,8 +3,10 @@
    mirror-B: D5/B/S3/Arith/Robin/PriceRecord/MovingPrimeSoftplus
    mirror-E: none(waiver:general-asymptotic-analysis)
    anchors: []
-   utility: none -/
+   utility: none
+   digest: Absolutely summable moving prime softplus weights have normalized limit pi squared over six. -/
 
+import D5.S3.Arith.Robin.PriceRecord.FirstPrimePrefixLocalization
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import D5.S3.Weil.ZetaBridge.FermiMellin
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
@@ -246,21 +248,20 @@ private theorem log_window_lower {P t : ℝ} (hP : 4 ≤ P) (ht : P / 2 ≤ t) :
 private theorem theta_window_log_bound (N : ℕ) :
     ∀ᶠ P : ℝ in atTop, ∀ t ∈ Icc (P / 2) (2 * P),
       |Chebyshev.theta t - t| ≤ 2 ^ (N + 1) * P / log P ^ N := by
-  obtain ⟨T, hT⟩ := eventually_atTop.mp ((theta_error_log_power N).bound
-    (show (0 : ℝ) < 1 by norm_num))
+  have hθev : ∀ᶠ t : ℝ in atTop, |Chebyshev.theta t - t| ≤ t / log t ^ N := by
+    filter_upwards [(theta_error_log_power N).bound (by norm_num : (0 : ℝ) < 1),
+      eventually_gt_atTop (1 : ℝ)] with t ht ht1
+    have hpos : 0 ≤ t / log t ^ N :=
+      div_nonneg (by linarith) (pow_nonneg (log_pos ht1).le _)
+    simpa only [Real.norm_eq_abs, one_mul, abs_of_nonneg hpos] using ht
+  obtain ⟨T, hθ⟩ := eventually_atTop.mp hθev
   filter_upwards [eventually_ge_atTop (2 * T), eventually_ge_atTop (4 : ℝ)] with P hPT hP
-  intro t ht
-  have ht0 : 0 < t := by linarith [ht.1]
-  have hlogP : 0 < log P := log_pos (by linarith)
-  have hlogt : 0 < log t := log_pos (by linarith [ht.1])
-  have hθ := hT t (by linarith [ht.1])
-  simp only [Real.norm_eq_abs, one_mul, abs_of_pos (div_pos ht0 (pow_pos hlogt N))] at hθ
-  calc
-    _ ≤ t / log t ^ N := hθ
-    _ ≤ (2 * P) / (log P / 2) ^ N := by
-      exact div_le_div₀ (by linarith) ht.2 (pow_pos (by positivity) _)
-        (pow_le_pow_left₀ (by positivity) (log_window_lower hP ht.1) N)
-    _ = _ := by rw [div_pow, pow_succ, div_div_eq_mul_div]; ring
+  have hlog : 2 * log 2 ≤ log P := by
+    have h := log_le_log (by norm_num : (0 : ℝ) < 4) hP
+    rw [show (4 : ℝ) = 2 * 2 by norm_num, log_mul (by norm_num) (by norm_num)] at h
+    linarith
+  exact fun t ht =>
+    FirstPrimePrefixLocalization.uniform_theta_error (by linarith) hlog (by linarith) N hθ ht.1 ht.2
 
 private theorem theta_comparison_tendsto {a C : ℝ} {s : ℝ → ℝ}
     (hs : ∀ᶠ P in atTop, 0 ≤ s P ∧ s P ≤ C * log P ^ a) (hC : 0 < C) :
