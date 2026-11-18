@@ -1,4 +1,4 @@
-import D5.S3.Quantum.Algebra.PositiveWordRayDescent
+import D5.S3.Quantum.Algebra.RayDescent.PositiveWordRayDescent
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
