@@ -19,7 +19,8 @@ attribute [local instance] Classical.propDecidable
 open private armTypes arm_coordinates flip_direction_unique from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareExclusion
 open private diff diff_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private diff_self diff_triangle_card adj_of_diff_subset_card low_not_three from
+open private diff_self diff_injective diff_triangle_card adj_of_diff_subset_card low_not_three
+  compressed_distance from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
@@ -332,3 +333,142 @@ private lemma doubly_translated_spokes_excludes_low_middle
 #print axioms translated_spokes_middle_not_degree_two
 #print axioms doubly_translated_spokes_middle
 #print axioms doubly_translated_spokes_excludes_low_middle
+
+private lemma diff_two_flips {n : ℕ} (x : Q n) {a b : Fin n} (hab : a ≠ b) :
+    diff (flip (flip x a) b) x = {a, b} := by
+  rw [diff_flip, diff_flip, diff_self]
+  simp [hab.symm, pair_comm]
+
+private lemma diff_three_flips {n : ℕ} (x : Q n) {a b c : Fin n}
+    (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
+    diff (flip (flip (flip x a) b) c) x = {a, b, c} := by
+  rw [diff_flip, diff_two_flips x hab]
+  have hnot : c ∉ ({a, b} : Finset (Fin n)) := by simp [hac.symm, hbc.symm]
+  rw [if_neg hnot]
+  ext i
+  simp only [mem_insert, mem_singleton]
+  tauto
+
+/-- A degree-two midpoint with support `{c,t}` on the arm through
+`{c}` excludes a second selected end in direction `t`. -/
+private lemma equal_arm_parameter_avoids_other_end
+    {n : ℕ} {S : Finset (Q n)} (x : Q n) {a c t : Fin n}
+    (hac : a ≠ c) (hat : a ≠ t) (hct : c ≠ t)
+    (v p : (S : Set (Q n))) (hv : diff v.val x = {a, c, t})
+    (hp : diff p.val x = {c, t})
+    (hp2 : ((hypercube n).induce (S : Set (Q n))).degree p = 2)
+    (hc : flip x c ∈ S) (ht : flip x t ∈ S) : False := by
+  classical
+  let u : (S : Set (Q n)) := ⟨flip x c, hc⟩
+  let w : (S : Set (Q n)) := ⟨flip x t, ht⟩
+  have hU : diff u.val x = {c} := by
+    change diff (flip x c) x = _
+    simp [diff_flip, diff_self]
+  have hW : diff w.val x = {t} := by
+    change diff (flip x t) x = _
+    simp [diff_flip, diff_self]
+  have hcardP : (diff p.val x).card = 2 := by simp [hp, hct]
+  have hcardV : (diff v.val x).card = 3 := by simp [hv, hac, hat, hct]
+  have hcardU : (diff u.val x).card = 1 := by simp [hU]
+  have hcardW : (diff w.val x).card = 1 := by simp [hW]
+  have hpu : (hypercube n).Adj u.val p.val :=
+    adj_of_diff_subset_card (o := x) (by simp [hU, hp]) (by omega)
+  have hpw : (hypercube n).Adj w.val p.val :=
+    adj_of_diff_subset_card (o := x) (by simp [hW, hp]) (by omega)
+  have hpv : (hypercube n).Adj p.val v.val :=
+    adj_of_diff_subset_card (by rw [hp, hv]; exact subset_insert _ _) (by omega)
+  have hne {f g : (S : Set (Q n))} (h : f = g) :
+      (diff f.val x).card = (diff g.val x).card := by rw [h]
+  exact low_not_three hp2
+    (fun h : u = w => hct (flip_direction_unique (congrArg Subtype.val h)))
+    (fun h : u = v => by have he := hne h; omega)
+    (fun h : w = v => by have he := hne h; omega) hpu.symm hpw.symm hpv
+
+/-- Two cores with equal directions on their respective arms cannot be
+matched. A translation pins the midpoint within a row, and two translations
+pin it across rows. -/
+private lemma equal_direction_cores_not_matched
+    {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
+    (hs : IsSwitching S sigma) {x : Q n} (hx : x ∈ S)
+    {a c d t s : Fin n} (hac : a ≠ c) (had : a ≠ d)
+    (hat : a ≠ t) (has : a ≠ s) (hct : c ≠ t) (hds : d ≠ s)
+    (hc : flip x c ∈ S) (hd : flip x d ∈ S)
+    (v w p q r m : (S : Set (Q n)))
+    (hv : diff v.val x = {a, c, t}) (hw : diff w.val x = {a, d, s})
+    (hp : diff p.val x = {c, t}) (hq : diff q.val x = {d, s})
+    (hp2 : ((hypercube n).induce (S : Set (Q n))).degree p = 2)
+    (hq2 : ((hypercube n).induce (S : Set (Q n))).degree q = 2)
+    (hr : r.val = flip x a)
+    (hr2 : ((hypercube n).induce (S : Set (Q n))).degree r = 2)
+    (hm2 : ((hypercube n).induce (S : Set (Q n))).degree m = 2)
+    (hvm : (hypercube n).Adj v.val m.val) (hwm : (hypercube n).Adj w.val m.val)
+    (hvw : hammingDist v.val w.val = 2)
+    (hlow : ∀ ⦃v w⦄, ((hypercube n).induce (S : Set (Q n))).Adj v w →
+      ((hypercube n).induce (S : Set (Q n))).degree v = 2 →
+      ((hypercube n).induce (S : Set (Q n))).degree w = 2 → False) : False := by
+  classical
+  by_cases hcd : c = d
+  · subst d
+    have hts : t ≠ s := by
+      intro he
+      have h := diff_injective x (hv.trans (he ▸ hw.symm))
+      simp [h] at hvw
+    have hp' : p.val = flip (flip x c) t :=
+      diff_injective x (hp.trans (diff_two_flips x hct).symm)
+    have hq' : q.val = flip (flip x c) s :=
+      diff_injective x (hq.trans (diff_two_flips x hds).symm)
+    have hv' : v.val = flip (flip (flip x c) a) t := by
+      apply diff_injective x
+      change diff v.val x = diff (flip (flip (flip x c) a) t) x
+      rw [hv, diff_three_flips x hac.symm hct hat, insert_comm]
+    have hw' : w.val = flip (flip (flip x c) a) s := by
+      apply diff_injective x
+      change diff w.val x = diff (flip (flip (flip x c) a) s) x
+      rw [hw, diff_three_flips x hac.symm hds has, insert_comm]
+    exact translated_spokes_middle_not_degree_two hs (flip x c) hts hat.symm has.symm hc
+      (hp' ▸ p.property) (hq' ▸ q.property) (hv' ▸ v.property) (hw' ▸ w.property) m
+      (hv' ▸ hvm) (hw' ▸ hwm) hm2
+  · have hdt : d ≠ t := by
+      intro he
+      exact equal_arm_parameter_avoids_other_end x hac hat hct v p hv hp hp2 hc (he ▸ hd)
+    have hcs : c ≠ s := by
+      intro he
+      exact equal_arm_parameter_avoids_other_end x had has hds w q hw hq hq2 hd (he ▸ hc)
+    have hts : t = s := by
+      by_contra hne
+      have hEq : ({a, c, t} : Finset (Fin n)) ∩ {a, d, s} = {a} := by
+        ext i
+        simp only [mem_inter, mem_insert, mem_singleton]
+        aesop
+      have h := diff_triangle_card v.val w.val x
+      change hammingDist v.val w.val + 2 * _ = _ at h
+      rw [hvw, hv, hw, hEq] at h
+      simp [hac, hat, hct, had, has, hds] at h
+    subst s
+    have hp' : p.val = flip (flip x t) c := by
+      apply diff_injective x
+      change diff p.val x = diff (flip (flip x t) c) x
+      rw [hp, diff_two_flips x hct.symm, pair_comm]
+    have hq' : q.val = flip (flip x t) d := by
+      apply diff_injective x
+      change diff q.val x = diff (flip (flip x t) d) x
+      rw [hq, diff_two_flips x hds.symm, pair_comm]
+    have hv' : v.val = flip (flip (flip x t) a) c := by
+      apply diff_injective x
+      change diff v.val x = diff (flip (flip (flip x t) a) c) x
+      rw [hv, diff_three_flips x hat.symm hct.symm hac]
+      ext i
+      simp only [mem_insert, mem_singleton]
+      tauto
+    have hw' : w.val = flip (flip (flip x t) a) d := by
+      apply diff_injective x
+      change diff w.val x = diff (flip (flip (flip x t) a) d) x
+      rw [hw, diff_three_flips x hat.symm hds.symm had]
+      ext i
+      simp only [mem_insert, mem_singleton]
+      tauto
+    exact doubly_translated_spokes_excludes_low_middle hs x hcd hct hds hac.symm had.symm
+      hx hc hd (hp' ▸ p.property) (hq' ▸ q.property) (hv' ▸ v.property) (hw' ▸ w.property)
+      r m hr hr2 (hv' ▸ hvm) (hw' ▸ hwm) hlow hm2
+
+#print axioms equal_direction_cores_not_matched
