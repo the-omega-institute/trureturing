@@ -98,7 +98,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () (fun P : ℝ => (primeCount P - countingSecondScaleTop P) / (P / log P ^ 4)) atTop (𝓝 6)
+  Law R := R.readout () () secondScale atTop atTop
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   exact id
@@ -168,7 +168,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () (fun P : ℝ => (primeCount P - countingSaddleBudgetLimit P) / (P / log P ^ 4)) atTop (𝓝 6)
+  Law R := R.readout () () (fun P : ℝ => saddle P * budget P / (P / (log P * sqrt (log P)))) atTop (𝓝 (π / sqrt 3))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   exact id
