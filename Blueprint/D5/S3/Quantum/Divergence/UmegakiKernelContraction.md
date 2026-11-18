@@ -230,7 +230,7 @@ Lean statement: `D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_mul_embed
 
 *Commentary.*
 
-The amplification of Z times X tensor input identity equals the amplification of Z times X tensor output identity. The reference center and the output residual use this law on arbitrary complex matrices.
+The right module law is amp(N, Z · (X ⊗ I_a)) = amp(N, Z) · (X ⊗ I_b). The reference center and the output residual use this law on arbitrary complex matrices.
 
 **Theorem 1.20 (Left reference multiplication under amplification).**
 

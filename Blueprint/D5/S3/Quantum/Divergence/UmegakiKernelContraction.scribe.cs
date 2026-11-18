@@ -118,7 +118,7 @@ internal sealed class UmegakiKernelContractionDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_mul_embed"),
                 H("Right reference multiplication under amplification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The amplification of Z times X tensor input identity equals the amplification of Z times X tensor output identity. The reference center and the output residual use this law on arbitrary complex matrices."))),
+                    Paragraph(Text("The right module law is amp(N, Z · (X ⊗ I_a)) = amp(N, Z) · (X ⊗ I_b). The reference center and the output residual use this law on arbitrary complex matrices."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("amp-embed-mul"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_embed_mul"),
