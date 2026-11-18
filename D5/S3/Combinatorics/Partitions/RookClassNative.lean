@@ -152,7 +152,7 @@ def pad (N : ℕ) (b : PositiveColumns) : List ℕ :=
   List.replicate (N-b.val.length) 0 ++ b.val
 
 /-- Every member of the unrestricted native class fits in every registered
-    common length, with a genuine leading zero, including the empty class. -/
+    common length, with a genuine leading zero, including the empty board. -/
 theorem class_padding (m : ℕ) (b : PositiveColumns) (N : ℕ)
     (hN : area b + 1 ≤ N) (a : RookClass m b) :
     a.val.val.length < N ∧ (pad N a.val).length = N ∧
