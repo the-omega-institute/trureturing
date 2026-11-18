@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -135,5 +136,20 @@ theorem large_weight_tail {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s)
     _ ≤ (3 * P / 2) * (2 / 3 : ℝ) ^ s :=
       div_le_self (by positivity) (by linarith)
     _ ≤ _ := by gcongr; linarith
+
+/-- Every fixed geometric decay kills the second-threshold logarithmic scale
+when the exponent grows as a positive multiple of its square root. -/
+theorem geometric_sqrt_decay {c q : ℝ} (hc : 0 < c) (hq0 : 0 < q) (hq1 : q < 1) :
+    Tendsto (fun t : ℝ => t * sqrt t * q ^ (c * sqrt t)) atTop (𝓝 0) := by
+  let b : ℝ := -c * log q
+  have hb : 0 < b := mul_pos_of_neg_of_neg (by linarith) (log_neg hq0 hq1)
+  have h := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 3 b hb).comp tendsto_sqrt_atTop
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+  simp only [Function.comp_def, rpow_ofNat]
+  rw [rpow_def_of_pos hq0]
+  have he : -b * sqrt t = log q * (c * sqrt t) := by dsimp [b]; ring
+  have hp : sqrt t ^ 3 = t * sqrt t := by nlinarith [sq_sqrt ht.le]
+  rw [he, hp]
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.Tail
