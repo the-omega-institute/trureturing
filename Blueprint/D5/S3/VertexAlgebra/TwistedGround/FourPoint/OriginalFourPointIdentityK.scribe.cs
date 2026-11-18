@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.FourPoin
 
 internal sealed class OriginalFourPointIdentityKDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/OriginalFourMChargeCoset.";
+    private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourPointIdentityK.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Original Four-Point Identity from the Actual Channel Germs.",

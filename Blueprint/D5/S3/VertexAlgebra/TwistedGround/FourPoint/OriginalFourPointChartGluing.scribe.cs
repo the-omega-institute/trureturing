@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.FourPoin
 
 internal sealed class OriginalFourPointChartGluingDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/OriginalFourPointChartGluing.";
+    private const string Prefix = "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourPointChartGluing.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Analytic Gluing of the Four-Point Charts.",
