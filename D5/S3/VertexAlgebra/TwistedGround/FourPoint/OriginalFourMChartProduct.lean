@@ -432,6 +432,7 @@ theorem native_rank24_determinant {w : ℂ} (hw : ‖w‖ < 1) :
     mul_pow, he, mul_inv, slitPeriod_eq_period hw2]
 
 set_option maxHeartbeats 400000 in
+-- The two complex source substitutions and finite Fourier normalization share this proof.
 /-- The complementary S law cancels the signed Gaussian correction at D.
 The B path uses Pfaff translation followed by complementary S. This
 comparison keeps every charge sector and every finite external weight. -/
@@ -569,9 +570,103 @@ theorem native_chart_product (D : LatticeData) (hu : IsUnit D.G.det)
     unfold fourierRow at hrow
     rw [he, mul_assoc, hrow]
 
+open OriginalFourMDiscriminantCharge (doubled sectorEquiv)
+open LatticeDiscriminantTheta (Discriminant pairingCharacter phase quadraticClass)
+open LatticeDiscriminantWeil (rho weilS weilT)
+open LatticeDiscriminantTheta (dual_lattice_realization)
+open private doubled_posDef sqrt_det_doubled pairing_sign reduction_surjective from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMShiftedTheta
+
+private theorem fourier_from_D (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (hr : D.rank = 24) (f : ModTwoCharge D → ℂ)
+    (a : ModTwoCharge D) :
+    fourierRow D a (fun b => quadraticSign D b * f b) =
+      ((2 : ℂ) ^ (12 : ℕ))⁻¹ *
+        ∑ b, quadraticSign D (a + b) * fourierRow D b f := by
+  let d := doubled D
+  let hd := doubled_posDef D hD
+  let : Fact (gramReal d).PosDef := ⟨hd⟩
+  let : Fintype (Discriminant d) := Fintype.ofFinite _
+  let e := sectorEquiv D hu
+  let S := weilS d
+  let T := weilT d
+  have hρ : rho d = (2 : ℂ) ^ (12 : ℕ) := by
+    unfold rho
+    rw [(dual_lattice_realization d hd).2.2.1]
+    exact sqrt_det_doubled D hu hd hr
+  have hneg (b : ModTwoCharge D) : -(e b) = e b := by
+    rw [← map_neg]
+    congr 1
+    ext i
+    exact ZMod.neg_eq_self_mod_two _
+  have hS (g : Discriminant d → ℂ) (b : ModTwoCharge D) :
+      S g (e b) = fourierRow D b (fun c => g (e c)) := by
+    change (rho d)⁻¹ * (∑ c : Discriminant d, pairingCharacter d hd (e b) (-c) * g c) = _
+    rw [hρ, ← e.toEquiv.sum_comp (fun c => pairingCharacter d hd (e b) (-c) * g c)]
+    unfold fourierRow
+    congr 1
+    apply Finset.sum_congr rfl
+    intro c _
+    change pairingCharacter d hd (e b) (-(e c)) * g (e c) = _
+    rw [hneg, pairing_sign D hu hd]
+  have hQ (b : ModTwoCharge D) : phase (quadraticClass d (e b)) = quadraticSign D b := by
+    obtain ⟨q, rfl⟩ := reduction_surjective D b
+    exact OriginalFourMShiftedTheta.quadratic_phase_reduceCharge D hu hd q
+  have hT (g : Discriminant d → ℂ) (b : ModTwoCharge D) :
+      T g (e b) = quadraticSign D b * g (e b) := by
+    change phase (quadraticClass d (e b)) * _ = _
+    rw [hQ]
+  have hT2 (g : Discriminant d → ℂ) : T (T g) = g := by
+    funext b
+    obtain ⟨c, rfl⟩ := e.surjective b
+    rw [hT, hT, ← mul_assoc, quadraticSign_square, one_mul]
+  obtain ⟨hs, hst⟩ := OriginalFourMShiftedTheta.original_finite_weil D hu hD hr
+  have hS2 (g : Discriminant d → ℂ) : S (S g) = g :=
+    LinearMap.congr_fun hs g
+  have hcube (g : Discriminant d → ℂ) : S (T (S (T (S (T g))))) = g :=
+    LinearMap.congr_fun hst g
+  have hbraid (g : Discriminant d → ℂ) : S (T (S g)) = T (S (T g)) := by
+    have h := congrArg (fun v => T (S v)) (hcube (T g))
+    rwa [hS2, hT2, hT2] at h
+  let g : Discriminant d → ℂ := fun b => f (e.symm b)
+  have h := congrFun (hbraid (S g)) (e a)
+  rw [hS2] at h
+  simp only [hS, hT, g, AddEquiv.symm_apply_apply] at h
+  rw [h]
+  unfold fourierRow
+  rw [← mul_assoc, mul_comm (quadraticSign D a), mul_assoc, Finset.mul_sum]
+  apply congrArg (((2 : ℂ) ^ (12 : ℕ))⁻¹ * ·)
+  apply Finset.sum_congr rfl
+  intro b _
+  rw [OriginalFourMChargeCoset.quadraticSign_add]
+  ring
+
+/-- The D-to-B comparison has the original quadratic character at the
+sum of the two sectors, with the Pfaff period-root power on the B side. -/
+theorem chart_product_B_from_D (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (hr : D.rank = 24) {X : Type*} [Fintype X]
+    (s : X → Sample D) (weights : X → ℂ) (upperA : Bool)
+    {x : ℝ} (hx : 0 < x) (hx1 : x < 1) (w : ℂ) (a : ModTwoCharge D) :
+    (periodRoot .A x) ^ (12 : ℕ) * chartProduct D hu s weights upperA x w .B a =
+      ((2 : ℂ) ^ (12 : ℕ))⁻¹ * ∑ b, quadraticSign D (a + b) *
+        chartProduct D hu s weights upperA x w .D b := by
+  have hp : periodRoot .A x ≠ 0 :=
+    inv_ne_zero (ofReal_ne_zero.mpr (Real.sqrt_pos.2 hx).ne')
+  let f := chartProduct D hu s weights upperA x w .A
+  have hd (b : ModTwoCharge D) :
+      chartProduct D hu s weights upperA x w .D b = fourierRow D b f :=
+    (native_chart_product D hu hD hr s weights upperA hx hx1 w b).1
+  have hb := (native_chart_product D hu hD hr s weights upperA hx hx1 w a).2
+  rw [hb, ← mul_assoc, mul_inv_cancel₀ (pow_ne_zero _ hp), one_mul]
+  simp only [hd]
+  have h := fourier_from_D D hu hD hr f a
+  unfold fourierRow at h ⊢
+  simpa only [mul_assoc, f] using h
+
 #print axioms pulled_covariance_off_diagonal
 #print axioms chart_product_charge_sum
 #print axioms native_rank24_determinant
 #print axioms native_chart_product
+#print axioms chart_product_B_from_D
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChartProduct

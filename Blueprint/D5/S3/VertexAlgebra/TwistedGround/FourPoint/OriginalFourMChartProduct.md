@@ -76,8 +76,21 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartP
 
 For every finite family of external source weights the forward theta exponential cancels the Gram-contracted Gaussian correction. The D comparison uses the normalized original Fourier row. The B comparison first uses the Pfaff translation and then complementary inversion, with the quadratic sign in the Fourier summand and the inverse twelfth power of the Pfaff root.
 
+**Theorem 1.7 (The common B and D sector expression).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chart_product_B_from_D`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chart_product_B_from_D` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The rank-24 finite Weil relations give the B product from the D products. The summand uses the original quadratic sign of the sum of the two sectors.
+
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chart_product_B_from_D`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.chart_product_charge_sum`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.native_chart_product`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMChartProduct.native_rank24_determinant`

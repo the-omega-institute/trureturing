@@ -36,5 +36,9 @@ internal sealed class OriginalFourMChartProductDocument : IScribeDocumentDefinit
                 + "cancels the Gram-contracted Gaussian correction. The D comparison uses the normalized "
                 + "original Fourier row. The B comparison first uses the Pfaff translation and then "
                 + "complementary inversion, with the quadratic sign in the Fourier summand and "
-                + "the inverse twelfth power of the Pfaff root."))));
+                + "the inverse twelfth power of the Pfaff root."),
+            Result("fourm-chart-product-b-from-d", "chart_product_B_from_D",
+                "The common B and D sector expression",
+                "The rank-24 finite Weil relations give the B product from the D products. "
+                + "The summand uses the original quadratic sign of the sum of the two sectors."))));
 }
