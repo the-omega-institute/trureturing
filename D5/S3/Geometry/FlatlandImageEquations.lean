@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#25719; Proved)
 escape_witness: none; settling result
 Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
   sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd.
-The signed-minor expression in cofactorMatrix is literal; proofs use the cofactor owner.
+The matrix cofactorMatrix reshapes C by column vectorization.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30117
 Declaration classifications (same-delivery helpers expanded; C denotes the declaration above):
 singular_kernel_implies_equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: actual_image_equations.

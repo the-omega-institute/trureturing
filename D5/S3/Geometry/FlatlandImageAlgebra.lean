@@ -11,7 +11,7 @@ admission_basis: escape-witness
 escape_witness: rank_two_pair_curves (used by diagonal_rank_two_pair_curves)
 Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
   sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd.
-The signed-minor expression in cofactorMatrix is literal; proofs use the cofactor owner.
+The matrix cofactorMatrix reshapes C by column vectorization.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30117
 Declaration classifications (same-delivery helpers expanded; C denotes the declaration above):
 ImagingDomain | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: theta, imageClosure, imageClosure_polynomial_specialization, raw_imaging_realization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.postcompose_actual, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations.
@@ -20,7 +20,7 @@ coordinates | proof_shape: bind-only; escape_witness: none; Direct frozen depend
 Multihomogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure, imageClosure_polynomial_specialization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.minorPolynomial_multihomogeneous, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_multihomogeneous.
 imageClosure | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_polynomial_specialization, rank_one_closure_from_rank_two, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.normalized_rank_one_closure, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageClosure.closure_from_bilinear_normal_form, D5.S3.Geometry.FlatlandImageClosure.normalRankOne_closure, D5.S3.Geometry.FlatlandImageClosure.normalRankTwo_closure, D5.S3.Geometry.FlatlandImageClosure.singular_compatible_closure, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.imageClosure_implies_equations, D5.S3.Geometry.FlatlandImageEquations.claim, D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure, D5.S3.Geometry.FlatlandImageEquations.result.
 segreMatrix | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: cofactorMatrix, equations, D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel, D5.S3.Geometry.FlatlandImageEquations.segre_kernel_bilinear, D5.S3.Geometry.FlatlandImageEquations.minorPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure.
-cofactorMatrix | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: equations, D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual.
+cofactorMatrix | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: equations, D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual.
 equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations, D5.S3.Geometry.FlatlandImageEquations.imageClosure_implies_equations, D5.S3.Geometry.FlatlandImageEquations.claim, D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure, D5.S3.Geometry.FlatlandImageEquations.result.
 deformX | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: deform_at_zero, deform_nonzero, deform_compatible, rank_one_closure_from_rank_two.
 deformY | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: deform_at_zero, deform_nonzero, deform_compatible, rank_one_closure_from_rank_two.
@@ -105,8 +105,9 @@ def segreMatrix {n : ℕ} (p : (Fin n → Fin 2 → Projectivization ℂ (Fin 3 
 /-- Column vectorization: the entry F(b,a) pairs with x(a)y(b). -/
 def cofactorMatrix {n : ℕ} (p : (Fin n → Fin 2 → Projectivization ℂ (Fin 3 → ℂ))) (I : Fin 8 ↪ Fin n) :
     Matrix (Fin 3) (Fin 3) ℂ :=
-  fun b a => (-1 : ℂ) ^ (finProdFinEquiv (a,b)).val *
-    Matrix.det ((segreMatrix p).submatrix I (finProdFinEquiv (a,b)).succAbove)
+  fun b a =>
+    D5.S3.Arith.Lattices.CofactorKernel.cofactor
+      ((segreMatrix p).submatrix I id) (finProdFinEquiv (a,b))
 
 /-- Every 9 by 9 Segre minor and every eight-point cofactor determinant vanish. -/
 def equations {n : ℕ} (p : (Fin n → Fin 2 → Projectivization ℂ (Fin 3 → ℂ))) : Prop :=
