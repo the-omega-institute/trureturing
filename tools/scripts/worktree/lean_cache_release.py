@@ -626,12 +626,29 @@ def publish(root, partition, verification=None, *, build_report=True, indexed=Fa
                     (stage / name).unlink(missing_ok=True)
                 downloaded = stage / "downloaded"
                 downloaded.mkdir()
+                if indexed and "workflow_run_id" in verification:
+                    lifetime.enter_context(cache_guard(root))
+                    with tempfile.TemporaryDirectory(prefix=".release-scoped-", dir=root / ".lake") as empty:
+                        control = pathlib.Path(empty)
+                        transport = control / "download"
+                        transport.mkdir()
+                        modules, transferred = restore_scoped(root, partition, tag, transport, deadline,
+                            cache_key=cache_key, producer=identity["producer_commit_sha"],
+                            targets=["D5.S0.Tower.GoldenGapWord"], verification=True, destination_root=control)
+                        if not modules or not 0 < transferred < metadata["archive_bytes"]:
+                            raise ValueError("indexed verification did not restore a strict subset")
+                        recovered = control / ".lake/build"
+                        for member in recovered.rglob("*"):
+                            if member.is_file() and archive_sha(member, deadline) != archive_sha(
+                                    root / ".lake/build" / member.relative_to(recovered), deadline):
+                                raise ValueError("scoped restore bytes differ from the producer")
                 if all(verification.get(field) for field in
                        ("workflow_run_id", "workflow_run_attempt", "source_ref")):
                     # Only the attributed native job owns a disposable source build.
                     # Failure after retirement may leave it absent; other callers
                     # retain their source. Hold the writer through owned cleanup.
-                    lifetime.enter_context(cache_guard(root))
+                    if not indexed:
+                        lifetime.enter_context(cache_guard(root))
                     lake, build = root / ".lake", root / ".lake/build"
                     if lake.is_symlink() or build.is_symlink() or not build.is_dir():
                         raise ValueError("native verification requires a private source build")
@@ -776,7 +793,8 @@ def download_range(asset, offset, length, output, deadline):
                 process.kill()
 
 
-def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer, targets, verification):
+def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer, targets, verification,
+                   destination_root=None):
     metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
         expected={"producer_commit_sha": producer} if producer else None,
         verification=verification, cache_key=cache_key)
@@ -787,8 +805,9 @@ def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer
     index_path = stage / index["name"]
     if index_path.stat().st_size != index["bytes"] or archive_sha(index_path, deadline) != index["sha256"]:
         raise ValueError("Release index checksum or size mismatch")
-    rows = indexed_release.scoped_members(root, indexed_release.read_index(index_path, manifest["archive_bytes"]), targets)
-    lake = root / ".lake"
+    lake = (root if destination_root is None else destination_root) / ".lake"
+    rows = indexed_release.scoped_members(root,
+        indexed_release.read_index(index_path, manifest["archive_bytes"]), targets, lake / "build")
     if lake.is_symlink() or (lake / "build").is_symlink():
         raise ValueError("scoped restore requires a private project build")
     lake.mkdir(exist_ok=True)
@@ -812,7 +831,7 @@ def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer
     receipt("fetch", "scoped", resolved=tag, producer_commit_sha=manifest["producer_commit_sha"],
             modules=[row["module"] for row in rows], requests=requests,
             index_bytes=index["bytes"], data_bytes=transferred)
-    return 0
+    return len(rows), transferred
 
 
 def install_scoped(target, unpacked, extracted, deadline):
@@ -1092,8 +1111,9 @@ def fetch_candidate(root, partition, tag, producer, *, targets=()):
             if targets:
                 if os.environ.get("GITHUB_ACTIONS") == "true" or checkout_topology(root)[0]:
                     raise ValueError("scoped Release restore requires a local main checkout")
-                return restore_scoped(root, source, tag, pathlib.Path(temporary), deadline,
-                                      cache_key=cache_key, producer=producer, targets=targets, verification=True)
+                restore_scoped(root, source, tag, pathlib.Path(temporary), deadline,
+                               cache_key=cache_key, producer=producer, targets=targets, verification=True)
+                return 0
             installed = restore_snapshot(root, source, tag, pathlib.Path(temporary), deadline,
                 {"producer_commit_sha": producer}, refresh_stale=True, cache_key=cache_key,
                 require_compatible_seed=True, on_installed=notify_installed)

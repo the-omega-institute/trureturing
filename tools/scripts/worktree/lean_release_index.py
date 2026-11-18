@@ -277,7 +277,7 @@ def restore_full(stage, manifest, rows, destination, deadline):
         raise ValueError("Release archive checksum mismatch")
 
 
-def scoped_members(root, rows, targets):
+def scoped_members(root, rows, targets, target_build):
     modules = workspace_modules(root)
     graph = project_imports(root, modules)
     unknown = set(targets) - modules.keys()
@@ -300,7 +300,7 @@ def scoped_members(root, rows, targets):
         if not paths.issubset(allowed):
             raise ValueError("indexed module paths disagree with the Lake workspace: " + name)
         compatible.add(name)
-        if all(not os.path.lexists(root / PROJECT_BUILD / path) for path in paths):
+        if all(not os.path.lexists(target_build / path) for path in paths):
             needed.add(name)
     return [row for row in rows if row["module"] in needed]
 
