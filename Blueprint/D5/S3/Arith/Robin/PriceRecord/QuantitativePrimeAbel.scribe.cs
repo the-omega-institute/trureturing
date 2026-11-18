@@ -7,10 +7,10 @@ internal sealed class QuantitativePrimeAbelDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Real-endpoint four-term prime-counting expansion.",
+        "Real-endpoint factorial prime-counting expansion.",
         H("Quantitative counting and finite Euler deficits"),
         Blocks(
-            Paragraph(Text("A quantitative theta remainder and finite Abel summation give the real-endpoint prime-counting expansion through its residual coefficient 24. The same literal finite prime intervals carry the nonlinear Euler deficit estimates used by the real-image infimum limit.")),
+            Paragraph(Text("A quantitative theta remainder and finite Abel summation give the real-endpoint prime-counting expansion at every fixed order. The same literal finite prime intervals carry the nonlinear Euler deficit estimates used by the real-image infimum limit.")),
             Describe.Lean(DescribeId.Create("quantitativeprimeabel-theta-error-log-power"),
                 DeclarationHandle.Create(Prefix + "theta_error_log_power"), H("Theta remainder at every fixed log power"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

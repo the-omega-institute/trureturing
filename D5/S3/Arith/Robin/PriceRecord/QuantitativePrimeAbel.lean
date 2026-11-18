@@ -313,21 +313,28 @@ private lemma logPowerModel_deriv (k : ℕ) {x : ℝ} (hx : 1 < x) :
   have hl : log x ≠ 0 := (log_pos hx).ne'
   cases k with
   | zero =>
-    simpa [logPowerModel, reciprocalLogPower] using hasDerivAt_id x
+    have h : logPowerModel 0 = id := by
+      funext u
+      simp [logPowerModel]
+    simpa [h, reciprocalLogPower] using hasDerivAt_id x
   | succ k =>
     convert (hasDerivAt_id x).div ((hasDerivAt_log hx0).pow (k + 1))
       (pow_ne_zero (k + 1) hl) using 1
-    simp only [reciprocalLogPower, id_eq, Nat.add_sub_cancel, Nat.succ_eq_add_one,
-      pow_succ (log x) (k + 1), pow_succ (log x) k]
-    field_simp [hx0, hl]
-    <;> ring
+    · rfl
+    · simp only [reciprocalLogPower, id_eq, Nat.add_sub_cancel, Nat.succ_eq_add_one,
+        pow_succ (log x) (k + 1), pow_succ (log x) k]
+      field_simp [hx0, hl]
+      <;> ring
 
 private lemma factorialApproximation_deriv (r : ℕ) {x : ℝ} (hx : 1 < x) :
     HasDerivAt (factorialApproximation r)
       (reciprocalLogPower 1 x - (r.factorial : ℝ) * reciprocalLogPower (r + 1) x) x := by
   induction r with
   | zero =>
-    simpa [factorialApproximation] using hasDerivAt_const x (0 : ℝ)
+    have h : factorialApproximation 0 = fun _ => 0 := by
+      funext u
+      simp [factorialApproximation]
+    simpa [h] using hasDerivAt_const x (0 : ℝ)
   | succ r ih =>
     convert ih.add ((logPowerModel_deriv (r + 1) hx).const_mul (r.factorial : ℝ)) using 1
     · funext u
@@ -344,7 +351,9 @@ theorem prime_counting_factorial_residual (r : ℕ) :
   change Tendsto (fun x => (primeCount x - factorialApproximation r x) /
     logPowerModel (r + 1) x) atTop (𝓝 (r.factorial : ℝ))
   let c : ℝ := r.factorial
-  have hc : 0 < c := by exact_mod_cast Nat.factorial_pos r
+  have hc : 0 < c := by
+    dsimp [c]
+    exact_mod_cast Nat.factorial_pos r
   let F (x : ℝ) := Chebyshev.theta x / (x * log x ^ 2)
   let H (x : ℝ) := factorialApproximation r x - logPowerModel 1 x
   let H' (x : ℝ) := reciprocalLogPower 2 x - c * reciprocalLogPower (r + 1) x
