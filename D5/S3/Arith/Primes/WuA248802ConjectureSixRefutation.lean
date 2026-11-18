@@ -51,6 +51,22 @@ def claim : Prop :=
     ¬ coveredThree (44 * n + 10) → ¬ coveredFour (44 * n + 10) → ¬ coveredFive (44 * n + 10) →
     Nat.minFac (2 ^ (2 ^ (44 * n + 10) + 2) + 3) = 2383
 
+private theorem divisor_of_inner_residue (e : ℕ) (hi : e % 879 = 718) :
+    1759 ∣ (2 : ℕ) ^ (e + 2) + 3 := by
+  have h879 : (2 : ℕ) ^ 879 ≡ 1 [MOD 1759] := by decide
+  have h720 : (2 : ℕ) ^ 720 ≡ 1756 [MOD 1759] := by decide
+  have he : e + 2 = 720 + 879 * (e / 879) := by
+    have h := Nat.mod_add_div e 879
+    omega
+  have houter : (2 : ℕ) ^ (e + 2) ≡ 1756 [MOD 1759] := by
+    rw [he, pow_add, pow_mul]
+    simpa only [one_pow, mul_one] using h720.mul (h879.pow (e / 879))
+  exact Nat.modEq_zero_iff_dvd.mp ((houter.add_right 3).trans (by decide))
+
+private theorem minFac_ne_of_dvd (x : ℕ) (hd : 1759 ∣ x) : Nat.minFac x ≠ 2383 :=
+  ne_of_lt ((Nat.minFac_le_of_dvd (by decide : 2 ≤ 1759) hd).trans_lt
+    (by decide : 1759 < 2383))
+
 /-- The admissible witness n = 79 refutes the entire conditional universal claim. -/
 theorem result : ¬ claim := by
   have hc1 : ¬ coveredOne 3486 := by rintro ⟨m, hm⟩; omega
@@ -60,27 +76,13 @@ theorem result : ¬ claim := by
   have hc5 : ¬ coveredFive 3486 := by rintro ⟨m, hm, _⟩; omega
   have h292 : (2 : ℕ) ^ 292 ≡ 1 [MOD 879] := by decide
   have h274 : (2 : ℕ) ^ 274 ≡ 718 [MOD 879] := by decide
-  have h879 : (2 : ℕ) ^ 879 ≡ 1 [MOD 1759] := by decide
-  have h720 : (2 : ℕ) ^ 720 ≡ 1756 [MOD 1759] := by decide
-  have hinner : (2 : ℕ) ^ 3486 ≡ 718 [MOD 879] := by
+  have hinner : (2 : ℕ) ^ (44 * 79 + 10) ≡ 718 [MOD 879] := by
     have h := h274.mul (h292.pow 11)
     simpa only [one_pow, mul_one, ← pow_mul, ← pow_add] using h
-  have hi : (2 : ℕ) ^ 3486 % 879 = 718 := hinner
-  have he : (2 : ℕ) ^ 3486 + 2 = 720 + 879 * (2 ^ 3486 / 879) := by
-    have h := Nat.mod_add_div ((2 : ℕ) ^ 3486) 879
-    omega
-  have houter : (2 : ℕ) ^ (2 ^ 3486 + 2) ≡ 1756 [MOD 1759] := by
-    rw [he, pow_add, pow_mul]
-    simpa only [one_pow, mul_one] using h720.mul (h879.pow (2 ^ 3486 / 879))
-  have hzero : (2 : ℕ) ^ (2 ^ 3486 + 2) + 3 ≡ 0 [MOD 1759] :=
-    (houter.add_right 3).trans (by decide)
-  have hd : 1759 ∣ (2 : ℕ) ^ (2 ^ 3486 + 2) + 3 :=
-    Nat.modEq_zero_iff_dvd.mp hzero
-  have hbound := Nat.minFac_le_of_dvd (by decide : 2 ≤ 1759) hd
+  have hd : 1759 ∣ (2 : ℕ) ^ (2 ^ (44 * 79 + 10) + 2) + 3 :=
+    divisor_of_inner_residue (2 ^ (44 * 79 + 10)) hinner
   intro hclaim
-  have hEq := hclaim 79 hc1 hc2 hc3 hc4 hc5
-  change Nat.minFac ((2 : ℕ) ^ (2 ^ 3486 + 2) + 3) = 2383 at hEq
-  exact (ne_of_lt (hbound.trans_lt (by decide : 1759 < 2383))) hEq
+  exact minFac_ne_of_dvd _ hd (hclaim 79 hc1 hc2 hc3 hc4 hc5)
 
 #print axioms claim
 #print axioms result
