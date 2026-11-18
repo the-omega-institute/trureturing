@@ -8,7 +8,11 @@
 
 /-
 admission_basis: open-problem-resolution (#23717; Proved).
-Direct frozen dependencies: none (only pinned Mathlib imports).
+Direct frozen dependencies:
+  D5/S0/Automata/TwoStateCertificateWidth.rotate_ne
+    (declaration statement_id: sha256:c19f186363328657bba190013f2e602d331392250cff0fd1cb4db82fc358b2f8).
+  D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination.rotate_twice_ne
+    (declaration statement_id: sha256:4db858c0807bdecf3630d04b87692291da0363c836a439d43858ecccf66b4d99).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/29985.
 The public predicates inline the one-entry count from #23717; the proofs use
 hammingNorm (Function.uncurry M) through weight_encoding without a duplicate definition.
@@ -37,13 +41,13 @@ matrix_weight_le_zarankiewicz: proof_shape: bind-only; escape_witness: none; con
 extremizer: proof_shape: bind-only; escape_witness: none; consumers: result.
 -/
 
+import D5.S0.Automata.TwoStateCertificateWidth
+import D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
+import Mathlib.Combinatorics.Hall.Finite
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Combinatorics.SimpleGraph.Extremal.Zarankiewicz
-import D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
-
-import Mathlib.Combinatorics.Hall.Finite
-import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.InformationTheory.Hamming
+import Mathlib.Logic.Equiv.Fin.Rotate
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -208,9 +212,7 @@ private theorem transpose_free {n : ℕ} (M : Matrix (Fin n) (Fin n) (Fin 2))
 
 
 private theorem rotate_no_fixed {n : ℕ} (hn : 3 ≤ n) (i : Fin n) : finRotate n i ≠ i := by
-  apply Equiv.Perm.mem_support.mp
-  rw [support_finRotate_of_le (by omega : 2 ≤ n)]
-  exact mem_univ i
+  exact D5.S0.Automata.TwoStateCertificateWidth.rotate_ne (by omega) i
 
 private theorem cycle_matrix {n : ℕ} (hn : 3 ≤ n) :
     ∃ M : Matrix (Fin n) (Fin n) (Fin 2), ¬ HasRectangle M ∧ hammingNorm (Function.uncurry M) = 2*n := by

@@ -75,4 +75,5 @@ The proof uses a cyclic avoiding matrix of weight 2*n. A full row or column in a
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/AlekseyevA191873ZeroDiagonal.diagonalWeights`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/AlekseyevA191873ZeroDiagonal.forcingCounts`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/AlekseyevA191873ZeroDiagonal.result`
+- Dependency: [D5/S0/Automata/TwoStateCertificateWidth](../../../../S0/Automata/TwoStateCertificateWidth.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination](../Domination/TrapezohedralMinimalDomination.md)

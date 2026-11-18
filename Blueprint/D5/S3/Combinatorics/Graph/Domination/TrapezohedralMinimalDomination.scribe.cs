@@ -73,11 +73,11 @@ internal sealed class TrapezohedralMinimalDominationDocument : IScribeDocumentDe
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
     private static Formula RotateTwiceFormula() =>
-        Disp(All("n", Nat,
+        All("n", Nat,
             Imp(Le(D(3), V("n")),
                 All("i", Call("Fin", V("n")),
                     new Formula.Relation(
                         Call("finRotate", V("n"), Call("finRotate", V("n"), V("i"))),
-                        FormulaRelationOperator.NotEqual, V("i"))))));
+                        FormulaRelationOperator.NotEqual, V("i")))));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 }

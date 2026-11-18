@@ -158,7 +158,7 @@ private theorem dominates_alphaSet_iff {n : ℕ} (j : Fin n) (C : Set (Fin n)) :
         · exact Or.inr ⟨a (finRotate n i), hi, Or.inr rfl⟩
 
 /-- A selected cover vertex has an edge whose other endpoint is omitted. -/
-def CutPrivate {n : ℕ} (j : Fin n) (C : Set (Fin n)) (i : Fin n) : Prop :=
+private def CutPrivate {n : ℕ} (j : Fin n) (C : Set (Fin n)) (i : Fin n) : Prop :=
   ∃ k : Fin n, k ≠ j ∧
     ((i = k ∧ finRotate n k ∉ C) ∨ (i = finRotate n k ∧ k ∉ C))
 
