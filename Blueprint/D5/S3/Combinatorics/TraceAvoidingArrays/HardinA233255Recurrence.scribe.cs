@@ -1,9 +1,18 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
 
 internal sealed class HardinA233255RecurrenceDocument : IScribeDocumentDefinition
 {
+    private static Formula V(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
+    private static Formula Num(string value) => D(value.Select(c => (byte)(c - '0')).ToArray());
+    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, FormulaDsl.Eq, Sp, b);
+    private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part, i) => i == 0
+        ? new[] { Seq(Operatorname, Grp(V(part))) }
+        : new[] { Dot, Seq(Operatorname, Grp(V(part))) }).ToArray());
+    private static Formula Call(string name, params Formula[] args) => args.Length == 0
+        ? Q(name) : new Formula.Apply(Q(name), [.. args]);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original seven-column individual-array count satisfies Hardin's five-step recurrence.",
         H("Literal positive-height recurrence"),
@@ -20,6 +29,28 @@ internal sealed class HardinA233255RecurrenceDocument : IScribeDocumentDefinitio
                 + "The six explicit vectors are checked powers of this actual seventeen-coordinate "
                 + "transfer on the all-ones vector. Their exact degree-five vector identity propagates "
                 + "to every height by multiplication with arbitrary further matrix powers.")),
+            Describe.Lean(DescribeId.Create("table"), DeclarationHandle.Create(
+                "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table"),
+                H("The sixteen-class transfer table"),
+                StatementSource.FromAuthor(Disp(Seq(Call("HardinA233255Recurrence.table"), Colon, Sp,
+                    Call("Matrix", Call("Fin", Num("16")), Call("Fin", Num("16")), V("Int"))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Automata/hardin2013a233255")),
+                Blocks(Paragraph(Text("This 16 by 16 integer matrix stores the compatible proper "
+                    + "boundary-class transition counts, with both indices in the representatives and "
+                    + "classOf order of HardinA233255ShapeSymmetry. Entries are defined by the finite "
+                    + "row vectors in the Lean owner. The theorem table_matches pins the entire table "
+                    + "to the semantic transfer K, including every source and destination class."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("table-matches"), DeclarationHandle.Create(
+                "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.table_matches"),
+                H("The table equals the semantic transfer"),
+                StatementSource.FromAuthor(Disp(Eq(Call("HardinA233255ShapeSymmetry.K"),
+                    Call("HardinA233255Recurrence.table")))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Automata/hardin2013a233255")),
+                Blocks(Paragraph(Text("Equality is of the complete matrices. The kernel-checked finite "
+                    + "certificate compares all 256 entries with the compatible-row fibre counts. "
+                    + "Consumers reuse this owner table through their class injections."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(
                 "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result"),
                 H("The all-height five-step recurrence"), StatementSource.WithoutFormula(),

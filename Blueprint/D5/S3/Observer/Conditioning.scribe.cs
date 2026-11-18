@@ -10,6 +10,10 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
         "Finite projective record measurements preserve trace and define idempotent unread conditioning.",
         H("Finite Record Conditioning"),
         Blocks(
+            Paragraph(Text("Selected Lüders repeatability uses the particular instrument in conditionalState. Let d and kappa be finite coordinate and record types, with the required decidable equalities, and let P satisfy the original IsRecordMeasurement laws: self-adjointness, idempotence, pairwise orthogonality and completeness. For an actual positive semidefinite rho of trace one, select k with recordWeight P rho k nonzero, and put sigma = conditionalState P rho k. In matrix notation, w_j(tau) = trace(tau P_j) and sigma = w_k(rho) inverse times P_k rho P_k. Then "), Math(SelectedRepeatabilityFormula())),
+            Paragraph(Text("The positivity and trace-one assertions are supplied directly by conditionalState_isState. The repeat weights follow from support of this actual branch. Expanding conditionalState and using associativity and P_k squared equal to P_k gives sigma P_k = sigma. For j distinct from k, P_k P_j = 0 gives sigma P_j = 0. Taking traces yields w_k(sigma) = trace(sigma) = 1 and w_j(sigma) = 0. Only scalar normalization and the original projection laws are needed for these support identities; no separately supplied state sigma or intervening evolution is introduced.")),
+            Paragraph(Text("The nonzero-weight premise is essential to this normalization. It permits every positive-probability branch, including degenerate projection ranges and arbitrary mixed input states. A zero-weight branch has no normalized selected-state conclusion here. Empty coordinate or record types create no exceptional branch satisfying these hypotheses. This is immediate repetition of the same projective measurement after the chosen Lüders update. It does not say that static effects determine an instrument, that repeatability uniquely specifies Lüders state change, or that an arbitrary intervening evolution preserves the record. Idempotence of the unread map is a separate statement.")),
+            Paragraph(Text("The literature correspondence is Gerhart Lüders, Concerning the state-change due to the measurement process, in Kirkpatrick's English translation, quant-ph/0403007v2: Section 2, equations (2a)–(3) give the projection algebra and trace weights, and equation (7) gives the unnormalized selected branch P_k rho P_k. Division by its nonzero trace is the conditionalState used here. Section 3, equations (9)–(10) express sequential branches and certainty through vanishing alternative weights. The present result is the same-PVM immediate-repeat specialization, with no intermediate evolution or leakage estimate, and makes no independent claim about physical realization of the instrument.")),
             Describe.Lean(
                 DescribeId.Create("record-weights-sum-to-the-original-trace"),
                 DeclarationHandle.Create("D5/S3/Observer/Conditioning.recordWeight_sum"),
@@ -101,6 +105,14 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
                                     + "normalization."))),
                 DescribeRole.Theorem
             ))));
+
+    private static Formula SelectedRepeatabilityFormula() => Disp(Seq(
+        Operatorname, Grp(F.Id("PosSemidef")), Open, SigmaLower, Close,
+        Sp, Land, Sp, Operatorname, Grp(F.Id("tr")), Open, SigmaLower, Close, Eq, D(1),
+        Sp, Land, Sp, F.Id("w"), Underscore, Grp(F.Id("k")), Open, SigmaLower, Close, Eq, D(1),
+        Sp, Land, Sp, Open, Forall, Sp, F.Id("j"), InMacro, Kappa, Comma, Esc,
+        F.Id("j"), Neq, Sp, F.Id("k"), Sp, Rightarrow, Sp,
+        F.Id("w"), Underscore, Grp(F.Id("j")), Open, SigmaLower, Close, Eq, D(0), Close));
 
     private static Formula RecordWeightSumFormula() => Disp(Seq(
         Ambient(),

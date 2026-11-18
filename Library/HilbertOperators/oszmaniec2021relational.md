@@ -5,7 +5,8 @@ authors: Michał Oszmaniec, Daniel J. Brod, Ernesto F. Galvão
 year: 2021
 url: https://arxiv.org/abs/2109.10006v1
 claim: Higher-degree Bargmann invariants retain relational information absent from pair overlaps and admit resource-dependent coherent cycle tests.
-strata_touched: []
+strata_touched:
+  - D5/S3/Quantum/PureState/BargmannRealRephasing
 license: citation-only
 triage: anchor
 doi: 10.1088/1367-2630/ad1a27
@@ -65,3 +66,14 @@ distinguishability, not one-shot perfect identification.
 
 This note paraphrases the primary text. No article, figure, or extended
 quotation is redistributed.
+
+## Verified locator
+
+DOI: https://doi.org/10.1088/1367-2630/ad1a27
+Source: https://arxiv.org/abs/2109.10006v1
+
+The DOI resolves in Crossref to New J. Phys. 26, 013053 (2024) by the same
+three authors. In v1, the paragraph "Application: Basis-independent
+imaginarity witnesses" states that a non-real Bargmann invariant of degree
+three or more forces complex-valued amplitudes in every basis, because the
+invariant is gauge-invariant. It does not state a converse.
