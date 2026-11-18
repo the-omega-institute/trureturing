@@ -905,4 +905,26 @@ theorem inverse_lowered_word_step (D : LatticeData) (c : Chart) (a : ℝ) (i : P
     congr 1
     ring
 
+/-- The same coefficient selected by the analytic physical subtraction is
+the pair term of the original oscillator word, in the native selector order. -/
+theorem inverse_lowered_word_taylor_step (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : Chart) {a : ℝ} (ha : 0 < a) (ha₁ : a < 1) (i : Puncture)
+    (x : Index D) (xs : List (Index D)) :
+    inverseLoweredWord D c a i (x :: xs) =
+      (∑ n ∈ Finset.range (x.2+1), creatorEntry c a i x.2 n •
+        (MvPolynomial.X (x.1, n) : Oscillator D)) * inverseLoweredWord D c a i xs +
+      ∑ j : Fin xs.length,
+        ((D.G x.1 (xs.get j).1 : ℂ) * coefficient (xs.get j).2
+          (fun v => coefficient x.2 (fun u =>
+            -freeCorrection c i (inverseRoot c a i u) (inverseRoot c a i v) /
+              (halfJacobian c a i (inverseRoot c a i u) *
+                halfJacobian c a i (inverseRoot c a i v))))) •
+          inverseLoweredWord D c a i (xs.eraseIdx j) := by
+  rw [inverse_lowered_word_step]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [inverse_physical_free_correction_coefficient D hu ha ha₁ c i x (xs.get j)]
+  rfl
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCauchyTaylor

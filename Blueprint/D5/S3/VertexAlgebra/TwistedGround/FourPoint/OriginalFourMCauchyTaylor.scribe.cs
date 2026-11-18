@@ -41,5 +41,17 @@ internal sealed class OriginalFourMCauchyTaylorDocument : IScribeDocumentDefinit
             Result("fourm-selected-radial-physical-covariance", "selected_radial_physical_covariance",
                 "Literal sewn covariance entries on the native radial charts",
                 "On A and B the signed Taylor selectors in the finite transform are the "
-                + "original tagged entries of the sewn effective matrix."))));
+                + "original tagged entries of the sewn effective matrix."),
+            Result("fourm-inverse-lowered-word-eq-original", "inverse_lowered_word_eq_original",
+                "Original inverse-scaled finite oscillator word",
+                "The inverse scale acts on the incoming word before the finite negative "
+                + "lowering sum. The original cutoff gives the same polynomial."),
+            Result("fourm-inverse-lowered-word-step", "inverse_lowered_word_step",
+                "Finite creator and contraction terms",
+                "At each step an occurrence carries its own finite creator transform or "
+                + "contracts with a later occurrence with both incoming scale factors."),
+            Result("fourm-inverse-lowered-word-taylor-step", "inverse_lowered_word_taylor_step",
+                "Physical Taylor coefficients in the original lowering recurrence",
+                "The ordinary same-puncture subtraction coefficient is the pair term "
+                + "in the original finite oscillator action, including repeated modes."))));
 }
