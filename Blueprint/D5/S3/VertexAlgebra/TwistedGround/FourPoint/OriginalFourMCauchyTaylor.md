@@ -76,14 +76,54 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchy
 
 On A and B the signed Taylor selectors in the finite transform are the original tagged entries of the sewn effective matrix.
 
+**Theorem 1.7 (Original inverse-scaled finite oscillator word).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_eq_original`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_eq_original` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The inverse scale acts on the incoming word before the finite negative lowering sum. The original cutoff gives the same polynomial.
+
+**Theorem 1.8 (Finite creator and contraction terms).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_step`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At each step an occurrence carries its own finite creator transform or contracts with a later occurrence with both incoming scale factors.
+
+**Theorem 1.9 (Physical Taylor coefficients in the original lowering recurrence).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_taylor_step`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_taylor_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The ordinary same-puncture subtraction coefficient is the pair term in the original finite oscillator action, including repeated modes.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.chart_free_correction_coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_eq_original`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_step`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_lowered_word_taylor_step`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_physical_free_correction_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.inverse_physical_two_leg_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.native_free_correction_coefficient`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.selected_physical_covariance`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMCauchyTaylor.selected_radial_physical_covariance`
 - Dependency: [D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentCauchy](../../HalfFock/OriginalHalfCurrentCauchy.md)
+- Dependency: [D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentFiniteLowering](../../HalfFock/OriginalHalfCurrentFiniteLowering.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMAnalyticPullback](OriginalFourMAnalyticPullback.md)
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPhysicalCovariance](OriginalFourMPhysicalCovariance.md)
