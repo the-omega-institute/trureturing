@@ -31,8 +31,7 @@ def eulerCost : ℝ := log (1 + ∑' n : ℕ, (n : ℝ) ^ (-2 : ℝ))
 
 private lemma pseries_le_square {s : ℝ} (hs : 2 ≤ s) :
     (∑' n : ℕ, (n : ℝ) ^ (-s)) ≤ ∑' n : ℕ, (n : ℝ) ^ (-2 : ℝ) := by
-  apply Summable.tsum_le_tsum
-    (Real.summable_nat_rpow.mpr (by linarith : -s < -1))
+  apply (Real.summable_nat_rpow.mpr (by linarith : -s < -1)).tsum_le_tsum ?_
     (Real.summable_nat_rpow.mpr (by norm_num : (-2 : ℝ) < -1))
   intro n
   by_cases hn : n = 0
