@@ -53,14 +53,15 @@ internal sealed class AnholcerEpistemicEF1RefutationDocument : IScribeDocumentDe
                 AssessedProvenance.FromLiterature(Source),
                 ConjectureQuote + " The carrier is Fin m, the number n of agents is positive, every matroid has ground Set.univ, and the singleton weights are arbitrary NNReal values. The goods and chores existentials may use different allocations. This is ordinary EF1; no imaginary allocation is quantified.", DescribeRole.Definition),
             Node("result", Not(ClaimBody()), AssessedProvenance.FromRepo(Source),
-                "Take four items and two agents. The first matroid has capacity-one blocks {0,1} and {2,3}; the second has blocks {1,2} and {3,0}. Both admit the two-color partition {0,2}, {1,3}. A finite certificate shows that every complete feasible allocation is one of its two orders. Both agents assign weights (3,1,3,1). The two bundle values are 6 and 2, and every deletion from the high bundle leaves 3 > 2. Thus neither order satisfies goods-EF1 or chores-EF1. The heterogeneous constraints realize a complementary-item obstruction; Dror–Feldman–Segal-Halevi, JAIR 76 (2023), Section 8.3, supplies the earlier common-nonmatroid obstruction. The common-matroid conjectures and the epistemic variants remain outside this conclusion.", DescribeRole.Theorem))));
+                "Take four items and two agents. The first matroid has capacity-one blocks {0,1} and {2,3}; the second has blocks {1,2} and {3,0}. Both admit the two-color partition {0,2}, {1,3}. A finite certificate shows that every complete feasible allocation is one of its two orders. Both agents assign weights (3,1,3,1). The two bundle values are 6 and 2, and every deletion from the high bundle leaves 3 > 2. Thus neither order satisfies goods-EF1 or chores-EF1. The heterogeneous constraints realize a complementary-item obstruction; Dror–Feldman–Segal-Halevi, JAIR 76 (2023), Section 8.3, supplies the earlier common-nonmatroid obstruction. The common-matroid conjectures and the epistemic variants remain outside this conclusion.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("op-abbg2606c4"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, Formula formula, AssessedProvenance provenance,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/AnholcerEpistemicEF1Refutation." + name),
             H(name), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula PartitionBody() => And(
         All("i", Fin(V("n")), All("j", Fin(V("n")),

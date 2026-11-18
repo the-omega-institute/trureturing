@@ -106,6 +106,10 @@ $$\neg (\forall (m: \mathbb{N}), \forall (n: \mathbb{N}), (0 < n) \Rightarrow (\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/AnholcerEpistemicEF1Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-abbg2606c4` (refuted) by `D5/S3/Combinatorics/Matroids/AnholcerEpistemicEF1Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-abbg2606c4","declaration_gid":"D5/S3/Combinatorics/Matroids/AnholcerEpistemicEF1Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Marcin Anholcer; Maciej Bartkowiak; Bartłomiej Bosek; Jarosław Grytczuk (2026). *Epistemic fair division of independence structures*. URL: <https://arxiv.org/abs/2606.11494v1>.
