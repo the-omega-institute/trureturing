@@ -38,7 +38,9 @@ internal sealed class RookClassNativeDocument : IScribeDocumentDefinition
                 "For a cell with coordinates i and j, lower closure supplies i+1 cells in its column and j+1 in its row. Both coordinates are strictly below the area. Equal rook numbers force equal area. Sending a class member to its actual cells therefore embeds the entire class into the powerset of the area by area square. Finite is established without using Nat.card on an unproved finite carrier."),
             Definition("pad", "One fixed padding", "At length N, prepend N minus the positive-column length zero entries. This is the lower-right alignment convention."),
             Theorem("class_padding", "All registered common lengths", Padding(),
-                "For every native class member and every N at least area(b)+1, its positive-column length is below N, its padding has length N, the head is zero, and the padded sum is area(b). The empty board and zero padding are included. In the formula, columns(a) is the underlying positive list of the class member, board(a) is that normalized shape, and head returns an Option natural.")
+                "For every native class member and every N at least area(b)+1, its positive-column length is below N, its padding has length N, the head is zero, and the padded sum is area(b). The empty board and zero padding are included. In the formula, columns(a) is the underlying positive list of the class member, board(a) is that normalized shape, and head returns an Option natural."),
+            Theorem("native_interface", "The complete native finite interface", Interface(),
+                "For the same native class, finiteness, the complete finite rook-vector comparison and the common-padding laws hold together. finiteTest(m,a,b) denotes area equality together with equality of rookCount at every natural index in Icc(1,area(b)); paddingLaw(n,a,b) denotes all four clauses of class_padding. These abbreviations refer to the displayed formulas above. The finite-vector equivalence includes both directions and all omitted indices, rather than treating an observed finite window as a universal proof.")
         ), []));
 
     private static DocumentBlock Definition(string declaration, string title, string prose) =>
@@ -77,4 +79,10 @@ internal sealed class RookClassNativeDocument : IScribeDocumentDefinition
                 And(Eq(Call("length", Call("pad", F.Id("n"), Call("board", F.Id("a")))), F.Id("n")),
                     And(Eq(Call("head", Call("pad", F.Id("n"), Call("board", F.Id("a")))), Call("some", D(0))),
                         Eq(Call("sum", Call("pad", F.Id("n"), Call("board", F.Id("a")))), Call("area", F.Id("b")))))))))));
+    private static Formula Interface() => All("m", Nat(), All("b", Boards(),
+        And(Call("Finite", Call("RookClass", F.Id("m"), F.Id("b"))),
+            And(All("a", Boards(), new Formula.Logic(Call("RookEquivalent", F.Id("m"), F.Id("a"), F.Id("b")),
+                    FormulaLogicOperator.Iff, Call("finiteTest", F.Id("m"), F.Id("a"), F.Id("b")))),
+                All("n", Nat(), Imp(Le(new Formula.Binary(Call("area", F.Id("b")), FormulaBinaryOperator.Add, D(1)), F.Id("n")),
+                    All("a", Call("RookClass", F.Id("m"), F.Id("b")), Call("paddingLaw", F.Id("n"), F.Id("a"), F.Id("b")))))))));
 }
