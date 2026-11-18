@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
 internal sealed class BKMSubalgebraDefectDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Quantum/Recovery/BKMSubalgebraDefect.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Divergence/hiaikosakipetzruskai2013monotonemetrics");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positivity of the BKM transpose forces commutation with projections in the "
@@ -17,12 +19,10 @@ internal sealed class BKMSubalgebraDefectDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Entry("bkm-transpose", "bkmTranspose", "The actual BKM transpose",
                 "Invert the restricted BKM integral at the reduced faithful base, then "
-                + "include the result in the ambient algebra and apply the ambient BKM integral.",
-                DescribeRole.Definition),
-            Entry("transpose-action", "bkmTranspose_apply", "Resolvent formula for the transpose",
-                "The first step in the transpose is computed by the actual resolvent "
-                + "logarithmic derivative at the reduced base.",
-                DescribeRole.Theorem),
+                + "include the result in the ambient algebra and apply the ambient BKM integral. "
+                + "The order of composition follows the metric transpose in Appendix B of "
+                + "Hiai, Kosaki, Petz, and Ruskai.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Entry("positive-transpose", "bkmTranspose_positive_commute", "Positive transpose projection test",
                 "For a projection P that commutes with the reduced state, the reduced "
                 + "BKM integral gives the positive compression of that state by P. The "
@@ -42,8 +42,8 @@ internal sealed class BKMSubalgebraDefectDocument : IScribeDocumentDefinition
                 + "the theorem.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string name, string title, string text,
-        DescribeRole role) => Describe.Lean(
+        DescribeRole role, AssessedProvenance? provenance = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + name), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), provenance ?? AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 }

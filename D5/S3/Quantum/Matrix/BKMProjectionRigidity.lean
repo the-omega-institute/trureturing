@@ -21,9 +21,8 @@ open scoped Matrix.Norms.L2Operator MatrixOrder ComplexOrder CStarAlgebra
 namespace D5.S3.Quantum.Matrix.BKMProjectionRigidity
 
 open D5.S3.Quantum.Matrix.SpectralPower (mpow)
-open D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction (basisChange logMean omega)
-open private diagReal conjugated_cfc omega_entry strict_mean logMean_symm
-  from D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction
+open D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction
+  (basisChange logMean omega diagReal conjugated_cfc omega_entry strict_mean logMean_symm)
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 

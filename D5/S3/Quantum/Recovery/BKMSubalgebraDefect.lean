@@ -8,9 +8,7 @@
 
 import D5.S3.Quantum.Matrix.BKMProjectionRigidity
 import D5.S3.Quantum.Algebra.OrderedGNSProjection
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
-
-import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
+import D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.PosPart.Isometric
 
 /-! # Faithful finite matrix subalgebras and the actual BKM transpose -/
@@ -26,12 +24,10 @@ open D5.S3.Quantum.Algebra.OrderedGNSProjection
 open D5.S3.Quantum.Matrix.BKMLogarithmicMeanInverse
 open D5.S3.Quantum.Matrix.BKMProjectionRigidity
 open D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction (omega)
-open D5.S3.Divergence.LogDerivTrace (logDeriv)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
 open D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM (traceNorm_mul_le_hsSq)
-open private hsSq_eq_trace from D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
-open private projection_mem projection_left_comparison
-  from D5.S3.Quantum.Algebra.OrderedGNSProjection
+open D5.S3.Quantum.Foundation.HilbertSchmidtTraceStability (entryNormSq_eq_hs_sq)
+open D5.S3.Quantum.GNSMatrix (frobenius_norm_sq_eq_trace)
 
 variable {n : Type*} [Fintype n] [DecidableEq n] [Nonempty n]
 
@@ -51,7 +47,7 @@ private theorem tracialDensity_trace : (tracialDensity n).trace = 1 := by
 def traceExpectation (B : StarSubalgebra ℂ (Mat n)) : Mat n →ₗ[ℂ] B :=
   LinearMap.codRestrict B.toSubmodule
     (projection (tracialDensity n) tracialDensity_posDef B)
-    (projection_mem _ _ B)
+    (ordered_gns_characterization _ tracialDensity_posDef tracialDensity_trace B).2.1
 
 private theorem traceExpectation_contract (B : StarSubalgebra ℂ (Mat n)) :
     Expectation (tracialDensity n) B (projection (tracialDensity n) tracialDensity_posDef B) := by
@@ -59,9 +55,10 @@ private theorem traceExpectation_contract (B : StarSubalgebra ℂ (Mat n)) :
   let hρ : ρ.PosDef := tracialDensity_posDef
   have ht (X : Mat n) : state ρ X = (1 / (Fintype.card n : ℝ)) • X.trace := by
     simp [ρ, tracialDensity, state, Matrix.trace_smul]
-  apply ((ordered_gns_characterization ρ hρ tracialDensity_trace B).2.2.2.2.2).mp
+  have hGNS := ordered_gns_characterization ρ hρ tracialDensity_trace B
+  apply hGNS.2.2.2.2.2.mp
   intro X b hb
-  have h := projection_left_comparison ρ hρ B X (star b) (B.star_mem' hb)
+  have h := hGNS.2.2.1 X (star b) (B.star_mem' hb)
   simpa only [star_star, ht, Matrix.trace_mul_comm b] using h
 
 private theorem traceExpectation_mono (B : StarSubalgebra ℂ (Mat n)) :
@@ -96,14 +93,6 @@ def bkmTranspose (B : StarSubalgebra ℂ (Mat n)) (a : Mat n) (ha : a.PosDef) :
   (omegaEquiv a ha).toLinearMap.comp
     (B.toSubmodule.subtype.comp
       (omegaRestrict B (traceExpectation B a) (reduced_posDef B a ha)).symm.toLinearMap)
-
-/-- The transpose applies the reduced resolvent derivative and the ambient power integral. -/
-theorem bkmTranspose_apply (B : StarSubalgebra ℂ (Mat n)) (a : Mat n) (ha : a.PosDef)
-    (Y : B) :
-    bkmTranspose B a ha Y = omega a (logDeriv (traceExpectation B a : Mat n) (Y : Mat n)) := by
-  change omegaEquiv a ha
-    (((omegaRestrict B (traceExpectation B a) (reduced_posDef B a ha)).symm Y : B) : Mat n) = _
-  rw [omegaEquiv_apply, omegaRestrict_symm_apply]
 
 /-- Positivity of the actual transpose forces every projection in B that
 commutes with the reduced state to commute with the faithful ambient state. -/
@@ -213,7 +202,9 @@ private theorem traceNorm_frobSq (X : Mat n) :
     traceNorm X ≤ Real.sqrt (Fintype.card n : ℝ) * Real.sqrt (RHLinalg.frobSq X) := by
   classical
   have h := traceNorm_mul_le_hsSq (1 : Mat n) X
-  rw [one_mul, hsSq_eq_trace, hsSq_eq_trace] at h
+  rw [one_mul, entryNormSq_eq_hs_sq, entryNormSq_eq_hs_sq] at h
+  rw [← Complex.ofReal_re (_ ^ 2), frobenius_norm_sq_eq_trace,
+    ← Complex.ofReal_re (_ ^ 2), frobenius_norm_sq_eq_trace] at h
   simpa [RHLinalg.frobSq] using h
 
 omit [Nonempty n] [DecidableEq n] in

@@ -6,7 +6,6 @@
    utility: none
    digest: Inversion of the actual BKM power integral on complex matrix directions. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Range
 import Mathlib.Analysis.Convex.Integral
@@ -23,9 +22,9 @@ namespace D5.S3.Quantum.Matrix.BKMLogarithmicMeanInverse
 open D5.S3.Divergence.LogDerivTrace (logDeriv)
 open D5.S3.Quantum.Matrix.SpectralPower (mpow)
 open D5.S3.Quantum.Matrix.ExponentialFirstResponse (derivative)
-open D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction (basisChange logMean omega)
-open private omega_entry logDeriv_entry logMean_pos logDeriv_omega derivative_eq_omega
-  continuous_mpow from D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction
+open D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction
+  (basisChange omega omega_entry logDeriv_entry logMean_pos logDeriv_omega
+    derivative_eq_omega continuous_mpow)
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 

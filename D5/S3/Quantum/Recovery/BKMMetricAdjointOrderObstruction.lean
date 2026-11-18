@@ -43,7 +43,7 @@ private abbrev UMat (n : Type*) [Fintype n] [DecidableEq n] := Matrix.unitaryGro
 /-- Unitary conjugation used to read the spectral and measurement coordinates. -/
 abbrev basisChange (U : UMat n) := (Unitary.conjStarAlgAut ℂ (Mat n) U).toAlgEquiv
 
-private def diagReal (p : n → ℝ) : Mat n := diagonal fun k => (p k : ℂ)
+def diagReal (p : n → ℝ) : Mat n := diagonal fun k => (p k : ℂ)
 
 private def diagRealCLM : (n → ℝ) →L[ℝ] Mat n :=
   ((Matrix.diagonalLinearMap n ℝ ℂ).toContinuousLinearMap).comp
@@ -56,7 +56,7 @@ private def entry (i j : n) : Mat n →L[ℂ] ℂ :=
 private theorem entry_apply (X : Mat n) (i j : n) : entry i j X = X i j := by
   simp [entry, Matrix.stdBasis]
 
-private theorem conjugated_cfc (a : Mat n) (ha : a.PosDef) (f : ℝ → ℝ) :
+theorem conjugated_cfc (a : Mat n) (ha : a.PosDef) (f : ℝ → ℝ) :
     (basisChange ha.isHermitian.eigenvectorUnitary).symm (cfc f a) =
       diagReal (f ∘ ha.isHermitian.eigenvalues) := by
   rw [ha.isHermitian.cfc_eq]
@@ -87,14 +87,14 @@ private theorem exp_log_smul (a : Mat n) (ha : a.PosDef) (u : ℝ) :
 def omega (a X : Matrix n n ℂ) : Matrix n n ℂ :=
   ∫ u : ℝ in 0..1, mpow a u * X * mpow a (1 - u)
 
-private theorem derivative_eq_omega (a : Mat n) (ha : a.PosDef) (X : Mat n) :
+theorem derivative_eq_omega (a : Mat n) (ha : a.PosDef) (X : Mat n) :
     derivative (CFC.log a) X = omega a X := by
   rw [derivative_apply, omega]
   simp_rw [exp_log_smul a ha]
   simpa using (intervalIntegral.integral_comp_sub_left
     (a := (0 : ℝ)) (b := 1) (fun u => mpow a u * X * mpow a (1 - u)) 1)
 
-private theorem continuous_mpow (a : Mat n) (ha : a.PosDef) :
+theorem continuous_mpow (a : Mat n) (ha : a.PosDef) :
     Continuous (fun u : ℝ => mpow a u) := by
   have he (u : ℝ) : mpow a u = basisChange ha.isHermitian.eigenvectorUnitary
       (diagReal fun k => Real.exp (u * Real.log (ha.isHermitian.eigenvalues k))) := by
@@ -146,7 +146,7 @@ private theorem logMean_integral (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     field_simp
     <;> ring
 
-private theorem omega_entry (a X : Mat n) (ha : a.PosDef) (i j : n) :
+theorem omega_entry (a X : Mat n) (ha : a.PosDef) (i j : n) :
     (basisChange ha.isHermitian.eigenvectorUnitary).symm (omega a X) i j =
       (logMean (ha.isHermitian.eigenvalues i) (ha.isHermitian.eigenvalues j) : ℂ) *
         (basisChange ha.isHermitian.eigenvectorUnitary).symm X i j := by
@@ -184,7 +184,7 @@ private theorem resolvent_pair (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (z : ℂ) :
   congr 1
   by_cases h : x = y <;> simp [logMean, h, div_eq_mul_inv, mul_comm]
 
-private theorem logDeriv_entry (a X : Mat n) (ha : a.PosDef) (i j : n) :
+theorem logDeriv_entry (a X : Mat n) (ha : a.PosDef) (i j : n) :
     (basisChange ha.isHermitian.eigenvectorUnitary).symm (logDeriv a X) i j =
       (logMean (ha.isHermitian.eigenvalues i) (ha.isHermitian.eigenvalues j) : ℂ)⁻¹ *
         (basisChange ha.isHermitian.eigenvectorUnitary).symm X i j := by
@@ -203,7 +203,7 @@ private theorem logDeriv_entry (a X : Mat n) (ha : a.PosDef) (i j : n) :
   simp only [entry_apply, map_mul, hR, diagonal_mul, mul_diagonal]
   rfl
 
-private theorem logMean_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
+theorem logMean_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     0 < logMean x y := by
   unfold logMean
   split_ifs with h
@@ -212,7 +212,7 @@ private theorem logMean_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     · exact div_pos_of_neg_of_neg (sub_neg.mpr hxy) (sub_neg.mpr (Real.log_lt_log hx hxy))
     · exact div_pos (sub_pos.mpr hyx) (sub_pos.mpr (Real.log_lt_log hy hyx))
 
-private theorem logDeriv_omega (a X : Mat n) (ha : a.PosDef) : logDeriv a (omega a X) = X := by
+theorem logDeriv_omega (a X : Mat n) (ha : a.PosDef) : logDeriv a (omega a X) = X := by
   apply (basisChange ha.isHermitian.eigenvectorUnitary).symm.injective
   ext i j
   rw [logDeriv_entry a _ ha, omega_entry a X ha, ← mul_assoc, inv_mul_cancel₀, one_mul]
@@ -467,7 +467,7 @@ private theorem metricAdjoint_apply (a : Mat n) (ha : a.PosDef) (V : UMat n)
   rw [adjoint_logDeriv V p hp]
   exact derivative_eq_omega a ha _
 
-private theorem logMean_symm (x y : ℝ) : logMean x y = logMean y x := by
+theorem logMean_symm (x y : ℝ) : logMean x y = logMean y x := by
   by_cases h : x = y
   · subst y
     rfl
@@ -584,7 +584,7 @@ private theorem local_order_impossible (a τ P : Mat n) (V : UMat n) (z : n → 
   change quadratic z (R P) - quadratic z (E P) = 0 at heq
   exact (not_lt_of_ge hproper) ((sub_eq_zero.mp heq).symm ▸ hneg)
 
-private theorem strict_mean (x y : ℝ) (hy : 0 < y) (hyx : y < x) :
+theorem strict_mean (x y : ℝ) (hy : 0 < y) (hyx : y < x) :
     Real.sqrt (x * y) < logMean x y := by
   have hx := hy.trans hyx
   let u := (Real.log x - Real.log y) / 2
