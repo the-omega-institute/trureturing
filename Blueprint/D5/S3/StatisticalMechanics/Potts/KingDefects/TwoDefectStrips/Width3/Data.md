@@ -30,7 +30,7 @@ $$\operatorname{horizontal} = \operatorname{StripDefects}.\operatorname{HardinA2
 
 *Commentary.*
 
-The Lean type is Finset (Fin 3 x Fin 3). The 2 ordered bonds join consecutive columns. This consumed alias delegates to StripDefects.HardinA229581Strip.horizontal. It is bind-only.
+The Lean type is Finset (Fin 3 x Fin 3). The 2 ordered bonds join consecutive columns. It is defined as StripDefects.HardinA229581Strip.horizontal.
 
 **Definition 1.3 (between).**
 
@@ -44,7 +44,7 @@ $$\operatorname{between} = \{(0, 0), (1, 1), (2, 2), (0, 1), (1, 2), (1, 0), (2,
 
 *Commentary.*
 
-The Lean type is Finset (Fin 3 x Fin 3). The 7 ordered bonds comprise 3 vertical, 2 diagonal and 2 antidiagonal bonds. This consumed alias delegates to CrossedStripDefects.HardinA229536Strip.between.
+The Lean type is Finset (Fin 3 x Fin 3). The 7 ordered bonds comprise 3 vertical, 2 diagonal and 2 antidiagonal bonds. It is defined as CrossedStripDefects.HardinA229536Strip.between.
 
 **Definition 1.4 (Valid).**
 
@@ -114,7 +114,7 @@ Lean statement: `D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Wi
 
 *Commentary.*
 
-The Lean type is Fin 9 -> Int. Forward.structural_certificate pins the terminal value as the indicator that the residual budget is zero. This consumed alias delegates to CrossedStripDefects.HardinA229632Strip.terminal.
+The Lean type is Fin 9 -> Int. Forward.structural_certificate pins the terminal value as the indicator that the residual budget is zero. It is defined as CrossedStripDefects.HardinA229632Strip.terminal.
 
 **Remark 1.9 (W).**
 

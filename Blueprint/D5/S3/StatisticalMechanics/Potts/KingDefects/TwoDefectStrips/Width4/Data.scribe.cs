@@ -18,7 +18,7 @@ internal sealed class DataDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "horizontal"), H("horizontal"),
                 StatementSource.FromAuthor(Disp(Eq(Call("horizontal"), Call("StripDefects.HardinA229582Strip.horizontal")))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The Lean type is Finset (Fin 4 x Fin 4). The 3 ordered bonds join consecutive columns. This consumed alias delegates to StripDefects.HardinA229582Strip.horizontal. It is bind-only."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The Lean type is Finset (Fin 4 x Fin 4). The 3 ordered bonds join consecutive columns. It is defined as StripDefects.HardinA229582Strip.horizontal."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("between"),
                 DeclarationHandle.Create(Prefix + "between"), H("between"),
                 StatementSource.FromAuthor(Disp(Eq(Call("between"), SetOf(Pair(Num("0"), Num("0")), Pair(Num("1"), Num("1")), Pair(Num("2"), Num("2")), Pair(Num("3"), Num("3")), Pair(Num("0"), Num("1")), Pair(Num("1"), Num("2")), Pair(Num("2"), Num("3")), Pair(Num("1"), Num("0")), Pair(Num("2"), Num("1")), Pair(Num("3"), Num("2")))))),
