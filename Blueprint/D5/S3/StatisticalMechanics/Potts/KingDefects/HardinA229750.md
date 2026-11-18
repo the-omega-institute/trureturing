@@ -12,6 +12,10 @@ $$\forall (n: \operatorname{Nat}), ((9 \le n) \Rightarrow (\operatorname{Int}.\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin229750` (proved) by `D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229750","declaration_gid":"D5/S3/StatisticalMechanics/Potts/KingDefects/HardinA229750.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A229750: four-colour king arrays with exactly two mistakes*. URL: <https://oeis.org/A229750>.
