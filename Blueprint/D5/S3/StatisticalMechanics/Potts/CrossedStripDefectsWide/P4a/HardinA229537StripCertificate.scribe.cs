@@ -17,7 +17,7 @@ internal sealed class HardinA229537StripCertificateDocument : IScribeDocumentDef
             Node("powers",All("i",Fin(22),Eq(Power(Val(V("i"))),Cert("W",V("i")))),true),
             Node("finite_certificate",Certificate(),true))));
     private static DocumentBlock Node(string name,Formula formula,bool theorem) => Describe.Lean(
-        DescribeId.Create(name.Replace("_","-")),DeclarationHandle.Create(Prefix+name),H(name),
+        DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229537")),
         Blocks(Paragraph(Text("Exact transition counts preserve the remaining defect budget. The continuation vectors obey the square of the proper-colouring sextic after two transitions. The proper-colouring powers and their sextic relation are those of HardinA233177PairTransfer."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
@@ -29,26 +29,18 @@ internal sealed class HardinA229537StripCertificateDocument : IScribeDocumentDef
     private static Formula Typed(Formula a,Formula t) => Parenthesized(Seq(a,Colon,Sp,t));
     private static Formula Arrow(Formula a,Formula b) => new Formula.TypeArrow(a,b);
     private static Formula Fin(int n) => Call("Fin",N(n));
-    private static Formula Fin(Formula n) => Call("Fin",n);
     private static Formula Row() => Arrow(Fin(4),Fin(3));
     private static Formula Val(Formula a) => Call("Fin.val",a);
     private static Formula Pair(Formula a,Formula b) => Parenthesized(Seq(a,Comma,Sp,b));
-    private static Formula Product(Formula a,Formula b) => Seq(Parenthesized(a),Times,Parenthesized(b));
     private static Formula Eq(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
-    private static Formula Lt(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula Le(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula And(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.And,Parenthesized(b));
-    private static Formula Imp(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Implies,Parenthesized(b));
     private static Formula Add(Formula a,Formula b) => new Formula.Binary(Parenthesized(a),FormulaBinaryOperator.Add,Parenthesized(b));
     private static Formula Sub(Formula a,Formula b) => new Formula.Binary(Parenthesized(a),FormulaBinaryOperator.Subtract,Parenthesized(b));
-    private static Formula Mul(Formula a,Formula b) => new Formula.Binary(Parenthesized(a),FormulaBinaryOperator.Multiply,Parenthesized(b));
     private static Formula All(string n,Formula t,Formula b) => Seq(Forall,Sp,Typed(V(n),t),Comma,Sp,Parenthesized(b));
-    private static Formula Ex(string n,Formula t,Formula b) => Seq(Exists,Sp,Typed(V(n),t),Comma,Sp,Parenthesized(b));
-    private static Formula Fn(string n,Formula t,Formula b) => Parenthesized(Seq(LambdaLower,Sp,Typed(V(n),t),Mapsto,Sp,Parenthesized(b)));
     private static Formula Sum(string n,Formula t,Formula b) => Seq(F.Sum,Underscore,Grp(Typed(V(n),t)),Sp,Parenthesized(b));
     private static Formula If(Formula c,Formula y,Formula n) => Parenthesized(Seq(Q("if"),Sp,Parenthesized(c),Sp,Q("then"),Sp,y,Sp,Q("else"),Sp,n));
     private static Formula Data(string n,params Formula[] a) => Call("HardinA229537StripData."+n,a);
-    private static Formula Own(string n,params Formula[] a) => Call("HardinA229537Strip."+n,a);
     private static Formula Old(string n,params Formula[] a) => Call("HardinA233177PairTransfer."+n,a);
     private static Formula IntVec(Formula x,int n) => Typed(x,Arrow(Fin(n),Q("Int")));
     private static Formula Power(Formula n) => Call("Matrix.mulVec",Call("HPow.hPow",Data("T"),n),Data("terminal"));

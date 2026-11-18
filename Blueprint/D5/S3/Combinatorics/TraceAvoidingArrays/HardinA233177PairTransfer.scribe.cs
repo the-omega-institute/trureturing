@@ -74,10 +74,14 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
     private static Formula SumOver(string n, Formula t, Formula b) => Seq(F.Sum,Underscore,Grp(Typed(V(n),t)),Sp,Parenthesized(b));
     private static Formula IntVector(Formula v,int size) => Typed(v,Arrow(Fin(Num(size)),Q("Int")));
     private static Formula Power(Formula n) => Call("Matrix.mulVec",Call("HPow.hPow",Own("Q"),n),IntVector(Num(1),14));
-    private static Formula CompatibleFormula() => All("a",Own("Col"),All("b",Own("Col"),
-        Eq(Own("compatible",V("a"),V("b")),Parenthesized(All("r",Fin(Num(4)),All("s",Fin(Num(4)),
-            Imp(And(Le(Val(V("r")),Add(Val(V("s")),Num(1))),Le(Val(V("s")),Add(Val(V("r")),Num(1)))),
-                Ne(Own("column",V("a"),V("r")),Own("column",V("b"),V("s")))))))));
+    private static Formula CompatibleFormula()
+    {
+        var a=V("a"); var b=V("b"); var r=V("r"); var t=V("s");
+        var adjacent=And(Le(Val(r),Add(Val(t),Num(1))),Le(Val(t),Add(Val(r),Num(1))));
+        var distinct=Ne(Own("column",a,r),Own("column",b,t));
+        var body=All("r",Fin(Num(4)),All("s",Fin(Num(4)),Imp(adjacent,distinct)));
+        return All("a",Own("Col"),All("b",Own("Col"),Eq(Own("compatible",a,b),Parenthesized(body))));
+    }
     private static Formula QuotientFormula() => All("b",Own("Col"),All("s",Fin(Num(14)),
         Eq(SumOver("c",Own("Col"),If(And(Own("compatible",V("b"),V("c")),Eq(Own("cls",V("c")),V("s"))),Typed(Num(1),Q("Int")),Typed(Num(0),Q("Int")))),Own("Q",Own("cls",V("b")),V("s")))));
     private static Formula PowersFormula() => All("k",Fin(Num(8)),Eq(Power(Val(V("k"))),Own("W",V("k"))));
