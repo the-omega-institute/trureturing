@@ -55,9 +55,10 @@ def registration : Registration arena.{u}
       have hentry := congrFun he (ULift.up (), ULift.up ())
       norm_num at hentry
     have hv := hz.dotProduct_mulVec_pos hv0
-    simpa using hv
+    simp at hv
 
-def audit : Contract.Registration (@omegaCoefficient_posDef.{u})
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@omegaCoefficient_posDef.{u})
     (type_of% (realize signature.{u} (fun _ _ coefficient => coefficient.PosDef)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Quantum.Recovery.BKMActualMetricCoordinates.omegaCoefficient_posDef.__information_unit,
