@@ -26,6 +26,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays
 open HardinA229537StripData
 open DefectTransfer (bondDefects defects literalCount lumped_count)
 open HardinA233177Canonical (Canonical canonical_pattern_card)
+set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
@@ -55,18 +56,23 @@ theorem result (n : ℕ) :
     apply lumped_count horizontal between id (bondDefects between)
       (fun _ d => d ≤ 1) cl T initial terminal 1 (fun _ _ => rfl)
     · intro p d hd
-      by_cases h : d = 0 <;> simp [cl, terminal, h]
+      by_cases h : d = 0
+      · simp only [cl, if_pos h, terminal, Fin.append_right, if_pos h]
+        rfl
+      · simp only [cl, if_neg h, terminal, Fin.append_left, if_neg h]
+        rfl
     · intro p d hd r hr
       omega
     · intro p d hd s
       simpa only [horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
-        Nat.add_zero] using
+        Nat.add_zero, id_eq] using
         HardinA229537StripCertificate.finite_certificate.1 p ⟨d, by omega⟩ s
     · intro r hr
       simp [horizontal, bondDefects]
     · intro s
-      simpa only [horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
-        Nat.zero_le, Nat.sub_zero, true_and] using (show _ = initial s from rfl)
+      simp only [horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
+        Nat.zero_le, Nat.sub_zero, true_and, id_eq]
+      rfl
   have scale (m : ℕ) (hm : 1 ≤ m) :
       literalCount (q := 3) horizontal between 1 (m + 1) = 6 * a (m + 1) := by
     classical
