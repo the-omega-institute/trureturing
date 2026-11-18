@@ -716,4 +716,62 @@ theorem selected_physical_covariance (D : LatticeData) (hu : IsUnit D.G.det)
     rw [hz, coefficient_const]
     split_ifs <;> simp
 
+
+open OriginalGaussianExternalBlocks (External explicitEffectiveKernel)
+open OriginalFourMSignedOverlap
+  (chart_covariance_eq_native covarianceMode taggedMode native_tagged_entry)
+open OriginalFourMActualChart (parameter)
+
+private theorem radial_chart_entry (D : LatticeData) {a : ℝ} (ha : 0 < a) (ha₁ : a < 1)
+    (upperA : Bool) (c : Chart) (hc : c = .A ∨ c = .B) (i j : Puncture)
+    (x y : Index D) {w : ℂ} (hw : ‖w‖ < 1) (hwc : w^2 = parameter c a) :
+    let label : Bool → External D :=
+      fun k => if k then ((flags c j).2, y) else ((flags c i).2, x)
+    (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u =>
+      chartCovariance upperA c a (flags c i).1 (flags c j).1 (flags c i).2 (flags c j).2 u v)) =
+      explicitEffectiveKernel D label w (taggedMode (flags c i).1 false)
+        (taggedMode (flags c j).1 true) := by
+  have hr : ‖parameter c (a : ℂ)‖ < 1 := by
+    rw [← hwc, norm_pow]
+    exact pow_lt_one₀ (norm_nonneg _) hw (by decide)
+  have he := chart_covariance_eq_native ha ha₁ upperA c hc
+    (flags c i).1 (flags c j).1 (flags c i).2 (flags c j).2 hr
+  dsimp only
+  rw [pair_coefficient_congr he x.2 y.2, ← hwc, native_tagged_entry _ _ _ _ _ _ hw]
+  simp only [Bool.false_eq_true, ite_false, ite_true]
+  change (D.G x.1 y.1 : ℂ) * _ = coefficient y.2 (fun v => coefficient x.2 (fun u =>
+    (D.G x.1 y.1 : ℂ) * covarianceMode (flags c i).1 (flags c j).1
+      (flags c i).2 (flags c j).2 u v (w^2)))
+  simp_rw [coefficient_mul_scalar]
+
+/-- On either native radial chart, the two-leg selector is a finite sum of the
+literal signed sewn matrix entries and the original same-puncture contraction. -/
+theorem selected_radial_physical_covariance (D : LatticeData) (hu : IsUnit D.G.det)
+    {a : ℝ} (ha : 0 < a) (ha₁ : a < 1) (upperA : Bool)
+    (c : Chart) (hc : c = .A ∨ c = .B) (i j : Puncture)
+    (x y : Index D) {w : ℂ} (hw : ‖w‖ < 1) (hwc : w^2 = parameter c a) :
+    (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u =>
+      physicalCovariance upperA c a i j u v)) =
+      (∑ k ∈ Finset.range (x.2+1), ∑ l ∈ Finset.range (y.2+1),
+        let label : Bool → External D :=
+          fun b => if b then ((flags c j).2, y.1, l) else ((flags c i).2, x.1, k)
+        creatorEntry c a i x.2 k * creatorEntry c a j y.2 l *
+          explicitEffectiveKernel D label w (taggedMode (flags c i).1 false)
+            (taggedMode (flags c j).1 true)) +
+      (if (flags c i).1 = (flags c j).1 ∧ (flags c i).2 = (flags c j).2 then
+        ((scaleRoot c a i)⁻¹)^(2*x.2+1) * ((scaleRoot c a i)⁻¹)^(2*y.2+1) *
+          ((D.G x.1 y.1 : ℂ) * ((-loweringParameter c i)^(x.2+y.2+1) *
+            contractionScalar x.2 y.2))
+      else 0) := by
+  rw [selected_physical_covariance D hu ha ha₁ upperA c i j x y]
+  dsimp only
+  congr 1
+  simp only [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro k _
+  apply Finset.sum_congr rfl
+  intro l _
+  rw [← radial_chart_entry D ha ha₁ upperA c hc i j (x.1, k) (y.1, l) hw hwc]
+  ring
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCauchyTaylor
