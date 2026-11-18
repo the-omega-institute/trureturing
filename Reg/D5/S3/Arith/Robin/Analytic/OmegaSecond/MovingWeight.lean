@@ -80,72 +80,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end WeightNonneg
 
-namespace WeightPeak
 
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
-    (fun _ => ℝ → Prop)
-
-def actual : Realization signature :=
-  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
-
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ {P s t : ℝ}, 0 ≤ s → R.readout () () (weight P s t) (log 2)
-
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  exact h (P := 1) (s := 0) (t := 1) le_rfl
-
-def family : Registration arena (type_of% @weight_le_log_two) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@weight_le_log_two, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
-  dependence := by
-    intro i
-    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
-    intro he
-    have hh : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he (0 : ℝ)) (le_refl (0 : ℝ))
-    norm_num at hh
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@weight_le_log_two) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight.weight_le_log_two.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight.WeightPeak.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-end WeightPeak
 
 namespace WeightContinuity
 

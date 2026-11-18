@@ -17,7 +17,6 @@ internal sealed class MovingWeightDocument : IScribeDocumentDefinition
             D("weight", "weight", "Localized weight", "The weight at P,s,t is log(1+exp(-s*abs(log(t/P)))).", DescribeRole.Definition),
             D("remainder", "remainder", "Finite prime remainder", "The remainder is the sum of the localized weight over all primes at most the natural floor of x.", DescribeRole.Definition),
             D("weight-nonneg", "weight_nonneg", "Nonnegative localized weight", "The localized weight is nonnegative for all real P,s,t.", DescribeRole.Theorem),
-            D("weight-peak", "weight_le_log_two", "Uniform peak height", "For s>=0 the localized weight is at most log(2), for all real P,t.", DescribeRole.Theorem),
             D("weight-continuous", "weight_continuousOn", "Continuity away from zero", "For P>0 and a>0, the localized weight is continuous on every closed real interval [a,b], for every real s.", DescribeRole.Theorem),
             D("left-weight", "leftWeight", "Smooth left extension", "The left extension subtracts s*(log(P)-log(t)) from log(1+P^s/t^s).", DescribeRole.Definition),
             D("left-equals", "leftWeight_eq_weight", "Left-branch identity", "For P>0,t>0,s>=0,t<=P, the smooth left extension equals the localized weight.", DescribeRole.Theorem),
