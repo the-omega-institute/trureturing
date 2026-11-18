@@ -8,6 +8,7 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (L initial_values)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+open scoped BigOperators
 noncomputable section
 attribute [local irreducible] L
 
@@ -414,5 +415,118 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end ColumnGrid
+namespace OwnerSuccessors
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Col (fun _ => Fin 14) (fun _ => ℤ)
+def actual : Realization signature := realize signature (fun _ b j => Q (cls b) j) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun w a b => (fun _ b j => Q (cls b) j) w a b + 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (b : Col) (j : Fin 14),
+    (∑ c : Col, if compatible b c ∧ cls c = j then (1 : ℤ) else 0) = R.readout () b j
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (0,0,0,0) 0
+  have ha := quotient_rows (0,0,0,0) 0
+  simp only [rejected, realize] at hb
+  linarith
+def family : Registration arena (type_of% @quotient_rows) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@quotient_rows, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(0,0,0,0), 0, 4, ?_⟩
+    change Q (cls (0,0,0,0)) 0 ≠ Q (cls (0,0,0,0)) 4
+    decide +kernel
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@quotient_rows) (Realization signature) Type Unit where
+  unitName := `Reg.P4a.OwnerSuccessors.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ b j => Q (cls b) j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
+    definition := none
+    coordinates := #[0]
+    readouts := #[{path := #["body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end OwnerSuccessors
+
+namespace OwnerPowers
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 8) (fun _ => (Fin 14 → ℤ))
+def actual : Realization signature := realize signature (fun _ _ k => W k) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun w a b => (fun _ _ k => W k) w a b + 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ k : Fin 8, (Q ^ k.val).mulVec (1 : Fin 14 → ℤ) = R.readout () () k
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := congrFun (h 0) 0
+  have ha := congrFun (powers_table 0) 0
+  simp only [rejected, realize, Pi.add_apply, Pi.one_apply] at hb
+  linarith
+def family : Registration arena (type_of% @powers_table) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@powers_table, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change W 0 ≠ W 1
+    decide +kernel
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@powers_table) (Realization signature) Type Unit where
+  unitName := `Reg.P4a.OwnerPowers.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ k => W k) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
+    definition := none
+    coordinates := #[]
+    readouts := #[{path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end OwnerPowers
+
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer

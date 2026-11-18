@@ -60,7 +60,7 @@ private theorem zero_cut (p r : Fin 4 → Fin 3) :
   · intro h e he
     exact h e.1 e.2 he
 
-private theorem zero_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
+theorem zero_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
     (∑ r : Fin 4 → Fin 3, if bondDefects between p r = 0 ∧
       HardinA233177PairTransfer.cls (r 0, r 1, r 2, r 3) = j then (1 : ℤ) else 0) =
       HardinA233177PairTransfer.Q (HardinA233177PairTransfer.cls (p 0, p 1, p 2, p 3)) j := by
@@ -69,7 +69,7 @@ private theorem zero_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
   simpa only [Fintype.sum_prod_type, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons, Fin.succ_zero_eq_one, Fin.reduceFinMk] using
     HardinA233177PairTransfer.quotient_rows (p 0, p 1, p 2, p 3) j
 
-private theorem cost_relabel (e : Equiv.Perm (Fin 3)) (p r : HardinA233177PairTransfer.Col) :
+theorem cost_relabel (e : Equiv.Perm (Fin 3)) (p r : HardinA233177PairTransfer.Col) :
     bondDefects between (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e p))
       (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e r)) =
       bondDefects between (HardinA233177PairTransfer.column p) (HardinA233177PairTransfer.column r) := by
@@ -82,7 +82,7 @@ private theorem one_representatives : ∀ i j : Fin 14,
       then (1 : ℤ) else 0) = T (i.castAdd 14) (j.natAdd 14) := by
   decide +kernel
 
-private theorem one_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
+theorem one_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
     (∑ r : Fin 4 → Fin 3, if bondDefects between p r = 1 ∧
       HardinA233177PairTransfer.cls (r 0, r 1, r 2, r 3) = j then (1 : ℤ) else 0) =
       T ((HardinA233177PairTransfer.cls (p 0, p 1, p 2, p 3)).castAdd 14) (j.natAdd 14) := by
@@ -165,7 +165,7 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 2) (s : Fin 28)
       exact zero_counts p j
     · simpa only [Fin.val_one, cl, show (1 : ℕ) ≠ 0 by decide, ite_false] using one_counts p j
 
-private def Z : Fin 22 → Fin 14 → ℤ :=
+def Z : Fin 22 → Fin 14 → ℤ :=
   Fin.append HardinA233177PairTransfer.W
     (![![2340880, 783812, 557050, 719483, 0, 557050, 417502, 0, 417502, 783812, 127826, 0, 0, 0],
     ![13154182, 4401225, 3124692, 4036330, 0, 3124692, 2340880, 0, 2340880, 4401225, 719483, 0, 0, 0],
@@ -182,7 +182,7 @@ private def Z : Fin 22 → Fin 14 → ℤ :=
     ![2303314113185784, 770829790357720, 547427375725382, 707115758914671, 0, 547427375725382, 410162067440982, 0, 410162067440982, 770829790357720, 125919439678494, 0, 0, 0],
     ![12934536678297246, 4328687038183557, 3074143903543504, 3970893133579718, 0, 3074143903543504, 2303314113185784, 0, 2303314113185784, 4328687038183557, 707115758914671, 0, 0, 0]])
 
-private theorem zero_powers (i : Fin 22) :
+theorem zero_powers (i : Fin 22) :
     (HardinA233177PairTransfer.Q ^ i.val).mulVec (1 : Fin 14 → ℤ) = Z i := by
   have recurrence (n : ℕ) :
       (HardinA233177PairTransfer.Q ^ (n + 7)).mulVec (1 : Fin 14 → ℤ) =
@@ -212,7 +212,7 @@ private theorem zero_powers (i : Fin 22) :
             HardinA233177PairTransfer.coefficients, Fin.sum_univ_succ]
   exact go i.val i.isLt
 
-private def W (i : Fin 15) : Fin 28 → ℤ :=
+def W (i : Fin 22) : Fin 28 → ℤ :=
   Fin.append ((![![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ![0, 12, 8, 8, 6, 8, 6, 3, 6, 12, 6, 0, 3, 6],
     ![120, 49, 31, 42, 9, 31, 20, 8, 20, 49, 20, 0, 8, 9],
@@ -227,10 +227,17 @@ private def W (i : Fin 15) : Fin 28 → ℤ :=
     ![2825893800, 1080173062, 772848457, 932633526, 51428874, 772848457, 592061986, 47392544, 592061986, 1080173062, 236690978, 0, 47392544, 51428874],
     ![17297388672, 6543135579, 4678478409, 5674694984, 288789678, 4678478409, 3578207734, 266113563, 3578207734, 6543135579, 1407355134, 0, 266113563, 288789678],
     ![105143454200, 39425416516, 28178327908, 34328155076, 1621769497, 28178327908, 21522210170, 1494452097, 21522210170, 39425416516, 8340654622, 0, 1494452097, 1621769497],
-    ![635447036928, 236454026529, 168927769187, 206582067498, 9107154045, 168927769187, 128868177900, 8392132878, 128868177900, 236454026529, 49298924172, 0, 8392132878, 9107154045]]) i)
-    (Z ⟨i.val, by omega⟩)
+    ![635447036928, 236454026529, 168927769187, 206582067498, 9107154045, 168927769187, 128868177900, 8392132878, 128868177900, 236454026529, 49298924172, 0, 8392132878, 9107154045],
+    ![3821058103316, 1412391957008, 1008692705678, 1237661620888, 51142521763, 1008692705678, 768676702904, 47127366187, 768676702904, 1412391957008, 290652802934, 0, 47127366187, 51142521763],
+    ![22876484910768, 8406271468352, 6001616749467, 7385784342638, 287196465468, 6001616749467, 4569223737796, 264648564551, 4569223737796, 8406271468352, 1709769508298, 0, 264648564551, 287196465468],
+    ![136432986329272, 49872853461284, 35596496016265, 43921843131174, 1612787339904, 35596496016265, 27077902295262, 1486167648888, 27077902295262, 49872853461284, 10036966091510, 0, 1486167648888, 1612787339904],
+    ![810898666012136, 295040520004921, 210530143593343, 260384109402776, 9056797748492, 210530143593343, 160026540442738, 8345747917415, 160026540442738, 295040520004921, 58809863948350, 0, 8345747917415, 9056797748492],
+    ![4804954366993832, 1740921354610008, 1241973709508354, 1539354236631440, 50859539629539, 1241973709508354, 943391116684990, 46866558360269, 943391116684990, 1740921354610008, 343989593164870, 0, 46866558360269, 50859539629539],
+    ![28393761930463952, 10248546583403267, 7309793785660639, 9077591498643394, 285607822867783, 7309793785660639, 5548981550039120, 263184747962894, 5548981550039120, 10248546583403267, 2008850803107928, 0, 263184747962894, 285607822867783],
+    ![167371994534626796, 60203605630137598, 42932182179508552, 53408792169658520, 1603864988950885, 42932182179508552, 32571935843345596, 1477945549272391, 32571935843345596, 60203605630137598, 11714105830809598, 0, 1477945549272391, 1603864988950885]]) i)
+    (Z i)
 
-private theorem tail_step (i : Fin 14) (j : Fin 14) :
+private theorem tail_step (i : Fin 21) (j : Fin 14) :
     W i.succ (j.natAdd 14) = T.mulVec (W i.castSucc) (j.natAdd 14) := by
   have block_tail (A B D : Matrix (Fin 14) (Fin 14) ℤ) (v : Fin 28 → ℤ) :
       (Matrix.reindex finSumFinEquiv finSumFinEquiv
@@ -250,7 +257,7 @@ private theorem tail_step (i : Fin 14) (j : Fin 14) :
   simp_rw [← zero_powers]
   simp only [Fin.val_succ, Fin.val_castSucc, pow_succ', Matrix.mulVec_mulVec]
 
-private theorem powers (i : Fin 15) :
+theorem powers (i : Fin 22) :
     (T ^ i.val).mulVec terminal = W i := by
   have hzero : W 0 = terminal := by
     funext j
@@ -260,11 +267,11 @@ private theorem powers (i : Fin 15) :
       simp only [W, Fin.append_right, terminal]
       rw [← zero_powers]
       norm_num
-  have step (k : Fin 14) : W k.succ = T.mulVec (W k.castSucc) := by
+  have step (k : Fin 21) : W k.succ = T.mulVec (W k.castSucc) := by
     funext j
     induction j using Fin.addCases (m := 14) (n := 14) with
     | left j =>
-      have new_coordinates : ∀ (k : Fin 14) (j : Fin 14),
+      have new_coordinates : ∀ (k : Fin 21) (j : Fin 14),
           W k.succ (j.castAdd 14) = T.mulVec (W k.castSucc) (j.castAdd 14) := by
         decide +kernel
       exact new_coordinates k j
@@ -306,7 +313,7 @@ private theorem tail_polynomial (j : Fin 14) :
   simp_rw [← zero_powers]
   norm_num [HardinA233177PairTransfer.coefficients, Fin.sum_univ_succ] at h0 h1 h2 h3 h4 h5 h6
   norm_num only [Fin.reduceFinMk, Fin.val_ofNat, Nat.reduceMod, Fin.val_natCast]
-  simp only [show (14 : Fin 15).val = 14 from rfl,
+  simp only [show (14 : Fin 22).val = 14 from rfl,
     show (14 : Fin 22).val = 14 from rfl]
   linear_combination h6 - 4 * h0 - 2 * h1 + 25 * h2 + 3 * h3 - 16 * h4 - 3 * h5
 
@@ -319,7 +326,7 @@ theorem finite_certificate :
       (![-16, -16, 196, 124, -741, -238, 787, 250, -288, -102, 23, 6] k : ℤ) •
         (T ^ (2 + k.val)).mulVec terminal := by
   refine ⟨transition_counts, ?_⟩
-  rw [show 14 = (14 : Fin 15).val from rfl, powers]
+  rw [show 14 = (14 : Fin 22).val from rfl, powers]
   simp_rw [show ∀ k : Fin 12, (T ^ (2 + k.val)).mulVec terminal =
     W ⟨2 + k.val, by omega⟩ from fun k => powers ⟨2 + k.val, by omega⟩]
   funext j

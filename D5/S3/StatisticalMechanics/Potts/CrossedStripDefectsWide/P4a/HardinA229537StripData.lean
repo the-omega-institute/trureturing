@@ -18,13 +18,11 @@ terminal: proof_shape=bind-only; consumers=HardinA229537Strip.result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
-import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import Mathlib.Data.Matrix.Block
 
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripData
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open D5.S3.StatisticalMechanics.Potts.StripDefects
 
 -- A sweep boundary is a column of the original array.
 def horizontal : Finset (Fin 4 × Fin 4) := ∅
