@@ -56,10 +56,6 @@ private def reindexStar (e : a ≃ b) : Matrix a a ℂ ≃⋆ₐ[ℝ] Matrix b b
     ext i j
     rfl)
 
-private lemma reindex_trace (e : a ≃ b) (X : Matrix a a ℂ) :
-    (reindexStar e X).trace = X.trace := by
-  exact e.symm.sum_comp (fun i => X i i)
-
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 private lemma reindex_log (e : a ≃ b) (X : Matrix a a ℂ) (hX : X.IsHermitian) :
     reindexStar e (CFC.log X) = CFC.log (reindexStar e X) := by
@@ -222,7 +218,7 @@ private lemma local_data (B H : Matrix a a ℂ)
   let E := reindexStar e
   have hd := local_data_fin (E B) (E H)
     (hB.submatrix e.symm.injective) (hH.submatrix e.symm)
-    (by rw [reindex_trace, ht])
+    ((trace_reindex e H).trans ht)
   have hI : localIntegral (E B) (E H) = localIntegral B H := by
     funext s
     unfold localIntegral
@@ -232,9 +228,10 @@ private lemma local_data (B H : Matrix a a ℂ)
     have hh := reindex_logDeriv e (B+(t*s) • H) H
     change E (logDeriv _ H) = _ at hh
     rw [map_add, map_smul] at hh
-    rw [← hh, ← map_mul, reindex_trace]
+    rw [← hh, ← map_mul, show ∀ X, (E X).trace = X.trace from trace_reindex e]
   have hq : ((E H) * logDeriv (E B) (E H)).trace = (H * logDeriv B H).trace := by
-    rw [← reindex_logDeriv, ← map_mul, reindex_trace]
+    rw [← reindex_logDeriv, ← map_mul]
+    exact trace_reindex e _
   refine ⟨by simpa only [hI, hq] using hd.1, ?_⟩
   filter_upwards [hd.2] with s hs
   have hp : (B+s • H).PosDef := by
@@ -251,7 +248,8 @@ private lemma local_data (B H : Matrix a a ℂ)
   rw [hI] at hh
   change d (E B+s • E H) (E B) = _ at hh
   unfold d at hh ⊢
-  rw [← map_smul, ← map_add, ← hl, ← hr, ← map_sub, ← map_mul, reindex_trace] at hh
+  rw [← map_smul, ← map_add, ← hl, ← hr, ← map_sub, ← map_mul,
+    show ∀ X, (E X).trace = X.trace from trace_reindex e] at hh
   exact hh
 
 private def ampPositive (N : QuantumChannel a b) :
@@ -357,14 +355,6 @@ private lemma amp_flag_offdiag (N : QuantumChannel a b)
       Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.conjTranspose_apply] using congrArg star he
   rw [hc]
 
-private lemma block_pd (X Y : Matrix a a ℂ) (hX : X.PosDef) (hY : Y.PosDef) :
-    (Matrix.fromBlocks X 0 0 Y).PosDef := by
-  letI := hX.isUnit.invertible
-  apply (Matrix.PosSemidef.posDef_iff_isUnit ?_).mpr
-  · simpa only [Matrix.isUnit_fromBlocks_zero₂₁] using And.intro hX.isUnit hY.isUnit
-  · simpa using (Matrix.PosDef.fromBlocks₁₁ (0 : Matrix a a ℂ) Y hX).mpr
-      (by simpa using hY.posSemidef)
-
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 private lemma normalized_d (A B : Matrix a a ℂ) (hA : A.PosDef) (hB : B.PosDef)
     (c : ℝ) (hc : 0 < c) : d (c • A) (c • B) = c * d A B := by
@@ -380,7 +370,7 @@ private lemma d_reindex (e : a ≃ b) (A B : Matrix a a ℂ)
     d (reindexStar e A) (reindexStar e B) = d A B := by
   unfold d
   rw [← reindex_log e A hA, ← reindex_log e B hB,
-    ← map_sub, ← map_mul, reindex_trace]
+    ← map_sub, ← map_mul, show ∀ X, (reindexStar e X).trace = X.trace from trace_reindex e]
 
 private def ampReal (N : QuantumChannel a b) :
     Matrix (r × a) (r × a) ℂ →ₗ[ℝ] Matrix (r × b) (r × b) ℂ :=
@@ -524,8 +514,8 @@ theorem faithful_density_pair_ratio_approx
   let Hi := cornerH Vi
   let Bo := cornerB Zo Co δ
   let Ho := cornerH Vo
-  have hBi : Bi.PosDef := block_pd Zi (δ • Ci) hZ (Matrix.PosDef.one.smul hδ)
-  have hBo : Bo.PosDef := block_pd Zo (δ • Co) hZo (hCo.smul hδ)
+  have hBi : Bi.PosDef := block_diag_posDef Zi Ci hZ Matrix.PosDef.one hδ
+  have hBo : Bo.PosDef := block_diag_posDef Zo Co hZo hCo hδ
   have hlocali := local_data Bi Hi hBi (cornerH_hermitian Vi) (cornerH_trace Vi)
   have hlocalo := local_data Bo Ho hBo (cornerH_hermitian Vo) (cornerH_trace Vo)
   have hQrat : Tendsto (fun e => localIntegral Bo Ho e / localIntegral Bi Hi e)
@@ -570,10 +560,14 @@ theorem faithful_density_pair_ratio_approx
   let τ := Bi.trace.re
   have hτ : 0 < τ := (Complex.pos_iff.mp hBi.trace_pos).1
   have hBtr : (Ei Bi).trace = (τ : ℂ) := by
-    rw [reindex_trace]
+    change (Bi.reindex (flagIndex (r := r) (a := a)).symm
+      (flagIndex (r := r) (a := a)).symm).trace = _
+    rw [trace_reindex]
     exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hBi.isHermitian).symm
   have hAtr : (Ei Ai).trace = (τ : ℂ) := by
-    rw [reindex_trace]
+    change (Ai.reindex (flagIndex (r := r) (a := a)).symm
+      (flagIndex (r := r) (a := a)).symm).trace = _
+    rw [trace_reindex]
     change (Bi+e • Hi).trace = _
     rw [Matrix.trace_add, Matrix.trace_smul, cornerH_trace, smul_zero, add_zero]
     exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hBi.isHermitian).symm
