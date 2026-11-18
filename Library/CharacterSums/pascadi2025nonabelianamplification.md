@@ -3,17 +3,19 @@ bibkey: pascadi2025nonabelianamplification
 authors: Alexandru Pascadi
 year: 2026
 title: Non-abelian amplification and bilinear forms with Kloosterman sums
-doi: null
+doi: 10.1007/s00039-026-00746-0
 url: https://arxiv.org/abs/2511.08445v2
 claim: Conjecture 6.1 gives a uniform upper bound for alternating T,S return words in PSL_2(Z/cZ); Proposition 6.2 gives a weaker q=6 bound and proves the conjecture only in some parameter ranges.
 strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiSixWordFiber
   - D5/S3/Arith/CharacterSums/PascadiMinusRows
   - D5/S3/Arith/CharacterSums/PascadiOriginalCoefficients
+  - D5/S3/Arith/CharacterSums/PascadiModularZeroPartners
   - D5/S3/Arith/CharacterSums/PascadiSingularResultant
   - D5/S3/Arith/CharacterSums/PascadiSingularFactorCover
   - D5/S3/Arith/CharacterSums/PascadiLocalizedFactor
   - D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover
+  - D5/S3/Arith/CharacterSums/PascadiPrimeCubeCount
 license: source-reference
 triage: anchor
 ---
@@ -60,6 +62,33 @@ Source: <https://arxiv.org/abs/2511.08445v2>, Section 6: Conjecture 6.1,
 bound (6.2), and Proposition 6.2, weaker $q=6$ bound (6.3), including the
 following remark on the parameter ranges where the conjecture follows.
 
+The journal version is *Geometric and Functional Analysis* 36 (2026),
+1174–1243, <https://doi.org/10.1007/s00039-026-00746-0>.
+For $c=p^3$, Proposition 6.2 gives
+$p^{o(1)}Y^2(1+X^2/p^3)$, so it already supplies the desired scale when
+$X\ll p^{3/2}$. It does not supply it throughout
+$p^{3/2}\le X\le Y$, $XY\le C_0p^{18/5}$, $6Y<p^2$:
+at $X=Y=p^{9/5}$ the extra factor is $1+p^{3/5}$.
+The 17 November 2026 bounded literature screen covered both arXiv versions,
+the journal text, the conjecture's cited results and identifiable citing papers;
+no theorem covering this whole prime-cube range was found in that scope.
+This does not establish exhaustive novelty or priority. The later repository
+prime-cube continuation below proves that precise original-tuple estimate;
+the final Shkredov/Chang primary-text comparison remains incomplete.
+
+The continuation also checked the current primary texts arXiv:2605.02518v2
+(Zhang) and arXiv:2603.14116v2 (Shkredov). Zhang's Theorem 2.4 requires
+trace-hyperplane nonconcentration; the natural two-letter unipotent product
+here has a fixed lower-right matrix entry, so that theorem does not directly
+apply. Its Theorem 3.6 concerns a specified Mobius incidence configuration.
+Shkredov's class Z includes sufficiently large prime cubes, but Lemma 14
+averages a common shift and Lemma 15 counts a small-N Mobius incidence; neither
+is the fixed-coefficient six-return estimate above. These checked distinctions
+do not exhaust the citation graph. The final 2021 Journal of Number Theory
+text cited by Pascadi was not obtained; Pascadi's published attribution to its
+Lemma 15 is explicitly in the prime-modulus case. No exhaustive priority
+claim follows from this bounded comparison.
+
 ## Repository prime-cube continuation (16 November 2026)
 
 The new `PascadiMinusRows` module proves the original literal-box reduction
@@ -77,10 +106,49 @@ coordinates and forms the literal coefficient functions of `L₀Q−LQ₀`.
 Its root identity is derived from the actual original word equation, using
 `β=V₁/R₁` and `α=−1/(g*t*R₁)`; it is not supplied as a polynomial-root hypothesis.
 Literal coordinate bounds also give coefficient constant `C=3`, actual pencil
-height `H=18`, and degree at most three. The lattice basis construction,
-exceptional strata, physical multiplicities,
-average/second-moment estimate, plus-center comparison and full original
-prime-cube count remain unformalized here.
+height `H=18`, and degree at most three.
+
+The actual lattice construction and modular-zero partner count are now integrated
+through [PR #31327](https://github.com/the-omega-institute/trureturing/pull/31327).
+`PascadiOriginalLattice` constructs the shortest primitive vector, its Bezout
+completion, the centered reduced basis and the literal coordinate bounds.
+`PascadiModularZeroFieldPartners`, `PascadiModularZeroPartners`,
+`PascadiModularZeroRegularity` and `PascadiOriginalModularPartners` count the
+full modular-zero partner set for a nonaligned retained original baseline,
+including both dividing directions and the nondividing six-candidate case.
+Their explicit coordinate-height and unit hypotheses remain part of the results.
+
+`NumberFieldDivisorSubpower` proves the bounded algebraic-divisor estimate with
+one constant uniform over number fields of degree at most three.
+`PascadiOriginalSingularPartners` constructs the actual algebraic values and
+their nonzero fixed products from the original word. Together with
+`PascadiOriginalLinearFibers`, `PascadiOriginalSingularCount` bounds the actual
+nonzero singular partner set by
+`C_epsilon p^epsilon (1+6H/(p*sigma))`, where sigma is the shortest length of
+the actual index-p-squared lattice. The original word determines the second
+endpoint, so this physical multiplicity is paid once.
+
+`PascadiOriginalWeightAverage` proves the full finite dyadic average of
+`1+H/(p*sigma)` over actual integer `(w,t)` in the literal parameter rectangle.
+For `1<=X<=Y`, `Y<p^3`, `A=XY<2p^4`, `H^2=A` and `p<=H`, its bound is
+`2048[A+(A/p)(1+log(2p)/log(2))+A^2/p^4]`.
+These are explicit sufficient conditions; applying them to the target range
+still requires checking that range's hypotheses.
+
+`PascadiPrimeCubeCount.prime_cube_scalar_return_count` now proves the original
+prime-cube slice: for every epsilon>0 and C0>=1, one K>0 bounds the total literal
+six-letter count, summed over every scalar gamma with gamma^2=1, by
+`K*Y^2*p^epsilon`, for every prime p, fixed alternating units modulo p^3,
+`p^(3/2)<=X<=Y`, `XY<=C0*p^(18/5)` and `6Y<p^2`. The proof connects the
+derivative and exceptional partners, actual record moments, all removed
+charts, nonunit rows, all scalar centers and the bounded-prime range without
+supplied lattice or counting hypotheses. The exact-root Lean build and scoped
+report passed; canonical publication and required CI are separate checks.
+The unrestricted arbitrary-modulus conjecture remains open. The supplied
+paper proof is an input with the separate provenance below. Source-bound
+four-slot escape audits remain unfinished
+under [issue #31176](https://github.com/the-omega-institute/trureturing/issues/31176);
+no completed registration is claimed for these new modules.
 
 The four integrated singular-factor modules retain the proofs from the completed
 research archive `pascadi-prime-cube-singular-cover-formalization-20261116`.
