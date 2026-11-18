@@ -5,5 +5,7 @@ cas_ref: sha256:5b7288b594d029055300ddb30f54728c33bc665392f01d63a0b151014b27511c
 coverage_gids:
   - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.centered_reserve
     target_statement_id: sha256:fc86ffe53310b810826c3ae9f228784aa09786de1045543e8142e34083224dc6
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_deletion
+    target_statement_id: sha256:6064ee5d6ce8274a55cef0eca3c5fffbf1990c562acc02ecc57426647f6fcab5
 receipts:
   unresolved_subitems: []
