@@ -209,8 +209,8 @@ theorem softplus_theta_window {P s E : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
     exact (continuousOn_const.add hexp).log
       (fun t _ => (add_pos_of_pos_of_nonneg zero_lt_one (exp_pos _).le).ne')
   have hint := intervalIntegral.integral_add_adjacent_intervals
-    ((hC (P / 2) P hhalf).intervalIntegrable_of_Icc hleft)
-    ((hC P (2 * P) hP).intervalIntegrable_of_Icc hright)
+    ((hC (P / 2) P hhalf).intervalIntegrable_of_Icc (μ := volume) hleft)
+    ((hC P (2 * P) hP).intervalIntegrable_of_Icc (μ := volume) hright)
   have hsum : primeInterval (P / 2) (2 * P) =
       primeInterval (P / 2) P ∪ primeInterval P (2 * P) := by
     unfold primeInterval
