@@ -69,7 +69,7 @@ private theorem level_card (m N t : ℕ) (b : PositiveColumns) (p : Fin N) :
   rw [Finset.card_filter]
   apply Finset.sum_congr rfl
   intro j _
-  split_ifs <;> rfl
+  split_ifs with h <;> simp [h]
 
 /-- Count actual full placements on the augmented board by its level totals.
     This holds for arbitrary normalized original boards, with no singleton
