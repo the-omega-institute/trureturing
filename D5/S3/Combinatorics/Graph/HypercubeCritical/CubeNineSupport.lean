@@ -31,19 +31,19 @@ private def twoNeighbors (S : Finset Q9) (x : Q9) : Finset Q9 :=
   (S.erase x).filter (fun z => (diff x z).card = 2)
 
 open Classical in
-private theorem diff_self (x : Q9) : diff x x = ∅ := by
+private theorem diff_self {n : Nat} (x : Q n) : diff x x = ∅ := by
   classical
   ext i
   simp [diff]
 
 open Classical in
-private theorem diff_symm (x y : Q9) : diff x y = diff y x := by
+private theorem diff_symm {n : Nat} (x y : Q n) : diff x y = diff y x := by
   classical
   ext i
   simp [diff, ne_comm]
 
 open Classical in
-private theorem diff_empty_iff (x y : Q9) : diff x y = ∅ ↔ x = y := by
+private theorem diff_empty_iff {n : Nat} (x y : Q n) : diff x y = ∅ ↔ x = y := by
   classical
   constructor
   · intro h
@@ -56,7 +56,7 @@ private theorem diff_empty_iff (x y : Q9) : diff x y = ∅ ↔ x = y := by
     exact diff_self x
 
 open Classical in
-private theorem diff_triangle (x y z : Q9) :
+private theorem diff_triangle {n : Nat} (x y z : Q n) :
     diff x y = (diff x z \ diff y z) ∪ (diff y z \ diff x z) := by
   classical
   ext i
@@ -64,7 +64,7 @@ private theorem diff_triangle (x y z : Q9) :
     simp [diff, hx, hy, hz]
 
 open Classical in
-private theorem diff_triangle_card (x y z : Q9) :
+private theorem diff_triangle_card {n : Nat} (x y z : Q n) :
     (diff x y).card + 2 * (diff x z ∩ diff y z).card =
       (diff x z).card + (diff y z).card := by
   classical

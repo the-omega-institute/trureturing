@@ -4,10 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
    utility: none
-   digest: The actual twenty-point degree-two/degree-three slice has five high-high edges and only the 10/10 or 11/9 parity splits before the remaining cube obstruction.
+   digest: The actual twenty-point slice has parity split 10/10 and compressed graphs of the same five-vertex type before the remaining Huang-sign obstruction.
  -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
+import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
+import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
 import D5.S3.Combinatorics.Graph.HypercubeCritical.FifteenSliceStructure
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricLowPartners
@@ -49,6 +50,10 @@ open private SideHigh compressed compressed_degree compressed_triangle_free
   nine_side_no_high_wedge nine_side_three_step_cover selected_three_hamming
   eleven_nine_central_obstruction from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
+open private eleven_nine_nonembedding from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
+open private SquareLeaf symmetric_paired_types from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 
 attribute [local instance] Classical.propDecidable
 
@@ -262,9 +267,9 @@ def claim : Prop :=
       (∀ {x y}, G.Adj x y → G.degree x = 2 → G.degree y = 2 → False) ∧
       IsBalanced S
 
-/- The exact actual-support telescope yields the derived girth, parity alternatives,
-   and the five-edge high graph.  The remaining private unit is the elimination of
-   these alternatives by actual cube words and Huang signs. -/
+/- The exact actual-support telescope yields derived girth, the symmetric parity
+   split, five high-high edges, and equal compressed types. Their actual signed
+   word exclusions remain necessary to obtain the full obstruction. -/
 theorem actual_twenty_point_slice_data (h : claim) :
     ∃ (n : ℕ) (S : Finset (Q n)),
       ∃ L R : Finset {x : Q n // x ∈ S},
@@ -280,12 +285,11 @@ theorem actual_twenty_point_slice_data (h : claim) :
         (∃ P T : Finset {x : Q n // x ∈ S},
           G.IsBipartiteWith (P : Set {x : Q n // x ∈ S})
             (T : Set {x : Q n // x ∈ S}) ∧
-          ((P.card = 10 ∧ T.card = 10 ∧
-              (degreeTwo G P).card = 5 ∧ (degreeTwo G T).card = 5) ∨
-           (P.card = 11 ∧ T.card = 9 ∧
-              (degreeTwo G P).card = 8 ∧ (degreeTwo G T).card = 2) ∨
-           (P.card = 9 ∧ T.card = 11 ∧
-              (degreeTwo G P).card = 2 ∧ (degreeTwo G T).card = 8))) ∧
+          P.card = 10 ∧ T.card = 10 ∧
+            (degreeTwo G P).card = 5 ∧ (degreeTwo G T).card = 5 ∧
+            ((Nonempty (cycleGraph 5 ≃g compressed G P) ∧
+                Nonempty (cycleGraph 5 ≃g compressed G T)) ∨
+              (SquareLeaf (compressed G P) ∧ SquareLeaf (compressed G T)))) ∧
         (G.induce {v | G.degree v = 3}).edgeFinset.card = 5 ∧
         (∀ P T : Finset (S : Set (Q n)),
           G.IsBipartiteWith (P : Set (S : Set (Q n))) (T : Set (S : Set (Q n))) →
@@ -322,6 +326,27 @@ theorem actual_twenty_point_slice_data (h : claim) :
       (paritySide S false).card + (paritySide S true).card = 20 :=
     hparity_card.trans hScard
   have hsplit := parity_split hparity hdeg hparity_card20 hq
+  have hhigh (T : Finset (S : Set (Q n))) {a b : ℕ} (hT : T.card = a)
+      (hlo : (degreeTwo G T).card = b) : (degreeThree G T).card = a - b := by
+    have hp := parts_card G hdeg T
+    omega
+  have hsym : (paritySide S false).card = 10 ∧ (paritySide S true).card = 10 ∧
+      (degreeTwo G (paritySide S false)).card = 5 ∧
+      (degreeTwo G (paritySide S true)).card = 5 := by
+    rcases hsplit with hs | hs | hs
+    · exact hs
+    · have hp : (degreeThree G (paritySide S false)).card = 3 :=
+        hhigh _ hs.1 hs.2.2.1
+      have ht : (degreeThree G (paritySide S true)).card = 7 :=
+        hhigh _ hs.2.1 hs.2.2.2
+      exact (eleven_nine_nonembedding hparity hdeg hlow hbal
+        hp hs.2.2.2 ht hs.2.1).elim
+    · have hp : (degreeThree G (paritySide S false)).card = 7 :=
+        hhigh _ hs.1 hs.2.2.1
+      have ht : (degreeThree G (paritySide S true)).card = 3 :=
+        hhigh _ hs.2.1 hs.2.2.2
+      exact (eleven_nine_nonembedding hparity.symm hdeg hlow hbal
+        ht hs.2.2.1 hp hs.1).elim
   have hcardV : Fintype.card (S : Set (Q n)) = 20 := by
     simpa using hScard
   have hedge := high_high_edge_count hdeg hlow hcardV hq
@@ -329,7 +354,14 @@ theorem actual_twenty_point_slice_data (h : claim) :
     BalancedCubeGirth.eight_le_egirth S hbal, ?_, ?_, ?_⟩
   · exact hpart
   · refine ⟨paritySide S false, paritySide S true, hparity, ?_⟩
-    exact hsplit
+    refine ⟨hsym.1, hsym.2.1, hsym.2.2.1, hsym.2.2.2, ?_⟩
+    have hp : (degreeThree G (paritySide S false)).card = 5 :=
+      hhigh _ hsym.1 hsym.2.2.1
+    have ht : (degreeThree G (paritySide S true)).card = 5 :=
+      hhigh _ hsym.2.1 hsym.2.2.2
+    exact symmetric_paired_types hparity hdeg hlow
+      (BalancedCubeGirth.eight_le_egirth S hbal) hp ht
+      hsym.2.2.1 hsym.2.2.2
   · change (graph G).edgeFinset.card = 5
     exact hedge
   · intro P T hp
