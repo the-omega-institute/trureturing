@@ -276,15 +276,19 @@ iteration use `make -C tools check-fast` and the affected test project:
 make -C tools test TEST_PROJECT=tools/tests/<Project>/<Project>.csproj
 ```
 
-`make test` generates the Lean report and runs check-current. For local validation
-of cross-tree constraints, resolve an explicit base and run the independent commands:
+For local validation of cross-tree constraints, resolve an explicit base and preview
+the checks selected for your diff.
 
 ```sh
 base_sha="$(git rev-parse upstream/dev^{commit})"
-make gate BASE="$base_sha"
+make gate-plan BASE="$base_sha"
 ```
 
-The gate runs lean-report, check-current, Scribe, filemap-conform and check-delta.
+Run `make gate BASE="$base_sha"` when the plan fits the local check scope. If the
+plan includes a full Lean report, use the focused checks relevant to your change
+unless a full report is needed. For an explicitly scoped whole-repository check,
+`make gate BASE="$base_sha" FULL_BUILD=1` authorizes the selected full-report phase.
+`make test FULL_BUILD=1` builds the full Lean report and runs check-current.
 Base supplies data only. Use `origin/dev` when that is your project remote.
 Commit and push each logical change; local checks provide early feedback alongside
 remote CI. Report actual commands and exit codes. Local success does not replace
