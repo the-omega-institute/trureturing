@@ -13,7 +13,8 @@ import re
 import tarfile
 
 from lean_artifact_inventory import (
-    PROJECT_BUILD, build_inventory, import_closure, lean_artifact_paths, project_imports, workspace_modules,
+    PROJECT_BUILD, build_inventory, import_closure, lake_configuration, lean_artifact_paths,
+    project_imports, workspace_modules,
 )
 from lean_cache_release_io import ArchiveInput, MultipartArchiveOutput, archive_sha, copy_chunks, remaining
 
@@ -112,7 +113,7 @@ def pack(root, stage, chunk_bytes, deadline):
     with (stage / INDEX).open("wb") as encoded:
         with gzip.GzipFile(filename="", fileobj=encoded, mode="wb", mtime=0) as index:
             index.write(json.dumps({"members": frames}, separators=(",", ":")).encode())
-    return {**output.metadata(), "index": {"name": INDEX, "bytes": (stage / INDEX).stat().st_size,
+    return {**output.metadata(), "lake_inputs_sha256": lake_configuration(root), "index": {"name": INDEX, "bytes": (stage / INDEX).stat().st_size,
                                            "sha256": archive_sha(stage / INDEX, deadline)}}
 
 
@@ -300,7 +301,7 @@ def scoped_members(root, rows, targets, target_build):
         if not paths.issubset(allowed):
             raise ValueError("indexed module paths disagree with the Lake workspace: " + name)
         compatible.add(name)
-        if all(not os.path.lexists(target_build / path) for path in paths):
+        if any(not os.path.lexists(target_build / path) for path in paths):
             needed.add(name)
     return [row for row in rows if row["module"] in needed]
 

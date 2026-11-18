@@ -70,6 +70,47 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         with self.assertRaises((ValueError, EOFError)):
             indexed.extract_frame(io.BytesIO(encoded[:-1]), row, self.root / "truncated", set(), None)
 
+    def test_scoped_rollback_removes_only_directories_it_created(self):
+        from lean_cache_release import install_scoped
+
+        target = self.root / "scoped-build"
+        staged = self.root / "scoped-staging"
+        path = pathlib.PurePosixPath("lib/lean/D5/Fixture.olean")
+        write(staged / path, "artifact")
+        link = os.link
+
+        def interrupted(source, destination):
+            link(source, destination)
+            raise OSError("interrupted after link")
+
+        with patch("lean_cache_release.os.link", side_effect=interrupted):
+            with self.assertRaisesRegex(OSError, "interrupted after link"):
+                install_scoped(target, staged, {path}, None)
+        self.assertFalse(target.exists())
+        self.assertTrue((staged / path).is_file())
+        (target / "lib").mkdir(parents=True)
+        with patch("lean_cache_release.os.link", side_effect=interrupted):
+            with self.assertRaises(OSError):
+                install_scoped(target, staged, {path}, None)
+        self.assertEqual([target / "lib"], list(target.iterdir()))
+        self.assertEqual([], list((target / "lib").iterdir()))
+
+    def test_scoped_release_rejects_changed_lake_configuration_before_transfer(self):
+        from lean_artifact_inventory import lake_configuration
+        from lean_cache_release import restore_scoped
+        from lean_release_index import SCHEMA
+
+        config = self.root / "lakefile.toml"
+        write(config, '[leanOptions]\nmaxRecDepth = 1000\n')
+        manifest = {"schema": SCHEMA, "lake_inputs_sha256": lake_configuration(self.root)}
+        write(config, '[leanOptions]\nmaxRecDepth = 2000\n')
+        with patch("lean_cache_release.snapshot_manifest", return_value=({}, manifest, [])), \
+                patch("lean_cache_release.gh") as transport:
+            result = restore_scoped(self.root, "fixture", "tag", self.root, None,
+                                    cache_key={}, producer="", targets=["D5.Fixture"], verification=True)
+        self.assertEqual((0, 0), result)
+        transport.assert_not_called()
+
     def local_environment(self, **changes):
         return dict(GITHUB_ACTIONS="false", GITHUB_EVENT_NAME="", GITHUB_REF="", GITHUB_REPOSITORY="",
                     GITHUB_SHA="not-an-input", GITHUB_RUN_ID="", GITHUB_RUN_ATTEMPT="", **changes)

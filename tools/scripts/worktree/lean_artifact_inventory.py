@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass, field
+import hashlib
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -92,6 +93,22 @@ def workspace_modules(root: Path) -> dict[str, Module]:
             raise ValueError(f"ambiguous module ownership: {module}")
         result[module] = Module(package, source, build)
     return result
+
+
+def lake_configuration(root: Path) -> str:
+    """Bind the compiler settings and dependency pins of every local Lake package."""
+    files = [Path("lean-toolchain")]
+    files.extend(directory / name
+                 for directory in (Path("."), Path("Reg"), INSPECTOR, REG_INSPECTOR, INTERFACE)
+                 for name in ("lakefile.lean", "lakefile.toml", "lake-manifest.json"))
+    config = {}
+    for relative in files:
+        path = root / relative
+        if path.is_symlink():
+            raise ValueError(f"Lake config is a symlink: {relative}")
+        if path.is_file():
+            config[relative.as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(json.dumps(config, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
 def project_imports(root: Path, modules: dict[str, Module]) -> dict[str, set[str]]:
