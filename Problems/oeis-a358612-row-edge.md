@@ -2,7 +2,7 @@
 slug: oeis-a358612-row-edge
 bibkey: kurkov2024a358612
 doi: null
-url: https://raw.githubusercontent.com/oeis/oeisdata/d8ad22d9b98d2c427be8c6cd9f2672c600b8e3ae/seq/A358/A358612.seq
+url: https://oeis.org/A358612
 triage: theorem
 motivation_gids:
   - D5/S1/Recurrence/Parity/DyadicExtendedStirlingEdge.result
@@ -20,6 +20,7 @@ A341392 NAME is, verbatim:
 
 > a(n) = A284005(n) / (1 + A000120(n))!.
 
+The question is quoted from [A358612 revision 52](https://raw.githubusercontent.com/oeis/oeisdata/d8ad22d9b98d2c427be8c6cd9f2672c600b8e3ae/seq/A358/A358612.seq).
 The [source note](../Library/Digit/kurkov2024a358612.md) gives the immutable
 primary sources, attribution and exact scalar-program correspondence.
 Write w=A000120 and P=A284005, with w(0)=0, P(0)=1, P(1)=2 and
