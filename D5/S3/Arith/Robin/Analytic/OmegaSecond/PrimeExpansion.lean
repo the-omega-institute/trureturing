@@ -36,6 +36,33 @@ theorem prime_counting_three_terms :
   field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
   <;> ring
 
+private lemma prime_counting_error_limit :
+    Tendsto (fun P : ℝ =>
+      (primeCount P - P / log P) / (P / log P ^ 2))
+      atTop (𝓝 1) := by
+  have hi : Tendsto (fun P : ℝ => 1 / log P) atTop (𝓝 0) :=
+    tendsto_log_atTop.const_div_atTop 1
+  have h := ((prime_counting_three_terms.mul (hi.pow 2)).add
+    (hi.const_mul 2)).add_const 1
+  norm_num only [zero_pow, mul_zero, zero_add, add_zero] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+  dsimp only [countingThreeTerms]
+  field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
+  <;> ring
+
+/-- A uniform eventual error bound for comparison on moving prime intervals. -/
+theorem prime_counting_error_bound :
+    ∀ᶠ P : ℝ in atTop,
+      |primeCount P - P / log P| ≤ 3 * (P / log P ^ 2) := by
+  have h := prime_counting_error_limit.abs
+  norm_num only [abs_one] at h
+  filter_upwards [h.eventually_lt_const (by norm_num : (1 : ℝ) < 3),
+    eventually_gt_atTop (1 : ℝ)] with P hbound hP
+  have hscale : 0 < P / log P ^ 2 := div_pos (by linarith) (sq_pos_of_pos (log_pos hP))
+  rw [abs_div, abs_of_pos hscale] at hbound
+  exact ((div_lt_iff₀ hscale).mp hbound).le
+
 /-- The budget after removing the second distinct-prime threshold at cutoff P. -/
 def budget (P : ℝ) : ℝ :=
   P - Chebyshev.theta P +
