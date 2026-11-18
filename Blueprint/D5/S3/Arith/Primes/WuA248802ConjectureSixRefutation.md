@@ -82,6 +82,10 @@ $$\neg (\operatorname{claim}\left(\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/WuA248802ConjectureSixRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wu-a248802-conjecture-six-refutation` (refuted) by `D5/S3/Arith/Primes/WuA248802ConjectureSixRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wu-a248802-conjecture-six-refutation","declaration_gid":"D5/S3/Arith/Primes/WuA248802ConjectureSixRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chai Wah Wu; OEIS Foundation Inc. (2019). *OEIS A248802, Conjecture 6*. URL: <https://oeis.org/A248802/internal>.

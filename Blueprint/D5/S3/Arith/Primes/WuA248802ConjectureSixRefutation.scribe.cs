@@ -47,7 +47,10 @@ internal sealed class WuA248802ConjectureSixRefutationDocument : IScribeDocument
                     + "Matthew House's MathOverflow answer and prior divisibility table "
                     + "supply the 1759 progression; the result adds the admissible "
                     + "intersection and the full claim's negation. No exact minimum "
-                    + "equality or global priority is asserted."))), DescribeRole.Theorem))));
+                    + "equality or global priority is asserted."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wu-a248802-conjecture-six-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock.Describe Domain(string name, string label, Formula body, string prose) =>
         Describe.Lean(DescribeId.Create("wu-a248802-six-" + name.ToLowerInvariant()),
