@@ -7,6 +7,17 @@ doi: null
 url: https://math.dartmouth.edu/~carlp/robin4.pdf
 claim: Robin violations have global counting function at most exp(O(log x / log log x)); this does not supply a per-progression singleton theorem or exclude a remaining candidate.
 strata_touched:
+  - D5/S3/Arith/Robin/Analytic/RobinExceptionCount
+  - D5/S3/Arith/Robin/Analytic/OmegaTailUpper
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Density
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Truncation
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Binning
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Selection
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Entropy
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Lower
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Counting
+  - D5/S3/Arith/Robin/Analytic/OmegaTail/Asymptotic
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/Entropy
 license: citation-only
 triage: anchor
@@ -57,10 +68,6 @@ Here $y=\log x/\log\log x$ and $\omega$ counts distinct prime divisors.
 The section then asks:
 
 > How good is this estimate?
-
-Section 3 also states:
-
-> Presumably there are not many values of n ≤ x with ω(n) > y + y/log₂ x
 
 ## Comparison with the FIB source estimates
 

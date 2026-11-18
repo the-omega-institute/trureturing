@@ -16,13 +16,52 @@ universe u
 private def emptySystem (J : Type u) : ExchangeSystem J := { base := ∅, neg := fun _ => ∅, pos := fun _ => ∅, base_prime := by simp, neg_subset := by simp, pos_prime := by simp, pos_base := by simp, neg_disjoint := by intro i j hij; simp, pos_disjoint := by intro i j hij; simp }
 private def emptyChoices (J : Type u) [Fintype J] [DecidableEq J] : Choices (emptySystem J) (fun _ => 0) := ⟨fun _ => ⟨∅, by simp [emptySystem]⟩, fun _ => ⟨∅, by simp [emptySystem]⟩⟩
 namespace Injection
-abbrev signature : Signature := { Params := Type u, State A := A → ℕ, Role := Unit, finiteRole := inferInstance, nonemptyRole := inferInstance, Output _ _ := Prop, Anchor := Empty, finiteAnchor := inferInstance }
-def actual : Realization signature := realize signature (fun _ _ f => Function.Injective f) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
-abbrev arena : Arena := { signature := signature, Law R := ∀ {J : Type u} [Fintype J] [DecidableEq J] (E : ExchangeSystem J) (h : J → ℕ), R.readout () (Choices E h) (value E h) }
-private theorem rejected_law : ¬ arena.Law rejected := by intro h; exact h (J := PUnit) (emptySystem PUnit) (fun _ => 0)
-def family : Registration arena (type_of% @exchange_value_injective.{u}) := { actual := actual, bridge := Iff.rfl, variation := ⟨@exchange_value_injective, rejected, rejected_law⟩, sensitivity := by { constructor; { intro i; refine ⟨rejected, ?_, rfl, rejected_law⟩; intro j hj; exact (hj (Subsingleton.elim _ _)).elim }; { intro e; exact nomatch e } }, dependence := by { intro i; refine ⟨ULift.{u} ℕ, (fun a => a.down), (fun _ => 0), ?_⟩; intro he; have hi : Function.Injective (fun a : ULift.{u} ℕ => a.down) := fun _ _ hh => ULift.ext hh; have hc : Function.Injective (fun _ : ULift.{u} ℕ => (0 : ℕ)) := Eq.mp he hi; have hh : (0 : ℕ) = 1 := congrArg ULift.down (@hc ⟨0⟩ ⟨1⟩ rfl); norm_num at hh } }
-def audit : Contract.Registration.{_,_,_,0,0,0,u+1,u,0,0,0,0} (@exchange_value_injective.{u}) (Realization signature.{u}) Type Unit := { unitName := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Entropy.Exchange.exchange_value_injective.audit, realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaSecond.Entropy.Exchange.Injection.family, realizationSource := none, generated := false, arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩, catalog := Lean.Name.anonymous, localNames := false, realization := .source arena.{u} ⟨family.{u}⟩, correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent, readout := some (realize signature.{u} actual.{u}.readout actual.{u}.anchor), variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none, sourceSelection := some { owner := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Entropy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }, continuation := .unknown, familyRecord := none, options := #[] }
+abbrev signature : Signature where
+  Params := Σ J : Type u, Σ _ : Fintype J, Σ _ : ExchangeSystem J, J → ℕ
+  State p := Choices p.2.2.1 p.2.2.2
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ p z => @value p.1 p.2.1 p.2.2.1 p.2.2.2 z) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {J : Type u} [Fintype J] [DecidableEq J] (E : ExchangeSystem J) (h : J → ℕ), Function.Injective (R.readout () ⟨J, ⟨inferInstance, ⟨E, h⟩⟩⟩)
+private def witnessSystem : ExchangeSystem PUnit.{u+1} where
+  base := {2, 3}
+  neg := fun _ => {2, 3}
+  pos := fun _ => {5}
+  base_prime := by { intro p hp; simp only [mem_insert, mem_singleton] at hp; rcases hp with rfl | rfl <;> norm_num }
+  neg_subset := fun _ _ h => h
+  pos_prime := by { intro i p hp; simp only [mem_singleton] at hp; subst p; norm_num }
+  pos_base := by { intro i; norm_num [Finset.disjoint_left] }
+  neg_disjoint := by { intro i j h; exact (h (Subsingleton.elim _ _)).elim }
+  pos_disjoint := by { intro i j h; exact (h (Subsingleton.elim _ _)).elim }
+private def witnessFirst : Choices witnessSystem.{u} (fun _ => 1) := ⟨fun _ => ⟨{2}, by { apply mem_powersetCard.mpr; constructor <;> simp [witnessSystem] }⟩, fun _ => ⟨{5}, by { apply mem_powersetCard.mpr; constructor <;> simp [witnessSystem] }⟩⟩
+private def witnessSecond : Choices witnessSystem.{u} (fun _ => 1) := ⟨fun _ => ⟨{3}, by { apply mem_powersetCard.mpr; constructor <;> simp [witnessSystem] }⟩, fun _ => ⟨{5}, by { apply mem_powersetCard.mpr; constructor <;> simp [witnessSystem] }⟩⟩
+private theorem witness_ne : witnessFirst.{u} ≠ witnessSecond.{u} := by
+  intro h
+  have hh := congrArg (fun z : Choices witnessSystem.{u} (fun _ => 1) => (z.1 PUnit.unit).val) h
+  change ({2} : Finset ℕ) = {3} at hh
+  have hh' : (2 : ℕ) = 3 := Finset.singleton_inj.mp hh
+  norm_num at hh'
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  exact witness_ne.{u} (h witnessSystem.{u} (fun _ => 1) (a₁ := witnessFirst.{u}) (a₂ := witnessSecond.{u}) rfl)
+def family : Registration arena (type_of% @exchange_value_injective.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@exchange_value_injective, rejected, rejected_law⟩
+  sensitivity := by { constructor; { intro i; refine ⟨rejected, ?_, rfl, rejected_law⟩; intro j hj; exact (hj (Subsingleton.elim _ _)).elim }; { intro e; exact nomatch e } }
+  dependence := by
+    intro i
+    refine ⟨⟨PUnit.{u+1}, ⟨inferInstance, ⟨witnessSystem.{u}, fun _ => 1⟩⟩⟩, witnessFirst.{u}, witnessSecond.{u}, ?_⟩
+    intro he
+    exact witness_ne.{u} (exchange_value_injective witnessSystem.{u} (fun _ => 1) he)
+def audit : Contract.Registration.{_,_,_,0,0,0,u+1,u,0,0,0,0} (@exchange_value_injective.{u}) (Realization signature.{u}) Type Unit := { unitName := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Entropy.Exchange.exchange_value_injective.audit, realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaSecond.Entropy.Exchange.Injection.family, realizationSource := none, generated := false, arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩, catalog := Lean.Name.anonymous, localNames := false, realization := .source arena.{u} ⟨family.{u}⟩, correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent, readout := some (realize signature.{u} actual.{u}.readout actual.{u}.anchor), variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none, sourceSelection := some { owner := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Entropy, definition := none, coordinates := #[0, 3, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }, continuation := .unknown, familyRecord := none, options := #[] }
 end Injection
 namespace Omega
 abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ → Prop)

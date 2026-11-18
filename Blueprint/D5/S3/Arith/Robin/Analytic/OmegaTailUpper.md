@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.rankin_exponential_bo
 
 *Commentary.*
 
-For s>1, z>=1 and x>0, the count of integers 1<=n<=x whose number of distinct prime divisors strictly exceeds any real T is at most the exponential of s*log(x)-T*log(z), plus the logarithmic convergent inverse Euler cost and the finite prime logarithmic product. The same finite formula supports parameters depending on x when its hypotheses are verified at each x.
+For s>1, z>=1 and x>0, the count of integers 1<=n<=x whose number of distinct prime divisors strictly exceeds any real T is at most exp(s*log(x)-T*log(z)+log(1+sum over natural n of n^(-s))+sum over primes p<=x of log(1+z*p^(-s))). Every displayed cost and the entire finite prime sum lie inside the exponential. The same finite formula supports parameters depending on x when its hypotheses are verified at each x.
 
 **Theorem 1.14 (Continuity of the Abel kernel).**
 
