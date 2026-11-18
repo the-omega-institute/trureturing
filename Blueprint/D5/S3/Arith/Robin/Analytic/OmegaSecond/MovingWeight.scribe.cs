@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.Analytic.OmegaSecond;
 
 internal sealed class MovingWeightDocument : IScribeDocumentDefinition
 {
-    private static Describe D(string id, string name, string title, string text, DescribeRole role) =>
+    private static DocumentBlock.Describe D(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaSecond/MovingWeight." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

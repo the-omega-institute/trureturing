@@ -53,5 +53,14 @@ internal sealed class UpperDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("The product saddle(P)*budget(P), divided by P/(log(P)*sqrt(log(P))), tends to pi/sqrt(3). The coefficient two in the exact prime budget combines with the explicit saddle constant.")),
                     Paragraph(Text("This stage concerns an upper bound at the second distinct-prime threshold. A matching lower bound has not been established."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("result"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaSecond/Upper.result"),
+                H("Sharp second-threshold upper coefficient"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every real epsilon>0, all sufficiently large real x satisfy tailCount(1,x)<=exp((2*pi/sqrt(3)+epsilon)*log(x)/(log(log(x)))^(3/2)). The strict second threshold and the range 1<=n<=x are exactly those of tailCount(1,x).")),
+                    Paragraph(Text("At the explicit saddle, the prime budget and the localized remainder each contribute pi/sqrt(3) on the finer scale. The fixed Euler cost vanishes there. This is an upper bound only; a matching lower bound remains unproved."))),
                 DescribeRole.Theorem))));
 }

@@ -16,6 +16,7 @@ strata_touched:
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/CentralWeight
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/ContinuumWeight
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/MovingWeight
+  - D5/S3/Arith/Robin/Analytic/OmegaSecond/MovingEstimate
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/Upper
   - D5/S3/Arith/Robin/Analytic/OmegaTail/Density
   - D5/S3/Arith/Robin/Analytic/OmegaTail/Truncation
