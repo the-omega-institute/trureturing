@@ -8,7 +8,7 @@ The actual positive source amplitude has finite support for every complex parame
 
 The ++ candidate is t(p,q,r)=P(p,q,r)-k(r)*a(p,r)*a(q,r), composed with r=z squared. P contains both the r/2 convolution term and the direct r squared inverse-square contribution. The logarithmic period factor k=r*(1-r)*Fprime/F uses the literal original period and its existing Picard-Fuchs equation.
 
-These are concrete finite mode functions with derivatives and analyticity on the unit disk. The literal finite tables now satisfy E*h=delta00, E*h2=h and their finite derivative and Euler recurrences. Their actual finite convolutions satisfy E*G=A and E*J=G. The complete P denominator equation is proved; the asymmetric polynomial Euler stencil, candidate signed-frequency differential equations, signed source extension, all J modes, and full identification with original externalT remain separate obligations. The actual negative-zero row against any positive mode is identified with an explicit finite source formula; this does not yet verify its equality to the independently defined all-sign rational candidate. The guarded shift11 is only a Taylor monomial shift; it never replaces the signed predecessor true,0 by zero.
+These are concrete finite mode functions with derivatives and analyticity on the unit disk. The literal finite tables now satisfy E*h=delta00, E*h2=h and their finite derivative and Euler recurrences. Their actual finite convolutions satisfy E*G=A and E*J=G. The complete P denominator equation and asymmetric polynomial Euler stencil are proved for all natural indices and complex parameters; candidate signed-frequency differential equations, signed source extension, all J modes, and full identification with original externalT remain separate obligations. The actual negative-zero row against any positive mode is identified with an explicit finite source formula; this does not yet verify its equality to the independently defined all-sign rational candidate. The guarded shift11 is only a Taylor monomial shift; it never replaces the signed predecessor true,0 by zero.
 
 **Theorem 1.1 (sourceDerivativeConvolution_step).**
 
@@ -20,7 +20,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFi
 
 *Commentary.*
 
-The actual finite convolution Q_H=sum a(i)*r*aPrime(j)*H(p-i,q-j) satisfies 2*(Q_H-(1-r)*Y*Q_H)=-r*Y*L_H for every coefficient table H and all indices, including q=0. A finite reindexing applies the source derivative recurrence term by term. This supplies the source cancellation required by the still-open asymmetric polynomial Euler stencil; it asserts no original/candidate equality.
+The actual finite convolution Q_H=sum a(i)*r*aPrime(j)*H(p-i,q-j) satisfies 2*(Q_H-(1-r)*Y*Q_H)=-r*Y*L_H for every coefficient table H and all indices, including q=0. A finite reindexing applies the source derivative recurrence term by term. This supplies a finite source cancellation for convolution arguments; it asserts no original/candidate equality.
 
 **Theorem 1.2 (a_derivative_mode_step).**
 
@@ -152,7 +152,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianFi
 
 *Commentary.*
 
-The complete polynomial part satisfies E*P=r/2*(A+(1-r)*XY*A)+r squared*XY*G. The r squared term is retained. This is a denominator equation only: the asymmetric Euler stencil and literal original/candidate germ equality remain unproved.
+The complete polynomial part satisfies E*P=r/2*(A+(1-r)*XY*A)+r squared*XY*G. The r squared term is retained. This denominator equation is consumed by the asymmetric Euler stencil; literal original/candidate germ equality is a separate obligation.
 
 **Theorem 1.13 (a_euler_mode_step).**
 
