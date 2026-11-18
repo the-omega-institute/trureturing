@@ -70,6 +70,73 @@ def exchangeFamily : Registration exchangeArena.{u} (type_of% @paired_exchange.{
     have hh : (1 : ℕ) = 0 := Eq.mp (congrFun he 0) rfl
     exact Nat.one_ne_zero hh
 
+abbrev gridOutputsArena : Arena where
+  signature := signature
+  Law O := ∀ {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+    (ht0 : t 0 = 0) (P s reserve : ℝ) (hP : 0 < P) (hs : 0 < s)
+    (base : Finset ℕ) (h : Fin m → ℕ)
+    (hbase : base ⊆ Nat.primesLE ⌊P⌋₊)
+    (hdonor : ∀ i, donorBin t P s i ⊆ base)
+    (hreserve : (∑ p ∈ base, log (p : ℝ)) ≤ P - reserve)
+    (hcost : (2 / s) * (∑ i, t i.succ * (h i : ℝ)) < reserve),
+    let outputs := pairedOutputs base (donorBin t P s) (recipientBin t P s) h
+    O.readout () () outputs.card (∏ i, (donorBin t P s i).card.choose (h i) *
+      (recipientBin t P s i).card.choose (h i)) ∧
+    ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+      base.card ∧ (n : ℝ) < exp P
+
+private theorem grid_outputs_rejected : ¬ gridOutputsArena.Law rejected := by
+  intro h
+  exact (h (m := 0) (fun _ => 0) (fun i j hij => by omega) rfl
+    1 1 (1 / 2) (by norm_num) (by norm_num) ∅ Fin.elim0 (empty_subset _)
+    (fun i => i.elim0) (by norm_num) (by norm_num)).1
+
+def gridOutputsFamily : Registration gridOutputsArena (type_of% @fixed_grid_outputs) where
+  actual := exactCardinality
+  bridge := Iff.rfl
+  variation := ⟨@fixed_grid_outputs, rejected, grid_outputs_rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    gridOutputsArena.Law exactCardinality rejected grid_outputs_rejected
+  dependence := by
+    intro i
+    refine ⟨(), (0 : ℕ), 1, ?_⟩
+    intro he
+    have hh : (1 : ℕ) = 0 := Eq.mp (congrFun he 0) rfl
+    exact Nat.one_ne_zero hh
+
+def gridOutputsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@fixed_grid_outputs) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange.fixed_grid_outputs.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange.gridOutputsFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨gridOutputsArena⟩
+  objectArena := .source ⟨gridOutputsArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source gridOutputsArena ⟨gridOutputsFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature exactCardinality.readout exactCardinality.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 abbrev gridArena : Arena where
   signature := signature
   Law O := ∀ {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
