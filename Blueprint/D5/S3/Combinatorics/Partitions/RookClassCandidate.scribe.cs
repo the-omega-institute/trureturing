@@ -37,7 +37,7 @@ internal sealed class RookClassCandidateDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static DocumentBlock Theorem(string declaration, string title, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create("rookclasscandidate-" + declaration.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("rookclasscandidate-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     private static Formula I(string name) => F.Id(name);
@@ -48,17 +48,24 @@ internal sealed class RookClassCandidateDocument : IScribeDocumentDefinition
     private static Formula And(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, Seq(Open, y, Close));
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula Lt(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
-    private static Formula FamilyCount() => All("m", Nat(), Imp(Lt(D(0), I("m")), All("n", Nat(),
-        All("z", new Formula.TypeArrow(Call("Fin", I("n")), new Formula.Integers()),
-            And(Call("Finite", Call("RootFamily", I("m"), I("z"))),
-                Eq(Call("int", Call("card", Call("RootFamily", I("m"), I("z")))), Call("sumWeights", I("m"), I("z")))))));
+    private static Formula FamilyCount()
+    {
+        Formula family = Call("RootFamily", I("m"), I("z"));
+        Formula conclusion = And(Call("Finite", family),
+            Eq(Call("int", Call("card", family)), Call("sumWeights", I("m"), I("z"))));
+        Formula ztype = new Formula.TypeArrow(Call("Fin", I("n")), new Formula.Integers());
+        return All("m", Nat(), Imp(Lt(D(0), I("m")), All("n", Nat(), All("z", ztype, conclusion))));
+    }
     private static Formula Padding()
     {
         Formula m = I("m"), n = I("n"), b = I("b"), i = I("i"), c = Call("lOperator", m, b), p = Call("sourcePadding", m, n, b);
-        return All("m", Nat(), Imp(Lt(D(0), m), All("b", I("PositiveColumns"), All("n", Nat(),
-            Imp(new Formula.Relation(new Formula.Binary(Call("area", b), FormulaBinaryOperator.Add, D(1)), FormulaRelationOperator.LessThanOrEqual, n),
-                And(Lt(Call("length", c), n), And(Eq(Call("length", p), n),
-                    And(Eq(Call("head", p), Call("some", D(0))), All("i", Call("Fin", n),
-                        Imp(Eq(Call("val", i), D(0)), Eq(Call("seedRoots", m, n, b, i), D(0)))))))))));
+        Formula first = All("i", Call("Fin", n), Imp(Eq(Call("val", i), D(0)),
+            Eq(Call("seedRoots", m, n, b, i), D(0))));
+        Formula conclusion = And(Lt(Call("length", c), n), And(Eq(Call("length", p), n),
+            And(Eq(Call("head", p), Call("some", D(0))), first)));
+        Formula bound = new Formula.Relation(new Formula.Binary(Call("area", b),
+            FormulaBinaryOperator.Add, D(1)), FormulaRelationOperator.LessThanOrEqual, n);
+        return All("m", Nat(), Imp(Lt(D(0), m), All("b", I("PositiveColumns"),
+            All("n", Nat(), Imp(bound, conclusion)))));
     }
 }

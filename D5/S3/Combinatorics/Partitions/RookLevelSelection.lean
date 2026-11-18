@@ -67,7 +67,7 @@ private def split (m N : ℕ) (L : Fin (N+1) → Finset (C × Fin m)) :
       have hn : i.succ ≠ 0 := Fin.succ_ne_zero i
       exact hn hi
     · intro i j hij
-      exact Fin.succ_injective (f.property.2 hij)⟩⟩
+      exact Fin.succ_injective N (f.property.2 hij)⟩⟩
   invFun z := ⟨Fin.cons z.1.val z.2.val, by
     constructor
     · intro i
