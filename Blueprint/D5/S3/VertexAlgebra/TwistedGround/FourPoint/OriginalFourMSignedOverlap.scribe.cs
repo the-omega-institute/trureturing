@@ -66,5 +66,17 @@ internal sealed class OriginalFourMSignedOverlapDocument : IScribeDocumentDefini
                 + "matched D half-plane, with the actual root and its sign."),
             Result("chart-d-covariance-boundary", "chartD_covariance_boundary", "Signed covariance on the D lip",
                 "The signed covariance has the corresponding one-sided limit using the actual D "
-                + "period and derivative. The branch and denominator conditions specify its spatial domain."))));
+                + "period and derivative. The branch and denominator conditions specify its spatial domain."),
+            Result("chart-spatial-overlap", "chart_spatial_overlap", "Elliptic covariance on all three charts",
+                "The continued signed kernels use the actual elliptic rational kernel and period correction "
+                + "on their punctured domains. The mixed same-leg term includes the native free contraction."),
+            Result("chart-same-slot-covariance", "chart_same_slot_covariance", "Physical normal-ordering correction",
+                "The physical Cauchy subtraction differs from the native equal-orientation subtraction "
+                + "by the regular correction for the chosen scale at the actual puncture."),
+            Result("chart-same-slot-origin", "chart_same_slot_origin", "Finite covariance at a coincident puncture",
+                "The same-slot covariance tends to the regular value at the native mode origins in "
+                + "each chart, with the selected period correction and orientation."),
+            Result("slit-covariance-native", "slit_covariance_eq_native", "Original germ of the slit covariance",
+                "The slit expression used in the D boundary theorem agrees with the original "
+                + "signed mode generator near both mode origins throughout the native radial disk."))));
 }
