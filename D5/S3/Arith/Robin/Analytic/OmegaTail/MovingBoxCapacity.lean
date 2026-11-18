@@ -9,6 +9,8 @@
 import D5.S3.Arith.Robin.Analytic.OmegaTail.Selection
 import D5.S3.Arith.Robin.PriceRecord.UniformThetaShellError
 
+/-! Local Abel summation on real-endpoint prime boxes. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -24,7 +26,7 @@ private lemma continuousOn_inv_log {y z : ℝ} (hy : 1 < y) :
     ContinuousOn (fun t : ℝ => (log t)⁻¹) (Icc y z) := by
   intro t ht
   have ht1 := hy.trans_le ht.1
-  exact (continuousAt_log (by linarith : t ≠ 0)).inv (log_pos ht1).ne'
+  exact (continuousAt_log (by linarith : t ≠ 0)).inv₀ (log_pos ht1).ne'
     |>.continuousWithinAt
 
 /-- The local prime count differs from its logarithmic integral by at most
@@ -43,10 +45,11 @@ theorem abs_primeInterval_card_sub_integral_le {y z E : ℝ}
     intro t h
     have h0 : t ≠ 0 := by linarith [ht t h]
     have hl := (log_pos (ht t h)).ne'
-    exact ((continuousAt_id.mul ((continuousAt_log h0).pow 2)).inv
+    exact ((continuousAt_id.mul ((continuousAt_log h0).pow 2)).inv₀
       (mul_ne_zero h0 (pow_ne_zero 2 hl))).continuousWithinAt
   have hki := hkc.intervalIntegrable_of_Icc (μ := volume) hyz
-  have hti := (continuousOn_id.mul hkc).intervalIntegrable_of_Icc (μ := volume) hyz
+  have hti : IntervalIntegrable (fun t => t * k t) volume y z :=
+    (continuousOn_id.mul hkc).intervalIntegrable_of_Icc (μ := volume) hyz
   have hθ (x : ℝ) (hx : 2 ≤ x) :
       IntervalIntegrable (fun t => Chebyshev.theta t * k t) volume 2 x := by
     simpa only [k, div_eq_mul_inv] using
@@ -74,8 +77,9 @@ theorem abs_primeInterval_card_sub_integral_le {y z E : ℝ}
     apply intervalIntegral.integral_eq_sub_of_hasDerivAt _ (hinv.sub hti)
     intro t h
     convert (hasDerivAt_id t).mul (hder t h) using 1
-    simp only [id_eq, one_mul]
-    ring
+    · rfl
+    · simp only [id_eq, one_mul]
+      ring
   have hcount : ((primeInterval y z).card : ℝ) =
       Chebyshev.theta z * (log z)⁻¹ - Chebyshev.theta y * (log y)⁻¹ +
         ∫ t in y..z, Chebyshev.theta t * k t := by
@@ -83,8 +87,9 @@ theorem abs_primeInterval_card_sub_integral_le {y z E : ℝ}
     unfold primeCount
     rw [Chebyshev.primeCounting_eq_theta_div_log_add_integral hy,
       Chebyshev.primeCounting_eq_theta_div_log_add_integral (hy.trans hyz)]
-    simp only [div_eq_mul_inv, ← k]
+    simp only [div_eq_mul_inv, k]
     have hadd := intervalIntegral.integral_add_adjacent_intervals (hθ y hy) hθlocal
+    dsimp only [k] at hadd
     linarith only [hadd]
   have herror : ((primeInterval y z).card : ℝ) - (∫ t in y..z, (log t)⁻¹) =
       e z * (log z)⁻¹ - e y * (log y)⁻¹ + ∫ t in y..z, e t * k t := by
@@ -113,7 +118,7 @@ theorem abs_primeInterval_card_sub_integral_le {y z E : ℝ}
       simpa only [abs_mul, abs_of_nonneg hylog, abs_of_nonneg hzlog, abs_neg, sub_eq_add_neg]
         using (abs_add_le (e z * (log z)⁻¹) (-(e y * (log y)⁻¹)))
     _ ≤ E * (log z)⁻¹ + E * (log y)⁻¹ + E * ((log y)⁻¹ - (log z)⁻¹) :=
-      add_le_add_right (add_le_add
+      add_le_add_left (add_le_add
         (mul_le_mul_of_nonneg_right (hE z ⟨hyz, le_rfl⟩) hzlog)
         (mul_le_mul_of_nonneg_right (hE y ⟨le_rfl, hyz⟩) hylog)) _
     _ = _ := by rw [div_eq_mul_inv]; ring
