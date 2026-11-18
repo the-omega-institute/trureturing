@@ -1,0 +1,60 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.FourPoint;
+
+internal sealed class OriginalFourMPeriodSourceDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The original four-point covariance on the period lips",
+        H("The Euler periods and spatial covariance"), Blocks(
+        Paragraph(Text("The native periods in A, B and D have arguments 1-1/z, z and 1/z for 0<z<1. The Pfaff intermediate argument is 1-z. An upper approach of the A parameter pairs with a lower approach of D.")),
+        Describe.Lean(DescribeId.Create("original-fourm-pfaff-correction"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.pfaff_correction"),
+            H("Differentiated Pfaff identity"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Set C(r)=r*(1-r)*P'(r)/P(r) for the Euler slit period. Differentiating P(r/(r-1))=sqrt(1-r)*P(r) gives C(r/(r-1))=C(r)/(1-r)-r/(2*(1-r)) throughout the open slit domain."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-fourm-b-pfaff-correction"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chartB_pfaff_correction"),
+            H("The correction at the Pfaff intermediate chart"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("At r_A=1-1/z the differentiated Pfaff identity gives z*C(r_A)+(1-z)/2=C(1-z). Both arguments are interior to the slit domain of P."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-fourm-b-pfaff-period"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chartB_pfaff_period"),
+            H("The A period root"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("On the positive real cross-ratio interval, the chosen A root is the reciprocal of sqrt(z) and multiplies P(r_A) to give P(1-z)."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-fourm-d-period-open-lips"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_eq_slit"),
+            H("The D periods on the two open half-planes"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("In the native D argument t the continued period is (tau(1-1/t)+s)*P(1-t)/i. The sign s is +1 on the D lower half-plane and -1 on the D upper half-plane. The Pfaff jump of tau at 1-t gives exact agreement with the slit integral on each half-plane."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-fourm-d-period-boundary"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.dPeriod_boundary"),
+            H("Boundary values in the native D argument"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("At each real t>1, the explicit D period and its complex derivative are the two limits from the matching open lip. Analyticity of the explicit continuation at t transfers the derivative because the periods agree on the adjacent open half-plane."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-fourm-d-root-boundary"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chartD_root_boundary"),
+            H("The chosen root on the D lip"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The principal square root of 1-r_D limits to i*sqrt(1-z)/sqrt(z) when r_D approaches 1/z from below. The upper lip has the negative of that root."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-fourm-period-covariance-discrepancies"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.covariance_discrepancies"),
+            H("The two complementary Wronskians"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The pulled-back A kernel minus the new kernel is 1/(pi*P(1-z)*P(z)) in B units and 1/(pi*P(r_A)*P_D(r_D)) in D units. The first value follows from the Pfaff correction. The second takes the limit of the complementary Wronskian with P_D and its derivative on the matched lip."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-fourm-gram-source-exponents"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMPeriodSource.chart_source_exponents"),
+            H("The source coefficient in the shifted theta exponent"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For the new Gram source M and the complementary periods p and q, the forward multiplier exponent is the Gram square of M divided by 2*pi*p*q. The Pfaff intermediate source acquires the phase -i from the A root and the B lift, and the D comparison uses the phase i. The inverse multiplier has the negative exponent."))),
+            DescribeRole.Theorem))));
+}
