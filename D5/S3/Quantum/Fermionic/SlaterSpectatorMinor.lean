@@ -148,11 +148,48 @@ private theorem append_gram {k : ℕ} [Fintype ι] (V : Matrix ι (Fin k) ℂ)
       (Fin.castSucc_ne_last j).symm]
   · simp [Matrix.mul_apply, Matrix.conjTranspose_apply, appendOrbital]
 
-/-- Append the spectator coordinates in increasing order and compute all occupied minors. -/
-theorem extend_ordered_spectators {k : ℕ} [Fintype ι]
+private theorem enumerate_insert_max (p : ι) (T : Finset ι)
+    (hmax : ∀ q ∈ T, q < p)
+    (hcard : (insert p T).card = T.card + 1) :
+    (fun j => (insert p T).orderEmbOfFin hcard j) =
+      @Fin.snoc T.card (fun _ => ι) (fun j => T.orderEmbOfFin rfl j) p := by
+  symm
+  apply Finset.orderEmbOfFin_unique
+  · intro i
+    refine Fin.lastCases ?_ (fun j => ?_) i
+    · simp
+    · simp [Finset.mem_insert_of_mem (T.orderEmbOfFin_mem rfl j)]
+  · intro i j hij
+    rcases Fin.eq_castSucc_or_eq_last i with ⟨i, rfl⟩ | rfl
+    · rcases Fin.eq_castSucc_or_eq_last j with ⟨j, rfl⟩ | rfl
+      · simpa only [Fin.snoc_castSucc] using
+          (T.orderEmbOfFin rfl).strictMono (show i < j from hij)
+      · rw [Fin.snoc_castSucc, Fin.snoc_last]
+        exact hmax _ (T.orderEmbOfFin_mem rfl i)
+    · exact (not_lt_of_ge (Fin.le_last j) hij).elim
+
+private theorem occupiedMinor_cast_columns {m n : ℕ} (h : m = n)
+    (V : Matrix ι (Fin n) ℂ) (S : Finset ι) :
+    occupiedMinor (fun i j => V i (Fin.cast h j) : Matrix ι (Fin m) ℂ) S =
+      occupiedMinor V S := by
+  subst n
+  rfl
+
+omit [LinearOrder ι] in
+private theorem gram_cast_columns [Fintype ι] {m n : ℕ} (h : m = n)
+    (V : Matrix ι (Fin n) ℂ) (hV : V.conjTranspose * V = 1) :
+    let W : Matrix ι (Fin m) ℂ := fun i j => V i (Fin.cast h j)
+    W.conjTranspose * W = 1 := by
+  subst n
+  exact hV
+
+private theorem canonical_extension_exists {k : ℕ} [Fintype ι]
     (V : Matrix ι (Fin k) ℂ) (hV : V.conjTranspose * V = 1) (T : Finset ι)
     (hT : ∀ p ∈ T, ∀ j, V p j = 0) :
-    ∃ W : Matrix ι (Fin (k + T.card)) ℂ, W.conjTranspose * W = 1 ∧
+    ∃ W : Matrix ι (Fin (k + T.card)) ℂ,
+      (∀ i j, W i (Fin.castAdd T.card j) = V i j) ∧
+      (∀ i j, W i (Fin.natAdd k j) = if i = T.orderEmbOfFin rfl j then 1 else 0) ∧
+      W.conjTranspose * W = 1 ∧
       (∀ q ∉ T, (∀ j, V q j = 0) → ∀ j, W q j = 0) ∧
       ∀ S : Finset ι, occupiedMinor W S =
         if T ⊆ S then
@@ -161,25 +198,52 @@ theorem extend_ordered_spectators {k : ℕ} [Fintype ι]
   classical
   induction T using Finset.induction_on_max with
   | empty =>
-    exact ⟨V, hV, fun _ _ h => h, fun S => by simp⟩
+    exact ⟨V, fun _ _ => rfl, fun _ j => Fin.elim0 j, hV, fun _ _ h => h, fun S => by simp⟩
   | insert p T hmax ih =>
     have hpT : p ∉ T := fun hp => (lt_irrefl p) (hmax p hp)
-    obtain ⟨U, hU, hUzero, hminor⟩ :=
+    obtain ⟨U, hUfirst, hUlast, hU, hUzero, hminor⟩ :=
       ih (fun q hq => hT q (Finset.mem_insert_of_mem hq))
     have hpU : ∀ j, U p j = 0 := hUzero p hpT (hT p (Finset.mem_insert_self p T))
-    have hsize : k + (insert p T).card = k + T.card + 1 := by
-      rw [Finset.card_insert_of_notMem hpT]
-      omega
-    rw [hsize]
-    refine ⟨appendOrbital U p, append_gram U p hU hpU, ?_, ?_⟩
+    have hcard : (insert p T).card = T.card + 1 := Finset.card_insert_of_notMem hpT
+    have hsize : k + (insert p T).card = k + T.card + 1 := by rw [hcard, Nat.add_assoc]
+    let W : Matrix ι (Fin (k + (insert p T).card)) ℂ :=
+      fun i j => appendOrbital U p i (Fin.cast hsize j)
+    refine ⟨W, ?_, ?_, gram_cast_columns hsize _ (append_gram U p hU hpU), ?_, ?_⟩
+    · intro i j
+      have hindex : Fin.cast hsize (Fin.castAdd (insert p T).card j) =
+          (Fin.castAdd T.card j).castSucc := Fin.ext rfl
+      change appendOrbital U p i _ = _
+      rw [hindex]
+      simpa [appendOrbital] using hUfirst i j
+    · intro i j
+      let j' := Fin.cast hcard j
+      have horder : (insert p T).orderEmbOfFin rfl j =
+          @Fin.snoc T.card (fun _ => ι) (fun j => T.orderEmbOfFin rfl j) p j' := by
+        change (insert p T).orderEmbOfFin hcard j' = _
+        exact congrFun (enumerate_insert_max p T hmax hcard) j'
+      have hindex : Fin.cast hsize (Fin.natAdd k j) =
+          Fin.natAdd k j' := Fin.ext rfl
+      change appendOrbital U p i _ = _
+      rw [hindex, horder]
+      rcases Fin.eq_castSucc_or_eq_last j' with ⟨j', hj'⟩ | hj'
+      · rw [hj', Fin.snoc_castSucc]
+        have he : Fin.natAdd k j'.castSucc = (Fin.natAdd k j').castSucc := Fin.ext rfl
+        rw [he]
+        simpa only [appendOrbital, Fin.snoc_castSucc] using hUlast i j'
+      · rw [hj', Fin.natAdd_last, Fin.snoc_last]
+        simp only [appendOrbital, Fin.snoc_last]
     · intro q hq hVq j
       have hqp : q ≠ p := fun he => hq (he ▸ Finset.mem_insert_self p T)
       have hqT : q ∉ T := fun h => hq (Finset.mem_insert_of_mem h)
-      rcases Fin.eq_castSucc_or_eq_last j with ⟨j, rfl⟩ | rfl
-      · simp [appendOrbital, hUzero q hqT hVq j]
-      · simp [appendOrbital, hqp]
+      change appendOrbital U p q (Fin.cast hsize j) = 0
+      rcases Fin.eq_castSucc_or_eq_last (Fin.cast hsize j) with ⟨j, hj⟩ | hj
+      · rw [hj]
+        simp [appendOrbital, hUzero q hqT hVq j]
+      · rw [hj]
+        simp [appendOrbital, hqp]
     · intro S
-      rw [occupiedMinor_append]
+      change occupiedMinor (fun i j => appendOrbital U p i (Fin.cast hsize j)) S = _
+      rw [occupiedMinor_cast_columns hsize, occupiedMinor_append]
       by_cases hpS : p ∈ S
       · rw [ite_eq_left hpS, hminor]
         have hsub : T ⊆ S.erase p ↔ insert p T ⊆ S := by
@@ -202,5 +266,25 @@ theorem extend_ordered_spectators {k : ℕ} [Fintype ι]
             Finset.sum_insert hpT, pow_add, ← mul_assoc, hfilter]
         · rw [ite_eq_right (fun hs => h (hsub.mp hs)), ite_eq_right h, mul_zero]
       · rw [ite_eq_right hpS, ite_eq_right (fun h => hpS (h (Finset.mem_insert_self p T)))]
+
+/-- The ordered original and coordinate columns determine the orthonormal extension uniquely. -/
+theorem canonical_ordered_spectator_extension {k : ℕ} [Fintype ι]
+    (V : Matrix ι (Fin k) ℂ) (hV : V.conjTranspose * V = 1) (T : Finset ι)
+    (hT : ∀ p ∈ T, ∀ j, V p j = 0) :
+    ∃! W : Matrix ι (Fin (k + T.card)) ℂ,
+      (∀ i j, W i (Fin.castAdd T.card j) = V i j) ∧
+      (∀ i j, W i (Fin.natAdd k j) = if i = T.orderEmbOfFin rfl j then 1 else 0) ∧
+      W.conjTranspose * W = 1 ∧
+      (∀ q ∉ T, (∀ j, V q j = 0) → ∀ j, W q j = 0) ∧
+      ∀ S : Finset ι, occupiedMinor W S =
+        if T ⊆ S then
+          (-1 : ℂ) ^ (∑ p ∈ T, ((S \ T).filter (p < ·)).card) * occupiedMinor V (S \ T)
+        else 0 := by
+  obtain ⟨W, hW⟩ := canonical_extension_exists V hV T hT
+  refine ⟨W, hW, ?_⟩
+  intro U hU
+  ext i j : 1
+  exact Fin.addCases (fun j => (hU.1 i j).trans (hW.1 i j).symm)
+    (fun j => (hU.2.1 i j).trans (hW.2.1 i j).symm) j
 
 end D5.S3.Quantum.Fermionic.SlaterSpectatorMinor

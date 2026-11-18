@@ -144,7 +144,10 @@ abbrev arena : Arena where
   Law R := ∀ {ι : Type u} [order : LinearOrder ι] {k : ℕ} [Fintype ι]
       (V : Matrix ι (Fin k) ℂ) (_hV : V.conjTranspose * V = 1) (T : Finset ι)
       (_hT : ∀ p ∈ T, ∀ j, V p j = 0),
-    ∃ W : Matrix ι (Fin (k + T.card)) ℂ, W.conjTranspose * W = 1 ∧
+    ∃! W : Matrix ι (Fin (k + T.card)) ℂ,
+      (∀ i j, W i (Fin.castAdd T.card j) = V i j) ∧
+      (∀ i j, W i (Fin.natAdd k j) = if i = T.orderEmbOfFin rfl j then 1 else 0) ∧
+      W.conjTranspose * W = 1 ∧
       (∀ q ∉ T, (∀ j, V q j = 0) → ∀ j, W q j = 0) ∧
       ∀ S : Finset ι, R.readout () ⟨ι, order, k, T, S⟩ W =
         if T ⊆ S then
@@ -155,7 +158,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   let V : Matrix (ULift.{u} Unit) (Fin 0) ℂ := 0
   have hv : Vᴴ * V = 1 := Subsingleton.elim _ _
-  obtain ⟨W, _, _, hlaw⟩ := h V hv ∅ (by simp)
+  obtain ⟨W, ⟨_, _, _, _, hlaw⟩, _⟩ := h V hv ∅ (by simp)
   have hbad := hlaw ∅
   norm_num [rejected, realize, occupiedMinor] at hbad
 
@@ -174,18 +177,18 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   rw [h₀, h₁]
   exact zero_ne_one
 
-def source_registration : Registration arena.{u} (type_of% (@extend_ordered_spectators.{u})) where
+def source_registration : Registration arena.{u} (type_of% (@canonical_ordered_spectator_extension.{u})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@extend_ordered_spectators.{u}, rejected, rejected_law⟩
+  variation := ⟨@canonical_ordered_spectator_extension.{u}, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim,
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := dependence
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@extend_ordered_spectators.{u}) (Realization signature.{u}) Unit Unit := {
-  unitName := `D5.S3.Quantum.Fermionic.SlaterSpectatorMinor.extend_ordered_spectators.__information_unit
+      (@canonical_ordered_spectator_extension.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `D5.S3.Quantum.Fermionic.SlaterSpectatorMinor.canonical_ordered_spectator_extension.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.SlaterSpectatorMinor.FiniteExtension.source_registration
   realizationSource := none
   generated := false
@@ -208,7 +211,7 @@ def registration :
     coordinates := #[0, 2, 6, 9]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "arg", "body", "fn", "arg"]
+        "arg", "body", "arg", "arg", "arg", "arg", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
