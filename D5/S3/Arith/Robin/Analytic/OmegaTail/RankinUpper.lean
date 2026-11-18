@@ -24,7 +24,7 @@ open FarDeletion (centeredThreshold continuousReserve centered_reserve)
 open D5.S3.Arith.Robin.PriceRecord.MovingPrimeSoftplus (weight prime_softplus_asymptotic)
 open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel (primeCount)
 
-private lemma prime_log_split {P s t : ℝ} (hP : 0 < P) (hs : 0 ≤ s) (ht : 0 < t) :
+private lemma prime_log_split {P s t : ℝ} (hP : 0 < P) (ht : 0 < t) :
     log (1 + P ^ s * t ^ (-s)) =
       (if t ≤ P then s * (log P - log t) else 0) + weight P s t := by
   have harg : P ^ s * t ^ (-s) = exp (s * (log P - log t)) := by
@@ -33,7 +33,7 @@ private lemma prime_log_split {P s t : ℝ} (hP : 0 < P) (hs : 0 ≤ s) (ht : 0 
     ring
   rw [harg, weight, log_div ht.ne' hP.ne']
   by_cases h : t ≤ P
-  · rw [if_pos h, abs_of_nonpos (sub_nonpos.mpr (log_le_log ht h))]
+  · rw [ite_eq_left h, abs_of_nonpos (sub_nonpos.mpr (log_le_log ht h))]
     have he :
         1 + exp (s * (log P - log t)) =
           exp (s * (log P - log t)) * (1 + exp (-s * -(log t - log P))) := by
@@ -42,11 +42,11 @@ private lemma prime_log_split {P s t : ℝ} (hP : 0 < P) (hs : 0 ≤ s) (ht : 0 
       simp [add_comm]
     rw [he, log_mul (exp_pos _).ne' (by positivity), log_exp]
   · have hlog := log_le_log hP (le_of_lt (lt_of_not_ge h))
-    rw [if_neg h, zero_add, abs_of_nonneg (sub_nonneg.mpr hlog)]
+    rw [ite_eq_right h, zero_add, abs_of_nonneg (sub_nonneg.mpr hlog)]
     congr 3
     ring
 
-private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P) (hs : 0 ≤ s)
+private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P)
     (hR : Summable (fun p : ℕ => if p.Prime then weight P s p else 0)) :
     s * P - threshold 1 (exp P) * log (P ^ s) +
         ∑ p ∈ Icc 1 ⌊exp P⌋₊ with p.Prime, log (1 + P ^ s * (p : ℝ) ^ (-s)) ≤
@@ -71,8 +71,8 @@ private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P) (hs : 0 ≤ s)
           _ = ∑ p ∈ Nat.primesLE ⌊P⌋₊, if (p : ℝ) ≤ P then s * (log P - log p) else 0 := by
             apply sum_congr rfl
             intro p hp
-            rw [if_pos ((hmem (hsub hp)).mp hp)]
-          _ = _ := sum_subset hsub (fun p hp hnp => if_neg (fun h => hnp ((hmem hp).mpr h)))
+            rw [ite_eq_left ((hmem (hsub hp)).mp hp)]
+          _ = _ := sum_subset hsub (fun p hp hnp => ite_eq_right (fun h => hnp ((hmem hp).mpr h)))
       _ = _ := by
         rw [← mul_sum, sum_sub_distrib, sum_const, nsmul_eq_mul,
           Nat.primesLE_card_eq_primeCounting, Chebyshev.theta_eq_sum_primesLE, primeCount]
@@ -82,7 +82,7 @@ private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P) (hs : 0 ≤ s)
       _ = ∑ p ∈ cutoff, if p.Prime then weight P s p else 0 := by
         apply sum_congr rfl
         intro p hp
-        rw [if_pos (Nat.prime_of_mem_primesLE hp)]
+        rw [ite_eq_left (Nat.prime_of_mem_primesLE hp)]
       _ ≤ _ := hR.sum_le_tsum cutoff (fun p _ => by
         split_ifs
         · exact log_nonneg (by unfold weight at *; linarith [exp_pos (-s * |log ((p : ℝ) / P)|)])
@@ -96,7 +96,7 @@ private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P) (hs : 0 ≤ s)
           ∑ p ∈ cutoff, weight P s p := by
     rw [← sum_add_distrib]
     exact sum_congr rfl (fun p hp =>
-      prime_log_split hP0 hs (by exact_mod_cast (Nat.prime_of_mem_primesLE hp).pos))
+      prime_log_split hP0 (by exact_mod_cast (Nat.prime_of_mem_primesLE hp).pos))
   have hthreshold : threshold 1 (exp P) = centeredThreshold P := by
     simp only [threshold, scale, log_exp, one_mul, centeredThreshold, div_div, pow_two]
   rw [hsplit, hhead, log_rpow hP0, hthreshold, continuousReserve]
@@ -109,8 +109,9 @@ private lemma rankin_correction {s : ℝ} (hs : 2 ≤ s) :
       log (1 + ∑' n : ℕ, (n : ℝ) ^ (-s)) ≤
         log (1 + ∑' n : ℕ, (n : ℝ) ^ (-(2 : ℝ))) := by
   have hn (n : ℕ) : 0 ≤ (n : ℝ) ^ (-s) := rpow_nonneg (Nat.cast_nonneg n) _
-  refine ⟨log_nonneg (by linarith [tsum_nonneg hn]), log_le_log (by linarith [tsum_nonneg hn]) ?_⟩
-  apply add_le_add_left
+  have hnonneg : 0 ≤ ∑' n : ℕ, (n : ℝ) ^ (-s) := tsum_nonneg hn
+  refine ⟨log_nonneg (by linarith), log_le_log (by linarith) ?_⟩
+  apply add_le_add_right
   have hsum (t : ℝ) (ht : 2 ≤ t) : Summable (fun n : ℕ => (n : ℝ) ^ (-t)) :=
     summable_nat_rpow.mpr (by linarith)
   refine (hsum s hs).tsum_le_tsum (fun n => ?_) (hsum 2 le_rfl)
@@ -125,7 +126,9 @@ private lemma optimizer_constant :
   have hs : 0 < sqrt (3 : ℝ) := sqrt_pos.2 (by norm_num)
   have hs2 := sq_sqrt (show 0 ≤ (3 : ℝ) by norm_num)
   field_simp [pi_ne_zero, hs.ne']
-  linear_combination -2 * π ^ 2 * hs2
+  ring_nf
+  rw [hs2]
+  ring
 
 /-- Sharp upper bound at the second threshold for every positive error and all large real cutoffs. -/
 theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
@@ -141,7 +144,7 @@ theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
   have hs : Tendsto s atTop atTop :=
     (tendsto_const_mul_atTop_of_pos hc).mpr
       ((tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 2)).comp tendsto_log_atTop)
-  have hsoft := prime_softplus_asymptotic (by norm_num : (0 : ℝ) < 1 / 2) hc hc.le s
+  have hsoft := prime_softplus_asymptotic (by norm_num : (0 : ℝ) < 1 / 2) hc le_rfl s
     (Eventually.of_forall (fun _ => ⟨le_rfl, le_rfl⟩))
   have hZ : Tendsto Z atTop atTop := by
     have h := (isLittleO_log_rpow_rpow_atTop (3 / 2 : ℝ) (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
@@ -156,9 +159,9 @@ theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     rw [← rpow_add (log_pos hP), show (3 / 2 : ℝ) + 1 / 2 = (2 : ℕ) by norm_num, rpow_natCast]
   have hscale₂ {P : ℝ} (hP : 1 < P) :
       log P ^ (1 / 2 : ℝ) * log P = log P ^ (3 / 2 : ℝ) := by
-    conv_lhs => rw [← rpow_one (log P)] at *
-    rw [← rpow_add (log_pos hP)]
-    norm_num
+    calc
+      _ = log P ^ (1 / 2 : ℝ) * log P ^ (1 : ℝ) := by rw [rpow_one]
+      _ = _ := by rw [← rpow_add (log_pos hP)]; norm_num
   have hreserve : Tendsto (fun P => s P * continuousReserve P / Z P) atTop (𝓝 (2 * c)) := by
     have h := centered_reserve.2.2.2.1.mul_const c
     apply h.congr'
@@ -171,8 +174,8 @@ theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
     change R P / (P / (s P * log P)) / c = R P / Z P
     dsimp only [s, Z]
-    rw [mul_assoc, hscale₂ hP, div_div_eq_mul_div, div_div_eq_mul_div, mul_left_comm,
-      mul_div_mul_left _ _ hc.ne']
+    rw [mul_assoc, hscale₂ hP, div_div_eq_mul_div, div_div_eq_mul_div]
+    field_simp [hc.ne', (zero_lt_one.trans hP).ne']
   have hC : Tendsto (fun P => C P / Z P) atTop (𝓝 0) := by
     apply squeeze_zero' _ _ (hZ.const_div_atTop (log (1 + ∑' n : ℕ, (n : ℝ) ^ (-(2 : ℝ)))))
     · filter_upwards [hs.eventually_ge_atTop 2, eventually_gt_atTop (1 : ℝ)] with P hsP hP
@@ -191,7 +194,7 @@ theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
   refine (rankin_exponential_bound (T := threshold 1 (exp P)) hs1 hz (exp_pos P)).trans ?_
   apply exp_le_exp.mpr
   rw [log_exp]
-  have hcancel := rankin_prime_cancellation hP (zero_lt_one.trans hs1).le hRsum.of_abs
+  have hcancel := rankin_prime_cancellation hP hRsum.of_abs
   have hnormalized : (s P * continuousReserve P + R P + C P) / Z P <
       2 * π / sqrt 3 + epsilon := by
     simpa only [add_div] using hlim
