@@ -6,6 +6,39 @@ namespace StrataLint.Tests;
 public sealed partial class WorktreeCommandTests
 {
     [Theory]
+    [InlineData("with-cache-reader")]
+    [InlineData("with-cache-writer")]
+    public void LinkedScopedColdBuildEntryPreservesTargetsWithoutClonefile(string entry)
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var target = AddColdGuardWorktree(repository.Path, "linux-scoped-cold");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner
+        {
+            FailureReason = "clonefile(2) requires macOS",
+        };
+        string[] build = ["--log-level=error", "build", "D5.First", "D5.Second"];
+
+        var result = WithColdBuildConsent("1", () => WorktreeCommand.Run(target,
+            [entry, "--", "lake", .. build], runner, cloner));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Empty(cloner.Invocations);
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.Single(runner.Invocations, call =>
+            call.FileName == "lake" && call.Arguments.SequenceEqual(build));
+        Assert.Single(runner.Invocations, static call =>
+            call.FileName == "lake" && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
+        Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
+        using var receipt = ParseReceipt(result.Output);
+        Assert.True(receipt.RootElement.GetProperty("cold_build_consent").GetBoolean());
+        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("donor").ValueKind);
+        Assert.Equal(0, receipt.RootElement.GetProperty("clonefile_attempts").GetInt32());
+    }
+
+    [Theory]
     [InlineData(false, false)]
     [InlineData(true, false)]
     [InlineData(false, true)]
@@ -92,6 +125,8 @@ public sealed partial class WorktreeCommandTests
         Assert.Contains("make -C", result.Error, StringComparison.Ordinal);
         Assert.Contains(repository.Path, result.Error, StringComparison.Ordinal);
         Assert.Contains("lean-cache-ensure", result.Error, StringComparison.Ordinal);
+        Assert.Contains("LEAN_TARGETS=\"<nonempty module list>\"", result.Error, StringComparison.Ordinal);
+        Assert.Contains("FULL_BUILD=1", result.Error, StringComparison.Ordinal);
         using var receipt = ParseReceipt(result.Output);
         Assert.Equal(mathlibWarm ? "warm" : "cold", receipt.RootElement.GetProperty("mathlib_olean_state").GetString());
         Assert.Equal("cold", receipt.RootElement.GetProperty("project_olean_state").GetString());
@@ -236,6 +271,7 @@ public sealed partial class WorktreeCommandTests
         Assert.Contains("make -C", result.Error, StringComparison.Ordinal);
         Assert.Contains(repository.Path, result.Error, StringComparison.Ordinal);
         Assert.Contains("lean-cache-ensure", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("STRATALINT_ACCEPT_COLD_BUILD", result.Error, StringComparison.Ordinal);
         Assert.Contains("probe failed", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("both cold", result.Error, StringComparison.OrdinalIgnoreCase);
         using var receipt = ParseReceipt(result.Output);

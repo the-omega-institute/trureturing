@@ -8,6 +8,30 @@ public sealed partial class LeanCacheEnsureCommandTests
     private const string LinkedArchiveDisabled = "linked worktree: release archive disabled";
 
     [Fact]
+    public void ClonefileUnavailableReportsExplicitScopedAlternativeWithoutRunningIt()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "warm main cache\n");
+        _ = WriteProjectOlean(repository.Path, "WarmMain");
+        var target = AddWorktree(repository.Path, "non-macos-cold-lane");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner { FailureReason = "clonefile(2) requires macOS" };
+
+        var result = WorktreeCommand.Run(repository.Path,
+            ["ensure-cache", "--path", target], runner, cloner);
+
+        Assert.False(result.Success);
+        Assert.Single(cloner.Invocations);
+        AssertNoCacheGet(runner);
+        Assert.Equal(0, runner.ArchiveInvocations);
+        var reason = ReceiptReason(result.Error);
+        Assert.Contains("clonefile(2) requires macOS", reason, StringComparison.Ordinal);
+        Assert.Contains(ScopedColdRemediation(target), reason, StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+    }
+
+    [Fact]
     public void LinkedLaneWithAbsentLakeClonesOnlyTheWarmMainCheckout()
     {
         using var repository = new TemporaryDirectory();
@@ -151,7 +175,7 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         Assert.False(coldMain.Success);
         Assert.Equal(
-            $"main checkout stamp absent; {MainWarmRemediation(mainCheckout)}",
+            $"main checkout stamp absent; {MainWarmRemediation(mainCheckout)}; {ScopedColdRemediation(target)}",
             ReceiptReason(coldMain.Error));
 
         WriteCache(mainCheckout, "warm main cache\n");
@@ -321,7 +345,13 @@ public sealed partial class LeanCacheEnsureCommandTests
     private static string LaneReseedRemediation(string lane) =>
         "the lane's content layer is cold while the main checkout is warm: remove "
         + $"{ShellQuote(Path.Combine(LeanCacheGuard.PhysicalPath(lane), ".lake"))} "
-        + "and re-run so ensure seeds it from the main checkout";
+        + "and re-run so ensure seeds it from the main checkout; " + ScopedColdRemediation(lane);
+
+    private static string ScopedColdRemediation(string lane) =>
+        "if the lane's project layer is cold, explicitly accept a scoped build without donor cloning (also on Linux): "
+        + $"STRATALINT_ACCEPT_COLD_BUILD=1 make -C {ShellQuote(LeanCacheGuard.PhysicalPath(lane))} lean LEAN_TARGETS=\"<nonempty module list>\"; "
+        + "replace the target placeholder; this fetches pinned dependencies only and compiles the selected closure; "
+        + "standalone lean-cache-ensure still requires donor seeding";
 
     private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
 

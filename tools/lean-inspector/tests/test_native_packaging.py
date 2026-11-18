@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import struct
 import subprocess
@@ -194,10 +195,22 @@ class NativePackagingTests(NativeReleaseSupport):
 class NativeCompilerConsumerTests:
 
     def test_collection_drains_projection_and_preparation_roots(self):
-        # Delay real job completions, not graph registration. The event order
-        # must hold even while another collection root could start compiling.
         config = self.root / 'tools/lean-inspector/lakefile.lean'
         source = config.read_text()
+        # Record a registration only after Lake returns the native job handle.
+        fetch = 'sources.mapM (·.exportInfo.fetch)'
+        self.assertEqual(source.count(fetch), 1)
+        source = source.replace(fetch, '''do
+    observePhase "test-exports" "group"
+    sources.mapM fun source => do
+      let job ← source.exportInfo.fetch
+      observePhase "test-exports" "registered" source.name.toString
+      job.mapM fun info => do
+        observePhase "test-exports" "finish" source.name.toString
+        return info''')
+        source = re.sub(r'^( +)(discard <\| \(\S+ exports\)\.await)$',
+            r'\1observePhase "test-exports" "wait"\n\1\2', source, flags=re.MULTILINE)
+        # Delay the real projection and preparation completions independently.
         projection = '    return file\n\n/-- A native report artifact.'
         prepared = '      return ⟨file, args, env, inputTrace, artifact?, prepareProduction, !ownInputs.isEmpty⟩'
         self.assertEqual(source.count(projection), 1)
@@ -230,13 +243,49 @@ class NativeCompilerConsumerTests:
                 claimSourcePath=claim_module + '.lean', claimSourceSha256='sha256:' +
                     publication.digest(self.root / (claim_module + '.lean'))))
         self.write('utility.json', json.dumps(utilities))
-        built = self.build()
         members = {'D5.A', 'D5.Alone', 'D5.B', 'Fixture'}
-        for module in ['D5.B', 'ClaimSupport', 'External', 'ExternalTwo']:
+        compiler_modules = members | {'External', 'ExternalTwo', 'ClaimSupport'}
+        # Check the actual olean files when the native classifier starts.
+        # In particular, neither utility claim is imported by a report member.
+        reader = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
+        paths = ['.lake/build/lib/lean/' + module.replace('.', '/') + '.olean'
+                 for module in sorted(compiler_modules)]
+        reader_source = reader.read_text()
+        entry = '    let mut paths := #[]'
+        self.assertEqual(reader_source.count(entry), 1)
+        reader.write_text(reader_source.replace(entry,
+            f'    for file in #{json.dumps(paths)} do\n'
+            '      unless ← (System.FilePath.mk file).pathExists do\n'
+            '        throw <| IO.userError s!"{moduleName} classified before compiling {file}"\n'
+            '    if moduleName == "D5.A" then\n'
+            '      IO.FS.writeBinFile "classified-External.olean"\n'
+            '        (← IO.FS.readBinFile ".lake/build/lib/lean/External.olean")\n'
+            + entry))
+        built = self.build()
+        for module in compiler_modules:
             self.assertEqual((built.stdout + built.stderr).count(f'Built {module} ('), 1)
 
         def check_order():
             observations = [json.loads(line) for line in phases.read_text().splitlines()]
+            roots = members | {'External', 'ExternalTwo'}
+            registered, finished = [], []
+            groups, waits = 0, 0
+            for event in observations:
+                if event['phase'] in ('lake-prepare-module', 'lake-compiler-inputs'):
+                    break
+                if event['phase'] != 'test-exports':
+                    continue
+                if event['boundary'] == 'group':
+                    groups += 1
+                elif event['boundary'] == 'registered':
+                    registered.append(event['module'])
+                elif event['boundary'] == 'wait':
+                    self.assertCountEqual(registered, roots, f'collector waited after fetching {registered}')
+                    waits += 1
+                elif event['boundary'] == 'finish':
+                    finished.append(event['module'])
+            self.assertEqual((groups, waits), (1, 1))
+            self.assertCountEqual(finished, roots, 'classification started before all exports finished')
             for operation, completed_phase in [('judge-inputs-fetch', 'test-projection'),
                                                 ('prepared-report-fetch', 'test-prepared')]:
                 completed, started, previous = set(), [], None
@@ -253,38 +302,63 @@ class NativeCompilerConsumerTests:
                 self.assertEqual(len(started), len(members))
                 self.assertEqual(set(started), members)
                 self.assertEqual(completed, members)
+            return dict(registered=registered, groups=groups, waits=waits)
 
-        check_order()
+        self.record_result('cold-compiler-roots', check_order())
         rows, report, material = self.report()
         self.assertEqual({row['module'] for row in rows}, members)
         self.assertEqual(len(rows), len(members))
         stamps = self.stamps()
         self.write('collection-phases.jsonl', '')
         self.build()
-        check_order()
+        self.record_result('warm-compiler-roots', check_order())
         self.assertEqual(stamps, self.stamps())
         self.assertEqual(self.report()[1:], (report, material))
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
 
-        # A utility export can fail after all projections have succeeded.
-        # No later preparation root or native production may start past it.
+        # A warm classifier can see an existing, stale utility olean.
+        # Compare the bytes captured inside D5.A discovery with the rebuilt claim.
+        observed = self.root / 'classified-External.olean'
+        observed.unlink()
+        external_olean = self.root / '.lake/build/lib/lean/External.olean'
+        previous_digest = publication.digest(external_olean)
+        external = self.root / 'External.lean'
+        external.write_text(external.read_text() + '\ndef warmClaimVersion : Nat := 2\n')
+        owner = self.root / 'D5/A.lean'
+        owner.write_text(owner.read_text() + '\ndef warmReportVersion : Nat := 2\n')
+        utilities = [dict(row, claimSourceSha256='sha256:' + publication.digest(external))
+                     if row['claimModule'] == 'External' else row for row in utilities]
+        self.write('utility.json', json.dumps(utilities))
+        self.build()
+        current_digest = publication.digest(external_olean)
+        self.assertNotEqual(current_digest, previous_digest)
+        self.assertEqual(publication.digest(observed), current_digest,
+                         'D5.A classified before the changed utility claim was compiled')
+        _, report, material = self.report()
+        stamps = self.stamps()
+
+        # Both independent compiler failures reach Lake in the same invocation.
+        # Neither classifier nor native production may start past a failed export.
         claim = self.root / 'ExternalTwo.lean'
         original_claim = claim.read_text()
         claim.write_text('def secondClaim : Prop := missingUtilityDependency\n')
         self.write('utility.json', json.dumps([dict(row, claimSourceSha256='sha256:' +
             publication.digest(claim)) if row['claimModule'] == 'ExternalTwo' else row
             for row in utilities]))
+        fixture = self.root / 'Fixture.lean'
+        original_fixture = fixture.read_text()
+        fixture.write_text('def broken : Nat := missingIndependentModuleDependency\n')
         self.write('collection-phases.jsonl', '')
         failed = self.build(success=False)
         self.assertIn('missingUtilityDependency', failed.stdout + failed.stderr)
+        self.assertIn('missingIndependentModuleDependency', failed.stdout + failed.stderr)
         observations = [json.loads(line) for line in phases.read_text().splitlines()]
-        self.assertEqual([event['module'] for event in observations if
-            event['phase'] == 'lake-prepare-module' and event['boundary'] == 'start'
-            and event['operation'] == 'prepared-report-fetch'], ['D5.A', 'D5.Alone'])
+        self.assertFalse(any(event['phase'] == 'lake-prepare-module' for event in observations))
         self.assertEqual(stamps, self.stamps())
         self.assertEqual(self.report()[1:], (report, material))
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         claim.write_text(original_claim)
+        fixture.write_text(original_fixture)
         self.write('utility.json', json.dumps(utilities))
 
         # A shared compiler dependency failure must fail the collection before
@@ -299,7 +373,7 @@ class NativeCompilerConsumerTests:
         observations = [json.loads(line) for line in phases.read_text().splitlines()]
         starts = [event['module'] for event in observations if
             event['phase'] == 'lake-prepare-module' and event['boundary'] == 'start']
-        self.assertEqual(starts, ['D5.A'])
+        self.assertEqual(starts, [])
         self.write('D5/B.lean', 'import D5.A\n')
         failed = self.build(success=False)
         self.assertIn('build cycle detected', failed.stdout + failed.stderr)
