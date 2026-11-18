@@ -247,6 +247,47 @@ private lemma four_high_side_is_star
 
 #print axioms four_high_side_is_star
 
+/-- Every matched cross edge from a star uses a direction outside its four spokes. -/
+private lemma star_ports_outside
+    {n : ℕ} {S : Finset (Q n)} {L R : Finset (S : Set (Q n))}
+    (e : cycleGraph 4 ≃g compressed ((hypercube n).induce (S : Set (Q n))) L)
+    (B : Fin 4 ↪ SideHigh ((hypercube n).induce (S : Set (Q n))) R)
+    (hB : ∀ i y, ((hypercube n).induce (S : Set (Q n))).Adj (e i).val y.val ↔ y = B i)
+    (z : Q n) (s : Fin 4 → Fin n) (hs : Function.Injective s)
+    (hA : ∀ i, (e i).val.val = flip z (s i)) (x : Fin 4) :
+    ∃ f : Fin n, f ∉ Set.range s ∧ (B x).val.val = flip (flip z f) (s x) := by
+  classical
+  let A : Fin 4 → (S : Set (Q n)) := fun k => (e k).val
+  have hspoke (k : Fin 4) : (hypercube n).Adj z (A k).val := by
+    change (hypercube n).Adj z (e k).val.val
+    rw [hA]
+    exact BalancedCriticalSpectrum.flip_adj _ _
+  have sd (x y : Fin 4) (hxy : x ≠ y) : diff (A x).val (A y).val = {s x, s y} := by
+    change diff (e x).val.val (e y).val.val = _
+    rw [hA, hA, diff_flip, diff_symm z, diff_flip, diff_self]
+    simp [hs.eq_iff, hxy, Finset.pair_comm]
+  have hsides (x y : Fin 4) (hxy : x ≠ y) : (diff (A x).val (A y).val).card = 2 := by
+    rw [sd x y hxy]
+    simp [hs.eq_iff, hxy]
+  have hnx : ∀ x : Fin 4, x + 1 ≠ x := by decide +kernel
+  obtain ⟨f, hf⟩ := adjacent_exists_flip (show
+    (hypercube n).Adj (A x).val (B x).val.val from (hB x (B x)).mpr rfl)
+  have hport : (B x).val.val = flip (flip z f) (s x) := by
+    rw [hf, show (A x).val = flip z (s x) from hA x, flip_comm]
+  refine ⟨f, ?_, hport⟩
+  rintro ⟨k, rfl⟩
+  have beyond (y : Fin 4) (hy : y ≠ x) (he : (hypercube n).Adj (B x).val.val (A y).val) :
+      False := hy (B.injective ((hB y (B x)).mp he.symm)).symm
+  by_cases hk : k = x
+  · subst k
+    have he : (B x).val.val = z := by
+      rw [hf, show (A x).val = flip z (s x) from hA x, BalancedCriticalSpectrum.flip_flip]
+    exact beyond (x + 1) (hnx x) (he ▸ hspoke (x + 1))
+  · apply beyond k hk
+    change (diff (B x).val.val (A k).val).card = 1
+    have hm : s k ∈ diff (A x).val (A k).val := by rw [sd x k (Ne.symm hk)]; simp
+    rw [hf, diff_flip, ite_eq_left hm, card_erase_of_mem hm, hsides x k (Ne.symm hk)]
+
 /-- A matched diagonal in the star forces the same outward direction at both
 ends, and its actual degree-two middle is the translated center. -/
 private lemma star_matched_diagonal_midpoint
@@ -281,24 +322,11 @@ private lemma star_matched_diagonal_midpoint
   have hsides (x y : Fin 4) (hxy : x ≠ y) : (diff (A x).val (A y).val).card = 2 := by
     rw [sd x y hxy]
     simp [hs.eq_iff, hxy]
-  have hnx : ∀ x : Fin 4, x + 1 ≠ x := by decide +kernel
-  have hdirs (x : Fin 4) :
-      ∃ f : Fin n, f ∉ Set.range s ∧ (B x).val.val = flip (A x).val f := by
-    obtain ⟨f, hf⟩ := adjacent_exists_flip (show
-      (hypercube n).Adj (A x).val (B x).val.val from (hB x (B x)).mpr rfl)
-    refine ⟨f, ?_, hf⟩
-    rintro ⟨k, rfl⟩
-    have beyond (y : Fin 4) (hy : y ≠ x) (he : (hypercube n).Adj (B x).val.val (A y).val) :
-        False := hy (B.injective ((hB y (B x)).mp he.symm)).symm
-    by_cases hk : k = x
-    · subst k
-      have he : (B x).val.val = z := by
-        rw [hf, show (A x).val = flip z (s x) from hA x, BalancedCriticalSpectrum.flip_flip]
-      exact beyond (x + 1) (hnx x) (he ▸ hspoke (x + 1))
-    · apply beyond k hk
-      change (diff (B x).val.val (A k).val).card = 1
-      have hm : s k ∈ diff (A x).val (A k).val := by rw [sd x k (Ne.symm hk)]; simp
-      rw [hf, diff_flip, ite_eq_left hm, card_erase_of_mem hm, hsides x k (Ne.symm hk)]
+  have hdirs (k : Fin 4) :
+      ∃ f : Fin n, f ∉ Set.range s ∧ (B k).val.val = flip (A k).val f := by
+    obtain ⟨f, hext, hf⟩ := star_ports_outside e B hB z s hs hA k
+    refine ⟨f, hext, ?_⟩
+    rw [hf, show (A k).val = flip z (s k) from hA k, flip_comm]
   have mid_far (x y : Fin 4) (hxy : (cycleGraph 4).Adj x y) :
       flip (flip z (s x)) (s y) ∈ S := by
     obtain ⟨_, l, hl, hxl, hyl⟩ := e.map_rel_iff.mpr hxy
