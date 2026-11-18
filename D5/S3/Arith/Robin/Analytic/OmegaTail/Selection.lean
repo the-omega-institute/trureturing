@@ -120,7 +120,7 @@ private lemma selected_error (lambda : ℝ) :
   exact ⟨by linarith, by linarith⟩
 
 /-- The logarithmic rounding error is negligible on the counting scale. -/
-private lemma loglog_div_scale :
+lemma loglog_div_scale :
     Tendsto (fun x : ℝ => log (log x) / scale x) atTop (𝓝 0) := by
   have h := ((isLittleO_log_rpow_rpow_atTop 2
     (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero).comp tendsto_log_atTop
