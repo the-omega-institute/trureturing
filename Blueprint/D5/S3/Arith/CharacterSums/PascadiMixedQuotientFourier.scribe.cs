@@ -29,5 +29,5 @@ internal sealed class PascadiMixedQuotientFourierDocument : IScribeDocumentDefin
                 H("The unit-sector bound and support"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("If A and B have nonzero reductions, each eligible residue has the same square, so there are at most two of them. The triangle inequality gives the bound 2*p squared. A nonzero coefficient gives a common solution of the two residue equations and hence D/A = -E/B modulo p."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }
