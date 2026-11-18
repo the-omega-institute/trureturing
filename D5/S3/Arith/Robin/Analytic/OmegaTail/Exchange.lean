@@ -8,8 +8,7 @@
 
 import D5.S3.Arith.Robin.Analytic.OmegaTail.Entropy
 import D5.S3.Arith.Robin.Analytic.OmegaTail.FarDeletion
-import Mathlib.Data.Nat.Squarefree
-import Mathlib.Data.Fintype.Pi
+import D5.S3.Arith.Robin.Analytic.OmegaTail.Lower
 
 /-! Signed prime exchanges on a common base and their application to paired grid bins. -/
 
@@ -23,18 +22,13 @@ namespace D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
 open D5.S3.Arith.Robin.Analytic.OmegaTailUpper
 open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel (primeInterval)
 
-private lemma mem_selected_union {J : Type*} [Fintype J]
-    {P f : J → Finset ℕ} (hd : Pairwise (fun i j => Disjoint (P i) (P j)))
-    (hf : ∀ j, f j ⊆ P j) {j : J} {p : ℕ} (hp : p ∈ P j) :
-    p ∈ univ.biUnion f ↔ p ∈ f j := by
-  constructor
-  · intro h
-    obtain ⟨i, _, hi⟩ := mem_biUnion.mp h
-    by_cases hij : i = j
-    · simpa [hij] using hi
-    · exact ((disjoint_left.mp (hd hij)) (hf i hi) hp).elim
-  · intro h
-    exact mem_biUnion.mpr ⟨j, mem_univ _, h⟩
+/-- Products obtained by making all prescribed paired choices on the given base. -/
+def pairedOutputs {J : Type*} [Fintype J]
+    (base : Finset ℕ) (D R : J → Finset ℕ) (h : J → ℕ) : Finset ℕ := by
+  classical
+  exact ((Fintype.piFinset (fun j => (D j).powersetCard (h j))) ×ˢ
+    (Fintype.piFinset (fun j => (R j).powersetCard (h j)))).image
+      (fun f => ∏ p ∈ (base \ univ.biUnion f.1) ∪ univ.biUnion f.2, p)
 
 /-- On one prime base, removing and adding the same prescribed number in
 each paired bin realizes the full independent product of choices. -/
@@ -50,10 +44,10 @@ theorem paired_exchange {J : Type*} [Fintype J]
     (hhi : ∀ j, ∀ p ∈ R j, log (p : ℝ) ≤ hi j)
     (hx : 0 < x)
     (hslack : (∑ p ∈ base, log (p : ℝ)) + ∑ j, (h j : ℝ) * (hi j - lo j) < log x) :
-    ∃ outputs : Finset ℕ,
-      outputs.card = (∏ j, (D j).card.choose (h j) * (R j).card.choose (h j)) ∧
-      ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
-        base.card ∧ (n : ℝ) < x := by
+    let outputs := pairedOutputs base D R h
+    outputs.card = (∏ j, (D j).card.choose (h j) * (R j).card.choose (h j)) ∧
+    ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+      base.card ∧ (n : ℝ) < x := by
   classical
   let C := Fintype.piFinset (fun j => (D j).powersetCard (h j)) ×ˢ
     Fintype.piFinset (fun j => (R j).powersetCard (h j))
@@ -86,6 +80,10 @@ theorem paired_exchange {J : Type*} [Fintype J]
     · exact hbase p (mem_sdiff.mp hp).1
     · obtain ⟨j, _, hj⟩ := mem_biUnion.mp hp
       exact hprime j p ((hrf hf j).1 hj)
+  have hremoved {f} (hf : f ∈ C) (j : J) {p : ℕ} (hp : p ∈ D j) :
+      p ∈ removed f ↔ p ∈ f.1 j := by
+    rw [← Lower.bin_union_inter D f.1 hDdisj (fun j => (hdf hf j).1) j]
+    simp only [removed, mem_inter, hp, and_true]
   have hrecover {f} (hf : f ∈ C) (j : J) :
       D j \ support f = f.1 j ∧ support f ∩ R j = f.2 j := by
     constructor
@@ -93,7 +91,7 @@ theorem paired_exchange {J : Type*} [Fintype J]
       constructor
       · intro hp
         obtain ⟨hd, hs⟩ := mem_sdiff.mp hp
-        apply (mem_selected_union hDdisj (fun j => (hdf hf j).1) hd).mp
+        apply (hremoved hf j hd).mp
         exact not_not.mp fun hm => hs (mem_union_left _ (mem_sdiff.mpr ⟨hD j hd, hm⟩))
       · intro hp
         have hd := (hdf hf j).1 hp
@@ -101,28 +99,23 @@ theorem paired_exchange {J : Type*} [Fintype J]
         intro hs
         rcases mem_union.mp hs with hs | hs
         · exact (mem_sdiff.mp hs).2
-            ((mem_selected_union hDdisj (fun j => (hdf hf j).1) hd).mpr hp)
+            ((hremoved hf j hd).mpr hp)
         · exact disjoint_left.mp (hadd hf) hs (hD j hd)
-    · ext p
-      constructor
-      · intro hp
-        obtain ⟨hs, hr⟩ := mem_inter.mp hp
-        apply (mem_selected_union hRdisj (fun j => (hrf hf j).1) hr).mp
-        rcases mem_union.mp hs with hs | hs
-        · exact (disjoint_left.mp (hR j) hr (mem_sdiff.mp hs).1).elim
-        · exact hs
-      · intro hp
-        have hr := (hrf hf j).1 hp
-        exact mem_inter.mpr ⟨mem_union_right _
-          ((mem_selected_union hRdisj (fun j => (hrf hf j).1) hr).mpr hp), hr⟩
+    · have hempty : (base \ removed f) ∩ R j = ∅ :=
+        disjoint_iff_inter_eq_empty.mp ((hR j).symm.mono_left sdiff_subset)
+      change ((base \ removed f) ∪ added f) ∩ R j = f.2 j
+      rw [union_inter_distrib_right, hempty, empty_union]
+      exact Lower.bin_union_inter R f.2 hRdisj (fun j => (hrf hf j).1) j
   have hinj : Set.InjOn output (C : Set ((J → Finset ℕ) × (J → Finset ℕ))) := by
     intro f hf g hg he
-    have hs : support f = support g := by
-      simpa only [output, Nat.primeFactors_prod (hsupport hf),
-        Nat.primeFactors_prod (hsupport hg)] using congrArg Nat.primeFactors he
+    have hs : support f = support g :=
+      Lower.prime_product_injective (hsupport hf) (hsupport hg) he
     exact Prod.ext (funext fun j => by rw [← (hrecover hf j).1, hs, (hrecover hg j).1])
       (funext fun j => by rw [← (hrecover hf j).2, hs, (hrecover hg j).2])
-  refine ⟨C.image output, ?_, ?_⟩
+  change (C.image output).card = _ ∧
+    ∀ n ∈ C.image output, 0 < n ∧ Squarefree n ∧
+      ArithmeticFunction.cardDistinctFactors n = base.card ∧ (n : ℝ) < x
+  constructor
   · simp only [card_image_of_injOn hinj, C, card_product, Fintype.card_piFinset,
       card_powersetCard, prod_mul_distrib]
   · intro n hn
@@ -166,9 +159,7 @@ theorem paired_exchange {J : Type*} [Fintype J]
           (fun hd => hpq ((Nat.prime_dvd_prime_iff_eq (hsupport hf p hp)
             (hsupport hf q hq)).mp hd))
       · exact fun p hp => (hsupport hf p hp).squarefree
-    · rw [ArithmeticFunction.cardDistinctFactors_apply, ← List.card_toFinset,
-        Nat.toFinset_factors, show output f = ∏ p ∈ support f, p from rfl,
-        Nat.primeFactors_prod (hsupport hf), hcard]
+    · exact (Lower.omega_prime_product (hsupport hf)).trans hcard
     · rw [hlog]
       simp only [mul_sub, sum_sub_distrib] at hslack
       linarith
@@ -188,18 +179,18 @@ private lemma primeInterval_endpoints {a b : ℝ} {p : ℕ} (hb : 0 ≤ b)
   have hi := mem_Ioc.mp h.1
   exact ⟨Nat.lt_of_floor_lt hi.1, (Nat.le_floor_iff hb).mp hi.2, h.2⟩
 
-/-- The paired exponential grid contributes both choices in each bin to the
-second-threshold tail, provided the pointwise exchange cost fits the reserve. -/
-theorem fixed_grid_bound {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+private theorem fixed_grid_outputs {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
     (ht0 : t 0 = 0) (P s reserve : ℝ) (hP : 0 < P) (hs : 0 < s)
     (base : Finset ℕ) (h : Fin m → ℕ)
     (hbase : base ⊆ Nat.primesLE ⌊P⌋₊)
     (hdonor : ∀ i, donorBin t P s i ⊆ base)
-    (lambda : ℝ) (hsize : threshold lambda (exp P) < (base.card : ℝ))
     (hreserve : (∑ p ∈ base, log (p : ℝ)) ≤ P - reserve)
     (hcost : (2 / s) * (∑ i, t i.succ * (h i : ℝ)) < reserve) :
-    (∏ i, (donorBin t P s i).card.choose (h i) *
-      (recipientBin t P s i).card.choose (h i)) ≤ tailCount lambda (exp P) := by
+    let outputs := pairedOutputs base (donorBin t P s) (recipientBin t P s) h
+    outputs.card = (∏ i, (donorBin t P s i).card.choose (h i) *
+      (recipientBin t P s i).card.choose (h i)) ∧
+    ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+      base.card ∧ (n : ℝ) < exp P := by
   let L : Fin (m + 1) → ℝ := fun i => P * exp (-t i / s)
   let U : Fin (m + 1) → ℝ := fun i => P * exp (t i / s)
   have hLp (i) : 0 < L i := mul_pos hP (exp_pos _)
@@ -246,18 +237,10 @@ theorem fixed_grid_bound {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
       (Nat.le_floor_iff hP.le).mp (Nat.mem_primesLE.mp (hbase hb)).1
     have hcentre : P ≤ U i.castSucc := hU0 ▸ hU.monotone (Fin.zero_le i.castSucc)
     exact (habove i hp).1.not_ge (hbound.trans hcentre)
-  have hexchange := paired_exchange base (donorBin t P s) (recipientBin t P s) h
+  refine paired_exchange base (donorBin t P s) (recipientBin t P s) h
     (fun i => log P - t i.succ / s) (fun i => log P + t i.succ / s) (exp P)
     (fun p hp => (Nat.mem_primesLE.mp (hbase hp)).2)
     hdonor hrbase hdd hrd (fun i _ hp => (habove i hp).2.2) ?_ ?_ (exp_pos P) ?_
-  · obtain ⟨outputs, hcard, hout⟩ := hexchange
-    rw [← hcard, tailCount]
-    apply card_le_card
-    intro n hn
-    obtain ⟨hnpos, _, hω, hstrict⟩ := hout n hn
-    refine mem_filter.mpr ⟨mem_Icc.mpr ⟨hnpos, ?_⟩, ?_⟩
-    · exact (Nat.le_floor_iff (exp_pos P).le).mpr hstrict.le
-    · simpa only [hω] using hsize
   · intro i p hp
     have h := log_le_log (hLp i.succ) (hbelow i hp).1.le
     rwa [show log (L i.succ) = log P - t i.succ / s by
@@ -278,6 +261,35 @@ theorem fixed_grid_bound {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
     rw [hsum]
     linarith
 
+
+private theorem family_card_le_tail {outputs : Finset ℕ} {lambda x : ℝ} {k : ℕ}
+    (hx : 0 < x) (hsize : threshold lambda x < (k : ℝ))
+    (hout : ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧
+      ArithmeticFunction.cardDistinctFactors n = k ∧ (n : ℝ) < x) :
+    outputs.card ≤ tailCount lambda x := by
+  rw [tailCount]
+  apply card_le_card
+  intro n hn
+  obtain ⟨hnpos, _, hω, hstrict⟩ := hout n hn
+  refine mem_filter.mpr ⟨mem_Icc.mpr ⟨hnpos, (Nat.le_floor_iff hx.le).mpr hstrict.le⟩, ?_⟩
+  simpa only [hω] using hsize
+
+/-- The paired exponential grid contributes both choices in each bin to the
+second-threshold tail, provided the pointwise exchange cost fits the reserve. -/
+theorem fixed_grid_bound {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+    (ht0 : t 0 = 0) (P s reserve : ℝ) (hP : 0 < P) (hs : 0 < s)
+    (base : Finset ℕ) (h : Fin m → ℕ)
+    (hbase : base ⊆ Nat.primesLE ⌊P⌋₊)
+    (hdonor : ∀ i, donorBin t P s i ⊆ base)
+    (lambda : ℝ) (hsize : threshold lambda (exp P) < (base.card : ℝ))
+    (hreserve : (∑ p ∈ base, log (p : ℝ)) ≤ P - reserve)
+    (hcost : (2 / s) * (∑ i, t i.succ * (h i : ℝ)) < reserve) :
+    (∏ i, (donorBin t P s i).card.choose (h i) *
+      (recipientBin t P s i).card.choose (h i)) ≤ tailCount lambda (exp P) := by
+  obtain ⟨hcard, hout⟩ :=
+    fixed_grid_outputs t ht ht0 P s reserve hP hs base h hbase hdonor hreserve hcost
+  rw [← hcard]
+  exact family_card_le_tail (exp_pos P) hsize hout
 
 /-- Fixed-grid entropy bound with the moving-bin capacities and safe-base
 estimates as inputs. The floor, signed slack, full product count, and
@@ -301,8 +313,16 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
       (base P).card = Selection.selectedCount 1 (exp P) ∧
       (∑ p ∈ base P, log (p : ℝ)) ≤ P - reserve P) →
     ∀ᶠ P in atTop,
-      ((2 * ∑ i, delta i * binEntropy (q i)) / C - zeta) * Z P ≤
-        log (tailCount 1 (exp P) : ℝ) := by
+      let h := fun i => ⌊q i * (min (donorBin t P (s P) i).card
+        (recipientBin t P (s P) i).card : ℝ)⌋₊
+      let bound := ((2 * ∑ i, delta i * binEntropy (q i)) / C - zeta) * Z P
+      let outputs := pairedOutputs (base P) (donorBin t P (s P)) (recipientBin t P (s P)) h
+      outputs.card = (∏ i, (donorBin t P (s P) i).card.choose (h i) *
+        (recipientBin t P (s P) i).card.choose (h i)) ∧
+      0 < outputs.card ∧
+      (∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+        Selection.selectedCount 1 (exp P) ∧ (n : ℝ) < exp P) ∧
+      bound ≤ log (outputs.card : ℝ) ∧ bound ≤ log (tailCount 1 (exp P) : ℝ) := by
   intro c C s W Z delta hslack hd hr hreserve hbase
   have hC : 0 < C := mul_pos (by linarith) (div_pos pi_pos (by positivity))
   have hdelta (i : Fin m) : 0 < delta i := sub_pos.mpr (ht i.castSucc_lt_succ)
@@ -375,8 +395,10 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
   have hsize : threshold 1 (exp P) < ((base P).card : ℝ) := by
     rw [hbaseP.2.2.1, Selection.selectedCount, Nat.cast_add, Nat.cast_one]
     exact Nat.lt_floor_add_one _
-  have hcount := fixed_grid_bound t ht ht0 P (s P) (reserve P) (zero_lt_one.trans hP) hsP
-    (base P) (fun i => h i P) hbaseP.1 hbaseP.2.1 1 hsize hbaseP.2.2.2 hcost
+  obtain ⟨hcard, hout⟩ := fixed_grid_outputs t ht ht0 P (s P) (reserve P)
+    (zero_lt_one.trans hP) hsP (base P) (fun i => h i P) hbaseP.1 hbaseP.2.1
+    hbaseP.2.2.2 hcost
+  have hcount := family_card_le_tail (exp_pos P) hsize hout
   let d : Fin m → ℕ := fun i => (donorBin t P (s P) i).card.choose (h i P)
   let r : Fin m → ℕ := fun i => (recipientBin t P (s P) i).card.choose (h i P)
   have hdp (i : Fin m) : (0 : ℝ) < d i := by
@@ -389,22 +411,32 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
     rw [Nat.cast_prod]
     simp only [Nat.cast_mul]
     exact prod_pos fun i _ => mul_pos (hdp i) (hrp i)
-  have hlog := log_le_log hprod (show ((∏ i, d i * r i : ℕ) : ℝ) ≤
-      (tailCount 1 (exp P) : ℝ) by exact_mod_cast hcount)
-  rw [Nat.cast_prod, log_prod (fun i _ => by
-    simpa only [Nat.cast_mul] using (mul_pos (hdp i) (hrp i)).ne')] at hlog
-  simp only [Nat.cast_mul, log_mul (hdp _).ne' (hrp _).ne'] at hlog
+  have hlog : log ((∏ i, d i * r i : ℕ) : ℝ) =
+      ∑ i, (log (d i : ℝ) + log (r i : ℝ)) := by
+    rw [Nat.cast_prod, log_prod (fun i _ => by
+      simpa only [Nat.cast_mul] using (mul_pos (hdp i) (hrp i)).ne')]
+    simp only [Nat.cast_mul, log_mul (hdp _).ne' (hrp _).ne']
   have hsum : (2 * ∑ i, delta i * binEntropy (q i)) - zeta * C <
       (∑ i, (log (d i : ℝ) + log (r i : ℝ))) / W P := by
     rw [sum_div]
     simp only [add_div]
     exact hlowP
-  refine le_trans (le_of_lt ?_) hlog
-  have hscale : Z P = C * W P := by
-    change (P / log P) / sqrt (log P) = C * ((P / log P) / (C * sqrt (log P)))
-    field_simp [hC.ne', (sqrt_pos.2 (log_pos hP)).ne']
-  rw [hscale, ← mul_assoc, sub_mul, div_mul_cancel₀ _ hC.ne']
-  exact (lt_div_iff₀ hWP).mp hsum
+  have hfamily : ((2 * ∑ i, delta i * binEntropy (q i)) / C - zeta) * Z P ≤
+      log ((∏ i, d i * r i : ℕ) : ℝ) := by
+    rw [hlog]
+    have hscale : Z P = C * W P := by
+      change (P / log P) / sqrt (log P) = C * ((P / log P) / (C * sqrt (log P)))
+      field_simp [hC.ne', (sqrt_pos.2 (log_pos hP)).ne']
+    rw [hscale, ← mul_assoc, sub_mul, div_mul_cancel₀ _ hC.ne']
+    exact le_of_lt ((lt_div_iff₀ hWP).mp hsum)
+  refine ⟨hcard, ?_, ?_, ?_, ?_⟩
+  · rw [hcard]
+    exact_mod_cast hprod
+  · simpa only [hbaseP.2.2.1] using hout
+  · rw [hcard]
+    exact hfamily
+  · rw [hcard] at hcount
+    exact hfamily.trans (log_le_log hprod (by exact_mod_cast hcount))
 
 open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
   (primeCount countingPolynomial prime_counting_four_terms)
@@ -568,16 +600,29 @@ private lemma moving_prime_capacity {C a b : ℝ} (hC : 0 < C) (hab : a < b) :
   dsimp only [W, Y]
   field_simp [hpos.ne', hs0.ne', (log_pos hP).ne'] <;> ring
 
-/-- Lemma 7.6 on the literal second-threshold count. -/
+/-- The actual paired-grid family and its entropy lower bound at the second threshold. -/
 theorem fixed_grid_lower {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
     (ht0 : t 0 = 0) (q : Fin m → ℝ) (hq0 : ∀ i, 0 < q i) (hq1 : ∀ i, q i < 1)
     (eta : ℝ) (heta : 0 < eta) (zeta : ℝ) (hzeta : 0 < zeta)
     (hslack : 2 * ∑ i, t i.succ * ((t i.succ - t i.castSucc) * q i) <
       (π ^ 2 / 6) * (1 + eta) ^ 2) :
     ∀ᶠ P : ℝ in atTop,
-      ((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) /
-        ((1 + eta) * (π / (2 * sqrt 3))) - zeta) *
-        ((P / log P) / sqrt (log P)) ≤ log (tailCount 1 (exp P) : ℝ) := by
+      let C := (1 + eta) * (π / (2 * sqrt 3))
+      let s := C * sqrt (log P)
+      let h := fun i => ⌊q i * (min (donorBin t P s i).card (recipientBin t P s i).card : ℝ)⌋₊
+      let bound := ((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) / C - zeta) *
+        ((P / log P) / sqrt (log P))
+      ∃ base : Finset ℕ, base ⊆ Nat.primesLE ⌊P⌋₊ ∧
+        (∀ i, donorBin t P s i ⊆ base) ∧
+        base.card = Selection.selectedCount 1 (exp P) ∧
+        (∑ p ∈ base, log (p : ℝ)) ≤ P - FarDeletion.safeReserve P ∧
+        let outputs := pairedOutputs base (donorBin t P s) (recipientBin t P s) h
+        outputs.card = (∏ i, (donorBin t P s i).card.choose (h i) *
+          (recipientBin t P s i).card.choose (h i)) ∧
+        0 < outputs.card ∧
+        (∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+          Selection.selectedCount 1 (exp P) ∧ (n : ℝ) < exp P) ∧
+        bound ≤ log (outputs.card : ℝ) ∧ bound ≤ log (tailCount 1 (exp P) : ℝ) := by
   let C := (1 + eta) * (π / (2 * sqrt 3))
   have hC : 0 < C := mul_pos (by linarith) (div_pos pi_pos (by positivity))
   obtain ⟨base, hbase⟩ := safe_base t ht ht0 hC
@@ -601,9 +646,11 @@ theorem fixed_grid_lower {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
         rw [← pow_two, mul_pow, sq_sqrt hl.le]
         ring]
     field_simp [(zero_lt_one.trans hP).ne', hC.ne', hl.ne'] <;> ring
-  refine fixed_grid_lower_of_capacity t ht ht0 q hq0 hq1 eta heta base FarDeletion.safeReserve
+  have hfamily := fixed_grid_lower_of_capacity t ht ht0 q hq0 hq1 eta heta base FarDeletion.safeReserve
     zeta hzeta
     hslack (fun i => ?_) (fun i => ?_) hres hbase
+  · filter_upwards [hbase, hfamily] with P hbaseP hfamilyP
+    exact ⟨base P, hbaseP.1, hbaseP.2.1, hbaseP.2.2.1, hbaseP.2.2.2, hfamilyP⟩
   · have h := moving_prime_capacity hC (neg_lt_neg (ht i.castSucc_lt_succ))
     simpa only [donorBin, neg_sub_neg] using h
   · exact moving_prime_capacity hC (ht i.castSucc_lt_succ)
