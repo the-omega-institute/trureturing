@@ -1,0 +1,10 @@
+### Theorem 7.1. One faithful probe determines the whole matrix order
+
+Put v=(1,0)^T. For every nonnegative k,
+
+$$\boxed{A_{P,Q_0}^k v=v\quad\Longleftrightarrow\quad A_{P,Q_0}^k=I.} \tag{7.1}$$
+
+Proof. The two columns v and Av=(P,1)^T have determinant one and form a basis over Z/NZ, including composite moduli. If A^k fixes v, commutation with A makes it fix Av too, hence every vector. The reverse implication is immediate. QED.
+
+The orbit length r equals the existing algebraic `matrixPeriod` and satisfies r<=N^2-1, because the nonzero vector v stays in a nonzero permutation orbit. For P=1,Q_0=-1 this is the Fibonacci update (x+y,x), with A^k v=(F_{k+1},F_k) modulo N. Its return period is exactly the Pisano period, without requiring that every state have the same orbit length. A single occurrence of F_k=0 is insufficient; the adjacent coordinate must also return to one.
+

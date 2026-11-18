@@ -1,0 +1,26 @@
+**定理 195.3（点态线性塌缩的精确谱字典）。** 在195.2的同一商中，对每个单位 $v$，
+
+$$
+\begin{aligned}
+\neg\mathrm{LIN}(p_v)
+&\Longleftrightarrow
+\exists Z\in\mathcal N,\ \exists\lambda\in\mathbb R\setminus\{0\}:\ Zv=\lambda v,\\
+p_v\notin F_K(N_{p_v})
+&\Longleftrightarrow
+v^*Zv=0\quad\text{对每个 }Z\in\mathcal N.
+\end{aligned}
+\tag{195.10}
+$$
+
+因而全标签 LIN、全标签 NC 与 $\mathcal N=0$ 等价；单个标签的 LIN 则不要求 $v^*Zv=0$。
+
+证明。由195.4，$p_v\in W_{p_v}$ 当且仅当某个 $Y\in\operatorname{Herm}(v^\perp)$ 满足 $\Psi Y=\Psi P_v$。此时 $Z=P_v-Y\in\mathcal N$ 且 $Zv=v$。反向若 $Zv=\lambda v$、$\lambda\ne0$，Hermitian 性给
+
+$$
+Z=\lambda P_v+Q_vZQ_v,\qquad
+p_v=-\lambda^{-1}\Psi(Q_vZQ_v)\in W_{p_v}.
+\tag{195.11}
+$$
+
+第二行直接复用 XII159.10 的实际面二分：若某个 $v^*Zv\ne0$，整个邻点生成面就是 $K$；若全部为零，它是 $\Psi\mathcal D(v^\perp)$，且排除 $p_v$。每个非零 Hermitian 核元都有非零本征值，故全标签 LIN 由第一行迫核为零。核为零时第二行给全标签 NC，并由第一行给全标签 LIN；全标签 NC 排核亦是159.10的结论。这里从未用 AD 把全部正交纯点免费放进邻点集。$\square$
+

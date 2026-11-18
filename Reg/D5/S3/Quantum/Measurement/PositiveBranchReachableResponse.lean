@@ -31,6 +31,90 @@ def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 end General
 
+namespace Kernel
+abbrev signature := General.signature.{u}
+abbrev actual := General.actual.{u}
+abbrev rejected := General.rejected.{u}
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {n : Type u} {α : Type} [Fintype n] [Fintype α]
+    (K : α → Matrix n n ℂ) (c : α → ℝ) (_hc : ∀ a, 0 < c a)
+    {X : Matrix n n ℂ} (_hX : X.PosSemidef) (x : n → ℂ),
+    (weightedCP K c (R.readout () n X)) *ᵥ x = 0 ↔
+      ∀ a, X *ᵥ ((K a)ᴴ *ᵥ x) = 0
+
+private theorem actual_law : arena.{u}.Law actual := by
+  exact @weightedCP_kernel.{u}
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  classical
+  intro h
+  let n := ULift.{u} Unit
+  let K : Unit → Matrix n n ℂ := fun _ => 1
+  let c : Unit → ℝ := fun _ => 1
+  let x : n → ℂ := fun _ => 1
+  have hz : (weightedCP K c (rejected.readout () n 1)) *ᵥ x = 0 := by
+    simp [rejected, General.rejected, realize, weightedCP]
+  have hh := (h K c (by intro a; norm_num [c]) (X := 1) Matrix.PosSemidef.one x).mp hz ()
+  have he := congrFun hh (ULift.up ())
+  simpa [K, x] using he
+
+def family : Registration arena.{u} (type_of% (@weightedCP_kernel.{u})) where
+  actual := realize signature.{u} (fun _ _ X => X) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      cases i; cases j
+      exact (hji rfl).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    change ObservationalDependence signature.{u} actual
+    intro i
+    refine ⟨ULift.{u} Unit, 0, (fun _ _ => 1), ?_⟩
+    intro he
+    have hh := congrFun (congrFun he (ULift.up ())) (ULift.up ())
+    exact zero_ne_one hh
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@weightedCP_kernel.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.Kernel.unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.Kernel.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ X => X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end Kernel
+
 namespace Finite
 @[reducible] def signature : Signature where
   Params := ℕ

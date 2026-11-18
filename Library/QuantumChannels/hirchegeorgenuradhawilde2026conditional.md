@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2608.27171v1
 claim: "For a quantum channel N and a generalized divergence D, the conditional contraction coefficient is η^Δ_D(N) := sup over |R| and ρ_RA ≠ σ_RA of [D((id ⊗ N)(ρ_RA)‖(id ⊗ N)(σ_RA)) − D(ρ_R‖σ_R)] / [D(ρ_RA‖σ_RA) − D(ρ_R‖σ_R)] (Eq. (2.14)), optimized over pairs with a strictly positive finite denominator (Remark 2). The hockey-stick divergence is E_γ(ρ‖σ) := Tr(ρ − γσ)_+ (Eq. (5.1)). For the trace distance (γ = 1), η^c_Tr(N) and η^Δ_Tr(N) are optimized by orthogonal states (Proposition 8). §9 asks whether, for the hockey-stick divergence, the optimization can be restricted to orthogonal states, which would imply monotonicity of the coefficient in γ."
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
+  - D5/S3/Quantum/Divergence/FaithfulConditionalGap
 license: citation-only
 triage: anchor
 ---
@@ -28,6 +29,7 @@ No DOI or journal reference is listed in the arXiv metadata. The text was read f
 - p. 37, §5, Eqs. (5.1)–(5.2);
 - p. 40, Proposition 8;
 - p. 72, §9, the first open problem.
+- p. 72, §9, the second open problem (faithful-divergence separation).
 
 ## Source statements
 
@@ -43,7 +45,7 @@ Proposition 8 (p. 40): "For a channel N : A → B, the coefficients ηc_Tr(N) an
 
 ## Reading used by the repository
 
-The question is read for the conditional coefficient η^Δ_{E_γ} with γ ≥ 1. The complete coefficient η^c is not addressed.
+The first question is read for the conditional coefficient η^Δ_{E_γ} with γ ≥ 1. That orthogonal-reduction result does not address the complete coefficient η^c.
 
 For finite systems A and B and a channel N : A → B, the ratio set S_γ(N) consists of the ratios [E_γ((id ⊗ N)ρ‖(id ⊗ N)σ) − E_γ(ρ_R‖σ_R)] / [E_γ(ρ‖σ) − E_γ(ρ_R‖σ_R)]. These range over every finite reference system R and all density matrices ρ, σ on R ⊗ A with a strictly positive denominator. S^⊥_γ(N) is its subset from pairs with ρσ = 0.
 
@@ -52,3 +54,19 @@ The repository proves two statements:
 - S_γ(N) = S_δ(N) for all γ, δ ≥ 1, so η^Δ_{E_γ}(N) does not depend on γ ≥ 1.
 
 In the formal numerator, the subtracted reference marginals are taken of the output states (id ⊗ N)ρ and (id ⊗ N)σ; they equal ρ_R and σ_R because N is trace preserving.
+
+## Faithful-divergence separation
+
+The second bullet of §9, printed p. 72, asks:
+
+> Can we find a concrete example such that η_D^c(N) < η_D^Δ(N) for some faithful divergence D? A particularly interesting case would be that of the relative entropy. Although it would be natural to conjecture that such an example exists, the unbounded reference systems make it difficult to confirm.
+
+This is a separate question from the hockey-stick orthogonal reduction. The divergence is a nonnegative real-valued family on all finite quantum density-state pairs, faithful in the sense that it vanishes exactly on equal states, and monotone under every finite CPTP map, including maps between different dimensions. Both coefficient optimizations include every finite quantum reference. Complete ratios require equal reference marginals and positive input divergence; conditional ratios subtract the reference divergence and require a positive denominator. Empty admissible sets contribute coefficient zero.
+
+`FaithfulConditionalGap.result` answers this existential affirmatively using squared trace distance and a binary measure-and-prepare CPTP channel with transition matrix $W=((3/4,1/4),(1/4,3/4))$. It proves
+
+$$
+\eta^c_D(N)\le\frac14<\frac5{12}\le\eta^\Delta_D(N).
+$$
+
+The uniform complete bound includes arbitrary finite quantum references, including off-diagonal reference blocks. The conditional witness consists of actual density states on $\mathrm{Fin}\,3\times\mathrm{Fin}\,2$. No reference cutoff, relative-entropy resolution or exact optimum is asserted. The [problem dossier](../../Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap.md) gives the construction, quantifiers and audit boundary.

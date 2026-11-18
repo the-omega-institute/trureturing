@@ -16,7 +16,43 @@ Lean statement: `D5/S3/Topology/QuandleMarkovColoring.Colors`
 
 A boundary coloring is a function from Fin n to an arbitrary rack Q. Neither finiteness nor quandle idempotence is assumed. At zero strands the coloring space consists of the unique empty function, including when Q itself is empty.
 
-**Definition 1.2 (Artin action on rack colors).**
+**Definition 1.2 (Left adjacent coordinate).**
+
+Lean statement: `D5/S3/Topology/QuandleMarkovColoring.leftSlot`
+
+*Formalization.* `D5/S3/Topology/QuandleMarkovColoring.leftSlot` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n and i in Fin (n−1), the left coordinate in Fin n has value i.val. This inclusion applies without any rack or quandle data.
+
+**Definition 1.3 (Right adjacent coordinate).**
+
+Lean statement: `D5/S3/Topology/QuandleMarkovColoring.rightSlot`
+
+*Formalization.* `D5/S3/Topology/QuandleMarkovColoring.rightSlot` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n and i in Fin (n−1), the right coordinate in Fin n has value i.val+1. Together with the left coordinate it specifies an adjacent pair.
+
+**Theorem 1.4 (Adjacent coordinates are distinct).**
+
+Lean statement: `D5/S3/Topology/QuandleMarkovColoring.slots_ne`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/QuandleMarkovColoring.slots_ne` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n and i in Fin (n−1), leftSlot i differs from rightSlot i: equality would equate i.val and i.val+1. The same coordinate inclusions give distinct endpoints for the horizontal, vertical and diagonal bonds of a rectangular king grid.
+
+**Definition 1.5 (Artin action on rack colors).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.braidAction`
 
@@ -30,7 +66,7 @@ The local crossing sends (x,y) to (x ◃ y,x); its inverse sends (x,y) to (y,y �
 
 The resulting group homomorphism is defined on the existing literal n-strand Artin presentation, with values in permutations of the entire coloring space. It applies to infinite and empty racks as well as finite racks, and includes zero and one strands, which have no crossing generators. Multiplication applies the right factor first. No geometric braid identification or knot-closure theorem is asserted.
 
-**Definition 1.3 (Final old coordinate).**
+**Definition 1.6 (Final old coordinate).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.lastSlot`
 
@@ -42,7 +78,7 @@ Lean statement: `D5/S3/Topology/QuandleMarkovColoring.lastSlot`
 
 For a strictly positive strand count n, the final old coordinate is the element n−1 of Fin n. The positivity hypothesis supplies a genuine coordinate for the stabilization formulas.
 
-**Definition 1.4 (Closed boundary colorings).**
+**Definition 1.7 (Closed boundary colorings).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.ClosedColorings`
 
@@ -54,7 +90,7 @@ Lean statement: `D5/S3/Topology/QuandleMarkovColoring.ClosedColorings`
 
 For a rack Q and an element of the literal n-strand Artin group, a closed coloring is a function from Fin n to Q fixed by its braid transport.
 
-**Definition 1.5 (Positive stabilization).**
+**Definition 1.8 (Positive stabilization).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.positiveStabilizationEquiv`
 
@@ -66,7 +102,7 @@ Lean statement: `D5/S3/Topology/QuandleMarkovColoring.positiveStabilizationEquiv
 
 For every quandle, every strictly positive strand count and every braid, positive stabilization preserves the entire coloring space. The forward map appends the old last color and the inverse restricts to the original coordinates. Comparing the last coordinate forces the appended color; idempotence removes the remaining crossing. The quandle may be infinite or empty.
 
-**Definition 1.6 (Negative stabilization).**
+**Definition 1.9 (Negative stabilization).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.negativeStabilizationEquiv`
 
@@ -78,7 +114,7 @@ Lean statement: `D5/S3/Topology/QuandleMarkovColoring.negativeStabilizationEquiv
 
 Negative stabilization has the same diagonal extension and restriction maps. Its last coordinate equation uses the inverse rack action. Injectivity of that action and quandle idempotence force the added color to equal the old last color. Both inverse laws hold without a finiteness assumption.
 
-**Definition 1.7 (Conjugation of closed braids).**
+**Definition 1.10 (Conjugation of closed braids).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.conjugationEquiv`
 
@@ -90,7 +126,7 @@ Lean statement: `D5/S3/Topology/QuandleMarkovColoring.conjugationEquiv`
 
 Transport by a conjugating braid identifies the fixed-coloring spaces of a braid and its conjugate. The inverse uses transport by the inverse conjugating braid.
 
-**Definition 1.8 (Coloring count).**
+**Definition 1.11 (Coloring count).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.coloringCount`
 
@@ -102,7 +138,7 @@ Lean statement: `D5/S3/Topology/QuandleMarkovColoring.coloringCount`
 
 The count is the natural cardinality of the closed-coloring type. It is an ordinary finite count when the color quandle is finite.
 
-**Theorem 1.9 (Algebraic Markov invariance).**
+**Theorem 1.12 (Algebraic Markov invariance).**
 
 Lean statement: `D5/S3/Topology/QuandleMarkovColoring.quandle_coloring_markov_invariant`
 
@@ -126,8 +162,11 @@ This is the classical algebraic coloring construction. A geometric identificatio
 - Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.coloringCount`
 - Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.conjugationEquiv`
 - Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.lastSlot`
+- Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.leftSlot`
 - Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.negativeStabilizationEquiv`
 - Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.positiveStabilizationEquiv`
 - Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.quandle_coloring_markov_invariant`
+- Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.rightSlot`
+- Truth anchor: `D5/S3/Topology/QuandleMarkovColoring.slots_ne`
 - Dependency: [D5/S0/Certificates/Quandles/BraidColoringTransport](../../S0/Certificates/Quandles/BraidColoringTransport.md)
 - Dependency: [D5/S3/Quantum/Algebra/Knot/WeightedPathArtinRepresentation](../Quantum/Algebra/Knot/WeightedPathArtinRepresentation.md)

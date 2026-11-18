@@ -1,0 +1,62 @@
+The scalar geometric sum similarly gives
+
+$$
+|\langle z^{jn}\rangle|\le\frac{2}{N|1-z^j|}.
+\tag{2.11}
+$$
+
+All these are finite sums and hold uniformly in the starting index $m$.
+
+For the full error range, put $t_n=\operatorname{Re}z^n$, so $p_n=(1-t_n)/2$. The Laurent expansion
+
+$$
+t_n^r=2^{-r}\sum_{j=0}^r\binom rj z^{(r-2j)n}
+\tag{2.12}
+$$
+
+has nonnegative coefficients with sum one. Odd powers have no constant term; the constant coefficient of power $2k$ is $c_k$. In particular $c_{k+1}=c_kr_k$. Applying (2.10)–(2.11) to (2.12), and writing $\Delta=\delta_{2k+2}(z)$, gives
+
+$$
+\begin{aligned}
+|\langle q_nt_n^{2k+1}\rangle|
+ &\le\frac{16S}{N\delta_{LS}(z)^2},\\
+|\langle t_n^{2k+1}\rangle|&\le\frac2{N\Delta},\\
+|\langle t_n^{2k+2}\rangle-c_{k+1}|&\le\frac2{N\Delta},\\
+\langle t_n^{2k}\rangle&\le c_k+\frac2{N\Delta}.
+\end{aligned}
+\tag{2.13}
+$$
+
+For the first bound every occurring $|j|\le L$ and every $r\le S$ give $|jr|\le LS$. For each other bound all nonzero frequencies have absolute value at most $2k+2$. Deleting a constant coefficient only reduces the sum of the remaining absolute coefficients; the last estimate also holds when $k=0$ and its remainder is exactly zero.
+
+Suppose $|q_n-p_n|\le\varepsilon$ at every index in this window. Since $|t_n|^{2k+1}\le t_n^{2k}$, we have
+
+$$
+|\langle(q_n-p_n)t_n^{2k+1}\rangle|
+ \le\varepsilon\langle t_n^{2k}\rangle.
+$$
+
+On the other hand,
+
+$$
+\langle(q_n-p_n)t_n^{2k+1}\rangle
+ =\langle q_nt_n^{2k+1}\rangle
+  -\tfrac12\langle t_n^{2k+1}\rangle
+  +\tfrac12\langle t_n^{2k+2}\rangle.
+$$
+
+Use the triangle inequality and (2.13) to isolate its positive constant coefficient. The result is
+
+$$
+\frac{c_{k+1}}2
+ \le\varepsilon c_k
+ +\frac{16S}{N\delta_{LS}(z)^2}
+ +\frac{2(1+\varepsilon)}{N\Delta},
+\qquad N a_k\le D_{\rm ph}(S,\varepsilon,z).
+\tag{2.14}
+$$
+
+Taking $N=N_{\rm ph}$ contradicts this last inequality. This establishes (2.1) uniformly over all initial rows, stochastic entries and report probabilities. It also explains the higher odd power: the first power alone has $r_0/2=1/4$, whereas $r_k/2$ tends to $1/2$. No infinite-time limit is substituted for (2.14).
+
+Finally (2.6) gives $D_{\rm ph}<D_{\rm nat}$, so $N=N_{\rm nat}>D_{\rm ph}/a_k$ also contradicts (2.14). This proves the entirely numerical native cutoff. The source correspondence (2.3)–(2.4) gives its original call count. For (2.2), take the measurable joint event whose terminal coordinate is $w_*$; its two masses are $p_n,q_n$. The variational definition of total variation yields the inequality. This last step retains the entire specified joint law and does not assert that agreement on its terminal projection implies joint or path agreement. A common failing index is impossible in this permissive class: for each fixed index $n$, the one-state report probability $b=p_n$ matches that index exactly. $\square$
+

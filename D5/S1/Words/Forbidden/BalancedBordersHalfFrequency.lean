@@ -91,7 +91,7 @@ private theorem omega_singleton (b : Bool) (m : ℕ) :
     rw [List.singleton_infix_iff]
     cases b <;> simp
 
-private theorem rho_singleton {b : Bool} {m : ℕ} (hm : 0 < m) :
+theorem rho_singleton {b : Bool} {m : ℕ} (hm : 0 < m) :
     rho [b] m = if b then 0 else 1 := by
   unfold rho
   rw [omega_singleton]

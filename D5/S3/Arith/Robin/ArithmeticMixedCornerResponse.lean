@@ -46,7 +46,7 @@ private theorem density_pos {t : ℝ} (ht : 1 < t) : 0 < activationDensity t := 
     field_simp [ht0, hl0]
   exact he.symm ▸ h
 
-private theorem density_antitone {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
+theorem density_antitone {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
     activationDensity t ≤ activationDensity s := by
   have ht := hs.trans_le hst
   have h := D5.S3.Arith.Robin.MellinWeightedVariation.scaleWeight_antitone

@@ -31,7 +31,7 @@ open OriginalGaussianMatrix
 open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 open OriginalGaussianResolvent
 
-private def unit1Entry (z : ℂ) (i j : ℕ) : ℂ :=
+def unit1Entry (z : ℂ) (i j : ℕ) : ℂ :=
   matrixEntry z (i + 1) (j + 1)
 
 def unit1Geo (ρ : ℝ) (a : ℕ × ℕ) : ℝ :=
@@ -49,7 +49,7 @@ lemma unit1Geo_summable {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
     (summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one hρ hρ1)
   exact h.mul_of_nonneg h (fun _ => pow_nonneg hρ _) (fun _ => pow_nonneg hρ _)
 
-private lemma unit1Entry_bound {ρ : ℝ} (hρ : 0 ≤ ρ) {z : ℂ}
+lemma unit1Entry_bound {ρ : ℝ} (hρ : 0 ≤ ρ) {z : ℂ}
     (hzρ : ‖z‖ ≤ ρ) (i j : ℕ) :
     ‖unit1Entry z i j‖ ≤ unit1Geo ρ (i, j) := by
   calc
@@ -76,7 +76,7 @@ lemma unit1Power_coordinate_bound (T : H →L[ℂ] H) (p i j : ℕ) :
     _ ≤ ‖T ^ p‖ * ‖basis i‖ := (T ^ p).le_opNorm _
     _ ≤ ‖T‖ ^ p := by rw [unit1Basis_norm, mul_one]; exact norm_pow_le _ _
 
-private def unit1Contract (z : ℂ) (p : ℕ) (a : ℕ × ℕ) : ℂ :=
+def unit1Contract (z : ℂ) (p : ℕ) (a : ℕ × ℕ) : ℂ :=
   unit1Entry z a.1 a.2 * (operator z ^ p) (basis a.1) a.2
 
 private lemma unit1Contract_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
@@ -322,13 +322,13 @@ private lemma unit1CycleLog_norm_summable {z : ℂ} (hz : ‖z‖ < 1) :
       (unit1AbsClosed_summable hz (2 * k + 1)).hasSum)
     (fun i => unit1Walk_norm_le_abs hz _ i i)
 
-private def unit1EntryN (N : ℕ) (z : ℂ) (i j : ℕ) : ℂ :=
+def unit1EntryN (N : ℕ) (z : ℂ) (i j : ℕ) : ℂ :=
   if i < N ∧ j < N then unit1Entry z i j else 0
 
-private def unit1ContractN (N : ℕ) (z : ℂ) (p : ℕ) (a : ℕ × ℕ) : ℂ :=
+def unit1ContractN (N : ℕ) (z : ℂ) (p : ℕ) (a : ℕ × ℕ) : ℂ :=
   unit1EntryN N z a.1 a.2 * (sectionOp N z ^ p) (basis a.1) a.2
 
-private lemma unit1ContractN_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
+lemma unit1ContractN_bound {ρ : ℝ} (hρ : 0 ≤ ρ) (hρ1 : ρ < 1)
     {z : ℂ} (hzρ : ‖z‖ ≤ ρ) (N p : ℕ) (a : ℕ × ℕ) :
     ‖unit1ContractN N z p a‖ ≤ unit1Geo ρ a * (ρ ^ 2) ^ p := by
   have hz : ‖z‖ < 1 := hzρ.trans_lt hρ1
@@ -365,7 +365,7 @@ lemma unit1Section_power_coordinate (N : ℕ) (z : ℂ)
     rw [unit1Section_apply_fin, Matrix.mul_apply]
     exact Finset.sum_congr rfl (fun m _ => congrArg (fun t => finiteSection N z j m * t) (ih m))
 
-private lemma unit1ContractN_tsum (N : ℕ) (z : ℂ) (p : ℕ) :
+lemma unit1ContractN_tsum (N : ℕ) (z : ℂ) (p : ℕ) :
     (∑' a : ℕ × ℕ, unit1ContractN N z p a) =
       Matrix.trace (finiteSection N z ^ (p + 1)) := by
   classical
@@ -594,7 +594,7 @@ private lemma unit1FiniteDet_diff (N : ℕ) : Differentiable ℂ (unit1DetN N) :
 
 /-- Holomorphy is local in z; the actual trace bound pays the M-test on
 each smaller disk for this fixed finite N. This is NOT spatial uniformity. -/
-private lemma finiteLog_diff (N : ℕ) :
+lemma finiteLog_diff (N : ℕ) :
     DifferentiableOn ℂ (finiteLog N) (ball (0 : ℂ) 1) := by
   intro z hz
   have hz1 : ‖z‖ < 1 := mem_ball_zero_iff.mp hz

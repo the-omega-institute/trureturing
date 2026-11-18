@@ -1,0 +1,30 @@
+**定义 151.1（完整原域与局部二元候选）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$。整个原归一基、全部原纯点和全部原效应始终是
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^\ast},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{XII151.1}
+$$
+
+$K$ 紧并张成 $V$；完整 $\mathcal E$ 及每个非空 $\mathcal F_p$ 紧，故最低值在每个原混输入 $x\in K$ 达到。记 $S_p=P\cap D_p$，以及 $p\perp q\Longleftrightarrow T_p(q)=0$。补效应使零关系对称且反自反。完整 EB3 指每个整个 $D_p$ 都是非退化仿射实心三球；PR 指全部原纯对满足 $T_p(q)=T_q(p)$，不表示先后测量对易。
+
+局部共同零条件定义为
+
+$$
+\begin{aligned}
+\mathsf N_2:\quad
+&\forall p\in P\ \exists\varepsilon_p\in(0,1)\ \forall q\in P:\\
+&T_p(q)>1-\varepsilon_p
+\quad\Longrightarrow\quad
+\exists r\in P:\ T_p(r)=T_q(r)=0.
+\end{aligned}
+\tag{XII151.2}
+$$
+
+阈值逐点选定，同一个实际原纯点 $r$ 同时承担两条原零边；不要求连续选择或统一阈值。完整候选是同一式(XII151.1)原域中的 EB3、PR 与 $\mathsf N_2$，没有输入全域球标签单射、唯一整球零确认、least、谱性、自对偶或矩阵坐标。
+

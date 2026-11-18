@@ -68,7 +68,7 @@ internal sealed class GeometricTraceConvexityDocument : IScribeDocumentDefinitio
                     + "for 1 <= alpha <= 2 and 1/2 <= p <= 1. The mean is the classical "
                     + "base-first quasi-geometric mean G of Hiai, with A to exponent p "
                     + "as its base. It is distinct from SG and tilde-SG.")),
-                    Paragraph(Text("Fix a supported pair. Q=I-spectralSupport(A) is the "
+                    Paragraph(Text("Fix a supported pair. The SupportPowerLimits spectral identities give Q=I-spectralSupport(A) as the "
                     + "kernel projection, and both A Q and B Q vanish. Finite-spectrum "
                     + "CFC gives the exact decomposition of (A+epsilon I) to exponent "
                     + "-p/2 into a support-restricted factor and epsilon to exponent "

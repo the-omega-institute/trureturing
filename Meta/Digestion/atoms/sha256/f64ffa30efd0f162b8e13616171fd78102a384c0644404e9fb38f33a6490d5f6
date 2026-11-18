@@ -1,0 +1,102 @@
+**Theorem 5.2 (polynomial separation for the original phase).** With the constants (5.1), one has $0<\kappa<K_0$, and for every integer $r\ge1$,
+
+$$
+|1-z^r|>\frac2\pi r^{-\kappa}
+            >\frac1{2r^{K_0}}.
+\tag{5.2}
+$$
+
+Consequently, for every integer $M\ge1$,
+
+$$
+\delta_M(z)>\frac2\pi M^{-\kappa}
+                 >\frac1{2M^{K_0}},\qquad
+\delta_M(z)^2>\max\left\{70^{-M},\frac1{4M^{2K_0}}\right\}.
+\tag{5.3}
+$$
+
+The source-specific application (5.2)–(5.3) is `repo-derived`. Its logarithmic-form supplier is the `literature-attested` main theorem of Baker–Wüstholz [BW93, printed pp.19–20 and §2][BW93] ([primary scan](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0442/LOG_0005.pdf)); that general theorem is used inside the proof.
+
+**Proof.** Reuse the degree-four minimal polynomial (2.5), its conjugates $z,z^{-1},R,R^{-1}$, the inequality $R<70$, and the non-root-of-unity conclusion in Theorem 2.1. Thus
+
+$$
+K=\mathbb Q(z,-1)=\mathbb Q(z),\qquad [K:\mathbb Q]=4,
+\qquad z^r\ne1\quad(r\ge1).
+\tag{5.4}
+$$
+
+For clarity about normalization, [BW93, pp.21–22][BW93] uses the relative projective height
+$h_K(a_0:\cdots:a_t)=\sum_v\log\max_j|a_j|_v$, with local-degree powers in the absolute values. Its absolute logarithmic height is $h_K/4$ here. Since $z$ is an algebraic integer, finite places contribute zero to $h_K(1:z)$. Of the four archimedean conjugates, only $R$ has positive logarithm of its modulus; the conjugate pair on the unit circle has modulus one. Therefore
+
+$$
+h_K(z)=\log R,\qquad h_K(-1)=0,\qquad
+h'_K(z)=\frac14\max\{h_K(z),|\ell_z|,1\}=\frac\chi4,
+\qquad h'_K(-1)=\frac\pi4.
+\tag{5.5}
+$$
+
+These are the modified heights used in the cited main theorem. In particular $\log R/4$ is the absolute height of $z$, and must not be substituted for $h_K(z)$ in (5.5).
+
+For an integer $r\ge2$, put
+
+$$
+s_r=-\frac{r\phi}{2\pi}\in(0,r/2),\qquad
+j_r=\left\lfloor s_r+\frac12\right\rfloor,\qquad
+\Lambda_r=r\ell_z+2j_r\ell_{-1}=i u_r.
+\tag{5.6}
+$$
+
+Then $|j_r-s_r|\le1/2$, so $|u_r|\le\pi$. Also $j_r\ge0$ and $2j_r\le r$: if $r=2a$, then $s_r<a$ gives $j_r\le a$; if $r=2a+1$, then $s_r<a+1/2$ again gives $j_r\le a$. Exponentiation gives $e^{\Lambda_r}=z^r$. Hence $\Lambda_r\ne0$ by (5.4).
+
+The integer form $\mathcal L_r(X,Y)=rX+2j_rY$ is nonzero. With $g_r=\gcd(r,2j_r)>0$, its primitive integer coefficient pair has maximum absolute value $r/g_r$. The relative projective height is consequently
+
+$$
+h_K(\mathcal L_r)=4\log(r/g_r),\qquad
+h'_K(\mathcal L_r)=\frac14\max\{h_K(\mathcal L_r),1\}
+ =\max\{\log(r/g_r),1/4\}\le\log r.
+\tag{5.7}
+$$
+
+Indeed primitive integer coordinates have maximum local norm one at every finite place, while the sum of the archimedean local degrees is four. The last inequality uses $r\ge2$ and $\log2>1/4$, and includes $j_r=0$.
+
+The cited Baker–Wüstholz main theorem permits algebraic numbers different from $0,1$, fixed complex logarithms and an integer linear form whose value is nonzero. For $n$ logarithms in degree $D$ its constant is
+$18(n+1)!n^{n+1}(32D)^{n+2}\log(2nD)$, with modified algebraic heights $D^{-1}\max\{h_K(\alpha),|\log\alpha|,1\}$ and form height $D^{-1}\max\{h_K(\mathcal L),1\}$. Apply it with $n=2$, $D=4$, $(\alpha_1,\alpha_2)=(z,-1)$, the fixed values $(\ell_z,\ell_{-1})$, and $\mathcal L_r$. All its exclusions and the nonzero-value hypothesis have been checked in (5.4)–(5.7). It gives
+
+$$
+\log|\Lambda_r|>
+ -C_0\frac\chi4\frac\pi4\,h'_K(\mathcal L_r)
+ \ge-\kappa\log r,\qquad
+|\Lambda_r|>r^{-\kappa}.
+\tag{5.8}
+$$
+
+This is the main fixed-logarithm theorem, rather than its separate crude principal-logarithm consequence with coefficient bounds at least $e$. No real-log specialization or additional independence hypothesis is inserted.
+
+On $|u_r|\le\pi$, concavity of sine on $[0,\pi/2]$ gives
+
+$$
+|1-z^r|=2\sin(|u_r|/2)
+ \ge\frac2\pi |u_r|=\frac2\pi|\Lambda_r|
+ >\frac2\pi r^{-\kappa}.
+\tag{5.9}
+$$
+
+The omitted exponent $r=1$ is elementary: by (2.5),
+
+$$
+|1-z|^2=2-(34-16\sqrt5)=16(\sqrt5-2)>1,
+\tag{5.10}
+$$
+
+where $\sqrt5>33/16$ follows by squaring. Since $2/\pi<1$, this proves (5.2)'s first inequality also at $r=1$, with no logarithmic coefficient estimate at $\log1=0$.
+
+For the integer enlargement, $\log R<\log70<5$, $|\phi|<\pi<4$ and $\log16<3$ imply $\chi<5$ and
+
+$$
+0<\kappa<3240\cdot128^4=869730877440
+                <1099511627776=K_0.
+\tag{5.11}
+$$
+
+The logarithmic inequalities can, for example, be obtained from the positive exponential series $e>8/3$, giving $e^3>16$ and $e^5>70$. Since $2/\pi>1/2$, (5.11) proves the second strict inequality in (5.2), including $r=1$. Taking the minimum over $1\le r\le M$ proves the first two bounds in (5.3); combining their squares with the original strict norm bound (2.6) proves its last bound. $\square$
+

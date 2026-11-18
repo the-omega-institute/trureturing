@@ -24,8 +24,21 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianMatrix.finite
 
 For every N and every complex z with norm(z)<1, the actual native finite-section matrix has Euclidean operator norm at most norm(z)^2.
 
+**Theorem 1.2 (pairScalar_comm).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianMatrix.pairScalar_comm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianMatrix.pairScalar_comm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural frequencies, the original pairScalar coefficient is symmetric under exchanging its arguments.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianMatrix.finiteSection_opNorm_le`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianMatrix.pairScalar_comm`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection](../LatticeHalfFockFiniteCorrection.md)
 - Dependency: [D5/S3/Weil/ProjectiveRayleigh/ScaledComplexQuadraticRowBound](../../Weil/ProjectiveRayleigh/ScaledComplexQuadraticRowBound.md)

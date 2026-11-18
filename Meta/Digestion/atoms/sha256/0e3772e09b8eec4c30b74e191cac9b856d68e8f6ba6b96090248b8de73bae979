@@ -1,0 +1,50 @@
+**定理 16.7（实际共同周期的有限下界与匹配主阶）。** 对所有整数 $H\ge2,M\ge1$，原共同周期满足
+
+$$
+\log q(H,H;M)
+\ge H\sum_{p\in\mathcal G_H}\log p
+ -64h_0\sum_{p\in\mathcal G_H}p
+ -8C_E\,\#\mathcal G_H.
+\tag{16.25}
+$$
+
+令 $\mathcal P(H)=\prod_{p\le H}p$。对所有整数 $H\ge7$ 及所有 $M\ge1$，还有真正的整除上包络
+
+$$
+q(H,H;M)\mid
+ \operatorname{lcm}\bigl(M,5\mathcal P(H)^{H-1}\bigr).
+\tag{16.26}
+$$
+
+因而每个固定 $M$ 都有无条件的
+
+$$
+\log q(H,H;M)
+=H\vartheta(H)+O\left(\frac{H^2}{\log H}\right)
+\sim H^2\qquad(H\to\infty).
+\tag{16.27}
+$$
+
+误差常数可依赖固定 $M$ 及本节固定点；(16.26) 的阈值 $7$ 与 $M$ 无关。
+
+**证明（下界来自实际自身分量）。** 由 (16.6)，对每个 $p\in\mathcal G_H$，
+
+$$
+\begin{aligned}
+v_p(q(H,H;M))&\ge b_p(H)
+=v_p(n_p)+\max(0,H-t_p)\\
+&\ge H-(t_p-v_p(n_p)).
+\end{aligned}
+\tag{16.28}
+$$
+
+把这些不同素数的实际自身指数乘以 $\log p$ 后相加，再用 (16.19)，即得 (16.25)。右侧某一项若为负，只是一个仍有效的下界，不会删掉其原量词。这一步没有使用 $C_p$ 或任何较大消去数的最小公倍数作下界。
+
+**证明（跨地方素因子的整除上界）。** 对 $p\in\mathcal G_H$，$t_p\ge1$，且由下降支持和 (16.12)，$v_p(n_p)=0$，唯一例外为 $v_5(n_5)=1$。因此来自 (16.6) 自身的 $p$ 指数不超过 $H-1$，在 $p=5$ 处不超过 $H$。来自 $n_p$ 的其它素因子均不超过 $H$，而 $n_p\le p^2\le H^2$ 保证每个这样的 $\ell$ 指数至多 $2\log H/\log\ell\le2\log H/\log2\le H-1$，最后一个不等式对 $H\ge7$ 成立。
+
+§15 给出 $\delta_2(H)=2^{\kappa(H)}$，$\kappa(H)=\max(0,\lceil(H-15)/8\rceil)\le H-1$。命题 16.5 给出 $\delta_7(H)=2\cdot7^{\lceil(H-1)/2\rceil}$，其两个指数同样不超过 $H-1$。故每个实际 $\delta_p(H)$ 都整除 $5\mathcal P(H)^{H-1}$；结合 (16.5) 得 (16.26)。共同整数在这里由最小公倍数承担，大小不等式没有被改写为未经证明的整除式。
+
+**证明（闭合主阶）。** 经典素数定理及其分部求和后果给出 $\vartheta(H)\sim H$、$\pi(H)=O(H/\log H)$、$\sum_{p\le H}p=O(H^2/\log H)$。其原始来源是 Hadamard，*Sur la distribution des zéros de la fonction ζ(s) et ses conséquences arithmétiques*，Bull. Soc. Math. France 24，199–220，[DOI:10.24033/bsmf.545](https://doi.org/10.24033/bsmf.545)；以及 de la Vallée Poussin，*Recherches analytiques sur la théorie des nombres premiers*，Ann. Soc. Sci. Bruxelles 20，183–256。这里只用无条件素数定理，不用 RH 或其误差估计。
+
+从 (16.25) 减去 $H\vartheta(H)$，遗漏的 $2,7$ 只产生 $O(H)$；余下损失是 $O(H^2/\log H)$。从 (16.26) 则有 $\log q\le\log M+\log5+(H-1)\vartheta(H)$。两边夹住实际同一个 $q$，得到 (16.27)。$\square$
+

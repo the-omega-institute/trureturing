@@ -1,0 +1,22 @@
+### 141.6 完整中文图景
+
+把整个原状态集合看成一块完整凸体，每个纯标签背后都有一颗完整实心排除三球。原来的根检测量 $g_o$ 只在根纯点 $o$ 为零。由于整个状态体紧，离根一段距离的全部原态，在这张检测量上都有共同的正读数余量。因此稍微改变检测量，新零面只能落到根附近。
+
+这里必须排除一个真实危险：新零面可能是一整颗越来越小的球，不能仅凭它靠近纯点就说它是单点。本章用的是原关联的具体捕获。假如一颗完整球进入很小的根邻域，任选它的纯球缘点 $q$，原零关系的对称性就把这颗球的标签 $a$ 放入 $S_q$；支持接口又把整个 $S_q$ 放入紧标签集 $\Lambda$。在 $\Lambda$ 上，整颗球连续变化，而且每颗球都非退化，所以它们有统一的正直径。它们不可能缩进比这个直径更小的根邻域。于是新零面只能是一个原纯点。
+
+这真的给出了全部原检测量组成的对偶基边界上的一整块开放区域。把每张检测量送到它唯一的零点，是连续映射：检测量和零点一起取极限，零读数保留，而极限检测量仍只有一个零点。同一个零点允许的检测量，都在四维原法向张成空间中；按同一个原内态归一后，只剩三维仿射平面。另一方面，这些零点都落在紧四维流形 $Q$ 中。在开放边界里取一个紧坐标球，连续映射就成为到其紧像的闭映射。Hurewicz 定理因此把这块原对偶边界的维数压到至多七维，使整个原实空间至多九维。
+
+反过来，$Q$ 中每个点的原四维法向，都能送到同一个完整状态体的距离函数次微分中。成熟的凸函数奇异集定理把这些点覆盖在可数张图上，每张图只需环境维数减四个坐标。紧空间的 Baire 性保证，$Q$ 的某个真正四维开片整块落在其中一张图上。若这张图的底面不到四维，投影就会把一个四维开片连续单射到更低维空间，与区域不变性矛盾。所以原基至少八维，整个原实空间至少九维。上下两边相合，得到整个 $V$ 恰为九维。
+
+这个结论精确依赖所列支持接口，却没有把 $Q$ 以外的纯点自动消掉。它也没有确定所有混态如何凸混合，或把整个锥自动认成三能级量子锥。只有再取得一个根对全部目标的完整覆盖，或取得同一混态所有有限纯配方的球心相容，既有分类才给同一锥及单位上的全部密度态、完整非单点确认菜单、least、每个混态上的 Born minimum、全部 POVM、谱和 Jordan 字典。实际来源、读回、全部质量、所有有限复合和纠缠、三份相位资源、全旁观 CP、逐输入预算、事件仪器、记录、全部未来与切口，以及物理钟、Hamiltonian、能量与数值 $\hbar$，仍各按原合同承担。
+
+[Q141VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.1—103.2：完整原菜单、所有混输入 minimum、共同暴露及原真面穷尽。"
+[Q141IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1—116.2：原面与孤立重复块；119.10：法向维数与沿边冗余传播；120.2、120.7—120.8：原最大值、唯一零点及限制同构；118.8、120.4—120.5、116.17—116.18：保留的既有分类依赖。"
+[Q141TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "VIII130.2：完整 EB3+Conn 的 Inj、P=P0、全部原四维法向；131.7—131.8：条件静态字典与全部物理合同。"
+[Q141XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "135.1—135.6、136.4：完整 MC 候选与同原分类；137.1—137.3：完整原域、单根 G、原法向、近根 Q 集合相等；139.1—139.2第1、2项、139.8与式(XI139.24)：原拓扑四维 Q、紧 Lambda、整个球的 Hausdorff 连续及近根完整捕获；139.11：保留的物理合同。"
+[Q141X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X133.1、133.6—133.7：先固定根的完整 R1、同锥同单位分类、全部静态字典与反向；133.10：完整物理合同。"
+[Q141SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "SECTION127.10：同一原来源、全部质量、全有限联合、事件仪器、所有未来与切口及物理时间，连同其全部传递引用。"
+[Q141H]: https://dwc.knaw.nl/DL/publications/PU00015429.pdf "W. Hurewicz, Ueber stetige Bilder von Punktmengen (Zweite Mitteilung), Proceedings of the Royal Academy of Amsterdam 30, 159—165：Theorem III，印刷页163—164；紧源与闭性的脚注12，及页164的维数不等式。"
+[Q141A]: https://people.dm.unipi.it/alberti/ricerca/1989-91/convex.pdf "G. Alberti, On the structure of singular sets of convex functions, Calculus of Variations and Partial Differential Equations 2, 17—27：Theorem 1、Definitions 1.1、1.2、1.5；Lemma 2.7、Theorem 2.10及Theorem 1的证明。作者原文PDF页1、3—4、7—9；Lemma 2.7给定义于整个底面的局部Lipschitz图，证明中的可数步骤覆盖全部高阶奇异集。"
+[Q141AT]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology：印刷页172 Theorem 2B.3，Brouwer区域不变性；连续单射的源与目标同为欧氏四维时适用。"
+

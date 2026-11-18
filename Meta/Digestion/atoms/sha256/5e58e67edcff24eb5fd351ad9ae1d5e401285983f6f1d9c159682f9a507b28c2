@@ -1,0 +1,34 @@
+**引理 133.3（固定覆盖根的全部邻边先取得三角）。** 在裸 EB3 域，固定满足 $\mathsf D_2(o)$ 的原纯根 $o$。置
+
+$$ A=D_o,\qquad S=S_o,\qquad B=\bigcup_{s\in S}D_s. \tag{X133.6} $$
+
+则 $I(A)=\{o\}$，$B$ 紧，$P\subseteq B$，并且对每个 $s\in S$，存在 $b\in S$ 使 $o,s,b$ 成为真实零三角。因此 $I(D_s)=\{s\}$ 对全部 $s\in S$ 成立。
+
+证明。首先直接使用 [X130.2][Q133X130]：在完整 EB$_{\ge2}$ 域，$\mathsf D_2(o)$ 使 $o$ 属于一个真实三角。EB3 满足该原前件，故引理133.2给 $I(A)=\{o\}$。这里不重新证明 X130.2 的连通边界分离论证。
+
+集合 $B$ 是下面紧集在 $K$ 上的投影：
+
+$$ \mathcal H_o= \{(s,x,f)\in S\times K\times\mathcal E: f(s)=1,\ f(x)=0\}. \tag{X133.7} $$
+
+$S$ 是一张固定完整球的紧球面，$K,\mathcal E$ 紧；评价连续使约束闭。由最低值达到，投影确实等于整个 $B$，包括所有球内混态。因此 $B$ 在 $K$ 及 $V$ 中紧闭。这是 X130 式(X130.8)及 [SAME_READBACK126.1][Q133SR] 的同一紧投影构造，不使用后者关于重复球的额外纤维结论，更不要求整个 $P$ 紧。
+
+根条件先只给
+
+$$ P\setminus A\subseteq B. \tag{X133.8} $$
+
+确实，$x\in P\setminus A$ 不与 $o$ 相邻，于是同一个原共同邻点 $s\in S$ 使 $x\in D_s$。不能仅凭这一式就声称 $S\subseteq B$。
+
+现固定任意 $s\in S$。因 $o\perp s$，有 $o\in S_s$。完整 $S_s\simeq S^2$ 不只含一个点，可取
+
+$$ t\in S_s\setminus\{o\}. \tag{X133.9} $$
+
+根的单标签性给 $D_t\ne A$。零对称使 $s\in D_t\cap A$，故 (X133.5) 给
+
+$$ D_t\cap A=\{s\}. \tag{X133.10} $$
+
+特别地，$s$ 是 $D_t$ 的纯球面点。该二维球面没有孤立点，可在这张固定球面上选 $x_n\in S_t\setminus\{s\}$，使 $x_n\to s$。由 (X133.10)，每个 $x_n\in P\setminus A$，于是 (X133.8) 给 $x_n\in B$。$B$ 闭，遂有 $s\in B$。按 $B$ 的原定义，存在 $b\in S$ 使 $s\in D_b$，即
+
+$$ o\perp s,\qquad o\perp b,\qquad s\perp b. \tag{X133.11} $$
+
+反自反性保证三点不同。每个 $s\in S$ 已是实际三角顶点，引理133.2便给 $I(D_s)=\{s\}$。最后 $P\cap A=S$，结合刚证的 $S\subseteq B$ 与 (X133.8)，得到 $P\subseteq B$。极限中留住的是紧投影集合中的一张原效应及一个固定球面标签；没有要求纯点列的任意极限仍纯，也没有让移动球族先连续。证毕。
+

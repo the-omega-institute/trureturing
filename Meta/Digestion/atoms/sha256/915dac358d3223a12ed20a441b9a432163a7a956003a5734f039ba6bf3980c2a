@@ -1,0 +1,55 @@
+### 137.5 从根芽到整个法向边界
+
+固定 $s\in S$。每个 $h\in N$ 在完整球 $D_s$ 上非负且在球面点 $o$ 为零。球在该点只有一条非负支持仿射函数射线；$g|_{D_s}$ 非零且属于该射线。所以
+
+$$
+h|_{D_s}=b_s(h)g|_{D_s}\quad(h\in N),\qquad b_s(h)\ge0.
+\tag{XI137.14}
+$$
+
+因 $N$ 张成 $L$，这给唯一线性 $b_s\in L^*$，且同式延至所有 $h\in L$。例如固定 $y\in D_s\setminus\{o\}$，系数就是 $h(y)/g(y)$，故延拓确为线性且与 $y$ 无关。于是
+
+$$
+b_s(g)=1,\qquad b_s\in\Omega,\qquad
+J(x)=g(x)b_s\quad(x\in D_s).
+\tag{XI137.15}
+$$
+
+原效应 $e_s\in N$ 非零，且 $b_s(e_s)=0$，故 $b_s\in\partial_H\Omega$。若 $t\ne s$，在 $D_t\setminus\{o\}$ 取一点 $y$；(XI137.12)和 $e_s$ 的准确零面给 $e_s(y)>0$，因此
+
+$$
+b_t(e_s)>0=b_s(e_s).
+\tag{XI137.16}
+$$
+
+所以 $s\mapsto b_s$ 单射；这一步尚未假定它连续。
+
+取根芽供应的 $U$，令 $U_0=U\setminus A$。因 $A$ 紧且 $o\notin A$，这是含 $o$ 的环境开集，仍有 $U_0\cap P\subseteq Q$。对每个指定 $s\in S$，在固定球面 $S_s$ 上取
+
+$$
+q\in S_s\cap U_0\setminus\{o\},\qquad a\in S_q\setminus\{s\}.
+\tag{XI137.17}
+$$
+
+前者存在，因为 $S_s$ 在 $o$ 没有孤立点；后者存在，因为 $S_q$ 是完整二维球面。$\pi(q)=s$；若 $a\in S$，则 $a$ 也是 $o,q$ 的共同邻点，违反唯一性。因此 $a\notin S$，零对称给 $o\notin D_a$。在固定球面 $S_a$ 取含 $q$ 的开片 $W\subseteq S_a\cap U_0$。
+
+$W\subseteq Q\setminus\{o\}$，故 $\pi|_W$ 连续。若两个点同映到 $t\in S$，它们同属 $D_a\cap D_t$；$a\notin S$ 保证 $a\ne t$，Inj 及点交规则使两点相等。因此 $\pi|_W$ 是二维流形开片到 $S\cong S^2$ 的连续单射。区域不变性给 $\pi(W)$ 在 $S$ 中开，且限制为同胚。对这个含 $s$ 的开邻域，
+
+$$
+b_t=j\bigl((\pi|_W)^{-1}(t)\bigr)\qquad(t\in\pi(W)).
+\tag{XI137.18}
+$$
+
+右侧连续；分母 $g$ 在整个紧 $D_a$ 上严格正。每个 $s$ 都有上述邻域，故 $b:s\mapsto b_s$ 连续。$S$ 和 $\partial_H\Omega$ 是紧二维球面；连续单射的像由区域不变性开，由紧性闭，目标连通，所以
+
+$$
+b:S\overset{\sim}{\longrightarrow}\partial_H\Omega.
+\tag{XI137.19}
+$$
+
+这里使用 [Hatcher，Theorem 2B.3、Corollary 2B.4][Q137H]：$\mathbb R^n$ 的开集到 $\mathbb R^n$ 的连续单射有开像；紧 $n$ 流形嵌入连通 $n$ 流形必满射。流形均为无边界 Hausdorff 流形。上文每次用坐标图降至 $n=2$；没有对整个 $P$ 应用该定理。
+
+还须证明 $\Omega$ 严格凸。任一真支持面可写为 $\{\lambda\in\Omega:\lambda(h)=0\}$，其中 $0\ne h\in N$。确实，$H$ 上的非负支持仿射函数可线性延至 $L^*$，再沿 $N^\vee$ 的正归一化齐次延拓；双极性给其代表属于 $N$。该面含某个 $b_s$，则(XI137.15)使 $h$ 零于整个 $D_s$。由(XI137.6)，$h$ 为 $e_s$ 的正倍数；(XI137.16)使此面只有 $b_s$。所有支持面均为单点，故边界没有非退化线段，$\Omega$ 严格凸。
+
+现在已可证明(XI137.8)的全态集合等式。正向由(XI137.15)。反向，若 $x\in K\setminus\{o\}$ 且 $j(x)\in\partial_H\Omega$，则由(XI137.19)写成 $b_s$；于是 $e_s(x)=g(x)b_s(e_s)=0$，准确零面给 $x\in D_s$。没有把混端点改成纯端点。
+

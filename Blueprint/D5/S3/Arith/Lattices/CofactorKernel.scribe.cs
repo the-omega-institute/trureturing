@@ -181,6 +181,26 @@ internal sealed class CofactorKernelDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Seq(OpenBrace, Seq(F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N")))), CloseBrace), Comma, Sp, Seq(Forall, Sp, Parenthesized(Seq(F.Id("U"), Sp, Colon, Sp, Call("Matrix"), Sp, Parenthesized(Seq(Call("Fin"), Sp, F.Id("d"))), Sp, Parenthesized(Seq(Call("Fin"), Sp, F.Id("d"))), Sp, Seq(Mathbb, Grp(F.Id("Z"))))), Comma, Sp, Seq(Forall, Sp, Parenthesized(Seq(F.Id("M"), Sp, Colon, Sp, Call("Matrix"), Sp, Parenthesized(Seq(Call("Fin"), Sp, F.Id("d"))), Sp, Parenthesized(Seq(Call("Fin"), Sp, Parenthesized(Seq(F.Id("d"), Sp, Plus, Sp, D(1))))), Sp, Seq(Mathbb, Grp(F.Id("Z"))))), Comma, Sp, Seq(Parenthesized(Seq(Call("IsUnit"), Sp, F.Id("U"), Sp, Dot, Sp, Call("det"))), Sp, To, Sp, Seq(Parenthesized(Seq(Call("Finset"), Sp, Dot, Sp, Call("univ"), Sp, Dot, Sp, Call("gcd"), Sp, Parenthesized(Seq(Call("cofactor"), Sp, F.Id("M"))), Sp, Eq, Sp, D(1))), Sp, To, Sp, Seq(Call("Finset"), Sp, Dot, Sp, Call("univ"), Sp, Dot, Sp, Call("gcd"), Sp, Parenthesized(Seq(Call("cofactor"), Sp, Parenthesized(Seq(F.Id("U"), Sp, Star, Sp, F.Id("M"))))), Sp, Eq, Sp, D(1))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("det-top-row"),
+                DeclarationHandle.Create("D5/S3/Arith/Lattices/CofactorKernel.det_topRow"),
+                H("Determinant expansion along the top row"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, Parenthesized(Seq(F.Id("R"), Sp, Colon, Sp, Call("Type"))), Sp,
+                    Parenthesized(Seq(Call("CommRing"), Sp, F.Id("R"))), Sp,
+                    Parenthesized(Seq(F.Id("d"), Sp, Colon, Sp, Mathbb, Grp(F.Id("N")))), Comma, Sp,
+                    Forall, Sp, Parenthesized(Seq(F.Id("M"), Sp, Colon, Sp, Call("Matrix"), Sp,
+                        Parenthesized(Seq(Call("Fin"), Sp, F.Id("d"))), Sp,
+                        Parenthesized(Seq(Call("Fin"), Sp, Parenthesized(Seq(F.Id("d"), Plus, D(1))))),
+                        Sp, F.Id("R"))), Sp,
+                    Parenthesized(Seq(F.Id("a"), Sp, Colon, Sp, Call("Fin"), Sp,
+                        Parenthesized(Seq(F.Id("d"), Plus, D(1))), Sp, To, Sp, F.Id("R"))), Comma, Sp,
+                    Call("det"), Parenthesized(Seq(Call("updateRow"),
+                        Parenthesized(Seq(Call("augment"), Parenthesized(F.Id("M")))), Sp, D(0), Sp, F.Id("a"))),
+                    Sp, Eq, Sp, new Formula.Subscript(Sum, F.Id("j")), Sp, F.Id("a"), Parenthesized(F.Id("j")), Sp,
+                    Cdot, Sp, Call("cofactor"), Parenthesized(Seq(F.Id("M"), Comma, F.Id("j")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The sum ranges over all columns. The top row is paired with the signed cofactors of the remaining rows."))),
                 DescribeRole.Theorem))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

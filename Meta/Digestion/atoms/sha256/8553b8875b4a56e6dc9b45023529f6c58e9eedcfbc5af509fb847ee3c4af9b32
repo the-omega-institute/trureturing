@@ -1,0 +1,48 @@
+**引理 145.4（有限见证的整球转移）。** 设接口145.3成立，$p_i,p\in P$、$p_i\to p$。若存在同一有限指标集 $1\le\ell\le m$，使
+
+$$
+h_i^\ell\in N_{p_i},\qquad h_i^\ell\longrightarrow h^\ell,
+\qquad \operatorname{span}\{h^1,\ldots,h^m\}=L_p,
+\tag{XI145.10}
+$$
+
+则 $D_{p_i}\to D_p$ 于 Hausdorff 距离，且 $e_{p_i}\to e_p$ 于原效应空间。这里正法向允许零元；去掉零极限项不影响张成条件。
+
+证明。取任意子列。在 $H_0=\ker u$ 中逐球作有界半轴选择，写
+
+$$
+D_{p_i}=c_i+B_i\overline{\mathbb B}^3,
+\qquad c_i\in K,\qquad B_i:\mathbb R^3\to H_0\text{ 单射},\qquad
+\|B_i\|\le\tfrac12\operatorname{diam}K.
+\tag{XI145.11}
+$$
+
+界来自 $c_i\pm B_it\in K$ 对所有单位 $t$ 成立，不假设这些选择连续。中心、矩阵和原效应都在有限维有界紧集内，故可共同再取子列使 $c_i\to c$、$B_i\to B$、$e_{p_i}\to e\in\mathcal E$。统一参数球上的一致收敛给实际椭球极限
+
+$$
+E=c+B\overline{\mathbb B}^3,\qquad D_{p_i}\to E,\qquad
+e(p)=1,\quad e|_E=0,\quad E\subseteq D_p.
+\tag{XI145.12}
+$$
+
+最后一个包含只用同一 $e\in\mathcal F_p$ 的原零见证，不先断言 $e=e_p$。$B$ 的秩暂时可以小于三。
+
+正锥和评价的闭性给 $h^\ell\in N_p$。任给固定 $a_\ell\ge0$，置 $h_i=\sum_\ell a_\ell h_i^\ell$、$h=\sum_\ell a_\ell h^\ell$。由(XI145.6)，
+
+$$
+\max_{D_{p_i}}h_i=\max_Kh_i
+\quad\Longrightarrow\quad
+\max_Eh=\max_Kh=\max_{D_p}h.
+\tag{XI145.13}
+$$
+
+此极限同时使用 $h_i\to h$ 在紧 $K$ 上一致，以及实际整球的 Hausdorff 收敛。同一有限见证和同一参数子列已使该式对所有固定非负系数成立，不逐个法向更换极限球或子列。
+
+锥 $\mathcal H=\operatorname{cone}\{h^\ell\}$ 在四维 $L_p$ 中有非空内部：从张成族中选四个线性无关元，其严格正组合已给四维开集。通过已付线性同构 $R_p$，再取仿射函数的三维线性部分，是满射线性映射，所以该内部的线性部分像含一个三维非空开集。可在其中取避开零的开球；其单位方向含 $S^2$ 的非空开片。
+
+把 $D_p$ 化为 $c_p+B_p\overline{\mathbb B}^3$。非零线性部分 $v$ 的唯一最大点是 $c_p+B_pv/\|v\|$。由 $E\subseteq D_p$ 和(XI145.13)，这个**同一**最大点必在 $E$ 中。因此 $E$ 含 $S_p$ 的一块非空球面开片。秩至多二的 $B$ 不可能包含这种片：一个真仿射平面若包含球面开片，其非零仿射方程在该片消失，经球面一次多项式唯一性便在整个球面消失，矛盾。故 $\operatorname{rank}B=3$。
+
+此时 $E,D_p$ 有同一仿射三平面。上述最大点也在 $\partial_{\rm rel}E$，因为相同非零线性部分在 $E$ 上支持。两椭球边界共享非空球面开片，[XI137.6的二次曲面唯一性][Q145XI]遂给 $E=D_p$。该初等工具只用二次方程在球面开片的消失，不消费137的根芽前件。于是 $e\in\mathcal A_p=\{e_p\}$。
+
+对任意起始子列，全部有界参数都能再取上述子列，且再极限只能是 $D_p,e_p$。若任一整列结论失败，就能选距所称极限有固定正下界的子列，与此矛盾。引理得证。没有假设任意原面族的集合值连续性。
+

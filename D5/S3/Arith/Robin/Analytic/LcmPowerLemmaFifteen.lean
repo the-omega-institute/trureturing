@@ -149,7 +149,7 @@ private lemma F_two {κ y : ℝ} (hκ : 0 < κ) (hy : 1 < y) :
   field_simp [hm.ne', hyκ.ne', hc.ne']
   <;> ring
 
-private lemma F_one {κ x : ℝ} (hκ : 0 < κ) (hx : 1 < x) :
+lemma F_one {κ x : ℝ} (hκ : 0 < κ) (hx : 1 < x) :
     lcmPowerF κ x 1 = Real.log (((x + 1) ^ κ - 1) / x ^ κ) / (κ * Real.log x) := by
   have hx0 : 0 < x := lt_trans zero_lt_one hx
   have hxm : 0 < x - 1 := sub_pos.mpr hx
@@ -238,7 +238,7 @@ private theorem F_of_core {κ y : ℝ} (hκ : 1 < κ) (hy : 1 < y) (hy2 : 2 < y 
       exact div_lt_div_of_pos_left hlogA (mul_pos hk0 hlx) (by nlinarith)
 
 
-private lemma log_deriv_pos {κ t : ℝ} (hκ : 1 < κ) (ht : 0 < t) :
+lemma log_deriv_pos {κ t : ℝ} (hκ : 1 < κ) (ht : 0 < t) :
     0 < deriv (logPowerDifference κ) t := by
   rw [(log_derivative hκ ht).deriv]
   change 0 < κ * ((1 + t) ^ (κ - 1) - t ^ (κ - 1)) / powerDifference κ t
@@ -246,13 +246,13 @@ private lemma log_deriv_pos {κ t : ℝ} (hκ : 1 < κ) (ht : 0 < t) :
     (sub_pos.mpr (Real.rpow_lt_rpow ht.le (by linarith) (by linarith))))
     (difference_pos hκ ht.le)
 
-private lemma log_strictMono {κ : ℝ} (hκ : 1 < κ) :
+lemma log_strictMono {κ : ℝ} (hκ : 1 < κ) :
     StrictMonoOn (logPowerDifference κ) (Ioi 0) := by
   apply strictMonoOn_of_deriv_pos (convex_Ioi 0)
     (fun t ht => (log_derivative hκ ht).continuousAt.continuousWithinAt)
   simpa only [interior_Ioi, mem_Ioi] using (fun t ht => log_deriv_pos hκ ht)
 
-private lemma elasticity_formula {κ t : ℝ} (hκ : 1 < κ) (ht : 0 < t) :
+lemma elasticity_formula {κ t : ℝ} (hκ : 1 < κ) (ht : 0 < t) :
     t * deriv (logPowerDifference κ) t =
       κ * (1 - 1 / ((1 - (t / (1 + t)) ^ κ) / (1 - t / (1 + t)))) := by
   have hq : 0 < 1 + t := by linarith
@@ -266,7 +266,7 @@ private lemma elasticity_formula {κ t : ℝ} (hκ : 1 < κ) (ht : 0 < t) :
   field_simp [hq.ne', ht.ne', hqk, hp.ne']
   <;> ring
 
-private lemma elasticity_strictMono {κ : ℝ} (hκ : 1 < κ) :
+lemma elasticity_strictMono {κ : ℝ} (hκ : 1 < κ) :
     StrictMonoOn (fun t => t * deriv (logPowerDifference κ) t) (Ioi 0) := by
   intro t ht u hu htu
   change 0 < t at ht

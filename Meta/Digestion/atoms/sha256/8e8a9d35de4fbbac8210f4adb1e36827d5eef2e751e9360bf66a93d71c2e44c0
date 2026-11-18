@@ -1,0 +1,60 @@
+**定义 139.1（原对象、单根与完整载体标签）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。始终使用整个原域
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+C^*=\{h\in V^*:h(C)\subseteq\mathbb R_+\},\qquad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p.
+\end{gathered}
+\tag{XI139.1}
+$$
+
+第二变量 $x$ 遍历全部原态，包括每个混态。$K$ 紧且张成 $V$；原全效应区间紧，$\mathcal F_p$ 非空紧，故 minimum 达到。对纯端点记 $p\perp q\Longleftrightarrow q\in S_p$；补效应使它对称，且 $p\not\perp p$。完整 EB3 要求每个原 $p\in P$ 的整个 $D_p$ 都仿射等价于非退化实心闭三球。
+
+另取原零图的 $\mathsf{Conn}$：任意两个原纯点之间有一条有限原零边路，长度可依端点改变。在全部目标之前固定同一个 $o\in P$，置
+
+$$
+B_2(r)=\bigcup_{s\in S_r}D_s,\qquad
+Q(r)=P\cap B_2(r)=\bigcup_{s\in S_r}S_s,\qquad S=S_o,\quad Q=Q(o).
+\tag{XI139.2}
+$$
+
+唯一额外根条件仍是137.1的原意义：
+
+$$
+\mathsf G(o):\quad \exists U\subset V\text{ 开},\quad
+o\in U,\quad U\cap P\subseteq Q(o).
+\tag{XI139.3}
+$$
+
+以下直接消费[原域接口137.2、定理137.3及137.4、137.7—137.8][Q139XI]：
+
+$$
+\begin{gathered}
+D_p\text{ 为非点紧暴露极大真面},\quad
+S_p=\partial_{\rm rel}D_p\cong S^2,\quad D_p=\operatorname{conv}S_p,\\
+\text{全部非空原真面只有纯单点和这些完整球},\\
+D_p=D_q\Longrightarrow p=q,\qquad
+p\ne q\Longrightarrow D_p\cap D_q\text{ 为空或一个原纯单点},\\
+Q\subseteq P\text{ 在原 }V\text{ 中紧},\qquad
+\exists U_0\subset V\text{ 开}:\quad o\in U_0,\quad
+U_0\cap D_o=\varnothing,\quad
+\forall q\in U_0\cap P, Q(q)=Q.
+\end{gathered}
+\tag{XI139.4}
+$$
+
+其中完整面接口的原来源为 FINITE_PURE VII103.2、EXCLUSION IX116.1；Conn 后的标签单射由 IX116.2 与 THREE_COPY VIII130.2取得。$U_0$ 可以按137.5缩小为避开整个 $D_o$ 的环境开集。紧性和近根集合相等在这里是137.3的结论；以下不把它们扩张到全 $P$，也不把 $\mathsf G$ 重新施于别的根。
+
+定义辅助标签集及实际共同邻点存在域
+
+$$
+\Lambda=\{a\in P:S_a\subseteq Q\},\qquad
+\mathcal J=\{(a,b)\in P^2:\exists r\in P, a\perp r, b\perp r\}.
+\tag{XI139.5}
+$$
+
+$\Lambda$ 由每张完整原球的整个纯球缘定义，仍是原 $P$ 中的标签集合；$K,P,\mathcal E,\mathcal F_p,T_p,D_p$ 一概保留原定义。$\mathsf{Tri}(o)$ 表示存在三个不同原纯点 $o,s,t$，满足三条原零边。$d_\perp$ 表示原零图最短有限路径长度。
+

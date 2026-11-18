@@ -109,7 +109,7 @@ private theorem sigma_mul_prime {q n : ℕ} (hq : q.Prime) (hn : n ≠ 0) :
   ring
 
 /-- The excess of one more factor `q` is `1 / (q σ(q^a))`, where `a` is the current exponent. -/
-private theorem edge_excess {q n : ℕ} (hq : q.Prime) (hn : n ≠ 0) :
+theorem edge_excess {q n : ℕ} (hq : q.Prime) (hn : n ≠ 0) :
     divisorRatio (n * q) / divisorRatio n - 1 =
       1 / ((q : ℝ) * ArithmeticFunction.sigma 1 (q ^ n.factorization q)) := by
   have key := sigma_mul_prime hq hn

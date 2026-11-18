@@ -1,6 +1,6 @@
 ---
 slug: oeis-a305550-integral-egf-substitution-totient-period
-bibkey: bala2022egfgeneral
+bibkey: bala2022a305550
 doi: null
 url: https://oeis.org/A305550
 triage: theorem
@@ -78,7 +78,7 @@ only; a bounded search does not establish the universal assertion.
 
 ## Evidence
 
-- Own Library note: `Library/ArithSums/bala2022egfgeneral.md` (bibkey `bala2022egfgeneral`),
+- Own Library note: `Library/ArithSums/bala2022a305550.md` (bibkey `bala2022a305550`),
   URL `https://oeis.org/A305550`, matching this dossier's URL.
 - Lean module: `D5/S1/Recurrence/Periodic/IntegralEgfTotientPeriod.lean`.
 - Main theorem: `bala_conjecture_egf_general`.
