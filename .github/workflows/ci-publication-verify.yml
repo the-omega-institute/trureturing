@@ -138,6 +138,94 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib FULL_BUILD=1 LEAN_CACHE_INDEXED=1 LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
 
+  cache-shards:
+    name: Verify Lean cache continuation transport
+    if: github.ref_protected
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    permissions:
+      contents: read
+      actions: write
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+      CACHE_SCOPE: D5.S0.Tower.GoldenGapWord
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2002
+          persist-credentials: false
+      - id: entry
+        name: Validate source and select cache transport changes
+        env:
+          CI_HIT_PATHS: |
+            .github/actions/lean-cache-shards/*
+            .github/workflows/ci-publication-verify.yml
+            tools/scripts/worktree/lean_actions_shards.py
+            tools/scripts/worktree/lean_cache_shards.py
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - if: steps.entry.outputs.hit == 'true'
+        id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: steps.entry.outputs.hit == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - if: steps.entry.outputs.hit == 'true'
+        id: dependency
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Prepare Lean dependencies and build the scoped checkpoint
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+        run: |
+          python3 tools/scripts/worktree/lean_actions.py restore --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          make lean LEAN_TARGETS="$CACHE_SCOPE"
+      - if: steps.entry.outputs.hit == 'true'
+        id: checkpoint
+        name: Save scoped producer continuation
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: save
+          state: resume
+          anchor: ${{ github.event.before }}
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Isolate the restored build
+        run: |
+          test -f .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          mv .lake/build .lake/shard-verification-source
+      - if: steps.entry.outputs.hit == 'true'
+        id: resumed
+        name: Restore the immutable producer continuation
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: restore
+          state: resume
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Check the recovered bytes and Lake freshness
+        env:
+          SAVED: ${{ steps.checkpoint.outputs.available }}
+          RESTORED: ${{ steps.resumed.outputs.available }}
+          MISSING: ${{ steps.resumed.outputs.missing }}
+        run: |
+          [[ "$SAVED" =~ ^[1-9][0-9]*$ && "$SAVED" == "$RESTORED" && "$MISSING" == 0 ]]
+          path=lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          cmp ".lake/shard-verification-source/$path" ".lake/build/$path"
+          lake --no-build build "$CACHE_SCOPE"
+
   scribe:
     name: verify Scribe publication and fetch
     runs-on: ubuntu-24.04-arm

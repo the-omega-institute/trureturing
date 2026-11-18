@@ -39,6 +39,9 @@ on:
         description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
         type: boolean
         default: false
+      shard_history_anchor:
+        description: 'Optional exact dev history anchor for the protected sharded build'
+        type: string
       native_report_batch_modules:
         description: 'Maximum modules per native extraction process (integer 1..100; full report scope unchanged)'
         type: string
@@ -72,7 +75,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
-          fetch-depth: 2
+          fetch-depth: ${{ inputs.shard_history_anchor != '' && 2002 || 2 }}
           persist-credentials: false
       - name: Validate the manual source ref and immutable pin
         if: github.event_name == 'workflow_dispatch'
@@ -129,6 +132,7 @@ jobs:
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
         with:
+          shard-history-anchor: ${{ inputs.shard_history_anchor }}
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
           native-report-batch-modules: ${{ inputs.native_report_batch_modules }}
           release-seed-tag: ${{ inputs.release_seed_tag }}

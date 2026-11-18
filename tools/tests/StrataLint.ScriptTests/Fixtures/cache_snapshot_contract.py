@@ -23,6 +23,42 @@ from cache_publication_contract import PublicationCases
 
 
 class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
+    def test_sharded_resume_recovers_verified_entries_and_reports_eviction(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        root = self.root
+        producer = root / "producer"
+        names = ["lib/lean/D5/First.olean", "lib/lean/D5/Second.olean"]
+        payloads = []
+        for name in names:
+            compiled = producer / name
+            compiled.parent.mkdir(parents=True, exist_ok=True)
+            compiled.write_text(name)
+            payloads.append(shards.write_payload(root, producer, [name]))
+        groups = [[["D5.First"]], [["D5.Second"]]]
+        keys = [shards.group_identity(group) for group in groups]
+        identity = {"producer_resume": "isolated"}
+        record = {
+            "binding": identity, "state": "resume",
+            "owner": {"commit": "b" * 40, "ref": "refs/heads/dev", "run": "17", "attempt": "2"},
+            "layout": dict(zip(keys, groups, strict=True)),
+            "entries": dict(zip(keys, payloads, strict=True)),
+            "fingerprints": {key: "c" * 64 for key in keys},
+            "sources": {name: "d" * 64 for name in ("D5.First", "D5.Second")},
+        }
+        index = root / "shard-index.json"
+        index.write_text(json.dumps(record))
+        decoded = shards.read_index(index, identity, "resume")
+        with self.assertRaisesRegex(ValueError, "incompatible"):
+            shards.read_index(index, identity, "complete")
+        (root / shards.transport_payload(payloads[1])).unlink()
+        result = shards.install(root, decoded, [])
+        self.assertEqual(1, result["available"])
+        self.assertEqual([payloads[1]], result["missing"])
+        build = root / ".lake/build"
+        self.assertEqual(names[0], (build / names[0]).read_text())
+        self.assertFalse((build / names[1]).exists())
+
     def lookup_keys(self, responses=(), *, wait=None, real_wait=False, streams=None, **environment):
         owner = self.restore_owner()
         result, errors = streams or (io.StringIO(), io.StringIO())
