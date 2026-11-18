@@ -45,6 +45,10 @@ def primeExcess (r : ℕ) (P : ℝ) : ℝ := primeCount P - cutoff r P
 /-- The natural number of primes to delete. -/
 def deletionCount (r : ℕ) (P : ℝ) : ℕ := Nat.primeCounting ⌊P⌋₊ - cutoff r P
 
+/-- The reserve obtained from the unrounded threshold. -/
+def continuousReserve (r : ℕ) (P : ℝ) : ℝ :=
+  P - Chebyshev.theta P + (primeCount P - centeredThreshold r P) * log P
+
 /-- The rounded reserve pricing each deletion at the central logarithm. -/
 def roundedReserve (r : ℕ) (P : ℝ) : ℝ :=
   P - Chebyshev.theta P + primeExcess r P * log P
@@ -66,18 +70,19 @@ private lemma rounding (r : ℕ) {P : ℝ} (hP : 1 < P) :
   exact ⟨sub_pos.mpr (Nat.lt_floor_add_one _),
     by linarith [Nat.floor_le (centeredThreshold_nonneg r hP)]⟩
 
+private lemma continuous_excess (r : ℕ) :
+    Tendsto (fun P : ℝ =>
+      (primeCount P - centeredThreshold r P) / (P / log P ^ (r + 1)))
+      atTop (𝓝 (r.factorial : ℝ)) := by
+  simpa only [centeredThreshold, mul_sum, ← mul_div_assoc, mul_comm] using
+    prime_counting_factorial_residual r
+
 private lemma rounded_excess (r : ℕ) :
     Tendsto (fun P : ℝ => primeExcess r P / (P / log P ^ (r + 1)))
       atTop (𝓝 (r.factorial : ℝ)) := by
-  have hcontinuous :
-      Tendsto (fun P : ℝ => (primeCount P - centeredThreshold r P) / (P / log P ^ (r + 1)))
-        atTop (𝓝 (r.factorial : ℝ)) := by
-    simpa only [centeredThreshold, mul_sum, mul_div_assoc, mul_comm] using
-      prime_counting_factorial_residual r
   have hlog : Tendsto (fun P : ℝ => log P ^ (r + 1) / P) atTop (𝓝 0) := by
-    simpa only [rpow_natCast, rpow_one] using
-      (isLittleO_log_rpow_rpow_atTop (↑(r + 1 : ℕ)) (by norm_num : (0 : ℝ) < 1))
-        .tendsto_div_nhds_zero
+    have h := isLittleO_log_rpow_rpow_atTop (↑(r + 1 : ℕ)) (by norm_num : (0 : ℝ) < 1)
+    simpa only [rpow_natCast, rpow_one] using h.tendsto_div_nhds_zero
   have hsmall : Tendsto
       (fun P : ℝ => ((cutoff r P : ℝ) - centeredThreshold r P) / (P / log P ^ (r + 1)))
       atTop (𝓝 0) := by
@@ -92,7 +97,7 @@ private lemma rounded_excess (r : ℕ) :
             (div_nonneg (by linarith) (pow_nonneg (log_pos hP).le _))
         _ = log P ^ (r + 1) / P := by rw [one_div, inv_div]
   simpa only [sub_zero, ← sub_div, sub_sub_sub_cancel_right, primeExcess] using
-    hcontinuous.sub hsmall
+    (continuous_excess r).sub hsmall
 
 /-- The strict count at exp P uses exactly the natural cutoff, including integer thresholds. -/
 theorem tailCount_exp_eq (r : ℕ) {P : ℝ} (hP : 1 < P) :
@@ -105,6 +110,24 @@ theorem tailCount_exp_eq (r : ℕ) {P : ℝ} (hP : 1 < P) :
   ext n
   simp only [mem_filter, cutoff, Nat.succ_le_iff, Nat.floor_lt (centeredThreshold_nonneg r hP)]
 
+private lemma theta_deficit (r : ℕ) :
+    Tendsto (fun P : ℝ => (P - Chebyshev.theta P) / (P / log P ^ r))
+      atTop (𝓝 0) := by
+  simpa only [← neg_div, neg_sub, neg_zero] using
+    ((theta_error_log_power r).tendsto_div_nhds_zero).neg
+
+/-- The budget from the unrounded threshold retains the next factorial coefficient. -/
+theorem continuous_reserve_limit (r : ℕ) :
+    Tendsto (fun P : ℝ => continuousReserve r P / (P / log P ^ r))
+      atTop (𝓝 (r.factorial : ℝ)) := by
+  have h := (theta_deficit r).add (continuous_excess r)
+  rw [zero_add] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+  dsimp only [continuousReserve]
+  rw [pow_succ]
+  field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
+
 /-- The rounded excess and the two reserves retain the next factorial coefficient. -/
 theorem factorial_reserve (r : ℕ) :
     Tendsto (fun P : ℝ => primeExcess r P / (P / log P ^ (r + 1)))
@@ -115,10 +138,7 @@ theorem factorial_reserve (r : ℕ) :
       atTop (𝓝 (r.factorial : ℝ)) ∧
     Tendsto (fun P : ℝ => safeReserve r P / (P / log P ^ r))
       atTop (𝓝 (r.factorial : ℝ)) := by
-  have htheta : Tendsto (fun P : ℝ => (P - Chebyshev.theta P) / (P / log P ^ r))
-      atTop (𝓝 0) := by
-    simpa only [← neg_div, neg_sub, neg_zero] using
-      ((theta_error_log_power r).tendsto_div_nhds_zero).neg
+  have htheta := theta_deficit r
   have hhalf : Tendsto (fun P : ℝ => log (P / 2) / log P) atTop (𝓝 1) := by
     have h := (tendsto_const_nhds (x := (1 : ℝ)) (f := atTop)).sub
       (tendsto_log_atTop.const_div_atTop (log 2))
@@ -143,14 +163,14 @@ theorem factorial_reserve (r : ℕ) :
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
     dsimp only [roundedReserve]
     rw [pow_succ]
-    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne'] <;> ring
+    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
   · have h := htheta.add ((rounded_excess r).mul hhalf)
     rw [mul_one, zero_add] at h
     apply h.congr'
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
     dsimp only [safeReserve]
     rw [pow_succ]
-    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne'] <;> ring
+    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
 
 /-- A far-window deletion exists, and every such choice leaves exactly the strict cutoff
 of distinct primes with a uniform reserve for the logarithm of their product. -/
@@ -173,7 +193,7 @@ theorem factorial_far_deletion (r : ℕ) (hr : 2 ≤ r) :
     apply h.congr'
     filter_upwards [eventually_gt_atTop (1 : ℝ), hcast] with P hP hcastP
     rw [hcastP.2, pow_succ, div_pow, one_pow]
-    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne'] <;> ring
+    field_simp [(show P ≠ 0 by linarith), (log_pos hP).ne']
   filter_upwards [hexcess.eventually_lt far_window_capacity (by norm_num), hcast,
     eventually_gt_atTop (1 : ℝ)] with P hfit hcastP hP
   have hscale : 0 < P / log P := div_pos (by linarith) (log_pos hP)

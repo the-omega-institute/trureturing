@@ -22,12 +22,18 @@ internal sealed class FactorialReserveDocument : IScribeDocumentDefinition
                 "Subtract the integer cutoff from the number of primes at most P in real arithmetic."),
             Definition("deletion-count", "deletionCount", "Deletion count",
                 "Use natural subtraction for the size of the deleted prime set."),
+            Definition("continuous-reserve", "continuousReserve", "Continuous reserve",
+                "Add P minus theta(P) to the unrounded prime excess times log P."),
             Definition("rounded-reserve", "roundedReserve", "Rounded reserve",
                 "Add the real prime excess times log P to P minus theta(P)."),
             Definition("safe-reserve", "safeReserve", "Far deletion reserve",
                 "Add the real prime excess times log(P/2) to P minus theta(P)."),
             Theorem("exact-cutoff", "tailCount_exp_eq", "Exact counting at exp P",
                 "For P > 1 the strict inequality in the counting function is equivalent to meeting the integer cutoff, including when the threshold is an integer."),
+            Theorem("continuous-reserve-limit", "continuous_reserve_limit", "Continuous reserve limit",
+                "At each fixed order r the continuous reserve divided by P/(log P)^r tends to r!. "
+                + "Multiplying the prime-counting residual by log P changes its scale from P/(log P)^(r+1) to P/(log P)^r. "
+                + "The theta deficit divided by the latter scale tends to zero."),
             Theorem("reserve-limits", "factorial_reserve", "Factorial reserve limits",
                 "At each fixed order r, the real prime excess divided by P/(log P)^(r+1) tends to r!. "
                 + "The floor error is at most one and vanishes on this scale. Eventually the natural deletion count casts to the real excess. "
