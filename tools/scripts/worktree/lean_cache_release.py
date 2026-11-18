@@ -27,13 +27,10 @@ try:
 except ImportError:
     MaintenanceLog = None
 
-from lean_artifact_inventory import lake_configuration
-import lean_release_index as indexed_release
-
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
-from lean_cache_release_io import (OperationBudget, remaining, MultipartArchiveOutput, ArchiveInput, archive_sha,
-                                   copy_chunks, extract_members)
+from lean_cache_release_io import (ArchiveInput, INDEXED_ASSET, INDEXED_SCHEMA, MultipartArchiveOutput,
+                                   OperationBudget, archive_sha, copy_chunks, extract_members, remaining)
 
 # Use the report entry's declared format and execution capture, never program hashes.
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
@@ -370,7 +367,7 @@ def valid_publication_id(value):
 
 
 def declared_parts(manifest, maximum_bytes=CHUNK_BYTES):
-    asset = indexed_release.ASSET if manifest.get("schema") == indexed_release.SCHEMA else ASSET
+    asset = INDEXED_ASSET if manifest.get("schema") == INDEXED_SCHEMA else ASSET
     parts = manifest.get("parts")
     if not isinstance(parts, list) or not 1 <= len(parts) <= 100:
         raise ValueError("invalid archive parts inventory")
@@ -597,6 +594,8 @@ def publish(root, partition, verification=None, *, build_report=True, indexed=Fa
                 # Level 1 keeps the gzip protocol within the transport window.
                 preparing = True
                 if indexed:
+                    import lean_release_index as indexed_release
+
                     contents = indexed_release.pack(root, stage, CHUNK_BYTES, deadline)
                 else:
                     with MultipartArchiveOutput(stage, ASSET, CHUNK_BYTES, deadline) as output:
@@ -606,7 +605,7 @@ def publish(root, partition, verification=None, *, build_report=True, indexed=Fa
                                         filter=lambda member: None if member.isfile()
                                         and member.name.endswith(".setup.json") else member)
                     contents = output.metadata()
-            metadata = {"schema": indexed_release.SCHEMA if indexed else "lean-release-seed-v4",
+            metadata = {"schema": INDEXED_SCHEMA if indexed else "lean-release-seed-v4",
                         "partition": partition, "cache_key": cache_key, **identity, **contents}
             (stage / MANIFEST).write_text(json.dumps(metadata, sort_keys=True) + "\n")
             remaining(deadline)
@@ -732,7 +731,7 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
         raise ValueError("snapshot manifest must be an object")
     commit, publication_id = manifest.get("producer_commit_sha", ""), manifest.get("publication_id", "")
     indexed = tag.startswith(partition_prefix(partition, verification, indexed=True))
-    schema = indexed_release.SCHEMA if indexed else "lean-release-seed-v4"
+    schema = INDEXED_SCHEMA if indexed else "lean-release-seed-v4"
     if (manifest.get("schema") != schema or manifest.get("partition") != partition
             or manifest.get("cache_key") != cache_key
             or not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit)
@@ -754,6 +753,8 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
     index = manifest.get("index")
     entries = parts
     if indexed:
+        import lean_release_index as indexed_release
+
         if (not indexed_release.valid_digest(manifest.get("archive_sha256"))
                 or not indexed_release.valid_digest(manifest.get("lake_inputs_sha256"))):
             raise ValueError("invalid indexed archive or workspace digest")
@@ -829,11 +830,14 @@ def download_range(asset, offset, length, output, deadline):
 
 def restore_scoped(root, partition, tag, stage, deadline, *, cache_key, producer, targets, verification,
                    destination_root=None, release_metadata=None, require_complete=False):
+    from lean_artifact_inventory import lake_configuration
+    import lean_release_index as indexed_release
+
     metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
         expected={"producer_commit_sha": producer} if producer else None,
         verification=verification, cache_key=cache_key, metadata=release_metadata,
         expect_draft=release_metadata is not None)
-    if manifest["schema"] != indexed_release.SCHEMA:
+    if manifest["schema"] != INDEXED_SCHEMA:
         raise ValueError("scoped restore requires an indexed Release")
     if lake_configuration(root) != manifest["lake_inputs_sha256"]:
         receipt("fetch", "scoped-miss", resolved=tag, reason="Lake workspace configuration changed")
@@ -961,7 +965,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             expected=verification if approved_producer is None else {"producer_commit_sha": approved_producer},
             verification=verification is not None, cache_key=cache_key, metadata=release_metadata,
             expect_draft=release_metadata is not None)
-    indexed = manifest["schema"] == indexed_release.SCHEMA
+    indexed = manifest.get("schema") == INDEXED_SCHEMA
     entries = [*parts, manifest["index"]] if indexed else parts
     commit = manifest["producer_commit_sha"]
     with observed_phase("transfer", expected_bytes=manifest["archive_bytes"]):
@@ -1021,6 +1025,8 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                 unpacked = pathlib.Path(temporary)
                 source = unpacked / "build"
                 if indexed:
+                    import lean_release_index as indexed_release
+
                     with observed_phase("extraction"):
                         rows = indexed_release.read_index(stage / indexed_release.INDEX, manifest["archive_bytes"])
                         source.mkdir()
@@ -1375,7 +1381,7 @@ def _main():
             cache_key = release_key(args.repository)
             payload = {"partition": partition, "cache_key": cache_key,
                        "release_prefix": prefix(partition, cache_key, indexed=args.indexed),
-                       "asset": indexed_release.ASSET if args.indexed else ASSET}
+                       "asset": INDEXED_ASSET if args.indexed else ASSET}
             _observe("address", "resolved", phase="address")
             print(json.dumps(payload))
             return 0
