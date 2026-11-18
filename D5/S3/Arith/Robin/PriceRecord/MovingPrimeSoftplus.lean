@@ -620,8 +620,9 @@ private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
   refine ⟨hprime, ?_, ?_⟩
   · have hnonneg : 0 ≤ ∑ n ∈ Finset.range (M + 1), primeWeight P s n :=
       Finset.sum_nonneg (fun n _ => primeWeight_nonneg P s n)
-    linarith only [ht, hnonneg,
-      tsum_nonneg (fun n : ℕ => primeWeight_nonneg P s (n + (N + 1)))]
+    have hnonnegTail : 0 ≤ ∑' n : ℕ, primeWeight P s (n + (N + 1)) :=
+      tsum_nonneg (fun n : ℕ => primeWeight_nonneg P s (n + (N + 1)))
+    linarith only [ht, hnonneg, hnonnegTail]
   · linarith only [ht, hsmall, hright]
 
 private theorem remove_prime_logs {s : ℝ → ℝ}
