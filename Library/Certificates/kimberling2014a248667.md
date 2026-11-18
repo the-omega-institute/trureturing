@@ -7,7 +7,7 @@ doi: null
 url: https://oeis.org/A248667
 claim: "Conjecture: any composite term can be represented as a product a(i)*a(j) (i > 1, j > 1) in at least one way."
 strata_touched:
-  - D5/S3/Arith/Congruence/KurkovA248667CompositeFactorization
+  - D5/S3/Arith/PolynomialValues/KurkovA248667CompositeFactorization
 license: citation-only
 triage: anchor
 ---

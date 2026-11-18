@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Congruence;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.PolynomialValues;
 
 internal sealed class KurkovA248667CompositeFactorizationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/Congruence/KurkovA248667CompositeFactorization.";
+    private const string Prefix = "D5/S3/Arith/PolynomialValues/KurkovA248667CompositeFactorization.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Certificates/kimberling2014a248667");
 

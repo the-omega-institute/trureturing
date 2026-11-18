@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Congruence/KurkovA248667CompositeFactorization
+/- GID: D5/S3/Arith/PolynomialValues/KurkovA248667CompositeFactorization
    generality: I
-   mirror-B: D5/B/S3/Arith/Congruence/KurkovA248667CompositeFactorization
+   mirror-B: D5/B/S3/Arith/PolynomialValues/KurkovA248667CompositeFactorization
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#23541; Proved)
-escape_witness: none (admission uses the settling result).
+escape_witness: source_prime_support (admission uses the settling result).
 Direct frozen dependencies: none (no D5 imports).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30662
 The source's numerator, enumeration and claim retain their stated expressions.
@@ -23,35 +23,35 @@ IsSourceSequence: proof_shape: bind-only; kind: definition; consumers: claim,
 claim: proof_shape: bind-only; kind: definition; consumer: result.
 Q: proof_shape: bind-only; kind: recursive definition; consumers: Q_sum, source_Q,
   Q_coeff, Q_map, Q_reset, Q_reduce, source_prime_support, source_three_pow.
-Q_sum: proof_shape: content; escape_witness: none;
+Q_sum: proof_shape: content; escape_witness: Q_sum;
   Direct frozen dependencies: none; consumers: source_Q.
-source_Q: proof_shape: content; escape_witness: none;
+source_Q: proof_shape: content; escape_witness: Q_sum;
   Direct frozen dependencies: none; consumers: source_prime_support.
-Q_coeff: proof_shape: content; escape_witness: none;
+Q_coeff: proof_shape: content; escape_witness: Q_coeff;
   Direct frozen dependencies: none; consumers: source_prime_support.
-Q_map: proof_shape: content; escape_witness: none;
+Q_map: proof_shape: content; escape_witness: Q_map;
   Direct frozen dependencies: none; consumers: source_prime_support.
-Q_reset: proof_shape: content; escape_witness: none;
+Q_reset: proof_shape: content; escape_witness: Q_reset;
   Direct frozen dependencies: none; consumers: Q_reduce.
 primitive_iff_no_prime: proof_shape: bind-only; escape_witness: none;
   Direct frozen dependencies: none; consumers: source_prime_support.
 C_dvd_iff_zmod: proof_shape: bind-only; escape_witness: none;
   Direct frozen dependencies: none; consumers: source_prime_support.
-Q_reduce: proof_shape: content; escape_witness: none;
+Q_reduce: proof_shape: content; escape_witness: Q_reset;
   Direct frozen dependencies: none; consumers: source_prime_support.
-source_prime_support: proof_shape: content; escape_witness: none;
+source_prime_support: proof_shape: content; escape_witness: source_prime_support;
   Direct frozen dependencies: none; consumers: source_divisor_closed, source_three_pow.
-source_divisor_closed: proof_shape: content; escape_witness: none;
+source_divisor_closed: proof_shape: content; escape_witness: source_prime_support;
   Direct frozen dependencies: none; consumers: result.
 source_one: proof_shape: bind-only; escape_witness: none;
   Direct frozen dependencies: none; consumers: source_sequence_one.
-source_three_pow: proof_shape: content; escape_witness: none;
+source_three_pow: proof_shape: content; escape_witness: source_prime_support;
   Direct frozen dependencies: none; consumers: source_sequence_exists.
-source_sequence_exists: proof_shape: content; escape_witness: none;
+source_sequence_exists: proof_shape: content; escape_witness: source_prime_support;
   Direct frozen dependencies: none; consumers: result.
 source_sequence_one: proof_shape: bind-only; escape_witness: none;
   Direct frozen dependencies: none; consumers: result.
-result: proof_shape: content; escape_witness: none;
+result: proof_shape: content; escape_witness: source_prime_support;
   Direct frozen dependencies: none; consumers: none (settling result).
 
 The inductive polynomial representation, coefficient bound and modular reset
@@ -64,7 +64,7 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Nat.Prime.Int
 import Mathlib.Data.Nat.Nth
 
-namespace D5.S3.Arith.Congruence.KurkovA248667CompositeFactorization
+namespace D5.S3.Arith.PolynomialValues.KurkovA248667CompositeFactorization
 
 open Polynomial
 open scoped BigOperators
@@ -298,4 +298,4 @@ theorem result : claim := by
     exact hpq
 
 
-end D5.S3.Arith.Congruence.KurkovA248667CompositeFactorization
+end D5.S3.Arith.PolynomialValues.KurkovA248667CompositeFactorization
