@@ -318,10 +318,10 @@ private lemma logPowerModel_deriv (k : ℕ) {x : ℝ} (hx : 1 < x) :
       simp [logPowerModel]
     simpa [h, reciprocalLogPower] using hasDerivAt_id x
   | succ k =>
-    convert (hasDerivAt_id x).div ((hasDerivAt_log hx0).pow (k + 1))
+    convert (hasDerivAt_id x).fun_div ((hasDerivAt_log hx0).fun_pow (k + 1))
       (pow_ne_zero (k + 1) hl) using 1
     · rfl
-    · simp only [reciprocalLogPower, id_eq, Nat.add_sub_cancel, Nat.succ_eq_add_one,
+    · simp only [reciprocalLogPower, id_eq, Nat.add_sub_cancel,
         pow_succ (log x) (k + 1), pow_succ (log x) k]
       field_simp [hx0, hl]
       <;> ring
@@ -387,7 +387,6 @@ theorem prime_counting_factorial_residual (r : ℕ) :
       G' x = reciprocalLogPower (r + 1) x * (1 - ((r + 1 : ℕ) : ℝ) / log x) := by
     simp only [G', reciprocalLogPower, pow_succ (log x) (r + 1)]
     field_simp [(log_pos hx).ne']
-    <;> ring
   have hlarge : ∀ᶠ x : ℝ in atTop, ((r + 1 : ℕ) : ℝ) < log x :=
     tendsto_log_atTop.eventually_gt_atTop _
   have hGpos : ∀ᶠ x : ℝ in atTop, 0 < G' x := by
@@ -411,7 +410,7 @@ theorem prime_counting_factorial_residual (r : ℕ) :
     dsimp [e, H', F, reciprocalLogPower]
     rw [pow_succ (log x) r]
     field_simp [hx0, hlog, hc.ne', hdiff]
-    <;> ring
+    ring
   have hi := integral_ratio_of_derivative_ratio
     (fun x hx => ((hFint x hx).sub (hHint x hx)).div_const c) hGint
     (fun x hx => logPowerModel_deriv (r + 1) (by linarith)) hG hGpos hratio
@@ -435,7 +434,7 @@ theorem prime_counting_factorial_residual (r : ℕ) :
   dsimp only [H, logPowerModel]
   rw [pow_succ (log x) r]
   field_simp [show x ≠ 0 by linarith, (log_pos (by linarith : 1 < x)).ne', hc.ne']
-  <;> ring
+  ring
 
 def logarithmicTail (y z : ℝ) : ℝ :=
   ∑ p ∈ primeInterval y z, -log (1 - 1 / (p : ℝ) ^ 2)
