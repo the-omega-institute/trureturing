@@ -77,7 +77,7 @@ private lemma source_r {u r : ℂ} (h : ‖u‖ + ‖r‖ < 1) :
   rw [diagonal_derivative_explicit true h] at hd
   convert hd using 1 <;> simp only [ite_true, a] <;> congr 1 <;> ring
 
-private lemma correction_hasDerivAt {r : ℂ} (hr : ‖r‖ < 1) :
+lemma correction_hasDerivAt {r : ℂ} (hr : ‖r‖ < 1) :
     HasDerivAt correction (1 / 4 - r * (1 - r) * ell r ^ 2) r := by
   have hp := picard_fuchs hr
   have hn := OriginalGaussianPeriodIdentity.period_ne_zero hr

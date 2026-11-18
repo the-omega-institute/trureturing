@@ -31,6 +31,7 @@ internal sealed class OriginalGaussianExternalAnalyticCandidateDocument : IScrib
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.ell"),
                 H("ell"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The logarithmic derivative of the existing complex half-binomial period. Its use in the differential equations is restricted to the open unit disk, where period_ne_zero applies."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("correction-has-deriv-at"), DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.correction_hasDerivAt"), H("correction_hasDerivAt"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every complex r with norm(r)<1, correction has complex derivative 1/4-r(1-r)ell(r)^2 at r. The existing Picard-Fuchs proof and period_ne_zero are reused without an additional nonvanishing premise. This supplies the period correction derivative for complex candidate holomorphy."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("correction"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalAnalyticCandidate.correction"),
                 H("correction"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

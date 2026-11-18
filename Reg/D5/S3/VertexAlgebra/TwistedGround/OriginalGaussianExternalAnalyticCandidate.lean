@@ -378,4 +378,69 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end kernelMode_joint_differentiable
 
+abbrev correctionDerivativeSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (ℂ × ℂ)
+    (fun _ => ℂ → ℂ) (fun _ => Prop)
+def correctionDerivativeActual : Realization correctionDerivativeSignature :=
+  realize _ (fun _ a f => HasDerivAt f a.2 a.1) (fun e => nomatch e)
+def correctionDerivativeBad : Realization correctionDerivativeSignature :=
+  realize _ (fun _ _ _ => False) (fun e => nomatch e)
+private theorem correctionDerivativeDependence :
+    ObservationalDependence correctionDerivativeSignature correctionDerivativeActual := by
+  intro i
+  refine ⟨(0,0), (fun _ => 0), (fun z => z), ?_⟩
+  intro h
+  have hf : HasDerivAt (fun z : ℂ => z) 0 0 := Eq.mp h (hasDerivAt_const _ _)
+  have hg : HasDerivAt (fun z : ℂ => z) 1 0 := hasDerivAt_id 0
+  exact zero_ne_one (hf.unique hg)
+
+namespace correction_hasDerivAt
+abbrev arena : Arena where
+  signature := correctionDerivativeSignature
+  Law R := ∀ {r : ℂ} (_hr : ‖r‖ < 1),
+    R.readout () (r, 1 / 4 - r * (1 - r) * ell r ^ 2) correction
+private theorem rejected_fails : ¬ arena.Law correctionDerivativeBad := by
+  intro h
+  exact h (r := 0) (by norm_num)
+def family : Registration arena (type_of% (@correction_hasDerivAt)) where
+  actual := correctionDerivativeActual
+  bridge := Iff.rfl
+  variation := ⟨@correction_hasDerivAt, correctionDerivativeBad, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law correctionDerivativeActual correctionDerivativeBad rejected_fails
+  dependence := correctionDerivativeDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@correction_hasDerivAt) (Realization correctionDerivativeSignature) ℂ Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.correction_hasDerivAt.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.correction_hasDerivAt.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize correctionDerivativeSignature correctionDerivativeActual.readout correctionDerivativeActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false } ] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end correction_hasDerivAt
+
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
