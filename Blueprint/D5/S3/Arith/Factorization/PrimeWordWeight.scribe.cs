@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Factorization;
 internal sealed class PrimeWordWeightDocument : IScribeDocumentDefinition
 {
     private static DocumentBlock Entry(string selector, string title, string text) =>
-        Describe.Lean(DescribeId.Create("prime-word-weight-" + selector.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("a124056-" + selector.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Arith/Factorization/PrimeWordWeight." + selector),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);

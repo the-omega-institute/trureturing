@@ -147,8 +147,8 @@ omission.
 
 The sequence source is `D5/S3/Arith/Recurrence/A124056Occurrence.lean`, and
 the arithmetic supplier is `D5/S3/Arith/Factorization/PrimeWordWeight.lean`,
-each with matching Blueprint Scribe and emitted mathematical exposition. Its
-`source_specification` gives the original recurrence, and
+each with matching Blueprint Scribe and emitted mathematical exposition.
+The sequence module's `source_specification` gives the original recurrence, and
 `full_positive_occurrence` has type
 `∀ k : ℕ, 0 < k → ∃ n : ℕ, 0 < n ∧ sourceTerm n = k`.
 
@@ -188,11 +188,13 @@ The matching Reg source provides dependent-family realization, equivalence,
 variation, sensitivity and observational-dependence evidence for the four
 original public theorems. Its four `Contract.Registration` attempts have no
 `sourceSelection`. The missing evidence is the complete original-source
-reconstruction and its readout path and coordinate bindings. The five additional contributor and unconditional theorems remain owned by
+reconstruction and its readout path and coordinate bindings. The five
+additional contributor and unconditional theorems remain owned by
 `A124056Occurrence`; the eight prime-word and analytic theorems are owned by
 `D5/S3/Arith/Factorization/PrimeWordWeight`. The weight monotonicity helper is
 public for its actual cross-module consumer and adds no mathematical target.
-These declarations have no completed registration; their complete source-family realization, selected readouts, coordinate bindings
+These declarations have no completed registration; their complete
+source-family realization, selected readouts, coordinate bindings
 and family-wide evidence remain required. The concrete linked exception is
 [issue 31349](https://github.com/the-omega-institute/trureturing/issues/31349#issuecomment-6957913334).
 No public theorem is claimed to have a completed `declared_validated`
