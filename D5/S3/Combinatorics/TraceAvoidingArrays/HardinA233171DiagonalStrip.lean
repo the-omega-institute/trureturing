@@ -106,7 +106,7 @@ def classCount (s : Seen) (p : Boundary) (k : Fin 7) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
     boundaryClass (finish s c) (labels c) = k then 1 else 0
 
-private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 7) :
+theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 7) :
     classCount s p k = ∑ q : Boundary,
       rowWeight s q * if (∀ j : Fin 4, q j.castSucc ≠ q j.succ) ∧
         (∀ j : Fin 4, p j.castSucc ≠ q j.succ ∧ p j.succ ≠ q j.castSucc) ∧
@@ -126,7 +126,7 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 7) :
   by_cases hg : good s c <;> simp [hg]
 
 set_option maxHeartbeats 0 in
-private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
+theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
   suffices h : ∀ k : Fin 7, ∀ s p, Valid s p →
       classCount s p k = transfer (boundaryClass s p) k by

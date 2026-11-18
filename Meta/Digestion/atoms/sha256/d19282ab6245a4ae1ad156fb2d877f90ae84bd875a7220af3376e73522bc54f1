@@ -1,0 +1,40 @@
+#### 定理 11.1：OTF-005 条件综合
+
+在 C1–C7 的适用范围内，得到以下兼容结构：
+
+$$
+\begin{gathered}
+ V\simeq\Lambda^2V,\ \dim V>0
+ \ \Longrightarrow\ \dim V=3,\\
+ \text{线性锐比较}
+ \ \Longrightarrow\ \operatorname{Cl}_{3,0}\simeq M_2(\mathbb C),\\
+ \text{归一正读出}
+ \ \Longrightarrow\
+ \rho_r=(1_2+r\cdot\boldsymbol{\sigma})/2,\quad
+ p(+|r,n)=\tfrac12(1+r\cdot n),\\
+ \text{指定路径与参考；闭路取水平提升}
+ \ \Longrightarrow\
+ B=n\wedge\dot n+\lambda\star n,\quad
+ \gamma_{\rm horiz}=-\Omega/2,\\
+ \text{指定余弦--相位政策及 Lipschitz 增量}
+ \ \Longrightarrow\
+ T_s\sim F_s\times R_{\omega_*}.
+ \end{gathered}
+$$
+
+各箭头是有条件的数学推论；最后一项仅覆盖所声明的 $X$。 若纳入其他参考、记录和钟，仍须检验它们各自的更新。
+
+**证明。**
+
+依次应用 §2 的维数定理、§4 的代数及正锥重建、 定理 6.3、7.4 和 10.3。 每一步的输入均已在相应定义、约束或定理中列出。
+
+$\square$
+
+| 结果 | 足够输入 | 删除输入后的具体缺口 |
+|:---|:---|:---|
+| 三维方向–面积对偶 | 完整线性同构、正定度量、定向 | 仅各向同性允许不同维数；任意给定同构不必已是归一 Hodge 星 |
+| 扇形生成最短门 | 非反向端点、最短平面选择、Spin 半角作用 | 反向端点不定平面；一般门还含稳定子及中心相位 |
+| Born 读出 | 线性全方向锐比较、正性与归一化 | $f(n\cdot m)=(n\cdot m)^3$ 仍保留单纯旋转对称 |
+| 时间速度 | 路径、Hamiltonian、内部钟与单位 | 重参数化保留路径却改变经过时长 |
+| 注意力影响读出 | 设置编码、耦合、访问菜单及记录 | 未耦合参考上的保迹操作不改变目标边缘态 |
+| 余弦整体固定 | 基底固定、$`\omega_*\equiv0`$ 及所有其余已声明变量固定 | 三角回路给八周期；追加记录使整体无不动点 |

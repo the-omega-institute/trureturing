@@ -112,15 +112,18 @@ What the refutation shows beyond the single word:
   3. The prefix $01$ recurs at positions 4–5, and this recurrence, together with
   the first letter $0$ and the last letter $1$, forces both letters to act
   bijectively or to make a shorter word synchronize.
-- **Family (argument given here, not formalized).** The same three steps apply
-  to every word $w$ that starts with $01$, ends with $1$, and contains $01$
-  again at positions $j,j+1$ with $j\ge3$ and $j+1<|w|$. With $P$ the map of
-  the prefix ending at $j+1$, $Q=M_{01}$ and $z=w_{j+2}\cdots w_{|w|}$, equal
-  images of $P$ and $Q$ would make $01z$ synchronize. A surjective $f_0$
-  would make $w_2\cdots w_{|w|}$ synchronize. Equal images of $Q$ and $f_1$
-  would make $w_2\cdots w_{|w|}$ synchronize. An injective $f_1$ would make
-  $w_1\cdots w_{|w|-1}$ synchronize. So all such words have
-  $\mathrm{qc}(w)\ge3$, and so do their images under exchanging the letters.
+- **Family (Lean-proved qubit exclusion).** For arbitrary binary words $u,z$,
+  let $w=01\,u\,01\,z\,1$. The theorem
+  `D5/S3/Quantum/QuantumChannels/QuantumCernyRepeated01Family.no_qubit_instance_repeated01`
+  proves $\neg\mathrm{HasInstance}(2,w)$, using the separately proved
+  `mortal_repeated01` rank obstruction. The latter supplies one of the four
+  strictly shorter mortal words $01u01$, $01z1$, $1u01z1$, and $01u01z$.
+  On the span of differences of reachable qubit states, mortality is equivalent
+  to synchronization, so none of these words can occur in a unique-shortest
+  instance for $w$. This includes every word that starts with $01$, has a
+  later $01$ ending strictly before its final $1$, and ends in $1$.
+  The corresponding letter-exchanged exclusion follows by relabeling channels;
+  that relabeling is not a separate Lean theorem here.
   Examples are $01011$, $010101$ and $0110101$; numerically, least squares
   finds no qubit instance for these words (other-word norms $1.9\cdot10^{-8}$,
   $3.0\cdot10^{-6}$, $5.3\cdot10^{-8}$). For $0111001$, where the second $01$
@@ -133,8 +136,8 @@ What the refutation shows beyond the single word:
     consistent with the results. The family above contains, for random $w$ of
     length $m\to\infty$, a proportion tending to $1/8$, and its letter-exchanged
     copy another $1/8$. So at least a quarter of long words have
-    $\mathrm{qc}(w)\ge3$, and almost all words having $\mathrm{qc}=2$ is false
-    (by the family argument; not formalized).
+    no qubit unique-shortest instance. The counting and the resulting
+    almost-all consequence are prose deductions, not Lean-formalized.
   - The paper's other results, the general bounds, $\mathrm{qc}(0^m)$ and
     $\mathrm{qc}(01^n0)=2$, are unaffected.
 - **Open.** The characterization of $\{w:\mathrm{qc}(w)=2\}$ remains open.

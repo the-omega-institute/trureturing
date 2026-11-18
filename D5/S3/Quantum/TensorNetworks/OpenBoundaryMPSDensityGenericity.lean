@@ -28,11 +28,11 @@ open PeriodicMPSParentIntersection (Bond Word)
 open D5.S3.Quantum.Algebra
 open OpenBoundaryMPSTwoSiteMinimality (originalCore original_chart)
 
-private def realCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
+def realCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
   AddMonoidAlgebra.ofCoeff (Finsupp.mapRange Complex.re (by simp)
     (AddMonoidAlgebra.coeff p))
 
-private def imagCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
+def imagCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
   AddMonoidAlgebra.ofCoeff (Finsupp.mapRange Complex.im (by simp)
     (AddMonoidAlgebra.coeff p))
 
@@ -44,7 +44,7 @@ private lemma coefficient_split {σ : Type*} (p : MvPolynomial σ ℂ) :
   change ((p.coeff m).re : ℂ) + Complex.I * (p.coeff m).im = p.coeff m
   simpa only [mul_comm] using Complex.re_add_im (p.coeff m)
 
-private lemma coefficient_eval {σ : Type*} (p : MvPolynomial σ ℂ) (x : σ → ℝ) :
+lemma coefficient_eval {σ : Type*} (p : MvPolynomial σ ℂ) (x : σ → ℝ) :
     eval x (realCoeff p) = (eval (fun i => (x i : ℂ)) p).re ∧
     eval x (imagCoeff p) = (eval (fun i => (x i : ℂ)) p).im := by
   have h := congrArg (eval (fun i => (x i : ℂ))) (coefficient_split p)
@@ -56,7 +56,7 @@ private lemma coefficient_eval {σ : Type*} (p : MvPolynomial σ ℂ) (x : σ �
   · simpa using congrArg Complex.re h
   · simpa using congrArg Complex.im h
 
-private def normPolynomial {ι : Type*} (p : PhasePolynomial.Poly ι) :
+def normPolynomial {ι : Type*} (p : PhasePolynomial.Poly ι) :
     MvPolynomial (ι ⊕ ι) ℝ :=
   realCoeff (PhasePolynomial.toCartesian p) ^ 2 +
     imagCoeff (PhasePolynomial.toCartesian p) ^ 2
@@ -65,7 +65,7 @@ private def normPolynomial {ι : Type*} (p : PhasePolynomial.Poly ι) :
 def realCoordinates {ι : Type*} (z : ι → ℂ) : ι ⊕ ι → ℝ :=
   Sum.elim (fun i => (z i).re) (fun i => (z i).im)
 
-private lemma normPolynomial_eval {ι : Type*} (p : PhasePolynomial.Poly ι)
+lemma normPolynomial_eval {ι : Type*} (p : PhasePolynomial.Poly ι)
     (z : ι → ℂ) :
     eval (realCoordinates z) (normPolynomial p) = Complex.normSq (PhasePolynomial.actual p z) := by
   obtain ⟨hr, hi⟩ := coefficient_eval (PhasePolynomial.toCartesian p) (realCoordinates z)
@@ -80,7 +80,7 @@ def transferMatrix (A : Fin 2 → Bond) :
     Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   fun ij kl => ∑ s : Fin 2, A s ij.1 kl.1 * star (A s ij.2 kl.2)
 
-private lemma transferMatrix_apply (A : Fin 2 → Bond) (X : Bond) :
+lemma transferMatrix_apply (A : Fin 2 → Bond) (X : Bond) :
     (transferMatrix A) *ᵥ (fun ij => X ij.1 ij.2) =
       fun ij => transfer A X ij.1 ij.2 := by
   funext ij
@@ -117,7 +117,7 @@ def numeratorTransfer : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2)
     rename Sum.inl (matrixNumerator s ij.1 kl.1) *
       rename Sum.inr (map (starRingEnd ℂ) (matrixNumerator s ij.2 kl.2))
 
-private lemma numeratorTransfer_eval (t : Word 3 → ℂ) :
+lemma numeratorTransfer_eval (t : Word 3 → ℂ) :
     (eval (Sum.elim t (fun i => star (t i)))).mapMatrix numeratorTransfer =
       transferMatrix (fun s => (eval t).mapMatrix (matrixNumerator s)) := by
   ext ij kl
@@ -128,13 +128,13 @@ private lemma numeratorTransfer_eval (t : Word 3 → ℂ) :
   simp only [← MvPolynomial.map_eval]
   rfl
 
-private lemma transferMatrix_smul (A : Fin 2 → Bond) (c : ℂ) :
+lemma transferMatrix_smul (A : Fin 2 → Bond) (c : ℂ) :
     transferMatrix (fun s => c • A s) = (c * star c) • transferMatrix A := by
   ext ij kl
   simp [transferMatrix, Fin.sum_univ_two, star_mul]
   ring
 
-private lemma canonical_transfer_det (t : Word 3 → ℂ)
+lemma canonical_transfer_det (t : Word 3 → ℂ)
     (hg : eval t chartPoly ≠ 0) :
     PhasePolynomial.actual numeratorTransfer.det t ≠ 0 ↔
       Function.Injective (transfer (canonicalCore t)) := by
@@ -192,7 +192,7 @@ def observedPolynomial :
     MvPolynomial (((Word 3 × Word 3) ⊕ (Word 3 × Word 3))) ℝ :=
   rename (Sum.map (fun u => (u, fun _ => 0)) (fun u => (u, fun _ => 0))) recoveryPolynomial
 
-private lemma observedPolynomial_eval (Q : Matrix (Word 3) (Word 3) ℂ) :
+lemma observedPolynomial_eval (Q : Matrix (Word 3) (Word 3) ℂ) :
     eval (realCoordinates (fun ij => Q ij.1 ij.2)) observedPolynomial =
       eval (realCoordinates (fixedTensor Q)) recoveryPolynomial := by
   rw [observedPolynomial, eval_rename]
@@ -224,7 +224,7 @@ private lemma prefixCoordinates_eval (m : ℕ) (ψ : Word (3 + m) → ℂ) :
       mul_apply, conjTranspose_apply, Complex.mul_re, Complex.mul_im, sub_eq_add_neg, add_comm]
 
 /-- The actual raw-prefix pullback identity, with no parametrization hypothesis. -/
-private theorem statePolynomial_eval (m : ℕ) (ψ : Word (3 + m) → ℂ) :
+theorem statePolynomial_eval (m : ℕ) (ψ : Word (3 + m) → ℂ) :
     eval (realCoordinates ψ) (statePolynomial m) =
       eval (realCoordinates (fixedTensor (rawPrefix 3 m ψ))) recoveryPolynomial := by
   change eval (realCoordinates ψ) (eval₂ C (prefixCoordinates m) recoveryPolynomial) = _
@@ -374,7 +374,7 @@ private lemma fixed_witness_tensor (m : ℕ) :
   rfl
 
 /-- The fixed raw-density column satisfies the intrinsic polynomial at every length. -/
-private theorem statePolynomial_witness (m : ℕ) :
+theorem statePolynomial_witness (m : ℕ) :
     eval (realCoordinates
       (mpsState (3 + m) (originalCore 0) (originalCore 1) ![1, 0] ![1, 2]))
         (statePolynomial m) ≠ 0 := by
@@ -383,7 +383,7 @@ private theorem statePolynomial_witness (m : ℕ) :
   rw [ht]
   exact ⟨original_chart x y hx hy, original_canonical_transfer x y hx hy⟩
 
-private lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
+lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
     (P : MvPolynomial ρ ℝ) (a : ρ → ℝ) (ha : eval a P ≠ 0) :
     Dense {x : ρ → ℝ | eval x P ≠ 0} := by
   letI := Fintype.ofFinite ρ
@@ -397,7 +397,7 @@ private lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
     exact ha (hall (Set.mem_univ a))
   exact interior_eq_empty_iff_dense_compl.mp hz
 
-private lemma continuous_realCoordinates {ι : Type*} :
+lemma continuous_realCoordinates {ι : Type*} :
     Continuous (realCoordinates : (ι → ℂ) → (ι ⊕ ι → ℝ)) := by
   apply continuous_pi
   intro i

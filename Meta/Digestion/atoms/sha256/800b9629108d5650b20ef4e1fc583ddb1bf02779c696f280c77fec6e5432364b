@@ -1,0 +1,11 @@
+**Theorem 16.1 (Reduced-phase candidate membership).** For every such modular model, every natural counting width $n$ with $N^2\le Q=2^n$, and all natural $s<r$ and $y<Q$, assume the circular nearest condition
+
+$$
+\exists k\in\mathbb Z,\qquad
+\left|\frac{s}{r}-\frac{y}{Q}-k\right|\le\frac1{2Q}.
+$$
+
+Then the rational number $s/r$ in lowest terms belongs to $A(y,Q,N)$, and its reduced denominator divides $r$.
+
+Proof. Since $s<r$, $y<Q$ and $r<N$, the resolution condition excludes every nonzero integer $k$ in the nearest witness. Thus $|y/Q-s/r|\le1/(2Q)$. The reduced denominator $d$ satisfies $d\le r<N$, hence $d^2<Q$ and $|y/Q-s/r|<1/(2d^2)$. Legendre's theorem supplies a real continued-fraction convergent equal to $s/r$. The rational Euclidean list correspondence places that convergent in $C(y/Q)$, and $d<N$ passes the filter. Finally $d=r/\gcd(s,r)$ divides $r$.
+

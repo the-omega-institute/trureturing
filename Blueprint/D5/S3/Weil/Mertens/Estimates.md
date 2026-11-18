@@ -14,6 +14,8 @@ Lean statement: `D5/S3/Weil/Mertens/Estimates.sub_E1p_eq_sum_nonprime`
 
 *Commentary.*
 
+For every real x>=2, the original integrable_E1Lambda_div_mul_log_sq helper proves integrability of E1Lambda(t)/(t*log(t)^2) over t>x. Boundedness and the inverse-logarithmic kernel supply absolute domination, which the quantitative Mertens remainder uses with a sharper rate.
+
 For every real x, the original difference Mertens.E₁Λ(x)-Mertens.E₁p(x) is sum(if n is not prime then Lambda(n)/n else 0,0<n<=floorNat(x)). The logarithmic terms cancel and Lambda(p)=log(p) at each prime p. The cutoff is inclusive, so a prime power equal to x remains present. No lower bound on x is needed.
 
 The same finite identity gives the nonprime partial sums in the weighted prime-limit argument and the selected-prime-power lower bound in the explicit Mertens envelope.

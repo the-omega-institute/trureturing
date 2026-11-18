@@ -48,7 +48,7 @@ def transfer (A : Fin 2 → Bond) (X : Bond) : Bond :=
 /-- The canonical core supplied by the coherent three-site reconstruction. -/
 def canonicalCore (t : Word 3 → ℂ) : Fin 2 → Bond := reconstructedMatrix t
 
-private lemma state_formula (n : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
+lemma state_formula (n : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
     (w : Word n) :
     mpsState n (A 0) (A 1) l r w = dotProduct l (wordMatrix A w *ᵥ r) := by
   have hA : (![A 0, A 1] : Fin 2 → Bond) = A := FinVec.etaExpand_eq A
@@ -64,7 +64,7 @@ lemma columns_factor (k m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) :
   rw [hw, ← mulVec_mulVec, dotProduct_mulVec]
   rfl
 
-private lemma observed_coherent (m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
+lemma observed_coherent (m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
     (v : Word 3 → ℂ) :
     ∃ q : Fin 2 → ℂ,
       rawPrefix 3 m (mpsState (3 + m) (A 0) (A 1) l r) *ᵥ v =
@@ -78,7 +78,7 @@ private lemma observed_coherent (m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → 
   rw [state_formula, dotProduct_mulVec]
   rfl
 
-private lemma gauge_lift (t : Word 3 → ℂ) (A : Fin 2 → Bond)
+lemma gauge_lift (t : Word 3 → ℂ) (A : Fin 2 → Bond)
     (l g : Fin 2 → ℂ) (ht : mpsState 3 (A 0) (A 1) l g = t)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) (n : ℕ) (r : Fin 2 → ℂ) :
     ∃ q : Fin 2 → ℂ, mpsState n (A 0) (A 1) l r =
@@ -151,7 +151,7 @@ private lemma chart_prefix_injective (A : Fin 2 → Bond) (l g : Fin 2 → ℂ)
     ring
   simpa only [hw] using congrFun hxy ![i, 0, 0]
 
-private lemma tail_gram (A : Fin 2 → Bond) (r : Fin 2 → ℂ) (m : ℕ) :
+lemma tail_gram (A : Fin 2 → Bond) (r : Fin 2 → ℂ) (m : ℕ) :
     tailMap A r m * (tailMap A r m)ᴴ =
       (transfer A)^[m] (vecMulVec r (star r)) := by
   have hs (k : ℕ) : tailMap A r k * (tailMap A r k)ᴴ =
@@ -196,7 +196,7 @@ lemma sandwich_injective {ι : Type} [Fintype ι]
     simpa only [conjTranspose_mul, conjTranspose_conjTranspose] using congrArg conjTranspose he
   exact conjTranspose_injective (hleft _ _ hc)
 
-private lemma boundary_phase (x y : Fin 2 → ℂ)
+lemma boundary_phase (x y : Fin 2 → ℂ)
     (h : vecMulVec x (star x) = vecMulVec y (star y)) :
     ∃ z : ℂ, ‖z‖ = 1 ∧ y = z • x := by
   classical

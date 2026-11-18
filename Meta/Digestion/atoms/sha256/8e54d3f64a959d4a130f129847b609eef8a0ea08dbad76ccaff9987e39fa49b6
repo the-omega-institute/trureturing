@@ -1,0 +1,140 @@
+**定理 36.1（固定支持全部带符号计数的显式有限界）。** 取任意
+$M,q,s\in\mathbb N_0$ 和实数 $r$，满足
+$1\le q<M$、$s\ge0$、$0<r<1$ 及 $a=rq/(M-q)<1$。
+在两个各含 $M$ 个状态的奇偶类 $C_+,C_-$ 上，令 $n=2M$，
+$\chi|_{C_+}=1$、$\chi|_{C_-}=-1$。固定任意
+$S\subset C_+$、$|S|=q$，使用[原卷定义 16.1、式 (16.1)](PARITY_HIDDEN_ARROW.md#16-增补十三稀疏支持的方向边界与行样本比较)
+的同一补偿核公式：
+
+$$
+b_S(x)=\begin{cases}
+r,&x\in S,\\
+-a,&x\in C_+\setminus S,\\
+0,&x\in C_-,
+\end{cases}
+\qquad
+P_S(x,y)=\frac{1+\chi(x)\chi(y)b_S(x)}n.
+\tag{36.1}
+$$
+
+这里仅要求上述有限参数条件，不要求 $n$ 为二的幂或 $q<M/2$。
+补偿恒等式 $\sum_{x\in C_+}b_S(x)=0$ 使 $P_S$ 双随机，
+均匀分布为其平稳律。取定义 16.1 的已知正向连续路径实验，即
+观察 $X_0,\ldots,X_s$，其实际联合质量为
+
+$$
+\mathbb P_S\{X_0=x_0,\ldots,X_s=x_s\}
+=\frac1n\prod_{t=0}^{s-1}P_S(x_t,x_{t+1}).
+\tag{36.2}
+$$
+
+任取整个支持的无重复枚举 $m:\{1,\ldots,q\}\to S$，令
+$J=\{1,\ldots,q\}\times\{+,-\}$，并按原卷式 (17.6) 在同一条路径上定义
+
+$$
+N_{j,\sigma}=\sum_{t=0}^{s-1}
+\mathbf1_{\{X_t=m(j),\ \chi(X_{t+1})=\sigma\}},
+\qquad
+p_{j,+}=\frac{1+r}{4M},\quad p_{j,-}=\frac{1-r}{4M},\quad
+\rho=\sum_{i\in J}p_i=\frac q{2M}.
+\tag{36.3}
+$$
+
+符号 $+,-$ 在计数公式中分别取数值 $1,-1$。置 $\lambda=s/n$，
+并令 $\mathsf Q_s=\bigotimes_{i\in J}\operatorname{Pois}(sp_i)$，
+即每一行的两个均值分别为 $\lambda(1+r)/2$、$\lambda(1-r)/2$，
+全部 $2q$ 个坐标相互独立。则对完整计数空间的每个事件
+$E\subseteq\mathbb N_0^J$ 都有
+
+$$
+\left|\mathbb P_S\{N\in E\}-\mathsf Q_s(E)\right|
+\le9s\rho^2=9\frac{\lambda q^2}{n}.
+\tag{36.4}
+$$
+
+因而以事件概率差的上确界为总变差距离时，同一界也控制
+$d_{\mathrm{TV}}(\mathcal L_S(N),\mathsf Q_s)$。
+该结论对任意固定支持及其整个枚举成立，不截断计数或事件，且包括 $s=0$。
+它给出 (27.6) 中已知正向连续路径部分的显式有限常数；独立对实验、
+未知方向转移以及 (27.3)–(27.4) 的极限结论不包含在本定理中。
+
+证明。一般局部依赖过程的 Poisson 比较可参见
+[Arratia–Goldstein–Gordon 定理 2](../../../Library/Dynamics/arratia1990poisson.md)。
+下面直接由补偿核的有限递推给出所需常数。对 $2q$ 个形式变量
+$z_{j,+},z_{j,-}$，定义多项式
+
+$$
+\begin{aligned}
+A&=-\rho+\sum_{j=1}^q(p_{j,+}z_{j,+}+p_{j,-}z_{j,-}),\\
+B&=-r\rho+\sum_{j=1}^q(p_{j,+}z_{j,+}-p_{j,-}z_{j,-}),
+\qquad P=1+A.
+\end{aligned}
+\tag{36.5}
+$$
+
+记 $\|F\|_1$ 为多项式各系数绝对值之和；它满足三角不等式及
+$\|FG\|_1\le\|F\|_1\|G\|_1$。令 $H_t(y)$ 为截至时刻 $t$、
+终点为 $y$ 的实际路径质量乘计数单项式后求和所得的多项式。
+均匀起点给出 $H_0(y)=1/n$。每条边乘上相应的标记变量后，
+核关于目的状态只依赖 $\chi(y)$，故逐步求和保持
+$H_t(y)=n^{-1}(U_t+\chi(y)V_t)$。
+在正类上 $H_t$ 恒为 $(U_t+V_t)/n$，而补偿项总和为零；
+将 (36.1) 和标记因子代入一次转移，分别收集常数项与 $\chi(y)$ 项，得到
+
+$$
+(U_0,V_0)=(1,0),\qquad
+U_{t+1}=PU_t+AV_t,\qquad
+V_{t+1}=B(U_t+V_t).
+\tag{36.6}
+$$
+
+对终点求和可知 $U_t$ 正是全部原生计数的概率生成多项式，
+所以其系数非负且总和为一，特别地 $\|U_t\|_1\le1$。
+另一方面，$P$ 是单次独立分类增量的生成多项式：
+该增量以概率 $1-\rho$ 为零，以概率 $p_i$ 为第 $i$ 个单位向量。
+记 $s$ 次此类独立增量之和的律为 $\mathsf C_s$，其生成多项式为 $P^s$。
+
+置 $\beta=(1+r)\rho$。原假设 $rq<M-q$ 给出 $\beta<1/2$，
+而 $r<1$ 给出 $\beta\le2\rho$。由 (36.5) 的系数直接得到
+$\|P\|_1\le1$、$\|A\|_1\le2\rho$、$\|B\|_1\le\beta$。
+若 $\|V_t\|_1\le2\beta$，则 (36.6) 给出
+$\|V_{t+1}\|_1\le\beta(1+2\beta)\le2\beta$；初值为零，
+故此反馈界对全部 $t$ 成立。再由
+$U_{t+1}-P^{t+1}=P(U_t-P^t)+AV_t$，得到
+
+$$
+\|U_{t+1}-P^{t+1}\|_1
+\le\|U_t-P^t\|_1+4\rho\beta
+\le\|U_t-P^t\|_1+8\rho^2.
+\tag{36.7}
+$$
+
+从零时刻归纳，$\|U_s-P^s\|_1\le8s\rho^2$。
+对任意 $E\subseteq\mathbb N_0^J$，求和属于 $E$ 的系数这一线性泛函
+被 $\|\cdot\|_1$ 控制，因此
+$|\mathbb P_S\{N\in E\}-\mathsf C_s(E)|\le8s\rho^2$。
+
+最后比较分类增量律 $\mu=(1-\rho)\delta_0+\sum_i p_i\delta_{e_i}$
+与完整单步乘积律 $\nu=\bigotimes_i\operatorname{Pois}(p_i)$。
+后者在零向量的质量为 $e^{-\rho}$，在 $e_i$ 的质量为 $e^{-\rho}p_i$。
+由 $1-\rho\le e^{-\rho}\le1$，测度
+$c=(1-\rho)\delta_0+e^{-\rho}\sum_i p_i\delta_{e_i}$
+同时受 $\mu,\nu$ 支配。其总质量为 $1-d$，其中
+$d=\rho(1-e^{-\rho})\le\rho^2$ 且 $0\le d\le1$。
+于是 $c^{\otimes s}$ 同时受两种完整增量历史律支配，总质量为 $(1-d)^s$。
+将同一历史的全部坐标按时间求和后，支配关系与总质量均保留。
+分类侧的像为 $\mathsf C_s$；Poisson 侧由独立 Poisson 和的加法公式，
+其像恰为全部坐标独立、均值为 $sp_i$ 的 $\mathsf Q_s$。
+两个概率律若共享质量为 $h$ 的子测度，则任意事件的概率差至多为 $1-h$：
+分别从事件及其补集中扣除共同质量即可。因此
+
+$$
+|\mathsf C_s(E)-\mathsf Q_s(E)|
+\le1-(1-d)^s\le sd\le s\rho^2.
+\tag{36.8}
+$$
+
+该子测度论证保留完整 Poisson 律，所有多次到达的质量都由共同部分的补集控制。
+将 (36.7) 的事件界与 (36.8) 用三角不等式相加即得 (36.4)。
+$s=0$ 时两个计数律均集中在零向量，以上空乘积和递推仍成立。∎
+

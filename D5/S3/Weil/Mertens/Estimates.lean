@@ -471,7 +471,7 @@ theorem integrable_const_div_mul_log_sq {x : ℝ} (c : ℝ) (hx : 2 ≤ x) :
     simp only [Set.mem_Ioi] at ht
     exact one_div_nonneg.mpr <| mul_nonneg (by linarith) (sq_nonneg _)
 
-private theorem integrable_E₁Λ_div_mul_log_sq {x : ℝ} (hx : 2 ≤ x) :
+theorem integrable_E₁Λ_div_mul_log_sq {x : ℝ} (hx : 2 ≤ x) :
     MeasureTheory.IntegrableOn (fun x ↦ E₁Λ x / (x * log x ^ 2)) (Set.Ioi x) MeasureTheory.volume := by
   obtain ⟨c, hc1, hc2⟩ := E₁Λ.bounded'
   apply MeasureTheory.Integrable.mono (integrable_const_div_mul_log_sq c hx)

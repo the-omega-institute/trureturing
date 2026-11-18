@@ -254,7 +254,7 @@ private lemma quartic_parameter_identity :
     (mem_nonZeroDivisors_iff_ne_zero.mpr hc)
   exact (RingHom.map_det _ _).trans hdet
 
-private lemma quartic_image (t : (Fin 3 → Fin 2) → ℂ) (ht : t ∈ openBoundaryMPS 3) :
+lemma quartic_image (t : (Fin 3 → Fin 2) → ℂ) (ht : t ∈ openBoundaryMPS 3) :
     MvPolynomial.eval t kernelMatrix.det = 0 := by
   rw [parameter_image] at ht
   obtain ⟨x, rfl⟩ := ht
@@ -366,7 +366,7 @@ lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
     change ((d / v) ^ 2 * c)⁻¹ * (d / v) = v / (d * c)
     field_simp
 
-private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
+lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
     (hquartic : MvPolynomial.eval t kernelMatrix.det = 0)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
     (∀ i k : Fin 2, dotProduct (fun j => t ![i, k, j]) (reconstructedKernel t) =

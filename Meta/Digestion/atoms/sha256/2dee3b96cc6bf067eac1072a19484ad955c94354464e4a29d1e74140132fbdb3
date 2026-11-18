@@ -1,0 +1,29 @@
+## 5. The universal risk–representation inequality
+
+For a p configuration z on current original fibre c, define
+
+$$
+g(z)=\inf_{N\in G_p}\operatorname{TV}(D_z,(I_c)_*N).
+$$
+
+Define its worst-positive-history configuration-average value
+
+$$
+E_G(M)=\sup_{h\in H_p}\sum_z\rho _h(z)g(z).\tag{5.1}
+$$
+
+This is not TV after averaging the decoders, an average over random actual histories, or the marginalized-coherence defect.
+
+Assume μ({k≥3})>0. Set
+
+$$
+\begin{aligned}
+\eta &=(5/13)^3(8/13)^5-(2/5)^3(3/5)^5\\
+&=14219478376/318644812890625>0.
+\end{aligned}
+$$
+
+$$
+A_p=1+C/\delta _p,\qquad A_\beta =C/\delta _\beta ,\qquad A_G=A_p+(10/3)A_\beta .\tag{5.2}
+$$
+

@@ -115,7 +115,7 @@ private lemma smooth_record (m : ℕ) : ContDiff ℝ (⊤ : WithTop ℕ∞) (rec
       intro j
       exact smooth_density m _ _
 
-private lemma normalized_rows (θ : Parameter) (i : Fin 2) :
+lemma normalized_rows (θ : Parameter) (i : Fin 2) :
     left θ ᵥ* core θ i = Pi.single i 1 := by
   ext j
   fin_cases i <;> fin_cases j <;>
@@ -132,7 +132,7 @@ private lemma gauge_row (θ : Parameter) (s : ℂ) (hs : s ≠ 0)
 
 /-- The common three-site reconstruction identifies the five canonical core
 coordinates. Right boundaries are unrestricted in this intermediate statement. -/
-private lemma canonical_core_rigidity (θ η : Parameter) (g h : Fin 2 → ℂ)
+lemma canonical_core_rigidity (θ η : Parameter) (g h : Fin 2 → ℂ)
     (heq : mpsState 3 (core θ 0) (core θ 1) (left θ) g =
       mpsState 3 (core η 0) (core η 1) (left η) h)
     (hg : MvPolynomial.eval (mpsState 3 (core θ 0) (core θ 1) (left θ) g)
@@ -193,7 +193,7 @@ private lemma triple_formula (θ : Parameter) (g : Fin 2 → ℂ) (i j k : Fin 2
     normalized_rows, single_one_dotProduct, Matrix.mulVec_mulVec]
   rfl
 
-private lemma boundary_contraction (θ : Parameter) (g : Fin 2 → ℂ) (k : Fin 2) :
+lemma boundary_contraction (θ : Parameter) (g : Fin 2 → ℂ) (k : Fin 2) :
     (∑ i : Fin 2, ∑ j : Fin 2, left θ i * left θ j *
       mpsState 3 (core θ 0) (core θ 1) (left θ) g ![i, j, k]) = g k := by
   simp only [triple_formula]
@@ -411,11 +411,11 @@ theorem phase_rigidity (m : ℕ) {θ η : Parameter}
   · exact Complex.ofReal_injective (by simpa [right] using congrFun hr 0)
   · simpa [right] using congrFun hr 1
 
-private lemma density_hermitian (m : ℕ) (θ : Parameter) :
+lemma density_hermitian (m : ℕ) (θ : Parameter) :
     (density m θ).IsHermitian :=
   Matrix.isHermitian_mul_conjTranspose_self _
 
-private lemma density_rank (m : ℕ) (θ : Parameter) : (density m θ).rank ≤ 2 := by
+lemma density_rank (m : ℕ) (θ : Parameter) : (density m θ).rank ≤ 2 := by
   unfold density state rawPrefix
   rw [columns_factor]
   exact (Matrix.rank_mul_le_left _ _).trans
@@ -505,7 +505,7 @@ theorem open_subchart_collision (m : ℕ) {U : Set Parameter}
 
 def originalCore : Fin 2 → Bond := ![!![1, 2; 3, 4], !![5, 6; 7, 8]]
 
-private def witnessParameter (m : ℕ) : Parameter :=
+def witnessParameter (m : ℕ) : Parameter :=
   (![(-3 : ℂ), 1, 1 / 2, -1 / 2, 2],
     (2 : ℝ) ^ (2 + m) * 5, (2 : ℂ) ^ (2 + m) * 17)
 
@@ -514,7 +514,7 @@ private lemma witness_core (m : ℕ) : core (witnessParameter m) =
   ext i j k
   fin_cases i <;> fin_cases j <;> fin_cases k <;> norm_num [core, witnessParameter]
 
-private lemma witness_gauge (m : ℕ) :
+lemma witness_gauge (m : ℕ) :
     state (3 + m) (witnessParameter m) =
       mpsState (3 + m) (originalCore 0) (originalCore 1) ![1, 0] ![1, 2] := by
   let U : Bond := !![1, 2; 5, 6]

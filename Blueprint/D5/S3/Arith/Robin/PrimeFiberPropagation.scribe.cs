@@ -19,6 +19,12 @@ internal sealed class PrimeFiberPropagationDocument : IScribeDocumentDefinition
                 + "Since log(log(n*m))=log(log(n))+log(1+log(m)/log(n)), the test says that the relative "
                 + "increase of Z, weighted by log(log(n)), is paid by the increase of the double logarithm. "
                 + "It discards the existing Robin slack at n, so it is sufficient for propagation and not necessary.")),
+            Describe.Lean(DescribeId.Create("prime-edge-excess"),
+                DeclarationHandle.Create(Prefix + "edge_excess"),
+                H("The exact relative excess on adding one prime"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every prime q and nonzero natural n, divisorRatio(n*q)/divisorRatio(n)-1 equals 1/(q*sigma(1,q^v)), where v is the exponent of q in n. Positivity makes every cancellation valid."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("divisor-ratio-positive"),
                 DeclarationHandle.Create(Prefix + "divisorRatio_pos"),

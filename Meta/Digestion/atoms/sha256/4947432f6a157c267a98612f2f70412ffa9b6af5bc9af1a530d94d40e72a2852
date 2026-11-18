@@ -1,0 +1,24 @@
+#### 反例 5.5：线性投影本身不删除干涉交叉项
+
+令 $Q_o$ 为实线投影。若 $Q_o(B_j)=a_jo$，则
+
+$$
+\left\|Q_o(B_1+B_2)\right\|^2
+ =(a_1+a_2)^2=a_1^2+a_2^2+2a_1a_2.
+$$
+
+取 $B_1=B_2=o$，两个外积 $o\wedge B_j$ 均为零， 交叉项却为二。 先将每一路变为模方再相加，已经另外引入非相干求和规则。
+
+量子情形同样有
+
+$$
+|\langle o|\psi_1+\psi_2\rangle|^2 =
+ |\langle o|\psi_1\rangle|^2+
+ |\langle o|\psi_2\rangle|^2+
+ 2\operatorname{Re}\!\left(
+ \langle o|\psi_1\rangle
+ \overline{\langle o|\psi_2\rangle}\right).
+$$
+
+是否保留交叉项取决于相干准备和记录处理。 若两条路径有归一化标记 $m_1,m_2$，令 $a_j=\langle o|\psi_j\rangle$，忽略标记后交叉项为 $2\operatorname{Re}(a_1\overline{a_2}\langle m_2|m_1\rangle)$。 标记正交是该项对所有振幅普遍消失的充分条件； 某一读数也可因特定相位偶然为零。 这取决于准备和记录，不能归因于“输出只有一条线”。
+

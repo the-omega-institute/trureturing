@@ -9,6 +9,7 @@ claim: Question 3 asks for the least number of open orthogonality-free sets cove
 strata_touched:
   - D5/S3/Topology/SphereOrthogonalityCover
   - D5/S3/Topology/SphereBrouwerObstruction
+  - D5/S3/Topology/AnnularSecondZero
 license: citation-only
 triage: anchor
 ---
@@ -97,6 +98,29 @@ condition.
 ```json
 {"declaration":"TauCeti.not_contractibleSpace_sphere","source_revision":"5a01f5fe3621126cccf9ba22e700493cbc7b7156","source_path":"TauCeti/AlgebraicTopology/Sphere/Contractible.lean","transitive_source_modules":49,"transitive_source_lines":9630,"retire_when":{"own_pinned_mathlib_has_equivalent_full_telescope":true,"all_live_consumers_compile_with_direct_replacement":true}}
 ```
+
+## Regular zeros and annular extensions
+
+`D5/S3/Topology/AnnularSecondZero.constantExterior_second_zero` applies the
+same classical sphere obstruction in any nontrivial finite-dimensional real
+normed space. A continuous map equal to a fixed nonzero constant outside a
+bounded set cannot have a unique zero with invertible ordinary real derivative.
+After composing with the inverse derivative, a little-o remainder estimate
+homotopes the normalized image of a small sphere to its identity. Under a
+unique-zero hypothesis, positive-radius expansion then homotopes that image
+to the constant exterior, contradicting noncontractibility. This argument
+does not require the inverse-function theorem or a strict derivative.
+
+`D5/S3/Topology/AnnularSecondZero.annular_second_zero` extends a continuous
+complex-valued map on a positive-radius closed annulus to such a map on the
+whole real plane. Both boundary circles must map to the strict left half-plane.
+Radial collars interpolate to minus one; their negative real parts exclude
+new zeros. An interior regular zero therefore forces a distinct zero strictly
+inside the same annulus. The derivative is real, with no holomorphicity or
+assumption on any other zero. These are standard consequences of the sphere
+obstruction, not a claimed resolution of a new external open problem. An
+application must separately supply its residual, boundary inequalities and
+regular interior zero; no physical dynamics or thermodynamic cost follows.
 
 ## Verified locator
 
