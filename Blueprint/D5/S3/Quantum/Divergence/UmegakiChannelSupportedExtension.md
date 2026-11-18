@@ -94,7 +94,7 @@ Lean statement: `D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension.varia
 
 *Commentary.*
 
-Take ratios over every finite reference, faithful correlated input bases and complex zero-partial-trace directions of positive input inverse form. Use the actual output variational form and adjoin zero before taking the supremum. The supported Moore–Penrose form is its exact output representation.
+For t in [0,1], take ratios over every finite reference, faithful correlated input bases and complex zero-partial-trace directions of positive input inverse form. Use the actual output variational form and adjoin zero before taking the supremum. The supported Moore–Penrose form is its exact output representation.
 
 **Theorem 1.8 (Upper bound at each parameter).**
 

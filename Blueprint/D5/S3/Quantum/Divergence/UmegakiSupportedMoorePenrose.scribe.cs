@@ -22,7 +22,7 @@ internal sealed class UmegakiSupportedMoorePenroseDocument : IScribeDocumentDefi
                 H("Range at the actual channel output"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For a positive semidefinite input base and a complex direction of zero partial trace, a finite input variational form puts the amplified direction in the range of the arithmetic map of the actual amplified base. The output value is its supported Moore–Penrose pairing."))),
+                    Paragraph(Text("For t in [0,1], a positive semidefinite input base and a complex direction of zero partial trace, bounded input test values put the amplified direction in the range of the arithmetic map of the actual amplified base. The output value is its supported Moore–Penrose pairing."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("variationalmetriccoefficient-eq-ssup-moorepenrose"),
                 DeclarationHandle.Create(Prefix + "variationalMetricCoefficient_eq_sSup_moorePenrose"),
