@@ -183,7 +183,8 @@ theorem entropy_lower_scaled {α : Type*} {l : Filter α}
     have h := hn.add (hW.const_div_atTop 1)
     simpa only [add_div, add_zero] using h
   have hlog : Tendsto (fun x => log ((n x : ℝ) + 1) / W x) l (𝓝 0) := by
-    have h := (isLittleO_log_id_atTop.tendsto_div_nhds_zero.comp (hnR.add_const 1)).mul hn1
+    have htop := tendsto_atTop_add_const_right l 1 hnR
+    have h := (isLittleO_log_id_atTop.tendsto_div_nhds_zero.comp htop).mul hn1
     simp only [zero_mul] at h
     apply h.congr'
     filter_upwards [] with x
@@ -193,7 +194,7 @@ theorem entropy_lower_scaled {α : Type*} {l : Filter α}
   simp only [sub_zero] at h
   apply h.congr'
   filter_upwards [] with x
-  dsimp only [entropyLower]
+  dsimp only [entropyLower, Function.comp_def]
   ring
 
 /-- Taking a fixed nonnegative fraction and rounding down preserves its scale. -/
@@ -217,7 +218,7 @@ theorem min_scaled {α : Type*} {l : Filter α}
     (hW : Tendsto W l atTop)
     (hM : Tendsto (fun x => (M x : ℝ) / W x) l (𝓝 d))
     (hN : Tendsto (fun x => (N x : ℝ) / W x) l (𝓝 d)) :
-    Tendsto (fun x => (min (M x) (N x) : ℝ) / W x) l (𝓝 d) := by
+    Tendsto (fun x => ((min (M x) (N x) : ℕ) : ℝ) / W x) l (𝓝 d) := by
   have h := hM.min hN
   simp only [min_self] at h
   apply h.congr'

@@ -6,7 +6,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open Filter Real Finset LeanInformationAudit
-open scoped Topology
+open scoped Topology BigOperators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Entropy
 
@@ -290,7 +290,7 @@ abbrev arena : Arena where
     {d : ℝ}, Tendsto W l atTop →
     Tendsto (fun x => (M x : ℝ) / W x) l (𝓝 d) →
     Tendsto (fun x => (N x : ℝ) / W x) l (𝓝 d) →
-    R.readout () α (fun x => (min (M x) (N x) : ℝ) / W x) l (𝓝 d)
+    R.readout () α (fun x => ((min (M x) (N x) : ℕ) : ℝ) / W x) l (𝓝 d)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
