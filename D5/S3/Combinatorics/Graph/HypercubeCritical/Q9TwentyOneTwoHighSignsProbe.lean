@@ -19,7 +19,8 @@ attribute [local instance] Classical.propDecidable
 open private armTypes arm_coordinates flip_direction_unique from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareExclusion
 open private diff diff_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private diff_self low_not_three from D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
+open private diff_self diff_triangle_card adj_of_diff_subset_card low_not_three from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open private adjacent_exists_flip from
@@ -172,6 +173,47 @@ private lemma actual_core_arm_label
   · exact Or.inr ⟨he, t, p, hta, htb, htc, hcore, hp', hp2, hhp, hup⟩
 
 #print axioms actual_core_arm_label
+
+/-- Distance two from an unequal-direction core would give the low
+neighbor of an equal-direction core a third neighbor. -/
+private lemma equal_direction_core_not_distance_two_from_distinct
+    {n : ℕ} {S : Finset (Q n)} (x : Q n) {a b c t d e : Fin n}
+    (hac : a ≠ c) (hat : a ≠ t) (hct : c ≠ t)
+    (hab : a ≠ b) (had : a ≠ d) (hae : a ≠ e)
+    (hbd : b ≠ d) (hbe : b ≠ e) (hde : d ≠ e)
+    (m u v w : (S : Set (Q n)))
+    (hm : diff m.val x = {c, t})
+    (hv : diff v.val x = {a, c, t}) (hw : diff w.val x = {b, d, e})
+    (hm2 : ((hypercube n).induce (S : Set (Q n))).degree m = 2)
+    (hmu : ((hypercube n).induce (S : Set (Q n))).Adj m u)
+    (hmv : ((hypercube n).induce (S : Set (Q n))).Adj m v)
+    (huv : u ≠ v) (huw : u ≠ w) (hvw : v ≠ w) :
+    hammingDist v.val w.val ≠ 2 := by
+  intro hdist
+  have hcount := diff_triangle_card v.val w.val x
+  change hammingDist v.val w.val + 2 * _ = _ at hcount
+  rw [hdist, hv, hw] at hcount
+  have hcardV : ({a, c, t} : Finset (Fin n)).card = 3 := by simp [hac, hat, hct]
+  have hcardW : ({b, d, e} : Finset (Fin n)).card = 3 := by simp [hbd, hbe, hde]
+  rw [hcardV, hcardW] at hcount
+  have hcard : (({a, c, t} : Finset (Fin n)) ∩ {b, d, e}).card = 2 := by omega
+  have hsub : ({a, c, t} : Finset (Fin n)) ∩ {b, d, e} ⊆ {c, t} := by
+    intro i hi
+    obtain ⟨hl, hr⟩ := mem_inter.mp hi
+    have hia : i ≠ a := by
+      rintro rfl
+      simp [hab, had, hae] at hr
+    simpa only [mem_insert, hia, false_or] using hl
+  have hpair : ({a, c, t} : Finset (Fin n)) ∩ {b, d, e} = {c, t} :=
+    eq_of_subset_of_card_le hsub (by simp [hcard, hct])
+  have hsub' : diff m.val x ⊆ diff w.val x := by
+    rw [hm, hw, ← hpair]
+    exact inter_subset_right
+  have hmw : ((hypercube n).induce (S : Set (Q n))).Adj m w :=
+    adj_of_diff_subset_card hsub' (by simp [hm, hw, hct, hcardW])
+  exact low_not_three hm2 huv huw hvw hmu hmv hmw
+
+#print axioms equal_direction_core_not_distance_two_from_distinct
 
 private lemma equal_spoke_phase_at_center
     {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
