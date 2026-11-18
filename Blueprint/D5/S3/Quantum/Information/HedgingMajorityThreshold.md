@@ -102,7 +102,19 @@ $$(\operatorname{claim}) \Leftrightarrow (\forall (n: \mathbb{N}), (\forall (k: 
 
 The source's strict-majority question is expressed as an equivalence: a joint channel can win at least k games with certainty exactly when alpha² = cos²(theta), the case in which a single game can be won with certainty. The bounds n < 2k and k <= n imply n >= 1. All finite Kraus families are allowed, and theta ranges over all real numbers. The assertion concerns strict majorities; it makes no characterization for k <= n/2.
 
-**Theorem 1.9 (Certain majority success requires certain single-game success).**
+**Theorem 1.9 (The trace pairing of a retained observable).**
+
+$$\forall (A: \operatorname{Type}), (\forall (B: \operatorname{Type}), ([\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] \forall (X: \operatorname{Matrix}\left((A\times B), (A\times B), \mathbb{C}\right)), (\forall (D: \operatorname{Matrix}\left(B, B, \mathbb{C}\right)), (\operatorname{trace}\left(\operatorname{Matrix.kroneckerMap}\left(\lambda u v \mapsto u \cdot v, (1: \operatorname{Matrix}\left(A, A, \mathbb{C}\right)), D\right) \cdot X\right) = \operatorname{trace}\left(D \cdot \operatorname{partialTraceFirst}\left(X\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/HedgingMajorityThreshold.trace_retained` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The joint trace of an observable on the second factor equals its trace pairing with the partial trace over the first factor.
+
+**Theorem 1.10 (Certain majority success requires certain single-game success).**
 
 $$\operatorname{claim}$$
 
@@ -135,6 +147,7 @@ Conversely, if alpha² = c² and alpha > 0, then alpha = |c| and sqrt(1 - alpha�
 - Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.result`
 - Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.sharedAmp`
 - Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.sharedVec`
+- Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.trace_retained`
 - Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.winAtLeast`
 - Truth anchor: `D5/S3/Quantum/Information/HedgingMajorityThreshold.winVec`
 - Dependency: [D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence](../Entanglement/LocalObservationPartialTraceEquivalence.md)
