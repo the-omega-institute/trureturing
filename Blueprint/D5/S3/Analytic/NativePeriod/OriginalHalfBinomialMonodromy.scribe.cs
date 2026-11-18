@@ -1,0 +1,56 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.NativePeriod;
+
+internal sealed class OriginalHalfBinomialMonodromyDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Native period and source continuation with fixed original normalization.",
+        H("OriginalHalfBinomialMonodromy"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("b"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.b"),
+                H("The native base point"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The common base point is b=1/2."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("baselog"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.baseLog"),
+                H("The initial lift"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The initial lift is the principal complex logarithm of b."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("deck"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.deck"),
+                H("The deck displacement"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each integer k, deck(k)=2 pi i k."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("nativecharts"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.NativeCharts"),
+                H("The native path chart certificate"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A certificate contains the continuous exponential projection into the negative half-plane, locally normalized inverse compatibility along the path, equality of numerator germs on transitions, holomorphy and the native equation and oriented Wronskian in every r-chart, and the literal initial numerator germ at b. The denominator in every such chart is the single-valued original P."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("native-path-continuation"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.native_path_continuation"),
+                H("Every continuous punctured-disk path"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every continuous path gamma with norm less than one and nonzero values, starting at b, there is a unique continuous lift starting at Log(b) with this native chart certificate. The proof applies Complex.isCoveringMap_exp and IsCoveringMap.liftPath to the path valued in the nonzero complex subtype. Norm(exp(zeta))=exp(Re(zeta)) forces the lift into E. Continuity then makes neighboring normalized chart parameters differ in imaginary part by less than pi, which gives germ equality rather than just equality of path values."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-loop-monodromy"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.native_loop_monodromy"),
+                H("All integer endpoint actions"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every such based loop, its lift ends at Log(b)+2 pi i k for an integer k, obtained from Complex.exp_eq_exp_iff_exists_int. The endpoint numerator germ is iP(1-r)+2kP(r), and the endpoint ratio germ is tau(r)+2k. No winding integral or differentiability of the path is assumed; negative integers and zero are included."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gamma0"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.gamma0"),
+                H("The positive zero loop"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("gamma0(t)=(1/2)exp(2 pi i t) for t in the real unit interval."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("positivelift"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.positiveLift"),
+                H("The positive lift"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The explicit lift is Log(b)+2 pi i t."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("positive-zero-monodromy"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalHalfBinomialMonodromy.positive_zero_monodromy"),
+                H("The exact native A0 action"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The explicit positive lift carries the native chart certificate and ends at Log(b)+2 pi i. Its endpoint numerator germ is iP(1-r)+2P(r), while the denominator remains P(r). On the ordered column (n,y), this is A0=[[1,2],[0,1]]."))), DescribeRole.Theorem))));
+}

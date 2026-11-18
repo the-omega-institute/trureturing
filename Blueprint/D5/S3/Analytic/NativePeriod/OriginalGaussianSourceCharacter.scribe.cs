@@ -1,0 +1,56 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.NativePeriod;
+
+internal sealed class OriginalGaussianSourceCharacterDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Native period and source continuation with fixed original normalization.",
+        H("OriginalGaussianSourceCharacter"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("c"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.C"),
+                H("The actual negative source"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("C(r) is OriginalGaussianSourceEvaluation.sourceAmplitude false 0 r."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("sourcecover"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.sourceCover"),
+                H("The normalized source on the complement cover"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The lifted source is exp(-zeta/2), with normalization fixed by the original source amplitude."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("sourcechart"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.sourceChart"),
+                H("The source in the native complement chart"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The source chart is exp(-localLog(zeta,1-r)/2)."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("actual-source-branch"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.actual_source_branch"),
+                H("The original source branch and its holomorphy"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every r in the full unit disk the literal negative zero amplitude equals exp(-Log(1-r)/2), is holomorphic on that disk, and equals the actual negative mode generator at u=0. This follows by evaluating the existing public HasSum sourceAmplitude_generators at u=0, without reproving its binomial series or copying the private closed-generator proof. The inequality Re(1-r)>0 fixes the principal branch."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("source-deck"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.source_deck"),
+                H("The exact integer source character"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The normalized lifted source is entire. Translation by 2 pi i k multiplies it by (-1)^k for every integer k, including negative windings."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sourcecharts"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.SourceCharts"),
+                H("The actual source chart certificate"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A source certificate contains holomorphic explicit complementary source charts, neighborhood equality of their transition germs, the initial literal negative source germ, and equality with the fixed normalized lifted source along the path. It is specific to the native period path charts."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("actual-source-path"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.actual_source_path"),
+                H("The source along every complementary path"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every continuous path with norm(1-r)<1 avoiding r=1 and beginning at b carries the native period lift and the actual source chart certificate. The proof uses normalized local inverse charts and their neighborhood transition identities, then matches their initial phase to the public source generator."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-source-loop-character"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.actual_source_loop_character"),
+                H("The actual all-loop source character"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The literal source C is holomorphic on the entire original unit disk. This same disk is a neighborhood of every point of every path in that disk, so its single-valued germs continue around zero with character one. For every based continuous loop in the complementary punctured disk, the native lift has endpoint Log(b)+2 pi i k, and the returned source germ is (-1)^k times the actual C. This includes all integers and uses no differentiable-path or winding-integral assumption."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("positive-source-monodromy"),
+                DeclarationHandle.Create("D5/S3/Analytic/NativePeriod/OriginalGaussianSourceCharacter.positive_source_monodromy"),
+                H("The positive source sign around one"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The positive native loop gamma1 with its positive complementary exponential lift has the actual source chart certificate. Its endpoint source germ is minus the literal negative zero amplitude C; its initial germ is C. The phase comes from the actual source generator, without scalar freedom."))), DescribeRole.Theorem))));
+}
