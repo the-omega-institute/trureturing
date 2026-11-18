@@ -1,3 +1,4 @@
+import Reg.Support.SingleDependentReadout
 import Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGeneratedSource
 import Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums
@@ -152,4 +153,71 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end radial_differential
+abbrev literalDiffSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ → ℂ)
+    (fun _ => ℂ → Prop)
+def literalDiffActual : Realization literalDiffSignature :=
+  realize _ (fun _ _ f z => DifferentiableAt ℂ f z) (fun e => nomatch e)
+def literalDiffBad : Realization literalDiffSignature :=
+  realize _ (fun _ _ _ _ => False) (fun e => nomatch e)
+private theorem literalDiffDependence :
+    ObservationalDependence literalDiffSignature literalDiffActual := by
+  intro i
+  refine ⟨(), (fun _ => 0), (fun z => z⁻¹), ?_⟩
+  intro h
+  have hd : DifferentiableAt ℂ (fun z : ℂ => z⁻¹) 0 :=
+    Eq.mp (congrFun h 0) (differentiableAt_const (0 : ℂ))
+  exact (differentiableAt_inv_iff.mp hd) rfl
+
+namespace literal_differentiable
+abbrev arena : Arena where
+  signature := literalDiffSignature
+  Law R := ∀ (out out' : Bool) (p q : ℕ) {z : ℂ} (_hz : ‖z‖<1),
+    R.readout () () (externalT out p out' q) z
+
+private theorem rejected_fails : ¬ arena.Law literalDiffBad := by
+  intro h
+  exact h true true 0 0 (z := 0) (by simp)
+
+def family : Registration arena (type_of% (@literal_differentiable)) where
+  actual := literalDiffActual
+  bridge := Iff.rfl
+  variation := ⟨@literal_differentiable, literalDiffBad, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law literalDiffActual literalDiffBad rejected_fails
+  dependence := literalDiffDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@literal_differentiable) (Realization literalDiffSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums.literal_differentiable.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums.literal_differentiable.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize literalDiffSignature literalDiffActual.readout literalDiffActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end literal_differentiable
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums

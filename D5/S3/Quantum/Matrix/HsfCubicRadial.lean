@@ -99,7 +99,7 @@ private theorem scalar_derivatives (a b c d k : ℝ) :
     simp [p,s,f3,p1,p2]
     ring
 
-private theorem trace_cubic (A B : Matrix n n ℂ) (t : ℝ) :
+theorem trace_cubic (A B : Matrix n n ℂ) (t : ℝ) :
     (Matrix.trace ((A + t • B)^3)).re =
       (Matrix.trace (A^3)).re + 3*(Matrix.trace (A*A*B)).re*t +
       3*(Matrix.trace (A*B*B)).re*t^2 + (Matrix.trace (B^3)).re*t^3 := by
@@ -141,7 +141,7 @@ theorem cubic_derivatives (A B : Matrix n n ℂ) (k : ℝ) :
       Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, one_mul] <;>
     simp only [h1, h2, h3, h4] <;> ring
 
-private theorem trace_weight_square_nonneg (W E : Matrix n n ℂ)
+theorem trace_weight_square_nonneg (W E : Matrix n n ℂ)
     (hW : W.PosSemidef) (hE : E.IsHermitian) :
     0 ≤ (Matrix.trace (W * E^2)).re := by
   have h := (hW.conjTranspose_mul_mul_same E).trace_nonneg
