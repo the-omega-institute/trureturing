@@ -8,6 +8,7 @@ noncomputable section
 open Filter Real Finset LeanInformationAudit
 open scoped Topology BigOperators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 open _root_.D5.S3.Arith.Robin.Analytic.OmegaTailUpper
 open _root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.Exchange
 
@@ -404,5 +405,92 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end TailBound
+
+namespace LogarithmicBound
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (P s : ℝ) (node : ℕ → ℝ) (Rset : Finset ℕ)
+    (hP : 0 < P) (hs : 0 < s) (hmono : Monotone node) (hzero : node 0 = 0)
+    (hfar : 3 * P / 4 ≤ P * exp (-node n / s))
+    (hR : Rset ⊆ primeInterval (P / 2) (3 * P / 4))
+    (h : Fin n → ℕ) (D lambda x : ℝ)
+    (hbase : ∑ p ∈ Nat.primesLE ⌊P⌋₊ \ Rset, log (p : ℝ) ≤ P - D)
+    (hbudget : (2 / s) * ∑ i : Fin n, node (i.val + 1) * (h i : ℝ) ≤ D)
+    (hthreshold : threshold lambda x < ((Nat.primesLE ⌊P⌋₊ \ Rset).card : ℝ))
+    (hPx : P ≤ log x) (hx : 0 < x),
+    R.readout () () (∏ i : Fin n,
+      (primeInterval (P * exp (-node (i.val + 1) / s))
+        (P * exp (-node i.val / s))).card.choose (h i) *
+      (primeInterval (P * exp (node i.val / s))
+        (P * exp (node (i.val + 1) / s))).card.choose (h i)) (tailCount lambda x)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h 0 1 1 (fun _ => 0) ∅ (by norm_num) (by norm_num)
+    (fun _ _ _ => le_rfl) rfl (by norm_num) (by simp) (fun _ => 0)
+    0 (-2) (exp (exp 1)) (by norm_num) (by simp)
+    (by simp only [Nat.floor_one, sdiff_empty, Nat.primesLE_one, card_empty,
+          Nat.cast_zero, threshold, scale, log_exp, div_one]
+        have := exp_pos (1 : ℝ)
+        linarith)
+    (by simpa only [log_exp] using (one_le_exp_iff.mpr (by norm_num : (0 : ℝ) ≤ 1)))
+    (exp_pos _)
+
+def family : Registration arena (type_of% @logarithmic_exchange_bound) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@logarithmic_exchange_bound, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (0 : ℕ), 1, ?_⟩
+    intro he
+    have hh : (1 : ℕ) ≤ 0 := Eq.mp (congrFun he 0) (le_refl 0)
+    norm_num at hh
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@logarithmic_exchange_bound) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Exchange.logarithmic_exchange_bound.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaSecond.Exchange.LogarithmicBound.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaSecond.Exchange
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end LogarithmicBound
 
 end Reg.D5.S3.Arith.Robin.Analytic.OmegaSecond.Exchange

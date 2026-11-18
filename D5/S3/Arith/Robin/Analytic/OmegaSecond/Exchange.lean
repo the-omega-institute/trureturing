@@ -7,6 +7,7 @@
    digest: Budget-feasible equal-cardinality prime exchanges and their injective count. -/
 
 import D5.S3.Arith.Robin.Analytic.OmegaTail.Lower
+import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.Data.Fintype.Prod
 
 set_option autoImplicit false
@@ -18,6 +19,7 @@ open scoped Topology BigOperators
 namespace D5.S3.Arith.Robin.Analytic.OmegaSecond.Exchange
 open D5.S3.Arith.Robin.Analytic.OmegaTailUpper
 open D5.S3.Arith.Robin.Analytic.OmegaTail.Lower
+open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 
 /-- Disjoint removable and insertable prime bins around a prime base. -/
 structure ExchangeSystem (ι : Type*) where
@@ -30,6 +32,76 @@ structure ExchangeSystem (ι : Type*) where
   pos_base : ∀ i, Disjoint (pos i) base
   neg_disjoint : Pairwise (fun i j => Disjoint (neg i) (neg j))
   pos_disjoint : Pairwise (fun i j => Disjoint (pos i) (pos j))
+
+/-- Actual logarithmic bins avoid a reserve trimmed below three quarters of P. -/
+def logarithmicExchangeSystem (n : ℕ) (P s : ℝ) (node : ℕ → ℝ) (R : Finset ℕ)
+    (hP : 0 < P) (hs : 0 < s) (hmono : Monotone node) (hzero : node 0 = 0)
+    (hfar : 3 * P / 4 ≤ P * exp (-node n / s))
+    (hR : R ⊆ primeInterval (P / 2) (3 * P / 4)) : ExchangeSystem (Fin n) := by
+  have hneg (i j : ℕ) (hij : i ≤ j) :
+      P * exp (-node j / s) ≤ P * exp (-node i / s) := by
+    apply mul_le_mul_of_nonneg_left _ hP.le
+    exact exp_le_exp.mpr (div_le_div_of_nonneg_right (neg_le_neg (hmono hij)) hs.le)
+  have hpos (i j : ℕ) (hij : i ≤ j) :
+      P * exp (node i / s) ≤ P * exp (node j / s) := by
+    apply mul_le_mul_of_nonneg_left _ hP.le
+    exact exp_le_exp.mpr (div_le_div_of_nonneg_right (hmono hij) hs.le)
+  have hnegP (i : ℕ) : P * exp (-node i / s) ≤ P := by
+    simpa [hzero] using hneg 0 i (Nat.zero_le i)
+  have hposP (i : ℕ) : P ≤ P * exp (node i / s) := by
+    simpa [hzero] using hpos 0 i (Nat.zero_le i)
+  refine {
+    base := Nat.primesLE ⌊P⌋₊ \ R
+    neg := fun i => primeInterval (P * exp (-node (i.val + 1) / s))
+      (P * exp (-node i.val / s))
+    pos := fun i => primeInterval (P * exp (node i.val / s))
+      (P * exp (node (i.val + 1) / s))
+    base_prime := ?_
+    neg_subset := ?_
+    pos_prime := ?_
+    pos_base := ?_
+    neg_disjoint := ?_
+    pos_disjoint := ?_ }
+  · intro p hp
+    exact (Nat.mem_primesLE.mp (Finset.mem_sdiff.mp hp).1).2
+  · intro i p hp
+    obtain ⟨hp, hpprime⟩ := Finset.mem_filter.mp hp
+    obtain ⟨hlo, hhi⟩ := Finset.mem_Ioc.mp hp
+    refine Finset.mem_sdiff.mpr ⟨Nat.mem_primesLE.mpr
+      ⟨hhi.trans (Nat.floor_mono (hnegP i.val)), hpprime⟩, ?_⟩
+    intro hr
+    have hrhi := (Finset.mem_Ioc.mp (Finset.mem_filter.mp (hR hr)).1).2
+    have hh := Nat.floor_mono (hfar.trans (hneg (i.val + 1) n (by omega)))
+    omega
+  · intro i p hp
+    exact (Finset.mem_filter.mp hp).2
+  · intro i
+    apply Finset.disjoint_left.mpr
+    intro p hp hb
+    have hpgt := (Finset.mem_Ioc.mp (Finset.mem_filter.mp hp).1).1
+    have hble := (Nat.mem_primesLE.mp (Finset.mem_sdiff.mp hb).1).1
+    have hh := Nat.floor_mono (hposP i.val)
+    omega
+  · intro i j hij
+    apply Finset.disjoint_left.mpr
+    intro p hpi hpj
+    have hi := Finset.mem_Ioc.mp (Finset.mem_filter.mp hpi).1
+    have hj := Finset.mem_Ioc.mp (Finset.mem_filter.mp hpj).1
+    rcases lt_or_gt_of_ne hij with hij | hij
+    · have hh := Nat.floor_mono (hneg (i.val + 1) j.val (by omega))
+      omega
+    · have hh := Nat.floor_mono (hneg (j.val + 1) i.val (by omega))
+      omega
+  · intro i j hij
+    apply Finset.disjoint_left.mpr
+    intro p hpi hpj
+    have hi := Finset.mem_Ioc.mp (Finset.mem_filter.mp hpi).1
+    have hj := Finset.mem_Ioc.mp (Finset.mem_filter.mp hpj).1
+    rcases lt_or_gt_of_ne hij with hij | hij
+    · have hh := Nat.floor_mono (hpos (i.val + 1) j.val (by omega))
+      omega
+    · have hh := Nat.floor_mono (hpos (j.val + 1) i.val (by omega))
+      omega
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
@@ -125,7 +197,7 @@ theorem exchange_value_injective (E : ExchangeSystem ι) (h : ι → ℕ) :
       have hw : p ∉ inserted E h w := fun hh =>
         disjoint_left.mp (inserted_disjoint E h w) hh hp
       have hh := Finset.ext_iff.mp hs p
-      simp only [support, mem_union, mem_sdiff, hp, true_and, hz, hw, or_false] at hh
+      simp only [support, mem_union, Finset.mem_sdiff, hp, true_and, hz, hw, or_false] at hh
       exact not_iff_not.mp hh
     · exact iff_of_false (fun hh => hp (removed_subset E h z hh))
         (fun hh => hp (removed_subset E h w hh))
@@ -136,7 +208,7 @@ theorem exchange_value_injective (E : ExchangeSystem ι) (h : ι → ℕ) :
         (fun hh => disjoint_left.mp (inserted_disjoint E h z) hh hp)
         (fun hh => disjoint_left.mp (inserted_disjoint E h w) hh hp)
     · have hh := Finset.ext_iff.mp hs p
-      simpa only [support, mem_union, mem_sdiff, hp, false_and, false_or] using hh
+      simpa only [support, mem_union, Finset.mem_sdiff, hp, false_and, false_or] using hh
   apply Prod.ext
   · funext i
     apply Subtype.ext
@@ -192,6 +264,7 @@ theorem log_exchange_value_le (E : ExchangeSystem ι) (h : ι → ℕ)
       (h i : ℝ) * (log P - t i / s) =
           ∑ _p ∈ (z.1 i).val, (log P - t i / s) := by
         simp [(neg_selection E h z i).2]
+        ring
       _ ≤ ∑ p ∈ (z.1 i).val, log (p : ℝ) :=
         sum_le_sum (fun p hp => hneg i p ((neg_selection E h z i).1 hp))
   have hp : ∑ p ∈ inserted E h z, log (p : ℝ) ≤
@@ -203,7 +276,7 @@ theorem log_exchange_value_le (E : ExchangeSystem ι) (h : ι → ℕ)
       ∑ p ∈ (z.2 i).val, log (p : ℝ) ≤
           ∑ _p ∈ (z.2 i).val, (log P + t i / s) :=
         sum_le_sum (fun p hp => hpos i p ((pos_selection E h z i).1 hp))
-      _ = _ := by simp [(pos_selection E h z i).2]
+      _ = _ := by simp [(pos_selection E h z i).2]; ring
   have hid :
       (∑ i, (h i : ℝ) * (log P + t i / s)) -
           (∑ i, (h i : ℝ) * (log P - t i / s)) =
@@ -213,7 +286,7 @@ theorem log_exchange_value_le (E : ExchangeSystem ι) (h : ι → ℕ)
     intro i _
     ring
   rw [value, Nat.cast_prod, log_prod hne, support, sum_union hd,
-    sum_sdiff (removed_subset E h z)]
+    sum_sdiff_eq_sub (removed_subset E h z)]
   linarith
 
 /-- A feasible prime-exchange family gives a lower bound for the literal tail. -/
@@ -250,5 +323,38 @@ theorem balanced_exchange_bound (E : ExchangeSystem ι) (h : ι → ℕ)
       exact_mod_cast (support_prime E h z p hp).ne_zero
     rw [hlog] at he
     linarith
+
+/-- The literal half-open logarithmic boxes satisfy the exchange cost hypotheses. -/
+theorem logarithmic_exchange_bound (n : ℕ) (P s : ℝ) (node : ℕ → ℝ) (R : Finset ℕ)
+    (hP : 0 < P) (hs : 0 < s) (hmono : Monotone node) (hzero : node 0 = 0)
+    (hfar : 3 * P / 4 ≤ P * exp (-node n / s))
+    (hR : R ⊆ primeInterval (P / 2) (3 * P / 4))
+    (h : Fin n → ℕ) (D lambda x : ℝ)
+    (hbase : ∑ p ∈ Nat.primesLE ⌊P⌋₊ \ R, log (p : ℝ) ≤ P - D)
+    (hbudget : (2 / s) * ∑ i : Fin n, node (i.val + 1) * (h i : ℝ) ≤ D)
+    (hthreshold : threshold lambda x < ((Nat.primesLE ⌊P⌋₊ \ R).card : ℝ))
+    (hPx : P ≤ log x) (hx : 0 < x) :
+    (∏ i : Fin n,
+      (primeInterval (P * exp (-node (i.val + 1) / s))
+        (P * exp (-node i.val / s))).card.choose (h i) *
+      (primeInterval (P * exp (node i.val / s))
+        (P * exp (node (i.val + 1) / s))).card.choose (h i)) ≤ tailCount lambda x := by
+  let E := logarithmicExchangeSystem n P s node R hP hs hmono hzero hfar hR
+  apply balanced_exchange_bound E h P D s (fun i => node (i.val + 1)) lambda x
+    hbase ?_ ?_ hbudget hthreshold hPx hx
+  · intro i p hp
+    obtain ⟨hp, _⟩ := Finset.mem_filter.mp hp
+    have hlo := (Finset.mem_Ioc.mp hp).1
+    have he : 0 < P * exp (-node (i.val + 1) / s) := mul_pos hP (exp_pos _)
+    have hh := log_le_log he ((Nat.floor_lt he.le).mp hlo).le
+    rw [log_mul hP.ne' (exp_ne_zero _), log_exp] at hh
+    simpa only [neg_div, sub_eq_add_neg] using hh
+  · intro i p hp
+    obtain ⟨hp, hpprime⟩ := Finset.mem_filter.mp hp
+    have hhi := (Finset.mem_Ioc.mp hp).2
+    have he : 0 ≤ P * exp (node (i.val + 1) / s) := by positivity
+    have hh := log_le_log (by exact_mod_cast hpprime.pos : 0 < (p : ℝ))
+      ((Nat.le_floor_iff he).mp hhi)
+    rwa [log_mul hP.ne' (exp_ne_zero _), log_exp] at hh
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.Exchange
