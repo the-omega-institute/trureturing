@@ -56,7 +56,35 @@ The same source predicates accept P : Type u, a candidate Q : Type v and compari
 
 For the ordinal extension construction the independent carrier is α.ToType : Type o for α : Ordinal o, and P ×ₗ α.ToType lies in Type (max u o). Ordinal.ToType.mk applied to ⟨0, 0 < α⟩ selects the distinguished point when α ≠ 0; Ordinal.type_toType gives its order type, and upward lifting changes the represented ordinal by Ordinal.lift. This convention does not assert the still-required full partition and skeleton theorems. The countable finite-height classification, explicit countable partitions, Noetherian section/shift injection, dual statements, Nat boundary and all nonzero ordinal and finite-n skeleton conclusions remain separate proof obligations.
 
-**Theorem 1.5 (Separated rays and a merged tail are incompatible).**
+**Theorem 1.5 (An incomparable pair excludes the two targets).**
+
+$$\forall Q \in Type u,\; [\operatorname{PartialOrder}\left(Q\right)] (\forall x \in Q,\; \exists z \in Q,\; x < z) \Rightarrow (\forall x \in Q,\; \forall y \in Q,\; ((\neg (x \leq y)) \land (\neg (y \leq x))) \Rightarrow (\forall f \in \operatorname{OrderEmbedding}\left(Q, Rays\right),\; \forall g \in \operatorname{OrderEmbedding}\left(Q, Tail\right),\; False))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.incompatible` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Remi Salinas Schmeis (2026). *General Criterion for a Poset to Admit a Partition Into omega-Chains*. URL: <https://arxiv.org/abs/2610.29056v1>.
+
+*Commentary.*
+
+Let Q be any partial order with no maximal element, and let x and y be incomparable. Choose z strictly above x. Under an order embedding into Tail, the images of x and y remain incomparable, so tail_forced_bound puts the image of y below the image of z. Reflecting gives y ≤ z. Under an embedding into Rays, the images of x and y now have a common upper bound; rays_upper_comparable and reflection contradict their incomparability. There is no cardinality, countability, height or common-lower-point hypothesis on Q. An omega partition supplies the strict successors through omega_successor.
+
+**Theorem 1.6 (Lifting the inherited partition).**
+
+$$\forall X \in Type u,\; [\operatorname{PartialOrder}\left(X\right)] (\operatorname{OmegaPartitionable}\left(X\right)) \Rightarrow (\operatorname{OmegaPartitionable}\left(\operatorname{ULift}\left(X\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.omega_partition_ulift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Remi Salinas Schmeis (2026). *General Criterion for a Poset to Admit a Partition Into omega-Chains*. URL: <https://arxiv.org/abs/2610.29056v1>.
+
+*Commentary.*
+
+For an arbitrary X and any lift universe w, replace each partition part C by its preimage under ULift.down. The inherited order isomorphism sends c to ULift.up c. These parts remain nonempty, cover uniquely, and retain their omega order. The empty carrier uses the empty family. This transport supplies the lifted Rays and Tail comparison targets in the fork argument.
+
+**Theorem 1.7 (Separated rays and a merged tail are incompatible).**
 
 $$\neg (\forall P \in Type u,\; \forall pOrder \in \operatorname{PartialOrder}\left(P\right),\; \exists Q \in Type v,\; \exists qOrder \in \operatorname{PartialOrder}\left(Q\right),\; (\operatorname{IsExtension}\left(P, Q, pOrder, qOrder\right)) \land ((\operatorname{OmegaPartitionable}\left(Q, qOrder\right)) \land (\forall Qprime \in Type w,\; \forall qOrderPrime \in \operatorname{PartialOrder}\left(Qprime\right),\; (\operatorname{IsExtension}\left(P, Qprime, pOrder, qOrderPrime\right)) \Rightarrow ((\operatorname{OmegaPartitionable}\left(Qprime, qOrderPrime\right)) \Rightarrow (\operatorname{Nonempty}\left(\operatorname{OrderEmbedding}\left(Q, Qprime, qOrder.toLE, qOrderPrime.toLE\right)\right))))))$$
 
@@ -78,7 +106,9 @@ The order Tail has carrier ℕ, with x ≤ y exactly when the usual natural-numb
 
 The three-element fork thus embeds into two omega-chain-partitionable orders. In the separated-ray order, two points with a common upper bound are comparable. In the tail order obtained by removing the comparison 1 ≤ 2, a strict successor of one incomparable point is above the other. An omega-chain partition supplies such a strict successor, and order embeddings transfer the resulting comparisons back to the fork, producing a contradiction.
 
-The universe-polymorphic application lifts the fixed Fork to Type u and lifts Rays and Tail to the comparison universe Type w. The candidate Q retains Type v. For each original partition part C, the lifted part is the preimage of C under ULift.down. The inherited order isomorphism sends c to ULift.up c, so the original omega isomorphism composes with it. Nonemptiness, unique coverage and disjointness are preserved. Composing the assumed comparison embeddings with ULift.down gives Q → Rays and Q → Tail; composing the base embedding with ULift.up gives Fork → Q. The original private incompatible theorem then supplies the contradiction. This uses no shrinking assumption on an arbitrary carrier and assigns no new solved credit.
+The same obstruction applies to the literal two-element antichain. Take the inherited subset A = {left, right} of Fork; its order is equality. Restrict intoRays and intoTail along its subtype embedding. Their two images are (false, 1), (true, 0) in Rays and 1, 2 in Tail, respectively. For any admissible extension e of A, the points e(left) and e(right) are incomparable and omega_successor supplies a strict successor. Leastness would embed that extension into both targets, contradicting incompatible. Upward lifts of A and the targets give the same argument with independent base, candidate and comparison universes. These comparison maps need satisfy no equation with e. The original fork still has its root below both branches, making its undirected comparability graph connected; this is a description of its displayed order. The two-point consequence does not alter the original negative answer or its attribution.
+
+The universe-polymorphic application lifts the fixed Fork to Type u and lifts Rays and Tail to the comparison universe Type w. The candidate Q retains Type v. For each original partition part C, the lifted part is the preimage of C under ULift.down. The inherited order isomorphism sends c to ULift.up c, so the original omega isomorphism composes with it. Nonemptiness, unique coverage and disjointness are preserved. Composing the assumed comparison embeddings with ULift.down gives Q → Rays and Q → Tail; composing the base embedding with ULift.up gives Fork → Q. The general incompatible theorem applied to the branch images supplies the contradiction. This uses no shrinking assumption on an arbitrary carrier and assigns no new solved credit.
 
 The literature screen is partial. The primary source and its version history, successful arXiv author and text queries, MathOverflow and Zenodo searches, public formal-conjecture snapshots and repository results identified no matching settlement in the inspected scope. Citation enumeration was unavailable, several Zenodo endpoints were blocked, and the original MacNeille completion article was not independently read. Those gaps and literature completeness remain ASSUMED-UNVERIFIED; no worldwide novelty or exhaustive coverage is asserted.
 
@@ -88,4 +118,6 @@ The literature screen is partial. The primary source and its version history, su
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.IsOmegaChain`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.OmegaPartitionable`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.claim`
+- Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.incompatible`
+- Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.omega_partition_ulift`
 - Truth anchor: `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.result`

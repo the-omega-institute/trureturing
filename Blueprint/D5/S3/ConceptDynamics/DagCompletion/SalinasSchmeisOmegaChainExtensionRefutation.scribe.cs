@@ -108,7 +108,7 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                     + "omega isomorphism composes with it. Nonemptiness, unique coverage and disjointness "
                     + "are preserved. Composing the assumed comparison embeddings with ULift.down gives "
                     + "Q → Rays and Q → Tail; composing the base embedding with ULift.up gives Fork → Q. "
-                    + "The original private incompatible theorem then supplies the contradiction. This "
+                    + "The general incompatible theorem applied to the branch images supplies the contradiction. This "
                     + "uses no shrinking assumption on an arbitrary carrier and assigns no new solved credit.")),
                     Paragraph(Text(
                     "The literature screen is partial. The primary source and its version history, "

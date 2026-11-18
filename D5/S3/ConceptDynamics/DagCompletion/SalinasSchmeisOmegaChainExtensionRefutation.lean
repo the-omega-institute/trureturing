@@ -19,7 +19,10 @@
    Definitions: IsOmegaChain, OmegaPartitionable, IsExtension, claim, Fork, forkOrder,
      Rays, rayLe, rayOrder, Tail, tailLe, tailOrder, forkRay, intoRays, forkTail,
      intoTail, rayEmbed, evenEmbed, oddEmbed.
-   Escape audit unfinished for result, incompatible and omega_partition_ulift: https://github.com/the-omega-institute/trureturing/issues/28004.
+   Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/28004.
+   Public helper audits remain unfinished under the same linked-issue exception:
+     omega_successor, rays_partition, tail_partition, incompatible, omega_partition_ulift.
+   The linked issue records the original result; no issue-content update is asserted.
    No source realization or lawful observational variation is supplied for these order statements.
    The symbolic refutation has utility: none and no utility-refutation audit exemption.
    The source definitions and Question 2.32 quotation are recorded in the Scribe and
@@ -315,11 +318,11 @@ theorem incompatible {Q : Type u} [PartialOrder Q]
   obtain ⟨z, hz⟩ := hnoMax x
   have hbz : y ≤ z := by
     apply g.le_iff_le.mp
-    apply tail_forced_bound (g (x)) (g (y)) (g z)
+    apply tail_forced_bound (g x) (g y) (g z)
     · exact fun h => hab (g.le_iff_le.mp h)
     · exact fun h => hba (g.le_iff_le.mp h)
     · exact g.strictMono hz
-  rcases rays_upper_comparable (f (x)) (f (y)) (f z)
+  rcases rays_upper_comparable (f x) (f y) (f z)
       (f.monotone hz.le) (f.monotone hbz) with h | h
   · exact hab (f.le_iff_le.mp h)
   · exact hba (f.le_iff_le.mp h)
