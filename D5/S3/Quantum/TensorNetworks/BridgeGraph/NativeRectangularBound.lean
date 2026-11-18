@@ -100,7 +100,7 @@ private theorem tensor_mix {a b c d k : ℕ} (B C : Matrix (Fin k) (Fin k) ℂ)
   simp_rw [← Finset.sum_mul, hcoeff]
   simp
 
-private theorem exact_whitening {a b c d k : ℕ}
+theorem exact_whitening {a b c d k : ℕ}
     (M : Fin k → Matrix (Fin a) (Fin b) ℂ)
     (N : Fin k → Matrix (Fin d) (Fin c) ℂ)
     (hN : LinearIndependent ℂ N)
@@ -138,17 +138,17 @@ private theorem exact_whitening {a b c d k : ℕ}
   · intro hM
     exact hM.sum_smul_of_nondegenerate (Matrix.nondegenerate_of_det_ne_zero hdet.ne_zero)
 
-private def stackK {a b k : ℕ} (M : Fin k → Matrix (Fin a) (Fin b) ℂ) :
+def stackK {a b k : ℕ} (M : Fin k → Matrix (Fin a) (Fin b) ℂ) :
     Matrix (Fin k × Fin a) (Fin b) ℂ :=
   fun p j => M p.1 p.2 j
 
-private theorem stackK_gram {a b k : ℕ} (M : Fin k → Matrix (Fin a) (Fin b) ℂ) :
+theorem stackK_gram {a b k : ℕ} (M : Fin k → Matrix (Fin a) (Fin b) ℂ) :
     (stackK M)ᴴ * stackK M = ∑ r, (M r)ᴴ * M r := by
   ext i j
   simp only [stackK, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fintype.sum_prod_type]
 
-private theorem block_kernel {a b c d k : ℕ}
+theorem block_kernel {a b c d k : ℕ}
     (M : Fin k → Matrix (Fin a) (Fin b) ℂ) (N : Fin k → Matrix (Fin d) (Fin c) ℂ)
     (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
       (∑ r, Matrix.kronecker (M r) (N r)) = 1)
@@ -201,7 +201,7 @@ private theorem block_kernel {a b c d k : ℕ}
       simp [huv, hlm]
     · simp [huv, hlm]
 
-private theorem stackK_compression_conjTranspose {a b : ℕ}
+theorem stackK_compression_conjTranspose {a b : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (T : Matrix (Fin 3) (Fin 3) ℂ) :
     (stackK M)ᴴ * Matrix.kronecker Tᴴ (1 : Matrix (Fin a) (Fin a) ℂ) * stackK M =
       ((stackK M)ᴴ * Matrix.kronecker T (1 : Matrix (Fin a) (Fin a) ℂ) *
@@ -214,7 +214,7 @@ private theorem stackK_compression_conjTranspose {a b : ℕ}
   rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul]
   simp only [Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
 
-private theorem block_compression {a b c d : ℕ}
+theorem block_compression {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ)
     (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
       (∑ r, Matrix.kronecker (M r) (N r)) = 1)
@@ -231,7 +231,7 @@ private theorem block_compression {a b c d : ℕ}
   rw [D5.S3.Quantum.Algebra.CommonCoefficientPlane.compression_eq_sum]
   exact block_kernel M N hF hMGram l m
 
-private theorem stackK_compression_smul_add {a b : ℕ}
+theorem stackK_compression_smul_add {a b : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (z w : ℂ) (T U : Matrix (Fin 3) (Fin 3) ℂ) :
     (stackK M)ᴴ * Matrix.kronecker (z • T + w • U)
         (1 : Matrix (Fin a) (Fin a) ℂ) * stackK M =
@@ -249,7 +249,7 @@ private theorem stackK_compression_smul_add {a b : ℕ}
     Finset.sum_add_distrib, Finset.smul_sum, Finset.sum_smul, smul_smul,
     add_smul, smul_add]
 
-private theorem complex_block_neutral {a b c d : ℕ}
+theorem complex_block_neutral {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ)
     (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
       (∑ r, Matrix.kronecker (M r) (N r)) = 1)
@@ -428,7 +428,7 @@ private theorem native_three_bound {a0 b0 c0 d0 : ℕ} (hab : 3 * a0 < 2 * b0)
   rw [hCPC, Matrix.rank_one] at hRank
   simpa only [Fintype.card_prod, Fintype.card_fin] using hRank
 
-private theorem stackK_compression {a b k : ℕ}
+theorem stackK_compression {a b k : ℕ}
     (X : Fin k → Matrix (Fin a) (Fin b) ℂ) (T : Matrix (Fin k) (Fin k) ℂ) :
     (stackK X)ᴴ * Matrix.kronecker T (1 : Matrix (Fin a) (Fin a) ℂ) * stackK X =
       ∑ r, ∑ s, T r s • ((X r)ᴴ * X s) := by
@@ -645,7 +645,7 @@ private theorem minimal_decomposition {a b c d : ℕ}
       exact (hmin n (by omega)) ⟨A', D', hred.trans hsum⟩
     refine ⟨n + 1, by omega, A, D, hA, hD, hsum⟩
 
-private theorem normalized_minimal_decomposition {a b c d : ℕ}
+theorem normalized_minimal_decomposition {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ)
     (lambda : ℝ) (hlambda : 0 < lambda)
     (hF : (∑ r, Matrix.kronecker (M r) (N r))ᴴ *
