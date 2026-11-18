@@ -11,7 +11,8 @@ open D5.S3.Combinatorics.Graph.HypercubeCritical
 open BalancedCriticalSpectrum (Q IsBalanced IsSwitching flip)
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private switching_sq from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
-open private switching_ne_zero from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open private flip_comm switching_ne_zero from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private spokePhase translate_spoke_phase spoke_phase_neg far_common_midpoint from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwentyOneCenterProbe
 attribute [local instance] Classical.propDecidable
@@ -172,6 +173,73 @@ private lemma actual_core_arm_label
 
 #print axioms actual_core_arm_label
 
+private lemma equal_spoke_phase_at_center
+    {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
+    (hs : IsSwitching S sigma) {x : Q n} (hx : x ∈ S)
+    {c d : Fin n} (hc : flip x c ∈ S) (hd : flip x d ∈ S) :
+    spokePhase sigma x c = spokePhase sigma x d := by
+  have phase (r : Fin n) (hr : flip x r ∈ S) : spokePhase sigma x r = sigma x := by
+    unfold spokePhase
+    rw [hs.2 x hx _ hr (BalancedCriticalSpectrum.flip_adj _ _), mul_assoc,
+      ← pow_two, switching_sq hs hr, mul_one]
+  exact (phase c hc).trans (phase d hd).symm
+
+private lemma equal_phase_forces_middle
+    {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
+    (hs : IsSwitching S sigma) {x : Q n} {c d : Fin n} (hcd : c ≠ d)
+    (hc : flip x c ∈ S) (hd : flip x d ∈ S)
+    (hphase : spokePhase sigma x c = spokePhase sigma x d)
+    {m : Q n} (hm : m ∈ S)
+    (hcm : (hypercube n).Adj (flip x c) m)
+    (hdm : (hypercube n).Adj (flip x d) m) : m = x := by
+  by_contra hne
+  have hfar := far_common_midpoint hcd hne hcm hdm
+  have hsign := spoke_phase_neg hs x hcd hc hd (hfar ▸ hm)
+  have hzero : spokePhase sigma x c = 0 := by linarith
+  have hsq := SupportedEigenSaturation.matrix_sq_of_adj (BalancedCriticalSpectrum.flip_adj x c)
+  have hnon : huangMatrix n x (flip x c) ≠ 0 := by
+    intro h
+    rw [h] at hsq
+    norm_num at hsq
+  exact mul_ne_zero hnon (switching_ne_zero hs hc) hzero
+
+/-- A common midpoint after one parallel translation of two selected spokes
+has a third selected neighbor, namely the original center. -/
+private lemma translated_spokes_middle_not_degree_two
+    {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
+    (hs : IsSwitching S sigma) (x : Q n) {c d t : Fin n}
+    (hcd : c ≠ d) (hct : c ≠ t) (hdt : d ≠ t)
+    (hx : x ∈ S) (hc : flip x c ∈ S) (hd : flip x d ∈ S)
+    (hctS : flip (flip x t) c ∈ S) (hdtS : flip (flip x t) d ∈ S)
+    (m : (S : Set (Q n)))
+    (hcm : (hypercube n).Adj (flip (flip x t) c) m.val)
+    (hdm : (hypercube n).Adj (flip (flip x t) d) m.val) :
+    ((hypercube n).induce (S : Set (Q n))).degree m ≠ 2 := by
+  classical
+  have hbase := equal_spoke_phase_at_center hs hx hc hd
+  have hphase : spokePhase sigma (flip x t) c = spokePhase sigma (flip x t) d := by
+    rw [translate_spoke_phase hs x hct hc hctS, translate_spoke_phase hs x hdt hd hdtS, hbase]
+  have hm := equal_phase_forces_middle hs hcd hctS hdtS hphase m.property hcm hdm
+  let u : (S : Set (Q n)) := ⟨x, hx⟩
+  let v : (S : Set (Q n)) := ⟨flip (flip x t) c, hctS⟩
+  let w : (S : Set (Q n)) := ⟨flip (flip x t) d, hdtS⟩
+  have hmu : ((hypercube n).induce (S : Set (Q n))).Adj m u := by
+    change (hypercube n).Adj m.val x
+    rw [hm]
+    exact (BalancedCriticalSpectrum.flip_adj x t).symm
+  have huv : u ≠ v := by
+    intro h
+    have he : flip (flip x t) t = flip (flip x t) c := by
+      simpa [u, v] using congrArg Subtype.val h
+    exact hct (flip_direction_unique he).symm
+  have huw : u ≠ w := by
+    intro h
+    have he : flip (flip x t) t = flip (flip x t) d := by
+      simpa [u, w] using congrArg Subtype.val h
+    exact hdt (flip_direction_unique he).symm
+  have hvw : v ≠ w := fun h => hcd (flip_direction_unique (congrArg Subtype.val h))
+  exact fun hm2 => low_not_three hm2 huv huw hvw hmu hcm.symm hdm.symm
+
 /-- Starting at a selected center, two parallel translations preserve equal
 spoke phase. A selected middle of the final spokes must be their center. -/
 private lemma doubly_translated_spokes_middle
@@ -185,26 +253,40 @@ private lemma doubly_translated_spokes_middle
     (hcm : (hypercube n).Adj (flip (flip (flip x t) a) c) m)
     (hdm : (hypercube n).Adj (flip (flip (flip x t) a) d) m) :
     m = flip (flip x t) a := by
-  by_contra hne
   let z := flip (flip x t) a
-  have base (r : Fin n) (hr : flip x r ∈ S) : spokePhase sigma x r = sigma x := by
-    unfold spokePhase
-    rw [hs.2 x hx _ hr (BalancedCriticalSpectrum.flip_adj _ _), mul_assoc,
-      ← pow_two, switching_sq hs hr, mul_one]
-  have hbase : spokePhase sigma x c = spokePhase sigma x d := (base c hc).trans (base d hd).symm
+  have hbase := equal_spoke_phase_at_center hs hx hc hd
   have hfirst : spokePhase sigma (flip x t) c = spokePhase sigma (flip x t) d := by
     rw [translate_spoke_phase hs x hct hc hctS, translate_spoke_phase hs x hdt hd hdtS, hbase]
   have hlast : spokePhase sigma z c = spokePhase sigma z d := by
     dsimp [z]
     rw [translate_spoke_phase hs _ hca hctS hcaS, translate_spoke_phase hs _ hda hdtS hdaS, hfirst]
-  have hfar := far_common_midpoint hcd hne hcm hdm
-  have hsign := spoke_phase_neg hs z hcd hcaS hdaS (hfar ▸ hm)
-  have hzero : spokePhase sigma z c = 0 := by linarith
-  have hsq := SupportedEigenSaturation.matrix_sq_of_adj (BalancedCriticalSpectrum.flip_adj z c)
-  have hnon : huangMatrix n z (flip z c) ≠ 0 := by
-    intro h
-    rw [h] at hsq
-    norm_num at hsq
-  exact mul_ne_zero hnon (switching_ne_zero hs hcaS) hzero
+  exact equal_phase_forces_middle hs hcd hcaS hdaS hlast hm hcm hdm
 
+/-- When the root midpoint is already low, the center forced by two
+translations cannot also be low. -/
+private lemma doubly_translated_spokes_excludes_low_middle
+    {n : ℕ} {S : Finset (Q n)} {sigma : Q n → ℝ}
+    (hs : IsSwitching S sigma) (x : Q n) {c d t a : Fin n}
+    (hcd : c ≠ d) (hct : c ≠ t) (hdt : d ≠ t) (hca : c ≠ a) (hda : d ≠ a)
+    (hx : x ∈ S) (hc : flip x c ∈ S) (hd : flip x d ∈ S)
+    (hctS : flip (flip x t) c ∈ S) (hdtS : flip (flip x t) d ∈ S)
+    (hcaS : flip (flip (flip x t) a) c ∈ S) (hdaS : flip (flip (flip x t) a) d ∈ S)
+    (r m : (S : Set (Q n))) (hr : r.val = flip x a)
+    (hr2 : ((hypercube n).induce (S : Set (Q n))).degree r = 2)
+    (hcm : (hypercube n).Adj (flip (flip (flip x t) a) c) m.val)
+    (hdm : (hypercube n).Adj (flip (flip (flip x t) a) d) m.val)
+    (hlow : ∀ ⦃v w⦄, ((hypercube n).induce (S : Set (Q n))).Adj v w →
+      ((hypercube n).induce (S : Set (Q n))).degree v = 2 →
+      ((hypercube n).induce (S : Set (Q n))).degree w = 2 → False) :
+    ((hypercube n).induce (S : Set (Q n))).degree m ≠ 2 := by
+  have hm := doubly_translated_spokes_middle hs x hcd hct hdt hca hda hx hc hd
+    hctS hdtS hcaS hdaS m.property hcm hdm
+  have hadj : ((hypercube n).induce (S : Set (Q n))).Adj r m := by
+    change (hypercube n).Adj r.val m.val
+    rw [hr, hm, flip_comm x t a]
+    exact BalancedCriticalSpectrum.flip_adj _ _
+  exact hlow hadj hr2
+
+#print axioms translated_spokes_middle_not_degree_two
 #print axioms doubly_translated_spokes_middle
+#print axioms doubly_translated_spokes_excludes_low_middle
