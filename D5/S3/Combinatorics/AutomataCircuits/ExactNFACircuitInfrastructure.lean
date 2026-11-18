@@ -80,6 +80,7 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 -/
 
 import D5.S3.Observer.Separation.BooleanRankThreeK4
+import Mathlib.LinearAlgebra.AffineSpace.AffineMap
 
 /-! Exact automata and polynomial obstructions for sparse languages. -/
 
@@ -598,12 +599,9 @@ private theorem reducedGridSupport {K : Type} [Field K] [DecidableEq K] {n : ℕ
           have hQxdeg : Qx.natDegree = k :=
             Polynomial.natDegree_map_of_leadingCoeff_ne_zero _ hAx
           have hQx : Qx ≠ 0 := by
-            intro hzero
-            apply hAx
-            have hcoeff := congrArg (fun p : Polynomial K => p.coeff k) hzero
-            change MvPolynomial.eval x Q.leadingCoeff = 0
-            rw [Polynomial.leadingCoeff]
-            simpa only [Qx, Polynomial.coeff_map, Polynomial.coeff_zero] using hcoeff
+            apply Polynomial.leadingCoeff_ne_zero.mp
+            rw [Polynomial.leadingCoeff_map_of_leadingCoeff_ne_zero _ hAx]
+            exact hAx
           have hb := nonzeroValuesCard S Qx hQx
           rw [hQxdeg] at hb
           have heval (a : K) : Qx.eval a = MvPolynomial.eval (Fin.cons a x) P :=
@@ -768,13 +766,8 @@ open MvPolynomial
 private theorem substituteEval {R I J : Type} [CommRing R]
     (f : I → MvPolynomial J R) (P : MvPolynomial I R) (x : J → R) :
     MvPolynomial.eval x ((MvPolynomial.eval₂Hom MvPolynomial.C) f P) =
-      MvPolynomial.eval (fun i => MvPolynomial.eval x (f i)) P := by
-  change MvPolynomial.eval x (MvPolynomial.eval₂ MvPolynomial.C f P) = _
-  rw [MvPolynomial.eval_eval₂]
-  have hC : (MvPolynomial.eval x).comp (MvPolynomial.C : R →+* MvPolynomial J R) = RingHom.id R := by
-    ext a
-    simp
-  rw [hC, MvPolynomial.eval₂_id]
+      MvPolynomial.eval (fun i => MvPolynomial.eval x (f i)) P :=
+  (MvPolynomial.eval_assoc f x P).symm
 
 private theorem substituteDegreeLe {R I J : Type} [CommRing R]
     (f : I → MvPolynomial J R) (hf : ∀ i, (f i).totalDegree ≤ 1)
@@ -796,28 +789,30 @@ private theorem substituteDegreeLe {R I J : Type} [CommRing R]
 
 private noncomputable def blockSubstitution {A : Type} {n t : ℕ}
     (labels : Bool → A) (e : A → Fin t → Bool) : (Fin n × Fin t) → MvPolynomial (Fin n) (ZMod 2) :=
-  fun ij => MvPolynomial.C (D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 (e (labels false) ij.2)) +
-    MvPolynomial.C (D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 (e (labels true) ij.2) - D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 (e (labels false) ij.2)) * X ij.1
+  fun ij => AffineMap.lineMap (k := MvPolynomial (Fin n) (ZMod 2))
+    (MvPolynomial.C (D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 (e (labels false) ij.2)))
+    (MvPolynomial.C (D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 (e (labels true) ij.2)))
+    (X ij.1)
 
 private theorem blockSubstitutionDegree {A : Type} {n t : ℕ}
     (labels : Bool → A) (e : A → Fin t → Bool) (ij : Fin n × Fin t) :
     (blockSubstitution labels e ij).totalDegree ≤ 1 := by
+  rw [blockSubstitution, AffineMap.lineMap_apply_ring', ← map_sub]
   apply (MvPolynomial.totalDegree_add _ _).trans
   apply max_le
-  · simp
   · exact (MvPolynomial.totalDegree_mul _ _).trans (by simp only [MvPolynomial.totalDegree_C, MvPolynomial.totalDegree_X]; decide)
+  · simp
 
 private theorem blockSubstitutionEval {A : Type} {n t : ℕ}
     (labels : Bool → A) (e : A → Fin t → Bool) (x : Fin n → Bool) (ij : Fin n × Fin t) :
     MvPolynomial.eval (D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 ∘ x) (blockSubstitution labels e ij) =
       D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 (e (labels (x ij.1)) ij.2) := by
-  simp only [blockSubstitution, map_add, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X,
-    Function.comp_apply]
+  simp only [blockSubstitution, AffineMap.lineMap_apply_ring', ← map_sub, map_add, map_mul,
+    MvPolynomial.eval_C, MvPolynomial.eval_X, Function.comp_apply]
   cases h : x ij.1 <;> simp [D5.S3.Observer.Separation.BooleanRankThreeK4.bit2]
 
 private theorem bit2Injective : Function.Injective D5.S3.Observer.Separation.BooleanRankThreeK4.bit2 := by
-  intro a b h
-  cases a <;> cases b <;> simp_all [D5.S3.Observer.Separation.BooleanRankThreeK4.bit2]
+  exact Bool.injective_iff.mpr (by simp [D5.S3.Observer.Separation.BooleanRankThreeK4.bit2])
 
 end D5.S3.Combinatorics.AutomataCircuits.ExactNFACircuitInfrastructure
 
