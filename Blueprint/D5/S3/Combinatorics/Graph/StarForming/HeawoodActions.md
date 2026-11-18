@@ -177,4 +177,5 @@ Exact declaration: theorem six_isomorphism (s : Signing) (hs : phi s≠0) : ∃ 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodActions.six_isomorphism`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodActions.typeFor`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodActions.vertexMap`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates](HeawoodCertificates.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodLift](HeawoodLift.md)

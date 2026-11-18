@@ -216,4 +216,3 @@ Exact declaration: theorem kernel_phi_eq_switching : LinearMap.ker phi = LinearM
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodSwitching.trace_phi`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodSwitching.traceless`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodSwitching.traceless_dimension`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates](HeawoodCertificates.md)

@@ -22,4 +22,4 @@ Exact declaration: theorem parameters {U : Type} [Fintype U] [DecidableEq U] (H 
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers.parameters`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/BinaryCoverRepresentation](BinaryCoverRepresentation.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters](HeawoodCoverParameters.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters](HeawoodConnectedCoverParameters.md)
