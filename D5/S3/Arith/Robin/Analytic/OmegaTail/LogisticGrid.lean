@@ -1,10 +1,10 @@
 /- GID: D5/S3/Arith/Robin/Analytic/OmegaTail/LogisticGrid
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/Analytic/OmegaTail/LogisticGrid
    mirror-E: none(waiver:general-integral-estimates)
    anchors: []
    utility: none
-   digest: Cost and entropy estimates for right-endpoint logistic grids. -/
+   digest: Cost and entropy estimates for right-endpoint logistic grids directly using the I-class FermiMellin results. -/
 
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Analysis.SpecialFunctions.Sigmoid
