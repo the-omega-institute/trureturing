@@ -308,8 +308,10 @@ private lemma twenty_one_high_parity_split (S : Finset (Q 9)) (hS : S.card = 21)
       let G := (hypercube 9).induce (S : Set (Q 9))
       let L := paritySide S b
       let R := paritySide S (!b)
-      ((degreeThree G L).card = 2 ∧ (degreeThree G R).card = 8) ∨
-        ((degreeThree G L).card = 4 ∧ (degreeThree G R).card = 6) := by
+      ((degreeThree G L).card = 2 ∧ (degreeThree G R).card = 8 ∧
+        (degreeTwo G L).card = 10 ∧ (degreeTwo G R).card = 1) ∨
+      ((degreeThree G L).card = 4 ∧ (degreeThree G R).card = 6 ∧
+        (degreeTwo G L).card = 7 ∧ (degreeTwo G R).card = 4) := by
   let G := (hypercube 9).induce (S : Set (Q 9))
   let L := paritySide S false
   let R := paritySide S true
@@ -337,15 +339,27 @@ private lemma twenty_one_high_parity_split (S : Finset (Q 9)) (hS : S.card = 21)
   have htotal : (degreeThree G L).card + (degreeThree G R).card = 10 := by omega
   have hsplit : (degreeThree G L).card = 2 ∨ (degreeThree G L).card = 4 ∨
       (degreeThree G L).card = 6 ∨ (degreeThree G L).card = 8 := by omega
+  have hcases (i : ℕ) (hi : (degreeThree G L).card = i) :
+      (degreeThree G R).card = 10 - i ∧
+        2 * (degreeTwo G L).card + 3 * i =
+          2 * (degreeTwo G R).card + 3 * (10 - i) := by omega
   rcases hsplit with h | h | h | h
-  · have hR8 : (degreeThree G R).card = 8 := by omega
-    exact ⟨false, Or.inl ⟨h, hR8⟩⟩
-  · have hR6 : (degreeThree G R).card = 6 := by omega
-    exact ⟨false, Or.inr ⟨h, hR6⟩⟩
-  · have hR4 : (degreeThree G R).card = 4 := by omega
-    exact ⟨true, Or.inr ⟨hR4, h⟩⟩
-  · have hR2 : (degreeThree G R).card = 2 := by omega
-    exact ⟨true, Or.inl ⟨hR2, h⟩⟩
+  · have ⟨hR8, e⟩ := hcases 2 h
+    have hl : (degreeTwo G L).card = 10 := by omega
+    have hr : (degreeTwo G R).card = 1 := by omega
+    exact ⟨false, Or.inl ⟨h, hR8, hl, hr⟩⟩
+  · have ⟨hR6, e⟩ := hcases 4 h
+    have hl : (degreeTwo G L).card = 7 := by omega
+    have hr : (degreeTwo G R).card = 4 := by omega
+    exact ⟨false, Or.inr ⟨h, hR6, hl, hr⟩⟩
+  · have ⟨hR4, e⟩ := hcases 6 h
+    have hl : (degreeTwo G R).card = 7 := by omega
+    have hr : (degreeTwo G L).card = 4 := by omega
+    exact ⟨true, Or.inr ⟨hR4, h, hl, hr⟩⟩
+  · have ⟨hR2, e⟩ := hcases 8 h
+    have hl : (degreeTwo G R).card = 10 := by omega
+    have hr : (degreeTwo G L).card = 1 := by omega
+    exact ⟨true, Or.inl ⟨hR2, h, hl, hr⟩⟩
 
 #print axioms twenty_one_high_parity_split
 
