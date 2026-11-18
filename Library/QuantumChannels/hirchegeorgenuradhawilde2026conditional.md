@@ -9,6 +9,8 @@ claim: "For a quantum channel N and a generalized divergence D, the conditional 
 strata_touched:
   - D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction
   - D5/S3/Quantum/Divergence/FaithfulConditionalGap
+  - D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension
+  - D5/S3/Quantum/Divergence/UmegakiSupportedMoorePenrose
 license: citation-only
 triage: anchor
 ---
@@ -33,6 +35,8 @@ No DOI or journal reference is listed in the arXiv metadata. The text was read f
 
 ## Source statements
 
+Definition 2, Eq. (2.13) (p. 8), gives the complete coefficient as the supremum of joint output-to-input divergence ratios over arbitrary finite reference systems and pairs with equal reference marginals.
+
 Definition 2 (p. 8): "the conditional contraction coefficient as η∆_D(N) := sup_{|R|, ρRA≠σRA} [D((id ⊗ N)(ρRA)∥(id ⊗ N)(σRA)) − D(ρR∥σR)] / [D(ρRA∥σRA) − D(ρR∥σR)]. (2.14)"
 
 Remark 2 (p. 9): "The optimization is should be over states such that ∞ > D(ρRA∥σRA) − D(ρR∥σR) > 0, which is a strictly stronger constraint than just ρRA ≠ σRA. … As a general rule, in this paper, all ratio optimizations are over strictly positive and finite denominators."
@@ -41,7 +45,7 @@ Remark 2 (p. 9): "The optimization is should be over states such that ∞ > D(ρ
 
 Proposition 8 (p. 40): "For a channel N : A → B, the coefficients ηc_Tr(N) and η∆_Tr(N) are optimized by orthogonal states".
 
-§9 (p. 72): "When considering the hockey-stick divergence, can the optimization in the contraction coefficient be restricted to orthogonal states, similar to Proposition 8? This would directly imply that the associated contraction coefficient is monotone in γ, which in turn would have applications similar to the results in [7]."
+§9 (p. 72): "When considering the hockey-stick divergence, can the optimization in the contraction coefficient be restricted to orthogonal states, similar to Proposition 8? This would directly imply that the associated contraction coefficient is monotone in γ, which in turn would have applications similar to the results in [38]."
 
 ## Reading used by the repository
 
@@ -69,4 +73,30 @@ $$
 \eta^c_D(N)\le\frac14<\frac5{12}\le\eta^\Delta_D(N).
 $$
 
-The uniform complete bound includes arbitrary finite quantum references, including off-diagonal reference blocks. The conditional witness consists of actual density states on $\mathrm{Fin}\,3\times\mathrm{Fin}\,2$. No reference cutoff, relative-entropy resolution or exact optimum is asserted. The [problem dossier](../../Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap.md) gives the construction, quantifiers and audit boundary.
+The uniform complete bound includes arbitrary finite quantum references, including off-diagonal reference blocks. The conditional witness consists of actual density states on $\mathrm{Fin}\,3\times\mathrm{Fin}\,2$. The squared trace-distance result applies without a reference cutoff and establishes the displayed coefficient bounds. The [problem dossier](../../Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap.md) gives the construction, quantifiers and audit boundary.
+
+### Relative entropy on the finite support branch
+
+`UmegakiChannelSupportedExtension.conditionalCoefficient_eq_completeCoefficient`
+rules out the relative-entropy instance of the strict separation in the second
+bullet of §9. For each finite CPTP channel, the complete and conditional
+Umegaki coefficients of Definition 2, Eqs. (2.13) and (2.14), coincide on the
+finite support branch with the strictly positive finite denominators of Remark
+2. Both coefficients range over all finite reference dimensions and arbitrary
+joint density states satisfying the respective conditions. Support containment
+of the joint input pair makes the joint divergence finite. Amplified and erasure
+data processing carry containment to the joint output and the marginal
+pairs. Trace preservation identifies the output reference marginals with the
+input reference marginals.
+
+The companion metric result proves
+$$
+c_0 = \eta^c_{D}(N) = \eta^\Delta_{D}(N) = \sup_{t\in[0,1]} c_t,
+\qquad 0 \le c_t \le \eta^c_D(N) \quad (t\in[0,1]),
+$$
+where $D$ denotes Umegaki relative entropy. At each $t$, the metric ratios use
+faithful joint input bases and complex directions of zero partial trace with
+positive input inverse form. At the actual channel output the direction belongs
+to the range of the corresponding arithmetic operator, so the numerator is
+the real Hilbert–Schmidt pairing against its supported Moore–Penrose preimage.
+The supremum over the interval is attained at $t=0$.

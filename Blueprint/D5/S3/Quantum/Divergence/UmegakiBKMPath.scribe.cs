@@ -7,6 +7,12 @@ internal sealed class UmegakiBKMPathDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual noncommuting matrix relative entropy is the weighted integral of its BKM resolvent form.",
         H("Umegaki divergence along a positive matrix segment"), Blocks(
+            Describe.Lean(DescribeId.Create("reindex-logderiv"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.reindex_logDeriv"),
+                H("Reindexing the logarithmic derivative"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An equivalence between two finite carriers relabels both matrix indices as a real star-algebra equivalence. Applying it to logDeriv(Z,H) gives the logarithmic derivative with both Z and H relabeled, for arbitrary complex matrices Z and H. The continuous linear equivalence passes through the Bochner integral, and relabeling preserves each inverse and product in the resolvent integrand."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("common-positive-floor"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.common_floor"),
                 H("A common positive spectral floor"),
