@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.Patterns.Separable.EndpointJointLaw
 import Reg.Support.DependentFamily
 
+/-! Faithful readout of the actual endpoint joint law over every removal count. -/
+
 namespace Reg.D5.S1.Words.Patterns.Separable.EndpointJointLaw
 
 open _root_.D5.S1.Words.Patterns.Separable.EndpointJointLaw
@@ -49,6 +51,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   have h0 := (whole_endpoint_joint_law 0).1
   have h1 := ((whole_endpoint_joint_law 1).2.2 (by decide)).1
   norm_num only at h1
+  simp only [pow_zero, mul_one] at h1
   intro same
   rw [h0, h1] at same
   have hs0 : 0 < Real.sqrt (2 : ℝ) := Real.sqrt_pos.2 (by norm_num)
@@ -82,7 +85,7 @@ def family : Registration arena (type_of% @whole_endpoint_joint_law) where
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
