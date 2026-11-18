@@ -168,15 +168,19 @@ zero. Around one, every based loop has the exact endpoint character (-1)^k. -/
 theorem actual_source_loop_character :
     DifferentiableOn ℂ C disk ∧
     (∀ γ : C(I, ℂ), (∀ t, ‖γ t‖ < 1) →
-      ∀ t, disk ∈ 𝓝 (γ t)) ∧
+      (∀ t, disk ∈ 𝓝 (γ t)) ∧
+      (∀ t, ∀ᶠ s in 𝓝 t, C =ᶠ[𝓝 (γ s)] C) ∧
+      C =ᶠ[𝓝 (γ 0)] C ∧ C =ᶠ[𝓝 (γ 1)] C) ∧
     (∀ γ : C(I, ℂ), (∀ t, ‖1 - γ t‖ < 1) → (∀ t, γ t ≠ 1) →
       γ 0 = b → γ 1 = b →
       ∃ L : C(I, ℂ), ∃ k : ℤ, L 0 = baseLog ∧ NativeCharts (complementPath γ) L ∧
         SourceCharts γ L ∧ L 1 = baseLog + deck k ∧
         sourceChart (L 1) =ᶠ[𝓝 b] (fun r => (-1 : ℂ) ^ k * C r)) := by
   refine ⟨actual_source_branch.2.1, ?_, ?_⟩
-  · intro γ hD t
-    exact Metric.isOpen_ball.mem_nhds (by simpa [disk] using hD t)
+  · intro γ hD
+    exact ⟨fun t => Metric.isOpen_ball.mem_nhds (by simpa [disk] using hD t),
+      fun _ => Filter.Eventually.of_forall (fun _ => Filter.EventuallyEq.rfl),
+      Filter.EventuallyEq.rfl, Filter.EventuallyEq.rfl⟩
   · intro γ hD hn hb hb1
     obtain ⟨L, k, h0, hc, h1, _, _⟩ := complementary_loop_monodromy γ hD hn hb hb1
     refine ⟨L, k, h0, hc, source_certificate γ L hc h0, h1, ?_⟩

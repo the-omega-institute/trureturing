@@ -42,8 +42,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize, Complex.exp_log]
 def family : Registration arena (type_of% @native_chart) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @native_chart,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @native_chart,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -70,8 +70,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -101,8 +105,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize]
 def family : Registration arena (type_of% @cover_periods) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @cover_periods,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @cover_periods,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -129,8 +133,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["arg", "arg", "arg", "body", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["arg", "arg", "arg", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -170,8 +178,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp [actual, realize, hn, hasDerivAt_const]
 def family : Registration arena (type_of% @chart_equations) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @chart_equations,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @chart_equations,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -198,8 +206,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "arg", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "arg", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -230,8 +242,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize]
 def family : Registration arena (type_of% @chart_transition) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @chart_transition,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @chart_transition,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -258,8 +270,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
     coordinates := #[0,1]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -277,7 +293,7 @@ def arena : Arena where
   Law M := ∀ r : ℂ, r ∈ lens →
     Complex.log r ∈ E ∧
     (∀ᶠ s in 𝓝 r, M.readout () (Complex.I * period (1 - s)) (chartN (Complex.log r) s) = true) ∧
-    chartT (Complex.log r) =ᶠ[𝓝 r] OriginalHalfBinomialWronskian.tau
+    chartT (Complex.log r) =ᶠ[𝓝 r] _root_.D5.S3.Analytic.OriginalHalfBinomialWronskian.tau
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb : (1 / 2 : ℂ) ∈ lens := by norm_num [lens, Metric.mem_ball, dist_eq_norm]
@@ -289,8 +305,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize]
 def family : Registration arena (type_of% @native_initial_germ) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @native_initial_germ,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @native_initial_germ,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -317,8 +333,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

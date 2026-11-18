@@ -43,8 +43,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize]
 def family : Registration arena (type_of% @actual_source_branch) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @actual_source_branch,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @actual_source_branch,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -71,8 +71,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -101,8 +105,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize]
 def family : Registration arena (type_of% @source_deck) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @source_deck,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @source_deck,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -129,8 +133,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -156,22 +164,21 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   have hg := positive_source_monodromy.1
-  have hn : ¬ SourceCharts gamma1 (ContinuousMap.const I (0 : ℂ)) := by
+  have hn : ¬ SourceCharts gamma1 ((0 : C(I, ℂ))) := by
     intro h
     have hy : gamma1 0 = b := by norm_num [gamma1, complementPath, gamma0, b]
     have hv : C b = 1 := h.initial.self_of_nhds.symm.trans (by
-      simpa only [ContinuousMap.const_apply, hy, sourceCover, neg_zero, zero_div,
-        Complex.exp_zero] using h.liftValue 0)
+      simpa [hy, sourceCover] using h.liftValue 0)
     have hd : b ∈ disk := by norm_num [b, disk]
     have hs := (sourceMode_square (u := 0) (x := b) (by norm_num [b])).2
     rw [actual_source_branch.2.2 b hd, hv] at hs
     norm_num [b] at hs
-  refine ⟨gamma1, positiveLift, ContinuousMap.const I (0 : ℂ), ?_⟩
+  refine ⟨gamma1, positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @actual_source_path) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @actual_source_path,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @actual_source_path,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -198,8 +205,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -216,7 +227,9 @@ def arena : Arena where
   signature := signature
   Law M := DifferentiableOn ℂ C disk ∧
     (∀ γ : C(I, ℂ), (∀ t, ‖γ t‖ < 1) →
-      ∀ t, disk ∈ 𝓝 (γ t)) ∧
+      (∀ t, disk ∈ 𝓝 (γ t)) ∧
+      (∀ t, ∀ᶠ s in 𝓝 t, C =ᶠ[𝓝 (γ s)] C) ∧
+      C =ᶠ[𝓝 (γ 0)] C ∧ C =ᶠ[𝓝 (γ 1)] C) ∧
     (∀ γ : C(I, ℂ), (∀ t, ‖1 - γ t‖ < 1) → (∀ t, γ t ≠ 1) →
       γ 0 = b → γ 1 = b →
       ∃ L : C(I, ℂ), ∃ k : ℤ, L 0 = baseLog ∧ NativeCharts (complementPath γ) L ∧
@@ -230,22 +243,21 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   have hg := positive_source_monodromy.1
-  have hn : ¬ SourceCharts gamma1 (ContinuousMap.const I (0 : ℂ)) := by
+  have hn : ¬ SourceCharts gamma1 ((0 : C(I, ℂ))) := by
     intro h
     have hy : gamma1 0 = b := by norm_num [gamma1, complementPath, gamma0, b]
     have hv : C b = 1 := h.initial.self_of_nhds.symm.trans (by
-      simpa only [ContinuousMap.const_apply, hy, sourceCover, neg_zero, zero_div,
-        Complex.exp_zero] using h.liftValue 0)
+      simpa [hy, sourceCover] using h.liftValue 0)
     have hd : b ∈ disk := by norm_num [b, disk]
     have hs := (sourceMode_square (u := 0) (x := b) (by norm_num [b])).2
     rw [actual_source_branch.2.2 b hd, hv] at hs
     norm_num [b] at hs
-  refine ⟨gamma1, positiveLift, ContinuousMap.const I (0 : ℂ), ?_⟩
+  refine ⟨gamma1, positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @actual_source_loop_character) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @actual_source_loop_character,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @actual_source_loop_character,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -272,8 +284,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -296,22 +312,21 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   have hg := positive_source_monodromy.1
-  have hn : ¬ SourceCharts gamma1 (ContinuousMap.const I (0 : ℂ)) := by
+  have hn : ¬ SourceCharts gamma1 ((0 : C(I, ℂ))) := by
     intro h
     have hy : gamma1 0 = b := by norm_num [gamma1, complementPath, gamma0, b]
     have hv : C b = 1 := h.initial.self_of_nhds.symm.trans (by
-      simpa only [ContinuousMap.const_apply, hy, sourceCover, neg_zero, zero_div,
-        Complex.exp_zero] using h.liftValue 0)
+      simpa [hy, sourceCover] using h.liftValue 0)
     have hd : b ∈ disk := by norm_num [b, disk]
     have hs := (sourceMode_square (u := 0) (x := b) (by norm_num [b])).2
     rw [actual_source_branch.2.2 b hd, hv] at hs
     norm_num [b] at hs
-  refine ⟨gamma1, positiveLift, ContinuousMap.const I (0 : ℂ), ?_⟩
+  refine ⟨gamma1, positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @positive_source_monodromy) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @positive_source_monodromy,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @positive_source_monodromy,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -338,8 +353,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

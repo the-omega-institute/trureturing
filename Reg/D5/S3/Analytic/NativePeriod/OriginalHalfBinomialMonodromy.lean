@@ -38,16 +38,16 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   have hg := positive_zero_monodromy.1
-  have hn : ¬ NativeCharts gamma0 (ContinuousMap.const I (0 : ℂ)) := by
+  have hn : ¬ NativeCharts gamma0 ((0 : C(I, ℂ))) := by
     intro h
     have he := h.projection 0
     norm_num [gamma0, b] at he
-  refine ⟨gamma0, positiveLift, ContinuousMap.const I (0 : ℂ), ?_⟩
+  refine ⟨gamma0, positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @native_path_continuation) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @native_path_continuation,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @native_path_continuation,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -74,8 +74,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialMonodromy
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -97,7 +101,7 @@ def arena : Arena where
       chartN (L 1) =ᶠ[𝓝 b]
         (fun r => Complex.I * period (1 - r) + 2 * k * period r) ∧
       chartT (L 1) =ᶠ[𝓝 b]
-        (fun r => OriginalHalfBinomialWronskian.tau r + 2 * k)
+        (fun r => _root_.D5.S3.Analytic.OriginalHalfBinomialWronskian.tau r + 2 * k)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (ContinuousMap.const I b) (by intro t; norm_num [b])
@@ -106,16 +110,16 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   have hg := positive_zero_monodromy.1
-  have hn : ¬ NativeCharts gamma0 (ContinuousMap.const I (0 : ℂ)) := by
+  have hn : ¬ NativeCharts gamma0 ((0 : C(I, ℂ))) := by
     intro h
     have he := h.projection 0
     norm_num [gamma0, b] at he
-  refine ⟨gamma0, positiveLift, ContinuousMap.const I (0 : ℂ), ?_⟩
+  refine ⟨gamma0, positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @native_loop_monodromy) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @native_loop_monodromy,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @native_loop_monodromy,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -142,8 +146,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialMonodromy
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -167,16 +175,16 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   have hg := positive_zero_monodromy.1
-  have hn : ¬ NativeCharts gamma0 (ContinuousMap.const I (0 : ℂ)) := by
+  have hn : ¬ NativeCharts gamma0 ((0 : C(I, ℂ))) := by
     intro h
     have he := h.projection 0
     norm_num [gamma0, b] at he
-  refine ⟨gamma0, positiveLift, ContinuousMap.const I (0 : ℂ), ?_⟩
+  refine ⟨gamma0, positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @positive_zero_monodromy) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @positive_zero_monodromy,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @positive_zero_monodromy,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -203,8 +211,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialMonodromy
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
-      stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
