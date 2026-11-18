@@ -24,7 +24,7 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.BinomialBases.MatharA001722
 open Polynomial
 
-private noncomputable def falling (N : ℕ) : Polynomial ℤ :=
+noncomputable def falling (N : ℕ) : Polynomial ℤ :=
   ∏ i ∈ Finset.range N, (X - C (i : ℤ))
 
 /-- Signed first-kind Stirling numbers, defined by the falling product. -/
@@ -54,7 +54,7 @@ def claim : Prop := Recurrence ∧ DFinite
 private noncomputable def shifted (n : ℕ) : Polynomial ℤ :=
   C ((-1 : ℤ)^n) * taylor (-5) (falling (n + 2))
 
-private theorem falling_degree (N : ℕ) : (falling N).natDegree ≤ N := by
+theorem falling_degree (N : ℕ) : (falling N).natDegree ≤ N := by
   have hp := Polynomial.natDegree_prod_le (R := ℤ) (Finset.range N)
     (fun i : ℕ => (X - C (i : ℤ) : Polynomial ℤ))
   simpa only [falling, natDegree_X_sub_C, Finset.sum_const, Finset.card_range,

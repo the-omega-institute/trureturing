@@ -1,0 +1,97 @@
+**引理 260.3（共同尺下仿射维数至多十的外三角）。** 在240.1的任意有限维原域中假设 L2 与 $\mathsf A_2(g)$。固定 $B=B(a,b)$、$S=P\cap B\simeq S^2$、$p\in P\setminus B$，令 $F=F(p,a,b)$。平移 $p$ 为零，沿用240.2的 $U,d,D,E_y,H,N$，并定义
+
+$$
+r=\dim\operatorname{span}N,\qquad
+L=\bigcap_{\ell\in N}\ker\ell\subset U,\qquad \dim L=d-r.
+\tag{260.3}
+$$
+
+若 $d\le10$，则 $d=8$、$r=4$、$\dim H=4$，$F$ 的原纯点恰为全部 $B(p,y)$、$y\in S$ 的纯壳之并，且 $H=E_a\oplus E_b$。特别地，该外三角满足 TC。本引理是待用的推论，不是260.1的候选输入。
+
+证明。（一）实际面、支撑和所有纯点的切向。精确复用240.2：有限实际面 $J=K\cap\operatorname{aff}J$，因而闭且紧；$J=\operatorname{conv}(P\cap J)$，$\operatorname{ext}J=P\cap J$。后一个结论也可直接从 $K$ 的有限极点分解看出：面内点的每个正权分量都在该面，不要求 $P$ 闭。该定理给 $\dim D=4$、限制 $N\to\operatorname{Aff}(B)_+$ 满射和 $d\ge8$。其中支撑是在真面 $B(p,y)$ 的相对内部取得，限制到 $B$ 为正倍数的 $1-\widehat y\cdot z$；这些射线生成完整四维 Lorentz 锥，未假设零面已等于该球。
+
+令 $M=\operatorname{span}N$。限制满射给 $r\ge4$、$D\cap L=0$。还需加强切向的量词：对任意 $q\in P\cap F\setminus\{p\}$ 及 $\ell\in N$，$\ell$ 在 $p$ 为最小；沿实际球 $B(p,q)$ 的壳经过 $p$ 的任意双侧光滑曲线求导，得
+
+$$
+\tau_p(q)\subseteq L,\qquad H\subseteq L,\qquad D\cap H=0.
+\tag{260.4}
+$$
+
+这对扇外原纯点同样成立。精确复用 XII引理159.5 [B260]：不同实际二点球的齐次实张成只交于零或共同纯射线。其方向在 $\ker u$，而 $u(p)=1$，故通过 $p$ 的不同球连整个方向空间都交于零，切二维平面当然也交于零。对不同 $y,z\in S$，$B(p,y)\ne B(p,z)$，否则共同球含 $B(y,z)=B$，严格凸球的非单点面只能为自身，与 $p\notin B$ 矛盾。因此 $E_y\cap E_z=0$，$\dim H\ge4$，并有 $\dim H\le d-r$。
+
+（二）离对角线的实际圆球连续性。设 $a_i\to a,b_i\to b$ 都是原纯点，$a\ne b$。实际圆三球 $B(a_i,b_i)$ 均在紧 $K$ 内，故中心、半径有界；其三维方向位于紧 Grassmann 流形。任意子列都有中心、半径、方向同时收敛的子列，极限为含于闭 $K$ 的圆三球 $B'$；半径至少 $\|a-b\|_g/2>0$，且不同 $a,b$ 在其壳上。中点 $m=(a+b)/2\in\operatorname{ri}B'$；从 $m$ 向 $B'$ 任意点反向延长线段，面性质给 $B'\subseteq F_K(m)=B(a,b)$。两球仿射维数同为三，故仿射空间相同。
+
+在同一 Euclidean 三空间，若半径 $r'$、中心 $c'$ 的球含于半径 $r$、中心 $c$ 的球，则 $\|c-c'\|+r'\le r$。内球某壳点也在外壳时，三角不等式须取等号；若中心不同，该点只能是中心连线的一个指定端点；若中心相同，公共壳点迫使半径相同。故不相等的嵌套圆球至多有一个公共壳点。这里有 $a,b$ 两点，迫使 $B'=B(a,b)$。所有子列极限唯一，证明中心、半径和方向连续；切平面由球方向及中心到端点的径向连续决定。因此 $y\mapsto E_y$ 在固定紧 $S$ 上连续。此论证只使用端点极限本身仍为不同原纯点，不使用整个 $P$ 的紧性。
+
+（三）五维中的带符号饱和。先证明一个所需拓扑事实。若连续族 $E_y\subset\mathbb R^5$、$y\in S^2$ 都是二维线性平面，且 $y\ne z$ 时 $E_y\cap E_z=0$，则不存在另一个二维平面同时避开全部 $E_y$。把 Grassmann 流形的秩二实 tautological 丛拉回 $S^2$；因 $S^2$ 单连通，该丛可定向。其单位圆丛 $T$ 是紧、连通、无边界的可定向三维流形。评价
+
+$$
+j:T\longrightarrow S^4,\qquad j(y,v)=v
+\tag{260.5}
+$$
+
+因交为零而单射，故是到紧像 $A$ 的同胚。$A$ 非空、局部可缩，$H^3(A;\mathbb Z)=\mathbb Z$；它是 $S^4$ 的真子集，否则这与 $H^3(S^4;\mathbb Z)=0$ 矛盾。按连续定向及内积逐纤维选正 quarter-turn $J$，$(y,v)\mapsto(y,\cos t\,v+\sin t\,Jv)$、$0\le t\le\pi$ 给恒等到纤维负号的同伦。因此环境对径 $\tau(v)=-v$ 限制到 $A$ 后在 $H^3$ 上为恒等。
+
+此处准确使用 Hatcher [A260] 推论3.45的 Alexander 对偶及定理3.44的相对 cap／直极限构造。其适用条件正是紧、局部可缩、非空真子集，不要求局部平坦或光滑嵌入。令
+
+$$
+\mathcal D:H^3(A;\mathbb Z)\xrightarrow{\ \cong\ }
+\widetilde H_0(S^4\setminus A;\mathbb Z).
+\tag{260.6}
+$$
+
+开补集局部道路连通，故右端为 $\mathbb Z$ 表明恰有两个连通分支。符号不能省略：cap 自然性 $f_*(c\cap f^*\phi)=f_*c\cap\phi$ 连同自然连接映射，以及 $\tau_*[S^4]=-[S^4]$，给
+
+$$
+\tau_*\mathcal D\bigl((\tau|_A)^*\alpha\bigr)=-\mathcal D(\alpha).
+\tag{260.7}
+$$
+
+这是由环境基本类推出的等式，不是向书中另借一个无符号自然性断言。因 $(\tau|_A)^*=1$，$\tau$ 在补集的约化零阶同调上为 $-1$，从而交换两个分支。若另有二维平面 $E$ 与全部 $E_y$ 零交，其单位圆就在补集中，是连通且对径不变的集合；它须在一个分支内，却又被 $\tau$ 送入另一个分支，矛盾。没有使用 Euler 数的预设。
+
+（四）当 $d-r\le5$ 时先得纯扇穷尽。把 $L$ 线性嵌入 $\mathbb R^5$，对连续、两两零交的 $E_y$ 应用（三）。若 $q\in P\cap F$ 不在任何 $B(p,y)$ 的纯壳，$q\ne p$，且 $B(p,q)$ 与每个扇球不同；否则 $q$ 作为原纯点就在那个球壳。由（一），它的整个二维切平面在 $L$，并与全部 $E_y$ 零交，违反（三）。反向包含由扇球是 $F$ 内的实际面及其极点就是原纯点直接得到。因此
+
+$$
+P\cap F=\bigcup_{y\in S}\operatorname{ext}B(p,y).
+\tag{260.8}
+$$
+
+（五）纯扇穷尽通过两颗交叉球迫使 TC。现在只假设(260.8)。扇球方向为 $\mathbb Ry\oplus E_y$，故有限纯生成给 $U=D\oplus H$。令 $Q:D\oplus H\to D$ 为沿 $H$ 的投影，$I(x)=x/\|x\|_g^2$。扇球中心 $c_y$ 满足 $g(c_y,E_y)=0$；壳方程及 $y$ 也在壳上给
+
+$$
+\|x\|_g^2=2g(c_y,x),\qquad
+Qx=\frac{\|x\|_g^2}{\|y\|_g^2}\,y,\qquad
+I\bigl(\operatorname{ext}B(p,y)\setminus\{0\}\bigr)=s_y+E_y,
+\quad s_y=I(y).
+\tag{260.9}
+$$
+
+最后一个等式也直接由 $2g(c_y,Ix)=1$ 得到，反向代回 $I$ 即可。$I(S)$ 是圆二球面 $S'\subset D$：一般圆球面 $x=c+w,\ w\in W,\|w\|^2=R^2$ 的反演满足 $k\|z\|^2-2g(c,z)+1=0$、$P_{W^\perp}z=P_{W^\perp}c\,\|z\|^2$，其中 $k=\|c\|^2-R^2$；消元并完成平方给圆球面或仿射平面。原球面不含零且紧，排除平面。这里 $p\notin\operatorname{aff}B$ 已由240.2支付。
+
+取不同 $s_0,s_1\in S'$、$y_i=I(s_i)$ 及 $E_{y_1}$ 的实基 $v_1,v_2$。点 $q_j=I(s_1+v_j)$ 是扇内原纯点。实际交叉球 $B(y_0,q_j)$ 不含 $p$：若含，则它等于 $B(p,y_0)$，又与不同的 $B(p,y_1)$ 共享 $p,q_j$，违反159.5。故其反演壳 $\Sigma_j$ 为圆二球面，且由(260.8)—(260.9)，$Q\Sigma_j\subset S'$，并含不同的 $s_0,s_1$。
+
+把源球面参数化为 $m+Mt$、$\|t\|=1$，目标中心、半径记为 $c',R'$。恒等式 $\|m-c'+Mt\|^2=R'^2$ 对全部单位 $t$ 成立，比较 $t,-t$ 及二次型给 $M^*(m-c')=0$、$M^*M=\lambda I$。非恒定性给 $\lambda>0$，故秩三；其像是目标方向三空间，于是 $m=c'$，且像遍历整个目标球面。应用于 $Q|_{\Sigma_j}$，其仿射延拓是三维方向间的同构。因此 $\Sigma_j$ 是图
+
+$$
+s\longmapsto s+h_j(s),\qquad
+h_j(s)=A_j(s-s_0)\in E_{I(s)},\quad
+h_j(s_0)=0,\quad h_j(s_1)=v_j.
+\tag{260.10}
+$$
+
+为简记写 $E_s=E_{I(s)}$。由（二）的连续性，在 $s_0$ 沿球面取差商，得 $A_j(T_{s_0}S')\subset E_{s_0}$。弦 $s_1-s_0$ 横截该切平面，故 $\operatorname{im}A_j\subset W_0=E_{s_0}\oplus E_{s_1}$。若非零实组合 $h=\alpha h_1+\beta h_2$ 在某 $s\ne s_0$ 为零，其线性部分 $A$ 消去 $n=s-s_0$。对关于通过 $c'$、法向为 $n$ 的中心超平面的球面反射，配对点 $t,t'$ 满足 $t-t'\in\mathbb Rn$，因而 $h(t)=h(t')$。离固定大圆时 $t\ne t'$，这个值同时在零交的 $E_t,E_{t'}$ 内，只能为零。由稠密性与连续性，$h$ 处处为零；但 $h(s_1)=\alpha v_1+\beta v_2\ne0$，矛盾。
+
+因此 $h_1(s),h_2(s)$ 对每个 $s\ne s_0$ 张成 $E_s$，都在 $W_0$；$E_{s_0}$ 本就在其中，故 $H=W_0$、$\dim H=4$。任意两个不同端点的切平面同样零交并张成 $H$，特别是 $H=E_a\oplus E_b$。于是 $U=D\oplus H$ 给 $d=8$；$H\subset L$ 及 $r\ge4$ 给 $r=4$。交叉壳落在扇内并非额外前件，而是(260.8)和实际面的原纯性给出的。
+
+（六）处理 $r=4,d\le10$ 的分支，不预设(260.8)。限制 $R:M\to\operatorname{Aff}(B)$ 是四维线性同构，且把 $N$ 恰送到 $\operatorname{Aff}(B)_+$。其转置定义满射 $Q_0:U\to\operatorname{Aff}(B)^*$，满足 $Q_0(F-p)$ 在对偶 Lorentz 锥内、$Q_0(y-p)=\operatorname{ev}_y$。令 $\ell_y$ 为 $f_y(z)=1-\widehat y\cdot z$ 的唯一提升，$G_y=\{x\in F:\ell_y(x-p)=0\}$。对偶 Lorentz 零面为 $\mathbb R_+\operatorname{ev}_y$，所以
+
+$$
+B(p,y)\subseteq G_y,\qquad
+\dim\operatorname{aff}G_y\le\dim\ker Q_0+1=d-3\le7.
+\tag{260.11}
+$$
+
+若严格包含，有限原纯分解给 $q\in P\cap G_y\setminus B(p,y)$；实际外三角 $F(p,y,q)\subseteq G_y$，却由240.2仿射维数至少八，矛盾。因此 $G_y=B(p,y)$。对任意 $q\in P\cap F\setminus\{p\}$，球 $B(p,q)$ 是 $F$ 的真面；在其相对内部支撑，给非零 $\ell\in N$ 消去 $q-p$。$R\ell$ 是非零正 Lorentz 泛函，因此 $Q_0(q-p)$ 在对偶边界。它不能为零，否则 $q$ 同时属于所有 $G_y=B(p,y)$，而任取不同 $y,z$ 的两球交仅为 $p$。非零边界向量在某唯一极射线 $\mathbb R_+\operatorname{ev}_y$，从而 $q\in G_y$。得到(260.8)，再用（五）得 $d=8,r=4$ 和 TC。
+
+（七）最后，$r\ge4$。若 $r=4$ 用（六）；若 $r\ge5$ 且 $d\le10$，则 $d-r\le5$，用（四）、（五）仍得 $d=8,r=4$，排除此分支。特别地 $d=10,r=\dim H=5$ 不可能。引理证毕。$\square$
+

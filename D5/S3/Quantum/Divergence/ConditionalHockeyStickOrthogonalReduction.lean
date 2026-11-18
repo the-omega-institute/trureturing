@@ -222,7 +222,7 @@ private theorem posPart_reindex {n m : Type*} [Fintype n]
       _ = X⁺.submatrix e.symm e.symm - X⁻.submatrix e.symm e.symm := rfl
   exact (CFC.posPart_negPart_unique hdecomp hpq hP hQ).1
 
-private theorem trace_reindex {n m : Type*} [Fintype n]
+theorem trace_reindex {n m : Type*} [Fintype n]
     [Fintype m] (e : n ≃ m) (X : Matrix n n ℂ) :
     (X.reindex e e).trace = X.trace := by
   classical

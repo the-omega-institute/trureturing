@@ -202,5 +202,139 @@ def registration :
   options := #[] }
 
 #print axioms registration
+
+namespace IterateSmul
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Bond
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bond
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ X => X) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (F : Bond → Bond),
+    (∀ (t : ℂ) X, F (t • X) = t • F X) → ∀ (n : ℕ) (t : ℂ) (X : Bond),
+    R.readout () () (F^[n] (t • X)) = t • F^[n] X
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := congrArg (fun X : Bond => X 0 0)
+    (h (fun X => X) (fun _ _ => rfl) 0 1 1)
+  norm_num [rejected, realize] at hh
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro he
+  have hh := congrArg (fun X : Bond => X 0 0) he
+  change (0 : ℂ) = 1 at hh
+  norm_num at hh
+def source_registration : Registration arena
+    (type_of% @_root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.iterate_smul) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.iterate_smul,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.iterate_smul)
+      (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.iterate_smul.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.IterateSmul.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X => X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end IterateSmul
+
+namespace TransferSmul
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Bond
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bond
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature := realize signature (fun _ _ X => X) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (A : Fin 2 → Bond) (t : ℂ) (X : Bond),
+    R.readout () () (transfer A (t • X)) = t • transfer A X
+private lemma rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := congrArg (fun X : Bond => X 0 0) (h (fun _ => 1) 1 1)
+  norm_num [rejected, realize, transfer, Fin.sum_univ_two, Matrix.add_apply] at hh
+  change (0 : ℂ) = 2 at hh
+  norm_num at hh
+private lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro he
+  have hh := congrArg (fun X : Bond => X 0 0) he
+  change (0 : ℂ) = 1 at hh
+  norm_num at hh
+def source_registration : Registration arena
+    (type_of% @_root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.transfer_smul) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.transfer_smul,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e; exact nomatch e
+  dependence := dependence
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.transfer_smul)
+      (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.transfer_smul.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization.TransferSmul.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X => X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end TransferSmul
 end
 end Reg.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSInteriorRootRealization

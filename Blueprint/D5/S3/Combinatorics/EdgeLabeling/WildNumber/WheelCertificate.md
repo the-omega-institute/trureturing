@@ -124,7 +124,21 @@ $$\forall (\operatorname{W} : \operatorname{Finset} (\operatorname{Sym2} (\opera
 
 Example 5.12, PDF page 17: “As an example in which the Greedy Algorithm produces a color-connecting wild set that is not an ideal wild set, consider the wheel graph in Figure 9, which has vertex set V = {vᵢ : 0 ≤ i ≤ 7} and colored edge sets” The vertices are numbered from 0 to 7 and the four colors from 0 to 3. The set O has edges 03, 07, 12, 45, and 56.
 
-**Theorem 1.11 (all outputs six).**
+**Theorem 1.11 (component count on the wheel).**
+
+$$\forall (\operatorname{W} : \operatorname{Finset} (\operatorname{Fin} 14)) (\operatorname{c} : \operatorname{Fin} 4) , \operatorname{ComponentMirror} . \operatorname{componentCount} ((\operatorname{List} . \operatorname{finRange} 14) . \operatorname{filterMap} (\operatorname{fun} \operatorname{e} \mapsto \operatorname{if} (! [ 0 , 0 , 0 , 1 , 1 , 1 , 1 , 2 , 2 , 2 , 2 , 2 , 3 , 3 ] : \operatorname{Fin} 14 \to \operatorname{Fin} 4) \operatorname{e} = \operatorname{c} \lor \operatorname{e} \in \operatorname{W} \operatorname{then} \operatorname{some} (((! [ 0 , 0 , 0 , 0 , 0 , 4 , 6 , 0 , 0 , 1 , 1 , 5 , 2 , 3 ] : \operatorname{Fin} 14 \to \operatorname{Fin} 8) \operatorname{e}) , ((! [ 1 , 3 , 4 , 2 , 6 , 5 , 7 , 5 , 7 , 2 , 7 , 6 , 3 , 4 ] : \operatorname{Fin} 14 \to \operatorname{Fin} 8) \operatorname{e})) \operatorname{else} \operatorname{none})) = \operatorname{Nat} . \operatorname{card} (\operatorname{Greedy} . \operatorname{wildColorGraph} \operatorname{WheelCertificate} . \operatorname{Wheel} . \operatorname{H} \operatorname{WheelCertificate} . \operatorname{Wheel} . \operatorname{gamma} (\operatorname{Finset} . \operatorname{image} (\operatorname{fun} \operatorname{e} \mapsto \operatorname{s} ((! [ 0 , 0 , 0 , 0 , 0 , 4 , 6 , 0 , 0 , 1 , 1 , 5 , 2 , 3 ] : \operatorname{Fin} 14 \to \operatorname{Fin} 8) \operatorname{e} , (! [ 1 , 3 , 4 , 2 , 6 , 5 , 7 , 5 , 7 , 2 , 7 , 6 , 3 , 4 ] : \operatorname{Fin} 14 \to \operatorname{Fin} 8) \operatorname{e})) \operatorname{W}) \operatorname{c}) . \operatorname{ConnectedComponent}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.count_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Katie Anders; Briana Foster-Greenwood; Rebecca Garcia; Naomi Krawzik (2025). *The Wild Number of an Edge-Colored Graph*. DOI: [10.48550/arXiv.2508.06711](https://doi.org/10.48550/arXiv.2508.06711). URL: <https://arxiv.org/abs/2508.06711v1>.
+
+*Commentary.*
+
+For every set W of the fourteen indexed wheel edges and every color c, the recursive component count equals the number of connected components of the graph formed by W and the edges of color c. This equality identifies the counts used in the dip computations.
+
+**Theorem 1.12 (all outputs six).**
 
 $$\forall (\operatorname{W} : \operatorname{Finset} (\operatorname{Sym2} (\operatorname{Fin} 8))) , \operatorname{Greedy} . \operatorname{IsGreedyOutput} \operatorname{WheelCertificate} . \operatorname{Wheel} . \operatorname{H} \operatorname{WheelCertificate} . \operatorname{Wheel} . \operatorname{gamma} \operatorname{W} \to \operatorname{W} . \operatorname{card} = 6$$
 
@@ -148,6 +162,7 @@ Example 5.12, PDF page 17: “As an example in which the Greedy Algorithm produc
 - Truth anchor: `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.O_color_connecting`
 - Truth anchor: `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.all_outputs_six`
 - Truth anchor: `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.color_connecting_card_ge_five`
+- Truth anchor: `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.count_eq`
 - Truth anchor: `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.edgeColor`
 - Truth anchor: `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.gamma`
 - Truth anchor: `D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.gamma_surjective`

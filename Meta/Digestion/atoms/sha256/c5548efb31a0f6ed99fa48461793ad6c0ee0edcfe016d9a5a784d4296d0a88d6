@@ -1,0 +1,17 @@
+**定义 280.1（纯端点中点候选）。** 完整保留279.1的非平凡强全有限背景、同一原概率表、全部原态与完整proper菜单、真实有限复合及全部相关输入。二元最低确认读数仍是279.1的 $T_N$；它先于最小门存在而总定义。真实 $(12)|3$ 分块仍取 $B_3=P_2\otimes P_1$，块内允许纠缠，源对允许重复。只把279.2第一条的一个输入限制为原纯点，定义
+
+$$
+\begin{aligned}
+m_{p,q}&=(p+q)/2,\\
+\mathsf A_{\mathrm{pm},3}:\quad
+T_3\!\left(m_{p,q},\frac{a+y}{2}\right)
+&=\frac{T_3(m_{p,q},a)+T_3(m_{p,q},y)}2
+\quad(p,q\in B_3,\ a\in P_3,\ y\in K_3),\\
+\boxed{\qquad\mathsf Q_{\mathrm{pm}}
+&:=\mathsf A_{\mathrm{pm},3}+\mathsf X_{T,2}.\qquad}
+\end{aligned}
+\tag{280.1}
+$$
+
+这里 $P_3=\operatorname{ext}K_3$ 是整个原纯域，包括跨分块纠缠；$y$ 仍遍历整个原 $K_3$。$\mathsf X_{T,2}$ 完整沿用279.2：对不同原纯 $p,q\in P_2$，存在原纯 $g$，保住全部共同零参照 $\{p,q\}^{\perp_T}=\{p,g\}^{\perp_T}$，并翻转 $p\perp_T q$ 与 $p\perp_T g$ 的真假。两个条件作用于同一个二元比较，换点中的共同参照量词没有被省掉。
+

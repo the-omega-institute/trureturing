@@ -74,7 +74,35 @@ $$\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\
 
 The sum ranges over the original individual colour rows with the original scanner.
 
-**Theorem 1.6 (Hardin's recurrence for every height at least eight).**
+**Theorem 1.6 (Exact scanner pushforward for every target class).**
+
+$$\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}), (\forall (p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}), (\forall (k: \operatorname{Fin}\left(7\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{classCount}\left(s, p, k\right) = \sum_{q: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}} ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255LiteralBridge}.\operatorname{rowWeight}\left(s, q\right)) \cdot (((\operatorname{if} ((\forall (j: \operatorname{Fin}\left(4\right)), (q\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \ne q\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right))) \land ((\forall (j: \operatorname{Fin}\left(4\right)), ((p\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \ne q\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)) \land (p\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right) \ne q\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{boundaryClass}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255LiteralBridge}.\operatorname{rowFinish}\left(s, q\right), q\right) = k))) \operatorname{then} (1) \operatorname{else} (0)): \operatorname{Int}))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.class_fibres` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233171: normalized six-colour five-column arrays with both diagonal exclusions*. URL: <https://oeis.org/A233171>.
+
+*Commentary.*
+
+For every Seen state, boundary and Fin 7 target class, classCount equals the sum over actual Fin 3 boundaries weighted by rowWeight. Each indicator requires horizontal properness, both diagonal compatibilities with p, and the exact rowFinish target class. At saturated Seen flags the weight is 32 and rowFinish is unchanged.
+
+**Theorem 1.7 (Universal interpretation of the seven-class transfer).**
+
+$$\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}), (\forall (p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Valid}\left(s, p\right) \implies (\forall (k: \operatorname{Fin}\left(7\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{classCount}\left(s, p, k\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{transfer}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{boundaryClass}\left(s, p\right), k\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.finite_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233171: normalized six-colour five-column arrays with both diagonal exclusions*. URL: <https://oeis.org/A233171>.
+
+*Commentary.*
+
+For every valid Seen state and boundary, each actual classCount equals the corresponding transfer entry. Combining this certificate with class_fibres supplies the proper diagonal sectors of HardinA229531Strip through an exact budget and class adapter and division by 32.
+
+**Theorem 1.8 (Hardin's recurrence for every height at least eight).**
 
 $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (8)\right): \operatorname{Int}) = (((((((480) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (7)\right): \operatorname{Int}))) - ((60416) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (6)\right): \operatorname{Int})))) + ((1966080) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (5)\right): \operatorname{Int})))) + ((22020096) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (4)\right): \operatorname{Int})))) - ((1845493760) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (3)\right): \operatorname{Int})))) + ((22548578304) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (2)\right): \operatorname{Int})))) - ((68719476736) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233171DiagonalStrip}.\operatorname{a}\left((n) + (1)\right): \operatorname{Int}))))$$
 
@@ -90,14 +118,16 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 
 *Commentary.*
 
-The width-independent literal counting bridge and exact scanner fibres give the displayed class transfer. The owner's compatibility-free row_valid supplies boundary validity. The private finite_certificate proves the diagonal graph's class transfer and is used in the induction identifying all continuations with powers of this transfer. The reused first-row distribution is (8,0,8,4,8,4,4). Its eighth Krylov row is the stated integer linear combination of its first seven rows. The numerical premises are finite_certificate, distribution_step for consecutive row products, and distribution_relation for this integer relation; all feed result. Multiplying this identity by every continuation vector proves the recurrence for all n+8. Thus the literal count, defined independently of the recurrence, satisfies the displayed order-seven relation.
+The width-independent literal counting bridge and exact scanner fibres give the displayed class transfer. The owner's compatibility-free row_valid supplies boundary validity. The finite_certificate proves the diagonal graph's class transfer and is used in the induction identifying all continuations with powers of this transfer. The reused first-row distribution is (8,0,8,4,8,4,4). Its eighth Krylov row is the stated integer linear combination of its first seven rows. The numerical premises are finite_certificate, distribution_step for consecutive row products, and distribution_relation for this integer relation; all feed result. Multiplying this identity by every continuation vector proves the recurrence for all n+8. Thus the literal count, defined independently of the recurrence, satisfies the displayed order-seven relation.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.a`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.bonds`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.classCount`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.class_fibres`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.compatible`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.transfer`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip](HardinA233126SquareStrip.md)

@@ -1,0 +1,22 @@
+**定义 277.1（同一概率表上的两门收紧）。** 完整保留275.1的非平凡强全有限背景、276.1的真实分块 $(12)|3$ 及 $\mathcal B_3=P_2\otimes P_1$。写 $\mathcal E=[0,u_3]_{C_3^*}$，原序仍为 $f\le g\Longleftrightarrow f(x)\le g(x)$ 对所有 $x\in K_3$ 成立。定义二元确认关系及其纤维
+
+$$
+p\Vdash f\quad\Longleftrightarrow\quad f(p)=1,\qquad
+c_B(f)=\{p\in\mathcal B_3:p\Vdash f\},\qquad
+\mathcal E(S)=\{f\in\mathcal E:S\subseteq c_B(f)\}.
+\tag{277.1}
+$$
+
+$S$ 可为空、无限或含重复列出的同一目标；$\mathcal E(S)$ 总含 $u_3$。提出只作用于两只原测试的单条收紧规则
+
+$$
+\mathsf R_B:\quad
+\forall f,g\in\mathcal E\ \exists h\in\mathcal E:\quad
+h\le f,g,\qquad c_B(h)=c_B(f)\cap c_B(g),
+\qquad
+\boxed{\ \mathsf Q_{\mathrm{ref}}:=\mathsf X_2+\mathsf R_B.\ }
+\tag{277.2}
+$$
+
+原序给包含 $c_B(h)\subseteq c_B(f)\cap c_B(g)$，故新要求只是不丢掉共同确认的独立块纯准备。这里没有预选最小门，没有要求 $h$ 是两效应的最大下界，也不要求两门组成可联合实施的仪器。完整原概率表、全菜单和全相关输入比较均保留，不能将 $\le$ 换成仅比较产品读数。
+

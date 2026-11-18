@@ -71,7 +71,7 @@ Declaration proof shapes (names relative to this module):
   Gaussian.realConsEquiv_preserving; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_mv_log_coeff_lower
   Gaussian.gaussian_mv_log_coeff_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_mv_abs_log_bound
 Direct frozen dependencies:
-  D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+  D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm: declaration statement_id sha256:22d5a6952370e9164f56764205f50d3d5d06a1a6e0cf1bab0a41053068bfebc5
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog

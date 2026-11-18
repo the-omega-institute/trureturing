@@ -58,20 +58,12 @@ F2: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply
   sha256:e3427bb6efbbe3e9b723be03b86574ca66e788ed2d360508fdb706fa7b764080
 F3: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage
   sha256:643023e91c290d010b39ef66865832300da6bc0e9e247a1d942263cdbaef62ba
-F4: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_hermitian
-  sha256:e2c73307f067b03207d0f3f7d1d834657288c35f0eccfdf141f5cf0d50ef2c08
-F5: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_identity_fixed
-  sha256:b7e1bc0bee2a33d3da5732a7d8d3c96dadf292c003f4698a39bc9f6d6ae544f7
-F6: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_image_span
-  sha256:9c148163365a59f540f3e854581a5066b8373b36936af617f39db9e095a337af
-F7: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_swap_fixed
-  sha256:4140ddf84490bd3b1b543ceeadf3f3208a4d8d9335600bc17a932777dae22758
-F8: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.hermitian_fixed_pairing
-  sha256:9ea713521ccc6215fc514afd9c2c5507a4e5dcc7b677cf819086214ea0a54163
+F4: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.twirlFormula
+  sha256:40623735b973e483dc12cfd874eb075eae8ca0e56917f2974fef9e39d8bb67ff
 F9: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.literalMoment
   sha256:6d3808f646b3a2dccfb6f436f49901190286d1e2981e01de7c972ab57d7d214d
 F10: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.literalMoment_integrable
-  sha256:6aeca34ab3850c51aee19232cf3d90e3fed0e26d6714c829c20c1904fdb6f3c6
+  sha256:a783f751e45dce390f6ca66183989c2434449739aa5b82262dede3e7e1771e01
 F11: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryBorelSpace
   sha256:757f890bf0f7c651f03551550d08fb6b7b44524790dd9502bb910d11d5d7843a
 F12: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryCompactSpace
@@ -79,14 +71,14 @@ F12: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryCompactSpace
 F13: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryMeasurableSpace
   sha256:abb9c185cb4644ae2b034b61c7aa2a837e9832ef73855984512122acadf02844
 F14: RHLinalg.frobSq
-  sha256:a1114d4731d26d6c5ef81acb0a254cdc6e0ed6e629ccb2dcf75d7faa00f4ccce
+  sha256:87344d8035a8c18278b7631968fd9b17dbe3a4221dfb10f55432779f1064e116
 F15: D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace
   sha256:470140292aee89705512206af514f5a42fdc3948e5c9195d302613a47b859917
 Direct frozen dependencies: cHaarChannel: F1.
 Direct frozen dependencies: momentOp: F13, F11, F12, F1.
 Direct frozen dependencies: hsNormSq: none.
 Direct frozen dependencies: claim: F13, F11, F12, F1.
-Direct frozen dependencies: haarAverageEntry: F3, F6, F8, F4, F5, F7.
+Direct frozen dependencies: haarAverageEntry: F3, F4.
 Direct frozen dependencies: cHaarSingle: F1.
 Direct frozen dependencies: jointIndex: none.
 Direct frozen dependencies: twoCopyIntegrand: F1, F9.
@@ -94,7 +86,7 @@ Direct frozen dependencies: momentOp2HaarEntries: F13, F11, F12, F1, F3, F9, F10
 Direct frozen dependencies: jointId: none.
 Direct frozen dependencies: jointSwap: none.
 Direct frozen dependencies: jointSwapRev: none.
-Direct frozen dependencies: momentOp2Formula: F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7.
+Direct frozen dependencies: momentOp2Formula: F13, F11, F12, F1, F3, F9, F10, F4.
 Direct frozen dependencies: w: none.
 Direct frozen dependencies: P: none.
 Direct frozen dependencies: Q: none.
@@ -104,7 +96,7 @@ Direct frozen dependencies: uDotU: none.
 Direct frozen dependencies: uDotW: none.
 Direct frozen dependencies: wDotU: none.
 Direct frozen dependencies: wDotW: none.
-Direct frozen dependencies: moment22Reindex: F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
+Direct frozen dependencies: moment22Reindex: F13, F11, F12, F1, F3, F9, F10, F4, F2.
 Direct frozen dependencies: pMulP: none.
 Direct frozen dependencies: pMulQ: none.
 Direct frozen dependencies: pMulR: none.
@@ -119,9 +111,9 @@ Direct frozen dependencies: aPow: none.
 Direct frozen dependencies: hsNormSqCorrespondence: F14, F15.
 Direct frozen dependencies: normReindex: F14, F15.
 Direct frozen dependencies: normNormal: F14, F15.
-Direct frozen dependencies: instanceN4: F14, F15, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
-Direct frozen dependencies: instanceN5: F14, F15, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
-Direct frozen dependencies: result: F14, F15, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
+Direct frozen dependencies: instanceN4: F14, F15, F13, F11, F12, F1, F3, F9, F10, F4, F2.
+Direct frozen dependencies: instanceN5: F14, F15, F13, F11, F12, F1, F3, F9, F10, F4, F2.
+Direct frozen dependencies: result: F14, F15, F13, F11, F12, F1, F3, F9, F10, F4, F2.
 The public result is the designated refutation result (`basis=refutes`) and is exempt
 from four-slot escape registration (CLAUDE.md §3.9).
 Every other newly authored public theorem would be an escape-audit target;

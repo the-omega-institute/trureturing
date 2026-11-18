@@ -6,7 +6,7 @@ Every greedy output on the star family has an additive gap r.
 
 **Definition 1.1 (claim).**
 
-$$\operatorname{claim} \iff (\forall \operatorname{r} : \mathbb{N} , 1 \leq \operatorname{r} \to \exists \operatorname{n} : \mathbb{N} , \exists \operatorname{G} : \operatorname{SimpleGraph} (\operatorname{Fin} \operatorname{n}) , \exists \gamma : \operatorname{G} . \operatorname{edgeSet} \to \operatorname{Fin} 4 , \operatorname{G} . \operatorname{Connected} \land \operatorname{Function} . \operatorname{Surjective} \gamma \land \operatorname{wildNumber} \operatorname{G} \gamma = 5 * \operatorname{r} \land (\exists \operatorname{W} , \operatorname{IsGreedyOutput} \operatorname{G} \gamma \operatorname{W}) \land (\forall \operatorname{W} , \operatorname{IsGreedyOutput} \operatorname{G} \gamma \operatorname{W} \to \operatorname{W} . \operatorname{card} = 6 * \operatorname{r}))$$
+$$claim = (\forall \operatorname{r} : \mathbb{N} , 1 \leq \operatorname{r} \to \exists \operatorname{n} : \mathbb{N} , \exists \operatorname{G} : \operatorname{SimpleGraph} (\operatorname{Fin} \operatorname{n}) , \exists \gamma : \operatorname{G} . \operatorname{edgeSet} \to \operatorname{Fin} 4 , \operatorname{G} . \operatorname{Connected} \land \operatorname{Function} . \operatorname{Surjective} \gamma \land \operatorname{wildNumber} \operatorname{G} \gamma = 5 * \operatorname{r} \land (\exists \operatorname{W} , \operatorname{IsGreedyOutput} \operatorname{G} \gamma \operatorname{W}) \land (\forall \operatorname{W} , \operatorname{IsGreedyOutput} \operatorname{G} \gamma \operatorname{W} \to \operatorname{W} . \operatorname{card} = 6 * \operatorname{r}))$$
 
 *Formalization.* `D5/S3/Combinatorics/EdgeLabeling/WildNumber/Result.claim` (`✓ std3`).
 

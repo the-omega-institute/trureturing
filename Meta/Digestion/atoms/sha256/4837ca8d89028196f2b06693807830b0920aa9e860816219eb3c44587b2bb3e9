@@ -1,0 +1,117 @@
+**定理 13.2（这对实际点的共享周期整除式及数值包络）。** 定义 13.1 中每个 $U_v(r)$ 都是有限指数开子群，并且对所有 $B\ge2$、整数 $r,M\ge1$ 有真正的整数整除式
+
+$$
+q(B,r;M)\ \mid\
+ M A_2\,2^{r-1}
+ \prod_{3\le p\le B}
+ \left[p^{r-1}\prod_{v\mid p}\#E_0(k_v)\right].
+\tag{13.5}
+$$
+
+由此有数值不等式
+
+$$
+\log q(B,r;M)
+\le \log(MA_2)+(r-1)\log2
+ +(r+7)\vartheta(B)+8(\log4)\pi(B).
+\tag{13.6}
+$$
+
+特别地，若 $h\ge2$ 为整数，令 $c_0=28+8\log4+\log2$，则
+
+$$
+\log q(h,h;M)\le4h^2+c_0h+\log(MA_2).
+\tag{13.7}
+$$
+
+若 $B\le B'$、$r\le r'$，则 $q(B,r;M)\mid q(B',r';M)$。对任意整数 $m$，精确的同步等价为
+
+$$
+\begin{split}
+q(B,r;M)\mid m
+\quad\Longleftrightarrow\quad
+&M\mid m\ \text{且}\\
+&[m]P_j\in U_v(r)
+ \quad(p\le B,\ v\mid p,\ j=1,2).
+\end{split}
+\tag{13.8}
+$$
+
+**证明。** 先说明定义中的局部群确实存在且指数有限。整模型的形式群律及逆元级数的系数都在 $\mathcal O_v$ 中，因而 $\widehat{\mathcal E}_v(\mathfrak m_v^r)$ 是子群，形式坐标使其成为单位元的开邻域。其像及经 $\iota_v$ 拉回的像也都是开子群。$F_v$ 是有限扩张的 $p$ 进局部紧域，$\mathbb P^2(F_v)$ 紧，故其中闭子集 $E_0(F_v)$ 紧。一个紧群的开子群具有有限指数：其开陪集构成开覆盖，有限子覆盖给出有限个陪集。因此所有 $d_{v,j}(r)$ 及 $A_2$ 都是有限正整数。此处在 $v\mid2$ 不要求好约化，也不把整个商群误认成特殊纤维的非奇异点群；任何实际约化类型均由紧性和固定极小模型处理。
+
+Silverman 上述第二版 IV.2.3(a) 给出整系数乘法级数
+
+$$
+[p]_{\widehat{\mathcal E}_v}(T)=pT+\sum_{\nu\ge2}a_\nu T^\nu,
+\qquad a_\nu\in\mathcal O_v.
+$$
+
+若 $\operatorname{ord}_v(t)\ge s\ge1$，级数收敛，且
+
+$$
+\operatorname{ord}_v([p]t)
+\ge\min(e_v+s,2s)\ge s+1.
+\tag{13.9}
+$$
+
+零参数的赋值取 $+\infty$，所以上式也包括乘积为单位元的情形。反复应用得到
+
+$$
+[p^{r-1}]U_v(1)\subseteq U_v(r),\qquad
+d_{v,j}(r)\mid p^{r-1}d_{v,j}(1).
+\tag{13.10}
+$$
+
+这只使用 $e_v\ge1$，故分歧无需排除；非线性项若相消只会提高赋值。另一方面 $U_v(r+1)\subseteq U_v(r)$，故商映射给出 $d_{v,j}(r)\mid d_{v,j}(r+1)$。
+
+原曲线 $E_0$ 的判别式为 $64$，故每个奇素数处的原模型在任意 $F_v$ 上均为好约化的极小整模型，包括分歧的有限扩张。由 Silverman VII.2.1 的约化正合列和 VII.2.2 的形式群识别，
+
+$$
+E_0(F_v)/U_v(1)\simeq E_0(k_v)\qquad(p\ne2).
+$$
+
+因此两个点的 $d_{v,j}(1)$ 都整除同一个整数 $\#E_0(k_v)$，从而
+
+$$
+d_{v,j}(r)\mid p^{r-1}\#E_0(k_v)\qquad(p\ne2).
+\tag{13.11}
+$$
+
+对固定奇素数 $p$，整数 $p^{r-1}\prod_{v\mid p}\#E_0(k_v)$ 同时被所有 $d_{v,j}(r)$ 整除；两个点共享群阶，不需要把群阶平方。对 $p=2$，式 (13.10) 使 $A_2\,2^{r-1}$ 同时被所有相应阶整除。再乘 $M$，式 (13.5) 的右端同时被取最小公倍数的每一项整除，故得到该整除式。不同素数的群阶可以有共同因子，证明只需要它们的乘积是共同倍数。
+
+数值估计另作如下处理。在奇特征域 $k_v$ 上，每个横坐标至多对应两个纵坐标，再加无穷远点，所以
+
+$$
+\#E_0(k_v)\le2p^{f_v}+1\le4p^{f_v}.
+\tag{13.12}
+$$
+
+这是足够的初等点数上界，不需要 Hasse 界。由 $\sum_{v\mid p}e_vf_v=d_F\le8$，有 $\sum_{v\mid p}f_v\le8$ 及 $\#\{v:v\mid p\}\le8$。因此
+
+$$
+\begin{aligned}
+\sum_{v\mid p}\log\#E_0(k_v)&\le8\log4+8\log p,\\
+\log q(B,r;M)
+&\le\log(MA_2)+(r-1)\log2
+ +\sum_{3\le p\le B}\bigl((r+7)\log p+8\log4\bigr).
+\end{aligned}
+$$
+
+放大求和范围即为式 (13.6)。式 (13.12) 只用于大小比较；没有把 $4p^{f_v}$ 当成实际群阶的整数倍数。
+
+为给出式 (13.7) 的具体常数，使用经典二项式方法的以下初等估计。对整数 $m\ge2$，每个 $\lceil m/2\rceil<p\le m$ 的素数都整除 $\binom m{\lfloor m/2\rfloor}$，所以
+
+$$
+\vartheta(m)\le\vartheta(\lceil m/2\rceil)+m\log2.
+$$
+
+由 $\vartheta(1)=0$ 归纳得 $\vartheta(m)\le4m$：归纳步的右端至多 $4\lceil m/2\rceil+m\log2\le4m$，最后一个不等式对所有 $m\ge2$ 成立。又有 $\pi(m)\le m$。将 $B=r=h$ 代入式 (13.6)，便得
+
+$$
+\log q(h,h;M)
+\le\log(MA_2)+(h-1)\log2+4h(h+7)+8h\log4
+\le4h^2+c_0h+\log(MA_2).
+$$
+
+最后，子群随深度递减，地方集合随截止增长，故各精确阶及其最小公倍数具有所述整除嵌套。一个元素在商群中的精确阶为 $d$，恰意味着其第 $m$ 倍为零当且仅当 $d\mid m$；对所有地方、两个点及 $M$ 同时应用即得式 (13.8)。$\square$
+

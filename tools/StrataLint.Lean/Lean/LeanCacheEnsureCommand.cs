@@ -786,6 +786,12 @@ internal static partial class LeanCacheEnsureCommand
         }
     }
 
+    private static string ScopedColdBuildRemediation(string root) =>
+        "if the lane's project layer is cold, explicitly accept a scoped build without donor cloning (also on Linux): "
+        + $"{ColdBuildConsentVariable}=1 make -C {ShellQuote(root)} lean LEAN_TARGETS=\"<nonempty module list>\"; "
+        + "replace the target placeholder; this fetches pinned dependencies only and compiles the selected closure; "
+        + "standalone lean-cache-ensure still requires donor seeding";
+
     private static CommandResult LinkedLaneReseedFailure(
         string root,
         LeanPinSet pins,
@@ -803,7 +809,7 @@ internal static partial class LeanCacheEnsureCommand
             location.MainCheckout,
             "none",
             pins.Sha256,
-            JoinReasons(reason, remediation) ?? remediation,
+            JoinReasons(JoinReasons(reason, remediation), ScopedColdBuildRemediation(root))!,
             stampMiss,
             clonefile,
             LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
@@ -828,7 +834,7 @@ internal static partial class LeanCacheEnsureCommand
             location.MainCheckout,
             "none",
             pins.Sha256,
-            completeReason,
+            JoinReasons(completeReason, ScopedColdBuildRemediation(root))!,
             stampMiss,
             clonefile,
             LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
