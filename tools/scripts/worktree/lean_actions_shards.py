@@ -19,7 +19,7 @@ from lean_actions import (
     actions_keys, dependency_inputs, native_archive_paths, project_publication, receipt, resume_spec,
 )
 from lean_artifact_inventory import PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports, workspace_modules
-from lean_cache_release import cache_guard, install_scoped
+from lean_cache_release import cache_guard, install_scoped, report_reuse
 from lean_cache_release_io import archive_sha, copy_chunks
 from lean_cache_shards import group_identity, make_layout
 from lean_release_index import safe_path, valid_digest
@@ -183,11 +183,16 @@ def write_payload(root, build, paths):
 def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset()):
     if state == "complete":
         allowed, reason, _ = project_publication(root)
-        if not allowed or os.environ.get("GITHUB_REF_PROTECTED") != "true":
+        keys = actions_keys(root)
+        if (not (allowed or reason == "no-build-work") or not keys["project_save_allowed"]
+                or os.environ.get("GITHUB_REF_PROTECTED") != "true"):
             raise ValueError("Actions shard publication denied: " + reason)
     else:
         resume_spec(root)
     with cache_guard(root, shared=True):
+        if state == "complete":
+            report = root / PROJECT_BUILD / REPORT_PATH
+            report_reuse.read_receipt(report, report_reuse.capture(root))
         modules = workspace_modules(root)
         graph = project_imports(root, modules)
         inventory = build_inventory(root, modules)
