@@ -189,7 +189,7 @@ private lemma hsArithmeticMap_inverse_apply (Z X : Matrix ι ι ℂ) (u : ℝ) (
       HSOp (EuclideanSpace ℂ ι) => F (matrixHS X)) hleft
   simpa [M, Q, inverseCandidate, ContinuousLinearMap.comp_apply] using h.symm
 
-private lemma affineKernel_integrable (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
+lemma affineKernel_integrable (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     IntervalIntegrable (fun u : ℝ => ((1-u)*a+u*b)⁻¹) volume 0 1 := by
   apply ContinuousOn.intervalIntegrable
   simp only [Set.uIcc_of_le zero_le_one]
@@ -265,7 +265,7 @@ private lemma trace_hadjoint_resolvent (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef)
   rw [hcyc]
   simpa [R, U, one_div, _root_.mul_inv_rev, mul_comm, mul_left_comm, mul_assoc] using h
 
-private lemma hs_pair_spectral (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : ℝ)
+lemma hs_pair_spectral (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : ℝ)
     (hu : u ∈ Set.Icc (0 : ℝ) 1) :
     Complex.re (inner ℂ
       (ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) H))
@@ -323,7 +323,6 @@ private lemma hs_pair_spectral (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : ℝ
       _ = _ := by dsimp [D]; push_cast; rfl
   exact congrArg Complex.re he
 
-attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 /-- The Bochner logarithmic derivative paired with an arbitrary complex direction
 is the integral of the earned native Hilbert-Schmidt arithmetic inverse. -/
 theorem arithmetic_inverse_pairing_eq_logDeriv (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) :

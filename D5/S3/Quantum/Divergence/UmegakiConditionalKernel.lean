@@ -7,7 +7,6 @@
    digest: Native arithmetic inverse quadratic forms and quantum partial-trace residuals. -/
 
 import D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
-import D5.S3.Quantum.Divergence.UniversalPositiveScalarizer
 import Mathlib.LinearAlgebra.SesquilinearForm.Basic
 
 /-! The inverse and coordinates are those of the native arithmetic operator.
@@ -19,11 +18,10 @@ set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
-open Matrix
-open scoped BigOperators ComplexOrder MatrixOrder Kronecker
+open Matrix MeasureTheory
+open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 open HilbertSchmidtOperatorSpace
 open D5.S3.Quantum.Divergence.UmegakiArithmeticBKM
-open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 namespace D5.S3.Quantum.Divergence.UmegakiConditionalKernel
 
@@ -40,6 +38,29 @@ def inverseMatrix (Z V : Matrix ι ι ℂ) (u : ℝ) : Matrix ι ι ℂ :=
 /-- The quadratic form uses the actual continuous-linear-map inverse. -/
 def q (Z V : Matrix ι ι ℂ) (u : ℝ) : ℝ :=
   (inner ℂ (matrixHS V) ((hsArithmeticMap Z u).inverse (matrixHS V))).re
+
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+lemma arithmetic_inverse_pairing_intervalIntegrable (Z H : Matrix ι ι ℂ)
+    (hZ : Z.PosDef) :
+    IntervalIntegrable (fun u : ℝ =>
+      (inner ℂ (matrixHS H) ((hsArithmeticMap Z u).inverse (matrixHS H))).re)
+      volume 0 1 := by
+  let U : Matrix ι ι ℂ := hZ.isHermitian.eigenvectorUnitary
+  let W := Uᴴ * H * U
+  let f := fun (i j : ι) (u : ℝ) => Complex.normSq (W i j) *
+    ((1-u) * hZ.isHermitian.eigenvalues i + u * hZ.isHermitian.eigenvalues j)⁻¹
+  have hi (i j : ι) : IntervalIntegrable (f i j) volume 0 1 :=
+    (affineKernel_integrable _ _ (hZ.eigenvalues_pos i)
+      (hZ.eigenvalues_pos j)).const_mul _
+  have hs : IntervalIntegrable (∑ i, ∑ j, f i j) volume 0 1 :=
+    IntervalIntegrable.sum Finset.univ (fun i _ =>
+      IntervalIntegrable.sum Finset.univ (fun j _ => hi i j))
+  apply hs.congr
+  intro u hu
+  have hm : matrixHS H = ofOp ((Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ)) H) := rfl
+  simp only [hm, Finset.sum_apply, f, W, U]
+  exact (hs_pair_spectral Z H hZ u (Set.Ioc_subset_Icc_self
+      (by simpa only [Set.uIoc_of_le zero_le_one] using hu))).symm
 
 def energy (Z X : Matrix ι ι ℂ) (u : ℝ) : ℝ :=
   (Xᴴ * arithmetic Z X u).trace.re
@@ -74,14 +95,9 @@ lemma q_eq_trace (Z V : Matrix ι ι ℂ) (u : ℝ) :
 
 lemma q_zero_parameter (Z V : Matrix ι ι ℂ) (hZ : Z.PosDef) :
     q Z V 0 = (Vᴴ * Z⁻¹ * V).trace.re := by
-  have hi : inverseMatrix Z V 0 = Z⁻¹ * V := by
-    apply matrixHS.injective
-    simp only [inverseMatrix, LinearEquiv.apply_symm_apply]
-    apply (hsArithmeticMap_isInvertible Z 0 hZ (by simp)).inverse_apply_eq.mpr
-    rw [arithmetic_apply]
-    simp only [sub_zero, one_smul, zero_smul, add_zero]
-    exact congrArg matrixHS (Matrix.mul_nonsing_inv_cancel_left Z V
-      ((Matrix.isUnit_iff_isUnit_det Z).mp hZ.isUnit)).symm
+  have hi := inverseMatrix_arithmetic Z (Z⁻¹ * V) 0 hZ (by simp)
+  simp only [arithmetic, sub_zero, one_smul, zero_smul, add_zero,
+    Matrix.mul_nonsing_inv_cancel_left Z V ((Matrix.isUnit_iff_isUnit_det Z).mp hZ.isUnit)] at hi
   rw [q_eq_trace, hi, Matrix.mul_assoc]
 
 private lemma arithmetic_positive (Z : Matrix ι ι ℂ) (u : ℝ)

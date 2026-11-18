@@ -169,7 +169,7 @@ def defectR (Φ : QuantumChannel a b) {R : Type u}
     Matrix (R × a) (R × a) ℂ :=
   PhiR Φ (Y * Yᴴ) - PhiR Φ Y * (PhiR Φ Y)ᴴ
 
-private lemma PhiR_star (Φ : QuantumChannel a b)
+lemma PhiR_star (Φ : QuantumChannel a b)
     {R : Type u} [Fintype R] [DecidableEq R]
     (Y : Matrix (R × b) (R × b) ℂ) :
     PhiR Φ Yᴴ = (PhiR Φ Y)ᴴ := by
@@ -891,6 +891,20 @@ private lemma amplified_defect {R : Type u} [Fintype R] [DecidableEq R]
   rw [← piAmp_mul, ← piAmp_star]
   simp [e, amp_sub, amp_one, ← amp_mul, ← amp_star, Matrix.conjTranspose_mul, Matrix.mul_assoc,
     Matrix.mul_sub, Matrix.sub_mul]
+
+set_option maxHeartbeats 800000 in
+lemma defectR_posSemidef {R : Type u} [Fintype R] [DecidableEq R]
+    (Φ : QuantumChannel a b) (Y : Matrix (R × b) (R × b) ℂ) :
+    (defectR Φ Y).PosSemidef := by
+  rw [amplified_defect]
+  have he : (e Φ).PosSemidef := by
+    have h := Matrix.posSemidef_conjTranspose_mul_self (e Φ)
+    rw [e_star Φ, e_mul_self Φ] at h
+    exact h
+  have h := (amp_pos (R := R) he).conjTranspose_mul_mul_same
+    ((piAmp (a := a) Y)ᴴ * amp (R := R) (J Φ))
+  simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+    Matrix.mul_assoc] using h
 
 private lemma amplified_state_bound {R : Type u} [Fintype R] [DecidableEq R]
     (Φ : QuantumChannel a b) (k : ℝ) (σ : DensityState b)

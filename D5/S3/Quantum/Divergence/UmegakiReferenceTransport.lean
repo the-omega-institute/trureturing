@@ -7,14 +7,17 @@
    digest: Actual amplified channel adjunction and strict positivity for correlated matrices. -/
 
 import D5.S3.Quantum.Divergence.UmegakiConditionalKernel
+import D5.S3.Quantum.Divergence.UniversalPositiveScalarizer
 import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+
+/-! Matrix transport for the canonical reference-amplified channel and its trace adjoint. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open Matrix
-open scoped BigOperators ComplexOrder MatrixOrder Kronecker
+open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -44,7 +47,7 @@ lemma partialTraceRight_mul_embed (Z : Matrix (R × a) (R × a) ℂ)
   ext r s
   simp only [partialTraceRight, Matrix.mul_apply, Matrix.kronecker_apply,
     Fintype.sum_prod_type, Matrix.one_apply, mul_ite, mul_one, mul_zero]
-  simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   rw [Finset.sum_comm]
   simp only [Finset.sum_mul]
 
@@ -55,7 +58,7 @@ lemma partialTraceRight_embed_mul (Z : Matrix (R × a) (R × a) ℂ)
   simp only [partialTraceRight, Matrix.mul_apply, Matrix.kronecker_apply,
     Fintype.sum_prod_type, Matrix.one_apply, mul_ite, mul_one, mul_zero,
     ite_mul, zero_mul]
-  simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   rw [Finset.sum_comm]
   simp only [Finset.mul_sum]
 
@@ -96,20 +99,64 @@ lemma positive_floor {ι : Type*} [Fintype ι] [DecidableEq ι]
       (fun x hx => hZ.isStrictlyPositive.spectrum_pos hx)
     exact ⟨m,hm,by simpa only [Algebra.algebraMap_eq_smul_one] using hfloor⟩
 
+set_option maxHeartbeats 1200000 in
 /-- Positivity of the channel image of the identity gives strict positivity
 on every correlated positive-definite reference input. -/
 lemma amp_posDef (N : QuantumChannel a b) (hN : (act N 1).PosDef)
     (Z : Matrix (R × a) (R × a) ℂ) (hZ : Z.PosDef) : (amp N Z).PosDef := by
   obtain ⟨m,hm,hfloor⟩ := positive_floor Z hZ
-  have hmon := amp_mono N hfloor
+  have hmon : amp N (m • (1 : Matrix (R × a) (R × a) ℂ)) ≤ amp N Z :=
+    amp_mono N hfloor
   have he : amp N (m • (1 : Matrix (R × a) (R × a) ℂ)) =
       m • ((1 : Matrix R R ℂ) ⊗ₖ act N 1) := by
-    have hlin := (CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
-      ((referenceLinear N).comp CStarMatrix.ofMatrixₗ.toLinearMap)).restrictScalars ℝ
-    rw [hlin.map_smul]
-    rw [← Matrix.one_kronecker_one, amp_kronecker]
+    rw [amp_smul, ← Matrix.one_kronecker_one, amp_kronecker]
   rw [he] at hmon
-  exact ((Matrix.PosDef.one.kronecker hN).isStrictlyPositive.smul hm).of_le hmon |>.posDef
+  have hp : ((1 : Matrix R R ℂ) ⊗ₖ act N 1).PosDef :=
+    (Matrix.PosDef.one (n := R)).kronecker hN
+  exact ((hp.isStrictlyPositive.smul hm).of_le hmon).posDef
+
+lemma amp_mul_embed (N : QuantumChannel a b)
+    (Z : Matrix (R × a) (R × a) ℂ) (X : Matrix R R ℂ) :
+    amp N (Z * (X ⊗ₖ (1 : Matrix a a ℂ))) = amp N Z * (X ⊗ₖ (1 : Matrix b b ℂ)) := by
+  ext ⟨r,i⟩ ⟨s,j⟩
+  rw [amp_entry]
+  have h (p q : a) : (Z * (X ⊗ₖ (1 : Matrix a a ℂ))) (r,p) (s,q) =
+      ∑ t, Z (r,p) (t,q) * X t s := by
+    simp [Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kronecker_apply, Matrix.one_apply,
+      mul_ite, mul_assoc]
+  have hblock : (fun p q => (Z * (X ⊗ₖ (1 : Matrix a a ℂ))) (r,p) (s,q)) =
+      ∑ t, X t s • (fun p q => Z (r,p) (t,q)) := by
+    ext p q
+    simp [h, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, mul_comm]
+  rw [hblock]
+  let L : Matrix a a ℂ →ₗ[ℂ] Matrix b b ℂ := CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+    (N.toCompletelyPositiveMap.toLinearMap.comp CStarMatrix.ofMatrixₗ.toLinearMap)
+  change L (∑ t, X t s • (fun p q => Z (r,p) (t,q))) i j = _
+  simp only [map_sum, map_smul, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+  simp [show ∀ Q, L Q = act N Q from fun _ => rfl, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kronecker_apply,
+    Matrix.one_apply, mul_ite, mul_assoc, amp_entry, mul_comm]
+
+lemma amp_embed_mul (N : QuantumChannel a b)
+    (Z : Matrix (R × a) (R × a) ℂ) (X : Matrix R R ℂ) :
+    amp N ((X ⊗ₖ (1 : Matrix a a ℂ)) * Z) = (X ⊗ₖ (1 : Matrix b b ℂ)) * amp N Z := by
+  ext ⟨r,i⟩ ⟨s,j⟩
+  rw [amp_entry]
+  have h (p q : a) : ((X ⊗ₖ (1 : Matrix a a ℂ)) * Z) (r,p) (s,q) =
+      ∑ t, X r t * Z (t,p) (s,q) := by
+    simp [Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kronecker_apply, Matrix.one_apply,
+      ite_mul, mul_ite]
+  have hblock : (fun p q => ((X ⊗ₖ (1 : Matrix a a ℂ)) * Z) (r,p) (s,q)) =
+      ∑ t, X r t • (fun p q => Z (t,p) (s,q)) := by
+    ext p q
+    simp [h, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+  rw [hblock]
+  let L : Matrix a a ℂ →ₗ[ℂ] Matrix b b ℂ := CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+    (N.toCompletelyPositiveMap.toLinearMap.comp CStarMatrix.ofMatrixₗ.toLinearMap)
+  change L (∑ t, X r t • (fun p q => Z (t,p) (s,q))) i j = _
+  simp only [map_sum, map_smul, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+  simp [show ∀ Q, L Q = act N Q from fun _ => rfl, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kronecker_apply,
+    Matrix.one_apply, ite_mul, mul_ite, amp_entry]
+
 
 section Adjoint
 variable [Nonempty a] [Nonempty b]
@@ -132,8 +179,9 @@ private lemma Phi_trace_pair (N : QuantumChannel a b) (Y : Matrix b b ℂ)
   simp only [Matrix.sum_mul, Matrix.mul_sum, Matrix.trace_sum]
   apply Finset.sum_congr rfl
   intro j _
-  simp only [K]
-  rw [Matrix.trace_mul_cycle]
+  change ((K N j)ᴴ * Y * K N j * Z).trace = (Y * (K N j * Z * (K N j)ᴴ)).trace
+  rw [show (K N j)ᴴ * Y * K N j * Z = (K N j)ᴴ * (Y * K N j * Z) by
+    simp only [Matrix.mul_assoc], Matrix.trace_mul_comm (K N j)ᴴ]
   simp only [Matrix.mul_assoc]
 
 /-- The normalized canonical Kraus adjoint pairs with the actual channel
@@ -160,6 +208,12 @@ lemma PhiR_trace_pair (N : QuantumChannel a b)
       intro r _
       rw [Finset.sum_comm]
       rfl
+
+lemma PhiR_hs_pair (N : QuantumChannel a b)
+    (Y : Matrix (R × b) (R × b) ℂ) (Z : Matrix (R × a) (R × a) ℂ) :
+    ((PhiR N Y)ᴴ * Z).trace = (Yᴴ * amp N Z).trace := by
+  rw [← PhiR_star, PhiR_trace_pair]
+
 
 end Adjoint
 end D5.S3.Quantum.Divergence.UmegakiReferenceTransport

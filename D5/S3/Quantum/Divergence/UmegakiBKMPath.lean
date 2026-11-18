@@ -167,7 +167,7 @@ theorem relativeEntropy_eq_integral_bkm {n : ℕ} (A B : Matrix (Fin n) (Fin n) 
   ring
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma weighted_bkm_integrable {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
+lemma weighted_bkm_integrable {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
     (hA : A.PosDef) (hB : B.PosDef) :
     IntervalIntegrable (fun t : ℝ => (1 - t) *
       ((A - B) * logDeriv (B + t • (A - B)) (A - B)).trace.re) volume 0 1 := by
