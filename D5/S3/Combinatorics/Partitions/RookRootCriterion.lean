@@ -63,20 +63,21 @@ private theorem singleton_iff_adjacent (m : ℕ) {N : ℕ} (d : Fin N → ℕ)
     (hd : Monotone d) : SingletonColumns m d ↔ AdjacentPartial m d := by
   constructor
   · intro h i j hij hi hj
-    have hlt : i < j := by simpa only [Fin.lt_iff_val_lt_val] using (by omega : i.val < j.val)
+    have hlt : i < j := by simpa only [Fin.lt_def] using (by omega : i.val < j.val)
     have hle : d i / m ≤ d j / m := Nat.div_le_div_right (hd hlt.le)
     have hne : d i / m ≠ d j / m := fun he => (ne_of_lt hlt) (h i j hi hj he)
     omega
   · intro h i j hi hj he
     by_contra hne
     wlog hij : i < j generalizing i j
-    · exact this j i hj hi he.symm (Ne.symm hne) (lt_of_le_of_ne (le_of_not_gt hij) hne)
-    let k : Fin N := ⟨i.val+1, by have := j.isLt; have := hij; simp only [Fin.lt_iff_val_lt_val] at this; omega⟩
+    · exact this j i hj hi he.symm (Ne.symm hne)
+        (lt_of_le_of_ne (le_of_not_gt hij) (Ne.symm hne))
+    let k : Fin N := ⟨i.val+1, by have := j.isLt; have := hij; simp only [Fin.lt_def] at this; omega⟩
     have hik : i ≤ k := by simp only [Fin.le_iff_val_le_val, k]; omega
-    have hkj : k ≤ j := by simpa only [Fin.le_iff_val_le_val, k] using (by have := hij; simp only [Fin.lt_iff_val_lt_val] at this; omega : i.val+1 ≤ j.val)
+    have hkj : k ≤ j := by simpa only [Fin.le_iff_val_le_val, k] using (by have := hij; simp only [Fin.lt_def] at this; omega : i.val+1 ≤ j.val)
     have hq : d i / m = d k / m := by
-      have h₁ := Nat.div_le_div_right (hd hik)
-      have h₂ := Nat.div_le_div_right (hd hkj)
+      have h₁ : d i / m ≤ d k / m := Nat.div_le_div_right (hd hik)
+      have h₂ : d k / m ≤ d j / m := Nat.div_le_div_right (hd hkj)
       omega
     have hk := partial_between m (d i) (d k) hi (hd hik) hq
     have hlt := h i k rfl hi hk
