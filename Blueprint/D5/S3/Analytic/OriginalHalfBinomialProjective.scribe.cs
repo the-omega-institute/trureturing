@@ -10,7 +10,7 @@ internal sealed class OriginalHalfBinomialProjectiveDocument : IScribeDocumentDe
         Blocks(Describe.Lean(DescribeId.Create("original-tau-projective"),
             DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialProjective.original_tau_projective"),
             H("Actual third-order regularity and exact Schwarzian"), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/nist2010schwarzian")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/nist2010schwarzian")),
             Blocks(
                 Paragraph(Text("For every complex r with norm r<1 and norm(1-r)<1, let "
                     + "P be the literal original half-binomial-square period and tau(r)=iP(1-r)/P(r), "

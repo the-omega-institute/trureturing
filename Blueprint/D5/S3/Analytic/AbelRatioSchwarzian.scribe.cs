@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 internal sealed class AbelRatioSchwarzianDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/AbelRatioSchwarzian.";
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Analytic/nist2010schwarzian");
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/VertexAlgebra/nist2010schwarzian");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An Abel ratio of a nonvanishing second-order ODE solution has actual third-order regularity and an exact Schwarzian.",

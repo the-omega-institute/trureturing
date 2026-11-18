@@ -10,7 +10,7 @@ internal sealed class OriginalGaussianProjectiveCorrectionDocument : IScribeDocu
         Blocks(Describe.Lean(DescribeId.Create("original-correction-projective"),
             DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/FiniteMode/OriginalGaussianProjectiveCorrection.original_correction_projective"),
             H("The exact correction bridge in both directions"), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/nist2010schwarzian")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/nist2010schwarzian")),
             Blocks(
                 Paragraph(Text("For every complex r in the full open lens, use exactly "
                     + "OriginalGaussianFiniteCandidateModes.ell=P'/P and its canonical k=r(1-r)ell. "
