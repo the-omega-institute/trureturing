@@ -1,8 +1,8 @@
-# Sharp Rankin upper bound at the second threshold
+# Sharp Rankin upper bounds for distinct-prime tails
 
 ## Abstract
 
-The second distinct-prime threshold admits an upper exponent of order P divided by log(P) to the power 3/2.
+The continuous reserve controls the sharp Rankin upper exponent for distinct-prime tails.
 
 **Theorem 1.1 (Upper bound for every sufficiently large real cutoff).**
 
@@ -22,8 +22,25 @@ The finite sum of nonnegative softplus weights is bounded by the summable total 
 
 This is the bound of Proposition 7.5 in the theory of the LCM-power Robin kappa threshold.
 
+**Theorem 1.2 (Upper bound from a factorial reserve limit).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/RankinUpper.factorial_sharp_upper_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/RankinUpper.factorial_sharp_upper_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix a natural number r at least two and a real threshold function T of P. Assume that the continuous reserve B(P) = P - theta(P) + (pi(P) - T(P))*log(P), divided by P/log(P)^r, tends to r! as P tends to infinity. For each positive real epsilon and all sufficiently large real P, the count of positive integers up to exp(P) with strictly more than T(P) distinct prime factors is strictly less than exp((pi*sqrt(2*r!/3) + epsilon)*Z(P)), where Z(P) = P/log(P)^((r+1)/2). The estimate includes a zero count.
+
+Set c = pi/sqrt(6*r!), s = c*log(P)^((r-1)/2), and A = pi^2/6. The finite Rankin cancellation leaves s*B(P) and the softplus sum, whose ratios to Z(P) tend to r!*c and A/c, respectively. The p-series correction is bounded once s is at least two, and Z(P) tends to infinity. Since r!*c^2 = A, the two leading coefficients sum to pi*sqrt(2*r!/3).
+
+This gives the analytic upper bound in Proposition 7.9 of the theory of the LCM-power Robin kappa threshold, with the reserve limit as a hypothesis.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/RankinUpper.factorial_sharp_upper_bound`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/RankinUpper.sharp_upper_bound`
 - Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion](FarDeletion.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/MovingPrimeSoftplus](../../PriceRecord/MovingPrimeSoftplus.md)
