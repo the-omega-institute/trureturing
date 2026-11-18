@@ -7,25 +7,7 @@ doi: null
 url: https://math.dartmouth.edu/~carlp/robin4.pdf
 claim: Robin violations have global counting function at most exp(O(log x / log log x)); this does not supply a per-progression singleton theorem or exclude a remaining candidate.
 strata_touched:
-  - D5/S3/Arith/Robin/Analytic/RobinExceptionCount
-  - D5/S3/Arith/Robin/Analytic/OmegaTailUpper
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/PrimeExpansion
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/KernelLimit
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/Tail
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/CentralWeight
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/ContinuumWeight
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/MovingWeight
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/MovingEstimate
-  - D5/S3/Arith/Robin/Analytic/OmegaSecond/Upper
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Density
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Truncation
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Binning
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Saddle
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Selection
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Entropy
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Lower
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Counting
-  - D5/S3/Arith/Robin/Analytic/OmegaTail/Asymptotic
+  - D5/S3/Arith/Robin/Analytic/OmegaSecond/Entropy
 license: citation-only
 triage: anchor
 ---
