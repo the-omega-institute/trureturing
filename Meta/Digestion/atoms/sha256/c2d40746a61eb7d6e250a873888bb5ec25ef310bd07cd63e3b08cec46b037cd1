@@ -1,0 +1,50 @@
+**定义 17.1（固定数据、原过滤与完整相容目标）。** 本节固定定义 11.1 的正实根与指定实嵌入，使用同一曲线和点
+
+$$
+\begin{gathered}
+F=\mathbb Q(\sqrt2,\sqrt{3-\sqrt2},\sqrt{3+\sqrt2}),\qquad
+E_0:Y^2=X^3-X,\\
+P_1=\left(\frac{115-27\sqrt2}{56},
+ \frac{-660+417\sqrt2}{32(3-\sqrt2)^{3/2}}\right),\\
+P_2=\left(\frac{115+27\sqrt2}{56},
+ \frac{-660-417\sqrt2}{32(3+\sqrt2)^{3/2}}\right).
+\end{gathered}
+\tag{17.1}
+$$
+
+$C=E_0(\mathbb R)^0$、$\omega=dX/(2Y)$、正实周期 $\Omega$、$\theta:C\to\mathbb T=\mathbb R/\mathbb Z$ 及 $\alpha=(\theta(P_1),\theta(P_2))$ 均为定义 12.1 的对象。特别地，$\theta(R)=\Omega^{-1}\int_O^R\omega\pmod{\mathbb Z}$，圆距离记作 $\|\cdot\|_{\mathbb T}$。
+
+有限端始终是 $F$ 的全部有限位。对 $v\mid p$，$\mathfrak m_v$、原极小整模型 $\mathcal E_v$、保单位元同构 $\iota_v$ 和形式参数同构 $\psi_v$ 严格沿用定义 13.1；奇素数处原方程即为该模型。具体的过滤、阶和共同模数为
+
+$$
+\begin{aligned}
+U_v(r)&=\iota_v^{-1}
+ \bigl(\psi_v(\widehat{\mathcal E}_v(\mathfrak m_v^r))\bigr),\\
+d_{v,j}(r)&=\operatorname{ord}_{E_0(F_v)/U_v(r)}(P_j+U_v(r)),\\
+D_H&=q(H,H;1),\\
+q(B,r;M)&=\operatorname{lcm}
+ \bigl(M,\{d_{v,j}(r):p\le B,\ v\mid p,\ j=1,2\}\bigr).
+\end{aligned}
+\tag{17.2}
+$$
+
+这里 $r,H,M$ 为正整数且 $H\ge2$。形式深度要求先进入约化至单位元的形式群，再取参数属于 $\mathfrak m_v^r$；不以任意仿射点上的坐标比值替代这一条件。
+
+令 $\widehat{\mathbb Z}=\varprojlim_m\mathbb Z/m\mathbb Z$。对 $u\in\widehat{\mathbb Z}$，原目标 $\eta(u)$ 的坐标由
+
+$$
+\{\eta_{v,j}(u)\}
+ =\bigcap_{r\ge1}\bigl([b_{v,j,r}]P_j+U_v(r)\bigr),
+\qquad b_{v,j,r}\equiv u\pmod{d_{v,j}(r)}
+\tag{17.3}
+$$
+
+定义，交集的唯一性和代表无关性由定理 14.2 保证。完整有限目标空间为 $\eta(\widehat{\mathbb Z})$，使用普通乘积拓扑。固定 $M\ge1$、$a_0\in\mathbb Z$ 后，本节的全部相容目标指
+
+$$
+u\in a_0+M\widehat{\mathbb Z},\qquad z\in\mathbb T^2.
+\tag{17.4}
+$$
+
+这是同一整数的相容目标族；不允许把不同地方任意独立指定的点自动视为此族中的元素。
+

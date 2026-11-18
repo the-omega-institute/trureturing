@@ -1,0 +1,28 @@
+## 6. A closed excluded neighborhood and its limits
+
+Put
+
+$$
+e_*:=\eta /(4A_G)>0,\qquad c_*:=\eta /[8(A_p+A_\beta )]>0.
+$$
+
+**Corollary 6.1.** Under the additional-depth premise of Theorem 5.1:
+
+1. Every exact common conf/law or conf/conf endpoint observer satisfies E_G(M)≥e_*.
+2. Every sequence of finite observers on the same source and prior whose corresponding two excesses tend to zero satisfies liminf E_G(M_n)≥e_*. Their state counts may grow without bound.
+3. Every finite observer with E_G(M)≤e_*/2 satisfies max(ε_p,ε_β)≥c_*.
+
+**Proof.** The first two statements follow directly from (5.3). In the third, A_GE_G≤η/8, so A_pε_p+A_βε_β≥η/8; bound this by (A_p+A_β)max(ε_p,ε_β). ∎
+
+Thus the positive gap in item 3 is uniform over all finite shapes satisfying its explicit semantic-distance premise. That premise is not known to hold for unrestricted competitors. The result supplies neither an unrestricted positive gap nor a common attaining table.
+
+The proof also gives the distance bound on the common stationary analysis row itself. For an arbitrary original observer, E_G is a supremum over actual positive histories. For every ζ>0 below e_*, an exact endpoint observer therefore has a positive finite p history with configuration-average distance greater than e_*−ζ. There is no asserted uniform bound on that history's paid length or probability. This is not an average-error statement and does not identify that history on one realized source run.
+
+The four risk combinations retain their distinction:
+
+| p order | Suspended order | Consequence here |
+| --- | --- | --- |
+| conf | law | Theorem 5.1 and Corollary 6.1 apply |
+| conf | conf | The same bounds apply through suspended TV convexity |
+| law | law | No representation-separation theorem is asserted |
+| law | conf | No representation-separation theorem is asserted |

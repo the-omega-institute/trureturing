@@ -25,6 +25,21 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("Here E₃ is Mertens.E₃ and theta is Chebyshev.theta. Both are the canonical actual arithmetic functions."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("centered-square-root-correction"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.A"),
+                H("The original square-root tail"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A(x) is the actual integral over t>x of sqrt(t) times activationDensity(t). The correction is retained exactly, rather than replaced by its leading asymptotic."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("unconditional-centered-root-tail"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.S_sub_A_limit"),
+                H("Unconditional centered root-tail remainder"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The existing unconditional EulerLayerRootCorrection.psi_theta_root_limit controls the original S-A integral uniformly on its whole tail. The original integral comparison gives D(x)*(S(x)-A(x))->0. The original S_limit consumes this core and adds the unchanged A_limit; signed_B_limit keeps its original telescope and consumes S_limit. The independent original RH root-rate theorem remains available.")),
+                    Paragraph(Text("For a nontrivial zero rho with beta=Re(rho)>=1/2, write fpsi=-Jpsi(exp u) and use the exact identity ftheta-fpsi=S(exp u). The factor exp((1/2-beta)*u) is 1 at equality and tends to zero above it, so u*exp((1-beta)*u)*(S(exp u)-A(exp u))->0. The actual psi forcing is meromorphic on Re s>-1 and analytic at real x>-1, with full complex coefficient Lambda=-m/rho at rho-1. Apply the existing fixed-cutoff signed_peaks at log 2 with an intermediate c1 strictly between c and m/(norm(rho)*norm(rho-1)). The absolute centered remainder spends c1-c, for either real sign s with s^2=1. Thus for every 0<=c below that full coefficient and every real T, some u>max(T,log 2) satisfies c<u*exp((1-beta)*u)*s*(ftheta(u)-A(exp u)). This is an application of the actual source and pole results; it assumes neither RH nor a nonresonance or growth premise and does not assert RH."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-b-lower-endpoint"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.actual_B_lower_endpoint"),
                 H("All-real envelope, arbitrarily late attainment and exact liminf in one result"),
@@ -80,7 +95,7 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                         + "(7/32)*log(x)^3/x^(1/4)+C*log(x)/x^(1/6)+C*log(x)/x^(3/10). "
                         + "The root power-log API makes each term tend to zero. Multiply this actual rate "
                         + "by 1/log(x), cancelling only eventually where x>1, to obtain the "
-                        + "limit (psi-theta)/sqrt->1 used in the square-root tail estimate. "
+                        + "RH root rate. The square-root tail estimate uses the existing unconditional root limit. "
                         + "These are consequences of RH, not additional root-rate or error premises.")),
                     Paragraph(Text(
                         "For the nonlinear term put delta=theta(x)-x, L=log(x), u=delta/x and "
@@ -99,7 +114,7 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                         + "to g=-H on Ici(x), with derivative q>=0 and limit zero: q is integrable and "
                         + "integral_(t>x)q(t)=H(x). Domination pays integrability of a. If A=integral a, "
                         + "H(x)/(1+1/log(x))<=A(x)<=H(x), and D(x)*H(x)=2, so D*A->2. "
-                        + "The local RH-only limit (psi-theta)/sqrt->1 gives, uniformly over the whole tail, "
+                        + "The unconditional EulerLayerRootCorrection root limit gives, uniformly over the whole tail, "
                         + "abs((psi-theta)*w-a)<=eta*a. Integrability of the actual S kernel follows by "
                         + "subtracting the supplied psi and theta kernels. setIntegral_mono_on then gives "
                         + "abs(S-A)<=eta*A and D*S->2. No derivative of a Chebyshev step function is used.")),

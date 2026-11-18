@@ -1,0 +1,40 @@
+#### 命题 8.2：一般三角闭路的无坐标相位
+
+若 $a,b,c$ 两两非反向，令
+
+$$
+S=1+a\cdot b+b\cdot c+c\cdot a,\qquad
+ D=a\cdot(b\times c).
+$$
+
+沿 $a\to b\to c\to a$ 的最短水平门回返相位因子为
+
+$$
+h(a,b,c)=\frac{S-\mathrm iD}{\sqrt{S^2+D^2}}.
+$$
+
+**证明。**
+
+直接展开 Pauli 乘积得
+
+$$
+\operatorname{tr}(P_aP_cP_b)=\frac{S-\mathrm iD}{4}.
+$$
+
+最短门在每一步的当前输入上满足
+
+$$
+U(b\leftarrow a)\psi_a
+ =\frac{P_b\psi_a}{\sqrt{\langle\psi_a|P_b|\psi_a\rangle}}.
+$$
+
+这是逐步选择正实相邻重叠，不是让闭路全部预选代表同时具有正实重叠； 逐段复合故给出上式复数的单位相位。 Gram 行列式恒等式 $D^2=1+2(a\cdot b)(b\cdot c)(c\cdot a) -(a\cdot b)^2-(b\cdot c)^2-(c\cdot a)^2$ 进一步给
+
+$$
+S^2+D^2=2(1+a\cdot b)(1+b\cdot c)(1+c\cdot a)>0.
+$$
+
+因此分母非零，公式处处有定义。
+
+$\square$
+

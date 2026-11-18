@@ -1,0 +1,22 @@
+#### 定理 7.2：度量与有向面积统一于同一张量
+
+$$
+\boxed{\quad
+ \mathcal Q_n(u,v)=\frac14
+ \bigl[u\cdot v+\mathrm in\cdot(u\times v)\bigr].\quad}
+$$
+
+其对称实部是本文的 Fubini–Study 度量； 两倍反对称虚部为
+
+$$
+F_n(u,v)=\frac12n\cdot(u\times v).
+$$
+
+**证明。**
+
+$\mathrm dP_n(u)=u\cdot\boldsymbol{\sigma}/2$，且 $(u\cdot\boldsymbol{\sigma})(v\cdot\boldsymbol{\sigma}) =(u\cdot v)1_2+\mathrm i(u\times v)\cdot\boldsymbol{\sigma}$。 再用 $\operatorname{tr}P_n=1$、$\operatorname{tr}(P_n w\cdot\boldsymbol{\sigma})=n\cdot w$ 即得公式。取 $u=v$ 得长度平方 $\left\|u\right\|^2/4$。
+
+$\square$
+
+这一统一比“波必等于任意面积”更具体： 同一张量的实部控制邻近可区分性，虚部控制有向相位运输。 由单态得到的切平面复结构 $J_nu=n\times u$，满足 $F_n(u,v)=2g_{\rm FS}(J_nu,v)$。
+

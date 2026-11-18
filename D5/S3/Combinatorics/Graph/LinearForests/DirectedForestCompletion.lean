@@ -238,7 +238,7 @@ private theorem component_completion_classification [Finite V] (E : V → V → 
   · intro σ A
     simpa [K] using hΨ σ (q A)
 
-private theorem path_to_tail [Finite V] (E : V → V → Prop)
+theorem path_to_tail [Finite V] (E : V → V → Prop)
     (hout : Relator.RightUnique E) (ha : ∀ x, ¬ TransGen E x x)
     {x : V} (y : Tail E) (hc : EqvGen E x y) : ReflTransGen E x y := by
   have ht := (terminal_component E hout ha hc).trans (terminal_fixed E ha y)

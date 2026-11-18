@@ -16,6 +16,8 @@ internal sealed class OpenBoundaryMPSTwoSiteMinimalityDocument : IScribeDocument
                 "The source is (Fin 5 to complex) times real times complex. Its coordinates are x,p,q,u,v,rho,r1. The left row is (x,1), the right column is (rho,r1), and the real positive condition on rho fixes only unit complex phase. It retains positive amplitude scale on the raw affine cone.", DescribeRole.Definition),
             Item("core", "core", "The canonical symbol matrices",
                 "The two matrices have first rows (p,q) and (u,v), and second rows (1-xp,-xq) and (-xu,1-xv). Their products with the left row are exactly the two standard physical rows. The source model is the existing openBoundaryMPS model with independent free boundaries.", DescribeRole.Definition),
+            Item("normalized-rows", "normalized_rows", "The original canonical row normalization",
+                "For every original Parameter theta and binary symbol i, left theta times core theta i is Pi.single i 1. This canonical helper supplies gauge_row locally and normalizer_inverse in OpenBoundaryMPSSpectralExtraction at theta=(c,0,0). Its original telescope and proof are preserved.", DescribeRole.Theorem),
             Item("record", "densityRecord", "The twelve real raw density coordinates",
                 "Using the fixed ordering 00,01 then 10,11, retain the two real diagonal entries of the leading block H, its complex off-diagonal entry, and the complex two by two upper-right block B. This defines a twelve-real-dimensional vector space. The record map is evaluated on the actual rawPrefix density of the canonical MPS state; all its coordinates are real C-infinity.", DescribeRole.Definition),
             Item("density-record-injective", "densityRecord_injective", "Schur completion from the fixed record",
@@ -69,6 +71,10 @@ internal sealed class OpenBoundaryMPSTwoSiteMinimalityDocument : IScribeDocument
     private static Formula Parameter => At("Parameter");
     private static Formula Statement(string name)
     {
+        if (name == "normalized_rows")
+            return All("theta", Parameter, All("i", At("Fin", D(2)),
+                Eqn(At("Matrix.vecMul", At("left", X("theta")), At("core", X("theta"), X("i"))),
+                    At("Pi.single", X("i"), D(1)))));
         if (name == "densityRecord_injective")
         {
             var matrix = At("Matrix", At("Word", D(2)), At("Word", D(2)), Complex);

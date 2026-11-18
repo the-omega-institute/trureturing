@@ -16,7 +16,31 @@ Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubicRadialTrace`
 
 For complex matrices A and B and real k, define f(t)=Re Tr((A+tB)^3)/(1+kt)^2. This is the actual scalar function, with its usual real derivatives. Its denominator is nonzero on a neighborhood of zero.
 
-**Theorem 1.2 (Second and third derivatives).**
+**Theorem 1.2 (Cyclic cubic expansion).**
+
+Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.trace_cubic`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/HsfCubicRadial.trace_cubic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite index type, arbitrary complex square matrices A,B and real t, Re Tr((A+tB)^3)=Re Tr(A^3)+3t Re Tr(AAB)+3t^2 Re Tr(ABB) +t^3 Re Tr(B^3). Trace cyclicity identifies the ordered cross terms; no matrix factors are assumed to commute.
+
+**Theorem 1.3 (A PSD weight and a Hermitian square).**
+
+Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.trace_weight_square_nonneg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/HsfCubicRadial.trace_weight_square_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite index type, complex positive semidefinite W and Hermitian E, 0<=Re Tr(W E^2). Indeed E* W E is positive semidefinite and its trace equals Tr(W E^2). The statement includes singular W and empty dimensions.
+
+**Theorem 1.4 (Second and third derivatives).**
 
 Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubic_derivatives`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubic_derivatives`
 
 For every finite index type, arbitrary complex square matrices A and B, and real k, put E=B-kA. Then f''(0)=6 Re Tr(A E^2) and f'''(0)=6 Re Tr((B-4kA) E^2). No Hermitian or positivity hypotheses are needed for these identities. Expanding the cubic and using cyclicity of trace gives a scalar cubic numerator. Repeated quotient differentiation near zero proves the identities for iteratedDeriv, including differentiability on the neighborhood where the denominator is nonzero.
 
-**Theorem 1.3 (The noncommutative cubic estimate).**
+**Theorem 1.5 (The noncommutative cubic estimate).**
 
 Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubic_radial_compatibility`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubic_radial_compatibility`
 
 For every finite index type, Hermitian A and B with A+B and A-B positive semidefinite, and every real k, one has f''(0)>=0 and |f'''(0)|<=(1+4|k|)f''(0). Thus |k|<=1 gives the constant 5. The assumptions already imply that A is positive semidefinite. They allow a singular center, singular endpoints, the empty index type, and zero Hessian; in the last case the third derivative is zero. A and B need not commute. Indeed, the congruences E(A+B)E and E(A-B)E are positive semidefinite. Trace cyclicity gives |Re Tr(B E^2)|<=Re Tr(A E^2), and the derivative formulas and the triangle inequality give the result.
 
-**Definition 1.4 (A dimension independent constant).**
+**Definition 1.6 (A dimension independent constant).**
 
 Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.UniversalCubicBound`
 
@@ -52,7 +76,7 @@ Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.UniversalCubicBound`
 
 UniversalCubicBound(C) means that for every natural dimension m, PSD A, Hermitian B, PSD endpoints A+B and A-B, and real |k|<=1, the actual derivatives obey |f'''(0)|<=C f''(0).
 
-**Theorem 1.5 (The sharp uniform constant).**
+**Theorem 1.7 (The sharp uniform constant).**
 
 Lean statement: `D5/S3/Quantum/Matrix/HsfCubicRadial.universal_constant_iff`
 
@@ -74,4 +98,6 @@ Application to the physical radial trace. Let X and Y be positive definite compl
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubicRadialTrace`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubic_derivatives`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfCubicRadial.cubic_radial_compatibility`
+- Truth anchor: `D5/S3/Quantum/Matrix/HsfCubicRadial.trace_cubic`
+- Truth anchor: `D5/S3/Quantum/Matrix/HsfCubicRadial.trace_weight_square_nonneg`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfCubicRadial.universal_constant_iff`
