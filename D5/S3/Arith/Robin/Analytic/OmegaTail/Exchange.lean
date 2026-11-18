@@ -409,8 +409,6 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
 open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
   (primeCount countingPolynomial prime_counting_four_terms)
 
-open private primeInterval_card from D5.S3.Arith.Robin.Analytic.OmegaTail.Selection
-
 private lemma prime_count_remainder :
     Tendsto (fun P : ℝ => (primeCount P - P / log P) / (P / log P ^ 2))
       atTop (𝓝 1) := by
@@ -566,7 +564,7 @@ private lemma moving_prime_capacity {C a b : ℝ} (hC : 0 < C) (hab : a < b) :
       (primeCount (Y a P) - Y a P / log P) / W P) +
       s P * (exp (b / s P) - exp (a / s P)) =
       ((primeInterval (Y a P) (Y b P)).card : ℝ) / W P
-  rw [primeInterval_card habY]
+  rw [Selection.primeInterval_card habY]
   dsimp only [W, Y]
   field_simp [hpos.ne', hs0.ne', (log_pos hP).ne'] <;> ring
 
