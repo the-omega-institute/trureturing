@@ -608,7 +608,7 @@ theorem isLeast_depolarizedArithmeticBound (N : QuantumChannel a b) :
     exact (div_le_iff₀ hpos).mpr
       (supported_conditional_relativeEntropy_contraction N c h.1 hEnd ρ σ hSupp)
 
-private def inverseTest (Z V X : Matrix n n ℂ) (t : ℝ) : ℝ :=
+def inverseTest (Z V X : Matrix n n ℂ) (t : ℝ) : ℝ :=
   2 * (Xᴴ * V).trace.re - energy Z X t
 
 /-- Variational domain of the inverse quadratic form. Boundedness is automatic
@@ -851,6 +851,101 @@ theorem isLeast_variationalArithmeticBound (N : QuantumChannel a b) :
       mul_le_mul_of_nonneg_right (sub_le_self _ δ.2.1.le) hNonneg
     _ ≤ c * q Z V t := by simpa only [one_mul, hEq] using hBound
 
+/-- Actual output variational ratios over faithful correlated input bases and
+complex directions in the partial-trace kernel. -/
+def variationalMetricRatios (N : QuantumChannel a b) (t : ℝ) : Set ℝ :=
+  {x | ∃ (R : Type u) (fR : Fintype R) (eR : DecidableEq R),
+    letI := fR
+    letI := eR
+    ∃ Z V : Matrix (R × a) (R × a) ℂ, Z.PosDef ∧ partialTraceRight V = 0 ∧
+      0 < q Z V t ∧ x = variationalInverse (amp N Z) (amp N V) t / q Z V t}
+
+def variationalMetricCoefficient (N : QuantumChannel a b) (t : ℝ) : ℝ :=
+  sSup (insert 0 (variationalMetricRatios N t))
+
+private lemma variationalMetricRatios_bounds (N : QuantumChannel a b) (t : ℝ)
+    (ht : t ∈ Set.Icc 0 1) :
+    insert 0 (variationalMetricRatios N t) ⊆ Set.Icc 0 (completeCoefficient N) := by
+  intro x hx
+  rcases Set.mem_insert_iff.mp hx with rfl | ⟨R, fR, eR, Z, V, hZ, hV, hq, rfl⟩
+  · exact ⟨le_rfl, (completeCoefficient_bounds N).1⟩
+  · let _ := fR
+    let _ := eR
+    obtain ⟨hFin, hEq⟩ := variationalInverse_eq_q Z V t hZ ht
+    obtain ⟨hOut, hBound⟩ := variationalInverse_channel_contraction N Z V t hZ.posSemidef hV ht hFin
+    exact ⟨div_nonneg (le_csSup hOut (Set.mem_insert _ _)) hq.le,
+      (div_le_iff₀ hq).mpr (hEq ▸ hBound)⟩
+
+theorem variationalMetricCoefficient_bounds (N : QuantumChannel a b) (t : ℝ)
+    (ht : t ∈ Set.Icc 0 1) :
+    variationalMetricCoefficient N t ∈ Set.Icc 0 (completeCoefficient N) := by
+  have hBound := variationalMetricRatios_bounds N t ht
+  exact ⟨le_csSup ⟨_, fun _ hx => (hBound hx).2⟩ (Set.mem_insert _ _),
+    csSup_le ⟨0, Set.mem_insert _ _⟩ fun _ hx => (hBound hx).2⟩
+
+private lemma depolarized_endpointBound_variationalMetricCoefficient
+    (N : QuantumChannel a b) (δ : Weight) :
+    EndpointBound ((depolarizingChannel b δ).comp N) (variationalMetricCoefficient N 0) := by
+  intro R fR eR Z V hZ hV
+  let M := (depolarizingChannel b δ).comp N
+  have ht : (0 : ℝ) ∈ Set.Icc 0 1 := by simp
+  rcases (q_nonneg Z V 0 hZ ht).eq_or_lt with hq | hq
+  · have hZero := direction_eq_zero_of_q_eq_zero Z V 0 hZ ht hq.symm
+    have hAmp : amp M V = 0 := by
+      rw [hZero]
+      simpa only [zero_smul] using amp_smul M (0 : ℝ) Z
+    change q (amp M Z) (amp M V) 0 ≤ _
+    simp only [hAmp, ← hq, q_eq_trace, Matrix.conjTranspose_zero, Matrix.zero_mul,
+      Matrix.trace_zero, Complex.zero_re, mul_zero, le_rfl]
+  · have hFin := (variationalInverse_eq_q Z V 0 hZ ht).1
+    have hOut := (variationalInverse_channel_contraction N Z V 0 hZ.posSemidef hV ht hFin).1
+    have hBdd : BddAbove (insert 0 (variationalMetricRatios N 0)) :=
+      ⟨_, fun _ hx => (variationalMetricRatios_bounds N 0 ht hx).2⟩
+    have hRatio : variationalInverse (amp N Z) (amp N V) 0 / q Z V 0 ∈
+        variationalMetricRatios N 0 := ⟨R, fR, eR, Z, V, hZ, hV, hq, rfl⟩
+    calc
+      _ ≤ (1 - (δ : ℝ)) * variationalInverse (amp N Z) (amp N V) 0 :=
+        depolarizedInverse_le_variational N δ Z V 0 hZ hV ht hOut
+      _ ≤ variationalInverse (amp N Z) (amp N V) 0 := by
+        have hNonneg : 0 ≤ variationalInverse (amp N Z) (amp N V) 0 :=
+          le_csSup hOut (Set.mem_insert _ _)
+        simpa only [one_mul] using mul_le_mul_of_nonneg_right
+          (sub_le_self 1 δ.2.1.le) hNonneg
+      _ ≤ variationalMetricCoefficient N 0 * q Z V 0 :=
+        (div_le_iff₀ hq).mp (le_csSup hBdd (Set.mem_insert_of_mem _ hRatio))
+
+/-- The left endpoint attains the common entropy coefficient and the
+supremum of the actual metric coefficients over the closed interval. -/
+theorem variationalMetricCoefficient_chain (N : QuantumChannel a b) :
+    variationalMetricCoefficient N 0 = completeCoefficient N ∧
+    completeCoefficient N = conditionalCoefficient N ∧
+    conditionalCoefficient N = sSup (variationalMetricCoefficient N '' Set.Icc 0 1) := by
+  have ht : (0 : ℝ) ∈ Set.Icc 0 1 := by simp
+  have hMetric := variationalMetricCoefficient_bounds N 0 ht
+  have hEntropy := conditionalCoefficient_eq_completeCoefficient N
+  have hReverse : conditionalCoefficient N ≤ variationalMetricCoefficient N 0 := by
+    have hc : variationalMetricCoefficient N 0 ∈ Set.Icc 0 1 :=
+      ⟨hMetric.1, hMetric.2.trans (completeCoefficient_bounds N).2⟩
+    apply csSup_le ⟨0, Set.mem_insert _ _⟩
+    intro x hx
+    rcases Set.mem_insert_iff.mp hx with rfl | ⟨R, fR, eR, ρ, σ, hSupp, hpos, rfl⟩
+    · exact hc.1
+    · let _ := fR
+      let _ := eR
+      exact (div_le_iff₀ hpos).mpr (supported_conditional_relativeEntropy_contraction N _ hc
+        (depolarized_endpointBound_variationalMetricCoefficient N) ρ σ hSupp)
+  have hZero := le_antisymm hMetric.2 (hEntropy ▸ hReverse)
+  have hMem : variationalMetricCoefficient N 0 ∈ variationalMetricCoefficient N '' Set.Icc 0 1 :=
+    ⟨0, ht, rfl⟩
+  have hUpper : ∀ x ∈ variationalMetricCoefficient N '' Set.Icc 0 1, x ≤ completeCoefficient N := by
+    rintro _ ⟨t, ht, rfl⟩
+    exact (variationalMetricCoefficient_bounds N t ht).2
+  refine ⟨hZero, hEntropy.symm, ?_⟩
+  rw [hEntropy]
+  apply le_antisymm _ (csSup_le ⟨_, hMem⟩ hUpper)
+  rw [← hZero]
+  exact le_csSup ⟨_, hUpper⟩ hMem
+
 #print axioms act_depolarizingChannel
 #print axioms supported_conditional_relativeEntropy_contraction_of_faithful_output
 #print axioms supported_conditional_relativeEntropy_contraction
@@ -860,4 +955,6 @@ theorem isLeast_variationalArithmeticBound (N : QuantumChannel a b) :
 #print axioms variationalInverse_eq_q
 #print axioms variationalInverse_channel_contraction
 #print axioms isLeast_variationalArithmeticBound
+#print axioms variationalMetricCoefficient_bounds
+#print axioms variationalMetricCoefficient_chain
 end D5.S3.Quantum.Divergence.UmegakiChannelSupportedExtension

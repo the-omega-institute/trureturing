@@ -100,7 +100,7 @@ lemma q_zero_parameter (Z V : Matrix ι ι ℂ) (hZ : Z.PosDef) :
     Matrix.mul_nonsing_inv_cancel_left Z V ((Matrix.isUnit_iff_isUnit_det Z).mp hZ.isUnit)] at hi
   rw [q_eq_trace, hi, Matrix.mul_assoc]
 
-private lemma arithmetic_positive (Z : Matrix ι ι ℂ) (u : ℝ)
+lemma arithmetic_positive (Z : Matrix ι ι ℂ) (u : ℝ)
     (hZ : Z.PosSemidef) (hu : u ∈ Set.Icc (0 : ℝ) 1) :
     (hsArithmeticMap Z u).IsPositive := by
   have hz : 0 ≤ Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ) Z :=
