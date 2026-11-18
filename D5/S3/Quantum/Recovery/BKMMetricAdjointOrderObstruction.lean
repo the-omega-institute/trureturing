@@ -403,11 +403,6 @@ private theorem gibbs_derivative (a : Mat n) (ha : a.PosDef) (V : UMat n)
     (derivative (CFC.log a) (measurementAdjoint V (logDeriv (diagReal p) (diagReal d)))) 0 at h
   rwa [derivative_eq_omega a ha] at h
 
-private theorem trace_basisChange (U : UMat n) (X : Mat n) :
-    (basisChange U X).trace = X.trace := by
-  change ((U : Mat n) * X * star (U : Mat n)).trace = _
-  rw [trace_mul_cycle, Unitary.coe_star_mul_self, one_mul]
-
 set_option maxHeartbeats 500000 in
 private theorem trace_omega (a X : Mat n) (ha : a.PosDef) :
     (omega a X).trace = (a * X).trace := by
