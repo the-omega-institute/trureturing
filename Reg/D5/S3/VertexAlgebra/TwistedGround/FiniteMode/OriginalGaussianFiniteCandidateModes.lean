@@ -760,4 +760,108 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end sourceDerivativeConvolution_step
 
+namespace denominatorStencil_linear
+abbrev arena : Arena where
+  signature := complexSignature
+  Law R := ∀ (F G : ℕ → ℕ → ℂ → ℂ) (b c : ℂ → ℂ) (p q : ℕ) (r : ℂ),
+    R.readout () () (denominatorStencil (fun i j u => b u * F i j u + c u * G i j u) p q r)
+      (b r * denominatorStencil F p q r + c r * denominatorStencil G p q r)
+
+private theorem rejected_fails : ¬ arena.Law complexFalse := by
+  intro h
+  exact h (fun _ _ _ => 0) (fun _ _ _ => 0) (fun _ => 0) (fun _ => 0) 0 0 0
+
+def family : Registration arena (type_of% (@denominatorStencil_linear)) where
+  actual := complexEqual
+  bridge := Iff.rfl
+  variation := ⟨@denominatorStencil_linear, complexFalse, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law complexEqual complexFalse rejected_fails
+  dependence := complexEqualDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@denominatorStencil_linear) (Realization complexSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.denominatorStencil_linear.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.denominatorStencil_linear.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end denominatorStencil_linear
+
+namespace denominatorStencil_shift11
+abbrev arena : Arena where
+  signature := complexSignature
+  Law R := ∀ (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ),
+    R.readout () () (denominatorStencil (shift11 F) p q r)
+      (shift11 (denominatorStencil F) p q r)
+
+private theorem rejected_fails : ¬ arena.Law complexFalse := by
+  intro h
+  exact h (fun _ _ _ => 0) 0 0 0
+
+def family : Registration arena (type_of% (@denominatorStencil_shift11)) where
+  actual := complexEqual
+  bridge := Iff.rfl
+  variation := ⟨@denominatorStencil_shift11, complexFalse, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law complexEqual complexFalse rejected_fails
+  dependence := complexEqualDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@denominatorStencil_shift11) (Realization complexSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.denominatorStencil_shift11.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes.denominatorStencil_shift11.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end denominatorStencil_shift11
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.FiniteMode.OriginalGaussianFiniteCandidateModes
