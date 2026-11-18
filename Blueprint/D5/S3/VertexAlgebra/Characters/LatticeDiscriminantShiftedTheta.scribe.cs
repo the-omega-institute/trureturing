@@ -11,5 +11,10 @@ internal sealed class LatticeDiscriminantShiftedThetaDocument : IScribeDocumentD
             DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantShiftedTheta.shiftedTheta_real_S"),
             H("Inversion with a real source"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Translated Poisson summation resolves the dual lattice into its finite discriminant sectors. The dual theta argument is minus the reciprocal period and the source is divided by the original period. The Fourier character uses the original unshifted frequency."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("discriminant-shifted-shiftedtheta-s"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantShiftedTheta.shiftedTheta_S"),
+            H("Inversion with a complex source"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The affine complex source has a uniform summable Gaussian bound on bounded scalar disks. Holomorphic continuation from real scalar parameters gives the same inversion with the full complex bilinear quadratic form."))),
             DescribeRole.Theorem))));
 }

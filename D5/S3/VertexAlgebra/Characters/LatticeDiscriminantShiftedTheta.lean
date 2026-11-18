@@ -394,4 +394,189 @@ theorem shiftedTheta_real_S (D : LatticeData) (hD : (gramReal D).PosDef)
   simp_rw [shiftedTheta_scalar_real]
   simpa only [one_div] using real_source_sector_S D hD a τ hτ v
 
+private theorem thetaTerm_affine {r : ℕ} (A : Matrix (Fin r) (Fin r) ℝ)
+    (τ t : ℂ) (v w : Fin r → ℂ) (x : Fin r → ℝ) :
+    thetaTerm A τ (v + t • w) x =
+      Complex.exp (Real.pi * Complex.I * τ * (quadratic A x : ℂ) +
+        ∑ i, (x i : ℂ) *
+          ((2 * Real.pi * Complex.I) * (((Aᵀ.map Complex.ofReal) *ᵥ v) i +
+            t * (((Aᵀ.map Complex.ofReal) *ᵥ w) i)))) := by
+  unfold thetaTerm
+  have hcast : (fun i => (↑((A *ᵥ x) i) : ℂ)) =
+      A.map Complex.ofReal *ᵥ (fun i => (x i : ℂ)) :=
+    funext (Complex.ofRealHom.map_mulVec A x)
+  rw [hcast, dotProduct_comm, ← dotProduct_transpose_mulVec]
+  change Complex.exp (_ + _ * ((fun i => (x i : ℂ)) ⬝ᵥ
+    (Aᵀ.map Complex.ofReal *ᵥ (v + t • w)))) = _
+  rw [mulVec_add, mulVec_smul, dotProduct, Finset.mul_sum]
+  congr 2
+  apply Finset.sum_congr rfl
+  intro i _
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+  ring
+
+private theorem affine_majorant {r : ℕ} (A : Matrix (Fin r) (Fin r) ℝ)
+    (hA : A.PosDef) (τ : ℂ) (hτ : 0 < τ.im) (s : Fin r → ℝ)
+    (v w : Fin r → ℂ) (R : ℝ) (hR : 0 ≤ R) :
+    ∃ u : (Fin r → ℤ) → ℝ, Summable u ∧
+      ∀ (n : Fin r → ℤ) (t : ℂ), ‖t‖ ≤ R →
+        ‖thetaTerm A τ (v + t • w) ((fun i => (n i : ℝ)) + s)‖ ≤ u n := by
+  obtain ⟨c, hc, hcoercive⟩ := exists_quadratic_lower_bound A hA
+  let d := Real.pi * τ.im * c / 2
+  have hd : 0 < d := by dsimp [d]; positivity
+  let B := Aᵀ.map Complex.ofReal
+  let L (i : Fin r) : ℝ := ‖(2 * Real.pi * Complex.I : ℂ)‖ *
+    (‖(B *ᵥ v) i‖ + R * ‖(B *ᵥ w) i‖)
+  let M := ∑ i, L i ^ 2 / (4 * d)
+  let b : ℂ := -Complex.I * τ / 2
+  have hb : 0 < b.re := by simpa [b, Complex.div_re] using
+    (show 0 < τ.im / 2 by positivity)
+  let K : TopologicalSpace.Compacts (Fin r → ℝ) := ⟨{0}, isCompact_singleton⟩
+  let u (n : Fin r → ℤ) := Real.exp M *
+    ‖gaussianMap A b ((fun i => (n i : ℝ)) + s)‖
+  refine ⟨u, ?_, ?_⟩
+  · apply Summable.mul_left
+    refine (translated_locally_summable A hA b hb s K).of_nonneg_of_le
+      (fun _ => norm_nonneg _) (fun n => ?_)
+    have hn := ContinuousMap.norm_coe_le_norm
+      (((translatedGaussian A b s).comp
+        (ContinuousMap.addRight (fun i => (n i : ℝ)))).restrict K) ⟨0, by simp [K]⟩
+    change ‖gaussianMap A b ((0 + (fun i => (n i : ℝ))) + s)‖ ≤ _ at hn
+    simpa only [zero_add] using hn
+  intro n t ht
+  let x : Fin r → ℝ := (fun i => (n i : ℝ)) + s
+  let a (i : Fin r) : ℂ := (2 * Real.pi * Complex.I) * ((B *ᵥ v) i + t * (B *ᵥ w) i)
+  have ha (i : Fin r) : ‖a i‖ ≤ L i := by
+    rw [show ‖a i‖ = ‖(2 * Real.pi * Complex.I : ℂ)‖ *
+        ‖(B *ᵥ v) i + t * (B *ᵥ w) i‖ by simp only [a, norm_mul]]
+    apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+    have ht' : ‖t * (B *ᵥ w) i‖ ≤ R * ‖(B *ᵥ w) i‖ := by
+      rw [norm_mul]
+      exact mul_le_mul_of_nonneg_right ht (norm_nonneg _)
+    exact (norm_add_le _ _).trans (add_le_add_right ht' _)
+  have hlinear : (∑ i, (x i : ℂ) * a i).re ≤ d * (∑ i, (x i) ^ 2) + M := by
+    change Complex.reAddGroupHom (∑ i, (x i : ℂ) * a i) ≤ _
+    rw [map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+    change (∑ i, ((x i : ℂ) * a i).re) ≤ ∑ i, (d * (x i) ^ 2 + L i ^ 2 / (4 * d))
+    apply Finset.sum_le_sum
+    intro i _
+    have h₁ : ((x i : ℂ) * a i).re ≤ |x i| * L i := by
+      calc
+        _ ≤ ‖(x i : ℂ) * a i‖ := Complex.re_le_norm _
+        _ = |x i| * ‖a i‖ := by rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
+        _ ≤ _ := mul_le_mul_of_nonneg_left (ha i) (abs_nonneg _)
+    have hd₀ : d ≠ 0 := hd.ne'
+    have h₂ := mul_nonneg hd.le (sq_nonneg (|x i| - L i / (2 * d)))
+    have h₃ : d * (|x i| - L i / (2 * d)) ^ 2 =
+        d * |x i| ^ 2 - |x i| * L i + L i ^ 2 / (4 * d) := by
+      field_simp
+      ring
+    rw [h₃, sq_abs] at h₂
+    exact h₁.trans (by linarith)
+  have hq : d * (∑ i, (x i) ^ 2) ≤ Real.pi * τ.im * quadratic A x / 2 := by
+    have hh := mul_le_mul_of_nonneg_left (hcoercive x)
+      (show 0 ≤ Real.pi * τ.im / 2 by positivity)
+    dsimp [d]
+    linarith only [hh]
+  change ‖thetaTerm A τ (v + t • w) x‖ ≤ Real.exp M * ‖gaussianMap A b x‖
+  rw [thetaTerm_affine, Complex.norm_exp, gaussianMap]
+  simp only [ContinuousMap.coe_mk, Complex.norm_exp, ← Real.exp_add, Complex.add_re]
+  apply Real.exp_le_exp.mpr
+  have hmain : (Real.pi * Complex.I * τ * (quadratic A x : ℂ)).re =
+      -Real.pi * τ.im * quadratic A x := by simp [Complex.mul_re, Complex.mul_im]
+  have hgauss : (-Real.pi * b * (quadratic A x : ℂ)).re =
+      -(Real.pi * τ.im * quadratic A x / 2) := by
+    simp [b, Complex.mul_re, Complex.mul_im]
+    ring
+  rw [hmain, hgauss]
+  change -Real.pi * τ.im * quadratic A x + (∑ i, (x i : ℂ) * a i).re ≤
+    M + -(Real.pi * τ.im * quadratic A x / 2)
+  linarith only [hlinear, hq]
+
+private theorem shiftedTheta_affine_entire (D : LatticeData) (hD : (gramReal D).PosDef)
+    (a : Discriminant D) (τ : ℂ) (hτ : 0 < τ.im) (v w : Fin D.rank → ℂ) :
+    Differentiable ℂ (fun t : ℂ => shiftedTheta D a τ (v + t • w)) := by
+  intro t
+  let R := ‖t‖ + 1
+  obtain ⟨u, hu, hb⟩ := affine_majorant (gramReal D) hD τ hτ
+    (shift D (representative D a)) v w R (by dsimp [R]; positivity)
+  let F (n : Charge D) (t' : ℂ) := thetaTerm (gramReal D) τ (v + t' • w)
+    ((fun i => (n i : ℝ)) + shift D (representative D a))
+  have hd : DifferentiableOn ℂ (fun t' => ∑' n, F n t') (Metric.ball (0 : ℂ) R) := by
+    refine Complex.differentiableOn_tsum_of_summable_norm hu ?_ Metric.isOpen_ball ?_
+    · intro n
+      simp only [F, thetaTerm_affine]
+      fun_prop
+    · intro n t' ht'
+      exact hb n t' (mem_ball_zero_iff.mp ht').le
+  exact hd.differentiableAt (Metric.isOpen_ball.mem_nhds
+    (mem_ball_zero_iff.mpr (by dsimp [R]; linarith)))
+
+/-- Complex-source theta inversion, obtained by analytic continuation along
+the affine line joining the real source to its complex value. -/
+theorem shiftedTheta_S (D : LatticeData) (hD : (gramReal D).PosDef)
+    (a : Discriminant D) (τ : ℂ) (hτ : 0 < τ.im) (z : Fin D.rank → ℂ) :
+    letI : Fact (gramReal D).PosDef := ⟨hD⟩
+    letI : Fintype (Discriminant D) := Fintype.ofFinite _
+    shiftedTheta D a τ z =
+      ((Real.sqrt (gramReal D).det : ℂ)⁻¹ * (-Complex.I * τ) ^ (-(D.rank : ℂ) / 2)) *
+      Complex.exp (-Real.pi * Complex.I / τ * sourceQuadratic (gramReal D) z) *
+      ∑ c : Discriminant D, pairingCharacter D hD a c *
+        shiftedTheta D c (-1 / τ) (τ⁻¹ • z) := by
+  classical
+  letI : Fact (gramReal D).PosDef := ⟨hD⟩
+  letI : Fintype (Discriminant D) := Fintype.ofFinite _
+  let v (i : Fin D.rank) : ℂ := (z i).re
+  let w (i : Fin D.rank) : ℂ := (z i).im
+  let l (t : ℂ) := v + t • w
+  let F (t : ℂ) := shiftedTheta D a τ (l t)
+  let H (t : ℂ) :=
+    ((Real.sqrt (gramReal D).det : ℂ)⁻¹ * (-Complex.I * τ) ^ (-(D.rank : ℂ) / 2)) *
+    Complex.exp (-Real.pi * Complex.I / τ * sourceQuadratic (gramReal D) (l t)) *
+    ∑ c : Discriminant D, pairingCharacter D hD a c *
+      shiftedTheta D c (-1 / τ) (τ⁻¹ • l t)
+  have ht0 : τ ≠ 0 := by intro h; simp [h] at hτ
+  have htS : 0 < ((-1 : ℂ) / τ).im := by
+    rw [div_im]
+    simpa using div_neg_of_neg_of_pos (neg_neg_of_pos hτ) (Complex.normSq_pos.mpr ht0)
+  have hF : Differentiable ℂ F := shiftedTheta_affine_entire D hD a τ hτ v w
+  have hH : Differentiable ℂ H := by
+    have hterms (c : Discriminant D) :
+        Differentiable ℂ (fun t => shiftedTheta D c (-1 / τ) (τ⁻¹ • l t)) := by
+      have hline (t : ℂ) : τ⁻¹ • l t = τ⁻¹ • v + t • (τ⁻¹ • w) := by
+        dsimp only [l]
+        rw [smul_add, smul_comm τ⁻¹ t]
+      simpa only [hline] using
+        shiftedTheta_affine_entire D hD c (-1 / τ) htS (τ⁻¹ • v) (τ⁻¹ • w)
+    have hq : Differentiable ℂ (fun t => sourceQuadratic (gramReal D) (l t)) := by
+      simp only [sourceQuadratic, dotProduct, mulVec, l, Pi.add_apply, Pi.smul_apply,
+        smul_eq_mul]
+      fun_prop
+    dsimp only [H]
+    apply Differentiable.mul
+    · fun_prop
+    · apply Differentiable.fun_sum
+      intro c _
+      fun_prop
+  have hEq (r : ℝ) : F (r : ℂ) = H (r : ℂ) := by
+    have hl : l (r : ℂ) = fun i => (((z i).re + r * (z i).im : ℝ) : ℂ) := by
+      ext i
+      simp [l, v, w]
+    simpa only [F, H, hl] using
+      shiftedTheta_real_S D hD a τ hτ (fun i => (z i).re + r * (z i).im)
+  have ht : Tendsto ((↑) : ℝ → ℂ) (𝓝[>] (0 : ℝ)) (𝓝[≠] (0 : ℂ)) := by
+    apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
+    · simpa only [ofReal_zero] using
+        (Complex.continuous_ofReal.continuousAt (x := (0 : ℝ))).tendsto.mono_left
+          nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with x hx
+      exact Set.mem_compl_singleton_iff.mpr (Complex.ofReal_ne_zero.mpr (ne_of_gt hx))
+  have he : ∃ᶠ t in 𝓝[≠] (0 : ℂ), F t = H t := ht.frequently (Filter.Eventually.of_forall hEq).frequently
+  have hid := (hF.differentiableOn.analyticOnNhd isOpen_univ).eq_of_frequently_eq
+    (hH.differentiableOn.analyticOnNhd isOpen_univ) he
+  have hI : l Complex.I = z := by
+    ext i
+    simp [l, v, w, mul_comm Complex.I, Complex.re_add_im]
+  simpa only [F, H, hI] using congrFun hid Complex.I
+
 end D5.S3.VertexAlgebra.LatticeDiscriminantShiftedTheta
