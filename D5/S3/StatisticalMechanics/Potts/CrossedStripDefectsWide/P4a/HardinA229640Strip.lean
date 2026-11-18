@@ -19,6 +19,7 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA22964
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229640StripCertificate
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripCertificate
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import Mathlib.Logic.Equiv.Fin.Basic

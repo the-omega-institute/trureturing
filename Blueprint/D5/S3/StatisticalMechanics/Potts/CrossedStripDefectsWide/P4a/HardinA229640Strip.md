@@ -44,3 +44,6 @@ The filter counts every actual four-by-n array over Fin 3 with two monochromatic
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripCertificate](HardinA229640StripCertificate.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripData](HardinA229640StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../../StripDefects/DefectTransfer.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/HardinA229589StripData](../../StripDefects/HardinA229589StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697StripCertificate](../../StripDefectsTwo/HardinA229697StripCertificate.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697StripData](../../StripDefectsTwo/HardinA229697StripData.md)

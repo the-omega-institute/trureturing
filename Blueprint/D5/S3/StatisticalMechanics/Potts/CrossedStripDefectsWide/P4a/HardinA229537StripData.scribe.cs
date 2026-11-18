@@ -22,14 +22,12 @@ internal sealed class HardinA229537StripDataDocument : IScribeDocumentDefinition
     private static Formula V(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());
     private static Formula Call(string n, params Formula[] a) => a.Length==0?Q(n):new Formula.Apply(Q(n),[..a]);
-    private static Formula App(Formula f,params Formula[] a) => new Formula.Apply(f,[..a]);
     private static Formula Parenthesized(Formula a) => Seq(Open,a,Close);
     private static Formula Typed(Formula a,Formula t) => Parenthesized(Seq(a,Colon,Sp,t));
     private static Formula Arrow(Formula a,Formula b) => new Formula.TypeArrow(a,b);
     private static Formula Fin(int n) => Call("Fin",N(n));
     private static Formula Row() => Arrow(Fin(4),Fin(3));
     private static Formula Val(Formula a) => Call("Fin.val",a);
-    private static Formula Pair(Formula a,Formula b) => Parenthesized(Seq(a,Comma,Sp,b));
     private static Formula Product(Formula a,Formula b) => Seq(Parenthesized(a),Times,Parenthesized(b));
     private static Formula Eq(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Le(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
@@ -37,11 +35,9 @@ internal sealed class HardinA229537StripDataDocument : IScribeDocumentDefinition
     private static Formula Add(Formula a,Formula b) => new Formula.Binary(Parenthesized(a),FormulaBinaryOperator.Add,Parenthesized(b));
     private static Formula All(string n,Formula t,Formula b) => Seq(Forall,Sp,Typed(V(n),t),Comma,Sp,Parenthesized(b));
     private static Formula Fn(string n,Formula t,Formula b) => Parenthesized(Seq(LambdaLower,Sp,Typed(V(n),t),Mapsto,Sp,Parenthesized(b)));
-    private static Formula Sum(string n,Formula t,Formula b) => Seq(F.Sum,Underscore,Grp(Typed(V(n),t)),Sp,Parenthesized(b));
     private static Formula If(Formula c,Formula y,Formula n) => Parenthesized(Seq(Q("if"),Sp,Parenthesized(c),Sp,Q("then"),Sp,y,Sp,Q("else"),Sp,n));
     private static Formula Data(string n,params Formula[] a) => Call("HardinA229537StripData."+n,a);
     private static Formula Old(string n,params Formula[] a) => Call("HardinA233177PairTransfer."+n,a);
-    private static Formula IntVec(Formula x,int n) => Typed(x,Arrow(Fin(n),Q("Int")));
     private static Formula Matrix(params Formula[][] rows) {
         var a=new List<Formula>{Begin,Grp(F.Id("pmatrix"))};
         for(int i=0;i<rows.Length;i++){if(i>0)a.Add(RowBreak);for(int j=0;j<rows[i].Length;j++){if(j>0)a.Add(Amp);a.Add(rows[i][j]);}}

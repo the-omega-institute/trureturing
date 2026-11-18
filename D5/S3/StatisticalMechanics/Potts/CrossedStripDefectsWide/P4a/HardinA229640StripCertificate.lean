@@ -68,7 +68,8 @@ private theorem two_counts (p : Fin 4 → Fin 3) (j : Fin 14) :
           (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e r)) = 2 ∧
           HardinA233177PairTransfer.cls (HardinA233177PairTransfer.relabel e r) = j
         then (1 : ℤ) else 0 := by
-          simp only [HardinA229537StripCertificate.cost_relabel, HardinA233177PairTransfer.class_relabel]
+          simp only [HardinA229537StripCertificate.cost_relabel,
+            HardinA233177PairTransfer.class_relabel]
       _ = _ := by
         rw [he]
         exact ((HardinA233177PairTransfer.relabel e).sum_comp (fun r =>
@@ -132,13 +133,17 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 3) (s : Fin 42)
         Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
     simp_rw [cut]
     fin_cases d
-    · simp only [Fin.val_zero, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, show (0 : ℕ) ≠ 2 by decide, ite_false]
+    · simp only [Fin.val_zero, cl, HardinA229697StripData.cl, HardinA229589StripData.cl,
+      Nat.reduceLT, Nat.reduceSub, show (0 : ℕ) ≠ 2 by decide, ite_false]
       rw [lower]
       simp
-    · simp only [Fin.val_one, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, show (1 : ℕ) ≠ 2 by decide, ite_false]
+    · simp only [Fin.val_one, cl, HardinA229697StripData.cl, HardinA229589StripData.cl,
+      Nat.reduceLT, Nat.reduceSub, show (1 : ℕ) ≠ 2 by decide, ite_false]
       rw [lower]
       simp
-    · simp only [show (2 : Fin 3).val = 2 from rfl, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, Fin.castAdd_castAdd, Nat.reduceAdd, Fin.cast_refl, id_eq, Nat.reduceEqDiff, ite_false, ite_true]
+    · simp only [show (2 : Fin 3).val = 2 from rfl, cl, HardinA229697StripData.cl,
+      HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, Fin.castAdd_castAdd, Nat.reduceAdd,
+      Fin.cast_refl, id_eq, Nat.reduceEqDiff, ite_false, ite_true]
       rw [q00]
       simpa only [true_and] using HardinA229537StripCertificate.zero_counts p j
   | right s =>
@@ -157,17 +162,23 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 3) (s : Fin 42)
           Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
       simp_rw [cut]
       fin_cases d
-      · simp only [Fin.val_zero, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, show (0 : ℕ) ≠ 2 by decide, ite_false]
+      · simp only [Fin.val_zero, cl, HardinA229697StripData.cl, HardinA229589StripData.cl,
+        Nat.reduceLT, Nat.reduceSub, show (0 : ℕ) ≠ 2 by decide, ite_false]
         rw [old]
-        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, ite_true]
+        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true,
+          ite_false, ite_true]
         rw [z21]
         simp
-      · simp only [Fin.val_one, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, show (1 : ℕ) ≠ 2 by decide, ite_false]
+      · simp only [Fin.val_one, cl, HardinA229697StripData.cl, HardinA229589StripData.cl,
+        Nat.reduceLT, Nat.reduceSub, show (1 : ℕ) ≠ 2 by decide, ite_false]
         rw [old]
-        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false]
+        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true,
+          ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false]
         rw [q11]
         simpa using HardinA229537StripCertificate.zero_counts p j
-      · simp only [show (2 : Fin 3).val = 2 from rfl, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, Fin.castAdd_castAdd, Nat.reduceAdd, Fin.cast_refl, id_eq, Nat.reduceEqDiff, ite_false, ite_true]
+      · simp only [show (2 : Fin 3).val = 2 from rfl, cl, HardinA229697StripData.cl,
+        HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, Fin.castAdd_castAdd, Nat.reduceAdd,
+        Fin.cast_refl, id_eq, Nat.reduceEqDiff, ite_false, ite_true]
         rw [upper]
         simpa using HardinA229537StripCertificate.one_counts p j
     | right j =>
@@ -183,14 +194,18 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 3) (s : Fin 42)
           Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
       simp_rw [cut]
       fin_cases d
-      · simp only [Fin.val_zero, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, show (0 : ℕ) ≠ 2 by decide, ite_false]
+      · simp only [Fin.val_zero, cl, HardinA229697StripData.cl, HardinA229589StripData.cl,
+        Nat.reduceLT, Nat.reduceSub, show (0 : ℕ) ≠ 2 by decide, ite_false]
         rw [old]
-        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, ite_true]
+        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true,
+          ite_false, ite_true]
         rw [q22]
         exact HardinA229537StripCertificate.zero_counts p j
-      · simp only [Fin.val_one, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, show (1 : ℕ) ≠ 2 by decide, ite_false]
+      · simp only [Fin.val_one, cl, HardinA229697StripData.cl, HardinA229589StripData.cl,
+        Nat.reduceLT, Nat.reduceSub, show (1 : ℕ) ≠ 2 by decide, ite_false]
         rw [old]
-        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false]
+        simp only [HardinA229537StripData.cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true,
+          ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false]
         exact HardinA229537StripCertificate.one_counts p j
       · simpa only [show (2 : Fin 3).val = 2 from rfl, cl, HardinA229697StripData.cl, HardinA229589StripData.cl, Nat.reduceLT, Nat.reduceSub, Fin.castAdd_castAdd, Nat.reduceAdd, Fin.cast_refl, id_eq, Nat.reduceEqDiff, ite_false, ite_true] using two_counts p j
 

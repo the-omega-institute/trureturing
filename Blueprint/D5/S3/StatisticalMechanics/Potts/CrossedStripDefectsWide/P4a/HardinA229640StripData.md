@@ -4,11 +4,11 @@
 
 Four-row two-defect HDA strips.
 
-The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
+The budget-two class map and endpoint vectors are those of A229697. At every budget other than two the class map appends fourteen to the saturated one-defect class. The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
 
 **Definition 1.1 (cl).**
 
-$$\forall (p: \operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\right)), (\forall (d: \operatorname{Nat}), (\operatorname{HardinA229640StripData}.\operatorname{cl}\left(p, d\right) = (\operatorname{if} (d = 2) \operatorname{then} \operatorname{Fin}.\operatorname{castAdd}\left(28, \operatorname{HardinA233177PairTransfer}.\operatorname{cls}\left((p\left(0\right), (p\left(1\right), (p\left(2\right), p\left(3\right))))\right)\right) \operatorname{else} \operatorname{Fin}.\operatorname{natAdd}\left(14, \operatorname{HardinA229537StripData}.\operatorname{cl}\left(p, d\right)\right))))$$
+$$\forall (p: \operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\right)), (\forall (d: \operatorname{Nat}), (\operatorname{HardinA229640StripData}.\operatorname{cl}\left(p, d\right) = (\operatorname{if} (d = 2) \operatorname{then} \operatorname{HardinA229697StripData}.\operatorname{cl}\left(p, 2\right) \operatorname{else} \operatorname{Fin}.\operatorname{natAdd}\left(14, \operatorname{HardinA229537StripData}.\operatorname{cl}\left(p, d\right)\right))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripData.cl` (`✓ std3`).
 
@@ -18,7 +18,7 @@ $$\forall (p: \operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\rig
 
 *Commentary.*
 
-The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
+The budget-two class map and endpoint vectors are those of A229697. At every budget other than two the class map appends fourteen to the saturated one-defect class. The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
 
 **Definition 1.2 (T).**
 
@@ -32,11 +32,11 @@ $$\operatorname{HardinA229640StripData}.\operatorname{T} = \operatorname{Matrix}
 
 *Commentary.*
 
-The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
+The budget-two class map and endpoint vectors are those of A229697. At every budget other than two the class map appends fourteen to the saturated one-defect class. The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
 
 **Definition 1.3 (initial).**
 
-$$\forall (s: \operatorname{Fin}\left(42\right)), (\operatorname{HardinA229640StripData}.\operatorname{initial}\left(s\right) = \sum_{(r: \operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\right))} ((\operatorname{if} (\operatorname{HardinA229640StripData}.\operatorname{cl}\left(r, 2\right) = s) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))))$$
+$$\operatorname{HardinA229640StripData}.\operatorname{initial} = \operatorname{HardinA229697StripData}.\operatorname{initial}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripData.initial` (`✓ std3`).
 
@@ -46,11 +46,11 @@ $$\forall (s: \operatorname{Fin}\left(42\right)), (\operatorname{HardinA229640St
 
 *Commentary.*
 
-The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
+The budget-two class map and endpoint vectors are those of A229697. At every budget other than two the class map appends fourteen to the saturated one-defect class. The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
 
 **Definition 1.4 (terminal).**
 
-$$\operatorname{HardinA229640StripData}.\operatorname{terminal} = \operatorname{Fin}.\operatorname{append}\left((0: \operatorname{Fin}\left(14\right) \to \operatorname{Int}), \operatorname{HardinA229537StripData}.\operatorname{terminal}\right)$$
+$$\operatorname{HardinA229640StripData}.\operatorname{terminal} = \operatorname{HardinA229697StripData}.\operatorname{terminal}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripData.terminal` (`✓ std3`).
 
@@ -60,7 +60,7 @@ $$\operatorname{HardinA229640StripData}.\operatorname{terminal} = \operatorname{
 
 *Commentary.*
 
-The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
+The budget-two class map and endpoint vectors are those of A229697. At every budget other than two the class map appends fourteen to the saturated one-defect class. The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.
 
 ## References
 
@@ -70,3 +70,4 @@ The first fourteen coordinates have two remaining defects. The trailing twenty-e
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripData.terminal`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229537StripData](HardinA229537StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefectsTwo/HardinA229697StripData](../../StripDefectsTwo/HardinA229697StripData.md)

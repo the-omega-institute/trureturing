@@ -152,10 +152,12 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 2) (s : Fin 28)
           Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
     simp_rw [cut]
     fin_cases d
-    · simp only [Fin.val_zero, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, ite_true]
+    · simp only [Fin.val_zero, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false,
+      ite_true]
       rw [bt]
       simp
-    · simp only [Fin.val_one, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false]
+    · simp only [Fin.val_one, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false,
+      show (1 : ℕ) ≠ 0 by decide, ite_false]
       rw [tt]
       simpa only [true_and] using zero_counts p j
   | right j =>
@@ -172,7 +174,8 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 2) (s : Fin 28)
           Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
     simp_rw [cut]
     fin_cases d
-    · simp only [Fin.val_zero, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, ite_true]
+    · simp only [Fin.val_zero, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false,
+      ite_true]
       rw [bb]
       exact zero_counts p j
     · simpa only [Fin.val_one, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false] using one_counts p j

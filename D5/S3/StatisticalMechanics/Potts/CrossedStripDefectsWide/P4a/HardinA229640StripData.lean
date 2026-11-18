@@ -20,7 +20,6 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import Mathlib.Data.Matrix.Block
 
-open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229640StripData
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.StatisticalMechanics.Potts.StripDefectsTwo
