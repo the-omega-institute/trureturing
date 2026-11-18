@@ -77,9 +77,10 @@ private lemma pfaffMap_hasDerivAt {r : ℂ} (hr : 1 - r ≠ 0) :
   have he : r - 1 = -(1 - r) := by ring
   unfold pfaffMap
   convert (hasDerivAt_id r).fun_div ((hasDerivAt_id r).sub_const 1)
-    (he ▸ neg_ne_zero.mpr hr) using 1
-  simp only [id_eq, he, neg_sq, div_eq_mul_inv, ← inv_pow]
-  ring
+    (he ▸ neg_ne_zero.mpr hr) using 1 <;> try rfl
+  change -(1 - r)⁻¹ ^ 2 = ((1 : ℂ) * (r - 1) - r * 1) / (r - 1) ^ 2
+  rw [show (1 : ℂ) * (r - 1) - r * 1 = -1 by ring,
+    he, neg_sq, div_eq_mul_inv, ← inv_pow, neg_one_mul]
 
 private lemma pfaff_period_sq {r : ℂ} (hr : r ∈ doubleSlit) :
     slitPeriod (pfaffMap r) ^ 2 = (1 - r) * slitPeriod r ^ 2 := by
@@ -95,9 +96,6 @@ private lemma tau_pfaff_hasDerivAt {r : ℂ} (hr : r.im ≠ 0) :
   have hp := slitPeriod_ne_zero hd.1
   have hπ : (Real.pi : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
   convert (tau_hasDerivAt (pfaffMap_mem hr)).comp r (pfaffMap_hasDerivAt h₁) using 1 <;> try rfl
-  change tauDerivative r =
-    (-I / ((Real.pi : ℂ) * pfaffMap r * (1 - pfaffMap r) * slitPeriod (pfaffMap r) ^ 2)) *
-      (-(1 - r)⁻¹ ^ 2)
   rw [pfaff_period_sq hd, ← complementMap_eq h₁]
   have he : r - 1 = -(1 - r) := by ring
   simp only [tauDerivative, pfaffMap, complementMap, he, div_neg]
@@ -153,8 +151,9 @@ private lemma upper_difference_value {c : ℂ}
     have h := ((hasDerivAt_id u).const_sub 1).fun_inv (one_sub_ne_zero hu)
     have he : (1 - u)⁻¹ ^ 2 = u ^ 2 := congrArg (fun z : ℂ => z ^ 2) hfix
     unfold complementMap
-    convert h using 1
-    simpa only [id_eq, neg_neg, one_div, inv_pow] using he.symm
+    convert h using 1 <;> try rfl
+    change u ^ 2 = -(-1 : ℂ) / (1 - u) ^ 2
+    rw [neg_neg, one_div, ← inv_pow, he]
   have ht : HasDerivAt tau (tauDerivative u) u := tau_hasDerivAt hu
   have hL : HasDerivAt (fun z => tau (complementMap z)) (tauDerivative u * u ^ 2) u := by
     have h' : HasDerivAt tau (tauDerivative u) (complementMap u) := by simpa only [hfix] using ht
