@@ -1,0 +1,55 @@
+**Definition 4.1 (a fixed conull code).** Fix once and for all Borel conull
+sets $G_*\subseteq G$, $\mathcal Z_*\subseteq\mathcal Z$ and a probability
+isomorphism
+
+$$
+B:G_*\longrightarrow\mathcal Z_*,\qquad
+B_*\mu_H=\mathbf P,
+\tag{4.1}
+$$
+
+with Borel inverse on $\mathcal Z_*$. Extend $B$ to a Borel map
+$\bar B:G\to\mathcal Z$ by setting it equal to the all-$\star$ sequence off
+$G_*$. Write $\bar B(z)_n\in\mathcal B$ for its block coordinates.
+
+Existence here is a use of classical atomless standard probability-space
+isomorphism, rather than a new general coding theorem. To check its precise
+applicability, a point of $G$ lies in a residue cylinder of probability $m^{-2}$
+for every $m$, so Haar probability has no point atoms. The product
+$\mathbf P$ also has no point atoms: the only point atom of $\beta$ is the
+all-$\star$ block, of mass $b=(1-a)^3<1$. A singleton in $\mathcal Z$ either has
+some non-atomic block coordinate, hence zero probability, or is the all-$\star$
+sequence, of probability $\lim_n b^n=0$. On a standard Borel probability space,
+absence of point atoms is atomlessness. For example, nested finite partitions
+from a countable separating generator would isolate a point in any purported
+positive atom, giving the contrary point atom. The completions of both spaces
+are perfect, countably separated, complete probability spaces, so satisfy
+[Fremlin 344I and 344K(a)][Fremlin]. This is also the static conull-coding
+machinery already used in [native certification §§63,67][Native].
+
+For clarity, the completed-space result is converted to (4.1) without using
+arbitrary bijections on null sets. Start with the measure-preserving maps
+$f,g$ from Fremlin 344I proof (b), inverse almost everywhere, before the
+null-set completion in proof (c). Choose Borel versions $f_0:G\to\mathcal Z$
+and $g_0:\mathcal Z\to G$; standard Borel targets permit these versions.
+They retain their pushforwards and the identities
+$g_0f_0=\mathrm{id}$ and $f_0g_0=\mathrm{id}$ almost everywhere. Indeed the
+sets on which versions differ are null, and the pushforward identities make
+their inverse images null too. The set
+
+$$
+D=\{z:g_0(f_0(z))=z\}
+\tag{4.2}
+$$
+
+is Borel and conull. The Borel map $f_0$ is injective on $D$, so its image
+$f_0(D)$ is Borel by the standard Borel injection theorem, has probability one,
+and its inverse is $g_0$ there. Take $G_*=D$, $\mathcal Z_*=f_0(D)$ and
+$B=f_0|_D$. This proves the representative claims in (4.1).
+
+The maps $B$ and $\Psi$ are fixed before choosing a cut or horizon. They need
+not be continuous, computable or finitely obtainable from the declared source
+ports. In particular, (4.1) is an isomorphism of initial probability spaces,
+not an intertwining $B\delta=\operatorname{shift}B$. Such an intertwining in
+the stationary finite-entropy class would contradict Theorem 3.1.
+

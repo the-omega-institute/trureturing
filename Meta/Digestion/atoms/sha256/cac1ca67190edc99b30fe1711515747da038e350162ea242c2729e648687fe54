@@ -1,0 +1,60 @@
+**Theorem 5.1 (stationary zero-tail source with a nonstationary joint clock).**
+There is a deterministic Borel unit-peel map on $K\times\mathbb N$ and one fixed
+Borel joint-state decoder that, from initial law $\mu_0\otimes\delta_0$,
+produce all the native finite configuration-path joint laws of Definition 1.2.
+At every cut the $K$ marginal is the same stationary law $\mu_0$, every source
+advancement is exactly one, and the initial arithmetic seed is recovered
+exactly from the current joint state. The infinite output alone recovers that
+same seed almost surely. The initialized joint law is not stationary, and the
+map admits no invariant probability on $K\times\mathbb N$.
+
+Proof. On the whole space put
+
+$$
+J_0(x,n)=(\delta x,n+1),\qquad
+\mathcal R_0((\xi,z),n)
+=\Psi\bigl(\bar B(M^nz)_n\bigr).
+\tag{5.1}
+$$
+
+Both maps are Borel; the countably indexed family $M^n$ poses no measurability
+problem. Draw $Z\sim\mu_H$ once. The initialized orbit is exactly
+
+$$
+J_0^n((0^\infty,Z),0)=((0^\infty,M^{-n}Z),n).
+\tag{5.2}
+$$
+
+Its source marginal is $\mu_0$ at every $n$, and the arithmetic reconstruction
+$M^nM^{-n}Z=Z$ is pointwise exact. Substitution into the one fixed decoder gives
+
+$$
+\mathcal R_0(J_0^n((0^\infty,Z),0))
+=\Psi(\bar B(Z)_n).
+\tag{5.3}
+$$
+
+Thus the entire block sequence is the single draw $B(Z)$, with law
+$\beta^{\otimes\mathbb N}$. No fresh seed is drawn between blocks, and neither
+the decoder nor the code is changed with the horizon. Concatenating the first
+$n$ blocks and retaining the original deterministic wavefunction, integer
+call seams, final terminal and failure coordinates gives exactly the law of
+$\mathsf T(1^{10n})$ in Definition 1.2. Equality follows from the full mark
+product law in III183.2, not just from Born marginals. Endpoints at cycle
+boundaries are already $q_0$, so no seam correction or deterministic-time jump
+is introduced. Native path prefixes across different terminal horizons are
+the restrictions of this same infinite running configuration path; a final
+terminal is attached only at the requested end, not inserted into a longer run.
+
+From the infinite output, invert $\Psi$ block by block to obtain $B(Z)$, and
+then use $B^{-1}$ on $\mathcal Z_*$. This is a Borel almost-sure recovery of
+$Z$, on the same full-measure set $\{Z\in G_*\}$ for every finite cut and the
+infinite trajectory. Reconstructing $Z$ at each cut in (5.2) avoids any need
+to assume $G_*$ itself is invariant under $M^{-1}$.
+
+Finally, the counter is $n$ with probability one at cut $n$, so the joint laws
+at successive cuts are different. If an invariant probability for $J_0$
+existed, its counter marginal $\pi$ would be invariant under $n\mapsto n+1$.
+Then $\pi(\{0\})=0$ and $\pi(\{n\})=\pi(\{n-1\})$ for $n\ge1$, giving zero
+mass to every integer and contradicting total mass one. ∎
+

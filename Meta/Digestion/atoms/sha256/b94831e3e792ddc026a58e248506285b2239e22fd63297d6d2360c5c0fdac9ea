@@ -1,0 +1,72 @@
+**Convention 1.1 (objects and precision).** Put
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+e=\binom10,
+$$
+
+$$
+\Omega_F=\{\xi\in\{0,1\}^{\mathbb N}:\xi_j\xi_{j+1}=0\},
+\qquad G=\widehat{\mathbb Z}^{2},\qquad K=\Omega_F\times G.
+$$
+
+The topology and Borel structure are those of the literal joint completion in
+[FIB source §§2–5][FIB]. Its forward operation is the original total peel
+
+$$
+\delta(\xi,z)=\bigl(\sigma\xi,M^{-1}(z-\xi_0e)\bigr).
+\tag{1.1}
+$$
+
+For a finite word $w=w_0\cdots w_{n-1}$, let
+
+$$
+t_w=\sum_{j<n}w_jM^je,\qquad
+h_w(\eta,v)=(w\eta,t_w+M^nv).
+\tag{1.2}
+$$
+
+The map $h_w$ is used only when $w\eta$ is legal. The source formula is
+
+$$
+\delta^n(\xi,z)
+=\bigl(\sigma^n\xi,M^{-n}(z-t_{\xi|_n})\bigr).
+\tag{1.3}
+$$
+
+In particular, each fibre of $\delta^n$ is finite, indexed by compatible legal
+words of length $n$. There is no new shift or inverse oracle in this notation.
+All logarithms below are natural. Entropy means the supremum of entropy rates
+of finite measurable partitions, with the invariant probability explicitly
+specified; it is not differential entropy or a static information capacity.
+
+Let $\mu_H$ be normalized Haar probability on $G$, $\nu_P$ the one-sided Parry
+probability of the golden-mean shift, and
+
+$$
+\lambda=\nu_P\otimes\mu_H,\qquad
+\mu_0=\delta_{0^\infty}\otimes\mu_H.
+\tag{1.4}
+$$
+
+Both probabilities are $\delta$-invariant. For $\lambda$ this is FIB 9.2;
+for $\mu_0$, (1.1) reduces to the Haar-preserving automorphism $M^{-1}$.
+FIB 9.8–9.10 gives, for every invariant Borel probability $\rho$ on $K$,
+
+$$
+h_\rho(\delta)=h_{\rho_{\rm sym}}(\sigma)\le\log\phi,
+\qquad h_\lambda(\delta)=\log\phi,
+\qquad h_{\mu_0}(\delta)=0.
+\tag{1.5}
+$$
+
+The actual finite-source graph remains
+
+$$
+\Gamma=\{(b,\iota(x(b))): b\text{ is legal and eventually zero}\}.
+\tag{1.6}
+$$
+
+It is a countable dense proper subset of $K$, rather than a replacement for $K$.
+

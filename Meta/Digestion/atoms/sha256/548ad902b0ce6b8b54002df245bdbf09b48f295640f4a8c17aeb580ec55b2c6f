@@ -1,0 +1,30 @@
+**Theorem 3.1 (necessary cost at each native precision).** Suppose Definition
+2.1 holds and a single Borel decoder $\mathcal R:Y\to D([0,10],E)$ is used at
+all times, with block outputs $\mathcal R(J^ky)$ from one initial $y\sim\nu$.
+If, for a fixed integer $m\ge1$, the resulting three-cycle quantile codes
+have the native joint law for every finite number of blocks, then
+
+$$
+\boxed{c\log\phi\ \ge\ 3[h_b(a)+2a\log m].}
+\tag{3.1}
+$$
+
+Consequently no such decoder in this finite-$c$ stationary class produces the
+entire native continuous configuration-path law for every finite horizon.
+
+Proof. Compose $\mathcal R$ with the finite quantile code of Definition 1.3,
+extending the code arbitrarily on nonnative paths if necessary. It is a finite
+partition $\mathcal Q_m$ of $Y$. The same decoder and the same update at all
+cuts mean its $n$-name is exactly the output code sequence, rather than a family
+of unrelated codes chosen at separate cuts. By the joint-law hypothesis and
+(1.11),
+
+$$
+H_\nu\!\left(\bigvee_{k<n}J^{-k}\mathcal Q_m\right)=nH_m.
+\tag{3.2}
+$$
+
+Hence $H_m=h_\nu(J,\mathcal Q_m)\le h_\nu(J)\le c\log\phi$ by Theorem 2.2.
+Exact continuous-path laws would imply (3.2) for every $m$, whereas $a>0$
+makes $H_m\to\infty$. This contradicts finite $c$. ∎
+

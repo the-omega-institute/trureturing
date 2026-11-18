@@ -1,0 +1,18 @@
+**Definition 7.4 (the acquisition boundary).** Theorem 7.3 is conditional on
+the declared source-blind deterministic finite-transcript access model. It
+does not exclude exact outputs from an explicitly stronger continuous port,
+externally supplied analog state, infinite transcript or additional random
+drive. A finite quantile code has finite range, so the countability argument
+does not by itself obstruct its acquisition. The stationary all-horizon cost
+in (3.1) is a different condition.
+
+For this program the native terminal report at $10n$ is simply $W(q_0)$.
+Thus (7.3) concerns the complete hidden continuous path, not a purported
+positive-error lower bound for generating this deterministic terminal alone.
+Likewise the ability to decode hidden paths in Theorems 5.1 and 6.1 does not
+place jump-time monitoring or seed recovery in III145.2's readable
+$\mathcal G_t$. The actual $\Gamma$ is countable and has probability zero
+under both (1.4); no atomless-source obstruction is thereby proved for every
+possible sampling law on $\Gamma$. FIB 4.2's finite-trace equivalence describes
+the available observations, not permission to read a completed point exactly.
+

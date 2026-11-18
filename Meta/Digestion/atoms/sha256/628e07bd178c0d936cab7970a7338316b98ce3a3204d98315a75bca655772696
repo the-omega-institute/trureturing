@@ -1,0 +1,11 @@
+**Definition 5.2 (the sharp stationary boundary).** Theorem 5.1 retains unit
+advancement, countable controller, a time-independent joint-state decoder,
+one initial seed and a stationary source marginal. It removes joint
+stationarity. It therefore refutes an extension of Theorem 3.1 that replaces
+joint stationarity by source-marginal stationarity, even at advancement one
+and source entropy zero. It does not refute (2.4), since the initialized joint
+law is not invariant and $h_{\mu_0\otimes\delta_0}(J_0)$ is not an invariant
+probability entropy in the sense of Convention 1.1. It also supplies no
+finite-work decoder: the access to $\bar B$ in (5.1) remains an explicitly
+stronger mathematical access contract.
+

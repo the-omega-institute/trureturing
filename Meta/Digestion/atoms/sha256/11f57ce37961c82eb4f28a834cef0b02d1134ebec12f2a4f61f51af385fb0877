@@ -1,0 +1,27 @@
+**Definition 9.2 (unprovided extensions).** Theorems 5.1 and 6.1 concern a
+fixed original address-one running program, with all of its finite native
+configuration-path laws on the same seed. They do not construct the full
+counterfactual-program noise coupling, independent extra fine archives,
+arbitrary control acquisition, a stable finite-resolution code or a finite
+physical implementation. Full source recovery from current joint state,
+arithmetic recovery from infinite output, finite-prefix reconstruction and
+actual finite-interface acquisition have the distinct conditions proved
+above. An entropy inequality alone supplies none of the missing operations.
+
+The stationary obstruction and the nonstationary realization therefore give
+an exact conditional distinction between event clock, retained memory and
+source-marginal law on this original completion. They do not establish an
+unconditional mutual reconstruction of space, time, boundary and memory,
+or remove the declared resource and common-source contracts.
+
+[FIB]: FIB_SOURCE_COMPLETION_DYNAMICS.md
+[III]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[Native]: RECURSIVE_RELATIONAL_OBSERVATION_FIBONACCI_NATIVE_TERMINAL_CERTIFICATION.md
+[V57]: AURIC_FIXED_ONTIC_STATE_GROWING_OBSERVER_STABLE_SELF_INTERNAL_PREDICTION_AND_RELATIVE_CLOCKS_V57.md
+[Sarig]: https://www.weizmann.ac.il/math/sarigo/sites/math.sarigo/files/uploads/ergodicnotes.pdf
+[Zwei]: https://www.mat.univie.ac.at/~zweimueller/MyPub/z7.pdf
+[Fremlin]: https://www1.essex.ac.uk/maths/people/fremlin/chap34.pdf
+[LeanFinite]: ../../../D5/S1/Dynamics/FiniteFiberEntropy.lean
+[LeanAutonomous]: ../../../D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.lean
+[LeanConull]: ../../../D5/S3/Observer/ProbabilisticClosure/ConullImageProbabilityIsomorphism.lean
+

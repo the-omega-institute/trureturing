@@ -1,0 +1,28 @@
+**Definition 8.3 (binding to internal memory and actual work).** In
+[V57 §2][V57], a counter or archive is inside the total state, rather than a
+free parameter external to the decoder. Equations (5.1) and (6.1) implement
+that distinction with countable classical records. The fixed decoder reads
+the joint state, so its time dependence is a state dependence. The source
+coordinate alone does not supply the increasing event index or, in (6.4),
+the deleted symbolic prefix. V57 7.4's within-history predictive sufficiency
+requires equal retained summaries to give equal required future outputs.
+Here the joint-state formulas give such well-defined fixed decoders; equal
+current source marginals alone give no such assertion. Neither theorem is a
+claim that this classical construction is a finite unitary implementation
+of V57's Hilbert-space model.
+
+V57 8.1–8.2 instead fixes actual work costs $d_j\ge1$, cumulative work
+$D(k)=\sum_{j\le k}d_j$, and completion count
+$K_D(b)=\max\{k:D(k)\le b\}$. Conditional on an implementation with these
+measured costs, sequential work conservation and a pathwise limit
+$D(k)/k\to\bar d$, the same inverse-sequence argument gives
+$K_D(b)/b\to1/\bar d$ (zero for an infinite limit). Source peel count,
+decoder evaluation, record acquisition, storage and other charged work
+must be related by a separately specified cost contract before one can
+substitute $\tau$ for $d_j$. The unit peel in Theorems 5.1 and 6.1 gives no
+finite value of $d_j$ for evaluating $\bar B$ with exact continuous output.
+In the finite-port contract of Definition 7.2, Theorem 7.3 already rules out
+that exact finite acquisition. This leaves a conditional completion-clock
+statement, rather than an unproved physical rate or a substitution of the
+nonergodic ensemble $c$ for an actual pathwise average.
+

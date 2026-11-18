@@ -1,0 +1,20 @@
+**Proposition 8.2 (a literal nonergodic distinction).** The class in Definition
+2.1 contains a probability with $c=3/2$ for which pathwise advancement means
+are $1$ and $2$ on two sets of probability $1/2$. Its pathwise inverse clock
+limits are respectively $1$ and $1/2$, neither equal almost surely to $1/c$.
+
+Proof. Take the actual fixed source point $x_*=(0^\infty,0)$, controller
+$C=\{1,2\}$, $u(x,s)=s$, $\tau(x,s)=s$ and
+
+$$
+\nu=\tfrac12\delta_{(x_*,1)}+\tfrac12\delta_{(x_*,2)}.
+\tag{8.5}
+$$
+
+Since $\delta x_*=x_*$, both supported joint states are fixed by $J$.
+The law is invariant and $c=3/2$, while $L_n=ns$ on component $s$.
+The asserted means and inverse limits follow. In particular even the
+ensemble mean of the inverse limits is $3/4$, whereas $1/c=2/3$.
+This example respects the literal FIB operation and has zero entropy;
+it contradicts no part of (2.4). ∎
+

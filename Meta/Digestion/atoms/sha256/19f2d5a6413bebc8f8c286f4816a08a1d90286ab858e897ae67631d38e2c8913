@@ -1,0 +1,62 @@
+**Definition 1.2 (the retained native target).** The target is the original
+program $\mathsf T(1^{10n})$ from its unique ready state, for every $n\ge1$,
+under [III145.1–145.2 and III183–185][III]. Its configuration carrier is the
+entire original set $E$, $|E|=89$. Write $q_0=q_{\rm r}$ and $q_1$ for the two
+configurations in III183.1. Only these two are visited in this program; the
+other $87$ configurations remain in the carrier. Put
+
+$$
+a=4\phi^{-3}\in(0,1),\qquad
+\alpha=3\pi/5,\qquad P=2\pi/\alpha=10/3.
+\tag{1.7}
+$$
+
+III183.2 supplies an iid sequence of cycle marks with space and probability
+
+$$
+\mathcal M=\{\star\}\sqcup(0,1)^2,\qquad
+\vartheta=(1-a)\delta_\star+a\operatorname{Leb}_{(0,1)^2}.
+\tag{1.8}
+$$
+
+The mark $\star$ means no jump during a cycle. A mark $(u,v)$ means two jumps,
+at the relative times
+
+$$
+S(u)=\frac2\alpha\arcsin\sqrt u,\qquad
+T(v)=P-\frac2\alpha\arcsin\sqrt{1-v},
+\tag{1.9}
+$$
+
+so $0<S<P/2<T<P$. The path is $q_0$ before $S$, $q_1$ from $S$ until $T$,
+and $q_0$ thereafter, using right-continuous values at jumps. Three consecutive
+marks form a ten-call block. Thus set
+
+$$
+\mathcal B=\mathcal M^3,\qquad
+\beta=\vartheta^{\otimes3},\qquad
+\mathcal Z=\mathcal B^{\mathbb N},\qquad
+\mathbf P=\beta^{\otimes\mathbb N}.
+\tag{1.10}
+$$
+
+These are standard Borel spaces. Let $\Psi:\mathcal B\to D([0,10],E)$ concatenate
+the three cycle paths. Here $D$ has its usual finite-state càdlàg path Borel
+structure. The map $\Psi$ is Borel and injective: the path reveals whether each
+cycle jumped and, when it did, its two jump times, whose inverse coordinates
+are $u=\sin^2(\alpha S/2)$ and $v=1-\sin^2(\alpha T/2)$.
+
+All blocks begin and end at $q_0$. The deterministic wavefunction is the original
+$\psi(t)=e^{-itH_1}e_0$; it returns exactly to $e_0$ at cycle boundaries.
+Integer call seams carry the original uninterrupted evolution and no new jump,
+measurement or reset. In particular the mathematical cycles of length $P$ do
+not authorize fractional calls. At the final integer time $10n$, the terminal
+is the original $W(q_0)$ in the full $1024$-label space. All original failure,
+refusal, stopping and leakage coordinates remain present with zero ideal
+probability. The target here includes the complete configuration path and
+continuous jump times, as well as the actual call word and these coordinates.
+It chooses the allowed case of no additional stochastic fine archive in
+III145.2(3); additional archive laws require their separately specified kernels
+and drives. No claim below silently supplies those additional drives or the
+counterfactual coupling of all other programs in III145.2(4).
+

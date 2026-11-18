@@ -1,0 +1,32 @@
+**Theorem 7.3 (exact finite-port obstruction for these source laws).** Under
+Definition 7.2, on either initial source law $\mu_0$ or $\lambda$, a protocol's
+exact returned values have countable range up to the null event of nontermination.
+It therefore recovers the initial arithmetic seed with probability zero.
+If its returned value is intended to be the exact complete native configuration
+path over $10n$ calls, its output law $\eta$ satisfies
+
+$$
+d_{\rm TV}(\eta,\mathsf P_n)\ge1-(1-a)^{3n},
+\tag{7.3}
+$$
+
+where $\mathsf P_n$ is the target law of Definition 1.2 and
+$d_{\rm TV}(\eta,\zeta)=\sup_A|\eta(A)-\zeta(A)|$. In particular it cannot
+have that target law exactly.
+
+Proof. Finite transcripts form a countable union of finite words over a
+countable instruction/reply alphabet, hence are countable. A deterministic
+final value is a function of its terminal transcript and thus ranges over a
+countable set. The Haar arithmetic coordinate has no atoms, so the probability
+that it equals any of these countably many returned seed values is zero.
+
+For the path assertion, a finite product of the mark law (1.8) has exactly one
+point atom: the mark vector all of whose entries are $\star$, of mass
+$(1-a)^{3n}$. Every other point fixes at least one continuously distributed
+pair and therefore has probability zero. The concatenated path uniquely
+recovers these marks, so the target configuration-path probability has exactly
+the same single atom, namely the constant $q_0$ path. Appending the deterministic
+call, wavefunction, terminal and failure coordinates changes none of these
+atom masses. If $A$ is the countable support of the protocol's path output,
+then $\eta(A)=1$ but $\mathsf P_n(A)\le(1-a)^{3n}$. This proves (7.3). ∎
+
