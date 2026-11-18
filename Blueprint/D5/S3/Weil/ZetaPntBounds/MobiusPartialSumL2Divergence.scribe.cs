@@ -82,8 +82,11 @@ internal sealed class MobiusPartialSumL2DivergenceDocument : IScribeDocumentDefi
             Paragraph(Text(
                 "The arithmetic input is the finite floor cancellation in "
                 + "MoebiusLogarithmic.floor_cancellation, combined with the indicator-tail integrals "
-                + "in Mertens.IntegratedExplicit.OriginalSignedJ. Expanding the two literal finite "
-                + "Möbius sums gives ∫₀ᵗ a(u)h(t−u) du = t exp(−t/2) for every t ≥ 0. "
+                + "in Mertens.IntegratedExplicit.OriginalSignedJ. After removing exp(−u/2), a(u) "
+                + "has a finite pulse/floor expansion with summands 1−u+log(n) for log(n) ≤ u "
+                + "and no Möbius coefficients. The distinct literal finite weighted Möbius expansion "
+                + "of h has coefficients μ(k)/k, multiplied by its exponential factor. Combining "
+                + "these expansions gives ∫₀ᵗ a(u)h(t−u) du = t exp(−t/2) for every t ≥ 0. "
                 + "Measurability and local integrability follow from the finite floor cutoffs. "
                 + "The stronger public MoebiusLogarithmic.abs_reciprocalSum_le_one gives "
                 + "|h(t)| ≤ exp(T/2) on [0,T], which also proves the required local integrability of h².")),
@@ -129,9 +132,13 @@ internal sealed class MobiusPartialSumL2DivergenceDocument : IScribeDocumentDefi
                 + "with zero, and the positive denominator gives the stated estimate.")),
             Paragraph(Text(
                 "This is an application of the existing arithmetic, Mellin and convolution results, "
-                + "rather than a new standalone mathematical declaration. The eventual logarithmic "
-                + "energy lower bound is known from Konyagin–Popov, Corollary 1, equation (9), "
-                + "printed page 246, DOI 10.1007/BF02304106; no originality is claimed. "
+                + "rather than a new standalone mathematical declaration. Konyagin–Popov, Corollary 1, "
+                + "equation (9), printed page 246, DOI 10.1007/BF02304106, gives the known eventual "
+                + "logarithmic lower bound for the ordinary unweighted Mertens energy "
+                + "∫_1^X M₀(u)²/u² du, where M₀(x) = ∑_{1 ≤ n ≤ floor(x)} μ(n); no originality is claimed. "
+                + "Transfer to this section’s weighted reciprocal-sum energy requires a separate "
+                + "derived energy-transfer identity, which is not established here. The paper does "
+                + "not directly state the weighted formula. "
                 + "Transport by x = exp(t), the discrete identity E(N+1) = S_N, and an eventual "
                 + "discrete lower bound are separate obligations. This application does not establish "
                 + "those obligations, Nyman–Beurling closure, or RH."))))),
