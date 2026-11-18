@@ -120,7 +120,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.parit
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.paritySide_card` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Source.* Repository-derived.
 
 *Commentary.*
 
