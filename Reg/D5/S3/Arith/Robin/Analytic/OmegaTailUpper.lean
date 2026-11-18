@@ -8,7 +8,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open Filter Real MeasureTheory Set LeanInformationAudit
-open scoped Topology
+open scoped Topology BigOperators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Robin.Analytic.OmegaTailUpper
 
@@ -505,5 +505,148 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 
 end LogWeightDerivative
+
+namespace RankinExponential
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ)
+    (fun _ => ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {s z x T : ℝ}, 1 < s → 1 ≤ z → 0 < x →
+    R.readout () ()
+      (((Finset.Icc 1 ⌊x⌋₊).filter (fun n => T <
+        (ArithmeticFunction.cardDistinctFactors n : ℝ))).card : ℝ)
+      (exp (s * log x - T * log z +
+        log (1 + ∑' n : ℕ, (n : ℝ) ^ (-s)) +
+        ∑ p ∈ Finset.Icc 1 ⌊x⌋₊ with p.Prime, log (1 + z * (p : ℝ) ^ (-s))))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (s := 2) (z := 1) (x := 1) (T := 0) (by norm_num) le_rfl (by norm_num)
+
+def family : Registration arena (type_of% @rankin_exponential_bound) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@rankin_exponential_bound, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+    intro he
+    have hh : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he (0 : ℝ)) (le_refl (0 : ℝ))
+    norm_num at hh
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@rankin_exponential_bound) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaTailUpper.rankin_exponential_bound.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaTailUpper.RankinExponential.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaTailUpper
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end RankinExponential
+
+namespace AbelContinuity
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ → ℝ)
+    (fun _ => Set ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f => ContinuousOn f) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {s z a b : ℝ}, 0 < z → 0 < a →
+    R.readout () () (abelKernel s z) (Set.Icc a b)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (s := 0) (z := 1) (a := 1) (b := 2) (by norm_num) (by norm_num)
+
+def family : Registration arena (type_of% @abelKernel_continuousOn) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@abelKernel_continuousOn, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (fun _ : ℝ => 0), Real.log, ?_⟩
+    intro he
+    have hc : ContinuousOn Real.log Set.univ :=
+      Eq.mp (congrFun he Set.univ) continuousOn_const
+    have hc0 : ContinuousAt Real.log (0 : ℝ) := (continuousOn_univ.mp hc) (0 : ℝ)
+    exact (Real.continuousAt_log_iff.mp hc0) rfl
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@abelKernel_continuousOn) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaTailUpper.abelKernel_continuousOn.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaTailUpper.AbelContinuity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaTailUpper
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end AbelContinuity
 
 end Reg.D5.S3.Arith.Robin.Analytic.OmegaTailUpper
