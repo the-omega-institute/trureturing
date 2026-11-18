@@ -677,4 +677,162 @@ theorem oscillator_kernel_normal_order (D : LatticeData) (hu : IsUnit D.G.det)
   rw [div_eq_mul_inv, mul_inv]
   ring
 
+
+/-- Each monomial has finite doubled energy, so the largest energy on the
+original finite support gives a cutoff even for inhomogeneous input. -/
+theorem exists_lowering_cutoff (D : LatticeData) (hu : IsUnit D.G.det) (f : Oscillator D) :
+    ∃ N : ℕ, ∀ n : ℕ, N ≤ n → (oscillatorLower D ^ n) f = 0 := by
+  let w := fun d : Index D →₀ ℕ => Finsupp.weight (omega D) d
+  refine ⟨f.support.sup w / 2 + 1, fun n hn => ?_⟩
+  conv_lhs => rw [MvPolynomial.as_sum f, map_sum]
+  apply Finset.sum_eq_zero
+  intro d hd
+  have hle : w d ≤ f.support.sup w := Finset.le_sup hd
+  have hlt : (w d : ℤ) < 2*(n:ℤ) := by omega
+  have hw : Finsupp.weight (fun x => (omega D x : ℤ)) d = (w d : ℤ) := by
+    simp only [w, Finsupp.weight_apply, Finsupp.sum, nsmul_eq_mul, Int.cast_id,
+      Int.natCast_mul]
+    push_cast
+    rfl
+  exact lowering_after_energy_cutoff D hu _ _ (isWeightedHomogeneous_monomial _ _ _ hw) n hlt
+
+open LatticeActualAnnihilation
+
+/-- Diagonal scale on the actual oscillator polynomial algebra. -/
+def scaleOscillator (D : LatticeData) (root lambda : ℂ) : Oscillator D →ₐ[ℂ] Oscillator D :=
+  MvPolynomial.aeval fun x : Index D =>
+    modeScale root lambda (-(x.2 : ℤ)-1) • (X x : Oscillator D)
+
+private theorem positive_scale (D : LatticeData) (root lambda : ℂ)
+    (i : Fin D.rank) (k : ℕ) (f : Oscillator D) :
+    annihilate D i k (scaleOscillator D root lambda f) =
+      modeScale root lambda (-(k:ℤ)-1) • scaleOscillator D root lambda (annihilate D i k f) := by
+  induction f using MvPolynomial.induction_on with
+  | C a =>
+    have h : annihilate D i k (MvPolynomial.C a) = 0 := by
+      rw [← annihilation_apply]
+      exact (annihilationDerivation D i k).map_algebraMap a
+    rw [show scaleOscillator D root lambda (MvPolynomial.C a) = MvPolynomial.C a by
+      simp [scaleOscillator], h, map_zero, smul_zero]
+  | add p q hp hq =>
+    simp only [map_add, hp, hq, smul_add]
+  | mul_X p x hp =>
+    rcases x with ⟨j,l⟩
+    let S := scaleOscillator D root lambda
+    let a := modeScale root lambda (-(k:ℤ)-1)
+    let b := modeScale root lambda (-(l:ℤ)-1)
+    have hx : S (X (j,l)) = b • X (j,l) := by simp [S, b, scaleOscillator]
+    rw [map_mul, hx, annihilate_mul, map_smul, hp, annihilate_mul, map_add,
+      map_mul, map_mul, hx, smul_add]
+    rw [annihilate_X]
+    by_cases h : k = l
+    · subst l
+      simp only [ite_true, map_smul, map_one, mul_smul_comm, smul_mul_assoc]
+      rw [smul_comm b a]
+    · simp only [if_neg h, smul_zero, map_zero, mul_zero, add_zero, mul_smul_comm,
+        smul_mul_assoc]
+      rw [smul_comm b a]
+
+private theorem scale_current (D : LatticeData) (root lambda : ℂ)
+    (hroot : root^2 = lambda) (hlambda : lambda ≠ 0) (i : Fin D.rank)
+    (j : ℤ) (f : Oscillator D) :
+    scaleOscillator D root lambda (current D i j f) =
+      modeScale root lambda j • current D i j (scaleOscillator D root lambda f) := by
+  by_cases hj : j < 0
+  · let k := (-j-1).toNat
+    have hk : j = -(k:ℤ)-1 := by dsimp [k]; omega
+    rw [hk, current_negative]
+    simp only [LinearMap.mulLeft_apply, map_mul]
+    rw [show scaleOscillator D root lambda (X (i,k)) =
+      modeScale root lambda (-(k:ℤ)-1) • X (i,k) by simp [scaleOscillator], smul_mul_assoc]
+  · let k := j.toNat
+    have hk : j = (k:ℤ) := by dsimp [k]; omega
+    rw [hk]
+    simp only [current, if_neg (not_lt.mpr (Int.natCast_nonneg k)), Int.toNat_natCast,
+      LinearMap.smul_apply, map_smul, positive_scale]
+    rw [smul_comm (modeScale root lambda (k:ℤ)) (frequency (k:ℤ))]
+    congr 1
+    rw [smul_smul, scale_opposites root lambda hroot hlambda, one_smul]
+
+/-- The scaled formal current carries the specified half-coordinate weight
+at each shifted frequency. -/
+def scaledCurrent (D : LatticeData) (root lambda : ℂ) (i : Fin D.rank) (j : ℤ) :
+    PowerSeries (End D) :=
+  PowerSeries.mk fun n =>
+    (Ring.choose (-frequency j) n * modeScale root lambda (j+n)) • current D i (j+n)
+
+/-- Coordinate transport for the actual current with an explicit lift of
+the nonzero scale. The lowering flow acts before the diagonal scale. -/
+theorem scaled_lowering_flow_intertwines (D : LatticeData) (hu : IsUnit D.G.det)
+    (root lambda : ℂ) (hroot : root^2 = lambda) (hlambda : lambda ≠ 0)
+    (i : Fin D.rank) (j : ℤ) :
+    let S := PowerSeries.C (scaleOscillator D root lambda).toLinearMap
+    (S * loweringFlow D) * PowerSeries.C (current D i j) =
+      scaledCurrent D root lambda i j * (S * loweringFlow D) := by
+  have hs :
+      PowerSeries.C (scaleOscillator D root lambda).toLinearMap * transportedCurrent D i j =
+      scaledCurrent D root lambda i j *
+        PowerSeries.C (scaleOscillator D root lambda).toLinearMap := by
+    apply PowerSeries.ext
+    intro n
+    apply LinearMap.ext
+    intro f
+    rw [PowerSeries.coeff_C_mul, PowerSeries.coeff_mul_C, transportedCurrent, scaledCurrent,
+      PowerSeries.coeff_mk, PowerSeries.coeff_mk]
+    simp only [Module.End.mul_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply,
+      map_smul, scale_current D root lambda hroot hlambda, smul_smul]
+  dsimp only
+  rw [mul_assoc, lowering_flow_intertwines D hu, ← mul_assoc, hs, mul_assoc]
+
+
+open TwistedGround.OriginalFourMChargeCoset (cosetKernel channelB channelD)
+open LatticeTwistedGroundRealization.SignQuotient (ModTwoCharge)
+
+private theorem cosetKernel_detector_smul (D : LatticeData) (hu : IsUnit D.G.det)
+    (H K : ℕ) (k t : ℤ) (P Q R S : Oscillator D) (a : ModTwoCharge D) (c : ℂ) :
+    cosetKernel D hu H K k t P Q R (c • S) a =
+      c * cosetKernel D hu H K k t P Q R S a := by
+  unfold cosetKernel
+  rw [mul_left_comm c]
+  congr 1
+  rw [← smul_eq_mul c, smul_finsum]
+  apply finsum_congr
+  intro b
+  split_ifs
+  · simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
+    ring
+  · simp
+
+/-- The skew-channel detector lowering is the same normal ordering on the
+actual polynomial, with the original skew cutoff and phase. -/
+theorem skew_channels_normal_order (D : LatticeData) (hu : IsUnit D.G.det)
+    (H K L : ℕ) (m n r : ℤ) (P Q R S : Oscillator D) (a : ModTwoCharge D) :
+    channelB D hu H K L m n r P Q R S a =
+      (∑ j ∈ Finset.range ((K : ℤ)+(L : ℤ)-n).toNat,
+        ∑ ell ∈ Finset.range ((H : ℤ)+(K : ℤ)+(L : ℤ)-m-n-r-3).toNat,
+          Ring.choose (r : ℂ) j * (-1 : ℂ)^(m+r+(ell : ℤ)+1) *
+            cosetKernel D hu K L (n+(j : ℤ)) (m+r-(j : ℤ)+(ell : ℤ))
+              Q R P (polynomialCoefficient D S ell) a) ∧
+    channelD D hu H K L m n r P Q R S a =
+      (∑ j ∈ Finset.range ((H : ℤ)+(L : ℤ)-m).toNat,
+        ∑ ell ∈ Finset.range ((H : ℤ)+(K : ℤ)+(L : ℤ)-m-n-r-3).toNat,
+          Ring.choose (r : ℂ) j * (-1 : ℂ)^(n+(ell : ℤ)+1) *
+            cosetKernel D hu H L (m+(j : ℤ)) (n+r-(j : ℤ)+(ell : ℤ))
+              P R Q (polynomialCoefficient D S ell) a) := by
+  constructor
+  · unfold channelB
+    apply Finset.sum_congr rfl
+    intro j _
+    apply Finset.sum_congr rfl
+    intro ell _
+    rw [← lowering_normal_order D hu, cosetKernel_detector_smul]
+    ring
+  · unfold channelD
+    apply Finset.sum_congr rfl
+    intro j _
+    apply Finset.sum_congr rfl
+    intro ell _
+    rw [← lowering_normal_order D hu, cosetKernel_detector_smul]
+    ring
+
 end D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
