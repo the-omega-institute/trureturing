@@ -67,7 +67,7 @@ The canonical source is
 Its `claim` has literal type Prop, and `result` has literal type Not claim.
 Only the designated result is a public theorem; it is exempt under section 3.9.
 
-## Admission
+### Admission
 
 `admission_basis: open-problem-resolution`; `escape_witness: none`.
 The utility is `certified-instance` with the typed `refutes` edge from
