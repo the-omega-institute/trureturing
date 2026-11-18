@@ -34,30 +34,36 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ConceptDynamics.DagCompletion.SalinasSchmeisOmegaChainExtensionRefutation
 
+universe u v w
+
 /-- A part with its inherited order is order-isomorphic to the ordinal omega. -/
-def IsOmegaChain {P : Type} [PartialOrder P] (C : Set P) : Prop :=
+def IsOmegaChain {P : Type u} [PartialOrder P] (C : Set P) : Prop :=
   Nonempty (ℕ ≃o C)
 
 /-- The parts form a partition of the entire poset, and every part is an omega-chain. -/
-def OmegaPartitionable (P : Type) [PartialOrder P] : Prop :=
+def OmegaPartitionable (P : Type u) [PartialOrder P] : Prop :=
   ∃ D : Set (Set P), Setoid.IsPartition D ∧ ∀ C : Set P, C ∈ D → IsOmegaChain C
 
 /-- An extension retains the induced order of the original poset. -/
-def IsExtension (P Q : Type) [PartialOrder P] [PartialOrder Q] : Prop :=
+def IsExtension (P : Type u) (Q : Type v) [PartialOrder P] [PartialOrder Q] : Prop :=
   Nonempty (P ↪o Q)
 
 /-- Question 2.32: every poset has an omega-chain-partitionable extension
 that order-embeds into every omega-chain-partitionable extension of that poset.
-No comparison embedding is required to fix the original poset. -/
+No comparison embedding is required to fix the original poset.
+The universe parameters of `claim.{u, v, w}` belong respectively to the original
+poset, the candidate extension and the unrestricted comparison extension.
+This is a family of propositions at fixed levels, not an internal quantifier
+over universes; `result` includes the original Type0 specialization. -/
 def claim : Prop :=
-  ∀ (P : Type) (pOrder : PartialOrder P),
-    ∃ (Q : Type) (qOrder : PartialOrder Q),
+  ∀ (P : Type u) (pOrder : PartialOrder P),
+    ∃ (Q : Type v) (qOrder : PartialOrder Q),
       @IsExtension P Q pOrder qOrder ∧ @OmegaPartitionable Q qOrder ∧
-        ∀ (Q' : Type) (qOrder' : PartialOrder Q'),
+        ∀ (Q' : Type w) (qOrder' : PartialOrder Q'),
           @IsExtension P Q' pOrder qOrder' → @OmegaPartitionable Q' qOrder' →
             Nonempty (@OrderEmbedding Q Q' qOrder.toLE qOrder'.toLE)
 
-private theorem omega_successor {Q : Type} [PartialOrder Q]
+private theorem omega_successor {Q : Type u} [PartialOrder Q]
     (hQ : OmegaPartitionable Q) (x : Q) : ∃ z : Q, x < z := by
   obtain ⟨D, hD, hC⟩ := hQ
   obtain ⟨C, hx, _⟩ := hD.2 x
@@ -181,7 +187,7 @@ private theorem tail_forced_bound (x y z : Tail)
   dsimp [tailLe, Tail] at *
   omega
 
-private theorem partition_of_two {X : Type} [PartialOrder X]
+private theorem partition_of_two {X : Type u} [PartialOrder X]
     (e₀ e₁ : ℕ ↪o X)
     (cover : ∀ x : X, x ∈ Set.range e₀ ∨ x ∈ Set.range e₁)
     (disjoint : ∀ x : X, x ∈ Set.range e₀ → x ∈ Set.range e₁ → False) :
@@ -267,7 +273,7 @@ private theorem tail_partition : OmegaPartitionable Tail := by
     change 2 * m + 1 = 2 * n at hm
     omega
 
-private theorem incompatible {Q : Type} [PartialOrder Q]
+private theorem incompatible {Q : Type u} [PartialOrder Q]
     (hQ : OmegaPartitionable Q) (p : Fork ↪o Q)
     (f : Q ↪o Rays) (g : Q ↪o Tail) : False := by
   have hab : ¬ p .left ≤ p .right := by
@@ -292,13 +298,54 @@ private theorem incompatible {Q : Type} [PartialOrder Q]
   · exact hab (f.le_iff_le.mp h)
   · exact hba (f.le_iff_le.mp h)
 
-theorem result : ¬ claim := by
+theorem result : ¬ claim.{u, v, w} := by
+  have liftPartition (X : Type) [PartialOrder X] (h : OmegaPartitionable X) :
+      OmegaPartitionable (ULift.{w} X) := by
+    classical
+    obtain ⟨D, hD, hparts⟩ := h
+    let E : Set (Set (ULift.{w} X)) := {B | ∃ C ∈ D, B = ULift.down ⁻¹' C}
+    refine ⟨E, ⟨?_, ?_⟩, ?_⟩
+    · rintro ⟨C, hC, heq⟩
+      apply hD.1
+      have hempty : C = ∅ := by
+        apply Set.eq_empty_iff_forall_notMem.mpr
+        intro x hx
+        have hx' : (ULift.up x : ULift.{w} X) ∈ (∅ : Set (ULift.{w} X)) := by
+          rw [heq]
+          exact hx
+        exact hx'
+      exact hempty ▸ hC
+    · intro x
+      obtain ⟨C, hxC, huniq⟩ := hD.2 x.down
+      refine ⟨ULift.down ⁻¹' C, ⟨⟨C, hxC.1, rfl⟩, hxC.2⟩, ?_⟩
+      rintro B ⟨⟨C', hC', rfl⟩, hx'⟩
+      exact congrArg (fun A : Set X => ULift.down ⁻¹' A) (huniq C' ⟨hC', hx'⟩)
+    · rintro B ⟨C, hC, rfl⟩
+      obtain ⟨e⟩ := hparts C hC
+      let f : C ≃o (ULift.down ⁻¹' C : Set (ULift.{w} X)) :=
+        { toFun := fun x => ⟨ULift.up x.val, x.property⟩
+          invFun := fun x => ⟨x.val.down, x.property⟩
+          left_inv := fun _ => rfl
+          right_inv := fun _ => rfl
+          map_rel_iff' := by intro x y; rfl }
+      exact ⟨e.trans f⟩
   intro h
-  obtain ⟨Q, qOrder, hp, hQ, hleast⟩ := h Fork forkOrder
+  obtain ⟨Q, qOrder, hp, hQ, hleast⟩ := h (ULift.{u} Fork) inferInstance
   letI := qOrder
   obtain ⟨p⟩ := hp
-  obtain ⟨f⟩ := hleast Rays rayOrder ⟨intoRays⟩ rays_partition
-  obtain ⟨g⟩ := hleast Tail tailOrder ⟨intoTail⟩ tail_partition
-  exact incompatible hQ p f g
+  let intoRaysLift : ULift.{u} Fork ↪o ULift.{w} Rays :=
+    ((ULift.orderIso : ULift.{u} Fork ≃o Fork).toOrderEmbedding.comp intoRays).comp
+      (ULift.orderIso.symm : Rays ≃o ULift.{w} Rays).toOrderEmbedding
+  let intoTailLift : ULift.{u} Fork ↪o ULift.{w} Tail :=
+    ((ULift.orderIso : ULift.{u} Fork ≃o Fork).toOrderEmbedding.comp intoTail).comp
+      (ULift.orderIso.symm : Tail ≃o ULift.{w} Tail).toOrderEmbedding
+  obtain ⟨f⟩ := hleast (ULift.{w} Rays) inferInstance ⟨intoRaysLift⟩
+    (liftPartition Rays rays_partition)
+  obtain ⟨g⟩ := hleast (ULift.{w} Tail) inferInstance ⟨intoTailLift⟩
+    (liftPartition Tail tail_partition)
+  exact incompatible hQ
+    ((ULift.orderIso.symm : Fork ≃o ULift.{u} Fork).toOrderEmbedding.comp p)
+    (f.comp (ULift.orderIso : ULift.{w} Rays ≃o Rays).toOrderEmbedding)
+    (g.comp (ULift.orderIso : ULift.{w} Tail ≃o Tail).toOrderEmbedding)
 
 end D5.S3.ConceptDynamics.DagCompletion.SalinasSchmeisOmegaChainExtensionRefutation

@@ -20,13 +20,15 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                 "Page 2: “An ω-chain of a poset P is a subset of P that is order-isomorphic to ω under the ordering inherited from P.” The formula uses the inherited order on the subtype C."),
             Definition("OmegaPartitionable", "Partitions into omega-chains", OmegaPartitionableFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                "Question 2.3, page 2: “Given a poset P with no maximal element, when can the maximal family D of disjoint ω-chains in P given by Lemma 2.1 be taken such that ⋃D = P? That is, when can P be partitioned into ω-chains?” The formula records a covering disjoint family whose members satisfy IsOmegaChain."),
+                "Question 2.3, page 3: “Given a poset P with no maximal element, when can the maximal family D of disjoint ω-chains in P given by Lemma 2.1 be taken such that ⋃D = P? That is, when can P be partitioned into ω-chains?” The formula records a covering disjoint family whose members satisfy IsOmegaChain."),
             Definition("IsExtension", "Induced order extension", IsExtensionFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "An extension is represented by an order embedding, so the original order is preserved and reflected."),
             Definition("claim", "Question 2.32", Equal(F.Id("claim"), Parenthesized(ClaimBody())),
                 AssessedProvenance.FromLiterature(Source),
-                "Question 2.32, page 14: “Let P be a poset. Does there exist a minimal extension Q of P which can be partitioned into ω-chains? Here by minimal we mean that if Q′ is any extension of P which can be partitioned into ω-chains, then Q is order-isomorphic to a subposet of Q′.” The encoding uses an induced order embedding for extension and a setoid partition whose parts are order-isomorphic to omega."),
+                "Question 2.32, page 14: “Let P be a poset. Does there exist a minimal extension Q of P which can be partitioned into ω-chains? Here by minimal we mean that if Q′ is any extension of P which can be partitioned into ω-chains, then Q is order-isomorphic to a subposet of Q′.” The encoding uses an induced order embedding for extension and a setoid partition whose parts are order-isomorphic to omega.",
+                "The same source predicates accept P : Type u, a candidate Q : Type v and comparison Q′ : Type w independently. A claim instance fixes these three universe parameters; Lean does not quantify over universe levels inside Prop. The original Type0 refutation is the instance u = v = w = 0, with the original Fork and private proof suppliers. Comparison embeddings Q → Q′ have no equation requiring them to fix P. The countability and uniform finite chain-height hypotheses of the further classification concern P alone, and impose no restriction on Q′. The positive carrier P ⊕ₗ ℕ is chosen from P before the comparison universe; upward ULift order isomorphisms preserve induced embeddings and transport the literal partition to preimage parts, without shrinking P. This interface does not itself prove the positive classification or the arbitrary-candidate negative theorem.",
+                "For the ordinal extension construction the independent carrier is α.ToType : Type o for α : Ordinal o, and P ×ₗ α.ToType lies in Type (max u o). Ordinal.ToType.mk applied to ⟨0, 0 < α⟩ selects the distinguished point when α ≠ 0; Ordinal.type_toType gives its order type, and upward lifting changes the represented ordinal by Ordinal.lift. This convention does not assert the still-required full partition and skeleton theorems. The countable finite-height classification, explicit countable partitions, Noetherian section/shift injection, dual statements, Nat boundary and all nonzero ordinal and finite-n skeleton conclusions remain separate proof obligations."),
             Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -56,6 +58,16 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                     + "a strict successor, and order embeddings transfer the resulting comparisons back to "
                     + "the fork, producing a contradiction.")),
                     Paragraph(Text(
+                    "The universe-polymorphic application lifts the fixed Fork to Type u and lifts "
+                    + "Rays and Tail to the comparison universe Type w. The candidate Q retains Type v. "
+                    + "For each original partition part C, the lifted part is the preimage of C under "
+                    + "ULift.down. The inherited order isomorphism sends c to ULift.up c, so the original "
+                    + "omega isomorphism composes with it. Nonemptiness, unique coverage and disjointness "
+                    + "are preserved. Composing the assumed comparison embeddings with ULift.down gives "
+                    + "Q → Rays and Q → Tail; composing the base embedding with ULift.up gives Fork → Q. "
+                    + "The original private incompatible theorem then supplies the contradiction. This "
+                    + "uses no shrinking assumption on an arbitrary carrier and assigns no new solved credit.")),
+                    Paragraph(Text(
                     "The literature screen is partial. The primary source and its version history, "
                     + "successful arXiv author and text queries, MathOverflow and Zenodo searches, "
                     + "public formal-conjecture snapshots and repository results identified no matching "
@@ -69,18 +81,18 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                     ResolutionKind.Refuted)))));
 
     private static DocumentBlock.Describe Definition(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose) =>
+        AssessedProvenance provenance, params string[] prose) =>
         Describe.Lean(DescribeId.Create("definition-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks([.. prose.Select(value => Paragraph(Text(value)))]), DescribeRole.Definition);
 
     private static Formula IsOmegaChainFormula()
     {
         var p = F.Id("P");
         var c = F.Id("C");
         var body = Call("Nonempty", Call("OrderIso", Nat(), c));
-        return All("P", F.Id("Type"), Instance("PartialOrder", p,
+        return All("P", TypeAt("u"), Instance("PartialOrder", p,
             All("C", Call("Set", p), Equal(Call("IsOmegaChain", c), body))));
     }
 
@@ -93,7 +105,7 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
         var parts = All("C", Call("Set", p),
             Implies(Member(c, d), Call("IsOmegaChain", c)));
         var body = Ex("D", Call("Set", Call("Set", p)), And(partition, parts));
-        return All("P", F.Id("Type"), Instance("PartialOrder", p,
+        return All("P", TypeAt("u"), Instance("PartialOrder", p,
             Equal(Call("OmegaPartitionable", p), Parenthesized(body))));
     }
 
@@ -102,7 +114,7 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
         var p = F.Id("P");
         var q = F.Id("Q");
         var body = Call("Nonempty", Call("OrderEmbedding", p, q));
-        return All("P", F.Id("Type"), All("Q", F.Id("Type"),
+        return All("P", TypeAt("u"), All("Q", TypeAt("v"),
             Instance("PartialOrder", p, Instance("PartialOrder", q,
                 Equal(Call("IsExtension", p, q), body)))));
     }
@@ -117,12 +129,12 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
         var qpo = F.Id("qOrderPrime");
         var comparison = Call("Nonempty", Call("OrderEmbedding", q, qp,
             Seq(qo, Dot, F.Id("toLE")), Seq(qpo, Dot, F.Id("toLE"))));
-        var least = All("Qprime", F.Id("Type"), All("qOrderPrime", Call("PartialOrder", qp),
+        var least = All("Qprime", TypeAt("w"), All("qOrderPrime", Call("PartialOrder", qp),
             Implies(Call("IsExtension", p, qp, po, qpo),
                 Implies(Call("OmegaPartitionable", qp, qpo), comparison))));
-        var witness = Ex("Q", F.Id("Type"), Ex("qOrder", Call("PartialOrder", q),
+        var witness = Ex("Q", TypeAt("v"), Ex("qOrder", Call("PartialOrder", q),
             And(Call("IsExtension", p, q, po, qo), And(Call("OmegaPartitionable", q, qo), least))));
-        return All("P", F.Id("Type"), All("pOrder", Call("PartialOrder", p), witness));
+        return All("P", TypeAt("u"), All("pOrder", Call("PartialOrder", p), witness));
     }
 
     private static Formula App(Formula function, params Formula[] arguments) =>
@@ -130,6 +142,8 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
 
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner)), Dot, F.Id(name));
+
+    private static Formula TypeAt(string level) => Seq(F.Id("Type"), Sp, F.Id(level));
 
     private static Formula Nat() => F.Id("Nat");
 
