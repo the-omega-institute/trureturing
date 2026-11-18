@@ -6,6 +6,7 @@
    utility: none
    digest: Zero Dixon residual gives a sixth-height quadratic pencil resultant gap. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Arith.CharacterSums.PascadiQuadraticPrimitiveDirection
 import D5.S3.Arith.CharacterSums.PascadiQuadraticDirection
 import D5.S3.Arith.CharacterSums.PascadiSeventhHeightCover
@@ -24,7 +25,9 @@ open private bracket from D5.S3.Arith.CharacterSums.PascadiPrimeCubeSingularCove
 open private singular_quadratic_leading_unit from
   D5.S3.Arith.CharacterSums.PascadiSeventhHeightCover
 
+set_option maxRecDepth 4096 in
 set_option maxHeartbeats 2000000 in
+-- Expand the fixed Dixon determinant and padded quadratic resultant.
 /-- At a constant leading baseline, the actual Dixon residual controls the
 quadratic resultant through the partner leading minor, including its zero fiber. -/
 theorem constant_base_dixon_quadratic_identity {R : Type*} [CommRing R]
@@ -85,9 +88,12 @@ theorem zero_dixon_quadratic_resultant_zero (l m q r s : Fin 3 → ℤ)
     norm_num
   have hc (i : Fin 3) : m 0 * s i - m i * s 0 = 0 := by
     fin_cases i
-    · ring
-    · rw [← hcoeff 1]; exact coeff_eq_zero_of_natDegree_lt (by omega)
-    · rw [← hcoeff 2]; exact coeff_eq_zero_of_natDegree_lt (by omega)
+    · change m 0 * s 0 - m 0 * s 0 = 0
+      ring
+    · change m 0 * s 1 - m 1 * s 0 = 0
+      rw [← hcoeff 1]; exact coeff_eq_zero_of_natDegree_lt (by omega)
+    · change m 0 * s 2 - m 2 * s 0 = 0
+      rw [← hcoeff 2]; exact coeff_eq_zero_of_natDegree_lt (by omega)
   have hdir (a : Fin 3) (hn : m a ≠ 0 ∨ s a ≠ 0)
       (hcol : ∀ i, m a * s i - m i * s a = 0) :
       (pair l m q r s 1).resultant (pair l m q r s 2) 2 2 = 0 := by
@@ -95,7 +101,8 @@ theorem zero_dixon_quadratic_resultant_zero (l m q r s : Fin 3 → ℤ)
       primitive_direction_at m s a J hJ hn hcol hm hs
     have hmeq : m = fun i => d * k i := funext hmd
     have hseq : s = fun i => n * k i := funext hns
-    rw [hmeq, hseq] at h₁ h₂ hv₁ hv₂ hd₁ hd₂ hlead hL ⊢
+    rw [hmeq] at hL
+    rw [hmeq, hseq] at h₁ h₂ hv₁ hv₂ hd₁ hd₂ hlead ⊢
     exact quadratic_direction_resultant_zero l q r k d n p b I J D
       (by linarith) (by linarith) hD0 hq hr hl hk hd hnD hDu
       h₁ h₂ hv₁ hv₂ hd₁ hd₂ hlead hL hgap
@@ -103,15 +110,21 @@ theorem zero_dixon_quadratic_resultant_zero (l m q r s : Fin 3 → ℤ)
   · by_cases hminor : m 1 * s 2 - m 2 * s 1 = 0
     · have hn : m 1 ≠ 0 ∨ s 1 ≠ 0 := by
         by_contra h
-        push_neg at h
+        push Not at h
+        have hquad : (pair l m q r s 1).coeff 2 =
+            l 0 * s 1 + m 0 * r 1 - l 1 * s 0 - m 1 * r 0 := by
+          rw [pair_coefficients]
+          simp only [coeff_add, coeff_C_mul, coeff_C, coeff_X, coeff_X_pow]
+          norm_num
         apply hlead
-        rw [pair_coefficients]
-        simp [hz.1, hz.2, h.1, h.2]
+        rw [hquad, hz.1, hz.2, h.1, h.2]
+        norm_num
       apply hdir 1 hn
       intro i
       fin_cases i
       · simp [hz.1, hz.2]
-      · ring
+      · change m 1 * s 1 - m 1 * s 1 = 0
+        ring
       · exact hminor
     · have hid := constant_base_dixon_quadratic_identity l m q r s hz.1 hz.2
       rw [hD, mul_zero] at hid
