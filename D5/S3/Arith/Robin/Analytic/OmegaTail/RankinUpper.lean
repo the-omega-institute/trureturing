@@ -47,11 +47,12 @@ private lemma prime_log_split {P s t : ℝ} (hP : 0 < P) (ht : 0 < t) :
     congr 3
     ring
 
-private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P)
+private lemma rankin_prime_cancellation {P s : ℝ} (T : ℝ) (hP : 1 < P)
     (hR : Summable (fun p : ℕ => if p.Prime then weight P s p else 0)) :
-    s * P - threshold 1 (exp P) * log (P ^ s) +
+    s * P - T * log (P ^ s) +
         ∑ p ∈ Icc 1 ⌊exp P⌋₊ with p.Prime, log (1 + P ^ s * (p : ℝ) ^ (-s)) ≤
-      s * continuousReserve P + ∑' p : ℕ, if p.Prime then weight P s p else 0 := by
+      s * (P - Chebyshev.theta P + (primeCount P - T) * log P) +
+        ∑' p : ℕ, if p.Prime then weight P s p else 0 := by
   have hP0 : 0 < P := zero_lt_one.trans hP
   let cutoff := Nat.primesLE ⌊exp P⌋₊
   have hsub : Nat.primesLE ⌊P⌋₊ ⊆ cutoff := by
@@ -89,7 +90,7 @@ private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P)
         · exact log_nonneg (by unfold weight at *; linarith [exp_pos (-s * |log ((p : ℝ) / P)|)])
         · exact le_rfl)
   rw [← Nat.primesLE_eq_filter_Icc_one]
-  change s * P - threshold 1 (exp P) * log (P ^ s) +
+  change s * P - T * log (P ^ s) +
     (∑ p ∈ cutoff, log (1 + P ^ s * (p : ℝ) ^ (-s))) ≤ _
   have hsplit :
       (∑ p ∈ cutoff, log (1 + P ^ s * (p : ℝ) ^ (-s))) =
@@ -98,12 +99,10 @@ private lemma rankin_prime_cancellation {P s : ℝ} (hP : 1 < P)
     rw [← sum_add_distrib]
     exact sum_congr rfl (fun p hp =>
       prime_log_split hP0 (by exact_mod_cast (Nat.prime_of_mem_primesLE hp).pos))
-  have hthreshold : threshold 1 (exp P) = centeredThreshold P := by
-    simp only [threshold, scale, log_exp, one_mul, centeredThreshold, div_div, pow_two]
-  rw [hsplit, hhead, log_rpow hP0, hthreshold, continuousReserve]
-  linarith only [htotal, show s * P - centeredThreshold P * (s * log P) +
+  rw [hsplit, hhead, log_rpow hP0]
+  linarith only [htotal, show s * P - T * (s * log P) +
       s * (primeCount P * log P - Chebyshev.theta P) =
-      s * (P - Chebyshev.theta P + (primeCount P - centeredThreshold P) * log P) by ring]
+      s * (P - Chebyshev.theta P + (primeCount P - T) * log P) by ring]
 
 private lemma rankin_correction {s : ℝ} (hs : 2 ≤ s) :
     0 ≤ log (1 + ∑' n : ℕ, (n : ℝ) ^ (-s)) ∧
@@ -198,7 +197,11 @@ theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
   refine (rankin_exponential_bound (T := threshold 1 (exp P)) hs1 hz (exp_pos P)).trans ?_
   apply exp_le_exp.mpr
   rw [log_exp]
-  have hcancel := rankin_prime_cancellation hP hRsum.of_abs
+  have hthreshold : threshold 1 (exp P) = centeredThreshold P := by
+    simp only [threshold, scale, log_exp, one_mul, centeredThreshold, div_div, pow_two]
+  have hcancel := rankin_prime_cancellation (threshold 1 (exp P)) hP hRsum.of_abs
+  rw [hthreshold, ← continuousReserve] at hcancel
+  rw [hthreshold]
   have hnormalized : (s P * continuousReserve P + R P + C P) / Z P <
       2 * π / sqrt 3 + epsilon := by
     simpa only [add_div] using hlim
