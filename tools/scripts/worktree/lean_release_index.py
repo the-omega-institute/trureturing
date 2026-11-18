@@ -16,11 +16,13 @@ from lean_artifact_inventory import (
     PROJECT_BUILD, build_inventory, import_closure, lake_configuration, lean_artifact_paths,
     project_imports, required_compiler_paths, workspace_modules,
 )
-from lean_cache_release_io import ArchiveInput, MultipartArchiveOutput, archive_sha, copy_chunks, remaining
+from lean_cache_release_io import (
+    INDEXED_ASSET, INDEXED_SCHEMA, ArchiveInput, MultipartArchiveOutput, archive_sha, copy_chunks, remaining,
+)
 
-ASSET = "lean-members"
+ASSET = INDEXED_ASSET
 INDEX = "index.json.gz"
-SCHEMA = "lean-release-seed-v5"
+SCHEMA = INDEXED_SCHEMA
 BATCH_BYTES = 32 * 1024 * 1024
 
 
