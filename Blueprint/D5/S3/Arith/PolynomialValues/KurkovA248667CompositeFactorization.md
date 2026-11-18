@@ -46,6 +46,10 @@ $$\left(\exists a \in \mathbb{N} \to \mathbb{N},\; \operatorname{IsSourceSequenc
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/PolynomialValues/KurkovA248667CompositeFactorization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kurkov-a248667` (proved) by `D5/S3/Arith/PolynomialValues/KurkovA248667CompositeFactorization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kurkov-a248667","declaration_gid":"D5/S3/Arith/PolynomialValues/KurkovA248667CompositeFactorization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Clark Kimberling; Mikhail Kurkov (2014). *OEIS A248667: primitive numerator polynomials and Kurkov's composite-term conjecture*. URL: <https://oeis.org/A248667>.

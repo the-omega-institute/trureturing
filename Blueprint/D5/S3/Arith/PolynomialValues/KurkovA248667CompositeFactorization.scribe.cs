@@ -40,14 +40,17 @@ internal sealed class KurkovA248667CompositeFactorizationDocument : IScribeDocum
                 + "Membership therefore depends only on the prime divisors of n and is preserved by positive divisors. "
                 + "Every power of three belongs, so an increasing exact enumeration exists. Its first positive term is one. "
                 + "A composite member splits as p*q with p prime and p,q greater than one; both divisors belong and their indices exceed one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("kurkov-a248667"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("kurkov-a248667-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
