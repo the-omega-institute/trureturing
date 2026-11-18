@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier.coefficie
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
 *Commentary.*
 
 Let p be prime. Fix a unit C modulo p squared. The graph sends the unit x modulo p squared and the digit s modulo p to C/x modulo p squared and C*s/x squared modulo p. Its complete coefficient uses the two standard complex additive characters with frequencies A,B modulo p squared and D,E modulo p.
@@ -26,6 +28,8 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier.coefficie
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
 *Commentary.*
 
 If exactly one of A and B reduces to zero, the first residue equation has no unit solution, so the coefficient vanishes.
@@ -37,6 +41,8 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier.coefficie
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier.coefficient_unit_sector` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 

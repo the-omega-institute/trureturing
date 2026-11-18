@@ -23,6 +23,7 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiZeroDQuadratic
   - D5/S3/Arith/CharacterSums/PascadiZeroDCover
   - D5/S3/Arith/CharacterSums/PascadiZeroDBadDegreeAverage
+  - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
 license: source-reference
 triage: anchor
 ---
@@ -285,3 +286,41 @@ the row reduction and starts actual coefficient realization; the supplied paper
 proof and archived Lean endpoint have distinct provenance from this implementation.
 These repository results are not attributed to Pascadi as published theorems and
 do not claim to settle his full uniform conjecture.
+
+## Prime-cube counts beyond the $15/4$ endpoint
+
+Let $A=XY$, $p^{3/2}\le X\le Y$, $6Y<p^2$, and $A\ll p^\alpha$
+for a fixed $\alpha<49/13$. The ordinary proof gives the original
+scalar six-return bound $O_\varepsilon(Y^2p^\varepsilon)$ for every
+prescribed pair of unit coefficients when $A^3\ll Y^2p^{15/2}$.
+For $15/4<\alpha<49/13$, the same bound holds simultaneously at all
+admissible widths outside an exceptional set of
+$O(p^{4\alpha-15}\log(2p))$ lifts modulo $p^3$ of each nonzero residue
+class modulo $p$ for the product $g=a_1a_2$. The set can depend on $p$,
+the area constant, and $\alpha$. Extending the balanced range to
+every prescribed $g$ requires a bound on the concentration of the
+last coefficient digit among irreducible simple-root configurations.
+
+The digit calculation uses the map
+$(x,s)\mapsto(C/x,Cs/x^2)$ on units modulo $p^2$ and digits modulo
+$p$. Completing the two digit sums leaves exactly the phase at each
+unit residue $a\bmod p$ satisfying
+$\bar A a^2=\bar C\bar B$ and $Da^2=-\bar CE$, with a factor $p^2$.
+Here $A,B,D,E$ in the phase denote frequencies. In the unit sector
+there are at most two surviving residues and the nonzero Fourier
+coefficients lie on paired frequency lines. The ordinary proof sums
+the interval weights on those lines using the shortest vector of the
+actual index-$p$ lattice. This pays the nonsplit branch at all
+admissible aspects. The split branch is controlled by the count of
+middles for a fixed kernel. Selecting the largest derivative line at
+each middle and applying an additive large sieve to the reducible
+relative cubics reduces the coefficient average to the irreducible
+simple-root configurations.
+
+`PascadiMixedQuotientFourier` formalizes the exact complete coefficient,
+mixed-sector vanishing, and unit-sector bound and support. Its
+Lean 4.35 scoped report verifies 45 declarations using
+`Classical.choice`, `Quot.sound`, and `propext`. The original lattice
+instance, weighted arithmetic estimate, and enlarged counting ranges
+are ordinary mathematics. Source-bound four-slot registration for the
+three Fourier theorems remains open.
