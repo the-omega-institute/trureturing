@@ -4,7 +4,7 @@
    mirror-E: none(waiver:uniform-occupation-shuffle-and-alternating-witness)
    anchors: []
    utility: none
-   digest: Exact alternating-cut spectra and stable-order transfer for Slater determinant marginals. -/
+   digest: Alternating-cut spectra and prefix transfer for Slater determinants. -/
 
 import D5.S3.Quantum.Fermionic.SlaterCutPhase
 import Mathlib.GroupTheory.Perm.Fin
@@ -21,7 +21,7 @@ namespace D5.S3.Quantum.Fermionic.OrderedSlaterCut
 open scoped BigOperators
 open D5.S3.Quantum.Fermionic.SlaterCutPhase
 
-theorem sign_of_ordered_blocks {m n : ℕ} (σ : Equiv.Perm (Fin (m + n)))
+private theorem sign_of_ordered_blocks {m n : ℕ} (σ : Equiv.Perm (Fin (m + n)))
     (hleft : StrictMono (fun i : Fin m => σ (Fin.castAdd n i)))
     (hright : StrictMono (fun j : Fin n => σ (Fin.natAdd m j))) :
     σ.sign = ∏ i : Fin m, ∏ j : Fin n,
@@ -191,7 +191,6 @@ private theorem ordered_amplitude_of_block_relabeling {κ : Type*} [LinearOrder 
         (a'.disjUnion b' hd').orderEmbOfFin ((Finset.card_disjUnion a' b' hd').trans hk') := by
       apply Finset.orderEmbOfFin_unique
       · intro i
-        change e (groupedRows a b hd (Fin.cast hk.symm i)) ∈ a'.disjUnion b' hd'
         have hi := (groupedRows a b hd (Fin.cast hk.symm i)).2
         rcases Finset.mem_disjUnion.mp hi with hi | hi
         · exact Finset.mem_disjUnion.mpr (Or.inl (Finset.mem_map.mpr ⟨_, hi, rfl⟩))
@@ -225,7 +224,7 @@ private theorem ordered_amplitude_of_block_relabeling {κ : Type*} [LinearOrder 
             exact hb _ (b.orderEmbOfFin_mem rfl i) _ (b.orderEmbOfFin_mem rfl j)
               ((b.orderEmbOfFin rfl).strictMono ((Fin.natAdd_lt_natAdd_iff a.card).mp hij))
     unfold orderedAmplitude groupedAmplitude
-    rw [dif_pos hk', dif_pos hk]
+    rw [dite_eq_left hk', dite_eq_left hk]
     congr 1
     ext i j
     change V (e.symm ((a'.disjUnion b' hd').orderEmbOfFin _ i)) j =
@@ -233,29 +232,9 @@ private theorem ordered_amplitude_of_block_relabeling {κ : Type*} [LinearOrder 
     rw [← congrFun hrows i, e.symm_apply_apply]
   · simp [orderedAmplitude, groupedAmplitude, hcard, hk]
 
-private theorem grouped_ordered_marginal_charpoly {I : Set ι} (h : ¬ Alternates I)
-    {A B : Type*} [Fintype A] [DecidableEq A] [Fintype B]
-    (a : A → Finset ι) (b : B → Finset ι)
-    (ha : ∀ x, (↑(a x) : Set ι) ⊆ I) (hb : ∀ y, (↑(b y) : Set ι) ⊆ Iᶜ)
-    {k : ℕ} (V : Matrix ι (Fin k) ℂ) :
-    let hd : ∀ x y, Disjoint (a x) (b y) := fun x y =>
-      Finset.disjoint_left.mpr fun _ hx hy => hb y hy (ha x hx)
-    let original : Matrix A B ℂ := fun x y => orderedAmplitude V (a x) (b y) (hd x y)
-    let grouped : Matrix A B ℂ := fun x y => groupedAmplitude V (a x) (b y) (hd x y)
-    (grouped * grouped.conjTranspose).charpoly = (original * original.conjTranspose).charpoly := by
-  intro hd original grouped
-  have hsupport (x : A) (y : B) (hxy : (a x).card + (b y).card ≠ k) : original x y = 0 := by
-    simp [original, orderedAmplitude, hxy]
-  let signed : Matrix A B ℂ := fun x y => (-1 : ℂ) ^ crossCount (a x) (b y) * original x y
-  have hg : grouped = signed := by
-    ext x y
-    exact grouped_amplitude_eq_signed V (a x) (b y) (hd x y)
-  rw [hg]
-  exact reduction_charpoly h a b ha hb k original hsupport
-
 end OccupiedMinors
 
-noncomputable def orbitalEntry {ι : Type*} [DecidableEq ι] (sites : Finset ι) (i : ι) : ℂ :=
+private noncomputable def orbitalEntry {ι : Type*} [DecidableEq ι] (sites : Finset ι) (i : ι) : ℂ :=
   if i ∈ sites then ((Real.sqrt ((1 : ℝ) / 2) : ℝ) : ℂ) else 0
 
 private noncomputable def pairedOrbitals {ι : Type*} [DecidableEq ι] (a b : Finset ι) :
@@ -306,17 +285,14 @@ private noncomputable def signed {ι : Type*} [LinearOrder ι]
     (a b : Fin 2 → ι) : Matrix (Fin 2) (Fin 2) ℂ :=
   fun i j => (-1 : ℂ) ^ crossCount {a i} {b j} * grouped i j
 
-private theorem grouped_det : grouped.det = 0 := by
-  rw [Matrix.det_fin_two]
-  simp [grouped]
-
 private theorem groupedGram_charpoly :
     (grouped * grouped.conjTranspose).charpoly =
       Polynomial.X * (Polynomial.X - 1) := by
   have ht : (grouped * grouped.conjTranspose).trace = 1 := by
     rw [Matrix.trace_fin_two]
     norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two, grouped]
-  rw [Matrix.charpoly_fin_two, Matrix.det_mul, grouped_det, zero_mul, ht]
+  have hd : grouped.det = 0 := by simp [Matrix.det_fin_two, grouped]
+  rw [Matrix.charpoly_fin_two, Matrix.det_mul, hd, zero_mul, ht]
   simp [pow_two, mul_sub]
 
 private theorem distinct_padded_spectra (n m : ℕ) :
@@ -456,18 +432,14 @@ private theorem grouped_singletons {ι : Type*} [LinearOrder ι] (V : Matrix ι 
   have h1 : Fin.cast hc.symm (1 : Fin 2) = Fin.natAdd a.card right := by
     apply Fin.ext
     simp [a, right]
-  have hrow0 : (groupedRows a b hd
-      (Fin.cast hc.symm (0 : Fin 2)) : ι) = x := by
+  have hrow0 : (groupedRows a b hd (Fin.cast hc.symm (0 : Fin 2)) : ι) = x := by
     rw [h0]
-    have hm : ((a.orderIsoOfFin rfl left : a) : ι) = x :=
-      Finset.mem_singleton.mp (a.orderIsoOfFin rfl left).2
-    simpa [groupedRows] using hm
-  have hrow1 : (groupedRows a b hd
-      (Fin.cast hc.symm (1 : Fin 2)) : ι) = y := by
+    simp [groupedRows, Finset.coe_orderIsoOfFin_apply, a]
+    exact Finset.mem_singleton.mp (a.orderEmbOfFin_mem rfl left)
+  have hrow1 : (groupedRows a b hd (Fin.cast hc.symm (1 : Fin 2)) : ι) = y := by
     rw [h1]
-    have hm : ((b.orderIsoOfFin rfl right : b) : ι) = y :=
-      Finset.mem_singleton.mp (b.orderIsoOfFin rfl right).2
-    simpa [groupedRows] using hm
+    simp [groupedRows, Finset.coe_orderIsoOfFin_apply, b]
+    exact Finset.mem_singleton.mp (b.orderEmbOfFin_mem rfl right)
   change groupedAmplitude V a b hd = _
   rw [groupedAmplitude, dite_eq_left hc, Matrix.det_fin_two]
   simp only [Matrix.submatrix_apply, id_eq, hrow0, hrow1]
@@ -538,17 +510,25 @@ noncomputable def groupedCut {ι : Type*} [LinearOrder ι] (I : Set ι) {k : ℕ
     (V : Matrix ι (Fin k) ℂ) : Matrix (Occupation I) (Occupation Iᶜ) ℂ :=
   fun a b => groupedAmplitude V a.1 b.1 (cut_disjoint a b)
 
+private theorem grouped_ordered_marginal_charpoly {ι : Type*} [LinearOrder ι] [Fintype ι]
+    {I : Set ι} (h : ¬ Alternates I) {k : ℕ} (V : Matrix ι (Fin k) ℂ) :
+    (groupedCut I V * (groupedCut I V).conjTranspose).charpoly =
+      (orderedCut I V * (orderedCut I V).conjTranspose).charpoly := by
+  classical
+  have hphase : groupedCut I V = fun a b =>
+      (-1 : ℂ) ^ crossCount a.1 b.1 * orderedCut I V a b := by
+    ext a b
+    exact grouped_amplitude_eq_signed V a.1 b.1 (cut_disjoint a b)
+  rw [hphase]
+  exact reduction_charpoly h Subtype.val Subtype.val (·.2) (·.2) k (orderedCut I V)
+    (fun a b hab => by simp [orderedCut, orderedAmplitude, hab])
+
 private def occupationCongr {ι κ : Type*} (e : ι ≃ κ) (I : Set ι) :
     Occupation I ≃ Occupation (e.symm ⁻¹' I) :=
   (e.finsetCongr).subtypeEquiv (fun a => by
-    simp only [Equiv.finsetCongr_apply]
-    constructor
-    · intro h i hi
-      obtain ⟨j, hj, rfl⟩ := Finset.mem_map.mp hi
-      simpa using h hj
-    · intro h i hi
-      have hm : e i ∈ a.map e.toEmbedding := Finset.mem_map.mpr ⟨i, hi, rfl⟩
-      simpa using h hm)
+    simp only [Equiv.finsetCongr_apply, Set.subset_def, Set.mem_preimage, Finset.mem_coe,
+      Finset.mem_map_equiv]
+    exact ⟨fun h i hi => h (e.symm i) hi, fun h i hi => by simpa using h (e i) (by simpa using hi)⟩)
 
 private theorem groupedCut_relabeling {ι κ : Type*} [LinearOrder ι] [LinearOrder κ]
     (e : ι ≃ κ) (I : Set ι) (hI : StrictMonoOn e I) (hJ : StrictMonoOn e Iᶜ)
@@ -668,51 +648,33 @@ private theorem compression_charpoly {ι : Type*} [LinearOrder ι] [Fintype ι] 
   intro X
   let vi : Fin 2 ↪ I := ⟨fun i => ⟨v i, hv i⟩, fun _ _ hij =>
     v.injective (congrArg Subtype.val hij)⟩
-  let r : ℂ := ((Real.sqrt ((1 : ℝ) / 2) : ℝ) : ℂ)
-  have hstar : star r = r := by simp [r]
-  let u : Matrix (Fin 2) Unit ℂ := fun _ _ => r
-  let E := embedMatrix vi
-  let L := E * u
-  have first (i : I) : X i 0 = L i () := by
-    change orbitalEntry (Finset.univ.image v) i.1 = (embedMatrix vi * u) i ()
-    by_cases hi : ∃ j, v j = i.1
-    · obtain ⟨j, hj⟩ := hi
-      have hvij : vi j = i := Subtype.ext hj
-      have hm : i.1 ∈ Finset.univ.image v := Finset.mem_image.mpr ⟨j, Finset.mem_univ _, hj⟩
-      rw [← hvij] at hm ⊢
-      rw [Matrix.mul_apply]
-      change orbitalEntry (Finset.univ.image v) (vi j).1 =
-        ∑ l : Fin 2, (if vi j = vi l then (1 : ℂ) else 0) * r
-      simp [orbitalEntry, hm, vi.injective.eq_iff, r]
-    · have hm : i.1 ∉ Finset.univ.image v := fun h => by
-        obtain ⟨j, _, hj⟩ := Finset.mem_image.mp h
-        exact hi ⟨j, hj⟩
-      have hne (j : Fin 2) : i ≠ vi j := fun h => hi ⟨j, (congrArg Subtype.val h).symm⟩
-      simp [Matrix.mul_apply, embedMatrix, orbitalEntry, hm, hne]
+  let s := Finset.univ.image vi
+  have hs : s.card = 2 := by simp [s, Finset.card_image_of_injective _ vi.injective]
+  have first (i : I) : X i 0 = orbitalEntry s i := by
+    have hm : i.1 ∈ Finset.univ.image v ↔ i ∈ s := by
+      simp only [s, Finset.mem_image, Finset.mem_univ, true_and]
+      exact ⟨fun ⟨j, hj⟩ => ⟨j, Subtype.ext hj⟩, fun ⟨j, hj⟩ => ⟨j, congrArg Subtype.val hj⟩⟩
+    simp [X, retainedRows, pairedOrbitals, orbitalEntry, hm]
   have second (i : I) : X i 1 = 0 := by
-    have hm : i.1 ∉ Finset.univ.image w := fun h => by
+    have hm : i.1 ∉ Finset.univ.image w := by
+      rintro h
       obtain ⟨j, _, hj⟩ := Finset.mem_image.mp h
       exact hw j (hj.symm ▸ i.2)
     norm_num [X, retainedRows, pairedOrbitals, orbitalEntry, hm]
-  have hGram : X * X.conjTranspose = L * L.conjTranspose := by
+  have hinner : X.conjTranspose * X = Matrix.diagonal (![1, 0] : Fin 2 → ℂ) := by
     ext i j
-    simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two, first, second]
-  have hu : u.conjTranspose * u = (1 : Matrix Unit Unit ℂ) := by
-    ext i j
-    change (∑ l : Fin 2, star r * r) = (1 : Matrix Unit Unit ℂ) i j
-    rw [hstar, show r * r = (1 : ℂ) / 2 from halfRoot_mul]
-    norm_num [Fin.sum_univ_two, Matrix.one_apply, Subsingleton.elim i j]
-  have hinner : L.conjTranspose * L = 1 := by
-    change (E * u).conjTranspose * (E * u) = 1
-    rw [Matrix.conjTranspose_mul, Matrix.mul_assoc u.conjTranspose,
-      ← Matrix.mul_assoc E.conjTranspose,
-      show E.conjTranspose * E = 1 from embed_adjoint_mul vi, Matrix.one_mul, hu]
+    fin_cases i <;> fin_cases j <;>
+      norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.diagonal_apply,
+        first, second]
+    change (∑ i, star (orbitalEntry s i) * orbitalEntry s i) = 1
+    rw [orbital_inner]
+    norm_num [hs]
   have hcard := Fintype.card_le_of_injective vi vi.injective
   simp only [Fintype.card_fin] at hcard
-  have hle : Fintype.card Unit ≤ Fintype.card I := by
-    simpa using le_trans (by decide : 1 ≤ 2) hcard
-  rw [hGram, Matrix.charpoly_mul_comm_of_le L L.conjTranspose hle, hinner, Matrix.charpoly_one]
-  simp
+  rw [Matrix.charpoly_mul_comm_of_le X X.conjTranspose, hinner, Matrix.charpoly_diagonal]
+  · rw [show Fintype.card I - 1 = Fintype.card I - 2 + 1 by omega, pow_succ]
+    simp [Fin.prod_univ_two, mul_assoc, mul_left_comm, mul_comm]
+  · simpa using hcard
 
 private theorem orthonormal_cut_obstruction {ι : Type*} [LinearOrder ι] [Fintype ι]
     {I : Set ι} (v w : Fin 2 ↪ ι)
@@ -838,22 +800,6 @@ theorem alternating_cut_obstruction {ι : Type*} [LinearOrder ι] [Fintype ι] {
     exact orthonormal_cut_obstruction v u
       (pair_membership _ hy hw) (pair_membership _ hx hz)
       (alternatingActiveMinor hxy hyz hzw).2
-
-/-- The interval condition is exact for equality of the literal and grouped
-determinant marginal polynomials for every orthonormal orbital family. -/
-private theorem universal_cut_spectrum_iff {ι : Type*} [LinearOrder ι] [Fintype ι] (I : Set ι) :
-    ¬ Alternates I ↔
-      ∀ (k : ℕ) (V : Matrix ι (Fin k) ℂ), V.conjTranspose * V = 1 →
-        (orderedCut I V * (orderedCut I V).conjTranspose).charpoly =
-        (groupedCut I V * (groupedCut I V).conjTranspose).charpoly := by
-  constructor
-  · intro h k V _
-    exact (grouped_ordered_marginal_charpoly h
-      (fun a : Occupation I => a.1) (fun b : Occupation Iᶜ => b.1)
-      (fun a => a.2) (fun b => b.2) V).symm
-  · intro h hAlt
-    obtain ⟨V, hnorm, _, hg, ho⟩ := alternating_cut_obstruction hAlt
-    exact distinct_padded_spectra _ _ (ho.symm.trans ((h 2 V hnorm).trans hg))
 
 open Polynomial in
 private theorem one_nonzero_mode {α : Type*} [Fintype α] (ν : α → ℂ)
@@ -1036,8 +982,8 @@ theorem universal_cut_product_iff_of_prefix
       V.conjTranspose * V = 1 → HasProductSpectrum I V := by
   constructor
   · intro h k V hV ν hν
-    rw [(universal_cut_spectrum_iff I).mp h k V hV]
-    exact grouped_product_from_prefix hprefix I V hV ν hν
+    exact (grouped_ordered_marginal_charpoly h V).symm.trans
+      (grouped_product_from_prefix hprefix I V hV ν hν)
   · intro h hAlt
     obtain ⟨V, hV, hcontra⟩ := alternating_cut_bernoulli_obstruction hAlt
     let Q := retainedRows I V
