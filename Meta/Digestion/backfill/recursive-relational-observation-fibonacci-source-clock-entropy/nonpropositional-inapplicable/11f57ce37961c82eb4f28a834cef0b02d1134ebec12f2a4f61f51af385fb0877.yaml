@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:11f57ce37961c82eb4f28a834cef0b02d1134ebec12f2a4f61f51af385fb0877
+  normalized_sha256: sha256:11f57ce37961c82eb4f28a834cef0b02d1134ebec12f2a4f61f51af385fb0877
+cas_ref: sha256:11f57ce37961c82eb4f28a834cef0b02d1134ebec12f2a4f61f51af385fb0877
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is an expository scope boundary and bibliography. It distinguishes supplied results from unprovided constructions, without asserting an impossibility theorem for those constructions. It has no independent proposition to formalize. This disposition supplies no entropy proof, native operation, physical implementation or coverage of earlier mathematical atoms.
+    previous_atom_id: 1f332c7d742f37d55f6084bc2310981c2d95f114e96864a5a796f77061e75b20
+    next_atom_id: null

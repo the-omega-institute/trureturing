@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f332c7d742f37d55f6084bc2310981c2d95f114e96864a5a796f77061e75b20
+  normalized_sha256: sha256:1f332c7d742f37d55f6084bc2310981c2d95f114e96864a5a796f77061e75b20
+cas_ref: sha256:1f332c7d742f37d55f6084bc2310981c2d95f114e96864a5a796f77061e75b20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This source-correspondence definition is bibliographic and expository: it attributes the classical suppliers and states the scope of the source-specific applications. It is not an independent mathematical proposition. This disposition supplies no proof or coverage of the listed results, and the entropy-transfer theorem remains unresolved.'
+    previous_atom_id: 6e57fb292310805f1d69ecfc166e97ad62b6c0a18ec6e12d6c5ada2ee7a4e9bc
+    next_atom_id: 11f57ce37961c82eb4f28a834cef0b02d1134ebec12f2a4f61f51af385fb0877
