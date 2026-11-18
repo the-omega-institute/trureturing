@@ -194,16 +194,26 @@ class NativePackagingTests(NativeReleaseSupport):
 class NativeCompilerConsumerTests:
 
     def test_collection_drains_projection_and_preparation_roots(self):
-        # Observe each projection and preparation at the end of its real job.
         config = self.root / 'tools/lean-inspector/lakefile.lean'
         source = config.read_text()
+        # Observe the actual group passed to native fetch and the success of
+        # each returned job, including exports already warm in Lake's store.
+        fetch = 'sources.mapM (·.exportInfo.fetch)'
+        self.assertEqual(source.count(fetch), 1)
+        source = source.replace(fetch, '''do
+    observePhase "test-exports" "admit" (Lean.toJson (sources.map (·.name.toString))).compress
+    sources.mapM fun source => do
+      (← source.exportInfo.fetch).mapM fun info => do
+        observePhase "test-exports" "finish" source.name.toString
+        return info''')
+        # Delay the real projection and preparation completions independently.
         projection = '    return file\n\n/-- A native report artifact.'
         prepared = '      return ⟨file, args, env, inputTrace, artifact?, prepareProduction, !ownInputs.isEmpty⟩'
         self.assertEqual(source.count(projection), 1)
         self.assertEqual(source.count(prepared), 1)
-        source = source.replace(projection,
+        source = source.replace(projection, '    IO.sleep 100\n'
             '    observePhase "test-projection" "finish" mod.name.toString\n' + projection)
-        config.write_text(source.replace(prepared,
+        config.write_text(source.replace(prepared, '      IO.sleep 100\n'
             '      observePhase "test-prepared" "finish" mod.name.toString\n' + prepared))
         phases = self.root / 'collection-phases.jsonl'
         self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
@@ -250,6 +260,23 @@ class NativeCompilerConsumerTests:
 
         def check_order():
             observations = [json.loads(line) for line in phases.read_text().splitlines()]
+            batches, pending = [], set()
+            for event in observations:
+                if event['phase'] in ('lake-prepare-module', 'lake-compiler-inputs'):
+                    break
+                if event['phase'] != 'test-exports':
+                    continue
+                if event['boundary'] == 'admit':
+                    batch = json.loads(event['module'])
+                    self.assertFalse(pending, f'admitted {batch} with unfinished exports {pending}')
+                    self.assertLessEqual(len(batch), 4, batch)
+                    batches.append(batch)
+                    pending.update(batch)
+                else:
+                    pending.remove(event['module'])
+            self.assertFalse(pending, f'classification started with unfinished exports {pending}')
+            self.assertCountEqual([name for batch in batches for name in batch],
+                                  members | {'External', 'ExternalTwo'})
             for operation, completed_phase in [('judge-inputs-fetch', 'test-projection'),
                                                 ('prepared-report-fetch', 'test-prepared')]:
                 completed, started, previous = set(), [], None
@@ -266,15 +293,16 @@ class NativeCompilerConsumerTests:
                 self.assertEqual(len(started), len(members))
                 self.assertEqual(set(started), members)
                 self.assertEqual(completed, members)
+            return batches
 
-        check_order()
+        self.record_result('cold-compiler-roots', dict(batches=check_order()))
         rows, report, material = self.report()
         self.assertEqual({row['module'] for row in rows}, members)
         self.assertEqual(len(rows), len(members))
         stamps = self.stamps()
         self.write('collection-phases.jsonl', '')
         self.build()
-        check_order()
+        self.record_result('warm-compiler-roots', dict(batches=check_order()))
         self.assertEqual(stamps, self.stamps())
         self.assertEqual(self.report()[1:], (report, material))
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')

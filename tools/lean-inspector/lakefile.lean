@@ -512,10 +512,12 @@ private def collectNativeReports (pkg : Package) (config : Json) :
       unless seen.contains source.name do
         seen := seen.insert source.name
         roots := roots.push source
-  -- Register the entire compiler graph before waiting. The barrier controls
-  -- ordering only; each artifact still traces just its own module and claims.
-  let exports ← fetchReportExports reportState roots
-  discard <| (collectModuleJobs exports).await
+  -- Drain each group of collection roots before admitting the next. Lake
+  -- schedules their shared imports, and each report traces its own exports.
+  let batchSize := 4
+  for start in [0:roots.size:batchSize] do
+    let exports ← fetchReportExports reportState (roots.extract start (start + batchSize))
+    discard <| (Job.mixArray exports).await
   -- Keep classifier processes and late graph registration sequential.
   for mod in modules do
     unless alreadyStarted.contains mod.name do
