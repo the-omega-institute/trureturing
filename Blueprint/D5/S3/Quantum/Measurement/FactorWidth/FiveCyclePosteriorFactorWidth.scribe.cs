@@ -64,7 +64,7 @@ internal sealed class FiveCyclePosteriorFactorWidthDocument : IScribeDocumentDef
     private static Formula WidthStatement()
     {
         var complexMoment = Seq(Operatorname, Grp(F.Id("complex")), Open, F.Id("M"), Close);
-        Formula HasWidth(int width) => Seq(Operatorname, Grp(F.Id("IsKIncoherentSum")),
+        Formula HasWidth(byte width) => Seq(Operatorname, Grp(F.Id("IsKIncoherentSum")),
             Open, D(width), Comma, Sp, complexMoment, Close);
         return Disp(Seq(HasWidth(3), Sp, Land, Sp, Neg, Sp, HasWidth(2)));
     }
