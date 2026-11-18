@@ -20,6 +20,12 @@ open scoped BigOperators ENNReal
 /-- Count the low-value right suffixes actually removed along the alternating cycle.
 As in `EndpointHistory.word`, precisely a true (skew) discard advances the low-value
 boundary; the false (direct) terminal emits finite endpoint values. -/
+private theorem decode_size_local {sign r} (c : Fixed sign r) :
+    c.decode.size = c.size := by
+  induction r generalizing sign with
+  | zero => rfl
+  | succ r ih => simp only [Fixed.decode, UnboundedCycle.size, Fixed.size, ih]
+
 def lowRemovalCount : {sign : Bool} → UnboundedCycle sign → ℕ
   | _, .terminal _ _ => 0
   | sign, .discard _ _ tail => (if sign then 1 else 0) + lowRemovalCount tail
@@ -120,7 +126,7 @@ private theorem mass_by_steps (v : ℕ × Bool) :
   simp only [observation_decode]
   split_ifs with h
   · change (∑' c : Fixed sign k, ENNReal.ofReal (rho ^ c.decode.size)) = _
-    simp only [Fixed.decode_size]
+    simp only [decode_size_local]
     exact actual_countable_cycle_law.2.2.2.1 sign k
   · simp
 

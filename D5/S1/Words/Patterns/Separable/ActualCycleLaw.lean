@@ -37,7 +37,7 @@ def decode {sign} : {r : ℕ} → Fixed sign r → UnboundedCycle sign
   | 0, terminal => .terminal terminal.1 terminal.2
   | _ + 1, pair => .discard pair.1.1 pair.1.2 (decode pair.2)
 
-theorem decode_size {sign r} (c : Fixed sign r) :
+private theorem decode_size {sign r} (c : Fixed sign r) :
     c.decode.size = c.size := by
   induction r generalizing sign with
   | zero => rfl
