@@ -1,3 +1,6 @@
+import Reg.Support.FactorialFockMetric
+import Reg.Support.SingleDependentReadout
+import Reg.D5.S3.VertexAlgebra.TwistedGround.Signed.CandidateSource
 import Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianBilinearTranspose
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
 noncomputable section
@@ -266,5 +269,179 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end candidateT_original_differential
+
+namespace positiveJ_eq_candidateJ
+open _root_.Reg.D5.S3.VertexAlgebra.FactorialFockMetric
+abbrev arena : Arena where
+  signature := complexSignature
+  Law R := ∀ {u v : ℂ} {r : ℝ} (_hr : 0 < r) (_hr1 : r < 1)
+    (_hu : ‖u‖ + Real.sqrt r < 1) (_hv : ‖v‖ + Real.sqrt r < 1),
+    R.readout () () (kernelMode false true true u v (Real.sqrt r : ℂ))
+      (candidateJ u v (r : ℂ))
+private theorem rejected_fails : ¬ arena.Law complexFalse := by
+  intro h
+  have hs : Real.sqrt (1/4 : ℝ) < 1 := by
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 1/4 by norm_num),
+      Real.sqrt_nonneg (1/4 : ℝ)]
+  exact @h 0 0 (1/4) (by norm_num) (by norm_num)
+    (by simpa using hs) (by simpa using hs)
+def family : Registration arena (type_of% (@positiveJ_eq_candidateJ)) where
+  actual := complexEqual
+  bridge := Iff.rfl
+  variation := ⟨@positiveJ_eq_candidateJ, complexFalse, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law complexEqual complexFalse rejected_fails
+  dependence := complexEqualDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@positiveJ_eq_candidateJ) (Realization complexSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.positiveJ_eq_candidateJ.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.positiveJ_eq_candidateJ.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end positiveJ_eq_candidateJ
+
+
+namespace kernelMode_joint_differentiable
+open _root_.Reg.D5.S3.VertexAlgebra.TwistedGround.Signed.CandidateSource
+  (jointSignature jointDiff jointBad jointDiffDependence)
+abbrev arena : Arena where
+  signature := jointSignature
+  Law R := ∀ (square out out' : Bool) {u v z : ℂ}
+      (_hu : ‖u‖ + ‖z‖ < 1) (_hv : ‖v‖ + ‖z‖ < 1),
+    R.readout () () (fun p : ℂ × ℂ => kernelMode square out out' p.1 p.2 z) (u,v)
+private theorem rejected_fails : ¬ arena.Law jointBad := by
+  intro hh
+  exact hh false false false (u := 0) (v := 0) (z := 0) (by norm_num) (by norm_num)
+def family : Registration arena (type_of% (@kernelMode_joint_differentiable)) where
+  actual := jointDiff
+  bridge := Iff.rfl
+  variation := ⟨@kernelMode_joint_differentiable, jointBad, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law jointDiff jointBad rejected_fails
+  dependence := jointDiffDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@kernelMode_joint_differentiable) (Realization jointSignature) Unit Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.kernelMode_joint_differentiable.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.kernelMode_joint_differentiable.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize jointSignature jointDiff.readout jointDiff.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end kernelMode_joint_differentiable
+
+abbrev correctionDerivativeSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => ℂ → ℂ) (fun _ => ℂ → ℂ → Prop)
+def correctionDerivativeActual : Realization correctionDerivativeSignature :=
+  realize _ (fun _ _ f d r => HasDerivAt f d r) (fun e => nomatch e)
+def correctionDerivativeBad : Realization correctionDerivativeSignature :=
+  realize _ (fun _ _ _ _ _ => False) (fun e => nomatch e)
+private theorem correctionDerivativeDependence :
+    ObservationalDependence correctionDerivativeSignature correctionDerivativeActual := by
+  intro i
+  refine ⟨(), (fun _ => 0), (fun z => z), ?_⟩
+  intro h
+  have hf : HasDerivAt (fun z : ℂ => z) 0 0  :=
+    Eq.mp (congrFun (congrFun h 0) 0) (hasDerivAt_const _ _)
+  have hg : HasDerivAt (fun z : ℂ => z) 1 0 := hasDerivAt_id 0
+  exact zero_ne_one (hf.unique hg)
+
+namespace correction_hasDerivAt
+abbrev arena : Arena where
+  signature := correctionDerivativeSignature
+  Law R := ∀ {r : ℂ} (_hr : ‖r‖ < 1),
+    R.readout () () correction (1 / 4 - r * (1 - r) * ell r ^ 2) r
+private theorem rejected_fails : ¬ arena.Law correctionDerivativeBad := by
+  intro h
+  exact h (r := 0) (by norm_num)
+def family : Registration arena (type_of% (@correction_hasDerivAt)) where
+  actual := correctionDerivativeActual
+  bridge := Iff.rfl
+  variation := ⟨@correction_hasDerivAt, correctionDerivativeBad, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law correctionDerivativeActual correctionDerivativeBad rejected_fails
+  dependence := correctionDerivativeDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@correction_hasDerivAt) (Realization correctionDerivativeSignature) ℂ Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.correction_hasDerivAt.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate.correction_hasDerivAt.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize correctionDerivativeSignature correctionDerivativeActual.readout correctionDerivativeActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false } ] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end correction_hasDerivAt
+
 
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalAnalyticCandidate

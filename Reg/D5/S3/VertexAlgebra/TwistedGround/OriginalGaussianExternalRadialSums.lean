@@ -153,6 +153,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end radial_differential
+
 abbrev literalDiffSignature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ → ℂ)
     (fun _ => ℂ → Prop)
@@ -219,5 +220,130 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 end literal_differentiable
+
+abbrev kernelSeriesSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => (ℕ × ℕ) → ℂ)
+    (fun _ => ℂ → SummationFilter (ℕ × ℕ) → Prop)
+def kernelSeriesActual : Realization kernelSeriesSignature :=
+  realize _ (fun _ _ f a L => HasSum f a L) (fun e => nomatch e)
+def kernelSeriesBad : Realization kernelSeriesSignature :=
+  realize _ (fun _ _ _ _ _ => False) (fun e => nomatch e)
+private theorem kernelSeriesDependence :
+    ObservationalDependence kernelSeriesSignature kernelSeriesActual := by
+  intro i
+  refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
+  intro h
+  have hf : HasSum (fun _ : ℕ × ℕ => (1 : ℂ)) 0 :=
+    Eq.mp (congrFun (congrFun h 0) (SummationFilter.unconditional _)) hasSum_zero
+  have he : (1 : ℂ) = 0 := by simpa only [summable_const_iff] using hf.summable
+  exact one_ne_zero he
+
+namespace kernel_complex_derivative
+abbrev arena : Arena where
+  signature := kernelSeriesSignature
+  Law R := ∀ (square out out' : Bool) {u v z : ℂ}
+    (_hu : ‖u‖ + ‖z‖ < 1) (_hv : ‖v‖ + ‖z‖ < 1),
+    R.readout () () (fun pq : ℕ × ℕ =>
+      deriv (fun w => if square then externalT out pq.1 out' pq.2 w
+        else externalJ out pq.1 out' pq.2 w) z * u ^ pq.1 * v ^ pq.2)
+      (deriv (fun w => kernelMode square out out' u v w) z)
+      (SummationFilter.unconditional _) ∧
+    DifferentiableAt ℂ (fun w => kernelMode square out out' u v w) z
+private theorem rejected_fails : ¬ arena.Law kernelSeriesBad := by
+  intro h
+  exact (h false false false (u := 0) (v := 0) (z := 0) (by norm_num) (by norm_num)).1
+def family : Registration arena (type_of% (@kernel_complex_derivative)) where
+  actual := kernelSeriesActual
+  bridge := Iff.rfl
+  variation := ⟨@kernel_complex_derivative, kernelSeriesBad, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law kernelSeriesActual kernelSeriesBad rejected_fails
+  dependence := kernelSeriesDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@kernel_complex_derivative) (Realization kernelSeriesSignature) ℂ Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums.kernel_complex_derivative.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums.kernel_complex_derivative.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize kernelSeriesSignature kernelSeriesActual.readout kernelSeriesActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false } ] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end kernel_complex_derivative
+
+namespace kernel_complex_derivative_holomorphy
+abbrev arena : Arena where
+  signature := literalDiffSignature
+  Law R := ∀ (square out out' : Bool) {u v z : ℂ}
+    (_hu : ‖u‖ + ‖z‖ < 1) (_hv : ‖v‖ + ‖z‖ < 1),
+    HasSum (fun pq : ℕ × ℕ =>
+      deriv (fun w => if square then externalT out pq.1 out' pq.2 w
+        else externalJ out pq.1 out' pq.2 w) z * u ^ pq.1 * v ^ pq.2)
+      (deriv (fun w => kernelMode square out out' u v w) z) ∧
+    R.readout () () (fun w => kernelMode square out out' u v w) z
+private theorem rejected_fails : ¬ arena.Law literalDiffBad := by
+  intro h
+  exact (h false false false (u := 0) (v := 0) (z := 0) (by norm_num) (by norm_num)).2
+def family : Registration arena (type_of% (@kernel_complex_derivative)) where
+  actual := literalDiffActual
+  bridge := Iff.rfl
+  variation := ⟨@kernel_complex_derivative, literalDiffBad, rejected_fails⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law literalDiffActual literalDiffBad rejected_fails
+  dependence := literalDiffDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@kernel_complex_derivative) (Realization literalDiffSignature) ℂ Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums.kernel_complex_derivative_holomorphy.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums.kernel_complex_derivative_holomorphy.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize literalDiffSignature literalDiffActual.readout literalDiffActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false } ] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end kernel_complex_derivative_holomorphy
 
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalRadialSums
