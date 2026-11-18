@@ -130,17 +130,18 @@ end Envelope
 
 namespace Continuity
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ → ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ _ f => Continuous f) (fun e => nomatch e)
+  realize signature (fun _ _ => fermi) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ => Real.log) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () fermi
+  Law R := Continuous (R.readout () ())
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h
+  have hc : Continuous Real.log := h
+  exact (Real.continuousAt_log_iff.mp (hc.continuousAt (x := (0 : ℝ)))) rfl
 def family : Registration arena (type_of% @continuous_fermi) where
   actual := actual
   bridge := Iff.rfl
@@ -149,10 +150,9 @@ def family : Registration arena (type_of% @continuous_fermi) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(), (fun _ : ℝ => 0), Real.log, ?_⟩
-    intro he
-    have hc : Continuous Real.log := Eq.mp he continuous_const
-    exact (Real.continuousAt_log_iff.mp (hc.continuousAt (x := (0 : ℝ)))) rfl
+    refine ⟨(), (0 : ℝ), log 2, ?_⟩
+    change fermi 0 ≠ fermi (log 2)
+    norm_num [fermi, Real.exp_log (by norm_num : (0 : ℝ) < 2)]
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@continuous_fermi) (Realization signature) Type Unit where
   unitName := `D5.S3.Weil.ZetaBridge.FermiMellin.continuous_fermi.audit
@@ -176,7 +176,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn"]
+      path := #["arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
