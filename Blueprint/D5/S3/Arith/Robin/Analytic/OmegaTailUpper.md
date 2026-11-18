@@ -148,7 +148,21 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.logWeight_deriv`
 
 For z>0 and t>0, the logarithmic weight has derivative minus the Abel kernel. The entropy integral uses this derivative with its endpoint limits.
 
-**Theorem 1.13 (Rankin upper bound).**
+**Theorem 1.13 (Finite Rankin exponential bound).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.rankin_exponential_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.rankin_exponential_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For s>1, z>=1 and x>0, count the integers n from 1 through floor(x) whose distinct-prime count is strictly greater than the real threshold T.
+
+This count is bounded by the exponential of s*log(x) - T*log(z), plus the logarithm of one plus the p-series of exponent s, plus the sum of log(1+z*p^(-s)) over primes at most x. The estimate applies even at a zero count.
+
+**Theorem 1.14 (Rankin upper bound).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.upper_bound`
 
@@ -164,7 +178,7 @@ The finite-support Euler expansion bounds the weighted integer sum by a product 
 
 For each fixed alpha in (0,1), primes up to log(x)^alpha contribute o(y(x)). Above that cutoff, the prime number theorem gives a uniform linear bound for prime counting. Abel summation compares the remaining weighted sum with the positive integral of s*c/(u^s+c). A power substitution and the existing Beta normalizer evaluate that integral exactly. Choosing alpha sufficiently close to one preserves the stated coefficient.
 
-**Theorem 1.14 (Vanishing exponent at the endpoint).**
+**Theorem 1.15 (Vanishing exponent at the endpoint).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.result`
 
@@ -184,6 +198,7 @@ At lambda=1, log(1+N(1,x))/y(x) tends to zero. The quotient is eventually nonneg
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.logWeight`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.logWeight_deriv`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.power_kernel_integral`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.rankin_exponential_bound`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.rate`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.result`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTailUpper.scale`
