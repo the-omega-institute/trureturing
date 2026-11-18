@@ -253,6 +253,9 @@ class NativeCompilerConsumerTests:
             f'    for file in #{json.dumps(paths)} do\n'
             '      unless ← (System.FilePath.mk file).pathExists do\n'
             '        throw <| IO.userError s!"{moduleName} classified before compiling {file}"\n'
+            '    if moduleName == "D5.A" then\n'
+            '      IO.FS.writeBinFile "classified-External.olean"\n'
+            '        (← IO.FS.readBinFile ".lake/build/lib/lean/External.olean")\n'
             + entry))
         built = self.build()
         for module in compiler_modules:
@@ -306,6 +309,27 @@ class NativeCompilerConsumerTests:
         self.assertEqual(stamps, self.stamps())
         self.assertEqual(self.report()[1:], (report, material))
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+        # A warm classifier can see an existing, stale utility olean.
+        # Compare the bytes captured inside D5.A discovery with the rebuilt claim.
+        observed = self.root / 'classified-External.olean'
+        observed.unlink()
+        external_olean = self.root / '.lake/build/lib/lean/External.olean'
+        previous_digest = publication.digest(external_olean)
+        external = self.root / 'External.lean'
+        external.write_text(external.read_text() + '\ndef warmClaimVersion : Nat := 2\n')
+        owner = self.root / 'D5/A.lean'
+        owner.write_text(owner.read_text() + '\ndef warmReportVersion : Nat := 2\n')
+        utilities = [dict(row, claimSourceSha256='sha256:' + publication.digest(external))
+                     if row['claimModule'] == 'External' else row for row in utilities]
+        self.write('utility.json', json.dumps(utilities))
+        self.build()
+        current_digest = publication.digest(external_olean)
+        self.assertNotEqual(current_digest, previous_digest)
+        self.assertEqual(publication.digest(observed), current_digest,
+                         'D5.A classified before the changed utility claim was compiled')
+        _, report, material = self.report()
+        stamps = self.stamps()
 
         # Both independent compiler failures reach Lake in the same invocation.
         # Neither classifier nor native production may start past a failed export.
