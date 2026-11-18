@@ -6,19 +6,16 @@
    utility: none
    digest: A cut without four alternating sites preserves the fixed-occupation marginal spectrum under the row-shuffle sign. -/
 
-module
-
-public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-public import Mathlib.Algebra.BigOperators.Ring.Finset
-public import Mathlib.Order.Interval.Set.Defs
-public import Mathlib.Analysis.Complex.Basic
-public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-public import Mathlib.LinearAlgebra.Matrix.ConjTranspose
-public import Mathlib.Tactic.Ring
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Order.Interval.Set.Defs
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.LinearAlgebra.Matrix.ConjTranspose
+import Mathlib.Tactic.Ring
 
 /-! # Occupied-site shuffle phases at a spatial cut -/
-
-@[expose] public section
 
 namespace D5.S3.Quantum.Fermionic.SlaterCutPhase
 
@@ -233,7 +230,16 @@ theorem reduction_charpoly
     rw [Matrix.mul_diagonal, Matrix.diagonal_mul]
     simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, signed]
     exact hred x x'
-  rw [hm, Matrix.charpoly_mul_comm (D * (ψ * ψ.conjTranspose)) D',
-    ← Matrix.mul_assoc D' D _, hinv, one_mul]
+  have hstar : star D = D' := by
+    rw [Matrix.star_eq_conjTranspose]
+    ext x x'
+    by_cases he : x = x'
+    · subst x'
+      simp [D, D']
+    · simp [D, D', Matrix.diagonal_apply, he, Ne.symm he]
+  rw [hm, ← hstar]
+  apply D5.S3.Quantum.Information.PartialTraceMutualInformation.charpoly_conj_unitary
+  rw [hstar]
+  exact hinv
 
 end D5.S3.Quantum.Fermionic.SlaterCutPhase
