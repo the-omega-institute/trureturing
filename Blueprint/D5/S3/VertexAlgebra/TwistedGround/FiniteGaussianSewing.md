@@ -92,7 +92,19 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.covarian
 
 The four blocks are (I-BA)^(-1)B, (I-BA)^(-1), (I-AB)^(-1), and (I-AB)^(-1)A. These are ordered matrix products. The lower cross block is the transpose of the upper one under the stated symmetry hypotheses.
 
-**Theorem 1.8 (Symmetric covariance and both true insertion recurrences).**
+**Theorem 1.8 (Symmetry of the ordered insertion covariance).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.covariance_symm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.covariance_symm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary finite shared type, symmetric strict Euclidean contractions A and B give a symmetric joint insertion covariance. Ordinary transpose and the ordered resolvent identities are retained, including the empty type.
+
+**Theorem 1.9 (Symmetric covariance and both true insertion recurrences).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.bilinearMoment_wick_recursion`
 
@@ -104,7 +116,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.bilinear
 
 For symmetric strict contractions A and B, the joint covariance is symmetric. Both insertion-coordinate recurrences have the exact lowering multiplicity alpha_j or beta_j. The matrix identity (I-BA)^(-1)B=B(I-AB)^(-1) is proved by multiplying the two actual ordered inverses. Transposition uses symmetry, with no conjugation or commuting assumption. These are recurrences of the native infinite pairing; no Gaussian moment evaluation is assumed.
 
-**Theorem 1.9 (Finite expansion of the actual external contraction).**
+**Theorem 1.10 (Finite expansion of the actual external contraction).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.row_pair_moments`
 
@@ -116,7 +128,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.row_pair
 
 The polynomial witnesses are constructed from the actual Gaussian rows. Their absolutely convergent shared-occupation contraction equals the finite double sum of their ordinary monomial coefficients times the actual two-sided insertion moments H(alpha,beta). The proof exchanges each finite sum with the infinite pairing using the previously established norm summability. No effective-kernel identity, moment evaluation or vacuum normalization is assumed in this bridge.
 
-**Theorem 1.10 (Actual pairing equals the normalized native Gaussian moment).**
+**Theorem 1.11 (Actual pairing equals the normalized native Gaussian moment).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.bilinearMoment_native`
 
@@ -128,7 +140,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.bilinear
 
 For every pair of shared occupations alpha and beta, H(alpha,beta)=Z times NativeGaussianMoment.nativeMoment(C,alpha.sumElim(beta)), with the ordered symmetric covariance C above and Z=exp((1/2) sum_(k>=0) trace((A B)^(k+1))/(k+1)). Both creation recurrences are used in strong induction on degree(alpha)+degree(beta). Coordinate multiplicities remain alpha_j and beta_j. The zero term is given by the native vacuum_trace_log theorem. No division by Z or nonvanishing hypothesis occurs. The generic nativeMoment_step declaration is reused from NativeGaussianMoment; its proof is not reproduced.
 
-**Definition 1.11 (Effective external kernel with ordered inverses).**
+**Definition 1.12 (Effective external kernel with ordered inverses).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel`
 
@@ -142,7 +154,19 @@ For arbitrary finite X,H,Y, symmetric complex P:X by X, Q:Y by Y, A,B:H by H, an
 
 The external coefficient bridge acts directly on the actual polynomial Gaussian rows. Their internal annihilation equation includes the external lowerings with coefficients R^T and S. With F(d,e) the actual convergent row pairing, U_h the pairing with creation on the first row and V_h that with creation on the second, factorial adjointness gives U=B V+S r and V=A U+R^T l. Here l_j is zero if d_j=0 and otherwise F(d-e_j,e), and r_j is zero if e_j=0 and otherwise F(d,e-e_j). These lowerings carry no extra occupation factor because d and e index ordinary coefficients. Multiplication by the actual ordered inverse solves U=N(B R^T l+S r). The external annihilation equation then has coefficients E_xx and E_xy; the exchanged equation has E_yx and E_yy. The native Gaussian coefficient of E obeys exactly the same two recurrences. Strong induction on external total degree, with base Z, proves the full equality. All finite/infinite sum exchanges use the genuine polynomial-row summability.
 
-**Theorem 1.12 (Full all-occupation finite sewing identity).**
+**Theorem 1.13 (Symmetry of the full effective external kernel).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel_symm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel_symm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual ordered effective kernel is symmetric when the external diagonal blocks and shared internal blocks are symmetric and the shared blocks are strict contractions. The ordinary ordered inverses and both mixed rectangles remain literal. Fixed external ordinary extraction consumes this symmetry.
+
+**Theorem 1.14 (Full all-occupation finite sewing identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.finite_sewing`
 
@@ -163,7 +187,9 @@ This is a finite coefficient sewing theorem in classical Gaussian/Fock calculus,
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.bilinearMoment_resolvent_step`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.bilinearMoment_wick_recursion`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.covariance`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.covariance_symm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.effectiveKernel_symm`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.finite_sewing`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.polynomialGaussian`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FiniteGaussianSewing.row`

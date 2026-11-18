@@ -1,0 +1,6 @@
+对一个语法可判定、代入检查可判定的有理方程类 $\mathcal F$，以下等价：
+
+1.  $\mathcal F$ 中的有理解存在性可判定；
+
+2.  存在全可计算函数 $b:\mathbb N\to\mathbb N$，使每个有解的 $f\in\mathcal F$ 都有一个见证元组，各坐标编码长度至多 $b(\operatorname{len}f)$。
+

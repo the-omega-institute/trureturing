@@ -330,7 +330,7 @@ theorem hasDerivAt_columnSeries {z : ℂ} (hz : ‖z‖ < 1) :
     HasDerivAt columnSeries (columnSeriesDerivative z) z :=
   (hasDerivAt_resolvent hz).clm_apply (hasDerivAt_sourceFamily 0 hz)
 
-private def radialOperatorDerivative (r : ℝ) : H →L[ℂ] H :=
+def radialOperatorDerivative (r : ℝ) : H →L[ℂ] H :=
   ((1 / (2 * Real.sqrt r) : ℝ) : ℂ) • operatorDerivative (Real.sqrt r : ℂ)
 
 def radialSourceFamily (j : ℕ) (r : ℝ) : H := sourceFamily j (Real.sqrt r : ℂ)

@@ -12,6 +12,18 @@ Binary additivity first gives the zero value at zero and monotonicity. Dividing 
 
 A Hermitian matrix is a difference of positive matrices. Equality of two such differences gives equality of the cross sums, so the positive-cone functional extends unambiguously to a real-linear functional on Hermitian matrices and then to a complex-linear functional on all matrices. Finite-dimensional trace duality gives a unique representing matrix. Testing positive rank-one matrices proves that this matrix is positive, and evaluation at the identity proves trace one. This argument uses only finite additivity and includes dimension two. Busch gives the effect-measure argument; countable additivity is needed for normality in his infinite-dimensional formulation. The rank-one trace pairing specializes to the squared modulus of the inner product of unit vectors.
 
+A separate fixed-matrix criterion characterizes which matrices can represent a single effect. Let d be any finite coordinate type, with decidable equality, and let E be an arbitrary complex d-by-d matrix. Write D_d for the actual density matrices: all positive semidefinite rho with trace one. Then $(\forall \rho\in D_{d},\ 0\leq\operatorname{tr}(\rho E)\leq1) \Leftrightarrow \operatorname{PosSemidef}(E) \land \operatorname{PosSemidef}(I-E)$
+
+Both inequalities constrain the actual complex trace: it must be real and lie in the closed unit interval. Hermiticity of E is a consequence, with no Hermitian or nonempty-coordinate premise. The criterion covers every finite dimension and matrices of every rank. In the empty coordinate type there is no trace-one matrix, so the left side is vacuous; E and I minus E are the unique empty matrix and are both positive semidefinite.
+
+For the effect-to-probability direction, apply Matrix.PosSemidef.trace_mul_nonneg to rho and E, and then to rho and I minus E. The latter trace equals one minus trace(rho E). This is the actual complex nonnegativity theorem supplied by `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation`; a bound on the real part alone would not supply this conclusion.
+
+Conversely, choose any nonzero vector x in the Euclidean space of complex d-coordinates and set u = x divided by its Euclidean norm. The original rankOneDensity u is the outer product of u with its conjugate. Matrix.posSemidef_vecMulVec_self_star gives its positivity, and Matrix.trace_vecMulVec with the unit-norm identity gives trace one. The final conjunct of pure_state_handshake in `D5/S3/Quantum/PureState/PureStateHandshake` identifies the quadratic form u* E u with trace(E rankOneDensity u). Trace commutation lets the hypothesis apply to this actual density matrix. For I minus E, use the upper probability bound and the trace-one identity. Multiplication by the nonnegative squared Euclidean norm transfers both conclusions to x; the zero vector contributes zero.
+
+Mathlib's LinearMap.isPositive_iff_complex then recovers positive operators from these real nonnegative quadratic forms, and Matrix.isPositive_toEuclideanLin_iff returns positive semidefinite matrices. Its inner product is written with the operator in the first slot, so conjugate symmetry reverses the slots; reality of the quadratic form makes this harmless. No assumed equivalence between density testing and ray testing, or continuity or convexity premise, enters this derivation. The norm used here is the Euclidean Hilbert norm, rather than the supremum norm on bare coordinate functions.
+
+Keeping only the real part changes the criterion: on any nonzero finite coordinate space, E = (one half plus i) times I gives real part one half for trace(rho E) for every trace-one rho, yet E is not Hermitian and hence is not an effect. Watrous, The Theory of Quantum Information, Section 1.1.2, printed page 20 (author-manuscript PDF page 28), lists the equivalent positivity characterizations by all quadratic forms and all positive trace pairings, items 4 and 5. Applying that standard criterion to E and I minus E gives this fixed-effect result; it is distinct from Busch's representation of an entire effect-probability function. This application neither derives the matrix model from a classical ontology nor specifies a measurement instrument.
+
 **Theorem 1.1 (The standard qubit Weyl pair has the Pauli star skeleton).**
 
 $ZX=-(XZ) \land X^{*}=X \land Z^{*}=Z \land X^{2}=I \land Z^{2}=I$
@@ -53,3 +65,5 @@ For a positive semidefinite finite complex matrix rho with trace one, P maps to 
 - Truth anchor: `D5/S3/Quantum/FiniteDimensional.born_probability_skeleton`
 - Truth anchor: `D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character`
 - Truth anchor: `D5/S3/Quantum/FiniteDimensional.qubit_weyl_star`
+- Narrative reference: [D5/S3/Quantum/PureState/PureStateHandshake](PureState/PureStateHandshake.md)
+- Narrative reference: [D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation](QuantumChannels/PositiveFilterTransposeRefutation.md)

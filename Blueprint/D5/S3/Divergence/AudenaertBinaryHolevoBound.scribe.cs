@@ -14,7 +14,13 @@ internal sealed class AudenaertBinaryHolevoBoundDocument : IScribeDocumentDefini
             H("The binary ensemble inequality"), StatementSource.FromAuthor(Bound()),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Divergence/audenaert2014skew")),
             Blocks(Paragraph(Text("Audenaert, Quantum Skew Divergence, Theorem 14, bounds Holevo information by the classical mixing entropy times the maximal trace distance. For an equiprobable binary ensemble the mixing entropy is one bit. The matrices may be singular. The matrix-log resolvent integral gives the derivative along a positive affine path. Positivity of that derivative and its trace pairing bound the skew divergence by trace distance times the negative logarithm of the mixing weight. Specializing the weight to one half gives the binary inequality for strictly positive states. Adding epsilon times the identity and dividing by one plus n epsilon preserves trace one, and continuity of x log x extends the estimate to singular states."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("logderiv-real-scaling"),
+                DeclarationHandle.Create("D5/S3/Divergence/AudenaertBinaryHolevoBound.logDeriv_smul"),
+                H("Real scaling of the logarithmic derivative direction"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, all complex matrices m and X on Fin n and every real c, logDeriv(m,c times X) equals c times logDeriv(m,X). Here logDeriv is LogDerivTrace.logDeriv, the actual Bochner integral of the two-resolvent sandwich. The equality uses the totalized Bochner integral and does not assume positive definiteness, integrability, a sign for c or a nonzero dimension. This scaling identity serves the differential skew bound and the local second-order expansion in UmegakiFaithfulLowerRatio. The repository assembly is not a new result attributed to Audenaert's paper."))),
+                DescribeRole.Theorem))));
     private static Formula V(string n) => F.Id(n);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string n, params Formula[] a) => new Formula.FunctionCall(FormulaIdentifier.Create(n), [.. a]);
