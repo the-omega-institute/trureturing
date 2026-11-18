@@ -635,42 +635,4 @@ theorem spectator_projector_charpoly {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [hA, hcard, pow_succ]
   ac_rfl
 
-open Polynomial in
-theorem canonical_two_mode_compression [Fintype ι] {I : Set ι}
-    (V : Matrix ι (Fin 2) ℂ) (hV : V.conjTranspose * V = 1)
-    (hleft : ∀ i ∉ I, V i 0 = 0) (hright : ∀ i ∈ I, V i 1 = 0)
-    (T : Finset ι) (hT : ∀ p ∈ T, ∀ j, V p j = 0)
-    (W : Matrix ι (Fin (2 + T.card)) ℂ)
-    (hWl : ∀ i j, W i (Fin.castAdd T.card j) = V i j)
-    (hWr : ∀ i j, W i (Fin.natAdd 2 j) = if i = T.orderEmbOfFin rfl j then 1 else 0) :
-    let Tret := Finset.univ.filter (fun i : I => i.val ∈ T)
-    (retainedRows I W * (retainedRows I W).conjTranspose).charpoly =
-      X ^ (Fintype.card I - Tret.card - 1) * (X - 1) ^ (Tret.card + 1) := by
-  classical
-  intro Tret
-  let v : I → ℂ := fun i => V i.val 0
-  have hbase : retainedRows I V * (retainedRows I V).conjTranspose =
-      Matrix.vecMulVec v (fun i => star (v i)) := by
-    ext i j : 1
-    simp [Matrix.mul_apply, Matrix.conjTranspose_apply, retainedRows, Matrix.submatrix_apply,
-      Matrix.vecMulVec, Fin.sum_univ_two, v, hright _ i.property]
-  have hnorm : ∑ i : I, v i * star (v i) = 1 := by
-    have hu := congrArg (fun X : Matrix (Fin 2) (Fin 2) ℂ => X 0 0) hV
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply_eq] at hu
-    rw [← hu]
-    symm
-    rw [← Finset.sum_filter_add_sum_filter_not (s := (Finset.univ : Finset ι))
-      (p := (· ∈ I))]
-    have hz : (∑ i ∈ (Finset.univ : Finset ι).filter (· ∉ I), star (V i 0) * V i 0) = 0 :=
-      Finset.sum_eq_zero fun i hi => by simp [hleft i (Finset.mem_filter.mp hi).2]
-    rw [hz, add_zero]
-    simpa [mul_comm, v] using
-      (Finset.sum_subtype (s := (Finset.univ : Finset ι).filter (· ∈ I))
-        (fun i => by simp) (fun i => star (V i 0) * V i 0))
-  have hzero : ∀ i ∈ Tret, v i = 0 := by
-    intro i hi
-    exact hT i.val (Finset.mem_filter.mp hi).2 0
-  rw [retention_compression_of_canonical_columns T I V W hWl hWr, hbase]
-  simpa [Tret] using spectator_projector_charpoly Tret v hnorm hzero
-
 end D5.S3.Quantum.Fermionic.OrderedSlaterFixedFilling

@@ -50,24 +50,11 @@ Lean statement: `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.spectator_pro
 
 *Commentary.*
 
-Let T be a subset of a finite index type and let v be a normalized complex vector with zero entries on T. The sum of the rank-one matrix v times its adjoint and the coordinate projector on T has characteristic polynomial X to the power of the index count minus the cardinality of T minus one times X minus one to the power of the cardinality of T plus one. Reindex by T and its complement. The first block is the identity and the second is the rank-one matrix of the restricted vector, whose squared norm is one.
-
-**Theorem 1.5 (The compression polynomial of the extended two-orbital witness).**
-
-Lean statement: `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.canonical_two_mode_compression`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.canonical_two_mode_compression` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Let the first of two orthonormal orbitals vanish on discarded sites and the second vanish on retained sites. For a finite set T of zero rows, let W have the two original columns followed by the coordinate columns for T in increasing order. Let t be the number of sites in T on the retained side and m the number of retained sites. The retained compression of W has characteristic polynomial X to the power m minus t minus one times X minus one to the power t plus one. The restricted first orbital has norm one and vanishes at every retained spectator site, so the coordinate-projector formula applies.
+Let T be a subset of a finite index type and let v be a normalized complex vector with zero entries on T. The sum of the rank-one matrix v times its adjoint and the coordinate projector on T has characteristic polynomial X to the power of the index count minus the cardinality of T minus one times X minus one to the power of the cardinality of T plus one. Reindex by T and its complement. The first block is the identity and the second is the rank-one matrix of the restricted vector, whose squared norm is one. In the two-orbital construction, take v to be the retained column restricted to I. Its norm stays one, the discarded column restricts to zero, and the coordinate columns add the projector on the retained spectator sites.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.alternating_fixed_filling_compression_twins`
-- Truth anchor: `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.canonical_two_mode_compression`
 - Truth anchor: `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.fixed_filling_spectral_criteria`
 - Truth anchor: `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.retention_compression_of_canonical_columns`
 - Truth anchor: `D5/S3/Quantum/Fermionic/OrderedSlaterFixedFilling.spectator_projector_charpoly`
