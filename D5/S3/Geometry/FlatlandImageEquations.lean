@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#25719; Proved)
-escape_witness: none; settling result
+escape_witness: none; settling result. The forward rows describe live proof content under §3.2. Admission rests on the preregistered open-problem resolution.
 Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
   sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd;
   M = D5/S3/Arith/Lattices/GirardPlagneBoxLimit.cofactor_map @
@@ -33,11 +33,11 @@ eightPointPolynomial_eval | proof_shape: bind-only; escape_witness: none; Direct
 imageClosure_equations_of_actual | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_implies_equations.
 transpose_injective_of_surjective | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: surjective_cameras_constraint.
 singular_outer_difference | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: surjective_cameras_constraint.
-surjective_cameras_constraint | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: all_cameras_constraint.
+surjective_cameras_constraint | proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: all_cameras_constraint. Two independent pairs in the kernel of (a, b) ↦ Aᵀa − Bᵀb give the alternating outer-product difference F. The lemma singular_outer_difference gives det F = 0, vanishing of F forces dependence of the pairs, and the transpose equalities give bilinear vanishing.
 deficient_camera_constraint | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: all_cameras_constraint.
-all_cameras_constraint | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: actual_image_equations.
-actual_image_equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_implies_equations.
-imageClosure_implies_equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: result.
+all_cameras_constraint | proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: actual_image_equations. The case with two surjective cameras uses the construction in surjective_cameras_constraint. The deficient cases use deficient_camera_constraint, with transposition when only B is deficient.
+actual_image_equations | proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_implies_equations. The proof consumes the nonzero form, its determinant equation and its bilinear vanishing from all_cameras_constraint to obtain a nonzero singular Segre-kernel vector and apply singular_kernel_implies_equations.
+imageClosure_implies_equations | proof_shape: content; escape_witness: none; Direct frozen dependencies: none; consumers: result. The multihomogeneous closure argument in imageClosure_equations_of_actual uses both families of equations from actual_image_equations, so inlining the forward chain retains the camera construction.
 claim | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: result.
 equations_imply_imageClosure | proof_shape: content; escape_witness: D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: result.
 result | proof_shape: content; escape_witness: D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: none (settling result).
