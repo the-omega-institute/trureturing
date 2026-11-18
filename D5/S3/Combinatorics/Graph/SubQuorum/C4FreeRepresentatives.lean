@@ -7,6 +7,7 @@
    digest: Pappus dissociation refutation of the cubic C4-free half-order bound. -/
 
 import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
+import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Int.CardIntervalMod
 
 /-! The actual Pappus certificates use Sahbi source PR #28593 at revision
@@ -121,9 +122,13 @@ theorem paritySide_card (n : ℕ) (c : Bool) :
   simp_rw [hp]
   have hcard := Nat.count_modEq_card (b := 2 * n) (r := 2) (by decide) c.toNat
   rw [Nat.count_eq_card_filter_range] at hcard
-  rw [← Finset.card_map Fin.valEmbedding, ← Finset.filter_map,
-    Fin.map_valEmbedding_univ, Nat.Iio_eq_range]
-  simpa [Nat.mul_comm n 2] using hcard
+  calc
+    _ = (((Finset.univ : Finset (Fin (2 * n))).map Fin.valEmbedding).filter p).card :=
+      (Finset.card_map _).symm.trans (congrArg Finset.card
+        (Finset.filter_map (s := Finset.univ) (f := Fin.valEmbedding) (p := p))).symm
+    _ = n := by
+      rw [Fin.map_valEmbedding_univ, Nat.Iio_eq_range]
+      simpa [p, Nat.mul_comm 2 n] using hcard
 
 /-- The exact supplier table gives actual cubic bipartiteness and no four-cycle. -/
 theorem pappus_class : pappusGraph.Colorable 2 ∧
@@ -134,7 +139,8 @@ theorem pappus_class : pappusGraph.Colorable 2 ∧
     intro a b hab he
     apply pappusColor_valid a b hab
     unfold pappusColor
-    rw [congrArg Fin.val he]
+    have hparity : a.val % 2 = b.val % 2 := congrArg Fin.val he
+    rw [hparity]
   · intro v
     rw [pappus_degree_bridge]
     exact (pappus_regular_bipartite_certificate.1 v).1
