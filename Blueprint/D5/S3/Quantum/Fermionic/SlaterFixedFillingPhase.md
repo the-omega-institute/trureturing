@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Quantum/Fermionic/SlaterFixedFillingPhase.factors_of_extr
 
 *Commentary.*
 
-For any retained and discarded site sets, the degree-k phase factors whenever k is at most one or the number of sites is at most k plus one. A supported pair then has at most one occupied site or at most one hole. In the latter case the hole inversion count vanishes and the particle and hole identity gives the factors.
+For any retained and discarded site sets, the degree-k phase factors whenever k is at most one or the sum of the two site counts is at most k plus one. A supported pair then has at most one occupied site or at most one hole. In the latter case the hole inversion count vanishes and the particle and hole identity gives the factors.
 
 **Theorem 1.4 (Alternating cuts at intermediate filling).**
 
