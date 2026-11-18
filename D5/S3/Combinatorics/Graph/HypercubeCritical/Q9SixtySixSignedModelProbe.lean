@@ -10,7 +10,7 @@ open scoped BigOperators
 open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical
-open BalancedCriticalSpectrum (Q IsBalanced switchingVector flip_adj directionEdges
+open BalancedCriticalSpectrum (Q IsBalanced switchingVector flip_adj directionEdges directionEndpoints
   direction_edge_count)
 local notation "flip" => BalancedCriticalSpectrum.flip
 attribute [local instance] Classical.propDecidable
@@ -25,7 +25,7 @@ open private shell from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
-open private coordinate_profile_weight_bound from
+open private coordinate_profile_weight_bound sixty_six_edge_weight_inequality from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private distance_seven_agreement_excludes_minority from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerWeightsProbe
@@ -243,5 +243,88 @@ theorem q9_sixty_six_normalized_signed_constraints {C : Finset (Q 9)} (hC : C.ca
       (fun _ => true) r hr hhalf hx hy hxy hi
 
 #print axioms q9_sixty_six_normalized_signed_constraints
+
+/-- Eight or more deficit-five coordinates force a point with at least
+`52 - ∑ i, r i` distance-seven partners. In particular, a uniform cap of
+six rules out all such profiles. -/
+theorem q9_sixty_six_many_deficit_five_force_partners {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (r : Fin 9 → ℤ) (hr : ∀ i, 0 ≤ r i)
+    (hhalf : ∀ i, ((C.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33)
+    (hmany : 8 ≤ (univ.filter (fun i => r i = 5)).card) :
+    ∃ x ∈ C, 52 ≤ (∑ i, r i) + (shell C x 7).card := by
+  let a (i : Fin 9) : ℤ := if r i = 5 then 1 else 0
+  let t (x : Q 9) (i : Fin 9) : ℤ := if x i then a i else 0
+  let w (x : Q 9) : ℤ := ∑ i, t x i
+  have hcount : 8 ≤ ∑ i, a i := by
+    have hsum : ∑ i, a i = ((univ.filter (fun i => r i = 5)).card : ℤ) := by
+      dsimp [a]
+      rw [← sum_filter, sum_const]
+      simp
+    rw [hsum]
+    exact_mod_cast hmany
+  have htotal : (∑ x ∈ C, w x) = 23 * ∑ i, a i := by
+    dsimp only [w, t]
+    rw [sum_comm, mul_sum]
+    apply sum_congr rfl
+    intro i _
+    rw [← sum_filter, sum_const, nsmul_eq_mul]
+    by_cases hi : r i = 5
+    · have hcard := hhalf i
+      rw [hi] at hcard
+      simp only [a, if_pos hi]
+      linarith
+    · simp [a, hi]
+  have hroot : ∃ x ∈ C, 4 ≤ w x := by
+    by_contra! h
+    let g (x : Q 9) : ℤ := 3 - w x
+    have hn (x : Q 9) (hx : x ∈ C) : 0 ≤ g x := by
+      dsimp [g]
+      have := h x hx
+      omega
+    have hlocal (i : Fin 9) (x : Q 9) (hx : x ∈ directionEndpoints C i) :
+        a i ≤ g x + g (flip x i) := by
+      have hxC := (mem_filter.mp hx).1
+      have hfC := (mem_filter.mp hx).2
+      have hsplit (y : Q 9) :
+          w y = (∑ j ∈ (univ : Finset (Fin 9)).erase i, t y j) + t y i :=
+        (sum_erase_add _ _ (mem_univ i)).symm
+      have hs : (∑ j ∈ (univ : Finset (Fin 9)).erase i, t (flip x i) j) =
+          ∑ j ∈ (univ : Finset (Fin 9)).erase i, t x j := by
+        apply sum_congr rfl
+        intro j hj
+        simp [t, BalancedCriticalSpectrum.flip, (mem_erase.mp hj).1]
+      have hdiff : g (flip x i) - g x = t x i - t (flip x i) i := by
+        dsimp [g]
+        rw [hsplit x, hsplit (flip x i), hs]
+        ring
+      cases hi : x i <;>
+        simp [t, BalancedCriticalSpectrum.flip_apply_same, hi] at hdiff <;>
+        linarith [hn x hxC, hn _ hfC]
+    have hedge := sixty_six_edge_weight_inequality hC hreg hb a g hlocal
+    have hgap : (∑ x ∈ C, g x) = 198 - 23 * ∑ i, a i := by
+      dsimp only [g]
+      rw [sum_sub_distrib, sum_const, hC, nsmul_eq_mul, htotal]
+      norm_num
+    rw [hgap] at hedge
+    linarith
+  obtain ⟨x, hx, hw⟩ := hroot
+  have hwle : 5 * w x ≤ ∑ i, if x i then r i else 0 := by
+    dsimp only [w, t]
+    rw [mul_sum]
+    apply sum_le_sum
+    intro i _
+    cases hi : x i
+    · simp [hi]
+    · by_cases hri : r i = 5
+      · simp [hi, a, hri]
+      · simpa [hi, a, hri] using hr i
+  have hpartners := coordinate_profile_weight_bound hC hreg hb (fun _ => true) r hhalf hx
+  have hweight : (∑ i, if x i = true then r i else 0) =
+      ∑ i, if x i then r i else 0 := rfl
+  rw [hweight] at hpartners
+  exact ⟨x, hx, by linarith⟩
+
+#print axioms q9_sixty_six_many_deficit_five_force_partners
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
