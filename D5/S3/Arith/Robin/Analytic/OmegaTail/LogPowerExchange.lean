@@ -6,7 +6,6 @@
    utility: none
    digest: Signed prime exchange entropy at a positive logarithmic power scale. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
 
 set_option autoImplicit false
@@ -18,7 +17,6 @@ open scoped Topology BigOperators
 namespace D5.S3.Arith.Robin.Analytic.OmegaTail.LogPowerExchange
 
 open D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
-open private fixed_grid_outputs from D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
 
 /-- At a positive logarithmic power scale, a strict normalized reserve and full
 signed bin capacities give an actual squarefree family with the paired entropy. -/

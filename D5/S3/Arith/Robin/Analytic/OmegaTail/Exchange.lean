@@ -179,7 +179,7 @@ private lemma primeInterval_endpoints {a b : ℝ} {p : ℕ} (hb : 0 ≤ b)
   have hi := mem_Ioc.mp h.1
   exact ⟨Nat.lt_of_floor_lt hi.1, (Nat.le_floor_iff hb).mp hi.2, h.2⟩
 
-private theorem fixed_grid_outputs {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
+theorem fixed_grid_outputs {m : ℕ} (t : Fin (m + 1) → ℝ) (ht : StrictMono t)
     (ht0 : t 0 = 0) (P s reserve : ℝ) (hP : 0 < P) (hs : 0 < s)
     (base : Finset ℕ) (h : Fin m → ℕ)
     (hbase : base ⊆ Nat.primesLE ⌊P⌋₊)
