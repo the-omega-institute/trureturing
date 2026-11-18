@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using Fml = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.PowerMaps;
 
 internal sealed class PowerMapSeparationDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S3/FiniteGroups/PowerMapSeparation.";
+    private const string Owner = "D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two groups of order 4374 have separately conjugate integer-power maps but no common square-cube conjugacy.",

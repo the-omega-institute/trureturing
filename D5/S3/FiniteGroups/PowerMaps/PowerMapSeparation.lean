@@ -1,9 +1,9 @@
-/- GID: D5/S3/FiniteGroups/PowerMapSeparation
+/- GID: D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation
    generality: G
-   mirror-B: D5/B/S3/FiniteGroups/PowerMapSeparation
+   mirror-B: D5/B/S3/FiniteGroups/PowerMaps/PowerMapSeparation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/PowerMapSeparation.claim; result=D5/S3/FiniteGroups/PowerMapSeparation.result; claim=D5/S3/FiniteGroups/PowerMapSeparation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.claim; result=D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.result; claim=D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.claim
    digest: Fixed finite groups with separate integer-power conjugacies but no joint square-cube conjugacy. -/
 
 module
@@ -22,7 +22,7 @@ public import Mathlib.Tactic.Ring
 
 @[expose] public section
 
-namespace D5.S3.FiniteGroups.PowerMapSeparation
+namespace D5.S3.FiniteGroups.PowerMaps.PowerMapSeparation
 
 abbrev F := ZMod 3
 
@@ -611,4 +611,4 @@ theorem result : ¬ claim := by
   intro h
   exact no_joint_square_cube (h ⟨card_S false, card_S true, separate_powers⟩)
 
-end D5.S3.FiniteGroups.PowerMapSeparation
+end D5.S3.FiniteGroups.PowerMaps.PowerMapSeparation

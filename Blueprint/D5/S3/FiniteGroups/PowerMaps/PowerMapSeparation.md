@@ -6,9 +6,9 @@ Two groups of order 4374 have separately conjugate integer-power maps but no com
 
 **Definition 1.1 (The field of three elements).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.F`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.F`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.F` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.F` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ F is ZMod 3. All seven non-Boolean coordinates and every bilinear expression bel
 
 **Definition 1.2 (The two original-coordinate carriers).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.S`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.S`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.S` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.S` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ For a Boolean i, S(i) has coordinates (a,b,x,y,z,s,t,e), with the first seven in
 
 **Definition 1.3 (The finite Cartesian parametrization).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.productEquiv`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.productEquiv`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.productEquiv` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.productEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ For each Boolean i, productEquiv(i) maps (a,b,x,y,z,s,t,e) to ((a,b),(x,y,z),(s,
 
 **Definition 1.4 (The involution sign).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.sign`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.sign`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.sign` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.sign` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ For a Boolean e, sign(e) is minus one if e is true and one otherwise.
 
 **Definition 1.5 (The first bilinear coordinate).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.B1`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.B1`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.B1` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.B1` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ For i,a,b,x,y, B1(i,a,b,x,y) is ax+by when i is false and ax−by when i is true
 
 **Definition 1.6 (The second bilinear coordinate).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.B2`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.B2`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.B2` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.B2` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ For i,a,b,x,y,z, B2(i,a,b,x,y,z) is ay+bz when i is false and bx+ay when i is tr
 
 **Definition 1.7 (The semidirect-product multiplication).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.mulS`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.mulS`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.mulS` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.mulS` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ For p=(v,w,c,e) and q=(v′,w′,c′,e′) in S(i), put σ=sign(e). Their produ
 
 **Definition 1.8 (The identity).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.oneS`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.oneS`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.oneS` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.oneS` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -102,9 +102,9 @@ For each Boolean i, oneS(i) is (0,0,0,0,0,0,0,false). It is the identity for mul
 
 **Definition 1.9 (The inverse).**
 
-Lean statement: `D5/S3/FiniteGroups/PowerMapSeparation.invS`
+Lean statement: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.invS`
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.invS` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.invS` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -116,7 +116,7 @@ For p=(v,w,c,e) and σ=sign(e), invS(p) is (−v,−σw,−σc+σB(i,v,w),e). Bi
 
 $$claim = \left((\operatorname{card}\left(G\right) = 4374 \land \left(\operatorname{card}\left(H\right) = 4374 \land \left(\forall m \in \mathbb{Z},\; \exists f \in \operatorname{Equiv}\left(G, H\right),\; \forall p \in G,\; \operatorname{f}\left(p^{m}\right) = \operatorname{f}\left(p\right)^{m}\right)\right)) \Rightarrow (\exists f \in \operatorname{Equiv}\left(G, H\right),\; \forall p \in G,\; \operatorname{f}\left(p^{2}\right) = \operatorname{f}\left(p\right)^{2} \land \operatorname{f}\left(p^{3}\right) = \operatorname{f}\left(p\right)^{3})\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/PowerMapSeparation.claim` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -128,7 +128,7 @@ In this formula G=S(false), H=S(true), Equiv(G,H) is the type of bijections betw
 
 $$\neg ((\operatorname{card}\left(G\right) = 4374 \land \left(\operatorname{card}\left(H\right) = 4374 \land \left(\forall m \in \mathbb{Z},\; \exists f \in \operatorname{Equiv}\left(G, H\right),\; \forall p \in G,\; \operatorname{f}\left(p^{m}\right) = \operatorname{f}\left(p\right)^{m}\right)\right)) \Rightarrow (\exists f \in \operatorname{Equiv}\left(G, H\right),\; \forall p \in G,\; \operatorname{f}\left(p^{2}\right) = \operatorname{f}\left(p\right)^{2} \land \operatorname{f}\left(p^{3}\right) = \operatorname{f}\left(p\right)^{3}))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/PowerMapSeparation.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -144,14 +144,14 @@ The argument uses the classical bilinear central extension and its sign action, 
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.B1`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.B2`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.F`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.S`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.claim`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.invS`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.mulS`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.oneS`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.productEquiv`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.result`
-- Truth anchor: `D5/S3/FiniteGroups/PowerMapSeparation.sign`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.B1`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.B2`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.F`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.S`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.claim`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.invS`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.mulS`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.oneS`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.productEquiv`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.result`
+- Truth anchor: `D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.sign`
