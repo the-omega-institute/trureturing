@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c746addb118c3e1c29d238118410b6a5088379230bc196c21b7cc739b11063f9
+  normalized_sha256: sha256:c746addb118c3e1c29d238118410b6a5088379230bc196c21b7cc739b11063f9
+cas_ref: sha256:c746addb118c3e1c29d238118410b6a5088379230bc196c21b7cc739b11063f9
+coverage_gids:
+  - gid: D5/S3/Combinatorics/GreedyBrick/SuccessorBand.EventSequence
+    target_statement_id: sha256:dcaee6f967b148af5fb6d5b14ce02d32d783d109e816274702fae9fd7119657d
+  - gid: D5/S3/Combinatorics/GreedyBrick/SuccessorBand.Renewal
+    target_statement_id: sha256:d04dafacf4223196f7f7903362553e7ebcd30cc1c2970ef8a19b2fcd87cbbb4b
+  - gid: D5/S3/Combinatorics/GreedyBrick/SuccessorBand.higherRenewals
+    target_statement_id: sha256:9388a3a7a56f14273604978aec18bf4d8de1db389a8b13a7c0cbacdbb452e18f
+receipts:
+  unresolved_subitems: []
