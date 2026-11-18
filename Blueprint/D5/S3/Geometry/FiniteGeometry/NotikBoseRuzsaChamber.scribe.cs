@@ -168,11 +168,12 @@ internal sealed class NotikBoseRuzsaChamberDocument : IScribeDocumentDefinition
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Definition, bool fromLiterature = false) =>
+        DescribeRole role = DescribeRole.Definition, bool fromLiterature = false,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Module + "." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             fromLiterature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Shorter real rulers refute both of Notik's chamber analogues.",
@@ -201,7 +202,10 @@ internal sealed class NotikBoseRuzsaChamberDocument : IScribeDocumentDefinition
                 Seq(Named("claim"), Iff, Sp, Par(Seq(Named("Bose"), Sp, Lor, Sp, Named("Ruzsa")))),
                 "Section 10 asks the two analogues of the Section 7 conjecture. The disjunction asks whether either universal assertion holds.",
                 fromLiterature: true),
-            Node("result", "Both universal assertions are false", Seq(Neg, Sp, Named("claim")),
+            Node("result", "Both universal assertions are false",
+                Seq(Neg, Sp, Par(Seq(Named("Bose"), Sp, Lor, Sp, Named("Ruzsa")))),
                 "For Bose, use the field adjoining a root of X squared plus four over F seven. The generator is one plus that root and has order 48. Multiplication by five gives residues 4, 5, 9, 11, 30, 39, 42. Cutting between 11 and 30 gives gaps (9, 3, 10, 1, 4, 2). The rational gaps (17/2, 3, 19/2, 1, 4, 2) preserve the chamber and shorten the total from 29 to 28. For Ruzsa, the prime is five, the primitive root is two, and the multiplier is one. The residues 3, 14, 16, 17 give the cut between 3 and 14. The gaps (2, 1, 5) lie in the chamber of (2, 1, 6) and shorten the total from 9 to 8. The exact rational inequalities transfer to real gaps.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("notik-bose-ruzsa-chambers"), ResolutionKind.Refuted)))));
 }

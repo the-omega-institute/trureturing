@@ -158,9 +158,13 @@ Section 10 asks the two analogues of the Section 7 conjecture. The disjunction a
 
 **Theorem 1.12 (Both universal assertions are false).**
 
-$$\neg \operatorname{claim}$$
+$$\neg (\operatorname{Bose} \lor \operatorname{Ruzsa})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteGeometry/NotikBoseRuzsaChamber.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/notik-bose-ruzsa-chambers` (refuted) by `D5/S3/Geometry/FiniteGeometry/NotikBoseRuzsaChamber.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"notik-bose-ruzsa-chambers","declaration_gid":"D5/S3/Geometry/FiniteGeometry/NotikBoseRuzsaChamber.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
