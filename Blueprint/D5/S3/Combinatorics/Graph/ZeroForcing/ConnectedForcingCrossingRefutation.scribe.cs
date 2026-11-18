@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.ZeroForcing;
 internal sealed class ConnectedForcingCrossingRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/notes/mukherjeeray2026connected");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Certificates/mukherjeeray2026connected");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The four-vertex path followed by the four-vertex star refutes the fixed ordered crossing in Problem 5.3: their size-one connected zero forcing counts are two and zero.",
