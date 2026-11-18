@@ -40,7 +40,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   apply ne_of_gt
   unfold fermi
   apply (inv_lt_inv₀ (by positivity) (by positivity)).2
-  exact add_lt_add_left (Real.exp_lt_exp.mpr zero_lt_one) 1
+  exact add_lt_add_right (Real.exp_lt_exp.mpr zero_lt_one) 1
 
 def family : Registration arena (type_of% @fermi_le_exp_neg) where
   actual := actual
