@@ -10,6 +10,13 @@ internal sealed class CofactorKernelDocument : IScribeDocumentDefinition
         "Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.",
         H("CofactorKernel"),
         Blocks(
+            Describe.Lean(DescribeId.Create("det-top-row"),
+                DeclarationHandle.Create("D5/S3/Arith/Lattices/CofactorKernel.det_topRow"),
+                H("Determinant expansion along the top row"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Over a commutative ring, adjoining a top row to a matrix with one more column than row gives the determinant pairing of that top row with the signed cofactors of the original matrix."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("isminimalzerosum"),
                 DeclarationHandle.Create("D5/S3/Arith/Lattices/CofactorKernel.IsMinimalZeroSum"),
                 H("IsMinimalZeroSum"),

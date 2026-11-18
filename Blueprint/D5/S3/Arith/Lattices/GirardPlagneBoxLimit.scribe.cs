@@ -10,6 +10,13 @@ internal sealed class GirardPlagneBoxLimitDocument : IScribeDocumentDefinition
         "Fixed-support box Davenport ratios converge to the largest augmented sign determinant in every positive dimension.",
         H("GirardPlagneBoxLimit"),
         Blocks(
+            Describe.Lean(DescribeId.Create("cofactor-map"),
+                DeclarationHandle.Create("D5/S3/Arith/Lattices/GirardPlagneBoxLimit.cofactor_map"),
+                H("Signed cofactors under a ring homomorphism"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A homomorphism between commutative rings commutes with every signed cofactor of a matrix with one more column than row."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("d"),
                 DeclarationHandle.Create("D5/S3/Arith/Lattices/GirardPlagneBoxLimit.D"),
                 H("D"),

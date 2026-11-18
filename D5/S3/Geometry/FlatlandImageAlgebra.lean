@@ -743,10 +743,14 @@ theorem cofactor_in_full_kernel {K ι : Type*} [Field K]
       refine Fin.cases ?_ (fun r => ?_) i <;> rfl
     rw [he]
     exact arbitrary_row_minor_zero M h (Fin.cases j (fun r => I r))
-  rw [Matrix.det_succ_row_zero] at hn
-  simpa [N, Matrix.of_apply, Fin.cases_zero, Fin.cases_succ, Matrix.mulVec, dotProduct,
-    D5.S3.Arith.Lattices.CofactorKernel.cofactor, Matrix.submatrix,
-    mul_comm, mul_left_comm, mul_assoc] using hn
+  have hN : N = (D5.S3.Arith.Lattices.CofactorKernel.augment (M.submatrix I id)).updateRow 0
+      (M j) := by
+    ext i k
+    refine Fin.cases ?_ (fun r => ?_) i
+    · simp [N]
+    · simp [N, Matrix.updateRow_ne (Fin.succ_ne_zero r)]
+  rw [hN, D5.S3.Arith.Lattices.CofactorKernel.det_topRow] at hn
+  simpa only [Matrix.mulVec, dotProduct, Pi.zero_apply] using hn
 end
 
 section

@@ -44,6 +44,7 @@ result | proof_shape: content; escape_witness: D5.S3.Geometry.FlatlandImageClosu
 import D5.S3.Geometry.FlatlandImageAlgebra
 import D5.S3.Geometry.FlatlandImageClosure
 import D5.S3.Arith.Lattices.CofactorKernel
+import D5.S3.Arith.Lattices.GirardPlagneBoxLimit
 
 set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
@@ -247,12 +248,16 @@ private theorem eightPointPolynomial_eval {n : ℕ} (p : (Fin n → Fin 2 → Pr
   rw [eightPointPolynomial, RingHom.map_det]
   congr 1
   ext b a
-  simp [cofactorPolynomial, RingHom.map_det, cofactorMatrix, D5.S3.Arith.Lattices.CofactorKernel.cofactor,
-    Matrix.map_apply, segrePolynomial, segreMatrix, coordinates, Matrix.submatrix]
-  all_goals
-    apply congrArg Matrix.det
+  let f := MvPolynomial.eval (coordinates p)
+  let P : Matrix (Fin 8) (Fin 9) _ := Matrix.of (fun i k => segrePolynomial (I i) k)
+  have hP : P.map f = (segreMatrix p).submatrix I id := by
     ext i k
-    simp [Matrix.map_apply, Matrix.of_apply, coordinates]
+    simp [P, f, Matrix.map_apply, Matrix.of_apply, segrePolynomial, segreMatrix,
+      coordinates, Matrix.submatrix]
+  change f (D5.S3.Arith.Lattices.CofactorKernel.cofactor P (finProdFinEquiv (a,b))) =
+    D5.S3.Arith.Lattices.CofactorKernel.cofactor ((segreMatrix p).submatrix I id)
+      (finProdFinEquiv (a,b))
+  rw [← D5.S3.Arith.Lattices.GirardPlagneBoxLimit.cofactor_map, hP]
 
 private theorem imageClosure_equations_of_actual {n : ℕ}
     (h : ∀ s : ImagingDomain n, equations (theta s)) (p : (Fin n → Fin 2 → Projectivization ℂ (Fin 3 → ℂ)))
