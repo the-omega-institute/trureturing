@@ -4,17 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim; result=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.result; claim=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim
-   digest: C4-free pair ownership, finite Pappus/Heawood proofs and canonical dissociation obstruction. -/
+   digest: Pappus dissociation obstruction and C4-free representative rigidity. -/
 
 import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodParameters
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodIncidence
 
-/-! Actual finite Pappus and Heawood certificates from the exact received Sahbi
-source revision 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0.
-The actual Pappus dissociation ten-set refutes the cubic C4-free half-order
-claim. General representative proofs are imported without weakening hypotheses.
-Finite positive consequences retain their own separate utility-review duty. -/
+/-! The actual Pappus certificates use the exact received Sahbi source revision
+48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0.
+The Pappus dissociation ten-set refutes the cubic C4-free half-order claim.
+The representative and coloring results use the general pair-packing bounds. -/
 
 namespace D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
 open StarFormingDissociationRefutation
@@ -151,74 +148,6 @@ theorem result : ¬ claim := by
 section RepresentativeConsequences
 variable {V : Type} [Fintype V] [DecidableEq V]
 variable (G : SimpleGraph V) [DecidableRel G.Adj]
-
-private theorem noFour_of_common_cap {W : Type} [Fintype W] [DecidableEq W]
-    (F : SimpleGraph W) [DecidableRel F.Adj]
-    (h : ∀ a b, a ≠ b → (Finset.univ.filter (fun v => F.Adj a v ∧ F.Adj b v)).card ≤ 1) :
-    NoFourCycle F.Adj := by
-  intro a b x y hab hxy _ _ _ _ hax hay hbx hby
-  exact hxy (Finset.card_le_one.mp (h a b hab) x
-    (Finset.mem_filter.mpr ⟨Finset.mem_univ _,hax,hbx⟩) y
-    (Finset.mem_filter.mpr ⟨Finset.mem_univ _,hay,hby⟩))
-
-private def heawoodColor (v : Fin 14) : Bool := decide (v.val < 7)
-private theorem heawoodColor_valid : ∀ v w, HeawoodParameters.graph.Adj v w →
-    heawoodColor v ≠ heawoodColor w := by decide +kernel
-private theorem heawoodColor_sides : ∀ c,
-    (Finset.univ.filter (fun v => heawoodColor v = c)).card = 7 := by decide +kernel
-private theorem heawood_free : NoFourCycle HeawoodParameters.graph.Adj := by
-  apply noFour_of_common_cap
-  decide +kernel
-
-/-- In the actual cyclic-label Heawood graph, the coloring/representative
-parameters equal seven while the distinct star-forming parameter equals eight. -/
-theorem heawood_parameters : beta HeawoodParameters.graph 2 = 7 ∧
-    psiSq HeawoodParameters.graph = 7 ∧ Omega HeawoodParameters.graph = 7 ∧
-    SF HeawoodParameters.graph 2 = 8 := by
-  have hp := threshold_parameters HeawoodParameters.graph heawoodColor heawoodColor_valid
-    heawood_free 3 7 (by decide) HeawoodParameters.graph_class.2 heawoodColor_sides (by decide)
-  exact ⟨hp.1,hp.2.1,hp.2.2,HeawoodParameters.sf_graph⟩
-
-/-- Binary-label Heawood graph used by the written mixed-support example.
-Point and line copies of the same nonzero binary label are distinct. -/
-def binaryHeawood : SimpleGraph (Fin 14) where
-  Adj v w := (v.val < 7) ≠ (w.val < 7) ∧
-    HeawoodCertificates.dot (v.val%7+1) (w.val%7+1) = 0
-  symm := ⟨by decide +kernel⟩
-  loopless := ⟨by decide +kernel⟩
-
-instance : DecidableRel binaryHeawood.Adj := fun v w => inferInstanceAs (Decidable
-  ((v.val < 7) ≠ (w.val < 7) ∧ HeawoodCertificates.dot (v.val%7+1) (w.val%7+1) = 0))
-
-private theorem binaryColor_valid : ∀ v w, binaryHeawood.Adj v w →
-    heawoodColor v ≠ heawoodColor w := by decide +kernel
-private theorem binary_regular : ∀ v, DegreeCapacity.degree binaryHeawood v = 3 := by
-  decide +kernel
-private theorem binary_free : NoFourCycle binaryHeawood.Adj := by
-  apply noFour_of_common_cap
-  decide +kernel
-
-def mixedSingletons : Finset (Fin 14) := {1,2,3,11,12,13}
-def mixedMatching : Finset (Fin 14 × Fin 14) := {(0,8)}
-
-/-- The q=2 exception is an actual optimum with three singletons on each
-side and one matching edge, in the source's exact binary labeling. -/
-theorem mixed_support_optimum : Feasible binaryHeawood mixedSingletons mixedMatching ∧
-    mixedSingletons.card + mixedMatching.card = Omega binaryHeawood ∧
-    (mixedSingletons.filter (fun v => heawoodColor v = false)).card = 3 ∧
-    (mixedSingletons.filter (fun v => heawoodColor v = true)).card = 3 := by
-  have hp := threshold_parameters binaryHeawood heawoodColor binaryColor_valid
-    binary_free 3 7 (by decide) binary_regular heawoodColor_sides (by decide)
-  refine ⟨?_,?_,by decide +kernel,by decide +kernel⟩
-  · constructor
-    · decide +kernel
-    · intro e he f hf hne
-      simp [mixedMatching] at he hf
-      exact (hne (he.trans hf.symm)).elim
-    · decide +kernel
-    · decide +kernel
-  · rw [hp.2.2]
-    decide +kernel
 
 private def pappusColor (v : Fin 18) : Bool := decide (v.val % 2 = 1)
 private theorem pappusColor_valid : ∀ v w, pappusGraph.Adj v w → pappusColor v ≠ pappusColor w := by

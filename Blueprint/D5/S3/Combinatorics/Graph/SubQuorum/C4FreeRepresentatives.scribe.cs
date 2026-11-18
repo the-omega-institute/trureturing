@@ -12,8 +12,8 @@ internal sealed class C4FreeRepresentativesDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), role);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite C4-free representative instances", H("Finite C4-free representative instances"),
-        Blocks(Paragraph(Text("The exact Pappus cubic bipartite C4-free graph has beta, psiSq and Omega ten, empty optimal matching and distinct-color dissociation support at ten colors. The actual Heawood parameter distinction and binary-label mixed-support optimum retain their finite scope. The typed Pappus claim/result refutes extending the half-order bound to order eighteen. Positive finite consequences are not certified exempt from utility review.")),
+        "Pappus C4-free representatives", H("Pappus C4-free representatives"),
+        Blocks(Paragraph(Text("The exact Pappus cubic bipartite C4-free graph has beta, psiSq and Omega ten, empty optimal matching and distinct-color dissociation support at ten colors. The typed Pappus claim/result refutes extending the half-order bound to order eighteen.")),
             Node("pappusNeighbors", "pappusNeighbors", "Exact declaration: def pappusNeighbors (vertex : Fin 18) : List Nat.", DescribeRole.Definition),
             Node("pappusSelected", "pappusSelected", "Exact declaration: def pappusSelected : List Nat.", DescribeRole.Definition),
             Node("pappus_regular_bipartite_certificate", "pappus regular bipartite certificate", "Exact declaration: theorem pappus_regular_bipartite_certificate : (∀ vertex : Fin 18, (pappusNeighbors vertex).length = 3 ∧ (pappusNeighbors vertex).Nodup ∧ ∀ neighbor, neighbor ∈ pappusNeighbors vertex → neighbor < 18 ∧ neighbor % 2 ≠ vertex.val % 2) ∧ (∀ first second : Fin 18, second.val ∈ pappusNeighbors first ↔ first.val ∈ pappusNeighbors second).", DescribeRole.Theorem),
@@ -26,11 +26,6 @@ internal sealed class C4FreeRepresentativesDocument : IScribeDocumentDefinition
             Node("beta_pappus", "beta pappus", "Exact declaration: theorem beta_pappus : beta pappusGraph 2 = 10.", DescribeRole.Theorem),
             Node("claim", "claim", "Exact declaration: def claim : Prop.", DescribeRole.Definition),
             Node("result", "result", "Exact declaration: theorem result : ¬ claim.", DescribeRole.Theorem),
-            Node("heawood_parameters", "heawood parameters", "Exact declaration: theorem heawood_parameters : beta HeawoodParameters.graph 2 = 7 ∧ psiSq HeawoodParameters.graph = 7 ∧ Omega HeawoodParameters.graph = 7 ∧ SF HeawoodParameters.graph 2 = 8.", DescribeRole.Theorem),
-            Node("binaryHeawood", "binaryHeawood", "Exact declaration: def binaryHeawood : SimpleGraph (Fin 14).", DescribeRole.Definition),
-            Node("mixedSingletons", "mixedSingletons", "Exact declaration: def mixedSingletons : Finset (Fin 14).", DescribeRole.Definition),
-            Node("mixedMatching", "mixedMatching", "Exact declaration: def mixedMatching : Finset (Fin 14 × Fin 14).", DescribeRole.Definition),
-            Node("mixed_support_optimum", "mixed support optimum", "Exact declaration: theorem mixed_support_optimum : Feasible binaryHeawood mixedSingletons mixedMatching ∧ mixedSingletons.card + mixedMatching.card = Omega binaryHeawood ∧ (mixedSingletons.filter (fun v => heawoodColor v = false)).card = 3 ∧ (mixedSingletons.filter (fun v => heawoodColor v = true)).card = 3.", DescribeRole.Theorem),
             Node("omega_pappus", "omega pappus", "Exact declaration: theorem omega_pappus : Omega pappusGraph = 10.", DescribeRole.Theorem),
             Node("pappus_parameters", "pappus parameters", "Exact declaration: theorem pappus_parameters : beta pappusGraph 2 = 10 ∧ psiSq pappusGraph = 10 ∧ Omega pappusGraph = 10.", DescribeRole.Theorem),
             Node("pappus_optimal_matching_empty", "pappus optimal matching empty", "Exact declaration: theorem pappus_optimal_matching_empty (T : Finset (Fin 18)) (M : Finset (Fin 18 × Fin 18)) (hf : Feasible pappusGraph T M) (hc : T.card + M.card = 10) : M = ∅.", DescribeRole.Theorem),
