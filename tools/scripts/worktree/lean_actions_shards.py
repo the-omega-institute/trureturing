@@ -16,7 +16,8 @@ import tarfile
 import tempfile
 
 from lean_actions import (
-    actions_keys, dependency_inputs, native_archive_paths, project_publication, receipt, resume_spec,
+    actions_keys, dependency_inputs, manual_source_is_valid, native_archive_paths, project_publication,
+    receipt, resume_spec, write_small_record,
 )
 from lean_artifact_inventory import (
     PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports,
@@ -33,6 +34,7 @@ EXTRAS = "extras"
 REPORT = "report"
 REPORT_PATH = "stratalint/raw-lean-report.json"
 REPORT_RECEIPT = PurePosixPath(REPORT_PATH + ".reuse.json")
+RESUME_RECORD = STAGE / "resumed.json"
 
 
 def digest(value):
@@ -205,11 +207,20 @@ def required_outputs(root, modules, graph, owners):
     return {key: sorted(paths) for key, paths in result.items()}
 
 
+def resume_verified(root):
+    try:
+        value = json.loads((root / RESUME_RECORD).read_text())
+        return value == {"binding": binding(root, "resume"), "owner": current_owner(root)}
+    except (OSError, ValueError, KeyError):
+        return False
+
+
 def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset()):
     if state == "complete":
         allowed, reason, _ = project_publication(root)
         keys = actions_keys(root)
-        if (not (allowed or reason == "no-build-work") or not keys["project_save_allowed"]
+        migrated = reason == "no-build-work" and (manual_source_is_valid() or resume_verified(root))
+        if (not (allowed or migrated) or not keys["project_save_allowed"]
                 or os.environ.get("GITHUB_REF_PROTECTED") != "true"):
             raise ValueError("Actions shard publication denied: " + reason)
     else:
@@ -364,7 +375,12 @@ def main():
     elif args.operation == "restore-plan":
         print(json.dumps(selected_keys(root, record, args.target)))
     else:
-        print(json.dumps(install(root, record, args.target, require_complete=args.require_complete)))
+        if args.state == "resume":
+            (root / RESUME_RECORD).unlink(missing_ok=True)
+        result = install(root, record, args.target, require_complete=args.require_complete)
+        if args.state == "resume" and result["available"]:
+            write_small_record(root / RESUME_RECORD, {"binding": identity, "owner": current_owner(root)})
+        print(json.dumps(result))
 
 
 if __name__ == "__main__":

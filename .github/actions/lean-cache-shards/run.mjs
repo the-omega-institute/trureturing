@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
 import { join, resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -83,21 +83,46 @@ async function paced(items, parallelism, perMinute, invoke) {
   }));
 }
 
-async function restore(cache, identity) {
+async function fetchIndex(cache, cacheVersion, identity) {
+  const ref = process.env.GITHUB_BASE_REF ? 'refs/heads/' + process.env.GITHUB_BASE_REF : identity.owner.ref;
+  const refs = state === 'resume' ? [ref] : [...new Set([ref, 'refs/heads/dev'])];
   await rm(indexPath, { force: true });
-  const matched = await cache.restoreCache([indexPath], indexKey(identity), [identity.prefix + 'snapshot-']);
+  for (const candidateRef of refs.filter(value => /^refs\/heads\/(dev|integration-[A-Za-z0-9._/-]+)$/.test(value))) {
+    const prefix = identity.prefix + 'snapshot-';
+    const rows = visibleEntries(candidateRef, prefix)
+      .filter(row => row.key.startsWith(prefix) && /^[1-9][0-9]*-[1-9][0-9]*$/.test(row.key.slice(prefix.length))
+        && row.version === cacheVersion(indexPath))
+      .sort((left, right) => right.key.localeCompare(left.key, 'en', { numeric: true }));
+    for (const row of rows.slice(0, 3)) {
+      const matched = await cache.restoreCache([indexPath], row.key, []);
+      if (matched !== row.key) continue;
+      const record = JSON.parse(await readFile(indexPath, 'utf8'));
+      matchIndex(identity, matched, record);
+      if (record.owner.ref !== candidateRef) throw new Error('Actions index owner ref mismatch');
+      return matched;
+    }
+  }
+}
+
+async function restore(cache, cacheVersion, identity) {
+  const started = performance.now();
+  const matched = await fetchIndex(cache, cacheVersion, identity);
   if (!matched) {
     console.log('LEAN_ACTIONS_SHARDS no compatible index was found');
     return;
   }
   const needed = python('restore-plan', ['--index', indexPath, ...targetArgs]);
-  matchIndex(identity, matched, JSON.parse(await readFile(indexPath, 'utf8')));
   const digests = [...new Set(Object.values(needed))];
+  let transferred = 0;
   await paced(digests, 24, 1200, async digest => {
     const path = payloadPath(digest);
     await rm(path, { force: true });
     try {
-      await cache.restoreCache([path], payloadKey(identity, digest), [], {});
+      const key = payloadKey(identity, digest);
+      if (await cache.restoreCache([path], key, []) === key) {
+        const { size } = await stat(path);
+        transferred += size;
+      }
     } catch (error) {
       console.log('LEAN_ACTIONS_SHARDS restore failed for ' + digest + ': ' + error.message);
     }
@@ -106,6 +131,10 @@ async function restore(cache, identity) {
   if (requireComplete) installArgs.push('--require-complete');
   const result = python('install', installArgs);
   await Promise.all(digests.map(digest => rm(payloadPath(digest), { force: true })));
+  console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+    operation: 'restore', requested: digests.length, restored: result.available,
+    bytes: transferred, seconds: (performance.now() - started) / 1000,
+  }));
   await setOutputs({ key: matched, available: result.available, missing: result.missing.length,
     complete: result.complete });
 }
@@ -131,6 +160,7 @@ async function digestFile(path) {
 }
 
 async function save(cache, cacheVersion, identity) {
+  const started = performance.now();
   const prefix = identity.prefix + 'material-';
   const ownerRef = identity.owner.ref;
   const before = visibleEntries(ownerRef, identity.prefix);
@@ -140,9 +170,11 @@ async function save(cache, cacheVersion, identity) {
   await rm(indexPath, { force: true });
   const extra = ['--anchor', anchor, ...targetArgs];
   const known = new Set();
+  let previous;
   if (savedIndex && await cache.restoreCache([indexPath], savedIndex.key, []) === savedIndex.key) {
     const record = JSON.parse(await readFile(indexPath, 'utf8'));
     matchIndex(identity, savedIndex.key, record);
+    previous = record;
     if (record.owner.ref !== ownerRef) throw new Error('Actions index owner ref mismatch');
     for (const digest of Object.values(record.entries)) {
       if (matches(before, payloadKey(identity, digest), cacheVersion(payloadPath(digest)))) known.add(digest);
@@ -156,6 +188,13 @@ async function save(cache, cacheVersion, identity) {
   const digests = [...new Set(Object.values(record.entries))];
   const confirmed = new Set(digests.filter(digest => known.has(digest)));
   const pending = digests.filter(digest => !confirmed.has(digest));
+  if (state === 'complete' && previous && pending.length === 0
+      && Object.keys(previous.entries).length === Object.keys(record.entries).length
+      && Object.entries(record.entries).every(([key, digest]) => previous.entries[key] === digest)) {
+    console.log('LEAN_ACTIONS_SHARDS reuse current verified material');
+    await setOutputs({ key: savedIndex.key, available: confirmed.size, missing: 0, complete: true });
+    return;
+  }
   await paced(pending, 8, 170, async digest => {
     const path = payloadPath(digest);
     const key = payloadKey(identity, digest);
@@ -197,6 +236,10 @@ async function save(cache, cacheVersion, identity) {
   if (!matches(visibleEntries(ownerRef, key), key, cacheVersion(indexPath))) {
     throw new Error('Actions index is not visible on its producer ref');
   }
+  console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+    operation: 'save', requested: digests.length, previous: digests.length - pending.length,
+    confirmed: confirmed.size, seconds: (performance.now() - started) / 1000,
+  }));
   await setOutputs({ key, available: confirmed.size, missing, complete: state === 'complete' });
 }
 
@@ -214,7 +257,7 @@ try {
   const identity = python('identity');
   await mkdir(stage, { recursive: true });
   if (operation === 'save') await save(cache, cacheVersion, identity);
-  else await restore(cache, identity);
+  else await restore(cache, cacheVersion, identity);
 } catch (error) {
   process.exitCode = 1;
   console.error('LEAN_ACTIONS_SHARDS ' + error.message);

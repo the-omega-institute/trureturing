@@ -74,6 +74,8 @@ runs:
       if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
       continue-on-error: true
       uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
       with:
         operation: restore
         state: resume
@@ -82,6 +84,8 @@ runs:
       if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == '' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
       continue-on-error: true
       uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
       with:
         operation: restore
         require-complete: 'true'

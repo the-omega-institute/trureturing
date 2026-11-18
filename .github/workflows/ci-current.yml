@@ -251,7 +251,7 @@ jobs:
     outputs:
       lean_required: ${{ needs.detect.outputs.report }}
       unit: ${{ steps.checked.outputs.unit }}
-      project_seed_available: ${{ steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
+      project_seed_available: ${{ steps.sharded_project_push.outputs.complete == 'true' || steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
     env:
       # This job writes project seeds only on dev/integration pushes.
       # Dependency and elan writes also use the PR's own merge-ref scope.
@@ -343,6 +343,8 @@ jobs:
         if: needs.detect.outputs.report == 'true' && steps.prepared.outputs.adopted != 'true' && vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name)
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           operation: restore
           require-complete: 'true'
@@ -437,9 +439,21 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ needs.source.outputs.judge_key }}
+      - id: sharded_project_push
+        name: Publish the indexed push project seed
+        if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && steps.sharded_project.outputs.complete == 'true' && steps.lean_report.outcome == 'success' }}
+        continue-on-error: true
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CACHE_WRITES: 'true'
+          STRATALINT_REPORT_SUCCEEDED: 'true'
+        with:
+          operation: save
+          anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
       - id: project_snapshot_push
         name: Prepare the project seed
-        if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
+        if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.sharded_project_push.outputs.complete != 'true' && steps.lean_report.outcome == 'success' }}
         continue-on-error: true
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
@@ -514,7 +528,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 2
+          fetch-depth: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && 2002 || 2 }}
           persist-credentials: false
       - name: Validate the protected push and strip checkout remote
         env:
@@ -523,6 +537,8 @@ jobs:
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
+        with:
+          shard-history-anchor: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
 
   banned-api-proof:
     needs: [detect, source]

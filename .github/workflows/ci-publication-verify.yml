@@ -127,6 +127,8 @@ jobs:
         name: Restore the selected sharded project seed
         if: steps.entry.outputs.hit == 'true' && (env.SHARD_HANDOFF == 'complete' || env.SHARD_HANDOFF == 'partial')
         uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           operation: restore
           require-complete: ${{ env.SHARD_HANDOFF == 'complete' }}
@@ -286,6 +288,8 @@ jobs:
         id: resumed
         name: Restore the immutable producer continuation
         uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           operation: restore
           state: resume
@@ -317,6 +321,8 @@ jobs:
         id: evicted
         name: Restore remaining checkpoint entries
         uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           operation: restore
           state: resume

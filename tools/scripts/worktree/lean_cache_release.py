@@ -1197,7 +1197,7 @@ def fetch_candidate(root, partition, tag, producer, *, targets=()):
 
 
 def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag=None, approved_producer=None,
-          local_assets=None):
+          local_assets=None, *, indexed=False, targets=()):
     if os.environ.get("GITHUB_ACTIONS") == "true":
         receipt("fetch", "skipped", reason="CI does not consume Release seeds")
         return 0
@@ -1216,32 +1216,35 @@ def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag
     try:
         deadline = operation_deadline()
         with contextlib.nullcontext() if writer_owned else cache_guard(root):
-            return fetch_locked(root, partition, deadline, refresh_stale, approved_tag, approved_producer, local_assets)
+            return fetch_locked(root, partition, deadline, refresh_stale, approved_tag, approved_producer,
+                                local_assets, indexed=indexed, targets=targets)
     except (OSError, ImportError, ValueError) as error:
         receipt("fetch", "miss", _error=error, reason=str(error), partition=partition)
         return 1
 
 
-def snapshot_partition(root, partition, tag, cache_key):
+def snapshot_partition(root, partition, tag, cache_key, *, indexed=False):
     compatible = [partition] + [other for other in seed_partitions(root) if other != partition]
     return next((candidate for candidate in compatible
-        if tag.startswith(prefix(candidate, cache_key))
-        and valid_publication_id(tag[len(prefix(candidate, cache_key)):])), None)
+        if tag.startswith(prefix(candidate, cache_key, indexed=indexed))
+        and valid_publication_id(tag[len(prefix(candidate, cache_key, indexed=indexed)):])), None)
 
 
-def snapshot_candidates(root, partition, deadline, cache_key):
+def snapshot_candidates(root, partition, deadline, cache_key, *, indexed=False, fallback=False):
     """One listing and filter for both freshness decisions and recovery fetches."""
     releases = json.loads(gh(deadline, "release", "list", "--repo", REPO, "--limit", "100",
         "--json", "tagName,createdAt,isDraft"))
-    for release in sorted(releases, key=lambda item: item["createdAt"], reverse=True):
-        tag = release.get("tagName", "")
-        source = snapshot_partition(root, partition, tag, cache_key)
-        if release.get("isDraft") is False and source is not None:
-            yield source, tag
+    releases.sort(key=lambda release: release["createdAt"], reverse=True)
+    for use_index in (True, False) if indexed and fallback else (indexed,):
+        for release in releases:
+            tag = release.get("tagName", "")
+            source = snapshot_partition(root, partition, tag, cache_key, indexed=use_index)
+            if release.get("isDraft") is False and source is not None:
+                yield source, tag
 
 
 def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=None, approved_producer=None,
-                 local_assets=None):
+                 local_assets=None, *, indexed=False, targets=()):
     if local_assets is not None and (not approved_tag or not approved_producer or not refresh_stale):
         raise ValueError("local assets require an approved production refresh")
     fetch_staging_cleanup(root, now=time.time())
@@ -1250,12 +1253,15 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
     cache_key = release_key(root)
     try:
         if approved_tag is not None:
-            source = snapshot_partition(root, partition, approved_tag, cache_key)
+            source = snapshot_partition(root, partition, approved_tag, cache_key, indexed=indexed)
+            if source is None and indexed and not targets:
+                source = snapshot_partition(root, partition, approved_tag, cache_key)
             if source is None:
                 raise ValueError("approved snapshot is outside the compatible partitions")
             candidates = [(source, approved_tag)]
         else:
-            candidates = snapshot_candidates(root, partition, deadline, cache_key)
+            candidates = snapshot_candidates(root, partition, deadline, cache_key,
+                                             indexed=indexed, fallback=indexed and not targets)
         attempts = 0
         for source, tag in candidates:
             if attempts >= RELEASE_FETCH_MAX_ATTEMPTS:
@@ -1265,9 +1271,14 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
             try:
                 temporary = tempfile.TemporaryDirectory(prefix="lean-fetch-")
                 try:
-                    restore_snapshot(root, source, tag, pathlib.Path(temporary.name), deadline,
-                        refresh_stale=refresh_stale, cache_key=cache_key, approved_producer=approved_producer,
-                        local_assets=local_assets)
+                    if targets:
+                        restore_scoped(root, source, tag, pathlib.Path(temporary.name), deadline,
+                                       cache_key=cache_key, producer=approved_producer, targets=targets,
+                                       verification=False)
+                    else:
+                        restore_snapshot(root, source, tag, pathlib.Path(temporary.name), deadline,
+                            refresh_stale=refresh_stale, cache_key=cache_key, approved_producer=approved_producer,
+                            local_assets=local_assets)
                 finally:
                     try:
                         temporary.cleanup()
@@ -1328,8 +1339,9 @@ def _main():
         LOG.emit("operation_started", operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE)
     try:
         args.repository = args.repository.resolve()
-        if args.target and (args.command != "fetch" or args.mode != "candidate"):
-            raise ValueError("--target requires an exact indexed candidate fetch")
+        if args.target and (args.command != "fetch" or args.mode == "verification"
+                            or (args.mode == "production" and not args.indexed)):
+            raise ValueError("--target requires an indexed production or exact indexed candidate fetch")
         if args.no_build and args.command != "publish":
             raise ValueError("--no-build requires publish")
         if args.tag and (args.mode != "candidate" or args.command != "fetch"):
@@ -1362,7 +1374,8 @@ def _main():
         if args.command == "address":
             cache_key = release_key(args.repository)
             payload = {"partition": partition, "cache_key": cache_key,
-                       "release_prefix": prefix(partition, cache_key), "asset": ASSET}
+                       "release_prefix": prefix(partition, cache_key, indexed=args.indexed),
+                       "asset": indexed_release.ASSET if args.indexed else ASSET}
             _observe("address", "resolved", phase="address")
             print(json.dumps(payload))
             return 0
@@ -1370,7 +1383,8 @@ def _main():
             if verification is not None:
                 return fetch_verification(args.repository, partition, verification, indexed=args.indexed)
             return fetch(args.repository, partition, args.writer_owned, args.refresh_stale,
-                         args.approved_tag, args.approved_producer, args.local_assets)
+                         args.approved_tag, args.approved_producer, args.local_assets,
+                         indexed=args.indexed, targets=args.target)
         return publish(args.repository, partition, verification, build_report=not args.no_build, indexed=args.indexed)
     except RollbackFailed as error:
         receipt(args.command, "rollback-failed", _error=error, reason=str(error), backup=error.backup)
