@@ -7,7 +7,7 @@
    digest: The actual twenty-point slice reduces to paired squares with leaves after excluding 11/9 and paired pentagons.
  -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonExclusion
+import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareLeaf
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
@@ -26,6 +26,9 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSlice
 
 open private paired_cycle_nonembedding from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonExclusion
+
+open private sq crossNbr paired_square_labels from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareLeaf
 
 open scoped BigOperators Classical
 open SimpleGraph GirthSliceCounting
@@ -290,7 +293,9 @@ private theorem actual_twenty_point_slice_data (h : claim) :
             (T : Set {x : Q n // x ∈ S}) ∧
           P.card = 10 ∧ T.card = 10 ∧
             (degreeTwo G P).card = 5 ∧ (degreeTwo G T).card = 5 ∧
-            (SquareLeaf (compressed G P) ∧ SquareLeaf (compressed G T))) ∧
+            (SquareLeaf (compressed G P) ∧ SquareLeaf (compressed G T) ∧
+              ∃ eP : sq ≃g compressed G P, ∃ eT : sq ≃g compressed G T,
+                ∀ i j, G.Adj (eP i).val (eT j).val ↔ j ∈ crossNbr i)) ∧
         (G.induce {v | G.degree v = 3}).edgeFinset.card = 5 ∧
         (∀ P T : Finset (S : Set (Q n)),
           G.IsBipartiteWith (P : Set (S : Set (Q n))) (T : Set (S : Set (Q n))) →
@@ -365,7 +370,8 @@ private theorem actual_twenty_point_slice_data (h : claim) :
       hsym.2.2.1 hsym.2.2.2
     rcases hcases with ⟨hLc, hRc⟩ | hsq
     · exact (paired_cycle_nonembedding hparity hdeg hlow hbal hLc hRc).elim
-    · exact hsq
+    · exact ⟨hsq.1, hsq.2, paired_square_labels hparity hdeg hlow
+        (BalancedCubeGirth.eight_le_egirth S hbal) hp ht hsq.1 hsq.2⟩
   · change (graph G).edgeFinset.card = 5
     exact hedge
   · intro P T hp
