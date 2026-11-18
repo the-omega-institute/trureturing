@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement.FactorWidth;
 
 internal sealed class NonnegativeFactorWidthTwoDocument : IScribeDocumentDefinition
 {
@@ -12,7 +12,7 @@ internal sealed class NonnegativeFactorWidthTwoDocument : IScribeDocumentDefinit
         Blocks(Describe.Lean(
             DescribeId.Create("nonnegative-two-sparse-gram"),
             DeclarationHandle.Create(
-                "D5/S3/Quantum/Measurement/NonnegativeFactorWidthTwo.nonnegative_two_sparse_gram"),
+                "D5/S3/Quantum/Measurement/FactorWidth/NonnegativeFactorWidthTwo.nonnegative_two_sparse_gram"),
             H("Bounded nonnegative two-sparse Gram decomposition"),
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Measurement/NonnegativeFactorWidthTwo
+/- GID: D5/S3/Quantum/Measurement/FactorWidth/NonnegativeFactorWidthTwo
    generality: G
-   mirror-B: D5/B/S3/Quantum/Measurement/NonnegativeFactorWidthTwo
+   mirror-B: D5/B/S3/Quantum/Measurement/FactorWidth/NonnegativeFactorWidthTwo
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -39,7 +39,7 @@ set_option relaxedAutoImplicit false
 open scoped BigOperators
 open Matrix Finset
 
-namespace D5.S3.Quantum.Measurement.NonnegativeFactorWidthTwo
+namespace D5.S3.Quantum.Measurement.FactorWidth.NonnegativeFactorWidthTwo
 noncomputable section
 
 private theorem compress_complex_pair_moments {n : ℕ} {ι : Type*}
@@ -262,4 +262,4 @@ theorem nonnegative_two_sparse_gram {n : ℕ} {X : Matrix (Fin n) (Fin n) ℝ}
 
 end
 
-end D5.S3.Quantum.Measurement.NonnegativeFactorWidthTwo
+end D5.S3.Quantum.Measurement.FactorWidth.NonnegativeFactorWidthTwo
