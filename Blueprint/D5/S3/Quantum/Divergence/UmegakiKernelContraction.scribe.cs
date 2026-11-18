@@ -7,6 +7,11 @@ internal sealed class UmegakiKernelContractionDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A uniform endpoint estimate implies the arithmetic inverse-form estimate at every parameter.",
         H("Endpoint contraction on the partial-trace kernel"), Blocks(
+            Describe.Lean(DescribeId.Create("arithmetic-positive"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.arithmetic_positive"),
+                H("Positivity of the arithmetic operator"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a positive semidefinite base and t in [0,1], the Hilbert–Schmidt arithmetic interpolation is positive. This applies to singular bases and supplies the range argument for the supported Moore–Penrose form."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("arithmetic"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.arithmetic"),
                 H("Arithmetic interpolation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -108,30 +113,6 @@ internal sealed class UmegakiKernelContractionDocument : IScribeDocumentDefiniti
                 H("Complex trace adjunction"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Tr((X tensor I) adjoint V) equals Tr(X adjoint P(V)) for arbitrary complex matrices, using the ordinary partial trace. This preserves the pairing on zero-partial-trace directions when the reference center is subtracted."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("amp-kronecker"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_kronecker"),
-                H("Amplification on an elementary tensor"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("For a finite channel N and arbitrary complex X and Z on the reference and input, the amplification sends X tensor Z to X tensor N(Z). This computes the channel image of the identity in the positivity argument."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("amp-mono"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_mono"),
-                H("Amplification preserves matrix order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("For the canonical finite channel, input matrix order X ≤ Z implies the same order for their amplified images. This transports a strictly positive lower bound."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("positive-floor"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.positive_floor"),
-                H("Positive lower bound by the identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("Every positive definite complex matrix on a finite carrier dominates m times the identity for some real m > 0. On the empty carrier the proof chooses m = 1. Amplification uses this lower bound."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("amp-posdef"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_posDef"),
-                H("Faithfulness under amplification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("If N(I) is positive definite, the amplified channel sends each positive definite joint Z to a positive definite matrix for every finite reference. The assertion includes correlated input and the empty reference. The inverse-form and density-state proofs use this implication."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("amp-mul-embed"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_mul_embed"),

@@ -13,7 +13,14 @@ import D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Order
 
-/-! The trace against the upper comparison logarithm controls the singular boundary. -/
+/-! The trace against the upper comparison logarithm controls the singular boundary.
+The cross-log limit uses the support regularization theorem of AlphaZAffine.
+
+proof_shape: content
+admission_basis: escape-witness
+escape_witness: a supported cross-log comparison supplies the lower limit for
+variable density noises, and the eventual data-processing upper bound gives
+convergence of the finite divergence at the singular pair. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -264,16 +264,6 @@ private lemma matrix_path (A B : Matrix ι ι ℂ) (hA : A.PosDef) (hB : B.PosDe
       simp only [E, Matrix.coe_reindexAlgEquiv, trace_reindex]] at h
     exact h
 
-private lemma support_of_posDef (ρ σ : DensityState ι)
-    (hσ : (CStarMatrix.ofMatrix.symm σ.1).PosDef) : SupportContained ρ σ := by
-  intro v hv
-  change (CStarMatrix.ofMatrix.symm σ.1) *ᵥ v = 0 at hv
-  have hv0 := Matrix.mulVec_injective_of_isUnit hσ.isUnit
-    (show (CStarMatrix.ofMatrix.symm σ.1) *ᵥ v =
-      (CStarMatrix.ofMatrix.symm σ.1) *ᵥ 0 by simpa only [Matrix.mulVec_zero] using hv)
-  change (CStarMatrix.ofMatrix.symm ρ.1) *ᵥ v = 0
-  rw [hv0, Matrix.mulVec_zero]
-
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 private lemma density_path (ρ σ : DensityState ι)
     (hρ : (CStarMatrix.ofMatrix.symm ρ.1).PosDef)

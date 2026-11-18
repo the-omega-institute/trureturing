@@ -13,13 +13,16 @@ import D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 
 /-! Actual faithful density-pair approximation via ordered rare-flag and local limits.
 
+The integrated logarithmic derivative and rare-flag limit come from
+`UmegakiBKMPath` and `UmegakiRareFlagBKM`, respectively.
 The public approximation result constructs the actual state witnesses with an
 earned positive denominator. Private lemmas provide consumed analytic estimates
 and transport support; none is a separate delivery. The uniform floor in
 `affine_floor` and compact-interval estimate in `average_limit` feed the
 construction, normalization and ordered parameter selection on the live
 proof path of `faithful_density_pair_ratio_approx`.
-proof_shape: content; admission_basis: escape-witness.
+proof_shape: content
+admission_basis: escape-witness
 escape_witness: the public theorem's construction of actual faithful density
 pairs from the ordered limits, with a strictly positive input divergence.
 -/
@@ -39,6 +42,7 @@ open D5.S3.Divergence.AudenaertBinaryHolevoBound
 open D5.S3.Quantum.Divergence.UmegakiBKMPath
 open D5.S3.Quantum.Divergence.UmegakiRareFlagBKM
 open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (amp_kronecker amp_posDef)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance
@@ -261,45 +265,6 @@ private def ampPositive (N : QuantumChannel a b) :
       (referenceAction_nonneg N (CStarMatrix.ofMatrix X)
         (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hX)))
 
-private lemma amp_one (N : QuantumChannel a b) :
-    amp (R := r) N (1 : Matrix (r × a) (r × a) ℂ) =
-      (1 : Matrix r r ℂ) ⊗ₖ act N (1 : Matrix a a ℂ) := by
-  ext ⟨i,x⟩ ⟨j,y⟩
-  rw [amp_entry]
-  by_cases h : i = j
-  · subst j
-    have he : (fun u v => (1 : Matrix (r × a) (r × a) ℂ) (i,u) (i,v)) =
-        (1 : Matrix a a ℂ) := by ext u v; simp [Matrix.one_apply]
-    rw [he]
-    simp only [Matrix.kroneckerMap_apply, Matrix.one_apply, ite_true, one_mul]
-  · have he : (fun u v => (1 : Matrix (r × a) (r × a) ℂ) (i,u) (j,v)) =
-        (0 : Matrix a a ℂ) := by ext u v; simp [Matrix.one_apply, h]
-    rw [he]
-    change N.toCompletelyPositiveMap 0 x y = _
-    simp [Matrix.kroneckerMap_apply, Matrix.one_apply, h]
-
-attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma amp_posDef (N : QuantumChannel a b)
-    (hN : (act N (1 : Matrix a a ℂ)).PosDef)
-    (X : Matrix (r × a) (r × a) ℂ) (hX : X.PosDef) : (amp N X).PosDef := by
-  let e := Fintype.equivFin (r × a)
-  let E := reindexStar e
-  obtain ⟨c, hc, hfloor, _⟩ := common_floor (E X) (E X)
-    (hX.submatrix e.symm.injective) (hX.submatrix e.symm.injective)
-  have hf : c • (1 : Matrix (r × a) (r × a) ℂ) ≤ X := by
-    have hh := OrderHomClass.mono E.symm hfloor
-    simpa only [map_smul, map_one, StarAlgEquiv.symm_apply_apply] using hh
-  have hp : (c • amp (R := r) N (1 : Matrix (r × a) (r × a) ℂ)).PosDef := by
-    rw [amp_one]
-    exact (Matrix.PosDef.one.kronecker hN).smul hc
-  have hh := OrderHomClass.mono (ampPositive (r := r) N) hf
-  change ampPositive N (c • (1 : Matrix (r × a) (r × a) ℂ)) ≤ amp N X at hh
-  have heq : ampPositive (r := r) N (c • (1 : Matrix (r × a) (r × a) ℂ)) =
-      c • amp (R := r) N (1 : Matrix (r × a) (r × a) ℂ) :=
-    ((ampPositive (r := r) N).toLinearMap.restrictScalars ℝ).map_smul c 1
-  rw [heq] at hh
-  exact (hp.isStrictlyPositive.of_le hh).posDef
-
 private def flagIndex : ((Fin 2 × r) × a) ≃ ((r × a) ⊕ (r × a)) where
   toFun p := if p.1.1 = 0 then Sum.inl (p.1.2,p.2) else Sum.inr (p.1.2,p.2)
   invFun := Sum.elim (fun p => ((0,p.1),p.2)) (fun p => ((1,p.1),p.2))
@@ -422,14 +387,6 @@ private lemma finite_branch_matrix (rho sigma : DensityState a)
   rw [← hr, ← hs]
   rfl
 
-private lemma full_support (rho sigma : DensityState a)
-    (hS : (CStarMatrix.ofMatrix.symm sigma.1).PosDef) : SupportContained rho sigma := by
-  intro v hv
-  change (CStarMatrix.ofMatrix.symm sigma.1) *ᵥ v = 0 at hv
-  have hz : v = 0 := hS.mulVec_injective (hv.trans (Matrix.mulVec_zero _).symm)
-  subst v
-  exact Matrix.mulVec_zero _
-
 set_option maxHeartbeats 1000000 in
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 /-- With faithful channel output on the identity, actual faithful density pairs
@@ -475,7 +432,7 @@ theorem faithful_density_pair_ratio_approx
   have hZo : Zo.PosDef := amp_posDef N hN Z hZ
   have hCo : Co.PosDef := by
     dsimp [Co]
-    rw [amp_one]
+    rw [← Matrix.one_kronecker_one, amp_kronecker]
     exact Matrix.PosDef.one.kronecker hN
   let qi := (Vᴴ * Z⁻¹ * V).trace.re
   let qo := (Voᴴ * Zo⁻¹ * Vo).trace.re
@@ -636,9 +593,9 @@ theorem faithful_density_pair_ratio_approx
     rw [hp, hq]
     exact hh
   refine ⟨rho, sigma, hpR, hpS, by rwa [hrhoO], by rwa [hsigmaO], hmarg, hmargO,
-    full_support rho sigma hpS, ?_, hpositive, ?_, ?_⟩
+    support_of_posDef rho sigma hpS, ?_, hpositive, ?_, ?_⟩
   · rw [hrhoO, hsigmaO]
-    exact full_support rhoO sigmaO hpSO
+    exact support_of_posDef rhoO sigmaO hpSO
   · rw [hrhoO, hsigmaO, hquot]
     calc
       _ = |(localIntegral Bo Ho e / localIntegral Bi Hi e - k Zo Co Vo δ / k Zi Ci Vi δ) +

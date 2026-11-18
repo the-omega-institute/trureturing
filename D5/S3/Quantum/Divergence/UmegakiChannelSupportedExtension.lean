@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Depolarized endpoint bounds control the supported conditional Umegaki deficit. -/
+   digest: The complete and conditional Umegaki coefficients equal the left endpoint metric. -/
 
 import D5.S3.Quantum.Divergence.UmegakiConditionalBKM
 import D5.S3.Quantum.Divergence.UmegakiFaithfulLowerRatio
@@ -16,7 +16,17 @@ import D5.S3.Quantum.Recovery.QubitCenteredTransport
 
 /-! The input noise makes a supported pair faithful at fixed output depolarization.
 A second limit removes the output depolarization, with each state's own marginal
-determining its noise. Both limits use data processing for actual CPTP maps. -/
+determining its noise. Both limits use data processing for actual CPTP maps.
+
+Hirche, George, Nuradha and Wilde, arXiv:2608.27171v1, Definition 2
+(Eqs. (2.13) and (2.14)), Remark 2 and §9, second bullet, supply the
+coefficient definitions and the separation question.
+
+proof_shape: content
+admission_basis: escape-witness
+escape_witness: actual flagged entropy ratios bound every depolarized endpoint
+test, and the ordered support limits and variational comparisons recover the
+actual supported entropy and arithmetic metric coefficients. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -543,8 +553,10 @@ theorem depolarized_endpointBound_completeCoefficient (N : QuantumChannel a b) (
       linarith only [hUpper, hLower]
   · exact hZero (by ext i; exact (hj ⟨i⟩).elim)
 
-/-- The supported finite-real Umegaki formulation of the equality asked in
-arXiv:2608.27171v1, Definition 2, Remark 2 and Section 9. -/
+/-- The complete and conditional Umegaki coefficients coincide on the finite
+support branch, ruling out the relative-entropy instance of the strict
+separation asked in the second bullet of §9 of arXiv:2608.27171v1.
+The ratios implement Definition 2, Eqs. (2.13) and (2.14), with Remark 2. -/
 theorem conditionalCoefficient_eq_completeCoefficient (N : QuantumChannel a b) :
     conditionalCoefficient N = completeCoefficient N := by
   have hComplete := completeCoefficient_bounds N

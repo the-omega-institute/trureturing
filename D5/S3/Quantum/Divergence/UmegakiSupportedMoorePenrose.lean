@@ -9,7 +9,16 @@
 import D5.S3.Quantum.Divergence.UmegakiChannelSupportedExtension
 import D5.S3.Observer.Hilbert.FiniteMoorePenroseInverse
 
-/-! The range condition and the maximizing test for the arithmetic inverse. -/
+/-! The range condition and the maximizing test for the arithmetic inverse.
+The finite inverse is the existing `FiniteMoorePenroseInverse.moorePenroseInverse`.
+The kernel-direction test and square completion follow the independent GPT Pro
+derivation for the singular metric variational form.
+
+proof_shape: content
+admission_basis: escape-witness
+escape_witness: boundedness of the complex quadratic tests forces membership in
+the arithmetic range, where the Moore–Penrose preimage attains the supremum.
+The actual channel maps each admissible test direction into this output range. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

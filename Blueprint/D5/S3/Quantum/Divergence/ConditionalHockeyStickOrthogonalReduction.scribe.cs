@@ -34,17 +34,35 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                 Blocks(
                     Paragraph(Text("For a finite carrier, positive semidefiniteness and complex trace one imply nonemptiness. The faithful input and output states supply the local nonemptiness needed for positivity of their partial traces."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("trace-reindex"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex"),
-                H("Trace under reindexing"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("Reindexing an arbitrary complex square matrix along a finite equivalence preserves its complex trace. The faithful BKM path uses this to transport traces back from Fin coordinates."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("amp-smul"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_smul"),
                 H("Real homogeneity of the amplification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For a finite channel, arbitrary joint X and real t, amplification sends t times X to t times the amplified X. The lower bound and the residual transport use this identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("amp-kronecker"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_kronecker"),
+                H("Amplification on an elementary tensor"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For a finite channel N and arbitrary complex X and Z on the reference and input, the amplification sends X tensor Z to X tensor N(Z). This computes the channel image of the identity in the positivity argument."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("amp-mono"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_mono"),
+                H("Amplification preserves matrix order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For the canonical finite channel, input matrix order X ≤ Z implies the same order for their amplified images. This transports a strictly positive lower bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("positive-floor"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.positive_floor"),
+                H("Positive lower bound by the identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Every positive definite complex matrix on a finite carrier dominates m times the identity for some real m > 0. On the empty carrier the proof chooses m = 1. Amplification uses this lower bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("amp-posdef"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_posDef"),
+                H("Faithfulness under amplification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("If N(I) is positive definite, the amplified channel sends each positive definite joint Z to a positive definite matrix for every finite reference. The assertion includes correlated input and the empty reference. The inverse-form and density-state proofs use this implication."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("amp-sub-smul"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_sub_smul"),
@@ -164,7 +182,7 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                     "For every finite A, B and R, every channel N and every complex "
                         + "matrix X on R times A, tracing out B after amplification equals "
                         + "tracing out A before amplification. No state hypothesis is needed. "
-                        + "The public definition ptr in the Lean statement is precisely "
+                        + "The private notation ptr in the Lean statement is precisely "
                         + "PartialTraceMutualInformation.partialTraceRight. "
                         + "FaithfulConditionalGap consumes this existing trace-preservation identity."))),
                 DescribeRole.Theorem),
@@ -261,7 +279,21 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("hirche-george-nuradha-wilde-2026-conditional-hockey-stick-orthogonal-reduction"),
-                    ResolutionKind.Proved))
+                    ResolutionKind.Proved)),
+            Describe.Lean(
+                DescribeId.Create("conditional-hockey-stick-trace-reindex"),
+                DeclarationHandle.Create(Prefix + "trace_reindex"),
+                H("Simultaneous reindexing preserves the trace"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary finite types n and m, an equivalence e from n to m, "
+                        + "and any square complex matrix X on n, the complex trace of "
+                        + "Matrix.reindex e e X is the complex trace of X. The statement "
+                        + "requires only the two Fintype instances and includes empty types. "
+                        + "The identity supplies the trace step for orthogonal reduction "
+                        + "and for coordinate changes in UmegakiFaithfulLowerRatio."))),
+                DescribeRole.Theorem)
         )));
 
     private static Formula X(string name) => F.Id(name);
