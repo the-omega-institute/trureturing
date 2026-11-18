@@ -12,9 +12,7 @@ $$\forall n: \mathit{Nat}, (\operatorname{\mathit{HardinA229634Strip}}.\operator
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634Strip.a` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229634: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229634>.
+*Citation.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229634: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229634>.
 
 *Commentary.*
 

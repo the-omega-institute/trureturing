@@ -67,27 +67,12 @@ internal sealed class HardinA229634StripDataDocument : IScribeDocumentDefinition
         var statement = full(tables);
         return Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks([Paragraph(Text(prose)), Paragraph(Text("Each displayed B subscript names only a row block of this presentation, with zero-based row and column indices. The Fin.append expressions concatenate these blocks in order along their first index. Every block is displayed in full below.")), .. tables]),
+            Blocks([Paragraph(Text(prose)), .. tables]),
             DescribeRole.Definition);
     }
     private static Formula Table(List<DocumentBlock> tables, params Formula[][] rows)
     {
-        var blocks = new List<Formula>();
-        for (var offset = 0; offset < rows.Length; offset += 3)
-        {
-            var count = rows.Length - offset < 3 ? rows.Length - offset : 3;
-            var chunk = new Formula[count][];
-            for (var row = 0; row < count; row++)
-                chunk[row] = rows[offset + row];
-            var symbol = Seq(V("B"), Underscore, Grp(Num(tables.Count.ToString(System.Globalization.CultureInfo.InvariantCulture))));
-            tables.Add(new DocumentBlock.DisplayFormula(Disp(Eq(
-                Typed(symbol, Call("Matrix", Fin(chunk.Length), Fin(chunk[0].Length), Call("Int"))), Mat(chunk)))));
-            blocks.Add(symbol);
-        }
-        var result = blocks[blocks.Count - 1];
-        for (var i = blocks.Count - 2; i >= 0; i--)
-            result = Call("Fin.append", blocks[i], result);
-        return result;
+        return Mat(rows);
     }
 
     private static Formula FullCl() =>
