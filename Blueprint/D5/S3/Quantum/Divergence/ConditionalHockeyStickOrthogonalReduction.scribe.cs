@@ -225,7 +225,21 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("hirche-george-nuradha-wilde-2026-conditional-hockey-stick-orthogonal-reduction"),
-                    ResolutionKind.Proved))
+                    ResolutionKind.Proved)),
+            Describe.Lean(
+                DescribeId.Create("conditional-hockey-stick-trace-reindex"),
+                DeclarationHandle.Create(Prefix + "trace_reindex"),
+                H("Simultaneous reindexing preserves the trace"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary finite types n and m, an equivalence e from n to m, "
+                        + "and any square complex matrix X on n, the complex trace of "
+                        + "Matrix.reindex e e X is the complex trace of X. The statement "
+                        + "requires only the two Fintype instances and includes empty types. "
+                        + "The identity supplies the trace step for orthogonal reduction "
+                        + "and for coordinate changes in UmegakiFaithfulLowerRatio."))),
+                DescribeRole.Theorem)
         )));
 
     private static Formula X(string name) => F.Id(name);

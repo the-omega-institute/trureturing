@@ -172,6 +172,18 @@ Choose a pure density matrix tau on A and enlarge the reference to R direct-sum 
 
 Positive-part traces add across the three blocks. Both the reference amplification and the partial trace respect the three blocks. Consequently the input divergence, output divergence and reference-marginal divergence each become c times their original value plus a. Subtracting the marginal term cancels a, so both conditional gaps are multiplied by the same positive c. The denominator stays positive and the ratio is unchanged. Taking delta=gamma yields the orthogonal reduction; transferring in both directions between any gamma,delta at least one yields parameter independence. Thus the conditional coefficient equals its trace-distance value throughout this range.
 
+**Theorem 1.13 (Simultaneous reindexing preserves the trace).**
+
+Lean statement: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary finite types n and m, an equivalence e from n to m, and any square complex matrix X on n, the complex trace of Matrix.reindex e e X is the complex trace of X. The statement requires only the two Fintype instances and includes empty types. The identity supplies the trace step for orthogonal reduction and for coordinate changes in UmegakiFaithfulLowerRatio.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.E`
@@ -186,6 +198,7 @@ Positive-part traces add across the three blocks. Both the reference amplificati
 - Truth anchor: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.ptr_amp`
 - Truth anchor: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.ratios`
 - Truth anchor: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.result`
+- Truth anchor: `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDensityPurification](../Foundation/FiniteDensityPurification.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../Foundation/FiniteDiamondDistance.md)
 - Dependency: [D5/S3/Quantum/Information/OrthogonalRecordEntropy](../Information/OrthogonalRecordEntropy.md)
