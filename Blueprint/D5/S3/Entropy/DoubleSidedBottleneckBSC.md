@@ -144,6 +144,10 @@ $$\forall (\operatorname{Cu} : \mathbb{R}), (0 \le \operatorname{Cu}) \implies (
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/DoubleSidedBottleneckBSC.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-dos2022c3` (proved) by `D5/S3/Entropy/DoubleSidedBottleneckBSC.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-dos2022c3","declaration_gid":"D5/S3/Entropy/DoubleSidedBottleneckBSC.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Michael Dikshtein, Or Ordentlich, Shlomo Shamai (Shitz) (2022). *The Double-Sided Information Bottleneck Function*. DOI: [10.3390/e24091321](https://doi.org/10.3390/e24091321). URL: <https://doi.org/10.3390/e24091321>.
