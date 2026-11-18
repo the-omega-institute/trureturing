@@ -10,6 +10,11 @@ internal sealed class SelectionDocument : IScribeDocumentDefinition
         "Actual prime capacities and exact second-order cardinality adjustment for finite density selections.",
         H("Selecting prime sets with exact total size"),
         Blocks(
+            Describe.Lean(DescribeId.Create("prime-interval-card"),
+                DeclarationHandle.Create(Prefix + "primeInterval_card"), H("Cardinality at real endpoints"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real a ≤ b, the cardinality of the primes in (a,b] is primeCount(b) minus primeCount(a). The floor cutoffs preserve both endpoint conventions."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("prime-capacity"),
                 DeclarationHandle.Create(Prefix + "primeInterval_capacity"), H("Capacity of a logarithmic prime window"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

@@ -123,4 +123,144 @@ theorem abs_primeInterval_card_sub_integral_le {y z E : ℝ}
         (mul_le_mul_of_nonneg_right (hE y ⟨le_rfl, hyz⟩) hylog)) _
     _ = _ := by rw [div_eq_mul_inv]; ring
 
+/-- An actual half-open moving box has its limiting width as its capacity
+on the scale `(P / log P) / (C * (log P) ^ a)`. -/
+theorem primeInterval_moving_log_power_capacity {C a u v : ℝ}
+    (hC : 0 < C) (ha : 0 < a) (huv : u < v) :
+    Tendsto (fun P : ℝ =>
+      ((primeInterval (P * exp (u / (C * log P ^ a)))
+        (P * exp (v / (C * log P ^ a)))).card : ℝ) /
+          ((P / log P) / (C * log P ^ a))) atTop (𝓝 (v - u)) := by
+  let s (P : ℝ) := C * log P ^ a
+  let b (w P : ℝ) := P * exp (w / s P)
+  let d (P : ℝ) := (P / log P) / s P
+  let J (P : ℝ) := ∫ t in b u P..b v P, (log t)⁻¹
+  let Q (P : ℝ) := ((primeInterval (b u P) (b v P)).card : ℝ)
+  change Tendsto (fun P => Q P / d P) atTop (𝓝 (v - u))
+  have hs : Tendsto s atTop atTop :=
+    ((tendsto_rpow_atTop ha).comp tendsto_log_atTop).const_mul_atTop hC
+  have hs0 : Tendsto (fun P => (s P)⁻¹) atTop (𝓝 0) := hs.inv_tendsto_atTop
+  have hexp (w : ℝ) : Tendsto (fun P => exp (w / s P)) atTop (𝓝 1) := by
+    simpa only [Function.comp_def, exp_zero] using (continuous_exp.tendsto 0).comp (hs.const_div_atTop w)
+  have hbox (w : ℝ) : ∀ᶠ P in atTop, b w P ∈ Icc (P / 2) (2 * P) := by
+    filter_upwards [eventually_ge_atTop (0 : ℝ),
+      (hexp w).eventually_const_lt (by norm_num : (1 / 2 : ℝ) < 1),
+      (hexp w).eventually_lt_const (by norm_num : (1 : ℝ) < 2)] with P hP hl hh
+    exact ⟨by
+      rw [div_eq_mul_one_div]
+      exact mul_le_mul_of_nonneg_left hl.le hP,
+      by rw [mul_comm 2 P]; exact mul_le_mul_of_nonneg_left hh.le hP⟩
+  have hgeom : ∀ᶠ P in atTop,
+      0 < P ∧ 0 < log P ∧ 0 < s P ∧ 2 ≤ b u P ∧ b u P ≤ b v P ∧
+        Icc (b u P) (b v P) ⊆ Icc (P / 2) (2 * P) := by
+    filter_upwards [eventually_ge_atTop (4 : ℝ), hs.eventually_gt_atTop 0,
+      hbox u, hbox v] with P hP hsP hy hz
+    have hP0 : 0 < P := by linarith
+    refine ⟨hP0, log_pos (by linarith), hsP, by linarith [hy.1], ?_,
+      Icc_subset_Icc hy.1 hz.2⟩
+    exact mul_le_mul_of_nonneg_left (exp_le_exp.mpr
+      (div_le_div_of_nonneg_right huv.le hsP.le)) hP0.le
+  have hlog (w : ℝ) : Tendsto (fun P => log P / log (b w P)) atTop (𝓝 1) := by
+    have hsmall := (hs.const_div_atTop w).mul tendsto_log_atTop.inv_tendsto_atTop
+    have hratio := (tendsto_const_nhds (x := (1 : ℝ)) (f := atTop)).add hsmall
+    simp only [mul_zero, add_zero] at hratio
+    have h := hratio.inv₀ (one_ne_zero : (1 : ℝ) ≠ 0)
+    simp only [inv_one] at h
+    apply h.congr'
+    filter_upwards [hgeom] with P hP
+    obtain ⟨hP0, hL, _, _, _, _⟩ := hP
+    dsimp [b]
+    rw [log_mul hP0.ne' (exp_pos _).ne', log_exp]
+    have heq : (1 : ℝ) + w / s P * (log P)⁻¹ = (log P + w / s P) / log P := by
+      field_simp
+    rw [heq, inv_div]
+  have hder (w : ℝ) : HasDerivAt (fun t : ℝ => exp (t * w)) w 0 := by
+    simpa using ((hasDerivAt_id (0 : ℝ)).mul_const w).exp
+  have ht : Tendsto (fun P => (s P)⁻¹) atTop (𝓝[>] 0) :=
+    tendsto_nhdsWithin_iff.mpr ⟨hs0, (hs.eventually_gt_atTop 0).mono
+      fun _ h => inv_pos.mpr h⟩
+  have hwidth : Tendsto (fun P => (exp (v / s P) - exp (u / s P)) * s P)
+      atTop (𝓝 (v - u)) := by
+    simpa only [Function.comp_def, zero_add, zero_mul, mul_zero, exp_zero, sub_self, sub_zero, Pi.sub_apply,
+      smul_eq_mul, inv_inv, div_eq_mul_inv, mul_comm] using
+      ((hder v).sub (hder u)).tendsto_slope_zero_right.comp ht
+  have hsides (w : ℝ) : Tendsto (fun P => ((b v P - b u P) / log (b w P)) / d P)
+      atTop (𝓝 (v - u)) := by
+    have h := hwidth.mul (hlog w)
+    simp only [mul_one] at h
+    apply h.congr'
+    filter_upwards [hgeom] with P hP
+    obtain ⟨hP0, hL, hsP, _, _, _⟩ := hP
+    dsimp only [b, d]
+    rw [div_div_eq_mul_div, div_div_eq_mul_div]
+    field_simp
+    <;> ring
+  have hJ : Tendsto (fun P => J P / d P) atTop (𝓝 (v - u)) := by
+    apply tendsto_of_tendsto_of_tendsto_of_le_of_le' (hsides v) (hsides u)
+    · filter_upwards [hgeom] with P hP
+      obtain ⟨hP0, hL, hsP, hy, hyz, _⟩ := hP
+      apply div_le_div_of_nonneg_right _ (div_nonneg (div_nonneg hP0.le hL.le) hsP.le)
+      have h := intervalIntegral.integral_mono_on (μ := volume) hyz intervalIntegrable_const
+        ((continuousOn_inv_log (by linarith : 1 < b u P)).intervalIntegrable_of_Icc hyz)
+        (fun t ht => inv_anti₀ (log_pos (by linarith [ht.1]))
+          (log_le_log (by linarith [ht.1]) ht.2))
+      simpa only [J, intervalIntegral.integral_const, smul_eq_mul, div_eq_mul_inv] using h
+    · filter_upwards [hgeom] with P hP
+      obtain ⟨hP0, hL, hsP, hy, hyz, _⟩ := hP
+      apply div_le_div_of_nonneg_right _ (div_nonneg (div_nonneg hP0.le hL.le) hsP.le)
+      have h := intervalIntegral.integral_mono_on (μ := volume) hyz
+        ((continuousOn_inv_log (by linarith : 1 < b u P)).intervalIntegrable_of_Icc hyz)
+        intervalIntegrable_const
+        (fun t ht => inv_anti₀ (log_pos (by linarith)) (log_le_log (by linarith) ht.1))
+      simpa only [J, intervalIntegral.integral_const, smul_eq_mul, div_eq_mul_inv] using h
+  obtain ⟨N, hN⟩ := exists_nat_gt a
+  have hpt : ∀ᶠ t : ℝ in atTop, |Chebyshev.theta t - t| ≤ t / log t ^ N := by
+    filter_upwards [(theta_error_log_power N).def (zero_lt_one : (0 : ℝ) < 1),
+      eventually_gt_atTop (1 : ℝ)] with t h ht
+    simpa only [Real.norm_eq_abs, one_mul, abs_of_nonneg
+      (div_nonneg (by linarith : 0 ≤ t) (pow_nonneg (log_pos ht).le N))] using h
+  obtain ⟨T, hT⟩ := eventually_atTop.mp hpt
+  let K : ℝ := (2 : ℝ) ^ |(1 : ℝ)| * (2 : ℝ) ^ |-(N : ℝ)|
+  have hshell : ∀ᶠ P : ℝ in atTop,
+      shellError P ≤ K * P * log P ^ (-(N : ℝ)) := by
+    apply (eventually_gt_atTop (max 4 (2 * T))).mono
+    intro P hP
+    have h := shellError_global_power (σ := 1) (B := -(N : ℝ))
+      (K := 1) (Y := T) (by norm_num) (fun t ht _ hl => by
+        simpa only [one_mul, rpow_one, rpow_neg hl.le, rpow_natCast, div_eq_mul_inv]
+          using hT t ht) P hP
+    simpa only [K, one_mul, rpow_one] using h
+  have hdecay : Tendsto (fun P : ℝ => log P ^ (a - (N : ℝ))) atTop (𝓝 0) := by
+    simpa only [neg_sub, Function.comp_def] using
+      (tendsto_rpow_neg_atTop (sub_pos.mpr hN)).comp tendsto_log_atTop
+  have hbound : Tendsto (fun P => (2 * K * C * log P ^ (a - (N : ℝ))) *
+      (log P / log (b u P))) atTop (𝓝 0) := by
+    simpa only [mul_zero, zero_mul] using (hdecay.const_mul (2 * K * C)).mul (hlog u)
+  have herr : Tendsto (fun P => |Q P / d P - J P / d P|) atTop (𝓝 0) := by
+    apply squeeze_zero' (Eventually.of_forall fun _ => abs_nonneg _) _ hbound
+    filter_upwards [hgeom, hshell] with P hP hKP
+    obtain ⟨hP0, hL, hsP, hy, hyz, hsub⟩ := hP
+    have hd : 0 < d P := div_pos (div_pos hP0 hL) hsP
+    have hly : 0 < log (b u P) := log_pos (by linarith)
+    have hlocal := abs_primeInterval_card_sub_integral_le hy hyz
+      (fun t ht => pointwise_le_shellError hP0.le (hsub ht))
+    rw [← sub_div, abs_div, abs_of_pos hd]
+    calc
+      _ ≤ (2 * shellError P / log (b u P)) / d P :=
+        div_le_div_of_nonneg_right hlocal hd.le
+      _ ≤ (2 * (K * P * log P ^ (-(N : ℝ))) / log (b u P)) / d P :=
+        div_le_div_of_nonneg_right
+          (div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hKP (by norm_num)) hly.le)
+          hd.le
+      _ = _ := by
+        rw [sub_eq_add_neg, rpow_add hL]
+        dsimp only [s, d]
+        field_simp
+        <;> ring
+  have herr' : Tendsto (fun P => Q P / d P - J P / d P) atTop (𝓝 0) := by
+    apply Metric.tendsto_nhds.mpr
+    intro ε hε
+    simpa only [Real.dist_eq, sub_zero, abs_abs] using (Metric.tendsto_nhds.mp herr) ε hε
+  simpa only [sub_add_cancel, zero_add] using herr'.add hJ
+
 end D5.S3.Arith.Robin.Analytic.OmegaTail.MovingBoxCapacity
