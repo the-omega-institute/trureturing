@@ -390,7 +390,7 @@ private lemma rankin_euler_majorant {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
   exact (rankin_finite_product hs0 hz hx).trans
     ((mul_le_mul_of_nonneg_left hprod hC).trans_eq (by ring))
 
-private lemma rankin_exponential_bound {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
+lemma rankin_exponential_bound {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
     (hx : 0 < x) :
     (((Icc 1 ⌊x⌋₊).filter (fun n => T <
       (ArithmeticFunction.cardDistinctFactors n : ℝ))).card : ℝ) ≤
@@ -526,7 +526,7 @@ lemma logWeight_deriv {s z t : ℝ} (hz : 0 < z) (ht : 0 < t) :
     field_simp
     <;> ring
 
-private lemma abelKernel_continuousOn {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a) :
+lemma abelKernel_continuousOn {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a) :
     ContinuousOn (abelKernel s z) (Set.Icc a b) := by
   have hp : ContinuousOn (fun t : ℝ => t ^ s) (Set.Icc a b) :=
     continuousOn_id.rpow_const (fun t ht => Or.inl (ne_of_gt (ha.trans_le ht.1)))
@@ -535,7 +535,7 @@ private lemma abelKernel_continuousOn {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a) 
   have ht0 := ha.trans_le ht.1
   exact mul_ne_zero ht0.ne' (add_pos (rpow_pos_of_pos ht0 _) hz).ne'
 
-private lemma finite_prime_abel {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a)
+lemma finite_prime_abel {s z a b : ℝ} (hz : 0 < z) (ha : 0 < a)
     (hab : a ≤ b) :
     (∑ p ∈ (Ioc ⌊a⌋₊ ⌊b⌋₊).filter Nat.Prime, logWeight s z p) =
       logWeight s z b * (Nat.primeCounting ⌊b⌋₊ : ℝ) -
