@@ -9,11 +9,9 @@
 /-
 admission_basis: escape-witness
 escape_witness: diagonal_rank_two_closure (used by singular_compatible_closure)
-Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
-  sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd.
-The matrix cofactorMatrix reshapes C by column vectorization.
+Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30117
-Declaration classifications (same-delivery helpers expanded; C denotes the declaration above):
+Declaration classifications (direct dependencies in compiled types and bodies):
 diagonal_rank_two_closure | proof_shape: content; escape_witness: diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: normalized_rank_one_closure, normalRankTwo_closure.
 normalized_rank_one_closure | proof_shape: content; escape_witness: diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: normalRankOne_closure.
 linearCoordinatePolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: linearCoordinatePolynomial_homogeneous, linearCoordinatePolynomial_eval, imageClosure_postcompose.

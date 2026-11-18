@@ -47,7 +47,14 @@ A configuration satisfying `equations` but outside `imageClosure`, or a configur
 
 ## Evidence
 
-The kernel-checked declarations are `D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure`, `D5.S3.Geometry.FlatlandImageEquations.imageClosure_implies_equations` and `D5.S3.Geometry.FlatlandImageEquations.result`. Their accepted axiom closure is contained in `{propext, Classical.choice, Quot.sound}`. The direct frozen repository dependency is `D5/S3/Arith/Lattices/CofactorKernel.cofactor`; the delivered modules also use the same-delivery owners in `FlatlandImageAlgebra` and `FlatlandImageClosure`.
+The kernel-checked declarations are `D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure`, `D5.S3.Geometry.FlatlandImageEquations.imageClosure_implies_equations` and `D5.S3.Geometry.FlatlandImageEquations.result`. Their accepted axiom closure is contained in `{propext, Classical.choice, Quot.sound}`. The Flatland modules use the following frozen repository declarations directly in the cofactor construction and proofs.
+
+- `D5/S3/Arith/Lattices/CofactorKernel.cofactor` (`sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd`)
+- `D5/S3/Arith/Lattices/CofactorKernel.augment` (`sha256:1b8ea5d92050b0800467ee3b6cec64a706ba07779c3d671002dadd0d4b97013c`)
+- `D5/S3/Arith/Lattices/CofactorKernel.augment_succ` (`sha256:788160be84279da0dc13fa6d07028ab8f0ba53ea43b1ecad0e66bab5a6fd4250`)
+- `D5/S3/Arith/Lattices/CofactorKernel.det_topRow` (`sha256:8f1dc771b93fd0f1d4e62ca10c9a2411049962bdd64b97ca70d0abccfe7fbee1`)
+- `D5/S3/Arith/Lattices/CofactorKernel.cofactor_eq_adjugate` (`sha256:5d6763dae921f641fc4c08348c41dbf11eb06e9acaf299082ec24c39488485c4`)
+- `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.cofactor_map` (`sha256:bb65039d475dcf1de876dded4c2107433b2f0c0931042edc05b0320132128700`)
 
 The four-slot escape audit is unfinished for the public audit targets; issue [#30117](https://github.com/the-omega-institute/trureturing/issues/30117) records the missing dependent-family registration evidence. The designated settling result is admitted by `open-problem-resolution (#25719; Proved)`.
 

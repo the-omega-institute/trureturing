@@ -10,10 +10,18 @@
 admission_basis: escape-witness
 escape_witness: rank_two_pair_curves (used by diagonal_rank_two_pair_curves)
 Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
-  sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd.
+  sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd;
+  A = D5/S3/Arith/Lattices/CofactorKernel.augment @
+  sha256:1b8ea5d92050b0800467ee3b6cec64a706ba07779c3d671002dadd0d4b97013c;
+  S = D5/S3/Arith/Lattices/CofactorKernel.augment_succ @
+  sha256:788160be84279da0dc13fa6d07028ab8f0ba53ea43b1ecad0e66bab5a6fd4250;
+  T = D5/S3/Arith/Lattices/CofactorKernel.det_topRow @
+  sha256:8f1dc771b93fd0f1d4e62ca10c9a2411049962bdd64b97ca70d0abccfe7fbee1;
+  J = D5/S3/Arith/Lattices/CofactorKernel.cofactor_eq_adjugate @
+  sha256:5d6763dae921f641fc4c08348c41dbf11eb06e9acaf299082ec24c39488485c4.
 The matrix cofactorMatrix reshapes C by column vectorization.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30117
-Declaration classifications (same-delivery helpers expanded; C denotes the declaration above):
+Declaration classifications (direct dependencies in compiled types and bodies):
 ImagingDomain | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: theta, imageClosure, imageClosure_polynomial_specialization, raw_imaging_realization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.postcompose_actual, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations.
 theta | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure, imageClosure_polynomial_specialization, raw_imaging_realization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.postcompose_actual, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations.
 coordinates | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure, imageClosure_polynomial_specialization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.minorPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual.
@@ -52,10 +60,10 @@ finite_row_basis | proof_shape: bind-only; escape_witness: none; Direct frozen d
 full_rank_row_minor | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: kernel_nonzero_of_maximal_minors.
 kernel_nonzero_of_maximal_minors | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
 arbitrary_row_minor_zero | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: cofactor_in_full_kernel.
-cofactor_in_full_kernel | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
-cofactor_kernel_cross | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: kernel_eq_smul_cofactor.
+cofactor_in_full_kernel | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C, A, S, T; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
+cofactor_kernel_cross | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C, A, S, T, J; consumers: kernel_eq_smul_cofactor.
 kernel_eq_smul_cofactor | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations.
-cofactor_nonzero_of_independent_rows | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
+cofactor_nonzero_of_independent_rows | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C, A, S, T; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
 -/
 
 import Mathlib.LinearAlgebra.Projectivization.Basic
@@ -767,9 +775,7 @@ private theorem cofactor_kernel_cross {K : Type*} [Field K] {d : ℕ}
   let N := (augment A).updateRow 0 (Pi.single k 1)
   have hcof (j : Fin (d+1)) : N.adjugate j 0 = cofactor A j := by
     rw [cofactor_eq_adjugate, Matrix.adjugate_apply, Matrix.adjugate_apply]
-    congr 1
-    ext r c
-    by_cases hr : r = 0 <;> simp [N, Matrix.updateRow_apply, hr]
+    simp only [N, Matrix.updateRow_idem]
   have hdet : N.det = cofactor A k := by
     simp [N, det_topRow, Pi.single_apply, ite_mul]
   have hNx : N *ᵥ x = Pi.single 0 (x k) := by
