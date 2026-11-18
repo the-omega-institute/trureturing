@@ -40,7 +40,8 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 
 private abbrev UMat (n : Type*) [Fintype n] [DecidableEq n] := Matrix.unitaryGroup n ℂ
 
-private abbrev basisChange (U : UMat n) := (Unitary.conjStarAlgAut ℂ (Mat n) U).toAlgEquiv
+/-- Unitary conjugation used to read the spectral and measurement coordinates. -/
+abbrev basisChange (U : UMat n) := (Unitary.conjStarAlgAut ℂ (Mat n) U).toAlgEquiv
 
 private def diagReal (p : n → ℝ) : Mat n := diagonal fun k => (p k : ℂ)
 
@@ -108,7 +109,8 @@ private theorem continuous_mpow (a : Mat n) (ha : a.PosDef) :
     (u * Real.log (ha.isHermitian.eigenvalues k))))
   fun_prop
 
-private def logMean (x y : ℝ) : ℝ :=
+/-- The logarithmic mean with its equal-argument value. -/
+def logMean (x y : ℝ) : ℝ :=
   if x = y then x else (x - y) / (Real.log x - Real.log y)
 
 private theorem logMean_integral (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
@@ -244,13 +246,15 @@ private theorem logDeriv_diag (p : n → ℝ) (hp : ∀ k, 0 < p k) (X : Mat n) 
     exact inv_mul_cancel₀ (hf k)
   rw [hinv, mul_diagonal, diagonal_mul]
 
-private def projector (k : n) : Mat n := Matrix.single k k 1
+/-- The standard rank-one coordinate projection. -/
+def projector (k : n) : Mat n := Matrix.single k k 1
 
 private theorem projector_sandwich (k : n) (X : Mat n) :
     projector k * X * projector k = Matrix.single k k (X k k) := by
   simpa [projector] using Matrix.single_mul_mul_single k k k k (1 : ℂ) X 1
 
-private def measurementKraus (V : UMat n) (k : n) : Mat n :=
+/-- The Kraus operator for the standard diagonal encoding of outcome k. -/
+def measurementKraus (V : UMat n) (k : n) : Mat n :=
   projector k * (star (V : Mat n))
 
 private theorem kraus_complete (V : UMat n) :
@@ -531,7 +535,8 @@ private theorem trace_ref_logDeriv (p : n → ℝ) (hp : ∀ k, 0 < p k) (Y : Ma
   have hne : (p k : ℂ) ≠ 0 := by exact_mod_cast (hp k).ne'
   simp [logMean, ← mul_assoc, hne]
 
-private def quadratic (z : n → ℂ) (X : Mat n) : ℝ := (star z ⬝ᵥ (X *ᵥ z)).re
+/-- The real quadratic form tested by the order obstruction. -/
+def quadratic (z : n → ℂ) (X : Mat n) : ℝ := (star z ⬝ᵥ (X *ᵥ z)).re
 
 private def quadraticCLM (z : n → ℂ) : Mat n →L[ℝ] ℝ :=
   Complex.reCLM.comp
@@ -618,7 +623,8 @@ private theorem hadamardAmplitude_sq :
   change (2 : ℂ) * ((Real.sqrt 2 / 2 : ℝ) : ℂ) ^ 2 = 1
   exact_mod_cast ht
 
-private def rotation (i j : n) (hij : i ≠ j) : UMat n :=
+/-- The unitary Hadamard rotation on the selected pair of coordinates. -/
+def rotation (i j : n) (hij : i ≠ j) : UMat n :=
   ⟨D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Hadamard.hadamard i j hadamardAmplitude,
     hadamard_unitary i j hij _ (by simp [hadamardAmplitude]) hadamardAmplitude_sq⟩
 

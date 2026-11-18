@@ -58,20 +58,21 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   let n := ULift.{u} Unit
   refine ⟨⟨n, inferInstance, inferInstance⟩, 0, algebraMap ℝ (Mat n) (Real.log 2), ?_⟩
   change exp (0 : Mat n) ≠ exp (algebraMap ℝ (Mat n) (Real.log 2))
-  rw [exp_zero, ← algebraMap_exp_comm, Real.exp_eq_exp_ℝ, Real.exp_log (by norm_num)]
+  rw [exp_zero, ← algebraMap_exp_comm, ← Real.exp_eq_exp_ℝ, Real.exp_log (by norm_num)]
   intro h
-  have h' := congrArg (fun X : Mat n => X (ULift.up ()) (ULift.up ())) h
-  norm_num at h'
+  rw [show (2 : ℝ) = 1 + 1 by norm_num, map_add, map_one] at h
+  exact zero_ne_one (add_right_cancel (by simpa only [zero_add] using h :
+    (0 : Mat n) + 1 = 1 + 1))
 
-def family : Registration arena.{u} (type_of% (@hasFDerivAt_exp.{u})) where
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Matrix.ExponentialFirstResponse.hasFDerivAt_exp.{u})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@hasFDerivAt_exp.{u}, rejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.ExponentialFirstResponse.hasFDerivAt_exp.{u}, rejected, rejected_law⟩
   sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@hasFDerivAt_exp.{u}) (Realization signature.{u}) Unit Unit where
+    (@_root_.D5.S3.Quantum.Matrix.ExponentialFirstResponse.hasFDerivAt_exp.{u}) (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.ExponentialFirstResponse.Exponential.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.ExponentialFirstResponse.Exponential.family
   realizationSource := none
@@ -137,7 +138,8 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   let n := ULift.{u} Unit
   refine ⟨⟨⟨n, inferInstance, inferInstance⟩, 0⟩, 0, 1, ?_⟩
   change derivative (0 : Mat n) 0 ≠ derivative (0 : Mat n) 1
-  rwa [derivative_zero, derivative_zero]
+  rw [derivative_zero, derivative_zero]
+  exact zero_ne_one
 
 def family : Registration arena.{u} (type_of% (@derivative_apply.{u})) where
   actual := actual

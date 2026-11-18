@@ -11,6 +11,27 @@ internal sealed class BKMMetricAdjointOrderObstructionDocument : IScribeDocument
         + "has an attainable Gibbs curve that obstructs positive recovery under local operator order.",
         H("Local order for the BKM metric adjoint"),
         Blocks(
+            Entry("basis-change", "basisChange", "Unitary basis change",
+                "Conjugate a matrix by a unitary. Its inverse reads the matrix in that basis.",
+                DescribeRole.Definition),
+            Entry("logarithmic-mean", "logMean", "Logarithmic mean",
+                "The mean is the difference quotient (x−y)/(log x−log y) "
+                + "for distinct arguments, with value x when the arguments coincide.",
+                DescribeRole.Definition),
+            Entry("coordinate-projection", "projector", "Coordinate projection",
+                "The rank-one projection has one at its selected diagonal entry and zero elsewhere.",
+                DescribeRole.Definition),
+            Entry("measurement-kraus", "measurementKraus", "Encoded measurement Kraus operator",
+                "The operator is the coordinate projection multiplied on the right by V*. "
+                + "It takes the selected input-basis amplitude to the standard output coordinate.",
+                DescribeRole.Definition),
+            Entry("quadratic-form", "quadratic", "Real quadratic form",
+                "Evaluate Re(z*Xz) for the given complex vector and matrix.",
+                DescribeRole.Definition),
+            Entry("hadamard-rotation", "rotation", "Two-coordinate Hadamard rotation",
+                "The unitary acts as the normalized real Hadamard block on the selected "
+                + "distinct coordinates and is the identity on their complement.",
+                DescribeRole.Definition),
             Entry("logarithmic-mean-integral", "omega", "Logarithmic-mean integral",
                 "For a reference a and a matrix X, integrate a^u X a^(1−u) over the unit "
                 + "interval using the actual real spectral powers.", DescribeRole.Definition),
