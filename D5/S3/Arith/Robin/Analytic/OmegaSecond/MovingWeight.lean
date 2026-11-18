@@ -68,14 +68,6 @@ theorem weight_nonneg (P s t : ℝ) : 0 ≤ weight P s t := by
   have := exp_nonneg (-s * |log (t / P)|)
   linarith
 
-/-- The localized peak has height log two, independently of the parameters. -/
-theorem weight_le_log_two {P s t : ℝ} (hs : 0 ≤ s) : weight P s t ≤ log 2 := by
-  apply log_le_log (by positivity : 0 < 1 + exp (-s * |log (t / P)|))
-  have he : exp (-s * |log (t / P)|) ≤ 1 := by
-    rw [← exp_zero]
-    exact exp_le_exp.mpr (by nlinarith [abs_nonneg (log (t / P))])
-  linarith
-
 theorem weight_continuousOn {P s a b : ℝ} (hP : 0 < P) (ha : 0 < a) :
     ContinuousOn (weight P s) (Set.Icc a b) := by
   intro t ht
