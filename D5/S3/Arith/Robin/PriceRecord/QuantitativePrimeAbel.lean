@@ -299,6 +299,135 @@ theorem prime_counting_four_terms :
   field_simp [show x ≠ 0 by linarith, hl]
   <;> ring
 
+private def logPowerModel (k : ℕ) (x : ℝ) : ℝ := x / log x ^ k
+
+private def reciprocalLogPower (k : ℕ) (x : ℝ) : ℝ := 1 / log x ^ k
+
+private def factorialApproximation (r : ℕ) (x : ℝ) : ℝ :=
+  ∑ j ∈ range r, (j.factorial : ℝ) * logPowerModel (j + 1) x
+
+private lemma logPowerModel_deriv (k : ℕ) {x : ℝ} (hx : 1 < x) :
+    HasDerivAt (logPowerModel k)
+      (reciprocalLogPower k x - (k : ℝ) * reciprocalLogPower (k + 1) x) x := by
+  have hx0 : x ≠ 0 := by linarith
+  have hl : log x ≠ 0 := (log_pos hx).ne'
+  cases k with
+  | zero =>
+    simpa [logPowerModel, reciprocalLogPower] using hasDerivAt_id x
+  | succ k =>
+    convert (hasDerivAt_id x).div ((hasDerivAt_log hx0).pow (k + 1))
+      (pow_ne_zero (k + 1) hl) using 1
+    simp only [reciprocalLogPower, id_eq, Nat.add_sub_cancel, Nat.succ_eq_add_one,
+      pow_succ (log x) (k + 1), pow_succ (log x) k]
+    field_simp [hx0, hl]
+    <;> ring
+
+private lemma factorialApproximation_deriv (r : ℕ) {x : ℝ} (hx : 1 < x) :
+    HasDerivAt (factorialApproximation r)
+      (reciprocalLogPower 1 x - (r.factorial : ℝ) * reciprocalLogPower (r + 1) x) x := by
+  induction r with
+  | zero =>
+    simpa [factorialApproximation] using hasDerivAt_const x (0 : ℝ)
+  | succ r ih =>
+    convert ih.add ((logPowerModel_deriv (r + 1) hx).const_mul (r.factorial : ℝ)) using 1
+    · funext u
+      exact sum_range_succ _ _
+    · push_cast [Nat.factorial_succ]
+      ring
+
+/-- At each fixed order, the normalized real-endpoint prime-counting residual tends to
+the next factorial coefficient. -/
+theorem prime_counting_factorial_residual (r : ℕ) :
+    Tendsto (fun x : ℝ =>
+      (primeCount x - ∑ j ∈ range r, (j.factorial : ℝ) * (x / log x ^ (j + 1))) /
+        (x / log x ^ (r + 1))) atTop (𝓝 (r.factorial : ℝ)) := by
+  change Tendsto (fun x => (primeCount x - factorialApproximation r x) /
+    logPowerModel (r + 1) x) atTop (𝓝 (r.factorial : ℝ))
+  let c : ℝ := r.factorial
+  have hc : 0 < c := by exact_mod_cast Nat.factorial_pos r
+  let F (x : ℝ) := Chebyshev.theta x / (x * log x ^ 2)
+  let H (x : ℝ) := factorialApproximation r x - logPowerModel 1 x
+  let H' (x : ℝ) := reciprocalLogPower 2 x - c * reciprocalLogPower (r + 1) x
+  let G' (x : ℝ) := reciprocalLogPower (r + 1) x -
+    ((r + 1 : ℕ) : ℝ) * reciprocalLogPower (r + 2) x
+  let e (x : ℝ) := (F x - H' x) / c
+  have hH (x : ℝ) (hx : 1 < x) : HasDerivAt H (H' x) x := by
+    convert (factorialApproximation_deriv r hx).sub (logPowerModel_deriv 1 hx) using 1
+    dsimp [H', c]
+    ring
+  have hG := model_atTop (r + 1)
+  have hFint (x : ℝ) (hx : 2 ≤ x) : IntervalIntegrable F volume 2 x :=
+    (intervalIntegrable_iff_integrableOn_Icc_of_le hx).mpr
+      (Chebyshev.integrableOn_theta_div_id_mul_log_sq x)
+  have hb (k : ℕ) {u : ℝ} (hu : 1 < u) :
+      ContinuousAt (reciprocalLogPower k) u :=
+    continuousAt_const.div (continuousAt_log (by linarith : u ≠ 0) |>.pow k)
+      (pow_ne_zero k (log_pos hu).ne')
+  have hHint (x : ℝ) (hx : 2 ≤ x) : IntervalIntegrable H' volume 2 x := by
+    apply ContinuousOn.intervalIntegrable_of_Icc (μ := volume) hx
+    intro u hu
+    have hu' : 1 < u := by linarith [hu.1]
+    exact ((hb 2 hu').sub (continuousAt_const.mul (hb (r + 1) hu'))).continuousWithinAt
+  have hGint (x : ℝ) (hx : 2 ≤ x) : IntervalIntegrable G' volume 2 x := by
+    apply ContinuousOn.intervalIntegrable_of_Icc (μ := volume) hx
+    intro u hu
+    have hu' : 1 < u := by linarith [hu.1]
+    exact ((hb (r + 1) hu').sub
+      (continuousAt_const.mul (hb (r + 2) hu'))).continuousWithinAt
+  have hGfactor {x : ℝ} (hx : 1 < x) :
+      G' x = reciprocalLogPower (r + 1) x * (1 - ((r + 1 : ℕ) : ℝ) / log x) := by
+    simp only [G', reciprocalLogPower, pow_succ (log x) (r + 1)]
+    field_simp [(log_pos hx).ne']
+    <;> ring
+  have hlarge : ∀ᶠ x : ℝ in atTop, ((r + 1 : ℕ) : ℝ) < log x :=
+    tendsto_log_atTop.eventually_gt_atTop _
+  have hGpos : ∀ᶠ x : ℝ in atTop, 0 < G' x := by
+    filter_upwards [eventually_gt_atTop (1 : ℝ), hlarge] with x hx hl
+    rw [hGfactor hx]
+    exact mul_pos (one_div_pos.mpr (pow_pos (log_pos hx) _))
+      (sub_pos.mpr ((div_lt_one (log_pos hx)).mpr hl))
+  have hratio : Tendsto (fun x => e x / G' x) atTop (𝓝 1) := by
+    have herror := (theta_error_log_power r).tendsto_div_nhds_zero
+    have hd := tendsto_log_atTop.const_div_atTop ((r + 1 : ℕ) : ℝ)
+    have hinv := tendsto_log_atTop.const_div_atTop (1 : ℝ)
+    have h := (((herror.mul hinv).div_const c).add_const 1).div
+      (tendsto_const_nhds.sub hd) (by norm_num : (1 : ℝ) - 0 ≠ 0)
+    norm_num only [mul_zero, zero_div, zero_add, sub_zero, div_one] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ), hlarge] with x hx hl
+    rw [hGfactor hx]
+    have hx0 : x ≠ 0 := by linarith
+    have hlog := (log_pos hx).ne'
+    have hdiff : log x - ((r + 1 : ℕ) : ℝ) ≠ 0 := (sub_pos.mpr hl).ne'
+    dsimp [e, H', F, reciprocalLogPower]
+    rw [pow_succ (log x) r]
+    field_simp [hx0, hlog, hc.ne', hdiff]
+    <;> ring
+  have hi := integral_ratio_of_derivative_ratio
+    (fun x hx => ((hFint x hx).sub (hHint x hx)).div_const c) hGint
+    (fun x hx => logPowerModel_deriv (r + 1) (by linarith)) hG hGpos hratio
+  have hFTC (x : ℝ) (hx : 2 ≤ x) :
+      (∫ u in 2..x, e u) = ((∫ u in 2..x, F u) - H x + H 2) / c := by
+    have hprimitive := intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (fun u hu => hH u (by
+        rw [uIcc_of_le hx] at hu
+        linarith [hu.1])) (hHint x hx)
+    simp only [e, intervalIntegral.integral_div,
+      intervalIntegral.integral_sub (hFint x hx) (hHint x hx), hprimitive]
+    ring
+  have hz := (theta_error_log_power r).tendsto_div_nhds_zero
+  have h := hz.add ((hi.const_mul c).sub (hG.const_div_atTop (H 2)))
+  norm_num only [zero_add, mul_one, sub_zero] at h
+  apply h.congr'
+  filter_upwards [eventually_ge_atTop (2 : ℝ)] with x hx
+  rw [hFTC x hx]
+  dsimp only [primeCount]
+  rw [Chebyshev.primeCounting_eq_theta_div_log_add_integral hx]
+  dsimp only [H, logPowerModel]
+  rw [pow_succ (log x) r]
+  field_simp [show x ≠ 0 by linarith, (log_pos (by linarith : 1 < x)).ne', hc.ne']
+  <;> ring
+
 def logarithmicTail (y z : ℝ) : ℝ :=
   ∑ p ∈ primeInterval y z, -log (1 - 1 / (p : ℝ) ^ 2)
 
