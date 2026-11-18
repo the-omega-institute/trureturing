@@ -28,6 +28,12 @@ internal sealed class UmegakiBKMPathDocument : IScribeDocumentDefinition
                     Paragraph(Text("Positive spectral floors for A and B give a common positive floor c along the closed segment. The norm of the two-resolvent sandwich is bounded by the integrable function norm(H)/(c+u) squared. Shifted inverse differentiability gives pointwise continuity without choosing eigenvectors along the path; dominated convergence then gives continuity of the matrix-valued logDeriv and of its real trace pairing. The first derivative of F(t)=Re Tr(Z(t)log Z(t)) is G(t)=Re Tr(H(log Z(t)+I)), and G has derivative Q(t)=Re Tr(H logDeriv(Z(t),H)). Scalar FTC gives the integral of G, and integration by parts with weight 1-t gives the stated identity. Endpoint continuity is proved on the closed interval; two-sided derivatives are used only in its interior.")),
                     Paragraph(Text("For equal traces the correction Re Tr(A-B) is zero by linearity, in particular for normalized density states. Positive definiteness is essential to this delivered scope; no singular endpoint limit is asserted."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("weighted-bkm-integrable"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.weighted_bkm_integrable"),
+                H("Integrability of the weighted BKM path"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For positive definite complex A and B on Fin n, the real trace of (A-B) times the logarithmic derivative at B+t(A-B) in direction A-B, weighted by 1-t, is interval integrable on [0,1]. The faithful conditional proof transports this integrability to arbitrary finite carriers for the joint and marginal paths."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("conditional-block-bkm-path"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.conditional_relativeEntropy_eq_integral_bkm"),
                 H("The conditional block-family identity"),
