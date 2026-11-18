@@ -40,8 +40,21 @@ Lean statement: `D5/S3/Quantum/Fermionic/SlaterSpectatorMinor.occupiedMinor_appe
 
 For every finite occupied set S, the minor for the appended matrix vanishes when p is absent from S. When p is present, it equals the original occupied minor on S with p removed, times minus one to the power of the number of elements of S strictly greater than p. The removal preserves the increasing enumeration of the other rows. The cofactor position in the last column has this parity for every occupied set of the matching size, and the zero convention gives the formula for all other sizes.
 
+**Theorem 1.4 (Ordered extension by a finite set of coordinates).**
+
+Lean statement: `D5/S3/Quantum/Fermionic/SlaterSpectatorMinor.extend_ordered_spectators`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/SlaterSpectatorMinor.extend_ordered_spectators` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For an orthonormal orbital matrix on a finite ordered site type and a finite set T of zero rows, an orthonormal orbital matrix with cardinality of T additional columns exists. Each original zero row outside T remains zero. For any finite occupied set S, the extended minor vanishes unless S contains all of T. When S contains T, the extended minor is the original minor on S with T removed, multiplied by minus one to the power of the number of pairs consisting of a site in T and a later site in S outside T. Removing the largest appended site iterates the one-coordinate cofactor and keeps the order of the other spectator rows.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Fermionic/SlaterSpectatorMinor.appendOrbital`
+- Truth anchor: `D5/S3/Quantum/Fermionic/SlaterSpectatorMinor.extend_ordered_spectators`
 - Truth anchor: `D5/S3/Quantum/Fermionic/SlaterSpectatorMinor.occupiedMinor`
 - Truth anchor: `D5/S3/Quantum/Fermionic/SlaterSpectatorMinor.occupiedMinor_append`

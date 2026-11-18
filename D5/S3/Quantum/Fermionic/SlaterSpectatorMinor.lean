@@ -6,8 +6,10 @@
    utility: none
    digest: Ordered Slater minors with an appended coordinate orbital. -/
 
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
+import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Sort
+import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Order.Interval.Finset.Fin
 
@@ -131,5 +133,74 @@ theorem occupiedMinor_append {k : ℕ} (V : Matrix ι (Fin k) ℂ)
     by_cases hS : S.card = k + 1
     · simpa [occupiedMinor, hS] using minor_without_spectator V p S hS hp
     · simp [occupiedMinor, hS]
+
+private theorem append_gram {k : ℕ} [Fintype ι] (V : Matrix ι (Fin k) ℂ)
+    (p : ι) (hV : V.conjTranspose * V = 1) (hp : ∀ i, V p i = 0) :
+    (appendOrbital V p).conjTranspose * appendOrbital V p = 1 := by
+  classical
+  ext i j : 1
+  rcases Fin.eq_castSucc_or_eq_last i with ⟨i, rfl⟩ | rfl <;>
+    rcases Fin.eq_castSucc_or_eq_last j with ⟨j, rfl⟩ | rfl
+  · have h := congrFun (congrFun hV i) j
+    simpa [Matrix.mul_apply, Matrix.conjTranspose_apply, appendOrbital, Matrix.one_apply] using h
+  · simp [Matrix.mul_apply, Matrix.conjTranspose_apply, appendOrbital, hp]
+  · simp [Matrix.mul_apply, Matrix.conjTranspose_apply, appendOrbital, hp,
+      (Fin.castSucc_ne_last j).symm]
+  · simp [Matrix.mul_apply, Matrix.conjTranspose_apply, appendOrbital]
+
+/-- Append the spectator coordinates in increasing order and compute all occupied minors. -/
+theorem extend_ordered_spectators {k : ℕ} [Fintype ι]
+    (V : Matrix ι (Fin k) ℂ) (hV : V.conjTranspose * V = 1) (T : Finset ι)
+    (hT : ∀ p ∈ T, ∀ j, V p j = 0) :
+    ∃ W : Matrix ι (Fin (k + T.card)) ℂ, W.conjTranspose * W = 1 ∧
+      (∀ q ∉ T, (∀ j, V q j = 0) → ∀ j, W q j = 0) ∧
+      ∀ S : Finset ι, occupiedMinor W S =
+        if T ⊆ S then
+          (-1 : ℂ) ^ (∑ p ∈ T, ((S \ T).filter (p < ·)).card) * occupiedMinor V (S \ T)
+        else 0 := by
+  classical
+  induction T using Finset.induction_on_max with
+  | empty =>
+    exact ⟨V, hV, fun _ _ h => h, fun S => by simp⟩
+  | insert p T hmax ih =>
+    have hpT : p ∉ T := fun hp => (lt_irrefl p) (hmax p hp)
+    obtain ⟨U, hU, hUzero, hminor⟩ :=
+      ih (fun q hq => hT q (Finset.mem_insert_of_mem hq))
+    have hpU : ∀ j, U p j = 0 := hUzero p hpT (hT p (Finset.mem_insert_self p T))
+    have hsize : k + (insert p T).card = k + T.card + 1 := by
+      rw [Finset.card_insert_of_notMem hpT]
+      omega
+    rw [hsize]
+    refine ⟨appendOrbital U p, append_gram U p hU hpU, ?_, ?_⟩
+    · intro q hq hVq j
+      have hqp : q ≠ p := fun he => hq (he ▸ Finset.mem_insert_self p T)
+      have hqT : q ∉ T := fun h => hq (Finset.mem_insert_of_mem h)
+      rcases Fin.eq_castSucc_or_eq_last j with ⟨j, rfl⟩ | rfl
+      · simp [appendOrbital, hUzero q hqT hVq j]
+      · simp [appendOrbital, hqp]
+    · intro S
+      rw [occupiedMinor_append]
+      by_cases hpS : p ∈ S
+      · rw [ite_eq_left hpS, hminor]
+        have hsub : T ⊆ S.erase p ↔ insert p T ⊆ S := by
+          rw [Finset.insert_subset_iff, and_iff_right hpS]
+          exact ⟨fun h q hq => (Finset.mem_erase.mp (h hq)).2,
+            fun h q hq => Finset.mem_erase.mpr ⟨fun he => hpT (he ▸ hq), h hq⟩⟩
+        have hsets : S.erase p \ T = S \ insert p T := by
+          ext q
+          simp only [Finset.mem_sdiff, Finset.mem_erase, Finset.mem_insert]
+          tauto
+        have hfilter : S.filter (p < ·) = (S \ insert p T).filter (p < ·) := by
+          ext q
+          simp only [Finset.mem_filter, Finset.mem_sdiff, Finset.mem_insert]
+          refine ⟨fun h => ⟨⟨h.1, ?_⟩, h.2⟩, fun h => ⟨h.1.1, h.2⟩⟩
+          rintro (rfl | hq)
+          · exact (lt_irrefl _) h.2
+          · exact (not_lt_of_gt (hmax q hq)) h.2
+        by_cases h : insert p T ⊆ S
+        · rw [ite_eq_left (hsub.mpr h), ite_eq_left h, hsets,
+            Finset.sum_insert hpT, pow_add, ← mul_assoc, hfilter]
+        · rw [ite_eq_right (fun hs => h (hsub.mp hs)), ite_eq_right h, mul_zero]
+      · rw [ite_eq_right hpS, ite_eq_right (fun h => hpS (h (Finset.mem_insert_self p T)))]
 
 end D5.S3.Quantum.Fermionic.SlaterSpectatorMinor
