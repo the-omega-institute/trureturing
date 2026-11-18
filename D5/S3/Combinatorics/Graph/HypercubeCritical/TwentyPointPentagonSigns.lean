@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none
-   digest: Common centers and odd signed cycles for actual pentagon embeddings.
- -/
+   digest: Common centers and odd signed cycles for actual pentagon embeddings. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagon
 import D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance

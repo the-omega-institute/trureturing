@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
    utility: none
-   digest: Actual compressed edge counts and degree alternatives in the twenty-point symmetric branch.
- -/
+   digest: Actual compressed edge counts and degree alternatives in the twenty-point symmetric branch. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
 import D5.S3.Combinatorics.Graph.Brooks.General

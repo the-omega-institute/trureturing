@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none
-   digest: Actual matching-coordinate rigidity of paired pentagons.
- -/
+   digest: Actual matching-coordinate rigidity of paired pentagons. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonSigns
 

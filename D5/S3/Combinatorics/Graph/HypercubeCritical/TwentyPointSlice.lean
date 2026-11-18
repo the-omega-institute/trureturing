@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.claim; result=D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.result; claim=D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.claim
-   digest: Obstruction to an actual balanced twenty-point cube support with ten independent degree-two vertices.
- -/
+   digest: Obstruction to an actual balanced twenty-point cube support with ten independent degree-two vertices. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareExclusion
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry

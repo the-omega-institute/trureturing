@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
    utility: none
-   digest: Actual low-path compression and the central high vertex in the twenty-point slice 11/9 branch.
- -/
+   digest: Actual low-path compression and the central high vertex in the twenty-point slice 11/9 branch. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.EighteenPointSlice
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
