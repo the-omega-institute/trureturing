@@ -68,9 +68,11 @@ private theorem exp_log_smul (a : Mat n) (ha : a.PosDef) (u : ℝ) :
     rw [ha.isHermitian.spectrum_real_eq_range_eigenvalues]
     rintro _ ⟨k, rfl⟩
     exact (ha.eigenvalues_pos k).ne'
+  have hlog : ContinuousOn (fun x : ℝ => u • Real.log x) (spectrum ℝ a) :=
+    (continuousOn_const : ContinuousOn (fun _ : ℝ => u) _).smul hc
   rw [← CFC.real_exp_eq_normedSpace_exp ((IsSelfAdjoint.all u).smul IsSelfAdjoint.log), CFC.log,
     ← cfc_smul u Real.log a hc,
-    ← cfc_comp' Real.exp (fun x => u • Real.log x) a (by fun_prop) (by exact continuousOn_const.smul hc)
+    ← cfc_comp' Real.exp (fun x => u • Real.log x) a (by fun_prop) hlog
       ha.isHermitian.isSelfAdjoint]
   apply (basisChange ha.isHermitian.eigenvectorUnitary).symm.injective
   rw [conjugated_cfc a ha]
@@ -236,8 +238,11 @@ private theorem logDeriv_diag (p : n → ℝ) (hp : ∀ k, 0 < p k) (X : Mat n) 
     rw [diagReal, Matrix.diagonal_mul_diagonal]
     have hf (k : n) : ((p k + t : ℝ) : ℂ) ≠ 0 := by
       exact_mod_cast (add_pos (hp k) ht).ne'
-    simp [hf]
-  rw [hinv, diagonal_mul, mul_diagonal]
+    rw [← Matrix.diagonal_one]
+    congr 1
+    funext k
+    exact inv_mul_cancel₀ (hf k)
+  rw [hinv, mul_diagonal, diagonal_mul]
 
 private def projector (k : n) : Mat n := Matrix.single k k 1
 
@@ -447,6 +452,7 @@ private theorem adjoint_logDeriv (V : UMat n) (p : n → ℝ) (hp : ∀ k, 0 < p
   ext i j
   by_cases h : i = j
   · subst j
+    rw [Matrix.diagonal_apply_eq, Matrix.diag_apply]
     change logDeriv (diagReal p) Y i i = (diagReal (fun k => (p k)⁻¹) * diagonal (diag Y)) i i
     rw [logDeriv_diag p hp]
     simp [logMean, diagReal]
@@ -654,17 +660,21 @@ private theorem rotation_diagonal_first (i j : n) (hij : i ≠ j) (p : n → ℝ
     rw [mul_comm hadamardAmplitude, mul_assoc, ht]]
   ring
 
+private theorem projector_diagonal (i : n) :
+    projector i = diagonal (fun k => if k = i then (1 : ℂ) else 0) := by
+  ext j k
+  by_cases hjk : j = k
+  · subst k
+    by_cases hj : j = i <;> simp [projector, Matrix.single_apply, hj, eq_comm]
+  · simp [projector, Matrix.single_apply, Matrix.diagonal_apply, hjk]
+    intro hij hik
+    exact hjk (hij.symm.trans hik)
+
+
 private theorem projector_posSemidef (i : n) : (projector i).PosSemidef := by
-  have h : projector i = diagonal (Pi.single i (1 : ℂ)) := by
-    ext j k
-    by_cases hj : j = i
-    · subst j
-      by_cases hk : k = i <;> simp [projector, Matrix.single_apply, Matrix.diagonal_apply, hk, eq_comm]
-    · have hi := Ne.symm hj
-      simp [projector, Matrix.single_apply, Matrix.diagonal_apply, hj, hi]
-  rw [h, posSemidef_diagonal_iff]
+  rw [projector_diagonal, posSemidef_diagonal_iff]
   intro j
-  by_cases hj : j = i <;> simp [Pi.single_apply, hj]
+  by_cases hj : j = i <;> simp [hj]
 
 private theorem witness_quadratic (i j : n) (hij : i ≠ j) (X : Mat n)
     (x y m s : ℝ)
@@ -676,10 +686,10 @@ private theorem witness_quadratic (i j : n) (hij : i ≠ j) (X : Mat n)
   have hstar : star (Pi.single (M := fun _ : n => ℂ) i (Real.sqrt y : ℂ) - Pi.single (M := fun _ : n => ℂ) j (Real.sqrt x : ℂ)) =
       Pi.single (M := fun _ : n => ℂ) i (Real.sqrt y : ℂ) - Pi.single (M := fun _ : n => ℂ) j (Real.sqrt x : ℂ) := by
     funext k
-    by_cases hi : k = i <;> by_cases hj : k = j <;> simp [Pi.single_apply, hi, hj]
+    by_cases hi : k = i <;> by_cases hj : k = j <;> simp [Pi.single_apply, hi, hj, hij, Ne.symm hij]
   unfold quadratic
   rw [hstar, Matrix.mulVec_sub, sub_dotProduct, dotProduct_sub, dotProduct_sub]
-  simp only [single_dotProduct, Matrix.mulVec_single, hii, hij', hji, hjj,
+  simp only [single_dotProduct, Matrix.mulVec, dotProduct_single, hii, hij', hji, hjj,
     ← Complex.ofReal_mul, ← Complex.ofReal_sub, Complex.ofReal_re]
   rw [Real.sqrt_mul hx.le y]
   field_simp
@@ -699,12 +709,24 @@ private theorem measured_density (a : Mat n) (ha : a.PosDef) (V : UMat n) :
     have hdiag := h.diag_pos (i := k)
     apply Complex.ext
     · simp [Matrix.diag]
-    · simpa [Matrix.diag] using (Complex.pos_iff.mp hdiag).2
+    · simpa [Matrix.diag] using (Complex.pos_iff.mp hdiag).2.symm
 
 private theorem rotated_projector_entry (T : UMat n) (r s i : n) :
     basisChange T (projector i) r s = (T : Mat n) r i * star ((T : Mat n) s i) := by
   change ((T : Mat n) * projector i * (T : Mat n)ᴴ) r s = _
-  simp [projector, Matrix.mul_apply, Matrix.single_apply]
+  rw [projector, mul_assoc]
+  rw [show Matrix.single i i (1 : ℂ) * (T : Mat n)ᴴ =
+      Matrix.of (fun k l => if k = i then star ((T : Mat n) l i) else 0) by
+    ext k l
+    by_cases hk : k = i
+    · subst k
+      simp [Matrix.single_mul_apply_same]
+    · simp [Matrix.single_mul_apply_of_ne, hk]]
+  rw [Matrix.mul_apply, Finset.sum_eq_single i]
+  · simp
+  · intro k _ hk
+    simp [hk]
+  · exact fun hi => (hi (Finset.mem_univ _)).elim
 
 private theorem metricAdjoint_projector (a : Mat n) (ha : a.PosDef)
     (T : UMat n) (p : n → ℝ) (i r s : n) :
@@ -714,12 +736,16 @@ private theorem metricAdjoint_projector (a : Mat n) (ha : a.PosDef)
       ((p i : ℂ)⁻¹ * ((T : Mat n) r i * star ((T : Mat n) s i))) := by
   let U := ha.isHermitian.eigenvectorUnitary
   have hP : scaledDiagonal p (projector i) = (p i : ℂ)⁻¹ • projector i := by
-    ext k l
+    change diagReal (fun k => (p k)⁻¹) * diagonal (diag (projector i)) =
+      (p i : ℂ)⁻¹ • projector i
+    rw [projector_diagonal, Matrix.diag_diagonal, diagReal, Matrix.diagonal_mul_diagonal,
+      ← Matrix.diagonal_smul]
+    congr 1
+    funext k
     by_cases hk : k = i
     · subst k
-      by_cases hl : l = i <;>
-        simp [scaledDiagonal, diagonalPart, diagReal, projector, Matrix.single_apply, hl, eq_comm]
-    · simp [scaledDiagonal, diagonalPart, diagReal, projector, Matrix.single_apply, hk, Ne.symm hk]
+      simp
+    · simp [hk]
   change (basisChange U).symm
     (derivative (CFC.log a) (basisChange (U * T) (scaledDiagonal p (projector i)))) r s = _
   rw [derivative_eq_omega a ha, omega_entry a _ ha]
@@ -730,7 +756,7 @@ private theorem metricAdjoint_projector (a : Mat n) (ha : a.PosDef)
   rw [hc, AlgEquiv.symm_apply_apply, hP, map_smul, Matrix.smul_apply, rotated_projector_entry]
   rfl
 
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 2200000 in
 /-- Every faithful nonflat density has a projective measurement whose attainable Gibbs
 line cannot be locally dominated in operator order by a positive reference-exact map. -/
 theorem measurement_order_obstruction (a : Matrix n n ℂ) (ha : a.PosDef)
@@ -756,6 +782,8 @@ theorem measurement_order_obstruction (a : Matrix n n ℂ) (ha : a.PosDef)
       (∀ H Y, (Hᴴ * logDeriv a (E Y)).trace = ((N H)ᴴ * logDeriv τ Y).trace) ∧
       z = (U : Mat n) *ᵥ (Pi.single (M := fun _ : n => ℂ) i (Real.sqrt (eigen j) : ℂ) -
         Pi.single (M := fun _ : n => ℂ) j (Real.sqrt (eigen i) : ℂ)) ∧
+      (∀ r s, (r = i ∨ r = j) → (s = i ∨ s = j) →
+        (basisChange U).symm (E P) r s = (logMean (eigen r) (eigen s) / (eigen i + eigen j) : ℝ)) ∧
       quadratic z (E P) = (2 * eigen i * eigen j - 2 * logMean (eigen i) (eigen j) *
         Real.sqrt (eigen i * eigen j)) / (eigen i + eigen j) ∧ quadratic z (E P) < 0 ∧
       (∀ᶠ t : ℝ in 𝓝 0, (w t).PosDef ∧ (w t).trace = 1 ∧
@@ -779,7 +807,13 @@ theorem measurement_order_obstruction (a : Matrix n n ℂ) (ha : a.PosDef)
     · obtain ⟨k⟩ := hn
       apply hflat
       refine ⟨eigen k, (basisChange U).symm.injective ?_⟩
-      rw [hspec, ← AlgEquiv.toLinearMap_apply, map_smul, map_one]
+      rw [hspec]
+      have hm : (basisChange U).symm (eigen k • (1 : Mat n)) = eigen k • (1 : Mat n) := by
+        change ((basisChange U).symm.toLinearMap.restrictScalars ℝ) (eigen k • (1 : Mat n)) = _
+        rw [map_smul]
+        congr 1
+        exact map_one (basisChange U).symm
+      rw [hm]
       ext i j
       by_cases hij : i = j
       · subst j
@@ -796,7 +830,7 @@ theorem measurement_order_obstruction (a : Matrix n n ℂ) (ha : a.PosDef)
   obtain ⟨p, hp, hpτ⟩ := measured_density a ha V
   change τ = _ at hpτ
   let P := projector i
-  let E := metricAdjoint a V p
+  let E : MatrixMap n n ℂ := metricAdjoint a V p
   let z₀ : n → ℂ := Pi.single (M := fun _ : n => ℂ) i (Real.sqrt (eigen j) : ℂ) -
     Pi.single (M := fun _ : n => ℂ) j (Real.sqrt (eigen i) : ℂ)
   let z := (U : Mat n) *ᵥ z₀
@@ -837,8 +871,11 @@ theorem measurement_order_obstruction (a : Matrix n n ℂ) (ha : a.PosDef)
     rw [measurement_apply] at h
     simp only [Matrix.diagonal_apply_eq, Matrix.diag_apply, diagReal,
       Complex.ofReal_re] at h
-    have hc : (basisChange V).symm a = (basisChange T).symm ((basisChange U).symm a) :=
-      Unitary.conjStarAlgAut_mul_apply (S := ℂ) _ _ _
+    have hc : (basisChange V).symm a = (basisChange T).symm ((basisChange U).symm a) := by
+      change star (V : Mat n) * a * (V : Mat n) =
+        star (T : Mat n) * (star (U : Mat n) * a * (U : Mat n)) * (T : Mat n)
+      change star ((U : Mat n) * (T : Mat n)) * a * ((U : Mat n) * (T : Mat n)) = _
+      simp only [star_mul, mul_assoc]
     rw [hc, hspec, rotation_diagonal_first] at h
     exact h.symm
   have hsum : 0 < eigen i + eigen j := add_pos (ha.eigenvalues_pos i) (ha.eigenvalues_pos j)
@@ -875,9 +912,8 @@ theorem measurement_order_obstruction (a : Matrix n n ℂ) (ha : a.PosDef)
     rw [measurement_apply, AlgEquiv.symm_apply_apply]
   have hNB : N B = P - τ := by
     rw [hbase, hpτ]
-    ext k l
-    by_cases hkl : k = l <;> simp_all [P, projector, diagReal, Matrix.single_apply,
-      Matrix.diagonal_apply, Matrix.sub_apply]
+    change diagonal (diag (projector i - diagReal p)) = projector i - diagReal p
+    rw [projector_diagonal, diagReal, Matrix.diagonal_sub, Matrix.diag_diagonal]
   have hBstar : IsSelfAdjoint B := by
     have h := (hP.isHermitian.isSelfAdjoint.sub hτ.isHermitian.isSelfAdjoint)
     exact h.map (Unitary.conjStarAlgAut ℂ (Mat n) V)
@@ -896,16 +932,18 @@ theorem measurement_order_obstruction (a : Matrix n n ℂ) (ha : a.PosDef)
     let d : n → ℝ := fun k => (if k = i then 1 else 0) - p k
     have hd : diagReal d = P - τ := by
       rw [hpτ]
-      ext k l
-      by_cases hkl : k = l <;> by_cases hki : k = i <;>
-        simp_all [diagReal, d, P, projector, Matrix.single_apply, Matrix.diagonal_apply]
+      change diagReal d = projector i - diagReal p
+      rw [projector_diagonal, diagReal, diagReal, Matrix.diagonal_sub]
+      congr 1
+      funext k
+      by_cases hk : k = i <;> simp [d, hk]
     have h := gibbs_derivative a ha V p d hp
     rw [hd, ← hpτ, ← hAdj, map_sub, heτ] at h
     exact h
   exact ⟨i, j, hij, V, Q, E, z, hlt, rfl, fun _ => rfl, kraus_complete V,
     MatrixMap.of_kraus_isCompletelyPositive Q, hTP, hτ, hτtr, hP, hPtr, hLueders,
     adjoint_kraus V, hAdj, metricAdjoint_star a ha V p hp, heTP, heτ, hMetric, rfl,
-    hzVal, hz, hAff, hkτ, hder,
+    hentry, hzVal, hz, hAff, hkτ, hder,
     local_order_impossible a τ P V z hP hkτ (hAff.mono fun _ h => h.1) E hz hder⟩
 
 #print axioms measurement_order_obstruction
