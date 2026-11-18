@@ -1,0 +1,74 @@
+**引理 7.7（熵与成本同时逼近的有限网格）。** 令 $q(u)=(1+e^u)^{-1}$，$u\ge0$。对任意有限网格 $0=t_0<\cdots<t_m=U$，取 $q_i=q(t_i)$、$\delta=\max_i\Delta_i$，并沿用引理 7.6 的 $C_{\mathrm{grid}},E_{\mathrm{grid}}$。则
+
+$$
+\begin{aligned}
+C_{\mathrm{grid}}&\le A+2\delta\log2,\\
+E_{\mathrm{grid}}&\ge2A-2(U+2)e^{-U}-2\delta\log2.
+\end{aligned}
+$$
+
+特别地，对任意 $\eta>0$、$\rho>0$，存在固定的 $U\ge1$、整数 $m\ge1$ 及均匀网格，使
+
+$$
+C_{\mathrm{grid}}\le A(1+\eta/2),\qquad
+E_{\mathrm{grid}}\ge2A-\rho.
+$$
+
+**证明。** 先说明占据率的选择。对固定 $u\ge0$，严格凹函数 $H(v)-uv$ 在 $0<v<1$ 的导数为 $\log((1-v)/v)-u$，故唯一最大点为 $v=q(u)$，并且
+
+$$
+H(v)-uv\le J(u):=\log(1+e^{-u}),\qquad
+H(q(u))=J(u)+uq(u).
+$$
+
+此为二项式熵的经典对偶恒等式，以下只用于构造有限网格。由引理 7.4 证明中的经典对数积分与 $J'(u)=-q(u)$，有限区间分部积分给出
+
+$$
+\begin{aligned}
+\int_0^\infty J(u)\,du&=\frac{\pi^2}{12},&
+\int_0^\infty q(u)\,du&=\log2,\\
+\int_0^T uq(u)\,du&=-TJ(T)+\int_0^T J(u)\,du,&
+\int_0^\infty uq(u)\,du&=\frac{\pi^2}{12}.
+\end{aligned}
+$$
+
+最后一式因 $0\le TJ(T)\le Te^{-T}\to0$ 得到。记 $f(u)=H(q(u))$，于是
+
+$$
+\int_0^\infty f(u)\,du=A,\qquad
+f'(u)=-uq(u)(1-q(u))\le0,\qquad
+0\le f(u)\le(1+u)e^{-u}.
+$$
+
+全部积分绝对收敛；这些经典积分只在本引理的网格估计中承担中间步骤。
+
+对 $u\in[t_{i-1},t_i]$，有 $q(t_i)\le q(u)$ 与 $t_i\le u+\delta$，所以
+
+$$
+\Delta_i t_iq(t_i)
+\le\int_{t_{i-1}}^{t_i}uq(u)\,du
++\delta\int_{t_{i-1}}^{t_i}q(u)\,du.
+$$
+
+求和再乘以 $2$，得到成本上界。另一方面，$f$ 递减，故
+
+$$
+0\le\int_{t_{i-1}}^{t_i}f(u)\,du-\Delta_i f(t_i)
+\le\delta\bigl(f(t_{i-1})-f(t_i)\bigr).
+$$
+
+求和后右端不超过 $\delta\log2$，而尾积分不超过
+
+$$
+\int_U^\infty(1+u)e^{-u}\,du=(U+2)e^{-U}.
+$$
+
+这就证明熵下界。给定 $\eta,\rho>0$，先固定 $U\ge1$ 使 $2(U+2)e^{-U}\le\rho/2$，再固定整数 $m$ 充分大，使均匀网格的宽度满足
+
+$$
+\delta=U/m\le
+\min\left\{\frac{A\eta}{4\log2},\frac{\rho}{4\log2}\right\}.
+$$
+
+代入两条显式估计即得结论。所有这些有限参数都独立于 $P$。证毕。
+

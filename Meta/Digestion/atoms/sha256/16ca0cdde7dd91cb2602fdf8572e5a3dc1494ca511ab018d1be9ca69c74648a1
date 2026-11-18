@@ -1,0 +1,45 @@
+**命题 7.5（第二阈值的尖锐上界）。** 对每个 $\varepsilon>0$，存在 $P_\varepsilon$，使对所有实数 $P\ge P_\varepsilon$，
+
+$$
+N_2(e^P)\le\exp\!\left((K+\varepsilon)Z(P)\right).
+$$
+
+**证明。** 应用经典 Rankin 方法。对 $x=e^P$、$s>1$、$z\ge1$，每个被计数的 $n$ 满足 $x^sn^{-s}z^{\omega(n)-k}\ge1$。唯一分解与各素数幂的几何级数给出有限素数乘积界
+
+$$
+N_2(x)\le x^sz^{-k}
+\prod_{p\le x}\left(1+\frac z{p^s-1}\right)
+\le x^sz^{-k}
+\prod_{p\le x}\frac{1+zp^{-s}}{1-p^{-s}}.
+$$
+
+取 $z=P^s$。最终 $P<x$，并且逐项有
+
+$$
+\begin{aligned}
+\sum_{p\le x}\log(1+(P/p)^s)
+&=s\sum_{p\le P}\log(P/p)
++\sum_{p\le x}\log(1+e^{-s|\log(p/P)|})\\
+&\le s(\pi(P)\ell-\theta(P))+R(P,s).
+\end{aligned}
+$$
+
+故当 $N_2(x)>0$ 时，Rankin 主项精确抵消为
+
+$$
+\log N_2(e^P)\le sB_k(P)+R(P,s)+C(s),\qquad
+C(s)=\sum_p-\log(1-p^{-s}).
+$$
+
+最终 $s\ge2$ 时，$0\le C(s)\le2\sum_{n\ge2}n^{-s}\le2(2^{-s}+2^{1-s}/(s-1))\to0$；这也说明无需对无限 Euler 乘积另作假设。
+
+选择显式尺度 $s=c\sqrt\ell$，其中 $c=\pi/(2\sqrt3)=\sqrt{A/2}$。由引理 7.3、7.4，
+
+$$
+\frac{sB_k(P)}{Z(P)}\longrightarrow2c,\qquad
+\frac{R(P,s)}{Z(P)}\longrightarrow\frac Ac,
+\qquad C(s)=o(1).
+$$
+
+两项之和 $2c+A/c=2\pi/\sqrt3=K$。此 $c$ 也使函数 $2c+A/c$ 在 $c>0$ 上达到最小值，因为 $2c+A/c\ge2\sqrt{2A}$，等号恰在 $c^2=A/2$。于是得到所述上界；若 $N_2(e^P)=0$，计数上界直接成立。证毕。
+
