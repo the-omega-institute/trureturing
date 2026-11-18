@@ -1,0 +1,10 @@
+In an endpoint exploration of actual separable permutations, let $N$
+count low-value suffix removals and let $\chi=1$ denote a finite-valued
+terminal block. With $t=\sqrt2-1$ and $a=1-1/\sqrt2$, the coupled
+endpoint probabilities are
+$$
+\begin{aligned}
+ u_0&=\Pr(N=0,\chi=1)=a,& v_0&=\Pr(N=0,\chi=0)=a(1+t),\\
+ u_r&=a t(1+t)t^{2r-2},& v_r&=t u_r\quad(r\ge1).
+\end{aligned}
+$$
