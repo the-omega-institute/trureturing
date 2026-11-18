@@ -108,8 +108,12 @@ theorem saddle_budget_limit :
   · filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
     have hlog := log_pos hP
     dsimp only [saddle]
-    field_simp [(show P ≠ 0 by linarith), hlog.ne', (sqrt_pos.mpr hlog).ne']
-    nlinarith [sq_sqrt hlog.le]
+    generalize hr : sqrt (log P) = r
+    have hr0 : 0 < r := by rw [← hr]; exact sqrt_pos.mpr hlog
+    have hr2 : r ^ 2 = log P := by rw [← hr]; exact sq_sqrt hlog.le
+    rw [← hr2]
+    field_simp [(show P ≠ 0 by linarith), hr0.ne']
+    <;> ring
 
 private lemma saddle_top : Tendsto saddle atTop atTop := by
   have hc : 0 < π / (2 * sqrt 3) := by positivity
@@ -133,7 +137,7 @@ theorem result : ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop,
     have hsqrt := sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
     have hp := pi_pos.ne'
     have hs := (sqrt_pos.mpr (by norm_num : (0 : ℝ) < 3)).ne'
-    field_simp
+    field_simp [hp, hs]
     nlinarith
   filter_upwards [hsum, hR,
     (saddle_top.comp tendsto_log_atTop).eventually_ge_atTop 2,
