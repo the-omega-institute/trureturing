@@ -9,16 +9,18 @@
 /- result: proof_shape: bind-only; escape_witness: none.
    admission_basis: open-problem-resolution (#23817; Refuted)
    Direct frozen dependencies: none (all declarations).
-   Private theorems, each proof_shape: bind-only; escape_witness: none:
-     omega_successor -> incompatible; rays_upper_comparable -> incompatible;
+   Auxiliary theorems, each proof_shape: bind-only; escape_witness: none:
+     omega_successor -> result; rays_upper_comparable -> incompatible;
      tail_forced_bound -> incompatible; partition_of_two -> rays_partition, tail_partition;
-     rays_partition -> result; tail_partition -> result; incompatible -> result.
+     rays_partition -> result; tail_partition -> result; incompatible -> result;
+     omega_partition_ulift -> result.
    Proposition-valued private definitions are classified as bind-only:
      rayLe -> rayOrder, intoRays; tailLe -> tailOrder, intoTail, tail_forced_bound.
    Definitions: IsOmegaChain, OmegaPartitionable, IsExtension, claim, Fork, forkOrder,
      Rays, rayLe, rayOrder, Tail, tailLe, tailOrder, forkRay, intoRays, forkTail,
      intoTail, rayEmbed, evenEmbed, oddEmbed.
-   Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/28004.
+   Escape audit unfinished for result, incompatible and omega_partition_ulift: https://github.com/the-omega-institute/trureturing/issues/28004.
+   No source realization or lawful observational variation is supplied for these order statements.
    The symbolic refutation has utility: none and no utility-refutation audit exemption.
    The source definitions and Question 2.32 quotation are recorded in the Scribe and
    Library note for arXiv:2610.29056v1. The public claim keeps the source's literal
@@ -63,7 +65,7 @@ def claim : Prop :=
           @IsExtension P Q' pOrder qOrder' → @OmegaPartitionable Q' qOrder' →
             Nonempty (@OrderEmbedding Q Q' qOrder.toLE qOrder'.toLE)
 
-private theorem omega_successor {Q : Type u} [PartialOrder Q]
+theorem omega_successor {Q : Type u} [PartialOrder Q]
     (hQ : OmegaPartitionable Q) (x : Q) : ∃ z : Q, x < z := by
   obtain ⟨D, hD, hC⟩ := hQ
   obtain ⟨C, hx, _⟩ := hD.2 x
@@ -75,11 +77,11 @@ private theorem omega_successor {Q : Type u} [PartialOrder Q]
   rw [hn] at h
   exact h
 
-private inductive Fork
+inductive Fork
   | root | left | right
   deriving DecidableEq
 
-private instance forkOrder : PartialOrder Fork where
+instance forkOrder : PartialOrder Fork where
   le x y := x = .root ∨ x = y
   le_refl x := Or.inr rfl
   le_trans x y z hxy hyz := by
@@ -93,12 +95,12 @@ private instance forkOrder : PartialOrder Fork where
       · exact h'.symm
     · exact h
 
-private def Rays := Bool × ℕ
+def Rays := Bool × ℕ
 
 private def rayLe (x y : Rays) : Prop :=
   x = (false, 0) ∨ (x.1 = y.1 ∧ x.2 ≤ y.2)
 
-private instance rayOrder : PartialOrder Rays where
+instance rayOrder : PartialOrder Rays where
   le := rayLe
   le_refl x := Or.inr ⟨rfl, le_rfl⟩
   le_trans x y z hxy hyz := by
@@ -126,13 +128,13 @@ private instance rayOrder : PartialOrder Rays where
         · dsimp at h2; omega
       · exact Prod.ext h1 (le_antisymm h2 h4)
 
-private def Tail := ℕ
+def Tail := ℕ
 
 private def tailLe (x y : Tail) : Prop :=
   (show ℕ from x) ≤ (show ℕ from y) ∧
     ¬ (x = (show Tail from (1 : ℕ)) ∧ y = (show Tail from (2 : ℕ)))
 
-private instance tailOrder : PartialOrder Tail where
+instance tailOrder : PartialOrder Tail where
   le := tailLe
   le_refl x := by dsimp [tailLe, Tail]; omega
   le_trans x y z hxy hyz := by dsimp [tailLe, Tail] at *; omega
@@ -143,7 +145,7 @@ private def forkRay : Fork → Rays
   | .left => (false, 1)
   | .right => (true, 0)
 
-private def intoRays : Fork ↪o Rays where
+def intoRays : Fork ↪o Rays where
   toFun := forkRay
   inj' := by
     intro x y h
@@ -158,7 +160,7 @@ private def forkTail : Fork → Tail
   | .left => (1 : ℕ)
   | .right => (2 : ℕ)
 
-private def intoTail : Fork ↪o Tail where
+def intoTail : Fork ↪o Tail where
   toFun := forkTail
   inj' := by
     intro x y h
@@ -232,7 +234,7 @@ private def rayEmbed (b : Bool) : ℕ ↪o Rays where
     simp only [Prod.mk.injEq, true_and]
     omega
 
-private theorem rays_partition : OmegaPartitionable Rays := by
+theorem rays_partition : OmegaPartitionable Rays := by
   apply partition_of_two (rayEmbed false) (rayEmbed true)
   · rintro ⟨b, n⟩
     cases b
@@ -260,7 +262,7 @@ private def oddEmbed : ℕ ↪o Tail where
     change (2 * n + 1 ≤ 2 * m + 1 ∧ ¬ (2 * n + 1 = 1 ∧ 2 * m + 1 = 2)) ↔ n ≤ m
     omega
 
-private theorem tail_partition : OmegaPartitionable Tail := by
+theorem tail_partition : OmegaPartitionable Tail := by
   apply partition_of_two evenEmbed oddEmbed
   · intro x
     let n : ℕ := x
@@ -273,62 +275,56 @@ private theorem tail_partition : OmegaPartitionable Tail := by
     change 2 * m + 1 = 2 * n at hm
     omega
 
-private theorem incompatible {Q : Type u} [PartialOrder Q]
-    (hQ : OmegaPartitionable Q) (p : Fork ↪o Q)
+/-- Upward universe lifts preserve the literal inherited omega partition. -/
+theorem omega_partition_ulift (X : Type u) [PartialOrder X] (h : OmegaPartitionable X) :
+    OmegaPartitionable (ULift.{w} X) := by
+  classical
+  obtain ⟨D, hD, hparts⟩ := h
+  let E : Set (Set (ULift.{w} X)) := {B | ∃ C ∈ D, B = ULift.down ⁻¹' C}
+  refine ⟨E, ⟨?_, ?_⟩, ?_⟩
+  · rintro ⟨C, hC, heq⟩
+    apply hD.1
+    have hempty : C = ∅ := by
+      apply Set.eq_empty_iff_forall_notMem.mpr
+      intro x hx
+      have hx' : (ULift.up x : ULift.{w} X) ∈ (∅ : Set (ULift.{w} X)) := by
+        rw [heq]
+        exact hx
+      exact hx'
+    exact hempty ▸ hC
+  · intro x
+    obtain ⟨C, hxC, huniq⟩ := hD.2 x.down
+    refine ⟨ULift.down ⁻¹' C, ⟨⟨C, hxC.1, rfl⟩, hxC.2⟩, ?_⟩
+    rintro B ⟨⟨C', hC', rfl⟩, hx'⟩
+    exact congrArg (fun A : Set X => ULift.down ⁻¹' A) (huniq C' ⟨hC', hx'⟩)
+  · rintro B ⟨C, hC, rfl⟩
+    obtain ⟨e⟩ := hparts C hC
+    let f : C ≃o (ULift.down ⁻¹' C : Set (ULift.{w} X)) :=
+      { toFun := fun x => ⟨ULift.up x.val, x.property⟩
+        invFun := fun x => ⟨x.val.down, x.property⟩
+        left_inv := fun _ => rfl
+        right_inv := fun _ => rfl
+        map_rel_iff' := by intro x y; rfl }
+    exact ⟨e.trans f⟩
+
+/-- An incomparable pair in an order with no maximal elements cannot embed into both targets. -/
+theorem incompatible {Q : Type u} [PartialOrder Q]
+    (hnoMax : ∀ x : Q, ∃ z : Q, x < z) (x y : Q)
+    (hab : ¬ x ≤ y) (hba : ¬ y ≤ x)
     (f : Q ↪o Rays) (g : Q ↪o Tail) : False := by
-  have hab : ¬ p .left ≤ p .right := by
-    intro h
-    have h' := p.le_iff_le.mp h
-    change Fork.left = .root ∨ Fork.left = .right at h'
-    simpa using h'
-  have hba : ¬ p .right ≤ p .left := by
-    intro h
-    have h' := p.le_iff_le.mp h
-    change Fork.right = .root ∨ Fork.right = .left at h'
-    simpa using h'
-  obtain ⟨z, hz⟩ := omega_successor hQ (p .left)
-  have hbz : p .right ≤ z := by
+  obtain ⟨z, hz⟩ := hnoMax x
+  have hbz : y ≤ z := by
     apply g.le_iff_le.mp
-    apply tail_forced_bound (g (p .left)) (g (p .right)) (g z)
+    apply tail_forced_bound (g (x)) (g (y)) (g z)
     · exact fun h => hab (g.le_iff_le.mp h)
     · exact fun h => hba (g.le_iff_le.mp h)
     · exact g.strictMono hz
-  rcases rays_upper_comparable (f (p .left)) (f (p .right)) (f z)
+  rcases rays_upper_comparable (f (x)) (f (y)) (f z)
       (f.monotone hz.le) (f.monotone hbz) with h | h
   · exact hab (f.le_iff_le.mp h)
   · exact hba (f.le_iff_le.mp h)
 
 theorem result : ¬ claim.{u, v, w} := by
-  have liftPartition (X : Type) [PartialOrder X] (h : OmegaPartitionable X) :
-      OmegaPartitionable (ULift.{w} X) := by
-    classical
-    obtain ⟨D, hD, hparts⟩ := h
-    let E : Set (Set (ULift.{w} X)) := {B | ∃ C ∈ D, B = ULift.down ⁻¹' C}
-    refine ⟨E, ⟨?_, ?_⟩, ?_⟩
-    · rintro ⟨C, hC, heq⟩
-      apply hD.1
-      have hempty : C = ∅ := by
-        apply Set.eq_empty_iff_forall_notMem.mpr
-        intro x hx
-        have hx' : (ULift.up x : ULift.{w} X) ∈ (∅ : Set (ULift.{w} X)) := by
-          rw [heq]
-          exact hx
-        exact hx'
-      exact hempty ▸ hC
-    · intro x
-      obtain ⟨C, hxC, huniq⟩ := hD.2 x.down
-      refine ⟨ULift.down ⁻¹' C, ⟨⟨C, hxC.1, rfl⟩, hxC.2⟩, ?_⟩
-      rintro B ⟨⟨C', hC', rfl⟩, hx'⟩
-      exact congrArg (fun A : Set X => ULift.down ⁻¹' A) (huniq C' ⟨hC', hx'⟩)
-    · rintro B ⟨C, hC, rfl⟩
-      obtain ⟨e⟩ := hparts C hC
-      let f : C ≃o (ULift.down ⁻¹' C : Set (ULift.{w} X)) :=
-        { toFun := fun x => ⟨ULift.up x.val, x.property⟩
-          invFun := fun x => ⟨x.val.down, x.property⟩
-          left_inv := fun _ => rfl
-          right_inv := fun _ => rfl
-          map_rel_iff' := by intro x y; rfl }
-      exact ⟨e.trans f⟩
   intro h
   obtain ⟨Q, qOrder, hp, hQ, hleast⟩ := h (ULift.{u} Fork) inferInstance
   letI := qOrder
@@ -340,11 +336,22 @@ theorem result : ¬ claim.{u, v, w} := by
     ((ULift.orderIso : ULift.{u} Fork ≃o Fork).toOrderEmbedding.comp intoTail).comp
       (ULift.orderIso.symm : Tail ≃o ULift.{w} Tail).toOrderEmbedding
   obtain ⟨f⟩ := hleast (ULift.{w} Rays) inferInstance ⟨intoRaysLift⟩
-    (liftPartition Rays rays_partition)
+    (omega_partition_ulift Rays rays_partition)
   obtain ⟨g⟩ := hleast (ULift.{w} Tail) inferInstance ⟨intoTailLift⟩
-    (liftPartition Tail tail_partition)
-  exact incompatible hQ
-    ((ULift.orderIso.symm : Fork ≃o ULift.{u} Fork).toOrderEmbedding.comp p)
+    (omega_partition_ulift Tail tail_partition)
+  let p₀ : Fork ↪o Q :=
+    (ULift.orderIso.symm : Fork ≃o ULift.{u} Fork).toOrderEmbedding.comp p
+  exact incompatible (omega_successor hQ) (p₀ .left) (p₀ .right)
+    (by
+      intro hle
+      have h' := p₀.le_iff_le.mp hle
+      change Fork.left = .root ∨ Fork.left = .right at h'
+      simpa using h')
+    (by
+      intro hle
+      have h' := p₀.le_iff_le.mp hle
+      change Fork.right = .root ∨ Fork.right = .left at h'
+      simpa using h')
     (f.comp (ULift.orderIso : ULift.{w} Rays ≃o Rays).toOrderEmbedding)
     (g.comp (ULift.orderIso : ULift.{w} Tail ≃o Tail).toOrderEmbedding)
 

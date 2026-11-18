@@ -30,6 +30,35 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                 "The same source predicates accept P : Type u, a candidate Q : Type v and comparison Q′ : Type w independently. A claim instance fixes these three universe parameters; Lean does not quantify over universe levels inside Prop. The original Type0 refutation is the instance u = v = w = 0, with the original Fork and private proof suppliers. Comparison embeddings Q → Q′ have no equation requiring them to fix P. The countability and uniform finite chain-height hypotheses of the further classification concern P alone, and impose no restriction on Q′. The positive carrier P ⊕ₗ ℕ is chosen from P before the comparison universe; upward ULift order isomorphisms preserve induced embeddings and transport the literal partition to preimage parts, without shrinking P. This interface does not itself prove the positive classification or the arbitrary-candidate negative theorem.",
                 "For the ordinal extension construction the independent carrier is α.ToType : Type o for α : Ordinal o, and P ×ₗ α.ToType lies in Type (max u o). Ordinal.ToType.mk applied to ⟨0, 0 < α⟩ selects the distinguished point when α ≠ 0; Ordinal.type_toType gives its order type, and upward lifting changes the represented ordinal by Ordinal.lift. This convention does not assert the still-required full partition and skeleton theorems. The countable finite-height classification, explicit countable partitions, Noetherian section/shift injection, dual statements, Nat boundary and all nonzero ordinal and finite-n skeleton conclusions remain separate proof obligations."),
             Describe.Lean(
+                DescribeId.Create("incompatible"),
+                DeclarationHandle.Create(Prefix + "incompatible"),
+                H("An incomparable pair excludes the two targets"),
+                StatementSource.FromAuthor(Disp(IncompatibleFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Let Q be any partial order with no maximal element, and let x and y be "
+                    + "incomparable. Choose z strictly above x. Under an order embedding into Tail, "
+                    + "the images of x and y remain incomparable, so tail_forced_bound puts the "
+                    + "image of y below the image of z. Reflecting gives y ≤ z. Under an embedding "
+                    + "into Rays, the images of x and y now have a common upper bound; "
+                    + "rays_upper_comparable and reflection contradict their incomparability. "
+                    + "There is no cardinality, countability, height or common-lower-point hypothesis "
+                    + "on Q. An omega partition supplies the strict successors through omega_successor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("omega-partition-ulift"),
+                DeclarationHandle.Create(Prefix + "omega_partition_ulift"),
+                H("Lifting the inherited partition"),
+                StatementSource.FromAuthor(Disp(PartitionLiftFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For an arbitrary X and any lift universe w, replace each partition part C by its preimage under "
+                    + "ULift.down. The inherited order isomorphism sends c to ULift.up c. "
+                    + "These parts remain nonempty, cover uniquely, and retain their omega order. "
+                    + "The empty carrier uses the empty family. This transport supplies the lifted "
+                    + "Rays and Tail comparison targets in the fork argument."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Separated rays and a merged tail are incompatible"),
@@ -57,6 +86,20 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                     + "of one incomparable point is above the other. An omega-chain partition supplies such "
                     + "a strict successor, and order embeddings transfer the resulting comparisons back to "
                     + "the fork, producing a contradiction.")),
+                    Paragraph(Text(
+                    "The same obstruction applies to the literal two-element antichain. Take the "
+                    + "inherited subset A = {left, right} of Fork; its order is equality. Restrict "
+                    + "intoRays and intoTail along its subtype embedding. Their two images are "
+                    + "(false, 1), (true, 0) in Rays and 1, 2 in Tail, respectively. For any "
+                    + "admissible extension e of A, the points e(left) and e(right) are incomparable "
+                    + "and omega_successor supplies a strict successor. Leastness would embed that "
+                    + "extension into both targets, contradicting incompatible. Upward lifts of A "
+                    + "and the targets give the same argument with independent base, candidate and "
+                    + "comparison universes. These comparison maps need satisfy no equation with e. "
+                    + "The original fork still has its root below both branches, making its "
+                    + "undirected comparability graph connected; this is a description of its "
+                    + "displayed order. The two-point consequence does not alter the original "
+                    + "negative answer or its attribution.")),
                     Paragraph(Text(
                     "The universe-polymorphic application lifts the fixed Fork to Type u and lifts "
                     + "Rays and Tail to the comparison universe Type w. The candidate Q retains Type v. "
@@ -135,6 +178,29 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
         var witness = Ex("Q", TypeAt("v"), Ex("qOrder", Call("PartialOrder", q),
             And(Call("IsExtension", p, q, po, qo), And(Call("OmegaPartitionable", q, qo), least))));
         return All("P", TypeAt("u"), All("pOrder", Call("PartialOrder", p), witness));
+    }
+
+    private static Formula IncompatibleFormula()
+    {
+        var q = F.Id("Q");
+        var x = F.Id("x");
+        var y = F.Id("y");
+        var z = F.Id("z");
+        var noMax = All("x", q, Ex("z", q, Seq(x, Sp, Lt, Sp, z)));
+        var incomparable = And(new Formula.Not(Parenthesized(Seq(x, Sp, Leq, Sp, y))),
+            new Formula.Not(Parenthesized(Seq(y, Sp, Leq, Sp, x))));
+        var maps = All("f", Call("OrderEmbedding", q, F.Id("Rays")),
+            All("g", Call("OrderEmbedding", q, F.Id("Tail")), F.Id("False")));
+        return All("Q", TypeAt("u"), Instance("PartialOrder", q,
+            Implies(noMax, All("x", q, All("y", q, Implies(incomparable, maps))))));
+    }
+
+    private static Formula PartitionLiftFormula()
+    {
+        var x = F.Id("X");
+        var lift = Call("ULift", x);
+        return All("X", TypeAt("u"), Instance("PartialOrder", x,
+            Implies(Call("OmegaPartitionable", x), Call("OmegaPartitionable", lift))));
     }
 
     private static Formula App(Formula function, params Formula[] arguments) =>
