@@ -13,6 +13,7 @@ factor consuming its first diagonal budget and leaving a nonnegative second diag
 proof_shape: compress_complex_pair_moments: content; consumer: nonnegative_two_sparse_gram
 proof_shape: pair_subset_support: bind-only; consumer: nonnegative_two_sparse_gram
 proof_shape: nonnegative_two_sparse_gram: content
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31511
 -/
 
 import D5.S3.Quantum.Measurement.FactorWidthTwoCone
