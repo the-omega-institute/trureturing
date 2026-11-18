@@ -453,6 +453,9 @@ private theorem selected_three_hamming
   obtain ⟨i, hai⟩ := adjacent_exists_flip hxa
   obtain ⟨j, hbj⟩ := adjacent_exists_flip hab
   obtain ⟨k, hyk⟩ := adjacent_exists_flip hby
+  change a.val = BalancedCriticalSpectrum.flip x.val i at hai
+  change b.val = BalancedCriticalSpectrum.flip a.val j at hbj
+  change y.val = BalancedCriticalSpectrum.flip b.val k at hyk
   have hij : i ≠ j := by
     intro he
     have hb : b.val = x.val := by
@@ -471,6 +474,8 @@ private theorem selected_three_hamming
     rw [hyk, hbj, hai]
   have hd : Finset.univ.filter (fun r => x.val r ≠ y.val r) = {i, j, k} := by
     ext r
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+      Finset.mem_insert, Finset.mem_singleton]
     rw [he]
     by_cases hri : r = i
     · subst r
