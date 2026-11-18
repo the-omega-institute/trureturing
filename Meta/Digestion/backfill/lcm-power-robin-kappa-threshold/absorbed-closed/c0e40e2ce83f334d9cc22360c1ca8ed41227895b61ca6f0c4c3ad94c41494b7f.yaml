@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c0e40e2ce83f334d9cc22360c1ca8ed41227895b61ca6f0c4c3ad94c41494b7f
+  normalized_sha256: sha256:c0e40e2ce83f334d9cc22360c1ca8ed41227895b61ca6f0c4c3ad94c41494b7f
+cas_ref: sha256:c0e40e2ce83f334d9cc22360c1ca8ed41227895b61ca6f0c4c3ad94c41494b7f
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerEndpointRH.result
+    target_statement_id: sha256:9f217acc53cee4b5ae790f60d22eedbf30aa2e210cd0bf799b8f8db789214b78
+receipts:
+  unresolved_subitems: []

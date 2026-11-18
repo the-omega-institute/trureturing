@@ -21,7 +21,7 @@ namespace D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripCertif
 open HardinA229584StripData
 open DefectTransfer (bondDefects)
 
-private theorem tail_bound (r : Row) :
+theorem tail_bound (r : Row) :
     (Finset.univ.filter fun z : Fin 4 =>
       boundary r z.castSucc = boundary r z.succ).card ≤ bondDefects horizontal r r := by
   revert r

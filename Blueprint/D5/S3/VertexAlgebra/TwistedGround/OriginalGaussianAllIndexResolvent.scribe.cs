@@ -61,5 +61,45 @@ internal sealed class OriginalGaussianAllIndexResolventDocument : IScribeDocumen
                 DescribeId.Create("square-resolvent-entry-explicit"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.squareResolvent_entry_explicit"),
                 H("squareResolvent_entry_explicit"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The squareResolvent_entry_explicit statement is verified on its displayed full domain and consumed by the original Gaussian source calculation."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The squareResolvent_entry_explicit statement is verified on its displayed full domain and consumed by the original Gaussian source calculation."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("period-ofreal"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_ofReal"),
+                H("period_ofReal"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real r, the literal complex period at r is the complex embedding of the existing real period F r."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("central-hasderivat"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.central_hasDerivAt"),
+                H("central_hasDerivAt"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural shift and complex x with norm less than one, shiftedCentralSeries has complex derivative shiftedCentralDerivative."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("period-eq-central"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.period_eq_central"),
+                H("period_eq_central"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex x, the original period tsum is exactly shiftedCentralSeries at shift zero."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("radial-positive-column"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_positive_column"),
+                H("radial_positive_column"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real 0<r<1 and each natural n, the actual resolvent applied to weightedSource has coordinate sqrt(1-r)(-1)^(n+1) sqrt(r)^(n+1) centralColumnJet(r,n+1)/sqrt(n+1)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("radial-negative-column"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.radial_negative_column"),
+                H("radial_negative_column"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real 0<r<1 and each natural n, the actual oppositeResolvent applied to weightedSource has coordinate sqrt(1-r)(-1)^(n+1) sqrt(r)^(n+1) sqrt(n+1) shiftedCentralSeries(r,n+1)."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("signed-square-factorization"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.signed_square_factorization"),
+                H("signed_square_factorization"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On the complex unit disk, the actual resolvent equals (1+operator) times squareResolvent, and oppositeResolvent equals (1-operator) times squareResolvent."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("odd-eq-half-difference"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.odd_eq_half_difference"),
+                H("odd_eq_half_difference"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On the complex unit disk, the actual oddResolvent is half the difference of resolvent and oppositeResolvent."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("opposite-differentiable"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianAllIndexResolvent.opposite_differentiable"),
+                H("opposite_differentiable"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual oppositeResolvent is complex differentiable at every point of the unit disk."))), DescribeRole.Theorem))));
 }

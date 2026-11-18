@@ -82,7 +82,7 @@ private lemma polynomial_series {a : ℕ → ℂ}
   convert hdiff.hasDerivAt using 1
   exact (tsum_congr (fun n => by push_cast; ring)).trans hshift.tsum_eq
 
-private lemma central_hasDerivAt {x : ℂ} (hx : ‖x‖ < 1) (s : ℕ) :
+lemma central_hasDerivAt {x : ℂ} (hx : ‖x‖ < 1) (s : ℕ) :
     HasDerivAt (fun w => shiftedCentralSeries w s) (shiftedCentralDerivative x s) x := by
   have hb (k : ℕ) : ‖(centralWeight k : ℂ) * centralWeight (k + s)‖ ≤
       (k + 1 : ℝ) ^ 2 := (central_coefficient_bound s k).trans
@@ -103,7 +103,7 @@ private lemma central_derivative_differentiable {x : ℂ} (hx : ‖x‖ < 1) (s 
       _ ≤ _ := by nlinarith
   exact (polynomial_series hb hx).differentiableAt
 
-private lemma period_eq_central (x : ℂ) : period x = shiftedCentralSeries x 0 := by
+lemma period_eq_central (x : ℂ) : period x = shiftedCentralSeries x 0 := by
   apply tsum_congr
   intro k
   rw [halfBinomial_eq_signed_centralWeight]
@@ -118,7 +118,7 @@ private lemma central_ofReal (r : ℝ) (s : ℕ) :
   push_cast
   rfl
 
-private lemma period_ofReal (r : ℝ) : period (r : ℂ) = (F r : ℂ) := by
+lemma period_ofReal (r : ℝ) : period (r : ℂ) = (F r : ℂ) := by
   rw [period_eq_central, central_ofReal]
   have h := congrArg Complex.re (period_eq_central (r : ℂ))
   rw [central_ofReal] at h
@@ -242,7 +242,7 @@ private lemma column_derivative_jet {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ) :
   field_simp [hden, OriginalGaussianPeriodIdentity.period_ne_zero (norm_sq_lt_one hz)]
   <;> ring
 
-private lemma radial_positive_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : ℕ) :
+lemma radial_positive_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : ℕ) :
     resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n =
       (-1 : ℂ) ^ (n + 1) * (Real.sqrt r : ℂ) ^ (n + 1) *
         (Real.sqrt (1 - r) : ℂ) * centralColumnJet (r : ℂ) (n + 1) /
@@ -263,7 +263,7 @@ private lemma radial_positive_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : �
   field_simp [hF, hb, hn] at he ⊢
   linear_combination -he
 
-private lemma radial_negative_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : ℕ) :
+lemma radial_negative_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) (n : ℕ) :
     oppositeResolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) n =
       (-1 : ℂ) ^ (n + 1) * (Real.sqrt r : ℂ) ^ (n + 1) *
         (Real.sqrt (n + 1 : ℝ) : ℂ) * (Real.sqrt (1 - r) : ℂ) *
@@ -297,7 +297,7 @@ private lemma square_unit {z : ℂ} (hz : ‖z‖ < 1) :
     (pow_lt_one₀ (norm_nonneg _) (operator_norm_lt_one hz) (by norm_num))
   exact (summable_geometric_of_norm_lt_one hb).one_sub_mul_tsum_pow
 
-private lemma signed_square_factorization {z : ℂ} (hz : ‖z‖ < 1) :
+lemma signed_square_factorization {z : ℂ} (hz : ‖z‖ < 1) :
     resolvent z = (1 + operator z) * squareResolvent z ∧
       oppositeResolvent z = (1 - operator z) * squareResolvent z := by
   have h := square_unit hz
@@ -313,7 +313,7 @@ private lemma signed_square_factorization {z : ℂ} (hz : ‖z‖ < 1) :
       _ = (oppositeResolvent z * (1 + operator z)) * ((1 - operator z) * squareResolvent z) := by noncomm_ring
       _ = _ := by rw [hV, one_mul]
 
-private lemma odd_eq_half_difference {z : ℂ} (hz : ‖z‖ < 1) :
+lemma odd_eq_half_difference {z : ℂ} (hz : ‖z‖ < 1) :
     oddResolvent z = (1 / 2 : ℂ) • (resolvent z - oppositeResolvent z) := by
   rw [(signed_square_factorization hz).1, (signed_square_factorization hz).2]
   have he : (1 + operator z) * squareResolvent z - (1 - operator z) * squareResolvent z =
@@ -330,7 +330,7 @@ lemma square_eq_one_add {z : ℂ} (hz : ‖z‖ < 1) :
   rw [sub_mul, one_mul] at h
   exact (sub_eq_iff_eq_add.mp h).trans (by simp only [oddResolvent, pow_two, mul_assoc])
 
-private lemma opposite_differentiable {z : ℂ} (hz : ‖z‖ < 1) :
+lemma opposite_differentiable {z : ℂ} (hz : ‖z‖ < 1) :
     DifferentiableAt ℂ oppositeResolvent z := by
   have hunit : IsUnit (1 + operator z) := by
     simpa only [sub_neg_eq_add] using isUnit_one_sub_of_norm_lt_one

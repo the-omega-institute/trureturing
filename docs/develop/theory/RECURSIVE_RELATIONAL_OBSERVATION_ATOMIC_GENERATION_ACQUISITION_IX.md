@@ -1723,3 +1723,349 @@ memory minimum, recorder-independent logarithmic result or completion
 of the enduring space/time/boundary/memory mutual-recovery goal follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 186. Occupation-preserving read interfaces for a serial port compiler
+
+**Definition 186.1 (fixed read rails and retained compilation cuts).**
+Keep §§178–184's actual source, resource, preparations, rights and
+complete futures. Consider a proposed realization of the finite port
+by a finite serial word of V34's literal full-qubit $P$ and $B$ gates.
+The occurrence output $Q$ is its actual acquired qubit $q$. One fixed
+acquired qubit $m$ reads the memory value: on the proposed memory code,
+the occupation projector $n_m$ is the original memory projector
+$|1\rangle\langle1|_M$. All other memory rails, resource encodings,
+work qubits, preparation devices and leakage spaces remain actual
+retained factors. A change of decoder does not change which acquired
+qubit this occupation request addresses.
+
+At every completed elementary gate cut the original port progress is
+some retained $s_k\in[0,1]$, initially zero and finally one. Intermediate
+classical work may hold the bank and append genuine independent vacuum
+through native growth. The raw gate cursor, enabled entries, actual
+bindings, executed progress, output prefix and owed suffix are retained.
+An authorized interruption may read $m$ and $q$ at such a cut and then
+resume the saved raw suffix. The corresponding original continuation
+reads the memory and $Q$ at $s_k$ and owes $V(1-s_k)$ on their actual
+postmeasurement joint state. The decoder may not postpone these reads
+until a completed word, silently complete that word first, discard a
+read result or replace the pending state by an endpoint state.
+
+This is a specified compiler class, including the two-rail encoding
+below. It is not an assertion that every encoding has a one-qubit memory
+read. The theorem permits arbitrary extra acquired wires and arbitrary
+initial states of the other factors, including correlations with
+untouched references; it does not grant those states, wires or rights.
+Between the tested gates the unobserved word has no extra quantum
+primitive besides $P/B$, identity holds and independent vacuum extension.
+A measuring or adaptive compiler is a different complete instrument,
+with its own retained outcomes and correspondence obligation.
+
+**Definition 186.2 (one charge-compatible endpoint encoding).** An
+explicit member of this class uses two acquired memory qubits
+$m_0,m$, the literal occurrence qubit $q$, and $R_B$ resource qubits.
+Its mathematical isometry $E$ is
+
+$$
+\begin{aligned}
+|0\rangle_M&\longmapsto |10\rangle_{m_0m},&
+|1\rangle_M&\longmapsto |01\rangle_{m_0m},\\
+|r\rangle_B&\longmapsto |1^r0^{R_B-r}\rangle,&
+|z\rangle_Q&\longmapsto |z\rangle_q.
+\end{aligned}
+\tag{IX.53}
+$$
+
+Thus physical total occupation compresses to $I+N_Q+N_B$.
+The unused computational vectors are retained leakage directions, not
+removed outcomes. The initial memory excitation, encoded resource,
+same-source first harmonic, preparation/ingress and any helper state
+require their own paid acquisitions and complete preparation backing.
+In particular (IX.53) neither prepares (IX.28) nor transports its
+same-phase promise into this encoding. The obstruction below may be
+tested conditional on that preparation being supplied exactly; it
+therefore does not arise merely from starting all resource qubits in
+vacuum.
+
+## 187. A necessary intermediate mismatch in every finite serial word
+
+**Theorem 187.1 (IX first-emission cut obstruction and quantitative
+gate certificate).** Start a proposed compiler of Definition 186.1 with
+$M=|0\rangle$, the actual fresh $Q=|0\rangle$, and the calibrated
+resource (IX.28), with its separately supplied full preparation. Take
+any purification including every backing factor and untouched reference.
+For an unobserved word of $N\ge1$ elementary gates write $\rho_k$
+for the complete state after gate $k$, and define full-space projectors
+
+$$
+F_{11}=n_m n_q,\qquad
+F_{\ne}=n_m(I-n_q)+(I-n_m)n_q,\qquad
+p_k=\operatorname{Tr}(F_{\ne}\rho_k).
+\tag{IX.54}
+$$
+
+For the $k$th hopping gate let $\alpha_k$ be its actual angle. Let
+$\mathcal I$ consist of those gates whose endpoint pair contains
+exactly one of $m,q$, and put
+
+$$
+A=\sum_{k\in\mathcal I}|\sin\alpha_k|,\qquad
+T=|\mathcal I|.
+\tag{IX.55}
+$$
+
+If the complete endpoint state has half-trace error at most $\eta$
+from the encoded $V(1)$ first-emission target, then
+
+$$
+\begin{aligned}
+\sqrt{(b^2-\eta)_+}
+ &\le\sum_{k\in\mathcal I}|\sin\alpha_k|\sqrt{p_{k-1}},\\
+(b^2-\eta)_+
+ &\le A^2\max_{0\le k<N}p_k
+ \le T^2\max_{0\le k<N}p_k.
+\end{aligned}
+\tag{IX.56}
+$$
+
+Here $b^2=u/\lambda>0$ is the original IX coefficient and
+$x_+=\max\{x,0\}$. An empty word has endpoint $F_{11}$ probability
+zero and cannot have $\eta<b^2$. If at every
+prefix the complete state has half-trace error at most $\epsilon$
+from its assigned original partial state, with endpoint error also
+at most $\epsilon$, necessarily
+
+$$
+\epsilon\ge\frac{b^2}{1+A^2}
+              \ge\frac{b^2}{1+T^2}.
+\tag{IX.57}
+$$
+
+Consequently no finite serial word in this class is an exact
+correspondence at all its exposed cuts. The obstruction already uses
+one lawful clean first-emission input, so a purported exact bridge on
+the full dirty/reference domain fails too. The inequalities do not
+assert a positive error floor uniform over words of unbounded length.
+
+Proof. The guard in Theorem 179.2 makes the one-step lowering $D_-$
+an isometry on the initial resource support. Its exact first partial
+emission, before any intervention, is
+
+$$
+\cos(s\theta_0)|0\rangle_M|0\rangle_Q|g_t\rangle_B
+ +\sin(s\theta_0)|1\rangle_M|1\rangle_QD_-|g_t\rangle_B.
+\tag{IX.58}
+$$
+
+This has $F_{\ne}$ probability zero at every $s\in[0,1]$, and
+$F_{11}$ probability $b^2$ at $s=1$. All other factors and their
+true stipulated evolution remain alongside it. The same statements
+hold in the full common-phase mixture. They require neither a readable
+$t$ nor a resource read.
+
+Purify the actual initial state and retain that purification through
+all unitary gates and vacuum extensions. Write $\psi_k$ for this
+unit vector and $a_k=\|F_{11}\psi_k\|$. The initial $a_0$ is zero.
+A phase gate, a hop disjoint from $\{m,q\}$, or the hop between
+$m$ and $q$ commutes with $F_{11}$ and preserves $a_k$. The last
+case uses the full-qubit fact that $B_{mq}$ fixes $11$; its exchange
+acts only within the mismatching $10,01$ subspace.
+
+For a hop $G=B(\alpha_k)$ touching exactly one of $m,q$, put
+$F_{00}=(I-n_m)(I-n_q)$. The untouched one of these two read rails
+prevents a direct $00$-to-$11$ transition, whereas the literal hopping
+matrix gives
+
+$$
+F_{11}GF_{00}=0,\qquad
+\|F_{11}GF_{\ne}\|\le |\sin\alpha_k|,\qquad
+\|F_{11}GF_{11}\|\le1.
+\tag{IX.59}
+$$
+
+These are identities and bounds on the entire qubit space, including
+all occupations of the other endpoint and all spectators. Resolving
+the identity as $F_{00}+F_{\ne}+F_{11}$ therefore gives
+
+$$
+a_k\le a_{k-1}+|\sin\alpha_k|\sqrt{p_{k-1}}.
+\tag{IX.60}
+$$
+
+Holds and independent vacuum extension commute with these projectors
+and leave the same inequality unchanged. Summing proves the first
+upper bound for $a_N$. The endpoint half-trace bound, tested with the
+effect $F_{11}$, gives $a_N^2\ge b^2-\eta$. This proves (IX.56).
+Every assigned original partial state has mismatch probability zero,
+so the prefix error bounds imply $p_k\le\epsilon$. Also
+$\eta\le\epsilon$. Hence $b^2\le\epsilon+A^2\epsilon$;
+$A\le T$ proves (IX.57). Purification included arbitrary untouched
+references throughout; no helper marginal or clean-helper assumption
+was inserted. $\square$
+
+The restriction is about intermediate states even when the endpoint
+has no algebraic reachability obstruction. For (IX.53), the full-qubit
+unitary
+
+$$
+W_s=EV(s)E^\dagger+I-EE^\dagger
+\tag{IX.61}
+$$
+
+preserves physical total occupation. In each physical occupation sector
+it is a direct sum of the determinant-one rotations (IX.29) and
+identities, so its sector determinant is one. Marvian,
+[*Restrictions on realizable unitary operations imposed by symmetry
+and locality*, 2003.05524v3, Corollary 10](https://arxiv.org/html/2003.05524v3),
+then supplies an endpoint word using arbitrary-pair $XX+YY$ and local
+$Z$ rotations, provided those pairs are actually acquired. The native
+$B$ is $\exp(i\alpha(XX+YY)/2)$, and local $Z$ differs from a native
+$P$ rotation only by a global scalar; the resulting channel on the
+whole bank and every reference has the required endpoint action.
+This application includes dirty $M,Q,B$ within the entire encoded
+domain and the four unpaired resource endpoints. It does not identify
+that endpoint word's prefixes with $W_s$.
+
+For an effectively specified $s$ and positive rational endpoint
+tolerance, this endpoint consequence also permits a finite-command
+search: enumerate finite signed-dyadic $P/B$ words on the acquired
+finite bank and rational global phases, dovetailing these descriptions
+with increasing enclosure precision. Accept only a strict Frobenius
+norm upper bound below the requested tolerance, computed from outward
+enclosures of the word's entries and those of $W_s$. The real-angle
+endpoint word and continuity ensure eventual termination. The Frobenius
+bound dominates operator norm and supplies
+the same reference-stable half-trace endpoint bound, retaining all
+physical outputs. Each tested word and its accepted enclosure are
+finite; execution still needs its paid enabled catalog entries and
+holds. The search supplies no gate-count optimum. In particular this
+effective endpoint certificate leaves (IX.56–57) in force at that
+word's actual elementary cuts.
+
+## 188. A legal interrupted future retaining the complete IX181 consumer
+
+**Theorem 188.1 (a retained mismatch event survives the original
+consumer).** Take a commission with $K\ge6$ and suppose $\eta<b^2$
+in Theorem 187.1. Then $A>0$, and there is a prefix $k_*$ of that
+fixed unobserved word for which the
+following original permitted finite future separates the proposed
+compiler from the finite reference port by complete-output half-trace
+distance at least
+
+$$
+\frac{b^2-\eta}{A^2}.
+\tag{IX.62}
+$$
+
+Pause at that prefix and read the memory and the actual $Q$ occupation
+in succession, with both delivered bits $z_M,z_Q$ retained. Resume the
+actual owed suffix on the disturbed joint state. For any commissioned
+$5\le n\le K-1$ continue with genuine fresh occurrence factors to a
+bank of $n$, make the complete terminal memory read, and apply precisely
+the complete VIII159 instrument used in §181 to factors $p+1,p+2$,
+where $p,q_{\rm ext}\ge1$ and $p+2+q_{\rm ext}=n$. Supply its two
+fresh common-frame probes and all actual detector readiness. Retain both
+terminal flags, all sixteen four-bit outcomes for the chosen setting,
+the early bits, and every disturbed quantum/resource/backing output.
+Either chosen $\beta\in\{0,1\}$ may be used. No branch is discarded.
+
+The finite reference continuation resumes by $V(1-s_{k_*})$, then
+uses its ordinary later increments on the actual post-read state.
+Neither reference nor proposed implementation restarts the first
+emission. The early read generally changes later quantum laws, so the
+uninterrupted formulas (IX.35–48) are not asserted for this continuation.
+Its complete consumer is nevertheless exactly (IX.43)'s full-domain
+instrument on the joint state that actually reaches it, as permitted
+by §§174 and 182.
+
+Proof. Choose a prefix maximizing $p_k$ in (IX.56). Its two successive
+occupation instruments commute and have complete joint projectors
+$F_{ab}$ on the read rails. Thus the actual probability of the recorded
+event $z_M\ne z_Q$ is $p_{k_*}\ge(b^2-\eta)/A^2$. At the
+reference cut (IX.58), the probability of that event is zero for every
+assigned progress. The fine outcomes $00,11$ need not preserve the
+coherence in (IX.58); their projected full joint successors, not its
+unmeasured version, are used on resumption. Zero-probability outcomes
+have no normalized successor.
+
+Every following operation, including the saved raw suffix, native
+holds/growth, later emissions, both terminal branches and all sixteen
+consumer outcomes, is a normalized complete operation. It cannot
+change the probability of an already delivered immutable early event.
+Testing that event in the final full classical record proves (IX.62).
+All resource correlations, memory-code leakage, unused rails, old
+exteriors, spent probes and untouched references remain in the quantum
+output; none must be measured or traced away to obtain the lower bound.
+Counting the interrupted first call as two executed increments gives
+at most $n+1\le K$ reference increments, so the original finite guard
+still applies. $\square$
+
+The finite family of tests, one at each of the word's $N$ prefixes,
+is specified directly by the gate cursors. It requires no request for
+$p_k$ or private $t$. The conclusion says that at least one member
+separates; it supplies no source-dependent oracle choosing the largest
+probability. An all-future correspondence must pass every member.
+
+This consumer uses only the separately supplied memory read and the
+ordinary occurrence occupation read already allowed between port
+increments. It needs no measurement of $B$, no new opaque coupler and
+no simultaneous parity detector. Its two detector results are distinct
+backed answers. Their deliveries keep Print, End, local ACK and
+same-root Return; an unfinished delivery keeps its actual prefix and
+owed suffix before an outcome may select a next request.
+
+Mounting this test uses the same actual root and acquired component
+bindings of Theorem 184.1 at either authentic entrance, including the
+finite prehistory or selected bilateral preparation. Additional qubits
+are apparatus references or genuinely acquired occurrences, never
+substitute source vertices. All original ordered $\alpha/\beta$ syntax,
+addressed $P/S/\operatorname{Next}$, Tag, immutable samples, old
+history, rights, refusals and pending native phases remain. Interposed
+native service holds the full disturbed bank and appends only genuine
+vacuum. The raw suffix and its real controls are still owed after a
+pause. This is a conditional test on acquired controls and detector
+rights, not a new native grant or a claim about an uninspected physical
+device.
+
+## 189. Attribution and the exact compiler boundary
+
+The charge-compatible endpoint application above uses Marvian's
+Corollary 10 with all sector determinants checked, rather than
+inferring it from one-excitation controllability. Theorem 15 of the
+same primary source assumes its equally spaced intrinsic system
+Hamiltonians (167–168), the level-selective conserving couplings
+(169)/(174), and an ancillary qubit initially in $|0\rangle$; (180)
+returns that ancilla for every system input. The zero ancillary
+preparation and those interactions are hypotheses. In particular its
+general $d$-level interactions are not automatically native qubit
+$P/B$ wires. Neither theorem gives the intermediate memory/resource
+state, the returned ancilla at every cut, the fixed read-rail
+correspondence or the owed suffix demanded here.
+
+The `repo-derived` result is the explicit first-emission mismatch
+inequality (IX.56–57) and its separating future (IX.62) in the complete
+IX181 consumer. It remains valid with arbitrarily many retained
+helpers and with endpoint reachability on the full encoded input;
+it is additional to §171's vacuum-conservation observation and
+§183's resource-read disturbance. The proof uses the literal native
+full-qubit matrices and finite norm inequalities, not a claimed new
+general controllability or quantum speed-limit theorem. This attribution
+asserts no literature priority or Lean verification.
+
+For fixed $T$ it gives a necessary quantitative error budget; increasing
+$T$ leaves open arbitrarily accurate process approximation. A different
+encoding whose logical memory read is nonlocal, an adaptive measured
+compiler, or a separately acquired simultaneous interaction is outside
+the serial fixed-read-rail class and needs its own complete proof.
+An exact continuous partial-path implementation is not constructed.
+No finite budget for a uniform joint/reference-stable approximation
+under all original allowed interruptions and later instruments is
+supplied. Such a construction must specify every actual cut's state,
+progress, control labels, decoder/read implementation and owed suffix,
+with errors on that original future domain; matching only (IX.61) is
+insufficient. The source-owned resource/phase preparation, protected
+holds, calibration, actual acquisition and readiness premises remain
+separate. No total-memory or resource optimum follows, and the
+bespoke finite coupler premise has been delimited for this compiler
+class rather than removed.
+
+## 追加锚（本行以下为增补区）

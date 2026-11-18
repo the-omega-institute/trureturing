@@ -283,3 +283,87 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end take_drop_append_eq_left
 
 end Reg.D5.S1.Words.GoldenUniformRecurrence
+
+namespace Reg.D5.S1.Words.GoldenUniformRecurrence.flatMap_window_infix_one_or_two
+universe u v
+abbrev signature : Signature where
+  Params := Σ α : Type u, Σ β : Type v, Σ _f : α → List β, ℕ × ℕ
+  State p := List p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := List p.2.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u,v} := realize signature
+  (fun _ p l => ((l.flatMap p.2.2.1).drop p.2.2.2.1).take p.2.2.2.2)
+  (fun e => nomatch e)
+
+def rejected : Realization signature.{u,v} := realize signature
+  (fun _ p l => actual.readout () p l ++ actual.readout () p l ++ actual.readout () p l)
+  (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u,v}
+  Law R := ∀ {α : Type u} {β : Type v} {f : α → List β} {l : List α} {p n : ℕ}
+    (_hnpos : 0 < n) (_hblocks : ∀ a ∈ l, n < (f a).length)
+    (_hend : p+n ≤ (l.flatMap f).length),
+    (∃ a, [a] <:+: l ∧ R.readout () ⟨α, β, f, p, n⟩ l <:+: f a) ∨
+      ∃ a b, [a,b] <:+: l ∧ ((l.flatMap f).drop p).take n <:+: f a ++ f b
+
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected.{u,v} := by
+  intro h
+  let f : ULift.{u} Unit → List (ULift.{v} Unit) := fun _ => [⟨()⟩, ⟨()⟩]
+  have hh := h (f := f) (l := [⟨()⟩]) (p := 0) (n := 1)
+    (by decide) (by intro a ha; norm_num [f]) (by norm_num [f])
+  rcases hh with ⟨a, _, ha⟩ | ⟨a, b, hab, _⟩
+  · have hl := ha.length_le
+    change 3 ≤ 2 at hl
+    omega
+  · have hl := hab.length_le
+    change 2 ≤ 1 at hl
+    omega
+
+def family : Registration arena.{u,v}
+    (type_of% (@_root_.D5.S1.Words.flatMap_window_infix_one_or_two.{u,v})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.flatMap_window_infix_one_or_two,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro _
+    refine ⟨⟨ULift.{u} Unit, ULift.{v} Unit, (fun _ => [⟨()⟩]), 0, 1⟩,
+      [], [⟨()⟩], ?_⟩
+    change ([] : List (ULift.{v} Unit)) ≠ [⟨()⟩]
+    simp
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.flatMap_window_infix_one_or_two.{u,v})
+    (type_of% actual.{u,v}) Unit Unit := {
+  unitName := `D5.S1.Words.flatMap_window_infix_one_or_two.__information_unit,
+  realizationName := `Reg.D5.S1.Words.GoldenUniformRecurrence.flatMap_window_infix_one_or_two.family,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Words.GoldenUniformRecurrence, definition := none,
+    coordinates := #[0, 1, 2, 4, 5], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "body", "arg", "fn", "arg"],
+      stateBinder := 3, functionOperand := false, stateOperand := some #["arg", "arg", "arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S1.Words.GoldenUniformRecurrence.flatMap_window_infix_one_or_two

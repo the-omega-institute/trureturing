@@ -294,4 +294,57 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end squareResolvent_entry_explicit
 
+namespace period_ofReal
+abbrev arena : Arena where
+  signature := eqSignature
+  Law R := ∀ (r : ℝ), R.readout () _ (period (r : ℂ)) (F r : ℂ)
+private theorem rejected_fails : ¬ arena.Law eqRejected := by
+  intro h
+  exact h (0 : ℝ)
+def family : Registration arena (type_of% (@period_ofReal)) where
+  actual := eqActual
+  bridge := Iff.rfl
+  variation := ⟨@period_ofReal, eqRejected, rejected_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨eqRejected, ?_, rfl, rejected_fails⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      cases e
+  dependence := eqDependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@period_ofReal) (Realization eqSignature) Type Unit where
+  unitName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianAllIndexResolvent.period_ofReal.unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianAllIndexResolvent.period_ofReal.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize eqSignature eqActual.readout eqActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianAllIndexResolvent
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end period_ofReal
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianAllIndexResolvent

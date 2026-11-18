@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSAllWindowC9
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorCommonCore
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorRootRealization
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorEndpointSigns
@@ -571,3 +572,61 @@ right reversal, one-site partial-trace adapters, full window composition and
 normalized readings remain separate obligations. Full C9 is open; the
 solved-open-problem KPI remains zero. Scoped kernel verification does not
 constitute freezing or independent acceptance.
+
+
+## Raw all-window settlement candidate
+
+`OpenBoundaryMPSAllWindowC9.result` composes the existing suppliers into one
+raw actual-image statement for every $N=3+m\ge3$. A single nonzero real
+polynomial in ALL real and imaginary full-state amplitudes defines a nonempty,
+relatively open dense $U(1)$-saturated locus in the ENTIRE literal actual MPS
+image. Every target there is nonzero. Every separate adjacent three-site raw
+marginal determines that target up to unit phase against arbitrary actual
+competitors. Each separate two-site and one-site window has a possibly
+different actual nonzero nonphase competitor preserving its complete raw
+marginal. Every exterior split and every exact length cast is quantified.
+
+Ordinary transpose with swapped original boundaries makes word reversal an
+actual-image homeomorphism. Intersect the prefix recovery and Q2 loci, the
+interior loci only in their valid length ranges, and the two reversed prefix
+loci. One common ACTUAL point of these dense open sets proves nonzero
+evaluation of the literal full-amplitude polynomial, constructed by complete
+Q3 quadratic substitution and reversal of amplitude indices. Boundary Q2
+witnesses are chosen in the open nonzero neighborhood of the nonzero target;
+partial traces retain the same pair witness for each site. No spectral,
+root, norm or genericity supplier is re-proved.
+
+This is a sufficient strengthening of the pre-probe raw $N\ge4$ prefix
+recovery and no-fewer target in issue #30422. $N\ge3$ and the explicit
+real-principal genericity convention are formal strengthening choices, not
+quoted author wording. The candidate's conservative proof shape is bind-only;
+its candidate admission basis is open-problem-resolution. The matching Scribe
+and `Problems/critch-morton-2014-open-boundary-mps-raw-c9.md` describe only that
+raw settlement candidate. The bounded literature check found no exact C9
+settlement in its accessible searched scope; this is no priority or uniqueness
+certificate. Independent caller fidelity review, required checks, freezing and
+publication remain separate. Global C9 status stays OPEN and solved-open-problem
+KPI stays zero until caller verification. No normalized-state, joint-marginal,
+closure-only, dynamics or thermodynamic conclusion is asserted. Original
+supplier attributions and licenses are unchanged; the new whole-source Reg
+attempt has no source-selection certificate and claims no native validation.
+
+`OpenBoundaryMPSNormalizedC9.result` supplies the physical-mass-one consequence of the raw all-window supplier. For every natural $m$, including zero, let $N=3+m$ and
+$$
+M(\psi)=\sum_{w\in\{0,1\}^N}|\psi_w|^2,
+\qquad S_N=\{\psi\in\mathrm{OB}(2,2,N):M(\psi)=1\}.
+$$
+This uses the actual free-boundary image and its induced topology. It does not use the default Pi sup norm. If $P$ is the real polynomial on all real and imaginary amplitude coordinates supplied by `OpenBoundaryMPSAllWindowC9.result`, write $P_d$ for its degree-$d$ homogeneous component and set
+$$
+H=\sum_{d=0}^{\deg P}P_d^2.
+$$
+The theorem retains literal nonzero real polynomials $P,H$. The locus $G_N=\{\psi\in S_N:H(\operatorname{Re}\psi,\operatorname{Im}\psi)\ne0\}$ is nonempty, relatively open, dense and $U(1)$-saturated. For every target in this same locus, every $p,q\in\mathbb N$ with $p+q=m$, and every length equality $(p+3)+q=N$, equality of the individual three-site `rawInterior p 3 q` observation with an arbitrary actual mass-one competitor is equivalent to a unit-phase relation. For each $p+q=m+1$, every individual two-site window admits an actual mass-one competitor with the same observation and no phase relation; the corresponding assertion holds separately for each one-site window with $p+q=m+2$. Each competitor may depend on the window. All equality casts, zero-length exteriors and the case $N=3$ remain in scope.
+
+The new normalization argument uses the finite coefficient polynomial $F_x(T)=\sum_d P_d(x)T^d=P(Tx)$. Homogeneous evaluation, coefficient extraction, the real sum-of-squares criterion and the univariate infinite-root theorem prove
+$$
+H(x)\ne0\quad\Longleftrightarrow\quad
+\exists t>0,\ P(tx)\ne0.
+$$
+This algebraic statement includes $P=0$, constants, empty variable carriers and $x=0$; no homogeneity of $P$ or $H$ is assumed. Taking $t=1$ embeds the old dense locus in the positive-ray saturation. A continuous normalization retraction $\psi\mapsto\psi/\sqrt{M(\psi)}$ on the open positive-mass actual subtype transports density to $S_N$. The old raw phase saturation, together with the ray characterization and commuting scalar actions, gives phase saturation of $G_N$.
+
+For every window and its exact length cast, the proof establishes scalar degree two and $\operatorname{tr}(Q_k(\psi))=M(\psi)$. Equal same-window observations therefore have equal physical mass. For a target in $G_N$, choose $t>0$ reaching the raw $P$ locus. Apply the raw theorem at $t\psi$, scale each ambiguity witness back by $t^{-1}$, and use trace equality to retain that same witness on $S_N$. Recovery scales every arbitrary mass-one competitor by the same $t$ and cancels it. This supplies no joint-window ambiguity witness, neighborhood upgrade, stability, dynamics, time group, energy, physical clock or thermodynamic statement. All upstream attribution, including the Ma–Zhang Conjecture 8 supplier under CC BY 4.0, remains in force. The normalized result completes the same preregistered physical C9 reading with both states normalized under #30422: it is an AdditionalMember of the single existing claim hosted by `OpenBoundaryMPSAllWindowC9.result` in the same Problems dossier. Its conservative proof shape is bind-only and candidate admission basis is open-problem-resolution; no escape witness, independent priority or second problem credit is asserted. Normalization alone establishes no global C9 novelty or official resolution: caller scope verification and publication remain outstanding, C9 is OPEN, and the solved-open-problem KPI increment is zero. The normalized result's full-telescope Reg attempt is `declared_unresolved`, IE-C050 ClosedTruthReadout, rule `source.selection_missing`. The newly public `OpenBoundaryMPSDensityGenericity.continuous_realCoordinates` separately lacks owner-mirror registration evidence under the same #30422 disclosure route. Neither unfinished audit claims `declared_validated`.
