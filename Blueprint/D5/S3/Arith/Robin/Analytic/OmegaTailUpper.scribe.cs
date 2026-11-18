@@ -82,6 +82,20 @@ internal sealed class OmegaTailUpperDocument : IScribeDocumentDefinition
                 H("Logarithmic weight derivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For z>0 and t>0, the logarithmic weight has derivative minus the Abel kernel. The entropy integral uses this derivative with its endpoint limits."))), DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("rankin-exponential-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.rankin_exponential_bound"),
+                H("Finite Rankin exponential bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For s>1, z>=1 and x>0, the count of integers 1<=n<=x whose number of distinct prime divisors strictly exceeds any real T is at most the exponential of s*log(x)-T*log(z), plus the logarithmic convergent inverse Euler cost and the finite prime logarithmic product. The same finite formula supports parameters depending on x when its hypotheses are verified at each x."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("abel-kernel-continuous"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.abelKernel_continuousOn"),
+                H("Continuity of the Abel kernel"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For z>0 and a>0, the Abel kernel is continuous on every closed real interval [a,b], for every real s."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("upper-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.upper_bound"),
                 H("Rankin upper bound"),
