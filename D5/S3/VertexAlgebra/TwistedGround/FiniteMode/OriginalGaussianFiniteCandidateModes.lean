@@ -585,13 +585,13 @@ theorem h2_euler_mode_step (p q : ℕ) (r : ℂ) :
   push_cast at hh ⊢
   linear_combination hh
 
-private lemma denominatorStencil_linear (F G : ℕ → ℕ → ℂ → ℂ) (b c : ℂ → ℂ)
+lemma denominatorStencil_linear (F G : ℕ → ℕ → ℂ → ℂ) (b c : ℂ → ℂ)
     (p q : ℕ) (r : ℂ) :
     denominatorStencil (fun i j u => b u * F i j u + c u * G i j u) p q r =
       b r * denominatorStencil F p q r + c r * denominatorStencil G p q r := by
   cases p <;> cases q <;> simp [denominatorStencil, shiftX, shiftY, shift11] <;> ring
 
-private lemma denominatorStencil_shift11 (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
+lemma denominatorStencil_shift11 (F : ℕ → ℕ → ℂ → ℂ) (p q : ℕ) (r : ℂ) :
     denominatorStencil (shift11 F) p q r = shift11 (denominatorStencil F) p q r := by
   cases p with
   | zero => simp [denominatorStencil, shiftX, shiftY, shift11]
