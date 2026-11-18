@@ -248,12 +248,42 @@ jobs:
         name: Check the recovered bytes and Lake freshness
         env:
           SAVED: ${{ steps.checkpoint.outputs.available }}
+          UNSAVED: ${{ steps.checkpoint.outputs.missing }}
           RESTORED: ${{ steps.resumed.outputs.available }}
           MISSING: ${{ steps.resumed.outputs.missing }}
         run: |
-          [[ "$SAVED" =~ ^[1-9][0-9]*$ && "$SAVED" == "$RESTORED" && "$MISSING" == 0 ]]
+          [[ "$SAVED" =~ ^[1-9][0-9]*$ && "$SAVED" == "$RESTORED" && "$UNSAVED" == 0 && "$MISSING" == 0 ]]
           path=lib/lean/D5/S0/Tower/GoldenGapWord.olean
           cmp ".lake/shard-verification-source/$path" ".lake/build/$path"
+          lake --no-build build "$CACHE_SCOPE"
+
+      - if: steps.entry.outputs.hit == 'true'
+        name: Evict one entry of this run's incomplete index
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          index=build/lean-cache/shards/index.json
+          prefix="$(python3 tools/scripts/worktree/lean_actions_shards.py identity --state resume | jq -er .prefix)"
+          digest="$(jq -er '.entries | to_entries[0].value' "$index")"
+          gh cache delete --ref "$GITHUB_REF" "${prefix}material-$digest"
+          mv .lake/build .lake/shard-verification-recovered
+      - if: steps.entry.outputs.hit == 'true'
+        id: evicted
+        name: Restore remaining checkpoint entries
+        uses: ./.github/actions/lean-cache-shards
+        with:
+          operation: restore
+          state: resume
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Rebuild the missing checkpoint entry through Lake
+        env:
+          SAVED: ${{ steps.checkpoint.outputs.available }}
+          AVAILABLE: ${{ steps.evicted.outputs.available }}
+          MISSING: ${{ steps.evicted.outputs.missing }}
+        run: |
+          [[ "$AVAILABLE" =~ ^[0-9]+$ && "$MISSING" == 1 && $((AVAILABLE + 1)) == "$SAVED" ]]
+          make lean LEAN_TARGETS="$CACHE_SCOPE"
           lake --no-build build "$CACHE_SCOPE"
 
   scribe:

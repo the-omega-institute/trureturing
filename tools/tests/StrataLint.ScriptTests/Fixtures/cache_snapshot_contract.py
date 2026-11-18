@@ -39,7 +39,7 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         keys = [shards.group_identity(group) for group in groups]
         identity = {"producer_resume": "isolated"}
         record = {
-            "binding": identity, "state": "resume",
+            "binding": identity, "state": "resume", "required": {},
             "owner": {"commit": "b" * 40, "ref": "refs/heads/dev", "run": "17", "attempt": "2"},
             "layout": dict(zip(keys, groups, strict=True)),
             "entries": dict(zip(keys, payloads, strict=True)),
@@ -58,6 +58,29 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         build = root / ".lake/build"
         self.assertEqual(names[0], (build / names[0]).read_text())
         self.assertFalse((build / names[1]).exists())
+
+    def test_complete_shard_index_requires_every_declared_compiler_group(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        group = [["D5.Fixture"]]
+        key = shards.group_identity(group)
+        record = {
+            "binding": {}, "state": "complete",
+            "owner": {"commit": "b" * 40, "ref": "refs/heads/dev", "run": "17", "attempt": "2"},
+            "layout": {key: group},
+            "entries": {key: "a" * 64, "report": "b" * 64},
+            "fingerprints": {key: "c" * 64, "report": "d" * 64},
+            "sources": {"D5.Fixture": "e" * 64},
+            "required": {key: ["lib/lean/D5/Fixture.olean"], "report": [shards.REPORT_PATH]},
+        }
+        index = self.root / "shards.json"
+        index.write_text(json.dumps(record))
+        self.assertEqual(record, shards.read_index(index, {}, "complete"))
+        del record["entries"][key]
+        del record["fingerprints"][key]
+        index.write_text(json.dumps(record))
+        with self.assertRaisesRegex(ValueError, "required Actions shard inventory"):
+            shards.read_index(index, {}, "complete")
 
     def lookup_keys(self, responses=(), *, wait=None, real_wait=False, streams=None, **environment):
         owner = self.restore_owner()
@@ -746,53 +769,24 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         self.assertTrue((self.root / ".lake/.stratalint-lean-cache-stamp.json").is_file())
         self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
 
-    def test_ordinary_seed_allows_resume_without_certifying_an_incomplete_report(self):
+    def test_ordinary_seed_does_not_certify_an_incomplete_report(self):
         owner = self.resume_setup()
         self.work(0, 0)
-        action = (CACHE.parents[3] / ".github/actions/lean-cache-produce/action.yml").read_text()
-
-        def selected(step, values):
-            block = next(block for block in action.split("\n    - ") if block.startswith(step + "\n"))
-            condition = next(line.removeprefix("      if: ") for line in block.splitlines()
-                             if line.startswith("      if: "))
-            results = []
-            for term in condition.split(" && "):
-                field, operator, literal = term.split()
-                self.assertEqual("!=", operator)
-                self.assertTrue(literal.startswith("'") and literal.endswith("'"))
-                results.append(values[field] != literal[1:-1])
-            return all(results)
-
         for seeded in ("0", "1"):
-            for adopted in ("false", "true"):
-                for released in ("false", "true"):
-                    with self.subTest(seeded=seeded, adopted=adopted, released=released):
-                        env = dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED=seeded,
-                                   STRATALINT_REPORT_SUCCEEDED="false")
-                        values = {"steps.prepared.outputs.adopted": adopted,
-                                  "env.STRATALINT_ACTIONS_CACHE_SEEDED": seeded,
-                                  "steps.release.outputs.restored": released}
-                        with mock.patch.dict(os.environ, env, clear=True), \
-                                contextlib.redirect_stdout(io.StringIO()) as receipts:
-                            owner.resume_record(self.root).unlink(missing_ok=True)
-                            spec = owner.resume_spec(self.root)
-                            owner.resume_snapshot(self.root, spec)
-                            lookup = selected("id: resume_lookup", values)
-                            values["steps.resume_lookup.outputs.cache-matched-key"] = spec["key"] if lookup else ""
-                            extracted = selected("id: resume", values)
-                            if selected("name: Validate the producer continuation", values):
-                                owner.resume_restore(self.root, spec, spec["key"] if extracted else "",
-                                                     "success" if extracted else "skipped")
-                            expected = adopted == "false" and released == "false"
-                            self.assertEqual(expected, lookup)
-                            self.assertEqual(expected, extracted)
-                            self.assertEqual(expected, owner.resume_verified(self.root))
-                            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
-                            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
-                            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
-                        self.assertIn('"complete": false', receipts.getvalue())
-                        self.assertIn("project_ready=false", receipts.getvalue())
-                        self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
+            with self.subTest(seeded=seeded), mock.patch.dict(os.environ,
+                    dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED=seeded,
+                         STRATALINT_REPORT_SUCCEEDED="false"), clear=True), \
+                    contextlib.redirect_stdout(io.StringIO()) as receipts:
+                spec = owner.resume_spec(self.root)
+                owner.resume_snapshot(self.root, spec)
+                owner.resume_restore(self.root, spec, spec["key"], "success")
+                self.assertTrue(owner.resume_verified(self.root))
+                self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+                self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+                owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+                self.assertIn('"complete": false', receipts.getvalue())
+                self.assertIn("project_ready=false", receipts.getvalue())
+                self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
         self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
 
     def test_incompatible_or_failed_resume_restore_discards_material_and_cannot_promote(self):

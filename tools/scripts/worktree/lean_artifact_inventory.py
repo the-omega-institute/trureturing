@@ -137,6 +137,15 @@ def import_closure(graph: dict[str, set[str]], targets) -> set[str]:
     return included
 
 
+def compiler_path(name, module, location, suffix):
+    return PurePosixPath(module.build, location, *name.split(".")).with_suffix("." + suffix)
+
+
+def required_compiler_paths(name, module):
+    library = {compiler_path(name, module, "lib/lean", suffix) for suffix in ("trace", "olean", "ilean")}
+    return library | {compiler_path(name, module, "ir", "c")}
+
+
 def lean_artifact_paths(name, module):
     relative = PurePosixPath(*name.split("."))
     output = set()

@@ -18,7 +18,10 @@ import tempfile
 from lean_actions import (
     actions_keys, dependency_inputs, native_archive_paths, project_publication, receipt, resume_spec,
 )
-from lean_artifact_inventory import PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports, workspace_modules
+from lean_artifact_inventory import (
+    PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports,
+    required_compiler_paths, workspace_modules,
+)
 from lean_cache_release import cache_guard, install_scoped, report_reuse
 from lean_cache_release_io import archive_sha, copy_chunks
 from lean_cache_shards import group_identity, make_layout
@@ -98,7 +101,7 @@ def read_index(path, identity, state):
         raise ValueError("Actions shard index too large")
     record = json.loads(data, object_pairs_hook=pairs)
     if (not isinstance(record, dict) or record.get("binding") != identity or record.get("state") != state
-            or set(record) != {"binding", "state", "owner", "layout", "entries", "sources", "fingerprints"}):
+            or set(record) != {"binding", "state", "owner", "layout", "entries", "sources", "fingerprints", "required"}):
         raise ValueError("incompatible Actions shard index")
     owner = record["owner"]
     if (not isinstance(owner, dict) or set(owner) != {"commit", "ref", "run", "attempt"}
@@ -126,8 +129,17 @@ def read_index(path, identity, state):
     if (not isinstance(fingerprints, dict) or set(fingerprints) != set(entries)
             or any(not valid_digest(value) for value in fingerprints.values())):
         raise ValueError("invalid Actions shard fingerprint")
-    if state == "complete" and REPORT not in entries:
-        raise ValueError("complete Actions shard index has no report bundle")
+    required = record["required"]
+    if not isinstance(required, dict) or any(
+            key not in entries or not isinstance(paths, list) or not paths
+            or any(not isinstance(path, str) or str(safe_path(path)) != path for path in paths)
+            or len(set(paths)) != len(paths)
+            for key, paths in required.items()):
+        raise ValueError("invalid required Actions shard inventory")
+    if state == "resume" and required:
+        raise ValueError("incomplete Actions shard index claims required output coverage")
+    if state == "complete" and (REPORT not in required or required.keys() <= {REPORT, EXTRAS}):
+        raise ValueError("complete Actions shard index lacks required outputs")
     if set(sources) != used or any(not valid_digest(value) for value in sources.values()):
         raise ValueError("invalid Actions source membership")
     return record
@@ -180,6 +192,19 @@ def write_payload(root, build, paths):
         candidate.unlink(missing_ok=True)
 
 
+def required_outputs(root, modules, graph, owners):
+    selection = report_reuse.publication.selection.Selection(root)
+    reported = selection.modules()
+    if not reported or not reported.keys() <= modules.keys():
+        raise ValueError("report modules do not match Actions workspace ownership")
+    result = defaultdict(set)
+    result[REPORT].update(REPORT_PATH + suffix for suffix in report_reuse.publication.SUFFIXES)
+    result[REPORT].add(str(REPORT_RECEIPT))
+    for name in import_closure(graph, reported):
+        result[owners[name]].update(str(path) for path in required_compiler_paths(name, modules[name]))
+    return {key: sorted(paths) for key, paths in result.items()}
+
+
 def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset()):
     if state == "complete":
         allowed, reason, _ = project_publication(root)
@@ -214,6 +239,11 @@ def prepare(root, identity, state, previous, anchor, targets=(), available=froze
                 if scoped_keys is None or group in scoped_keys:
                     groups[group].append(artifact.path.as_posix())
 
+        required = required_outputs(root, modules, graph, owners) if state == "complete" else {}
+        for key, paths in required.items():
+            if not set(paths).issubset(groups.get(key, ())):
+                absent = sorted(set(paths) - set(groups.get(key, ())))
+                raise ValueError(f"project snapshot is missing compiler or report outputs: {absent[:5]}")
         build = root / PROJECT_BUILD
         fingerprints = {}
         entries = {}
@@ -266,7 +296,8 @@ def extract_payload(path, destination, registrations, restored):
 
 
 def install(root, record, targets, *, require_complete=False):
-    selected = set(selected_keys(root, record, targets).values())
+    selected = selected_keys(root, record, targets)
+    required = record["required"]
     registrations = native_archive_paths(root, ["project"])["project"]
     lake = root / ".lake"
     if lake.is_symlink():
@@ -276,12 +307,18 @@ def install(root, record, targets, *, require_complete=False):
     with cache_guard(root), tempfile.TemporaryDirectory(prefix=".shards-", dir=lake) as temporary:
         unpacked = Path(temporary)
         paths = set()
-        for digest_value in sorted(selected):
+        for key, digest_value in sorted(selected.items()):
             payload = root / transport_payload(digest_value)
             if not payload.is_file() or archive_sha(payload, None) != digest_value:
                 missing.add(digest_value)
                 continue
-            extract_payload(payload, unpacked, registrations, paths)
+            entries = set()
+            extract_payload(payload, unpacked, registrations, entries)
+            if not set(required.get(key, ())).issubset(str(path) for path in entries):
+                raise ValueError("Actions payload omits a required compiler or report output")
+            if paths.intersection(entries):
+                raise ValueError("duplicate artifact across Actions shards")
+            paths.update(entries)
             available.add(digest_value)
         target = root / PROJECT_BUILD
         if target.is_symlink() or (target.is_dir() and any(target.iterdir())):
