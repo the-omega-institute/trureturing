@@ -10,8 +10,8 @@ open scoped BigOperators
 open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical
-open BalancedCriticalSpectrum (Q IsBalanced switchingVector flip_adj directionEdges directionEndpoints
-  direction_edge_count)
+open BalancedCriticalSpectrum (Q IsBalanced switchingVector flip_adj directionEdges
+  directionEndpoints direction_edge_count)
 local notation "flip" => BalancedCriticalSpectrum.flip
 attribute [local instance] Classical.propDecidable
 open private huangMatrix cubeParity from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
@@ -25,7 +25,7 @@ open private shell from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
-open private coordinate_profile_weight_bound sixty_six_edge_weight_inequality from
+open private coordinate_profile_weight_bound sixty_six_edge_weight_inequality sum_ofFn_int from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private distance_seven_agreement_excludes_minority from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerWeightsProbe
@@ -156,12 +156,12 @@ private lemma distance_seven_agreement_count {C : Finset (Q 9)}
     · have hmem : i ∈ diff (antipode x) y := by
         cases h : x i <;> simp [diff, antipode, ← hagree, h]
       have he := card_erase_add_one hmem
-      rw [if_pos hmem]
+      rw [ite_eq_left hmem]
       simp only [hagree, and_true]
       omega
     · have hmem : i ∉ diff (antipode x) y := by
         cases h : x i <;> cases hy' : y i <;> simp_all [diff, antipode]
-      rw [if_neg hmem, card_insert_of_notMem hmem]
+      rw [ite_eq_right hmem, card_insert_of_notMem hmem]
       simp only [hagree, and_false, iff_false]
       omega
   have hcount : (directions C v).card =
@@ -272,7 +272,7 @@ theorem q9_sixty_six_many_deficit_five_force_partners {C : Finset (Q 9)} (hC : C
     by_cases hi : r i = 5
     · have hcard := hhalf i
       rw [hi] at hcard
-      simp only [a, if_pos hi]
+      simp only [a, ite_eq_left hi]
       linarith
     · simp [a, hi]
   have hroot : ∃ x ∈ C, 4 ≤ w x := by
@@ -315,10 +315,10 @@ theorem q9_sixty_six_many_deficit_five_force_partners {C : Finset (Q 9)} (hC : C
     apply sum_le_sum
     intro i _
     cases hi : x i
-    · simp [hi]
+    · simp
     · by_cases hri : r i = 5
-      · simp [hi, a, hri]
-      · simpa [hi, a, hri] using hr i
+      · simp [a, hri]
+      · simpa [a, hri] using hr i
   have hpartners := coordinate_profile_weight_bound hC hreg hb (fun _ => true) r hhalf hx
   have hweight : (∑ i, if x i = true then r i else 0) =
       ∑ i, if x i then r i else 0 := rfl
@@ -326,5 +326,51 @@ theorem q9_sixty_six_many_deficit_five_force_partners {C : Finset (Q 9)} (hC : C
   exact ⟨x, hx, by linarith⟩
 
 #print axioms q9_sixty_six_many_deficit_five_force_partners
+
+/-- Candidate deficits after imposing the distance-seven bound for profiles
+with eight or more deficit-five coordinates. -/
+def sixtySixProfilesAfterPartnerBound : List (List ℤ) :=
+  sixtySixCandidateProfiles.filter fun profile =>
+    decide ((profile.map fun r => if r = 5 then (1 : ℤ) else 0).sum < 8 ∨ 44 ≤ profile.sum)
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 2000000 in
+-- The kernel reduces both filters on the enumerated deficit profiles.
+theorem sixtySixProfilesAfterPartnerBound_length :
+    sixtySixProfilesAfterPartnerBound.length = 247 := by
+  decide +kernel
+
+/-- Every 66-point support gives one of the 247 remaining deficit profiles. -/
+theorem q9_sixty_six_mem_profiles_after_partner_bound {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C) :
+    ∃ (S : Finset (Q 9)) (r : Fin 9 → ℤ),
+      S.card = 66 ∧ ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3 ∧
+      IsBalanced S ∧ (∀ i, ((S.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33) ∧
+      List.ofFn r ∈ sixtySixProfilesAfterPartnerBound := by
+  obtain ⟨S, r, hS, hregS, hbS, hd, hmono, hr, hhalf, _, hm⟩ :=
+    exists_sorted_minority_cube_support hC hreg hb
+      (huang_balanced_cubic_sixty_six_diameter_le_seven hC hreg hb)
+  refine ⟨S, r, hS, hregS, hbS, hhalf, ?_⟩
+  rw [sixtySixProfilesAfterPartnerBound, List.mem_filter, decide_eq_true_eq]
+  refine ⟨sorted_deficits_mem_sixtySixCandidateProfiles r hmono hr hm, ?_⟩
+  rw [List.map_ofFn, sum_ofFn_int, sum_ofFn_int]
+  simp only [Function.comp_apply]
+  have hcount : (∑ i : Fin 9, if r i = 5 then (1 : ℤ) else 0) =
+      ((univ.filter (fun i => r i = 5)).card : ℤ) := by
+    rw [← sum_filter, sum_const]
+    simp
+  rw [hcount]
+  by_cases h : 8 ≤ (univ.filter (fun i => r i = 5)).card
+  · right
+    obtain ⟨x, hx, hlower⟩ := q9_sixty_six_many_deficit_five_force_partners hS hregS hbS
+      r (fun i => (hr i).1) hhalf h
+    have hupper : ((shell S x 7).card : ℤ) ≤ 8 := by
+      exact_mod_cast sixty_six_distance_seven_le_eight hS hregS hbS hd hx
+    omega
+  · left
+    exact_mod_cast Nat.lt_of_not_ge h
+
+#print axioms sixtySixProfilesAfterPartnerBound_length
+#print axioms q9_sixty_six_mem_profiles_after_partner_bound
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
