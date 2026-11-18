@@ -45,7 +45,7 @@ Remark 2 (p. 9): "The optimization is should be over states such that ∞ > D(ρ
 
 Proposition 8 (p. 40): "For a channel N : A → B, the coefficients ηc_Tr(N) and η∆_Tr(N) are optimized by orthogonal states".
 
-§9 (p. 72): "When considering the hockey-stick divergence, can the optimization in the contraction coefficient be restricted to orthogonal states, similar to Proposition 8? This would directly imply that the associated contraction coefficient is monotone in γ, which in turn would have applications similar to the results in [7]."
+§9 (p. 72): "When considering the hockey-stick divergence, can the optimization in the contraction coefficient be restricted to orthogonal states, similar to Proposition 8? This would directly imply that the associated contraction coefficient is monotone in γ, which in turn would have applications similar to the results in [38]."
 
 ## Reading used by the repository
 
@@ -73,7 +73,7 @@ $$
 \eta^c_D(N)\le\frac14<\frac5{12}\le\eta^\Delta_D(N).
 $$
 
-The uniform complete bound includes arbitrary finite quantum references, including off-diagonal reference blocks. The conditional witness consists of actual density states on $\mathrm{Fin}\,3\times\mathrm{Fin}\,2$. No reference cutoff, relative-entropy resolution or exact optimum is asserted. The [problem dossier](../../Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap.md) gives the construction, quantifiers and audit boundary.
+The uniform complete bound includes arbitrary finite quantum references, including off-diagonal reference blocks. The conditional witness consists of actual density states on $\mathrm{Fin}\,3\times\mathrm{Fin}\,2$. The squared trace-distance result applies without a reference cutoff and establishes the displayed coefficient bounds. The [problem dossier](../../Problems/hirche-george-nuradha-wilde-2026-faithful-conditional-gap.md) gives the construction, quantifiers and audit boundary.
 
 ### Relative entropy on the finite support branch
 
