@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import struct
 import subprocess
@@ -196,16 +197,19 @@ class NativeCompilerConsumerTests:
     def test_collection_drains_projection_and_preparation_roots(self):
         config = self.root / 'tools/lean-inspector/lakefile.lean'
         source = config.read_text()
-        # Observe the actual group passed to native fetch and the success of
-        # each returned job, including exports already warm in Lake's store.
+        # Record a registration only after Lake returns the native job handle.
         fetch = 'sources.mapM (·.exportInfo.fetch)'
         self.assertEqual(source.count(fetch), 1)
         source = source.replace(fetch, '''do
-    observePhase "test-exports" "admit" (Lean.toJson (sources.map (·.name.toString))).compress
+    observePhase "test-exports" "group"
     sources.mapM fun source => do
-      (← source.exportInfo.fetch).mapM fun info => do
+      let job ← source.exportInfo.fetch
+      observePhase "test-exports" "registered" source.name.toString
+      job.mapM fun info => do
         observePhase "test-exports" "finish" source.name.toString
         return info''')
+        source = re.sub(r'^( +)(discard <\| \(\S+ exports\)\.await)$',
+            r'\1observePhase "test-exports" "wait"\n\1\2', source, flags=re.MULTILINE)
         # Delay the real projection and preparation completions independently.
         projection = '    return file\n\n/-- A native report artifact.'
         prepared = '      return ⟨file, args, env, inputTrace, artifact?, prepareProduction, !ownInputs.isEmpty⟩'
@@ -263,23 +267,25 @@ class NativeCompilerConsumerTests:
 
         def check_order():
             observations = [json.loads(line) for line in phases.read_text().splitlines()]
-            batches, pending = [], set()
+            roots = members | {'External', 'ExternalTwo'}
+            registered, finished = [], []
+            groups, waits = 0, 0
             for event in observations:
                 if event['phase'] in ('lake-prepare-module', 'lake-compiler-inputs'):
                     break
                 if event['phase'] != 'test-exports':
                     continue
-                if event['boundary'] == 'admit':
-                    batch = json.loads(event['module'])
-                    self.assertFalse(pending, f'admitted {batch} with unfinished exports {pending}')
-                    self.assertLessEqual(len(batch), 4, batch)
-                    batches.append(batch)
-                    pending.update(batch)
-                else:
-                    pending.remove(event['module'])
-            self.assertFalse(pending, f'classification started with unfinished exports {pending}')
-            self.assertCountEqual([name for batch in batches for name in batch],
-                                  members | {'External', 'ExternalTwo'})
+                if event['boundary'] == 'group':
+                    groups += 1
+                elif event['boundary'] == 'registered':
+                    registered.append(event['module'])
+                elif event['boundary'] == 'wait':
+                    self.assertCountEqual(registered, roots, f'collector waited after fetching {registered}')
+                    waits += 1
+                elif event['boundary'] == 'finish':
+                    finished.append(event['module'])
+            self.assertEqual((groups, waits), (1, 1))
+            self.assertCountEqual(finished, roots, 'classification started before all exports finished')
             for operation, completed_phase in [('judge-inputs-fetch', 'test-projection'),
                                                 ('prepared-report-fetch', 'test-prepared')]:
                 completed, started, previous = set(), [], None
@@ -296,16 +302,16 @@ class NativeCompilerConsumerTests:
                 self.assertEqual(len(started), len(members))
                 self.assertEqual(set(started), members)
                 self.assertEqual(completed, members)
-            return batches
+            return dict(registered=registered, groups=groups, waits=waits)
 
-        self.record_result('cold-compiler-roots', dict(batches=check_order()))
+        self.record_result('cold-compiler-roots', check_order())
         rows, report, material = self.report()
         self.assertEqual({row['module'] for row in rows}, members)
         self.assertEqual(len(rows), len(members))
         stamps = self.stamps()
         self.write('collection-phases.jsonl', '')
         self.build()
-        self.record_result('warm-compiler-roots', dict(batches=check_order()))
+        self.record_result('warm-compiler-roots', check_order())
         self.assertEqual(stamps, self.stamps())
         self.assertEqual(self.report()[1:], (report, material))
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
@@ -339,9 +345,9 @@ class NativeCompilerConsumerTests:
         self.write('utility.json', json.dumps([dict(row, claimSourceSha256='sha256:' +
             publication.digest(claim)) if row['claimModule'] == 'ExternalTwo' else row
             for row in utilities]))
-        alone = self.root / 'D5/Alone.lean'
-        original_alone = alone.read_text()
-        alone.write_text('def alone : Nat := missingIndependentModuleDependency\n')
+        fixture = self.root / 'Fixture.lean'
+        original_fixture = fixture.read_text()
+        fixture.write_text('def broken : Nat := missingIndependentModuleDependency\n')
         self.write('collection-phases.jsonl', '')
         failed = self.build(success=False)
         self.assertIn('missingUtilityDependency', failed.stdout + failed.stderr)
@@ -352,7 +358,7 @@ class NativeCompilerConsumerTests:
         self.assertEqual(self.report()[1:], (report, material))
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         claim.write_text(original_claim)
-        alone.write_text(original_alone)
+        fixture.write_text(original_fixture)
         self.write('utility.json', json.dumps(utilities))
 
         # A shared compiler dependency failure must fail the collection before

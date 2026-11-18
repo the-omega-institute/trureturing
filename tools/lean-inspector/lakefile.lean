@@ -465,27 +465,29 @@ private def runBatch (pkg : Package) (requests : Array (String × Array String))
   finally
     removeFileIfExists requestFile
 
--- Bound the continuation depth when collecting thousands of module jobs.
-private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array α) := Id.run do
-  let mut level : Array (Job (Array α)) := #[]
-  let mut start := 0
-  while start < jobs.size do
-    level := level.push (Job.collectArray (jobs.extract start (min (start + 64) jobs.size)))
-    start := start + 64
-  if level.isEmpty then
-    return Job.collectArray #[]
+-- Combine already-fetched jobs in short folds and then a balanced tree.
+private def foldModuleJobs {α β : Type} (jobs : Array (Job α))
+    (leaf : Array (Job α) → Job β) (join : Job β → Job β → Job β) : Job β := Id.run do
+  if jobs.isEmpty then return leaf #[]
+  let mut level := #[]
+  for start in [0:jobs.size:64] do
+    level := level.push (leaf (jobs.extract start (start + 64)))
   while level.size > 1 do
-    let mut next : Array (Job (Array α)) := #[]
-    let mut i := 0
-    while i < level.size do
-      if i + 1 < level.size then
-        next := next.push ((level[i]!).zipWith (sync := true) (· ++ ·) (level[i + 1]!))
-        i := i + 2
-      else
-        next := next.push level[i]!
-        i := i + 1
+    let mut next := #[]
+    for i in [0:level.size:2] do
+      let left := level[i]!
+      next := next.push <| match level[i + 1]? with
+        | some right => join left right
+        | none => left
     level := next
-  return level[0]?.getD (Job.collectArray #[])
+  return level[0]!
+
+private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array α) :=
+  foldModuleJobs jobs (fun chunk => Job.collectArray chunk)
+    (fun left right => left.zipWith (sync := true) (· ++ ·) right)
+
+private def mixModuleJobs {α : Type} (jobs : Array (Job α)) : Job Unit :=
+  foldModuleJobs jobs (fun chunk => Job.mixArray chunk) Job.mix
 
 private def collectNativeReports (pkg : Package) (config : Json) :
     FetchM (Job (Array ReportArtifact)) := do
@@ -512,12 +514,10 @@ private def collectNativeReports (pkg : Package) (config : Json) :
       unless seen.contains source.name do
         seen := seen.insert source.name
         roots := roots.push source
-  -- Drain each group of collection roots before admitting the next. Lake
-  -- schedules their shared imports, and each report traces its own exports.
-  let batchSize := 4
-  for start in [0:roots.size:batchSize] do
-    let exports ← fetchReportExports reportState (roots.extract start (start + batchSize))
-    discard <| (Job.mixArray exports).await
+  -- Submit every root to Lake before the collector waits. Each artifact
+  -- traces its own exports independently of this ordering barrier.
+  let exports ← fetchReportExports reportState roots
+  discard <| (mixModuleJobs exports).await
   -- Keep classifier processes and late graph registration sequential.
   for mod in modules do
     unless alreadyStarted.contains mod.name do
