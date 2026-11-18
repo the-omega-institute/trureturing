@@ -16,8 +16,12 @@ internal sealed class ConditionalGiniTVDocument : IScribeDocumentDefinition
                 "Let p be a probability mass function, r the refined readout, t the target, and f "
                 + "the deterministic coarsening. M(p,r,d) is the refined fiber mass. T(p,r,t,f) "
                 + "is the sum over refined fibers of their real mass times the total variation "
-                + "between the two target posteriors. Total variation is half the finite sum of "
-                + "absolute differences of the real posterior coordinates. L(p,r,t,f) is the "
+                + "between the two target posteriors. Each posterior coordinate is its joint "
+                + "target-and-fiber mass divided by the corresponding fiber mass, using totalized "
+                + "division in the extended nonnegative reals. A zero denominator gives zero. "
+                + "The ratios are converted to real coordinates before taking total variation. "
+                + "Total variation is half the finite sum of absolute coordinate differences. "
+                + "The outer sum ranges over all refined labels. L(p,r,t,f) is the "
                 + "coarse impurity minus the refined impurity in real coordinates. K(A) equals "
                 + "floor(n squared over four) divided by n for a target type A of cardinality n.")),
             Describe.Lean(
@@ -45,8 +49,8 @@ internal sealed class ConditionalGiniTVDocument : IScribeDocumentDefinition
                     + "Split A into blocks of sizes floor(n/2) and n minus floor(n/2), assigning "
                     + "one half of the probability mass uniformly to each block. The refined readout "
                     + "reports the block. The coarse posterior is the half-mixture of both block "
-                    + "posteriors. Each posterior total variation is one half. The defect is "
-                    + "n divided by four times the product of the block sizes, so equality with "
+                    + "posteriors. Each posterior total variation is one half. For a first block "
+                    + "of size k, the defect is n divided by the product 4 k (n-k). Equality with "
                     + "positive defect forces every universal coefficient to be at least K(A)."))),
                 DescribeRole.Theorem))));
 
