@@ -164,6 +164,4 @@ theorem result {x : Fin (m + 1) → ℕ} {G : ℕ}
   have hhigh : z i ≤ 0 := (hz (Fin.le_last i)).trans hlast
   exact sub_eq_zero.mp (le_antisymm hhigh hlow)
 
-#print axioms result
-
 end D5.S3.Geometry.FiniteGeometry.NotikSingerChamber
