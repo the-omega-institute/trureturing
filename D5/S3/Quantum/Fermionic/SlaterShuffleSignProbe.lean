@@ -158,6 +158,69 @@ theorem grouped_amplitude_eq_signed {k : ℕ} (V : Matrix ι (Fin k) ℂ)
     simpa [groupedAmplitude, orderedAmplitude, crossCount] using grouped_minor a b hd V
   · simp [groupedAmplitude, orderedAmplitude, h]
 
+/-- Relabeling a stable partition as two consecutive blocks gives the same
+occupied minor as listing the occupied rows of the retained side first. -/
+theorem ordered_amplitude_of_block_relabeling {κ : Type*} [LinearOrder κ]
+    (e : ι ≃ κ) (a b : Finset ι) (hd : Disjoint a b)
+    (ha : ∀ x ∈ a, ∀ y ∈ a, x < y → e x < e y)
+    (hb : ∀ x ∈ b, ∀ y ∈ b, x < y → e x < e y)
+    (hab : ∀ x ∈ a, ∀ y ∈ b, e x < e y)
+    {k : ℕ} (V : Matrix ι (Fin k) ℂ) :
+    orderedAmplitude (V.submatrix e.symm id) (a.map e.toEmbedding) (b.map e.toEmbedding)
+      ((Finset.disjoint_map e.toEmbedding).mpr hd) = groupedAmplitude V a b hd := by
+  let a' := a.map e.toEmbedding
+  let b' := b.map e.toEmbedding
+  let hd' : Disjoint a' b' := (Finset.disjoint_map e.toEmbedding).mpr hd
+  change orderedAmplitude (V.submatrix e.symm id) a' b' hd' = _
+  have hcard : a'.card + b'.card = a.card + b.card := by simp [a', b']
+  by_cases hk : a.card + b.card = k
+  · have hk' := hcard.trans hk
+    have hrows : (fun i : Fin k => e (groupedRows a b hd (Fin.cast hk.symm i))) =
+        (a'.disjUnion b' hd').orderEmbOfFin ((Finset.card_disjUnion a' b' hd').trans hk') := by
+      apply Finset.orderEmbOfFin_unique
+      · intro i
+        change e (groupedRows a b hd (Fin.cast hk.symm i)) ∈ a'.disjUnion b' hd'
+        have hi := (groupedRows a b hd (Fin.cast hk.symm i)).2
+        rcases Finset.mem_disjUnion.mp hi with hi | hi
+        · exact Finset.mem_disjUnion.mpr (Or.inl (Finset.mem_map.mpr ⟨_, hi, rfl⟩))
+        · exact Finset.mem_disjUnion.mpr (Or.inr (Finset.mem_map.mpr ⟨_, hi, rfl⟩))
+      · suffices hs : StrictMono (fun i => e (groupedRows a b hd i)) from
+          hs.comp (Fin.cast_strictMono _)
+        have left (i : Fin a.card) :
+            (groupedRows a b hd (Fin.castAdd b.card i) : ι) = a.orderEmbOfFin rfl i := by
+          simp [groupedRows, Finset.coe_orderIsoOfFin_apply]
+        have right (i : Fin b.card) :
+            (groupedRows a b hd (Fin.natAdd a.card i) : ι) = b.orderEmbOfFin rfl i := by
+          simp [groupedRows, Finset.coe_orderIsoOfFin_apply]
+        intro i j hij
+        induction i using Fin.addCases with
+        | left i =>
+          induction j using Fin.addCases with
+          | left j =>
+            simp only [left]
+            exact ha _ (a.orderEmbOfFin_mem rfl i) _ (a.orderEmbOfFin_mem rfl j)
+              ((a.orderEmbOfFin rfl).strictMono (show i < j from hij))
+          | right j =>
+            simp only [left, right]
+            exact hab _ (a.orderEmbOfFin_mem rfl i) _ (b.orderEmbOfFin_mem rfl j)
+        | right i =>
+          induction j using Fin.addCases with
+          | left j =>
+            change a.card + i.val < j.val at hij
+            omega
+          | right j =>
+            simp only [right]
+            exact hb _ (b.orderEmbOfFin_mem rfl i) _ (b.orderEmbOfFin_mem rfl j)
+              ((b.orderEmbOfFin rfl).strictMono ((Fin.natAdd_lt_natAdd_iff a.card).mp hij))
+    unfold orderedAmplitude groupedAmplitude
+    rw [dif_pos hk', dif_pos hk]
+    congr 1
+    ext i j
+    change V (e.symm ((a'.disjUnion b' hd').orderEmbOfFin _ i)) j =
+      V (groupedRows a b hd (Fin.cast hk.symm i)) j
+    rw [← congrFun hrows i, e.symm_apply_apply]
+  · simp [orderedAmplitude, groupedAmplitude, hcard, hk]
+
 theorem grouped_ordered_marginal_charpoly {I : Set ι} (h : ¬ Alternates I)
     {A B : Type*} [Fintype A] [DecidableEq A] [Fintype B]
     (a : A → Finset ι) (b : B → Finset ι)

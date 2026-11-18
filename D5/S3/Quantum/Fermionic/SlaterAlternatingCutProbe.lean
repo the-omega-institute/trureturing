@@ -1,6 +1,7 @@
 import D5.S3.Quantum.Fermionic.SlaterCutPhase
 import D5.S3.Quantum.Fermionic.SlaterShuffleSignProbe
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+import Mathlib.Data.Fintype.Sort
 
 /-! The two opposite four-site obstructions on the active occupation rows. -/
 
@@ -74,14 +75,12 @@ private theorem groupedGram_charpoly :
   rw [Matrix.charpoly_fin_two, Matrix.det_mul, grouped_det, zero_mul, ht]
   simp [pow_two, mul_sub]
 
-private theorem gram_distinct {A B : Matrix (Fin 2) (Fin 2) ℂ}
-    (hA : A.det ≠ 0) (hB : B.det = 0) :
-    (A * A.conjTranspose).charpoly ≠ (B * B.conjTranspose).charpoly := by
-  intro heq
-  have hd : (A * A.conjTranspose).det = (B * B.conjTranspose).det := by
-    rw [Matrix.det_eq_sign_charpoly_coeff, Matrix.det_eq_sign_charpoly_coeff, heq]
-  rw [Matrix.det_mul, Matrix.det_mul, hB, zero_mul, Matrix.det_conjTranspose] at hd
-  exact (mul_ne_zero hA (by simpa using hA)) hd
+private theorem distinct_padded_spectra (n m : ℕ) :
+    Polynomial.X ^ n * (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2 ≠
+      Polynomial.X ^ m * (Polynomial.X - 1) := by
+  intro h
+  have he := congrArg (Polynomial.eval (1 : ℂ)) h
+  norm_num [pow_two] at he
 
 private def embedMatrix {ι κ : Type*} [DecidableEq ι] (e : κ ↪ ι) : Matrix ι κ ℂ :=
   fun i j => if i = e j then 1 else 0
@@ -295,6 +294,137 @@ noncomputable def groupedCut {ι : Type*} [LinearOrder ι] (I : Set ι) {k : ℕ
     (V : Matrix ι (Fin k) ℂ) : Matrix (Occupation I) (Occupation Iᶜ) ℂ :=
   fun a b => SlaterShuffleSignProbe.groupedAmplitude V a.1 b.1 (cut_disjoint a b)
 
+private def occupationCongr {ι κ : Type*} (e : ι ≃ κ) (I : Set ι) :
+    Occupation I ≃ Occupation (e.symm ⁻¹' I) :=
+  (e.finsetCongr).subtypeEquiv (fun a => by
+    simp only [Equiv.finsetCongr_apply]
+    constructor
+    · intro h i hi
+      obtain ⟨j, hj, rfl⟩ := Finset.mem_map.mp hi
+      simpa using h hj
+    · intro h i hi
+      have hm : e i ∈ a.map e.toEmbedding := Finset.mem_map.mpr ⟨i, hi, rfl⟩
+      simpa using h hm)
+
+private theorem groupedCut_relabeling {ι κ : Type*} [LinearOrder ι] [LinearOrder κ]
+    (e : ι ≃ κ) (I : Set ι) (hI : StrictMonoOn e I) (hJ : StrictMonoOn e Iᶜ)
+    (hIJ : ∀ x ∈ I, ∀ y ∈ Iᶜ, e x < e y)
+    {k : ℕ} (V : Matrix ι (Fin k) ℂ) :
+    (orderedCut (e.symm ⁻¹' I) (V.submatrix e.symm id)).submatrix
+      (occupationCongr e I) (occupationCongr e Iᶜ) = groupedCut I V := by
+  ext a b
+  exact SlaterShuffleSignProbe.ordered_amplitude_of_block_relabeling e a.1 b.1
+    (cut_disjoint a b) (fun _ hx _ hy hxy => hI (a.2 hx) (a.2 hy) hxy)
+    (fun _ hx _ hy hxy => hJ (b.2 hx) (b.2 hy) hxy)
+    (fun x hx y hy => hIJ x (a.2 hx) y (b.2 hy)) V
+
+private noncomputable def prefixOrder {ι : Type*} [LinearOrder ι] [Fintype ι] (I : Set ι) :
+    Fin (Fintype.card I + Fintype.card (Iᶜ : Set ι)) ≃ ι := by
+  classical
+  exact finSumFinEquiv.symm.trans
+    (((monoEquivOfFin I rfl).toEquiv.sumCongr (monoEquivOfFin (Iᶜ : Set ι) rfl).toEquiv).trans
+      (Equiv.Set.sumCompl I))
+
+private theorem prefixOrder_left {ι : Type*} [LinearOrder ι] [Fintype ι]
+    (I : Set ι) (i : Fin (Fintype.card I)) :
+    prefixOrder I (Fin.castAdd (Fintype.card (Iᶜ : Set ι)) i) =
+      (monoEquivOfFin I rfl i : ι) := by
+  classical
+  simp [prefixOrder]
+
+private theorem prefixOrder_right {ι : Type*} [LinearOrder ι] [Fintype ι]
+    (I : Set ι) (j : Fin (Fintype.card (Iᶜ : Set ι))) :
+    prefixOrder I (Fin.natAdd (Fintype.card I) j) =
+      (monoEquivOfFin (Iᶜ : Set ι) rfl j : ι) := by
+  classical
+  simp [prefixOrder]
+
+private theorem prefixOrder_symm_left {ι : Type*} [LinearOrder ι] [Fintype ι]
+    (I : Set ι) (i : I) :
+    (prefixOrder I).symm i = Fin.castAdd (Fintype.card (Iᶜ : Set ι))
+      ((monoEquivOfFin I rfl).symm i) := by
+  apply (prefixOrder I).injective
+  rw [Equiv.apply_symm_apply, prefixOrder_left, OrderIso.apply_symm_apply]
+
+private theorem prefixOrder_symm_right {ι : Type*} [LinearOrder ι] [Fintype ι]
+    (I : Set ι) (j : (Iᶜ : Set ι)) :
+    (prefixOrder I).symm j = Fin.natAdd (Fintype.card I)
+      ((monoEquivOfFin (Iᶜ : Set ι) rfl).symm j) := by
+  apply (prefixOrder I).injective
+  rw [Equiv.apply_symm_apply, prefixOrder_right, OrderIso.apply_symm_apply]
+
+private theorem prefixOrder_preimage {ι : Type*} [LinearOrder ι] [Fintype ι]
+    (I : Set ι) :
+    (prefixOrder I) ⁻¹' I = {i | i.val < Fintype.card I} := by
+  ext i
+  induction i using Fin.addCases with
+  | left i =>
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq, prefixOrder_left, Fin.val_castAdd]
+    exact iff_of_true (monoEquivOfFin I rfl i).2 i.isLt
+  | right j =>
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq, prefixOrder_right, Fin.val_natAdd]
+    exact iff_of_false (monoEquivOfFin (Iᶜ : Set ι) rfl j).2 (by omega)
+
+/-- Grouping a cut is a genuine ordered-prefix marginal after relabeling both
+occupation carriers. The characteristic polynomial retains all zero modes. -/
+theorem groupedCut_prefix_charpoly {ι : Type*} [LinearOrder ι] [Fintype ι] (I : Set ι)
+    {k : ℕ} (V : Matrix ι (Fin k) ℂ) :
+    let W := V.submatrix (prefixOrder I) id
+    let P : Set (Fin (Fintype.card I + Fintype.card (Iᶜ : Set ι))) := {i | i.val < Fintype.card I}
+    W.conjTranspose * W = V.conjTranspose * V ∧
+    (orderedCut P W * (orderedCut P W).conjTranspose).charpoly =
+      (groupedCut I V * (groupedCut I V).conjTranspose).charpoly := by
+  classical
+  intro W P
+  constructor
+  · change (V.submatrix (prefixOrder I) id).conjTranspose *
+      V.submatrix (prefixOrder I) id = V.conjTranspose * V
+    rw [Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv, Matrix.submatrix_id_id]
+  have hI : StrictMonoOn (prefixOrder I).symm I := by
+    intro x hx y hy hxy
+    rw [prefixOrder_symm_left I ⟨x, hx⟩, prefixOrder_symm_left I ⟨y, hy⟩]
+    exact (monoEquivOfFin I rfl).symm.strictMono hxy
+  have hJ : StrictMonoOn (prefixOrder I).symm Iᶜ := by
+    intro x hx y hy hxy
+    rw [prefixOrder_symm_right I ⟨x, hx⟩, prefixOrder_symm_right I ⟨y, hy⟩]
+    exact (Fin.natAdd_lt_natAdd_iff _).mpr ((monoEquivOfFin (Iᶜ : Set ι) rfl).symm.strictMono hxy)
+  have hIJ : ∀ x ∈ I, ∀ y ∈ Iᶜ, (prefixOrder I).symm x < (prefixOrder I).symm y := by
+    intro x hx y hy
+    rw [prefixOrder_symm_left I ⟨x, hx⟩, prefixOrder_symm_right I ⟨y, hy⟩]
+    change ((monoEquivOfFin I rfl).symm ⟨x, hx⟩).val <
+      Fintype.card I + ((monoEquivOfFin (Iᶜ : Set ι) rfl).symm ⟨y, hy⟩).val
+    omega
+  have hp : (prefixOrder I) ⁻¹' I = P := prefixOrder_preimage I
+  change (orderedCut P W * (orderedCut P W).conjTranspose).charpoly = _
+  rw [← hp]
+  let e := (prefixOrder I).symm
+  let A := orderedCut (e.symm ⁻¹' I) W
+  let row := occupationCongr e I
+  let col := occupationCongr e Iᶜ
+  change (A * A.conjTranspose).charpoly = _
+  rw [← groupedCut_relabeling e I hI hJ hIJ V]
+  change _ = ((A.submatrix row col) * (A.submatrix row col).conjTranspose).charpoly
+  rw [Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv]
+  exact (Matrix.charpoly_reindex row.symm (A * A.conjTranspose)).symm
+
+/-- The prefix relabeling also preserves the complete one-particle compression
+on the retained sites. The matrix coordinates use their increasing site order. -/
+theorem prefix_compression_relabeling {ι : Type*} [LinearOrder ι] [Fintype ι] (I : Set ι)
+    {k : ℕ} (V : Matrix ι (Fin k) ℂ) :
+    let W := V.submatrix (prefixOrder I) id
+    let X := W.submatrix (Fin.castAdd (Fintype.card (Iᶜ : Set ι))) id
+    let Q := retainedRows I V
+    let e := (monoEquivOfFin I rfl).toEquiv
+    X * X.conjTranspose = (Q * Q.conjTranspose).submatrix e e := by
+  intro W X Q e
+  have hX : X = Q.submatrix e id := by
+    ext i j
+    change V (prefixOrder I (Fin.castAdd (Fintype.card (Iᶜ : Set ι)) i)) j =
+      V (monoEquivOfFin I rfl i : ι) j
+    rw [prefixOrder_left]
+  rw [hX, Matrix.conjTranspose_submatrix]
+  exact Matrix.submatrix_mul_equiv Q Q.conjTranspose e (Equiv.refl _) e
+
 private theorem orderedCut_apply {ι : Type*} [LinearOrder ι] {I : Set ι} {k : ℕ}
     (V : Matrix ι (Fin k) ℂ) (a : Occupation I) (b : Occupation Iᶜ) :
     orderedCut I V a b = (-1 : ℂ) ^ crossCount a.1 b.1 * groupedCut I V a b := by
@@ -361,15 +491,16 @@ private theorem compression_charpoly {ι : Type*} [LinearOrder ι] [Fintype ι] 
 private theorem orthonormal_cut_obstruction {ι : Type*} [LinearOrder ι] [Fintype ι]
     {I : Set ι} (v w : Fin 2 ↪ ι)
     (hv : ∀ i, v i ∈ I) (hw : ∀ i, w i ∈ Iᶜ)
-    (hminor : (signed v w * (signed v w).conjTranspose).charpoly ≠
-      (grouped * grouped.conjTranspose).charpoly) :
+    (hminor : (signed v w * (signed v w).conjTranspose).charpoly =
+      (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2) :
     ∃ V : Matrix ι (Fin 2) ℂ, V.conjTranspose * V = 1 ∧
       ((retainedRows I V) * (retainedRows I V).conjTranspose).charpoly =
         Polynomial.X ^ (Fintype.card I - 1) * (Polynomial.X - 1) ∧
       (groupedCut I V * (groupedCut I V).conjTranspose).charpoly =
         Polynomial.X ^ (Fintype.card (Occupation I) - 1) * (Polynomial.X - 1) ∧
-      (orderedCut I V * (orderedCut I V).conjTranspose).charpoly ≠
-      (groupedCut I V * (groupedCut I V).conjTranspose).charpoly := by
+      (orderedCut I V * (orderedCut I V).conjTranspose).charpoly =
+        Polynomial.X ^ (Fintype.card (Occupation I) - 2) *
+          (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2 := by
   classical
   let s := Finset.univ.image v
   let t := Finset.univ.image w
@@ -416,25 +547,33 @@ private theorem orthonormal_cut_obstruction {ι : Type*} [LinearOrder ι] [Finty
     simp only [Fintype.card_fin] at hcard ⊢
     congr 2
     omega
-  · rw [hg, ho, paddedGram_charpoly e f (signed v w), paddedGram_charpoly e f grouped]
-    intro h
-    exact hminor (mul_left_cancel₀ (pow_ne_zero _ Polynomial.X_ne_zero) h)
+  · rw [ho, paddedGram_charpoly e f (signed v w), hminor, Fintype.card_fin]
 
 theorem alternatingActiveMinor {ι : Type*} [LinearOrder ι] {x y z w : ι}
     (hxy : x < y) (hyz : y < z) (hzw : z < w) :
     let first := signed ![x, z] ![y, w]
     let second := signed ![y, w] ![x, z]
-    (first * first.conjTranspose).charpoly ≠ (grouped * grouped.conjTranspose).charpoly ∧
-    (second * second.conjTranspose).charpoly ≠ (grouped * grouped.conjTranspose).charpoly := by
+    (first * first.conjTranspose).charpoly = (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2 ∧
+    (second * second.conjTranspose).charpoly = (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2 := by
   have hxw := hxy.trans (hyz.trans hzw)
+  have hchar (A : Matrix (Fin 2) (Fin 2) ℂ)
+      (h : A * A.conjTranspose = Matrix.diagonal (fun _ => (1 : ℂ) / 2)) :
+      (A * A.conjTranspose).charpoly = (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2 := by
+    rw [h, Matrix.charpoly_diagonal]
+    simp [pow_two]
   constructor
-  · apply gram_distinct _ grouped_det
-    rw [Matrix.det_fin_two]
-    norm_num [signed, grouped, crossCount, Finset.filter_singleton, hyz, not_lt_of_gt hxy,
-      not_lt_of_gt hxw, not_lt_of_gt hzw]
-  · apply gram_distinct _ grouped_det
-    rw [Matrix.det_fin_two]
-    norm_num [signed, grouped, crossCount, Finset.filter_singleton, hxy, hxw, hzw, not_lt_of_gt hyz]
+  · apply hchar
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [signed, grouped, crossCount, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        Fin.sum_univ_two, Matrix.diagonal_apply, Finset.filter_singleton, hyz, not_lt_of_gt hxy,
+        not_lt_of_gt hxw, not_lt_of_gt hzw]
+  · apply hchar
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [signed, grouped, crossCount, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        Fin.sum_univ_two, Matrix.diagonal_apply, Finset.filter_singleton, hxy, hxw, hzw,
+        not_lt_of_gt hyz]
 
 private def pairEmbedding {ι : Type*} (a b : ι) (h : a ≠ b) : Fin 2 ↪ ι where
   toFun := ![a, b]
@@ -457,8 +596,9 @@ theorem alternating_cut_obstruction {ι : Type*} [LinearOrder ι] [Fintype ι] {
         Polynomial.X ^ (Fintype.card I - 1) * (Polynomial.X - 1) ∧
       (groupedCut I V * (groupedCut I V).conjTranspose).charpoly =
         Polynomial.X ^ (Fintype.card (Occupation I) - 1) * (Polynomial.X - 1) ∧
-      (orderedCut I V * (orderedCut I V).conjTranspose).charpoly ≠
-      (groupedCut I V * (groupedCut I V).conjTranspose).charpoly := by
+      (orderedCut I V * (orderedCut I V).conjTranspose).charpoly =
+        Polynomial.X ^ (Fintype.card (Occupation I) - 2) *
+          (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2 := by
   obtain ⟨x, y, z, w, hxy, hyz, hzw, hsites | hsites⟩ := h
   · obtain ⟨hx, hy, hz, hw⟩ := hsites
     let v := pairEmbedding x z (hxy.trans hyz).ne
@@ -486,8 +626,8 @@ theorem universal_cut_spectrum_iff {ι : Type*} [LinearOrder ι] [Fintype ι] (I
       (fun a : Occupation I => a.1) (fun b : Occupation Iᶜ => b.1)
       (fun a => a.2) (fun b => b.2) V).symm
   · intro h hAlt
-    obtain ⟨V, hnorm, _, _, hne⟩ := alternating_cut_obstruction hAlt
-    exact hne (h 2 V hnorm)
+    obtain ⟨V, hnorm, _, hg, ho⟩ := alternating_cut_obstruction hAlt
+    exact distinct_padded_spectra _ _ (ho.symm.trans ((h 2 V hnorm).trans hg))
 
 open Polynomial in
 private theorem one_nonzero_mode {α : Type*} [Fintype α] (ν : α → ℂ)
@@ -527,6 +667,70 @@ private theorem one_nonzero_mode {α : Type*} [Fintype α] (ν : α → ℂ)
 noncomputable def bernoulliWeight {ι : Type*} [LinearOrder ι] [Fintype ι] {I : Set ι}
     (ν : I → ℂ) (a : Occupation I) : ℂ :=
   ∏ i : I, if i.1 ∈ a.1 then ν i else 1 - ν i
+
+private def siteCongr {ι κ : Type*} (e : ι ≃ κ) (I : Set ι) : I ≃ (e.symm ⁻¹' I : Set κ) :=
+  e.subtypeEquiv fun i => by simp
+
+private theorem bernoulliWeight_relabeling {ι κ : Type*}
+    [LinearOrder ι] [LinearOrder κ] [Fintype ι] [Fintype κ]
+    (e : ι ≃ κ) (I : Set ι) (ν : I → ℂ) (a : Occupation I) :
+    bernoulliWeight (fun i => ν ((siteCongr e I).symm i)) (occupationCongr e I a) =
+      bernoulliWeight ν a := by
+  classical
+  unfold bernoulliWeight
+  symm
+  apply Fintype.prod_equiv (siteCongr e I)
+  intro i
+  simp only [Equiv.symm_apply_apply]
+  change (if i.1 ∈ a.1 then ν i else 1 - ν i) =
+    (if e i.1 ∈ a.1.map e.toEmbedding then ν i else 1 - ν i)
+  simp only [Finset.mem_map_equiv, e.symm_apply_apply]
+
+/-- The product formula on all occupation sets, where the list of modes is
+specified by the complete characteristic polynomial of the compression. -/
+def HasProductSpectrum {ι : Type*} [LinearOrder ι] [Fintype ι]
+    (I : Set ι) {k : ℕ} (V : Matrix ι (Fin k) ℂ) : Prop :=
+  ∀ ν : I → ℂ,
+    (retainedRows I V * (retainedRows I V).conjTranspose).charpoly =
+      (∏ i : I, (Polynomial.X - Polynomial.C (ν i))) →
+    (orderedCut I V * (orderedCut I V).conjTranspose).charpoly =
+      (∏ a : Occupation I, (Polynomial.X - Polynomial.C (bernoulliWeight ν a)))
+
+private theorem grouped_product_from_prefix
+    (hprefix : ∀ m n k : ℕ, ∀ W : Matrix (Fin (m + n)) (Fin k) ℂ,
+      W.conjTranspose * W = 1 → HasProductSpectrum {i | i.val < m} W)
+    {ι : Type*} [LinearOrder ι] [Fintype ι] (I : Set ι)
+    {k : ℕ} (V : Matrix ι (Fin k) ℂ) (hV : V.conjTranspose * V = 1)
+    (ν : I → ℂ) (hν : (retainedRows I V * (retainedRows I V).conjTranspose).charpoly =
+      (∏ i : I, (Polynomial.X - Polynomial.C (ν i)))) :
+    (groupedCut I V * (groupedCut I V).conjTranspose).charpoly =
+      (∏ a : Occupation I, (Polynomial.X - Polynomial.C (bernoulliWeight ν a))) := by
+  classical
+  let e := (prefixOrder I).symm
+  let W := V.submatrix e.symm id
+  let J := e.symm ⁻¹' I
+  let q := siteCongr e I
+  let ν' : J → ℂ := fun i => ν (q.symm i)
+  obtain ⟨hnorm, hgram⟩ := groupedCut_prefix_charpoly I V
+  have hW : W.conjTranspose * W = 1 := hnorm.trans hV
+  have hP := hprefix (Fintype.card I) (Fintype.card (Iᶜ : Set ι)) k W hW
+  rw [← prefixOrder_preimage I] at hP hgram
+  change HasProductSpectrum J W at hP
+  have hcompression : retainedRows J W = (retainedRows I V).submatrix q.symm id := rfl
+  have hν' : (retainedRows J W * (retainedRows J W).conjTranspose).charpoly =
+      (∏ i : J, (Polynomial.X - Polynomial.C (ν' i))) := by
+    rw [hcompression, Matrix.conjTranspose_submatrix]
+    change ((retainedRows I V).submatrix q.symm (Equiv.refl _) *
+      (retainedRows I V).conjTranspose.submatrix (Equiv.refl _) q.symm).charpoly = _
+    rw [Matrix.submatrix_mul_equiv]
+    change (Matrix.reindex q q (retainedRows I V * (retainedRows I V).conjTranspose)).charpoly = _
+    rw [Matrix.charpoly_reindex, hν]
+    exact Fintype.prod_equiv q _ _ (fun i => by simp [ν'])
+  calc
+    _ = (orderedCut J W * (orderedCut J W).conjTranspose).charpoly := hgram.symm
+    _ = _ := hP ν' hν'
+    _ = _ := (Fintype.prod_equiv (occupationCongr e I) _ _
+      (fun a => by rw [bernoulliWeight_relabeling e I ν a])).symm
 
 open Polynomial in
 private theorem single_mode_bernoulli_charpoly {ι : Type*} [LinearOrder ι] [Fintype ι]
@@ -591,9 +795,33 @@ theorem alternating_cut_bernoulli_obstruction {ι : Type*} [LinearOrder ι] [Fin
           (∏ i : I, (X - C (ν i))) →
         (orderedCut I V * (orderedCut I V).conjTranspose).charpoly ≠
           (∏ a : Occupation I, (X - C (bernoulliWeight ν a))) := by
-  obtain ⟨V, hV, hc, hg, ho⟩ := alternating_cut_obstruction h
+  obtain ⟨V, hV, hc, _, ho⟩ := alternating_cut_obstruction h
   refine ⟨V, hV, fun ν hν => ?_⟩
-  rw [single_mode_bernoulli_charpoly ν (hν.symm.trans hc), ← hg]
-  exact ho
+  rw [single_mode_bernoulli_charpoly ν (hν.symm.trans hc), ho]
+  exact distinct_padded_spectra _ _
+
+/-- The arbitrary-cut classification follows from the literal ordered-prefix
+product formula. The alternating direction already has a two-orbital witness. -/
+theorem universal_cut_product_iff_of_prefix
+    (hprefix : ∀ m n k : ℕ, ∀ W : Matrix (Fin (m + n)) (Fin k) ℂ,
+      W.conjTranspose * W = 1 → HasProductSpectrum {i | i.val < m} W)
+    {ι : Type*} [LinearOrder ι] [Fintype ι] (I : Set ι) :
+    ¬ Alternates I ↔ ∀ (k : ℕ) (V : Matrix ι (Fin k) ℂ),
+      V.conjTranspose * V = 1 → HasProductSpectrum I V := by
+  constructor
+  · intro h k V hV ν hν
+    rw [(universal_cut_spectrum_iff I).mp h k V hV]
+    exact grouped_product_from_prefix hprefix I V hV ν hν
+  · intro h hAlt
+    obtain ⟨V, hV, hcontra⟩ := alternating_cut_bernoulli_obstruction hAlt
+    let Q := retainedRows I V
+    let hQ : (Q * Q.conjTranspose).IsHermitian :=
+      Matrix.isHermitian_mul_conjTranspose_self Q
+    let ν : I → ℂ := fun i => (hQ.eigenvalues i : ℂ)
+    have hν : (Q * Q.conjTranspose).charpoly =
+        (∏ i : I, (Polynomial.X - Polynomial.C (ν i))) := by
+      rw [hQ.charpoly_eq]
+      rfl
+    exact hcontra ν hν (h 2 V hV ν hν)
 
 end SlaterAlternatingCutProbe
