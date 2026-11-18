@@ -25,12 +25,12 @@ namespace Branch
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e)
+  realize signature (fun _ r v => decide (v = Complex.exp (-Complex.log (1 - r) / 2))) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := (∀ r ∈ disk, M.readout () (Complex.exp (-Complex.log (1 - r) / 2)) (C r) = true) ∧
+  Law M := (∀ r ∈ disk, M.readout () r (C r) = true) ∧
     DifferentiableOn ℂ C disk ∧
     (∀ r ∈ disk, sourceMode false 0 r = C r)
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -39,12 +39,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   simpa [rejected, realize] using hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
+  refine ⟨0, 1, 0, ?_⟩
   norm_num [actual, realize]
 def family : Registration arena (type_of% @actual_source_branch) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @actual_source_branch,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @actual_source_branch,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -62,7 +62,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ r v => decide (v = Complex.exp (-Complex.log (1 - r) / 2))) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -70,9 +70,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["fn", "arg", "body", "body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
@@ -84,29 +84,28 @@ end Branch
 
 namespace Deck
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℂ, ℤ) (fun _ => ℂ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e)
+  realize signature (fun _ p v => decide (v = (-1 : ℂ) ^ p.2 * sourceCover p.1)) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law M := Differentiable ℂ sourceCover ∧
     (∀ z : ℂ, ∀ k : ℤ,
-      M.readout () ((-1 : ℂ) ^ k * sourceCover z)
-        (sourceCover (z + k * (2 * (Real.pi : ℂ) * Complex.I))) = true)
+      M.readout () ⟨z, k⟩ (sourceCover (z + k * (2 * (Real.pi : ℂ) * Complex.I))) = true)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h.2 0 0
   simpa [rejected, realize] using hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
-  norm_num [actual, realize]
+  refine ⟨⟨0, 0⟩, 1, 0, ?_⟩
+  norm_num [actual, realize, sourceCover]
 def family : Registration arena (type_of% @source_deck) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @source_deck,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @source_deck,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -124,7 +123,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p v => decide (v = (-1 : ℂ) ^ p.2 * sourceCover p.1)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -132,9 +131,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["arg", "body", "body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
@@ -177,8 +176,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @actual_source_path) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @actual_source_path,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @actual_source_path,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -204,12 +203,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -256,8 +255,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @actual_source_loop_character) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @actual_source_loop_character,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @actual_source_loop_character,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -283,12 +282,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalGaussianSourceCharacter
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["arg", "arg", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -297,14 +296,14 @@ end Loop
 
 namespace Positive
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (C(I, ℂ)) (fun _ => C(I, ℂ)) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature (Unit) (fun _ => C(I, ℂ)) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ γ L => decide (SourceCharts γ L)) (fun e => nomatch e)
+  realize signature (fun _ _ L => decide (SourceCharts gamma1 L)) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := M.readout () gamma1 positiveLift = true ∧
+  Law M := M.readout () () positiveLift = true ∧
     sourceChart (positiveLift 1) =ᶠ[𝓝 b] (fun r => -C r)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -321,12 +320,12 @@ private theorem dependence : ObservationalDependence signature actual := by
     have hs := (sourceMode_square (u := 0) (x := b) (by norm_num [b])).2
     rw [actual_source_branch.2.2 b hd, hv] at hs
     norm_num [b] at hs
-  refine ⟨gamma1, positiveLift, (0 : C(I, ℂ)), ?_⟩
+  refine ⟨(), positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @positive_source_monodromy) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @positive_source_monodromy,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @positive_source_monodromy,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -344,7 +343,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ γ L => decide (SourceCharts γ L)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ L => decide (SourceCharts gamma1 L)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -354,10 +353,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none

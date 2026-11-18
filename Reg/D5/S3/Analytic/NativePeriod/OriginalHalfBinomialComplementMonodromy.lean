@@ -23,7 +23,7 @@ namespace Equations
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e)
+  realize signature (fun _ r v => decide (v = -Complex.I / ((Real.pi : ℂ) * r * (1 - r)))) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
@@ -38,8 +38,7 @@ def arena : Arena where
         (1 - 2 * r) * deriv complementN r - (1 / 4 : ℂ) * complementN r = 0 ∧
       r * (1 - r) * deriv (deriv (complementY z)) r +
         (1 - 2 * r) * deriv (complementY z) r - (1 / 4 : ℂ) * complementY z r = 0 ∧
-      M.readout () (-Complex.I / ((Real.pi : ℂ) * r * (1 - r)))
-        (deriv complementN r * complementY z r - complementN r * deriv (complementY z) r) = true)
+      M.readout () r (deriv complementN r * complementY z r - complementN r * deriv (complementY z) r) = true)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hz : (-1 : ℂ) ∈ E := by norm_num [E]
@@ -53,8 +52,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize]
 def family : Registration arena (type_of% @complementary_equations) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @complementary_equations,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @complementary_equations,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -72,7 +71,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ r v => decide (v = -Complex.I / ((Real.pi : ℂ) * r * (1 - r)))) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -80,9 +79,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialComplementMonodromy
     definition := none
-    coordinates := #[]
+    coordinates := #[1]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "arg", "arg", "body", "body", "arg", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
@@ -122,8 +121,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @complementary_path_continuation) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @complementary_path_continuation,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @complementary_path_continuation,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -149,12 +148,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialComplementMonodromy
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -194,8 +193,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @complementary_loop_monodromy) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @complementary_loop_monodromy,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @complementary_loop_monodromy,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -221,12 +220,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialComplementMonodromy
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -235,14 +234,14 @@ end Loop
 
 namespace Positive
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (C(I, ℂ)) (fun _ => C(I, ℂ)) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature (Unit) (fun _ => C(I, ℂ)) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ γ L => decide (NativeCharts (complementPath γ) L)) (fun e => nomatch e)
+  realize signature (fun _ _ L => decide (NativeCharts (complementPath gamma1) L)) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := M.readout () gamma1 positiveLift = true ∧
+  Law M := M.readout () () positiveLift = true ∧
     complementY (positiveLift 0) =ᶠ[𝓝 b] period ∧
     complementY (positiveLift 1) =ᶠ[𝓝 b]
       (fun r => period r - 2 * Complex.I * period (1 - r))
@@ -256,12 +255,12 @@ private theorem dependence : ObservationalDependence signature actual := by
     intro h
     have he := h.projection 0
     norm_num [gamma1, complementPath, gamma0, b] at he
-  refine ⟨gamma1, positiveLift, (0 : C(I, ℂ)), ?_⟩
+  refine ⟨(), positiveLift, (0 : C(I, ℂ)), ?_⟩
   simp [actual, realize, hg, hn]
 def family : Registration arena (type_of% @positive_one_monodromy) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @positive_one_monodromy,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @positive_one_monodromy,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -279,7 +278,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ γ L => decide (NativeCharts (complementPath γ) L)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ L => decide (NativeCharts (complementPath gamma1) L)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -289,10 +288,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -301,28 +300,32 @@ end Positive
 
 namespace Initial
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ → ℂ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e)
+  realize signature (fun _ r f => decide (f =ᶠ[𝓝 r] period)) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := ∀ r : ℂ, r ∈ lens →
-    ∀ᶠ s in 𝓝 r, M.readout () (period s) (complementY (Complex.log (1 - r)) s) = true
+  Law M := ∀ (r : ℂ) (hr : r ∈ lens),
+    M.readout () r (complementY (Complex.log (1 - r))) = true
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb : b ∈ lens := by norm_num [b, lens, Metric.mem_ball, dist_eq_norm]
-  obtain ⟨s, hs⟩ := (h b hb).exists
-  simpa [rejected, realize] using hs
+  have hh := h b hb
+  simpa [rejected, realize] using hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
-  norm_num [actual, realize]
+  have hn : ¬ ((fun r : ℂ => (period) r + 1) =ᶠ[𝓝 (0)] (period)) := by
+    intro h
+    have he := h.self_of_nhds
+    simpa using he
+  refine ⟨0, (period), (fun r : ℂ => (period) r + 1), ?_⟩
+  simp [actual, realize, hn]
 def family : Registration arena (type_of% @complementary_initial_germ) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @complementary_initial_germ,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @complementary_initial_germ,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -340,7 +343,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ r f => decide (f =ᶠ[𝓝 r] period)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -348,9 +351,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialComplementMonodromy
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]

@@ -24,7 +24,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := ∀ z : ℂ, z ∈ E →
+  Law M := ∀ (z : ℂ) (hz : z ∈ E),
     IsOpen (chartDomain z) ∧ Complex.exp z ∈ chartDomain z ∧
     localLog z (Complex.exp z) = z ∧
     (∀ r ∈ chartDomain z, M.readout () r (localLog z r) = true ∧
@@ -42,8 +42,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   norm_num [actual, realize, Complex.exp_log]
 def family : Registration arena (type_of% @native_chart) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @native_chart,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @native_chart,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -69,12 +69,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
-    coordinates := #[0]
+    coordinates := #[2]
     readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body", "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["fn", "arg", "arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -85,7 +85,7 @@ namespace Cover
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e)
+  realize signature (fun _ z v => decide (v = Y z)) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
@@ -93,7 +93,7 @@ def arena : Arena where
   Law M := DifferentiableOn ℂ T E ∧ DifferentiableOn ℂ Y E ∧ DifferentiableOn ℂ N E ∧
     (∀ z : ℂ, ∀ k : ℤ,
       T (z + k * (2 * (Real.pi : ℂ) * Complex.I)) = T z + 2 * k ∧
-      M.readout () (Y z) (Y (z + k * (2 * (Real.pi : ℂ) * Complex.I))) = true ∧
+      M.readout () z (Y (z + k * (2 * (Real.pi : ℂ) * Complex.I))) = true ∧
       N (z + k * (2 * (Real.pi : ℂ) * Complex.I)) = N z + 2 * k * Y z)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -101,12 +101,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   simpa [rejected, realize] using hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
-  norm_num [actual, realize]
+  refine ⟨0, Y 0, Y 0 + 1, ?_⟩
+  simp [actual, realize]
 def family : Registration arena (type_of% @cover_periods) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @cover_periods,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @cover_periods,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -124,7 +124,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ z v => decide (v = Y z)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -132,7 +132,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["arg", "arg", "arg", "body", "body", "arg", "fn", "arg"]
       stateBinder := 0
@@ -153,7 +153,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := ∀ z : ℂ,
+  Law M := ∀ (z : ℂ),
     DifferentiableOn ℂ (chartT z) (chartDomain z) ∧
     DifferentiableOn ℂ (chartN z) (chartDomain z) ∧
     (∀ r ∈ chartDomain z,
@@ -178,8 +178,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   simp [actual, realize, hn, hasDerivAt_const]
 def family : Registration arena (type_of% @chart_equations) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @chart_equations,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @chart_equations,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -205,12 +205,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
-    coordinates := #[0]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "arg", "arg", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      stateOperand := some #["fn", "fn", "arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -219,31 +219,36 @@ end Equations
 
 namespace Transition
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ → ℂ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e)
+  realize signature (fun _ w f => decide (f =ᶠ[𝓝 (Complex.exp w)] localLog w)) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := ∀ z w : ℂ, w ∈ E → (w - z).im ∈ Ioo (-Real.pi) Real.pi →
-    (∀ᶠ r in 𝓝 (Complex.exp w), M.readout () (localLog w r) (localLog z r) = true) ∧
+  Law M := ∀ (z w : ℂ) (hw : w ∈ E)
+    (hzw : (w - z).im ∈ Ioo (-Real.pi) Real.pi),
+    M.readout () w (localLog z) = true ∧
     chartT z =ᶠ[𝓝 (Complex.exp w)] chartT w ∧
     chartN z =ᶠ[𝓝 (Complex.exp w)] chartN w
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hz : (-1 : ℂ) ∈ E := by norm_num [E]
   have hzz : ((-1 : ℂ) - -1).im ∈ Ioo (-Real.pi) Real.pi := by simp [Real.pi_pos]
-  obtain ⟨r, hr⟩ := (h (-1) (-1) hz hzz).1.exists
-  simpa [rejected, realize] using hr
+  have hh := (h (-1) (-1) hz hzz).1
+  simpa [rejected, realize] using hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
-  norm_num [actual, realize]
+  have hn : ¬ ((fun r : ℂ => (localLog 0) r + 1) =ᶠ[𝓝 (1 : ℂ)] (localLog 0)) := by
+    intro h
+    have he := h.self_of_nhds
+    simpa using he
+  refine ⟨0, (localLog 0), (fun r : ℂ => (localLog 0) r + 1), ?_⟩
+  simp [actual, realize, hn]
 def family : Registration arena (type_of% @chart_transition) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @chart_transition,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @chart_transition,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -261,7 +266,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ w f => decide (f =ᶠ[𝓝 (Complex.exp w)] localLog w)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -269,7 +274,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.NativePeriod.OriginalHalfBinomialLocalCharts
     definition := none
-    coordinates := #[0,1]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
@@ -283,30 +288,34 @@ end Transition
 
 namespace Initial
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature (ℂ) (fun _ => ℂ → ℂ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e)
+  realize signature (fun _ r f => decide (f =ᶠ[𝓝 r] (fun s => Complex.I * period (1 - s)))) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law M := ∀ r : ℂ, r ∈ lens →
+  Law M := ∀ (r : ℂ) (hr : r ∈ lens),
     Complex.log r ∈ E ∧
-    (∀ᶠ s in 𝓝 r, M.readout () (Complex.I * period (1 - s)) (chartN (Complex.log r) s) = true) ∧
+    M.readout () r (chartN (Complex.log r)) = true ∧
     chartT (Complex.log r) =ᶠ[𝓝 r] _root_.D5.S3.Analytic.OriginalHalfBinomialWronskian.tau
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb : (1 / 2 : ℂ) ∈ lens := by norm_num [lens, Metric.mem_ball, dist_eq_norm]
-  obtain ⟨r, hr⟩ := (h (1 / 2) hb).2.1.exists
-  simpa [rejected, realize] using hr
+  have hh := (h (1 / 2) hb).2.1
+  simpa [rejected, realize] using hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, 0, 1, ?_⟩
-  norm_num [actual, realize]
+  have hn : ¬ ((fun r : ℂ => (fun s : ℂ => Complex.I * period (1 - s)) r + 1) =ᶠ[𝓝 (0)] (fun s : ℂ => Complex.I * period (1 - s))) := by
+    intro h
+    have he := h.self_of_nhds
+    simpa using he
+  refine ⟨0, (fun s : ℂ => Complex.I * period (1 - s)), (fun r : ℂ => (fun s : ℂ => Complex.I * period (1 - s)) r + 1), ?_⟩
+  simp [actual, realize, hn]
 def family : Registration arena (type_of% @native_initial_germ) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq, Filter.EventuallyEq] using @native_initial_germ,
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @native_initial_germ,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
@@ -324,7 +333,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r v => decide (v = r)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ r f => decide (f =ᶠ[𝓝 r] (fun s => Complex.I * period (1 - s)))) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
