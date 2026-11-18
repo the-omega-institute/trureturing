@@ -341,23 +341,30 @@ open OriginalFourMActualChart (Chart Puncture loweringParameter)
 open private freeCorrection from
   D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMChartProduct
 
-/-- The chart subtraction uses the literal finite lowering contraction at
-every pair of ordinary Taylor indices, including equal indices. -/
-theorem chart_free_correction_coefficient (c : Chart) (i : Puncture) (p q : ℕ) :
-    coefficient p (fun u => coefficient q (fun v => freeCorrection c i
-      ((1-loweringParameter c i*u)^(1/2:ℂ)) ((1-loweringParameter c i*v)^(1/2:ℂ)))) =
-      loweringParameter c i^(p+q+1) * contractionScalar p q := by
-  let eta := loweringParameter c i
-  let R : ℂ × ℂ → ℂ := fun uv => freeCorrection c i (rootPower eta (1/2) uv.1)
-    (rootPower eta (1/2) uv.2)
+private def regularCorrection (eta : ℂ) (u v : ℂ) : ℂ :=
+  let B := rootPower eta (1/2) u
+  let C₀ := rootPower eta (1/2) v
+  eta * (1+B*C₀) / (2*B*C₀*(B+C₀)^2)
+
+private theorem regular_correction_coefficient (eta : ℂ) (p q : ℕ) :
+    coefficient p (fun u => coefficient q (fun v => regularCorrection eta u v)) =
+      eta^(p+q+1) * contractionScalar p q := by
   have h := taylorPair_regularSeries eta
-  change taylorPair R = regularSeries eta at h
+  change taylorPair (fun uv => regularCorrection eta uv.1 uv.2) = regularSeries eta at h
   have hc := congrArg (fun A : PowerSeries (LaurentSeries ℂ) =>
     (coeff q A).coeff (p:ℤ)) h
   simp only [taylorPair, coeff_mk] at hc
   rw [LaurentSeries.coeff_coe_powerSeries, taylor, coeff_mk,
     D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentCauchy.regular_series_coefficient] at hc
   exact hc
+
+/-- The chart subtraction uses the literal finite lowering contraction at
+every pair of ordinary Taylor indices, including equal indices. -/
+theorem chart_free_correction_coefficient (c : Chart) (i : Puncture) (p q : ℕ) :
+    coefficient p (fun u => coefficient q (fun v => freeCorrection c i
+      ((1-loweringParameter c i*u)^(1/2:ℂ)) ((1-loweringParameter c i*v)^(1/2:ℂ)))) =
+      loweringParameter c i^(p+q+1) * contractionScalar p q := by
+  exact regular_correction_coefficient (loweringParameter c i) p q
 
 open LatticeGeneratingFieldLocality (LatticeData Index Oscillator)
 open D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
@@ -379,8 +386,8 @@ private theorem pair_top_coefficient (D : LatticeData) (x y : Index D) :
     have hsum : ij.1 + ij.2 = x.2+y.2+1 := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
     simp only [creationPart, coeff_mk]
     split_ifs <;> first | omega | simp
-  rw [hzero, zero_add, contraction, coeff_monomial, if_pos rfl]
-  simp [Module.End.mul_apply, vacuumProjection_apply]
+  rw [hzero, zero_add, contraction, coeff_monomial, ite_eq_left rfl]
+  simp [vacuumProjection_apply]
 
 private theorem weighted_pair_symmetry (D : LatticeData) (hu : IsUnit D.G.det) (x y : Index D) :
     (D.G x.1 y.1 : ℂ) * contractionScalar x.2 y.2 =
@@ -396,28 +403,136 @@ private theorem weighted_pair_symmetry (D : LatticeData) (hu : IsUnit D.G.det) (
   simpa [MvPolynomial.constantCoeff_smul] using
     congrArg (fun f : Oscillator D => f.constantCoeff) he
 
+private theorem native_regular_correction_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    (eta : ℂ) (x y : Index D) :
+    (D.G x.1 y.1 : ℂ) *
+      coefficient y.2 (fun v => coefficient x.2 (fun u => regularCorrection eta u v)) =
+      (D.G x.1 y.1 : ℂ) * (eta^(x.2+y.2+1) * contractionScalar x.2 y.2) := by
+  have hswap (u v : ℂ) : regularCorrection eta u v = regularCorrection eta v u := by
+    unfold regularCorrection
+    ring
+  have hsel : (fun v => coefficient x.2 (fun u => regularCorrection eta u v)) =
+      (fun v => coefficient x.2 (fun u => regularCorrection eta v u)) := by
+    funext v
+    congr 1
+    funext u
+    exact hswap u v
+  rw [hsel, regular_correction_coefficient, show y.2+x.2+1 = x.2+y.2+1 by omega]
+  calc
+    _ = eta^(x.2+y.2+1) * ((D.G y.1 x.1 : ℂ) * contractionScalar y.2 x.2) := by
+      rw [D.symmetric x.1 y.1]
+      ring
+    _ = _ := by rw [weighted_pair_symmetry D hu y x]; ring
+
 /-- In the native order of the two Taylor selectors, the regular subtraction
 is the Gram-weighted pair obtained by normally ordering the original currents. -/
 theorem native_free_correction_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (c : Chart) (i : Puncture) (x y : Index D) :
     (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u => freeCorrection c i
       ((1-loweringParameter c i*u)^(1/2:ℂ)) ((1-loweringParameter c i*v)^(1/2:ℂ)))) =
-      (D.G x.1 y.1 : ℂ) * (loweringParameter c i^(x.2+y.2+1) * contractionScalar x.2 y.2) := by
-  have hswap (u v : ℂ) : freeCorrection c i u v = freeCorrection c i v u := by
-    unfold freeCorrection
-    congr 2 <;> ring
-  have hsel : (fun v => coefficient x.2 (fun u => freeCorrection c i
-      ((1-loweringParameter c i*u)^(1/2:ℂ)) ((1-loweringParameter c i*v)^(1/2:ℂ)))) =
-      (fun v => coefficient x.2 (fun u => freeCorrection c i
-      ((1-loweringParameter c i*v)^(1/2:ℂ)) ((1-loweringParameter c i*u)^(1/2:ℂ)))) := by
-    funext v
-    congr 1
-    funext u
-    exact hswap _ _
-  rw [hsel, chart_free_correction_coefficient, show y.2+x.2+1 = x.2+y.2+1 by omega]
-  calc
-    _ = loweringParameter c i^(x.2+y.2+1) *
-      ((D.G y.1 x.1 : ℂ) * contractionScalar y.2 x.2) := by rw [D.symmetric x.1 y.1]; ring
-    _ = _ := by rw [weighted_pair_symmetry D hu y x]; ring
+      (D.G x.1 y.1 : ℂ) * (loweringParameter c i^(x.2+y.2+1) * contractionScalar x.2 y.2) :=
+  native_regular_correction_coefficient D hu (loweringParameter c i) x y
+
+open OriginalFourMActualChart (scale scaleRoot chosen_roots)
+open OriginalFourMOccupationTransport (inverseRoot)
+open private rawLocal halfJacobian from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMChartProduct
+open private scale_ne from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMActualChart
+open private root_ne from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMOccupationTransport
+
+private theorem pair_coefficient_congr {F G : ℂ × ℂ → ℂ} (h : F =ᶠ[𝓝 (0, 0)] G)
+    (p q : ℕ) :
+    coefficient q (fun v => coefficient p (fun u => F (u, v))) =
+      coefficient q (fun v => coefficient p (fun u => G (u, v))) := by
+  rw [nhds_prod_eq] at h
+  obtain ⟨P, hP, Q, hQ, h⟩ := eventually_prod_iff.mp h
+  have he : (fun v => coefficient p (fun u => F (u, v))) =ᶠ[𝓝 0]
+      (fun v => coefficient p (fun u => G (u, v))) := by
+    filter_upwards [hQ] with v hv
+    have he : (fun u => F (u, v)) =ᶠ[𝓝 0] (fun u => G (u, v)) :=
+      hP.mono fun u hu => h hu hv
+    simp only [coefficient, he.iteratedDeriv_eq]
+  exact congrArg (fun z : ℂ => z / (q.factorial : ℂ)) (he.iteratedDeriv_eq (n := q))
+
+private theorem inverse_correction_germ {a : ℝ} (ha : 0 < a) (ha₁ : a < 1)
+    (c : Chart) (i : Puncture) :
+    (fun uv : ℂ × ℂ => -freeCorrection c i (inverseRoot c a i uv.1) (inverseRoot c a i uv.2) /
+      (halfJacobian c a i (inverseRoot c a i uv.1) *
+        halfJacobian c a i (inverseRoot c a i uv.2))) =ᶠ[𝓝 (0, 0)]
+      (fun uv => regularCorrection (-loweringParameter c i / scale c a i) uv.1 uv.2) := by
+  let lam := scale c a i
+  let eta := loweringParameter c i
+  let s := scaleRoot c a i
+  let t := -eta / lam
+  let B := fun u : ℂ => 1 - t*u
+  let R := rootPower t (1/2)
+  have hl : lam ≠ 0 := scale_ne ha ha₁ c i
+  have hS : s ≠ 0 := root_ne ha ha₁ c i
+  have hs : s^2 = lam := (chosen_roots ha ha₁ c i).1
+  have hB : ContinuousAt B 0 := continuousAt_const.sub (continuousAt_const.mul continuousAt_id)
+  have hb : ∀ᶠ u in 𝓝 0, B u ∈ Complex.slitPlane :=
+    hB.eventually (Complex.isOpen_slitPlane.mem_nhds (by simp [B]))
+  have hsum : ∀ᶠ uv : ℂ × ℂ in 𝓝 (0, 0), R uv.1 + R uv.2 ≠ 0 := by
+    have hR : AnalyticAt ℂ R 0 := rootPower_analytic t (1/2)
+    have h₁ : AnalyticAt ℂ (fun uv : ℂ × ℂ => R uv.1) (0, 0) :=
+      hR.comp_of_eq analyticAt_fst rfl
+    have h₂ : AnalyticAt ℂ (fun uv : ℂ × ℂ => R uv.2) (0, 0) :=
+      hR.comp_of_eq analyticAt_snd rfl
+    have hh := (h₁.add h₂).continuousAt
+    exact hh.eventually_ne (by norm_num [R, rootPower_zero])
+  have ht₁ : Tendsto (Prod.fst : ℂ × ℂ → ℂ) (𝓝 (0, 0)) (𝓝 0) := continuous_fst.continuousAt
+  have ht₂ : Tendsto (Prod.snd : ℂ × ℂ → ℂ) (𝓝 (0, 0)) (𝓝 0) := continuous_snd.continuousAt
+  have hroot (u : ℂ) (hu : B u ∈ Complex.slitPlane) : inverseRoot c a i u = (R u)⁻¹ := by
+    have hu₀ := Complex.slitPlane_ne_zero hu
+    have hd : lam+eta*u = lam*B u := by
+      dsimp [B,t]
+      field_simp
+      ring
+    have he : 1-eta*rawLocal c a i u = (B u)⁻¹ := by
+      change 1-eta*(u/(lam+eta*u)) = _
+      rw [hd]
+      field_simp [hu₀]
+      dsimp [B,t]
+      field_simp
+      ring
+    unfold inverseRoot
+    change (1-eta*rawLocal c a i u)^(1/2:ℂ) = _
+    rw [he, Complex.inv_cpow _ _ (Complex.slitPlane_arg_ne_pi hu)]
+    rfl
+  filter_upwards [ht₁ hb, ht₂ hb, hsum] with uv h₁ h₂ h₃
+  have hp : R uv.1 ≠ 0 :=
+    Complex.cpow_ne_zero_iff.mpr (Or.inl (Complex.slitPlane_ne_zero h₁))
+  have hq : R uv.2 ≠ 0 :=
+    Complex.cpow_ne_zero_iff.mpr (Or.inl (Complex.slitPlane_ne_zero h₂))
+  rw [hroot _ h₁, hroot _ h₂]
+  change -(eta * (1+(R uv.1)⁻¹*(R uv.2)⁻¹) /
+    (2*(R uv.1)⁻¹*(R uv.2)⁻¹*((R uv.1)⁻¹+(R uv.2)⁻¹)^2)) /
+      ((s/((R uv.1)⁻¹)^3)*(s/((R uv.2)⁻¹)^3)) =
+       (-eta/lam)*(1+R uv.1*R uv.2)/(2*R uv.1*R uv.2*(R uv.1+R uv.2)^2)
+  rw [← hs]
+  have hi : (R uv.1)⁻¹ + (R uv.2)⁻¹ = (R uv.1 + R uv.2)/(R uv.1*R uv.2) := by
+    field_simp
+    ring
+  rw [hi]
+  field_simp
+  ring
+
+/-- The correction added to the inverse half-current pullback has exactly
+the same coefficient as a contracted pair in the original lowering action.
+The two inverse scale powers are taken at the incoming modes. -/
+theorem inverse_physical_free_correction_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    {a : ℝ} (ha : 0 < a) (ha₁ : a < 1) (c : Chart) (i : Puncture) (x y : Index D) :
+    (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u =>
+      -freeCorrection c i (inverseRoot c a i u) (inverseRoot c a i v) /
+        (halfJacobian c a i (inverseRoot c a i u) * halfJacobian c a i (inverseRoot c a i v)))) =
+      ((scaleRoot c a i)⁻¹)^(2*x.2+1) * ((scaleRoot c a i)⁻¹)^(2*y.2+1) *
+        ((D.G x.1 y.1 : ℂ) * ((-loweringParameter c i)^(x.2+y.2+1) *
+          contractionScalar x.2 y.2)) := by
+  rw [pair_coefficient_congr (inverse_correction_germ ha ha₁ c i) x.2 y.2,
+    native_regular_correction_coefficient D hu, div_pow, ← (chosen_roots ha ha₁ c i).1]
+  rw [← pow_add, show 2*x.2+1+(2*y.2+1) = 2*(x.2+y.2+1) by omega, pow_mul,
+    div_eq_mul_inv, ← inv_pow, ← inv_pow]
+  ring
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCauchyTaylor
