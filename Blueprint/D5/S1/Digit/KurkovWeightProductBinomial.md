@@ -4,7 +4,7 @@
 
 Binary-weight products satisfy Kurkov's binomial identity at every natural index.
 
-The variables m, n, and k range over the natural numbers N, including zero. The functions wt and a take natural values: wt is the frozen binary-weight definition of D5/S1/Digit/DyadicRowPolynomialRecurrence (A000120), reused by import, and a is A284005. The operator div is natural floor division, and binom(r,k) is Nat.choose r k. All additions, products, powers, and sums are in N. Kurkov's April 24, 2023 binomial conjecture and its consumed dyadic helper is asserted here. The 2019 bit-flip recursion, the 2023 mod-2 binomial transform of A329369, and the representation A000005(A283477(n)) are outside this statement.
+The variables m, n, and k range over the natural numbers N, including zero. The functions wt and a take natural values: wt is the frozen binary-weight definition of D5/S1/Digit/DyadicRowPolynomialRecurrence (A000120), reused by import, and a is A284005. The operator div is natural floor division, and binom(r,k) is Nat.choose r k. All additions, products, powers, and sums are in N. Kurkov's April 24, 2023 binomial conjecture is asserted here. The 2019 bit-flip recursion, the 2023 mod-2 binomial transform of A329369, and the representation A000005(A283477(n)) are outside this statement.
 
 **Definition 1.1 (The binary-weight product sequence).**
 
@@ -24,11 +24,13 @@ $$\forall m, n \in \mathbb{N}, \operatorname{a}\left(2^{m} \cdot (2 \cdot n + 1)
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/KurkovWeightProductBinomial.a_two_pow_mul_odd` (`✓ std3`). ∎
 
-*Citation.* Antti Karttunen; Mikhail Kurkov (2023). *OEIS A284005, product of (1 + binary weight) over the binary shifts of n, with Kurkov's binomial conjecture*. URL: <https://oeis.org/A284005>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Antti Karttunen; Mikhail Kurkov (2023). *OEIS A284005, product of (1 + binary weight) over the binary shifts of n, with Kurkov's binomial conjecture*. URL: <https://oeis.org/A284005>.
 
 *Commentary.*
 
-For all natural m and n, including zero, multiplication of the odd index 2*n+1 by 2^m yields a(2^m*(2*n+1))=(wt(n)+2)^(m+1)*a(n). Induction uses the same sequence a and binary weight wt. This original-owner helper is used by result below and by DyadicExtendedStirlingEdge.result; it introduces no alternate sequence and asserts no additional external problem settlement.
+For all natural m and n, including zero, multiplication of the odd index 2*n+1 by 2^m yields a(2^m*(2*n+1))=(wt(n)+2)^(m+1)*a(n). The repository derives this law by induction from the A284005 recurrence and binary-weight identities. This original-owner helper is used by result below and by DyadicExtendedStirlingEdge.result; it introduces no alternate sequence and asserts no additional external problem settlement.
 
 **Theorem 1.3 (Kurkov's binomial identity).**
 

@@ -93,8 +93,9 @@ canonically frozen. Admission basis is the external open-problem-resolution
 route; independent source/form and mirror reviews are approved.
 The source-owner product helper is consumed both by its binomial theorem
 and this edge result. The exposed dyadic index is consumed by the block
-law and edge induction. Per-declaration proof shape and escape-registration
-binding remain audit obligations; compilation alone supplies neither.
+law and edge induction. The edge, support, block law and odd-parent
+product proofs use induction. The dyadic index proof specializes
+Mathlib's maximal-power decomposition and normalizes the odd quotient.
 The §3.9 audit remains unfinished under the linked-issue exception in
 [#31124](https://github.com/the-omega-institute/trureturing/issues/31124#issuecomment-6906238478);
 none of these targets is reported declared_validated.
