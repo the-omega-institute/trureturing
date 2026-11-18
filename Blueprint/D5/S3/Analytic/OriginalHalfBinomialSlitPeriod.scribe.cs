@@ -49,9 +49,15 @@ internal sealed class OriginalHalfBinomialSlitPeriodDocument : IScribeDocumentDe
                 + "Integrating twice and dividing by the squared norm of the period gives the strict sign."),
             Result("pfaff-domain", "pfaff_mem_slitDomain", "Pfaff preserves the slit domain",
                 "The complement of r/(r − 1) is the reciprocal of 1 − r and stays off the cut."),
-            Result("pfaff", "pfaff", "The Pfaff transformation",
-                "On the slit domain the period at r/(r − 1) equals the principal square root of 1 − r "
-                + "times the period at r. Reflect the real integration variable at π/4 and then use analytic uniqueness."),
+            Describe.Lean(DescribeId.Create("pfaff"), DeclarationHandle.Create(Prefix + "pfaff"),
+                H("The Pfaff transformation"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Asymptotics/nist2026dlmfpfaff")),
+                Blocks(Paragraph(Text(
+                    "On the full slit domain the period at r/(r − 1) equals the principal square root of 1 − r "
+                    + "times the period at r. This is DLMF 15.8.1 at a = b = 1/2 and c = 1, with the period "
+                    + "normalization from DLMF 19.5.1. The Lean proof reflects the real integration variable "
+                    + "about π/4 for real r < 1 and extends the identity to the slit domain by analytic uniqueness."))),
+                DescribeRole.Theorem),
             Result("slit-wronskian", "slit_wronskian", "The exact complementary Wronskian",
                 "On the double slit, r(1 − r) times the sum of P′(r)P(1 − r) and P(r)P′(1 − r) "
                 + "equals 1/π. The disk identities also identify the local derivatives, so the existing "

@@ -142,11 +142,11 @@ Lean statement: `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.pfaff`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/OriginalHalfBinomialSlitPeriod.pfaff` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* NIST Digital Library of Mathematical Functions (2026). *Hypergeometric function, Pfaff transformation*. URL: <https://dlmf.nist.gov/15.8.E1>.
 
 *Commentary.*
 
-On the slit domain the period at r/(r − 1) equals the principal square root of 1 − r times the period at r. Reflect the real integration variable at π/4 and then use analytic uniqueness.
+On the full slit domain the period at r/(r − 1) equals the principal square root of 1 − r times the period at r. This is DLMF 15.8.1 at a = b = 1/2 and c = 1, with the period normalization from DLMF 19.5.1. The Lean proof reflects the real integration variable about π/4 for real r < 1 and extends the identity to the slit domain by analytic uniqueness.
 
 **Theorem 1.13 (The exact complementary Wronskian).**
 
