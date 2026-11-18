@@ -43,5 +43,6 @@ The nine-row Segre minors and the eight-point constraints cut out exactly the va
 - Truth anchor: `D5/S3/Geometry/FlatlandImageEquations.claim`
 - Truth anchor: `D5/S3/Geometry/FlatlandImageEquations.result`
 - Dependency: [D5/S3/Arith/Lattices/CofactorKernel](../Arith/Lattices/CofactorKernel.md)
+- Dependency: [D5/S3/Arith/Lattices/GirardPlagneBoxLimit](../Arith/Lattices/GirardPlagneBoxLimit.md)
 - Dependency: [D5/S3/Geometry/FlatlandImageAlgebra](FlatlandImageAlgebra.md)
 - Dependency: [D5/S3/Geometry/FlatlandImageClosure](FlatlandImageClosure.md)
