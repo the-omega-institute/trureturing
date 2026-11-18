@@ -15,6 +15,11 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiSingularFactorCover
   - D5/S3/Arith/CharacterSums/PascadiLocalizedFactor
   - D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover
+  - D5/S3/Arith/CharacterSums/PascadiPrimeCubeCount
+  - D5/S3/Arith/CharacterSums/PascadiActualQuadraticResultant
+  - D5/S3/Arith/CharacterSums/PascadiCubicQuadraticHeight
+  - D5/S3/Arith/CharacterSums/PascadiSeventhHeightCover
+  - D5/S3/Arith/CharacterSums/PascadiSingularValueEnvelope
 license: source-reference
 triage: anchor
 ---
@@ -71,8 +76,22 @@ at $X=Y=p^{9/5}$ the extra factor is $1+p^{3/5}$.
 The 17 November 2026 bounded literature screen covered both arXiv versions,
 the journal text, the conjecture's cited results and identifiable citing papers;
 no theorem covering this whole prime-cube range was found in that scope.
-This does not establish exhaustive novelty or priority, and the repository's
-partial formal results do not yet prove that original-tuple estimate.
+This does not establish exhaustive novelty or priority. The later repository
+prime-cube continuation below proves that precise original-tuple estimate;
+the final Shkredov/Chang primary-text comparison remains incomplete.
+
+The continuation also checked the current primary texts arXiv:2605.02518v2
+(Zhang) and arXiv:2603.14116v2 (Shkredov). Zhang's Theorem 2.4 requires
+trace-hyperplane nonconcentration; the natural two-letter unipotent product
+here has a fixed lower-right matrix entry, so that theorem does not directly
+apply. Its Theorem 3.6 concerns a specified Mobius incidence configuration.
+Shkredov's class Z includes sufficiently large prime cubes, but Lemma 14
+averages a common shift and Lemma 15 counts a small-N Mobius incidence; neither
+is the fixed-coefficient six-return estimate above. These checked distinctions
+do not exhaust the citation graph. The final 2021 Journal of Number Theory
+text cited by Pascadi was not obtained; Pascadi's published attribution to its
+Lemma 15 is explicitly in the prime-modulus case. No exhaustive priority
+claim follows from this bounded comparison.
 
 ## Repository prime-cube continuation (16 November 2026)
 
@@ -91,10 +110,74 @@ coordinates and forms the literal coefficient functions of `L₀Q−LQ₀`.
 Its root identity is derived from the actual original word equation, using
 `β=V₁/R₁` and `α=−1/(g*t*R₁)`; it is not supplied as a polynomial-root hypothesis.
 Literal coordinate bounds also give coefficient constant `C=3`, actual pencil
-height `H=18`, and degree at most three. The lattice basis construction,
-exceptional strata, physical multiplicities,
-average/second-moment estimate, plus-center comparison and full original
-prime-cube count remain unformalized here.
+height `H=18`, and degree at most three.
+
+The actual lattice construction and modular-zero partner count are now integrated
+through [PR #31327](https://github.com/the-omega-institute/trureturing/pull/31327).
+`PascadiOriginalLattice` constructs the shortest primitive vector, its Bezout
+completion, the centered reduced basis and the literal coordinate bounds.
+`PascadiModularZeroFieldPartners`, `PascadiModularZeroPartners`,
+`PascadiModularZeroRegularity` and `PascadiOriginalModularPartners` count the
+full modular-zero partner set for a nonaligned retained original baseline,
+including both dividing directions and the nondividing six-candidate case.
+Their explicit coordinate-height and unit hypotheses remain part of the results.
+
+`NumberFieldDivisorSubpower` proves the bounded algebraic-divisor estimate with
+one constant uniform over number fields of degree at most three.
+`PascadiOriginalSingularPartners` constructs the actual algebraic values and
+their nonzero fixed products from the original word. Together with
+`PascadiOriginalLinearFibers`, `PascadiOriginalSingularCount` bounds the actual
+nonzero singular partner set by
+`C_epsilon p^epsilon (1+6H/(p*sigma))`, where sigma is the shortest length of
+the actual index-p-squared lattice. The original word determines the second
+endpoint, so this physical multiplicity is paid once.
+
+`PascadiOriginalWeightAverage` proves the full finite dyadic average of
+`1+H/(p*sigma)` over actual integer `(w,t)` in the literal parameter rectangle.
+For `1<=X<=Y`, `Y<p^3`, `A=XY<2p^4`, `H^2=A` and `p<=H`, its bound is
+`2048[A+(A/p)(1+log(2p)/log(2))+A^2/p^4]`.
+These are explicit sufficient conditions; applying them to the target range
+still requires checking that range's hypotheses.
+
+`PascadiPrimeCubeCount.prime_cube_scalar_return_count` now proves the original
+prime-cube slice: for every epsilon>0 and C0>=1, one K>0 bounds the total literal
+six-letter count, summed over every scalar gamma with gamma^2=1, by
+`K*Y^2*p^epsilon`, for every prime p, fixed alternating units modulo p^3,
+`p^(3/2)<=X<=Y`, `XY<=C0*p^(18/5)` and `6Y<p^2`. The proof connects the
+derivative and exceptional partners, actual record moments, all removed
+charts, nonunit rows, all scalar centers and the bounded-prime range without
+supplied lattice or counting hypotheses. The exact-root Lean build and scoped
+report passed; canonical publication and required CI are separate checks.
+The unrestricted arbitrary-modulus conjecture remains open. The supplied
+paper proof is an input with the separate provenance below. Source-bound
+four-slot escape audits remain unfinished
+under [issue #31176](https://github.com/the-omega-institute/trureturing/issues/31176);
+no completed registration is claimed for these new modules.
+
+The 18 November continuation strengthens the area restriction to
+`XY<=C0*p^alpha` for every fixed real `alpha<26/7`, with the same lower-width,
+upper-width, unit and all-center conditions. The constant can depend on
+epsilon, C0 and alpha, but remains independent of p, X, Y and the two units.
+The old eighteen-fifths statement is retained as a consequence. The exact-root
+Lean build and scoped axiom report passed; this statement does not claim that
+the new delivery's required remote checks have completed.
+
+The improvement uses the actual pencil structure. The genuine degree-two
+branch has seventh weighted resultant height, including zero baseline leading
+coefficients. A degree-two factor of a genuine cubic gains an extra J/I in
+its coefficient height, giving a sixth-weight mixed resultant. Together with
+the existing seventh-weight cubic residual, one common condition is
+`C7*(IJ)^7<p^5`. Since `IJ<=32XY/p^3`, every fixed alpha<26/7 satisfies this
+condition for all sufficiently large primes. The algebraic value envelope
+separates its real height parameter from the modular prime and uses T=p^2;
+the physical endpoint multiplicity is still paid once. Actual zero-reduction
+counts, bad-degree averaging, retained records, unit-middle counting, nonunit
+rows and all scalar centers are assembled into
+`prime_cube_scalar_return_count_of_exponent`. The oracle broker suggested
+the cofactor elimination route and provided literature leads; Codex derived
+and formalized the explicit branches and counting assembly. No priority claim
+is inferred from the bounded literature screen. The strict endpoint
+alpha=26/7 and the full arbitrary-modulus conjecture remain open here.
 
 The four integrated singular-factor modules retain the proofs from the completed
 research archive `pascadi-prime-cube-singular-cover-formalization-20261116`.

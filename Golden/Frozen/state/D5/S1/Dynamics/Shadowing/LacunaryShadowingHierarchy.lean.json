@@ -1,0 +1,1 @@
+{"statement_id":"sha256:4d0fbf83b5ddf3b4c8ea6f34b0424b27973b7518f16b8d901e8981f800635ee1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Dynamics),9:Shadowing),24:lacunary_shift_bijective)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Dynamics),9:Shadowing),28:lacunary_shadowing_hierarchy)","kind":"theorem"}]}
