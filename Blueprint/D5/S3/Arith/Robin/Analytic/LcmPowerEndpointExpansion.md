@@ -4,7 +4,43 @@
 
 The actual real-power divisor transform has an exact logarithmic decomposition on prefix least common multiples.
 
-**Definition 1.1 (Real-power divisor transform).**
+**Theorem 1.1 (Exact transform on a prime power).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_prime_power`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_prime_power` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real kappa, prime p and natural a, sigmaKappa(kappa,p^(a+1)) equals sigma(p^(a+1))^kappa-sigma(p^a)^kappa. The convolution telescopes over the divisors of a prime power. The real-power Robin reduction uses this exact identity before estimating each local factor.
+
+**Theorem 1.2 (Multiplicative factorization of the transform).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_factorization`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_factorization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real kappa and nonzero natural n, sigmaKappa(kappa,n) is the product of sigmaKappa(kappa,p^v_p(n)) over its distinct prime divisors. The real-power Robin reduction combines this factorization with the corresponding factorization of n^kappa.
+
+**Theorem 1.3 (Positive transform for positive exponent).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive real kappa and nonzero natural n, sigmaKappa(kappa,n) is strictly positive. Prime-power divisor sums strictly increase, and multiplicativity passes positivity to the whole transform. The normalized real-power Robin product comparison uses this positivity.
+
+**Definition 1.4 (Real-power divisor transform).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa`
 
@@ -16,7 +52,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa
 
 The value at a natural n is the finite sum over positive divisors d of n of mu(n/d) times sigma(d)^kappa. The real exponent is unrestricted in this definition. The divisor set is empty at zero. This is Definition 1.2 of Fan, Kobayashi and Molnar, arXiv:2511.02106v1.
 
-**Definition 1.2 (Normalized divisor ratio).**
+**Definition 1.5 (Normalized divisor ratio).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.G`
 
@@ -28,7 +64,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.G`
 
 For natural n the expression is zeta(kappa)*sigmaKappa(kappa,n)/(exp(gamma)*n*log(log(n)))^kappa. The real part of the complex Riemann zeta at a real argument is used. The positive domain used below has kappa>1 and log(n)>1. This is the normalization in equation (1.1) of Fan, Kobayashi and Molnar.
 
-**Definition 1.3 (Finite prime support).**
+**Definition 1.6 (Finite prime support).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.primeCutoff`
 
@@ -40,7 +76,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.primeCutof
 
 The finite set consists of positive natural primes at most the natural floor of the real cutoff x.
 
-**Definition 1.4 (Prime-clock Mertens correction).**
+**Definition 1.7 (Prime-clock Mertens correction).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.B`
 
@@ -52,7 +88,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.B`
 
 B(x) is gamma+log(log(theta(x))) plus the finite sum of log(1-1/p) over the prime cutoff. Thus it equals gamma+log(log(theta(x)))-log(P(x)), where P(x) is the finite product of inverse Euler factors.
 
-**Definition 1.5 (Terminal prime-power layers).**
+**Definition 1.8 (Terminal prime-power layers).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.A`
 
@@ -64,7 +100,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.A`
 
 A(x) is minus the finite sum of log(1-p^(-a-1)), where a is the natural base-p logarithm of the natural floor of x. These are the omitted terminal terms in the ordinary sigma ratio of the prefix least common multiple.
 
-**Definition 1.6 (Prime-power clock correction).**
+**Definition 1.9 (Prime-power clock correction).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.J`
 
@@ -76,7 +112,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.J`
 
 J(x) is log(log(psi(x)))-log(log(theta(x))). It measures the change from the prime clock to the prime-power clock.
 
-**Definition 1.7 (Missing Euler logarithms).**
+**Definition 1.10 (Missing Euler logarithms).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.T`
 
@@ -88,7 +124,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.T`
 
 T(kappa,x) is log(zeta(kappa)) plus the finite sum of log(1-p^(-kappa)) over primes not exceeding x. In the convergent domain kappa>1 this is the logarithm of the missing inverse Euler factors.
 
-**Definition 1.8 (Exact local Euler correction).**
+**Definition 1.11 (Exact local Euler correction).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.C`
 
@@ -100,7 +136,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.C`
 
 C(kappa,x) is the sum of log((1-r^kappa)/(1-p^(-kappa))), where r=sigma(p^(a-1))/sigma(p^a) at the maximal prime-power exponent a allowed by x. Its strict upper bound 1/p follows from sigma(p^a)=p*sigma(p^(a-1))+1.
 
-**Theorem 1.9 (The local correction is nonnegative).**
+**Theorem 1.12 (The local correction is nonnegative).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.C_nonneg`
 
@@ -112,7 +148,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.C_nonneg`
 
 For every positive real kappa and every real x, C(kappa,x) is nonnegative. Every prime in the finite support has a positive maximal exponent. Its exact successive divisor-sum ratio is strictly between zero and 1/p, so the logarithm of the corresponding quotient of Euler factors is nonnegative.
 
-**Theorem 1.10 (Positivity on the logarithmic domain).**
+**Theorem 1.13 (Positivity on the logarithmic domain).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.G_pos`
 
@@ -124,7 +160,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.G_pos`
 
 For kappa>1 and psi(x)>1, G(kappa,lcmUpto(floor(x))) is positive. The convolution transform is multiplicative, and at a positive prime-power exponent it is the positive difference sigma(p^a)^kappa-sigma(p^(a-1))^kappa. The real zeta factor and the logarithmic normalizing factor are positive.
 
-**Theorem 1.11 (The exact logarithmic decomposition).**
+**Theorem 1.14 (The exact logarithmic decomposition).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.log_G_decomposition`
 
@@ -136,7 +172,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.log_G_deco
 
 For every real kappa>1 and every real x with psi(x)>1, log(G(kappa,lcmUpto(floor(x))))=-kappa*B(x)-kappa*A(x)-kappa*J(x)+T(kappa,x)+C(kappa,x). Dirichlet convolution gives the exact prime-power difference. Multiplicativity turns its logarithm into the sum of kappa times the ordinary sigma logarithm and the exact local corrections. The existing ordinary divisor-ratio factorization supplies A and the finite Euler prefix, while log(lcmUpto(floor(x)))=psi(x) supplies the change of clock. This identity is exact; the subsequent correction estimates are unconditional.
 
-**Theorem 1.12 (The unit clock correction).**
+**Theorem 1.15 (The unit clock correction).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.J_scaled_limit`
 
@@ -152,7 +188,7 @@ The existing prime number theorem gives theta(x)/x and psi(x)/x tending to one. 
 
 The existing prime-power layer identity gives (psi(x)-theta(x))/sqrt(x) tending to one. The tangent inequality for log(log(t)), applied in both directions, places J(x) between (psi(x)-theta(x))/(psi(x)*log(psi(x))) and (psi(x)-theta(x))/(theta(x)*log(theta(x))). Multiplication by sqrt(x)*log(x) makes both bounds tend to one.
 
-**Theorem 1.13 (The coefficient two).**
+**Theorem 1.16 (The coefficient two).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.A_scaled_limit`
 
@@ -168,7 +204,7 @@ Write tau_p=p^(-a_p-1) and Q(x)=sum tau_p. Maximality of a_p gives tau_p<1/x. Fo
 
 Thus, with S(x)=sum over sqrt(x)<p<=x of 1/p^2, S(x)<=Q(x)<=S(x)+3*x^(-2/3). The logarithm inequality t<=-log(1-t)<=t+t^2 gives Q(x)<=A(x)<=(1+1/x)*Q(x) for x>=2. The existing uniform prime-square tail gives sqrt(x)*log(x)*S(x) tending to two, while sqrt(x)*log(x)*x^(-2/3) tends to zero. Both bounds therefore have the same limit.
 
-**Theorem 1.14 (The endpoint Euler tail supplies coefficient two).**
+**Theorem 1.17 (The endpoint Euler tail supplies coefficient two).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.endpoint_euler_tail_lower`
 
@@ -196,6 +232,9 @@ For every epsilon>0, eventually for all real x, sqrt(x)*log(x)*T(3/2,x)>2-epsilo
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.log_G_decomposition`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.primeCutoff`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_factorization`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_pos`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/LcmPowerEndpointExpansion.sigmaKappa_prime_power`
 - Dependency: [D5/S3/Arith/GoldenResourceObjectiveFactorization](../../GoldenResourceObjectiveFactorization.md)
 - Dependency: [D5/S3/Arith/Robin/EulerLayerRootCorrection](../EulerLayerRootCorrection.md)
 - Dependency: [D5/S3/Arith/Robin/LogarithmBounds](../LogarithmBounds.md)

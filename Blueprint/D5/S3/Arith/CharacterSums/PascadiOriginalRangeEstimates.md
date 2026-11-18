@@ -4,7 +4,19 @@
 
 The actual weighted chart error and moment error are absorbed into A*p^epsilon in the original area range.
 
-**Theorem 1.1 (One uniform final analytic estimate).**
+**Theorem 1.1 (The actual moment error permits exponents up to fifteen quarters).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalRangeEstimates.range_error_absorption_of_exponent`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalRangeEstimates.range_error_absorption_of_exponent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real alpha<=15/4, epsilon>0, C>=1 and K>0, the same actual chart and moment expression is at most D*A*p^epsilon whenever p>=2 and 0<=A<=C*p^alpha. The proof uses alpha<=4 and 4*alpha<=15, so A/p^4<=C and A^4/p^15<=C^4. The original theorem below consumes this stronger estimate at alpha=18/5. The analytic estimate alone does not supply any endpoint count, singular-factor cover or larger range for the original conjecture.
+
+**Theorem 1.2 (One uniform final analytic estimate).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalRangeEstimates.original_range_error_absorption`
 
@@ -23,3 +35,4 @@ This is the analytic absorption of the actual chart estimates. Their original-va
 ## References
 
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalRangeEstimates.original_range_error_absorption`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalRangeEstimates.range_error_absorption_of_exponent`

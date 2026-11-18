@@ -319,4 +319,72 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end ProductBudget
 
+namespace LogarithmicPrefactor
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ → ℝ)
+    (fun _ => Filter ℝ → Filter ℝ → Prop)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f => Tendsto f) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := R.readout () () (fun x : ℝ => log (log x) / scale x) atTop (𝓝 0)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  exact id
+
+def family : Registration arena (type_of% @loglog_div_scale) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@loglog_div_scale, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (fun _ : ℝ => 0), (fun _ : ℝ => 1), ?_⟩
+    intro he
+    have hh : Tendsto (fun _ : ℝ => (1 : ℝ)) atTop (𝓝 0) :=
+      Eq.mp (congrFun (congrFun he atTop) (𝓝 (0 : ℝ))) tendsto_const_nhds
+    have hzero : (1 : ℝ) = 0 := tendsto_nhds_unique tendsto_const_nhds hh
+    norm_num at hzero
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@loglog_div_scale) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.Analytic.OmegaTail.Selection.loglog_div_scale.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Selection.LogarithmicPrefactor.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.Analytic.OmegaTail.Selection
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end LogarithmicPrefactor
+
 end Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Selection

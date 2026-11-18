@@ -16,6 +16,10 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiLocalizedFactor
   - D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover
   - D5/S3/Arith/CharacterSums/PascadiPrimeCubeCount
+  - D5/S3/Arith/CharacterSums/PascadiActualQuadraticResultant
+  - D5/S3/Arith/CharacterSums/PascadiCubicQuadraticHeight
+  - D5/S3/Arith/CharacterSums/PascadiSeventhHeightCover
+  - D5/S3/Arith/CharacterSums/PascadiSingularValueEnvelope
 license: source-reference
 triage: anchor
 ---
@@ -149,6 +153,31 @@ paper proof is an input with the separate provenance below. Source-bound
 four-slot escape audits remain unfinished
 under [issue #31176](https://github.com/the-omega-institute/trureturing/issues/31176);
 no completed registration is claimed for these new modules.
+
+The 18 November continuation strengthens the area restriction to
+`XY<=C0*p^alpha` for every fixed real `alpha<26/7`, with the same lower-width,
+upper-width, unit and all-center conditions. The constant can depend on
+epsilon, C0 and alpha, but remains independent of p, X, Y and the two units.
+The old eighteen-fifths statement is retained as a consequence. The exact-root
+Lean build and scoped axiom report passed; this statement does not claim that
+the new delivery's required remote checks have completed.
+
+The improvement uses the actual pencil structure. The genuine degree-two
+branch has seventh weighted resultant height, including zero baseline leading
+coefficients. A degree-two factor of a genuine cubic gains an extra J/I in
+its coefficient height, giving a sixth-weight mixed resultant. Together with
+the existing seventh-weight cubic residual, one common condition is
+`C7*(IJ)^7<p^5`. Since `IJ<=32XY/p^3`, every fixed alpha<26/7 satisfies this
+condition for all sufficiently large primes. The algebraic value envelope
+separates its real height parameter from the modular prime and uses T=p^2;
+the physical endpoint multiplicity is still paid once. Actual zero-reduction
+counts, bad-degree averaging, retained records, unit-middle counting, nonunit
+rows and all scalar centers are assembled into
+`prime_cube_scalar_return_count_of_exponent`. The oracle broker suggested
+the cofactor elimination route and provided literature leads; Codex derived
+and formalized the explicit branches and counting assembly. No priority claim
+is inferred from the bounded literature screen. The strict endpoint
+alpha=26/7 and the full arbitrary-modulus conjecture remain open here.
 
 The four integrated singular-factor modules retain the proofs from the completed
 research archive `pascadi-prime-cube-singular-cover-formalization-20261116`.

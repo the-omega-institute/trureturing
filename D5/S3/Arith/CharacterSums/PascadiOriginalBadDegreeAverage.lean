@@ -9,8 +9,8 @@
 import D5.S3.Arith.CharacterSums.PascadiOriginalBadDegree
 import D5.S3.Arith.CharacterSums.PascadiOriginalWeightAverage
 
-/-! A genuine reduced long basis supplies the coordinate heights. The numerical
-cutoffs remain explicit; averaging uses only actual original parameters. -/
+/-! A genuine reduced long basis supplies the coordinate heights. The seventh-height
+gap is explicit; averaging uses only actual original parameters. -/
 
 open scoped BigOperators
 
@@ -18,10 +18,30 @@ namespace D5.S3.Arith.CharacterSums.Original
 
 noncomputable section
 
+/-- A genuine reduced long chart forces its normalized area height to be at least one. -/
+theorem long_chart_area_height_one_le (p : ℕ) (hp : p.Prime)
+    (X Y H : ℝ) (t w : ℤ) (B : ReducedMiddleBasis (p^3) t w X Y)
+    (hX : 0 < X) (hY : 0 < Y) (hH : 0 < H) (hHsq : H^2 = X*Y)
+    (hlong : ((p^3 : ℕ) : ℝ)^2 < H^2*weightedSq X Y B.R) :
+    1 ≤ 32*(X*Y/(p : ℝ)^3) := by
+  have hc : 0 < p^3 := pow_pos hp.pos _
+  let σ := Real.sqrt (weightedSq X Y B.R)
+  have hQ : 0 < weightedSq X Y B.R := weightedSq_pos hX hY (B.first_ne_zero hc)
+  have hσ : 0 < σ := Real.sqrt_pos.mpr hQ
+  have hσsq : σ^2 = weightedSq X Y B.R := Real.sq_sqrt hQ.le
+  have hσhi : weightedSq X Y B.R < 4*σ^2 := by rw [hσsq]; linarith
+  obtain ⟨horder, hJ₂, hprod, _⟩ := B.long_scale_bounds hc hX hY H σ
+    hH hHsq hσ hσsq.le hσhi hlong
+  have hsecond : 1 ≤ 4*H*σ/((p^3 : ℕ) : ℝ) := by linarith only [hJ₂]
+  have hfirst : 1 ≤ 8*H/σ := hsecond.trans horder
+  have hh := one_le_mul_of_one_le_of_one_le hfirst hsecond
+  rw [hprod] at hh
+  simpa only [Nat.cast_pow] using hh
+
 /-- The physical long chart supplies every height input of the actual bad-degree
-bound. The original numerical separation cutoffs are retained explicitly. -/
-theorem actual_long_bad_degree_subpower (ε : ℝ) (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ) (t w : ℤ)
+bound. Only the structural seventh-height separation is required. -/
+theorem actual_long_bad_degree_subpower_seventh (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (X Y H : ℝ) (t w : ℤ)
       (B : ReducedMiddleBasis (p^3) t w X Y)
       (B₂ : ReducedMiddleBasis (p^2) t w X Y)
       (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
@@ -38,16 +58,14 @@ theorem actual_long_bad_degree_subpower (ε : ℝ) (hε : 0 < ε) :
         IsUnit ((physical B.R B.V e.2).1 : ZMod (p^3))) →
       (∀ e ∈ E, physical B.R B.V e.1 ∈ literalBox X Y ∧
         physical B.R B.V e.2 ∈ literalBox X Y) →
-      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
-      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
-      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      seventhHeightConstant*(32*(X*Y/(p : ℝ)^3))^7 < (p : ℝ)^5 →
       (actualRecordBadDegree p q B.R B.V E : ℝ) ≤ C*(p : ℝ)^ε*
         (1+6*H/((p : ℝ)*Real.sqrt (weightedSq X Y B₂.R))) := by
   classical
-  obtain ⟨C, hC, hdegree⟩ := actual_record_bad_degree_subpower ε hε
+  obtain ⟨C, hC, hdegree⟩ := actual_record_bad_degree_subpower_seventh ε hε
   refine ⟨C, hC, ?_⟩
-  intro p hp M X Y H t w B B₂ a₁ a₂ ha₁ ha₂ q E hX hY hXsmall hYsmall
-    hH hHsq hparameter hq hlong hr ht hw hk hword heunit hebox hcap hlargeR hlargeQ
+  intro p hp X Y H t w B B₂ a₁ a₂ ha₁ ha₂ q E hX hY hXsmall hYsmall
+    hH hHsq hparameter hq hlong hr ht hw hk hword heunit hebox hgap
   have hc : 0 < p^3 := pow_pos hp.pos _
   let σ := Real.sqrt (weightedSq X Y B.R)
   have hQ : 0 < weightedSq X Y B.R := weightedSq_pos hX hY (B.first_ne_zero hc)
@@ -78,16 +96,52 @@ theorem actual_long_bad_degree_subpower (ε : ℝ) (hε : 0 < ε) :
   have hk' : IsUnit (1-a₁*a₂*(ht.unit : ZMod (p^3))*
       ((physical B.R B.V q).1 : ZMod (p^3))) := by
     simpa only [hq, ht.unit_spec, Int.cast_neg, mul_neg, sub_neg_eq_add] using hk
-  have hcap' : (J₁*J₂)^5 ≤ M^5*(p : ℝ)^3 := by rw [hprod']; exact hcap
-  exact hdegree p hp J₁ J₂ M X Y H t w B.toMiddleBasis B₂ a₁ a₂ ha₁ ha₂ q E
+  have hgap' : seventhHeightConstant*(J₁*J₂)^7 < (p : ℝ)^5 := by
+    rw [hprod']
+    exact hgap
+  exact hdegree p hp J₁ J₂ X Y H t w B.toMiddleBasis B₂ a₁ a₂ ha₁ ha₂ q E
     hr ht hw hX hY hXsmall hYsmall hH hHsq hq horder' hJ₂' hk' hqc hEc
-    hword heunit hebox hcap' hlargeR hlargeQ
+    hword heunit hebox hgap'
+
+/-- The original three numerical cutoffs imply the new long-chart estimate. -/
+theorem actual_long_bad_degree_subpower (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ) (t w : ℤ)
+      (B : ReducedMiddleBasis (p^3) t w X Y)
+      (B₂ : ReducedMiddleBasis (p^2) t w X Y)
+      (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
+      (q : Coordinate) (E : Finset Endpoint),
+      0 < X → 0 < Y → 2*X < (p^3 : ℕ) → 2*Y < (p^3 : ℕ) →
+      0 < H → H^2 = X*Y → (w,t) ∈ literalBox X Y →
+      physical B.R B.V q = (-w,-t) →
+      ((p^3 : ℕ) : ℝ)^2 < H^2*weightedSq X Y B.R →
+      IsUnit (B.R.1 : ZMod (p^3)) →
+      IsUnit (t : ZMod (p^3)) → IsUnit (w : ZMod (p^3)) →
+      IsUnit (1+a₁*a₂*(t : ZMod (p^3))*(w : ZMod (p^3))) →
+      (∀ e ∈ E, WordSolution (p^3) a₁ a₂ B.R B.V q e) →
+      (∀ e ∈ E, IsUnit ((physical B.R B.V e.1).1 : ZMod (p^3)) ∧
+        IsUnit ((physical B.R B.V e.2).1 : ZMod (p^3))) →
+      (∀ e ∈ E, physical B.R B.V e.1 ∈ literalBox X Y ∧
+        physical B.R B.V e.2 ∈ literalBox X Y) →
+      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
+      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
+      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      (actualRecordBadDegree p q B.R B.V E : ℝ) ≤ C*(p : ℝ)^ε*
+        (1+6*H/((p : ℝ)*Real.sqrt (weightedSq X Y B₂.R))) := by
+  obtain ⟨C, hC, hcount⟩ := actual_long_bad_degree_subpower_seventh ε hε
+  refine ⟨C, hC, ?_⟩
+  intro p hp M X Y H t w B B₂ a₁ a₂ ha₁ ha₂ q E hX hY hXsmall hYsmall
+    hH hHsq hparameter hq hlong hr ht hw hk hword heunit hebox hcap _hlargeR hlargeQ
+  have hB := long_chart_area_height_one_le p hp X Y H t w B hX hY hH hHsq hlong
+  have hgap := seventh_height_gap_of_old_cutoffs (32*(X*Y/(p : ℝ)^3)) M (p : ℝ)
+    (by exact_mod_cast hp.pos) hB hcap hlargeQ
+  exact hcount p hp X Y H t w B B₂ a₁ a₂ ha₁ ha₂ q E hX hY hXsmall hYsmall
+    hH hHsq hparameter hq hlong hr ht hw hk hword heunit hebox hgap
 
 /-- Average the actual bad degrees over the literal original parameter set.
 Reduced prime-square bases are selected only on that finite set; no coordinate,
 counting, or physical-weight bound is supplied as a hypothesis. -/
-theorem actual_long_bad_degree_average (ε : ℝ) (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ)
+theorem actual_long_bad_degree_average_seventh (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (X Y H : ℝ)
       (a₁ a₂ : ZMod (p^3)) (q : Coordinate → Coordinate)
       (RV : Coordinate → Coordinate × Coordinate)
       (s : Finset Coordinate) (E : Coordinate → Finset Endpoint),
@@ -109,17 +163,15 @@ theorem actual_long_bad_degree_average (ε : ℝ) (hε : 0 < ε) :
       (∀ wt ∈ s, ∀ e ∈ E wt,
         physical (RV wt).1 (RV wt).2 e.1 ∈ literalBox X Y ∧
         physical (RV wt).1 (RV wt).2 e.2 ∈ literalBox X Y) →
-      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
-      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
-      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      seventhHeightConstant*(32*(X*Y/(p : ℝ)^3))^7 < (p : ℝ)^5 →
       (∑ wt ∈ s, (actualRecordBadDegree p (q wt) (RV wt).1 (RV wt).2 (E wt) : ℝ)) ≤
         C*(p : ℝ)^ε*(X*Y+(X*Y/p)*(1+Real.log (2*p)/Real.log 2)+
           (X*Y)^2/(p : ℝ)^4) := by
   classical
-  obtain ⟨C, hC, hdegree⟩ := actual_long_bad_degree_subpower ε hε
+  obtain ⟨C, hC, hdegree⟩ := actual_long_bad_degree_subpower_seventh ε hε
   refine ⟨12288*C, by positivity, ?_⟩
-  intro p hp M X Y H a₁ a₂ q RV s E hX1 hXY hYsmall hAcut hH hHsq hHp ha₁ ha₂
-    hsbox hred hanchor hlong hr hunit hrhs hword heunit hebox hcap hlargeR hlargeQ
+  intro p hp X Y H a₁ a₂ q RV s E hX1 hXY hYsmall hAcut hH hHsq hHp ha₁ ha₂
+    hsbox hred hanchor hlong hr hunit hrhs hword heunit hebox hgap
   have hX : 0 < X := lt_of_lt_of_le zero_lt_one hX1
   have hY : 0 < Y := hX.trans_le hXY
   have hp2 : 0 < p^2 := pow_pos hp.pos _
@@ -152,12 +204,12 @@ theorem actual_long_bad_degree_average (ε : ℝ) (hε : 0 < ε) :
     have hlongB : ((p^3 : ℕ) : ℝ)^2 < H^2*weightedSq X Y B.R := by
       rw [hHsq, hBR]
       simpa only [Nat.cast_pow] using hlong wt hw
-    have hd := hdegree p hp M X Y H wt.2 wt.1 B B₂ a₁ a₂ ha₁ ha₂ (q wt) (E wt)
+    have hd := hdegree p hp X Y H wt.2 wt.1 B B₂ a₁ a₂ ha₁ ha₂ (q wt) (E wt)
       hX hY hXcube hYcube hH hHsq (hsbox wt hw) hq hlongB
       (by simpa only [hBR] using hr wt hw) (hunit wt hw).1 (hunit wt hw).2 (hrhs wt hw)
       (by simpa only [hBR, hBV] using hword wt hw)
       (by simpa only [hBR, hBV] using heunit wt hw)
-      (by simpa only [hBR, hBV] using hebox wt hw) hcap hlargeR hlargeQ
+      (by simpa only [hBR, hBV] using hebox wt hw) hgap
     have hd' : (actualRecordBadDegree p (q wt) (RV wt).1 (RV wt).2 (E wt) : ℝ) ≤
         C*(p : ℝ)^ε*(1+6*H/((p : ℝ)*Real.sqrt (weightedSq X Y (U wt)))) := by
       simpa only [hBR, hBV, ← hBU] using hd
@@ -178,6 +230,62 @@ theorem actual_long_bad_degree_average (ε : ℝ) (hε : 0 < ε) :
     _ ≤ ((6*C)*(p : ℝ)^ε)*(2048*(X*Y+(X*Y/p)*(1+Real.log (2*p)/Real.log 2)+
         (X*Y)^2/(p : ℝ)^4)) := mul_le_mul_of_nonneg_left hweight (by positivity)
     _ = _ := by ring
+
+/-- Retain the original finite-average statement and all of its hypotheses. -/
+theorem actual_long_bad_degree_average (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ)
+      (a₁ a₂ : ZMod (p^3)) (q : Coordinate → Coordinate)
+      (RV : Coordinate → Coordinate × Coordinate)
+      (s : Finset Coordinate) (E : Coordinate → Finset Endpoint),
+      1 ≤ X → X ≤ Y → 2*Y < (p : ℝ)^3 → X*Y < 2*(p : ℝ)^4 →
+      0 < H → H^2 = X*Y → (p : ℝ) ≤ H → IsUnit a₁ → IsUnit a₂ →
+      (∀ wt ∈ s, wt ∈ literalBox X Y) →
+      (∀ wt ∈ s, ∃ B : ReducedMiddleBasis (p^3) wt.2 wt.1 X Y,
+        B.R = (RV wt).1 ∧ B.V = (RV wt).2) →
+      (∀ wt ∈ s, physical (RV wt).1 (RV wt).2 (q wt) = -wt) →
+      (∀ wt ∈ s, (p^3 : ℝ)^2 < (X*Y)*weightedSq X Y (RV wt).1) →
+      (∀ wt ∈ s, IsUnit ((RV wt).1.1 : ZMod (p^3))) →
+      (∀ wt ∈ s, IsUnit (wt.2 : ZMod (p^3)) ∧ IsUnit (wt.1 : ZMod (p^3))) →
+      (∀ wt ∈ s, IsUnit (1+a₁*a₂*(wt.2 : ZMod (p^3))*(wt.1 : ZMod (p^3)))) →
+      (∀ wt ∈ s, ∀ e ∈ E wt,
+        WordSolution (p^3) a₁ a₂ (RV wt).1 (RV wt).2 (q wt) e) →
+      (∀ wt ∈ s, ∀ e ∈ E wt,
+        IsUnit ((physical (RV wt).1 (RV wt).2 e.1).1 : ZMod (p^3)) ∧
+        IsUnit ((physical (RV wt).1 (RV wt).2 e.2).1 : ZMod (p^3))) →
+      (∀ wt ∈ s, ∀ e ∈ E wt,
+        physical (RV wt).1 (RV wt).2 e.1 ∈ literalBox X Y ∧
+        physical (RV wt).1 (RV wt).2 e.2 ∈ literalBox X Y) →
+      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
+      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
+      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      (∑ wt ∈ s, (actualRecordBadDegree p (q wt) (RV wt).1 (RV wt).2 (E wt) : ℝ)) ≤
+        C*(p : ℝ)^ε*(X*Y+(X*Y/p)*(1+Real.log (2*p)/Real.log 2)+
+          (X*Y)^2/(p : ℝ)^4) := by
+  classical
+  obtain ⟨C, hC, hcount⟩ := actual_long_bad_degree_average_seventh ε hε
+  refine ⟨C, hC, ?_⟩
+  intro p hp M X Y H a₁ a₂ q RV s E hX1 hXY hYsmall hAcut hH hHsq hHp ha₁ ha₂
+    hsbox hred hanchor hlong hr hunit hrhs hword heunit hebox hcap _hlargeR hlargeQ
+  have hX : 0 < X := lt_of_lt_of_le zero_lt_one hX1
+  have hY : 0 < Y := hX.trans_le hXY
+  by_cases hs : s.Nonempty
+  · obtain ⟨wt, hwt⟩ := hs
+    obtain ⟨B, hBR, _hBV⟩ := hred wt hwt
+    have hlongB : ((p^3 : ℕ) : ℝ)^2 < H^2*weightedSq X Y B.R := by
+      rw [hHsq, hBR]
+      simpa only [Nat.cast_pow] using hlong wt hwt
+    have hB := long_chart_area_height_one_le p hp X Y H wt.2 wt.1 B
+      hX hY hH hHsq hlongB
+    have hgap := seventh_height_gap_of_old_cutoffs (32*(X*Y/(p : ℝ)^3)) M (p : ℝ)
+      (by exact_mod_cast hp.pos) hB hcap hlargeQ
+    exact hcount p hp X Y H a₁ a₂ q RV s E hX1 hXY hYsmall hAcut hH hHsq hHp ha₁ ha₂
+      hsbox hred hanchor hlong hr hunit hrhs hword heunit hebox hgap
+  · have hs0 : s = ∅ := Finset.not_nonempty_iff_eq_empty.mp hs
+    simp only [hs0, Finset.sum_empty]
+    have hp1 : 1 ≤ (p : ℝ) := by exact_mod_cast hp.one_le
+    have hlog : 0 ≤ Real.log (2*(p : ℝ)) := Real.log_nonneg (by linarith)
+    have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+    positivity
 
 end
 end D5.S3.Arith.CharacterSums.Original

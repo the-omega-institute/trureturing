@@ -8,7 +8,7 @@
 
 import D5.S3.Arith.CharacterSums.PascadiOriginalUnitMiddleCount
 import D5.S3.Arith.CharacterSums.PascadiOriginalRowReduction
-import D5.S3.Arith.CharacterSums.PascadiOriginalRangeCutoffs
+import D5.S3.Arith.CharacterSums.PascadiSeventhHeightRange
 import D5.S3.Arith.CharacterSums.PascadiOriginalRangeEstimates
 import D5.S3.Arith.CharacterSums.PascadiScalarCenters
 import Mathlib.RingTheory.ZMod.UnitsCyclic
@@ -94,19 +94,22 @@ private theorem scalar_count_crude {c : ℕ} [NeZero c] (X Y : ℝ)
       (by positivity) (by positivity)
     _ = _ := by ring
 
-private theorem large_minus_count (ε C : ℝ) (hε : 0 < ε) (hC : 1 ≤ C) :
-    ∃ K : ℝ, 0 < K ∧ ∀ (p : ℕ) (_hp : p.Prime) [NeZero (p ^ 3)]
+private theorem large_minus_count (ε C α : ℝ)
+    (hε : 0 < ε) (hC : 1 ≤ C) (hα : α < 26 / 7) :
+    ∃ P K : ℝ, 0 < P ∧ 0 < K ∧ ∀ (p : ℕ) (_hp : p.Prime) [NeZero (p ^ 3)]
       (X Y : ℝ) (a₁ a₂ : ZMod (p ^ 3)),
       1 ≤ X → X ≤ Y → 3*Y < (p : ℝ)^2 →
-      (p : ℝ)^3 ≤ X*Y → X*Y ≤ C*(p : ℝ)^((18 : ℝ)/5) →
-      ((2 : ℝ)^20*(1+C))^200 < (p : ℝ) →
+      (p : ℝ)^3 ≤ X*Y → X*Y ≤ C*(p : ℝ)^α →
+      P < (p : ℝ) →
       IsUnit a₁ → IsUnit a₂ →
       ((scalarSolutionsReal (p ^ 3) X Y a₁ a₂ (-1)).card : ℝ) ≤
         K*Y^2*(p : ℝ)^ε := by
   classical
-  obtain ⟨K₀, hK₀, hcount⟩ := actual_unit_middle_tuple_count (ε/2) (by linarith)
-  obtain ⟨D, hD, habsorb⟩ := original_range_error_absorption ε C K₀ hε hC hK₀
-  refine ⟨3*D+72, by positivity, ?_⟩
+  obtain ⟨K₀, hK₀, hcount⟩ := actual_unit_middle_tuple_count_seventh (ε/2) (by linarith)
+  obtain ⟨D, hD, habsorb⟩ := range_error_absorption_of_exponent ε C K₀ α hε hC hK₀
+    (by linarith only [hα])
+  obtain ⟨P, hP, hcut⟩ := seventh_area_height_cutoff α C hα hC
+  refine ⟨P, 3*D+72, hP, by positivity, ?_⟩
   intro p hp inst X Y a₁ a₂ hX hXY hsmall hlower harea hlarge ha₁ ha₂
   have hpR : 0 < (p : ℝ) := by exact_mod_cast hp.pos
   have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
@@ -114,8 +117,12 @@ private theorem large_minus_count (ε C : ℝ) (hε : 0 < ε) (hC : 1 ≤ C) :
   have hY1 : 1 ≤ Y := hX.trans hXY
   have hY0 : 0 < Y := lt_of_lt_of_le zero_lt_one hY1
   have hA : 0 < X*Y := mul_pos hX0 hY0
-  obtain ⟨hcap, hupper, hsepR, hsepQ⟩ :=
-    original_range_numeric_cutoffs hC hA.le harea hlarge
+  have hgap := hcut (p : ℝ) (X*Y) hlarge hA.le harea
+  have hupper : X*Y < (p : ℝ)^4 := by
+    have hYp : Y < (p : ℝ)^2 := by linarith only [hsmall, hY0]
+    have hsq := pow_lt_pow_left₀ hYp hY0.le (by decide : 2 ≠ 0)
+    have hXYsq : X*Y ≤ Y^2 := by nlinarith only [mul_nonneg (sub_nonneg.mpr hXY) hY0.le]
+    nlinarith only [hsq, hXYsq]
   let T := (minusSolutions (p ^ 3) ⌊X⌋₊ ⌊Y⌋₊ a₁ a₂).filter
     fun h => ¬ (p : ℤ) ∣ h.2 2*h.1 2
   have hmem (h : ReturnRows) (hh : h ∈ T) :
@@ -129,10 +136,10 @@ private theorem large_minus_count (ε C : ℝ) (hε : 0 < ε) (hC : 1 ≤ C) :
     have hn := (Finset.mem_filter.mp hh).2
     exact ⟨prime_cube_unit_of_not_dvd hp (fun hd => hn (dvd_mul_of_dvd_right hd _)),
       prime_cube_unit_of_not_dvd hp (fun hd => hn (dvd_mul_of_dvd_left hd _))⟩
-  have ht := hcount p hp (32*C) X Y (Real.sqrt (X*Y)) a₁ a₂ T hX hXY hsmall
+  have ht := hcount p hp X Y (Real.sqrt (X*Y)) a₁ a₂ T hX hXY hsmall
     hlower hupper.le (Real.sqrt_pos.mpr hA) (Real.sq_sqrt hA.le) ha₁ ha₂
     (fun h hh i => ⟨(hmem h hh).1 i, (hmem h hh).2.1 i⟩)
-    (fun h hh => (hmem h hh).2.2) hunit hcap hsepR hsepQ
+    (fun h hh => (hmem h hh).2.2) hunit hgap
   have hT : (T.card : ℝ) ≤ D*(X*Y)*(p : ℝ)^ε :=
     ht.trans (habsorb p (X*Y) hp2 hA.le harea)
   have hfloor : ⌊X⌋₊ ≤ ⌊Y⌋₊ := Nat.floor_mono hXY
@@ -167,20 +174,19 @@ private theorem large_minus_count (ε C : ℝ) (hε : 0 < ε) (hC : 1 ≤ C) :
 /-- The original prime-cube area range bounds the total literal six-letter
 count, summed over every scalar center whose square is one. There is no
 excluded prime or supplied lattice, chart, endpoint family or counting bound. -/
-theorem prime_cube_scalar_return_count (ε C₀ : ℝ) (hε : 0 < ε) (hC₀ : 1 ≤ C₀) :
+theorem prime_cube_scalar_return_count_of_exponent (ε C₀ α : ℝ)
+    (hε : 0 < ε) (hC₀ : 1 ≤ C₀) (hα : α < 26 / 7) :
     ∃ K : ℝ, 0 < K ∧ ∀ (p : ℕ) (_hp : p.Prime) [NeZero (p ^ 3)]
       (X Y : ℝ) (a₁ a₂ : ZMod (p ^ 3)),
       (p : ℝ)^((3 : ℝ)/2) ≤ X → X ≤ Y →
-      X*Y ≤ C₀*(p : ℝ)^((18 : ℝ)/5) → 6*Y < (p : ℝ)^2 →
+      X*Y ≤ C₀*(p : ℝ)^α → 6*Y < (p : ℝ)^2 →
       IsUnit a₁ → IsUnit a₂ →
       (∑ γ ∈ (Finset.univ : Finset (ZMod (p ^ 3))).filter (fun γ => γ*γ=1),
         ((scalarSolutionsReal (p ^ 3) X Y a₁ a₂ γ).card : ℝ)) ≤
         K*Y^2*(p : ℝ)^ε := by
   classical
   have hC : 1 ≤ 4*C₀ := by linarith only [hC₀]
-  obtain ⟨K₁, hK₁, hlarge_count⟩ := large_minus_count ε (4*C₀) hε hC
-  generalize hPdef : ((2 : ℝ)^20*(1+4*C₀))^200 = P
-  have hP : 0 < P := by rw [← hPdef]; positivity
+  obtain ⟨P, K₁, hP, hK₁, hlarge_count⟩ := large_minus_count ε (4*C₀) α hε hC hα
   let D := 256*K₁+729*P^8
   have hD : 0 < D := by dsimp only [D]; positivity
   refine ⟨4*D, by positivity, ?_⟩
@@ -212,7 +218,7 @@ theorem prime_cube_scalar_return_count (ε C₀ : ℝ) (hε : 0 < ε) (hC₀ : 1
         (by linarith only [hX1]) (by linarith only [hXY])
         (by linarith only [hwidth])
         (by nlinarith only [hlower, mul_pos hX0 hY0]) (by nlinarith only [harea])
-        (by rw [hPdef]; exact hlarge) ha₁ ha₂
+        hlarge ha₁ ha₂
       have hc := scalarSolutionsReal_card_le_minus_doubled a₁ a₂ γ hγ2 X Y
         hX0.le hY0.le
       change (scalarSolutionsReal (p ^ 3) X Y a₁ a₂ γ).card ≤
@@ -255,6 +261,18 @@ theorem prime_cube_scalar_return_count (ε C₀ : ℝ) (hε : 0 < ε) (hC₀ : 1
       rw [Finset.sum_const, nsmul_eq_mul]
     _ ≤ 4*(D*Y^2*(p : ℝ)^ε) := mul_le_mul_of_nonneg_right hcenter (by positivity)
     _ = (4*D)*Y^2*(p : ℝ)^ε := by simp only [mul_assoc]
+
+/-- Preserve the original eighteen-fifths prime-cube count. -/
+theorem prime_cube_scalar_return_count (ε C₀ : ℝ) (hε : 0 < ε) (hC₀ : 1 ≤ C₀) :
+    ∃ K : ℝ, 0 < K ∧ ∀ (p : ℕ) (_hp : p.Prime) [NeZero (p ^ 3)]
+      (X Y : ℝ) (a₁ a₂ : ZMod (p ^ 3)),
+      (p : ℝ)^((3 : ℝ)/2) ≤ X → X ≤ Y →
+      X*Y ≤ C₀*(p : ℝ)^((18 : ℝ)/5) → 6*Y < (p : ℝ)^2 →
+      IsUnit a₁ → IsUnit a₂ →
+      (∑ γ ∈ (Finset.univ : Finset (ZMod (p ^ 3))).filter (fun γ => γ*γ=1),
+        ((scalarSolutionsReal (p ^ 3) X Y a₁ a₂ γ).card : ℝ)) ≤
+        K*Y^2*(p : ℝ)^ε := by
+  exact prime_cube_scalar_return_count_of_exponent ε C₀ ((18 : ℝ)/5) hε hC₀ (by norm_num)
 
 end
 end D5.S3.Arith.CharacterSums.Original

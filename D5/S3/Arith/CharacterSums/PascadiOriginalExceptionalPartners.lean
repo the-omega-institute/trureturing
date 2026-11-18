@@ -170,9 +170,11 @@ private theorem integer_singular_product (b : ℤ) (q : Coordinate) (base e : En
 
 /-- The identically zero integer-pencil stratum has uniformly subpower many
 actual original endpoint pairs, including aligned baselines. Integer divisor
-values and the two literal physical widths provide genuine point recovery. -/
-theorem actual_zero_polynomial_partners_subpower (ε : ℝ) (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ M X Y : ℝ) (t w : ℤ)
+values and the two literal physical widths provide genuine point recovery.
+Only the coordinate-height bound J₁ ≤ p is required; no scale cap or
+large-prime cutoff is part of this interface. -/
+theorem actual_zero_polynomial_partners_subpower_of_coordinate_height (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ X Y : ℝ) (t w : ℤ)
       (B : MiddleBasis (p^3) t w)
       (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
       (q : Coordinate) (base : Endpoint) (S : Finset Endpoint)
@@ -188,14 +190,13 @@ theorem actual_zero_polynomial_partners_subpower (ε : ℝ) (hε : 0 < ε) :
       (∀ e ∈ S, physical B.R B.V e.1 ∈ literalBox X Y ∧
         physical B.R B.V e.2 ∈ literalBox X Y) →
       (∀ e ∈ S, pencil q base e = 0) →
-      (J₁*J₂)^5 ≤ M^5*(p : ℝ)^3 →
-      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      J₁ ≤ (p : ℝ) →
       (S.card : ℝ) ≤ C*(p : ℝ)^ε := by
   classical
   obtain ⟨C, hC, hdiv⟩ := signed_divisors_antidiag_subpower (ε/24) (by positivity)
   refine ⟨C, hC, ?_⟩
-  intro p hp J₁ J₂ M X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
-    hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂ hbox hzero hcap hlarge
+  intro p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂ hbox hzero hJp
   letI : NeZero (p^3) := ⟨pow_ne_zero _ hp.ne_zero⟩
   letI : Fact (1 < p^3) := ⟨lt_of_lt_of_le (by decide : 1 < 2^3)
     (pow_le_pow_left₀ (by decide : 0 ≤ 2) hp.two_le 3)⟩
@@ -227,7 +228,6 @@ theorem actual_zero_polynomial_partners_subpower (ε : ℝ) (hε : 0 < ε) :
     intro hz
     apply hDu.ne_zero
     rw [hz, Int.cast_zero]
-  have hJp := original_coordinate_height p hp J₁ J₂ M h₁₂ h₂ hcap hlarge
   have hbound (z : Coordinate) (hz : CoordinateBound J₁ J₂ z) : CoordinateBound (p : ℝ) p z :=
     ⟨hz.1.trans hJp, hz.2.trans (h₁₂.trans hJp)⟩
   have hDheight : (D.natAbs : ℝ) ≤ (p : ℝ)^24 := by
@@ -270,6 +270,37 @@ theorem actual_zero_polynomial_partners_subpower (ε : ℝ) (hε : 0 < ε) :
       rw [← Real.rpow_natCast_mul (by positivity : 0 ≤ (p : ℝ)) 24 (ε/24)]
       congr 2
       ring
+
+
+/-- The original cap-and-cutoff interface is retained as a consequence of the
+coordinate-height version, with the same uniform constant. -/
+theorem actual_zero_polynomial_partners_subpower (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ M X Y : ℝ) (t w : ℤ)
+      (B : MiddleBasis (p^3) t w)
+      (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
+      (q : Coordinate) (base : Endpoint) (S : Finset Endpoint)
+      (hr : IsUnit (B.R.1 : ZMod (p^3)))
+      (ht : IsUnit (-(physical B.R B.V q).2 : ZMod (p^3)))
+      (hw : IsUnit (w : ZMod (p^3))),
+      2*X < (p^3 : ℕ) → 2*Y < (p^3 : ℕ) → J₂ ≤ J₁ → 1 ≤ J₂ →
+      WordSolution (p^3) a₁ a₂ B.R B.V q base →
+      IsUnit ((physical B.R B.V base.1).1 : ZMod (p^3)) →
+      IsUnit ((physical B.R B.V base.2).1 : ZMod (p^3)) →
+      IsUnit (1-a₁*a₂*(ht.unit : ZMod (p^3))*((physical B.R B.V q).1 : ZMod (p^3))) →
+      CoordinateBound J₁ J₂ q → CoordinateBound J₁ J₂ base.1 → CoordinateBound J₁ J₂ base.2 →
+      (∀ e ∈ S, physical B.R B.V e.1 ∈ literalBox X Y ∧
+        physical B.R B.V e.2 ∈ literalBox X Y) →
+      (∀ e ∈ S, pencil q base e = 0) →
+      (J₁*J₂)^5 ≤ M^5*(p : ℝ)^3 →
+      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      (S.card : ℝ) ≤ C*(p : ℝ)^ε := by
+  obtain ⟨C, hC, hcount⟩ := actual_zero_polynomial_partners_subpower_of_coordinate_height ε hε
+  refine ⟨C, hC, ?_⟩
+  intro p hp J₁ J₂ M X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂ hbox hzero hcap hlarge
+  exact hcount p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂ hbox hzero
+    (original_coordinate_height p hp J₁ J₂ M h₁₂ h₂ hcap hlarge)
 
 end
 end D5.S3.Arith.CharacterSums.Original
