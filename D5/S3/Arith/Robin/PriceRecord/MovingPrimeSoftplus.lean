@@ -9,6 +9,7 @@ import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import D5.S3.Weil.ZetaBridge.FermiMellin
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
+import Mathlib.Analysis.SumIntegralComparisons
 
 /-! A uniform Abel comparison for a softplus centered at a real prime cutoff. -/
 
@@ -351,7 +352,7 @@ private theorem fermi_mass :
     · filter_upwards [eventually_ge_atTop (0 : ℝ)] with u hu
       exact mul_le_mul_of_nonneg_right (softplus_le_exp u) hu
     · have h := tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 1 one_pos
-      simpa only [rpow_one, mul_one, mul_comm] using h
+      simpa only [rpow_one, neg_mul, one_mul, mul_comm] using h
   have hi' : IntegrableOn (fun u => -(exp u + 1)⁻¹ * id u) (Ioi 0) := by
     convert hf.neg using 1
     funext u
@@ -429,7 +430,7 @@ private theorem softplus_continuum_tendsto {s : ℝ → ℝ} (hs : Tendsto s atT
       have hlow := neg_abs_le u
       have hhi := le_abs_self u
       exact ⟨by linarith, by linarith⟩
-    exact (indicator_of_mem hu _).symm
+    exact (indicator_of_mem hu (fun v : ℝ => g v * exp (v / s P))).symm
   have hm := tendsto_integral_filter_of_dominated_convergence _ hmeas hbound hmajor hpoint
   have hmass : (∫ u, g u) = π ^ 2 / 6 := by
     dsimp [g]
@@ -484,5 +485,270 @@ private theorem softplus_continuum_tendsto {s : ℝ → ℝ} (hs : Tendsto s atT
     (show -s P * log 2 ≤ s P * log 2 by nlinarith [log_pos (show (1 : ℝ) < 2 by norm_num)]),
     ← hh]
   field_simp
+
+private def primeWeight (P s : ℝ) (n : ℕ) : ℝ :=
+  if n.Prime then weight P s n else 0
+
+private theorem primeWeight_nonneg (P s : ℝ) (n : ℕ) : 0 ≤ primeWeight P s n := by
+  unfold primeWeight
+  split_ifs
+  · exact softplus_nonneg (s * |log ((n : ℝ) / P)|)
+  · exact le_rfl
+
+private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
+    Summable (primeWeight P s) ∧
+      0 ≤ (∑' n, primeWeight P s n) - ∑ p ∈ primeInterval (P / 2) (2 * P), weight P s p ∧
+      (∑' n, primeWeight P s n) - ∑ p ∈ primeInterval (P / 2) (2 * P), weight P s p ≤
+        5 * P * exp (-s * log 2) := by
+  let N := ⌊2 * P⌋₊
+  let M := ⌊P / 2⌋₊
+  let b := exp (-s * log 2)
+  let g : ℝ → ℝ := fun t => t ^ (-2 : ℝ)
+  have hp : 0 < P := by linarith
+  have hN : P ≤ (N : ℝ) := by
+    have h := Nat.lt_floor_add_one (2 * P)
+    push_cast at h
+    dsimp only [N]
+    linarith
+  have hNp := hp.trans_le hN
+  have hMN : M + 1 ≤ N + 1 := by
+    exact Nat.succ_le_succ (Nat.floor_le_floor (by linarith))
+  have hupper (n : ℕ) (hn : N < n) :
+      primeWeight P s n ≤ (4 * P ^ 2 * b) * g n := by
+    unfold primeWeight
+    split_ifs with hnprime
+    · have ht : 2 * P < (n : ℝ) := (Nat.floor_lt (by positivity)).mp hn
+      have hn0 : (0 : ℝ) < n := by linarith
+      have hr : 2 ≤ (n : ℝ) / P := (le_div_iff₀ hp).mpr (by linarith)
+      have hl := log_le_log (by norm_num : (0 : ℝ) < 2) hr
+      have hlog : 0 ≤ log ((n : ℝ) / P) := (log_nonneg (by norm_num : (1 : ℝ) ≤ 2)).trans hl
+      unfold weight
+      rw [abs_of_nonneg hlog]
+      refine (softplus_le_exp _).trans ?_
+      have splitExp : -s * log ((n : ℝ) / P) =
+          -2 * log ((n : ℝ) / P) + (-(s - 2)) * log ((n : ℝ) / P) := by ring
+      rw [splitExp, exp_add]
+      have hexp : exp (-(s - 2) * log ((n : ℝ) / P)) ≤ exp (-(s - 2) * log 2) :=
+        exp_le_exp.mpr (mul_le_mul_of_nonpos_left hl (by linarith))
+      refine (mul_le_mul_of_nonneg_left hexp (exp_pos _).le).trans_eq ?_
+      rw [show -(s - 2) * log 2 = -s * log 2 + 2 * log 2 by ring, exp_add]
+      rw [show (-2 : ℝ) * log ((n : ℝ) / P) = -(log ((n : ℝ) / P) * 2) by ring,
+        exp_neg, exp_mul, exp_log (div_pos hn0 hp), rpow_two]
+      rw [show (2 : ℝ) * log 2 = log 2 * 2 by ring, exp_mul, exp_log (by norm_num), rpow_two]
+      dsimp only [g, b]
+      rw [rpow_neg hn0.le, rpow_two]
+      field_simp
+      <;> ring
+    · exact mul_nonneg (by dsimp [b]; positivity) (rpow_nonneg (Nat.cast_nonneg _) _)
+  have hbase : Summable (fun n : ℕ => (4 * P ^ 2 * b) * g n) :=
+    (Real.summable_nat_rpow.mpr (by norm_num : (-2 : ℝ) < -1)).mul_left _
+  have hbaseShift := (summable_nat_add_iff (N + 1)).mpr hbase
+  have hprimeShift : Summable (fun n : ℕ => primeWeight P s (n + (N + 1))) :=
+    hbaseShift.of_nonneg_of_le (fun n => primeWeight_nonneg P s _)
+      (fun n => hupper _ (by omega))
+  have hprime := (summable_nat_add_iff (N + 1)).mp hprimeShift
+  have hright : (∑' n : ℕ, primeWeight P s (n + (N + 1))) ≤ 4 * P * b := by
+    have ha : AntitoneOn g (Ici (N : ℝ)) := by
+      intro x hx y _ hxy
+      exact rpow_le_rpow_of_nonpos (hNp.trans_le hx) hxy (by norm_num)
+    have hi : IntegrableOn g (Ioi (N : ℝ)) :=
+      integrableOn_Ioi_rpow_of_lt (by norm_num) hNp
+    have htest := ha.tsum_comp_add_le_integral N hi
+      (fun t ht => rpow_nonneg (hNp.trans (mem_Ioi.mp ht)).le _)
+    have hval : (∫ t in Ioi (N : ℝ), g t) = (N : ℝ)⁻¹ := by
+      dsimp only [g]
+      rw [integral_Ioi_rpow_of_lt (by norm_num : (-2 : ℝ) < -1) hNp]
+      norm_num [rpow_neg_one]
+    rw [hval] at htest
+    calc
+      _ ≤ ∑' n : ℕ, (4 * P ^ 2 * b) * g (n + (N + 1) : ℕ) :=
+        hprimeShift.tsum_le_tsum (fun n => hupper _ (by omega)) hbaseShift
+      _ = (4 * P ^ 2 * b) * ∑' n : ℕ, g (n + N + 1 : ℕ) := by
+        rw [← tsum_mul_left]
+        simp only [Nat.add_assoc]
+      _ ≤ (4 * P ^ 2 * b) * (N : ℝ)⁻¹ :=
+        mul_le_mul_of_nonneg_left htest (by dsimp [b]; positivity)
+      _ ≤ 4 * P * b := by
+        rw [← div_eq_mul_inv]
+        apply (div_le_iff₀ hNp).mpr
+        nlinarith [mul_nonneg (show 0 ≤ 4 * P * b by dsimp [b]; positivity)
+          (sub_nonneg.mpr hN)]
+  have hleft (n : ℕ) (hn : n ∈ Finset.range (M + 1)) : primeWeight P s n ≤ b := by
+    unfold primeWeight
+    split_ifs with hnprime
+    · have hn0 : (0 : ℝ) < n := by exact_mod_cast hnprime.pos
+      have ht : (n : ℝ) ≤ P / 2 := (Nat.le_floor_iff (by positivity)).mp
+        (Nat.le_of_lt_succ (Finset.mem_range.mp hn))
+      have hlog : log ((n : ℝ) / P) ≤ -log 2 := by
+        rw [← log_inv]
+        exact log_le_log (div_pos hn0 hp) ((div_le_iff₀ hp).mpr (by linarith))
+      have hlog0 := log_nonneg (show (1 : ℝ) ≤ 2 by norm_num)
+      refine (softplus_le_exp (s * |log ((n : ℝ) / P)|)).trans ?_
+      dsimp only [b]
+      rw [abs_of_nonpos (by linarith : log ((n : ℝ) / P) ≤ 0), ← neg_mul]
+      exact exp_le_exp.mpr (mul_le_mul_of_nonpos_left (by linarith) (by linarith))
+    · exact (exp_pos _).le
+  have hsmall : ∑ n ∈ Finset.range (M + 1), primeWeight P s n ≤ P * b := by
+    calc
+      _ ≤ ∑ _ ∈ Finset.range (M + 1), b := Finset.sum_le_sum hleft
+      _ = ((M : ℝ) + 1) * b := by simp
+      _ ≤ _ := mul_le_mul_of_nonneg_right (by
+        have h := Nat.floor_le (show 0 ≤ P / 2 by positivity)
+        dsimp [M]
+        linarith) (exp_pos _).le
+  have hsplit : (∑ n ∈ Finset.range (M + 1), primeWeight P s n) +
+      (∑ p ∈ primeInterval (P / 2) (2 * P), weight P s p) =
+        ∑ n ∈ Finset.range (N + 1), primeWeight P s n := by
+    have he : Finset.Ico (M + 1) (N + 1) = Finset.Ioc M N := by
+      ext n
+      simp only [Finset.mem_Ico, Finset.mem_Ioc]
+      omega
+    rw [← Finset.sum_range_add_sum_Ico hMN, he]
+    simp only [primeInterval, Finset.sum_filter, primeWeight, M, N]
+  have ht := hprime.sum_add_tsum_nat_add (N + 1)
+  rw [← hsplit] at ht
+  refine ⟨hprime, ?_, ?_⟩
+  · linarith only [ht, Finset.sum_nonneg (fun n _ => primeWeight_nonneg P s n),
+      tsum_nonneg (fun n : ℕ => primeWeight_nonneg P s (n + (N + 1)))]
+  · linarith only [ht, hsmall, hright]
+
+private theorem remove_prime_logs {s : ℝ → ℝ}
+    (hs : ∀ᶠ P in atTop, 0 ≤ s P)
+    (hweighted : Tendsto (fun P : ℝ => (s P / P) *
+      ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p * log p)
+      atTop (𝓝 (π ^ 2 / 6))) :
+    Tendsto (fun P : ℝ => (s P * log P / P) *
+      ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p)
+      atTop (𝓝 (π ^ 2 / 6)) := by
+  let A : ℝ → ℝ := fun P => (s P / P) *
+    ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p * log p
+  let B : ℝ → ℝ := fun P => (s P * log P / P) *
+    ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p
+  have h := (tendsto_log_atTop.const_div_atTop (2 * log 2)).mul hweighted
+  simp only [zero_mul] at h
+  have herr : Tendsto (fun P => B P - A P) atTop (𝓝 0) := by
+    apply (tendsto_zero_iff_abs_tendsto_zero _).mpr
+    refine squeeze_zero' (Eventually.of_forall (fun _ => abs_nonneg _)) ?_ h
+    filter_upwards [eventually_ge_atTop (4 : ℝ), hs] with P hP hsP
+    let S := primeInterval (P / 2) (2 * P)
+    let w : ℕ → ℝ := fun p => weight P (s P) p
+    have hP0 : 0 < P := by linarith
+    have hlog : 0 < log P := log_pos (by linarith)
+    have hcoef := div_nonneg hsP hP0.le
+    have hdiff : B P - A P = (s P / P) * ∑ p ∈ S, w p * (log P - log p) := by
+      dsimp only [A, B, S, w]
+      simp_rw [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul]
+      ring
+    change |B P - A P| ≤ (2 * log 2 / log P) * A P
+    rw [hdiff, abs_mul, abs_of_nonneg hcoef]
+    have hpbound (p : ℕ) (hp : p ∈ S) : |log P - log p| ≤ (2 * log 2 / log P) * log p := by
+      simp only [S, primeInterval, Finset.mem_filter, Finset.mem_Ioc] at hp
+      have hlow := (Nat.floor_lt (by positivity : 0 ≤ P / 2)).mp hp.1.1
+      have hhi := (Nat.le_floor_iff (by positivity : 0 ≤ 2 * P)).mp hp.1.2
+      have hpos : 0 < (p : ℝ) := by linarith
+      have hall := log_window_lower hP hlow.le
+      have hlow' := log_le_log (show 0 < P / 2 by positivity) hlow.le
+      have hhi' := log_le_log hpos hhi
+      rw [log_div hP0.ne' (by norm_num : (2 : ℝ) ≠ 0)] at hlow'
+      rw [log_mul (by norm_num : (2 : ℝ) ≠ 0) hP0.ne'] at hhi'
+      refine (abs_le.mpr ⟨by linarith, by linarith⟩ : |log P - log p| ≤ log 2).trans ?_
+      rw [div_mul_eq_mul_div, le_div_iff₀ hlog]
+      nlinarith [mul_nonneg (log_nonneg (by norm_num : (1 : ℝ) ≤ 2))
+        (sub_nonneg.mpr hall)]
+    calc
+      _ ≤ (s P / P) * ∑ p ∈ S, |w p * (log P - log p)| :=
+        mul_le_mul_of_nonneg_left (Finset.abs_sum_le_sum_abs _ _) hcoef
+      _ ≤ (s P / P) * ∑ p ∈ S, w p * ((2 * log 2 / log P) * log p) := by
+        apply mul_le_mul_of_nonneg_left _ hcoef
+        apply Finset.sum_le_sum
+        intro p hp
+        have hw : 0 ≤ w p := (weight_bounds P p hsP).1
+        rw [abs_mul, abs_of_nonneg hw]
+        exact mul_le_mul_of_nonneg_left (hpbound p hp) hw
+      _ = _ := by
+        dsimp only [A, S, w]
+        simp_rw [show ∀ p : ℕ, weight P (s P) p * (2 * log 2 / log P * log p) =
+          (2 * log 2 / log P) * (weight P (s P) p * log p) from fun _ => by ring,
+          Finset.mul_sum]
+        ring
+  have hB := herr.add hweighted
+  simp only [zero_add] at hB
+  exact hB.congr (fun P => by change B P - A P + A P = B P; ring)
+
+/-- The actual prime sum for a moving softplus is eventually absolutely
+summable and has normalized limit `π^2 / 6` for every positive log power. -/
+theorem prime_softplus_asymptotic {a C₁ C₂ : ℝ} (ha : 0 < a) (hC₁ : 0 < C₁)
+    (hC : C₁ ≤ C₂) (s : ℝ → ℝ)
+    (hs : ∀ᶠ P in atTop, C₁ * log P ^ a ≤ s P ∧ s P ≤ C₂ * log P ^ a) :
+    (∀ᶠ P in atTop,
+      Summable (fun p : ℕ => |if p.Prime then weight P (s P) p else 0|)) ∧
+    Tendsto (fun P : ℝ =>
+      (∑' p : ℕ, if p.Prime then weight P (s P) p else 0) /
+        (P / (s P * log P))) atTop (𝓝 (π ^ 2 / 6)) := by
+  have hC₂ := hC₁.trans_le hC
+  have hlogpow := (tendsto_rpow_atTop ha).comp tendsto_log_atTop
+  have hsTop : Tendsto s atTop atTop :=
+    tendsto_atTop_mono' _ (hs.mono fun _ h => h.1) (hlogpow.atTop_const_mul hC₁)
+  have hn : ∀ᶠ P in atTop, 0 ≤ s P := (hsTop.eventually_ge_atTop 0)
+  have hθ := theta_comparison_tendsto (hn.and (hs.mono fun _ h => h.2)) hC₂
+  have hc := softplus_continuum_tendsto hsTop
+  have hw := hθ.add hc
+  rw [zero_add] at hw
+  have hw' : Tendsto (fun P : ℝ => (s P / P) *
+      ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p * log p)
+      atTop (𝓝 (π ^ 2 / 6)) :=
+    hw.congr (fun P => by dsimp only [Pi.add_apply]; ring)
+  have hcenter := remove_prime_logs hn hw'
+  have hfar : ∀ᶠ P : ℝ in atTop, Summable (primeWeight P (s P)) ∧
+      0 ≤ (∑' n, primeWeight P (s P) n) -
+        ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p ∧
+      (∑' n, primeWeight P (s P) n) -
+        ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p ≤
+        5 * P * exp (-s P * log 2) := by
+    filter_upwards [eventually_ge_atTop (2 : ℝ), hsTop.eventually_ge_atTop 2] with P hP hsP
+    exact softplus_prime_tails hP hsP
+  constructor
+  · filter_upwards [hfar] with P hP
+    simpa only [← primeWeight, abs_of_nonneg (primeWeight_nonneg _ _ _)] using hP.1
+  let K : ℝ := 5 * C₂
+  let b : ℝ := C₁ * log 2
+  have hb : 0 < b := mul_pos hC₁ (log_pos (by norm_num))
+  have hdecay : Tendsto (fun P : ℝ =>
+      K * (log P ^ (a + 1) * exp (-b * log P ^ a))) atTop (𝓝 0) := by
+    have h := ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero ((a + 1) / a) b hb)
+      .comp hlogpow).const_mul K
+    simp only [mul_zero] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    simp only [Function.comp_apply]
+    rw [← rpow_mul (log_pos hP).le, show a * ((a + 1) / a) = a + 1 by field_simp]
+  have herr : Tendsto (fun P : ℝ => s P * log P / P *
+      ((∑' n, primeWeight P (s P) n) -
+        ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p)) atTop (𝓝 0) := by
+    refine squeeze_zero' ?_ ?_ hdecay
+    · filter_upwards [hfar, eventually_gt_atTop (1 : ℝ), hn] with P htail hP hsP
+      exact mul_nonneg (by have := log_pos hP; positivity) htail.2.1
+    · filter_upwards [hfar, hs, eventually_gt_atTop (1 : ℝ), hn] with P htail hscale hP hsP
+      have hp : 0 < P := by linarith
+      have hl : 0 < log P := log_pos hP
+      have hexp : exp (-s P * log 2) ≤ exp (-b * log P ^ a) := by
+        apply exp_le_exp.mpr
+        dsimp [b]
+        nlinarith [mul_nonneg (log_nonneg (by norm_num : (1 : ℝ) ≤ 2))
+          (sub_nonneg.mpr hscale.1)]
+      calc
+        _ ≤ (s P * log P / P) * (5 * P * exp (-s P * log 2)) :=
+          mul_le_mul_of_nonneg_left htail.2.2 (by positivity)
+        _ = 5 * s P * log P * exp (-s P * log 2) := by field_simp
+        _ ≤ (5 * (C₂ * log P ^ a) * log P) * exp (-b * log P ^ a) := by
+          apply mul_le_mul _ hexp (exp_pos _).le (by positivity)
+          exact mul_le_mul_of_nonneg_right
+            (mul_le_mul_of_nonneg_left hscale.2 (by norm_num)) hl.le
+        _ = _ := by rw [rpow_add hl, rpow_one]; unfold K; ring
+  have hfull := herr.add hcenter
+  rw [zero_add] at hfull
+  exact hfull.congr fun P => by
+    simp only [← primeWeight, div_div_eq_mul_div]
+    ring
 
 end D5.S3.Arith.Robin.PriceRecord.MovingPrimeSoftplus
