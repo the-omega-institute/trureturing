@@ -187,4 +187,142 @@ private lemma entropy_truncated {U : ℝ} (hU : 0 ≤ U) :
   rw [← intervalIntegral.integral_Ioi_sub_Ioi entropy_integral.1 hU, entropy_integral.2]
   linarith
 
+/-- A finite uniform grid, chosen before the asymptotic parameter varies. -/
+structure Mesh where
+  U : ℝ
+  n : ℕ
+  U_pos : 0 < U
+  n_pos : 0 < n
+
+def Mesh.step (G : Mesh) : ℝ := G.U / G.n
+def Mesh.node (G : Mesh) (i : ℕ) : ℝ := i * G.step
+def Mesh.cost (G : Mesh) : ℝ :=
+  2 * ∑ i ∈ Finset.range G.n, G.step * G.node (i + 1) * logistic (G.node (i + 1))
+def Mesh.mass (G : Mesh) : ℝ :=
+  2 * ∑ i ∈ Finset.range G.n, G.step * entropy (G.node (i + 1))
+
+private lemma step_pos (G : Mesh) : 0 < G.step := by
+  exact div_pos G.U_pos (by exact_mod_cast G.n_pos)
+private lemma node_nonneg (G : Mesh) (i : ℕ) : 0 ≤ G.node i := by
+  dsimp [Mesh.node]; positivity
+private lemma node_step (G : Mesh) (i : ℕ) : G.node (i+1) - G.node i = G.step := by
+  simp [Mesh.node, Nat.cast_add, Nat.cast_one]; ring
+private lemma node_end (G : Mesh) : G.node G.n = G.U := by
+  dsimp [Mesh.node, Mesh.step]
+  exact mul_div_cancel₀ _ (by exact_mod_cast G.n_pos.ne')
+private lemma node_zero (G : Mesh) : G.node 0 = 0 := by simp [Mesh.node]
+
+private lemma cell_cost (G : Mesh) (i : ℕ) :
+    G.step * G.node (i+1) * logistic (G.node (i+1)) ≤
+      (∫ u in G.node i..G.node (i+1), u * logistic u) +
+      G.step * ∫ u in G.node i..G.node (i+1), logistic u := by
+  have hab : G.node i ≤ G.node (i+1) := by linarith [step_pos G, node_step G i]
+  have hq := logistic_continuous.intervalIntegrable (a := G.node i) (b := G.node (i+1))
+  have huq := (continuous_id.mul logistic_continuous).intervalIntegrable
+    (a := G.node i) (b := G.node (i+1))
+  have h := intervalIntegral.integral_mono_on_of_le_Ioo hab intervalIntegrable_const
+    (huq.add (hq.const_mul G.step)) (fun u hu => ?_)
+  · rw [intervalIntegral.integral_const, intervalIntegral.integral_add huq (hq.const_mul _),
+      intervalIntegral.integral_const_mul, node_step, smul_eq_mul] at h
+    simpa [mul_assoc] using h
+  · have hqu := logistic_antitone hu.2.le
+    have hbu : G.node (i+1) ≤ u + G.step := by linarith [node_step G i, hu.1]
+    calc
+      G.node (i+1) * logistic (G.node (i+1)) ≤ G.node (i+1) * logistic u :=
+        mul_le_mul_of_nonneg_left hqu (node_nonneg G _)
+      _ ≤ (u + G.step) * logistic u :=
+        mul_le_mul_of_nonneg_right hbu (logistic_range u).1.le
+      _ = u * logistic u + G.step * logistic u := by ring
+
+private lemma cell_entropy (G : Mesh) (i : ℕ) :
+    (∫ u in G.node i..G.node (i+1), entropy u) -
+      G.step * entropy (G.node (i+1)) ≤
+      G.step * (entropy (G.node i) - entropy (G.node (i+1))) := by
+  have hab : G.node i ≤ G.node (i+1) := by linarith [step_pos G, node_step G i]
+  have h := intervalIntegral.integral_mono_on_of_le_Ioo hab
+    entropy_continuous.intervalIntegrable intervalIntegrable_const
+    (fun u hu => entropy_antitone (node_nonneg G i) ((node_nonneg G i).trans hu.1.le) hu.1.le)
+  rw [intervalIntegral.integral_const, node_step, smul_eq_mul] at h
+  linarith
+
+private lemma truncated_le {f : ℝ → ℝ} (hf : IntegrableOn f (Ioi 0))
+    (hp : ∀ u, 0 ≤ u → 0 ≤ f u) {U : ℝ} (hU : 0 ≤ U) :
+    (∫ u in (0 : ℝ)..U, f u) ≤ ∫ u in Ioi (0 : ℝ), f u := by
+  rw [intervalIntegral.integral_of_le hU]
+  apply setIntegral_mono_set hf
+  · filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu using hp u hu.le
+  · exact Eventually.of_forall (fun u hu => hu.1)
+
+/-- Finite endpoint sampling controls both cost and entropy, with explicit mesh and tail errors. -/
+theorem grid_bounds (G : Mesh) :
+    G.cost ≤ π ^ 2 / 6 + 2 * G.step * log 2 ∧
+    π ^ 2 / 3 - 2 * (G.U + 2) * exp (-G.U) - 2 * G.step * log 2 ≤ G.mass := by
+  have hq := intervalIntegral.sum_integral_adjacent_intervals
+    (a := G.node) (n := G.n) (f := logistic)
+    (fun _ _ => logistic_continuous.intervalIntegrable)
+  have huq := intervalIntegral.sum_integral_adjacent_intervals
+    (a := G.node) (n := G.n) (f := fun u => u * logistic u)
+    (fun _ _ => (continuous_id.mul logistic_continuous).intervalIntegrable)
+  have hf := intervalIntegral.sum_integral_adjacent_intervals
+    (a := G.node) (n := G.n) (f := entropy)
+    (fun _ _ => entropy_continuous.intervalIntegrable)
+  rw [node_zero, node_end] at hq huq hf
+  constructor
+  · have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.range G.n) => cell_cost G i)
+    rw [Finset.sum_add_distrib, ← Finset.mul_sum, hq, huq] at h
+    have h₁ := truncated_le fermi_real_two.1
+      (fun u hu => mul_nonneg hu (logistic_range u).1.le) G.U_pos.le
+    have h₂ := truncated_le fermi_real_one.1 (fun u _ => (logistic_range u).1.le) G.U_pos.le
+    rw [fermi_real_two.2] at h₁
+    rw [fermi_real_one.2] at h₂
+    dsimp [Mesh.cost]
+    nlinarith [mul_le_mul_of_nonneg_left h₂ (step_pos G).le]
+  · have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.range G.n) => cell_entropy G i)
+    rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
+      Finset.sum_range_sub', node_zero, node_end, hf] at h
+    have hfU := binEntropy_nonneg (logistic_range G.U).1.le (logistic_range G.U).2.le
+    have h0 : entropy 0 = log 2 := by simp [entropy, logistic]
+    rw [h0] at h
+    have ht := entropy_truncated G.U_pos.le
+    dsimp [Mesh.mass]
+    nlinarith [mul_nonneg (step_pos G).le hfU]
+
+/-- A fixed grid achieves any prescribed positive cost slack and entropy loss. -/
+theorem exists_good_grid {η ρ : ℝ} (hη : 0 < η) (hρ : 0 < ρ) :
+    ∃ G : Mesh, G.cost ≤ (π ^ 2 / 6) * (1 + η / 2) ∧
+      π ^ 2 / 3 - ρ ≤ G.mass := by
+  have he : Tendsto (fun u : ℝ => exp (-u)) atTop (𝓝 0) :=
+    tendsto_exp_atBot.comp tendsto_neg_atTop_atBot
+  have ht : Tendsto (fun u : ℝ => 2 * (u + 2) * exp (-u)) atTop (𝓝 0) := by
+    simpa [add_mul, mul_add, mul_assoc] using (mul_exp_limit.add (he.const_mul 2)).const_mul 2
+  obtain ⟨U, hU, htU⟩ := ((eventually_ge_atTop (1 : ℝ)).and
+    (ht.eventually_lt_const (by linarith : (0 : ℝ) < ρ / 2))).exists
+  have hlog : 0 < log (2 : ℝ) := log_pos (by norm_num)
+  let d := min ((π ^ 2 / 6) * η / (4 * log 2)) (ρ / (4 * log 2))
+  have hd : 0 < d := lt_min (by positivity) (by positivity)
+  obtain ⟨n, hn⟩ := exists_nat_gt (max 1 (U / d))
+  have hn1 : 0 < n := by exact_mod_cast (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1)
+    (le_max_left _ _).trans_lt hn).le
+  let G : Mesh := ⟨U, n, by linarith, hn1⟩
+  have hs : G.step ≤ d := by
+    have hnR : (0 : ℝ) < n := by exact_mod_cast hn1
+    apply (div_le_iff₀ hnR).mpr
+    have h := (div_lt_iff₀ hd).mp ((le_max_right _ _).trans_lt hn)
+    simpa [mul_comm] using h.le
+  have hs₁ : 2 * G.step * log 2 ≤ (π ^ 2 / 6) * η / 2 := by
+    have h := hs.trans (min_le_left _ _)
+    have hd' : 0 < 4 * log (2 : ℝ) := by positivity
+    have h := (le_div_iff₀ hd').mp h
+    nlinarith
+  have hs₂ : 2 * G.step * log 2 ≤ ρ / 2 := by
+    have h := hs.trans (min_le_right _ _)
+    have hd' : 0 < 4 * log (2 : ℝ) := by positivity
+    have h := (le_div_iff₀ hd').mp h
+    nlinarith
+  obtain ⟨hc, hm⟩ := grid_bounds G
+  refine ⟨G, ?_, ?_⟩
+  · nlinarith
+  · change π ^ 2 / 3 - 2 * (U + 2) * exp (-U) - 2 * G.step * log 2 ≤ G.mass at hm
+    linarith
+
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.Grid
