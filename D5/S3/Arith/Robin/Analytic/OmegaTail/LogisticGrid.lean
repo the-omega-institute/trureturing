@@ -158,10 +158,6 @@ private theorem potential_bounds (u : ℝ) : 0 ≤ potential u ∧ potential u �
   · simpa only [add_sub_cancel_left] using Real.log_le_sub_one_of_pos
       (show 0 < 1 + exp (-u) by positivity)
 
-private theorem occupancy_le_exp (u : ℝ) : occupancy u ≤ exp (-u) := by
-  rw [occupancy, sigmoid_def, neg_neg, Real.exp_neg]
-  exact inv_anti₀ (exp_pos _) (by linarith)
-
 private theorem hasDerivAt_potential (u : ℝ) : HasDerivAt potential (-occupancy u) u := by
   have h := (((hasDerivAt_id u).neg.exp).const_add 1).log (by
     change 1 + exp (-u) ≠ 0
@@ -195,7 +191,8 @@ private theorem entropy_integrable_mass_tail :
     refine (integrableOn_exp_neg_Ioi 0).mono' hqcont.aestronglyMeasurable ?_
     exact Eventually.of_forall fun u => by
       rw [Real.norm_of_nonneg (sigmoid_nonneg _)]
-      exact occupancy_le_exp u
+      simpa only [occupancy, sigmoid_def, neg_neg, Weil.ZetaBridge.FermiMellin.fermi] using
+        Weil.ZetaBridge.FermiMellin.fermi_le_exp_neg u
   have hJInt : IntegrableOn potential (Ioi 0) := by
     refine (integrableOn_exp_neg_Ioi 0).mono' hJcont.aestronglyMeasurable ?_
     exact Eventually.of_forall fun u => by
@@ -209,7 +206,9 @@ private theorem entropy_integrable_mass_tail :
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
     have hu0 : 0 ≤ u := le_of_lt hu
     rw [Real.norm_of_nonneg (mul_nonneg hu0 (sigmoid_nonneg _))]
-    exact mul_le_mul_of_nonneg_left (occupancy_le_exp u) hu0
+    apply mul_le_mul_of_nonneg_left _ hu0
+    simpa only [occupancy, sigmoid_def, neg_neg, Weil.ZetaBridge.FermiMellin.fermi] using
+      Weil.ZetaBridge.FermiMellin.fermi_le_exp_neg u
   have hqMass : (∫ u in Ioi (0 : ℝ), occupancy u) = log 2 := by
     have h := D5.S3.Weil.ZetaBridge.FermiMellin.fermi_mellin_at_one 1 one_pos
     apply Complex.ofReal_injective
@@ -284,8 +283,10 @@ private theorem entropy_integrable_mass_tail :
           hboundInt measurableSet_Ioi
         intro u hu
         rw [entropy_eq_potential, add_mul, one_mul]
-        exact add_le_add (potential_bounds u).2
-          (mul_le_mul_of_nonneg_left (occupancy_le_exp u) (hU.trans (le_of_lt hu)))
+        refine add_le_add (potential_bounds u).2
+          (mul_le_mul_of_nonneg_left ?_ (hU.trans (le_of_lt hu)))
+        simpa only [occupancy, sigmoid_def, neg_neg, Weil.ZetaBridge.FermiMellin.fermi] using
+          Weil.ZetaBridge.FermiMellin.fermi_le_exp_neg u
       _ = tailShape U := by
         simpa using integral_Ioi_of_hasDerivAt_of_nonneg'
           (fun u (_ : u ∈ Ici U) => hderiv u) hpos hlim
