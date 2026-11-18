@@ -156,4 +156,78 @@ theorem eight_partners_force_minority_directions_used
 
 #print axioms eight_partners_force_minority_directions_used
 
+/-- If three minority assignments from a set of coordinates already exceed
+the allowable weight, those coordinate halves have total size at most twice
+the size of the support. -/
+private lemma minority_triple_capacity {n : ℕ} (C : Finset (Q n))
+    (b : Fin n → Bool) (r : Fin n → ℤ) (hNonneg : ∀ i, 0 ≤ r i)
+    (K : ℤ) (T : Finset (Fin n))
+    (hWeight : ∀ x ∈ C, (∑ i : Fin n, if x i = b i then r i else 0) ≤ K)
+    (hTriple : ∀ i ∈ T, ∀ j ∈ T, ∀ k ∈ T,
+      i ≠ j → i ≠ k → j ≠ k → K < r i + r j + r k) :
+    (∑ i ∈ T, (C.filter (fun x => x i = b i)).card) ≤ 2 * C.card := by
+  classical
+  have localBound (x : Q n) (hx : x ∈ C) : (T.filter (fun i => x i = b i)).card ≤ 2 := by
+    by_contra! h
+    obtain ⟨U, hU, h3⟩ := exists_subset_card_eq (show 3 ≤ _ from h)
+    obtain ⟨i, j, k, hij, hik, hjk, hSet⟩ := card_eq_three.mp h3
+    have member {t : Fin n} (ht : t ∈ U) : t ∈ T ∧ x t = b t :=
+      mem_filter.mp (hU ht)
+    have hi := member (show i ∈ U by rw [hSet]; simp)
+    have hj := member (show j ∈ U by rw [hSet]; simp)
+    have hk := member (show k ∈ U by rw [hSet]; simp)
+    have hsum : (∑ t ∈ U, if x t = b t then r t else 0) ≤
+        ∑ t : Fin n, if x t = b t then r t else 0 :=
+      sum_le_sum_of_subset_of_nonneg (subset_univ _) (by
+        intro t _ _
+        split <;> simp [hNonneg])
+    have hi' : i ∉ ({j, k} : Finset (Fin n)) := by simp [hij, hik]
+    rw [hSet, sum_insert hi', sum_pair hjk, ite_eq_left hi.2, ite_eq_left hj.2,
+      ite_eq_left hk.2] at hsum
+    linarith [hWeight x hx, hTriple i hi.1 j hj.1 k hk.1 hij hik hjk]
+  calc
+    _ = ∑ x ∈ C, (T.filter (fun i => x i = b i)).card := by
+      simp only [card_filter]
+      exact sum_comm
+    _ ≤ ∑ _x ∈ C, 2 := sum_le_sum localBound
+    _ = 2 * C.card := by simp [Nat.mul_comm]
+
+/-- The deficit profile (0,0,0,3,5,5,5,5,5) would require 142 minority
+assignments across the six positive-deficit coordinates, whose capacity is
+132. The choice of the smaller sides is arbitrary. -/
+theorem no_66_support_deficit_zero_zero_zero_three_five
+    {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C)
+    (hd : ∀ x ∈ C, ∀ y ∈ C, hammingDist x y ≤ 7)
+    (b : Fin 9 → Bool)
+    (hr : ∀ i, ((C.filter (fun y => y i = b i)).card : ℤ) +
+      2 * (![0, 0, 0, 3, 5, 5, 5, 5, 5] : Fin 9 → ℤ) i = 33) : False := by
+  classical
+  let r : Fin 9 → ℤ := ![0, 0, 0, 3, 5, 5, 5, 5, 5]
+  let T : Finset (Fin 9) := {3, 4, 5, 6, 7, 8}
+  have htotal : (∑ i, r i) = 28 := by decide +kernel
+  have hNonneg : ∀ i, 0 ≤ r i := by decide +kernel
+  have hTriple : ∀ i ∈ T, ∀ j ∈ T, ∀ k ∈ T,
+      i ≠ j → i ≠ k → j ≠ k → 12 < r i + r j + r k := by decide +kernel
+  have hWeight (x : Q 9) (hx : x ∈ C) :
+      (∑ i : Fin 9, if x i = b i then r i else 0) ≤ 12 := by
+    have h := coordinate_profile_weight_bound hC hreg hb b r hr hx
+    have hcap : ((shell C x 7).card : ℤ) ≤ 8 := by
+      exact_mod_cast sixty_six_distance_seven_le_eight hC hreg hb hd hx
+    omega
+  have hcap := minority_triple_capacity C b r hNonneg 12 T hWeight hTriple
+  have hT : T.card = 6 := by decide +kernel
+  have hrT : (∑ i ∈ T, r i) = 28 := by decide +kernel
+  have hsum := sum_congr rfl (fun i (_ : i ∈ T) => hr i)
+  change (∑ i ∈ T, (((C.filter (fun y => y i = b i)).card : ℤ) + 2 * r i)) =
+    ∑ _i ∈ T, (33 : ℤ) at hsum
+  rw [sum_add_distrib, ← mul_sum, sum_const, nsmul_eq_mul, hT, hrT] at hsum
+  have hcap' : (∑ i ∈ T, ((C.filter (fun y => y i = b i)).card : ℤ)) ≤ 132 := by
+    rw [hC] at hcap
+    exact_mod_cast hcap
+  omega
+
+#print axioms no_66_support_deficit_zero_zero_zero_three_five
+
 end D5.S3.Combinatorics.Graph.HypercubeCritical
