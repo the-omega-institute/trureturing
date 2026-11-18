@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonSigns
+import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointEightWord
 
 /-! The phase at a common cube neighbor after translating two opposite spokes. -/
 
@@ -8,6 +9,8 @@ noncomputable section
 open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical
 open BalancedCriticalSpectrum (Q IsSwitching flip)
+open private positive_eight_word from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointEightWord
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private flip_comm switching_ne_zero from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
@@ -121,8 +124,83 @@ private lemma translated_opposite_midpoint
     apply diff_injective u
     change diff m u = diff (flip (flip u a) c) u
     rw [diff_symm m u, hdiff, diff_flip, diff_flip, diff_self]
-    simp [hac, Ne.symm hac, Finset.pair_comm]
+    simp [Ne.symm hac, Finset.pair_comm]
   exact translated_far_midpoint_excluded hs z hab hbc hac haf hcf ha hb hc
     habS hbcS hafS hcfS (hmfar ▸ hm)
 
 #print axioms translated_opposite_midpoint
+
+/-- Alternating vertices of a balanced actual eight-cycle form a coordinate
+rectangle or four distinct neighbors of a common cube vertex. -/
+private lemma alternating_eight_cycle_geometry
+    {n : ℕ} {S : Finset (Q n)} (hb : BalancedCriticalSpectrum.IsBalanced S)
+    (v : Fin 8 → (S : Set (Q n))) (hv : Function.Injective v)
+    (w : Fin 8 → Fin n) (step : ∀ i, (v (i + 1)).val = flip (v i).val (w i)) :
+    ∃ g : Fin 4 → Fin n, Function.Injective g ∧
+      ((diff (v 2).val (v 0).val = {g 0, g 1} ∧
+        diff (v 4).val (v 0).val = {g 0, g 1, g 2, g 3} ∧
+        diff (v 6).val (v 0).val = {g 2, g 3}) ∨
+      ∃ z : Q n, (v 0).val = flip z (g 1) ∧ (v 2).val = flip z (g 0) ∧
+        (v 4).val = flip z (g 2) ∧ (v 6).val = flip z (g 3)) := by
+  classical
+  obtain ⟨g, hg, hw0, hw1, hw2, hword⟩ := positive_eight_word hb v hv w step
+  refine ⟨g, hg, ?_⟩
+  have h₁ : (v 1).val = flip (v 0).val (g 0) := by
+    simpa only [show (0 : Fin 8) + 1 = 1 by decide, hw0] using step 0
+  have h₂ : (v 2).val = flip (v 1).val (g 1) := by
+    simpa only [show (1 : Fin 8) + 1 = 2 by decide, hw1] using step 1
+  have h₃ : (v 3).val = flip (v 2).val (g 2) := by
+    simpa only [show (2 : Fin 8) + 1 = 3 by decide, hw2] using step 2
+  have h₄ : (v 4).val = flip (v 3).val (w 3) := step 3
+  have rev (i : Fin 8) : (v i).val = flip (v (i + 1)).val (w i) := by
+    rw [step, BalancedCriticalSpectrum.flip_flip]
+  have h₇ : (v 7).val = flip (v 0).val (w 7) := rev 7
+  have h₆ : (v 6).val = flip (v 7).val (w 6) := rev 6
+  have heq (i j : Fin 4) : g i = g j ↔ i = j := hg.eq_iff
+  rcases hword with h | h | h <;>
+    simp only [List.cons.injEq, and_true] at h <;>
+    obtain ⟨hw7, hw6, _, _, hw3⟩ := h
+  · left
+    simp [h₁, h₂, h₃, h₄, h₆, h₇, hw7, hw6, hw3, diff_flip, diff_self, heq,
+      Finset.insert_comm, Finset.pair_comm]
+    ext k
+    simp only [Finset.mem_insert, Finset.mem_singleton]
+    tauto
+  · right
+    let z := flip (v 0).val (g 1)
+    refine ⟨z, (BalancedCriticalSpectrum.flip_flip _ _).symm, ?_, ?_, ?_⟩
+    · rw [h₂, h₁, flip_comm]
+    · rw [h₄, h₃, h₂, h₁, hw3, flip_comm (v 0).val (g 0) (g 1)]
+      change flip (flip (flip z (g 0)) (g 2)) (g 0) = flip z (g 2)
+      rw [flip_comm (flip z (g 0)), BalancedCriticalSpectrum.flip_flip]
+    · rw [h₆, h₇, hw7, hw6, flip_comm]
+  · left
+    simp [h₁, h₂, h₃, h₄, h₆, h₇, hw7, hw6, hw3, diff_flip, diff_self, heq,
+      Finset.insert_comm, Finset.pair_comm]
+    ext k
+    simp only [Finset.mem_insert, Finset.mem_singleton]
+    tauto
+
+#print axioms alternating_eight_cycle_geometry
+
+/-- Flips outside the difference set add two to the distance if distinct
+and preserve it if they use the same coordinate. -/
+private lemma hamming_dist_after_external_flips {n : ℕ} (x y : Q n) (f g : Fin n)
+    (hf : f ∉ diff x y) (hg : g ∉ diff x y) :
+    hammingDist (flip x f) (flip y g) = hammingDist x y + if f = g then 0 else 2 := by
+  classical
+  have h₁ : diff (flip x f) y = insert f (diff x y) := by rw [diff_flip, ite_eq_right hf]
+  have h₂ : diff (flip x f) (flip y g) =
+      if g ∈ insert f (diff x y) then (insert f (diff x y)).erase g
+        else insert g (insert f (diff x y)) := by
+    rw [diff_symm (flip x f), diff_flip, ← diff_symm (flip x f) y, h₁]
+  change (diff (flip x f) (flip y g)).card = (diff x y).card + if f = g then 0 else 2
+  rw [h₂]
+  by_cases hfg : f = g
+  · subst g
+    simp [hf]
+  · have hn : g ∉ insert f (diff x y) := by simp [Ne.symm hfg, hg]
+    rw [ite_eq_right hn, ite_eq_right hfg, Finset.card_insert_of_notMem hn,
+      Finset.card_insert_of_notMem hf]
+
+#print axioms hamming_dist_after_external_flips

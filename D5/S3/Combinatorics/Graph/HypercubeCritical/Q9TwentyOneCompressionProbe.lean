@@ -15,6 +15,10 @@ attribute [local instance] Classical.propDecidable
 
 open private SideHigh compressed compressed_degree compressed_triangle_free from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
+open private three_walk_endpoint_injective from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
+open private side_high_neighbors_card high_neighbors_compressed_separated from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
 open private compressed_edge_count from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 open private paritySide parity_bipartite from
@@ -164,3 +168,168 @@ private lemma twenty_one_slice_compression
     exact Nat.add_left_cancel hd
 
 #print axioms twenty_one_slice_compression
+
+/-- The four square vertices have distinct actual high neighbors on the other
+side, and exactly those four vertices lose a degree when their side is compressed. -/
+private lemma square_cross_matching
+    {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {L R : Finset V}
+    (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {v w}, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False)
+    (hg : (8 : ℕ∞) ≤ G.egirth) (e : cycleGraph 4 ≃g compressed G L)
+    (hcount : ∀ x : SideHigh G L, (degreeThree G (G.neighborFinset x.val)).card = 1) :
+    ∃ B : Fin 4 ↪ SideHigh G R,
+      (∀ i y, G.Adj (e i).val y.val ↔ y = B i) ∧
+      ∀ y, (compressed G R).degree y = if y ∈ Set.range B then 2 else 3 := by
+  classical
+  let N (i : Fin 4) := (univ : Finset (SideHigh G R)).filter (fun y => G.Adj (e i).val y.val)
+  have hN (i : Fin 4) : (N i).card = 1 :=
+    (side_high_neighbors_card hpart (mem_filter.mp (e i).property).1).trans (hcount (e i))
+  choose f hf using fun i => card_eq_one.mp (hN i)
+  have hmatch (i : Fin 4) (y : SideHigh G R) : G.Adj (e i).val y.val ↔ y = f i := by
+    have hmem : y ∈ N i ↔ G.Adj (e i).val y.val := by simp [N]
+    rw [hf i, mem_singleton] at hmem
+    exact hmem.symm
+  have c4_near : ∀ i j : Fin 4, i ≠ j → (cycleGraph 4).Adj i j ∨
+      ∃ k, (cycleGraph 4).Adj i k ∧ (cycleGraph 4).Adj j k := by decide +kernel
+  have hinj : Function.Injective f := by
+    intro i j hij
+    by_contra hne
+    have hi := (hmatch i (f i)).mpr rfl
+    have hj := (hmatch j (f i)).mpr hij
+    have hsep := high_neighbors_compressed_separated hpart.symm hg
+      (mem_filter.mp (f i).property).1 (mem_filter.mp (f i).property).2
+      hi.symm hj.symm (e.injective.ne hne)
+    rcases c4_near i j hne with hadj | ⟨k, hik, hjk⟩
+    · exact hsep.1 (e.map_rel_iff.mpr hadj)
+    · exact hsep.2 (e k) (e.map_rel_iff.mpr hik) (e.map_rel_iff.mpr hjk)
+  let B : Fin 4 ↪ SideHigh G R := ⟨f, hinj⟩
+  refine ⟨B, hmatch, ?_⟩
+  intro y
+  let M := (univ : Finset (SideHigh G L)).filter (fun x => G.Adj y.val x.val)
+  have hM := side_high_neighbors_card hpart.symm (mem_filter.mp y.property).1
+  change M.card = (degreeThree G (G.neighborFinset y.val)).card at hM
+  have hd := compressed_degree hpart.symm hdeg hlow hg y
+  rw [← hM] at hd
+  by_cases hy : y ∈ Set.range B
+  · obtain ⟨i, rfl⟩ := hy
+    have hm : M = {e i} := by
+      ext x
+      have hx : G.Adj (e (e.symm x)).val (B i).val ↔ B i = f (e.symm x) :=
+        hmatch (e.symm x) (B i)
+      rw [e.apply_symm_apply] at hx
+      simp only [M, mem_filter, mem_univ, true_and, mem_singleton]
+      constructor
+      · intro h
+        have he := hinj (hx.mp h.symm)
+        rw [he, e.apply_symm_apply]
+      · rintro rfl
+        exact ((hmatch i (B i)).mpr rfl).symm
+    rw [hm, card_singleton] at hd
+    rw [ite_eq_left (show B i ∈ Set.range B from ⟨i, rfl⟩)]
+    omega
+  · have hm : M = ∅ := by
+      apply eq_empty_iff_forall_notMem.mpr
+      intro x hx
+      have h := (mem_filter.mp hx).2
+      have he : y = B (e.symm x) := by
+        apply (hmatch (e.symm x) y).mp
+        rw [e.apply_symm_apply]
+        exact h.symm
+      exact hy ⟨e.symm x, he.symm⟩
+    rw [hm, card_empty] at hd
+    rw [ite_eq_right hy]
+    omega
+
+#print axioms square_cross_matching
+
+/-- The larger compressed side must contain an edge between two of the matched
+ends. An independent set of four ends would overload the other two vertices. -/
+private lemma matched_ends_have_edge
+    {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj]
+    (hV : Fintype.card V = 6) (B : Fin 4 ↪ V)
+    (hdeg : ∀ y, H.degree y = if y ∈ Set.range B then 2 else 3) :
+    ∃ i j, H.Adj (B i) (B j) := by
+  classical
+  by_contra! hnone
+  let X : Finset V := univ.map B
+  let Y : Finset V := univ \ X
+  have hx (y : V) : y ∈ X ↔ y ∈ Set.range B := by simp [X, Set.mem_range]
+  have hx4 : X.card = 4 := by simp [X]
+  have hy2 : Y.card = 2 := by
+    change ((univ : Finset V) \ X).card = 2
+    rw [card_sdiff_of_subset (subset_univ _), card_univ, hV, hx4]
+  obtain ⟨u, hu⟩ := card_pos.mp (show 0 < Y.card by omega)
+  have hu' : u ∉ Set.range B := by
+    intro h
+    exact (mem_sdiff.mp hu).2 ((hx u).mpr h)
+  have hydeg (i : Fin 4) : H.degree (B i) = 2 := by
+    simpa only [ite_eq_left (show B i ∈ Set.range B from ⟨i, rfl⟩)] using hdeg (B i)
+  have hN (i : Fin 4) : H.neighborFinset (B i) = Y := by
+    apply eq_of_subset_of_card_le
+    · intro y hy
+      refine mem_sdiff.mpr ⟨mem_univ _, ?_⟩
+      intro h
+      obtain ⟨j, rfl⟩ := (hx y).mp h
+      exact hnone i j ((H.mem_neighborFinset _ _).mp hy)
+    · rw [H.card_neighborFinset_eq_degree, hydeg, hy2]
+  have hsub : X ⊆ H.neighborFinset u := by
+    intro y hy
+    obtain ⟨i, rfl⟩ := (hx y).mp hy
+    apply (H.mem_neighborFinset _ _).mpr
+    exact ((H.mem_neighborFinset _ _).mp (hN i ▸ hu)).symm
+  have hbad := card_le_card hsub
+  rw [hx4, H.card_neighborFinset_eq_degree, hdeg u, ite_eq_right hu'] at hbad
+  omega
+
+#print axioms matched_ends_have_edge
+
+-- Adjacent square indices would yield two different three-edge paths.
+private lemma matched_edge_over_diagonal
+    {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {L R : Finset V}
+    (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hg : (8 : ℕ∞) ≤ G.egirth) (e : cycleGraph 4 ≃g compressed G L)
+    (B : Fin 4 ↪ SideHigh G R) (hB : ∀ i, G.Adj (e i).val (B i).val)
+    {i j : Fin 4} (hij : (compressed G R).Adj (B i) (B j)) :
+    ¬ (cycleGraph 4).Adj i j := by
+  intro hadj
+  obtain ⟨hi, a, ha2, hia, hja⟩ := e.map_rel_iff.mpr hadj
+  obtain ⟨hj, b, hb2, hib, hjb⟩ := hij
+  have highL (k : Fin 4) : G.degree (e k).val = 3 := (mem_filter.mp (e k).property).2
+  have highR (k : Fin 4) : G.degree (B k).val = 3 := (mem_filter.mp (B k).property).2
+  have hL := (mem_filter.mp (e i).property).1
+  have hn₁ : (e i).val ≠ (e j).val := fun h => hi (Subtype.ext h)
+  have hn₂ : a ≠ (B j).val := by
+    intro h
+    rw [h, highR] at ha2
+    omega
+  have hn₃ : (e i).val ≠ b := by
+    intro h
+    rw [← h, highL] at hb2
+    omega
+  have hn₄ : (B i).val ≠ (B j).val := fun h => hj (Subtype.ext h)
+  have he := three_walk_endpoint_injective hpart hg hL hL
+    hia hja.symm (hB j) (hB i) hib hjb.symm hn₁ hn₂ hn₃ hn₄ ⟨rfl, rfl⟩
+  rw [he.2.1, highR] at ha2
+  omega
+
+/-- With four highs on the smaller side, some diagonal of its compressed square
+has matched endpoints joined by an actual low path on the other side. -/
+private lemma square_cross_diagonal
+    {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {L R : Finset V}
+    (hpart : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {v w}, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False)
+    (hg : (8 : ℕ∞) ≤ G.egirth) (e : cycleGraph 4 ≃g compressed G L)
+    (hcount : ∀ x : SideHigh G L, (degreeThree G (G.neighborFinset x.val)).card = 1)
+    (hR : Fintype.card (SideHigh G R) = 6) :
+    ∃ B : Fin 4 ↪ SideHigh G R,
+      (∀ i y, G.Adj (e i).val y.val ↔ y = B i) ∧
+      (∀ y, (compressed G R).degree y = if y ∈ Set.range B then 2 else 3) ∧
+      ∃ i j, i ≠ j ∧ ¬ (cycleGraph 4).Adj i j ∧ (compressed G R).Adj (B i) (B j) := by
+  obtain ⟨B, hB, hdegB⟩ := square_cross_matching hpart hdeg hlow hg e hcount
+  obtain ⟨i, j, h⟩ := matched_ends_have_edge (compressed G R) hR B hdegB
+  exact ⟨B, hB, hdegB, i, j, B.injective.ne_iff.mp h.ne,
+    matched_edge_over_diagonal hpart hg e B (fun k => (hB k (B k)).mpr rfl) h, h⟩
+
+#print axioms square_cross_diagonal
