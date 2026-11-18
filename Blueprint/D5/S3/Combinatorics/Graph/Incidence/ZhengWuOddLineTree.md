@@ -35,3 +35,5 @@ Conversely, the odd branches specify the even-indegree orientation of T(P). At e
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/ZhengWuOddLineTree.result`
+- Dependency: [D5/S3/Combinatorics/Graph/Incidence/EndpointSplit](EndpointSplit.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Incidence/TreeParity](TreeParity.md)

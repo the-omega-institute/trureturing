@@ -47,3 +47,4 @@ On a finite vertex type, every nonempty even finite subset is the odd-degree set
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/TreeParity.even_indegrees_iff_odd_neighbor_branches`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/TreeParity.existsUnique_even_indegree_head`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/TreeParity.exists_isTree_odd_neighborSet_card`
+- Dependency: [D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge](../Eccentric/DePatraBridge.md)
