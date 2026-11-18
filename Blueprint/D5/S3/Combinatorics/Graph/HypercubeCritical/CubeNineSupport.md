@@ -6,8 +6,6 @@ A nonempty Q9 set of at most nine vertices with no singleton neighbor is a full 
 
 Hong–Wu–Xia, arXiv:2610.09483v1, §7 Problem 2 (https://arxiv.org/html/2610.09483v1#Thmproblem2), asks whether f₂(Q₉)=3 or 4. This classifies small actual cube supports needed for the integral Huang residual argument. It supplies neither a 258-vertex construction nor a complete exclusion, and no literature-priority claim is made.
 
-The private Boolean-coordinate difference identities are dimension-independent and apply to actual Q n vertices. The public small-support classification in this module concerns Q9.
-
 **Theorem 1.1 (A full neighborhood is the only small support without a singleton neighbor).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/CubeNineSupport.eq_neighbors_of_no_singleton`

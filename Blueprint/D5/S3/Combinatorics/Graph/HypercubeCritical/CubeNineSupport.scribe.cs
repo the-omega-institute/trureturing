@@ -18,7 +18,6 @@ internal sealed class CubeNineSupportDocument : IScribeDocumentDefinition
                     + "needed for the integral Huang residual argument. It supplies "
                     + "neither a 258-vertex construction nor a complete exclusion, "
                     + "and no literature-priority claim is made.")),
-            Paragraph(Text("The private Boolean-coordinate difference identities are dimension-independent and apply to actual Q n vertices. The public small-support classification in this module concerns Q9.")),
             Describe.Lean(
                 DescribeId.Create("cube-nine-support-neighborhood-classification"),
                 DeclarationHandle.Create(Prefix + "eq_neighbors_of_no_singleton"),

@@ -8,7 +8,6 @@
  -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
-import D5.S3.Combinatorics.Graph.HypercubeCritical.CubeNineSupport
 
 /-! Differences are taken from an actual selected root in the original cube. -/
 
@@ -24,8 +23,6 @@ open D5.S3.Combinatorics.Graph.Hypercube
 open BalancedCriticalSpectrum (Q IsBalanced flip)
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
-open private diff_self diff_symm diff_empty_iff diff_triangle diff_triangle_card from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CubeNineSupport
 open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private SideHigh compressed selected_three_hamming nine_side_three_step_cover from
@@ -34,6 +31,54 @@ open private eleven_nine_theta from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
 
 attribute [local instance] Classical.propDecidable
+
+open Classical in
+private theorem diff_self {n : Nat} (x : Q n) : diff x x = ∅ := by
+  classical
+  ext i
+  simp [diff]
+
+open Classical in
+private theorem diff_symm {n : Nat} (x y : Q n) : diff x y = diff y x := by
+  classical
+  ext i
+  simp [diff, ne_comm]
+
+open Classical in
+private theorem diff_empty_iff {n : Nat} (x y : Q n) : diff x y = ∅ ↔ x = y := by
+  classical
+  constructor
+  · intro h
+    funext i
+    by_contra hi
+    have : i ∈ diff x y := by simp [diff, hi]
+    rw [h] at this
+    simp at this
+  · rintro rfl
+    exact diff_self x
+
+open Classical in
+private theorem diff_triangle {n : Nat} (x y z : Q n) :
+    diff x y = (diff x z \ diff y z) ∪ (diff y z \ diff x z) := by
+  classical
+  ext i
+  cases hx : x i <;> cases hy : y i <;> cases hz : z i <;>
+    simp [diff, hx, hy, hz]
+
+open Classical in
+private theorem diff_triangle_card {n : Nat} (x y z : Q n) :
+    (diff x y).card + 2 * (diff x z ∩ diff y z).card =
+      (diff x z).card + (diff y z).card := by
+  classical
+  have hd : Disjoint (diff x z \ diff y z) (diff y z \ diff x z) := by
+    apply Finset.disjoint_left.mpr
+    intro i hi hj
+    exact (Finset.mem_sdiff.mp hi).2 (Finset.mem_sdiff.mp hj).1
+  have hA := Finset.card_sdiff_add_card_inter (diff x z) (diff y z)
+  have hB := Finset.card_sdiff_add_card_inter (diff y z) (diff x z)
+  rw [Finset.inter_comm (diff y z) (diff x z)] at hB
+  rw [diff_triangle x y z, Finset.card_union_of_disjoint hd]
+  omega
 
 private theorem diff_injective {n : ℕ} (o : Q n) : Function.Injective (fun x => diff x o) := by
   intro x y hxy
