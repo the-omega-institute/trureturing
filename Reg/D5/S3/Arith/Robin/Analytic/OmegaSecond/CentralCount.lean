@@ -32,7 +32,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨P, hP, ht⟩ := (eventually_gt_atTop (0 : ℝ)).and h |>.exists
+  obtain ⟨P, hP, ht⟩ := ((eventually_gt_atTop (0 : ℝ)).and h).exists
   exact ht P ⟨by linarith, by linarith⟩
 
 def family : Registration arena (type_of% @central_prime_counting_bound) where
