@@ -3,11 +3,11 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
-   utility: none
-   digest: The actual twenty-point slice reduces to paired squares with leaves after excluding 11/9 and paired pentagons.
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.claim; result=D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.result; claim=D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.claim
+   digest: Obstruction to an actual balanced twenty-point cube support with ten independent degree-two vertices.
  -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareLeaf
+import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareExclusion
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
@@ -26,6 +26,9 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSlice
 
 open private paired_cycle_nonembedding from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonExclusion
+
+open private paired_square_nonembedding from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareExclusion
 
 open private sq crossNbr paired_square_labels from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareLeaf
@@ -260,8 +263,7 @@ private theorem high_high_edge_count
   rw [hgraphsum, hsumhigh] at hgraphedges
   omega
 
-/- The public obstruction claim is retained at the original actual-support telescope.
-   The final five-vertex and signed-word elimination is the next private proof unit. -/
+/-- The actual-support hypotheses of the twenty-point slice obstruction. -/
 def claim : Prop :=
   ∃ (n : ℕ) (S : Finset (Q n)),
     ∃ L R : Finset {x : Q n // x ∈ S},
@@ -388,6 +390,14 @@ private theorem actual_twenty_point_slice_data (h : claim) :
     · intro hP3 hT2 hT
       exact eleven_nine_central_obstruction hp hdeg hlow hg hP3 hT2 hT
 
-#print axioms actual_twenty_point_slice_data
+/-- No actual selected cube support satisfies the twenty-point slice hypotheses. -/
+theorem result : ¬ claim := by
+  intro h
+  obtain ⟨n, S, _, _, _, _, _, _, hlow, hbal, _, hpaired, _, _⟩ :=
+    actual_twenty_point_slice_data h
+  obtain ⟨P, T, hpart, _, _, _, _, _, _, eP, eT, hcross⟩ := hpaired
+  exact paired_square_nonembedding hpart hlow hbal eP eT hcross
+
+#print axioms result
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSlice

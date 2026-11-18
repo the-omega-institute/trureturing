@@ -17,8 +17,8 @@ internal sealed class TwentyPointSliceDocument : IScribeDocumentDefinition
                     + "a cycle classification, a coordinate normal form, or a signed-path result.")),
             Paragraph(Text(
                 "The two five-vertex compressed graphs are each classified as a five-cycle or a four-cycle with a leaf, and the mixed pair is excluded. "
-                    + "The actual paired-pentagon case is excluded by its derived matching, constant-or-injective matching directions, coordinate differences, low independence, and the original Huang negative ten-cycle. Only the paired squares with leaves remain. Their high vertices receive derived graph isomorphisms and the exact actual high-edge table a2-b4, a4-b4, a4-b2, a1-b1, a3-b3. "
-                    + "The unsigned abstract twenty-vertex graph is not used as an actual cube countermodel.")),
+                    + "The actual paired-pentagon case is excluded by its derived matching, constant-or-injective matching directions, coordinate differences, low independence, and the original Huang negative ten-cycle. The paired squares with leaves receive derived graph isomorphisms and the exact actual high-edge table a2-b4, a4-b4, a4-b2, a1-b1, a3-b3. "
+                    + "The resulting positive eight-cycles restrict the two five-step paths to three coordinate words. The first word forces a forbidden high adjacency or a vertex coincidence. The other two force a contradiction with the degree or independence of an actual low vertex.")),
             Describe.Lean(
                 DescribeId.Create("twenty-point-slice-claim"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.claim"),
@@ -26,7 +26,14 @@ internal sealed class TwentyPointSliceDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "The literal proposition quantifies over every ambient dimension, every finite actual support, and actual bipartition sides. "
                         + "Its local hypotheses are support cardinality twenty, degree type two or three, exactly ten actual degree-two vertices, actual degree-two independence, "
-                        + "and original IsBalanced."))), DescribeRole.Definition)),
+                        + "and original IsBalanced."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("twenty-point-slice-result"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.result"),
+                H("result"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The literal negation of the actual-support claim excludes the twenty-point branch of Hong–Wu–Xia Section 7 Problem 2 in every ambient dimension. "
+                        + "The value of f2(Q9) remains open."))), DescribeRole.Theorem)),
 
         [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeGirth")),
@@ -35,6 +42,7 @@ internal sealed class TwentyPointSliceDocument : IScribeDocumentDefinition
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighGraph")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointGeometry")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSymmetric")),
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSquareLeaf"))
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSquareLeaf")),
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSquareExclusion"))
         ]));
 }
