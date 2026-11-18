@@ -17,8 +17,10 @@ attribute [local instance] Classical.propDecidable
 open private huangMatrix cubeParity from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private paritySide parity_bipartite parity_union from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
-open private directions mem_directions from
+open private directions mem_directions directions_card exterior_even from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+open private diff diff_flip from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private shell from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
@@ -27,7 +29,8 @@ open private coordinate_profile_weight_bound from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private distance_seven_agreement_excludes_minority from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerWeightsProbe
-open private agreeing_coordinate_unused unusedDirections from
+open private agreeing_coordinate_unused unusedDirections unused_card antipode hamming_antipode_add
+  matching_coordinate_pair_unused from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9PartnerGraphProbe
 open private matrix_flip_prefix from D5.S3.Combinatorics.Graph.HypercubeCritical.GrayGridComponent
 open private theta theta_flip theta_unit prod_true_sign from
@@ -134,6 +137,71 @@ private lemma cubic_parity_half_card {C : Finset (Q 9)} (hC : C.card = 66)
   rw [← himage, card_image_of_injective _ Subtype.val_injective]
   cases b <;> omega
 
+private lemma distance_seven_agreement_count {C : Finset (Q 9)}
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (hd : ∀ x ∈ C, ∀ y ∈ C, hammingDist x y ≤ 7)
+    {x : Q 9} (hx : x ∈ C) (i : Fin 9) :
+    let count := (C.filter (fun y => hammingDist x y = 7 ∧ x i = y i)).card
+    Even count ∧ count ≤ 4 := by
+  dsimp only
+  let v := flip (antipode x) i
+  have hnear (y : Q 9) (hy : y ∈ C) :
+      (hypercube 9).Adj v y ↔ hammingDist x y = 7 ∧ x i = y i := by
+    have hdist := hamming_antipode_add x y
+    have hbound := hd x hx y hy
+    change hammingDist x y + (diff (antipode x) y).card = 9 at hdist
+    change (diff (flip (antipode x) i) y).card = 1 ↔ _
+    rw [diff_flip]
+    by_cases hagree : x i = y i
+    · have hmem : i ∈ diff (antipode x) y := by
+        cases h : x i <;> simp [diff, antipode, ← hagree, h]
+      have he := card_erase_add_one hmem
+      rw [if_pos hmem]
+      simp only [hagree, and_true]
+      omega
+    · have hmem : i ∉ diff (antipode x) y := by
+        cases h : x i <;> cases hy' : y i <;> simp_all [diff, antipode]
+      rw [if_neg hmem, card_insert_of_notMem hmem]
+      simp only [hagree, and_false, iff_false]
+      omega
+  have hcount : (directions C v).card =
+      (C.filter (fun y => hammingDist x y = 7 ∧ x i = y i)).card := by
+    rw [directions_card]
+    congr 1
+    ext y
+    simp only [mem_filter]
+    exact and_congr_right (hnear y)
+  have hv : v ∉ C := by
+    intro hv
+    have h := hamming_antipode_add x v
+    have hflip : hammingDist (antipode x) v = 1 := flip_adj _ _
+    have hbound := hd x hx v hv
+    omega
+  rw [← hcount]
+  have heven := exterior_even C hreg hb v hv
+  refine ⟨heven, ?_⟩
+  have hpair (j : Fin 9) (hj : j ∈ directions C v) :
+      i ∈ unusedDirections C x ∧ j ∈ (unusedDirections C x).erase i := by
+    have hselected := (mem_directions C v j).mp hj
+    have hij : i ≠ j := by
+      rintro rfl
+      have ha : antipode x ∈ C := by
+        simpa [v, BalancedCriticalSpectrum.flip_flip] using hselected
+      have h := hamming_antipode_add x (antipode x)
+      have hbound := hd x hx _ ha
+      rw [hammingDist_self] at h
+      omega
+    have h := matching_coordinate_pair_unused hd hij hselected
+    exact ⟨h.1, mem_erase.mpr ⟨hij.symm, h.2⟩⟩
+  by_cases hpos : (directions C v).Nonempty
+  · obtain ⟨j, hj⟩ := hpos
+    have hle := card_le_card (fun j hj => (hpair j hj).2)
+    rw [card_erase_of_mem (hpair j hj).1, unused_card hreg hx] at hle
+    obtain ⟨k, hk⟩ := heven
+    omega
+  · rw [not_nonempty_iff_eq_empty.mp hpos, card_empty]
+    decide
+
 /-- The support of a 66-point balanced cubic component gives a candidate profile
 and integer labels satisfying the signed equations and distance constraints. -/
 theorem q9_sixty_six_normalized_signed_constraints {C : Finset (Q 9)} (hC : C.card = 66)
@@ -150,6 +218,8 @@ theorem q9_sixty_six_normalized_signed_constraints {C : Finset (Q 9)} (hC : C.ca
         2 * (∑ i, if x i then r i else 0) + 12 ≤ (∑ i, r i) + (shell S x 7).card) ∧
       (∀ x ∈ S, ∀ y ∈ S, hammingDist x y = 7 → ∀ i, x i = y i →
         flip x i ∉ S ∧ (x i = true → r i ≤ 1)) ∧
+      (∀ x ∈ S, ∀ i, let count := (S.filter (fun y => hammingDist x y = 7 ∧ x i = y i)).card
+        Even count ∧ count ≤ 4) ∧
       (∀ x ∈ S, z x = 1 ∨ z x = -1) ∧ (∀ x ∉ S, z x = 0) ∧
       (∀ x ∈ S, ∀ i, flip x i ∈ S → truePrefixSign x i = z x * z (flip x i)) ∧
       ∀ x, (∑ i, truePrefixSign x i * z (flip x i)) = 3 * z x := by
@@ -159,7 +229,7 @@ theorem q9_sixty_six_normalized_signed_constraints {C : Finset (Q 9)} (hC : C.ca
   obtain ⟨z, hsign, hzero, hedge, hsum⟩ := q9_integral_true_prefix_switching hregS hbS
   refine ⟨S, r, z, sorted_deficits_mem_sixtySixCandidateProfiles r hmono hr hm,
     hS, hregS, hbS, cubic_parity_half_card hS hregS, hhalf, ?_, hd, hw, ?_, ?_,
-    hsign, hzero, hedge, hsum⟩
+    fun _ hx i => distance_seven_agreement_count hregS hbS hd hx i, hsign, hzero, hedge, hsum⟩
   · intro i
     have h := direction_edge_count (d := 3) S hregS hbS i
     omega
