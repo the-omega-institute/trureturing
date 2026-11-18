@@ -1,0 +1,142 @@
+**引理 7.6（固定网格的可行交换与熵规模）。** 固定 $\eta>0$、整数 $m\ge1$、网格 $0=t_0<t_1<\cdots<t_m=U$ 及实数 $q_i\in(0,1)$，其中 $1\le i\le m$。记
+
+$$
+\Delta_i=t_i-t_{i-1},\qquad
+C_{\mathrm{grid}}=2\sum_{i=1}^m\Delta_i t_iq_i,\qquad
+E_{\mathrm{grid}}=2\sum_{i=1}^m\Delta_i H(q_i),
+$$
+
+其中 $H(v)=-v\log v-(1-v)\log(1-v)$，在 $0,1$ 处连续延拓为零。若 $C_{\mathrm{grid}}<A(1+\eta)^2$，则对每个 $\zeta>0$，存在 $P_0$，使对所有实数 $P\ge P_0$，
+
+$$
+\log N_2(e^P)\ge
+\left(\frac{E_{\mathrm{grid}}}{(1+\eta)c}-\zeta\right)Z(P).
+$$
+
+下界中所有被构造的整数均平方自由，并且恰有 $k(P)$ 个不同素因子。
+
+**证明。** 固定引理 7.3 的一个删集 $R(P)$ 与基底 $S_0(P)$，令
+
+$$
+s=(1+\eta)c\sqrt\ell,\qquad W=\frac gs,
+$$
+
+并定义半开素数箱
+
+$$
+\begin{aligned}
+I_i^-&=\{p:Pe^{-t_i/s}<p\le Pe^{-t_{i-1}/s}\},\\
+I_i^+&=\{p:Pe^{t_{i-1}/s}<p\le Pe^{t_i/s}\},\qquad
+m_i^\pm=|I_i^\pm|.
+\end{aligned}
+$$
+
+同一侧的箱两两不交，两侧也不交。因 $U$ 固定且 $s\to\infty$，最终 $Pe^{-U/s}>3P/4$，故每个负箱都包含于 $S_0(P)$，而每个正箱都与基底不交。半开端点保证即使某端点为素数，也只属于唯一的箱。
+
+由三项展开，最终 $|\pi(t)-t/\log t|\le3t/(\log t)^2$。对 $P/2\le t\le2P$，有 $|\log t-\ell|\le\log2$；最终 $\log t\ge\ell/2$，从而
+
+$$
+|\pi(t)-t/\ell|
+\le\frac{3t}{(\log t)^2}
++\frac{t\log2}{\ell\log t}
+\le\frac{28P}{\ell^2}.
+$$
+
+两端相减并对指数函数使用中值定理，得到对所有 $i$ 同时成立的界
+
+$$
+W\Delta_i e^{-U/s}-\frac{56P}{\ell^2}
+\le m_i^\pm\le
+W\Delta_i e^{U/s}+\frac{56P}{\ell^2}.
+$$
+
+由于 $(P/\ell^2)/W=s/\ell\to0$，所以 $m_i^\pm/W\to\Delta_i$。令
+
+$$
+M_i=\min(m_i^-,m_i^+),\qquad h_i=\lfloor q_iM_i\rfloor.
+$$
+
+则 $0\le h_i\le M_i\le m_i^\pm$，并且因 $W\to\infty$，对每个固定的 $i$ 有
+
+$$
+\frac{M_i}{W}\to\Delta_i,\qquad
+\frac{h_i}{W}\to\Delta_iq_i,\qquad
+\frac{h_i}{M_i}\to q_i.
+$$
+
+最后一个比值只在最终 $M_i>0$ 时使用；此前的有限区间不参与极限。
+
+从每个负箱任取 $A_i\subseteq I_i^-$，从对应正箱任取 $B_i\subseteq I_i^+$，使 $|A_i|=|B_i|=h_i$。构造
+
+$$
+S=\left(S_0(P)\setminus\bigcup_iA_i\right)\cup\bigcup_iB_i,
+\qquad n(S)=\prod_{p\in S}p.
+$$
+
+不交性保证 $|S|=|S_0(P)|=k(P)$，故 $\omega(n(S))=k(P)>a(P)$，并且 $n(S)$ 平方自由。每个负箱中 $\log p>\ell-t_i/s$，每个正箱中 $\log p\le\ell+t_i/s$。所以每一组选择都满足
+
+$$
+\log n(S)\le P-D_{\mathrm{safe}}+V(P),\qquad
+V(P)=\frac2s\sum_i t_ih_i.
+$$
+
+由上述取整极限，
+
+$$
+\frac{V(P)}{g/s^2}\longrightarrow C_{\mathrm{grid}},\qquad
+\frac{s^2D_{\mathrm{safe}}(P)}g\longrightarrow A(1+\eta)^2.
+$$
+
+于是 $V(P)/D_{\mathrm{safe}}(P)\to C_{\mathrm{grid}}/[A(1+\eta)^2]<1$。对所有充分大的 $P$，每组选择均有 $n(S)\le e^P$，并非仅在平均意义上满足预算。
+
+唯一分解从 $n(S)$ 恢复整个素数集 $S$，然后
+
+$$
+B_i=S\cap I_i^+,\qquad A_i=I_i^-\setminus S
+$$
+
+恢复全部选择。因此选择到整数的映射为单射，得到确定性的计数界
+
+$$
+N_2(e^P)\ge\prod_{i=1}^m
+\binom{m_i^-}{h_i}\binom{m_i^+}{h_i}
+\ge\prod_{i=1}^m\binom{M_i}{h_i}^{\,2}\ge1.
+$$
+
+作为中间步骤，使用经典的 Cover–Thomas 型二项式熵界
+
+$$
+\log\binom Ma\ge MH(a/M)-\log(M+1)\qquad(0\le a\le M).
+$$
+
+其有限证明如下。$a=0,M$ 时直接成立；$M=0$ 时将 $MH(a/M)$ 理解为零。其余情形令 $v=a/M$，$T_j=\binom Mjv^j(1-v)^{M-j}$。相邻项之比为
+
+$$
+\frac{T_{j+1}}{T_j}=\frac{M-j}{j+1}\frac a{M-a}.
+$$
+
+与 $1$ 比较后的分子差为 $M(a-j-1)+a$，在 $j<a$ 时为正，在 $j\ge a$ 时为负。因此 $T_a$ 是最大项。由二项式定理，$1=\sum_{j=0}^M T_j\le(M+1)T_a$；取对数即得该经典熵界。
+
+定义
+
+$$
+\Psi(P)=2\sum_{i=1}^m
+\left[M_iH(h_i/M_i)-\log(M_i+1)\right].
+$$
+
+最终 $\log N_2(e^P)\ge\Psi(P)$。熵函数连续，且
+
+$$
+\frac{\log(M_i+1)}W
+=\frac{\log(M_i+1)}{M_i+1}\frac{M_i+1}W\longrightarrow0.
+$$
+
+因 $m$ 固定有限，可逐项取极限，得到
+
+$$
+\frac{\Psi(P)}W\longrightarrow E_{\mathrm{grid}},\qquad
+\frac W{Z(P)}=\frac1{(1+\eta)c}.
+$$
+
+这证明所述任意 $\zeta>0$ 的下界。其熵项是总计数的对数下界；成本已用于确保每个整数可行，不再从该熵项扣除成本。证毕。
+
