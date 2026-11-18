@@ -4,13 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A cyclic perfect difference set cut at a largest gap uniquely minimizes its real chamber. -/
+   digest: Cutting a cyclic perfect difference set at a largest gap gives chamber uniqueness. -/
 
-import Mathlib.Data.Int.ModEq
-import Mathlib.Data.Real.Basic
-import Mathlib.Order.Fin.Basic
+module
+
+public import Mathlib.Basic.ExistsUnique
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Order.Fin.Basic
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
 
 /-!
 # Notik's Singer ruler conjecture
@@ -24,6 +26,8 @@ distances form a chain of unit separations below each kept adjacent gap.
 -/
 
 set_option autoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Geometry.FiniteGeometry.NotikSingerChamber
 
@@ -67,22 +71,30 @@ private theorem exists_distance_below_cut {x : Fin (m + 1) → ℕ} (hx : Strict
     {d : ℕ} (hd : 0 < d) (hdG : d < G) :
     ∃ i j : Fin (m + 1), i < j ∧ x j - x i = d := by
   let N := x (Fin.last m) + G
-  have hdN : d < N := by dsimp [N]; omega
+  have hdN : d < N := by
+    dsimp [N]
+    omega
   obtain ⟨⟨i, j⟩, ⟨hne, hmod⟩, _⟩ := hperfect d hd hdN
+  change i ≠ j at hne
   have hi := hx.monotone (Fin.le_last i)
   have hj := hx.monotone (Fin.le_last j)
   change ((x j : ℤ) - (x i : ℤ)) % (N : ℤ) = (d : ℤ) % (N : ℤ) at hmod
-  rw [Int.emod_eq_of_lt (by omega : 0 ≤ (d : ℤ)) (by omega)] at hmod
+  have hdmod : (d : ℤ) % (N : ℤ) = (d : ℤ) :=
+    Int.emod_eq_of_lt (by omega) (by omega)
+  rw [hdmod] at hmod
   have hN : (N : ℤ) = (x (Fin.last m) : ℤ) + (G : ℤ) := by simp [N]
   rcases lt_or_gt_of_ne hne with hij | hji
-  · have horder := hx hij
-    rw [Int.emod_eq_of_lt (by omega) (by omega)] at hmod
+  · have horder : x i < x j := hx hij
+    have hordinary :
+        ((x j : ℤ) - (x i : ℤ)) % (N : ℤ) = (x j : ℤ) - (x i : ℤ) :=
+      Int.emod_eq_of_lt (by omega) (by omega)
+    rw [hordinary] at hmod
     exact ⟨i, j, hij, by omega⟩
-  · have horder := hx hji
+  · have horder : x j < x i := hx hji
     have hwrapped :
         ((x j : ℤ) - (x i : ℤ)) % (N : ℤ) = (x j : ℤ) - (x i : ℤ) + (N : ℤ) := by
       calc
-        _ = ((x j : ℤ) - (x i : ℤ) + (N : ℤ)) % (N : ℤ) := (Int.add_emod_right ..).symm
+        _ = ((x j : ℤ) - (x i : ℤ) + (N : ℤ)) % (N : ℤ) := (Int.add_emod_right _ _).symm
         _ = _ := Int.emod_eq_of_lt (by omega) (by omega)
     rw [hwrapped] at hmod
     omega
@@ -141,7 +153,7 @@ theorem result {x : Fin (m + 1) → ℕ} {G : ℕ}
   intro y hy hlength i
   let z (j : Fin (m + 1)) : ℝ := y j - (x j : ℝ)
   have hz : Monotone z := Fin.monotone_iff_le_succ.mpr fun j => by
-    have hj : j.castSucc < j.succ := Fin.castSucc_lt_succ j
+    have hj : j.castSucc < j.succ := Fin.castSucc_lt_succ
     have hbound := chamber_distance_ge hx hperfect hy _ (hgap j) _ _ hj rfl
     rw [Nat.cast_sub (hx.monotone hj.le)] at hbound
     dsimp [z]
