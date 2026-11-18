@@ -109,13 +109,14 @@ namespace Evaluation
 
 abbrev signature : Signature :=
   Reg.Support.UniverseSingleReadout.signature
-    (Σ p : Shape.{u}, Mat p.1) (fun p => Mat p.1.1) (fun p => Mat p.1.1)
+    (Σ n : Type u, Σ _ : Fintype n, Σ _ : DecidableEq n, Mat n)
+    (fun p => Mat p.1) (fun p => Mat p.1)
 
 def actual : Realization signature.{u} :=
   realize signature (fun _ p X => by
-    let _ := p.1.2.1
-    let _ := p.1.2.2
-    exact derivative p.2 X) (fun e => nomatch e)
+    let _ := p.2.1
+    let _ := p.2.2.1
+    exact derivative p.2.2.2 X) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -123,7 +124,7 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n] (A J : Mat n),
-    R.readout () ⟨⟨n, inferInstance, inferInstance⟩, A⟩ J =
+    R.readout () ⟨n, inferInstance, inferInstance, A⟩ J =
       ∫ t : ℝ in 0..1, exp ((1 - t) • A) * J * exp (t • A)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
@@ -136,7 +137,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro _
   let n := ULift.{u} Unit
-  refine ⟨⟨⟨n, inferInstance, inferInstance⟩, 0⟩, 0, 1, ?_⟩
+  refine ⟨⟨n, inferInstance, inferInstance, 0⟩, 0, 1, ?_⟩
   change derivative (0 : Mat n) 0 ≠ derivative (0 : Mat n) 1
   rw [derivative_zero, derivative_zero]
   exact zero_ne_one

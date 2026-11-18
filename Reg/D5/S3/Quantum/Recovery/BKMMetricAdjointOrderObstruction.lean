@@ -19,16 +19,17 @@ private abbrev Mat (n : Type*) := Matrix n n ℂ
 local notation "logDeriv" => _root_.D5.S3.Divergence.LogDerivTrace.logDeriv
 
 abbrev signature : Signature :=
-  Reg.Support.UniverseSingleReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+  Reg.Support.UniverseSingleReadout.signature
+    (Σ n : Type u, Σ _ : Fintype n, DecidableEq n) (fun _ => ℝ) (fun _ => Bool)
 
-def actual : Realization signature :=
-  realize signature (fun _ _ q => q < 0) (fun e => nomatch e)
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ q => decide (q < 0)) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u}
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n] (a : Matrix n n ℂ) (ha : a.PosDef)
     (htr : a.trace = 1) (hflat : ¬ ∃ c : ℝ, a = c • (1 : Matrix n n ℂ)),
     ∃ (i j : n) (hij : i ≠ j), ∃ (V : Matrix.unitaryGroup n ℂ)
@@ -55,7 +56,7 @@ abbrev arena : Arena where
       (∀ r s, (r = i ∨ r = j) → (s = i ∨ s = j) →
         (basisChange U).symm (E P) r s = (logMean (eigen r) (eigen s) / (eigen i + eigen j) : ℝ)) ∧
       quadratic z (E P) = (2 * eigen i * eigen j - 2 * logMean (eigen i) (eigen j) *
-        Real.sqrt (eigen i * eigen j)) / (eigen i + eigen j) ∧ R.readout () () (quadratic z (E P)) ∧
+        Real.sqrt (eigen i * eigen j)) / (eigen i + eigen j) ∧ R.readout () ⟨n, inferInstance, inferInstance⟩ (quadratic z (E P)) = true ∧
       (∀ᶠ t : ℝ in 𝓝 0, (w t).PosDef ∧ (w t).trace = 1 ∧
         (ρ t).PosDef ∧ (ρ t).trace = 1 ∧ N (ρ t) = w t) ∧
       gibbs a τ V τ = a ∧ HasDerivAt (fun t : ℝ => gibbs a τ V (w t)) (E P - a) 0 ∧
@@ -86,23 +87,26 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     linarith
   obtain ⟨_, _, _, _, _, _, _, law⟩ := h a ha ht hf
   rcases law with ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, impossible, _⟩
-  exact impossible
+  exact Bool.noConfusion impossible
 
-private theorem dependence : ObservationalDependence signature actual := by
+private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro _
-  refine ⟨(), -1, 0, ?_⟩
-  change ((-1 : ℝ) < 0) ≠ ((0 : ℝ) < 0)
+  refine ⟨⟨ULift.{u} Unit, inferInstance, inferInstance⟩, -1, 0, ?_⟩
+  change decide ((-1 : ℝ) < 0) ≠ decide ((0 : ℝ) < 0)
   simp
 
 def family : Registration arena.{u} (type_of% (@measurement_order_obstruction.{u})) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@measurement_order_obstruction.{u}, rejected, rejected_law⟩
+  bridge := by
+    simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by
+    simpa only [arena, actual, realize, decide_eq_true_eq] using
+      (@measurement_order_obstruction.{u}), rejected, rejected_law⟩
   sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@measurement_order_obstruction.{u}) (Realization signature) Unit Unit where
+    (@measurement_order_obstruction.{u}) (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction.unit
   realizationName := `Reg.D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction.family
   realizationSource := none
@@ -122,10 +126,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.BKMMetricAdjointOrderObstruction
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #[
-        "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "arg", "body", "arg", "body",
         "arg", "body", "arg", "body", "arg", "body",
         "body", "body", "body", "body", "body", "body", "body",
@@ -135,7 +139,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
