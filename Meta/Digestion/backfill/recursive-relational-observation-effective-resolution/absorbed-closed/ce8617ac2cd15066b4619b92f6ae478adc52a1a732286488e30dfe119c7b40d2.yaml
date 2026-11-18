@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ce8617ac2cd15066b4619b92f6ae478adc52a1a732286488e30dfe119c7b40d2
   normalized_sha256: sha256:ce8617ac2cd15066b4619b92f6ae478adc52a1a732286488e30dfe119c7b40d2
 cas_ref: sha256:ce8617ac2cd15066b4619b92f6ae478adc52a1a732286488e30dfe119c7b40d2
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/TotalVariation/ParryFirstReturn.return_time_cylinder_probability
+    target_statement_id: sha256:5ae8412b7bb79ac5bbfc0f7372e46d3a9784d0d33d4d6678202781d2d25e6acc
 receipts:
   unresolved_subitems: []
