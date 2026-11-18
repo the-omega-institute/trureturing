@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Measurement/FiveCyclePosteriorFactorWidth
+/- GID: D5/S3/Quantum/Measurement/FactorWidth/FiveCyclePosteriorFactorWidth
    generality: I
-   mirror-B: D5/B/S3/Quantum/Measurement/FiveCyclePosteriorFactorWidth
+   mirror-B: D5/B/S3/Quantum/Measurement/FactorWidth/FiveCyclePosteriorFactorWidth
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -26,7 +26,7 @@ set_option relaxedAutoImplicit false
 
 open scoped BigOperators
 
-namespace D5.S3.Quantum.Measurement.FiveCyclePosteriorFactorWidth
+namespace D5.S3.Quantum.Measurement.FactorWidth.FiveCyclePosteriorFactorWidth
 
 private def consecutive (s i : Fin 5) : ℤ :=
   if i = s then 1 else if i = s + 1 then 2 else if i = s + 2 then 1 else 0
@@ -219,4 +219,4 @@ theorem cycle_moment_width_exactly_three :
 
 end
 
-end D5.S3.Quantum.Measurement.FiveCyclePosteriorFactorWidth
+end D5.S3.Quantum.Measurement.FactorWidth.FiveCyclePosteriorFactorWidth
