@@ -17,5 +17,5 @@ internal sealed class OriginalHalfCurrentCauchyDocument : IScribeDocumentDefinit
             H("Every ordinary bivariate coefficient"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
             Blocks(Paragraph(Text("Multiplying the dressed and undressed chamber expansions by (u-v)^2 clears their denominators. The square-root relations then identify their difference with the regular expression. For a fixed inner coefficient q, substitution uses only powers zero through q. Nonnegative outer coefficients of the original chamber kernel vanish, so the contraction sum gives the ordinary coefficient of the regular difference."))),
-            DescribeRole.Theorem)))));
+            DescribeRole.Theorem))));
 }
