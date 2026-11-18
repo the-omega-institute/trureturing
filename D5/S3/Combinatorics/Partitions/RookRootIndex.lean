@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.Partitions.RookRootCriterion
 import Mathlib.Data.List.FinRange
+import Mathlib.GroupTheory.Perm.DomMulAct
+import Mathlib.GroupTheory.GroupAction.Quotient
 
 /-! Finite root-multiset enumeration and exact removal of leading zero columns.
     The connection to equality of native rook numbers is a separate obligation. -/
@@ -46,7 +48,12 @@ def indices (m : ℕ) {N : ℕ} (z : Fin N → ℤ) : Finset (Fin N → ℤ) := 
 private theorem ofFn_getD {N : ℕ} (l : List ℤ) (hl : l.length = N) :
     List.ofFn (fun i : Fin N => l.getD i.val 0) = l := by
   subst N
-  simpa only [List.getD_eq_getElem] using (List.ofFn_getElem l)
+  calc
+    _ = List.ofFn (fun i : Fin l.length => l[i.val]) := by
+      congr 1
+      funext i
+      exact List.getD_eq_getElem l 0 i.isLt
+    _ = l := List.ofFn_getElem
 
 private theorem mem_rootPermutations_iff {N : ℕ} (z a : Fin N → ℤ) :
     a ∈ rootPermutations z ↔ (List.ofFn a).Perm (List.ofFn z) := by
@@ -65,6 +72,7 @@ private theorem mem_rootPermutations_iff {N : ℕ} (z a : Fin N → ℤ) :
 private theorem index_spec (m : ℕ) {N : ℕ} (z : Fin N → ℤ)
     (a : ↥(indices m z)) :
     (List.ofFn a.val).Perm (List.ofFn z) ∧ Admissible m a.val := by
+  classical
   obtain ⟨hp,ha⟩ := Finset.mem_filter.mp a.property
   exact ⟨(mem_rootPermutations_iff z a.val).mp hp,ha⟩
 
@@ -122,7 +130,7 @@ private theorem pad_board (m : ℕ) {N : ℕ} {z : Fin N → ℤ} (a : ↥(indic
     pad N (board m a) = List.ofFn (decode m a.val) := by
   have hh := split_zero_prefix (List.ofFn (decode m a.val))
     ((decode_monotone m a.val (index_spec m z a).2).sortedLE_ofFn)
-  simpa only [List.length_ofFn] using hh
+  simpa only [pad, board, List.length_ofFn] using hh
 
 /-- Root entries at the fixed common padding, with zero extension only to make
     the total function usable outside its intended length-bound hypotheses. -/
@@ -133,7 +141,9 @@ private theorem paddedRoots_board (m : ℕ) {N : ℕ} {z : Fin N → ℤ}
     (a : ↥(indices m z)) : paddedRoots m N (board m a) = a.val := by
   funext i
   rw [paddedRoots, pad_board]
-  simp only [List.getD_eq_getElem _ _ (by simpa using i.isLt), List.getElem_ofFn]
+  have hi : i.val < (List.ofFn (decode m a.val)).length := by
+    simpa only [List.length_ofFn] using i.isLt
+  rw [List.getD_eq_getElem _ _ hi, List.getElem_ofFn]
   rw [decode_spec m a.val (index_spec m z a).2]
   simp [heights]
 
@@ -162,5 +172,101 @@ theorem reconstruction (m : ℕ) (hm : 0 < m) {N : ℕ} (z : Fin N → ℤ)
     simp [heights]
   rw [hr]
   exact ha.2.2.2
+
+private theorem board_area (m : ℕ) {N : ℕ} {z : Fin N → ℤ}
+    (a : ↥(indices m z)) : (area (board m a) : ℤ) =
+      ∑ i : Fin N, heights m a.val i := by
+  have hp := congrArg List.sum (pad_board m a)
+  have hs : area (board m a) = ∑ i : Fin N, decode m a.val i := by
+    simpa [pad, area, Fin.sum_ofFn] using hp
+  rw [hs, Nat.cast_sum]
+  exact Finset.sum_congr rfl (fun i _ => decode_spec m a.val (index_spec m z a).2 i)
+
+private theorem reconstruction_area (m : ℕ) {N : ℕ} (d : Fin N → ℕ)
+    (a : ↥(indices m (root m d))) : area (board m a) = ∑ i, d i := by
+  have hp := (index_spec m (root m d) a).1.sum_eq
+  have hs : (∑ i : Fin N, a.val i) = ∑ i : Fin N, root m d i := by
+    simpa only [Fin.sum_ofFn] using hp
+  have hh : (area (board m a) : ℤ) = ∑ i : Fin N, (d i : ℤ) := by
+    rw [board_area]
+    simp only [heights, Finset.sum_sub_distrib, hs, root]
+    ring
+  exact_mod_cast hh
+
+private theorem fiber_card {N : ℕ} (f : Fin N → ℤ) (t : ℤ) :
+    Fintype.card {i : Fin N // f i = t} = (List.ofFn f).count t := by
+  classical
+  rw [Fintype.card_subtype]
+  induction N with
+  | zero => simp
+  | succ N ih =>
+    rw [List.ofFn_succ, List.count_cons, Finset.card_filter]
+    rw [Fin.sum_univ_succ]
+    have ht := ih (fun i => f i.succ)
+    rw [Finset.card_filter] at ht
+    simp only [Finset.mem_univ, true_and] at ht ⊢
+    simp only [Fin.cons_zero, Fin.cons_succ]
+    rw [ht]
+    split_ifs <;> simp_all [eq_comm]
+
+private theorem perm_iff_orbit {N : ℕ} (z a : Fin N → ℤ) :
+    (List.ofFn a).Perm (List.ofFn z) ↔
+      a ∈ MulAction.orbit (Equiv.Perm (Fin N))ᵈᵐᵃ z := by
+  classical
+  constructor
+  · intro h
+    let e (t : ℤ) : {i : Fin N // a i = t} ≃ {i : Fin N // z i = t} :=
+      Fintype.equivOfCardEq (by rw [fiber_card, fiber_card]; exact h.count_eq t)
+    let σ : Equiv.Perm (Fin N) := Equiv.ofFiberEquiv e
+    refine MulAction.mem_orbit_iff.mpr ⟨DomMulAct.mk σ, ?_⟩
+    funext i
+    exact Equiv.ofFiberEquiv_map e i
+  · rintro ⟨σ,rfl⟩
+    exact (DomMulAct.mk.symm σ).ofFn_comp_perm z
+
+/-- The multiplicities count values, never labels assigned to equal roots. -/
+def multiplicityFactor {N : ℕ} (z : Fin N → ℤ) : ℕ :=
+  ∏ t ∈ Finset.univ.image z, (Fintype.card {i : Fin N // z i = t}).factorial
+
+private theorem permutations_card {N : ℕ} (z : Fin N → ℤ) :
+    (rootPermutations z).card = N.factorial / multiplicityFactor z := by
+  classical
+  let G := (Equiv.Perm (Fin N))ᵈᵐᵃ
+  let O := MulAction.orbit G z
+  letI : Fintype O := (Finite.finite_mulAction_orbit (M := G) z).fintype
+  let e : ↥(rootPermutations z) ≃ O :=
+    Equiv.subtypeEquivRight (fun a => (mem_rootPermutations_iff z a).trans (perm_iff_orbit z a))
+  have hs : Fintype.card (MulAction.stabilizer G z) = multiplicityFactor z := by
+    let es : {g : Equiv.Perm (Fin N) // z ∘ g = z} ≃ MulAction.stabilizer G z :=
+      Equiv.subtypeEquiv DomMulAct.mk (fun _ => Iff.rfl)
+    rw [← Fintype.card_congr es]
+    exact DomMulAct.stabilizer_card' z
+  have hg : Fintype.card G = N.factorial := by
+    rw [← Fintype.card_congr (DomMulAct.mk : Equiv.Perm (Fin N) ≃ G), Fintype.card_perm]
+    simp
+  have h := MulAction.card_orbit_mul_card_stabilizer_eq_card_group G z
+  rw [hs,hg] at h
+  have hp : 0 < multiplicityFactor z := by
+    unfold multiplicityFactor
+    exact Finset.prod_pos (fun _ _ => Nat.factorial_pos _)
+  rw [← Fintype.card_coe, Fintype.card_congr e, ← h, Nat.mul_div_cancel _ hp]
+
+/-- A family-level index specification: the registered finite multinomial bound,
+    unique normalized representatives, geometric singleton law, and area are
+    simultaneous properties of the very same reconstruction. -/
+theorem index_family (m : ℕ) (hm : 0 < m) {N : ℕ} (d : Fin N → ℕ) :
+    (indices m (root m d)).card ≤ N.factorial / multiplicityFactor (root m d) ∧
+      Function.Injective (board m (z := root m d)) ∧
+      ∀ a : ↥(indices m (root m d)),
+        pad N (board m a) = List.ofFn (decode m a.val) ∧
+          paddedRoots m N (board m a) = a.val ∧
+          SingletonColumns m (decode m a.val) ∧ area (board m a) = ∑ i, d i := by
+  classical
+  refine ⟨?_, board_injective m (root m d), ?_⟩
+  · rw [← permutations_card]
+    exact Finset.card_filter_le _ _
+  · intro a
+    have hr := reconstruction m hm (root m d) a
+    exact ⟨hr.1,hr.2.1,hr.2.2,reconstruction_area m d a⟩
 
 end D5.S3.Combinatorics.Partitions.RookRootIndex
