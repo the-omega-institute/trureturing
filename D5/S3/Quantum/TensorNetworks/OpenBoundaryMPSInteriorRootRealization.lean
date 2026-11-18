@@ -333,14 +333,14 @@ private lemma iterate_psd (F : Bond → Bond)
   | zero => exact hX
   | succ n ih => simpa only [Function.iterate_succ_apply'] using hF _ ih
 
-private lemma iterate_smul (F : Bond → Bond)
+lemma iterate_smul (F : Bond → Bond)
     (hF : ∀ (t : ℂ) X, F (t • X) = t • F X) (n : ℕ) (t : ℂ) (X : Bond) :
     F^[n] (t • X) = t • F^[n] X := by
   induction n with
   | zero => rfl
   | succ n ih => simp only [Function.iterate_succ_apply', ih, hF]
 
-private lemma transfer_smul (A : Fin 2 → Bond) (t : ℂ) (X : Bond) :
+lemma transfer_smul (A : Fin 2 → Bond) (t : ℂ) (X : Bond) :
     transfer A (t • X) = t • transfer A X := by simp [transfer]
 
 private lemma dual_smul (A : Fin 2 → Bond) (t : ℂ) (X : Bond) :

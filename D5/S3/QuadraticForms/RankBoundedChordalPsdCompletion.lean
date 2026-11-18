@@ -166,7 +166,7 @@ private theorem spanEquivOfInnerEq_apply {v : ι → E} {w : ι → F}
     (fun a b => inner_linearCombination_eq_of_inner_eq a b h) (Finsupp.single i 1))
     using 2 <;> simp [Subtype.ext_iff]
 
-private theorem exists_linearIsometryEquiv_of_inner_eq [FiniteDimensional 𝕜 E] {v w : ι → E}
+theorem exists_linearIsometryEquiv_of_inner_eq [FiniteDimensional 𝕜 E] {v w : ι → E}
     (h : ∀ i j, ⟪v i, v j⟫_𝕜 = ⟪w i, w j⟫_𝕜) :
     ∃ e : E ≃ₗᵢ[𝕜] E, ∀ i, e (v i) = w i := by
   let L :=
@@ -182,7 +182,7 @@ end Rigidity
 
 attribute [local instance] Fintype.ofFinite
 
-private theorem gram_factor_rank {V : Type*} [Finite V] (d : ℕ)
+theorem gram_factor_rank {V : Type*} [Finite V] (d : ℕ)
     (A : Matrix V V ℝ) (hA : A.PosSemidef) (hr : A.rank ≤ d) :
     ∃ p : V → EuclideanSpace ℝ (Fin d), ∀ i j, ⟪p i, p j⟫_ℝ = A i j := by
   classical

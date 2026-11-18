@@ -1082,6 +1082,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(0, address.returncode, address.stdout + address.stderr)
         report_path = "build/lean-inspector/report.zip"
         write(self.root / ".lake" / report_path, '{"material":"report-seed"}\n')
+        setup_paths = ["build/A.setup.json", "build/ir/D5/A.setup.json",
+                       "build/reg/ir/Reg/A.setup.json", "build/lean-inspector/producer/ir/A.setup.json"]
+        for path in setup_paths:
+            write(self.root / ".lake" / path, "compiler setup")
+        retained_paths = ["build/ir/D5/A.c", "build/lib/lean/D5/A.trace",
+                          "build/ir/D5/A.setup.json.hash"]
+        for path in retained_paths:
+            write(self.root / ".lake" / path, path)
         saved = self.transport("publish")
         self.assertEqual(0, saved.returncode, saved.stdout + saved.stderr)
         self.assertIn('"status":"published"', saved.stdout.replace(" ", ""))
@@ -1098,12 +1106,21 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         with tarfile.open(snapshot / "lean-build.tgz") as archive:
             self.assertEqual(b"locally-produced-olean", archive.extractfile("build/lib/lean/D5/A.olean").read())
             self.assertEqual(b'{"material":"report-seed"}\n', archive.extractfile(report_path).read())
+            for path in setup_paths:
+                self.assertNotIn(path, archive.getnames())
+                self.assertEqual("compiler setup", (self.root / ".lake" / path).read_text())
+            for path in retained_paths:
+                self.assertEqual(path.encode(), archive.extractfile(path).read())
         shutil.rmtree(self.root / ".lake/build")
         write(self.root / "D5/A.lean", "def a := 333\n")
         restored = self.transport("fetch", GITHUB_SHA="e"*40)
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertEqual('{"material":"report-seed"}\n', (self.root / ".lake" / report_path).read_text())
+        for path in setup_paths:
+            self.assertFalse((self.root / ".lake" / path).exists())
+        for path in retained_paths:
+            self.assertEqual(path, (self.root / ".lake" / path).read_text())
         self.assertIn('"mode":"partition"', restored.stdout.replace(" ", ""))
 
     def test_missing_corrupt_and_cross_partition_are_misses_without_target_writes(self):

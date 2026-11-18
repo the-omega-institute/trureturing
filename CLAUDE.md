@@ -1,5 +1,13 @@
 # trureturing — 不动点(所有 agent 的必读标架)
 
+**文件系统搜索边界**：文件发现限于仓库或明确已知的有界目录。禁止以 `$HOME`、`~`、`/Users/<user>`、`/`、`~/Library` 为根递归使用 `find`、`rg`、`fd`、`du`、`ls -R`、递归 glob 或等价遍历；按展开后的路径、实际 cwd 和符号链接目标判定，不能用别名或排除过滤绕过。HOME 仅允许深度 1 列举，例如 `find "$HOME" -mindepth 1 -maxdepth 1 -print`，不下钻。使用以下有界替代；路径缺失也不构成扩大到上述根扫描的理由：
+
+- **工作树与相邻仓库**：用 `git worktree list` 定位工作树，再访问列出的路径或明确已知的同级仓库精确目录。
+- **mathlib**：搜索当前树的 `.lake/packages/mathlib/Mathlib/`；缺失时使用已有缓存或 `make lean-cache-ensure`。
+- **指令与技能**：按已知路径读取 `CLAUDE.md`、`AGENTS.md`，搜索本仓 `skills/` 或宿主提供的精确技能目录。
+- **工具**：用 `command -v <tool>` 和 `$PATH` 中的已知目录定位。
+- **磁盘统计**：用 `df -h .` 查看可用空间，只对显式有界路径运行 `du -sh <path>`。
+
 **默认 thinking 与回答技能**：所有 agent 开始处理用户请求时，默认读取并使用 [`skills/formal-thinking-and-answer/SKILL.md`](skills/formal-thinking-and-answer/SKILL.md)，无需用户显式点名。按该技能进行思考、核验证据与组织回答；具体形式化和编译范围遵守技能的适用条件，面向用户默认用普通语言回答，并保留影响结论的条件与未决边界。
 
 ## 常用命令速查

@@ -1,0 +1,137 @@
+**定理 6.1。** 假设 RH 成立。存在整数 $M_0\ge3$，使对每个整数 $m\ge M_0$，都有
+
+$$
+\frac{(e^\gamma L_m\log\log L_m)^{3/2}}{\zeta(3/2)}
+<\sigma^{[3/2]}(L_m).
+$$
+
+**证明。** 对实数 $x\ge3$，令 $N_x=L_{\lfloor x\rfloor}$，并对素数 $p\le x$ 令 $a_p=\max\{a\in\mathbb Z_{\ge1}:p^a\le x\}$。记
+
+$$
+\theta(x)=\sum_{p\le x}\log p,\qquad
+\psi(x)=\sum_{p^j\le x}\log p=\log N_x,\qquad
+P(x)=\prod_{p\le x}(1-p^{-1})^{-1},
+$$
+
+$$
+D(x)=\sqrt x\log x,\qquad
+B(x)=\gamma+\log\log\theta(x)-\log P(x).
+$$
+
+以下所有对数恒等式均限于充分大的 $x$，此时 $\theta(x)>1$、$\psi(x)>1$，各乘积因子均为正。
+
+首先定义
+
+$$
+A(x)=-\sum_{p\le x}\log(1-p^{-a_p-1}),\qquad
+J(x)=\log\log\psi(x)-\log\log\theta(x).
+$$
+
+由 $\sigma(p^a)/p^a=(1-p^{-a-1})/(1-p^{-1})$ 及可乘性，得到精确等式
+
+$$
+\log\frac{\sigma(N_x)}{e^\gamma N_x\log\log N_x}
+=-B(x)-A(x)-J(x).
+\tag{6.1}
+$$
+
+对于 $\kappa>1$，令
+
+$$
+r_{p,a}=\frac{p^a-1}{p^{a+1}-1},\quad
+T_\kappa(x)=-\sum_{p>x}\log(1-p^{-\kappa}),\quad
+C_\kappa(x)=\sum_{p\le x}\log\frac{1-r_{p,a_p}^{\kappa}}{1-p^{-\kappa}}.
+$$
+
+因为 $0\le r_{p,a}<1/p$，所以 $C_\kappa(x)\ge0$。实幂保持正数的乘法，故 $\sigma^{[\kappa]}$ 可乘，且
+
+$$
+\sigma^{[\kappa]}(p^a)
+=\sigma(p^a)^\kappa-\sigma(p^{a-1})^\kappa
+=\sigma(p^a)^\kappa(1-r_{p,a}^{\kappa})>0.
+$$
+
+结合 $\zeta(\kappa)$ 的绝对收敛 Euler 乘积与 (6.1)，得到另一个精确等式
+
+$$
+\log G_\kappa(N_x)
+=-\kappa B(x)-\kappa A(x)-\kappa J(x)+T_\kappa(x)+C_\kappa(x).
+\tag{6.2}
+$$
+
+接着只用素数定理 $\theta(t)/t\to1$ 和部分求和估计这三个修正项。对每个固定的 $s>1$，部分求和给出
+
+$$
+\sum_{p>y}p^{-s}\sim\frac{y^{1-s}}{(s-1)\log y}.
+\tag{6.3}
+$$
+
+例如先对 $\theta$ 与 $t^{-s}$ 作部分求和，得到 $\sum_{p>y}(\log p)p^{-s}\sim y^{1-s}/(s-1)$；再对权 $1/\log t$ 作部分求和，所得积分余项为 $O(y^{1-s}/\log^2 y)$，即得 (6.3)。这里每一尾和的下端均为严格不等号，包含素数端点时也适用。
+
+由 $-\log(1-u)=u+O(u^2)$，一致地对 $0\le u\le1/2$ 成立，(6.3) 在 $s=3/2$ 时给出
+
+$$
+D(x)T_{3/2}(x)\longrightarrow2.
+\tag{6.4}
+$$
+
+其中对数展开的误差不超过常数倍 $\sum_{n>x}n^{-3}=O(x^{-2})$。
+
+令 $u_p=p^{-a_p-1}$。由 $p^{a_p+1}>x$，有 $0<u_p<1/x$。当 $\sqrt x<p\le x$ 时 $a_p=1$，于是这部分的和为 $\sum_{\sqrt x<p\le x}p^{-2}$。其余两段分别满足
+
+$$
+\sum_{p\le x^{1/3}}u_p\le x^{-1}\lfloor x^{1/3}\rfloor=O(x^{-2/3}),
+\qquad
+\sum_{x^{1/3}<p\le\sqrt x}u_p
+\le\sum_{n>x^{1/3}}n^{-3}=O(x^{-2/3}).
+$$
+
+此外 $\sum_{p\le x}u_p^2\le x^{-1}\sum_{p\le x}u_p$。因此 (6.3) 在 $s=2$ 时给出
+
+$$
+A(x)\sim\sum_{\sqrt x<p\le x}p^{-2}
+\sim\frac{2}{\sqrt x\log x},\qquad D(x)A(x)\longrightarrow2.
+\tag{6.5}
+$$
+
+素数幂的逐层展开还给出
+
+$$
+\psi(x)-\theta(x)=\theta(\sqrt x)+O(x^{1/3}\log x)\sim\sqrt x.
+$$
+
+确实，次数至少三的层数至多 $\log_2x$，每层由 $\theta(t)=O(t)$ 控制为 $O(x^{1/3})$。对函数 $\log\log t$ 使用中值定理，结合 $\theta(x)\sim\psi(x)\sim x$，得到
+
+$$
+J(x)\sim\frac{\psi(x)-\theta(x)}{\theta(x)\log\theta(x)},
+\qquad D(x)J(x)\longrightarrow1.
+\tag{6.6}
+$$
+
+由 (6.2)、(6.4)–(6.6) 和 $C_{3/2}(x)\ge0$，对任意 $\varepsilon>0$，最终都有
+
+$$
+D(x)\log G_{3/2}(N_x)
+\ge-\frac32D(x)B(x)-\frac52-\varepsilon.
+\tag{6.7}
+$$
+
+最后应用 RH 下的实际算术包络。记 $b=\mathrm{firstLiMass}$；已有 $b<1/3$，且对每个 $\eta>0$，最终都有
+
+$$
+|D(x)B(x)+2|<b+\eta.
+$$
+
+这里的 $B$ 与该包络中的定义完全一致：展开
+$E_3(x)=\sum_{p\le x}\log(1-p^{-1})+\log\log x+\gamma$，便有
+$E_3(x)+\log\log\theta(x)-\log\log x=B(x)$。因此 (6.7) 蕴含
+
+$$
+D(x)\log G_{3/2}(N_x)
+>\frac12-\frac32b-\frac32\eta-\varepsilon.
+$$
+
+因为 $1/2-3b/2>0$，可先固定充分小的正数 $\eta,\varepsilon$，使右端为正。于是最终 $\log G_{3/2}(N_x)>0$，即 $G_{3/2}(N_x)>1$。取 $x=m$ 为整数，并用 $\zeta(3/2)>0$，即得所需严格不等式。证毕。
+
+**范围。** 实参数除数函数及归一化采用 Fan–Kobayashi–Molnar，arXiv:2511.02106v1，定义 1.2 与式 (1.1)。本节的 lcm 序列端点结论由实际 RH 算术包络及无条件的素数尾和估计推导；不据此断言 RH，也不主张文献优先权。
+

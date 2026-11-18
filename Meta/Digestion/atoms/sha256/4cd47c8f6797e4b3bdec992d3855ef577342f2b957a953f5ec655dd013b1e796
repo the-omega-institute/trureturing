@@ -1,0 +1,44 @@
+#### 定理 3.3：端点关系积与通用转向门的区别
+
+端点关系积满足
+
+$$
+ab=\cos\theta+B_{ab}\sin\theta=e^{B_{ab}\theta},
+ \qquad a(ab)=b.
+$$
+
+但一般三维旋转应使用
+
+$$
+\boxed{\quad
+ R_{ab}
+ =\frac{1+ba}{\sqrt{2(1+a\cdot b)}}
+ =e^{-B_{ab}\theta/2},
+ \qquad R_{ab}a\widetilde{R_{ab}}=b.\quad}
+$$
+
+对任意向量 $x$，$x\mapsto R_{ab}x\widetilde{R_{ab}}$ 保持向量 grade、内积和转动平面的正交补。
+
+**证明。**
+
+第一式由几何乘积与 $B_{ab}^2=-1$ 得出。 又 $ba=\cos\theta-B_{ab}\sin\theta$， 半角公式给出 $R_{ab}$ 的两种表达及 $R_{ab}\widetilde{R}_{ab}=1$。 在正交基 $a,u,k$ 中，直接计算
+
+$$
+R_{ab}a\widetilde{R}_{ab}=\cos\theta\,a+\sin\theta\,u=b,
+$$
+
+$$
+R_{ab}u\widetilde{R}_{ab}=-\sin\theta\,a+\cos\theta\,u,
+ \qquad R_{ab}k\widetilde{R}_{ab}=k,
+$$
+
+其中 $k\perp a,u$。 所以该作用是这个基中的标准正交旋转。 任意把 $a$ 送至 $b$ 的 $\operatorname{SO}(3)$ 旋转，设主旋角为 $\phi\in[0,\pi]$、单位轴为 $k$。Rodrigues 公式给出
+
+$$
+a\cdot b=\cos\phi+(1-\cos\phi)(k\cdot a)^2\ge\cos\phi,
+$$
+
+故 $\theta\le\phi$。上述旋转达到该下界。 在 $0<\theta<\pi$ 时，等号要求 $k\perp a$， 端点再唯一确定平面与转向。因此最小主旋角的 $\operatorname{SO}(3)$ 旋转唯一； 选择标量部分为正的 Spin 提升即得 $R_{ab}$。 此处最小性不涉及经过的物理时间或作用量。
+
+$\square$
+

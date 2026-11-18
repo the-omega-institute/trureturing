@@ -36,6 +36,7 @@ private theorem exists_cut_energy (C T : Finset Q9) (sigma : Q9 → Real)
     (hr : ((hypercube 9).induce (C : Set Q9)).IsRegularOfDegree 3)
     (hs : IsSwitching C sigma) (hTC : T ⊆ C) :
     ∃ f : Q9 → Int,
+      (fun x => (f x : Real)) = switchingVector T sigma ∧
       HuangIntegralNormGap.energy f = ((cutEdges C T).card : Real) := by
   classical
   let tau : Q9 → Int := fun x => if sigma x = 1 then 1 else -1
@@ -98,7 +99,7 @@ private theorem exists_cut_energy (C T : Finset Q9) (sigma : Q9 → Real)
         rw [ite_eq_right hadj] at hsupport
         exact abs_eq_zero.mp hsupport
       simp [hadj, hzero]
-  refine ⟨f, ?_⟩
+  refine ⟨f, hf, ?_⟩
   calc
     HuangIntegralNormGap.energy f =
         ∑ x, g x * ((3 : Real) * g x - (huangMatrix 9).mulVec g x) := by
@@ -135,7 +136,7 @@ theorem three_le_cutEdges_card (C T : Finset Q9)
     (hb : IsBalanced C) (hTC : T ⊆ C) (hpos : 0 < (cutEdges C T).card) :
     3 ≤ (cutEdges C T).card := by
   obtain ⟨sigma, hs⟩ := hb
-  obtain ⟨f, hf⟩ := exists_cut_energy C T sigma hr hs hTC
+  obtain ⟨f, _hfvector, hf⟩ := exists_cut_energy C T sigma hr hs hTC
   have henergy : 0 < HuangIntegralNormGap.energy f := by
     rw [hf]
     exact_mod_cast hpos
