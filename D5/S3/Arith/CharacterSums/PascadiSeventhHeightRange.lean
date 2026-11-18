@@ -1,6 +1,6 @@
-/- GID: D5 / S3 / Arith / CharacterSums / PascadiSeventhHeightRange
+/- GID: D5/S3/Arith/CharacterSums/PascadiSeventhHeightRange
    generality: G
-   mirror-B: D5 / B / S3 / Arith / CharacterSums / PascadiSeventhHeightRange
+   mirror-B: D5/B/S3/Arith/CharacterSums/PascadiSeventhHeightRange
    mirror-E: none(waiver:actual-seventh-height-range)
    anchors: []
    utility: none
