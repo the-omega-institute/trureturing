@@ -18,6 +18,8 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA22953
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripCertificate
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripCertificate
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData
 import Mathlib.Logic.Equiv.Fin.Basic
 
 open scoped BigOperators
@@ -57,23 +59,21 @@ theorem result (n : ℕ) :
     apply lumped_count horizontal between id (bondDefects between)
       (fun _ d => d ≤ 1) cl T initial terminal 1 (fun _ _ => rfl)
     · intro p d hd
-      by_cases h : d = 0
-      · simp only [cl, if_pos h, terminal, Fin.append_right, if_pos h]
-        rfl
-      · simp only [cl, if_neg h, terminal, Fin.append_left, if_neg h]
-        rfl
+      have h := HardinA229589StripCertificate.structural_certificate.1 p ⟨d, by omega⟩ hd
+      rcases (show d = 0 ∨ d = 1 by omega) with rfl | rfl <;>
+        simpa only [cl, terminal, Nat.reduceEqDiff, ite_true, ite_false] using h
     · intro p d hd r hr
       omega
     · intro p d hd s
-      simpa only [horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
+      simpa only [horizontal, HardinA229589StripData.horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
         Nat.add_zero, id_eq] using
         HardinA229537StripCertificate.finite_certificate.1 p ⟨d, by omega⟩ s
-    · intro r hr
-      simp [horizontal, bondDefects]
+    · exact HardinA229589StripCertificate.structural_certificate.2.2.1
     · intro s
-      simp only [horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
-        Nat.zero_le, Nat.sub_zero, true_and, id_eq]
-      rfl
+      have h := HardinA229589StripCertificate.structural_certificate.2.2.2.1 s
+      simpa only [horizontal, HardinA229589StripData.horizontal, bondDefects,
+        Finset.filter_empty, Finset.card_empty, Nat.zero_le, Nat.sub_zero, true_and, id_eq,
+        initial, cl, Nat.reduceEqDiff, ite_true, ite_false] using h
   have scale (m : ℕ) (hm : 1 ≤ m) :
       literalCount (q := 3) horizontal between 1 (m + 1) = 6 * a (m + 1) := by
     classical

@@ -19,6 +19,7 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
             Node("arrayOK", "All neighboring tests", ArrayFormula(), "The finite indexed array satisfies every horizontal and vertical neighboring-trace inequality.", DescribeRole.Definition),
             Node("arrayOKIffGood", "Indexed and recursive tests agree", ArrayIffFormula(), "Reading an indexed array as a list gives exactly the recursive pair and triple tests.", DescribeRole.Theorem),
             Node("cardMatrix", "The weighted counting formula", CardFormula(), "Suppose every allowed row pair in a given class has the same number of legal successors in each destination class, and the initial multiplicities are v. Induction on the continuation length gives the cardinality as the dot product of v with the corresponding matrix power applied to the constant-one vector.", DescribeRole.Theorem),
+            Node("vector_relation_shift", "Shifting a vector relation", VectorShiftFormula(), "Multiplication by a further matrix power transports a polynomial relation between continuation vectors to every later exponent.", DescribeRole.Theorem),
             Node("scalarRelationShift", "Transporting a vector relation", ShiftFormula(), "Multiplication by a further matrix power and an initial row vector transports a polynomial relation to every later scalar count.", DescribeRole.Theorem),
             Node("tabulatedPowers", "Successive vectors are matrix powers", TableFormula(), "A finite table starting at the constant-one vector and satisfying each matrix-vector step agrees with the corresponding powers throughout its domain.", DescribeRole.Theorem)), []));
 
@@ -94,6 +95,16 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
         var card=Cast(App(Qualified("Nat","card"),Seq(OpenBrace,V("a"),Colon,Sp,Arr(Fin(PlusF(n,Num(2))),R()),Sp,Mid,Sp,G("good",P(),Q(),App(Qualified("List","ofFn"),V("a"))),CloseBrace)),IntF());
         var body=All("P",Arr(R(),Arr(R(),PropF())),All("Q",Arr(R(),Arr(R(),Arr(R(),PropF()))),All("cl",Arr(R(),Arr(R(),S())),All("T",MatrixF(S(),S(),IntF()),All("v",Arr(S(),IntF()),Imp(ht,Imp(hv,All("n",NatF(),Eq(card,Call("dotProduct",V("v"),MV(n)))))))))));
         return Disp(GenericStates(body));
+    }
+    private static Formula VectorShiftFormula()
+    {
+        var n=V("n");var b=V("b");var d=V("d");var j=V("j");var c=V("c");
+        Formula Terms(Formula offset) => Sum("j",Fin(d),App(Qualified("HSMul","hSMul"),
+            App(c,j),MV(PlusF(offset,Val(j)))));
+        var h=Eq(MV(PlusF(b,d)),Terms(b));
+        var conclusion=All("n",NatF(),Eq(MV(PlusF(PlusF(n,b),d)),Terms(PlusF(n,b))));
+        return Disp(StateOnly(All("T",MatrixF(S(),S(),IntF()),All("d",NatF(),
+            All("b",NatF(),All("c",Arr(Fin(d),IntF()),Imp(h,conclusion)))))));
     }
     private static Formula ShiftFormula()
     {

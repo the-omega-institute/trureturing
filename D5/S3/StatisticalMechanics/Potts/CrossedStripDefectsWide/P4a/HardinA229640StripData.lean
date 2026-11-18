@@ -17,15 +17,17 @@ terminal: proof_shape=bind-only; consumers=HardinA229640Strip.result
 
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229537StripData
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
+import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import Mathlib.Data.Matrix.Block
 
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229640StripData
 open D5.S3.Combinatorics.TraceAvoidingArrays
+open D5.S3.StatisticalMechanics.Potts.StripDefectsTwo
 set_option backward.isDefEq.respectTransparency false
 
 def cl (p : Fin 4 → Fin 3) (d : ℕ) : Fin 42 :=
-  if d = 2 then (HardinA233177PairTransfer.cls (p 0,p 1,p 2,p 3)).castAdd 28
+  if d = 2 then HardinA229697StripData.cl p 2
   else (HardinA229537StripData.cl p d).natAdd 14
 
 def T : Matrix (Fin 42) (Fin 42) ℤ :=
@@ -51,10 +53,8 @@ def T : Matrix (Fin 42) (Fin 42) ℤ :=
     ![1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2]]) i))
       0 HardinA229537StripData.T)
 
-def initial (s : Fin 42) : ℤ :=
-  ∑ r : Fin 4 → Fin 3, if cl r 2 = s then 1 else 0
+def initial : Fin 42 → ℤ := HardinA229697StripData.initial
 
-def terminal : Fin 42 → ℤ :=
-  Fin.append (0 : Fin 14 → ℤ) HardinA229537StripData.terminal
+def terminal : Fin 42 → ℤ := HardinA229697StripData.terminal
 
 end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229640StripData

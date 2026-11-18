@@ -19,11 +19,14 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA22964
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229640StripCertificate
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripCertificate
+import D5.S3.StatisticalMechanics.Potts.StripDefectsTwo.HardinA229697StripData
 import Mathlib.Logic.Equiv.Fin.Basic
 
 open scoped BigOperators
 namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA229640Strip
 open D5.S3.StatisticalMechanics.Potts.StripDefects
+open D5.S3.StatisticalMechanics.Potts.StripDefectsTwo
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open HardinA229537StripData (horizontal between)
 open HardinA229640StripData
@@ -62,23 +65,23 @@ theorem result (n : ℕ) :
     apply lumped_count horizontal between id (bondDefects between)
       (fun _ d => d ≤ 2) cl T initial terminal 2 (fun _ _ => rfl)
     · intro p d hd
-      have cases : d = 0 ∨ d = 1 ∨ d = 2 := by omega
-      rcases cases with rfl | rfl | rfl <;>
-        simp only [cl, terminal, HardinA229537StripData.cl,
-          HardinA229537StripData.terminal, Nat.reduceEqDiff, ite_true, ite_false,
-          Fin.append_left, Fin.append_right] <;> rfl
+      have h := HardinA229697StripCertificate.structural_certificate.1 p ⟨d, by omega⟩ hd
+      rcases (show d = 0 ∨ d = 1 ∨ d = 2 by omega) with rfl | rfl | rfl <;>
+        simpa only [terminal, cl, HardinA229537StripData.cl, HardinA229589StripData.cl,
+          HardinA229697StripData.cl, Nat.reduceEqDiff, Nat.reduceLT, Nat.reduceSub,
+          ite_true, ite_false, Fin.natAdd_natAdd, Fin.castAdd_natAdd, Nat.reduceAdd, Fin.cast_refl, id_eq] using h
     · intro p d hd r hr
       omega
     · intro p d hd s
-      simpa only [horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
+      simpa only [horizontal, HardinA229589StripData.horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
         Nat.add_zero, id_eq] using
         HardinA229640StripCertificate.finite_certificate.1 p ⟨d, by omega⟩ s
-    · intro r hr
-      simp [horizontal, bondDefects]
+    · exact HardinA229697StripCertificate.structural_certificate.2.2.1
     · intro s
-      simp only [horizontal, bondDefects, Finset.filter_empty, Finset.card_empty,
-        Nat.zero_le, Nat.sub_zero, true_and, id_eq]
-      rfl
+      have h := HardinA229697StripCertificate.structural_certificate.2.2.2 s
+      simpa only [horizontal, HardinA229589StripData.horizontal, bondDefects,
+        Finset.filter_empty, Finset.card_empty, Nat.zero_le, Nat.sub_zero, true_and, id_eq,
+        initial, cl, Nat.reduceEqDiff, ite_true, ite_false] using h
   have scale (m : ℕ) (hm : 1 ≤ m) :
       literalCount (q := 3) horizontal between 2 (m + 1) = 6 * a (m + 1) := by
     classical

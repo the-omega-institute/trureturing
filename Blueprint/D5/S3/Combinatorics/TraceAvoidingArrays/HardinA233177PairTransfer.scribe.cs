@@ -157,12 +157,9 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
                 Pair(App(p, Pair(D(2), j)), App(p, Pair(D(3), j)))))));
         var inverse = Fn("f", columns, Fn("p", Cells(n),
             Own("column", App(f, Call("Prod.snd", cell)), Call("Prod.fst", cell))));
-        var leftInverse = Fn("P", arrays, Seq(V("by"), Sp, V("funext"), Sp, cell, Semi, Sp,
-            V("rcases"), Sp, cell, Sp, V("with"), Sp, Langle, Sp, V("r"), Comma, j, Rangle, Semi, Sp,
-            Q("fin_cases"), Sp, V("r"), Sp, F.Lt, Semi, F.Gt, Sp, V("rfl")));
-        var rightInverse = Fn("f", columns, Call("Eq.refl", f));
-        return All("n", Q("Nat"), Eq(Own("gridEquiv", n),
-            Call("Equiv.mk", forward, inverse, leftInverse, rightInverse)));
+        return All("n", Q("Nat"), And(
+            Eq(Call("Equiv.toFun", Own("gridEquiv", n)), forward),
+            Eq(Call("Equiv.invFun", Own("gridEquiv", n)), inverse)));
     }
 
     private static Formula ColumnGridFormula()

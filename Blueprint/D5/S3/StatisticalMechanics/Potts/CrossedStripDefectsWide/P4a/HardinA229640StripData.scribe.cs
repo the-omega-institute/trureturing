@@ -7,15 +7,15 @@ internal sealed class HardinA229640StripDataDocument : IScribeDocumentDefinition
     private const string Prefix="D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripData.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-row two-defect HDA strips.",H("HardinA229640StripData"),Blocks(
-            Paragraph(Text("The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.")),
+            Paragraph(Text("The budget-two class map and endpoint vectors are those of A229697. At every budget other than two the class map appends fourteen to the saturated one-defect class. The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.")),
             Node("cl",Class(),false),
             Node("T",Transfer(),false),
-            Node("initial",All("s",Fin(42),Eq(Data("initial",V("s")),Sum("r",Row(),If(Eq(Data("cl",V("r"),N(2)),V("s")),Typed(N(1),Q("Int")),Typed(N(0),Q("Int")))))),false),
-            Node("terminal",Eq(Data("terminal"),Call("Fin.append",IntVec(N(0),14),First("terminal"))),false))));
+            Node("initial",Eq(Data("initial"),Call("HardinA229697StripData.initial")),false),
+            Node("terminal",Eq(Data("terminal"),Call("HardinA229697StripData.terminal")),false))));
     private static DocumentBlock Node(string name,Formula formula,bool theorem) => Describe.Lean(
         DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229640")),
-        Blocks(Paragraph(Text("The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
+        Blocks(Paragraph(Text("The budget-two class map and endpoint vectors are those of A229697. At every budget other than two the class map appends fourteen to the saturated one-defect class. The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());
@@ -40,8 +40,10 @@ internal sealed class HardinA229640StripDataDocument : IScribeDocumentDefinition
         for(int i=0;i<rows.Length;i++){if(i>0)a.Add(RowBreak);for(int j=0;j<rows[i].Length;j++){if(j>0)a.Add(Amp);a.Add(rows[i][j]);}}
         a.AddRange([End,Grp(F.Id("pmatrix"))]);return Seq(a.ToArray());}
     private static Formula First(string n,params Formula[] a) => Call("HardinA229537StripData."+n,a);
-    private static Formula Class() {var p=V("p");var d=V("d");var c=Old("cls",Pair(App(p,N(0)),Pair(App(p,N(1)),Pair(App(p,N(2)),App(p,N(3))))));
-        return All("p",Row(),All("d",Q("Nat"),Eq(Data("cl",p,d),If(Eq(d,N(2)),Call("Fin.castAdd",N(28),c),Call("Fin.natAdd",N(14),First("cl",p,d))))));}
+    private static Formula Class() {var p=V("p");var d=V("d");
+        return All("p",Row(),All("d",Q("Nat"),Eq(Data("cl",p,d),
+            If(Eq(d,N(2)),Call("HardinA229697StripData.cl",p,N(2)),
+                Call("Fin.natAdd",N(14),First("cl",p,d))))));}
     private static Formula Transfer() {
         var e=Typed(Q("finSumFinEquiv"),Call("Equiv",Call("Sum",Fin(14),Fin(28)),Fin(42)));
         var sub=Call("Matrix.submatrix",First("T"),Fn("i",Fin(14),Call("Fin.castAdd",N(14),V("i"))),Fn("j",Fin(14),Call("Fin.natAdd",N(14),V("j"))),V("i"));

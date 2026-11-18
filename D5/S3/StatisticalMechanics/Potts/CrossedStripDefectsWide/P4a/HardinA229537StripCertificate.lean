@@ -29,6 +29,8 @@ import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.P4a.HardinA22953
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
+import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229589StripData
 import Mathlib.Data.Matrix.Block
 
 open scoped BigOperators
@@ -72,7 +74,16 @@ theorem cost_relabel (e : Equiv.Perm (Fin 3)) (p r : HardinA233177PairTransfer.C
     bondDefects between (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e p))
       (HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e r)) =
       bondDefects between (HardinA233177PairTransfer.column p) (HardinA233177PairTransfer.column r) := by
-  simp only [bondDefects, HardinA233177PairTransfer.column_relabel, e.injective.eq_iff]
+  have hc (p : HardinA233177PairTransfer.Col) :
+      HardinA233177PairTransfer.column (HardinA233177PairTransfer.relabel e p) =
+        e ∘ HardinA233177PairTransfer.column p :=
+    funext (HardinA233177PairTransfer.column_relabel e p)
+  rw [hc p, hc r]
+  have h := DefectTransfer.relabel_defects (∅ : Finset (Fin 4 × Fin 4)) between e
+    [HardinA233177PairTransfer.column p, HardinA233177PairTransfer.column r]
+  simpa only [List.map_cons, List.map_nil, DefectTransfer.defects,
+    DefectTransfer.tailDefects, bondDefects, Finset.filter_empty, Finset.card_empty,
+    zero_add, add_zero] using h
 
 private theorem one_representatives : ∀ i j : Fin 14,
     (∑ r : HardinA233177PairTransfer.Col,
@@ -136,14 +147,15 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 2) (s : Fin 28)
       have hj := j.isLt
       have hd := d.isLt
       unfold cl
-      split_ifs with h <;>
-        simp only [Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
+      split_ifs <;>
+        simp only [HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false,
+          Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
     simp_rw [cut]
     fin_cases d
-    · simp only [Fin.val_zero, cl, ite_true]
+    · simp only [Fin.val_zero, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, ite_true]
       rw [bt]
       simp
-    · simp only [Fin.val_one, cl, show (1 : ℕ) ≠ 0 by decide, ite_false]
+    · simp only [Fin.val_one, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false]
       rw [tt]
       simpa only [true_and] using zero_counts p j
   | right j =>
@@ -155,14 +167,15 @@ private theorem transition_counts (p : Fin 4 → Fin 3) (d : Fin 2) (s : Fin 28)
       have hi := (HardinA233177PairTransfer.cls (r 0,r 1,r 2,r 3)).isLt
       have hj := j.isLt
       unfold cl
-      split_ifs with h <;>
-        simp only [Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
+      split_ifs <;>
+        simp only [HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false,
+          Fin.ext_iff, Fin.val_natAdd, Fin.val_castAdd] <;> omega
     simp_rw [cut]
     fin_cases d
-    · simp only [Fin.val_zero, cl, ite_true]
+    · simp only [Fin.val_zero, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, ite_true]
       rw [bb]
       exact zero_counts p j
-    · simpa only [Fin.val_one, cl, show (1 : ℕ) ≠ 0 by decide, ite_false] using one_counts p j
+    · simpa only [Fin.val_one, cl, HardinA229589StripData.cl, Nat.reduceEqDiff, ite_true, ite_false, show (1 : ℕ) ≠ 0 by decide, ite_false] using one_counts p j
 
 def Z : Fin 22 → Fin 14 → ℤ :=
   Fin.append HardinA233177PairTransfer.W
@@ -187,10 +200,9 @@ theorem zero_powers (i : Fin 22) :
       (HardinA233177PairTransfer.Q ^ (n + 7)).mulVec (1 : Fin 14 → ℤ) =
         ∑ j : Fin 6, HardinA233177PairTransfer.coefficients j •
           (HardinA233177PairTransfer.Q ^ (n + 1 + j.val)).mulVec (1 : Fin 14 → ℤ) := by
-    have h := congrArg (fun w => (HardinA233177PairTransfer.Q ^ n).mulVec w)
-      HardinA233177PairTransfer.power_polynomial
-    simpa only [Matrix.mulVec_sum, Matrix.mulVec_smul, Matrix.mulVec_mulVec,
-      ← pow_add, Nat.add_assoc] using h
+    simpa only [Nat.add_assoc] using
+      TransferMatrix.vector_relation_shift HardinA233177PairTransfer.Q 6 1
+        HardinA233177PairTransfer.coefficients HardinA233177PairTransfer.power_polynomial n
   have go (n : ℕ) (hn : n < 22) :
       (HardinA233177PairTransfer.Q ^ n).mulVec (1 : Fin 14 → ℤ) = Z ⟨n, hn⟩ := by
     induction n using Nat.strong_induction_on with
@@ -266,6 +278,7 @@ theorem powers (i : Fin 22) :
       simp only [W, Fin.append_right, terminal]
       rw [← zero_powers]
       norm_num
+      fin_cases j <;> rfl
   have step (k : Fin 21) : W k.succ = T.mulVec (W k.castSucc) := by
     funext j
     induction j using Fin.addCases (m := 14) (n := 14) with
@@ -290,14 +303,9 @@ private theorem tail_polynomial (j : Fin 14) :
       ((HardinA233177PairTransfer.Q ^ (n + 7)).mulVec (1 : Fin 14 → ℤ)) j =
         (∑ k : Fin 6, HardinA233177PairTransfer.coefficients k •
           (HardinA233177PairTransfer.Q ^ (n + 1 + k.val)).mulVec (1 : Fin 14 → ℤ)) j := by
-    have h := congrArg (fun w => (HardinA233177PairTransfer.Q ^ n).mulVec w)
-      HardinA233177PairTransfer.power_polynomial
-    have he : (HardinA233177PairTransfer.Q ^ (n + 7)).mulVec (1 : Fin 14 → ℤ) =
-        ∑ k : Fin 6, HardinA233177PairTransfer.coefficients k •
-          (HardinA233177PairTransfer.Q ^ (n + 1 + k.val)).mulVec (1 : Fin 14 → ℤ) := by
-      simpa only [Matrix.mulVec_sum, Matrix.mulVec_smul, Matrix.mulVec_mulVec,
-        ← pow_add, Nat.add_assoc] using h
-    exact congrFun he j
+    simpa only [Nat.add_assoc] using congrFun
+      (TransferMatrix.vector_relation_shift HardinA233177PairTransfer.Q 6 1
+        HardinA233177PairTransfer.coefficients HardinA233177PairTransfer.power_polynomial n) j
   have h0 := rel 1
   have h1 := rel 2
   have h2 := rel 3
