@@ -110,8 +110,8 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ᶠ P : ℝ in atTop, ∀ s : ℝ, 0 ≤ s →
     R.readout () ()
-      (∑ p ∈ primeInterval (P / 2) (2 * P), MovingWeight.weight P s p)
-      ((∫ t in (P / 2)..(2 * P), MovingWeight.weight P s t) / log P +
+      (∑ p ∈ primeInterval (P / 2) (2 * P), _root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight.weight P s p)
+      ((∫ t in (P / 2)..(2 * P), _root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight.weight P s t) / log P +
         112 * log 2 * (P / log P ^ 2))
 
 private theorem rejected_law : ¬ arena.Law rejected := by

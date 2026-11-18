@@ -30,7 +30,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {P s : ℝ}, 0 < P → 1 < s →
-    R.readout () () (∫ t in (P / 2)..(2 * P), MovingWeight.weight P s t)
+    R.readout () () (∫ t in (P / 2)..(2 * P), _root_.D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight.weight P s t)
       (P * (π / sin (π / s) - s) + (s / 2 + 2) * P * (2 : ℝ) ^ (-s))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
