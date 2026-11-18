@@ -16,27 +16,30 @@ universe u
 
 private abbrev pairSignature : Signature where
   Params := Unit
-  State _ := ℝ × ℝ
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 namespace CubicExpansion
 private def actual : Realization pairSignature :=
-  realize pairSignature (fun _ _ s => s.1 = s.2) (fun e => nomatch e)
+  realize pairSignature (fun _ _ x y => x = y) (fun e => nomatch e)
 private def rejected : Realization pairSignature :=
-  realize pairSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize pairSignature (fun _ _ _ _ => False) (fun e => nomatch e)
 private theorem dependence : ObservationalDependence pairSignature actual := by
   intro i
-  exact ⟨(), (0, 0), (1, 0), by norm_num [actual, realize]⟩
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hf : (1 : ℝ) = 0 := Eq.mp (congrFun h 0) rfl
+  norm_num at hf
 private abbrev arena : Arena where
   signature := pairSignature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     (A B : Matrix n n ℂ) (t : ℝ),
-    R.readout () () ((Matrix.trace ((A + t • B)^3)).re,
+    R.readout () () (Matrix.trace ((A + t • B)^3)).re (
       (Matrix.trace (A^3)).re + 3*(Matrix.trace (A*A*B)).re*t +
       3*(Matrix.trace (A*B*B)).re*t^2 + (Matrix.trace (B^3)).re*t^3)
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
@@ -75,12 +78,21 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize pairSignature (fun _ _ s => s.1 = s.2) (fun e => nomatch e))
+  readout := some (realize pairSignature (fun _ _ x y => x = y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.HsfCubicRadial
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -88,17 +100,20 @@ end CubicExpansion
 
 namespace WeightedSquare
 private def actual : Realization pairSignature :=
-  realize pairSignature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e)
+  realize pairSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 private def rejected : Realization pairSignature :=
-  realize pairSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize pairSignature (fun _ _ _ _ => False) (fun e => nomatch e)
 private theorem dependence : ObservationalDependence pairSignature actual := by
   intro i
-  exact ⟨(), (0, 0), (1, 0), by norm_num [actual, realize]⟩
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
+  norm_num at hf
 private abbrev arena : Arena where
   signature := pairSignature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     (W E : Matrix n n ℂ) (_hW : W.PosSemidef) (_hE : E.IsHermitian),
-    R.readout () () (0, (Matrix.trace (W * E^2)).re)
+    R.readout () () 0 (Matrix.trace (W * E^2)).re
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (n := ULift.{u} Unit) 0 0 Matrix.PosSemidef.zero (by simp)
@@ -135,12 +150,21 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize pairSignature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e))
+  readout := some (realize pairSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.HsfCubicRadial
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

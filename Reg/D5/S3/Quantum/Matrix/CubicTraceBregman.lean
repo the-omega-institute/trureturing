@@ -16,29 +16,32 @@ universe u
 
 private abbrev pairSignature : Signature where
   Params := Unit
-  State _ := ℝ × ℝ
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 namespace Coercivity
 private def actual : Realization pairSignature :=
-  realize pairSignature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e)
+  realize pairSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 private def rejected : Realization pairSignature :=
-  realize pairSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize pairSignature (fun _ _ _ _ => False) (fun e => nomatch e)
 private theorem dependence : ObservationalDependence pairSignature actual := by
   intro i
-  exact ⟨(), (0, 0), (1, 0), by norm_num [actual, realize]⟩
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
+  norm_num at hf
 private abbrev arena : Arena where
   signature := pairSignature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     (A T : Matrix n n ℂ) (hA : A.PosSemidef) (hT : T.PosSemidef),
     let H := A - T
     let hH : H.IsHermitian := hA.isHermitian.sub hT.isHermitian
-    R.readout () () ((T * H ^ 2).trace.re + (∑ i, |hH.eigenvalues i| ^ 3),
+    R.readout () () ((T * H ^ 2).trace.re + (∑ i, |hH.eigenvalues i| ^ 3)) (
       (A ^ 3).trace.re - 3 * (T ^ 2 * A).trace.re + 2 * (T ^ 3).trace.re)
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -77,12 +80,21 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize pairSignature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e))
+  readout := some (realize pairSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.CubicTraceBregman
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -90,12 +102,15 @@ end Coercivity
 
 namespace TwoLevel
 private def actual : Realization pairSignature :=
-  realize pairSignature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e)
+  realize pairSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 private def rejected : Realization pairSignature :=
-  realize pairSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize pairSignature (fun _ _ _ _ => False) (fun e => nomatch e)
 private theorem dependence : ObservationalDependence pairSignature actual := by
   intro i
-  exact ⟨(), (0, 0), (1, 0), by norm_num [actual, realize]⟩
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hf : (1 : ℝ) ≤ 0 := Eq.mp (congrFun h 0) le_rfl
+  norm_num at hf
 private abbrev arena : Arena where
   signature := pairSignature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
@@ -109,7 +124,7 @@ private abbrev arena : Arena where
         (((b : ℂ) • (1 : Matrix n n ℂ)) + D)
     let W : ℝ := a * q ^ 2 + b * (Dᴴ * D).trace.re +
       (a + b) * (E * Eᴴ).trace.re
-    X.PosSemidef → R.readout () () (max (W + |q| ^ 3) (2 * W),
+    X.PosSemidef → R.readout () () (max (W + |q| ^ 3) (2 * W)) (
       (X ^ 3).trace.re - 3 * (T ^ 2 * X).trace.re + 2 * (T ^ 3).trace.re)
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -152,12 +167,21 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize pairSignature (fun _ _ s => s.1 ≤ s.2) (fun e => nomatch e))
+  readout := some (realize pairSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.CubicTraceBregman
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

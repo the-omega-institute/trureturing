@@ -49,7 +49,7 @@ internal sealed class CubicTraceBregmanDocument : IScribeDocumentDefinition
                 + "increment epsilon along a kernel projection has cubic remainder "
                 + "epsilon^3 times its rank. Positive reference levels instead weight "
                 + "quadratic deviations.")),
-            Paragraph(Text("For the full Gibbs-centered matrix A=Yhat=Omega+H with "
+            Paragraph(Text("For u>=0 and the full PSD Gibbs-centered matrix A=Yhat=Omega+H with "
                 + "Omega=diag(u^2,u,u,1) and Re Tr(Omega^2 H)=0, the scalar "
                 + "3 Re Tr(Omega H^2)+Re Tr(H^3) is exactly D3(A,Omega). "
                 + "For an excited PSD matrix F, take n=Fin 2, a=u=s^4, b=1, "
