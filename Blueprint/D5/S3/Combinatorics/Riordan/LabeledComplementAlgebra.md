@@ -110,7 +110,7 @@ $$(\operatorname{claim}) \Leftrightarrow ((\operatorname{a}\left(1\right) = 1) \
 
 *Commentary.*
 
-A401496, revision 9, FORMULA 1–5 (unpaginated): "Conjecture: a(n) = 8*a(n-2) - 4 for n >= 3." "Conjecture: a(n+1) - a(n) = 2^floor(3*(n-1)/2), so a(n) = 1 + Sum_{k=1..n-1} 2^floor(3*(k-1)/2)." "Conjecture: a(n) = A113836(n-1) + 1." "Conjecture: a(2*k) = (108^(k-1) + 4)/7 and a(2*k+1) = (38^k + 4)/7." "Conjecture: G.f.: x*(1 - 2*x)*(1 + 3*x)/((1 - x)*(1 - 8*x^2))." The concatenations 108 and 38 are interpreted as the products 10 times 8 and 3 times 8, respectively. Author confirmation of this typography is unavailable. The identity involving A113836 has domain n at least two. Integer differences and rational quotients preserve the stated equalities; Nat.div denotes floor division.
+A401496, revision 9, FORMULA 1–5 (unpaginated): "Conjecture: a(n) = 8*a(n-2) - 4 for n >= 3." "Conjecture: a(n+1) - a(n) = 2^floor(3*(n-1)/2), so a(n) = 1 + Sum_{k=1..n-1} 2^floor(3*(k-1)/2)." "Conjecture: a(n) = A113836(n-1) + 1." "Conjecture: a(2*k) = (108^(k-1) + 4)/7 and a(2*k+1) = (38^k + 4)/7." "Conjecture: G.f.: x*(1 - 2*x)*(1 + 3*x)/((1 - x)*(1 - 8*x^2))." The two parity numerators use 10 * 8^(k - 1) and 3 * 8^k, respectively. Author confirmation of this typography is unavailable. The identity involving A113836 has domain n at least two. Integer differences and rational quotients preserve the stated equalities; Nat.div denotes floor division.
 
 **Theorem 1.10 (count one).**
 
@@ -168,23 +168,9 @@ $$\forall (N: \operatorname{Nat}), (((\operatorname{Polynomial}.\operatorname{X}
 
 The defining power of the polynomial X is monic.
 
-**Theorem 1.14 (modulusDegree).**
+**Definition 1.14 (coefficientEquiv).**
 
-$$\forall (N: \operatorname{Nat}), (((\operatorname{Polynomial}.\operatorname{X} : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)})).\operatorname{natDegree} = N + 1$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.modulusDegree` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Arnauld Mesinga Mwafise (2026). *OEIS A401496: labeled Riordan graphs with labeled Riordan complements*. URL: <https://oeis.org/A401496>.
-
-*Commentary.*
-
-The degree of the defining power of the polynomial X is N + 1.
-
-**Definition 1.15 (coefficientEquiv).**
-
-$$\forall (N: \operatorname{Nat}), \operatorname{coefficientEquiv}\left(N\right) = (((\operatorname{AdjoinRoot}.\operatorname{powerBasisAux}'\left((\operatorname{monicModulus}\left(N\right))\right))).\operatorname{equivFun}).\operatorname{trans}\left((\operatorname{LinearEquiv}.\operatorname{piCongrLeft}'\left((\operatorname{ZMod}\left(2\right))\right)\left((\operatorname{Function}.\operatorname{const}\left((\operatorname{Fin}\left(((((\operatorname{Polynomial}.\operatorname{X} : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)})).\operatorname{natDegree})\right))\right)\left((\operatorname{ZMod}\left(2\right))\right))\right)\left((\operatorname{finCongr}\left((\operatorname{modulusDegree}\left(N\right))\right))\right))\right)$$
+$$\forall (N: \operatorname{Nat}), \operatorname{coefficientEquiv}\left(N\right) = (((\operatorname{AdjoinRoot}.\operatorname{powerBasisAux}'\left((\operatorname{monicModulus}\left(N\right))\right))).\operatorname{equivFun}).\operatorname{trans}\left((\operatorname{LinearEquiv}.\operatorname{piCongrLeft}'\left((\operatorname{ZMod}\left(2\right))\right)\left((\operatorname{Function}.\operatorname{const}\left((\operatorname{Fin}\left(((((\operatorname{Polynomial}.\operatorname{X} : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)})).\operatorname{natDegree})\right))\right)\left((\operatorname{ZMod}\left(2\right))\right))\right)\left((\operatorname{finCongr}\left((\operatorname{Polynomial}.\operatorname{natDegree_{X_{pow}}}\left((N + 1)\right))\right))\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.coefficientEquiv` (`✓ std3`).
 
@@ -194,9 +180,9 @@ $$\forall (N: \operatorname{Nat}), \operatorname{coefficientEquiv}\left(N\right)
 
 *Commentary.*
 
-The power basis of the quotient identifies its elements with their N + 1 coefficients.
+The power basis of the quotient identifies its elements with their N + 1 coefficients. Polynomial.natDegree_X_pow at N + 1 supplies the degree equality in finCongr.
 
-**Definition 1.16 (truncatedCoeff).**
+**Definition 1.15 (truncatedCoeff).**
 
 $$\forall (N: \operatorname{Nat}), \forall (i: \operatorname{Nat}), \forall (f: (\operatorname{AdjoinRoot}\left(((\operatorname{Polynomial}.\operatorname{X} : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)})\right))), \operatorname{truncatedCoeff}\left(N\right)\left(i\right)\left(f\right) = ((\operatorname{AdjoinRoot}.\operatorname{modByMonicHom}\left((\operatorname{monicModulus}\left(N\right))\right)\left(f\right))).\operatorname{coeff}\left(i\right)$$
 
@@ -210,7 +196,7 @@ $$\forall (N: \operatorname{Nat}), \forall (i: \operatorname{Nat}), \forall (f: 
 
 Take the coefficient of the unique representative polynomial of degree less than N + 1.
 
-**Theorem 1.17 (truncatedCoeff truncateMap).**
+**Theorem 1.16 (truncatedCoeff truncateMap).**
 
 $$\forall (N: \operatorname{Nat}), \forall (f: \operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right)), \forall (i: \operatorname{Nat}), (i < N + 1) \Rightarrow (\operatorname{truncatedCoeff}\left(N\right)\left(i\right)\left((\operatorname{truncateMap}\left(N\right)\left(f\right))\right) = \operatorname{PowerSeries}.\operatorname{coeff}\left(i\right)\left(f\right))$$
 
@@ -224,7 +210,7 @@ $$\forall (N: \operatorname{Nat}), \forall (f: \operatorname{PowerSeries}\left((
 
 Below the truncation length, taking a quotient coefficient recovers the original series coefficient.
 
-**Theorem 1.18 (truncateMap eq iff).**
+**Theorem 1.17 (truncateMap eq iff).**
 
 $$\forall (N: \operatorname{Nat}), \forall (f: \operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right)), \forall (g: \operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right)), (\operatorname{truncateMap}\left(N\right)\left(f\right) = \operatorname{truncateMap}\left(N\right)\left(g\right)) \Leftrightarrow (\forall (i: \operatorname{Nat}), (i < N + 1) \Rightarrow (\operatorname{PowerSeries}.\operatorname{coeff}\left(i\right)\left(f\right) = \operatorname{PowerSeries}.\operatorname{coeff}\left(i\right)\left(g\right)))$$
 
@@ -238,7 +224,7 @@ $$\forall (N: \operatorname{Nat}), \forall (f: \operatorname{PowerSeries}\left((
 
 Two quotient elements agree exactly when all coefficients below the truncation length agree.
 
-**Theorem 1.19 (truncateMap eq zero iff).**
+**Theorem 1.18 (truncateMap eq zero iff).**
 
 $$\forall (N: \operatorname{Nat}), \forall (f: \operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right)), (\operatorname{truncateMap}\left(N\right)\left(f\right) = 0) \Leftrightarrow ((\operatorname{PowerSeries}.\operatorname{X} : \operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)} \mid f)$$
 
@@ -252,7 +238,7 @@ $$\forall (N: \operatorname{Nat}), \forall (f: \operatorname{PowerSeries}\left((
 
 A series maps to zero exactly when it is divisible by X to the truncation length.
 
-**Theorem 1.20 (complement orientation card).**
+**Theorem 1.19 (complement orientation card).**
 
 $$\forall (V: \operatorname{Type}), \forall (P: \operatorname{SimpleGraph}\left(V\right) \to \operatorname{Prop}), \forall (v: V), \forall (w: V), (v \ne w) \Rightarrow (\operatorname{Nat}.\operatorname{card}\left(\{G: \operatorname{SimpleGraph}\left(V\right) \mid (P\left(G\right)) \land (P\left(G^{\operatorname{c}}\right))\}\right) = 2 \cdot \operatorname{Nat}.\operatorname{card}\left(\{G: \operatorname{SimpleGraph}\left(V\right) \mid (P\left(G\right)) \land ((P\left(G^{\operatorname{c}}\right)) \land (G.\operatorname{Adj}\left(v\right)\left(w\right)))\}\right))$$
 
@@ -266,7 +252,7 @@ $$\forall (V: \operatorname{Type}), \forall (P: \operatorname{SimpleGraph}\left(
 
 Complementation pairs the graphs, and the presence of one fixed edge selects exactly one graph in each pair.
 
-**Theorem 1.21 (unit parameter criterion).**
+**Theorem 1.20 (unit parameter criterion).**
 
 $$\forall (R: \operatorname{Type}), [\operatorname{CommRing}\left(R\right)] [\operatorname{CharP}\left(R\right)\left(2\right)] \forall (g: \operatorname{Units}\left(R\right)), \forall (H: \operatorname{Units}\left(R\right)), \forall (f: R), \forall (u: R), \forall (t: R), ((\forall (j: \operatorname{Nat}), (g : R) \cdot f^{j} + ((H : R) + g) \cdot u^{j} = (H : R) \cdot t^{j})) \Leftrightarrow ((f = t + (((H : R) + g) \cdot (\operatorname{Units}.\operatorname{val}\left(g^{-1}\right) : R)) \cdot (u + t)) \land (((H : R) + g) \cdot (u + t)^{2} = 0))$$
 
@@ -280,7 +266,7 @@ $$\forall (R: \operatorname{Type}), [\operatorname{CommRing}\left(R\right)] [\op
 
 Over a commutative ring of characteristic two, the all-column equations with two unit parameters are equivalent to a linear displacement equation and one square-annihilator equation.
 
-**Theorem 1.22 (truncateMap isUnit).**
+**Theorem 1.21 (truncateMap isUnit).**
 
 $$\forall (N: \operatorname{Nat}), \forall (f: (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))), (\operatorname{PowerSeries}.\operatorname{constantCoeff}\left(f\right) = 1) \Rightarrow (\operatorname{IsUnit}\left((\operatorname{truncateMap}\left(N\right)\left(f\right))\right))$$
 
@@ -294,7 +280,7 @@ $$\forall (N: \operatorname{Nat}), \forall (f: (\operatorname{PowerSeries}\left(
 
 A series with constant coefficient one maps to a unit of the finite quotient.
 
-**Definition 1.23 (allOnes).**
+**Definition 1.22 (allOnes).**
 
 $$\operatorname{allOnes} = \operatorname{PowerSeries}.\operatorname{mk}\left((\operatorname{Function}.\operatorname{const}\left(\operatorname{Nat}\right)\left(1\right))\right)$$
 
@@ -308,7 +294,7 @@ $$\operatorname{allOnes} = \operatorname{PowerSeries}.\operatorname{mk}\left((\o
 
 Every coefficient of this series is one.
 
-**Theorem 1.24 (allOnes constant).**
+**Theorem 1.23 (allOnes constant).**
 
 $$\operatorname{PowerSeries}.\operatorname{constantCoeff}\left(\operatorname{allOnes}\right) = 1$$
 
@@ -322,7 +308,7 @@ $$\operatorname{PowerSeries}.\operatorname{constantCoeff}\left(\operatorname{all
 
 The constant coefficient of the all-ones series is one.
 
-**Theorem 1.25 (shifted square divisibility).**
+**Theorem 1.24 (shifted square divisibility).**
 
 $$\forall (f: (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))), \forall (N: \operatorname{Nat}), \forall (k: \operatorname{Nat}), ((\operatorname{PowerSeries}.\operatorname{X} : (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right)))^{N} \mid \operatorname{PowerSeries}.\operatorname{X}^{k} \cdot f^{2}) \Leftrightarrow ((\operatorname{PowerSeries}.\operatorname{X} : (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right)))^{(\operatorname{Nat}.\operatorname{div}\left((N - k + 1), 2\right))} \mid f)$$
 
@@ -336,7 +322,7 @@ $$\forall (f: (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right
 
 A shifted square is divisible by a power of X exactly when the original series vanishes below the displayed half-threshold. Nat.div denotes floor division on natural numbers.
 
-**Theorem 1.26 (zero prefix card).**
+**Theorem 1.25 (zero prefix card).**
 
 $$\forall (N: \operatorname{Nat}), \forall (q: \operatorname{Nat}), (q \le N) \Rightarrow (\operatorname{Nat}.\operatorname{card}\left(\{f: \operatorname{Fin}\left(N\right) \to (\operatorname{ZMod}\left(2\right)) \mid \forall (i: \operatorname{Fin}\left(N\right)), \left(i.\operatorname{val} < q\right) \to \left(f\left(i\right) = 0\right)\}\right) = 2^{(N - q)})$$
 
@@ -350,7 +336,7 @@ $$\forall (N: \operatorname{Nat}), \forall (q: \operatorname{Nat}), (q \le N) \R
 
 Binary vectors with a prescribed zero prefix have one free binary coordinate at each remaining position.
 
-**Definition 1.27 (canonicalSeries).**
+**Definition 1.26 (canonicalSeries).**
 
 $$\forall (N: \operatorname{Nat}), \forall (x: \operatorname{AdjoinRoot}\left(((\operatorname{Polynomial}.\operatorname{X} : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)})\right)), \operatorname{canonicalSeries}\left(N\right)\left(x\right) = ((\operatorname{AdjoinRoot}.\operatorname{modByMonicHom}\left((\operatorname{monicModulus}\left(N\right))\right)\left(x\right) : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right)) : \operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))$$
 
@@ -364,7 +350,7 @@ $$\forall (N: \operatorname{Nat}), \forall (x: \operatorname{AdjoinRoot}\left(((
 
 Embed the unique representative polynomial of degree less than N + 1 into the ring of power series.
 
-**Theorem 1.28 (truncateMap canonicalSeries).**
+**Theorem 1.27 (truncateMap canonicalSeries).**
 
 $$\forall (N: \operatorname{Nat}), \forall (x: (\operatorname{AdjoinRoot}\left(((\operatorname{Polynomial}.\operatorname{X} : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)})\right))), \operatorname{truncateMap}\left(N\right)\left((\operatorname{canonicalSeries}\left(N\right)\left(x\right))\right) = x$$
 
@@ -378,7 +364,7 @@ $$\forall (N: \operatorname{Nat}), \forall (x: (\operatorname{AdjoinRoot}\left((
 
 The representative series maps back to its original quotient element.
 
-**Theorem 1.29 (coefficientEquiv apply).**
+**Theorem 1.28 (coefficientEquiv apply).**
 
 $$\forall (N: \operatorname{Nat}), \forall (x: (\operatorname{AdjoinRoot}\left(((\operatorname{Polynomial}.\operatorname{X} : \operatorname{Polynomial}\left((\operatorname{ZMod}\left(2\right))\right))^{(N + 1)})\right))), \forall (i: \operatorname{Fin}\left((N + 1)\right)), \operatorname{coefficientEquiv}\left(N\right)\left(x\right)\left(i\right) = \operatorname{PowerSeries}.\operatorname{coeff}\left(i.\operatorname{val}\right)\left((\operatorname{canonicalSeries}\left(N\right)\left(x\right))\right)$$
 
@@ -392,7 +378,7 @@ $$\forall (N: \operatorname{Nat}), \forall (x: (\operatorname{AdjoinRoot}\left((
 
 The coordinates of a quotient element are the coefficients of its representative series.
 
-**Theorem 1.30 (image square annihilator).**
+**Theorem 1.29 (image square annihilator).**
 
 $$\forall (N: \operatorname{Nat}), \forall (k: \operatorname{Nat}), (k \le N + 1) \Rightarrow (\forall (v: \operatorname{Units}\left((\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))\right)), \forall (w: \operatorname{Units}\left((\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))\right)), \forall (s: (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))), ((\exists (delta: (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))), (\operatorname{truncateMap}\left(N\right)\left((\operatorname{PowerSeries}.\operatorname{X}^{k} \cdot (v : (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))) \cdot delta^{2})\right) = 0) \land (\operatorname{truncateMap}\left(N\right)\left((\operatorname{PowerSeries}.\operatorname{X}^{k} \cdot (v : (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))) \cdot (w : (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right))) \cdot delta)\right) = \operatorname{truncateMap}\left(N\right)\left(s\right)))) \Leftrightarrow ((\operatorname{PowerSeries}.\operatorname{X} : (\operatorname{PowerSeries}\left((\operatorname{ZMod}\left(2\right))\right)))^{(k + \operatorname{Nat}.\operatorname{div}\left((N + 1 - k + 1), 2\right))} \mid s))$$
 
@@ -406,7 +392,7 @@ $$\forall (N: \operatorname{Nat}), \forall (k: \operatorname{Nat}), (k \le N + 1
 
 For two unit multipliers, the image subject to the square-annihilator constraint is exactly the displayed coefficient tail. Nat.div denotes floor division on natural numbers.
 
-**Theorem 1.31 (claim of sum).**
+**Theorem 1.30 (claim of sum).**
 
 $$(\forall (n: \operatorname{Nat}), \left(1 \le n\right) \to \left(\operatorname{a}\left(n\right) = \operatorname{prefixCount}\left((n - 1)\right)\right)) \Rightarrow ((\operatorname{a}\left(1\right) = 1) \land ((\operatorname{a}\left(2\right) = 2) \land (((\forall (n: \operatorname{Nat}), \left(3 \le n\right) \to \left((\operatorname{a}\left(n\right) : \operatorname{Int}) = 8 \cdot (\operatorname{a}\left((n - 2)\right) : \operatorname{Int}) - 4\right))) \land (((\forall (n: \operatorname{Nat}), \left(1 \le n\right) \to \left((\operatorname{a}\left((n + 1)\right) : \operatorname{Int}) - (\operatorname{a}\left(n\right) : \operatorname{Int}) = (2 : \operatorname{Int})^{(\operatorname{Nat}.\operatorname{div}\left(3 \cdot (n - 1), 2\right))}\right))) \land (((\forall (n: \operatorname{Nat}), \left(1 \le n\right) \to \left(\operatorname{a}\left(n\right) = 1 + \sum_{k \in \operatorname{Finset}.\operatorname{range}\left((n - 1)\right)} 2^{(\operatorname{Nat}.\operatorname{div}\left(3 \cdot k, 2\right))}\right))) \land (((\forall (n: \operatorname{Nat}), \left(2 \le n\right) \to \left(\operatorname{a}\left(n\right) = \operatorname{a113836}\left((n - 1)\right) + 1\right))) \land (((\forall (k: \operatorname{Nat}), \left(1 \le k\right) \to \left((\operatorname{a}\left((2 \cdot k)\right) : \operatorname{Rat}) = \frac{(10 \cdot (8 : \operatorname{Rat})^{(k - 1)} + 4)}{7}\right))) \land (((\forall (k: \operatorname{Nat}), (\operatorname{a}\left((2 \cdot k + 1)\right) : \operatorname{Rat}) = \frac{(3 \cdot (8 : \operatorname{Rat})^{k} + 4)}{7})) \land (\operatorname{ogf} = \operatorname{conjecturedOGF})))))))))$$
 
@@ -438,7 +424,6 @@ The finite-sum formula implies the recurrence, successive differences, auxiliary
 - Truth anchor: `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.conjecturedOGF`
 - Truth anchor: `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.count_one`
 - Truth anchor: `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.image_square_annihilator`
-- Truth anchor: `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.modulusDegree`
 - Truth anchor: `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.monicModulus`
 - Truth anchor: `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.ogf`
 - Truth anchor: `D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.prefixCount`

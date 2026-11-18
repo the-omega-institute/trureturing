@@ -13,6 +13,8 @@ internal sealed class MarkovBlockWeightDocument : IScribeDocumentDefinition
         + "factor and a power of its occupation activity, and is strictly positive.",
         H("Legal Markov block weights and persistent mixture minors"),
         Blocks(
+            Describe.Lean(DescribeId.Create("normalizer-factor"), DeclarationHandle.Create(Prefix + "normalizer_factor"), H("Endpoint normalization separates from the activity partition"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For 0<p<1, m>=1 and both exterior bits, pathNormalizer equals p^r times (1-p)^(m+1-l-r) times activityPartition. The legal path-weight formula is summed over every interior word; illegal summands are zero."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("normalized-path"), DeclarationHandle.Create(Prefix + "normalized_path"), H("Normalized legal-word mass"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For 0<p<1, m>=1 and every padded legal word, pathMass divided by pathNormalizer equals z^K divided by activityPartition, where z=p/(1-p)^2. Cancellation uses the strictly positive endpoint factor. The persistent mixture minor and conditional count experiment use this same normalization."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "A block w is a Boolean function on Fin n. The two exterior bits l and r "
                 + "are observed separately. Adm on Fin.cons l (Fin.snoc w r) requires "

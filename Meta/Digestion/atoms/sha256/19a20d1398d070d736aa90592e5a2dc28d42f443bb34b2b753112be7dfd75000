@@ -1,0 +1,37 @@
+**定义 16.1（共同局部阶与入口）。** 本节保持定义 11.1、13.1 的实际 $F,E_0,P_1,P_2,U_v(r),q(B,r;M)$，赋值仍取 $\operatorname{ord}_v(\mathfrak m_v)=1$。有理数上的 $v_p$ 则取 $v_p(p)=1$，故 $\operatorname{ord}_v|_{\mathbb Q^\times}=e_vv_p$。沿用 $a,b,c$ 的正实根，另记
+
+$$
+\begin{gathered}
+a^2=2,\quad b^2=3-a,\quad c^2=3+a,\quad bc=\sqrt7,\\
+K=F(i),\qquad [i](X,Y)=(-X,iY),\qquad i^2=-1.
+\end{gathered}
+\tag{16.1}
+$$
+
+这里 $K$ 专指本节的复乘扩域，不是定义 11.1 中暂用同一字母的二次域。对每个有理素数 $p$（包括 $2,7$）及整数 $r\ge1$，定义 $\delta_{p,v}(r)=\operatorname{lcm}(d_{v,1}(r),d_{v,2}(r))$（$v\mid p$），并定义 $\delta_p(r)=\operatorname{lcm}_{v\mid p}\delta_{p,v}(r)$。命题 16.2 将证明 $\delta_p(r)=\delta_{p,v}(r)$ 对每个 $v\mid p$ 成立。以下只有入口记号 $n_p,t_p$ 限于 $p\ne2,7$，定义为
+
+$$
+\begin{aligned}
+n_p&=\operatorname{lcm}\bigl(\operatorname{ord}(\overline P_1),
+                         \operatorname{ord}(\overline P_2)\bigr),\\
+t_p&=\min_{j=1,2}\operatorname{ord}_v
+               \bigl(t([n_p]P_j)\bigr),\qquad t=-X/Y.
+\end{aligned}
+\tag{16.2}
+$$
+
+横线是原好约化模型 $E_0$ 在同一个 $k_v$ 中的约化，$\overline O=O$ 的阶取 $1$；参数在此式中只用于已经约化为 $O$ 的点。所有 $[n_p]P_j$ 非零，故 $t_p$ 是有限正整数。记
+
+$$
+\begin{gathered}
+\mathcal G_H=\{p\le H:p\ne2,7\},\qquad
+h_0=\widehat h(P_1)=\widehat h(P_2),\qquad C_E=2\log2,\\
+A=64h_0,\qquad B=8C_E,\qquad
+b_p(H)=v_p(\delta_p(H)),\qquad
+W(H)=\sum_{p\in\mathcal G_H}(t_p-1)\log p.
+\end{gathered}
+\tag{16.3}
+$$
+
+高度为绝对对数高度及 §12 的典范高度归一化，特别地复用 (12.7) 对所有代数点的 $h(xT)\le2\widehat h(T)+C_E$，不另换比较常数。高度的共轭不变性及 (12.8) 给出 $0<h_0\le\log82/2$。
+

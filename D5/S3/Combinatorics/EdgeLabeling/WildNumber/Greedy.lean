@@ -15,8 +15,8 @@ kappa_connected: proof_shape: bind-only; escape_witness: none; Direct frozen dep
 dip_zero_of_connected: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
 step_positive: proof_shape: content; escape_witness: none; Direct frozen dependencies: none.
 exists_greedy_output: proof_shape: content; escape_witness: exists_greedy_output; Direct frozen dependencies: none.
-The potential and greedy-step formulas inline the source finite edge set; the
-amplification proofs use SimpleGraph.edgeFinset via a compiled correspondence.
+The potential and greedy-step formulas use edges; the amplification proofs use
+SimpleGraph.edgeFinset via a private compiled correspondence.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21209
 -/
 
@@ -46,6 +46,10 @@ edge-colored graph", arXiv:2508.06711v1 (8 August 2025).
 namespace D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy
 open SimpleGraph
 variable {V : Type*} [Fintype V] [DecidableEq V] {C : Type*} [Fintype C]
+/-- The number of connected components of `H`. -/
+noncomputable def kappa (H : SimpleGraph V) : ℕ := Nat.card H.ConnectedComponent
+/-- The finite edge set of `G`. -/
+noncomputable def edges (G : SimpleGraph V) : Finset (Sym2 V) := (Set.toFinite G.edgeSet).toFinset
 /-- `Eᵢ(G)`: the edges of colour `c`. -/
 def colorEdges (G : SimpleGraph V) (γ : G.edgeSet → C) (c : C) : Set (Sym2 V) :=
   {e | ∃ h : e ∈ G.edgeSet, γ ⟨e, h⟩ = c}
@@ -60,16 +64,16 @@ noncomputable def wildNumber (G : SimpleGraph V) (γ : G.edgeSet → C) : ℕ :=
   sInf {k | ∃ W : Finset (Sym2 V), IsColorConnecting G γ W ∧ W.card = k}
 /-- The dip number of the edge `e` of `G/W`: `Σᵢ (κ(Gᵢᵂ) − κ(Gᵢ^{W ∪ {e}}))`. -/
 noncomputable def dip (G : SimpleGraph V) (γ : G.edgeSet → C) (W : Finset (Sym2 V)) (e : Sym2 V) : ℕ :=
-  ∑ c : C, (Nat.card (wildColorGraph G γ W c).ConnectedComponent - Nat.card (wildColorGraph G γ (insert e W) c).ConnectedComponent)
+  ∑ c : C, (kappa (wildColorGraph G γ W c) - kappa (wildColorGraph G γ (insert e W) c))
 /-- The potential of `e` in `G/W`: the nonincreasing dip sequence of `(G/W)/e`, over every edge of `G`. -/
 noncomputable def potential (G : SimpleGraph V) (γ : G.edgeSet → C) (W : Finset (Sym2 V)) (e : Sym2 V) : List ℕ :=
-  (((Set.toFinite G.edgeSet).toFinset).val.map (dip G γ (insert e W))).sort (· ≥ ·)
+  ((edges G).val.map (dip G γ (insert e W))).sort (· ≥ ·)
 /-- One step of Algorithm 5.10 from the wild set `W`: `G/W` is not color-connected, `e` is an edge of `G/W` of highest
 dip number, and no edge of that dip number has a lexicographically greater potential. -/
 def IsGreedyStep (G : SimpleGraph V) (γ : G.edgeSet → C) (W : Finset (Sym2 V)) (e : Sym2 V) : Prop :=
-  ¬ IsColorConnecting G γ W ∧ e ∈ (Set.toFinite G.edgeSet).toFinset \ W ∧
-    (∀ f ∈ (Set.toFinite G.edgeSet).toFinset \ W, dip G γ W f ≤ dip G γ W e) ∧
-    ∀ f ∈ (Set.toFinite G.edgeSet).toFinset \ W, dip G γ W f = dip G γ W e →
+  ¬ IsColorConnecting G γ W ∧ e ∈ edges G \ W ∧
+    (∀ f ∈ edges G \ W, dip G γ W f ≤ dip G γ W e) ∧
+    ∀ f ∈ edges G \ W, dip G γ W f = dip G γ W e →
       ¬ List.Lex (· < ·) (potential G γ W e) (potential G γ W f)
 /-- The wild sets reachable from `∅` by steps of Algorithm 5.10. -/
 inductive IsGreedyRun (G : SimpleGraph V) (γ : G.edgeSet → C) : Finset (Sym2 V) → Prop
@@ -94,7 +98,7 @@ theorem kappa_connected {G : SimpleGraph V} (h : G.Connected) : Nat.card G.Conne
     Nonempty.map G.connectedComponentMk h.nonempty⟩
 theorem dip_zero_of_connected (G : SimpleGraph V) (γ : G.edgeSet → C)
     (W : Finset (Sym2 V)) (h : IsColorConnecting G γ W) (e : Sym2 V) : dip G γ W e = 0 := by
-  unfold dip
+  unfold dip kappa
   apply Finset.sum_eq_zero
   intro c hc
   rw [kappa_connected (h.2 c),kappa_connected (SimpleGraph.Connected.mono

@@ -68,8 +68,8 @@ Declaration proof shapes (names relative to this module):
   Gaussian.gaussian_noiseFamily_log_remainder_tendsto; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_uniform_log; consumer: Gaussian.gaussian_noiseFamily_log_order
   Gaussian.gaussian_noiseFamily_log_order; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_uniform_log; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.polynomial_log_order
 Direct frozen dependencies:
-  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
-  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli._proof_1: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli: declaration statement_id sha256:aee6f44c7b754f7568932206a687d5cf3eb54e759581907e0d0e319afc8647bc
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli._proof_1: declaration statement_id sha256:1dc7d82ea625081deee71f1615e89332f78727a151d4d48a9367604b8a91e63c
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog
@@ -163,10 +163,8 @@ private lemma map_pairDet {R S : Type*} [CommRing R] [StarRing R] [CommRing S] [
     apply Matrix.ext
     intro i j
     exact φ.map_mul _ _
-  have h1 : (1 : Matrix (Fin n) (Fin n) (Polynomial R)).map φ = 1 := by
-    apply Matrix.ext
-    intro i j
-    by_cases hij : i=j <;> simp [Matrix.one_apply, hij]
+  have h1 : (1 : Matrix (Fin n) (Fin n) (Polynomial R)).map φ = 1 :=
+    Matrix.map_one (fun p => φ p) (by simp) (by simp)
   change ((D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.affineGramPoly A G ⊗ₖ (1 : Matrix (Fin n) (Fin n) (Polynomial R))) -
       (1 : Matrix (Fin n) (Fin n) (Polynomial R)) ⊗ₖ D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.affineGramPoly C K).map φ = _
   rw [hsub, hkr, hkr, h1, map_affineGram f hf, map_affineGram f hf]
@@ -553,10 +551,8 @@ lemma eval_pairDet {n : ℕ} (ε : ℝ) (A C G K : Matrix (Fin n) (Fin n) ℂ) :
     apply Matrix.ext
     intro i j
     exact φ.map_mul _ _
-  have h1 : (1 : Matrix (Fin n) (Fin n) (Polynomial ℂ)).map φ = 1 := by
-    apply Matrix.ext
-    intro i j
-    by_cases hij : i=j <;> simp [Matrix.one_apply, hij]
+  have h1 : (1 : Matrix (Fin n) (Fin n) (Polynomial ℂ)).map φ = 1 :=
+    Matrix.map_one (fun p => φ p) (by simp) (by simp)
   change ((D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.affineGramPoly A G ⊗ₖ (1 : Matrix (Fin n) (Fin n) (Polynomial ℂ))) -
       (1 : Matrix (Fin n) (Fin n) (Polynomial ℂ)) ⊗ₖ D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.affineGramPoly C K).map φ = _
   rw [hsub, hkr, hkr, h1, eval_affineGram, eval_affineGram]

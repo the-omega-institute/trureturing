@@ -81,7 +81,7 @@ theorem connecting_iff (f : G ≃g H) (γ : G.edgeSet → C) (W : Finset (Sym2 V
     exact f.map_mem_edgeSet_iff.mpr (hv hd)
 @[simp] private theorem dip_map (f : G ≃g H) (γ : G.edgeSet → C) (W : Finset (Sym2 V)) (e : Sym2 V) :
     dip H ((SimpleGraph.EdgeLabeling.pullback γ f.symm.toHom)) ((fun f W => Finset.image (Sym2.map f) W) f W) (Sym2.map f e) = dip G γ W e := by
-  unfold dip
+  unfold dip kappa
   simp only [←setMap_insert,kappa_colorMap]
 private theorem edges_map (f : G ≃g H) : (Set.toFinite H.edgeSet).toFinset = (fun f W => Finset.image (Sym2.map f) W) f ((Set.toFinite G.edgeSet).toFinset) := by
   ext e
@@ -90,7 +90,7 @@ private theorem edges_map (f : G ≃g H) : (Set.toFinite H.edgeSet).toFinset = (
   exact f.map_mem_edgeSet_iff
 @[simp] private theorem potential_map (f : G ≃g H) (γ : G.edgeSet → C) (W : Finset (Sym2 V)) (e : Sym2 V) :
     potential H ((SimpleGraph.EdgeLabeling.pullback γ f.symm.toHom)) ((fun f W => Finset.image (Sym2.map f) W) f W) (Sym2.map f e) = potential G γ W e := by
-  unfold potential
+  unfold potential edges
   rw [edges_map f]
   rw [Finset.image_val_of_injOn (edgeMap_injective f).injOn,Multiset.map_map]
   apply congrArg (fun m : Multiset ℕ => m.sort (· ≥ ·))
@@ -105,7 +105,7 @@ private theorem step_iff (f : G ≃g H) (γ : G.edgeSet → C) (W : Finset (Sym2
     simp only [Finset.mem_sdiff,Set.Finite.mem_toFinset,mem_setMap]
     exact and_congr f.map_mem_edgeSet_iff Iff.rfl
   have hall : ∀ d : Sym2 U, ∃ a : Sym2 V, Sym2.map f a = d := edgeMap_surjective f
-  simp only [IsGreedyStep,connecting_iff,hm,dip_map,potential_map]
+  simp only [IsGreedyStep,edges,connecting_iff,hm,dip_map,potential_map]
   constructor
   · rintro ⟨hn,he,hd,hp⟩
     exact ⟨hn,he,fun d h => by simpa using hd (Sym2.map f d) ((hm d).mpr h),

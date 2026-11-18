@@ -79,6 +79,46 @@ public sealed class LedgerAlignWriterTests
         Assert.True(File.Exists(fixture.StateFile("A")));
     }
 
+    [Fact]
+    public void ScopedTruthRetainsInventoryWhileReadingOnlyRequestedImportBodies()
+    {
+        var a = Module("A", source: "import D5.S0.Carrier.B\ntheorem a : True := by trivial\n", imports: ["B"]);
+        using var fixture = new AlignFixture(a, Module("B"), Module("C"));
+        var report = new DagLedgerCommandPreparation.FileLeanReportSource(
+            fixture.ReportPath(scoped: true, "--add", PathFor("A")));
+
+        var truth = DagLedgerCommandPreparation.BuildTruthScoped(
+            fixture.Repository, report, [RepoPathFor("A")]);
+
+        Assert.True(truth.Snapshot.Files[RepoPathFor("A")].ContentWasRead);
+        Assert.True(truth.Snapshot.Files[RepoPathFor("B")].ContentWasRead);
+        Assert.False(truth.Snapshot.Files[RepoPathFor("C")].ContentWasRead);
+        Assert.True(truth.Snapshot.Files[RepoPath.CreateKnown("lean-toolchain")].ContentWasRead);
+        Assert.True(truth.Snapshot.Files[RepoPath.CreateKnown("lake-manifest.json")].ContentWasRead);
+        Assert.Equal(new[] { PathFor("A"), PathFor("B") },
+            fixture.Repository.ScopedCurrentReads.SelectMany(static paths => paths)
+                .Select(static path => path.Replace(":(literal)", "", StringComparison.Ordinal))
+                .Order(StringComparer.Ordinal));
+        Assert.Equal(new[] { RepoPathFor("A"), RepoPathFor("B") },
+            truth.Report.Files.Keys.OrderBy(static path => path.Value, StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void FullBundleStillAcquiresAndChecksUnselectedSources()
+    {
+        using var fixture = new AlignFixture(Module("A"), Module("C"));
+        var report = new DagLedgerCommandPreparation.FileLeanReportSource(
+            fixture.ReportPath(scoped: false, "--add", PathFor("A")));
+
+        var truth = DagLedgerCommandPreparation.BuildTruthScoped(
+            fixture.Repository, report, [RepoPathFor("A")]);
+
+        Assert.True(truth.Report.IsScoped);
+        Assert.Single(truth.Report.Files);
+        Assert.False(truth.Snapshot.Files[RepoPathFor("C")].ContentWasRead);
+        Assert.Equal(2, fixture.Repository.WholeTreeReadCount);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -173,6 +213,21 @@ public sealed class LedgerAlignWriterTests
         Assert.True(result.Success, result.Error);
         Assert.False(File.Exists(fixture.StateFile("A")));
         Assert.Equal(before, File.ReadAllBytes(fixture.StateFile("B")));
+    }
+
+    [Fact]
+    public void CombinedAddAndRetirementChecksImportsInUnselectedModules()
+    {
+        var c = Module("C", source: "import D5.S0.Carrier.A\ntheorem c : True := by trivial\n", imports: ["A"]);
+        using var fixture = new AlignFixture(Module("B"), c);
+        fixture.Install(BuildCatalog(Module("A")));
+        var before = fixture.Image();
+
+        var result = fixture.Align("--add", PathFor("B"), "--retire-registration", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains("still imports retired registration", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.Image());
     }
 
     [Theory]

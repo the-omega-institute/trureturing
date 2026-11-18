@@ -10,6 +10,7 @@
 admission_basis: open-problem-resolution (#22351; Proved).
 escape_witness: none.
 The definitions retain the source's matrix-unit formulas and algebraic multiplicities.
+MState.pure_iff_purity_one supplies the pure-state representation used by the Choi-purity adapter.
 The trace-zero space is the trace map's kernel; finTwoArrowEquiv supplies tensor coordinates.
 The standard matrix basis and LinearMap.toMatrix give the channel transfer matrix.
 The scalar projector uses PeritoTsirelson.maxEntangled; private equalities connect its trace-vector and Q representations.
@@ -18,7 +19,7 @@ proof_shape: DesignEntries.scalarProjector_eq_Q: bind-only; consumers: DesignEnt
 All theorem proofs below are bind-only compositions of spectral, norm and channel owners.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23694.
 proof_shape: IsUnitaryTwoDesign: bind-only; consumers: claim,DesignEntries.design_haar_entry,DesignEntries.average_rep_entry,DesignEntries.averaged_endomorphism_entry,DesignEntries.averaged_traceless_endomorphism,DesignEntries.projected_gram_averages,DesignTensorBound.projected_tensor_bound,CanonicalSector.canonical_tensor_strict,FinalAssembly.canonical_result | conjugatedEntry: bind-only; consumers: twirledTensorPower,TransferGeometry.twirledTensorPower_two_reindex,FinalAssembly.inverse_entry,FinalAssembly.target_charpoly | twirledTensorPower: bind-only; consumers: IsNContractive,TransferGeometry.twirledTensorPower_two_reindex,FinalAssembly.target_charpoly,FinalAssembly.canonical_result | IsNContractive: bind-only; consumers: claim,FinalAssembly.canonical_result | claim: bind-only; consumers: result.
-proof_shape: PurityEquality.probability_purity_one: bind-only; consumers: PurityEquality.density_purity_one_outer | PurityEquality.density_purity_one_outer: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary | ChoiRankOne.rank_one_choi_unitary: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary | ChannelPurity.canonical_action_trace: bind-only; consumers: ChannelPurity.canonical_choi_trace,ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_projected_mass | ChannelPurity.canonical_action_choi_psd: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_projected_mass.
+proof_shape: PurityEquality.density_purity_one_outer: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary | ChoiRankOne.rank_one_choi_unitary: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary | ChannelPurity.canonical_action_trace: bind-only; consumers: ChannelPurity.canonical_choi_trace,ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_projected_mass | ChannelPurity.canonical_action_choi_psd: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_projected_mass.
 proof_shape: ChannelPurity.canonical_choi_trace: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value | ChannelPurity.maximal_choi_purity_unitary: bind-only; consumers: ChannelPurity.strict_unitarity_value | ChannelPurity.unitarityValue: bind-only; consumers: ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_unitarity_mass,TransferGeometry.canonical_unitarity_nonneg,CanonicalSector.canonical_coefficient,CanonicalSector.canonical_tensor_strict | ChannelPurity.strict_unitarity_value: bind-only; consumers: CanonicalSector.canonical_one_copy_strict,CanonicalSector.canonical_tensor_strict | TransferGeometry.std_repr: bind-only; consumers: TransferGeometry.transfer_entry,TransferGeometry.transfer_action,TraceInterface.projection_matrix.
 proof_shape: TransferGeometry.transfer_entry: bind-only; consumers: TransferGeometry.transfer_choi_purity,TransferGeometry.transfer_scalar_row,ConjugationInterface.transfer_conjugation,FinalAssembly.inverse_entry | TransferGeometry.transfer_action: bind-only; consumers: TransferGeometry.transfer_scalar_image | TransferGeometry.transfer_choi_purity: bind-only; consumers: TransferGeometry.canonical_projected_mass | TransferGeometry.conjugationRep_action: bind-only; consumers: ConjugationInterface.scalar_rep_right | TransferGeometry.twirledTensorPower_two_reindex: bind-only; consumers: FinalAssembly.target_charpoly.
 proof_shape: DesignEntries.design_haar_entry: bind-only; consumers: DesignEntries.average_rep_entry | DesignEntries.average_rep_entry: bind-only; consumers: DesignEntries.averaged_endomorphism_entry | DesignEntries.diagonal_pair_sum: bind-only; consumers: DesignEntries.averaged_endomorphism_entry | DesignEntries.fourth_moment_reshaped: bind-only; consumers: DesignEntries.averaged_endomorphism_entry.
@@ -41,6 +42,13 @@ proof_shape: FinalAssembly.inverse_entry: bind-only; consumers: FinalAssembly.ta
 -/
 
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.States.Mixed.MState.Basic
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Basic
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.IsMaximalSelfAdjoint
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Trace
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Order
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.States.Pure.Braket
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ClassicalInfo.Prob
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
 import D5.S3.Quantum.Foundation.FiniteStateChannel
@@ -83,51 +91,23 @@ def claim : Prop := ∀ (d : ℕ), 2 ≤ d → ∀ (Λ : QuantumChannel (Fin d) 
 end D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity
 open scoped BigOperators ComplexOrder
 namespace D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity.PurityEquality
-private theorem probability_purity_one {ι : Type*} [Fintype ι] [DecidableEq ι] (x : ι → ℝ) (hx : ∀ i, 0 ≤ x i) (hsum : ∑ i, x i = 1) (hsq : ∑ i, x i ^ 2 = 1) : ∃ k, ∀ j, x j = if j = k then 1 else 0 := by
-  classical
-  have hle (i : ι) : x i ≤ 1 := by
-    rw [← hsum]; exact Finset.single_le_sum (fun j _ => hx j) (Finset.mem_univ i)
-  have hterms (i : ι) : x i * (1 - x i) = 0 := by
-    apply (Finset.sum_eq_zero_iff_of_nonneg (fun j (_ : j ∈ (Finset.univ : Finset ι)) =>
-        mul_nonneg (hx j) (sub_nonneg.mpr (hle j)))).mp _ i (Finset.mem_univ i)
-    calc
-      (∑ j, x j * (1 - x j)) = (∑ j, x j) - ∑ j, x j ^ 2 := by
-        simp_rw [mul_sub, mul_one, ← pow_two]; exact Finset.sum_sub_distrib _ _
-      _ = 0 := by rw [hsum, hsq]; norm_num
-  obtain ⟨k, hk⟩ : ∃ k, x k ≠ 0 := by
-    by_contra h
-    push_neg at h
-    have hzero : ∑ i, x i = 0 := Finset.sum_eq_zero (fun i _ => h i)
-    linarith
-  have hk1 : x k = 1 := by
-    have ht := (mul_eq_zero.mp (hterms k)).resolve_left hk
-    linarith
-  have herase : ∑ i ∈ (Finset.univ : Finset ι).erase k, x i = 0 := by
-    have ht := Finset.sum_erase_add (Finset.univ : Finset ι) x (Finset.mem_univ k)
-    rw [hsum, hk1] at ht; linarith
-  refine ⟨k, fun j => ?_⟩
-  by_cases hj : j = k
-  · simp [hj, hk1]
-  · simp only [hj, ↓reduceIte]
-    exact (Finset.sum_eq_zero_iff_of_nonneg (fun i _ => hx i)).mp herase j (Finset.mem_erase.mpr ⟨hj, Finset.mem_univ j⟩)
 private theorem density_purity_one_outer {ι : Type*} [Fintype ι] [DecidableEq ι] (J : Matrix ι ι ℂ) (hJ : J.PosSemidef) (htrace : J.trace = 1) (hpurity : (J * J).trace = 1) : ∃ v : ι → ℂ, J = Matrix.vecMulVec v (star v) := by
   classical
-  have hsum : ∑ i, hJ.1.eigenvalues i = 1 := by
-    have ht := hJ.1.trace_eq_sum_eigenvalues
-    rw [htrace] at ht
-    have hr := congrArg Complex.re ht
-    simpa using hr.symm
-  have hsqcomplex : (J * J).trace = ∑ i, ((hJ.1.eigenvalues i : ℂ) ^ 2) := by
-    conv_lhs => rw [hJ.1.spectral_theorem]
-    rw [← map_mul]; simp only [Unitary.conjStarAlgAut_apply]; rw [Matrix.trace_mul_cycle, Unitary.coe_star_mul_self, Matrix.one_mul]; simp [Matrix.diagonal_mul_diagonal, pow_two]
-  have hsq : ∑ i, hJ.1.eigenvalues i ^ 2 = 1 := by
-    rw [hpurity] at hsqcomplex
-    have hr := congrArg Complex.re hsqcomplex
-    simpa [pow_two, Complex.mul_re] using hr.symm
-  obtain ⟨k, hk⟩ := probability_purity_one _ hJ.eigenvalues_nonneg hsum hsq
-  let U := hJ.1.eigenvectorUnitary
-  refine ⟨fun i => U.val i k, ?_⟩; rw [hJ.1.spectral_theorem]; simp only [Unitary.conjStarAlgAut_apply]; ext i j
-  simp only [Matrix.mul_apply, Matrix.diagonal, Matrix.conjTranspose_apply, Matrix.vecMulVec_apply, Pi.star_apply, U]; simp [hk, apply_ite, mul_ite, ite_mul]
+  let ρ : MState ι := {
+    M := ⟨J, hJ.1⟩
+    nonneg := HermitianMat.zero_le_iff.mpr hJ
+    tr := by
+      change J.trace.re = 1
+      rw [htrace]
+      rfl }
+  have hp : ρ.purity = 1 := by
+    apply Subtype.ext
+    change (J * J).trace.re = 1
+    rw [hpurity]
+    rfl
+  obtain ⟨ψ, hψ⟩ := (MState.pure_iff_purity_one ρ).mpr hp
+  refine ⟨ψ, ?_⟩
+  exact congrArg MState.m hψ
 end D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity.PurityEquality
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 namespace D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity.ChoiRankOne

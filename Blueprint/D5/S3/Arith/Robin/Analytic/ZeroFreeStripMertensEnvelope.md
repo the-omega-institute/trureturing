@@ -30,7 +30,19 @@ If an actual nontrivial zero rho had beta=Re(rho)>1-alpha, put b=1-beta. Then 0<
 
 The argument uses the classical integrated explicit formula and Abel summation. The Mertens suppliers retain the PrimeNumberTheoremAnd contributors' Apache-2.0 notice, the IEANTN/Mertens.lean source at commit 6a380f0c4658c04a420a9eb00b1ed62a1e3fde01, and the attribution to Leo Goldmakher, A quick proof of Mertens' theorem; the supplying notice and license are preserved at Library/notes/pntplus2026mertens.md. No literature-priority claim is made.
 
-**Theorem 1.2 (The actual quadratic log-log remainder).**
+**Theorem 1.2 (Transfer a power estimate from psi to theta).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_power_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_power_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all real beta,C,X with beta>1/2, suppose that abs(psi(x)-x)<=C*x^beta for every real x>=X. There are real K,R with K>=0 and R>=2 such that abs(theta(x)-x)<=K*x^beta for every real x>=R. The unconditional estimate 0<=psi(x)-theta(x)<=H*sqrt(x) supplies the transfer with K=abs(C)+abs(H) and R=max(2,X). This result also supplies the theta power estimate for the unconditional actual-zero-abscissa lower envelope.
+
+**Theorem 1.3 (The actual quadratic log-log remainder).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic`
 
@@ -46,6 +58,7 @@ For every real x with exp(2)<=x and x/2<=Chebyshev.theta(x), the original nonlin
 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.actual_B_critical_strip_envelope`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.nonlinear_quadratic`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/ZeroFreeStripMertensEnvelope.theta_power_bound`
 - Dependency: [D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvatureStability](LogLogGlobalCurvatureStability.md)
 - Dependency: [D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope](RHSharpArithmeticEnvelope.md)
 - Dependency: [D5/S3/Arith/Robin/EulerLayerRootCorrection](../EulerLayerRootCorrection.md)

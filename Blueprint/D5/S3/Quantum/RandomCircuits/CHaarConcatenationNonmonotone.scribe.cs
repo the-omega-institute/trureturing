@@ -108,7 +108,7 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
     private static Formula SwapMatrix(Formula n) => At(
         Seq(Operatorname,Grp(F.Id("Equiv"),Dot,F.Id("Perm"),Dot,F.Id("permMatrix"))),
         Complex(), QCall("Equiv.prodComm", n, n));
-    private static Formula Generic(Formula body) => All("n",F.Id("Type"),
+    private static Formula Generic(Formula body) => All("n",Seq(F.Id("Type"), Star),
         Instance(Call("Fintype",F.Id("n")), Instance(Call("DecidableEq",F.Id("n")), body)));
     private static Formula Nat() => Seq(Mathbb,Grp(F.Id("N")));
     private static Formula Complex() => Seq(Mathbb,Grp(F.Id("C")));

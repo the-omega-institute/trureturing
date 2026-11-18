@@ -54,7 +54,7 @@ The escape audit is unfinished: [#27284](https://github.com/the-omega-institute/
 
 [Experiment directory at commit 6e0dcc3ec6a0faa2f159aa2a6ed5b344e582ec91](https://github.com/the-omega-institute/trureturing-experiments/tree/6e0dcc3ec6a0faa2f159aa2a6ed5b344e582ec91/docs/reports/oeis-a401496-labeled-riordan-complements).
 
-The immutable `check.py` was executed with Python 3.14 from that repository, using `git show 6e0dcc3ec6a0faa2f159aa2a6ed5b344e582ec91:docs/reports/oeis-a401496-labeled-riordan-complements/check.py` as the program supplied to `python3 -c`. Exit code: 0. Script SHA-256: `08f6714491038e8d6b038ea184394482763333f7cffd3826a65a6dd76307544e`. Final check: `ALL_CHECKS_OK`.
+Command: `git -C ../trureturing-experiments show 6e0dcc3ec6a0faa2f159aa2a6ed5b344e582ec91:docs/reports/oeis-a401496-labeled-riordan-complements/check.py | python3` (Python 3.14, from the formalization worktree). Exit code: 0. Script SHA-256: `08f6714491038e8d6b038ea184394482763333f7cffd3826a65a6dd76307544e`. Final check: `ALL_CHECKS_OK`.
 
 Complete enumeration of presentations and deduplication of fixed-label graphs for $n=1,\ldots,10$ gives $1,2,4,12,28,92,220,732,1756,5852$. The canonical graph sets equal the exhaustive unit-side sets at these orders. The recurrence, difference, sum, A113836, multiplication-reading parity formulas and generating-function coefficients agree through index $200$. This computation proves no uniform extension beyond its tested ranges.
 

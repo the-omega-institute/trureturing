@@ -1,0 +1,29 @@
+#### 定理 9.3：有限历史中的内部钟构造
+
+设完整数据寄存器的有限历史由酉门 $U_1,\ldots,U_N$ 给出，令 $|\Phi_k\rangle=U_k\cdots U_1|\Phi_0\rangle$。 引入正交钟态 $|0\rangle_T,\ldots,|N\rangle_T$，构造
+
+$$
+|\Omega_N\rangle
+ =\frac1{\sqrt{N+1}}\sum_{k=0}^N
+ |k\rangle_T\otimes|\Phi_k\rangle.
+$$
+
+定义
+
+$$
+L_k=\frac1{\sqrt2}
+ \bigl(\langle k|_T\otimes1-\langle k-1|_T\otimes U_k\bigr),
+ \qquad
+ G_{\rm hist}=\sum_{k=1}^N L_k^\dagger L_k.
+$$
+
+则 $G_{\rm hist}\ge0$，$G_{\rm hist}|\Omega_N\rangle=0$； 条件于内部钟读数 $k$，数据态为 $|\Phi_k\rangle$。
+
+**证明。**
+
+正性由平方和给出。 每项 $L_k$ 对历史态的作用正比于 $\Phi_k-U_k\Phi_{k-1}=0$，故满足传播约束。 钟读数概率为 $1/(N+1)$， 对 $\langle k|_T$ 收缩并归一即得到 $\Phi_k$。
+
+$\square$
+
+这个构造把有序演化编码为一个整体中的相关关系， 是“时间也在整体内部”的一个可审查模型 [\[7\]](#ref-repo_otf1), [\[12\]](#ref-repo_v21)。 $G_{\rm hist}$ 是传播约束，不自动是实际推动钟运行的 Hamiltonian。 钟标签的顺序、允许门及初始条件仍为明示结构； 有限时刻标签也不自行给出秒、连续时间或唯一的宇宙状态。
+

@@ -111,7 +111,7 @@ open D5.S3.Analytic.ZetaGibbs
 open D5.S3.Analytic.Zeta.ZetaEntropy
 open D5.S3.Analytic.Zeta.PrimeMarginalEntropy
 noncomputable section
-private lemma summable_prime_eulerLog (s : ℝ) (hs : 1 < s) :
+lemma summable_prime_eulerLog (s : ℝ) (hs : 1 < s) :
     Summable (fun p : Nat.Primes ↦ -Real.log (1 - (p.1 : ℝ) ^ (-s))) := by
   have hq : Summable (fun p : Nat.Primes ↦ (p.1 : ℝ) ^ (-s)) :=
     (summable_real_weight s hs).comp_injective Subtype.coe_injective

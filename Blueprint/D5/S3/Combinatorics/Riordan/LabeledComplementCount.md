@@ -20,7 +20,7 @@ $$(\operatorname{a}\left(1\right) = 1) \land ((\operatorname{a}\left(2\right) = 
 
 *Commentary.*
 
-The formula gives all five expressions for the count of fixed-label graphs, at every order in their stated domains. The finite quotient condition is r times delta squared equal to zero. First nonzero coefficients and their attainable tails give a bijective classification of the graphs. The expressions 108 and 38 in the source are read as the products 10 times 8 and 3 times 8; no author confirmation of the typography is asserted. The unlabeled problem in Section 5, Problem 3 of arXiv:1710.04604v2 is outside this statement.
+The formula gives all five expressions for the count of fixed-label graphs, at every order in their stated domains. The finite quotient condition is r times delta squared equal to zero. First nonzero coefficients and their attainable tails give a bijective classification of the graphs. The expressions 108 and 38 in the source are read as the products 10 * 8^(k - 1) and 3 * 8^k; no author confirmation of the typography is asserted. The unlabeled problem in Section 5, Problem 3 of arXiv:1710.04604v2 is outside this statement.
 
 Nat.div denotes floor division on natural numbers.
 

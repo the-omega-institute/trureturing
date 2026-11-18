@@ -129,7 +129,7 @@ private lemma odd_prime_three_le {p : ℕ} (hp : Nat.Prime p) (ho : Odd p) : 3 �
   have hpge : 2 ≤ p := hp.two_le
   omega
 
-private lemma odd_part_lower (m : ℕ) (hm0 : m ≠ 0) (hodd : Odd m) :
+lemma odd_part_lower (m : ℕ) (hm0 : m ≠ 0) (hodd : Odd m) :
     3 ^ m.primeFactorsList.length ≤ m := by
   calc
     3 ^ m.primeFactorsList.length ≤ m.primeFactorsList.prod := by

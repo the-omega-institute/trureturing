@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/EdgeLabeling/WildNumber/Result.result; instance=D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.all_outputs_six
    digest: Every greedy output on the four-colored wheel has six edges. -/
 /-
 admission_basis: escape-witness (FiniteState.run_states)
@@ -16,6 +16,7 @@ O_color_connecting: proof_shape: bind-only; escape_witness: none; Direct frozen 
 color_connecting_card_ge_five: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
 all_outputs_six: proof_shape: content; escape_witness: none; Direct frozen dependencies: none.
 FiniteState.run_states: proof_shape: content; escape_witness: FiniteState.run_states; Direct frozen dependencies: none.
+count_eq: proof_shape: content; escape_witness: ComponentMirror.labels_valid; Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21209
 -/
 import D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy
@@ -292,17 +293,19 @@ private theorem graph_eq (W : (Finset (Fin 14))) (c : (Fin 4)) : SimpleGraph.fro
     rcases Sym2.eq_iff.mp heq with ⟨hu,hv⟩ | ⟨hu,hv⟩
     · exact Or.inl ((localEdges_mem W c u v).mpr ⟨i,hi,hu,hv⟩)
     · exact Or.inr ((localEdges_mem W c v u).mpr ⟨i,hi,hu,hv⟩)
-private theorem count_eq (W : (Finset (Fin 14))) (c : (Fin 4)) : count W c =
+theorem count_eq (W : (Finset (Fin 14))) (c : (Fin 4)) : count W c =
     Nat.card (wildColorGraph D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.gamma (realize W) c).ConnectedComponent := by
   unfold count
   rw [D5.S3.Combinatorics.EdgeLabeling.WildNumber.ComponentMirror.componentCount_eq_kappa,graph_eq]
 private theorem dip_eq (W : (Finset (Fin 14))) (e : (Fin 14)) : dip W e =
     D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.dip D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.gamma (realize W) (edge e) := by
   unfold dip D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.dip
+    D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.kappa
   simp only [count_eq,realize_insert]
 private theorem potential_eq (W : (Finset (Fin 14))) (e : (Fin 14)) : potential W e =
     D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.potential D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.gamma (realize W) (edge e) := by
   unfold potential D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.potential
+    D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.edges
   rw [edges_realize]
   unfold realize
   rw [Finset.image_val_of_injOn edge_injective.injOn,Multiset.map_map]
@@ -983,7 +986,8 @@ private theorem run_states {W : Finset (Sym2 (Fin 8))}
   | @step W e hr hs ih =>
     obtain ⟨S,hS,rfl⟩ := ih
     have he : e ∈ D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H.edgeSet := by
-      simpa [] using (Finset.mem_sdiff.mp hs.2.1).1
+      simpa [D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.edges] using
+        (Finset.mem_sdiff.mp hs.2.1).1
     obtain ⟨i,rfl⟩ := edge_exhaust he
     exact ⟨insert i S,states_step S hS i (step_reflect S i hs),realize_insert S i⟩
 end D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.FiniteState

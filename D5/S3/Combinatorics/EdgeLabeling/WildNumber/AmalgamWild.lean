@@ -233,7 +233,7 @@ private theorem greedy_step_restrict (B : ι → SimpleGraph (Option A))
     exact (Nat.lt_irrefl 0 hp)
   · apply Finset.mem_sdiff.mpr
     constructor
-    · simpa [] using he
+    · simpa [edges] using he
     · intro hm
       apply (Finset.mem_sdiff.mp hs.2.1).2
       exact (liftEdgeMem_assemble_iff W i e hnDiag).mpr hm
@@ -308,7 +308,7 @@ private theorem run_valid (G : SimpleGraph (Option A)) (γ : G.edgeSet → C) {W
   | @step W e hr hs ih =>
     intro f hf
     rcases Finset.mem_insert.mp hf with rfl | hf
-    · simpa [] using (Finset.mem_sdiff.mp hs.2.1).1
+    · simpa [edges] using (Finset.mem_sdiff.mp hs.2.1).1
     · exact ih hf
 private theorem run_decompose (B : ι → SimpleGraph (Option A))
     (γ : ∀ i, (B i).edgeSet → C) (hB : ∀ i, (B i).Connected) {W}
@@ -323,7 +323,7 @@ private theorem run_decompose (B : ι → SimpleGraph (Option A))
   | @step W e hr hs ih =>
     obtain ⟨L,rfl,hL⟩ := ih
     have he : e ∈ (starGraph B).edgeSet := by
-      simpa [] using (Finset.mem_sdiff.mp hs.2.1).1
+      simpa [edges] using (Finset.mem_sdiff.mp hs.2.1).1
     obtain ⟨i,f,hf,rfl⟩ := (star_edge_decomp B).mp he
     have hv : ∀ j, (L j : Set _) ⊆ (B j).edgeSet := fun j => run_valid _ _ (hL j)
     refine ⟨Function.update L i (insert f (L i)),assemble_insert L i f,?_⟩

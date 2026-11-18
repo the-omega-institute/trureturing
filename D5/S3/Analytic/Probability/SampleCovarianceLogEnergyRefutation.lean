@@ -65,9 +65,9 @@ Declaration proof shapes (names relative to this module):
   claim; proof_shape: bind-only; escape_witness: none; consumer: result
   result; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: none (settling result)
 Direct frozen dependencies:
-  D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
-  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
-  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli._proof_1: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+  D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm: declaration statement_id sha256:22d5a6952370e9164f56764205f50d3d5d06a1a6e0cf1bab0a41053068bfebc5
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli: declaration statement_id sha256:aee6f44c7b754f7568932206a687d5cf3eb54e759581907e0d0e319afc8647bc
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli._proof_1: declaration statement_id sha256:1dc7d82ea625081deee71f1615e89332f78727a151d4d48a9367604b8a91e63c
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog

@@ -63,13 +63,13 @@ private instance instDecidableProper {n : ℕ} (P : Fin 3 × Fin n → Fin 3) :
 def L (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun P : Fin 3 × Fin n → Fin 3 => Proper P)).card
 
-private abbrev Col := Fin 3 × Fin 3 × Fin 3
+abbrev Col := Fin 3 × Fin 3 × Fin 3
 private def column (c : Col) : Fin 3 → Fin 3 := ![c.1, c.2.1, c.2.2]
 private def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 3, (r = s ∨ r.val = s.val + 1) → column a r ≠ column b s
 private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
   inferInstanceAs (Decidable (∀ _ _, _ → _))
-private def cls (c : Col) : Fin 5 :=
+def cls (c : Col) : Fin 5 :=
   if c.1 = c.2.1 then (if c.1 = c.2.2 then 0 else 1)
   else if c.1 = c.2.2 then 2 else if c.2.1 = c.2.2 then 3 else 4
 def Q : Matrix (Fin 5) (Fin 5) ℤ :=
