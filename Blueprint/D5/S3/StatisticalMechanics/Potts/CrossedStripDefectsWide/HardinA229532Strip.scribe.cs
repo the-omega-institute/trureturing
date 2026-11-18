@@ -18,7 +18,8 @@ internal sealed class HardinA229532StripDocument : IScribeDocumentDefinition
                 H("The registered all-index recurrence"), StatementSource.FromAuthor(Disp(RecurrenceFormula())),
 
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("The recurrence is an identity in the integers at every index at least 20. DefectTransfer.lumped_count and forward_shift propagate the vector relation from row twenty. A separate terminal scalar certificate at row nineteen supplies the first index twenty; the full vector relation is not claimed there. The literal row-major canonical representative is independent of the row sweep. canonical_pattern_card supplies the factor six in the range used here, where a constant array cannot have the prescribed defect count. This is a finite combinatorial count and makes no thermodynamic-limit claim."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The recurrence is an identity in the integers at every index at least 20. DefectTransfer.lumped_count and forward_shift propagate the vector relation from row twenty. A separate terminal scalar certificate at row nineteen supplies the first index twenty; the full vector relation is not claimed there. The literal row-major canonical representative is independent of the row sweep. canonical_pattern_card supplies the factor six in the range used here, where a constant array cannot have the prescribed defect count. This is a finite combinatorial count and makes no thermodynamic-limit claim."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229532"), ResolutionKind.Proved)))));
 
     private static Formula RecurrenceFormula()
     {

@@ -23,5 +23,6 @@ For every actual row p : Fin 5 to Fin 3 and residual d : Fin 3 satisfying Valid 
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass10.transition_counts`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefects/HardinA229531StripData](../CrossedStripDefects/HardinA229531StripData.md)
+- Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripCut](HardinA229634StripCut.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripData](HardinA229634StripData.md)
 - Dependency: [D5/S3/StatisticalMechanics/Potts/StripDefects/DefectTransfer](../StripDefects/DefectTransfer.md)
