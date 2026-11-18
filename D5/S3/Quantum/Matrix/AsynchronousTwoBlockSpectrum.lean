@@ -47,7 +47,7 @@ def zeroDiagonal {m n : ℕ} (U : Matrix (Fin m) (Fin n) ℝ)
   Matrix.reindexAlgEquiv ℝ ℝ (blockEquiv m n)
     (Matrix.fromBlocks 0 U V 0)
 
-private theorem shift_row {ℓ : ℕ} {sizes : Fin ℓ → ℕ}
+theorem shift_row {ℓ : ℕ} {sizes : Fin ℓ → ℕ}
     (M : Matrix (Vtx sizes) (Vtx sizes) ℝ) (δ : Fin ℓ → Fin ℓ → ℕ)
     (K : ℕ) (H : Fin (K+1) × Vtx sizes → ℂ)
     (r : Fin (K+1)) (p : Vtx sizes) (hr : r.val ≠ 0) :
