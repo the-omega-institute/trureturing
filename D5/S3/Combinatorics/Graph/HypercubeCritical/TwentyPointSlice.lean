@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
    utility: none
-   digest: The actual twenty-point slice has parity split 10/10 and compressed graphs of the same five-vertex type before the remaining Huang-sign obstruction.
+   digest: The actual twenty-point slice reduces to paired squares with leaves after excluding 11/9 and paired pentagons.
  -/
 
+import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonExclusion
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 import D5.S3.Combinatorics.Graph.HypercubeCritical.SymmetricHighGraph
@@ -22,6 +23,9 @@ set_option linter.style.longLine false
 noncomputable section
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSlice
+
+open private paired_cycle_nonembedding from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonExclusion
 
 open scoped BigOperators Classical
 open SimpleGraph GirthSliceCounting
@@ -267,10 +271,9 @@ def claim : Prop :=
       (∀ {x y}, G.Adj x y → G.degree x = 2 → G.degree y = 2 → False) ∧
       IsBalanced S
 
-/- The exact actual-support telescope yields derived girth, the symmetric parity
-   split, five high-high edges, and equal compressed types. Their actual signed
-   word exclusions remain necessary to obtain the full obstruction. -/
-theorem actual_twenty_point_slice_data (h : claim) :
+/- The original actual-support telescope reduces to paired squares with leaves.
+   The 11/9 orientations and the paired-pentagon branch are excluded. -/
+private theorem actual_twenty_point_slice_data (h : claim) :
     ∃ (n : ℕ) (S : Finset (Q n)),
       ∃ L R : Finset {x : Q n // x ∈ S},
         let G := (hypercube n).induce {x | x ∈ S}
@@ -287,9 +290,7 @@ theorem actual_twenty_point_slice_data (h : claim) :
             (T : Set {x : Q n // x ∈ S}) ∧
           P.card = 10 ∧ T.card = 10 ∧
             (degreeTwo G P).card = 5 ∧ (degreeTwo G T).card = 5 ∧
-            ((Nonempty (cycleGraph 5 ≃g compressed G P) ∧
-                Nonempty (cycleGraph 5 ≃g compressed G T)) ∨
-              (SquareLeaf (compressed G P) ∧ SquareLeaf (compressed G T)))) ∧
+            (SquareLeaf (compressed G P) ∧ SquareLeaf (compressed G T))) ∧
         (G.induce {v | G.degree v = 3}).edgeFinset.card = 5 ∧
         (∀ P T : Finset (S : Set (Q n)),
           G.IsBipartiteWith (P : Set (S : Set (Q n))) (T : Set (S : Set (Q n))) →
@@ -359,9 +360,12 @@ theorem actual_twenty_point_slice_data (h : claim) :
       hhigh _ hsym.1 hsym.2.2.1
     have ht : (degreeThree G (paritySide S true)).card = 5 :=
       hhigh _ hsym.2.1 hsym.2.2.2
-    exact symmetric_paired_types hparity hdeg hlow
+    have hcases := symmetric_paired_types hparity hdeg hlow
       (BalancedCubeGirth.eight_le_egirth S hbal) hp ht
       hsym.2.2.1 hsym.2.2.2
+    rcases hcases with ⟨hLc, hRc⟩ | hsq
+    · exact (paired_cycle_nonembedding hparity hdeg hlow hbal hLc hRc).elim
+    · exact hsq
   · change (graph G).edgeFinset.card = 5
     exact hedge
   · intro P T hp

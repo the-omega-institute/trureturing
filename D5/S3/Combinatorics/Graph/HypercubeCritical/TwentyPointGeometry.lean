@@ -195,19 +195,20 @@ private theorem subset_of_inter_card {α : Type*} [DecidableEq α]
   have he : T ∩ U = T := Finset.eq_of_subset_of_card_le Finset.inter_subset_left hc.ge
   exact Finset.inter_eq_left.mp he
 
-private theorem common_middle_diff {n : ℕ} {o x y m : Q n}
-    (hx : (diff x o).card = 3) (hy : (diff y o).card = 3)
+private theorem common_middle_diff {n k : ℕ} {o x y m : Q n}
+    (hx : (diff x o).card = k) (hy : (diff y o).card = k)
     (hxy : hammingDist x y = 2)
     (hxm : (hypercube n).Adj x m) (hym : (hypercube n).Adj y m) :
     diff m o = diff x o ∩ diff y o ∨ diff m o = diff x o ∪ diff y o := by
   have hi := inter_card hx hy hxy
-  have hI : (diff x o ∩ diff y o).card = 2 := by omega
-  have hU : (diff x o ∪ diff y o).card = 4 := by
+  have hk : 1 ≤ k := by omega
+  have hI : (diff x o ∩ diff y o).card = k - 1 := by omega
+  have hU : (diff x o ∪ diff y o).card = k + 1 := by
     have h := Finset.card_union_add_card_inter (diff x o) (diff y o)
     omega
   obtain ⟨i, hm⟩ := adjacent_exists_flip hxm
   change m = flip x i at hm
-  have hmcard : (diff m o).card = 2 ∨ (diff m o).card = 4 := by
+  have hmcard : (diff m o).card = k - 1 ∨ (diff m o).card = k + 1 := by
     rw [hm, diff_flip]
     split_ifs with hi
     · left; rw [Finset.card_erase_of_mem hi, hx]

@@ -177,6 +177,35 @@ private theorem direction_avoids_two_step {n : ℕ} {x y : Q n} {i : Fin n}
   change (diff x y).card = 2 at hxy
   omega
 
+private theorem matching_direction_bit {n : ℕ}
+    (A B : Fin 5 → Q n) (c : Fin 5 → Fin n)
+    (hflip : ∀ i, B i = flip (A i) (c i))
+    (hno : ∀ i j, i ≠ j → ¬ (hypercube n).Adj (A i) (B j))
+    (hA : ∀ i j, (cycleGraph 5).Adj i j → hammingDist (A i) (A j) = 2)
+    (hB : ∀ i j, i ≠ j → ¬ (cycleGraph 5).Adj i j →
+      hammingDist (B i) (B j) = 2) :
+    ∀ i j : Fin 5, i ≠ j →
+      (A i (c i) = A j (c i) ↔ (cycleGraph 5).Adj i j ∨ c i = c j) := by
+  intro i j hij
+  by_cases he : (cycleGraph 5).Adj i j
+  · have h := direction_avoids_two_step (hA i j he) (by
+      rw [← hflip i]
+      exact fun hh => hno j i hij.symm hh.symm)
+    simp [he, h]
+  · have hBi := direction_avoids_two_step (hB i j hij he) (by
+      rw [hflip i, BalancedCriticalSpectrum.flip_flip]
+      exact hno i j hij)
+    rw [hflip i, hflip j] at hBi
+    by_cases hc : c i = c j
+    · simp [hc, BalancedCriticalSpectrum.flip] at hBi
+      simp [he, hc, hBi]
+    · have hci : c j ≠ c i := Ne.symm hc
+      simp only [BalancedCriticalSpectrum.flip_apply_same,
+        BalancedCriticalSpectrum.flip, Function.update_of_ne hci] at hBi
+      have hn : A i (c i) ≠ A j (c i) := by
+        cases ha : A i (c i) <;> cases hb : A j (c i) <;> simp_all
+      simp [he, hc, hn]
+
 private theorem direction_fiber_dichotomy {n : ℕ}
     (A B : Fin 5 → Q n) (c : Fin 5 → Fin n)
     (hflip : ∀ i, B i = flip (A i) (c i))
@@ -185,26 +214,7 @@ private theorem direction_fiber_dichotomy {n : ℕ}
     (hB : ∀ i j, i ≠ j → ¬ (cycleGraph 5).Adj i j →
       hammingDist (B i) (B j) = 2) :
     (∀ i, c i = c 0) ∨ Function.Injective c := by
-  have hbit (i j : Fin 5) (hij : i ≠ j) :
-      (A i (c i) = A j (c i) ↔ (cycleGraph 5).Adj i j ∨ c i = c j) := by
-    by_cases he : (cycleGraph 5).Adj i j
-    · have h := direction_avoids_two_step (hA i j he) (by
-        rw [← hflip i]
-        exact fun hh => hno j i hij.symm hh.symm)
-      simp [he, h]
-    · have hBi := direction_avoids_two_step (hB i j hij he) (by
-        rw [hflip i, BalancedCriticalSpectrum.flip_flip]
-        exact hno i j hij)
-      rw [hflip i, hflip j] at hBi
-      by_cases hc : c i = c j
-      · simp [hc, BalancedCriticalSpectrum.flip] at hBi
-        simp [he, hc, hBi]
-      · have hci : c j ≠ c i := Ne.symm hc
-        simp only [BalancedCriticalSpectrum.flip_apply_same,
-          BalancedCriticalSpectrum.flip, Function.update_of_ne hci] at hBi
-        have hn : A i (c i) ≠ A j (c i) := by
-          cases ha : A i (c i) <;> cases hb : A j (c i) <;> simp_all
-        simp [he, hc, hn]
+  have hbit := matching_direction_bit A B c hflip hno hA hB
   have hmodule (t : Fin n) :
       ∀ i ∈ Finset.univ.filter (fun i => c i = t),
         ∀ j ∈ Finset.univ.filter (fun j => c j = t),

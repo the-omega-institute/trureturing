@@ -17,7 +17,7 @@ internal sealed class TwentyPointSliceDocument : IScribeDocumentDefinition
                     + "a cycle classification, a coordinate normal form, or a signed-path result.")),
             Paragraph(Text(
                 "The two five-vertex compressed graphs are each classified as a five-cycle or a four-cycle with a leaf, and the mixed pair is excluded. "
-                    + "The two matching types still require their actual Huang-sign contradictions. "
+                    + "The actual paired-pentagon case is excluded by its derived matching, constant-or-injective matching directions, coordinate differences, low independence, and the original Huang negative ten-cycle. Only the paired squares with leaves remain. "
                     + "The unsigned abstract twenty-vertex graph is not used as an actual cube countermodel.")),
             Describe.Lean(
                 DescribeId.Create("twenty-point-slice-claim"),
@@ -26,20 +26,15 @@ internal sealed class TwentyPointSliceDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "The literal proposition quantifies over every ambient dimension, every finite actual support, and actual bipartition sides. "
                         + "Its local hypotheses are support cardinality twenty, degree type two or three, exactly ten actual degree-two vertices, actual degree-two independence, "
-                        + "and original IsBalanced."))), DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("actual-twenty-point-slice-data"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSlice.actual_twenty_point_slice_data"),
-                H("actual twenty-point slice data"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "From claim, BalancedCubeGirth.eight_le_egirth supplies girth at least eight; actual low/high incidence counting supplies five high-high edges; "
-                        + "and the constructed cube-parity bipartition is forced to have ten vertices and five lows on each side. The derived compressed graphs are either both five-cycles or both four-cycles with a leaf. The final obstruction is not claimed here."))), DescribeRole.Theorem)),
+                        + "and original IsBalanced."))), DescribeRole.Definition)),
+
         [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeGirth")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/EighteenPointSlice")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/GirthSliceCounting")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/SymmetricHighGraph")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointGeometry")),
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSymmetric"))
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointSymmetric")),
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/TwentyPointPentagonExclusion"))
         ]));
 }

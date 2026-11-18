@@ -152,27 +152,16 @@ private theorem five_distance_two_center {n : ℕ} (A : Fin 5 → Q n)
 private theorem five_star_negative {n : ℕ} {S : Finset (Q n)}
     (hbal : IsBalanced S) (A P : Fin 5 → (S : Set (Q n)))
     (hinj : Function.Injective A)
-    (hP : ∀ i, ((hypercube n).induce (S : Set (Q n))).degree (P i) = 2)
     (hAP : ∀ i, (hypercube n).Adj (A i).val (P i).val)
     (hPA : ∀ i, (hypercube n).Adj (A (i + 1)).val (P i).val)
-    {z : Q n} (hz : ∀ i, (hypercube n).Adj z (A i).val) : False := by
+    {z : Q n} (hz : ∀ i, (hypercube n).Adj z (A i).val)
+    (hPz : ∀ i, (P i).val ≠ z) : False := by
   choose d hd using fun i => adjacent_exists_flip (hz i)
   have hd' : Function.Injective d := by
     intro i j he
     apply hinj
     apply Subtype.ext
     rw [hd i, hd j, he]
-  have hPz (i : Fin 5) : (P i).val ≠ z := by
-    intro he
-    have hneighbor (j : Fin 5) :
-        ((hypercube n).induce (S : Set (Q n))).Adj (P i) (A j) := by
-      change (hypercube n).Adj (P i).val (A j).val
-      rw [he]; exact hz j
-    exact low_not_three (hP i)
-      (hinj.ne (by decide : (0 : Fin 5) ≠ 1))
-      (hinj.ne (by decide : (0 : Fin 5) ≠ 2))
-      (hinj.ne (by decide : (1 : Fin 5) ≠ 2))
-      (hneighbor 0) (hneighbor 1) (hneighbor 2)
   have hnext (i : Fin 5) : i ≠ i + 1 := by revert i; decide +kernel
   have hmiddle (i : Fin 5) : (P i).val = flip (flip z (d i)) (d (i + 1)) := by
     have h1 := diff_of_adj_flip (hPz i).symm (d i) (by rw [← hd i]; exact hAP i)

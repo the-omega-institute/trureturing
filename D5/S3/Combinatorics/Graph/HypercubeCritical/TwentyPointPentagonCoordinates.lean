@@ -25,7 +25,7 @@ open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open private paired_cycle_direction_data from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagon
-open private compressed_distance from
+open private compressed_distance low_not_three from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry
 open private five_distance_two_center five_star_negative from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonSigns
@@ -37,12 +37,15 @@ attribute [local instance] Classical.propDecidable
 private theorem hamming_flip_both {n : ℕ} (x y : Q n) (t : Fin n) :
     hammingDist (flip x t) (flip y t) = hammingDist x y := by
   change (diff (flip x t) (flip y t)).card = (diff x y).card
-  congr 1
-  ext k
-  by_cases hkt : k = t
-  · subst k
-    cases hx : x t <;> cases hy : y t <;> simp [diff, BalancedCriticalSpectrum.flip, hx, hy]
-  · simp [diff, BalancedCriticalSpectrum.flip, hkt]
+  have hd : diff (flip x t) (flip y t) = diff x y := by
+    ext k
+    simp only [diff, Finset.mem_filter, Finset.mem_univ, true_and]
+    by_cases hkt : k = t
+    · subst k
+      cases hx : x t <;> cases hy : y t <;>
+        simp [BalancedCriticalSpectrum.flip, hx, hy]
+    · simp [BalancedCriticalSpectrum.flip, hkt]
+  exact congrArg Finset.card hd
 
 private theorem paired_cycle_injective_directions {n : ℕ} {S : Finset (Q n)}
     {L R : Finset (S : Set (Q n))}
@@ -88,7 +91,18 @@ private theorem paired_cycle_injective_directions {n : ℕ} {S : Finset (Q n)}
       revert i
       decide +kernel
     choose P hP hAP hPA using fun i => (hedge i).2
-    exact five_star_negative hbal A P hAinj hP hAP hPA hz
+    have hPz (i : Fin 5) : (P i).val ≠ z := by
+      intro he
+      have hneighbor (j : Fin 5) :
+          ((hypercube n).induce (S : Set (Q n))).Adj (P i) (A j) := by
+        change (hypercube n).Adj (P i).val (A j).val
+        rw [he]; exact hz j
+      exact low_not_three (hP i)
+        (hAinj.ne (by decide : (0 : Fin 5) ≠ 1))
+        (hAinj.ne (by decide : (0 : Fin 5) ≠ 2))
+        (hAinj.ne (by decide : (1 : Fin 5) ≠ 2))
+        (hneighbor 0) (hneighbor 1) (hneighbor 2)
+    exact five_star_negative hbal A P hAinj hAP hPA hz hPz
   · exact hinj
 
 #print axioms paired_cycle_injective_directions
