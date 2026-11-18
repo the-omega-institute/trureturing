@@ -149,7 +149,10 @@ theorem geometric_sqrt_decay {c q : ℝ} (hc : 0 < c) (hq0 : 0 < q) (hq1 : q < 1
   simp only [Function.comp_def, rpow_ofNat]
   rw [rpow_def_of_pos hq0]
   have he : -b * sqrt t = log q * (c * sqrt t) := by dsimp [b]; ring
-  have hp : sqrt t ^ 3 = t * sqrt t := by nlinarith [sq_sqrt ht.le]
+  have hp : sqrt t ^ 3 = t * sqrt t := by
+    calc
+      sqrt t ^ 3 = sqrt t ^ 2 * sqrt t := by ring
+      _ = t * sqrt t := by rw [sq_sqrt ht.le]
   rw [he, hp]
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.Tail
