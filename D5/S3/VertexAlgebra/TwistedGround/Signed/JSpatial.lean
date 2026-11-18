@@ -242,6 +242,46 @@ private lemma candidateJ_chart (e f : Bool) {u v r : ℂ}
   unfold candidateJ chartJ
   linear_combination -hregular
 
+/-- The literal signed J candidate satisfies its polynomial identity also on
+same-sign diagonals. The source square fixes that diagonal algebraically. -/
+lemma candidateJ_cleared (e f : Bool) {u v r : ℂ}
+    (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1) :
+    2 * G e f u v ^ 2 *
+      (candidateJ e f u v r - (Qconstant e f r - correction r) *
+        sourceMode e u r * sourceMode f v r) =
+      jN e f u v r * sourceMode e u r * sourceMode f v r - rho e f u v := by
+  by_cases hg : G e f u v = 0
+  · have hef : e = f := by
+      by_contra hef
+      have hprod : u * v = 1 := by
+        have he : 1 - u * v = 0 := by simpa [G, hef] using hg
+        exact (sub_eq_zero.mp he).symm
+      have hu1 : ‖u‖ < 1 := by linarith [norm_nonneg r]
+      have hv1 : ‖v‖ < 1 := by linarith [norm_nonneg r]
+      have hn : ‖u‖ * ‖v‖ < 1 := by nlinarith [mul_nonneg (norm_nonneg u) (sub_nonneg.mpr hv1.le)]
+      rw [← norm_mul, hprod, norm_one] at hn
+      exact (lt_irrefl 1) hn
+    subst f
+    have huv : u = v := sub_eq_zero.mp (by simpa [G] using hg)
+    subst v
+    have hb := (mode_factors_ne_zero hu).1
+    have hb' : b u ≠ 0 := hb
+    have hh := h_ne_zero e hu
+    have hs : sourceMode e u r ^ 2 = 1 / (b u * h e u r) := by
+      cases e
+      · exact (sourceMode_square hu).2
+      · exact (sourceMode_square hu).1
+    rw [hg, zero_pow (by decide), mul_zero, zero_mul]
+    have hd : jN e e u u r * sourceMode e u r * sourceMode e u r = rho e e u u := by
+      calc
+        _ = (2 * u * h e u r * b u) * sourceMode e u r ^ 2 := by simp only [jN, ite_true]; ring
+        _ = rho e e u u := by rw [hs]; unfold rho; simp only [ite_true]; field_simp [hb', hh]; ring
+    rw [hd, sub_self]
+  · rw [candidateJ_chart e f hu hv hg]
+    unfold chartJ rationalJ cauchy
+    field_simp [hg]
+    <;> ring
+
 private lemma candidateJ_u (e f : Bool) {u v r : ℂ}
     (hu : ‖u‖ + ‖r‖ < 1) (hv : ‖v‖ + ‖r‖ < 1) (hg : G e f u v ≠ 0) :
     HasDerivAt (fun w => candidateJ e f w v r)
