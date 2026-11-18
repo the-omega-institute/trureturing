@@ -106,6 +106,10 @@ $$\exists n \in \mathrm{Nat},\; \exists G \in \operatorname{SimpleGraph}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TotalConformalRigidityTwoNotOne.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-acg2605cr` (proved) by `D5/S3/Combinatorics/SpectralGraph/TotalConformalRigidityTwoNotOne.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-acg2605cr","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/TotalConformalRigidityTwoNotOne.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Henrique Assumpção, Gabriel Coutinho and Chris Godsil (2026). *Total Conformal Rigidity in Graphs*. DOI: [10.48550/arXiv.2605.08508](https://doi.org/10.48550/arXiv.2605.08508). URL: <https://arxiv.org/abs/2605.08508v2>.
