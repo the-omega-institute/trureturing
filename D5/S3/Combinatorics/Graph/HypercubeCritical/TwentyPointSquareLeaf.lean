@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
    utility: none
-   digest: Actual labels and high-edge incidence for paired squares with leaves.
- -/
+   digest: Actual labels and high-edge incidence for paired squares with leaves. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonExclusion
 

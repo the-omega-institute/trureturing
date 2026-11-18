@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none
-   digest: Actual coordinate differences for five distinct pentagon matching directions.
- -/
+   digest: Actual coordinate differences for five distinct pentagon matching directions. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonCoordinates
 

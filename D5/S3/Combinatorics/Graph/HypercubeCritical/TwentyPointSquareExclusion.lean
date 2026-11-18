@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none
-   digest: Nonembedding of the paired squares with leaves in a balanced actual twenty-point slice.
- -/
+   digest: Nonembedding of the paired squares with leaves in a balanced actual twenty-point slice. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointEightWord
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareLeaf

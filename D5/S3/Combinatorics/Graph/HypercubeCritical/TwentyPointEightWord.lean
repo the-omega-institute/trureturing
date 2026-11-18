@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Archive.Sensitivity]
    utility: none
-   digest: Positive eight-cycle direction words in the actual Huang cube.
- -/
+   digest: Positive eight-cycle direction words in the actual Huang cube. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonSigns
 

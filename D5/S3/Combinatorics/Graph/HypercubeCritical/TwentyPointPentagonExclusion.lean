@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none
-   digest: Actual independent low vertices exclude paired pentagons under Huang balance.
- -/
+   digest: Actual independent low vertices exclude paired pentagons under Huang balance. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonDistinct
 

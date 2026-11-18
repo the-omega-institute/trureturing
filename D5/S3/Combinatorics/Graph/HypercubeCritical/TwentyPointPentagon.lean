@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Matching]
    utility: none
-   digest: Actual perfect matching and complementary pentagons in the twenty-point slice.
- -/
+   digest: Actual perfect matching and complementary pentagons in the twenty-point slice. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointGeometry

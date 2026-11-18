@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
    utility: none
-   digest: The actual 11/9 twenty-point branch forces its seven-high-vertex theta incidence.
- -/
+   digest: The actual 11/9 twenty-point branch forces its seven-high-vertex theta incidence. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 

@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.InformationTheory.Hamming]
    utility: none
-   digest: Actual coordinate differences for the twenty-point 11/9 theta obstruction.
- -/
+   digest: Actual coordinate differences for the twenty-point 11/9 theta obstruction. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
