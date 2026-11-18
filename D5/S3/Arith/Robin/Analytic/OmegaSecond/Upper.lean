@@ -56,9 +56,6 @@ theorem rankin_reduction {x s : ℝ} (hx : exp 1 < x) (hs : 2 ≤ s) :
   have hprimes : ((Icc 1 ⌊x⌋₊).filter Nat.Prime) = Nat.primesLE ⌊x⌋₊ := by
     rw [Nat.primesLE_eq_filter_Ioc_zero]
     congr 1
-    ext p
-    simp only [mem_Icc, mem_Ioc]
-    omega
   rw [hprimes, prime_weight_split hL0 (log_le_sub_one_of_pos hx0 |>.trans (by linarith))
     hs0.le] at h
   have heq : s * log x - threshold 1 x * log ((log x) ^ s) +
@@ -72,7 +69,7 @@ theorem rankin_reduction {x s : ℝ} (hx : exp 1 < x) (hs : 2 ≤ s) :
   have hcost : log (1 + ∑' n : ℕ, (n : ℝ) ^ (-s)) ≤ eulerCost := by
     apply log_le_log
     · positivity
-    · exact add_le_add_left (pseries_le_square hs) 1
+    · simpa only [add_comm] using add_le_add_left (pseries_le_square hs) 1
   change (tailCount 1 x : ℝ) ≤ _ at h
   refine h.trans (exp_le_exp.mpr ?_)
   linarith only [heq, hcost]
@@ -93,7 +90,8 @@ theorem secondScale_top : Tendsto secondScale atTop atTop := by
     exact div_pos (mul_pos (log_pos hP) (sqrt_pos.mpr (log_pos hP))) (by linarith)
   have h := tendsto_inv_nhdsGT_zero.comp
     (tendsto_nhdsWithin_iff.mpr ⟨log_rpow_over_id_zero, hp⟩)
-  simpa only [secondScale, inv_div, Function.comp_def] using h.comp tendsto_log_atTop
+  change Tendsto (fun x : ℝ => log x / (log (log x) * sqrt (log (log x)))) atTop atTop
+  simpa only [inv_div, Function.comp_def] using h.comp tendsto_log_atTop
 
 /-- The budget contribution at the explicit saddle has coefficient pi/sqrt(3). -/
 theorem saddle_budget_limit :
@@ -163,6 +161,12 @@ theorem result : ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop,
   rw [heq, show (2 * π / sqrt 3 + ε) * log x /
       (log (log x) * sqrt (log (log x))) =
       (2 * π / sqrt 3 + ε) * secondScale x by dsimp [secondScale]; ring]
-  linarith only [hfront, hrem]
+  simp only [Function.comp_def]
+  calc
+    _ = (saddle (log x) * budget (log x) + eulerCost) +
+        remainder (log x) (saddle (log x)) x := by ring
+    _ ≤ (π / sqrt 3 + ε / 2) * secondScale x +
+        (π / sqrt 3 + ε / 2) * secondScale x := add_le_add hfront hrem
+    _ = _ := by ring
 
 end D5.S3.Arith.Robin.Analytic.OmegaSecond.Upper

@@ -6,7 +6,7 @@
    utility: none
    digest: Prime-weight quadrature with the exact total variation error. -/
 
-import D5.S3.Arith.Robin.Analytic.OmegaSecond.CentralCount
+import D5.S3.Arith.Robin.Analytic.OmegaSecond.PrimeExpansion
 import D5.S3.Arith.Robin.Analytic.OmegaTailUpper
 import D5.S3.Arith.Robin.Analytic.OmegaSecond.MovingWeight
 
@@ -196,7 +196,7 @@ theorem central_prime_weight_upper :
       (∑ p ∈ primeInterval (P / 2) (2 * P), MovingWeight.weight P s p) ≤
         (∫ t in (P / 2)..(2 * P), MovingWeight.weight P s t) / log P +
           112 * log 2 * (P / log P ^ 2) := by
-  filter_upwards [CentralCount.central_prime_counting_bound,
+  filter_upwards [PrimeExpansion.central_prime_counting_bound,
     eventually_gt_atTop (1 : ℝ)] with P hcount hP
   intro s hs
   have hP0 : 0 < P := by linarith
