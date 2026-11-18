@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/UmegakiArithmeticBKM
   - D5/S3/Quantum/Divergence/UniversalCommonCenter
   - D5/S3/Quantum/Divergence/UniversalPositiveScalarizer
+  - D5/S3/Quantum/Divergence/ScalarizerMatrixTransport
 license: citation-only
 triage: anchor
 ---
@@ -76,8 +77,8 @@ then uses Hermitian-matrix PSD self-duality and strict separation.
 This common-center inference is derived from the supplied repository-first
 assessment, not attributed to Audenaert's article. It is step 3 support for the
 same Umegaki complete-versus-conditional contraction problem served by the BKM
-path identity. The weighted quotient-duality bridge, amplified common scalarizer
-and final coefficient comparison remain open. No originality or solution of
+path identity. The weighted quotient-duality bridge and final coefficient
+comparison remain open. No originality or solution of
 that original problem is asserted.
 
 The actual selected-column inference is formalized in
@@ -93,9 +94,22 @@ other columns form R. The proof uses P P adjoint=D D adjoint+R R adjoint
 and positivity of the latter remainder; it imposes no sparsity on X.
 
 This inference is a repository construction using the finite common-center
-supplier, not a result attributed to Audenaert's paper. It establishes joint
-Gram control, not yet a scalar functional or a state-valued scalarizer.
-Heterogeneous Douglas factorization, the unital functional and trace density,
-contractive polar correction for possibly singular density, the supported
-Gram flip and the same-center quantum-reference bounds remain unproved here.
-The original all-finite Umegaki coefficient equality remains open.
+supplier, not a result attributed to Audenaert's paper. The selected joint
+Gram is consumed by `UniversalPositiveScalarizer.common_positive_state_scalarizer`,
+which constructs one possibly singular positive trace-one `DensityState b`,
+independent of the reference and joint input. For every finite reference,
+including the empty carrier, and every complex joint matrix, its ordinary
+unnormalized weighted partial-trace center is the same in both residual Gram
+inequalities. The construction uses native rectangular Douglas factorization,
+complex-linear trace duality, the singular polar factor, and the supported Gram
+flip; no faithful-state, invertibility, unitary-polar, or dimension
+normalization assumption is added.
+
+`ScalarizerMatrixTransport` contains the finite Euclidean matrix transports
+used by this construction, including the Hilbert direct-sum application of the
+existing Douglas supplier. These transports are auxiliary to the common-state
+theorem and carry no separate novelty claim.
+
+This is an intermediate on the original route. The all-channel coefficient
+theorem, its support and regularization steps, and the final ratio comparison
+remain open; no literature-priority or open-problem resolution is asserted.
