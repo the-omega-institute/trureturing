@@ -7,6 +7,15 @@ internal sealed class ExchangeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Signed prime exchanges on a fixed base and counting on an exponential grid.",
         H("Paired prime exchanges"), Blocks(
+            Describe.Lean(DescribeId.Create("paired-outputs"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.pairedOutputs"),
+                H("Integers from paired choices"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "In each bin take all donor and recipient subsets of the prescribed sizes. " +
+                    "For each tuple of choices, remove the union of the donor subsets from the base, add the union of the recipient subsets, and multiply the elements of the resulting support. " +
+                    "The output family is the image of the entire finite product of choices under this map."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("paired-exchange"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.paired_exchange"),
                 H("Exact size and pointwise logarithmic budget"),
@@ -21,7 +30,7 @@ internal sealed class ExchangeDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The product of the resulting prime support is positive, squarefree, below x, and has exactly as many distinct prime factors as the base. " +
                         "The donor choice is the part of its bin missing from the support. The recipient choice is the intersection of its bin with the support. " +
-                        "Prime factorization recovers the support, so the number of outputs equals the product over bins of both binomial coefficients. " +
+                        "The Lower lemmas recover the prime support from the product, recover each bin choice, and identify the number of distinct factors with the support cardinality. Therefore the number of outputs equals the product over bins of both binomial coefficients. " +
                         "The statement allows an empty index type, zero choices, and choices filling a bin."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fixed-grid-bound"),
@@ -41,7 +50,7 @@ internal sealed class ExchangeDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fixed-grid-lower"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower"),
-                H("Fixed-grid entropy lower bound"),
+                H("Actual fixed-grid family and its entropy"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -57,8 +66,12 @@ internal sealed class ExchangeDocument : IScribeDocumentDefinition
                         "Normalizing by W/s gives the limit (pi^2/6)(1+eta)^2.")),
                     Paragraph(Text(
                         "Take h(i) to be the floor of q(i) times the smaller of the two bin sizes. Its ratio to W tends to delta(i) q(i). " +
-                        "The finite grid bound applies eventually by strict normalized slack. The two log binomial coefficients in each bin contribute " +
-                        "2 delta(i) H(q(i)) on scale W, with H the binary entropy. For each positive zeta, the log of the second-threshold count at exp(P) is eventually " +
-                        "at least Z times the coefficient 2 sum(delta(i) H(q(i)))/C minus zeta, with the subtraction inside the coefficient."))),
+                        "The floor fits in both bins. Strict normalized slack makes the exchange feasible for all sufficiently large P. " +
+                        "The image of all the paired choices is nonempty and has cardinality equal to the full product of both binomial coefficients over the grid. " +
+                        "Each integer in that image is positive, squarefree, strictly below exp(P), and has exactly k(P) distinct prime factors.")),
+                    Paragraph(Text(
+                        "The two log binomial coefficients in each bin contribute 2 delta(i) H(q(i)) on scale W, with H the binary entropy. " +
+                        "For each positive zeta, the log cardinality of the constructed family is eventually at least Z times (2 sum(delta(i) H(q(i)))/C minus zeta). " +
+                        "Since k(P) is strictly above the true second threshold, the same lower bound holds for the log of the second-threshold tail count."))),
                 DescribeRole.Theorem))));
 }

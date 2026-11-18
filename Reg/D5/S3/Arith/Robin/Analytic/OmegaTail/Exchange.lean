@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
 import Reg.Support.SingleDependentReadout
 
-/-! Readouts of the exact exchange cardinality and the finite grid lower count. -/
+/-! Readouts for the exact exchange cardinality, finite grid count, and entropy of the constructed family. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -12,6 +12,7 @@ open Filter Real Finset LeanInformationAudit
 open scoped Topology BigOperators
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Robin.Analytic.OmegaTailUpper
+open _root_.D5.S3.Arith.Robin.Analytic.OmegaTail
 open _root_.D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
 
 namespace Reg.D5.S3.Arith.Robin.Analytic.OmegaTail.Exchange
@@ -43,19 +44,18 @@ abbrev exchangeArena : Arena where
     (hhi : ∀ j, ∀ p ∈ R j, log (p : ℝ) ≤ hi j)
     (hx : 0 < x)
     (hslack : (∑ p ∈ base, log (p : ℝ)) + ∑ j, (h j : ℝ) * (hi j - lo j) < log x),
-    ∃ outputs : Finset ℕ,
-      O.readout () () outputs.card (∏ j, (D j).card.choose (h j) * (R j).card.choose (h j)) ∧
-      ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
-        base.card ∧ (n : ℝ) < x
+    let outputs := pairedOutputs base D R h
+    O.readout () () outputs.card (∏ j, (D j).card.choose (h j) * (R j).card.choose (h j)) ∧
+    ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+      base.card ∧ (n : ℝ) < x
 
 private theorem exchange_rejected : ¬ exchangeArena.{u}.Law rejected := by
   intro h
-  obtain ⟨_, hfalse, _⟩ := h (J := PEmpty.{u+1}) ∅ (fun j => j.elim) (fun j => j.elim)
+  exact (h (J := PEmpty.{u+1}) ∅ (fun j => j.elim) (fun j => j.elim)
     (fun j => j.elim) (fun j => j.elim) (fun j => j.elim) 2 (by simp)
     (fun j => j.elim) (fun j => j.elim) (fun i => i.elim) (fun i => i.elim)
     (fun j => j.elim) (fun j => j.elim) (fun j => j.elim) (by norm_num)
-    (by simpa using log_pos (show (1 : ℝ) < 2 by norm_num))
-  exact hfalse
+    (by simpa using log_pos (show (1 : ℝ) < 2 by norm_num))).1
 
 def exchangeFamily : Registration exchangeArena.{u} (type_of% @paired_exchange.{u}) where
   actual := exactCardinality
@@ -130,8 +130,7 @@ def exchangeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg", "body", "fn", "arg", "fn",
-        "fn"]
+        "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -191,19 +190,34 @@ abbrev entropyArena : Arena where
     (eta : ℝ) (heta : 0 < eta) (zeta : ℝ) (hzeta : 0 < zeta)
     (hslack : 2 * ∑ i, t i.succ * ((t i.succ - t i.castSucc) * q i) <
       (π ^ 2 / 6) * (1 + eta) ^ 2),
-    ∀ᶠ P : ℝ in atTop, O.readout () ()
-      (((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) /
-        ((1 + eta) * (π / (2 * sqrt 3))) - zeta) * ((P / log P) / sqrt (log P)))
-      (log (tailCount 1 (exp P) : ℝ))
+    ∀ᶠ P : ℝ in atTop,
+      let C := (1 + eta) * (π / (2 * sqrt 3))
+      let s := C * sqrt (log P)
+      let h := fun i => ⌊q i * (min (donorBin t P s i).card (recipientBin t P s i).card : ℝ)⌋₊
+      let bound := ((2 * ∑ i, (t i.succ - t i.castSucc) * binEntropy (q i)) / C - zeta) *
+        ((P / log P) / sqrt (log P))
+      ∃ base : Finset ℕ, base ⊆ Nat.primesLE ⌊P⌋₊ ∧
+        (∀ i, donorBin t P s i ⊆ base) ∧
+        base.card = Selection.selectedCount 1 (exp P) ∧
+        (∑ p ∈ base, log (p : ℝ)) ≤ P - FarDeletion.safeReserve P ∧
+        let outputs := pairedOutputs base (donorBin t P s) (recipientBin t P s) h
+        outputs.card = (∏ i, (donorBin t P s i).card.choose (h i) *
+          (recipientBin t P s i).card.choose (h i)) ∧
+        0 < outputs.card ∧
+        (∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+          Selection.selectedCount 1 (exp P) ∧ (n : ℝ) < exp P) ∧
+        O.readout () () bound (log (outputs.card : ℝ)) ∧ bound ≤ log (tailCount 1 (exp P) : ℝ)
 
 private theorem entropy_rejected : ¬ entropyArena.Law entropyRejected := by
   intro h
   have hcost : (0 : ℝ) < (π ^ 2 / 6) * (1 + 1) ^ 2 :=
     mul_pos (div_pos (pow_pos pi_pos 2) (by norm_num)) (by norm_num)
-  have hbad : ∀ᶠ _ : ℝ in atTop, False := h (m := 0) (fun _ => 0)
+  have hinstance := h (m := 0) (fun _ => 0)
     (fun i j hij => by omega) rfl Fin.elim0 (fun i => i.elim0) (fun i => i.elim0)
     1 (by norm_num) 1 (by norm_num) (by simpa using hcost)
-  exact hbad.exists.choose_spec
+  obtain ⟨P, base, hbase, hdonor, hcard, hreserve, hcount, hpos, hmembers, hbad, htail⟩ :=
+    hinstance.exists
+  exact hbad
 
 def entropyFamily : Registration entropyArena (type_of% @fixed_grid_lower) where
   actual := entropyLowerBound
@@ -242,7 +256,10 @@ def entropyAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "fn", "arg", "body", "fn", "fn"]
+        "body", "body", "body", "body", "fn", "arg", "body", "body",
+        "body", "body", "body", "arg", "body", "arg", "arg", "arg",
+        "arg", "body", "arg", "arg", "arg", "fn", "arg", "fn",
+        "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

@@ -395,12 +395,17 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
   have hsize : threshold 1 (exp P) < ((base P).card : ℝ) := by
     rw [hbaseP.2.2.1, Selection.selectedCount, Nat.cast_add, Nat.cast_one]
     exact Nat.lt_floor_add_one _
-  obtain ⟨hcard, hout⟩ := fixed_grid_outputs t ht ht0 P (s P) (reserve P)
-    (zero_lt_one.trans hP) hsP (base P) (fun i => h i P) hbaseP.1 hbaseP.2.1
-    hbaseP.2.2.2 hcost
-  have hcount := family_card_le_tail (exp_pos P) hsize hout
+  let outputs := pairedOutputs (base P) (donorBin t P (s P)) (recipientBin t P (s P)) (fun i => h i P)
   let d : Fin m → ℕ := fun i => (donorBin t P (s P) i).card.choose (h i P)
   let r : Fin m → ℕ := fun i => (recipientBin t P (s P) i).card.choose (h i P)
+  have hexchange : outputs.card = (∏ i, d i * r i) ∧
+      ∀ n ∈ outputs, 0 < n ∧ Squarefree n ∧ ArithmeticFunction.cardDistinctFactors n =
+        (base P).card ∧ (n : ℝ) < exp P :=
+    fixed_grid_outputs t ht ht0 P (s P) (reserve P)
+      (zero_lt_one.trans hP) hsP (base P) (fun i => h i P) hbaseP.1 hbaseP.2.1
+      hbaseP.2.2.2 hcost
+  have hcount : outputs.card ≤ tailCount 1 (exp P) :=
+    family_card_le_tail (exp_pos P) hsize hexchange.2
   have hdp (i : Fin m) : (0 : ℝ) < d i := by
     dsimp [d]
     exact_mod_cast Nat.choose_pos ((hfit i P).trans (min_le_left _ _))
@@ -429,14 +434,15 @@ private theorem fixed_grid_lower_of_capacity {m : ℕ} (t : Fin (m + 1) → ℝ)
       field_simp [hC.ne', (sqrt_pos.2 (log_pos hP)).ne']
     rw [hscale, ← mul_assoc, sub_mul, div_mul_cancel₀ _ hC.ne']
     exact le_of_lt ((lt_div_iff₀ hWP).mp hsum)
-  refine ⟨hcard, ?_, ?_, ?_, ?_⟩
-  · rw [hcard]
-    exact_mod_cast hprod
-  · simpa only [hbaseP.2.2.1] using hout
-  · rw [hcard]
-    exact hfamily
-  · rw [hcard] at hcount
-    exact hfamily.trans (log_le_log hprod (by exact_mod_cast hcount))
+  have hpos : 0 < outputs.card :=
+    (congrArg (fun k : ℕ => 0 < k) hexchange.1).mpr (by exact_mod_cast hprod)
+  have hlogCard := congrArg (fun k : ℕ => log (k : ℝ)) hexchange.1
+  have hfamily' := hfamily.trans_eq hlogCard.symm
+  refine ⟨hexchange.1, hpos, ?_, hfamily', ?_⟩
+  · intro n hn
+    obtain ⟨hnpos, hsf, hk, hlt⟩ := hexchange.2 n hn
+    exact ⟨hnpos, hsf, hk.trans hbaseP.2.2.1, hlt⟩
+  · exact hfamily'.trans (log_le_log (by exact_mod_cast hpos) (by exact_mod_cast hcount))
 
 open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
   (primeCount countingPolynomial prime_counting_four_terms)
