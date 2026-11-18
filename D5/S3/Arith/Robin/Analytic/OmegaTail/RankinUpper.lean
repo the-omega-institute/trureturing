@@ -148,7 +148,7 @@ theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     (Eventually.of_forall (fun _ => ⟨le_rfl, le_rfl⟩))
   have hZ : Tendsto Z atTop atTop := by
     have h := (isLittleO_log_rpow_rpow_atTop (3 / 2 : ℝ) (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
-    rw [show (fun x : ℝ => x ^ (1 : ℝ)) = id from funext rpow_one] at h
+    simp only [rpow_one] at h
     have hpos : ∀ᶠ P : ℝ in atTop, 0 < log P ^ (3 / 2 : ℝ) / P := by
       filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
       exact div_pos (rpow_pos_of_pos (log_pos hP) _) (zero_lt_one.trans hP)
@@ -176,6 +176,9 @@ theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     dsimp only [s, Z]
     rw [mul_assoc, hscale₂ hP, div_div_eq_mul_div, div_div_eq_mul_div]
     field_simp [hc.ne', (zero_lt_one.trans hP).ne']
+    dsimp only [c]
+    field_simp [(sqrt_pos.2 (by norm_num : (0 : ℝ) < 3)).ne']
+    <;> ring
   have hC : Tendsto (fun P => C P / Z P) atTop (𝓝 0) := by
     apply squeeze_zero' _ _ (hZ.const_div_atTop (log (1 + ∑' n : ℕ, (n : ℝ) ^ (-(2 : ℝ)))))
     · filter_upwards [hs.eventually_ge_atTop 2, eventually_gt_atTop (1 : ℝ)] with P hsP hP
