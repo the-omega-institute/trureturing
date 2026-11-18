@@ -487,23 +487,28 @@ private lemma selector_charge_sublevel (D : LatticeData)
   · rw [hn', hn, hzero]
     split_ifs <;> first | rfl | omega
 
-/-- The coefficient computed from the holomorphic charge sums, with the
-original finite lowerings and Laurent selectors in the positive square coordinate. -/
-def cosetSewnTaylor (D : LatticeData) (H K E : ℕ) (t : ℤ)
-    (P Q R S : Oscillator D) (a : ModTwoCharge D) : ℂ :=
-  ∑ i ∈ Finset.range (K-1), ∑ j ∈ Finset.range (H-1),
+/-- Evaluate the finite lowering and Laurent projection on fixed-occupation values. -/
+private def projectOccupations (D : LatticeData) (H K E : ℕ) (t : ℤ)
+    (P Q R S : Oscillator D) (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ) : ℂ :=
+  ∑ i ∈ Finset.range (K - 1), ∑ j ∈ Finset.range (H - 1),
     let PL := (oscillatorLower D ^ j) P
     let QL := (oscillatorLower D ^ i) Q
-    ((-1 : ℂ)^((K : ℤ)-(i : ℤ)+(j : ℤ)) / ((i.factorial : ℂ)*(j.factorial : ℂ))) *
+    ((-1 : ℂ) ^ ((K : ℤ) - (i : ℤ) + (j : ℤ)) / ((i.factorial : ℂ) * (j.factorial : ℂ))) *
       ∑ betaL ∈ PL.support, ∑ gammaL ∈ QL.support,
         ∑ betaR ∈ R.support, ∑ gammaR ∈ S.support,
           (PL.coeff betaL * QL.coeff gammaL * R.coeff betaR * S.coeff gammaR) *
             (weight betaL : ℂ) * (weight gammaL : ℂ) *
             (weight betaR : ℂ) * (weight gammaR : ℂ) *
             selector D 0 (leftExponent H K E i j) E betaL gammaL *
-            selector D 0 (-2*t-2) E betaR gammaR *
-            coefficient (2 * E) (fun z => ∑' q : Charge D, if reduceCharge D q = a then
-              sewnChargeTerm D betaL gammaL betaR gammaR q z else 0)
+            selector D 0 (-2 * t - 2) E betaR gammaR * F betaL gammaL betaR gammaR
+
+/-- The coefficient computed from the holomorphic charge sums, with the
+original finite lowerings and Laurent selectors in the positive square coordinate. -/
+def cosetSewnTaylor (D : LatticeData) (H K E : ℕ) (t : ℤ)
+    (P Q R S : Oscillator D) (a : ModTwoCharge D) : ℂ :=
+  projectOccupations D H K E t P Q R S (fun betaL gammaL betaR gammaR =>
+    coefficient (2 * E) (fun z => ∑' q : Charge D, if reduceCharge D q = a then
+      sewnChargeTerm D betaL gammaL betaR gammaR q z else 0))
 
 private lemma cosetSeries_sewnTaylor (D : LatticeData) (hunit : IsUnit D.G.det)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (H K E : ℕ) (t : ℤ)
@@ -532,7 +537,7 @@ private lemma cosetSeries_sewnTaylor (D : LatticeData) (hunit : IsUnit D.G.det)
       _ = _ := tsum_fintype (fun q : C => g q)
   rw [cosetSeries, PowerSeries.coeff_mk]
   change (∑ q : C, _) = cosetSewnTaylor D H K E t P Q R S a
-  unfold cosetSewnTaylor
+  unfold cosetSewnTaylor projectOccupations
   simp only [hcoeff]
   symm
   -- Move the finite charge sum through the original external and lowering sums.
