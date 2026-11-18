@@ -260,4 +260,6 @@ theorem nonnegative_two_sparse_gram {n : ℕ} {X : Matrix (Fin n) (Fin n) ℝ}
         · simp [vertex, hi]
       rw [hvertex_zero, zero_add]
 
+end
+
 end D5.S3.Quantum.Measurement.NonnegativeFactorWidthTwo
