@@ -22,6 +22,42 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                     + "part. The notation X+ denotes CFC.posPart(X). Anonymous brackets "
                     + "supply the displayed type-class structures; Type allows arbitrary "
                     + "universes except that the types in ratios and claim lie in Type 0.")),
+            Describe.Lean(DescribeId.Create("ptr"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.ptr"),
+                H("Ordinary right partial trace"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("This is partialTraceRight over the local factor. Its affine law and its preservation under the actual reference action enter the conditional Umegaki proof."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("state-nonempty"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.state_nonempty"),
+                H("Trace-one matrices have a nonempty carrier"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For a finite carrier, positive semidefiniteness and complex trace one imply nonemptiness. The faithful input and output states supply the local nonemptiness needed for positivity of their partial traces."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("trace-reindex"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.trace_reindex"),
+                H("Trace under reindexing"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Reindexing an arbitrary complex square matrix along a finite equivalence preserves its complex trace. The faithful BKM path uses this to transport traces back from Fin coordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("amp-smul"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_smul"),
+                H("Real homogeneity of the amplification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For a finite channel, arbitrary joint X and real t, amplification sends t times X to t times the amplified X. The lower bound and the residual transport use this identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("amp-sub-smul"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.amp_sub_smul"),
+                H("Amplification of an affine difference"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For a finite channel, arbitrary joint X,Y and real t, amplification sends X minus t times Y to the corresponding difference of their images. The output residual and affine path use this law."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ptr-sub-smul"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.ptr_sub_smul"),
+                H("Partial trace of an affine difference"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For arbitrary finite joint X,Y and real t, ordinary partial trace sends X minus t times Y to the corresponding difference of their partial traces. The endpoint kernel test and faithful path use this law."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("conditional-hockey-stick-positive-block-diagonal"),
                 DeclarationHandle.Create(Prefix + "posSemidef_blockDiagonal"),
@@ -128,7 +164,7 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                     "For every finite A, B and R, every channel N and every complex "
                         + "matrix X on R times A, tracing out B after amplification equals "
                         + "tracing out A before amplification. No state hypothesis is needed. "
-                        + "The private notation ptr in the Lean statement is precisely "
+                        + "The public definition ptr in the Lean statement is precisely "
                         + "PartialTraceMutualInformation.partialTraceRight. "
                         + "FaithfulConditionalGap consumes this existing trace-preservation identity."))),
                 DescribeRole.Theorem),

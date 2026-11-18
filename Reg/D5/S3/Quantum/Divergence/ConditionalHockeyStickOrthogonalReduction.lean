@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
-import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 open _root_.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
@@ -316,6 +316,89 @@ def registration :
 #print axioms registration
 
 end RatioSets
+
+namespace ReindexTrace
+open Matrix LeanInformationAudit
+universe u v
+
+private abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ)
+    (fun _ => ℂ → Prop)
+
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+private def eqActual : Realization signature :=
+  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+private theorem eqDependence : ObservationalDependence signature eqActual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro he
+  have hh := congrFun he 0
+  exact one_ne_zero (hh.mp rfl)
+
+private abbrev reindexArena : Arena where
+  signature := signature
+  Law F := ∀ {n : Type u} {m : Type v} [Fintype n] [Fintype m]
+      (e : n ≃ m) (X : Matrix n n ℂ),
+    F.readout () () ((X.reindex e e).trace) (X.trace)
+
+private theorem reindexEquivalence :
+    (type_of% @trace_reindex.{u,v}) ↔ reindexArena.{u,v}.Law eqActual :=
+  Iff.rfl
+
+private theorem reindexRejected : ¬ reindexArena.{u,v}.Law rejected := by
+  intro h
+  let e : ULift.{u,0} Unit ≃ ULift.{v,0} Unit :=
+    ⟨fun _ => ⟨()⟩, fun _ => ⟨()⟩,
+      fun _ => Subsingleton.elim _ _, fun _ => Subsingleton.elim _ _⟩
+  exact h e 0
+
+def reindexFamily : Registration reindexArena.{u,v}
+    (type_of% @trace_reindex.{u,v}) where
+  actual := eqActual
+  bridge := reindexEquivalence
+  variation := ⟨@trace_reindex, rejected, reindexRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    reindexArena.{u,v}.Law eqActual rejected reindexRejected
+  dependence := eqDependence
+
+def reindexAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@trace_reindex.{u,v}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.trace_reindex.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.ReindexTrace.reindexFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨reindexArena.{u,v}⟩
+  objectArena := .source ⟨reindexArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source reindexArena.{u,v} ⟨reindexFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms reindexAudit
+
+end ReindexTrace
 
 end
 end Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction

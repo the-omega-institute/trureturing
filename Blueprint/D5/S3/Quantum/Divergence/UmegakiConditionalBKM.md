@@ -4,7 +4,31 @@
 
 A uniform endpoint bound on the partial-trace kernel contracts conditional Umegaki divergence of faithful joint states.
 
-**Theorem 1.1 (The joint and marginal inverse forms).**
+**Definition 1.1 (The marginal-centered joint direction).**
+
+Lean statement: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.residual`
+
+*Formalization.* `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.residual` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For finite reference and local carriers and complex Z,H, subtract the arithmetic image of the embedded marginal inverse applied to PH from H. This definition uses the ordinary partial trace and the native matrix inverse coordinates.
+
+**Theorem 1.2 (The residual has zero partial trace).**
+
+Lean statement: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.residual_partialTrace`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.residual_partialTrace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonempty local factor, positive definite Z, and u in [0,1], the ordinary partial trace of the residual of any complex H vanishes. The pointwise conditional estimate applies kernel_contraction to exactly this direction.
+
+**Theorem 1.3 (The joint and marginal inverse forms).**
 
 Lean statement: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.quadratic_difference_eq_residual`
 
@@ -18,7 +42,7 @@ Let P be ordinary partial trace over a nonempty finite local factor and let Z be
 
 Trace adjunction pairs an embedded reference matrix with the ordinary partial trace. Consequently the energy of X tensor I is the marginal quadratic form, and the cross term is twice that same form. The channel commutes with multiplication by embedded reference matrices on both sides and preserves P. The output residual is therefore the channel action applied to V, using the same X.
 
-**Theorem 1.2 (The conditional divergence of faithful density states).**
+**Theorem 1.4 (The conditional divergence of faithful density states).**
 
 Lean statement: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.faithful_conditional_relativeEntropy_contraction`
 
@@ -34,10 +58,13 @@ For every finite reference and pair of faithful joint density states rho and sig
 
 For c < 1, the endpoint estimate applied at the reference center (PZ) inverse times P(Z PhiR(Y)) bounds the original trace infimum with multiplier k = c/(1-c). The common-state construction supplies both residual Gram inequalities at the same center. For the output inverse direction, weighted Cauchy–Schwarz gives q squared at most k times the energy defect times p, and q squared at most the uncentered input energy times p. Combining the estimates gives q at most c times p. The zero-output quadratic form is handled before cancellation. At c = 1 the uncentered estimate and the nonnegative defect give the bound directly.
 
-The residual identity turns the arithmetic-form estimate into a pointwise bound on joint-minus-marginal forms. Integration in u gives the corresponding logarithmic derivative estimate. The joint and marginal matrix paths each use the ordinary BKM formula with weight 1-t. Their trace corrections vanish for density states. The path integrals use the actual matrix logarithms and ordinary partial traces, including for correlated quantum references. The conclusion is confined to faithful endpoints.
+The residual identity turns the arithmetic-form estimate into a pointwise bound on joint-minus-marginal forms. Integration in u gives the corresponding logarithmic derivative estimate. The joint and marginal matrix paths each use the ordinary BKM formula with weight 1-t. Their trace corrections vanish for density states. The path integrals use the actual matrix logarithms and ordinary partial traces, including for correlated quantum references. The conclusion applies to faithful endpoints. The coefficient equality for all supported pairs and all channels remains open, including the singular support boundary and the final comparison of ratios with strictly positive finite denominators.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.faithful_conditional_relativeEntropy_contraction`
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.quadratic_difference_eq_residual`
+- Truth anchor: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.residual`
+- Truth anchor: `D5/S3/Quantum/Divergence/UmegakiConditionalBKM.residual_partialTrace`
 - Dependency: [D5/S3/Quantum/Divergence/UmegakiBKMPath](UmegakiBKMPath.md)
+- Dependency: [D5/S3/Quantum/Divergence/UmegakiKernelContraction](UmegakiKernelContraction.md)

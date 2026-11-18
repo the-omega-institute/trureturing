@@ -7,6 +7,12 @@ internal sealed class ScalarizerMatrixTransportDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Rectangular matrix transports for the common positive-state scalarizer.",
         H("Rectangular Euclidean matrix transports"), Blocks(
+            Describe.Lean(DescribeId.Create("matrixclm"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ScalarizerMatrixTransport.matrixCLM"),
+                H("Matrix action as a continuous linear map"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For finite row and column carriers, the action of the complex rectangular matrix is transported to a continuous linear map between the corresponding Euclidean spaces. The Gram norm and Douglas factor estimates use this map."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("gram-majorization"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/ScalarizerMatrixTransport.gram_majorization"),
                 H("Gram order and adjoint norm"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
