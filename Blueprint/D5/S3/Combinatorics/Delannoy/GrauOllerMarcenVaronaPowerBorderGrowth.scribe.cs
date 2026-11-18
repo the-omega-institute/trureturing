@@ -27,7 +27,8 @@ internal sealed class GrauOllerMarcenVaronaPowerBorderGrowthDocument : IScribeDo
                     + "Dominated convergence in the exact border convolution transfers that expansion to the normalized diagonal. "
                     + "Reciprocal-ratio algebra gives the half-shift, and first-order ratio transfer gives the asserted additive limit. "
                     + "No explicit rate or second-order expansion is asserted.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("gv2501b-bordergrowth"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(

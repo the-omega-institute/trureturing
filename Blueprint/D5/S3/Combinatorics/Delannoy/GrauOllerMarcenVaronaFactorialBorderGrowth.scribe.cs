@@ -77,7 +77,8 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
                     + "The limiting normalizing constant is positive because the zeroth exponential-series coefficient is one. "
                     + "First-order ratio transfer then gives the stated additive-error limit. "
                     + "No explicit rate or second-order expansion is asserted.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("gv2501a-bordergrowth"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Node(name, title, formula, prose, DescribeRole.Definition, AssessedProvenance.FromRepo());
