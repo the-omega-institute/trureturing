@@ -10,6 +10,7 @@ internal sealed class RookRootIndexDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Distinct root sequences reconstruct normalized singleton boards with a finite multinomial bound.",
         H("Finite root indices and unique normalized reconstruction"), Blocks(
+            Paragraph(Text("In the displayed formulas, Member(S) is the finite subtype of members of the Finset S, boardMap(m,z) is the map a to board(m,a) on indices(m,z), and sum(d) sums the entries over its finite index type. A subtype index a is read as its underlying root tuple when used by decode or compared with paddedRoots.")),
             Definition("heights", "Integer heights", "At position i, heights(m,a,i)=mi-a(i) in the integers."),
             Definition("Admissible", "The exact admissibility filter",
                 "Require a(i)=0 at the first position, nonnegative heights, weakly increasing heights, and the original conditional RootFloorCriterion. When the length is positive, the first-position clause is a(0)=0. The empty tuple is also defined, although all registered common lengths are positive."),
