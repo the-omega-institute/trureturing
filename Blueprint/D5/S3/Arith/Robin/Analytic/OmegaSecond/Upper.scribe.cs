@@ -61,6 +61,6 @@ internal sealed class UpperDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every real epsilon>0, all sufficiently large real x satisfy tailCount(1,x)<=exp((2*pi/sqrt(3)+epsilon)*log(x)/(log(log(x)))^(3/2)). The strict second threshold and the range 1<=n<=x are exactly those of tailCount(1,x).")),
-                    Paragraph(Text("At the explicit saddle, the prime budget and the localized remainder each contribute pi/sqrt(3) on the finer scale. The fixed Euler cost vanishes there. This is an upper bound only; a matching lower bound remains unproved."))),
+                    Paragraph(Text("At the explicit saddle, the prime budget has limiting coefficient pi/sqrt(3), and the localized remainder has upper coefficient pi/sqrt(3) on the finer scale. The fixed Euler cost vanishes there. This is an upper bound only; a matching lower bound remains unproved."))),
                 DescribeRole.Theorem))));
 }
