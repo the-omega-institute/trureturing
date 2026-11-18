@@ -1,10 +1,10 @@
-# Pappus C4-free representatives
+# Pappus half-order refutation
 
 ## Abstract
 
-Pappus C4-free representatives
+Pappus half-order refutation
 
-The exact Pappus cubic bipartite C4-free graph has beta, psiSq and Omega ten, empty optimal matching and distinct-color dissociation support at ten colors. The typed Pappus claim/result refutes extending the half-order bound to order eighteen.
+The certified Pappus graph is cubic, bipartite and C4-free, with dissociation maximum ten. It refutes the half-order bound at order eighteen. The parity labeling also supplies the common input to the representative proofs.
 
 **Definition 1.1 (pappusNeighbors).**
 
@@ -90,7 +90,43 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappu
 
 Exact declaration: def pappusSet : Finset (Fin 18).
 
-**Theorem 1.8 (pappus class).**
+**Definition 1.8 (Pappus parity coloring).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusColor`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusColor` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def pappusColor (v : Fin 18) : Bool.
+
+**Theorem 1.9 (Pappus parity coloring is proper).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusColor_valid`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusColor_valid` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Adjacent Pappus vertices have different parity labels by the certified adjacency table.
+
+**Theorem 1.10 (Equal parity classes).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.paritySide_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.paritySide_card` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+For every even initial interval Fin (2 * n), each parity class has n elements by the general residue count.
+
+**Theorem 1.11 (pappus class).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_class`
 
@@ -102,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappu
 
 Exact declaration: theorem pappus_class : pappusGraph.Colorable 2 ∧ (∀ v, DegreeCapacity.degree pappusGraph v = 3) ∧ NoFourCycle pappusGraph.Adj.
 
-**Theorem 1.9 (pappus selection).**
+**Theorem 1.12 (pappus selection).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_selection`
 
@@ -114,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappu
 
 Exact declaration: theorem pappus_selection : IsKIndependent pappusGraph 2 pappusSet ∧ pappusSet.card = 10.
 
-**Theorem 1.10 (beta pappus).**
+**Theorem 1.13 (beta pappus).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.beta_pappus`
 
@@ -126,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.beta_
 
 Exact declaration: theorem beta_pappus : beta pappusGraph 2 = 10.
 
-**Definition 1.11 (claim).**
+**Definition 1.14 (claim).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim`
 
@@ -138,7 +174,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim
 
 Exact declaration: def claim : Prop.
 
-**Theorem 1.12 (result).**
+**Theorem 1.15 (result).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.result`
 
@@ -148,72 +184,23 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.resul
 
 *Commentary.*
 
-Exact declaration: theorem result : ¬ claim.
-
-**Theorem 1.13 (omega pappus).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.omega_pappus`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.omega_pappus` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem omega_pappus : Omega pappusGraph = 10.
-
-**Theorem 1.14 (pappus parameters).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_parameters`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_parameters` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem pappus_parameters : beta pappusGraph 2 = 10 ∧ psiSq pappusGraph = 10 ∧ Omega pappusGraph = 10.
-
-**Theorem 1.15 (pappus optimal matching empty).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_optimal_matching_empty`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_optimal_matching_empty` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem pappus_optimal_matching_empty (T : Finset (Fin 18)) (M : Finset (Fin 18 × Fin 18)) (hf : Feasible pappusGraph T M) (hc : T.card + M.card = 10) : M = ∅.
-
-**Theorem 1.16 (pappus coloring rigidity).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_coloring_rigidity`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_coloring_rigidity` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem pappus_coloring_rigidity (c : Fin 18 → Option ℕ) (hc : IsSubQuorum pappusGraph c) (hp : (palette c Finset.univ).card = 10) : IsKIndependent pappusGraph 2 (coloredSupport c Finset.univ) ∧ (coloredSupport c Finset.univ).card = 10 ∧ Set.InjOn c (coloredSupport c Finset.univ).
+There is no universal half-order bound 2 * beta G 2 ≤ 18 for all cubic bipartite C4-free graphs G on Fin 18. The certified Pappus graph gives beta G 2 = 10.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.beta_pappus`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.omega_pappus`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusColor`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusColor_valid`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusNeighbors`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusSelected`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappusSet`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_class`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_coloring_rigidity`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_dissociation_certificate`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_no_four_cycle_certificate`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_optimal_matching_empty`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_parameters`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_regular_bipartite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.pappus_selection`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.paritySide_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.result`
 - Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds](C4RepresentativeBounds.md)

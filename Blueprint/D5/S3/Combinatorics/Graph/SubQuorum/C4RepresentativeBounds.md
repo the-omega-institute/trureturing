@@ -102,19 +102,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.obje
 
 Exact declaration: theorem objective_le_omega (T : Finset V) (M : Finset (V × V)) (h : Feasible G T M) : T.card + M.card ≤ Omega G.
 
-**Theorem 1.9 (Omega upper from all feasible pairs).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.omega_upper_of_objective_bound`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.omega_upper_of_objective_bound` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem omega_upper_of_objective_bound (n : ℕ) (h : ∀ T M, Feasible G T M → T.card + M.card ≤ n) : Omega G ≤ n. The finite Pappus maximum is its actual consumer.
-
-**Theorem 1.10 (dissociation feasible).**
+**Theorem 1.9 (dissociation feasible).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.dissociation_feasible`
 
@@ -126,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.diss
 
 Exact declaration: theorem dissociation_feasible (T : Finset V) (hT : IsKIndependent G 2 T) : Feasible G T ∅.
 
-**Theorem 1.11 (positive excess budget).**
+**Theorem 1.10 (positive excess budget).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.positive_excess_budget`
 
@@ -138,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.posi
 
 Exact declaration: theorem positive_excess_budget (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hexcess : N < T.card + M.card) : (M.card : ℤ) + ((T.card : ℤ) + M.card - N) ≤ (N : ℤ) - 2 * ((D - 1) * (D - 2) : ℕ) - 4.
 
-**Theorem 1.12 (objective threshold).**
+**Theorem 1.11 (objective threshold).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_threshold`
 
@@ -150,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.obje
 
 Exact declaration: theorem objective_threshold (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2 * (D - 1) * (D - 2) + 4) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) : T.card + M.card ≤ N.
 
-**Theorem 1.13 (objective general bound).**
+**Theorem 1.12 (objective general bound).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_general_bound`
 
@@ -162,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.obje
 
 Exact declaration: theorem objective_general_bound (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) : T.card + M.card ≤ max N (2*N - 2*((D-1)*(D-2)) - 4).
 
-**Theorem 1.14 (first excess matching empty).**
+**Theorem 1.13 (first excess matching empty).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.first_excess_matching_empty`
 
@@ -174,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.firs
 
 Exact declaration: theorem first_excess_matching_empty (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N = 2*((D-1)*(D-2))+5) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N+1) : M = ∅.
 
-**Theorem 1.15 (zero excess unused).**
+**Theorem 1.14 (zero excess unused).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.zero_excess_unused`
 
@@ -186,7 +174,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.zero
 
 Exact declaration: theorem zero_excess_unused (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N) (c : Bool) : (unusedSide T M color c).card = 0 ∨ (D-1)*(D-2)+1 ≤ (unusedSide T M color c).card.
 
-**Theorem 1.16 (objective one side support).**
+**Theorem 1.15 (objective one side support).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_one_side_support`
 
@@ -198,7 +186,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.obje
 
 Exact declaration: theorem objective_one_side_support (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2*((D-1)*(D-2))+1) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N) : ∃ c : Bool, (∀ v ∈ T, color v = c) ∧ (∀ v, color v = c → v ∈ T ∪ endpoints M).
 
-**Theorem 1.17 (coloring representatives).**
+**Theorem 1.16 (coloring representatives).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.coloring_representatives`
 
@@ -210,7 +198,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.colo
 
 Exact declaration: theorem coloring_representatives {C : Type} [DecidableEq C] (c : V → Option C) (hc : IsSubQuorum G c) : ∃ T : Finset V, ∃ M : Finset (V × V), Feasible G T M ∧ T.card + M.card = (palette c Finset.univ).card ∧ (M = ∅ → ∀ v w, c v ≠ none → c w = c v → ¬ G.Adj v w).
 
-**Theorem 1.18 (palette le omega).**
+**Theorem 1.17 (palette le omega).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.palette_le_omega`
 
@@ -222,7 +210,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pale
 
 Exact declaration: theorem palette_le_omega {C : Type} [DecidableEq C] (c : V → Option C) (hc : IsSubQuorum G c) : (palette c Finset.univ).card ≤ Omega G.
 
-**Theorem 1.19 (psiSq le omega).**
+**Theorem 1.18 (psiSq le omega).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.psiSq_le_omega`
 
@@ -234,7 +222,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.psiS
 
 Exact declaration: theorem psiSq_le_omega : psiSq G ≤ Omega G.
 
-**Theorem 1.20 (parameter comparison).**
+**Theorem 1.19 (parameter comparison).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.parameter_comparison`
 
@@ -246,7 +234,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.para
 
 Exact declaration: theorem parameter_comparison : beta G 2 ≤ psiSq G ∧ psiSq G ≤ Omega G.
 
-**Theorem 1.21 (threshold parameters).**
+**Theorem 1.20 (threshold parameters).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.threshold_parameters`
 
@@ -258,7 +246,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.thre
 
 Exact declaration: theorem threshold_parameters (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2 * (D - 1) * (D - 2) + 4) : beta G 2 = N ∧ psiSq G = N ∧ Omega G = N.
 
-**Theorem 1.22 (plane parameter specialization).**
+**Theorem 1.21 (plane parameter specialization).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_parameter_specialization`
 
@@ -270,7 +258,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plan
 
 Exact declaration: theorem plane_parameter_specialization (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (q : ℕ) (hq : 2 ≤ q) (hr : ∀ v, DegreeCapacity.degree G v = q + 1) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = q*q+q+1) : beta G 2 = q*q+q+1 ∧ psiSq G = q*q+q+1 ∧ Omega G = q*q+q+1.
 
-**Theorem 1.23 (plane optimal support).**
+**Theorem 1.22 (plane optimal support).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_optimal_support`
 
@@ -296,7 +284,6 @@ Exact declaration: theorem plane_optimal_support (color : V → Bool) (hcolor : 
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_le_omega`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_one_side_support`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_threshold`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.omega_upper_of_objective_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pair_packing`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pair_packing_lower`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.palette_le_omega`
