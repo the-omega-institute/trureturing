@@ -4,25 +4,27 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Parity sums of plaquette products over 𝔽₂ keep the plaquette sets with given boundary. -/
+   digest: Parity sums of weighted plaquette products over 𝔽₂ keep plaquette sets with given boundary. -/
 
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.ZMod.Basic
-import Mathlib.InformationTheory.Hamming
 
 /-! # The high-temperature expansion over `𝔽₂`
 
 Let `E` and `P` be finite types and let `M : Matrix P E (ZMod 2)` be an incidence matrix over
 `𝔽₂`. For a configuration `σ : E → ZMod 2` the value `(M *ᵥ σ) p` is the parity of `σ` along
-the row `p`. Write `sgn 0 = 1` and `sgn 1 = -1` in a commutative ring `R`. For every `t : R`
-and every `c : E → ZMod 2`,
+the row `p`. Write `sgn 0 = 1` and `sgn 1 = -1` in a commutative ring `R`. For every family
+of weights `t : P → R` and every `c : E → ZMod 2`,
 
-`∑ σ, sgn (c ⬝ᵥ σ) * ∏ p, (1 + t * sgn ((M *ᵥ σ) p))
-  = 2 ^ |E| * ∑ S with Mᵀ *ᵥ S = c, t ^ (hammingNorm S)`.
+`∑ σ, sgn (c ⬝ᵥ σ) * ∏ p, (1 + t p * sgn ((M *ᵥ σ) p))
+  = 2 ^ |E| * ∑ S with Mᵀ *ᵥ S = c, ∏ p with S p ≠ 0, t p`.
+
+For a constant weight `t` this product is `t ^ (hammingNorm S)`, the power of `t` by the
+number of plaquettes in `S`.
 
 Expanding the product over the rows gives a sum over `S : P → ZMod 2` of
-`t ^ (hammingNorm S) * sgn (S ⬝ᵥ M *ᵥ σ)`, and `S ⬝ᵥ M *ᵥ σ = (Mᵀ *ᵥ S) ⬝ᵥ σ`. The sum of
+`(∏ p with S p ≠ 0, t p) * sgn (S ⬝ᵥ M *ᵥ σ)`, and `S ⬝ᵥ M *ᵥ σ = (Mᵀ *ᵥ S) ⬝ᵥ σ`. The sum of
 `sgn (v ⬝ᵥ σ)` over all `σ` factors coordinatewise into `∏ e, (1 + sgn (v e))`, which is
 `2 ^ |E|` when `v = 0` and `0` otherwise; applied to `v = c + Mᵀ *ᵥ S` this keeps exactly the
 `S` with `Mᵀ *ᵥ S = c`.
@@ -85,38 +87,42 @@ private theorem sum_sgn_dotProduct {E : Type*} [Fintype E] [DecidableEq E] (v : 
     exact Finset.prod_eq_zero (Finset.mem_univ e) (by simp [he])
 
 /-- Expansion of the plaquette product over the plaquette sets `S`. -/
-private theorem prod_one_add_eq_sum {P : Type*} [Fintype P] [DecidableEq P] (t : R)
+private theorem prod_one_add_eq_sum {P : Type*} [Fintype P] [DecidableEq P] (t : P → R)
     (x : P → ZMod 2) :
-    ∏ p, (1 + t * sgn R (x p)) =
-      ∑ S : P → ZMod 2, t ^ hammingNorm S * sgn R (S ⬝ᵥ x) := by
-  have hp : ∀ p, 1 + t * sgn R (x p) =
-      ∑ b : ZMod 2, (if b = 0 then 1 else t) * sgn R (b * x p) := by
+    ∏ p, (1 + t p * sgn R (x p)) =
+      ∑ S : P → ZMod 2, (∏ p ∈ Finset.univ.filter (fun p => S p ≠ 0), t p) *
+        sgn R (S ⬝ᵥ x) := by
+  have hp : ∀ p, 1 + t p * sgn R (x p) =
+      ∑ b : ZMod 2, (if b = 0 then 1 else t p) * sgn R (b * x p) := by
     intro p
     rw [univ_zmod_two, Finset.sum_pair zero_ne_one]
     simp [sgn]
   simp_rw [hp]
-  rw [Fintype.prod_sum (fun p b => (if b = 0 then 1 else t) * sgn R (b * x p))]
+  rw [Fintype.prod_sum (fun p b => (if b = 0 then 1 else t p) * sgn R (b * x p))]
   refine Finset.sum_congr rfl fun S _ => ?_
   rw [Finset.prod_mul_distrib, dotProduct, sgn_sum]
   congr 1
-  rw [hammingNorm, ← Finset.prod_const, Finset.prod_filter]
+  rw [Finset.prod_filter]
   refine Finset.prod_congr rfl fun p _ => ?_
   by_cases hS : S p = 0 <;> simp [hS]
 
 /-- The high-temperature expansion over `𝔽₂`: for an incidence matrix `M : Matrix P E (ZMod 2)`,
-a loop `c : E → ZMod 2` and `t` in a commutative ring, the parity-weighted sum of the plaquette
-products over all configurations `σ : E → ZMod 2` equals `2 ^ |E|` times the sum of
-`t ^ (hammingNorm S)` over the plaquette sets `S : P → ZMod 2` with boundary `Mᵀ *ᵥ S = c`. -/
+a loop `c : E → ZMod 2` and plaquette weights `t : P → R` in a commutative ring, the
+parity-weighted sum of the plaquette products over all configurations `σ : E → ZMod 2` equals
+`2 ^ |E|` times the sum, over the plaquette sets `S : P → ZMod 2` with boundary `Mᵀ *ᵥ S = c`,
+of the product of `t p` over the plaquettes `p` with `S p ≠ 0`. For a constant weight this
+product is `t` raised to the number of plaquettes in `S`. -/
 theorem sum_sgn_mul_prod_one_add_eq {E P : Type*} [Fintype E] [DecidableEq E] [Fintype P]
-    [DecidableEq P] (M : Matrix P E (ZMod 2)) (t : R) (c : E → ZMod 2) :
-    ∑ σ : E → ZMod 2, sgn R (c ⬝ᵥ σ) * ∏ p, (1 + t * sgn R ((M *ᵥ σ) p)) =
+    [DecidableEq P] (M : Matrix P E (ZMod 2)) (t : P → R) (c : E → ZMod 2) :
+    ∑ σ : E → ZMod 2, sgn R (c ⬝ᵥ σ) * ∏ p, (1 + t p * sgn R ((M *ᵥ σ) p)) =
       2 ^ Fintype.card E *
-        ∑ S ∈ Finset.univ.filter (fun S : P → ZMod 2 => Mᵀ *ᵥ S = c), t ^ hammingNorm S := by
+        ∑ S ∈ Finset.univ.filter (fun S : P → ZMod 2 => Mᵀ *ᵥ S = c),
+          ∏ p ∈ Finset.univ.filter (fun p => S p ≠ 0), t p := by
   have hc : ∀ S : P → ZMod 2, c + Mᵀ *ᵥ S = 0 ↔ Mᵀ *ᵥ S = c := fun S => by
     rw [add_eq_zero_iff_eq_neg', ZModModule.neg_eq_self]
-  calc ∑ σ : E → ZMod 2, sgn R (c ⬝ᵥ σ) * ∏ p, (1 + t * sgn R ((M *ᵥ σ) p))
-      = ∑ S : P → ZMod 2,
-          t ^ hammingNorm S * ∑ σ : E → ZMod 2, sgn R ((c + Mᵀ *ᵥ S) ⬝ᵥ σ) := by
+  calc ∑ σ : E → ZMod 2, sgn R (c ⬝ᵥ σ) * ∏ p, (1 + t p * sgn R ((M *ᵥ σ) p))
+      = ∑ S : P → ZMod 2, (∏ p ∈ Finset.univ.filter (fun p => S p ≠ 0), t p) *
+          ∑ σ : E → ZMod 2, sgn R ((c + Mᵀ *ᵥ S) ⬝ᵥ σ) := by
         simp_rw [prod_one_add_eq_sum, Finset.mul_sum]
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun S _ => Finset.sum_congr rfl fun σ _ => ?_

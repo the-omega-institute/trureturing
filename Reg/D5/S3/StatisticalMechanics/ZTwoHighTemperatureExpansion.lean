@@ -45,16 +45,17 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law r := ∀ {R : Type u} [ring : CommRing R] {E : Type v} {P : Type w} [Fintype E]
-    [DecidableEq E] [Fintype P] [DecidableEq P] (M : Matrix P E (ZMod 2)) (t : R)
+    [DecidableEq E] [Fintype P] [DecidableEq P] (M : Matrix P E (ZMod 2)) (t : P → R)
     (c : E → ZMod 2),
     ∑ σ : E → ZMod 2, r.readout () ⟨R, ring⟩ (c ⬝ᵥ σ) *
-        ∏ p, (1 + t * sgn R ((M *ᵥ σ) p)) =
+        ∏ p, (1 + t p * sgn R ((M *ᵥ σ) p)) =
       2 ^ Fintype.card E *
-        ∑ S ∈ Finset.univ.filter (fun S : P → ZMod 2 => Mᵀ *ᵥ S = c), t ^ hammingNorm S
+        ∑ S ∈ Finset.univ.filter (fun S : P → ZMod 2 => Mᵀ *ᵥ S = c),
+          ∏ p ∈ Finset.univ.filter (fun p => S p ≠ 0), t p
 
 private theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   intro h
-  have hh := h (R := ULift.{u} ℤ) (E := PEmpty.{v + 1}) (P := PEmpty.{w + 1}) 0 1 0
+  have hh := h (R := ULift.{u} ℤ) (E := PEmpty.{v + 1}) (P := PEmpty.{w + 1}) 0 (fun _ => 1) 0
   have hone : (1 : ULift.{u} ℤ) ≠ 0 := by
     intro h1
     have := congrArg ULift.down h1
