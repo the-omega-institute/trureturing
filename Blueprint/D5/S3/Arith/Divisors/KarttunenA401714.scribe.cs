@@ -6,7 +6,7 @@ internal sealed class KarttunenA401714Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Divisors/KarttunenA401714.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/karttunen2026a401714");
+        LibraryNoteRef.Create("D5/L/Factorization/karttunen2026a401714");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A radical quotient below the least missing prime forces the joint divisor-sum inequality.",
