@@ -1,11 +1,11 @@
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
 /-! Literal six-row array counts as exact dependent-family laws. -/
 
-namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 noncomputable section
@@ -42,8 +42,8 @@ def family : Registration arena (type_of% @counting_bridge) where
   dependence := actual_dependence
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@counting_bridge) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal.Bridge.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal.Bridge.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal.Bridge.auditUnit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal.Bridge.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -59,7 +59,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   partialSensitivity := none
   escapeFrom := some ℕ
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -127,8 +127,8 @@ def family : Registration arena (type_of% @result) where
   dependence := actual_dependence
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal.Result.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal.Result.family
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal.Result.auditUnit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal.Result.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -144,7 +144,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   partialSensitivity := none
   escapeFrom := some ℤ
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -159,4 +159,4 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 end Result
 
 end
-end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal

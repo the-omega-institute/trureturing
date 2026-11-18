@@ -2,12 +2,12 @@ using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence;
 
 internal sealed class HardinA233261LiteralDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.";
-    private const string LeanPrefix = "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal.";
+    private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA233261Literal.";
+    private const string LeanPrefix = "D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal.";
     private const string OriginalName = "Number of 6Xn 0..5 arrays with no element x(i,j) adjacent to itself or value 5-x(i,j) horizontally or antidiagonally, top left element zero, and 1 appearing before 2 3 and 4, and 2 appearing before 3 in row major order (unlabeled 6-colorings with no clashing color pairs).";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal six-row complementary-pair arrays with horizontal and antidiagonal bonds.",

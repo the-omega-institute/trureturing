@@ -1,9 +1,9 @@
-/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA233261Literal
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA233261Literal
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233261Literal.counting_bridge
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA233261Literal.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinA233261Literal.counting_bridge
    digest: Literal six-row antidiagonal arrays and their exact complementary-pair count. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
@@ -12,7 +12,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 
 /-! Exact literal normalization and finite column transfer for six-row antidiagonal arrays. -/
 
-namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+namespace D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal
 
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open D5.S3.Combinatorics.TraceAvoidingArrays
@@ -925,4 +925,4 @@ theorem result (n : ℤ) (hn : 16 < n) :
   have e10 : n.toNat-17+7 = (n-10).toNat := by omega
   simpa only [e0,e1,e2,e3,e4,e5,e6,e7,e8,e9,e10] using h
 
-end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
+end D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinA233261Literal
