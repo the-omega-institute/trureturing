@@ -17,7 +17,9 @@ import Mathlib.Algebra.Polynomial.Sequence
 /-! Native level-total factorization from reversible finite constructions.
     Auxiliary columns are distinguished from original columns by a disjoint sum.
 
-    New public theorems have proof_shape: content after expanding the new helpers.
+    New public theorems have proof_shape: content after expanding the new helpers,
+    except levelPolynomial_eq_iff_roots, which has proof_shape: bind-only and is
+    consumed by RookClassCandidate.rookEquivalent_iff_seedRoots.
     native_completion_count uses nativePartialEquiv and completionEquiv;
     native_factorization uses the two counts of the same selections;
     rookEquivalent_iff_levelPolynomial recovers native coefficients by linear

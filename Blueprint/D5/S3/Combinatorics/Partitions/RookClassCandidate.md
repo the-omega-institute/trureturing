@@ -1,8 +1,8 @@
-# The exact weighted-root candidate and its fiber assembly
+# The exact native class count and its fiber assembly
 
 ## Abstract
 
-The registered weighted-root sum is evaluated on a finite disjoint family; its identification with the full native rook class remains open.
+The exact registered weighted-root sum equals the genuine native rook-class cardinality at every registered common padding.
 
 **Definition 1.1 (Ordered source padding).**
 
@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/RookClassCandidate.K`
 
 K is Nat.card of the class defined by equality of every literal rook-subset count. The separate rookClass_finite theorem proves this carrier finite using an explicit injection into the powerset of the area-square. Thus the infinite-carrier convention of Nat.card is not used to assert class finiteness.
 
-**Definition 1.6 (The unproved universal target).**
+**Definition 1.6 (The exact universal proposition).**
 
 Lean statement: `D5/S3/Combinatorics/Partitions/RookClassCandidate.UniversalFormula`
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/RookClassCandidate.UniversalForm
 
 *Commentary.*
 
-UniversalFormula asserts K(m,B)=Q(m,N,B) for every positive m, every normalized positive-column input including the empty board, and every N at least area(B)+1. This declaration defines a proposition. No proof of it or its negation is provided here. In particular, the fiber-assembly theorem below does not identify its RootFamily with the native rook class.
+UniversalFormula asserts the integer equality K(m,B)=Q(m,N,B) for every positive m, every normalized positive-column input including the empty board, and every N at least area(B)+1. universal_formula proves this exact proposition. Q retains the registered root index, Gaussian recurrence, guard and empty-list value.
 
 **Definition 1.7 (The actual root-selected source family).**
 
@@ -110,7 +110,7 @@ $$\forall m \in Nat,\; 0 < m \Rightarrow \left(\forall n \in Nat,\; \forall z \i
 
 *Commentary.*
 
-Every lOperator fiber is finite: the existing operatorFiberEquiv and the publicly reusable original sourceShapeEquiv transport it to ShapeFiber, then normalizedPaddingEquiv transports it to the existing finite NativeFiber. Invalid positive-target data give an empty fiber. The finite index therefore gives a finite dependent sum and a finite RootFamily. Nat.card_sigma and the direct application of BarreseSourceNormalization.lOperator_count evaluate every fiber with the exact guarded recurrence. In the displayed formula, sumWeights(m,z) denotes the sum over a in indices(m,z) of weight(m,board(m,a)); board is read as its underlying positive list. Applying this theorem to z=seedRoots(m,N,B) gives cardinality Q for RootFamily, while the native-class identification remains open.
+Every lOperator fiber is finite: the existing operatorFiberEquiv and the publicly reusable original sourceShapeEquiv transport it to ShapeFiber, then normalizedPaddingEquiv transports it to the existing finite NativeFiber. Invalid positive-target data give an empty fiber. The finite index therefore gives a finite dependent sum and a finite RootFamily. Nat.card_sigma and the direct application of BarreseSourceNormalization.lOperator_count evaluate every fiber with the exact guarded recurrence. In the displayed formula, sumWeights(m,z) denotes the sum over a in indices(m,z) of weight(m,board(m,a)); board is read as its underlying positive list. Applying this theorem to z=seedRoots(m,N,B) gives cardinality Q for RootFamily. universal_formula uses the proved identification with the full native class.
 
 **Theorem 1.10 (Every registered common length).**
 
@@ -124,7 +124,31 @@ $$\forall m \in Nat,\; 0 < m \Rightarrow \left(\forall b \in PositiveColumns,\; 
 
 For every positive m, arbitrary normalized B and N at least area(B)+1, lOperator(m,B) has length below N, sourcePadding has length N and a zero head, and seedRoots is zero at its first coordinate. To bound the number of levels, inspect the last nonempty level. Its positive total supplies an actual occupied cell in some column. That column's height is at most the area and exceeds m times the level index, so the number of nonempty levels is at most the area. This includes the empty board without an extra premise.
 
-The first unresolved mathematical interface is the level-total factorization for the native rookCount on every arbitrary input: the sum of r(k,m,B) times the m-step falling factorial of length N-k must equal the product over i of X minus seedRoots(m,N,B,i). The source is Theorem 26 of arXiv:1508.05944v1; its proof uses the arbitrary-board reduction through Lemmas 3 and 5 and singleton factorization. Those literature statements have not been imported as assumptions. A complete result still needs this native bridge or an equivalent bijection, the complete singleton image and inverse, area preservation of the actual l-operator, and all-length class identification. The root-selected family count and finite probes do not prove any of those missing interfaces. The exact full target remains issue #31465.
+**Theorem 1.11 (Native equivalence and the exact registered seed multiset).**
+
+Lean statement: `D5/S3/Combinatorics/Partitions/RookClassCandidate.rookEquivalent_iff_seedRoots`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/RookClassCandidate.rookEquivalent_iff_seedRoots` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive m and a common N at least area(A)+1 and area(B)+1, native RookEquivalent(m,A,B) holds exactly when List.ofFn(seedRoots(m,N,A)) and List.ofFn(seedRoots(m,N,B)) are permutations. The sourcePadding entry at i equals the actual columnLevel(m,B,N-1-i), including its zero prefix. Thus the native level-polynomial criterion and exact multiplicity theorem apply to the registered seed function without substituting a different board or root convention.
+
+**Theorem 1.12 (The full native all-padding count).**
+
+$$\forall m \in Nat,\; 0 < m \Rightarrow \left(\forall b \in PositiveColumns,\; \forall n \in Nat,\; \operatorname{area}\left(b\right) + 1 \le n \Rightarrow \operatorname{int}\left(\operatorname{K}\left(m, b\right)\right) = \operatorname{Q}\left(m, n, b\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/RookClassCandidate.universal_formula` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive m, every normalized B including the empty and nonsingleton boards, and every N at least area(B)+1, the ordinary finite native class count K equals the exact registered Q in the integers. The native completion bijection first establishes the same-board polynomial factorization. Linear independence of descending Pochhammer polynomials recovers every rook count, and the root-product identity preserves all multiplicities. Actual level totals are singleton and sum to the actual area. Forward class identification assigns to each native class member A its own seedRoots; equality of rook numbers gives the required root permutation, and reconstruction recovers precisely lOperator(m,A). Conversely, a root-family witness recovers its complete seed function, and reconstructed area plus the actual lOperator sum proves area(A)=area(B), so the same common padding is legitimate. The two subtypes contain the same original normalized shapes. Nat.card_congr transports that carrier equality, and rootFamily_count evaluates the disjoint fibers with the unchanged weight. No singleton restriction is imposed on original source shapes, and no lOperator identity or literature theorem is assumed as an axiom.
+
+The mathematical statement is proved in Lean. The reference scope is arXiv:1308.4081v1 Lemma 4.3 and Propositions 4.4 and 7.4(iii), and arXiv:1508.05944v1 section 6.2. The proof obtains native class identification directly from original level data; it does not replace the normalized lOperator by the identity or assert that a singleton input is fixed by it. Escape registration and independent pre-freeze audit remain unfinished under https://github.com/the-omega-institute/trureturing/issues/31465. No freeze or publication is claimed.
 
 ## References
 
@@ -133,9 +157,12 @@ The first unresolved mathematical interface is the level-total factorization for
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.RootFamily`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.UniversalFormula`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.candidate_padding`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.rookEquivalent_iff_seedRoots`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.rootFamily_count`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.rootFiberEquiv`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.seedRoots`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.sourcePadding`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.universal_formula`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassCandidate.weight`
+- Dependency: [D5/S3/Combinatorics/Partitions/RookAugmentedLevels](RookAugmentedLevels.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/RookRootIndex](RookRootIndex.md)
