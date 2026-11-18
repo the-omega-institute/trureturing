@@ -9,6 +9,9 @@ claim: Robin violations have global counting function at most exp(O(log x / log 
 strata_touched:
   - D5/S3/Arith/Robin/Analytic/RobinExceptionCount
   - D5/S3/Arith/Robin/Analytic/OmegaTailUpper
+  - D5/S3/Arith/Robin/Analytic/OmegaSecond/PrimeExpansion
+  - D5/S3/Arith/Robin/Analytic/OmegaSecond/MovingWeight
+  - D5/S3/Arith/Robin/Analytic/OmegaSecond/Upper
   - D5/S3/Arith/Robin/Analytic/OmegaTail/Density
   - D5/S3/Arith/Robin/Analytic/OmegaTail/Truncation
   - D5/S3/Arith/Robin/Analytic/OmegaTail/Binning
@@ -67,6 +70,10 @@ Here $y=\log x/\log\log x$ and $\omega$ counts distinct prime divisors.
 The section then asks:
 
 > How good is this estimate?
+
+Section 3 also states:
+
+> Presumably there are not many values of n ≤ x with ω(n) > y + y/log₂ x
 
 ## Comparison with the FIB source estimates
 
