@@ -323,6 +323,7 @@ lemma hs_pair_spectral (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) (u : ℝ)
       _ = _ := by dsimp [D]; push_cast; rfl
   exact congrArg Complex.re he
 
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 /-- The Bochner logarithmic derivative paired with an arbitrary complex direction
 is the integral of the earned native Hilbert-Schmidt arithmetic inverse. -/
 theorem arithmetic_inverse_pairing_eq_logDeriv (Z H : Matrix ι ι ℂ) (hZ : Z.PosDef) :
