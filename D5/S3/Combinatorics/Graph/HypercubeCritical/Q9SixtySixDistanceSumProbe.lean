@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDiameterProbe
+import Mathlib.Data.Fin.Tuple.Sort
 
 /-! The one-point distance sum that constrains the 66-vertex coordinate profiles. -/
 
@@ -264,7 +265,8 @@ open BalancedCubeLowerBound (coordinateSlice)
 open GirthSliceCounting (degreeTwo degreeThree)
 open private reindex reindex_regular reindex_balanced reindex_slice from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
-open private coordinate_slice_degree_cases low_slice_card_eq_q parts_card sum_degrees_parts from
+open private balanced_subset coordinate_slice_degree_cases coordinate_slice_low_independent
+  low_slice_card_eq_q parts_card sum_degrees_parts from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private sixty_six_half_card_ge_twenty_one from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
@@ -296,6 +298,40 @@ private lemma sixty_six_odd_coordinate_half {C : Finset (Q 9)} (hc : C.card = 66
     rw [← sum_degrees_parts G hd univ]
     exact G.sum_degrees_eq_twice_card_edges
   omega
+
+-- A half of size twenty-one inherits all the hypotheses of the signed slice obstruction.
+private lemma twenty_one_half_slice {C : Finset (Q 9)} (hc : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (i : Fin 9) (b : Bool) (hsmall : (C.filter (fun x => x i = b)).card = 21) :
+    ∃ S : Finset (Q 9), S.card = 21 ∧ IsBalanced S ∧
+      let G := (hypercube 9).induce (S : Set (Q 9))
+      (∀ v, G.degree v = 2 ∨ G.degree v = 3) ∧
+        (degreeTwo G univ).card = 11 ∧
+        (∀ ⦃v w⦄, G.Adj v w → G.degree v = 2 → G.degree w = 2 → False) := by
+  let p := Equiv.swap i (0 : Fin 9)
+  let T := C.image (reindex p)
+  let S := coordinateSlice T b
+  let G := (hypercube 9).induce (S : Set (Q 9))
+  have hreg' := reindex_regular hreg p
+  have hb' := reindex_balanced hb p
+  have ht : T.card = 66 := by
+    simpa [T, card_image_of_injective _ (reindex p).injective] using hc
+  have hsize : S.card = (C.filter (fun x => x i = b)).card := by
+    dsimp [S, T, p]
+    rw [reindex_slice, card_image_of_injective _ (reindex _).injective]
+  have hdir : 6 * directionEdges T 0 = 66 := by
+    simpa [ht] using direction_edge_count (d := 3) T hreg' hb' 0
+  have htwo := low_slice_card_eq_q (b := b) hreg'
+  change (degreeTwo G univ).card = directionEdges T 0 at htwo
+  refine ⟨S, hsize.trans hsmall, balanced_subset hb' (filter_subset _ _),
+    fun v => coordinate_slice_degree_cases v.property hreg', ?_, ?_⟩
+  · change (degreeTwo G univ).card = 11
+    rw [htwo]
+    omega
+  · intro v w hadj hv hw
+    exact coordinate_slice_low_independent hreg' hb' hadj hv hw
+
+#print axioms twenty_one_half_slice
 
 private lemma smaller_half_deficits {C : Finset (Q 9)} (hc : C.card = 66)
     (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C) :
@@ -343,3 +379,120 @@ private lemma coordinate_profile_for_partner_cap {C : Finset (Q 9)} (hc : C.card
   exact ⟨b,r,hrange,hr,hK,coordinate_profile_moment_bound hc hreg hb b r K hr hK⟩
 
 #print axioms coordinate_profile_for_partner_cap
+
+
+/-- Enumerate nondecreasing coordinate deficits between `lower` and five. -/
+private def orderedDeficits : ℕ → ℤ → List (List ℤ)
+  | 0, _ => [[]]
+  | n + 1, lower => (List.range 6).flatMap fun (i : ℕ) =>
+      if lower ≤ (i : ℤ) then (orderedDeficits n i).map ((i : ℤ) :: ·) else []
+
+private lemma orderedDeficits_complete {xs : List ℤ} {lower : ℤ}
+    (hn : 0 ≤ lower) (hs : xs.Pairwise (· ≤ ·))
+    (hb : ∀ x ∈ xs, lower ≤ x ∧ x ≤ 5) : xs ∈ orderedDeficits xs.length lower := by
+  induction xs generalizing lower with
+  | nil => simp [orderedDeficits]
+  | cons x xs ih =>
+    obtain ⟨hl, hu⟩ := hb x (by simp)
+    have hx : 0 ≤ x := hn.trans hl
+    have hc : (x.toNat : ℤ) = x := Int.toNat_of_nonneg hx
+    have hr : x.toNat ∈ List.range 6 := List.mem_range.mpr (by omega)
+    have hp := List.pairwise_cons.mp hs
+    have ht := ih hx hp.2 (fun y hy => ⟨hp.1 y hy, (hb y (by simp [hy])).2⟩)
+    simp only [List.length_cons, orderedDeficits, List.mem_flatMap]
+    exact ⟨x.toNat, hr, by simpa [hc, hl] using ht⟩
+
+private def capSixMoment (rs : List ℤ) : Prop :=
+  110 * rs.sum ≤ 198 * ((rs.sum - 6) / 2) + 6 * (rs.map (fun r => r ^ 2)).sum
+
+private instance (rs : List ℤ) : Decidable (capSixMoment rs) := by
+  unfold capSixMoment
+  infer_instance
+
+-- These are the coordinate profiles covered by the proposed integer certificates.
+private def capSixProfiles : List (List ℤ) := [
+  [0, 0, 4, 5, 5, 5, 5, 5, 5],
+  [0, 1, 5, 5, 5, 5, 5, 5, 5],
+  [0, 2, 4, 5, 5, 5, 5, 5, 5],
+  [0, 3, 3, 5, 5, 5, 5, 5, 5],
+  [0, 3, 4, 4, 5, 5, 5, 5, 5],
+  [0, 3, 5, 5, 5, 5, 5, 5, 5],
+  [0, 4, 4, 5, 5, 5, 5, 5, 5],
+  [0, 4, 5, 5, 5, 5, 5, 5, 5],
+  [0, 5, 5, 5, 5, 5, 5, 5, 5],
+  [1, 1, 4, 5, 5, 5, 5, 5, 5],
+  [1, 2, 5, 5, 5, 5, 5, 5, 5],
+  [1, 3, 4, 5, 5, 5, 5, 5, 5],
+  [1, 4, 4, 4, 5, 5, 5, 5, 5],
+  [1, 4, 5, 5, 5, 5, 5, 5, 5],
+  [1, 5, 5, 5, 5, 5, 5, 5, 5],
+  [2, 2, 4, 5, 5, 5, 5, 5, 5],
+  [2, 3, 3, 5, 5, 5, 5, 5, 5],
+  [2, 3, 4, 4, 5, 5, 5, 5, 5],
+  [2, 3, 5, 5, 5, 5, 5, 5, 5],
+  [2, 4, 4, 5, 5, 5, 5, 5, 5],
+  [2, 4, 5, 5, 5, 5, 5, 5, 5],
+  [2, 5, 5, 5, 5, 5, 5, 5, 5],
+  [3, 3, 4, 5, 5, 5, 5, 5, 5],
+  [3, 3, 5, 5, 5, 5, 5, 5, 5],
+  [3, 4, 4, 4, 5, 5, 5, 5, 5],
+  [3, 4, 4, 5, 5, 5, 5, 5, 5],
+  [3, 4, 5, 5, 5, 5, 5, 5, 5],
+  [3, 5, 5, 5, 5, 5, 5, 5, 5],
+  [4, 4, 4, 4, 4, 5, 5, 5, 5],
+  [4, 4, 4, 5, 5, 5, 5, 5, 5],
+  [4, 4, 5, 5, 5, 5, 5, 5, 5],
+  [4, 5, 5, 5, 5, 5, 5, 5, 5],
+  [5, 5, 5, 5, 5, 5, 5, 5, 5]]
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 1500000 in
+-- Kernel reduction checks every sorted tuple before taking the filter.
+private lemma capSixProfiles_eq :
+    (orderedDeficits 9 0).filter (fun rs => decide (capSixMoment rs)) = capSixProfiles := by
+  decide +kernel
+
+private lemma sum_ofFn_int {n : ℕ} (f : Fin n → ℤ) : (List.ofFn f).sum = ∑ i, f i := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [List.ofFn_succ, List.sum_cons, Fin.sum_univ_succ, ih]
+
+private lemma sorted_deficits_mem_capSixProfiles (r : Fin 9 → ℤ)
+    (hr : ∀ i, 0 ≤ r i ∧ r i ≤ 5)
+    (hm : 110 * (∑ i, r i) ≤ 198 * (((∑ i, r i) - 6) / 2) + 6 * (∑ i, (r i) ^ 2)) :
+    List.ofFn (r ∘ Tuple.sort r) ∈ capSixProfiles := by
+  let rs := List.ofFn (r ∘ Tuple.sort r)
+  have hb : ∀ x ∈ rs, 0 ≤ x ∧ x ≤ 5 := by
+    intro x hx
+    obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hx
+    exact hr (Tuple.sort r i)
+  have hsort : rs.Pairwise (· ≤ ·) := (Tuple.monotone_sort r).sortedLE_ofFn.pairwise
+  have hsum : rs.sum = ∑ i, r i := by
+    rw [sum_ofFn_int]
+    exact Equiv.sum_comp (Tuple.sort r) r
+  have hsumSq : (rs.map (fun x => x ^ 2)).sum = ∑ i, (r i)^2 := by
+    rw [List.map_ofFn, sum_ofFn_int]
+    exact Equiv.sum_comp (Tuple.sort r) (fun i => (r i)^2)
+  rw [← capSixProfiles_eq, List.mem_filter, decide_eq_true_eq]
+  refine ⟨by simpa [rs] using orderedDeficits_complete (le_refl 0) hsort hb, ?_⟩
+  change capSixMoment rs
+  simpa only [capSixMoment, hsum, hsumSq] using hm
+
+private lemma coordinate_profile_in_capSixProfiles {C : Finset (Q 9)} (hc : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (hhalf : ∀ (i : Fin 9) (v : Bool), 23 ≤ (C.filter (fun x => x i = v)).card)
+    (hcap : ∀ x ∈ C, (shell C x 7).card ≤ 6) :
+    ∃ (b : Fin 9 → Bool) (r : Fin 9 → ℤ),
+      (∀ i, ((C.filter (fun y => y i = b i)).card : ℤ) + 2 * r i = 33) ∧
+      (∀ x ∈ C, (∑ i : Fin 9, if x i = b i then r i else 0) ≤ ((∑ i, r i) - 6) / 2) ∧
+      List.ofFn (r ∘ Tuple.sort r) ∈ capSixProfiles := by
+  obtain ⟨b, r, hrange, hr, hw, hm⟩ := coordinate_profile_for_partner_cap hc hreg hb 6 hcap
+  have hrange' (i : Fin 9) : 0 ≤ r i ∧ r i ≤ 5 := by
+    have hlo : (23 : ℤ) ≤ (C.filter (fun x => x i = b i)).card := by exact_mod_cast hhalf i (b i)
+    have hcard := hr i
+    exact ⟨(hrange i).1, by omega⟩
+  have ht : (∑ i, r i) - 12 + (6 : ℤ) = (∑ i, r i) - 6 := by omega
+  simp only [Nat.cast_ofNat, ht] at hw hm
+  exact ⟨b, r, hr, hw, sorted_deficits_mem_capSixProfiles r hrange' hm⟩
+
+#print axioms coordinate_profile_in_capSixProfiles
