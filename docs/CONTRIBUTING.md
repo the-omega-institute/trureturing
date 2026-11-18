@@ -203,10 +203,11 @@ validated branch in the same session worktree, following
 Other branch kinds are `math` and `theory`; file-level checks still apply.
 Maintainers use `BASE=origin/dev`.
 
-The worktree starts without a Lean cache. Its first `make lean` prepares a
-private cache, using a compatible local donor when available or downloading
-dependencies. Use `make lean` before any `lake env lean` debugging command in a
-new worktree. `make lean-cache-ensure` is an optional explicit prewarm command.
+The worktree starts without a Lean cache. Ordinary tasks need no full Lean
+build or full project cache. If a change needs Lean verification, run
+`make lean LEAN_TARGETS="..."` with the affected module names. For a cold
+project layer in a linked worktree, see the guarded scoped build in
+[§8.3](../CLAUDE.md#83-worktree-与-lean-缓存入口).
 
 For a documentation edit, change the owning source, check links and preview
 the Markdown. If you publish a command or example, run it. A typo fix needs no
