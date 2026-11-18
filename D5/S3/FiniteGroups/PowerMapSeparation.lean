@@ -49,16 +49,16 @@ def productEquiv (i : Bool) :
 instance (i : Bool) : Fintype (S i) := Fintype.ofEquiv _ (productEquiv i).symm
 
 def sign (e : Bool) : F := if e then -1 else 1
-def B₁ (i : Bool) (a b x y : F) : F := if i then a*x-b*y else a*x+b*y
-def B₂ (i : Bool) (a b x y z : F) : F := if i then b*x+a*y else a*y+b*z
+def B1 (i : Bool) (a b x y : F) : F := if i then a*x-b*y else a*x+b*y
+def B2 (i : Bool) (a b x y z : F) : F := if i then b*x+a*y else a*y+b*z
 
 def mulS {i : Bool} (p q : S i) : S i := ⟨p.a+q.a, p.b+q.b, p.x+sign p.e*q.x, p.y+sign p.e*q.y,
-    p.z+sign p.e*q.z, p.s+sign p.e*q.s+sign p.e*B₁ i p.a p.b q.x q.y,
-    p.t+sign p.e*q.t+sign p.e*B₂ i p.a p.b q.x q.y q.z, p.e ^^ q.e⟩
+    p.z+sign p.e*q.z, p.s+sign p.e*q.s+sign p.e*B1 i p.a p.b q.x q.y,
+    p.t+sign p.e*q.t+sign p.e*B2 i p.a p.b q.x q.y q.z, p.e ^^ q.e⟩
 def oneS (i : Bool) : S i := ⟨0,0,0,0,0,0,0,false⟩
 def invS {i : Bool} (p : S i) : S i := ⟨-p.a,-p.b,-sign p.e*p.x,-sign p.e*p.y,-sign p.e*p.z,
-    -sign p.e*p.s+sign p.e*B₁ i p.a p.b p.x p.y,
-    -sign p.e*p.t+sign p.e*B₂ i p.a p.b p.x p.y p.z,p.e⟩
+    -sign p.e*p.s+sign p.e*B1 i p.a p.b p.x p.y,
+    -sign p.e*p.t+sign p.e*B2 i p.a p.b p.x p.y p.z,p.e⟩
 
 instance (i : Bool) : Group (S i) where
   mul := mulS
@@ -70,22 +70,22 @@ instance (i : Bool) : Group (S i) where
     rcases q with ⟨a',b',x',y',z',s',t',e'⟩
     rcases r with ⟨a'',b'',x'',y'',z'',s'',t'',e''⟩
     cases i <;> cases e <;> cases e' <;>
-      apply S.ext <;> simp [mulS, sign, B₁, B₂, Bool.xor_assoc, add_assoc] <;> ring
+      apply S.ext <;> simp [mulS, sign, B1, B2, Bool.xor_assoc, add_assoc] <;> ring
   one_mul p := by
     change mulS (oneS i) p = p
     rcases p with ⟨a,b,x,y,z,s,t,e⟩
     cases i <;> cases e <;> apply S.ext <;>
-      simp [mulS, oneS, sign, B₁, B₂]
+      simp [mulS, oneS, sign, B1, B2]
   mul_one p := by
     change mulS p (oneS i) = p
     rcases p with ⟨a,b,x,y,z,s,t,e⟩
     cases i <;> cases e <;> apply S.ext <;>
-      simp [mulS, oneS, sign, B₁, B₂]
+      simp [mulS, oneS, sign, B1, B2]
   inv_mul_cancel p := by
     change mulS (invS p) p = oneS i
     rcases p with ⟨a,b,x,y,z,s,t,e⟩
     cases i <;> cases e <;> apply S.ext <;>
-      simp only [mulS, oneS, invS, sign, B₁, B₂, Bool.false_eq_true,
+      simp only [mulS, oneS, invS, sign, B1, B2, Bool.false_eq_true,
         Bool.true_eq_false, ↓reduceIte, Bool.xor_self] <;> ring
 
 private theorem card_S (i : Bool) : Fintype.card (S i) = 4374 := by
@@ -94,16 +94,16 @@ private theorem card_S (i : Bool) : Fintype.card (S i) = 4374 := by
 
 /-- The same underlying coordinates with the central term centered. -/
 private def center (i : Bool) : S i ≃ S false where
-  toFun p := ⟨p.a,p.b,p.x,p.y,p.z,p.s+B₁ i p.a p.b p.x p.y,
-    p.t+B₂ i p.a p.b p.x p.y p.z,p.e⟩
-  invFun p := ⟨p.a,p.b,p.x,p.y,p.z,p.s-B₁ i p.a p.b p.x p.y,
-    p.t-B₂ i p.a p.b p.x p.y p.z,p.e⟩
+  toFun p := ⟨p.a,p.b,p.x,p.y,p.z,p.s+B1 i p.a p.b p.x p.y,
+    p.t+B2 i p.a p.b p.x p.y p.z,p.e⟩
+  invFun p := ⟨p.a,p.b,p.x,p.y,p.z,p.s-B1 i p.a p.b p.x p.y,
+    p.t-B2 i p.a p.b p.x p.y p.z,p.e⟩
   left_inv p := by apply S.ext <;> simp
   right_inv p := by apply S.ext <;> simp
 
 private def squareC (i : Bool) (p : S false) : S false :=
-  if p.e then ⟨-p.a,-p.b,0,0,0,-B₁ i p.a p.b p.x p.y,
-    -B₂ i p.a p.b p.x p.y p.z,false⟩
+  if p.e then ⟨-p.a,-p.b,0,0,0,-B1 i p.a p.b p.x p.y,
+    -B2 i p.a p.b p.x p.y p.z,false⟩
   else ⟨-p.a,-p.b,-p.x,-p.y,-p.z,-p.s,-p.t,false⟩
 
 private def cubeC (p : S false) : S false :=
@@ -120,7 +120,7 @@ private theorem center_square (i : Bool) (p : S i) :
   change center i (mulS p p) = squareC i (center i p)
   rcases p with ⟨a,b,x,y,z,s,t,e⟩
   cases i <;> cases e <;> apply S.ext <;>
-    simp [center, squareC, mulS, sign, B₁, B₂] <;> ring_nf <;> simp [two_F, three_F, five_F] <;> ring
+    simp [center, squareC, mulS, sign, B1, B2] <;> ring_nf <;> simp [two_F, three_F, five_F] <;> ring
 
 private theorem center_cube (i : Bool) (p : S i) :
     center i (p^3) = cubeC (center i p) := by
@@ -128,7 +128,7 @@ private theorem center_cube (i : Bool) (p : S i) :
   change center i (mulS (mulS p p) p) = cubeC (center i p)
   rcases p with ⟨a,b,x,y,z,s,t,e⟩
   cases i <;> cases e <;> apply S.ext <;>
-    simp [center, cubeC, mulS, oneS, sign, B₁, B₂] <;> ring_nf <;>
+    simp [center, cubeC, mulS, oneS, sign, B1, B2] <;> ring_nf <;>
       simp [three_F, show (4 : F) = 1 by decide, show (12 : F) = 0 by decide]
 
 private theorem center_inv (i : Bool) (p : S i) :
@@ -138,7 +138,7 @@ private theorem center_inv (i : Bool) (p : S i) :
   change center i (invS p) = _
   rcases p with ⟨a,b,x,y,z,s,t,e⟩
   cases i <;> cases e <;> apply S.ext <;>
-    simp [center, invS, sign, B₁, B₂] <;> ring_nf <;> simp [two_F, three_F, five_F] <;> ring
+    simp [center, invS, sign, B1, B2] <;> ring_nf <;> simp [two_F, three_F, five_F] <;> ring
 
 private def transportAxis : (F × F × F) ≃ (F × F × F) where
   toFun w := (w.2.2, -w.2.1, w.1)
@@ -174,20 +174,20 @@ private def transport (a b : F) : (F × F × F) ≃ (F × F × F) :=
 
 private theorem one_ne_neg_one_F : (1 : F) ≠ -1 := by decide
 
-private theorem transport_B₁ (a b x y z : F) :
-    B₁ true a b (transport a b (x,y,z)).1 (transport a b (x,y,z)).2.1 =
-      B₁ false a b x y := by
+private theorem transport_B1 (a b x y z : F) :
+    B1 true a b (transport a b (x,y,z)).1 (transport a b (x,y,z)).2.1 =
+      B1 false a b x y := by
   rcases cases_F a with rfl | rfl | rfl <;>
     rcases cases_F b with rfl | rfl | rfl <;>
-    norm_num [transport, transportAxis, transportPlus, transportMinus, B₁, one_ne_neg_one_F, Ne.symm one_ne_neg_one_F] <;>
+    norm_num [transport, transportAxis, transportPlus, transportMinus, B1, one_ne_neg_one_F, Ne.symm one_ne_neg_one_F] <;>
       (try ring_nf) <;> simp [two_F, three_F, five_F] <;> ring
 
-private theorem transport_B₂ (a b x y z : F) :
-    B₂ true a b (transport a b (x,y,z)).1 (transport a b (x,y,z)).2.1
-      (transport a b (x,y,z)).2.2 = B₂ false a b x y z := by
+private theorem transport_B2 (a b x y z : F) :
+    B2 true a b (transport a b (x,y,z)).1 (transport a b (x,y,z)).2.1
+      (transport a b (x,y,z)).2.2 = B2 false a b x y z := by
   rcases cases_F a with rfl | rfl | rfl <;>
     rcases cases_F b with rfl | rfl | rfl <;>
-    norm_num [transport, transportAxis, transportPlus, transportMinus, B₂, one_ne_neg_one_F, Ne.symm one_ne_neg_one_F] <;>
+    norm_num [transport, transportAxis, transportPlus, transportMinus, B2, one_ne_neg_one_F, Ne.symm one_ne_neg_one_F] <;>
       (try ring_nf) <;> simp [two_F, three_F, five_F] <;> ring
 
 private def evenC : S false ≃ S false where
@@ -207,7 +207,7 @@ private def evenC : S false ≃ S false where
 private theorem evenC_square (p : S false) :
     evenC (squareC false p) = squareC true (evenC p) := by
   rcases p with ⟨a,b,x,y,z,s,t,e⟩
-  cases e <;> simp [evenC, squareC, transport_B₁, transport_B₂]
+  cases e <;> simp [evenC, squareC, transport_B1, transport_B2]
 
 private def oddEquiv : S false ≃ S true := (center false).trans (center true).symm
 private def evenEquiv : S false ≃ S true :=
@@ -246,7 +246,7 @@ private theorem sixth_power (i : Bool) (p : S i) : p^6 = 1 := by
   apply (center i).injective
   rw [show (6 : ℕ) = 3*2 by decide, pow_mul, center_square, center_cube, center_one]
   rcases p with ⟨a,b,x,y,z,s,t,e⟩
-  cases i <;> cases e <;> simp [center, cubeC, squareC, oneS, B₁, B₂]
+  cases i <;> cases e <;> simp [center, cubeC, squareC, oneS, B1, B2]
 
 private theorem fifth_power (i : Bool) (p : S i) : p^5 = p⁻¹ := by
   apply eq_inv_iff_mul_eq_one.mpr
@@ -369,7 +369,7 @@ private def involutionPoint (i : Bool) (x y z s t : F) : S i :=
   ⟨0,0,x,y,z,s,t,true⟩
 
 private def neighborhoodPoint (i : Bool) (a b x y z : F) : S i :=
-  ⟨a,b,0,0,0,B₁ i a b x y,B₂ i a b x y z,false⟩
+  ⟨a,b,0,0,0,B1 i a b x y,B2 i a b x y z,false⟩
 
 private theorem square_of_cube_point (i : Bool) (q : S i) (x y z s t : F)
     (h : q ^ (3 : ℕ) = involutionPoint i x y z s t) :
@@ -380,23 +380,23 @@ private theorem square_of_cube_point (i : Bool) (q : S i) (x y z s t : F)
   cases e with
   | false => simp [cubeC, center, involutionPoint, oneS] at hc
   | true =>
-    simp [cubeC, center, involutionPoint, B₁, B₂] at hc
+    simp [cubeC, center, involutionPoint, B1, B2] at hc
     rcases hc with ⟨rfl, rfl, rfl, hc, hd⟩
     apply (center i).injective
     rw [center_square]
     cases i <;> apply S.ext <;>
-      simp [squareC, center, neighborhoodPoint, B₁, B₂] <;> ring
+      simp [squareC, center, neighborhoodPoint, B1, B2] <;> ring
 
 private theorem neighborhood_point_mem (i : Bool) (a b x y z s t : F) :
     neighborhoodPoint i a b x y z ∈ powerNeighborhood (involutionPoint i x y z s t) := by
   refine ⟨(center i).symm ⟨-a,-b,x,y,z,s,t,true⟩, ?_, ?_⟩
   · apply (center i).injective
     rw [center_cube, (center i).apply_symm_apply]
-    apply S.ext <;> simp [cubeC, center, involutionPoint, B₁, B₂]
+    apply S.ext <;> simp [cubeC, center, involutionPoint, B1, B2]
   · apply (center i).injective
     rw [center_square, (center i).apply_symm_apply]
     cases i <;> apply S.ext <;>
-      simp [squareC, center, neighborhoodPoint, B₁, B₂] <;> ring
+      simp [squareC, center, neighborhoodPoint, B1, B2] <;> ring
 
 private theorem neighborhood_point_range (i : Bool) (x y z s t : F) :
     powerNeighborhood (involutionPoint i x y z s t) =
@@ -412,8 +412,8 @@ private theorem neighborhood_point_range (i : Bool) (x y z s t : F) :
 private theorem neighborhood_eq_bilinear (i : Bool) (x y z s t x' y' z' s' t' : F) :
     powerNeighborhood (involutionPoint i x y z s t) =
         powerNeighborhood (involutionPoint i x' y' z' s' t') ↔
-      ∀ a b : F, B₁ i a b x y = B₁ i a b x' y' ∧
-        B₂ i a b x y z = B₂ i a b x' y' z' := by
+      ∀ a b : F, B1 i a b x y = B1 i a b x' y' ∧
+        B2 i a b x y z = B2 i a b x' y' z' := by
   constructor
   · intro h a b
     have hm := neighborhood_point_mem i a b x y z s t
@@ -440,7 +440,7 @@ private theorem neighborhood_eq_zero (x y z s t x' y' z' s' t' : F) :
   · intro h
     have h₁ := h 1 0
     have h₂ := h 0 1
-    simp [B₁, B₂] at h₁ h₂
+    simp [B1, B2] at h₁ h₂
     exact ⟨h₁.1,h₁.2,h₂.2⟩
   · rintro ⟨rfl,rfl,rfl⟩
     simp
@@ -452,9 +452,9 @@ private theorem neighborhood_eq_one (x y z s t x' y' z' s' t' : F) :
   rw [neighborhood_eq_bilinear]
   constructor
   · intro h
-    simpa [B₁, B₂] using h 1 0
+    simpa [B1, B2] using h 1 0
   · rintro ⟨rfl,rfl⟩
-    simp [B₁, B₂]
+    simp [B1, B2]
 
 private theorem involution_point_valid (i : Bool) (x y z s t : F) :
     powerInvolution (involutionPoint i x y z s t) := by
@@ -463,7 +463,7 @@ private theorem involution_point_valid (i : Bool) (x y z s t : F) :
     rw [center_square]
     change squareC i (center i (involutionPoint i x y z s t)) = center i (oneS i)
     cases i <;> apply S.ext <;>
-      simp [center, squareC, involutionPoint, oneS, B₁, B₂]
+      simp [center, squareC, involutionPoint, oneS, B1, B2]
   · intro h
     have he := congrArg S.e h
     change true = false at he
@@ -490,7 +490,7 @@ private theorem involution_coordinates (i : Bool) (p : S i) :
     cases e with
     | true => rfl
     | false =>
-      simp [squareC, center, oneS, B₁, B₂] at hc
+      simp [squareC, center, oneS, B1, B2] at hc
       rcases hc with ⟨hx,hy,hz,hs,ht⟩
       exfalso
       apply hn
