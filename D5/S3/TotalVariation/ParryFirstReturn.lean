@@ -44,7 +44,7 @@ private theorem measurable_relationShift : Measurable (@relationShift k) := by
   apply Measurable.subtype_mk
   exact Measurable.of_eval fun t => (measurable_pi_apply (t + 1)).comp measurable_subtype_coe
 
-private theorem shift_iterate (r : RelationPath k) (n : ℕ) (t : ℤ) :
+theorem shift_iterate (r : RelationPath k) (n : ℕ) (t : ℤ) :
     (relationShift^[n] r).val t = r.val (t + n) := by
   induction n generalizing r t with
   | zero => simp
@@ -59,7 +59,7 @@ private theorem measurable_zeroSection : MeasurableSet (zeroSection k) := by
     (measurable_pi_apply (-1)).comp measurable_subtype_coe
   exact hm (measurableSet_singleton false)
 
-private theorem measurable_returnTime : Measurable (@returnTime k) := by
+theorem measurable_returnTime : Measurable (@returnTime k) := by
   unfold returnTime
   have hm : Measurable (fun r : RelationPath k => Nat.find (nextZero_exists r)) := by
     apply measurable_find
@@ -74,7 +74,7 @@ private theorem measurable_returnMap : Measurable (@returnMap k) := by
     measurable_from_prod_countable_right (fun n : ℕ => measurable_relationShift.iterate n)
   exact hm.comp (measurable_returnTime.prodMk measurable_id)
 
-private theorem returnTime_spec (r : RelationPath k) :
+theorem returnTime_spec (r : RelationPath k) :
     0 < returnTime r ∧ returnTime r ≤ k ∧
     returnMap r ∈ zeroSection k ∧
     ∀ n : ℕ, 0 < n → n < returnTime r → relationShift^[n] r ∉ zeroSection k := by
