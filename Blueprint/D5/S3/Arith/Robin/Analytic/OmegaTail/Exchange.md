@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.paired_exchange`
 
 *Commentary.*
 
-Let the donor bins be pairwise disjoint subsets of a finite prime base. Let the recipient bins consist of primes outside the base and be pairwise disjoint. In each paired bin choose h(i) donors and independently choose h(i) recipients. The lower donor log bound is lo(i) and the upper recipient log bound is hi(i). Suppose the base log sum plus the sum of h(i) times hi(i) minus lo(i) is strictly below log(x), for x positive.
+Let the donor bins be pairwise disjoint subsets of a finite prime base. Let the recipient bins consist of primes outside the base and be pairwise disjoint. In each paired bin choose h(i) donors and independently choose h(i) recipients. The lower donor log bound is lo(i) and the upper recipient log bound is hi(i). Suppose the base log sum plus the sum of h(i) times the difference hi(i) minus lo(i) is strictly below log(x), for x positive.
 
 The product of the resulting prime support is positive, squarefree, below x, and has exactly as many distinct prime factors as the base. The donor choice is the part of its bin missing from the support. The recipient choice is the intersection of its bin with the support. Prime factorization recovers the support, so the number of outputs equals the product over bins of both binomial coefficients. The statement allows an empty index type, zero choices, and choices filling a bin.
 
@@ -32,11 +32,11 @@ Fix a strictly increasing grid t starting at zero and positive real parameters P
 
 The signed exchange gives a lower bound on the literal distinct-prime tail at exp(P), equal to the product of the two binomial coefficients for each bin. The exponential endpoints provide the donor lower and recipient upper log bounds, and the common log(P) cancels within each pair.
 
-**Theorem 1.3 (Entropy bound from moving capacities and a safe base).**
+**Theorem 1.3 (Fixed-grid entropy lower bound).**
 
-Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower_of_capacity`
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower_of_capacity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,14 +44,14 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower_
 
 Use the grid above with interior densities q(i), positive eta, c = pi/(2 sqrt(3)), C = (1+eta)c, s = C sqrt(log(P)), W = (P/log(P))/s, and Z = (P/log(P))/sqrt(log(P)). Let delta(i) be the width of bin i. Twice the sum of t(i+1) delta(i) q(i) must be less than (pi^2/6)(1+eta)^2.
 
-Assume both bin sizes divided by W converge to delta(i), and the supplied reserve divided by W/s converges to (pi^2/6)(1+eta)^2. For all sufficiently large P, the supplied base consists of primes up to P, contains every donor bin, has exactly floor(T_2(exp(P)))+1 elements, and has log sum at most P minus the reserve. In Lemma 7.6 the reserve is D_safe from Lemma 7.3 and the base is its retained prime set.
+The quantitative prime-counting expansion gives both moving bin sizes asymptotic to W times delta(i). Delete exactly primeCount(P) minus k(P) primes from the interval (P/2, 3P/4], where k(P) is floor(T_2(exp(P)))+1. There are eventually enough primes in that interval and it lies below every donor bin. The remaining base has size k(P) and log sum at most P minus the safe reserve from Lemma 7.3. The reserve is P minus theta(P) plus the number of deletions times log(P/2). Its ratio to W/s tends to (pi^2/6)(1+eta)^2.
 
 Take h(i) to be the floor of q(i) times the smaller of the two bin sizes. Its ratio to W tends to delta(i) q(i). The finite grid bound applies eventually by strict normalized slack. The two log binomial coefficients in each bin contribute 2 delta(i) H(q(i)) on scale W, with H the binary entropy. For each positive zeta, the log of the second-threshold count at exp(P) is eventually at least Z times the coefficient 2 sum(delta(i) H(q(i)))/C minus zeta, with the subtraction inside the coefficient.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_bound`
-- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower_of_capacity`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.paired_exchange`
 - Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTail/Entropy](Entropy.md)
 - Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTail/Selection](Selection.md)
