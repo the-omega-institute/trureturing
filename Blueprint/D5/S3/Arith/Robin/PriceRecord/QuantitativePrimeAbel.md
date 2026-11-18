@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Real-endpoint four-term prime-counting expansion.
+Real-endpoint factorial prime-counting expansion.
 
-A quantitative theta remainder and finite Abel summation give the real-endpoint prime-counting expansion through its residual coefficient 24. The same literal finite prime intervals carry the nonlinear Euler deficit estimates used by the real-image infimum limit.
+A quantitative theta remainder and finite Abel summation give the real-endpoint prime-counting expansion at every fixed order. The same literal finite prime intervals carry the nonlinear Euler deficit estimates used by the real-image infimum limit.
 
 **Theorem 1.1 (Theta remainder at every fixed log power).**
 
@@ -42,7 +42,23 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.prime_count
 
 The real-endpoint residual (primeCount x-countingPolynomial x)/(x/log(x)^5) tends to 24 atTop. The primeCount definition includes the floor endpoint and no separate pi hypothesis is introduced.
 
-**Definition 1.4 (primeCount).**
+**Theorem 1.4 (Factorial residual at every fixed order).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.prime_counting_factorial_residual`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.prime_counting_factorial_residual` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix a natural number r and set G_k(x) = x/(log x)^k and A_r(x) = sum_{j<r} j! G_{j+1}(x). The real-endpoint residual (primeCount(x) - A_r(x))/G_{r+1}(x) tends to r!. The sum is empty at r = 0.
+
+For x > 1, write b_k(x) = 1/(log x)^k. Differentiation gives G'_k = b_k - k b_{k+1}. The finite sum telescopes by (j+1)! = (j+1) j!, giving A'_r = b_1 - r! b_{r+1}. In exact Abel summation, subtract the derivative of A_r - G_1 from the integrand, then divide by r!. The resulting integrand divided by G'_{r+1} tends to one by the order-r theta error. The integral comparison transfers the limit, and the normalized Abel endpoint error and fixed lower endpoint tend to zero.
+
+Applying the limit at r + 1 bounds the remainder after subtracting r! G_{r+1} by a constant times G_{r+2}. This is the arithmetic expansion used in Proposition 7.9 of LCM_POWER_ROBIN_KAPPA_THRESHOLD.md.
+
+**Definition 1.5 (primeCount).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.primeCount`
 
@@ -54,7 +70,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.primeCount`
 
 The real endpoint counting function is Nat.primeCounting at the natural floor of t, cast to the reals. The floor convention fixes all endpoint ties.
 
-**Definition 1.5 (primeInterval).**
+**Definition 1.6 (primeInterval).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.primeInterval`
 
@@ -66,7 +82,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.primeInterv
 
 The finite interval consists of primes in the natural Ioc from floor(y) to floor(z), so it represents the strict lower and included upper real endpoints y<p<=z.
 
-**Definition 1.6 (squareSum).**
+**Definition 1.7 (squareSum).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.squareSum`
 
@@ -78,7 +94,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.squareSum`
 
 The finite square sum is the sum of p^-2 over that literal prime interval, with no infinite-tail replacement.
 
-**Definition 1.7 (logarithmicTail).**
+**Definition 1.8 (logarithmicTail).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.logarithmicTail`
 
@@ -90,7 +106,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.logarithmic
 
 The logarithmic Euler tail is the finite sum of -log(1-p^-2) on the same interval as the square sum.
 
-**Theorem 1.8 (log deficit bounds).**
+**Theorem 1.9 (log deficit bounds).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.log_deficit_bounds`
 
@@ -102,7 +118,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.log_deficit
 
 For 0<=q<1, the pinned elementary logarithm inequalities give q<=-log(1-q)<=q/(1-q), including q=0.
 
-**Theorem 1.9 (finite logarithmic tail squeeze).**
+**Theorem 1.10 (finite logarithmic tail squeeze).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.finite_logarithmic_tail_squeeze`
 
@@ -122,6 +138,7 @@ For y>1 and every real z, the logarithmic Euler tail lies between the square sum
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.logarithmicTail`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.primeCount`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.primeInterval`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.prime_counting_factorial_residual`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.prime_counting_four_terms`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.squareSum`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.theta_error_log_power`

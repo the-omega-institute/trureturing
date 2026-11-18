@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Divergence/UmegakiBKMPath
   - D5/S3/Quantum/Divergence/UmegakiRareFlagBKM
   - D5/S3/Quantum/Divergence/UmegakiArithmeticBKM
+  - D5/S3/Quantum/Divergence/UmegakiFaithfulLowerRatio
   - D5/S3/Quantum/Divergence/UniversalCommonCenter
 license: citation-only
 triage: anchor
@@ -80,11 +81,42 @@ supply this correlated-reference application.
 This application is a bind-only consequence of the existing analytic suppliers
 and finite matrix normalization, not a new standalone mathematical declaration
 or a result attributed to Audenaert. The uniform metric bound is an explicit
-intermediate premise. Support removal, singular limits, rare-flag ratios and
-the remaining coefficient comparisons are not established. Final coefficient
+intermediate premise. Support removal, singular limits and the remaining
+coefficient comparisons are not established by that application. Final coefficient
 division still requires the original strictly positive finite denominator.
 The all-finite Umegaki coefficient equality remains unproved; the open-problem
 KPI remains zero.
+
+`UmegakiFaithfulLowerRatio.faithful_density_pair_ratio_approx` supplies an
+actual density-pair lower-ratio intermediate under the additional assumption
+that the channel's actual identity image `N(I_A)` is positive definite. For
+every finite reference R, positive definite complex Z on R times A, arbitrary
+complex V on that space with `partialTraceRight V = 0`, and strictly positive
+`qin = Re Tr(V adjoint Z inverse V)`, put
+`qout = Re Tr((TV) adjoint (TZ) inverse TV)` for the canonical reference action T.
+For every tolerance eta greater than zero, it constructs actual `DensityState`
+values rho and sigma on `(Fin 2 times R) times A`, with faithful input and
+canonical output matrices, equal input and output reference marginals,
+`SupportContained` for both pairs, and strictly positive canonical input
+`finiteTraceLogRelativeEntropy`. Their actual output/input divergence ratio
+differs from `qout/qin` by less than eta. The conditional output numerator
+equals the output divergence because the actual output reference marginals
+agree. V need not be Hermitian; qout may vanish, and no division by qout,
+approach from below or attainment is asserted.
+
+The construction first chooses a positive rare-flag weight delta, then a
+nonzero sufficiently small perturbation epsilon. Its input base is
+`diag(Z,delta I)` with off-diagonal direction V and V adjoint; the output
+lower block is `delta T(I)`, not an assumed identity image. Shared trace
+normalization cancels in the ratio. The original rare-flag logarithmic
+derivative limit, BKM path identity, uniform-floor continuity and real scaling
+of `logDeriv` are reused to control the ordered limits. This is a
+repository-derived assembly serving Hirche, George, Nuradha and Wilde,
+arXiv:2608.27171v1, Definition 2, Remark 2 and section 9; it is not a theorem
+attributed to Audenaert's paper or a claim of external priority. Singular
+identity images still require canonical support compression and amplified
+relative-entropy equality. Full coefficient integration and the original
+all-channel coefficient chain remain unproved; the open-problem KPI is zero.
 
 The associated finite semidefinite supplier
 `UniversalCommonCenter.exists_common_center_of_posDef_trace_inf_le` concerns
