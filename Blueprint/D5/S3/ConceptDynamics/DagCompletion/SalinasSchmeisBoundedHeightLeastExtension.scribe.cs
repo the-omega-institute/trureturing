@@ -13,7 +13,7 @@ internal sealed class SalinasSchmeisBoundedHeightLeastExtensionDocument : IScrib
         LibraryNoteRef.Create("D5/L/ConceptDynamics/salinasschmeis2026omega");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Least extensions for embeddability and their bounded-height classification.",
+        "Least extensions at bounded finite height and the finite skeleton obstruction.",
         H("Least omega-chain extensions at bounded finite height"),
         Blocks(
             Describe.Lean(
@@ -153,7 +153,47 @@ internal sealed class SalinasSchmeisBoundedHeightLeastExtensionDocument : IScrib
                         + "Fork, Rays and Tail refutation and its settlement retain their credit. "
                         + "Remi Salinas Schmeis owns the posing question and the cited prior "
                         + "partition and lifting results."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-skeleton-obstruction"),
+                DeclarationHandle.Create(Prefix + "finiteSkeletonObstruction"),
+                H("A cofinal inherited chain without a partition"),
+                StatementSource.FromAuthor(Disp(FiniteSkeletonFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "For each natural n at least two, use the chain Fin(n+1) with its usual "
+                        + "order. The strict interval above zero is the literal tail {1, …, n}, "
+                        + "isomorphic to Fin(n) under successor. It contains the greatest point, "
+                        + "so the one-member family consisting of this interval is pairwise "
+                        + "disjoint with a cofinal union, as in Definition 2.33.")),
+                    Paragraph(Text(
+                        "In any proposed partition, take the inherited isomorphism from Fin(n) "
+                        + "to each part. The product of the type of parts with Fin(n) maps "
+                        + "bijectively to Fin(n+1). Surjectivity uses coverage and injectivity "
+                        + "uses unique membership followed by injectivity within the part. "
+                        + "If there are m parts, counting gives n+1 = nm, so n divides 1. "
+                        + "This contradicts n at least two.")),
+                    Paragraph(Text(
+                        "For n = 1, singleton parts partition every partial order. A one-point "
+                        + "order has no inherited two-point chain and therefore no 2-skeleton. "
+                        + "The finite obstruction is the second clause of the skeleton corollary "
+                        + "in revision 2 by Haobo Ma and Wenlin Zhang. Its first clause, concerning "
+                        + "extensions for every nonzero ordinal, is in the lexicographic fiber document."))),
                 DescribeRole.Theorem))));
+
+    private static Formula FiniteSkeletonFormula()
+    {
+        var n = F.Id("n");
+        var chain = Call("Fin", n);
+        var larger = Call("Fin", Seq(n, Sp, Plus, Sp, D(1)));
+        var tail = Call("Ioi", Seq(D(0), Sp, Colon, Sp, larger));
+        return All("n", Seq(Mathbb, Grp(F.Id("N"))), Seq(
+            D(2), Sp, Le, Sp, n, Sp, Rightarrow, RowBreak,
+            Call("IsCofinal", tail), Sp, Land, Sp,
+            Call("Nonempty", Call("OrderIso", chain, tail)), Sp, Land, RowBreak,
+            Neg, Sp, Call("PartitionableBy", chain, larger)));
+    }
 
     private static Formula PartitionFormula()
     {

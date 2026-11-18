@@ -4,17 +4,20 @@
    mirror-E: none(waiver:pure-mathematical-argument)
    anchors: []
    utility: none
-   digest: Classifies least omega-partitionable extensions at bounded finite height. -/
+   digest: Bounded-height least omega extensions and a finite skeleton obstruction. -/
 
 /- Escape audits for ordinalSum_isLeastExtension, hasLeastOmegaExtension_of_top,
-   and hasLeastOmegaExtension_iff are unfinished under the linked source-family issue
+   hasLeastOmegaExtension_iff, and finiteSkeletonObstruction are unfinished
+   under the linked source-family issue
    https://github.com/the-omega-institute/trureturing/issues/28004.
    The proofs give the order-theoretic comparison law. A lawful enrolled observation
    and the required observational variation remain unresolved. -/
 
 import D5.S3.ConceptDynamics.DagCompletion.SalinasSchmeisCountablePartitions
 import Mathlib.Basic.Countable.Small
+import Mathlib.Data.Fintype.Prod
 import Mathlib.Logic.Equiv.Set
+import Mathlib.Order.Fin.Tuple
 import Mathlib.Order.Height
 import Mathlib.Order.Minimal
 import Mathlib.Order.Shrink
@@ -36,6 +39,50 @@ universe a u v w z
 /-- The whole carrier is partitioned into parts having the prescribed inherited order type. -/
 def PartitionableBy (A : Type a) (X : Type u) [PartialOrder A] [PartialOrder X] : Prop :=
   ∃ D : Set (Set X), Setoid.IsPartition D ∧ ∀ C ∈ D, Nonempty (A ≃o C)
+
+/-- The strict upper interval of zero in the next larger finite chain is a
+cofinal inherited n-chain, but the whole chain has no partition into such chains. -/
+theorem finiteSkeletonObstruction (n : ℕ) (hn : 2 ≤ n) :
+    IsCofinal (Set.Ioi (0 : Fin (n + 1))) ∧
+    Nonempty (Fin n ≃o Set.Ioi (0 : Fin (n + 1))) ∧
+    ¬ PartitionableBy (Fin n) (Fin (n + 1)) := by
+  have tailEq : {x : Fin (n + 1) | x ≠ 0} = Set.Ioi (0 : Fin (n + 1)) := by
+    ext x
+    exact Fin.pos_iff_ne_zero.symm
+  refine ⟨?_, ⟨tailEq ▸ finSuccAboveOrderIso (0 : Fin (n + 1))⟩, ?_⟩
+  · intro x
+    refine ⟨Fin.last n, ?_, Fin.le_last x⟩
+    change 0 < n
+    omega
+  · classical
+    rintro ⟨D, partition, parts⟩
+    let iso (C : D) : Fin n ≃o C.val := (parts C.val C.property).some
+    let point (p : D × Fin n) : Fin (n + 1) := (iso p.1 p.2).val
+    have bijective : Function.Bijective point := by
+      constructor
+      · rintro ⟨B, i⟩ ⟨C, j⟩ heq
+        have hB : point (B, i) ∈ B.val := (iso B i).property
+        have hC : point (B, i) ∈ C.val := heq ▸ (iso C j).property
+        obtain ⟨A, _, unique⟩ := partition.2 (point (B, i))
+        have hBC : B = C := Subtype.ext
+          ((unique B.val ⟨B.property, hB⟩).trans (unique C.val ⟨C.property, hC⟩).symm)
+        subst C
+        have hij : i = j := (iso B).injective (Subtype.ext heq)
+        subst j
+        rfl
+      · intro x
+        obtain ⟨C, ⟨hC, hx⟩, _⟩ := partition.2 x
+        let part : D := ⟨C, hC⟩
+        obtain ⟨i, hi⟩ := (iso part).surjective ⟨x, hx⟩
+        exact ⟨(part, i), congrArg Subtype.val hi⟩
+    let : Fintype D := Fintype.ofFinite D
+    have hcard : Fintype.card D * n = n + 1 := by
+      simpa only [Fintype.card_prod, Fintype.card_fin] using
+        Fintype.card_congr (Equiv.ofBijective point bijective)
+    have hdvd : n ∣ n + 1 := ⟨Fintype.card D, by rw [Nat.mul_comm, hcard]⟩
+    have hone : n ∣ 1 := (Nat.dvd_add_iff_right (dvd_refl n)).mpr hdvd
+    have : n = 1 := Nat.dvd_one.mp hone
+    omega
 
 /-- A partitionable extension admitting an order embedding into every competing extension. -/
 def IsLeastExtension (A : Type a) (P : Type u) (Q : Type v)
