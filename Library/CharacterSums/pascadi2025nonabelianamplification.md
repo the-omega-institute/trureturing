@@ -179,6 +179,32 @@ and formalized the explicit branches and counting assembly. No priority claim
 is inferred from the bounded literature screen. The strict endpoint
 alpha=26/7 and the full arbitrary-modulus conjecture remain open here.
 
+## Quadratic nonzero middle sections
+
+`PascadiQuadraticMiddleCount.quadratic_nonzero_middle_box_count` proves a
+geometric ingredient for averaging a fixed physical quadratic kernel.
+For an actual reduced basis of the determinant-c congruence lattice, let
+an integer-valued degree-two homogeneous Q satisfy q divides Q on the
+lattice and `|Q(z)|<=M[(Y/X)z1^2+(X/Y)z2^2]`, with c,q positive and M
+nonnegative. A finite literal-box section avoiding Q=0 has at most
+`1+4*sqrt(XY)*sqrt(M/q)+24*XY/c` points. The theorem includes split
+quadratic forms: when the shortest direction is a null line, every point
+of that entire central line is excluded. Other rows are counted with
+their nonzero transverse integer coordinate, removing its perimeter term.
+
+The proof reuses the existing actual-lattice reduction and proves the
+new count without a counting supplier. Its ordinary geometric proposal
+was supplied through the oracle broker, with the Lean proof implemented
+by Codex. This is a repository-derived estimate, not an attribution to
+Pascadi or a claim of mathematical priority. The proposed arithmetic
+substitution c=p^2, q=p^(6-j), M of order (XY)^2/p^(3+j), for j=3 or 4,
+would give the common boundary scale (XY)^(3/2)/p^(9/2). The primitive
+physical-kernel supplies and two-root cover remain separate from this
+formal result. No fixed alpha greater than 26/7 or closure of the
+non-split branch follows from the lattice theorem alone. Four-slot audit
+registration remains unfinished under issue #31176; the typed Reg
+positive law is not completed registration.
+
 The four integrated singular-factor modules retain the proofs from the completed
 research archive `pascadi-prime-cube-singular-cover-formalization-20261116`.
 Necessary archived helpers are exposed publicly, replacing private-name elaborator
