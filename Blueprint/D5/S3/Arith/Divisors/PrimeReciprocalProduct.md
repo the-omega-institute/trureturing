@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Arith/Divisors/PrimeReciprocalProduct.prime_support_produ
 
 *Commentary.*
 
-For every nonempty finite set F of primes, the square of the product of 1+1/p over F is at most (9/4) times the cardinality of F. For a set of r distinct odd integers at least three, induction on the largest element q bounds the product squared by r+1. The map p to p/2 injects all preceding odd elements into an interval, giving q at least 2r+3 for the induction step. The prime two contributes a factor whose square is 9/4; if two is absent, nonemptiness absorbs the extra additive one in the odd-support estimate.
+For every nonempty finite set F of primes, the square of the product of 1+1/p over F is at most (9/4) times the cardinality of F. For a set of distinct odd natural numbers at least three, induction by adjoining its maximum bounds the product squared by the size of the set plus one. With r elements preceding the new maximum q, the map p to floor(p/2) injects those r elements into the half-open integer interval from one to floor(q/2). This gives q at least 2r+3, so adjoining q raises the squared-product bound from r+1 to r+2. The prime two contributes a factor whose square is 9/4; if two is absent, nonemptiness absorbs the extra additive one in the odd-support estimate.
 
 **Theorem 1.3 (Removing the support of a large integer).**
 

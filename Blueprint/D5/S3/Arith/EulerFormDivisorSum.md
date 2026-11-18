@@ -16,7 +16,7 @@ $$\forall N \in \mathbb{N}, \operatorname{unitarySum}\left(N\right) = \sum_{d \i
 
 *Commentary.*
 
-A divisor d is unitary when d and N/d are coprime. The quotient is exact on the divisor set. This definition also includes N itself.
+A divisor d is unitary when d and N/d are coprime. The quotient is exact on the divisor set. For positive N, this definition also includes N itself.
 
 **Definition 1.2 (The squarefree divisor sum).**
 
@@ -74,7 +74,7 @@ $$\forall p \in \mathbb{N}, \forall a \in \mathbb{N}, \forall r \in \mathbb{N}, 
 
 *Commentary.*
 
-After dividing by positive N, the distinguished prime contributes at most six fifths to each product. Every prime from r has exponent at least two. A finite reciprocal-square product bound, with separate cases for whether the support contains three and another prime, bounds the remaining sum strictly below five thirds. Their product is strictly below two. The hypothesis r>1 supplies a nonempty support; for r=1 and p=5 the claimed inequality would fail.
+After dividing by positive N, the distinguished prime contributes at most six fifths to each product. Every prime from r has exponent at least two. A finite reciprocal-square product bound, with separate cases for whether the support contains three and another prime, bounds the remaining sum strictly below five thirds. Their product is strictly below two. The hypothesis r>1 supplies a nonempty support. For r=1, p=5 and a=0 the claimed inequality would fail.
 
 ## References
 

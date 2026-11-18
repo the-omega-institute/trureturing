@@ -16,17 +16,13 @@ Lean statement: `D5/S3/Arith/Divisors/KarttunenA401714.leastMissingPrime`
 
 *Commentary.*
 
-The least missing prime is the smallest prime that does not divide N. Such a prime exists because there is a prime larger than N.
+The least missing prime is the smallest prime that does not divide N. The frozen least-missing-prime threshold theorem supplies existence. Nat.find selects the least witness to primality and nondivisibility.
 
 **Theorem 1.2 (The divisor-sum implication).**
 
 Lean statement: `D5/S3/Arith/Divisors/KarttunenA401714.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/KarttunenA401714.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/oeis-a401714-unitary-squarefree-divisor-sum` (proved) by `D5/S3/Arith/Divisors/KarttunenA401714.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a401714-unitary-squarefree-divisor-sum","declaration_gid":"D5/S3/Arith/Divisors/KarttunenA401714.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -41,3 +37,4 @@ For every positive integer N, if N/rad(N) is less than its least missing prime, 
 - Truth anchor: `D5/S3/Arith/Divisors/KarttunenA401714.leastMissingPrime`
 - Truth anchor: `D5/S3/Arith/Divisors/KarttunenA401714.result`
 - Dependency: [D5/S3/Arith/Divisors/UnitaryProductBridge](UnitaryProductBridge.md)
+- Dependency: [D5/S3/Arith/GoldenResource/GoldenSmallestMissingPrime](../GoldenResource/GoldenSmallestMissingPrime.md)
