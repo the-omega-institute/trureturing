@@ -37,7 +37,7 @@ internal sealed class UmegakiChannelSupportedExtensionDocument : IScribeDocument
                 H("Contraction at the support boundary"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("A uniform endpoint bound on genuine output depolarizations contracts the supported conditional deficit for the original channel. At fixed output depolarization first remove common replacement noise at the input. Then remove output noise using each state's own reference marginal. The same CPTP map acts on both states in each step, supplying the upper bounds needed for the supported limits."))),
+                    Paragraph(Text("A uniform endpoint bound on genuine output depolarizations contracts the supported conditional deficit for the original channel. At fixed output depolarization first remove common replacement noise at the input. Then remove output noise using each state's own reference marginal. On any joint matrix the replacement is the partial trace tensored with the normalized identity. For a density matrix these are exactly the entries of the product state of its reference marginal and the uniform state. The metric estimates use that same matrix formula on the output of N. The same CPTP map acts on both states in each step, supplying the upper bounds needed for the supported limits."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("conditionalcoefficient-eq-completecoefficient"),
                 DeclarationHandle.Create(Prefix + "conditionalCoefficient_eq_completeCoefficient"),

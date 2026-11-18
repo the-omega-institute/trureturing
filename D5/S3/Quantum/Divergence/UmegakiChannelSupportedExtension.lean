@@ -145,6 +145,28 @@ theorem act_depolarizingChannel (δ : Set.Ioo (0 : ℝ) 1) (X : Matrix b b ℂ) 
 private lemma act_comp (M : QuantumChannel b b) (N : QuantumChannel a b)
     (X : Matrix a a ℂ) : act (M.comp N) X = act M (act N X) := rfl
 
+private def replacementMatrix (X : Matrix (R × b) (R × b) ℂ) :
+    Matrix (R × b) (R × b) ℂ :=
+  partialTraceRight X ⊗ₖ ((Fintype.card b : ℝ)⁻¹ • (1 : Matrix b b ℂ))
+
+private lemma amp_depolarizing (δ : Weight) (X : Matrix (R × b) (R × b) ℂ) :
+    amp (depolarizingChannel b δ) X =
+      (1 - (δ : ℝ)) • X + (δ : ℝ) • replacementMatrix X := by
+  ext ⟨r,i⟩ ⟨s,j⟩
+  rw [amp_entry, act_depolarizingChannel]
+  simp only [replacementMatrix, Matrix.add_apply, Matrix.smul_apply, Matrix.kronecker_apply,
+    partialTraceRight, Matrix.trace, Matrix.diag_apply, smul_eq_mul]
+
+private lemma amp_depolarized (N : QuantumChannel a b)
+    (δ : Weight) (X : Matrix (R × a) (R × a) ℂ) :
+    amp ((depolarizingChannel b δ).comp N) X =
+      (1 - (δ : ℝ)) • amp N X + (δ : ℝ) • replacementMatrix (amp N X) := by
+  calc
+    _ = amp (depolarizingChannel b δ) (amp N X) := by
+      ext ⟨r,i⟩ ⟨s,j⟩
+      simp only [amp_entry, act_comp]
+    _ = _ := amp_depolarizing δ (amp N X)
+
 private lemma depolarized_posDef [Nonempty a] [Nonempty b] (N : QuantumChannel a b)
     (δ : Weight) : (act ((depolarizingChannel b δ).comp N) 1).PosDef := by
   rw [act_comp, act_depolarizingChannel]
@@ -327,30 +349,12 @@ theorem supported_conditional_relativeEntropy_contraction_of_faithful_output
 private lemma referenceState_depolarizing [Nonempty b] (X : DensityState (R × b)) (δ : Weight) :
     raw (referenceState (depolarizingChannel b δ) X) =
       (1 - (δ : ℝ)) • raw X + (δ : ℝ) • raw (productState (marginalRight X) (uniformState b)) := by
-  obtain ⟨P, hP⟩ := finite_local_preparation_quantum_channel
-    (s := R) (fun _ : b => uniformState b)
-  have hReplace (Z : Matrix (R × b) (R × b) ℂ) :
-      act P Z = amp (replacementChannel (uniformState b)) Z := by
+  have hProduct : replacementMatrix (raw X) =
+      raw (productState (marginalRight X) (uniformState b)) := by
     ext ⟨r,i⟩ ⟨s,j⟩
-    rw [amp_entry, act_replacementChannel]
-    exact (hP Z (r,i) (s,j)).trans (by simp [Matrix.trace, Finset.sum_mul, smul_eq_mul])
+    rfl
   change amp (depolarizingChannel b δ) (raw X) = _
-  rw [depolarizingChannel_eq]
-  ext ⟨r,i⟩ ⟨s,j⟩
-  rw [amp_entry, noiseChannel, act_mixIdentity]
-  have hBlock := congrArg (fun Z : Matrix (R × b) (R × b) ℂ => Z (r,i) (s,j))
-    (hReplace (raw X)).symm
-  rw [amp_entry] at hBlock
-  change (1 - (δ : ℝ)) • raw X (r,i) (s,j) +
-      (δ : ℝ) • act (replacementChannel (uniformState b))
-        (fun x y => raw X (r,x) (s,y)) i j =
-    (1 - (δ : ℝ)) • raw X (r,i) (s,j) +
-      (δ : ℝ) • ((∑ x, raw X (r,x) (s,x)) * raw (uniformState b) i j)
-  rw [hBlock]
-  change _ + (δ : ℝ) • CStarMatrix.ofMatrix.symm
-      (P.toCompletelyPositiveMap (CStarMatrix.ofMatrix (raw X))) (r,i) (s,j) = _
-  rw [hP]
-  rw [Finset.sum_mul]
+  rw [amp_depolarizing, hProduct]
 
 /-- A uniform endpoint bound on the genuine depolarizations of a finite channel
 controls its conditional relative entropy deficit for every supported joint pair. -/
@@ -677,19 +681,6 @@ private lemma energy_linear_base (Z W X : Matrix n n ℂ) (r s t : ℝ) :
 private lemma amp_add_smul (N : QuantumChannel a b) (Z W : Matrix (R × a) (R × a) ℂ)
     (s : ℝ) : amp N (Z + s • W) = amp N Z + s • amp N W := by
   simpa only [neg_smul, sub_neg_eq_add] using amp_sub_smul N (-s) Z W
-
-private def replacementMatrix (X : Matrix (R × b) (R × b) ℂ) :
-    Matrix (R × b) (R × b) ℂ :=
-  partialTraceRight X ⊗ₖ ((Fintype.card b : ℝ)⁻¹ • (1 : Matrix b b ℂ))
-
-private lemma amp_depolarized (N : QuantumChannel a b)
-    (δ : Weight) (X : Matrix (R × a) (R × a) ℂ) :
-    amp ((depolarizingChannel b δ).comp N) X =
-      (1 - (δ : ℝ)) • amp N X + (δ : ℝ) • replacementMatrix (amp N X) := by
-  ext ⟨r,i⟩ ⟨s,j⟩
-  rw [amp_entry, act_comp, act_depolarizingChannel]
-  simp only [replacementMatrix, Matrix.add_apply, Matrix.smul_apply, Matrix.kronecker_apply,
-    partialTraceRight, Matrix.trace, Matrix.diag_apply, amp_entry, smul_eq_mul]
 
 omit [DecidableEq n] in
 private lemma continuous_inverseTest {Z V : ℝ → Matrix n n ℂ}

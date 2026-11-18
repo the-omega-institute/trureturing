@@ -54,12 +54,6 @@ universe ur ua ub
 variable {r : Type ur} {a : Type ua} {b : Type ub} [Fintype r] [DecidableEq r]
   [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
 
-private def reindexStar (e : a ≃ b) : Matrix a a ℂ ≃⋆ₐ[ℝ] Matrix b b ℂ :=
-  StarAlgEquiv.ofAlgEquiv (Matrix.reindexAlgEquiv ℝ ℂ e) (by
-    intro X
-    ext i j
-    rfl)
-
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 private lemma reindex_log (e : a ≃ b) (X : Matrix a a ℂ) (hX : X.IsHermitian) :
     reindexStar e (CFC.log X) = CFC.log (reindexStar e X) := by
@@ -68,20 +62,6 @@ private lemma reindex_log (e : a ≃ b) (X : Matrix a a ℂ) (hX : X.IsHermitian
   exact StarAlgHomClass.map_cfc (reindexStar e) Real.log X
     (X.finite_real_spectrum.continuousOn _) hE hX
     (hX.submatrix e.symm)
-
-attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma reindex_logDeriv (e : a ≃ b) (Z H : Matrix a a ℂ) :
-    reindexStar e (logDeriv Z H) = logDeriv (reindexStar e Z) (reindexStar e H) := by
-  let E := (Matrix.reindexLinearEquiv ℝ ℂ e e).toContinuousLinearEquiv
-  have hi (X : Matrix a a ℂ) : reindexStar e X⁻¹ = (reindexStar e X)⁻¹ := by
-    exact (Matrix.inv_reindex e e X).symm
-  unfold D5.S3.Divergence.LogDerivTrace.logDeriv
-  change E (∫ t in Set.Ioi (0 : ℝ), (Z+t • 1)⁻¹ * H * (Z+t • 1)⁻¹) = _
-  rw [← E.integral_comp_comm]
-  apply integral_congr_ae
-  filter_upwards [] with t
-  change reindexStar e (_ * H * _) = _
-  simp only [map_mul, hi, map_add, map_smul, map_one]
 
 private def d (A B : Matrix a a ℂ) : ℝ :=
   (A * (CFC.log A - CFC.log B)).trace.re
