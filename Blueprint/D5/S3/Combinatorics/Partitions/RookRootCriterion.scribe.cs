@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Partitions;
 internal sealed class RookRootCriterionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Partitions/RookRootCriterion.";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/barrese2013mlevel");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The source root filter is equivalent to geometric uniqueness of a partial column in each level.",
         H("Geometric singleton columns and the root floor condition"),
@@ -20,8 +21,8 @@ internal sealed class RookRootCriterionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("rookrootcriterion-geometric-iff"),
                 DeclarationHandle.Create(Prefix + "rootFloorCriterion_iff_singleton"),
                 H("Exact criterion for every padded Ferrers tuple"), StatementSource.FromAuthor(Statement()),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For every positive m and every weakly increasing nonnegative padded tuple d, the root floor test is equivalent to SingletonColumns. For a partial column, floor((mi-d(i))/m)=i-floor(d(i)/m)-1. The adjacent root inequality therefore forces a strict increase in the partial-top level. If two separated partial columns had the same level, monotonicity would put their intervening successor in that same level and contradict the adjacent condition. Conversely, geometric uniqueness forces every adjacent pair of partial tops into different levels. Zero padding and an empty index type need no exceptions. This formalizes the geometric content of the root criterion; equality of native rook numbers and root multisets is a separate unproved interface."))), DescribeRole.Theorem)
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
+                    "For every positive m and every weakly increasing nonnegative padded tuple d, the root floor test is equivalent to SingletonColumns. This is the conditional geometric clause of Proposition 4.4 of Barrese, Loehr, Remmel and Sagan, arXiv:1308.4081v1, with the nonnegative Ferrers columns supplied explicitly. For a partial column, floor((mi-d(i))/m)=i-floor(d(i)/m)-1. The adjacent root inequality therefore forces a strict increase in the partial-top level. If two separated partial columns had the same level, monotonicity would put their intervening successor in that same level and contradict the adjacent condition. Conversely, geometric uniqueness forces every adjacent pair of partial tops into different levels. Zero padding and an empty index type need no exceptions. Equality of native rook numbers and root multisets is a separate unproved interface; this dictionary is not a claim of literature novelty."))), DescribeRole.Theorem)
         ), []));
     private static DocumentBlock Definition(string declaration, string title, string prose) =>
         Describe.Lean(DescribeId.Create("rookrootcriterion-" + declaration.ToLowerInvariant()),

@@ -172,6 +172,18 @@ $$\forall m \in Nat,\; \forall b \in PositiveColumns,\; \forall n \in Nat,\; \op
 
 For every native class member and every N at least area(b)+1, its positive-column length is below N, its padding has length N, the head is zero, and the padded sum is area(b). The empty board and zero padding are included. In the formula, columns(a) is the underlying positive list of the class member, board(a) is that normalized shape, and head returns an Option natural.
 
+**Theorem 1.15 (The complete native finite interface).**
+
+$$\forall m \in Nat,\; \forall b \in PositiveColumns,\; \operatorname{Finite}\left(\operatorname{RookClass}\left(m, b\right)\right) \land (\left(\forall a \in PositiveColumns,\; \operatorname{RookEquivalent}\left(m, a, b\right) \Leftrightarrow \operatorname{finiteTest}\left(m, a, b\right)\right) \land (\forall n \in Nat,\; \operatorname{area}\left(b\right) + 1 \le n \Rightarrow \left(\forall a \in \operatorname{RookClass}\left(m, b\right),\; \operatorname{paddingLaw}\left(n, a, b\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/RookClassNative.native_interface` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same native class, finiteness, the complete finite rook-vector comparison and the common-padding laws hold together. finiteTest(m,a,b) denotes area equality together with equality of rookCount at every natural index in Icc(1,area(b)); paddingLaw(n,a,b) denotes all four clauses of class_padding. These abbreviations refer to the displayed formulas above. The finite-vector equivalence includes both directions and all omitted indices, rather than treating an observed finite window as a universal proof.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.Nonattacking`
@@ -180,6 +192,7 @@ For every native class member and every N at least area(b)+1, its positive-colum
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.area`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.cells`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.class_padding`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.native_interface`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.pad`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.placements`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/RookClassNative.rookClass_finite`
