@@ -48,6 +48,10 @@ $$\neg (\forall N \in \mathbb{N},\; \forall n \in \mathbb{N},\; (0 < N) \Rightar
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/StrongDominanceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-zlfzc1608dom` (refuted) by `D5/S3/Analytic/Probability/StrongDominanceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-zlfzc1608dom","declaration_gid":"D5/S3/Analytic/Probability/StrongDominanceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. Zoroa; E. Lesigne; M. J. Fernández-Sáez; P. Zoroa; J. Casas (2017). *The coupon collector urn model with unequal probabilities in ecology and evolution*. DOI: [10.1098/rsif.2016.0643](https://doi.org/10.1098/rsif.2016.0643). URL: <https://arxiv.org/abs/1608.00155v1>.

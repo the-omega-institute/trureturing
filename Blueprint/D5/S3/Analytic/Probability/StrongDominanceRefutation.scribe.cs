@@ -50,7 +50,9 @@ internal sealed class StrongDominanceRefutationDocument : IScribeDocumentDefinit
         AssessedProvenance provenance, string prose, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            declaration == "claim" ? Blocks(ConjectureSource(), Paragraph(Text(prose))) : Blocks(Paragraph(Text(prose))), role);
+            declaration == "claim" ? Blocks(ConjectureSource(), Paragraph(Text(prose))) : Blocks(Paragraph(Text(prose))), role,
+            declaration == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("op-zlfzc1608dom"), ResolutionKind.Refuted) : null);
 
     private static DocumentBlock ConjectureSource() => Paragraph(
         Text("Conjecture, arXiv v1 p. 30: “If p≺q, then the random variable Yₙ defined on the probability space "
