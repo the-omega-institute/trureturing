@@ -14,9 +14,10 @@ import D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 /-! Actual faithful density-pair approximation via ordered rare-flag and local limits.
 
 The public approximation result constructs the actual state witnesses with an
-earned positive denominator. All private lemmas are consumed support, classified
-as bind-only; none is a separate admission or escape witness. The construction,
-normalization, spectral floors and ordered parameter selection lie on the live
+earned positive denominator. Private lemmas provide consumed analytic estimates
+and transport support; none is a separate delivery. The uniform floor in
+`affine_floor` and compact-interval estimate in `average_limit` feed the
+construction, normalization and ordered parameter selection on the live
 proof path of `faithful_density_pair_ratio_approx`.
 proof_shape: content; admission_basis: escape-witness.
 escape_witness: the public theorem's construction of actual faithful density
