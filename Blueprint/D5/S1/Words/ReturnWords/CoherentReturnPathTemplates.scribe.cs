@@ -72,6 +72,17 @@ internal sealed class CoherentReturnPathTemplatesDocument : IScribeDocumentDefin
                 + "and a phase theta : Component S -> ZMod p. Every actual internal "
                 + "arrow e : a -> b has label P(theta a) and theta b = theta a + 1. "
                 + "A function on the p residues is a word with exactly p positions."),
+            Proof("path_output_of_bounded_phases", "Bounded phases determine actual path output",
+                "The edge-to-path implication of FIB_SOURCE_COMPLETION_DYNAMICS.md "
+                + "Theorem 36.22 uses the bounded phases of a finite vertex quiver. "
+                + "The same positive period p, block P and phase map theta satisfy "
+                + "the two edge laws and determine the endpoint phase of every actual "
+                + "internal path H from a to b as theta(a) + length(H) modulo p. "
+                + "At every i < length(H), the output at i is P(theta(a) + i) modulo p "
+                + "in the phase index. The induction uses the label of the actual "
+                + "appended arrow, and the empty path gives the initial phase and no letters. "
+                + "The periodic-prefix equivalence and the finite template cover both use "
+                + "this implication."),
             Def("PeriodicPrefixes", "One purely periodic stream per entry",
                 "For every entry a in Component S there exist one stream X : Nat -> alpha "
                 + "and one positive period p, with X(n+p)=X(n) for every n. For every "
