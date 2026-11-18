@@ -65,7 +65,7 @@ private theorem weight_eq_left {P s t : ℝ} (ht : 0 < t) (htP : t ≤ P) :
   have hP := ht.trans_le htP
   have hlog := log_nonpos (div_nonneg ht.le hP.le) ((div_le_one hP).mpr htP)
   rw [weight, smoothWeight, abs_of_nonpos hlog]
-  congr 2 <;> ring
+  simp only [neg_mul_neg]
 
 private theorem weight_eq_right {P s t : ℝ} (hP : 0 < P) (hPt : P ≤ t) :
     weight P s t = smoothWeight P (-s) t := by
@@ -120,7 +120,7 @@ private theorem smooth_theta_comparison {P k a b E : ℝ} (hP : 0 < P)
   have hm : IntervalIntegrable (fun t => g t * t) volume a b :=
     (hgc.mul continuous_id.continuousOn).intervalIntegrable_of_Icc hab
   have hmθ : IntervalIntegrable (fun t => g t * Chebyshev.theta t) volume a b := by
-    have h := integrableOn_mul_sum_Icc c ha.le
+    have h := integrableOn_mul_sum_Icc c (m := 0) ha.le
       (g := g) ((intervalIntegrable_iff_integrableOn_Icc_of_le hab).mp hgi)
     simpa only [hc] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr h
   have hdiff : (∫ t in a..b, g t * Chebyshev.theta t) - (∫ t in a..b, g t * t) =
@@ -205,7 +205,9 @@ theorem softplus_theta_window {P s E : ℝ} (hP : 0 < P) (hs : 0 ≤ s)
         div_ne_zero (ha.trans_le ht.1).ne' hP.ne'
     have hexp : ContinuousOn (fun t : ℝ => exp (-s * |log (t / P)|)) (Icc a b) :=
       continuous_exp.comp_continuousOn (continuousOn_const.mul hlog.abs)
-    exact (continuousOn_const.add hexp).log (fun t _ => by positivity)
+    unfold weight
+    exact (continuousOn_const.add hexp).log
+      (fun t _ => (add_pos_of_pos_of_nonneg zero_lt_one (exp_pos _).le).ne')
   have hint := intervalIntegral.integral_add_adjacent_intervals
     ((hC (P / 2) P hhalf).intervalIntegrable_of_Icc hleft)
     ((hC P (2 * P) hP).intervalIntegrable_of_Icc hright)
