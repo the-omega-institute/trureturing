@@ -55,8 +55,8 @@ private theorem primeCube_nonunit_reduction_zero {p : ℕ} (hp : p.Prime)
 actual integer solution set; their counts use the same chosen reduced basis
 at every occurrence of an original middle pair. Only three explicit numerical
 long-chart separations remain, for later consumption of the original range. -/
-theorem actual_unit_middle_tuple_count (ε : ℝ) (hε : 0 < ε) :
-    ∃ K : ℝ, 0 < K ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ)
+theorem actual_unit_middle_tuple_count_seventh (ε : ℝ) (hε : 0 < ε) :
+    ∃ K : ℝ, 0 < K ∧ ∀ (p : ℕ) (hp : p.Prime) (X Y H : ℝ)
       (a₁ a₂ : ZMod (p^3)) (T : Finset ReturnRows),
       1 ≤ X → X ≤ Y → 3*Y < (p : ℝ)^2 →
       (p : ℝ)^3 ≤ X*Y → X*Y ≤ (p : ℝ)^4 →
@@ -65,9 +65,7 @@ theorem actual_unit_middle_tuple_count (ε : ℝ) (hε : 0 < ε) :
       (∀ h ∈ T, sixReturnWord a₁ a₂ (h.1 0) (h.2 2) (h.1 1)
         (h.2 0) (h.1 2) (h.2 1) = scalarReturn (-1)) →
       (∀ h ∈ T, IsUnit (h.1 2 : ZMod (p^3)) ∧ IsUnit (h.2 2 : ZMod (p^3))) →
-      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
-      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
-      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      seventhHeightConstant*(32*(X*Y/(p : ℝ)^3))^7 < (p : ℝ)^5 →
       (T.card : ℝ) ≤
         K*(p : ℝ)^ε*(X*Y*(1+(1+Real.log (2*p)/Real.log 2))+
           (X*Y)^2/(p : ℝ)^4) +
@@ -76,11 +74,11 @@ theorem actual_unit_middle_tuple_count (ε : ℝ) (hε : 0 < ε) :
   classical
   obtain ⟨Crhs, hCrhs, hunrhs⟩ := actual_long_nonunit_rhs_tuple_count ε hε
   obtain ⟨Cend, hCend, hendpoint⟩ := actual_nonunit_endpoint_tuple_count ε hε
-  obtain ⟨Cret, hCret, hretained⟩ := actual_retained_long_tuple_count ε hε
+  obtain ⟨Cret, hCret, hretained⟩ := actual_retained_long_tuple_count_seventh ε hε
   let K := 66048+148992+18+Crhs+Cend+Cret
   refine ⟨K, by dsimp only [K]; positivity, ?_⟩
-  intro p hp M X Y H a₁ a₂ T hX1 hXY hsmall harea hupper hH hHsq ha₁ ha₂
-    hbox hword hunit hcap hsepR hsepQ
+  intro p hp X Y H a₁ a₂ T hX1 hXY hsmall harea hupper hH hHsq ha₁ ha₂
+    hbox hword hunit hgap
   letI : NeZero (p^3) := ⟨pow_ne_zero _ hp.ne_zero⟩
   have hX : 0 < X := lt_of_lt_of_le zero_lt_one hX1
   have hY1 : 1 ≤ Y := hX1.trans hXY
@@ -201,7 +199,7 @@ theorem actual_unit_middle_tuple_count (ε : ℝ) (hε : 0 < ε) :
   have hG : (G.card : ℝ) ≤
       Cret*(p : ℝ)^ε*(X*Y+(X*Y/p)*(1+Real.log (2*p)/Real.log 2)+(X*Y)^2/(p : ℝ)^4) +
       Real.sqrt (Cret*(p : ℝ)^ε*(X*Y)^6/(p : ℝ)^15*(1+Real.log (2*p)/Real.log 2)) := by
-    apply hretained p hp M X Y H a₁ a₂ G BG hX1 hXY hsmall hAcut hH hHsq hHp ha₁ ha₂
+    apply hretained p hp X Y H a₁ a₂ G BG hX1 hXY hsmall hAcut hH hHsq hHp ha₁ ha₂
       (fun h hh => hbox h (Finset.mem_filter.mp hh).1)
       (fun h hh => hword h (Finset.mem_filter.mp hh).1)
       (fun h hh => hunit h (Finset.mem_filter.mp hh).1)
@@ -223,9 +221,7 @@ theorem actual_unit_middle_tuple_count (ε : ℝ) (hε : 0 < ε) :
       have hm₁ : h.1 2 = wt.1 := congrArg Prod.fst hm
       have hm₂ : h.2 2 = wt.2 := congrArg Prod.snd hm
       simpa only [Rh, hm₁, hm₂] using (Finset.mem_filter.mp hh).2.2.2.1
-    · exact hcap
-    · exact hsepR
-    · exact hsepQ
+    · exact hgap
   have hcover : T ⊆ N ∪ S ∪ U ∪ Z ∪ D ∪ G := by
     intro h hh
     have hor : h ∈ N ∨ h ∈ S ∨ h ∈ U ∨ h ∈ Z ∨ h ∈ D ∨ h ∈ G := by
@@ -349,6 +345,38 @@ theorem actual_unit_middle_tuple_count (ε : ℝ) (hε : 0 < ε) :
   apply hcardR.trans (hsum.trans_eq ?_)
   dsimp only [K, W]
   ring
+
+/-- Preserve the original numerical-cutoff statement. -/
+theorem actual_unit_middle_tuple_count (ε : ℝ) (hε : 0 < ε) :
+    ∃ K : ℝ, 0 < K ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ)
+      (a₁ a₂ : ZMod (p^3)) (T : Finset ReturnRows),
+      1 ≤ X → X ≤ Y → 3*Y < (p : ℝ)^2 →
+      (p : ℝ)^3 ≤ X*Y → X*Y ≤ (p : ℝ)^4 →
+      0 < H → H^2 = X*Y → IsUnit a₁ → IsUnit a₂ →
+      (∀ h ∈ T, ∀ i, |(h.1 i : ℝ)| ≤ X ∧ |(h.2 i : ℝ)| ≤ Y) →
+      (∀ h ∈ T, sixReturnWord a₁ a₂ (h.1 0) (h.2 2) (h.1 1)
+        (h.2 0) (h.1 2) (h.2 1) = scalarReturn (-1)) →
+      (∀ h ∈ T, IsUnit (h.1 2 : ZMod (p^3)) ∧ IsUnit (h.2 2 : ZMod (p^3))) →
+      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
+      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
+      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      (T.card : ℝ) ≤
+        K*(p : ℝ)^ε*(X*Y*(1+(1+Real.log (2*p)/Real.log 2))+
+          (X*Y)^2/(p : ℝ)^4) +
+        Real.sqrt (K*(p : ℝ)^ε*(X*Y)^6/(p : ℝ)^15*
+          (1+Real.log (2*p)/Real.log 2)) := by
+  obtain ⟨K, hK, hcount⟩ := actual_unit_middle_tuple_count_seventh ε hε
+  refine ⟨K, hK, ?_⟩
+  intro p hp M X Y H a₁ a₂ T hX1 hXY hsmall harea hupper hH hHsq ha₁ ha₂
+    hbox hword hunit hcap _hsepR hsepQ
+  have hpR : 0 < (p : ℝ) := by exact_mod_cast hp.pos
+  have hB : 1 ≤ 32*(X*Y/(p : ℝ)^3) := by
+    have hh : 1 ≤ X*Y/(p : ℝ)^3 := (le_div_iff₀ (pow_pos hpR 3)).mpr (by simpa using harea)
+    linarith only [hh]
+  have hgap := seventh_height_gap_of_old_cutoffs (32*(X*Y/(p : ℝ)^3)) M (p : ℝ)
+    hpR hB hcap hsepQ
+  exact hcount p hp X Y H a₁ a₂ T hX1 hXY hsmall harea hupper hH hHsq ha₁ ha₂
+    hbox hword hunit hgap
 
 end
 end D5.S3.Arith.CharacterSums.Original

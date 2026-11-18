@@ -295,7 +295,7 @@ private lemma D2_continuousOn : ContinuousOn D2 (Ioi 0) := by
     ((show ContinuousAt (fun t : ℝ => Real.exp (-t / 2)) t by fun_prop).div
       (by fun_prop) hden)).continuousWithinAt
 
-private lemma choose_window : ∃ δ : ℝ, 0 < δ ∧ δ < Real.log 2 ∧
+lemma choose_window : ∃ δ : ℝ, 0 < δ ∧ δ < Real.log 2 ∧
     (∀ t ∈ Ioc 0 δ, 0 < K t ∧ D1 t < 0 ∧ 0 < D2 t ∧ t * D2 t < 1) ∧
     IntegrableOn (fun t : ℝ => t * D2 t) (Ioc 0 δ) := by
   have hK : ∀ᶠ t in 𝓝[>] (0 : ℝ), 0 < K t :=

@@ -4,7 +4,21 @@
 
 Every actual derivative-zero partner is counted, with one physical fiber weight and no nonalignment or assumed counting supplier.
 
-**Theorem 1.1 (Uniform weighted count of all actual bad partners).**
+**Theorem 1.1 (All actual derivative-zero partners under seventh height).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners.actual_derivative_zero_partners_subpower_seventh`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners.actual_derivative_zero_partners_subpower_seventh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+For every epsilon>0 choose C>0 before all primes and original physical chart data. With the same actual bases, original word, anchor, endpoint units, derivative test and physical boxes as the preserved theorem, replace its three numerical cutoffs by seventhHeightConstant*(J1*J2)^7<p^5. Then card(S)<=C*p^epsilon*(1+6H/(p*sigma)). Partition the literal endpoint set into coefficientwise zero and nonzero reductions. The seventh-height gap supplies the zero-reduction small determinant separations, while the structural factor cover and squared real envelope bound the nonzero singular values. Both strata preserve the original endpoints and use the physical linear-fiber weight once. The original public theorem remains as a consequence with its full original type; no full arbitrary-modulus conjecture is asserted.
+
+**Theorem 1.2 (Uniform weighted count of all actual bad partners).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners.actual_derivative_zero_partners_subpower`
 
@@ -25,5 +39,6 @@ This theorem closes the actual derivative-zero partner layer of Pascadi's origin
 ## References
 
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners.actual_derivative_zero_partners_subpower`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners.actual_derivative_zero_partners_subpower_seventh`
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalAlignedPartners](PascadiOriginalAlignedPartners.md)
-- Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalSingularCount](PascadiOriginalSingularCount.md)
+- Dependency: [D5/S3/Arith/CharacterSums/PascadiSeventhSingularCount](PascadiSeventhSingularCount.md)

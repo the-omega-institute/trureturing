@@ -4,7 +4,35 @@
 
 Actual long reduced charts supply their heights, and their derivative defects have the original physical parameter average.
 
-**Theorem 1.1 (Derive the coordinate heights from the actual reduced basis).**
+**Lemma 1.1 (A genuine long chart supplies a positive normalized area height).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.long_chart_area_height_one_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.long_chart_area_height_one_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+For a prime p, positive X,Y,H with H squared=XY, and a genuine reduced index-p-cubed basis B satisfying p^6<H^2*Q(B.R), the normalized area height 32XY/p^3 is at least one. The actual long-scale bounds give 2<J2<=J1 and J1*J2=32XY/p^3. This consumed helper transfers the old numerical-cutoff interfaces to seventh height for actual nonempty long-chart families; no corresponding claim is made for arbitrary small area data without such a chart.
+
+**Theorem 1.2 (Actual long charts with only the seventh-height cutoff).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_subpower_seventh`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_subpower_seventh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+For every epsilon>0 a uniform positive C bounds the actual long-chart maximum derivative-zero degree by C*p^epsilon*(1+6H/(p*sqrt(Q(R2)))). Retain the actual original prime-cube reduced long basis, prime-square reduced basis, literal physical boxes, anchor identity, original word and all original units. The only scale separation replacing the previous three numerical cutoffs is seventhHeightConstant*(32XY/p^3)^7<p^5. The genuine reduced basis supplies J1=8H/sigma, J2=4H*sigma/p^3 and J1*J2=32XY/p^3; the actual seventh-height bad-degree theorem therefore receives every coordinate input from the physical chart. The original public theorem remains with exactly its previous hypotheses.
+
+**Theorem 1.3 (Derive the coordinate heights from the actual reduced basis).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_subpower`
 
@@ -20,7 +48,21 @@ For each epsilon>0 one positive C works for all primes p and actual reduced inde
 
 Take sigma=sqrt(Q(R)) from the actual long reduced basis and define J1=8H/sigma and J2=4H*sigma/p^3. The existing reduced-basis coordinate bound proves the anchor and all endpoint height inputs. The long-scale theorem proves J2<=J1, J2>2 and J1*J2=32XY/p^3. Thus no height supplier is assumed. Consume actual_record_bad_degree_subpower with these actual inputs. The explicit inequalities (32XY/p^3)^5<=M^5*p^3, (10368*3^9)^5*M^35<p^4 and (24*(8*18)^4)^5*M^40<p remain hypotheses; they have not been discharged over the final original range.
 
-**Theorem 1.2 (Average the actual maximum derivative defects).**
+**Theorem 1.4 (Average actual long-chart defects under seventh height).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_average_seventh`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_average_seventh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+Let A=XY. With the same original finite parameter domain, actual long prime-cube charts, endpoint word and units, physical boxes, 1<=X<=Y, 2Y<p^3, A<2p^4 and H>=p, the single scale condition seventhHeightConstant*(32A/p^3)^7<p^5 gives sum actualRecordBadDegree<=C*p^epsilon*[A+(A/p)*(1+log(2p)/log(2))+A^2/p^4]. Choose genuine reduced prime-square bases only at actual parameters and consume the existing physical-weight average. No counting or coordinate estimate is assumed. To retain the original three-cutoff interface, an actual parameter in a nonempty domain supplies long-scale bounds proving 1<=32A/p^3; when the domain is empty its sum is zero. This module does not claim the full arbitrary-modulus conjecture or literature priority.
+
+**Theorem 1.5 (Average the actual maximum derivative defects).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_average`
 
@@ -41,6 +83,9 @@ These are actual-chart bounds used to remove the derivative-defect term in the g
 ## References
 
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_average`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_average_seventh`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_subpower`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.actual_long_bad_degree_subpower_seventh`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegreeAverage.long_chart_area_height_one_le`
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree](PascadiOriginalBadDegree.md)
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalWeightAverage](PascadiOriginalWeightAverage.md)
