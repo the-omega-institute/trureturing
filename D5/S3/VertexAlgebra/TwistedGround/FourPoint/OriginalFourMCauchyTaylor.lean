@@ -271,16 +271,20 @@ private theorem taylorPair_regularSeries (eta : ℂ) :
   have hSi : AnalyticAt ℂ Si (0, 0) := hS.inv hS₀
   have hbt : taylorPair B = b eta := by
     dsimp only [B]
-    rw [taylorPair_fst, show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, b]
+    rw [taylorPair_fst,
+      show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, b]
   have hct : taylorPair C₀ = c eta := by
     dsimp only [C₀]
-    rw [taylorPair_snd, show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, c]
+    rw [taylorPair_snd,
+      show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, c]
   have hbit : taylorPair Bi = bi eta := by
     dsimp only [Bi]
-    rw [taylorPair_fst, show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, bi]
+    rw [taylorPair_fst,
+      show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, bi]
   have hcit : taylorPair Ci = ci eta := by
     dsimp only [Ci]
-    rw [taylorPair_snd, show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, ci]
+    rw [taylorPair_snd,
+      show taylor (rootPower eta _) = unitPower eta _ from taylor_binomial _ _, ci]
   have hst : taylorPair S = b eta + c eta := by
     dsimp only [S]
     rw [taylorPair_add hB hC, hbt, hct]
@@ -354,5 +358,66 @@ theorem chart_free_correction_coefficient (c : Chart) (i : Puncture) (p q : ℕ)
   rw [LaurentSeries.coeff_coe_powerSeries, taylor, coeff_mk,
     D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentCauchy.regular_series_coefficient] at hc
   exact hc
+
+open LatticeGeneratingFieldLocality (LatticeData Index Oscillator)
+open D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
+  (creationPart contraction normalOrder lowering_normal_order_word)
+open private vacuum vacuumProjection vacuumProjection_apply from
+  D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
+
+private theorem pair_top_coefficient (D : LatticeData) (x y : Index D) :
+    coeff (x.2+y.2+1) (normalOrder D [x, y]) (1 : Oscillator D) =
+      ((D.G x.1 y.1 : ℂ) * contractionScalar x.2 y.2) • (1 : Oscillator D) := by
+  have hword : normalOrder D [x, y] =
+      (creationPart D x * creationPart D y + contraction D x y) * vacuum D := by
+    simp [normalOrder, mul_assoc, add_mul]
+  rw [hword, vacuum, coeff_mul_C, map_add]
+  have hzero : coeff (x.2+y.2+1) (creationPart D x * creationPart D y) = 0 := by
+    rw [coeff_mul]
+    apply Finset.sum_eq_zero
+    intro ij hij
+    have hsum : ij.1 + ij.2 = x.2+y.2+1 := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
+    simp only [creationPart, coeff_mk]
+    split_ifs <;> first | omega | simp
+  rw [hzero, zero_add, contraction, coeff_monomial, if_pos rfl]
+  simp [Module.End.mul_apply, vacuumProjection_apply]
+
+private theorem weighted_pair_symmetry (D : LatticeData) (hu : IsUnit D.G.det) (x y : Index D) :
+    (D.G x.1 y.1 : ℂ) * contractionScalar x.2 y.2 =
+      (D.G y.1 x.1 : ℂ) * contractionScalar y.2 x.2 := by
+  let n := x.2+y.2+1
+  have hxy := lowering_normal_order_word D hu [x, y] n
+  have hyx := lowering_normal_order_word D hu [y, x] n
+  simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one] at hxy hyx
+  rw [mul_comm (MvPolynomial.X y : Oscillator D)] at hyx
+  have he := hxy.symm.trans hyx
+  rw [show n = x.2+y.2+1 by rfl, pair_top_coefficient D x y,
+    show x.2+y.2+1 = y.2+x.2+1 by omega, pair_top_coefficient D y x] at he
+  simpa [MvPolynomial.constantCoeff_smul] using
+    congrArg (fun f : Oscillator D => f.constantCoeff) he
+
+/-- In the native order of the two Taylor selectors, the regular subtraction
+is the Gram-weighted pair obtained by normally ordering the original currents. -/
+theorem native_free_correction_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : Chart) (i : Puncture) (x y : Index D) :
+    (D.G x.1 y.1 : ℂ) * coefficient y.2 (fun v => coefficient x.2 (fun u => freeCorrection c i
+      ((1-loweringParameter c i*u)^(1/2:ℂ)) ((1-loweringParameter c i*v)^(1/2:ℂ)))) =
+      (D.G x.1 y.1 : ℂ) * (loweringParameter c i^(x.2+y.2+1) * contractionScalar x.2 y.2) := by
+  have hswap (u v : ℂ) : freeCorrection c i u v = freeCorrection c i v u := by
+    unfold freeCorrection
+    congr 2 <;> ring
+  have hsel : (fun v => coefficient x.2 (fun u => freeCorrection c i
+      ((1-loweringParameter c i*u)^(1/2:ℂ)) ((1-loweringParameter c i*v)^(1/2:ℂ)))) =
+      (fun v => coefficient x.2 (fun u => freeCorrection c i
+      ((1-loweringParameter c i*v)^(1/2:ℂ)) ((1-loweringParameter c i*u)^(1/2:ℂ)))) := by
+    funext v
+    congr 1
+    funext u
+    exact hswap _ _
+  rw [hsel, chart_free_correction_coefficient, show y.2+x.2+1 = x.2+y.2+1 by omega]
+  calc
+    _ = loweringParameter c i^(x.2+y.2+1) *
+      ((D.G y.1 x.1 : ℂ) * contractionScalar y.2 x.2) := by rw [D.symmetric x.1 y.1]; ring
+    _ = _ := by rw [weighted_pair_symmetry D hu y x]; ring
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMCauchyTaylor
