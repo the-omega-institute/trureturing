@@ -34,7 +34,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Recurrence
 
 attribute [local instance] Classical.propDecidable
 
-open HardinA233178Literal (Array Edges Proper chromaticCount a FullE)
+open HardinA233178Literal (Array Edges Proper chromaticCount a)
 open HardinA233178Chromatic (Column colour Bond T v)
 
 private def columnEquiv : Column ≃ (Fin 5 → Fin 3) :=
@@ -166,7 +166,13 @@ private theorem scaled_recurrence (n : ℕ) :
   linarith
 
 /-- The exact registered event on the literal source count, with no upper cutoff. -/
-theorem result : FullE := by
+theorem result :
+  ∀ n : ℕ, n > 11 →
+    (a n : ℤ) = 192 * (a (n-1) : ℤ) + 31744 * (a (n-2) : ℤ) -
+      3178496 * (a (n-3) : ℤ) - 170917888 * (a (n-4) : ℤ) +
+      13992198144 * (a (n-5) : ℤ) + 99857989632 * (a (n-6) : ℤ) -
+      17660905521152 * (a (n-7) : ℤ) + 211106232532992 * (a (n-8) : ℤ) +
+      2533274790395904 * (a (n-9) : ℤ) - 40532396646334464 * (a (n-10) : ℤ) := by
   intro n hn
   obtain ⟨k,rfl⟩ : ∃ k, n = k+12 := ⟨n-12,by omega⟩
   have h := scaled_recurrence k

@@ -181,10 +181,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Recurrence
-    definition := some {
-      owner := `D5.S3.Combinatorics.TraceAvoidingArrays.FiveRow.HardinA233178Literal
-      name := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal.FullE
-      path := #[] }
+    definition := none
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "fn", "arg"]
