@@ -378,7 +378,7 @@ hypothesis occurs here. All summability is obtained before evaluating sums. -/
 theorem positiveT_hasSum {r : ℝ} {u v : ℂ} (hr : 0 < r) (hr1 : r < 1)
     (hu : ‖u‖ + Real.sqrt r < 1) (hv : ‖v‖ + Real.sqrt r < 1) :
     HasSum (fun pq : ℕ × ℕ =>
-      OriginalGaussianFiniteCandidateModes.t pq.1 pq.2 (r : ℂ) *
+      FiniteMode.OriginalGaussianFiniteCandidateModes.t pq.1 pq.2 (r : ℂ) *
         u ^ pq.1 * v ^ pq.2)
       (OriginalGaussianExternalAnalyticCandidate.candidateT u v (r : ℂ)) := by
   have hs0 := Real.sqrt_nonneg r
@@ -426,7 +426,7 @@ theorem positiveT_eq_candidateT {u v : ℂ} {r : ℝ}
       apply tsum_congr
       intro pq
       simp only [ite_true, externalT_positive_finite_eq pq.1 pq.2 hz,
-        OriginalGaussianFiniteCandidateModes.candidateT, hsq]
+        FiniteMode.OriginalGaussianFiniteCandidateModes.candidateT, hsq]
     _ = _ := (positiveT_hasSum hr hr1 hu hv).tsum_eq
 
 end D5.S3.VertexAlgebra.TwistedGround.PositiveT.GeneratorIdentification
