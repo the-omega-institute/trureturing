@@ -24,6 +24,10 @@ Lean statement: `D5/S3/Arith/Divisors/KarttunenA401714.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/KarttunenA401714.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a401714-unitary-squarefree-divisor-sum` (proved) by `D5/S3/Arith/Divisors/KarttunenA401714.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a401714-unitary-squarefree-divisor-sum","declaration_gid":"D5/S3/Arith/Divisors/KarttunenA401714.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Antti Karttunen (2026). *OEIS A401714 and A401715: radical quotient and joint divisor sums*. URL: <https://github.com/oeis/oeisdata/blob/24e9613f999e4d1e98e6d8a4c2b6ae0124d79ed8/seq/A401/A401714.seq>.
