@@ -4,7 +4,31 @@
 
 Finite graph structure, degree counting, and perfect matchings.
 
-**Definition 1.1 (IsAlmostRegular).**
+**Theorem 1.1 (Native matching count and edge enumeration).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.matchingCount_eq_cnt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.matchingCount_eq_cnt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, simple graph G on Fin n, decidable adjacency instance and natural i, matchingCount G i equals cnt G.edgeFinset i. The published supplier is consumed by MatchingPartition.matchingCount_partition.
+
+**Theorem 1.2 (Matching size is bounded by vertex order).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.matchingCount_eq_zero_of_card_lt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.matchingCount_eq_zero_of_card_lt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, simple graph G on Fin n, decidable adjacency instance and natural i with n less than 2i, matchingCount G i is zero. The published supplier is consumed by the finite-support argument in MatchingPartition.
+
+**Definition 1.3 (IsAlmostRegular).**
 
 $$\forall (n: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname{Fin} n)), \forall [\operatorname{DecidableRel} G . \operatorname{Adj}], \forall (d: \mathbb{N}), (\operatorname{IsAlmostRegular} G d)\iff((\exists (w: \operatorname{Fin} n), (G . \operatorname{degree} w = d - 1)\land((\forall (v: \operatorname{Fin} n), (v \neq w)\to(G . \operatorname{degree} v = d)))))$$
 
@@ -16,7 +40,7 @@ $$\forall (n: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname
 
 Section 2, page 3: “if d(w) = d − 1 for some w ∈ V(G) and d(v) = d for all v ∈ V(G) − w, then G is said to be almost d-regular.” The carrier is Fin n and the natural subtraction d − 1 follows this expression.
 
-**Definition 1.2 (IsFactorCritical).**
+**Definition 1.4 (IsFactorCritical).**
 
 $$\forall (n: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname{Fin} n)), (\operatorname{IsFactorCritical} G)\iff((\forall (v: \operatorname{Fin} n), \exists (M: (G . \operatorname{induce} (\ \{v\ \}^{c}: \operatorname{Set} (\operatorname{Fin} n))) . \operatorname{Subgraph}), M . \operatorname{IsPerfectMatching}))$$
 
@@ -28,7 +52,7 @@ $$\forall (n: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname
 
 Section 2, page 4: “A graph G is said to be factor-critical if G \ v has a perfect matching for all v ∈ V(G).” Deletion is the induced graph on the complement of the singleton.
 
-**Theorem 1.3 (odd order).**
+**Theorem 1.5 (odd order).**
 
 $$\forall (N: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname{Fin} N)), ((\operatorname{IsFactorCritical} G))\to((((0 < N))\to((\operatorname{Odd} N))))$$
 
@@ -42,7 +66,7 @@ $$\forall (N: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname
 
 A perfect matching after one vertex deletion forces the remaining order to be even.
 
-**Theorem 1.4 (almost regular order eq).**
+**Theorem 1.6 (almost regular order eq).**
 
 $$\forall (N: \mathbb{N}), \forall (d: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname{Fin} N)), \forall [\operatorname{DecidableRel} G . \operatorname{Adj}], ((\operatorname{IsFactorCritical} G))\to((((\operatorname{IsAlmostRegular} G d))\to((N = 2 \cdot \operatorname{matchingNumber} G + 1))))$$
 
@@ -56,7 +80,7 @@ $$\forall (N: \mathbb{N}), \forall (d: \mathbb{N}), \forall (G: \operatorname{Si
 
 A nonempty factor-critical graph has one more vertex than twice its matching number. Almost regularity supplies nonemptiness.
 
-**Theorem 1.5 (exists equiv of omission bound).**
+**Theorem 1.7 (exists equiv of omission bound).**
 
 $$\forall (A: \operatorname{Type}), \forall (B: \operatorname{Type}), \forall [\operatorname{Fintype} A], \forall [\operatorname{Fintype} B], \forall (R: (A)\to((B)\to(\operatorname{Prop}))), \forall [\operatorname{DecidableRel} R], \forall (r: \mathbb{N}), ((\operatorname{Fintype} . \operatorname{card} A = \operatorname{Fintype} . \operatorname{card} B))\to((((2 \cdot r \leq \operatorname{Fintype} . \operatorname{card} B))\to(((\forall (a: A), (\operatorname{Finset} . \operatorname{univ} . \operatorname{filter} (fun (b: B)\mapsto \neg R a b)) . \operatorname{card} \leq r) \to ((\forall (b: B), (\operatorname{Finset} . \operatorname{univ} . \operatorname{filter} (fun (a: A)\mapsto \neg R a b)) . \operatorname{card} \leq r) \to (\exists (f: \operatorname{Equiv}\left(A, B\right)), \forall (a: A), R a (f a)))))))$$
 
@@ -70,7 +94,7 @@ $$\forall (A: \operatorname{Type}), \forall (B: \operatorname{Type}), \forall [\
 
 Two finite sets of equal size admit a compatible bijection when each element omits at most r partners in the other set and both sets have at least 2r elements. The proof verifies Hall’s condition.
 
-**Theorem 1.6 (color balance).**
+**Theorem 1.8 (color balance).**
 
 $$\forall (V: \operatorname{Type}), \forall [\operatorname{Fintype} V], \forall (G: \operatorname{SimpleGraph} V), \forall (M: G . \operatorname{Subgraph}), ((M . \operatorname{IsPerfectMatching}))\to((\forall (c: (V)\to(\operatorname{Fin} 2)), (\forall (x y: V), (G . \operatorname{Adj} x y)\to(c x \neq c y)) \to (\operatorname{Fintype} . \operatorname{card} \ \{x: V \mid c x = 0\ \} = \operatorname{Fintype} . \operatorname{card} \ \{x: V \mid c x = 1\ \})))$$
 
@@ -84,7 +108,7 @@ $$\forall (V: \operatorname{Type}), \forall [\operatorname{Fintype} V], \forall 
 
 Every perfect matching exchanges the two classes of a proper two-coloring, so the classes have the same cardinality.
 
-**Theorem 1.7 (deleted color count).**
+**Theorem 1.9 (deleted color count).**
 
 $$\forall (V: \operatorname{Type}), \forall [\operatorname{Fintype} V], \forall [\operatorname{DecidableEq} V], \forall (C: \operatorname{Type}), \forall [\operatorname{DecidableEq} C], \forall (c: (V)\to(C)), \forall (i: C), \forall (v: V), \operatorname{Fintype} . \operatorname{card} \ \{x: (\ \{v\ \}^{c}: \operatorname{Set} V) \mid c (\operatorname{Subtype} . \operatorname{val} x) = i\ \} = (\operatorname{Finset} . \operatorname{univ} . \operatorname{filter} (fun (x: V)\mapsto c x = i)) . \operatorname{card} - (if c v = i then 1 else 0)$$
 
@@ -98,7 +122,7 @@ $$\forall (V: \operatorname{Type}), \forall [\operatorname{Fintype} V], \forall 
 
 Deleting a vertex removes one member of its color class and leaves every other color count unchanged.
 
-**Theorem 1.8 (no two color).**
+**Theorem 1.10 (no two color).**
 
 $$\forall (N: \mathbb{N}), \forall (G: \operatorname{SimpleGraph} (\operatorname{Fin} N)), ((\operatorname{IsFactorCritical} G))\to(((\exists (a b: \operatorname{Fin} N), G . \operatorname{Adj} a b) \to (\neg (\exists (c: (\operatorname{Fin} N)\to(\operatorname{Fin} 2)), \forall (x y: \operatorname{Fin} N), (G . \operatorname{Adj} x y)\to(c x \neq c y)))))$$
 
@@ -120,6 +144,8 @@ A factor-critical graph containing an edge has no proper two-coloring: deleting 
 - Truth anchor: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.color_balance`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.deleted_color_count`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.exists_equiv_of_omission_bound`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.matchingCount_eq_cnt`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.matchingCount_eq_zero_of_card_lt`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.no_two_color`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ComponentPacking/FactorCriticalMatching.odd_order`
 - Dependency: [D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation](../../../StatisticalMechanics/DimerVirialFourthDifferenceRefutation.md)

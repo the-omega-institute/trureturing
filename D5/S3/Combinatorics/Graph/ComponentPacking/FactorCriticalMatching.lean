@@ -86,7 +86,7 @@ open Classical
 open Finset
 open D5.S3.StatisticalMechanics.DimerVirialFourthDifferenceRefutation
 /-- The frozen matching count equals the owner's finite matching enumeration for every graph. -/
-private theorem matchingCount_eq_cnt {n : ℕ} (G : SimpleGraph (Fin n))
+theorem matchingCount_eq_cnt {n : ℕ} (G : SimpleGraph (Fin n))
     [DecidableRel G.Adj] (i : ℕ) : matchingCount G i = cnt G.edgeFinset i := by
   all_goals
     classical
@@ -120,7 +120,7 @@ private theorem matchingCount_eq_cnt {n : ℕ} (G : SimpleGraph (Fin n))
         right_inv := fun S => rfl }
 
 /-- No matching can cover more vertices than the graph has. -/
-private theorem matchingCount_eq_zero_of_card_lt {n : ℕ} (G : SimpleGraph (Fin n))
+theorem matchingCount_eq_zero_of_card_lt {n : ℕ} (G : SimpleGraph (Fin n))
     [DecidableRel G.Adj] (i : ℕ) (hi : n < 2 * i) : matchingCount G i = 0 := by
   all_goals
     have hz : matchingsIn G.edgeFinset i = ∅ :=
