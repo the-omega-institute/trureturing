@@ -7,7 +7,6 @@
    digest: Finite coordinate transport for the original twisted half-current oscillator. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeCoset
-import Batteries.Tactic.OpenPrivate
 import Mathlib.Data.Nat.Choose.Cast
 import Mathlib.RingTheory.PowerSeries.Binomial
 
@@ -25,8 +24,7 @@ open LatticeGeneratingFieldLocality LatticeHalfFock MvPolynomial
 open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse_right)
 open TwistedGround.OriginalFourMChargeCoset (oscillatorLower)
 open LatticeHalfFockChargedCoefficients (omega)
-open private L_zero_of_homogeneous_int halfEnergy_eq_signedOddWeight_half from
-  D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero
+open LatticeHalfFockChargedLZero (L_zero_of_homogeneous_int)
 
 private abbrev End (D : LatticeData) := Module.End ℂ (Oscillator D)
 
@@ -263,9 +261,14 @@ private theorem negative_oscillator_eigen (D : LatticeData) (hu : IsUnit D.G.det
         ((Finsupp.weight (fun x => (omega D x : ℤ)) d : ℤ) : ℂ)/2) *
         f.coeff d := by
     conv_lhs => rw [MvPolynomial.as_sum f, map_sum, coeff_sum]
-    simp only [L_zero_monomial_coeff D (actualInverse D) (actualInverse_left D hu)
-      (actualInverse_right D hu), halfEnergy_eq_signedOddWeight_half,
-      coeff_smul, smul_eq_mul, coeff_monomial]
+    have monomial_eigen (e : Index D →₀ ℕ) :
+        L D (actualInverse D) 0 (monomial e (f.coeff e)) =
+          ((D.rank : ℂ)/16 +
+            ((Finsupp.weight (fun x => (omega D x : ℤ)) e : ℤ) : ℂ)/2) •
+            monomial e (f.coeff e) :=
+      L_zero_of_homogeneous_int D (actualInverse D) (actualInverse_left D hu)
+        (actualInverse_right D hu) _ _ (isWeightedHomogeneous_monomial _ e _ rfl)
+    simp only [monomial_eigen, coeff_smul, smul_eq_mul, coeff_monomial]
     by_cases hd : d ∈ f.support
     · rw [Finset.sum_eq_single_of_mem d hd]
       · simp
@@ -527,7 +530,7 @@ theorem scaled_contraction_term (root lambda : ℂ) (hroot : root^2 = lambda)
 
 /-- The normalized binomial series for `(1-eta*u)^a`. -/
 def unitPower (eta a : ℂ) : PowerSeries ℂ :=
-  PowerSeries.mk fun n => (-eta)^n * Ring.choose a n
+  PowerSeries.rescale (-eta) (PowerSeries.binomialSeries ℂ a)
 
 private theorem binomial_reflection (a : ℂ) (k : ℕ) :
     (-1:ℂ)^k * Ring.choose a k = Ring.choose (-a+(k:ℂ)-1) k := by
@@ -556,7 +559,8 @@ theorem chamber_coefficient_eq_contraction (eta : ℂ) (p q : ℕ) :
   apply Finset.sum_congr rfl
   intro n hn
   have hn' : n ≤ q := by simpa using hn
-  simp only [unitPower, PowerSeries.coeff_mk]
+  simp only [unitPower, PowerSeries.coeff_rescale, PowerSeries.binomialSeries_coeff,
+    smul_eq_mul, mul_one]
   have cf (a : ℂ) (k : ℕ) : (-eta)^k * Ring.choose a k =
       eta^k * Ring.choose (-a+(k:ℂ)-1) k := by
     rw [show -eta = eta*(-1) by ring, mul_pow, mul_assoc, binomial_reflection]

@@ -41,23 +41,17 @@ private theorem u_ne : u ≠ 0 := by simp [u]
 private theorem U_mul_I : U * I = 1 := by
   rw [U, I, ← map_mul, mul_inv_cancel₀ u_ne, map_one]
 
-private theorem unitPower_rescale (eta a : ℂ) :
-    unitPower eta a = rescale (-eta) (binomialSeries ℂ a) := by
-  apply PowerSeries.ext
-  intro n
-  simp [unitPower, coeff_rescale]
-
 private theorem unitPower_add (eta a b : ℂ) :
     unitPower eta (a+b) = unitPower eta a * unitPower eta b := by
-  simp only [unitPower_rescale, binomialSeries_add, map_mul]
+  simp only [unitPower, binomialSeries_add, map_mul]
 
 private theorem unitPower_zero (eta : ℂ) : unitPower eta 0 = 1 := by
-  simp [unitPower_rescale]
+  simp [unitPower]
 
 private theorem unitPower_one (eta : ℂ) :
     unitPower eta 1 = 1 - C eta * X := by
   have he : (1 : ℂ) = ((1:ℕ):ℂ) := by norm_num
-  rw [unitPower_rescale, he, binomialSeries_nat]
+  rw [unitPower, he, binomialSeries_nat]
   simp [map_add, rescale_X, sub_eq_add_neg, neg_mul]
 
 private def e (eta : ℂ) : Chamber := C (HahnSeries.C eta)

@@ -12,11 +12,11 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lower
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
 
 *Commentary.*
 
-At each order n, the divided power L(1)^n/n! applied to a current on any oscillator polynomial is the sum over shifts k from zero through n. Its k-th term is choose(-j-1/2,k) times the shifted current j+k applied to the divided power of order n-k. The actual inverse Gram matrix enters through the current commutator.
+At each order n, the divided power L(1)^n/n! applied to a current on any oscillator polynomial is the sum over shifts k from zero through n. Its k-th term is choose(-j-1/2,k) times the shifted current j+k applied to the divided power of order n-k. The actual inverse Gram matrix enters through the weight-one law [L(m), J(r)] = -r J(m+r), with r=j+1/2. This is the weight-one current specialization of the twisted commutator in Bakalov–Kac v1, §3.2, equation (3.12), with the lattice conformal vector of §4.1, equation (4.16). The divided-power formula follows by iterating the m=1 case.
 
 **Definition 1.2 (Formal divided lowering).**
 
@@ -25,8 +25,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lower
 *Formalization.* `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.loweringFlow` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -40,8 +38,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.trans
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 The coefficient of order n shifts the signed mode index by n and multiplies by choose(-j-1/2,n).
@@ -53,8 +49,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lower
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lowering_flow_intertwines` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -68,8 +62,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.creat
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 Shifts through the original negative range remain multiplication by a variable.
@@ -81,8 +73,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.annih
 *Formalization.* `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.annihilationPart` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -96,8 +86,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.contr
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 For modes p and q the sum over n from zero through q multiplies n+1/2 by the binomial coefficients at shifts p+n+1 and q-n.
@@ -109,8 +97,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.contr
 *Formalization.* `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.contraction` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -124,11 +110,11 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.annih
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
 
 *Commentary.*
 
-The positive part of the transported p mode commutes through the negative part of the transported q mode with the stated central correction. The original Heisenberg relation leaves exactly opposite frequencies.
+The positive part of the transported p mode commutes through the negative part of the transported q mode with the stated central correction. Bakalov–Kac v1, §4.2, equation (4.23), gives the fractional Heisenberg bracket. With the order-two involution acting as minus one on the currents, it pairs exactly opposite half-integer frequencies with scalar r times the Gram entry.
 
 **Theorem 1.10 (Cutoff from doubled oscillator energy).**
 
@@ -137,8 +123,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lower
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lowering_after_energy_cutoff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -152,11 +136,9 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.norma
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
-The first slot remains a creator or pairs with one later slot. Removing both paired slots leaves the same rule for all remaining slots. Repeated modes occupy distinct slots.
+The first slot remains a creator or pairs with one later slot. Removing both paired slots leaves the same rule for all remaining slots. Repeated modes occupy distinct slots. The creation/annihilation convention is the Wick ordering of Doyon–Lepowsky–Milas v1, §5.1 and §7.1, equations (7.4)–(7.8). Commuting positive modes through the later negative modes gives the partial matchings for these transported words. https://arxiv.org/abs/math/0311151v1
 
 **Theorem 1.12 (All occupations of creation words).**
 
@@ -165,8 +147,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lower
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lowering_normal_order_word` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -180,8 +160,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.modeS
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 A signed mode j receives the chosen square root of lambda times the integer power lambda^(-j-1).
@@ -193,8 +171,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.scale
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.scaled_contraction_term` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -208,11 +184,9 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.unitP
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
-Coefficient n of the formal power (1-eta*u)^a is (-eta)^n choose(a,n).
+This is Mathlib’s binomialSeries rescaled by -eta. Coefficient n of (1-eta*u)^a is (-eta)^n choose(a,n).
 
 **Definition 1.16 (Cauchy chamber coefficient).**
 
@@ -221,8 +195,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.chamb
 *Formalization.* `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.chamberCoefficient` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -236,8 +208,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.chamb
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 Negative binomial reflection converts both chamber factors to the binomial coefficients of the actual commuting modes.
@@ -250,11 +220,9 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.regul
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
-For roots b and c of 1-eta*u and 1-eta*v, the dressed Cauchy kernel minus the original kernel equals eta*(1+b*c)/(2*b*c*(b+c)^2). The rational identity holds off the diagonal and the right side extends across it wherever its denominator is nonzero.
+The native coordinate calculation uses the chosen lift and roots b and c of 1-eta*u and 1-eta*v. Subtracting the undressed Cauchy kernel from the pullback gives eta*(1+b*c)/(2*b*c*(b+c)^2). The rational identity holds off the diagonal and the right side extends across it wherever its denominator is nonzero.
 
 **Definition 1.19 (Normal ordering on oscillator polynomials).**
 
@@ -263,8 +231,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.polyn
 *Formalization.* `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.polynomialCoefficient` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -278,8 +244,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lower
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 For arbitrary polynomial input, every coefficient is the actual power of L(1) divided by its factorial.
@@ -291,8 +255,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lower
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.lowering_normal_order_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -306,11 +268,9 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.oscil
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
-Replace the two divided lowering powers by their normally ordered coefficients inside the original bilinear Wick evaluation. The original indices, signs and corrected field coefficients appear at their original values.
+The native oscillator-kernel proof replaces both divided lowering powers in the original bilinear Wick evaluation by their normally ordered coefficients, with the same indices, signs and corrected field coefficients.
 
 **Theorem 1.23 (Finite cutoff on mixed oscillator energies).**
 
@@ -319,8 +279,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.exist
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.exists_lowering_cutoff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -334,8 +292,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.scale
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 Each original generator is multiplied by its half-integral weight using the chosen lift of lambda.
@@ -347,8 +303,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.scale
 *Formalization.* `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.scaledCurrent` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
 
 *Commentary.*
 
@@ -362,8 +316,6 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.scale
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
 Compose the lowering flow with diagonal scaling. The resulting formal series intertwines each original current with the scaled shifted expansion on the actual oscillator.
@@ -376,11 +328,9 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/OriginalHalfCurrentTransport.skew_
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
 *Commentary.*
 
-The detector in both original skew channels is evaluated by the same ordinary normal-order coefficients, through the original skew cutoffs and with the original phases and field index shifts.
+The two native channel proofs unfold OriginalFourMChargeCoset.channelB and channelD respectively. Each substitutes the ordinary normal-order coefficients into the original detector, retaining its own cutoffs, phase and field-index shifts.
 
 The local coordinate is F(u)=lambda*u/(1-eta*u). The normalized square root of 1-eta*u has constant coefficient one, and the specified lift of lambda fixes the square root factor in the weight. The coordinate kernel uses ordinary spatial coefficients. The lowering flow uses divided powers in the coordinate parameter.
 
