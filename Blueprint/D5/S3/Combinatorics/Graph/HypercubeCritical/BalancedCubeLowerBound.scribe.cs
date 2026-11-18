@@ -28,11 +28,15 @@ internal sealed class BalancedCubeLowerBoundDocument : IScribeDocumentDefinition
                     + "This repository-derived structural lower bound assumes exact "
                     + "cubic regularity and balance; it supplies neither a 258-vertex "
                     + "witness nor exclusion, a Q9 solution, attainment of 48, uniqueness, "
-                    + "classification or literature priority. The bridge extracting at "
-                    + "least two balanced cubic components from arbitrary 258-vertex "
-                    + "candidates of induced maximum degree at most three remains prose "
-                    + "and UNCOMPILED, so this conditional theorem alone does not settle "
-                    + "the original problem.")),
+                    + "classification or literature priority. The existing theorem "
+                    + "TwoBalancedComponents.exists_two_balanced_components proves that "
+                    + "any 258-vertex Q9 candidate of induced maximum degree at most three "
+                    + "contains two distinct actual connected components, represented by "
+                    + "nonempty disjoint vertex sets closed under adjacency within the "
+                    + "candidate. Both components are balanced and cubic, each has at "
+                    + "least 48 vertices, and their union has at least 96 vertices. "
+                    + "This lower bound alone does not exclude a 258-vertex candidate; "
+                    + "the external Q9 problem remains unresolved.")),
             Paragraph(Text(
                 "Precedents recorded in the companion are Laplante, Naserasr, Sunny "
                     + "and Wang, Sensitivity conjecture and signed hypercubes, "

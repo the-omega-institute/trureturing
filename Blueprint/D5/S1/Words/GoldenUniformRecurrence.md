@@ -40,7 +40,19 @@ $$\forall alpha \in Type,\; \forall x \in List\left(alpha\right),\; \forall y \i
 
 For every type alpha, lists x,y and natural p,n with p+n at most length(x), the window obtained from x++y by dropping p entries and taking n is exactly the corresponding window of x.
 
-**Definition 1.4 (The recurrence window is an explicit Fibonacci quantity).**
+**Theorem 1.4 (A short interval meets at most two adjacent blocks).**
+
+$$\forall alpha \in Type,\; \forall beta \in Type,\; \forall f \in Function\left(alpha, List\left(beta\right)\right),\; \forall l \in List\left(alpha\right),\; \forall p \in \mathbb{N},\; \forall n \in \mathbb{N},\; \left(0 < n \land \left(\left(\forall a \in alpha,\; a \in l \Rightarrow n < length\left(f\left(a\right)\right)\right) \land p + n \le length\left(flatMap\left(f, l\right)\right)\right)\right) \Rightarrow \left(\left(\exists a \in alpha,\; IsInfix\left(list\left(a\right), l\right) \land IsInfix\left(take\left(n, drop\left(p, flatMap\left(f, l\right)\right)\right), f\left(a\right)\right)\right) \lor \left(\exists a \in alpha,\; \exists b \in alpha,\; IsInfix\left(list\left(a, b\right), l\right) \land IsInfix\left(take\left(n, drop\left(p, flatMap\left(f, l\right)\right)\right), append\left(f\left(a\right), f\left(b\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/GoldenUniformRecurrence.flatMap_window_infix_one_or_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary alphabets alpha,beta, map f, source list l and natural p,n, assume n>0, n<length(f(a)) for every a in l, and p+n<=length(flatMap(f,l)). The actual slice is an infix of f(a) for some singleton [a] occurring in l, or an infix of f(a)++f(b) for some adjacent pair [a,b] occurring in l. The alternatives concern the same slice at p, with no assumption that l belongs to an infinite word.
+
+**Definition 1.5 (The recurrence window is an explicit Fibonacci quantity).**
 
 Lean statement: `D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound`
 
 For a factor length n, let k be the greatest Fibonacci index with Fib(k) at most n, and define B(n) = 3 Fib(k+5). This bound is deliberately coarse; no optimality claim is made.
 
-**Theorem 1.5 (Every factor recurs wholly inside every B(n)-window).**
+**Theorem 1.6 (Every factor recurs wholly inside every B(n)-window).**
 
 $$\forall i,\ \exists j,\ i\le j \land j+n\le i+B(n) \land w=\operatorname{goldenFactor}(n,j)$$
 
@@ -64,7 +76,7 @@ $$\forall i,\ \exists j,\ i\le j \land j+n\le i+B(n) \land w=\operatorname{golde
 
 For every starting coordinate i and every word w occurring as a length-n golden factor, there is a start j at or after i such that w begins at j and ends no later than i+B(n). The proof locates w inside one control supertile, then finds a complete copy of that supertile after the arbitrary starting coordinate.
 
-**Theorem 1.6 (The explicit window is at most thirty-nine times the factor length).**
+**Theorem 1.7 (The explicit window is at most thirty-nine times the factor length).**
 
 $$n>0 \Rightarrow B(n)\le39n$$
 
@@ -76,7 +88,7 @@ $$n>0 \Rightarrow B(n)\le39n$$
 
 For positive n, Fib(k) is at most n and Fib(k+1) is at most 2n. The identity Fib(k+5) = 3 Fib(k) + 5 Fib(k+1) therefore gives B(n) at most 39n.
 
-**Theorem 1.7 (Every positive-length factor recurs in a direct 39n window).**
+**Theorem 1.8 (Every positive-length factor recurs in a direct 39n window).**
 
 $$\forall i,\ \exists j,\ i\le j \land j+n\le i+39n \land w=\operatorname{goldenFactor}(n,j)$$
 
@@ -91,6 +103,7 @@ Combining uniform recurrence with the coarse linear estimate removes the auxilia
 ## References
 
 - Truth anchor: `D5/S1/Words/GoldenUniformRecurrence.exists_flatMap_block`
+- Truth anchor: `D5/S1/Words/GoldenUniformRecurrence.flatMap_window_infix_one_or_two`
 - Truth anchor: `D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound`
 - Truth anchor: `D5/S1/Words/GoldenUniformRecurrence.golden_factor_uniformly_recurrent`
 - Truth anchor: `D5/S1/Words/GoldenUniformRecurrence.golden_factor_uniformly_recurrent_linear`

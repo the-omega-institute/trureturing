@@ -59,7 +59,7 @@ private theorem prime_cofactor {m p : ℕ} (hm : 0 < m) (hp : p.Prime) :
     omega)).symm
   exact ⟨ht, hcp, (Nat.div_mul_cancel hd).symm⟩
 
-private theorem geom_closed {p : ℕ} (hp : p.Prime) (a : ℕ) :
+theorem geom_closed {p : ℕ} (hp : p.Prime) (a : ℕ) :
     reciprocalGeomSum p a =
       ((p : ℝ) ^ (a + 1) - 1) / ((p : ℝ) ^ a * (p - 1)) := by
   rw [← normalized_sigma_prime_pow hp, ArithmeticFunction.sigma_one_apply_prime_pow hp]
