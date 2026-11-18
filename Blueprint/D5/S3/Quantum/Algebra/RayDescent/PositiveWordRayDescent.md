@@ -12,7 +12,7 @@ Geometry R means a metric space R, eleven maps gate(j):R->R, each an isometry wi
 
 $$\forall L:\operatorname{Law}\left(\right),\ \operatorname{Rten}\left(L\right) \Rightarrow \forall a:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \forall b:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \operatorname{dist}\left(\operatorname{row}\left(L, a\right), \operatorname{row}\left(L, b\right)\right)=\operatorname{dist}\left(\operatorname{row}\left(L, \operatorname{append}\left(a, \operatorname{inverseWord}\left(b\right)\right)\right), \operatorname{row}\left(L, \operatorname{nil}\left(\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PositiveWordRayDescent.row_return_transport` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.row_return_transport` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,7 +24,7 @@ inverseWord reverses the address order and replaces each address by nine positiv
 
 $$\forall R:\operatorname{Type}\left(\right),\ \forall L:\operatorname{Law}\left(\right),\ \forall G:\operatorname{Geometry}\left(R\right),\ \operatorname{MetricSpace}\left(R\right) \land \operatorname{Rten}\left(L\right) \land \operatorname{ReadyReturn}\left(L, G\right) \Rightarrow (\forall epsilon:\operatorname{Real}\left(\right),\ 0<epsilon \Rightarrow \exists delta:\operatorname{Real}\left(\right),\ 0<delta \land \forall a:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \forall b:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \operatorname{dist}\left(\operatorname{ray}\left(G, a\right), \operatorname{ray}\left(G, b\right)\right)<delta \Rightarrow \operatorname{dist}\left(\operatorname{row}\left(L, a\right), \operatorname{row}\left(L, b\right)\right)<epsilon) \land \forall a:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \forall b:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \operatorname{ray}\left(G, a\right)=\operatorname{ray}\left(G, b\right) \Rightarrow \operatorname{row}\left(L, a\right)=\operatorname{row}\left(L, b\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PositiveWordRayDescent.uniform_rows_and_fibers` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.uniform_rows_and_fibers` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,7 +36,7 @@ If an epsilon bound failed at ready, choose a violating actual word c(n) whose r
 
 $$\forall R:\operatorname{Type}\left(\right),\ \forall L:\operatorname{Law}\left(\right),\ \forall G:\operatorname{Geometry}\left(R\right),\ \operatorname{MetricSpace}\left(R\right) \land \operatorname{DenseRange}\left(\operatorname{ray}\left(G\right)\right) \land \operatorname{Rten}\left(L\right) \land \operatorname{ReadyReturn}\left(L, G\right) \Rightarrow \exists \phi:\operatorname{ContinuousMap}\left(R, \operatorname{closedSpan}\left(L\right)\right),\ \operatorname{Descent}\left(L, G, \phi\right) \land \forall x:\operatorname{ContinuousMap}\left(R, \operatorname{closedSpan}\left(L\right)\right),\ \operatorname{Descent}\left(L, G, x\right) \Rightarrow x=\phi$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PositiveWordRayDescent.continuous_descent` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.continuous_descent` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -50,7 +50,7 @@ First apply uniform_rows_and_fibers. Choose a representing word only on range(ra
 
 $$\forall R:\operatorname{Type}\left(\right),\ \forall L:\operatorname{Law}\left(\right),\ \forall G:\operatorname{Geometry}\left(R\right),\ \operatorname{MetricSpace}\left(R\right) \land \operatorname{CompactSpace}\left(R\right) \Rightarrow \forall q:\operatorname{ContinuousMap}\left(R, \operatorname{Icc}\left(0, 1\right)\right),\ (\forall a:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \operatorname{q}\left(\operatorname{ray}\left(G, a\right)\right)=\operatorname{probability}\left(L, a\right)) \Rightarrow \operatorname{Rten}\left(L\right) \land \operatorname{ReadyReturn}\left(L, G\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PositiveWordRayDescent.represented_statistics` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.represented_statistics` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -62,7 +62,7 @@ Assume q is a continuous [0,1]-valued response representing all actual p(a). Com
 
 $$\forall R:\operatorname{Type}\left(\right),\ \forall L:\operatorname{Law}\left(\right),\ \forall G:\operatorname{Geometry}\left(R\right),\ \operatorname{MetricSpace}\left(R\right) \land \operatorname{DenseRange}\left(\operatorname{ray}\left(G\right)\right) \land \operatorname{CompactSpace}\left(R\right) \Rightarrow (\operatorname{Rten}\left(L\right) \land \operatorname{ReadyReturn}\left(L, G\right)) \Leftrightarrow \exists q:\operatorname{ContinuousMap}\left(R, \operatorname{Icc}\left(0, 1\right)\right),\ (\forall a:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \operatorname{q}\left(\operatorname{ray}\left(G, a\right)\right)=\operatorname{probability}\left(L, a\right)) \land \forall r:\operatorname{ContinuousMap}\left(R, \operatorname{Icc}\left(0, 1\right)\right),\ (\forall a:\operatorname{List}\left(\operatorname{Fin}\left(11\right)\right),\ \operatorname{r}\left(\operatorname{ray}\left(G, a\right)\right)=\operatorname{probability}\left(L, a\right)) \Rightarrow r=q$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PositiveWordRayDescent.ready_return_iff_unique_response` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.ready_return_iff_unique_response` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -74,7 +74,7 @@ For compact R and dense actual ready orbit, Rten and ReadyReturn hold if and onl
 
 $$\forall R:\operatorname{Type}\left(\right),\ \forall L:\operatorname{Law}\left(\right),\ \forall G:\operatorname{Geometry}\left(R\right),\ \operatorname{MetricSpace}\left(R\right) \land \operatorname{Rten}\left(L\right) \Rightarrow \forall s:\operatorname{Real}\left(\right),\ 0\le s \Rightarrow \operatorname{sSup}\left(\operatorname{returnErrors}\left(L, G, s\right)\right)=\operatorname{sSup}\left(\operatorname{pairErrors}\left(L, G, s\right)\right) \land \operatorname{sSup}\left(\operatorname{pairErrors}\left(L, G, s\right)\right)=\operatorname{sSup}\left(\operatorname{scalarErrors}\left(L, G, s\right)\right) \land \operatorname{Member}\left(\operatorname{sSup}\left(\operatorname{returnErrors}\left(L, G, s\right)\right), \operatorname{Icc}\left(0, 1\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PositiveWordRayDescent.three_moduli_equal` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.three_moduli_equal` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -96,9 +96,9 @@ The result supplies the analytic return/descent predecessor needed by the closed
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Algebra/PositiveWordRayDescent.continuous_descent`
-- Truth anchor: `D5/S3/Quantum/Algebra/PositiveWordRayDescent.ready_return_iff_unique_response`
-- Truth anchor: `D5/S3/Quantum/Algebra/PositiveWordRayDescent.represented_statistics`
-- Truth anchor: `D5/S3/Quantum/Algebra/PositiveWordRayDescent.row_return_transport`
-- Truth anchor: `D5/S3/Quantum/Algebra/PositiveWordRayDescent.three_moduli_equal`
-- Truth anchor: `D5/S3/Quantum/Algebra/PositiveWordRayDescent.uniform_rows_and_fibers`
+- Truth anchor: `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.continuous_descent`
+- Truth anchor: `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.ready_return_iff_unique_response`
+- Truth anchor: `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.represented_statistics`
+- Truth anchor: `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.row_return_transport`
+- Truth anchor: `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.three_moduli_equal`
+- Truth anchor: `D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent.uniform_rows_and_fibers`

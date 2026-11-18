@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Algebra/PositiveWordRayDescent
+/- GID: D5/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent
    generality: G
-   mirror-B: D5/B/S3/Quantum/Algebra/PositiveWordRayDescent
+   mirror-B: D5/B/S3/Quantum/Algebra/RayDescent/PositiveWordRayDescent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
