@@ -64,7 +64,19 @@ Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.adjustedSelectio
 
 If each actual capacity divided by y tends to d_j and r_j<d_j, then eventually all adjusted occupancies fit their capacities simultaneously. Finiteness permits one common cutoff for all boxes.
 
-**Theorem 1.6 (Strict logarithmic slack pays the full product budget).**
+**Theorem 1.6 (Negligible logarithmic prefactors).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.loglog_div_scale`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.loglog_div_scale` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The quotient log(log(x))/scale(x) tends to zero. Thus factors polynomial in log(x) have negligible logarithms on the distinct-prime exponential counting scale.
+
+**Theorem 1.7 (Strict logarithmic slack pays the full product budget).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.adjustedSelection_budget`
 
@@ -82,6 +94,7 @@ For positive upper endpoints b_j and lambda+sum(r_j*log(b_j))<0, eventually sum(
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.adjustedSelection_budget`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.adjustedSelection_fits`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.adjustedSelection_spec`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.loglog_div_scale`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.primeInterval_capacity`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Selection.selectedCount`
 - Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTailUpper](../OmegaTailUpper.md)
