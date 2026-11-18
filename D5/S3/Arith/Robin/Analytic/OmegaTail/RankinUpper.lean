@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Arith/Robin/Analytic/OmegaTail/RankinUpper
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none -/
+   utility: none
+   digest: Sharp asymptotic Rankin upper bound for the distinct-prime tail at the second threshold. -/
 
 import D5.S3.Arith.Robin.Analytic.OmegaTail.FarDeletion
 import D5.S3.Arith.Robin.PriceRecord.MovingPrimeSoftplus

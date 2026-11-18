@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:16ca0cdde7dd91cb2602fdf8572e5a3dc1494ca511ab018d1be9ca69c74648a1
   normalized_sha256: sha256:16ca0cdde7dd91cb2602fdf8572e5a3dc1494ca511ab018d1be9ca69c74648a1
 cas_ref: sha256:16ca0cdde7dd91cb2602fdf8572e5a3dc1494ca511ab018d1be9ca69c74648a1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/RankinUpper.sharp_upper_bound
+    target_statement_id: sha256:3f8b097670abb198fd8c841b75221181df930590f06f76950a83c7558801698e
 receipts:
   unresolved_subitems: []
