@@ -756,7 +756,7 @@ end
 section
 open Matrix
 open scoped BigOperators Classical
-open D5.S3.Arith.Lattices.CofactorKernel (cofactor)
+open D5.S3.Arith.Lattices.CofactorKernel (augment cofactor cofactor_eq_adjugate det_topRow)
 
 /-- Any kernel vector is proportional, coordinate by coordinate, to the signed cofactor vector. -/
 private theorem cofactor_kernel_cross {K : Type*} [Field K] {d : ℕ}
@@ -764,18 +764,19 @@ private theorem cofactor_kernel_cross {K : Type*} [Field K] {d : ℕ}
     (hx : A *ᵥ x = 0) (i k : Fin (d+1)) :
     cofactor A k * x i = x k * cofactor A i := by
   classical
-  let N : Matrix (Fin (d+1)) (Fin (d+1)) K := Matrix.of (Fin.cases (Pi.single k 1) (fun i j => A i j))
+  let N := (augment A).updateRow 0 (Pi.single k 1)
   have hcof (j : Fin (d+1)) : N.adjugate j 0 = cofactor A j := by
-    rw [Matrix.adjugate_fin_succ_eq_det_submatrix]
-    simp [N, Matrix.of_apply, Fin.cases_zero, Fin.cases_succ, cofactor, Matrix.submatrix]
+    rw [cofactor_eq_adjugate, Matrix.adjugate_apply, Matrix.adjugate_apply]
+    congr 1
+    ext r c
+    by_cases hr : r = 0 <;> simp [N, Matrix.updateRow_apply, hr]
   have hdet : N.det = cofactor A k := by
-    rw [Matrix.det_succ_row_zero]
-    simp [N, Matrix.of_apply, Fin.cases_zero, Fin.cases_succ, cofactor, Matrix.submatrix, Pi.single_apply, mul_ite, ite_mul]
+    simp [N, det_topRow, Pi.single_apply, ite_mul]
   have hNx : N *ᵥ x = Pi.single 0 (x k) := by
     funext j
     refine Fin.cases ?_ (fun r => ?_) j
-    · simp [N, Matrix.of_apply, Fin.cases_zero, Fin.cases_succ, mulVec, dotProduct, Pi.single_apply, ite_mul]
-    · simpa [N, Matrix.of_apply, Fin.cases_zero, Fin.cases_succ, mulVec, dotProduct] using congrFun hx r
+    · simp [N, mulVec, dotProduct, Pi.single_apply, ite_mul]
+    · simpa [N, Matrix.updateRow_ne (Fin.succ_ne_zero r), mulVec, dotProduct] using congrFun hx r
   have hh := congrArg (fun C => (C *ᵥ x) i) (Matrix.adjugate_mul N)
   rw [← Matrix.mulVec_mulVec, hNx] at hh
   simpa [hdet, Matrix.mulVec_single, hcof, smul_mulVec, Matrix.col, mul_comm] using hh.symm
@@ -798,7 +799,7 @@ end
 section
 open Matrix Module
 open scoped BigOperators Classical
-open D5.S3.Arith.Lattices.CofactorKernel (cofactor)
+open D5.S3.Arith.Lattices.CofactorKernel (augment cofactor det_topRow)
 
 /-- Independent rows of a d by d+1 matrix give a nonzero cofactor vector. -/
 theorem cofactor_nonzero_of_independent_rows {K : Type*} [Field K] {d : ℕ}
@@ -827,13 +828,12 @@ theorem cofactor_nonzero_of_independent_rows {K : Type*} [Field K] {d : ℕ}
     ((Matrix.isUnit_iff_isUnit_det _).mp (Matrix.linearIndependent_row_iff_isUnit.mp hN)).ne_zero
   intro hc
   apply hdet
-  rw [Matrix.det_succ_row_zero]
-  calc
-    _ = ∑ k, v k * cofactor A k := by
-      apply Finset.sum_congr rfl
-      intro k hk
-      simp only [N, Matrix.of_apply, Fin.cases_zero, Fin.cases_succ, Fin.cases_zero, cofactor, Matrix.submatrix, id_eq]
-      ring
-    _ = 0 := by rw [hc]; simp
+  have hupdate : N = (augment A).updateRow 0 v := by
+    ext i k
+    refine Fin.cases ?_ (fun r => ?_) i
+    · simp [N]
+    · simp [N, Matrix.updateRow_ne (Fin.succ_ne_zero r)]
+  rw [hupdate, det_topRow, hc]
+  simp
 end
 end D5.S3.Geometry.FlatlandImageAlgebra
