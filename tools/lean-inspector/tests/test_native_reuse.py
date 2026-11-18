@@ -105,15 +105,14 @@ class NativeReportConsumerTests:
 
         # Hold the shared prerequisite inside Lake's lookup/create gap until
         # an independent consumer contends on graphFetch or creates it again.
-        # Observe the real mutex with a try-lock; never infer overlap from time.
+        # Observe a pending predecessor after the real atomic queue append;
+        # never infer overlap from time or replace the queue algorithm.
         config = self.root / 'lakefile.toml'
         config.write_text(config.read_text().replace(
             'name = "LeanInformationAudit"\n',
             'name = "LeanInformationAudit"\nneeds = ["leanInspector/compilerRegistrationGate"]\n'))
         producer_config = self.root / 'tools/lean-inspector/lakefile.lean'
-        source = producer_config.read_text().replace(
-            'graphFetch : CompilerMutex Unit', 'graphFetch : RegistrationMutex Unit').replace(
-            '← CompilerMutex.new ()', '← RegistrationMutex.new ()')
+        source = producer_config.read_text()
         schedule = '''
 structure RegistrationSchedule where
   state : Std.Mutex (Nat × Nat)
@@ -123,27 +122,24 @@ structure RegistrationSchedule where
 package_facet compilerRegistrationState (_pkg : Package) : RegistrationSchedule := do
   Job.async do return ⟨← Std.Mutex.new (0, 0), ← IO.Promise.new, ← IO.Promise.new⟩
 
-structure RegistrationMutex (α : Type) where
-  inner : CompilerMutex α
-
-def RegistrationMutex.new (value : α) : BaseIO (RegistrationMutex α) :=
-  return ⟨← CompilerMutex.new value⟩
-
-def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT FetchM m] [MonadFinally m]
-    (mutex : RegistrationMutex α) (action : IO.Ref α → m β) : m β := do
-  let schedule ← liftM (m := FetchM) do
-    (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await
-  if let some value ← mutex.inner.tryAtomically action then return value
-  liftM (m := BaseIO) <| schedule.state.atomically fun state => do
-    let (registered, waiting) ← state.get
-    state.set (registered, waiting + 1)
-    if registered > 0 then schedule.release.resolve "contended"
-  try mutex.inner.atomically action
-  finally
-    liftM (m := BaseIO) <| schedule.state.atomically fun state => state.modify fun (registered, waiting) =>
-      (registered, waiting - 1)
-
 '''
+        queued = '''  unless ← IO.hasFinished previous do
+    let schedule ← liftM (m := FetchM) do
+      (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await
+    liftM (m := BaseIO) <| schedule.state.atomically fun state => do
+      let (registered, waiting) ← state.get
+      state.set (registered, waiting + 1)
+      if registered > 0 then schedule.release.resolve "contended"
+'''
+        # Only the test observer needs FetchM. All production call sites already
+        # run in FetchM or JobM; their critical sections remain unchanged.
+        mutex = 'private def CompilerMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]\n'
+        wait = '  discard <| IO.wait previous\n'
+        self.assertEqual(source.count(mutex), 1)
+        self.assertEqual(source.count(wait), 1)
+        source = source.replace(mutex, schedule + mutex.replace(
+            '[MonadFinally m]', '[MonadLiftT FetchM m] [MonadFinally m]')).replace(
+            wait, queued + wait)
         contender = '''
 package_facet compilerRegistrationContender (pkg : Package) : Unit := do
   let schedule ← (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await
@@ -165,7 +161,6 @@ package_facet compilerRegistrationContender (pkg : Package) : Unit := do
         self.assertEqual(source.count(inputs), 1)
         self.assertEqual(source.count(enrollment), 1)
         producer_config.write_text(source.replace(
-            'private structure ReportState where', schedule + 'private structure ReportState where').replace(
             batch, batch + '  discard <| (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await\n').replace(
             inputs, contender + inputs).replace(enrollment,
                 '      let contender ← JobM.runFetchM <| fetch <| pkg.facet `compilerRegistrationContender\n'

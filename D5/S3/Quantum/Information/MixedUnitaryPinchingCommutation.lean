@@ -161,7 +161,7 @@ private lemma mixed_channel_data (φ : QubitMatrix → QubitMatrix) (hφ : IsMix
   simp only [Fin.sum_univ_three, Complex.ofReal_add, Complex.ofReal_mul]
   module
 
-private lemma spin_triple (a b : Fin 3 → ℝ) :
+lemma spin_triple (a b : Fin 3 → ℝ) :
     spin a * spin b * spin a = (2 * (a ⬝ᵥ b) : ℂ) • spin a -
       ((a ⬝ᵥ a : ℝ) : ℂ) • spin b := by
   have h := congrArg (fun m : QubitMatrix => m * spin a) (spin_anticommutator a b)

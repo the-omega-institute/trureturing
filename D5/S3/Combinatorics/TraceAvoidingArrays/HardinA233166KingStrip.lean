@@ -571,7 +571,7 @@ private theorem normalized_card8 {C : Type*} [Fintype C] [LinearOrder C]
   intro P _
   simpa only [Nat.card_eq_fintype_card] using fibre_card8 P.val
 
-private theorem canonical_pattern_card4 {C : Type*} [Fintype C] [LinearOrder C]
+theorem canonical_pattern_card4 {C : Type*} [Fintype C] [LinearOrder C]
     (S : (C → Fin 4) → Prop)
     (hinv : ∀ e : Equiv.Perm (Fin 4), ∀ P, S (e ∘ P) ↔ S P)
     (huse : ∀ P, S P → Function.Surjective P) :

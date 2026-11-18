@@ -151,7 +151,7 @@ private theorem scalar_gram_injective {m n : Type*} [Fintype m] [Fintype n]
       _ = 0 := by change F *ᵥ x = 0 at hx; rw [hx]; simp
   exact (smul_eq_zero.mp h).resolve_left hlam
 
-private theorem flow_common_kernel {a b c d : ℕ}
+theorem flow_common_kernel {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) (hc : 0 < c)
     {lam : ℂ} (hlam : lam ≠ 0)
@@ -194,7 +194,7 @@ private theorem flow_gram {a b c d : ℕ}
     ← Matrix.mul_kronecker_mul, Fintype.sum_prod_type]
   exact Finset.sum_comm
 
-private theorem scalar_cross_grams {a b c d : ℕ}
+theorem scalar_cross_grams {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) (k : Fin c)
     (hLI : LinearIndependent ℂ (fun p : Fin 3 × Fin 3 => (M p.1)ᴴ * M p.2))
@@ -232,7 +232,7 @@ private theorem scalar_cross_grams {a b c d : ℕ}
   have h' := sub_eq_zero.mp h
   simpa [z, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply] using h'
 
-private theorem rank_kronecker_one (H : Matrix (Fin 3) (Fin 3) ℂ) (n : ℕ) :
+theorem rank_kronecker_one (H : Matrix (Fin 3) (Fin 3) ℂ) (n : ℕ) :
     (Matrix.kronecker H (1 : Matrix (Fin n) (Fin n) ℂ)).rank = n * H.rank := by
   classical
   let e : (Fin 3 × Fin n) ≃ (Σ _ : Fin n, Fin 3) :=
@@ -249,13 +249,13 @@ private theorem rank_kronecker_one (H : Matrix (Fin 3) (Fin 3) ℂ) (n : ℕ) :
     D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Blocks.rank_block]
   simp
 
-private def stack {a b : ℕ} (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) :
+def stack {a b : ℕ} (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ) :
     Matrix (Fin 3 × Fin a) (Fin b) ℂ := fun p j => M p.1 p.2 j
 
-private def concat {c d : ℕ} (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) :
+def concat {c d : ℕ} (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) :
     Matrix (Fin d) (Fin 3 × Fin c) ℂ := fun i p => N p.1 i p.2
 
-private theorem concat_gram {c d : ℕ}
+theorem concat_gram {c d : ℕ}
     (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ)
     (H : Matrix (Fin 3) (Fin 3) ℂ)
     (hN : ∀ r s, (N r)ᴴ * N s = H r s • 1) :
@@ -265,7 +265,7 @@ private theorem concat_gram {c d : ℕ}
   simpa [concat, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.kronecker,
     Matrix.kroneckerMap_apply, Matrix.smul_apply, smul_eq_mul] using h
 
-private theorem stack_gram {a b c d : ℕ}
+theorem stack_gram {a b c d : ℕ}
     (M : Fin 3 → Matrix (Fin a) (Fin b) ℂ)
     (N : Fin 3 → Matrix (Fin d) (Fin c) ℂ) (k : Fin c) {lam : ℂ}
     (hF : (QuantumMaxFlowBound.flow M N)ᴴ * QuantumMaxFlowBound.flow M N = lam • 1) :

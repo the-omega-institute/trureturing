@@ -4259,3 +4259,741 @@ V 定理29.3穷尽了 $\Phi=0$ 的全部正来源，定理26.3在完整世界上
 (26.16)只处理字面父族 $H^-_{\theta,0}$。非零 $\xi$ 的共同父两臂失败或恢复、其他字面历史、整条第14章解析父曲线以及更早祖先的共同实现仍须各自证明。第25章的矩形排除与此前的合法碰撞保持各自原范围；本章不把任何单臂禁例或两世界整树刚性扩大成一般两臂排除。原根八读／九读判别、初始两动作的全部分支义务及九读上界均不由(26.16)结清。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 27. 实际 MM 的漂移符号校准与重复源签名的全局界
+
+**定义 27.1（重复 MM 源签名域）。** 保留定义1.1的整个 $\mathcal W_3$、原时钟、立即读数及含早停的任意确定性策略。父历史仍为(8.3)的同一个 $H^-_{\theta,\xi}$。以 $\mathscr S$ 表示全部严格逐项正、秩一、迹一的实二阶来源；$u=\nu_0$、$h,\ell,n,a,\Delta,\Phi,k,q,\Psi_6,\Psi_7,\mu,\eta$ 复用(8.1)、(8.5)—(8.6)。定义
+
+$$
+\begin{aligned}
+\mathscr C=\{P\in\mathscr S:\ &\Phi(P)\ne0,\quad
+ \exists Q\in\mathscr S\setminus\{P\},\ \Phi(Q)\ne0,\\
+ &\mu(Q)=\mu(P),\quad\eta(Q)=\eta(P)\}.
+\end{aligned}
+\tag{27.1}
+$$
+
+这里只要求源签名重复；没有要求这两个来源能在预定父参数上共同实现。实际同父碰撞的额外条件由定理23.2供应。置
+
+$$
+\begin{gathered}
+w_0(\theta)=120(1+2\theta),\qquad
+m_0(\theta)=210(2+3\theta),\\
+\mathfrak T(P)=2\Psi_7(P)-26\Psi_6(P)-5\Phi(P),\\
+\Lambda_{\theta,\xi}(w,m)=4m-13w-120+600\theta-300\xi.
+\end{gathered}
+\tag{27.2}
+$$
+
+**定理 27.2（整个父族的仿射漂移符号校准）。** 对任意 $\theta,\xi\in\mathbb R$、任意 $W=(P,g,d)\in\mathcal F(H^-_{\theta,\xi})$，从该父实际依次执行原时钟六、七的 $M,M$，记立即读数为 $w,m$。则
+
+$$
+\begin{gathered}
+\Lambda_{\theta,\xi}(w,m)=0\quad\Longleftrightarrow\quad d=0,\\
+d\ne0\quad\Longrightarrow\quad
+\operatorname{sgn}\Lambda_{\theta,\xi}(w,m)=\operatorname{sgn}d,
+\qquad 0<|d|<\frac{|\Lambda_{\theta,\xi}(w,m)|}{2}.
+\end{gathered}
+\tag{27.3}
+$$
+
+特别地，当 $\xi\ne0$ 时，同一父上任何两个不同完整世界若具有相同的实际 $MM$ 记录，必有 $d_1d_2>0$ 及 $\Phi_1\Phi_2>0$。对固定实际第六 $M$ 子纤维，末 $M$ 响应因此把正漂移、零漂移和负漂移三部分彼此分开；各部分内部仍可碰撞。
+
+证明。定理8.2证明中的无除数恒等式对全部 $\xi$ 成立：
+
+$$
+d\Phi=120h\xi,\qquad
+w-w_0(\theta)=\frac{d\Psi_6}{h},\qquad
+m-m_0(\theta)=\frac{d\Psi_7}{4h}.
+\tag{27.4}
+$$
+
+因 $4m_0-13w_0-120+600\theta=0$，它们给出
+
+$$
+2h\Lambda_{\theta,\xi}(w,m)=d\mathfrak T(P).
+\tag{27.5}
+$$
+
+真正所需的全源严格不等式是 $\mathfrak T(P)>4h$。使用(8.1)的唯一正坐标 $P=P(s,t)$，令 $D_0=1+st$、$U=s+t+st$，于是 $h=U(U+D_0)/D_0^2$。直接展开(8.1)、(8.6)得
+
+$$
+D_0^3(\mathfrak T-4h)=\mathscr B(s,t),
+\tag{27.6}
+$$
+
+其中
+
+$$
+\begin{aligned}
+\mathscr B(s,t)={}&152s^3t^3+60s^3t^2+61s^3t+35s^3\\
+ &+114s^2t^3+363s^2t^2+125s^2t+s^2\\
+ &+14st^3+255st^2+139st\\
+ &+10t^3+4t^2+76t+8.
+\end{aligned}
+\tag{27.7}
+$$
+
+全部系数严格正，故对每个 $s,t>0$ 有 $\mathscr B>0$。于是 $h>0$ 且 $\mathfrak T/(2h)>2$；(27.5)即给(27.3)。这个恒等式没有除以 $\xi$ 或 $\Phi$，所以包括 $\xi=0,\Phi=0,d=0$。在 $\Phi\ne0$ 的源域上，同一不等式也给
+
+$$
+\operatorname{sgn}(2\eta-26\mu-5)=\operatorname{sgn}\Phi.
+\tag{27.8}
+$$
+
+若 $\xi\ne0$ 且两个世界的实际 $w,m$ 相同，(27.3)及(27.4)先给两个非零漂移同号，再由 $d_i\Phi_i=120h_i\xi$ 给两个 $\Phi_i$ 同号。固定子纤维的三部分分离同样由(27.3)给出，无须假设另一末动作使用同一个碰撞对。此证明只读取所声明的原时钟路径；增益的低次数、符号、根和 $\Delta=0$ 层均未被删去。常数 $2$ 只作严格有效界，不主张最优。∎
+
+**定理 27.3（重复签名的全局有界性及实际必需边的线性塌缩）。** 存在与父参数和世界均无关的有限常数 $B>0$，使每个 $P\in\mathscr C$ 满足
+
+$$
+\max\left\{\frac{h(P)}{|\Phi(P)|},\ |q(P)|,
+                   |\mu(P)|,\ |\eta(P)|\right\}\le B.
+\tag{27.9}
+$$
+
+因此对任意 $\theta\in\mathbb R$、$\xi\ne0$，若两个不同完整世界 $W_i=(P_i,g_i,d_i)\in\mathcal F(H^-_{\theta,\xi})$ 有相同的实际第六 $M$ 读数 $w$ 及实际第七 $MM$ 读数 $m$，则同一个 $B$ 给
+
+$$
+\begin{gathered}
+|d_i|\le120B|\xi|,\qquad |\theta-k(P_i)|\le B|\xi|
+\quad(i=1,2),\\
+|w-w_0(\theta)|\le120B|\xi|,\qquad
+|m-m_0(\theta)|\le30B|\xi|,\\
+\operatorname{dist}(\theta,[1/2,3])\le B|\xi|.
+\end{gathered}
+\tag{27.10}
+$$
+
+对任意 $\theta\in\mathbb R$、$\xi\ne0$ 及 $K\subseteq\mathcal F(H^-_{\theta,\xi})$，若 $L_2(K,H^-_{\theta,\xi})$ 成立，则其实际第六 $M$ 子纤维中末 $M$ 条款所必需的任一碰撞对均满足(27.3)、(27.10)。因而在任意 $\xi_j\to0$、$\xi_j\ne0$ 的此类父序列上，该必需对的两个漂移都趋于零，其共同 $w_j,m_j$ 与各自父的基线之差均为 $O(|\xi_j|)$。这里没有先验的来源紧性、漂移有界性或 $\theta_j$ 有界性假设。
+
+证明。先控制全部非紧来源尾部。写
+
+$$
+P=\begin{pmatrix}p&b\\c&1-p\end{pmatrix},\qquad
+0<p<1,\quad b,c>0,\quad bc=p(1-p).
+$$
+
+四迹逆[V，(29.1)](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)给
+
+$$
+u=b+c+1-p,\qquad n=1+b+2c,\qquad a=1+2u-c.
+\tag{27.11}
+$$
+
+因此 $n\ge u$、$a\ge u+1$、$n,a\le2u+1$。当 $u\ge3$ 时，$A=3u^2+3u-10$ 及 $B_1=8u^2+18u-30$ 均正，从而
+
+$$
+\begin{aligned}
+\Phi&=Aa+B_1n-23u(u+1)\\
+&\ge A(u+1)+B_1u-23u(u+1)\\
+&=11u^3+u^2-60u-10\ge4u^3.
+\end{aligned}
+\tag{27.12}
+$$
+
+最后一步置 $u=3+v$，差为 $7v^3+64v^2+135v+8>0$。同一范围内有
+
+$$
+\begin{gathered}
+h\le\frac43u^2,\quad 0<\ell\le2u^2,\quad
+0<V_6\le17u^2,\quad0<X_7\le32u^2,\quad n,a\le\frac73u.
+\end{gathered}
+\tag{27.13}
+$$
+
+由(8.6)和三角不等式，$|\Psi_6|$ 至多为
+$119u^3+(140/3)u^3+(116/3)u^2$，$|\Psi_7|$ 至多为
+$(4480/3)u^3+490u^3+508u^2$。又
+$\Delta/n=h+a\ell-4ah/n$，所以
+
+$$
+\begin{gathered}
+\frac h{|\Phi|}\le\frac19,\qquad
+|\mu|\le\frac{1607}{36}<45,\qquad
+|\eta|\le\frac{3229}{6}<539,\\
+|q|\le\frac5{4u^3}
+ \left(\frac43u^2+\frac{14}3u^3+\frac{112}9u^2\right)
+ \le\frac{625}{54}<12.
+\end{gathered}
+\tag{27.14}
+$$
+
+这些是整个 $u\ge3$ 尾部的界，不要求源签名重复。
+
+余下来源置于紧集
+
+$$
+\mathscr K=\left\{\begin{pmatrix}p&b\\c&1-p\end{pmatrix}:
+0\le p\le1,\ b,c\ge0,\ bc=p(1-p),\ b+c+1-p\le3\right\}.
+\tag{27.15}
+$$
+
+这里 $b+c\le3$，故此集闭且有界；它的非负边界只用于极限分析。需证明重复签名点不能逼近 $\mathscr K$ 中的 $\Phi=0$ 层。
+
+先精确识别这个闭极层。V 定理29.3证明中 $u\le3/2$ 时 $\Phi<0$ 的估计对非负来源仍成立：将 $n,a<1+2u$ 换成弱不等式，其所用两个三次上界在相应区间仍严格负；$u=0$ 时直接有 $n=a=1,\Phi=-40$。故此极层的 $u>3/2$。复用 V (29.9)、(29.14)—(29.15)，非负来源恰为两条正来源弧的闭包
+
+$$
+\begin{aligned}
+\overline{\mathcal S_+}&=\{(u,n_+(u),a_+(u)):
+                              \alpha_0\le u\le\gamma_0\},\\
+\overline{\mathcal S_-}&=\{(u,n_-(u),a_-(u)):
+                              \beta_0\le u\le\eta_0\}.
+\end{aligned}
+\tag{27.16}
+$$
+
+确实，V (29.14)穷尽 $p=0,1,b=0,c=0$ 的边界交点；(29.15)在其余开区间给严格违反非负性的坐标，端点取连续极限即得(27.16)，没有孤立的额外非负支。四端点均在 $1649/1000<u<2171/1000$ 内。
+
+由(26.6)、(26.9)，两条闭弧上 $A>0$、$F_n\ne0$、$\mathcal H\ne0$。复用(26.3)，$\Psi_6,\Psi_7$ 不可能同时为零，否则 $T=C=0$ 将使(26.7)的 $\mathcal H=0$。定理26.2的严格单调性与(26.11)的端点严格包围说明：$[\Psi_6:\Psi_7]$ 在这两条闭弧的并上单射。具体地，$\mathcal S_+$ 的极点左侧连同端点有 $\mathcal R<1$，右侧连同端点有 $\mathcal R>17$；闭 $\mathcal S_-$ 上有 $14<\mathcal R<17$。唯一 $\Psi_6=0$ 点仍是(26.4)的内点，那里 $\Psi_7\ne0$，代表唯一的射影无穷点。故端点与极点均未被删除。
+
+还需排除两个重复签名点在极层上合流；仅有极层内部单射不足以保证这一点。在(27.16)每一点附近，令 $v=\Phi$，以
+
+$$
+a=\frac{v+23h-B_1n}{A},\qquad
+\widetilde F(u,n,v)=A^2D\!\left(u,n,\frac{v+23h-B_1n}{A}\right)
+\tag{27.17}
+$$
+
+代入 V (29.1)的源方程 $D=0$。V (29.13)给
+$\widetilde F(u,n,0)=F(u,n)$，故
+$\partial_n\widetilde F(u,n,0)=F_n\ne0$。隐函数定理于是把 $(u,v)$ 作为源曲面的局部坐标。此结论在非负端点也成立：先在包含端点的完整实曲面邻域使用定理，再限制回非负来源，不把端点当作额外合法世界。
+
+沿 $v=0$ 对 $u$ 求导，定义 Wronskian
+
+$$
+\mathcal W=\Psi_6\frac{d\Psi_7}{du}
+             -\Psi_7\frac{d\Psi_6}{du}
+          =\frac{\mathcal H}{A^2F_n}\ne0.
+\tag{27.18}
+$$
+
+等式由(26.3)、(26.7)及 $dn/du=-F_u/F_n$ 得到，因而也包括四个端点和唯一极点。若 $\Psi_6\ne0$，用局部映射
+
+$$
+(u,v)\longmapsto
+ \left(\frac v{\Psi_6},\frac{\Psi_7}{\Psi_6}\right);
+\qquad
+\det D_{(u,v)}\bigg|_{v=0}=-\frac{\mathcal W}{\Psi_6^3}\ne0.
+\tag{27.19}
+$$
+
+在 $\Psi_6=0$ 的唯一点改用
+
+$$
+(u,v)\longmapsto
+ \left(\frac v{\Psi_7},\frac{\Psi_6}{\Psi_7}\right);
+\qquad
+\det D_{(u,v)}\bigg|_{v=0}=\frac{\mathcal W}{\Psi_7^3}\ne0.
+\tag{27.20}
+$$
+
+逆函数定理给这两种映射各自在相应点的某个邻域内单射。只在分母非零的邻域使用相应映射，故没有把极点误作可除点。
+
+反设有 $P_j\in\mathscr C\cap\mathscr K$ 且 $\Phi(P_j)\to0$。为每个 $P_j$ 选择定义(27.1)中的 $Q_j\ne P_j$。取子列使 $P_j\to P_*\in\mathscr K$。由(27.16)及极层上 $\Psi_6,\Psi_7$ 不同时为零，
+
+$$
+\| (\mu(P_j),\eta(P_j))\|_\infty\longrightarrow\infty.
+\tag{27.21}
+$$
+
+$Q_j$ 的签名相同，(27.14)遂迫使最终 $u(Q_j)<3$。再取子列使 $Q_j\to Q_*\in\mathscr K$。由于 $n\ge1$，若 $\Phi(Q_*)\ne0$，两个签名在该处连续而有界，与(27.21)矛盾。因此 $\Phi(Q_*)=0$。对充分大的 $j$，签名相等给
+$[\Psi_6(P_j):\Psi_7(P_j)]=[\Psi_6(Q_j):\Psi_7(Q_j)]$；在两个极限点这些射影对都有定义，取极限并使用闭极层的射影单射，得 $P_*=Q_*$。
+
+选择该共同极限点处分母非零的(27.19)或(27.20)邻域。充分大的 $j$ 使两点同在这个单射邻域内。若用(27.19)，其值为 $(1/\mu,\eta/\mu)$；若用(27.20)，其值为 $(1/\eta,\mu/\eta)$。在相应邻域内这些分母确实非零，故相同签名给相同局部映射值，强制 $P_j=Q_j$，矛盾。
+
+因此存在 $\varepsilon>0$，使 $\mathscr C\cap\mathscr K$ 上 $|\Phi|\ge\varepsilon$。在紧集 $\mathscr K\cap\{|\Phi|\ge\varepsilon\}$ 上，$h/|\Phi|,q,\mu,\eta$ 连续：这里 $n\ge1$，没有额外分母零点。它们有共同有限上界。把此上界与(27.14)合并，取 $B\ge539$ 即得(27.9)。不要求 $\mathscr C$ 本身闭或紧，也没有把极层外单射误当成全域单射。
+
+最后回到实际世界。定理23.2保证任一实际同父 $MM$ 碰撞对具有不同来源，且两来源都在 $\mathscr C$。于是(8.5)、(8.7)给
+
+$$
+d_i=\frac{120h_i\xi}{\Phi_i},\qquad
+\theta-k_i=\xi q_i,\qquad
+w-w_0=120\xi\mu_i,\qquad m-m_0=30\xi\eta_i.
+\tag{27.22}
+$$
+
+再由正坐标(8.1)，
+
+$$
+2a-n=\frac{1+3t+5st}{1+st}>0,\qquad
+3n-a=\frac{2+5s+t}{1+st}>0,
+\tag{27.23}
+$$
+
+所以 $1/2<k_i<3$。(27.9)、(27.22)—(27.23)证明(27.10)。
+
+若 $L_2(K,H^-_{\theta,\xi})$ 成立，直接使用定理23.2的必要边：在同一个实际第六 $M$ 子纤维中取末 $M$ 条款的两个不同世界，应用上述界即可。其共同第六读数 $w$ 因而也受界。这没有把该界赋给子纤维中的每个世界；定理24.6的末 $J$ 碰撞对可以不同，第六 $J$ 臂的两种末碰撞对也可各自不同。所有对仍必须分别满足各自共同实际历史和响应纤维条件。令 $\xi_j\to0$ 即得所述必需对的漂移与移动基线残差的线性塌缩；来源本身仍可逼近边界或逃向无穷。
+
+本条与定理27.2的承重内容是此指定观察映射的全源正性证书、极层附近的重复签名排除及全局实际响应界，属于仓内推导（repo-derived）。隐函数定理、逆函数定理、紧性和 Sturm 计数只作成熟中间供应；源分支、端点和射影供应分别按 V 定理29.3及本卷定理26.2的原条件使用。一般可识别性语言可参见 Li、Lee、Bresler，[*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*](https://arxiv.org/html/1501.06120v1)，定义2.7、定理2.8；其双线性变换群条件不提供这里的加性漂移、原时钟或极层估计，不作为本证明的前提。不申领外部优先权。
+
+以上只给部分校准及必要边约束。常数 $B$ 是存在性的统一有限界，没有数值最优性或有限精度稳定性结论；(27.10)不扩展到任意父世界。相同漂移符号的共同父两臂实现、$\mathcal P_M\cap\mathcal P_J$ 的空性或非空性、整条第14章父曲线、更早祖先兼容及原根八读／九读问题仍未由本条解决；也未给九读上界。$\xi=0$ 的父排除保持定理26.4的范围，仿射校准(27.3)则仍在该层成立。全部推导保留增益次数下降、任意符号与采样根、重根、任意漂移以及 $\Delta=0$，未除以任何采样增益。∎
+
+## 追加锚（本行以下为增补区）
+
+## 28. 临界第四 M 的完整世界与指定支持
+
+**定义 28.1（完整世界与失败递归）。** Use the entire $\mathcal W_3$ of Definition 1.1, writing $d$ for the drift coordinate $\delta$. Thus a world is a triple $W=(P,g,d)$, where $P$ is a strictly entrywise positive real $2\times2$ matrix of rank one and trace one, $g\in\mathbb R[t]\setminus\{0\}$ has degree at most three, and $d\in\mathbb R$. Put
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+For a chronological word $E_1\cdots E_k$, set $A_0=I$ and $A_i=E_iA_{i-1}$. The response at original clock $i$ is $g(i)\operatorname{tr}(A_iP)+d$. The set $\mathcal F(H)$ consists of every world realizing the entire literal history $H$. For $K\subseteq\mathcal F(H)$, write $K_{E,z}=K\cap\mathcal F(H,E,z)$ and define
+
+$$
+\begin{aligned}
+L_0(K,H)&\iff |K|\ge2,\\
+L_{s+1}(K,H)&\iff |K|\ge2\ \land\
+ \forall E\in\{M,J\}\ \exists z\in\mathbb R:
+ L_s(K_{E,z},(H,E,z)).
+\end{aligned}                                                     \tag{28.1}
+$$
+
+Each world retains its same source, entire gain and drift at every shared prefix. There is one unresettable, uncopyable trajectory, each atomic action is immediately read, and the initial reading at clock zero counts. The remaining clocks at $H_4$ are exactly $5,6,7$. Actions, stopping and returned worlds may depend arbitrarily and deterministically on the entire actual history. The cardinality guard includes stopping. These are exactly the whole-world and actual-history conventions of Definition 1.1, including all gain signs, lower actual degrees, sampled roots and repeated roots.
+
+**定义 28.2（临界第四 M 历史）。** Put
+
+$$
+\begin{gathered}
+h(t)=(t-1)(t-3)(t-7),\qquad
+P_r=\begin{pmatrix}1-r&12r(1-r)\\1/12&r\end{pmatrix},\qquad U_r=(P_r,h,0),\\
+H_3=(-21,M,0,J,65/12,M,0),\qquad
+H_4=(H_3,M,-93/2),\\
+z_{1/2}=-76,\qquad z_{2/3}=-220/3,\qquad
+H_5^r=(H_4,J,z_r)\quad(r\in\{1/2,2/3\}).
+\end{gathered}                                                     \tag{28.2}
+$$
+
+Both $U_{1/2}$ and $U_{2/3}$ realize $H_4$. Their fifth-$J$ responses are the distinct values $z_r$. The cumulative matrices at clocks four and five are
+
+$$
+A_4=\begin{pmatrix}1&2\\1&3\end{pmatrix},\qquad
+Q=JA_4=\begin{pmatrix}1&3\\1&2\end{pmatrix}.
+\tag{28.3}
+$$
+
+The corresponding sixth responses are $-275/2$ after $M$ and $-155/2$ after $J$, for either $r$; every seventh response is zero. The common fourth history and the fifth responses are [V, Theorem 6.1 and Proposition 6.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md). The sixth values follow from the trace table in Definition 29.1 below and $h(6)=-15$.
+
+## 29. 临界第四 M 八读点纤维的有限整数证书
+
+**定义 29.1（八种数据与正来源图）。** The symbols in Sections 28–31 refer to the histories of Definition 28.2. For each $z\in\{-76,-220/3\}$ and $w=EF\in\{MM,MJ,JM,JJ\}$, use independent variables $x,y$ and put
+
+$$
+R(x,y)=\begin{pmatrix}(3-2x)y&3-2x\\(x-1)y&x-1\end{pmatrix}.
+\tag{29.1}
+$$
+
+Every legal source has a unique such representative: if $\eta=(QP)_{22}>0$, then $R=P/\eta$ and
+
+$$
+QR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+1<x<3/2,\quad y>0.
+\tag{29.2}
+$$
+
+Conversely (29.2) makes $R$ strictly positive of rank one and $P=R/\operatorname{tr}R$ legal. This is the source chart (4.4) of Definition 4.1, for the same cumulative matrix $Q$. Its trace polynomials at clocks zero through five are
+
+$$
+\begin{aligned}
+T_0&=-2xy+x+3y-1,& T_1&=xy-x-y+2,\\
+T_2&=-xy+x+2y-1,& T_3&=xy-y+1,\\
+T_4&=x+y,&T_5&=xy+1.
+\end{aligned}                                                     \tag{29.3}
+$$
+
+For the chronological sixth and seventh actions $EF$, complete the table by
+
+| $w=EF$ | $T_6=\operatorname{tr}(EQR)$ | $T_7=\operatorname{tr}(FEQR)$ |
+| --- | --- | --- |
+| $MM$ | $x+y+1$ | $xy+x+y+2$ |
+| $MJ$ | $x+y+1$ | $xy+y+1$ |
+| $JM$ | $x+y$ | $xy+x+1$ |
+| $JJ$ | $x+y$ | $xy+1$ |
+
+Define the data vector
+
+$$
+v=(-21,0,65/12,0,-93/2,z,v_6,0),\qquad
+v_6=\begin{cases}-275/2&E=M,\\-155/2&E=J.\end{cases}
+\tag{29.4}
+$$
+
+The source coordinates of the prescribed world are
+
+$$
+u_z=(x_z,y_z)=
+\begin{cases}(9/8,1/6)&z=-76,\\(7/6,1/8)&z=-220/3.\end{cases}
+\tag{29.5}
+$$
+
+At either point, $\operatorname{tr}R=1/4$, $P=4R=P_r$, and the normalized gain $G=\eta g$ is $4h$.
+
+**定义 29.2（消去漂移的六个多项式）。** Let
+
+$$
+\ell_j(t)=\prod_{\substack{0\le k\le3\\k\ne j}}\frac{t-k}{j-k}
+\quad(0\le j\le3),\qquad D=T_0T_1T_2T_3.
+$$
+
+For $n=4,5,6,7$, define
+
+$$
+\bigl(\ell_0(n),\ell_1(n),\ell_2(n),\ell_3(n)\bigr)=
+\begin{cases}
+(-1,4,-6,4)&n=4,\\
+(-4,15,-20,10)&n=5,\\
+(-10,36,-45,20)&n=6,\\
+(-20,70,-84,35)&n=7,
+\end{cases}
+$$
+
+and
+
+$$
+\begin{aligned}
+a_n&=D\left(1-T_n\sum_{j=0}^3\frac{\ell_j(n)}{T_j}\right),\\
+b_n&=D\left(T_n\sum_{j=0}^3\frac{v_j\ell_j(n)}{T_j}-v_n\right),\\
+f_{nm}&=\frac{12(a_nb_m-a_mb_n)}{D}\quad(4\le n<m\le7).
+\end{aligned}                                                     \tag{29.6}
+$$
+
+All six $f_{nm}$ lie in $\mathbb Z[x,y]$ and have degree at most four in each variable. Order them as
+
+$$
+(f_{45},f_{46},f_{47},f_{56},f_{57},f_{67})=(f_0,\ldots,f_5).
+\tag{29.7}
+$$
+
+Let $V$ be the $49$-dimensional real space spanned by $x^uy^v$, $0\le u,v\le6$. Define the integer matrix $C=C_{z,w}$ by
+
+$$
+C_{9k+3a+b,\,7u+v}=[x^uy^v](x^ay^bf_k),
+\quad 0\le k\le5,\quad 0\le a,b\le2,\quad 0\le u,v\le6.
+\tag{29.8}
+$$
+
+Thus $C$ has $54$ rows and $49$ columns, with all indices starting at zero. Its row space is identified with a polynomial subspace of $V$.
+
+**定理 29.3（精确行空间证书）。** For $p\in V$, write $p_j(x)=[y^j]p(x,y)$ and define
+
+$$
+\Lambda_0(p)=p_6(1),\qquad
+\Lambda_1(p)=p_5(1)-p_6'(1).
+\tag{29.9}
+$$
+
+Set $\psi_\pm=(-1\pm\sqrt5)/2$ and
+
+$$
+S_{z,w}=\begin{cases}
+\{u_z\},&w\ne JM,\\
+\{u_z,(-\psi_+,\psi_+),(-\psi_-,\psi_-)\},&w=JM.
+\end{cases}
+$$
+
+Then, for every one of the eight choices $(z,w)$,
+
+$$
+\operatorname{row}(C_{z,w})=
+\ker\Lambda_0\cap\ker\Lambda_1\cap
+\bigcap_{q\in S_{z,w}}\{p\in V:p(q)=0\}.
+\tag{29.10}
+$$
+
+Proof. The expressions in (29.6) are polynomials: the factors $D/T_j$ are polynomial, and in the alternating expression for $a_nb_m-a_mb_n$ the terms with two equal denominator factors cancel. Every other product denominator divides $D$, leaving $D$ as a factor of that alternating expression. Expanding gives integral coefficients after the factor $12$, and bidegree at most $(4,4)$.
+
+The following polynomial identities, together with the determinant table below, give a finite certificate for (29.10). For each of its six $f=f_k$, put $f_j(x)=[y^j]f$. Substitution in (29.6) gives
+
+$$
+\begin{gathered}
+f(u_z)=0,\qquad f_4(1)=0,\qquad f_3(1)-f_4'(1)=0,\\
+\text{if }w=JM:\quad f(-y,y)\equiv0\pmod{y^2+y-1}.
+\end{gathered}                                                     \tag{29.11}
+$$
+
+These identities also show that all $x^ay^bf$, $0\le a,b\le2$, belong to the right side of (29.10). For the two functionals in (29.9), the only nontrivial case is $b=2$, when the last two identities at $x=1$ in the first line of (29.11) apply. For $b=1$ only $f_4(1)=0$ is needed, and for $b=0$ both functionals vanish by degree.
+
+Here are square integer minors of (29.8). Use ascending row and column order and put
+
+$$
+\begin{aligned}
+I_{46}&=\{0,\ldots,34\}\cup\{36,\ldots,43\}\cup\{45,46,47\},\\
+I_{44}&=\{0,\ldots,34\}\cup\{36,\ldots,43\}\cup\{45\},\\
+J_r&=\{0,\ldots,r-1\},\qquad N_{z,w}=C_{z,w}[I_r,J_r].
+\end{aligned}                                                     \tag{29.12}
+$$
+
+The determinants, reduced modulo $1000003$, are
+
+| $z$ | $w$ | $r$ | $\det N_{z,w}\pmod{1000003}$ |
+| --- | --- | --- | --- |
+| $-76$ | $MM$ | $46$ | $6010$ |
+| $-76$ | $MJ$ | $46$ | $600600$ |
+| $-76$ | $JM$ | $44$ | $176698$ |
+| $-76$ | $JJ$ | $46$ | $372449$ |
+| $-220/3$ | $MM$ | $46$ | $535142$ |
+| $-220/3$ | $MJ$ | $46$ | $894382$ |
+| $-220/3$ | $JM$ | $44$ | $358619$ |
+| $-220/3$ | $JJ$ | $46$ | $518998$ |
+
+All entries of these minors are specified by (29.3)–(29.8). Over $\mathbb Z/1000003\mathbb Z$, row swaps and the elimination step $R_i\leftarrow R_i-c_{ij}c_{jj}^{-1}R_j$ give the displayed residues as the signed products of the resulting nonzero pivots. Their nonzero residues imply rank at least $r$ over $\mathbb R$.
+
+The functionals defining the right side of (29.10) are independent. When there is one evaluation, restrict first to the constant polynomial. When there are three, restrict to $1,y,y^2$; their three $y$ coordinates are distinct, so the evaluation matrix is Vandermonde and invertible. Both $\Lambda_i$ vanish on these low degree polynomials. After eliminating the evaluation functionals, use $y^6,y^5$ to see that $\Lambda_0,\Lambda_1$ are independent. The right side therefore has dimension $46$ when $w\ne JM$ and $44$ when $w=JM$. Its inclusion of every row, and the matching lower rank bounds, prove (29.10). ∎
+
+**推论 29.4（正域中的唯一共同零点）。** In the domain $1<x<3/2$, $y>0$, the simultaneous equations $f_k(x,y)=0$ for all $0\le k\le5$ have only the solution $u_z$.
+
+Proof. If $w\ne JM$, both $x-x_z$ and $y-y_z$ belong to the right side of (29.10), and hence to the row space. Every common zero of the six $f_k$ annihilates every row polynomial and their linear combinations. Thus $x=x_z,y=y_z$.
+
+For $w=JM$, the following two polynomials belong to the same row space:
+
+| $z$ | first polynomial | second polynomial |
+| --- | --- | --- |
+| $-76$ | $58x+93y^2+151y-93$ | $(6y-1)(y^2+y-1)$ |
+| $-220/3$ | $165x+248y^2+413y-248$ | $(8y-1)(y^2+y-1)$ |
+
+Indeed they vanish at all three points in $S_{z,JM}$ and have zero $\Lambda_0,\Lambda_1$. At a common zero, the second polynomial gives $y=y_z$ or $y^2+y-1=0$. In the first case the first polynomial gives $x=x_z$. In the second, that polynomial reduces to $58(x+y)$ or $165(x+y)$, respectively. This contradicts $x>1,y>0$. ∎
+
+## 30. 临界第四 M 的全域点纤维刚性与指定四世界排除
+
+**定理 30.1（指定 U 的四条八读点纤维）。** Fix $r\in\{1/2,2/3\}$ and $E,F\in\{M,J\}$. If a legal complete world $W$ realizes $H_5^r$, has the same actual sixth response as $U_r$ after $E$, and has the same actual seventh response as $U_r$ after the chronological suffix $EF$, then $W=U_r$.
+
+Proof. Apply the chart (29.1)–(29.2) to the source of $W$, and let $G=\eta g$. All $T_j$ at $j=0,1,2,3$ are strictly positive, so $D>0$. The entire gain $G$ has degree at most three. Its first four values therefore determine it by
+
+$$
+G(t)=\sum_{j=0}^3\frac{v_j-d}{T_j}\ell_j(t).
+\tag{30.1}
+$$
+
+The four remaining actual response equations are exactly $a_nd+b_n=0$, $4\le n\le7$. Hence all six $f_{nm}$ vanish. Corollary 29.4 identifies the source coordinates as $u_{z_r}$, including every possible sign of the drift or gain and every lower degree.
+
+At these coordinates, $b_4=0$ and
+
+$$
+a_4(u_{-76})=\frac{3936643}{2654208},\qquad
+a_4(u_{-220/3})=\frac{3709457}{2654208}.
+\tag{30.2}
+$$
+
+Both are nonzero, so $a_4d+b_4=0$ gives $d=0$. Formula (30.1) now gives $G=4h$. Since $\operatorname{tr}R=1/4$, the original normalized source and gain are $P=4R=P_r$ and $g=G/4=h$. This proves equality of the entire worlds. Only the single word $MJMMJEF$ is used in this point-fiber assertion. ∎
+
+**定理 30.2（含指定 U 的三世界两读排除）。** For $r\in\{1/2,2/3\}$ and any pairwise distinct complete worlds $U_r,B,C\in\mathcal F(H_5^r)$,
+
+$$
+\neg L_2(\{U_r,B,C\},H_5^r).
+\tag{30.3}
+$$
+
+Proof. Suppose the triple has $L_2$. For each sixth action $E$, choose its actual $L_1$ response child $S_E$. If $U_r\notin S_E$, the cardinality guard forces $S_E=\{B,C\}$. If $U_r\in S_E$, no terminal collision under either final action can involve $U_r$: another member in that collision would share the whole fifth history, the sixth response, and that seventh response with $U_r$, contrary to Theorem 30.1. Consequently the collision required for each final action must again be the pair $B,C$.
+
+For both sixth actions, therefore, $B,C$ share the selected sixth response and both terminal responses after that sixth action. Thus the same pair $\{B,C\}$ has $L_2$ at $H_5^r$.
+
+Apply Theorem 5.1 with $D_0=0$, $\lambda=1$, $\varepsilon=1/12$, $Y=-93/2$, and $z=z_r$. It excludes every distinct two-world $L_2$ in precisely this actual $MJMMJ$ fiber, without drift, root or gain-shape promises. This is a contradiction. The two terminal collision pairs were allowed to differ before Theorem 30.1 forced them to be $B,C$. ∎
+
+**定理 30.3（两个新增完整世界不能补成临界 L3）。** For all legal complete worlds $B,C\in\mathcal F(H_4)$ such that $B,C,U_{1/2},U_{2/3}$ are pairwise distinct,
+
+$$
+\neg L_3(\{U_{1/2},U_{2/3},B,C\},H_4).
+\tag{30.4}
+$$
+
+Proof. Write the four-world set as $K$ and suppose $L_3(K,H_4)$. Its fifth-$J$ branch has an actual response child $K_{J,z}$ with $L_2$. It has at least two worlds. Theorem 5.1, with the same parameters just specified and this actual $z$, excludes cardinality two.
+
+The two prescribed worlds have different fifth-$J$ responses, so $K_{J,z}$ contains at most one of them and hence at most three worlds. It must therefore be exactly $\{U_r,B,C\}$ for one $r\in\{1/2,2/3\}$, with $z=z_r$. Theorem 30.2 excludes $L_2$ on this same triple. This contradiction proves (30.4) for every allowed source, entire gain and drift of both additions. ∎
+
+## 31. 临界第四 M 排除的适用范围与未决共同实现
+
+**约定 31.1（数学来源与结论范围）。** The fourth-$J$ sibling at $H_3$ is supplied by [IV, Theorem 3.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md). The prescribed sources, the $H_4,H_5^r$ data and the baseline root-seven inverse are those of [V, Theorem 6.1 and Proposition 6.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md); the arbitrary-drift two-world exclusion is Theorem 5.1. That baseline inverse alone does not give the unrestricted point fibers of Theorem 30.1. Lemma 18.1 concerns the four matrices $I,JM,MJ,M^2$ at one shared terminal clock; its subsequent injectivity theorem has a different parent history and is not used here. The extra first-response hypotheses of the mixed-prefix triple exclusion are not assumed.
+
+The coefficient-space certificate in Section 29, the four point fibers of Theorem 30.1, and their consumption in Theorems 30.2–30.3 are model-specific deductions (repo-derived). Lagrange interpolation, finite-dimensional duality and integer determinants are classical intermediate tools. Li–Lee–Bresler, [arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1), Definition 2.7 and Theorem 2.8, treat constrained bilinear identifiability modulo its specified ambiguity group; they do not identify the unknown source in this history. Van den Bos–Vaandrager, [arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2), Section 4, defines adaptive test cases and their distinguishing observations for suspension automata; these finite-state definitions supply no continuous-world response certificate here. No literature priority claim is made for these deductions.
+
+**开放问题 31.2（其他支持与更早兄弟）。** The existence of another finite $K\subseteq\mathcal F(H_4)$ with $L_3(K,H_4)$ is not decided by (30.4). No extraction of a losing pair or a losing four-world subset from a larger losing support is assumed or proved here. IV, Theorem 3.1, still supplies the fourth-$J$ $L_3$ sibling at $H_3$; an actual fourth-$M$ $L_3$ remains necessary for that route to a same-ancestor $L_4$.
+
+Under the affine response translation by $+21$ of [V, Lemmas 9.2–9.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md), the corresponding third-clock history is
+
+$$
+\overline H_3=(0,M,21,J,317/12,M,21).
+$$
+
+The third-$J$ $L_4$ at $(0,M,21,J,317/12)$ and the second-$M$ $L_5$ at $(0,M,21)$ remain separate requirements for the indicated initial-$M$ $L_6$ route. Initial $J$, the original root, and a nine-reading upper bound are not decided by this fixed-support exclusion.
+
+The separate parent $H^-_{\theta,\xi}$ in (8.3) has chronological prefix $MMJMM$, whereas $H_4$ has prefix $MJMM$. Theorem 26.4 recovers every complete world at each $H^-_{\theta,0}$ within its two remaining original-clock reads. Theorems 27.2–27.3 give drift-sign calibration and uniform necessary bounds on a repeated $MM$ signature at $H^-_{\theta,\xi}$. These conclusions do not supply an identification between either of those fibers and $\mathcal F(H_4)$. The nonzero-$\xi$ common-parent two-arm realization remains distinct from the present specified-support exclusion.
+
+For the parent $H_4$ of Definition 28.2, the remaining joint condition is the existence of one fixed family $K\subseteq\mathcal F(H_4)$ and actual values $m,j$ such that
+
+$$
+L_2(K_{M,m},(H_4,M,m))
+\quad\text{and}\quad
+L_2(K_{J,j},(H_4,J,j)).
+\tag{31.1}
+$$
+
+Both children must be intersections of this same $K$ with their actual response fibers; they may use different retained worlds and different terminal collision pairs. Theorem 5.1 forces the $J$ child to contain at least three worlds. If it has exactly three and contains either prescribed $U_r$, Theorem 30.2 excludes it. Theorem 30.3 only rules out the special four-world support consisting of both prescribed $U$ and two additions. Neither it nor the point-fiber rigidity excludes a support omitting those prescribed worlds, a larger support, an arbitrary parent, or the original root.
+
+## 追加锚（本行以下为增补区）
+
+## 32. 统一小非零偏离的整个外侧父走廊固定 MM 恢复
+
+**定理 32.1（全部正来源上的外侧走廊恢复）。** 保持定义1.1的整个 $\mathcal W_3$、定义8.1的原时钟及字面父历史 $H=H^-_{\theta,\xi}$。取定理27.3中任一个满足(27.9)的统一常数 $B\ge539$，令
+
+$$
+\varepsilon=\frac1{10^{20}B},\qquad \mathcal D_B=\{(\theta,\xi)\in\mathbb R^2:0<|\xi|<\varepsilon,\
+                 \theta\le11/10\ \text{或}\ \theta\ge181/100\}. \tag{32.1}
+$$
+
+则对每个 $(\theta,\xi)\in\mathcal D_B$，在整个实际父纤维 $\mathcal F(H)$ 上，原时钟六、七实际依次选择 $M,M$ 的响应映射
+
+$$
+W\longmapsto\bigl(r_M^{(6)}(W),r_{MM}^{(7)}(W)\bigr) \tag{32.2}
+$$
+
+对完整世界单射。因此固定接续 $MM$ 在至多两个进一步实际读数内恢复整个父纤维；每个实际第六 $M$ 子纤维的末 $M$ 响应单射，且
+
+$$
+\forall K\subseteq\mathcal F(H),\qquad \neg L_2(K,H). \tag{32.3}
+$$
+
+证明。以下所有来源量沿用(8.1)、(8.5)—(8.6)。对 $\Phi\ne0$ 的来源使用(23.2)的归一化提升和矩阵，记
+
+$$
+x=\frac1\Phi(nu^2,nu,n,h)^{\mathsf T},\quad \mathsf A(k)x=(1,q,\mu,\eta)^{\mathsf T},\quad \mathcal T(y)=y_0y_2-y_1^2,\quad e=(0,1,0,0)^{\mathsf T}. \tag{32.4}
+$$
+
+向量指标从零开始；$\mathcal T$ 只取前三分量。矩阵 $\mathsf A$ 关于 $k$ 仿射，$e$ 的非零分量对应签名中的 $q$。本证明需要两个完整闭区间
+
+$$
+I_-=[1/2,551/500],\qquad I_+=[226/125,3],\qquad \mathcal I=I_-\cup I_+. \tag{32.5}
+$$
+
+先给用于整个 $\mathcal I$ 的有理符号及范数证书。复用(23.5)的 $Q$，置
+
+$$
+\begin{aligned}
+F(k)&=208827k^4-219885k^3-532630k^2+250705k+359123,\\
+N(k)&=\bigl(-5358k^2+2012k+6458,\,
+ -1674k^2-166k+1028,\,
+ -2082k^2+756k+2388,\,
+ -12k^3-546k^2-478k-64\bigr)^{\mathsf T}.
+\end{aligned} \tag{32.6}
+$$
+
+由(23.2)逐项取余子式，有 $\det\mathsf A=40Q$、$\operatorname{adj}(\mathsf A)e=N$，以及多项式恒等式 $N_0N_2-N_1^2=40F$。因而在 $Q\ne0$ 处
+
+$$
+v(k)=\mathsf A(k)^{-1}e=\frac{N(k)}{40Q(k)},\qquad
+\mathcal T(v(k))=\frac{F(k)}{40Q(k)^2}. \tag{32.7}
+$$
+
+为完整指定有限精确证书，对次数至多 $d$ 的多项式 $p$ 及有理区间 $I=[a,b]$，令 $c_j=[t^j]p(a+(b-a)t)$，并定义
+
+$$
+\beta_i^{I,d}(p)=\sum_{j=0}^i c_j\frac{\binom ij}{\binom dj},
+\qquad
+p(a+(b-a)t)=\sum_{i=0}^d\beta_i^{I,d}(p)\binom di t^i(1-t)^{d-i}. \tag{32.8}
+$$
+
+这里系数不足的 $c_j$ 为零。$0\le t\le1$ 时基函数非负且和为一；故下表的系数极值控制整个闭区间。表内多项式均取 $d=4$，系数界均是精确有理数：
+
+$$
+\begin{array}{c|c|c}
+ I&\min_i\beta_i^{I,4}(F)&\text{对 }Q\text{ 的系数界}\\ \hline
+ I_-&142435964065727/62500000000&
+       \max_i\beta_i^{I_-,4}(Q)=-99/4\\
+ I_+&774891446877/244140625&
+       \min_i\beta_i^{I_+,4}(Q)=8176970406/244140625
+\end{array} \tag{32.9}
+$$
+
+因此 $\mathcal I$ 上 $F>2000$、$|Q|>24$。又 $|k|\le3$ 给
+$|Q|\le6\cdot3^4+15\cdot3^3+18\cdot3^2+29\cdot3+8=1148$。
+记 $C_{ij}(k)=(\operatorname{adj}\mathsf A(k))_{ij}$，其次数至多三。用(32.8)取 $d=3$，四个行号依次为 $0,1,2,3$，直接有如下严格整数上界：
+
+$$
+\begin{array}{c|rrrr}
+ I&\sum_j\max_i|\beta_i^{I,3}(C_{0j})|&
+ \sum_j\max_i|\beta_i^{I,3}(C_{1j})|&
+ \sum_j\max_i|\beta_i^{I,3}(C_{2j})|&
+ \sum_j\max_i|\beta_i^{I,3}(C_{3j})|\\ \hline
+ I_-&<32000&<5000&<12000&<6000\\
+ I_+&<385000&<141000&<150000&<57000
+\end{array} \tag{32.10}
+$$
+
+式(23.2)、(32.8)及这些整数比较指定了全部有限有理计算，不使用采样或根近似。以最大绝对行和为矩阵范数，(32.9)—(32.10)遂给 $\mathcal I$ 上
+
+$$
+\|\mathsf A^{-1}\|_\infty<
+ \frac{400000}{40\cdot24}<4000,\qquad
+\|\mathsf A'\|_\infty=648,\qquad
+\mathcal T(v)>\frac{2000}{40\cdot1148^2}>\frac1{30000}. \tag{32.11}
+$$
+
+$\mathsf A'$ 的四个绝对行和为 $16,60,50,648$。这同时证明所有用到的矩阵逆存在。
+
+现在反设(32.2)在某个 $(\theta,\xi)\in\mathcal D_B$ 上有不同完整世界 $W_1,W_2$ 的碰撞。定理23.2给不同来源、$\Phi_i\ne0$、$\mu_1=\mu_2$、$\eta_1=\eta_2$，且
+
+$$
+r=q_1-q_2\ne0,\qquad k_2-k_1=\xi r,\qquad
+\theta=k_i+\xi q_i,\qquad x^{(i)}=x(P_i). \tag{32.12}
+$$
+
+两来源均属于(27.1)的 $\mathscr C$。因此仅对这对来源使用定理27.3，得到
+
+$$
+|q_i|,|\mu_i|,|\eta_i|\le B,\qquad
+|\theta-k_i|\le B|\xi|<10^{-20},\qquad 1/2<k_i<3. \tag{32.13}
+$$
+
+末项是(27.23)的严格正性。不限制任意父世界或其他末动作碰撞对。若 $\theta\le11/10$，两 $k_i$ 都小于 $11/10+10^{-20}<551/500$，故同在 $I_-$；若 $\theta\ge181/100$，两 $k_i$ 都大于 $181/100-10^{-20}>226/125$，故同在 $I_+$。这涵盖全部实 $\theta$，没有另设来源紧性条件。
+
+由 $B\ge539>1$、(32.4)、(32.11)及(32.13)，这对来源满足
+
+$$
+\|x^{(i)}\|_\infty
+ \le\|\mathsf A(k_i)^{-1}\|_\infty
+           \|(1,q_i,\mu_i,\eta_i)\|_\infty<4000B. \tag{32.14}
+$$
+
+由于 $\mathsf A$ 仿射，相减响应方程而不取任何中间参数的逆，精确得到
+
+$$
+\begin{aligned}
+\mathsf A(k_1)(x^{(1)}-x^{(2)})
+ &=r e+(k_2-k_1)\mathsf A'x^{(2)},\\
+\frac{x^{(1)}-x^{(2)}}r&=v(k_1)+z,\qquad
+z=\xi\,\mathsf A(k_1)^{-1}\mathsf A'x^{(2)},\\
+\|z\|_\infty&<4000^2\cdot648\,B|\xi|
+ <\frac{10368000000}{10^{20}}<2\cdot10^{-10}.
+\end{aligned} \tag{32.15}
+$$
+
+这里 $r\ne0$ 的依据正是(32.12)，无需为 $|r|$ 设置下界。由 $\|v\|_\infty<4000$，
+
+$$
+|\mathcal T(v+z)-\mathcal T(v)|
+ \le4\|v\|_\infty\|z\|_\infty+2\|z\|_\infty^2
+ <16000(2\cdot10^{-10})+2(2\cdot10^{-10})^2<\frac1{100000}. \tag{32.16}
+$$
+
+结合(32.11)，$\mathcal T(v+z)>1/30000-1/100000>0$，于是
+$\mathcal T(x^{(1)}-x^{(2)})=r^2\mathcal T(v+z)>0$。
+
+另一方面，定理27.2对同一实际 $MM$ 记录给 $\Phi_1\Phi_2>0$。令 $c_i=n_i/\Phi_i$，则 $n_i>0$、$c_1c_2>0$。提升的前三分量为 $c_i(u_i^2,u_i,1)$，直接相减给
+
+$$
+\mathcal T(x^{(1)}-x^{(2)})=-c_1c_2(u_1-u_2)^2\le0, \tag{32.17}
+$$
+
+矛盾。这个非严格不等式包括相同 $u$；(32.15)允许来源对任意趋近对角。由此排除所有不同完整世界的碰撞，证明(32.2)。
+
+固定父及其实际第六读数 $w$ 后，若末 $M$ 响应相同，就有相同的(32.2)，故完整世界相同。实际响应像上取唯一完整世界的逆即给固定 $MM$ 解码器；空纤维无实际路径，单点纤维可早停。若任意 $K\subseteq\mathcal F(H)$ 有 $L_2$，递归(1.2)的第六 $M$ 条款会给一个实际子纤维的 $L_1$，其末 $M$ 条款再给两个不同世界的碰撞，违反上述单射，故(32.3)成立。没有要求末 $J$ 或另一第六臂使用同一对世界，也没有对它们套用 $B$ 界。
+
+全部推导只除已非零的 $\xi,\Phi,r,Q$ 及(8.2)中原本严格正的迹量；事实上(32.15)不除 $\xi$，(32.12)中签名相等只使用 $\xi\ne0$。未除 $\Delta$、任何采样增益或增益的最高次系数。因此整个非零至多三次实多项式、任意增益符号、降次、采样根、重根、$\Delta=0$ 及任意常漂移均保留。未给来源或漂移增加紧性假设；非紧尾部的控制来自已有全源定理27.3与(32.14)。
+
+接续动作是同一不可复制、不可重置轨迹上原时钟六、七的两个实际 $M$，每步立即读取；连同既有初读共至多八读。这里的逆仅属于精确实响应合同，$B$ 是存在性的统一界，$\varepsilon$ 不是数值稳定半径或有限位算法的运行参数；不主张逆的连续性、可计算性或稳定性。
+
+承重内容是全源差几何的符号不相容、统一扰动控制及其整个外侧父走廊的固定 $MM$ 消费者，属于仓内推导（repo-derived）；四次式展开本身不单列为成果。伴随矩阵恒等式与范数估计是成熟线性代数；Bernstein 非负性、单位分解及系数凸包界沿用第25章的成熟供应，参见 Patrikalakis、Maekawa、Cho，[§1.3.1](https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node9.html)。定理23.2和27.2—27.3分别供应完整实际碰撞的父坐标、同号性与全源重复签名界；本条不重证这些结果，不申领外部文献优先权。这是普通数学纸面证明，非 Lean 核验。
+
+本条仅收缩 $\mathcal P_M\cap\mathcal P_J$ 的可能父域：$0<|\xi|<\varepsilon$ 时，若共同父失败存在，就必须有 $11/10<\theta<181/100$。这个中心带、$|\xi|\ge\varepsilon$ 的非零偏离父族、同父两臂共同实现及更早祖先仍未解决；零偏离只复用定理26.4的策略，不声称该层固定 $MM$ 单射。第28—31章的 $MJMM$ 历史不作本证明供应，亦不与这里的 $MMJMM$ 认同。原根八读／九读判别、九读上界及有限精度稳定性均未由本定理结清。∎
+
+## 追加锚（本行以下为增补区）

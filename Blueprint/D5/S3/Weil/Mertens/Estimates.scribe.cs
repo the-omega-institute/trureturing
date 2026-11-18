@@ -15,6 +15,7 @@ internal sealed class EstimatesDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
+                    Paragraph(Text("For every real x>=2, the original integrable_E1Lambda_div_mul_log_sq helper proves integrability of E1Lambda(t)/(t*log(t)^2) over t>x. Boundedness and the inverse-logarithmic kernel supply absolute domination, which the quantitative Mertens remainder uses with a sharper rate.")),
                     Paragraph(Text(
                         "For every real x, the original difference Mertens.E₁Λ(x)-Mertens.E₁p(x) "
                         + "is sum(if n is not prime then Lambda(n)/n else 0,0<n<=floorNat(x)). "

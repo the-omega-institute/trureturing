@@ -1,0 +1,79 @@
+**定理 280.4（最大缺口由至多菜单维数个原纯输入达到）。** 对280.3的整个共同确认纤维，存在不超过 $\max\{1,r_S\}$ 个原纯输入达到最大混合缺口，即
+
+$$
+\boxed{\quad
+\delta_S=\max_{\substack{1\le k\le\max\{1,r_S\}\\
+\lambda\in\Delta_k,\ a_i\in P}}
+\left[t\!\left(\sum_i\lambda_i a_i\right)-\sum_i\lambda_i t(a_i)\right].
+\quad}
+\tag{280.6}
+$$
+
+这里的最大值实际达到，不要求整个 $P=\operatorname{ext}K$ 紧。若 $r_S\le1$，则 $\delta_S=0$，整个 $F$ 有least；若 $r_S\ge2$，则
+
+$$
+0\le\delta_S\le1-\frac1{r_S}.
+\tag{280.7}
+$$
+
+单源有 $r_S\le d-1$，两个不同归一源有 $r_S\le d-2$。这些是有限存在界，不是高效搜索算法，也不建立小缺口到完整量子层级的稳定性。
+
+证明。279.3已给有限达到的最优混合以及最优 $h_*\in F$。其中minimax/Jensen恒等式也是[Abernethy等，Theorem1式(2)][Q280A]在 $T=1$ 的直接特化：行动集是紧凸 $F$，输入集是紧 $K$，损失为连续双线性的 $f(x)$；其紧性、有界性和对行动凸性均满足。这里复用这一成熟单轮最坏后悔值对偶，不将恒等式本身另计为新内容。
+
+先将有限最优混合的每个输入分解成有限原纯点。凹性使分解后的平均最低读数不增加，原重心不变，故缺口不减；它已是全局最大 $\delta_S$，因此仍取等。删去零权，记纯见证为 $a_i$、正权为 $\lambda_i$、重心为 $b$。由最优 $h_*$ 的整个原域上界，
+
+$$
+\begin{aligned}
+\delta_S
+&=\sum_i\lambda_i\bigl(h_*(a_i)-t(a_i)\bigr)
+-\bigl(h_*(b)-t(b)\bigr),\\
+0&\le h_*(a_i)-t(a_i)\le\delta_S,\qquad h_*(b)-t(b)\ge0.
+\end{aligned}
+\tag{280.8}
+$$
+
+所以 $h_*(b)=t(b)$，且每个正权支撑点都满足 $h_*(a_i)-t(a_i)=\delta_S$。这是同一个 $h_*$ 和同一个实际混合的接触条件，不是分别最优值的拼接。
+
+只需处理 $\delta_S>0$。若纯点数超过 $r_S$，它们在 $V/W_S$ 中的像线性相关。取非零实 $\beta_i$，置
+
+$$
+w=\sum_i\beta_i a_i\in W_S,\qquad
+c=\sum_i\beta_i=u(w),\qquad
+\sum_i\beta_i t(a_i)=(1-\delta_S)c.
+\tag{280.9}
+$$
+
+最后一式由同一 $h_*$ 的接触条件及 $h_*(w)=u(w)$ 得到。对所有分子非负且分母正的 $\varepsilon$，定义
+
+$$
+\lambda_i(\varepsilon)=\frac{\lambda_i+\varepsilon\beta_i}{1+\varepsilon c},\qquad
+b_\varepsilon=\frac{b+\varepsilon w}{1+\varepsilon c}.
+\tag{280.10}
+$$
+
+它们仍是同一原纯点的概率混合。所有原 $f\in F$ 在 $w$ 上的值同为 $c$，故
+
+$$
+\begin{aligned}
+t(b_\varepsilon)&=\frac{t(b)+\varepsilon c}{1+\varepsilon c},\\
+t(b_\varepsilon)-\sum_i\lambda_i(\varepsilon)t(a_i)
+&=\frac{\delta_S+\varepsilon\delta_S c}{1+\varepsilon c}=\delta_S.
+\end{aligned}
+\tag{280.11}
+$$
+
+若 $\beta$ 与 $\lambda$ 成比例，则 $b\in W_S$，所有确认者在 $b$ 取一；proper上界及全部正权迫每个确认者在每个 $a_i$ 都取一，因此缺口为零，矛盾。所以二者不成比例。翻转 $\beta$ 可令 $c\ge0$；它至少有一项正。沿负 $\varepsilon$ 到第一个分子为零处，所有分子仍非负且不全零，分母作为它们的和仍正。于是删去至少一个输入而保住同一最优值。有限次消去后，商像线性独立，纯点数至多 $r_S$。$\delta_S=0$ 时任一原纯点的单点混合即可达到零。这也证明不闭纯域中的实际达到。
+
+最后，对任意 $k$ 个原输入（允许混态）和任意归一权，取最大权的第 $j$ 项，并选在该点最小的原 $f\in F$，得
+
+$$
+\begin{aligned}
+J_S(\lambda;x_1,\ldots,x_k)
+&\le\sum_i\lambda_i(f(x_i)-t(x_i))\\
+&\le1-\lambda_j\le1-1/k.
+\end{aligned}
+\tag{280.12}
+$$
+
+第一项在 $j$ 处为零，其余差均在 $[0,1]$。正缺口不可能由一个点达到，所以 $r_S\le1$ 时只能零；否则(280.6)给(280.7)。两个不同归一源线性独立，故(280.5)给所述 $d-2$ 界。$\square$
+

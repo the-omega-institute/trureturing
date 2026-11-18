@@ -95,7 +95,7 @@ private theorem convex_bloch_sphere_image (L : EuclideanSpace ℝ (Fin 3) →ₗ
   obtain ⟨k,hk,hLk⟩ := bloch_map_has_kernel L
   exact convex_sphere_image L k hk hLk
 
-private theorem blochPure_norm (v : (EuclideanSpace ℂ (Fin 2))) (hv : ‖v‖ = 1) : ‖(fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v‖ = 1 := by
+theorem blochPure_norm (v : (EuclideanSpace ℂ (Fin 2))) (hv : ‖v‖ = 1) : ‖(fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v‖ = 1 := by
   have hn : star v.ofLp ⬝ᵥ v.ofLp = (1 : ℂ) := by
     calc
       star v.ofLp ⬝ᵥ v.ofLp = inner ℂ v v := dotProduct_comm _ _
@@ -108,7 +108,7 @@ private theorem blochPure_norm (v : (EuclideanSpace ℂ (Fin 2))) (hv : ‖v‖ 
   exact (bloch_geometry_of_isHermitian _
     (Matrix.posSemidef_vecMulVec_self_star v.ofLp).isHermitian).2 ht hp
 
-private theorem blochPure_surjective (r : (EuclideanSpace ℝ (Fin 3))) (hr : ‖r‖ = 1) :
+theorem blochPure_surjective (r : (EuclideanSpace ℝ (Fin 3))) (hr : ‖r‖ = 1) :
     ∃ v : (EuclideanSpace ℂ (Fin 2)), ‖v‖ = 1 ∧ (fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v = r := by
   have hrsq : (r 0)^2 + (r 1)^2 + (r 2)^2 = 1 := by
     have h := EuclideanSpace.real_norm_sq_eq r
