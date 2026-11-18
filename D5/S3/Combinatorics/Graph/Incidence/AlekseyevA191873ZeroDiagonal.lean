@@ -47,7 +47,6 @@ import Mathlib.Combinatorics.Hall.Finite
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Combinatorics.SimpleGraph.Extremal.Zarankiewicz
 import Mathlib.InformationTheory.Hamming
-import Mathlib.Logic.Equiv.Fin.Rotate
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
