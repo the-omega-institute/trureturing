@@ -87,7 +87,7 @@ internal sealed class OmegaTailUpperDocument : IScribeDocumentDefinition
                 H("Finite Rankin exponential bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For s>1, z>=1 and x>0, count the integers n from 1 through floor(x) whose distinct-prime count is strictly greater than the real threshold T.")),
-                    Paragraph(Text("This count is bounded by the exponential of s*log(x) - T*log(z), plus the logarithm of one plus the p-series of exponent s, plus the sum of log(1+z*p^(-s)) over primes at most x. The estimate applies even at a zero count."))),
+                    Paragraph(Text("This count is bounded by exp((s*log(x) - T*log(z)) + log(1 + the p-series of exponent s) + the sum of log(1+z*p^(-s)) over primes at most x). The estimate applies even at a zero count."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("upper-bound"),
