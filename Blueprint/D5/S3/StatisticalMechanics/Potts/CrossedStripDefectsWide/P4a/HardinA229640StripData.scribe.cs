@@ -7,7 +7,7 @@ internal sealed class HardinA229640StripDataDocument : IScribeDocumentDefinition
     private const string Prefix="D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripData.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-row two-defect HDA strips.",H("HardinA229640StripData"),Blocks(
-            Paragraph(Text("The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds.")),
+            Paragraph(Text("The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index.")),
             Node("cl",Class(),false),
             Node("T",Transfer(),false),
             Node("initial",All("s",Fin(42),Eq(Data("initial",V("s")),Sum("r",Row(),If(Eq(Data("cl",V("r"),N(2)),V("s")),Typed(N(1),Q("Int")),Typed(N(0),Q("Int")))))),false),
@@ -15,7 +15,7 @@ internal sealed class HardinA229640StripDataDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name,Formula formula,bool theorem) => Describe.Lean(
         DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229640")),
-        Blocks(Paragraph(Text("The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
+        Blocks(Paragraph(Text("The first fourteen coordinates have two remaining defects. The trailing twenty-eight coordinates are exactly the one-defect transfer. The upper block consists of its one-defect block followed by the literal two-defect table. Each table entry counts next columns with exactly two monochromatic bonds. The submatrix selects rows zero through thirteen and columns fourteen through twenty-seven of the one-defect matrix. Fin.append concatenates the two fourteen-coordinate vectors; Fin.natAdd adds fourteen to an index."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());

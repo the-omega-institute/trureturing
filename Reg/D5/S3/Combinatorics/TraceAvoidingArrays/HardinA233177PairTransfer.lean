@@ -6,7 +6,6 @@ import LeanInformationAuditInterface.Contract.Registration
 /-! Exact sequence readouts for the literal ladder count and its pair-label transfer. -/
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (L initial_values)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators

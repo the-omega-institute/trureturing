@@ -53,7 +53,6 @@ import Mathlib.Tactic
 /-! Pair labels alone determine the column transfer. -/
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
-open D5.S3.Combinatorics.TraceAvoidingArrays
 
 def Proper {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : Prop :=
   ∀ (j : Fin n) (h : j.val + 1 < n) (r s : Fin 4),

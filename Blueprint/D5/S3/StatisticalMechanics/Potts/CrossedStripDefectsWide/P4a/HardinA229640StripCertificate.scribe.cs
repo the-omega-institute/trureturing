@@ -7,12 +7,12 @@ internal sealed class HardinA229640StripCertificateDocument : IScribeDocumentDef
     private const string Prefix="D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640StripCertificate.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-row two-defect HDA strips.",H("HardinA229640StripCertificate"),Blocks(
-            Paragraph(Text("The one-defect successor counts and continuation powers retain their original values. Exactly two monochromatic bonds define the additional transition entries. The full continuation vector satisfies the cube of the proper-colouring sextic after three transitions.")),
+            Paragraph(Text("The one-defect successor counts and continuation powers retain their original values. Exactly two monochromatic bonds define the additional transition entries. The full continuation vector satisfies the cube of the proper-colouring sextic after three transitions. Natural subtraction is truncated at zero. The transition inequality ensures that the displayed remaining budget is the ordinary nonnegative difference.")),
             Node("finite_certificate",Certificate(),true))));
     private static DocumentBlock Node(string name,Formula formula,bool theorem) => Describe.Lean(
         DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229640")),
-        Blocks(Paragraph(Text("The one-defect successor counts and continuation powers retain their original values. Exactly two monochromatic bonds define the additional transition entries. The full continuation vector satisfies the cube of the proper-colouring sextic after three transitions."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
+        Blocks(Paragraph(Text("The one-defect successor counts and continuation powers retain their original values. Exactly two monochromatic bonds define the additional transition entries. The full continuation vector satisfies the cube of the proper-colouring sextic after three transitions. Natural subtraction is truncated at zero. The transition inequality ensures that the displayed remaining budget is the ordinary nonnegative difference."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());

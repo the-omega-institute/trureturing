@@ -7,7 +7,7 @@ internal sealed class HardinA229537StripCertificateDocument : IScribeDocumentDef
     private const string Prefix="D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229537StripCertificate.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-row exact-defect HDA strips.",H("HardinA229537StripCertificate"),Blocks(
-            Paragraph(Text("Exact transition counts preserve the remaining defect budget. The continuation vectors obey the square of the proper-colouring sextic after two transitions. The proper-colouring powers and their sextic relation are those of HardinA233177PairTransfer.")),
+            Paragraph(Text("Exact transition counts preserve the remaining defect budget. The continuation vectors obey the square of the proper-colouring sextic after two transitions. The proper-colouring powers and their sextic relation are those of HardinA233177PairTransfer. Natural subtraction is truncated at zero. The transition inequality ensures that the displayed remaining budget is the ordinary nonnegative difference.")),
             Node("zero_counts",CountSector(0),true),
             Node("one_counts",CountSector(1),true),
             Node("cost_relabel",Relabel(),true),
@@ -19,7 +19,7 @@ internal sealed class HardinA229537StripCertificateDocument : IScribeDocumentDef
     private static DocumentBlock Node(string name,Formula formula,bool theorem) => Describe.Lean(
         DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229537")),
-        Blocks(Paragraph(Text("Exact transition counts preserve the remaining defect budget. The continuation vectors obey the square of the proper-colouring sextic after two transitions. The proper-colouring powers and their sextic relation are those of HardinA233177PairTransfer."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
+        Blocks(Paragraph(Text("Exact transition counts preserve the remaining defect budget. The continuation vectors obey the square of the proper-colouring sextic after two transitions. The proper-colouring powers and their sextic relation are those of HardinA233177PairTransfer. Natural subtraction is truncated at zero. The transition inequality ensures that the displayed remaining budget is the ordinary nonnegative difference."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());

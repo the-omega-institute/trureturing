@@ -7,7 +7,7 @@ internal sealed class HardinA229537StripDataDocument : IScribeDocumentDefinition
     private const string Prefix="D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229537StripData.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-row exact-defect HDA strips.",H("HardinA229537StripData"),Blocks(
-            Paragraph(Text("Each boundary has four colours. The first fourteen coordinates have one remaining defect and the last fourteen have none. The diagonal blocks are the proper-colouring matrix Q. The upper block counts precisely one monochromatic bond. The original horizontal and two diagonal bonds all join successive columns; the column itself has no bonds.")),
+            Paragraph(Text("Each boundary has four colours. The first fourteen coordinates have one remaining defect and the last fourteen have none. The diagonal blocks are the proper-colouring matrix Q. The upper block counts precisely one monochromatic bond. The original horizontal and two diagonal bonds all join successive columns; the column itself has no bonds. Fin.castAdd preserves the original index; Fin.natAdd adds the indicated offset. Fin.append concatenates finite vectors. Matrix.reindex identifies the sum of the index sets with consecutive finite indices.")),
             Node("horizontal",Eq(Data("horizontal"),Typed(Q("Finset.empty"),Call("Finset",Product(Fin(4),Fin(4))))),false),
             Node("between",Bonds(),false),
             Node("cl",Class(),false),
@@ -17,7 +17,7 @@ internal sealed class HardinA229537StripDataDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name,Formula formula,bool theorem) => Describe.Lean(
         DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229537")),
-        Blocks(Paragraph(Text("Each boundary has four colours. The first fourteen coordinates have one remaining defect and the last fourteen have none. The diagonal blocks are the proper-colouring matrix Q. The upper block counts precisely one monochromatic bond. The original horizontal and two diagonal bonds all join successive columns; the column itself has no bonds."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
+        Blocks(Paragraph(Text("Each boundary has four colours. The first fourteen coordinates have one remaining defect and the last fourteen have none. The diagonal blocks are the proper-colouring matrix Q. The upper block counts precisely one monochromatic bond. The original horizontal and two diagonal bonds all join successive columns; the column itself has no bonds. Fin.castAdd preserves the original index; Fin.natAdd adds the indicated offset. Fin.append concatenates finite vectors. Matrix.reindex identifies the sum of the index sets with consecutive finite indices."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());
