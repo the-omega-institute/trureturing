@@ -30,19 +30,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sheet
 
 Exact declaration: def sheet (vertex : Fin 28) : Nat.
 
-**Definition 1.3 (dot).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.dot`
-
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.dot` (`✓ std3`).
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: def dot (first second : Nat) : Nat.
-
-**Definition 1.4 (adjacency).**
+**Definition 1.3 (adjacency).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.adjacency`
 
@@ -54,7 +42,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.adjac
 
 Exact declaration: def adjacency (twists : List (Nat × Nat)) (first second : Fin 28) : Prop.
 
-**Definition 1.5 (selected).**
+**Definition 1.4 (selected).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.selected`
 
@@ -66,7 +54,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.selec
 
 Exact declaration: def selected (points lines : List Nat) (vertex : Fin 28) : Prop.
 
-**Definition 1.6 (scalarTwists).**
+**Definition 1.5 (scalarTwists).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarTwists`
 
@@ -78,7 +66,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: def scalarTwists : List (Nat × Nat).
 
-**Definition 1.7 (jordanTwists).**
+**Definition 1.6 (jordanTwists).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanTwists`
 
@@ -90,7 +78,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: def jordanTwists : List (Nat × Nat).
 
-**Definition 1.8 (scalarPoints).**
+**Definition 1.7 (scalarPoints).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarPoints`
 
@@ -102,7 +90,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: def scalarPoints : List Nat.
 
-**Definition 1.9 (scalarLines).**
+**Definition 1.8 (scalarLines).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarLines`
 
@@ -114,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: def scalarLines : List Nat.
 
-**Definition 1.10 (jordanPoints).**
+**Definition 1.9 (jordanPoints).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanPoints`
 
@@ -126,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: def jordanPoints : List Nat.
 
-**Definition 1.11 (jordanLines).**
+**Definition 1.10 (jordanLines).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanLines`
 
@@ -138,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: def jordanLines : List Nat.
 
-**Theorem 1.12 (scalar dissociates).**
+**Theorem 1.11 (scalar dissociates).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_dissociates`
 
@@ -150,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: theorem scalar_dissociates : Dissociates (adjacency scalarTwists) (selected scalarPoints scalarLines).
 
-**Theorem 1.13 (jordan dissociates).**
+**Theorem 1.12 (jordan dissociates).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_dissociates`
 
@@ -162,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: theorem jordan_dissociates : Dissociates (adjacency jordanTwists) (selected jordanPoints jordanLines).
 
-**Theorem 1.14 (scalar card).**
+**Theorem 1.13 (scalar card).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_card`
 
@@ -174,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: theorem scalar_card : ((List.finRange 28).filter (fun vertex => decide (selected scalarPoints scalarLines vertex))).length = 16.
 
-**Theorem 1.15 (jordan card).**
+**Theorem 1.14 (jordan card).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_card`
 
@@ -186,7 +174,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: theorem jordan_card : ((List.finRange 28).filter (fun vertex => decide (selected jordanPoints jordanLines vertex))).length = 16.
 
-**Definition 1.16 (scalarGraph).**
+**Definition 1.15 (scalarGraph).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarGraph`
 
@@ -198,7 +186,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: def scalarGraph : SimpleGraph (Fin 28).
 
-**Definition 1.17 (jordanGraph).**
+**Definition 1.16 (jordanGraph).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanGraph`
 
@@ -210,7 +198,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: def jordanGraph : SimpleGraph (Fin 28).
 
-**Definition 1.18 (scalarSet).**
+**Definition 1.17 (scalarSet).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarSet`
 
@@ -222,7 +210,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: def scalarSet : Finset (Fin 28).
 
-**Definition 1.19 (jordanSet).**
+**Definition 1.18 (jordanSet).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanSet`
 
@@ -234,7 +222,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: def jordanSet : Finset (Fin 28).
 
-**Theorem 1.20 (scalar selection).**
+**Theorem 1.19 (scalar selection).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_selection`
 
@@ -246,7 +234,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: theorem scalar_selection : IsKIndependent scalarGraph 2 scalarSet ∧ scalarSet.card = 16.
 
-**Theorem 1.21 (jordan selection).**
+**Theorem 1.20 (jordan selection).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_selection`
 
@@ -258,7 +246,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: theorem jordan_selection : IsKIndependent jordanGraph 2 jordanSet ∧ jordanSet.card = 16.
 
-**Theorem 1.22 (scalar class).**
+**Theorem 1.21 (scalar class).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_class`
 
@@ -270,7 +258,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: theorem scalar_class : scalarGraph.Colorable 2 ∧ ∀ v, DegreeCapacity.degree scalarGraph v = 3.
 
-**Theorem 1.23 (jordan class).**
+**Theorem 1.22 (jordan class).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_class`
 
@@ -282,7 +270,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: theorem jordan_class : jordanGraph.Colorable 2 ∧ ∀ v, DegreeCapacity.degree jordanGraph v = 3.
 
-**Theorem 1.24 (scalar parameters).**
+**Theorem 1.23 (scalar parameters).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_parameters`
 
@@ -294,7 +282,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scala
 
 Exact declaration: theorem scalar_parameters : beta scalarGraph 2 = 16 ∧ SF scalarGraph 2 = 16.
 
-**Theorem 1.25 (jordan parameters).**
+**Theorem 1.24 (jordan parameters).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_parameters`
 
@@ -306,7 +294,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: theorem jordan_parameters : beta jordanGraph 2 = 16 ∧ SF jordanGraph 2 = 16.
 
-**Definition 1.26 (sixTwists).**
+**Definition 1.25 (sixTwists).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTwists`
 
@@ -318,7 +306,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTw
 
 Exact declaration: def sixTwists (k : Fin 6) : List (Nat × Nat).
 
-**Definition 1.27 (sixPoints).**
+**Definition 1.26 (sixPoints).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPoints`
 
@@ -330,7 +318,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPo
 
 Exact declaration: def sixPoints (k : Fin 6) : List Nat.
 
-**Definition 1.28 (sixLines).**
+**Definition 1.27 (sixLines).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLines`
 
@@ -342,7 +330,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLi
 
 Exact declaration: def sixLines (k : Fin 6) : List Nat.
 
-**Definition 1.29 (sixGraph).**
+**Definition 1.28 (sixGraph).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGraph`
 
@@ -354,7 +342,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGr
 
 Exact declaration: def sixGraph (k : Fin 6) : SimpleGraph (Fin 28).
 
-**Definition 1.30 (sixSet).**
+**Definition 1.29 (sixSet).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSet`
 
@@ -366,7 +354,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSe
 
 Exact declaration: def sixSet (k : Fin 6) : Finset (Fin 28).
 
-**Theorem 1.31 (six selection).**
+**Theorem 1.30 (six selection).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection`
 
@@ -378,7 +366,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_s
 
 Exact declaration: theorem six_selection (k : Fin 6) : IsKIndependent (sixGraph k) 2 (sixSet k) ∧ (sixSet k).card = 15.
 
-**Theorem 1.32 (six class).**
+**Theorem 1.31 (six class).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class`
 
@@ -390,7 +378,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_c
 
 Exact declaration: theorem six_class (k : Fin 6) : (sixGraph k).Colorable 2 ∧ ∀ v, DegreeCapacity.degree (sixGraph k) v = 3.
 
-**Theorem 1.33 (six beta bounds).**
+**Theorem 1.32 (six beta bounds).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_beta_bounds`
 
@@ -405,7 +393,6 @@ Exact declaration: theorem six_beta_bounds (k : Fin 6) : 15 ≤ beta (sixGraph k
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.adjacency`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.dot`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanLines`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanPoints`
@@ -438,4 +425,5 @@ Exact declaration: theorem six_beta_bounds (k : Fin 6) : 15 ≤ beta (sixGraph k
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/FiniteMasks](FiniteMasks.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodIncidence](HeawoodIncidence.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)
