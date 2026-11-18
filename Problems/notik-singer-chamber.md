@@ -50,7 +50,7 @@ Pass from normalized marks to consecutive gaps by subtraction and recover the ma
 
 Chamber uniqueness is proved by the coordinatewise lower bound on all retained gaps. The argument applies to every largest-gap cut of a cyclic perfect difference set and gives a symbolic chamber certificate. Write $a_i$ for the integer gaps, $A=\max_i a_i$, and $v_d$ for the interval row of the ordinary distance $d$, for $1\le d\le A$. These distances exist because all $d<G$ occur and $A$ itself is a retained gap. The tight rows $r_1=v_1$ and $r_d=v_d-v_{d-1}$ for $2\le d\le A$ telescope to the coordinate row $v_{a_i}$ of gap $i$. Giving row $r_d$ weight $|\{i:a_i\ge d\}|$ yields the all-ones objective with total weight $\sum_i a_i$. The same identities show that the positively weighted rows span the gap coordinates.
 
-The §10 question classifying the global shortest real rulers at 8, 9 and 10 marks remains open in [#31427](https://github.com/the-omega-institute/trureturing/issues/31427). The certificate concerns the chamber of a largest-gap cut. The source’s other-gap computations include cases with shorter or tied rulers.
+The separate §10 question classifying the global shortest real rulers at 8, 9 and 10 marks has a reported Lean proof that the minimizers are exactly the optimal integer rulers, at lengths 34, 44 and 55, respectively. Its canonical freeze and delivery are tracked separately. [#31427 proof report](https://github.com/the-omega-institute/trureturing/issues/31427#issuecomment-6975703095) The certificate concerns the chamber of a largest-gap cut. The source’s other-gap computations include cases with shorter or tied rulers.
 
 ## ASSUMED-UNVERIFIED
 
