@@ -37,8 +37,5 @@ internal sealed class KarttunenA401714Document : IScribeDocumentDefinition
                     + "forces every prime at most N/rad(N) to divide N. The mandatory "
                     + "support theorem then gives the claimed inequality. No bound on "
                     + "N, parity restriction or restriction on its number of prime "
-                    + "divisors is imposed."))), DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("oeis-a401714-unitary-squarefree-divisor-sum"),
-                    ResolutionKind.Proved)))));
+                    + "divisors is imposed."))), DescribeRole.Theorem))));
 }
