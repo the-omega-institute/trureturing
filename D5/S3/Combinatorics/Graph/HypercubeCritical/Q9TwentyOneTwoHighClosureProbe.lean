@@ -1,6 +1,14 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwentyOneTwoHighSignsProbe
 
-/-! A compressed core edge cannot join two opposite cells of the coordinate grid. -/
+/-! An obstruction for balanced 21-point slices in Hong, Wu and Xia's
+[Problem 2](https://arxiv.org/html/2610.09483v1#Thmproblem2).
+
+Compression of degree-two paths leaves two possible bipartite degree profiles.
+The four-high side is excluded by the signed cube geometry of its matched theta
+graphs. For the two-high side, the signed eight-cycle fixes each core label.
+Equal arm directions give a midpoint obstruction. Distinct directions give a
+coordinate grid whose compressed edges would have to change both labels by
+triangle-freeness. They would then have Hamming distance four. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -19,10 +27,6 @@ open private matched_core_arm_label from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwentyOneTwoHighSignsProbe
 open private two_high_core_shape twenty_one_slice_remaining_case from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwentyOneTwoHighProbe
-open private twenty_one_half_slice sixty_six_odd_coordinate_half from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
-open private sixty_six_half_card_ge_twenty_one from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
 open private adjacent_exists_flip flip_comm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private paritySide parity_bipartite from
@@ -251,21 +255,5 @@ theorem no_balanced_twenty_one_slice
   exact two_high_slice_impossible hb hp hdeg hlow hL hR he
 
 #print axioms no_balanced_twenty_one_slice
-
-/-- Every coordinate half of a 66-vertex Huang-balanced cubic support has
-at least 23 vertices. -/
-theorem huang_balanced_cubic_sixty_six_half_ge_twenty_three {C : Finset (Q 9)}
-    (hc : C.card = 66)
-    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
-    (hb : IsBalanced C) (i : Fin 9) (b : Bool) :
-    23 ≤ (C.filter (fun x => x i = b)).card := by
-  have hlo := sixty_six_half_card_ge_twenty_one hc hreg hb i b
-  have hodd := sixty_six_odd_coordinate_half hc hreg hb i b
-  by_contra hn
-  have he : (C.filter (fun x => x i = b)).card = 21 := by omega
-  obtain ⟨S, hS, hBal, hdeg, hcount, hlow⟩ := twenty_one_half_slice hc hreg hb i b he
-  exact no_balanced_twenty_one_slice S hS hBal hdeg hcount hlow
-
-#print axioms huang_balanced_cubic_sixty_six_half_ge_twenty_three
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical

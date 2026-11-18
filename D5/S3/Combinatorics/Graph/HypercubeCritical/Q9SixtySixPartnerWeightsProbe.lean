@@ -1,5 +1,6 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwentyOneTwoHighClosureProbe
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerShapesProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 
 /-! Restrictions on the agreement coordinates of a distance-seven pair. -/
 
@@ -15,11 +16,11 @@ attribute [local instance] Classical.propDecidable
 open private diff from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private shell from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
-open private coordinate_profile_weight_bound from
+open private coordinate_profile_weight_bound twenty_one_half_slice sixty_six_odd_coordinate_half from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
-open private sixty_six_distance_seven_le_eight from
+open private sixty_six_distance_seven_le_eight sixty_six_half_card_ge_twenty_one from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
 open private unusedDirections unused_card distanceSevenPartners distanceSeven_partner_card
   distanceSeven_partner_degree hamming_pair_antipode antipode from
@@ -90,6 +91,22 @@ private lemma distance_seven_agreement_excludes_minority
 #print axioms distance_seven_agreement_excludes_minority
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical
+
+/-- Every coordinate half of a 66-vertex Huang-balanced cubic support has
+at least 23 vertices. -/
+theorem huang_balanced_cubic_sixty_six_half_ge_twenty_three {C : Finset (Q 9)}
+    (hc : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (i : Fin 9) (b : Bool) :
+    23 ≤ (C.filter (fun x => x i = b)).card := by
+  have hlo := sixty_six_half_card_ge_twenty_one hc hreg hb i b
+  have hodd := sixty_six_odd_coordinate_half hc hreg hb i b
+  by_contra hn
+  have he : (C.filter (fun x => x i = b)).card = 21 := by omega
+  obtain ⟨S, hS, hBal, hdeg, hcount, hlow⟩ := twenty_one_half_slice hc hreg hb i b he
+  exact no_balanced_twenty_one_slice S hS hBal hdeg hcount hlow
+
+#print axioms huang_balanced_cubic_sixty_six_half_ge_twenty_three
 
 /-- At a vertex with eight distance-seven partners, each smaller-half
 coordinate of deficit at least two is a direction of an actual incident edge. -/

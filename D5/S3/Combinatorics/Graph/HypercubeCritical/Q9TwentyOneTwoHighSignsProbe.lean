@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwentyOneTwoHighProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSquareExclusion
 
 /-! The actual signed eight-cycle through an end on each side of the two-root pair. -/
 
