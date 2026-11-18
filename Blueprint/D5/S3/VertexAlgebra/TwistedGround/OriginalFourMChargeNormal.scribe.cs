@@ -25,5 +25,10 @@ internal sealed class OriginalFourMChargeNormalDocument : IScribeDocumentDefinit
                 "In the sewing coordinate z, the source scalar, energy shift, and two charge factors "
                 + "give Q₀(z²) to the charge energy. The affine coefficient retains the literal signed "
                 + "mean and sewn covariance. A closed disk about zero admits a summable bound for "
-                + "every charge and the resulting sum is holomorphic on its interior."))));
+                + "every charge and the resulting sum is holomorphic on its interior."),
+            Result("sewn-charge-coefficient", "sewn_charge_coefficient", "Charge-class Taylor coefficient",
+                "At order 2E in the sewing coordinate, local uniform convergence permits the "
+                + "Taylor coefficient to pass through the charge sum. Only charges of energy at "
+                + "most E contribute. Each surviving coefficient is the degree-E coefficient of "
+                + "the original square-coordinate charge series in that charge class."))));
 }

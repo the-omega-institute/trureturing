@@ -25,6 +25,7 @@ open Set Filter Metric
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeNormal
 
 open LatticeGeneratingFieldLocality LatticeHalfFock LatticePositiveEnergy
+open LatticeTwistedGroundRealization.SignQuotient OriginalFourMEnergyCoefficient
 open LatticeHalfFockChargedTensorCoefficients OriginalGaussianExternalRadial
 open OriginalChargedRowSource OriginalGaussianExternalBlocks OriginalGaussianSourceMeans
 open OriginalGaussianSourceRestriction OriginalGaussianSewnAnalytic OriginalGaussianDeterminant
@@ -38,8 +39,9 @@ open private affine_norm_le_positive
 open private gaussianCoefficient_smul
   from D5.S3.VertexAlgebra.TwistedGround.FiniteSqueezedVacuum
 open private affine_coefficient_differentiableOn finite_data_differentiableOn
+    iterated_differentiableOn
   from D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic
-open private chargeScalar_pair
+open private chargeScalar_pair chargeSeries_coeff
   from D5.S3.VertexAlgebra.TwistedGround.OriginalFourMEnergyCoefficient
 
 private lemma affine_bound {I : Type*} [Fintype I]
@@ -343,5 +345,124 @@ theorem sewn_charge_normal_at_zero (D : LatticeData) (hunit : IsUnit D.G.det)
     apply tsum_congr
     intro q
     exact (heq q z (ball_subset_closedBall hz)).symm
+
+
+private lemma coefficient_pow_shift {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0)
+    (m n : ℕ) :
+    coefficient n (fun z => z ^ m * f z) =
+      if m ≤ n then coefficient (n - m) f else 0 := by
+  classical
+  unfold coefficient
+  rw [iteratedDeriv_fun_mul
+    (by fun_prop : ContDiffAt ℂ n (fun z : ℂ => z ^ m) 0) hf.contDiffAt]
+  simp only [iteratedDeriv_fun_pow_zero]
+  split_ifs with h
+  · rw [Finset.sum_eq_single m]
+    · simp only [ite_true, eq_self]
+      have hfac : (n.choose m : ℂ) * (m.factorial : ℂ) * ((n-m).factorial : ℂ) =
+          (n.factorial : ℂ) := by exact_mod_cast Nat.choose_mul_factorial_mul_factorial h
+      rw [← hfac]
+      have hm : (m.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero m
+      have hn : (n.choose m : ℂ) ≠ 0 := by exact_mod_cast (Nat.choose_pos h).ne'
+      have hk : ((n-m).factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero _
+      field_simp
+    · intro i hi hne
+      simp [hne]
+    · simp [Finset.mem_range, h]
+  · rw [Finset.sum_eq_zero]
+    · simp
+    · intro i hi
+      have hne : i ≠ m := by
+        have := Nat.le_of_lt_succ (Finset.mem_range.mp hi)
+        omega
+      simp [hne]
+
+private lemma sewn_term_diff (D : LatticeData) (hunit : IsUnit D.G.det)
+    (betaL gammaL betaR gammaR : Exponent D) (q : Charge D) :
+    DifferentiableOn ℂ (sewnChargeTerm D betaL gammaL betaR gammaR q) (ball 0 1) :=
+  ((differentiableOn_id.pow _).const_mul _).mul
+    (sewn_differentiableOn D hunit q _ _)
+
+/-- At order 2E in the native sewing coordinate, a fixed charge class contributes
+exactly the finite charge sublevel of the original square-coordinate series. -/
+theorem sewn_charge_coefficient (D : LatticeData) (hunit : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (betaL gammaL betaR gammaR : Exponent D) (a : ModTwoCharge D) (E : ℕ) :
+    coefficient (2 * E) (fun z => ∑' q : Charge D, if reduceCharge D q = a then
+      sewnChargeTerm D betaL gammaL betaR gammaR q z else 0) =
+      ∑' q : Charge D, if reduceCharge D q = a ∧ chargeEnergy D q ≤ E then
+        PowerSeries.coeff E (chargeSeries D q betaL gammaL betaR gammaR) else 0 := by
+  classical
+  let T := sewnChargeTerm D betaL gammaL betaR gammaR
+  let F := fourSupport D betaL gammaL betaR gammaR
+  let f (q : Charge D) (z : ℂ) :=
+    if reduceCharge D q = a then T q z else 0
+  obtain ⟨r, hr, hr1, ⟨b, hb, hbnd⟩, _⟩ :=
+    sewn_charge_normal_at_zero D hunit hD betaL gammaL betaR gammaR
+  have hr0 : (0 : ℂ) ∈ ball 0 r := mem_ball_self hr
+  have hd (q : Charge D) : DifferentiableOn ℂ (f q) (ball 0 r) := by
+    by_cases h : reduceCharge D q = a
+    · simpa only [f, ite_eq_left h] using
+        (sewn_term_diff D hunit betaL gammaL betaR gammaR q).mono
+          (ball_subset_ball hr1.le : ball (0 : ℂ) r ⊆ ball 0 1)
+    · simpa only [f, ite_eq_right h] using
+        (differentiableOn_const (c := (0 : ℂ)) (s := ball (0 : ℂ) r))
+  have hl := (tendstoUniformlyOn_tsum (f := f) hb
+    (s := closedBall 0 r) (fun q z hz => by
+      by_cases h : reduceCharge D q = a
+      · simpa only [f, ite_eq_left h] using hbnd q z hz
+      · simpa only [f, ite_eq_right h, norm_zero] using (norm_nonneg _).trans (hbnd q z hz))).mono
+        (ball_subset_closedBall : ball (0 : ℂ) r ⊆ closedBall 0 r)
+  have hpart (S : Finset (Charge D)) :
+      DifferentiableOn ℂ (fun z => ∑ q ∈ S, f q z) (ball 0 r) :=
+    DifferentiableOn.fun_sum fun q _ => hd q
+  have hder (n : ℕ) : TendstoLocallyUniformlyOn
+      (fun S : Finset (Charge D) => iteratedDeriv n (fun z => ∑ q ∈ S, f q z))
+      (iteratedDeriv n (fun z => ∑' q, f q z)) atTop (ball 0 r) := by
+    induction n with
+    | zero => simpa using hl.tendstoLocallyUniformlyOn
+    | succ n ih =>
+      simpa only [iteratedDeriv_succ, Function.comp_def] using ih.deriv
+        (Eventually.of_forall fun S => iterated_differentiableOn (hpart S) isOpen_ball n)
+        isOpen_ball
+  have hcoeff : HasSum (fun q => coefficient (2 * E) (f q))
+      (coefficient (2 * E) (fun z => ∑' q, f q z)) := by
+    rw [HasSum]
+    have h := ((hder (2 * E)).tendsto_at hr0).div_const ((Nat.factorial (2 * E) : ℂ))
+    apply h.congr'
+    filter_upwards with S
+    have hS := iteratedDeriv_fun_sum (I := S) (f := f)
+      (fun q _ => ((hd q).analyticOnNhd isOpen_ball 0 hr0).contDiffAt (n := 2 * E))
+    simp only [coefficient, hS, Finset.sum_div]
+  change coefficient (2 * E) (fun z => ∑' q, f q z) = _
+  rw [← hcoeff.tsum_eq]
+  apply tsum_congr
+  intro q
+  by_cases hq : reduceCharge D q = a
+  · have hS : AnalyticAt ℂ
+        (sewn D q (compactExternal D F) (externalOccupation D F betaL gammaL betaR gammaR)) 0 :=
+      ((sewn_differentiableOn D hunit q _ _).analyticOnNhd isOpen_ball) 0 (by simp)
+    have hm := chargeEnergy_nonneg D hD q
+    simp only [f, hq, ite_true, true_and]
+    change coefficient (2 * E) (T q) = _
+    unfold T sewnChargeTerm coefficient
+    rw [show (fun z => (chargeScalar D q * chargeScalar D (-q)) *
+          z ^ (2 * (chargeEnergy D q).toNat) *
+          sewn D q (compactExternal D F) (externalOccupation D F betaL gammaL betaR gammaR) z) =
+        (fun z => (chargeScalar D q * chargeScalar D (-q)) *
+          (z ^ (2 * (chargeEnergy D q).toNat) *
+            sewn D q (compactExternal D F) (externalOccupation D F betaL gammaL betaR gammaR) z))
+        from funext fun z => mul_assoc _ _ _]
+    rw [iteratedDeriv_const_mul_field, mul_div_assoc]
+    change (chargeScalar D q * chargeScalar D (-q)) *
+      coefficient (2 * E) (fun z => z ^ (2 * (chargeEnergy D q).toNat) *
+        sewn D q (compactExternal D F) (externalOccupation D F betaL gammaL betaR gammaR) z) = _
+    rw [coefficient_pow_shift hS]
+    by_cases hE : chargeEnergy D q ≤ E
+    · rw [ite_eq_left hE, ite_eq_left (by omega : 2 * (chargeEnergy D q).toNat ≤ 2 * E),
+        ← Nat.mul_sub_left_distrib, chargeSeries_coeff D q E hE]
+    · rw [ite_eq_right hE, ite_eq_right (by omega : ¬ 2 * (chargeEnergy D q).toNat ≤ 2 * E),
+        mul_zero]
+  · simp [f, hq, coefficient]
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeNormal
