@@ -7,8 +7,10 @@
    digest: Literal all-width five-row recurrence through exact source cardinalities. -/
 
 /-
-admission_basis: staged open-problem-resolution candidate for preregistered issue #28580.
-No freeze, final OpenProblemResolutionClaim or project settlement is supplied here.
+admission_basis: open-problem-resolution for preregistered issue #28580.
+The Frozen state slice records this module's statement identity. The Blueprint Scribe binds
+result to the hardin233178 dossier with a typed OpenProblemResolutionClaim (Proved).
+Project settlement is tracked in that dossier.
 proof_shape: count_transfer=bind-only (array/column equivalence and generic continuation count),
 consumed by chromatic_recurrence and result;
 chromatic_recurrence=bind-only, consumed by scaled_recurrence and result;
