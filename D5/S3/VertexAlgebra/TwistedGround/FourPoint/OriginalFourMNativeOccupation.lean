@@ -7,6 +7,7 @@
    digest: Marked Taylor selection in the actual signed native Gaussian. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPhysicalCovariance
+import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCauchyTaylor
 
 /-! Marked spatial Taylor selectors in the actual four-point affine Gaussian. -/
 
@@ -126,5 +127,58 @@ theorem native_selected_occupation (D : LatticeData) (a : Charge D)
   simp only [hk, hm]
   exact OriginalFourMPhysicalCovariance.marked_gaussian_jet mode l _ _
     (explicit_covariance_symmetric D labels hw)
+
+
+open OriginalFourMActualChart (Chart Puncture parameter)
+open OriginalFourMOccupationTransport (flags physicalSource)
+open OriginalFourMSignedOverlap (chosen_chart_source_eq_native chosen_chart_source_analytic
+  legSign)
+open private chosenChartSource from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSignedOverlap
+open private rawLocal chartPeriod from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMChartProduct
+open private inverseJac creatorEntry inverse_pullback_entry from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCauchyTaylor
+
+/-- The charge-linear physical source selects the literal native signed
+means on the radial charts. Each surviving creator carries the same
+finite inverse-coordinate coefficient as in the covariance transport. -/
+theorem selected_radial_physical_mean (D : LatticeData) (a : Charge D)
+    {z : ℝ} (hz : 0 < z) (hz₁ : z < 1) (upperA : Bool)
+    (c : Chart) (hc : c = .A ∨ c = .B) (i : Puncture) (x : Index D)
+    {w : ℂ} (hw : ‖w‖ < 1) (hwc : w^2 = parameter c z) :
+    coefficient x.2 (fun u =>
+      -(bilinear D (unitCharge D x.1) a : ℂ) * physicalSource c z i u / chartPeriod upperA c z) =
+      ∑ k ∈ Finset.range (x.2+1), creatorEntry c z i x.2 k *
+        explicitMean D a (fun _ : Unit => ((flags c i).2, x.1, k)) w
+          (taggedMode (flags c i).1 ()) := by
+  have hr : ‖parameter c (z : ℂ)‖ < 1 := by
+    rw [← hwc, norm_pow]
+    exact pow_lt_one₀ (norm_nonneg _) hw (by decide)
+  have hp : chartPeriod upperA c z = slitPeriod (w^2) := by
+    rw [hwc]
+    rcases hc with rfl | rfl <;> rfl
+  let f : ℂ → ℂ := fun v => -(bilinear D (unitCharge D x.1) a : ℂ) *
+    (legSign (flags c i).1 * chosenChartSource c z (flags c i).2 v) / chartPeriod upperA c z
+  have hf : AnalyticAt ℂ f 0 := (analyticAt_const.mul
+    (analyticAt_const.mul (chosen_chart_source_analytic hz hz₁ c (flags c i).2))).div_const
+  have he : (fun u => -(bilinear D (unitCharge D x.1) a : ℂ) *
+      physicalSource c z i u / chartPeriod upperA c z) =
+      (fun u => inverseJac c z i u * f (rawLocal c z i u)) := by
+    funext u
+    simp only [physicalSource, inverseJac, f, div_eq_mul_inv]
+    ring
+  rw [he, inverse_pullback_entry hz hz₁ c i hf]
+  apply Finset.sum_congr rfl
+  intro k _
+  congr 1
+  have hsource := chosen_chart_source_eq_native hz hz₁ c hc (flags c i).2 hr
+  have he : f =ᶠ[𝓝 0] (fun u =>
+      -(bilinear D (unitCharge D x.1) a : ℂ) *
+        signedHalfSource (flags c i).1 (flags c i).2 u (w^2) / slitPeriod (w^2)) := by
+    filter_upwards [hsource] with u hu
+    simp only [f, hp, signedHalfSource, hwc, hu]
+  exact (congrArg (fun t : ℂ => t / (k.factorial : ℂ)) (he.iteratedDeriv_eq (n := k))).trans
+    (mean_scalar_coefficient D a (flags c i).1 (flags c i).2 x.1 k hw)
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMNativeOccupation
