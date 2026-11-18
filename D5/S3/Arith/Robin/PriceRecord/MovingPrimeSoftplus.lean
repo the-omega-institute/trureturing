@@ -352,7 +352,7 @@ private theorem fermi_mass :
     · filter_upwards [eventually_ge_atTop (0 : ℝ)] with u hu
       exact mul_le_mul_of_nonneg_right (softplus_le_exp u) hu
     · have h := tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 1 one_pos
-      simpa only [rpow_one, neg_mul, one_mul, mul_comm] using h
+      simpa only [rpow_one, neg_mul, one_mul, mul_neg, mul_comm] using h
   have hi' : IntegrableOn (fun u => -(exp u + 1)⁻¹ * id u) (Ioi 0) := by
     convert hf.neg using 1
     funext u
@@ -421,7 +421,8 @@ private theorem softplus_continuum_tendsto {s : ℝ → ℝ} (hs : Tendsto s atT
     have hcut : Tendsto (fun P => s P * log 2) atTop atTop :=
       hs.atTop_mul_const (log_pos (by norm_num))
     have hsmall := hs.const_div_atTop u
-    have h := ((continuous_exp.continuousAt (x := (0 : ℝ))).tendsto.comp hsmall).const_mul (g u)
+    have he := (continuous_exp.continuousAt (x := (0 : ℝ))).tendsto.comp hsmall
+    have h := he.const_mul (g u)
     change Tendsto (fun P : ℝ => g u * exp (u / s P)) atTop (𝓝 (g u * exp 0)) at h
     rw [exp_zero, mul_one] at h
     apply h.congr'
@@ -492,7 +493,7 @@ private def primeWeight (P s : ℝ) (n : ℕ) : ℝ :=
 private theorem primeWeight_nonneg (P s : ℝ) (n : ℕ) : 0 ≤ primeWeight P s n := by
   unfold primeWeight
   split_ifs
-  · exact softplus_nonneg (s * |log ((n : ℝ) / P)|)
+  · simpa only [softplus, weight, neg_mul] using softplus_nonneg (s * |log ((n : ℝ) / P)|)
   · exact le_rfl
 
 private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
@@ -524,7 +525,9 @@ private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
       have hlog : 0 ≤ log ((n : ℝ) / P) := (log_nonneg (by norm_num : (1 : ℝ) ≤ 2)).trans hl
       unfold weight
       rw [abs_of_nonneg hlog]
-      refine (softplus_le_exp _).trans ?_
+      have hw := softplus_le_exp (s * log ((n : ℝ) / P))
+      simp only [softplus, ← neg_mul] at hw
+      refine hw.trans ?_
       have splitExp : -s * log ((n : ℝ) / P) =
           -2 * log ((n : ℝ) / P) + (-(s - 2)) * log ((n : ℝ) / P) := by ring
       rw [splitExp, exp_add]
@@ -583,7 +586,9 @@ private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
         rw [← log_inv]
         exact log_le_log (div_pos hn0 hp) ((div_le_iff₀ hp).mpr (by linarith))
       have hlog0 := log_nonneg (show (1 : ℝ) ≤ 2 by norm_num)
-      refine (softplus_le_exp (s * |log ((n : ℝ) / P)|)).trans ?_
+      have hw := softplus_le_exp (s * |log ((n : ℝ) / P)|)
+      simp only [softplus, ← neg_mul] at hw
+      refine hw.trans ?_
       dsimp only [b]
       rw [abs_of_nonpos (by linarith : log ((n : ℝ) / P) ≤ 0), ← neg_mul]
       exact exp_le_exp.mpr (mul_le_mul_of_nonpos_left (by linarith) (by linarith))
@@ -603,7 +608,7 @@ private theorem softplus_prime_tails {P s : ℝ} (hP : 2 ≤ P) (hs : 2 ≤ s) :
       ext n
       simp only [Finset.mem_Ico, Finset.mem_Ioc]
       omega
-    rw [← Finset.sum_range_add_sum_Ico hMN, he]
+    rw [← Finset.sum_range_add_sum_Ico (primeWeight P s) hMN, he]
     simp only [primeInterval, Finset.sum_filter, primeWeight, M, N]
   have ht := hprime.sum_add_tsum_nat_add (N + 1)
   rw [← hsplit] at ht
@@ -686,7 +691,8 @@ theorem prime_softplus_asymptotic {a C₁ C₂ : ℝ} (ha : 0 < a) (hC₁ : 0 < 
       (∑' p : ℕ, if p.Prime then weight P (s P) p else 0) /
         (P / (s P * log P))) atTop (𝓝 (π ^ 2 / 6)) := by
   have hC₂ := hC₁.trans_le hC
-  have hlogpow := (tendsto_rpow_atTop ha).comp tendsto_log_atTop
+  have hlogpow : Tendsto (fun P : ℝ => log P ^ a) atTop atTop :=
+    (tendsto_rpow_atTop ha).comp tendsto_log_atTop
   have hsTop : Tendsto s atTop atTop :=
     tendsto_atTop_mono' _ (hs.mono fun _ h => h.1) (hlogpow.atTop_const_mul hC₁)
   have hn : ∀ᶠ P in atTop, 0 ≤ s P := (hsTop.eventually_ge_atTop 0)
@@ -697,7 +703,7 @@ theorem prime_softplus_asymptotic {a C₁ C₂ : ℝ} (ha : 0 < a) (hC₁ : 0 < 
   have hw' : Tendsto (fun P : ℝ => (s P / P) *
       ∑ p ∈ primeInterval (P / 2) (2 * P), weight P (s P) p * log p)
       atTop (𝓝 (π ^ 2 / 6)) :=
-    hw.congr (fun P => by dsimp only [Pi.add_apply]; ring)
+    hw.congr (fun P => by ring)
   have hcenter := remove_prime_logs hn hw'
   have hfar : ∀ᶠ P : ℝ in atTop, Summable (primeWeight P (s P)) ∧
       0 ≤ (∑' n, primeWeight P (s P) n) -
@@ -709,14 +715,15 @@ theorem prime_softplus_asymptotic {a C₁ C₂ : ℝ} (ha : 0 < a) (hC₁ : 0 < 
     exact softplus_prime_tails hP hsP
   constructor
   · filter_upwards [hfar] with P hP
-    simpa only [← primeWeight, abs_of_nonneg (primeWeight_nonneg _ _ _)] using hP.1
+    change Summable (fun p => |primeWeight P (s P) p|)
+    simpa only [abs_of_nonneg (primeWeight_nonneg _ _ _)] using hP.1
   let K : ℝ := 5 * C₂
   let b : ℝ := C₁ * log 2
   have hb : 0 < b := mul_pos hC₁ (log_pos (by norm_num))
   have hdecay : Tendsto (fun P : ℝ =>
       K * (log P ^ (a + 1) * exp (-b * log P ^ a))) atTop (𝓝 0) := by
-    have h := ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero ((a + 1) / a) b hb)
-      .comp hlogpow).const_mul K
+    have h := ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero ((a + 1) / a) b hb).comp
+      hlogpow).const_mul K
     simp only [mul_zero] at h
     apply h.congr'
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
@@ -748,7 +755,7 @@ theorem prime_softplus_asymptotic {a C₁ C₂ : ℝ} (ha : 0 < a) (hC₁ : 0 < 
   have hfull := herr.add hcenter
   rw [zero_add] at hfull
   exact hfull.congr fun P => by
-    simp only [← primeWeight, div_div_eq_mul_div]
+    simp only [primeWeight, div_div_eq_mul_div]
     ring
 
 end D5.S3.Arith.Robin.PriceRecord.MovingPrimeSoftplus
