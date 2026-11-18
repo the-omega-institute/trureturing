@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation
    mirror-E: none(waiver:open-problem-resolution-has-no-escape-mirror)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Basic]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.claim; result=D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.result; claim=D5/S3/Combinatorics/Graph/ZeroForcing/ConnectedForcingCrossingRefutation.claim
    digest: The four-vertex path followed by the star refutes the ordered connected forcing crossing. -/
 import D5.S3.Combinatorics.GeneralizedPetersen.ZeroForcingThree
