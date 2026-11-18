@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Fermionic/SlaterCutPhase
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Fermionic/SlaterCutPhase
+   mirror-E: none(waiver:uniform-occupation-phase)
+   anchors: []
+   utility: none
+   digest: A cut without four alternating sites preserves the fixed-occupation marginal spectrum under the row-shuffle sign. -/
+
 module
 
 public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
@@ -96,7 +104,7 @@ private theorem gt_iff_of_inside
 
 /-- When the retained side is connected, each dropped particle crosses all or none
 of the retained particles. -/
-theorem crossCount_retained_connected
+private theorem crossCount_retained_connected
     {I : Set ι} (hI : I.OrdConnected) {p : ι} (hp : p ∈ I)
     (a b : Finset ι) (ha : (↑a : Set ι) ⊆ I) (hb : (↑b : Set ι) ⊆ Iᶜ) :
     crossCount a b = a.card * (b.filter (· < p)).card := by
@@ -112,7 +120,7 @@ theorem crossCount_retained_connected
 
 /-- When the dropped side is connected, each retained particle crosses all or none
 of the dropped particles. -/
-theorem crossCount_dropped_connected
+private theorem crossCount_dropped_connected
     {I : Set ι} (hJ : (Iᶜ).OrdConnected) {p : ι} (hp : p ∉ I)
     (a b : Finset ι) (ha : (↑a : Set ι) ⊆ I) (hb : (↑b : Set ι) ⊆ Iᶜ) :
     crossCount a b = b.card * (a.filter (p < ·)).card := by
@@ -127,10 +135,9 @@ theorem crossCount_dropped_connected
       simp only [gt_iff_of_inside hJ (hb hj) hp (fun hni => hni (ha hi))]
     _ = (a.filter (p < ·)).card := by simp
 
-
 /-- On a fixed occupation sector the shuffle phase factors into a phase
 on each side of a cut without alternation. -/
-theorem phase_factors {I : Set ι} (h : ¬ Alternates I) (k : ℕ) :
+private theorem phase_factors {I : Set ι} (h : ¬ Alternates I) (k : ℕ) :
     ∃ l r : Finset ι → ℕ,
       ∀ a b : Finset ι, (↑a : Set ι) ⊆ I → (↑b : Set ι) ⊆ Iᶜ →
         a.card + b.card = k → crossCount a b = l a + r b := by
@@ -157,7 +164,6 @@ theorem phase_factors {I : Set ι} (h : ¬ Alternates I) (k : ℕ) :
       have he : b = ∅ := Finset.eq_empty_iff_forall_notMem.mpr fun i hi => hne ⟨i, hb hi⟩
       simp [he, crossCount]
 
-
 private theorem sign_pow_mul_star (m : ℕ) :
     (-1 : ℂ) ^ m * star ((-1 : ℂ) ^ m) = 1 := by
   rw [star_pow]
@@ -166,7 +172,7 @@ private theorem sign_pow_mul_star (m : ℕ) :
 /-- For fixed total occupation, multiplying amplitudes by the cross-inversion sign
 at a cut without alternation changes the reduced matrix by a diagonal unitary.
 The row and column labels encode subsets of the two sides of the cut. -/
-theorem reduced_matrix_phase
+private theorem reduced_matrix_phase
     {I : Set ι} (h : ¬ Alternates I) {A B : Type*} [Fintype B]
     (a : A → Finset ι) (b : B → Finset ι)
     (ha : ∀ x, (↑(a x) : Set ι) ⊆ I) (hb : ∀ y, (↑(b y) : Set ι) ⊆ Iᶜ)
@@ -197,7 +203,6 @@ theorem reduced_matrix_phase
     (d x * (e y * ψ x y)) * (star (ψ x' y) * star (e y) * star (d x')) =
         (e y * star (e y)) * (d x * (ψ x y * star (ψ x' y)) * star (d x')) := by ring
     _ = _ := by rw [show e y * star (e y) = 1 from sign_pow_mul_star (r (b y)), one_mul]
-
 
 /-- Equality of characteristic polynomials preserves every eigenvalue
 with its algebraic multiplicity, including zero. -/
