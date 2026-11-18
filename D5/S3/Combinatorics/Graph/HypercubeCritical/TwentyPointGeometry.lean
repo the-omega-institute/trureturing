@@ -7,6 +7,7 @@
    digest: Actual coordinate differences for the twenty-point 11/9 theta obstruction.
  -/
 
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
 
 /-! Differences are taken from an actual selected root in the original cube. -/
