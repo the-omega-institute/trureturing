@@ -28,7 +28,18 @@ internal sealed class BKMSubalgebraDefectDocument : IScribeDocumentDefinition
                 + "BKM integral gives the positive compression of that state by P. The "
                 + "transpose sends this test to the ambient BKM image of P. Projection "
                 + "rigidity then forces the ambient state to commute with P.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Entry("positivity-defect", "positivityDefect", "Defect of the BKM transpose",
+                "Take the supremum of negative spectral mass over the images of positive "
+                + "elements of the subalgebra with ambient trace one.",
+                DescribeRole.Definition),
+            Entry("pinching-trace-norm", "bkm_pinching_traceNorm_le", "Trace-norm error of pinching",
+                "Test the transpose on the reduced state times each projection. The exact "
+                + "inverse identifies the output with the ambient BKM image, so its negative "
+                + "mass controls the squared Frobenius norm of the corresponding off-diagonal "
+                + "row. Row orthogonality allows their squared norms to be summed. The finite "
+                + "Schatten bound gives the trace-norm error with the coefficient stated in "
+                + "the theorem.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string name, string title, string text,
         DescribeRole role) => Describe.Lean(

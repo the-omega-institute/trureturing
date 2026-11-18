@@ -23,7 +23,20 @@ internal sealed class BKMProjectionRigidityDocument : IScribeDocumentDefinition
                 + "divided by the geometric mean, minus one. Each term is nonnegative, "
                 + "and the coefficient is positive across distinct eigenvalues. Positivity "
                 + "forces all such entries to vanish. In the converse direction the output "
-                + "is positive by compression. Every projection rank is in scope."))));
+                + "is positive by compression. Every projection rank is in scope."),
+            Describe.Lean(
+                DescribeId.Create("negative-trace"), DeclarationHandle.Create(Module + "negTrace"),
+                H("Negative spectral mass"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Take the real trace of the negative part from continuous "
+                    + "functional calculus."))), DescribeRole.Definition),
+            Entry("projection-leakage", "omega_projection_leakage", "Off-diagonal leakage",
+                "The first two terms of the hyperbolic sine series give a quadratic bound "
+                + "on the logarithmic-mean coefficient. The spectral upper bound converts "
+                + "logarithm differences to differences of eigenvalues. The spectral lower "
+                + "bound controls the norm of the complementary projection after congruence. "
+                + "The two adjoint corners have equal squared Frobenius norm, giving the "
+                + "factor 12 times the squared upper bound divided by the lower bound."))));
 
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + name), H(title),
