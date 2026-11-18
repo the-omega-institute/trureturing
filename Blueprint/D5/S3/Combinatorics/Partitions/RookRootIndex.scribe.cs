@@ -22,7 +22,7 @@ internal sealed class RookRootIndexDocument : IScribeDocumentDefinition
             Definition("paddedRoots", "Roots of the same reconstructed board", "Prepend zero columns to length N and subtract each resulting height from mi. The default-zero accessor makes the definition total; the reconstruction theorem proves the padded list has exactly the required length."),
             Theorem("board_injective", "Fixed-length representatives are distinct", Injective(),
                 "Re-padding each reconstructed board recovers every decoded height, hence every original root. Equal normalized boards therefore give equal root sequences, including repeated roots and all-zero decoded tuples."),
-            Theorem("reconstruction", "Exact padding and geometric singleton law", Reconstruction(false),
+            Theorem("reconstruction", "Exact padding and geometric singleton law", Reconstruction(),
                 "At every positive m and every finite root seed z, each admissible index re-pads to its full decoded tuple, recovers its entire original root sequence, and satisfies the geometric singleton condition. This does not assert native rook equivalence to an input board."),
             Definition("multiplicityFactor", "Root multiplicity factorials",
                 "Multiply the factorial of each value's multiplicity over the distinct values of the root tuple. The empty product is one. A multiplicity counts positions with that value, without labeling the equal values."),
@@ -52,7 +52,7 @@ internal sealed class RookRootIndexDocument : IScribeDocumentDefinition
         And(Eq(Call("paddedRoots", I("m"), I("n"), Board()), I("a")), Call("SingletonColumns", I("m"), Call("decode", I("m"), I("a")))));
     private static Formula Injective() => All("m", Nat(), All("n", Nat(), All("z", Tuple(new Formula.Integers()),
         Call("Injective", Call("boardMap", I("m"), I("z"))))));
-    private static Formula Reconstruction(bool unused) => All("m", Nat(), Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, I("m")),
+    private static Formula Reconstruction() => All("m", Nat(), Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, I("m")),
         All("n", Nat(), All("z", Tuple(new Formula.Integers()), All("a", Call("Member", Index(I("z"))), Details())))));
     private static Formula Family() => All("m", Nat(), Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, I("m")),
         All("n", Nat(), All("d", Tuple(Nat()), And(new Formula.Relation(Call("card", Index(Roots())), FormulaRelationOperator.LessThanOrEqual,
