@@ -102,7 +102,21 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery.Obs
 
 There exists a complex vector v on three-bit words such that t = rawPrefix 3 m ψ times v has chartPoly(t) nonzero and transfer(canonicalCore t) is injective on all complex two by two matrices. Both tests depend only on the observed Q₃. The chart retains every factor of the supplier polynomial, including the reconstructed sum determinant. This definition asserts neither nonemptiness nor density.
 
-**Theorem 1.8 (Phase recovery against every actual competitor).**
+**Theorem 1.8 (The original right-environment Gram).**
+
+$$\forall (A: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Bond}), (\forall (r: \operatorname{Fin}\left(2\right) \to \mathbb{C}), (\forall (m: \mathbb{N}), (\operatorname{HMul.hMul}\left(\operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery.tailMap}\left(A, r, m\right), \operatorname{Matrix.conjTranspose}\left(\operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery.tailMap}\left(A, r, m\right)\right)\right) = \operatorname{Function.iterate}\left(\operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery.transfer}\left(A\right), m, \operatorname{Matrix.vecMulVec}\left(r, \operatorname{star}\left(r\right)\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery.tail_gram` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.
+
+*Commentary.*
+
+For every core, right boundary and natural complement length m, tailMap A r m times its conjugate transpose equals transfer(A) iterated m times on rr†. The interior common-core dictionary consumes this original right-tail identity; its separate left Gram uses snoc words and the dual transfer.
+
+**Theorem 1.9 (Phase recovery against every actual competitor).**
 
 $$\forall (m: \mathbb{N}), (\forall (\psi: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(3 + m\right) \to \mathbb{C}), (\forall (\phi: \operatorname{D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection.Word}\left(3 + m\right) \to \mathbb{C}), ((\psi \in \operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality.openBoundaryMPS}\left(3 + m\right)) \to ((\phi \in \operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality.openBoundaryMPS}\left(3 + m\right)) \to ((\operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery.ObservableChart}\left(m, \psi\right)) \to ((\operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery.rawPrefix}\left(3, m, \phi\right) = \operatorname{D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery.rawPrefix}\left(3, m, \psi\right)) \Leftrightarrow (\exists (z: \mathbb{C}), ((\operatorname{norm}\left(z\right) = 1) \land (\phi = \operatorname{HSMul.hSMul}\left(z, \psi\right))))))))))$$
 
@@ -135,6 +149,7 @@ The gauge reconstruction is supplied by the existing Conjecture 8 formalization.
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery.prefixMap`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery.rawPrefix`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery.tailMap`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery.tail_gram`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery.transfer`
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality](OpenBoundaryMPSMarginalBirationality.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection](PeriodicMPSParentIntersection.md)

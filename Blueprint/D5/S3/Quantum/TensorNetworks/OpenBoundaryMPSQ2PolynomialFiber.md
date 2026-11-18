@@ -68,6 +68,8 @@ For every point x of that locus and every specified open neighborhood U of x con
 
 This is a principal generic locus in the canonical parameter domain. Density in the actual MPS state image modulo unit phase requires a separate observable rational inverse and denominator descent and remains open here. The theorem does not resolve full Critch–Morton Conjecture 9 or arbitrary interior windows. It adds no dynamics, time group, energy, physical clock, stability or thermodynamic law, and carries no external open-problem-solution credit. The reused canonical inverse and phase argument retain Haobo Ma and Wenlin Zhang's CC BY 4.0 attribution. The C1 supplier credits BochaoKong's Apache-2.0 LeanPool constant-rank argument at commit 2b1ec889365345f19a45fa94b6457a4d92c96295. Realification, Gram transfer, Schur completion and constant rank are mature mathematics.
 
+The interior-genericity consumer also uses evaluate, evaluate_core and evaluate_eta, retaining their exact original proofs. The cross-module consumers use representative_continuous, representative_coordinatesOf, record_equality_density, leadingPolynomial_eval, clear_polynomial, quotientCoordinate_ratio and quotient_denominators_nonzero from this source. Each exposed helper retains its original telescope and proof. Their four-slot audit evidence is unfinished: source-owned typed realization, lawful enrolled readout, complete equivalence, variation, sensitivity, actual observational dependence and accepted source/readout binding are missing. The incomplete audits are disclosed in https://github.com/the-omega-institute/trureturing/issues/30422; public visibility supplies no validated registration.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.exists_generic_fiber`
@@ -77,3 +79,4 @@ This is a principal generic locus in the canonical parameter domain. Density in 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQ2PolynomialFiber.recordPolynomial_eval`
 - Dependency: [D5/S3/Geometry/PolynomialLocalFiber](../../Geometry/PolynomialLocalFiber.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityGenericity](OpenBoundaryMPSDensityGenericity.md)
+- Dependency: [D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient](OpenBoundaryMPSQuotient.md)

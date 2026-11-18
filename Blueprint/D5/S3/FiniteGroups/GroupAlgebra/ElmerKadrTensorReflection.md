@@ -10,7 +10,21 @@ An M-relatively projective P is an actual equivariant retract of X tensor M with
 
 The mathematical source is Jonathan Elmer and Kazal Kadr, Some formulae relating modular representations of elementary abelian p-groups, DOI 10.1007/s13366-026-00855-9, arXiv:2510.07939v1, formulas (11)--(12), Section 2.2 and Lemma 2.1(iii). The recurrence route follows their Proof of Corollary 1.3. The repository proves the finite-field specialization of the reflection proposed in Conjecture 3.7(b), with no claim of literature priority.
 
-**Theorem 1.1 (One copy of W reflects a positive low digit).**
+**Theorem 1.1 (Products preserve original relative projectivity).**
+
+Lean statement: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.projective_prod`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.projective_prod` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any field K, group G and representation M, if A and B are M-relatively projective, then their actual product A times B is M-relatively projective. The projective and tensor witnesses are unrestricted; neither a finite field nor finite-dimensional witnesses are required.
+
+Given retractions through X tensor M and Y tensor M, the actual tensor-product distribution equivalence gives a retraction through (X times Y) tensor M. This existing helper is consumed by the reflection factor calculus and by the literal triple tensor criterion.
+
+**Theorem 1.2 (One copy of W reflects a positive low digit).**
 
 Lean statement: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.single_factor_reflection`
 
@@ -32,7 +46,7 @@ For u>=3, strong induction identifies W tensor V_(pa+u-2) with V_d, where d=pa+p
 
 When p=2, the only positive low digit is u=1 and W=V_1. The actual tensor-unit equivalence proves the statement directly. The induction therefore preserves the characteristic-two case without invoking a split whose required scalar would vanish.
 
-**Theorem 1.2 (W squares to the tensor unit modulo the original ideal).**
+**Theorem 1.3 (W squares to the tensor unit modulo the original ideal).**
 
 Lean statement: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.reflection_square`
 
@@ -44,7 +58,7 @@ Lean statement: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.refle
 
 For every finite field K of prime characteristic p, W tensor W ~_M V_1, with no further parameters or hypotheses. Apply the completed single-factor theorem at a=0 and u=p-1; p<=q supplies p-1<q and the reflected index is 1. This consequence is derived after the single-factor induction and is consumed by tensor_reflection. It is not used as an assumption for that induction. For p=2 it is the tensor-unit case.
 
-**Theorem 1.3 (Reflect both low digits with no sum or carry condition).**
+**Theorem 1.4 (Reflect both low digits with no sum or carry condition).**
 
 Lean statement: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.tensor_reflection`
 
@@ -68,6 +82,7 @@ The results are structural existence statements with utility none. The auxiliary
 
 ## References
 
+- Truth anchor: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.projective_prod`
 - Truth anchor: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.reflection_square`
 - Truth anchor: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.single_factor_reflection`
 - Truth anchor: `D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrTensorReflection.tensor_reflection`

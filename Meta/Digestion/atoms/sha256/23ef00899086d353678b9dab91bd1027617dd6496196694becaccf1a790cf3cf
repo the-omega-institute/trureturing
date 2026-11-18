@@ -1,0 +1,6 @@
+本节仅作原问题比较，不把下列额外条件移入裸分支。完整 $\mathsf E_0=\mathsf{Ent}_\triangle$ 严格取 [SAME_READBACK127.1、129.1][Q133SR] 的同一个原域，逐项保留：
+
+1. 全部完整 EB3 与原标签 Inj。
+2. 已给定的一组实际原正交三角 $\triangle=(p_1,p_2,p_3)$，至少一个顶点属于 $P_0=\{p:\mathcal A_p\text{ 为单点}\}$，其中 $\mathcal A_p=\{f\in\mathcal F_p:f|_{D_p}=0\}$。
+3. 同一三角的全部原零效应联合分离：
+

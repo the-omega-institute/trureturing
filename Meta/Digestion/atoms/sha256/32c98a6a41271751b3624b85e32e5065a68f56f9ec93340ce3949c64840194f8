@@ -1,0 +1,21 @@
+**定理 181.7（三球方向控制的条件提升）。** 对三个不同原纯点定义
+
+$$
+W_{abc}=\operatorname{aff}(B(a,b)\cup B(a,c)\cup B(b,c)),
+\qquad G_{abc}=\{a,b,c\}^{\perp\perp}.
+\tag{181.9}
+$$
+
+总有 $\dim_{\rm aff}W_{abc}\le8$。若另有 $G_{abc}\subseteq W_{abc}$，则 $F_K(a,b,c)=\operatorname{conv}G_{abc}$。若三点还两两原正交，任取共同确认者并令 $S=e_a+e_b+e_c$，此附加包含还给
+
+$$
+S\le u,\qquad \{S=1\}=F_K(a,b,c).
+\tag{181.10}
+$$
+
+证明。三个球的锥线性张成各为四维；前两个共享 $\mathbb Ra$，第三个与它们之和共享线性独立的 $b,c$。故总线性维数至多 $4+4-1+4-2=9$，归一切片的仿射维数至多八。此读数尚不是整个三点面的维数界。
+
+由179.2的任意交零面工具，$\operatorname{conv}G_{abc}$ 是包含三点的实际暴露面，故含 $F=F_K(a,b,c)$；而 $W_{abc}\subseteq\operatorname{aff}F$。附加包含使两面仿射维数相同，严格真面必降维，故两面相等。正交时181.3给 $e_a+e_b=1$ 于 $B(a,b)$，而 $e_c=0$ 于该球，循环亦然。因此 $S=1$ 于 $W_{abc}$。$S$ 消去三点的共同零集，其纯最大点由181.2的归一化步骤属于 $G_{abc}$；附加包含遂使全域最大值恰为一，且最大面恰为 $\operatorname{conv}G_{abc}=F$。
+
+不加该包含时，三条两项预算只给 $S\le3u/2$。若 $S\le u$ 失败，纯最大点 $r$ 必满足 $r\in G_{abc}\setminus W_{abc}$、$1<S(r)\le3/2$，且三个 $e_i(r)$ 全正；任一项为零会被另外两项预算排除。这是可定位的三点缺陷，尚非其实际存在性或 AD 的反模型。$\square$
+

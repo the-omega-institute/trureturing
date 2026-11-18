@@ -281,7 +281,7 @@ theorem source_atomization_nonempty [Nonempty n] {μ : Measure α}
   rw [← heL, ← heR]
   exact ⟨k, R, hR.trans hcost⟩
 
-private theorem cost_congr_ae {μ : Measure α} {f : ℝ → ℝ}
+theorem cost_congr_ae {μ : Measure α} {f : ℝ → ℝ}
     (hf : ConvexOn ℝ (Ioi 0) f) {p q p' q' : α → ℝ}
     (hp : p =ᵐ[μ] p') (hq : q =ᵐ[μ] q') :
     closedPerspectiveCost hf μ p q = closedPerspectiveCost hf μ p' q' := by
@@ -420,7 +420,7 @@ def finiteCosts {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
     (A B : Matrix n n ℂ) : Set EReal :=
   {z | ∃ k, ∃ R : ReverseTest A B k, z = ∑ i, closedPerspective hf (R.p i) (R.q i)}
 
-private theorem measurable_positive_L1_input {X : Type*} [MeasurableSpace X]
+theorem measurable_positive_L1_input {X : Type*} [MeasurableSpace X]
     {μ : Measure X} (h : X →₁[μ] ℂ) (hn : ∀ᵐ a ∂μ, 0 ≤ h a) :
     ∃ (p : X → ℝ) (hp : Integrable p μ), Measurable p ∧
       (∀ᵐ a ∂μ, 0 ≤ p a) ∧

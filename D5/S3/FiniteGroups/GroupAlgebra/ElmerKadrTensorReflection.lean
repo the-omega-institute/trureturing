@@ -39,7 +39,7 @@ variable {K G A B C D : Type u} [Field K] [Group G]
   [AddCommGroup A] [Module K A] [AddCommGroup B] [Module K B]
   [AddCommGroup C] [Module K C] [AddCommGroup D] [Module K D]
 
-private def tensorCongr {ρ : Representation K G A} {σ : Representation K G B}
+def tensorCongr {ρ : Representation K G A} {σ : Representation K G B}
     {τ : Representation K G C} {υ : Representation K G D}
     (e : ρ.Equiv σ) (f : τ.Equiv υ) : (ρ.tprod τ).Equiv (σ.tprod υ) :=
   Representation.Equiv.mk (TensorProduct.congr e.toLinearEquiv f.toLinearEquiv)
@@ -67,7 +67,7 @@ private def tensorProdRight (ρ : Representation K G A)
     simp only [LinearMap.comp_apply, Representation.tprod_apply,
       TensorProduct.map_tmul, TensorProduct.prodRight_tmul] <;> rfl
 
-private def tensorProdLeft (ρ : Representation K G A)
+def tensorProdLeft (ρ : Representation K G A)
     (σ : Representation K G B) (τ : Representation K G C) :
     ((ρ.prod σ).tprod τ).Equiv ((ρ.tprod τ).prod (σ.tprod τ)) :=
   Representation.Equiv.mk (TensorProduct.prodLeft K K A B C) fun _ => by
@@ -88,7 +88,7 @@ variable {K G M A B C D : Type u} [Field K] [Group G]
   {ρ : Representation K G A} {σ : Representation K G B}
   {υ : Representation K G C} {ξ : Representation K G D}
 
-private theorem projective_prod
+theorem projective_prod
     (hρ : RelativeProjective τ (Rep.of ρ))
     (hσ : RelativeProjective τ (Rep.of σ)) :
     RelativeProjective τ (Rep.of (ρ.prod σ)) := by

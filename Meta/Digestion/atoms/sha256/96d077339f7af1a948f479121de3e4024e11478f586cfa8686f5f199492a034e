@@ -1,0 +1,37 @@
+**定理 6.2（Ordered records plus terminal successor recover every finite legal path）。** For all $N\ge0$ and $(p,q,r)\in\mathcal D$,
+
+$$
+V_4^{[N]}(|i_0\rangle\psi)
+=\sum_{h\in\mathcal H_N(i_0)}\sqrt{w(h)}\,
+|i_N\rangle\otimes U_h\psi\otimes r_h.
+\tag{6.2}
+$$
+
+For fixed $N$, the vectors $|i_N\rangle\otimes r_h$ are pairwise orthonormal over all legal length-$N$ paths, including paths with different roots. A single decoder using the actual terminal successor and the ordered $N$ record colors recovers the entire path. A common terminal joint measurement produces exactly the source path branches
+
+$$
+K_h=\sqrt{w(h)}\,|i_N\rangle\langle i_0|\otimes U_h.
+\tag{6.3}
+$$
+
+Consequently, under the stated initialization, the acquired path law and conditional internal-reference state are (5.6), with no intermediate measurement.
+
+**证明。** For $N=0$, (6.2) is the identity, with one path $(i_0)$ for each supplied root, $w=1$ and $U_h=I_K$. At any induction step, apply (1.4) for $V_4$ to the terminal summand $|i_s\rangle U_{h_s}\psi$. It appends $g_{\kappa(i_s)}$ in the next ordered environment, multiplies the amplitude by $\sqrt{P_{i_si_{s+1}}}$ and multiplies the internal transport by $U_{i_{s+1}i_s}$ on the left. Summing all legal extensions proves (6.2). Every composition acts on a fresh environment; its tensor-extended isometry preserves the previously retained environments and any untouched reference.
+
+For orthogonality, paths with different terminal configurations are separated by the terminal basis label. Suppose $h,k$ have the same terminal label and differ somewhere. Let $\ell<N$ be the largest index with $i_\ell\ne k_\ell$. Their next configurations agree: $i_{\ell+1}=k_{\ell+1}=j$. Both differing sources belong to $I_j$, so $\kappa(i_\ell)\ne\kappa(k_\ell)$ by (4.2)–(4.3). The $(\ell+1)$-st tensor factors of $r_h,r_k$ are orthogonal, and hence the product vectors are orthogonal. Norms are one. For $N=0$, different roots have different terminal labels, covering that boundary case as well.
+
+The same argument gives a constructive decoder without a history-dependent rule. Start with the acquired $i_N$. The last returned color determines the unique predecessor in $I_{i_N}$. With that predecessor as the new successor, the preceding color determines its unique predecessor. Repeat backward through the ordered registers. Each lookup depends only on the supplied graph, one current successor and one acquired color. Thus every legal codeword is uniquely decoded by a common rule for the given length. The composition produces legal codewords by the preceding induction; no legality decision for a fabricated word is mistaken for an acquired event.
+
+Let $q_h=|i_N\rangle\otimes r_h$. On the configuration-record factors measure the mutually orthogonal projections $|q_h\rangle\langle q_h|$, tensored with $I_K$, and include the complementary outcome. Applying a path projection to (6.2) isolates (6.3), with the normalized retained record $r_h$. For an arbitrary input superposition, linearity gives the same $K_h$ operator, because the terminal codewords are orthogonal even for different roots. The complementary outcome is zero on the image. Moreover
+
+$$
+\sum_hK_h^\dagger K_h
+=\sum_i\left(\sum_{h\in\mathcal H_N(i)}w(h)\right)
+|i\rangle\langle i|\otimes I_K=I_H,
+\tag{6.4}
+$$
+
+since iterating row normalization makes each inner sum one, including the empty product. The instrument is therefore common and trace preserving on all $H$.
+
+For an initialized root, $K_h^\dagger K_h=w(h)|i_0\rangle\langle i_0|\otimes I_K$ gives the product probability and transported state in (5.6). For (5.5), it gives the factor $\pi_{i_0}$ and the same reference-preserving conditional state, while $R_0$ remains its actual initial record. Measuring separate terminal/configuration and record bases followed by the backward decoder is an equivalent readout of these path outcomes on the generated image. $\square$
+

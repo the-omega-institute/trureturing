@@ -1,0 +1,31 @@
+**引理 188.3（有限维平均工具及其原面用途）。** 在188.1的原域，每个原 $D_a$ 都有同一原空间上的正、质量不增、幂等映射 $P_a$，满足
+
+$$
+P_aa=0,\qquad
+P_a(C)=\operatorname{cone}D_a,\qquad
+P_a|_{\operatorname{cone}D_a}=\operatorname{id}.
+\tag{188.4}
+$$
+
+不要求原先给定的 $Q_a$ 已幂等，也不把 $P_a$ 认作实际可接续设备。
+
+证明。使用成熟的有限维幂有界算子平均工具，并在本证明中写出所需部分。正性与 $uQ_a\le u$ 使 $Q_a$ 在原基范数中收缩：对任意分解 $v=x-y$、$x,y\in C$，取 $u(Q_ax)+u(Q_ay)\le u(x)+u(y)$，再取基范数下确界。故其全部幂统一有界。
+
+对任意有限维幂有界实线性 $Q$，有
+
+$$
+V=\ker(I-Q)\oplus\operatorname{im}(I-Q).
+\tag{188.5}
+$$
+
+若 $v=(I-Q)w$ 且 $Qv=v$，则 $Q^nw=w-nv$，幂有界迫 $v=0$；再用秩—零化度得直和覆盖。平均
+
+$$
+A_L=\frac1L\sum_{j=0}^{L-1}Q^j\qquad(L\ge1)
+\tag{188.6}
+$$
+
+在固定空间恒等，在 $(I-Q)w$ 处等于 $(w-Q^Lw)/L\to0$。因此 $A_L$ 收敛到固定空间投影 $P$，$P^2=P$、$QP=PQ=P$。对 $Q=Q_a$，每个 $A_L$ 正且质量不增；$C$ 闭使极限 $P_a$ 仍正且质量不增。$A_La=a/L\to0$，故 $P_aa=0$。
+
+若 $x\in C$ 且 $Q_ax=x$，则 $e_a(x)=u(x)-u(Q_ax)=0$，所以 $x\in\operatorname{cone}D_a$。反之188.2已给整个该锥固定。因此 $P_a(C)\subseteq\operatorname{cone}D_a$，并固定其每一点，得到(188.4)。因 $C$ 生成 $V$，还得 $\operatorname{im}P_a=\operatorname{span}(\operatorname{cone}D_a)$，完整线性像亦已确定。这个工具供应原正收回；不供应对偶零测试保持、least或完整双侧P-projection。$\square$
+
