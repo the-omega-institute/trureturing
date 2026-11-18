@@ -4,7 +4,43 @@
 
 Injective selection of prime subsets.
 
-**Theorem 1.1 (Prime bin counting).**
+**Theorem 1.1 (Recover prime support from its product).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.prime_product_injective`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.prime_product_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two finite prime supports with equal products are equal. Taking prime factors recovers each support.
+
+**Theorem 1.2 (Count distinct prime factors of a support product).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.omega_prime_product`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.omega_prime_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The number of distinct prime factors of a finite prime support's product is the cardinality of that support.
+
+**Theorem 1.3 (Recover a selection from its disjoint bin).**
+
+Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.bin_union_inter`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.bin_union_inter` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For selections from pairwise disjoint bins, intersect the union of the selections with a bin to recover that bin's selection.
+
+**Theorem 1.4 (Prime bin counting).**
 
 Lean statement: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.multibox_bound`
 
@@ -18,5 +54,8 @@ For any finite index type, pairwise disjoint finite prime bins P(j), prescribed 
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.bin_union_inter`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.multibox_bound`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.omega_prime_product`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/OmegaTail/Lower.prime_product_injective`
 - Dependency: [D5/S3/Arith/Robin/Analytic/OmegaTailUpper](../OmegaTailUpper.md)
