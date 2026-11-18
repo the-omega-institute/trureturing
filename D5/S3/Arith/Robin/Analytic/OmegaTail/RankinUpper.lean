@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Sharp asymptotic Rankin upper bound for the distinct-prime tail at the second threshold. -/
+   digest: Sharp Rankin upper bounds for distinct-prime tails from continuous reserves. -/
 
 import D5.S3.Arith.Robin.Analytic.OmegaTail.FarDeletion
 import D5.S3.Arith.Robin.PriceRecord.MovingPrimeSoftplus
@@ -130,82 +130,138 @@ private lemma optimizer_constant :
   rw [hs2]
   ring
 
-/-- Sharp upper bound at the second threshold for every positive error and all large real cutoffs. -/
-theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
+private lemma sharp_upper_bound_of_reserve (T : ℝ → ℝ) {a b c : ℝ}
+    (ha : 0 < a) (hc : 0 < c)
+    (hB : Tendsto (fun P : ℝ =>
+      (P - Chebyshev.theta P + (primeCount P - T P) * log P) /
+        (P / log P ^ (a + 1 + a))) atTop (𝓝 b))
+    (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     ∀ᶠ P : ℝ in atTop,
-      (tailCount 1 (exp P) : ℝ) ≤ exp ((2 * π / sqrt 3 + epsilon) *
-        (P / log P ^ (3 / 2 : ℝ))) := by
-  let c : ℝ := π / (2 * sqrt 3)
-  let s (P : ℝ) := c * log P ^ (1 / 2 : ℝ)
-  let Z (P : ℝ) := P / log P ^ (3 / 2 : ℝ)
+      (((Icc 1 ⌊exp P⌋₊).filter (fun n =>
+        T P < (ArithmeticFunction.cardDistinctFactors n : ℝ))).card : ℝ) <
+          exp ((b * c + (π ^ 2 / 6) / c + epsilon) * (P / log P ^ (a + 1))) := by
+  let B (P : ℝ) := P - Chebyshev.theta P + (primeCount P - T P) * log P
+  let s (P : ℝ) := c * log P ^ a
+  let Z (P : ℝ) := P / log P ^ (a + 1)
   let R (P : ℝ) := ∑' p : ℕ, if p.Prime then weight P (s P) p else 0
   let C (P : ℝ) := log (1 + ∑' n : ℕ, (n : ℝ) ^ (-s P))
-  have hc : 0 < c := by dsimp [c]; positivity
   have hs : Tendsto s atTop atTop :=
-    (tendsto_const_mul_atTop_of_pos hc).mpr
-      ((tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 2)).comp tendsto_log_atTop)
-  have hsoft := prime_softplus_asymptotic (by norm_num : (0 : ℝ) < 1 / 2) hc le_rfl s
+    (tendsto_const_mul_atTop_of_pos hc).mpr ((tendsto_rpow_atTop ha).comp tendsto_log_atTop)
+  have hsoft := prime_softplus_asymptotic ha hc le_rfl s
     (Eventually.of_forall (fun _ => ⟨le_rfl, le_rfl⟩))
+  have hZpos {P : ℝ} (hP : 1 < P) : 0 < Z P :=
+    div_pos (zero_lt_one.trans hP) (rpow_pos_of_pos (log_pos hP) _)
   have hZ : Tendsto Z atTop atTop := by
-    have h := (isLittleO_log_rpow_rpow_atTop (3 / 2 : ℝ) (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
+    have h := (isLittleO_log_rpow_rpow_atTop (a + 1)
+      (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
     simp only [rpow_one] at h
-    have hpos : ∀ᶠ P : ℝ in atTop, 0 < log P ^ (3 / 2 : ℝ) / P := by
+    have hpos : ∀ᶠ P : ℝ in atTop, 0 < log P ^ (a + 1) / P := by
       filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
       exact div_pos (rpow_pos_of_pos (log_pos hP) _) (zero_lt_one.trans hP)
     simpa only [Z, Function.comp_def, inv_div, id_eq] using
       tendsto_inv_nhdsGT_zero.comp (tendsto_nhdsWithin_iff.mpr ⟨h, hpos⟩)
-  have hscale₁ {P : ℝ} (hP : 1 < P) :
-      log P ^ (3 / 2 : ℝ) * log P ^ (1 / 2 : ℝ) = log P ^ (2 : ℕ) := by
-    rw [← rpow_add (log_pos hP), show (3 / 2 : ℝ) + 1 / 2 = (2 : ℕ) by norm_num, rpow_natCast]
-  have hscale₂ {P : ℝ} (hP : 1 < P) :
-      log P ^ (1 / 2 : ℝ) * log P = log P ^ (3 / 2 : ℝ) := by
-    calc
-      _ = log P ^ (1 / 2 : ℝ) * log P ^ (1 : ℝ) := by rw [rpow_one]
-      _ = _ := by rw [← rpow_add (log_pos hP)]; norm_num
-  have hreserve : Tendsto (fun P => s P * continuousReserve P / Z P) atTop (𝓝 (2 * c)) := by
-    have h := centered_reserve.2.2.2.1.mul_const c
-    apply h.congr'
+  have hreserve : Tendsto (fun P => s P * B P / Z P) atTop (𝓝 (b * c)) := by
+    apply (hB.mul_const c).congr'
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
+    change B P / (P / log P ^ (a + 1 + a)) * c = s P * B P / Z P
     dsimp [s, Z]
-    rw [div_div_eq_mul_div, div_div_eq_mul_div, ← hscale₁ hP]
+    rw [div_div_eq_mul_div, div_div_eq_mul_div, rpow_add (log_pos hP)]
     ring
   have hR : Tendsto (fun P => R P / Z P) atTop (𝓝 ((π ^ 2 / 6) / c)) := by
     apply (hsoft.2.div_const c).congr'
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with P hP
     change R P / (P / (s P * log P)) / c = R P / Z P
-    dsimp only [s, Z]
-    rw [mul_assoc, hscale₂ hP, div_div_eq_mul_div, div_div_eq_mul_div]
+    have hscale : s P * log P = c * log P ^ (a + 1) := by
+      dsimp only [s]
+      rw [mul_assoc, rpow_add (log_pos hP), rpow_one]
+    rw [hscale]
+    change R P / (P / (c * log P ^ (a + 1))) / c = R P / (P / log P ^ (a + 1))
+    simp only [div_div_eq_mul_div]
     field_simp [hc.ne', (zero_lt_one.trans hP).ne']
-    dsimp only [c]
-    field_simp [(sqrt_pos.2 (by norm_num : (0 : ℝ) < 3)).ne']
     <;> ring
   have hC : Tendsto (fun P => C P / Z P) atTop (𝓝 0) := by
     apply squeeze_zero' _ _ (hZ.const_div_atTop (log (1 + ∑' n : ℕ, (n : ℝ) ^ (-(2 : ℝ)))))
     · filter_upwards [hs.eventually_ge_atTop 2, eventually_gt_atTop (1 : ℝ)] with P hsP hP
-      exact div_nonneg (rankin_correction hsP).1 (by
-        exact div_nonneg (zero_lt_one.trans hP).le (rpow_nonneg (log_pos hP).le _))
+      exact div_nonneg (rankin_correction hsP).1 (hZpos hP).le
     · filter_upwards [hs.eventually_ge_atTop 2, eventually_gt_atTop (1 : ℝ)] with P hsP hP
-      exact div_le_div_of_nonneg_right (rankin_correction hsP).2 (by
-        exact div_nonneg (zero_lt_one.trans hP).le (rpow_nonneg (log_pos hP).le _))
+      exact div_le_div_of_nonneg_right (rankin_correction hsP).2 (hZpos hP).le
   have hlim := (hreserve.add hR).add hC
-  rw [add_zero, show 2 * c + (π ^ 2 / 6) / c = 2 * π / sqrt 3 from optimizer_constant] at hlim
+  rw [add_zero] at hlim
   filter_upwards [hlim.eventually_lt_const (lt_add_of_pos_right _ hepsilon),
     hs.eventually_ge_atTop 2, hsoft.1, eventually_gt_atTop (1 : ℝ)] with P hlim hsP hRsum hP
-  have hZP : 0 < Z P := div_pos (zero_lt_one.trans hP) (rpow_pos_of_pos (log_pos hP) _)
   have hs1 : 1 < s P := (by norm_num : (1 : ℝ) < 2).trans_le hsP
   have hz : 1 ≤ P ^ s P := one_le_rpow hP.le (zero_lt_one.trans hs1).le
-  refine (rankin_exponential_bound (T := threshold 1 (exp P)) hs1 hz (exp_pos P)).trans ?_
-  apply exp_le_exp.mpr
+  refine (rankin_exponential_bound (T := T P) hs1 hz (exp_pos P)).trans_lt ?_
+  apply exp_lt_exp.mpr
   rw [log_exp]
+  have hcancel := rankin_prime_cancellation (T P) hP hRsum.of_abs
+  have hnormalized : (s P * B P + R P + C P) / Z P < b * c + (π ^ 2 / 6) / c + epsilon := by
+    simpa only [add_div] using hlim
+  change _ < (b * c + (π ^ 2 / 6) / c + epsilon) * Z P
+  exact (by linarith only [hcancel] : _ ≤ s P * B P + R P + C P).trans_lt
+    ((div_lt_iff₀ (hZpos hP)).mp hnormalized)
+
+/-- Sharp upper bound at the second threshold for every positive error and all large cutoffs. -/
+theorem sharp_upper_bound (epsilon : ℝ) (hepsilon : 0 < epsilon) :
+    ∀ᶠ P : ℝ in atTop,
+      (tailCount 1 (exp P) : ℝ) ≤ exp ((2 * π / sqrt 3 + epsilon) *
+        (P / log P ^ (3 / 2 : ℝ))) := by
+  have hB : Tendsto (fun P : ℝ => continuousReserve P /
+      (P / log P ^ ((1 / 2 : ℝ) + 1 + 1 / 2))) atTop (𝓝 2) := by
+    rw [show (1 / 2 : ℝ) + 1 + 1 / 2 = (2 : ℕ) by norm_num]
+    simpa only [rpow_natCast] using centered_reserve.2.2.2.1
+  have h := sharp_upper_bound_of_reserve centeredThreshold (by norm_num : (0 : ℝ) < 1 / 2)
+    (show 0 < π / (2 * sqrt 3) by positivity) (by simpa only [continuousReserve] using hB)
+    epsilon hepsilon
+  rw [optimizer_constant, show (1 / 2 : ℝ) + 1 = 3 / 2 by norm_num] at h
+  filter_upwards [h] with P hP
   have hthreshold : threshold 1 (exp P) = centeredThreshold P := by
     simp only [threshold, scale, log_exp, one_mul, centeredThreshold, div_div, pow_two]
-  have hcancel := rankin_prime_cancellation (threshold 1 (exp P)) hP hRsum.of_abs
-  rw [hthreshold, ← continuousReserve] at hcancel
-  rw [hthreshold]
-  have hnormalized : (s P * continuousReserve P + R P + C P) / Z P <
-      2 * π / sqrt 3 + epsilon := by
-    simpa only [add_div] using hlim
-  exact (by linarith only [hcancel] : _ ≤ s P * continuousReserve P + R P + C P).trans
-    ((div_lt_iff₀ hZP).mp hnormalized).le
+  simpa only [tailCount, hthreshold] using hP.le
+
+private lemma factorial_optimizer_constant (b : ℝ) (hb : 0 < b) :
+    b * (π / sqrt (6 * b)) + (π ^ 2 / 6) / (π / sqrt (6 * b)) =
+      π * sqrt (2 * b / 3) := by
+  have hd : 0 < sqrt (6 * b) := by positivity
+  have hd_sq : sqrt (6 * b) ^ 2 = 6 * b := sq_sqrt (by positivity)
+  have hsqrt : sqrt (6 * b) = 3 * sqrt (2 * b / 3) := by
+    have hq : sqrt (2 * b / 3) ^ 2 = 2 * b / 3 := sq_sqrt (by positivity)
+    have hsq : sqrt (6 * b) ^ 2 = (3 * sqrt (2 * b / 3)) ^ 2 := by nlinarith
+    rcases sq_eq_sq_iff_eq_or_eq_neg.mp hsq with h | h
+    · exact h
+    · have hpos : 0 < sqrt (2 * b / 3) := by positivity
+      linarith
+  calc
+    _ = (sqrt (6 * b) ^ 2 / 6) * (π / sqrt (6 * b)) +
+        (π ^ 2 / 6) / (π / sqrt (6 * b)) := by rw [hd_sq]; ring
+    _ = π * sqrt (6 * b) / 3 := by
+      field_simp [pi_ne_zero, hd.ne']
+      <;> ring
+    _ = _ := by rw [hsqrt]; ring
+
+/-- The analytic upper bound in Proposition 7.9 follows from the sharp continuous reserve limit. -/
+theorem factorial_sharp_upper_bound (r : ℕ) (hr : 2 ≤ r) (T : ℝ → ℝ)
+    (hB : Tendsto (fun P : ℝ =>
+      (P - Chebyshev.theta P + (primeCount P - T P) * log P) /
+        (P / log P ^ r)) atTop (𝓝 (r.factorial : ℝ)))
+    (epsilon : ℝ) (hepsilon : 0 < epsilon) :
+    ∀ᶠ P : ℝ in atTop,
+      (((Icc 1 ⌊exp P⌋₊).filter (fun n =>
+        T P < (ArithmeticFunction.cardDistinctFactors n : ℝ))).card : ℝ) <
+          exp ((π * sqrt (2 * (r.factorial : ℝ) / 3) + epsilon) *
+            (P / log P ^ (((r : ℝ) + 1) / 2))) := by
+  let a : ℝ := ((r : ℝ) - 1) / 2
+  let b : ℝ := r.factorial
+  let c : ℝ := π / sqrt (6 * b)
+  have hr' : (2 : ℝ) ≤ r := by exact_mod_cast hr
+  have ha : 0 < a := by dsimp [a]; linarith
+  have hb : 0 < b := by dsimp [b]; exact_mod_cast Nat.factorial_pos r
+  have hc : 0 < c := by dsimp [c]; positivity
+  have hpower : a + 1 + a = (r : ℝ) := by dsimp [a]; ring
+  have hscale : a + 1 = ((r : ℝ) + 1) / 2 := by dsimp [a]; ring
+  have h := sharp_upper_bound_of_reserve T ha hc
+    (by simpa only [hpower, rpow_natCast] using hB) epsilon hepsilon
+  rwa [show b * c + (π ^ 2 / 6) / c = π * sqrt (2 * b / 3) from
+    factorial_optimizer_constant b hb, hscale] at h
 
 end D5.S3.Arith.Robin.Analytic.OmegaTail.RankinUpper
