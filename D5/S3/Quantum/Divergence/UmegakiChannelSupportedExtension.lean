@@ -7,6 +7,7 @@
    digest: Depolarized endpoint bounds control the supported conditional Umegaki deficit. -/
 
 import D5.S3.Quantum.Divergence.UmegakiConditionalBKM
+import D5.S3.Quantum.Divergence.UmegakiFaithfulLowerRatio
 import D5.S3.Quantum.Divergence.UmegakiSupportedNoise
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
 import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
@@ -33,8 +34,11 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 open D5.S3.Quantum.Divergence.CanonicalChannelDPI
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
+open D5.S3.Quantum.Divergence.UmegakiConditionalKernel
+open D5.S3.Quantum.Divergence.UmegakiFaithfulLowerRatio
 open D5.S3.Quantum.Divergence.UmegakiKernelContraction
 open D5.S3.Quantum.Divergence.UmegakiConditionalBKM
+open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (amp_posDef)
 open D5.S3.Quantum.Divergence.UmegakiSupportedNoise
 open D5.S3.Quantum.Recovery.QubitResidualRounding (referenceState_comp)
 open D5.S3.Quantum.Divergence.FannesRootFidelityHolevo (exists_eraseChannel)
@@ -375,7 +379,485 @@ theorem supported_conditional_relativeEntropy_contraction
     supported_conditional_relativeEntropy_contraction_of_faithful_output
       ((depolarizingChannel b δ).comp N) c (depolarized_posDef N δ) hc (hEnd δ) ρ σ hSupport
 
+/-- Complete Umegaki ratios with equal reference marginals and positive finite
+input divergence, over every finite reference in the channel's universe. -/
+def completeRatios (N : QuantumChannel a b) : Set ℝ :=
+  {x | ∃ (R : Type u) (fR : Fintype R) (eR : DecidableEq R),
+    letI := fR
+    letI := eR
+    ∃ ρ σ : DensityState (R × a), SupportContained ρ σ ∧
+      marginalRight ρ = marginalRight σ ∧ 0 < finiteTraceLogRelativeEntropy ρ σ ∧
+      x = finiteTraceLogRelativeEntropy (referenceState N ρ) (referenceState N σ) /
+        finiteTraceLogRelativeEntropy ρ σ}
+
+private def conditionalDeficit (ρ σ : DensityState (R × a)) : ℝ :=
+  finiteTraceLogRelativeEntropy ρ σ -
+    finiteTraceLogRelativeEntropy (marginalRight ρ) (marginalRight σ)
+
+/-- Conditional Umegaki ratios with exact marginal subtraction and a positive
+finite input deficit, over every finite reference in the channel's universe. -/
+def conditionalRatios (N : QuantumChannel a b) : Set ℝ :=
+  {x | ∃ (R : Type u) (fR : Fintype R) (eR : DecidableEq R),
+    letI := fR
+    letI := eR
+    ∃ ρ σ : DensityState (R × a), SupportContained ρ σ ∧
+      0 < conditionalDeficit ρ σ ∧
+      x = conditionalDeficit (referenceState N ρ) (referenceState N σ) /
+        conditionalDeficit ρ σ}
+
+/-- The supported complete Umegaki contraction coefficient, including the
+zero convention when the feasible set is empty. -/
+def completeCoefficient (N : QuantumChannel a b) : ℝ := sSup (insert 0 (completeRatios N))
+
+/-- The supported conditional Umegaki contraction coefficient, including the
+zero convention when the feasible set is empty. -/
+def conditionalCoefficient (N : QuantumChannel a b) : ℝ := sSup (insert 0 (conditionalRatios N))
+
+private lemma amplified_dpi (N : QuantumChannel a b) (ρ σ : DensityState (R × a))
+    (h : SupportContained ρ σ) :
+    SupportContained (referenceState N ρ) (referenceState N σ) ∧
+      finiteTraceLogRelativeEntropy (referenceState N ρ) (referenceState N σ) ≤
+        finiteTraceLogRelativeEntropy ρ σ := by
+  obtain ⟨C, hC⟩ := exists_amplifiedChannel (R := R) N
+  simpa only [amplifiedChannel_state N C hC] using supported_channel_dpi C ρ σ h
+
+private lemma conditionalDeficit_bounds (N : QuantumChannel a b)
+    (ρ σ : DensityState (R × a)) (h : SupportContained ρ σ) :
+    conditionalDeficit (referenceState N ρ) (referenceState N σ) ∈
+      Set.Icc 0 (conditionalDeficit ρ σ) := by
+  have hOut := amplified_dpi N ρ σ h
+  obtain ⟨E, hE⟩ := exists_eraseChannel (n := R) (ι := b)
+  have hErase := supported_channel_dpi E (referenceState N ρ) (referenceState N σ) hOut.1
+  rw [erasure_state E hE, erasure_state E hE] at hErase
+  constructor
+  · exact sub_nonneg.mpr hErase.2
+  · unfold conditionalDeficit
+    rw [marginal_referenceState, marginal_referenceState]
+    exact sub_le_sub_right hOut.2 _
+
+private lemma conditionalDeficit_of_marginal_eq (ρ σ : DensityState (R × a))
+    (h : marginalRight ρ = marginalRight σ) :
+    conditionalDeficit ρ σ = finiteTraceLogRelativeEntropy ρ σ := by
+  rw [conditionalDeficit, h, finiteTraceLogRelativeEntropy_self, sub_zero]
+
+private lemma completeRatios_subset_conditionalRatios (N : QuantumChannel a b) :
+    completeRatios N ⊆ conditionalRatios N := by
+  rintro x ⟨R, fR, eR, ρ, σ, h, hm, hpos, hx⟩
+  let _ := fR
+  let _ := eR
+  have hmOut : marginalRight (referenceState N ρ) = marginalRight (referenceState N σ) := by
+    simpa only [marginal_referenceState] using hm
+  refine ⟨R, fR, eR, ρ, σ, h, ?_, ?_⟩
+  · rwa [conditionalDeficit_of_marginal_eq ρ σ hm]
+  · rwa [conditionalDeficit_of_marginal_eq ρ σ hm, conditionalDeficit_of_marginal_eq _ _ hmOut]
+
+private lemma conditionalRatios_bounds (N : QuantumChannel a b) :
+    insert 0 (conditionalRatios N) ⊆ Set.Icc 0 1 := by
+  intro x hx
+  rcases Set.mem_insert_iff.mp hx with rfl | ⟨R, fR, eR, ρ, σ, h, hpos, rfl⟩
+  · exact ⟨le_rfl, zero_le_one⟩
+  · let _ := fR
+    let _ := eR
+    have hBounds := conditionalDeficit_bounds N ρ σ h
+    exact ⟨div_nonneg hBounds.1 hpos.le, (div_le_one hpos).mpr hBounds.2⟩
+
+private lemma completeRatios_bounds (N : QuantumChannel a b) :
+    insert 0 (completeRatios N) ⊆ Set.Icc 0 1 :=
+  (Set.insert_subset_insert (completeRatios_subset_conditionalRatios N)).trans
+    (conditionalRatios_bounds N)
+
+private lemma completeCoefficient_bounds (N : QuantumChannel a b) :
+    completeCoefficient N ∈ Set.Icc 0 1 :=
+  ⟨le_csSup ⟨1, fun _ hx => (completeRatios_bounds N hx).2⟩ (Set.mem_insert _ _),
+    csSup_le ⟨0, Set.mem_insert _ _⟩ fun _ hx => (completeRatios_bounds N hx).2⟩
+
+set_option maxHeartbeats 800000 in
+private lemma postprocessed_ratio_le_completeCoefficient (N : QuantumChannel a b)
+    (C : QuantumChannel b b) (ρ σ : DensityState (R × a)) (h : SupportContained ρ σ)
+    (hm : marginalRight ρ = marginalRight σ) (hpos : 0 < finiteTraceLogRelativeEntropy ρ σ) :
+    finiteTraceLogRelativeEntropy (referenceState (C.comp N) ρ) (referenceState (C.comp N) σ) /
+      finiteTraceLogRelativeEntropy ρ σ ≤ completeCoefficient N := by
+  have hOut := amplified_dpi N ρ σ h
+  have hPost := amplified_dpi C (referenceState N ρ) (referenceState N σ) hOut.1
+  rw [referenceState_comp, referenceState_comp]
+  have hMem :
+      finiteTraceLogRelativeEntropy (referenceState N ρ) (referenceState N σ) /
+        finiteTraceLogRelativeEntropy ρ σ ∈ completeRatios N := by
+    rw [completeRatios, Set.mem_setOf_eq]
+    refine ⟨R, ‹Fintype R›, ‹DecidableEq R›, ?_⟩
+    exact ⟨ρ, σ, h, hm, hpos, rfl⟩
+  have hBdd : BddAbove (insert 0 (completeRatios N)) :=
+    ⟨1, fun _ hx => (completeRatios_bounds N hx).2⟩
+  exact (div_le_div_of_nonneg_right hPost.2 hpos.le).trans
+    (le_csSup hBdd (Set.mem_insert_of_mem 0 hMem))
+
+private lemma direction_eq_zero_of_q_eq_zero (Z V : Matrix n n ℂ) (t : ℝ)
+    (hZ : Z.PosDef) (ht : t ∈ Set.Icc (0 : ℝ) 1) (hq : q Z V t = 0) : V = 0 := by
+  have hGram := weighted_cauchy Z V V t hZ ht
+  rw [hq, mul_zero] at hGram
+  have hre : (Vᴴ * V).trace.re = 0 := by nlinarith only [hGram]
+  have hTrace := congrArg Complex.im (Matrix.trace_conjTranspose (Vᴴ * V))
+  rw [(Matrix.isHermitian_conjTranspose_mul_self V).eq] at hTrace
+  simp only [Complex.star_def, Complex.conj_im] at hTrace
+  apply Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp
+  exact Complex.ext hre (by
+    change (Vᴴ * V).trace.im = 0
+    linarith only [hTrace])
+
+/-- The complete supported entropy coefficient bounds every complex left
+endpoint of every genuine output depolarization, uniformly in the reference. -/
+theorem depolarized_endpointBound_completeCoefficient (N : QuantumChannel a b) (δ : Weight) :
+    EndpointBound ((depolarizingChannel b δ).comp N) (completeCoefficient N) := by
+  classical
+  intro R fR eR Z V hZ hV
+  let M := (depolarizingChannel b δ).comp N
+  have hZero (hv : V = 0) : q (amp M Z) (amp M V) 0 ≤ completeCoefficient N * q Z V 0 := by
+    subst V
+    have hAmp : amp M (0 : Matrix (R × a) (R × a) ℂ) = 0 := by
+      simpa only [zero_smul] using amp_smul M (0 : ℝ) Z
+    simp only [hAmp, q_eq_trace, Matrix.conjTranspose_zero, Matrix.zero_mul,
+      Matrix.trace_zero, Complex.zero_re, mul_zero, le_rfl]
+  by_cases hj : Nonempty (R × a)
+  · have : Nonempty a := Nonempty.map Prod.snd hj
+    have : Nonempty b := density_nonempty (N.mapState (uniformState a))
+    have hM := depolarized_posDef N δ
+    have hOut := amp_posDef M hM Z hZ
+    have hq := q_nonneg Z V 0 hZ (by simp)
+    rcases hq.eq_or_lt with hq | hq
+    · exact hZero (direction_eq_zero_of_q_eq_zero Z V 0 hZ (by simp) hq.symm)
+    · apply (div_le_iff₀ hq).mp
+      by_contra! h
+      let ε := q (amp M Z) (amp M V) 0 / q Z V 0 - completeCoefficient N
+      have hε : 0 < ε := sub_pos.mpr h
+      have hqin : 0 < (Vᴴ * Z⁻¹ * V).trace.re := by
+        rwa [q_zero_parameter Z V hZ] at hq
+      obtain ⟨ρ, σ, _, _, _, _, hm, _, hSupp, _, hpos, hApprox, _⟩ :=
+        faithful_density_pair_ratio_approx M hM Z V hZ hV hqin ε hε
+      have hUpper := postprocessed_ratio_le_completeCoefficient N (depolarizingChannel b δ)
+        ρ σ hSupp hm hpos
+      have hLower := (abs_lt.mp hApprox).1
+      rw [← q_zero_parameter Z V hZ, ← q_zero_parameter (amp M Z) (amp M V) hOut] at hLower
+      change finiteTraceLogRelativeEntropy (referenceState M ρ) (referenceState M σ) /
+        finiteTraceLogRelativeEntropy ρ σ ≤ completeCoefficient N at hUpper
+      dsimp only [ε] at hLower
+      linarith only [hUpper, hLower]
+  · exact hZero (by ext i; exact (hj ⟨i⟩).elim)
+
+/-- The supported finite-real Umegaki formulation of the equality asked in
+arXiv:2608.27171v1, Definition 2, Remark 2 and Section 9. -/
+theorem conditionalCoefficient_eq_completeCoefficient (N : QuantumChannel a b) :
+    conditionalCoefficient N = completeCoefficient N := by
+  have hComplete := completeCoefficient_bounds N
+  apply le_antisymm
+  · apply csSup_le ⟨0, Set.mem_insert _ _⟩
+    intro x hx
+    rcases Set.mem_insert_iff.mp hx with rfl | ⟨R, fR, eR, ρ, σ, h, hpos, rfl⟩
+    · exact hComplete.1
+    · let _ := fR
+      let _ := eR
+      exact (div_le_iff₀ hpos).mpr (supported_conditional_relativeEntropy_contraction N
+        (completeCoefficient N) hComplete (depolarized_endpointBound_completeCoefficient N)
+        ρ σ h)
+  · exact csSup_le_csSup ⟨1, fun _ hx => (conditionalRatios_bounds N hx).2⟩
+      ⟨0, Set.mem_insert _ _⟩
+      (Set.insert_subset_insert (completeRatios_subset_conditionalRatios N))
+
+/-- Uniform arithmetic inverse contraction on all genuine output depolarizations. -/
+def DepolarizedArithmeticBound (N : QuantumChannel a b) (c : ℝ) : Prop :=
+  ∀ (δ : Set.Ioo (0 : ℝ) 1) {R : Type u} [Fintype R] [DecidableEq R]
+    (Z V : Matrix (R × a) (R × a) ℂ) (t : ℝ), Z.PosDef →
+    partialTraceRight V = 0 → t ∈ Set.Icc 0 1 →
+      q (amp ((depolarizingChannel b δ).comp N) Z)
+        (amp ((depolarizingChannel b δ).comp N) V) t ≤ c * q Z V t
+
+private lemma arithmetic_bound_of_endpoints (N : QuantumChannel a b) (c : ℝ)
+    (hc : c ∈ Set.Icc 0 1)
+    (hEnd : ∀ δ : Weight, EndpointBound ((depolarizingChannel b δ).comp N) c) :
+    DepolarizedArithmeticBound N c := by
+  intro δ R _ _ Z V t hZ hV ht
+  by_cases hj : Nonempty (R × a)
+  · have : Nonempty a := Nonempty.map Prod.snd hj
+    have : Nonempty b := density_nonempty (N.mapState (uniformState a))
+    exact kernel_contraction _ c (depolarized_posDef N δ) hc (hEnd δ) Z V t hZ hV ht
+  · have hZero : V = 0 := by ext i; exact (hj ⟨i⟩).elim
+    subst V
+    rw [show amp ((depolarizingChannel b δ).comp N) (0 : Matrix (R × a) (R × a) ℂ) = 0 by
+      simpa only [zero_smul] using amp_smul ((depolarizingChannel b δ).comp N) (0 : ℝ) Z]
+    simp only [q_eq_trace, Matrix.conjTranspose_zero, Matrix.zero_mul,
+      Matrix.trace_zero, Complex.zero_re, mul_zero, le_rfl]
+
+/-- The complete entropy coefficient is the least uniform arithmetic inverse
+bound in `[0,1]` for all output depolarizations, parameters and references. -/
+theorem isLeast_depolarizedArithmeticBound (N : QuantumChannel a b) :
+    IsLeast {c : ℝ | c ∈ Set.Icc 0 1 ∧ DepolarizedArithmeticBound N c}
+      (completeCoefficient N) := by
+  have hc := completeCoefficient_bounds N
+  refine ⟨⟨hc, arithmetic_bound_of_endpoints N _ hc
+    (depolarized_endpointBound_completeCoefficient N)⟩, ?_⟩
+  intro c h
+  have hEnd (δ : Weight) : EndpointBound ((depolarizingChannel b δ).comp N) c := by
+    intro R _ _ Z V hZ hV
+    exact h.2 δ Z V 0 hZ hV (by simp)
+  rw [← conditionalCoefficient_eq_completeCoefficient N]
+  apply csSup_le ⟨0, Set.mem_insert _ _⟩
+  intro x hx
+  rcases Set.mem_insert_iff.mp hx with rfl | ⟨R, fR, eR, ρ, σ, hSupp, hpos, rfl⟩
+  · exact h.1.1
+  · let _ := fR
+    let _ := eR
+    exact (div_le_iff₀ hpos).mpr
+      (supported_conditional_relativeEntropy_contraction N c h.1 hEnd ρ σ hSupp)
+
+private def inverseTest (Z V X : Matrix n n ℂ) (t : ℝ) : ℝ :=
+  2 * (Xᴴ * V).trace.re - energy Z X t
+
+/-- Variational domain of the inverse quadratic form. Boundedness is automatic
+for positive definite bases and can also hold on a singular base. -/
+def inverseTestValues (Z V : Matrix n n ℂ) (t : ℝ) : Set ℝ :=
+  insert 0 (Set.range (fun X => inverseTest Z V X t))
+
+/-- The real variational inverse quadratic form on its bounded domain. -/
+def variationalInverse (Z V : Matrix n n ℂ) (t : ℝ) : ℝ :=
+  sSup (inverseTestValues Z V t)
+
+private lemma inverseTest_le_q (Z V X : Matrix n n ℂ) (t : ℝ)
+    (hZ : Z.PosDef) (ht : t ∈ Set.Icc 0 1) : inverseTest Z V X t ≤ q Z V t := by
+  have h := q_nonneg Z (V - arithmetic Z X t) t hZ ht
+  rw [q_sub_arithmetic Z V X t hZ ht] at h
+  unfold inverseTest
+  linarith
+
+private lemma inverseTest_inverseMatrix (Z V : Matrix n n ℂ) (t : ℝ)
+    (hZ : Z.PosDef) (ht : t ∈ Set.Icc 0 1) :
+    inverseTest Z V (inverseMatrix Z V t) t = q Z V t := by
+  have h := q_sub_arithmetic Z V (inverseMatrix Z V t) t hZ ht
+  rw [arithmetic_inverseMatrix Z V t hZ ht, sub_self] at h
+  have hz : q Z 0 t = 0 := by
+    simp only [q_eq_trace, Matrix.conjTranspose_zero, Matrix.zero_mul,
+      Matrix.trace_zero, Complex.zero_re]
+  rw [hz] at h
+  unfold inverseTest
+  linarith
+
+/-- The variational formula agrees with the native Hilbert–Schmidt inverse at
+every faithful base. -/
+theorem variationalInverse_eq_q (Z V : Matrix n n ℂ) (t : ℝ)
+    (hZ : Z.PosDef) (ht : t ∈ Set.Icc 0 1) :
+    BddAbove (inverseTestValues Z V t) ∧ variationalInverse Z V t = q Z V t := by
+  have hUpper : ∀ x ∈ inverseTestValues Z V t, x ≤ q Z V t := by
+    intro x hx
+    rcases Set.mem_insert_iff.mp hx with rfl | ⟨X, rfl⟩
+    · exact q_nonneg Z V t hZ ht
+    · exact inverseTest_le_q Z V X t hZ ht
+  have hBdd : BddAbove (inverseTestValues Z V t) := ⟨_, hUpper⟩
+  refine ⟨hBdd, le_antisymm (csSup_le ⟨0, Set.mem_insert _ _⟩ hUpper) ?_⟩
+  rw [← inverseTest_inverseMatrix Z V t hZ ht]
+  exact le_csSup hBdd (Set.mem_insert_of_mem _ (Set.mem_range_self (inverseMatrix Z V t)))
+
+omit [DecidableEq n] in
+private lemma energy_linear_base (Z W X : Matrix n n ℂ) (r s t : ℝ) :
+    energy (r • Z + s • W) X t = r * energy Z X t + s * energy W X t := by
+  simp only [energy, arithmetic, Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul,
+    Matrix.mul_smul, smul_add, Matrix.trace_add, Matrix.trace_smul, Complex.add_re,
+    Complex.smul_re]
+  ring
+
+private lemma amp_add_smul (N : QuantumChannel a b) (Z W : Matrix (R × a) (R × a) ℂ)
+    (s : ℝ) : amp N (Z + s • W) = amp N Z + s • amp N W := by
+  simpa only [neg_smul, sub_neg_eq_add] using amp_sub_smul N (-s) Z W
+
+private def replacementMatrix (X : Matrix (R × b) (R × b) ℂ) :
+    Matrix (R × b) (R × b) ℂ :=
+  partialTraceRight X ⊗ₖ ((Fintype.card b : ℝ)⁻¹ • (1 : Matrix b b ℂ))
+
+private lemma amp_depolarized (N : QuantumChannel a b)
+    (δ : Weight) (X : Matrix (R × a) (R × a) ℂ) :
+    amp ((depolarizingChannel b δ).comp N) X =
+      (1 - (δ : ℝ)) • amp N X + (δ : ℝ) • replacementMatrix (amp N X) := by
+  ext ⟨r,i⟩ ⟨s,j⟩
+  rw [amp_entry, act_comp, act_depolarizingChannel]
+  simp only [replacementMatrix, Matrix.add_apply, Matrix.smul_apply, Matrix.kronecker_apply,
+    partialTraceRight, Matrix.trace, Matrix.diag_apply, amp_entry, smul_eq_mul]
+
+omit [DecidableEq n] in
+private lemma continuous_inverseTest {Z V : ℝ → Matrix n n ℂ}
+    (hZ : Continuous Z) (hV : Continuous V) (X : Matrix n n ℂ) (t : ℝ) :
+    Continuous (fun s => inverseTest (Z s) (V s) X t) := by
+  unfold inverseTest energy arithmetic
+  have h₁ : Continuous (fun s => Xᴴ * V s) := continuous_const.mul hV
+  have hL : Continuous (fun s => Z s * X) := hZ.mul continuous_const
+  have hR : Continuous (fun s => X * Z s) := continuous_const.mul hZ
+  have h₂ : Continuous (fun s => Xᴴ * ((1 - t) • (Z s * X) + t • (X * Z s))) :=
+    continuous_const.mul ((hL.const_smul (1 - t)).add (hR.const_smul t))
+  exact (continuous_const.mul (Complex.continuous_re.comp h₁.matrix_trace)).sub
+    (Complex.continuous_re.comp h₂.matrix_trace)
+
+/-- On its finite input domain, the actual channel contracts the variational
+arithmetic inverse form by the complete Umegaki coefficient, even when either
+base is singular. The estimate also proves finiteness at the amplified output. -/
+theorem variationalInverse_channel_contraction (N : QuantumChannel a b)
+    (Z V : Matrix (R × a) (R × a) ℂ) (t : ℝ)
+    (hZ : Z.PosSemidef) (hV : partialTraceRight V = 0) (ht : t ∈ Set.Icc 0 1)
+    (hFin : BddAbove (inverseTestValues Z V t)) :
+    BddAbove (inverseTestValues (amp N Z) (amp N V) t) ∧
+      variationalInverse (amp N Z) (amp N V) t ≤
+        completeCoefficient N * variationalInverse Z V t := by
+  let c := completeCoefficient N
+  let d := c * variationalInverse Z V t
+  have hc : 0 ≤ c := (completeCoefficient_bounds N).1
+  have hd : 0 ≤ d := mul_nonneg hc (le_csSup hFin (Set.mem_insert _ _))
+  have hMetric := (isLeast_depolarizedArithmeticBound N).1.2
+  have hTest (X : Matrix (R × b) (R × b) ℂ) :
+      inverseTest (amp N Z) (amp N V) X t ≤ d := by
+    have hInput (s : ℝ) (hs : 0 < s) :
+        q (Z + s • (1 : Matrix (R × a) (R × a) ℂ)) V t ≤ variationalInverse Z V t := by
+      let W := Z + s • (1 : Matrix (R × a) (R × a) ℂ)
+      let Y := inverseMatrix W V t
+      have hW : W.PosDef := Matrix.PosDef.posSemidef_add hZ (Matrix.PosDef.one.smul hs)
+      rw [← inverseTest_inverseMatrix W V t hW ht]
+      have hComparison : inverseTest W V Y t ≤ inverseTest Z V Y t := by
+        unfold inverseTest
+        rw [show W = (1 : ℝ) • Z + s • 1 by simp [W], energy_linear_base, one_mul]
+        have he := energy_nonneg (1 : Matrix (R × a) (R × a) ℂ) Y t
+          Matrix.PosSemidef.one ht
+        linarith only [mul_nonneg hs.le he]
+      exact hComparison.trans (le_csSup hFin (Set.mem_insert_of_mem _ (Set.mem_range_self Y)))
+    have hOutput (s : ℝ) (hs : 0 < s) :
+        inverseTest (amp N (Z + s • 1)) (amp N V) X t ≤ d := by
+      let W := Z + s • (1 : Matrix (R × a) (R × a) ℂ)
+      have hW : W.PosDef := Matrix.PosDef.posSemidef_add hZ (Matrix.PosDef.one.smul hs)
+      let T := amp N W
+      let U := amp N V
+      let F := fun e : ℝ => inverseTest ((1-e) • T + e • replacementMatrix T)
+        ((1-e) • U + e • replacementMatrix U) X t
+      have hF : Continuous F := continuous_inverseTest (by fun_prop) (by fun_prop) X t
+      have hLim : Tendsto F (𝓝[>] 0) (𝓝 (inverseTest T U X t)) := by
+        simpa only [F, sub_zero, one_smul, zero_smul, add_zero] using
+          (hF.continuousAt (x := (0 : ℝ))).tendsto.mono_left nhdsWithin_le_nhds
+      apply le_of_tendsto hLim
+      filter_upwards [Ioo_mem_nhdsGT (zero_lt_one : (0 : ℝ) < 1)] with e he
+      let δ : Weight := ⟨e, he⟩
+      let M := (depolarizingChannel b δ).comp N
+      have hFδ : F e = inverseTest (amp M W) (amp M V) X t := by
+        simp only [F, M, amp_depolarized, T, U, show (δ : ℝ) = e from rfl]
+      rw [hFδ]
+      by_cases hj : Nonempty (R × a)
+      · have : Nonempty a := Nonempty.map Prod.snd hj
+        have : Nonempty b := density_nonempty (N.mapState (uniformState a))
+        have hMO := amp_posDef M (depolarized_posDef N δ) W hW
+        exact (inverseTest_le_q _ _ X _ hMO ht).trans
+          ((hMetric δ W V t hW hV ht).trans (mul_le_mul_of_nonneg_left (hInput s hs) hc))
+      · have hZero : amp M V = 0 := by
+          rw [show V = 0 by ext i; exact (hj ⟨i⟩).elim]
+          simpa only [zero_smul] using amp_smul M (0 : ℝ) Z
+        have hPSD : (amp M W).PosSemidef := Matrix.nonneg_iff_posSemidef.mp
+          (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm
+            (referenceAction_nonneg M (CStarMatrix.ofMatrix W)
+              (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hW.posSemidef.nonneg)))
+        have hEnergy := energy_nonneg (amp M W) X t hPSD ht
+        rw [hZero]
+        simpa only [inverseTest, Matrix.mul_zero, Matrix.trace_zero, Complex.zero_re,
+          mul_zero, zero_sub] using (neg_nonpos.mpr hEnergy).trans hd
+    let G := fun s : ℝ => inverseTest (amp N Z + s • amp N (1 : Matrix (R × a) (R × a) ℂ))
+      (amp N V) X t
+    have hG : Continuous G := continuous_inverseTest (by fun_prop) continuous_const X t
+    have hLim : Tendsto G (𝓝[>] 0) (𝓝 (inverseTest (amp N Z) (amp N V) X t)) := by
+      simpa only [G, zero_smul, add_zero] using
+        (hG.continuousAt (x := (0 : ℝ))).tendsto.mono_left nhdsWithin_le_nhds
+    apply le_of_tendsto hLim
+    filter_upwards [self_mem_nhdsWithin] with s hs
+    simpa only [G, amp_add_smul] using hOutput s hs
+  have hUpper : ∀ x ∈ inverseTestValues (amp N Z) (amp N V) t, x ≤ d := by
+    intro x hx
+    rcases Set.mem_insert_iff.mp hx with rfl | ⟨X, rfl⟩
+    · exact hd
+    · exact hTest X
+  exact ⟨⟨d, hUpper⟩, csSup_le ⟨0, Set.mem_insert _ _⟩ hUpper⟩
+
+/-- Uniform contraction for the original channel on the finite arithmetic
+inverse domain, including singular input and output bases. -/
+def VariationalArithmeticBound (N : QuantumChannel a b) (c : ℝ) : Prop :=
+  ∀ {R : Type u} [Fintype R] [DecidableEq R]
+    (Z V : Matrix (R × a) (R × a) ℂ) (t : ℝ), Z.PosSemidef →
+    partialTraceRight V = 0 → t ∈ Set.Icc 0 1 → BddAbove (inverseTestValues Z V t) →
+    BddAbove (inverseTestValues (amp N Z) (amp N V) t) ∧
+      variationalInverse (amp N Z) (amp N V) t ≤ c * variationalInverse Z V t
+
+private lemma depolarizedInverse_le_variational (N : QuantumChannel a b) (δ : Weight)
+    (Z V : Matrix (R × a) (R × a) ℂ) (t : ℝ) (hZ : Z.PosDef)
+    (hV : partialTraceRight V = 0) (ht : t ∈ Set.Icc 0 1)
+    (hFin : BddAbove (inverseTestValues (amp N Z) (amp N V) t)) :
+    q (amp ((depolarizingChannel b δ).comp N) Z)
+        (amp ((depolarizingChannel b δ).comp N) V) t ≤
+      (1 - (δ : ℝ)) * variationalInverse (amp N Z) (amp N V) t := by
+  let M := (depolarizingChannel b δ).comp N
+  let T := amp N Z
+  let U := amp N V
+  let s : ℝ := 1 - (δ : ℝ)
+  have hs : 0 ≤ s := sub_nonneg.mpr δ.2.2.le
+  have hOut : 0 ≤ variationalInverse T U t := le_csSup hFin (Set.mem_insert _ _)
+  have hPtr : partialTraceRight U = 0 := (ptr_amp N V).trans hV
+  have hU : replacementMatrix U = 0 := by
+    simp only [replacementMatrix, hPtr, Matrix.zero_kronecker]
+  have hVδ : amp M V = s • U := by rw [amp_depolarized, hU, smul_zero, add_zero]
+  change q (amp M Z) (amp M V) t ≤ s * variationalInverse T U t
+  by_cases hj : Nonempty (R × a)
+  · have : Nonempty a := Nonempty.map Prod.snd hj
+    have : Nonempty b := density_nonempty (N.mapState (uniformState a))
+    have hFaithful := amp_posDef M (depolarized_posDef N δ) Z hZ
+    let X := inverseMatrix (amp M Z) (amp M V) t
+    have hTest : inverseTest T U X t ≤ variationalInverse T U t :=
+      le_csSup hFin (Set.mem_insert_of_mem _ (Set.mem_range_self X))
+    have hT : T.PosSemidef := Matrix.nonneg_iff_posSemidef.mp
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm
+        (referenceAction_nonneg N (CStarMatrix.ofMatrix Z)
+          (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hZ.posSemidef.nonneg)))
+    have hK : (replacementMatrix T).PosSemidef :=
+      (partialTraceRight_posSemidef hT).kronecker ((Matrix.PosSemidef.one (n := b)).smul
+        (inv_nonneg.mpr (Nat.cast_nonneg (Fintype.card b)) : 0 ≤ (Fintype.card b : ℝ)⁻¹))
+    have he := energy_nonneg (replacementMatrix T) X t hK ht
+    rw [← inverseTest_inverseMatrix (amp M Z) (amp M V) t hFaithful ht]
+    change inverseTest (amp M Z) (amp M V) X t ≤ s * variationalInverse T U t
+    rw [hVδ, show amp M Z = s • T + (δ : ℝ) • replacementMatrix T from amp_depolarized N δ Z]
+    unfold inverseTest at hTest ⊢
+    rw [energy_linear_base, Matrix.mul_smul, Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
+    nlinarith only [mul_le_mul_of_nonneg_left hTest hs, mul_nonneg δ.2.1.le he]
+  · have hz : V = 0 := by ext i; exact (hj ⟨i⟩).elim
+    have hu : U = 0 := by
+      rw [show U = amp N V from rfl, hz]
+      simpa only [zero_smul] using amp_smul N (0 : ℝ) Z
+    rw [hVδ, hu, smul_zero, q_eq_trace, Matrix.conjTranspose_zero, Matrix.zero_mul,
+      Matrix.trace_zero, Complex.zero_re]
+    simpa only [hu] using mul_nonneg hs hOut
+
+/-- The common complete and conditional entropy coefficient is also the
+sharp bound for the actual arithmetic inverse metric on its finite domain. -/
+theorem isLeast_variationalArithmeticBound (N : QuantumChannel a b) :
+    IsLeast {c : ℝ | c ∈ Set.Icc 0 1 ∧ VariationalArithmeticBound N c}
+      (completeCoefficient N) := by
+  refine ⟨⟨completeCoefficient_bounds N, variationalInverse_channel_contraction N⟩, ?_⟩
+  intro c hc
+  apply (isLeast_depolarizedArithmeticBound N).2
+  refine ⟨hc.1, ?_⟩
+  intro δ R _ _ Z V t hZ hV ht
+  obtain ⟨hFin, hEq⟩ := variationalInverse_eq_q Z V t hZ ht
+  obtain ⟨hOut, hBound⟩ := hc.2 Z V t hZ.posSemidef hV ht hFin
+  have hNonneg : 0 ≤ variationalInverse (amp N Z) (amp N V) t :=
+    le_csSup hOut (Set.mem_insert _ _)
+  calc
+    _ ≤ (1 - (δ : ℝ)) * variationalInverse (amp N Z) (amp N V) t :=
+      depolarizedInverse_le_variational N δ Z V t hZ hV ht hOut
+    _ ≤ 1 * variationalInverse (amp N Z) (amp N V) t :=
+      mul_le_mul_of_nonneg_right (sub_le_self _ δ.2.1.le) hNonneg
+    _ ≤ c * q Z V t := by simpa only [one_mul, hEq] using hBound
+
 #print axioms act_depolarizingChannel
 #print axioms supported_conditional_relativeEntropy_contraction_of_faithful_output
 #print axioms supported_conditional_relativeEntropy_contraction
+#print axioms depolarized_endpointBound_completeCoefficient
+#print axioms conditionalCoefficient_eq_completeCoefficient
+#print axioms isLeast_depolarizedArithmeticBound
+#print axioms variationalInverse_eq_q
+#print axioms variationalInverse_channel_contraction
+#print axioms isLeast_variationalArithmeticBound
 end D5.S3.Quantum.Divergence.UmegakiChannelSupportedExtension
