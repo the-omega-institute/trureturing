@@ -8,12 +8,13 @@
 
 import Mathlib.Data.Nat.ModEq
 import Mathlib.Data.Nat.Prime.Defs
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.Rintro
+import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option Elab.async false
+set_option maxRecDepth 8192
+set_option exponentiation.threshold 1000
 
 namespace D5.S3.Arith.Primes.WuA248802ConjectureSixRefutation
 
@@ -52,6 +53,11 @@ def claim : Prop :=
 
 /-- The admissible witness n = 79 refutes the entire conditional universal claim. -/
 theorem result : ¬ claim := by
+  have hc1 : ¬ coveredOne 3486 := by rintro ⟨m, hm⟩; omega
+  have hc2 : ¬ coveredTwo 3486 := by rintro ⟨m, hm, _⟩; omega
+  have hc3 : ¬ coveredThree 3486 := by rintro ⟨m, hm, _⟩; omega
+  have hc4 : ¬ coveredFour 3486 := by rintro ⟨⟨m, hm⟩, _⟩; omega
+  have hc5 : ¬ coveredFive 3486 := by rintro ⟨m, hm, _⟩; omega
   have h292 : (2 : ℕ) ^ 292 ≡ 1 [MOD 879] := by decide
   have h274 : (2 : ℕ) ^ 274 ≡ 718 [MOD 879] := by decide
   have h879 : (2 : ℕ) ^ 879 ≡ 1 [MOD 1759] := by decide
@@ -71,15 +77,10 @@ theorem result : ¬ claim := by
   have hd : 1759 ∣ (2 : ℕ) ^ (2 ^ 3486 + 2) + 3 :=
     Nat.modEq_zero_iff_dvd.mp hzero
   have hbound := Nat.minFac_le_of_dvd (by decide : 2 ≤ 1759) hd
-  have hc1 : ¬ coveredOne 3486 := by rintro ⟨m, hm⟩; omega
-  have hc2 : ¬ coveredTwo 3486 := by rintro ⟨m, hm, _⟩; omega
-  have hc3 : ¬ coveredThree 3486 := by rintro ⟨m, hm, _⟩; omega
-  have hc4 : ¬ coveredFour 3486 := by rintro ⟨⟨m, hm⟩, _⟩; omega
-  have hc5 : ¬ coveredFive 3486 := by rintro ⟨m, hm, _⟩; omega
   intro hclaim
   have hEq := hclaim 79 hc1 hc2 hc3 hc4 hc5
   change Nat.minFac ((2 : ℕ) ^ (2 ^ 3486 + 2) + 3) = 2383 at hEq
-  omega
+  exact (ne_of_lt (hbound.trans_lt (by decide : 1759 < 2383))) hEq
 
 #print axioms claim
 #print axioms result

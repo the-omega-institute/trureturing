@@ -49,7 +49,7 @@ internal sealed class WuA248802ConjectureSixRefutationDocument : IScribeDocument
                     + "intersection and the full claim's negation. No exact minimum "
                     + "equality or global priority is asserted."))), DescribeRole.Theorem))));
 
-    private static ScribeNode Domain(string name, string label, Formula body, string prose) =>
+    private static DocumentBlock.Describe Domain(string name, string label, Formula body, string prose) =>
         Describe.Lean(DescribeId.Create("wu-a248802-six-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(label + " coverage domain"),
             StatementSource.FromAuthor(Disp(All("k", Nat(), Iff(Call(name, V("k")), body)))),
