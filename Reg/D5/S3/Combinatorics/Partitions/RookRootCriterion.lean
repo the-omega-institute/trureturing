@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Partitions.RookRootCriterion
 import Reg.Support.DependentFamily
 
+/-! Source-bound geometric singleton readout with whole-family interventions. -/
+
 open _root_.D5.S3.Combinatorics.Partitions.RookRootCriterion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -25,7 +27,7 @@ def actual : Realization signature := realize signature
 def rejected : Realization signature := realize signature
   (fun _ _ _ => False) (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law f := ∀ (m : ℕ) (hm : 0 < m) (N : ℕ) (d : Fin N → ℕ),
     Monotone d → (RootFloorCriterion m (root m d) ↔ f.readout () ⟨m,⟨hm⟩,N⟩ d)
@@ -51,11 +53,17 @@ def family : Registration arena (type_of% @rootFloorCriterion_iff_singleton) whe
     · intro e
       cases e
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     refine ⟨⟨2,⟨by decide⟩,2⟩,(fun _ => 0),(fun _ => 1),?_⟩
     change SingletonColumns 2 (fun _ : Fin 2 => 0) ≠ SingletonColumns 2 (fun _ : Fin 2 => 1)
-    have hgood : SingletonColumns 2 (fun _ : Fin 2 => 0) := by decide
-    have hbad : ¬ SingletonColumns 2 (fun _ : Fin 2 => 1) := by decide
+    have hgood : SingletonColumns 2 (fun _ : Fin 2 => 0) := by
+      intro i j hi
+      norm_num at hi
+    have hbad : ¬ SingletonColumns 2 (fun _ : Fin 2 => 1) := by
+      intro h
+      have he := h 0 1 (by decide) (by decide) rfl
+      exact (by decide : (0 : Fin 2) ≠ 1) he
     exact fun h => hbad (h.mp hgood)
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

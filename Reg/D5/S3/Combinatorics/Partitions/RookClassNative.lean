@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Partitions.RookClassNative
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the literal one-rook area readout. -/
+
 open _root_.D5.S3.Combinatorics.Partitions.RookClassNative
 open _root_.D5.S3.Combinatorics.Partitions.BarreseSourceNormalization
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -10,7 +12,10 @@ open LeanInformationAudit
 noncomputable section
 namespace Reg.D5.S3.Combinatorics.Partitions.RookClassNative.OneRook
 
-private def empty : PositiveColumns := ⟨[],by simp⟩
+private def empty : PositiveColumns := ⟨[],by
+  constructor
+  · exact (show ([] : List ℕ).Pairwise (· ≤ ·) from by simp).sortedLE
+  · simp⟩
 private def one : PositiveColumns := ⟨[1],by decide⟩
 
 abbrev signature : Signature where
@@ -27,7 +32,7 @@ def actual : Realization signature := realize signature
   (fun _ _ b => area b) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
   (fun _ _ _ => 0) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law f := ∀ (m : ℕ) (b : PositiveColumns), rookCount m b 1 = f.readout () m b
 
@@ -50,6 +55,7 @@ def family : Registration arena (type_of% @rookCount_one) where
     · intro e
       cases e
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     refine ⟨1,empty,one,?_⟩
     norm_num [actual,realize,area,empty,one]

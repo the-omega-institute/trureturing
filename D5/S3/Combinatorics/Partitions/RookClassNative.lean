@@ -168,4 +168,16 @@ theorem class_padding (m : ℕ) (b : PositiveColumns) (N : ℕ)
     rfl
   · simpa [pad, area] using class_area m b a
 
+/-- The complete native finite interface used by class enumeration: finiteness,
+    the exact finite rook-vector test, and every common padding length. -/
+theorem native_interface (m : ℕ) (b : PositiveColumns) :
+    Finite (RookClass m b) ∧
+      (∀ a : PositiveColumns, RookEquivalent m a b ↔ area a = area b ∧
+        ∀ k ∈ Finset.Icc 1 (area b), rookCount m a k = rookCount m b k) ∧
+      (∀ (N : ℕ), area b + 1 ≤ N → ∀ a : RookClass m b,
+        a.val.val.length < N ∧ (pad N a.val).length = N ∧
+          (pad N a.val).head? = some 0 ∧ (pad N a.val).sum = area b) := by
+  exact ⟨rookClass_finite m b, fun a => rookEquivalent_iff m a b,
+    fun N hN a => class_padding m b N hN a⟩
+
 end D5.S3.Combinatorics.Partitions.RookClassNative
