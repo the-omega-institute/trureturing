@@ -1,0 +1,88 @@
+**Corollary 5.7 (The nonsplit contribution to the selected degree).**
+
+Let $\mathcal M$ be the finite set of original middles being averaged.
+At each middle start with one actual baseline attaining its maximum
+derivative-zero degree. Denote by $b(w,t)$ and $\mathcal S(w,t)$ the
+single baseline and actual ordered partner family retained in the
+old auxiliary zero-reduction separation. This auxiliary corollary is
+not used for the enlarged range. Define
+
+$$
+W(w,t)=\operatorname{span}_{\mathbb Q}
+   \bigl(\{r_{b(w,t)}\}\cup\{r_e:e\in\mathcal S(w,t)\}\bigr).
+$$
+
+In particular the baseline row is retained even though its pencil is
+zero. Let $\mathcal M_{\rm ns}$ consist of those middles for which this
+span has rank three, has nonzero Dixon residual, and has unramified
+nonsplit physical kernel in the $j=3$ branch. Put
+
+$$
+\mathsf d_{\rm ns}(w,t)=
+ \begin{cases}
+  |\mathcal S(w,t)|,&(w,t)\in\mathcal M_{\rm ns},\\
+  0,&(w,t)\in\mathcal M\setminus\mathcal M_{\rm ns}.
+ \end{cases}
+$$
+
+Thus the weight counts actual ordered partners, whereas a middle in
+$\mathcal M_{\rm ns}$ is assigned only its one primitive kernel.
+Assume the fixed-kernel middle bound and fixed-middle all-layer bound
+
+$$
+\tag{5.36}
+
+ \#\{(w,t)\text{ assigned to one fixed kernel}\}\ll A/p^2,
+ \qquad
+ \mathsf d_{\rm ns}(w,t)
+       \ll_\varepsilon p^\varepsilon(1+K^{1/9}).
+$$
+
+Then
+
+$$
+\tag{5.37}
+
+ \sum_{(w,t)\in\mathcal M}\mathsf d_{\rm ns}(w,t)
+   \ll_\varepsilon p^\varepsilon
+       Y^2\frac{A^4}{p^{15}}K^{10/9}.
+$$
+
+If $A\le C_0p^\alpha$ and $K\le C_1A^7/p^{26}$, this retained
+auxiliary contribution is $O_\varepsilon(Y^2p^\varepsilon)$ for every fixed
+$\alpha<395/106$; the enlarged range uses Section 6.
+
+*Proof.*
+
+Each selected rank-three space has one primitive physical kernel.
+Proposition 5.6 and the first bound in
+(5.36) give
+
+$$
+\#\mathcal M_{\rm ns}
+   \ll_\varepsilon p^\varepsilon\frac A{p^2}
+                      H_3\sqrt{D_{\max}}K
+   \ll_\varepsilon p^\varepsilon Y^2\frac{A^4}{p^{15}}K.
+$$
+
+For a prescribed final $\varepsilon$, apply this kernel bound with
+$\varepsilon/2$ and the all-layer input with $\varepsilon/2$.
+The former uses the small-ideal lemma with exponent $\varepsilon/4$,
+and the remaining logarithm is bounded by $O_\varepsilon(p^{\varepsilon/4})$.
+Multiplication and $1+K^{1/9}\le2K^{1/9}$ now give
+(5.37) with total loss at most $p^\varepsilon$.
+There is one selected family per middle; no sum over all baselines or
+over decompositions of a higher-rank family is present.
+
+The power of $p$ relative to $Y^2$, apart from the arbitrarily small
+subpower loss, is
+
+$$
+4\alpha-15+\frac{10}{9}(7\alpha-26)
+       =\frac{106\alpha-395}{9}.
+$$
+
+It is strictly negative for the stated range. For example,
+$\alpha=149/40$ gives $-1/60$. At $\alpha=26/7$ the saving is
+$p^{-1/7}$ before the subpower loss.
+

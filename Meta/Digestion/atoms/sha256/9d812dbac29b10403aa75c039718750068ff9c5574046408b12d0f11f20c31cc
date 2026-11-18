@@ -1,0 +1,92 @@
+### 6.6 Finite unit-safe shears and projection boxes
+
+Choose $m'$ from $\{\lceil Y/X\rceil,\lceil Y/X\rceil+1\}$ prime
+to $p$, and take the five nodes $z=jm'$, $0\le j\le4$.
+For $p>4$ they are distinct modulo $p$ and $zX\ll Y$.
+Under $(x,u)\mapsto(x,u+zx)$ the primitive kernel becomes
+
+$$
+(a',b',c')=(a,b+2za,c+zb+z^2a).
+$$
+
+At most two nodes have $p\mid c'$. Interpolation at any three good
+indices in $\{0,\ldots,4\}$ gives
+
+$$
+\max(|c|,|m'b|,|(m')^2a|)\le36\max_{\rm good}|c+zb+z^2a|.
+$$
+
+The left side is at least a fixed multiple of $Y^2\tau$.
+Consequently a chart, chosen from the kernel alone, has
+
+$$
+|c'|\asymp Y^2\tau,\quad p\nmid c',\quad
+ |a'|\ll X^2\tau,\quad |b'|\ll A\tau.
+$$
+
+Put $d_z=1-z\theta$ and $\theta'=\theta/d_z$. Exact transport is
+
+$$
+J'=J/d_z,\quad E'=E/d_z^3,\quad
+ U'=U/d_z-zE/d_z^2,\quad V'=V/d_z^2.
+$$
+
+With $e=hE$ define
+
+$$
+X_*'=X_*/d_z-ze/d_z^2.
+$$
+
+Then, exactly,
+
+$$
+\tag{6.11}
+ hU'=X_*'+x'+y'\theta',\qquad (x',y')=(x,y+zx)\in\mathbb Z^2.
+$$
+
+This is an integral unimodular change of free parameters.
+Since $N(d_z)=c'/c$ is a $p$-unit, $d_z$ is a unit in each local
+component or in the ramified local field. In particular
+$1+z\lambda_0$ is a unit. The correction $E/d_z^2$ has coefficients
+in $p^2$ in the $(1,\theta')$ basis in the unramified case (its
+component valuations are at least $3,5$, with root gap one).
+In the ramified field it has valuation four; write
+$\theta'=\theta'_0+p\pi/(2c')$ with a possible unit sign on $\pi$.
+Integer versus half-integer valuations show that its scalar and
+$\pi$ coefficients have valuations at least four, hence its
+$(1,\theta')$ coefficients are in $p^3\mathbb Z_p$.
+Thus $u_0'\equiv u_0$, $u_1'\equiv u_1+zu_0\pmod q$ in either case.
+The projection coset and inverse slope become
+
+$$
+x'-\lambda'y'=\text{constant}\pmod q,\qquad
+ \lambda'=\frac{\lambda_0}{1+z\lambda_0},\qquad
+ y'=\frac{h(1+z\lambda_0)}{g\lambda_0}t^{-1}+\text{constant}\pmod q.
+$$
+
+Both Fourier slopes are units. The original middle intervals remain
+in their old coordinates. The auxiliary physical shear need not
+preserve the original word equation: the displayed identities transport
+the actual graph. The indices $h,g_{\rm idx}$ and the ideal norm $n$
+are unchanged; indeed $e'(J')^{-3}=eJ^{-3}$.
+
+For completeness, the projection boxes follow from coefficient Cramer
+bounds using the *same* actual triple and its unchanged $M$.
+Its sheared rows have bounds $O(X^2),O(A),O(Y^2),O(X),O(Y)$.
+In the $c'$ chart reduce
+$\theta'^2=-a'/c'-(b'/c')\theta'$. Cramer elimination for $U'$ gives
+
+$$
+\begin{aligned}
+ |hu_0'|&\ll\frac{hY(X^2+Y^2|a'/c'|)}M
+          \ll\frac{hXA}M\ll TX/g_{\rm idx},\\
+ |hu_1'|&\ll\frac{hY(A+Y^2|b'/c'|)}M
+          \ll\frac{hYA}M\ll TY/g_{\rm idx}.
+\end{aligned}
+$$
+
+Here $|a'/c'|\ll X^2/Y^2$, $|b'/c'|\ll X/Y$ by the chosen chart.
+Subtracting the fixed coefficients of $X_*'$ shifts only the interval
+centers. Hence the actual integers $x',y'$ lie in intervals of lengths
+$O(TX),O(TY)$. There is no real root-gap divisor or omitted denominator.
+

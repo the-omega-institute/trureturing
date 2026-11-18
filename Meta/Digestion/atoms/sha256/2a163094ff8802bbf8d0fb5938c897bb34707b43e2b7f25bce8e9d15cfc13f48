@@ -1,0 +1,69 @@
+## 7. Completion of the original count
+
+*Proof of Theorem 1.1.*
+
+Write the original widths as $X_0,Y_0$. Apply
+(2.2) for every scalar center and set
+$X=2X_0$, $Y=2Y_0$, $A=XY$. Then
+
+$$
+3Y<p^2,\qquad p^3\le A\le C_1p^{15/4},\qquad C_1=4C_0.
+$$
+
+The unit-middle cover (2.4) retains all remaining
+integer tuples. The five chart estimates need only the width inequalities
+listed in Section 2.2; in particular
+$A\le Y^2<p^4/9$. They are uniform in the fixed original units.
+
+We spell out why every strict arithmetic cutoff used in the proof
+survives for arbitrary fixed $C_1$. In a source bin
+$B=IJ=32A/p^3\ll_{C_1}p^{3/4}$ and $J\le\sqrt B$. Hence
+
+$$
+\frac Bp=O_{C_1}(p^{-1/4}),\quad
+ \frac{C_DB^7}{p^6}=O_{C_1}(p^{-3/4}),\quad
+ \frac{C_*B^6}{p^5}=O_{C_1}(p^{-1/2}),\quad
+ \frac{B^6J}{p^5}=O_{C_1}(p^{-1/8}).
+$$
+
+Also $B^4/p^4=O_{C_1}(p^{-1})$,
+$I\ll_{C_1}p^{3/4}$, and $I^3/p^3=O_{C_1}(p^{-3/4})$.
+These imply (2.10), (2.16),
+the sixth-height zero-$D$ gap, saturation, and $K<p$ after raising a
+single $C_1$-dependent prime threshold. We have not used the false
+endpoint inference $B^4=o(p^3)$: Lemma 3.2
+retains valuation three and excludes valuation at least four, including
+zero, by the exact residual. The ramified proofs in
+Sections 3, 4.2, and
+6 apply to that actual stratum.
+
+At each occupied middle choose exactly one actual maximum baseline.
+Keep it in the whole selected row span. The source chart estimates and
+the paper lemmas handle modular-zero pencils, zero residual, and rank
+four. Lower rank is included in the zero-residual cover. The $j=4$
+nonzero-residual branch contributes (2.17); at this area
+its bound is $O_{\eta,C_1}(Ap^{-17/36+\eta})$. The remaining $j=3$
+branches, including split null directions and ramification, contribute
+(6.19), which is
+$O_{\eta,C_1}(Y^2p^\eta)$ since its two area factors are at most
+$C_1^{12}$ and $C_1^{10}$. The old unramified ideal-only estimate in
+Section 5 is auxiliary and is not substituted for this
+joint bound. The maximum was paid once and no $U$-lift multiplicity was
+silently removed.
+
+Choose the subpower parameters in the divisor, class, layer, Fourier,
+and dyadic bounds smaller than the prescribed $\varepsilon$, as in
+(6.5a); all logarithms fit within the remaining exponent.
+The actual dyadic bins number $O(\log p)$, since the source has
+$1\le\sqrt{Q_{X,Y}(R)}\le2p^2$. Summing them gives
+(2.9) for every positive input exponent.
+Corollary 2.3 now applies at
+$\alpha=15/4$: it uses $A^4/p^{15}\le C_1^4$, not a strictly negative
+power. Thus the minus count is $O_{\varepsilon,C_1}(Y^2p^\varepsilon)$.
+
+There are at most four centers; their factor $64$ and the doubled
+$Y^2=4Y_0^2$ change only the constant. For $p$ below the chosen threshold
+$P$, the literal count is at most $729Y_0^6\le729P^8Y_0^2p^\varepsilon$,
+using $6Y_0<p^2$. This includes $p=2$ and is uniform in the units.
+The endpoint assertion follows for every fixed $C_0\ge1$.
+

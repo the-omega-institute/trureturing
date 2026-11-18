@@ -1,0 +1,21 @@
+## 6. The actual rank-three projection correlation
+
+This section treats only $j=3$ rank-three nonzero-residual families:
+unramified nonsplit, rationally split, and ramified. The $j=4$ branch
+keeps (2.17). At each middle we keep the one selected actual
+maximum baseline and its whole selected partner family in $W$, including
+the baseline’s zero pencil. Every object below belongs to that same
+family, with the original $g=a_1a_2$ fixed. Use the heights
+$H_1,H_2,H_3,D_{\max}$ in (5.2), and fix once and for all
+
+$$
+\tag{6.1}
+ K:=C_D\frac{A^7}{p^{26}},\qquad A=XY,
+$$
+
+where $C_D$ is a sufficiently large absolute constant covering *all*
+actual triple residual bounds and the norm-height constants below.
+This is a public common scale, not a potentially smaller intrinsic maximum.
+If $K<1$ the nonzero branch is empty; for $A\le C_0p^{15/4}$,
+$K\ll_{C_0}p^{1/4}<p$ for sufficiently large $p$.
+

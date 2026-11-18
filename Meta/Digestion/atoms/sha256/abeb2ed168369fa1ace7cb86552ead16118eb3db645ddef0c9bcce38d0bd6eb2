@@ -1,0 +1,61 @@
+### 2.2 The unit-middle reduction and the six actual charts
+
+Let $U_-(p;X,Y)$ count the minus returns whose middle $(w,t)$ satisfies
+$p\nmid wt$. The original three-width unit-middle reduction of [R](#reference-formalsource) gives, with floors when the widths are real,
+
+$$
+\tag{2.4}
+
+ N_{-1}(p^3;X,Y)\leq3U_-(p;X,Y)
+             +8(2\lfloor Y\rfloor+1)^2.
+$$
+
+It uses only $3Y<p^2$, together with $X\leq Y$. Even cyclic
+rotation of the word preserves its alternating coefficients, so the
+three unit-column charts retain the original $a_1,a_2$. The last
+term counts the remaining row-divisible cases; these are not omitted.
+
+Fix a finite set $T$ of the unit-middle returns. Choose one reduced
+basis $(R_{w,t},V_{w,t})$ of
+
+$$
+\Lambda_{w,t}=\{(x,u)\in\mathbb Z^2:wu-tx\equiv0\pmod{p^3}\}
+$$
+
+for each occupied original middle, and reuse that same choice in every
+chart. Put $H=\sqrt A$ and
+
+$$
+Q_{X,Y}(x,u)=\frac YX x^2+\frac XY u^2,\qquad
+ \sigma_{w,t}^2=Q_{X,Y}(R_{w,t}),\qquad
+ \kappa_{w,t}=1+gtw\pmod{p^3}.
+$$
+
+The minor equations in Lemma 2.1 place the two
+physical endpoints $(a,d),(b,v)$ in this same lattice.
+
+The original six-chart decomposition of [R](#reference-formalsource) gives the following six subsets of the actual $T$. They form a cover; they need not be disjoint. The first five estimates require no seventh-height assumption:
+
+| Condition | Proved bound |
+|:---|:---|
+| $N$: $R_{w,t,x}$ is nonunit | $66048\,A^2/p^4$ |
+| $S$: $R_{w,t,x}$ is a unit and $A\sigma_{w,t}^2\leq p^6$ | $148992\,A\,L(p)$ |
+| $U$: the unit-shortest long chart, $\kappa_{w,t}$ nonunit | $O_\eta(p^\eta A^2/p^4)$ |
+| $Z$: at least one physical endpoint is $(0,0)$ | $18A$ |
+| $D$: $\kappa_{w,t}$ a unit and some nonzero endpoint has nonunit first coordinate | $O_\eta(p^\eta(A/p+A^2/p^4))$ |
+| $G$: unit shortest first coordinate, $A\sigma_{w,t}^2>p^6$, $\kappa_{w,t}$ a unit, and both endpoint first coordinates units | the retained count treated below. |
+
+Here
+
+$$
+L(p)=1+\frac{\log(2p)}{\log2}.
+$$
+
+The five discarded-chart bounds are the original-count estimates of [R](#reference-formalsource).
+Their width hypotheses follow from (2.3):
+$2X<p^2$, $2Y<p^3$, $Y<p^2$, and $A<p^4$. In the long nonunit
+right-side theorem the strict long condition supplies its required
+$p^3\leq H\sigma_{w,t}$. The endpoint theorem only needs
+$2Y<p^2$ and $p^2\leq A$. Thus no six-width hypothesis is being
+reintroduced here.
+

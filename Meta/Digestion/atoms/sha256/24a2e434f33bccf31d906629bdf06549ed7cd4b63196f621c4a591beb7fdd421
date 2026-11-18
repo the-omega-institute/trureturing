@@ -1,0 +1,77 @@
+### 6.8 The four-interval inverse-graph lemma
+
+Let $I_1,\ldots,I_4$ be cyclic intervals modulo $q=p^2$; an interval of
+length at least $q$ means the whole residue circle. For units $a,c,C$ put
+
+$$
+F_1(t)=1_{I_1}(t)1_{I_2}(at+b),\qquad
+ G_1(s)=1_{I_3}(s)1_{I_4}(cs+d),
+ \quad N_F=\sum F_1,\quad N_G=\sum G_1.
+$$
+
+Then, for every $\eta>0$,
+
+$$
+\tag{6.13}
+ \sum_{t\bmod q}^{*}F_1(t)G_1(Ct^{-1})
+ \ll N_FN_G/q+p^{3/2+\eta}.
+$$
+
+Indeed, with $\widehat F(A)=\sum_xF(x)e_q(-Ax)$,
+$q^{-1}\|\widehat{1_I}\|_1\ll\log(2q)$, by the geometric-series
+bound and a harmonic sum. Affine unit substitutions preserve this norm;
+product is normalized convolution, so each of $F_1,G_1$ has normalized
+Fourier $L^1$ norm $O(\log^2(2q))$. Fourier expansion reduces the sum to
+$q^{-2}\sum_{A,B}\widehat F_1(A)\widehat G_1(B)S(A,BC;p^2)$, where
+
+$$
+S(A,B;c)=\sum_{t\bmod c}^{*}e_c(At+Bt^{-1}).
+$$
+
+The external input is the gcd-aware complete Kloosterman bound, for every
+integer $A,B$ and positive integer $c$,
+
+$$
+|S(A,B;c)|\ll_\delta c^\delta\sqrt{c\gcd(A,B,c)}\quad(\delta>0),
+$$
+
+as stated in Pascadi [Pascadi, Lemma 3.3, Section 3.2](#reference-pascadi2026), using
+his \[27, Corollary 11.12\] and the divisor bound. The $(A,B)=(0,0)$
+term is $\varphi(q)N_FN_G/q^2\le N_FN_G/q$. For every other residue
+frequency pair, $v_p\gcd(A,BC,p^2)\le1$; the bound is
+$O_\delta(p^{3/2+2\delta})$, including frequencies both divisible by $p$.
+Budgeting $\delta$ and the four logarithms proves (6.13).
+
+Apply the lemma with $F_1$ supported on the original middle intervals:
+its variable is the original $t$, and its second slope is $\lambda_0$.
+These intervals have lengths less than $q$ by $3Y<p^2$, so each residue
+has at most one integer representative in each interval. Thus $N_F$
+is the integer $\Gamma_0$ support count and $N_F\ll A/p^2$.
+The sheared projection graph has unit multipliers $h/g$ and
+$h(1+z\lambda_0)/(g\lambda_0)$; its two-interval function $G_1$ uses
+the unit slope $\lambda'^{-1}$, which need not equal the middle slope.
+
+Projection intervals may be longer than $q$. Their residue images are
+existence indicators, equal to the whole circle if an interval has at
+least $q$ integers. For each residue parameter counted by $G_1$, choose
+one integer lift of each projection coordinate inside its actual interval.
+Every such pair lies in the same affine $\Gamma_z$ coset, since lifting
+changes neither modular coordinate. Distinct parameters have distinct
+first-coordinate residues and hence distinct chosen integer pairs.
+This injects the residue support into the actual integer projection-coset
+support. Therefore $N_G\le\min(q,N_{\rm proj})$, without a projection
+lift factor. No shortness of the sheared witness or projection box is
+required.
+By (6.10) and its exact shear transport, followed by
+(6.12), for fixed $(\text{kernel},e,h)$,
+
+$$
+\tag{6.14}
+ M_T(\text{kernel},e,h)\ll_\eta p^\eta
+             (T^2A^2/p^6+p^{3/2}).
+$$
+
+Only support is counted here. Each original middle has exactly one
+selected $W$; its actual ordered endpoint multiplicity is paid by
+$W(h,n)$ in (6.3). There is no sum over $U$ lifts.
+
