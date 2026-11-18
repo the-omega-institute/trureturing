@@ -13,6 +13,8 @@ strata_touched:
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/CentralCount
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/KernelLimit
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/Tail
+  - D5/S3/Arith/Robin/Analytic/OmegaSecond/CentralWeight
+  - D5/S3/Arith/Robin/Analytic/OmegaSecond/ContinuumWeight
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/MovingWeight
   - D5/S3/Arith/Robin/Analytic/OmegaSecond/Upper
   - D5/S3/Arith/Robin/Analytic/OmegaTail/Density
