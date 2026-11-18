@@ -4,16 +4,28 @@
    mirror-E: none(waiver:native-augmented-level-product)
    anchors: []
    utility: none
-   digest: Actual Ferrers levels with auxiliary full columns have the level-total product count. -/
+   digest: Native augmented completions give exact factorization, root multiplicities and singleton level data. -/
 
 import D5.S3.Combinatorics.Partitions.RookLevelSelection
+import D5.S3.Combinatorics.Partitions.RookRootCriterion
 import Mathlib.Data.Fintype.CardEmbedding
 import Batteries.Tactic.OpenPrivate
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.Algebra.Polynomial.Roots
+import Mathlib.Algebra.Polynomial.Sequence
 
-/-! A native combinatorial side of the level-total factorization. Auxiliary
-    columns are distinguished from the original columns by a disjoint sum. -/
+/-! Native level-total factorization from reversible finite constructions.
+    Auxiliary columns are distinguished from original columns by a disjoint sum.
+
+    New public theorems have proof_shape: content after expanding the new helpers.
+    native_completion_count uses nativePartialEquiv and completionEquiv;
+    native_factorization uses the two counts of the same selections;
+    rookEquivalent_iff_levelPolynomial recovers native coefficients by linear
+    independence; levelPolynomial_eq_iff_roots preserves every root multiplicity;
+    level_totals_singleton uses full lower-level column blocks; level_totals_sum
+    uses a bijection with the literal native cells. These are symbolic family
+    arguments, not bounded enumeration, numeric reduction or certified instances.
+    Escape registration remains unfinished under issue #31465. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -522,7 +534,7 @@ private theorem eval_rookPolynomial (m N t : ℕ) (b : PositiveColumns) :
     (rookPolynomial m N b).eval (t : ℤ) =
       ((∑ k ∈ Finset.range (N+1),
         rookCount m b k * m^(N-k) * Nat.descFactorial t (N-k) : ℕ) : ℤ) := by
-  simp only [rookPolynomial, Polynomial.eval_finset_sum, Polynomial.eval_mul,
+  simp only [rookPolynomial, Polynomial.eval_finsetSum, Polynomial.eval_mul,
     Polynomial.eval_C, descPochhammer_eval_eq_descFactorial,
     Nat.cast_sum, Nat.cast_mul, Nat.cast_pow, mul_assoc]
 
@@ -553,6 +565,182 @@ theorem native_factorization (m N : ℕ) (hm : 0 < m) (b : PositiveColumns)
   congr 1
   exact (native_completion_count m N (N+n) hm b hN).symm.trans
     (augmented_selections_count m N (N+n) b)
+
+private def fallingSequence : Polynomial.Sequence ℤ where
+  elems' := descPochhammer ℤ
+  degree_eq' n := by
+    rw [Polynomial.degree_eq_natDegree (monic_descPochhammer ℤ n).ne_zero,
+      descPochhammer_natDegree]
+
+private theorem rookPolynomial_injective (m N : ℕ) (hm : 0 < m)
+    (a b : PositiveColumns) (h : rookPolynomial m N a = rookPolynomial m N b)
+    (k : ℕ) (hk : k ≤ N) : rookCount m a k = rookCount m b k := by
+  classical
+  have hinj : Function.Injective (fun i : Fin (N+1) => N-i.val) := by
+    intro i j h
+    change N-i.val = N-j.val at h
+    apply Fin.ext
+    have hi := i.isLt
+    have hj := j.isLt
+    omega
+  have hv : LinearIndependent ℤ (fun i : Fin (N+1) => descPochhammer ℤ (N-i.val)) :=
+    fallingSequence.linearIndependent.comp _ hinj
+  have hs : (∑ i : Fin (N+1),
+      ((rookCount m a i.val : ℤ) * (m : ℤ)^(N-i.val)) • descPochhammer ℤ (N-i.val)) =
+      ∑ i : Fin (N+1),
+      ((rookCount m b i.val : ℤ) * (m : ℤ)^(N-i.val)) • descPochhammer ℤ (N-i.val) := by
+    unfold rookPolynomial at h
+    rw [← Fin.sum_univ_eq_sum_range (fun k =>
+      Polynomial.C ((rookCount m a k : ℤ) * (m : ℤ)^(N-k)) * descPochhammer ℤ (N-k)) (N+1),
+      ← Fin.sum_univ_eq_sum_range (fun k =>
+      Polynomial.C ((rookCount m b k : ℤ) * (m : ℤ)^(N-k)) * descPochhammer ℤ (N-k)) (N+1)] at h
+    simpa only [Polynomial.smul_eq_C_mul] using h
+  have he := hv.eq_coords_of_eq hs ⟨k,by omega⟩
+  have hm' : (m : ℤ) ≠ 0 := by exact_mod_cast hm.ne'
+  have hc := mul_right_cancel₀ (pow_ne_zero (N-k) hm') he
+  exact_mod_cast hc
+
+/-- Native rook equivalence is exactly equality of the original boards' level
+    products, at every common registered padding. -/
+theorem rookEquivalent_iff_levelPolynomial (m N : ℕ) (hm : 0 < m)
+    (a b : PositiveColumns) (ha : area a + 1 ≤ N) (hb : area b + 1 ≤ N) :
+    RookEquivalent m a b ↔ levelPolynomial m N a = levelPolynomial m N b := by
+  rw [← native_factorization m N hm a ha, ← native_factorization m N hm b hb]
+  constructor
+  · intro h
+    unfold rookPolynomial
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [h k]
+  · intro h k
+    by_cases hk : k ≤ N
+    · exact rookPolynomial_injective m N hm a b h k hk
+    · rw [rookCount_eq_zero_of_area_lt m a k (by omega),
+        rookCount_eq_zero_of_area_lt m b k (by omega)]
+
+/-- The roots determined by actual level totals, before identifying them with
+    the candidate's padded source tuple. -/
+def levelRoots (m N : ℕ) (b : PositiveColumns) (i : Fin N) : ℤ :=
+  (m : ℤ) * (i.val : ℤ) - (columnLevel m b (N-1-i.val) : ℤ)
+
+private def rootProduct {N : ℕ} (z : Fin N → ℤ) : Polynomial ℤ :=
+  ∏ i : Fin N, (Polynomial.X - Polynomial.C (z i))
+
+private theorem rootProduct_roots {N : ℕ} (z : Fin N → ℤ) :
+    (rootProduct z).roots = (List.ofFn z : Multiset ℤ) := by
+  have h := Polynomial.roots_multiset_prod_X_sub_C (List.ofFn z : Multiset ℤ)
+  simpa only [Multiset.map_coe, Multiset.prod_coe, List.map_ofFn,
+    Fin.prod_ofFn, rootProduct, Function.comp_def] using h
+
+private theorem levelPolynomial_rootProduct (m N : ℕ) (b : PositiveColumns) :
+    levelPolynomial m N b =
+      (rootProduct (levelRoots m N b)).comp (Polynomial.C (m : ℤ) * Polynomial.X) := by
+  unfold levelPolynomial rootProduct
+  rw [Polynomial.prod_comp]
+  apply Finset.prod_congr rfl
+  intro i _
+  simp only [Polynomial.sub_comp, Polynomial.X_comp, Polynomial.C_comp,
+    levelRoots, map_sub, map_mul, Polynomial.mul_comp]
+  ring
+
+/-- Equality of the native level products retains root multiplicities exactly. -/
+theorem levelPolynomial_eq_iff_roots (m N : ℕ) (hm : 0 < m) (a b : PositiveColumns) :
+    levelPolynomial m N a = levelPolynomial m N b ↔
+      (List.ofFn (levelRoots m N a)).Perm (List.ofFn (levelRoots m N b)) := by
+  classical
+  rw [levelPolynomial_rootProduct, levelPolynomial_rootProduct]
+  constructor
+  · intro h
+    have hm' : (m : ℤ) ≠ 0 := by exact_mod_cast hm.ne'
+    have hp : rootProduct (levelRoots m N a) = rootProduct (levelRoots m N b) := by
+      apply Polynomial.eq_of_infinite_eval_eq
+      have hi : Function.Injective (fun t : ℤ => (m : ℤ)*t) :=
+        fun _ _ he => mul_left_cancel₀ hm' he
+      apply (Set.infinite_range_of_injective hi).mono
+      rintro x ⟨t,rfl⟩
+      have he := congrArg (Polynomial.eval t) h
+      simpa only [Set.mem_ofPred_eq, Polynomial.eval_comp, Polynomial.eval_mul,
+        Polynomial.eval_C, Polynomial.eval_X] using he
+    have hr := congrArg Polynomial.roots hp
+    rw [rootProduct_roots, rootProduct_roots] at hr
+    exact Multiset.coe_eq_coe.mp hr
+  · intro h
+    have hp : rootProduct (levelRoots m N a) = rootProduct (levelRoots m N b) := by
+      have hh := (h.map (fun x : ℤ => Polynomial.X - Polynomial.C x)).prod_eq
+      simpa only [List.map_ofFn, Fin.prod_ofFn, rootProduct, Function.comp_def] using hh
+    rw [hp]
+
+private theorem nested_counts_singleton {C : Type*} [Fintype C] [DecidableEq C]
+    (m N : ℕ) (hm : 0 < m) (L : Fin N → Finset (C × Fin m)) (hL : NestedFull m L) :
+    D5.S3.Combinatorics.Partitions.RookRootCriterion.SingletonColumns m
+      (fun i => (L i).card) := by
+  classical
+  have growth (i j : Fin N) (hij : i < j) (hi : (L i).card % m ≠ 0) :
+      (L i).card / m < (L j).card / m := by
+    let c := (L i).image Prod.fst
+    have hupper : (L i).card ≤ c.card * m := by
+      have hs : L i ⊆ c ×ˢ (Finset.univ : Finset (Fin m)) := by
+        intro x hx
+        exact Finset.mem_product.mpr
+          ⟨Finset.mem_image_of_mem _ hx,Finset.mem_univ _⟩
+      simpa only [Finset.card_product, Finset.card_univ, Fintype.card_fin] using
+        Finset.card_le_card hs
+    have hlower : c.card * m ≤ (L j).card := by
+      have hs : c ×ˢ (Finset.univ : Finset (Fin m)) ⊆ L j := by
+        intro x hx
+        obtain ⟨hc,_⟩ := Finset.mem_product.mp hx
+        obtain ⟨y,hy,he⟩ := Finset.mem_image.mp hc
+        simpa only [he] using hL i j hij y hy x.2
+      simpa only [Finset.card_product, Finset.card_univ, Fintype.card_fin] using
+        Finset.card_le_card hs
+    have hs : (L i).card < c.card * m := lt_of_le_of_ne hupper (by
+      intro he
+      apply hi
+      rw [he, Nat.mul_mod_left])
+    have h₁ : (L i).card / m < c.card := (Nat.div_lt_iff_lt_mul hm).mpr hs
+    have h₂ : c.card ≤ (L j).card / m := (Nat.le_div_iff_mul_le hm).mpr hlower
+    omega
+  intro i j hi hj hq
+  dsimp only at hi hj hq
+  by_contra hne
+  rcases lt_or_gt_of_ne hne with hij | hji
+  · have := growth i j hij hi
+    omega
+  · have := growth j i hji hj
+    omega
+
+/-- The actual level-total tuple is geometrically singleton, even when the
+    original Ferrers board is not singleton. -/
+theorem level_totals_singleton (m N : ℕ) (hm : 0 < m) (b : PositiveColumns) :
+    D5.S3.Combinatorics.Partitions.RookRootCriterion.SingletonColumns m
+      (fun i : Fin N => columnLevel m b (N-1-i.val)) := by
+  have h := nested_counts_singleton m N hm (level m N 0 b) (levels_nested m N 0 b)
+  simpa only [level_card, Nat.mul_zero, Nat.add_zero] using h
+
+/-- Counting all original cells by their actual levels preserves total area. -/
+theorem level_totals_sum (m N : ℕ) (hm : 0 < m) (b : PositiveColumns)
+    (hN : area b + 1 ≤ N) :
+    (∑ i : Fin N, columnLevel m b (N-1-i.val)) = area b := by
+  classical
+  let T := {z : Fin N × (Fin b.val.length × Fin m) //
+    m*(N-1-z.1.val)+z.2.2.val < b.val[z.2.1.val]}
+  let f : T → ↥(cells b) := fun z =>
+    ⟨nativeCoord m N b z.val,(coord_mem m N b z.val).mpr z.property⟩
+  have hf : Function.Bijective f := by
+    constructor
+    · intro z w h
+      exact Subtype.ext (coord_injective m N hm b (congrArg Subtype.val h))
+    · intro x
+      obtain ⟨z,hz⟩ := coord_onto m N hm b hN x.val x.property
+      exact ⟨⟨z,(coord_mem m N b z).mp (hz.symm ▸ x.property)⟩,Subtype.ext hz⟩
+  have hc : Fintype.card T = ∑ i : Fin N, columnLevel m b (N-1-i.val) := by
+    dsimp only [T]
+    simp only [Fintype.card_subtype, Finset.card_filter, ← Finset.univ_product_univ,
+      Finset.sum_product, columnLevel]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [Finset.sum_comm]
+  rw [← hc, Fintype.card_congr (Equiv.ofBijective f hf), Fintype.card_coe, cells_card]
 
 end D5.S3.Combinatorics.Partitions.RookAugmentedLevels
 
