@@ -1,0 +1,70 @@
+**定理 274.2（双份换边先恢复原单份洛伦兹锥）。** 在274.1的强背景及四维局域分支中，单独 $\mathsf X_2$ 已给一个保单位实线性序同构
+
+$$
+\theta:V\longrightarrow\operatorname{Herm}_2(\mathbb C),\qquad
+\theta(C_1)=\operatorname{PSD}_2,\qquad
+u=\operatorname{Tr}\circ\theta.
+\tag{274.3}
+$$
+
+等价地，原单份锥是四维洛伦兹锥，原 $K_1$ 是仿射三维椭球。这里尚未使用 $\mathsf M_3$，也尚未分类整个 $C_2$ 或 $C_3$。
+
+证明。先精确复用272.2—272.3的单底结论：$K_2$ 有NR、唯一正交剩余、不可约覆盖格、全部实际面识别、完整RP以及非线段严格凸的实际二元面。两份的四个原二值产品字及其产品测试，按266.2的实际零面链论证给至少四级严格实际面链。故[Paseka—Vetterlein, Theorem4.5][Q266P]的秩至少四前件已满足。266.2—266.3中只依赖这个门槛的表示步骤可在 $K_2$ 执行；[Labardini-Fragoso—Neumann-Coto—Takane][Q266L]仅供应已经模、不可约的实际面格的连续射影坐标、保面同胚和维数。
+
+固定原纯旁观，XIII161.1给 $K_1$ 到整个实际面的仿射同构；其子空间格使用与 $K_2$ 相同的除环。对 $1|1$ 复用266.3的原产品秩乘法证明，得局域秩 $r\ge2$、联合秩 $r^2$，以及
+
+$$
+d_\beta(r^2)=d_\beta(r)^2,\qquad
+d_\beta(a)=a+\frac\beta2a(a-1),\qquad \beta\in\{1,2,4\}.
+$$
+
+266.4的差公式迫 $\beta=2$；$\dim V=r^2=4$ 再迫 $r=2$。于是原纯域具有连续标签 $P_1\simeq\mathbb{CP}^1$、$P_2\simeq\mathbb{CP}^3$。全部实际面对应完整复射影子空间，$K_1$ 严格凸且每颗原纯点暴露。这一步还没有把原仿射混合识别为矩阵混合。
+
+先给产品网格的准确坐标。原纯产品形成单射 $\chi:P_1\times P_1\to\mathbb{CP}^3$，每个固定纯旁观的行与列都是完整射影直线。取两条不同行；它们因纯边缘不同而不交，故其向量子空间给 $\mathbb C^4=U\oplus W$，$\dim_{\mathbb C}U=\dim_{\mathbb C}W=2$。第三行与两者不交，是可逆图 $\operatorname{graph}F$；调整 $W$ 坐标令 $F=I$。每一列连接 $[v,0]$ 与 $[0,w]$，又交 $\operatorname{graph}I$，所以 $[w]=[v]$。任一其他行是 $\operatorname{graph}A$，与每一列相交迫使 $Av\parallel v$ 对全部 $[v]\in\mathbb{CP}^1$ 成立，故 $A=\lambda I$。完整行列保证参数没有遗漏。由此有双射 $\xi,\eta:P_1\to\mathbb{CP}^1$，使
+
+$$
+\chi(a,b)=[\xi(a)\otimes\eta(b)].
+\tag{274.4}
+$$
+
+固定一条完整行或列，其原连续嵌入及逆给 $\xi,\eta$ 连续；它们是同胚。这里允许两个因子分别重标，没有将 $\xi$ 与 $\eta$ 预认作同一个局域坐标，也没有预认它们保持正交极性。
+
+对每颗原纯 $a,b$，选非零原正泛函 $F_a,G_b$，其归一零面分别恰为 $\{a\},\{b\}$。令非零复线性行 $\alpha_a,\beta_b$ 分别消去 $\xi(a),\eta(b)$。原正产品效应 $F_a\otimes G_b$ 的零面含两条ruling；二者生成复射影超平面。它非零，故零面恰为该coatom。将原双份纯点标为 $z_M$，其中 $[\operatorname{vec}M]\in\mathbb{CP}^3$，得到
+
+$$
+(F_a\otimes G_b)(z_M)=0
+\quad\Longleftrightarrow\quad
+\alpha_a M\beta_b^T=0.
+\tag{274.5}
+$$
+
+对可逆 $M$，原最大界使条件化 $T_M:g\mapsto(\operatorname{id}\otimes g)z_M$ 从 $C_1^*$ 正映入 $C_1$。(274.5)使 $T_M(G_b)$ 非零且准确落在纯射线 $\xi^{-1}[M\beta_b^T]$。这些方向遍历全部原纯射线，故 $T_M(C_1^*)=C_1$。两载体实维数均为四，$T_M$ 因而是序同构。于是
+
+$$
+A_G=T_G T_I^{-1}\in\operatorname{Aut}(C_1),\qquad
+A_G:[p]\mapsto\xi^{-1}G\xi([p]),\quad G\in GL_2(\mathbb C).
+\tag{274.6}
+$$
+
+这些是数学锥自同构，未被宣布为保原单位或可调用的物理操作。
+
+补齐标量与紧群。若两个锥自同构有相同纯射线作用，其比 $D$ 固定每条纯射线。对归一纯点 $p$ 写 $Dp=\lambda(p)p$；$\lambda(p)=u(Dp)>0$ 连续且只取有限维算子 $D$ 的有限个实特征值。$P_1\simeq\mathbb{CP}^1$ 连通，故 $D$ 为同一正标量乘恒等。由此 $A_GA_H=c(G,H)A_{GH}$，其中 $c(G,H)>0$。由于 $G\mapsto z_G$ 连续且 $A_I=I$，
+
+$$
+\rho(G)=\frac{A_G}{|\det_{\mathbb R}A_G|^{1/4}}
+\tag{274.7}
+$$
+
+是一条真正连续表示；正标量的四次行列式恰消去cocycle。复标量矩阵的像为恒等。$H=\rho(SU(2))$ 紧，且在原全部纯射线上传递。
+
+Haar平均给一个 $H$ 不变的严格正单位 $\widehat u$、其归一底内的一个 $H$ 不动内点 $c$，以及 $\ker\widehat u$ 上的一个 $H$ 不变正定内积。新底 $\widehat K=C_1\cap\{\widehat u=1\}$ 仍严格凸；其整个边界为纯点，$H$ 在边界上传递，所以边界到 $c$ 的这个内积距离恒定。每条从 $c$ 出发的射线恰交边界一次，故 $\widehat K$ 是整个三球。因此 $C_1$ 是洛伦兹锥。
+
+最后回到原单位，不能把 $\widehat u$ 当作原 $u$。在洛伦兹坐标 $C_1=\{(t,x):t\ge\|x\|\}$ 中写 $u(t,x)=at+b\cdot x$，其中 $a>\|b\|$。原截面满足
+
+$$
+x^T(a^2I-bb^T)x+2b\cdot x\le1.
+\tag{274.8}
+$$
+
+矩阵 $a^2I-bb^T$ 正定，该椭球连通且含 $x=0$；$1-b\cdot x$ 不可能在其中过零，所以平方没有引入错误支。原 $K_1$ 因而是完整椭球。将其保单位仿射同构到 Bloch 球，再作齐次实线性延拓，得到(274.3)。没有调用二维Gleason，也没有假设原单位下的 $A_G$ 已保迹。$\square$
+

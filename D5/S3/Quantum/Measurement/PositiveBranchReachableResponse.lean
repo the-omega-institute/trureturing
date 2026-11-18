@@ -114,7 +114,7 @@ private theorem weightedCP_quadratic (K : α → Matrix n n ℂ) (c : α → ℝ
   rw [hv]
 
 omit [DecidableEq n] in
-private theorem weightedCP_kernel (K : α → Matrix n n ℂ) (c : α → ℝ)
+theorem weightedCP_kernel (K : α → Matrix n n ℂ) (c : α → ℝ)
     (hc : ∀ a, 0 < c a) {X : Matrix n n ℂ} (hX : X.PosSemidef) (x : n → ℂ) :
     (weightedCP K c X) *ᵥ x = 0 ↔ ∀ a, X *ᵥ ((K a)ᴴ *ᵥ x) = 0 := by
   constructor

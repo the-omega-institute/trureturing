@@ -27,6 +27,14 @@ internal sealed class PositiveBranchReachableResponseDocument : IScribeDocumentD
                 + "W_l(K,rho) is the complex span of K_w v for words of length at most l and v in supp(rho); "
                 + "S(K,rho) is the union, equivalently the supremum, of these increasing subspaces. "
                 + "Quadratic forms use the Euclidean inner product and their real parts.")),
+            Theorem("kernel", "weightedCP_kernel", "Kernel of a positive weighted Kraus sum", KernelFormula(),
+                "For arbitrary finite matrix and branch index types, strictly positive real weights and a "
+                + "positive semidefinite X, the weighted Kraus sum kills v exactly when X kills every K_a^* v. "
+                + "The quadratic form of the sum is the sum of the nonnegative weighted quadratic forms. "
+                + "A zero total forces each term to vanish, strict positivity removes its weight, and the PSD "
+                + "kernel criterion gives the forward implication. The reverse implication follows by linearity. "
+                + "Empty index types remain allowed. This kernel criterion is also consumed by exact-length "
+                + "Kraus-word strict positivity with every weight equal to one."),
             Theorem("cp-positive", "weightedCP_psd", "Positive weighted Kraus maps", CpPositiveFormula(),
                 "For nonnegative weights, every Kraus sandwich of a positive semidefinite matrix is positive "
                 + "semidefinite, as is their weighted sum. Strict positivity and trace preservation are unnecessary."),
@@ -163,6 +171,21 @@ internal sealed class PositiveBranchReachableResponseDocument : IScribeDocumentD
         Seq(Call("Finite", Index), Sp, Land, Sp, Call("Finite", A), Sp, Rightarrow, Sp,
             All(K, Arrow(A, Mat(Index)), All(C, Arrow(A, Real), All(Rho, Mat(Index),
                 Seq(Call("Positive", C), Sp, Land, Sp, Psd(Rho), Sp, Rightarrow, Sp, body)))))));
+    private static Formula KernelFormula()
+    {
+        Formula x = F.Id("X"), a = F.Id("a");
+        Formula transformed = Call("mulVec", Call("adjoint", Call("apply", K, a)), V);
+        return Disp(All(Index, Kind, All(A, Kind,
+            Seq(OpenBracket, Call("Fintype", Index), CloseBracket, Sp,
+                OpenBracket, Call("Fintype", A), CloseBracket, Sp,
+                All(K, Arrow(A, Mat(Index)), All(C, Arrow(A, Real),
+                    Seq(Scope(All(a, A, Seq(D(0), Sp, Lt, Sp, Call("apply", C, a)))),
+                        Sp, Rightarrow, Sp, All(x, Mat(Index), Seq(Psd(x), Sp, Rightarrow, Sp,
+                            All(V, Arrow(Index, Complex), Seq(
+                                Eqn(Call("mulVec", Call("weightedCP", K, C, x), V), D(0)),
+                                Sp, Iff, Sp,
+                                Scope(All(a, A, Eqn(Call("mulVec", x, transformed), D(0)))))))))))))));
+    }
     private static Formula SupportFormula() => Disp(Generic(All(L, Nat,
         Eqn(Supp(Call("R", K, C, Rho, L)), Call("W", K, Rho, L)))));
     private static Formula FaithfulFormula() => Disp(Generic(Ex(L, Nat, Ex(Mu, Real,

@@ -1,0 +1,8 @@
+## 10. Continuation: controllable states, observable states and circuit costs
+
+The native pulse supplier’s Definition 8.3 specifies independently addressed single-position pulses with arbitrary phase and angle. Sections 10–15 use those ideal projected generators. A scalable modular-arithmetic compiler and physical error model are separate hypotheses.
+
+Let d=|B_n|=F_{n+2} for n>=1, X_i=H_i(0), Y_i=H_i(pi/2), and P_s=|s><s| on K_n. Both X_i and Y_i are traceless Hermitian matrices. The site-i edges form a matching; on each oriented edge their matrices are the usual Pauli X and Y, and on blocked words they vanish. Pulse angles are real and inverses are available. Negative angles can also be replaced modulo 2pi for these generators. The following controllability assertions do not bound duration, pulse count or precision.
+
+The external combinatorial input is Numata-Yamanouchi [NY22], Theorem 3.7: the toggles of independent sets of the open path generate the entire symmetric group on those independent sets. Its vertices 1,...,n and independent-set indicator strings map literally to our B_n and tau_i. It is a theorem about permutations, not a theorem about their phases or quantum control. The added lifting argument appears below.
+

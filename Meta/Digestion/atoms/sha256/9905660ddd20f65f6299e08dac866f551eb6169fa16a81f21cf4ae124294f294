@@ -1,0 +1,30 @@
+**定理 261.3（完整候选及其简洁几何）。** 保留250.1的完整强全有限背景，则(261.3)当且仅当XVIII定理253.6及其式(253.9)的同一个全有限复矩阵坐标族存在。对每个有限 $N\ge1$，由其原中心反点与混合独立生成的关系还准确满足
+
+$$
+xR_{K_N}y
+\quad\Longleftrightarrow\quad
+\operatorname{Tr}(\Theta_Nx\,\Theta_Ny)=0
+\quad\Longleftrightarrow\quad
+\operatorname{ran}(\Theta_Nx)\perp\operatorname{ran}(\Theta_Ny).
+\tag{261.6}
+$$
+
+证明。261.2支付XVIII(253.2)的整个CB、ZP、FI候选。直接应用XVIII253.6，不重证其固定线透视、除环与实迹Gleason桥、既有完整框架乘法或全有限传播，得到一个 $r\ge2$ 及同一个 $\Theta_N=\theta^{\otimes N}$，对全部有限 $N$ 有
+
+$$
+\Theta_N(C_N)=\operatorname{PSD}_{r^N},
+\qquad u_N=\operatorname{Tr}\Theta_N.
+\tag{261.7}
+$$
+
+反向，在标准归一PSD体上，令 $\rho R^0\sigma$ 当且仅当 $\operatorname{Tr}(\rho\sigma)=0$。对正矩阵，迹零恰等价于支持正交；固定一端的关系集合是核空间上的整个支持面，或空集。故 $R^0$ 对称、面闭，包含全部中心反点种子，并因 $\operatorname{Tr}(\rho^2)>0$ 而无自环。最小性给 $R_{K_N}\subseteq R^0$。若两态支持正交，它们正权谱分解的全部交叉纯对都是种子，有限混合规则给反包含。因此(261.6)成立，特别给三复制NR。CB由标准二元支持三球供应。
+
+于是最简几何可以表为原面格及其由关系生成的正交补。对任意 $A\subseteq K_N$，定义 $A^{\perp_R}=\{y:xR_{K_N}y\text{ 对全部 }x\in A\}$。它是面或空集，且
+
+$$
+A^{\perp_R\perp_R}=F(A),
+\tag{261.8}
+$$
+
+其中 $F(A)$ 是整个最小实际面，$F(\varnothing)=\varnothing$。证明只需(261.6)：若 $S$ 是所有 $\Theta_Nx$ 的支持空间的线性张成，第一正交补是 $S^\perp$ 的密度支持面，第二正交补是 $S$ 的密度支持面，准确等于 $F(A)$。有限维使任意 $A$ 的支持已由有限子集张成；空集及零支持按空面处理。这里的支持子空间、正交面格及三维球形都是分类后的描述，未被塞进关系生成定义。$\square$
+

@@ -35,7 +35,7 @@ open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
    The auxiliary j is a coordinate weight on explicitly summable vectors;
    no diagonal frequency map on H is defined. -/
 
-private lemma derivative_shifted_geometric {R : ℝ} (hR : 0 < R) (hR1 : R < 1)
+lemma derivative_shifted_geometric {R : ℝ} (hR : 0 < R) (hR1 : R < 1)
     (j : ℕ) : Summable (fun n : ℕ => (n + 1 : ℝ) ^ j * R ^ n) := by
   have hg := summable_pow_mul_geometric_of_norm_lt_one j (r := R)
     (by simpa [Real.norm_eq_abs, abs_of_pos hR] using hR1)
@@ -140,14 +140,14 @@ theorem hasDerivAt_operator {z : ℂ} (hz : ‖z‖ < 1) :
       (by simpa using (Metric.mem_ball.mp hζ).le) p)
     hm (term_summable hz).of_norm hm
 
-private def sourceCoefficient (n : ℕ) : H :=
+def sourceCoefficient (n : ℕ) : H :=
   lp.single 2 n (halfBinomial (n + 1) / (Real.sqrt (n + 1 : ℝ) : ℂ))
 
 private lemma sourceCoefficient_bound (n : ℕ) : ‖sourceCoefficient n‖ ≤ 1 := by
   rw [sourceCoefficient, lp.norm_single (by norm_num : (0 : ℝ≥0∞) < 2)]
   simpa [sourceValue] using sourceValue_bound 1 n
 
-private def sourceFamilyTerm (j : ℕ) (z : ℂ) (n : ℕ) : H :=
+def sourceFamilyTerm (j : ℕ) (z : ℂ) (n : ℕ) : H :=
   ((n + 1 : ℂ) ^ j * z ^ (n + 1)) • sourceCoefficient n
 
 /-- Entirely specified coordinate-weighted source series, on the original H. -/
@@ -187,7 +187,7 @@ private lemma sourceFamilyDerivativeTerm_bound (j : ℕ) {R : ℝ} (hR : 0 ≤ R
         (sourceCoefficient_bound n) (norm_nonneg _) (by positivity)
     _ = _ := mul_one _
 
-private lemma sourceFamily_summable (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
+lemma sourceFamily_summable (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
     Summable (fun n : ℕ => ‖sourceFamilyTerm j z n‖) := by
   obtain ⟨R, hzR, hR1⟩ := exists_between hz
   have hR : 0 < R := lt_of_le_of_lt (norm_nonneg z) hzR
@@ -231,7 +231,7 @@ theorem hasDerivAt_sourceFamily (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
       (by simpa using (Metric.mem_ball.mp hζ).le) n)
     hm (sourceFamily_summable j hz).of_norm hm
 
-private lemma sourceFamily_apply (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ) :
+lemma sourceFamily_apply (j : ℕ) {z : ℂ} (hz : ‖z‖ < 1) (n : ℕ) :
     sourceFamily j z n = (n + 1 : ℂ) ^ j * halfBinomial (n + 1) * z ^ (n + 1) /
       (Real.sqrt (n + 1 : ℝ) : ℂ) := by
   change (lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 n)
@@ -270,14 +270,14 @@ private lemma sourceFamily_frequency_derivative (j : ℕ) {z : ℂ} (hz : ‖z�
   simp only [pow_succ]
   ring
 
-private lemma sourceFamily_zero_eq_source {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
+lemma sourceFamily_zero_eq_source {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     sourceFamily 0 (Real.sqrt r : ℂ) = source r hr hr1 := by
   ext n
   rw [sourceFamily_apply 0 (radial_norm_lt_one hr1)]
   change _ = sourceValue r n
   simp only [pow_zero, one_mul, sourceValue]
 
-private lemma sourceFamily_one_eq_weightedSource {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
+lemma sourceFamily_one_eq_weightedSource {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     sourceFamily 1 (Real.sqrt r : ℂ) = weightedSource r hr hr1 := by
   ext n
   rw [sourceFamily_apply 1 (radial_norm_lt_one hr1)]
@@ -330,14 +330,14 @@ theorem hasDerivAt_columnSeries {z : ℂ} (hz : ‖z‖ < 1) :
     HasDerivAt columnSeries (columnSeriesDerivative z) z :=
   (hasDerivAt_resolvent hz).clm_apply (hasDerivAt_sourceFamily 0 hz)
 
-private def radialOperatorDerivative (r : ℝ) : H →L[ℂ] H :=
+def radialOperatorDerivative (r : ℝ) : H →L[ℂ] H :=
   ((1 / (2 * Real.sqrt r) : ℝ) : ℂ) • operatorDerivative (Real.sqrt r : ℂ)
 
-private def radialSourceFamily (j : ℕ) (r : ℝ) : H := sourceFamily j (Real.sqrt r : ℂ)
+def radialSourceFamily (j : ℕ) (r : ℝ) : H := sourceFamily j (Real.sqrt r : ℂ)
 
-private def radialColumn (r : ℝ) : H := columnSeries (Real.sqrt r : ℂ)
+def radialColumn (r : ℝ) : H := columnSeries (Real.sqrt r : ℂ)
 
-private def radialColumnDerivative (r : ℝ) : H :=
+def radialColumnDerivative (r : ℝ) : H :=
   ((1 / (2 * Real.sqrt r) : ℝ) : ℂ) • columnSeriesDerivative (Real.sqrt r : ℂ)
 
 /-- Original radial operator, with the physical frequencies n+1 unchanged. -/
@@ -359,7 +359,7 @@ private lemma radial_source_family_derivative_eq (j : ℕ) {r : ℝ}
   <;> ring
 
 /-- In particular 2r v'=w and 2r w'=Dw, as identities of actual H vectors. -/
-private lemma hasDerivAt_radial_sourceFamily (j : ℕ) {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma hasDerivAt_radial_sourceFamily (j : ℕ) {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     HasDerivAt (radialSourceFamily j)
       ((1 / (2 * (r : ℂ))) • radialSourceFamily (j + 1) r) r := by
   rw [← radial_source_family_derivative_eq j hr hr1]
@@ -373,21 +373,21 @@ private lemma radialColumn_eq_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   ext n
   exact resolvent_column hr hr1 n
 
-private lemma hasDerivAt_radial_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma hasDerivAt_radial_column {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     HasDerivAt radialColumn (radialColumnDerivative r) r :=
   (hasDerivAt_columnSeries (radial_norm_lt_one hr1)).scomp r
     (Real.hasDerivAt_sqrt hr.ne').ofReal_comp
 
-private def sourceBilinearFunctional (w : H) : H →L[ℂ] ℂ := innerSL ℂ (star w)
+def sourceBilinearFunctional (w : H) : H →L[ℂ] ℂ := innerSL ℂ (star w)
 
-private lemma sourceBilinearFunctional_apply (w x : H) :
+lemma sourceBilinearFunctional_apply (w x : H) :
     sourceBilinearFunctional w x = ∑' n : ℕ, w n * x n := by
   rw [sourceBilinearFunctional, innerSL_apply_apply, lp.inner_eq_tsum]
   apply tsum_congr
   intro n
   simp only [lp.star_apply, RCLike.inner_apply', ← RCLike.star_def, star_star]
 
-private lemma sourceBilinearFunctional_smul_left (a : ℂ) (w x : H) :
+lemma sourceBilinearFunctional_smul_left (a : ℂ) (w x : H) :
     sourceBilinearFunctional (a • w) x = a * sourceBilinearFunctional w x := by
   rw [sourceBilinearFunctional_apply, sourceBilinearFunctional_apply]
   calc
@@ -476,7 +476,7 @@ theorem radial_operator_derivative_rankOne {r : ℝ} (hr : 0 < r) (hr1 : r < 1) 
   rw [radialOperatorDerivative, smul_smul, hcoef, ← smul_smul,
     radial_scaled_operatorDerivative hr hr1]
 
-private def radialNormalization (r : ℝ) : ℝ := 1 / (Real.sqrt (1 - r) * F r)
+def radialNormalization (r : ℝ) : ℝ := 1 / (Real.sqrt (1 - r) * F r)
 
 private lemma radialNormalization_ne_zero {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     (radialNormalization r : ℂ) ≠ 0 := by
@@ -485,7 +485,7 @@ private lemma radialNormalization_ne_zero {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   exact_mod_cast (one_div_ne_zero (mul_ne_zero hs hF))
 
 /-- The actual explicit inverse column obeys r c'=κ R_-w/2. -/
-private lemma radial_column_derivative_scaled {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma radial_column_derivative_scaled {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     (r : ℂ) • radialColumnDerivative r =
       ((radialNormalization r : ℂ) / 2) •
         resolvent (Real.sqrt r : ℂ) (weightedSource r hr.le hr1) := by
@@ -561,7 +561,7 @@ private lemma radialNormalization_hasDerivAt {r : ℝ} (hr : 0 < r) (hr1 : r < 1
   field_simp [hs0, hF]
   <;> ring
 
-private lemma radial_pair_normalization {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma radial_pair_normalization {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     1 + sourceBilinearFunctional (radialSourceFamily 1 r) (radialColumn r) =
       (radialNormalization r : ℂ) := by
   rw [radialColumn_eq_column hr hr1]

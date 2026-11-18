@@ -27,6 +27,10 @@ internal sealed class OpenBoundaryMPSDensityRecoveryDocument : IScribeDocumentDe
                 "This is exactly OpenBoundaryMPSMarginalBirationality.reconstructedMatrix evaluated at the same three-site coherent tensor t. The supplier's chartPoly, reconstructedLeft and triple_gauge are reused with their original definitions and proof. No second support-rigidity or core-reconstruction theorem is introduced."),
             Definition("ObservableChart", "An intrinsic condition on the observed density",
                 "There exists a complex vector v on three-bit words such that t = rawPrefix 3 m ψ times v has chartPoly(t) nonzero and transfer(canonicalCore t) is injective on all complex two by two matrices. Both tests depend only on the observed Q₃. The chart retains every factor of the supplier polynomial, including the reconstructed sum determinant. This definition asserts neither nonemptiness nor density."),
+            Describe.Lean(DescribeId.Create("open-density-tail-gram"),
+                DeclarationHandle.Create(Module + ".tail_gram"), H("The original right-environment Gram"),
+                StatementSource.FromAuthor(TailGramFormula()), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every core, right boundary and natural complement length m, tailMap A r m times its conjugate transpose equals transfer(A) iterated m times on rr†. The interior common-core dictionary consumes this original right-tail identity; its separate left Gram uses snoc words and the dual transfer."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("observable-chart-phase-recovery"),
                 DeclarationHandle.Create(Module + ".observable_chart_phase_recovery"),
                 H("Phase recovery against every actual competitor"),
@@ -37,7 +41,7 @@ internal sealed class OpenBoundaryMPSDensityRecoveryDocument : IScribeDocumentDe
                     Paragraph(Text("Choose t=Q₃v. For every actual realization of either state, factor its amplitude-column matrix as F₃T. Matrix multiplication gives t=F₃γ for an induced virtual vector γ. Hence the same t is an actual coherent three-site MPS for both realizations, even when the competitor parameters are singular. Apply the existing triple_gauge directly to each realization; it supplies the same reconstructed left boundary and symbol matrices. At length n the free right boundary becomes q=(s times s to the power minus n)Ur, and the physical amplitude function is unchanged.")),
                     Paragraph(Text("The chart's slice determinant factors through the rows lA_i, A₀ and the columns A_iγ. Its nonvanishing makes the rows lA_i and A₀ invertible. Restricting F₃ to the rows indexed by (i,0,0) therefore proves injectivity of F₃. This is a rank consequence of the supplied chart, not another gauge theorem.")),
                     Paragraph(Text("For the common canonical core, Q₃=F₃ E^m(qq†) F₃†. Injectivity of F₃ cancels the two sandwiches; injectivity of E cancels its iterate. Equality of the two rank-one boundary Grams gives q′=zq with norm(z)=1, including the zero-boundary case. Linearity then propagates the same phase to the whole state. Conversely a unit phase cancels against its conjugate in every raw density entry.")),
-                    Paragraph(Text("This is a conditional reconstruction bridge toward Critch–Morton Conjecture 9, not an OpenProblemResolutionClaim. An intrinsic nonempty dense relative real-algebraic open locus for every length at least four, and the no-fewer clause asserting generic two-site nonidentifiability, remain obligations of the original problem. No all-interior-window interpretation is asserted.")),
+                    Paragraph(Text("This is a conditional reconstruction bridge toward Critch–Morton Conjecture 9, not an OpenProblemResolutionClaim. OpenBoundaryMPSDensityGenericity.intrinsic_recovery_genericity supplies an intrinsic nonempty dense relative real-algebraic open locus in the actual state image at every length at least four and applies this arbitrary-competitor recovery theorem there. The no-fewer clause asserting generic two-site nonidentifiability in the full actual state image remains unproved. No all-interior-window interpretation is asserted.")),
                     Paragraph(Text("The gauge reconstruction is supplied by the existing Conjecture 8 formalization. The present mathematical addition is the Hermitian density bridge with a common observed coherent vector and arbitrary actual competitors. Injectivity here concerns a finite-dimensional linear map. Its algebraic inverse is not asserted to be completely positive or implementable. The theorem provides no stability, sample complexity, dynamics, time group, Hamiltonian, clock, energy or thermodynamic cost."))),
                 DescribeRole.Theorem))));
 
@@ -46,6 +50,19 @@ internal sealed class OpenBoundaryMPSDensityRecoveryDocument : IScribeDocumentDe
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula TailGramFormula()
+    {
+        Formula a = X("A"), r = X("r"), m = X("m");
+        Formula tail = At(Local("tailMap"), a, r, m);
+        Formula gram = At(Q("HMul", "hMul"), tail, At(Q("Matrix", "conjTranspose"), tail));
+        Formula rhs = At(Q("Function", "iterate"), At(Local("transfer"), a), m,
+            At(Q("Matrix", "vecMulVec"), r, At(Q("star"), r)));
+        Formula bond = Supplier("PeriodicMPSParentIntersection", "Bond");
+        Formula boundary = Arrow(At(Q("Fin"), D(2)), Complexes());
+        return Disp(All("A", Arrow(At(Q("Fin"), D(2)), bond), All("r", boundary,
+            All("m", Seq(Mathbb, Grp(X("N"))), Eq(gram, rhs)))));
+    }
 
     private static Formula RecoveryFormula()
     {

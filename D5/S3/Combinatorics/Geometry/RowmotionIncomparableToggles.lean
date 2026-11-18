@@ -15,7 +15,7 @@ namespace D5.S3.Combinatorics.Geometry.RowmotionIncomparableToggles
 
 variable {P : Type*} [PartialOrder P]
 
-private lemma flip_other (S : Set P) (x z : P) (hz : z ≠ x) :
+lemma flip_other (S : Set P) (x z : P) (hz : z ≠ x) :
     z ∈ S ∆ {x} ↔ z ∈ S := by
   simp [Set.mem_symmDiff, hz]
 
@@ -48,7 +48,7 @@ private lemma transfer_flip {S T : Set P} {x : P}
   exact (flip_other T x z hzx).mpr
     (hT.out ((flip_other T x u hux).mp hu) ((flip_other T x v hvx).mp hv) hz)
 
-private lemma toggle_connected (x : P) {S : Set P} (hS : S.OrdConnected) :
+lemma toggle_connected (x : P) {S : Set P} (hS : S.OrdConnected) :
     (toggle x S).OrdConnected := by
   classical
   unfold toggle

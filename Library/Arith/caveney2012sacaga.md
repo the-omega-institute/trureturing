@@ -1842,3 +1842,38 @@ The [rational interval certificate](https://github.com/the-omega-institute/trure
 reuses the existing logarithm enclosure, checks the complete strict
 inventories and both derivative signs, and retains the positive (FR14)
 gap. It does not rerun or certify the external global inputs in (FR9).
+
+## Locator
+
+URL: https://arxiv.org/abs/1112.6010v2
+
+DOI: 10.1007/s11139-012-9371-0
+
+G. Caveney, J.-L. Nicolas, J. Sondow, *On SA, CA, and GA numbers*,
+Ramanujan Journal 29 (2012), 359–384. Theorem 9 is in §6.1, printed
+pages 20–21; the counting question is in §8. The existing properness
+definition following Fact 1 counts prime factors with multiplicity.
+The source quotations below are supplied passages of this pinned version.
+
+## Proper GA1 definitions and the counting question
+
+Write $G(n)=\sigma(n)/(n\log\log n)$.
+
+> A positive integer N is a GA1 number if N is composite and the inequality G(N) ≥ G(N/p) holds for all prime factors p of N.
+
+> The GA1 numbers with exactly two (not necessarily distinct) prime factors are precisely 4 and 2p, for primes p ≥ 7. We call such GA1 numbers improper, while GA1 numbers with at least three (not necessarily distinct) prime factors will be called proper.
+
+Section 8 states:
+
+> Let Q1(x) be the number of proper GA1 numbers N ≤ x.
+
+> Q1(x) ≤ exp(c log x / log log x) for some positive c. By estimating the number of good divisors of M ..., it might be possible to improve the above estimate.
+
+Theorem 9 supplies the previously published prime-power restriction
+$p\le(r\log N)^{1/r}\le\log N$ for occupied positive layers. Its
+$r=1,2$ consequences bound the prime endpoint and the repeated-prime
+cutoff. These necessary constraints are distinct from the stronger
+counting bound obtained from missing-prime mass, a uniform quantitative
+Chebyshev budget and injective prime-factor encoding. The §8 passage
+requests an improvement; it does not state that particular quantitative
+upper bound as a named conjecture.

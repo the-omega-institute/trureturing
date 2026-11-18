@@ -1,0 +1,20 @@
+**定义 178.1（完整原域与零中点关系）。** 采用 XIII160.1 的有限维实原域：$C\subset V$ 闭、尖、生成，$u$ 严格正于非零正元，$d=\dim_{\mathbb R}V\ge1$。始终取整个 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$、完整 $\mathcal E=[0,u]_{C^*}$ 及
+
+$$
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+N_p=\{q\in P:T_p(q)=0\},\quad D_p=\{x\in K:T_p(x)=0\}.
+\tag{178.1}
+$$
+
+对固定原纯目标 $p$，定义
+
+$$
+\boxed{\quad\mathsf Z_2(p):\quad
+x,y\in K,\quad T_p(x)=T_p(y)=0
+\ \Longrightarrow\ T_p\!\left(\frac{x+y}{2}\right)=0.\quad}
+\tag{178.2}
+$$
+
+第二端点遍历整个混态域，不只遍历纯点。反向蕴含已由 minimum 达到和效应非负性给出，不是另一条公理。各零读数的达到者可以不同；条件只要求平均之后仍有一张合法原确认尺。
+

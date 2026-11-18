@@ -40,12 +40,12 @@ open D5.S3.Weil.Mertens.IntegratedExplicit (trivialT trivialT_le_mass)
 
 namespace D5.S3.Arith.Robin.PriceRecord.OriginalRecordLowerBoundCriterion
 
-private lemma D_pos {x : ℝ} (hx : 1 < x) : 0 < D x := by
+lemma D_pos {x : ℝ} (hx : 1 < x) : 0 < D x := by
   exact mul_pos (Real.sqrt_pos.mpr (by linarith)) (Real.log_pos hx)
 
 /-- Division by the positive ratio is safe because the constant is fixed and
 nonpositive.  No bound on the absolute value of the variable is used. -/
-private lemma fixed_negative_ratio {c r b : ℝ} (hc : c ≤ 0)
+lemma fixed_negative_ratio {c r b : ℝ} (hc : c ≤ 0)
     (hr : (1 / 2 : ℝ) ≤ r) (hb : c ≤ r * b) : 2 * c ≤ b := by
   have hr0 : 0 < r := by linarith
   have hcr : r * c ≤ (1 / 2 : ℝ) * c :=

@@ -1,0 +1,76 @@
+**定义 13.1（实际局部子群、精确周期与增长安排）。** 固定定义 11.1 的实际非挠点 $P_1,P_2\in E_0(F)$，其中
+
+$$
+E_0:Y^2=X^3-X,\qquad
+F=\mathbb Q(\sqrt2,\sqrt{3-\sqrt2},\sqrt{3+\sqrt2}),\qquad
+d_F=[F:\mathbb Q]\le8.
+$$
+
+正实根及指定实嵌入沿用第 11–12 节；$\theta,\alpha$ 与圆距离沿用定义 12.1。实际点的原始来源是 Brox，[固定源码的 “The quadratic-field elliptic curve” 一节](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)，这里只复用其所列点、非挠性及第 12 节已使用的整数模挠独立性。
+
+对每个有限位 $v\mid p$，记 $F_v$ 的整数环、极大理想及剩余域为 $\mathcal O_v,\mathfrak m_v,k_v$，固定 $\operatorname{ord}_v(\varpi_v)=1$，并置
+
+$$
+e_v=\operatorname{ord}_v(p)\ge1,\qquad
+f_v=[k_v:\mathbb F_p],\qquad
+\sum_{v\mid p}e_vf_v=d_F.
+$$
+
+当 $p$ 为奇素数时，使用原方程 $E_0$。当 $v\mid2$ 时，固定一个极小整 Weierstrass 模型 $\mathcal E_v$ 及保单位元的 $F_v$-同构 $\iota_v:E_0\to\mathcal E_v$；奇素数处记 $\mathcal E_v=E_0$、$\iota_v=\mathrm{id}$。令 $\widehat{\mathcal E}_v$ 为该整模型的形式群，$\psi_v:\widehat{\mathcal E}_v(\mathfrak m_v)\to\mathcal E_{v,1}(F_v)$ 为形式参数给出的群同构，参数为 $t_v=-x_v/y_v$，$t_v(O)=0$。这里 $\mathcal E_{v,1}(F_v)$ 是约化为单位元的点群。对整数 $r\ge1$ 定义
+
+$$
+U_v(r)=\iota_v^{-1}
+ \bigl(\psi_v(\widehat{\mathcal E}_v(\mathfrak m_v^r))\bigr)
+ \ \le E_0(F_v).
+\tag{13.1}
+$$
+
+这是实际单位元邻域中的形式子群。等价地，先要求 $\iota_v(R)\in\mathcal E_{v,1}(F_v)$，再要求其形式参数属于 $\mathfrak m_v^r$；不把任意仿射点上的坐标比值不等式当作本定义。极小模型与此同构分别使用 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[VII.1.3、VII.2.2 及 IV §3](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)；相关文字澄清见作者的[勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)中印刷页 122–124、188–191 的条目。
+
+定义精确有限阶及共同周期
+
+$$
+\begin{aligned}
+d_{v,j}(r)&=\operatorname{ord}_{E_0(F_v)/U_v(r)}(P_j+U_v(r)),
+ &&j=1,2,\\
+A_2&=\operatorname{lcm}_{v\mid2,\ j=1,2}d_{v,j}(1),\\
+q(B,r;M)&=\operatorname{lcm}
+ \bigl(M,\{d_{v,j}(r):p\le B,\ v\mid p,\ j=1,2\}\bigr),
+ &&B\in\mathbb R_{\ge2},\quad M,r\in\mathbb Z_{\ge1}.
+\end{aligned}
+\tag{13.2}
+$$
+
+上述商群的有限性在定理 13.2 的证明中给出。素数求和、乘积均只取有理素数，记
+
+$$
+\vartheta(B)=\sum_{p\le B}\log p,\qquad
+\pi(B)=\#\{p:p\le B\}.
+$$
+
+固定 $M\ge1$ 及 $0<\gamma<1/4$。对正整数 $n$ 置
+
+$$
+\begin{aligned}
+h(n)&=\max\left(2,\left\lfloor(\log\log(n+16))^{1/3}\right\rfloor\right),\\
+\rho(n)&=(\log(n+2))^{-\gamma},\\
+q_n&=q(h(n),h(n);M),\qquad D_n=q(h(n),h(n);1).
+\end{aligned}
+\tag{13.3}
+$$
+
+所有对数均为自然对数。成功整数集合是
+
+$$
+\begin{split}
+\mathcal S_{M,\gamma}=\{n\in\mathbb Z_{\ge1}:\
+&M\mid n,\quad
+\|\theta([n]P_j)\|_{\mathbb T}<\rho(n)\quad(j=1,2),\\
+&[n]P_j\in U_v(h(n))
+\quad(p\le h(n),\ v\mid p,\ j=1,2)\}.
+\end{split}
+\tag{13.4}
+$$
+
+其中素数截止、局部深度和实半径都取同一个整数 $n$ 自身的值。
+

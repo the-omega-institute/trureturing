@@ -30,6 +30,8 @@ internal sealed class MaximalHockeyStickL1ReverseTestDocument : IScribeDocumentD
                 Call("allLoneCosts", Id("h"), Id("A"), Id("B"))), Imp(Call("Ne", Id("z"), Call("Top")),
                 Call("Mem", Id("z"), Call("finiteCosts", Id("h"), Id("A"), Id("B"))))))),
                 "This applies the constructed atomization to each individual actual source test. It assumes no density representation or finite-moment supplier: both are proved from the original map."),
+            ProfileNode("cost_congr_ae", "On any measurable space and any measure, if p=pprime and q=qprime almost everywhere, then their literal closedPerspectiveCost values agree for every convex generator. Both the finite affine integral and extended nonnegative curvature integral are invariant. The theorem is generic in the source and has no matrix parameter; arbitrary-von-Neumann source normalization consumes it directly.", true),
+            ProfileNode("measurable_positive_L1_input", "On any measurable space X and measure mu, every a.e. nonnegative complex L1 input h has a measurable integrable real representative p, nonnegative almost everywhere, whose embedded complex toL1 class is EXACTLY h and which equals Re(h) almost everywhere. The theorem is generic in X and mu and needs no matrix, s-finiteness or finite-mass premise. It is used by both the original matrix source bridge and GeneralConvexReverseTestAttainment.representativeCosts_of_positive_L1.", true),
             Node("allL1Costs_of_positive_L1", PositiveInputContext(Call("Mem",
                 Call("closedPerspectiveCost", Id("h"), Id("mu"), Call("RealPart", Id("p")), Call("RealPart", Id("q"))),
                 Call("allLoneCosts", Id("h"), Gamma(Id("p")), Gamma(Id("q"))))),

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:2822f565a5fa8b75157b00886838d0c4862ed529002e4d0903a34e8a91ab0d35","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Divisors),20:DimitrovLowerBoundC6),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Divisors),20:DimitrovLowerBoundC6),6:result)","kind":"theorem"}]}

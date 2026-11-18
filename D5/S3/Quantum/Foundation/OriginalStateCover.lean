@@ -223,7 +223,7 @@ private theorem interior_cover
       (by convert he using 1; module)
     rwa [hswap]
 
-private theorem radial_decomposition
+theorem radial_decomposition
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p : pure C u) (b : ExclusionChart C u p) {y : V} (hy : y ∈ exclusion C u p) :

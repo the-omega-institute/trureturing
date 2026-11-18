@@ -1,0 +1,23 @@
+**定义 190.1（有限正配对一致性）。** 保留188.1的完整原域：有限维实空间 $V$、闭尖生成锥 $C$、严格正单位 $u$、整个紧底 $K$、全部原纯点 $P=\operatorname{ext}K$ 和整个效应区间 $[0,u]$，置 $d=\dim V>1$。原二元关系及零邻点仍为
+
+$$
+a\mathrel{\#}b\ \Longleftrightarrow\
+\exists f\in[0,u]\quad f(a)=1,\ f(b)=0,
+\qquad N_a=\{b\in P:a\mathrel{\#}b\}.
+\tag{190.1}
+$$
+
+固定原纯点 $a$。对所有 $0\le k\le d^2$、$0\le r\le d$，原纯点 $p_i$、零邻点 $b_j\in N_a$、原效应 $f_i\in[0,u]$、系数 $t_i\ge0$ 和任意实代数对偶元 $g_0,g_j\in V^*$，要求
+
+$$
+\boxed{\quad
+\sum_{i=1}^k t_i p_i\otimes f_i
+ =a\otimes g_0+\sum_{j=1}^r b_j\otimes g_j
+\quad\Longrightarrow\quad
+\sum_{j=1}^r g_j(b_j)\ge0.
+\quad}
+\tag{190.2}
+$$
+
+两侧相等是在同一原 $V\otimes_{\mathbb R}V^*$ 中的精确相等。空和允许为零。$g_j$ 可有符号，只是原测试的实线性表达式，不作为负概率事件。此张量记一条准备和一条读数的配对关系，不预认作复合系统的态；其算子配对方向为 $\langle x\otimes h,Q\rangle=h(Qx)$。前端没有 $Q_a$、局部删除 $\delta_a$、$\mathsf Z_2$、NC、暴露面或线性独立性输入。
+

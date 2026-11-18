@@ -186,7 +186,7 @@ theorem transport {K : ℝ → ℝ} {t : ℝ} (ht : 2 ≤ t)
       intro u hu
       ring
 
-private lemma r_exp (y : ℝ) : r (exp y) = R y := by
+lemma r_exp (y : ℝ) : r (exp y) = R y := by
   simp only [r, R, log_exp, add_comm]
 
 /-- The exponential Jacobian cancels the single `1/z` in `-r'(z)`.
