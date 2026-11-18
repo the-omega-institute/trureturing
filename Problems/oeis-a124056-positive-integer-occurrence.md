@@ -19,7 +19,7 @@ $$a_{n+1}=\#\{i:1\le i\le n,\ a_i\mid a_n\}.$$
 The target is that for every positive integer $k$ there exists a positive index
 $n$ with $a_n=k$. Indices, multiplicities and the self index are all retained.
 The source is Quet's A124056, Della Corte's question 376929 and Sommacal's
-question 515669; see `Library/RecurrenceComposition/quet2006a124056.md`.
+question 515669; see `Library/Factorization/quet2006a124056.md`.
 
 ## Motivation
 
@@ -62,6 +62,10 @@ $v\ge2$, `contributor_rank_bound` proves
 $D_t(v)\le q\sum_{d\mid v,\ d<v}c_t(d)$. This time range keeps the successor
 of every counted contributor inside the avoided prefix. Empty prefixes and the
 first rank are included; $v=1$ is handled by its two initial occurrences.
+
+The recurrence-independent supplier is
+`D5/S3/Arith/Factorization/PrimeWordWeight.lean`; its constants retain the
+`D5.S3.Arith.Recurrence.A124056Occurrence` namespace.
 
 The finite set `primeWords v` contains the distinct permutations of the prime
 factor list of positive $v$. Its cardinality is $b(v)$ and its common length is
@@ -141,8 +145,9 @@ omission.
 
 ## Evidence
 
-The Lean source is `D5/S3/Arith/Recurrence/A124056Occurrence.lean`, with matching
-Blueprint Scribe and emitted mathematical exposition. Its
+The sequence source is `D5/S3/Arith/Recurrence/A124056Occurrence.lean`, and
+the arithmetic supplier is `D5/S3/Arith/Factorization/PrimeWordWeight.lean`,
+each with matching Blueprint Scribe and emitted mathematical exposition. Its
 `source_specification` gives the original recurrence, and
 `full_positive_occurrence` has type
 `∀ k : ℕ, 0 < k → ∃ n : ℕ, 0 < n ∧ sourceTerm n = k`.
@@ -183,9 +188,11 @@ The matching Reg source provides dependent-family realization, equivalence,
 variation, sensitivity and observational-dependence evidence for the four
 original public theorems. Its four `Contract.Registration` attempts have no
 `sourceSelection`. The missing evidence is the complete original-source
-reconstruction and its readout path and coordinate bindings. The thirteen
-additional contributor, prime-word, analytic and unconditional theorems have no
-completed registration; their complete source-family realization, selected readouts, coordinate bindings
+reconstruction and its readout path and coordinate bindings. The five additional contributor and unconditional theorems remain owned by
+`A124056Occurrence`; the eight prime-word and analytic theorems are owned by
+`D5/S3/Arith/Factorization/PrimeWordWeight`. The weight monotonicity helper is
+public for its actual cross-module consumer and adds no mathematical target.
+These declarations have no completed registration; their complete source-family realization, selected readouts, coordinate bindings
 and family-wide evidence remain required. The concrete linked exception is
 [issue 31349](https://github.com/the-omega-institute/trureturing/issues/31349#issuecomment-6957913334).
 No public theorem is claimed to have a completed `declared_validated`
