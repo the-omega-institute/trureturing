@@ -65,10 +65,10 @@ def claim : Prop :=
   ∀ n a : ℕ, 4 ≤ n → ∀ h : a + 3 ≤ n,
     (vanishingPolys n).IsPrime ∧ (vanishingPolys 3).IsPrime ∧ IsBirationalVia n a h
 
-private abbrev parameterIndex :=
+abbrev parameterIndex :=
   (Fin 2 × Fin 2 × Fin 2) ⊕ (Fin 2 ⊕ Fin 2)
 
-private def parameterPolys (n : ℕ) (w : Fin n → Fin 2) :
+def parameterPolys (n : ℕ) (w : Fin n → Fin 2) :
     MvPolynomial parameterIndex ℂ :=
   dotProduct (fun i => MvPolynomial.X (Sum.inr (Sum.inl i)))
     ((List.ofFn fun j => Matrix.of (fun i k =>
@@ -102,7 +102,7 @@ private lemma polynomial_image_prime {ι σ : Type*}
   rw [heq]
   exact RingHom.ker_isPrime φ
 
-private lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
+lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
     (fun w => MvPolynomial.eval x (parameterPolys n w)) =
       mpsState n (Matrix.of fun i k => x (Sum.inl (0, i, k)))
         (Matrix.of fun i k => x (Sum.inl (1, i, k)))
@@ -136,7 +136,7 @@ private lemma parameter_eval (n : ℕ) (x : parameterIndex → ℂ) :
     simp only [Function.comp_def, MvPolynomial.eval_X]
     rw [hprod]
 
-private lemma parameter_image (n : ℕ) :
+lemma parameter_image (n : ℕ) :
     openBoundaryMPS n =
       Set.range (fun x : parameterIndex → ℂ =>
         fun w => MvPolynomial.eval x (parameterPolys n w)) := by
@@ -159,37 +159,37 @@ private lemma model_prime (n : ℕ) : (vanishingPolys n).IsPrime := by
   rw [vanishingPolys, parameter_image]
   exact polynomial_image_prime (parameterPolys n)
 
-private def coordinate (i j k : Fin 2) : MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def coordinate (i j k : Fin 2) : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   MvPolynomial.X ![i, j, k]
-private def kernelMatrix : Matrix (Fin 4) (Fin 4) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
+def kernelMatrix : Matrix (Fin 4) (Fin 4) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   !![coordinate 0 0 0, coordinate 0 0 1, -coordinate 0 0 0, -coordinate 1 0 0;
      coordinate 0 1 0, coordinate 0 1 1, -coordinate 0 0 1, -coordinate 1 0 1;
      coordinate 1 0 0, coordinate 1 0 1, -coordinate 0 1 0, -coordinate 1 1 0;
      coordinate 1 1 0, coordinate 1 1 1, -coordinate 0 1 1, -coordinate 1 1 1]
-private def kernelMinor : Matrix (Fin 3) (Fin 3) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
+def kernelMinor : Matrix (Fin 3) (Fin 3) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   kernelMatrix.submatrix (Fin.castLE (by omega)) (Fin.castLE (by omega))
-private def minorPoly : MvPolynomial (Fin 3 → Fin 2) ℂ := kernelMinor.det
-private def cramerNumerator : Fin 3 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def minorPoly : MvPolynomial (Fin 3 → Fin 2) ℂ := kernelMinor.det
+def cramerNumerator : Fin 3 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   kernelMinor.cramer (fun i => -kernelMatrix (Fin.castLE (by omega) i) 3)
-private def leftNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def leftNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   ![cramerNumerator 2, minorPoly]
 private def rightKernelNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   ![cramerNumerator 0, cramerNumerator 1]
-private def slicePoly (j : Fin 2) :
+def slicePoly (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   fun i k => coordinate i j k
-private def basisNumerator :
+def basisNumerator :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   fun i k => dotProduct leftNumerator (fun j => coordinate j i k)
-private def matrixNumerator (j : Fin 2) :
+def matrixNumerator (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   slicePoly j * basisNumerator.adjugate
-private def sumNumerator :
+def sumNumerator :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   matrixNumerator 0 + matrixNumerator 1
 private def boundaryNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   basisNumerator *ᵥ rightKernelNumerator
-private def chartPoly : MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def chartPoly : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   minorPoly * basisNumerator.det * sumNumerator.det *
     (coordinate 0 0 0 * coordinate 1 0 1 - coordinate 0 0 1 * coordinate 1 0 0) *
     (coordinate 0 0 0 * coordinate 0 1 1 - coordinate 0 0 1 * coordinate 0 1 0)
@@ -204,13 +204,13 @@ private def numerator (n a : ℕ) (w : Fin n → Fin 2) :
 private def rationalInverse (n a : ℕ) (t : (Fin 3 → Fin 2) → ℂ) :
     (Fin n → Fin 2) → ℂ :=
   fun w => MvPolynomial.eval t (numerator n a w) / MvPolynomial.eval t (denominator n)
-private def reconstructedLeft (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
+def reconstructedLeft (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   fun i => MvPolynomial.eval t (leftNumerator i) / MvPolynomial.eval t minorPoly
 private def reconstructedKernel (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
   fun i => MvPolynomial.eval t (rightKernelNumerator i) / MvPolynomial.eval t minorPoly
 private def reconstructedBasis (t : (Fin 3 → Fin 2) → ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   fun i k => MvPolynomial.eval t (basisNumerator i k) / MvPolynomial.eval t minorPoly
-private def reconstructedMatrix (t : (Fin 3 → Fin 2) → ℂ) (j : Fin 2) :
+def reconstructedMatrix (t : (Fin 3 → Fin 2) → ℂ) (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.of (fun i k => t ![i, j, k]) * (reconstructedBasis t)⁻¹
 private def reconstructedRight (t : (Fin 3 → Fin 2) → ℂ) : Fin 2 → ℂ :=
@@ -254,7 +254,7 @@ private lemma quartic_parameter_identity :
     (mem_nonZeroDivisors_iff_ne_zero.mpr hc)
   exact (RingHom.map_det _ _).trans hdet
 
-private lemma quartic_image (t : (Fin 3 → Fin 2) → ℂ) (ht : t ∈ openBoundaryMPS 3) :
+lemma quartic_image (t : (Fin 3 → Fin 2) → ℂ) (ht : t ∈ openBoundaryMPS 3) :
     MvPolynomial.eval t kernelMatrix.det = 0 := by
   rw [parameter_image] at ht
   obtain ⟨x, rfl⟩ := ht
@@ -298,7 +298,7 @@ private lemma kernel_cramer_identity :
       kernelMatrix (Fin.castSucc j) 3 * minorPoly = 0
     ring
 
-private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
+lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
     let ε := MvPolynomial.eval t
     let d := ε minorPoly
@@ -366,7 +366,7 @@ private lemma chart_scalars (t : (Fin 3 → Fin 2) → ℂ)
     change ((d / v) ^ 2 * c)⁻¹ * (d / v) = v / (d * c)
     field_simp
 
-private lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
+lemma chart_reconstruction (t : (Fin 3 → Fin 2) → ℂ)
     (hquartic : MvPolynomial.eval t kernelMatrix.det = 0)
     (hg : MvPolynomial.eval t chartPoly ≠ 0) :
     (∀ i k : Fin 2, dotProduct (fun j => t ![i, k, j]) (reconstructedKernel t) =
@@ -540,7 +540,7 @@ private lemma sum_words (n : ℕ) (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
     simp_rw [← Finset.mul_sum, ih]
     rw [Fin.sum_univ_two, ← add_mul, ← pow_succ']
 
-private lemma outside_sum_exact (a b : ℕ)
+lemma outside_sum_exact (a b : ℕ)
     (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (b₀ b₁ : Fin 2 → ℂ) :
     improperMarginal (a + (3 + b)) a (by omega)
       (mpsState (a + (3 + b)) a₀ a₁ b₀ b₁) =
@@ -564,7 +564,7 @@ private lemma outside_sum_exact (a b : ℕ)
   simp only [← sum_dotProduct, ← Matrix.sum_vecMul, ← Matrix.vecMul_sum, sum_words]
   rfl
 
-private lemma outside_sum (n a : ℕ) (h : a + 3 ≤ n)
+lemma outside_sum (n a : ℕ) (h : a + 3 ≤ n)
     (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (b₀ b₁ : Fin 2 → ℂ) :
     improperMarginal n a h (mpsState n a₀ a₁ b₀ b₁) =
       mpsState 3 a₀ a₁ (b₀ ᵥ* (a₀ + a₁) ^ a)
@@ -666,7 +666,7 @@ private lemma kernel_vector_unique (t : (Fin 3 → Fin 2) → ℂ)
     rw [heq]
     exact congrFun hxy j
 
-private lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2 → ℂ)
+lemma triple_gauge (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (l r : Fin 2 → ℂ)
     (hg : MvPolynomial.eval (mpsState 3 a₀ a₁ l r) chartPoly ≠ 0) :
     ∃ s : ℂ, s ≠ 0 ∧ ∃ u : Matrix (Fin 2) (Fin 2) ℂ, IsUnit u.det ∧
       reconstructedLeft (mpsState 3 a₀ a₁ l r) = s⁻¹ • (l ᵥ* u⁻¹) ∧

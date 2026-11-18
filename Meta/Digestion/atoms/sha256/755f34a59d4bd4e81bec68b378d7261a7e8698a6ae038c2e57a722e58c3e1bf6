@@ -1,0 +1,23 @@
+**定理 132.2（原水平切片的纯极点与固定标签小正无隙）。** 在132.1域内，固定任意原 $p\in P$，取原确认效应 $e\in\mathcal F_p$，满足 $K\cap\ker e=D_p$。对每个 $0<t<1$，非空紧切片
+
+$$
+K_t=\{x\in K:e(x)=t\}
+\tag{X132.1}
+$$
+
+的每个极点都是原纯点，而非仅在切片中被称为纯。特别地，
+
+$$
+\forall p\in P\ \forall\delta>0\ \exists q\in P:
+\qquad 0<T_p(q)<\delta.
+\tag{X132.2}
+$$
+
+证明。所需 $e$ 的原效应资格和归一化由[VII103.2][Q130VII]供应：在完整球心 $c_p$ 取达到 $T_p(c_p)=0$ 的一张 $e\in\mathcal F_p$，球心反射与非负性使它零于整个 $D_p$；反向包含来自原最低定义。故 $0\le e\le u$、$e(p)=1$，且其整个零面准确为 $D_p$。这里没有把任意支撑泛函直接称作确认效应。$D_p\ne\varnothing$ 与 $p$ 的凸组合使每个 $K_t$ 非空；紧性来自固定 $K$。
+
+置 $n=\dim\operatorname{aff}K$。因 $D_p$ 是维数至少二的真暴露面，$n\ge3$。若 $x\in\operatorname{ext}K_t$ 却在 $\operatorname{ri}K$，则在 $\ker u\cap\ker e$ 中取非零方向 $v$，其维数为 $n-1\ge2$。充分小的 $h>0$ 使 $x\pm hv\in K_t$，与极端性矛盾。
+
+因此 $x\in\partial_{\rm rel}K$。在 $x$ 取相对支撑，其接触集是含 $x$ 的原非空真面。VII103.2及[IX116.1][Q130IX]的完整面分类使它为原纯单点或某个整个 $D_a$。若 $x$ 不是原纯点，只能处于后一球的相对内部，因为 $\partial_{\rm rel}D_a=P\cap D_a$。方向空间 $\operatorname{lin}(D_a-D_a)$ 维数 $d_a\ge2$，限制 $e$ 的核至少一维；选非零核方向并在球内作充分小的正反步，又在 $K_t$ 中得到穿过 $x$ 的非退化线段，矛盾。这证明所有切片极点均属于原 $P$，并涵盖全部原边界真面。
+
+给定 $\delta>0$，取 $0<t<\min\{1,\delta\}$，在非空紧凸 $K_t$ 取极点 $q$。上段给 $q\in P$，而 $e(q)=t>0$ 使 $q\notin D_p$，故 $T_p(q)>0$；又 $e\in\mathcal F_p$ 给 $T_p(q)\le e(q)=t<\delta$。全程只使用固定切片的紧性，没有对整个 $P$ 取极限或最小值。证毕。
+

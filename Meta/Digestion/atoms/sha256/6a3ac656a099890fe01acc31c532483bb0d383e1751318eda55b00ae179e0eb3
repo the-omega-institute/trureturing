@@ -1,0 +1,14 @@
+#### 注 7.6：若把接口扩展为一个场
+
+对一个已声明的参数流形 $M$ 及映射 $n:M\to S^2$， 可拉回上述度量与曲率：
+
+$$
+g_{\mu\nu}=\frac14\,\partial_\mu n\cdot\partial_\nu n,\qquad
+ F_{\mu\nu}=\frac12\,n\cdot
+ (\partial_\mu n\times\partial_\nu n).
+$$
+
+这确实定义了方向场的几何结构。 但 $M$ 的物理含义、作用量、传播方程、局域性与钟还需另外指定。 这些公式不直接推出电磁场、真空能或基本粒子的质量与自旋谱。
+
+<a id="section-8"></a>
+

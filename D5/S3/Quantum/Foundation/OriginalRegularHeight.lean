@@ -25,17 +25,17 @@ open OrthogonalJointCompletion OriginalNormalRestriction RegularAnchorHeight
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
-private abbrev normal (C : PointedCone ℝ V) (p : V) : Set (V →L[ℝ] ℝ) :=
+abbrev normal (C : PointedCone ℝ V) (p : V) : Set (V →L[ℝ] ℝ) :=
   {f | (∀ x ∈ C, 0 ≤ f x) ∧ f p = 0}
 
-private abbrev normalSpan (C : PointedCone ℝ V) (p : V) :=
+abbrev normalSpan (C : PointedCone ℝ V) (p : V) :=
   Submodule.span ℝ (normal C p)
 
-private abbrev chartSpace {p : V} (a : ExclusionChart C u p) :=
+abbrev chartSpace {p : V} (a : ExclusionChart C u p) :=
   EuclideanSpace ℝ (Fin a.dim)
 
 omit [FiniteDimensional ℝ V] in
-private theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a) :
+theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a) :
     u (a.param z) = 1 := by
   have hspan : affineSpan ℝ (Metric.closedBall (0 : chartSpace a) 1) = ⊤ := by
     apply (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp
@@ -48,7 +48,7 @@ private theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a)
   exact congrArg (fun f : chartSpace a →ᵃ[ℝ] ℝ => f z) heq
 
 omit [FiniteDimensional ℝ V] in
-private theorem peak_formula {p : V} (a : ExclusionChart C u p)
+theorem peak_formula {p : V} (a : ExclusionChart C u p)
     (e : V →ₗ[ℝ] ℝ) (he : proper C u e)
     (v : chartSpace a) (hv : ‖v‖ = 1) (hpeak : e (a.param v) = 1) :
     ∀ z, e (a.param z) = 1 - ((1 - e (a.param (-v))) / 2) * (1 - ⟪v, z⟫) := by
@@ -65,7 +65,7 @@ private theorem peak_formula {p : V} (a : ExclusionChart C u p)
   simp only [chart_unit a, inner_neg_left] at hh
   linarith
 
-private structure Coordinates (p : pure C u) (a : ExclusionChart C u p)
+structure Coordinates (p : pure C u) (a : ExclusionChart C u p)
     (ep : V →ₗ[ℝ] ℝ) where
   g : normalSpan C p
   equivalence : normalSpan C p ≃ₗ[ℝ] (chartSpace a →ᵃ[ℝ] ℝ)
@@ -73,7 +73,7 @@ private structure Coordinates (p : pure C u) (a : ExclusionChart C u p)
   g_interior : g ∈ interior ((normalSpan C p).subtype ⁻¹' normal C p)
   restriction : ∀ (f : normalSpan C p) z, equivalence f z = f.val (a.param z)
 
-private theorem original_coordinates
+theorem original_coordinates
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     (hEB3 : ∀ q : pure C u, ∃ b : ExclusionChart C u q, b.dim = 3)
@@ -87,7 +87,7 @@ private theorem original_coordinates
   intro f z
   exact congrArg (fun h : normalSpan C p →ₗ[ℝ] (chartSpace a →ᵃ[ℝ] ℝ) => h f z) he
 
-private def directionLift {p : pure C u} {a : ExclusionChart C u p}
+def directionLift {p : pure C u} {a : ExclusionChart C u p}
     {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) : chartSpace a →ₗ[ℝ] normalSpan C p :=
   k.equivalence.symm.toLinearMap.comp
     ({
@@ -99,13 +99,13 @@ private def directionLift {p : pure C u} {a : ExclusionChart C u p}
         change ⟪t • v, z⟫ = t * ⟪v, z⟫
         exact real_inner_smul_left _ _ _ } : chartSpace a →ₗ[ℝ] (chartSpace a →ᵃ[ℝ] ℝ))
 
-private theorem directionLift_value {p : pure C u} {a : ExclusionChart C u p}
+theorem directionLift_value {p : pure C u} {a : ExclusionChart C u p}
     {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) (v z : chartSpace a) :
     (directionLift k v).val (a.param z) = ⟪v, z⟫ := by
   rw [← k.restriction]
   simp [directionLift]
 
-private theorem g_positive
+theorem g_positive
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (hInj : Function.Injective (fun q : pure C u => exclusion C u q))
@@ -120,7 +120,7 @@ private theorem g_positive
   rw [hy.2] at *
   exact sub_pos.mpr (lt_of_le_of_ne hnonneg hne)
 
-private theorem peak_lift {p : pure C u} {a : ExclusionChart C u p}
+theorem peak_lift {p : pure C u} {a : ExclusionChart C u p}
     {ep : V →ₗ[ℝ] ℝ} (hep : ep ∈ fullZeroConfirmers C u p)
     (k : Coordinates p a ep) (e : V →ₗ[ℝ] ℝ) (he : proper C u e) (hep0 : e p = 0)
     (v : chartSpace a) (hv : ‖v‖ = 1) (hpeak : e (a.param v) = 1) :
@@ -157,7 +157,7 @@ private theorem peak_lift {p : pure C u} {a : ExclusionChart C u p}
     ring
   exact congrArg Subtype.val heq
 
-private theorem neighbor_unique
+theorem neighbor_unique
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (hInj : Function.Injective (fun q : pure C u => exclusion C u q))
@@ -205,7 +205,7 @@ private theorem neighbor_unique
     ⟨heq, fun x hx => (show x ∈ {x | x ∈ base C u ∧ eq x = 0} from hzero ▸ hx).2⟩
   exact ⟨eq, fun e => ⟨fun he => hsame e eq he heqfull, fun h => h ▸ heqfull⟩⟩
 
-private theorem direction_domination {p : pure C u} {a : ExclusionChart C u p}
+theorem direction_domination {p : pure C u} {a : ExclusionChart C u p}
     {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) :
     ∃ M : ℝ, 1 ≤ M ∧ ∀ v : chartSpace a, ‖v‖ = 1 →
       ∀ x ∈ C, |(directionLift k v).val x| ≤ M * k.g.val x := by
@@ -245,7 +245,7 @@ private theorem direction_domination {p : pure C u} {a : ExclusionChart C u p}
       nlinarith
   exact hbound.trans (by nlinarith)
 
-private theorem neighbor_parameter_bound
+theorem neighbor_parameter_bound
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (hInj : Function.Injective (fun q : pure C u => exclusion C u q))

@@ -14,6 +14,18 @@ internal sealed class ChenKatoBrandaoTraceNormCMIRefutationDocument : IScribeDoc
         "A flagged measurement in two qubit bases strictly contracts local trace distance while preserving the trace-norm conditional mutual information of a tripartite state.",
         H("Trace-norm CMI contraction conjecture"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("qubit"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit"),
+                H("A traceless Hermitian qubit matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The real scalar x and complex scalar y define the two by two matrix with diagonal x and minus x and off-diagonal y and its conjugate."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("qubit-norm"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.qubit_norm"),
+                H("Exact traceless qubit trace norm"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The trace norm of qubit(x,y) equals twice the square root of x squared plus the complex norm squared of y. Its adjoint product is that nonnegative scalar times the identity."))), DescribeRole.Theorem),
             Node("localContraction", "Local trace-norm contraction ratio", LocalContractionFormula(),
                 "Conjecture III.2, PDF p. 17: the local contraction ratio is the supremum of the trace-norm output difference divided by the trace-norm input difference. The two input DensityState values are distinct. Their underlying matrices are exposed by CStarMatrix.ofMatrix.symm. ofKraus(K,K,X) denotes FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus applied to K, K and X, namely the sum of K_i X K_i adjoint. The definition uses the repository traceNorm and the real supremum sSup.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),

@@ -1,0 +1,44 @@
+**定理 193.2（谱宽度恰好控制同一个合法二元测试）。** 在193.1下，下列三项等价：
+
+1. $\mathsf A(L)$；
+2. 每个 $X\in L$ 满足 $\operatorname{Tr}X_+\ge\lambda_{\max}(X)-\lambda_{\min}(X)$；
+3. 所有单位向量 $v,z$ 满足 $T_v(p_z)=|v^*z|^2$。
+
+等价的核条件是
+
+$$
+\boxed{\quad\|X\|_1\ge2\bigl(\lambda_{\max}(X)-\lambda_{\min}(X)\bigr)
+\qquad(X\in L).\quad}
+\tag{193.4}
+$$
+
+证明。固定 $v\perp w$，置 $Q=I-P_v-P_w$。满足 $0\le E\le I$、$Ev=v$、$Ew=0$ 的矩阵恰为 $E=P_v+B$、$0\le B\le Q$。对迹零 Hermitian $X$，写 $h=v^*Xv$、$a=\lambda_{\max}X$、$b=-\lambda_{\min}X$、$t=\operatorname{Tr}X_+$。成熟的余维一 Cauchy 交错界给任意余维一压缩 $A'$：
+
+$$
+\operatorname{Tr}(A')_+\ge\operatorname{Tr}A_+-\max(\lambda_{\max}A,0),\qquad
+\operatorname{Tr}(A')_-\ge\operatorname{Tr}A_--\max(-\lambda_{\min}A,0).
+\tag{193.5}
+$$
+
+先将 $X$ 压到 $v^\perp$，得矩阵 $Y$，其迹为 $-h$，因而 $\operatorname{Tr}Y_- =\operatorname{Tr}Y_++h\ge t-a+h$。再删去 $w$，并用 $\lambda_{\min}Y\ge-b$，得
+
+$$
+\operatorname{Tr}(QXQ)_-\ge t-a-b+h,
+\qquad
+\min_{P_v\le E\le I-P_w}\operatorname{Tr}(EX)
+=h-\operatorname{Tr}(QXQ)_-\le a+b-t.
+\tag{193.6}
+$$
+
+压缩谱部只在 $\operatorname{ran}Q$ 上计；零维压缩允许。取 $v,w$ 分别为 $X$ 的最大、最小谱向量便达到等号，所以
+
+$$
+\sup_{v\perp w}\ \min_{P_v\le E\le I-P_w}\operatorname{Tr}(EX)
+=a+b-t.
+\tag{193.7}
+$$
+
+固定一对 $v,w$，将整个紧凸区间 $\{E:P_v\le E\le I-P_w\}$ 送到 $L^*$，映射为 $E\mapsto[X\mapsto\operatorname{Tr}(EX)]$。它的像包含零，当且仅当对每个 $X\in L$，该区间的最小配对不大于零；若零在像外，紧凸严格分离给一个所有配对均严格为正的 $X$。这里 $-X$ 也属于 $L$，故一个方向的条件已含另一方向。于是(193.7)证明1与2等价。这一步得到同一个 $E$ 同时消去整个 $L$，没有把各个方向分别可行拼成共同可行。
+
+任意确认 $v$ 的正收缩满足 $E\ge P_v$，故 $T_v(p_z)\ge|v^*z|^2$。若1成立，把 $z$ 写在 $\operatorname{span}\{v,w\}$ 中，取相应共同测试，达到这个下界；$z$ 平行 $v$ 时直接成立。故1推出3。3对正交 $v,w$ 给最小值零，紧性保证达到，正性使 $w^*Ew=0$ 等价于 $Ew=0$，故3推出1。$\square$
+

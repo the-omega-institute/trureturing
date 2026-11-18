@@ -52,7 +52,7 @@ private theorem apply_eq_smul_of_mem_eigenspace_realPart_imaginaryPart (T : E �
 /-- **The spectral theorem for normal operators.** A normal operator on a finite-dimensional
 complex inner product space has an orthonormal basis of eigenvectors. The basis may be indexed by
 any finite type whose cardinality is the dimension of the space. -/
-private theorem exists_orthonormalBasis_apply_eq_smul_of_isStarNormal (T : E →ₗ[ℂ] E) [IsStarNormal T]
+theorem exists_orthonormalBasis_apply_eq_smul_of_isStarNormal (T : E →ₗ[ℂ] E) [IsStarNormal T]
     {ι : Type*} [Fintype ι] (hι : Fintype.card ι = finrank ℂ E) :
     ∃ (b : OrthonormalBasis ι ℂ E) (μ : ι → ℂ), ∀ i, T (b i) = μ i • b i := by
   classical

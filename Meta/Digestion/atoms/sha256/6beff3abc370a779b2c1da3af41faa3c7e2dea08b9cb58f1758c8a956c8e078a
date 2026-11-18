@@ -1,0 +1,6 @@
+### 1.2　三个相关结果的逻辑层次
+
+2016年 Koenigsmann 已证明 $\mathbb Z$ 在 $\mathbb Q$ 中有全称定义，等价地 $\mathbb Q\setminus\mathbb Z$ 是丢番图集合。全称定义与本次纯存在定义的目标不同。[\[5\]](#ref-koenigsmann)
+
+OpenAI 的9月24日稿及10月6日版本声称证明 $\operatorname{HTP}(\mathbb Q)$ 不可判定；其可读导论采用一列有限检验和 Turing 归约。Sun 的10月19日 arXiv v2 声称把不可判定性限制到86个有理未知数，仍依赖近期算术输入。86不是整数定义的见证数，也不是次数、解高度或时间界。V13 则声称对普通嵌入 $\mathbb Z\subset\mathbb Q$ 本身给出单个存在多项式定义。[\[6\]](#ref-openaiintro), [\[7\]](#ref-openaioct), [\[8\]](#ref-sun)
+

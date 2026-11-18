@@ -1,0 +1,25 @@
+**定理 152.3（单落点限制与整球并合时的差距保留）。** 在相同完整原域中：
+
+1. 若某个原纯 $s$ 满足 $\Delta_p(s)>0$，则
+
+$$
+\mathscr L(p)\subseteq\{r_p(s)\}.
+\tag{XII152.8}
+$$
+
+2. 若 $a_i\to p$ 且 $D_{a_i}\xrightarrow{H}D_p$，则对每个固定原纯 $s$，
+
+$$
+\liminf_i\Delta_{a_i}(s)\ge\Delta_p(s).
+\tag{XII152.9}
+$$
+
+特别地，若 $\Delta_p(s)>0$，这条整球并合序列最终满足
+$M_{a_i}(s)\cap\mathcal A_{a_i}=\varnothing$。
+
+证明。对第一项，若 $D_{a_i}\to\{r\}$，从 $M_{a_i}(s)$ 的任一效应中取真实零点 $z_i$。它属于整个 $D_{a_i}$，故 $z_i\to r$；(XII152.4)又给 $z_i\to r_p(s)$，得到(XII152.8)。发送标签可以来自不同零图分量，没有预设它们与 $p$ 有限零路可达。
+
+对第二项，取 $e_i\in\mathcal A_{a_i}$ 达到 $B_{a_i}(s)$。沿实现下极限的子列再用紧 $\mathcal E$ 取 $e_i\to e$。$e_i(a_i)=1$ 给 $e(p)=1$。对任意 $z\in D_p$，Hausdorff 收敛给 $z_i\in D_{a_i}$、$z_i\to z$，于是 $e(z)=\lim e_i(z_i)=0$。故 $e\in\mathcal A_p$，得到 $\liminf_iB_{a_i}(s)\ge B_p(s)$。减去(XII152.7)的极限即得(XII152.9)。证毕。
+
+这是同一完整菜单中两种 minimum 的差距约束，不是整球连续性的新增假设。整球并合不会自动把原最优效应改成整球零确认；正差距反而保留。
+

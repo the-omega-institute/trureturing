@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9c3bedd2e29d67d954947a7ed008b5d4f14ce98bb61811ca215a8be8e6f713d1
+  normalized_sha256: sha256:9c3bedd2e29d67d954947a7ed008b5d4f14ce98bb61811ca215a8be8e6f713d1
+cas_ref: sha256:9c3bedd2e29d67d954947a7ed008b5d4f14ce98bb61811ca215a8be8e6f713d1
+coverage_gids:
+  - gid: D5/S3/Combinatorics/GroupWords/InvolutionExactLength.exact_length_products
+    target_statement_id: sha256:15e979b621f99de50b2b155fba72b9f32abfeac6c0c50423ade31415b551ed2d
+receipts:
+  unresolved_subitems: []

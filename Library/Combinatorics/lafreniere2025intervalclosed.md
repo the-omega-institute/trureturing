@@ -5,10 +5,11 @@ year: 2025
 title: "Interval-closed set rowmotion and homomesy on products of two chains"
 doi: 10.48550/arXiv.2505.04000
 url: https://arxiv.org/abs/2505.04000v1
-claim: "Conjecture 4.2 restates the max-minus-min homomesy conjecture from the earlier interval-closed-set rowmotion paper for products of two chains; the paper proves a separate signed-cardinality result."
+claim: "Theorem 1.1 and its proof give the finite-poset interval-closed rowmotion image formula; Conjecture 4.2 restates the earlier max-minus-min homomesy conjecture for products of two chains, and the paper proves a separate signed-cardinality result."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/RectangleRowmotionHomomesy
   - D5/S3/Combinatorics/Geometry/IntervalClosedSignedCardinalityRefutation
+  - D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula
 license: citation-only
 triage: anchor
 ---
@@ -24,7 +25,25 @@ used as the target of the repository result.
 
 - DOI: https://doi.org/10.48550/arXiv.2505.04000
 - URL: https://arxiv.org/abs/2505.04000v1
-- Version and location: arXiv:2505.04000v1, Conjecture 4.2 and Remark 4.3.
+- Version and location: arXiv:2505.04000v1, Theorem 1.1 and its proof;
+  Conjecture 4.2 and Remark 4.3.
+
+## Global image formula
+
+For an interval-closed subset I of a finite poset, let C be the minimal
+elements of the upper closure of I outside I, and let H be the minimal
+elements of I that lie in the lower closure of C. The rowmotion image is the
+union of the points incomparable with every member of C outside I and the
+lower closure of C outside the lower closure of H. These are the ceiling,
+lower boundary, incomparable region and image formula used in
+`RowmotionGlobalFormula`.
+
+The repository's [Rowmotion endpoint transport](../../docs/develop/theory/ROWMOTION_ENDPOINT_TRANSPORT.md),
+equation (2.3), attributes this exact identity to Theorem 1.1 and its proof.
+This locator is supported by that repository source; no separate inspection
+of the external paper is asserted here. The mathematical attribution is
+distinct from the Lean implementation's Columbus Labs adaptation attribution
+and MIT license, which remain in the Lean source.
 
 ## Signed-cardinality scope
 

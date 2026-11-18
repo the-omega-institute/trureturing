@@ -24,7 +24,7 @@ class MaintenanceLogTests(unittest.TestCase):
         self.root = Path(temporary.name).resolve()
         self.main = self.root / "main"
         self.main.mkdir()
-        self.environment = dict(os.environ)
+        self.environment = dict(os.environ, FULL_BUILD="1")
         self.environment[LOG_ENV] = str(self.root / "logs")
         self.environment.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
         self.git("init", "--initial-branch=dev")

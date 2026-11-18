@@ -1,0 +1,13 @@
+**引理 149.5（同一原效应范数下的三轴非塌缩）。** 有 $1\le\kappa<2$。固定辅助欧氏结构于 $\ker u$，令
+
+$$
+L=\max_{f\in\mathcal E}\|f|_{\ker u}\|_*<\infty,
+\qquad b=\frac{2-\kappa}{2L}>0.
+\tag{149.15}
+$$
+
+则每个 $p\in Q$、每个球参数 $D_p=c_p+B_p\overline B^3$ 的最小奇异值至少 $b$。
+
+证明。在(149.4)的 $q$ 处评价，得 $e_{q^\sharp}(q)=\kappa-1\ge0$；在 $q^\sharp$ 处评价，得 $e_q(q^\sharp)=\kappa-1$。故 $e_q(q)-e_q(q^\sharp)=2-\kappa>0$，也给 $L>0$。对任意单位 $t$ 取 $q=c_p+B_pt$，原全效应的统一范数界给
+$2-\kappa\le2L\|B_pt\|$。这支付每个方向的半轴界，不仅是直径下界。证毕。
+
