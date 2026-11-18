@@ -213,14 +213,16 @@ private lemma two_high_core_shape
       let C := univ \ (U ∪ W)
       let K := compressed G R
       U.card = 2 ∧ W.card = 2 ∧ Disjoint U W ∧ C.card = 4 ∧
-      ∀ v ∈ C, (∃! u, u ∈ U ∧ K.Adj v u) ∧
-        (∃! w, w ∈ W ∧ K.Adj v w) ∧ ∃! t, t ∈ C ∧ K.Adj v t := by
+      (∀ u ∈ U, ∃ v ∈ C, ∃ t ∈ C, v ≠ t ∧ K.Adj v u ∧ K.Adj t u) ∧
+      (∀ v ∈ C, (∃! u, u ∈ U ∧ K.Adj v u) ∧
+        (∃! w, w ∈ W ∧ K.Adj v w) ∧ ∃! t, t ∈ C ∧ K.Adj v t) := by
   obtain ⟨x, y, hxy, hU, hW, hdis, hind, hsep⟩ := two_high_end_sets hp hdeg hlow hg hL he
   let A (r : SideHigh G L) := (univ : Finset (SideHigh G R)).filter
     (fun u => G.Adj r.val u.val)
   let U := A x
   let W := A y
   let K := compressed G R
+  let C := univ \ (U ∪ W)
   have hRoots : ({x, y} : Finset (SideHigh G L)) = univ := by
     apply eq_of_subset_of_card_le (subset_univ _)
     rw [card_univ, hL]
@@ -251,6 +253,14 @@ private lemma two_high_core_shape
         exact hd
   obtain ⟨hC, core⟩ := separated_pairs_core K U W hR hU hW hdis hind
     (hsep x (by simp)) (hsep y (by simp)) degreeK
-  exact ⟨x, y, hxy, hU, hW, hdis, hC, core⟩
+  refine ⟨x, y, hxy, hU, hW, hdis, hC, ?_, core⟩
+  intro u hu
+  have hdu : K.degree u = 2 := by rw [degreeK u, if_pos (mem_union_left _ hu)]
+  obtain ⟨v, t, hvt, hN⟩ := card_eq_two.mp ((K.card_neighborFinset_eq_degree u).trans hdu)
+  have hv : K.Adj u v := (K.mem_neighborFinset _ _).mp (by rw [hN]; simp)
+  have ht : K.Adj u t := (K.mem_neighborFinset _ _).mp (by rw [hN]; simp)
+  have hmem {z : SideHigh G R} (huz : K.Adj u z) : z ∈ C := by
+    exact mem_sdiff.mpr ⟨mem_univ _, fun hz => hind u (mem_union_left _ hu) z hz huz⟩
+  exact ⟨v, hmem hv, t, hmem ht, hvt, hv.symm, ht.symm⟩
 
 #print axioms two_high_core_shape

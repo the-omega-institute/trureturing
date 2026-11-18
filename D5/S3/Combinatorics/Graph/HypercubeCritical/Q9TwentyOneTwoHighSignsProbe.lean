@@ -472,3 +472,60 @@ private lemma equal_direction_cores_not_matched
       r m hr hr2 (hv' ▸ hvm) (hw' ▸ hwm) hlow hm2
 
 #print axioms equal_direction_cores_not_matched
+
+set_option maxHeartbeats 600000 in
+/-- Once the actual core matching is available, every arm has distinct
+directions. An equal arm can have neither kind of matching partner. -/
+private lemma matched_core_arm_label
+    {n : ℕ} {S : Finset (Q n)} (hb : IsBalanced S)
+    {L R : Finset (S : Set (Q n))}
+    (hp : ((hypercube n).induce (S : Set (Q n))).IsBipartiteWith
+      (L : Set (S : Set (Q n))) (R : Set (S : Set (Q n))))
+    (x y : SideHigh ((hypercube n).induce (S : Set (Q n))) L)
+    (hxy : x ≠ y) (m : (S : Set (Q n)))
+    (hm2 : ((hypercube n).induce (S : Set (Q n))).degree m = 2)
+    (hxm : ((hypercube n).induce (S : Set (Q n))).Adj x.val m)
+    (hym : ((hypercube n).induce (S : Set (Q n))).Adj y.val m)
+    (hlow : ∀ ⦃v w⦄, ((hypercube n).induce (S : Set (Q n))).Adj v w →
+      ((hypercube n).induce (S : Set (Q n))).degree v = 2 →
+      ((hypercube n).induce (S : Set (Q n))).degree w = 2 → False)
+    {a b : Fin n} (hab : a ≠ b)
+    (hm : m.val = flip x.val.val a) (hy : y.val.val = flip m.val b) :
+    let G := (hypercube n).induce (S : Set (Q n))
+    let K := compressed G R
+    ∀ {u w v u' w' v' : SideHigh G R} {c d c' d' : Fin n},
+      u ≠ w → u' ≠ w' → u ≠ v' →
+      G.Adj x.val u.val → G.Adj y.val w.val → G.Adj x.val u'.val → G.Adj y.val w'.val →
+      K.Adj v u → K.Adj v w → K.Adj v' u' → K.Adj v' w' → K.Adj v v' →
+      w.val.val = flip y.val.val c → u.val.val = flip x.val.val d →
+      w'.val.val = flip y.val.val c' → u'.val.val = flip x.val.val d' →
+      a ≠ c → a ≠ c' → a ≠ d' → b ≠ c' → b ≠ d' →
+      d ≠ c ∧ diff v.val.val x.val.val = {b, c, d} := by
+  classical
+  dsimp only
+  intro u w v u' w' v' c d c' d' huw huw' huv' hxu hyw hxu' hyw'
+    hvu hvw hvu' hvw' hvv' hw hu hw' hu' hac hac' had' hbc' hbd'
+  rcases actual_core_arm_label hb hp x y u w v huw m hm2 hxm hym hxy hxu hyw hvu hvw
+      hm hy hw hu with h | ⟨he, t, p, hta, _, htc, hv, hp'⟩
+  · exact h
+  · obtain ⟨hpDiff, hp2, hvp, hup⟩ := hp'
+    obtain ⟨sigma, hs⟩ := hb
+    have hdist := compressed_distance hvv'
+    rcases actual_core_arm_label ⟨sigma, hs⟩ hp x y u' w' v' huw' m hm2 hxm hym hxy
+        hxu' hyw' hvu' hvw' hm hy hw' hu' with h | h
+    · exfalso
+      exact equal_direction_core_not_distance_two_from_distinct (S := S) x.val.val hac
+        hta.symm htc.symm hab hac' had' hbc' hbd' h.1.symm
+        p u.val v.val v'.val hpDiff hv h.2 hp2 hup.symm hvp.symm
+        (fun e => hvu.ne (Subtype.ext e.symm)) (fun e => huv' (Subtype.ext e))
+        (fun e => hvv'.ne (Subtype.ext e)) hdist
+    · obtain ⟨he', s, q, hsa, _, hsc, hv', hq, hq2, _, _⟩ := h
+      obtain ⟨_, k, hk2, hvk, hv'k⟩ := hvv'
+      exfalso
+      exact equal_direction_cores_not_matched (S := S) hs x.val.property hac hac'
+        hta.symm hsa.symm htc.symm hsc.symm
+        (by rw [← he, ← hu]; exact u.val.property)
+        (by rw [← he', ← hu']; exact u'.val.property)
+        v.val v'.val p q m k hv hv' hpDiff hq hp2 hq2 hm hm2 hk2 hvk hv'k hdist hlow
+
+#print axioms matched_core_arm_label
