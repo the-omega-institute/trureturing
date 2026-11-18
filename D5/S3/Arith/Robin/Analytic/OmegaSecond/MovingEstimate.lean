@@ -83,7 +83,7 @@ theorem remainder_le_majorant :
       (hcentral s hs0.le)
   have hi := ContinuumWeight.central_integral_upper hP0 (by linarith : 1 < s)
   have hi' := div_le_div_of_nonneg_right hi hl.le
-  rw [← half_power s] at hi'
+  rw [← half_power s, add_div] at hi'
   have hk := (kernel_correction_upper hsπ).2
   have hk' : P * (π / sin (π / s) - s) / log P ≤
       P / (s * log P) * correctionMajorant s := by
@@ -129,8 +129,12 @@ theorem majorant_limit {c : ℝ} (hc : 0 < c) :
         2 * (log P * sqrt (log P) * (2 / 3 : ℝ) ^ (c * sqrt (log P))) =
       majorant P (c * sqrt (log P)) / (P / (log P * sqrt (log P)))
     dsimp only [majorant]
-    field_simp [hP0, hl.ne', hs.ne', hc.ne']
-    nlinarith [sq_sqrt hl.le]
+    generalize hr : sqrt (log P) = r
+    have hr0 : 0 < r := by rw [← hr]; exact hs
+    have hr2 : r ^ 2 = log P := by rw [← hr]; exact sq_sqrt hl.le
+    rw [← hr2]
+    field_simp [hP0, hr0.ne', hc.ne']
+    <;> ring
 
 /-- At square-root logarithmic sharpness, the finite prime remainder has the
 sharp upper coefficient pi squared divided by six c, uniformly in x. -/
