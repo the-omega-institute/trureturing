@@ -86,7 +86,7 @@ lemma q_zero_parameter (Z V : Matrix ι ι ℂ) (hZ : Z.PosDef) :
     Matrix.mul_nonsing_inv_cancel_left Z V ((Matrix.isUnit_iff_isUnit_det Z).mp hZ.isUnit)] at hi
   rw [q_eq_trace, hi, Matrix.mul_assoc]
 
-private lemma arithmetic_positive (Z : Matrix ι ι ℂ) (u : ℝ)
+lemma arithmetic_positive (Z : Matrix ι ι ℂ) (u : ℝ)
     (hZ : Z.PosSemidef) (hu : u ∈ Set.Icc (0 : ℝ) 1) :
     (hsArithmeticMap Z u).IsPositive := by
   have hz : 0 ≤ Matrix.toEuclideanCLM (n := ι) (𝕜 := ℂ) Z :=
@@ -219,53 +219,6 @@ lemma trace_embed_pair (X : Matrix R R ℂ) (V : Matrix (R × a) (R × a) ℂ) :
     ((X ⊗ₖ (1 : Matrix a a ℂ))ᴴ * V).trace = (Xᴴ * partialTraceRight V).trace := by
   rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
     ← trace_partialTraceRight, partialTraceRight_embed_mul]
-
-lemma amp_kronecker (N : QuantumChannel a b) (X : Matrix R R ℂ)
-    (Z : Matrix a a ℂ) : amp N (X ⊗ₖ Z) = X ⊗ₖ act N Z := by
-  ext ⟨r,i⟩ ⟨s,j⟩
-  rw [amp_entry]
-  change (N.toCompletelyPositiveMap ((X r s) • CStarMatrix.ofMatrix Z)) i j = _
-  rw [map_smul]
-  rfl
-
-lemma amp_mono (N : QuantumChannel a b)
-    {X Z : Matrix (R × a) (R × a) ℂ} (h : X ≤ Z) : amp N X ≤ amp N Z := by
-  have hp := referenceAction_nonneg N (CStarMatrix.ofMatrix (Z-X))
-    (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv (sub_nonneg.mpr h))
-  have hn := map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm hp
-  change 0 ≤ amp N (Z-X) at hn
-  have he : amp N (Z-X) = amp N Z - amp N X := by
-    exact (CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
-      ((referenceLinear N).comp CStarMatrix.ofMatrixₗ.toLinearMap)).map_sub Z X
-  rw [he] at hn
-  exact sub_nonneg.mp hn
-
-attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-lemma positive_floor {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (Z : Matrix ι ι ℂ) (hZ : Z.PosDef) :
-    ∃ m : ℝ, 0 < m ∧ m • (1 : Matrix ι ι ℂ) ≤ Z := by
-  cases isEmpty_or_nonempty ι with
-  | inl h => exact ⟨1, zero_lt_one, le_of_eq (Subsingleton.elim _ _)⟩
-  | inr h =>
-    obtain ⟨m,hm,hfloor⟩ := (CFC.exists_pos_algebraMap_le_iff Z).mpr
-      (fun x hx => hZ.isStrictlyPositive.spectrum_pos hx)
-    exact ⟨m,hm,by simpa only [Algebra.algebraMap_eq_smul_one] using hfloor⟩
-
-set_option maxHeartbeats 1200000 in
-/-- Positivity of the channel image of the identity gives strict positivity
-on every correlated positive-definite reference input. -/
-lemma amp_posDef (N : QuantumChannel a b) (hN : (act N 1).PosDef)
-    (Z : Matrix (R × a) (R × a) ℂ) (hZ : Z.PosDef) : (amp N Z).PosDef := by
-  obtain ⟨m,hm,hfloor⟩ := positive_floor Z hZ
-  have hmon : amp N (m • (1 : Matrix (R × a) (R × a) ℂ)) ≤ amp N Z :=
-    amp_mono N hfloor
-  have he : amp N (m • (1 : Matrix (R × a) (R × a) ℂ)) =
-      m • ((1 : Matrix R R ℂ) ⊗ₖ act N 1) := by
-    rw [amp_smul, ← Matrix.one_kronecker_one, amp_kronecker]
-  rw [he] at hmon
-  have hp : ((1 : Matrix R R ℂ) ⊗ₖ act N 1).PosDef :=
-    (Matrix.PosDef.one (n := R)).kronecker hN
-  exact ((hp.isStrictlyPositive.smul hm).of_le hmon).posDef
 
 lemma amp_mul_embed (N : QuantumChannel a b)
     (Z : Matrix (R × a) (R × a) ℂ) (X : Matrix R R ℂ) :
