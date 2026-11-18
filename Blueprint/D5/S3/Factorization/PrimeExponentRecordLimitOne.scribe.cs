@@ -29,8 +29,16 @@ internal sealed class PrimeExponentRecordLimitOneDocument : IScribeDocumentDefin
             Entry("f_one", "prime-exponent-score-at-one", "The score at one",
                 ScoreAtOneFormula(), DescribeRole.Theorem,
                 "At x=1 the score is Mathlib's cardFactors, the number of prime factors counted "
-                    + "with multiplicity. This is a bind-only companion to Mathlib's canonical "
-                    + "factorization sum identity.", AssessedProvenance.FromRepo()),
+                    + "with multiplicity, by the factorization sum identity.",
+                AssessedProvenance.FromRepo()),
+            Entry("odd_part_lower", "odd-part-prime-product-lower-bound",
+                "The odd-part prime-product bound", OddPartLowerFormula(), DescribeRole.Theorem,
+                "For a nonzero odd natural m, three raised to the length of its prime-factor "
+                    + "list is at most m. Each listed prime is at least three, and the list "
+                    + "product is m. Mathlib's cardFactors_apply identifies this length with "
+                    + "the prime-factor count with multiplicity. The estimate supplies both "
+                    + "the prime-product gap here and the odd-weight bound in JLTConjecture.",
+                AssessedProvenance.FromRepo()),
             Entry("gap_lemma", "prime-exponent-gap", "The prime-product gap",
                 GapFormula(), DescribeRole.Theorem,
                 "If nonzero n is neither a power of two nor three times a power of two, then the "
@@ -119,6 +127,15 @@ internal sealed class PrimeExponentRecordLimitOneDocument : IScribeDocumentDefin
         Formula n = F.Id("n");
         return Disp(ForAll([Bound("n", Naturals())],
             Equal(Call("f", D(1), n), Call("real", Call("cardFactors", n)))));
+    }
+
+    private static Formula OddPartLowerFormula()
+    {
+        Formula m = F.Id("m");
+        Formula hypotheses = And(NotEqual(m, D(0)), Call("Odd", m));
+        Formula exponent = Call("length", Call("primeFactorsList", m));
+        return Disp(ForAll([Bound("m", Naturals())],
+            Implies(hypotheses, Le(Power(D(3), exponent), m))));
     }
 
     private static Formula GapFormula()
