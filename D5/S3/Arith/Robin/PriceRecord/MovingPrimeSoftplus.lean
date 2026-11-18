@@ -285,7 +285,6 @@ private theorem theta_comparison_tendsto {a C : ℝ} {s : ℝ → ℝ}
       mul_le_mul_of_nonneg_left hbound (div_nonneg hsP.1 hP0.le)
     _ = (6 * log 2 * 2 ^ (N + 1)) * s P / log P ^ N := by
       field_simp [hP0.ne', hlog.ne']
-      <;> ring
     _ ≤ (6 * log 2 * 2 ^ (N + 1)) * (C * log P ^ a) / log P ^ N :=
       div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hsP.2 (by positivity))
         (pow_nonneg hlog.le _)
@@ -346,7 +345,7 @@ private theorem fermi_mass :
       (nhdsWithin_le_nhds (s := Ioi (0 : ℝ)))
     simpa only [Pi.mul_apply, id_eq, mul_zero] using ht
   have hbTop : Tendsto (softplus * id) atTop (𝓝 0) := by
-    refine squeeze_zero' ?_ ?_ ?_
+    refine squeeze_zero' (g := fun u => exp (-u) * u) ?_ ?_ ?_
     · filter_upwards [eventually_ge_atTop (0 : ℝ)] with u hu
       exact mul_nonneg (softplus_nonneg u) hu
     · filter_upwards [eventually_ge_atTop (0 : ℝ)] with u hu
@@ -356,12 +355,16 @@ private theorem fermi_mass :
   have hi' : IntegrableOn (fun u => -(exp u + 1)⁻¹ * id u) (Ioi 0) := by
     convert hf.neg using 1
     funext u
-    dsimp only [id_eq, f]
+    simp only [id_eq, f, Pi.neg_apply]
     ring
   have h := integral_Ioi_mul_deriv_eq_deriv_mul
     (u := softplus) (v := id) (u' := fun u => -(exp u + 1)⁻¹) (v' := fun _ => 1)
     (fun u _ => hd u) (fun u _ => hasDerivAt_id u)
-    (by simpa only [Pi.mul_apply, mul_one] using hi) hi' hb0 hbTop
+    (by
+      have he : softplus * (fun _ : ℝ => (1 : ℝ)) = softplus := by
+        funext u
+        exact mul_one _
+      rwa [he]) hi' hb0 hbTop
   simp only [mul_one, sub_zero, zero_sub, id_eq] at h
   rw [h, ← integral_neg]
   convert hmass using 2
@@ -417,7 +420,7 @@ private theorem softplus_continuum_tendsto {s : ℝ → ℝ} (hs : Tendsto s atT
     have hcut : Tendsto (fun P => s P * log 2) atTop atTop :=
       hs.atTop_mul_const (log_pos (by norm_num))
     have hsmall := hs.const_div_atTop u
-    have h := (hsmall.exp.const_mul (g u))
+    have h := ((continuous_exp.continuousAt (x := (0 : ℝ))).tendsto.comp hsmall).const_mul (g u)
     change Tendsto (fun P : ℝ => g u * exp (u / s P)) atTop (𝓝 (g u * exp 0)) at h
     rw [exp_zero, mul_one] at h
     apply h.congr'
