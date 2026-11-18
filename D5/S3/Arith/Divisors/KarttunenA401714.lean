@@ -18,7 +18,7 @@ open D5.S3.Arith.EulerFormDivisorSum
 private theorem missing_prime_exists (N : ℕ) (hn : 0 < N) :
     ∃ p : ℕ, Nat.Prime p ∧ ¬ p ∣ N := by
   obtain ⟨p, hp, -⟩ :=
-    GoldenSmallestMissingPrime.exists_smallest_missing_prime_threshold (Nat.succ_le_of_lt hn)
+    _root_.D5.S3.Arith.GoldenResource.GoldenSmallestMissingPrime.exists_smallest_missing_prime_threshold (Nat.succ_le_of_lt hn)
   exact ⟨p, hp.1⟩
 
 /-- The least prime not dividing a positive integer. -/
