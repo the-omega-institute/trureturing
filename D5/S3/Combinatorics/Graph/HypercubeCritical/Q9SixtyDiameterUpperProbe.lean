@@ -90,21 +90,20 @@ private lemma ball_subset_has_degree_at_most_one {C : Finset (Q 9)}
   change (G.neighborFinset z ∩ P).card ≤ 1
   simp [hempty]
 
-private lemma full_exterior_forces_single_attachment_in_same_half {C : Finset (Q 9)}
+private lemma full_leaf_other_attachment_in_same_half {C : Finset (Q 9)}
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (x w : (C : Set (Q 9))) (k : Fin 9)
     (hkw : w.val k ≠ x.val k)
     (hout : w ∉ HammingSeven.ball ((hypercube 9).induce (C : Set (Q 9))) x)
     (hfull : ((third ((hypercube 9).induce (C : Set (Q 9))) x).filter
-      (fun z => (hypercube 9).Adj z.val w.val)).card = 3) :
+      (fun z => (hypercube 9).Adj z.val w.val)).card = 3)
+    (z : (C : Set (Q 9)))
+    (hzt : z ∈ third ((hypercube 9).induce (C : Set (Q 9))) x)
+    (hzw : (hypercube 9).Adj z.val w.val) :
     let G := (hypercube 9).induce (C : Set (Q 9))
-    ∃ a ∉ HammingSeven.ball G x, a.val k = w.val k ∧
+    ∃ a ∉ HammingSeven.ball G x, G.Adj z a ∧ a.val k = w.val k ∧
       ((third G x).filter (fun z => G.Adj z a)).card = 1 := by
   let G := (hypercube 9).induce (C : Set (Q 9))
-  let L := (third G x).filter (fun z => (hypercube 9).Adj z.val w.val)
-  have hc : L.card = 3 := hfull
-  obtain ⟨z,hz⟩ := Finset.card_pos.mp (by omega : 0 < L.card)
-  obtain ⟨hzt,hzw⟩ := Finset.mem_filter.mp hz
   obtain ⟨i,p,q,hip,hiq,hpq,hi,hi₂,hzi⟩ := word_to_third hb x z hzt
   have hziC : flip (flip (flip x.val i) p) q ∈ C := hzi ▸ z.property
   have hziw : (hypercube 9).Adj (flip (flip (flip x.val i) p) q) w.val := by
@@ -141,8 +140,24 @@ private lemma full_exterior_forces_single_attachment_in_same_half {C : Finset (Q
         exact BalancedCriticalSpectrum.flip_adj _ _
     · rw [hj]
       simp [BalancedCriticalSpectrum.flip,Ne.symm he]
-  refine ⟨a,haout,habit.trans hzbit,?_⟩
+  refine ⟨a,haout,hza,habit.trans hzbit,?_⟩
   exact actual_full_leaf_blocking hr hb x z hzt w hout a haout hzw hza haw.symm hfull
+
+private lemma full_exterior_forces_single_attachment_in_same_half {C : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (x w : (C : Set (Q 9))) (k : Fin 9)
+    (hkw : w.val k ≠ x.val k)
+    (hout : w ∉ HammingSeven.ball ((hypercube 9).induce (C : Set (Q 9))) x)
+    (hfull : ((third ((hypercube 9).induce (C : Set (Q 9))) x).filter
+      (fun z => (hypercube 9).Adj z.val w.val)).card = 3) :
+    let G := (hypercube 9).induce (C : Set (Q 9))
+    ∃ a ∉ HammingSeven.ball G x, a.val k = w.val k ∧
+      ((third G x).filter (fun z => G.Adj z a)).card = 1 := by
+  obtain ⟨z,hz⟩ := Finset.card_pos.mp (by rw [hfull]; omega)
+  obtain ⟨hzt,hzw⟩ := Finset.mem_filter.mp hz
+  obtain ⟨a,ha,_,hbit,hone⟩ :=
+    full_leaf_other_attachment_in_same_half hr hb x w k hkw hout hfull z hzt hzw
+  exact ⟨a,ha,hbit,hone⟩
 
 #print axioms ball_subset_has_degree_at_most_one
 #print axioms full_exterior_forces_single_attachment_in_same_half
