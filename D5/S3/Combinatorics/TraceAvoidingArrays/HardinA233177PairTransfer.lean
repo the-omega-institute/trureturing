@@ -149,7 +149,11 @@ set_option maxHeartbeats 10000000 in
 private theorem initial_weights : ∀ s : Fin 14,
     (∑ a : Col, ∑ b : Col,
       if compatible a b ∧ cls b = s then (1 : ℤ) else 0) = weights s := by
-  decide +kernel
+  intro s
+  simp_rw [quotient_rows]
+  have h : ∀ s : Fin 14, (∑ a : Col, Q (cls a) s) = weights s := by
+    decide +kernel
+  exact h s
 
 def gridEquiv (n : ℕ) : (Fin 4 × Fin n → Fin 3) ≃ (Fin n → Col) where
   toFun P j := (P (0,j), P (1,j), P (2,j), P (3,j))
