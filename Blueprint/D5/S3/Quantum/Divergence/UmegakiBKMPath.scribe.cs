@@ -7,6 +7,18 @@ internal sealed class UmegakiBKMPathDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual noncommuting matrix relative entropy is the weighted integral of its BKM resolvent form.",
         H("Umegaki divergence along a positive matrix segment"), Blocks(
+            Describe.Lean(DescribeId.Create("common-positive-floor"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.common_floor"),
+                H("A common positive spectral floor"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n and positive definite complex matrices A and B on Fin n, there exists a real c strictly greater than zero such that c times the identity is at most A and at most B in the matrix order. Dimension zero is included. The proof takes the minimum of two positive spectral floors, with the empty carrier handled directly. The BKM path proofs and the actual faithful density-pair construction use this common floor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("logderiv-continuous-on-floor"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.continuousOn_logDeriv_of_floor"),
+                H("Continuity on an arbitrary set with a uniform floor"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, arbitrary complex matrices B and H on Fin n, any set s of real numbers and any real c strictly greater than zero, assume c times the identity is at most B+tH for every t in s. Then t mapped to the actual matrix-valued Bochner logarithmic derivative logDeriv(B+tH,H) is continuous on s. No interval shape, nonemptiness of s or separate Hermitian hypothesis on B and H is imposed. The common resolvent majorant norm(H)/(c+u) squared supplies dominated continuity. This original helper is used by the path identity and, for fixed positive flag weight, by the faithful density-pair local expansion."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("relative-entropy-bkm-path"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.relativeEntropy_eq_integral_bkm"),
                 H("The path identity with the trace correction"),

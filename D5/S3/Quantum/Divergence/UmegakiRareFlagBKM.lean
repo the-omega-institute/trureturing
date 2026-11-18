@@ -22,7 +22,7 @@ open D5.S3.Divergence.LogDerivTrace
 
 namespace D5.S3.Quantum.Divergence.UmegakiRareFlagBKM
 
-private lemma block_diag_posDef {iota kappa : Type*} [Fintype iota] [DecidableEq iota]
+lemma block_diag_posDef {iota kappa : Type*} [Fintype iota] [DecidableEq iota]
     [Fintype kappa] [DecidableEq kappa]
     (Z : Matrix iota iota ℂ) (C : Matrix kappa kappa ℂ)
     (hZ : Z.PosDef) (hC : C.PosDef) {δ : ℝ} (hδ : 0 < δ) :
