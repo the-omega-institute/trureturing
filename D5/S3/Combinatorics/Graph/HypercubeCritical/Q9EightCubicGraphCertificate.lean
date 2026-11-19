@@ -4,6 +4,7 @@ import Mathlib.Data.Nat.Bitwise
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Logic.Equiv.Set
+import Mathlib.Tactic.FinCases
 
 /-! Check the finite classifications after labeling the neighbors of vertex zero
 as 1, 2, and 3. The masks encode the twelve possible edges from those neighbors
@@ -218,5 +219,154 @@ theorem normalized_edge_counts (G : SimpleGraph (Fin 8)) [DecidableRel G.Adj]
   omega
 
 #print axioms normalized_edge_counts
+
+private theorem pair_digits : ∀ x y z t : Bool,
+    x.toNat + y.toNat + z.toNat + t.toNat = 2 →
+      ∃ a : Fin 6, (pairMasks a).testBit 0 = x ∧ (pairMasks a).testBit 1 = y ∧
+        (pairMasks a).testBit 2 = z ∧ (pairMasks a).testBit 3 = t := by
+  decide +kernel
+
+private theorem triple_digits : ∀ x y z u v w : Bool,
+    x.toNat + y.toNat + z.toNat + u.toNat + v.toNat + w.toNat = 3 →
+      ∃ a : Fin 20, (tripleMasks a).testBit 0 = x ∧ (tripleMasks a).testBit 1 = y ∧
+        (tripleMasks a).testBit 2 = z ∧ (tripleMasks a).testBit 3 = u ∧
+        (tripleMasks a).testBit 4 = v ∧ (tripleMasks a).testBit 5 = w := by
+  intro x y z u v w
+  cases x <;> cases y <;> cases z <;> cases u <;> cases v <;> cases w <;> decide +kernel
+
+private def cutDigits (a b c : Fin 6) (i : Fin 3) : ℕ := ![pairMasks a, pairMasks b, pairMasks c] i
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 16000000 in
+-- Check the bit positions in the bounded code.
+private theorem code_digits : ∀ (a b c : Fin 6) (d : Fin 20),
+    (∀ (i : Fin 3) (j : Fin 4),
+      (code a b c d).testBit (i.val * 4 + j.val) = (cutDigits a b c i).testBit j.val) ∧
+    (∀ j : Fin 6, (code a b c d).testBit (12 + j.val) = (tripleMasks d).testBit j.val) := by
+  decide +kernel
+
+/-- The edge counts of a normalized graph encode it among the checked codes. -/
+theorem exists_code_of_normalized (G : SimpleGraph (Fin 8)) [DecidableRel G.Adj]
+    (hr : G.IsRegularOfDegree 3)
+    (ht : ∀ x y z, G.Adj x y → G.Adj y z → G.Adj z x → False)
+    (hroot : ∀ i, G.Adj 0 i ↔ i ∈ ({1, 2, 3} : Finset (Fin 8))) :
+    ∃ (a b c : Fin 6) (d : Fin 20), ∀ i j, adj (code a b c d) i j = decide (G.Adj i j) := by
+  let f := fun (i j : Fin 8) => decide (G.Adj i j)
+  have hweight (i j : Fin 8) : (f i j).toNat = if G.Adj i j then 1 else 0 := by
+    by_cases h : G.Adj i j <;> simp [f, h]
+  obtain ⟨hcut, htail⟩ := normalized_edge_counts G hr ht hroot
+  have hpair (i : Fin 8) (hi : i ∈ ({1, 2, 3} : Finset (Fin 8))) :
+      ∃ a : Fin 6, (pairMasks a).testBit 0 = f i 4 ∧ (pairMasks a).testBit 1 = f i 5 ∧
+        (pairMasks a).testBit 2 = f i 6 ∧ (pairMasks a).testBit 3 = f i 7 :=
+    pair_digits _ _ _ _ (by simpa only [hweight] using hcut i hi)
+  obtain ⟨a, ha0, ha1, ha2, ha3⟩ := hpair 1 (by decide)
+  obtain ⟨b, hb0, hb1, hb2, hb3⟩ := hpair 2 (by decide)
+  obtain ⟨c, hc0, hc1, hc2, hc3⟩ := hpair 3 (by decide)
+  obtain ⟨d, hd0, hd1, hd2, hd3, hd4, hd5⟩ :=
+    triple_digits (f 4 5) (f 4 6) (f 4 7) (f 5 6) (f 5 7) (f 6 7)
+      (by simpa only [hweight] using htail)
+  let mask := code a b c d
+  have hc (i : Fin 3) (j : Fin 4) :
+      mask.testBit (i.val * 4 + j.val) = (cutDigits a b c i).testBit j.val :=
+    (code_digits a b c d).1 i j
+  have hd (j : Fin 6) : mask.testBit (12 + j.val) = (tripleMasks d).testBit j.val :=
+    (code_digits a b c d).2 j
+  have hsymm (i j : Fin 8) : f i j = f j i := by simp [f, G.adj_comm]
+  have hnone (i j : Fin 8) (hi : i ∈ ({1, 2, 3} : Finset (Fin 8)))
+      (hj : j ∈ ({1, 2, 3} : Finset (Fin 8))) : f i j = false :=
+    decide_eq_false (fun h => ht 0 i j ((hroot i).mpr hi) h ((hroot j).mpr hj).symm)
+  have hs : ∀ i j, adj mask i j = adj mask j i := by
+    intro i j
+    rcases lt_trichotomy i j with h | rfl | h
+    · simp [adj, h, not_lt_of_ge h.le]
+    · simp [adj]
+    · simp [adj, h, not_lt_of_ge h.le]
+  have hf : ∀ i j : Fin 8, i ≤ j → adj mask i j = f i j := by
+    intro i j hij
+    fin_cases i <;> fin_cases j <;> try (exfalso; exact (by decide : ¬ _ ≤ _) hij)
+    all_goals try rfl
+    all_goals try (simp [adj, edgeSorted, f, hroot] <;> done)
+    all_goals try (rw [hnone _ _ (by decide) (by decide)]; rfl)
+    all_goals first
+      | exact (hc 0 0).trans ha0
+      | exact (hc 0 1).trans ha1
+      | exact (hc 0 2).trans ha2
+      | exact (hc 0 3).trans ha3
+      | exact (hc 1 0).trans hb0
+      | exact (hc 1 1).trans hb1
+      | exact (hc 1 2).trans hb2
+      | exact (hc 1 3).trans hb3
+      | exact (hc 2 0).trans hc0
+      | exact (hc 2 1).trans hc1
+      | exact (hc 2 2).trans hc2
+      | exact (hc 2 3).trans hc3
+      | exact (hd 0).trans hd0
+      | exact (hd 1).trans hd1
+      | exact (hd 2).trans hd2
+      | exact (hd 3).trans hd3
+      | exact (hd 4).trans hd4
+      | exact (hd 5).trans hd5
+  refine ⟨a, b, c, d, fun i j => ?_⟩
+  rcases le_total i j with h | h
+  · exact hf i j h
+  · exact (hs i j).trans ((hf j i h).trans (hsymm j i))
+
+#print axioms exists_code_of_normalized
+
+/-- Every triangle-free cubic graph on eight vertices has the adjacency
+of the cube or the Wagner graph after a bijective relabeling. -/
+theorem cube_or_wagner (G : SimpleGraph (Fin 8)) [DecidableRel G.Adj]
+    (hr : G.IsRegularOfDegree 3)
+    (ht : ∀ x y z, G.Adj x y → G.Adj y z → G.Adj z x → False) :
+    ∃ (wagner : Bool) (p : Equiv.Perm (Fin 8)),
+      ∀ i j, G.Adj i j ↔ modelAdj wagner (p i) (p j) = true := by
+  classical
+  obtain ⟨q, hq, hroot⟩ := normalize_root G hr
+  let H := G.comap q
+  have hrH (i : Fin 8) : H.degree i = 3 :=
+    ((SimpleGraph.Iso.comap q G).degree_eq i).symm.trans (hr (q i))
+  have htH (x y z : Fin 8) (hxy : H.Adj x y) (hyz : H.Adj y z)
+      (hzx : H.Adj z x) : False := ht (q x) (q y) (q z) hxy hyz hzx
+  have hrootH (i : Fin 8) : H.Adj 0 i ↔ i ∈ ({1, 2, 3} : Finset (Fin 8)) := by
+    change G.Adj (q 0) (q i) ↔ _
+    rw [hq]
+    exact hroot i
+  obtain ⟨a, b, c, d, hcode⟩ := exists_code_of_normalized H hrH htH hrootH
+  let mask := code a b c d
+  have hvalid : valid mask = true := by
+    apply Bool.and_eq_true_iff.mpr
+    constructor
+    · apply List.all_eq_true.mpr
+      intro i _
+      apply beq_iff_eq.mpr
+      have hnodup : vertices.Nodup := List.nodup_finRange 8
+      have hall : vertices.toFinset = Finset.univ := by
+        ext j
+        simp [vertices]
+      have hcount := hnodup.card_eq_countP (P := H.Adj i)
+      rw [hall, ← SimpleGraph.neighborFinset_eq_filter,
+        SimpleGraph.card_neighborFinset_eq_degree, hrH] at hcount
+      rw [show adj mask i = (fun j => decide (H.Adj i j)) from funext (hcode i)]
+      exact hcount.symm
+    · apply List.all_eq_true.mpr
+      intro i _
+      apply List.all_eq_true.mpr
+      intro j _
+      apply List.all_eq_true.mpr
+      intro k _
+      by_cases h1 : H.Adj i j
+      · by_cases h2 : H.Adj j k
+        · have h3 : ¬ H.Adj k i := htH i j k h1 h2
+          simp [mask, hcode, h3]
+        · simp [mask, hcode, h2]
+      · simp [mask, hcode, h1]
+  obtain ⟨wagner, σ, hσ⟩ := exists_model_relabeling a b c d hvalid
+  refine ⟨wagner, q.symm.trans σ, fun i j => ?_⟩
+  change G.Adj i j ↔ modelAdj wagner (σ (q.symm i)) (σ (q.symm j)) = true
+  rw [← hσ, hcode, decide_eq_true_eq]
+  change G.Adj i j ↔ G.Adj (q (q.symm i)) (q (q.symm j))
+  simp
+
+#print axioms cube_or_wagner
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9EightCubicGraphCertificate

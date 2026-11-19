@@ -1,6 +1,7 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.EighteenPointSlice
 import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
+import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9EightCubicGraphCertificate
 import Batteries.Tactic.OpenPrivate
 
 /-! Degree separation in a twenty-vertex literal half of a balanced cubic
@@ -138,5 +139,25 @@ theorem compressed_cubic {C : Finset (Q 9)} (hC : C.card = 72)
     rfl
 
 #print axioms compressed_cubic
+
+/-- The actual degree-two subdivision in a twenty-point half compresses to
+the three-cube or Wagner graph. -/
+theorem compressed_cube_or_wagner {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 20) :
+    let G := (hypercube 9).induce (coordinateSlice C b : Set (Q 9))
+    ∃ (wagner : Bool) (vertices : Fin 8 ↪ (coordinateSlice C b : Set (Q 9))),
+      ∀ x y, Q9EightCubicGraphCertificate.modelAdj wagner x y = true ↔
+        x ≠ y ∧ ∃ m, G.degree m = 2 ∧ G.Adj (vertices x) m ∧ G.Adj (vertices y) m := by
+  obtain ⟨H, vertices, hreg, htriangle, hrealize⟩ := compressed_cubic hC hr hb b hs
+  obtain ⟨wagner, label, hlabel⟩ :=
+    Q9EightCubicGraphCertificate.cube_or_wagner H hreg htriangle
+  refine ⟨wagner, label.symm.toEmbedding.trans vertices, fun x y => ?_⟩
+  have h := (hlabel (label.symm x) (label.symm y)).symm.trans
+    (hrealize (label.symm x) (label.symm y))
+  simpa only [Equiv.apply_symm_apply, label.symm.injective.ne_iff,
+    Function.Embedding.trans_apply, Equiv.toEmbedding_apply] using h
+
+#print axioms compressed_cube_or_wagner
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoThinSlice
