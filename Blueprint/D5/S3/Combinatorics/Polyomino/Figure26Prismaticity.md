@@ -316,4 +316,3 @@ Choose 16 distinct anchors in a competing board. Each output column is the union
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/Figure26Prismaticity.rightIssuePattern`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/Figure26Prismaticity.right_issue_prismatic`
 - Truth anchor: `D5/S3/Combinatorics/Polyomino/Figure26Prismaticity.wordAt`
-- Dependency: [D5/S3/StatisticalMechanics/HardCore/OrderedGridMemory](../../StatisticalMechanics/HardCore/OrderedGridMemory.md)
