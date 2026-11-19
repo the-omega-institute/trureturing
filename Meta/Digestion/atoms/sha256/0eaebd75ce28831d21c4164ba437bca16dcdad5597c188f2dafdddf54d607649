@@ -1,0 +1,104 @@
+### 4.5 A thin integer functional and the ninth-root loss
+
+*Proof of Theorem 4.1.*
+
+Let $\Gamma=\sum_{e\in\mathcal E}\mathbb Z\mathbf r_e$. This is a
+rank-three integer lattice. Choose an integer basis and let
+$D_\Gamma$ be (4.4) on that basis. It is a nonzero
+integer. By (4.5), for all actual triples,
+
+$$
+\tag{4.17}
+ \mathcal D(\mathbf r_{e_1},\mathbf r_{e_2},\mathbf r_{e_3})
+   =D_\Gamma\det_\Gamma
+       (\mathbf r_{e_1},\mathbf r_{e_2},\mathbf r_{e_3})^3.
+$$
+
+Actual rows generate $\Gamma/p\Gamma$, so three of them have
+$\Gamma$-determinant a $p$-unit. Equation
+(4.8) applied to this triple gives
+
+$$
+\tag{4.18}
+  v_pD_\Gamma=5,\qquad |D_\Gamma|\geq p^5.
+$$
+
+Choose three actual rows $x_1,x_2,x_3$ with maximal absolute
+$\Gamma$-determinant $d$. It is a positive integer. Equations
+(4.8) and
+(4.17) imply
+
+$$
+\tag{4.19}
+  d^3p^5\leq d^3|D_\Gamma|\leq C_DB^7,\qquad d\leq K^{1/3}.
+$$
+
+In particular this nonzero-residual branch is empty when $K<1$.
+By Cramer’s rule and the maximality of $d$, every actual row is
+
+$$
+\tag{4.20}
+  \mathbf r_e=t_1x_1+t_2x_2+t_3x_3,\qquad |t_i|\leq1.
+$$
+
+Identify $\Gamma$ with $\mathbb Z^3$ and put the coordinates of the
+$x_i$ in the columns of $X_0$. The sublattice
+$X_0^{\mathsf T}\mathbb Z^3\subset\mathbb Z^3$ has index $d$. Set
+$m=\lceil d^{1/3}\rceil$. The cube $\{0,\ldots,m\}^3$ has more than
+$d$ integer points. Two of them are congruent modulo this sublattice;
+their nonzero difference is $X_0^{\mathsf T}f$ for an integer
+functional $f\ne0$, and
+
+$$
+|f(x_i)|\leq m\qquad(i=1,2,3).
+$$
+
+Divide $f$ by the gcd of its coordinates to make it primitive; the
+inequalities only improve. Equation (4.20)
+then gives
+
+$$
+\tag{4.21}
+ |f(\mathbf r_e)|\leq3m\qquad(e\in\mathcal E).
+$$
+
+Hence the actual rows occupy $O(1+d^{1/3})$ integer affine planes.
+
+We verify the height condition rather than treating this functional as
+an arbitrary supplier. The actual row entries have fixed polynomial
+height. A fixed-rank Hermite basis of their generated lattice has fixed
+polynomial height, as do the coordinates of the $x_i$ in it, by minors
+and Cramer’s rule. In the pigeonhole construction,
+$f=(X_0^{\mathsf T})^{-1}v$ with $|v_i|\leq m$ and $d\geq1$; its
+height is consequently polynomial. A kernel basis and a complementary
+vector for primitive $f$ again have polynomial height by fixed-rank
+integer elimination. The layer values in
+(4.21) have polynomial height as well.
+
+Lemma 4.8 therefore applies uniformly to all
+these planes, proving
+
+$$
+\#\mathcal E\ll_\varepsilon p^\varepsilon(1+d^{1/3})
+       \ll_\varepsilon p^\varepsilon(1+K^{1/9}),
+$$
+
+as required. The decomposition was by an auxiliary integer functional,
+not by the original residual layer. All actual pairs in $\mathcal E$,
+including the original zero and nonzero layers, occur in the counted
+planes, and the zero-product case in
+(4.16) was retained. This completes the
+all-layer count.
+
+**Remark 4.9.**
+
+The estimate is uniform for the specified actual rank-three family.
+It does not say that every endpoint family at the same middle has the
+same derivative parameter or rational span. For the original maximum
+bad-degree average, one first chooses a single actual maximizing
+baseline, then applies the theorem to the corresponding common-parameter
+nonzero-residual rank-three family. Empty, lower-rank, zero-residual,
+other-rank and nonunit-chart strata require their separate estimates.
+The all-layer proof itself introduces neither another baseline sum nor
+a physical multiplicity factor.
+

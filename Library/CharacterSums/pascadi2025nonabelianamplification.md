@@ -23,6 +23,8 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiZeroDQuadratic
   - D5/S3/Arith/CharacterSums/PascadiZeroDCover
   - D5/S3/Arith/CharacterSums/PascadiZeroDBadDegreeAverage
+  - D5/S3/Arith/CharacterSums/PascadiRankFourFactor
+  - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
 license: source-reference
 triage: anchor
 ---
@@ -240,6 +242,26 @@ This proves the selected zero-D branch average, not a larger total-count
 exponent. The delivered unconditional total-count range remains every fixed
 `alpha<26/7`; the nonzero-residual average and the full arbitrary-modulus
 conjecture remain separate open work. No literature priority is claimed.
+
+## Rank four and its original average
+
+Lemma 2.6 of the repository's
+`PASCADI_PRIME_CUBE_PROJECTION_IDEAL_ENDPOINT` volume is formalized in
+`PascadiRankFourFactor.rank_four_root_relevant_factor`. For a finite
+coefficient family with common value modulo the prime cube and common
+derivative modulo the prime, the three inequalities in (2.16) bound rational
+row rank by four. In rank four the primitive integer factor has the form
+`aT-n` with positive leading coefficient, unit leading reduction and
+`a*beta-n=0` modulo the prime. It divides the integer pencil of every row
+and its rational root has nonzero baseline linear value.
+
+`PascadiRankFourBadDegreeAverage.actual_long_bad_degree_average_rank_four`
+uses that factor on the actual maximizing family. The rank includes the
+baseline and all nonzero-reduction derivative-zero partners. At the common
+root every selected quadratic value is a common multiple of its linear
+value. This gives zero Dixon determinants and yields the original average
+above under `C6^2*(32*A/p^3)^13<p^10`. The degree still includes the
+zero-reduction partners and is zero for empty endpoint families.
 
 ## Quadratic nonzero middle sections
 
