@@ -147,7 +147,7 @@ theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
   · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
   · exact (adjacent 3).symm.trans ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm))
 
-private def alternating (n : ℕ) (a b : Fin 3) : Fin 5 × Fin n → Fin 3 :=
+def alternating (n : ℕ) (a b : Fin 3) : Fin 5 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
 
 private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
@@ -157,7 +157,7 @@ private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
   have hpar : (j.val + 1) % 2 = 0 ↔ ¬ j.val % 2 = 0 := by omega
   by_cases h : j.val % 2 = 0 <;> simp [h, hpar, hab, Ne.symm hab]
 
-private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
+theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 5 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) :
     ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b := by
