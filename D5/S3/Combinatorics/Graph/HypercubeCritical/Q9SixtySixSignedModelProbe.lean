@@ -17,7 +17,7 @@ attribute [local instance] Classical.propDecidable
 open private huangMatrix cubeParity from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private paritySide parity_bipartite parity_union from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
-open private directions mem_directions directions_card exterior_even from
+open private directions mem_directions directions_card exterior_even regular_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
@@ -541,7 +541,7 @@ theorem q9_sixty_six_mem_profiles_after_suffix_bounds {C : Finset (Q 9)} (hC : C
   refine ⟨sorted_deficits_mem_sixtySixCandidateProfiles r hmono hr hm, ?_⟩
   have he : (fun i : Fin 9 => (List.ofFn r)[i.val]?.getD 0) = r := by
     funext i
-    simp only [List.getElem?_ofFn, dif_pos i.isLt, Option.getD_some]
+    simp only [List.getElem?_ofFn, dite_eq_left i.isLt, Option.getD_some]
   simp only [Bool.not_eq_true', hasSuffixConflict, he, sum_ofFn_int, List.any_eq_false,
     Bool.not_eq_true, decide_eq_false_iff_not]
   intro a _ b _
@@ -549,5 +549,185 @@ theorem q9_sixty_six_mem_profiles_after_suffix_bounds {C : Finset (Q 9)} (hC : C
 
 #print axioms sixtySixProfilesAfterSuffixBounds_length
 #print axioms q9_sixty_six_mem_profiles_after_suffix_bounds
+
+private def trueDirections (x : Q 9) : Finset (Fin 9) :=
+  univ.filter fun j => x j = true
+
+private lemma trueDirections_injective : Function.Injective trueDirections := by
+  intro x y h
+  funext j
+  have hmem : (x j = true) ↔ (y j = true) := by
+    simpa [trueDirections] using (show j ∈ trueDirections x ↔ j ∈ trueDirections y by rw [h])
+  cases hx : x j <;> cases hy : y j <;> simp_all
+
+/-- A literal half contained in radius two about its coordinate vertex has
+at most nine vertices below the outer layer, and every outer vertex requires
+a crossing edge. -/
+private lemma thin_half_card_le {C : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (i : Fin 9) (hthin : ∀ x ∈ C, x i = true → (trueDirections x).card ≤ 3) :
+    (C.filter (fun x => x i = true)).card ≤ 9 + directionEdges C i := by
+  let H := C.filter (fun x => x i = true)
+  let T := H.filter (fun x => (trueDirections x).card ≤ 2)
+  let E := C.filter (fun x => x i = false ∧ flip x i ∈ C)
+  have hT : T.card ≤ 9 := by
+    let erasePivot : Q 9 → Finset (Fin 9) := fun x => (trueDirections x).erase i
+    let L := insert ∅ (((univ : Finset (Fin 9)).erase i).image fun j => ({j} : Finset (Fin 9)))
+    have hinj : Set.InjOn erasePivot (T : Set (Q 9)) := by
+      intro x hx y hy h
+      have hx' := (mem_filter.mp (mem_filter.mp hx).1).2
+      have hy' := (mem_filter.mp (mem_filter.mp hy).1).2
+      have hiX : i ∈ trueDirections x := by simp [trueDirections, hx']
+      have hiY : i ∈ trueDirections y := by simp [trueDirections, hy']
+      exact trueDirections_injective (by
+        simpa only [erasePivot, insert_erase hiX, insert_erase hiY] using congrArg (insert i) h)
+    have hsub : T.image erasePivot ⊆ L := by
+      intro q hq
+      obtain ⟨x, hx, rfl⟩ := mem_image.mp hq
+      have hx' := (mem_filter.mp (mem_filter.mp hx).1).2
+      have hiX : i ∈ trueDirections x := by simp [trueDirections, hx']
+      have hcard : (erasePivot x).card ≤ 1 := by
+        dsimp only [erasePivot]
+        rw [card_erase_of_mem hiX]
+        have := (mem_filter.mp hx).2
+        omega
+      by_cases hn : erasePivot x = ∅
+      · simp [L, hn]
+      · have hpos := card_pos.mpr (nonempty_iff_ne_empty.mpr hn)
+        obtain ⟨j, hj⟩ := card_eq_one.mp (by omega : (erasePivot x).card = 1)
+        have hji : j ≠ i := by
+          have hj' : j ∈ erasePivot x := by simp [hj]
+          exact (mem_erase.mp hj').1
+        exact mem_insert_of_mem (mem_image.mpr ⟨j, by simp [hji], hj.symm⟩)
+    have hL : L.card ≤ 9 := by
+      have h := card_insert_le (s := (((univ : Finset (Fin 9)).erase i).image
+        (fun j => ({j} : Finset (Fin 9))))) (a := (∅ : Finset (Fin 9)))
+      have hi := card_image_le (s := (univ : Finset (Fin 9)).erase i)
+        (f := fun j => ({j} : Finset (Fin 9)))
+      rw [card_erase_of_mem (mem_univ _), card_univ, Fintype.card_fin] at hi
+      dsimp only [L]
+      omega
+    rw [← card_image_of_injOn hinj]
+    exact (card_le_card hsub).trans hL
+  have hcross : (H \ T).card ≤ E.card := by
+    apply card_le_card_of_injOn (flip · i)
+    · intro x hx
+      obtain ⟨hxH, hxT⟩ := mem_sdiff.mp hx
+      obtain ⟨hxC, hxi⟩ := mem_filter.mp hxH
+      have hcard : (trueDirections x).card = 3 := by
+        have hu := hthin x hxC hxi
+        by_contra! h
+        apply hxT
+        exact mem_filter.mpr ⟨hxH, by omega⟩
+      have hflip : flip x i ∈ C := by
+        by_contra hmissing
+        have hsub : directions C x ⊆ (trueDirections x).erase i := by
+          intro j hj
+          have hjC := (mem_directions C x j).mp hj
+          have hji : j ≠ i := by
+            rintro rfl
+            exact hmissing hjC
+          refine mem_erase.mpr ⟨hji, ?_⟩
+          by_cases hjx : x j = true
+          · simp [trueDirections, hjx]
+          · have hjfalse : x j = false := Bool.eq_false_of_not_eq_true hjx
+            have hset : trueDirections (flip x j) = insert j (trueDirections x) := by
+              ext k
+              by_cases hk : k = j
+              · subst k
+                simp [trueDirections, hjfalse]
+              · simp only [trueDirections, mem_filter, mem_univ, true_and, mem_insert, hk,
+                  false_or]
+                rw [BalancedCriticalSpectrum.flip, Function.update_of_ne hk]
+            have hnot : j ∉ trueDirections x := by simp [trueDirections, hjfalse]
+            have hu := hthin (flip x j) hjC (by
+              simpa [BalancedCriticalSpectrum.flip, Ne.symm hji] using hxi)
+            rw [hset, card_insert_of_notMem hnot, hcard] at hu
+            omega
+        have h := card_le_card hsub
+        have hiX : i ∈ trueDirections x := by simp [trueDirections, hxi]
+        rw [regular_directions C hr hxC, card_erase_of_mem hiX, hcard] at h
+        omega
+      simp [E, hflip, hxi, hxC]
+    · intro x _ y _ h
+      simpa using congrArg (flip · i) h
+  have hsplit := card_sdiff_add_card_eq_card (filter_subset
+    (fun x => (trueDirections x).card ≤ 2) H)
+  change (H \ T).card + T.card = H.card at hsplit
+  change H.card ≤ 9 + E.card
+  omega
+
+/-- The profile with eight deficits four and one deficit five cannot occur.
+The true side of the last coordinate is confined to its first three layers. -/
+private lemma no_four_eight_five_profile
+    {C : Finset (Q 9)} (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hdir : directionEdges C 8 = 11)
+    (hhalf : (C.filter (fun x => x 8 = true)).card = 23)
+    (hweight : ∀ x ∈ C, (∑ j : Fin 9, if x j then (if j = 8 then (5 : ℤ) else 4) else 0) ≤ 16) :
+    False := by
+  have hthin (x : Q 9) (hx : x ∈ C) (hxi : x 8 = true) :
+      (trueDirections x).card ≤ 3 := by
+    have hi : (8 : Fin 9) ∈ trueDirections x := by simp [trueDirections, hxi]
+    have hw := hweight x hx
+    rw [← sum_filter] at hw
+    change (∑ j ∈ trueDirections x, if j = 8 then (5 : ℤ) else 4) ≤ 16 at hw
+    rw [← sum_erase_add _ _ hi, ite_eq_left rfl] at hw
+    have hsum : (∑ j ∈ (trueDirections x).erase 8, if j = 8 then (5 : ℤ) else 4) =
+        ((trueDirections x).erase 8).card * (4 : ℤ) := by
+      rw [← nsmul_eq_mul, ← sum_const]
+      apply sum_congr rfl
+      intro j hj
+      exact ite_eq_right (mem_erase.mp hj).1
+    rw [hsum, card_erase_of_mem hi] at hw
+    omega
+  have h := thin_half_card_le hr 8 hthin
+  omega
+
+private def fourEightFiveProfile : List ℤ := List.ofFn (fun j : Fin 9 => if j = 8 then 5 else 4)
+
+/-- A 66-point balanced cubic support has one of the 155 profiles left after
+the suffix bounds and the radius-two obstruction in its last coordinate. -/
+def sixtySixProfilesAfterThinHalf : List (List ℤ) :=
+  sixtySixProfilesAfterSuffixBounds.filter (· != fourEightFiveProfile)
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- Reduce the profile filters in the kernel, including all coordinate intervals.
+theorem sixtySixProfilesAfterThinHalf_length : sixtySixProfilesAfterThinHalf.length = 155 := by
+  decide +kernel
+
+/-- The remaining profiles include the normalized profile of any hypothetical
+66-point Huang-balanced cubic support. -/
+theorem q9_sixty_six_mem_profiles_after_thin_half {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C) :
+    ∃ (S : Finset (Q 9)) (r : Fin 9 → ℤ),
+      S.card = 66 ∧ ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3 ∧
+      IsBalanced S ∧ (∀ i, ((S.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33) ∧
+      List.ofFn r ∈ sixtySixProfilesAfterThinHalf := by
+  obtain ⟨S, r, hS, hregS, hbS, hhalf, hprofile⟩ :=
+    q9_sixty_six_mem_profiles_after_suffix_bounds hC hreg hb
+  refine ⟨S, r, hS, hregS, hbS, hhalf, ?_⟩
+  rw [sixtySixProfilesAfterThinHalf, List.mem_filter]
+  refine ⟨hprofile, ?_⟩
+  have hne : List.ofFn r ≠ fourEightFiveProfile := by
+    intro hp
+    have he := List.ofFn_inj.mp hp
+    subst r
+    have hdir := direction_edge_count (d := 3) S hregS hbS 8
+    have hslice := hhalf 8
+    simp at hslice
+    have hd := huang_balanced_cubic_sixty_six_diameter_le_seven hS hregS hbS
+    apply no_four_eight_five_profile hregS (by omega) (by omega)
+    intro x hx
+    have hw := coordinate_profile_weight_bound hS hregS hbS (fun _ => true) _ hhalf hx
+    have hsum : (∑ j : Fin 9, if j = 8 then (5 : ℤ) else 4) = 37 := by decide +kernel
+    have hcap : ((shell S x 7).card : ℤ) ≤ 8 := by
+      exact_mod_cast sixty_six_distance_seven_le_eight hS hregS hbS hd hx
+    rw [hsum] at hw
+    omega
+  exact bne_iff_ne.mpr hne
+
+#print axioms sixtySixProfilesAfterThinHalf_length
+#print axioms q9_sixty_six_mem_profiles_after_thin_half
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
