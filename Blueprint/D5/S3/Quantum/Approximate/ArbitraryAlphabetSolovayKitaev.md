@@ -76,7 +76,7 @@ $$\forall m \in \operatorname{Nat}\left(\right),\; \forall Gamma \in \operatorna
 
 *Commentary.*
 
-Start with a word u from the preceding level approximating the current U. The residual is U*star(eval(Gamma,u)), whose distance from identity equals the preceding error and whose determinant remains one. BalancedSU2Commutator supplies exact factors V,W at square-root distance. Approximate both at the same preceding level and concatenate their words with inverse words and u. Stability bounds this same list's error by e(n+1)=33*e(n)^(3/2), while its actual length is bounded by 5^(n+1)*L. This alphabet-parametric construction follows the licensed CSD ordinary-word induction; the residual always uses the preceding approximation to this target.
+Start with a word u from the preceding level approximating the current U. The residual is U*star(eval(Gamma,u)), whose distance from identity equals the preceding error and whose determinant remains one. BalancedSU2Commutator supplies exact factors V and W, each at distance at most sqrt(2) times the square root of the residual distance from identity. Approximate both at the same preceding level and concatenate their words with inverse words and u. Stability bounds this same list's error by e(n+1)=33*e(n)^(3/2), while its actual length is bounded by 5^(n+1)*L. This alphabet-parametric construction follows the licensed CSD ordinary-word induction; the residual always uses the preceding approximation to this target.
 
 **Theorem 1.7 (The uniform polylogarithmic ordinary-word theorem).**
 
