@@ -114,17 +114,17 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   exact fun h => h
 
-def family : Registration arena (type_of% @A₁_eq_weighted_pauli) where
+def family : Registration arena (type_of% @A1_eq_weighted_pauli) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@A₁_eq_weighted_pauli, rejected, rejected_law⟩
+  variation := ⟨@A1_eq_weighted_pauli, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@A₁_eq_weighted_pauli) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointWeightedPauli.A₁_eq_weighted_pauli.audit
+    (@A1_eq_weighted_pauli) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Semigroups.WuEndpointWeightedPauli.A1_eq_weighted_pauli.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointWeightedPauli.WeightedPauli.family
   realizationSource := none
   generated := false

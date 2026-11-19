@@ -39,7 +39,7 @@ theorem A₁_trace_pair_swap (P Q : TwoMode) : (P * A₁ Q).trace = (Q * A₁ P)
     intro p q
     change (pauliWord r s * A₁ (pauliWord p q)).trace =
       (A₁ (pauliWord r s) * pauliWord p q).trace
-    rw [A₁_pauliWord, A₁_pauliWord, Matrix.mul_smul, Matrix.smul_mul,
+    rw [A1_pauliWord, A1_pauliWord, Matrix.mul_smul, Matrix.smul_mul,
       Matrix.trace_smul, Matrix.trace_smul, pauliWord_trace_orthogonal]
     by_cases he : r = p ∧ s = q
     · obtain ⟨rfl, rfl⟩ := he
@@ -61,7 +61,7 @@ theorem A₁_trace_pair_swap (P Q : TwoMode) : (P * A₁ Q).trace = (Q * A₁ P)
 
 theorem A₁_one : A₁ (1 : TwoMode) = 1 := by
   have hI : pauliWord .I .I = 1 := Matrix.one_kronecker_one
-  simpa [hI, cliffordDegree] using A₁_pauliWord .I .I
+  simpa [hI, cliffordDegree] using A1_pauliWord .I .I
 
 theorem A₁_trace (X : TwoMode) : (A₁ X).trace = X.trace := by
   simpa only [one_mul, A₁_one, mul_one] using A₁_trace_pair_swap 1 X
@@ -71,7 +71,7 @@ theorem A₁_isHermitian (X : TwoMode) (hX : X.IsHermitian) : (A₁ X).IsHermiti
     rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_conjTranspose, hX.eq, mul_assoc]
   change (A₁ X)ᴴ = A₁ X
-  rw [A₁_eq_weighted_pauli]
+  rw [A1_eq_weighted_pauli]
   simp only [endpointConjugationSum, LinearMap.add_apply, LinearMap.smul_apply,
     LinearMap.id_apply, LinearMap.sum_apply, ← Complex.ofReal_pow, ← Complex.ofReal_mul,
     Matrix.conjTranspose_add, Matrix.conjTranspose_smul, Matrix.conjTranspose_sum,
@@ -124,11 +124,11 @@ private theorem prefix2 (B : EndpointBasis) : endpointPrefix B 2 = 1 - endpointP
 private theorem test_single_single (B C : EndpointBasis) (i j : Fin 4) :
     endpointBeta ^ 2 ≤ test (endpointProjector (B i)) (endpointProjector (C j)) ∧
       test (endpointProjector (B i)) (endpointProjector (C j)) ≤ endpointAlpha ^ 2 :=
-  A₁_rankOne_rankOne _ _ (B.orthonormal.1 i) (C.orthonormal.1 j)
+  A1_rankOne_rankOne _ _ (B.orthonormal.1 i) (C.orthonormal.1 j)
 
 private theorem test_single_pair (B C : EndpointBasis) (i : Fin 4) :
     test (endpointProjector (B i)) (endpointPrefix C 1) ≤ endpointAlpha :=
-  A₁_rankOne_rankTwo_basis _ (B.orthonormal.1 i) C
+  A1_rankOne_rankTwo_basis _ (B.orthonormal.1 i) C
 
 private theorem trace_basis_projector (B : EndpointBasis) (i : Fin 4) :
     (endpointProjector (B i)).trace.re = 1 := by
@@ -226,7 +226,7 @@ private theorem classical_prefix (x : Fin 4 → ℝ) (k : Fin 3) :
   have hb : endpointBeta = 1 - endpointAlpha := by linarith [endpointAlpha_add_beta]
   fin_cases k <;> simp [endpointPrefixSum, endpointClassical, prefixBound] <;> rw [hb] <;> ring
 
-theorem A₁_prefix_basis_bound (B C : EndpointBasis) (x : Fin 4 → ℝ)
+private theorem A₁_prefix_basis_bound (B C : EndpointBasis) (x : Fin 4 → ℝ)
     (hx : Antitone x) (k : Fin 3) :
     test (endpointPrefix B k) (spectralSum C x) ≤ endpointPrefixSum (endpointClassical x) k := by
   rw [spectralSum_prefix, classical_prefix]
@@ -288,7 +288,7 @@ private theorem trace_prefix_eigen {X : TwoMode} (hX : X.IsHermitian) (k : Fin 3
     Matrix.trace_add, Complex.add_re, hp]
 
 /-- Proper-prefix spectral comparisons for every Hermitian input on the actual signed channel. -/
-theorem A₁_spectral_prefix (X : TwoMode) (hX : X.IsHermitian) (k : Fin 3) :
+theorem A1_spectral_prefix (X : TwoMode) (hX : X.IsHermitian) (k : Fin 3) :
     endpointPrefixSum (A₁_isHermitian X hX).eigenvalues₀ k ≤
       endpointPrefixSum (endpointClassical hX.eigenvalues₀) k := by
   let hY := A₁_isHermitian X hX
@@ -303,9 +303,17 @@ theorem A₁_spectral_total (X : TwoMode) (hX : X.IsHermitian) :
       ∑ i : Fin 4, endpointClassical hX.eigenvalues₀ i := by
   have trace_eq {Y : TwoMode} (hY : Y.IsHermitian) :
       Y.trace.re = ∑ i : Fin 4, hY.eigenvalues₀ i := by
-    conv_lhs => rw [actual_spectralSum hY]
-    simp [spectralSum, Matrix.trace_sum, Matrix.trace_smul, Complex.re_sum,
-      trace_endpointProjector, (orderedBasis hY).orthonormal.1]
+    rw [hY.trace_eq_sum_eigenvalues, Complex.re_sum]
+    simp only [RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re]
+    calc
+      (∑ i : Mode, hY.eigenvalues i) =
+          ∑ i : Fin 4, hY.eigenvalues (spectrumIndex i) :=
+        (spectrumIndex.sum_comp hY.eigenvalues).symm
+      _ = ∑ i : Fin 4, hY.eigenvalues₀ i := by
+        apply Finset.sum_congr rfl
+        intro i _
+        change hY.eigenvalues₀ (spectrumIndex.symm (spectrumIndex i)) = _
+        rw [Equiv.symm_apply_apply]
   rw [← trace_eq (A₁_isHermitian X hX), A₁_trace, trace_eq hX]
   have hb : endpointBeta = 1 - endpointAlpha := by linarith [endpointAlpha_add_beta]
   change (∑ i : Fin 4, hX.eigenvalues₀ i) = _
@@ -354,18 +362,18 @@ theorem endpointClassical_antitone (x : Fin 4 → ℝ) (hx : Antitone x) :
 
 /-- The actual signed channel's ordered eigenvalues are majorized by the classical
 two-bit convolution of the ordered input eigenvalues. -/
-theorem A₁_spectral_majorization (X : TwoMode) (hX : X.IsHermitian) :
+theorem A1_spectral_majorization (X : TwoMode) (hX : X.IsHermitian) :
     Antitone (endpointClassical hX.eigenvalues₀) ∧
     (∀ k : Fin 3,
       endpointPrefixSum (A₁_isHermitian X hX).eigenvalues₀ k ≤
         endpointPrefixSum (endpointClassical hX.eigenvalues₀) k) ∧
     (∑ i : Fin 4, (A₁_isHermitian X hX).eigenvalues₀ i) =
       ∑ i : Fin 4, endpointClassical hX.eigenvalues₀ i :=
-  ⟨endpointClassical_antitone _ hX.eigenvalues₀_antitone, A₁_spectral_prefix X hX,
+  ⟨endpointClassical_antitone _ hX.eigenvalues₀_antitone, A1_spectral_prefix X hX,
     A₁_spectral_total X hX⟩
 
-#print axioms A₁_spectral_majorization
-#print axioms A₁_spectral_prefix
+#print axioms A1_spectral_majorization
+#print axioms A1_spectral_prefix
 #print axioms A₁_spectral_total
 #print axioms endpointClassical_antitone
 

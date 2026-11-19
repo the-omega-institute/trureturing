@@ -42,7 +42,7 @@ theorem endpointBeta_le_alpha : endpointBeta ≤ endpointAlpha := by
   unfold endpointAlpha endpointBeta
   linarith
 
-theorem endpointAlpha_sub_beta : endpointAlpha - endpointBeta = lambda := by
+private theorem endpointAlpha_sub_beta : endpointAlpha - endpointBeta = lambda := by
   unfold endpointAlpha endpointBeta
   ring
 
@@ -134,7 +134,7 @@ theorem endpoint_map_eq_on_pauli {E : Type*} [AddCommMonoid E] [Module ℂ E]
   simp only [map_sum, map_smul, h]
 
 /-- The weighted ordered Pauli conjugations are the actual signed map `A₁`. -/
-theorem A₁_eq_weighted_pauli :
+theorem A1_eq_weighted_pauli :
     A₁ = endpointConjugationSum (endpointAlpha : ℂ) (endpointBeta : ℂ) := by
   apply endpoint_map_eq_on_pauli
   intro p q
@@ -142,7 +142,7 @@ theorem A₁_eq_weighted_pauli :
     exact_mod_cast endpointAlpha_add_beta
   have hdiff : (endpointAlpha : ℂ) - (endpointBeta : ℂ) = (lambda : ℂ) := by
     exact_mod_cast endpointAlpha_sub_beta
-  rw [A₁_pauliWord, conjugationSum_word, hab, hdiff, one_pow, one_mul]
+  rw [A1_pauliWord, conjugationSum_word, hab, hdiff, one_pow, one_mul]
 
 private theorem pauliWord_trace (p q : Pauli) :
     (pauliWord p q).trace = if p = .I ∧ q = .I then 4 else 0 := by
@@ -168,7 +168,7 @@ theorem endpoint_pauli_twirl (X : TwoMode) :
   rw [h]
   exact smul_smul (4 : ℂ) X.trace (1 : TwoMode)
 
-#print axioms A₁_eq_weighted_pauli
+#print axioms A1_eq_weighted_pauli
 #print axioms endpoint_pauli_twirl
 
 end WuRankOneEndpointFloor

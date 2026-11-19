@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Semigroups.WuEndpointWeightedPauli
 import Mathlib.Algebra.Order.Chebyshev
+import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Tactic.IntervalCases
 
 /-! Trace bounds for the signed endpoint on projections. -/
@@ -37,7 +38,7 @@ theorem trace_endpointProjector_mul (u : EndpointVector) (X : TwoMode) :
   rw [Matrix.trace_mul_comm, endpointProjector, Matrix.mul_vecMulVec, Matrix.trace_vecMulVec]
   rfl
 
-theorem conj_endpointProjector (U : TwoMode) (v : EndpointVector) :
+private theorem conj_endpointProjector (U : TwoMode) (v : EndpointVector) :
     MatrixMap.conj U (endpointProjector v) = endpointProjector (U.toEuclideanLin v) := by
   change U * Matrix.vecMulVec (WithLp.ofLp v) (star (WithLp.ofLp v)) * Uᴴ = _
   rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMul_conjTranspose, star_star]
@@ -80,18 +81,17 @@ private theorem trace_twirl_re (P Q : TwoMode) :
       (P * MatrixMap.conj endpointVolume Q).trace.re := by
   simpa using trace_pauli_re P Q 1 1
 
-theorem endpointU_unitary_left (j : Fin 4) : (endpointU j)ᴴ * endpointU j = 1 := by
-  rw [(endpointU_hermitian j).eq, endpointU_sq]
+private theorem endpointU_mem_unitary (j : Fin 4) :
+    endpointU j ∈ Matrix.unitaryGroup Mode ℂ := by
+  apply Matrix.mem_unitaryGroup_iff'.mpr
+  rw [Matrix.star_eq_conjTranspose, (endpointU_hermitian j).eq, endpointU_sq]
 
-private theorem unitary_left_mul (A B : TwoMode) (hA : Aᴴ * A = 1) (hB : Bᴴ * B = 1) :
-    (A * B)ᴴ * (A * B) = 1 := by
-  rw [Matrix.conjTranspose_mul, mul_assoc, ← mul_assoc Aᴴ A, hA, one_mul, hB]
+private theorem endpointVolume_mem_unitary : endpointVolume ∈ Matrix.unitaryGroup Mode ℂ :=
+  mul_mem (mul_mem (mul_mem (endpointU_mem_unitary 0) (endpointU_mem_unitary 1))
+    (endpointU_mem_unitary 2)) (endpointU_mem_unitary 3)
 
-theorem endpointVolume_unitary_left : endpointVolumeᴴ * endpointVolume = 1 := by
-  unfold endpointVolume
-  exact unitary_left_mul _ _
-    (unitary_left_mul _ _ (unitary_left_mul _ _ (endpointU_unitary_left 0)
-      (endpointU_unitary_left 1)) (endpointU_unitary_left 2)) (endpointU_unitary_left 3)
+private theorem endpointVolume_unitary_left : endpointVolumeᴴ * endpointVolume = 1 :=
+  Matrix.mem_unitaryGroup_iff'.mp endpointVolume_mem_unitary
 
 private theorem overlap_le_one (u v : EndpointVector) (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) :
     ‖⟪u, v⟫_ℂ‖ ^ 2 ≤ 1 := by
@@ -156,11 +156,11 @@ private theorem rankOne_arithmetic {a b f₀ f₁ f₂ f₃ f₄ : ℝ}
         linear_combination -a ^ 2 * b ^ 2 * ht
       _ ≥ 0 := by positivity
 
-/-- Exact trace bounds for the signed channel on two arbitrary complex rank-one projections. -/
-theorem A₁_rankOne_rankOne (u v : EndpointVector) (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) :
+/-- Trace bounds for the signed channel on two arbitrary complex rank-one projections. -/
+theorem A1_rankOne_rankOne (u v : EndpointVector) (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) :
     endpointBeta ^ 2 ≤ (endpointProjector u * A₁ (endpointProjector v)).trace.re ∧
       (endpointProjector u * A₁ (endpointProjector v)).trace.re ≤ endpointAlpha ^ 2 := by
-  rw [A₁_eq_weighted_pauli, trace_pauli_re, trace_projector_product, Complex.ofReal_re]
+  rw [A1_eq_weighted_pauli, trace_pauli_re, trace_projector_product, Complex.ofReal_re]
   simp only [trace_projector_conj]
   apply rankOne_arithmetic endpointBeta_nonneg endpointBeta_le_alpha endpointAlpha_add_beta
   · positivity
@@ -196,23 +196,15 @@ theorem sum_endpointProjector (B : OrthonormalBasis (Fin 4) ℂ EndpointVector) 
   change (B i).ofLp k * ⟪B i, x⟫_ℂ = ⟪B i, x⟫_ℂ * (B i).ofLp k
   exact mul_comm _ _
 
-private theorem unitary_right_mul (A B : TwoMode) (hA : A * Aᴴ = 1) (hB : B * Bᴴ = 1) :
-    (A * B) * (A * B)ᴴ = 1 := by
-  rw [Matrix.conjTranspose_mul, mul_assoc A B, ← mul_assoc B Bᴴ, hB, one_mul, hA]
-
-private theorem endpointU_unitary_right (j : Fin 4) : endpointU j * (endpointU j)ᴴ = 1 := by
-  rw [(endpointU_hermitian j).eq, endpointU_sq]
-
-theorem endpointTriple_unitary_right (j : Fin 4) :
+private theorem endpointTriple_unitary_right (j : Fin 4) :
     endpointTriple j * (endpointTriple j)ᴴ = 1 := by
+  apply Matrix.mem_unitaryGroup_iff.mp
   fin_cases j <;>
-    exact unitary_right_mul _ _ (unitary_right_mul _ _ (endpointU_unitary_right _)
-      (endpointU_unitary_right _)) (endpointU_unitary_right _)
+    exact mul_mem (mul_mem (endpointU_mem_unitary _) (endpointU_mem_unitary _))
+      (endpointU_mem_unitary _)
 
-theorem endpointVolume_unitary_right : endpointVolume * endpointVolumeᴴ = 1 :=
-  unitary_right_mul _ _ (unitary_right_mul _ _
-    (unitary_right_mul _ _ (endpointU_unitary_right 0) (endpointU_unitary_right 1))
-    (endpointU_unitary_right 2)) (endpointU_unitary_right 3)
+private theorem endpointVolume_unitary_right : endpointVolume * endpointVolumeᴴ = 1 :=
+  Matrix.mem_unitaryGroup_iff.mp endpointVolume_mem_unitary
 
 private theorem trace_readout_add (P X Y : TwoMode) :
     (P * (X + Y)).trace.re = (P * X).trace.re + (P * Y).trace.re := by
@@ -220,7 +212,7 @@ private theorem trace_readout_add (P X Y : TwoMode) :
 
 /-- The mixed rank bound for the projection onto the first two vectors of any
 orthonormal basis. The testing unit vector can be in a different basis. -/
-theorem A₁_rankOne_rankTwo_basis (u : EndpointVector) (hu : ‖u‖ = 1)
+theorem A1_rankOne_rankTwo_basis (u : EndpointVector) (hu : ‖u‖ = 1)
     (B : OrthonormalBasis (Fin 4) ℂ EndpointVector) :
     (endpointProjector u * A₁ (endpointProjector (B 0) + endpointProjector (B 1))).trace.re ≤
       endpointAlpha := by
@@ -329,7 +321,7 @@ theorem A₁_rankOne_rankTwo_basis (u : EndpointVector) (hu : ‖u‖ = 1)
   change (P * A₁ Q).trace.re ≤ endpointAlpha
   calc
     (P * A₁ Q).trace.re = ∑ i ∈ Finset.range 5, f i * w i := by
-      rw [A₁_eq_weighted_pauli, trace_pauli_re]
+      rw [A1_eq_weighted_pauli, trace_pauli_re]
       norm_num [Finset.sum_range_succ, f, w] <;> ring
     _ ≤ ∑ i ∈ Finset.range 5, c i * w i :=
       Finset.sum_mul_le_sum_mul_of_sum_range_le hprefix hw₀ hw
@@ -337,7 +329,7 @@ theorem A₁_rankOne_rankTwo_basis (u : EndpointVector) (hu : ‖u‖ = 1)
       norm_num [Finset.sum_range_succ, c, w] <;> ring
     _ = endpointAlpha := by rw [endpointAlpha_add_beta, one_pow, mul_one]
 
-#print axioms A₁_rankOne_rankOne
-#print axioms A₁_rankOne_rankTwo_basis
+#print axioms A1_rankOne_rankOne
+#print axioms A1_rankOne_rankTwo_basis
 
 end WuRankOneEndpointFloor

@@ -202,11 +202,11 @@ def endpointTriple : Fin 4 → TwoMode :=
   ![endpointU 1 * endpointU 2 * endpointU 3, endpointU 0 * endpointU 2 * endpointU 3,
     endpointU 0 * endpointU 1 * endpointU 3, endpointU 0 * endpointU 1 * endpointU 2]
 
-theorem endpointVolume_eq : endpointVolume = -pauliWord .Z .Z := by
+private theorem endpointVolume_eq : endpointVolume = -pauliWord .Z .Z := by
   simp [endpointVolume, endpointU, pauliWord_mul, letterPhase, letterProduct,
     smul_smul, Complex.I_mul_I]
 
-theorem endpointVolume_mul_U (j : Fin 4) :
+private theorem endpointVolume_mul_U (j : Fin 4) :
     endpointVolume * endpointU j =
       if j = 0 ∨ j = 2 then -endpointTriple j else endpointTriple j := by
   rw [endpointVolume_eq]

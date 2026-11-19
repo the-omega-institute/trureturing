@@ -54,17 +54,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 0 0 0 0 0
 
-def family : Registration arena (type_of% @A₁_apply) where
+def family : Registration arena (type_of% @A1_apply) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@A₁_apply, rejected, rejected_law⟩
+  variation := ⟨@A1_apply, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@A₁_apply) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuRankOneEndpointFloor.A₁_apply.audit
+    (@A1_apply) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Semigroups.WuRankOneEndpointFloor.A1_apply.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuRankOneEndpointFloor.Entries.family
   realizationSource := none
   generated := false

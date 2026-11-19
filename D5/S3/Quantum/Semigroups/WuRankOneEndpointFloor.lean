@@ -85,7 +85,7 @@ private theorem lambda_complex_sq : (lambda : ℂ) * (lambda : ℂ) = 2 / 3 := b
   push_cast
   rfl
 
-theorem A₁_apply (X : TwoMode) (i j k l : Bit) :
+theorem A1_apply (X : TwoMode) (i j k l : Bit) :
     A₁ X (i,k) (j,l) =
       if i = j then
         if k = l then
@@ -102,6 +102,6 @@ theorem A₁_apply (X : TwoMode) (i j k l : Bit) :
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num [signW, Fin.rev, ← mul_assoc, lambda_complex_sq, -mul_eq_mul_left_iff, -mul_eq_mul_right_iff] <;> ring
 
-#print axioms A₁_apply
+#print axioms A1_apply
 
 end WuRankOneEndpointFloor

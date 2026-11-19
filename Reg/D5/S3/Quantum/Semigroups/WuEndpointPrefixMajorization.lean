@@ -44,17 +44,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 0 Matrix.isHermitian_zero 0
 
-def family : Registration arena (type_of% @A₁_spectral_prefix) where
+def family : Registration arena (type_of% @A1_spectral_prefix) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@A₁_spectral_prefix, rejected, rejected_law⟩
+  variation := ⟨@A1_spectral_prefix, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@A₁_spectral_prefix) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization.A₁_spectral_prefix.audit
+    (@A1_spectral_prefix) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization.A1_spectral_prefix.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization.SpectralPrefix.family
   realizationSource := none
   generated := false
@@ -101,17 +101,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact (h 0 Matrix.isHermitian_zero).2.1 0
 
-def family : Registration arena (type_of% @A₁_spectral_majorization) where
+def family : Registration arena (type_of% @A1_spectral_majorization) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@A₁_spectral_majorization, rejected, rejected_law⟩
+  variation := ⟨@A1_spectral_majorization, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@A₁_spectral_majorization) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization.A₁_spectral_majorization.audit
+    (@A1_spectral_majorization) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization.A1_spectral_majorization.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointPrefixMajorization.SpectralMajorization.family
   realizationSource := none
   generated := false

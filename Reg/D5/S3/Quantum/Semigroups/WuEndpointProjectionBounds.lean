@@ -51,17 +51,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact (h (standardBasis 0) (standardBasis 0)
     (standardBasis.orthonormal.1 0) (standardBasis.orthonormal.1 0)).2
 
-def family : Registration arena (type_of% @A₁_rankOne_rankOne) where
+def family : Registration arena (type_of% @A1_rankOne_rankOne) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@A₁_rankOne_rankOne, rejected, rejected_law⟩
+  variation := ⟨@A1_rankOne_rankOne, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@A₁_rankOne_rankOne) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointProjectionBounds.A₁_rankOne_rankOne.audit
+    (@A1_rankOne_rankOne) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Semigroups.WuEndpointProjectionBounds.A1_rankOne_rankOne.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointProjectionBounds.RankOne.family
   realizationSource := none
   generated := false
@@ -106,17 +106,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h (standardBasis 0) (standardBasis.orthonormal.1 0) standardBasis
 
-def family : Registration arena (type_of% @A₁_rankOne_rankTwo_basis) where
+def family : Registration arena (type_of% @A1_rankOne_rankTwo_basis) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@A₁_rankOne_rankTwo_basis, rejected, rejected_law⟩
+  variation := ⟨@A1_rankOne_rankTwo_basis, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@A₁_rankOne_rankTwo_basis) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Semigroups.WuEndpointProjectionBounds.A₁_rankOne_rankTwo_basis.audit
+    (@A1_rankOne_rankTwo_basis) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Semigroups.WuEndpointProjectionBounds.A1_rankOne_rankTwo_basis.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointProjectionBounds.RankTwo.family
   realizationSource := none
   generated := false

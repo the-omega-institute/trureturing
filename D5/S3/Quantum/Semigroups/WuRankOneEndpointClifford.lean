@@ -39,7 +39,7 @@ private theorem lambda_pow_two : (lambda : ℂ) ^ 2 = 2 / 3 := by
 
 set_option maxHeartbeats 3000000 in
 /-- The actual signed factorization has the Clifford degree multiplier on each Pauli word. -/
-theorem A₁_pauliWord (p q : Pauli) :
+theorem A1_pauliWord (p q : Pauli) :
     A₁ (pauliWord p q) = ((lambda : ℂ) ^ cliffordDegree p q) • pauliWord p q := by
   have h3 : (lambda : ℂ) ^ 3 = (2 / 3 : ℂ) * lambda := by
     rw [pow_succ, lambda_pow_two]
@@ -47,12 +47,12 @@ theorem A₁_pauliWord (p q : Pauli) :
     rw [show (4 : ℕ) = 2 + 2 by decide, pow_add, lambda_pow_two]
     norm_num
   ext ⟨i,k⟩ ⟨j,l⟩
-  rw [A₁_apply]
+  rw [A1_apply]
   cases p <;> cases q <;> fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num [pauliWord, cliffordDegree, pauliMatrix, qubitX, qubitZ, Matrix.one_apply,
       Matrix.kroneckerMap_apply, Matrix.mul_apply, Fin.sum_univ_two, Fin.rev,
       lambda_pow_two, h3, h4, -one_div, -mul_eq_mul_left_iff, -mul_eq_mul_right_iff] <;> ring <;> simp
 
-#print axioms A₁_pauliWord
+#print axioms A1_pauliWord
 
 end WuRankOneEndpointFloor
