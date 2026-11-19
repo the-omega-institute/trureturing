@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Eigenstructure;
 internal sealed class BinaryTraceZeroSimilarityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Eigenstructure/BinaryTraceZeroSimilarity.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Certificates/omega2026heawoodsimilarity");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every nonzero trace-zero binary matrix of size three is similar to one of six explicit matrices.",
@@ -12,13 +14,13 @@ internal sealed class BinaryTraceZeroSimilarityDocument : IScribeDocumentDefinit
         Blocks(
             Describe.Lean(DescribeId.Create("binary-trace-zero-representatives"),
                 DeclarationHandle.Create(Prefix + "representative"), H("The six representatives"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
                     "Write Eij for a matrix unit with one-based indices. The representatives in order are "
                     + "E12, E12+E23, diag(1,1,0), diag(1,1,0)+E12, E13+E21+E32, and E13+E21+E32+E23."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("binary-trace-zero-similarity"),
                 DeclarationHandle.Create(Prefix + "exists_conjugate"), H("Conjugacy to a chosen representative"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source), Blocks(
                     Paragraph(Text("A nonzero binary matrix of size three and trace zero has characteristic "
                         + "polynomial X cubed plus a times X plus c. The two coefficients are binary. "
                         + "For c equal to zero, the nilpotent or repeated-root theorem supplies an ordered "
@@ -26,6 +28,6 @@ internal sealed class BinaryTraceZeroSimilarityDocument : IScribeDocumentDefinit
                     Paragraph(Text("The change-of-basis matrix is invertible and conjugates the chosen "
                         + "representative to the input matrix.")),
                     Paragraph(Text("The matrices match the switching invariants of the six signings in the "
-                        + "Heawood double cover classification. https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_DOUBLE_COVER_GAIN.md#L68-L108"))),
+                        + "Heawood double cover classification."))),
                 DescribeRole.Theorem))));
 }

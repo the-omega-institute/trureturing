@@ -10,7 +10,7 @@ Lean statement: `D5/S1/Eigenstructure/BinaryTraceZeroSimilarity.representative`
 
 *Formalization.* `D5/S1/Eigenstructure/BinaryTraceZeroSimilarity.representative` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* The Omega Institute repository contributors (2026). *A structural dissociation gain in every connected Heawood double cover*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_DOUBLE_COVER_GAIN.md#L68-L108>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S1/Eigenstructure/BinaryTraceZeroSimilarity.exists_conjugate
 
 *Proof.* Machine-checked in Lean as `D5/S1/Eigenstructure/BinaryTraceZeroSimilarity.exists_conjugate` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* The Omega Institute repository contributors (2026). *A structural dissociation gain in every connected Heawood double cover*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_DOUBLE_COVER_GAIN.md#L68-L108>.
 
 *Commentary.*
 
@@ -30,7 +30,7 @@ A nonzero binary matrix of size three and trace zero has characteristic polynomi
 
 The change-of-basis matrix is invertible and conjugates the chosen representative to the input matrix.
 
-The matrices match the switching invariants of the six signings in the Heawood double cover classification. https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/HEAWOOD_DOUBLE_COVER_GAIN.md#L68-L108
+The matrices match the switching invariants of the six signings in the Heawood double cover classification.
 
 ## References
 
