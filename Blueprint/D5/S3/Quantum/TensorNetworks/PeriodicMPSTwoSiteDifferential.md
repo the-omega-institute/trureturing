@@ -42,7 +42,7 @@ $$\forall r \in Nat,\; \exists a \in Complex,\; \exists x \in Fin\left(4\right) 
 
 For every natural r the length r+4 admits a point of the displayed chart with a nonsingular nine-row minor. Complex independence of the value and the eight real derivative columns implies that the derivative has rank eight after quotienting out the real line of the value.
 
-Expanding the actual partial trace gives the trace of two Kronecker blocks followed by the complement transfer power. Evaluating Gaussian-integer polynomial lines in dual numbers retains the value and derivative and commutes with reduction modulo 13, where the imaginary unit maps to 5. The certificate verifies the selected minors by elimination and checks the base transfer identity at exponents 16 and 4 at four points. The square-zero ideal and characteristic 13 lift this to equality at exponents 164 and 8 for every direction.
+Expanding the actual partial trace gives the trace of two Kronecker blocks followed by the complement transfer power. Evaluating Gaussian-integer polynomial lines in dual numbers retains the value and derivative and commutes with reduction modulo 5, where the imaginary unit maps to 2. The certificate verifies the selected minors by elimination and checks the base transfer identity at exponents 8 and 4 at three points. The square-zero ideal and characteristic 5 lift this to equality at exponents 28 and 8 for every direction.
 
 This differential result addresses local identifiability within the chart. Global exclusion of phase-inequivalent states with the same observed density remains a separate part of the periodic sharp-threshold question.
 

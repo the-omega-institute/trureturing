@@ -125,9 +125,9 @@ private lemma map_tensors {R S : Type*} [Semiring R] [Semiring S] (f : R →+* S
 open Polynomial TrivSqZeroExt
 
 private abbrev G := GaussianInt
-private abbrev F := ZMod 13
+private abbrev F := ZMod 5
 
-local instance : Fact (Nat.Prime 13) := ⟨by decide⟩
+local instance : Fact (Nat.Prime 5) := ⟨by decide⟩
 
 private def imaginary : G := ⟨0, 1⟩
 
@@ -136,7 +136,7 @@ private lemma minus_one_not_square (z : ℤ) : (-1 : ℤ) ≠ z * z := by
   omega
 
 
-private def residue : G →+* F := Zsqrtd.lift ⟨5, by decide⟩
+private def residue : G →+* F := Zsqrtd.lift ⟨2, by decide⟩
 private noncomputable def complex : G →+* ℂ := Zsqrtd.lift ⟨Complex.I, by simp⟩
 
 private lemma complex_star (z : G) : complex (star z) = conj (complex z) := by
@@ -276,24 +276,23 @@ private lemma residue_augmented (a : G) (x : Fin 4 → G) (m : ℕ) :
     exact (dual_coeff residue (marginalLine a x u m p)).2.symm.trans
       (congrArg (TrivSqZeroExt.snd : DualNumber F → F) (h u p))
 
-private def point (i : Fin 4) : Fin 5 → G :=
-  ![![⟨0,-2⟩, ⟨3,-1⟩, ⟨1,-6⟩, ⟨5,-1⟩, ⟨1,-1⟩],
-    ![⟨2,-6⟩, ⟨0,-5⟩, ⟨4,6⟩, ⟨-2,4⟩, ⟨3,1⟩],
-    ![⟨3,-3⟩, ⟨6,2⟩, ⟨1,3⟩, ⟨0,5⟩, ⟨-5,-5⟩],
-    ![⟨4,0⟩, ⟨4,5⟩, ⟨0,0⟩, ⟨-3,-6⟩, ⟨0,4⟩]] i
+private def point (i : Fin 3) : Fin 5 → G :=
+  ![![⟨0, 1⟩, ⟨3, 3⟩, ⟨1, 2⟩, ⟨4, 3⟩, ⟨0, 4⟩],
+    ![⟨3, 2⟩, ⟨3, 4⟩, ⟨2, 3⟩, ⟨2, 2⟩, ⟨0, 1⟩],
+    ![⟨0, 4⟩, ⟨3, 4⟩, ⟨2, 2⟩, ⟨3, 3⟩, ⟨1, 2⟩]] i
 
-private abbrev firstEntry (i : Fin 4) := point i 0
-private abbrev variableEntries (i : Fin 4) (j : Fin 4) := point i j.succ
+private abbrev firstEntry (i : Fin 3) := point i 0
+private abbrev variableEntries (i : Fin 3) (j : Fin 4) := point i j.succ
 
-private abbrev leftTensors (i : Fin 4) (d : Direction) :
+private abbrev leftTensors (i : Fin 3) (d : Direction) :
     Fin 2 → Matrix (Fin 2) (Fin 2) (DualNumber F) :=
   dualTensors residue (firstEntry i) (variableEntries i) d
 
-private abbrev rightTensors (i : Fin 4) (d : Direction) :
+private abbrev rightTensors (i : Fin 3) (d : Direction) :
     Fin 2 → Matrix (Fin 2) (Fin 2) (DualNumber F) :=
   dualTensors (residue.comp (starRingEnd G)) (firstEntry i) (variableEntries i) d
 
-private def T (i : Fin 4) (d : Direction) : Matrix Bits Bits (DualNumber F) :=
+private def T (i : Fin 3) (d : Direction) : Matrix Bits Bits (DualNumber F) :=
   transfer (R := DualNumber F) (leftTensors i d) (rightTensors i d)
 
 private abbrev Stored (R : Type) (n : ℕ) := Vector (Vector R n) n
@@ -369,10 +368,10 @@ private lemma read4_power4 (A : Stored (DualNumber F) 4) (m k : ℕ) (h : m < 2 
       congr 1
       omega
 
-private def evalPower (i : Fin 4) (d : Direction) (m : ℕ) :=
-  power4 (pack4 (T i d)) m 8
+private def evalPower (i : Fin 3) (d : Direction) (m : ℕ) :=
+  power4 (pack4 (T i d)) m 5
 
-private lemma evalPower_correct (i : Fin 4) (d : Direction) (m : ℕ) (h : m < 256) :
+private lemma evalPower_correct (i : Fin 3) (d : Direction) (m : ℕ) (h : m < 32) :
     read4 (evalPower i d m) = T i d ^ m :=
   (read4_power4 _ _ _ h).trans (by rw [read4_pack4])
 
@@ -391,44 +390,44 @@ private lemma square_zero_of_fst_zero (A : Matrix Bits Bits (DualNumber F))
   · simp [hz]
   · simp [DualNumber.snd_mul, hz]
 
-local instance : CharP (DualNumber F) 13 where
+local instance : CharP (DualNumber F) 5 where
   cast_eq_zero_iff n := by
-    change (n : DualNumber F) = 0 ↔ 13 ∣ n
+    change (n : DualNumber F) = 0 ↔ 5 ∣ n
     constructor
     · intro h
-      exact (CharP.cast_eq_zero_iff F 13 n).mp (by simpa [fstRing] using congrArg fstRing h)
+      exact (CharP.cast_eq_zero_iff F 5 n).mp (by simpa [fstRing] using congrArg fstRing h)
     · intro h
-      have hn := (CharP.cast_eq_zero_iff F 13 n).mpr h
+      have hn := (CharP.cast_eq_zero_iff F 5 n).mpr h
       apply TrivSqZeroExt.ext
       · simpa [fstRing] using hn
       · simp
 
 private lemma lift_transfer_period (A : Matrix Bits Bits (DualNumber F))
-    (h : (RingHom.mapMatrix fstRing A) ^ 16 = (RingHom.mapMatrix fstRing A) ^ 4) :
-    A ^ 164 = A ^ 8 := by
-  let B : Matrix Bits Bits (DualNumber F) := A ^ 12 - 1
+    (h : (RingHom.mapMatrix fstRing A) ^ 8 = (RingHom.mapMatrix fstRing A) ^ 4) :
+    A ^ 28 = A ^ 8 := by
+  let B : Matrix Bits Bits (DualNumber F) := A ^ 4 - 1
   have hb : RingHom.mapMatrix fstRing (A ^ 4 * B) = 0 := by
     simp only [B, map_mul, map_sub, map_one, map_pow, mul_sub, mul_one, ← pow_add]
     exact sub_eq_zero.mpr h
   have hc : Commute (A ^ 4) B :=
-    ((Commute.refl A).pow_pow 4 12).sub_right (Commute.one_right _)
+    ((Commute.refl A).pow_pow 4 4).sub_right (Commute.one_right _)
   have h2 : A ^ 8 * B ^ 2 = 0 := by
     simpa only [← pow_two, hc.mul_pow, ← pow_mul] using
       square_zero_of_fst_zero (A ^ 4 * B) hb
-  have h13 : A ^ 8 * B ^ 13 = 0 := by
-    have hp : B ^ 13 = B ^ 2 * B ^ 11 := pow_add B 2 11
+  have h5 : A ^ 8 * B ^ 5 = 0 := by
+    have hp : B ^ 5 = B ^ 2 * B ^ 3 := pow_add B 2 3
     rw [hp, ← mul_assoc, h2, zero_mul]
-  have hf : B ^ 13 = A ^ 156 - 1 := by
-    have hcomm : Commute (A ^ 12) (1 : Matrix Bits Bits (DualNumber F)) :=
+  have hf : B ^ 5 = A ^ 20 - 1 := by
+    have hcomm : Commute (A ^ 4) (1 : Matrix Bits Bits (DualNumber F)) :=
       Commute.one_right _
     calc
-      B ^ 13 = (A ^ 12) ^ 13 - (1 : Matrix Bits Bits (DualNumber F)) ^ 13 :=
-        sub_pow_char_of_commute 13 hcomm
-      _ = A ^ 156 - 1 := by rw [← pow_mul, one_pow]
-  rw [hf, mul_sub, mul_one, ← pow_add] at h13
-  exact sub_eq_zero.mp h13
+      B ^ 5 = (A ^ 4) ^ 5 - (1 : Matrix Bits Bits (DualNumber F)) ^ 5 :=
+        sub_pow_char_of_commute 5 hcomm
+      _ = A ^ 20 - 1 := by rw [← pow_mul, one_pow]
+  rw [hf, mul_sub, mul_one, ← pow_add] at h5
+  exact sub_eq_zero.mp h5
 
-private lemma fst_transfer (i : Fin 4) (d : Direction) :
+private lemma fst_transfer (i : Fin 3) (d : Direction) :
     RingHom.mapMatrix fstRing (T i d) = RingHom.mapMatrix fstRing (T i firstDirection) := by
   apply Matrix.ext
   intro u v
@@ -449,16 +448,16 @@ private lemma fst_transfer (i : Fin 4) (d : Direction) :
     | exact congrFun (congrFun (hh residue _) _) _
     | exact congrFun (congrFun (hh (residue.comp (starRingEnd G)) _) _) _
 
-private def baseCheck (i : Fin 4) : Bool :=
-  let a := evalPower i firstDirection 16
+private def baseCheck (i : Fin 3) : Bool :=
+  let a := evalPower i firstDirection 8
   let b := evalPower i firstDirection 4
   (List.finRange 4).all fun u => (List.finRange 4).all fun v =>
     (entries a u v).fst.val == (entries b u v).fst.val
 
-private lemma base_period_sound (i : Fin 4) (h : baseCheck i = true) :
-    (RingHom.mapMatrix fstRing (T i firstDirection)) ^ 16 =
+private lemma base_period_sound (i : Fin 3) (h : baseCheck i = true) :
+    (RingHom.mapMatrix fstRing (T i firstDirection)) ^ 8 =
       (RingHom.mapMatrix fstRing (T i firstDirection)) ^ 4 := by
-  rw [← map_pow, ← map_pow, ← evalPower_correct i firstDirection 16 (by decide),
+  rw [← map_pow, ← map_pow, ← evalPower_correct i firstDirection 8 (by decide),
     ← evalPower_correct i firstDirection 4 (by decide)]
   apply Matrix.ext
   intro u v
@@ -467,8 +466,8 @@ private lemma base_period_sound (i : Fin 4) (h : baseCheck i = true) :
     ((List.all_eq_true.mp (List.all_eq_true.mp h (toBits.symm u) (by simp)))
       (toBits.symm v) (by simp)))
 
-private lemma period_from_base (h : ∀ i, baseCheck i = true) (i : Fin 4) (d : Direction) :
-    T i d ^ 164 = T i d ^ 8 := by
+private lemma period_from_base (h : ∀ i, baseCheck i = true) (i : Fin 3) (d : Direction) :
+    T i d ^ 28 = T i d ^ 8 := by
   apply lift_transfer_period
   rw [fst_transfer]
   exact base_period_sound i (h i)
@@ -522,7 +521,7 @@ private def rowsOf (packed : ℕ) (i : Fin 9) : Entries :=
   let pair := (finProdFinEquiv (m := 4) (n := 4)).symm (Fin.ofNat 16 (packed / 16 ^ i.val))
   (toBits pair.1, toBits pair.2)
 
-private def checkedMinor (m : ℕ) (i : Fin 4) (packed : ℕ) : Stored F 9 :=
+private def checkedMinor (m : ℕ) (i : Fin 3) (packed : ℕ) : Stored F 9 :=
   let powers := Vector.ofFn fun d : Fin 8 => evalPower i (finProdFinEquiv.symm d) m
   store fun u k =>
     let p := rowsOf packed u
@@ -535,7 +534,7 @@ private def checkedMinor (m : ℕ) (i : Fin 4) (packed : ℕ) : Stored F 9 :=
       entries product 0 0 + entries product 1 1 + entries product 2 2 + entries product 3 3
     Fin.cases (coefficient 0).fst (fun d => (coefficient d).snd) k
 
-private lemma checkedMinor_correct (m : ℕ) (i : Fin 4) (packed : ℕ) (hm : m < 256) :
+private lemma checkedMinor_correct (m : ℕ) (i : Fin 3) (packed : ℕ) (hm : m < 32) :
     entries (checkedMinor m i packed) =
       (residueAugmented (firstEntry i) (variableEntries i) m).submatrix (rowsOf packed) id := by
   have htrace (A : Stored (DualNumber F) 4) :
@@ -567,121 +566,103 @@ private lemma checkedMinor_correct (m : ℕ) (i : Fin 4) (packed : ℕ) (hm : m 
   refine Fin.cases ?_ (fun d => ?_) k <;> rfl
 
 /-- The selected point and nine row indices in pivot order for each complement length
-from 2 through 163. Each row occupies four bits, in increasing pivot order. -/
-private def certificates : Vector (Fin 4 × ℕ) 162 := #v[
-  (0, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xdc7546310),
-  (1, 0xdc7654301), (1, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310),
-  (0, 0xdc6574310), (1, 0xdc7654310), (1, 0xdc7654301), (1, 0xbdc564310),
-  (0, 0xdc7654310), (0, 0xdc7643250), (0, 0xdc7654310), (1, 0xdc7654310),
-  (1, 0xdc7653401), (1, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7653410),
-  (0, 0xdc7654310), (1, 0xdc7654310), (1, 0xdc7654301), (1, 0xfc7635410),
-  (0, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xfd4675310),
-  (1, 0xdc7654301), (1, 0xdc7653410), (0, 0xdc7653410), (0, 0xdc7654310),
-  (0, 0xdc7654310), (1, 0xdc7654310), (1, 0xdc7564301), (1, 0xdc7654310),
-  (0, 0xdc7654310), (0, 0xdc7643510), (0, 0xdc7654310), (1, 0xdc7654310),
-  (1, 0xdc7654301), (1, 0xdc6754230), (0, 0xdc7653410), (0, 0xdc7654310),
-  (0, 0xdc7654310), (1, 0xdc7654310), (1, 0xdc7654301), (1, 0xdc7645310),
-  (1, 0xcd7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xcd6754230),
-  (1, 0xdc7654031), (1, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310),
-  (0, 0xdc7654310), (1, 0xdc7654310), (1, 0xdc7564301), (1, 0xdc7654310),
-  (0, 0xdc6574230), (1, 0xdc7654310), (0, 0xcd6574310), (1, 0xdc7654310),
-  (1, 0xdc7654301), (1, 0xdc7654310), (0, 0xdc6573410), (0, 0xdc7654310),
-  (0, 0xdc6574310), (1, 0xfc7654310), (1, 0xfc7654301), (1, 0xdc7654310),
-  (0, 0xd7c654310), (0, 0xdc6573410), (1, 0xdc7654310), (1, 0xdc7654310),
-  (2, 0xdc7654310), (2, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310),
-  (0, 0xdc7651430), (1, 0xdc7546310), (1, 0xdc7654301), (1, 0xdc7654310),
-  (0, 0xd7c654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xdc7654310),
-  (1, 0xdc7654301), (1, 0xbdc564310), (0, 0xdc7653410), (0, 0xdc7654310),
-  (0, 0xd7c654310), (1, 0xdc7654310), (1, 0xdc7653401), (1, 0xdc7654310),
-  (0, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xdc7654310),
-  (1, 0xdc7654301), (1, 0xfc7635410), (0, 0xdc7653410), (0, 0xdc7654310),
-  (0, 0xdc7654310), (1, 0xfd4675310), (1, 0xdc7654301), (1, 0xdc7653410),
-  (0, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xdc7654310),
-  (1, 0xdc7564301), (1, 0xdc7654310), (0, 0xdc6573410), (0, 0xdc7645310),
-  (0, 0xdc7654310), (1, 0xdc7654310), (1, 0xdc7654301), (1, 0xdc6754230),
-  (0, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xdc7654310),
-  (1, 0xdc7654301), (1, 0xdc7645310), (1, 0xcd7654310), (0, 0xcd7654230),
-  (0, 0xdc7654310), (1, 0xcd6754230), (1, 0xdc7654031), (1, 0xdc7654310),
-  (0, 0xdc7653410), (0, 0xdc7653410), (0, 0xcd7653410), (1, 0xdc7654310),
-  (1, 0xdc7564301), (1, 0xdc7654310), (0, 0xdc7653410), (1, 0xdc7654310),
-  (0, 0xdc7654310), (1, 0xdc7654310), (1, 0xdc7654301), (1, 0xdc7654310),
-  (0, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xfc7654310),
-  (1, 0xfc7654301), (1, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310),
-  (1, 0xdc7654310), (1, 0xdc7654310), (3, 0xcd7654310), (3, 0xcd7654310),
-  (0, 0xdc7654310), (0, 0xdc7653410), (0, 0xdc7654310), (1, 0xdc7546310),
-  (1, 0xdc7654301), (1, 0xdc7654310)]
+from 2 through 27. Each row occupies four bits, in increasing pivot order. -/
+private def certificates : Vector (Fin 3 × ℕ) 26 := #v[
+  (0, 0xdc7654310), (1, 0xdc6754031), (1, 0xd7c654031), (1, 0xdc7654031),
+  (0, 0xdc7654310), (0, 0xc7d645130), (2, 0xd7c654310), (2, 0xd7c654310),
+  (0, 0xd7c645310), (0, 0xdc7654310), (2, 0xd7c654310), (2, 0xd7c654310),
+  (0, 0xdc7654310), (0, 0xdc6543710), (2, 0xd7c654310), (2, 0xd7c654310),
+  (2, 0xd7c654310), (0, 0xd6c573410), (2, 0xd7c654310), (2, 0xd7c654310),
+  (0, 0xdc7654310), (2, 0xd7c654310), (2, 0xd7c654310), (2, 0xd7c654310),
+  (0, 0xdc7654310), (0, 0xc7d645130)]
 
-private def finiteCheck (n : Fin 162) : Bool :=
+private def finiteCheck (n : Fin 26) : Bool :=
   let (i, rows) := certificates.get n
   pivotCheck 9 (checkedMinor (n.val + 2) i rows)
 
-private lemma check_base : ∀ i : Fin 4, baseCheck i = true := by decide +kernel
+private lemma check_base : ∀ i : Fin 3, baseCheck i = true := by decide +kernel
 
 private def checkBlock (start count : ℕ) : Bool :=
-  (List.range' start count).all (fun n => finiteCheck (Fin.ofNat 162 n))
+  (List.range' start count).all (fun n => finiteCheck (Fin.ofNat 26 n))
 
--- The kernel checks consecutive lengths together, sharing the recurring transfer factors.
+-- Check short blocks separately so the kernel can release each reduction cache.
 set_option maxHeartbeats 0 in
-private lemma check_finite (n : Fin 162) : finiteCheck n = true := by
-  have h₁ : checkBlock 0 27 = true := by decide +kernel
-  have h₂ : checkBlock 27 27 = true := by decide +kernel
-  have h₃ : checkBlock 54 27 = true := by decide +kernel
-  have h₄ : checkBlock 81 27 = true := by decide +kernel
-  have h₅ : checkBlock 108 27 = true := by decide +kernel
-  have h₆ : checkBlock 135 27 = true := by decide +kernel
-  have consume (start : ℕ) (h : checkBlock start 27 = true)
-      (lo : start ≤ n.val) (hi : n.val < start + 27) : finiteCheck n = true := by
-    have hmem : n.val ∈ List.range' start 27 := List.mem_range'_1.mpr ⟨lo, hi⟩
+private lemma check_first_block : checkBlock 0 4 = true := by decide +kernel
+
+set_option maxHeartbeats 0 in
+private lemma check_second_block : checkBlock 4 4 = true := by decide +kernel
+
+set_option maxHeartbeats 0 in
+private lemma check_third_block : checkBlock 8 4 = true := by decide +kernel
+
+set_option maxHeartbeats 0 in
+private lemma check_fourth_block : checkBlock 12 4 = true := by decide +kernel
+
+set_option maxHeartbeats 0 in
+private lemma check_fifth_block : checkBlock 16 4 = true := by decide +kernel
+
+set_option maxHeartbeats 0 in
+private lemma check_sixth_block : checkBlock 20 4 = true := by decide +kernel
+
+set_option maxHeartbeats 0 in
+private lemma check_last_block : checkBlock 24 2 = true := by decide +kernel
+
+private lemma check_finite (n : Fin 26) : finiteCheck n = true := by
+  have consume (start count : ℕ) (h : checkBlock start count = true)
+      (lo : start ≤ n.val) (hi : n.val < start + count) : finiteCheck n = true := by
+    have hmem : n.val ∈ List.range' start count := List.mem_range'_1.mpr ⟨lo, hi⟩
     have hc := List.all_eq_true.mp h n.val hmem
-    have hn : Fin.ofNat 162 n.val = n := Fin.ext (Nat.mod_eq_of_lt n.isLt)
+    have hn : Fin.ofNat 26 n.val = n := Fin.ext (Nat.mod_eq_of_lt n.isLt)
     simpa only [hn] using hc
-  by_cases h : n.val < 81
-  · by_cases h' : n.val < 27
-    · exact consume 0 h₁ (by omega) (by omega)
-    · by_cases h'' : n.val < 54
-      · exact consume 27 h₂ (by omega) (by omega)
-      · exact consume 54 h₃ (by omega) (by omega)
-  · by_cases h' : n.val < 108
-    · exact consume 81 h₄ (by omega) (by omega)
-    · by_cases h'' : n.val < 135
-      · exact consume 108 h₅ (by omega) (by omega)
-      · exact consume 135 h₆ (by omega) (by omega)
+  by_cases h : n.val < 4
+  · exact consume 0 4 check_first_block (by omega) (by omega)
+  by_cases h' : n.val < 8
+  · exact consume 4 4 check_second_block (by omega) (by omega)
+  by_cases h'' : n.val < 12
+  · exact consume 8 4 check_third_block (by omega) (by omega)
+  by_cases h₄ : n.val < 16
+  · exact consume 12 4 check_fourth_block (by omega) (by omega)
+  by_cases h₅ : n.val < 20
+  · exact consume 16 4 check_fifth_block (by omega) (by omega)
+  by_cases h₆ : n.val < 24
+  · exact consume 20 4 check_sixth_block (by omega) (by omega)
+  · exact consume 24 2 check_last_block (by omega) n.isLt
 
 private lemma reduce_power {M : Type*} [Monoid M] (t : M)
-    (h : t ^ 164 = t ^ 8) (k : ℕ) : t ^ (8 + k) = t ^ (8 + k % 156) := by
-  have hp (l : ℕ) : t ^ (8 + l + 156) = t ^ (8 + l) := by
-    rw [show 8 + l + 156 = 164 + l by omega, pow_add, h, ← pow_add]
-  have repeatPeriod (q l : ℕ) : t ^ (8 + l + 156 * q) = t ^ (8 + l) := by
+    (h : t ^ 28 = t ^ 8) (k : ℕ) : t ^ (8 + k) = t ^ (8 + k % 20) := by
+  have hp (l : ℕ) : t ^ (8 + l + 20) = t ^ (8 + l) := by
+    rw [show 8 + l + 20 = 28 + l by omega, pow_add, h, ← pow_add]
+  have repeatPeriod (q l : ℕ) : t ^ (8 + l + 20 * q) = t ^ (8 + l) := by
     induction q with
     | zero => simp
     | succ q ih => rw [Nat.mul_succ, ← Nat.add_assoc, Nat.add_assoc 8 l, hp, ← Nat.add_assoc, ih]
-  conv_lhs => rw [← Nat.mod_add_div k 156, ← Nat.add_assoc]
+  conv_lhs => rw [← Nat.mod_add_div k 20, ← Nat.add_assoc]
   apply repeatPeriod
 
-private def reduced (m : ℕ) : ℕ := if m < 8 then m else 8 + (m - 8) % 156
+private def reduced (m : ℕ) : ℕ := if m < 8 then m else 8 + (m - 8) % 20
 
 private lemma reduced_bounds (m : ℕ) (hm : 2 ≤ m) :
-    2 ≤ reduced m ∧ reduced m < 164 := by
-  have hq : (m - 8) % 156 < 156 := Nat.mod_lt _ (by decide)
+    2 ≤ reduced m ∧ reduced m < 28 := by
+  have hq : (m - 8) % 20 < 20 := Nat.mod_lt _ (by decide)
   unfold reduced
   split <;> omega
 
 private lemma residue_reduced
-    (period : ∀ i d, T i d ^ 164 = T i d ^ 8) (i : Fin 4) (m : ℕ) :
+    (period : ∀ i d, T i d ^ 28 = T i d ^ 8) (i : Fin 3) (m : ℕ) :
     residueAugmented (firstEntry i) (variableEntries i) m =
     residueAugmented (firstEntry i) (variableEntries i) (reduced m) := by
   unfold reduced
   split
   · rfl
   · rename_i hm
-    have h (d : Direction) : T i d ^ m = T i d ^ (8 + (m - 8) % 156) := by
+    have h (d : Direction) : T i d ^ m = T i d ^ (8 + (m - 8) % 20) := by
       nth_rw 1 [show m = 8 + (m - 8) by omega]
       exact reduce_power _ (period _ _) _
     have he (p : Entries) (d : Direction) :
         dualContraction (firstEntry i) (variableEntries i) d m p =
-        dualContraction (firstEntry i) (variableEntries i) d (8 + (m - 8) % 156) p := by
+        dualContraction (firstEntry i) (variableEntries i) d (8 + (m - 8) % 20) p := by
       unfold dualContraction contraction
-      change (_ * T i d ^ m).trace = (_ * T i d ^ (8 + (m - 8) % 156)).trace
+      change (_ * T i d ^ m).trace = (_ * T i d ^ (8 + (m - 8) % 20)).trace
       rw [h d]
     apply Matrix.ext
     intro p k
@@ -692,13 +673,13 @@ private lemma residue_reduced
 the actual raw two-site density and its eight coordinate derivatives. Complex nonsingularity
 implies real independence including the radial column. -/
 private theorem rank_of_certificates
-    (period : ∀ i d, T i d ^ 164 = T i d ^ 8)
+    (period : ∀ i d, T i d ^ 28 = T i d ^ 8)
     (certificate : ∀ n, finiteCheck n = true) (r : ℕ) :
     ∃ (a : ℂ) (x : Fin 4 → ℂ) (rows : Fin 9 → Entries),
       ((augmented r a x).submatrix rows id).det ≠ 0 := by
   let m := r + 2
   have bounds := reduced_bounds m (by omega)
-  let n : Fin 162 := ⟨reduced m - 2, by omega⟩
+  let n : Fin 26 := ⟨reduced m - 2, by omega⟩
   have hcheck := certificate n
   change pivotCheck 9 (checkedMinor (n.val + 2)
     (certificates.get n).1 (certificates.get n).2) = true at hcheck
