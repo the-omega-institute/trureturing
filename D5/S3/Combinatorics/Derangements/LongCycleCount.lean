@@ -16,10 +16,14 @@ proof_shape:
   mem_D_iff: bind-only helper (TerminalDifference.noFixed_iff_sum); consumer: excluded_mul.
   long_cycle: content via excluded_mul.
 Direct frozen dependencies: D5/S3/Combinatorics/Derangements/TerminalDifference (D, T, excluded,
-  T_add_excluded, noFixed_iff_sum).
+  T_add_excluded, noFixed_iff_sum; statement_id
+  sha256:30f6c3f4b3ec92fcc35b679f227332f248b5fb2e951966e3a6170f421fb9f74d).
+utility: none (a general count theorem; no enumeration, checker, reduction or certified
+  instance).
 Search record (§3.1): TerminalDifference proves only the cases k = n and k = n - 2 (n >= 5);
   Mathlib's Perm.card_of_cycleType_mul_eq and Perm.exists_with_cycleType_iff are reused; no
-  frozen module counts derangements with a prescribed long cycle.
+  frozen module counts derangements with a prescribed long cycle. Kallat's ancillary sources
+  treat only the column cases and are not used.
 -/
 
 import D5.S3.Combinatorics.Derangements.TerminalDifference

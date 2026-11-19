@@ -25,7 +25,8 @@ internal sealed class LongCycleCountDocument : IScribeDocumentDefinition
                     + "part of m′ is at most n−k < k, the part k occurs once. The class sizes "
                     + "from Perm.card_of_cycleType_mul_eq then satisfy "
                     + "#(k ::ₘ m′)·k(n−k)! = n!·#m′, and summing over m′ gives the count. This is "
-                    + "Lemma 2 of H. Ma and W. Zhang; the identity was proved earlier by L.-H. Su "
-                    + "(Proposition 7.4) and later by A. Kallat (Theorem 4.1(c)-(d))."))),
+                    + "Lemma 2 of H. Ma and W. Zhang. The special cases k = n, n−1, n−2 (n ≥ 5), "
+                    + "the two A378495 column differences, were proved earlier by L.-H. Su "
+                    + "(Proposition 7.4) and independently by A. Kallat (Theorem 4.1(c)-(d))."))),
                 DescribeRole.Theorem))));
 }
