@@ -20,7 +20,7 @@ $$\forall s\in\mathbb{C},H\left(s\right)=\begin{cases}\log 2,&s=0\\\frac{(1-2^{s
 
 *Commentary.*
 
-Here s is complex and 2 to the power s means exp((log 2)s). Near zero, sζ(1+s) extends holomorphically with value 1. Therefore the reciprocal ζ(1+s)⁻¹ tends to 0, and (1−2ˢ)/s tends to −log 2. The product has removable value log 2 as a complex number.
+Here s is complex and 2 to the power s means exp((log 2)s). The reciprocal uses the Lean convention 0⁻¹ = 0. Near zero, sζ(1+s) extends holomorphically with value 1. Therefore the reciprocal ζ(1+s)⁻¹ tends to 0, and (1−2ˢ)/s tends to −log 2. The product has removable value log 2 as a complex number.
 
 **Theorem 1.2 (Integrability and Parseval at unit weight).**
 

@@ -24,7 +24,8 @@ internal sealed class MobiusDyadicUnitWeightParsevalDocument : IScribeDocumentDe
                 StatementSource.FromAuthor(F.Disp(MellinSymbol())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Here s is complex and 2 to the power s means exp((log 2)s). Near zero, "
+                    "Here s is complex and 2 to the power s means exp((log 2)s). "
+                    + "The reciprocal uses the Lean convention 0⁻¹ = 0. Near zero, "
                     + "sζ(1+s) extends holomorphically with value 1. Therefore the reciprocal "
                     + "ζ(1+s)⁻¹ tends to 0, and (1−2ˢ)/s tends to −log 2. The product has "
                     + "removable value log 2 as a complex number."))),
