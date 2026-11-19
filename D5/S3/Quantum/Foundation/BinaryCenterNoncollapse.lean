@@ -7,6 +7,7 @@
    digest: Binary original compatibility bounds center variation on each fixed sphere. -/
 
 import D5.S3.Geometry.AffineBallRigidity
+import D5.S3.Quantum.Foundation.MixedExclusionGeometry
 import D5.S3.Quantum.Foundation.OriginalRowSaturation
 
 /-! Quantitative variation and attained distance on each fixed original sphere (theory XI138.5). -/
