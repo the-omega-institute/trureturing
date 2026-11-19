@@ -268,6 +268,7 @@ jobs:
       # This job writes project seeds only on dev/integration pushes.
       # Dependency and elan writes also use the PR's own merge-ref scope.
       CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
+      INDEXED_PROJECT_PUSH: ${{ github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' }}
       REPORT: .lake/build/stratalint/raw-lean-report.json
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
       SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
@@ -456,7 +457,10 @@ jobs:
           key: ${{ needs.source.outputs.judge_key }}
       - id: sharded_project_push
         name: Publish the indexed push project seed
-        if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && (steps.sharded_project.outputs.complete == 'true' || steps.prepared.outputs.sharded == 'true') && steps.lean_report.outcome == 'success' }}
+        if: >-
+          ${{ !cancelled() && env.INDEXED_PROJECT_PUSH == 'true'
+              && (steps.sharded_project.outputs.complete == 'true' || steps.prepared.outputs.adopted == 'true')
+              && steps.lean_report.outcome == 'success' }}
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
         env:
@@ -476,7 +480,9 @@ jobs:
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
       - id: project_save
         name: Publish the push project seed
-        if: ${{ !cancelled() && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
+        if: >-
+          ${{ !cancelled() && env.INDEXED_PROJECT_PUSH != 'true'
+              && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:

@@ -251,14 +251,23 @@ runs:
       env:
         READY: ${{ steps.project_snapshot.outputs.project_ready }}
         SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
+        INDEXED: ${{ inputs.shard-history-anchor != '' }}
+        SHARDED_SEED: ${{ steps.sharded_seed.outputs.complete }}
       shell: bash
       run: |
+        if [[ "$INDEXED" == true ]]; then
+          if [[ "$SHARDED_SEED" == true && "$SKIP_REASON" == no-build-work ]]; then
+            exit 0
+          fi
+          echo 'CACHE_SEED_ERROR indexed project publication did not complete' >&2
+          exit 1
+        fi
         if [[ "$READY" != true ]] && [[ "${STRATALINT_ACTIONS_CACHE_SEEDED:-0}" != 1 || "$SKIP_REASON" != no-build-work ]]; then
           echo "CACHE_SEED_ERROR build produced no accepted project seed" >&2
           exit 1
         fi
     - name: Publish the project seed
-      if: steps.project_snapshot.outputs.project_ready == 'true'
+      if: inputs.shard-history-anchor == '' && steps.project_snapshot.outputs.project_ready == 'true'
       uses: actions/cache/save@v5
       with:
         path: ${{ steps.keys.outputs.project_archive_path }}
@@ -272,7 +281,7 @@ runs:
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
     - name: Verify the project cache was published
-      if: steps.project_snapshot.outputs.project_ready == 'true'
+      if: inputs.shard-history-anchor == '' && steps.project_snapshot.outputs.project_ready == 'true'
       env:
         GH_TOKEN: ${{ github.token }}
         CACHE_KEY: ${{ steps.keys.outputs.project_key }}
