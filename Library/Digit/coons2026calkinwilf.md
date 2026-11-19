@@ -10,6 +10,7 @@ strata_touched:
   - D5/S1/Digit/CoonsAdjacentGrowthRefutation
   - D5/S1/Digit/DigitCapPowerGF
   - D5/S1/Digit/DigitCapSubcritical
+  - D5/S1/Digit/DigitCapLeastCap
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -133,3 +134,9 @@ of the outreach note registered in the-omega-institute/trureturing-requests#300,
 improves `DigitCapQuotientBound.count_le_pow` (Q^m) for caps at most ell^r − 2. Its case r = 2 is
 exactly the sufficient condition quoted above; together with `count_square_sub_one` and cap
 monotonicity it bears on CW2, which is not settled here as a separate claim.
+
+The least cap whose upper exponent reaches r − 1 is ell^r − 1 (`DigitCapLeastCap.least_cap`):
+the cap ell^r − 1 grows like n^(r−1) by the product formula of Theorem 2, and every smaller cap
+is subcritical. For r = 2 this is the least cap with linear maximal growth, as asked in CW2;
+the combination is Corollary 2 of the outreach note registered in
+the-omega-institute/trureturing-requests#301.
