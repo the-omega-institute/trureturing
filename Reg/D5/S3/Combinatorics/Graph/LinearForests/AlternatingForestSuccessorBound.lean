@@ -278,7 +278,7 @@ def sparseRegistration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "type", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
