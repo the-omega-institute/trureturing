@@ -353,13 +353,8 @@ private def usesTarget (target : Name) (proof : Expr) : FibSource.M Bool := do
     -- Prune that entire library closure before reading its proof bodies.
     if index < targetIndex then continue
     let info ← getConstInfo name
-    let proofDeclaration ← match info with
-      | .thmInfo _ => pure true
-      | .defnInfo _ | .opaqueInfo _ => isProp info.type
-      | _ => pure false
-    if proofDeclaration then
-      if let some body := info.value? (allowOpaque := true) then
-        pending := (← bodyNames body).toList ++ pending
+    if let some body := info.value? (allowOpaque := true) then
+      pending := (← bodyNames body).toList ++ pending
   return false
 
 /-- Typed optional-face projection of the same compiled LawFact acquisition.
@@ -442,20 +437,21 @@ def request (bound : Bound) (target : Name) (family point claims task : Expr) : 
       pointJson := Json.mkObj [("parameter", describe parameter),
         ("law", ← rationalCells masses), ("certificate", describe point)]
   catch error => pointError := error.toString
-  let taskValue ← option task
-  let taskJson ← match taskValue with
-    | none => pure Json.null
-    | some task => rationalCells task true
-  let (factsJson, capture) ← facts target claims
-  let usesDelta ← match taskValue with
-    | none => pure false
-    | some task => do
-      let cells ← fields (base ++ `LawTask.mk) task
+  let mut taskJson := Json.null
+  let mut taskError := ""
+  let mut usesDelta := false
+  try
+    if let some decodedTask ← option task then
+      let decoded ← rationalCells decodedTask true
+      let cells ← fields (base ++ `LawTask.mk) decodedTask
       let find := (← read).provenance.view.find?
       let values ← (cells.extract 0 4).mapM fun cell => do
         IO.ofExcept (Contract.Literal.int "fib.law_task"
           (← IO.ofExcept (Contract.Literal.referencedValue find cell)))
-      pure (values[3]! - values[1]! - values[2]! + values[0]! != 0)
+      usesDelta := values[3]! - values[1]! - values[2]! + values[0]! != 0
+      taskJson := decoded
+  catch error => taskError := error.toString
+  let (factsJson, capture) ← facts target claims
   let infinite := (← option (← field family "infinite")).isSome
   let simplex := (← option (← field family "simplex")).map describe
   return Json.mkObj [
@@ -474,6 +470,7 @@ def request (bound : Bound) (target : Name) (family point claims task : Expr) : 
         Json.mkObj [("atom", toJson atom), ("mode", mode)]))]),
     ("point", pointJson), ("point_unavailable_reason", toJson pointError),
     ("facts", factsJson), ("task", taskJson),
+    ("task_unavailable_reason", toJson taskError),
     ("compiled_capture", Json.mkObj [
       ("family", Json.mkObj [("status", toJson capture.label),
         ("simplex_width_implies_strict", toJson false),

@@ -12,7 +12,8 @@ private def explanation (kind reason : String) : Json :=
 No native state machine, reply map or guard is assigned to a law family. -/
 def analyze (request : Json) : Except String Json := do
   requireKeys request ["arena", "binding", "plan", "acquisition", "law_family",
-    "point", "point_unavailable_reason", "facts", "task", "compiled_capture", "compiled_prediction"]
+    "point", "point_unavailable_reason", "facts", "task", "task_unavailable_reason",
+    "compiled_capture", "compiled_prediction"]
   let point ← request.getObjVal? "point"
   let task ← request.getObjVal? "task"
   let hasTask := task != Json.null

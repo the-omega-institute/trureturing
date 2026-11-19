@@ -76,6 +76,125 @@ def unavailable(reason):
     return reading
 
 
+def _qualify_compiled(request, reading):
+    """Describe evidence already acquired by FibApplications in this producer.
+
+    The arithmetic subprocess has no compiler custody and always returns raw
+    input scope. This function is internal to production artifact creation;
+    neither the standalone JSON command nor consume promotes decoded requests.
+    """
+    if reading["disposition"]["status"] == "refuted":
+        return reading
+    disposition = reading["disposition"]
+    readings = disposition["readings"]
+    # This function runs only inside the compiler artifact producer. The
+    # standalone analyzer leaves this source-owned certificate unknown.
+    prediction = copy.deepcopy(request.get("compiled_prediction", {
+        "kind": "unknown", "reason": "no source-owned operation contract supplied"}))
+    continuation = reading.get("continuation_target")
+    if isinstance(continuation, dict):
+        continuation["predictive_closure"] = prediction
+        readings["predictive_closure"] = {
+            "kind": prediction["kind"],
+            "reason": prediction.get("reason", "compiled source-bound operation evidence")}
+    def evidence(field, kind, reason):
+        readings[field] = dict(kind=kind, reason=reason)
+    if request.get("arena") == "law-family":
+        _qualify_law_family(request, reading, evidence)
+        return reading
+    if request.get("arena", "native-single-window") == "native-single-window":
+        source = reading["source_contract"]
+        source.pop("supplied_binding")
+        source.pop("supplied_law_acquisition")
+        source.update(binding=request["binding"], law_acquisition=request.get("law_acquisition"))
+        evidence("source_contract", "available", "compiled native adapter with explicit initialized specialization")
+        has_law = source["pushforward_law"] is not None
+        disposition["reason"] = ("exact finite execution report; not a Lean proof or a certified physical law"
+            if has_law else "finite micro analysis computed; source-law acquisition contract or nonempty archive is missing")
+        if has_law:
+            for field in ("pyramid_coordinates", "association_coordinate", "residuals"):
+                evidence(field, "available", "exact declared or empirical law; physical law and IID unverified")
+            if reading["continuation_target"]["conditional_reply_law"] is not None:
+                evidence("conditional_reply_law", "available", "positive conditioning mass; apex handled without division by r")
+        elif source["law_acquisition"] is not None:
+            for field in ("pyramid_coordinates", "association_coordinate", "residuals", "conditional_reply_law"):
+                readings[field] = dict(source["law_acquisition"])
+        return reading
+    if request.get("arena") != "typed-source":
+        return reading
+    acquisition = request["acquisition"]
+    kind, reason = acquisition["kind"], acquisition["reason"]
+    finite = kind == "finite"
+    disposition["reason"] = "source-bound downstream analysis; ordinary audit obligations remain independent"
+    evidence("arena", "available" if finite or kind == "infinite" else "unavailable", reason)
+    evidence("source_contract", "available", "full compiled source correspondence; probability law unknown")
+    evidence("continuation_target", "available", "same-source total task; numerical outputs require acquired presentation")
+    evidence("kernel", "available", "structural equality kernels exist for the full actual family")
+    evidence("layered_spectrum", "available", "source-bound weak refinement; counts require finite acquisition")
+    count_kind = "available" if finite else "not-applicable" if kind == "infinite" else "unavailable"
+    for field in ("escape_pairs", "unique_capture"):
+        evidence(field, count_kind, "complete certified domain and bidirectional table reflection" if finite else reason)
+    n = reading["arena"]["cardinality"]
+    evidence("escape_rate", "available" if n is not None and n > 1 else
+             "not-applicable" if kind == "infinite" or n is not None else "unavailable",
+             "N(N-1) ordered off-diagonal pairs" if n is not None and n > 1 else
+             "finite pair rate requires complete finite N>1" if kind == "infinite" or n is not None else reason)
+    source = reading["source_contract"]
+    source.pop("supplied_binding")
+    source.pop("supplied_acquisition")
+    source.update(kind="typed-source", binding=request["binding"], acquisition=acquisition)
+    reading["continuation_target"]["scope"] = ("same actual source realization; complete finite total task"
+                                               if finite else "same actual source realization; total task")
+    if finite:
+        reading["arena"]["kind"] = "certified-finite-presentation"
+        reading["arena"]["scope_boundary"] = ("counts refer only to the certified whole fiber, restriction or quotient; "
+                                               "original theorem remains universal")
+        reading["kernel"]["scope"] = "certified readout kernels and supplied layers; no exponential lattice claimed"
+    else:
+        reading["arena"].update(kind=kind, reason=reason)
+    return reading
+
+
+def _qualify_law_family(request, reading, evidence):
+    """Attach the compiler's law-family evidence in the native report producer."""
+    source = reading["source_contract"]
+    source.pop("supplied_binding")
+    source.update(kind="law-family", binding=request["binding"])
+    reading["disposition"]["reason"] = (
+        "compiled mass-valued law family; ordinary audit obligations remain independent")
+    for field in ("arena", "source_contract", "atom_readout", "kernel"):
+        evidence(field, "available", "full source binding, atom bijection and actual mass readout equality")
+    for field in ("seam_readout", "guard", "reply", "R_guard", "native_continuation", "conditional_reply_law"):
+        evidence(field, "not-applicable", "law family declares no native Window execution")
+    acquisition = request["acquisition"]
+    count_kind = "not-applicable" if acquisition["kind"] == "infinite" else "unavailable"
+    for field in ("escape_pairs", "escape_rate", "unique_capture"):
+        evidence(field, count_kind, acquisition["reason"])
+    evidence("layered_spectrum", "available", "qualitative family capture; finite counts acquired separately")
+
+    compiled = request["compiled_capture"]
+    reading["association_coordinate"]["family_capture"] = compiled["family"]
+    reading["layered_spectrum"]["family_capture"] = compiled["family"]
+    reading["disposition"]["readings"]["family_capture"] = compiled["reading"]
+
+    point_reason = request["point_unavailable_reason"]
+    if request["point"] is not None:
+        point_kind = "available"
+        point_reason = "exact rational point with domain membership and pointwise source-law equality"
+    elif point_reason:
+        point_kind = "unavailable"
+    else:
+        point_kind = "unknown"
+        point_reason = "law defined; no certified rational point supplied"
+    for field in ("pyramid_coordinates", "association_coordinate", "residuals"):
+        evidence(field, point_kind, point_reason)
+    if request["task"] is not None:
+        evidence("continuation_target", "available", "explicit rational atom task; no native continuation")
+        reading["continuation_target"].update(family_capture=compiled["task"], uses_delta=compiled["uses_delta"])
+    elif request.get("task_unavailable_reason"):
+        evidence("continuation_target", "unavailable", request["task_unavailable_reason"])
+
+
 def prepare(row, previous_artifact):
     """Reuse unchanged declaration payloads from the existing module artifact.
 
@@ -138,8 +257,7 @@ def finish(row, analyzer, stats):
         started = time.monotonic_ns()
         result = subprocess.run([str(analyzer), "--batch"],
             input=json.dumps([x["request"] for x in pending]),
-            text=True, capture_output=True, check=False,
-            env=dict(os.environ, LEAN_FIB_COMPILED_PROJECTION="1"))
+            text=True, capture_output=True, check=False)
         analysis_ns = time.monotonic_ns() - started
         if result.returncode not in (0, 2):
             raise ValueError(f"fib.analysis_failed:exit={result.returncode}:{result.stderr}")
@@ -147,7 +265,7 @@ def finish(row, analyzer, stats):
         if not isinstance(outputs, list) or len(outputs) != len(pending):
             raise ValueError("fib.analysis_incomplete")
         for leaf, reading in zip(pending, outputs):
-            leaf["reading"] = reading
+            leaf["reading"] = _qualify_compiled(leaf["request"], reading)
         rejected = any(x["disposition"]["status"] == "refuted" for x in outputs)
         if (result.returncode == 2) != rejected:
             raise ValueError("fib.analysis_exit_mismatch")
