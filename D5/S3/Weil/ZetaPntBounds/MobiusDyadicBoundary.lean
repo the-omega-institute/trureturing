@@ -9,7 +9,6 @@
 import D5.S3.Weil.Mertens.MobiusDyadicEnergy
 import D5.S3.Weil.ZetaPntBounds.MobiusDyadicUnitWeightParseval
 import D5.S3.Analytic.Laplace.CausalExponentialStripTransfer
-import D5.S3.Arith.Robin.ForwardKernel.KappaGap
 import Mathlib.Analysis.Complex.Convex
 import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
 import Mathlib.MeasureTheory.Measure.Lebesgue.Integral
@@ -537,32 +536,5 @@ theorem weighted_reciprocal_zeta_sq_bound_of_mobiusDyadicEnergy {θ : ℝ}
   obtain ⟨hF, hmass⟩ := dyadic_symbol_sq_bound hθ₂ hθne hzero hE
   have hout := weighted_reciprocal_of_symbol hθ₀ hθ₂ hθne hzero hF hmass
   exact ⟨hout.1, hout.2.trans_eq (by ring)⟩
-
-section ZeroAbscissa
-
-open D5.S3.Arith.Robin.ForwardKernel.KappaGap (zeroAbscissa zero_re_le_abscissa)
-open D5.S3.Weil.ZeroSum (IsNontrivialZero)
-open D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence (exists_nontrivial_zero_re_ge_half)
-
--- Check the specialization at the actual zero abscissa, including line nonvanishing.
-example (hΘ : zeroAbscissa < 1)
-    (hunattained : ∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re ≠ zeroAbscissa)
-    (hE : IntegrableOn (fun x : ℝ => D x ^ 2 * x ^ (-(2 * zeroAbscissa - 1))) (Ioi 1)) :
-    Integrable (fun y : ℝ =>
-      1 / ((1 + |y|) ^ 2 * ‖riemannZeta ((zeroAbscissa : ℂ) + (y : ℂ) * I)‖ ^ 2)) ∧
-    (∫ y : ℝ, 1 / ((1 + |y|) ^ 2 * ‖riemannZeta ((zeroAbscissa : ℂ) + (y : ℂ) * I)‖ ^ 2)) ≤
-      4 + 4 * Real.pi * (∫ x in Ioi (1 : ℝ), D x ^ 2 * x ^ (-(2 * zeroAbscissa - 1))) /
-        (1 - (2 : ℝ) ^ (zeroAbscissa - 1)) ^ 2 := by
-  obtain ⟨ρ, hρ, hhalf⟩ := exists_nontrivial_zero_re_ge_half
-  have hΘhalf := hhalf.trans (zero_re_le_abscissa hρ)
-  have hzero (y : ℝ) : riemannZeta ((zeroAbscissa : ℂ) + (y : ℂ) * I) ≠ 0 := by
-    let z : ℂ := (zeroAbscissa : ℂ) + (y : ℂ) * I
-    have hre : z.re = zeroAbscissa := by simp [z, Complex.mul_re]
-    intro hz
-    exact hunattained z ⟨hz, by rw [hre]; linarith, by rwa [hre]⟩ hre
-  exact weighted_reciprocal_zeta_sq_bound_of_mobiusDyadicEnergy
-    (by linarith) (by linarith) hΘ.ne hzero hE
-
-end ZeroAbscissa
 
 end D5.S3.Weil.ZetaPntBounds.MobiusDyadicBoundary

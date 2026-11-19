@@ -24,7 +24,6 @@ When the real parts of the nontrivial zeros have an unattained supremum Θ < 1, 
 
 - Truth anchor: `D5/S3/Weil/ZetaPntBounds/MobiusDyadicBoundary.weighted_reciprocal_zeta_sq_bound_of_mobiusDyadicEnergy`
 - Dependency: [D5/S3/Analytic/Laplace/CausalExponentialStripTransfer](../../Analytic/Laplace/CausalExponentialStripTransfer.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/KappaGap](../../Arith/Robin/ForwardKernel/KappaGap.md)
 - Dependency: [D5/S3/Weil/Mertens/MobiusDyadicEnergy](../Mertens/MobiusDyadicEnergy.md)
 - Dependency: [D5/S3/Weil/ZetaGamma/FormCore/LineFourier](../ZetaGamma/FormCore/LineFourier.md)
 - Dependency: [D5/S3/Weil/ZetaPntBounds/MobiusDyadicUnitWeightParseval](MobiusDyadicUnitWeightParseval.md)
