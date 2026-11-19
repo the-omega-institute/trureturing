@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.Graph.Hypercube
+import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 import D5.S3.Combinatorics.Graph.HypercubeCritical.GrayPairCutCounting
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9OrbitCertificateProbe
 import Mathlib.Data.Fin.VecNotation
@@ -16,10 +17,14 @@ open D5.S3.Combinatorics.Graph.Hypercube
 
 private abbrev Vertex := BitVec 9
 
-private def cube : SimpleGraph Vertex :=
+private instance : Fintype Vertex :=
+  Fintype.ofEquiv (Fin (2 ^ 9)) (BitVec.equivFin (m := 9)).toEquiv.symm
+
+/-- Cube adjacency in little-endian coordinates. -/
+def cube : SimpleGraph Vertex :=
   (hypercube 9).comap (cubeBitVec 9)
 
-private instance : DecidableRel cube.Adj := fun x y =>
+instance : DecidableRel cube.Adj := fun x y =>
   inferInstanceAs (Decidable (hammingDist (cubeBitVec 9 x) (cubeBitVec 9 y) = 1))
 
 private def blockWeight (mask x : Vertex) : Nat :=
@@ -36,6 +41,9 @@ private def support (x : Vertex) : Bool :=
 
 private def flipBit (x : Vertex) (i : Fin 9) : Vertex :=
   x ^^^ BitVec.ofNat 9 (2 ^ i.val)
+
+/-- The union of the two placed 54-vertex Gray supports. -/
+def supportUnion : Finset Vertex := univ.filter fun x => support x = true
 
 /-- The region outside the two Gray supports and all their neighbors. -/
 def residual : Finset Vertex :=
@@ -96,11 +104,11 @@ theorem residual_card_le
     obtain ⟨hleaves, hadj, _⟩ := stars_valid i
     exact GrayPairCutCounting.star_has_omission cube S (leaves i) (center i)
       hleaves hadj hdeg
-  let omit (i : StarIndex) : middle \ (S ∩ middle) :=
+  let missing (i : StarIndex) : (middle \ (S ∩ middle) : Finset Vertex) :=
     ⟨(hstar i).choose, by
       have hm := mem_sdiff.mp (hstar i).choose_spec
       exact mem_sdiff.mpr ⟨(stars_valid i).2.2 hm.1, fun hi => hm.2 (mem_inter.mp hi).1⟩⟩
-  have hInjective : Function.Injective omit := by
+  have hInjective : Function.Injective missing := by
     intro i j hij
     by_contra hne
     have he := congrArg Subtype.val hij
@@ -108,7 +116,7 @@ theorem residual_card_le
     have hi := (mem_sdiff.mp (hstar i).choose_spec).1
     have hj := (mem_sdiff.mp (hstar j).choose_spec).1
     exact Finset.disjoint_left.mp (stars_disjoint i j hne) hi (he.symm ▸ hj)
-  have homit := Fintype.card_le_of_injective omit hInjective
+  have homit := Fintype.card_le_of_injective missing hInjective
   have hmiddle : (S ∩ middle).card ≤ 90 := by
     rw [Fintype.card_prod, Fintype.card_fin, Fintype.card_fin, Fintype.card_coe,
       card_sdiff_of_subset inter_subset_right, hmid] at homit
@@ -124,12 +132,44 @@ theorem residual_card_le
   have hsub : S ⊆ (S ∩ lower) ∪ (S ∩ middle) ∪ (S ∩ upper) := by
     intro v hv
     have hh := hcover (hS hv)
-    simp only [mem_union, mem_inter, hv, true_and] at *
-    exact hh
+    simpa only [mem_union, mem_inter, hv, true_and] using hh
   have htotal := (card_le_card hsub).trans (card_union_le _ _)
   have hu := card_union_le (S ∩ lower) (S ∩ middle)
   omega
 
 #print axioms residual_card_le
+
+set_option maxRecDepth 4096 in
+private theorem support_union_card : supportUnion.card = 108 := by
+  decide +kernel
+
+/-- Any set of induced maximum degree three containing this pair as a union
+of components has at most 254 vertices. -/
+theorem candidate_card_le
+    (U : Finset Vertex) (hU : supportUnion ⊆ U)
+    (hclosed : ∀ x ∈ supportUnion, ∀ y ∈ U, cube.Adj x y → y ∈ supportUnion)
+    (hdeg : ∀ v ∈ U, (U.filter (cube.Adj v)).card ≤ 3) : U.card ≤ 254 := by
+  have hsub : U \ supportUnion ⊆ residual := by
+    intro x hx
+    obtain ⟨hxU, hxN⟩ := mem_sdiff.mp hx
+    refine mem_filter.mpr ⟨mem_univ _, ?_, ?_⟩
+    · cases hs : support x
+      · rfl
+      · exact (hxN (mem_filter.mpr ⟨mem_univ _, hs⟩)).elim
+    · intro i
+      cases hs : support (flipBit x i)
+      · rfl
+      · have hAdj : cube.Adj x (flipBit x i) := by
+          change (hypercube 9).Adj (cubeBitVec 9 x) (cubeBitVec 9 (flipBit x i))
+          rw [flipBit, cubeBitVec_xor_single]
+          exact BalancedCriticalSpectrum.flip_adj _ _
+        exact (hxN (hclosed _ (mem_filter.mpr ⟨mem_univ _, hs⟩) _ hxU hAdj.symm)).elim
+  have h := residual_card_le (U \ supportUnion) hsub (fun v hv =>
+    (card_le_card (filter_subset_filter _ sdiff_subset)).trans
+      (hdeg v (mem_sdiff.mp hv).1))
+  rw [card_sdiff_of_subset hU, support_union_card] at h
+  omega
+
+#print axioms candidate_card_le
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9GrayCrossedPlacement

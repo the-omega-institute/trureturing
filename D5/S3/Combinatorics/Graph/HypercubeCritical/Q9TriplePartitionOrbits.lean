@@ -46,6 +46,7 @@ private instance (m : Fin 3 → Fin 3 → Fin 4) : Decidable (classified m) :=
 
 set_option maxHeartbeats 4000000 in
 set_option maxRecDepth 4096 in
+-- Check the column totals and the relabelings for the triples of candidate rows.
 private theorem classify_rows :
     ∀ (a b c : Fin 10), (∀ j, columnTotal ![rows a, rows b, rows c] j = 3) →
       classified ![rows a, rows b, rows c] := by
@@ -96,7 +97,9 @@ theorem classify_triple_partitions (first second : Fin 9 → Fin 3)
   let overlap (i j : Fin 3) := (univ.filter (fun a => first a = i ∧ second a = j)).card
   have hle (i j : Fin 3) : overlap i j ≤ 3 := by
     rw [← hfirst i]
-    exact card_le_card (filter_subset_filter _ (fun _ h => h.1))
+    apply card_le_card
+    intro a ha
+    exact mem_filter.mpr ⟨mem_univ _, (mem_filter.mp ha).2.1⟩
   let m (i j : Fin 3) : Fin 4 := ⟨overlap i j, Nat.lt_succ_of_le (hle i j)⟩
   have hrow (i : Fin 3) : (m i 0).val + (m i 1).val + (m i 2).val = 3 := by
     have h := card_eq_sum_card_fiberwise (f := second)

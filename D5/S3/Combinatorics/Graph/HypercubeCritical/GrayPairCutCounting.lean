@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Combinatorics.SimpleGraph.Finite
 
 /-! Cut counting in the residual graph of a pair of Gray supports. -/
@@ -20,7 +21,10 @@ private theorem cut_eq_reverse (A B : Finset V) :
   simp only [neighborsIn, card_filter]
   rw [sum_comm]
   exact sum_congr rfl fun w _ => sum_congr rfl fun v _ => by
-    rw [G.adj_comm v w]
+    by_cases h : G.Adj v w
+    · simp [h, h.symm]
+    · have hr : ¬ G.Adj w v := fun h' => h h'.symm
+      simp [h, hr]
 
 /-- Inside a finite regular region, each selected vertex must send enough
 edges to the omitted vertices to keep its selected degree at most `k`. -/
@@ -36,11 +40,13 @@ theorem selected_card_mul_le (R S : Finset V) (hSR : S ⊆ R) (d k : ℕ)
     · simp [hw, hSR hw]
     · simp [hw]
   have hdis (v : V) : Disjoint (neighborsIn G S v) (neighborsIn G T v) := by
-    rw [disjoint_left]
+    rw [Finset.disjoint_left]
     intro w hws hwt
     exact (mem_sdiff.mp (mem_filter.mp hwt).1).2 (mem_filter.mp hws).1
   have hlo : (d - k) * S.card ≤ ∑ v ∈ S, (neighborsIn G T v).card := by
-    rw [mul_comm, ← nsmul_eq_mul, ← sum_const]
+    calc
+      (d - k) * S.card = ∑ _v ∈ S, (d - k) := by simp [mul_comm]
+      _ ≤ ∑ v ∈ S, (neighborsIn G T v).card := ?_
     apply sum_le_sum
     intro v hv
     have he := hpart v
@@ -48,14 +54,16 @@ theorem selected_card_mul_le (R S : Finset V) (hSR : S ⊆ R) (d k : ℕ)
     rw [card_union_of_disjoint (hdis v)] at hc
     have hrv := hR v (hSR hv)
     have hsv := hS v hv
-    simp only [neighborsIn] at hc
+    simp only [neighborsIn] at hc ⊢
     omega
   have hhi : (∑ w ∈ T, (neighborsIn G S w).card) ≤ d * (R.card - S.card) := by
-    rw [← card_sdiff_of_subset hSR, mul_comm, ← nsmul_eq_mul, ← sum_const]
-    apply sum_le_sum
-    intro w hw
-    rw [← hR w (mem_sdiff.mp hw).1]
-    exact card_le_card (filter_subset_filter _ hSR)
+    calc
+      (∑ w ∈ T, (neighborsIn G S w).card) ≤ ∑ _w ∈ T, d := by
+        apply sum_le_sum
+        intro w hw
+        rw [← hR w (mem_sdiff.mp hw).1]
+        exact card_le_card (filter_subset_filter _ hSR)
+      _ = d * (R.card - S.card) := by simp [T, card_sdiff_of_subset hSR, mul_comm]
   rw [cut_eq_reverse] at hlo
   exact hlo.trans hhi
 
