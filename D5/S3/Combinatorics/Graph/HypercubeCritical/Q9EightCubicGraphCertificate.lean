@@ -1,6 +1,8 @@
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Nat.Bitwise
+import Mathlib.Combinatorics.SimpleGraph.Finite
+import Mathlib.Logic.Equiv.Set
 
 /-! Check the finite classifications after labeling the neighbors of vertex zero
 as 1, 2, and 3. The masks encode the twelve possible edges from those neighbors
@@ -114,5 +116,54 @@ theorem exists_model_relabeling (a b c : Fin 6) (d : Fin 20)
     exact beq_iff_eq.mp (List.all_eq_true.mp (List.all_eq_true.mp hadj i (hmem i)) j (hmem j))
 
 #print axioms exists_model_relabeling
+
+/-- Relabel an actual cubic graph so that vertex zero is fixed and its three
+neighbors have labels 1, 2 and 3. -/
+theorem normalize_root (G : SimpleGraph (Fin 8)) [DecidableRel G.Adj]
+    (hG : G.IsRegularOfDegree 3) :
+    ∃ p : Equiv.Perm (Fin 8), p 0 = 0 ∧
+      ∀ i, G.Adj 0 (p i) ↔ i ∈ ({1, 2, 3} : Finset (Fin 8)) := by
+  classical
+  let A : Finset (Fin 8) := {1, 2, 3}
+  let B := G.neighborFinset 0
+  have hA : A.card = 3 := by decide
+  have hB : B.card = 3 := (G.card_neighborFinset_eq_degree 0).trans (hG 0)
+  have hC : Aᶜ.card = Bᶜ.card := by
+    rw [Finset.card_compl, Finset.card_compl, hA, hB]
+  let ea := Finset.equivOfCardEq (hA.trans hB.symm)
+  let eb : ((A : Set (Fin 8))ᶜ : Set (Fin 8)) ≃ ((B : Set (Fin 8))ᶜ : Set (Fin 8)) :=
+    (Equiv.subtypeEquivRight fun x => Finset.mem_compl.symm).trans
+      ((Finset.equivOfCardEq hC).trans (Equiv.subtypeEquivRight fun x => Finset.mem_compl))
+  let e := (Equiv.Set.sumCompl (A : Set (Fin 8))).symm.trans
+    ((ea.sumCongr eb).trans (Equiv.Set.sumCompl (B : Set (Fin 8))))
+  have he (x : Fin 8) : e x ∈ B ↔ x ∈ A := by
+    by_cases hx : x ∈ A
+    · have h := Equiv.Set.sumCompl_symm_apply_of_mem (show x ∈ (A : Set (Fin 8)) from hx)
+      refine iff_of_true ?_ hx
+      change (Equiv.Set.sumCompl (B : Set (Fin 8))
+        ((ea.sumCongr eb) ((Equiv.Set.sumCompl (A : Set (Fin 8))).symm x))) ∈ B
+      rw [h]
+      exact (ea ⟨x, hx⟩).property
+    · have h := Equiv.Set.sumCompl_symm_apply_of_notMem (show x ∉ (A : Set (Fin 8)) from hx)
+      refine iff_of_false ?_ hx
+      change (Equiv.Set.sumCompl (B : Set (Fin 8))
+        ((ea.sumCongr eb) ((Equiv.Set.sumCompl (A : Set (Fin 8))).symm x))) ∉ B
+      rw [h]
+      exact (eb ⟨x, hx⟩).property
+  have h0 : (0 : Fin 8) ∉ B := by simp [B]
+  have he0 : e 0 ∉ B := fun h => (by decide : (0 : Fin 8) ∉ A) ((he 0).mp h)
+  let swap := Equiv.swap (e 0) 0
+  have hs (x : Fin 8) : swap x ∈ B ↔ x ∈ B := by
+    by_cases h1 : x = e 0
+    · subst x
+      simp [swap, h0, he0]
+    by_cases h2 : x = 0
+    · subst x
+      simp [swap, h0, he0]
+    rw [show swap x = x from Equiv.swap_apply_of_ne_of_ne h1 h2]
+  refine ⟨e.trans swap, by simp [swap], fun i => ?_⟩
+  exact (G.mem_neighborFinset 0 _).symm.trans ((hs (e i)).trans (he i))
+
+#print axioms normalize_root
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9EightCubicGraphCertificate
