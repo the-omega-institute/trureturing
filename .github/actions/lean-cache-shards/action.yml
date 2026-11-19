@@ -1,0 +1,28 @@
+name: Transport Lean cache shards
+description: Restore or publish immutable project shard entries and a bound index
+inputs:
+  operation:
+    description: Restore or save
+    required: true
+  state:
+    description: Complete snapshot or producer continuation
+    default: complete
+  anchor:
+    description: Pinned dev commit used to derive a new layout
+  require-complete:
+    description: Skip installation when any requested project shard is missing
+    default: 'false'
+  targets:
+    description: Space-delimited project Lean modules whose imports are needed
+outputs:
+  complete:
+    description: All project shards installed from a complete index
+  key:
+    description: Immutable Actions snapshot index key
+  available:
+    description: Number of project cache entries verified
+  missing:
+    description: Number of requested project cache entries unavailable
+runs:
+  using: node24
+  main: run.mjs

@@ -10,6 +10,9 @@ inputs:
   preparation-only:
     description: Build for isolated PR artifact transport without ordinary cache publication
     default: 'false'
+  shard-history-anchor:
+    description: Pinned dev anchor for the sharded project cache, empty selects native cache transport
+    default: ''
   regenerate-report-artifacts:
     description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
     default: 'false'
@@ -19,7 +22,7 @@ inputs:
 outputs:
   project-key:
     description: 'Newly published or accepted restored project seed'
-    value: ${{ steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.project.outputs.cache-matched-key }}
+    value: ${{ steps.sharded_project.outputs.complete == 'true' && steps.sharded_project.outputs.key || steps.sharded_seed.outputs.complete == 'true' && steps.sharded_seed.outputs.key || steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.project.outputs.cache-matched-key }}
   dependency-key:
     description: 'Newly published or retained dependency seed'
     value: ${{ steps.dependency_snapshot.outputs.dependency_ready == 'true' && steps.keys.outputs.dependency_key || steps.dependency.outputs.cache-matched-key }}
@@ -66,8 +69,28 @@ runs:
         path: ${{ steps.keys.outputs.dependency_archive_path }}
         key: ${{ steps.keys.outputs.dependency_key }}
         restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+    - id: sharded_resume
+      name: Restore sharded producer progress
+      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: restore
+        state: resume
+    - id: sharded_seed
+      name: Restore a complete sharded project seed
+      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == '' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: restore
+        require-complete: 'true'
     - id: project
-      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != ''
+      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != '' && steps.sharded_seed.outputs.complete != 'true' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -81,8 +104,15 @@ runs:
         PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        SHARDED_SEED: ${{ steps.sharded_seed.outputs.complete }}
       shell: bash
-      run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      run: |
+        if [[ "$SHARDED_SEED" == true ]]; then
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+        else
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+        fi
     - id: release
       name: Restore the explicitly selected local Release
       if: steps.prepared.outputs.adopted != 'true' && (inputs.release-seed-tag != '' || inputs.release-seed-producer != '')
@@ -98,7 +128,7 @@ runs:
       run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
     - id: resume_lookup
       name: Find the producer continuation without extracting
-      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true' && steps.sharded_seed.outputs.complete != 'true' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -115,7 +145,7 @@ runs:
         key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
         fail-on-cache-miss: true
     - name: Validate the producer continuation
-      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true' && steps.sharded_seed.outputs.complete != 'true' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
       env:
         RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
@@ -157,10 +187,21 @@ runs:
         fi
         echo "exit_code=$status" >> "$GITHUB_OUTPUT"
         exit "$status"
+    - id: sharded_progress
+      name: Record the sharded producer continuation
+      if: ${{ !cancelled() && steps.build.conclusion == 'success' && steps.build.outcome != 'success' && inputs.shard-history-anchor != '' }}
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: save
+        state: resume
+        anchor: ${{ inputs.shard-history-anchor }}
     - id: resume_snapshot
       name: Prepare producer progress
       # A tolerated nonzero build has a successful step conclusion.
-      if: ${{ !cancelled() && steps.build.conclusion == 'success' && (steps.build.outcome != 'success' || inputs.preparation-only == 'true') }}
+      if: ${{ !cancelled() && steps.build.conclusion == 'success' && steps.sharded_progress.outputs.available == '' && (steps.build.outcome != 'success' || inputs.preparation-only == 'true') }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
     - name: Save producer progress
@@ -181,8 +222,21 @@ runs:
           echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress does not validate the report" >&2
         fi
         exit 1
+    - id: sharded_project
+      name: Publish the complete sharded project seed
+      if: inputs.preparation-only != 'true' && inputs.shard-history-anchor != ''
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+        STRATALINT_CACHE_WRITES: 'true'
+        STRATALINT_REPORT_SUCCEEDED: 'true'
+        STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
+      with:
+        operation: save
+        anchor: ${{ inputs.shard-history-anchor }}
     - id: project_snapshot
-      if: inputs.preparation-only != 'true'
+      if: inputs.preparation-only != 'true' && steps.sharded_project.outputs.complete != 'true'
       name: Prepare the project seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
@@ -191,7 +245,7 @@ runs:
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
     - name: Require a usable project seed
-      if: inputs.preparation-only != 'true'
+      if: inputs.preparation-only != 'true' && steps.sharded_project.outputs.complete != 'true'
       env:
         READY: ${{ steps.project_snapshot.outputs.project_ready }}
         SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
