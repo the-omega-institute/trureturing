@@ -82,6 +82,10 @@ $$\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \operatorname{terNim}\left(m, 
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/OddCycleTER.conjecture_5_5` (`✓ std3`). ∎
 
+*Resolves.* `Problems/benesh-et-al-2026-odd-cycle-terminate-conjecture-5-5` (proved) by `D5/S0/Certificates/Games/OddCycleTER.conjecture_5_5`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"benesh-et-al-2026-odd-cycle-terminate-conjecture-5-5","declaration_gid":"D5/S0/Certificates/Games/OddCycleTER.conjecture_5_5","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bret J. Benesh, Dana C. Ernst, Marie Meyer, Sarah K. Salmon, and Nándor Sieben (2026). *Impartial geodetic removing games on graphs*. DOI: [10.48550/arXiv.2606.05483](https://doi.org/10.48550/arXiv.2606.05483). URL: <https://arxiv.org/abs/2606.05483v1>.

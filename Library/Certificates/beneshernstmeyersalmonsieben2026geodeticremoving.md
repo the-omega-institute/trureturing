@@ -30,3 +30,9 @@ settlement. [Pinned paper](https://arxiv.org/pdf/2606.05483v1#page=7)
 The source and literature screen are recorded in the preregistration.
 The formal conclusion applies to every $C_{2m+1}$ with $m\ge2$.
 [Preregistration](https://github.com/the-omega-institute/trureturing/issues/31523)
+
+## Verified locator
+
+- DOI: 10.48550/arXiv.2606.05483
+- URL: https://arxiv.org/abs/2606.05483v1
+- Source locator: Section 5.1, Conjecture 5.5, printed page 7 of v1.
