@@ -35,4 +35,3 @@ For a 66-vertex Huang-balanced induced cubic support, write each coordinate true
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/WeightLayerParity.balanced_cube_even_adjacent_layers`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/WeightLayerParity.balanced_sixty_six_even_total_deficit`
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeComponentBoundary](../BalancedCubeComponentBoundary.md)
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/CubicFiftyFourReconstruction](../CubicFiftyFourReconstruction.md)
