@@ -13,19 +13,19 @@ open Set
 open scoped Topology
 namespace D5.S3.Geometry.AlgebraicBoundary.ConeSectionDegree
 
-open private original_section_boundary
-  from D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary
+open D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary (original_section_boundary)
 open private sectionChart
   from D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
 open private base_chart_geometry
   from D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
-open private affinePullback chart_minimum_correspondence chart_boundary_lift
+open D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation (affinePullback)
+open private chart_minimum_correspondence chart_boundary_lift
   chartHomogenize chartHomogenize_homogeneous chartHomogenize_ne_zero chartHomogenize_section
   from D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
 
 variable {ι : Type*} [Fintype ι]
 
-private theorem original_section_degree {E : Type*} [NormedAddCommGroup E]
+theorem original_section_degree {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E] [Nontrivial E]
     (c : E ≃L[ℝ] (ι → ℝ)) (C : ProperCone ℝ E)
     (hs : (C : ConvexCone ℝ E).Salient) (hfull : (interior (C : Set E)).Nonempty)

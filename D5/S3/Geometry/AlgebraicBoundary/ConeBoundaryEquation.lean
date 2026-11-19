@@ -18,7 +18,8 @@ namespace D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
 open private exists_full_compact_base base_chart_geometry
   from D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
 
-open private linePolynomial eval_linePolynomial affineLinearPolynomial eval_affineLinearPolynomial homogeneous_eval_smul
+open D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor (linePolynomial affineLinearPolynomial)
+open private eval_linePolynomial eval_affineLinearPolynomial homogeneous_eval_smul
   from D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
 
 variable {ι : Type*} [Fintype ι]
@@ -134,7 +135,7 @@ private theorem substitution_degree {κ : Type*} (p : MvPolynomial κ ℝ)
         (by simpa using Nat.mul_le_mul_left (d i) (hf i))
     _ ≤ p.totalDegree := MvPolynomial.le_totalDegree hd
 
-private def affinePullback {κ : Type*} (p : MvPolynomial κ ℝ) (a : κ → ℝ)
+def affinePullback {κ : Type*} (p : MvPolynomial κ ℝ) (a : κ → ℝ)
     (A : (ι → ℝ) →L[ℝ] (κ → ℝ)) : MvPolynomial ι ℝ :=
   p.eval₂ MvPolynomial.C (fun j => MvPolynomial.C (a j) +
     affineLinearPolynomial 0 ((ContinuousLinearMap.proj j).comp A))

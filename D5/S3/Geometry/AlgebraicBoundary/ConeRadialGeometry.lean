@@ -129,7 +129,7 @@ private def sectionChart {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   continuous_invFun := (continuous_subtype_val.sub continuous_const).subtype_mk _
 
 /-- The original positive unit is retained, as is every relative interior center. -/
-private theorem section_radial_geometry [FiniteDimensional ℝ E]
+theorem section_radial_geometry [FiniteDimensional ℝ E]
     (C : ProperCone ℝ E) (u : E →L[ℝ] ℝ)
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (a : {x : E | u x = 1})

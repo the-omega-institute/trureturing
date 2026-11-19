@@ -112,7 +112,7 @@ private theorem homogeneous_factors {σ R : Type*} [CommRing R] [IsDomain R]
   · simpa only [hgh.totalDegree hg] using hgh
   · rw [← hhom.totalDegree hp, hfg, MvPolynomial.totalDegree_mul_of_isDomain hf hg]
 
-private theorem original_finite_boundary_ideal {E : Type*} [NormedAddCommGroup E]
+theorem original_finite_boundary_ideal {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [Nontrivial E] (c : E ≃L[ℝ] (ι → ℝ))
     (C : ProperCone ℝ E) (hs : (C : ConvexCone ℝ E).Salient)
     (hfull : (interior (C : Set E)).Nonempty)

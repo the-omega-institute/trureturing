@@ -20,24 +20,16 @@ open D5.S3.Quantum.Foundation
 open CircuitBalancedConfirmation ContinuousFrameSum ExclusionWidthCompactness
 namespace D5.S3.Geometry.AlgebraicBoundary.OriginalBoundaryHost
 
-open private original_finite_boundary_ideal
-  from D5.S3.Geometry.AlgebraicBoundary.ConeFiniteBoundary
-open private original_minimum_roots_and_branch whole_branch_boundary_vanishing ray_boundary_ideal
-  from D5.S3.Geometry.AlgebraicBoundary.ConeMinimumBranch
-open private section_radial_geometry
-  from D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
-open private original_quantum_consumer
-  from D5.S3.Geometry.AlgebraicBoundary.ConeQuantumConsumer
-open private linePolynomial affineLinearPolynomial interior_zero_factor
-  from D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
+open D5.S3.Geometry.AlgebraicBoundary.ConeFiniteBoundary (original_finite_boundary_ideal)
+open D5.S3.Geometry.AlgebraicBoundary.ConeMinimumBranch (original_minimum_roots_and_branch whole_branch_boundary_vanishing ray_boundary_ideal)
+open D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry (section_radial_geometry)
+open D5.S3.Geometry.AlgebraicBoundary.ConeQuantumConsumer (original_quantum_consumer)
+open D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor (linePolynomial affineLinearPolynomial interior_zero_factor)
 
-open private original_section_boundary
-  from D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary
+open D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary (original_section_boundary)
 
-open private original_section_degree
-  from D5.S3.Geometry.AlgebraicBoundary.ConeSectionDegree
-open private affinePullback
-  from D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
+open D5.S3.Geometry.AlgebraicBoundary.ConeSectionDegree (original_section_degree)
+open D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation (affinePullback)
 
 /-- Original ambient and quantum domains, finite-degree ideal, and every low-degree direction. -/
 theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]

@@ -16,7 +16,7 @@ open D5.S3.Quantum.Foundation
 open CircuitBalancedConfirmation ContinuousFrameSum ExclusionWidthCompactness
 namespace D5.S3.Geometry.AlgebraicBoundary.ConeQuantumConsumer
 
-private theorem original_quantum_consumer {E : Type*} [NormedAddCommGroup E]
+theorem original_quantum_consumer {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     (C : ProperCone ℝ E) (hfull : (interior (C : Set E)).Nonempty)
     (u : E →L[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) :

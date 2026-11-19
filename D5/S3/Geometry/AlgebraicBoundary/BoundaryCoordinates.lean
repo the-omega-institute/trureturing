@@ -20,7 +20,8 @@ namespace D5.S3.Geometry.AlgebraicBoundary.BoundaryCoordinates
 
 universe u v
 
-open private affinePullback eval_affinePullback
+open D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation (affinePullback)
+open private eval_affinePullback
   from D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
 
 variable {ι : Type u} {κ : Type v} [Fintype ι] [Fintype κ]

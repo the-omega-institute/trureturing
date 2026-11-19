@@ -37,7 +37,7 @@ namespace D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
 
 variable {ι : Type*} [Fintype ι]
 
-private def linePolynomial (p : MvPolynomial ι ℝ) (a v : ι → ℝ) : Polynomial ℝ :=
+def linePolynomial (p : MvPolynomial ι ℝ) (a v : ι → ℝ) : Polynomial ℝ :=
   p.eval₂ Polynomial.C (fun i => Polynomial.C (a i) + Polynomial.C (v i) * Polynomial.X)
 
 private theorem eval_linePolynomial (p : MvPolynomial ι ℝ) (a v : ι → ℝ) (t : ℝ) :
@@ -185,7 +185,7 @@ private theorem interior_zero_hyperplane {B : Set (ι → ℝ)} (hB : Convex ℝ
   intro x
   simpa using hx x (by simp [L, hL])
 
-private def affineLinearPolynomial (a : ι → ℝ) (L : (ι → ℝ) →L[ℝ] ℝ) :
+def affineLinearPolynomial (a : ι → ℝ) (L : (ι → ℝ) →L[ℝ] ℝ) :
     MvPolynomial ι ℝ := by
   classical
   exact ∑ i, MvPolynomial.C (L (Pi.single i 1)) *
@@ -286,7 +286,7 @@ private theorem hyperplane_factorization (p : MvPolynomial ι ℝ) (hp : p ≠ 0
 
 /-- The complete affine polynomial factor and degree drop, with deletion on the
 entire boundary. -/
-private theorem interior_zero_factor {B : Set (ι → ℝ)} (hB : Convex ℝ B)
+theorem interior_zero_factor {B : Set (ι → ℝ)} (hB : Convex ℝ B)
     (hc : IsCompact B) (p : MvPolynomial ι ℝ) (hp : p ≠ 0) (hd : p.totalDegree ≤ 3)
     (hvan : ∀ x ∈ frontier B, MvPolynomial.eval x p = 0)
     {a : ι → ℝ} (ha : a ∈ interior B) (hpa : MvPolynomial.eval a p = 0) :

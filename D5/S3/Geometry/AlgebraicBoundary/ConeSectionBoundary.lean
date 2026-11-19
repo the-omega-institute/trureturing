@@ -23,7 +23,7 @@ open private cone_vertex_frontier cone_frontier_smul
 open private cone_interior_add_positive
   from D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
 
-private theorem original_section_boundary {E : Type*} [NormedAddCommGroup E]
+theorem original_section_boundary {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E] [Nontrivial E]
     (C : ProperCone ℝ E) (hs : (C : ConvexCone ℝ E).Salient)
     (hfull : (interior (C : Set E)).Nonempty)

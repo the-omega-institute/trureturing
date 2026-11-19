@@ -26,10 +26,12 @@ open private boundary_component_recovery
 open private exists_full_compact_base base_chart_geometry
   from D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
 
-open private linePolynomial eval_linePolynomial eval_differentiable affineLinearPolynomial eval_affineLinearPolynomial hyperplane_factorization interior_zero_factor homogeneous_eval_smul linePolynomial_top_coeff cone_interior_add_positive cone_line_roots_and_branch
+open D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor (linePolynomial affineLinearPolynomial interior_zero_factor)
+open private eval_linePolynomial eval_differentiable eval_affineLinearPolynomial hyperplane_factorization homogeneous_eval_smul linePolynomial_top_coeff cone_interior_add_positive cone_line_roots_and_branch
   from D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
 
-open private cone_vertex_frontier cone_boundary_component affinePullback eval_affinePullback chart_minimum_correspondence minimum_equation_squarefree exists_homogeneous_minimum
+open D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation (affinePullback)
+open private cone_vertex_frontier cone_boundary_component eval_affinePullback chart_minimum_correspondence minimum_equation_squarefree exists_homogeneous_minimum
   from D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
 
 variable {ι : Type*} [Fintype ι]
@@ -253,7 +255,7 @@ private theorem positive_finset_lower_bound (s : Finset ℝ) (hs : ∀ r ∈ s, 
 
 /-- The converse uses the whole original root branch. A polynomial merely
 covering the boundary does not supply this hypothesis. -/
-private theorem whole_branch_boundary_vanishing {E : Type*} [NormedAddCommGroup E]
+theorem whole_branch_boundary_vanishing {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] (c : E ≃L[ℝ] (ι → ℝ)) (C : ProperCone ℝ E)
     (p : MvPolynomial ι ℝ) {d : ℕ} (hp : p.IsHomogeneous d)
     {e : E} (he : e ∈ interior (C : Set E)) (hpe : MvPolynomial.eval (c e) p ≠ 0)
@@ -339,7 +341,7 @@ private theorem cone_component_and_closure {E : Type*} [NormedAddCommGroup E]
   rw [hF, C.convex.closure_interior_eq_closure_of_nonempty_interior ⟨e, he⟩,
     C.isClosed.closure_eq]
 
-private theorem ray_boundary_ideal {E : Type*} [NormedAddCommGroup E]
+theorem ray_boundary_ideal {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [Nontrivial E] (c : E ≃L[ℝ] (ι → ℝ))
     (C : ProperCone ℝ E) (hs : (C : ConvexCone ℝ E).Salient)
     (hfull : (interior (C : Set E)).Nonempty)
@@ -418,7 +420,7 @@ private theorem ray_boundary_ideal {E : Type*} [NormedAddCommGroup E]
 
 /-- The selected minimum generates the actual entire-boundary ideal, and its
 analytic conclusions retain all original directions and ambient vectors. -/
-private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGroup E]
+theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [Nontrivial E] (c : E ≃L[ℝ] (ι → ℝ))
     (C : ProperCone ℝ E) (hs : (C : ConvexCone ℝ E).Salient)
     (hfull : (interior (C : Set E)).Nonempty)

@@ -22,7 +22,8 @@ open private polynomialCoordinates eval_polynomialCoordinates exists_transverse_
   from D5.S3.Geometry.AlgebraicBoundary.BoundaryCoordinates
 open private visible_irreducible_factor_dvd
   from D5.S3.Geometry.AlgebraicBoundary.BoundaryElimination
-open private homogeneous_eval_smul linePolynomial eval_linePolynomial linePolynomial_top_coeff
+open D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor (linePolynomial)
+open private homogeneous_eval_smul eval_linePolynomial linePolynomial_top_coeff
   from D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
 open private minimum_equation_squarefree
   from D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
