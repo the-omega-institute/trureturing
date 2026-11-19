@@ -24,4 +24,3 @@ The self-log term converges by continuity. The supported cross-log comparison su
 - Dependency: [D5/S3/Quantum/Divergence/AlphaZAffine/Result](AlphaZAffine/Result.md)
 - Dependency: [D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy](SupportAwareRelativeEntropy.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
-- Dependency: [D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation](../Measurements/BroadcastingChannelExtremaRefutation.md)
