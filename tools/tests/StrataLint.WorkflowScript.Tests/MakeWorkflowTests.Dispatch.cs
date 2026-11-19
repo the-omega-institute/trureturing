@@ -138,24 +138,9 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains("scribe-release-publish: export TARGET ?=", makefile, StringComparison.Ordinal);
         Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
-        Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\" \"$$REANCHOR_OLD_REPORT\"",
+            $"\t@/bin/bash {ReanchorScriptPath} \"$(BASE)\" \"$$REANCHOR_OLD_REPORT\"",
             Recipe(makefile, "mathlib-reanchor"));
-        // The four targets that reach the command line keep the verb in the Makefile and stay one
-        // recipe line: the dispatch table above allows at most one line per target, and
-        // CliVerbLinkageTests reads the verb out of this file to prove it is registered. The same
-        // line first checks that the build output exists and builds it when it does not, because a
-        // fresh worktree has no build output.
-        foreach (var noBuildTarget in new[] { "show-atom", "atom-context", "settle", "settle-clear" })
-        {
-            var recipe = Recipe(makefile, noBuildTarget);
-            Assert.Contains("dotnet run --no-build --project", recipe, StringComparison.Ordinal);
-            Assert.Contains(
-                "@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build",
-                recipe,
-                StringComparison.Ordinal);
-        }
         var gateRecipe = string.Join('\n', RecipeLines(makefile, "gate"));
         Assert.Contains("tools/scripts/local-harness-gate.sh", gateRecipe, StringComparison.Ordinal);
         var worktreeRecipe = Recipe(makefile, "worktree");

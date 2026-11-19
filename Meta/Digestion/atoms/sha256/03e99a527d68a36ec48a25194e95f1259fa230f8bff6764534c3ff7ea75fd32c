@@ -1,7 +1,0 @@
-其中：
-
-* \(w_k\)：被切开的显式逃逸 witness；
-* \(\operatorname{Leak}_k\)：定义是否偷偷依赖目标；
-* \(\operatorname{Cost}_k\)：新增复杂度；
-* \(\operatorname{Status}_k\)：定义、定理、条件命题或 Lean 锚点。
-

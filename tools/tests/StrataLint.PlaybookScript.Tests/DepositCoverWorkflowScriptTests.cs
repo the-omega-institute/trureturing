@@ -26,7 +26,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(0, result.ExitCode);
         Assert.Equal(0, fixture.FreezeCount());
         Assert.Empty(fixture.CallKinds());
-        Assert.Contains("ATOM_ID is not accepted", Diagnostics(result), StringComparison.Ordinal);
+        Assert.Contains("usage: playbook-workflows.sh", Diagnostics(result), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -60,7 +60,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             $"dotnet:deposit-header-check --target {TransactionFixture.LeanPath} --protected-base {fixture.HeadRevision()}",
             fixture.Calls());
         Assert.Contains(
-            $"PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED gid={TransactionFixture.Gid} reason=NO_ATOM",
+            $"PLAYBOOK_DEPOSIT_FROZEN gid={TransactionFixture.Gid}",
             Diagnostics(result), StringComparison.Ordinal);
     }
 
@@ -80,135 +80,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(0, fixture.FreezeCount());
         Assert.Empty(fixture.CallKinds());
         Assert.Contains(diagnostic, Diagnostics(result), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DepositRefusesAnAtomIdThatResolvesToNoLedgerEntryAndFreezesNothing()
-    {
-        // 形状合法但不存在的 atom id 必须在冻结前被拒绝。
-        // 冻结不可逆,故同时断言非零退出与零次冻结。
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-
-        var result = fixture.Run("deposit", atomId: "none");
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Equal(0, fixture.FreezeCount());
-        Assert.Contains("atom not found in the digestion ledger", Diagnostics(result), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DepositBuildsEmitsFreezesAndCoversWithoutCommitting()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var before = fixture.CommitCount();
-
-        var result = fixture.Run("deposit");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(before, fixture.CommitCount());
-        Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(0, fixture.FreezeProbeCount());
-        Assert.NotEmpty(fixture.Status());
-        Assert.Equal(
-            [
-                "make:lean-report-scoped",
-                "dotnet:deposit-header-check",
-                "make:emit",
-                "dotnet:ledger-frozen",
-                "dotnet:ledger-align",
-                "dotnet:ledger-frozen",
-                "dotnet:cover-atom --lean-inputs",
-                "dotnet:cover-atom",
-            ],
-            fixture.CallKinds());
-        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DepositReplaySkipsExistingFreezeAndCoverage()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        fixture.WriteActiveFreeze();
-        File.WriteAllText(
-            Path.Combine(fixture.Root, TransactionFixture.BackfillPath),
-            $"atom_id: {TransactionFixture.AtomId}\ncoverage: true\naligned: false\n");
-        var ledgerBefore = fixture.LedgerState();
-        var backfillBefore = fixture.BackfillContents();
-
-        var result = fixture.Run("deposit");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(ledgerBefore, fixture.LedgerState());
-        Assert.Equal(backfillBefore, fixture.BackfillContents());
-        Assert.Equal(
-            [
-                "make:lean-report-scoped",
-                "dotnet:deposit-header-check",
-                "make:emit",
-                "dotnet:ledger-frozen",
-                "dotnet:cover-atom --lean-inputs",
-                "dotnet:cover-atom",
-            ],
-            fixture.CallKinds());
-        var error = Encoding.UTF8.GetString(result.StandardError);
-        Assert.Contains("PLAYBOOK_SKIP command=deposit detail=module-already-frozen", error);
-        Assert.Contains("PLAYBOOK_SKIP command=cover detail=coverage-already-applied", error);
-    }
-
-    [Fact]
-    public void DepositCoverFailureKeepsFreezeAndReportsFrozenUncovered()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-
-        var result = fixture.Run("deposit", coverDispositionFailure: true);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Equal(1, fixture.FreezeCount());
-        Assert.Equal(
-            [
-                "make:lean-report-scoped",
-                "dotnet:deposit-header-check",
-                "make:emit",
-                "dotnet:ledger-frozen",
-                "dotnet:ledger-align",
-                "dotnet:ledger-frozen",
-                "dotnet:cover-atom --lean-inputs",
-                "dotnet:cover-atom",
-            ],
-            fixture.CallKinds());
-        var error = Encoding.UTF8.GetString(result.StandardError);
-        Assert.Contains("COVER_INVALID synthetic disposition", error, StringComparison.Ordinal);
-        Assert.Contains(
-            $"PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id={TransactionFixture.AtomId} "
-                + $"gid={TransactionFixture.Gid} reason=COVER_INVALID synthetic disposition",
-            error,
-            StringComparison.Ordinal);
-        Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.DoesNotContain("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DepositDelegatesCoverageWritingExclusivelyToCoverAtom()
-    {
-        var script = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
-            "tools/scripts/workflow/playbook-workflows.sh"));
-        var depositStart = script.IndexOf("  deposit)", StringComparison.Ordinal);
-        var coverStart = script.IndexOf("  cover)", depositStart, StringComparison.Ordinal);
-
-        Assert.True(depositStart >= 0 && coverStart > depositStart);
-        var depositCase = script[depositStart..coverStart];
-        Assert.Contains("\n    cover_row || {\n", depositCase, StringComparison.Ordinal);
-        Assert.DoesNotContain("coverage_gids", script, StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(script, @"run_cli\s+cover-atom\s+--cover-atom\b").Cast<Match>());
     }
 
     [Fact]
@@ -278,7 +149,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalization();
 
-        var result = fixture.Run(command, atomId: command == "deposit" ? TransactionFixture.AtomId : null, staleReport: true);
+        var result = fixture.Run(command, atomId: null, staleReport: true);
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
@@ -286,52 +157,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ["make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit"],
             fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
-    }
-
-    [Fact]
-    public void CoverWritesEdgeWithoutEmittingOrCommitting()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var deposit = fixture.Run("deposit");
-        Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
-        fixture.ClearCalls();
-        var before = fixture.CommitCount();
-
-        var result = fixture.Run("cover");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(before, fixture.CommitCount());
-        Assert.Equal(
-            [
-                "dotnet:cover-atom --lean-inputs",
-                "make:lean-report-scoped",
-                "dotnet:cover-atom",
-            ],
-            fixture.CallKinds());
-        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.NotEmpty(fixture.Status());
-    }
-
-    [Fact]
-    public void FailedCoverLeavesDispositionUncommittedBeforeReturningFailure()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        var before = fixture.CommitCount();
-
-        var result = fixture.Run("cover", coverDispositionFailure: true);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains(
-            "COVER_INVALID synthetic disposition",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-        Assert.Equal(before, fixture.CommitCount());
-        Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal(["dotnet:cover-atom --lean-inputs", "make:lean-report-scoped", "dotnet:cover-atom"], fixture.CallKinds());
-        Assert.NotEmpty(fixture.Status());
     }
 
 }

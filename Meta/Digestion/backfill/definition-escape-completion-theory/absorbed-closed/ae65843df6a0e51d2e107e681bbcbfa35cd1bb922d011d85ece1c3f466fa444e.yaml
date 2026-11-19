@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ae65843df6a0e51d2e107e681bbcbfa35cd1bb922d011d85ece1c3f466fa444e
-  normalized_sha256: sha256:ae65843df6a0e51d2e107e681bbcbfa35cd1bb922d011d85ece1c3f466fa444e
-cas_ref: sha256:ae65843df6a0e51d2e107e681bbcbfa35cd1bb922d011d85ece1c3f466fa444e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RoleLedgerPrefixStability.append_only_adjudication_role_prefix_unchanged
-    target_statement_id: sha256:85bcc84a32253949ef55d9a9b6c05fd2c7cf9b78618f05579954155f22dcd98e
-receipts:
-  unresolved_subitems: []

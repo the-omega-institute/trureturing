@@ -1,5 +1,0 @@
-**定理 340.2（最小访问反链）。** \(\operatorname{MinAcc}(\Phi)\) 是反链；每个足以恢复 \(\Phi\) 的访问对象 \(B\in\Phi'\) 都细化或包含某个 \(A\in\operatorname{MinAcc}(\Phi)\)。若组件成本为正，则精确恢复 \(\Phi\) 的最小加权成本为
-\[
-\boxed{
-c^*(\Phi)
-=

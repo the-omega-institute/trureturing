@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:70b8f6eec72391f18f797f3d7efea135bad9771ee3306a7ddd47e696cf387a86
-  normalized_sha256: sha256:70b8f6eec72391f18f797f3d7efea135bad9771ee3306a7ddd47e696cf387a86
-cas_ref: sha256:70b8f6eec72391f18f797f3d7efea135bad9771ee3306a7ddd47e696cf387a86
-coverage_gids:
-  - gid: D5/S3/Midline/Cayley/CayleyCriticalLineZetaCriterion.cayley_critical_line_zeta_criterion
-    target_statement_id: sha256:5f9545369c0d90054138c7a85af22538cacd45cd35bc71489f80af45e0ca9307
-receipts:
-  unresolved_subitems: []

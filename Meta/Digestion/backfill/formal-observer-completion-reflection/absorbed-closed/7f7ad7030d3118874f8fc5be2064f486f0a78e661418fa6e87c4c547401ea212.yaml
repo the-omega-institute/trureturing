@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212
-  normalized_sha256: sha256:7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212
-cas_ref: sha256:7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212
-coverage_gids:
-  - gid: D5/S3/Entropy/Forgetting/CommitmentInformationUpperBound.commitment_information_le_residual_entropy
-    target_statement_id: sha256:7622652392a4d2e0cacfae804a69940f75765103a9cfb0b9608aebe5fc25de20
-receipts:
-  unresolved_subitems: []

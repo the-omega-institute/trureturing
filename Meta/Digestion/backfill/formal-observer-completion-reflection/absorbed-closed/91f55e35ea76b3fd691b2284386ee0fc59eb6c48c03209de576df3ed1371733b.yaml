@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:91f55e35ea76b3fd691b2284386ee0fc59eb6c48c03209de576df3ed1371733b
-  normalized_sha256: sha256:91f55e35ea76b3fd691b2284386ee0fc59eb6c48c03209de576df3ed1371733b
-cas_ref: sha256:91f55e35ea76b3fd691b2284386ee0fc59eb6c48c03209de576df3ed1371733b
-coverage_gids:
-  - gid: D5/S3/Quantum/Decoherence/RecordingIsometry.recording_isometry_and_state_blocks
-    target_statement_id: sha256:43af521b12639689dce9b8b32206fb776f1842a19e5d3a431e4da8f025f66655
-receipts:
-  unresolved_subitems: []

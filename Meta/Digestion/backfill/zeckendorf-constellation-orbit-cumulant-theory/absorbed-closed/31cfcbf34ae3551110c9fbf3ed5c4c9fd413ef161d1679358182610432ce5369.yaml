@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:31cfcbf34ae3551110c9fbf3ed5c4c9fd413ef161d1679358182610432ce5369
-  normalized_sha256: sha256:31cfcbf34ae3551110c9fbf3ed5c4c9fd413ef161d1679358182610432ce5369
-cas_ref: sha256:31cfcbf34ae3551110c9fbf3ed5c4c9fd413ef161d1679358182610432ce5369
-coverage_gids:
-  - gid: D5/S3/Analytic/ReflectedSpectrum/FiniteMirrorCumulantOddOrderInvisibility.finite_mirror_cumulant_odd_order_invisibility
-    target_statement_id: sha256:ec4f3ec00a38ab4cc617c7aaaf06448626d06fc2c97fc9b53fc5c4a58d6980c1
-receipts:
-  unresolved_subitems: []

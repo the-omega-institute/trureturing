@@ -1,6 +1,0 @@
-**定理 193.2（谱宽度恰好控制同一个合法二元测试）。** 在193.1下，下列三项等价：
-
-1. $\mathsf A(L)$；
-2. 每个 $X\in L$ 满足 $\operatorname{Tr}X_+\ge\lambda_{\max}(X)-\lambda_{\min}(X)$；
-3. 所有单位向量 $v,z$ 满足 $T_v(p_z)=|v^*z|^2$。
-

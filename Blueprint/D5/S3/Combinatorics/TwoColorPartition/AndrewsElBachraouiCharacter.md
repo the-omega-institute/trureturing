@@ -22,3 +22,4 @@ For every natural number n, the absolute value of the sum over i from zero throu
 
 - Truth anchor: `D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiCharacter.alternating_odd_divisor_sum_bound`
 - Dependency: [D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiBounds](AndrewsElBachraouiBounds.md)
+- Dependency: [D5/S3/PrimeGaps/ChiFourWeightedMangoldt](../../PrimeGaps/ChiFourWeightedMangoldt.md)

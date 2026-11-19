@@ -1,0 +1,1 @@
+{"statement_id":"sha256:c8c0d3ce64edeafef6b7a267ba9caa65795d4b16ef245b787b4e34018c1a3830","declarations":[{"declaration_name_key":"ns(ns(n0,6:Finset),15:exists_left_gap)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,6:Finset),16:exists_right_gap)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,6:Finset),9:sum_jumps)","kind":"theorem"}]}

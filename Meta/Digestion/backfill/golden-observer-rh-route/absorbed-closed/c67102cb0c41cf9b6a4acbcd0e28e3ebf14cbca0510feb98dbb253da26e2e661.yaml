@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c67102cb0c41cf9b6a4acbcd0e28e3ebf14cbca0510feb98dbb253da26e2e661
-  normalized_sha256: sha256:c67102cb0c41cf9b6a4acbcd0e28e3ebf14cbca0510feb98dbb253da26e2e661
-cas_ref: sha256:c67102cb0c41cf9b6a4acbcd0e28e3ebf14cbca0510feb98dbb253da26e2e661
-coverage_gids:
-  - gid: D5/S3/Weil/Separator/UnconditionalExplicitFormula.explicitFormula_unconditional
-    target_statement_id: sha256:b40f0139d19c22941ebe51599823c46b77e2f905d48750249a7bd46191b4aa6f
-receipts:
-  unresolved_subitems: []

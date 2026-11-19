@@ -1,9 +1,0 @@
-(ii) 对每个分配，每条边任选一个方向并记该向份额为 $x_e$，由 $x^2+(1-x)^2=\tfrac12+2(x-\tfrac12)^2$ 得
-
-$$
-\sum_bL_b^G(a)=\frac{|E|}{2}+2\sum_{e\in E}\Bigl(x_e-\frac12\Bigr)^2.
-\tag{4.2}
-$$
-
-若 $\kappa(G)=C(G)$，取最小点 $a^\star$，则 $|V|\kappa(G)\ge\sum_bL_b^G(a^\star)\ge|E|/2=|V|C(G)$，故 (4.2) 中每个平方为零，全部份额为 $1/2$，$L_b^G(a^\star)=d_b/4$。于是每个 $d_b/4\le\kappa(G)=|V|^{-1}\sum_cd_c/4$，即每个度数不超过平均度数，所有度数相等。反之，$d$ 正则时 $C(G)=d/4=\Delta(G)/4$，由 (i) 得等号。这一平均负载论证与母卷 §3.1 对 $\Gamma_n$ 的论证相同，此处推广到一般图。
-

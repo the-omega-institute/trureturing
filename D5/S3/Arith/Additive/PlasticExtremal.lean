@@ -75,7 +75,7 @@ def weight (D : Finset ℤ) : ℕ :=
   (if 1 ∈ D ∧ 4 ∈ D ∧ 9 ∈ D then 1 else 0)
 
 /-- Every needed distance sees exactly the actual previous prefix. -/
-private theorem shifted_memory_iff (E : Finset ℤ) (x y a : ℤ)
+theorem shifted_memory_iff (E : Finset ℤ) (x y a : ℤ)
     (hmax : ∀ z ∈ E, z ≤ x) (hxy : x < y) (ha : 1 ≤ a) (ha9 : a ≤ 9) :
     a ∈ shifted (memory E x) (y - x) ↔ y - a ∈ E := by
   constructor
@@ -577,12 +577,12 @@ theorem prefix_certificate (E : Finset ℤ) :
       exact ⟨by omega, hp'⟩
 
 /-- Every later maximum contributes at most the four literal patterns. -/
-private theorem weight_le_four (S : Finset ℤ) : weight S ≤ 4 := by
+theorem weight_le_four (S : Finset ℤ) : weight S ≤ 4 := by
   unfold weight
   split_ifs <;> omega
 
 /-- The uniform combinatorial bound on arbitrary signed exponent sets. -/
-private theorem count_bound (E : Finset ℤ) (hn : 10 ≤ E.card) :
+theorem count_bound (E : Finset ℤ) (hn : 10 ≤ E.card) :
     count E + 26 ≤ 4 * E.card := by
   induction E using Finset.induction_on_max with
   | empty => simp at hn

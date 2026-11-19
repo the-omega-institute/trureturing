@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:45c9be586168cabc2f5246bba7c4c1a60480940a3cf5b2c89f851706a9e9b9df
-  normalized_sha256: sha256:45c9be586168cabc2f5246bba7c4c1a60480940a3cf5b2c89f851706a9e9b9df
-cas_ref: sha256:45c9be586168cabc2f5246bba7c4c1a60480940a3cf5b2c89f851706a9e9b9df
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Experiment/PosteriorInformationGainIncrease.actual_posterior_information_gain_can_increase
-    target_statement_id: sha256:f503a0bbd0f7896356bb4c4f2a8d39ce4674797b4ba34f0ee9b100d2a717673d
-receipts:
-  unresolved_subitems: []

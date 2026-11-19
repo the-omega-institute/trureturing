@@ -1,6 +1,0 @@
-所以当前严格边界是：
-
-* finite effect synthesis 已闭合；
-* global negative dominance 仍需 Power-Packet、Chebyshev 或加权尾界；
-* global positivity 仍需统一正性定理。
-
