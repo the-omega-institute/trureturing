@@ -685,6 +685,9 @@ def publish(root, partition, verification=None, *, build_report=True, indexed=Fa
                     restore_snapshot(target, partition, tag, downloaded, deadline, metadata, cache_key=cache_key,
                                      release_metadata=draft)
             if indexed:
+                # Draft validation and verification restore are complete. Give
+                # the final promotion and read-back their own bounded budget.
+                deadline = operation_deadline()
                 gh(deadline, "release", "edit", tag, "--repo", REPO, "--draft=false")
             pruned, prune_error = 0, None
             if indexed or verification is None:

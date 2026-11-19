@@ -23,6 +23,54 @@ from lean_release_legacy import ReleaseLegacyCases
 class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransportCases, unittest.TestCase):
     """Release transport cases exposed under their existing test identity."""
 
+    def test_indexed_release_promotes_after_the_restore_outlives_the_pack_budget(self):
+        import lean_cache_release as release
+        import lean_release_index as indexed
+
+        root = self.root
+        write(root / ".lake/build/lib/lean/D5/A.olean", "fixture")
+        partition = "fixture/linux-arm64"
+        cache_key = {"report_format": "fixture", "execution_sha256": "a" * 64}
+        identity = {"producer_commit_sha": "b" * 40, "publication_id": "ci-123-1",
+                    "workflow_run_id": "123", "workflow_run_attempt": "1", "source_ref": "refs/heads/integration-fixture"}
+        budget = release.OperationBudget(10)
+        clock = 0
+        promotions = []
+
+        def restore(target, *args, **kwargs):
+            nonlocal clock
+            write(target / ".lake/build/lib/lean/D5/A.olean", "fixture")
+            clock = 12
+            return True
+
+        def transport(deadline, *args):
+            release.remaining(deadline)
+            if args[:2] == ("release", "view"):
+                return json.dumps({"databaseId": 1, "isDraft": True, "tagName": args[2]})
+            if args[:2] == ("release", "edit"):
+                promotions.append(args[2])
+            return "{}"
+
+        archive = {"archive_bytes": 2, "parts": [], "index": {"name": "index.json.gz"}}
+        with patch.object(release.time, "monotonic", side_effect=lambda: clock), \
+                patch.object(release, "operation_deadline", side_effect=[budget, release.OperationBudget(22)]), \
+                patch.object(release, "partition_path", return_value=partition), \
+                patch.object(release, "release_key", return_value=cache_key), \
+                patch.object(release, "publication_identity", return_value=identity), \
+                patch.object(release.report_reuse, "capture"), \
+                patch.object(release.report_reuse, "read_receipt"), \
+                patch.object(release.report_reuse.publication, "validate_bundle"), \
+                patch.object(indexed, "pack", return_value=archive), \
+                patch.object(release, "gh", side_effect=transport), \
+                patch.object(release, "existing_release", side_effect=[None, {"draft": False}]), \
+                patch.object(release, "snapshot_manifest"), \
+                patch.object(release, "restore_scoped", return_value=(1, 1)), \
+                patch.object(release, "restore_snapshot", side_effect=restore), \
+                patch.object(release, "receipt") as receipt:
+            self.assertEqual(0, release.publish(root, partition, identity, build_report=False, indexed=True))
+        self.assertEqual(1, len(promotions))
+        self.assertEqual(("publish", "published"), receipt.call_args.args)
+
     def test_indexed_release_members_roundtrip_across_volumes(self):
         from lean_artifact_inventory import Module
         import lean_release_index as indexed
