@@ -30,7 +30,6 @@ jobs:
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
       delta: ${{ steps.detect.outputs.delta }}
-      theory: ${{ steps.detect.outputs.theory }}
     steps:
       # Commits and trees only, and only the entry scripts in the working tree.
       - uses: actions/checkout@v5

@@ -292,7 +292,6 @@ explicit registration exception above, the independent pre-freeze review and the
 before merge still apply.
 
 Source-owned coverage can cite the frozen declaration after publication. Confirm the exact hypotheses when relating the theorem to its source.
-draft); current-input `filemap-conform` exited 0; the complete intended source-and-projection delta
 Before publication, verify the complete source and projection diff across the selected checkpoints.
 
 ### 8. Push and open the pull request, or report `open`

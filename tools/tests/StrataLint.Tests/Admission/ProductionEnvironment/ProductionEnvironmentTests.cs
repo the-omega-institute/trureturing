@@ -9,10 +9,10 @@ public sealed partial class ProductionEnvironmentTests
 {
     [Theory]
     [InlineData("Meta/Digestion/backfill/unrelated/residual-open/" +
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml", true)]
-    [InlineData("Meta/Digestion/backfill/unrelated/source.toml", true)]
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml", false)]
+    [InlineData("Meta/Digestion/backfill/unrelated/source.toml", false)]
     [InlineData("Meta/Digestion/atoms/sha256/" +
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false)]
     [InlineData("Meta/Digestion/atoms/sha256/not-a-canonical-id", false)]
     public void CheckSkipsUnrelatedDigestionBodiesWhileEnforcingCanonicalPaths(
         string unrelatedPath, bool canonicalPath)
@@ -165,7 +165,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
-        const string registeredModule = "D5/S0/Carrier/BackfillTarget.lean";
+        const string registeredModule = RuleFixture.RingPath;
         AddFrozenLedger(fixture);
         var addedStatePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(registeredModule)).Value;

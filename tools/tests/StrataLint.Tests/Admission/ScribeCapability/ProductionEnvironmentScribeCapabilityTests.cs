@@ -32,7 +32,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var (outcome, verifier) = CheckReportDerivedScribeStock(
             reportInputsChanged: false,
-            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs");
+            "tools/StrataLint.Engine/Rules/RepositoryRules.Content.cs");
 
         var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
@@ -44,7 +44,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckDoesNotReplayBaselineOnlyProducerPathDrift()
     {
         var (outcome, verifier) = CheckBaselineOnlyReportProducerInputStock(
-            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs");
+            "tools/StrataLint.Engine/Rules/RepositoryRules.Content.cs");
 
         var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
@@ -56,7 +56,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckDoesNotReplayProducerPathSetBaselineDrift()
     {
         var (outcome, verifier) = CheckProducerPathSetsDifferStock(
-            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs");
+            "tools/StrataLint.Engine/Rules/RepositoryRules.Content.cs");
 
         var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
@@ -115,7 +115,7 @@ public sealed partial class ProductionEnvironmentTests
                 NameKey = "ns(n0,22:protectedTargetFixture)",
                 PrecomputedStatementId = targetStatementId,
             }]);
-        fixture.Files[targetPath] = RuleFixture.HeaderFor(coveredDocumentGid, "F") + "def protectedTargetFixture : Unit := ()\n";
+        fixture.Files[targetPath] = RuleFixture.HeaderFor(coveredDocumentGid, "E") + "\ndef protectedTargetFixture : Unit := ()\n";
         fixture.Baseline[targetPath] = fixture.Files[targetPath];
         fixture.Reports[targetPath] = targetReport;
         fixture.BaselineReports[targetPath] = targetReport;
@@ -207,7 +207,7 @@ public sealed partial class ProductionEnvironmentTests
         const string baselineDefinition = "fixture Scribe definition\n";
         const string baselineEmission = "# Fixture Scribe emission\n";
         var fixture = new RuleFixture();
-        fixture.Files[targetPath] = RuleFixture.HeaderFor(documentGid, "F") + "def protectedTargetFixture : Unit := ()\n";
+        fixture.Files[targetPath] = RuleFixture.HeaderFor(documentGid, "E") + "\ndef protectedTargetFixture : Unit := ()\n";
 
 
         var baselineTarget = fixture.Files[targetPath];

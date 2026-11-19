@@ -225,7 +225,6 @@ internal static partial class RepositoryRules
         RepositorySnapshot current, RepositorySnapshot baseline, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        findings.AddRange(TheoryCapacity(current, changes));
         findings.AddRange(LibraryCapacity(current, changes));
         var directories = CapacityPathsByDirectory(current.Files.Keys);
         var baselineDirectories = CapacityPathsByDirectory(baseline.Files.Keys);

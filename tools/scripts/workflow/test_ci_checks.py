@@ -166,7 +166,6 @@ class CheckTests(unittest.TestCase):
         for paths, purpose, verb, delta in (
                 (["D5/changed.lean"], "pull-request", "check-source", True),
                 (["D5/changed.lean"], "push", "check-source", False),
-                (["docs/develop/theory/Note.md"], "push", "check-delta", True),
                 (["D5/changed.lean", "docs/develop/theory/Note.md"], "pull-request", "check-source", True)):
             plan = contract.selection(data, paths, purpose)
             with self.subTest(paths=paths, purpose=purpose), patch.object(checks, "execute", return_value=0) as execute:
@@ -191,11 +190,6 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(plan["hits"]["current"])
         self.assertFalse(any("check-source" in call or "check-delta" in call for call in calls))
-        result, calls, plan = self.local_spies(paths=("docs/develop/theory/Note.md",), purpose="push")
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertTrue(plan["theory"])
-        self.assertFalse(any(call[0] == "elan" or call[:2] == ["make", "lean-report"] for call in calls))
-        self.assertEqual(1, sum("check-delta" in call for call in calls))
         result, calls, plan = self.local_spies(purpose="push")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(plan["delta"])

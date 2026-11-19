@@ -207,8 +207,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () => (
                     Current: AdmissionRepositoryInputs.ReadCurrent(repository),
                     Baseline: AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision)));
-            var currentRaw = AdmissionRepositoryInputs.ReadDeltaInputs(
-                repository, rawSnapshots.Current, rawSnapshots.Baseline, prepared.Changes);
+            var currentRaw = rawSnapshots.Current;
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
