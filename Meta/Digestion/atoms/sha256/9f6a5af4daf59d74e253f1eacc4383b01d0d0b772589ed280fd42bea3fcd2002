@@ -1,0 +1,91 @@
+**Definition 27.1 (One terminal task on the whole qutrit).** Use the actual
+matrices and chronological words of (26.1), at any real angle $\theta$
+and finite integer horizon $n\ge0$, with the fair independent law of
+Definition 11.1. In this chapter set
+
+$$
+\begin{gathered}
+\Delta_W(X)=\tfrac12(X+WXW),\qquad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W
+ =\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1}),\qquad
+\mathcal N_n=F^n,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+E=|v\rangle\langle v|,\quad \|v\|=1,\quad
+p=|\langle\xi,v\rangle|^2,\quad q=|\langle e,v\rangle|^2,\quad
+r=|\langle f,v\rangle|^2,\quad p+q+r=1,\\
+\eta_n(E)=\min_{\mathcal D\ {\rm CPTP}}
+ \sup_{\rho\in\mathsf D(\mathbb C^3)}
+ \left|\operatorname{Tr}(E\mathcal D F^n(\rho))
+                   -\operatorname{Tr}(E\rho)\right|.
+\end{gathered}
+\tag{27.1}
+$$
+
+The decoder is a single qutrit channel, chosen for $E,n$, independent of
+the unknown input. All qutrit density matrices are included. There is no
+history, reference access, smaller input code, intermediate correction or
+postselection. The loss is a probability error, not a diamond distance.
+The symbols $p,q,r$ here are task populations, not the law $p_h$ of §26.
+For each finite $n\ge1$ write
+
+$$
+s=(-1/2)^{n-1},\qquad \tau=|s|>0,\qquad
+\alpha=(1+s)/2,\quad \beta=(1-s)/2,\qquad
+k=\sqrt{r(1-r)}.
+\tag{27.2}
+$$
+
+The horizon $n=0$ is treated separately throughout. No inverse involving
+$s$ below is evaluated at an infinite horizon.
+
+The identification $\mathcal N_n=F^n$ uses the actual all-angle law,
+not a replacement instrument. Indeed, putting $R_\theta=e^{i\theta W}$,
+Theorem 2.2 gives $V_0=U_0R_\theta$, $V_1=V_0W$. Since $\Delta_W(X)$
+commutes with $W$,
+
+$$
+\tfrac12\sum_j V_jXV_j^\dagger
+ =U_0R_\theta\Delta_W(X)R_\theta^\dagger U_0^\dagger=F(X).
+\tag{27.3}
+$$
+
+Each normalized branch is unitary, so its actual next outcome has
+conditional probability $1/2$ after every preceding history and on every
+qutrit input. Thus the chronological history law is $2^{-n}$; summing
+the products $V_{h_n}\cdots V_{h_1}$ gives $F^n$ at every angle.
+
+We reuse the task-effect interface of [Purity arithmetic, §86][PA27]
+and the [observable-correction note][NOTE26]:
+
+$$
+\begin{aligned}
+\eta_n(E)&=\min_{0\le B\le I_3}\|(F^n)^\dagger(B)-E\|_{\rm op},\\
+\eta_n(E)&\ge\operatorname{Tr}(YE)
+                 -\operatorname{Tr}\bigl((F^n(Y))_+\bigr)
+ \quad(Y=Y^\dagger,\ \|Y\|_1\le1).
+\end{aligned}
+\tag{27.4}
+$$
+
+Here $A_+$ is the positive part of a Hermitian matrix. To fix the decoder
+for every construction below, choose any fixed densities $\sigma_1$ in
+$\operatorname{ran}E$ and $\sigma_0$ in $\ker E$ and use
+
+$$
+\mathcal D_B(X)=\operatorname{Tr}(BX)\sigma_1
+                      +\operatorname{Tr}((I_3-B)X)\sigma_0.
+\tag{27.5}
+$$
+
+For rank-one $E$, one explicit choice is $\sigma_1=E$ and
+$\sigma_0=(I_3-E)/2$. This is CPTP with $\mathcal D_B^\dagger(E)=B$.
+Conversely every decoder
+supplies such an effect. The all-density supremum is the operator norm
+of its Hermitian residual. The second line of (27.4) follows from
+trace/operator-norm duality and
+$\max_{0\le B\le I}\operatorname{Tr}(AB)=\operatorname{Tr}(A_+)$,
+obtained by diagonalizing $A$. These are reused general tools. The
+minimum is attained because the effect interval is compact.
+

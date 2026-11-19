@@ -1,0 +1,59 @@
+**命题 3.6（紧的首次 PVM Choi 外部松弛）。** 以下均在规范坐标中，记未归一化支撑分数
+
+$$
+\mathcal G(\mathcal T)=N^2\mathcal F(\mathcal T).
+$$
+
+对每个有序正秩分拆 $r_1+\cdots+r_m=5$、$m\ge2$，取两两正交、和为 $I_5$ 的投影 $E_a$，其秩为 $r_a$。对每个 $a$ 取两个 CP 操作 $\Psi_{a0},\Psi_{a1}:M_5\to M_5$，只要求
+
+$$
+\sum_{j=0}^1\Psi_{aj}^\dagger(I_5)=E_a,
+\qquad \mathcal T_j=\sum_a\Psi_{aj}.
+\tag{3.17}
+$$
+
+所有这样得到的带旗标通道组成 $\mathcal K_{\rm pvm}$。另令 $\mathcal K_{\rm unit}$ 只包含一个全五维幺正、报告一个确定旗标的通道，并置
+
+$$
+\mathcal K=\mathcal K_{\rm pvm}\cup\mathcal K_{\rm unit},
+\qquad \mathcal C=\operatorname{conv}(\mathcal K).
+$$
+
+$\mathcal C$ 是非空紧凸集，并且
+
+$$
+\mathfrak S_{\rm fin}\subseteq\mathfrak S_{\rm as}
+\subseteq\mathfrak S_{\rm cl}\subseteq\mathcal C,
+\qquad \max_{\mathcal T\in\mathcal C}\mathcal G(\mathcal T)=65.
+\tag{3.18}
+$$
+
+式 (3.17) 的一般 CP 后代只定义外部松弛，不是合法后处理原语。尤其不能把没有首次非平凡分拆的情况扩张为任意秩五 CP 通道；那里只允许 $\mathcal K_{\rm unit}$，再作输入独立的经典混合。
+
+证明。对 (3.17) 的任意 Kraus 表示 $B_{ajt}$，有 $\sum_{j,t}B_{ajt}^\dagger B_{ajt}=E_a$。若 $x\in\ker E_a$，则
+
+$$
+\sum_{j,t}\|B_{ajt}x\|^2=\langle x,E_ax\rangle=0.
+$$
+
+非负项分别为零，故每个 $B_{ajt}=B_{ajt}E_a$。同一首次结果的全部后代共享右支撑与完整效应，这正是引理 3.2 的条件。
+
+固定一个秩分拆时，满足投影恒等式、正交性、和及秩条件的投影元组是有限维闭有界集；秩可由投影的迹固定，故该集合紧。输出优先的非归一化 Choi 矩阵定义为
+
+$$
+J(\Psi)=\sum_{k,\ell}\Psi(|e_k\rangle\langle e_\ell|)
+ \otimes |e_k\rangle\langle e_\ell|.
+$$
+
+CP 条件是 $J(\Psi)\ge0$，而效应条件成为闭约束
+
+$$
+\sum_j\operatorname{Tr}_{\rm out}J(\Psi_{aj})=E_a^{\mathsf T}.
+$$
+
+正性给出 $0\le\operatorname{Tr}J(\Psi_{aj})\le r_a$，所以所有 Choi 矩阵均有界。投影与 Choi 矩阵的联合可行集因此紧，连续求和所给的通道像也紧。五的正秩分拆只有有限多个；幺正群与二值确定旗标的乘积同样紧，所以 $\mathcal K$ 紧。带旗标保持伴随映射所成的实向量空间维数有限，记为 $D$。Carathéodory 定理将其凸包中每一点表示为至多 $D+1$ 个 $\mathcal K$ 中的点的凸组合；允许零权补足个数后，$\mathcal C$ 是紧单纯形与 $\mathcal K^{D+1}$ 的连续像，因而紧。
+
+再核对实际协议的包含关系。固定实际有限深度协议的一条输入独立经典带；若没有非平凡 PVM，得到的就是 $\mathcal K_{\rm unit}$ 中一个通道。否则首次 PVM 前的幺正乘积为 $U$，其结果投影为 $R_a$。定理 3.3 的完整树论证给出 $E_a=U^\dagger R_aU$、$B_t=M_tR_aU$，以及同一实际子树的 $\sum_{t\succ a}B_t^\dagger B_t=E_a$。按末端旗标分组即满足 (3.17)，所以固定带通道属于 $\mathcal K$。任意可测、与输入独立的带积分属于闭凸集 $\mathcal C$：若其积分在外，有限维分离线性泛函会严格分离积分与 $\mathcal C$，却无法分离全部位于 $\mathcal K$ 的被积通道，矛盾。故 $\mathfrak S_{\rm fin}\subseteq\mathcal C$；闭性及引理 2.2 给出其余包含关系。这一步涵盖非原子经典随机性，并不假定任意松弛通道实际可实现。
+
+最后，上述共同右支撑使引理 3.2 及定理 3.3 中的每个秩分拆估计逐字适用于 $\mathcal K_{\rm pvm}$：$3+2$ 的联合上界为 $G(\sigma)\le65$；其余所有秩至多三的分拆至多 $59<65$；$4+1$ 至多 $38+12\sqrt5<65$。$\mathcal K_{\rm unit}$ 的界为 $49<65$。这些证明只用了相同右支撑、完整效应与投影分拆，均未使用一般 CP 后代的合法性，故不需重作推导。线性性把上界传到 $\mathcal C$，而 (3.14) 的实际协议达到六十五。这是覆盖全部分拆的全局精确最大值，所列严格较小的分拆上界不被称作各分拆的精确最优值。$\square$
+

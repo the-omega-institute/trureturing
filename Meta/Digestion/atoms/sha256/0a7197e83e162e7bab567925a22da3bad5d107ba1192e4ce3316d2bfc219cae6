@@ -1,0 +1,21 @@
+**Definition 3.2 (Classical compression kernel).** Every finite or countable
+terminal view $a$ produced from these labels by deterministic or randomized
+classical updates induces numbers
+
+$$
+r(a\mid h)\ge0,\qquad\sum_a r(a\mid h)=1.
+$$
+
+The variable $a$ contains the entire counted view of Definition 1.5.
+Given $R_a=\sum_h r(a\mid h)>0$, put
+
+$$
+p_a=2^{-n}R_a,\qquad w_{a,h}=r(a\mid h)/R_a,\qquad
+\mathcal N_a(X)=\sum_h w_{a,h}Q_hXQ_h^\dagger.
+$$
+
+These probabilities are input-independent. Decoder-local randomness can
+be absorbed into the CPTP map $\mathcal D_a:M_5\to M_5$.
+No online constraint is needed for the necessity below; every online
+procedure is included in this terminal-kernel description.
+

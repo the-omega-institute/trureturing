@@ -1,0 +1,22 @@
+**Definition 3.1 (Chronological words and projective classes).** Fix one
+instrument and set $(Q_0,Q_1)=(U_0,U_1)$ or $(V_0,V_1)$ accordingly.
+For a chronological history $h=(h_1,\ldots,h_n)\in\{0,1\}^n$ define
+
+$$
+Q_h=Q_{h_n}\cdots Q_{h_1},\qquad Q_{\varnothing}=I_3.
+$$
+
+Two words are projectively equivalent if $Q_h=\lambda Q_k$ for some
+$|\lambda|=1$. Write $[Q_h]$ for the class, and let
+
+$$
+\mathcal P_n=\{[Q_h]:h\in\{0,1\}^n\},\qquad m_n=|\mathcal P_n|.
+$$
+
+Fresh preparations and Theorem 2.2 give probability $2^{-n}$ to every
+history on every qutrit-reference input, and normalized action
+$\operatorname{Ad}_{Q_h}$ in qutrit coordinates. To see the product law,
+condition successively on each previous history: its normalized output
+is still supported in $R$, so the next conditional probability is again
+$1/2$. Thus the law follows from the measured instrument at every step.
+

@@ -1,0 +1,21 @@
+**定义 4.1（精确参数及完整控制）。** 暂取 $0<\tau\le1/100$，最终选择 $\tau_0=1/10000$。定义
+
+$$
+c=\sqrt{1-\tau},\quad \alpha=\sqrt\tau,\quad k=2\sqrt2,\quad
+d=\sqrt{1+7\tau},\quad h=\frac{1-\tau}{d},\quad b=\frac{k\tau}{d}.
+\tag{4.1}
+$$
+
+这些是精确符号控制规格。取 $f=e_1,g=e_3$，使 $(f,g)$ 是 $QH$ 的正交基。置
+
+$$
+\begin{gathered}
+r=cs+\alpha f,\quad w=cf-\alpha s,\qquad
+R_0=P+|r\rangle\langle r|,\quad R_1=|g\rangle\langle g|+|w\rangle\langle w|,\\
+y=(cf-k\alpha s)/d,\qquad \zeta=(k\alpha f+cs)/d,\\
+U_0=P+|g\rangle\langle g|+|s\rangle\langle r|+|f\rangle\langle w|,\\
+U_1=P+|g\rangle\langle g|+|y\rangle\langle w|+|\zeta\rangle\langle r|.
+\end{gathered}
+\tag{4.2}
+$$
+

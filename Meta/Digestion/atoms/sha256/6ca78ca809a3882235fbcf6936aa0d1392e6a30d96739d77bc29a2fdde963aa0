@@ -1,0 +1,47 @@
+**Theorem 27.4 (The boundary $p=0$ at every finite positive horizon).**
+Suppose $p=0$, so $q+r=1$. Define
+
+$$
+h=q-r,\qquad \delta=\operatorname{clip}(h,-\tau,\tau),\qquad
+t=\tfrac12\sqrt{4qr+(|h|-\tau)_+^2}.
+\tag{27.10}
+$$
+
+Then $\eta_n(E)=t$ for every finite $n\ge1$. After phase removal,
+an attaining effect in (27.6) is
+
+$$
+K=\operatorname{diag}\left(0,\frac{1+\delta/s}{2},
+                              \frac{1-\delta/s}{2}\right).
+\tag{27.11}
+$$
+
+Proof. Since $|\delta/s|\le1$, this is an effect. Its image is
+$C=0\oplus\operatorname{diag}((1+\delta)/2,(1-\delta)/2)$.
+On $(e,f)$ the residual $R=E-C$ is traceless with entries
+$R_{ee}=(h-\delta)/2$, $R_{ff}=-(h-\delta)/2$,
+$R_{ef}=R_{fe}=\sqrt{qr}$. Its eigenvalues are $t,-t$, because
+$t^2=qr+(h-\delta)^2/4$. Thus the primal error is $t$.
+
+If $t>0$, extend $Y=R/(2t)$ by zero on $\xi$. Its trace norm is
+one. Applying (27.7) gives the exact support and task values
+
+$$
+\operatorname{Tr}\bigl((F^n(Y))_+\bigr)
+ =\frac{\tau|h-\delta|}{4t},\qquad
+\operatorname{Tr}(YE)=\frac{1-\delta h}{4t}.
+\tag{27.12}
+$$
+
+Indeed erasure kills its $e$–$f$ entry and the two remaining active
+eigenvalues after propagation are $\pm s(h-\delta)/(4t)$, up to the
+physical $U_0$ conjugation. The task trace uses $h^2+4qr=1$.
+Clipping gives $\delta(h-\delta)=\tau|h-\delta|$, whether $h$ lies
+inside or outside the clipping interval. Consequently the difference
+in (27.12) is $(1-2\delta h+\delta^2)/(4t)=t$. Equation (27.4)
+proves the lower bound against every full-qutrit effect. If $t=0$,
+(27.11) already attains zero, and nonnegativity completes the proof
+without defining $R/(2t)$. Complex phases transfer by Proposition 27.2.
+Although this witness is supported on $(e,f)$, the input domain has
+not been restricted to that plane. $\square$
+

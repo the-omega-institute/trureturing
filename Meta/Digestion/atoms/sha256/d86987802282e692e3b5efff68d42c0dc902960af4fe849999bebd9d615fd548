@@ -1,0 +1,42 @@
+**Theorem 9.3 (Seeds and measurable complete views).** Under the same
+permissions, a successful standard Borel complete view determines
+$\mathsf H_n$ measurably almost surely. If a separately supplied
+shared seed $S$ is explicitly declared free and is independent of
+$\mathsf H_n$, the conditional finite alphabet bound is still $2^n$
+for almost every seed. For a discrete counted view $\mathsf Y$,
+
+$$
+H_{\mathrm{Sh}}(\mathsf Y\mid S)\ge n,
+\tag{9.9}
+$$
+
+and the shift register, ignoring $S$, attains equality. A correlated
+decoder-visible seed is part of the counted joint view instead.
+
+Proof. Use the measures $\nu_h$, $\lambda=\sum_h\nu_h$ and densities
+$f_h=d\nu_h/d\lambda$ of Convention 3.4. Its almost-everywhere summary
+criterion and Theorem 8.2 imply that, outside one common null set,
+at most one $f_h$ is positive. Since $\sum_h f_h=1$, exactly one is
+positive there. The measurable sets where this is $h$ give a
+measurable history function. Thus this conclusion does not rely on
+individual continuous outcomes having positive probability.
+
+For a free independent shared seed, the rank-one-Choi argument of
+Theorem 3.3 applied to the averaged recovery identity first gives
+conditional exact recovery for almost every $S$. Independence
+leaves every history conditionally uniform with probability $2^{-n}$.
+There are finitely many histories, so these conditions can be imposed
+on one common full-measure seed set. Apply the disjoint-support and
+entropy arguments of Theorem 9.2 at each such seed, then average the
+conditional entropies to obtain (9.9).
+
+Discarded private randomness is already averaged into the compression
+kernel. If a visible seed is correlated with the history, its joint
+value with all other visible data is the complete view to which the
+criterion applies. For example, a seed equal to the history could
+make an auxiliary register constant, but that joint view still
+contains the whole history. For a non-discrete view the conclusion
+is measurable determination of the finite history; it is not a
+lower bound on differential entropy, and does not turn a continuous
+alphabet into a finite one. $\square$
+
