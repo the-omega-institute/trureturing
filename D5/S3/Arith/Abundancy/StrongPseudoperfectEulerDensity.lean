@@ -217,19 +217,19 @@ private lemma sigma_square_sum (T : ℕ) :
       mul_le_mul_of_nonneg_left (reciprocal_square_sum_le_two T) (by positivity)
     _ ≤ _ := by nlinarith [pow_nonneg (Nat.cast_nonneg T : (0 : ℝ) ≤ T) 3]
 
-private def smallSquares (T : ℕ) : Finset ℕ :=
+def smallSquares (T : ℕ) : Finset ℕ :=
   (Icc 1 T).biUnion fun m =>
     (Icc 1 (ArithmeticFunction.sigma 1 (m ^ 2))).image (fun q => q * m ^ 2)
 
-private def largeSquares (X T : ℕ) : Finset ℕ :=
+def largeSquares (X T : ℕ) : Finset ℕ :=
   (Icc (T + 1) X).biUnion fun m =>
     (Icc 1 (X / m ^ 2)).image (fun q => q * m ^ 2)
 
-private def highPowers (X : ℕ) : Finset ℕ :=
+def highPowers (X : ℕ) : Finset ℕ :=
   (Icc 2 X).biUnion fun q =>
     (Icc 1 (Nat.sqrt X / q ^ 2)).image (fun a => q ^ 5 * a ^ 2)
 
-private lemma smallSquares_card (T : ℕ) :
+lemma smallSquares_card (T : ℕ) :
     ((smallSquares T).card : ℝ) ≤ 3 * (T : ℝ) ^ 3 := by
   have h : (smallSquares T).card ≤
       ∑ m ∈ Icc 1 T, ArithmeticFunction.sigma 1 (m ^ 2) := by
@@ -242,7 +242,7 @@ private lemma smallSquares_card (T : ℕ) :
     exact_mod_cast h
   exact hR.trans (sigma_square_sum T)
 
-private lemma largeSquares_card (X T : ℕ) :
+lemma largeSquares_card (X T : ℕ) :
     ((largeSquares X T).card : ℝ) ≤ 2 * (X : ℝ) / (T + 1) := by
   have h : (largeSquares X T).card ≤
       ∑ m ∈ Icc (T + 1) X, X / m ^ 2 := by
@@ -268,7 +268,7 @@ private lemma largeSquares_card (X T : ℕ) :
       simpa only [hI, one_div] using (sum_Ioo_inv_sq_le (α := ℝ) T (X + 1))
     _ = _ := by ring
 
-private lemma highPowers_card (X : ℕ) :
+lemma highPowers_card (X : ℕ) :
     ((highPowers X).card : ℝ) ≤ (Nat.sqrt X : ℝ) := by
   have h : (highPowers X).card ≤ ∑ q ∈ Icc 2 X, Nat.sqrt X / q ^ 2 := by
     apply (card_biUnion_le).trans
@@ -401,13 +401,13 @@ private lemma eulerSP_bound (X : ℕ) (hX : 16 ≤ X) :
   change (eulerSPCount X : ℝ) ≤ 3 * (T : ℝ) ^ 3 + 2 * x / (T + 1) + Nat.sqrt X at hen
   linarith
 
-private lemma eulerCount_pos (X : ℕ) (hX : 5 ≤ X) : 0 < eulerCount X := by
+lemma eulerCount_pos (X : ℕ) (hX : 5 ≤ X) : 0 < eulerCount X := by
   apply card_pos.mpr
   refine ⟨5, mem_filter.mpr ⟨mem_Icc.mpr ⟨by norm_num, hX⟩, ?_⟩⟩
   exact ⟨5, 1, 1, by norm_num, by norm_num, by norm_num,
     by norm_num, by norm_num, by norm_num⟩
 
-private lemma primeCount_le_eulerCount (X : ℕ) :
+lemma primeCount_le_eulerCount (X : ℕ) :
     D5.S3.PrimeGaps.ModFourChebyshev.primeCount X ≤ eulerCount X := by
   unfold D5.S3.PrimeGaps.ModFourChebyshev.primeCount eulerCount
   rw [Nat.floor_natCast]

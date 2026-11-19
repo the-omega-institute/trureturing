@@ -185,6 +185,9 @@ jobs:
           ref: ${{ inputs.source_sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
       - name: Validate the unmerged source and protected workflow runtime
         env:
           GH_TOKEN: ${{ github.token }}
