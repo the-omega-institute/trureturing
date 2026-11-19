@@ -3,9 +3,9 @@ import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 import { copyFile, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const workspace = process.env.GITHUB_WORKSPACE;
 process.chdir(workspace);
@@ -17,7 +17,8 @@ const state = process.env.INPUT_STATE || 'complete';
 const targets = (process.env.INPUT_TARGETS || '').trim().split(/\s+/).filter(Boolean);
 const anchor = process.env.INPUT_ANCHOR;
 const requireComplete = process.env['INPUT_REQUIRE-COMPLETE'] === 'true';
-const actionPath = process.env.GITHUB_ACTION_PATH || new URL('.', import.meta.url).pathname;
+// A nested JavaScript action may inherit the enclosing composite's action path.
+const actionPath = dirname(fileURLToPath(import.meta.url));
 const targetArgs = targets.flatMap(target => ['--target', target]);
 const pythonTool = 'tools/scripts/worktree/lean_actions_shards.py';
 

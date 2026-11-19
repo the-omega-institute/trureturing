@@ -48,7 +48,10 @@ runs:
         case "$HANDOFF" in
           auto|legacy) ;;
           complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
-          partial) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]] ;;
+          partial)
+            [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
+            test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+            ;;
           none) [[ ! -e .lake/build ]] ;;
           *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
         esac
@@ -63,3 +66,9 @@ runs:
         if [[ "$COMPLETE" == true ]]; then
           echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
         fi
+    - name: Complete missing project artifacts with Lake
+      if: inputs.mode != 'legacy' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1'
+      env:
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+      shell: bash
+      run: make lean FULL_BUILD=1

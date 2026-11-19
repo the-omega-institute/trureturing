@@ -120,11 +120,6 @@ jobs:
         with:
           mode: ${{ env.SHARD_HANDOFF }}
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
-      - if: steps.entry.outputs.hit == 'true' && env.SHARD_HANDOFF != 'legacy'
-        name: Complete the project compiler outputs for the pinned source
-        env:
-          STRATALINT_ACCEPT_COLD_BUILD: '1'
-        run: make lean FULL_BUILD=1
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
