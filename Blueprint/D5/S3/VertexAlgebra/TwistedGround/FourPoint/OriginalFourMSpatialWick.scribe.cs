@@ -1,0 +1,51 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround.FourPoint;
+
+internal sealed class OriginalFourMSpatialWickDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Spatial Taylor selection of the original simultaneous marked Gaussian",
+        H("Spatial Taylor Selection"),
+        Blocks(Describe.Lean(DescribeId.Create("fourm-spatial-marked-gaussian"),
+            DeclarationHandle.Create(
+                "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.spatial_marked_gaussian"),
+            H("Spatial coefficients through the marked Wick recurrence"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("In the recursion the selected occurrence belongs to either "
+                + "a singleton or a pair. Its spatial Taylor coefficient acts on that factor, "
+                + "leaving the remaining coordinate selections to the remaining marks."))),
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-radial-spatial-occupation"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.radial_spatial_occupation"),
+                H("A native occupation after the simultaneous spatial Taylor coefficient"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a fixed charge on radial A or B, the simultaneous "
+                    + "coefficient of the physical Gaussian gives the literal native affine "
+                    + "occupation after the four inverse-lowered words."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-physical-product-marked-charge-fiber"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_product_marked_charge_fiber"),
+                H("Marked charge summands of the actual physical product"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In the actual charge fiber of each physical chart, the "
+                    + "relative source signs multiply each occurrence weight and the original "
+                    + "period factor multiplies the full sum."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-radial-spatial-sewn-charge"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.radial_spatial_sewn_charge"),
+                H("Original sewn readout of a marked charge summand"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For the native radial nome, the readout includes the "
+                    + "original determinant, charge energy and scalar. The period normalization "
+                    + "adds the cube of the complementary parameter."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-physical-chart-coefficient-overlap"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_coefficient_overlap"),
+                H("Sector identities of the simultaneous marked Taylor coefficients"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under joint analyticity at the marked origin, Taylor "
+                    + "extraction preserves the actual Fourier and quadratic sector identities "
+                    + "and the original B-chart period multiplier."))), DescribeRole.Theorem))));
+}
