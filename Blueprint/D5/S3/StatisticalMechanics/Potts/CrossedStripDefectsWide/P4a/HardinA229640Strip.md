@@ -26,6 +26,10 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{HardinA229640Strip}.\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640Strip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin229640` (proved) by `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640Strip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229640","declaration_gid":"D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/P4a/HardinA229640Strip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229640: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229640>.
