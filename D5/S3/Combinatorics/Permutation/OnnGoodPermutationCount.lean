@@ -30,7 +30,6 @@ count_large — proof_shape: bind-only; escape_witness: none; Direct frozen depe
 leftLabels — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.rightLabels_compl, OnnGoodPermutationCount.leftLabels_card, OnnGoodPermutationCount.orderedSplitSubsetEquiv.
 leftLabels_card — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
 rightLabels_compl — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: settling result.
-shuffle_ext — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F4, F5; consumers: settling result.
 orderedSplitSubsetEquiv — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.orderedSplit_card, OnnGoodPermutationCount.rowSplitSubsetEquiv.
 orderedSplit_card — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6; consumers: OnnGoodPermutationCount.typeA_card.
 chainLayout — proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: OnnGoodPermutationCount.partitionOrderEquiv, OnnGoodPermutationCount.chainLayout_left, OnnGoodPermutationCount.chainLayout_right.
@@ -159,13 +158,6 @@ private theorem rightLabels_compl {p q N : ℕ} (e : (Fin p ⊕ Fin q) ≃ Fin N
     · exact (hy ⟨i,rfl⟩).elim
     · exact ⟨i,rfl⟩
 
-private theorem shuffle_ext {p q : ℕ} (s t : Shuffle p q)
-    (h : s.positions = t.positions) : s = t := by
-  rcases s with ⟨s, hs, hs'⟩
-  rcases t with ⟨t, ht, ht'⟩
-  cases h
-  rfl
-
 private noncomputable def orderedSplitSubsetEquiv (p q N : ℕ) (h : p+q=N) :
     Shuffle p q ≃ {S : Finset (Fin N) // S.card=p} := by
   subst N
@@ -195,7 +187,7 @@ private noncomputable def orderedSplitSubsetEquiv (p q N : ℕ) (h : p+q=N) :
               intro j; rw [← rightLabels_compl]
               exact Finset.mem_image.mpr ⟨j,Finset.mem_univ _,rfl⟩) e.upper_mono
           simpa (config := { congrConsts := false }) only [finSumEquivOfFinset_inr] using (congrFun he i).symm
-      exact shuffle_ext _ _ heq
+      exact Shuffle.positions_injective heq
     right_inv := fun S => by
       apply Subtype.ext
       change Finset.univ.image (fun i => finSumEquivOfFinset S.property _ (Sum.inl i)) = S.val
@@ -269,7 +261,7 @@ private noncomputable def partitionOrderEquiv {α : Type} [DecidableEq α] (N : 
     right_inv := fun e => by
       have h : (chainLayout L R hd hm).trans ((chainLayout L R hd hm).symm.trans e.positions) = e.positions :=
         (Equiv.trans_cancel_left (chainLayout L R hd hm) ((chainLayout L R hd hm).symm.trans e.positions) e.positions).mpr rfl
-      exact shuffle_ext _ _ h }
+      exact Shuffle.positions_injective h }
 
 end D5.S3.Combinatorics.Permutation.OnnGoodPermutationCount
 
@@ -631,13 +623,13 @@ private noncomputable def typeAEquiv :
   invFun σ := (extractLow σ.val σ.property,extractHigh σ.val σ.property)
   left_inv p := by
     apply Prod.ext
-    · apply shuffle_ext
+    · apply Shuffle.positions_injective
       apply Equiv.ext
       intro x
       apply Fin.ext
       change (assembleA p.1 p.2 (lowerPos x)).val = (p.1.positions x).val
       exact assembleA_lower p.1 p.2 x
-    · apply shuffle_ext
+    · apply Shuffle.positions_injective
       apply Equiv.ext
       intro x
       apply Fin.ext

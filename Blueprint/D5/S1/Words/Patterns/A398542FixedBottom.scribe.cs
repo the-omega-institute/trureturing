@@ -63,7 +63,7 @@ internal sealed class A398542FixedBottomDocument : IScribeDocumentDefinition
             Node("Shuffle", "An ordered interleaving",
                 "For all m,k, Shuffle(m,k) consists of an equivalence from the disjoint "
                 + "sum Fin(m) plus Fin(k) to Fin(m+k), strictly increasing on each "
-                + "summand separately. Both summands may be empty."),
+                + "summand separately. Both summands may be empty. Equality of the position equivalences determines equality of the shuffles by proof irrelevance for the two increasing-order conditions."),
             Node("extractShuffle", "Extract the two ordered position sets",
                 "For every w in Perm(m+k), extractShuffle(w) combines lowerOrder and "
                 + "upperOrder into the common position set, retaining the order within "
