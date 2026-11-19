@@ -101,7 +101,8 @@ private theorem laplacian_vanishes (A : Matrix F E ℝ) (f : F) (j : ℕ)
       exact hg (Or.inr ⟨h, hh, e, hhe, hge⟩)
     rw [transpose_vanishes A f j z hz e he, mul_zero]
 
-private theorem residual_pow_vanishes (A : Matrix F E ℝ) (M : ℝ) (f : F) (j : ℕ) :
+/-- The (j)-th residual iterate vanishes outside the (2j)-step face ball. -/
+theorem residual_pow_vanishes (A : Matrix F E ℝ) (M : ℝ) (f : F) (j : ℕ) :
     ∀ g ∉ faceBall A f j, ((residual A M ^ j) (faceUnit f)) g = 0 := by
   induction j with
   | zero =>
@@ -319,22 +320,16 @@ theorem neumann_repair (A : Matrix F E ℝ) {M q : ℝ} (hM : 0 < M)
   rw [heq]
   simpa only [sub_zero] using (tendsto_const_nhds (x := faceUnit f)).sub hzero
 
-/-- The Neumann volume bound transfers to integer absolute norm and to
-support over every `ZMod n`, using the same incidence matrix. -/
-theorem neumann_integer_and_zmod_repair (D : Matrix F E ℤ) (hD : D.IsTotallyUnimodular)
-    {M q : ℝ} (hM : 0 < M) (hq : 0 ≤ q) (hq' : q < 1)
-    (hA : ‖incidence (D.map (Int.castRingHom ℝ))‖ ≤ M)
-    (hcontract : ∀ z ∈ LinearMap.range (incidence (D.map (Int.castRingHom ℝ))).toLinearMap,
-      ‖residual (D.map (Int.castRingHom ℝ)) M z‖ ≤ q * ‖z‖)
-    (f : F) (hf : faceUnit f ∈ LinearMap.range (incidence (D.map (Int.castRingHom ℝ))).toLinearMap) :
+private theorem integer_and_zmod_of_repair (D : Matrix F E ℤ) (hD : D.IsTotallyUnimodular)
+    (f : F) (x : EuclideanSpace ℝ E)
+    (hx : incidence (D.map (Int.castRingHom ℝ)) x = faceUnit f)
+    {B : ℝ} (hcost : (∑ e, |x e|) ≤ B) :
     let b : F → ℤ := fun g => if g = f then 1 else 0
-    let B := ∑' j, neumannWeight (D.map (Int.castRingHom ℝ)) M q f j
     ∃ z : E → ℤ, D *ᵥ z = b ∧ (∑ e, |(z e : ℝ)|) ≤ B ∧
       ∀ n : ℕ, (D.map (Int.castRingHom (ZMod n)) *ᵥ (fun e => (z e : ZMod n)) =
         fun g => (b g : ZMod n)) ∧
         ((TotalUnimodularL1Repair.nonzeroSupport (fun e => (z e : ZMod n))).card : ℝ) ≤ B := by
   dsimp only
-  obtain ⟨x, _, hx, hcost, _⟩ := neumann_repair _ hM hq hq' hA hcontract f hf
   let b : F → ℤ := fun g => if g = f then 1 else 0
   have hsol : D.map (Int.castRingHom ℝ) *ᵥ (fun e => x e) = fun g => (b g : ℝ) := by
     funext g
@@ -349,6 +344,24 @@ theorem neumann_integer_and_zmod_repair (D : Matrix F E ℤ) (hD : D.IsTotallyUn
   obtain ⟨hmod, hsub⟩ := TotalUnimodularL1Repair.reduce_integer_solution D b z hz n
   exact ⟨hmod, (Nat.cast_le.mpr (Finset.card_le_card hsub)).trans
     ((TotalUnimodularL1Repair.support_card_le_sum_abs z).trans (hzcost.trans hcost))⟩
+
+/-- The Neumann volume bound transfers to integer absolute norm and to
+support over every `ZMod n`, using the same incidence matrix. -/
+theorem neumann_integer_and_zmod_repair (D : Matrix F E ℤ) (hD : D.IsTotallyUnimodular)
+    {M q : ℝ} (hM : 0 < M) (hq : 0 ≤ q) (hq' : q < 1)
+    (hA : ‖incidence (D.map (Int.castRingHom ℝ))‖ ≤ M)
+    (hcontract : ∀ z ∈ LinearMap.range (incidence (D.map (Int.castRingHom ℝ))).toLinearMap,
+      ‖residual (D.map (Int.castRingHom ℝ)) M z‖ ≤ q * ‖z‖)
+    (f : F)
+    (hf : faceUnit f ∈ LinearMap.range (incidence (D.map (Int.castRingHom ℝ))).toLinearMap) :
+    let b : F → ℤ := fun g => if g = f then 1 else 0
+    let B := ∑' j, neumannWeight (D.map (Int.castRingHom ℝ)) M q f j
+    ∃ z : E → ℤ, D *ᵥ z = b ∧ (∑ e, |(z e : ℝ)|) ≤ B ∧
+      ∀ n : ℕ, (D.map (Int.castRingHom (ZMod n)) *ᵥ (fun e => (z e : ZMod n)) =
+        fun g => (b g : ZMod n)) ∧
+        ((TotalUnimodularL1Repair.nonzeroSupport (fun e => (z e : ZMod n))).card : ℝ) ≤ B := by
+  obtain ⟨x, _, hx, hcost, _⟩ := neumann_repair _ hM hq hq' hA hcontract f hf
+  exact integer_and_zmod_of_repair D hD f x hx hcost
 
 /-- The face Laplacian restricted to the real incidence image. -/
 noncomputable def laplacianOnRange (A : Matrix F E ℝ) :
@@ -723,5 +736,71 @@ theorem chebyshev_repair (A : Matrix F E ℝ) {M σ : ℝ}
       (M * σ) • faceUnit f := congrArg Subtype.val hLs
   change incidence A ((M * σ)⁻¹ • incidence Aᵀ (s : EuclideanSpace ℝ F)) = faceUnit f
   rw [map_smul, hface, smul_smul, inv_mul_cancel₀ (mul_ne_zero hM.ne' hσ.ne'), one_smul]
+
+private theorem edge_hasEigenvalue_of_laplacianOnRange (A : Matrix F E ℝ) {μ : ℝ}
+    (hμ : 0 < μ) (hface : (laplacianOnRange A).HasEigenvalue μ) :
+    Module.End.HasEigenvalue ((incidence Aᵀ).comp (incidence A)).toLinearMap μ := by
+  obtain ⟨z, hz⟩ := hface.exists_hasEigenvector
+  have hAz : incidence A (incidence Aᵀ z.val) = μ • z.val :=
+    congrArg Subtype.val hz.apply_eq_smul
+  have hw : incidence Aᵀ z.val ≠ 0 := by
+    intro he
+    have hz' : μ • z.val = 0 := by rw [← hAz, he, map_zero]
+    exact hz.2 (Subtype.ext ((smul_eq_zero.mp hz').resolve_left hμ.ne'))
+  apply Module.End.hasEigenvalue_of_hasEigenvector (x := incidence Aᵀ z.val)
+  refine ⟨Module.End.mem_eigenspace_iff.mpr ?_, hw⟩
+  change incidence Aᵀ (incidence A (incidence Aᵀ z.val)) = μ • incidence Aᵀ z.val
+  rw [hAz, map_smul]
+
+/-- The positive spectrum of the edge Laplacian controls repair for a face
+unit in the real image of a totally unimodular incidence matrix. One integer
+repair satisfies both Green bounds when the Chebyshev bound applies, and
+its reduction over every modulus has support at most the same bound. -/
+theorem spectral_integer_and_zmod_repair (D : Matrix F E ℤ) (hD : D.IsTotallyUnimodular)
+    {M σ : ℝ} (hσ : 0 < σ) (hσM : σ ≤ M)
+    (hA : ‖incidence (D.map (Int.castRingHom ℝ))‖ ≤ M)
+    (hgap : let A := D.map (Int.castRingHom ℝ)
+      ∀ μ > 0,
+        Module.End.HasEigenvalue ((incidence Aᵀ).comp (incidence A)).toLinearMap μ → σ ^ 2 ≤ μ)
+    (f : F)
+    (hf : faceUnit f ∈ LinearMap.range (incidence (D.map (Int.castRingHom ℝ))).toLinearMap) :
+    let A := D.map (Int.castRingHom ℝ)
+    let b : F → ℤ := fun g => if g = f then 1 else 0
+    let BN := ∑' j, neumannWeight A M (1 - σ ^ 2 / M ^ 2) f j
+    let BC := ∑' j, chebyshevWeight A M σ f j
+    let B := if σ < M then min BN BC else BN
+    ∃ z : E → ℤ, D *ᵥ z = b ∧
+      ((TotalUnimodularL1Repair.nonzeroSupport z).card : ℝ) ≤ ∑ e, |(z e : ℝ)| ∧
+      (∑ e, |(z e : ℝ)|) ≤ B ∧
+      ∀ n : ℕ, (D.map (Int.castRingHom (ZMod n)) *ᵥ (fun e => (z e : ZMod n)) =
+        fun g => (b g : ZMod n)) ∧
+        ((TotalUnimodularL1Repair.nonzeroSupport (fun e => (z e : ZMod n))).card : ℝ) ≤ B := by
+  let A := D.map (Int.castRingHom ℝ)
+  let q := 1 - σ ^ 2 / M ^ 2
+  let BN := ∑' j, neumannWeight A M q f j
+  let BC := ∑' j, chebyshevWeight A M σ f j
+  let B := if σ < M then min BN BC else BN
+  have hM := hσ.trans_le hσM
+  have hM2 : 0 < M ^ 2 := by positivity
+  have hq : 0 ≤ q := sub_nonneg.mpr ((div_le_iff₀ hM2).mpr (by nlinarith))
+  have hq' : q < 1 := sub_lt_self _ (div_pos (by positivity) hM2)
+  have hface μ (hμ : 0 < μ) (he : (laplacianOnRange A).HasEigenvalue μ) : σ ^ 2 ≤ μ :=
+    hgap μ hμ (edge_hasEigenvalue_of_laplacianOnRange A hμ he)
+  have hcontract := residual_contracts_of_spectral_gap A hσ hσM hA hface
+  obtain ⟨x, hx, hcost⟩ : ∃ x : EuclideanSpace ℝ E,
+      incidence A x = faceUnit f ∧ (∑ e, |x e|) ≤ B := by
+    by_cases hbetter : σ < M ∧ BC < BN
+    · obtain ⟨x, _, hx, hcost, _⟩ := chebyshev_repair A hσ hbetter.1 hA hface f hf
+      refine ⟨x, hx, ?_⟩
+      simpa only [B, ite_eq_left hbetter.1, min_eq_right hbetter.2.le] using hcost
+    · obtain ⟨x, _, hx, hcost, _⟩ := neumann_repair A hM hq hq' hA hcontract f hf
+      refine ⟨x, hx, ?_⟩
+      have hB : B = BN := by
+        by_cases hlt : σ < M
+        · exact (ite_eq_left hlt).trans (min_eq_left (le_of_not_gt fun hi => hbetter ⟨hlt, hi⟩))
+        · exact ite_eq_right hlt
+      rwa [hB]
+  obtain ⟨z, hz, hzcost, hzmod⟩ := integer_and_zmod_of_repair D hD f x hx hcost
+  exact ⟨z, hz, TotalUnimodularL1Repair.support_card_le_sum_abs z, hzcost, hzmod⟩
 
 end D5.S3.HomologicalAlgebra.FiniteIncidenceGreen
