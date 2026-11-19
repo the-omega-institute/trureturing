@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7aa4ca284d496d9abb617a3ecfa5bf205a817947c30f35e5b54ecd1e1ee06fcb
   normalized_sha256: sha256:7aa4ca284d496d9abb617a3ecfa5bf205a817947c30f35e5b54ecd1e1ee06fcb
 cas_ref: sha256:7aa4ca284d496d9abb617a3ecfa5bf205a817947c30f35e5b54ecd1e1ee06fcb
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Entropy/Hypergraphs/CircularOrientationEntropyLowerBound.whole_theorem_one_two
+    target_statement_id: sha256:e52cd1bf102ebbe8370ff5587beb9bcefb3c36d5f234e60c89df30d577b6acca
 receipts:
   unresolved_subitems: []
