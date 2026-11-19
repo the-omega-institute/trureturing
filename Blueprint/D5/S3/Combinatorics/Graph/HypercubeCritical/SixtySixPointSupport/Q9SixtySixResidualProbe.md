@@ -8,4 +8,4 @@ Describe the six vertices left outside the two disjoint radius-three balls of a 
 
 ## References
 
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixShellProbe](Q9SixtySixShellProbe.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixShellProbe](Q9SixtySixShellProbe.md)

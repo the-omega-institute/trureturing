@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport;
 
 internal sealed class Q9SixtySixResidualHalfProbeDocument : IScribeDocumentDefinition
 {
@@ -9,6 +9,6 @@ internal sealed class Q9SixtySixResidualHalfProbeDocument : IScribeDocumentDefin
         Blocks(
             Paragraph(Text("Constrain the locations and degrees of the six residual vertices in the common-coordinate halves."))),
         [
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualProbe"))
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualProbe"))
         ]));
 }

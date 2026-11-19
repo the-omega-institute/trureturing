@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.claim; result=D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.result; claim=D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.claim
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.claim; result=D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.result; claim=D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.claim
    digest: Exclude Hamming distances eight and nine among the vertices of a 66-vertex Huang-balanced induced cubic support in the nine-cube. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualCountingProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualCountingProbe
 
 /-! Exclude distance eight from a 66-vertex balanced cubic support. -/
 
@@ -25,19 +25,19 @@ open private incidences incidences_symm incidences_add from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
 open private HammingSeven.ball from D5.S3.Combinatorics.Graph.HypercubeCritical.HammingSeven
 open private sixty_six_distance_eight_residual from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualProbe
 open private paritySide from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private residual_opposite_half_has_no_isolated from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualHalfProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualHalfProbe
 open private crossing_neighbor from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualMatchingProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualMatchingProbe
 open private cross_from_residual_bound cube_cut_incidences ball_half_internal_and_crossing_eq
   incidence_eq_neighbor_inter sum_incidence_eq_const_degree from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualCountingProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualCountingProbe
 open private sixty_six_half_card_ge_twenty_one from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 
 set_option maxHeartbeats 1200000 in
 -- Repeated comparison of incidence sums on induced-graph subtypes needs normalization.

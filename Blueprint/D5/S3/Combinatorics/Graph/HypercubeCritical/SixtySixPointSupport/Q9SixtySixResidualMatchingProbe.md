@@ -8,4 +8,4 @@ Charge isolated crossing incidences to the degree-two vertices of the residual g
 
 ## References
 
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualHalfProbe](Q9SixtySixResidualHalfProbe.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualHalfProbe](Q9SixtySixResidualHalfProbe.md)

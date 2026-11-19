@@ -8,4 +8,4 @@ Bound distance-six and distance-seven shells, and give a lower bound on each coo
 
 ## References
 
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/SixtyPointSupport/Q9SixtyExclusionProbe](SixtyPointSupport/Q9SixtyExclusionProbe.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/SixtyPointSupport/Q9SixtyExclusionProbe](../SixtyPointSupport/Q9SixtyExclusionProbe.md)

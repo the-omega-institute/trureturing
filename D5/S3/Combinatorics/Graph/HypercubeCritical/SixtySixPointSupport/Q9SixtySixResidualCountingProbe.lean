@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualCountingProbe
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualCountingProbe
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualCountingProbe
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualCountingProbe
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Bound crossing incidences from each ball and from the residual graph. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualMatchingProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualMatchingProbe
 
 /-! Degree accounting for a coordinate half containing neither ball center. -/
 
@@ -121,7 +121,7 @@ private lemma ball_has_predecessor {C : Finset (Q 9)}
         by rw [second_distance hv,third_distance hu]; omega⟩
 
 open private crossing_neighbor from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualMatchingProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualMatchingProbe
 
 open private endpoint_eq_of_short_paths from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
@@ -418,9 +418,9 @@ private lemma cube_cut_incidences {C : Finset (Q 9)} (k : Fin 9) (b : Bool) :
 #print axioms cube_cut_incidences
 
 open private isolated_crossing_card_le_degree_two from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualMatchingProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualMatchingProbe
 open private residual_opposite_half_has_no_isolated from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualHalfProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualHalfProbe
 
 private lemma sum_incidence_eq_const_degree {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) (S T : Finset V) (d : ℕ)
@@ -432,7 +432,7 @@ private lemma sum_incidence_eq_const_degree {V : Type*} [Fintype V] [DecidableEq
     _ = _ := by simp [Nat.mul_comm]
 
 open private sixty_six_distance_eight_residual from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualProbe
 open private paritySide from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum

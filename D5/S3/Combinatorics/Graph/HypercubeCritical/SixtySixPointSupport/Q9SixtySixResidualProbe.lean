@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualProbe
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualProbe
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualProbe
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualProbe
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Describe the six vertices left outside the two disjoint radius-three balls of a putative distance-eight pair. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 
 /-! The three vertices of opposite parity outside two radius-three balls. -/
 

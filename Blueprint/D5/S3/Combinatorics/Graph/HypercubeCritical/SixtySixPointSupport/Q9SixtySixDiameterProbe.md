@@ -8,9 +8,9 @@ Exclude Hamming distances eight and nine among the vertices of a 66-vertex Huang
 
 **Definition 1.1 (claim).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.claim`
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.claim`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.claim` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ A 66-vertex Huang-balanced induced cubic support in the nine-cube contains two v
 
 **Theorem 1.2 (result).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.result`
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,6 +32,6 @@ Every pair in a 66-vertex Huang-balanced induced cubic support in the nine-cube 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.claim`
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixDiameterProbe.result`
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualCountingProbe](Q9SixtySixResidualCountingProbe.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.claim`
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixDiameterProbe.result`
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualCountingProbe](Q9SixtySixResidualCountingProbe.md)

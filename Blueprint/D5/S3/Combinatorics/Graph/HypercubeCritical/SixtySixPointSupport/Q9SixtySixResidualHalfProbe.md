@@ -8,4 +8,4 @@ Constrain the locations and degrees of the six residual vertices in the common-c
 
 ## References
 
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualProbe](Q9SixtySixResidualProbe.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualProbe](Q9SixtySixResidualProbe.md)

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport;
 
 internal sealed class Q9SixtySixResidualCountingProbeDocument : IScribeDocumentDefinition
 {
@@ -9,6 +9,6 @@ internal sealed class Q9SixtySixResidualCountingProbeDocument : IScribeDocumentD
         Blocks(
             Paragraph(Text("Bound crossing incidences from each ball and from the residual graph."))),
         [
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualMatchingProbe"))
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualMatchingProbe"))
         ]));
 }

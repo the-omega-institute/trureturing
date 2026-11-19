@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualMatchingProbe
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualMatchingProbe
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualMatchingProbe
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualMatchingProbe
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Charge isolated crossing incidences to the degree-two vertices of the residual graph. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualHalfProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualHalfProbe
 
 /-! Charge isolated residual endpoints of coordinate edges to degree-two vertices. -/
 
@@ -36,7 +36,7 @@ open private actual_full_leaf_blocking from
 open private no_cross_between_distant_balls from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyDiameterUpperProbe
 open private no_two_ball_attachments_in_opposite_half from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualHalfProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualHalfProbe
 
 private lemma crossing_neighbor {u v : Q 9} (h : (hypercube 9).Adj u v)
     {k : Fin 9} (hk : v k ≠ u k) : v = flip u k := by

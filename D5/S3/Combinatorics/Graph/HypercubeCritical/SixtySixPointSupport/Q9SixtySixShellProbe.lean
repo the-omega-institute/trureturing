@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixShellProbe
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixShellProbe
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixShellProbe
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixShellProbe
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

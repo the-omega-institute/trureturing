@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport;
 
 internal sealed class Q9SixtySixResidualProbeDocument : IScribeDocumentDefinition
 {
@@ -9,6 +9,6 @@ internal sealed class Q9SixtySixResidualProbeDocument : IScribeDocumentDefinitio
         Blocks(
             Paragraph(Text("Describe the six vertices left outside the two disjoint radius-three balls of a putative distance-eight pair."))),
         [
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixShellProbe"))
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixShellProbe"))
         ]));
 }

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport;
 
 internal sealed class Q9SixtySixResidualMatchingProbeDocument : IScribeDocumentDefinition
 {
@@ -9,6 +9,6 @@ internal sealed class Q9SixtySixResidualMatchingProbeDocument : IScribeDocumentD
         Blocks(
             Paragraph(Text("Charge isolated crossing incidences to the degree-two vertices of the residual graph."))),
         [
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualHalfProbe"))
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualHalfProbe"))
         ]));
 }

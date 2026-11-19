@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualHalfProbe
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualHalfProbe
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9SixtySixResidualHalfProbe
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/SixtySixPointSupport/Q9SixtySixResidualHalfProbe
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Constrain the locations and degrees of the six residual vertices in the common-coordinate halves. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualProbe
 
 /-! Attachment restrictions in the coordinate half opposite a distance-eight pair. -/
 
@@ -139,7 +139,7 @@ private lemma opposite_half_card_bound
 #print axioms opposite_half_card_bound
 
 open private sixty_six_distance_eight_residual at_most_two_degree_two_into_three from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixResidualProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixResidualProbe
 open private paritySide from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
