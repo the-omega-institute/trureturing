@@ -36,8 +36,6 @@ Assume V is nontrivial and each entire original exclusion has a three-dimensiona
 
 The chart closed ball affinely spans its carrier. Affine transport of the intrinsic frontier identifies the entire boundary of the image with the original boundary centers. The singleton-label existence theorem and the original normalized-base dimension identity give the global conclusions for this same K.
 
-Source §138.3 of Quantum Origin XI. https://github.com/the-omega-institute/trureturing-source-theories/blob/2a39da5107abbfa3a72cc883486dbc15a15994a1/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md#L1318-L1345
-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterSections.original_center_sections`
