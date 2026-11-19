@@ -44,7 +44,6 @@ Golden.golden_profile_two_injective | content | D5.S1.Words.Complexity.LacunaryB
 Golden.golden_abelian_bound | bind-only | none
 -/
 
-import Batteries.Tactic.OpenPrivate
 import Batteries.Data.List.Lemmas
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
 import D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall

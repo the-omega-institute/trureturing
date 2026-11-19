@@ -20,11 +20,10 @@ Filtration.thueWord_of_permutation | content | D5.S1.Words.Complexity.UniformWor
 Counts.tm_length | bind-only | none
 Counts.tm_counts | content | D5.S1.Words.Complexity.UniformWordRecurrence.Counts.tm_counts
 Counts.repeated_false_count | content | D5.S1.Words.Complexity.UniformWordRecurrence.Counts.repeated_false_count
-pair_count_snoc | content | D5.S1.Words.Complexity.LacunaryBinomialMarkers.Binary.pair_count_snoc
+pair_count_snoc | bind-only | none (used by strict_one_two_of_return and ThueMorsePositionalRecovery)
 core_first_strict | content | D5.S1.Words.Complexity.UniformWordRecurrence.strict_one_two_of_return
 -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.LacunaryBinomialMarkers
 import D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonBracketAlgebra

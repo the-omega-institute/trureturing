@@ -6,7 +6,7 @@ For every integer ell at least two, a coding of a morphic word on a finite alpha
 
 **Definition 1.1 (binomialAt).**
 
-$$\forall (word : Nat \to Fin 4) (k n : Nat), binomialAt word k n = binomialComplexity word k n$$
+$$\forall (word : Nat \to Fin 4) (k n : Nat), binomialAt word k n = ((wordFactorSet word n).image (binomialProfile k)).card$$
 
 *Formalization.* `D5/S1/Words/Complexity/ThueMorseFactorRigidity.binomialAt` (`✓ std3`).
 
@@ -14,7 +14,7 @@ $$\forall (word : Nat \to Fin 4) (k n : Nat), binomialAt word k n = binomialComp
 
 *Commentary.*
 
-The displayed expression defines binomialAt.
+This counts the distinct k-binomial profiles of the length-n factors, one per equivalence class.
 
 **Definition 1.2 (factorComplexity).**
 

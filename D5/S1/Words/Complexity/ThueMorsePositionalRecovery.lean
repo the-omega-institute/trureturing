@@ -27,7 +27,6 @@ Alignment.frame_alignment | content | D5.S1.Words.Complexity.ThueMorsePositional
 Alignment.FactorFrames.factor_frame | content | D5.S1.Words.Complexity.ThueMorsePositionalRecovery.Alignment.FactorFrames.factor_frame
 Rigidity.top_profile_injectivity | content | D5.S1.Words.Complexity.ThueMorsePositionalRecovery.RootTransport.root_pullback_square
 -/
-import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
 import D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.OverlapInfiltration

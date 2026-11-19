@@ -17,7 +17,6 @@ morphic_result | content | D5.S1.Words.Complexity.ThueMorseFactorRigidity.coded_
 result | content | D5.S1.Words.Complexity.ThueMorseFactorRigidity.coded_hierarchy
 -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S0.Tower.GoldenGapWord
 import D5.S1.Words.Complexity.LacunaryBinomialMarkers
 import D5.S1.Words.Complexity.MorseHedlund
