@@ -221,20 +221,15 @@ function matches(entries, key, version) {
 }
 
 async function packPreparation(directory) {
-  const args = ['--directory', directory];
-  if (anchor) {
+  if (!anchor) throw new Error('sharded preparation requires a pinned history anchor');
+  const args = ['--directory', directory, '--anchor', anchor];
+  try {
     const { cache, cacheVersion } = await loadCacheClient();
-    const identity = python('identity');
-    if (await fetchIndex(cache, cacheVersion, identity, true)) {
-      const record = JSON.parse(await readFile(indexPath, 'utf8'));
-      const material = optionalInventory(identity.owner.ref, identity.prefix + 'material-');
-      const visible = new Set(material.map(row => row.key + '/' + row.version));
-      const digests = [...new Set(Object.values(record.entries))].filter(digest =>
-        visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest))));
-      const available = join(stage, 'visible-material.json');
-      await writeFile(available, JSON.stringify(digests));
-      args.push('--previous-index', indexPath, '--available', available);
+    if (await fetchIndex(cache, cacheVersion, python('identity'), true)) {
+      args.push('--previous-index', indexPath);
     }
+  } catch (error) {
+    console.log('LEAN_ACTIONS_SHARDS prior layout unavailable: ' + error.message);
   }
   preparationCommand('pack', args);
 }
