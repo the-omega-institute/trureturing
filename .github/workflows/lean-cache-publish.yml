@@ -30,7 +30,7 @@ on:
         options: [build, pr, release]
         default: build
       release_seed_tag:
-        description: 'Optional exact local candidate Release for the long build'
+        description: 'Optional exact verification Release for the long build'
         type: string
       release_seed_producer:
         description: 'Immutable producer commit of release_seed_tag'

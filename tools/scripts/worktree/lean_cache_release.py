@@ -1157,7 +1157,7 @@ def fetch_verification(root, partition, identity, *, indexed=False):
 
 
 def fetch_candidate(root, partition, tag, producer, *, targets=()):
-    """Restore one explicit local publication before a validated long producer builds."""
+    """Restore an explicit verification snapshot before a validated long producer builds."""
     if not re.fullmatch(r"[0-9a-f]{40}", producer) or producer == "0" * 40:
         raise ValueError("candidate fetch requires the immutable producer commit")
     deadline = operation_deadline()
@@ -1171,9 +1171,11 @@ def fetch_candidate(root, partition, tag, producer, *, targets=()):
     source, suffix, indexed = next(((part, tag.removeprefix(candidate), indexed)
         for part in seed_partitions(root) for indexed in (False, True)
         if tag.startswith(candidate := prefix(part, cache_key, True, indexed=indexed))), (None, "", False))
-    if (not valid_publication_id(suffix) or not
-            (suffix.startswith("local-" + producer[:12] + "-") or (indexed and suffix.startswith("ci-")))):
+    if (not valid_publication_id(suffix)
+            or not suffix.startswith(("local-" + producer[:12] + "-", "ci-"))):
         raise ValueError("candidate tag is outside the compatible partition or producer")
+    if targets and not indexed:
+        raise ValueError("scoped Release restore requires an indexed snapshot")
     def notify_installed():
         if os.environ.get("GITHUB_ACTIONS") == "true":
             for variable, content in (("GITHUB_ENV", "STRATALINT_RELEASE_CACHE_SEEDED=1\n"),
