@@ -72,7 +72,7 @@ abbrev Matter := Orbifold ⊗[ℂ] Hyperbolic
 def orbifoldMode (n : ℤ) : Module.End ℂ Orbifold :=
   OriginalOrbifoldConformal.L leechData leech_spec.2.1 leech_spec.2.2.1 n
 
-def orbifoldVertexAlgebra :=
+def orbifoldVertexAlgebra : LatticeActualVertexAlgebra.StateFieldVertexAlgebra Orbifold :=
   OriginalOrbifoldVertexAlgebra.originalVertexAlgebra leechData leech_spec.2.1
     leech_spec.2.2.1 leech_spec.1
 
