@@ -13,7 +13,7 @@ escape_witness: cls_cover (every point has a partner in every round-robin class)
 proof_shape:
   cls, d, Space: definitions; consumers: the lemmas below and MinimumCentralOrder (cls).
   cls_cover, center_iff, center_card, complete: content; consumer: complete_central_iff
-    (cls_cover, cls_lt and cls_comm are also consumed by MinimumCentralOrder).
+    (cls_cover, cls_lt, cls_comm and frac_bounds are also consumed by MinimumCentralOrder).
   cls_comm, cls_lt, d_self, d_ne, frac_bounds, d_bounds, d_comm: bind-only helpers; consumers:
     the metric instance, center_iff, center_card, complete.
   complete_central_iff: content via the round-robin construction; the odd case is a bind-only
@@ -114,7 +114,7 @@ private lemma d_ne {x y : Fin (2 * m + 2)} (h : x ≠ y) :
     d m x y = 1 + (cls m x.1 y.1 : ℝ) / (2 * m + 2) := by
   unfold d; simp only [h, ↓reduceIte]
 
-private lemma frac_bounds (r : ℕ) (hr : r < 2 * m + 1) :
+lemma frac_bounds (r : ℕ) (hr : r < 2 * m + 1) :
     0 ≤ (r : ℝ) / (2 * m + 2) ∧ (r : ℝ) / (2 * m + 2) < 1 := by
   have hpos : (0 : ℝ) < 2 * m + 2 := by positivity
   refine ⟨by positivity, ?_⟩
