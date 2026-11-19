@@ -471,4 +471,109 @@ private theorem selected_minor_phase {k : ℕ} (sites : (Fin k × Bool) ↪ ι)
   rw [selected_minor_det, sign_eq_selected_inversions, inversionSum_eq_natCast, binarySign_natCast]
   simp [inversionCount]
 
+
+private def pickEndpoint (z : ZMod 2) : Bool := decide (z = 1)
+
+private theorem bit_pickEndpoint (z : ZMod 2) : bit (pickEndpoint z) = z := by
+  exact (show ∀ z : ZMod 2, bit (pickEndpoint z) = z by decide) z
+
+open Classical in
+private noncomputable def alternationMatrix {m n : ℕ}
+    (p : Fin m → Bool → ι) (q : Fin n → Bool → ι) : Matrix (Fin m) (Fin n) (ZMod 2) :=
+  Matrix.of fun i j =>
+    if endpointsAlternate (p i false) (p i true) (q j false) (q j true) then 1 else 0
+
+private theorem alternation_phase_bilinear {m n : ℕ}
+    (p : Fin m → Bool → ι) (q : Fin n → Bool → ι)
+    (hp : ∀ i, p i false < p i true) (hq : ∀ j, q j false < q j true)
+    (hsep : ∀ i j x y, p i x ≠ q j y) :
+    ∃ left : (Fin m → ZMod 2) → ZMod 2, ∃ right : (Fin n → ZMod 2) → ZMod 2,
+      ∀ x y, inversionSum (Fin.addCases (fun i => p i (pickEndpoint (x i)))
+        (fun j => q j (pickEndpoint (y j)))) =
+        left x + right y + (((alternationMatrix p q)ᵀ *ᵥ x) ⬝ᵥ y) := by
+  refine ⟨fun x => inversionSum (fun i => p i (pickEndpoint (x i))) +
+      (∑ i, ∑ j, inversion (p i (pickEndpoint (x i))) (q j false)) -
+      (∑ i, ∑ j, inversion (p i false) (q j false)),
+    fun y => inversionSum (fun j => q j (pickEndpoint (y j))) +
+      ∑ i, ∑ j, inversion (p i false) (q j (pickEndpoint (y j))), ?_⟩
+  intro x y
+  rw [inversionSum_append, alternation_phase p q hp hq hsep]
+  simp only [bit_pickEndpoint]
+  have hbilin : (((alternationMatrix p q)ᵀ *ᵥ x) ⬝ᵥ y) =
+      ∑ i, ∑ j, x i * y j * (alternationMatrix p q) i j := by
+    simp only [dotProduct, Matrix.mulVec, Matrix.transpose_apply, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  rw [hbilin]
+  simp only [alternationMatrix, Matrix.of_apply]
+  abel
+
+
+private def cutPairSites {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) :
+    (Fin (m + n) × Bool) ↪ ι where
+  toFun w := Fin.addCases (fun i => (p (i, w.2) : ι))
+    (fun j => (q (j, w.2) : ι)) w.1
+  inj' := by
+    rintro ⟨i, e⟩ ⟨j, d⟩ h
+    induction i using Fin.addCases with
+    | left i =>
+      induction j using Fin.addCases with
+      | left j =>
+        simp only [Fin.addCases_left] at h
+        exact congrArg (fun w : Fin m × Bool => (Fin.castAdd n w.1, w.2))
+          (p.injective (Subtype.ext h))
+      | right j =>
+        simp only [Fin.addCases_left, Fin.addCases_right] at h
+        exact False.elim ((q (j, d)).property (h ▸ (p (i, e)).property))
+    | right i =>
+      induction j using Fin.addCases with
+      | left j =>
+        simp only [Fin.addCases_left, Fin.addCases_right] at h
+        exact False.elim ((q (i, e)).property (h.symm ▸ (p (j, d)).property))
+      | right j =>
+        simp only [Fin.addCases_right] at h
+        exact congrArg (fun w : Fin n × Bool => (Fin.natAdd m w.1, w.2))
+          (q.injective (Subtype.ext h))
+
+omit [LinearOrder ι] in
+private theorem cutPairSites_left {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (i : Fin m) (e : Bool) :
+    cutPairSites p q (Fin.castAdd n i, e) = p (i, e) := by
+  change Fin.addCases (motive := fun _ => ι) (fun i => (p (i, e) : ι)) (fun j => (q (j, e) : ι))
+    (Fin.castAdd n i) = _
+  rw [Fin.addCases_left]
+
+omit [LinearOrder ι] in
+private theorem cutPairSites_right {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (j : Fin n) (e : Bool) :
+    cutPairSites p q (Fin.natAdd m j, e) = q (j, e) := by
+  change Fin.addCases (motive := fun _ => ι) (fun i => (p (i, e) : ι)) (fun j => (q (j, e) : ι))
+    (Fin.natAdd m j) = _
+  rw [Fin.addCases_right]
+
+private def sideSites {m : ℕ} {I : Set ι} (p : (Fin m × Bool) ↪ I) :
+    (Fin m × Bool) ↪ ι :=
+  p.trans (Function.Embedding.subtype _)
+
+private theorem selectedSites_cut {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
+    (x : Fin m → Bool) (y : Fin n → Bool) :
+    selectedSites (cutPairSites p q) (Fin.addCases x y) =
+      selectedSites (sideSites p) x ∪ selectedSites (sideSites q) y := by
+  ext a
+  simp only [selectedSites, Finset.mem_union, Finset.mem_image, Finset.mem_univ, true_and]
+  constructor
+  · rintro ⟨i, hi⟩
+    induction i using Fin.addCases with
+    | left i => exact Or.inl ⟨i, by simpa [sideSites, cutPairSites_left] using hi⟩
+    | right j => exact Or.inr ⟨j, by simpa [sideSites, cutPairSites_right] using hi⟩
+  · rintro (⟨i, hi⟩ | ⟨j, hj⟩)
+    · exact ⟨Fin.castAdd n i, by simpa [sideSites, cutPairSites_left] using hi⟩
+    · exact ⟨Fin.natAdd m j, by simpa [sideSites, cutPairSites_right] using hj⟩
+
 end D5.S3.Quantum.Fermionic.SlaterPairCutRank
