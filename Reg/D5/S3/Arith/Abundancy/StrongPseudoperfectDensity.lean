@@ -174,4 +174,72 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end PrimeCodes
 
+namespace DivisorSplit
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => ℕ) (fun _ => Finset ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => n.divisors) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => {0}) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m q d : ℕ}, q.Prime → d ∈ R.readout () () (m * q) →
+    d ∈ m.divisors ∨ ∃ e ∈ m.divisors, d = e * q
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hzero := h (m := 1) (q := 2) (d := 0) (by norm_num) (by simp [rejected, realize])
+  norm_num at hzero
+
+def family : Registration arena (type_of% @divisor_split) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@divisor_split, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change (0 : ℕ).divisors ≠ (1 : ℕ).divisors
+    simp
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@divisor_split) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Abundancy.StrongPseudoperfectDensity.divisor_split.audit
+  realizationName := `Reg.D5.S3.Arith.Abundancy.StrongPseudoperfectDensity.DivisorSplit.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Abundancy.StrongPseudoperfectDensity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "domain", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end DivisorSplit
+
 end Reg.D5.S3.Arith.Abundancy.StrongPseudoperfectDensity
