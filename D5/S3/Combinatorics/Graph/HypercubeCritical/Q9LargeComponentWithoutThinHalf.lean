@@ -2,6 +2,7 @@ import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9ThinPairedCertificate
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwoGrayComponents
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.BalancedHalfCardinality
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoPairedExclusion
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourHalfEmbedding
 
 /-! The surviving large component in a hypothetical 258-vertex candidate
 has coordinate halves of even cardinality between 24 and 48 when its order is 72. -/
@@ -121,5 +122,53 @@ theorem exists_large_component_without_thin_half (U : Finset (Q 9)) (hU : U.card
   omega
 
 #print axioms exists_large_component_without_thin_half
+
+/-- At order 72 the balanced cubic component has even coordinate halves
+of sizes 26 through 46. -/
+theorem exists_large_component_coordinate_halves_twenty_six_to_forty_six
+    (U : Finset (Q 9)) (hU : U.card = 258)
+    (hdeg : ∀ v : (U : Set (Q 9)), ((hypercube 9).induce (U : Set (Q 9))).degree v ≤ 3) :
+    ∃ K : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent,
+      let C := componentFinset U K
+      ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3 ∧ IsBalanced C ∧
+        72 ≤ C.card ∧ (C.card = 72 → ∀ (j : Fin 9) (b : Bool),
+          let N := (C.filter (fun x => x j = b)).card
+          26 ≤ N ∧ N ≤ 46 ∧ N % 2 = 0) := by
+  classical
+  obtain ⟨K, hr, hb, hc, hbounds⟩ := exists_large_component_without_thin_half U hU hdeg
+  let C := componentFinset U K
+  refine ⟨K, hr, hb, hc, fun h72 j b => ?_⟩
+  let p := Equiv.swap j (0 : Fin 9)
+  let g := reindex p
+  have hC' : (C.image g).card = 72 := by rw [Finset.card_image_of_injective _ g.injective, h72]
+  have hne (side : Bool) : (C.filter (fun x => x j = side)).card ≠ 24 := by
+    have hn := CoordinateHalves.Q9TwentyFourHalfEmbedding.no_twenty_four_half hC'
+      (reindex_regular hr p) (reindex_balanced hb p) side
+    change (coordinateSlice (C.image (reindex (Equiv.swap j 0))) side).card ≠ 24 at hn
+    rwa [reindex_slice, Finset.card_image_of_injective _ g.injective] at hn
+  have hsum : (C.filter (fun x => x j = b)).card +
+      (C.filter (fun x => x j = !b)).card = C.card := by
+    have he : (C.filter (fun x => x j = !b)) = C.filter (fun x => ¬x j = b) := by
+      ext x
+      cases b <;> cases hx : x j <;> simp [hx]
+    rw [he]
+    exact Finset.card_filter_add_card_filter_not (s := C) (fun x => x j = b)
+  have hx := hbounds h72 j b
+  have hy := hbounds h72 j (!b)
+  change 24 ≤ (C.filter (fun x => x j = b)).card ∧
+    (C.filter (fun x => x j = b)).card ≤ 48 ∧
+    (C.filter (fun x => x j = b)).card % 2 = 0 at hx
+  change 24 ≤ (C.filter (fun x => x j = !b)).card ∧
+    (C.filter (fun x => x j = !b)).card ≤ 48 ∧
+    (C.filter (fun x => x j = !b)).card % 2 = 0 at hy
+  change C.card = 72 at h72
+  have hxb := hne b
+  have hyb := hne (!b)
+  change 26 ≤ (C.filter (fun x => x j = b)).card ∧
+    (C.filter (fun x => x j = b)).card ≤ 46 ∧
+    (C.filter (fun x => x j = b)).card % 2 = 0
+  omega
+
+#print axioms exists_large_component_coordinate_halves_twenty_six_to_forty_six
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
