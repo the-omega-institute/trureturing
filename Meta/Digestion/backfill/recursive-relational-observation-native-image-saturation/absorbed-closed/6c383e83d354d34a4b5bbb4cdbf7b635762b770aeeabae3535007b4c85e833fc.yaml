@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6c383e83d354d34a4b5bbb4cdbf7b635762b770aeeabae3535007b4c85e833fc
-  normalized_sha256: sha256:6c383e83d354d34a4b5bbb4cdbf7b635762b770aeeabae3535007b4c85e833fc
-cas_ref: sha256:6c383e83d354d34a4b5bbb4cdbf7b635762b770aeeabae3535007b4c85e833fc
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.original_symbolic_finite_value
-    target_statement_id: sha256:dc7279f02cb670ba3d646b075679a1296a2106820f488ad9b52a525e8587b46e
-receipts:
-  unresolved_subitems: []

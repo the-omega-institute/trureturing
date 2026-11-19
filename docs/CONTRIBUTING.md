@@ -89,7 +89,7 @@ the portable way to use a skill is to ask the agent to read its canonical
   Searches for reusable results first, then works on formalization or settlement
   of that source claim; a new theorem or closure is not guaranteed.
 
-- **[codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md)**
+- **[codex-theory-ingest](https://github.com/the-omega-institute/trureturing-source-theories/blob/main/skills/codex-theory-ingest/SKILL.md)**
 
   Externally authored material: “Ingest the document at `<path>` from
   `<source-URL>` under `<license>`.”
@@ -97,7 +97,7 @@ the portable way to use a skill is to ask the agent to read its canonical
   Brings reference input through the digestion workflow into open formalization
   atoms; ingestion is not proof.
 
-- **[theory-volume-template](../skills/theory-volume-template/SKILL.md)**
+- **[theory-volume-template](https://github.com/the-omega-institute/trureturing-source-theories/blob/main/skills/theory-volume-template/SKILL.md)**
 
   Your own volume: “Draft a new volume on `<topic>`,” or “Append to
   `<volume-path>` while preserving existing atoms.”
@@ -222,7 +222,7 @@ new Lean theorem or test. Then follow the applicable checks and PR steps below.
 | Blueprint or paper narrative | The corresponding `*.scribe.cs` source; regenerate with `make emit` |
 | Experimental evidence | `Evidence/` or the experiment's registered location |
 | Harness code and tests | `tools/` and `tools/tests/` |
-| Research input | `docs/develop/theory/`, under the append-only theory rules |
+| Research input | [Theory source repository](https://github.com/the-omega-institute/trureturing-source-theories), under its append-only theory rules |
 
 Read [AGENTS.md](../AGENTS.md) and [agents/CONTEXT.md](../agents/CONTEXT.md) before
 editing. The [specification](develop/spec/golden-ledger-repo-spec.md) defines

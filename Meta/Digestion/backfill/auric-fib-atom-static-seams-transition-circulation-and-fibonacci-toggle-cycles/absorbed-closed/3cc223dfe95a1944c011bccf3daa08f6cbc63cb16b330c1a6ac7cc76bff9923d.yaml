@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3cc223dfe95a1944c011bccf3daa08f6cbc63cb16b330c1a6ac7cc76bff9923d
-  normalized_sha256: sha256:3cc223dfe95a1944c011bccf3daa08f6cbc63cb16b330c1a6ac7cc76bff9923d
-cas_ref: sha256:3cc223dfe95a1944c011bccf3daa08f6cbc63cb16b330c1a6ac7cc76bff9923d
-coverage_gids:
-  - gid: D5/S3/Combinatorics/Graph/LegalWords/SupportSizeCount.support_count_eq_choose
-    target_statement_id: sha256:9f7e8ec69b8950c88d862cf3dd51a52d693709a1836e88e60a6b8b0614683e0a
-receipts:
-  unresolved_subitems: []

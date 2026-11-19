@@ -1,4 +1,0 @@
-**引理 192.4（原紧域内的实际面正则性）。** 设 $\Omega$ 为有限维紧凸基，且每个不同原纯对的实际最小面均有仿射维数三。那么每个这样的面紧、严格凸，其整个相对边界恰为原纯点与该面的交集；此结论不需中心对称。
-
-证明。对任意非空实际面 $F$，取 $x\in\operatorname{ri}F$。若 $y\in\Omega\cap\operatorname{aff}F$，可取小 $\varepsilon>0$ 使 $z=x+\varepsilon(x-y)\in F$。等式 $x=\varepsilon y/(1+\varepsilon)+z/(1+\varepsilon)$ 和面性质迫 $y\in F$。故 $F=\Omega\cap\operatorname{aff}F$，有限维仿射包闭，$F$ 因而紧。余下复用177.5a证明的严格凸步骤：非平凡边界线段给维数至多二的紧真支撑面 $G$，其两个不同极点也是原纯点，却生成包含于 $G$ 的实际面，与全原纯对三维量词矛盾。实际面极点性质给最后的边界等式。这里只复用不消费中心的证明段。$\square$
-

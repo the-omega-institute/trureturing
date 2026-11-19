@@ -1,8 +1,0 @@
-## 1. 文献与跨作者源的定位
-
-继续以 Connes-Consani-Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，Section 8 的真实最低模态/prolate 逼近为目标。Connes 的 2026 年综述 arXiv:2602.04022，Sections 6.4-6.6，仍将模型极限、最低模态单纯偶性和充分精确逼近分别处理。本轮复核 Suzuki arXiv:2606.09096 与 Groskin arXiv:2607.02828 的原始 arXiv 页面；取得的版本历史都列出 v1，没有把聚合站的更新标签当成已核验的新定理。Groskin 已有有限 Fourier 矩阵的 cutoff-free 算法，本节不宣称首次消除 Gamma 截断。
-
-读取 loning 研究链 #5892 的实际 `CoefficientDrivenJacobiCharacteristicPolynomial.lean`，固定于 `54f78c385cebdccb0b768b8a25b75dc04454b53e`。该有限 Jacobi/特征多项式定理保留 hSymmetric 前提，不能替代实际无限 prolate 的自伴实现或域控制。读取 AlyciaBHZ #6029 的 `WeilArithmeticResidualTail.lean`，固定于 `a2c2ccdc1fde62627deab56bbdea433c782621dc`；其消矩条件施加在所选 dual trial 上，不应转移到真实 prolate 模型。#5882 的新 energy-dual 结果已提供完整残差消费者，本节不复制其抽象变分定理。
-
-经典输入为 digamma 部分分式、Legendre 递推、正形式 Cauchy-Schwarz、几何级数及有限幂积分。这里的具体贡献是将这些工具接到已独立固定的算术模型及全部模型误差，不作优先权声明。
-

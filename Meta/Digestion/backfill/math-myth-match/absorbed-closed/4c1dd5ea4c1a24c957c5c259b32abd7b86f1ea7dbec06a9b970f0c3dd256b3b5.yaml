@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4c1dd5ea4c1a24c957c5c259b32abd7b86f1ea7dbec06a9b970f0c3dd256b3b5
-  normalized_sha256: sha256:4c1dd5ea4c1a24c957c5c259b32abd7b86f1ea7dbec06a9b970f0c3dd256b3b5
-cas_ref: sha256:4c1dd5ea4c1a24c957c5c259b32abd7b86f1ea7dbec06a9b970f0c3dd256b3b5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/TwoBitJointCommonKnowledgeSeparation.two_bit_joint_common_knowledge_separation
-    target_statement_id: sha256:796d232dbc6d7e15151b0c99c699c63a8cef1e76e6c5e5382a2f68cdcad8d230
-receipts:
-  unresolved_subitems: []

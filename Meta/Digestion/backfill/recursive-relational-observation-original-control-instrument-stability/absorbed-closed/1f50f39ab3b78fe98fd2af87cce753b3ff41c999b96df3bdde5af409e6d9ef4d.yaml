@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1f50f39ab3b78fe98fd2af87cce753b3ff41c999b96df3bdde5af409e6d9ef4d
-  normalized_sha256: sha256:1f50f39ab3b78fe98fd2af87cce753b3ff41c999b96df3bdde5af409e6d9ef4d
-cas_ref: sha256:1f50f39ab3b78fe98fd2af87cce753b3ff41c999b96df3bdde5af409e6d9ef4d
-coverage_gids:
-  - gid: D5/S3/Quantum/Fibers/OriginalRepeatedMarkedLaw.marked_inverse_nonuniformity
-    target_statement_id: sha256:b65f97327ee21f03b13900852cf3a2c93e7368994ccbfd1a264a035e6370114c
-receipts:
-  unresolved_subitems: []

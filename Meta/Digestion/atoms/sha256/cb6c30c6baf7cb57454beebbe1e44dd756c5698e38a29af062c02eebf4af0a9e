@@ -1,1 +1,0 @@
-| Amsterdamer–Deutch–Tannen，*Provenance for Aggregate Queries*（PODS 2011） | 将来源标注扩展至元组内的聚合值，并通过聚合表达差；与本卷“必须说明读数如何沿操作传播”的要求有局部对应 | 这是聚合查询语义，不是上一行的差运算不可能性论文；本卷没有建立其聚合值注释域、嵌套聚合与查询语言契约 | [arXiv:1101.1110](https://arxiv.org/abs/1101.1110)，与 TaPP 文分列。文献陈述 `literature-attested`；对照 `repo-derived`

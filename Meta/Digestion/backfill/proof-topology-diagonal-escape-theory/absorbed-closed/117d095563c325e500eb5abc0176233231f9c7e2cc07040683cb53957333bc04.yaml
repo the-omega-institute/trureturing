@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:117d095563c325e500eb5abc0176233231f9c7e2cc07040683cb53957333bc04
-  normalized_sha256: sha256:117d095563c325e500eb5abc0176233231f9c7e2cc07040683cb53957333bc04
-cas_ref: sha256:117d095563c325e500eb5abc0176233231f9c7e2cc07040683cb53957333bc04
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/SensorFamilies/SensorFamilyRestrictionMonotonicity.restricting_sensor_family_enlarges_kernel
-    target_statement_id: sha256:ebe51b2b72a5c09dc2415bef5db6c75397e06cf7e68a49d42a6de747b848e9d7
-receipts:
-  unresolved_subitems: []

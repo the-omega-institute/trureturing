@@ -117,7 +117,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly TimeProvider timeProvider;
-    private readonly ReportFreeIngestDependencies reportFreeIngestDependencies;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
@@ -144,15 +143,13 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier? scribeEmissionVerifier,
-        ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
+        IScribeEmissionVerifier? scribeEmissionVerifier)
         : this(
             repositoryRoot,
             repository,
             leanReportSource,
             scribeEmissionVerifier,
-            TimeProvider.System,
-            reportFreeIngestDependencies)
+            TimeProvider.System)
     {
     }
 
@@ -161,16 +158,13 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        TimeProvider timeProvider,
-        ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
+        TimeProvider timeProvider)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.timeProvider = timeProvider;
-        this.reportFreeIngestDependencies =
-            reportFreeIngestDependencies ?? new ReportFreeIngestDependencies();
     }
 
     public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
@@ -213,8 +207,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () => (
                     Current: AdmissionRepositoryInputs.ReadCurrent(repository),
                     Baseline: AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision)));
-            var currentRaw = AdmissionRepositoryInputs.ReadDeltaInputs(
-                repository, rawSnapshots.Current, rawSnapshots.Baseline, prepared.Changes);
+            var currentRaw = rawSnapshots.Current;
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",

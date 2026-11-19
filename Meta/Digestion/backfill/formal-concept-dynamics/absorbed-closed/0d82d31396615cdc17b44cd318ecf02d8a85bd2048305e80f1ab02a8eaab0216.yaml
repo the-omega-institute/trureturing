@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0d82d31396615cdc17b44cd318ecf02d8a85bd2048305e80f1ab02a8eaab0216
-  normalized_sha256: sha256:0d82d31396615cdc17b44cd318ecf02d8a85bd2048305e80f1ab02a8eaab0216
-cas_ref: sha256:0d82d31396615cdc17b44cd318ecf02d8a85bd2048305e80f1ab02a8eaab0216
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/GraphColoring/MultiTargetDefectGraphColoring.joint_target_defect_graph_and_minimum_labels
-    target_statement_id: sha256:25f589cbe3fced62ec894e692c8af7d1b75aeb7d822ba2dac851c0e5aecc1f6e
-receipts:
-  unresolved_subitems: []

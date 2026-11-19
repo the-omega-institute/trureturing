@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ddb4f6fb76c318def9a52083b7e6ec453a0a2d09275271d1f568671179949b74
-  normalized_sha256: sha256:ddb4f6fb76c318def9a52083b7e6ec453a0a2d09275271d1f568671179949b74
-cas_ref: sha256:ddb4f6fb76c318def9a52083b7e6ec453a0a2d09275271d1f568671179949b74
-coverage_gids:
-  - gid: D5/S3/Weil/GronwallLowerEnvelope.robin_log_margin_liminf
-    target_statement_id: sha256:c87d805981b4faae9762314dd5e88987c8aff0aed2a46bde06299be0ac7495bb
-receipts:
-  unresolved_subitems: []

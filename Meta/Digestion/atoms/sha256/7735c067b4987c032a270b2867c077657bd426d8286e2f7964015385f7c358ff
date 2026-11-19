@@ -1,2 +1,0 @@
-**F-2**:价格判据。同一命题又等价于 \(U(B)\le L(A)\);此处 \(U,L\) 取仓内 `goldenUpperPrice` 与 `goldenLowerPrice` 的声明含义,不取本卷两处 docstring 里颠倒的字母。
-

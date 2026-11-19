@@ -1,7 +1,0 @@
-## 6. Odd breaking and even completion
-
-`D5/S3/ObserverMemory/Refinement/InvolutiveReadoutCompletion.lean`
-
-abstracts the exact content of odd breaking and even completion. If each update applies an involution to a chosen readout, then:
-
-- every odd iterate places that readout on its flipped sheet;

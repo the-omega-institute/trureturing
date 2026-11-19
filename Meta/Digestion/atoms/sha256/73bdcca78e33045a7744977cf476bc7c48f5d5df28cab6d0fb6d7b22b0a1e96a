@@ -1,6 +1,0 @@
-并且以下条件等价：
-
-1. \(v\in\ker I_a(\theta)\)；
-2. \(v^{\mathsf T}\nabla p_a(x\mid\theta)=0\) 对所有 \(x\in X_a\)；
-3. 沿方向 \(v\) 的一阶参数变化不改变该动作的全部结果概率。
-
