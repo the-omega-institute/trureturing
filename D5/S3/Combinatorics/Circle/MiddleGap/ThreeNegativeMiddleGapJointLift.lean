@@ -148,12 +148,16 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
   have hN : N = r * s * t - 1 := by
     dsimp [N, modulus, k, r, s, t]; rw [pow_add, pow_add]
   have hNC : N = 2 * C + 1 := by rw [hN]; dsimp [C]; rw [hrq]; ring
-  have hhalf : modulus k / 2 = C := by change N / 2 = C; omega
+  have hhalf : modulus k / 2 = C := by
+    change N / 2 = C
+    clear * - hNC
+    omega
   have hnewhalf : modulus (k + 1) / 2 = N := by
     have hm : modulus (k + 1) = 2 * N + 1 := by dsimp [modulus, N]; rw [pow_succ]; ring
-    omega
+    clear * - hm; omega
   obtain ⟨hu, hB, hL, hU, hV, hW, hfA, hfB, hfG, hgA, hgB, hgG, hgear⟩ :=
-    ThreeNegativeMinimumTwoJointLift.paired_chains a b c (by omega) hb (by omega)
+    ThreeNegativeMinimumTwoJointLift.paired_chains a b c
+      (by clear * - hb hba; omega) hb (by clear * - hb hba hac; omega)
   change (1 ≤ u ∧ u < N) at hu
   change (1 ≤ B ∧ B < N) at hB
   change (1 ≤ L ∧ L < N) at hL
@@ -180,33 +184,40 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     rw [hN]; dsimp [Hb, C, L]; rw [hrq, hsp]; ring
   have hHg : 2 * Hg = N - u := by
     rw [hN]; dsimp [Hg, C, u]; rw [hrq]; ring
-  have hKa : 2 * Ka = (2 * N + 1) - (2 * B - 1) := by dsimp [Ka]; omega
-  have hKb : 2 * Kb = (2 * N + 1) - (2 * L - s - 1) := by dsimp [Kb]; omega
+  -- Give each arithmetic goal only the local bounds and identities it uses.
+  have hKa : 2 * Ka = (2 * N + 1) - (2 * B - 1) := by
+    dsimp only [Ka]
+    clear * - hHa
+    omega
+  have hKb : 2 * Kb = (2 * N + 1) - (2 * L - s - 1) := by
+    dsimp only [Kb]
+    clear * - hHb hsp
+    omega
   have hKg : 2 * Kg = (2 * N + 1) - u := by
     dsimp [Kg]
     have he : u = 2 * (q * (s + 1)) + 1 := by dsimp [u]; rw [hrq]; ring
-    omega
-  have hfA' : f (c - 1) = -Ha := by rw [hfA]; omega
-  have hfB' : f (c + b - 1) = -Hb := by rw [hfB]; omega
-  have hfG' : f (k - 1) = -Hg := by rw [hfG]; omega
-  have hgA' : g (c - 1) = -Ka := by rw [hgA]; omega
-  have hgB' : g (c + b - 1) = -Kb := by rw [hgB]; omega
-  have hgG' : g (k - 1) = -Kg := by rw [hgG]; omega
-  have hHa0 : 0 ≤ Ha := by omega
-  have hHb0 : 0 ≤ Hb := by omega
-  have hHg0 : 0 ≤ Hg := by omega
-  have hHgC : Hg ≤ C := by omega
-  have hKa0 : 0 ≤ Ka := by dsimp [Ka]; omega
-  have hKb0 : 0 ≤ Kb := by dsimp [Kb]; omega
+    clear * - hHg he; omega
+  have hfA' : f (c - 1) = -Ha := by rw [hfA]; clear * - hHa; omega
+  have hfB' : f (c + b - 1) = -Hb := by rw [hfB]; clear * - hHb; omega
+  have hfG' : f (k - 1) = -Hg := by rw [hfG]; clear * - hHg; omega
+  have hgA' : g (c - 1) = -Ka := by rw [hgA]; clear * - hKa; omega
+  have hgB' : g (c + b - 1) = -Kb := by rw [hgB]; clear * - hKb; omega
+  have hgG' : g (k - 1) = -Kg := by rw [hgG]; clear * - hKg; omega
+  have hHa0 : 0 ≤ Ha := by clear * - hHa hB; omega
+  have hHb0 : 0 ≤ Hb := by clear * - hHb hL; omega
+  have hHg0 : 0 ≤ Hg := by clear * - hHg hu; omega
+  have hHgC : Hg ≤ C := by dsimp only [Hg]; exact sub_le_self C (by positivity)
+  have hKa0 : 0 ≤ Ka := by dsimp [Ka]; clear * - hHa0; omega
+  have hKb0 : 0 ≤ Kb := by dsimp [Kb]; clear * - hHb0 hsp hs; omega
   have hKg0 : 0 ≤ Kg := by dsimp [Kg]; positivity
-  have hKgN : Kg ≤ N := by omega
-  have hC0 : 0 ≤ C := by omega
+  have hKgN : Kg ≤ N := by clear * - hKg hu; omega
+  have hC0 : 0 ≤ C := hHg0.trans hHgC
+  have hu0 : 0 < u := lt_of_lt_of_le Int.zero_lt_one hu.1
   let m := (C / u).toNat
   let G := C % u
-  have hm0 : 0 ≤ C / u := Int.ediv_nonneg hC0 (by omega)
+  have hm0 : 0 ≤ C / u := Int.ediv_nonneg hC0 hu0.le
   have hmc : (m : ℤ) = C / u := Int.toNat_of_nonneg hm0
-  have hG0 : 0 ≤ G := Int.emod_nonneg C (by omega)
-  have hGu : G < u := Int.emod_lt_of_pos C (by omega)
+  have hG0 : 0 ≤ G := Int.emod_nonneg C hu0.ne'
   have hdivision : C = u * (m : ℤ) + G := by
     have he := Int.emod_add_mul_ediv C u
     rw [← hmc] at he
@@ -218,18 +229,18 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
       have he : u * vhalf - C = vhalf * (r + 1) + 1 := by
         dsimp [u, C]; rw [hrq, htv]; ring
       have hpos : 0 ≤ vhalf * (r + 1) := by positivity
-      omega
+      clear * - he hpos; omega
     have hm : (m : ℤ) < vhalf := by
       by_contra hn
-      have he := mul_le_mul_of_nonneg_left (show vhalf ≤ (m : ℤ) by omega) (show 0 ≤ u by omega)
-      omega
+      have he := mul_le_mul_of_nonneg_left (le_of_not_gt hn) hu0.le
+      clear * - hprod he hdivision hG0; omega
     dsimp only [vhalf] at hm
     exact_mod_cast hm
   let z := 2 ^ (a - 1) - 1
   have hzcap : z < 2 ^ (a - 1) := by
     dsimp only [z]
     have hpow : 0 < (2 : ℕ) ^ (a - 1) := by positivity
-    omega
+    clear * - hpow; omega
   have hzc : (z : ℤ) = q - 1 := by
     dsimp [z, q]
     rw [Nat.cast_sub (Nat.one_le_two_pow : 1 ≤ (2 : ℕ) ^ (a - 1))]
@@ -240,22 +251,39 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
   let word := P.toList ++ (c + b - 1) :: Q.toList ++ (c - 1) :: T.toList ++ [k - 1]
   let plus := P.toList ++ (c + b - 1) :: k :: Q.toList ++ (c - 1) :: T.toList ++ [k - 1]
   have hPbound {i : ℕ} (hi : i ∈ P) : i < c - 1 := by
-    have hh := mask_labels_bound hi; omega
+    have hh := mask_labels_bound hi; clear * - hh; omega
   have hTbound {i : ℕ} (hi : i ∈ T) : c + b ≤ i ∧ i < k - 1 := by
-    have hh := mask_labels_bound hi; dsimp [k]; omega
-  have hPsub : P ⊆ Finset.range k := by intro i hi; have := hPbound hi; exact Finset.mem_range.mpr (by dsimp [k]; omega)
-  have hTsub : T ⊆ Finset.range k := by intro i hi; have := hTbound hi; exact Finset.mem_range.mpr (by omega)
+    have hh := mask_labels_bound hi; dsimp [k]; clear * - hh; omega
+  have hPsub : P ⊆ Finset.range k := by
+    intro i hi
+    have hi' := hPbound hi
+    exact Finset.mem_range.mpr (by dsimp [k]; clear * - hi'; omega)
+  have hTsub : T ⊆ Finset.range k := by
+    intro i hi
+    have hi' := hTbound hi
+    exact Finset.mem_range.mpr (by clear * - hi'; omega)
   have hPT : Disjoint P T := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    have := hPbound hi; have := hTbound hj; omega
+    have hi' := hPbound hi
+    have hj' := hTbound hj
+    clear * - hi' hj'
+    omega
   have hPn : ∀ i ∈ P, i ≠ c + b - 1 ∧ i ≠ c - 1 ∧ i ≠ k - 1 := by
-    intro i hi; have := hPbound hi; dsimp [k]; omega
+    intro i hi
+    have hi' := hPbound hi
+    dsimp only [k]
+    clear * - hi' hb
+    omega
   have hTn : ∀ i ∈ T, i ≠ c + b - 1 ∧ i ≠ c - 1 ∧ i ≠ k - 1 := by
-    intro i hi; have := hTbound hi; omega
+    intro i hi
+    have hi' := hTbound hi
+    clear * - hi' hb
+    omega
   have hp : word.Perm (List.range k) := by
     have hi := labelled_permutation k (c + b - 1) (c - 1) (k - 1) P T hPsub hTsub hPT
-      (by dsimp [k]; omega) (by dsimp [k]; omega) hPn hTn
+      (by dsimp only [k]; clear * - hb hba hac; omega)
+      (by dsimp only [k]; clear * - hb hba; omega) hPn hTn
     change (P.toList ++ (c + b - 1) :: T.toList ++ (c - 1) :: Q.toList ++ [k - 1]).Perm _ at hi
     have he : (P.toList ++ [c + b - 1] ++ Q.toList ++ [c - 1] ++ T.toList ++ [k - 1]).Perm
         (P.toList ++ [c + b - 1] ++ T.toList ++ [c - 1] ++ Q.toList ++ [k - 1]) := by
@@ -277,20 +305,21 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     exact he.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have hWbase : 0 ≤ 2 * L - s - 1 := by
     have hst : 0 ≤ s * t := by positivity
-    dsimp [L]; nlinarith
+    dsimp only [L]; nlinarith only [hst, hs]
   have hpositive (i : ℕ) (hi : i < k)
       (hn : i ≠ c - 1 ∧ i ≠ c + b - 1 ∧ i ≠ k - 1) : 0 ≤ f i ∧ 0 ≤ g i := by
     by_cases h1 : i < c - 1
     · obtain ⟨hf, hg⟩ := hU i h1
       rw [hf, hg]; constructor <;> positivity
     · by_cases h2 : i < c + b - 1
-      · have he : i = c + (i - c) := by omega
-        obtain ⟨hf, hg⟩ := hV (i - c) (by omega)
+      · have he : i = c + (i - c) := by clear * - h1 hn; omega
+        obtain ⟨hf, hg⟩ := hV (i - c) (by clear * - h2 hb; omega)
         rw [he, hf, hg]
-        have hbb : 0 ≤ 2 * B - 1 := by omega
+        have hbb : 0 ≤ 2 * B - 1 := by clear * - hB; omega
         constructor <;> positivity
-      · have he : i = c + b + (i - (c + b)) := by omega
-        obtain ⟨hf, hg⟩ := hW (i - (c + b)) (by dsimp [k] at hi hn; omega)
+      · have he : i = c + b + (i - (c + b)) := by clear * - h2 hn; omega
+        obtain ⟨hf, hg⟩ := hW (i - (c + b))
+          (by dsimp only [k] at hi hn; clear * - hi hn hb hba; omega)
         rw [he, hf, hg]; constructor <;> positivity
   have hPpos : ∀ i ∈ P.toList, 0 ≤ f i ∧ 0 ≤ g i := by
     intro i hi; have hm := Finset.mem_toList.mp hi
@@ -324,11 +353,12 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     · rw [Finset.sum_map_toList, mask_labels_sum (a - 1) (c + b) z hzcap f L (fun i hi => (hW i hi).1), hzc]
     · rw [Finset.sum_map_toList, mask_labels_sum (a - 1) (c + b) z hzcap g (2 * L - s - 1) (fun i hi => (hW i hi).2), hzc]
   have hA : 0 < xn - Kb := by
-    have hh := floor_margin r s t p C hs (by omega) hsp hcases (by rw [hN] at hNC; omega)
-      (power_odd_remainder a b (by omega))
+    have hh := floor_margin r s t p C hs (by clear * - hrq hqs; omega) hsp hcases
+      (by rw [hN] at hNC; clear * - hNC; omega)
+      (power_odd_remainder a b (by clear * - hb; omega))
     have he : xn - Kb = s * t + p - 1 - 2 * G := by
       change 2 * (u * (m : ℤ)) - (2 * (C - p * (t + 1)) + p + 1) = _
-      have hx : u * (m : ℤ) = C - G := by omega
+      have hx : u * (m : ℤ) = C - G := by clear * - hdivision; omega
       rw [hx, hsp]; ring
     rw [he]
     exact hh
@@ -338,44 +368,62 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     dsimp [delta, Hg, y, C, L]; rw [hrq]; ring
   have hdelta0 : 0 ≤ delta := by
     rw [hdelta]
-    have hh := mul_le_mul_of_nonneg_left htr (show 0 ≤ s by omega)
-    have hs1 := mul_le_mul_of_nonneg_left (show 1 ≤ s by omega) (show 0 ≤ r by omega)
-    nlinarith
+    have hh := mul_le_mul_of_nonneg_left htr (show 0 ≤ s by clear * - hs; omega)
+    have hs1 := mul_le_mul_of_nonneg_left
+      (show 1 ≤ s by clear * - hs; omega) (show 0 ≤ r by clear * - hs hqs hrq; omega)
+    nlinarith only [hh, hs1, hs]
   have hD : D = 2 * delta + r * (s + 1) - s := by
     dsimp [D, Kg, delta, yn, y]; rw [hrq]; ring
   have hcharge : 0 ≤ r * (s + 1) - s := by
-    have hh := mul_le_mul_of_nonneg_right (show 1 ≤ r by omega) (show 0 ≤ s + 1 by omega)
-    omega
+    have hh := mul_le_mul_of_nonneg_right
+      (show 1 ≤ r by clear * - hs hqs hrq; omega) (show 0 ≤ s + 1 by clear * - hs; omega)
+    clear * - hh; omega
   have hslack : N - Ka - D = t * (r + 1 - 2 * s) + r * (s + 1) - s := by
     rw [hD, hdelta, hN]
     dsimp [Ka, Ha, C]; rw [hrq, htv]; ring
   have hslack0 : 0 < N - Ka - D := by
     rw [hslack]
-    have hh : 0 < t * (r + 1 - 2 * s) := mul_pos (by omega) (by omega)
-    omega
+    have hh : 0 < t * (r + 1 - 2 * s) :=
+      mul_pos (by clear * - hs hqs hrq htr; omega) (by clear * - hrq hqs; omega)
+    clear * - hh hcharge; omega
   have hfirst : Hb ≤ x ∧ x ≤ C := by
     dsimp only [xn, Kb] at hA
-    have hx : x = C - G := by dsimp [x]; omega
-    constructor <;> omega
+    have hx : x = C - G := by dsimp [x]; clear * - hdivision; omega
+    constructor
+    · clear * - hA hsp hs
+      omega
+    · rw [hx]
+      exact sub_le_self C hG0
   have hfirstn : Kb ≤ xn ∧ xn ≤ N := by
-    have ha := hA
-    change 0 < 2 * x - Kb at ha
-    change Kb ≤ 2 * x ∧ 2 * x ≤ N
-    constructor <;> omega
+    constructor
+    · exact (sub_pos.mp hA).le
+    · change 2 * x ≤ N
+      clear * - hfirst hNC
+      omega
   have htail : y ≤ Hg ∧ Ha + Hg - y ≤ C := by
-    have hh : N - Ka = 2 * (C - Ha) := by dsimp [Ka]; omega
-    have hd : delta ≤ C - Ha := by omega
+    have hh : N - Ka = 2 * (C - Ha) := by dsimp [Ka]; clear * - hNC; omega
+    have hd : delta ≤ C - Ha := by clear * - hh hslack0 hD hcharge; omega
     change Hg - y ≤ C - Ha at hd
-    change 0 ≤ Hg - y at hdelta0
-    constructor <;> omega
-  have htailn : yn ≤ Kg ∧ Ka + Kg - yn ≤ N := by dsimp only [D] at hD hslack0; constructor <;> omega
+    constructor
+    · exact sub_nonneg.mp hdelta0
+    · clear * - hd
+      omega
+  have htailn : yn ≤ Kg ∧ Ka + Kg - yn ≤ N := by
+    dsimp only [D] at hD hslack0
+    constructor
+    · clear * - hD hdelta0 hcharge
+      omega
+    · clear * - hslack0
+      omega
   have hseed : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = u := by
     push_cast; dsimp [u, r, s]; rw [pow_add]
   have hzero : ((List.range k).map f).sum = 0 := by
-    have hz := ThreeNegativeEqualOuterSourceBridge.source_zero k (1 + 2 ^ a + 2 ^ (a + b)) (by dsimp [k]; omega)
+    have hz := ThreeNegativeEqualOuterSourceBridge.source_zero k (1 + 2 ^ a + 2 ^ (a + b))
+      (by dsimp only [k]; clear * - hb hba hac; omega)
     simpa only [hseed] using hz
   have hzero' : ((List.range (k + 1)).map g).sum = 0 := by
-    have hz := ThreeNegativeEqualOuterSourceBridge.source_zero (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (by dsimp [k]; omega)
+    have hz := ThreeNegativeEqualOuterSourceBridge.source_zero (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b)))
+      (by dsimp only [k]; clear * - hb hba hac; omega)
     simpa only [Nat.cast_mul, Nat.cast_ofNat, hseed] using hz
   have hold : InStrip f C 0 word := schedule_from_tail f (List.range k) P.toList Q.toList T.toList
     (c + b - 1) (c - 1) (k - 1) Hb Ha Hg C hp hfB' hfA' hfG'
@@ -386,7 +434,8 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     (c + b - 1) (c - 1) (k - 1) Kb Ka Kg N hplus hgB' hgA' hgG'
     hKb0 hKa0 ⟨hKg0, hKgN⟩ (fun i hi => (hPpos i hi).2)
     (by intro i hi; rcases List.mem_cons.mp hi with rfl | hi
-        · rw [hgear]; omega
+        · rw [hgear]
+          exact hu0.le
         · exact (hQpos i hi).2)
     (fun i hi => (hTpos i hi).2)
     (by simpa only [hPsum.2] using hfirstn) (by simpa only [hTsum.2] using htailn) hzero'
@@ -396,13 +445,15 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     have hh := Finset.card_le_card hsub
     simp only [Finset.card_range] at hh
     dsimp [j, k]
-    simpa only [Finset.length_toList] using (show P.card + 1 ≤ a + b + c by omega)
-  have hk : 0 < k := by dsimp [k]; omega
+    have hcard : P.card + 1 ≤ a + b + c := by clear * - hh hb; omega
+    simpa only [Finset.length_toList] using hcard
+  have hk : 0 < k := by dsimp [k]; clear * - hb; omega
   refine ⟨word.map (label k hk), j, hj, ?_, ?_⟩
   · refine lift_order k (1 + 2 ^ a + 2 ^ (a + b)) hk word hp ?_ ?_
     · simpa only [hseed, hhalf] using hold
     · simpa only [hseed] using hzero
-  · have he : earWord k (word.map (label k hk)) j = plus.map (label (k + 1) (by omega)) := by
+  · have he : earWord k (word.map (label k hk)) j =
+        plus.map (label (k + 1) (Nat.zero_lt_succ k)) := by
       have hpre : (P.toList ++ [c + b - 1]).length = j := by simp [j]
       have hw : (P.toList ++ [c + b - 1]) ++ (Q.toList ++ (c - 1) :: T.toList ++ [k - 1]) = word := by
         simp only [word, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
@@ -411,7 +462,7 @@ theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
       simpa only [hw, hpw] using marked_word k j hk (P.toList ++ [c + b - 1])
         (Q.toList ++ (c - 1) :: T.toList ++ [k - 1]) hpre (by rw [hw]; exact hp)
     rw [he]
-    refine lift_order (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (by omega) plus hplus ?_ ?_
+    refine lift_order (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (Nat.zero_lt_succ k) plus hplus ?_ ?_
     · simpa only [Nat.cast_mul, Nat.cast_ofNat, hseed, hnewhalf] using hnew
     · simpa only [Nat.cast_mul, Nat.cast_ofNat, hseed] using hzero'
 
