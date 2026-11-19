@@ -68,33 +68,67 @@ private theorem completedValue_encode (wagner : Bool) (highs : Placement)
   simp only [completedValue, complete, valueAt_encode, decode_flip]
   rfl
 
+private def setParityBit (mask i : Nat) (b : Bool) : Nat :=
+  if mask.testBit i = b then mask else mask ^^^ (2 ^ i)
+
+private theorem testBit_setParityBit (mask i j : Nat) (b : Bool) :
+    (setParityBit mask i b).testBit j = if i = j then b else mask.testBit j := by
+  by_cases h : i = j
+  · subst j
+    cases hbit : mask.testBit i <;> cases b <;>
+      simp [setParityBit, hbit, Nat.testBit_xor]
+  · unfold setParityBit
+    split <;> simp [h, Nat.testBit_xor, Nat.testBit_two_pow]
+
+private def parityMask : List (BitVec 9 × ℤ) → Nat
+  | [] => 0
+  | (x, s) :: rest => setParityBit (parityMask rest) x.toNat (decide ((s : ZMod 2) ≠ 0))
+
+private def parityAt (mask : Nat) (x : BitVec 9) : ZMod 2 :=
+  if mask.testBit x.toNat then 1 else 0
+
+private theorem parityAt_mask (entries : List (BitVec 9 × ℤ)) (x : BitVec 9) :
+    parityAt (parityMask entries) x = (valueAt entries x : ZMod 2) := by
+  have hone : ∀ z : ZMod 2, z ≠ 0 → z = 1 := by decide
+  induction entries with
+  | nil => simp [parityAt, parityMask, valueAt]
+  | cons entry rest ih =>
+    obtain ⟨y, v⟩ := entry
+    simp only [parityAt, parityMask, testBit_setParityBit, valueAt, List.find?_cons] at *
+    by_cases hy : y = x
+    · subst y
+      by_cases hv : (v : ZMod 2) = 0
+      · simp [hv]
+      · simp [hone _ hv]
+    · have hnat : y.toNat ≠ x.toNat := fun hh => hy (BitVec.eq_of_toNat_eq hh)
+      simpa [hnat, hy] using ih
+
 -- Modulo two, a signed cut row only counts the occupied vertices in the first half.
-private def completedParity (entries : List (BitVec 9 × ℤ)) (x : BitVec 9) : ZMod 2 :=
-  if x.getLsbD 0 = false then (valueAt entries x : ZMod 2)
+private def completedParity (mask : Nat) (x : BitVec 9) : ZMod 2 :=
+  if x.getLsbD 0 = false then parityAt mask x
   else
     let y := flipBit x 0
-    (valueAt entries y : ZMod 2) + ∑ i ∈ Finset.univ.erase (0 : Fin 9),
-      (valueAt entries (flipBit y i) : ZMod 2)
+    parityAt mask y + ∑ i ∈ Finset.univ.erase (0 : Fin 9), parityAt mask (flipBit y i)
 
 private theorem completedParity_eq (entries : List (BitVec 9 × ℤ)) (x : BitVec 9) :
-    completedParity entries x = (completedValue entries x : ZMod 2) := by
+    completedParity (parityMask entries) x = (completedValue entries x : ZMod 2) := by
   have hneg : (-1 : ZMod 2) = 1 := by decide
   have hthree : (3 : ZMod 2) = 1 := by decide
   have hsub (a b : ZMod 2) : a - b = a + b := by
     revert a b
     decide
-  simp only [completedParity, completedValue]
+  simp only [completedParity, completedValue, parityAt_mask]
   split
   · rfl
   · simp [truePrefixSign, hneg, hthree, hsub]
 
 private def rowChecked (wagner : Bool) (row : Witness) : Bool :=
   decide (∀ i j : Fin 9, row.axes i = row.axes j → i = j) &&
-  let entries := encodeEntries (signedRecords wagner (cubeBitVec 9 ∘ row.highs)
-    (unitSign ∘ signsFromMask row.signs))
+  let mask := parityMask (encodeEntries (signedRecords wagner (cubeBitVec 9 ∘ row.highs)
+    (unitSign ∘ signsFromMask row.signs)))
   (List.finRange 512).all fun v =>
     if (supportMask row.representative).testBit v.val then
-      decide (completedParity entries
+      decide (completedParity mask
         ((cubeBitVec 9).symm (preimage row (cubeBitVec 9 (BitVec.ofFin v)))) ≠ 0)
     else true
 
