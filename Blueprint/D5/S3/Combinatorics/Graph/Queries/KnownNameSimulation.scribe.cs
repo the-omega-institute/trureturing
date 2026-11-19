@@ -16,9 +16,12 @@ internal sealed class KnownNameSimulationDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Take a deterministic strategy whose depth is at most a given budget on "
-                    + "every answer branch. The simulation asks the oracle only when the queried "
-                    + "name has already been supplied. It returns a synthetic miss internally "
-                    + "on any other name. Its number of oracle calls is at most the original "
+                    + "every answer branch. Start the simulation with a specified set of known "
+                    + "names. Each successful reply adds the queried name and all returned "
+                    + "neighbor names. A miss leaves the known set as it was. The simulation "
+                    + "asks the oracle only when the queried name is in the current known set "
+                    + "and returns a synthetic miss internally on any other name. Its number "
+                    + "of oracle calls is at most the original "
                     + "budget because each simulated step follows one answer branch and makes "
                     + "at most one call."))),
                 DescribeRole.Theorem),
@@ -31,11 +34,13 @@ internal sealed class KnownNameSimulationDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "Sample an oracle world from an arbitrary probability mass function and "
                     + "run the original deterministic strategy and the simulation on that same "
-                    + "world. For any success predicate of the world and completed record, the "
+                    + "world with the same initial known set. A successful reply adds its queried "
+                    + "name and neighbor names to the current set. For any success predicate of "
+                    + "the world and completed record, the "
                     + "original success probability is at most the simulated success probability "
-                    + "plus the probability of a hit on a name not yet supplied to the original "
-                    + "strategy. Until such a hit, the two records agree. An out-of-knowledge "
-                    + "miss and a synthetic miss select the same continuation."))),
+                    + "plus the probability that the original strategy hits a name outside its "
+                    + "current known set. The two records agree up to that hit. A real miss on "
+                    + "an unknown name and a synthetic miss select the same continuation."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("known-name-next-query-from-prefix"),
