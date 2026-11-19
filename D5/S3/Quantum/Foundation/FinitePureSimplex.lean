@@ -192,7 +192,7 @@ private theorem one_relation_obstruction {C : PointedCone ℝ A} {u : A →ₗ[�
 
 
 omit [FiniteDimensional ℝ A] in
-private theorem simplex_kernel_zero {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem simplex_kernel_zero {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     [Fintype (pure C u)] (hS : simplex C u) :
     LinearMap.ker (coordinates C u) = ⊥ := by
   apply LinearMap.ker_eq_bot'.mpr

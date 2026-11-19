@@ -181,5 +181,148 @@ def registration :
   familyRecord := none
   options := #[] }
 
+
+namespace ArcCount
+
+private abbrev signature : Signature where
+  Params := Type u
+  State V := V → V → Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature.{u} :=
+  realize signature (fun _ V E => Nat.card {a : V × V // E a.1 a.2}) (fun e => nomatch e)
+
+private def zero : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private abbrev One := ULift.{u} Unit
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro _
+  refine ⟨One.{u}, (fun _ _ => False), (fun _ _ => True), ?_⟩
+  change Nat.card {a : One.{u} × One.{u} // False} ≠
+    Nat.card {a : One.{u} × One.{u} // True}
+  simp [Nat.card_eq_fintype_card]
+
+private abbrev sparseArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {V : Type u} [Finite V] (E : V → V → Prop)
+    (σ : Perm V) (_full : σ.IsCycleOn Set.univ)
+    (_hedge : ∀ a b, E a b → σ a = b)
+    (_hsparse : R.readout () V E < Nat.card V), ∀ v, ¬ TransGen E v v
+
+private theorem sparseRejectsZero : ¬ sparseArena.{u}.Law zero := by
+  intro h
+  let v : One.{u} := ULift.up ()
+  have hs : (1 : Perm One.{u}).IsCycleOn Set.univ :=
+    Equiv.Perm.isCycleOn_one.mpr (fun _ _ _ _ => Subsingleton.elim _ _)
+  have hn : zero.readout () One.{u} (fun _ _ => True) < Nat.card One.{u} := by
+    simp [zero, realize, Nat.card_eq_fintype_card]
+  exact h (fun _ _ => True) 1 hs (fun _ _ _ => Subsingleton.elim _ _) hn v
+    (TransGen.single trivial)
+
+def sparseEvidence : Registration sparseArena.{u} (type_of% (@partial_cycle_acyclic.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@partial_cycle_acyclic.{u}, zero, sparseRejectsZero⟩
+  sensitivity := ⟨fun i => ⟨zero,
+    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, sparseRejectsZero⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+private abbrev headArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {V : Type u} [Finite V] (E : V → V → Prop) (k : V → Bool) (b : Bool),
+    Nat.card (Side k b) - R.readout () V E ≤ Nat.card {x : Head E // k x = b}
+
+private theorem headsRejectZero : ¬ headArena.{u}.Law zero := by
+  intro h
+  have hle := h (V := One.{u}) (fun _ _ => True) (fun _ => false) false
+  simpa [zero, realize, Side, Head, Nat.card_eq_fintype_card] using hle
+
+def headEvidence : Registration headArena.{u} (type_of% (@heads_card_ge.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@heads_card_ge.{u}, zero, headsRejectZero⟩
+  sensitivity := ⟨fun i => ⟨zero,
+    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, headsRejectZero⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+
+def sparseRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@partial_cycle_acyclic.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound.partial_cycle_acyclic
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound.ArcCount.sparseEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sparseArena.{u}⟩
+  objectArena := .source ⟨sparseArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sparseArena.{u} ⟨sparseEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ V E => Nat.card {a : V × V // E a.1 a.2}) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "domain", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+def headRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@heads_card_ge.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound.heads_card_ge
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound.ArcCount.headEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨headArena.{u}⟩
+  objectArena := .source ⟨headArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source headArena.{u} ⟨headEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ V E => Nat.card {a : V × V // E a.1 a.2}) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ArcCount
+
 end
 end Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound
