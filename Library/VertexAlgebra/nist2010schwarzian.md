@@ -13,10 +13,16 @@ triage: anchor
 
 # Schwarzian and Gauss equation
 
-[DLMF 1.13.20](https://dlmf.nist.gov/1.13.E20) uses the convention
+## Verified locator
+
+In [DLMF §1.13](https://dlmf.nist.gov/1.13),
+[equation 1.13.20](https://dlmf.nist.gov/1.13.E20) uses the convention
 $S(t)=t'''/t'-(3/2)(t''/t')^2$.
 [DLMF 15.10.1](https://dlmf.nist.gov/15.10.E1) gives
 $z(1-z)y''+(c-(a+b+1)z)y'-aby=0$.
+
+## Application
+
 Taking $a=b=1/2$ and $c=1$ gives the differential equation used by
 the original half-binomial-square period.
 
