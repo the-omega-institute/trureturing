@@ -16,6 +16,7 @@ import tempfile
 import time
 import zipfile
 
+PREVIOUS_REPORT_SCHEMA = "stratalint-raw-lean-report-v3"
 HEX = re.compile(r"[0-9a-f]{64}")
 FIELDS = {"arena", "source_contract", "atom_readout", "seam_readout",
           "pyramid_coordinates", "association_coordinate", "continuation_target",
@@ -216,14 +217,18 @@ def prepare(row, previous_artifact):
         import publication
         with zipfile.ZipFile(path) as artifact:
             report = publication.read_json(artifact.read('raw-lean-report.json'))
-            if report['schema'] != publication.materials.REPORT_SCHEMA or len(report['modules']) != 1:
-                raise ValueError('fib.previous_module_binding')
-            old = report['modules'][0]
-            if old['module'] != row['module']:
-                raise ValueError('fib.previous_module_binding')
-            publication.check_origin(publication.read_json(
-                artifact.read('raw-lean-report.json.provenance.json')), old)
-        if "fib_analysis" in old:
+            old = None
+            # A known obsolete extraction format contributes no reusable leaves.
+            # Malformed or mismatched current artifacts still fail closed.
+            if report['schema'] != PREVIOUS_REPORT_SCHEMA:
+                if report['schema'] != publication.materials.REPORT_SCHEMA or len(report['modules']) != 1:
+                    raise ValueError('fib.previous_module_binding')
+                old = report['modules'][0]
+                if old['module'] != row['module']:
+                    raise ValueError('fib.previous_module_binding')
+                publication.check_origin(publication.read_json(
+                    artifact.read('raw-lean-report.json.provenance.json')), old)
+        if old is not None and "fib_analysis" in old:
             validate(old["fib_analysis"])
             previous = {x["application"]: x for x in old["fib_analysis"]["applications"]}
     pending = []
@@ -329,6 +334,21 @@ def application_inputs(report):
         return result
 
 
+def is_obsolete_published_report(report):
+    # Publication writes the schema as the final canonical field. This bounded
+    # read only selects a fresh regression run and never accepts old evidence.
+    suffix = f'], "schema": "{PREVIOUS_REPORT_SCHEMA}"}}\n'.encode('ascii')
+    try:
+        with report.open('rb') as source:
+            size = source.seek(0, os.SEEK_END)
+            if size < len(suffix):
+                return False
+            source.seek(-len(suffix), os.SEEK_END)
+            return source.read() == suffix
+    except FileNotFoundError:
+        return False
+
+
 def run_regressions(repository, previous, current, selected=False):
     """An already selected report consumer discharges one regression obligation.
 
@@ -337,8 +357,10 @@ def run_regressions(repository, previous, current, selected=False):
     same inputs without a persisted semantic test receipt.
     """
     current_inputs = application_inputs(current)
+    previous = Path(previous)
     try:
-        previous_inputs = application_inputs(previous) if Path(previous).exists() else {}
+        previous_inputs = None if is_obsolete_published_report(previous) else (
+            application_inputs(previous) if previous.exists() else {})
     except ValueError as error:
         if os.environ.get('REGENERATE_REPORT_ARTIFACTS') != '1' or str(error) != 'fib.invalid_partition':
             raise

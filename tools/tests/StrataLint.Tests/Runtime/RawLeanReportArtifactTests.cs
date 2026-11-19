@@ -57,7 +57,7 @@ public sealed class RawLeanReportArtifactTests
         var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("Trureturing.lean")]);
         var scoped = CanonicalReport.Replace(
             "stratalint-raw-lean-report-v4",
-            "stratalint-scoped-lean-report-v1",
+            "stratalint-scoped-lean-report-v2",
             StringComparison.Ordinal).Replace("\"imports\": []", "\"imports\": [\"Init\"]", StringComparison.Ordinal);
 
         var report = RawLeanReportArtifact.ReadForScope(
@@ -66,6 +66,10 @@ public sealed class RawLeanReportArtifactTests
         Assert.True(report.IsScoped);
         Assert.Throws<FormatException>(() =>
             RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(scoped), snapshot));
+        var previous = scoped.Replace(RawLeanReportArtifact.ScopedSchema,
+            "stratalint-scoped-lean-report-v1", StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.ReadForScope(Encoding.UTF8.GetBytes(previous), scope));
     }
 
     [Theory]
@@ -86,7 +90,7 @@ public sealed class RawLeanReportArtifactTests
         switch (defect)
         {
             case "missing":
-                bytes = "{\"modules\": [], \"schema\": \"stratalint-scoped-lean-report-v1\"}\n";
+                bytes = "{\"modules\": [], \"schema\": \"stratalint-scoped-lean-report-v2\"}\n";
                 File.Delete(RawLeanReportArtifact.MaterialsPath(path));
                 using (var archive = ZipFile.Open(RawLeanReportArtifact.MaterialsPath(path), ZipArchiveMode.Create)) { }
                 break;

@@ -47,7 +47,7 @@ class ScopedContracts(unittest.TestCase):
                          source_sha256='sha256:' + publication.digest(self.root / source['source_path']))
                     for source in self.scope['modules']]
         report = self.root / 'scoped.json'
-        report.write_bytes(materials.canonical_json(dict(schema='stratalint-scoped-lean-report-v1', modules=rows)))
+        report.write_bytes(materials.canonical_json(dict(schema='stratalint-scoped-lean-report-v2', modules=rows)))
         with zipfile.ZipFile(publication.member(report, '.materials.zip'), 'w'):
             pass
         origins = {row['module']: dict(module=row['module'], report_sha256=hashlib.sha256(materials.canonical_json(
@@ -269,7 +269,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
     def rows(self):
         value = json.loads(self.output.read_text())
         self.assertEqual(set(value), {'modules', 'schema'})
-        self.assertEqual(value['schema'], 'stratalint-scoped-lean-report-v1')
+        self.assertEqual(value['schema'], 'stratalint-scoped-lean-report-v2')
         return {row['module']: row for row in value['modules']}
 
     def test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation(self):

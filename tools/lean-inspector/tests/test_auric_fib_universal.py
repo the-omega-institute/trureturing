@@ -107,7 +107,7 @@ end AuricFibUniversalProduction
                 raise AssertionError('nonparticipants must not acquire a FIB partition')
         raw = json.loads(cls.report.read_text())
         if raw['schema'] != 'stratalint-raw-lean-report-v4':
-            raise AssertionError('parent report schema must remain v3')
+            raise AssertionError('parent report schema must remain v4')
         if set(raw['modules'][0]['fib_analysis']) != {'applications'}:
             raise AssertionError('FIB partition must have no independent version field')
         cls.native = {row['application'].removeprefix('AuricFibUniversalCompiled.'): row
@@ -404,13 +404,23 @@ end AuricFibUniversalProduction
         stats = fib_analysis.produce(incremental, previous, '')
         self.assertEqual(stats['generated'], 0)
         self.assertEqual(incremental['fib_analysis'], full['fib_analysis'])
+        obsolete = self.directory / 'obsolete-module.zip'
+        with zipfile.ZipFile(obsolete, 'w') as bundle:
+            bundle.writestr('raw-lean-report.json', materials.canonical_json(
+                dict(schema='stratalint-raw-lean-report-v3', modules=[original])))
+        rebuilt = copy.deepcopy(original)
+        stats = fib_analysis.produce(rebuilt, obsolete, ROOT / 'tools/scripts/auric-fib-analysis.sh')
+        self.assertEqual(stats['reused'], 0)
+        self.assertEqual(stats['generated'], sum(
+            leaf['request'] is not None for leaf in full['fib_analysis']['applications']))
+        self.assertEqual(rebuilt['fib_analysis'], full['fib_analysis'])
 
     def test_report_consumer_compares_complete_inputs_and_runs_once(self):
         original = json.loads(self.report.read_text())['modules'][0]
         origin = json.loads(Path(str(self.report) + '.provenance.json').read_text())
-        def save(name, row):
+        def save(name, row, schema=materials.REPORT_SCHEMA):
             report = self.directory / (name + '.json')
-            report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=[row])))
+            report.write_bytes(materials.canonical_json(dict(schema=schema, modules=[row])))
             current_origin = copy.deepcopy(origin)
             current_origin['report_sha256'] = hashlib.sha256(report.read_bytes()).hexdigest()
             Path(str(report) + '.provenance.json').write_text(json.dumps(current_origin))
@@ -449,6 +459,12 @@ end AuricFibUniversalProduction
                 command.reset_mock()
                 self.assertTrue(fib_analysis.run_regressions(ROOT, before, current))
                 command.assert_called_once()
+            previous_v3 = save('previous-v3', original, 'stratalint-raw-lean-report-v3')
+            command.reset_mock()
+            self.assertTrue(fib_analysis.run_regressions(ROOT, previous_v3, before))
+            command.assert_called_once()
+            with self.assertRaises(ValueError):
+                fib_analysis.run_regressions(ROOT, before, previous_v3)
             # Failed selected work propagates and cannot replace its input data.
             before_bytes = before.read_bytes()
             command.side_effect = subprocess.CalledProcessError(23, 'make')

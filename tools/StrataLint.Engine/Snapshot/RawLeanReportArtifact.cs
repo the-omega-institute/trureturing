@@ -12,7 +12,7 @@ namespace StrataLint.Engine;
 internal static partial class RawLeanReportArtifact
 {
     internal const string Schema = "stratalint-raw-lean-report-v4";
-    internal const string ScopedSchema = "stratalint-scoped-lean-report-v1";
+    internal const string ScopedSchema = "stratalint-scoped-lean-report-v2";
     internal const string DefaultRelativePath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly AsyncLocal<Action?> Reading = new();
 
