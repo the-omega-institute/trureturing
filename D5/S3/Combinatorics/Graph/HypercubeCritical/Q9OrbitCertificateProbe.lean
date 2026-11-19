@@ -3,7 +3,12 @@ module
 public import Mathlib.Algebra.BigOperators.Ring.Finset
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Algebra.Order.Ring.Int
+public import Mathlib.Data.BitVec
 public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.List.OfFn
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.Algebra.Group.Action.Prod
 public import Mathlib.GroupTheory.GroupAction.Defs
 public import Mathlib.Logic.Equiv.Basic
 
@@ -131,5 +136,70 @@ public theorem exists_deficit_perm_of_joint_bit_counts {I : Type*} [Fintype I]
   exact ⟨p, fun i => by simpa only [Prod.mk.injEq] using hp i⟩
 
 #print axioms exists_deficit_perm_of_joint_bit_counts
+
+/-- Permutations that preserve the deficit at every coordinate. -/
+public def deficitPermutations {I : Type*} (r : I → ℤ) : Subgroup (Equiv.Perm I) where
+  carrier := {p | ∀ i, r (p i) = r i}
+  one_mem' := fun _ => rfl
+  mul_mem' := by
+    intro p q hp hq i
+    exact (hp (q i)).trans (hq i)
+  inv_mem' := by
+    intro p hp i
+    have h := hp (p.symm i)
+    rw [p.apply_symm_apply] at h
+    exact h.symm
+
+/-- Permute coordinates simultaneously in each cube vertex. -/
+public instance {I : Type*} (r : I → ℤ) : MulAction (deficitPermutations r) (I → Bool) where
+  smul p x i := x (p.val.symm i)
+  one_smul _ := rfl
+  mul_smul _ _ _ := rfl
+
+/-- Joint bit-pattern counts identify the orbits for the diagonal action on pairs. -/
+public theorem joint_bit_counts_same_orbit {I : Type*} [Fintype I]
+    (r : I → ℤ) (x y u v : I → Bool)
+    (h : ∀ d a b, (univ.filter (fun i => r i = d ∧ x i = a ∧ y i = b)).card =
+      (univ.filter (fun i => r i = d ∧ u i = a ∧ v i = b)).card) :
+    ∃ p : deficitPermutations r, p • (x, y) = (u, v) := by
+  obtain ⟨p, hp⟩ := exists_deficit_perm_of_joint_bit_counts r x y u v h
+  refine ⟨⟨p, fun i => (hp i).1⟩, Prod.ext ?_ ?_⟩
+  · funext i
+    change x (p.symm i) = u i
+    simpa using ((hp (p.symm i)).2.1).symm
+  · funext i
+    change y (p.symm i) = v i
+    simpa using ((hp (p.symm i)).2.2).symm
+
+#print axioms joint_bit_counts_same_orbit
+
+/-- Little-endian encoding of a cube vertex for the integer certificate data. -/
+public def cubeBitVec (n : ℕ) : BitVec n ≃ (Fin n → Bool) where
+  toFun x i := x.getLsbD i.val
+  invFun x := (BitVec.ofBoolListLE (List.ofFn x)).cast List.length_ofFn
+  left_inv x := by
+    apply BitVec.eq_of_getLsbD_eq
+    intro i hi
+    simp only [BitVec.getLsbD_cast, BitVec.getLsbD_ofBoolListLE,
+      List.getD_eq_getElem?_getD, List.getElem?_ofFn, dite_eq_left hi, Option.getD_some]
+  right_inv x := by
+    funext i
+    simp only [BitVec.getLsbD_cast, BitVec.getLsbD_ofBoolListLE,
+      List.getD_eq_getElem?_getD, List.getElem?_ofFn, dite_eq_left i.isLt, Option.getD_some]
+
+/-- XOR by a single bit is the corresponding coordinate flip in the cube. -/
+public theorem cubeBitVec_xor_single {n : ℕ} (x : BitVec n) (i : Fin n) :
+    cubeBitVec n (x ^^^ BitVec.ofNat n (2 ^ i.val)) =
+      Function.update (cubeBitVec n x) i (!(cubeBitVec n x i)) := by
+  funext j
+  change (x ^^^ BitVec.ofNat n (2 ^ i.val)).getLsbD j.val = _
+  rw [BitVec.getLsbD_xor, BitVec.getLsbD_ofNat, Nat.testBit_two_pow]
+  by_cases h : j = i
+  · subst j
+    simp [cubeBitVec, i.isLt]
+  · have h' : i.val ≠ j.val := fun he => h (Fin.ext he.symm)
+    simp [Function.update_of_ne h, cubeBitVec, h']
+
+#print axioms cubeBitVec_xor_single
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
