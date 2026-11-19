@@ -70,7 +70,7 @@ internal sealed class NoncompactQuantileDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/NoncompactQuantile.exists_martingale_approximations"),
                 H("Actual finite martingale joints with converging marginals"),
                 StatementSource.FromAuthor(Approximation()),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Geometry/leskela2017conditionalconvex")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Convexity/leskela2017conditionalconvex")),
                 Blocks(
                     Paragraph(Text("Mean(rho) is the integral of the identity and StopLoss(rho,z) is the integral of max(x-z,0). IsMartingaleCoupling denotes both exact pushforward marginals, integrability of both joint coordinates, and zero displacement integrals for every bounded measurable first-coordinate test. WeakLimit denotes convergence in the weak topology of probability measures. The conclusion chooses one sequence of actual finite joint laws and asserts the two marginal convergences and a single uniform sum-of-coordinate-tails criterion.")),
                     Paragraph(Text("Quantile integrability follows from the original law by its pushforward identity. Each bin mean is monotone in its bin index, and the sum through bin K is n times the integral of Q_mu over (0,(K+1)/n]. Equal means and the stop-loss inequalities give reversed lower integrated-quantile inequalities. Finite majorization therefore orders both lists of bin means, and the existing uniform finite martingale-coupling construction produces the actual joint laws.")),
