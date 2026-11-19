@@ -6,6 +6,7 @@
    utility: none
    digest: The ordinary occupation spectrum of Slater orbitals supported on disjoint site pairs. -/
 
+import D5.S3.Quantum.Fermionic.OrderedSlaterFixedFilling
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Basic.Complex.Basic
@@ -24,6 +25,8 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
 import Mathlib.Tactic.NormNum
+
+/-! # Ordered Slater marginals of disjoint two-site orbitals -/
 
 open scoped BigOperators Matrix
 open Polynomial
@@ -478,7 +481,7 @@ private theorem bit_pickEndpoint (z : ZMod 2) : bit (pickEndpoint z) = z := by
   exact (show ∀ z : ZMod 2, bit (pickEndpoint z) = z by decide) z
 
 open Classical in
-private noncomputable def alternationMatrix {m n : ℕ}
+noncomputable def alternationMatrix {m n : ℕ}
     (p : Fin m → Bool → ι) (q : Fin n → Bool → ι) : Matrix (Fin m) (Fin n) (ZMod 2) :=
   Matrix.of fun i j =>
     if endpointsAlternate (p i false) (p i true) (q j false) (q j true) then 1 else 0
@@ -575,5 +578,406 @@ private theorem selectedSites_cut {m n : ℕ} {I : Set ι}
   · rintro (⟨i, hi⟩ | ⟨j, hj⟩)
     · exact ⟨Fin.castAdd n i, by simpa [sideSites, cutPairSites_left] using hi⟩
     · exact ⟨Fin.natAdd m j, by simpa [sideSites, cutPairSites_right] using hj⟩
+
+
+open D5.S3.Quantum.Fermionic.OrderedSlaterCut
+open D5.S3.Quantum.Fermionic.SlaterSpectatorMinor
+open D5.S3.Quantum.Fermionic.OrderedSlaterFixedFilling
+
+private theorem selectedSites_subset {m : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (x : Fin m → Bool) :
+    (↑(selectedSites (sideSites p) x) : Set ι) ⊆ I := by
+  intro a ha
+  obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp ha
+  exact (p (i, x i)).property
+
+private def pairOccupation {m : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) : (Fin m → Bool) ↪ Occupation I where
+  toFun x := ⟨selectedSites (sideSites p) x, selectedSites_subset p x⟩
+  inj' := fun _ _ h => selectedSites_injective (sideSites p) (congrArg Subtype.val h)
+
+private theorem union_occupation_injective {I : Set ι}
+    {a a' : Occupation I} {b b' : Occupation Iᶜ}
+    (h : a.val ∪ b.val = a'.val ∪ b'.val) : a = a' ∧ b = b' := by
+  have side {s t : Finset ι} (hs : (s : Set ι) ⊆ I) (ht : (t : Set ι) ⊆ Iᶜ)
+      {i : ι} : i ∈ s ↔ i ∈ s ∪ t ∧ i ∈ I := by
+    constructor
+    · intro hi
+      exact ⟨Finset.mem_union_left _ hi, hs hi⟩
+    · rintro ⟨hu, hi⟩
+      exact (Finset.mem_union.mp hu).elim id fun hx => False.elim (ht hx hi)
+  have hleft : a = a' := by
+    apply Subtype.ext
+    ext i
+    rw [side a.property b.property, side a'.property b'.property, h]
+  refine ⟨hleft, Subtype.ext ?_⟩
+  ext i
+  have hr {s t : Finset ι} (hs : (s : Set ι) ⊆ I) (ht : (t : Set ι) ⊆ Iᶜ) :
+      i ∈ t ↔ i ∈ s ∪ t ∧ i ∉ I := by
+    constructor
+    · intro hi
+      exact ⟨Finset.mem_union_right _ hi, ht hi⟩
+    · rintro ⟨hu, hi⟩
+      exact (Finset.mem_union.mp hu).elim (fun hx => False.elim (hi (hs hx))) id
+  rw [hr a.property b.property, hr a'.property b'.property, h]
+
+omit [LinearOrder ι] in
+private theorem cutPairSites_pick {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
+    (x : Fin m → Bool) (y : Fin n → Bool) :
+    (fun j => cutPairSites p q (j, Fin.addCases x y j)) =
+      Fin.addCases (fun i => (p (i, x i) : ι)) (fun j => (q (j, y j) : ι)) := by
+  funext j
+  induction j using Fin.addCases with
+  | left i => simp only [Fin.addCases_left, cutPairSites_left]
+  | right j => simp only [Fin.addCases_right, cutPairSites_right]
+
+
+private theorem orderedCut_pairs_zero {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
+    (weight : Fin (m + n) → Bool → ℂ)
+    (a : Occupation I) (b : Occupation Iᶜ)
+    (h : ¬ (∃ x, pairOccupation p x = a) ∨ ¬ (∃ y, pairOccupation q y = b)) :
+    orderedCut I (pairedEntries (cutPairSites p q) weight) a b = 0 := by
+  classical
+  rw [orderedCut_eq_minor]
+  unfold occupiedMinor
+  split_ifs with hcard <;> try rfl
+  apply minor_zero_of_no_selection _ _ _ hcard
+  rintro ⟨pick, hpick⟩
+  let x : Fin m → Bool := fun i => pick (Fin.castAdd n i)
+  let y : Fin n → Bool := fun j => pick (Fin.natAdd m j)
+  have hxy : Fin.addCases x y = pick := by
+    funext i
+    induction i using Fin.addCases with
+    | left i => simp [x]
+    | right j => simp [y]
+  rw [← hxy, selectedSites_cut] at hpick
+  have heq : pairOccupation p x = a ∧ pairOccupation q y = b :=
+    union_occupation_injective hpick
+  exact h.elim (fun hx => hx ⟨x, heq.1⟩) (fun hy => hy ⟨y, heq.2⟩)
+
+private theorem orderedCut_pairs_selected {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
+    (weight : Fin (m + n) → Bool → ℂ) (x : Fin m → Bool) (y : Fin n → Bool) :
+    orderedCut I (pairedEntries (cutPairSites p q) weight) (pairOccupation p x) (pairOccupation q y) =
+      binarySign (inversionSum (Fin.addCases (fun i => (p (i, x i) : ι))
+        (fun j => (q (j, y j) : ι)))) *
+        ∏ j, weight j (Fin.addCases x y j) := by
+  rw [orderedCut_eq_minor]
+  change occupiedMinor _ (selectedSites (sideSites p) x ∪ selectedSites (sideSites q) y) = _
+  rw [← selectedSites_cut, occupiedMinor, dite_eq_left (selectedSites_card _ _), selected_minor_phase,
+    cutPairSites_pick]
+
+
+private theorem orderedCut_pairs_character {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (w : ℂ)
+    (hp : ∀ i, (p (i, false) : ι) < p (i, true))
+    (hq : ∀ j, (q (j, false) : ι) < q (j, true)) :
+    ∃ left : (Fin m → ZMod 2) → ZMod 2, ∃ right : (Fin n → ZMod 2) → ZMod 2,
+      ∀ (x : Fin m → ZMod 2) (y : Fin n → ZMod 2),
+        orderedCut I (pairedEntries (cutPairSites p q) fun _ _ => w)
+          (pairOccupation p fun i => pickEndpoint (x i))
+          (pairOccupation q fun j => pickEndpoint (y j)) =
+        binarySign (left x) * (binarySign (right y) *
+          (w ^ (m + n) * binarySign
+            (((alternationMatrix (fun i e => (p (i, e) : ι))
+              (fun j e => (q (j, e) : ι)))ᵀ *ᵥ x) ⬝ᵥ y))) := by
+  have hsep (i : Fin m) (j : Fin n) (e d : Bool) : (p (i, e) : ι) ≠ q (j, d) :=
+    fun h => (q (j, d)).property (h ▸ (p (i, e)).property)
+  obtain ⟨left, right, hphase⟩ := alternation_phase_bilinear _ _ hp hq hsep
+  refine ⟨left, right, fun x y => ?_⟩
+  rw [orderedCut_pairs_selected, hphase x y]
+  simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, AddChar.map_add_eq_mul]
+  ring
+
+private theorem pairedEntries_orthonormal {k : ℕ} [Fintype ι] (sites : (Fin k × Bool) ↪ ι)
+    (weight : Fin k → Bool → ℂ)
+    (hnorm : ∀ j, star (weight j false) * weight j false +
+      star (weight j true) * weight j true = 1) :
+    (pairedEntries sites weight).conjTranspose * pairedEntries sites weight = 1 := by
+  classical
+  ext i j : 1
+  rw [Matrix.mul_apply]
+  simp only [Matrix.conjTranspose_apply]
+  by_cases hij : i = j
+  · subst j
+    rw [Matrix.one_apply_eq]
+    have hsite : sites (i, false) ≠ sites (i, true) := by
+      simp [sites.injective.eq_iff]
+    have hsum (r : ι) :
+        star (pairedEntries sites weight r i) * pairedEntries sites weight r i =
+          (if r = sites (i, false) then star (weight i false) * weight i false else 0) +
+          (if r = sites (i, true) then star (weight i true) * weight i true else 0) := by
+      by_cases hf : r = sites (i, false)
+      · subst r
+        simp [pairedEntries, hsite]
+      · by_cases ht : r = sites (i, true) <;> simp [pairedEntries, hf, ht]
+    simp only [hsum, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    exact hnorm i
+  · rw [Matrix.one_apply_ne hij]
+    refine Finset.sum_eq_zero fun r _ => ?_
+    have hsep (e d : Bool) : sites (i, e) ≠ sites (j, d) :=
+      fun h => hij (congrArg Prod.fst (sites.injective h))
+    by_cases hf : r = sites (i, false)
+    · subst r
+      simp [pairedEntries, hsep]
+    · by_cases ht : r = sites (i, true)
+      · subst r
+        simp [pairedEntries, hsep]
+      · simp [pairedEntries, hf, ht]
+
+
+noncomputable local instance [Fintype ι] (I : Set ι) : Fintype (Occupation I) :=
+  Fintype.ofFinite _
+
+private theorem pickEndpoint_bit (b : Bool) : pickEndpoint (bit b) = b := by
+  cases b <;> decide
+
+private def pairBitOccupation {m : ℕ} {I : Set ι} (p : (Fin m × Bool) ↪ I) :
+    (Fin m → ZMod 2) ↪ Occupation I where
+  toFun x := pairOccupation p fun i => pickEndpoint (x i)
+  inj' := by
+    intro x y h
+    have hpick := (pairOccupation p).injective h
+    funext i
+    simpa only [bit_pickEndpoint] using congrArg (fun f : Fin m → Bool => bit (f i)) hpick
+
+private theorem pairBitOccupation_apply_bits {m : ℕ} {I : Set ι} (p : (Fin m × Bool) ↪ I)
+    (x : Fin m → Bool) : pairBitOccupation p (fun i => bit (x i)) = pairOccupation p x := by
+  change pairOccupation p (fun i => pickEndpoint (bit (x i))) = pairOccupation p x
+  simp only [pickEndpoint_bit]
+
+/-- Each column is supported on its own pair, with the retained orbitals ordered first. -/
+def cutPairOrbitals {m n : ℕ} {I : Set ι} (p : (Fin m × Bool) ↪ I)
+    (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (weight : Fin (m + n) → Bool → ℂ) :
+    Matrix ι (Fin (m + n)) ℂ := pairedEntries (cutPairSites p q) weight
+
+
+private theorem not_pairOccupation_of_not_bit {m : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) {a : Occupation I} (h : ¬ ∃ x, pairBitOccupation p x = a) :
+    ¬ ∃ x, pairOccupation p x = a := by
+  rintro ⟨x, hx⟩
+  exact h ⟨fun i => bit (x i), (pairBitOccupation_apply_bits p x).trans hx⟩
+
+open Classical in
+private theorem charpoly_of_signed_character_padding
+    {α β u v : Type*} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β]
+    [Fintype u] [Fintype v]
+    (e : (u → ZMod 2) ↪ α) (f : (v → ZMod 2) ↪ β)
+    (A : Matrix u v (ZMod 2)) (c : ℂ)
+    (hnorm : c * star c = ((2 : ℂ) ^ (Fintype.card u + Fintype.card v))⁻¹)
+    (left : (u → ZMod 2) → ZMod 2) (right : (v → ZMod 2) → ZMod 2)
+    (B : Matrix α β ℂ)
+    (active : ∀ x y, B (e x) (f y) =
+      (-1 : ℂ) ^ (left x).val * ((-1 : ℂ) ^ (right y).val *
+        (c * binarySign ((Aᵀ *ᵥ x) ⬝ᵥ y))))
+    (row : ∀ a b, (¬ ∃ x, e x = a) → B a b = 0)
+    (col : ∀ a b, (¬ ∃ y, f y = b) → B a b = 0) :
+    (B * B.conjTranspose).charpoly =
+      X ^ (Fintype.card α - 2 ^ A.rank) * (X - C (((2 : ℂ) ^ A.rank)⁻¹)) ^ (2 ^ A.rank) := by
+  let M : Matrix (u → ZMod 2) (v → ZMod 2) ℂ :=
+    Matrix.of fun x y => c * binarySign ((Aᵀ *ᵥ x) ⬝ᵥ y)
+  let N : Matrix (u → ZMod 2) (v → ZMod 2) ℂ :=
+    fun x y => (-1 : ℂ) ^ (left x).val * ((-1 : ℂ) ^ (right y).val * M x y)
+  have heq := eq_padding e f B N active row col
+  have hsign : (N * N.conjTranspose).charpoly = (M * M.conjTranspose).charpoly :=
+    signed_reindexed_gram (Equiv.refl _) (Equiv.refl _) M
+      (fun x => (left x).val) (fun y => (right y).val)
+  have hpoly : (M * M.conjTranspose).charpoly =
+      X ^ (2 ^ Fintype.card u - 2 ^ A.rank) *
+        (X - C (((2 : ℂ) ^ A.rank)⁻¹)) ^ (2 ^ A.rank) :=
+    character_gram_charpoly A c hnorm
+  have he : Fintype.card (u → ZMod 2) ≤ Fintype.card α :=
+    Fintype.card_le_of_injective e e.injective
+  have hr : 2 ^ A.rank ≤ 2 ^ Fintype.card u :=
+    Nat.pow_le_pow_right (by decide) (Matrix.rank_le_card_height A)
+  simp only [Fintype.card_fun, ZMod.card] at he
+  have hpad :
+      ((embedMatrix e * N * (embedMatrix f).conjTranspose) *
+        (embedMatrix e * N * (embedMatrix f).conjTranspose).conjTranspose).charpoly =
+      X ^ (Fintype.card α - Fintype.card (u → ZMod 2)) *
+        (N * N.conjTranspose).charpoly :=
+    paddedGram_charpoly e f N
+  have hparts :
+      (B * B.conjTranspose).charpoly = X ^ (Fintype.card α - Fintype.card (u → ZMod 2)) *
+        (X ^ (2 ^ Fintype.card u - 2 ^ A.rank) *
+          (X - C (((2 : ℂ) ^ A.rank)⁻¹)) ^ (2 ^ A.rank)) :=
+    (congrArg (fun B : Matrix α β ℂ => (B * B.conjTranspose).charpoly) heq).trans
+      (hpad.trans (congrArg
+        (fun Q : ℂ[X] => X ^ (Fintype.card α - Fintype.card (u → ZMod 2)) * Q)
+        (hsign.trans hpoly)))
+  apply hparts.trans
+  simp only [Fintype.card_fun, ZMod.card]
+  have hexponent : Fintype.card α - 2 ^ Fintype.card u + (2 ^ Fintype.card u - 2 ^ A.rank) =
+      Fintype.card α - 2 ^ A.rank := by omega
+  rw [← mul_assoc, ← pow_add, hexponent]
+
+open Classical in
+theorem orderedCut_pair_charpoly [Fintype ι] {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
+    (hp : ∀ i, (p (i, false) : ι) < p (i, true))
+    (hq : ∀ j, (q (j, false) : ι) < q (j, true))
+    (w : ℂ) (hw : w * star w = (2 : ℂ)⁻¹) :
+    let A := alternationMatrix (fun i e => (p (i, e) : ι)) (fun j e => (q (j, e) : ι))
+    let B := orderedCut I (cutPairOrbitals p q fun _ _ => w)
+    (B * B.conjTranspose).charpoly =
+      X ^ (Fintype.card (Occupation I) - 2 ^ A.rank) *
+        (X - C (((2 : ℂ) ^ A.rank)⁻¹)) ^ (2 ^ A.rank) := by
+  intro A B
+  let e := pairBitOccupation p
+  let f := pairBitOccupation q
+  let c : ℂ := w ^ (m + n)
+  obtain ⟨left, right, hphase⟩ := orderedCut_pairs_character p q w hp hq
+  have hactive (x : Fin m → ZMod 2) (y : Fin n → ZMod 2) :
+      B (e x) (f y) =
+        (-1 : ℂ) ^ (left x).val * ((-1 : ℂ) ^ (right y).val *
+          (c * binarySign ((Aᵀ *ᵥ x) ⬝ᵥ y))) :=
+    hphase x y
+  have hnorm : c * star c =
+      ((2 : ℂ) ^ (Fintype.card (Fin m) + Fintype.card (Fin n)))⁻¹ := by
+    rw [show c = w ^ (m + n) from rfl, star_pow, ← mul_pow, hw, inv_pow]
+    simp
+  exact charpoly_of_signed_character_padding e f A c hnorm left right B hactive
+    (fun a b ha => orderedCut_pairs_zero p q _ a b (Or.inl (not_pairOccupation_of_not_bit p ha)))
+    (fun a b hb => orderedCut_pairs_zero p q _ a b (Or.inr (not_pairOccupation_of_not_bit q hb)))
+
+/-- Keep the retained columns and put every discarded column at its earlier endpoint. -/
+def coordinateReplacementWeights {m n : ℕ} (w : ℂ) : Fin (m + n) → Bool → ℂ :=
+  Fin.addCases (fun _ _ => w) (fun _ e => if e then 0 else 1)
+
+private theorem replacement_amplitude {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (w : ℂ)
+    (x : Fin m → Bool) (y : Fin n → Bool) :
+    orderedCut I (cutPairOrbitals p q (coordinateReplacementWeights w))
+      (pairOccupation p x) (pairOccupation q y) =
+      if y = (fun _ => false) then
+        binarySign (inversionSum (Fin.addCases (fun i => (p (i, x i) : ι))
+          (fun j => (q (j, false) : ι)))) * w ^ m
+      else 0 := by
+  classical
+  unfold cutPairOrbitals
+  rw [orderedCut_pairs_selected, Fin.prod_univ_add]
+  simp only [coordinateReplacementWeights, Fin.addCases_left, Fin.addCases_right,
+    Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+  by_cases hy : y = (fun _ => false)
+  · subst y
+    simp
+  · obtain ⟨j, hj⟩ : ∃ j, y j = true := by
+      by_contra! h
+      apply hy
+      funext j
+      exact Bool.eq_false_of_not_eq_true (h j)
+    have hprod : (∏ j : Fin n, if y j then (0 : ℂ) else 1) = 0 :=
+      Finset.prod_eq_zero (Finset.mem_univ j) (by simp [hj])
+    simp [hy, hprod]
+
+private theorem replacement_compression [Fintype ι] {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (w : ℂ) :
+    retainedRows I (cutPairOrbitals p q fun _ _ => w) =
+      retainedRows I (cutPairOrbitals p q (coordinateReplacementWeights w)) := by
+  ext u j
+  induction j using Fin.addCases with
+  | left j =>
+    simp [retainedRows, cutPairOrbitals, pairedEntries, coordinateReplacementWeights]
+  | right j =>
+    have hne (e : Bool) : (u : ι) ≠ q (j, e) := fun h => (q (j, e)).property (h ▸ u.property)
+    simp [retainedRows, cutPairOrbitals, pairedEntries, cutPairSites_right, hne]
+
+private theorem binarySign_sq (z : ZMod 2) : binarySign z * binarySign z = 1 := by
+  rw [← AddChar.map_add_eq_mul]
+  have hz : z + z = 0 := calc
+    z + z = -z + z := congrArg (fun a => a + z) (ZMod.neg_eq_self_mod_two z).symm
+    _ = 0 := neg_add_cancel z
+  rw [hz, AddChar.map_zero_eq_one]
+
+private theorem replacement_charpoly [Fintype ι] {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ)) (w : ℂ)
+    (hw : w * star w = (2 : ℂ)⁻¹) :
+    let B := orderedCut I (cutPairOrbitals p q (coordinateReplacementWeights w))
+    (B * B.conjTranspose).charpoly = X ^ (Fintype.card (Occupation I) - 1) * (X - 1) := by
+  classical
+  intro B
+  let y₀ : Fin n → Bool := fun _ => false
+  let f : Unit ↪ Occupation Iᶜ := ⟨fun _ => pairOccupation q y₀, fun _ _ _ => Subsingleton.elim _ _⟩
+  let e := pairOccupation p
+  let phase (x : Fin m → Bool) := inversionSum (Fin.addCases (fun i => (p (i, x i) : ι))
+    (fun j => (q (j, false) : ι)))
+  let N : Matrix (Fin m → Bool) Unit ℂ := fun x _ => binarySign (phase x) * w ^ m
+  have heq : B = embedMatrix e * N * (embedMatrix f).conjTranspose := by
+    apply eq_padding
+    · intro x u
+      change orderedCut I (cutPairOrbitals p q (coordinateReplacementWeights w))
+        (pairOccupation p x) (pairOccupation q y₀) = _
+      simpa [y₀] using replacement_amplitude p q w x y₀
+    · intro a b ha
+      exact orderedCut_pairs_zero p q _ a b (Or.inl ha)
+    · intro a b hb
+      by_cases ha : ∃ x, pairOccupation p x = a
+      · obtain ⟨x, rfl⟩ := ha
+        by_cases hex : ∃ y, pairOccupation q y = b
+        · obtain ⟨y, rfl⟩ := hex
+          have hy : y ≠ y₀ := fun h => hb ⟨(), congrArg (pairOccupation q) h.symm⟩
+          simpa [y₀, hy] using replacement_amplitude p q w x y
+        · exact orderedCut_pairs_zero p q _ _ b (Or.inr hex)
+      · exact orderedCut_pairs_zero p q _ _ b (Or.inl ha)
+  have hunit : N.conjTranspose * N = 1 := by
+    ext u v
+    cases u
+    cases v
+    rw [Matrix.mul_apply, Matrix.one_apply_eq]
+    have hterm (x : Fin m → Bool) :
+        star (N x ()) * N x () = ((2 : ℂ)⁻¹) ^ m := by
+      unfold N
+      rw [star_mul', binarySign_star, star_pow]
+      calc
+        _ = (binarySign (phase x) * binarySign (phase x)) * (w * star w) ^ m := by
+          rw [mul_pow]
+          ring
+        _ = _ := by rw [binarySign_sq, hw, one_mul]
+    simp only [Matrix.conjTranspose_apply, hterm, Finset.sum_const, Finset.card_univ,
+      Fintype.card_fun, Fintype.card_bool, Fintype.card_fin, nsmul_eq_mul]
+    push_cast
+    rw [inv_pow, mul_inv_cancel₀ (pow_ne_zero _ (by norm_num : (2 : ℂ) ≠ 0))]
+  have hle : Fintype.card Unit ≤ Fintype.card (Fin m → Bool) :=
+    Fintype.card_le_of_injective (fun _ : Unit => fun _ : Fin m => false)
+      (fun _ _ _ => Subsingleton.elim _ _)
+  have he : Fintype.card (Fin m → Bool) ≤ Fintype.card (Occupation I) :=
+    Fintype.card_le_of_injective e e.injective
+  have hpow : Fintype.card (Occupation I) - Fintype.card (Fin m → Bool) +
+      (Fintype.card (Fin m → Bool) - Fintype.card Unit) =
+        Fintype.card (Occupation I) - 1 := by
+    rw [Fintype.card_unit] at hle ⊢
+    omega
+  rw [heq, paddedGram_charpoly]
+  change X ^ (Fintype.card (Occupation I) - Fintype.card (Fin m → Bool)) *
+    (N * N.conjTranspose).charpoly = _
+  rw [Matrix.charpoly_mul_comm_of_le N N.conjTranspose hle, hunit, ← mul_assoc, ← pow_add, hpow]
+  simp [Matrix.charpoly_one]
+
+
+/-- The coordinate replacement preserves the compression and leaves a pure marginal. -/
+theorem coordinate_replacement [Fintype ι] {m n : ℕ} {I : Set ι}
+    (p : (Fin m × Bool) ↪ I) (q : (Fin n × Bool) ↪ ↥(Iᶜ))
+    (w : ℂ) (hw : w * star w = (2 : ℂ)⁻¹) :
+    let V := cutPairOrbitals p q fun _ _ => w
+    let W := cutPairOrbitals p q (coordinateReplacementWeights w)
+    V.conjTranspose * V = 1 ∧ W.conjTranspose * W = 1 ∧
+    retainedRows I V * (retainedRows I V).conjTranspose =
+      retainedRows I W * (retainedRows I W).conjTranspose ∧
+    ((orderedCut I W) * (orderedCut I W).conjTranspose).charpoly =
+      X ^ (Fintype.card (Occupation I) - 1) * (X - 1) := by
+  classical
+  intro V W
+  have hn : star w * w + star w * w = 1 := by
+    rw [mul_comm (star w) w, hw]
+    norm_num
+  refine ⟨pairedEntries_orthonormal _ _ (fun _ => hn), pairedEntries_orthonormal _ _ ?_, ?_,
+    replacement_charpoly p q w hw⟩
+  · intro j
+    induction j using Fin.addCases with
+    | left j => simpa only [coordinateReplacementWeights, Fin.addCases_left] using hn
+    | right j => simp [coordinateReplacementWeights]
+  · exact congrArg (fun M => M * M.conjTranspose) (replacement_compression p q w)
 
 end D5.S3.Quantum.Fermionic.SlaterPairCutRank
