@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:751a80bc346949d27f1ca3e55fea35fcdc7c23c8cc85a4ca4173cb61f2bd1df7
-  normalized_sha256: sha256:751a80bc346949d27f1ca3e55fea35fcdc7c23c8cc85a4ca4173cb61f2bd1df7
-cas_ref: sha256:751a80bc346949d27f1ca3e55fea35fcdc7c23c8cc85a4ca4173cb61f2bd1df7
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/ActiveFiniteContactCompletion.active_finite_contact_completion
-    target_statement_id: sha256:fd849831c517e0119b49dfa2ad02f970c952634563ce56a3ae3e96b1ac8cd44c
-receipts:
-  unresolved_subitems: []

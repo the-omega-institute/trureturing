@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2064a17a2e01bc8e776aa4cbfd9088865a3fba4142aed666c6b6d552d3b6c1c3
-  normalized_sha256: sha256:2064a17a2e01bc8e776aa4cbfd9088865a3fba4142aed666c6b6d552d3b6c1c3
-cas_ref: sha256:2064a17a2e01bc8e776aa4cbfd9088865a3fba4142aed666c6b6d552d3b6c1c3
-coverage_gids:
-  - gid: D5/S3/Estimation/DecisionRisk/PosteriorHistoryCompression.posterior_history_compression
-    target_statement_id: sha256:fe244886b865ff148ad39101be14946f72fe1a9546c78a6fe1d3d2e5157a48f7
-receipts:
-  unresolved_subitems: []

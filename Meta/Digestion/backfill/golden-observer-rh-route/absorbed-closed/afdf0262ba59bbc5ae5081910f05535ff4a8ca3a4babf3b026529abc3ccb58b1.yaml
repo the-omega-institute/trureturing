@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:afdf0262ba59bbc5ae5081910f05535ff4a8ca3a4babf3b026529abc3ccb58b1
-  normalized_sha256: sha256:afdf0262ba59bbc5ae5081910f05535ff4a8ca3a4babf3b026529abc3ccb58b1
-cas_ref: sha256:afdf0262ba59bbc5ae5081910f05535ff4a8ca3a4babf3b026529abc3ccb58b1
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance.truncatedZeroSum_enum_invariant
-    target_statement_id: sha256:d20e49378abab3f14a2447d482a7227ea4f182e2bee61cfb59c24abab172f3d6
-receipts:
-  unresolved_subitems: []

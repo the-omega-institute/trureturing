@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1a902546d9a9c2188dbf653f3f8fc80c9aeceae9cd290f7131527ef41650469b
-  normalized_sha256: sha256:1a902546d9a9c2188dbf653f3f8fc80c9aeceae9cd290f7131527ef41650469b
-cas_ref: sha256:1a902546d9a9c2188dbf653f3f8fc80c9aeceae9cd290f7131527ef41650469b
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.divisor_5040_golden_equiv
-    target_statement_id: sha256:f3dd5ff71359c08945559efb764170be30bacdab68c758eaf946dd9adb63d462
-receipts:
-  unresolved_subitems: []

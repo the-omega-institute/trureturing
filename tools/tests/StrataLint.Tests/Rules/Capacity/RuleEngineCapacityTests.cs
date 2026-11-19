@@ -270,59 +270,6 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003DoesNotTreatTheSingleSourceDigestionLedgerAsASplittableModule()
-    {
-        var fixture = new RuleFixture();
-        // domains, registry, engineering-projects and ci-checks are the four counted Meta files.
-        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 4; index++)
-        {
-            var path = $"Meta/Capacity{index:00}.txt";
-            fixture.Files[path] = "fixture\n";
-            fixture.Baseline[path] = "fixture\n";
-        }
-
-        fixture.Changes.Add("Meta/Capacity00.txt");
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3),
-            fixture.Build()).Diagnostics;
-        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == "Meta");
-    }
-
-    [Fact]
-    public void Sl003DoesNotTreatDirectoryDigestionLedgerFilesAsSplittableModules()
-    {
-        var fixture = new RuleFixture();
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3),
-            fixture.Build()).Diagnostics;
-
-        Assert.DoesNotContain(diagnostics, diagnostic =>
-            BackfillInventoryLoader.IsCanonicalPath(diagnostic.Path));
-    }
-
-    [Fact]
-    public void Sl003DoesNotTreatTheCasObjectStoreAsASplittableModule()
-    {
-        var fixture = new RuleFixture();
-        for (var index = 0; index < (L + 1); index++)
-        {
-            var text = $"CAS object {index}\n";
-            var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(text));
-            fixture.Files[captured.RelativePath] = text;
-            // The change has to touch the store, or the capacity rule skips it for being
-            // untouched and this stops testing the exclusion it is named for.
-            fixture.Changes.Add(captured.RelativePath);
-        }
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3),
-            fixture.Build()).Diagnostics;
-        Assert.DoesNotContain(diagnostics, diagnostic =>
-            diagnostic.Path.StartsWith(DigestionCasStore.RootPath, StringComparison.Ordinal)
-            || diagnostic.Path == DigestionCasStore.RootPath.TrimEnd('/'));
-    }
-
-    [Fact]
     public void Sl003DoesNotTreatTwentyFiveFrozenStateFragmentsAsASplittableModules()
     {
         var fixture = new RuleFixture();

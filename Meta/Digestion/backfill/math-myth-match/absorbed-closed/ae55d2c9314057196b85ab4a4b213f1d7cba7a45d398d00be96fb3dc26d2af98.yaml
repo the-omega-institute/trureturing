@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ae55d2c9314057196b85ab4a4b213f1d7cba7a45d398d00be96fb3dc26d2af98
-  normalized_sha256: sha256:ae55d2c9314057196b85ab4a4b213f1d7cba7a45d398d00be96fb3dc26d2af98
-cas_ref: sha256:ae55d2c9314057196b85ab4a4b213f1d7cba7a45d398d00be96fb3dc26d2af98
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Communication/JointLosslessCommunicationCriterion.joint_lossless_communication_criterion
-    target_statement_id: sha256:2c029d3c27adac67522e746f2c78cbf41390758bd60dd777c1fb654eba044d25
-receipts:
-  unresolved_subitems: []

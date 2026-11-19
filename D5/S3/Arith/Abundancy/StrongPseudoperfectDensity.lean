@@ -157,12 +157,12 @@ private lemma divisor_subset_sum {m q : ℕ} (hq : q.Prime) (hqm : ¬ q ∣ m)
       exact complement_formula (Nat.dvd_of_mem_divisors (mem_inter.mp hd).2) q
     _ = _ := by rw [mul_sum]
 
-private def primeCodes (m : ℕ) : Finset ℕ := by
+def primeCodes (m : ℕ) : Finset ℕ := by
   classical
   exact m.divisors.powerset.image
     (fun T => (∑ d ∈ T, d) / (2 * m - ∑ d ∈ T, m / d))
 
-private lemma prime_mem_codes {m q : ℕ} (hq : q.Prime) (hqm : ¬ q ∣ m)
+lemma prime_mem_codes {m q : ℕ} (hq : q.Prime) (hqm : ¬ q ∣ m)
     (hsp : StronglyPseudoperfect (m * q)) : q ∈ primeCodes m := by
   classical
   obtain ⟨hmq, S, hS, hclosed, hsum⟩ := hsp

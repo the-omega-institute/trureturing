@@ -1,8 +1,0 @@
-## 1. 两条最新研究线与本节的不同义务
-
-实际读取 #6029 在 `5c2898869032745b06ac30af97181b67243d5e44` 的 `WeilBoundaryKernelIntegral.lean`。它从 sine 因子和共同可积控制出发，识别原始 Gamma 边界级数与奇核积分；本节不重复该积分等式。其算子域与全部真实矩阵识别仍有各自义务，不能用一条标量边界等式代替。
-
-5040 研究的新 #6171 已移入 Mertens 第三定理。实际读取 `D5/S3/Weil/Mertens/Third.lean`，blob `435484ecbfc11097a057d6b435045728a6e41f01`：`Mertens.E₃.bound''` 给出标量 prime product 与 exp(-gamma)/log x 的渐近等价。这个重要输入可以供 Robin/Gronwall 线使用，却不是 s=1/2 的压缩平移算子范数估计。本节没有复制移植，也没有重新运行其编译或宣称它提供当前谱间隔。
-
-外部目标仍是 CCM arXiv:2511.22755v1 Section 8 的真实最低模态单纯偶性和充分准确的 prolate 逼近。DLMF 5.7.6 提供同一 digamma 部分分式。Mugnolo-Nittka-Post arXiv:1007.3932v2 的 abstract 是变空间范数 resolvent 收敛的经典方法背景；下面直接证明本算子的共同空间估计，未借用其几何特定假设。没有经典形式理论或数学优先权声明。
-

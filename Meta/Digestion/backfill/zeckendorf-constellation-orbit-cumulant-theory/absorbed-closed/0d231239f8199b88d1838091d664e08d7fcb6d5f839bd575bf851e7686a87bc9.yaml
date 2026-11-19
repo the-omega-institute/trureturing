@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0d231239f8199b88d1838091d664e08d7fcb6d5f839bd575bf851e7686a87bc9
-  normalized_sha256: sha256:0d231239f8199b88d1838091d664e08d7fcb6d5f839bd575bf851e7686a87bc9
-cas_ref: sha256:0d231239f8199b88d1838091d664e08d7fcb6d5f839bd575bf851e7686a87bc9
-coverage_gids:
-  - gid: D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments.parity_conditioned_probability_form
-    target_statement_id: sha256:c285eee20f6df615e7c27112e9c47c8bb823a21cafb67dd8294791599f89e9c3
-receipts:
-  unresolved_subitems: []

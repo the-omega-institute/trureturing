@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:587c8da41c1dc0684acf31e9707a4b1285fe6ca8842005f38fb00d4f1915cbbf
-  normalized_sha256: sha256:587c8da41c1dc0684acf31e9707a4b1285fe6ca8842005f38fb00d4f1915cbbf
-cas_ref: sha256:587c8da41c1dc0684acf31e9707a4b1285fe6ca8842005f38fb00d4f1915cbbf
-coverage_gids:
-  - gid: D5/S3/Observer/Completion/DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality
-    target_statement_id: sha256:6d814fad57b0dc5c0990fed601bfe06367d1b7f1a57bf32b9ddeb6d9550efaec
-receipts:
-  unresolved_subitems: []

@@ -503,6 +503,10 @@ internal static partial class FileMapPolicy
             // Report patterns may reserve future content or remain between
             // content deletion and the subsequent registration cleanup.
             .Where(static entry => !IsReportPath(entry.Pattern))
+            // Concurrent merges can bring auxiliary theory files back after their migration.
+            .Where(static entry => entry.Pattern is not ("Meta/Digestion/atoms/sha256/*"
+                or "Meta/Digestion/backfill/**" or "docs/develop/theory/**/*.md"
+                or "docs/develop/archive/theory/**/*.md"))
             .Where(entry => !IsRegFamilyReservation(entry, manifest, trackedPaths))
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(

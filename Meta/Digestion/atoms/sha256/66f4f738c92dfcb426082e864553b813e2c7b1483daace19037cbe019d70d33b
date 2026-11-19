@@ -1,9 +1,0 @@
-**闭合核心** 余弦角度的吸引点可以伴随持续相位转动。 将相位和记录内生之后，标量不动点与整体不动点成为不同命题。
-
-$$
-T_s(x,z)=\bigl(s\cos x,e^{\mathrm i\omega(x)}z\bigr)
- \ \sim\
- F_s\times\bigl(z\mapsto e^{\mathrm i\omega(s\alpha)}z\bigr),
- \qquad \alpha=\cos\alpha.
-$$
-

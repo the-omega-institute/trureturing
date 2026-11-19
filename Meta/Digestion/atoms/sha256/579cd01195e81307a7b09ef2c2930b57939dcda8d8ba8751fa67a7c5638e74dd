@@ -1,9 +1,0 @@
-对实际 \(T\in\mathcal I_{A,\rho}\)，(47.30) 的有限来源闭包包含于
-\(\mathcal B_{\rho,0}\)，所以到它的距离至少为 \(L_\rho(T)\)。
-(47.37) 则把每个 \(\mathsf U_\tau T\) 放入该闭包；(47.39) 给反向距离上界。
-一个集合与其闭包到固定点的距离相等，因为范数连续且闭包点可用原集合逼近。
-由此
-\[
-\boxed{
-\operatorname{dist}_\rho(T,\mathcal J_{A,\rho}^{\mathbb R})
-=

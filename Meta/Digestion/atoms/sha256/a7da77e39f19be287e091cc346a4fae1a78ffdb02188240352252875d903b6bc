@@ -1,0 +1,39 @@
+**定理 123.3（三个对角种子的全部确认与正压缩）。** 对任意(123.1)，三个 $p_i$ 都是原纯点。令 $\pi_i x=(a_j,a_k,z_i)$，并把
+
+$$
+\mathscr L_i=\{(b,c,z):b,c\ge0,\ |z|^2\le bc\},\qquad
+\upsilon_i(b,c,z)=b+c
+\tag{123.6}
+$$
+
+零延拓嵌入 $M_i=\{a_i=0,z_j=z_k=0\}\subset V$。则
+
+$$
+\begin{gathered}
+N_{p_i}=\pi_i^*(\mathscr L_i^*),\qquad
+\operatorname{span}N_{p_i}=\pi_i^*((\mathbb R^2\oplus L_i)^*),\\
+\mathcal F_{p_i}=
+\{a_i+h\circ\pi_i:h\in[0,\upsilon_i]_{\mathscr L_i^*}\},\qquad
+\mathcal T_{p_i}(x)=a_i(x)\quad(x\in C_\tau),\\
+D_{p_i}=\{x\in K_\tau:a_i=0\}
+=\{a_i=0,z_j=z_k=0,a_j+a_k=1,\ |z_i|^2\le a_ja_k\},\\
+\mathcal A_{p_i}=\{a_i\}.
+\end{gathered}
+\tag{123.7}
+$$
+
+每个 $D_{p_i}$ 是完整三球。将 $a_i,z_j,z_k$ 置零、保留余下块的映射 $T_i$，是取值于 $M_i$ 且满足 $h(T_i x)=h(x)$（$h\in N_{p_i},\ x\in V$）的唯一实线性映射。其像恰为 $M_i$，$T_i^2=T_i$，且 $T_i(C_\tau)\subset C_\tau$、$uT_i=u-a_i$。三个种子的全部原零效应联合分离 $V$，三个效应 $a_i$ 和为 $u$。
+
+证明。对角坐标非负，故 $p_i$ 的任何归一凸分解都迫使其余两对角坐标为零；二阶条件再清零全部边，得到纯性。下面直接核对一般 $\tau$ 所需的全部确认公式。若 $h\in N_{p_1}$，其 $a_1$ 系数为零。对任意单位 $\eta\in L_3$，整个曲线
+
+$$
+(1,t^2,0;0,0,t\eta)\in C_\tau\quad(t\in\mathbb R)
+\tag{123.8}
+$$
+
+成立，因为至少两条边为零，三次式为零。$h\ge0$ 对正负小 $t$ 同时成立，故 $h$ 的 $z_3$ 系数为零。曲线 $(1,0,t^2;0,t\eta,0)$ 同理清零 $z_2$ 系数。因此 $h$ 只读 $\pi_1$。整个 $C_\tau$ 的 $\pi_1$ 像是 $\mathscr L_1$，且每个块的零延拓都属于 $C_\tau$；正性遂等价于块正性，给出法向公式。其线性张成是整个四维块对偶。其余指标同理，不要求 $\tau$ 具有置换对称性。
+
+对 $f\in\mathcal F_{p_i}$，$u-f$ 在 $N_{p_i}$ 中，故 $f=a_i+h\pi_i$。在完整零延拓块上检查 $f\ge0$、$u-f\ge0$，恰给 $0\le h\le\upsilon_i$。反向，这两个块不等式也在整个 $C_\tau$ 上保证效应资格。$h=0$ 已可取，全部其他 $h\pi_i$ 非负，所以 $a_i$ 是全确认族的least，得到最低函数和整个 $D_{p_i}$。$a_i=0$ 时，二阶条件清零另两条边；坐标 $(a_j-a_k,2z_i)$ 把归一零面仿射双射到整个单位三球。它是 $K_\tau$ 的暴露面，其球面全部是原纯点。确认效应还要在整个球上读零，就须 $h=0$，得 $\mathcal A_{p_i}$。
+
+记块零延拓为 $\iota_i:\mathbb R^2\oplus L_i\to M_i$，则 $T_i=\iota_i\pi_i$ 且 $\pi_i\iota_i=I$，故其像恰为 $M_i$，并在 $M_i$ 上恒等，得到投影性质。$h\in N_{p_i}$ 只读保留块，所以 $hT_i=h$。若另一实线性映射 $S:V\to M_i$ 也保持全部这些读数，则 $Sx-T_i x\in M_i$ 被 $\operatorname{span}N_{p_i}$ 中每个泛函读成零；(123.7)的四维块对偶在 $M_i$ 上分离向量，故 $Sx=T_i x$ 对所有 $x\in V$ 成立。这证明的是指定像空间内的唯一性。投影的像块仍属 $\mathscr L_i$，零延拓正性给全锥正性；保留对角坐标之和给 $uT_i=u-a_i$。三个法向张成合起来是 $V^*$；任一非零正法向除以其在紧基底上的正最大值即成为原零效应，所以联合分离确实使用原效应。证毕。
+

@@ -46,16 +46,6 @@ internal static partial class UtilityAdmissionTestSupport
             fixture.Files[RuleFixture.RingPath],
             AddRefutationEvidence(fixture,
                 $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] =
-            fixture.Files[RuleFixture.FixtureBackfillAtomPath]
-                .Replace(
-                    "gid: D5/S0/Carrier/BackfillTarget",
-                    "gid: " + Result,
-                    StringComparison.Ordinal)
-                .Replace(
-                    "target_statement_id: null",
-                    $"target_statement_id: {targetStatementId ?? "null"}",
-                    StringComparison.Ordinal);
     }
 
     internal static string AddRefutationEvidence(RuleFixture fixture, string utility)

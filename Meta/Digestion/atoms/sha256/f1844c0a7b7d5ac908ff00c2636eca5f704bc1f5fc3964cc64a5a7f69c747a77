@@ -1,8 +1,0 @@
-**Theorem 1.2 (Faithful irreducible rigidity over $\mathbb Q_2$).** For every finite Galois extension $L/\mathbb Q_2$, put $G=\operatorname{Gal}(L/\mathbb Q_2)$. Let $\rho_1,\rho_2:G\to PGL_3(\mathbb C)$ be injective homomorphisms. If $\rho_1$ is projectively irreducible and the two maps are element-conjugate, there exists one $h\in PGL_3(\mathbb C)$ such that
-
-$$
-\rho_2(g)=h\rho_1(g)h^{-1}\qquad\text{for every }g\in G.
-$$
-
-Proof. All subgroup restrictions and conjugations below retain the original source elements. No homomorphic lift on all of $G$ is assumed.
-
