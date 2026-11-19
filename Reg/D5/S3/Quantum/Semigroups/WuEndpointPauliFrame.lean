@@ -159,18 +159,18 @@ private abbrev arena : Arena where
     R.readout () () (‖⟪u, v⟫_ℂ‖ ^ 2 + ∑ j, ‖⟪u, T j v⟫_ℂ‖ ^ 2)
       (2 * ‖u‖ ^ 2 * ‖v‖ ^ 2)
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
   exact h (E := EuclideanSpace ℂ (ULift.{u} Empty)) (J := ULift.{v} Empty)
     (fun j => nomatch j.down) (fun j => nomatch j.down)
     (fun j => nomatch j.down) (fun i => nomatch i.down) 0 0
 
-def family : Registration arena (type_of% @WuEndpointPauliFrame.overlap_le.{u, v}) where
+def family : Registration arena.{u, v} (type_of% @WuEndpointPauliFrame.overlap_le.{u, v}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@WuEndpointPauliFrame.overlap_le.{u, v}, rejected, rejected_law⟩
+  variation := ⟨@WuEndpointPauliFrame.overlap_le.{u, v}, rejected, rejected_law.{u, v}⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
+    arena.{u, v}.Law actual rejected rejected_law.{u, v}
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -179,11 +179,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointPauliFrame.GenericOverlap.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u, v}⟩
+  objectArena := .source ⟨arena.{u, v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u, v} ⟨family.{u, v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
