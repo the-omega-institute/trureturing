@@ -4,7 +4,7 @@
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
    utility: none
-   digest: Counts with digit cap ell^r-1 have generating function prod_{j<r} 1/(1-z^(ell^j)). -/
+   digest: Cap ell^r-1 counts have generating function prod_{j<r} 1/(1-z^(ell^j)), Θ(n^(r-1)). -/
 
 import D5.S1.Digit.DigitCapMultipleCount
 import Mathlib.RingTheory.PowerSeries.Expand
@@ -63,19 +63,21 @@ private lemma gf_zero (ell : ℕ) : gf ell 0 = 1 := by
   simp only [gf, coeff_mk, pow_zero, Nat.sub_self, count_cap_zero, coeff_one]
   split_ifs <;> simp
 
+private lemma count_rec {ell : ℕ} (hell : 2 ≤ ell) (r n : ℕ) :
+    count (ell ^ (r + 1) - 1) ell n =
+      ∑ t ∈ Finset.range (n / ell + 1), count (ell ^ r - 1) ell t := by
+  rw [show ell ^ (r + 1) - 1 = ell ^ r * ell - 1 by rw [pow_succ],
+    count_multiple ell (ell ^ r) n hell (Nat.one_le_pow _ _ (by omega))]
+
 /-- Differencing the multiple-cap identity: `(1 - z) G_{r+1} = G_r(z ^ ell)`. -/
 private lemma gf_succ {ell : ℕ} (hell : 2 ≤ ell) (r : ℕ) :
     (1 - X) * gf ell (r + 1) = expand ell (by omega) (gf ell r) := by
-  have hpow : ell ^ (r + 1) - 1 = ell ^ r * ell - 1 := by rw [pow_succ]
-  have hc : ∀ n, count (ell ^ (r + 1) - 1) ell n =
-      ∑ t ∈ Finset.range (n / ell + 1), count (ell ^ r - 1) ell t := by
-    intro n
-    rw [hpow, count_multiple ell (ell ^ r) n hell (Nat.one_le_pow _ _ (by omega))]
+  have hc := count_rec hell r
   ext n
   rw [sub_mul, one_mul, map_sub, coeff_expand]
   rcases n with _ | n
   · simp [gf, coeff_mk, hc, Nat.zero_div]
-  · rw [show X * gf ell (r + 1) = X * gf ell (r + 1) from rfl, coeff_succ_X_mul]
+  · rw [coeff_succ_X_mul]
     simp only [gf, coeff_mk, hc]
     have hdiv : (n + 1) / ell = n / ell + if ell ∣ n + 1 then 1 else 0 := by
       split_ifs with h
@@ -106,12 +108,6 @@ theorem den_mul_gf (ell r : ℕ) (hell : 2 ≤ ell) : den ell r * gf ell r = 1 :
   | zero => simp [den, gf_zero]
   | succ r ih =>
     rw [den_succ hell, mul_comm (1 - X), mul_assoc, gf_succ hell, ← map_mul, ih, map_one]
-
-private lemma count_rec {ell : ℕ} (hell : 2 ≤ ell) (r n : ℕ) :
-    count (ell ^ (r + 1) - 1) ell n =
-      ∑ t ∈ Finset.range (n / ell + 1), count (ell ^ r - 1) ell t := by
-  rw [show ell ^ (r + 1) - 1 = ell ^ r * ell - 1 by rw [pow_succ],
-    count_multiple ell (ell ^ r) n hell (Nat.one_le_pow _ _ (by omega))]
 
 private lemma count_one {ell : ℕ} (hell : 2 ≤ ell) (n : ℕ) : count (ell ^ 1 - 1) ell n = 1 := by
   rw [count_rec hell 0 n]
