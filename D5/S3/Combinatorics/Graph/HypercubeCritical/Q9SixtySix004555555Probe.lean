@@ -1137,4 +1137,35 @@ theorem q9_sixty_six_mem_profiles_after_six_coordinate_slices
 
 #print axioms q9_sixty_six_mem_profiles_after_six_coordinate_slices
 
+def sixtySixProfilesAfterSecondOrbitCertificate : List (List ℤ) :=
+  sixtySixProfilesAfterSixCoordinateSlices.filter (· != [0, 1, 4, 4, 5, 5, 5, 5, 5])
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 12000000 in
+-- Kernel reduction also evaluates the preceding profile filters.
+theorem sixtySixProfilesAfterSecondOrbitCertificate_length :
+    sixtySixProfilesAfterSecondOrbitCertificate.length = 35 := by
+  decide +kernel
+
+theorem q9_sixty_six_mem_profiles_after_second_orbit_certificate
+    {C : Finset (Q 9)} (hC : C.card = 66)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C) :
+    ∃ (S : Finset (Q 9)) (r : Fin 9 → ℤ),
+      S.card = 66 ∧ ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3 ∧
+      IsBalanced S ∧ (∀ i, ((S.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33) ∧
+      List.ofFn r ∈ sixtySixProfilesAfterSecondOrbitCertificate := by
+  obtain ⟨S, r, hS, hregS, hbS, hhalf, hp⟩ :=
+    q9_sixty_six_mem_profiles_after_six_coordinate_slices hC hr hb
+  refine ⟨S, r, hS, hregS, hbS, hhalf, ?_⟩
+  rw [sixtySixProfilesAfterSecondOrbitCertificate, List.mem_filter]
+  refine ⟨hp, bne_iff_ne.mpr ?_⟩
+  intro he
+  have hv : List.ofFn (![0, 1, 4, 4, 5, 5, 5, 5, 5] : Fin 9 → ℤ) =
+      [0, 1, 4, 4, 5, 5, 5, 5, 5] := by decide +kernel
+  have hvec := List.ofFn_inj.mp (he.trans hv.symm)
+  subst r
+  exact q9_sixty_six_excludes_014455555 hS hregS hbS hhalf
+
+#print axioms q9_sixty_six_mem_profiles_after_second_orbit_certificate
+
 end D5.S3.Combinatorics.Graph.HypercubeCritical
