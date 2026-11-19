@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures
    mirror-E: none(waiver:symbolic-asymptotic-density)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.claim; result=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result; claim=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.claim
+   utility: none
    digest: Primitive non-deficient integers are sparse in each radical component set. -/
 
 import D5.S3.Arith.Abundancy.ZelinskyZhangDoublePrimitive
@@ -476,7 +476,7 @@ private lemma subset_relative_density_zero (lam : ℝ) (hlam : 0 < lam)
   exact div_le_div_of_nonneg_right (by exact_mod_cast hcard) (Nat.cast_nonneg _)
 
 /-- Conjectures 10, 12 and 14, retaining the source's prime-set quantifiers. -/
-theorem conjectures :
+theorem result :
     Tendsto (fun X : ℕ =>
       (count (radicalComponentSet 2 ∩ {n | PrimitiveNonDeficient n}) X : ℝ) /
         radicalComponentCount 2 X) atTop (𝓝 0) ∧
@@ -492,16 +492,5 @@ theorem conjectures :
     subset_relative_density_zero 2 (by norm_num) _ (fun n hn => hn.1), ?_⟩
   intro M _hM _hprime
   exact subset_relative_density_zero 2 (by norm_num) _ (fun n hn => hn.1)
-
-/-- The source's assertion that its set B has natural density zero. -/
-def claim : Prop :=
-  Tendsto (fun X : ℕ => (radicalComponentCount 2 X : ℝ) / X) atTop (𝓝 0)
-
-/-- The positive density of B contradicts the zero-density assertion. -/
-theorem result : ¬ claim := by
-  intro hzero
-  have hlimit := ZelinskyRadicalComponentDensity.result 2 (by norm_num)
-  have heq : 1 - log (2 : ℝ) = 0 := tendsto_nhds_unique hlimit hzero
-  linarith [Real.log_two_lt_d9]
 
 end D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures

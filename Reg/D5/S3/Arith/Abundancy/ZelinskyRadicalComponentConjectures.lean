@@ -142,11 +142,11 @@ private theorem rejected_law (i : Fin 3) : ¬ arena.Law (rejected i) := by
     change False at hf
     exact hf
 
-def family : Registration arena (type_of% @conjectures) where
+def family : Registration arena (type_of% @result) where
   actual := actual
   bridge := Iff.rfl
   variation :=
-    ⟨conjectures, rejected ⟨0, by decide⟩, rejected_law ⟨0, by decide⟩⟩
+    ⟨result, rejected ⟨0, by decide⟩, rejected_law ⟨0, by decide⟩⟩
   sensitivity := by
     constructor
     · intro i
@@ -168,8 +168,8 @@ def family : Registration arena (type_of% @conjectures) where
     norm_num at hzero
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@conjectures) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.conjectures.audit
+    (@result) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.result.audit
   realizationName :=
     `Reg.D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures.Conjectures.family
   realizationSource := none
