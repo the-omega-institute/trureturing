@@ -1,0 +1,55 @@
+**Definition 40.2 (the finite original consumer).** Use the distinct
+atoms, free ordered binary trees and the original operation $\rho$ of
+[Fibonacci atomic relation generation, Definitions 2.1 and 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md):
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle u,v\rangle)=\langle\rho(u),\rho(v)\rangle.
+\tag{IV.121}
+$$
+
+For $H\ge1$ and origin $e\in\mathbb Z$, the task is the ordered tuple
+
+$$
+\mathcal R_H(e)=\big(\rho(a_e),\ldots,\rho(a_{e+H-1})\big).
+\tag{IV.122}
+$$
+
+Each beta input produces the actual ordered pair in (IV.121). The tuple
+retains the boundaries between the $H$ outputs. If only output frontiers
+are requested, encode beta by $0$ and alpha by $1$ and concatenate the
+images under $\sigma(0)=01$, $\sigma(1)=0$. The positive result below
+supplies the stronger tuple (IV.122). The quantity observation in the
+original source assigns weights $2,3$ to alpha, beta; (IV.120) assigns
+lengths $\varphi,\varphi^2$. These are two different functions of the
+same recovered atom, with no identification of their values.
+
+The existing word identity fixes the generation convention. If
+$T_j=\rho^j(\alpha)$, then for $j\ge1$ its flattened leaf word, encoded
+beta $=0$, alpha $=1$, is
+
+$$
+f(0)f(1)\cdots f(F_{j+1}-1),\qquad F_0=0,\ F_1=1.
+\tag{IV.123}
+$$
+
+Indeed `subst` and `fibWord` in
+[GoldenGapWord](../../../D5/S0/Tower/GoldenGapWord.lean) encode beta
+by `true` and alpha by `false`, starting at beta. The supplied
+[`fibWord_eq_beatty_floor`](../../../D5/S1/Words/ZeckendorfBeattyBridge.lean)
+identifies its position $i$ with $d(i)$, with exactly the $i+1$ floor
+shift in (IV.119). Complementing its Boolean names gives (IV.123), with
+$\texttt{fibWord}(j-1)$ of length $F_{j+1}$. The original structural
+recursion $T_{j+2}=\langle T_{j+1},T_j\rangle$ supplies the same leaf
+lengths. This word identity is a supplier, not a new recovery theorem.
+The two-sided extension in (IV.119) is explicitly defined; a finite
+$T_j$ is not an infinite two-arm source.
+
+The lower mechanical-word and rotation conventions used here are
+classical; see Berstel,
+[*Sturmian and Episturmian Words*, §3.1, pp. 30–31](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf).
+That identification does not supply observations, tree brackets or
+source permissions. The source-specific acquisition statements below
+are ordinary derivations using these suppliers.
+

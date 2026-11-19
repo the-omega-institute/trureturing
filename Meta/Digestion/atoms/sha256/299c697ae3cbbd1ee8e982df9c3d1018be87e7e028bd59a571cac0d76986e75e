@@ -1,0 +1,42 @@
+**Theorem 43.2 (exact reconstruction and the missing interleaving).**
+For every source, policy and fixed seed in Theorem 41.1, its actual
+terminal transcript determines the chart (IV.137). On the image of
+these transcripts, the chart together with its event spine determines
+the full original action/reply/stopped record. The chart alone loses
+exactly the permitted interleavings of the two outward query chains:
+if its terminal side is $L$, their number is
+$\binom{K-1}{l-1}$, and if it is $R$, their number is
+$\binom{K-1}{l}$. These fibre counts range over all policies capable
+of executing the indicated side word, rather than over a fixed
+policy's internal seed distribution.
+
+**Proof.** Let $j$ be the last side and $c$ its count **before** the last
+query. The terminal compared pair is $00$. All previous compared edges
+alternate by (IV.128). Moving $c$ edges inward from the inner zero
+endpoint gives root bit $c\bmod2$, precisely the existing
+`recoveredRoot` formula. Each other preterminal edge has different
+endpoints, so the known root and the stored side order determine both
+outward bit strings. The last reply supplies its additional outer zero
+endpoint. All $b_{-l},\ldots,b_r$ are thereby known. Substituting
+(IV.120) and summing lengths gives (IV.137), including its endpoints.
+
+Conversely the oriented chart recovers its tile bits since
+$\varphi\ne\varphi^2$, and it specifies $l,r$ relative to the root.
+On this actual terminal image there is just one $00$ adjacency among
+visited tiles: the terminal edge. All other compared adjacencies
+alternate. That edge is outermost on the last side and identifies
+that side (also when $K=1$, using the root). Before it, the two side
+chains have respectively $(l-1,r)$ or $(l,r-1)$ edges. Each chain has
+one forced outward order. Every shuffle of those preterminal chains
+is legal on this same source: it reads only the already specified
+alternating edges. Appending the terminal side produces the first
+marker at exactly $K$. There are the stated binomial numbers of
+shuffles. A fixed scheduled policy can realize each one. No other
+side word can have these counts, this final side and the same chart.
+
+Given the event spine, restore its replies as $K-1$ zeros followed
+by one $1$, reverse both lists, and set stopped to $1$. This recovers
+the actual terminal state. At a later public horizon the state is the
+same, so its chart and event spine do not encode the extra elapsed
+waiting or rejection chronology. $\square$
+

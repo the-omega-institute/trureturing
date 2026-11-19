@@ -1,0 +1,46 @@
+**Theorem 47.1 (the acquired prefix invariant).** Let $p_j$ be the
+successive actual marked starts on a canonical successful run, with
+$p_0=e+K-1$, and let $D_j=p_j-p_{j-1}$ for $1\le j\le m$.
+Define the length-$(K-1)$ word $U_K$ by
+$U_K(i)=(K-1-i)\bmod2$ for $0\le i<K-1$. At the returned cut
+after exactly $m$ resumed episodes,
+
+$$
+\begin{aligned}
+Q_m&=K+\sum_{j=1}^{m}D_j,& p_m&=e+Q_m-1,\\
+W_m&=U_K B_{D_1}\cdots B_{D_m}00
+     =f[e,e+Q_m+1).
+\end{aligned}
+\tag{IV.148}
+$$
+
+There have been exactly $Q_m$ source comparisons and $m$ paid successful
+Resumes. The right cursor is $e+Q_m=p_m+1$. The same bound source,
+version, original anchor, initial certificate and all old records persist.
+Passing to the next returned cut replaces the final $00$ by $B_D00$,
+or equivalently appends $100$ for $D=3$ and $10100$ for $D=5$.
+Thus $W_m$ is literally a prefix of $W_{m+1}$.
+
+**Proof.** Before the first mark the $K-1$ compared edges alternate,
+and the marker's inner letter is zero. Reading backwards from that
+letter gives precisely $U_K$, so $W_0=U_K00$ has length $K+1$
+and is the indicated original-source prefix. Its cursor and count
+are the original returned ones. Suppose the assertion holds at $m$.
+Resume changes only the latch and record. Theorem 46.1 then compares
+the next $D$ edges of this same source, giving the next adjacent
+marker and appending precisely its $D$ previously unacquired letters.
+This is the displayed final-$00$ replacement and proves (IV.148) at
+$m+1$. It adds $D$ comparisons and one successful Resume, preserves
+all old entries, and advances the retained cursor by $D$ sites.
+Induction proves every clause.
+
+In particular, splitting a completed run into consecutive groups of
+episodes and then concatenating their framed blocks gives the same
+word as decoding the whole run: the shared $00$ is retained once,
+not appended as a second copy. The intermediate configuration must
+be the actual preceding returned cursor on the same version.
+Concatenating separately compatible words from unrelated sources
+does not satisfy this hypothesis. Refusals and stopped-query rejections
+preserve the completed-cut prefix and counts, but add their own record
+events; they do not add a $B_D$ block. $\square$
+
