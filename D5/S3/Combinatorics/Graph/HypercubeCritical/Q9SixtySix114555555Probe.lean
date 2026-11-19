@@ -55,19 +55,21 @@ private def termsOf {n : ℕ} (p : Fin n → Bool) (t : Fin n → Term) : List T
 private def cubeTerms (p : Bits → Bool) (t : Bits → Term) : List Term :=
   termsOf (p ∘ BitVec.ofFin) (t ∘ BitVec.ofFin)
 
-private inductive Row where
+inductive Q9OrbitRow where
   | size | parity
   | half (i : Fin 9)
   | direction (i : Fin 9)
   | degree (x : Bits)
   | pairUpper (x y : Bits)
   | pairLower (x y : Bits)
+  | diameter (x y : Bits)
   | shellLower (x : Bits)
+  | shellUpper (x : Bits)
   | forcedEdge (x : Bits) (i : Fin 9)
   | agreementEdge (x y : Bits) (i : Fin 9)
   | agreement (x : Bits) (i : Fin 9) (factor : ℤ)
 
-private def Row.terms : Row → List Term
+private def Q9OrbitRow.terms : Q9OrbitRow → List Term
   | .size => cubeTerms (allowed deficit) (fun x => single x 1)
   | .parity => cubeTerms (fun x => (allowed deficit) x && cubeParity (cube x)) (fun x => single x 1)
   | .half i => cubeTerms (fun x => (allowed deficit) x && cube x i) (fun x => single x 1)
@@ -77,9 +79,13 @@ private def Row.terms : Row → List Term
       (fun i => pair x (bitFlip x i) 1)
   | .pairUpper x y => [pair x y 1, single x (-1)]
   | .pairLower x y => [single x 1, single y 1, pair x y (-1)]
+  | .diameter x y => [single x 1, single y 1]
   | .shellLower x => single x (2 * weight deficit x + 12 - ∑ i, deficit i) ::
       cubeTerms (fun y => decide (hammingDist (cube x) (cube y) = 7) && allowedFar deficit x y)
         (fun y => pair x y (-1))
+  | .shellUpper x => single x (-8) ::
+      cubeTerms (fun y => decide (hammingDist (cube x) (cube y) = 7) && allowedFar deficit x y)
+        (fun y => pair x y 1)
   | .forcedEdge x i => [single x 1, pair x (bitFlip x i) (-1)]
   | .agreementEdge x y i => [pair x y 1, pair x (bitFlip x i) 1, single x (-1)]
   | .agreement x i factor => single x (-factor) ::
@@ -87,12 +93,12 @@ private def Row.terms : Row → List Term
       cubeTerms (fun y => farAgreement x y i && allowedFar deficit x y)
         (fun y => pair x y (if factor = 4 then 1 else -1))
 
-private def Row.bound : Row → ℤ
+private def Q9OrbitRow.bound : Q9OrbitRow → ℤ
   | .size => 66
   | .parity => 33
   | .half i => 33 - 2 * deficit i
   | .direction _ => 11
-  | .pairLower .. => 1
+  | .pairLower .. | .diameter .. => 1
   | _ => 0
 
 -- Count the four joint bit patterns in each of the six possible deficit values.
@@ -112,12 +118,12 @@ private def orbitKey : Variable → Key
     let b := orderedKey deficit y x
     (true, if a.lex b then a else b)
 
-variable (certificate : List (Row × ℤ × ℤ))
+variable (certificate : List (Q9OrbitRow × ℤ × ℤ))
 
 private def combined : List Term := certificate.flatMap fun (row, sign, w) =>
-  (Row.terms deficit row).map fun (v, a) => (v, w * sign * a)
+  (Q9OrbitRow.terms deficit row).map fun (v, a) => (v, w * sign * a)
 
-private def upper : ℤ := (certificate.map fun (row, sign, w) => w * sign * (Row.bound deficit row)).sum
+private def upper : ℤ := (certificate.map fun (row, sign, w) => w * sign * (Q9OrbitRow.bound deficit row)).sum
 
 private def keys (terms : List (Key × ℤ)) : Finset Key := (terms.map Prod.fst).toFinset
 private def coefficient (terms : List (Key × ℤ)) (k : Key) : ℤ :=
@@ -225,13 +231,13 @@ private lemma eval_transport_sum (C : Finset Vertex) (terms : List Term) :
     rw [ih, average, mul_sum, sum_add_distrib]
 
 private lemma eval_combined (z : Variable → ℤ)
-    (h : ∀ t ∈ certificate, t.2.1 * evalTerms (Row.terms deficit t.1) z ≤ t.2.1 * (Row.bound deficit t.1))
+    (h : ∀ t ∈ certificate, t.2.1 * evalTerms (Q9OrbitRow.terms deficit t.1) z ≤ t.2.1 * (Q9OrbitRow.bound deficit t.1))
     (hw : ∀ t ∈ certificate, 0 ≤ t.2.2) :
     evalTerms (combined deficit certificate) z ≤ upper deficit certificate := by
   unfold combined upper
-  suffices ∀ rows : List (Row × ℤ × ℤ), (∀ t ∈ rows, t ∈ certificate) →
-      evalTerms (rows.flatMap fun (r, s, w) => (Row.terms deficit r).map fun (v, a) => (v, w * s * a)) z ≤
-        (rows.map fun (r, s, w) => w * s * (Row.bound deficit r)).sum from this _ (fun _ ht => ht)
+  suffices ∀ rows : List (Q9OrbitRow × ℤ × ℤ), (∀ t ∈ rows, t ∈ certificate) →
+      evalTerms (rows.flatMap fun (r, s, w) => (Q9OrbitRow.terms deficit r).map fun (v, a) => (v, w * s * a)) z ≤
+        (rows.map fun (r, s, w) => w * s * (Q9OrbitRow.bound deficit r)).sum from this _ (fun _ ht => ht)
   intro rows
   induction rows with
   | nil => simp [evalTerms]
@@ -349,33 +355,34 @@ private lemma half_eq_rows {C : Finset Vertex} (hC : C.card = 66)
     have h := direction_edge_count (d := 3) C hreg hb i
     omega)
 
-private def Row.Valid : Row → Prop
+private def Q9OrbitRow.Valid : Q9OrbitRow → Prop
+  | .diameter x y => 7 < hammingDist (cube x) (cube y)
   | .agreementEdge x y i => farAgreement x y i = true
   | .forcedEdge x i => 2 * weight deficit x + 12 = (∑ j, deficit j) + 8 ∧
       cube x i = true ∧ 2 ≤ deficit i
   | .agreement x _ k => k = 4 ∨ (k = -2 ∧ 2 * weight deficit x + 12 = (∑ i, deficit i) + 8)
   | _ => True
 
-private instance Row.validDecidable (row : Row) : Decidable (Row.Valid deficit row) := by
-  cases row <;> unfold Row.Valid <;> infer_instance
+private instance Q9OrbitRow.validDecidable (row : Q9OrbitRow) : Decidable (Q9OrbitRow.Valid deficit row) := by
+  cases row <;> unfold Q9OrbitRow.Valid <;> infer_instance
 
-private def Row.SignAllowed (sign : ℤ) : Row → Prop
-  | .pairUpper .. | .pairLower .. | .shellLower .. | .forcedEdge ..
+private def Q9OrbitRow.SignAllowed (sign : ℤ) : Q9OrbitRow → Prop
+  | .pairUpper .. | .pairLower .. | .diameter .. | .shellLower .. | .shellUpper .. | .forcedEdge ..
   | .agreementEdge .. | .agreement .. => sign = 1
   | _ => True
 
-private instance Row.signAllowedDecidable (sign : ℤ) (row : Row) :
-    Decidable (Row.SignAllowed sign row) := by
-  cases row <;> unfold Row.SignAllowed <;> infer_instance
+private instance Q9OrbitRow.signAllowedDecidable (sign : ℤ) (row : Q9OrbitRow) :
+    Decidable (Q9OrbitRow.SignAllowed sign row) := by
+  cases row <;> unfold Q9OrbitRow.SignAllowed <;> infer_instance
 
 include hrange in
 private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
     (hreg : ((hypercube 9).induce (C : Set Vertex)).IsRegularOfDegree 3)
     (hb : IsBalanced C)
     (hhalf : ∀ i, ((C.filter fun x => x i = true).card : ℤ) + 2 * deficit i = 33)
-    (row : Row) (hrow : Row.Valid deficit row) (sign : ℤ)
-    (hineq : Row.SignAllowed sign row) :
-    sign * evalTerms (Row.terms deficit row) (value C) ≤ sign * (Row.bound deficit row) := by
+    (row : Q9OrbitRow) (hrow : Q9OrbitRow.Valid deficit row) (sign : ℤ)
+    (hineq : Q9OrbitRow.SignAllowed sign row) :
+    sign * evalTerms (Q9OrbitRow.terms deficit row) (value C) ≤ sign * (Q9OrbitRow.bound deficit row) := by
   classical
   have hd := huang_balanced_cubic_sixty_six_diameter_le_seven hC hreg hb
   have hshell (x : Vertex) (hx : x ∈ C) :
@@ -422,13 +429,13 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
     · exact fun _ h => h.2
     · intro x h hx
       simpa using hz (cube.symm x) (fun ha => hx ⟨ha, h⟩)
-  have hs : evalTerms (Row.terms deficit Row.size) (value C) = 66 := by
-    simpa [Row.terms] using (hsingle (fun _ => true)).trans (by simpa using hsize)
-  have hp : evalTerms (Row.terms deficit Row.parity) (value C) = 33 := (hsingle cubeParity).trans (hparity true)
-  have hh (i : Fin 9) : evalTerms (Row.terms deficit (Row.half i)) (value C) = (Row.bound deficit (Row.half i)) :=
+  have hs : evalTerms (Q9OrbitRow.terms deficit Q9OrbitRow.size) (value C) = 66 := by
+    simpa [Q9OrbitRow.terms] using (hsingle (fun _ => true)).trans (by simpa using hsize)
+  have hp : evalTerms (Q9OrbitRow.terms deficit Q9OrbitRow.parity) (value C) = 33 := (hsingle cubeParity).trans (hparity true)
+  have hh (i : Fin 9) : evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.half i)) (value C) = (Q9OrbitRow.bound deficit (Q9OrbitRow.half i)) :=
     (hsingle (fun x => x i)).trans (hhalf' i)
-  have he (i : Fin 9) : evalTerms (Row.terms deficit (Row.direction i)) (value C) = 11 := by
-    rw [Row.terms, eval_cubeTerms, ← hdir i]
+  have he (i : Fin 9) : evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.direction i)) (value C) = 11 := by
+    rw [Q9OrbitRow.terms, eval_cubeTerms, ← hdir i]
     simp only [pair, value, cube_bitFlip, Equiv.apply_symm_apply, one_mul, Bool.and_eq_true,
       Bool.not_eq_true']
     apply sum_filter_weaken
@@ -439,8 +446,8 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
   have hn (x : Bits) (i : Fin 9) (h : ¬ (allowed deficit) (bitFlip x i) = true) :
       cubePairMembership C (cube x) (flip (cube x) i) = 0 := by
     simpa only [cube_bitFlip] using hzPair x (bitFlip x i) (fun h' => h h'.2)
-  have hc (x : Bits) : evalTerms (Row.terms deficit (Row.degree x)) (value C) = 0 := by
-    simp only [Row.terms, evalTerms, List.map_cons, List.sum_cons, single, value]
+  have hc (x : Bits) : evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.degree x)) (value C) = 0 := by
+    simp only [Q9OrbitRow.terms, evalTerms, List.map_cons, List.sum_cons, single, value]
     change -3 * cubeMembership C (cube x) +
       evalTerms (termsOf _ _) (value C) = 0
     simp only [eval_termsOf, pair, value, cube_bitFlip, one_mul]
@@ -452,7 +459,7 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
       exact sum_filter_weaken _ _ _ (fun _ _ => trivial) (fun i _ hi => hn x i hi)]
     linarith only [h.1]
   have hagree (x : Bits) (i : Fin 9) (k : ℤ) :
-      evalTerms (Row.terms deficit (Row.agreement x i k)) (value C) =
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.agreement x i k)) (value C) =
         (if k = 4 then 1 else -1) *
           (∑ y ∈ univ.filter (fun y => hammingDist (cube x) y = 7 ∧ cube x i = y i),
             cubePairMembership C (cube x) y) -
@@ -480,17 +487,17 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
       split
       · simp [evalTerms, pair, value, cube_bitFlip]
       · simp [evalTerms, hn x i (by assumption)]
-    simp only [Row.terms, evalTerms, List.map_cons, List.sum_cons, single, value, List.map_append,
+    simp only [Q9OrbitRow.terms, evalTerms, List.map_cons, List.sum_cons, single, value, List.map_append,
       List.sum_append]
     simp only [evalTerms, value] at hnear hfar
     rw [hnear, hfar]
     ring
-  have hcap (x : Bits) (i : Fin 9) : evalTerms (Row.terms deficit (Row.agreement x i 4)) (value C) ≤ 0 := by
+  have hcap (x : Bits) (i : Fin 9) : evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.agreement x i 4)) (value C) ≤ 0 := by
     have h := (cube_lifted_agreement_capacity hreg hb hd (cube x) i).1
     rw [hagree]
     simpa using sub_nonpos.mpr h
   have hfloor (x : Bits) (i : Fin 9) (hx : 2 * weight deficit x + 12 = (∑ i, deficit i) + 8) :
-      evalTerms (Row.terms deficit (Row.agreement x i (-2))) (value C) ≤ 0 := by
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.agreement x i (-2))) (value C) ≤ 0 := by
     rw [hagree]
     have h := (cube_lifted_agreement_capacity hreg hb hd (cube x) i).2
     by_cases hm : cube x ∈ C
@@ -503,49 +510,63 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
       linarith only [hf]
     · simp [cubePairMembership, cubeMembership, hm]
   have hpair (x y : Bits) :
-      evalTerms (Row.terms deficit (Row.pairUpper x y)) (value C) ≤ 0 := by
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.pairUpper x y)) (value C) ≤ 0 := by
     have h := (cube_lifted_pair_rows C (cube x) (cube y)).1
-    simp [Row.terms, evalTerms, single, pair, value]
+    simp [Q9OrbitRow.terms, evalTerms, single, pair, value]
     linarith only [h]
   have hpairLower (x y : Bits) :
-      evalTerms (Row.terms deficit (Row.pairLower x y)) (value C) ≤ 1 := by
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.pairLower x y)) (value C) ≤ 1 := by
     have h := (cube_lifted_pair_rows C (cube x) (cube y)).2.2
-    simp [Row.terms, evalTerms, single, pair, value]
+    simp [Q9OrbitRow.terms, evalTerms, single, pair, value]
     linarith only [h]
+  have hdiam (x y : Bits) (hxy : 7 < hammingDist (cube x) (cube y)) :
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.diameter x y)) (value C) ≤ 1 := by
+    have h := cube_lifted_forbidden_pair_row C (cube x) (cube y) (fun hx hy =>
+      (not_lt_of_ge (hd _ hx _ hy)) hxy)
+    simpa [Q9OrbitRow.terms, evalTerms, single, value] using h
+  have hfar (x : Bits) (k : ℤ) :
+      evalTerms (cubeTerms
+        (fun y => decide (hammingDist (cube x) (cube y) = 7) && allowedFar deficit x y)
+        (fun y => pair x y k)) (value C) =
+      k * ∑ y ∈ univ.filter (fun y => hammingDist (cube x) y = 7),
+        cubePairMembership C (cube x) y := by
+    rw [eval_cubeTerms, mul_sum]
+    simp only [pair, value, Equiv.apply_symm_apply]
+    apply sum_filter_weaken
+    · intro y hy
+      simpa only [Bool.and_eq_true, decide_eq_true_eq, Equiv.apply_symm_apply] using
+        (Bool.and_eq_true_iff.mp hy).1
+    · intro y hy hny
+      have hdy : hammingDist (cube x) (cube (cube.symm y)) = 7 := by simpa using hy
+      have hzero := hzFar x (cube.symm y) hdy
+        (fun ha => hny (Bool.and_eq_true_iff.mpr ⟨decide_eq_true hy, ha⟩))
+      simpa only [Equiv.apply_symm_apply] using (show k *
+        cubePairMembership C (cube x) (cube (cube.symm y)) = 0 by rw [hzero, mul_zero])
   have hshellLower (x : Bits) :
-      evalTerms (Row.terms deficit (Row.shellLower x)) (value C) ≤ 0 := by
-    have hfar :
-        evalTerms (cubeTerms
-          (fun y => decide (hammingDist (cube x) (cube y) = 7) && allowedFar deficit x y)
-          (fun y => pair x y (-1))) (value C) =
-        (-1) * ∑ y ∈ univ.filter (fun y => hammingDist (cube x) y = 7),
-          cubePairMembership C (cube x) y := by
-      rw [eval_cubeTerms, mul_sum]
-      simp only [pair, value, Equiv.apply_symm_apply]
-      apply sum_filter_weaken
-      · intro y hy
-        simpa only [Bool.and_eq_true, decide_eq_true_eq, Equiv.apply_symm_apply] using
-          (Bool.and_eq_true_iff.mp hy).1
-      · intro y hy hny
-        have hdy : hammingDist (cube x) (cube (cube.symm y)) = 7 := by simpa using hy
-        have hzero := hzFar x (cube.symm y) hdy
-          (fun ha => hny (Bool.and_eq_true_iff.mpr ⟨decide_eq_true hy, ha⟩))
-        simpa only [Equiv.apply_symm_apply] using (show (-1 : ℤ) *
-          cubePairMembership C (cube x) (cube (cube.symm y)) = 0 by rw [hzero, mul_zero])
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.shellLower x)) (value C) ≤ 0 := by
     have h := (cube_lifted_incidence_rows hreg hshell (cube x)).2.1
     change (2 * weight deficit x + 12 - ∑ i, deficit i) * cubeMembership C (cube x) ≤ _ at h
-    simp only [Row.terms, evalTerms, List.map_cons, List.sum_cons, single, value]
-    simp only [evalTerms, value] at hfar
-    rw [hfar]
+    simp only [Q9OrbitRow.terms, evalTerms, List.map_cons, List.sum_cons, single, value]
+    have hh := hfar x (-1)
+    simp only [evalTerms, value] at hh
+    rw [hh]
+    linarith only [h]
+  have hshellUpper (x : Bits) :
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.shellUpper x)) (value C) ≤ 0 := by
+    have h := (cube_lifted_incidence_rows hreg hshell (cube x)).2.2
+    simp only [Q9OrbitRow.terms, evalTerms, List.map_cons, List.sum_cons, single, value]
+    have hh := hfar x 1
+    simp only [evalTerms, value] at hh
+    rw [hh]
     linarith only [h]
   have hedge (x y : Bits) (i : Fin 9) (h : farAgreement x y i = true) :
-      evalTerms (Row.terms deficit (Row.agreementEdge x y i)) (value C) ≤ 0 := by
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.agreementEdge x y i)) (value C) ≤ 0 := by
     have hf : hammingDist (cube x) (cube y) = 7 ∧ cube x i = cube y i := of_decide_eq_true h
     have he' := cube_lifted_agreement_row hd hf.1 hf.2
-    simp [Row.terms, evalTerms, single, pair, value, cube_bitFlip]
+    simp [Q9OrbitRow.terms, evalTerms, single, pair, value, cube_bitFlip]
     linarith only [he']
-  have hforced (x : Bits) (i : Fin 9) (hvalid : Row.Valid deficit (.forcedEdge x i)) :
-      evalTerms (Row.terms deficit (Row.forcedEdge x i)) (value C) ≤ 0 := by
+  have hforced (x : Bits) (i : Fin 9) (hvalid : Q9OrbitRow.Valid deficit (.forcedEdge x i)) :
+      evalTerms (Q9OrbitRow.terms deficit (Q9OrbitRow.forcedEdge x i)) (value C) ≤ 0 := by
     obtain ⟨hw, hbit, hmin⟩ := hvalid
     by_cases hx : cube x ∈ C
     · obtain ⟨hc, h⟩ := hshell _ hx
@@ -553,34 +574,36 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
       have h8 : (shell C (cube x) 7).card = 8 := by rw [hw] at h; omega
       have hf := eight_partners_force_minority_directions_used hC hreg hb hd
         (fun _ => true) deficit hhalf (fun j => (hrange j).1) hx h8 hbit hmin
-      simp [Row.terms, evalTerms, single, pair, value, cube_bitFlip,
+      simp [Q9OrbitRow.terms, evalTerms, single, pair, value, cube_bitFlip,
         cubePairMembership, cubeMembership, hx, hf]
-    · simp [Row.terms, evalTerms, single, pair, value, cubePairMembership, cubeMembership, hx]
-  unfold Row.SignAllowed at hineq
+    · simp [Q9OrbitRow.terms, evalTerms, single, pair, value, cubePairMembership, cubeMembership, hx]
+  unfold Q9OrbitRow.SignAllowed at hineq
   cases row with
-  | size => simp [hs, Row.bound]
-  | parity => simp [hp, Row.bound]
+  | size => simp [hs, Q9OrbitRow.bound]
+  | parity => simp [hp, Q9OrbitRow.bound]
   | half i => rw [hh]
-  | direction i => simp [he, Row.bound]
-  | degree x => simp [hc, Row.bound]
-  | pairUpper x y => simpa only [hineq, one_mul, Row.bound] using hpair x y
-  | pairLower x y => simpa only [hineq, one_mul, Row.bound] using hpairLower x y
-  | shellLower x => simpa only [hineq, one_mul, Row.bound] using hshellLower x
-  | forcedEdge x i => simpa only [hineq, one_mul, Row.bound] using hforced x i hrow
-  | agreementEdge x y i => simpa only [hineq, one_mul, Row.bound] using hedge x y i hrow
+  | direction i => simp [he, Q9OrbitRow.bound]
+  | degree x => simp [hc, Q9OrbitRow.bound]
+  | pairUpper x y => simpa only [hineq, one_mul, Q9OrbitRow.bound] using hpair x y
+  | pairLower x y => simpa only [hineq, one_mul, Q9OrbitRow.bound] using hpairLower x y
+  | diameter x y => simpa only [hineq, one_mul, Q9OrbitRow.bound] using hdiam x y hrow
+  | shellLower x => simpa only [hineq, one_mul, Q9OrbitRow.bound] using hshellLower x
+  | shellUpper x => simpa only [hineq, one_mul, Q9OrbitRow.bound] using hshellUpper x
+  | forcedEdge x i => simpa only [hineq, one_mul, Q9OrbitRow.bound] using hforced x i hrow
+  | agreementEdge x y i => simpa only [hineq, one_mul, Q9OrbitRow.bound] using hedge x y i hrow
   | agreement x i k =>
     rcases hrow with h | ⟨h, hw⟩
     · subst k
-      simpa only [hineq, one_mul, Row.bound] using hcap x i
+      simpa only [hineq, one_mul, Q9OrbitRow.bound] using hcap x i
     · subst k
-      simpa only [hineq, one_mul, Row.bound] using hfloor x i hw
+      simpa only [hineq, one_mul, Q9OrbitRow.bound] using hfloor x i hw
 
 include hrange in
 private lemma certificate_contradiction {C : Finset Vertex} (hC : C.card = 66)
     (hreg : ((hypercube 9).induce (C : Set Vertex)).IsRegularOfDegree 3)
     (hb : IsBalanced C)
     (hh : ∀ i, ((C.filter fun x => x i = true).card : ℤ) + 2 * deficit i = 33)
-    (hw : ∀ t ∈ certificate, 0 ≤ t.2.2 ∧ Row.Valid deficit t.1 ∧ Row.SignAllowed t.2.1 t.1)
+    (hw : ∀ t ∈ certificate, 0 ≤ t.2.2 ∧ Q9OrbitRow.Valid deficit t.1 ∧ Q9OrbitRow.SignAllowed t.2.1 t.1)
     (hgap : (upper deficit certificate) < lower (keyedTerms deficit certificate)) : False := by
   have hrows (p : Perm deficit) : evalTerms (combined deficit certificate) (transportedValue deficit C p) ≤ upper deficit certificate := by
     obtain ⟨T, hT, hregT, hbT, hhT, hp⟩ := transport_lifted_cube_support hC hreg hb hh p
@@ -609,7 +632,7 @@ attribute [local instance] Classical.propDecidable
 private def deficit114555555 : Fin 9 → ℤ := ![1, 1, 4, 5, 5, 5, 5, 5, 5]
 
 -- Each entry gives the row, its sign, and its nonnegative multiplier.
-private def certificate114555555 : List (Row × ℤ × ℤ) :=
+private def certificate114555555 : List (Q9OrbitRow × ℤ × ℤ) :=
   [(.pairUpper 450 56, 1, 1000), (.agreementEdge 56 450 0, 1, 2001),
    (.size, 1, 1550), (.parity, 1, 113), (.direction 2, 1, 338), (.direction 3, 1, 1525),
    (.degree 12, 1, 500), (.degree 13, 1, 1000), (.degree 15, 1, 50),
@@ -644,7 +667,7 @@ theorem q9_sixty_six_excludes_114555555 {C : Finset (Q 9)} (hC : C.card = 66)
 
 private def deficit014455555 : Fin 9 → ℤ := ![0, 1, 4, 4, 5, 5, 5, 5, 5]
 
-private def certificate014455555 : List (Row × ℤ × ℤ) :=
+private def certificate014455555 : List (Q9OrbitRow × ℤ × ℤ) :=
   [(.pairLower 48 49, 1, 1495), (.agreementEdge 22 449 5, 1, 227),
    (.agreementEdge 23 448 5, 1, 227), (.agreementEdge 385 30 5, 1, 1495),
    (.agreementEdge 384 31 5, 1, 1495), (.agreementEdge 50 449 2, 1, 57),
@@ -700,7 +723,7 @@ theorem q9_sixty_six_excludes_014455555 {C : Finset (Q 9)} (hC : C.card = 66)
 
 private def deficit004445555 : Fin 9 → ℤ := ![0, 0, 4, 4, 4, 5, 5, 5, 5]
 
-private def certificate004445555 : List (Row × ℤ × ℤ) :=
+private def certificate004445555 : List (Q9OrbitRow × ℤ × ℤ) :=
   [(.pairUpper 28 29, 1, 53), (.pairUpper 29 28, 1, 53),
    (.pairUpper 29 31, 1, 53), (.pairUpper 31 29, 1, 53),
    (.agreementEdge 12 403 5, 1, 35), (.agreementEdge 13 402 5, 1, 70),
