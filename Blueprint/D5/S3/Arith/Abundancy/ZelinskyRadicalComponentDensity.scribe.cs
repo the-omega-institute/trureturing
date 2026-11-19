@@ -86,8 +86,5 @@ internal sealed class ZelinskyRadicalComponentDensityDocument : IScribeDocumentD
                         + "factor has positive exponent. The common density "
                         + "of the two critical sets and the error 2/(T+1), "
                         + "which tends to zero as T increases, give the result."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("zelinsky-2026-radical-component-density"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 }

@@ -6,7 +6,7 @@ url: https://arxiv.org/abs/2005.12115v5
 triage: theorem
 motivation_gids:
   - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result
-  - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.conjectures
+  - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result
 ---
 
 # Radical component density and primitive non-deficient intersections
@@ -154,13 +154,11 @@ of a limit.
 positive lam. `ZelinskyRadicalComponentConjectures.primitive_density_zero`
 proves the positive primitive non-deficient count is o(X), using the
 existing `ZelinskyZhangDoublePrimitive.PrimitiveNonDeficient` predicate.
-`ZelinskyRadicalComponentConjectures.conjectures` gives the three exact
+`ZelinskyRadicalComponentConjectures.result` gives the three exact
 limits. Their `OpenProblemResolutionClaim` is **Proved**.
 
-The separate typed claim in the Conjectures module is the source assertion
-that B has density zero. Its literal negation is the designated `result`.
-This keeps the general asymptotic as the Density module's main result and
-provides a unique compiled refutation selector in the Conjectures module.
+The source's zero-density assertion for B is contradicted by
+`ZelinskyRadicalComponentDensity.result`: its density is 1−log2>0.
 The external problem is preregistered in #31907.
 
 Bounded literature scope: the journal version and arXiv v5 state the
@@ -184,7 +182,8 @@ are unverified.
 - **Computed:** 1−log2 is approximately 0.3068528194; this decimal is
   explanatory and is not an input to any proof.
 - **Open:** Conjectures 11, 13 and 15 have denominator C(X). The present
-  arguments do not settle these relative-density statements.
+  arguments do not settle these relative-density statements; they are tracked
+  separately in #31919 and are outside this settlement.
 
 ## ASSUMED-UNVERIFIED
 

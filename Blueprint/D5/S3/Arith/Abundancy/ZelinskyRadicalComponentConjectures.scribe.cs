@@ -59,8 +59,8 @@ internal sealed class ZelinskyRadicalComponentConjecturesDocument : IScribeDocum
                         + "and the remaining upper bound is 4/K. Letting K "
                         + "increase proves C(X)/X tends to zero."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("conjectures"),
-                DeclarationHandle.Create(Prefix + "conjectures"),
+            Describe.Lean(DescribeId.Create("result"),
+                DeclarationHandle.Create(Prefix + "result"),
                 H("The three relative counting limits"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For B defined by the threshold lam=2, "
@@ -79,26 +79,9 @@ internal sealed class ZelinskyRadicalComponentConjecturesDocument : IScribeDocum
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("zelinsky-2026-radical-component-density"),
-                    ResolutionKind.Proved)),
-            Describe.Lean(DescribeId.Create("claim"),
-                DeclarationHandle.Create(Prefix + "claim"),
-                H("The source's zero-density assertion for B"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The source states that B has natural "
-                    + "density zero. This claim uses the original threshold "
-                    + "lam=2 and the inclusive positive counting function. "
-                    + "Including or excluding the integer one leaves the "
-                    + "density unchanged."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("result"),
-                DeclarationHandle.Create(Prefix + "result"),
-                H("B does not have density zero"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The exact asymptotic B(X)/X -> 1-log(2) "
-                    + "contradicts the zero-density claim, because log(2)<1. "
-                    + "Uniqueness of limits gives its formal negation. "
-                    + "This correction is compatible with the three "
-                    + "conjectures: their numerators have density zero "
-                    + "and their common denominator has positive density."))),
-                DescribeRole.Theorem))));
+                    ResolutionKind.Proved,
+                    additionalMembers: [
+                        DeclarationHandle.Create(
+                            "D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result")
+                    ])))));
 }
