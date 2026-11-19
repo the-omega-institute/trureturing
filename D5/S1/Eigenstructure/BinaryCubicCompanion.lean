@@ -1,5 +1,5 @@
 /- GID: D5/S1/Eigenstructure/BinaryCubicCompanion
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Eigenstructure/BinaryCubicCompanion
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
