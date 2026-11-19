@@ -6,6 +6,7 @@
    utility: none
    digest: Singleton center graphs give exact interior sections of the original normalized base. -/
 
+import D5.S3.Quantum.Foundation.ActualExclusionBoundary
 import D5.S3.Quantum.Foundation.BinaryCenterGraph
 import D5.S3.Quantum.Foundation.ExclusionIncidence
 import D5.S3.Quantum.Foundation.UniqueConfirmationDensity
