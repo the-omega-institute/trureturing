@@ -8,6 +8,7 @@ url: "https://doi.org/10.5281/zenodo.24369118"
 claim: "Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
+  - D5/S3/Combinatorics/Geometry/ThreeCentralMinimum
 license: citation-only
 triage: anchor
 ---
@@ -27,3 +28,8 @@ every point has another point, or itself when t = 0, at distance t. The central 
 distinct points whose distance lies in C(X). If |C(X)| = k then the central graph has at least
 (k-1)⌈n/2⌉ edges: for each nonzero central value the edges of that length cover every point,
 and edges of different lengths are distinct.
+
+Theorem 3 (Section 2): for every n >= 4 the minimum number of central edges among
+three-central n-point metric spaces is 2⌈n/2⌉; the lower bound is Lemma 2 with k = 3, and a
+narrow-band metric with two disjoint covering pair classes at distances 1 and 2 and all other
+distances distinct in (1,2) attains it.
