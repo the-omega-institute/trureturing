@@ -18,7 +18,7 @@ $$\forall (f: \operatorname{HardinA233260Literal}.\operatorname{Col}\left(\right
 
 *Commentary.*
 
-Functions on five colours and five-component columns are in bijection, so their integer sums agree.
+Functions from five row positions to three colours are in bijection with five-component colour columns via boundary, so the corresponding integer sums agree.
 
 **Theorem 1.2 (column boundary).**
 
