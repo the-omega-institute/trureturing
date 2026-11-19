@@ -151,7 +151,7 @@ private theorem weightedMobiusGrowth_proved : WeightedMobiusGrowth := by
   simpa only [Real.norm_eq_abs,
     abs_of_nonneg (Real.rpow_nonneg (le_trans (by norm_num) hnR) r)] using hbound
 
-private def mobiusMellin (s : ℂ) : ℂ :=
+def mobiusMellin (s : ℂ) : ℂ :=
   ∫ x in Ioi (1 : ℝ), (mobiusPartialSum x : ℂ) *
     (x : ℂ) ^ (-(s + 1))
 
@@ -205,7 +205,7 @@ private theorem initial_mellin_identity_of_growth
         riemannZeta (s + 1) * LSeries weightedMobius s := by rw [hL]
     _ = 1 := hprod'
 
-private theorem initial_mellin_identity {s : ℂ} (hs : 0 < s.re) :
+theorem initial_mellin_identity {s : ℂ} (hs : 0 < s.re) :
     s * mobiusMellin s = 1 / riemannZeta (s + 1) :=
   initial_mellin_identity_of_growth weightedMobiusGrowth_proved hs
 
