@@ -1,4 +1,5 @@
 import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Nat.Bitwise
 
 /-! Check the finite classifications after labeling the neighbors of vertex zero
@@ -10,7 +11,8 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.Q9EightCubicGraphCertificate
 
 private def pairMasks : Fin 6 → ℕ := ![3, 5, 9, 6, 10, 12]
-private def tripleMasks : Fin 20 → ℕ := ![7, 11, 19, 35, 13, 21, 37, 25, 41, 49, 14, 22, 38, 26, 42, 50, 28, 44, 52, 56]
+private def tripleMasks : Fin 20 → ℕ :=
+  ![7, 11, 19, 35, 13, 21, 37, 25, 41, 49, 14, 22, 38, 26, 42, 50, 28, 44, 52, 56]
 
 def code (a b c : Fin 6) (d : Fin 20) : ℕ :=
   pairMasks a + 16 * pairMasks b + 256 * pairMasks c + 4096 * tripleMasks d
@@ -40,7 +42,8 @@ def modelAdj (wagner : Bool) (i j : Fin 8) : Bool :=
   else let x := i.val ^^^ j.val; x == 1 || x == 2 || x == 4
 
 private def verifies (mask : ℕ) (wagner : Bool) (perm : ℕ) : Bool :=
-  (vertices.map (label perm)).eraseDups.length == 8 &&
+  vertices.all (fun i => vertices.all (fun j =>
+    (label perm i == label perm j) == (i == j))) &&
     vertices.all (fun i => vertices.all (fun j =>
       adj mask i j == modelAdj wagner (label perm i) (label perm j)))
 
@@ -81,6 +84,7 @@ private def witnesses : List (ℕ × Bool × ℕ) :=
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 16000000 in
+-- Check the 4,320 candidates and the explicit permutations of valid graphs.
 theorem checked_normalized_codes :
     ∀ (a b c : Fin 6) (d : Fin 20), valid (code a b c d) = true →
       (witnesses.find? (fun w => w.1 == code a b c d)).any
@@ -88,5 +92,27 @@ theorem checked_normalized_codes :
   decide +kernel
 
 #print axioms checked_normalized_codes
+
+/-- A valid encoded graph has a bijective relabeling to the cube or Wagner graph. -/
+theorem exists_model_relabeling (a b c : Fin 6) (d : Fin 20)
+    (h : valid (code a b c d) = true) :
+    ∃ (wagner : Bool) (p : Equiv.Perm (Fin 8)),
+      ∀ i j, adj (code a b c d) i j = modelAdj wagner (p i) (p j) := by
+  have hm := checked_normalized_codes a b c d h
+  cases he : witnesses.find? (fun w => w.1 == code a b c d) with
+  | none => simp [he] at hm
+  | some w =>
+    have hw : verifies (code a b c d) w.2.1 w.2.2 = true := by simpa [he] using hm
+    obtain ⟨hinj, hadj⟩ := Bool.and_eq_true_iff.mp hw
+    have hmem (i : Fin 8) : i ∈ vertices := List.mem_finRange i
+    have hi : Function.Injective (label w.2.2) := by
+      intro i j hij
+      have hi := List.all_eq_true.mp (List.all_eq_true.mp hinj i (hmem i)) j (hmem j)
+      simpa [hij] using hi
+    let p := Equiv.ofBijective (label w.2.2) ⟨hi, Finite.injective_iff_surjective.mp hi⟩
+    refine ⟨w.2.1, p, fun i j => ?_⟩
+    exact beq_iff_eq.mp (List.all_eq_true.mp (List.all_eq_true.mp hadj i (hmem i)) j (hmem j))
+
+#print axioms exists_model_relabeling
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9EightCubicGraphCertificate
