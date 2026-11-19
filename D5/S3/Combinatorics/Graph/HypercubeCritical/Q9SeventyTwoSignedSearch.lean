@@ -18,7 +18,7 @@ open private cube_action_regular_balanced from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixNormalizeProbe
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private flip_comm from
+open private flip_comm adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private matrix_true_prefix from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixSignedModelProbe
@@ -220,5 +220,132 @@ theorem signed_middle_unique {x y : Q 9} (hxy : x ≠ y) {i j k l : Fin 9}
   exact (mul_ne_zero (hnonzero x j) (hnonzero (flip x j) i)) hzero
 
 #print axioms signed_middle_unique
+
+/-- The endpoint signs and the two incident edge signs determine both the
+location and sign of a middle vertex. -/
+private theorem middle_of_signed_path {x y m : Q 9} {z : Q 9 → ℤ}
+    (hxm : (hypercube 9).Adj x m) (hmy : (hypercube 9).Adj m y)
+    (hx : z x = 1 ∨ z x = -1) (hm : z m = 1 ∨ z m = -1)
+    (h : ∀ u (i : Fin 9), (u = x ∧ flip u i = m) ∨ (u = m ∧ flip u i = y) →
+      truePrefixSign u i = z u * z (flip u i)) :
+    ∃ i j : Fin 9, m = flip x i ∧ y = flip m j ∧
+      truePrefixSign x i * truePrefixSign m j = z x * z y ∧
+      z m = z x * truePrefixSign x i := by
+  obtain ⟨i, hi⟩ := adjacent_exists_flip hxm
+  obtain ⟨j, hj⟩ := adjacent_exists_flip hmy
+  have hs := h x i (Or.inl ⟨rfl, hi.symm⟩)
+  have ht := h m j (Or.inr ⟨rfl, hj.symm⟩)
+  rw [← hi] at hs
+  rw [← hj] at ht
+  refine ⟨i, j, hi, hj, ?_, ?_⟩
+  · rw [hs, ht]
+    rcases hm with hm | hm <;> rw [hm] <;> ring
+  · rw [hs]
+    rcases hx with hx | hx <;> rw [hx] <;> ring
+
+/-- For a fixed normalized embedding of the eight high vertices, their
+signs determine the entire balanced support. -/
+theorem support_eq_of_high_signs {U V : Finset (Q 9)} {wagner : Bool}
+    (p : Fin 8 ↪ Q 9)
+    (m n : (modelEdges wagner : Set (Fin 8 × Fin 8)) ↪ Q 9)
+    (z t : Q 9 → ℤ)
+    (hU : coordinateSlice U false = Finset.univ.map p ∪ Finset.univ.map m)
+    (hV : coordinateSlice V false = Finset.univ.map p ∪ Finset.univ.map n)
+    (hm : ∀ e k, (hypercube 9).Adj (m e) (p k) ↔ k = e.val.1 ∨ k = e.val.2)
+    (hn : ∀ e k, (hypercube 9).Adj (n e) (p k) ↔ k = e.val.1 ∨ k = e.val.2)
+    (hz : ∀ x ∈ U, z x = 1 ∨ z x = -1) (ht : ∀ x ∈ V, t x = 1 ∨ t x = -1)
+    (hz0 : ∀ x ∉ U, z x = 0) (ht0 : ∀ x ∉ V, t x = 0)
+    (hzSign : ∀ x ∈ U, ∀ i : Fin 9, flip x i ∈ U →
+      truePrefixSign x i = z x * z (flip x i))
+    (htSign : ∀ x ∈ V, ∀ i : Fin 9, flip x i ∈ V →
+      truePrefixSign x i = t x * t (flip x i))
+    (hzRow : ∀ x, z (flip x 0) =
+      3 * z x - ∑ i ∈ Finset.univ.erase (0 : Fin 9), truePrefixSign x i * z (flip x i))
+    (htRow : ∀ x, t (flip x 0) =
+      3 * t x - ∑ i ∈ Finset.univ.erase (0 : Fin 9), truePrefixSign x i * t (flip x i))
+    (hp : ∀ k, z (p k) = t (p k)) : U = V := by
+  classical
+  have highMem (k : Fin 8) : p k ∈ Finset.univ.map p :=
+    Finset.mem_map.mpr ⟨k, Finset.mem_univ k, rfl⟩
+  have inSet {W : Finset (Q 9)}
+      {q : (modelEdges wagner : Set (Fin 8 × Fin 8)) ↪ Q 9}
+      (hW : coordinateSlice W false = Finset.univ.map p ∪ Finset.univ.map q)
+      {x : Q 9} (hx : x ∈ Finset.univ.map p ∪ Finset.univ.map q) : x ∈ W :=
+    (Finset.mem_filter.mp (hW.symm ▸ hx)).1
+  have signedPath {W : Finset (Q 9)} {s : Q 9 → ℤ} {x y v : Q 9}
+      (hs : ∀ a ∈ W, s a = 1 ∨ s a = -1)
+      (hsSign : ∀ a ∈ W, ∀ i : Fin 9, flip a i ∈ W →
+        truePrefixSign a i = s a * s (flip a i))
+      (hx : x ∈ W) (hy : y ∈ W) (hv : v ∈ W)
+      (hxv : (hypercube 9).Adj x v) (hvy : (hypercube 9).Adj v y) :
+      ∃ i j : Fin 9, v = flip x i ∧ y = flip v j ∧
+        truePrefixSign x i * truePrefixSign v j = s x * s y ∧
+        s v = s x * truePrefixSign x i := by
+    apply middle_of_signed_path hxv hvy (hs _ hx) (hs _ hv)
+    rintro a i (⟨rfl, hflip⟩ | ⟨rfl, hflip⟩)
+    · exact hsSign _ hx _ (hflip.symm ▸ hv)
+    · exact hsSign _ hv _ (hflip.symm ▸ hy)
+  have hmid (e : (modelEdges wagner : Set (Fin 8 × Fin 8))) :
+      m e = n e ∧ z (m e) = t (n e) := by
+    have hend : p e.val.1 ≠ p e.val.2 := fun he =>
+      (Finset.mem_filter.mp e.property).2.1.ne (p.injective he)
+    obtain ⟨i, j, hi, hj, hij, hzi⟩ := signedPath hz hzSign
+      (inSet hU (Finset.mem_union_left _ (highMem e.val.1)))
+      (inSet hU (Finset.mem_union_left _ (highMem e.val.2)))
+      (inSet hU (Finset.mem_union_right _ (Finset.mem_map.mpr ⟨e, Finset.mem_univ _, rfl⟩)))
+      ((hm e e.val.1).mpr (Or.inl rfl)).symm ((hm e e.val.2).mpr (Or.inr rfl))
+    obtain ⟨k, l, hk, hl, hkl, htk⟩ := signedPath ht htSign
+      (inSet hV (Finset.mem_union_left _ (highMem e.val.1)))
+      (inSet hV (Finset.mem_union_left _ (highMem e.val.2)))
+      (inSet hV (Finset.mem_union_right _ (Finset.mem_map.mpr ⟨e, Finset.mem_univ _, rfl⟩)))
+      ((hn e e.val.1).mpr (Or.inl rfl)).symm ((hn e e.val.2).mpr (Or.inr rfl))
+    have hik := signed_middle_unique hend ((congrArg (fun x => flip x j) hi).symm.trans hj.symm)
+      ((congrArg (fun x => flip x l) hk).symm.trans hl.symm) (by
+        rw [← hi, ← hk, hij, hkl, hp, hp])
+    exact ⟨hi.trans (hik ▸ hk.symm), by rw [hzi, htk, hp, hik]⟩
+  have hmn : m = n := Function.Embedding.ext fun e => (hmid e).1
+  have hhalf (x : Q 9) (hx : x 0 = false) : z x = t x := by
+    have hu : x ∈ U ↔ x ∈ coordinateSlice U false := by simp [coordinateSlice, hx]
+    have hv : x ∈ V ↔ x ∈ coordinateSlice V false := by simp [coordinateSlice, hx]
+    by_cases hxU : x ∈ U
+    · have hmemb := hu.mp hxU
+      rw [hU] at hmemb
+      rcases Finset.mem_union.mp hmemb with hh | hh
+      · obtain ⟨k, _, rfl⟩ := Finset.mem_map.mp hh
+        exact hp k
+      · obtain ⟨e, _, rfl⟩ := Finset.mem_map.mp hh
+        exact (hmid e).2.trans (congrArg t (hmid e).1.symm)
+    · have hxV : x ∉ V := by
+        intro hxV
+        apply hxU
+        apply hu.mpr
+        rw [hU, hmn, ← hV]
+        exact hv.mp hxV
+      rw [hz0 _ hxU, ht0 _ hxV]
+  have hall (x : Q 9) : z x = t x := by
+    cases hbit : x 0
+    · exact hhalf x hbit
+    · let y := flip x 0
+      have hy : y 0 = false := by simp [y, hbit]
+      have hyx : flip y 0 = x := flip_flip x 0
+      rw [← hyx, hzRow, htRow, hhalf y hy]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [hhalf (flip y i)]
+      exact (Function.update_of_ne (Finset.mem_erase.mp hi).1.symm _ _).trans hy
+  have mem_iff_ne_zero (W : Finset (Q 9)) (s : Q 9 → ℤ)
+      (hs : ∀ x ∈ W, s x = 1 ∨ s x = -1) (hs0 : ∀ x ∉ W, s x = 0) (x : Q 9) :
+      x ∈ W ↔ s x ≠ 0 := by
+    constructor
+    · intro h
+      rcases hs x h with h' | h' <;> simp [h']
+    · intro h
+      by_contra hn
+      exact h (hs0 x hn)
+  ext x
+  rw [mem_iff_ne_zero U z hz hz0, mem_iff_ne_zero V t ht ht0, hall]
+
+#print axioms support_eq_of_high_signs
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoSignedSearch
