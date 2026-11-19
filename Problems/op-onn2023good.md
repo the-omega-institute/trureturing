@@ -69,7 +69,7 @@ The escape audit is unfinished for the public theorem targets named in [issue #3
 
 ### What the settlement shows
 
-**Kernel-checked:** `result` proves the count and characterization in every positive dimension. The decisive mechanism is the unique two-row sign transition, the even-subset bijection, the two compatible $3\times3$ types, and the overlapping-block obstruction. **Computed:** the finite corroboration has exactly the range stated in item 6. **Open:** the surviving neighbouring questions and complete literature-priority comparison remain outside this settlement. No change to other source results is claimed.
+**Kernel-checked:** `result` proves the count and characterization in every positive dimension. The decisive mechanism is the unique two-row split, including the endpoints, the even-subset bijection, the two compatible $3\times3$ types, and the overlapping-block obstruction. **Computed:** the finite corroboration has exactly the range stated in item 6. **Open:** the surviving neighbouring questions and complete literature-priority comparison remain outside this settlement. No change to other source results is claimed.
 
 ## ASSUMED-UNVERIFIED
 

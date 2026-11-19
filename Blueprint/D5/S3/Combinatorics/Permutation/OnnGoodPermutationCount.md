@@ -62,7 +62,7 @@ $$\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; (0 < m) \Rightarrow ((
 
 *Commentary.*
 
-A unique sign transition splits a good two-row array into two disjoint chains. Their label sets run through all even subsets of Fin (2*n), giving 2^(2*n−1). The two three-by-three types have center label 5 and two independent interleavings of two ordered pairs, hence 36 each. One-dimensional arrays contribute every permutation; overlapping three-by-three blocks exclude the remaining dimensions.
+A unique split partitions a good two-row array into two disjoint chains, one of which can be empty at an endpoint. Their label sets run through all even subsets of Fin (2*n), giving 2^(2*n−1). The two three-by-three types have center label 5 and two independent interleavings of two ordered pairs, hence 36 each. One-dimensional arrays contribute every permutation; overlapping three-by-three blocks exclude the remaining dimensions.
 
 ## References
 

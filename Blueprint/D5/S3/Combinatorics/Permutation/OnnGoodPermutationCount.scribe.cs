@@ -26,7 +26,7 @@ internal sealed class OnnGoodPermutationCountDocument : IScribeDocumentDefinitio
                 + "The quantifiers range over all positive natural dimensions and every rank array in either orientation. "
                 + "The two-row split is unique, including its endpoint cases; the three-by-three alternatives are the two ordered-list types.", true, false),
             Node("result", "The count and characterization in all dimensions", ClaimBody(),
-                "A unique sign transition splits a good two-row array into two disjoint chains. Their label sets run through all even subsets of Fin (2*n), giving 2^(2*n−1). "
+                "A unique split partitions a good two-row array into two disjoint chains, one of which can be empty at an endpoint. Their label sets run through all even subsets of Fin (2*n), giving 2^(2*n−1). "
                 + "The two three-by-three types have center label 5 and two independent interleavings of two ordered pairs, hence 36 each. "
                 + "One-dimensional arrays contribute every permutation; overlapping three-by-three blocks exclude the remaining dimensions.",
                 resolution: new OpenProblemResolutionClaim(
