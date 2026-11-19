@@ -18,7 +18,8 @@ internal sealed class UnitQuaternionPolarDocument : IScribeDocumentDefinition
                     + "Since the squared norm of q is the sum of the squares of its four coordinates, the imaginary part of q has squared norm 1 - (re q)^2, so |re q| <= 1. "
                     + "Hence cos t = re q, and sin t = sqrt (1 - (re q)^2) is the norm of the imaginary part of q. "
                     + "If the imaginary part of q is nonzero, n is the imaginary part divided by its norm; it has real part zero and norm one, and q = re q + im q = cos t + sin t * n. "
-                    + "If the imaginary part of q is zero, then sin t = 0 and q = cos t, and any unit imaginary quaternion, for instance the quaternion unit i, serves as n."),
+                    + "If the imaginary part of q is zero, then sin t = 0 and q = cos t, and any unit imaginary quaternion, for instance the quaternion unit i, serves as n. "
+                    + "The polar form of a unit quaternion and de Moivre's formula for quaternions are classical; both statements are derived here from the definitions of the quaternion operations and norm, the polar form with the identities cos (arccos x) = x and sin (arccos x) = sqrt (1 - x^2) for |x| <= 1, and de Moivre's formula from the corresponding identity for complex numbers."),
             Node("de-moivre", "cos_add_sin_smul_pow", "De Moivre's formula for a unit imaginary quaternion",
                 StatementSource.FromAuthor(DeMoivreFormula()), DescribeRole.Lemma,
                 "Let n be a quaternion with real part zero and norm one. "
