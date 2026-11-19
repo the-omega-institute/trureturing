@@ -1,8 +1,0 @@
-本增订从这些真源出发作有限代数、组合、谱和能量推导。以下内容明确不作为既有 Lean 定理冒充：
-
-- canonical prime–Zeckendorf–Gamma transfer 已经存在；
-- Zeckendorf 稳定影子已经等于 zeta zero odd channel；
-- prime-side 横向能量已经支配 zero-side 奇能量；
-- 黄金比例已经从 Riemann completed function 中被无条件抽取；
-- RH 已被证明。
-

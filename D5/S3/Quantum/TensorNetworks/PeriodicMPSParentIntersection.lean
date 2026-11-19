@@ -406,7 +406,7 @@ private theorem phase_recovery (A B : Fin 2 → Bond) (r : ℕ)
       norm_num
     rw [hn, one_smul]
 
-private lemma rank_of_spanning (A : Fin 2 → Bond) (hA : TwoSiteSpanning A) (r : ℕ) :
+lemma rank_of_spanning (A : Fin 2 → Bond) (hA : TwoSiteSpanning A) (r : ℕ) :
     (twoFlattening A r).rank = 4 := by
   classical
   let L : Bond →ₗ[ℂ] (Word (r + 2) → ℂ) :=

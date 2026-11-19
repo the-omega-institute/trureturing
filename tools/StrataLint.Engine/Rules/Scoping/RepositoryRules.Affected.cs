@@ -13,7 +13,7 @@ internal static partial class RepositoryRules
         CapacityAffected(context.Changes);
 
     internal static bool CapacityAffected(RawChangeSet changes) =>
-        changes.Paths.Any(static path => IsTheoryDocument(path.Value) || !IsCapacityExcluded(path.Value));
+        changes.Paths.Any(static path => !IsCapacityExcluded(path.Value));
 
     private static bool HeartsAffected(DeltaRuleContext context) =>
         Changed(context, static path =>

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:93d330811f841e758adff464728339b1427140a74d00e37eddc4a8c063ca13df
-  normalized_sha256: sha256:93d330811f841e758adff464728339b1427140a74d00e37eddc4a8c063ca13df
-cas_ref: sha256:93d330811f841e758adff464728339b1427140a74d00e37eddc4a8c063ca13df
-coverage_gids:
-  - gid: D5/S3/Factorization/PrimePowers/CrtNilpotentAbelianVictory.crt_is_a_nilpotent_abelian_victory
-    target_statement_id: sha256:bd9c83e334bcb6efe0878f7af94a2a3ca419fdc650ac7ea873d26107792d40a0
-receipts:
-  unresolved_subitems: []

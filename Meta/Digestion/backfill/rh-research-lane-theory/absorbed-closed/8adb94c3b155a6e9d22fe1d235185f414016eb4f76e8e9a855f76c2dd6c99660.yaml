@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8adb94c3b155a6e9d22fe1d235185f414016eb4f76e8e9a855f76c2dd6c99660
-  normalized_sha256: sha256:8adb94c3b155a6e9d22fe1d235185f414016eb4f76e8e9a855f76c2dd6c99660
-cas_ref: sha256:8adb94c3b155a6e9d22fe1d235185f414016eb4f76e8e9a855f76c2dd6c99660
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound.stable_residual_swap_curvature_bound
-    target_statement_id: sha256:783ab9d36aa26e2ee77bfbfd450e0327d861e6a7301558dd8bc5eb40e17ae2e3
-receipts:
-  unresolved_subitems: []

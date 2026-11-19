@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6dba1ab66df8a8ef8aba8c27304003c8854eca3ee44c73e7a75360d4cb95149b
-  normalized_sha256: sha256:6dba1ab66df8a8ef8aba8c27304003c8854eca3ee44c73e7a75360d4cb95149b
-cas_ref: sha256:6dba1ab66df8a8ef8aba8c27304003c8854eca3ee44c73e7a75360d4cb95149b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InterventionsExchange/StableFlipCounterfactualOpposition.stable_flip_intervention_equivalent_counterfactual_opposite
-    target_statement_id: sha256:703a109be9a59eb76f0e285b9c5c9544f83a31520101758851c313d8ac94cdd0
-receipts:
-  unresolved_subitems: []

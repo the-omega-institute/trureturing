@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8bca4d28580bdd4121865fd84c24f15acb7bc41086c78534b212887aaef8de80
-  normalized_sha256: sha256:8bca4d28580bdd4121865fd84c24f15acb7bc41086c78534b212887aaef8de80
-cas_ref: sha256:8bca4d28580bdd4121865fd84c24f15acb7bc41086c78534b212887aaef8de80
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BudgetEnvelopeCompletion.budget_envelope_infimum_and_limit
-    target_statement_id: sha256:c6e1d59b0fdfade75c30172c1a064b500a19280b9fefb6f66ba4e20a065067e5
-receipts:
-  unresolved_subitems: []

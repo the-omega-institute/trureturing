@@ -57,25 +57,25 @@ set_option autoImplicit false
 namespace D5.S3.Arith.Additive.PlasticExtremal
 
 /-- The literal distance window of an actual integer prefix. -/
-private def memory (E : Finset ℤ) (x : ℤ) : Finset ℤ :=
+def memory (E : Finset ℤ) (x : ℤ) : Finset ℤ :=
   (Finset.Icc 0 8).filter fun a => x - a ∈ E
 
 /-- Full shift: no truncation before counting completed templates. -/
-private def shifted (S : Finset ℤ) (g : ℤ) : Finset ℤ := S.image (fun a => a + g)
+def shifted (S : Finset ℤ) (g : ℤ) : Finset ℤ := S.image (fun a => a + g)
 
 /-- The next finite state. -/
-private def advance (S : Finset ℤ) (g : ℤ) : Finset ℤ :=
+def advance (S : Finset ℤ) (g : ℤ) : Finset ℤ :=
   insert 0 ((shifted S g).filter fun a => a ≤ 8)
 
 /-- Literal right-endpoint incidence for the four source templates. -/
-private def weight (D : Finset ℤ) : ℕ :=
+def weight (D : Finset ℤ) : ℕ :=
   (if 1 ∈ D ∧ 2 ∈ D ∧ 4 ∈ D then 1 else 0) +
   (if 1 ∈ D ∧ 3 ∈ D ∧ 6 ∈ D then 1 else 0) +
   (if 2 ∈ D ∧ 7 ∈ D then 1 else 0) +
   (if 1 ∈ D ∧ 4 ∈ D ∧ 9 ∈ D then 1 else 0)
 
 /-- Every needed distance sees exactly the actual previous prefix. -/
-private theorem shifted_memory_iff (E : Finset ℤ) (x y a : ℤ)
+theorem shifted_memory_iff (E : Finset ℤ) (x y a : ℤ)
     (hmax : ∀ z ∈ E, z ≤ x) (hxy : x < y) (ha : 1 ≤ a) (ha9 : a ≤ 9) :
     a ∈ shifted (memory E x) (y - x) ↔ y - a ∈ E := by
   constructor
@@ -94,7 +94,7 @@ private theorem shifted_memory_iff (E : Finset ℤ) (x y a : ℤ)
     simpa only [he] using h
 
 /-- Inserting the next actual maximum implements the finite-state transition. -/
-private theorem memory_insert (E : Finset ℤ) (x y : ℤ)
+theorem memory_insert (E : Finset ℤ) (x y : ℤ)
     (hmax : ∀ z ∈ E, z ≤ x) (hxy : x < y) :
     memory (insert y E) y = advance (memory E x) (y - x) := by
   ext a
@@ -135,7 +135,7 @@ private theorem large_gap (S : Finset ℤ) (hS : ∀ a ∈ S, 0 ≤ a) (g : ℤ)
   simp [advance, hf, weight, h1, h2]
 
 /-- Capping a gap at nine preserves both the next state and its reward. -/
-private theorem cap_gap (S : Finset ℤ) (hS : ∀ a ∈ S, 0 ≤ a) (g : ℤ) :
+theorem cap_gap (S : Finset ℤ) (hS : ∀ a ∈ S, 0 ≤ a) (g : ℤ) :
     advance S (min g 9) = advance S g ∧
       weight (shifted S (min g 9)) = weight (shifted S g) := by
   by_cases hg : g ≤ 9
@@ -210,7 +210,7 @@ private theorem endpoints_card_insert (E L : Finset ℤ) (y : ℤ)
   split_ifs <;> simp [hy]
 
 /-- The full untruncated shifted window gives the actual increment. -/
-private theorem count_insert (E : Finset ℤ) (x y : ℤ)
+theorem count_insert (E : Finset ℤ) (x y : ℤ)
     (hmax : ∀ z ∈ E, z ≤ x) (hxy : x < y) :
     count (insert y E) = count E + weight (shifted (memory E x) (y-x)) := by
   have hm : ∀ z ∈ E, z < y := fun z hz => lt_of_le_of_lt (hmax z hz) hxy
@@ -403,11 +403,11 @@ private def table : Array (Array ℕ) := #[
 /-- Odd binary mask divided by two is the source table's column address. -/
 private def address (S : Finset ℤ) : ℕ := (∑ a ∈ S, 2 ^ a.toNat) / 2
 
-private def potential (k : ℕ) (S : Finset ℤ) : ℕ :=
+def potential (k : ℕ) (S : Finset ℤ) : ℕ :=
   (table[k]?.getD #[])[address S]?.getD 15
 
 /-- The explicit 256-state carrier, excluding windows without a current point. -/
-private def states : Finset (Finset ℤ) :=
+def states : Finset (Finset ℤ) :=
   (Finset.Icc (0 : ℤ) 8).powerset.filter fun S => 0 ∈ S
 
 set_option maxRecDepth 100000 in
@@ -493,7 +493,7 @@ private theorem table_step_8 :
 
 /-- All finite table entries satisfy every allowed one-step inequality.
 The unreachable marker is excluded, rather than treated as reward zero. -/
-private theorem table_step :
+theorem table_step :
     ∀ k ∈ Finset.range 9, ∀ S ∈ states, ∀ g ∈ Finset.Icc (1 : ℤ) 9,
       potential k S < 15 →
         potential (k+1) (advance S g) < 15 ∧
@@ -513,7 +513,7 @@ private theorem table_step :
 
 
 /-- Actual nonempty prefix windows belong to the certificate's finite carrier. -/
-private theorem memory_mem_states (E : Finset ℤ) (x : ℤ) (hx : x ∈ E) :
+theorem memory_mem_states (E : Finset ℤ) (x : ℤ) (hx : x ∈ E) :
     memory E x ∈ states := by
   apply Finset.mem_filter.mpr
   constructor
@@ -523,7 +523,7 @@ private theorem memory_mem_states (E : Finset ℤ) (x : ℤ) (hx : x ∈ E) :
 
 set_option maxRecDepth 100000 in
 /-- The finite certificate bounds every actual prefix of at most ten points. -/
-private theorem prefix_certificate (E : Finset ℤ) :
+theorem prefix_certificate (E : Finset ℤ) :
     ∀ x ∈ E, (∀ z ∈ E, z ≤ x) → E.card ≤ 10 →
       count E ≤ potential (E.card-1) (memory E x) ∧
         potential (E.card-1) (memory E x) < 15 := by
@@ -577,12 +577,12 @@ private theorem prefix_certificate (E : Finset ℤ) :
       exact ⟨by omega, hp'⟩
 
 /-- Every later maximum contributes at most the four literal patterns. -/
-private theorem weight_le_four (S : Finset ℤ) : weight S ≤ 4 := by
+theorem weight_le_four (S : Finset ℤ) : weight S ≤ 4 := by
   unfold weight
   split_ifs <;> omega
 
 /-- The uniform combinatorial bound on arbitrary signed exponent sets. -/
-private theorem count_bound (E : Finset ℤ) (hn : 10 ≤ E.card) :
+theorem count_bound (E : Finset ℤ) (hn : 10 ≤ E.card) :
     count E + 26 ≤ 4 * E.card := by
   induction E using Finset.induction_on_max with
   | empty => simp at hn
@@ -630,7 +630,7 @@ private theorem count_interval (a : ℤ) (n : ℕ) (hn : 10 ≤ n) :
 open scoped Pointwise
 
 /-- Import the frozen algebraic classification without re-proving it. -/
-private theorem sum_card_identity (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+theorem sum_card_identity (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
     (E : Finset ℤ) :
     ((E.image fun z => r^z) + (E.image fun z => r^z)).card + count E =
       E.card*(E.card+1)/2 := by

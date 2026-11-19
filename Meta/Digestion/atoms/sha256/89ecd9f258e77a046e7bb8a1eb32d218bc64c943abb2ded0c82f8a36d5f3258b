@@ -1,8 +1,0 @@
-**Proof.** Write $\lambda_u=\zeta^{f_t(\mathrm{col}(u))}$. Distinct values of $f_t$ give distinct powers of $\zeta$, so $\lambda_u\ne\lambda_v$ exactly when $\mathrm{col}(u)$ and $\mathrm{col}(v)$ lie in different blocks of $\pi_t$. Hence $(M_t)_{uv}=\Gamma^{\pi_t}_{uv}(\lambda_u+\lambda_v)$ for all $u,v$. If the $\lambda_u$ take one value, $M_t=0=\Gamma^{\pi_t}$. If they take two values $a\ne b$, $M_t=(a+b)\Gamma^{\pi_t}$. If they take three values $a,b,c$, let $\beta_a,\beta_b,\beta_c\in F^\times$ be the square roots
-
-$$
-\beta_a^2=\frac{(a+b)(a+c)}{b+c},\qquad \beta_b^2=\frac{(b+a)(b+c)}{a+c},\qquad \beta_c^2=\frac{(c+a)(c+b)}{a+b},
-$$
-
-which exist and are unique because squaring is an automorphism of the finite field $F$. Then $(\beta_a\beta_b)^2=(a+b)^2$, so $\beta_a\beta_b=a+b$, and similarly for the other two pairs. With $D=\operatorname{diag}(\beta_{\lambda_u})_u$ this gives $M_t=D\,\Gamma^{\pi_t}D$. In every case $M_t$ is congruent to a nonzero multiple of $\Gamma^{\pi_t}$ or equal to it, so $\rho_t=\operatorname{rank}_F\Gamma^{\pi_t}=\operatorname{rank}_{\mathbb F_2}\Gamma^{\pi_t}=r(\pi_t)$, rank being unchanged by field extension. ∎
-

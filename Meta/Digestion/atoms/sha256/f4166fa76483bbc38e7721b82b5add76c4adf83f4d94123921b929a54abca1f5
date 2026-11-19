@@ -1,7 +1,0 @@
-**Definition 52.3 (finite-depth approximants).** Put $R_0=Q\times Q$ and
-$R_{n+1}=\Psi(R_n)$. On a finite state space, the descending chain stabilizes
-at some $R_N=R_{N+1}=R_\infty$. In an infinite state space, the intersection
-of all $R_n$ is the finite-trace action equivalence; equality with a quotient
-for infinite histories requires an additional compactness or regularity
-hypothesis.
-

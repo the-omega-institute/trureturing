@@ -1,8 +1,0 @@
-这把之前讨论的多种结构统一了：
-
-* 黄金跳跃失衡是 additive coboundary；
-* L-function 完成因子是在平凡化 multiplicative reflection cocycle；
-* observer charts 的转换函数满足 cocycle；
-* branch monodromy 是取值于置换群的 cocycle；
-* 无法统一重完的名字，是非零上同调类。
-

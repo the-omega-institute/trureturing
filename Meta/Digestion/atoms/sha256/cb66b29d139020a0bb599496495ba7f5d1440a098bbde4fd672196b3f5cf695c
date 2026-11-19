@@ -1,5 +1,0 @@
-仓库当前 `ObserverDiagonalSeparation.lean` 将两个独立事实包装在同一存在命题中：
-
-1. 一维量子上下文的读出是单射；
-2. 独立 `Unit/Bool` carrier 上存在固定点自由的对角逃逸。
-

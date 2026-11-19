@@ -1,8 +1,0 @@
-**Convention 240.0 (Source, numbering and mathematical scope).** This volume
-continues [Continuation VII, §§215,226–230,235–239](https://github.com/the-omega-institute/trureturing/blob/b92a26f3f99eb2cdad322dbd60d0e95eadf7b024/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md).
-Numbers below 240 refer to that volume. The native preparation and fixed
-registers are those of §§215,226,235–236; the common exact-success contract
-is Definition 239.1. The argument here concerns a single fixed temperature
-at which every required target is separable. It leaves the fixed-$1/10$
-two-source result of Theorem 239.2 intact.
-

@@ -62,7 +62,7 @@ private lemma g_prime_pow {p : ℕ} (hp : p.Prime) (a : ℕ) :
     g (p ^ a) = ∑ i ∈ range (a + 1), 1 / (sigma 1 (p ^ i) : ℚ) := by
   exact Nat.sum_divisors_prime_pow hp
 
-private lemma sigma_prime {p : ℕ} (hp : p.Prime) : sigma 1 p = p + 1 := by
+lemma sigma_prime {p : ℕ} (hp : p.Prime) : sigma 1 p = p + 1 := by
   simpa [Finset.sum_range_succ, add_comm] using
     (sigma_one_apply_prime_pow (i := 1) hp)
 

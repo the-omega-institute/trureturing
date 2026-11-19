@@ -568,7 +568,7 @@ private theorem topRow_mul {R : Type*} [CommRing R] {d : ℕ}
   · simp only [Matrix.updateRow_self, Matrix.mul_apply, Matrix.vecMul, dotProduct]
   · simp only [Matrix.updateRow_ne (Fin.succ_ne_zero i), augment_succ, Matrix.mul_apply]
 
-private theorem cofactor_mul_right_cross {R : Type*} [CommRing R] {d : ℕ}
+theorem cofactor_mul_right_cross {R : Type*} [CommRing R] {d : ℕ}
     (M : Matrix (Fin d) (Fin (d+1)) R)
     (W : Matrix (Fin (d+1)) (Fin (d+1)) R) :
     W *ᵥ cofactor (M * W) = W.det • cofactor M := by

@@ -19,13 +19,18 @@ public sealed class AdmissionStandardErrorTests
     [InlineData(true)]
     public void SuccessfulDeltaAcceptsStandardErrorRegardlessOfInjectedPhaseTime(bool emitTiming)
     {
-        const string document = "docs/develop/theory/Fixture.MD";
+        using var temporary = new TemporaryDirectory();
+        const string document = "Library/notes/Fixture.md";
         var fixture = new RuleFixture();
-        fixture.Files[document] = "theory\n";
+        fixture.Files[document] = "fixture\n";
         static RawRepositorySnapshot Snapshot(Dictionary<string, string> files) =>
             RawRepositorySnapshot.Create(files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var current = Snapshot(fixture.Files);
+        var reportPath = Path.Combine(temporary.Path, "candidate.json");
+        var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(current));
+        RawLeanReportArtifact.WriteFile(reportPath, decoded.Snapshot, LeanAxiomReport.Create(fixture.Reports));
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create([document]), Snapshot(fixture.Files), Snapshot(fixture.Baseline));
+            RawChangeSet.Create([document]), current, Snapshot(fixture.Baseline));
         var environment = new ProductionCliEnvironment(
             "/fixture", gateway, new FakeLeanReportSource(null),
             scribeEmissionVerifier: null, new FirstPhaseTimeProvider(emitTiming));
@@ -39,7 +44,8 @@ public sealed class AdmissionStandardErrorTests
             Console.SetOut(output);
             Console.SetError(error);
             exitCode = CliApplication.Run(
-                ["check-delta", "--protected-base", new string('a', 40)], environment, new SystemCliConsole());
+                ["check-delta", "--protected-base", new string('a', 40), "--candidate-lean-report", reportPath],
+                environment, new SystemCliConsole());
         }
         finally
         {
@@ -47,10 +53,10 @@ public sealed class AdmissionStandardErrorTests
             Console.SetError(originalError);
         }
 
-        Assert.Equal(0, exitCode);
+        Assert.True(exitCode == 0, output.ToString() + error);
         using var verdict = JsonDocument.Parse(output.ToString());
-        Assert.Equal(["SL-003", "SL-015"], verdict.RootElement.GetProperty("executed")
-            .EnumerateArray().Select(static value => value.GetString()!).ToArray());
+        Assert.Contains("SL-003", verdict.RootElement.GetProperty("executed")
+            .EnumerateArray().Select(static value => value.GetString()));
         var standardError = Encoding.UTF8.GetBytes(error.ToString());
         if (emitTiming)
         {

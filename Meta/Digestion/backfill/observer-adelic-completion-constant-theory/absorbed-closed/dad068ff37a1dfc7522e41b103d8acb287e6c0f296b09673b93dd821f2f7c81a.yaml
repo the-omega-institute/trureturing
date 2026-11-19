@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dad068ff37a1dfc7522e41b103d8acb287e6c0f296b09673b93dd821f2f7c81a
-  normalized_sha256: sha256:dad068ff37a1dfc7522e41b103d8acb287e6c0f296b09673b93dd821f2f7c81a
-cas_ref: sha256:dad068ff37a1dfc7522e41b103d8acb287e6c0f296b09673b93dd821f2f7c81a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Algebra/GoldenModularMetricCriterion.golden_modular_metric_criterion
-    target_statement_id: sha256:6c4c2f450e23a4600e55fb1ca8ebdc2aa0fda308389d242fd9943cb36bf03f32
-receipts:
-  unresolved_subitems: []

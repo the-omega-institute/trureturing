@@ -66,11 +66,9 @@ def selection(data, paths, purpose):
         raise DetectError(f"invalid validation purpose: {purpose}")
     hits = matches(parse("\n".join(data["CI_UNITS"])), paths)
     report = hits["current"] and matches(parse("[scope]\n" + data["current"]["report_paths"]), paths)["scope"]
-    # A readable, nonempty, entirely theoretical diff alone earns the fast path.
-    theory = hits["current"] and paths is not None and bool(paths) and not report
-    delta = hits["current"] and (theory or (purpose == "pull-request" and matches(
-        parse("[scope]\n" + data["current"]["delta_paths"]), paths)["scope"]))
-    return {"hits": hits, "report": report, "theory": theory, "delta": delta,
+    delta = report and purpose == "pull-request" and matches(
+        parse("[scope]\n" + data["current"]["delta_paths"]), paths)["scope"]
+    return {"hits": hits, "report": report, "delta": delta,
             "compiled-audit": report and hits["tests-lean"],
             "fib-regressions": report and hits.get("tests-fib", False),
             "source-evidence": report and hits["tests-declared-template"]}
@@ -90,13 +88,14 @@ def base_commit(root, value):
 
 def changed_paths(root, base, head=None):
     # Name-status explicitly retains both endpoints of renames and copies.
-    fields = git(root, "diff", "--no-ext-diff", "--no-textconv", "--name-status", "-z",
-                 "--find-renames", base, *([head] if head else []), "--").split(b"\0")
+    fields = iter(git(root, "diff", "--no-ext-diff", "--no-textconv", "--name-status", "-z",
+                      "--find-renames", base, *([head] if head else []), "--").split(b"\0"))
     paths = []
-    while fields and fields[0]:
-        status = fields.pop(0).decode("ascii")
-        for _ in range(2 if status[0] in "RC" else 1):
-            paths.append(fields.pop(0).decode("utf-8"))
+    for status in fields:
+        if not status:
+            break
+        for _ in range(2 if status.startswith((b"R", b"C")) else 1):
+            paths.append(next(fields).decode("utf-8"))
     if head is None:
         # The candidate consists of cached paths (including tracked paths that
         # are missing from the worktree) and ordinary, nonignored untracked
@@ -115,7 +114,9 @@ def changed_paths(root, base, head=None):
         ]
         # Tracked paths are already covered by the base-to-worktree diff;
         # inspect only ordinary untracked paths as additional candidates.
-        paths += [path for path in untracked_list if path not in paths]
+        known_paths = set(paths)
+        paths.extend(path for path in untracked_list if path not in known_paths)
+        known_paths.update(untracked_list)
         # The comparison base can contain paths absent from the real index.
         # Compare their actual entries too, without staging or writing objects.
         baseline = {}
@@ -128,7 +129,7 @@ def changed_paths(root, base, head=None):
             baseline[path] = (mode, bytes.fromhex(identity.decode("ascii")))
         # Include baseline paths missing from the candidate, such as a tracked
         # file removed from the index while its ignored bytes remain on disk.
-        paths += [path for path in baseline if path not in candidate_paths and path not in paths]
+        paths.extend(path for path in baseline if path not in candidate_paths and path not in known_paths)
         paths = [
             path for path in paths
             if (candidate_entry(root / path) if path in candidate_paths else None)

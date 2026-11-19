@@ -68,6 +68,27 @@ internal sealed class FidelityDocument : IScribeDocumentDefinition
                 + "Expand the norm using the Frobenius trace identity. The diagonal terms are tr(S), "
                 + "tr(V); the two cross terms have equal real parts because they are conjugate traces. "
                 + "This proves nonnegativity even for singular S or V.", literature: true),
+            Entry("sqrt_trace_square_two", "The trace of a qubit square root",
+                All("S", Seq(Call("PSD",V("S")),Rightarrow,Sp,
+                    Sq(ReOf(Call("tr",SqrtOf(V("S"))))),Eq,
+                    ReOf(Call("tr",V("S"))),Plus,D(2),
+                    SqrtOf(ReOf(Call("det",V("S")))))),
+                "For every positive semidefinite complex two by two matrix S, "
+                + "the square of the real trace of CFC.sqrt S is Re tr(S) plus "
+                + "twice sqrt(Re det(S)). Singular matrices are included. "
+                + "The identity follows from the two-dimensional trace recurrence "
+                + "and the determinant of the positive square root. It is used by "
+                + "rootFidelity_sq_formula and by the QTD inverse-root calculation."),
+            Entry("sqrt_times_trace_two", "The qubit square root times its trace",
+                All("S", Seq(Call("PSD",V("S")),Rightarrow,Sp,
+                    ReOf(Call("tr",SqrtOf(V("S")))),SqrtOf(V("S")),Eq,
+                    V("S"),Plus,SqrtOf(ReOf(Call("det",V("S")))),V("I"))),
+                "For every positive semidefinite complex two by two matrix S, "
+                + "the real trace of CFC.sqrt S, cast to a complex scalar, times "
+                + "CFC.sqrt S equals S plus sqrt(Re det(S)) times the identity. "
+                + "No invertibility or trace normalization is required. This is "
+                + "the Cayley-Hamilton identity for the actual positive root; it "
+                + "also supplies the root formula in the QTD refutation."),
             Entry("qubit_root_fidelity_quotient", "The actual qubit quotient",
                 All("S,V,T", Seq(And(State(V("S")),State(V("V")),Call("PD",V("T")),
                     Seq(Call("tr",V("T")),Eq,D(1))),Rightarrow,Sp,

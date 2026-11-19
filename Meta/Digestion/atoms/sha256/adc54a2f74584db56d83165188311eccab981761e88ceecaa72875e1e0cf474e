@@ -1,0 +1,36 @@
+**Proposition 118.2 (The compact unitary preimage supplies $G$).** With
+$\widetilde\psi$ from Theorem 117.1, put
+
+$$
+G=\widetilde\psi^{-1}(H^0).
+\tag{118.2}
+$$
+
+Then $G$ is a compact subgroup of $U(n)$, its kernel over $H^0$ is
+the central $\mathbb T$, and $G/\mathbb T\cong H^0$. It preserves
+$N$ by conjugation and acts transitively on all $\mathcal R_n$.
+
+Proof. The sign $\sigma$ is trivial on the kernel $\mathbb T$ of
+$\widetilde\psi$. It therefore descends, by the quotient topology
+in Theorem 117.1, to a continuous homomorphism
+$\overline\sigma:H\to\{\pm1\}$. Its restriction to connected
+$H^0$ is trivial. Hence all elements of (118.2) are unitary.
+This is a closed preimage in compact $\widetilde G$, and so a
+compact subgroup of $U(n)$. The kernel remains exactly $\mathbb T$,
+now central by (117.6), and the quotient identification restricts
+accordingly.
+
+Every $U\in G$ satisfies $\pi\Gamma_U=h\pi$ for
+$h=\widetilde\psi(U)$, so it preserves $N$. Given
+$Q,R\in\mathcal R_n$, Lemma 118.1 supplies $h\in H^0$ with
+$hb(Q)=b(R)$. Choose any preimage $U\in G$. Intertwining yields
+$b(UQU^*)=b(R)$, and injectivity of $b$ gives $UQU^*=R$.
+Thus $G$ is projectively transitive on the entire source ray space. ∎
+
+This argument proves only what is needed to apply Theorem 109.2.
+It does not require $G$ connected, does not require $H$ connected,
+and does not put every original continuation in $H^0$. The preimage
+construction, rather than a phase section, supplies all its lifts.
+The finite-component argument is given directly and depends on no
+uninspected Lie-group textbook passage.
+
