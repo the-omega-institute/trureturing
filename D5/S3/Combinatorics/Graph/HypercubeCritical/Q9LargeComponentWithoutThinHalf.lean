@@ -1,8 +1,9 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9ThinPairedCertificate
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwoGrayComponents
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.BalancedHalfCardinality
 
 /-! The surviving large component in a hypothetical 258-vertex candidate
-has no twenty-vertex coordinate half when its order is 72. -/
+has coordinate halves of even cardinality between 22 and 50 when its order is 72. -/
 
 set_option autoImplicit false
 
@@ -51,26 +52,57 @@ private theorem no_twenty_half {U C : Finset (Q 9)} (hU : U.card = 258) (hC : C.
     exact hdeg a ha
 
 /-- A 258-vertex induced subcubic set has a Huang-balanced cubic component
-of order at least 72. If that component has order 72, none of its coordinate
-halves contains exactly twenty vertices. -/
+of order at least 72. If that component has order 72, every coordinate
+half has even cardinality between 22 and 50, inclusive. -/
 theorem exists_large_component_without_thin_half (U : Finset (Q 9)) (hU : U.card = 258)
     (hdeg : ∀ v : (U : Set (Q 9)), ((hypercube 9).induce (U : Set (Q 9))).degree v ≤ 3) :
     ∃ K : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent,
       let C := componentFinset U K
       ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3 ∧
-        IsBalanced C ∧ 72 ≤ C.card ∧
-          (C.card = 72 → ∀ (j : Fin 9) (b : Bool), (C.filter (fun x => x j = b)).card ≠ 20) := by
+        IsBalanced C ∧ 72 ≤ C.card ∧ (C.card = 72 → ∀ (j : Fin 9) (b : Bool),
+          let N := (C.filter (fun x => x j = b)).card
+          22 ≤ N ∧ N ≤ 50 ∧ N % 2 = 0) := by
   classical
   obtain ⟨K, hr, hb, hc⟩ := Q9TwoGrayComponents.exists_large_balanced_component U hU hdeg
-  refine ⟨K, hr, hb, hc, fun heq j b hhalf => ?_⟩
+  refine ⟨K, hr, hb, hc, fun heq j b => ?_⟩
   have hdegree (x : Q 9) (hx : x ∈ U) : (U.filter ((hypercube 9).Adj x)).card ≤ 3 := by
     have he : U.filter ((hypercube 9).Adj x) = (hypercube 9).neighborFinset x ∩ U := by
       ext y
       simp [SimpleGraph.mem_neighborFinset, and_comm]
     rw [he, selected_neighbor_card hx]
     exact hdeg ⟨x, hx⟩
-  exact no_twenty_half hU heq hr hb (componentFinset_subset U K)
-    (componentFinset_neighbor_closed U K) hdegree j b hhalf
+  let C := componentFinset U K
+  have h72 : C.card = 6 * 12 := heq
+  have half_min (side : Bool) : 22 ≤ (C.filter (fun x => x j = side)).card := by
+    obtain ⟨hbound, hparity⟩ :=
+      CoordinateHalves.BalancedHalfCardinality.half_cardinality h72 hr hb j side
+    have htwenty := no_twenty_half hU heq hr hb (componentFinset_subset U K)
+      (componentFinset_neighbor_closed U K) hdegree j side
+    change 5 * 12 ≤ 3 * (C.filter (fun x => x j = side)).card at hbound
+    change (C.filter (fun x => x j = side)).card % 2 = 12 % 2 at hparity
+    change (C.filter (fun x => x j = side)).card ≠ 20 at htwenty
+    omega
+  have hsum : (C.filter (fun x => x j = b)).card +
+      (C.filter (fun x => x j = !b)).card = C.card := by
+    have hd : Disjoint (C.filter (fun x => x j = b)) (C.filter (fun x => x j = !b)) := by
+      apply Finset.disjoint_left.mpr
+      intro x hx hy
+      have hf := (Finset.mem_filter.mp hx).2.symm.trans (Finset.mem_filter.mp hy).2
+      cases b <;> simp at hf
+    have hu : C.filter (fun x => x j = b) ∪ C.filter (fun x => x j = !b) = C := by
+      ext x
+      cases b <;> cases hx : x j <;> simp [hx]
+    rw [← Finset.card_union_of_disjoint hd, hu]
+  obtain ⟨_, hp⟩ :=
+    CoordinateHalves.BalancedHalfCardinality.half_cardinality h72 hr hb j b
+  change (C.filter (fun x => x j = b)).card % 2 = 12 % 2 at hp
+  have hmin := half_min b
+  have hother := half_min (!b)
+  change C.card = 72 at heq
+  change 22 ≤ (C.filter (fun x => x j = b)).card ∧
+    (C.filter (fun x => x j = b)).card ≤ 50 ∧
+    (C.filter (fun x => x j = b)).card % 2 = 0
+  omega
 
 #print axioms exists_large_component_without_thin_half
 
