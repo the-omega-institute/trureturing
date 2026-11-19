@@ -52,7 +52,31 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatia
 
 For the native radial nome, the readout includes the original determinant, charge energy and scalar. The period normalization adds the cube of the complementary parameter.
 
-**Theorem 1.5 (Sector identities of the simultaneous marked Taylor coefficients).**
+**Theorem 1.5 (Taylor extraction for a normally convergent series).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.spatialCoefficient_hasSum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.spatialCoefficient_hasSum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A summable majorant on a common polydisk lets each coordinate Taylor extraction pass through the infinite sum.
+
+**Theorem 1.6 (Taylor extraction through the physical charge fiber).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_jet_hasSum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_jet_hasSum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Positive definite lattice energy dominates the linear marked charge source on a common external polydisk. The coefficient sum uses the original mod-two charge fiber and period normalization.
+
+**Theorem 1.7 (Sector identities of the simultaneous marked Taylor coefficients).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_coefficient_overlap`
 
@@ -62,13 +86,15 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatia
 
 *Commentary.*
 
-Under joint analyticity at the marked origin, Taylor extraction preserves the actual Fourier and quadratic sector identities and the original B-chart period multiplier.
+Normal convergence at the marked origin lets Taylor extraction preserve the actual Fourier and quadratic sector identities and the original B-chart period multiplier.
 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_coefficient_overlap`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_jet_hasSum`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_product_marked_charge_fiber`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.radial_spatial_occupation`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.radial_spatial_sewn_charge`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.spatialCoefficient_hasSum`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.spatial_marked_gaussian`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMJointWick](OriginalFourMJointWick.md)
