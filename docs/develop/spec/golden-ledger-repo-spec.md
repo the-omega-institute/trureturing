@@ -85,7 +85,7 @@ golden-ledger/
 
 **文献笔记容量(delta-only)。** SL-003 对 `Library/**` 下新增或修改的 Markdown 文件检查候选全文，硬上限为 3,000 行；扩展名不区分大小写，空行计入，末尾换行符不额外计一行。超过上限即 Block，诊断包含路径、实测行数和上限。改名或复制的目标路径视为新增；修改已有长文时仍须满足候选全文上限，即使修改未增加行数。删除及未触及的历史长文不在本项检查范围，判官实现变更也不扩大选集。Library Markdown 不适用通用文件行数软硬上限，check-current 及 repository capacity-audit 不检查其行数，目录容量照常计算。超出单篇篇幅的内容拆为独立笔记并以引用衔接。
 
-理论正文的文件准入由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)负责。
+理论正文的文件准入由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)负责。
 
 ## 2.4 第五坐标:通用性(理论自分类之工程兑现)
 文件头声明 `generality: G|I|E`——G 通用机器(任意实二次域/任意无理;**自然普遍性律:能免费一般化者必须一般化陈述**,证于 `Zsqrtd d` 末行特化);I 实例运气(h=1、模数 5;**I 承重须警示注**——现查唯一承重 I 为 h=1/UFD,推广至 h>1 需理想论翻修);E 极值指纹(Hurwitz/Markov 根/复杂度地板——理论签名,不可亦无需一般化)。实测分解 G80%/I9%/E9%,承重 13G+1I。**因子分解落位(v7.4)**:G 层就地为根包 `Metallic/`(不析出——析出仅当外部需求已证实,且走 lake package 边界非分仓);实例层 `D<disc>/`;**跨族比较定理居 `Moduli/`**(Hurwitz 极值、Markov 谱、Lagrange 谱、分类表)——分库将使全族最好的定理无家可归,故不分。
@@ -965,7 +965,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 ## 11.21 理论输入与跨仓覆盖
 
-[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)拥有理论正文、归档、atom CAS、上下文、分解与结算。通过 `truth-export` 读取指定主仓提交的冻结状态和声明级 `statement_id`。本仓的 checkout、CI、Lean 编译、冻结与真值导出可独立执行。
+[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)拥有理论正文、归档、atom CAS、上下文、分解与结算。`make cover` 和 `make cover-batch` 默认跟随主仓 `dev`，可用 `TRUTH_BRANCH` 指定其他分支。理论仓读取目标模块的冻结状态片与声明名并记录实际提交。显式提供 `truth-export` 时可使用导出的声明级 `statement_id`。本仓的 checkout、CI、Lean 编译、冻结与真值导出可独立执行。
 ## 11.22 编排文件与一致性自检(deferred)
 编排文件 schema、模型升级流程与 spec ↔ 仓库漂移自检当前均为 `deferred`;登记于 2026-08-15,无执法机器,重启须先建门,不得冒领为现役 CI 作业。
 
@@ -988,7 +988,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 ## 11.27 理论勘误
 
-理论作者在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)处理原文、归档与 atom 勘误。针对主仓数学内容的反证须按本仓 Lean、冻结及公理规则验证。
+理论作者在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)处理原文、归档与 atom 勘误。针对主仓数学内容的反证须按本仓 Lean、冻结及公理规则验证。
 ## 11.28 CLAUDE.md 引用材料
 
 本节保存 CLAUDE.md 引用的命令速查、样本读数、单案边界与古典引语；这些资料不增设、替代或改变 CLAUDE.md 的规范性规则。
@@ -1078,7 +1078,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 | 核对指定 Lean 模块、utility 输入及 imports / 发射所选 Scribe | `make lean-report-scoped LEAN_TARGETS="<点分模块名>"` / `make emit [PATHS=<NUL分隔路径文件>]` |
 | 显式整库 Lean 报告（CI / 整库核验） | `make lean-report` |
 | 构建并冻结形式化模块 | `make deposit GID=<gid>` |
-| 摄入、查阅、覆盖或退役理论 atom | 在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)运行相应 Make 目标 |
+| 摄入、查阅、覆盖或退役理论 atom | 在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)运行相应 Make 目标 |
 | 快速 .NET 结构检查 | `make -C tools check-fast`（不验证 Lean 或完整准入） |
 | 基线到当前工作树的完整增量检查 | `make gate BASE=<40位commit-SHA>` |
 | .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
