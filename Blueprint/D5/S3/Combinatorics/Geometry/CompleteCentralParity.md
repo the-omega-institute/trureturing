@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/CompleteCentralParity.Space`
 
 *Commentary.*
 
-Space m is the point set {0,…,2m+1}. With M=2m+1 and the point M playing the role of ∞, a pair {i,j} of points below M lies in class (i+j) mod M and a pair {i,∞} in class 2i mod M; this is the round-robin one-factorization of the complete graph on 2m+2 points into M perfect matchings, as in Harary. Distinct points in class r are at distance 1+r/(2m+2), a value in [1,2), so the triangle inequality holds.
+Space m is the point set {0,…,2m+1}. With M=2m+1 and the point M playing the role of ∞, a pair {i,j} of points below M lies in class (i+j) mod M and a pair {i,∞} in class 2i mod M; this is the round-robin one-factorization of the complete graph on 2m+2 points into M perfect matchings (the 1-factorability of K_2n, F. Harary, Graph Theory, 1969). Distinct points in class r are at distance 1+r/(2m+2), a value in [1,2), so the triangle inequality holds.
 
 **Theorem 1.2 (The parity classification).**
 

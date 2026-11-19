@@ -6,6 +6,25 @@
    utility: none
    digest: An n-point metric space with complete n-central graph exists iff n = 1 or n is even. -/
 
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#321)
+escape_witness: cls_cover (every point has a partner in every round-robin class), with
+  center_iff and center_card (the round-robin space has exactly 2m+2 central values)
+proof_shape:
+  cls, d, Space: definitions; consumers: the lemmas below.
+  cls_cover, center_iff, center_card, complete: content; consumer: complete_central_iff.
+  cls_comm, cls_lt, d_self, d_ne, frac_bounds, d_bounds, d_comm: bind-only helpers; consumers:
+    the metric instance, center_iff, center_card, complete.
+  complete_central_iff: content via the round-robin construction; the odd case is a bind-only
+    combination of edge_cover_bound and SimpleGraph.card_edgeFinset_le_card_choose_two.
+Direct frozen dependencies: D5/S3/Combinatorics/Geometry/CentralEdgeCover (edge_cover_bound),
+  D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges (center, centralGraph).
+Search record (§3.1): the frozen private GlobalZZGateTimeBound.cyclicColor (with
+  cyclicColor_proper) colours Option (ZMod q) by injectivity at each vertex, inside a Quantum
+  module; OddPrimePerfectOneFactorization needs a prime modulus. Neither states the covering
+  property on Fin (2m+2) used here, so cls_cover is proved directly.
+-/
+
 import D5.S3.Combinatorics.Geometry.CentralEdgeCover
 
 /-! # Parity of complete `n`-central metric graphs
