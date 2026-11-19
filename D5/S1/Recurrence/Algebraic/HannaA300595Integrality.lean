@@ -101,7 +101,7 @@ private theorem source_integral (F : PowerSeries ℚ) (hF : IsSource F) :
             (f : ℚ) ^ 3 * coeff (f - 1) (expSeries ((f : ℚ) ^ 3) P)
           rw [he f hfn, he (f - 1) (by omega)]
           exact hF.2 f hf
-        have hl := MarkedAssemblyCoefficients.signed_prefix_residual_local_integral
+        have hv := MarkedAssemblyCoefficients.signed_prefix_residual_local_integral
           3 n a (by omega) p hp hpn hlower
         have hres := expSeries_residual (by omega : 1 ≤ n) ((n : ℚ) ^ 3) hF.1 hP hFP
         have he := expSeries_agree ((n : ℚ) ^ 3) hF.1 hP hFP
@@ -114,11 +114,9 @@ private theorem source_integral (F : PowerSeries ℚ) (hF : IsSource F) :
           rw [hnP, mul_zero, sub_zero] at hres
           rw [hminus] at heqn
           linear_combination -hres + heqn
-        change IsRIntegralRat p (coeff n (expSeries ((n : ℚ) ^ 3) P) -
-          (n : ℚ) ^ 3 * coeff (n - 1) (expSeries ((n : ℚ) ^ 3) P)) at hl
-        rw [hr] at hl
-        have hv := (localRat_iff_val_nonneg p hp _).mp hl
-        rw [padicValRat.neg, padicValRat.mul (pow_ne_zero _ hnq) hc,
+        change 0 ≤ padicValRat p (coeff n (expSeries ((n : ℚ) ^ 3) P) -
+          (n : ℚ) ^ 3 * coeff (n - 1) (expSeries ((n : ℚ) ^ 3) P)) at hv
+        rw [hr, padicValRat.neg, padicValRat.mul (pow_ne_zero _ hnq) hc,
           padicValRat.pow, padicValRat.of_nat, padicValNat.eq_zero_of_not_dvd hpn] at hv
         exact (localRat_iff_val_nonneg p hp _).mpr (by simpa using hv)
     exact (hp.coprime_iff_not_dvd.mp hlocal.symm) hpd

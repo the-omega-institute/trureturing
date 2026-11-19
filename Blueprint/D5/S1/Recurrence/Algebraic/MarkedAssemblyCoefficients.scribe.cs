@@ -33,8 +33,8 @@ internal sealed class MarkedAssemblyCoefficientsDocument : IScribeDocumentDefini
                 ResidualStatement(),
                 "For every natural d and N>=1, integer sequence a, and prime p not dividing N, let P have " +
                 "ordinary coefficient a(j) for 0<j<N and zero otherwise. Assume precisely the displayed lower " +
-                "degree-f equations for 1<=f<N. The degree-N residual then has rational denominator coprime " +
-                "to p. No restriction on d, coefficient signs, or the next source coefficient is imposed. " +
+                "degree-f equations for 1<=f<N. The degree-N residual then has nonnegative p-adic valuation. " +
+                "The arity d, coefficient signs, and next source coefficient are unrestricted. " +
                 "The finite palette realizes P, and each color has sign one or minus one independently of marker arity. Full assemblies and rooted assemblies " +
                 "carry the actual simultaneous permutation actions. A rooted object has one distinguished " +
                 "vertex and d independent markers; its remaining assembly retains the whole ambient marker " +
@@ -59,7 +59,7 @@ internal sealed class MarkedAssemblyCoefficientsDocument : IScribeDocumentDefini
         var premise = And(Leq(D(1), V("N")), And(Call("Prime", V("p")),
             And(Seq(Neg, Sp, Call("Dvd", V("p"), V("N"))), lower)));
         return All("d", N(), All("N", N(), All("a", Call("Function", N(), Z()), All("p", N(),
-            Imp(premise, Call("IsRIntegralRat", V("p"), R(V("N"))))))));
+            Imp(premise, Leq(D(0), Call("padicValRat", V("p"), R(V("N")))))))));
     }
     private static DocumentBlock Node(string name, string title, Formula statement, string prose) =>
         Describe.Lean(DescribeId.Create("marked-" + name.Replace('_', '-')),

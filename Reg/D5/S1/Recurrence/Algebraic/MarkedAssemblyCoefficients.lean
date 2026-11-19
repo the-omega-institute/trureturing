@@ -191,15 +191,17 @@ abbrev residualArena : Arena where
     (∀ f : ℕ, 1 ≤ f → f < I.N →
       let H := (exp ℚ).subst (C ((f : ℚ) ^ I.d) * prefixSeries I.N I.a)
       coeff f H = (f : ℚ) ^ I.d * coeff (f - 1) H) →
-    _root_.D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.IsRIntegralRat I.p
-      (R.readout () () I)
+    0 ≤ padicValRat I.p (R.readout () () I)
 
 private theorem residual_rejected : ¬ residualArena.Law residualRejected := by
   intro h
   have hh := h ⟨3, 1, fun _ => 0, 2⟩ (by exact le_rfl) (by decide) (by norm_num)
     (by intro f hf hlt; dsimp at hf hlt; omega)
-  norm_num [residualRejected, realize,
-    _root_.D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.IsRIntegralRat] at hh
+  change 0 ≤ padicValRat 2 (1 / 2 : ℚ) at hh
+  letI : Fact (Nat.Prime 2) := ⟨by decide⟩
+  rw [padicValRat.div (by norm_num) (by norm_num), padicValRat.one,
+    show padicValRat 2 (2 : ℚ) = 1 from padicValRat.self (by decide)] at hh
+  norm_num at hh
 
 private theorem zero_prefix (N : ℕ) : prefixSeries N (fun _ => 0) = 0 := by
   ext j

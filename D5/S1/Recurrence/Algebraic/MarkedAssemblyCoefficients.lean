@@ -7,10 +7,11 @@
    digest: Exact signed decoration sums for ordered blocks with ambient markers. -/
 
 import D5.S1.Recurrence.Algebraic.MarkedAssemblyFixedPoints
-import D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.GroupTheory.Sylow
+import Mathlib.NumberTheory.Padics.PadicVal.Basic
+import Mathlib.RingTheory.PowerSeries.Exp
 
 /-! Ordered block decorations and their exact signed finite sums. -/
 
@@ -214,7 +215,7 @@ theorem assembly_sum_coefficient (allowed : ℕ → C → Prop) (S T : Finset V)
     simp
   have hD : derivative (R := ℚ) H = PowerSeries.C t * derivative (R := ℚ) P * H := by
     dsimp [H]
-    rw [DoldExponentialIntegrality.expSeries_derivative (by simp [hP])]
+    rw [derivative_subst (.of_constantCoeff_zero harg), derivative_exp]
     simp only [Derivation.leibniz, derivative_C, mul_zero, add_zero, smul_eq_mul]
     ring
   change _ = (S.card.factorial : ℚ) * coeff S.card H
@@ -861,7 +862,7 @@ private theorem signed_residual_local_integral (allowed : ℕ → C → Prop) (s
       coeff f H = (f : ℚ) ^ d * coeff (f - 1) H) :
     let n := Fintype.card V
     let H := (exp ℚ).subst (PowerSeries.C ((n : ℚ) ^ d) * colorSeries allowed sign)
-    DoldExponentialIntegrality.IsRIntegralRat p
+    0 ≤ padicValRat p
       (coeff n H - (n : ℚ) ^ d * coeff (n - 1) H) := by
   classical
   letI : Fact p.Prime := ⟨hp⟩
@@ -883,7 +884,7 @@ private theorem signed_residual_local_integral (allowed : ℕ → C → Prop) (s
     exact h
   have hd : (p : ℤ) ^ n.factorial.factorization p ∣ z :=
     sylow_subtraction_divisibility allowed sign hs p hp hpn hlower
-  apply (DoldExponentialIntegrality.localRat_iff_val_nonneg p hp q).mpr
+  change 0 ≤ padicValRat p q
   by_cases hq : q = 0
   · simp [hq]
   have hnq : (n.factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
@@ -903,7 +904,7 @@ theorem signed_prefix_residual_local_integral (d : ℕ) (N : ℕ) (a : ℕ → �
       let H := (exp ℚ).subst (PowerSeries.C ((f : ℚ) ^ d) * prefixSeries N a)
       coeff f H = (f : ℚ) ^ d * coeff (f - 1) H) :
     let H := (exp ℚ).subst (PowerSeries.C ((N : ℚ) ^ d) * prefixSeries N a)
-    DoldExponentialIntegrality.IsRIntegralRat p
+    0 ≤ padicValRat p
       (coeff N H - (N : ℚ) ^ d * coeff (N - 1) H) := by
   classical
   have he := signed_residual_local_integral (d := d) (V := Fin N) (prefixAllowed N a)
