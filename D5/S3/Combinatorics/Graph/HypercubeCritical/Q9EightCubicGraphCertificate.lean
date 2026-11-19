@@ -1,6 +1,7 @@
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Nat.Bitwise
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Logic.Equiv.Set
 
@@ -165,5 +166,57 @@ theorem normalize_root (G : SimpleGraph (Fin 8)) [DecidableRel G.Adj]
   exact (G.mem_neighborFinset 0 _).symm.trans ((hs (e i)).trans (he i))
 
 #print axioms normalize_root
+
+/-- In the normalized labeling the three neighbors each have two edges to the
+last four vertices, and the last four vertices span exactly three edges. -/
+theorem normalized_edge_counts (G : SimpleGraph (Fin 8)) [DecidableRel G.Adj]
+    (hr : G.IsRegularOfDegree 3)
+    (ht : ∀ x y z, G.Adj x y → G.Adj y z → G.Adj z x → False)
+    (hroot : ∀ i, G.Adj 0 i ↔ i ∈ ({1, 2, 3} : Finset (Fin 8))) :
+    let w := fun (i j : Fin 8) => if G.Adj i j then (1 : ℕ) else 0
+    (∀ i ∈ ({1, 2, 3} : Finset (Fin 8)), w i 4 + w i 5 + w i 6 + w i 7 = 2) ∧
+      w 4 5 + w 4 6 + w 4 7 + w 5 6 + w 5 7 + w 6 7 = 3 := by
+  let w := fun (i j : Fin 8) => if G.Adj i j then (1 : ℕ) else 0
+  have hsum (i : Fin 8) : ∑ j : Fin 8, w i j = 3 := by
+    have h := hr i
+    rw [← SimpleGraph.card_neighborFinset_eq_degree G i,
+      SimpleGraph.neighborFinset_eq_filter, Finset.card_filter] at h
+    exact h
+  have hrow (i : Fin 8) :
+      w i 0 + w i 1 + w i 2 + w i 3 + w i 4 + w i 5 + w i 6 + w i 7 = 3 := by
+    have h := hsum i
+    simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero] at h
+    change w i 0 + (w i 1 + (w i 2 + (w i 3 + (w i 4 + (w i 5 +
+      (w i 6 + w i 7)))))) = 3 at h
+    simpa only [add_assoc] using h
+  have hsymm (i j : Fin 8) : w i j = w j i := by simp [w, G.adj_comm]
+  have hloop (i : Fin 8) : w i i = 0 := by simp [w]
+  have hnear (i : Fin 8) (hi : i ∈ ({1, 2, 3} : Finset (Fin 8))) :
+      w i 4 + w i 5 + w i 6 + w i 7 = 2 := by
+    have hzero : w i 0 = 1 := ite_eq_left ((hroot i).mpr hi).symm
+    have hnone (j : Fin 8) (hj : j ∈ ({1, 2, 3} : Finset (Fin 8))) : w i j = 0 :=
+      ite_eq_right (fun h => ht 0 i j ((hroot i).mpr hi) h ((hroot j).mpr hj).symm)
+    have h := hrow i
+    rw [hzero, hnone 1 (by decide), hnone 2 (by decide), hnone 3 (by decide)] at h
+    omega
+  refine ⟨hnear, ?_⟩
+  have h0 (i : Fin 8) (hi : i ∉ ({1, 2, 3} : Finset (Fin 8))) : w i 0 = 0 :=
+    ite_eq_right (fun h => hi ((hroot i).mp h.symm))
+  have h4 := hrow 4
+  have h5 := hrow 5
+  have h6 := hrow 6
+  have h7 := hrow 7
+  rw [h0 4 (by decide), hloop 4, hsymm 4 1, hsymm 4 2, hsymm 4 3] at h4
+  rw [h0 5 (by decide), hloop 5, hsymm 5 1, hsymm 5 2, hsymm 5 3, hsymm 5 4] at h5
+  rw [h0 6 (by decide), hloop 6, hsymm 6 1, hsymm 6 2, hsymm 6 3, hsymm 6 4, hsymm 6 5] at h6
+  rw [h0 7 (by decide), hloop 7, hsymm 7 1, hsymm 7 2, hsymm 7 3,
+    hsymm 7 4, hsymm 7 5, hsymm 7 6] at h7
+  have h1 := hnear 1 (by decide)
+  have h2 := hnear 2 (by decide)
+  have h3 := hnear 3 (by decide)
+  change w 4 5 + w 4 6 + w 4 7 + w 5 6 + w 5 7 + w 6 7 = 3
+  omega
+
+#print axioms normalized_edge_counts
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9EightCubicGraphCertificate
