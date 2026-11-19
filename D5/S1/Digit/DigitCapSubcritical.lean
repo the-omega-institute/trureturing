@@ -12,20 +12,31 @@ escape_witness: pair_sum (two consecutive admissible digits have at most Q^2 - Q
   choices), with count_rec (the lowest-digit recursion) and class_card.
 proof_shape:
   tail, cons, low: definitions; consumers: the lemmas below.
-  count_rec, class_card, pair_sum, count_le: content; consumers: pair_sum, count_le,
-    subcritical.
   fiberEquiv: content (the shift bijection); consumer: count_rec.
-  tail_apply, cons_zero, cons_succ, cons_tail, tail_cons, weight_cons, mem_low_of, weight_iff,
-    low_card, mod_eq_pred_iff, pred_iff, residue_count: bind-only helpers; consumers:
-    fiberEquiv, count_rec, low_card, pair_sum.
+  count_rec: content; consumers: count_le.
+  class_card: content; consumer: low_card.
+  pair_sum: content; consumer: count_le.
+  count_le: content; consumer: subcritical.
   subcritical: content via count_le; the big-O and exponent parts are consequences.
+  tail_apply: bind-only helper; consumers: cons_tail, tail_cons, fiberEquiv.
+  cons_zero, cons_succ: bind-only helpers; consumers: cons_tail, tail_cons, fiberEquiv.
+  cons_tail: bind-only helper; consumers: fiberEquiv, mem_low_of.
+  tail_cons: bind-only helper; consumer: fiberEquiv.
+  weight_cons: bind-only helper; consumers: mem_low_of, weight_iff.
+  mem_low_of, weight_iff: bind-only helpers; consumers: fiberEquiv, count_rec.
+  low_card: bind-only helper; consumer: pair_sum.
+  mod_eq_pred_iff: bind-only helper; consumer: pred_iff.
+  pred_iff, residue_count: bind-only helpers; consumer: pair_sum.
 Direct frozen dependencies: D5/S1/Digit/CoonsAdjacentGrowthRefutation (weight, Partitions,
-  count, partitions_finite), D5/S1/Digit/DigitCapQuotientBound (count_le_pow, used for m = 0, 1).
-Search record (§3.1): CoonsAdjacentGrowthRefutation.count_upper is the radix-four quotient bound
-  2^m; DigitCapQuotientBound.count_le_pow gives Q^m; the lowest-digit recursion exists only as
-  private helpers (DigitCapExponentOrder.count_mono, DigitCapPowerGF.count_rec through
-  count_multiple), neither stated for an arbitrary cap. Mathlib's Nat.count_modEq_card gives the
-  residue count.
+  count, partitions_finite; statement_id
+  sha256:adc04d4c318958807e0c995604326199d16ca889d5bd0f774bec45e46b1859ac),
+  D5/S1/Digit/DigitCapQuotientBound (count_le_pow, used for m = 0, 1; statement_id
+  sha256:42d2c162c57dd56b82a21271074f17ced8b073d04c7ea0af96bef4ee50b37da4).
+Search record (§3.1): no lowest-digit recursion exists in D5; the nearest is
+  DigitCapMultipleCount.count_multiple (a quotient/remainder split, for caps a·ell − 1 only).
+  DigitCapQuotientBound.count_le_pow gives Q^m; this module improves it to
+  Q^(m mod 2) H^⌊m/2⌋ for caps at most ell^r − 2. Mathlib's Finsupp.cons/tail exist only on
+  Fin (n+1); Mathlib's Nat.count_modEq_card gives the residue count.
 -/
 
 import D5.S1.Digit.DigitCapQuotientBound
@@ -359,7 +370,6 @@ private lemma count_le (ell r k : ℕ) (hell : 2 ≤ ell) (hr : 2 ≤ r) (hk : k
             rw [show (m + 2) % 2 = m % 2 by omega, show (m + 2) / 2 = m / 2 + 1 by omega,
               pow_succ]
             ring
-
 
 /-- For a radix `ell ≥ 2`, `r ≥ 2` and a digit cap `k ≤ ell ^ r - 2`, put `Q = ell ^ (r - 1)`
 and `H = Q ^ 2 - Q / ell`. Every `n < ell ^ (m + 1)` has at most `Q ^ (m mod 2) H ^ ⌊m/2⌋`

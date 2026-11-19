@@ -123,10 +123,13 @@ No worldwide openness, exhaustive absence, novelty or priority claim is made.
 
 ## Subcritical caps (CW2)
 
-Section 3 of the same version also asks how the counts behave below the critical caps
-ell^r − 1. The uniform bound formalized in `DigitCapSubcritical` is not asserted in this
-source: for k ≤ ell^r − 2 and n < ell^(m+1), b(k, ell, n) ≤ Q^(m mod 2) H^⌊m/2⌋ with
-Q = ell^(r−1) and H = Q² − Q/ell, so b(k, ell, n) = O(n^((log_ell H)/2)) with
-(log_ell H)/2 < r − 1. It is Theorem 1, equation (3), of the outreach note registered in
-the-omega-institute/trureturing-requests#300, which generalizes the radix-four bound of
-`CoonsAdjacentGrowthRefutation`.
+Section 1 lists CW2: "Is k = ℓ²−1 the first time we get linear maximum growth?". Section 3,
+third paragraph, notes that "it would be enough to show that the maximal growth of
+b_{ℓ²−2,ℓ}(n) is strictly sublinear". The general bound formalized in `DigitCapSubcritical` is
+not asserted in this source: for k ≤ ell^r − 2 and n < ell^(m+1),
+b(k, ell, n) ≤ Q^(m mod 2) H^⌊m/2⌋ with Q = ell^(r−1) and H = Q² − Q/ell, so
+b(k, ell, n) = O(n^((log_ell H)/2)) with (log_ell H)/2 < r − 1. It is Theorem 1, equation (3),
+of the outreach note registered in the-omega-institute/trureturing-requests#300, and it
+improves `DigitCapQuotientBound.count_le_pow` (Q^m) for caps at most ell^r − 2. Its case r = 2 is
+exactly the sufficient condition quoted above; together with `count_square_sub_one` and cap
+monotonicity it bears on CW2, which is not settled here as a separate claim.

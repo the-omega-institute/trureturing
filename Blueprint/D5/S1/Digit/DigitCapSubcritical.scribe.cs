@@ -17,7 +17,7 @@ internal sealed class DigitCapSubcriticalDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("digit-cap-subcritical-result"),
                 DeclarationHandle.Create(Prefix + "subcritical"),
                 H("The subcritical bound"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For ell ≥ 2, r ≥ 2 and a cap k ≤ ell^r−2, every n < ell^(m+1) has at most "
                     + "Q^(m mod 2) H^⌊m/2⌋ representations with digits at most k, where "
@@ -28,8 +28,10 @@ internal sealed class DigitCapSubcriticalDocument : IScribeDocumentDefinition
                     + "times, so two consecutive digits have at most Q²−Q/ell joint choices, and "
                     + "the bound follows by induction two digits at a time. Hence "
                     + "b(k,ell,n) = O(n^((log_ell H)/2)) and (log_ell H)/2 < r−1, because "
-                    + "H < Q² = ell^(2(r−1)). The question is CW2 of M. Coons, Section 3; the "
-                    + "bound is Theorem 1 of the outreach note registered with the request, "
-                    + "generalizing the radix-four bound."))),
+                    + "H < Q² = ell^(2(r−1)). It improves the quotient bound Q^m when the cap is "
+                    + "at most ell^r−2. M. Coons lists CW2 (is ell²−1 the first cap with linear "
+                    + "maximal growth?) in Section 1 and notes in Section 3 that sublinear maximal "
+                    + "growth of b(ell²−2, ell, n) would suffice; the case r = 2 gives it. The "
+                    + "all-r bound is Theorem 1 of the outreach note registered with the request."))),
                 DescribeRole.Theorem))));
 }
