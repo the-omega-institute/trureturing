@@ -1,0 +1,13 @@
+**Corollary 44.5 (additional source dependence is necessary).** No
+extension constructible solely from the acquired terminal record,
+absorbed native queries and source-independent postprocessing realizes
+six successive exact anchor transports of Definition 44.4 followed
+by the original root acquisition, uniformly over the source family.
+
+**Proof.** On $S_{13}$ and $S_{18}$ all the allowed inputs to such a
+construction agree by Theorem 44.3. Six exact transports and root
+acquisition would return their different bits at the new anchor in
+(IV.142), a contradiction. Thus a genuine extension with that consumer
+needs an additional source-dependent record or source action that
+separates those two realizations. $\square$
+
