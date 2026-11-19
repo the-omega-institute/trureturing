@@ -44,7 +44,8 @@ exit "${FAKE_BUILD_EXIT:-0}"
         helper_dir.mkdir(parents=True, exist_ok=True)
         # Exercise the production shell entry point with its declared transport
         # dependencies in the fixture repository.
-        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_release_io.py", "lean_cache_topology.py", "lean_actions.py"):
+        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_release_io.py", "lean_cache_topology.py", "lean_actions.py",
+                     "lean_artifact_inventory.py", "lean_release_index.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
         prepare_release_report(self.root)
         shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
