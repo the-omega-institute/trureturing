@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/WeightedEdgeDegreeBound
+/- GID: D5/S3/Combinatorics/Graph/BoundedDegree/WeightedEdgeDegreeBound
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/WeightedEdgeDegreeBound
+   mirror-B: D5/B/S3/Combinatorics/Graph/BoundedDegree/WeightedEdgeDegreeBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Basic]
    utility: none
@@ -14,7 +14,7 @@ import Mathlib.Tactic
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.WeightedEdgeDegreeBound
+namespace D5.S3.Combinatorics.Graph.BoundedDegree.WeightedEdgeDegreeBound
 
 open Finset
 
@@ -84,4 +84,4 @@ theorem card_le_of_weights {V : Type*} (G : SimpleGraph V) [DecidableRel G.Adj]
   simp only [sum_add_distrib, ← mul_sum, hz] at hcoverSum hd
   linarith
 
-end D5.S3.Combinatorics.Graph.WeightedEdgeDegreeBound
+end D5.S3.Combinatorics.Graph.BoundedDegree.WeightedEdgeDegreeBound

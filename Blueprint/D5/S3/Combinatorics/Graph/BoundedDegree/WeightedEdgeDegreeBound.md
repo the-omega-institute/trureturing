@@ -6,9 +6,9 @@ WeightedEdgeDegreeBound
 
 **Theorem 1.1 (Edge weights bound the size of an induced bounded-degree set).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/WeightedEdgeDegreeBound.card_le_of_weights`
+Lean statement: `D5/S3/Combinatorics/Graph/BoundedDegree/WeightedEdgeDegreeBound.card_le_of_weights`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/WeightedEdgeDegreeBound.card_le_of_weights` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/BoundedDegree/WeightedEdgeDegreeBound.card_le_of_weights` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,4 +22,4 @@ Integer scaling lets a solver propose rational weights and lets Lean verify thei
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/WeightedEdgeDegreeBound.card_le_of_weights`
+- Truth anchor: `D5/S3/Combinatorics/Graph/BoundedDegree/WeightedEdgeDegreeBound.card_le_of_weights`

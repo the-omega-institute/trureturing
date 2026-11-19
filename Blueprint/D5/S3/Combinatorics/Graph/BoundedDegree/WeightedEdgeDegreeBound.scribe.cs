@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.BoundedDegree;
 
 internal sealed class WeightedEdgeDegreeBoundDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class WeightedEdgeDegreeBoundDocument : IScribeDocumentDefinitio
         Blocks(Describe.Lean(
             DescribeId.Create("weighted-edge-degree-cardinality"),
             DeclarationHandle.Create(
-                "D5/S3/Combinatorics/Graph/WeightedEdgeDegreeBound.card_le_of_weights"),
+                "D5/S3/Combinatorics/Graph/BoundedDegree/WeightedEdgeDegreeBound.card_le_of_weights"),
             H("Edge weights bound the size of an induced bounded-degree set"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
