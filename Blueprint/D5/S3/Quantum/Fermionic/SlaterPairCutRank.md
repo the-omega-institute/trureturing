@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Quantum/Fermionic/SlaterPairCutRank.coordinateReplacement
 
 *Commentary.*
 
-Retained endpoint weights both equal w. For each discarded pair the earlier endpoint has weight one and the later endpoint has weight zero.
+Retained endpoint weights both equal w. For each discarded pair the endpoint labeled false has weight one and the endpoint labeled true has weight zero.
 
 **Theorem 1.5 (Equal compression and a pure marginal).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Quantum/Fermionic/SlaterPairCutRank.coordinate_replacemen
 
 *Commentary.*
 
-For any disjoint retained and discarded pairs on a finite linearly ordered site type, start with common endpoint amplitude w of squared modulus one half. Replace every discarded orbital by its first coordinate vector. Both orbital matrices have orthonormal columns and equal retained compressions. The replacement marginal has characteristic polynomial X to the power D minus one times X minus one, with D the full retained occupation dimension. The discarded occupation is fixed and the squared norm of the one active amplitude column is one.
+For any disjoint retained and discarded pairs on a finite linearly ordered site type, start with common endpoint amplitude w of squared modulus one half. Replace every discarded orbital by the coordinate vector at the endpoint labeled false. With increasing labels, it is the earlier endpoint. Both orbital matrices have orthonormal columns and equal retained compressions. The replacement marginal has characteristic polynomial X to the power D minus one times X minus one, with D the full retained occupation dimension. The discarded occupation is fixed and the squared norm of the one active amplitude column is one.
 
 For the graph-state rank formula, see Hein, Eisert and Briegel, Multi-party entanglement in graph states, Proposition 3. The Slater proof obtains the binary phase from actual sorted minors. For equal positive amplitudes, the eigenvalue multiplicities give the entropy gap r log 2. In consecutive alternating four-site blocks, pairs from different blocks do not alternate, so the alternation matrix is the identity and the gap equals the number of blocks times log 2.
 

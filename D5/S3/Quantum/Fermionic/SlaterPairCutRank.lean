@@ -842,7 +842,7 @@ theorem orderedCut_pair_charpoly [Fintype ι] {m n : ℕ} {I : Set ι}
     (fun a b ha => orderedCut_pairs_zero p q _ a b (Or.inl (not_pairOccupation_of_not_bit p ha)))
     (fun a b hb => orderedCut_pairs_zero p q _ a b (Or.inr (not_pairOccupation_of_not_bit q hb)))
 
-/-- Keep the retained columns and put every discarded column at its earlier endpoint. -/
+/-- Keep the retained columns and put each discarded column at the endpoint labeled false. -/
 def coordinateReplacementWeights {m n : ℕ} (w : ℂ) : Fin (m + n) → Bool → ℂ :=
   Fin.addCases (fun _ _ => w) (fun _ e => if e then 0 else 1)
 
