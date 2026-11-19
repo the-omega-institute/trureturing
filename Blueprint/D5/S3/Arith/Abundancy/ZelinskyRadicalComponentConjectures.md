@@ -40,13 +40,15 @@ For fixed K, Mertens' product theorem makes the interval product tend to zero as
 
 **Theorem 1.3 (The three relative counting limits).**
 
-Lean statement: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.conjectures`
+Lean statement: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.conjectures` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/zelinsky-2026-radical-component-density` (proved) by `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.conjectures`.
+*Resolves.* `Problems/zelinsky-2026-radical-component-density` (proved) by `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result` and `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zelinsky-2026-radical-component-density","declaration_gid":"D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.conjectures","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zelinsky-2026-radical-component-density","declaration_gid":"D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zelinsky-2026-radical-component-density","declaration_gid":"D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -56,36 +58,8 @@ Lean statement: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.conje
 
 For B defined by the threshold lam=2, the limits (B intersect C)(X)/B(X), (B intersect C_O)(X)/B(X), and (B intersect C_M)(X)/B(X) are all zero. Here C_O is the set of odd primitive non-deficient integers, and M ranges over all nonempty finite sets of primes; C_M consists of primitive non-deficient integers divisible by no element of M. Each numerator is bounded by C(X), whereas B(X)/X tends to the positive constant 1-log(2). The quotient limit therefore follows. The argument applies to every subset of C and every positive radical threshold. It does not settle the different ratios whose denominator is C(X).
 
-**Definition 1.4 (The source's zero-density assertion for B).**
-
-Lean statement: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.claim`
-
-*Formalization.* `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.claim` (`✓ std3`).
-
-*Citation.* Joshua Zelinsky (2026). *Must a Primitive Non-Deficient Number Always Have a Small Component?*. DOI: [10.48550/arXiv.2005.12115](https://doi.org/10.48550/arXiv.2005.12115). URL: <https://arxiv.org/abs/2005.12115v5>.
-
-*Commentary.*
-
-The source states that B has natural density zero. This claim uses the original threshold lam=2 and the inclusive positive counting function. Including or excluding the integer one leaves the density unchanged.
-
-**Theorem 1.5 (B does not have density zero).**
-
-Lean statement: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Joshua Zelinsky (2026). *Must a Primitive Non-Deficient Number Always Have a Small Component?*. DOI: [10.48550/arXiv.2005.12115](https://doi.org/10.48550/arXiv.2005.12115). URL: <https://arxiv.org/abs/2005.12115v5>.
-
-*Commentary.*
-
-The exact asymptotic B(X)/X -> 1-log(2) contradicts the zero-density claim, because log(2)<1. Uniqueness of limits gives its formal negation. This correction is compatible with the three conjectures: their numerators have density zero and their common denominator has positive density.
-
 ## References
 
-- Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.claim`
-- Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.conjectures`
 - Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.primitiveCount`
 - Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.primitive_density_zero`
 - Truth anchor: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result`

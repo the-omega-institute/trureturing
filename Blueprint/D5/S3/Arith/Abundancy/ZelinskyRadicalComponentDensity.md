@@ -52,10 +52,6 @@ Lean statement: `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/zelinsky-2026-radical-component-density` (proved) by `D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zelinsky-2026-radical-component-density","declaration_gid":"D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joshua Zelinsky (2026). *Must a Primitive Non-Deficient Number Always Have a Small Component?*. DOI: [10.48550/arXiv.2005.12115](https://doi.org/10.48550/arXiv.2005.12115). URL: <https://arxiv.org/abs/2005.12115v5>.
