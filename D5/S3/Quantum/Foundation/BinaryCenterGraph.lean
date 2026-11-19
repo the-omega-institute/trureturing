@@ -27,7 +27,7 @@ variable (hc : IsClosed (C : Set V))
   (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
 
 /-- Choice-independent equality of the existing original centers. -/
-private theorem center_eq_of_exclusion_eq (p q : pure C u)
+theorem center_eq_of_exclusion_eq (p q : pure C u)
     (he : exclusion C u p = exclusion C u q) : center hB p = center hB q := by
   have decomp (r : pure C u) (x) :
       (hB r).some.param x = (hB r).some.param 0 +
