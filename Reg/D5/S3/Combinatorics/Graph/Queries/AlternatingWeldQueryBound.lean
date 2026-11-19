@@ -154,5 +154,87 @@ def registration :
   familyRecord := none
   options := #[]
 
+
+private abbrev completionArena : Arena where
+  signature := signature.{v}
+  Law R := ∀ {V : Type v} [Fintype V] {F : SimpleGraph V}
+    (_hn : 3 ≤ Fintype.card V) (k : V → Bool) (n : ℕ)
+    (_h0 : Nat.card (Side k false) = n) (_h1 : Nat.card (Side k true) = n)
+    (_hm : Nat.card F.edgeSet + 2 ≤ n)
+    (_C : AlternatingCompletedGraph k F) (x : V) (S : Finset V),
+    ∃ q : PMF (AlternatingCompletedGraph k F),
+      (∀ g, q g = (Nat.card (AlternatingCompletedGraph k F) : ℝ≥0∞)⁻¹) ∧
+      q.toOuterMeasure {g | ∃ y ∈ S, g.1.1.Adj x y ∧ ¬ F.Adj x y} ≤
+        (2 * R.readout () V S : ℝ≥0∞) / ((n - Nat.card F.edgeSet - 1 : ℕ) : ℝ≥0∞)
+
+private theorem completionRejectsZero : ¬ completionArena.{v}.Law zero := by
+  classical
+  intro h
+  let F : SimpleGraph Four.{v} := ⊥
+  let A := AlternatingCompletedGraph color.{v} F
+  let x : Four.{v} := ⟨0⟩
+  obtain ⟨_, μ, _, _, _, _⟩ :=
+    alternating_undirected_completion_law color.{v} F 2 (by decide)
+      (color_count false) (color_count true)
+  obtain ⟨ref, _⟩ := μ.support_nonempty
+  have hm : Nat.card F.edgeSet + 2 ≤ 2 := by simp [F]
+  obtain ⟨q, _, hBound⟩ := h (by decide) color.{v} 2 (color_count false)
+    (color_count true) hm ref x Finset.univ
+  have hAll : {C : A | ∃ y ∈ (Finset.univ : Finset Four.{v}), C.1.1.Adj x y ∧
+      ¬ F.Adj x y} = Set.univ := by
+    ext C
+    simp only [Set.mem_ofPred_eq, Set.mem_univ, iff_true, Finset.mem_univ, true_and, F,
+      SimpleGraph.bot_adj, not_false_eq_true, and_true]
+    have hd : 0 < (C.1.1.neighborSet x).ncard := by rw [C.1.2.2.1]; decide
+    exact Set.nonempty_of_ncard_ne_zero hd.ne'
+  rw [hAll, PMF.toOuterMeasure_apply, Set.indicator_univ, PMF.tsum_coe] at hBound
+  have hOne : (1 : ℝ≥0∞) ≤ 0 := by
+    simpa only [zero, realize, Nat.cast_zero, mul_zero, ENNReal.zero_div] using hBound
+  exact (not_le_of_gt zero_lt_one) hOne
+
+def completionEvidence : Registration completionArena.{v}
+    (type_of% (@weld_neighbor_mass_le.{v})) where
+  actual := cardinality
+  bridge := Iff.rfl
+  variation := ⟨@weld_neighbor_mass_le.{v}, zero, completionRejectsZero⟩
+  sensitivity := ⟨fun i => ⟨zero, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, completionRejectsZero⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+def completionRegistration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@weld_neighbor_mass_le.{v}) (Realization signature.{v}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.AlternatingWeldQueryBound.weld_neighbor_mass_le
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.AlternatingWeldQueryBound.completionEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨completionArena.{v}⟩
+  objectArena := .source ⟨completionArena.{v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source completionArena.{v} ⟨completionEvidence.{v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ S => S.card) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Queries.AlternatingWeldQueryBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
 end
 end Reg.D5.S3.Combinatorics.Graph.Queries.AlternatingWeldQueryBound

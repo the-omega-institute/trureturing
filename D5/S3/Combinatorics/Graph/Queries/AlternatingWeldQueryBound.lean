@@ -269,7 +269,9 @@ private def reversing {V : Type*} [Fintype V] {F : SimpleGraph V} {k : V → Boo
       right_inv := ?_ } <;>
     intro l <;> exact Subtype.ext (lift_ext hn (by simp [rev, reverseLift]))
 
-private theorem weld_neighbor_mass_le {V : Type*} [Fintype V] {F : SimpleGraph V}
+/-- A uniformly completed weld reaches a finite target set by a fresh edge with
+mass controlled by the number of prescribed undirected edges. -/
+theorem weld_neighbor_mass_le {V : Type*} [Fintype V] {F : SimpleGraph V}
     (hn : 3 ≤ Fintype.card V) (k : V → Bool) (n : ℕ)
     (h0 : Nat.card (Side k false) = n) (h1 : Nat.card (Side k true) = n)
     (hm : Nat.card F.edgeSet + 2 ≤ n)
