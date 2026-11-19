@@ -1,0 +1,23 @@
+# Quaternionic coordinates from a noncommutative commutant
+
+## Abstract
+
+An irreducible set of linear isometries in dimension at most four whose commutant contains two noncommuting isometries acts by right multiplication by unit quaternions in quaternionic coordinates, in which the given commuting isometries act by left multiplication; the dimension is then four.
+
+**Theorem 1.1 (Quaternionic coordinates from a noncommutative commutant).**
+
+$$\forall E \in \operatorname{Type}*,\; [\operatorname{NormedAddCommGroup}\left(E\right)][\operatorname{InnerProductSpace}\left(\mathbb{R}, E\right)][\operatorname{FiniteDimensional}\left(\mathbb{R}, E\right)], \forall U \in \operatorname{Set}\left(\operatorname{LinearIsometryEquiv}\left(\mathbb{R}, E, E\right)\right), V \in \operatorname{Set}\left(\operatorname{LinearIsometryEquiv}\left(\mathbb{R}, E, E\right)\right),\; \operatorname{finrank}\left(\mathbb{R}, E\right) \le 4 \Rightarrow \left(\left(\forall X \in \operatorname{Submodule}\left(\mathbb{R}, E\right),\; \left(\forall T \in U,\; \forall x \in X,\; T\left(x\right) \in X\right) \Rightarrow \left(X = \operatorname{bot} \lor X = \operatorname{top}\right)\right) \Rightarrow \left(\left(\forall S \in U,\; \forall T \in V,\; S \cdot T = T \cdot S\right) \Rightarrow \left(\left(\exists S \in V,\; \exists T \in V,\; S \cdot T \ne T \cdot S\right) \Rightarrow \left(\operatorname{finrank}\left(\mathbb{R}, E\right) = 4 \land \left(\forall e \in E,\; \left\lVert e \right\rVert = 1 \Rightarrow \left(\exists F \in \operatorname{LinearIsometryEquiv}\left(\mathbb{R}, E, \mathbb{H}\right),\; F\left(e\right) = 1 \land \left(\left(\forall T \in V,\; \exists q \in \mathbb{H},\; \left\lVert q \right\rVert = 1 \land \left(\forall v \in E,\; F\left(T\left(v\right)\right) = q \cdot F\left(v\right)\right)\right) \land \left(\forall S \in U,\; \exists p \in \mathbb{H},\; \left\lVert p \right\rVert = 1 \land \left(\forall v \in E,\; F\left(S\left(v\right)\right) = F\left(v\right) \cdot p\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/CommutantQuaternionCoordinates.exists_quaternion_coordinates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ferdinand Georg Frobenius (1878). *Ueber lineare Substitutionen und bilineare Formen*. DOI: [10.1515/crll.1878.84.1](https://doi.org/10.1515/crll.1878.84.1).
+
+*Commentary.*
+
+Let E be a finite-dimensional real inner product space with finrank E <= 4, and let U and V be sets of linear isometry equivalences of E. Assume that every real subspace X of E with T x in X for all T in U and all x in X is the zero subspace or all of E, that S * T = T * S for every S in U and every T in V, and that V contains two elements S and T with S * T different from T * S. Then E has dimension four, and for every unit vector e there is a linear isometry equivalence F from E onto the quaternions H with F e = 1 such that for every T in V some quaternion q of norm one satisfies F (T v) = q * F v for all v, and for every S in U some quaternion p of norm one satisfies F (S v) = F v * p for all v. In the formula the isometry is written F and the two sets are written U and V. The argument runs as follows. A symmetric operator commuting with every element of U has an eigenspace invariant under U, which by irreducibility is all of E, so the operator is a scalar. Applied to T + T^-1 for T in V, this writes T as a scalar plus a skew operator commuting with U; applied to anticommutators, it shows that the anticommutator of two such skew operators is a scalar. Two noncommuting elements of V therefore yield, after rescaling and orthogonalization, skew operators J and K commuting with U with J J = -1, K K = -1 and K J = -J K. For a unit vector e the four vectors e, J e, K e, J (K e) are orthonormal, so E has dimension four, and the isometry F sending them to 1, i, j, k turns J and K into left multiplication by i and j. An element of U commutes with J and K, hence acts by right multiplication by the image of e. For an element T of V, the vectors w with F (T w) = F (T e) * F w form a subspace invariant under U that contains e, hence all of E. The statement asserts existence of such coordinates for each prescribed unit vector e; it asserts no uniqueness. The underlying algebra is classical: the commutant of an irreducible real representation is a division algebra (Schur), and a noncommutative finite-dimensional associative real division algebra is isomorphic to the quaternions (Frobenius).
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/AURICOmega/CommutantQuaternionCoordinates.exists_quaternion_coordinates`
