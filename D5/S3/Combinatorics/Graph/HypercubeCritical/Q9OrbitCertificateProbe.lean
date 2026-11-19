@@ -5,6 +5,7 @@ public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Algebra.Order.Ring.Int
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.GroupTheory.GroupAction.Defs
+public import Mathlib.Logic.Equiv.Basic
 
 /-! Finite group averaging for the lifted linear inequalities on Q9 supports. -/
 
@@ -99,5 +100,36 @@ public theorem no_orbit_certificate_solution {G V W R : Type*}
     _ ≤ _ := hrow r
 
 #print axioms no_orbit_certificate_solution
+
+/-- Equal counts of every coordinate color allow a permutation matching the
+colored coordinates. For a lifted vertex pair, use the color consisting of
+the deficit and the two bits. -/
+public theorem exists_perm_of_coordinate_color_counts {I A : Type*}
+    [Fintype I] [DecidableEq A] (f g : I → A)
+    (h : ∀ a, (univ.filter (fun i => f i = a)).card =
+      (univ.filter (fun i => g i = a)).card) :
+    ∃ p : Equiv.Perm I, ∀ i, g (p i) = f i := by
+  let e (a : A) : {i // f i = a} ≃ {i // g i = a} :=
+    Fintype.equivOfCardEq (by
+      rw [Fintype.card_subtype, Fintype.card_subtype]
+      exact h a)
+  exact ⟨Equiv.ofFiberEquiv e, Equiv.ofFiberEquiv_map e⟩
+
+#print axioms exists_perm_of_coordinate_color_counts
+
+/-- For two ordered pairs of cube vertices, the counts of the joint bit
+patterns within each deficit class determine their simultaneous orbit. -/
+public theorem exists_deficit_perm_of_joint_bit_counts {I : Type*} [Fintype I]
+    (r : I → ℤ) (x y u v : I → Bool)
+    (h : ∀ d a b, (univ.filter (fun i => r i = d ∧ x i = a ∧ y i = b)).card =
+      (univ.filter (fun i => r i = d ∧ u i = a ∧ v i = b)).card) :
+    ∃ p : Equiv.Perm I, ∀ i, r (p i) = r i ∧ u (p i) = x i ∧ v (p i) = y i := by
+  obtain ⟨p, hp⟩ := exists_perm_of_coordinate_color_counts
+    (fun i => (r i, x i, y i)) (fun i => (r i, u i, v i)) (by
+      rintro ⟨d, a, b⟩
+      simpa only [Prod.mk.injEq] using h d a b)
+  exact ⟨p, fun i => by simpa only [Prod.mk.injEq] using hp i⟩
+
+#print axioms exists_deficit_perm_of_joint_bit_counts
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical

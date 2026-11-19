@@ -730,4 +730,61 @@ theorem q9_sixty_six_mem_profiles_after_thin_half {C : Finset (Q 9)} (hC : C.car
 #print axioms sixtySixProfilesAfterThinHalf_length
 #print axioms q9_sixty_six_mem_profiles_after_thin_half
 
+/-- The integer indicator of a selected cube vertex. -/
+def cubeMembership (C : Finset (Q 9)) (x : Q 9) : ℤ :=
+  if x ∈ C then 1 else 0
+
+/-- The integer indicator of a pair of selected cube vertices. -/
+def cubePairMembership (C : Finset (Q 9)) (x y : Q 9) : ℤ :=
+  cubeMembership C x * cubeMembership C y
+
+private lemma sum_cube_membership (C : Finset (Q 9)) (A : Finset (Q 9)) :
+    (∑ x ∈ A, cubeMembership C x) = ((A.filter (· ∈ C)).card : ℤ) := by
+  simp only [cubeMembership, ← sum_filter, sum_const, nsmul_eq_mul, mul_one]
+
+/-- The lifted cubicity and distance-seven rows hold at every ambient vertex.
+The membership factor makes the radius inequalities valid at exterior vertices. -/
+theorem cube_lifted_incidence_rows {C : Finset (Q 9)} {r : Fin 9 → ℤ}
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hshell : ∀ x ∈ C, (shell C x 7).card ≤ 8 ∧
+      2 * (∑ i, if x i then r i else 0) + 12 ≤ (∑ i, r i) + (shell C x 7).card)
+    (x : Q 9) :
+    (∑ i : Fin 9, cubePairMembership C x (flip x i)) = 3 * cubeMembership C x ∧
+    (2 * (∑ i, if x i then r i else 0) + 12 - ∑ i, r i) * cubeMembership C x ≤
+      ∑ y ∈ univ.filter (fun y => hammingDist x y = 7), cubePairMembership C x y ∧
+    (∑ y ∈ univ.filter (fun y => hammingDist x y = 7), cubePairMembership C x y) ≤
+      8 * cubeMembership C x := by
+  by_cases hx : x ∈ C
+  · have hneighbor :
+        (∑ i : Fin 9, cubeMembership C (flip x i)) = ((directions C x).card : ℤ) := by
+      simp only [cubeMembership, directions, ← sum_filter, sum_const, nsmul_eq_mul, mul_one]
+    have he :
+        ((univ.filter (fun y => hammingDist x y = 7)).filter (· ∈ C)) = shell C x 7 := by
+      ext y
+      simp [shell, and_comm]
+    have hs := sum_cube_membership C (univ.filter fun y => hammingDist x y = 7)
+    rw [he] at hs
+    have ⟨hcap, hweight⟩ := hshell x hx
+    simp only [cubePairMembership, show cubeMembership C x = 1 by simp [cubeMembership, hx],
+      one_mul, mul_one, hneighbor, regular_directions C hreg hx, Nat.cast_ofNat, hs, true_and]
+    exact ⟨by omega, by exact_mod_cast hcap⟩
+  · simp [cubePairMembership, cubeMembership, hx]
+
+/-- A distance-seven pair and an incident edge in an agreement direction
+cannot both contribute at the same selected root. -/
+theorem cube_lifted_agreement_row {C : Finset (Q 9)}
+    (hd : ∀ x ∈ C, ∀ y ∈ C, hammingDist x y ≤ 7)
+    {x y : Q 9} (hxy : hammingDist x y = 7) {i : Fin 9} (hi : x i = y i) :
+    cubePairMembership C x y + cubePairMembership C x (flip x i) ≤ cubeMembership C x := by
+  by_cases hx : x ∈ C
+  · by_cases hy : y ∈ C
+    · have hu := agreeing_coordinate_unused hd hy hxy hi
+      have hf : flip x i ∉ C := fun h => (mem_sdiff.mp hu).2 ((mem_directions C x i).mpr h)
+      simp [cubePairMembership, cubeMembership, hx, hy, hf]
+    · by_cases hf : flip x i ∈ C <;> simp [cubePairMembership, cubeMembership, hx, hy, hf]
+  · simp [cubePairMembership, cubeMembership, hx]
+
+#print axioms cube_lifted_incidence_rows
+#print axioms cube_lifted_agreement_row
+
 end D5.S3.Combinatorics.Graph.HypercubeCritical
