@@ -33,25 +33,13 @@ private theorem exposed_mono (G : SimpleGraph V) {Q R : Set V} (h : Q ⊆ R) :
 private theorem star_adj (x a b : V) (T : Finset V) :
     (T.sup (SimpleGraph.edge x)).Adj a b ↔ ∃ y ∈ T, (SimpleGraph.edge x y).Adj a b := by
   classical
-  induction T using Finset.induction_on with
-  | empty => simp
-  | @insert u s hs ih =>
-    rw [Finset.sup_insert, SimpleGraph.sup_adj, ih]
-    constructor
-    · rintro (h | ⟨y, hy, h⟩)
-      · exact ⟨u, Finset.mem_insert_self _ _, h⟩
-      · exact ⟨y, Finset.mem_insert_of_mem hy, h⟩
-    · rintro ⟨y, hy, h⟩
-      rcases Finset.mem_insert.mp hy with rfl | hy
-      · exact Or.inl h
-      · exact Or.inr ⟨y, hy, h⟩
+  simp only [Finset.sup_eq_iSup, SimpleGraph.iSup_adj, exists_prop]
 
 private theorem reachable_eq_of_isolated {G : SimpleGraph V} {x y : V}
     (hiso : ∀ v, ¬ G.Adj y v) (hreach : G.Reachable x y) : x = y := by
-  obtain ⟨p⟩ := hreach.symm
-  cases p with
-  | nil => rfl
-  | cons ha _ => exact (hiso _ ha).elim
+  by_contra hxy
+  exact SimpleGraph.not_reachable_of_neighborSet_right_eq_empty hxy
+    (Set.eq_empty_iff_forall_notMem.mpr hiso) hreach
 
 private theorem acyclic_add_isolated_star (H : SimpleGraph V) (x : V) (T : Finset V)
     (hx : x ∉ T) (hiso : ∀ y ∈ T, ∀ v, ¬ H.Adj y v) (hH : H.IsAcyclic) :
