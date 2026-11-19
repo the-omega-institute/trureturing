@@ -74,9 +74,9 @@ internal sealed class QuadraticGermInvarianceDocument : IScribeDocumentDefinitio
             Equal(Apply(b, F.Id("U"), F.Id("V")), Apply(b, F.Id("V"), F.Id("U")))));
 
     private static Formula NormedSpaceBinders(Formula space, Formula body) =>
-        All("E", F.Id("Type"),
-            All("nE", Call("NormedAddCommGroup", space),
-                All("sE", Call("NormedSpace", Real, space), body)));
+        All("E", F.Id("Type"), Seq(
+            OpenBracket, Call("NormedAddCommGroup", space), CloseBracket, Sp,
+            OpenBracket, Call("NormedSpace", Real, space), CloseBracket, Sp, body));
 
     private static Formula RayFormula()
     {
@@ -121,11 +121,11 @@ internal sealed class QuadraticGermInvarianceDocument : IScribeDocumentDefinitio
             All("f", Arrow(l, Real), All("B", Call("BilinForm", Real, l),
                 ImpliesF(Symmetric(l, b), ImpliesF(Germ(l, f, b),
                     ImpliesF(conjugation, conclusion))))));
-        return Disp(All("A", F.Id("Type"),
-            All("nA", Call("NormedRing", a),
-                All("aA", Call("NormedAlgebra", Real, a),
-                    All("cA", Call("CompleteSpace", a),
-                        All("dA", Call("FiniteDimensional", Real, a), body))))));
+        return Disp(All("A", F.Id("Type"), Seq(
+            OpenBracket, Call("NormedRing", a), CloseBracket, Sp,
+            OpenBracket, Call("NormedAlgebra", Real, a), CloseBracket, Sp,
+            OpenBracket, Call("CompleteSpace", a), CloseBracket, Sp,
+            OpenBracket, Call("FiniteDimensional", Real, a), CloseBracket, Sp, body)));
     }
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>

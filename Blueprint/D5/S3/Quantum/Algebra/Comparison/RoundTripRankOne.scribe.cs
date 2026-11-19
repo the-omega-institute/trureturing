@@ -9,7 +9,7 @@ internal sealed class RoundTripRankOneDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Commuting Directions Have Rank One.",
         H("Commuting Directions Have Rank One"),
-        Describe.Lean(
+        Blocks(Describe.Lean(
             DescribeId.Create("centralizer-line"),
             DeclarationHandle.Create("D5/S3/Quantum/Algebra/Comparison/RoundTripRankOne.centralizer_line"),
             H("Commuting Directions Have Rank One"),
@@ -21,10 +21,9 @@ internal sealed class RoundTripRankOneDocument : IScribeDocumentDefinition
                 Paragraph(Text("For every nonzero X in L and every Y in L satisfying [X,Y]=0, there is a real scalar c with Y=cX. In particular, every commuting pair is linearly dependent; if X=0 the latter conclusion is immediate.")),
                 Paragraph(Text("The preceding metric theorem makes h an inner product. On the span of X and Y all elements commute, so the points whose exponentials are the identity form an additive subgroup. The exact cosine formula puts the entire h-sphere of radius sqrt(2)*pi in this kernel and excludes its sphere of half that radius. The spherical additive-kernel theorem therefore bounds the dimension of the span by one. Since X is nonzero it spans this space.")),
                 Paragraph(Text("The norm induced by h is used only in this finite-dimensional geometric argument. The original quadratic-germ hypothesis remains in the inherited algebra norm; no equality between these norms is assumed. The conclusion concerns infinitesimal commuting directions and asserts no global group classification."))),
-            DescribeRole.Theorem)));
+            DescribeRole.Theorem))));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
-    private static Formula At(Formula f, params Formula[] xs) => new Formula.Apply(f, [.. xs]);
     private static Formula All(string n, Formula ty, Formula p) => new Formula.BindMany(
         FormulaQuantifier.ForAll, [new Formula.BoundVariable(FormulaIdentifier.Create(n), ty)], p);
     private static Formula Ex(string n, Formula ty, Formula p) => new Formula.BindMany(
@@ -34,7 +33,6 @@ internal sealed class RoundTripRankOneDocument : IScribeDocumentDefinition
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Mul(Formula a, Formula b) => Seq(Open, a, Sp, Cdot, Sp, b, Close);
-    private static Formula Sq(Formula a) => new Formula.Power(a, D(2));
 
     private static Formula Context(Formula body)
     {

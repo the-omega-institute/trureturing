@@ -9,7 +9,7 @@ internal sealed class RoundTripComparisonDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Metric and Periods from Round-Trip Comparison.",
         H("Metric and Periods from Round-Trip Comparison"),
-        Describe.Lean(
+        Blocks(Describe.Lean(
             DescribeId.Create("metric-consequences"),
             DeclarationHandle.Create("D5/S3/Quantum/Algebra/Comparison/RoundTripComparison.metric_consequences"),
             H("Metric and Periods from Round-Trip Comparison"),
@@ -23,7 +23,7 @@ internal sealed class RoundTripComparisonDocument : IScribeDocumentDefinition
                 Paragraph(Text("For all C,X,Y in L the form obeys h([C,X],Y)+h(X,[C,Y])=0. Thus the quadratic coefficient is an invariant positive definite form.")),
                 Paragraph(Text("On each ray, boundedness forces the quadratic coefficient to be nonnegative. Applying the bounded duplication uniqueness theorem to 2*phi-1 gives the cosine formula. If the coefficient vanishes, faithfulness makes the entire exponential ray constant; its derivative at zero forces X=0. Conjugation invariance of the quadratic germ supplies the infinitesimal identity.")),
                 Paragraph(Text("These are conditional statements about the given algebra, subgroup and function. They impose no group topology beyond the ambient algebra used in the germ, and do not identify a physical comparison function or classify global groups."))),
-            DescribeRole.Theorem)));
+            DescribeRole.Theorem))));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula At(Formula f, params Formula[] xs) => new Formula.Apply(f, [.. xs]);
