@@ -38,7 +38,7 @@ def KLPrimitive (n : ℕ) : Prop :=
 /-- The strict divisor-sum inequality defining deficient integers. -/
 def Deficient (n : ℕ) : Prop := (ArithmeticFunction.sigma 1 n : ℝ) < 2 * n
 
-private def sig (n : ℕ) : ℝ := ArithmeticFunction.sigma 1 n
+def sig (n : ℕ) : ℝ := ArithmeticFunction.sigma 1 n
 
 private def f (p : ℕ) : ℝ := (p : ℝ) / (p + 1) * log ((p : ℝ) / (p - 1))
 
@@ -61,7 +61,7 @@ private lemma sum_coprime {a b : ℕ} (hab : a.Coprime b) (w : ℕ → ℝ) :
       Finset.sum_attach _ (fun z : ℕ × ℕ => w (z.1 * z.2))
     _ = _ := sum_product ..
 
-private lemma sig_prime_mul {p n : ℕ} (hp : p.Prime) (hpn : p.Coprime n) :
+lemma sig_prime_mul {p n : ℕ} (hp : p.Prime) (hpn : p.Coprime n) :
     sig (p * n) = ((p : ℝ) + 1) * sig n := by
   dsimp [sig]
   rw [ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime hpn,
@@ -69,7 +69,7 @@ private lemma sig_prime_mul {p n : ℕ} (hp : p.Prime) (hpn : p.Coprime n) :
   push_cast
   rfl
 
-private lemma kl_prime_mul {p n : ℕ} (hp : p.Prime) (hpn : p.Coprime n) :
+lemma kl_prime_mul {p n : ℕ} (hp : p.Prime) (hpn : p.Coprime n) :
     KL (p * n) = ((p : ℝ) + 1) * KL n +
       (p : ℝ) * sig n * log ((p : ℝ) / (p - 1)) := by
   have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos

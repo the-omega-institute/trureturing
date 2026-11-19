@@ -1,0 +1,127 @@
+**Lemma 5.1 (Cofactor content and the small layer).**
+
+For an independent actual coordinate triple, write
+
+$$
+([q,\ell,m],[r',\ell,m],[s,\ell,m])
+       =m_0(a_c,b_c,c_c),\qquad m_0>0,
+$$
+
+where the brackets denote three-column minors and the coordinate kernel
+is primitive. Let $\mathcal L=W\cap\mathbb Z^5$, let $G$ be the index
+in $\mathcal L$ of the actual physical three-row lattice, and put
+
+$$
+P=\operatorname{pr}_{\ell,m}(\mathcal L),\qquad
+ h=[\mathbb Z^2:P].
+$$
+
+There is a positive integer $\iota$, prime to $p$, such that
+
+$$
+\tag{5.9}
+
+ G=p^6\iota,\qquad m_0=\iota h,\qquad p\nmid h,
+ \qquad k=\iota^3\varkappa,
+ \qquad h\mid\varkappa.
+$$
+
+In particular $\iota^3h\mid k$ and $1\le h\le|\varkappa|\le K$.
+
+*Proof.*
+
+The displayed cofactor vector is the pure quadratic vector obtained by
+eliminating $\ell,m$. The last row of the Dixon matrix is exactly this
+vector: its entries are $[m,q,\ell],[m,r',\ell],[m,s,\ell]$, and the
+cyclic column permutations have positive sign. Thus $m_0$ divides
+$D_{\mathrm{coord}}$. Coordinate saturation and the unit projection
+minor imply $p\nmid m_0$, so $m_0\mid k$.
+
+The exact sequence
+
+$$
+0\longrightarrow\mathbb Z(a,b,c,0,0)
+ \longrightarrow\mathcal L\longrightarrow P\longrightarrow0
+$$
+
+shows that the cofactor content on a basis of $\mathcal L$ is $h$.
+Indeed, lift a basis of $P$ and adjoin the primitive kernel vector.
+Passing to the actual triple multiplies all three-column minors by $G$,
+so the physical cofactor content is $Gh$. On the other hand, physical
+change of variables acts on this vector by
+$\det(M)\operatorname{Sym}^2(M)$, where $\det(M)=p^3$. The $j=3$
+content therefore gives
+
+$$
+\tag{5.10}
+
+ Gh=p^6m_0.
+$$
+
+For completeness, the physical Smith valuations are $(0,3,3)$.
+Compatible integral local changes reduce the endpoint map to
+$\operatorname{diag}(1,p^3)$, up to units. The basis
+(5.8) becomes
+
+$$
+\begin{pmatrix}
+ \xi_c&p^3\gamma_c&0&1&0\\
+ \zeta_c&p^3\eta_c&0&0&p^3\\
+ a_c&p^3b_c&p^6c_c&0&0
+ \end{pmatrix}.
+$$
+
+After the unit pivot in the $\ell$ column, the last two rows are
+divisible by $p^3$. Upon dividing them by $p^3$, their $(q,m)$ minor is
+$-a_c/p^3$, a unit. Hence $G=p^6\iota$ with $p\nmid\iota$.
+Equation (5.10) now gives
+$m_0=\iota h$ and $p\nmid h$.
+
+The Dixon residual is cubic in the complete Plücker vector, and its
+physical change-of-variables weight is seven. Thus
+
+$$
+D_{\mathrm{phys}}=p^{21}D_{\mathrm{coord}}=p^{26}k,
+ \qquad G^3\mid D_{\mathrm{phys}}.
+$$
+
+Since $p\nmid\iota$, we have $\iota^3\mid k$. On a basis of
+$\mathcal L$ the residual is, up to orientation, $p^8\varkappa$.
+Its last Dixon row has content $h$, so $h\mid p^8\varkappa$.
+As $p\nmid h$, this proves $h\mid\varkappa$.
+
+Put $F_d=\mathbb Q(\sqrt d)$ and
+
+$$
+\tag{5.11}
+
+ \theta=\frac{-b+p\sqrt d}{2c},\qquad
+ \mathcal O=\mathcal O_{p^2d},\qquad
+ \mathcal O_0=\mathcal O_d,\qquad
+ J=\mathbb Z+\mathbb Z\theta.
+$$
+
+The subscript on an order denotes its discriminant. In particular
+$\mathcal O=\mathbb Z+p\mathcal O_0$ and
+$[\mathcal O_0:\mathcal O]=p$; $\mathcal O_0$ need not be maximal.
+Ideal norms are positive, and the norm of a field element is used with
+its absolute value when it occurs in an ideal-norm formula.
+
+The projection-normalized rows in $W$ are uniquely determined by
+
+$$
+u=(\xi,\gamma,0,1,0),\qquad
+ v=(\zeta,\eta,0,0,1).
+$$
+
+Define
+
+$$
+\tag{5.12}
+
+ U=\xi+\gamma\theta,\qquad
+ V=\zeta+\eta\theta,\qquad E=V-\theta U.
+$$
+
+Every row in $W$ then satisfies $Q(\theta)=U\ell+Vm$.
+

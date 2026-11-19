@@ -1,0 +1,24 @@
+### 2.1 Word, signs, and scalar centers
+
+For a modulus $c\geq 1$, let
+
+$$
+A(x)=\begin{pmatrix}x&-1\\1&0\end{pmatrix},\qquad
+ W_{a_1,a_2}(h_1,\ldots,h_6)
+ =A(a_1h_1)A(a_2h_2)A(a_1h_3)A(a_2h_4)A(a_1h_5)A(a_2h_6),
+$$
+
+with entries in $\mathbb Z/c\mathbb Z$. A scalar return is $\gamma I_2$.
+For real $X,Y\geq0$, define
+
+$$
+\begin{aligned}
+ N_\gamma(c;X,Y;a_1,a_2)
+  =\#\{(a,b,w;d,v,t)\in\mathbb Z^6:
+  &\ |a|,|b|,|w|\leq X,\quad |d|,|v|,|t|\leq Y,\\
+  &W_{a_1,a_2}(a,t,b,d,w,v)=\gamma I_2\}.
+\end{aligned}
+$$
+
+The two rows are $(a,b,w)$ and $(d,v,t)$, but the word order is $(a,t,b,d,w,v)$. For real widths the literal intervals use integer floors; the displayed membership condition is the original real-box count of [R](#reference-formalsource).
+

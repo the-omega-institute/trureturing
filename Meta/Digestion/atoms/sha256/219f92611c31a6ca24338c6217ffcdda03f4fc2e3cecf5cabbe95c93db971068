@@ -1,0 +1,64 @@
+## 2. Group laws, orders, and the bilinear fibers
+
+Proof of Theorem 1.3. Fix $i$ and abbreviate $B_i$ by $B$. Bilinearity gives the cocycle identity
+
+$$
+B(v,w')+B(v+v',w'')=B(v',w'')+B(v,w'+w'').                     \tag{2.1}
+$$
+
+The first two coordinates of either association in (1.2) are coordinate sums, and (2.1) equates their last coordinates. Thus (1.2) is associative. Its identity and inverse are
+
+$$
+1_{P_i}=(0,0,0),\qquad
+(v,w,z)^{-1}=(-v,-w,-z+B(v,w)).                                 \tag{2.2}
+$$
+
+Substitution in both orders verifies (2.2). Also
+
+$$
+\begin{aligned}
+(v,w,z)^2&=(2v,2w,2z+B(v,w)),\\
+(v,w,z)^3&=(0,0,3z+B(v,w)+B(2v,w))=(0,0,0).
+\end{aligned}                                                    \tag{2.3}
+$$
+
+Therefore $P_i$ has $3^7$ elements and every nonidentity element has order $3$.
+
+The map $\tau_i$ squares to the identity. Applying it to a product changes the last coordinate to $-z-z'-B(v,w')$; multiplying the two images gives the same coordinate because $B(v,-w')=-B(v,w')$. Hence $\tau_i$ is an automorphism. Associativity of (1.3) follows explicitly from
+
+$$
+\bigl(p\tau_i^\epsilon(p')\bigr)\tau_i^{\epsilon+\epsilon'}(p'')
+=p\tau_i^\epsilon\bigl(p'\tau_i^{\epsilon'}(p'')\bigr).
+$$
+
+Its identity is $(1_{P_i};0)$ and the inverse of $(p;\epsilon)$ is $(\tau_i^\epsilon(p^{-1});\epsilon)$. This proves that $S_i$ is a group of order $2\cdot3^7$ with normal subgroup $P_i$ and quotient $C_2$.
+
+For every $v\ne0$, the map $B_i(v,-):W\to Z$ is onto with kernel of size $3$. For $i=0$ its matrix is
+
+$$
+\begin{pmatrix}v_1&v_2&0\\0&v_1&v_2\end{pmatrix}.
+$$
+
+If $v_1\ne0$, the first two columns have determinant $v_1^2\ne0$. If $v_1=0$, then $v_2\ne0$ and the last two columns have determinant $v_2^2\ne0$. For $i=1$ the first two columns form
+
+$$
+\begin{pmatrix}v_1&-v_2\\v_2&v_1\end{pmatrix}.
+$$
+
+Its determinant $v_1^2+v_2^2$ is nonzero: every nonzero square in $F$ is $1$, so this sum is $1$ or $2$ when $v\ne0$. In both cases the linear map has rank $2$ and a one-dimensional kernel. Every fiber therefore has exactly $3$ elements.
+
+The common right kernels, by contrast, are different. Define
+
+$$
+K_i=\{w\in W:B_i(v,w)=0\text{ for every }v\in V\}.
+$$
+
+Testing $v=(1,0)$ and $v=(0,1)$ in (1.1) gives
+
+$$
+K_0=\{0\},\qquad K_1=\{(0,0,c):c\in F\},\qquad
+|K_0|=1,\quad |K_1|=3.                                         \tag{2.4}
+$$
+
+For $B_0$ the two tests impose $w_1=w_2=w_3=0$. For $B_1$ the first imposes $w_1=w_2=0$, and these conditions suffice for every $v$, leaving $w_3$ free.
+

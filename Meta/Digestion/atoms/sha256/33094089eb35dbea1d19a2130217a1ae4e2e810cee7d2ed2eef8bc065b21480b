@@ -1,0 +1,101 @@
+**Lemma 4.8 (Every affine row plane has subpower many actual pairs).**
+
+Let $\Gamma\subset\mathbb Z^5$ be a rank-three lattice containing the
+actual rows and spanning $\mathcal V$. Suppose its basis has polynomial
+height. Let $f:\Gamma\to\mathbb Z$ be a primitive nonzero integer
+functional of polynomial height, and let $n$ be an integer of polynomial
+height. Then
+
+$$
+\#\{e\in\mathcal E:f(\mathbf r_e)=n\}
+      \ll_{\varepsilon,C_0}p^\varepsilon,
+$$
+
+where the constant also depends on the fixed exponents of these heights.
+
+*Proof.*
+
+Choose an integer basis $b_0,c_0$ for $\ker f$ and $h\in\Gamma$ with
+$f(h)=1$. In fixed rank these can be chosen at polynomial height by
+integer elimination and the extended Euclidean algorithm. By
+Lemma 4.7, replace $b_0$ by
+$b=b_0+jc_0$ with $\mathfrak E(b)\ne0$, and put $c=c_0$.
+The auxiliary row $b$ need not be an actual endpoint row and no word
+or modular-unit property is required of it.
+
+The binary cubic $P_{b,c}=L_bQ_c-L_cQ_b$ is nonzero. Otherwise the
+coprimality of $L_b,Q_b$, supplied by $\mathfrak E(b)\ne0$, would force
+$c$ to be proportional to $b$. There is a projective algebraic root
+$\vartheta=[\vartheta_0:\vartheta_1]$ of $P_{b,c}$ for which
+$L_b(\vartheta)\ne0$. Indeed if all its roots were the unique root of
+$L_b$, then $P_{b,c}=\rho L_b^3$. Evaluation at that root first gives
+$L_c=\tau L_b$, then $Q_c-\tau Q_b=\rho L_b^2$. The nonzero row
+$c-\tau b$ would be the pure kernel with a square quadratic, contrary
+to (4.7).
+
+If $\vartheta$ is finite choose $\vartheta_0=1$; the field
+$\mathbb Q(\vartheta_1)$ has degree at most three. If it is the point
+at infinity use $\vartheta=(0,1)$
+and the field $\mathbb Q$. All coefficients and root heights are
+polynomially bounded: the cubic has bounded degree and polynomial
+coefficient height, and its primitive irreducible factors and their
+roots have polynomial height. Define the endpoint and anchor projections
+
+$$
+Z=\vartheta_0z_1+\vartheta_1z_2,\qquad
+ Z'=\vartheta_0z'_1+\vartheta_1z'_2,\qquad
+ A_\vartheta=\vartheta_0a_1+\vartheta_1a_2.
+$$
+
+Every row in the layer is $\mathbf r_e=i b+j c+n h$ with integers
+$i,j$. Since $P_{b,b}=0$ and $P_{b,c}(\vartheta)=0$,
+
+$$
+P_{b,e}(\vartheta)=nP_{b,h}(\vartheta).
+$$
+
+Using $Q_e(\vartheta)=ZZ'$ and
+$L_e(\vartheta)=Z+Z'-A_\vartheta$ gives the exact identity
+
+$$
+\tag{4.16}
+ \begin{split}
+ &[L_b(\vartheta)Z-Q_b(\vartheta)]
+  [L_b(\vartheta)Z'-Q_b(\vartheta)]\\
+ &\quad=Q_b(\vartheta)^2
+       -L_b(\vartheta)Q_b(\vartheta)A_\vartheta
+       +nL_b(\vartheta)P_{b,h}(\vartheta).
+ \end{split}
+$$
+
+This right side is fixed on the whole affine plane $f=n$.
+
+For clarity, the algebraic denominators cause no loss of uniformity.
+If the finite coordinate $\vartheta_1$ has primitive minimal polynomial
+with leading coefficient $A_0$, then $A_0\vartheta_1$ is integral. A fixed bounded
+power of $A_0$, together with the fixed rational denominators of the
+chosen coordinates, clears the factors in
+(4.16). Its size is a fixed power of $p$.
+The resulting factors are algebraic integers; every embedding and the
+norm of their fixed product are bounded by fixed powers of $p$.
+For infinity the same statement holds in $\mathbb Q$ directly.
+
+If the product is nonzero, Lemma 4.6
+gives $O_\varepsilon(p^\varepsilon)$ ordered factor values. For a
+finite nonrational $\vartheta_1$, the map
+$(z_1,z_2)\mapsto z_1+\vartheta_1 z_2$ is injective on $\mathbb Z^2$.
+Since $L_b(\vartheta)\ne0$, a factor value then fixes the first
+endpoint, and partner uniqueness finishes the count. If $\vartheta$
+is rational, including infinity, a factor value instead puts that
+endpoint on one rational affine line. Apply
+Lemma 4.5, using a smaller epsilon in the
+factor estimate and in the line estimate.
+
+If the fixed product is zero, at least one factor is zero. For
+nonrational $\vartheta$ that fixes at most one endpoint on that side;
+for rational $\vartheta$, including infinity, it specifies a rational
+affine endpoint line. Apply the same injection or line estimate and,
+for the second side, exchange the endpoints. This adds only a factor
+two. Thus zero products and projections at infinity are included,
+and the affine-plane estimate follows.
+

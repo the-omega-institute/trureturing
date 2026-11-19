@@ -1,0 +1,66 @@
+## 3. Involutions and commuting pairs
+
+An element outside $P_i$ has square
+
+$$
+(v,w,z;1)^2=(2v,0,-B_i(v,w);0).                                 \tag{3.1}
+$$
+
+This is the identity exactly when $v=0$. Thus the complete set of involutions is
+
+$$
+T_i=\{t_i(w,z)=(0,w,z;1):w\in W,\ z\in Z\},\qquad |T_i|=3^5.    \tag{3.2}
+$$
+
+Every other outside element has square a nonidentity element of $P_i$, hence has order $6$. In particular every element of $S_i$ has sixth power $1$, and the orders and their multiplicities are
+
+$$
+\begin{array}{c|cccc}
+\text{order}&1&2&3&6\\ \hline
+\text{multiplicity}&1&3^5&3^7-1&(3^2-1)3^5.
+\end{array}                                                     \tag{3.3}
+$$
+
+These assertions also show directly that all integer power maps depend only on their exponent modulo $6$.
+
+For $x=(v,u,s;0)\in P_i$ and $t=t_i(w,z)$, the two products are
+
+$$
+\begin{aligned}
+xt&=(v,u+w,s+z+B_i(v,w);1),\\
+tx&=(v,w-u,z-s;1).
+\end{aligned}
+$$
+
+Equality requires $2u=0$ and $2s=-B_i(v,w)$. In characteristic $3$ these are $u=0$ and $s=B_i(v,w)$. Consequently the centralizer inside $P_i$ is exactly
+
+$$
+C_i(t_i(w,z)):=C_{P_i}(t_i(w,z))
+=\{(v,0,B_i(v,w);0):v\in V\}.                                  \tag{3.4}
+$$
+
+This is an abelian subgroup of order $3^2$: multiplication on the displayed graph is addition in $V$. It is independent of $z$.
+
+Define the following set of nonidentity elements of $P_i$:
+
+$$
+A_i=\{(v,0,s;0):v\in V\setminus\{0\},\ s\in Z\},\qquad
+a:=|A_i|=(3^2-1)3^2.                                            \tag{3.5}
+$$
+
+Each element $(v,0,s;0)\in A_i$ commutes with exactly $3^3$ involutions. Indeed (3.4) asks for $B_i(v,w)=s$, with $3$ choices for $w$ by §2, and then permits all $3^2$ choices for $z$. No other nonidentity element of $P_i$ commutes with an involution: a nonzero $u$ is forbidden by (3.4), and $v=0$ in (3.4) forces $s=0$. Thus $A_i$ is exactly the union of the nonidentity elements of the subgroups (3.4).
+
+Every outside element $x$ has the unique decomposition
+
+$$
+x=bt,\qquad b=x^4\in P_i,\qquad t=x^3\in T_i,\qquad bt=tb.       \tag{3.6}
+$$
+
+To prove this, $x^6=1$ gives $x^4x^3=x$, and the two powers commute. The quotient $S_i/P_i=C_2$ puts $x^4$ inside and $x^3$ outside; the latter has square $1$, so is an involution. Conversely, if $t\in T_i$ and $b\in C_i(t)$, then $bt$ is outside and
+
+$$
+(bt)^3=t,\qquad (bt)^4=b,\qquad (bt)^2=b^2.                     \tag{3.7}
+$$
+
+These equalities prove both existence and uniqueness in (3.6). The case $b=1$ is the involution itself, and $b\ne1$ gives order $6$. In particular, for each fixed $t$ there are $3^2-1$ elements of order $6$ with cube $t$.
+

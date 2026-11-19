@@ -1,0 +1,45 @@
+**Lemma 4.6 (Bounded-degree algebraic factors).**
+
+Fix $d_*,M\geq1$. Uniformly for number fields $F$ of degree at most
+$d_*$ and $0\ne C\in\mathcal O_F$ with $|N_{F/\mathbb Q}C|\leq p^M$,
+the number of pairs $A,B\in\mathcal O_F$ satisfying
+
+$$
+AB=C,\qquad |\sigma(A)|,|\sigma(B)|\leq p^M
+       \quad\text{for every embedding }\sigma
+$$
+
+is $O_{\varepsilon,d_*,M}(p^\varepsilon)$.
+
+*Proof.*
+
+Put $n=|NC|$. Above each rational prime there are at most $d_*$ prime
+ideals, so the number of ideal divisors of $(C)$ is at most
+$\tau(n)^{d_*}$, and hence $O_\varepsilon(p^\varepsilon)$ after
+budgeting the exponent. For a fixed principal ideal choose one allowed
+generator $A_0$. Every other allowed generator is $A_0\epsilon$ with
+$\epsilon\in\mathcal O_F^\times$. Nonzero algebraic integers of
+degree at most $d_*$ whose embeddings are at most $p^M$ have every
+embedding at least $p^{-M(d_*-1)}$ in absolute value, since their norm
+is a nonzero integer. Thus the logarithms of all embedding absolute
+values of $\epsilon=A/A_0$ lie in a box of sidelength $O_{d_*,M}(\log p)$.
+
+For fixed degree there is a uniform positive lower bound for the height
+of a non-torsion algebraic unit: combine finiteness of algebraic numbers
+of bounded degree and height with the fact that height-zero units are
+roots of unity. Consequently distinct unit logarithmic vectors, modulo
+torsion, have a uniform positive separation. Packing this box gives
+$(1+\log p)^{O(d_*)}$ possibilities. The number of roots of unity of
+bounded degree is uniformly bounded. This proves the assertion, since
+$B=C/A$ is then determined. In particular the argument uses neither a
+class-number bound nor a regulator upper bound, uniformly in $F$.
+
+For a row $b$ define the homogeneous cubic
+
+$$
+\mathfrak E(b)=m_b^2q_b-\ell_bm_br_b+\ell_b^2s_b.
+$$
+
+It is the resultant of $L_b$ and $Q_b$, including the case of a root
+at infinity.
+
