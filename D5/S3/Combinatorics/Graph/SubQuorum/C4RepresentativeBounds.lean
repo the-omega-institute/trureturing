@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
@@ -107,30 +107,6 @@ private theorem packing_forces_many_unused (capacity unused excess : Int)
     simp [Int.mul_add, Int.mul_comm]
   omega
 
-private theorem positive_excess_size_threshold (capacity left right matching excess order : Int)
-    (hcapacity : 0 < capacity) (hleft : 0 ≤ left) (hright : 0 ≤ right)
-    (hmatching : 0 ≤ matching) (hexcess : 0 < excess)
-    (hleftPacking : capacity * (left + excess) ≤ left * (left - 1))
-    (hrightPacking : capacity * (right + excess) ≤ right * (right - 1))
-    (hpartition : matching + left + right + excess = order) :
-    2 * capacity + 5 ≤ order := by
-  have hleftBound := packing_forces_many_unused capacity left excess
-    hcapacity hleft hexcess hleftPacking
-  have hrightBound := packing_forces_many_unused capacity right excess
-    hcapacity hright hexcess hrightPacking
-  omega
-
-private theorem no_positive_excess_below_threshold (capacity left right matching excess order : Int)
-    (hcapacity : 0 < capacity) (hleft : 0 ≤ left) (hright : 0 ≤ right)
-    (hmatching : 0 ≤ matching) (hexcess : 0 < excess)
-    (hleftPacking : capacity * (left + excess) ≤ left * (left - 1))
-    (hrightPacking : capacity * (right + excess) ≤ right * (right - 1))
-    (hpartition : matching + left + right + excess = order)
-    (horder : order ≤ 2 * capacity + 4) : False := by
-  have hthreshold := positive_excess_size_threshold capacity left right matching excess order
-    hcapacity hleft hright hmatching hexcess hleftPacking hrightPacking hpartition
-  omega
-
 private theorem positive_excess_matching_budget (capacity left right matching excess order : Int)
     (hcapacity : 0 < capacity) (hleft : 0 ≤ left) (hright : 0 ≤ right)
     (hexcess : 0 < excess)
@@ -157,18 +133,6 @@ private theorem zero_excess_packing (capacity unused : Int) (hunused : 0 ≤ unu
     have hexpand : unused * (capacity - 1) = capacity * unused - unused := by
       simp [Int.mul_sub, Int.mul_comm]
     omega
-
-private theorem optimal_support_one_side (capacity left right matching order : Int)
-    (hleft : 0 ≤ left) (hright : 0 ≤ right) (hmatching : 0 ≤ matching)
-    (hleftPacking : capacity * left ≤ left * (left - 1))
-    (hrightPacking : capacity * right ≤ right * (right - 1))
-    (hpartition : matching + left + right = order)
-    (horder : order ≤ 2 * capacity + 1) : left = 0 ∨ right = 0 := by
-  rcases zero_excess_packing capacity left hleft hleftPacking with hzero | hbound
-  · exact Or.inl hzero
-  · rcases zero_excess_packing capacity right hright hrightPacking with hzero | hother
-    · exact Or.inr hzero
-    · omega
 
 section Representatives
 variable {V : Type} [Fintype V] [DecidableEq V]
@@ -202,7 +166,7 @@ theorem objective_le_omega (T : Finset V) (M : Finset (V × V)) (h : Feasible G 
     Finset.mem_filter.mpr ⟨Finset.mem_product.mpr ⟨by simp,by simp⟩,h⟩
   exact Finset.le_sup (f := fun p : Finset V × Finset (V × V) => p.1.card + p.2.card) hm
 
-/-- Every actual dissociation selection is a feasible empty-matching pair. -/
+/-- Each color class contains one endpoint per matching edge, counted without repetitions. -/
 private theorem endpoints_side_card (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (c : Bool) :

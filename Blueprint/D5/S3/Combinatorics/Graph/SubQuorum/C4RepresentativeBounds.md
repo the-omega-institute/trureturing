@@ -6,6 +6,8 @@ General C4-free representative bounds
 
 Actual finite representative maxima and graph-level pair ownership prove beta<=psiSq<=Omega, the equal-side regular C4-free threshold, positive-excess matching budgets and support rigidity. A dissociation set gives a feasible representative pair by taking the matching to be empty. For a finite projective plane of order q at least two, apply the threshold with degree q+1 and side size q squared plus q plus one. Unique incidence pairs exclude four-cycles and the threshold inequality reduces to q squared minus three q plus three being positive. From order three, the same degree and side size also satisfy the one-side support bound. The support bound applies to singletons and allows matching edges. The q=2 example in the source has singletons on both sides.
 
+The bound on each feasible objective gives the same upper bound on Omega by Finset.sup_le. At the first possible excess, the matching is empty and Feasible.capacity gives the dissociation condition on the singleton set. Under the one-side support conclusion, every occupied vertex on the other side is a matching endpoint.
+
 **Definition 1.1 (NoFourCycle).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.NoFourCycle`

@@ -4,7 +4,7 @@
 
 Dissociation and injective partial colorings
 
-For any finite simple graph and any partial coloring injective on its actual support, the sub-quorum majority condition is equivalent to that support inducing maximum degree at most one. Each actual dissociation set therefore yields a coloring with exactly its cardinality many distinct represented natural colors; attainment gives beta two at most psi square. Empty graphs and empty supports are included. This does not provide the opposite representative-packing bound or identify SF with the coloring parameter.
+For any finite simple graph and any partial coloring injective on its actual support, the sub-quorum majority condition is equivalent to that support inducing maximum degree at most one. Each actual dissociation set therefore yields a coloring with exactly its cardinality many distinct represented natural colors; attainment gives beta two at most psi square. The image bound and filter bound place the palette size of every admissible natural-number coloring within the search range of psi square. The coloring itself witnesses attainability. Empty graphs and empty supports are included. This does not provide the opposite representative-packing bound or identify SF with the coloring parameter.
 
 **Theorem 1.1 (injective support iff).**
 
@@ -54,19 +54,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.distin
 
 Exact declaration: theorem distinct_palette (S : Finset V) : (palette (distinctColoring S) Finset.univ).card = S.card.
 
-**Theorem 1.5 (palette le psiSq).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.palette_le_psiSq`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.palette_le_psiSq` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
-
-*Commentary.*
-
-Exact declaration: theorem palette_le_psiSq (G : SimpleGraph V) (c : V → Option ℕ) (h : IsSubQuorum G c) : (palette c Finset.univ).card ≤ psiSq G.
-
-**Theorem 1.6 (beta le psiSq).**
+**Theorem 1.5 (beta le psiSq).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.beta_le_psiSq`
 
@@ -85,5 +73,4 @@ Exact declaration: theorem beta_le_psiSq (G : SimpleGraph V) [DecidableRel G.Adj
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.distinct_palette`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.distinct_support`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.injective_support_iff`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring.palette_le_psiSq`
 - Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting](DoubleStarGrafting.md)

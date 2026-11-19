@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/SubQuorum/DissociationColoring
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
@@ -83,14 +83,6 @@ theorem distinct_palette (S : Finset V) :
   unfold palette
   rw [Finset.card_image_of_injOn (distinct_injective S),distinct_support]
 
-/-- Every admissible palette is included in the canonical finite maximum. -/
-theorem palette_le_psiSq (G : SimpleGraph V) (c : V → Option ℕ)
-    (h : IsSubQuorum G c) : (palette c Finset.univ).card ≤ psiSq G := by
-  classical
-  apply Nat.le_findGreatest
-  · exact Finset.card_image_le.trans ((Finset.card_filter_le _ _).trans_eq (by simp))
-  · exact ⟨c,h,rfl⟩
-
 /-- The complete lower comparison uses an actual attained dissociation maximum. -/
 theorem beta_le_psiSq (G : SimpleGraph V) [DecidableRel G.Adj] :
     beta G 2 ≤ psiSq G := by
@@ -105,7 +97,9 @@ theorem beta_le_psiSq (G : SimpleGraph V) [DecidableRel G.Adj] :
   have hi : IsSubQuorum G (distinctColoring S) :=
     (injective_support_iff G (distinctColoring S) (distinct_injective S)).mpr
       (by simpa only [distinct_support] using hS)
-  have hh := palette_le_psiSq G (distinctColoring S) hi
-  simpa only [distinct_palette,hc] using hh
+  rw [← hc, ← distinct_palette S]
+  apply Nat.le_findGreatest
+  · exact Finset.card_image_le.trans ((Finset.card_filter_le _ _).trans_eq (by simp))
+  · exact ⟨distinctColoring S, hi, rfl⟩
 
 end D5.S3.Combinatorics.Graph.SubQuorum.DissociationColoring
