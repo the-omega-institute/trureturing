@@ -15,7 +15,7 @@ internal sealed class DigitCapLowerExponentDocument : IScribeDocumentDefinition
                 "lowerExponent k ell is the supremum, over natural N with 2≤N, of the "
                 + "infimum, over every natural n with N≤n, of the real readout "
                 + "log(count k ell n)/log n embedded in EReal. It is the lower-limit "
-                + "companion of the upper exponent, taken over entire natural tails "
+                + "counterpart of the upper exponent, taken over entire natural tails "
                 + "with no finiteness premise.", DescribeRole.Definition),
             Node("singleton", "One representation of ell^s-1", "count_pow_sub_one",
                 "For natural ell, k and s with 2≤ell and ell−1≤k≤2·ell−2, "
@@ -33,7 +33,7 @@ internal sealed class DigitCapLowerExponentDocument : IScribeDocumentDefinition
                 + "lowerExponent k ell=0. For every n≥2 the count is at least one and "
                 + "log n>0, so every readout from two on is nonnegative and every tail "
                 + "infimum is at least zero. Given N≥2, the input ell^(N+1)−1 is at "
-                + "least N and has readout log 1/log n=0, so every tail infimum is at "
+                + "least N and has readout log 1/log(ell^(N+1)−1)=0, so every tail infimum is at "
                 + "most zero. Hence every tail infimum, and their supremum, equal zero. "
                 + "Consequently, whenever ell−1≤k≤2·ell−3 both lowerExponent k ell and "
                 + "lowerExponent (k+1) ell are zero; at radix four this covers k=5 and "
