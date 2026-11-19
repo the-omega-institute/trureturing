@@ -4,7 +4,7 @@
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
    utility: none
-   digest: The bounded-digit growth exponents are finite nonnegative reals, ordered and monotone in the cap. -/
+   digest: Bounded-digit growth exponents are real, nonnegative, ordered and monotone in the cap. -/
 
 import D5.S1.Digit.DigitCapQuotientBound
 import D5.S1.Digit.DigitCapLowerExponent
