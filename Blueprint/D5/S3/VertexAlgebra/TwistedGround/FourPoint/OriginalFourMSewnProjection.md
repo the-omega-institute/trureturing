@@ -64,9 +64,48 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnPr
 
 The original left lowering ranges, parity and factorials combine into one readout on the signed diagonal.
 
+**Theorem 1.6 (The sewn detector readout on the shifted signed diagonals).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.lowered_detector_sewn_readout`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.lowered_detector_sewn_readout` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each detector lowering contributes its original factorial and shifts the signed mode sum by the lowering order.
+
+**Theorem 1.7 (Original projectors of the four inverse-lowered words).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.inverse_words_detector_projector`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.inverse_words_detector_projector` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The native chart order, cutoff and four coordinate scales give the original signed occupation projector for each charge.
+
+**Theorem 1.8 (Original signed projectors of the actual radial Taylor jet).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_chart_signed_projector`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_chart_signed_projector` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either radial chart at the stated nome, the actual sector jet is the convergent charge sum of the original signed projectors, with the physical marks and the original chart scales.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.boxed_four_sewn_projection`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.inverse_words_detector_projector`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.lowered_detector_sewn_readout`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_chart_signed_projector`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_occupation_section_overlap`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_sector_four_occupation`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_spatial_four_occupation`
