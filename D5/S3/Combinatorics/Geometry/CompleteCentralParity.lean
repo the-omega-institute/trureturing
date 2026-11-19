@@ -11,8 +11,9 @@ admission_basis: escape-witness (the-omega-institute/trureturing-requests#321)
 escape_witness: cls_cover (every point has a partner in every round-robin class), with
   center_iff and center_card (the round-robin space has exactly 2m+2 central values)
 proof_shape:
-  cls, d, Space: definitions; consumers: the lemmas below.
-  cls_cover, center_iff, center_card, complete: content; consumer: complete_central_iff.
+  cls, d, Space: definitions; consumers: the lemmas below and MinimumCentralOrder (cls).
+  cls_cover, center_iff, center_card, complete: content; consumer: complete_central_iff
+    (cls_cover, cls_lt and cls_comm are also consumed by MinimumCentralOrder).
   cls_comm, cls_lt, d_self, d_ne, frac_bounds, d_bounds, d_comm: bind-only helpers; consumers:
     the metric instance, center_iff, center_card, complete.
   complete_central_iff: content via the round-robin construction; the odd case is a bind-only
@@ -49,21 +50,21 @@ variable (m : ℕ)
 /-- The round-robin class of a pair of distinct points of `Fin (2m+2)`: with `M = 2m+1` and the
 point `M` playing the role of `∞`, the pair `{i, j}` gets `(i + j) mod M` and `{i, ∞}` gets
 `2i mod M`. -/
-private def cls (i j : ℕ) : ℕ :=
+def cls (i j : ℕ) : ℕ :=
   if i = 2 * m + 1 then (2 * j) % (2 * m + 1)
   else if j = 2 * m + 1 then (2 * i) % (2 * m + 1)
   else (i + j) % (2 * m + 1)
 
-private lemma cls_comm (i j : ℕ) : cls m i j = cls m j i := by
+lemma cls_comm (i j : ℕ) : cls m i j = cls m j i := by
   unfold cls
   split_ifs <;> first | rfl | (subst_vars; rfl) | (rw [add_comm])
 
-private lemma cls_lt (i j : ℕ) : cls m i j < 2 * m + 1 := by
+lemma cls_lt (i j : ℕ) : cls m i j < 2 * m + 1 := by
   unfold cls
   split_ifs <;> exact Nat.mod_lt _ (by omega)
 
 /-- Each class is a perfect matching: every point has a partner in every class. -/
-private lemma cls_cover (x : Fin (2 * m + 2)) (r : ℕ) (hr : r < 2 * m + 1) :
+lemma cls_cover (x : Fin (2 * m + 2)) (r : ℕ) (hr : r < 2 * m + 1) :
     ∃ y : Fin (2 * m + 2), y ≠ x ∧ cls m x.1 y.1 = r := by
   obtain ⟨i, hi⟩ := x
   by_cases hinf : i = 2 * m + 1
