@@ -38,8 +38,8 @@ internal sealed class CommutingWordsDocument : IScribeDocumentDefinition
                     + "with multiplication and wordPower with natural monoid powers. "
                     + "Commute.pow_pow_self supplies commutation of these powers.")),
                 Paragraph(Text(
-                    "Karhumaki's Section 3, Theorem 1(i)-(ii), printed pages 3-4 (PDF pages "
-                    + "7-8), gives this classical equivalence and explicitly treats empty words. "
+                    "Section 3, Theorem 1(i)-(ii) of the cited report gives this classical "
+                    + "equivalence and explicitly treats empty words. "
                     + "The source introduces finite alphabets; the statement here allows an "
                     + "arbitrary type. It asserts existence of a common word and exponents, "
                     + "without a primitive-root uniqueness or shortest-root conclusion."))),
