@@ -116,7 +116,10 @@ theorem exists_large_balanced_component (U : Finset Vertex) (hU : U.card = 258)
           simp [SimpleGraph.mem_neighborFinset, and_comm]
         have hcard : ((hypercube 9).induce (U : Set Vertex)).degree ⟨v, hv⟩ =
             ((hypercube 9).neighborFinset v ∩ U).card := by
-          simpa only [Finset.toFinset_coe] using h
+          rw [Finset.toFinset_coe] at h
+          refine Eq.trans ?_ h
+          exact congrArg (fun inst => @SimpleGraph.degree _ ((hypercube 9).induce (U : Set Vertex))
+            ⟨v, hv⟩ inst) (Subsingleton.elim _ _)
         rw [he, ← hcard]
         exact hdeg ⟨v, hv⟩
       have h := card_le_of_two_balanced_cubic_fifty_four U C D h54C h54D hrC hrD hbC hbD
