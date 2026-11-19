@@ -96,26 +96,6 @@ private def coloredCompletionEventEquiv (k : V → Bool) (F : SimpleGraph V) :
   left_inv _ := rfl
   right_inv _ := rfl
 
-private theorem lift_fiber_card (hn : 3 ≤ Fintype.card V) (C : CompletedGraph F) :
-    Nat.card {l : Lift F // forget hn l = C} = 2 := by
-  classical
-  obtain ⟨l, hl⟩ := forget_surjective hn F C
-  let pick (b : Bool) : {a : Lift F // forget hn a = C} :=
-    if b then ⟨reverseLift l, (forget_reverse hn l).trans hl⟩ else ⟨l, hl⟩
-  have hpick : Function.Bijective pick := by
-    constructor
-    · intro a b h
-      cases a <;> cases b
-      · rfl
-      · exact (reverse_distinct hn l (congrArg Subtype.val h)).elim
-      · exact (reverse_distinct hn l (congrArg Subtype.val h).symm).elim
-      · rfl
-    · intro a
-      rcases (forget_fiber hn l a).mp (a.property.trans hl.symm) with ha | ha
-      · exact ⟨false, Subtype.ext ha.symm⟩
-      · exact ⟨true, Subtype.ext ha.symm⟩
-  exact (Nat.card_congr (Equiv.ofBijective pick hpick).symm).trans (by simp)
-
 private theorem colored_surjective (hn : 3 ≤ Fintype.card V) (k : V → Bool) :
     Function.Surjective (coloredForget hn (F := F) k) := by
   intro C
@@ -149,7 +129,7 @@ private theorem colored_card (hn : 3 ≤ Fintype.card V) (k : V → Bool) (F : S
   let (C : AlternatingCompletedGraph k F) : Fintype {l : ColoredLift hn k F // f l = C} := Fintype.ofFinite _
   have hc (C : AlternatingCompletedGraph k F) : Fintype.card {l : ColoredLift hn k F // f l = C} = 2 :=
     Nat.card_eq_fintype_card.symm.trans <|
-      (Nat.card_congr (coloredFiberEquiv hn k C)).trans (lift_fiber_card hn C.1)
+      (Nat.card_congr (coloredFiberEquiv hn k C)).trans (forget_fiber_card hn C.1)
   rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card,
     ← Fintype.card_congr (Equiv.sigmaFiberEquiv f), Fintype.card_sigma]
   simp [hc, Nat.mul_comm]
