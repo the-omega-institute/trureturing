@@ -1,2 +1,0 @@
-**定义 4.1(主体)**。一个主体是二元组 $\mathfrak S=(T,\mathcal U)$:一个变换 $T$(它做什么)与一个只追加的主张记录 $\mathcal U=(\mathcal U_t)_t$(它说什么)。主体沿时间生成账本链 $L_{t+1}=T(L_t)$ 与主张链 $\mathcal U_t$。
-

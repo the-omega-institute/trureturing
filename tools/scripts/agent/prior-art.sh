@@ -12,7 +12,7 @@
 # the name of the object ("Foata", "unimodal", "parking function"). Give several.
 #
 # Searches, in order of how often each one has actually caught something:
-#   1. origin/dev  — the frozen tree: D5, Blueprint, Library notes, theory volumes
+#   1. origin/dev  — the frozen tree: D5, Blueprint, Library notes
 #   2. open pull requests — titles and bodies
 #   3. remote branches — lanes in flight that have not opened a PR yet
 #
@@ -39,9 +39,9 @@ hits=0
 for term in "$@"; do
   printf '\n=== %s ===\n' "$term"
 
-  printf -- '--- %s (D5 / Blueprint / Library / theory) ---\n' "$BASE"
+  printf -- '--- %s (D5 / Blueprint / Library) ---\n' "$BASE"
   found=$(git grep -il -e "$term" "$BASE" -- \
-            'D5/**' 'Blueprint/**' 'Library/**' 'docs/develop/theory/**' 2>/dev/null | head -20)
+            'D5/**' 'Blueprint/**' 'Library/**' 2>/dev/null | head -20)
   if [ -n "$found" ]; then
     printf '%s\n' "$found"
     hits=$((hits + 1))

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:656820a09156d807027994377f1d44678398e35d50deea95ac70d5787bcac0b4
-  normalized_sha256: sha256:656820a09156d807027994377f1d44678398e35d50deea95ac70d5787bcac0b4
-cas_ref: sha256:656820a09156d807027994377f1d44678398e35d50deea95ac70d5787bcac0b4
-coverage_gids:
-  - gid: D5/S1/FixedPoints/FiniteMonotoneTermination.bool_identity_has_distinct_fixed_point_limits
-    target_statement_id: sha256:8fe1676583a441dcc01c2b9f7b7ec451b79985948386b45fb0d37d031421b859
-receipts:
-  unresolved_subitems: []

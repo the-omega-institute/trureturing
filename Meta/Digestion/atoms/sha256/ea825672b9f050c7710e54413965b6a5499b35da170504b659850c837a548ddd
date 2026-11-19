@@ -1,9 +1,0 @@
-这一文档处理 Fano 双覆盖、Prym 几何和 27 维表示的比较，属于新的具体代数几何问题。
-既有 `SURFACE_CONGRUENCE_OBSERVERS.md` 的曲面映射类群同余问题保持原范围。
-既有一般观察者理论的以下真实对象是本研究的参照，而不是被重新命名的证明：
-
-- 有限 Hankel 分解及可达空间模全未来不可见方向的维数公式；
-- 序列的实际线性实现；
-- automath 的 `subsec__pom-pw-tannaka-krein-reconstruction.tex` 所提出的群重构问题；
-- newmath 的 `TannakaKreinUp`、`MonodromyUp` 记录接口。它们不提供本问题所需的上同调比较。
-

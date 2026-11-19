@@ -9,10 +9,10 @@ public sealed partial class ProductionEnvironmentTests
 {
     [Theory]
     [InlineData("Meta/Digestion/backfill/unrelated/residual-open/" +
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml", true)]
-    [InlineData("Meta/Digestion/backfill/unrelated/source.toml", true)]
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml", false)]
+    [InlineData("Meta/Digestion/backfill/unrelated/source.toml", false)]
     [InlineData("Meta/Digestion/atoms/sha256/" +
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false)]
     [InlineData("Meta/Digestion/atoms/sha256/not-a-canonical-id", false)]
     public void CheckSkipsUnrelatedDigestionBodiesWhileEnforcingCanonicalPaths(
         string unrelatedPath, bool canonicalPath)
@@ -99,7 +99,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckRejectsProtectedChangeWhenContentViolatesSl001()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         fixture.Apply("upward-import");
         const string protectedPath = RuleFixture.SyntheticProtectedPath;
         var gateway = new FakeRepositoryGateway(
@@ -124,7 +124,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
@@ -160,12 +160,12 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
-        const string registeredModule = "D5/S0/Carrier/BackfillTarget.lean";
+        const string registeredModule = RuleFixture.RingPath;
         AddFrozenLedger(fixture);
         var addedStatePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(registeredModule)).Value;
@@ -205,7 +205,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckRejectsTheRetiredMergeBaseAlias()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { RuleFixture.SyntheticProtectedPath }),
             Snapshot(fixture.Files),
@@ -229,7 +229,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckRequiresThePrecomputedCandidateLeanReportForProtectedChanges()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
@@ -254,7 +254,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         AddFrozenLedger(fixture);
         const string scribePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
         fixture.Files[scribePath] = "// candidate Scribe definition\n";
@@ -300,7 +300,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         AddFrozenLedger(fixture);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
@@ -410,12 +410,8 @@ public sealed partial class ProductionEnvironmentTests
     private static RuleFixture TrustedFrozenFixture()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         AddFrozenLedger(fixture);
-        SettleCurrentCoverage(fixture);
-        var settled = BackfillInventoryLoader.Load(Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, settled);
         foreach (var item in fixture.Files)
         {
             fixture.Baseline[item.Key] = item.Value;
@@ -427,46 +423,6 @@ public sealed partial class ProductionEnvironmentTests
         }
 
         return fixture;
-    }
-
-    private static void SettleCurrentCoverage(RuleFixture fixture)
-    {
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot;
-        var lean = AcceptedLeanClosure.Create(LeanAxiomReport.Create(fixture.Reports));
-        var truthStates = LeanTruthStates.Resolve(snapshot, lean);
-        var document = BackfillInventoryLoader.Load(snapshot);
-        var aligned = document.WithDigestionSources(document.RequireDigestionSources()
-            .Select(source => source with
-            {
-                Entries = source.Entries.Select(entry => entry with
-                {
-                    Coverage = entry.Coverage.Select(edge => edge with
-                    {
-                        TargetStatementId = FrozenStatementReceiptTestData.Resolve(fixture.Files, edge.Gid, LeanAxiomReport.Create(fixture.Reports)),
-                    }).ToImmutableArray(),
-                }).ToImmutableArray(),
-            }).ToImmutableArray());
-        var statusByAtomId = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScope.FullScan,
-                aligned,
-                snapshot,
-                lean,
-                truthStates: truthStates)
-            .Entries
-            .ToDictionary(
-                static entry => entry.Entry.AtomId,
-                static entry => entry.DerivedStatus,
-                StringComparer.Ordinal);
-        var settled = aligned.WithDigestionSources(aligned.RequireDigestionSources()
-            .Select(source => source with
-            {
-                Entries = source.Entries.Select(entry => entry with
-                {
-                    ProjectedStatus = statusByAtomId[entry.AtomId],
-                }).ToImmutableArray(),
-            }).ToImmutableArray());
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, settled);
     }
 
 }

@@ -1,5 +1,0 @@
-source_id = "simplex-coverage-hessian"
-path = "docs/develop/theory/SIMPLEX_COVERAGE_HESSIAN.md"
-atomizer = "generic-v1"
-genre_registry_check = "no-registry"
-unregistered_genres = []

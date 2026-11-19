@@ -1,6 +1,0 @@
-reuses the repository's canonical future-readout and separation-time definitions. For an eventually separated pair:
-
-- every readout before `separationTime` agrees;
-- the readout at `separationTime` differs;
-- the pair belongs to the finite observation fiber exactly for horizons below that boundary.
-

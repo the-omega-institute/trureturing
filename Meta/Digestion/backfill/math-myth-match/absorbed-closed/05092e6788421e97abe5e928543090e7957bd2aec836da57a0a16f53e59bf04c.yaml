@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:05092e6788421e97abe5e928543090e7957bd2aec836da57a0a16f53e59bf04c
-  normalized_sha256: sha256:05092e6788421e97abe5e928543090e7957bd2aec836da57a0a16f53e59bf04c
-cas_ref: sha256:05092e6788421e97abe5e928543090e7957bd2aec836da57a0a16f53e59bf04c
-coverage_gids:
-  - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteErrorSqueeze.finite_suite_error_squeeze
-    target_statement_id: sha256:a210534e1b58b8ca62147229ed27887242274fcdc78091d49b3bd382a8a24b29
-receipts:
-  unresolved_subitems: []

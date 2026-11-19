@@ -1,0 +1,13 @@
+## 121. 两步原排斥的四维纯点片与全域唯一完整确认
+
+**卷间编号与引用约定。** 本章条目及公式采用本卷的121.x编号。下表规定本章所有跨卷引用的来源；裸章号、罗马卷号及其相应式号均按此表解释，不指本卷同号条目。
+
+| 本章使用的来源编号 | 原始来源 |
+| --- | --- |
+| 125、127、128、129、130章及全部相应子条目、Q125及Q127—Q130式号 | [SAME_READBACK《同一实际读回与并行全重置的概率校准》][SameReadback] |
+| VII103、VII104及相应子条目 | [FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS VII][FacetVII] |
+| VIII113及相应子条目 | [EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY VIII][ExclusionVIII] |
+| IX116、IX119、IX120及相应子条目 | [EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY IX][ExclusionIX] |
+| THREE_COPY VII121.6 | [THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY VII][ThreeCopyVII] |
+| (83.8) | [BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION V][V] |
+| VI(89.13) | [INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE VI][PolarVI] |

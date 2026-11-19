@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6f135c45758f6036a4e0bd855515a36e3a8072d4272111dd91d600c647fef0b9
-  normalized_sha256: sha256:6f135c45758f6036a4e0bd855515a36e3a8072d4272111dd91d600c647fef0b9
-cas_ref: sha256:6f135c45758f6036a4e0bd855515a36e3a8072d4272111dd91d600c647fef0b9
-coverage_gids:
-  - gid: D5/S3/Observer/Refinement/BiaxialMonotoneRefinement.biaxial_monotone
-    target_statement_id: sha256:85f4d7c1ac627575b4f7732c0f5428f337b030a7d92b5733ab7737cf1ec63bdb
-receipts:
-  unresolved_subitems: []

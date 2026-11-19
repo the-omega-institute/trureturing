@@ -1,0 +1,33 @@
+**推论 125.8（原E0内的低次边界诊断）。** 在这个固定 $\mathsf E_0$ 中，以下条件等价：
+
+$$
+\mathsf{AB}_{\le3}
+\quad\Longleftrightarrow\quad\delta(C)=3
+\quad\Longleftrightarrow\quad\mathsf{PC1}
+\quad\Longleftrightarrow\quad\mathsf{IC}_0
+\quad\Longleftrightarrow\quad\text{(MC125.25)的同原完整PSD}_3\text{表示}.
+\tag{MC125.29}
+$$
+
+证明。低次数与同原表示的等价由定理125.7，且给最低次数恰为三。其余等价直接复用SAME_READBACK定理127.11、129.8和130.5，不再证明全域纯压缩升级、原 $P_0$ 稠密性或谱分类。反向的表示将三次行列式拉回到**整个**原边界，故无需另加代数性。证毕。
+
+为保留这些复用项的实际原义，PC1仍是同一种子的
+
+$$
+\forall p\in P\ \exists i\in\{1,2,3\}:\Delta_i(p)=0,
+\tag{MC125.30}
+$$
+
+即至少一个 $T_ip$ 为原极射线向量或零；它等价于 $D_p$ 碰到至少一张完整种子球，或 $(p+p_i)/2$ 至少有一个位于原相对边界。$\Delta_i$ 与共同正定型 $B$ 均取127.2、129.1原定义，不能改成另选的环境二次式。$\mathsf{IC}_0$ 仍为
+
+$$
+\forall p\in P_0:\ D_p\cap I\ne\varnothing,\qquad
+I=\left\{\frac w3+v:v\in\ker u,\ \|v\|_B^2\le\frac16\right\},
+\quad w=p_1+p_2+p_3.
+\tag{MC125.31}
+$$
+
+$1/6$ 是同一仿射中心 $w/3$ 下的半径平方，不是接触态的原点范数平方；后者在接触处为 $1/2$。这两个数及固定内球包含、点态三零等价均按129.3—129.4复用，不从本章一般代数性另推。点态PC1与点态三次纯压缩仍不同；(MC125.29)使用的是全原量词的既有升级。IX120.9的 $P_0$ 稠密、THREE_COPY VII121.6的稠密 $G_\delta$ 和原宽度紧层也仅沿这些原消费者使用，不重计新结果。
+
+在已得同原表示后，可按127.11的同种子反向选坐标，使 $\Psi p_i=E_{ii}$、$\Psi w=I_3$、$B(x,y)=\operatorname{Tr}(\Psi x\Psi y)$，且原规范压缩恰为角压缩。于是 $\Psi^{-1}((I_3-\Psi p)/2)$ 给每个原完整球与上述固定内球的实际接触，全部原态、效应及最小值继续使用同一个 $\Psi$。这些是既有反向的准确消费者，不把预选矩阵投影放进原入口。
+

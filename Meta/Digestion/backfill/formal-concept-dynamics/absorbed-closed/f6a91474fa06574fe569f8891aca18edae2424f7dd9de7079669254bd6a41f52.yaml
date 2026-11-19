@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f6a91474fa06574fe569f8891aca18edae2424f7dd9de7079669254bd6a41f52
-  normalized_sha256: sha256:f6a91474fa06574fe569f8891aca18edae2424f7dd9de7079669254bd6a41f52
-cas_ref: sha256:f6a91474fa06574fe569f8891aca18edae2424f7dd9de7079669254bd6a41f52
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ThresholdCollapseByCommonProvenance.threshold_collapse_by_common_provenance
-    target_statement_id: sha256:10149e4a91cbcebdcf699eaa24df43f876c0c048d4840a8ad814867688218778
-receipts:
-  unresolved_subitems: []

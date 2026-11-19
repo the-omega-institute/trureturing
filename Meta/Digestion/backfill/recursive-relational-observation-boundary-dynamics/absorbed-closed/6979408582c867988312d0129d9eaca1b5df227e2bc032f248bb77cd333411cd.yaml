@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6979408582c867988312d0129d9eaca1b5df227e2bc032f248bb77cd333411cd
-  normalized_sha256: sha256:6979408582c867988312d0129d9eaca1b5df227e2bc032f248bb77cd333411cd
-cas_ref: sha256:6979408582c867988312d0129d9eaca1b5df227e2bc032f248bb77cd333411cd
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalCongruence.historical_congruence
-    target_statement_id: sha256:5131faf0b76b62b8d299f4ebbd07bddff54748f09bcde2aa9e5a8bb6886ca03a
-receipts:
-  unresolved_subitems: []

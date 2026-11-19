@@ -1,8 +1,0 @@
-Under the actual unknown-height source (55.1), the complete real path
-of $Y=\eta\cdot q$ identifies height at every positive time, in the
-sense of Theorem 55.2, exactly in the following cases:
-
-- $C_\eta\ne0$;
-- $C_\eta=0$, $p+q\ne0$, and
-  $r_*:=\kappa+Hp/(p+q)\notin I$.
-

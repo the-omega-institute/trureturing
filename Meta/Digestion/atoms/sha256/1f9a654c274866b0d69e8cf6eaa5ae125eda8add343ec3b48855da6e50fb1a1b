@@ -1,4 +1,0 @@
-**Corollary 68.3 (the selected late Read minimum).** On each fixed positive-domain graph, two successful additional scalar Reads are necessary in the worst case for this exact ternary history task, under the no-advice late-receiver and passive-access conditions. On each excluded graph no such decoder exists.
-
-**Proof.** The ternary image task contains the binary image task. Theorem 56.3's one-Read indistinguishability argument already allows every earned terminal and even known nonzero rational Adds, a larger passive menu than Definition 68.1. Restricting its operands to zero and enlarging its input family to ternary cannot remove that binary obstruction. Theorem 68.2 attains two. On the excluded graphs use the whole-field collisions of Theorem 67.2. This is a scalar-call minimum for this task; the other resource coordinates are not minimized by that argument. $\square$
-

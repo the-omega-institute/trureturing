@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3a9bedaf6c2252da72be0795068ec38bd00ae3fa2789a53c76956ec1079037bf
-  normalized_sha256: sha256:3a9bedaf6c2252da72be0795068ec38bd00ae3fa2789a53c76956ec1079037bf
-cas_ref: sha256:3a9bedaf6c2252da72be0795068ec38bd00ae3fa2789a53c76956ec1079037bf
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_three_laws
-    target_statement_id: sha256:fa97a54bc24f7ad08ad19098c4070894368f3a6b1db53817cfb327442c5890d6
-receipts:
-  unresolved_subitems: []

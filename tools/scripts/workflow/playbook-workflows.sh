@@ -6,23 +6,8 @@ PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 FROZEN_LEDGER="Golden/Frozen/state"
 COMMAND="${1:-}"
-# cover and cover-batch read nothing from git, so they take no base.
-case "$COMMAND" in
-  cover|cover-batch)
-    BASE=""
-    ATOM_ID="${2:-}"
-    GID="${3:-}"
-    ;;
-  deposit-uncovered)
-    BASE="${2:-origin/dev}"
-    ;;
-  *)
-    BASE="${2:-origin/dev}"
-    ATOM_ID="${3:-}"
-    GID="${4:-}"
-    ;;
-esac
-COVER_FAILURE_REASON=""
+BASE="${2:-origin/dev}"
+GID="${3:-}"
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
@@ -76,35 +61,6 @@ step() {
   complete_step passed
 }
 
-# 该 atom id 必须解析得到一个账目条目。账目有三种形态:
-# CAS blob、per-atom 的 backfill 分片、以及 Meta/BACKFILL.yaml 单文件。三者皆无即拒。
-# 字符形状合法不代表条目存在;存在性检查必须先于不可逆的冻结动作。
-atom_id_resolves() {
-  [[ -e "Meta/Digestion/atoms/sha256/$1" ]] && return 0
-  local hit
-  for hit in Meta/Digestion/backfill/*/*/"$1".yaml; do
-    [[ -e "$hit" ]] && return 0
-  done
-  [[ -f Meta/BACKFILL.yaml ]] && grep -q "atom_id: $1\$" Meta/BACKFILL.yaml && return 0
-  return 1
-}
-
-require_atom_argument() {
-  if [[ ! "$ATOM_ID" =~ ^[a-z0-9-]+$ ]]; then
-    if [[ "$COMMAND" == cover ]]; then
-      echo "usage: playbook-workflows.sh cover ATOM_ID GID" >&2
-    else
-      echo "usage: playbook-workflows.sh $COMMAND BASE ATOM_ID GID" >&2
-    fi
-    return 2
-  fi
-
-  if ! atom_id_resolves "$ATOM_ID"; then
-    echo "PLAYBOOK_INVALID atom not found in the digestion ledger: $ATOM_ID" >&2
-    return 2
-  fi
-}
-
 require_module_argument() {
   DOCUMENT_GID="${GID%.*}"
   MODULE_PATH="${DOCUMENT_GID}.lean"
@@ -114,31 +70,8 @@ require_module_argument() {
   fi
 }
 
-require_transaction_arguments() {
-  require_atom_argument
-  require_module_argument
-}
-
-require_cover_batch_arguments() {
-  local atoms_file="$ATOM_ID"
-  if [[ -z "$atoms_file" || -n "$GID" || ! -f "$atoms_file" || ! -r "$atoms_file" ]]; then
-    echo "usage: playbook-workflows.sh cover-batch ATOMS_FILE" >&2
-    return 2
-  fi
-  LEAN_TARGETS="$(run_cli cover-batch --lean-inputs --atoms "$atoms_file")"
-}
-
-prepare_cover_report() {
-  local selected
-  selected="$(run_cli cover-atom --lean-inputs --cover-atom "$ATOM_ID" --gid "$GID")" || return $?
-  if [[ "$COMMAND" != deposit || "$selected" != "${LEAN_TARGETS:-}" ]]; then
-    LEAN_TARGETS="$selected"
-    build_scoped_report
-  fi
-}
-
 build_scoped_report() {
-  [[ -n "$LEAN_TARGETS" ]] || { echo 'PLAYBOOK_INVALID cover report scope is empty' >&2; return 2; }
+  [[ -n "$LEAN_TARGETS" ]] || { echo 'PLAYBOOK_INVALID deposit report scope is empty' >&2; return 2; }
   REPORT=".lake/build/stratalint/delivery-lean-report.json"
   export STRATALINT_LEAN_REPORT="$ROOT/$REPORT"
   step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS" "LEAN_REPORT=$ROOT/$REPORT"
@@ -218,45 +151,6 @@ deposit_module() {
 }
 
 
-cover_atom_or_resume() {
-  local output
-  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" 2>&1)"; then
-    [[ -z "$output" ]] || printf '%s\n' "$output"
-    return
-  else
-    local status=$?
-    COVER_FAILURE_REASON="${output##*$'\n'}"
-    [[ -n "$COVER_FAILURE_REASON" ]] || COVER_FAILURE_REASON="cover-atom-exit-$status"
-    printf '%s\n' "$output" >&2
-    if grep -Fq "cover atom $ATOM_ID already has coverage:" <<<"$output"; then
-      printf 'PLAYBOOK_SKIP command=cover detail=coverage-already-applied atom_id=%s gid=%s\n' \
-        "$ATOM_ID" "$GID" >&2
-      return
-    fi
-    return "$status"
-  fi
-}
-
-cover_row() {
-  local status
-  if prepare_cover_report; then
-    :
-  else
-    status=$?
-    COVER_FAILURE_REASON="cover-report-exit-$status"
-    return "$status"
-  fi
-  begin_step cover-atom
-  if cover_atom_or_resume; then
-    complete_step passed
-  else
-    status=$?
-    complete_step failed
-    return "$status"
-  fi
-}
-
-cd "$ROOT"
 case "$COMMAND" in
   deliver-check)
     make lean-report
@@ -265,37 +159,17 @@ case "$COMMAND" in
     align_delivery_ledger
     make gate BASE="$BASE"
     ;;
-  deposit)
-    require_transaction_arguments
-    deposit_module
-    cover_row || {
-      status=$?
-      printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
-        "$ATOM_ID" "$GID" "$COVER_FAILURE_REASON" >&2
-      exit "$status"
-    }
-    ;;
-  deposit-uncovered)
+  deposit|deposit-uncovered)
     if [[ "$#" -ne 3 || -n "${ATOM_ID+x}" ]]; then
-      echo "usage: playbook-workflows.sh deposit-uncovered BASE GID (ATOM_ID is not accepted)" >&2
+      echo "usage: playbook-workflows.sh $COMMAND BASE GID" >&2
       exit 2
     fi
-    GID="$3"
     require_module_argument
     deposit_module
-    printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED gid=%s reason=NO_ATOM\n' "$GID" >&2
-    ;;
-  cover)
-    require_transaction_arguments
-    cover_row
-    ;;
-  cover-batch)
-    require_cover_batch_arguments
-    build_scoped_report
-    step cover-batch run_cli cover-batch --atoms "$ATOM_ID"
+    printf 'PLAYBOOK_DEPOSIT_FROZEN gid=%s\n' "$GID" >&2
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check [BASE] | deposit BASE ATOM_ID GID | deposit-uncovered BASE GID | cover ATOM_ID GID | cover-batch ATOMS_FILE" >&2
+    echo "usage: playbook-workflows.sh deliver-check [BASE] | deposit BASE GID" >&2
     exit 2
     ;;
 esac

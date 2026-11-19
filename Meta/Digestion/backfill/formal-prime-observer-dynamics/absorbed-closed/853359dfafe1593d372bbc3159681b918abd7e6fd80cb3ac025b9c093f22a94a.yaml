@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:853359dfafe1593d372bbc3159681b918abd7e6fd80cb3ac025b9c093f22a94a
-  normalized_sha256: sha256:853359dfafe1593d372bbc3159681b918abd7e6fd80cb3ac025b9c093f22a94a
-cas_ref: sha256:853359dfafe1593d372bbc3159681b918abd7e6fd80cb3ac025b9c093f22a94a
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient
-    target_statement_id: sha256:e6bbd232d9f6aad61751436cb37d9ceee4fa624298ef9a7680a2eab2cae94dd4
-receipts:
-  unresolved_subitems: []

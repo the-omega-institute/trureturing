@@ -1,8 +1,0 @@
-不得实现成：
-
-- `force = true`；
-- “若 ingest 失败则忽略错误”；
-- 按文件名或当前 issue 号跳过；
-- 只要操作者声称是尾节就放行；
-- 放宽 orphan 或 baseline-deletion 的全局定义。
-

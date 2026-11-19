@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d0c70c1e92aafddb05b5e8f839d1a876c843a70343f9652fde7f8d6b6092ba28
-  normalized_sha256: sha256:d0c70c1e92aafddb05b5e8f839d1a876c843a70343f9652fde7f8d6b6092ba28
-cas_ref: sha256:d0c70c1e92aafddb05b5e8f839d1a876c843a70343f9652fde7f8d6b6092ba28
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ResidueCoding/ArbitraryCoordinateErasureCriterion.arbitrary_coordinate_erasure_criterion
-    target_statement_id: sha256:f855dfe8ac630b6713f984ba19690c28d221e380dd90ebe0ba4d9a981e9f9733
-receipts:
-  unresolved_subitems: []
