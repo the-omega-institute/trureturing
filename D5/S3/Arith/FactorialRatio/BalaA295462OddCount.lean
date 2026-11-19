@@ -4,7 +4,7 @@
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
    utility: none
-   digest: The odd A295462 values below 2^m are counted by c_m=c_{m-1}+c_{m-4} and enumerated by blocks. -/
+   digest: Odd A295462 values below 2^m satisfy c_m=c_{m-1}+c_{m-4} and enumerate by blocks. -/
 
 import D5.S3.Arith.FactorialRatio.BalaA295462Parity
 import Mathlib.Data.Nat.Nth
@@ -20,13 +20,12 @@ and the increasing enumeration `u` of these indices satisfies `u_j = 2^e + u_{j 
 namespace D5.S3.Arith.FactorialRatio.BalaA295462OddCount
 
 open D5.S3.Arith.FactorialRatio.BalaA295462Parity
-open Classical
-
 noncomputable section
 
 /-- `a n` is an odd natural number. -/
 def oddValue (n : ℕ) : Prop := ∃ k : ℕ, a n = (k : ℚ) ∧ Odd k
 
+open Classical in
 /-- The number of odd values `a n` with `n < 2^m`. -/
 def c (m : ℕ) : ℕ := ((Finset.range (2 ^ m)).filter oddValue).card
 
@@ -111,9 +110,11 @@ private lemma spaced_two_pow (e : ℕ) : spacedBits (2 ^ e) := by
   simp at hi hj
   omega
 
+open Classical in
 private lemma c_eq_count (m : ℕ) : c m = Nat.count spacedBits (2 ^ m) := by
   rw [c, Nat.count_eq_card_filter_range, oddValue_eq]
 
+open Classical in
 private lemma count_low (e : ℕ) :
     Nat.count (fun k => spacedBits (2 ^ e + k)) (2 ^ e) = Nat.count spacedBits (2 ^ (e - 3)) := by
   have hle : 2 ^ (e - 3) ≤ 2 ^ e := Nat.pow_le_pow_right (by norm_num) (by omega)
@@ -129,9 +130,11 @@ private lemma count_low (e : ℕ) :
     have hk' : k < 2 ^ e := lt_of_lt_of_le hk hle
     exact ⟨hk', (spaced_shift hk').mpr ⟨h, hk⟩⟩
 
+open Classical in
 private lemma c_succ (e : ℕ) : c (e + 1) = c e + c (e - 3) := by
   rw [c_eq_count, c_eq_count, c_eq_count, pow_succ, mul_two, Nat.count_add, count_low]
 
+open Classical in
 /-- The odd values below `2^m` are counted by `c_0 = 1, c_1 = 2, c_2 = 3, c_3 = 4` and
 `c_m = c_{m-1} + c_{m-4}` for every `m ≥ 4`. -/
 theorem count_recurrence :
@@ -157,6 +160,7 @@ private lemma c_strictMono : StrictMono c :=
 private lemma spaced_infinite : (Set.ofPred spacedBits).Infinite :=
   Set.infinite_of_forall_exists_gt fun n => ⟨2 ^ n, spaced_two_pow n, Nat.lt_two_pow_self⟩
 
+open Classical in
 /-- The increasing enumeration of the indices of odd values satisfies `u_0 = 0`, and for every
 `j > 0` there is exactly one `e` with `c_e ≤ j < c_{e+1}`, for which `u_j = 2^e + u_{j - c_e}`. -/
 theorem enumeration :
@@ -170,7 +174,6 @@ theorem enumeration :
   · rw [hu]
     exact Nat.nth_zero_of_zero spaced_zero
   · have hex : ∃ e, j < c (e + 1) := ⟨j, by
-      have := c_strictMono.id_le (j + 1)
       have h0 := c_pos 0
       have : j + 1 ≤ c (j + 1) := c_strictMono.id_le (j + 1)
       omega⟩
