@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPSFiveSiteCoordinates
    mirror-E: none(waiver:static-algebraic-identifiability)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Trace]
    utility: none
    digest: Homogeneous trace coordinates of binary bond-two periodic states on five sites. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPSTwoSiteAmbiguity

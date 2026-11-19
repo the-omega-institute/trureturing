@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPSFiveSiteSpecialFiber
    mirror-E: none(waiver:static-algebraic-identifiability)
-   anchors: [mathlib/module/Mathlib.Data.Complex.Basic]
+   anchors: [mathlib/module/Mathlib.Analysis.Complex.Basic]
    utility: none
    digest: An exactly classified exceptional fiber of the binary five-site marginal. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPSFiveSiteCoordinates
