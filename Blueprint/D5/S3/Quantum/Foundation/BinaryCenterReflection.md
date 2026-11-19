@@ -34,8 +34,6 @@ Assume additionally the original nonzero carrier and EB3. For every original sin
 
 At a boundary center, original frontier coverage and its original exposing effect give a nonnegative affine functional on the entire reflected ball that vanishes at an interior source point. It vanishes everywhere, placing A inside one whole original exclusion. Both have dimension three, and the entire smaller sphere is extreme in K, so affine-ball rigidity gives equality. At an interior center, a point beyond A in the same affine carrier would place a pure sphere point on an interior segment in K, a contradiction. The original dimension-at-least-six result makes A proper; original face classification and its interior center then exclude faciality.
 
-Source §138.4 of Quantum Origin XI. https://github.com/the-omega-institute/trureturing-source-theories/blob/2a39da5107abbfa3a72cc883486dbc15a15994a1/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md#L1347-L1384
-
 The boundary alternative permits a different original ball; the interior alternative is retained. Neither implies A=F. No BC to MC, global label injectivity, closed pure locus, uniform diameter bound, common vector p+2center(D(p)), two-outside crossing exclusion, quantum classification or physical realization is asserted.
 
 ## References
