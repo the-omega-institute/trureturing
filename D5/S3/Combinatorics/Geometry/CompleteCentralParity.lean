@@ -13,19 +13,23 @@ escape_witness: band_center_iff and band_center_card (a labelled narrow-band spa
   below c meet every point has exactly the c+1 central values 0 and 1 + r/(2(n+c))), with
   cls_cover (every round-robin class is a perfect matching of Fin (2m+2)).
 proof_shape:
-  cls, plab, code, bd, Band, Space: definitions; consumers: the lemmas below, MinimumCentralOrder
-    and CentralSizeEdgeMinima.
-  cls_cover, band_center_iff, band_center_card, band_adj: content; consumers:
-    complete_central_iff, MinimumCentralOrder.minimum_order,
-    CentralSizeEdgeMinima.all_center_sizes.
+  cls, plab, Band: definitions; consumers: the lemmas below, MinimumCentralOrder and
+    CentralSizeEdgeMinima. code, bd, Space: definitions; consumers: the lemmas below.
+  cls_cover: content; consumer: space_cov.
+  band_center_iff: content; consumers: band_center_card, band_adj.
+  band_center_card: content; consumers: center_card, MinimumCentralOrder.minimum_order,
+    CentralSizeEdgeMinima.attain.
+  band_adj: content; consumers: complete, band_edges.
   band_edges: bind-only helper (band_adj with Finset.card_image_le); consumer:
-    CentralSizeEdgeMinima.all_center_sizes.
+    CentralSizeEdgeMinima.attain.
+  center_card_bound: bind-only helper (edge_cover_bound with
+    SimpleGraph.card_edgeFinset_le_card_choose_two and arithmetic); consumers:
+    complete_central_iff, MinimumCentralOrder.minimum_order, CentralSizeEdgeMinima.feasible_of.
   cls_comm, cls_lt, plab_comm, code_comm, code_lt, code_inj, lo_bounds, hi_bounds, bd_lo, bd_hi,
-    bd_bounds, bd_comm, bd_self, bd_triangle, bd_eq_zero, band_card, third_point, space_cov,
-    space_h3, center_card, complete: bind-only helpers; consumers: the metric instance, the band
-    lemmas, complete_central_iff, minimum_order and all_center_sizes.
-  complete_central_iff: content via the band construction; the odd case is a bind-only
-    combination of edge_cover_bound and SimpleGraph.card_edgeFinset_le_card_choose_two.
+    bd_bounds, bd_comm, bd_self, bd_triangle, bd_eq_zero, band_card, space_cov, space_h3,
+    center_card, complete: bind-only helpers; consumers: the metric instance, the band lemmas,
+    complete_central_iff, MinimumCentralOrder.minimum_order and CentralSizeEdgeMinima.attain.
+  complete_central_iff: content via the band construction; the odd case reads center_card_bound.
 Direct frozen dependencies: D5/S3/Combinatorics/Geometry/CentralEdgeCover (edge_cover_bound;
   frozen by the parent PR for #318), D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges
   (center, centralGraph).
@@ -34,7 +38,9 @@ Search record (§3.1): the frozen private GlobalZZGateTimeBound.cyclicColor (wit
   module; OddPrimePerfectOneFactorization needs a prime modulus. Neither states the covering
   property on Fin (2m+2) used here, so cls_cover is proved directly. No frozen module builds a
   metric space with a prescribed set of central values; the band is the single construction
-  shared by the three deliveries.
+  shared by the three deliveries. A third point off a pair comes from Mathlib's
+  Fin.exists_ne_and_ne_of_two_lt. ThreeCentralMinimum (#319) uses its own two-class band with
+  center {0,1,2}, which is not an instance of this labelling.
 -/
 
 import D5.S3.Combinatorics.Geometry.CentralEdgeCover
@@ -389,15 +395,6 @@ lemma band_edges (hn : 0 < n)
     _ ≤ (Finset.range c ×ˢ Finset.range q).card := Finset.card_image_le
     _ = c * q := by rw [Finset.card_product, Finset.card_range, Finset.card_range]
 
-/-- Any three points leave room for a point off a given pair. -/
-lemma third_point (h : 3 ≤ n) (x y : Fin n) : ∃ z : Fin n, z ≠ x ∧ z ≠ y := by
-  by_cases h0 : (0 : ℕ) ≠ x.1 ∧ (0 : ℕ) ≠ y.1
-  · exact ⟨⟨0, by omega⟩, fun e => h0.1 (congrArg Fin.val e), fun e => h0.2 (congrArg Fin.val e)⟩
-  by_cases h1 : (1 : ℕ) ≠ x.1 ∧ (1 : ℕ) ≠ y.1
-  · exact ⟨⟨1, by omega⟩, fun e => h1.1 (congrArg Fin.val e), fun e => h1.2 (congrArg Fin.val e)⟩
-  refine ⟨⟨2, by omega⟩, fun e => ?_, fun e => ?_⟩ <;>
-    · have := congrArg Fin.val e; simp only at this; omega
-
 end Band
 
 /-- The round-robin space: every pair of distinct points of `Fin (2m+2)` is central, at a
@@ -427,51 +424,70 @@ private lemma complete : centralGraph (Space m) = ⊤ := by
   simp only [SimpleGraph.top_adj]
   exact ⟨fun h => h.1, fun h => ⟨h, cls_lt m _ _⟩⟩
 
+/-- A nonempty finite metric space has at most as many central values as points, and at most
+one fewer when the order is odd and at least three. -/
+lemma center_card_bound (X : Type) [Fintype X] [MetricSpace X] (hX : 1 ≤ Fintype.card X) :
+    Nat.card (center X) ≤ Fintype.card X ∧
+      (Odd (Fintype.card X) → 3 ≤ Fintype.card X → Nat.card (center X) < Fintype.card X) := by
+  classical
+  have hb := (edge_cover_bound X).trans
+    (SimpleGraph.card_edgeFinset_le_card_choose_two (G := centralGraph X))
+  rw [Nat.choose_two_right] at hb
+  generalize Nat.card (center X) = k at hb ⊢
+  generalize Fintype.card X = n at hb hX ⊢
+  rcases Nat.even_or_odd' n with ⟨h, rfl | rfl⟩
+  · obtain ⟨h, rfl⟩ : ∃ h', h = h' + 1 := ⟨h - 1, by omega⟩
+    have e1 : (2 * (h + 1) + 1) / 2 = h + 1 := by omega
+    have e2 : 2 * (h + 1) * (2 * (h + 1) - 1) / 2 = (h + 1) * (2 * h + 1) := by
+      rw [show 2 * (h + 1) * (2 * (h + 1) - 1) = 2 * ((h + 1) * (2 * h + 1)) by
+        rw [show 2 * (h + 1) - 1 = 2 * h + 1 by omega]; ring,
+        Nat.mul_div_cancel_left _ (by norm_num)]
+    rw [e1, e2] at hb
+    refine ⟨?_, fun ho => absurd ho (by rw [Nat.not_odd_iff_even]; exact ⟨h + 1, by ring⟩)⟩
+    rw [mul_comm (h + 1)] at hb
+    have : k - 1 ≤ 2 * h + 1 := Nat.le_of_mul_le_mul_right hb (Nat.succ_pos h)
+    omega
+  · have e1 : (2 * h + 1 + 1) / 2 = h + 1 := by omega
+    have e2 : (2 * h + 1) * (2 * h + 1 - 1) / 2 = (2 * h + 1) * h := by
+      rw [show 2 * h + 1 - 1 = 2 * h by omega, show (2 * h + 1) * (2 * h) = 2 * ((2 * h + 1) * h)
+        by ring, Nat.mul_div_cancel_left _ (by norm_num)]
+    rw [e1, e2] at hb
+    have key : h = 0 ∨ k ≤ 2 * h := by
+      rcases Nat.eq_zero_or_pos h with h0 | hpos
+      · exact Or.inl h0
+      · right
+        by_contra hlt
+        have : (2 * h) * (h + 1) ≤ (k - 1) * (h + 1) :=
+          Nat.mul_le_mul_right _ (by omega)
+        nlinarith
+    rcases key with h0 | hk
+    · subst h0
+      simp only [mul_zero, zero_add, mul_one, Nat.le_zero] at hb
+      exact ⟨by omega, fun _ h3 => by omega⟩
+    · exact ⟨by omega, fun _ _ => by omega⟩
+
 /-- For `n ≥ 1`, a metric space on `n` points with exactly `n` central distances and a complete
 central graph exists if and only if `n = 1` or `n` is even. -/
 theorem complete_central_iff (n : ℕ) (hn : 1 ≤ n) :
     (∃ (X : Type) (_ : Fintype X) (_ : MetricSpace X), Fintype.card X = n ∧
       Nat.card (center X) = n ∧ centralGraph X = ⊤) ↔ n = 1 ∨ Even n := by
-  classical
   constructor
-  · rintro ⟨X, _, _, hX, hk, htop⟩
+  · rintro ⟨X, _, _, hX, hk, -⟩
     by_contra hcon
     push Not at hcon
     obtain ⟨hn1, hodd⟩ := hcon
-    obtain ⟨k, rfl⟩ : ∃ k, n = 2 * k + 1 := by
-      rcases Nat.even_or_odd n with h | ⟨k, hk'⟩
-      · exact absurd h hodd
-      · exact ⟨k, hk'⟩
-    have hb := edge_cover_bound X
-    rw [hk, hX] at hb
-    have hc := SimpleGraph.card_edgeFinset_le_card_choose_two (G := centralGraph X)
-    rw [hX, Nat.choose_two_right] at hc
-    have hk1 : 1 ≤ k := by omega
-    have h1 : (2 * k + 1 + 1) / 2 = k + 1 := by omega
-    have h2 : (2 * k + 1) * (2 * k + 1 - 1) / 2 = (2 * k + 1) * k := by
-      rw [show 2 * k + 1 - 1 = 2 * k by omega, show (2 * k + 1) * (2 * k) = 2 * ((2 * k + 1) * k)
-        by ring, Nat.mul_div_cancel_left _ (by norm_num)]
-    rw [h1] at hb
-    rw [h2] at hc
-    have := hb.trans hc
-    rw [show 2 * k + 1 - 1 = 2 * k by omega] at this
-    nlinarith
+    have ho : Odd n := Nat.not_even_iff_odd.mp hodd
+    have := (center_card_bound X (by omega)).2 (hX ▸ ho)
+      (by rcases ho with ⟨j, rfl⟩; omega)
+    omega
   · rintro (rfl | ⟨m', rfl⟩)
-    · refine ⟨Unit, inferInstance, inferInstance, rfl, ?_, ?_⟩
-      · have : center Unit = {0} := by
-          ext t
-          simp only [center, Set.mem_ofPred_eq, Set.mem_singleton_iff]
-          constructor
-          · rintro ⟨_, ht⟩
-            obtain ⟨y, hy⟩ := ht ()
-            rw [Subsingleton.elim y (), dist_self] at hy
-            exact hy.symm
-          · rintro rfl
-            exact ⟨le_rfl, fun p => ⟨p, dist_self p⟩⟩
-        rw [this, Nat.card_coe_set_eq, Set.ncard_singleton]
-      · ext x y
-        simp only [SimpleGraph.top_adj, centralGraph, SimpleGraph.fromRel_adj]
-        exact ⟨fun h => h.1, fun h => absurd (Subsingleton.elim x y) h⟩
+    · have h3 : ∀ x y : Fin 1, x ≠ y → 0 ≤ plab 1 (cls 0) x y →
+          ∃ z : Fin 1, z ≠ x ∧ z ≠ y := fun x y hxy _ => absurd (Subsingleton.elim x y) hxy
+      refine ⟨Band 1 0 (cls 0), inferInstance, inferInstance, band_card _ _ _,
+        band_center_card _ _ _ (by omega) (fun _ r hr => absurd hr (by omega)) h3, ?_⟩
+      ext x y
+      simp only [SimpleGraph.top_adj]
+      exact ⟨fun h => h.ne, fun h => absurd (Subsingleton.elim (α := Fin 1) x y) h⟩
     · obtain ⟨m, rfl⟩ : ∃ m, m' = m + 1 := ⟨m' - 1, by omega⟩
       refine ⟨Space m, inferInstance, inferInstance, ?_, ?_, complete m⟩
       · exact (band_card _ _ _).trans (by ring)

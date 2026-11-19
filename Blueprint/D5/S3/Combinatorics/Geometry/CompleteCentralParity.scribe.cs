@@ -26,7 +26,9 @@ internal sealed class CompleteCentralParityDocument : IScribeDocumentDefinition
                     + "central values are exactly 0 and 1+r/(2(n+c)) for r<c: a value used by "
                     + "one pair only is missed at the third point. Central neighbours are then "
                     + "the pairs with label below c. This is the realization step (eq. "
-                    + "realization) of H. Ma and W. Zhang."))),
+                    + "realization) of H. Ma and W. Zhang, who note that it uses the narrow-band "
+                    + "metric principle of O. Dovgoshey and O. Rovenska (proof of Theorem 3.8, "
+                    + "formula (19))."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("complete-central-parity-space"),
                 DeclarationHandle.Create(Prefix + "Space"),

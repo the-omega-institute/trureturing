@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/CompleteCentralParity.Band`
 
 *Commentary.*
 
-Band n c lab is the point set {0,…,n−1} where a pair i<j with label r=lab(i,j)<c is at distance 1+r/(2(n+c)) and every other pair gets its own distance 3/2+(in+j)/(2n²). All distances of distinct points lie in [1,2), so the triangle inequality holds. If every label below c occurs at every point and a pair with a larger label always leaves a third point, the central values are exactly 0 and 1+r/(2(n+c)) for r<c: a value used by one pair only is missed at the third point. Central neighbours are then the pairs with label below c. This is the realization step (eq. realization) of H. Ma and W. Zhang.
+Band n c lab is the point set {0,…,n−1} where a pair i<j with label r=lab(i,j)<c is at distance 1+r/(2(n+c)) and every other pair gets its own distance 3/2+(in+j)/(2n²). All distances of distinct points lie in [1,2), so the triangle inequality holds. If every label below c occurs at every point and a pair with a larger label always leaves a third point, the central values are exactly 0 and 1+r/(2(n+c)) for r<c: a value used by one pair only is missed at the third point. Central neighbours are then the pairs with label below c. This is the realization step (eq. realization) of H. Ma and W. Zhang, who note that it uses the narrow-band metric principle of O. Dovgoshey and O. Rovenska (proof of Theorem 3.8, formula (19)).
 
 **Definition 1.2 (The round-robin space).**
 

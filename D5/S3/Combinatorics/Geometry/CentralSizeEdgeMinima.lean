@@ -14,15 +14,16 @@ escape_witness: odd_cov and odd_hit (the borrowed-edge packing: on Z/(2m+1) ever
   only m + 1 edges each), with chord_hit and even_hit for the edge count of every class.
 proof_shape:
   ctr, wrap, labO, chord, edgeO, edgeE, Feasible: definitions; consumers: the lemmas below.
-  chord_hit, odd_cov, odd_hit, even_hit: content; consumer: attain.
+  chord_hit: content; consumers: odd_hit, even_hit.
+  odd_cov, odd_hit, even_hit: content; consumer: attain.
   ctr_spec, cls_eq: bind-only helpers; consumers: chord_hit, even_hit.
   feasible_of: content (the two-point space is bicentral); consumer: all_center_sizes.
   attain: content via the band; consumer: all_center_sizes.
   all_center_sizes: content.
 Direct frozen dependencies: D5/S3/Combinatorics/Geometry/CentralEdgeCover (edge_cover_bound),
   D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges (center, centralGraph).
-Same-delivery dependencies: CompleteCentralParity (Band, plab, cls, band lemmas, space_cov,
-  third_point), MinimumCentralOrder (center_card_bound).
+Same-delivery dependencies: CompleteCentralParity (Band, plab, plab_comm, cls, cls_comm, cls_lt,
+  space_cov, band_card, band_center_card, band_edges, center_card_bound).
 Search record (§3.1): no frozen module packs near-one-factors of an odd complete graph into
   spanning edge covers; the paper credits Andersen's cover-index criterion as the antecedent and
   gives the direct construction formalized here.
@@ -267,7 +268,7 @@ private lemma attain (n k : ℕ) (hn : 1 ≤ n) (hf : Feasible n k) :
     have h3 : ∀ x y : Fin (2 * m + 2), x ≠ y → k - 1 ≤ plab (2 * m + 2) (cls m) x y →
         ∃ z : Fin (2 * m + 2), z ≠ x ∧ z ≠ y := fun x y _ hc => by
       have := cls_lt m (min x.1 y.1) (max x.1 y.1)
-      exact third_point _ (by unfold plab at hc; omega) x y
+      exact Fin.exists_ne_and_ne_of_two_lt x y (by unfold plab at hc; omega)
     refine ⟨Band (2 * m + 2) (k - 1) (cls m), inferInstance, inferInstance,
       (band_card _ _ _).trans (by ring), ?_, ?_⟩
     · rw [band_center_card _ _ _ (by omega) hcov h3]; omega
@@ -297,7 +298,8 @@ private lemma attain (n k : ℕ) (hn : 1 ≤ n) (hf : Feasible n k) :
       have hcov : ∀ x : Fin (2 * m' + 1), ∀ r < k - 1, ∃ y : Fin (2 * m' + 1), y ≠ x ∧
           plab (2 * m' + 1) (labO m') x y = r := fun x r hr => odd_cov m' hm x r (by omega)
       have h3 : ∀ x y : Fin (2 * m' + 1), x ≠ y → k - 1 ≤ plab (2 * m' + 1) (labO m') x y →
-          ∃ z : Fin (2 * m' + 1), z ≠ x ∧ z ≠ y := fun x y _ _ => third_point _ (by omega) x y
+          ∃ z : Fin (2 * m' + 1), z ≠ x ∧ z ≠ y := fun x y _ _ =>
+            Fin.exists_ne_and_ne_of_two_lt x y (by omega)
       refine ⟨Band (2 * m' + 1) (k - 1) (labO m'), inferInstance, inferInstance,
         band_card _ _ _, ?_, ?_⟩
       · rw [band_center_card _ _ _ (by omega) hcov h3]; omega
