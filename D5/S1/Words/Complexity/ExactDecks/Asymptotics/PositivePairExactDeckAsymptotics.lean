@@ -36,8 +36,6 @@ import D5.S1.Words.Complexity.VivionBinomialConverseFails
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckLowerBound
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
-open D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall (scatteredCount_singleton_eq_count)
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -53,7 +51,7 @@ open D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
 open D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckLowerBound
 open D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
-open private letterActualLyndonEquiv from
+open private scatteredCount_singleton_eq_count letterActualLyndonEquiv from
   D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
 
 variable {A : Type*}

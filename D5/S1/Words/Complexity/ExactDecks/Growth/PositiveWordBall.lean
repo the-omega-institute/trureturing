@@ -6,8 +6,6 @@
    utility: none
    digest: Actual central digits inject the preceding cutoff ball into the next degree. -/
 
-/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567. -/
-
 import D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitInjection
 
 set_option autoImplicit false
@@ -43,7 +41,7 @@ private noncomputable def letterBoxWord [Fintype A] [LinearOrder A] (t : ℕ)
   (letterOrder (A := A)).flatMap
     (fun a ↦ List.replicate (digits a : ℕ) a)
 
-theorem scatteredCount_singleton_eq_count [DecidableEq A]
+private theorem scatteredCount_singleton_eq_count [DecidableEq A]
     (a : A) (source : List A) :
     D5.S1.Words.Complexity.VivionBinomialConverseFails.scatteredCount
       [a] source = source.count a := by
