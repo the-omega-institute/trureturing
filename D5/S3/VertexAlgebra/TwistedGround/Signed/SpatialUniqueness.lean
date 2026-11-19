@@ -6,7 +6,7 @@
    utility: none
    digest: Homogeneous spatial uniqueness in the six negative-label J/T sectors. -/
 
-import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalEquations
+import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianExternalGeneratedSource
 import Mathlib.Analysis.Complex.CauchyIntegral
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.Analytic.Uniqueness

@@ -23,4 +23,4 @@ For either J or T and either pair of labels with at least one negative label, jo
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/Signed/SpatialUniqueness.signed_spatial_zero`
-- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalEquations](../OriginalGaussianExternalEquations.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianExternalGeneratedSource](../OriginalGaussianExternalGeneratedSource.md)
