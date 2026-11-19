@@ -464,4 +464,220 @@ theorem signed_diagonal_sewn_readout (D : LatticeData) (hu : IsUnit D.G.det)
     Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
   ring
 
+open private lowered_support_weight from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMProjectionModes
+
+/-- Applying the negative lowering sum to the detector gives exactly the
+original factorial sum of the selected sewn charge readouts. On each
+detector summand the original signed diagonal is shifted by its lowering order. -/
+theorem lowered_detector_sewn_readout (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (N H K L E C : ℕ) (m n r : ℤ) (w : ℂ) (P Q R S : Oscillator D)
+    (hP : P.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (H : ℤ) - 3))
+    (hQ : Q.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (K : ℤ) - 3))
+    (hR : R.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (L : ℤ) - 3))
+    (hS : S.IsWeightedHomogeneous (fun i => (omega D i : ℤ))
+      (2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3))
+    (hPb : ∀ j ∈ Finset.range (H - 1), modesBounded D N ((oscillatorLower D ^ j) P))
+    (hQb : ∀ i ∈ Finset.range (K - 1), modesBounded D N ((oscillatorLower D ^ i) Q))
+    (hRb : modesBounded D N R)
+    (hSb : ∀ ell ∈ Finset.range C, modesBounded D N ((oscillatorLower D ^ ell) S)) :
+    (-1 : ℂ) ^ (K : ℤ) * sewnReadout D q N w
+      (boxedOscillator D N false false (loweringSum D (H - 1) P) *
+        boxedOscillator D N false true (loweringSum D (K - 1) Q) *
+        boxedOscillator D N true false R *
+        boxedOscillator D N true true (loweringSum D C S)) =
+      ∑ ell ∈ Finset.range C, ((-1 : ℂ) ^ ell / (ell.factorial : ℂ)) *
+        projectOccupations D H K E ((E : ℤ) + m + n + r + ell - H - K + 1)
+          P Q R ((oscillatorLower D ^ ell) S) (fun d g r s => sewnChargeTerm D d g r s q w) := by
+  classical
+  have hsum : boxedOscillator D N true true (loweringSum D C S) =
+      ∑ ell ∈ Finset.range C, ((-1 : ℂ) ^ ell / (ell.factorial : ℂ)) •
+        boxedOscillator D N true true ((oscillatorLower D ^ ell) S) := by
+    simp only [loweringSum, map_sum, map_smul]
+  rw [hsum]
+  simp only [Finset.mul_sum, map_sum]
+  apply Finset.sum_congr rfl
+  intro ell hell
+  let T := (oscillatorLower D ^ ell) S
+  let d := 2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3 - 2 * (ell : ℤ)
+  have hT : T.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) d := by
+    intro i hi
+    exact lowered_support_weight D hu S _ hS ell i (mem_support_iff.mpr hi)
+  have h := signed_diagonal_sewn_readout D hu q N H K E
+    ((E : ℤ) + m + n + r + ell - H - K + 1) (2 * (L : ℤ) - 3) d w P Q R T
+    hP hQ hR hT (by dsimp [d]; ring) hPb hQb hRb (hSb ell hell)
+  rw [← h]
+  simp only [T, mul_smul_comm, map_smul, smul_eq_mul]
+  ring
+
+open OriginalFourMActualChart (loweringParameter)
+open D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentFiniteLowering
+  (wordPolynomial evaluate_lowering_word)
+open D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
+  (exists_lowering_cutoff lowering_after_energy_cutoff)
+open private evalLower from D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentFiniteLowering
+open private wordScale from D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMCauchyTaylor
+
+private def creationWord (D : LatticeData) (xs : List (Index D)) : Oscillator D :=
+  (xs.map MvPolynomial.X).prod
+
+private theorem inverse_word_active (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : Chart) (x : ℝ) (s : Puncture) (xs : List (Index D)) (C : ℕ)
+    (hs : loweringParameter c s = 1)
+    (hC : ∀ j, C ≤ j → (oscillatorLower D ^ j) (creationWord D xs) = 0) :
+    inverseLoweredWord D c x s xs = wordScale D c x s xs • loweringSum D C (creationWord D xs) := by
+  rw [inverseLoweredWord, hs, evaluate_lowering_word D hu xs _ C hC]
+  rfl
+
+private theorem inverse_word_inactive (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : Chart) (x : ℝ) (s : Puncture) (xs : List (Index D))
+    (hs : loweringParameter c s = 0) :
+    inverseLoweredWord D c x s xs = wordScale D c x s xs • creationWord D xs := by
+  classical
+  obtain ⟨C, hC⟩ := exists_lowering_cutoff D hu (creationWord D xs)
+  rw [inverseLoweredWord, hs, neg_zero,
+    evaluate_lowering_word D hu xs 0 (C + 1) (fun j hj => hC j (by omega))]
+  congr 1
+  rw [Finset.sum_eq_single_of_mem 0 (Finset.mem_range.mpr (Nat.succ_pos C))]
+  · simp [creationWord]
+  · intro j _ hj
+    simp [zero_pow hj]
+
+private def chartDetectorCutoff (c : Chart) (H K L : ℕ) (m n r : ℤ) : ℕ :=
+  match c with
+  | .A => 1
+  | .B | .D => ((H : ℤ) + K + L - m - n - r - 3).toNat
+
+/-- The four actual inverse words evaluate to the original selected projector
+on every signed diagonal, with the detector cutoff for its chart.
+All coordinate scales multiply the original words before lowering. -/
+theorem inverse_words_detector_projector (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : Chart) (x : ℝ) (q : Charge D)
+    (N H K L E : ℕ) (m n r : ℤ) (w : ℂ) (words : Puncture → List (Index D))
+    (hP : (creationWord D (words (firstLeft c))).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (H : ℤ) - 3))
+    (hQ : (creationWord D (words (secondLeft c))).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (K : ℤ) - 3))
+    (hR : (creationWord D (words (firstRight c))).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (L : ℤ) - 3))
+    (hS : (creationWord D (words .S)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3))
+    (hPb : ∀ j ∈ Finset.range (H - 1), modesBounded D N
+      ((oscillatorLower D ^ j) (creationWord D (words (firstLeft c)))))
+    (hQb : ∀ j ∈ Finset.range (K - 1), modesBounded D N
+      ((oscillatorLower D ^ j) (creationWord D (words (secondLeft c)))))
+    (hRb : modesBounded D N (creationWord D (words (firstRight c))))
+    (hSb : ∀ j ∈ Finset.range (chartDetectorCutoff c H K L m n r),
+      modesBounded D N ((oscillatorLower D ^ j) (creationWord D (words .S)))) :
+    let C := chartDetectorCutoff c H K L m n r
+    let P := creationWord D (words (firstLeft c))
+    let Q := creationWord D (words (secondLeft c))
+    let R := creationWord D (words (firstRight c))
+    let S := creationWord D (words .S)
+    let W := fun s => inverseLoweredWord D c x s (words s)
+    let scale := fun s => wordScale D c x s (words s)
+    (-1 : ℂ) ^ (K : ℤ) * sewnReadout D q N w
+      (boxedOscillator D N false false (W (firstLeft c)) *
+        boxedOscillator D N false true (W (secondLeft c)) *
+        boxedOscillator D N true false (W (firstRight c)) * boxedOscillator D N true true (W .S)) =
+      (scale (firstLeft c) * scale (secondLeft c) * scale (firstRight c) * scale .S) *
+        ∑ ell ∈ Finset.range C, ((-1 : ℂ) ^ ell / (ell.factorial : ℂ)) *
+          projectOccupations D H K E ((E : ℤ) + m + n + r + ell - H - K + 1)
+            P Q R ((oscillatorLower D ^ ell) S) (fun d g r s => sewnChargeTerm D d g r s q w) := by
+  classical
+  dsimp only
+  have hp (j : ℕ) (hj : H - 1 ≤ j) :
+      (oscillatorLower D ^ j) (creationWord D (words (firstLeft c))) = 0 := by
+    apply lowering_after_energy_cutoff D hu _ _ hP
+    omega
+  have hq (j : ℕ) (hj : K - 1 ≤ j) :
+      (oscillatorLower D ^ j) (creationWord D (words (secondLeft c))) = 0 := by
+    apply lowering_after_energy_cutoff D hu _ _ hQ
+    omega
+  have hs (j : ℕ) (hj : ((H : ℤ) + K + L - m - n - r - 3).toNat ≤ j) :
+      (oscillatorLower D ^ j) (creationWord D (words .S)) = 0 := by
+    apply lowering_after_energy_cutoff D hu _ _ hS
+    omega
+  have hηP : loweringParameter c (firstLeft c) = 1 := by cases c <;> rfl
+  have hηQ : loweringParameter c (secondLeft c) = 1 := by cases c <;> rfl
+  have hηR : loweringParameter c (firstRight c) = 0 := by cases c <;> rfl
+  have hWS : inverseLoweredWord D c x .S (words .S) =
+      wordScale D c x .S (words .S) •
+        loweringSum D (chartDetectorCutoff c H K L m n r) (creationWord D (words .S)) := by
+    cases c with
+    | A =>
+      rw [inverse_word_inactive D hu _ _ _ _ rfl]
+      simp [chartDetectorCutoff, loweringSum, Finset.range_one]
+    | B => exact inverse_word_active D hu _ _ _ _ _ rfl hs
+    | D => exact inverse_word_active D hu _ _ _ _ _ rfl hs
+  rw [inverse_word_active D hu c x _ _ _ hηP hp, inverse_word_active D hu c x _ _ _ hηQ hq,
+    inverse_word_inactive D hu c x _ _ hηR, hWS]
+  simp only [map_smul, smul_mul_assoc, mul_smul_comm, smul_smul, smul_eq_mul]
+  rw [← lowered_detector_sewn_readout D hu q N H K L E _ m n r w _ _ _ _
+    hP hQ hR hS hPb hQb hRb hSb]
+  ring
+
+/-- On a radial chart the literal physical Taylor coefficient is the
+convergent sum of the original signed projectors. The finite box bounds
+both the inverse-transformed words and the individual lowering terms. -/
+theorem radial_chart_signed_projector (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24) (a : ModTwoCharge D)
+    (N H K L E : ℕ) (m n r : ℤ) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (upperA : Bool) (c : Chart) (hc : c = .A ∨ c = .B) {w : ℂ} (hw : ‖w‖ < 1)
+    (hwc : w ^ 2 = parameter c x)
+    (hNome : Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA c x) = Q0 (w ^ 2))
+    {X : Type*} [Fintype X] [DecidableEq X]
+    (slot : X → Puncture) (mode : X → Index D) (bound : ∀ i, (mode i).2 ≤ N)
+    (marks : Puncture → List X) (hslot : ∀ s j, j ∈ marks s → slot j = s)
+    (hl : ((punctureWords marks).flatMap Prod.snd).Nodup)
+    (hbox : ∀ s, modesBounded D N (inverseLoweredWord D c x s ((marks s).map mode)))
+    (hsupp : ∀ s j, modesBounded D N
+      ((oscillatorLower D ^ j) (creationWord D ((marks s).map mode))))
+    (hP : (creationWord D ((marks (firstLeft c)).map mode)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (H : ℤ) - 3))
+    (hQ : (creationWord D ((marks (secondLeft c)).map mode)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (K : ℤ) - 3))
+    (hR : (creationWord D ((marks (firstRight c)).map mode)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (L : ℤ) - 3))
+    (hS : (creationWord D ((marks .S).map mode)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3)) :
+    let words := fun s => (marks s).map mode
+    let P := creationWord D (words (firstLeft c))
+    let Q := creationWord D (words (secondLeft c))
+    let R := creationWord D (words (firstRight c))
+    let S := creationWord D (words .S)
+    let l := (punctureWords marks).flatMap Prod.snd
+    let scale := fun s => wordScale D c x s (words s)
+    let scalar := (l.map fun i => relative c (slot i)).prod * (1 - w ^ 2) ^ (3 : ℕ) *
+      (scale (firstLeft c) * scale (secondLeft c) * scale (firstRight c) * scale .S)
+    HasSum (fun q : {q : Charge D // reduceCharge D q = a} =>
+      scalar * ∑ ell ∈ Finset.range (chartDetectorCutoff c H K L m n r),
+        ((-1 : ℂ) ^ ell / (ell.factorial : ℂ)) *
+          projectOccupations D H K E ((E : ℤ) + m + n + r + ell - H - K + 1)
+            P Q R ((oscillatorLower D ^ ell) S)
+            (fun d g r s => sewnChargeTerm D d g r s q.val w))
+      ((-1 : ℂ) ^ (K : ℤ) *
+        spatialCoefficient (Sum.elim (fun i => (mode i).2) (fun _ => 1))
+          (l.map Sum.inr ++ l.map Sum.inl) (fun z =>
+            physicalProduct D hu slot (fun i => (mode i).1) upperA x c a
+              (z ∘ Sum.inl) (z ∘ Sum.inr)) 0) := by
+  dsimp only
+  let words := fun s => (marks s).map mode
+  let l := (punctureWords marks).flatMap Prod.snd
+  let W := fun s => inverseLoweredWord D c x s (words s)
+  let scalar := (l.map fun i => relative c (slot i)).prod * (1 - w ^ 2) ^ (3 : ℕ)
+  have hs := (radial_sector_four_occupation D hu hD h24 a N hx hx₁ upperA c hc hw hwc hNome
+    slot mode bound marks hslot hl hbox).mul_left ((-1 : ℂ) ^ (K : ℤ))
+  refine hs.congr_fun ?_
+  intro q
+  have hp := inverse_words_detector_projector D hu c x q.val N H K L E m n r w words
+    hP hQ hR hS (fun j _ => hsupp _ j) (fun j _ => hsupp _ j)
+    (by simpa only [pow_zero, Module.End.one_apply] using hsupp (firstRight c) 0)
+    (fun j _ => hsupp _ j)
+  have h := sewnReadout_four D q.val N w (W (firstLeft c)) (W (secondLeft c))
+    (W (firstRight c)) (W .S) (hbox _) (hbox _) (hbox _) (hbox _)
+  dsimp only at hp
+  rw [h] at hp
+  linear_combination scalar * hp.symm
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSewnProjection
