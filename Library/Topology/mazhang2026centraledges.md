@@ -9,6 +9,7 @@ claim: "Lemma 2: a finite metric space with n points and k central distances (ze
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
   - D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum
+  - D5/S3/Combinatorics/Geometry/ThreeCentralMinimum
 license: citation-only
 triage: anchor
 ---
@@ -28,6 +29,13 @@ every point has another point, or itself when t = 0, at distance t. The central 
 distinct points whose distance lies in C(X). If |C(X)| = k then the central graph has at least
 (k-1)⌈n/2⌉ edges: for each nonzero central value the edges of that length cover every point,
 and edges of different lengths are distinct.
+
+Theorem 3 (Section 2): for every n >= 4 the minimum number of central edges among
+three-central n-point metric spaces is 2⌈n/2⌉; the lower bound is Lemma 2 with k = 3. The
+attaining space takes two disjoint covering pair classes (even- and odd-indexed cycle edges,
+with the chord {0,2} for odd n) at distinct class lengths a_i in [1,2) and all other distances
+distinct in [1,2), following the narrow-band realization of O. Dovgoshey and O. Rovenska
+(Theorem 3.8, formula (19)).
 
 Theorem 4 (Section 3): for n >= 4 the least number of central edges of a three-central
 n-point ultrametric is 2n-4+⌈n/2⌉, with equality exactly when the diametrical graph is complete
