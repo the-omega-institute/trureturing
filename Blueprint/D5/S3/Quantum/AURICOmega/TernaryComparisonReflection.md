@@ -28,7 +28,7 @@ $$\forall M \in \operatorname{Type}*,\; \forall C \in \operatorname{TernaryCompa
 
 *Commentary.*
 
-In the group at a, where a is the identity and tri x y z = x * y^-1 * z, the n-th point of the reflection sequence is b^n. The proof is an induction on pairs of consecutive points: x 0 = a = b^0 and x 1 = b = b^1, and if x n = b^n and x (n + 1) = b^(n + 1), then x (n + 2) = b^(n + 1) * (b^n)^-1 * b^(n + 1) = b^(n + 2). Thus the sequence is the arithmetic progression with step b in the group at a.
+In the group at a, where a is the identity and tri x y z = x * y^-1 * z, the n-th point of the reflection sequence is b^n. The proof is an induction on pairs of consecutive points: x 0 = a = b^0 and x 1 = b = b^1, and if x n = b^n and x (n + 1) = b^(n + 1), then x (n + 2) = b^(n + 1) * (b^n)^-1 * b^(n + 1) = b^(n + 2). Thus the sequence consists of the powers of b in the group at a.
 
 **Theorem 1.3 (Equally spaced readings agree).**
 

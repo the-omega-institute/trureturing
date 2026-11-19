@@ -7,14 +7,13 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.AURICOmega;
 internal sealed class TernaryComparisonProductDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/AURICOmega/TernaryComparisonProduct.";
-    private static LibraryNoteRef Schur => LibraryNoteRef.Create("D5/L/QuantumBounds/schur1911boundedforms");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Products of ternary comparison structures, with multiplied feature ranks.",
         H("Products of ternary comparison structures"),
         Blocks(
             Node("prod", "prod", "The product structure",
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Schur),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 "For ternary comparison structures C on M and D on N, prod C D is the ternary comparison structure on M x N defined componentwise. "
                     + "Its transfer sends p, q, r to the pair whose first component is the transfer of C applied to the first components, tri of C at p.1, q.1, r.1, "
                     + "and whose second component is the transfer of D applied to the second components, tri of D at p.2, q.2, r.2. "

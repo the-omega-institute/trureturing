@@ -12,8 +12,6 @@ Lean statement: `D5/S3/Quantum/AURICOmega/TernaryComparisonProduct.prod`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Issai Schur (1911). *Bemerkungen zur Theorie der beschränkten Bilinearformen mit unendlich vielen Veränderlichen*. DOI: [10.1515/crll.1911.140.1](https://doi.org/10.1515/crll.1911.140.1). URL: <https://doi.org/10.1515/crll.1911.140.1>.
-
 *Commentary.*
 
 For ternary comparison structures C on M and D on N, prod C D is the ternary comparison structure on M x N defined componentwise. Its transfer sends p, q, r to the pair whose first component is the transfer of C applied to the first components, tri of C at p.1, q.1, r.1, and whose second component is the transfer of D applied to the second components, tri of D at p.2, q.2, r.2. Its reading at p, q is the reading of C at p.1, q.1 times the reading of D at p.2, q.2. The transfer identities and the invariance of the reading hold in each coordinate. The product reading equals one exactly on the diagonal because the readings of C and of D both lie in the interval from 0 to 1, so a product equal to one forces both factors to be one. The upper bound one for the reading of C at x, y holds because the Gram form of C for the pair x, y with coefficients 1 and -1 equals 2 minus twice that reading and is nonnegative; the same holds for D. Every finite Gram matrix of the product reading is the entrywise product of the corresponding Gram matrices of the readings of C and of D, and the entrywise product of two positive semidefinite matrices is positive semidefinite by the Schur product theorem.
