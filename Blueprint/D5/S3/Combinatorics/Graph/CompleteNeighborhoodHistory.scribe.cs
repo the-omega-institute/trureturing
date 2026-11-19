@@ -33,8 +33,8 @@ internal sealed class CompleteNeighborhoodHistoryDocument : IScribeDocumentDefin
                     + "Conversely, identical recorded replies supply the edges and the degree "
                     + "bounds.")),
                 Paragraph(Text(
-                    "Within a probability distribution on graphs with the same degree at "
-                    + "each named vertex, the transcript event coincides with the event "
+                    "For a distribution supported on graphs with the same degree as H "
+                    + "at each named vertex, the transcript event coincides with the event "
                     + "that every returned edge is present. Conditioning on a positive-mass "
                     + "transcript is therefore conditioning on that edge-extension event."))),
             DescribeRole.Theorem))));

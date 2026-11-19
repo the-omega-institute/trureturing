@@ -20,7 +20,7 @@ The run on G has exactly the transcript of the run on H if and only if G contain
 
 For a candidate containing F, the first recorded neighbor set is contained in the corresponding set in G. Its finite cardinality saturates the upper bound, so the first reply agrees. Induction through the same continuation after that reply gives the complete transcript. Conversely, identical recorded replies supply the edges and the degree bounds.
 
-Within a probability distribution on graphs with the same degree at each named vertex, the transcript event coincides with the event that every returned edge is present. Conditioning on a positive-mass transcript is therefore conditioning on that edge-extension event.
+For a distribution supported on graphs with the same degree as H at each named vertex, the transcript event coincides with the event that every returned edge is present. Conditioning on a positive-mass transcript is therefore conditioning on that edge-extension event.
 
 ## References
 
