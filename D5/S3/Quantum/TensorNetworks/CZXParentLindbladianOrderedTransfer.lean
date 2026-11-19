@@ -655,11 +655,12 @@ private lemma traceNorm_diagonal_sector (n : ℕ) (f : Config n → ℝ) :
     congr 1
     funext x
     simp [pow_two]
-  let D := Matrix.diagonal (fun x => (|f x| : ℂ))
+  let D := Matrix.diagonal (fun x => Complex.ofReal (|f x|))
   have hD : D.PosSemidef :=
     Matrix.PosSemidef.diagonal (fun x => Complex.zero_le_real.mpr (abs_nonneg (f x)))
   have hDgram : Dᴴ * D = Matrix.diagonal (fun x => ((f x ^ 2 : ℝ) : ℂ)) := by
-    rw [D, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
+    dsimp only [D]
+    rw [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
     congr 1
     funext x
     simp [pow_two, ← Complex.ofReal_mul]
