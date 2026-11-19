@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 
 /-! Relabel the cut, the three solid root axes, and the at most two remaining
 axes in the first subdivided edge. -/
@@ -6,6 +7,18 @@ axes in the first subdivided edge. -/
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoAxes
+
+open BalancedCriticalSpectrum (Q)
+open Q9GrayPlacementNormalForm (normalize origin)
+open private normalize_flip from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
+open private normalize_center from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9GrayPlacementNormalForm
+open private toggle from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
+open private firstPointAxes from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
+local notation "flip" => BalancedCriticalSpectrum.flip
 
 /-- Prescribe the axes of the cut and the three root edges. Any other axes
 used in the first two-step move then occupy consecutive indices starting at
@@ -83,5 +96,94 @@ theorem normalize_first_axes (first : Fin 3 ↪ Fin 9) (hzero : ∀ i, first i �
     omega
 
 #print axioms normalize_first_axes
+
+private theorem first_point_check :
+    ∀ (a b : Fin 9) (k : Fin 3),
+      ({a, b} : Finset (Fin 9)).filter (fun i => 4 ≤ i.val) =
+        Finset.univ.filter (fun i : Fin 9 => 4 ≤ i.val ∧ i.val < 4 + k.val) →
+      firstPointAxes (toggle (toggle 2 a) b) = true := by
+  decide +kernel
+
+/-- Translate a root to zero and relabel its three edge directions. The
+first cycle point, two steps from the first root neighbor, meets the
+initial coordinate restriction of the embedding search. -/
+theorem normalize_root_and_first_point (o : Q 9) (first : Fin 3 ↪ Fin 9)
+    (hzero : ∀ i, first i ≠ 0) (a b : Fin 9) :
+    ∃ (g : Q 9 ≃ Q 9) (σ : Equiv.Perm (Fin 9)),
+      (∀ x i, g (flip x i) = flip (g x) (σ i)) ∧
+      (∀ x, g x 0 = false ↔ x 0 = o 0) ∧
+      g o = cubeBitVec 9 0 ∧
+      (∀ i : Fin 3, g (flip o (first i)) =
+        cubeBitVec 9 (BitVec.ofNat 9 (2 ^ (i.val + 1)))) ∧
+      firstPointAxes ((cubeBitVec 9).symm (g (flip (flip (flip o (first 0)) a) b))) =
+        true := by
+  classical
+  let fixed : Fin 4 → Fin 9 := Fin.cases 0 first
+  let extra := ({a, b} : Finset (Fin 9)) \ (Finset.univ.image fixed)
+  obtain ⟨σ, hσ, hσextra⟩ := normalize_first_axes first hzero a b
+  change ∀ i : Fin 4, (σ (fixed i)).val = i.val at hσ
+  change extra.image σ = _ at hσextra
+  let g := normalize σ.symm o
+  have h0 : σ 0 = 0 := Fin.ext (hσ 0)
+  have h1 (i : Fin 3) : σ (first i) = ⟨i.val + 1, by omega⟩ :=
+    Fin.ext (hσ i.succ)
+  have hg0 : g o = origin := normalize_center σ.symm o
+  have hplane (x : Q 9) : g x 0 = false ↔ x 0 = o 0 := by
+    have hs : σ.symm 0 = 0 := (σ.symm_apply_eq).mpr h0.symm
+    change (x (σ.symm 0) != o (σ.symm 0)) = false ↔ _
+    simp [hs]
+  have hcard : extra.card ≤ 2 := by
+    calc
+      _ ≤ ({a, b} : Finset (Fin 9)).card := Finset.card_le_card Finset.sdiff_subset
+      _ ≤ 2 := Finset.card_insert_le _ _
+  let k : Fin 3 := ⟨extra.card, by omega⟩
+  have hextra : ({σ a, σ b} : Finset (Fin 9)).filter (fun i => 4 ≤ i.val) =
+      extra.image σ := by
+    apply Finset.ext
+    intro i
+    constructor
+    · rintro hi
+      obtain ⟨hi, hbig⟩ := Finset.mem_filter.mp hi
+      let j := σ.symm i
+      have hji : σ j = i := σ.apply_symm_apply i
+      have hj : j ∈ ({a, b} : Finset (Fin 9)) := by
+        simpa only [Finset.mem_insert, Finset.mem_singleton, ← hji, σ.injective.eq_iff] using hi
+      have hn : j ∉ Finset.univ.image fixed := by
+        rintro hj
+        obtain ⟨r, _, hr⟩ := Finset.mem_image.mp hj
+        have hs : (σ j).val = r.val := by rw [← hr, hσ]
+        rw [hji] at hs
+        have := r.isLt
+        omega
+      exact Finset.mem_image.mpr ⟨j, Finset.mem_sdiff.mpr ⟨hj, hn⟩, hji⟩
+    · rintro hi
+      obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hi
+      have hj' := (Finset.mem_sdiff.mp hj).1
+      have hbig : 4 ≤ (σ j).val := by
+        rw [hσextra] at hi
+        exact (Finset.mem_filter.mp hi).2.1
+      exact Finset.mem_filter.mpr ⟨by simpa only [Finset.mem_insert, Finset.mem_singleton,
+        σ.injective.eq_iff] using hj', hbig⟩
+  have hb0 : cubeBitVec 9 (0 : BitVec 9) = origin := by decide
+  have hb1 (i : Fin 3) : cubeBitVec 9 (BitVec.ofNat 9 (2 ^ (i.val + 1))) =
+      flip origin ⟨i.val + 1, by omega⟩ := by
+    have h := cubeBitVec_xor_single (0 : BitVec 9) (⟨i.val + 1, by omega⟩ : Fin 9)
+    change cubeBitVec 9 (0#9 ^^^ BitVec.ofNat 9 (2 ^ (i.val + 1))) =
+      flip (cubeBitVec 9 0) ⟨i.val + 1, by omega⟩ at h
+    rw [BitVec.zero_xor, hb0] at h
+    exact h
+  refine ⟨g, σ, normalize_flip σ o, hplane, hg0.trans hb0.symm, ?_, ?_⟩
+  · intro i
+    change normalize σ.symm o (flip o (first i)) = _
+    rw [normalize_flip, hg0, h1 i, hb1]
+  · have hcheck := first_point_check (σ a) (σ b) k (hextra.trans hσextra)
+    have hv : g (flip (flip (flip o (first 0)) a) b) =
+        cubeBitVec 9 (toggle (toggle 2 (σ a)) (σ b)) := by
+      simp only [g, normalize_flip, hg0, h1 0, ← hb1 0]
+      simp only [toggle, cubeBitVec_xor_single]
+      rfl
+    simpa only [hv, Equiv.symm_apply_apply] using hcheck
+
+#print axioms normalize_root_and_first_point
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoAxes
