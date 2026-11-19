@@ -1,0 +1,61 @@
+**Theorem 15.1 (A positive collision on the full qutrit).** Let
+
+$$
+s_*=(\sqrt5-1)/2,\qquad
+\theta_*=\arcsin(s_*)\in(0,\pi/2).
+\tag{15.1}
+$$
+
+Then $\theta_*/\pi$ is irrational. The actual letters at this
+angle obey the exact full-qutrit relation
+
+$$
+a^5b=ba^5,\qquad m_6(\theta_*)\le63.
+\tag{15.2}
+$$
+
+Its parameter $z_*=i\tan\theta_*$ has primitive irreducible
+polynomial $X^4-X^2-1$, whose value at one is odd.
+
+Proof. The actual formula (6.2) gives
+$\det a_T=-1$ and $\operatorname{tr}a_T=-i\sin\theta$.
+Consequently $M=ia_T\in SU(2)$ has trace
+$s_*=2\cos(2\pi/5)$ at (15.1). The last elementary identity
+follows by putting $u=e^{2\pi i/5}$ in
+$1+u+u^2+u^3+u^4=0$: the number $u+u^{-1}>0$ satisfies
+$X^2+X-1=0$. The two eigenvalues of $M$ are therefore
+$e^{2\pi i/5},e^{-2\pi i/5}$. Unitarity diagonalizes it, so
+$M^5=I_2$ and $a_T^5=(-i)^5I_2=-iI_2$.
+On $\mathbb C\xi$ the full $a^5$ acts by $e^{5i\theta_*}$.
+Both summands reduce $b$, so these scalar blocks imply
+$[a^5,b]=0$ on the entire qutrit. The two block scalars need
+not be equal; the conclusion is commutation, without discarding
+the relative phase. The distinct chronological histories
+$(1,0,0,0,0,0)$ and $(0,0,0,0,0,1)$ have precisely the products
+in (15.2). Each has probability $1/64$ and the equality is exact.
+Among the 64 histories at least this pair coincides, proving
+$m_6\le63$.
+
+If $\theta_*/\pi$ were rational, take a cyclotomic field containing
+both $e^{i\theta_*}$ and $i$. Every embedding sends
+$(e^{i\theta_*}-e^{-i\theta_*})/(2i)$ to a real sine or its
+negative, hence to $[-1,1]$. Every embedding of
+$\mathbb Q(s_*)$ extends to that field. But the irreducible
+polynomial $X^2+X-1$ of $s_*$ has conjugate
+$-(\sqrt5+1)/2<-1$. This contradiction proves irrationality.
+
+Finally $s_*^2=1-s_*$ gives $\cos^2\theta_*=s_*$ and
+$\tan^2\theta_*=s_*$. Thus $z_*^2=-s_*$, which implies
+$z_*^4-z_*^2-1=0$. This monic quartic has no rational linear
+root, since neither $1$ nor $-1$ is a root. If it factored into
+monic rational quadratics, they would have the form
+$(X^2+aX+b)(X^2-aX+d)$, with
+$a(d-b)=0$, $bd=-1$ and $b+d-a^2=-1$.
+If $a=0$, the rational numbers $b,d$ would be the irrational
+roots of $U^2+U-1=0$. Otherwise $b=d$, giving $b^2=-1$ in
+$\mathbb Q$. Both are impossible. These exhaust proper factors
+of a quartic without a linear factor, proving irreducibility.
+Its value at one is $-1$. This exhibits one actual collision
+outside Theorem 14.1's sufficient region; it does not make odd
+$f(1)$ a converse collision criterion. $\square$
+

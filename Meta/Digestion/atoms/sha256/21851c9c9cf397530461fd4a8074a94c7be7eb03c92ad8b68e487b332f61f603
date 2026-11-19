@@ -1,0 +1,50 @@
+**Corollary 25.1 (Exact $n$ bits versus at most six states).** For every
+integer $n\ge1$, every $\varepsilon>0$ and every integer $k$, choose
+an integer $q$ satisfying
+
+$$
+q>\max\left\{4,\,\pi\sqrt{\frac{2n}{3\varepsilon}}\right\},
+\qquad \eta=\pi/q,\qquad \theta=k\pi/2+\eta.
+\tag{25.1}
+$$
+
+For the one actual measured instrument at this $\theta$ and this
+horizon, the following hold under the complete-view and recovery
+permissions of Definition 1.5 and Assumption 1.4:
+
+$$
+\begin{gathered}
+\min|\mathcal Y_n^{\rm exact}|=2^n,\qquad
+\min b_n^{\rm exact}=n,\qquad
+\min H_{\rm Sh}(\mathcal Y_n^{\rm exact})=n,\\
+|\{P_t:|h|=t\}|\le6\quad(0\le t\le n),\qquad
+H_{\rm Sh}(P_n)\le\log_2 6,\qquad
+\|\mathcal F_{n,\theta}-\iota\|_\diamond<\varepsilon.
+\end{gathered}
+\tag{25.2}
+$$
+
+The entropy minimum is over discrete complete exact views. The exact
+lower bounds permit arbitrary randomized summaries and arbitrary terminal
+CPTP maps on all $H$, with success required only on the averaged
+encoded channel; the six-state upper bound uses just the single
+unitary (23.5). These are the same acquired-label, same-angle,
+same-horizon instances and the same encoded all-reference target.
+
+Proof. The ratio $\theta/\pi=k/2+1/q$ is rational and is not in
+$\tfrac12\mathbb Z$, since $0<1/q<1/4$. Theorem 14.2 directly gives
+$m_n(\theta)=2^n$, and Theorem 16.2 directly gives the three exact
+minima, including the history determination and discrete entropy
+conclusion. Their attainment uses the complete actual history and its
+terminal inverse. No new collision-free premise or shrinking
+collision-neighborhood argument is needed. For approximate recovery,
+$q>4$ makes $k\pi/2$ the nearest bounded angle, so $\delta=\pi/q$.
+Theorem 23.2 and (25.1) give
+$2n\delta^2/3<\varepsilon$. The state bound is (23.2).
+For its entropy, if $s\le6$ states have positive probabilities $p_a$,
+concavity of logarithm gives
+$\sum_ap_a\log_2(1/p_a)\le\log_2\sum_ap_a/p_a=\log_2s$.
+This proves (25.2). The exact suppliers are reused with their stated
+scope, rather than re-proving maximal word growth or exact-record
+necessity. $\square$
+

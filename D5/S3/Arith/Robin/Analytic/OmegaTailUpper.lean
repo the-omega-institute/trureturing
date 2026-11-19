@@ -51,11 +51,11 @@ def a (s : ℝ) : ℝ := s * sin (π / s) / π
 /-- The optimized exponential rate. -/
 def rate (lambda s : ℝ) : ℝ := s * (1 - lambda - log (a s))
 
-private lemma scale_pos {x : ℝ} (hx : exp 1 < x) : 0 < scale x := by
+lemma scale_pos {x : ℝ} (hx : exp 1 < x) : 0 < scale x := by
   have hl : 1 < log x := (lt_log_iff_exp_lt (lt_trans (exp_pos _) hx)).mpr hx
   exact div_pos (zero_lt_one.trans hl) (log_pos hl)
 
-private lemma scale_tendsto : Tendsto scale atTop atTop := by
+lemma scale_tendsto : Tendsto scale atTop atTop := by
   change Tendsto (fun x : ℝ => log x / log (log x)) atTop atTop
   have h := (isLittleO_log_id_atTop.tendsto_div_nhds_zero).comp tendsto_log_atTop
   have hn : ∀ᶠ x : ℝ in atTop, 0 < log (log x) / log x := by
@@ -88,7 +88,7 @@ private lemma rankin_log_limit (lambda s : ℝ) {c : ℝ} (hc : 0 < c) :
   filter_upwards [tendsto_log_atTop.eventually_gt_atTop 1] with x hx
   exact (rankin_log_cancellation lambda s c x hx hc).symm
 
-private lemma a_pos {s : ℝ} (hs : 1 < s) : 0 < a s := by
+lemma a_pos {s : ℝ} (hs : 1 < s) : 0 < a s := by
   have hs0 : 0 < s := zero_lt_one.trans hs
   have ht0 : 0 < π / s := div_pos pi_pos hs0
   have htpi : π / s < π := (div_lt_self pi_pos hs)
@@ -390,7 +390,7 @@ private lemma rankin_euler_majorant {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
   exact (rankin_finite_product hs0 hz hx).trans
     ((mul_le_mul_of_nonneg_left hprod hC).trans_eq (by ring))
 
-private lemma rankin_exponential_bound {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
+lemma rankin_exponential_bound {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ z)
     (hx : 0 < x) :
     (((Icc 1 ⌊x⌋₊).filter (fun n => T <
       (ArithmeticFunction.cardDistinctFactors n : ℝ))).card : ℝ) ≤
@@ -430,7 +430,7 @@ private lemma rankin_exponential_bound {s z x T : ℝ} (hs : 1 < s) (hz : 1 ≤ 
 section Kernel
 open Set
 
-private theorem power_kernel_integral {s c : ℝ} (hs : 1 < s) (hc : 0 < c) :
+theorem power_kernel_integral {s c : ℝ} (hs : 1 < s) (hc : 0 < c) :
     IntegrableOn (fun u : ℝ => s * c / (u ^ s + c)) (Ioi 0) ∧
       (∫ u in Ioi (0 : ℝ), s * c / (u ^ s + c)) =
         Real.pi * c ^ (1 / s) / Real.sin (Real.pi / s) := by
@@ -509,11 +509,11 @@ private lemma prime_counting_ratio :
   field_simp [(log_pos ht).ne']
   <;> ring
 
-private def logWeight (s z t : ℝ) : ℝ := log (1 + z / t ^ s)
+def logWeight (s z t : ℝ) : ℝ := log (1 + z / t ^ s)
 
-private def abelKernel (s z t : ℝ) : ℝ := s * z / (t * (t ^ s + z))
+def abelKernel (s z t : ℝ) : ℝ := s * z / (t * (t ^ s + z))
 
-private lemma logWeight_deriv {s z t : ℝ} (hz : 0 < z) (ht : 0 < t) :
+lemma logWeight_deriv {s z t : ℝ} (hz : 0 < z) (ht : 0 < t) :
     HasDerivAt (logWeight s z) (-abelKernel s z t) t := by
   have hp : 0 < t ^ s := rpow_pos_of_pos ht _
   have hh : 0 < 1 + z / t ^ s := by positivity

@@ -22,7 +22,7 @@ open scoped BigOperators
 
 namespace D5.S3.Quantum.TensorNetworks.BridgeGraph.NativeSaturation
 
-private def leftSlices (a b : ℕ) : Fin 3 → Matrix (Fin a) (Fin b) ℂ :=
+def leftSlices (a b : ℕ) : Fin 3 → Matrix (Fin a) (Fin b) ℂ :=
   ![fun i j => if i.val = j.val then 1 else 0,
     fun i j => if a ≤ j.val ∧ i.val = 2 * (j.val - a) then 1 else 0,
     fun i j => if a ≤ j.val ∧ i.val = 2 * (j.val - a) + 1 then 1 else 0]

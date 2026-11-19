@@ -1,0 +1,15 @@
+**Convention 1.1 (Ordinary mathematical scope).** All spaces below are
+finite-dimensional complex Hilbert spaces. Adjoint is denoted by $\dagger$;
+inner products are conjugate-linear in their first argument. A channel is a
+complex-linear completely positive trace-preserving map. For an operator $L$,
+write $\operatorname{Ad}_L(X)=LXL^\dagger$. Equality of channels means equality
+on the entire complex operator algebra, and therefore after tensoring with
+the identity on any untouched reference. The proofs are ordinary
+finite-dimensional mathematical proofs.
+
+An actual instrument in this volume means a specified mathematical unitary
+dilation, a specified pure environment preparation, and a specified
+orthonormal environment measurement whose actual outcome is supplied. It
+is additional structure beyond an averaged channel or a list of possible
+Kraus representations.
+

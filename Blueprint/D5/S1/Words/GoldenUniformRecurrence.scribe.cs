@@ -29,6 +29,13 @@ internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every type alpha, lists x,y and natural p,n with p+n at most length(x), the window obtained from x++y by dropping p entries and taking n is exactly the corresponding window of x."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("one-or-two-blocks"),
+                DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.flatMap_window_infix_one_or_two"),
+                H("A short interval meets at most two adjacent blocks"),
+                StatementSource.FromAuthor(F.Disp(OneOrTwo())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For arbitrary alphabets alpha,beta, map f, source list l and natural p,n, assume n>0, n<length(f(a)) for every a in l, and p+n<=length(flatMap(f,l)). The actual slice is an infix of f(a) for some singleton [a] occurring in l, or an infix of f(a)++f(b) for some adjacent pair [a,b] occurring in l. The alternatives concern the same slice at p, with no assumption that l belongs to an infinite word."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-recurrence-bound"),
                 DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound"),
                 H("The recurrence window is an explicit Fibonacci quantity"),
@@ -94,6 +101,18 @@ internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinitio
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S1/Words/GoldenWord")),
         ]));
+    private static Formula OneOrTwo()
+    {
+        Formula alpha=F.Id("alpha"),beta=F.Id("beta"),f=F.Id("f"),l=F.Id("l"),p=F.Id("p"),n=F.Id("n"),a=F.Id("a"),b=F.Id("b");
+        Formula Apply(Formula x)=>new Formula.Apply(f,[x]);
+        Formula Len(Formula x)=>WC("length",x);
+        Formula win=WC("take",n,WC("drop",p,WC("flatMap",f,l)));
+        Formula single=WE("a",alpha,WB(WC("IsInfix",WC("list",a),l),WC("IsInfix",win,Apply(a))));
+        Formula pair=WE("a",alpha,WE("b",alpha,WB(WC("IsInfix",WC("list",a,b),l),WC("IsInfix",win,WC("append",Apply(a),Apply(b))))));
+        Formula assumptions=WB(WT(D(0),n),WB(WA("a",alpha,WI(new Formula.Relation(a,FormulaRelationOperator.MemberOf,l),WT(n,Len(Apply(a))))),WL(WP(p,n),Len(WC("flatMap",f,l)))));
+        return WA("alpha",F.Id("Type"),WA("beta",F.Id("Type"),WA("f",WC("Function",alpha,WC("List",beta)),WA("l",WC("List",alpha),WA("p",WN(),WA("n",WN(),WI(assumptions,new Formula.Logic(single,FormulaLogicOperator.Or,pair))))))));
+    }
+
     private static Formula WindowSupplier(string name)
     {
         Formula a = F.Id("alpha"), b = F.Id("beta"), l = F.Id("l"), f = F.Id("f");

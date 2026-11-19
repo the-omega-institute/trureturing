@@ -136,5 +136,10 @@ internal sealed class OriginalGaussianDifferentiationDocument : IScribeDocumentD
                 DescribeId.Create("radial-pair-normalization"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radial_pair_normalization"),
                 H("radial_pair_normalization"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every real 0<r<1, one plus the ordinary bilinear pairing of the first radial source family with the radial column is the complex embedding of radialNormalization r."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every real 0<r<1, one plus the ordinary bilinear pairing of the first radial source family with the radial column is the complex embedding of radialNormalization r."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("radialoperatorderivative"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDifferentiation.radialOperatorDerivative"),
+                H("radialOperatorDerivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real r, the actual radial operator derivative is operatorDerivative at the complex embedding of sqrt(r), scaled by the complex embedding of 1/(2 sqrt(r)). The radial rank-one theorem consumes this same operator."))), DescribeRole.Definition))));
 }

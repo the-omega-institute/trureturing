@@ -16,7 +16,19 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivi
 
 For real t, K(t)=exp(-abs(t)/2) times the quantity (U(exp(abs(t)))-log(2*pi)+trivialT(abs(t))). Here U is CompleteMertensPeak.U, with its complete inclusive Mangoldt ramps, and trivialT is the full trivial-zero series with coefficients 1/(2*(n+1)*(2*(n+1)+1)). The value K(0) is the strictly positive first Li mass. The definition is even.
 
-**Theorem 1.2 (One window for all finite complex quadratic forms).**
+**Theorem 1.2 (A common positive decreasing convex window).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.choose_window`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.choose_window` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+There is a real delta with 0<delta<log(2) such that, for every 0<t<=delta, K(t)>0, D1(t)<0 and D2(t)>0. The identities hasDerivAt_K and hasDerivAt_D1 identify D1 and D2 as the first and second derivatives on this interval. The same choice gives t*D2(t)<1 and integrability of t*D2(t) over (0,delta]. Positivity of K at zero, the limit D1(t) tending to negative infinity and the limit t*D2(t) tending to one half supply one common window.
+
+**Theorem 1.3 (One window for all finite complex quadratic forms).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.exists_window_posDef`
 
@@ -41,6 +53,7 @@ This is an unconditional local arithmetic statement. Global positivity, the Riem
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.K`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.choose_window`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.exists_window_posDef`
 - Dependency: [D5/S3/Analytic/ExpRatioCM/Series](../../../Analytic/ExpRatioCM/Series.md)
 - Dependency: [D5/S3/Analytic/Fourier/PositiveDefinite/Closure](../../../Analytic/Fourier/PositiveDefinite/Closure.md)
