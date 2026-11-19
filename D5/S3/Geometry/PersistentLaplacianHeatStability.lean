@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Geometry/PersistentLaplacianHeatStability
    mirror-E: none(waiver:finite-hodge-operators)
    anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.Adjoint]
-   utility: none -/
+   utility: none
+   digest: Relative time-scaled edge weights control the degree-zero persistent heat operator. -/
 
 import Mathlib.Algebra.Category.ModuleCat.Products
 import D5.S3.Geometry.FiniteSimplicialSingularHomology
