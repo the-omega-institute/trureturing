@@ -65,9 +65,7 @@ internal sealed class BKMActualMetricHeatDocument : IScribeDocumentDefinition
                 "hidden-to-hidden block of T, and C its visible-to-hidden block. For every complex " +
                 "scalar c, the difference satisfies the following identity and estimate in operator " +
                 "norms induced by the reference BKM form.")),
-            Paragraph(Math(F.Disp(Equal(Id("D"), Compose(
-                Parenthesized(Subtract(Compose(Id("K"), Id("W")), Compose(Id("E"), Id("K")))),
-                Id("C"))))),
+            Paragraph(Math(DefectFactorization())),
             Paragraph(Math(DefectBound()))),
         DescribeRole.Theorem);
 
@@ -89,6 +87,12 @@ internal sealed class BKMActualMetricHeatDocument : IScribeDocumentDefinition
         var changed = Subtract(Compose(Id("R"), doubleTime, Id("i")), Square(Id("E")));
         var reference = Subtract(Compose(Id("P"), doubleTime, Id("i")), Square(Subscript(Id("E"), F.D(0))));
         return F.Disp(Equal(Id("D"), Subtract(Parenthesized(changed), Parenthesized(reference))));
+    }
+
+    private static Formula DefectFactorization()
+    {
+        var returnBlock = Subtract(Compose(Id("K"), Id("W")), Compose(Id("E"), Id("K")));
+        return F.Disp(Equal(Id("D"), Compose(Parenthesized(returnBlock), Id("C"))));
     }
 
     private static Formula Compose(params Formula[] maps)
