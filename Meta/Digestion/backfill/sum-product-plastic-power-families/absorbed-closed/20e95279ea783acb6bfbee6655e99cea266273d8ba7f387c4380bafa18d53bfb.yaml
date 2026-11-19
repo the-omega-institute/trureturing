@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:20e95279ea783acb6bfbee6655e99cea266273d8ba7f387c4380bafa18d53bfb
   normalized_sha256: sha256:20e95279ea783acb6bfbee6655e99cea266273d8ba7f387c4380bafa18d53bfb
 cas_ref: sha256:20e95279ea783acb6bfbee6655e99cea266273d8ba7f387c4380bafa18d53bfb
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Additive/PlasticGappedFamily.whole_proposition_five_one
+    target_statement_id: sha256:70c8edacd21e3dcd0c1b1681a7236bc94231329ec8920083ab5756c27c834c6c
 receipts:
   unresolved_subitems: []
