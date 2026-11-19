@@ -7,6 +7,10 @@ DRAFT ?= 0
 ALLOW_LOW_DISK ?= 0
 WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
+INDEX_DIR ?= build/lean-inspector/lookup-index/$(INDEX_BASIS)
+
+# Release Lake's loaded build graph before the memory-bounded native process.
+INSPECTOR_NATIVE_RUN = /bin/bash tools/scripts/search-reduction-runner.sh native
 LEAN_REPORT_CACHE_MISS_POLICY ?= fetch-or-fail
 REBUILD_REPORT_CACHE ?= 0
 REGENERATE_REPORT_ARTIFACTS ?= 0
@@ -15,7 +19,7 @@ export FULL_BUILD ?= 0
 export LEAN_SKIP_LOCK ?= 0
 # .NET processes started from these targets create no diagnostic pipes or sockets.
 export DOTNET_EnableDiagnostics ?= 0
-.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch ingest migrate-atom-context mathlib-reanchor source-dispatch search-atoms show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose settle settle-clear retire-sources worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test compiled-fib-test require-full-build
+.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch ingest migrate-atom-context mathlib-reanchor source-dispatch search-atoms show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose settle settle-clear retire-sources worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test compiled-fib-test require-full-build search-reduction search-reduction-run search-reduction-test search-reduction-blocker-test search-reduction-cache-retention-test search-reduction-sensitivity-test search-reduction-sensitivity-v1 search-reduction-production-negative search-reduction-probe-cache-test search-reduction-information-cache-test search-reduction-index-failure-test search-reduction-replay-test search-reduction-replay-calibration search-reduction-replay-faults search-reduction-replay-real-negative search-reduction-replay-vocabulary search-reduction-index search-reduction-index-domain search-reduction-index-run search-reduction-index-fixtures search-reduction-fixture-cache-test search-reduction-source-module search-reduction-membership-index-run search-reduction-membership-compare
 
 require-full-build:
 	@test "$(FULL_BUILD)" = 1 || { echo 'full build requires explicit FULL_BUILD=1; use scoped targets instead' >&2; exit 2; }
@@ -226,3 +230,86 @@ compiled-judge-test:
 
 compiled-fib-test:
 	@/bin/bash tools/scripts/compiled-fib-test.sh
+
+# Requests are Lean commands; the shell only transports compiler invocations.
+search-reduction:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands $(SEARCH_MODULES)" && $(MAKE) search-reduction-run
+
+# Replay only after the runner and request imports have been built.
+search-reduction-run:
+	@/bin/bash tools/scripts/search-reduction-runner.sh run
+search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
+
+search-reduction-test: search-reduction-index-fixtures
+	@env -u SEARCH_REDUCTION_INDEX /bin/bash tools/scripts/search-reduction-runner.sh test
+search-reduction-test: export SEARCH_REDUCTION_WORKERS := 1
+
+search-reduction-execution-mutation-test:
+	@python3 tools/scripts/search-reduction-execution-mutation-test.py
+
+search-reduction-blocker-test:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.BlockerTests LeanInformationAuditRegTests.SearchReduction.ExecutionChainTests"
+
+search-reduction-cache-retention-test:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.CacheRetentionTests"
+
+search-reduction-sensitivity-test:
+	@/bin/bash tools/scripts/search-reduction-runner.sh sensitivity-test
+
+search-reduction-sensitivity-v1:
+	@/bin/bash tools/scripts/search-reduction-runner.sh sensitivity-v1
+search-reduction-sensitivity-v1: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
+
+# CASE selects one isolated production calibration; the index stays caller-owned.
+search-reduction-production-negative:
+	@test -n "$$SEARCH_REDUCTION_NEGATIVE_CASE" && $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands LeanInformationAuditRegTests.SearchReduction.ProductionNegativeCandidates" && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/ProductionNegatives.lean
+search-reduction-production-negative: export SEARCH_REDUCTION_NEGATIVE_CASE := $(value CASE)
+search-reduction-production-negative: export SEARCH_REDUCTION_PROBE_CACHE := 0
+search-reduction-production-negative: export SEARCH_REDUCTION_RESUME :=
+
+search-reduction-probe-cache-test:
+	@python3 tools/scripts/search-reduction-probe-cache-test.py
+
+search-reduction-information-cache-test:
+	@python3 tools/scripts/search-reduction-information-cache-test.py
+
+search-reduction-index-failure-test:
+	@/bin/bash tools/scripts/search-reduction-runner.sh index-failure-test
+
+# Reexecute every probe and guard even when the compiled fixtures are current.
+search-reduction-replay-test:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands LeanInformationAuditRegTests.SearchReduction.Candidates LeanInformationAuditRegTests.SearchReduction.VocabularyCandidates LeanInformationAuditRegTests.SearchReduction.GraphCandidates D5.S0.Tower.NonPisotVerdict.SubstitutionTowerClause D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity" && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/GraphCalibration.lean && $(MAKE) -j1 search-reduction-replay-calibration search-reduction-replay-faults search-reduction-replay-real-negative search-reduction-replay-vocabulary
+
+search-reduction-replay-calibration:
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/Calibration.lean
+search-reduction-replay-faults:
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/Faults.lean
+search-reduction-replay-real-negative:
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/RealNegative.lean
+
+search-reduction-replay-vocabulary:
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTransport.lean && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTests.lean
+
+
+# Compile recovered source modules against this tree's pinned dependencies.
+search-reduction-source-module:
+	@/bin/bash tools/scripts/search-reduction-runner.sh source-module "$(SOURCE_ROOT)" "$(SOURCE_LIBRARY)" "$(SOURCE_MODULE)"
+
+
+search-reduction-index:
+	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex" && $(MAKE) search-reduction-index-run
+search-reduction-index-domain:
+	@python3 tools/scripts/search-reduction-domain-inputs.py "$$SEARCH_REDUCTION_INDEX" "$$SEARCH_REDUCTION_DOMAIN_DIR"
+search-reduction-index-domain: export SEARCH_REDUCTION_DOMAIN_DIR := $(value DOMAIN_DIR)
+search-reduction-index-domain: export SEARCH_REDUCTION_PROBE_CACHE := 0
+search-reduction-index-domain: export SEARCH_REDUCTION_RESUME :=
+search-reduction-index-run:
+	@$(INSPECTOR_NATIVE_RUN) .lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)
+search-reduction-membership-compare:
+	@$(INSPECTOR_NATIVE_RUN) .lake/build/lean-inspector/reg/bin/searchReductionIndex --compare-membership "$(INDEX_DIR)" "$(OLD_HEADER)"
+search-reduction-membership-index-run:
+	@$(INSPECTOR_NATIVE_RUN) .lake/build/lean-inspector/reg/bin/searchReductionIndex --membership "$(INDEX_DIR)"
+search-reduction-fixture-cache-test:
+	@python3 tools/tests/StrataLint.ScriptTests/Fixtures/search_reduction_fixture_cache_test.py
+search-reduction-index-fixtures: search-reduction-fixture-cache-test
+	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex regInspector/searchReductionFixtureRoots LeanInformationAuditRegTests.SearchReduction.LookupBaseline LeanInformationAuditRegTests.SearchReduction.Baseline LeanInformationAuditRegTests.SearchReduction.PresentationBaseline D5.S0.Tower.NonPisotVerdict.SubstitutionTowerClause D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity" && roots="$$($(INSPECTOR_NATIVE_RUN) .lake/build/lean-inspector/reg/bin/searchReductionFixtureRoots)" && python3 tools/scripts/search-reduction-fixtures.py --snapshot fixture Mathlib --snapshot lookup-fixture LeanInformationAuditRegTests.SearchReduction.LookupBaseline --snapshot b530df86e6e9c4709edecd3009bb96c3d4ebc8be Mathlib LeanInformationAuditRegTests.SearchReduction.Baseline $$roots --snapshot a5e5b163319079eeb1b4b431395c65e43beb4b07 Mathlib LeanInformationAuditRegTests.SearchReduction.Baseline LeanInformationAuditRegTests.SearchReduction.PresentationBaseline

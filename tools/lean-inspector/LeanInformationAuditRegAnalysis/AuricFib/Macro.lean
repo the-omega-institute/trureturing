@@ -26,7 +26,7 @@ def replyLaw (law : Array Rat) (condition : Bool) : Option Json := Id.run do
       ("mass", rationalJson (mass / eventMass))]
 
 /-- Formula evaluation consumes an already validated exact source law. -/
-def macroAnalysis (input : SourceInput) (law : Array Rat) : Except String MacroResult := do
+def lawAnalysis (input : SourceInput) (law f : Array Rat) : Except String MacroResult := do
   let p0 := law[0]!
   let p2 := law[1]!
   let p5 := law[2]!
@@ -35,7 +35,6 @@ def macroAnalysis (input : SourceInput) (law : Array Rat) : Except String MacroR
   let x := p2 + k
   let y := p5 + k
   let r := 1 - z
-  let m := y + z
   let low := max 0 (x + y - r)
   let high := min x y
   let width := min (min x y) (min (r - x) (r - y))
@@ -52,30 +51,15 @@ def macroAnalysis (input : SourceInput) (law : Array Rat) : Except String MacroR
   let recoveredK := if apex then 0 else (delta + x*y) / r
   let recovered := #[r-x-y+recoveredK, x-recoveredK, y-recoveredK, recoveredK, z]
   unless recovered = law do throw "internal law reconstruction inconsistency"
-  let f := modes.toArray.map targetIndicator
   let jf := f[3]! - f[1]! - f[2]! + f[0]!
   let expectation (p : Array Rat) := modes.foldl
-    (fun total a => total + p[modeIndex a]! * targetIndicator a) 0
+    (fun total a => total + p[modeIndex a]! * f[modeIndex a]!) 0
   let target := expectation law
   let targetStar := expectation completion
   let endpointLow := expectation #[r-x-y+low, x-low, y-low, low, z]
   let endpointHigh := expectation #[r-x-y+high, x-high, y-high, high, z]
   let rf := if apex then 0 else jf * delta / r
   unless rf = target - targetStar do throw "internal target residual inconsistency"
-  let guardResidual := if m = 0 then none else
-    some (if apex then 0 else delta / (r * m))
-  let rejectedJoint (p : Array Rat) := modes.foldl (fun total a =>
-    if parityEvent a && !guardAccepts a then total + p[modeIndex a]! else total) 0
-  if let some residual := guardResidual then
-    unless residual = (rejectedJoint law - rejectedJoint completion) / m do
-      throw "internal guard-response inconsistency"
-  let response := Json.mkObj [
-    ("conditioning_event_mass", rationalJson m),
-    ("conditional_reply_law", (replyLaw law true).getD Json.null),
-    ("product_completion_conditional_reply_law", (replyLaw completion true).getD Json.null),
-    ("unconditional_reply_law", (replyLaw law false).getD Json.null),
-    ("unconditional_rejection_mass", rationalJson x),
-    ("conditional_rejection_mass", if m = 0 then Json.null else rationalJson (k / m))]
   return {
     coordinates := Json.mkObj [("X", rationalJson x), ("Y", rationalJson y),
       ("Z", rationalJson z), ("r", rationalJson r),
@@ -102,12 +86,43 @@ def macroAnalysis (input : SourceInput) (law : Array Rat) : Except String MacroR
       ("target_max", rationalJson (max endpointLow endpointHigh)),
       ("target_range_width", rationalJson (abs jf * width)),
       ("R_f", quantity (if apex then "apex" else "positive-bottom-mass") (some rf)),
-      ("R_guard", quantity (if m = 0 then "zero-conditioning-mass" else if apex then
-        "apex" else "positive-bottom-and-conditioning-mass") guardResidual),
       ("global_fiber_width_upper", rationalJson (1/2)),
       ("fixed_Z_fiber_width_upper", rationalJson (r/2)),
       ("global_delta_bounds", Json.arr (#[(-1/4 : Rat), 1/4].map rationalJson)),
       ("fixed_Z_delta_bounds", Json.arr (#[-r*r/4, r*r/4].map rationalJson))]
+    response := Json.null }
+
+/-- Native response fields belong exclusively to the initialized Window machine. -/
+def macroAnalysis (input : SourceInput) (law : Array Rat) : Except String MacroResult := do
+  let result ← lawAnalysis input law (modes.toArray.map targetIndicator)
+  let x := law[1]! + law[3]!
+  let y := law[2]! + law[3]!
+  let z := law[4]!
+  let k := law[3]!
+  let r := 1 - z
+  let m := y + z
+  let delta := r * k - x * y
+  let apex := r = 0
+  let kstar := if apex then 0 else x * y / r
+  let completion := if apex then law else #[r-x-y+kstar, x-kstar, y-kstar, kstar, z]
+  let guardResidual := if m = 0 then none else
+    some (if apex then 0 else delta / (r * m))
+  let rejectedJoint (p : Array Rat) := modes.foldl (fun total a =>
+    if parityEvent a && !guardAccepts a then total + p[modeIndex a]! else total) 0
+  if let some residual := guardResidual then
+    unless residual = (rejectedJoint law - rejectedJoint completion) / m do
+      throw "internal guard-response inconsistency"
+  let response := Json.mkObj [
+    ("conditioning_event_mass", rationalJson m),
+    ("conditional_reply_law", (replyLaw law true).getD Json.null),
+    ("product_completion_conditional_reply_law", (replyLaw completion true).getD Json.null),
+    ("unconditional_reply_law", (replyLaw law false).getD Json.null),
+    ("unconditional_rejection_mass", rationalJson x),
+    ("conditional_rejection_mass", if m = 0 then Json.null else rationalJson (k / m))]
+  return { result with
+    residuals := Json.mkObj (result.residuals.getObj?.toOption.get!.toArray.toList ++ [
+      ("R_guard", quantity (if m = 0 then "zero-conditioning-mass" else if apex then
+        "apex" else "positive-bottom-and-conditioning-mass") guardResidual)])
     response := response }
 
 end LeanInformationAudit.AuricFib

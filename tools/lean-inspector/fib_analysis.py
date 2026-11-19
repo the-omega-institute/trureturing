@@ -16,6 +16,7 @@ import tempfile
 import time
 import zipfile
 
+PREVIOUS_REPORT_SCHEMA = "stratalint-raw-lean-report-v3"
 HEX = re.compile(r"[0-9a-f]{64}")
 FIELDS = {"arena", "source_contract", "atom_readout", "seam_readout",
           "pyramid_coordinates", "association_coordinate", "continuation_target",
@@ -94,11 +95,15 @@ def _qualify_compiled(request, reading):
     continuation = reading.get("continuation_target")
     if isinstance(continuation, dict):
         continuation["predictive_closure"] = prediction
-        readings["predictive_closure"] = {
-            "kind": prediction["kind"],
-            "reason": prediction.get("reason", "compiled source-bound operation evidence")}
+    readings["predictive_closure"] = {
+        "kind": prediction["kind"],
+        "reason": prediction.get("reason", "compiled source-bound operation evidence")}
+
     def evidence(field, kind, reason):
         readings[field] = dict(kind=kind, reason=reason)
+    if request.get("arena") == "law-family":
+        _qualify_law_family(request, reading, evidence)
+        return reading
     if request.get("arena", "native-single-window") == "native-single-window":
         source = reading["source_contract"]
         source.pop("supplied_binding")
@@ -152,6 +157,46 @@ def _qualify_compiled(request, reading):
     return reading
 
 
+def _qualify_law_family(request, reading, evidence):
+    """Attach the compiler's law-family evidence in the native report producer."""
+    source = reading["source_contract"]
+    source.pop("supplied_binding")
+    source.update(kind="law-family", binding=request["binding"])
+    reading["disposition"]["reason"] = (
+        "compiled mass-valued law family; ordinary audit obligations remain independent")
+    for field in ("arena", "source_contract", "atom_readout", "kernel"):
+        evidence(field, "available", "full source binding, atom bijection and actual mass readout equality")
+    for field in ("seam_readout", "guard", "reply", "R_guard", "native_continuation", "conditional_reply_law"):
+        evidence(field, "not-applicable", "law family declares no native Window execution")
+    acquisition = request["acquisition"]
+    count_kind = "not-applicable" if acquisition["kind"] == "infinite" else "unavailable"
+    for field in ("escape_pairs", "escape_rate", "unique_capture"):
+        evidence(field, count_kind, acquisition["reason"])
+    evidence("layered_spectrum", "available", "qualitative family capture; finite counts acquired separately")
+
+    compiled = request["compiled_capture"]
+    reading["association_coordinate"]["family_capture"] = compiled["family"]
+    reading["layered_spectrum"]["family_capture"] = compiled["family"]
+    reading["disposition"]["readings"]["family_capture"] = compiled["reading"]
+
+    point_reason = request["point_unavailable_reason"]
+    if request["point"] is not None:
+        point_kind = "available"
+        point_reason = "exact rational point with domain membership and pointwise source-law equality"
+    elif point_reason:
+        point_kind = "unavailable"
+    else:
+        point_kind = "unknown"
+        point_reason = "law defined; no certified rational point supplied"
+    for field in ("pyramid_coordinates", "association_coordinate", "residuals"):
+        evidence(field, point_kind, point_reason)
+    if request["task"] is not None:
+        evidence("continuation_target", "available", "explicit rational atom task; no native continuation")
+        reading["continuation_target"].update(family_capture=compiled["task"], uses_delta=compiled["uses_delta"])
+    elif request.get("task_unavailable_reason"):
+        evidence("continuation_target", "unavailable", request["task_unavailable_reason"])
+
+
 def prepare(row, previous_artifact):
     """Reuse unchanged declaration payloads from the existing module artifact.
 
@@ -172,14 +217,18 @@ def prepare(row, previous_artifact):
         import publication
         with zipfile.ZipFile(path) as artifact:
             report = publication.read_json(artifact.read('raw-lean-report.json'))
-            if report['schema'] != publication.materials.REPORT_SCHEMA or len(report['modules']) != 1:
-                raise ValueError('fib.previous_module_binding')
-            old = report['modules'][0]
-            if old['module'] != row['module']:
-                raise ValueError('fib.previous_module_binding')
-            publication.check_origin(publication.read_json(
-                artifact.read('raw-lean-report.json.provenance.json')), old)
-        if "fib_analysis" in old:
+            old = None
+            # A known obsolete extraction format contributes no reusable leaves.
+            # Malformed or mismatched current artifacts still fail closed.
+            if report['schema'] != PREVIOUS_REPORT_SCHEMA:
+                if report['schema'] != publication.materials.REPORT_SCHEMA or len(report['modules']) != 1:
+                    raise ValueError('fib.previous_module_binding')
+                old = report['modules'][0]
+                if old['module'] != row['module']:
+                    raise ValueError('fib.previous_module_binding')
+                publication.check_origin(publication.read_json(
+                    artifact.read('raw-lean-report.json.provenance.json')), old)
+        if old is not None and "fib_analysis" in old:
             validate(old["fib_analysis"])
             previous = {x["application"]: x for x in old["fib_analysis"]["applications"]}
     pending = []
@@ -285,6 +334,21 @@ def application_inputs(report):
         return result
 
 
+def is_obsolete_published_report(report):
+    # Publication writes the schema as the final canonical field. This bounded
+    # read only selects a fresh regression run and never accepts old evidence.
+    suffix = f'], "schema": "{PREVIOUS_REPORT_SCHEMA}"}}\n'.encode('ascii')
+    try:
+        with report.open('rb') as source:
+            size = source.seek(0, os.SEEK_END)
+            if size < len(suffix):
+                return False
+            source.seek(-len(suffix), os.SEEK_END)
+            return source.read() == suffix
+    except FileNotFoundError:
+        return False
+
+
 def run_regressions(repository, previous, current, selected=False):
     """An already selected report consumer discharges one regression obligation.
 
@@ -293,8 +357,10 @@ def run_regressions(repository, previous, current, selected=False):
     same inputs without a persisted semantic test receipt.
     """
     current_inputs = application_inputs(current)
+    previous = Path(previous)
     try:
-        previous_inputs = application_inputs(previous) if Path(previous).exists() else {}
+        previous_inputs = None if is_obsolete_published_report(previous) else (
+            application_inputs(previous) if previous.exists() else {})
     except ValueError as error:
         if os.environ.get('REGENERATE_REPORT_ARTIFACTS') != '1' or str(error) != 'fib.invalid_partition':
             raise
