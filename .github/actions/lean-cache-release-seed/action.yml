@@ -67,7 +67,7 @@ runs:
           echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
         fi
     - name: Complete missing project artifacts with Lake
-      if: inputs.mode != 'legacy' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1'
+      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1'
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
       shell: bash

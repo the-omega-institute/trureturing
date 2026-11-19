@@ -172,7 +172,7 @@ jobs:
 
   cache-shards:
     name: Verify Lean cache continuation transport
-    if: github.ref_protected
+    if: github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:
@@ -219,6 +219,7 @@ jobs:
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
           python3 tools/scripts/worktree/lean_actions.py restore --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           make lean LEAN_TARGETS="$CACHE_SCOPE"
@@ -231,7 +232,7 @@ jobs:
         with:
           operation: save
           state: resume
-          anchor: ${{ github.event.before }}
+          anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
           targets: ${{ env.CACHE_SCOPE }}
       - if: steps.entry.outputs.hit == 'true'
         name: Isolate the restored build
