@@ -49,7 +49,10 @@ internal sealed class OddCycleTERDocument : IScribeDocumentDefinition
                         + "One block contains exactly one survivor, whose deletion ends the game. "
                         + "Thus each first option has a zero-valued reply by strong induction or termination. "
                         + "Mex then gives zero at every position satisfying the invariant, including the start."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("benesh-et-al-2026-odd-cycle-terminate-conjecture-5-5"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("odd-cycle-ter-" + name.ToLowerInvariant()),
