@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Combinatorics.Polyomino.UXPentominoBounds
 
+/-! Board area and minimum-area observations for the U and X pentomino bounds. -/
+
 namespace Reg.D5.S3.Combinatorics.Polyomino.UXPentominoBounds
 
 open Finset LeanInformationAudit
@@ -145,7 +147,8 @@ noncomputable def equalityFamily : Registration equalityArena (type_of% (@same_m
   actual := xMinimum
   bridge := Iff.rfl
   variation := ⟨same_minimum, erasedMinimum, erased_equality⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ xMinimum erasedMinimum erased_equality
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ xMinimum erasedMinimum
+    erased_equality
   dependence := by
     intro i
     refine ⟨(), (0 : ℕ), (1 : ℕ), ?_⟩
@@ -154,7 +157,8 @@ noncomputable def equalityFamily : Registration equalityArena (type_of% (@same_m
 
 noncomputable def uBoundRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.u_card_bound) (Realization boardSignature) Unit Unit where
+      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.u_card_bound)
+      (Realization boardSignature) Unit Unit where
   unitName := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds.u_card_bound.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.uFamily
   realizationSource := none
@@ -172,9 +176,11 @@ noncomputable def uBoundRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds, definition := none, coordinates := #[]
+    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds
+    definition := none, coordinates := #[]
     readouts := #[{
-      path := #["body","body","fn","arg","arg"], stateBinder := 0, functionOperand := false
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 0, functionOperand := false
       stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -182,7 +188,8 @@ noncomputable def uBoundRegistration :
 
 noncomputable def xBoundRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.x_card_bound) (Realization boardSignature) Unit Unit where
+      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.x_card_bound)
+      (Realization boardSignature) Unit Unit where
   unitName := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds.x_card_bound.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.xFamily
   realizationSource := none
@@ -200,9 +207,11 @@ noncomputable def xBoundRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds, definition := none, coordinates := #[]
+    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds
+    definition := none, coordinates := #[]
     readouts := #[{
-      path := #["body","body","fn","arg","arg"], stateBinder := 0, functionOperand := false
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 0, functionOperand := false
       stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -210,7 +219,8 @@ noncomputable def xBoundRegistration :
 
 noncomputable def transferRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.u_board_of_x_board) (Realization boardSignature) Unit Unit where
+      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.u_board_of_x_board)
+      (Realization boardSignature) Unit Unit where
   unitName := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds.u_board_of_x_board.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.transferFamily
   realizationSource := none
@@ -228,9 +238,11 @@ noncomputable def transferRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds, definition := none, coordinates := #[]
+    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds
+    definition := none, coordinates := #[]
     readouts := #[{
-      path := #["body","body","arg","body","arg","arg","arg"], stateBinder := 0, functionOperand := false
+      path := #["body", "body", "arg", "body", "arg", "arg", "arg"]
+      stateBinder := 0, functionOperand := false
       stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -238,7 +250,8 @@ noncomputable def transferRegistration :
 
 noncomputable def equalityRegistration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.same_minimum) (Realization thresholdSignature) Unit Unit where
+      (@_root_.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.same_minimum)
+      (Realization thresholdSignature) Unit Unit where
   unitName := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds.same_minimum.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.equalityFamily
   realizationSource := none
@@ -256,9 +269,11 @@ noncomputable def equalityRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds, definition := none, coordinates := #[]
+    owner := `D5.S3.Combinatorics.Polyomino.UXPentominoBounds
+    definition := none, coordinates := #[]
     readouts := #[{
-      path := #["body","body","arg"], stateBinder := 0, functionOperand := false
+      path := #["body", "body", "arg"]
+      stateBinder := 0, functionOperand := false
       stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
