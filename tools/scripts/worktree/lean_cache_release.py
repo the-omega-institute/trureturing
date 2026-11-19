@@ -1265,9 +1265,11 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
             if source is None:
                 raise ValueError("approved snapshot is outside the compatible partitions")
             candidates = [(source, approved_tag)]
-        else:
+        elif indexed:
             candidates = snapshot_candidates(root, partition, deadline, cache_key,
-                                             indexed=indexed, fallback=indexed and not targets)
+                                             indexed=True, fallback=not targets)
+        else:
+            candidates = snapshot_candidates(root, partition, deadline, cache_key)
         attempts = 0
         for source, tag in candidates:
             if attempts >= RELEASE_FETCH_MAX_ATTEMPTS:
