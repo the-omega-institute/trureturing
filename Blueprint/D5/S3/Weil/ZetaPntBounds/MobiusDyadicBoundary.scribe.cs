@@ -26,8 +26,8 @@ internal sealed class MobiusDyadicBoundaryDocument : IScribeDocumentDefinition
                         "Use the actual signed difference D(x) = S(x) − S(2x), where S(x) is the finite "
                         + "sum of μ(n)/n over positive integers n ≤ x. Fix 0 ≤ θ < 2 with θ ≠ 1 "
                         + "and assume that ζ has no zeros on the line of real part θ. If the integral "
-                        + "E of D(x)² x⁻⁽²θ⁻¹⁾ over x > 1 is finite, the weighted reciprocal belongs "
-                        + "to L¹ on the whole real line and its integral satisfies the displayed bound.")),
+                        + "E of D(x)² x⁻⁽²θ⁻¹⁾ over x > 1 is finite, y ↦ 1/((1+|y|)|ζ(θ+iy)|) "
+                        + "belongs to L² on the real line. Its squared norm satisfies the displayed bound.")),
                     Paragraph(Text(
                         "The change of variables x = exp u gives a causal function in L². "
                         + "Damping it by exp(−hu) yields L¹ and L² and preserves the L² bound. "
