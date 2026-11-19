@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
   - D5/S3/Combinatorics/Geometry/CompleteCentralParity
   - D5/S3/Combinatorics/Geometry/MinimumCentralOrder
+  - D5/S3/Combinatorics/Geometry/CentralSizeEdgeMinima
 license: citation-only
 triage: anchor
 ---
@@ -37,5 +38,12 @@ realizes it.
 
 Corollary 6 (Section 4): for k >= 1 the least order v(k) of a metric space with |C(X)| = k is
 1 for k = 1, k for even k, and k+1 for odd k >= 3. This answers Problem 4.3 of Dovgoshey and
-Rovenska. A space has at most n central values; at equality the central graph is complete, so
-Theorem 5 excludes odd n >= 3, and capping the round-robin distances attains every bound.
+Rovenska. Lemma 2 against the n(n-1)/2 pairs gives k <= n, and k <= n-1 for odd n >= 3; a
+one-factorization of K_(k+1) or K_k with k-1 factors at constant lengths in [1,3/2) and the
+remaining edges at distinct lengths in (3/2,2) attains the bound.
+
+Corollary 7 (Section 5): for n >= 3 the feasible center sizes are 1 <= k <= n for even n and
+1 <= k <= n-1 for odd n; n = 1 allows only k = 1 and n = 2 only k = 2. Each feasible pair
+attains (k-1)⌈n/2⌉ central edges. For odd n the n near-one-factors of K_n are completed by
+orienting the path formed by two reserved factors, which gives n-2 disjoint spanning edge
+covers of size (n+1)/2; the source credits Andersen's cover-index criterion as antecedent.
