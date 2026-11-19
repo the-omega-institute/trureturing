@@ -47,6 +47,10 @@ private def boundArena (T : Finset Point) : Arena where
     (instances P T).card + 2 ≤ R.readout () () P ∧
       8 * (instances P T).card ≤ (P.card - (instances P T).card - 2) ^ 2 + 4
 
+abbrev uBoundArena : Arena := boundArena U
+
+abbrev xBoundArena : Arena := boundArena X
+
 private theorem erased_bound (T : Finset Point) (hT : T.Nonempty) :
     ¬ (boundArena T).Law erasedArea := by
   intro h
@@ -54,7 +58,7 @@ private theorem erased_bound (T : Finset Point) (hT : T.Nonempty) :
   change (instances T T).card + 2 ≤ 0 at hzero
   omega
 
-def uFamily : Registration (boundArena U) (type_of% (@u_card_bound)) where
+def uFamily : Registration uBoundArena (type_of% (@u_card_bound)) where
   actual := area
   bridge := Iff.rfl
   variation := ⟨u_card_bound, erasedArea, erased_bound U (by decide)⟩
@@ -62,7 +66,7 @@ def uFamily : Registration (boundArena U) (type_of% (@u_card_bound)) where
     (erased_bound U (by decide))
   dependence := area_dependence
 
-def xFamily : Registration (boundArena X) (type_of% (@x_card_bound)) where
+def xFamily : Registration xBoundArena (type_of% (@x_card_bound)) where
   actual := area
   bridge := Iff.rfl
   variation := ⟨x_card_bound, erasedArea, erased_bound X (by decide)⟩
@@ -163,11 +167,11 @@ noncomputable def uBoundRegistration :
   realizationName := `Reg.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.uFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨(boundArena U)⟩
-  objectArena := .source ⟨(boundArena U)⟩
+  arena := .source ⟨uBoundArena⟩
+  objectArena := .source ⟨uBoundArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source (boundArena U) ⟨uFamily⟩
+  realization := .source uBoundArena ⟨uFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize boardSignature area.readout area.anchor)
@@ -194,11 +198,11 @@ noncomputable def xBoundRegistration :
   realizationName := `Reg.D5.S3.Combinatorics.Polyomino.UXPentominoBounds.xFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨(boundArena X)⟩
-  objectArena := .source ⟨(boundArena X)⟩
+  arena := .source ⟨xBoundArena⟩
+  objectArena := .source ⟨xBoundArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source (boundArena X) ⟨xFamily⟩
+  realization := .source xBoundArena ⟨xFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize boardSignature area.readout area.anchor)
