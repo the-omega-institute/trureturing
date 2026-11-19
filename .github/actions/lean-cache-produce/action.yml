@@ -69,19 +69,9 @@ runs:
         path: ${{ steps.keys.outputs.dependency_archive_path }}
         key: ${{ steps.keys.outputs.dependency_key }}
         restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-    - id: sharded_resume
-      name: Restore sharded producer progress
-      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
-      continue-on-error: true
-      uses: ./.github/actions/lean-cache-shards
-      env:
-        GH_TOKEN: ${{ github.token }}
-      with:
-        operation: restore
-        state: resume
     - id: sharded_seed
       name: Restore a complete sharded project seed
-      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == '' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
+      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
       continue-on-error: true
       uses: ./.github/actions/lean-cache-shards
       env:
@@ -90,7 +80,7 @@ runs:
         operation: restore
         require-complete: 'true'
     - id: project
-      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != '' && steps.sharded_seed.outputs.complete != 'true' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
+      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != '' && steps.sharded_seed.outputs.complete != 'true'
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -122,6 +112,16 @@ runs:
         RELEASE_PRODUCER: ${{ inputs.release-seed-producer }}
       shell: bash
       run: make lean-cache-from-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_TAG="$RELEASE_TAG" LEAN_CACHE_SOURCE_COMMIT="$RELEASE_PRODUCER"
+    - id: sharded_resume
+      name: Restore sharded producer progress
+      if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: restore
+        state: resume
     - id: resume_keys
       name: Select the producer continuation
       shell: bash
