@@ -1,0 +1,120 @@
+**Theorem 41.1 (every-policy root and stopping bounds).** For every
+$e\in\mathbb Z$, every policy of Definition 40.3 and every fixed seed,
+the source $S_e$ satisfies `noAdjacentOnes` and $h_5$ is stopped. The
+existing `recoveredRoot` equals $f(e)$ at $h_5$ and every later horizon.
+With complete retained-record access, define
+
+$$
+D_4(h_4)=
+\begin{cases}
+\operatorname{recoveredRoot}(h_4)&h_4.\mathrm{stopped}=1,\\
+\#_L(h_4.\mathrm{actions})\bmod2&h_4.\mathrm{stopped}=0.
+\end{cases}
+\tag{IV.126}
+$$
+
+Then $D_4(h_4)=f(e)$. For **each** policy and fixed seed, some
+nonnegative origin remains active through four attempts and first
+marks at five. No policy with a decoder of its complete record can
+identify $f(e)$ uniformly over nonnegative origins in at most three
+attempts. The latter impossibility also holds for source-independent
+randomized control with exact recovery required almost surely at
+every origin.
+
+**Proof.** For every integer $u$ and positive integer $m$, telescoping
+the displayed floors gives
+
+$$
+\begin{aligned}
+\sum_{i=u}^{u+m-1} f(i)
+ &=m-\lfloor(u+m+1)s\rfloor+\lfloor(u+1)s\rfloor,\\
+\lfloor ms\rfloor
+ &\le \lfloor(u+m+1)s\rfloor-\lfloor(u+1)s\rfloor
+ \le\lceil ms\rceil.
+\end{aligned}
+\tag{IV.127}
+$$
+
+These are ordinary mechanical-word floor estimates, including every
+integer boundary. Since $1<2s<2$, every adjacent pair of $f$ has at
+most one $1$. Since $1<3s<2$, every triple has at least one $1$.
+Since $3<5s<4$, every length-five block has at most two $1$s. Thus
+
+$$
+11,\qquad 000,\qquad 10101
+\quad\hbox{do not occur in }f.
+\tag{IV.128}
+$$
+
+The first exclusion proves the exact `noAdjacentOnes` premise on both
+rays, including edges incident to the common root.
+
+If $q$ actual queries have all replied $0$, let $l,r$ be their left and
+right counts. Each compared edge is neither $11$ nor $00$, and hence
+alternates. Because the two rays are opposite portions of one source,
+their union is the contiguous interval
+
+$$
+f(e-l)\cdots f(e+r),\qquad l+r=q.
+\tag{IV.129}
+$$
+
+Every edge in that interval has been compared, regardless of query
+interleaving. At $q=5$ it would be an alternating six-letter word.
+Each such word contains $10101$, contradicting (IV.128). Consequently
+the fifth attempt has already marked. At an actual stopped state use
+the pointwise supplier
+[`stopped_root_recovery`](../../../D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.lean)
+on this very $S_e$ and its proved `noAdjacentOnes`. This supplies the
+claimed root without a probability-law premise. Absorption supplies
+all later horizons. No new conditional root-recovery principle is
+being asserted.
+
+If $h_4$ is active, all four attempts were actual queries. Its five
+letters alternate. The excluded word $10101$ leaves only $01010$ in
+(IV.129). The root is $l$ positions from its left end, so $f(e)=l\bmod2$.
+If already stopped, the same supplier applies. This proves (IV.126).
+The decoder does not set `stopped` or create a marker at attempt four.
+
+For sharpness, the exact canonical block is
+
+$$
+f(2)\cdots f(8)=0010100.
+\tag{IV.130}
+$$
+
+Fix a policy and seed and follow its four-action replay in which all
+replies are $0$. Let $l$ be the resulting left count. At origin
+$e=l+3$, the four queried edges lie inside $f(3)\cdots f(7)=01010$.
+Induction on the replay shows that all four actions really occur
+with zero replies on that source. The next query, on either side,
+adds the $0$ at index $2$ or $8$ to a zero endpoint. It marks.
+Thus every such policy has worst stopping horizon five.
+
+For the three-attempt lower bound, take its three-action zero replay
+and let its left count be $l$. The two origins $e_0=l+3$ and $e_1=l+4$
+give observed intervals $f(3)\cdots f(6)=0101$ and
+$f(4)\cdots f(7)=1010$. Both produce exactly the replay's actions,
+three zero replies and an active flag. Their roots, at the same
+offset $l$, are opposite. Any earlier readout has the same inputs on
+these sources too. Therefore no decoder succeeds on both.
+
+For a randomized policy, the third-attempt zero replay has only eight
+possible action words. At least one has positive seed probability.
+Use the same two origins for that word and couple the seed identically.
+On this event the entire available record and seed agree, and the
+correct roots differ. The sum of the two error probabilities is at
+least the event probability, so exact almost-sure recovery at every
+origin is impossible. The finite block (IV.130), and all later finite
+witnesses, follow directly from (IV.119): for $n>0$ its floors can be
+certified by
+
+$$
+\lfloor ns\rfloor=q
+\quad\Longleftrightarrow\quad
+(2q+n)^2<5n^2<(2q+2+n)^2\quad(q\ge0).
+\tag{IV.131}
+$$
+
+Irrationality makes both comparisons strict. $\square$
+

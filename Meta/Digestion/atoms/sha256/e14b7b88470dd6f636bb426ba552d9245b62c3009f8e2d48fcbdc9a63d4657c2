@@ -1,0 +1,33 @@
+**Theorem 49.1 (the original consumer and a supplied scaffold).**
+For any $H$ justified by Theorem 47.1 or 48.1, let $b_0\cdots b_{H-1}$
+be the recovered original prefix. The consumer map is exactly
+
+$$
+b_i=0\longmapsto a_{e+i}=\beta\longmapsto\langle\beta,\alpha\rangle,
+\qquad
+b_i=1\longmapsto a_{e+i}=\alpha\longmapsto\beta.
+\tag{IV.152}
+$$
+
+It yields $\mathcal R_H(e)$ without flattening the boundaries between
+its $H$ outputs. For a supplied known ordered $H$-leaf scaffold $C$
+with its specified leaf order, it also yields
+$\rho(C[a_e,\ldots,a_{e+H-1}])$. A flat acquired prefix does not
+in general determine an unknown original bracket structure: for $H\ge3$
+the same $H$ labels admit distinct ordered brackets with different images.
+
+**Proof.** The prefix equalities identify each input letter on the
+same original source. Equation (IV.152) is the original atomic rule,
+and the homomorphic clause of (IV.121) evaluates the supplied scaffold
+by structural recursion. This directly uses FARG Definitions 2.1/3.1
+and Proposition 42.3, rather than defining a substitute consumer.
+For unknown brackets, already the trees $\langle\langle u,v\rangle,z\rangle$
+and $\langle u,\langle v,z\rangle\rangle$, with the same three atomic
+labels, have different images: the first left image has
+$|\rho(u)|+|\rho(v)|$ leaves, the second only $|\rho(u)|$.
+For $H>3$, attach the remaining common ordered leaves with the same
+outer brackets; the distinction persists. Equation (IV.136) gives
+an attained four-letter instance. Further flat letters do not observe
+these brackets. Quantity/path recovery retains its original additional
+observations. $\square$
+

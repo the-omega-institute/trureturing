@@ -1,0 +1,27 @@
+**Proposition 42.3 (scaffolds and the original tree boundary).** The
+recovered four atoms determine $\rho$ of any **supplied known** ordered
+binary scaffold filled with those atoms, preserving all scaffold and
+beta-output brackets. They do not determine the brackets of an unknown
+original tree with that frontier.
+
+**Proof.** Recursive application of (IV.121) to the supplied scaffold
+computes its output from its leaves. For the second statement the two
+trees
+
+$$
+\langle\langle\beta,\beta\rangle,\langle\alpha,\beta\rangle\rangle,
+\qquad
+\langle\beta,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle
+\tag{IV.136}
+$$
+
+both have the attained four-letter frontier $0010$. Their left children
+are a branch and an atom, respectively. After $\rho$, their left
+subtrees are respectively
+$\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle$
+and $\langle\beta,\alpha\rangle$, which still differ. The gap word
+supplies no measurement of that structure. The original source's Theorem 5.4 still
+recovers composition from its two quantity readings, and Theorem 9.3
+still recovers a tree from all its path readings. Neither set of
+premises is silently supplied by a flat marker record. $\square$
+
