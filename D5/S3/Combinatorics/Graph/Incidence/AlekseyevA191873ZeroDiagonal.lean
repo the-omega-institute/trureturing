@@ -222,7 +222,7 @@ private theorem cycle_matrix {n : ℕ} (hn : 3 ≤ n) :
   let M : Matrix (Fin n) (Fin n) (Fin 2) := fun i j => if j=i ∨ j=f i then 1 else 0
   have hs : ∀ i j, M i j = 1 ↔ j=i ∨ j=f i := by
     intro i j
-    by_cases h : j=i ∨ j=f i <;> simp [M,h]
+    simp only [M, ite_eq_left_iff, zero_ne_one, imp_false, not_not]
   refine ⟨M, ?_, ?_⟩
   · rintro ⟨i,k,j,l,hik,hjl,h1,h2,h3,h4⟩
     rcases (hs i j).mp h1 with h1|h1 <;>
@@ -260,7 +260,7 @@ private theorem trim_matrix {n : ℕ} (M : Matrix (Fin n) (Fin n) (Fin 2))
   let B : Matrix (Fin n) (Fin n) (Fin 2) := fun i j => if (i,j) ∈ s then 1 else 0
   have hb : ∀ i j, B i j = 1 ↔ (i,j) ∈ s := by
     intro i j
-    by_cases h : (i,j) ∈ s <;> simp [B,h]
+    simp only [B, ite_eq_left_iff, zero_ne_one, imp_false, not_not]
   have hm : ∀ i j, B i j = 1 → M i j = 1 := by
     intro i j hij
     exact (mem_filter.mp (hs ((hb i j).mp hij))).2
