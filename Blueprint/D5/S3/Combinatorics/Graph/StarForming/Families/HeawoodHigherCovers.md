@@ -8,9 +8,9 @@ An arbitrary neighborhood cover of the actual binary Heawood base with two-eleme
 
 **Theorem 1.1 (connected double quotient).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodHigherCovers.connected_double_quotient`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodHigherCovers.connected_double_quotient`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodHigherCovers.connected_double_quotient` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodHigherCovers.connected_double_quotient` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -20,5 +20,5 @@ Exact declaration: theorem connected_double_quotient (p : V → Fin 14) (double 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodHigherCovers.connected_double_quotient`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers](HeawoodAllDoubleCovers.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodHigherCovers.connected_double_quotient`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodAllDoubleCovers](HeawoodAllDoubleCovers.md)

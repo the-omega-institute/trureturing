@@ -8,9 +8,9 @@ The six original fifteen-sets transport to every connected signing, giving beta 
 
 **Definition 1.1 (sixIso).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.sixIso`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.sixIso`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.sixIso` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.sixIso` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -20,9 +20,9 @@ Exact declaration: def sixIso (k : Fin 6) : graph (HeawoodActions.representative
 
 **Theorem 1.2 (connected beta).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.connected_beta`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.connected_beta`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.connected_beta` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.connected_beta` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -32,9 +32,9 @@ Exact declaration: theorem connected_beta (s : Signing) (hs : (graph s).Preconne
 
 **Theorem 1.3 (parameters).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.parameters`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.parameters`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.parameters` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.parameters` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -44,8 +44,8 @@ Exact declaration: theorem parameters (s : Signing) : SF (graph s) 2=16 ∧ (bet
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.connected_beta`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.parameters`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters.sixIso`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodActions](HeawoodActions.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters](HeawoodCoverParameters.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.connected_beta`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.parameters`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters.sixIso`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodActions](HeawoodActions.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters](../HeawoodCoverParameters.md)

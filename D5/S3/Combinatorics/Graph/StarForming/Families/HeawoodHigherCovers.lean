@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodHigherCovers
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodHigherCovers
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodHigherCovers
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/HeawoodHigherCovers
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual arbitrary-fiber covers above connected Heawood double quotients. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodAllDoubleCovers
+import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodAllDoubleCovers
 
 /-! The connected-double-quotient transfer in HEAWOOD_HIGHER_COVER_BOUNDS,
 subquorum-colorings 48728b42d39ab3de5de251c61da5a404ec418a69,

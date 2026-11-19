@@ -1,13 +1,13 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodActions
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodActions
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodActions
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/HeawoodActions
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Coordinate automorphisms and complete finite traceless classification. -/
 
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodLift
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodCertificates
+import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodCertificates
 
 /-! Explicit coordinate changes and conjugators for the finite binary
 three-space in HEAWOOD_DOUBLE_COVER_GAIN, subquorum-colorings

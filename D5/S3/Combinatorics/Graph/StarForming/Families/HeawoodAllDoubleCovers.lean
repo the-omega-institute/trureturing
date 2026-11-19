@@ -1,13 +1,13 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodAllDoubleCovers
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/HeawoodAllDoubleCovers
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual parameter dichotomy for every two-sheeted Heawood neighborhood cover. -/
 
 import D5.S3.Combinatorics.Graph.StarForming.BinaryCoverRepresentation
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodConnectedCoverParameters
+import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodConnectedCoverParameters
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 /-! The full two-sheet theorem of HEAWOOD_DOUBLE_COVER_GAIN,

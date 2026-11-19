@@ -8,9 +8,9 @@ The supplied binary point/line labels, sheet bits, twist flags and selected list
 
 **Definition 1.1 (label).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.label`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.label`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.label` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.label` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -20,9 +20,9 @@ Exact declaration: def label (vertex : Fin 28) : Nat.
 
 **Definition 1.2 (sheet).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sheet`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sheet`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sheet` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sheet` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -32,9 +32,9 @@ Exact declaration: def sheet (vertex : Fin 28) : Nat.
 
 **Definition 1.3 (adjacency).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.adjacency`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.adjacency`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.adjacency` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.adjacency` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -44,9 +44,9 @@ Exact declaration: def adjacency (twists : List (Nat × Nat)) (first second : Fi
 
 **Definition 1.4 (selected).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.selected`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.selected`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.selected` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.selected` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -56,9 +56,9 @@ Exact declaration: def selected (points lines : List Nat) (vertex : Fin 28) : Pr
 
 **Definition 1.5 (scalarTwists).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarTwists`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarTwists`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarTwists` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarTwists` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -68,9 +68,9 @@ Exact declaration: def scalarTwists : List (Nat × Nat).
 
 **Definition 1.6 (jordanTwists).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanTwists`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanTwists`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanTwists` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanTwists` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -80,9 +80,9 @@ Exact declaration: def jordanTwists : List (Nat × Nat).
 
 **Definition 1.7 (scalarPoints).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarPoints`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarPoints`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarPoints` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarPoints` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -92,9 +92,9 @@ Exact declaration: def scalarPoints : List Nat.
 
 **Definition 1.8 (scalarLines).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarLines`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarLines`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarLines` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarLines` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -104,9 +104,9 @@ Exact declaration: def scalarLines : List Nat.
 
 **Definition 1.9 (jordanPoints).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanPoints`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanPoints`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanPoints` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanPoints` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -116,9 +116,9 @@ Exact declaration: def jordanPoints : List Nat.
 
 **Definition 1.10 (jordanLines).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanLines`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanLines`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanLines` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanLines` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -128,9 +128,9 @@ Exact declaration: def jordanLines : List Nat.
 
 **Theorem 1.11 (scalar dissociates).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_dissociates`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_dissociates`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_dissociates` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_dissociates` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -140,9 +140,9 @@ Exact declaration: theorem scalar_dissociates : Dissociates (adjacency scalarTwi
 
 **Theorem 1.12 (jordan dissociates).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_dissociates`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_dissociates`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_dissociates` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_dissociates` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -152,9 +152,9 @@ Exact declaration: theorem jordan_dissociates : Dissociates (adjacency jordanTwi
 
 **Theorem 1.13 (scalar card).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_card`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_card`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_card` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_card` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -164,9 +164,9 @@ Exact declaration: theorem scalar_card : ((List.finRange 28).filter (fun vertex 
 
 **Theorem 1.14 (jordan card).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_card`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_card`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_card` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_card` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -176,9 +176,9 @@ Exact declaration: theorem jordan_card : ((List.finRange 28).filter (fun vertex 
 
 **Definition 1.15 (scalarGraph).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarGraph`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarGraph`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarGraph` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarGraph` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -188,9 +188,9 @@ Exact declaration: def scalarGraph : SimpleGraph (Fin 28).
 
 **Definition 1.16 (jordanGraph).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanGraph`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanGraph`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanGraph` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanGraph` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -200,9 +200,9 @@ Exact declaration: def jordanGraph : SimpleGraph (Fin 28).
 
 **Definition 1.17 (scalarSet).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarSet`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarSet`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarSet` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarSet` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -212,9 +212,9 @@ Exact declaration: def scalarSet : Finset (Fin 28).
 
 **Definition 1.18 (jordanSet).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanSet`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanSet`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanSet` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanSet` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -224,9 +224,9 @@ Exact declaration: def jordanSet : Finset (Fin 28).
 
 **Theorem 1.19 (scalar selection).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_selection`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_selection`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_selection` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_selection` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -236,9 +236,9 @@ Exact declaration: theorem scalar_selection : IsKIndependent scalarGraph 2 scala
 
 **Theorem 1.20 (jordan selection).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_selection`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_selection`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_selection` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_selection` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -248,9 +248,9 @@ Exact declaration: theorem jordan_selection : IsKIndependent jordanGraph 2 jorda
 
 **Theorem 1.21 (scalar class).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_class`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_class`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_class` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_class` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -260,9 +260,9 @@ Exact declaration: theorem scalar_class : scalarGraph.Colorable 2 ∧ ∀ v, Deg
 
 **Theorem 1.22 (jordan class).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_class`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_class`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_class` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_class` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -272,9 +272,9 @@ Exact declaration: theorem jordan_class : jordanGraph.Colorable 2 ∧ ∀ v, Deg
 
 **Theorem 1.23 (scalar parameters).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_parameters`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_parameters`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_parameters` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_parameters` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -284,9 +284,9 @@ Exact declaration: theorem scalar_parameters : beta scalarGraph 2 = 16 ∧ SF sc
 
 **Theorem 1.24 (jordan parameters).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_parameters`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_parameters`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_parameters` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_parameters` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -296,9 +296,9 @@ Exact declaration: theorem jordan_parameters : beta jordanGraph 2 = 16 ∧ SF jo
 
 **Definition 1.25 (sixTwists).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTwists`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixTwists`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTwists` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixTwists` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -308,9 +308,9 @@ Exact declaration: def sixTwists (k : Fin 6) : List (Nat × Nat).
 
 **Definition 1.26 (sixPoints).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPoints`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixPoints`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPoints` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixPoints` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -320,9 +320,9 @@ Exact declaration: def sixPoints (k : Fin 6) : List Nat.
 
 **Definition 1.27 (sixLines).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLines`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixLines`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLines` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixLines` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -332,9 +332,9 @@ Exact declaration: def sixLines (k : Fin 6) : List Nat.
 
 **Definition 1.28 (sixGraph).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGraph`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixGraph`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGraph` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixGraph` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -344,9 +344,9 @@ Exact declaration: def sixGraph (k : Fin 6) : SimpleGraph (Fin 28).
 
 **Definition 1.29 (sixSet).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSet`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixSet`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSet` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixSet` (`✓ std3`).
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -356,9 +356,9 @@ Exact declaration: def sixSet (k : Fin 6) : Finset (Fin 28).
 
 **Theorem 1.30 (six selection).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_selection`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_selection` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -368,9 +368,9 @@ Exact declaration: theorem six_selection (k : Fin 6) : IsKIndependent (sixGraph 
 
 **Theorem 1.31 (six class).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_class`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_class` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -380,9 +380,9 @@ Exact declaration: theorem six_class (k : Fin 6) : (sixGraph k).Colorable 2 ∧ 
 
 **Theorem 1.32 (six beta bounds).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_beta_bounds`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_beta_bounds`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_beta_bounds` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_beta_bounds` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -392,38 +392,38 @@ Exact declaration: theorem six_beta_bounds (k : Fin 6) : 15 ≤ beta (sixGraph k
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.adjacency`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanGraph`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanLines`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanPoints`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanSet`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordanTwists`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_card`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_class`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_dissociates`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_parameters`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jordan_selection`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.label`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarGraph`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarLines`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarPoints`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarSet`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalarTwists`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_card`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_class`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_dissociates`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_parameters`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_selection`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.selected`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sheet`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGraph`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLines`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPoints`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSet`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTwists`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_beta_bounds`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class`
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/FiniteMasks](FiniteMasks.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodIncidence](HeawoodIncidence.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.adjacency`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanLines`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanPoints`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanSet`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordanTwists`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_card`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_class`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_dissociates`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_parameters`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.jordan_selection`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.label`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarLines`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarPoints`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarSet`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalarTwists`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_card`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_class`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_dissociates`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_parameters`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.scalar_selection`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.selected`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sheet`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixLines`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixPoints`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixSet`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.sixTwists`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_beta_bounds`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_class`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates.six_selection`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/FiniteMasks](../FiniteMasks.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodIncidence](../HeawoodIncidence.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](../RegularCompensation.md)

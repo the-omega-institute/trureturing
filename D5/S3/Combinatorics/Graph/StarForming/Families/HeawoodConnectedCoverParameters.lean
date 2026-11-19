@@ -1,13 +1,13 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Exact SF and the connected/disconnected beta dichotomy for Heawood double lifts. -/
 
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodCoverParameters
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodActions
+import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodActions
 
 /-! The six-type parameter transfer in HEAWOOD_DOUBLE_COVER_GAIN,
 subquorum-colorings 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0. -/

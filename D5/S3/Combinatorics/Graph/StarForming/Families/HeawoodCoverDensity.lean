@@ -7,7 +7,7 @@
    digest: Density and gap bounds above the original S and J Heawood two-lifts. -/
 
 import D5.S3.Combinatorics.Graph.StarForming.CoverDensity
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodCertificates
+import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodCertificates
 
 namespace D5.S3.Combinatorics.Graph.StarForming.CoverDensity
 open StarFormingDissociationRefutation

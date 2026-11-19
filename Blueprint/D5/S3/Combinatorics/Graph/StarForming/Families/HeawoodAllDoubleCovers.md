@@ -8,9 +8,9 @@ An arbitrary finite neighborhood cover of the actual fourteen-vertex binary Fano
 
 **Theorem 1.1 (parameters).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers.parameters`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodAllDoubleCovers.parameters`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers.parameters` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodAllDoubleCovers.parameters` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -20,6 +20,6 @@ Exact declaration: theorem parameters {U : Type} [Fintype U] [DecidableEq U] (H 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers.parameters`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/BinaryCoverRepresentation](BinaryCoverRepresentation.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodConnectedCoverParameters](HeawoodConnectedCoverParameters.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodAllDoubleCovers.parameters`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/BinaryCoverRepresentation](../BinaryCoverRepresentation.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodConnectedCoverParameters](HeawoodConnectedCoverParameters.md)

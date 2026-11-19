@@ -35,4 +35,4 @@ Exact declaration: theorem jordan_cover_bound {U : Type} [Fintype U] [DecidableE
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.jordan_cover_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCoverDensity.scalar_cover_bound`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/CoverDensity](../CoverDensity.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates](../HeawoodCertificates.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodCertificates](HeawoodCertificates.md)
