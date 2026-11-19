@@ -1,0 +1,19 @@
+# Pinned real algebraic source: TauCeti.RingTheory.Polynomial.Subresultant.DegreeDrop.Basic.
+
+## Abstract
+
+Pinned real algebraic source: TauCeti.RingTheory.Polynomial.Subresultant.DegreeDrop.Basic.
+
+This content adaptation retains selected declarations and proof bodies from TauCetiProject/TauCeti revision 1f9b4414105d86e487a4ac4c3d3397076a44d0d2, TauCeti/RingTheory/Polynomial/Subresultant/DegreeDrop/Basic.lean. The D5 import paths connect its actual proof dependencies to the original cone boundary consumer. It does not assume a cylindrical decomposition or semialgebraic projection certificate. The original source ownership is retained and no independent escape credit is claimed. Full license and attribution appear in the Lean source and docs/reports/licenses/TauCeti-LICENSE.txt. Each adaptation is retired when the actual pinned mathlib supplies an equivalent statement, replacing consumers by direct applications of that owner.
+
+Let R be any commutative ring, p and q polynomials of degree at most m and n, and j ≤ m,n. The coefficient window for subresultantCoeff has size (m-j)+(n-j). Raising the right bound by one makes the last row zero off its corner when the actual degree of q is at most n; the corner is p.coeff m. For j<m the replaced first row is distinct. Pinned Matrix.det_succ_row and Finset.sum_eq_single give the sparse Laplace expansion, with sign exponent twice the last index. Fin coordinate casts identify the remaining minor with the smaller-bound matrix.
+
+For arbitrary N≥n this one-step identity is a semiconjugacy F(d+1)=p.coeff(m) F(d), where F(d)=subresultantCoeff p q m (n+d) j k. Pinned Function.Semiconj.iterate_right at N-n and mul_left_iterate_apply yield coefficient multiplication by p.coeff(m)^(N-n). The coefficient index k is arbitrary. At j=m the same principal-coefficient identity follows from the upper-triangular matrix and its diagonal product, including the empty determinant equal to one. Swapping blocks gives the left formula with sign (-1)^((M-m)*(n-j)); the block inversion rectangle has (M-j)*(n-j) pairs. These identities retain zero polynomials and zero leading coefficients.
+
+For arbitrary commutative R,S, ring hom f:R→+*S, m≤M,n≤N and j≤m,n, assume only (map f p).natDegree≤m and (map f q).natDegree≤n. Then f(psc p q M n j) = (-1)^((M-m)*(n-j))*f(q.coeff n)^(M-m)*psc (map f (reductum p (m+1))) (map f q) m n j, and f(psc p q m N j) = f(p.coeff m)^(N-n)*psc (map f p) (map f (reductum q (n+1))) m n j. First truncate the dropped input above the mapped degree, then map; coefficientwise truncation proves that its mapped value is unchanged. Fixed-bound compatibility is RingHom.map_det. No injectivity, nonzero coefficient or nontriviality assumption is imposed. The surviving coefficient-minor and left PSC identities also act on the actual remainder in Subresultant.Euclidean, which supplies the signed-PSC root-count recurrence.
+
+## References
+
+- Dependency: [D5/S3/Geometry/AlgebraicBoundary/TauCeti/LinearAlgebra/Matrix/CornerMinor](../../../../LinearAlgebra/Matrix/CornerMinor.md)
+- Dependency: [D5/S3/Geometry/AlgebraicBoundary/TauCeti/RingTheory/Polynomial/Reductum](../../Reductum.md)
+- Dependency: [D5/S3/Geometry/AlgebraicBoundary/TauCeti/RingTheory/Polynomial/Subresultant/Polynomial](../Polynomial.md)

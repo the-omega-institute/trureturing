@@ -1,0 +1,7 @@
+**定理 124.6（全族的弱球条件刚性）。** 对定义124.5中的任意收缩实三线性型 $\tau$，下列条件等价：
+
+1. 每个实际原纯点的整个 $D_p$ 都是某个正维仿射闭球，即EB$_{\ge1}$。
+2. 存在实线性双射 $\Psi:V\to\operatorname{Herm}_3(\mathbb C)$，满足 $\Psi(C_\tau)=\operatorname{PSD}_3$、$\operatorname{Tr}\Psi=u$。
+3. 每个实际原纯点的整个 $D_p$ 都是三球，即EB3。
+4. 存在实线性欧氏等距同构 $O_i:L_i\to\mathbb C$，使对全部实输入都有
+

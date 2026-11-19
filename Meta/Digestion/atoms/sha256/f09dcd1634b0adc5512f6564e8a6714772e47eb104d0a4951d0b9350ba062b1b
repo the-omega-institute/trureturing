@@ -1,0 +1,13 @@
+## 117. Closed implementer graph and the full twisted extension
+
+Fix a source complex conjugation $\kappa$ and give
+
+$$
+U^{\pm}(n)=U(n)\cup U(n)\kappa
+\tag{117.1}
+$$
+
+its usual finite-dimensional compact group topology. The two components
+are the unitary and antiunitary implementers. Let $H$ be the actual
+compact subgroup in Theorem 109.3.
+
