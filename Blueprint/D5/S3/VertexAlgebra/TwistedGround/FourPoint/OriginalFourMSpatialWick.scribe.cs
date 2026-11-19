@@ -60,7 +60,7 @@ internal sealed class OriginalFourMSpatialWickDocument : IScribeDocumentDefiniti
                     "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_coefficient_overlap"),
                 H("Sector identities of the simultaneous marked Taylor coefficients"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Under joint analyticity at the marked origin, Taylor "
-                    + "extraction preserves the actual Fourier and quadratic sector identities "
+                Blocks(Paragraph(Text("Normal convergence at the marked origin lets Taylor "
+                    + "extraction preserve the actual Fourier and quadratic sector identities "
                     + "and the original B-chart period multiplier."))), DescribeRole.Theorem))));
 }

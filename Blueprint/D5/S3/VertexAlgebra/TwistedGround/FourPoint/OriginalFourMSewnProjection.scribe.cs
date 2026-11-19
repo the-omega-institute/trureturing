@@ -24,5 +24,51 @@ internal sealed class OriginalFourMSewnProjectionDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text("In radial charts A and B, the marked spatial Taylor coefficient of a "
                     + "fixed charge equals the four original occupation sums after the slotwise inverse "
                     + "transforms. The native nome relation is an explicit hypothesis."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-radial-sector-four-occupation"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_sector_four_occupation"),
+                H("Convergent four-occupation projection of a radial sector"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In charts A and B the Taylor coefficient of the full "
+                    + "physical sector equals the convergent charge sum of the literal native "
+                    + "four-occupation readout at the stated nome."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-radial-occupation-section-overlap"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_occupation_section_overlap"),
+                H("Fourier overlap of the original radial occupation sections"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual D chart jet and the radial B occupation sum "
+                    + "are Fourier rows of the radial A occupation sums. The B row includes "
+                    + "the factor x to the power minus six."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-signed-diagonal-sewn-readout"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.signed_diagonal_sewn_readout"),
+                H("The signed diagonal occupation projection as a sewn readout"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original left lowering ranges, parity and factorials "
+                    + "combine into one readout on the signed diagonal."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-lowered-detector-sewn-readout"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.lowered_detector_sewn_readout"),
+                H("The sewn detector readout on the shifted signed diagonals"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each detector lowering contributes its original factorial "
+                    + "and shifts the signed mode sum by the lowering order."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-inverse-words-detector-projector"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.inverse_words_detector_projector"),
+                H("Original projectors of the four inverse-lowered words"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The native chart order, cutoff and four coordinate scales "
+                    + "give the original signed occupation projector for each charge."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-radial-chart-signed-projector"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_chart_signed_projector"),
+                H("Original signed projectors of the actual radial Taylor jet"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For either radial chart at the stated nome, the actual "
+                    + "sector jet is the convergent charge sum of the original signed projectors, "
+                    + "with the physical marks and the original chart scales."))), DescribeRole.Theorem))));
 }

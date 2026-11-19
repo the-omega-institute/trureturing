@@ -973,19 +973,15 @@ private theorem chart_charge_data (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 
   | B => exact ⟨hpB, hinv htB⟩
   | D => exact ⟨hpD, hinv htD⟩
 
-/-- At a fixed point of the real overlap, the simultaneous spatial and
-marking Taylor coefficient of the physical sector is the convergent sum
-of the same coefficient of its literal charge summands. -/
-theorem physical_chart_jet_hasSum (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem physical_charge_summands_normal (D : LatticeData)
     (hD : (gramReal D).PosDef) (slot : X → Puncture) (colour : X → Fin D.rank)
     (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
-    (hp : chartPeriod upperA c x ≠ 0) (hτ : 0 < (chartTau upperA c x).im)
-    (a : ModTwoCharge D) (n : X ⊕ X → ℕ) (l : List (X ⊕ X)) :
-    HasSum (fun q : {q : Charge D // reduceCharge D q = a} =>
-      (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
-        spatialCoefficient n l (physicalChargeSummand D slot colour upperA c x q.val) 0)
-      (spatialCoefficient n l (fun z => physicalProduct D hu slot colour upperA x c a
-        (z ∘ Sum.inl) (z ∘ Sum.inr)) 0) := by
+    (hτ : 0 < (chartTau upperA c x).im) :
+    ∃ (b : Charge D → ℝ) (r : ℝ), Summable b ∧ 0 < r ∧
+      (∀ q, AnalyticOnNhd ℂ (physicalChargeSummand D slot colour upperA c x q)
+        (Metric.ball 0 r)) ∧
+      ∀ q z, z ∈ Metric.ball 0 r →
+        ‖physicalChargeSummand D slot colour upperA c x q z‖ ≤ b q := by
   classical
   let Q := markedQuadratic D slot colour upperA c x
   let L := markedLinear D slot colour upperA c x
@@ -1000,8 +996,8 @@ theorem physical_chart_jet_hasSum (D : LatticeData) (hu : IsUnit D.G.det)
     refine ⟨⟨hz, hsz⟩, fun q => ?_⟩
     simpa only [physicalChargeSummand, markedLinear_eq] using hB q
   obtain ⟨r, hr, hballs⟩ := Metric.eventually_nhds_iff.mp he
-  have hF (q : {q : Charge D // reduceCharge D q = a}) :
-      AnalyticOnNhd ℂ (physicalChargeSummand D slot colour upperA c x q.val)
+  have hF (q : Charge D) :
+      AnalyticOnNhd ℂ (physicalChargeSummand D slot colour upperA c x q)
         (Metric.ball 0 r) := by
     intro z hz
     obtain ⟨hzQ, hzL⟩ := (hballs hz).1
@@ -1009,8 +1005,26 @@ theorem physical_chart_jet_hasSum (D : LatticeData) (hu : IsUnit D.G.det)
     simp_rw [markedLinear_eq]
     refine analyticAt_const.mul ((hzQ.add ?_).cexp)
     exact Finset.analyticAt_fun_sum _ fun j _ => analyticAt_const.mul (hzL j)
-  have hs := spatialCoefficient_hasSum (hb.subtype (fun q => reduceCharge D q = a)) hr hF
-    (fun q z hz => (hballs hz).2 q.val) n l
+  exact ⟨b, r, hb, hr, hF, fun q z hz => (hballs hz).2 q⟩
+
+/-- At a fixed point of the real overlap, the simultaneous spatial and
+marking Taylor coefficient of the physical sector is the convergent sum
+of the same coefficient of its literal charge summands. -/
+theorem physical_chart_jet_hasSum (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (slot : X → Puncture) (colour : X → Fin D.rank)
+    (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (hp : chartPeriod upperA c x ≠ 0) (hτ : 0 < (chartTau upperA c x).im)
+    (a : ModTwoCharge D) (n : X ⊕ X → ℕ) (l : List (X ⊕ X)) :
+    HasSum (fun q : {q : Charge D // reduceCharge D q = a} =>
+      (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
+        spatialCoefficient n l (physicalChargeSummand D slot colour upperA c x q.val) 0)
+      (spatialCoefficient n l (fun z => physicalProduct D hu slot colour upperA x c a
+        (z ∘ Sum.inl) (z ∘ Sum.inr)) 0) := by
+  classical
+  obtain ⟨b, r, hb, hr, hF, hbound⟩ :=
+    physical_charge_summands_normal D hD slot colour upperA c hx hx₁ hτ
+  have hs := spatialCoefficient_hasSum (hb.subtype (fun q => reduceCharge D q = a)) hr (fun q => hF q.val)
+    (fun q z hz => hbound q.val z hz) n l
   have heq : (fun z => physicalProduct D hu slot colour upperA x c a
       (z ∘ Sum.inl) (z ∘ Sum.inr)) = fun z => (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
         ∑' q : {q : Charge D // reduceCharge D q = a},
@@ -1282,17 +1296,94 @@ open LatticeDiscriminantTheta (gramReal)
 open OriginalFourMChargeCoset (fourierSign quadraticSign)
 open OriginalFourMPhysicalProduct (physical_chart_product)
 
+private theorem tsum_charge_fibres (D : LatticeData) (f : Charge D → ℂ)
+    (hf : Summable f) (k : ModTwoCharge D → ℂ) :
+    (∑' q : Charge D, k (reduceCharge D q) * f q) =
+      ∑ a : ModTwoCharge D, k a * ∑' q : {q : Charge D // reduceCharge D q = a}, f q.val := by
+  classical
+  let C : ℝ := ∑ a : ModTwoCharge D, ‖k a‖
+  have hC (a : ModTwoCharge D) : ‖k a‖ ≤ C :=
+    Finset.single_le_sum (fun i _ => norm_nonneg (k i)) (Finset.mem_univ a)
+  have hs : Summable (fun q : Charge D => k (reduceCharge D q) * f q) := by
+    apply (hf.norm.mul_left C).of_norm_bounded
+    intro q
+    rw [norm_mul]
+    exact mul_le_mul_of_nonneg_right (hC _) (norm_nonneg _)
+  have h := (hs.hasSum.tsum_fiberwise (reduceCharge D)).tsum_eq
+  rw [tsum_fintype] at h
+  rw [← h]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [← tsum_mul_left]
+  apply tsum_congr
+  intro q
+  have hq : reduceCharge D q.val = a := q.property
+  rw [hq]
+
+private theorem weighted_physical_chart_jet (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (slot : X → Puncture) (colour : X → Fin D.rank)
+    (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (k : ModTwoCharge D → ℂ) (n : X ⊕ X → ℕ) (l : List (X ⊕ X)) :
+    let F := fun a (z : (X ⊕ X) → ℂ) => physicalProduct D hu slot colour upperA x c a
+      (z ∘ Sum.inl) (z ∘ Sum.inr)
+    spatialCoefficient n l (fun z => ∑ a, k a * F a z) 0 =
+      ∑ a, k a * spatialCoefficient n l (F a) 0 := by
+  classical
+  dsimp only
+  obtain ⟨hp, hτ⟩ := chart_charge_data upperA c hx hx₁
+  let F := physicalChargeSummand D slot colour upperA c x
+  obtain ⟨b, r, hb, hr, hF, hbound⟩ :=
+    physical_charge_summands_normal D hD slot colour upperA c hx hx₁ hτ
+  let C : ℝ := ∑ a : ModTwoCharge D, ‖k a‖
+  have hk (a : ModTwoCharge D) : ‖k a‖ ≤ C :=
+    Finset.single_le_sum (fun i _ => norm_nonneg (k i)) (Finset.mem_univ a)
+  have hC : 0 ≤ C := Finset.sum_nonneg (fun i _ => norm_nonneg (k i))
+  have hB (q : Charge D) (z : (X ⊕ X) → ℂ) (hz : z ∈ Metric.ball 0 r) :
+      ‖k (reduceCharge D q) * F q z‖ ≤ C * b q := by
+    rw [norm_mul]
+    exact mul_le_mul (hk _) (hbound q z hz) (norm_nonneg _) hC
+  let G (q : Charge D) (z : (X ⊕ X) → ℂ) := k (reduceCharge D q) * F q z
+  have hs := spatialCoefficient_hasSum (f := G) (hb.mul_left C) hr
+    (fun q z hz => analyticAt_const.mul (hF q z hz)) hB n l
+  have hs0 := spatialCoefficient_hasSum hb hr hF hbound n l
+  let p := (chartPeriod upperA c x ^ (12 : ℕ))⁻¹
+  have he : (fun z : (X ⊕ X) → ℂ => ∑ a, k a *
+      physicalProduct D hu slot colour upperA x c a (z ∘ Sum.inl) (z ∘ Sum.inr)) =ᶠ[𝓝 0]
+      (fun z => p * ∑' q : Charge D, k (reduceCharge D q) * F q z) := by
+    filter_upwards [Metric.ball_mem_nhds (0 : (X ⊕ X) → ℂ) hr] with z hz
+    rw [tsum_charge_fibres D (fun q => F q z) (hb.of_norm_bounded fun q => hbound q z hz),
+      Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro a _
+    rw [physical_product_marked_charge_fiber D hu slot colour upperA c x hp]
+    change k a * (p * ∑' q : {q : Charge D // reduceCharge D q = a}, F q.val z) = _
+    ring
+  rw [(spatialCoefficient_congr n l he).eq_of_nhds, spatialCoefficient_const_mul]
+  change p * spatialCoefficient n l (fun z => ∑' q, G q z) 0 = _
+  rw [← hs.tsum_eq]
+  have hjet (q : Charge D) : spatialCoefficient n l (G q) 0 =
+      k (reduceCharge D q) * spatialCoefficient n l (F q) 0 :=
+    congrFun (spatialCoefficient_const_mul n l _ _) 0
+  simp_rw [hjet]
+  rw [tsum_charge_fibres D _ hs0.summable, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [← (physical_chart_jet_hasSum D hu hD slot colour upperA c hx hx₁ hp hτ a n l).tsum_eq,
+    tsum_mul_left]
+  change p * (k a * _) = k a * (p * _)
+  ring
+
+
+
 /-- The simultaneous Taylor coefficients of the actual physical products
-inherit the real-overlap sector identities. Analyticity is required at
-the joint origin of the spatial coordinates and the marking weights. -/
+inherit the real-overlap sector identities by normal convergence on a
+common polydisk. -/
 theorem physical_chart_coefficient_overlap (D : LatticeData) (hu : IsUnit D.G.det)
     (hD : (gramReal D).PosDef) (hr : D.rank = 24)
     (slot : X → Puncture) (colour : X → Fin D.rank) (upperA : Bool)
     {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
     {w : ℂ} (hwA : w ^ 2 = parameter .A x) (hw : ‖w‖ < 1)
     (n : X ⊕ X → ℕ) (l : List (X ⊕ X))
-    (hf : ∀ c a, AnalyticAt ℂ (fun z : (X ⊕ X) → ℂ =>
-        physicalProduct D hu slot colour upperA x c a (z ∘ Sum.inl) (z ∘ Sum.inr)) 0)
     (a : ModTwoCharge D) :
     let jet := fun c a => spatialCoefficient n l (fun z : (X ⊕ X) → ℂ =>
         physicalProduct D hu slot colour upperA x c a (z ∘ Sum.inl) (z ∘ Sum.inr)) 0
@@ -1319,16 +1410,8 @@ theorem physical_chart_coefficient_overlap (D : LatticeData) (hu : IsUnit D.G.de
     filter_upwards [h] with u hu
     exact (hu (u ∘ Sum.inr) a).2
   have hsum (k : ModTwoCharge D → ℂ) :
-      T (fun z => ∑ b, k b * F .A b z) = ∑ b, k b * T (F .A b) := by
-    have hk (b : ModTwoCharge D) : AnalyticAt ℂ (fun z => k b * F .A b z) 0 :=
-      analyticAt_const.mul (hf .A b)
-    have he := spatialCoefficient_sum n l Finset.univ (fun b z => k b * F .A b z) (fun b _ => hk b)
-    have he' := he.eq_of_nhds
-    have heq : (∑ j, fun z => k j * F .A j z) = fun z => ∑ j, k j * F .A j z := by
-      funext z
-      simp only [Finset.sum_apply]
-    rw [heq] at he'
-    simpa only [T, Finset.sum_apply, spatialCoefficient_const_mul] using he'
+      T (fun z => ∑ b, k b * F .A b z) = ∑ b, k b * T (F .A b) :=
+    weighted_physical_chart_jet D hu hD slot colour upperA .A hx hx₁ k n l
   constructor
   · rw [show T (F .D a) = _ from (spatialCoefficient_congr n l hD').eq_of_nhds]
     change spatialCoefficient n l (fun z => ((2 : ℂ) ^ (12 : ℕ))⁻¹ *
