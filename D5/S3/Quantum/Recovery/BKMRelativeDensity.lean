@@ -41,7 +41,7 @@ private theorem conjugated_cfc (a : Matrix n n ℂ) (ha : a.PosDef) (f : ℝ →
   rw [ha.isHermitian.cfc_eq]
   exact (basisChange ha.isHermitian.eigenvectorUnitary).symm_apply_apply _
 
-private theorem continuous_mpow (a : Matrix n n ℂ) (ha : a.PosDef) :
+theorem continuous_mpow (a : Matrix n n ℂ) (ha : a.PosDef) :
     Continuous (fun t : ℝ => mpow a t) := by
   have he (t : ℝ) : mpow a t = basisChange ha.isHermitian.eigenvectorUnitary
       (diagReal fun k => Real.exp (t * Real.log (ha.isHermitian.eigenvalues k))) := by
@@ -60,7 +60,7 @@ private theorem mpow_eq_rpow {a : Matrix n n ℂ} (ha : 0 ≤ a) (t : ℝ) :
     mpow a t = a ^ t :=
   (CFC.rpow_eq_cfc_real ha).symm
 
-private theorem mpow_smul_of_nonneg {b : Matrix n n ℂ} (hb : 0 ≤ b)
+theorem mpow_smul_of_nonneg {b : Matrix n n ℂ} (hb : 0 ≤ b)
     {c t : ℝ} (hc : 0 ≤ c) (ht : 0 ≤ t) :
     mpow (c • b) t = c ^ t • mpow b t := by
   have hcont := Real.continuous_rpow_const ht
