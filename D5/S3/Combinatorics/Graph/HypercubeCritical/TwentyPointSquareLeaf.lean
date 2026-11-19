@@ -7,6 +7,7 @@
    digest: Actual labels and high-edge incidence for paired squares with leaves. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointPentagonExclusion
+import Mathlib.Combinatorics.SimpleGraph.Maps
 
 /-! The square and leaf labels are transported from derived compressed graphs. -/
 
