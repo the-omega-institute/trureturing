@@ -1,6 +1,0 @@
-**Proposition 5.2 (the origin is new, rather than an old chronology inverse).** The preparation proves that the state at $o$ is $e_0$ and authenticates subsequent passive Tick count relative to $o$. It does not recover unrecorded pre-entry chronology, prior Holds or controlled journals.
-
-Proof. For any fixed promised $T$ and rational entry field $x^{\rm in}$, the histories starting directly at $x^{\rm in}$ and starting one Tick earlier at $T^{-1}x^{\rm in}$ have the same field at entry. The inverse exists and is rational since $T>0$. Both initial fields belong to the present unrestricted class. Subsequent common commands therefore have identical successors and outputs. Their earlier elapsed Tick counts differ. Extra unrecorded Holds likewise have no declared output distinction at entry. This uses no illicit reset in either run: it compares two admitted histories leading to the same entry configuration.
-
-Even complete recovery of the mathematical entry vector, which could now be computed as $T^{-s}(\widehat w-e_0)$, does not distinguish these pre-entry histories. The newly retained marker $o$ records an event actually performed by this controller. It asserts no earlier unit preparation and reconstructs no lost control journal. P Counterexamples 42.1 and 42.4 retain these same current-state/chronology boundaries. $\square$
-

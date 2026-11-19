@@ -48,7 +48,7 @@ def posTrace {n : Type*} [Fintype n] [DecidableEq n]
 def E {n : Type*} [Fintype n] [DecidableEq n]
     (γ : ℝ) (ρ σ : Matrix n n ℂ) : ℝ := posTrace (ρ - γ • σ)
 
-private def ptr {R A : Type*} [Fintype R] [DecidableEq R]
+def ptr {R A : Type*} [Fintype R] [DecidableEq R]
     [Fintype A] [DecidableEq A]
     (X : Matrix (R × A) (R × A) ℂ) : Matrix R R ℂ := partialTraceRight X
 
@@ -77,7 +77,7 @@ noncomputable def ratios
         0 < gap γ ρ σ ∧
         x = gap γ (amp N ρ) (amp N σ) / gap γ ρ σ}
 
-private theorem state_nonempty {n : Type*} [Fintype n]
+theorem state_nonempty {n : Type*} [Fintype n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef ∧ X.trace = 1) : Nonempty n := by
   classical
   by_contra hn
@@ -222,7 +222,7 @@ private theorem posPart_reindex {n m : Type*} [Fintype n]
       _ = X⁺.submatrix e.symm e.symm - X⁻.submatrix e.symm e.symm := rfl
   exact (CFC.posPart_negPart_unique hdecomp hpq hP hQ).1
 
-private theorem trace_reindex {n m : Type*} [Fintype n]
+theorem trace_reindex {n m : Type*} [Fintype n]
     [Fintype m] (e : n ≃ m) (X : Matrix n n ℂ) :
     (X.reindex e e).trace = X.trace := by
   classical
@@ -314,7 +314,7 @@ private theorem posTrace_flag {R A : Type*} [Fintype R] [DecidableEq R]
   rw [posTrace_dsum hX hYZ, posTrace_dsum hY hZ]
   ring
 
-private def act {A B : Type*} [Fintype A] [DecidableEq A]
+def act {A B : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B]
     (N : QuantumChannel A B) (X : Matrix A A ℂ) : Matrix B B ℂ :=
   CStarMatrix.ofMatrix.symm
@@ -353,7 +353,7 @@ private theorem amp_state {A B R : Type*} [Fintype A] [DecidableEq A]
       (Matrix.nonneg_iff_posSemidef.mpr hX.1), hX.2⟩
   exact ⟨density_posSemidef (referenceState N rho), (referenceState N rho).2.2⟩
 
-private theorem amp_entry {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_entry {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (X : Matrix (R × A) (R × A) ℂ)
     (r s : R) (b d : B) :
@@ -361,7 +361,7 @@ private theorem amp_entry {A B R : Type*} [Fintype A] [DecidableEq A]
       act N (fun a a' => X (r, a) (s, a')) b d := by
   rfl
 
-private theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (t : ℝ) (X : Matrix (R × A) (R × A) ℂ) :
     amp N (t • X) = t • amp N X := by
@@ -370,7 +370,7 @@ private theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
       ((referenceLinear N).comp CStarMatrix.ofMatrixₗ.toLinearMap)
   exact (T.restrictScalars ℝ).map_smul t X
 
-private theorem amp_sub_smul {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_sub_smul {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (t : ℝ) (X Y : Matrix (R × A) (R × A) ℂ) :
     amp N (X - t • Y) = amp N X - t • amp N Y := by
@@ -380,7 +380,7 @@ private theorem amp_sub_smul {A B R : Type*} [Fintype A] [DecidableEq A]
   exact ((T.restrictScalars ℝ).map_sub X (t • Y)).trans
     (congrArg (fun Z => T X - Z) ((T.restrictScalars ℝ).map_smul t Y))
 
-private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
+theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
     [Fintype A] [DecidableEq A]
     (t : ℝ) (X Y : Matrix (R × A) (R × A) ℂ) :
     ptr (X - t • Y) = ptr X - t • ptr Y := by
@@ -391,7 +391,7 @@ private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
   change T (X - t • Y) = T X - t • T Y
   rw [map_sub, map_smul]
 
-private theorem ptr_amp {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem ptr_amp {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (X : Matrix (R × A) (R × A) ℂ) :
     ptr (amp N X) = ptr X := by
@@ -744,3 +744,71 @@ theorem result : claim := by
       ((transfer_subset N δ γ (lt_of_lt_of_le zero_lt_one hγ)).trans (orth_subset N γ))
 
 end D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+
+section ReferenceTransport
+
+set_option backward.isDefEq.respectTransparency false
+
+namespace D5.S3.Quantum.Divergence.UmegakiReferenceTransport
+
+open Matrix
+open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
+open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Foundation.FiniteDiamondDistance
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+
+universe ua ub ur
+
+variable {a : Type ua} {b : Type ub} {R : Type ur} [Fintype a] [DecidableEq a]
+  [Fintype b] [DecidableEq b] [Fintype R] [DecidableEq R]
+
+lemma amp_kronecker (N : QuantumChannel a b) (X : Matrix R R ℂ)
+    (Z : Matrix a a ℂ) : amp N (X ⊗ₖ Z) = X ⊗ₖ act N Z := by
+  ext ⟨r,i⟩ ⟨s,j⟩
+  rw [amp_entry]
+  change (N.toCompletelyPositiveMap ((X r s) • CStarMatrix.ofMatrix Z)) i j = _
+  rw [map_smul]
+  rfl
+
+lemma amp_mono (N : QuantumChannel a b)
+    {X Z : Matrix (R × a) (R × a) ℂ} (h : X ≤ Z) : amp N X ≤ amp N Z := by
+  have hp := referenceAction_nonneg N (CStarMatrix.ofMatrix (Z-X))
+    (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv (sub_nonneg.mpr h))
+  have hn := map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm hp
+  change 0 ≤ amp N (Z-X) at hn
+  have he : amp N (Z-X) = amp N Z - amp N X := by
+    exact (CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+      ((referenceLinear N).comp CStarMatrix.ofMatrixₗ.toLinearMap)).map_sub Z X
+  rw [he] at hn
+  exact sub_nonneg.mp hn
+
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+lemma positive_floor {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (Z : Matrix ι ι ℂ) (hZ : Z.PosDef) :
+    ∃ m : ℝ, 0 < m ∧ m • (1 : Matrix ι ι ℂ) ≤ Z := by
+  cases isEmpty_or_nonempty ι with
+  | inl h => exact ⟨1, zero_lt_one, le_of_eq (Subsingleton.elim _ _)⟩
+  | inr h =>
+    obtain ⟨m,hm,hfloor⟩ := (CFC.exists_pos_algebraMap_le_iff Z).mpr
+      (fun x hx => hZ.isStrictlyPositive.spectrum_pos hx)
+    exact ⟨m,hm,by simpa only [Algebra.algebraMap_eq_smul_one] using hfloor⟩
+
+set_option maxHeartbeats 1200000 in
+/-- Positivity of the channel image of the identity gives strict positivity
+on every correlated positive-definite reference input. -/
+lemma amp_posDef (N : QuantumChannel a b) (hN : (act N 1).PosDef)
+    (Z : Matrix (R × a) (R × a) ℂ) (hZ : Z.PosDef) : (amp N Z).PosDef := by
+  obtain ⟨m,hm,hfloor⟩ := positive_floor Z hZ
+  have hmon : amp N (m • (1 : Matrix (R × a) (R × a) ℂ)) ≤ amp N Z :=
+    amp_mono N hfloor
+  have he : amp N (m • (1 : Matrix (R × a) (R × a) ℂ)) =
+      m • ((1 : Matrix R R ℂ) ⊗ₖ act N 1) := by
+    rw [amp_smul, ← Matrix.one_kronecker_one, amp_kronecker]
+  rw [he] at hmon
+  have hp : ((1 : Matrix R R ℂ) ⊗ₖ act N 1).PosDef :=
+    (Matrix.PosDef.one (n := R)).kronecker hN
+  exact ((hp.isStrictlyPositive.smul hm).of_le hmon).posDef
+
+end D5.S3.Quantum.Divergence.UmegakiReferenceTransport
+
+end ReferenceTransport

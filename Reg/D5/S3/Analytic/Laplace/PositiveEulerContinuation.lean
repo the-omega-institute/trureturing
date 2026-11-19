@@ -9,6 +9,7 @@ noncomputable section
 universe u
 open MeasureTheory ProbabilityTheory Set Complex
 open _root_.D5.S3.Analytic.Laplace.PositiveEulerContinuation
+open _root_.D5.S3.Analytic.Laplace.AbscissaSingularity
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -91,6 +92,124 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def corridorArena : Arena where
+  signature := signature
+  Law Q := ∀ {Ω : Type u} [MeasurableSpace Ω] {μ : Measure Ω} {X : Ω → ℝ}
+    [IsFiniteMeasure μ],
+    AEMeasurable X μ → (∀ᵐ ω ∂μ, 0 ≤ X ω) →
+    ∀ {a : ℝ}, a < 0 → ∀ {R : ℂ → ℂ},
+    MeromorphicOn R {z | a < z.re} →
+    (∀ x : ℝ, a < x → x ≤ 0 → AnalyticAt ℂ R (x : ℂ)) →
+    (∀ z : ℂ, 0 < z.re →
+      z * deriv (deriv (fun w => complexMGF X μ (-w))) z +
+        2 * deriv (fun w => complexMGF X μ (-w)) z = R z) →
+    (∀ x : ℝ, a < x → Integrable (fun ω => Real.exp (-x * X ω)) μ) ∧
+      Q.readout () () (fun z => complexMGF X μ (-z)) {z | a < z.re}
+
+
+private theorem corridor_rejected : ¬ corridorArena.{u}.Law rejected := by
+  intro h
+  have hh := h (Ω := ULift.{u} ℕ) (μ := 0) (X := fun _ => 0)
+    (by fun_prop) (by simp) (a := -1) (by norm_num) (R := fun _ => 0)
+    (fun z _ => analyticAt_const.meromorphicAt)
+    (fun _ _ _ => analyticAt_const)
+    (by intro z hz; simp [complexMGF])
+  exact hh.2
+
+def corridorEvidence : Registration corridorArena.{u}
+    (type_of% @integrable_and_analytic_of_euler_corridor.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@integrable_and_analytic_of_euler_corridor.{u}, rejected, corridor_rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    corridorArena.Law actual rejected corridor_rejected
+  dependence := actual_dependence
+
+def corridorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@integrable_and_analytic_of_euler_corridor.{u}) (Realization signature) Unit Unit where
+  unitName :=
+    `D5.S3.Analytic.Laplace.PositiveEulerContinuation.integrable_and_analytic_of_euler_corridor.audit
+  realizationName := `Reg.D5.S3.Analytic.Laplace.PositiveEulerContinuation.corridorEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨corridorArena.{u}⟩
+  objectArena := .source ⟨corridorArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source corridorArena.{u} ⟨corridorEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ F s => AnalyticOnNhd ℂ F s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Laplace.PositiveEulerContinuation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def analyticArena : Arena where
+  signature := signature
+  Law Q := ∀ {Ω : Type u} [MeasurableSpace Ω] {μ : Measure Ω} {X : Ω → ℝ}
+    {c : ℝ}, Ioi c ⊆ convergenceSet X μ →
+      Q.readout () () (fun z => complexMGF X μ (-z)) {z | c < z.re}
+
+private theorem analytic_rejected : ¬ analyticArena.{u}.Law rejected := by
+  intro h
+  exact h (Ω := ULift.{u} ℕ) (μ := 0) (X := fun _ => 0) (c := -1)
+    (by intro x hx; simp [convergenceSet])
+
+def analyticEvidence : Registration analyticArena.{u} (type_of% @analytic_laplace.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@analytic_laplace.{u}, rejected, analytic_rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    analyticArena.Law actual rejected analytic_rejected
+  dependence := actual_dependence
+
+def analyticAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@analytic_laplace.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Analytic.Laplace.PositiveEulerContinuation.analytic_laplace.audit
+  realizationName := `Reg.D5.S3.Analytic.Laplace.PositiveEulerContinuation.analyticEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨analyticArena.{u}⟩
+  objectArena := .source ⟨analyticArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source analyticArena.{u} ⟨analyticEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ F s => AnalyticOnNhd ℂ F s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Laplace.PositiveEulerContinuation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:48c12129ab73d077333b8e53f88d7aaca1bc651697aed7867fda3087cb74aaeb
-  normalized_sha256: sha256:48c12129ab73d077333b8e53f88d7aaca1bc651697aed7867fda3087cb74aaeb
-cas_ref: sha256:48c12129ab73d077333b8e53f88d7aaca1bc651697aed7867fda3087cb74aaeb
-coverage_gids:
-  - gid: D5/S1/Recurrence/Interpolation/PositiveJJExclusion.positive_jj_exclusion
-    target_statement_id: sha256:5317dbbb9264ee641776613c0f92bfcbc4c4e8b160c8d72c845e5d994da16233
-receipts:
-  unresolved_subitems: []

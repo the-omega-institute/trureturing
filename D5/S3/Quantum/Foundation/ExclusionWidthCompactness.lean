@@ -44,7 +44,7 @@ private theorem unit_proper (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) : proper C u
   · exact (hs x hx hz).le
 
 /-- The minimum over every original confirmer is attained, also at mixed inputs. -/
-private theorem comparison_attained
+theorem comparison_attained
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u) (x : V) :
     ∃ f : V →L[ℝ] ℝ, f ∈ confirmingEffects C u p ∧ comparison C u p x = f x := by

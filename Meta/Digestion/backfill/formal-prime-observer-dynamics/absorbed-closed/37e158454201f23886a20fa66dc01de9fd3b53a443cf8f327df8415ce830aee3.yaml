@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:37e158454201f23886a20fa66dc01de9fd3b53a443cf8f327df8415ce830aee3
-  normalized_sha256: sha256:37e158454201f23886a20fa66dc01de9fd3b53a443cf8f327df8415ce830aee3
-cas_ref: sha256:37e158454201f23886a20fa66dc01de9fd3b53a443cf8f327df8415ce830aee3
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaEntropyPlane/LocalEvidenceOrderThreshold.quadraticStatisticalEnergy
-    target_statement_id: sha256:1173d647aec60b471569b74fffb12856f2d22ec293ea091cae17b30083e5f8ad
-receipts:
-  unresolved_subitems: []

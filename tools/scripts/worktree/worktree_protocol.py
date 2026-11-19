@@ -310,6 +310,9 @@ def _main(argv=None):
     command = commands.add_parser("with")
     command.add_argument("--path", type=Path, default=Path.cwd())
     command.add_argument("argv", nargs=argparse.REMAINDER)
+    initializing = commands.add_parser("initialize", help=argparse.SUPPRESS)
+    initializing.add_argument("--path", type=Path, required=True)
+    initializing.add_argument("argv", nargs=argparse.REMAINDER)
     joined = commands.add_parser("reuse")
     joined.add_argument("--path", type=Path, required=True)
     joined.add_argument("--branch", required=True)
@@ -322,6 +325,7 @@ def _main(argv=None):
     returned.add_argument("--writers-joined", action="store_true")
     claimed = commands.add_parser("claim")
     claimed.add_argument("--path", type=Path)
+    claimed.add_argument("--initializing-path", type=Path, help=argparse.SUPPRESS)
     claimed.add_argument("--branch", required=True)
     claimed.add_argument("--base", required=True)
     claimed.add_argument("--skip-restore", action="store_true")
@@ -385,6 +389,15 @@ def _main(argv=None):
             if options.argv[:1] == ["--"]:
                 options.argv.pop(0)
             with_command(options)
+        elif options.action == "initialize":
+            from worktree_maintenance import initialization
+            argv = options.argv[1:] if options.argv[:1] == ["--"] else options.argv
+            try:
+                with initialization(options.source, options.path):
+                    return subprocess.run(argv, env=git_environment()).returncode
+            except Exception:
+                report(summary_source)
+                raise
         elif options.action == "stale":
             result = mark_stale(options.source, options.path)
             _log_result(options.action, result)

@@ -30,7 +30,6 @@ jobs:
       hits: ${{ steps.detect.outputs.hits }}
       report: ${{ steps.detect.outputs.report }}
       delta: ${{ steps.detect.outputs.delta }}
-      theory: ${{ steps.detect.outputs.theory }}
     steps:
       # Commits and trees only, and only the entry scripts in the working tree.
       - uses: actions/checkout@v5
@@ -389,7 +388,7 @@ jobs:
           STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
         run: |
           rc=0
-          python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
+          FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
           if [[ "$rc" != 0 ]]; then
             echo "::error title=Lean report failed::Inspect the preceding error. A missing compatible native seed requires the independent lean-cache-produce long job; wait for its successful exact-head production and retry."
           fi
@@ -593,12 +592,6 @@ jobs:
     with:
       unit: tests-configuration
 
-  tests-cover-batch:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-cover-batch
 
   tests-declared-template:
     needs: [detect, source]
@@ -607,12 +600,6 @@ jobs:
     with:
       unit: tests-declared-template
 
-  tests-digestion:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-digestion
 
   tests-engine:
     needs: [detect, source]
@@ -770,12 +757,6 @@ jobs:
     with:
       unit: tests-script
 
-  tests-source-atomizer:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-source-atomizer
 
   tests-engineering:
     needs: [detect, source]
@@ -830,7 +811,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-fib, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-declared-template, tests-engine, tests-fib, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

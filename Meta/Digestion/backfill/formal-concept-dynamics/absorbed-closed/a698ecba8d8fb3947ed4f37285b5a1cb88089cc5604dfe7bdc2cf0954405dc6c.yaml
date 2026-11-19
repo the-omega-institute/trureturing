@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a698ecba8d8fb3947ed4f37285b5a1cb88089cc5604dfe7bdc2cf0954405dc6c
-  normalized_sha256: sha256:a698ecba8d8fb3947ed4f37285b5a1cb88089cc5604dfe7bdc2cf0954405dc6c
-cas_ref: sha256:a698ecba8d8fb3947ed4f37285b5a1cb88089cc5604dfe7bdc2cf0954405dc6c
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Knowledge/StrongestPostconditionAdjunction.sp_wp_adjunction
-    target_statement_id: sha256:867d7a8174e6e4651eda99d16f31b6b2b7ece699a186161d2393bda035dcd1ee
-receipts:
-  unresolved_subitems: []

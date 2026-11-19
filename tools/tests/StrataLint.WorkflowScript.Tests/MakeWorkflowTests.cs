@@ -21,14 +21,13 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/worktree/lean-cache-run.sh";
     private const string WarmDonorScriptPath =
         "tools/scripts/worktree/warm-donor.sh";
-    private const string IngestScriptPath = "tools/scripts/ingest.sh";
+    private const string ReanchorScriptPath = "tools/scripts/mathlib-reanchor.sh";
     private const string ReportConsumerScriptPath =
         "tools/scripts/report/report-consumer.sh";
     private const string ReportSupervisorScriptPath =
         "tools/scripts/report/report-supervisor.sh";
     private const string LeanReportInputScriptPath =
         "tools/scripts/report/lean-report-input.sh";
-    private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string RendererContractUpdateScriptPath =
         "tools/scripts/update-renderer-contract.sh";
     private const string ToolsMakefilePath = "tools/Makefile";
@@ -55,22 +54,11 @@ public sealed partial class MakeWorkflowTests
         "scribe-release",
         "scribe-release-publish",
         "scribe-release-fetch",
-        "ingest",
-        "migrate-atom-context",
         "mathlib-reanchor",
-        "source-dispatch",
-        "search-atoms",
-        "show-atom",
-        "atom-context",
         "truth-export",
         "deliver-check",
         "deposit",
         "deposit-uncovered",
-        "cover",
-        "cover-batch",
-        "decompose",
-        "settle",
-        "settle-clear",
         "worktree",
         "worktree-clean",
         "worktree-remove",
@@ -88,6 +76,7 @@ public sealed partial class MakeWorkflowTests
         "ci-unit",
         "compiled-judge-test",
         "compiled-fib-test",
+        "require-full-build",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -101,8 +90,12 @@ public sealed partial class MakeWorkflowTests
         "research-readouts-test",
         "compiled-dependencies",
         "compiled-dependencies-test",
+        "worktree-maintenance-install",
+        "worktree-maintenance-uninstall",
+        "worktree-maintenance-notify",
+        "worktree-maintenance-run",
+        "worktree-maintenance-status",
         "help",
-        "settle-batch",
         "dotnet",
         "check-fast",
         "test",
@@ -146,142 +139,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("STRATALINT_LEAN_REPORT", consumer, StringComparison.Ordinal);
         Assert.Contains(".materials.zip", consumer, StringComparison.Ordinal);
         Assert.DoesNotContain("may be stale", consumer, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void IngestWrapperKeepsReportFreeDigestionIndependent()
-    {
-        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Contains("make test  Run lean-report and check-current", makefile, StringComparison.Ordinal);
-        var script = File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
-
-        Assert.DoesNotContain("lean-report-input.sh", script, StringComparison.Ordinal);
-        Assert.DoesNotContain(" address --repository ", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
-        Assert.Contains("ingest_args=(ingest)", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("align-digestion-status", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("digestion-alignment-consumer", script, StringComparison.Ordinal);
-        Assert.Contains("mathlib-reanchor)", script, StringComparison.Ordinal);
-        Assert.Contains("make -C \"$ROOT\" lean-report", script, StringComparison.Ordinal);
-        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$2\"", script, StringComparison.Ordinal);
-        Assert.Contains(
-            "ledger-reanchor-mathlib --base \"$base_sha\"",
-            script,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("exec \"$CONSUMER\"", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--base \"$BASE\"", script, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData("", "")]
-    [InlineData("alpha beta", "ingest --source alpha --source beta")]
-    public void IngestWrapperForwardsSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        const string leanSource = "theorem probe : True := by trivial\n";
-        var root = TestRepositoryLayout.FindRoot();
-        using var fixture = new TemporaryDirectory();
-        var binDirectory = Path.Combine(fixture.Path, "bin");
-        var ingestPath = Path.Combine(fixture.Path, IngestScriptPath);
-        Directory.CreateDirectory(binDirectory);
-        Directory.CreateDirectory(Path.GetDirectoryName(ingestPath)!);
-        Directory.CreateDirectory(Path.Combine(fixture.Path, "D5"));
-        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Cli"));
-        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Engine"));
-        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "Trureturing.Truth"));
-        Directory.CreateDirectory(Path.Combine(fixture.Path, ".github", "workflows"));
-        File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
-        File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
-        File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
-        File.WriteAllText(Path.Combine(fixture.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
-        File.WriteAllText(Path.Combine(fixture.Path, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
-        File.WriteAllText(Path.Combine(fixture.Path, "lakefile.toml"), "name = \"Fixture\"\n");
-        File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
-        File.WriteAllText(
-            Path.Combine(fixture.Path, ".github", "workflows", "ci-current.yml"),
-            "on: {pull_request: {branches: [dev]}}\njobs: {delta: {steps: []}}\n");
-        File.WriteAllText(
-            Path.Combine(fixture.Path, LeanReportPairScriptPath),
-            "#!/usr/bin/env bash\n");
-        var scribeContentChecks = Path.Combine(
-            fixture.Path, "tools", "scripts", "workflow", "scribe-content-checks.sh");
-        Directory.CreateDirectory(Path.GetDirectoryName(scribeContentChecks)!);
-        File.WriteAllText(scribeContentChecks, "#!/usr/bin/env bash\n");
-        foreach (var project in new[]
-        {
-            "tools/StrataLint.Cli/StrataLint.Cli.csproj",
-            "tools/StrataLint.Engine/StrataLint.Engine.csproj",
-            "tools/Trureturing.Truth/Trureturing.Truth.csproj",
-        })
-        {
-            File.WriteAllText(
-                Path.Combine(fixture.Path, project),
-                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
-        }
-        File.WriteAllText(
-            Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "FixtureProbe.cs"),
-            "// fixture\n");
-        var dotnetPath = Path.Combine(binDirectory, "dotnet");
-        File.WriteAllText(
-            dotnetPath,
-            """
-            #!/usr/bin/env bash
-            if [[ "${1:-}" == "msbuild" ]]; then
-              repository="$(cd "$(dirname "$2")/../.." && pwd -P)"
-              printf '{"Items":{"Compile":[{"FullPath":"%s/tools/StrataLint.Cli/FixtureProbe.cs"}]}}\n' "$repository"
-              exit 0
-            fi
-            printf '%s\n' "$*"
-            """ + "\n");
-        foreach (var executable in new[] { ingestPath, dotnetPath })
-        {
-            File.SetUnixFileMode(
-                executable,
-                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        }
-
-        TestGit.Run(fixture.Path, "init", "--quiet");
-        TestGit.Run(fixture.Path, "config", "user.email", "stratalint@example.invalid");
-        TestGit.Run(fixture.Path, "config", "user.name", "StrataLint Tests");
-        TestGit.Run(fixture.Path, "add", ".");
-        TestGit.Run(fixture.Path, "commit", "--quiet", "-m", "ingest wrapper fixture");
-
-        ProcessOutput RunWrapper() => TestProcessRunner.Run(
-            "/bin/bash",
-            [
-                "-c",
-                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest \"$4\"",
-                "ingest-wrapper",
-                binDirectory,
-                Path.Combine(fixture.Path, "cache"),
-                ingestPath,
-                sourcePayload,
-            ],
-            fixture.Path,
-            BoundedProcessRunner.HangDetectionBudget,
-            64 * 1024);
-
-        if (sourcePayload.Length == 0)
-        {
-            var missingSource = RunWrapper();
-            Assert.Equal(2, missingSource.ExitCode);
-            Assert.Empty(missingSource.StandardOutput);
-            Assert.Contains("USAGE:", Encoding.UTF8.GetString(missingSource.StandardError), StringComparison.Ordinal);
-            return;
-        }
-        File.AppendAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), "-- closure delta\n");
-        var changed = RunWrapper();
-        Assert.Equal(0, changed.ExitCode);
-        Assert.Equal(expected, Encoding.UTF8.GetString(changed.StandardOutput).Split(" -- ")[^1].Trim());
-
-        File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
-        File.AppendAllText(Path.Combine(fixture.Path, "README.md"), "markdown-only delta\n");
-        var unchanged = RunWrapper();
-        Assert.Equal(0, unchanged.ExitCode);
-        Assert.Equal(expected, Encoding.UTF8.GetString(unchanged.StandardOutput).Split(" -- ")[^1].Trim());
     }
 
     [Fact]

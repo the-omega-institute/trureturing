@@ -1,5 +1,0 @@
-- **混合方式**:评审席并发、互不可见;每席产出 `approve` / `comment` / `reject` 与 findings;orchestrator 逐条亲核 findings 后修订正文(合并前修订计入 v1.0)。**第一轮票数:reject / reject / reject**(quality 27 blocking + 3 advisory;architecture 11 blocking + 6 advisory;tests 12 blocking + 16 advisory),全部 blocking 经亲核成立并已修订;第二轮复审票数见追加账本。
-
----
-
-

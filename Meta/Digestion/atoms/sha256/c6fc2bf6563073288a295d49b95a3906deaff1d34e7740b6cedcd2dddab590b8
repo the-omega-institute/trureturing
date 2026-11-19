@@ -1,6 +1,0 @@
-因此同一个状态空间在两个 observer 下呈现完全不同的零点几何：
-
-- 指数 observer 看见单位圆几何级数；
-- occupancy observer 看见负实轴 hard-core edge；
-- 联合 observer 看见一个二维复零簇。
-

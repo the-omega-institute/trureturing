@@ -38,24 +38,11 @@ internal sealed class StubCliEnvironment(
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) =>
         new AdmissionTopologyOutcome.InfrastructureFailure("topology is not configured in this fixture");
 
-    public CommandResult Coverage(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "coverage is not configured in this fixture");
-
-    public CommandResult MigrateAtomContext(IReadOnlyList<string> arguments) => new(true, string.Empty, string.Empty);
-    public CommandResult SourceDispatch(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "source dispatch is not configured in this fixture");
-
-    public CommandResult SearchAtoms(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "atom search is not configured in this fixture");
-
-    public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "show atom is not configured in this fixture");
-
-    public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "atom context is not configured in this fixture");
-
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "gate authority is not configured in this fixture");
+
+    public CommandResult Coverage(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "coverage is not configured in this fixture");
 
     public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
         fileMapConform ?? new(2, string.Empty, "filemap conformance is not configured in this fixture");
@@ -68,24 +55,6 @@ internal sealed class StubCliEnvironment(
 
     public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "ledger frozen is not configured in this fixture");
-
-    public CommandResult Ingest(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ingest is not configured in this fixture");
-
-    public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "cover-atom is not configured in this fixture");
-
-    public CommandResult CoverBatch(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "cover-batch is not configured in this fixture");
-
-    public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "settle-batch is not configured in this fixture");
-
-    public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "settle-atom is not configured in this fixture");
-
-    public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "decompose-atom is not configured in this fixture");
 
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");

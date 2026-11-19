@@ -17,10 +17,24 @@ internal static class DagLedgerCommandPreparation
     internal static TruthContext BuildTruthScoped(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IReadOnlyCollection<RepoPath> requestedTargets)
+        IReadOnlyCollection<RepoPath> requestedTargets,
+        bool requireAllSources = false)
     {
-        var snapshot = Decode(Ask(() => repository.ReadCurrentProjection(TruthExportCommand.IsTruthInput)));
-        var report = LeanReportSourceScope.Load(leanReportSource, snapshot, requestedTargets);
+        var inventory = Decode(Ask(() => repository.ReadCurrentProjection(path =>
+            TruthExportCommand.IsTruthInput(path)
+                && (requireAllSources || !path.EndsWith(".lean", StringComparison.Ordinal)))));
+        var scope = LeanReportScope.Create(inventory, requestedTargets, path =>
+        {
+            if (inventory.Files[path].ContentWasRead) return inventory.Files[path];
+            var source = Decode(Ask(() => repository.ReadCurrent([":(literal)" + path.Value])));
+            return source.Files.TryGetValue(path, out var file) ? file
+                : throw new InvalidOperationException("scoped Lean report source bytes are unavailable: " + path.Value);
+        });
+        var report = leanReportSource is FileLeanReportSource fileSource
+            ? fileSource.Load(scope, () => requireAllSources ? inventory : Decode(Ask(() =>
+                repository.ReadCurrentProjection(TruthExportCommand.IsTruthInput))))
+            : leanReportSource.Load(scope);
+        var snapshot = scope.SourceSnapshot;
         return BuildTruth(snapshot, report, ValidateLean(snapshot, report));
     }
 
@@ -97,6 +111,9 @@ internal static class DagLedgerCommandPreparation
 
         public LeanAxiomReport Load(LeanReportScope scope) =>
             RawLeanReportArtifact.ReadFileForScopeOrFull(path, scope);
+
+        internal LeanAxiomReport Load(LeanReportScope scope, Func<RepositorySnapshot> fullSource) =>
+            RawLeanReportArtifact.ReadFileForScopeOrFull(path, scope, fullSource);
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about

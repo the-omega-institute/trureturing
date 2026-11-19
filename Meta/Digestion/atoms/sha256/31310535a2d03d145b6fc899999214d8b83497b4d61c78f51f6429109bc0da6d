@@ -1,0 +1,21 @@
+**Lemma 113.1 (The connected enlarged group is sphere transitive).**
+$M$ is compact, preserves $N$, and is transitive on the full complex
+unit sphere. Its identity component $M^0$ also acts transitively
+there and contains $\mathbb T$.
+
+Proof. Centrality of $\mathbb T$ makes its product with $G$ a subgroup,
+and compactness makes that product compact. Scalar conjugations are
+trivial, so $M$ preserves $N$. Given two unit vectors, $G$ sends
+the projector of the first to that of the second; a scalar phase
+corrects their chosen vector representatives. Thus $M$ is sphere
+transitive. The scalar circle is connected and contains the identity,
+so lies in $M^0$.
+
+A compact matrix group is a Lie group with finitely many components.
+Normality of $M^0$ and transitivity of $M$ make the sphere a union
+of finitely many $M^0$-orbits: use representatives of $M/M^0$ on one
+starting vector. These orbits are compact, and distinct ones are
+disjoint. A finite closed partition of a connected sphere has one
+member, since each member's complement is closed as well. Hence
+$M^0$ is transitive. ∎
+

@@ -47,7 +47,7 @@ class CheckTests(unittest.TestCase):
         data, _ = contract.load(ROOT)
         for path, selected in (("tools/scripts/compiled-fib-test.sh", True), ("Reg/D5/Owner.lean", False)):
             plan = contract.selection(data, [path], "pull-request")
-            with self.subTest(path=path), patch.dict(os.environ, STRATALINT_FIB_REGRESSIONS_SELECTED=str(not selected).lower()), \
+            with self.subTest(path=path), patch.dict(os.environ, FULL_BUILD="1", STRATALINT_FIB_REGRESSIONS_SELECTED=str(not selected).lower()), \
                     patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "producer")), \
                     patch.object(checks, "execute", return_value=0) as execute:
                 self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 0)
@@ -72,10 +72,19 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(record["raw_exit"], 2)
 
+    def test_full_report_rejects_without_confirmation_before_producer_build(self):
+        data, _ = contract.load(ROOT)
+        plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
+        with patch.dict(os.environ, FULL_BUILD="0"), patch.object(checks.subprocess, "run") as run, \
+                patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
+        run.assert_not_called()
+        execute.assert_not_called()
+
     def test_failed_report_producer_probe_preserves_failure_without_raising(self):
         data, _ = contract.load(ROOT)
         plan = contract.selection(data, ["D5/changed.lean"], "pull-request")
-        with patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 2, "")), \
+        with patch.dict(os.environ, FULL_BUILD="1"), patch.object(checks.subprocess, "run", return_value=subprocess.CompletedProcess([], 2, "")), \
                 patch.object(checks, "execute") as execute, contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(checks.current_phase("lean-report", data, plan, "a" * 40, Path("changed")), 2)
         execute.assert_not_called()
@@ -157,7 +166,6 @@ class CheckTests(unittest.TestCase):
         for paths, purpose, verb, delta in (
                 (["D5/changed.lean"], "pull-request", "check-source", True),
                 (["D5/changed.lean"], "push", "check-source", False),
-                (["docs/develop/theory/Note.md"], "push", "check-delta", True),
                 (["D5/changed.lean", "docs/develop/theory/Note.md"], "pull-request", "check-source", True)):
             plan = contract.selection(data, paths, purpose)
             with self.subTest(paths=paths, purpose=purpose), patch.object(checks, "execute", return_value=0) as execute:
@@ -182,11 +190,6 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(plan["hits"]["current"])
         self.assertFalse(any("check-source" in call or "check-delta" in call for call in calls))
-        result, calls, plan = self.local_spies(paths=("docs/develop/theory/Note.md",), purpose="push")
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertTrue(plan["theory"])
-        self.assertFalse(any(call[0] == "elan" or call[:2] == ["make", "lean-report"] for call in calls))
-        self.assertEqual(1, sum("check-delta" in call for call in calls))
         result, calls, plan = self.local_spies(purpose="push")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(plan["delta"])
@@ -278,7 +281,7 @@ class CheckTests(unittest.TestCase):
                 path = root / changed
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("candidate\n")
-            env = dict(os.environ, PATH=str(bindir) + os.pathsep + os.environ["PATH"], CALLS=str(root / "calls"),
+            env = dict(os.environ, FULL_BUILD="1", PATH=str(bindir) + os.pathsep + os.environ["PATH"], CALLS=str(root / "calls"),
                        SOURCE=str(source), CURRENT=str(current), JUDGE=str(judge), JUDGE_HIT="false",
                        STRATALINT_CI_COMPUTE_ACTIVE="0", PYTHONDONTWRITEBYTECODE="1")
             result = subprocess.run([sys.executable, str(runner), "local", "--base", "HEAD", "--purpose", purpose],

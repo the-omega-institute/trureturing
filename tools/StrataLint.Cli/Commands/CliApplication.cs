@@ -19,12 +19,7 @@ internal interface ICliEnvironment
 
     CommandResult Coverage(IReadOnlyList<string> arguments);
 
-    CommandResult SearchAtoms(IReadOnlyList<string> arguments);
-    CommandResult SourceDispatch(IReadOnlyList<string> arguments);
 
-    CommandResult ShowAtom(IReadOnlyList<string> arguments);
-    CommandResult AtomContext(IReadOnlyList<string> arguments);
-    CommandResult MigrateAtomContext(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments);
 
@@ -36,17 +31,11 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments);
 
-    CommandResult Ingest(IReadOnlyList<string> arguments);
 
 
-    CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
-    CommandResult CoverBatch(IReadOnlyList<string> arguments);
 
-    CommandResult SettleBatch(IReadOnlyList<string> arguments);
-    CommandResult SettleAtom(IReadOnlyList<string> arguments);
 
-    CommandResult DecomposeAtom(IReadOnlyList<string> arguments);
 
 
     CommandResult Route(IReadOnlyList<string> arguments);
@@ -119,36 +108,18 @@ internal static class CliApplication
                 RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>
                 RenderCommand(environment.Coverage(tail), console),
-            ["cover-atom"] = static (environment, tail, console) =>
-                RenderCommand(environment.CoverAtom(tail), console),
-            ["cover-batch"] = static (environment, tail, console) =>
-                RenderCommand(environment.CoverBatch(tail), console),
-            ["settle-batch"] = static (environment, tail, console) =>
-                RenderCommand(environment.SettleBatch(tail), console),
-            ["settle-atom"] = static (environment, tail, console) =>
-                RenderCommand(environment.SettleAtom(tail), console),
-            ["decompose-atom"] = static (environment, tail, console) =>
-                RenderCommand(environment.DecomposeAtom(tail), console),
             ["dag-render"] = static (environment, tail, console) =>
                 RenderCommand(environment.RenderDag(tail), console),
             ["deposit-header-check"] = static (environment, tail, console) =>
                 RenderExplicit(environment.DepositHeaderCheck(tail), console),
             ["lean-utility-input"] = static (environment, tail, console) =>
                 RenderExplicit(environment.LeanUtilityInput(tail), console),
-            ["migrate-atom-context"] = static (environment, tail, console) =>
-                RenderCommand(environment.MigrateAtomContext(tail), console),
-            ["source-dispatch"] = static (environment, tail, console) =>
-                RenderCommand(environment.SourceDispatch(tail), console),
-            ["search-atoms"] = static (environment, tail, console) =>
-                RenderCommand(environment.SearchAtoms(tail), console),
             ["gate-authority"] = static (environment, tail, console) =>
                 RenderExplicit(environment.GateAuthority(tail), console),
             ["verify-trx"] = static (_, tail, console) => RenderTestEvidence("verify-trx", tail, console),
             ["list-test-owner-assemblies"] = static (_, tail, console) => RenderTestEvidence("list-test-owner-assemblies", tail, console),
             ["filemap-conform"] = static (environment, tail, console) =>
                 RenderExplicit(environment.FileMapConform(tail), console),
-            ["ingest"] = static (environment, tail, console) =>
-                RenderCommand(environment.Ingest(tail), console),
             ["ledger-align"] = static (environment, tail, console) =>
                 RenderCommand(environment.AlignLedger(tail), console),
             ["ledger-frozen"] = static (environment, tail, console) =>
@@ -159,10 +130,6 @@ internal static class CliApplication
                 RenderCommand(environment.Route(tail), console),
             ["selftest"] = static (environment, tail, console) =>
                 RenderCommand(environment.SelfTest(tail), console),
-            ["show-atom"] = static (environment, tail, console) =>
-                RenderCommand(environment.ShowAtom(tail), console),
-            ["atom-context"] = static (environment, tail, console) =>
-                RenderCommand(environment.AtomContext(tail), console),
             ["topology"] = static (environment, tail, console) =>
                 RenderTopology(environment.Topology(tail), console),
             ["truth-export"] = static (environment, tail, console) =>

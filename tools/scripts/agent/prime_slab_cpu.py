@@ -48,14 +48,17 @@ def timestamp(value):
     return date.timestamp()
 
 
-def bind_inputs(path,expected,root=ROOT):
+def bind_inputs(path,expected,root=ROOT,theories=None):
     if sha(path)!=expected: raise InputGap('input manifest SHA-256 mismatch')
     document=json.loads(Path(path).read_text())
     if document['experiment']!=cpu.EXPERIMENT:
         raise InputGap('input experiment definition/window/ladder/cap mismatch')
+    theory_root = Path(theories or os.environ.get('SOURCE_THEORIES_DIR') or root.parent / 'trureturing-source-theories')
     for binding in document['source_bindings']:
-        relative=Path(binding['path']);resolved=(root/relative).resolve()
-        if relative.is_absolute() or not resolved.is_relative_to(root.resolve()):
+        relative=Path(binding['path'])
+        source_root = theory_root if relative.parts[:3] == ('docs', 'develop', 'theory') else root
+        resolved = (source_root / relative).resolve()
+        if relative.is_absolute() or not resolved.is_relative_to(source_root.resolve()):
             raise InputGap('source path outside repository: '+str(relative))
         if sha(resolved)!=binding['sha256']:
             raise InputGap('changed deciding source: '+str(relative))

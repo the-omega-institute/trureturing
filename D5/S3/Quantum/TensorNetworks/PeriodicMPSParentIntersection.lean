@@ -40,16 +40,16 @@ def gamma (A : Fin 2 → Bond) (n : ℕ) (X : Bond) (w : Word n) : ℂ :=
 def TwoSiteSpanning (A : Fin 2 → Bond) : Prop :=
   Submodule.span ℂ (Set.range fun p : Fin 2 × Fin 2 => A p.1 * A p.2) = ⊤
 
-private lemma wordMatrix_cons (A : Fin 2 → Bond) {n : ℕ} (i : Fin 2) (w : Word n) :
+lemma wordMatrix_cons (A : Fin 2 → Bond) {n : ℕ} (i : Fin 2) (w : Word n) :
     wordMatrix A (Fin.cons i w) = A i * wordMatrix A w := by
   simp [wordMatrix]
 
-private lemma wordMatrix_snoc (A : Fin 2 → Bond) {n : ℕ} (w : Word n) (i : Fin 2) :
+lemma wordMatrix_snoc (A : Fin 2 → Bond) {n : ℕ} (w : Word n) (i : Fin 2) :
     wordMatrix A (Fin.snoc w i) = wordMatrix A w * A i := by
   rw [wordMatrix, List.ofFn_succ']
   simp [wordMatrix]
 
-private lemma wordMatrix_append (A : Fin 2 → Bond) {m n : ℕ}
+lemma wordMatrix_append (A : Fin 2 → Bond) {m n : ℕ}
     (u : Word m) (v : Word n) :
     wordMatrix A (Fin.append u v) = wordMatrix A u * wordMatrix A v := by
   simp [wordMatrix, List.ofFn_comp', List.ofFn_fin_append, List.prod_append]
@@ -80,7 +80,7 @@ private theorem boundary_gluing (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
       simp only [Finset.sum_mul, smul_mul_assoc, Matrix.mul_assoc, hk]
     _ = Z * A i := by rw [hc, one_mul]
 
-private lemma trace_separates (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
+lemma trace_separates (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
     (m : ℕ) (X Y : Bond)
     (h : ∀ w : Word (m + 2), gamma A (m + 2) X w = gamma A (m + 2) Y w) :
     X = Y := by
@@ -114,7 +114,7 @@ private lemma trace_separates (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
       _ = Y := by rw [hc, mul_one]
 
 /-- The exact overlap of two adjacent parent spaces, including the four-site base. -/
-private theorem parent_intersection (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
+theorem parent_intersection (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
     (m : ℕ) (f : Word (m + 4) → ℂ) :
     ((∃ X : Fin 2 → Bond, ∀ (w : Word (m + 3)) j,
         f (Fin.snoc w j) = gamma A (m + 3) (X j) w) ∧
@@ -221,7 +221,7 @@ def threeColumns (A : Fin 2 → Bond) (r : ℕ) : Matrix (Word 3) (Word (r + 1))
 def rawThree (A : Fin 2 → Bond) (r : ℕ) : Matrix (Word 3) (Word 3) ℂ :=
   threeColumns A r * (threeColumns A r).conjTranspose
 
-private lemma gram_range {ι κ : Type} [Fintype ι] [Fintype κ]
+lemma gram_range {ι κ : Type} [Fintype ι] [Fintype κ]
     (M : Matrix ι κ ℂ) :
     LinearMap.range (M * M.conjTranspose).mulVecLin = LinearMap.range M.mulVecLin := by
   classical
@@ -406,7 +406,7 @@ private theorem phase_recovery (A B : Fin 2 → Bond) (r : ℕ)
       norm_num
     rw [hn, one_smul]
 
-private lemma rank_of_spanning (A : Fin 2 → Bond) (hA : TwoSiteSpanning A) (r : ℕ) :
+lemma rank_of_spanning (A : Fin 2 → Bond) (hA : TwoSiteSpanning A) (r : ℕ) :
     (twoFlattening A r).rank = 4 := by
   classical
   let L : Bond →ₗ[ℂ] (Word (r + 2) → ℂ) :=

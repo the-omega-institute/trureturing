@@ -1,0 +1,44 @@
+**定义 123.1（收缩三线性族）。** 令 $L_1,L_2,L_3$ 为三个带指定欧氏内积的实二维空间，$V=\mathbb R^3\oplus L_1\oplus L_2\oplus L_3$。写 $x=(a_1,a_2,a_3;z_1,z_2,z_3)$，其中 $z_i$ 对应补指标 $jk$ 的边。取任意实三线性型 $\tau:L_1\times L_2\times L_3\to\mathbb R$，要求
+
+$$
+|\tau(z_1,z_2,z_3)|\le |z_1||z_2||z_3|
+\quad(z_i\in L_i).
+\tag{123.1}
+$$
+
+不要求 $\tau$ 对称。令
+
+$$
+\begin{gathered}
+u(x)=a_1+a_2+a_3,\qquad
+p_i=(\delta_{i1},\delta_{i2},\delta_{i3};0,0,0),\qquad
+w=p_1+p_2+p_3,\\
+\Delta_i(x)=a_ja_k-|z_i|^2\quad(\{i,j,k\}=\{1,2,3\}),\\
+d_\tau(x)=a_1a_2a_3-\sum_i a_i|z_i|^2+2\tau(z_1,z_2,z_3),\\
+C_\tau=\{x:a_i\ge0,\ \Delta_i(x)\ge0\ (i=1,2,3),\ d_\tau(x)\ge0\}.
+\end{gathered}
+\tag{123.2}
+$$
+
+始终使用整个 $C_\tau$，以及
+
+$$
+\begin{gathered}
+K_\tau=C_\tau\cap\{u=1\},\qquad P_\tau=\operatorname{ext}K_\tau,
+\qquad \mathcal E_\tau=[0,u]_{C_\tau^*},\\
+\mathcal F_p=\{f\in\mathcal E_\tau:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(x\in C_\tau),\\
+D_p=\{x\in K_\tau:\mathcal T_p(x)=0\},\qquad
+\mathcal A_p=\{f\in\mathcal F_p:f|_{D_p}=0\},\qquad
+P_0=\{p\in P_\tau:\mathcal A_p\text{ 为单点}\},\\
+N_p=\{h\in C_\tau^*:h(p)=0\},\qquad
+p\perp q\ \Longleftrightarrow\ \exists f\in\mathcal E_\tau:
+f(p)=1,\ f(q)=0.
+\end{gathered}
+\tag{123.3}
+$$
+
+最后一行用于纯端点；补效应给其对称性。标量最低函数 $\mathcal T_p$ 与线性种子压缩 $T_i$ 不同型。EB3表示每个原纯标签的整个 $D_p$ 仿射同构于整个闭实三球；EB$_{\ge1}$ 允许各标签有不同的正整数球维数。二者都不把所选效应的零面预先等同于 $D_p$。这里不输入矩阵表示、Pair、least、全纯互易或任何效应子菜单。
+
+本章所称125—131及127.10均指[SAME_READBACK][Q123SR]；本卷121指[完整确认章节][Q123BV]；VII103.2指[完整排除面第七卷][Q123VII]。这些公开定义和条件结果按各自原前件复用。122的标量定义是(123.1)的一条子族；以下涉及一般 $\tau$ 的承重步骤均在本章证明。
+

@@ -1,8 +1,0 @@
-**Proposition 50.1 (one complete run).** Include the actual seed construction, signed preparation, cleared handoff and precisely Definition 46.2's acquisition, with no optional later continuation. The exact source-operation totals are
-
-| Stage | $P$ | $S$ | Add | Tick | $\operatorname{Read}_0$ | Hold | Reset |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Known-zero construction | $2k+1$ | $2k$ | $0$ | $0$ | $0$ | $0$ | $0$ |
-| Signed preparation | $0$ | $0$ | $2k$ | $0$ | $0$ | $0$ | $0$ |
-| Acquisition and final cut | $0$ | $k$ | $0$ | $k+4$ | $k$ | $1$ | $0$ |
-| Total | $2k+1$ | $3k$ | $2k$ | $k+4$ | $k$ | $1$ | $0$ |

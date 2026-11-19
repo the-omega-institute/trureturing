@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:baca1eaff29b2e5d743c5d5e7087fadabc8cd2efda2aa29ec938f400f3c186cf
-  normalized_sha256: sha256:baca1eaff29b2e5d743c5d5e7087fadabc8cd2efda2aa29ec938f400f3c186cf
-cas_ref: sha256:baca1eaff29b2e5d743c5d5e7087fadabc8cd2efda2aa29ec938f400f3c186cf
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Prediction/FiniteOneStepFutureMemory.finite_one_step_future_memory
-    target_statement_id: sha256:52240d2a76eb1d5dc319cb1521eaec0ffe80a63b8a2ad7c9dc6c160e42eff28d
-receipts:
-  unresolved_subitems: []

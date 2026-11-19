@@ -6,6 +6,7 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.counting_bridge
    digest: Literal five-row antidiagonal arrays and their exact complementary-pair count. -/
 
+import D5.S3.Observer.Separation.BooleanRankThreeK4
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
@@ -13,6 +14,8 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 /-! Exact literal normalization and finite column transfer for five-row antidiagonal arrays. -/
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
+
+set_option Elab.async false
 
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open D5.S3.Combinatorics.TraceAvoidingArrays
@@ -365,9 +368,9 @@ theorem counting_bridge {n : ℕ} (hn : 2 ≤ n) :
 
 
 open scoped BigOperators
-private abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3
-private def column (c : Col) : Fin 5 → Fin 3 := ![c.1,c.2.1,c.2.2.1,c.2.2.2.1,c.2.2.2.2]
-private def compatible (a b : Col) : Prop :=
+abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3
+def column (c : Col) : Fin 5 → Fin 3 := ![c.1,c.2.1,c.2.2.1,c.2.2.2.1,c.2.2.2.2]
+def compatible (a b : Col) : Prop :=
   column a 0 ≠ column b 0 ∧ column a 1 ≠ column b 1 ∧
   column a 2 ≠ column b 2 ∧ column a 3 ≠ column b 3 ∧ column a 4 ≠ column b 4 ∧
   column a 1 ≠ column b 0 ∧ column a 2 ≠ column b 1 ∧
@@ -383,13 +386,13 @@ private theorem compatible_iff (a b : Col) : compatible a b ↔
     exact ⟨h 0 0 (by decide), h 1 1 (by decide), h 2 2 (by decide),
       h 3 3 (by decide), h 4 4 (by decide), h 1 0 (by decide),
       h 2 1 (by decide), h 3 2 (by decide), h 4 3 (by decide)⟩
-private def cls (c : Col) : Fin 41 :=
+def cls (c : Col) : Fin 41 :=
   let index : Fin 243 := ⟨c.1.val + 3*c.2.1.val + 9*c.2.2.1.val +
     27*c.2.2.2.1.val + 81*c.2.2.2.2.val, by
       have := c.1.isLt; have := c.2.1.isLt; have := c.2.2.1.isLt
       have := c.2.2.2.1.isLt; have := c.2.2.2.2.isLt; omega⟩
   ![0, 27, 27, 14, 9, 40, 14, 40, 9, 5, 18, 36, 23, 3, 31, 32, 22, 13, 5, 36, 18, 32, 13, 22, 23, 31, 3, 2, 24, 30, 17, 6, 37, 20, 34, 12, 8, 15, 39, 26, 1, 28, 38, 16, 10, 11, 33, 21, 35, 7, 19, 29, 25, 4, 2, 30, 24, 20, 12, 34, 17, 37, 6, 11, 21, 33, 29, 4, 25, 35, 19, 7, 8, 39, 15, 38, 10, 16, 26, 28, 1, 1, 26, 28, 15, 8, 39, 16, 38, 10, 6, 17, 37, 24, 2, 30, 34, 20, 12, 7, 35, 19, 33, 11, 21, 25, 29, 4, 3, 23, 31, 18, 5, 36, 22, 32, 13, 9, 14, 40, 27, 0, 27, 40, 14, 9, 13, 32, 22, 36, 5, 18, 31, 23, 3, 4, 29, 25, 21, 11, 33, 19, 35, 7, 12, 20, 34, 30, 2, 24, 37, 17, 6, 10, 38, 16, 39, 8, 15, 28, 26, 1, 1, 28, 26, 16, 10, 38, 15, 39, 8, 7, 19, 35, 25, 4, 29, 33, 21, 11, 6, 37, 17, 34, 12, 20, 24, 30, 2, 4, 25, 29, 19, 7, 35, 21, 33, 11, 10, 16, 38, 28, 1, 26, 39, 15, 8, 12, 34, 20, 37, 6, 17, 30, 24, 2, 3, 31, 23, 22, 13, 32, 18, 36, 5, 13, 22, 32, 31, 3, 23, 36, 18, 5, 9, 40, 14, 40, 9, 14, 27, 27, 0] index
-private def Q : Matrix (Fin 41) (Fin 41) ℤ := ![
+def Q : Matrix (Fin 41) (Fin 41) ℤ := ![
   ![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ![1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ![1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -432,33 +435,30 @@ private def Q : Matrix (Fin 41) (Fin 41) ℤ := ![
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1]]
 private def weights : Fin 41 → ℤ := ![96, 96, 48, 96, 48, 48, 24, 24, 48, 96, 48, 24, 24, 48, 48, 24, 24, 12, 24, 12, 12, 12, 24, 48, 24, 24, 48, 96, 48, 24, 24, 48, 24, 12, 12, 12, 24, 12, 24, 24, 48]
-private def representatives : Fin 41 → Col := ![(0,0,0,0,0), (0,0,0,0,1), (0,0,0,1,0), (0,0,0,1,1), (0,0,0,1,2), (0,0,1,0,0), (0,0,1,0,1), (0,0,1,0,2), (0,0,1,1,0), (0,0,1,1,1), (0,0,1,1,2), (0,0,1,2,0), (0,0,1,2,1), (0,0,1,2,2), (0,1,0,0,0), (0,1,0,0,1), (0,1,0,0,2), (0,1,0,1,0), (0,1,0,1,1), (0,1,0,1,2), (0,1,0,2,0), (0,1,0,2,1), (0,1,0,2,2), (0,1,1,0,0), (0,1,1,0,1), (0,1,1,0,2), (0,1,1,1,0), (0,1,1,1,1), (0,1,1,1,2), (0,1,1,2,0), (0,1,1,2,1), (0,1,1,2,2), (0,1,2,0,0), (0,1,2,0,1), (0,1,2,0,2), (0,1,2,1,0), (0,1,2,1,1), (0,1,2,1,2), (0,1,2,2,0), (0,1,2,2,1), (0,1,2,2,2)]
-private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
+def representatives : Fin 41 → Col := ![(0,0,0,0,0), (0,0,0,0,1), (0,0,0,1,0), (0,0,0,1,1), (0,0,0,1,2), (0,0,1,0,0), (0,0,1,0,1), (0,0,1,0,2), (0,0,1,1,0), (0,0,1,1,1), (0,0,1,1,2), (0,0,1,2,0), (0,0,1,2,1), (0,0,1,2,2), (0,1,0,0,0), (0,1,0,0,1), (0,1,0,0,2), (0,1,0,1,0), (0,1,0,1,1), (0,1,0,1,2), (0,1,0,2,0), (0,1,0,2,1), (0,1,0,2,2), (0,1,1,0,0), (0,1,1,0,1), (0,1,1,0,2), (0,1,1,1,0), (0,1,1,1,1), (0,1,1,1,2), (0,1,1,2,0), (0,1,1,2,1), (0,1,1,2,2), (0,1,2,0,0), (0,1,2,0,1), (0,1,2,0,2), (0,1,2,1,0), (0,1,2,1,1), (0,1,2,1,2), (0,1,2,2,0), (0,1,2,2,1), (0,1,2,2,2)]
+def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
   Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e e)))
-private theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 5) :
+theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 5) :
     column (relabel e c) r = e (column c r) := by
   fin_cases r <;> rfl
 private theorem compatible_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
     compatible (relabel e a) (relabel e b) ↔ compatible a b := by
   simp only [compatible, column_relabel, e.injective.ne_iff]
 set_option maxRecDepth 100000 in
-private theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
+theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
     cls (relabel e c) = cls c := by decide +kernel
 set_option maxRecDepth 100000 in
-private theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
+theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
     relabel e c = representatives (cls c) := by decide +kernel
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
 private theorem representative_rows : ∀ i s : Fin 41,
     (∑ c : Col, if compatible (representatives i) c ∧ cls c = s then (1 : ℤ) else 0) =
       Q i s := by
-  have h : List.ofFn (fun i : Fin 41 => List.ofFn (fun s : Fin 41 =>
-      ∑ c : Col, if compatible (representatives i) c ∧ cls c = s then (1 : ℤ) else 0)) =
-      List.ofFn (fun i : Fin 41 => List.ofFn (fun s : Fin 41 => Q i s)) := by
-    decide +kernel
-  intro i s
-  exact congrFun (List.ofFn_inj.mp (congrFun (List.ofFn_inj.mp h) i)) s
-private theorem quotient_rows (b : Col) (s : Fin 41) :
+  intro i
+  fin_cases i <;> decide +kernel
+
+theorem quotient_rows (b : Col) (s : Fin 41) :
     (∑ c : Col, if compatible b c ∧ cls c = s then (1 : ℤ) else 0) = Q (cls b) s := by
   obtain ⟨e, he⟩ := class_rep b
   calc
@@ -471,11 +471,11 @@ private theorem quotient_rows (b : Col) (s : Fin 41) :
       exact (relabel e).sum_comp (fun c =>
         if compatible (representatives (cls b)) c ∧ cls c = s then (1 : ℤ) else 0)
     _ = _ := representative_rows _ _
-private def classWeights : Fin 41 → ℤ :=
+def classWeights : Fin 41 → ℤ :=
   ![3,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
-private theorem initial_class_counts : ∀ i : Fin 41,
+theorem initial_class_counts : ∀ i : Fin 41,
     (∑ a : Col, if cls a = i then (1 : ℤ) else 0) = classWeights i := by
   decide +kernel
 set_option maxRecDepth 100000 in
@@ -492,12 +492,12 @@ private theorem initial_weights (s : Fin 41) :
       simp
     _ = ∑ i : Fin 41, classWeights i * Q i s := by simp_rw [initial_class_counts]
     _ = _ := by fin_cases s <;> rfl
-private def gridEquiv (n : ℕ) : (Fin 5 × Fin n → Fin 3) ≃ (Fin n → Col) where
+def gridEquiv (n : ℕ) : (Fin 5 × Fin n → Fin 3) ≃ (Fin n → Col) where
   toFun P j := (P (0,j),P (1,j),P (2,j),P (3,j),P (4,j))
   invFun f p := column (f p.2) p.1
   left_inv P := by funext p; rcases p with ⟨r,j⟩; fin_cases r <;> rfl
   right_inv f := rfl
-private theorem column_grid (n : ℕ) (P : Fin 5 × Fin n → Fin 3)
+theorem column_grid (n : ℕ) (P : Fin 5 × Fin n → Fin 3)
     (j : Fin n) (r : Fin 5) : column (gridEquiv n P j) r = P (r,j) := by
   fin_cases r <;> rfl
 private theorem tail_iff (a b : Col) (xs : List Col) :
@@ -557,7 +557,7 @@ private theorem count_transfer (n : ℕ) :
 
 end CountBridge
 
-private def W : Fin 12 → Fin 41 → ℤ := ![
+def W : Fin 12 → Fin 41 → ℤ := ![
   ![1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ![32, 16, 8, 16, 8, 8, 4, 4, 8, 16, 8, 4, 4, 8, 8, 4, 4, 2, 4, 2, 2, 2, 4, 8, 4, 4, 8, 16, 8, 4, 4, 8, 4, 2, 2, 2, 4, 2, 4, 4, 8],
   ![324, 162, 108, 162, 54, 108, 72, 36, 90, 162, 72, 18, 36, 54, 108, 60, 48, 48, 72, 24, 24, 12, 36, 90, 60, 30, 84, 162, 78, 24, 48, 72, 18, 6, 12, 12, 36, 24, 24, 30, 54],
@@ -570,7 +570,7 @@ private def W : Fin 12 → Fin 41 → ℤ := ![
   ![5714699808, 2428286892, 1786071108, 2372039916, 462744516, 1776553854, 1130218524, 429577152, 1436892528, 2526101382, 760417884, 64536228, 483242874, 506892534, 1794483762, 968763108, 573102660, 762233496, 1151459670, 265428474, 370944006, 53524158, 400369098, 1445305332, 1020878634, 307940562, 1354550544, 2857349904, 1073736348, 154803954, 765192474, 926734584, 106523436, 11012070, 112298868, 164148678, 625094184, 367985028, 187315224, 468129420, 731617620],
   ![61051776924, 25939228116, 19081127928, 25339665234, 4941644988, 18979182138, 12074072952, 4588030326, 15350261016, 26986703574, 8121775080, 688964268, 5162740950, 5414409822, 19170864012, 10349117706, 6121303698, 8142986700, 12301097724, 2834784432, 3962993910, 571428762, 4276654674, 15439997250, 10906233570, 3288677688, 14469950022, 30525888462, 11469278094, 1652967300, 8174894358, 9899667984, 1137755148, 117535506, 1199747040, 1753245894, 6678084414, 3931086252, 2000471382, 5001143310, 7815839562],
   ![652216306656, 277099897740, 203843789832, 270698972820, 52785403032, 202753867506, 128986171596, 49009985160, 163985386296, 288297900318, 86758735104, 7358664744, 55153947462, 57839442558, 204802017882, 110558217504, 65389788876, 86991005040, 131411798202, 30281310222, 42336964590, 6103374090, 45685629426, 164943614496, 116510986758, 35129393658, 154579060152, 326108153328, 122520837588, 17656009374, 87332803074, 105755358324, 12153813132, 1255290654, 12816982872, 18728674938, 71342069304, 41995166556, 21368946228, 53427168792, 83495882436]]
-private def coefficients : Fin 7 → ℤ := ![-8,48,-84,17,76,-64,16]
+def coefficients : Fin 7 → ℤ := ![-8,48,-84,17,76,-64,16]
 private theorem table_zero : W 0 = (1 : Fin 41 → ℤ) := by
   exact List.ofFn_inj.mp rfl
 set_option maxRecDepth 100000 in
@@ -578,12 +578,12 @@ set_option maxHeartbeats 10000000 in
 private theorem table_steps : ∀ k : Fin 11, W k.succ = Q.mulVec (W k.castSucc) := by
   intro k
   fin_cases k <;> exact List.ofFn_inj.mp rfl
-private theorem powers_table : ∀ k : Fin 12,
+theorem powers_table : ∀ k : Fin 12,
     (Q^k.val).mulVec (1 : Fin 41 → ℤ) = W k :=
   TransferMatrix.tabulatedPowers Q 11 W table_zero table_steps
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
-private theorem power_polynomial : (Q^(4+7)).mulVec (1 : Fin 41 → ℤ) =
+theorem power_polynomial : (Q^(4+7)).mulVec (1 : Fin 41 → ℤ) =
     ∑ j : Fin 7, coefficients j • (Q^(4+j.val)).mulVec (1 : Fin 41 → ℤ) := by
   rw [show 4+7 = (11 : Fin 12).val from rfl, powers_table]
   have hh (j : Fin 7) : (Q^(4+j.val)).mulVec (1 : Fin 41 → ℤ) =
@@ -592,7 +592,7 @@ private theorem power_polynomial : (Q^(4+7)).mulVec (1 : Fin 41 → ℤ) =
   exact List.ofFn_inj.mp rfl
 
 
-private theorem pair_tail (n : ℕ) : (L (n+13) : ℤ) + 6 =
+theorem pair_tail (n : ℕ) : (L (n+13) : ℤ) + 6 =
     16 * ((L (n+12) : ℤ)+6) - 64 * ((L (n+11) : ℤ)+6) +
     76 * ((L (n+10) : ℤ)+6) + 17 * ((L (n+9) : ℤ)+6) -
     84 * ((L (n+8) : ℤ)+6) + 48 * ((L (n+7) : ℤ)+6) -
@@ -633,7 +633,7 @@ private theorem scale_recurrence (m : ℕ) (hm : 2 ≤ m)
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
-private theorem pair_base : (L 12 : ℤ)+6 =
+theorem pair_base : (L 12 : ℤ)+6 =
     16*((L 11 : ℤ)+6) - 64*((L 10 : ℤ)+6) + 76*((L 9 : ℤ)+6) +
     17*((L 8 : ℤ)+6) - 84*((L 7 : ℤ)+6) + 48*((L 6 : ℤ)+6) - 8*((L 5 : ℤ)+6) := by
   have ht (k : ℕ) (hk : k < 12) :

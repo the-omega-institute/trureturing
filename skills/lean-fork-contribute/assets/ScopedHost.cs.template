@@ -1,0 +1,114 @@
+using System.Collections.Immutable;
+using System.Text.Json;
+using StrataLint.Engine;
+
+namespace StrataLint.Scribe;
+
+internal static class ForkScopedEntry
+{
+    private sealed record Request(string Report, string[] Paths, string[] Roots, string Baseline);
+
+    public static int Main(string[] args)
+    {
+        if (args is not [var requestPath]) return 2;
+        try
+        {
+            var request = JsonSerializer.Deserialize<Request>(File.ReadAllText(requestPath))
+                ?? throw new FormatException("missing request");
+            var root = Directory.GetCurrentDirectory();
+            var report = LeanCompiledArtifactReports.ReadScopedRepositoryFiles(root, request.Roots, request.Report);
+            foreach (var (path, module) in report.Files)
+            {
+                if (module.Error is not null) throw new FormatException(path.Value + ": " + module.Error);
+                foreach (var declaration in module.Declarations)
+                    if (declaration.Kind == "axiom" || declaration.Axioms.Any(axiom => !LeanAxiomFacts.IsStandard(axiom)))
+                        throw new FormatException("unaccepted axiom closure: " + path.Value + "/"
+                            + declaration.Name + " [" + string.Join(",", declaration.Axioms) + "]");
+                if (!path.Value.StartsWith("D5/", StringComparison.Ordinal)) continue;
+                var pinPath = FrozenStatePath.FromModulePath(path);
+                var pin = Path.Combine(root, pinPath.Value);
+                if (!File.Exists(pin)) continue;
+                var expected = FrozenStateRecordLoader.Load(new RepositoryFile(pinPath,
+                    ImmutableArray.CreateRange(File.ReadAllBytes(pin)), false, null, true));
+                var actual = FrozenStateRecord.FromReport(path, module);
+                if (expected.StatementId != actual.StatementId
+                    || !expected.Declarations.SequenceEqual(actual.Declarations))
+                    throw new FormatException("frozen compiled statement mismatch: " + path.Value);
+            }
+            var scribe = ScribeContentChecks.Run(root, request.Paths.ToImmutableArray(), report,
+                checkContent: true, Console.Out, Console.Error);
+            return scribe == 0 ? Audit(root, request, report) : scribe;
+        }
+        catch (Exception error) when (error is IOException or InvalidOperationException or ArgumentException
+            or FormatException or JsonException)
+        {
+            Console.Error.WriteLine("FORK_CHECK_FAILED: " + error.Message);
+            return 1;
+        }
+    }
+
+    private static int Audit(string root, Request request, LeanAxiomReport report)
+    {
+        var raw = GitRepositorySnapshotReader.ReadCurrentProjection(root, static path =>
+            path.EndsWith(".lean", StringComparison.Ordinal));
+        var snapshot = SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
+            _ => throw new InvalidOperationException("unknown source snapshot outcome"),
+        };
+        var count = 0;
+        var unfinished = 0;
+        foreach (var target in request.Roots)
+        {
+            var source = RepoPath.CreateKnown(target);
+            var text = snapshot.Files[source].Text;
+            var baselinePath = Path.Combine(request.Baseline, target);
+            var baseline = File.Exists(baselinePath) ? File.ReadAllText(baselinePath) : "";
+            if (text == baseline) continue;
+            if (target.StartsWith("Reg/", StringComparison.Ordinal))
+            {
+                foreach (var occurrence in InformationTemplateEvidence.Collect(snapshot, report, [source]).Occurrences.Values)
+                    if (!occurrence.HasFourSlots)
+                    {
+                        Console.Error.WriteLine("FORK_AUDIT unfinished registration=" + occurrence.Key
+                            + " diagnostic=" + occurrence.Diagnostic);
+                        unfinished++;
+                    }
+                continue;
+            }
+            if (!target.StartsWith("D5/", StringComparison.Ordinal)) continue;
+            var names = LeanDeclarationSourceNames.Read(text);
+            var baseNames = LeanDeclarationSourceNames.Read(baseline);
+            var module = report.Files[source];
+            string? exempt = null;
+            if (RepositoryRules.TryHeader(text, out var header)
+                && UtilitySyntax.TryParse(header.Utility, out var utility, out _)
+                && utility is { BasisKind: UtilityBasisKind.Refutes, Result: { } result }
+                && result.ToTarget() is Target.Formal formal && formal.Path == source
+                && UtilityDeclarationValidator.Validate(UtilityValidationPhase.ChangedContent,
+                    source, header.Utility, snapshot, () => report).IsAccepted
+                && UtilityDeclarationValidator.TryResolveDeclaration(result, module, out var resolved))
+                exempt = resolved!.Name;
+            foreach (var declaration in module.Declarations.Where(declaration =>
+                declaration.Kind == "theorem" && declaration.IncludeInStatement
+                && !declaration.Name.StartsWith("_private.", StringComparison.Ordinal)
+                && names.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma"
+                && !(baseNames.TryGetValue(declaration.Name, out var oldKind) && oldKind is "theorem" or "lemma")
+                && declaration.Name != exempt))
+            {
+                var selected = ImmutableHashSet.Create(StringComparer.Ordinal, declaration.Name);
+                var owners = InformationTemplateTheoremSelection.OwnerMirrors(snapshot, report, source, selected);
+                var valid = owners.Any(owner => InformationTemplateTheoremSelection.Collect(snapshot, report,
+                    source, owner, selected).Occurrences.Values.Any(occurrence =>
+                    occurrence.Key.Theorem == declaration.Name && occurrence.HasFourSlots));
+                Console.WriteLine("FORK_AUDIT theorem=" + declaration.Name
+                    + " result=" + (valid ? "declared_validated" : "unfinished"));
+                if (!valid) unfinished++;
+                count++;
+            }
+        }
+        Console.WriteLine($"FORK_AUDIT targets={count} unfinished={unfinished}");
+        return unfinished == 0 ? 0 : 1;
+    }
+}

@@ -1,8 +1,0 @@
-其中：
-
-1. $d$ 与 $\mathbf G$ 决定伴随 $\delta=d^*_{\mathbf G}$、$\Delta=d\delta+\delta d$、谱和 Hodge 分解；
-2. $F_{\mathrm{cur}}\in C^2(K;\mathbb R)$ 是当前测量曲率数据；若它来自实际边状态 $g_{\mathrm{cur}}$，须声明 $F_{\mathrm{cur}}=d_1g_{\mathrm{cur}}$。独立测量不预设闭合或属于 $\operatorname{im}d_1$，即使可实现也不自动等于当前 $g_{\mathrm{cur}}$ 的曲率；
-3. $\mathcal C^1=\operatorname{im}\delta_2$、$\mathcal H^1=\ker\Delta_1$ 可由算子/内积重算，$\Pi:\mathcal H^1\to\mathbb R^r$ 是声明的线性周期接口映射。记 $P_{\mathcal H}$ 为到 $\mathcal H^1$ 的正交投影，本条周期约束指 $\Pi(P_{\mathcal H}g)=p$；若接口测的是完整 $g$ 的闭路积分，须在有曲率解后扣除 coexact 部分的相应读数，才能用作这里的 harmonic 周期数据；
-4. $p_{\mathrm{cur}}\in\operatorname{im}\Pi$ 是该接口的当前实际周期数据，不能与映射 $\Pi$ 混为一项，也不能由 $\Pi$ 单射凭空提供。若声称恢复实际 $g_{\mathrm{cur}}$ 的规范类，须同时有 $F_{\mathrm{cur}}=d_1g_{\mathrm{cur}}$ 和 $p_{\mathrm{cur}}=\Pi(P_{\mathcal H}g_{\mathrm{cur}})$；独立测量只定义满足所给约束的候选解集。若任务要求实际具体代表而非规范等价类，还须另列规范选择和该当前状态；
-5. $\mathsf{Event},\mathsf{Err},\mathsf{Stop}$ 分别保存事件核、误差/最小范数任务合同和未来资源后继。它们须区分无解报告与有解后的状态任务；对不一致测量可以有诊断事件、残差、修正任务或停止标签，但这些输出不能制造一个满足原约束的重构状态。
-

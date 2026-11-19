@@ -271,7 +271,7 @@ private lemma theta_mellin {z : ℂ} (hz : 1 < z.re) :
   rw [he] at h
   simpa only [← Complex.ofReal_sum, primeCoeff_prefix] using h
 
-private lemma cpow_exp (u : ℝ) (z : ℂ) :
+lemma cpow_exp (u : ℝ) (z : ℂ) :
     (Real.exp u : ℂ) ^ z = Complex.exp ((u : ℂ) * z) := by
   rw [Complex.cpow_def_of_ne_zero (by exact_mod_cast (Real.exp_pos u).ne'),
     ← Complex.ofReal_log (Real.exp_pos u).le, Real.log_exp]
@@ -319,7 +319,7 @@ private lemma Q_zero_raw {s : ℂ} (hs : 0 < s.re) :
     field_simp
   linear_combination -hd
 
-private lemma normalized_logDeriv {z : ℂ} (hz : z ≠ 1) (hn : riemannZeta₁ z ≠ 0) :
+lemma normalized_logDeriv {z : ℂ} (hz : z ≠ 1) (hn : riemannZeta₁ z ≠ 0) :
     logDeriv riemannZeta z = -(z - 1)⁻¹ + logDeriv riemannZeta₁ z := by
   rw [logDeriv_apply, logDeriv_apply, riemannZeta_eq_inv_sub_mul hz,
     deriv_riemannZeta_eq_neg_inv_sub_sq_mul_add hz]
@@ -409,7 +409,7 @@ private lemma Q_hasDeriv (u₀ : ℝ) (hu₀ : 0 ≤ u₀) {s : ℂ} (hs : 0 < s
       (by simpa using q_bound u) (abs_nonneg _)
       (by positivity)
 
-private lemma factor_logDeriv {f g : ℂ → ℂ} {a : ℂ} {m : ℕ}
+lemma factor_logDeriv {f g : ℂ → ℂ} {a : ℂ} {m : ℕ}
     (hg : AnalyticAt ℂ g a) (hg0 : g a ≠ 0)
     (heq : f =ᶠ[𝓝 a] fun z => (z - a) ^ m * g z) :
     AnalyticAt ℂ (logDeriv g) a ∧
@@ -431,7 +431,7 @@ private lemma factor_logDeriv {f g : ℂ → ℂ} {a : ℂ} {m : ℕ}
     logDeriv_comp (by fun_prop) (by fun_prop), logDeriv_pow]
   simp
 
-private lemma pole_orders {f H : ℂ → ℂ} {a α : ℂ}
+lemma pole_orders {f H : ℂ → ℂ} {a α : ℂ}
     (hH : AnalyticAt ℂ H a) (hα : α ≠ 0)
     (heq : f =ᶠ[𝓝[≠] a] fun z => α / (z - a) + H z) :
     (fun z => -deriv f z + f z) =ᶠ[𝓝[≠] a]

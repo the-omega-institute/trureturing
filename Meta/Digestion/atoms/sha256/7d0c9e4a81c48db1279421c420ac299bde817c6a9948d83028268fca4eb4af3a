@@ -1,7 +1,0 @@
-Then exactly one of the following holds:
-
-1. Its source is $B_1(t)$ for a finite $t>0$, $q_B(t)\ne0$, and
-   the complete tuple is $R(t)$.
-2. Its source is $C_1(t)$ for a finite $t>0$, $q_C(t)\ne0$, and
-   the complete tuple is $\widehat W_1(t)$.
-

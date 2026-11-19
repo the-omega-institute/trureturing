@@ -38,9 +38,14 @@ dividing by that coefficient modulo a composite modulus.
 
 ## Gap
 
-The source's uniform six-letter estimate, and hence Conjecture 6.1 in its median range,
-is not proved here. The current result counts actual returns in a fixed middle stratum;
-the required uniform estimate over the middle coordinates remains unresolved.
+The source's uniform six-letter estimate for arbitrary moduli, and hence the full
+Conjecture 6.1 in its median range, is not proved here. The repository now proves a
+uniform original-tuple slice for c=p^3: for every epsilon>0, C0>=1 and fixed
+alpha<26/7, the total count over all scalar centers is at most
+`K(epsilon,C0,alpha)*Y^2*p^epsilon` when `p^(3/2)<=X<=Y`,
+`XY<=C0*p^alpha`, `6Y<p^2`, and the two alternating coefficients are units.
+This includes all middle coordinates, zero and nonunit rows and ordered
+multiplicities. It does not settle other moduli or the strict cutoff endpoint.
 
 ## Route
 
@@ -77,6 +82,15 @@ gcd-period bound, would falsify the formal milestone.
 
 ## Evidence
 
+The strengthened prime-cube result is
+`prime_cube_scalar_return_count_of_exponent` in
+`D5/S3/Arith/CharacterSums/PascadiPrimeCubeCount`; its complete exact-root
+build and scoped standard-axiom report passed on 18 November 2026.
+The earlier `prime_cube_scalar_return_count` statement with exponent 18/5
+is preserved. Canonical publication and required remote checks remain separate
+from these local proofs. Source-bound four-slot audits are unfinished under
+[issue #31176](https://github.com/the-omega-institute/trureturing/issues/31176).
+
 The kernel-checked declarations are
 `completion_equations_of_sixReturnWord`, `completionFiber_period`, and
 `sixReturnWord_fixed_middle_count` in `D5/S3/Arith/CharacterSums/PascadiSixWordFiber`.
@@ -86,15 +100,15 @@ Conjecture 6.1 and Proposition 6.2.
 
 ## Triage
 
-This is a `window`: the source conjecture remains a live quantitative target, while the
-repository delivers a fixed-middle finite-interval bound. No claim is made
-that the weaker Proposition 6.2 or the full conjecture has been reproved.
-
-This is a partial counting result for natural representatives in $[0,H)^2$. The
-uniform Conjecture 6.1 bound and a resolution of the source problem remain open.
-Literature completeness and priority are not asserted.
+This is a `window`: the source conjecture remains a live quantitative target.
+The repository delivers both the original fixed-middle result for arbitrary moduli
+and the later uniform prime-cube slice above. The full Conjecture 6.1 remains open.
+Literature completeness and priority are not asserted; see the linked Library
+entry for the bounded primary-source comparison and its remaining gap.
 
 ## ASSUMED-UNVERIFIED
 
-The external literature screen is limited to the cited arXiv version and the repository's
-reuse search. The complete six-letter conjecture and any priority claim remain unverified.
+The external literature screen includes the cited arXiv and journal versions and
+the bounded comparison described in the Library entry. The final 2021 Shkredov
+Journal of Number Theory Lemma 15 primary text was not obtained. The complete
+six-letter conjecture and any exhaustive priority claim remain unverified.

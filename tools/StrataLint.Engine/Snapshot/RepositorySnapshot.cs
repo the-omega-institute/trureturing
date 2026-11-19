@@ -78,6 +78,7 @@ public sealed class RepositoryFile
         GitBlobOid = gitBlobOid;
         ContentWasRead = contentWasRead;
         text = new(() => IsOpaque ? string.Empty : StrictUtf8.GetString(RawBytes.AsSpan()));
+        TextIsRawUtf8 = !isOpaque;
         var bytes = isOpaque ? ReadOnlySpan<byte>.Empty : rawBytes.AsSpan();
         HasBom = bytes.Length >= 3 && bytes[0] == 0xef && bytes[1] == 0xbb && bytes[2] == 0xbf;
         HasCarriageReturn = bytes.Contains((byte)'\r');
@@ -114,6 +115,9 @@ public sealed class RepositoryFile
     internal bool ContentWasRead { get; }
 
     public string Text => text.Value;
+
+    // Only byte-backed, nonopaque text is guaranteed to be the UTF-8 decoding of RawBytes.
+    internal bool TextIsRawUtf8 { get; }
 
     public bool IsOpaque { get; }
 
@@ -182,7 +186,7 @@ public static class SnapshotDecoder
                     throw new FormatException($"Repository path is duplicated or case-colliding: {path.Value}.");
                 }
 
-                var isOpaque = DigestionOpaquePathPolicy.IsOpaque(path);
+                var isOpaque = HistoricalTheoryPaths.IsOpaque(path);
                 if (!isOpaque)
                 {
                     try

@@ -12,6 +12,32 @@ open Reg.D5.S3.Combinatorics.Graph.PlanarMatching.RotationBoundary
 universe u
 noncomputable section
 
+def boundaryWalkLaw (L : Realization signature.{u}) : Prop :=
+  ∀ (p : Params.{u}) (a : p.V) (q : p.G.Walk a a), q.IsCycle →
+    ∀ x : p.R.Face → ZMod 2,
+      L.readout () p x = (fun e : p.G.edgeSet => if e.val ∈ q.edges then 1 else 0) →
+      ∃ r : p.G.Walk a a, (r = q ∨ r = q.reverse) ∧ ∀ d : p.G.Dart,
+        ((x (p.R.face d) = 1 ∧ x (p.R.face d.symm) = 0) ↔ d ∈ r.darts) ∧
+        ((x (p.R.face d) = 0 ∧ x (p.R.face d.symm) = 1) ↔ d ∈ r.reverse.darts)
+
+def boundaryWalkArena : Arena := ⟨signature,boundaryWalkLaw⟩
+
+theorem boundary_walk_bridge :
+    (type_of% @Rotation.cycle_boundary_walk.{u}) ↔
+      boundaryWalkArena.{u}.Law actual.{u} := by
+  change _ ↔ boundaryWalkLaw actual
+  constructor
+  · intro h p a q hq x hx
+    exact @h p.V p.G p.R p.vertices p.vertexEq p.adjacency a q hq x hx
+  · intro h V G R fV dV dG a q hq x hx
+    exact h ⟨V,fV,dV,G,dG,R⟩ a q hq x hx
+
+theorem boundary_walk_actual : boundaryWalkArena.{u}.Law actual.{u} :=
+  boundary_walk_bridge.mp (@Rotation.cycle_boundary_walk.{u})
+
+#print axioms boundary_walk_bridge
+#print axioms boundary_walk_actual
+
 def sideLaw (L : Realization signature.{u}) : Prop :=
   ∀ p, model p → ∀ (a : p.V) (q : p.G.Walk a a), q.IsCycle →
     ∃ (x : p.R.Face → ZMod 2) (I J : Set p.V),

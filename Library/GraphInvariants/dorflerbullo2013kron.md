@@ -41,3 +41,11 @@ The source sign in that application is fixed by the term $+q^{\mathsf T}u$.
 The quadratic minimum's source-dependent constant, energy calibration and
 source-identification conditions are additional data; the accompanying
 matrix alone does not identify an internal source or its joint energy.
+
+## Verified locator
+
+- Journal §II.A (“The Kron Reduction Process”) defines the retained Schur
+  complement. <https://doi.org/10.1109/TCSI.2012.2215780>
+- The arXiv v1 PDF gives the network equations (1.1)–(1.2) and, in §2.1
+  (“The Kron Reduction Process”), equations (2.1)–(2.2) and Lemma 2.1(1),(3)
+  for the reduced and accompanying matrices. <https://arxiv.org/abs/1102.2950>

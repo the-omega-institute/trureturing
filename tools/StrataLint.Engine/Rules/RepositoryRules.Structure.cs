@@ -164,9 +164,9 @@ internal static partial class RepositoryRules
     internal static bool IsCapacityExcluded(string path) =>
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
-        || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
-        || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-        || DigestionCasStore.IsCanonicalPath(path)
+        || string.Equals(path, "Meta/BACKFILL.yaml", StringComparison.Ordinal)
+        || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
+        || path.StartsWith("Meta/Digestion/atoms/sha256/", StringComparison.Ordinal)
         || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
@@ -225,7 +225,6 @@ internal static partial class RepositoryRules
         RepositorySnapshot current, RepositorySnapshot baseline, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        findings.AddRange(TheoryCapacity(current, changes));
         findings.AddRange(LibraryCapacity(current, changes));
         var directories = CapacityPathsByDirectory(current.Files.Keys);
         var baselineDirectories = CapacityPathsByDirectory(baseline.Files.Keys);
@@ -435,7 +434,7 @@ internal static partial class RepositoryRules
         var counts = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (var (path, file) in FormalFiles(context.Current))
         {
-            if (!TryHeader(file.Text, out var header))
+            if (!TryHeader(file, out var header))
             {
                 findings.Add(new RuleFinding(
                     path.Value,

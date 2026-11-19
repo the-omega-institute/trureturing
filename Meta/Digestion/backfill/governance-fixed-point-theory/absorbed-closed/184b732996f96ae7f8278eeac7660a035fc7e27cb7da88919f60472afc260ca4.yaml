@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:184b732996f96ae7f8278eeac7660a035fc7e27cb7da88919f60472afc260ca4
-  normalized_sha256: sha256:184b732996f96ae7f8278eeac7660a035fc7e27cb7da88919f60472afc260ca4
-cas_ref: sha256:184b732996f96ae7f8278eeac7660a035fc7e27cb7da88919f60472afc260ca4
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyExistence.legal_tail_rekey_exists
-    target_statement_id: sha256:4fa4fa34f74456cbca71d5cc9bd4a13fe3d2a77f80e9a3b15a7608e6ef03b3ff
-receipts:
-  unresolved_subitems: []
