@@ -37,6 +37,7 @@ jobs:
             .github/workflows/lean-analysis-fixtures.yml
             .github/workflows/lean-cache-publish.yml
             .github/actions/lean-cache-produce/action.yml
+            .github/actions/lean-cache-release-seed/action.yml
             .gitignore
             D5/*.lean
             Directory.Build.*
@@ -111,61 +112,14 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
       - if: steps.entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - if: steps.entry.outputs.hit == 'true'
-        name: Check the selected cache handoff scenario
-        run: |
-          case "$SHARD_HANDOFF" in complete|partial|none|legacy) ;; *) exit 2 ;; esac
-      - id: shards
-        name: Restore the selected sharded project seed
-        if: steps.entry.outputs.hit == 'true' && (env.SHARD_HANDOFF == 'complete' || env.SHARD_HANDOFF == 'partial')
-        uses: ./.github/actions/lean-cache-shards
+      - name: Restore the selected Release build seeds
+        if: steps.entry.outputs.hit == 'true'
+        uses: ./.github/actions/lean-cache-release-seed
         env:
           GH_TOKEN: ${{ github.token }}
         with:
-          operation: restore
-          require-complete: ${{ env.SHARD_HANDOFF == 'complete' }}
-          targets: ${{ env.SHARD_HANDOFF == 'partial' && 'D5.S0.Tower.GoldenGapWord' || '' }}
-      - if: steps.entry.outputs.hit == 'true' && env.SHARD_HANDOFF != 'legacy'
-        name: Check the cache handoff evidence
-        env:
-          AVAILABLE: ${{ steps.shards.outputs.available }}
-          COMPLETE: ${{ steps.shards.outputs.complete }}
-        run: |
-          case "$SHARD_HANDOFF" in
-            complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
-            partial) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]] ;;
-            none) [[ ! -e .lake/build ]] ;;
-          esac
-          echo "LEAN_RELEASE_HANDOFF seed=$SHARD_HANDOFF available=${AVAILABLE:-0} complete=${COMPLETE:-false}"
-      - id: project
-        if: steps.entry.outputs.hit == 'true' && env.SHARD_HANDOFF == 'legacy' && steps.keys.outputs.project_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - if: steps.entry.outputs.hit == 'true'
-        name: Restore optional validated seeds
-        env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - if: steps.entry.outputs.hit == 'true' && env.SHARD_HANDOFF != 'legacy'
-        name: Complete the project compiler outputs for the pinned source
-        env:
-          STRATALINT_ACCEPT_COLD_BUILD: '1'
-        run: make lean FULL_BUILD=1
+          mode: ${{ env.SHARD_HANDOFF }}
+          cache-keys: ${{ toJSON(steps.keys.outputs) }}
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
@@ -218,7 +172,7 @@ jobs:
 
   cache-shards:
     name: Verify Lean cache continuation transport
-    if: github.ref_protected
+    if: github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     permissions:
@@ -265,8 +219,9 @@ jobs:
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
-          python3 tools/scripts/worktree/lean_actions.py restore --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           make lean LEAN_TARGETS="$CACHE_SCOPE"
       - if: steps.entry.outputs.hit == 'true'
         id: checkpoint
@@ -277,7 +232,7 @@ jobs:
         with:
           operation: save
           state: resume
-          anchor: ${{ github.event.before }}
+          anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
           targets: ${{ env.CACHE_SCOPE }}
       - if: steps.entry.outputs.hit == 'true'
         name: Isolate the restored build

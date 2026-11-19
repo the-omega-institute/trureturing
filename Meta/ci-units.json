@@ -334,6 +334,7 @@
     "tools/Architecture/BannedSymbols.Guid.txt",
     "[tests-cache]",
     ".github/actions/lean-cache-produce/action.yml",
+    ".github/actions/lean-cache-release-seed/action.yml",
     ".github/actions/lean-cache-shards/*",
     ".github/workflows/lean-cache-publish.yml",
     "tools/StrataLint.Engineering/*",
