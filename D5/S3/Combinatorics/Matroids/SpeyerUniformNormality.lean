@@ -16,7 +16,8 @@
    D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowMean sha256:155e49f2053e12d60f2e820552ce45df6bd03c24b4ca9779ea27fa2d13fc142d
    D5/S3/Analytic/Probability/BernoulliTriangularLimits.rowVariance sha256:ced9c60ac8dfb63dc57615620993837f835a60a88001bc4a5baf9262e0394ad9
    D5/S3/Analytic/Probability/BernoulliTriangularLimits.sigmaSq sha256:a3ea86df2dd9591b4e26a317c3b3d6ef80d00ce4e479aff2aa5d4eab72e475c9
-   Module escape_witness: monotone_cdf_pointwise_to_uniform (same-delivery content)
+   Existing frozen settlement: result applies the frozen Bernoulli limit theorem.
+   This visibility update has no new escape witness.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15743
    Template gap: No divergent-rank-sequence realization or conjunction-of-limits readout is supplied.
    Four-slot evidence missing: source-specific arenas and observation/readout maps,
@@ -25,8 +26,8 @@
    frozen StatLean.HypothesisTesting standard Gaussian owners.
    claim: proof_shape: bind-only; escape_witness: none;
      consumers: statement/type consumers.
-   result: proof_shape: content; escape_witness: monotone_cdf_pointwise_to_uniform;
-     consumers: statement/type consumers.
+   result: proof_shape: bind-only; escape_witness: none;
+     Existing frozen settlement of #15111.
    g: proof_shape: bind-only; escape_witness: none;
      consumers: g_coeff_succ, g_coeff_zero, g_coeff_above, g_eq_X_mul_q, speyer_variance_bound, speyer_variance_bound_eighth, speyer_variance_eighth_unconditional, speyer_variance_tendsto, g_normalized_bernoulli_multiset, g_bernoulli_factorization, claim, result.
    qAB: proof_shape: bind-only; escape_witness: none;
