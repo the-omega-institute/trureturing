@@ -46,4 +46,5 @@ For every finite digraph of order n and real palette parameters a and b with n â
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.normalizedDichromaticPolynomial`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.normalizedDichromaticPolynomial_monotoneOn`
+- Dependency: [D5/S3/Combinatorics/Graph/Coloring/CrewSingletonSplit](CrewSingletonSplit.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion](DichromaticPartitionExpansion.md)
