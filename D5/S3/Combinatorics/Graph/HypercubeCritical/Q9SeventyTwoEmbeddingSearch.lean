@@ -26,6 +26,14 @@ abbrev Placement := Fin 8 → BitVec 9
 private def toggle (x : BitVec 9) (i : Fin 9) : BitVec 9 :=
   x ^^^ BitVec.ofNat 9 (2 ^ i.val)
 
+private def hasTwoSetBits (x : BitVec 9) : Bool :=
+  let y := x &&& (x - 1)
+  y != 0 && (y &&& (y - 1)) == 0
+
+private theorem hasTwoSetBits_of_two_toggles (i j : Fin 9) (h : i ≠ j) :
+    hasTwoSetBits (toggle (toggle 0 i) j) = true := by
+  fin_cases i <;> fin_cases j <;> first | contradiction | decide +kernel
+
 private def adjacent (x y : BitVec 9) : Bool :=
   (List.finRange 9).any (fun i => toggle x i == y)
 
@@ -52,13 +60,44 @@ private def permitsMiddle (placed : List (Fin 8)) (p : Placement)
 
 private def valid (wagner : Bool) (placed : List (Fin 8)) (p : Placement) : Bool :=
   placed.all fun i => placed.all fun j =>
-    if i = j then true else p i != p j && (!modelAdj wagner i j || permitsMiddle placed p i j)
+    if i = j then true else p i != p j &&
+      (!modelAdj wagner i j || (hasTwoSetBits (p i ^^^ p j) && permitsMiddle placed p i j))
 
 private def initialLabels (wagner : Bool) : List (Fin 8) :=
   0 :: List.ofFn (modelRootNeighbors wagner)
 
 private def remainingLabels (wagner : Bool) : List (Fin 8) :=
   if wagner then [2, 3, 5, 6] else [3, 5, 6, 7]
+
+private def anchor (wagner : Bool) (i : Fin 8) : Fin 8 :=
+  if wagner then (if i = 2 ∨ i = 5 then 1 else 2)
+  else if i = 6 then 2 else if i = 7 then 3 else 1
+
+private def startsFromPlaced (wagner : Bool) (placed : List (Fin 8)) :
+    List (Fin 8) → Prop
+  | [] => True
+  | i :: tail => anchor wagner i ∈ placed ∧ modelAdj wagner (anchor wagner i) i = true ∧
+      startsFromPlaced wagner (i :: placed) tail
+
+private theorem starting_anchors (wagner : Bool) :
+    startsFromPlaced wagner (initialLabels wagner) (remainingLabels wagner) := by
+  cases wagner <;>
+    simp only [startsFromPlaced, initialLabels, remainingLabels, modelRootNeighbors, anchor,
+      Bool.false_eq_true, ite_false, ite_true] <;> decide
+
+private def moves (x : BitVec 9) : List (BitVec 9) :=
+  (List.finRange 9).flatMap fun a =>
+    ((List.finRange 9).filter (a < ·)).map fun b => toggle (toggle x a) b
+
+private theorem two_toggles_mem_moves (x : BitVec 9) (a b : Fin 9) (h : a ≠ b) :
+    toggle (toggle x a) b ∈ moves x := by
+  unfold moves
+  rcases lt_or_gt_of_ne h with hab | hba
+  · exact List.mem_flatMap.mpr ⟨a, List.mem_finRange _, List.mem_map.mpr
+      ⟨b, List.mem_filter.mpr ⟨List.mem_finRange _, decide_eq_true hab⟩, rfl⟩⟩
+  · refine List.mem_flatMap.mpr ⟨b, List.mem_finRange _, List.mem_map.mpr
+      ⟨a, List.mem_filter.mpr ⟨List.mem_finRange _, decide_eq_true hba⟩, ?_⟩⟩
+    simp only [toggle, BitVec.xor_assoc x, BitVec.xor_comm (BitVec.ofNat 9 (2 ^ b.val))]
 
 private def initialPoint (pattern : Fin 5) (a : Fin 3) : BitVec 9 :=
   toggle (toggle 0 ((a.castLE (by decide : 3 ≤ 8)).succ)) (rootSecondAxes pattern a)
@@ -72,9 +111,9 @@ private def initialPlacement (wagner : Bool) (pattern : Fin 5) : Placement :=
 private def fill (wagner : Bool) (placed : List (Fin 8))
     (p : Placement) : List (Fin 8) → List Placement
   | [] => [p]
-  | i :: tail => (List.finRange 512).flatMap fun n =>
-      let q := Function.update p i (BitVec.ofFin n)
-      if !n.val.testBit 0 && valid wagner (i :: placed) q then
+  | i :: tail => (moves (p (anchor wagner i))).flatMap fun x =>
+      let q := Function.update p i x
+      if !x.getLsbD 0 && valid wagner (i :: placed) q then
         fill wagner (i :: placed) q tail
       else []
 
@@ -107,6 +146,24 @@ private theorem valid_of_actual (wagner : Bool) (placed : List (Fin 8)) (q p : P
         apply (cubeBitVec 9).injective
         rw [toggle, cubeBitVec_xor_single, ha]
         rfl
+      obtain ⟨d, hd⟩ := adjacent_exists_flip ((hm j).mpr (Or.inr rfl))
+      have hpj : p j = toggle m d := by
+        apply (cubeBitVec 9).injective
+        rw [toggle, cubeBitVec_xor_single, hd]
+        rfl
+      have had : a ≠ d := by
+        intro had
+        subst d
+        apply hinj.ne h
+        rw [hpj, ← hm_eq]
+        simp [toggle, BitVec.xor_assoc]
+      have hs : hasTwoSetBits (p i ^^^ p j) = true := by
+        have he : p i ^^^ p j = toggle (toggle 0 a) d := by
+          rw [hpj, ← hm_eq]
+          simp [toggle, ← BitVec.xor_assoc]
+        rw [he]
+        exact hasTwoSetBits_of_two_toggles a d had
+      rw [hs, Bool.true_and]
       unfold permitsMiddle
       apply List.any_eq_true.mpr
       refine ⟨a, List.mem_finRange a, ?_⟩
@@ -128,11 +185,13 @@ private theorem mem_fill (wagner : Bool) (p : Placement)
       ∃ m : BitVec 9, m.getLsbD 0 = false ∧ ∀ k,
         (hypercube 9).Adj (cubeBitVec 9 m) (cubeBitVec 9 (p k)) ↔ k = i ∨ k = j)
     (tail placed : List (Fin 8)) (q : Placement)
+    (hanchors : startsFromPlaced wagner placed tail)
     (hagrees : ∀ k ∈ placed, q k = p k) :
     ∃ r ∈ fill wagner placed q tail, ∀ k ∈ tail ++ placed, r k = p k := by
   induction tail generalizing placed q with
   | nil => exact ⟨q, by simp [fill], hagrees⟩
   | cons i tail ih =>
+    obtain ⟨ha, he, htail⟩ := hanchors
     let q' := Function.update q i (p i)
     have hq' (k : Fin 8) (hk : k ∈ i :: placed) : q' k = p k := by
       rcases List.mem_cons.mp hk with rfl | hk
@@ -140,17 +199,35 @@ private theorem mem_fill (wagner : Bool) (p : Placement)
       · by_cases hki : k = i
         · simp [q', hki]
         · simp [q', hki, hagrees k hk]
-    obtain ⟨r, hr, hrp⟩ := ih (i :: placed) q' hq'
+    obtain ⟨r, hr, hrp⟩ := ih (i :: placed) q' htail hq'
     refine ⟨r, ?_, ?_⟩
     · unfold fill
       apply List.mem_flatMap.mpr
-      refine ⟨(p i).toFin, List.mem_finRange _, ?_⟩
-      have hbit : (p i).toFin.val.testBit 0 = false := hcut i
+      have hmove : p i ∈ moves (q (anchor wagner i)) := by
+        rw [hagrees _ ha]
+        obtain ⟨m, _, hm⟩ := hmid _ _ he
+        obtain ⟨a, hat⟩ := adjacent_exists_flip ((hm (anchor wagner i)).mpr (Or.inl rfl)).symm
+        obtain ⟨b, hbt⟩ := adjacent_exists_flip ((hm i).mpr (Or.inr rfl))
+        have hpoint : p i = toggle (toggle (p (anchor wagner i)) a) b := by
+          apply (cubeBitVec 9).injective
+          simp only [toggle, cubeBitVec_xor_single, hbt, hat]
+          rfl
+        have hab : a ≠ b := by
+          intro hab
+          subst b
+          have hsame : p i = p (anchor wagner i) := by
+            rw [hpoint]
+            simp [toggle, BitVec.xor_assoc]
+          have hs := hinj hsame
+          have hno : ∀ (w : Bool) (v : Fin 8), modelAdj w v v ≠ true := by decide
+          exact hno _ _ ((congrArg (modelAdj wagner (anchor wagner i)) hs).symm.trans he)
+        rw [hpoint]
+        exact two_toggles_mem_moves _ _ _ hab
+      refine ⟨p i, hmove, ?_⟩
       have hvalid := valid_of_actual wagner (i :: placed) q' p hq' hinj hmid
-      rw [BitVec.ofFin_toFin]
-      change r ∈ (if !(p i).toFin.val.testBit 0 && valid wagner (i :: placed) q' then
+      change r ∈ (if !(p i).getLsbD 0 && valid wagner (i :: placed) q' then
           fill wagner (i :: placed) q' tail else [])
-      simpa only [hbit, Bool.not_false, Bool.true_and, hvalid, if_true] using hr
+      simpa only [hcut, Bool.not_false, Bool.true_and, hvalid, ite_true] using hr
     · intro k hk
       apply hrp k
       simp only [List.cons_append, List.mem_cons, List.mem_append] at hk ⊢
@@ -197,7 +274,8 @@ theorem exists_member {C : Finset (Q 9)} (hC : C.card = 72)
     · simpa [actual] using hm
   obtain ⟨r, hmem, heq⟩ := mem_fill wagner actual
     ((cubeBitVec 9).symm.injective.comp p.injective) hplane hmid'
-    (remainingLabels wagner) (initialLabels wagner) (initialPlacement wagner pattern) hinit
+    (remainingLabels wagner) (initialLabels wagner) (initialPlacement wagner pattern)
+    (starting_anchors wagner) hinit
   have hlabels : ∀ (w : Bool) (k : Fin 8), k ∈ remainingLabels w ++ initialLabels w := by
     decide
   have hrp : r = actual := funext fun k => heq k (hlabels wagner k)
