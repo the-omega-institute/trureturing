@@ -123,17 +123,16 @@ def qualifyCompiled (request reading : Json) : Except String Json := do
         (toJson "certified readout kernels and supplied layers; no exponential lattice claimed"))
     else domain ← replace domain "reason" (toJson reason)
     reading ← replace reading "arena" domain
-  if arena == "native-single-window" || arena == "typed-source" then
-    let prediction := (request.getObjVal? "compiled_prediction").toOption.getD
-      (explanation "unknown" "no source-owned operation contract supplied")
-    if let .ok continuation := reading.getObjVal? "continuation_target" then
-      if continuation.getObj?.isOk then
-        reading ← replace reading "continuation_target"
-          (← replace continuation "predictive_closure" prediction)
-        let kind ← prediction.getObjValAs? String "kind"
-        let reason := (prediction.getObjValAs? String "reason").toOption.getD
-          "compiled source-bound operation evidence"
-        readings ← replace readings "predictive_closure" (explanation kind reason)
+  let prediction := (request.getObjVal? "compiled_prediction").toOption.getD
+    (explanation "unknown" "no source-owned operation contract supplied")
+  if let .ok continuation := reading.getObjVal? "continuation_target" then
+    if continuation.getObj?.isOk then
+      reading ← replace reading "continuation_target"
+        (← replace continuation "predictive_closure" prediction)
+      let kind ← prediction.getObjValAs? String "kind"
+      let reason := (prediction.getObjValAs? String "reason").toOption.getD
+        "compiled source-bound operation evidence"
+      readings ← replace readings "predictive_closure" (explanation kind reason)
   reading ← replace reading "source_contract" source
   disposition ← replace disposition "readings" readings
   replace reading "disposition" disposition
