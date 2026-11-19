@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Powers;
 
@@ -15,7 +17,7 @@ internal sealed class CommonPositivePowersDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(
                 "D5/S1/Words/Powers/CommonPositivePowers.append_comm_of_flatten_replicate_eq"),
             H("Equal positive powers imply word commutation"),
-            StatementSource.FromLean(),
+            StatementSource.FromAuthor(CommutationFormula()),
             AssessedProvenance.FromLiterature(Source),
             Blocks(
                 Paragraph(Text(
@@ -42,4 +44,41 @@ internal sealed class CommonPositivePowersDocument : IScribeDocumentDefinition
                     + "equivalent same-signature List declarations in this repository's own "
                     + "pinned Mathlib accompany the Lean source and primary software note."))),
             DescribeRole.Theorem))));
+
+    private static Formula CommutationFormula()
+    {
+        var alphabet = F.Id("alpha");
+        var words = Call("List", alphabet);
+        var w = F.Id("w");
+        var v = F.Id("v");
+        var m = F.Id("M");
+        var n = F.Id("N");
+        var powersEqual = Equal(Call("flatten", Call("replicate", m, w)),
+            Call("flatten", Call("replicate", n, v)));
+        var commuting = Equal(Call("append", w, v), Call("append", v, w));
+        var implication = Logic(NotEqual(m, D(0)), FormulaLogicOperator.Implies,
+            Logic(NotEqual(n, D(0)), FormulaLogicOperator.Implies,
+                Logic(powersEqual, FormulaLogicOperator.Implies, commuting)));
+        return Disp(All("u", F.Id("Universe"),
+            All("alpha", Call("Type", F.Id("u")),
+                All("w", words, All("v", words,
+                    All("M", Naturals(), All("N", Naturals(), implication)))))));
+    }
+
+    private static Formula All(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
+    private static Formula NotEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
+
+    private static Formula Logic(Formula left, FormulaLogicOperator operation, Formula right) =>
+        new Formula.Logic(Seq(Open, left, Close), operation, Seq(Open, right, Close));
 }

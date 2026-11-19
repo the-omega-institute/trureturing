@@ -17,7 +17,7 @@ triage: anchor
 Sébastien Gouëzel, IETFree/ListPeriodicity.lean, immutable revision
 `48a23a630f39ae7c439b9efcbd03e729c18406fd`. This reference identifies a
 Lean source artifact and its version, without journal or DOI metadata.
-The supplied source is `/private/tmp/ietfree-ListPeriodicity-48a23a6-01a181d6.lean`,
+The source at the immutable URL above has
 9328 bytes, SHA-256
 `f857ec2235717a1e5d2c034d339dad0b7e5ac1ca454bd6043154139c0066fa0b`.
 Lines 47–168 contain the needed proof closure; lines 102–105 state
@@ -38,6 +38,7 @@ period/reassembly helpers and the public theorem
 `D5.S1.Words.Powers.CommonPositivePowers.append_comm_of_flatten_replicate_eq`.
 The Fine–Wilf gcd-period and block-reassembly proof is transplanted;
 ring normalization is expressed by elementary natural-number rewrites.
+The private block lemmas include zero block length; the public positive-exponent assumptions remain unchanged.
 No unrelated prefix-comparison lemma or group code is included.
 CyclicCentralizer uses this theorem to establish compatibility of
 positive-power roots of the same word. This theorem alone proves no

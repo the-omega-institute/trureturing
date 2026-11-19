@@ -7,10 +7,10 @@
    digest: The centralizer of a nonempty finite word has a unique nonempty word generator. -/
 
 
-import D5.S1.Words.Powers.CommutingWords
-import D5.S1.Words.Powers.CommonPositivePowers
+module
 
-set_option Elab.async false
+public import D5.S1.Words.Powers.CommutingWords
+public import D5.S1.Words.Powers.CommonPositivePowers
 
 /-!
 A shortest nonempty positive-power root of a nonempty word generates all its
@@ -24,6 +24,8 @@ author notice, immutable source locator, license and retirement condition
 accompany CommonPositivePowers.
 -/
 
+
+public section
 
 namespace D5.S1.Words.Powers.CyclicCentralizer
 

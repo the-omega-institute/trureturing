@@ -6,15 +6,19 @@
    utility: none
    digest: Two finite words commute exactly when they are natural powers of a common word. -/
 
-import D5.S1.Words.Powers.WordPower
-import Mathlib.Algebra.FreeMonoid.Basic
-import Mathlib.Algebra.Group.Commute.Defs
+module
+
+public import D5.S1.Words.Powers.WordPower
+public import Mathlib.Algebra.FreeMonoid.Basic
+public import Mathlib.Algebra.Group.Commute.Defs
 
 /-!
 Commuting finite words are powers of a common word. The common word is obtained
 by descent on the sum of the lengths, removing a shorter prefix at each step.
 The alphabet is arbitrary, and empty words and zero exponents are included.
 -/
+
+public section
 
 namespace D5.S1.Words.Powers.CommutingWords
 

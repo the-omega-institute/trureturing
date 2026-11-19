@@ -24,7 +24,9 @@ https://github.com/sgouezel/IETFree/blob/48a23a630f39ae7c439b9efcbd03e729c18406f
 The immutable revision is 48a23a630f39ae7c439b9efcbd03e729c18406fd.
 The transplant preserves the positive-exponent hypotheses and the Fine–Wilf
 period/reassembly proof; ring normalization is replaced by elementary Nat
-rewrites. The original prefix lemma and group applications are
+rewrites.
+The private block lemmas include zero block length; the public positive-exponent assumptions remain unchanged.
+The original prefix lemma and group applications are
 outside this module. The complete Apache 2.0 license accompanies the source;
 the upstream tree contains no NOTICE file.
 
@@ -72,7 +74,7 @@ private theorem drop_mul_prefix {U : List α} {d : ℕ} (hper : U.HasPeriod d) (
       refine (List.HasPeriod.drop_prefix d ?_).trans ih
       exact hper.infix ⟨U.take (m * d), [], by rw [List.take_append_drop, List.append_nil]⟩
 
-private theorem take_drop_mul_eq_take {U : List α} {d : ℕ} (hd : 0 < d) (hper : U.HasPeriod d)
+private theorem take_drop_mul_eq_take {U : List α} {d : ℕ} (hper : U.HasPeriod d)
     {m : ℕ} (hlen : (m + 1) * d ≤ U.length) : (U.drop (m * d)).take d = U.take d := by
   have hX : U.drop (m * d) <+: U := drop_mul_prefix hper m
   have hXd : U.drop (m * d) = U.take (U.drop (m * d)).length := by
@@ -83,7 +85,7 @@ private theorem take_drop_mul_eq_take {U : List α} {d : ℕ} (hd : 0 < d) (hper
     rw [List.length_drop]; omega
   rw [hXd, List.take_take, Nat.min_eq_left hdX]
 
-private theorem take_eq_flatten_replicate_of_hasPeriod {U : List α} {d : ℕ} (hd : 0 < d)
+private theorem take_eq_flatten_replicate_of_hasPeriod {U : List α} {d : ℕ}
     (hper : U.HasPeriod d) (m : ℕ) (hlen : m * d ≤ U.length) :
     U.take (m * d) = (List.replicate m (U.take d)).flatten := by
   induction m with
@@ -91,7 +93,7 @@ private theorem take_eq_flatten_replicate_of_hasPeriod {U : List α} {d : ℕ} (
   | succ m ih =>
       have hlen2 : m * d + d ≤ U.length := by rwa [Nat.succ_mul] at hlen
       have hlen' : m * d ≤ U.length := by omega
-      have hstep : (U.drop (m * d)).take d = U.take d := take_drop_mul_eq_take hd hper hlen
+      have hstep : (U.drop (m * d)).take d = U.take d := take_drop_mul_eq_take hper hlen
       calc U.take ((m + 1) * d) = U.take (m * d + d) := by rw [Nat.succ_mul]
         _ = U.take (m * d) ++ (U.drop (m * d)).take d := List.take_add
         _ = (List.replicate m (U.take d)).flatten ++ U.take d := by rw [ih hlen', hstep]
@@ -113,7 +115,6 @@ theorem append_comm_of_flatten_replicate_eq {w v : List α} {M N : ℕ}
   have hp : 0 < w.length := List.length_pos_of_ne_nil hw
   have hq : 0 < v.length := List.length_pos_of_ne_nil hv
   set d := Nat.gcd w.length v.length with hd
-  have hd0 : 0 < d := by rw [hd]; exact Nat.gcd_pos_of_pos_left _ hp
   have hdp : d ∣ w.length := by rw [hd]; exact Nat.gcd_dvd_left _ _
   have hdq : d ∣ v.length := by rw [hd]; exact Nat.gcd_dvd_right _ _
   set U := (List.replicate (2 * M) w).flatten with hU
@@ -155,11 +156,11 @@ theorem append_comm_of_flatten_replicate_eq {w v : List α} {M N : ℕ}
   have hpd : w.length / d * d = w.length := Nat.div_mul_cancel hdp
   have hqd : v.length / d * d = v.length := Nat.div_mul_cancel hdq
   have hwz' : U.take w.length = (List.replicate (w.length / d) (U.take d)).flatten := by
-    have h1 := take_eq_flatten_replicate_of_hasPeriod hd0 hper_d (w.length / d)
+    have h1 := take_eq_flatten_replicate_of_hasPeriod hper_d (w.length / d)
       (by rw [hpd]; exact hUp)
     rwa [hpd] at h1
   have hvz' : U.take v.length = (List.replicate (v.length / d) (U.take d)).flatten := by
-    have h1 := take_eq_flatten_replicate_of_hasPeriod hd0 hper_d (v.length / d)
+    have h1 := take_eq_flatten_replicate_of_hasPeriod hper_d (v.length / d)
       (by rw [hqd]; exact hUq)
     rwa [hqd] at h1
   have hwz : w = (List.replicate (w.length / d) (U.take d)).flatten := hwU.symm.trans hwz'
