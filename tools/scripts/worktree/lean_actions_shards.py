@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 import fnmatch
 import gzip
 import hashlib
@@ -15,6 +16,7 @@ import stat
 import subprocess
 import tarfile
 import tempfile
+import time
 
 from lean_actions import (
     actions_keys, dependency_inputs, manual_source_is_valid, native_archive_paths, preparation_source_is_valid,
@@ -352,38 +354,54 @@ def install(root, record, targets, *, require_complete=False, preparation=None):
     with cache_guard(root), tempfile.TemporaryDirectory(prefix=".shards-", dir=lake) as temporary:
         stage = Path(temporary)
         unpacked = stage / "unpacked"
-        paths = set()
-        for key, digest_value in sorted(selected.items()):
+        target = lake / "build"
+        if target.is_symlink() or (target.exists() and not target.is_dir()):
+            raise ValueError("Actions shards require a private build directory")
+        if record["state"] == "complete" and target.is_dir() and any(target.iterdir()):
+            raise ValueError("Actions shards require an empty build destination")
+
+        def unpack(item):
+            key, digest_value = item
             payload = root / transport_payload(digest_value)
             if preparation:
                 packed = preparation / "shards" / payload.name
                 if packed.is_file():
                     payload = packed
             if not payload.is_file() or archive_sha(payload, None) != digest_value:
-                missing.add(digest_value)
-                continue
+                return digest_value, None
             entries = set()
             extract_payload(payload, unpacked, registrations, entries)
             if not set(required.get(key, ())).issubset(str(path) for path in entries):
                 raise ValueError("Actions payload omits a required compiler or report output")
-            if paths.intersection(entries):
-                raise ValueError("duplicate artifact across Actions shards")
-            paths.update(entries)
-            available.add(digest_value)
-        target = lake / "build"
-        if target.is_symlink() or (target.exists() and not target.is_dir()):
-            raise ValueError("Actions shards require a private build directory")
-        if record["state"] == "complete" and target.is_dir() and any(target.iterdir()):
-            raise ValueError("Actions shards require an empty build destination")
+            return digest_value, entries
+
+        extract_started = time.monotonic()
+        continuation = record["state"] == "resume"
+        paths = set()
+        # Every extracted member is a regular file created exclusively in the
+        # private staging tree. A colliding path fails before it can be installed.
+        with ThreadPoolExecutor(max_workers=min(4, max(1, len(selected)))) as workers:
+            for digest_value, entries in workers.map(unpack, sorted(selected.items())):
+                if entries is None:
+                    missing.add(digest_value)
+                else:
+                    if continuation:
+                        paths.update(entries)
+                    available.add(digest_value)
+        extract_seconds = time.monotonic() - extract_started
+        install_started = time.monotonic()
         if require_complete and missing:
             available.clear()
-        elif record["state"] == "resume":
+        elif continuation:
             install_continuation(target, unpacked, paths, stage / "base")
-        else:
-            install_scoped(target, unpacked, paths, None)
+        elif unpacked.is_dir():
+            # The complete and scoped readers both own an empty destination.
+            os.replace(unpacked, target)
+        install_seconds = time.monotonic() - install_started
     complete = record["state"] == "complete" and not missing and not targets
     receipt("shards", "restore", complete=complete,
-            restored=len(available), missing=len(missing), requested=len(selected))
+            restored=len(available), missing=len(missing), requested=len(selected),
+            extract_seconds=round(extract_seconds, 3), install_seconds=round(install_seconds, 3))
     return {"available": len(available), "missing": sorted(missing), "requested": len(selected),
             "complete": complete}
 

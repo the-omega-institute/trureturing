@@ -133,6 +133,24 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "required Actions shard inventory"):
             shards.read_index(index, {}, "complete")
 
+    def test_parallel_shard_install_rejects_cross_payload_collision_before_publication(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        relative = "lib/lean/D5/Fixture.olean"
+        source = self.root / "producer" / relative
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b"first")
+        first = shards.write_payload(self.root, self.root / "producer", [relative])
+        source.write_bytes(b"second")
+        second = shards.write_payload(self.root, self.root / "producer", [relative])
+        target = self.root / ".lake/build"
+        target.mkdir(parents=True)
+        record = {"state": "complete", "required": {}, "entries": {"first": first, "second": second}}
+        with self.assertRaises(FileExistsError):
+            shards.install(self.root, record, [], require_complete=True)
+        self.assertEqual([], list(target.iterdir()))
+        self.assertEqual([], list(target.parent.glob(".shards-*")))
+
     def lookup_keys(self, responses=(), *, wait=None, real_wait=False, streams=None, **environment):
         owner = self.restore_owner()
         result, errors = streams or (io.StringIO(), io.StringIO())
