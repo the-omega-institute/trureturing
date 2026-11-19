@@ -1,0 +1,21 @@
+#### 命题 3.8：两角参数化的正确范围
+
+正交架 $e_1,e_2,e_3$ 给出满射
+
+$$
+n(\alpha,\beta)=
+ \cos\alpha\,e_1+
+ \sin\alpha\cos\beta\,e_2+
+ \sin\alpha\sin\beta\,e_3,
+$$
+
+其中 $\alpha\in[0,\pi]$、$\beta\in[0,2\pi)$。 这是一种参数化，不是任意物理路径必须经过两次有限九十度转动的证明。
+
+**证明。**
+
+对单位 $n$，取 $\alpha=\arccos(n\cdot e_1)$； 非极点处取相应 $\operatorname{atan2}$，模 $2\pi$ 后得到 $\beta\in[0,2\pi)$。 在极点处 $\beta$ 任意，并非另一个确定读数。 任意光滑球面路径只要求 $n\cdot\dot n=0$； 其有限转角可以任意小，因而不被要求先经过指定的正交状态。
+
+$\square$
+
+<a id="section-4"></a>
+

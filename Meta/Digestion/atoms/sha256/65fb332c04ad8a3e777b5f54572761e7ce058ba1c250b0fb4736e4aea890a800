@@ -1,0 +1,107 @@
+**Theorem 13.1 (An absolute exact-horizon growth bound).** There is
+one constant $\beta>1$, independent of the real angle, such that
+for every $\theta\notin(\pi/2)\mathbb Z$ and every $n\ge1$,
+
+$$
+\max\{n+1,\beta^n\}\le m_n(\theta)\le2^n.
+\tag{13.1}
+$$
+
+One permissible existential choice is
+$\beta=1+1/(2N(2))$, where $N(2)\ge1$ is the integer supplied
+by Theorem 1.1 of Breuillard's *A Strong Tits Alternative*,
+[arXiv:0804.1395v1][STA], PDF p. 1. No numerical value of this
+integer or of $\beta$ is specified.
+
+Proof. Let $\alpha=a_T$, $\gamma=b_T$ be the actual restrictions,
+and $\Gamma=\Gamma_\theta$. The cited theorem states that for each
+$d$ there is $N(d)$ such that for every field $K$ and finite
+symmetric subset $F\subseteq GL_d(K)$ containing identity,
+either $F^{N(d)}$ contains two elements freely generating a
+nonabelian free group, or $\langle F\rangle$ is virtually solvable.
+Apply exactly this statement with $d=2$, $K=\mathbb C$ and
+
+$$
+F_{\rm sym}=\{I_2,\alpha,\gamma,\alpha^{-1},\gamma^{-1}\}.
+\tag{13.2}
+$$
+
+Finiteness, symmetry, invertibility and inclusion of identity are
+explicit. Theorem 12.2 excludes the virtually solvable alternative
+for the generated actual group. Thus there are free subgroup
+generators $x,y$, each a word of length at most $N=N(2)$ in
+(13.2). Their inverses have the same length bound. These inverse
+and identity letters are auxiliary to the proof; they add no
+permitted label, operation or idle step to Definition 11.1.
+
+For a finite nonempty $D\subseteq\Gamma$, the left action of
+$\langle x,y\rangle$ divides $\Gamma$ into free orbits. On each
+orbit its graph for $x,x^{-1},y,y^{-1}$ is a four-regular tree.
+A finite induced forest with $v$ vertices and $e$ edges has
+$e\le v-1$ on each nonempty component. Its directed outward edge
+count is $4v-2e\ge2v$. Summing over the finitely many intersected
+orbits yields
+
+$$
+\sum_{s\in\{x,x^{-1},y,y^{-1}\}}|sD\setminus D|\ge2|D|.
+\tag{13.3}
+$$
+
+For a bijective translate $sD$, its cardinality equals $|D|$, so
+$|sD\triangle D|=2|sD\setminus D|$. Some $s$ in (13.3)
+therefore satisfies $|sD\triangle D|\ge|D|$.
+For any word $g_1\cdots g_k$, repeated use of the triangle
+inequality for symmetric difference and invariance under left
+translation gives
+
+$$
+|(g_1\cdots g_k)D\triangle D|
+\le\sum_{j=1}^k|g_jD\triangle D|.
+\tag{13.4}
+$$
+
+Also $|g^{-1}D\triangle D|=|gD\triangle D|$, by translating
+the first symmetric difference by $g$. Expand the selected $s$
+in at most $N$ letters of (13.2). Identity contributes zero.
+Equations (13.3)–(13.4) imply that some forward letter
+$g\in\{\alpha,\gamma\}$ has
+$|gD\triangle D|\ge |D|/N$. With
+$F_+=\{I_2,\alpha,\gamma\}$ this gives
+
+$$
+|F_+D|\ge|D\cup gD|
+=|D|+\tfrac12|gD\triangle D|
+\ge\left(1+\frac1{2N}\right)|D|=\beta|D|.
+\tag{13.5}
+$$
+
+Starting at $D=\{I_2\}$ proves $|F_+^k|\ge\beta^k$ for
+every $k$. To remove the auxiliary identity and obtain each exact
+forward horizon, put $S_T=\{\alpha,\gamma\}$. Equation (11.2)
+identifies $|S_T^j|=m_j$. Since identity commutes with everything,
+
+$$
+F_+^k=\bigcup_{j=0}^k S_T^j,\qquad
+\beta^k\le|F_+^k|\le\sum_{j=0}^k m_j\le(k+1)m_k.
+\tag{13.6}
+$$
+
+The last inequality uses monotonicity from Theorem 12.1, valid
+also before deciding boundedness. Every length-$(u+v)$ product
+factors into a length-$u$ and a length-$v$ product, hence
+
+$$
+m_{u+v}\le m_um_v.
+\tag{13.7}
+$$
+
+Fix $n\ge1$ and apply (13.6) with $k=\ell n$, then (13.7):
+$\beta^{\ell n}\le(\ell n+1)m_n^\ell$ for every $\ell\ge1$.
+Taking $\ell$-th roots and letting $\ell\to\infty$ proves
+$m_n\ge\beta^n$. Theorem 12.1 supplies the additional $n+1$
+bound, and the number $2^n$ of actual histories supplies the upper
+bound. The argument has transferred the dimension-uniform theorem
+to positive products of exactly the measured horizon; neither
+density alone nor growth of a symmetric group ball supplies that
+transfer. $\square$
+

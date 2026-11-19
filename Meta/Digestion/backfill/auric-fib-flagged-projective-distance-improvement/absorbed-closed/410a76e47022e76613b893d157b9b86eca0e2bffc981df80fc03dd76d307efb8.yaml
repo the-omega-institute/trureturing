@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:410a76e47022e76613b893d157b9b86eca0e2bffc981df80fc03dd76d307efb8
+  normalized_sha256: sha256:410a76e47022e76613b893d157b9b86eca0e2bffc981df80fc03dd76d307efb8
+cas_ref: sha256:410a76e47022e76613b893d157b9b86eca0e2bffc981df80fc03dd76d307efb8
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/Auric/OriginalInstrument.original_exact_distance
+    target_statement_id: sha256:66eeea845d251aa8abf5f50566bf2fbdb8719371890ecc25be4f20fbacf3a0be
+receipts:
+  unresolved_subitems: []

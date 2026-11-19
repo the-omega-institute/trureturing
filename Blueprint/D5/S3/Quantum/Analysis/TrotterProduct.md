@@ -4,7 +4,19 @@
 
 The Lie-Trotter product converges in every complete real normed algebra with norm-one identity, without a commutation hypothesis.
 
-**Theorem 1.1 (Noncommuting exponential products converge).**
+**Theorem 1.1 (Power differences in a normed ring).**
+
+Lean statement: `D5/S3/Quantum/Analysis/TrotterProduct.norm_pow_sub_pow_le_of_norm_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/TrotterProduct.norm_pow_sub_pow_le_of_norm_le` (`✓ std3`). ∎
+
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
+
+*Commentary.*
+
+In any normed ring with norm-one identity, if C is at least one and bounds the norms of S and T, then for every natural n the norm of S to the nth power minus T to the nth power is at most n times C to the nth power times the norm of S minus T. No normed-algebra structure or completeness is needed. At C equal to one this original supplier controls power differences of the continuous endomorphisms used in the original Gaussian uniform trace estimate. The proof and attribution are those of the selected original source.
+
+**Theorem 1.2 (Noncommuting exponential products converge).**
 
 Lean statement: `D5/S3/Quantum/Analysis/TrotterProduct.trotter_product`
 
@@ -22,4 +34,5 @@ The supplier note's General Lie-Trotter products section selects Zayn Blore's or
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Analysis/TrotterProduct.norm_pow_sub_pow_le_of_norm_le`
 - Truth anchor: `D5/S3/Quantum/Analysis/TrotterProduct.trotter_product`

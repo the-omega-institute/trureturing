@@ -1,0 +1,10 @@
+**引理 2.3（从所有态测试到所有复测试）。** 设有限维复线性映射 $\Lambda$ 保持伴随。若对每个有限参考 $Z$ 及其与输入的每个归一化态 $\xi$ 都有 $\|(\Lambda\otimes\operatorname{id}_Z)(\xi)\|_1\le c_0$，则 $\|\Lambda\|_\diamond\le c_0$。证明纯态上的该界已经足够，因为迹范数凸性给出混合态上的同一界。
+
+证明。对任意参考上的复算符 $X$，另加一个只用于范数测试的二值参考，取 Hermitian 块
+
+$$
+Y=\frac12\begin{pmatrix}0&X\\X^\dagger&0\end{pmatrix}.
+$$
+
+由奇异值分解，$\|Y\|_1=\|X\|_1$。保持伴随性保证输出仍有同样块形，故 $\|(\Lambda\otimes\operatorname{id})(Y)\|_1=\|(\Lambda\otimes\operatorname{id})(X)\|_1$。写 $Y=Y_+-Y_-$，两部分为正，且 $\operatorname{Tr}Y_++\operatorname{Tr}Y_-=\|Y\|_1$。把每个非零部分按迹归一化，应用所有态及有限参考的假设，再用三角不等式，即得输出范数至多 $c_0\|X\|_1$。这正是 (1.2) 的所有复测试上界。额外参考与 Jordan 分解均是分析工具，不是模拟原语。$\square$
+

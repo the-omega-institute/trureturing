@@ -16,7 +16,9 @@ import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.QuantumStates.UnitWeightSupport
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 
-/-! Strict-majority certainty for the parallel Arunachalam–Molina–Russo qubit game. -/
+/-! Strict-majority certainty for the parallel Arunachalam–Molina–Russo qubit game.
+Escape audit for `trace_retained` unfinished: https://github.com/the-omega-institute/trureturing/issues/22403
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

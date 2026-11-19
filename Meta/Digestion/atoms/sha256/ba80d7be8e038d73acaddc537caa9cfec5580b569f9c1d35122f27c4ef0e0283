@@ -1,0 +1,90 @@
+**Theorem 9.2 (Optimal alphabet, bits, and discrete entropy).** At every
+known horizon $n\ge0$ for the actual $\theta=\pi/6$ instrument,
+under Convention 9.1 the following minima are attained:
+
+$$
+\begin{aligned}
+\min |\text{finite terminal alphabet}|&=2^n,\\
+\min \text{fixed-length binary bits}&=n,\\
+\min H_{\mathrm{Sh}}(\mathsf Y)&=n.
+\end{aligned}
+\tag{9.4}
+$$
+
+The last minimum ranges over discrete complete decoder-visible views
+$\mathsf Y$, including countable views with possibly infinite Shannon
+entropy. The bounds allow random summaries and arbitrary full-$H$
+CPTP decoders. More strongly, the entire chronological history is a
+function of any successful discrete complete view almost surely.
+Here $H_{\mathrm{Sh}}(\mathsf Y)=-\sum_y p_y\log_2p_y$, with
+$0\log_2 0=0$; all entropies in this section are Shannon entropies
+in bits.
+
+Proof. Let $\mathsf H_n$ be the history variable. By Definition 3.1,
+every $h\in\{0,1\}^n$ has probability $2^{-n}$ for every permitted
+qutrit-reference input. If a summary value $a$ receives positive
+conditional weight from histories $h,g$, Theorem 3.3 requires
+$[Q_h]=[Q_g]$. Theorem 8.2 forces $h=g$. Thus the nonempty supports
+$\{a:r(a\mid h)>0\}$ are disjoint for all $2^n$ histories. This
+uses the existing criterion with its ensemble-only and full-$H$
+decoder hypotheses; no unitary restriction on a competing decoder is
+being imposed.
+
+Every finite view consequently has at least $2^n$ values of positive
+probability. On a countable view, assign to each positive-probability
+value its unique history. This defines a function with
+$\mathsf H_n=g(\mathsf Y)$ almost surely, so
+
+$$
+H_{\mathrm{Sh}}(\mathsf Y)=H_{\mathrm{Sh}}(\mathsf H_n)
+ +H_{\mathrm{Sh}}(\mathsf Y\mid\mathsf H_n)
+\ge H_{\mathrm{Sh}}(\mathsf H_n)=n.
+\tag{9.5}
+$$
+
+The chain rule remains valid with the nonnegative extended entropy
+of a countable view. A register of $b$ fixed-length binary bits has
+at most $2^b$ values; hence $2^b\ge2^n$ requires $b\ge n$.
+
+For attainment, initialize the integer record $r_0=0$ and, on the
+supplied chronological label $h_k$, update
+
+$$
+r_k=2r_{k-1}+h_k,\qquad 0\le r_k<2^k\le2^n.
+\tag{9.6}
+$$
+
+At the declared deterministic prefix $k$, $r_k$ is the length-$k$
+binary history with leading zeros interpreted using that prefix.
+At termination the known $n$ makes $r_n$ a bijective encoding of
+the complete history. This is an online shift register with $n$
+binary bits, at most $2^n$ values at every prefix, and no extra
+history archive. Its terminal law is uniform, so its entropy is $n$.
+
+Decode $r_n$ to its history $h$ and use the full-$H$ unitary of
+equation (3.3), with the chronological product $Q_h$:
+
+$$
+D_h=BQ_h^\dagger B^\dagger+(I_5-P_R),\qquad
+\mathcal D_h=\operatorname{Ad}_{D_h}.
+\tag{9.7}
+$$
+
+On $R$ it is the inverse of the actual accumulated qutrit unitary;
+on $R^\perp$ it is identity. Therefore
+$D_h^\dagger D_h=D_hD_h^\dagger=I_5$ and $D_hBQ_h=B$.
+For every density $\rho$ on $\mathbb C^3\otimes Z$, the normalized
+conditional output is corrected by
+
+$$
+(D_h\otimes I_Z)(BQ_h\otimes I_Z)\rho
+(BQ_h\otimes I_Z)^\dagger(D_h\otimes I_Z)^\dagger
+=(B\otimes I_Z)\rho(B\otimes I_Z)^\dagger.
+\tag{9.8}
+$$
+
+The right side is independent of $h$, so averaging also recovers it.
+The block extension defines a channel on all $H$, but recovery is
+asserted only for embedded qutrit inputs. At $n=0$ the register has
+one value, entropy zero, and $D_{\varnothing}=I_5$. $\square$
+

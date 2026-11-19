@@ -132,7 +132,35 @@ $$\forall (m: \mathbb{N}), (\forall (psi: \operatorname{Word}\left(3 + m\right) 
 
 The observed coherent vector is produced from the actual density by observed_coherent. The original gauge_lift supplies the full-length canonical boundary q. Apply density_factor, contract on both sides with the original normalized-row left inverse, flatten the four complex entries, and iterate transferMatrix_apply. The adjugate identity and exact scalar cancellation recover q q dagger. The inverse transfer is algebraic; positivity is obtained from this actual rank-one Gram identity, rather than asserted for the inverse on arbitrary matrices.
 
-**Definition 1.10 (A literal polynomial numerator).**
+**Definition 1.10 (Conjugation of paired polynomial variables).**
+
+Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.polynomialConjugate`
+
+*Formalization.* `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.polynomialConjugate` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.
+
+*Commentary.*
+
+Conjugate every coefficient and swap the original and conjugate variable labels. This is the generic original conjugation operation used by both the observable quotient and native independent-trial interior polynomial recurrences.
+
+**Theorem 1.11 (Exact conjugate-diagonal evaluation).**
+
+$$\forall (K: Type), (\forall (p: \operatorname{PhasePolynomial}\left(K\right)), (\forall (z: \operatorname{Function}\left(K, Complex\right)), (\operatorname{actual}\left(\operatorname{polynomialConjugate}\left(p\right), z\right) = \operatorname{star}\left(\operatorname{actual}\left(p, z\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.polynomialConjugate_eval` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Critch, Andrew; Morton, Jason (2014). *Algebraic geometry of matrix product states*. DOI: [10.3842/SIGMA.2014.095](https://doi.org/10.3842/SIGMA.2014.095). URL: <https://arxiv.org/abs/1210.2812v4>.
+
+*Commentary.*
+
+For every index type, polynomial and complex variable assignment, actual evaluation of polynomialConjugate is the conjugate of actual evaluation. Coefficient conjugation and the variable swap both contribute; coefficient conjugation alone would not conjugate the paired variables. The original proof is reused unchanged by the native interior polynomial adjoints.
+
+**Definition 1.12 (A literal polynomial numerator).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.boundaryGramPolynomial`
 
@@ -146,7 +174,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.boundaryGr
 
 The variables are all entries of Q and independent conjugate entries, not merely points in a parametrized image. Substitute the selected column into the original Cramer polynomials, conjugate by coefficient conjugation and swapping the paired variables, form L0 Q L0 dagger, and apply the original transfer adjugate power. The exact evaluation is gramNumerator for every complex matrix Q.
 
-**Definition 1.11 (A literal polynomial denominator).**
+**Definition 1.13 (A literal polynomial denominator).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.boundaryDenominatorPolynomial`
 
@@ -160,7 +188,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.boundaryDe
 
 In the same paired observed variables, form h(d)^(m+2) det(M)^m. Its evaluation is exactly gramDenominator on every observed matrix.
 
-**Definition 1.12 (The rational phase quotient).**
+**Definition 1.14 (The rational phase quotient).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientCoordinates`
 
@@ -174,7 +202,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientCo
 
 The coordinates are five complex canonical core entries, sigma=Re G00 and eta=G10/G00, thirteen real numbers in total. On actual points with G00 nonzero, sigma=normSq(q0)>0 and eta=q1/q0. The lower-left orientation is essential.
 
-**Definition 1.13 (A positive phase representative).**
+**Definition 1.15 (A positive phase representative).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveBoundary`
 
@@ -188,7 +216,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveBo
 
 The representative boundary is (sqrt(sigma), sqrt(sigma) eta). This realization uses a square root. It is not called rational and is separate from the rational coordinate inverse and polynomial raw observations.
 
-**Theorem 1.14 (Exact unit-phase reconstruction).**
+**Theorem 1.16 (Exact unit-phase reconstruction).**
 
 $$\forall (m: \mathbb{N}), (\forall (psi: \operatorname{Word}\left(3 + m\right) \to \mathbb{C}), ((((psi \in \operatorname{openBoundaryMPS}\left(3 + m\right)) \land (\operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{fixedTensor}\left(\operatorname{rawPrefix}\left(3, m, psi\right)\right)\right), \operatorname{recoveryPolynomial}\left(\right)\right) \ne 0)) \land (\operatorname{boundaryGram}\left(m, \operatorname{rawPrefix}\left(3, m, psi\right), 0, 0\right) \ne 0)) \to ((0 < \operatorname{sigma}\left(\operatorname{quotientCoordinates}\left(m, \operatorname{rawPrefix}\left(3, m, psi\right)\right)\right)) \land (\exists (z: \mathbb{C}), ((\operatorname{norm}\left(z\right) = 1) \land (psi = \operatorname{smul}\left(z, \operatorname{mpsState}\left(3 + m, \operatorname{core}\left(\operatorname{quotientCoordinates}\left(m, \operatorname{rawPrefix}\left(3, m, psi\right)\right), 0\right), \operatorname{core}\left(\operatorname{quotientCoordinates}\left(m, \operatorname{rawPrefix}\left(3, m, psi\right)\right), 1\right), \operatorname{left}\left(\operatorname{quotientCoordinates}\left(m, \operatorname{rawPrefix}\left(3, m, psi\right)\right)\right), \operatorname{positiveBoundary}\left(\operatorname{quotientCoordinates}\left(m, \operatorname{rawPrefix}\left(3, m, psi\right)\right)\right)\right)\right)))))))$$
 
@@ -202,7 +230,7 @@ $$\forall (m: \mathbb{N}), (\forall (psi: \operatorname{Word}\left(3 + m\right) 
 
 First recover the actual boundary Gram. Nonzero G00 then implies q0 nonzero, sigma strictly positive, and the correctly oriented ratio eta=q1/q0. The constructed positive boundary has exactly the same Gram, and the original boundary_phase theorem gives an exact unit complex phase between the full states. Raw affine scale is retained.
 
-**Definition 1.15 (Polynomial raw observations on the quotient).**
+**Definition 1.17 (Polynomial raw observations on the quotient).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientObservation`
 
@@ -216,7 +244,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientOb
 
 For any prefix length k and complement length m use boundary (1,eta), the original canonical core and left row, then multiply the entire raw density by the real sigma. No square root occurs in this observation map.
 
-**Theorem 1.16 (Exact thirteen-coordinate observable retraction).**
+**Theorem 1.18 (Exact thirteen-coordinate observable retraction).**
 
 $$\forall (m: \mathbb{N}), (\forall (p: \operatorname{Quotient}\left(\right)), (((0 < \operatorname{sigma}\left(p\right)) \land (\operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{fixedTensor}\left(\operatorname{quotientObservation}\left(3, m, p\right)\right)\right), \operatorname{recoveryPolynomial}\left(\right)\right) \ne 0)) \to (\operatorname{quotientCoordinates}\left(m, \operatorname{quotientObservation}\left(3, m, p\right)\right) = p)))$$
 
@@ -230,7 +258,7 @@ $$\forall (m: \mathbb{N}), (\forall (p: \operatorname{Quotient}\left(\right)), (
 
 For sigma>0 the observation is the actual raw density of the positive-boundary representative. Original canonical-core rigidity and the actual boundary Gram return the same core, sigma and eta. No coherent sum-tail, invertibility of A0+A1, two-site leading block or genericity condition is added to the original fixed-density recovery condition.
 
-**Definition 1.17 (An explicit refined observed chart).**
+**Definition 1.19 (An explicit refined observed chart).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientLocusPolynomial`
 
@@ -244,7 +272,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientLo
 
 Multiply the existing real observed recovery polynomial by the norm-square polynomial of the boundary numerator at 00. Its nonvanishing is exactly recovery plus a nonzero numerator at 00. It is a literal real polynomial on the arbitrary-entry observed matrix space.
 
-**Theorem 1.18 (A nonzero actual witness at every length).**
+**Theorem 1.20 (A nonzero actual witness at every length).**
 
 $$\forall (m: \mathbb{N}), ((((\operatorname{mpsState}\left(3 + m, \operatorname{originalCore}\left(0\right), \operatorname{originalCore}\left(1\right), \operatorname{vector}\left(1, 0\right), \operatorname{vector}\left(1, 2\right)\right) \in \operatorname{openBoundaryMPS}\left(3 + m\right)) \land (\operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{entries}\left(\operatorname{rawPrefix}\left(3, m, \operatorname{mpsState}\left(3 + m, \operatorname{originalCore}\left(0\right), \operatorname{originalCore}\left(1\right), \operatorname{vector}\left(1, 0\right), \operatorname{vector}\left(1, 2\right)\right)\right)\right)\right), \operatorname{quotientLocusPolynomial}\left(m\right)\right) \ne 0)) \land (\operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{fixedTensor}\left(\operatorname{rawPrefix}\left(3, m, \operatorname{mpsState}\left(3 + m, \operatorname{originalCore}\left(0\right), \operatorname{originalCore}\left(1\right), \operatorname{vector}\left(1, 0\right), \operatorname{vector}\left(1, 2\right)\right)\right)\right)\right), \operatorname{recoveryPolynomial}\left(\right)\right) \ne 0)) \land (\operatorname{boundaryGram}\left(m, \operatorname{rawPrefix}\left(3, m, \operatorname{mpsState}\left(3 + m, \operatorname{originalCore}\left(0\right), \operatorname{originalCore}\left(1\right), \operatorname{vector}\left(1, 0\right), \operatorname{vector}\left(1, 2\right)\right)\right), 0, 0\right) \ne 0))$$
 
@@ -258,7 +286,7 @@ $$\forall (m: \mathbb{N}), ((((\operatorname{mpsState}\left(3 + m, \operatorname
 
 Use the original matrices [[1,2],[3,4]] and [[5,6],[7,8]], left (1,0), right (1,2), for every N=3+m. The original fixed-density positivity and recovery witness supply the recovery condition. The original full-length witness_gauge identifies the canonical boundary, whose first coordinate is 5 times 2^(2+m), hence nonzero. The exact recovered Gram gives a nonzero 00 numerator without presupposing membership in the refined chart. This is an actual-image witness, with no replacement by a Zariski closure.
 
-**Definition 1.19 (The positive-denominator numerator).**
+**Definition 1.21 (The positive-denominator numerator).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveGramPolynomial`
 
@@ -272,7 +300,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveGr
 
 Multiply boundaryGramPolynomial by conjugate(det(M))^m. This is still a literal paired-variable polynomial.
 
-**Definition 1.20 (A positive real denominator).**
+**Definition 1.22 (A positive real denominator).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveGramDenominator`
 
@@ -286,7 +314,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveGr
 
 The denominator is normSq(d)^(m+2) normSq(det(M))^m. It is strictly positive on the original observed recovery chart. The exact corresponding numerator is the positiveGramPolynomial evaluation.
 
-**Definition 1.21 (The thirteen real coordinates).**
+**Definition 1.23 (The thirteen real coordinates).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientRealCoordinates`
 
@@ -300,7 +328,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientRe
 
 The index is Fin 5 plus Fin 5 plus Fin 3: five real core parts, five imaginary core parts, sigma, real eta, imaginary eta.
 
-**Definition 1.22 (Real polynomial coordinate numerators).**
+**Definition 1.24 (Real polynomial coordinate numerators).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientRealNumerator`
 
@@ -314,7 +342,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientRe
 
 Each complex quotient p/q is multiplied by conjugate(q). Convert the paired-variable polynomial to Cartesian variables using the existing coordinate equivalence, then take coefficientwise real or imaginary parts. These are additive coefficient maps, not ring homomorphisms.
 
-**Definition 1.23 (Real polynomial coordinate denominators).**
+**Definition 1.25 (Real polynomial coordinate denominators).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientRealDenominator`
 
@@ -328,7 +356,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientRe
 
 Use the existing sum-of-squares normPolynomial of q. Every denominator is strictly positive on the refined chart. The construction gives actual ratios of real polynomials, not a smoothness or analyticity substitute.
 
-**Definition 1.24 (Real polynomial raw observation entries).**
+**Definition 1.26 (Real polynomial raw observation entries).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientObservationPolynomial`
 
@@ -342,7 +370,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.quotientOb
 
 Substitute the canonical core and boundary (1,eta) into the original twelve-complex-parameter amplitude polynomials. Multiply the amplitude/conjugate-amplitude complement sum by sigma, then take coefficientwise real or imaginary parts. The universal evaluation identity holds for every real quotient parameter, every prefix and complement length, and either component; no square root or positivity condition is used in this polynomial identity.
 
-**Theorem 1.25 (Rationality with exact real polynomial expressions).**
+**Theorem 1.27 (Rationality with exact real polynomial expressions).**
 
 $$\forall (m: \mathbb{N}), (\forall (Q: \operatorname{Matrix}\left(\operatorname{Word}\left(3\right), \operatorname{Word}\left(3\right), \mathbb{C}\right)), ((\operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{entries}\left(Q\right)\right), \operatorname{quotientLocusPolynomial}\left(m\right)\right) \ne 0) \to ((((((\operatorname{Fintype.card}\left(\operatorname{QuotientRealIndex}\left(\right)\right) = 13) \land (\forall (i: \operatorname{QuotientRealIndex}\left(\right)), ((0 < \operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{entries}\left(Q\right)\right), \operatorname{quotientRealDenominator}\left(m, i\right)\right)) \land (\frac{\operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{entries}\left(Q\right)\right), \operatorname{quotientRealNumerator}\left(m, i\right)\right)}{\operatorname{MvPolynomial.eval}\left(\operatorname{realCoordinates}\left(\operatorname{entries}\left(Q\right)\right), \operatorname{quotientRealDenominator}\left(m, i\right)\right)} = \operatorname{quotientRealCoordinates}\left(\operatorname{quotientCoordinates}\left(m, Q\right), i\right))))) \land (0 < \operatorname{positiveGramDenominator}\left(m, Q\right))) \land (\forall (i: \operatorname{Fin}\left(2\right)), (\forall (j: \operatorname{Fin}\left(2\right)), (\operatorname{boundaryGram}\left(m, Q, i, j\right) = \frac{\operatorname{PhasePolynomial.actual}\left(\operatorname{positiveGramPolynomial}\left(m, i, j\right), \operatorname{entries}\left(Q\right)\right)}{\operatorname{Complex.ofReal}\left(\operatorname{positiveGramDenominator}\left(m, Q\right)\right)})))) \land (\forall (k: \mathbb{N}), (\forall (a: \mathbb{N}), (\forall (u: \operatorname{Word}\left(k\right)), (\forall (v: \operatorname{Word}\left(k\right)), (\forall (imaginary: \operatorname{Bool}\left(\right)), (\forall (p: \operatorname{Quotient}\left(\right)), (\operatorname{MvPolynomial.eval}\left(\operatorname{quotientRealCoordinates}\left(p\right), \operatorname{quotientObservationPolynomial}\left(k, a, u, v, imaginary\right)\right) = \operatorname{component}\left(imaginary, \operatorname{quotientObservation}\left(k, a, p, u, v\right)\right))))))))) \land (\operatorname{boundaryGram}\left(m, Q, 0, 0\right) \ne 0))))$$
 
@@ -371,6 +399,8 @@ The interior-genericity consumer uses canonical_shape in place, with its origina
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.gramNumerator`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.leftNumeratorMap`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.modulus`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.polynomialConjugate`
+- Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.polynomialConjugate_eval`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveBoundary`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveGramDenominator`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient.positiveGramPolynomial`

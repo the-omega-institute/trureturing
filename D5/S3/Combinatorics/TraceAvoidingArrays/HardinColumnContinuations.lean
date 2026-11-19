@@ -119,7 +119,7 @@ def vH : ℕ → Fin 4 → ℕ
   | k+1, i => ∑ j, Hfull i j * vH k j
 
 set_option maxRecDepth 100000 in
-private theorem column_certificate :
+theorem column_certificate :
     (∀ p : Column 1, ∀ j : Fin 2,
       (∑ q : Column 1, if cross p q ∧ classB q = j then 1 else 0) = B (classB p) j) ∧
     (∀ p : Column 2, ∀ j : Fin 4,

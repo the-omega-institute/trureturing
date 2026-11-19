@@ -1,0 +1,36 @@
+**定义 21.1（原临界阶段及其固定半径子事件）。** 保持定义 20.1 的全部实际 CM 点、同一个整数、原有限地方过滤、$M,a_0,Y,\nu,E_n,R$ 与原 $h,\rho,L_X$，只限定参数
+
+$$
+c_0^2+2\beta=1.
+\tag{21.1}
+$$
+
+令 $\vartheta(t)=\sum_{p\le t}\log p$，并定义
+
+$$
+\begin{gathered}
+\mathcal H_- =\{H\in\mathbb Z:H\ge7,\ \vartheta(H)<H\},\qquad
+T_H=\frac{(H+1/2)^2}{c_0^2},\qquad X_H=\lfloor e^{T_H}\rfloor,\\
+r_H=\rho(2X_H),\qquad q_H=q(H,H;M),\qquad d_H=q_H/M,\\
+J_H=\#\{X_H<n\le2X_H:n\equiv a_0\pmod M\},\qquad
+K_H=\frac{J_H}{d_H}=\frac{MJ_H}{q_H},\\
+a_H=\lfloor K_H\rfloor,\qquad \tau_H=K_H-a_H.
+\end{gathered}
+\tag{21.2}
+$$
+
+以下阶段均取 $H\in\mathcal H_-$ 的充分大尾部；定理 21.2 将证明该集合无界，整块的 $h(n)=H$，且 $0<r_H<1/4$、$K_H\ge1$。对块内的 $n\in A$ 置
+
+$$
+\begin{gathered}
+F_{n,H}=(n+q_H\widehat{\mathbb Z})\times
+ \{z\in\mathbb T^2:\|n\alpha_j-z_j\|_{\mathbb T}<r_H\ (j=1,2)\},\\
+V_H=\sum_{\substack{X_H<n\le2X_H\\n\in A}}\mathbf1_{F_{n,H}},\qquad
+B_H=\{V_H>0\},\qquad
+m_H=\int_Y V_H\,d\nu,\qquad \mathcal E_H=\int_Y V_H^2\,d\nu.
+\end{gathered}
+\tag{21.3}
+$$
+
+有限端仍是全部原地方条件的准确编码；只将同块的两个实半径统一缩小到 $r_H$。符号 $K_H$ 是对目标平均的允许项数，不是固定 $u$ 的整数项数，也不是 $\lfloor X_H/q_H\rfloor$。
+

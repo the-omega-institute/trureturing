@@ -1,0 +1,31 @@
+#### 定理 6.3：同一方向路径的全部面积生成元
+
+给定 $C^1$ 路径 $n(t)\in S^2$，其全部二向量生成元为
+
+$$
+B(t)=n(t)\wedge\dot n(t)+\lambda(t)\star n(t).
+$$
+
+若
+
+$$
+\dot R=-\frac12BR,\qquad R(0)\in\operatorname{Spin}(3),
+$$
+
+且初始方向相符，则 $n(t)=R(t)n(0)\widetilde{R(t)}$。 其中 $\lambda(t)$ 可任取连续实函数；取 $\lambda=0$ 定义水平提升。
+
+**证明。**
+
+旋量微分给出 $\frac{d}{dt}(Rn_0\widetilde{R})=-[B,n]/2$。 定理 6.2 把此方程化为 $u=\dot n$，并保留核方向 $\lambda\star n$。 反过来，构造的路径满足同一线性方向演化及相同初值， 由常微分方程唯一性得到结论。
+
+$\square$
+
+写 $B=I\omega$，则
+
+$$
+\omega=n\times\dot n+\lambda n,\qquad
+ \dot n=\omega\times n.
+$$
+
+这使“单态必伴一个面”获得准确的动力学意义： $\star n$ 是绕该态方向的稳定子生成元； $n\wedge\dot n$ 才生成它离开当前位置的变化。 二者属于同一个面积空间，但不是同一个作用。
+

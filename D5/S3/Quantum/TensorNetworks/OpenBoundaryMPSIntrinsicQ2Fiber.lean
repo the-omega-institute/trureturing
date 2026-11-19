@@ -125,14 +125,14 @@ lemma positiveRepresentative_witness (m : ℕ) :
   dsimp [witnessParameter]
   positivity
 
-private def quotientValidityDomain (m : ℕ) : Set Coordinates :=
+def quotientValidityDomain (m : ℕ) : Set Coordinates :=
   {x | 0 < sigma x ∧
     eval (OpenBoundaryMPSDensityGenericity.realCoordinates
       (fun ij => quotientRawPrefix m x ij.1 ij.2))
       (OpenBoundaryMPSQuotient.quotientLocusPolynomial m) ≠ 0 ∧
     eval x (leadingPolynomial m) ≠ 0}
 
-private lemma quotientValidityDomain_open (m : ℕ) :
+lemma quotientValidityDomain_open (m : ℕ) :
     IsOpen (quotientValidityDomain m) := by
   unfold quotientValidityDomain
   have hcoords : Continuous (fun x : Coordinates =>
@@ -156,7 +156,7 @@ private lemma quotientValidityDomain_open (m : ℕ) :
   · exact isOpen_ne.preimage (MvPolynomial.continuous_eval _)
 
 set_option maxHeartbeats 800000 in
-private lemma quotientValidityDomain_nonempty (m : ℕ) :
+lemma quotientValidityDomain_nonempty (m : ℕ) :
     (quotientValidityDomain m).Nonempty := by
   let x₀ := coordinatesOf (witnessParameter m)
   have hrep : positiveRepresentative x₀ = witnessParameter m := by
@@ -396,11 +396,11 @@ lemma quotientCoordinates_retraction_local (m : ℕ) (x : Coordinates)
   rw [← hobs] at hp
   rw [hp, quotientParameter_coordinates]
 
-private def quotientNumeratorFamily (m : ℕ) (j : Fin 13) :
+def quotientNumeratorFamily (m : ℕ) (j : Fin 13) :
     MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ :=
   OpenBoundaryMPSQuotient.quotientRealNumerator m (quotientIndexEquiv.symm j)
 
-private def quotientDenominatorFamily (m : ℕ) (j : Fin 13) :
+def quotientDenominatorFamily (m : ℕ) (j : Fin 13) :
     MvPolynomial (ObsIndex ⊕ ObsIndex) ℝ :=
   OpenBoundaryMPSQuotient.quotientRealDenominator m (quotientIndexEquiv.symm j)
 

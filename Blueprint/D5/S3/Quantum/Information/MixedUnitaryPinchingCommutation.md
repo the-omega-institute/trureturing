@@ -6,7 +6,19 @@ Every non-isotropic mixed-unitary qubit channel fails to commute with marginal p
 
 QubitMatrix is the algebra of complex matrices with both indices in Fin 2. A starred matrix denotes its conjugate transpose, and I denotes the identity of the indicated size.
 
-**Definition 1.1 (Finite mixtures of unitary conjugations).**
+**Theorem 1.1 (Conjugation by a spin matrix).**
+
+Lean statement: `D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation.spin_triple`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation.spin_triple` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real three-vectors a and b, spin(a) spin(b) spin(a) equals 2(a dot b) spin(a) minus (a dot a) spin(b). The vectors need not be normalized or orthogonal. The Pauli anticommutator and square identities give this formula. For a unit vector a it describes the action of its unitary conjugation on every spin matrix, and hence the action of the associated pinching on qubit blocks with arbitrary quantum memory.
+
+**Definition 1.2 (Finite mixtures of unitary conjugations).**
 
 $$\forall (\varphi: (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}) \to (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})), (\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.IsMixedUnitary}\left(\varphi\right) = (\exists (k: \mathbb{N}), (\exists (p: (\operatorname{Fin}\left(k\right)) \to (\mathbb{R})), (\exists (u: (\operatorname{Fin}\left(k\right)) \to (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})), ((\forall (j: \operatorname{Fin}\left(k\right)), ((0: \mathbb{R}) \le p\left(j\right))) \land ((\sum_{j: \operatorname{Fin}\left(k\right)} (p\left(j\right)) = (1: \mathbb{R})) \land ((\forall (j: \operatorname{Fin}\left(k\right)), (u\left(j\right) \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right))) \land (\forall (a: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}), (\varphi\left(a\right) = \sum_{j: \operatorname{Fin}\left(k\right)} (((\operatorname{Complex.ofReal}\left(p\left(j\right)\right): \mathbb{C})) \cdot (((u\left(j\right)) \cdot (a)) \cdot (\operatorname{star}\left(u\left(j\right)\right)))))))))))))$$
 
@@ -18,7 +30,7 @@ $$\forall (\varphi: (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})
 
 A mixed-unitary map is a finite convex combination of unitary conjugations. The real weights are nonnegative and sum to one; their inclusions into the complex numbers act by scalar multiplication. The equality holds for every complex qubit matrix, rather than only for density matrices. This is the linear extension of the mixed-unitary class in Section 3.2, revised_jphysa_clean.tex, line 325.
 
-**Definition 1.2 (Unitary and antiunitary isotropic forms).**
+**Definition 1.3 (Unitary and antiunitary isotropic forms).**
 
 $$\forall (\varphi: (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}) \to (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})), (\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.IsIsotropic}\left(\varphi\right) = (\exists (\gamma: \mathbb{R}), ((\gamma \in \operatorname{Set.Icc}\left((0: \mathbb{R}), (1: \mathbb{R})\right)) \land (\exists (u: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}), ((u \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \land ((\forall (a: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}), (\varphi\left(a\right) = (((\operatorname{Complex.ofReal}\left(((1: \mathbb{R})) - (\gamma)\right): \mathbb{C})) \cdot (((u) \cdot (a)) \cdot (\operatorname{star}\left(u\right)))) + (((\operatorname{Complex.ofReal}\left(\gamma\right): \mathbb{C})) \cdot ((\frac{\operatorname{Matrix.trace}\left(a\right)}{(2: \mathbb{C})}) \cdot ((1: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})))))) \lor (\forall (a: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}), (\varphi\left(a\right) = (((\operatorname{Complex.ofReal}\left(((1: \mathbb{R})) - (\gamma)\right): \mathbb{C})) \cdot (((u) \cdot (\operatorname{Matrix.transpose}\left(a\right))) \cdot (\operatorname{star}\left(u\right)))) + (((\operatorname{Complex.ofReal}\left(\gamma\right): \mathbb{C})) \cdot ((\frac{\operatorname{Matrix.trace}\left(a\right)}{(2: \mathbb{C})}) \cdot ((1: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}))))))))))))$$
 
@@ -30,7 +42,7 @@ $$\forall (\varphi: (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})
 
 An isotropic map combines a unitary or antiunitary action with complete depolarization, using one real parameter between zero and one and one unitary matrix. On arbitrary complex matrices the depolarizing term is trace(a) times I/2. The antiunitary action on states extends complex linearly as u a-transpose u-star. These are the two alternatives in Section 3.2, revised_jphysa_clean.tex, lines 326-327; no positivity condition is imposed on the matrix argument a.
 
-**Definition 1.3 (Extension to the first qubit).**
+**Definition 1.4 (Extension to the first qubit).**
 
 $$\forall (\varphi: (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}) \to (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})), (\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.localMap}\left(\varphi, \rho\right): \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)) = \lambda (a: \operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \mapsto (\lambda (c: \operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \mapsto (\varphi\left(\lambda (i: \operatorname{Fin}\left(2\right)) \mapsto (\lambda (j: \operatorname{Fin}\left(2\right)) \mapsto (\rho\left((i, (a).2), (j, (c).2)\right))), (a).1, (c).1\right)))))$$
 
@@ -44,7 +56,7 @@ $$\forall (\varphi: (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})
 
 The two matrix indices are pairs, with the first coordinate belonging to A. Fixing the second coordinates selects a qubit block, to which the map is applied. For a linear map this is its tensor product with the identity on the second qubit. The block formula also defines a function for arbitrary maps, without requiring linearity.
 
-**Definition 1.4 (A Hermitian qubit matrix with simple spectrum).**
+**Definition 1.5 (A Hermitian qubit matrix with simple spectrum).**
 
 $$\forall (a: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}), (\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.IsNondegenerate}\left(a\right) = (\exists (h: \operatorname{Matrix.IsHermitian}\left(a\right)), (\operatorname{Function.Injective}\left(\operatorname{Matrix.IsHermitian.eigenvalues}\left(h\right)\right))))$$
 
@@ -56,7 +68,7 @@ $$\forall (a: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}), (\ope
 
 The matrix must be Hermitian and its two real eigenvalues must be distinct. Injectivity of the eigenvalue function on Fin 2 expresses this distinction. This is the nondegeneracy assumption on the marginal in revised_jphysa_clean.tex, line 339.
 
-**Definition 1.5 (Pinching in the first marginal's spectral basis).**
+**Definition 1.6 (Pinching in the first marginal's spectral basis).**
 
 $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.pinchA}\left(\rho\right): \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)) = \operatorname{dite}\left(\operatorname{Matrix.IsHermitian}\left(\operatorname{D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight}\left(\rho\right)\right), \lambda (h: \operatorname{Matrix.IsHermitian}\left(\operatorname{D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight}\left(\rho\right)\right)) \mapsto (\operatorname{D5.S3.Observer.Conditioning.unreadState}\left(\lambda (i: \operatorname{Fin}\left(2\right)) \mapsto (\operatorname{let} (p: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}) = \lambda (a: \operatorname{Fin}\left(2\right)) \mapsto (\lambda (c: \operatorname{Fin}\left(2\right)) \mapsto ((\operatorname{WithLp.ofLp}\left(\operatorname{Matrix.IsHermitian.eigenvectorBasis}\left(h\right)\left(i\right)\right)\left(a\right)) \cdot (\operatorname{star}\left(\operatorname{WithLp.ofLp}\left(\operatorname{Matrix.IsHermitian.eigenvectorBasis}\left(h\right)\left(i\right)\right)\left(c\right)\right)))); \operatorname{Matrix.kroneckerMap}\left(\lambda (x1: \mathbb{C}) \mapsto (\lambda (x2: \mathbb{C}) \mapsto ((x1) \cdot (x2))), p, (1: \operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})\right)), \rho\right)), \operatorname{Function.const}\left(\neg (\operatorname{Matrix.IsHermitian}\left(\operatorname{D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight}\left(\rho\right)\right)), \rho\right)\right))$$
 
@@ -68,7 +80,7 @@ $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \t
 
 For a Hermitian first marginal, choose its orthonormal eigenvector basis. Each outer product p projects onto one eigenvector; tensoring with the second identity and summing the corresponding unread measurements gives marginal pinching. This is the map defined in revised_jphysa_clean.tex, line 261. The choice is unambiguous on a nondegenerate marginal. The formula extends to degenerate Hermitian marginals using the chosen basis, and returns the original matrix when the marginal is not Hermitian.
 
-**Theorem 1.6 (Non-isotropic mixed-unitary channels do not commute with pinching).**
+**Theorem 1.7 (Non-isotropic mixed-unitary channels do not commute with pinching).**
 
 $$\forall (\varphi: (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix}) \to (\operatorname{D5.S3.Quantum.FiniteDimensional.QubitMatrix})), ((\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.IsMixedUnitary}\left(\varphi\right)) \Rightarrow ((\neg (\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.IsIsotropic}\left(\varphi\right))) \Rightarrow (\exists (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{Matrix.PosSemidef}\left(\rho\right)) \land ((\operatorname{Matrix.trace}\left(\rho\right) = (1: \mathbb{C})) \land ((\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.IsNondegenerate}\left(\operatorname{D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight}\left(\rho\right)\right)) \land ((\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.IsNondegenerate}\left(\varphi\left(\operatorname{D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight}\left(\rho\right)\right)\right)) \land (\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.pinchA}\left(\operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.localMap}\left(\varphi, \rho\right)\right) \ne \operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.localMap}\left(\varphi, \operatorname{D5.S3.Quantum.Information.MixedUnitaryPinchingCommutation.pinchA}\left(\rho\right)\right)))))))))$$
 
@@ -108,6 +120,7 @@ Finally substitute these state and pinching identities in the difference of the 
 - Truth anchor: `D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation.localMap`
 - Truth anchor: `D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation.pinchA`
 - Truth anchor: `D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation.result`
+- Truth anchor: `D5/S3/Quantum/Information/MixedUnitaryPinchingCommutation.spin_triple`
 - Dependency: [D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound](TraceNormDiscordMutualCorrelationBound.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction](../QuantumChannels/HiaiRuskaiRiemannianContraction.md)
 - Dependency: [D5/S3/QuantumChannels/ChannelTimeReversalNoGo](../../QuantumChannels/ChannelTimeReversalNoGo.md)

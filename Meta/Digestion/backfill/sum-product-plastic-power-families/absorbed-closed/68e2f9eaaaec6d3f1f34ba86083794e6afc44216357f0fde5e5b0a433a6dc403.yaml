@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:68e2f9eaaaec6d3f1f34ba86083794e6afc44216357f0fde5e5b0a433a6dc403
+  normalized_sha256: sha256:68e2f9eaaaec6d3f1f34ba86083794e6afc44216357f0fde5e5b0a433a6dc403
+cas_ref: sha256:68e2f9eaaaec6d3f1f34ba86083794e6afc44216357f0fde5e5b0a433a6dc403
+coverage_gids:
+  - gid: D5/S3/Arith/Additive/PlasticExtremal.whole_theorem_three_one
+    target_statement_id: sha256:363ab39789e85cf10447e587cd3c44bf1ba2ce7ad30edc4bb3d9dbe967fc8503
+receipts:
+  unresolved_subitems: []

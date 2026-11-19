@@ -1,0 +1,26 @@
+**定义 18.1（平方根对数阶段与移动质量）。** 保持定义 17.1 的 $F,E_0,P_1,P_2$、正实嵌入、圆坐标 $\theta$、$\alpha$、全部有限地方的 $U_v$、原过滤及相容目标 (17.4)。固定 $M\ge1$、$a_0\in\mathbb Z$，并取
+
+$$
+\begin{aligned}
+h(n)&=\max\left(2,\left\lfloor c_0\sqrt{\log(n+2)}\right\rfloor\right),\\
+\rho(n)&=(n+2)^{-\beta}(\log(n+2))^{-\gamma},
+\end{aligned}
+\tag{18.1}
+$$
+
+其中 $c_0>0$、$\beta,\gamma\ge0$ 且 $\beta+\gamma>0$。对 $u\in a_0+M\widehat{\mathbb Z}$、$z=(z_1,z_2)\in\mathbb T^2$，令
+
+$$
+\begin{aligned}
+S_X(u,z)=\#\{n\in\mathbb Z:\;&X<n\le2X,\ n\equiv a_0\pmod M,\\
+&\|\theta([n]P_j)-z_j\|_{\mathbb T}<\rho(n)\quad(j=1,2),\\
+&[n]P_j-\eta_{v,j}(u)\in U_v(h(n))\\
+&\hspace{20mm}(p\le h(n),\ v\mid p,\ j=1,2)\},\\
+L_X&=4\sum_{X<n\le2X}
+ \frac{\rho(n)^2}{q(h(n),h(n);M)}.
+\end{aligned}
+\tag{18.2}
+$$
+
+这里 $X$ 为正整数，$S_X$ 是每个整数使用自身 $h(n)$ 和自身半径的实际命中数，$L_X$ 使用同一实际模数的移动质量；右端不把任意阶段的模数替换成一个共同的上界。
+
