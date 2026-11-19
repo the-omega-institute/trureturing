@@ -15,13 +15,11 @@ The real trace functional is bornProbability followed by Complex.re.
 All proposition proofs are bind-only after expanding same-delivery helpers;
 none supplies an escape witness. The public result settles claim.
 Definition rows describe values and claim, without asserting new proof content.
-Direct frozen dependencies use declaration identities from the matching base sources.
-The trace_pair_pos identity is its private prepublication identity; its public
-identity and canonical re-pin are reserved for the subsequent freezing stage.
+Direct frozen dependencies use declaration identities from the current sources.
 Dependency keys:
 F1: D5.S3.Quantum.Bogoliubov.HardyBlockConservation.compressedBlock; declaration statement_id: sha256:2ac1332dea41c82e6801ecbf96346c6b514d05a0d9b6a632a6962d7efbaf156d.
 F2: D5.S3.Quantum.FiniteDimensional.bornProbability; declaration statement_id: sha256:70d0693159ac58607261fa66304a04ba6078de3492431f14485817d5497d9d6d.
-F3: D5.S3.Quantum.Matrix.AbedNikolaevaNovikovAFDensityBound.trace_pair_pos; declaration statement_id: sha256:bc10bdaefde95b9a0a9dcb40617bead6ada43a30bc17a8b27aba1557d459b814 (prepublication).
+F3: D5.S3.Quantum.Matrix.AbedNikolaevaNovikovAFDensityBound.trace_pair_pos; declaration statement_id: sha256:e029d616a7a38fa478ce7fd128471c66e60decbdef90393453efb544da80dae2.
 F4: D5.S3.Quantum.Matrix.AbedNikolaevaNovikovTwoContrastYoung.contrast; declaration statement_id: sha256:5ec033194bbce36cac7b489f77a2fdc67eb6f4a1d185769506cdc211089e6711.
 F5: D5.S3.Quantum.Matrix.AbedNikolaevaNovikovTwoContrastYoung.contrast.eq_1; declaration statement_id: sha256:3cef5446fd1cdbd3a2cf88e1dddeb3ac9fe6313ffa031c94c81fb75e3cca8766.
 F6: D5.S3.Quantum.Matrix.AlternativeMeanLinearization.gmInv; declaration statement_id: sha256:485f301967ad92c67d9517ca9019d415c27d5d09269db36a8f792fa51fe66702.

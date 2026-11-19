@@ -18,7 +18,7 @@ Section 3.4, p. 10: “For a fixed density V(ρ) denotes its supremum, and the e
 
 **Definition 1.2 (Envelope at a prescribed contrast).**
 
-$$\forall (delta: \mathbb{R}), \operatorname{envelope}\left(delta\right) = \operatorname{sSup}\left(\{r: \mathbb{R} | \exists (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\operatorname{PosDef}\left(rho\right) \land (\frac{(\operatorname{sSup}\left(\operatorname{spectrum}\left(\mathbb{R}, rho\right)\right) - \operatorname{sInf}\left(\operatorname{spectrum}\left(\mathbb{R}, rho\right)\right))}{(\operatorname{sSup}\left(\operatorname{spectrum}\left(\mathbb{R}, rho\right)\right) + \operatorname{sInf}\left(\operatorname{spectrum}\left(\mathbb{R}, rho\right)\right))} = delta \land r = \operatorname{V}\left(rho\right)))\}\right)$$
+$$\forall (delta: \mathbb{R}), \operatorname{envelope}\left(delta\right) = \operatorname{sSup}\left(\{r: \mathbb{R} | \exists (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\operatorname{PosDef}\left(rho\right) \land (\operatorname{contrast}\left(rho\right) = delta \land r = \operatorname{V}\left(rho\right)))\}\right)$$
 
 *Formalization.* `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovItemSix.envelope` (`✓ std3`).
 
@@ -56,7 +56,7 @@ $$\forall (delta: \mathbb{R}), (0 \le delta \Rightarrow (delta < 1 \Rightarrow \
 
 *Commentary.*
 
-Abed, Nikolaeva and Novikov, arXiv:2610.34388v1, p. 57, Conjecture 11.1: “Vₙ = G² − 1 for item 7 and Vₙ = g₂₅(δ) for item 25 in every dimension; V₂ = G − 1 for item 6; the value of Proposition 5.17 holds for item 9 in every dimension; and the lower bound of Proposition 5.22 is the two-contrast envelope of item 8 for even n.” The item-6 equality holds for the entire faithful interval. A completed square controls the two-dimensional off-diagonal contribution. The trace/determinant identity for contrast yields the uniform upper bound after unitary diagonalization. Positive definite matrices approaching a rank-one limit give the lower bound for a density of each contrast. Both suprema are nonempty and bounded above on this interval. Separate fixed-density sharpness for every density, higher dimensions and the singular endpoint are outside this theorem.
+Abed, Nikolaeva and Novikov, arXiv:2610.34388v1, p. 57, Conjecture 11.1: “Vₙ = G² − 1 for item 7 and Vₙ = g₂₅(δ) for item 25 in every dimension; V₂ = G − 1 for item 6; the value of Proposition 5.17 holds for item 9 in every dimension; and the lower bound of Proposition 5.22 is the two-contrast envelope of item 8 for even n.” The item-6 equality holds for the entire faithful interval. A completed square controls the two-dimensional off-diagonal contribution. The trace/determinant identity for contrast yields the uniform upper bound after unitary diagonalization. Positive definite matrices approaching a rank-one limit give the lower bound for a density of each contrast. Both suprema are nonempty and bounded above on this interval. A written corollary transfers the value to each faithful qubit density of the prescribed contrast by unitary conjugation and positive rescaling.
 
 ## References
 

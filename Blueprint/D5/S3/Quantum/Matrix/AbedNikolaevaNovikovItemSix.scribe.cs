@@ -61,7 +61,6 @@ internal sealed class AbedNikolaevaNovikovItemSixDocument : IScribeDocumentDefin
     private static Formula Conj(Formula a, Formula b) => Parenthesized(Seq(a, Sp, Land, Sp, b));
     private static Formula ImpliesF(Formula a, Formula b) => Parenthesized(Seq(a, Sp, Rightarrow, Sp, b));
     private static Formula Sub(Formula a, Formula b) => Parenthesized(Seq(a, Sp, Minus, Sp, b));
-    private static Formula Add(Formula a, Formula b) => Parenthesized(Seq(a, Sp, Plus, Sp, b));
     private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
     private static Formula Fraction(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Sq(Formula a) => new Formula.Power(a, D(2));
