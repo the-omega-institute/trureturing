@@ -8,7 +8,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoSignedCompletion
 
-open BalancedCriticalSpectrum (Q)
+open BalancedCriticalSpectrum (Q IsBalanced)
 open Q9SeventyTwoSignedSearch (modelEdges signed_middle_unique)
 open Q9EightCubicGraphCertificate (modelAdj)
 open BalancedCubeLowerBound (coordinateSlice)
@@ -192,5 +192,129 @@ theorem complete_eq_of_actual {U : Finset (Q 9)} {wagner : Bool}
     rw [valueEq y hy, hs, ← hrow, BalancedCriticalSpectrum.flip_flip]
 
 #print axioms complete_eq_of_actual
+
+private def unitSign (bit : Bool) : ℤ := if bit then -1 else 1
+
+section
+
+local instance : DecidableRel (hypercube 9).Adj := fun x y =>
+  inferInstanceAs (Decidable (hammingDist x y = 1))
+
+/-- Check that the signs give a geometrically allowed midpoint on every
+compressed edge of the normalized half. -/
+def survives (wagner : Bool) (p : Fin 8 → Q 9) (bits : Fin 8 → Bool) : Bool :=
+  (List.finRange 8).all fun i =>
+    (List.finRange 8).all fun j =>
+      if i < j ∧ modelAdj wagner i j = true then
+        match signedMiddle (p i) (p j) (unitSign (bits i)) (unitSign (bits j)) with
+        | none => false
+        | some (m, _) =>
+          !m 0 && (List.finRange 8).all fun k =>
+            decide ((hypercube 9).Adj m (p k) ↔ k = i ∨ k = j)
+      else true
+
+end
+
+/-- Nonzero vertices of the reconstructed signed vector. -/
+def support (wagner : Bool) (p : Fin 8 → Q 9) (bits : Fin 8 → Bool) : Finset (Q 9) :=
+  Finset.univ.filter fun x => complete wagner p (unitSign ∘ bits) x ≠ 0
+
+attribute [local instance] Classical.propDecidable
+
+/-- Every actual seventy-two-vertex component with a twenty-vertex half is
+covered by the geometric search and the midpoint sign filter. The first
+high vertex may always be assigned sign \(+1\). -/
+theorem exists_surviving_signs {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 20) :
+    ∃ (g : Q 9 ≃ Q 9) (σ : Fin 9 ≃ Fin 9) (wagner : Bool) (pattern : Fin 5)
+      (p : Fin 8 ↪ Q 9) (bits : Fin 8 → Bool),
+      (∀ x i, g (flip x i) = flip (g x) (σ i)) ∧
+      (fun i => (cubeBitVec 9).symm (p i)) ∈ Q9SeventyTwoEmbeddingSearch.candidates wagner pattern ∧
+      bits 0 = false ∧ survives wagner p bits = true ∧ C.image g = support wagner p bits := by
+  obtain ⟨g, σ, wagner, pattern, p, m, z, hg, hcut, hmem, hslice, hm, hu, hz, he, hw⟩ :=
+    Q9SeventyTwoSignedSearch.exists_signed_candidate hC hr hb b hs
+  have hslice' : coordinateSlice (C.image g) false =
+      Finset.univ.map p ∪ Finset.univ.map m := by
+    rw [← hslice]
+    ext x
+    simp only [coordinateSlice, Finset.mem_filter, Finset.mem_image]
+    constructor
+    · rintro ⟨⟨y, hy, rfl⟩, hzero⟩
+      exact ⟨y, ⟨hy, (hcut y).mp hzero⟩, rfl⟩
+    · rintro ⟨y, ⟨hy, hzero⟩, rfl⟩
+      exact ⟨⟨y, hy, rfl⟩, (hcut y).mpr hzero⟩
+  have inU {x : Q 9} (hx : x ∈ Finset.univ.map p ∪ Finset.univ.map m) : x ∈ C.image g :=
+    (Finset.mem_filter.mp (hslice'.symm ▸ hx)).1
+  have high (k : Fin 8) : p k ∈ C.image g :=
+    inU (Finset.mem_union_left _ (Finset.mem_map.mpr ⟨k, Finset.mem_univ _, rfl⟩))
+  obtain ⟨v, hvunit, hvzero, hvedge, hvrow, hvroot⟩ :
+      ∃ v : Q 9 → ℤ,
+        (∀ x ∈ C.image g, v x = 1 ∨ v x = -1) ∧ (∀ x ∉ C.image g, v x = 0) ∧
+        (∀ x ∈ C.image g, ∀ i : Fin 9, flip x i ∈ C.image g →
+          truePrefixSign x i = v x * v (flip x i)) ∧
+        (∀ y, v (flip y 0) =
+          3 * v y - ∑ i ∈ Finset.univ.erase (0 : Fin 9), truePrefixSign y i * v (flip y i)) ∧
+        v (p 0) = 1 := by
+    rcases hu _ (high 0) with hroot | hroot
+    · exact ⟨z, hu, hz, he, hw, hroot⟩
+    · refine ⟨fun x => -z x, ?_, ?_, ?_, ?_, by simp [hroot]⟩
+      · intro x hx
+        rcases hu x hx with h | h <;> simp [h]
+      · intro x hx
+        simp [hz x hx]
+      · intro x hx i hi
+        simpa using he x hx i hi
+      · intro y
+        change -z (flip y 0) =
+          3 * (-z y) - ∑ i ∈ Finset.univ.erase (0 : Fin 9), truePrefixSign y i * (-z (flip y i))
+        rw [hw y]
+        simp only [mul_neg, Finset.sum_neg_distrib]
+        ring
+  let bits (i : Fin 8) : Bool := decide (v (p i) = -1)
+  have hbits (i : Fin 8) : unitSign (bits i) = v (p i) := by
+    rcases hvunit _ (high i) with h | h <;> simp [bits, unitSign, h]
+  refine ⟨g, σ, wagner, pattern, p, bits, hg, hmem, by simp [bits, hvroot], ?_, ?_⟩
+  · apply List.all_eq_true.mpr
+    intro i _
+    apply List.all_eq_true.mpr
+    intro j _
+    split
+    · rename_i hij
+      let e : (modelEdges wagner : Set (Fin 8 × Fin 8)) :=
+        ⟨(i, j), Finset.mem_filter.mpr ⟨Finset.mem_univ _, hij⟩⟩
+      have hmemb : m e ∈ coordinateSlice (C.image g) false := by
+        rw [hslice']
+        exact Finset.mem_union_right _ (Finset.mem_map.mpr ⟨e, Finset.mem_univ _, rfl⟩)
+      obtain ⟨hmid, hmidCut⟩ := Finset.mem_filter.mp hmemb
+      have hleft := (hm e i).mpr (Or.inl rfl)
+      have hright := (hm e j).mpr (Or.inr rfl)
+      have hpath : signedMiddle (p i) (p j) (v (p i)) (v (p j)) =
+          some (m e, v (m e)) := by
+        apply signedMiddle_of_path (fun h => hij.1.ne (p.injective h)) hleft.symm hright
+          (hvunit _ (high i)) (hvunit _ hmid)
+        rintro x k (⟨rfl, hf⟩ | ⟨rfl, hf⟩)
+        · exact hvedge _ (high i) _ (hf.symm ▸ hmid)
+        · exact hvedge _ hmid _ (hf.symm ▸ high j)
+      rw [hbits, hbits, hpath]
+      simp only [hmidCut, Bool.not_false, Bool.true_and]
+      apply List.all_eq_true.mpr
+      intro k _
+      simpa only [decide_eq_true_eq] using hm e k
+    · rfl
+  · have hcomplete := complete_eq_of_actual p m v hslice' hm hvunit hvzero hvedge hvrow
+    have hfun : unitSign ∘ bits = fun i => v (p i) := funext hbits
+    unfold support
+    rw [hfun, hcomplete]
+    ext x
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · intro hx
+      rcases hvunit x hx with h | h <;> simp [h]
+    · intro h
+      by_contra hx
+      exact h (hvzero x hx)
+
+#print axioms exists_surviving_signs
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoSignedCompletion
