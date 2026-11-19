@@ -16,7 +16,7 @@ Baseline declaration _private.D5.S3.Combinatorics.Matroids.SpeyerUniformNormalit
 The recurrence and additive-limit statements use the conventions of #19938 and #19939.
 The unit-border array is qAB evaluated at one.
 All declarations have utility none: unbounded identities, estimates and limits.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaPowerBorderGrowth.result: proof_shape: content; escape_witness: R_scaled_limit, R_scaled_bound, R_border; Direct frozen dependencies: qAB.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaPowerBorderGrowth.result: proof_shape: content; escape_witness: R_scaled_limit, R_scaled_bound, R_border; Same-delivery dependencies: the factorial module's recurrence and ratio-transfer results.
 -/
 
 import D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth

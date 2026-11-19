@@ -18,20 +18,20 @@ The recurrence and additive-limit statements use the conventions of #19938 and #
 The literal recurrence defines the unit-border array; proofs use qAB evaluated at one.
 All declarations have utility none: unbounded identities, estimates and limits.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_convolution: proof_shape: content; escape_witness: border_convolution; Direct frozen dependencies: none.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_of_gt: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_nonneg: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB, qAB_pos.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_of_gt: proof_shape: bind-only; escape_witness: none; Uses the same-delivery publication of qAB through the unit-border identities.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_nonneg: proof_shape: bind-only; escape_witness: none; Same-delivery owner publications: qAB, qAB_pos.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.W_le_M: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_bound: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_limit: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_bound: proof_shape: content; escape_witness: H_scaled_error_bound; Uses the same-delivery publication of qAB through the unit-border identities.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_limit: proof_shape: content; escape_witness: tendsto_scaled_choose_ratio; Uses the same-delivery publication of qAB through the unit-border identities.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.summable_M: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.summable_succ_M: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.tendsto_of_scaled: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_bound: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_limit: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_Q_scaled_limit: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_factorial: proof_shape: content; escape_witness: d_eq_binomial; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.ratio_transfer: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.result: proof_shape: content; escape_witness: border_convolution, d_eq_binomial; Direct frozen dependencies: qAB.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_bound: proof_shape: content; escape_witness: Q_le_M; Uses the same-delivery publication of qAB through the unit-border identities.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_limit: proof_shape: bind-only; escape_witness: none; Uses the same-delivery publication of qAB through the unit-border identities.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_Q_scaled_limit: proof_shape: content; escape_witness: Q_le_M; Uses the same-delivery publication of qAB through the unit-border identities.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_factorial: proof_shape: content; escape_witness: d_eq_binomial; Uses the same-delivery publication of qAB through the unit-border identities.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.ratio_transfer: proof_shape: content; escape_witness: first_order_difference; Direct frozen dependencies: none.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.result: proof_shape: content; escape_witness: border_convolution, d_eq_binomial; Uses the same-delivery publication of qAB through the unit-border identities.
 -/
 
 import D5.S3.Combinatorics.Matroids.SpeyerUniformNormality
