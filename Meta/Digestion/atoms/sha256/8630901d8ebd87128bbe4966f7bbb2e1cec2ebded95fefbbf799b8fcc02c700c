@@ -1,0 +1,64 @@
+**Theorem 51.1 (the actual return-type word at every integer marker).**
+At a marked start $p$ put
+
+$$
+t=s^2=1-s,\quad a=2t,\quad \ell=s^3=2s-1,\quad
+M=\lfloor(p+1)s\rfloor,\quad x=\{(p+1)s\},\quad
+y=\frac{x-a}{\ell},\quad q=p-2M-3.
+\tag{IV.155}
+$$
+
+Then $x\in[a,1)$ and $y\in[0,1)$. Its first return has $D=5$
+for $y\in[0,s)$ and $D=3$ for $y\in[s,1)$. At the next actual
+marker the induced coordinate is $\{y+t\}$ and the hidden integer
+coordinate is $q-1$. Consequently the return-type bit $g=\mathbf1_{D=3}$
+and, for any finite $m$ completed returns starting there, their actually
+obtained return types satisfy exactly
+
+$$
+y=2p-3M+(q+2)s=\{(q+2)s\},\qquad
+g_n=f(q-n)\quad(0\le n<m).
+\tag{IV.156}
+$$
+
+The integer $q$ is an analysis coordinate, not an observer input;
+the return word runs in decreasing original indices.
+
+**Proof.** A letter at phase $x$ has $f(p)=0$ just when $x\ge t$.
+Then $\{x+s\}=x-t$, so the second zero requires $x\ge2t=a$.
+This proves the precise half-open marker cylinder. Rotation by $s$
+gives successive phases at steps one, two and three as
+$x-t$, $x-2t$, $x+3s-2$, respectively. The first two lie outside
+$[a,1)$. The third lies in that interval precisely when
+$x\ge a+s^4$. In that case $D=3$ and its new phase is $x-s^4$.
+For $a\le x<a+s^4$, step three lies in $[s,a)$; step four has
+phase $x+4s-3\in[\ell,t)$ and is still outside. Step five has
+phase $x+5s-3=x+s^5\in[a+s^5,1)$ and returns. These computations
+also exclude every earlier return. Normalizing by $\ell$ changes
+the threshold to $y=s$ and the two increments to $-s$ and $t$.
+Hence the induced map is $\{y+t\}$, with exactly the displayed
+included lower endpoints. This is the classical induced-return
+rotation calculation, here with the source's specified cuts; compare
+the lower/upper distinction in
+[Klouda–Medková–Pelantová–Starosta, §2.2](https://arxiv.org/pdf/1801.09203v3).
+
+Since $\ell^{-1}=3+2s$, expanding $(x-a)/\ell$ gives
+$2p-3M+(p-2M-1)s$, the first equality in (IV.156).
+Since $2p-3M$ is an integer and $0\le y<1$, the expression equals
+$\{(q+2)s\}$, proving its fractional-part form.
+For any integer $q$, the original lower-floor coding satisfies
+$f(q)=1$ exactly when $\{(q+2)s\}\in[s,1)$: this is the
+image of its $f(q)=1$ phase interval $[0,t)$ after one rotation.
+Thus the actual $D=3$ predicate equals $f(q)$, including endpoints.
+At a three-step return $M'=M+2$, while at a five-step return
+$M'=M+3$. In either case
+$q'=p+D-2M'-3=q-1$. Induction gives (IV.156).
+
+The singular integer markers are retained: $p=-3$ gives
+$M=-2$, $y=0$, $q=-2$, hence $D=5$ and $f(-2)=0$;
+$p=-6$ gives $M=-4$, $y=s$, $q=-1$, hence $D=3$ and $f(-1)=1$.
+No all-integer step uses a forward phase identification that drops
+these endpoints. The conclusion concerns the specified same-source
+returns, without an independent preparation or freely chosen phase.
+$\square$
+

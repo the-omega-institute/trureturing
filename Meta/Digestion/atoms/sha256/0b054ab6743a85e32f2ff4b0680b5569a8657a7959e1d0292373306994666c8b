@@ -1,0 +1,29 @@
+**Corollary 47.2 (every finite original request under finite supply).**
+For every finite $H\ge1$, the acquired prefix serves the unchanged
+$\mathcal R_H(e)$ whenever $Q_m+1\ge H$. One sufficient uniform budget is
+
+$$
+m_H=\max\!\left(0,\left\lceil\frac{H-2}{3}\right\rceil\right),
+\qquad Q_{m_H}\le5+5m_H.
+\tag{IV.149}
+$$
+
+It requires at most $m_H$ successful Resumes and the displayed number
+of comparisons, under the finite supply and return premises. The
+initial four-atom result of Theorem 42.1 and the nine-atom result below
+can give smaller budgets for their respective consumers.
+
+**Proof.** Each $D_j\ge3$ and $K\ge1$, so
+$Q_m+1\ge2+3m$. Equation (IV.149) makes this at least $H$.
+The upper bound follows from $K\le5$ and $D_j\le5$. Read the first
+$H$ bits of (IV.148), replace them by their atoms and apply (IV.121).
+This is a finite computation on actually acquired letters.
+All constructed counters, retained $J$, references, storage traffic,
+query and Ack records, computation, scratch and output remain separately
+paid. The bound counts comparisons and successful Resumes only; it
+is neither a physical time bound nor a total-resource optimum.
+Bounded local block decoding does not bound the memory of $J$, an
+unbounded target counter or retained outputs. The quantifier is one
+supplied finite execution for each finite request, not a completed
+infinite execution with fixed memory. $\square$
+

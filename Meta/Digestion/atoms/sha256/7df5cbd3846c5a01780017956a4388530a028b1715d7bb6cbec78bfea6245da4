@@ -1,0 +1,31 @@
+**Proposition 49.2 (conditional execution on authentic old operands).**
+Suppose an actual AA/AAII installation supplies its genuine current tree
+$t=C[a_e,\ldots,a_{e+H-1}]$ at an identified version, together with an
+authentic correspondence from the acquired ordered letters to all its
+old logical leaf operands. Suppose their acquired addresses are prefix
+free, its source/history domain holds, and its current guards, rights,
+phase, reservation, backing, writer, acknowledgement and return contract
+authorize the original operations. Then one original $P$ at each old
+alpha leaf and one original $S$ at each old beta leaf execute $\rho(t)$.
+The observation record alone supplies none of these execution premises.
+
+**Proof.** AA Definition 17.1 gives exactly
+$P:\alpha\mapsto\beta$ and
+$S:\beta\mapsto\langle\beta,\alpha\rangle$ at current logical leaves.
+Authenticity of the version and operand map makes the decoded tag the
+actual pre-edit tag. Replacing one old leaf cannot change the subtree
+at another prefix-free old address. Induction over these distinct old
+operands therefore preserves each remaining guard and gives precisely
+the homomorphic substitution of Theorem 49.1. The original complete
+request semantics, disabled calls, checked refusals and finite return
+obligations remain those of AA §20 and AAII §96; no gap-word operation
+replaces them. Native history queries require that installation's actual
+history records, not $J$ interpreted as a generation journal.
+
+The selected observation source/version remains immutable. If a native
+edit changes an object related to it, this proposition uses the acquired
+old-version correspondence only for the stated consumption. Reading
+again after interleaved edits requires a further proved version and
+continuation bridge. Neither cursor continuation nor a word equality
+provides that bridge or an installation of the native operations. $\square$
+

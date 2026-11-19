@@ -1,0 +1,23 @@
+**Proposition 50.3 (equal totals lose actual order).** Two successful
+two-Resume runs have the same initial $K$, comparison count, Resume
+count, total return displacement and chart end boundary, but different
+ordered words and original output tuples.
+
+**Proof.** Use $e=2$ and $e=7$. Their successive marker starts are
+$(2,7,10)$ and $(7,10,15)$, respectively; all are verified directly
+in the single word (IV.144). Both have $K=1$, but their return lists
+are $(5,3)$ and $(3,5)$. Hence $Q_2=9$ and both use two Resumes.
+Their acquired prefixes are respectively
+
+$$
+0010100100,\qquad0010010100.
+\tag{IV.154}
+$$
+
+The return displacements both equal $\varphi^5+\varphi^4$.
+Each full ten-tile prefix has seven beta and three alpha tiles, so
+its end boundary relative to its root is $7\varphi^2+3\varphi$.
+The words differ at offset four, and so do their ordered original
+$\mathcal R_{10}$ tuples. Thus totals cannot replace the ordered
+record or ordered chart in Theorem 50.2. $\square$
+
