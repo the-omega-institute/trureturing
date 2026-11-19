@@ -60,7 +60,7 @@ internal sealed class BarkerMinimalGridTransferDocument : IScribeDocumentDefinit
             PN("start", "start", "The two labelled real masks a,b encode the full start state 8*a+b in the first block.", DescribeRole.Definition),
             PN("accepted_cons_iff", "accepted cons iff", "For every suffix length k, masks a,b and suffix w, the concatenated numeric word belongs to acceptedWords(k+2) exactly when its unique run from start a b has weight one.", DescribeRole.Theorem),
             PN("actualCount_fullOrbit", "actualCount fullOrbit", "For every natural k, the actual inclusion-minimal dominating subset count of the ordinary open grid of width k+2, cast to the integers, equals the sum of fullOrbit k over all 64 starts. This includes width two with no transitions.", DescribeRole.Theorem),
-            N("closed", "The finite-window closed neighbourhood", "Two window vertices are closed neighbours exactly when the sum of their row and column distances is at most one."),
+            N("closed", "The finite-window closed neighbourhood", "Two window vertices are closed neighbours exactly when the sum of their row and column distances is at most one.", ClosedFormula()),
             Paragraph(Text("The generic CycleItalianDominationRecurrence.sum_pathWeight sums arbitrary intermediate states between fixed endpoints u and v for n+1 edges. At a positive suffix length k its parameters would be the state type Fin 4672, the unit admitted-edge matrix M, and n=k−1, followed by a terminal-weighted endpoint sum and a mask-word correspondence. The argument here defines each continuation by append and identifies its weight with the actual local tests for every k, including zero."))), []));
 
     private static DocumentBlock EN(string name, string title, string prose,
@@ -112,11 +112,25 @@ internal sealed class BarkerMinimalGridTransferDocument : IScribeDocumentDefinit
         return All("n", Nat, All("S", FS(Verts(n)), Iff(Call("MinimalDominating", Call("grid", n), s),
             All("c", Call("Fin", n), Call("ColumnTest", s, c)))));
     }
-    private static DocumentBlock N(string name, string title, string prose) => Node(name, title, prose, DescribeRole.Definition);
+    private static Formula ClosedFormula()
+    {
+        Formula u = X("u"), v = X("v"), vertex = Verts(D(5));
+        Formula distance = Seq(Operatorname, Grp(X("Nat"), Dot, X("dist")));
+        Formula Coordinate(Formula point, byte index) => Seq(point, Dot, D(index), Dot, X("val"));
+        Formula rowDistance = new Formula.Apply(distance, [Coordinate(u, 1), Coordinate(v, 1)]);
+        Formula columnDistance = new Formula.Apply(distance, [Coordinate(u, 2), Coordinate(v, 2)]);
+        Formula withinOne = Rel(Seq(rowDistance, Sp, Plus, Sp, columnDistance), FormulaRelationOperator.LessThanOrEqual, D(1));
+        Formula result = Par(Seq(Call("closed", u, v), Sp, Colon, Sp, X("Bool")));
+        return All("u", vertex, All("v", vertex, Rel(result, FormulaRelationOperator.Equal, Call("decide", withinOne))));
+    }
+
+    private static DocumentBlock N(string name, string title, string prose, Formula? formula = null) =>
+        Node(name, title, prose, DescribeRole.Definition, formula);
     private static DocumentBlock T(string name, string title, string prose) => Node(name, title, prose, DescribeRole.Theorem);
-    private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, string prose, DescribeRole role, Formula? formula = null) =>
         Describe.Lean(DescribeId.Create("bt-" + name.Replace('_', '-').ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static DocumentBlock PN(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("bp-" + name.Replace('_', '-').ToLowerInvariant()),

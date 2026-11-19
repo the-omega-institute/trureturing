@@ -54,7 +54,7 @@ The 49 coefficients in increasing degree order are exactly those of Colin Barker
 
 **Definition 1.5 (Sparse row evaluation).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.rowEval`
+$$\begin{aligned}&rowEval : \operatorname{List}\left(\operatorname{Fin}\left(59\right) \times Int\right) \to \left(Vector \to Int\right)\\&\forall (v : Vector), \operatorname{rowEval}\left([], v\right) = 0\\&\forall (j : \operatorname{Fin}\left(59\right)) (a : Int) (rest : \operatorname{List}\left(\operatorname{Fin}\left(59\right) \times Int\right)) (v : Vector),\\&\quad\operatorname{rowEval}\left((j, a) :: rest, v\right) = a \cdot v\left(j\right) + \operatorname{rowEval}\left(rest, v\right)\end{aligned}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.rowEval` (`✓ std3`).
 

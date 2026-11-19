@@ -124,13 +124,16 @@ The settling statement has no hypotheses. The actual subset family is defined
 independently of the published polynomial data. The finite certificates are
 Lean proofs; no experiment or external program output is a proof premise.
 
-The $31$ authored public theorem escape audits remain **unfinished** under the exact
-[target disclosure](https://github.com/the-omega-institute/trureturing/issues/22395#issuecomment-6421674861).
-The compiled inventory also includes three generated equation theorems:
-`Transfer.runWeight.eq_def`, `Transfer.fullOrbit.eq_def` and
-`Quotient.orbit.eq_def`. These are compiler-generated equations of the recursive
-definitions, rather than additional authored theorem declarations; the authored
-audit target count is $31$. No audit validation is inferred for any declaration.
+The $32$ authored public theorem escape audits remain **unfinished**. Transfer
+contributes $14$ targets, including the two `@[simp]` theorems `mem_decode` and
+`maskEquiv_apply`. Quotient contributes $5$, including `Quotient.orbit_values`,
+Partition contributes $3$ and Series contributes $10$.
+[Target disclosure](https://github.com/the-omega-institute/trureturing/issues/22395#issuecomment-6421674861).
+
+The compiled inventory also includes four generated equation theorems for the
+recursive definitions. They are `Transfer.runWeight.eq_def`,
+`Transfer.fullOrbit.eq_def`, `Quotient.rowEval.eq_def` and `Quotient.orbit.eq_def`.
+No audit validation is inferred for any declaration.
 No Reg mirror or `declared_validated` claim is supplied. Missing evidence includes
 lawful source-bound enrolled-template readout/application, realization,
 source selection and reconstruction, actual-positive law, whole-family
@@ -156,6 +159,6 @@ statement check.
 The mathematical endpoint has no unproved count assumption or additional axiom.
 Equivalence between the published prose and the formal definitions remains a
 source-fidelity review responsibility. The bounded literature checks do not
-certify absence of every external solution. The $31$ authored public theorem escape audits remain
+certify absence of every external solution. The $32$ authored public theorem escape audits remain
 unfinished as disclosed above; their completion is not implied by successful
 Lean or CI checks.

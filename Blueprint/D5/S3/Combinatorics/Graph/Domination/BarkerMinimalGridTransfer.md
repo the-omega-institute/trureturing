@@ -550,7 +550,7 @@ For every natural k, the actual inclusion-minimal dominating subset count of the
 
 **Definition 1.46 (The finite-window closed neighbourhood).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.closed`
+$$\forall (u : \operatorname{Vertex}\left(5\right)), \forall (v : \operatorname{Vertex}\left(5\right)), (\operatorname{closed}\left(u, v\right) : Bool) = \operatorname{decide}\left(\operatorname{Nat.dist}\left(u.1.val, v.1.val\right) + \operatorname{Nat.dist}\left(u.2.val, v.2.val\right) \le 1\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.closed` (`✓ std3`).
 
