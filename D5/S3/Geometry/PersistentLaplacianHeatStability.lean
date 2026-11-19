@@ -35,45 +35,10 @@ private def coordinates (L : PreAbstractSimplicialComplex V) (p : ℕ) :
   exact (DirectSum.linearEquivFunOnFintype ℤ (Face L p) (fun _ => ℤ)).toLinearMap.comp
     (ModuleCat.coprodIsoDirectSum (fun _ : Face L p => Z)).hom.hom
 
-private theorem coordinates_faceι (L : PreAbstractSimplicialComplex V) {p : ℕ}
-    (f : Face L p) (a : ℤ) :
-    coordinates L p ((faceι L f).hom a) = Pi.single f a := by
-  classical
-  change (DirectSum.linearEquivFunOnFintype ℤ (Face L p) (fun _ => ℤ))
-    ((faceι L f ≫ (ModuleCat.coprodIsoDirectSum (fun _ : Face L p => Z)).hom).hom a) = _
-  rw [faceι, ModuleCat.ι_coprodIsoDirectSum_hom]
-  exact DirectSum.linearEquivFunOnFintype_lof (R := ℤ) (M := fun _ : Face L p => ℤ) f a
-
 /-- Real incidence entries obtained from the integer ordered simplicial boundary. -/
 def edgeIncidence (L : PreAbstractSimplicialComplex V) :
     Matrix (Face L 0) (Face L 1) ℝ :=
   fun v e => (coordinates L 0 ((faceι L e ≫ orderedBoundary L 0).hom (1 : ℤ)) v : ℝ)
-
-private theorem edgeIncidence_apply (L : PreAbstractSimplicialComplex V)
-    (v : Face L 0) (e : Face L 1) :
-    letI := Classical.decEq (Face L 0)
-    edgeIncidence L v e = ∑ a : e.val, (-1 : ℝ) ^
-      (e.val.filter (fun b => b < a.val)).card * (if eraseFace L e a = v then (1 : ℝ) else 0) := by
-  classical
-  have hcomp : faceι L e ≫ orderedBoundary L 0 =
-      ∑ a : e.val, ((-1 : ℤ) ^ (e.val.filter (fun b => b < a.val)).card) •
-        faceι L (eraseFace L e a) := by
-    rw [faceι, orderedBoundary, Sigma.ι_comp_desc]
-  simp only [edgeIncidence, hcomp, ModuleCat.hom_sum, ModuleCat.hom_zsmul,
-    LinearMap.sum_apply, map_sum, Finset.sum_apply, Int.cast_sum]
-  apply Finset.sum_congr rfl
-  intro a _
-  change ((coordinates L 0 (((-1 : ℤ) ^ _ : ℤ) •
-    (faceι L (eraseFace L e a)).hom (1 : ℤ)) v : ℤ) : ℝ) = _
-  rw [map_zsmul, coordinates_faceι]
-  change ((((-1 : ℤ) ^ _ : ℤ) •
-    (Pi.single (M := fun _ : Face L 0 => ℤ) (eraseFace L e a) 1 v) : ℤ) : ℝ) = _
-  rw [zsmul_eq_mul, Int.cast_mul, Int.cast_pow]
-  norm_num only [Int.cast_neg, Int.cast_one]
-  by_cases ha : v = eraseFace L e a
-  · subst v
-    simp
-  · simp only [Pi.single_eq_of_ne ha, Int.cast_zero, ite_eq_right (Ne.symm ha), mul_zero]
 
 /-- Hidden vertices are the zero-faces of the larger complex missing from the smaller one. -/
 abbrev HiddenVertex (K L : PreAbstractSimplicialComplex V) :=
