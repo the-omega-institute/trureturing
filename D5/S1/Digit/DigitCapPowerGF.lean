@@ -6,6 +6,28 @@
    utility: none
    digest: Cap ell^r-1 counts have generating function prod_{j<r} 1/(1-z^(ell^j)), Θ(n^(r-1)). -/
 
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#301, partial: the
+  generating function and the Θ(n^(r-1)) growth; the least-cap claims are not delivered)
+escape_witness: gf_succ (the power-series difference equation (1 - z) G_{r+1} = G_r(z^ell),
+  obtained by differencing the frozen multiple-cap identity) and count_bounds (the explicit
+  binomial lower and polynomial upper bounds).
+proof_shape:
+  gf, den: definitions; consumers: den_mul_gf and the helpers.
+  gf_succ, den_succ, count_cap_zero: content; consumer: den_mul_gf (count_cap_zero also gf_zero).
+  gf_zero, count_rec: bind-only helpers (definition unfolding; count_rec is the instance
+    a = ell^r of the frozen count_multiple); consumers: den_mul_gf, gf_succ, count_bounds.
+  den_mul_gf: content.
+  count_bounds: content (induction through count_rec with Nat.sum_range_add_choose); the
+    base case reads the frozen count_standard.
+  count_isTheta: content via the inlined count_bounds.
+Direct frozen dependencies: D5/S1/Digit/DigitCapMultipleCount (count_multiple, count_standard),
+  D5/S1/Digit/CoonsAdjacentGrowthRefutation (count, weight, Partitions).
+Search record (§3.1): count_standard was private in DigitCapMultipleCount and is made public
+  (state re-pinned) instead of re-proving the cap ell - 1 count; no frozen module states the
+  generating product or polynomial growth for caps ell^r - 1.
+-/
+
 import D5.S1.Digit.DigitCapMultipleCount
 import Mathlib.RingTheory.PowerSeries.Expand
 
@@ -109,12 +131,6 @@ theorem den_mul_gf (ell r : ℕ) (hell : 2 ≤ ell) : den ell r * gf ell r = 1 :
   | succ r ih =>
     rw [den_succ hell, mul_comm (1 - X), mul_assoc, gf_succ hell, ← map_mul, ih, map_one]
 
-private lemma count_one {ell : ℕ} (hell : 2 ≤ ell) (n : ℕ) : count (ell ^ 1 - 1) ell n = 1 := by
-  rw [count_rec hell 0 n]
-  simp only [pow_zero, Nat.sub_self, count_cap_zero]
-  rw [Finset.sum_ite_eq' (Finset.range (n / ell + 1)) 0 (fun _ => 1)]
-  simp
-
 /-- Explicit growth: for `ell ≥ 2` and every `r`,
 `C(⌊n / ell ^ r⌋ + r, r) ≤ b(ell ^ (r+1) - 1, ell, n) ≤ (n + 1) ^ r`, so the counts with digit
 cap `ell ^ (r+1) - 1` grow like `n ^ r`. -/
@@ -123,9 +139,7 @@ theorem count_bounds (ell r n : ℕ) (hell : 2 ≤ ell) :
     count (ell ^ (r + 1) - 1) ell n ≤ (n + 1) ^ r := by
   induction r generalizing n with
   | zero =>
-    have h := count_one hell n
-    simp only [pow_one] at h
-    simp [h]
+    simp [count_standard ell n hell]
   | succ r ih =>
     rw [count_rec hell (r + 1) n]
     constructor
