@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.Topology.LocallyConstant;
 
 internal sealed class Source_TauCeti_Topology_LocallyConstant_PreconnectedDocument : IScribeDocumentDefinition
 {

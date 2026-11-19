@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.Data.Nat.Choose;
 
 internal sealed class Source_TauCeti_Data_Nat_Choose_BasicDocument : IScribeDocumentDefinition
 {

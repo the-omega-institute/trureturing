@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.ModelTheory.Algebra.OrderedRing;
 
 internal sealed class Source_TauCeti_ModelTheory_Algebra_OrderedRing_MvPolynomialDocument : IScribeDocumentDefinition
 {

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.Algebra.Order.Ring.Ordering;
 
 internal sealed class Source_TauCeti_Algebra_Order_Ring_Ordering_ExtensionDocument : IScribeDocumentDefinition
 {

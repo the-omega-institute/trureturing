@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.RingTheory.MvPolynomial.Symmetric;
 
 internal sealed class Source_TauCeti_RingTheory_MvPolynomial_Symmetric_SubstitutionDocument : IScribeDocumentDefinition
 {

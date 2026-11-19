@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.FieldTheory.RealClosure;
 
 internal sealed class Source_TauCeti_FieldTheory_RealClosure_AlgebraicClosedDocument : IScribeDocumentDefinition
 {

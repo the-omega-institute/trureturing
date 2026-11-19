@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.Analysis.Polynomial.RealRoots;
 
 internal sealed class Source_TauCeti_Analysis_Polynomial_RealRoots_OrderedDocument : IScribeDocumentDefinition
 {

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary.TauCeti.RingTheory.Polynomial.Monic;
 
 internal sealed class Source_TauCeti_RingTheory_Polynomial_Monic_OfCoeffDocument : IScribeDocumentDefinition
 {
