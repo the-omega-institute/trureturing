@@ -21,14 +21,21 @@ internal sealed class PositiveWordRayDescentDocument : IScribeDocumentDefinition
     private static Formula all(Formula v, Formula type, Formula body) =>
         Seq(Forall, Sp, v, Colon, type, Comma, Esc, body);
     private static Formula premise(Formula body, bool dense = false, bool compact = false,
-        bool statistics = false, bool ready = false) => Disp(Seq(
-        all(R,Call("Type"),all(L,Call("Law"),all(G,Call("Geometry",R),Seq(
-        Call("MetricSpace",R),
-        dense ? Seq(Sp,Land,Sp,Call("DenseRange",Call("ray",G))) : Seq(),
-        compact ? Seq(Sp,Land,Sp,Call("CompactSpace",R)) : Seq(),
-        statistics ? Seq(Sp,Land,Sp,Call("Rten",L)) : Seq(),
-        ready ? Seq(Sp,Land,Sp,Call("ReadyReturn",L,G)) : Seq(),
-        Sp,Rightarrow,Sp,body))))));
+        bool statistics = false, bool ready = false)
+    {
+        Formula? condition = null;
+        if (dense) add(Call("DenseRange", Call("ray", G)));
+        if (compact) add(Call("CompactSpace", R));
+        if (statistics) add(Call("Rten", L));
+        if (ready) add(Call("ReadyReturn", L, G));
+
+        var conclusion = condition is null ? body : Seq(condition, Sp, Rightarrow, Sp, Open, body, Close);
+        return Disp(all(R, Call("Type"), Seq(Call("MetricSpace", R), Sp, Rightarrow, Sp,
+            Open, all(L, Call("Law"), all(G, Call("Geometry", R), conclusion)), Close)));
+
+        void add(Formula item) =>
+            condition = condition is null ? item : Seq(condition, Sp, Land, Sp, item);
+    }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive statistical return and sequential ready return yield a continuous full-row response.",

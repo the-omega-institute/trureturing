@@ -433,9 +433,15 @@ private theorem cubic_beta : beta (cycleGraph 3) 2 = 7 := by
   have hc : ∀ v w, (cycleGraph 3).Adj v w → v.1 ≠ w.1 := by
     rintro ⟨b,v⟩ ⟨c,w⟩ h
     cases b <;> cases c <;> simp_all [cycleGraph,graph]
-  have hr : ∀ v, DegreeCapacity.degree (cycleGraph 3) v = 3 := by
+  have hr : ∀ v, (cycleGraph 3).degree v = 3 := by
     intro v
-    simpa [cycleGraph] using regular (finRotate 3) (rotate_ne (by decide)) v
+    have hneighbors : (cycleGraph 3).neighborFinset v =
+        Finset.univ.filter ((cycleGraph 3).Adj v) := by
+      ext w
+      simp
+    rw [← SimpleGraph.card_neighborFinset_eq_degree, hneighbors]
+    simpa [cycleGraph, DegreeCapacity.degree] using
+      regular (finRotate 3) (rotate_ne (by decide)) v
   have hs : ∀ b : Bool, (Finset.univ.filter (fun v : Vertex (Fin 3) => v.1 = b)).card = 7 := by
     decide +kernel
   exact (SubQuorum.C4FreeRepresentatives.threshold_parameters (cycleGraph 3)

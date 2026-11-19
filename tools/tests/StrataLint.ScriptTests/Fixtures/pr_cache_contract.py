@@ -85,6 +85,8 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.calls.append((path, body))
         if path.startswith("branches/"):
             return dict(protected=True, commit=dict(sha="c" * 40))
+        if path == "commits?sha=" + "c" * 40 + "&per_page=100":
+            return [dict(sha="c" * 40)]
         if path.startswith("compare/"):
             self.assertNotIn(self.identity["merge"], path, "M must never be required to be a target ancestor")
             return dict(merge_base_commit=dict(sha=path.split("/")[1].split("...")[0]))
@@ -249,6 +251,16 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
                 producer.validate_identity(dict(self.identity, **change))
         with self.assertRaises(ValueError):
             producer.validate_identity({})
+
+    def test_prepare_accepts_ancestry_from_commit_history_without_comparing_files(self):
+        target = "c" * 40
+        def api(repository, path, body=None):
+            if path == "commits?sha=" + target + "&per_page=100":
+                return [dict(sha=sha) for sha in (target, self.runtime_sha, self.identity["base"])]
+            self.assertFalse(path.startswith("compare/"), "recent ancestry must not require a file comparison")
+            return self.api(repository, path, body)
+
+        self.run_with(lambda: producer.prepare(self.root, self.identity), env=self.runtime(), api=api)
 
     def test_prepare_rejects_unprotected_target_nonancestor_or_changed_pr(self):
         cases = [("branches/", dict(protected=False)), ("compare/", dict(merge_base_commit=dict(sha="f" * 40))),

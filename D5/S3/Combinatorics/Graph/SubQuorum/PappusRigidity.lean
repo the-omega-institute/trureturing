@@ -22,8 +22,16 @@ open DoubleStarGrafting
 support-rigidity assertion beyond the numerical value ten. -/
 theorem pappus_optimal_matching_empty (T : Finset (Fin 18)) (M : Finset (Fin 18 × Fin 18))
     (hf : Feasible pappusGraph T M) (hc : T.card + M.card = 10) : M = ∅ := by
+  have hregular : ∀ v, pappusGraph.degree v = 3 := by
+    intro v
+    have hneighbors : pappusGraph.neighborFinset v =
+        Finset.univ.filter (pappusGraph.Adj v) := by
+      ext w
+      simp
+    rw [← SimpleGraph.card_neighborFinset_eq_degree, hneighbors]
+    exact pappus_class.2.1 v
   have hh := positive_excess_budget pappusGraph pappusColor pappusColor_valid
-    pappus_class.2.2 3 9 (by decide) pappus_class.2.1 (paritySide_card 9) T M hf (by omega)
+    pappus_class.2.2 3 9 (by decide) hregular (paritySide_card 9) T M hf (by omega)
   norm_num at hh
   apply Finset.card_eq_zero.mp
   omega
