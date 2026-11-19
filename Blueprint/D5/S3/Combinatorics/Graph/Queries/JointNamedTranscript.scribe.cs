@@ -17,14 +17,17 @@ internal sealed class JointNamedTranscriptDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "Fix finite vertex and name sets and prescribed initial assignments. "
                     + "Take an actual transcript of a deterministic protocol that queries a name "
-                    + "and receives its complete unordered neighborhood or a miss. The transcript "
-                    + "determines the seen names and the names ruled out by misses. On a candidate "
+                    + "and receives its complete unordered neighborhood or a miss. The reference "
+                    + "naming preserves the prescribed assignments. The seen names are the initial "
+                    + "names, successful query names and returned neighbor names. "
+                    + "Misses rule out their queried names. On a candidate "
                     + "graph, a feasible placement embeds the seen names into the vertices, "
                     + "agrees with the initial assignments and realizes every reported neighbor "
                     + "set as the entire neighborhood of its queried vertex.")),
                     Paragraph(Text(
-                    "The number of full namings that replay the transcript equals the number "
-                    + "of feasible placements times a falling factorial. Its base is the number "
+                    "The number of full namings that preserve the prescribed assignments and replay "
+                    + "the transcript equals the number of feasible placements times a falling "
+                    + "factorial. Its base is the number "
                     + "of names remaining after removing the seen and ruled-out names. Its "
                     + "order is the number of vertices outside a placement. Inside each "
                     + "placement, every full naming is an injection of those remaining vertices "

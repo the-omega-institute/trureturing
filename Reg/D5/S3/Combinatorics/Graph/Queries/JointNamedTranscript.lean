@@ -15,7 +15,7 @@ open scoped ENNReal
 namespace Reg.D5.S3.Combinatorics.Graph.Queries.JointNamedTranscript
 
 noncomputable section
-universe u v w k
+universe u v w
 
 private abbrev countSignature : Signature where
   Params := Type v
@@ -84,23 +84,22 @@ def countEvidence : Registration countArena.{u, v} (type_of% (@transcript_naming
 
 private abbrev placementSignature : Signature where
   Params := Unit
-  State _ := Type k
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℕ
+  Output _ _ := ℝ≥0∞
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def placementCard : Realization placementSignature.{k} :=
-  realize placementSignature (fun _ _ placements => Nat.card placements) (fun e => nomatch e)
+private def placementCard : Realization placementSignature :=
+  realize placementSignature (fun _ _ count => (count : ℝ≥0∞)) (fun e => nomatch e)
 
-private def zeroPlacements : Realization placementSignature.{k} :=
+private def zeroPlacements : Realization placementSignature :=
   realize placementSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-set_option linter.checkUnivs false in
 private abbrev posteriorArena : Arena where
-  signature := placementSignature.{max u v}
+  signature := placementSignature
   Law R := ∀ {V : Type u} {N : Type v} [Fintype V] [Fintype N]
     {W : Type w} (π : PMF W) (graph : W → SimpleGraph V)
     (p : PassiveProtocol N (fun _ => Option (Set N)))
@@ -113,12 +112,12 @@ private abbrev posteriorArena : Arena where
     let : Nonempty X := ⟨⟨base, fun _ _ => rfl⟩⟩
     let μ : PMF (W × X) := π.bind fun y => (uniformPmf X).map (Prod.mk y)
     let H : Set (W × X) := {x | runPassiveProtocol readWorld p (graph x.1, x.2.1) = T}
-    let weight (y : W) : ℝ≥0∞ := π y * ↑(R.readout () () (Feasible T (graph y) base initial))
+    let weight (y : W) : ℝ≥0∞ := π y * R.readout () () (Nat.card (Feasible T (graph y) base initial))
     μ.toOuterMeasure H ≠ 0 →
       ∀ y, μ.toOuterMeasure (H ∩ {x | x.1 = y}) / μ.toOuterMeasure H =
         weight y / ∑' z, weight z
 
-private theorem zeroPlacements_invalid : ¬ posteriorArena.{u, v, w}.Law zeroPlacements.{max u v} := by
+private theorem zeroPlacements_invalid : ¬ posteriorArena.{u, v, w}.Law zeroPlacements := by
   intro h
   let f := singletonNaming.{u, v}
   let G : SimpleGraph (ULift.{u} Unit) := ⊥
@@ -145,19 +144,19 @@ private theorem zeroPlacements_invalid : ¬ posteriorArena.{u, v, w}.Law zeroPla
   simp [hEq, hMass] at hbad'
 
 private theorem placementCard_varies :
-    placementCard.{k}.readout () () (ULift.{k} Empty) ≠
-      placementCard.{k}.readout () () (ULift.{k} Unit) := by
-  simp [placementCard, realize, Nat.card_eq_fintype_card]
+    placementCard.readout () () 0 ≠
+      placementCard.readout () () 1 := by
+  simp [placementCard, realize]
 
 def posteriorEvidence : Registration posteriorArena.{u, v, w}
     (type_of% (@graph_posterior.{u, v, w})) where
-  actual := placementCard.{max u v}
+  actual := placementCard
   bridge := Iff.rfl
-  variation := ⟨@graph_posterior.{u, v, w}, zeroPlacements.{max u v}, zeroPlacements_invalid⟩
-  sensitivity := ⟨fun i => ⟨zeroPlacements.{max u v}, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl,
+  variation := ⟨@graph_posterior.{u, v, w}, zeroPlacements, zeroPlacements_invalid⟩
+  sensitivity := ⟨fun i => ⟨zeroPlacements, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl,
     zeroPlacements_invalid⟩, fun e => nomatch e⟩
   dependence := fun _ =>
-    ⟨(), ULift.{max u v} Empty, ULift.{max u v} Unit, placementCard_varies⟩
+    ⟨(), 0, 1, placementCard_varies⟩
 
 
 def countRegistration :
@@ -197,7 +196,7 @@ def countRegistration :
 
 def posteriorRegistration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@graph_posterior.{u, v, w}) (Realization placementSignature.{max u v}) Unit Unit := {
+      (@graph_posterior.{u, v, w}) (Realization placementSignature) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.JointNamedTranscript.graph_posterior
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.JointNamedTranscript.posteriorEvidence
   realizationSource := none
@@ -209,7 +208,7 @@ def posteriorRegistration :
   realization := .source posteriorArena.{u, v, w} ⟨posteriorEvidence.{u, v, w}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize placementSignature.{max u v} (fun _ _ placements => Nat.card placements)
+  readout := some (realize placementSignature (fun _ _ count => (count : ℝ≥0∞))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -221,8 +220,7 @@ def posteriorRegistration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "body",
-        "arg", "arg"]
+        "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
