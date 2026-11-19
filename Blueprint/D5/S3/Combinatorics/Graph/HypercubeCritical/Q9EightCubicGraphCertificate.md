@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9EightCubicGraphCe
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeCritical/Q9EightCubicGraphCertificate.cube_or_wagner` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Kris Coolsaet, Sven D’hondt, Jan Goedgebeur (2023). *House of Graphs 2.0: A database of interesting graphs and more*. DOI: [10.1016/j.dam.2022.10.013](https://doi.org/10.1016/j.dam.2022.10.013). URL: <https://houseofgraphs.org/data/cubics/Generated_graphs.08.04.g6>.
 
 *Commentary.*
 
