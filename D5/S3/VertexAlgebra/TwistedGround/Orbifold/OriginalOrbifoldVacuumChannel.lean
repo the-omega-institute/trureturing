@@ -34,8 +34,9 @@ open MixedIntertwiner (fixedGrade normalizedCoefficient)
 open OriginalFourMChargeCoset (originalI originalI_homogeneous)
 open SourceBPZ.OriginalSourcePairing (sourcePairing sourcePairing_vacuum)
 open OriginalOrbifoldField (Carrier vacuumState Y_fixed_ncoeff_apply Y_twisted_ncoeff_apply)
-open OriginalOrbifoldConformal (L)
+open OriginalOrbifoldConformal (L L_minus_one_eq_translation)
 open OriginalOrbifoldLowSpectrum (eigenspace_zero_eq_vacuum)
+open OriginalOrbifoldTranslation (T T_apply Y_translation)
 open OriginalOrbifoldVertexAlgebra (originalVertexAlgebra)
 open StateFieldResidueReconstruction (integerBinomial epsilon)
 open private weight_two_vacuum_pairing from D5.S3.VertexAlgebra.TwistedGround.MixedJacobi
@@ -168,6 +169,23 @@ theorem stateField_twisted_twisted (n : ℤ) (u v : X) :
   dsimp only [originalVertexAlgebra]
   rw [Y_twisted_ncoeff_apply, map_zero]
 
+/-- The fixed-sector projection of the original derivative law on two
+negative twisted states, using the actual conformal `L(-1)` on the first input. -/
+theorem projected_L_minus_one_derivative (n : ℤ) (u v : X) :
+    originalI D hu hD n (L D hu hD (-1) (0, u)).2 v =
+      -(n : ℂ) • originalI D hu hD (n - 1) u v := by
+  rw [L_minus_one_eq_translation D hu hD h24]
+  change originalI D hu hD n (MixedIntertwiner.translation D hu u) v = _
+  have h := LinearMap.congr_fun (Y_translation D hu hD h24 n (0, u)) (0, v)
+  have hT : T D hu (0, u) = (0, MixedIntertwiner.translation D hu u) := by
+    rw [T_apply, map_zero]
+  rw [hT, LinearMap.smul_apply] at h
+  let A := originalVertexAlgebra D hu hD h24
+  change ((A.stateField (0, MixedIntertwiner.translation D hu u))[[n]]) (0, v) =
+    -(n : ℂ) • ((A.stateField (0, u))[[n - 1]]) (0, v) at h
+  rw [stateField_twisted_twisted, stateField_twisted_twisted] at h
+  exact congrArg Prod.fst h
+
 /-- Mode three of the original vertex field on twisted weight two is the
 computed fixed vacuum coefficient, in the full conformal weight-zero eigenspace. -/
 theorem stateField_modeThree (u v : weightTwo) :
@@ -220,6 +238,7 @@ theorem projected_mixed_borcherds (a : FixedCarrier D) (u v : X) (p q r : ℤ) :
 #print axioms vacuumCoefficient_nondegenerate
 #print axioms vacuumCoefficientDual
 #print axioms stateField_twisted_twisted
+#print axioms projected_L_minus_one_derivative
 #print axioms stateField_modeThree
 #print axioms projected_mixed_borcherds
 

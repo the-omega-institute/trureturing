@@ -7,6 +7,8 @@
    digest: The actual odd untwisted field gives crossed Jacobi and nonzero Leech twisted modes. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.Orbifold.OriginalOrbifoldSectorModules
+import D5.S3.VertexAlgebra.TwistedGround.OriginalOrbifoldConformal
+import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 import D5.S3.VertexAlgebra.LatticeHalfFockParityT
 import D5.S3.VertexAlgebra.Lattice.ActualLeechHyperbolic
 import Batteries.Tactic.OpenPrivate
@@ -31,6 +33,8 @@ open LatticeHalfFockCorrectedField (correctedField)
 open LatticeHalfFockPhysicalRescaling (physicalSlice physicalSlice_mode)
 open LatticeHalfFockParityT (actualParity)
 open HalfFock.LatticeHalfFockParityField (correctedField_target_parity paritySpace)
+open HalfFockSpectralFiberSource (actualInverse actualInverse_left actualInverse_right)
+open OriginalOrbifoldConformal (conformalVector)
 open OriginalOrbifoldSectorModules (fixedParityY oddY oddY_ncoeff_val)
 open StateFieldResidueReconstruction (epsilon integerBinomial)
 
@@ -160,6 +164,42 @@ theorem crossed_borcherds (D : LatticeData) (hu : IsUnit D.G.det)
     simpa only [finsum_val, Submodule.coe_sub, Submodule.coe_smul, crossedMode_val,
       fixedMode_val, oddY_ncoeff_val, mu, epsilon] using h.2.2.2
 
+/-- The odd-sector zero mode of the fixed conformal vector is the literal
+`L(-1)` and acts by the original lattice translation. -/
+theorem odd_conformal_mode_zero_val (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : minusSpace D) :
+    (((oddY D (conformalVector D hu).1)[[0]]) a).val =
+      LatticeSugawaraConformal.translation D a.val := by
+  rw [oddY_ncoeff_val]
+  have h := LatticeActualConformalState.omega_modes D (actualInverse D) (-1)
+  change ((LatticeAllStateField.Y D (conformalVector D hu).1.val)[[0]]) = _ at h
+  rw [h, LatticeSugawaraConformal.sugawaraMode_minus_one_eq_translation D _
+    (actualInverse_left D hu) (actualInverse_right D hu)]
+
+/-- Original lattice translation preserves the odd untwisted source. -/
+theorem odd_translation_mem_minusSpace (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : minusSpace D) : LatticeSugawaraConformal.translation D a.val ∈ minusSpace D := by
+  rw [← odd_conformal_mode_zero_val D hu a]
+  exact (((oddY D (conformalVector D hu).1)[[0]]) a).property
+
+/-- The derivative of the actual crossed field at physical mode `n + 1/2`.
+The same identity acts from either twisted sign to its opposite sign. -/
+theorem crossedMode_L_minus_one (D : LatticeData) (hu : IsUnit D.G.det)
+    (s : ℂ) (a : minusSpace D) (n : ℤ) :
+    crossedMode D hu s (((oddY D (conformalVector D hu).1)[[0]]) a) n =
+      -((n : ℂ) + 1 / 2) • crossedMode D hu s a (n - 1) := by
+  apply LinearMap.ext
+  intro x
+  apply Subtype.ext
+  simp only [LinearMap.smul_apply, Submodule.coe_smul, crossedMode_val,
+    odd_conformal_mode_zero_val]
+  rw [LatticeHalfFockOriginalTranslation.correctedField_translation_physical,
+    show (-2 * n - 3 + 2 : ℤ) = -2 * (n - 1) - 3 by omega]
+  have factor : ((-2 * (n - 1) - 3 : ℤ) : ℂ) / 2 = -((n : ℂ) + 1 / 2) := by
+    push_cast
+    ring
+  rw [factor]
+
 open ActualLeechHyperbolic (leechData leech_spec)
 open LatticeAllStateField (vacuum)
 open LatticeFiniteNegativeGeneration (neutralMode)
@@ -285,6 +325,9 @@ theorem leech_neutralCurrent_channels (i : Fin leechData.rank) :
 #print axioms crossedY
 #print axioms crossedMode_val
 #print axioms crossed_borcherds
+#print axioms odd_conformal_mode_zero_val
+#print axioms odd_translation_mem_minusSpace
+#print axioms crossedMode_L_minus_one
 #print axioms leech_neutralCurrent_channels
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalOrbifoldCrossedChannel
