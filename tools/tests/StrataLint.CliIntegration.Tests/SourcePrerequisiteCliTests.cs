@@ -62,10 +62,7 @@ public sealed class SourcePrerequisiteCliTests
     [InlineData("Library/notes/Note.md", 3000, RawChangeKind.Modified, 0)]
     [InlineData("Library/notes/Note.md", 3001, RawChangeKind.Modified, 1)]
     [InlineData("Library/notes/Note.md", 3001, RawChangeKind.Deleted, 0)]
-    [InlineData("docs/develop/theory/Note.md", 5000, RawChangeKind.Modified, 0)]
-    [InlineData("docs/develop/theory/Note.md", 5001, RawChangeKind.Modified, 1)]
-    [InlineData("docs/develop/theory/Note.md", 5001, RawChangeKind.Deleted, 0)]
-    public void LibraryAndTheoryRespectChangeScopeAndLineLimits(string path, int lines, RawChangeKind kind, int expected)
+    public void LibraryRespectsChangeScopeAndLineLimits(string path, int lines, RawChangeKind kind, int expected)
     {
         var fixture = new RuleFixture();
         fixture.Baseline[path] = new string('\n', lines);
@@ -125,9 +122,9 @@ public sealed class SourcePrerequisiteCliTests
         var baseline = Git("rev-parse", "HEAD");
         var index = Git("ls-files", "--stage");
         Assert.Equal(0, Run().ExitCode);
-        Write("docs/develop/theory/Untracked.md", new string('\n', 5001));
+        Write("Library/notes/Untracked.md", new string('\n', 3001));
         Assert.Equal(1, Run().ExitCode);
-        Write("docs/develop/theory/Untracked.md", new string('\n', 5000));
+        Write("Library/notes/Untracked.md", new string('\n', 3000));
         Assert.Equal(0, Run().ExitCode);
         Write(RuleFixture.RingPath, fixture.Files[RuleFixture.RingPath] + new string('\n', 1001));
         Assert.Equal(1, Run().ExitCode);

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4f27d11de95ce82407851135e095443ea5a49b1d548a17bdfd736fb47578b9a9
-  normalized_sha256: sha256:4f27d11de95ce82407851135e095443ea5a49b1d548a17bdfd736fb47578b9a9
-cas_ref: sha256:4f27d11de95ce82407851135e095443ea5a49b1d548a17bdfd736fb47578b9a9
-coverage_gids:
-  - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterUniformInformationExactness.binary_character_uniform_conditional_entropy_bits
-    target_statement_id: sha256:c9fb00ac72cf53645f23f7a0ecebdeb7ee06242ae39b485bb18e10dfafdb5436
-receipts:
-  unresolved_subitems: []

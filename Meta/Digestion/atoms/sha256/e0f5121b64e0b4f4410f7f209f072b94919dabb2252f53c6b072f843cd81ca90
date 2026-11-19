@@ -1,4 +1,0 @@
-## 10. Finite verification boundary
-
-No numerical program or new test is part of this volume. The finite menus and state transitions in §§3–6 are explicit mathematical constructions; they establish finite termination of the stated procedures, not a complexity bound and not a kernel verification. The source contract remains the original static four-reply interface.
-

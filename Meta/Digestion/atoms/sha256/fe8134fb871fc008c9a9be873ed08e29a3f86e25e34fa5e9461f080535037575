@@ -1,0 +1,36 @@
+### 125.13 完整中文图景：窗口像球，不等于整座实体只有三次边界
+
+把整个原状态体想成一块实心实体，所有原效应就是能在这整块实体上合法读零到一的尺。每个纯态背后的完整排除集，是所有能被某张确认它的尺读成零的状态收齐后的集合。要求每个这样的完整集合是三球，控制的是实体上每一扇真实的二能级窗口；它不直接告诉我们整座实体的外壳由几次方程刻出。只展示三个种子窗口，或给出在这些窗口上正确的三次式，仍没有覆盖全部外壳。
+
+本章另加的条件正是全局外壳的复杂度：**整个边界的最低总次数至多三**。最低意味着每个因子都必须为整个外壳承担不可删除的部分；不能为了凑三次，在内部再插一块平板。正卦限的 $xy(x-y)$ 就插入了这样的板：它仍盖住原边界，也仍双曲，但板把原内部切开，选中的分支只剩 $x\ge y\ge0$。最低方程 $xy$ 才描述原整体分支。
+
+为什么最低三次能排除这块内部板？先把锥按一个严格正刻度切成紧凸基。假设最低方程在实体内部某点为零。从这里朝任意方向走，直线的两头还各碰一次真实外壳。若沿某方向的一阶变化也为零，内部零点便至少占两个根，加上两头边界的两个根，三次已经容不下。于是所有一阶零方向上的整条直线都必须为零，拼成一个真正的超平面因子。这个平面穿过内部，从内部看出去只遮住一圈方向，不能独自承担一块外壳；平面以外的全部外壳已由剩余因子覆盖，连续性把遗漏的一圈也补上。因此这块板可删，与最低性矛盾。这里既不要求外壳处处光滑，也不把多项式的切平面偷当成已知的凸支撑面。
+
+内部障碍排除后，从任意内部方向看原锥与其负锥，一条不穿锥轴的直线会在两侧各遇到一个不同真实边界点。二次的根到此已齐，三次只剩一个实一次因子，全部根因此为实。还要再看完整实体：其内部从未经过多项式零点，整个边界又都在零集，所以内部正好占满一个无零连通分量。这样取得的是原锥等于整个闭双曲分支，而不只是边界包含或局部形状相像。
+
+到了这个完整入口，才复用124的几何机制：正维完整排除球与暴露纯点给每条纯射线两个不同支撑方向，立方秩二层却只允许一个；纯射线只能在秩一层。全部两纯点因而留在真面，旧的完整Pair／Jordan桥可以准确消费。若最低次数原本不到三，显式乘上原单位以凑成立方后，额外因子会提高纯射线的相对秩；ROG最低性排除这种情况，所以完整正维球域的最低次数实际恰为三。这个阶段的一般模型仍可能是实、复、四元、八元或旗标加球。要求**每个完整排除集都恰为三球**，才排除所有线段和其他简单类型，留下完整复三能级。
+
+同一个忠实映射随后负责全部对象：所有密度态、所有纯射线、整个效应区间、每个Born读数、全确认族的真正最小值、每颗完整排除三球，以及零和非零质量。没有给不同读数换不同表示，也没有把归一化用于零输入。固定E0中的原种子与固定内球也由旧反向一并读回；低次数条件于是与旧PC1／IC0等价。但“原E0为什么必有这样的整个三次外壳”仍是未证明的桥。它没有被三张圆窗口、一个家族的参数分类或四次反例替代。
+
+因此这里形成了一个完整的**条件静态**量子候选：原全效应凸锥、整个边界最低三次、全部原完整排除三球。它与同原复PSD3字典双向对应；要接回完整物理理论，125.11继承的共同来源、全部操作、任意有限纠缠联合与资源、全旁观CP、事件与同族仪器、记录和全部合法未来、原钟、能量标定及数值 $\hbar$ 仍须各按原完整合同支付。
+
+[MC125Sinn]: https://doi.org/10.1186/s40687-015-0022-0 "Rainer Sinn, Algebraic boundaries of convex semi-algebraic sets；Definition 2.1、Lemma 2.5、Proposition 2.9、Remark 2.10、Corollary 2.11。"
+[MC125GIL]: https://doi.org/10.68381/jca33015 "João Gouveia, Masaru Ito and Bruno F. Lourenço, Minimal Hyperbolic Polynomials and Ranks of Homogeneous Cones；§§2.1—2.2，Proposition 2.2及Lemmas 2.5—2.6。"
+[MC125HV]: https://arxiv.org/abs/math/0306180 "J. William Helton and Victor Vinnikov, Linear Matrix Inequality Representation of Sets；Lemma 2.1、§3及§3.2.2；DOI 10.1002/cpa.20155。"
+[MC125Renegar]: https://optimization-online.org/wp-content/uploads/2004/03/844.pdf "James Renegar, Hyperbolic Programs, and Their Derivative Relaxations；§2 Proposition 1、Theorems 2—3；DOI 10.1007/s10208-004-0136-z。"
+[MC125IL]: https://arxiv.org/pdf/2207.11986v3 "Masaru Ito and Bruno F. Lourenço, Automorphisms of rank-one generated hyperbolicity cones and their derivative relaxations；Proposition 2.4、Definition 3.1、Remark 3.2、Proposition 3.5(i)；DOI 10.1137/22M1513964。"
+[MC125Netzer]: https://arxiv.org/abs/2609.12957v1 "Tim Netzer, Clifford Realizations of Hyperbolic Cubics；Introduction及§1.1 Proposition 1.1。仅用于区分已有双曲三次式的谱面体路线与本章整个边界入口。"
+[MC125SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "127.1、127.11、129.1、129.8、130.5：同一完整E0、PC1／IC0及同原静态条件链；SECTION127.10及其全部传递引用：完整原来源、过程、全有限复合、资源、事件、仪器、记录和时间合同。"
+[MC125VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2—103.8：完整原面、Pair、完整S、同锥同单位的秩三EJA及全部支路和全效应字典。"
+[MC125VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.7—113.9：整个W域既有分类和谱字典；命题113.11与112.9：全部原联合、操作及时间合同。"
+[MC125IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX118及120.4：原宽度上半连续、饱和层与紧层；IX120.9：原P0稠密；IX120.11：全部同原静态对象与完整非静态合同。"
+[MC125X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X124.2：EB与PE下两条不同正法向；X128.2：仅标准复模型内中心关系的代数不足与有界闭包，不供应一般E0的三次边界。"
+[MC125TCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY VII121.6：稠密Gdelta及非塌缩层上的完整确认闭图；121.12与122.14：共同来源、全部有限复合、资源、事件仪器、记录与时间的完整合同。"
+[MC125PolarVI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md "定义89.7及式(89.13)：同一原装饰元组、原质量、两尺度及整个输出；89.8—89.10：逐消费者、原生／细化、全部原字与terminal futures、联合有符号关系、细标签粗归组、记录后条件未来、source-adoption及资源合同，连同全部传递引用完整继承。"
+[MC125NativeVII]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md "INTRINSIC_POLAR VI89.9—89.10所引原生与细化路线：原几何、全部原字及terminal futures、联合菜单、有符号关系、回返、完整校准、source-adoption与来源边界；每条路线只按其完整原入口消费，不由本章低次边界代付。"
+[MC125SBridge]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge "VII103与124所消费的既有完整S／谱性／projectivity／滤子保纯到Jordan桥；其纸面范围保持原样。"
+[Q124CubicEVIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.7—113.9：成熟秩三分类与完整静态字典；命题113.11及112.9的全部原联合、操作和时间合同。"
+[Q124CubicSR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "第127.10节及完整传递引用：来源、全部有限复合、资源、CP、实际事件仪器、记录、全部合法未来及时间；125.11、124.9、123.13、127.1、129.1与PC1／IC0的原范围。"
+[Q124CubicIX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX120.11：同一原静态字典及其完整物理合同和引用链。"
+[Q124CubicTCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY VII121.12、122.14：共同来源、全有限层级、事件仪器、记录及连续时间的完整合同。"
+

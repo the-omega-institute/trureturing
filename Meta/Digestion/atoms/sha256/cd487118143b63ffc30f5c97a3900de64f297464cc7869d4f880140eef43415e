@@ -1,5 +1,0 @@
-## 对应源码与适用范围
-
-源码位于 `D5/S3/Observer/Hankel/`：
-
-- `FiniteHoKalmanBlocks.lean`：有限索引、四块分解、精确恢复与阶数下界。

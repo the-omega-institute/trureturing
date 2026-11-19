@@ -11,6 +11,37 @@ internal sealed class SpeyerUniformNormalityDocument : IScribeDocumentDefinition
         H("Speyer Uniform Normality"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("qab"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB"),
+                H("The binomial polynomial"),
+                StatementSource.FromAuthor(Disp(All("a", Nat, All("b", Nat,
+                    Equal(Call("qAB", V("a"), V("b")),
+                        Seq(new Formula.Subscript(Sum, Seq(V("j"), Sp, InMacro, Sp,
+                                new Formula.Apply(Qualified("Finset", "range"), [Add(V("a"), new Formula.Number(1))]))), Sp,
+                            Parenthesized(Multiply(
+                                Call("C", Parenthesized(Seq(
+                                    Parenthesized(Seq(Multiply(
+                                        new Formula.Apply(Qualified("Nat", "choose"), [V("a"), V("j")]),
+                                        new Formula.Apply(Qualified("Nat", "choose"), [V("b"), V("j")])), Colon, Sp, Nat)),
+                                    Colon, Sp, Real))),
+                                new Formula.Power(Parenthesized(Add(V("X"), new Formula.Number(1))), V("j")))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The polynomial sums the products of the two binomial coefficients against powers of X + 1. The product of natural binomial coefficients is cast to the reals. Evaluation at one gives the unit-border Delannoy binomial sum."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("qab-positive"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB_pos"),
+                H("Positivity on the half-line"),
+                StatementSource.FromAuthor(Disp(All("a", Nat, All("b", Nat, All("x", Real,
+                    Imp(Rel(Subtract(new Formula.Number(0), new Formula.Number(1)),
+                            FormulaRelationOperator.LessThanOrEqual, V("x")),
+                        Rel(new Formula.Number(0), FormulaRelationOperator.LessThan,
+                            new Formula.Apply(Qualified("Polynomial", "eval"),
+                                [V("x"), Call("qAB", V("a"), V("b"))])))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all natural parameters a and b, qAB a b is strictly positive at every real x at least −1. Its constant summand is one and every summand is nonnegative on this half-line."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("g"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.g"),
                 H("g"),

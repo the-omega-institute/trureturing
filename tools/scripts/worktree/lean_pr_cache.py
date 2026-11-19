@@ -10,6 +10,7 @@ import subprocess
 import shutil
 import tarfile
 import tempfile
+import time
 import zipfile
 from datetime import datetime
 import sys
@@ -82,6 +83,19 @@ def source_identity(root):
     return identity
 
 
+def require_target_ancestor(repository, ancestor, target, reason):
+    if ancestor == target:
+        return
+    # The history endpoint can establish ancestry without computing changed files.
+    history = api(repository, "commits?" + urlencode({"sha": target, "per_page": 100}))
+    require(isinstance(history, list) and history and history[0].get("sha") == target,
+            "commit history does not bind the protected target")
+    if any(commit.get("sha") == ancestor for commit in history):
+        return
+    comparison = api(repository, "compare/" + ancestor + "..." + target)
+    require(comparison["merge_base_commit"]["sha"] == ancestor, reason)
+
+
 def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
     validate_identity(identity)
     repository = identity["repository"]
@@ -89,8 +103,10 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
     branch = identity["target_ref"].removeprefix("refs/heads/")
     target = api(repository, "branches/" + quote(branch, safe=""))
     require(target.get("protected") is True, "producer target is not protected")
-    comparison = api(repository, "compare/" + identity["base"] + "..." + quote(branch, safe=""))
-    require(comparison["merge_base_commit"]["sha"] == identity["base"], "B is not in the target history")
+    target_head = target.get("commit", {}).get("sha")
+    require(isinstance(target_head, str) and re.fullmatch(r"[0-9a-f]{40}", target_head),
+            "protected target has no commit identity")
+    require_target_ancestor(repository, identity["base"], target_head, "B is not in the target history")
     # B may be old. M is an unmerged candidate, never claimed to be target history.
     pr = api(repository, "pulls/" + identity["pr"])
     require(pr["number"] == int(identity["pr"]), "source PR identity differs")
@@ -108,6 +124,7 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
             and run["event"] == "pull_request" and run["head_sha"] == identity["head"]
             and run["path"] == ".github/workflows/" + WORKFLOW,
             "source run does not bind the PR head and workflow")
+    return target_head
 
 
 def receipt(status, identity, **fields):
@@ -143,10 +160,8 @@ def producer_context(root, identity, *, allow_merged=False):
             + "@" + identity["target_ref"] and os.environ["GITHUB_WORKFLOW_SHA"] == runtime_sha,
             "workflow is not the pinned target runtime")
     checkout_identity(root, identity)
-    validate_remote(identity, allow_merged=allow_merged, require_opt_in=not allow_merged)
-    comparison = api(identity["repository"], "compare/" + runtime_sha + "..." +
-                     quote(identity["target_ref"].removeprefix("refs/heads/"), safe=""))
-    require(comparison["merge_base_commit"]["sha"] == runtime_sha, "workflow runtime is outside target history")
+    target_head = validate_remote(identity, allow_merged=allow_merged, require_opt_in=not allow_merged)
+    require_target_ancestor(identity["repository"], runtime_sha, target_head, "workflow runtime is outside target history")
     return dict(ref=os.environ["GITHUB_REF"], sha=runtime_sha, workflow_ref=os.environ["GITHUB_WORKFLOW_REF"],
                 workflow_sha=os.environ["GITHUB_WORKFLOW_SHA"], run=os.environ["GITHUB_RUN_ID"],
                 attempt=os.environ["GITHUB_RUN_ATTEMPT"])
@@ -208,10 +223,73 @@ def confirm(root, identity, artifact_id):
     return receipt("prepared", identity, runtime=runtime, artifact=artifact_id)
 
 
-def paged(repository, path, field=None):
+class InterruptedAssociationRead(ValueError):
+    """The association page can be fetched again within its original deadline."""
+
+
+def association_response(result):
+    # gh prints the status line before the headers and body, including on HTTP errors.
+    headers, separator, body = result.stdout.replace(b"\r\n", b"\n").partition(b"\n\n")
+    status_line = re.fullmatch(rb"HTTP/\d+(?:\.\d+)? ([1-5]\d\d)(?: .*)?",
+                              headers.split(b"\n", 1)[0])
+    status = int(status_line[1]) if status_line else None
+    if status in (500, 502, 503, 504):
+        raise InterruptedAssociationRead(f"HTTP {status} (gh exit {result.returncode})")
+    if status is not None and status != 200:
+        raise ValueError(f"HTTP {status} (gh exit {result.returncode})")
+    if result.returncode and (status == 200 or not result.stdout):
+        transport = re.search(rb"(?:^|: )(unexpected EOF|connection reset by peer|i/o timeout|TLS handshake timeout)$",
+                              result.stderr.strip())
+        if transport:
+            response = "HTTP 200" if status == 200 else "no HTTP status"
+            raise InterruptedAssociationRead(f"{response} (gh exit {result.returncode}): {transport[1].decode('ascii')}")
+    require(status is not None, f"no HTTP status (gh exit {result.returncode})")
+    require(separator and not result.returncode, f"HTTP 200 response incomplete (gh exit {result.returncode})")
+    if not body.strip():
+        raise InterruptedAssociationRead("HTTP 200 with empty body")
+    try:
+        value = json.loads(body.decode("utf-8"))
+    except json.JSONDecodeError as error:
+        tail = error.doc[error.pos:].rstrip()
+        if (not tail or error.msg.startswith("Unterminated string")
+                or error.msg == "Expecting value" and any(word.startswith(tail) for word in ("true", "false", "null", "-"))):
+            raise InterruptedAssociationRead("HTTP 200 with truncated JSON") from None
+        raise ValueError(f"HTTP 200 with invalid JSON at character {error.pos}") from None
+    except UnicodeDecodeError as error:
+        if error.reason == "unexpected end of data" and error.end == len(body):
+            raise InterruptedAssociationRead("HTTP 200 with truncated JSON encoding") from None
+        raise ValueError("HTTP 200 with invalid JSON encoding") from None
+    require(isinstance(value, list) and all(isinstance(pr, dict) for pr in value),
+            "HTTP 200 with invalid API listing")
+    return value
+
+
+def association_page(repository, path, page):
+    command = ["gh", "api", "repos/" + repository + "/" + path, "--include"]
+    deadline = time.monotonic() + 60
+    delay = 0.25
+    for attempt in (1, 2):
+        try:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise ValueError("page deadline exceeded")
+            return association_response(subprocess.run(command, capture_output=True, timeout=remaining))
+        except (InterruptedAssociationRead, subprocess.TimeoutExpired) as error:
+            reason = "gh timed out" if isinstance(error, subprocess.TimeoutExpired) else str(error)
+            detail = f"commit PR association page {page}, attempt {attempt}: {reason}"
+            if attempt == 2 or time.monotonic() + delay >= deadline:
+                raise ValueError(detail) from None
+            print("PR_CACHE_RETRY " + detail, file=sys.stderr)
+            time.sleep(delay)
+        except ValueError as error:
+            raise ValueError(f"commit PR association page {page}, attempt {attempt}: {error}") from None
+
+
+def paged(repository, path, field=None, *, read_association=False):
     rows, page = [], 1
     while True:
-        value = api(repository, path + ("&" if "?" in path else "?") + urlencode(dict(per_page=100, page=page)))
+        page_path = path + ("&" if "?" in path else "?") + urlencode(dict(per_page=100, page=page))
+        value = association_page(repository, page_path, page) if read_association else api(repository, page_path)
         batch = value[field] if field else value
         require(isinstance(batch, list), "invalid API listing: " + path)
         rows.extend(batch)
@@ -242,7 +320,7 @@ def consumer_context(root):
         else:
             require(checkout == os.environ["STRATALINT_CACHE_CHECKED_OUT_SHA"], "manual consumer checkout mismatch")
         require(re.fullmatch(r"refs/heads/(dev|integration-[A-Za-z0-9._/-]+)", ref), "invalid target consumer ref")
-        prs = paged(repository, "commits/" + checkout + "/pulls")
+        prs = paged(repository, "commits/" + checkout + "/pulls", read_association=True)
         matching = [pr for pr in prs if pr.get("merged_at") and pr.get("merge_commit_sha") == checkout
                     and "refs/heads/" + pr["base"]["ref"] == ref
                     and pr["base"]["repo"]["full_name"] == repository]
@@ -301,12 +379,11 @@ def validate_preparation(root, value, context, artifact):
             datetime.fromisoformat(artifact["created_at"].replace("Z", "+00:00")) <=
             datetime.fromisoformat(run["updated_at"].replace("Z", "+00:00")),
             "artifact does not belong to producer attempt interval")
-    validate_remote(identity, allow_merged=context["merged"])
+    target_head = validate_remote(identity, allow_merged=context["merged"])
     commit = api(repository, "git/commits/" + identity["merge"])
     require(commit["sha"] == identity["merge"] and [p["sha"] for p in commit["parents"]] ==
             [identity["base"], identity["head"]], "prepared M parents are not B,H")
-    comparison = api(repository, "compare/" + runtime["sha"] + "..." + quote(identity["target_ref"].removeprefix("refs/heads/"), safe=""))
-    require(comparison["merge_base_commit"]["sha"] == runtime["sha"], "producer runtime is outside target history")
+    require_target_ancestor(repository, runtime["sha"], target_head, "producer runtime is outside target history")
     current = dict(partition=actions.partition_path(root), elan_key=actions.elan_key(root))
     prepared = {key: value[key] for key in current}
     if prepared != current:

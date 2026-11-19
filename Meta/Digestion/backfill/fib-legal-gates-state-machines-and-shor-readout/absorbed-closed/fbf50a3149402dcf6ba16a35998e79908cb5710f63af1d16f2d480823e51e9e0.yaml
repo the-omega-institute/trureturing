@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fbf50a3149402dcf6ba16a35998e79908cb5710f63af1d16f2d480823e51e9e0
-  normalized_sha256: sha256:fbf50a3149402dcf6ba16a35998e79908cb5710f63af1d16f2d480823e51e9e0
-cas_ref: sha256:fbf50a3149402dcf6ba16a35998e79908cb5710f63af1d16f2d480823e51e9e0
-coverage_gids:
-  - gid: D5/S3/Quantum/ShorContinuedFractions.shor_coprime_candidate
-    target_statement_id: sha256:7f086f003a7a56ce9dbcabcea51fa3725997f3ca0deb8269263ffd7fcc97884c
-receipts:
-  unresolved_subitems: []

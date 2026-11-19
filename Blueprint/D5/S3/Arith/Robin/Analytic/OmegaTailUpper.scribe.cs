@@ -82,6 +82,14 @@ internal sealed class OmegaTailUpperDocument : IScribeDocumentDefinition
                 H("Logarithmic weight derivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For z>0 and t>0, the logarithmic weight has derivative minus the Abel kernel. The entropy integral uses this derivative with its endpoint limits."))), DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("rankin-exponential-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.rankin_exponential_bound"),
+                H("Finite Rankin exponential bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For s>1, z>=1 and x>0, count the integers n from 1 through floor(x) whose distinct-prime count is strictly greater than the real threshold T.")),
+                    Paragraph(Text("This count is bounded by exp((s*log(x) - T*log(z)) + log(1 + the p-series of exponent s) + the sum of log(1+z*p^(-s)) over primes at most x). The estimate applies even at a zero count."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("upper-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/OmegaTailUpper.upper_bound"),
                 H("Rankin upper bound"),

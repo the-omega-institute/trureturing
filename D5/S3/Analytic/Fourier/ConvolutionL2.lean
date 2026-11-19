@@ -215,7 +215,7 @@ theorem schwartz_convolution_l2_multiplier
       (ae_of_all _ (convolution_tendsto_of_schwartz_approx k hf hg))
   exact ⟨hle.trans_lt (by finiteness), hle⟩
 
-private lemma complex_l2_integral {f : ℝ → ℂ} (hf : MemLp f 2) :
+lemma complex_l2_integral {f : ℝ → ℂ} (hf : MemLp f 2) :
     (∫ y, ‖f y‖ ^ 2) = (eLpNorm f 2).toReal ^ 2 := by
   rw [integral_eq_lintegral_of_nonneg_ae (ae_of_all _ (fun y => sq_nonneg ‖f y‖))
     (hf.aestronglyMeasurable.norm.pow 2), ← ENNReal.toReal_pow,

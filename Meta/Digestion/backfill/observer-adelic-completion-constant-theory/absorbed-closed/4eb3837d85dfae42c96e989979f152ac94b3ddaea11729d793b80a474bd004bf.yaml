@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4eb3837d85dfae42c96e989979f152ac94b3ddaea11729d793b80a474bd004bf
-  normalized_sha256: sha256:4eb3837d85dfae42c96e989979f152ac94b3ddaea11729d793b80a474bd004bf
-cas_ref: sha256:4eb3837d85dfae42c96e989979f152ac94b3ddaea11729d793b80a474bd004bf
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/StickyTailCompletionError.sticky_tail_completion_error
-    target_statement_id: sha256:e8eca2f19b0208e8e95ca18e30040350fde55f78300db1186cc844dd5ea93870
-receipts:
-  unresolved_subitems: []

@@ -98,22 +98,14 @@ public sealed class PlaybookWorkflowScriptTests
     [Theory]
     [InlineData("deliver-check")]
     [InlineData("deposit")]
-    [InlineData("cover")]
     public void CanonicalPlaybookVerbNeverExecutesBranchMerge(string command)
     {
         if (OperatingSystem.IsWindows()) return;
 
-        if (command is "deposit" or "cover")
+        if (command == "deposit")
         {
             using var fixture = new TransactionFixture();
             fixture.ChangeFormalization();
-            if (command == "cover")
-            {
-                var deposit = fixture.Run("deposit");
-                Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
-                fixture.ClearCalls();
-            }
-
             var result = fixture.Run(command);
 
             Assert.True(result.ExitCode == 0, Diagnostics(result));

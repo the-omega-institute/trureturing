@@ -1,5 +1,0 @@
-source_id = "fib-original-root-positive-trace-guards-and-singular-sources"
-path = "docs/develop/theory/FIB_ORIGINAL_ROOT_POSITIVE_TRACE_GUARDS_AND_SINGULAR_SOURCES.md"
-atomizer = "generic-v1"
-genre_registry_check = "no-registry"
-unregistered_genres = []

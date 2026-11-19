@@ -6,6 +6,9 @@
    utility: none
    digest: Hirche binary Renyi combining conjecture with threshold five quarters. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30706 -/
+
+import D5.S3.QuantumChannels.ContractionSpectrumOrder
 import Mathlib.Analysis.SpecialFunctions.Artanh
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
@@ -148,7 +151,7 @@ def claim : Prop := ∃ αhat : ℝ, 1 < αhat ∧ αhat < (13863 : ℝ) / 10000
     ConcaveOn ℝ (Icc 0 (Real.log 2)) (fun x => G α x y))
 
 def psi (α t : ℝ) : ℝ := h α ((1 - t) / 2)
-private def inverseBias (α x : ℝ) : ℝ := 1 - 2 * hInv α x
+def inverseBias (α x : ℝ) : ℝ := 1 - 2 * hInv α x
 def slope (α t : ℝ) : ℝ :=
   if α = 1 then Real.artanh t else α * (((1 + t) / 2) ^ (α - 1) - ((1 - t) / 2) ^ (α - 1)) /
     (2 * (α - 1) * (((1 + t) / 2) ^ α + ((1 - t) / 2) ^ α))
@@ -300,14 +303,14 @@ lemma psi_hasDerivAt {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) :
     field_simp [sub_ne_zero.mpr hne, sub_ne_zero.mpr (Ne.symm hne), hs.ne']
     <;> ring
 
-private lemma psi_strictAntiOn {α : ℝ} (hα : 0 < α) : StrictAntiOn (psi α) (Icc 0 1) := by
+lemma psi_strictAntiOn {α : ℝ} (hα : 0 < α) : StrictAntiOn (psi α) (Icc 0 1) := by
   apply strictAntiOn_of_deriv_neg (convex_Icc _ _) (psi_continuousOn hα)
   intro t ht
   rw [interior_Icc] at ht
   rw [(psi_hasDerivAt hα ht).deriv]
   exact neg_neg_of_pos (slope_pos hα ht)
 
-private lemma inverseBias_spec {α x : ℝ} (hα : 0 < α) (hx : x ∈ Icc 0 (Real.log 2)) :
+lemma inverseBias_spec {α x : ℝ} (hα : 0 < α) (hx : x ∈ Icc 0 (Real.log 2)) :
     inverseBias α x ∈ Icc 0 1 ∧ psi α (inverseBias α x) = x := by
   obtain ⟨hp, he⟩ := hInv_spec hα hx
   constructor
@@ -508,7 +511,7 @@ private lemma slope_ratio_antitone {α v : ℝ} (hα : 0 < α) (hne : α ≠ 1)
     exact hF (ratio_mem ht') (ratio_mem (hvt t ht'))
       (ratio_anti (hvt t ht') ht' (by nlinarith [hv.2, ht'.1]))
 
-private lemma bias_combining (α x y : ℝ) :
+lemma bias_combining (α x y : ℝ) :
     G α x y = psi α (inverseBias α y * inverseBias α x) := by
   unfold G psi inverseBias
   unfold star
@@ -538,7 +541,7 @@ private lemma transported_hasDerivAt {α v x : ℝ} (hα : 0 < α) (hv : v ∈ I
   · simp only [inv_neg, div_eq_mul_inv]
     ring
 
-private lemma inverseBias_anti {α : ℝ} (hα : 0 < α) :
+lemma inverseBias_anti {α : ℝ} (hα : 0 < α) :
     AntitoneOn (inverseBias α) (Icc 0 (Real.log 2)) := by
   intro x hx y hy hxy
   have ht := inverseBias_spec hα hx

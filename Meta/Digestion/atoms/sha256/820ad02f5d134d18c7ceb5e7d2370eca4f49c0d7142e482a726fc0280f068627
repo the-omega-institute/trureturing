@@ -1,7 +1,0 @@
-其中：
-
-- $\kappa$：静态五态联合关系；
-- $a,A,B$：特定动态先验下的 future quotient；
-- $\tau$：边界义务，如 active、pending、delivered；
-- $e$：来源 epoch 或原始历史身份。
-
