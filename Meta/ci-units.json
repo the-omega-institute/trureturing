@@ -1109,6 +1109,8 @@
     "tools/lean-inspector/*.lean",
     "tools/scripts/compiled-judge-test.sh",
     "tools/scripts/auric-fib-analysis.sh",
+    "tools/scripts/search-reduction-runner.sh",
+    "tools/scripts/search-reduction-probe-cache.py",
     "# NativeTestSupport stages the real compiler and package configuration;",
     "Makefile",
     "Reg/lakefile.toml",
