@@ -78,6 +78,7 @@ import D5.S1.Words.ReturnWords.GoldenOccurrenceGaps
 import D5.S1.Words.ReturnWords.GoldenPhaseShift
 import D5.S1.Words.ReturnWords.GoldenRankArcs
 import D5.S1.Words.ReturnWords.RotationGapArcs
+import Mathlib.NumberTheory.Real.GoldenRatio
 
 set_option maxHeartbeats 1600000
 

@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2f513c55509b5917940a98b8ac3913e0a0f6e209c41d48305f144695bc2b156c
   normalized_sha256: sha256:2f513c55509b5917940a98b8ac3913e0a0f6e209c41d48305f144695bc2b156c
 cas_ref: sha256:2f513c55509b5917940a98b8ac3913e0a0f6e209c41d48305f144695bc2b156c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Additive/PlasticDeletionBound.whole_theorem_four_one
+    target_statement_id: sha256:2e9c75fd84138bad651ae628b7eccd7cc6743a7901e1dc880475d1506e0637f0
 receipts:
   unresolved_subitems: []
