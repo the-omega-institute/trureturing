@@ -224,11 +224,21 @@ theorem mandatory_product_lower (N : ℕ) (hn : N ≠ 0)
     _ ≤ _ := prod_le_prod_of_subset_of_one_le₀ hF (fun _ _ => by positivity)
       (fun _ _ _ => le_add_of_nonneg_right (by positivity))
 
+-- Primes through 47 already suffice in every row. All additional factors are at least one.
 private theorem finite_mandatory_block_0 :
     ∀ m ∈ Icc 1 100,
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 1 100,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_1 :
@@ -236,6 +246,15 @@ private theorem finite_mandatory_block_1 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 101 200,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_2 :
@@ -243,6 +262,15 @@ private theorem finite_mandatory_block_2 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 201 300,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_3 :
@@ -250,6 +278,15 @@ private theorem finite_mandatory_block_3 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 301 400,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_4 :
@@ -257,6 +294,15 @@ private theorem finite_mandatory_block_4 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 401 500,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_5 :
@@ -264,6 +310,15 @@ private theorem finite_mandatory_block_5 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 501 600,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_6 :
@@ -271,6 +326,15 @@ private theorem finite_mandatory_block_6 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 601 700,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_7 :
@@ -278,6 +342,15 @@ private theorem finite_mandatory_block_7 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 701 800,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_8 :
@@ -285,6 +358,15 @@ private theorem finite_mandatory_block_8 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 801 900,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_block_9 :
@@ -292,6 +374,15 @@ private theorem finite_mandatory_block_9 :
       (2 : ℚ) ≤
         (∏ p ∈ Nat.primesLE m, (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
         (∏ p ∈ Nat.primesLE m, (1 + (p : ℚ)⁻¹)) / m := by
+  suffices checked : ∀ m ∈ Icc 901 999,
+      (2 : ℚ) ≤
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + 1 / (p : ℚ) ^ (m.factorization p + 1))) +
+        (∏ p ∈ Nat.primesLE (min m 47), (1 + (p : ℚ)⁻¹)) / m by
+    intro m hm
+    refine (checked m hm).trans (add_le_add ?_ (div_le_div_of_nonneg_right ?_ (by positivity)))
+    all_goals
+      exact prod_le_prod_of_subset_of_one_le₀ (Nat.primesLE_mono (min_le_left m 47))
+        (fun _ _ => by positivity) (fun _ _ _ => le_add_of_nonneg_right (by positivity))
   decide +kernel
 
 private theorem finite_mandatory_bound :
