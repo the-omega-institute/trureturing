@@ -1,0 +1,29 @@
+**定义 2.2（原单事件 D 与比较前件 G）。** D 严格沿用 III140.2：
+
+$$
+\mathrm D:\quad
+\Pr_{\mathsf R(a,\epsilon)}(w\in A)
+ =\Pr_{\mathsf T(a)}(w\in A)
+\qquad(a\in\mathsf W_{11}).
+\tag{2.2}
+$$
+
+此处字母 $\epsilon$ 表示空后读字；式 (2.1) 的 $\epsilon>0$ 是误差数，二者不混用。左端对两记录、全部细档案和 $A$ 中全部旧标签积分。没有 C、E、全码隔离、任意新制备、精确闭包门或更强终端不扰动前件。
+
+为比较假设强度，G 定义为存在连续数学函数
+$\mathfrak m:X\to[0,1]$，满足
+
+$$
+\mathrm G:\quad m_0(a)=\mathfrak m([\chi_a])
+\qquad(a\in\mathsf W_{11}).
+\tag{2.3}
+$$
+
+其补记录函数为 $1-\mathfrak m$。G 比较的是一个预先全域连续的记录表示；它不单独供应未准备射线的实际概率。以下记 $\mathrm{Born}_{\mathrm{act}}$ 为
+
+$$
+m_i(a)=t_i(a)
+\qquad(a\in\mathsf W_{11},\ i=0,1).
+\tag{2.4}
+$$
+

@@ -1,0 +1,47 @@
+**全部**有限 typed 结果标签 $\Lambda$，从一开始包括该菜单内原有的零标签及失败、拒绝、停止、告警等坐标。
+例如旧 $\Omega_{10}$ 的全部 $1024$ 标签即使投影为零也保留。
+各标签按原输入输出类型和原质量单位读取；其它程序的记录或销毁输出不因本定义被改成 terminal 标签。
+令
+
+$$
+ p_\lambda(a)\ge0,\quad\sum_{\lambda\in\Lambda}p_\lambda(a)=1,
+ \qquad X_a=\bigl(1,(p_\lambda(af))_{(\lambda,f)\in\Lambda\times\mathsf W_{11}}\bigr).
+\tag{26.9}
+$$
+
+在这**同一个联合行**上要求 joint $\mathrm R_{10}$、joint $\mathrm {UR}$ 及一个联合关系
+
+$$
+ X_\epsilon+X_{9^5}=X_9+X_{9^6}.
+\tag{26.10}
+$$
+
+则恰好存在唯一共同 POVM
+
+$$
+ E_\lambda\ge0,\qquad\sum_{\lambda\in\Lambda}E_\lambda=I_d,
+ \qquad p_\lambda(a)=\operatorname {Tr}(E_\lambda P_a).
+\tag{26.11}
+$$
+
+没有 joint capacity 输入。任一 $E_\lambda$ 非标量时，联合行秩为 $d^2$，共同完成锥、归一基、全 proper 区间及完整混态半比较均为同一个 (26.4)–(26.6)；全为标量时秩一。
+
+证明。在 $\ell^\infty(\{\star\}\sqcup(\Lambda\times\mathsf W_{11}),\mathbb R)$ 上使用 (24.3) 的同一 future 移位。
+联合 $\mathrm R_{10}$ 仍给其十次方为一，故同时搬运两个联合行仍等距。
+joint $\mathrm {UR}$ 遂给联合行的一致连续稠密延拓，值域先取联合行空间的 Banach 闭包。
+每个 $\lambda$ 坐标给连续 $q_\lambda$，(26.10) 对它给定理 16.3 的同一关系，故有 $E_\lambda$。
+实际归一律及原射线密度使
+$\operatorname {Tr}((\sum_\lambda E_\lambda-I)P)=0$ 对每个纯投影成立，得到 (26.11)。
+反向同样由连续性、矩阵回返和四投影恒等式给全部联合前件。
+联合像为
+$Z\mapsto(\operatorname {Tr}Z,(\operatorname {Tr}(E_\lambda K_fZK_f^*))_{\lambda,f})$；
+Born 后它才是有限维像，任一非标量坐标加星坐标即使该像单射。
+原 $P_a$ 张成 Hermitian 空间的上述论证给准确秩、锥与比较结论。证毕。
+
+逐标签 (26.7) 还给联合全未来距离
+$\|\Phi_\Lambda(P)-\Phi_\Lambda(Q)\|_\infty
+=(\max_\lambda\Delta_{E_\lambda})d_{\mathbb P}(P,Q)$。
+完整 POVM 是对该确切实际菜单的共同结论；不能从一个单事件 Born 响应自由增加标签、准备、参考或物理菜单。
+将每个 $E_w$ 识别为旧 $N_w$ 仍须各标签自己的实际事件不变性、标定及 source-adoption 合同。
+记录后七地址、一般可测档案和 (150.19) 的正质量条件核仍是另外的原接口。
+

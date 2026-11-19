@@ -1,0 +1,19 @@
+**命题 11.1（已知的二能级偶扇区边界）。** 不能将 9.2 的 $d\ge3$ 无条件改成 $d=2$。将 $\mathbb {CP}^1$ 写为 Bloch 球面 $r\in S^2$，$PU(2)=SO(3)$，取 $q(r)=r_z^2$。其完整预测锥是实 $3\times3$ PSD 锥，秩为六，满足全 proper 效应固定半律，但在原复二能级射线上不是 Born 效应。
+
+证明。旋转后的全部读数是 $(n\cdot r)^2=\operatorname{Tr}(nn^{\mathsf T}rr^{\mathsf T})$，其中 $n$ 遍历单位球面。矩阵 $nn^{\mathsf T}$ 张成 $\operatorname{Sym}_3(\mathbb R)$，且 $\operatorname{Tr}(rr^{\mathsf T})=1$，所以包含归一化坐标的完整 profile 空间与 $\operatorname{Sym}_3(\mathbb R)$ 线性同构。其实际轨道是 $rr^{\mathsf T}$，凸包由实谱分解恰为
+
+$$
+K_2=\{X\in\operatorname{Sym}_3(\mathbb R):X\ge0,\operatorname{Tr}X=1\},
+\quad C_2=\operatorname{PSD}_3(\mathbb R),\quad \dim V_2=6.
+\tag{11.1}
+$$
+
+这识别且仅识别 $r$ 与 $-r$，纯流形为 $\mathbb {RP}^2$。完整 proper 效应准确是 $X\mapsto\operatorname{Tr}(FX)$、$0\le F\le I_3$。若 $r^{\mathsf T}Fr=1$，则 $Fr=r$ 且 $F\ge rr^{\mathsf T}$，故
+
+$$
+T_{rr^{\mathsf T}}(X)=\operatorname{Tr}(rr^{\mathsf T}X).
+\tag{11.2}
+$$
+
+线性和迹互反给所有混合 $X$ 的固定半律。复二能级 Born 效应在 Bloch 坐标上是 $a+b\cdot r$；一个非恒定偶函数 $r_z^2$ 不可能有该形式。这是 GM Result 3、§3.1 中已知偶表示／非忠实实三能级边界的具体坐标表达，不主张新反例，也不是满足全部原 $\Omega$ 合同的物理反模型。∎
+

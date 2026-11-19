@@ -1,0 +1,75 @@
+**定义 17.1（同一原始载体和四个实际正前缀）。** 回到 [III150 的原始 typed 源][III150N96]：唯一 ready、$\mathcal K=V_{12}^{\mathbf1}$、$\dim_{\mathbb C}\mathcal K=89$、原十一地址
+$\mathsf W_{11}=\{0,\ldots,10\}^{<\infty}$、原事件 $A=\{b_1=1\}$，以及
+
+$$
+ p(a)=P_{\mathsf T(a)}(A),\qquad
+ x_a=\bigl(1,(p(af))_{f\in\mathsf W_{11}}\bigr).
+\tag{17.1}
+$$
+
+这里每个 $f$ 都是共同附接的**原十一地址、无中途读取的 terminal future**；它不是七地址记录后字，也不包括记录、档案或条件核。固定四个实际前缀
+
+$$
+ a_0=\epsilon,\qquad a_1=9^5,\qquad a_2=9,\qquad a_3=9^6,
+\tag{17.2}
+$$
+
+并要求一个等权 row relation
+
+$$
+ \boxed{x_\epsilon+x_{9^5}=x_9+x_{9^6}}.
+\tag{17.3}
+$$
+
+也就是对每个同一个 $f\in\mathsf W_{11}$，有
+$p(f)+p(9^5f)=p(9f)+p(9^6f)$。四个前缀在原 ready 上均为已有有限正向字，最长只在共同 future 之前调用六次地址 $9$；(17.3) 不引入变量 preparation context、第二个 ready、彩票、全档案等价或新的实际状态。原调用顺序、设置、记录、失败、停止、销毁和返回仍按原 typed contract 保存。
+
+在该 native block 上严格复用 II (105.1)、(111.3) 的同一个原门：
+
+$$
+ K_9J=J\bigl(I_H\otimes B_R\bigr),\qquad
+ B_R=\zeta\,[I+(\zeta-1)Q_R],\qquad
+ Q_R=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix},
+\tag{17.4}
+$$
+
+其中 $x=\varphi^{-1}$、$y=\sqrt x$、$x+x^2=1$。严格沿用 II100.1、II121.1 和 VII10.1：
+
+$$
+ v=e_{00100}\in H,\qquad R_0\eta=J(\eta\otimes|0\rangle),
+ \qquad e_0=R_0v=J(v\otimes|0\rangle).
+$$
+
+$J$ 的定义域始终是 $H\otimes\mathbb C^2$。整个 $89$ 维载体、$26$ 维代码 $J(H\otimes\mathbb C^2)$ 及全部 $63$ 维正交补保持原样；不把代码外作用改成恒等。置
+
+$$
+ u_-=J\bigl(v\otimes(I-Q_R)|0\rangle\bigr),\qquad
+ u_+=J\bigl(v\otimes Q_R|0\rangle\bigr),
+$$
+
+则
+
+$$
+ \|u_-\|=x,\qquad \|u_+\|=y,
+ \qquad \widehat e_-=u_-/x,\qquad \widehat e_+=u_+/y.
+\tag{17.5}
+$$
+
+这里 $\widehat e_-$、$\widehat e_+$ 是这一个二维数学块的正交谱方向，不是可自由准备的新物理态；特别地，旧的校准向量写作
+$e_1^{\mathrm {cal}}=R_0e_{10100}\ne e_0$，必须与 (17.5) 的两个带帽方向分开。直接计算给
+
+$$
+ t:=\|Q_R|0\rangle\|^2=x\quad(\text{不是 }x^2),
+ \qquad a=x=\sqrt{1-t},\quad b=y=\sqrt t,
+$$
+
+并且去掉一个无关的整体相位后
+
+$$
+ [K_9^k e_0]=[\psi_k],\qquad
+ \psi_k=a\widehat e_-+b\zeta^k\widehat e_+.
+\tag{17.6}
+$$
+
+因此 (17.3) 正是 (16.1) 在这四个**实际**原前缀上的起点，且四个系数都是 $+1,+1,-1,-1$。
+

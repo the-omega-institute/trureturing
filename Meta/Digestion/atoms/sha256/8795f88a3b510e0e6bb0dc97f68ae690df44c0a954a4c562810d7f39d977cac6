@@ -1,0 +1,35 @@
+**定义 22.1（固定归组与两个实际行空间）。** 保留定义 1.2、10.1 的唯一原 $\Omega$、全部 $89$ 条路径、$26+63$ 扇区、唯一 ready $e_0$、原十一地址有限正向字 $\mathsf W_{11}$、$K_{af}=K_fK_a$ 及同一个原终端协议。令 $\Lambda=\Omega_{10}$ 是全部 $1024$ 个旧标签，固定原归组 $A=\{\ell:b_1=1\}\subset\Lambda$。归组不随前缀、未来、细档案或所得概率改变。对同一实际律置
+
+$$
+\begin{aligned}
+p_\ell(a)&=P_{\mathsf T(a)}(W=\ell),&
+p_A(a)&=\sum_{\ell\in A}p_\ell(a),\\
+x_a^A&=\bigl(1,(p_A(af))_{f\in\mathsf W_{11}}\bigr),&
+z_a&=\bigl(1,(p_\ell(af))_{(\ell,f)\in\Lambda\times\mathsf W_{11}}\bigr),\\
+V_A&=\operatorname{span}_{\mathbb R}\{x_a^A:a\in\mathsf W_{11}\},&
+V_J&=\operatorname{span}_{\mathbb R}\{z_a:a\in\mathsf W_{11}\},\\
+r_A&=\dim_{\mathbb R}V_A,&r_J&=\dim_{\mathbb R}V_J.
+\end{aligned}
+\tag{22.1}
+$$
+
+两个空间各用其全部坐标的上确界范数，$u_A,u_J$ 是各自的 $\star$ 评价；维数允许无穷。秩也可按同一实际矩阵的全部有限子矩阵实秩的上确界读取，归一化列计入其中，与 II78.2–78.3 的行／函数约定相同。$p_\ell\ge0$、$\sum_{\ell\in\Lambda}p_\ell=1$ 取原理想零失败域，不通过丢弃失败再归一化取得。实际调用历史、档案、零支撑、零／失败／拒绝／停止／告警及 Return 坐标仍是原完整概率空间的一部分；(22.1) 仅取其指定终端边缘。有限、取得、成本、精度及可靠性合同各守原域。记录后未来仍是原七地址字，不能用 (22.1) 的十一地址未来替换它。
+
+定义连续坐标投影
+
+$$
+(\pi z)(\star)=z(\star),\qquad
+(\pi z)(f)=\sum_{\ell\in A}z(\ell,f).
+\tag{22.2}
+$$
+
+它把 $z_a$ 送到 $x_a^A$，从而给满射 $\pi:V_J\to V_A$；总有 $r_J\ge r_A$。完成基与生成锥分别记为
+
+$$
+K_A=\overline{\operatorname{conv}\{x_a^A\}},\quad C_A=\operatorname{cone}K_A,
+\qquad K_J=\overline{\operatorname{conv}\{z_a\}},\quad C_J=\operatorname{cone}K_J.
+\tag{22.3}
+$$
+
+这些闭包和有限凸组合只是数学对象，不增加准备、物理混合、参考、辅助载体、反馈、连续控制或极限门。这里的 $K_A$ 是预测基，区别于带字下标的原门矩阵 $K_a$。
+

@@ -1,0 +1,12 @@
+**成熟来源与贡献范围。** 连续一致延拓直接复用命题 2.3 的标准工具、通常序列判据及紧域一致连续性；
+全群与实际 future 的连续稠密限制复用定理 10.2。
+Born 选择直接复用定理 16.3，其中 [Moretti–Pastorello, arXiv:1205.4504v2][MP96]
+Theorem 5(a)–(c) 承担完整 $L^2$ 球谐分解及不可约性，Lemma 7 承担迹零二次型识别，
+Proposition 9(8) 承担不可约角色投影；该文 Theorem 10 证明中的轨道张成方法按 16.3 的精确域使用，
+不把该文 frame-function 前件误写成这里的实际来源前件。
+本节的仓内应用是原双前缀逆字使 ready 统一关系全局化、由此删除原下降的容量前件，
+以及 Born 后容量和精确全未来度量的推导；不主张一般 Gleason、谐和分解或延拓理论的新颖性。
+全部新增定义、证明、反模型与消费者均为纸面理论，不声称新的 Lean 核验、kernel 真值或冻结认证。
+
+[FS97]: AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md
+[RET97]: AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md

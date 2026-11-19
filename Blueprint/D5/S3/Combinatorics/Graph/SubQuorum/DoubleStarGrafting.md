@@ -123,4 +123,4 @@ For every finite nonempty V with decidable equality and every simple graph F, ps
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.palette`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.psiSq`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.psiSq_graftGraph`
-- Dependency: [D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation](../StarFormingDissociationRefutation.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Foundations/Invariants](../StarForming/Foundations/Invariants.md)

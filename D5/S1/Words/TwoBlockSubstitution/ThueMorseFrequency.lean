@@ -6,6 +6,8 @@
    utility: none
    digest: The Thue-Morse two-block fixed point has one-letter frequency one half. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567. -/
+
 /-
 The statements concern the specific Thue-Morse two-block fixed point, so generality is I.
 The frozen block-sum owners supply the pair and triple partitions with R := ℤ.
@@ -429,7 +431,7 @@ end D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency
 namespace D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency
 open Finset Filter
 
-private def sign (b : Bool) : ℤ := if b then -1 else 1
+def sign (b : Bool) : ℤ := if b then -1 else 1
 
 private theorem sign_sq (b : Bool) : (sign b) ^ 2 = 1 := by cases b <;> norm_num [sign]
 private theorem sign_abs (b : Bool) : |sign b| = 1 := by cases b <;> norm_num [sign]
@@ -620,5 +622,3 @@ private theorem fixed_point_density (x : ℕ → Bool)
 theorem result : claim := fixed_point_density tmFixed tmFixed_fixed
 
 end D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency
-
-#print axioms D5.S1.Words.TwoBlockSubstitution.ThueMorseFrequency.result
