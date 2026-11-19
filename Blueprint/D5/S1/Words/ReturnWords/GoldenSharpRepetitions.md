@@ -187,4 +187,3 @@ The displayed statement uses natural indices. Division of natural numbers is Nat
 - Dependency: [D5/S1/Words/Powers/GoldenCubePeriodsSupport](../Powers/GoldenCubePeriodsSupport.md)
 - Dependency: [D5/S1/Words/ReturnWords/GoldenArcFirstReturn](GoldenArcFirstReturn.md)
 - Dependency: [D5/S1/Words/ReturnWords/GoldenArcFirstReturnCore](GoldenArcFirstReturnCore.md)
-- Dependency: [D5/S3/Axis/AxisConvergence](../../../S3/Axis/AxisConvergence.md)
