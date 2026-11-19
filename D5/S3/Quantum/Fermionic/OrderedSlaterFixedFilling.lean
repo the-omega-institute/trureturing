@@ -43,7 +43,7 @@ private theorem minor_zero_of_occupied_zero_row {k : ℕ} (V : Matrix ι (Fin k)
     rw [hj, hV i]
   · rfl
 
-private theorem orderedCut_eq_minor {k : ℕ} (I : Set ι) (V : Matrix ι (Fin k) ℂ)
+theorem orderedCut_eq_minor {k : ℕ} (I : Set ι) (V : Matrix ι (Fin k) ℂ)
     (a : Occupation I) (b : Occupation Iᶜ) :
     orderedCut I V a b = occupiedMinor V (a.val ∪ b.val) := by
   classical
@@ -75,7 +75,7 @@ private theorem diagonal_sign_inverse {α : Type*} [Fintype α] [DecidableEq α]
     rw [h1, Matrix.diagonal_one]
   simp [hstar, hsq]
 
-private theorem signed_reindexed_gram {A B : Type*} [Fintype A] [Fintype B] [DecidableEq A]
+theorem signed_reindexed_gram {A B : Type*} [Fintype A] [Fintype B] [DecidableEq A]
     (e : Equiv.Perm A) (f : Equiv.Perm B) (M : Matrix A B ℂ) (l : A → ℕ) (r : B → ℕ) :
     let N : Matrix A B ℂ := fun i j => (-1) ^ l i * ((-1) ^ r j * M (e i) (f j))
     (N * N.conjTranspose).charpoly = (M * M.conjTranspose).charpoly := by
