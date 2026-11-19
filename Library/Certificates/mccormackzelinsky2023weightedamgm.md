@@ -5,7 +5,7 @@ year: 2023
 title: "Weighted Versions of the Arithmetic-Mean-Geometric Mean Inequality and Zaremba's Function"
 doi: 10.48550/arXiv.2312.11661
 url: https://arxiv.org/abs/2312.11661v4
-claim: "Question 34 asks for an odd primitive non-deficient n with a divisor set S1 containing 1, summing to 2n, and satisfying A(S1,n)>C(S1,n). Question 43 asks whether the strongly pseudoperfect integers have positive natural density and Question 44 whether strong pseudoperfectness is a strong restriction, a weak restriction, or neither within the Euler forms; Wang and Zelinsky repeat Question 43 as Question 22. Question 45 asks whether D1, the independent pseudoperfect condition together with an S1 satisfying A(S1,n) <= C(S1,n), is strong, weak, or neither."
+claim: "Page 17, Question 38 asks whether 60(2^n) is strongly pseudoperfect for every n >= 0. Question 34 asks for an odd primitive non-deficient n with a divisor set S1 containing 1, summing to 2n, and satisfying A(S1,n)>C(S1,n). Question 43 asks whether the strongly pseudoperfect integers have positive natural density and Question 44 whether strong pseudoperfectness is a strong restriction, a weak restriction, or neither within the Euler forms; Wang and Zelinsky repeat Question 43 as Question 22. Question 45 asks whether D1, the independent pseudoperfect condition together with an S1 satisfying A(S1,n) <= C(S1,n), is strong, weak, or neither."
 strata_touched:
   - D5/S3/Arith/Abundancy/StrongPseudoperfectDensity
   - D5/S3/PrimeGaps/ChiFourWeightedMangoldt
@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/Arith/Abundancy/StrongPseudoperfectEulerDensity
   - D5/S3/Arith/Abundancy/WeightedTotientEulerDensity
   - D5/S3/Arith/Abundancy/McCormackZelinskyQuestion34
+  - D5/S3/Arith/Abundancy/McCormackZelinskyQuestion38
 license: citation-only
 triage: anchor
 ---
@@ -76,6 +77,10 @@ Section 4, Question 22 asks whether this set has positive natural density.
 Proposition 4 states that if p is prime and p > sigma(n), then pn is not
 strongly pseudoperfect.
 
+Page 17 asks:
+
+> Question 38. For any n ≥ 0, is 60(2^n) strongly pseudoperfect?
+
 ## Verified locator
 
 - Locator: arXiv:2312.11661v4, S0/S1 definitions; page 14, equations (12)--(14); pages 18--19, E and strong/weak definitions; page 19, D1 and Question 45.
@@ -86,3 +91,4 @@ strongly pseudoperfect.
 - Locator: arXiv:2312.11661v4, pages 18--19, Euler forms and weak/strong restrictions; page 19, Question 44; page 17, Proposition 37.
 - URL: https://arxiv.org/abs/2609.36068v3
 - Locator: arXiv:2609.36068v3, abstract, definition; Section 4, Question 22; Proposition 4.
+- Locator: arXiv:2312.11661v4, page 17, Question 38.
