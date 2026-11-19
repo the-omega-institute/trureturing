@@ -8,6 +8,7 @@ url: https://arxiv.org/html/2611.08109v1
 claim: "Section 3 asks whether the logarithmic limsup growth exponent strictly increases with every adjacent multiplicity bound k,k+1 for k at least ell-1."
 strata_touched:
   - D5/S1/Digit/CoonsAdjacentGrowthRefutation
+  - D5/S1/Digit/DigitCapPowerGF
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -22,6 +23,10 @@ triage: anchor
 - Count: Section 1, opening definition; Section 2, opening generating product.
 - Question: Section 3, “Further remarks”, final display and the immediately
   following quantifier, before Acknowledgements.
+- Critical caps: Theorem 2, its proof's display
+  $B_{\ell^m-1,\ell}(z)=\prod_{j=0}^{m-1}(1-z^{\ell^j})^{-1}$ following equation (3),
+  and equation (4),
+  $b_{\ell^m-1,\ell}(n)=\frac{n^{m-1}}{\ell^{m(m-1)/2}(m-1)!}(1+O(1/n))$.
 
 ## Attribution and license
 
