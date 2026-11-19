@@ -56,7 +56,6 @@ private theorem square_sum (n : ℕ) : a n = ∑ k ∈ range (n+1), (T n k)^2 :=
   have hk' : k ≤ n := Finset.mem_range_succ_iff.mp hk
   rw [g_coeff n k hk', g_coeff n (n-k) (by omega), row_symm n k hk', pow_two]
 
-
 private theorem sum_A_sq (n : ℕ) :
     (∑ k ∈ range (n+1), (((n+2).choose (k+1) : ℕ) : ℤ)^2) =
       ((2*(n+2)).choose (n+2) : ℤ) - 2 := by
