@@ -1,6 +1,0 @@
-三条公开 Lean 定义/定理具有三个对应 FromLean Scribe 条目。没有新 authored sorry、admit 或 axiom；Lean elaboration、Scribe 发射与传递公理报告未执行。计算机辅助结果依赖明确的 Fourier/core、无限尾纸面证明，以及 Python、NumPy、mpmath 的算术实现；没有独立作者审查。
-
-- https://arxiv.org/html/2511.22755v1 , Sections 7-8.
-- https://arxiv.org/html/2606.09096v1 , Sections 1.2 and 2.1.
-- https://arxiv.org/abs/math/0503328 , primary abstract and methodological scope.
-

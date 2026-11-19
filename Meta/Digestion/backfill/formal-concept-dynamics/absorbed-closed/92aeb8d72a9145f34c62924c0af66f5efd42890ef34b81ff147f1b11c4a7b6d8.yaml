@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:92aeb8d72a9145f34c62924c0af66f5efd42890ef34b81ff147f1b11c4a7b6d8
-  normalized_sha256: sha256:92aeb8d72a9145f34c62924c0af66f5efd42890ef34b81ff147f1b11c4a7b6d8
-cas_ref: sha256:92aeb8d72a9145f34c62924c0af66f5efd42890ef34b81ff147f1b11c4a7b6d8
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Sufficiency/PermissionIntersectionLeast.sufficient_intersection_is_unique_least
-    target_statement_id: sha256:19c2ff8feaaedee77a57bfc4542eba6efe5d02bb69bcae437948ea6217760467
-receipts:
-  unresolved_subitems: []

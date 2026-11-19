@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1345cd59346e9f9914a1bf52dfd5ff50481587ca2828600927a48bd9c49112bb
-  normalized_sha256: sha256:1345cd59346e9f9914a1bf52dfd5ff50481587ca2828600927a48bd9c49112bb
-cas_ref: sha256:1345cd59346e9f9914a1bf52dfd5ff50481587ca2828600927a48bd9c49112bb
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/CuspidalToroidalKernel.cuspidal_all_torus_kernel
-    target_statement_id: sha256:a9e02eef43948b9a8d20656ef1e866d8f916dc7537b5ca6478ed8f4682eec992
-receipts:
-  unresolved_subitems: []

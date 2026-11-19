@@ -1,0 +1,68 @@
+**定义 124.5（全参数实九维族）。** 取三个实欧氏二维空间 $L_i$，并设
+
+$$
+\begin{gathered}
+V=\mathbb R^3\oplus L_1\oplus L_2\oplus L_3,\qquad
+x=(a_1,a_2,a_3;z_1,z_2,z_3),\\
+|\tau(z_1,z_2,z_3)|\le|z_1||z_2||z_3|
+\quad\text{对全部实 }z_i\in L_i,\\
+u(x)=a_1+a_2+a_3,\quad
+p_i=(\delta_{i1},\delta_{i2},\delta_{i3};0,0,0),\quad
+w=p_1+p_2+p_3,\\
+\Delta_i=a_ja_k-|z_i|^2,\qquad
+h_\tau=a_1a_2a_3-\sum_i a_i|z_i|^2+2\tau(z_1,z_2,z_3),\\
+C_\tau=\{x:a_i\ge0,\ \Delta_i\ge0\ (i=1,2,3),\ h_\tau\ge0\}.
+\end{gathered}
+\tag{124.15}
+$$
+
+$z_i$ 位于补指标 $jk$ 的边，$\tau$ 为实三线性型，不要求对称。所有 $K_\tau,P_\tau,\mathcal E_\tau,\mathcal F_p,\mathcal T_p,D_p$ 都按(124.2)从整个 $C_\tau$ 定义。这是123.1的同一家族，不另选满支撑子域、纯轨道、效应菜单或光滑部分。
+
+以下两个上下文事实与123.2—123.3一致；这里给出应用定理124.4所需的直接论证，不将它们计作新的家族构造。
+
+首先，$h_\tau$ 关于 $w$ 双曲且 $C_\tau=\Lambda_+(h_\tau,w)$。固定任意 $x$，置 $r_i=|z_i|$。收缩界允许选择模长为 $r_i$ 的复数 $\xi_i$，满足 $\operatorname{Re}(\xi_1\xi_2\xi_3)=\tau(z_1,z_2,z_3)$；若某个 $r_i=0$，两侧均为零。令
+
+$$
+H_x=\begin{pmatrix}
+a_1&\xi_3&\overline{\xi_2}\\
+\overline{\xi_3}&a_2&\xi_1\\
+\xi_2&\overline{\xi_1}&a_3
+\end{pmatrix}.
+\tag{124.16}
+$$
+
+直接展开给 $h_\tau(x+tw)=\det(H_x+tI_3)$。每个固定 $x$ 的右侧全实根，$h_\tau(w)=1$；根全不正等价于 $H_x\succeq0$，而其全部非空主子式恰是三个 $a_i$、三个 $\Delta_i$ 和 $h_\tau$。这同时证明整个闭分支等于(124.15)。$H_x$ 可随 $x$ 非线性地选择，此步没有产生共同矩阵表示。Renegar §2 Proposition 1、Theorems 2—3给该实际分支及其闭包的凸性。$w$ 满足全部严格不等式，故锥满维；若 $x\in C_\tau$ 且 $u(x)=0$，三个 $a_i$ 全零，二阶条件迫全部 $z_i=0$。于是原单位严格正，锥尖且生成，定理124.4的全部入口已经支付。
+
+其次，三个 $p_i$ 都是实际原纯点，且它们的完整最低函数和排除集满足
+
+$$
+\begin{gathered}
+\mathcal T_{p_i}(x)=a_i(x)\quad(x\in C_\tau),\\
+D_{p_i}=\{a_i=0,\ z_j=z_k=0,\ a_j+a_k=1,
+\ |z_i|^2\le a_ja_k\}\simeq_{\rm aff}\overline B^3.
+\end{gathered}
+\tag{124.17}
+$$
+
+为在全效应域核对这一点，记 $\pi_i x=(a_j,a_k,z_i)$ 及
+
+$$
+\mathscr L_i=\{(b,c,z):b,c\ge0,\ |z|^2\le bc\},
+\qquad \upsilon_i(b,c,z)=b+c.
+\tag{124.18}
+$$
+
+该块的全部零延拓都在 $C_\tau$ 中，而整个 $C_\tau$ 的块投影恰为 $\mathscr L_i$。若正泛函 $g$ 在 $p_1$ 为零，则其 $a_1$ 系数为零。分别独立任取单位向量 $\eta_3\in L_3$、$\eta_2\in L_2$，原锥内的曲线 $(1,t^2,0;0,0,t\eta_3)$、$(1,0,t^2;0,t\eta_2,0)$ 对全部实 $t$ 成立，正负小 $t$ 迫使 $g$ 的 $z_3,z_2$ 系数为零。因此
+
+$$
+N_{p_i}=\pi_i^*(\mathscr L_i^*),\qquad
+\mathcal F_{p_i}
+=\{a_i+b\circ\pi_i:0\le b\le\upsilon_i
+\text{ 于 }\mathscr L_i\}.
+\tag{124.19}
+$$
+
+后一式由 $u-f\in N_{p_i}$ 以及完整零延拓块上的上下界得到；反向块界在整个 $C_\tau$ 上保证效应资格。$b=0$ 可取且其余 $b\pi_i$ 非负，故 $a_i$ 确为全确认族的least，得到(124.17)第一式。$a_i=0$ 时二阶条件清零另外两条边，$\tau$ 随之为零，所以其整个归一零面恰为(124.17)。坐标 $(a_j-a_k,2z_i)$ 将其双射到整个单位三球。原 $p_i$ 的纯性则由任意凸分解中另两对角坐标必须为零、继而全部边为零得到。
+
+这里每个种子的 $D_{p_i}$ 都是通过全确认族算出的整个排除集，不是只展示一个包含于其中的三球。上述曲线也没有对一般 $\tau$ 使用任何未给的指标置换对称性。
+

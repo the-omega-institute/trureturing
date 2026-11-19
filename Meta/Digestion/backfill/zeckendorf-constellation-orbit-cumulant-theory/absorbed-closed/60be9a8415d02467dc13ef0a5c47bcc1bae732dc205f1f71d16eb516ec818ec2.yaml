@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:60be9a8415d02467dc13ef0a5c47bcc1bae732dc205f1f71d16eb516ec818ec2
-  normalized_sha256: sha256:60be9a8415d02467dc13ef0a5c47bcc1bae732dc205f1f71d16eb516ec818ec2
-cas_ref: sha256:60be9a8415d02467dc13ef0a5c47bcc1bae732dc205f1f71d16eb516ec818ec2
-coverage_gids:
-  - gid: D5/S3/PrimeGaps/GreedyResidues.greedy_residue_classes
-    target_statement_id: sha256:27b2eefaab9afe90589744d75b771030a21fd28de6b99c186be3c79d14a5d2c0
-receipts:
-  unresolved_subitems: []

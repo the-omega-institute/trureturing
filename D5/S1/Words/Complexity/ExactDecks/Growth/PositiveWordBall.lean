@@ -6,7 +6,17 @@
    utility: none
    digest: Actual central digits inject the preceding cutoff ball into the next degree. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567. -/
+
+import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
+import D5.S1.Words.Complexity.PositivePairs.Coefficients.MagnusWordCoefficients
+import D5.S1.Words.Complexity.PositivePairs.Digits.ActualLyndonDirections
+import D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitWords
+import D5.S1.Words.Complexity.PositivePairs.Span.FullFamilyHomogeneity
+import D5.S1.Words.Complexity.PositivePairs.Coefficients.CutoffCoefficientAlgebra
+import D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
 import D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitInjection
+import D5.S1.Words.Complexity.VivionBinomialConverseFails
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -41,7 +51,7 @@ private noncomputable def letterBoxWord [Fintype A] [LinearOrder A] (t : ℕ)
   (letterOrder (A := A)).flatMap
     (fun a ↦ List.replicate (digits a : ℕ) a)
 
-private theorem scatteredCount_singleton_eq_count [DecidableEq A]
+theorem scatteredCount_singleton_eq_count [DecidableEq A]
     (a : A) (source : List A) :
     D5.S1.Words.Complexity.VivionBinomialConverseFails.scatteredCount
       [a] source = source.count a := by

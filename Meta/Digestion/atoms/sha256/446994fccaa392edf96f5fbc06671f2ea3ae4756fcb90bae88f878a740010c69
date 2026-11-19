@@ -1,8 +1,0 @@
-一旦该 conservative realization 对全部 \(\omega>0\) 成立：
-
-* de Branges kernel 自动正定；
-* Clark/CMV family 自动生成；
-* toroidal null states 自动 tempered；
-* Hilbert–Pólya 自伴谱成为输出；
-* RH 随即成立。
-

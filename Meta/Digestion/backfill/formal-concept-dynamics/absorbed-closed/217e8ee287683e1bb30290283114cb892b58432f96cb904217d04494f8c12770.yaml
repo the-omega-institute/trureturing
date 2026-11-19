@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:217e8ee287683e1bb30290283114cb892b58432f96cb904217d04494f8c12770
-  normalized_sha256: sha256:217e8ee287683e1bb30290283114cb892b58432f96cb904217d04494f8c12770
-cas_ref: sha256:217e8ee287683e1bb30290283114cb892b58432f96cb904217d04494f8c12770
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.defectRelation
-    target_statement_id: sha256:5a16551a1bc776eed85d7eec6cac44373a3c66c5362948d527e7ad8dcc8ef349
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b09055d182963b4e5dde1f778a35d2a07c8ab030f9f6eab283dc72e847f8a78e
-  normalized_sha256: sha256:b09055d182963b4e5dde1f778a35d2a07c8ab030f9f6eab283dc72e847f8a78e
-cas_ref: sha256:b09055d182963b4e5dde1f778a35d2a07c8ab030f9f6eab283dc72e847f8a78e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Transport/ConservativeExtensionAnswerability.nonsurjective_pullback_can_hide_unanswerability
-    target_statement_id: sha256:9338e6442de76b11d74a8690d8d51990c68dc2d0823d7c09db990b741a534594
-receipts:
-  unresolved_subitems: []

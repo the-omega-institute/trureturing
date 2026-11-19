@@ -1,5 +1,0 @@
-这给出两类独立的有限反例证书：
-
-* 若 RH 失败，某个有限 Toeplitz minor 必为负；
-* 若 RH 失败，某个有限 Hankel／shifted-Hankel minor必为负。
-

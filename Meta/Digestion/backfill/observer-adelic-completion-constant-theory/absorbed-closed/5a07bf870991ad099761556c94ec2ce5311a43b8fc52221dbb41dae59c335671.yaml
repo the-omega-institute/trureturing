@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5a07bf870991ad099761556c94ec2ce5311a43b8fc52221dbb41dae59c335671
-  normalized_sha256: sha256:5a07bf870991ad099761556c94ec2ce5311a43b8fc52221dbb41dae59c335671
-cas_ref: sha256:5a07bf870991ad099761556c94ec2ce5311a43b8fc52221dbb41dae59c335671
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaLinear/FiniteHeightCompletionVariance.finite_height_completion_variance_nonnegative
-    target_statement_id: sha256:a34dd1a412304e58fa57172b07e4bc77131b87050ad2f7dd42f952acdc8e4ddd
-receipts:
-  unresolved_subitems: []

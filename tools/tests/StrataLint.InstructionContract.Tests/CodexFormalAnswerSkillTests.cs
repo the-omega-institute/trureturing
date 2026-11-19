@@ -399,10 +399,8 @@ public sealed partial class CodexFormalAnswerSkillTests
             "Blueprint/",
             "Library/",
             "Problems/",
-            "docs/develop/theory/",
             "Evidence/",
             "Chronicle/",
-            "Meta/Digestion/",
         };
         var requiredFormalSurfaces = new[]
         {

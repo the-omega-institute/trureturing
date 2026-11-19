@@ -137,16 +137,6 @@ public sealed class TypeModelTests
     private const string PaperRecipePath = "Papers/recipes/D5-P001.yaml";
 
     [Fact]
-    public void DigestionCasBlobIsClosedWorldRegisteredButNotASemanticTarget()
-    {
-        var path = RepoPath.CreateKnown(
-            DigestionCasStore.RootPath + new string('a', 64));
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Fact]
     public void RetiredFormalizationReceiptResidenceIsRejected()
     {
         const string value =
@@ -168,10 +158,9 @@ public sealed class TypeModelTests
     [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/extra")]
     public void DigestionCasPathGrammarRejectsNoncanonicalNeighbors(string relative)
     {
-        var value = DigestionCasStore.RootPath + relative;
+        var value = "Meta/Digestion/atoms/sha256/" + relative;
         var path = RepoPath.CreateKnown(value);
 
-        Assert.False(DigestionCasStore.IsCanonicalPath(value));
         Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }

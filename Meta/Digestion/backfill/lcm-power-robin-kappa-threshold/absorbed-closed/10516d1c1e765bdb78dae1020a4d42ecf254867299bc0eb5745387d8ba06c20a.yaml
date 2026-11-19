@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:10516d1c1e765bdb78dae1020a4d42ecf254867299bc0eb5745387d8ba06c20a
-  normalized_sha256: sha256:10516d1c1e765bdb78dae1020a4d42ecf254867299bc0eb5745387d8ba06c20a
-cas_ref: sha256:10516d1c1e765bdb78dae1020a4d42ecf254867299bc0eb5745387d8ba06c20a
-coverage_gids:
-  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerCollisionCountable.all_collision_parameters_countable_null
-    target_statement_id: sha256:9d709371bc5dd54f3cbe0a532014319790a7303179b84b3268a0d1126497ddc3
-receipts:
-  unresolved_subitems: []

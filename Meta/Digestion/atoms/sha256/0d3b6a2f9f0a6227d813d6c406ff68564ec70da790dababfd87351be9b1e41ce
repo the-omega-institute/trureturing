@@ -1,0 +1,8 @@
+## 110. Two-dimensional supports and actual minimal faces
+
+For a complex subspace $S\subset\mathbb C^n$, write
+$\operatorname{Herm}(S)$ for the entire real space of Hermitian matrices
+supported on $S$, extended by zero on $S^\perp$, and
+$\mathcal D(S)=\mathcal D_n\cap\operatorname{Herm}(S)$.
+Write $I_S$ for the orthogonal projection onto $S$.
+

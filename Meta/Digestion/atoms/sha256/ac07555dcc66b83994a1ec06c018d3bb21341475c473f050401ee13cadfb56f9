@@ -1,4 +1,0 @@
-**Proposition 15.4 (the confidence parameter does not bound literal memory).** Fixed $b$ and $N$ give no bound on required startup widths independent of $B,X$, and no bound on all later literal output widths or retained Time material.
-
-Proof. Already for $N=1$, $T=(1/2)$ and entry $x^{\rm in}=M\in\mathbb Z$, the first gate Read is $M+U_1$. The finite random amplitude range for fixed $b$ cannot bound its width as $M$ varies. After successful preparation, the passive outputs $2^{-k}$ have denominator width $k+1$. These are the same exact serialization and growing-record boundaries as Proposition 8.5 and P Proposition 41.5. Neither high confidence nor finite program/order changes them. $\square$
-

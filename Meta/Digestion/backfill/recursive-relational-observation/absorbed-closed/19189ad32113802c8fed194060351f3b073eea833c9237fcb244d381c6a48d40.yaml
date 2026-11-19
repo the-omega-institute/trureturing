@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:19189ad32113802c8fed194060351f3b073eea833c9237fcb244d381c6a48d40
-  normalized_sha256: sha256:19189ad32113802c8fed194060351f3b073eea833c9237fcb244d381c6a48d40
-cas_ref: sha256:19189ad32113802c8fed194060351f3b073eea833c9237fcb244d381c6a48d40
-coverage_gids:
-  - gid: D5/S3/Analytic/Convexity/LexicographicFlagRealization.linear_form_realization
-    target_statement_id: sha256:a05fd75b9f8340e259b95871c4144752170eb4e9108c94fcefb5de492b6219cb
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47
-  normalized_sha256: sha256:fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47
-cas_ref: sha256:fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47
-coverage_gids:
-  - gid: D5/S3/Quantum/Decoherence/StaticLossVersusReturnFlow.static_loss_and_return_flow_are_logically_independent
-    target_statement_id: sha256:59e6f991becdac7a48f27e72a0049a85b11a286312fe3e34cddbd0b871a139c0
-receipts:
-  unresolved_subitems: []
