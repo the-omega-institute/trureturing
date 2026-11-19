@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1cbc5991592c9ac8ffc24a7e13a0c4c5d5794b5b25a61b7e6f63532972864b35
+  normalized_sha256: sha256:1cbc5991592c9ac8ffc24a7e13a0c4c5d5794b5b25a61b7e6f63532972864b35
+cas_ref: sha256:1cbc5991592c9ac8ffc24a7e13a0c4c5d5794b5b25a61b7e6f63532972864b35
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/EndpointJointLaw.whole_endpoint_joint_law
+    target_statement_id: sha256:107f74f0dd0603a185f7735afcad1d306dace4b5149aa86f744ef87dd8016dab
+receipts:
+  unresolved_subitems: []
