@@ -22,9 +22,9 @@ open D5.S3.Arith.Divisors.DimitrovLowerBoundsC4C5
 /-- The `n / p` multiples of the least prime factor `p` below `n` are not coprime to `n`. -/
 private lemma totient_add_le {n : ℕ} (hn : 2 ≤ n) : Nat.totient n + n / n.minFac ≤ n := by
   classical
-  set p := n.minFac with hp_def
+  set p := n.minFac
   have hp : p.Prime := Nat.minFac_prime (by omega)
-  set m := n / p with hm_def
+  set m := n / p
   have hpm : p * m = n := Nat.mul_div_cancel' (Nat.minFac_dvd n)
   rw [Nat.totient_eq_card_coprime]
   have hdisj : Disjoint ((Finset.range n).filter n.Coprime)
@@ -54,9 +54,9 @@ private lemma totient_add_le {n : ℕ} (hn : 2 ≤ n) : Nat.totient n + n / n.mi
 private lemma sigma_le {n : ℕ} (hn : 2 ≤ n) :
     ArithmeticFunction.sigma 1 n ≤ n + n / n.minFac * (n / n.minFac) := by
   classical
-  set p := n.minFac with hp_def
+  set p := n.minFac
   have hp : p.Prime := Nat.minFac_prime (by omega)
-  set m := n / p with hm_def
+  set m := n / p
   have hpm : p * m = n := Nat.mul_div_cancel' (Nat.minFac_dvd n)
   rw [ArithmeticFunction.sigma_one_apply, Nat.sum_divisors_eq_sum_properDivisors_add_self]
   have hsub : n.properDivisors ⊆ Finset.Icc 1 m := by
@@ -68,10 +68,7 @@ private lemma sigma_le {n : ℕ} (hn : 2 ≤ n) :
       · omega
       · omega
       · omega
-    have hd0 : 0 < d := by
-      rcases Nat.eq_zero_or_pos d with h | h
-      · subst h; omega
-      · exact h
+    have hd0 : 0 < d := Nat.pos_of_ne_zero (by rintro rfl; omega)
     have hpe : p ≤ e := Nat.minFac_le_of_dvd he2 ⟨d, by rw [mul_comm]; exact he⟩
     rw [Finset.mem_Icc]
     refine ⟨hd0, ?_⟩
@@ -143,11 +140,7 @@ theorem separation (n : ℕ) (hn : 2 ≤ n) :
   obtain ⟨hle, hiff⟩ := key hn
   have hn0 : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
   have hsig : (0 : ℝ) < ArithmeticFunction.sigma 1 n := by
-    have : 0 < ArithmeticFunction.sigma 1 n := by
-      rw [ArithmeticFunction.sigma_one_apply]
-      exact Finset.sum_pos (fun d hd => Nat.pos_of_mem_divisors hd)
-        ⟨1, Nat.one_mem_divisors.mpr (by omega)⟩
-    exact_mod_cast this
+    exact_mod_cast ArithmeticFunction.sigma_pos 1 n (by omega)
   have hden : (0 : ℝ) < (Nat.totient n : ℝ) + ArithmeticFunction.sigma 1 n := by positivity
   have hleR : ((n : ℝ) + 1) * Nat.totient n + ArithmeticFunction.sigma 1 n ≤
       (n : ℝ) * psi n := by exact_mod_cast hle
