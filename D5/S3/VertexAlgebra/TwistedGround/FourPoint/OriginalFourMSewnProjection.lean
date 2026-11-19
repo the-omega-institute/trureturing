@@ -274,4 +274,65 @@ theorem radial_spatial_four_occupation (D : LatticeData) (hu : IsUnit D.G.det)
   exact boxed_four_sewn_projection D q N w (W (firstLeft c)) (W (secondLeft c))
     (W (firstRight c)) (W .S) (hbox _) (hbox _) (hbox _) (hbox _)
 
+open Filter
+open LatticeTwistedGroundRealization.SignQuotient (ModTwoCharge reduceCharge)
+open OriginalFourMPhysicalProduct (physicalProduct)
+open OriginalFourMSpatialWick (physical_chart_jet_hasSum)
+open NativeAffineExternalCoefficient (coordinateJet_const_mul)
+open private chart_charge_data physicalChargeSummand markedQuadratic split_spatial
+  mark_coefficient_eq_jet spatialCoefficient_const_mul from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMSpatialWick
+
+/-- The Taylor jet of the actual radial sector is the convergent sum over
+its original charge fibre of the literal four-occupation projections. -/
+theorem radial_sector_four_occupation (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h24 : D.rank = 24)
+    (a : ModTwoCharge D) (N : ℕ) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1) (upperA : Bool)
+    (c : Chart) (hc : c = .A ∨ c = .B) {w : ℂ} (hw : ‖w‖ < 1)
+    (hwc : w ^ 2 = parameter c x)
+    (hNome : Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA c x) = Q0 (w ^ 2))
+    {X : Type*} [Fintype X] [DecidableEq X]
+    (slot : X → Puncture) (mode : X → Index D) (bound : ∀ i, (mode i).2 ≤ N)
+    (words : Puncture → List X) (hslot : ∀ s j, j ∈ words s → slot j = s)
+    (hl : ((punctureWords words).flatMap Prod.snd).Nodup)
+    (hbox : ∀ s d, d ∈ (inverseLoweredWord D c x s ((words s).map mode)).support →
+      ∀ i ∈ d.support, i.2 ≤ N) :
+    let l := (punctureWords words).flatMap Prod.snd
+    let colour := fun i => (mode i).1
+    let sign := fun i => relative c (slot i)
+    let W := fun s => inverseLoweredWord D c x s ((words s).map mode)
+    let P := W (firstLeft c)
+    let Q := W (secondLeft c)
+    let R := W (firstRight c)
+    let S := W .S
+    HasSum (fun q : {q : Charge D // reduceCharge D q = a} =>
+      (l.map sign).prod * (1 - w ^ 2) ^ (3 : ℕ) *
+        ∑ d ∈ P.support, ∑ g ∈ Q.support, ∑ r ∈ R.support, ∑ s ∈ S.support,
+          (P.coeff d * Q.coeff g * R.coeff r * S.coeff s) *
+            ((weight d : ℂ) * (weight g : ℂ) * (weight r : ℂ) * (weight s : ℂ)) *
+            sewnChargeTerm D d g r s q.val w)
+      (spatialCoefficient (Sum.elim (fun i => (mode i).2) (fun _ => 1))
+        (l.map Sum.inr ++ l.map Sum.inl) (fun z =>
+          physicalProduct D hu slot colour upperA x c a (z ∘ Sum.inl) (z ∘ Sum.inr)) 0) := by
+  classical
+  dsimp only
+  let l := (punctureWords words).flatMap Prod.snd
+  let colour := fun i => (mode i).1
+  have hp := chart_charge_data upperA c hx hx₁
+  have hs := physical_chart_jet_hasSum D hu hD slot colour upperA c hx hx₁ hp.1 hp.2 a
+    (Sum.elim (fun i => (mode i).2) (fun _ => 1)) (l.map Sum.inr ++ l.map Sum.inl)
+  refine hs.congr_fun ?_
+  intro q
+  have h := radial_spatial_four_occupation D hu hD h24 q.val N hx hx₁ upperA c hc hw hwc hNome
+    slot mode bound words hslot hl hbox
+  dsimp only at h
+  rw [← h, split_spatial]
+  rw [← congrFun (spatialCoefficient_const_mul _ _ _ _) 0]
+  apply congrArg (fun f => spatialCoefficient (fun i => (mode i).2) l f 0)
+  funext u
+  rw [mark_coefficient_eq_jet l hl _ 0 (fun _ _ => rfl)]
+  simp only [physicalChargeSummand, markedQuadratic, Sum.elim_inl, Sum.elim_inr,
+    coordinateJet_const_mul, colour, mul_assoc]
+  rfl
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSewnProjection

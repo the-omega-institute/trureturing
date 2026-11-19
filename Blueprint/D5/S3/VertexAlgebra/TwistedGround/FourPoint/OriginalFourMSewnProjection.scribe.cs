@@ -24,5 +24,13 @@ internal sealed class OriginalFourMSewnProjectionDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text("In radial charts A and B, the marked spatial Taylor coefficient of a "
                     + "fixed charge equals the four original occupation sums after the slotwise inverse "
                     + "transforms. The native nome relation is an explicit hypothesis."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-radial-sector-four-occupation"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_sector_four_occupation"),
+                H("Convergent four-occupation projection of a radial sector"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In charts A and B the Taylor coefficient of the full "
+                    + "physical sector equals the convergent charge sum of the literal native "
+                    + "four-occupation readout at the stated nome."))), DescribeRole.Theorem))));
 }
