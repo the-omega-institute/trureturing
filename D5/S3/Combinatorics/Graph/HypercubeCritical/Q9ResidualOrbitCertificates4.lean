@@ -1,0 +1,106 @@
+import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9ResidualOrbitCertificateData
+
+/-! Checked orbit certificates for 4 remaining deficit profiles. -/
+
+namespace D5.S3.Combinatorics.Graph.HypercubeCritical
+
+
+private def residualOrbitCertificates4 : List ResidualOrbitCertificate :=
+  [⟨![2, 3, 3, 3, 5, 5, 5, 5, 5],
+      [(.pairUpper 22 30, 1, 1), (.pairUpper 31 30, 1, 1),
+       (.agreementEdge 19 396 5, 1, 80), (.agreementEdge 22 393 5, 1, 70),
+       (.agreementEdge 384 31 5, 1, 46), (.agreementEdge 49 396 1, 1, 75),
+       (.agreementEdge 50 396 0, 1, 80), (.agreementEdge 50 393 2, 1, 140),
+       (.pairUpper 448 51, 1, 22), (.pairUpper 54 448, 1, 25),
+       (.shellLower 31, 1, 8), (.shellUpper 49, 1, 1),
+       (.shellLower 51, 1, 23), (.shellLower 54, 1, 27),
+       (.shellUpper 112, 1, 1), (.size, 1, 40),
+       (.degree 0, 1, 2), (.degree 3, 1, 3),
+       (.degree 6, 1, 4), (.degree 7, 1, 7),
+       (.degree 14, 1, 2), (.degree 15, 1, 1),
+       (.degree 17, 1, 18), (.degree 18, 1, 56),
+       (.degree 19, 1, 16), (.degree 22, 1, 15),
+       (.degree 31, 1, 4), (.degree 48, 1, 23),
+       (.half 0, -1, 8), (.half 1, -1, 27),
+       (.half 4, -1, 70), (.direction 0, -1, 1),
+       (.direction 1, -1, 2), (.direction 4, -1, 11),
+       (.degree 23, -1, 2), (.degree 30, -1, 2),
+       (.degree 49, -1, 15), (.degree 50, -1, 47),
+       (.degree 51, -1, 8), (.degree 112, -1, 17)]⟩,
+   ⟨![3, 3, 3, 3, 4, 5, 5, 5, 5],
+      [(.pairUpper 15 31, 1, 1), (.pairUpper 112 96, 1, 2),
+       (.agreementEdge 19 396 5, 1, 30), (.agreementEdge 384 31 5, 1, 7),
+       (.agreementEdge 35 396 4, 1, 30), (.agreementEdge 35 396 6, 1, 30),
+       (.agreementEdge 35 284 6, 1, 70), (.agreementEdge 49 396 1, 1, 121),
+       (.pairUpper 51 448, 1, 23), (.agreementEdge 392 51 2, 1, 140),
+       (.agreementEdge 97 396 1, 1, 61), (.pairUpper 99 400, 1, 29),
+       (.pairUpper 400 99, 1, 1), (.shellLower 31, 1, 1),
+       (.shellLower 51, 1, 23), (.shellLower 99, 1, 30),
+       (.size, 1, 36), (.parity, 1, 2),
+       (.degree 0, 1, 3), (.degree 3, 1, 8),
+       (.degree 7, 1, 11), (.degree 17, 1, 15),
+       (.degree 19, 1, 10), (.degree 31, 1, 1),
+       (.degree 33, 1, 68), (.degree 35, 1, 33),
+       (.degree 48, 1, 13), (.degree 96, 1, 17),
+       (.half 0, -1, 31), (.half 4, -1, 13),
+       (.half 5, -1, 54), (.direction 0, -1, 5),
+       (.direction 4, -1, 2), (.direction 5, -1, 11),
+       (.degree 39, -1, 1), (.degree 49, -1, 16),
+       (.degree 51, -1, 4), (.degree 97, -1, 35),
+       (.degree 112, -1, 3), (.degree 224, -1, 2)]⟩,
+   ⟨![3, 4, 4, 4, 5, 5, 5, 5, 5],
+      [(.pairUpper 2 3, 1, 8), (.pairUpper 23 22, 1, 174),
+       (.pairUpper 54 22, 1, 9), (.pairUpper 449 14, 1, 255),
+       (.agreementEdge 14 449 4, 1, 32), (.agreementEdge 19 396 5, 1, 1019),
+       (.pairUpper 449 22, 1, 1022), (.agreementEdge 22 449 3, 1, 169),
+       (.agreementEdge 22 449 5, 1, 530), (.pairUpper 396 49, 1, 288),
+       (.agreementEdge 49 396 1, 1, 562), (.agreementEdge 49 396 6, 1, 170),
+       (.agreementEdge 50 396 0, 1, 1019), (.agreementEdge 50 449 2, 1, 860),
+       (.pairUpper 54 448, 1, 339), (.agreementEdge 448 54 0, 1, 1),
+       (.shellLower 54, 1, 340), (.shellLower 113, 1, 287),
+       (.size, 1, 218), (.parity, 1, 33),
+       (.degree 0, 1, 10), (.degree 3, 1, 15),
+       (.degree 6, 1, 27), (.degree 7, 1, 48),
+       (.degree 14, 1, 17), (.degree 17, 1, 86),
+       (.degree 18, 1, 372), (.degree 19, 1, 82),
+       (.degree 22, 1, 22), (.degree 48, 1, 143),
+       (.degree 113, 1, 115), (.half 0, -1, 23),
+       (.half 1, -1, 169), (.half 4, -1, 438),
+       (.direction 0, -1, 8), (.direction 4, -1, 52),
+       (.degree 23, -1, 82), (.degree 30, -1, 64),
+       (.degree 49, -1, 67), (.degree 50, -1, 430),
+       (.degree 51, -1, 360), (.degree 112, -1, 39)]⟩,
+   ⟨![0, 1, 3, 5, 5, 5, 5, 5, 5],
+      [(.pairLower 14 15, 1, 28), (.pairLower 24 25, 1, 73),
+       (.pairUpper 26 27, 1, 5), (.pairUpper 27 26, 1, 5),
+       (.pairUpper 28 29, 1, 5), (.pairUpper 29 28, 1, 5),
+       (.pairUpper 449 14, 1, 15), (.agreementEdge 14 449 4, 1, 39),
+       (.pairUpper 448 15, 1, 15), (.agreementEdge 15 448 4, 1, 39),
+       (.agreementEdge 26 449 2, 1, 54), (.agreementEdge 27 448 2, 1, 54),
+       (.agreementEdge 28 449 1, 1, 54), (.agreementEdge 29 448 1, 1, 54),
+       (.agreementEdge 448 30 0, 1, 54), (.agreementEdge 449 31 0, 1, 54),
+       (.pairUpper 56 449, 1, 18), (.pairUpper 449 56, 1, 18),
+       (.shellLower 56, 1, 18), (.shellLower 57, 1, 18),
+       (.size, 1, 24), (.degree 0, 1, 4),
+       (.degree 1, 1, 4), (.degree 6, 1, 3),
+       (.degree 7, 1, 3), (.degree 10, 1, 24),
+       (.degree 11, 1, 24), (.degree 12, 1, 24),
+       (.degree 13, 1, 24), (.degree 14, 1, 14),
+       (.degree 15, 1, 14), (.degree 24, 1, 54),
+       (.degree 25, 1, 54), (.half 1, -1, 3),
+       (.half 2, -1, 3), (.half 3, -1, 53),
+       (.direction 1, -1, 3), (.direction 2, -1, 3),
+       (.direction 3, -1, 22), (.degree 26, -1, 5),
+       (.degree 27, -1, 5), (.degree 28, -1, 5),
+       (.degree 29, -1, 5)]⟩]
+
+set_option maxRecDepth 16000 in
+set_option maxHeartbeats 0 in
+-- Reduce each sparse certificate on its own finite coordinate profile.
+private theorem residualOrbitCertificates4_valid :
+    ∀ c ∈ residualOrbitCertificates4, c.Valid := by
+  simp only [residualOrbitCertificates4, List.forall_mem_cons]
+  repeat' apply And.intro
+  all_goals first | exact List.forall_mem_nil _ | decide +kernel
+
+end D5.S3.Combinatorics.Graph.HypercubeCritical
