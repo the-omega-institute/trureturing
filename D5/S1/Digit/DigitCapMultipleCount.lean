@@ -6,7 +6,7 @@
    utility: none
    digest: With digit cap a*ell-1 the count of n is the sum of cap a-1 counts up to n/ell. -/
 
-import D5.S1.Digit.CoonsAdjacentGrowthRefutation
+import D5.S1.Digit.DigitCapQuotientBound
 
 /-! # Digit caps one below a multiple of the radix
 
@@ -37,63 +37,23 @@ private lemma weight_smul (ell c : ℕ) (x : ℕ →₀ ℕ) : weight ell (c •
   intro i _
   ring
 
-private lemma ofDigits_range (ell m : ℕ) (f : ℕ → ℕ) :
-    Nat.ofDigits ell ((List.range m).map f) = ∑ i ∈ Finset.range m, f i * ell ^ i := by
-  induction m with
-  | zero => simp
-  | succ m ih =>
-    rw [List.range_succ, List.map_append, Nat.ofDigits_append, ih, Finset.sum_range_succ]
-    simp [Nat.ofDigits_singleton]
-    ring
+/-- Every natural number has exactly one radix expansion with digits below the radix: at most
+one by the quotient-digit bound with `q = 1`, at least one by `count_positive`. -/
+private lemma count_standard (ell R : ℕ) (hell : 2 ≤ ell) : count (ell - 1) ell R = 1 := by
+  have hR : R < ell ^ (R + 1) :=
+    (Nat.lt_pow_self (by omega)).trans_le (Nat.pow_le_pow_right (by omega) (by omega))
+  have hle := DigitCapQuotientBound.count_le_pow ell 1 R (ell - 1) R hell le_rfl (by omega) hR
+  have hpos := count_positive (ell - 1) ell R hell le_rfl
+  rw [one_pow] at hle
+  omega
 
-/-- Two finitely supported digit strings with all digits below the radix and equal weight
-coincide. -/
-private lemma standard_unique {ell : ℕ} (hell : 2 ≤ ell) (x y : ℕ →₀ ℕ)
-    (hx : ∀ i, x i < ell) (hy : ∀ i, y i < ell) (h : weight ell x = weight ell y) : x = y := by
-  classical
-  set m := (x.support ∪ y.support).sup id + 1
-  have hsub : ∀ z : ℕ →₀ ℕ, z.support ⊆ x.support ∪ y.support → z.support ⊆ Finset.range m := by
-    intro z hz i hi
-    have := Finset.le_sup (f := id) (hz hi)
-    simp only [Finset.mem_range, id] at this ⊢
-    omega
-  have hw : ∀ z : ℕ →₀ ℕ, z.support ⊆ Finset.range m →
-      weight ell z = Nat.ofDigits ell ((List.range m).map z) := by
-    intro z hz
-    rw [ofDigits_range, weight, Finsupp.sum_of_support_subset z hz]
-    intro i _
-    simp
-  have hxs := hsub x Finset.subset_union_left
-  have hys := hsub y Finset.subset_union_right
-  have hL := Nat.ofDigits_inj_of_len_eq (L1 := (List.range m).map x)
-    (L2 := (List.range m).map y) (by omega : 1 < ell) (by simp only [List.length_map])
-    (by intro l hl; obtain ⟨i, _, rfl⟩ := List.mem_map.mp hl; exact hx i)
-    (by intro l hl; obtain ⟨i, _, rfl⟩ := List.mem_map.mp hl; exact hy i)
-    (by rw [← hw x hxs, ← hw y hys, h])
-  ext i
-  by_cases hi : i < m
-  · have := congrArg (fun L => L[i]?) hL
-    simpa [List.getElem?_map, List.getElem?_range hi] using this
-  · have hx0 : x i = 0 := by
-      by_contra h0
-      exact hi (Finset.mem_range.mp (hxs (Finsupp.mem_support_iff.mpr h0)))
-    have hy0 : y i = 0 := by
-      by_contra h0
-      exact hi (Finset.mem_range.mp (hys (Finsupp.mem_support_iff.mpr h0)))
-    rw [hx0, hy0]
-
-/-- Every natural number has exactly one radix expansion with digits below the radix. -/
-theorem count_standard (ell R : ℕ) (hell : 2 ≤ ell) : count (ell - 1) ell R = 1 := by
-  have hsub : Subsingleton (Partitions (ell - 1) ell R) := by
-    constructor
-    intro a b
-    apply Subtype.ext
-    exact standard_unique hell a.val b.val (fun i => by have := a.property.1 i; omega)
-      (fun i => by have := b.property.1 i; omega) (a.property.2.trans b.property.2.symm)
-  have hcount := count_positive (ell - 1) ell R hell le_rfl
-  have := partitions_finite (ell - 1) ell R hell
-  have hne : Nonempty (Partitions (ell - 1) ell R) := (Nat.card_pos_iff.mp hcount).1
-  exact Nat.card_eq_one_iff_unique.mpr ⟨hsub, hne⟩
+private lemma standard_unique {ell : ℕ} (hell : 2 ≤ ell) (R : ℕ) (x y : ℕ →₀ ℕ)
+    (hx : ∀ i, x i < ell) (hy : ∀ i, y i < ell) (hxw : weight ell x = R)
+    (hyw : weight ell y = R) : x = y := by
+  have hsub := (Nat.card_eq_one_iff_unique.mp (count_standard ell R hell)).1
+  have := hsub.elim ⟨x, fun i => by have := hx i; omega, hxw⟩
+    ⟨y, fun i => by have := hy i; omega, hyw⟩
+  exact congrArg Subtype.val this
 
 private lemma standard_exists {ell : ℕ} (hell : 2 ≤ ell) (R : ℕ) :
     ∃ x : ℕ →₀ ℕ, (∀ i, x i ≤ ell - 1) ∧ weight ell x = R := by
@@ -190,12 +150,12 @@ private def fiberEquiv {ell a n : ℕ} (hell : 2 ≤ ell) (ha : 1 ≤ a) (t : Fi
     simp only
     have hw : weight ell (quot ell d) = t := congrArg Fin.val hdt
     have hr : std hell (n - ell * t) = rem ell d := by
-      apply standard_unique hell _ _ (std_spec hell _).1
+      apply standard_unique hell (n - ell * t) _ _ (std_spec hell _).1
       · intro i
         simp only [rem, Finsupp.mapRange_apply]
         exact Nat.mod_lt _ (by omega)
-      · rw [(std_spec hell _).2]
-        have h := weight_split ell d
+      · exact (std_spec hell _).2
+      · have h := weight_split ell d
         rw [hd.2, hw] at h
         omega
     rw [hr, split]
