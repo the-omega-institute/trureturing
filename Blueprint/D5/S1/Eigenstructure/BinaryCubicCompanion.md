@@ -23,3 +23,4 @@ These companion matrices are the final two representatives in the Heawood double
 ## References
 
 - Truth anchor: `D5/S1/Eigenstructure/BinaryCubicCompanion.exists_basis`
+- Dependency: [D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity](../Recurrence/Residue/ExponentialSquareWeightCatalanParity.md)

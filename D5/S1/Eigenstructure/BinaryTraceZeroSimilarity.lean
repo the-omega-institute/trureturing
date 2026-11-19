@@ -6,6 +6,7 @@
    utility: none
    digest: Similarity representatives for nonzero trace-zero binary matrices of size three. -/
 
+import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import D5.S1.Eigenstructure.BinaryCubicCompanion
 import D5.S1.Eigenstructure.BinaryCubicRepeatedRoot
 import D5.S1.Eigenstructure.NilpotentDimensionThree
@@ -35,10 +36,6 @@ def representative (i : Fin 6) : Mat :=
     !![0, 0, 1; 1, 0, 0; 0, 1, 0],
     !![0, 0, 1; 1, 0, 1; 0, 1, 0]] i
 
-private theorem binary_scalar (x : F₂) : x = 0 ∨ x = 1 := by
-  revert x
-  decide
-
 private theorem trace_zero_charpoly (M : Mat) (htrace : M.trace = 0) :
     M.charpoly = X ^ 3 + C (M.charpoly.coeff 1) * X + C (M.charpoly.coeff 0) := by
   have hdegree : M.charpoly.natDegree = 3 := by simp
@@ -64,8 +61,8 @@ private theorem exists_normal_basis (M : Mat) (hne : M ≠ 0) (htrace : M.trace 
   let c := M.charpoly.coeff 0
   have hchar : f.charpoly = X ^ 3 + C a * X + C c := by
     simpa [f, a, c] using trace_zero_charpoly M htrace
-  rcases binary_scalar c with hc | hc
-  · rcases binary_scalar a with ha | ha
+  rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary c with hc | hc
+  · rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary a with ha | ha
     · have hp : f.charpoly = X ^ 3 := by simpa [hc, ha] using hchar
       have hcube : f ^ 3 = 0 := by
         simpa [hp, aeval_X_pow] using LinearMap.aeval_self_charpoly f
@@ -96,7 +93,7 @@ private theorem exists_normal_basis (M : Mat) (hne : M ≠ 0) (htrace : M.trace 
           simp [LinearMap.toMatrix_apply, h0, h1, h2, representative]
   · have hp : f.charpoly = X ^ 3 + C a * X + 1 := by simpa [hc] using hchar
     obtain ⟨b, h0, h1, h2⟩ := BinaryCubicCompanion.exists_basis hdim f a hp
-    rcases binary_scalar a with ha | ha
+    rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary a with ha | ha
     · refine ⟨b, 4, ?_⟩
       ext i j
       change LinearMap.toMatrix b b f i j = _

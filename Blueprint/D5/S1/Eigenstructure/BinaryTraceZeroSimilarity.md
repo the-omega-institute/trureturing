@@ -39,3 +39,4 @@ The matrices match the switching invariants of the six signings in the Heawood d
 - Dependency: [D5/S1/Eigenstructure/BinaryCubicCompanion](BinaryCubicCompanion.md)
 - Dependency: [D5/S1/Eigenstructure/BinaryCubicRepeatedRoot](BinaryCubicRepeatedRoot.md)
 - Dependency: [D5/S1/Eigenstructure/NilpotentDimensionThree](NilpotentDimensionThree.md)
+- Dependency: [D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity](../Recurrence/Residue/ExponentialSquareWeightCatalanParity.md)

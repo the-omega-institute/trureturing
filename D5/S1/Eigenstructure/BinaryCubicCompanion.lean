@@ -6,6 +6,7 @@
    utility: none
    digest: Companion bases for binary cubic characteristic polynomials with constant term one. -/
 
+import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Algebra.Polynomial.Derivative
@@ -26,10 +27,6 @@ set_option relaxedAutoImplicit false
 
 variable {V : Type*} [AddCommGroup V] [Module (ZMod 2) V]
 
-private theorem binary_scalar (x : ZMod 2) : x = 0 ∨ x = 1 := by
-  revert x
-  decide
-
 private theorem eq_of_add_eq_zero {x y : V} (h : x + y = 0) : x = y :=
   (add_eq_zero_iff_eq_neg.mp h).trans (ZModModule.neg_eq_self y)
 
@@ -43,9 +40,9 @@ private theorem independent_three (x y z : V)
   rw [Fintype.linearIndependent_iff]
   intro a h j
   rw [Fin.sum_univ_three] at h
-  rcases binary_scalar (a 0) with ha | ha <;>
-    rcases binary_scalar (a 1) with hb | hb <;>
-    rcases binary_scalar (a 2) with hc | hc <;>
+  rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary (a 0) with ha | ha <;>
+    rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary (a 1) with hb | hb <;>
+    rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary (a 2) with hc | hc <;>
     fin_cases j <;> simp_all
 
 private theorem vector_outside_kernels (f g : Module.End (ZMod 2) V) (hf : f ≠ 0) (hg : g ≠ 0) :
@@ -70,12 +67,12 @@ private theorem cyclic_basis [FiniteDimensional (ZMod 2) V]
       f (b 0) = b 1 ∧ f (b 1) = b 2 ∧ f (b 2) = b 0 + a • b 1 := by
   have hthird : f (f (f v)) ≠ f v := by
     rw [hrec]
-    rcases binary_scalar a with rfl | rfl
+    rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary a with rfl | rfl
     · simpa using Ne.symm hfix
     · simpa using hv
   have hthird0 : f (f (f v)) ≠ 0 := by
     rw [hrec]
-    rcases binary_scalar a with rfl | rfl
+    rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary a with rfl | rfl
     · simpa using hv
     · simpa using fun h : f v + v = 0 => hfix (eq_of_add_eq_zero h)
   have hsecond0 : f (f v) ≠ 0 := by
@@ -112,7 +109,7 @@ theorem exists_basis [FiniteDimensional (ZMod 2) V]
     intro he
     have hc : (X ^ 3 + C a * X + 1 : (ZMod 2)[X]) = (X - 1) ^ 3 := by
       rw [← hf, he, LinearMap.charpoly_one, hdim]
-    rcases binary_scalar a with rfl | rfl
+    rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary a with rfl | rfl
     · have h := congrArg (fun p : (ZMod 2)[X] => p.derivative.eval 1) hc
       norm_num [derivative_pow] at h
       exact (by decide : (3 : ZMod 2) ≠ 0) h
@@ -120,7 +117,7 @@ theorem exists_basis [FiniteDimensional (ZMod 2) V]
       norm_num at h
       exact (by decide : (3 : ZMod 2) ≠ 0) h
   have hquad : f ^ 2 + f + 1 ≠ 0 := by
-    rcases binary_scalar a with rfl | rfl
+    rcases D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary a with rfl | rfl
     · have heig : f.HasEigenvalue 1 :=
         (Module.End.hasEigenvalue_iff_isRoot_charpoly f 1).mpr (by
           norm_num [IsRoot, hf]
