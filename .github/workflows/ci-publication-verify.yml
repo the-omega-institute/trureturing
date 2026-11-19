@@ -192,6 +192,7 @@ jobs:
     env:
       STRATALINT_CACHE_WRITES: 'true'
       CACHE_SCOPE: D5.S0.Tower.GoldenGapWord
+      STRATALINT_SHARD_VERIFICATION: scoped-eviction
     steps:
       - uses: actions/checkout@v5
         with:

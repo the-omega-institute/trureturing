@@ -27,7 +27,7 @@ runs:
       uses: ./.github/actions/lean-cache-shards
       env:
         STRATALINT_CACHE_WRITES: 'true'
-        STRATALINT_RELEASE_RESUME: ${{ inputs.mode }}
+        STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
       with:
         operation: restore
         state: resume
@@ -114,7 +114,7 @@ runs:
       uses: ./.github/actions/lean-cache-shards
       env:
         STRATALINT_CACHE_WRITES: 'true'
-        STRATALINT_RELEASE_RESUME: ${{ inputs.mode }}
+        STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
       with:
         operation: save
         state: resume

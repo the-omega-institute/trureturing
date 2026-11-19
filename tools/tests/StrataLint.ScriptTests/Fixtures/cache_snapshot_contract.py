@@ -23,7 +23,7 @@ from cache_publication_contract import PublicationCases
 
 
 class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
-    def test_release_resume_isolated_by_mode_and_verification_run(self):
+    def test_resume_separates_producer_and_verification_runs(self):
         self.restore_owner()
         shards = importlib.import_module("lean_actions_shards")
         env = dict(self.env, GITHUB_REF="refs/heads/integration-ci-cache-tests",
@@ -31,18 +31,20 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         with mock.patch.dict(os.environ, env, clear=True), \
                 mock.patch.object(shards, "source_commit", return_value="a" * 40):
             ordinary = shards.binding(self.root, "resume")
-            with mock.patch.dict(os.environ, {"STRATALINT_RELEASE_RESUME": "none"}):
+            with mock.patch.dict(os.environ, {"STRATALINT_SHARD_VERIFICATION": "release-none"}):
                 cold = shards.binding(self.root, "resume")
                 with mock.patch.dict(os.environ, {"GITHUB_RUN_ATTEMPT": "2"}):
                     self.assertEqual(cold, shards.binding(self.root, "resume"))
-            with mock.patch.dict(os.environ, {"STRATALINT_RELEASE_RESUME": "partial"}):
+            with mock.patch.dict(os.environ, {"STRATALINT_SHARD_VERIFICATION": "release-partial"}):
                 partial = shards.binding(self.root, "resume")
-            with mock.patch.dict(os.environ, {"STRATALINT_RELEASE_RESUME": "none", "GITHUB_RUN_ID": "18"}):
+            with mock.patch.dict(os.environ, {"STRATALINT_SHARD_VERIFICATION": "release-none", "GITHUB_RUN_ID": "18"}):
                 separate_run = shards.binding(self.root, "resume")
-            self.assertEqual(4, len({shards.index_prefix(value)
-                                    for value in (ordinary, cold, partial, separate_run)}))
-            with mock.patch.dict(os.environ, {"STRATALINT_RELEASE_RESUME": "complete"}):
-                with self.assertRaisesRegex(ValueError, "cold seed mode"):
+            with mock.patch.dict(os.environ, {"STRATALINT_SHARD_VERIFICATION": "scoped-eviction"}):
+                scoped = shards.binding(self.root, "resume")
+            self.assertEqual(5, len({shards.index_prefix(value)
+                                    for value in (ordinary, cold, partial, separate_run, scoped)}))
+            with mock.patch.dict(os.environ, {"STRATALINT_SHARD_VERIFICATION": "release-complete"}):
+                with self.assertRaisesRegex(ValueError, "known scenario"):
                     shards.binding(self.root, "resume")
 
     def test_shard_writer_and_reader_round_trip_required_outputs(self):
