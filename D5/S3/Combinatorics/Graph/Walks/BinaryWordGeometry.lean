@@ -90,13 +90,13 @@ def Path.Within {u v : Word} : Path u v → ℕ → Prop
 /-- The tree distance, expressed with ordinary natural subtraction. -/
 def distance (u v : Word) : ℕ := u.length + v.length - 2 * (lcp u v).length
 
-private theorem distance_nil_left (v : Word) : distance [] v = v.length := by
+theorem distance_nil_left (v : Word) : distance [] v = v.length := by
   simp [distance, lcp]
 
 private theorem distance_nil_right (u : Word) : distance u [] = u.length := by
   cases u <;> simp [distance, lcp]
 
-private theorem distance_cons (a b : Bool) (u v : Word) :
+theorem distance_cons (a b : Bool) (u v : Word) :
     distance (a :: u) (b :: v) =
       if a = b then distance u v else (a :: u).length + (b :: v).length := by
   have h₁ := (lcp_prefix_left u v).length_le
