@@ -1,5 +1,6 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoThinSlice
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9GrayPlacementNormalForm
+import Batteries.Tactic.OpenPrivate
 
 /-! Translate the root to zero and choose axes for a cubical embedding of
 the compressed graph. Each compressed edge retains a midpoint touching
@@ -10,11 +11,15 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
 
 open D5.S3.Combinatorics.Graph.Hypercube
-open BalancedCriticalSpectrum (Q IsBalanced)
+open BalancedCriticalSpectrum (Q IsBalanced IsSwitching switchingVector)
 open BalancedCubeLowerBound (coordinateSlice)
 open Q9GrayPlacementNormalForm (normalize_hammingDist origin)
 open Q9SeventyTwoThinSlice (modelRootNeighbors rootSecondAxes compressed_root_axes)
 open Q9EightCubicGraphCertificate (modelAdj)
+open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+open private edge matrix_row from D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance
+open private matrix_flip_zero from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 
 local notation "flip" => BalancedCriticalSpectrum.flip
 local notation "cubeNormalize" => Q9GrayPlacementNormalForm.normalize
@@ -94,5 +99,34 @@ theorem normalized_embedding {C : Finset (Q 9)} (hC : C.card = 72)
     simp only [Finset.mem_insert, Finset.mem_singleton, vertices.injective.eq_iff]
 
 #print axioms normalized_embedding
+
+/-- The signed values in either coordinate-zero half force every value in
+the opposite half. The formula also applies at zeros off the support. -/
+theorem signed_half_completion (C : Finset (Q 9)) (s : Q 9 → ℝ)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hs : IsSwitching C s) (y : Q 9) :
+    switchingVector C s (flip y 0) =
+      3 * switchingVector (coordinateSlice C (y 0)) s y -
+        ∑ i ∈ Finset.univ.erase (0 : Fin 9),
+          edge y i * switchingVector (coordinateSlice C (y 0)) s (flip y i) := by
+  classical
+  have hslice (x : Q 9) (hx : x 0 = y 0) :
+      switchingVector (coordinateSlice C (y 0)) s x = switchingVector C s x := by
+    simp [switchingVector, coordinateSlice, hx]
+  have hsum : (∑ i ∈ Finset.univ.erase (0 : Fin 9), edge y i *
+      switchingVector (coordinateSlice C (y 0)) s (flip y i)) =
+      ∑ i ∈ Finset.univ.erase (0 : Fin 9), edge y i * switchingVector C s (flip y i) := by
+    apply Finset.sum_congr rfl
+    intro i hi
+    have hne : (0 : Fin 9) ≠ i := (Finset.mem_erase.mp hi).1.symm
+    rw [hslice (flip y i) (Function.update_of_ne hne _ _)]
+  have h := congrFun (BalancedCriticalSpectrum.ambient_eigenvector (d := 3) C s hr hs) y
+  change (huangMatrix 9).mulVec (switchingVector C s) y = 3 * switchingVector C s y at h
+  rw [matrix_row, ← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : Fin 9))] at h
+  have hz : edge y 0 = 1 := matrix_flip_zero y
+  rw [hz, one_mul] at h
+  rw [hslice y rfl, hsum, ← h, add_sub_cancel_left]
+
+#print axioms signed_half_completion
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
