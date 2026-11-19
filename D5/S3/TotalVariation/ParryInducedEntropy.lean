@@ -123,7 +123,7 @@ private theorem window_names_eq (r s : RelationPath k) (radius length : ℕ)
     have eqAt := (bits_eq_of_return_durations r s (length + radius) gaps).2 j.toNat hjlt
     simpa only [Int.toNat_of_nonneg (le_of_not_gt hj)] using eqAt
 
-private theorem relationPath_standardBorel : StandardBorelSpace (RelationPath k) := by
+theorem relationPath_standardBorel : StandardBorelSpace (RelationPath k) := by
   have h : {r : ℤ → Bool | Admissible k r}
       = ⋂ t : ℤ, ⋃ i : Fin k, {r : ℤ → Bool | r (t + i.val) = false} := by
     ext r
@@ -135,7 +135,7 @@ private theorem relationPath_standardBorel : StandardBorelSpace (RelationPath k)
     exact heval (measurableSet_singleton false)
   exact hm.standardBorel
 
-private noncomputable def fiberPartition {α β : Type*} [MeasurableSpace α]
+noncomputable def fiberPartition {α β : Type*} [MeasurableSpace α]
     [MeasurableSpace β] [MeasurableSingletonClass β] [Fintype β] (μ : Measure α)
     (f : α → β) (hf : Measurable f) : MeasurePartition μ β where
   cells := fun i => f ⁻¹' {i}
@@ -250,7 +250,7 @@ private theorem windowName_entropy_le (μ : Measure (RelationPath k))
   exact (entropy_le_of_partition_refinement P S reconstruct hrefine).trans
     (hcells ▸ (entropy_join_le Q R).trans (add_le_add hcard le_rfl))
 
-private theorem generatedSigma_fiberPartition {α β : Type*} [MeasurableSpace α]
+theorem generatedSigma_fiberPartition {α β : Type*} [MeasurableSpace α]
     [MeasurableSpace β] [MeasurableSingletonClass β] [Fintype β] (μ : Measure α)
     (f : α → β) (hf : Measurable f) :
     generatedSigmaAlgebra μ (fiberPartition μ f hf) = MeasurableSpace.comap f inferInstance := by
@@ -324,7 +324,7 @@ private theorem window_saturations (μ : Measure (RelationPath k))
         (fun n : ℕ => MeasurableSpace.comap (returnMap^[n])
         (generatedSigmaAlgebra μ (windowPartition μ radius))) 0
 
-private theorem ksJoin_fiber_cells {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
+theorem ksJoin_fiber_cells {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
     [MeasurableSingletonClass β] [Fintype β] {μ : Measure α} {T : α → α}
     (hT : MeasurePreserving T μ μ) (observe : α → β) (hobs : Measurable observe) (n : ℕ) :
     (ksJoin hT (fiberPartition μ observe hobs) n).cells =
