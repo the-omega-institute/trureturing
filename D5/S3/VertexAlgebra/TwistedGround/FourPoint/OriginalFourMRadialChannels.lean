@@ -381,4 +381,280 @@ theorem radial_AB_slit_crossing (D : LatticeData) (hu : IsUnit D.G.det)
 #print axioms radial_AB_slit_crossing
 
 
+open D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport (exists_lowering_cutoff)
+
+private def modeCeiling (D : LatticeData) (P : Oscillator D) : ℕ :=
+  P.vars.sup Prod.snd
+
+private theorem modesBounded_of_ceiling (D : LatticeData) (P : Oscillator D) {M : ℕ}
+    (hM : modeCeiling D P ≤ M) : modesBounded D M P := by
+  intro d hd i hi
+  exact (Finset.le_sup ((mem_vars_iff_mem_support i).mpr ⟨d, hd, hi⟩)).trans hM
+
+private theorem exists_nat_bound {X : Type*} [Fintype X] (f : X → ℕ) :
+    ∃ M, ∀ i, f i ≤ M :=
+  ⟨Finset.univ.sup f, fun i => Finset.le_sup (f := f) (Finset.mem_univ i)⟩
+
+/-- Word representatives require no supplied mode box or choice of marks.
+The charge-sector crossing holds for every signed triple of original modes. -/
+theorem radial_AB_word_crossing (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24) (b : ModTwoCharge D)
+    (H K L : ℕ) (m n r : ℤ) {x : ℝ} (hx : 1 / 2 < x) (hx₁ : x < 1)
+    (upperA : Bool) {wA wB : ℂ} (hwA : ‖wA‖ < 1) (hwB : ‖wB‖ < 1)
+    (hsA : wA ^ 2 = parameter .A (x : ℂ)) (hsB : wB ^ 2 = parameter .B (x : ℂ))
+    (hNomeA : exp ((Real.pi : ℂ) * I * chartTau upperA .A x) = Q0 (wA ^ 2))
+    (hNomeB : exp ((Real.pi : ℂ) * I * chartTau upperA .B x) = Q0 (wB ^ 2))
+    (words : Puncture → List (Index D))
+    (hP : (creationWord D (words .P)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (H : ℤ) - 3))
+    (hQ : (creationWord D (words .Q)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (K : ℤ) - 3))
+    (hR : (creationWord D (words .R)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * (L : ℤ) - 3))
+    (hS : (creationWord D (words .S)).IsWeightedHomogeneous
+      (fun i => (omega D i : ℤ)) (2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3)) :
+    let P := creationWord D (words .P)
+    let Q := creationWord D (words .Q)
+    let R := creationWord D (words .R)
+    let S := creationWord D (words .S)
+    slitChannelA D H K (m + n + r) P Q R S b (parameter .A (x : ℂ)) =
+      (2 : ℂ) ^ (12 : ℕ) * (x : ℂ) ^ (m + n + r + 2) *
+        slitChannelB D H K L m n r P Q R S b (parameter .B (x : ℂ)) := by
+  classical
+  let : Fintype Puncture :=
+    ⟨{.P, .Q, .R, .S}, by intro p; cases p <;> simp⟩
+  let : Fintype Chart :=
+    ⟨{.A, .B, .D}, by intro c; cases c <;> simp⟩
+  let X := Σ p : Puncture, Fin (words p).length
+  let slot : X → Puncture := Sigma.fst
+  let mode : X → Index D := fun i => (words i.1).get i.2
+  let marks (p : Puncture) : List X := List.ofFn fun i => ⟨p, i⟩
+  have hwords (p : Puncture) : (marks p).map mode = words p := by
+    simp only [marks, List.map_ofFn]
+    exact List.ofFn_get (words p)
+  have hslot (p : Puncture) (i : X) (hi : i ∈ marks p) : slot i = p := by
+    obtain ⟨j, rfl⟩ := (List.mem_ofFn' _ _).mp hi
+    rfl
+  have hnodup (p : Puncture) : (marks p).Nodup :=
+    List.nodup_ofFn_ofInjective fun _ _ h => eq_of_heq (Sigma.mk.inj_iff.mp h).2
+  have hdisj (p q : Puncture) (hpq : p ≠ q) : List.Disjoint (marks p) (marks q) := by
+    intro i hi hj
+    exact hpq ((hslot p i hi).symm.trans (hslot q i hj))
+  have hl : ((punctureWords marks).flatMap Prod.snd).Nodup := by
+    change (marks .P ++ (marks .Q ++ (marks .R ++ (marks .S ++ [])))).Nodup
+    simp only [List.append_nil, List.nodup_append', hnodup, List.disjoint_append_right,
+      true_and]
+    repeat' first | exact hdisj _ _ (by intro h; cases h) | constructor
+  choose cutoff hcut using fun p => exists_lowering_cutoff D hu (creationWord D (words p))
+  obtain ⟨maxMode, hmode⟩ := exists_nat_bound fun i : X => (mode i).2
+  obtain ⟨maxInverse, hinverse⟩ := exists_nat_bound fun z : Chart × Puncture =>
+    modeCeiling D (inverseLoweredWord D z.1 x z.2 (words z.2))
+  let lowerCeiling (p : Puncture) (j : ℕ) :=
+    modeCeiling D ((oscillatorLower D ^ j) (creationWord D (words p)))
+  obtain ⟨maxLower, hlower⟩ := exists_nat_bound fun p : Puncture =>
+    (Finset.range (cutoff p)).sup (lowerCeiling p)
+  let M := maxMode + maxInverse + maxLower
+  have hM₁ : maxMode ≤ M := by dsimp only [M]; omega
+  have hM₂ : maxInverse ≤ M := by dsimp only [M]; omega
+  have hM₃ : maxLower ≤ M := by dsimp only [M]; omega
+  have bound (i : X) : (mode i).2 ≤ M := (hmode i).trans hM₁
+  have hbox (c : Chart) (p : Puncture) :
+      modesBounded D M (inverseLoweredWord D c x p ((marks p).map mode)) := by
+    rw [hwords]
+    exact modesBounded_of_ceiling D _ ((hinverse (c, p)).trans hM₂)
+  have hsupp (p : Puncture) (j : ℕ) :
+      modesBounded D M ((oscillatorLower D ^ j) (Word D mode marks p)) := by
+    change modesBounded D M ((oscillatorLower D ^ j) (creationWord D ((marks p).map mode)))
+    rw [hwords]
+    by_cases hj : j < cutoff p
+    · have h := Finset.le_sup (f := lowerCeiling p) (Finset.mem_range.mpr hj)
+      exact modesBounded_of_ceiling D _ (h.trans ((hlower p).trans hM₃))
+    · rw [hcut p j (Nat.le_of_not_gt hj)]
+      simp [modesBounded]
+  have hmark (p : Puncture) : Word D mode marks p = creationWord D (words p) :=
+    congrArg (creationWord D) (hwords p)
+  simpa only [hmark] using radial_AB_slit_crossing D hu hD h24 b M H K L m n r hx hx₁
+    upperA hwA hwB hsA hsB hNomeA hNomeB slot mode bound marks hslot hl hbox hsupp
+    (by rwa [hmark]) (by rwa [hmark]) (by rwa [hmark]) (by rwa [hmark])
+
+#print axioms radial_AB_word_crossing
+
+open OriginalFourMEnergyCoefficient (leftExponent selector)
+open FactorialFockMetric (weight)
+open private monomialWord monomialWord_prod from
+  D5.S3.VertexAlgebra.HalfFock.OriginalHalfCurrentTransport
+
+private def occupationForm (D : LatticeData)
+    (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ) :
+    (Exponent D →₀ ℂ) →ₗ[ℂ] (Exponent D →₀ ℂ) →ₗ[ℂ]
+      (Exponent D →₀ ℂ) →ₗ[ℂ] (Exponent D →₀ ℂ) →ₗ[ℂ] ℂ :=
+  Finsupp.linearCombination ℂ fun d =>
+    Finsupp.linearCombination ℂ fun g =>
+      Finsupp.linearCombination ℂ fun r =>
+        Finsupp.linearCombination ℂ fun s => F d g r s
+
+private abbrev FourForm (D : LatticeData) :=
+  MultilinearMap ℂ (fun _ : Fin 4 => Oscillator D) ℂ
+
+private def occupationMultilinear (D : LatticeData)
+    (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ) : FourForm D where
+  toFun v := occupationForm D F (v 0).coeff (v 1).coeff (v 2).coeff (v 3).coeff
+  map_update_add' v i p q := by
+    fin_cases i <;>
+      simp [Function.update, Fin.ext_iff, AddMonoidAlgebra.coeff_add,
+        map_add, LinearMap.add_apply]
+  map_update_smul' v i t p := by
+    fin_cases i <;>
+      simp [Function.update, Fin.ext_iff, AddMonoidAlgebra.coeff_smul,
+        map_smul, LinearMap.smul_apply]
+
+private theorem occupationMultilinear_apply (D : LatticeData)
+    (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ)
+    (v : Fin 4 → Oscillator D) :
+    occupationMultilinear D F v =
+      ∑ d ∈ (v 0).support, ∑ g ∈ (v 1).support, ∑ r ∈ (v 2).support,
+        ∑ s ∈ (v 3).support,
+          ((v 0).coeff d * (v 1).coeff g * (v 2).coeff r * (v 3).coeff s) * F d g r s := by
+  classical
+  change occupationForm D F (v 0).coeff (v 1).coeff (v 2).coeff (v 3).coeff = _
+  simp only [occupationForm, Finsupp.linearCombination_apply, Finsupp.sum, LinearMap.sum_apply,
+    LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum, MvPolynomial.support]
+  refine Finset.sum_congr rfl fun d _ => Finset.sum_congr rfl fun g _ =>
+    Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
+  ring
+
+private def projectForm (D : LatticeData) (H K : ℕ) (t : ℤ)
+    (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ) : FourForm D :=
+  ∑ i ∈ Finset.range (K - 1), ∑ j ∈ Finset.range (H - 1),
+    ((-1 : ℂ) ^ ((K : ℤ) - (i : ℤ) + (j : ℤ)) /
+      ((i.factorial : ℂ) * (j.factorial : ℂ))) •
+      (occupationMultilinear D (fun d g r s =>
+        (weight d : ℂ) * (weight g : ℂ) * (weight r : ℂ) * (weight s : ℂ) *
+          selector D 0 (leftExponent H K 0 i j) 0 d g * selector D 0 (-2 * t - 2) 0 r s *
+          F d g r s)).compLinearMap
+        ![oscillatorLower D ^ j, oscillatorLower D ^ i, LinearMap.id, LinearMap.id]
+
+set_option maxHeartbeats 1000000 in
+-- Expanding the four nested sums requires elaborating the four lowering maps.
+private theorem projectForm_apply (D : LatticeData) (H K : ℕ) (t : ℤ)
+    (F : Exponent D → Exponent D → Exponent D → Exponent D → ℂ)
+    (v : Fin 4 → Oscillator D) :
+    projectForm D H K t F v = projectOccupations D H K 0 t (v 0) (v 1) (v 2) (v 3) F := by
+  classical
+  simp only [projectForm, sum_apply, smul_apply,
+    MultilinearMap.compLinearMap_apply, occupationMultilinear_apply,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons,
+    LinearMap.id_apply, projectOccupations, smul_eq_mul]
+  refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+  congr 1
+  refine Finset.sum_congr rfl fun d _ => Finset.sum_congr rfl fun g _ =>
+    Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
+  ring
+
+private def laurentForm (D : LatticeData) (H K : ℕ) (s : ℤ) (a : ModTwoCharge D)
+    (t : ℂ) : FourForm D :=
+  (-t) ^ (-((H : ℤ) + K)) •
+    projectForm D H K (s - H - K + 1) (fun d g r u => slitChargeSector D a d g r u t)
+
+private theorem laurentForm_apply (D : LatticeData) (H K : ℕ) (s : ℤ) (a : ModTwoCharge D)
+    (t : ℂ) (v : Fin 4 → Oscillator D) :
+    laurentForm D H K s a t v = slitLaurent D H K s (v 0) (v 1) (v 2) (v 3) a t := by
+  simp only [laurentForm, smul_apply, smul_eq_mul, projectForm_apply,
+    slitLaurent, slitDiagonal]
+
+private def slitAForm (D : LatticeData) (H K : ℕ) (s : ℤ) (b : ModTwoCharge D)
+    (t : ℂ) : FourForm D :=
+  ∑ a, (quadraticSign D a * fourierSign D a b) • laurentForm D H K s a t
+
+private def permB : Equiv.Perm (Fin 4) :=
+  (Equiv.swap 0 1).trans (Equiv.swap 0 2)
+
+private def slitBForm (D : LatticeData) (H K L : ℕ) (m n r : ℤ) (b : ModTwoCharge D)
+    (t : ℂ) : FourForm D :=
+  ∑ ell ∈ Finset.range (loweringCutoff H K L m n r), loweringWeight (m + n + r) ell •
+    ((laurentForm D K L (m + n + r + ell) b t).compLinearMap
+      ![LinearMap.id, LinearMap.id, LinearMap.id, oscillatorLower D ^ ell]).domDomCongr permB
+
+private theorem slitAForm_apply (D : LatticeData) (H K : ℕ) (s : ℤ) (a : ModTwoCharge D)
+    (t : ℂ) (v : Fin 4 → Oscillator D) :
+    slitAForm D H K s a t v = slitChannelA D H K s (v 0) (v 1) (v 2) (v 3) a t := by
+  simp only [slitAForm, slitChannelA, sum_apply, smul_apply,
+    smul_eq_mul, laurentForm_apply, mul_assoc]
+
+private theorem slitBForm_apply (D : LatticeData) (H K L : ℕ) (m n r : ℤ) (a : ModTwoCharge D)
+    (t : ℂ) (v : Fin 4 → Oscillator D) :
+    slitBForm D H K L m n r a t v = slitChannelB D H K L m n r (v 0) (v 1) (v 2) (v 3) a t := by
+  have hp0 : permB 0 = 1 := by decide
+  have hp1 : permB 1 = 2 := by decide
+  have hp2 : permB 2 = 0 := by decide
+  have hp3 : permB 3 = 3 := by decide
+  simp only [slitBForm, slitChannelB, slitLowered, sum_apply,
+    smul_apply, MultilinearMap.domDomCongr, MultilinearMap.coe_mk,
+    MultilinearMap.compLinearMap_apply, smul_eq_mul, laurentForm_apply,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons,
+    LinearMap.id_apply, hp0, hp1, hp2, hp3]
+
+/-- Exact interior A/B crossing for all four homogeneous original oscillators,
+including zero inputs and arbitrary signed modes. -/
+theorem radial_AB_crossing (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24) (b : ModTwoCharge D)
+    (H K L : ℕ) (m n r : ℤ) {x : ℝ} (hx : 1 / 2 < x) (hx₁ : x < 1)
+    (upperA : Bool) {wA wB : ℂ} (hwA : ‖wA‖ < 1) (hwB : ‖wB‖ < 1)
+    (hsA : wA ^ 2 = parameter .A (x : ℂ)) (hsB : wB ^ 2 = parameter .B (x : ℂ))
+    (hNomeA : exp ((Real.pi : ℂ) * I * chartTau upperA .A x) = Q0 (wA ^ 2))
+    (hNomeB : exp ((Real.pi : ℂ) * I * chartTau upperA .B x) = Q0 (wB ^ 2))
+    (P Q R S : Oscillator D)
+    (hP : P.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (H : ℤ) - 3))
+    (hQ : Q.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (K : ℤ) - 3))
+    (hR : R.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (L : ℤ) - 3))
+    (hS : S.IsWeightedHomogeneous (fun i => (omega D i : ℤ))
+      (2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3)) :
+    slitChannelA D H K (m + n + r) P Q R S b (parameter .A (x : ℂ)) =
+      (2 : ℂ) ^ (12 : ℕ) * (x : ℂ) ^ (m + n + r + 2) *
+        slitChannelB D H K L m n r P Q R S b (parameter .B (x : ℂ)) := by
+  classical
+  let v : Fin 4 → Oscillator D := ![P, Q, R, S]
+  let d : Fin 4 → ℤ := ![2 * (H : ℤ) - 3, 2 * (K : ℤ) - 3, 2 * (L : ℤ) - 3,
+    2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3]
+  have hv (i : Fin 4) : (v i).IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (d i) := by
+    fin_cases i <;> assumption
+  let A := slitAForm D H K (m + n + r) b (parameter .A (x : ℂ))
+  let c := (2 : ℂ) ^ (12 : ℕ) * (x : ℂ) ^ (m + n + r + 2)
+  let B := c • slitBForm D H K L m n r b (parameter .B (x : ℂ))
+  suffices A v = B v by
+    simpa only [A, B, c, slitAForm_apply, slitBForm_apply, smul_apply, smul_eq_mul,
+      v, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three,
+      Matrix.head_cons, Matrix.tail_cons]
+      using this
+  conv_lhs => rw [show v = (fun i => ∑ e ∈ (v i).support, monomial e ((v i).coeff e)) by
+    funext i; exact (v i).as_sum, A.map_sum_finset]
+  conv_rhs => rw [show v = (fun i => ∑ e ∈ (v i).support, monomial e ((v i).coeff e)) by
+    funext i; exact (v i).as_sum, B.map_sum_finset]
+  refine Finset.sum_congr rfl fun e he => ?_
+  have he' (i : Fin 4) : e i ∈ (v i).support := (Fintype.mem_piFinset.mp he) i
+  have hm (i : Fin 4) :
+      (monomial (e i) (1 : ℂ)).IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (d i) :=
+    isWeightedHomogeneous_monomial _ _ _ (hv i (mem_support_iff.mp (he' i)))
+  have hs (i : Fin 4) :
+      monomial (e i) ((v i).coeff (e i)) = (v i).coeff (e i) • monomial (e i) (1 : ℂ) := by
+    rw [← map_smul, smul_eq_mul, mul_one]
+  simp_rw [hs, MultilinearMap.map_smul_univ]
+  congr 1
+  let words : Puncture → List (Index D)
+    | .P => monomialWord (e 0)
+    | .Q => monomialWord (e 1)
+    | .R => monomialWord (e 2)
+    | .S => monomialWord (e 3)
+  have hp : creationWord D (words .P) = monomial (e 0) 1 := monomialWord_prod _
+  have hq : creationWord D (words .Q) = monomial (e 1) 1 := monomialWord_prod _
+  have hr : creationWord D (words .R) = monomial (e 2) 1 := monomialWord_prod _
+  have ht : creationWord D (words .S) = monomial (e 3) 1 := monomialWord_prod _
+  simpa only [A, B, c, slitAForm_apply, slitBForm_apply, smul_apply, smul_eq_mul,
+    hp, hq, hr, ht] using radial_AB_word_crossing D hu hD h24 b H K L m n r hx hx₁
+      upperA hwA hwB hsA hsB hNomeA hNomeB words
+      (by rw [hp]; exact hm 0) (by rw [hq]; exact hm 1)
+      (by rw [hr]; exact hm 2) (by rw [ht]; exact hm 3)
+
+#print axioms radial_AB_crossing
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMRadialChannels
