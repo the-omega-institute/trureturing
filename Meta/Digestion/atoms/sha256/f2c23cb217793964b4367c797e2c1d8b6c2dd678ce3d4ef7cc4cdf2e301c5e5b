@@ -1,0 +1,3 @@
+有限维紧凸分解给每个 $x\in K$ 的有限纯分解 $x=\sum_i\lambda_i r_i$，
+$\lambda_i\ge0$、$\sum_i\lambda_i=1$；可取项数至多 $\dim V$。不要求 $P$ 预先闭或每点暴露。
+
