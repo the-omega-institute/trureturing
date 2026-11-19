@@ -12,7 +12,9 @@ $$\begin{aligned}\forall mu: \operatorname{ProbabilityMeasure}\left(\mathbb{R}\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/NoncompactQuantile.absolute_tail_le` (`✓ std3`). ∎
 
-*Citation.* Daniel Lyng (2026). *Econlib compact scalar Strassen construction*. URL: <https://github.com/danlyng/Econlib/blob/d7bd9477476cade1c6695c8891746048ceddc52f/Econlib/Probability/Order/Strassen.lean>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Lyng (2026). *Econlib compact scalar Strassen construction*. URL: <https://github.com/danlyng/Econlib/blob/d7bd9477476cade1c6695c8891746048ceddc52f/Econlib/Probability/Order/Strassen.lean>.
 
 *Commentary.*
 
@@ -24,7 +26,9 @@ $$\begin{aligned}\forall mu: \operatorname{ProbabilityMeasure}\left(\mathbb{R}\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/NoncompactQuantile.exists_martingale_approximations` (`✓ std3`). ∎
 
-*Citation.* Lasse Leskelä and Matti Vihola (2017). *Conditional convex orders and measurable martingale couplings*. DOI: [10.3150/16-BEJ827](https://doi.org/10.3150/16-BEJ827). URL: <https://arxiv.org/abs/1404.0999>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Lasse Leskelä and Matti Vihola (2017). *Conditional convex orders and measurable martingale couplings*. DOI: [10.3150/16-BEJ827](https://doi.org/10.3150/16-BEJ827). URL: <https://arxiv.org/abs/1404.0999>.
 
 *Commentary.*
 
@@ -40,7 +44,9 @@ $$\begin{aligned}\forall pi: \operatorname{ProbabilityMeasure}\left(\mathbb{R}\t
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/NoncompactQuantile.tested_measurable_of_continuous` (`✓ std3`). ∎
 
-*Citation.* Daniel Lyng (2026). *Econlib compact scalar Strassen construction*. URL: <https://github.com/danlyng/Econlib/blob/d7bd9477476cade1c6695c8891746048ceddc52f/Econlib/Probability/Order/Strassen.lean>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Daniel Lyng (2026). *Econlib compact scalar Strassen construction*. URL: <https://github.com/danlyng/Econlib/blob/d7bd9477476cade1c6695c8891746048ceddc52f/Econlib/Probability/Order/Strassen.lean>.
 
 *Commentary.*
 
