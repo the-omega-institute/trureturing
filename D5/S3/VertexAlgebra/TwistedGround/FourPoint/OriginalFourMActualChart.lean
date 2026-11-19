@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalFourMActualChart
+/- GID: D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMActualChart
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalFourMActualChart
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMActualChart
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -18,7 +18,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-namespace D5.S3.VertexAlgebra.TwistedGround.OriginalFourMActualChart
+namespace D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMActualChart
 
 open Complex (I)
 open HalfFock.OriginalHalfCurrentTransport
@@ -543,4 +543,4 @@ theorem mixed_free_covariance (D : LatticeData) (c : Chart) (right : Bool)
   · field_simp
     ring
 
-end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMActualChart
+end D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMActualChart
