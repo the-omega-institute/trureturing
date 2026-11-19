@@ -21,93 +21,6 @@ namespace D5.S3.Arith.FactorialRatio.BalaA295462BlockMasks
 
 open D5.S3.Arith.FactorialRatio.BalaA295462Parity
 
-private lemma bit_shift {e y : ℕ} (hy : y < 2 ^ e) (i : ℕ) :
-    (2 ^ e + y).testBit i = (decide (i = e) || y.testBit i) := by
-  rcases lt_trichotomy i e with h | h | h
-  · rw [Nat.testBit_two_pow_add_gt h]
-    simp [show i ≠ e by omega]
-  · subst h
-    rw [Nat.testBit_two_pow_add_eq, Nat.testBit_lt_two_pow hy]
-    simp
-  · have hlt : 2 ^ e + y < 2 ^ i := by
-      have : 2 ^ (e + 1) ≤ 2 ^ i := Nat.pow_le_pow_right (by norm_num) (by omega)
-      rw [pow_succ] at this
-      omega
-    rw [Nat.testBit_lt_two_pow hlt, Nat.testBit_lt_two_pow (lt_of_lt_of_le hy
-      (Nat.pow_le_pow_right (by norm_num) h.le))]
-    simp [show i ≠ e by omega]
-
-private lemma low_bits_iff (e y : ℕ) :
-    (∀ i, y.testBit i = true → i + 4 ≤ e) ↔ y < 2 ^ (e - 3) := by
-  constructor
-  · intro h
-    apply Nat.lt_pow_two_of_testBit
-    intro i hi
-    by_contra hb
-    have := h i (by simpa using hb)
-    omega
-  · intro hy i hi
-    by_contra hlt
-    have hle : 2 ^ (e - 3) ≤ 2 ^ i := Nat.pow_le_pow_right (by norm_num) (by omega)
-    rw [Nat.testBit_lt_two_pow (lt_of_lt_of_le hy hle)] at hi
-    exact Bool.false_ne_true hi
-
-private lemma spaced_shift {e y : ℕ} (hy : y < 2 ^ e) :
-    spacedBits (2 ^ e + y) ↔ spacedBits y ∧ y < 2 ^ (e - 3) := by
-  rw [← low_bits_iff]
-  unfold spacedBits
-  simp only [bit_shift hy, Bool.or_eq_true, decide_eq_true_eq]
-  have hye : ∀ i, y.testBit i = true → i < e := by
-    intro i hi
-    by_contra h
-    have := Nat.testBit_lt_two_pow (lt_of_lt_of_le hy
-      (Nat.pow_le_pow_right (by norm_num) (not_lt.mp h)))
-    rw [this] at hi
-    exact Bool.false_ne_true hi
-  constructor
-  · intro h
-    refine ⟨fun i j hij hi hj => h i j hij (Or.inr hi) (Or.inr hj), fun i hi => ?_⟩
-    exact h i e (hye i hi) (Or.inr hi) (Or.inl rfl)
-  · rintro ⟨h1, h2⟩ i j hij hi hj
-    rcases hi with hi | hi <;> rcases hj with hj | hj
-    · omega
-    · have := hye j hj
-      omega
-    · subst hj
-      exact h2 i hi
-    · exact h1 i j hij hi hj
-
-/-- Top-bit splitting of a positive number. -/
-private lemma top_split (n : ℕ) (hn : 0 < n) : ∃ e y, y < 2 ^ e ∧ n = 2 ^ e + y :=
-  ⟨Nat.log 2 n, n - 2 ^ Nat.log 2 n, by
-    have h1 := Nat.lt_pow_succ_log_self (by norm_num : 1 < 2) n
-    rw [pow_succ] at h1
-    omega, by
-    have := Nat.pow_log_le_self 2 hn.ne'
-    omega⟩
-
-private lemma mul_bound (u : ℕ) (hu : u < 16) :
-    ∀ y e, spacedBits y → y < 2 ^ (e - 3) → u * y < 2 ^ e := by
-  intro y
-  induction y using Nat.strong_induction_on with
-  | _ y ih =>
-    intro e hs hy
-    rcases Nat.eq_zero_or_pos y with h0 | hpos
-    · subst h0; simp
-    · obtain ⟨f, z, hz, rfl⟩ := top_split y hpos
-      obtain ⟨hzs, hzf⟩ := (spaced_shift hz).mp hs
-      have hfe : f + 4 ≤ e := by
-        by_contra hc
-        have : 2 ^ (e - 3) ≤ 2 ^ f := Nat.pow_le_pow_right (by norm_num) (by omega)
-        omega
-      have hzlt : z < 2 ^ f := hz
-      have hrec := ih z (by omega) f hzs hzf
-      have h15 : u * 2 ^ f ≤ 15 * 2 ^ f := Nat.mul_le_mul_right _ (by omega)
-      have hpow : 2 ^ (f + 4) = 16 * 2 ^ f := by rw [pow_add]; ring
-      have : 2 ^ (f + 4) ≤ 2 ^ e := Nat.pow_le_pow_right (by norm_num) hfe
-      rw [show u * (2 ^ f + z) = u * 2 ^ f + u * z by ring]
-      omega
-
 private lemma block (e a b A B : ℕ) (hA : A < 2 ^ e) (hB : B < 2 ^ e) :
     ((2 ^ e * a + A) ^^^ (2 ^ e * b + B) = 2 ^ e * (a ^^^ b) + (A ^^^ B)) ∧
     ((2 ^ e * a + A) &&& (2 ^ e * b + B) = 2 ^ e * (a &&& b) + (A &&& B)) ∧
@@ -136,10 +49,23 @@ private lemma spaced_masks :
     intro hs u v hu hv
     rcases Nat.eq_zero_or_pos n with h0 | hpos
     · subst h0; simp
-    · obtain ⟨e, y, hy, rfl⟩ := top_split n hpos
-      obtain ⟨hys, hye⟩ := (spaced_shift hy).mp hs
-      have huy := mul_bound u hu y e hys hye
-      have hvy := mul_bound v hv y e hys hye
+    · obtain ⟨e, h1, h2⟩ : ∃ e, 2 ^ e ≤ n ∧ n < 2 * 2 ^ e := by
+        refine ⟨Nat.log 2 n, Nat.pow_log_le_self 2 hpos.ne', ?_⟩
+        have := Nat.lt_pow_succ_log_self (by norm_num : 1 < 2) n
+        rwa [pow_succ, mul_comm] at this
+      have hmod : n % 2 ^ e = n - 2 ^ e := by
+        rw [Nat.mod_eq_sub_mod h1, Nat.mod_eq_of_lt (by omega)]
+      have hbit : n.testBit e = true := by
+        rw [show n = 2 ^ e + (n - 2 ^ e) by omega, Nat.testBit_two_pow_add_eq,
+          Nat.testBit_lt_two_pow (by omega)]
+        rfl
+      have hys := sparse_mod n e hs
+      have ht := tail_bound n e hs hbit
+      rw [hmod] at hys ht
+      generalize hY : n - 2 ^ e = y at hys ht
+      obtain rfl : n = 2 ^ e + y := by omega
+      have huy : u * y < 2 ^ e := lt_of_le_of_lt (Nat.mul_le_mul_right y (by omega)) ht
+      have hvy : v * y < 2 ^ e := lt_of_le_of_lt (Nat.mul_le_mul_right y (by omega)) ht
       obtain ⟨hx, ha, ho⟩ := ih y (by omega) hys u v hu hv
       have eu : u * (2 ^ e + y) = 2 ^ e * u + u * y := by ring
       have ev : v * (2 ^ e + y) = 2 ^ e * v + v * y := by ring
@@ -277,6 +203,7 @@ theorem block_masks (n : ℕ) (hodd : ∃ k : ℕ, a n = (k : ℚ) ∧ Odd k) :
     (H 3 13 (by norm_num) (by norm_num)).1, (H 5 9 (by norm_num) (by norm_num)).1,
     (H 5 11 (by norm_num) (by norm_num)).1, (H 6 11 (by norm_num) (by norm_num)).1,
     (H 7 9 (by norm_num) (by norm_num)).1, (H 7 10 (by norm_num) (by norm_num)).1,
-    (H 7 11 (by norm_num) (by norm_num)).1, (carry_masks n hs).1, (carry_masks n hs).2.2.1⟩
+    (H 7 11 (by norm_num) (by norm_num)).1, (carry_masks n hs).1,
+    (carry_masks n hs).2.2.1⟩
 
 end D5.S3.Arith.FactorialRatio.BalaA295462BlockMasks
