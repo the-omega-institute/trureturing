@@ -237,17 +237,21 @@ private theorem mem_fill (wagner : Bool) (p : Placement)
 theorem exists_member {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 20) :
-    ∃ (wagner : Bool) (pattern : Fin 5) (p : Fin 8 ↪ Q 9),
+    ∃ (g : Q 9 ≃ Q 9) (σ : Fin 9 ≃ Fin 9)
+      (wagner : Bool) (pattern : Fin 5) (p : Fin 8 ↪ Q 9),
+      (∀ x i, g (flip x i) = flip (g x) (σ i)) ∧
+      (∀ x, g x 0 = false ↔ x 0 = b) ∧
+      (∀ k, p k ∈ (coordinateSlice C b).image g) ∧
       (fun i => (cubeBitVec 9).symm (p i)) ∈ candidates wagner pattern ∧
       ∀ i j, modelAdj wagner i j = true →
-        ∃ m : Q 9, m 0 = false ∧
+        ∃ m ∈ (coordinateSlice C b).image g, m 0 = false ∧
           ∀ k, (hypercube 9).Adj m (p k) ↔ k = i ∨ k = j := by
-  obtain ⟨wagner, pattern, p, hroot, hcut, hpoints, hmid⟩ :=
+  obtain ⟨g, σ, wagner, pattern, p, hg, hcut, hroot, hhigh, hpoints, hmid⟩ :=
     Q9SeventyTwoEmbedding.normalized_embedding hC hr hb b hs
   let actual : Placement := fun k => (cubeBitVec 9).symm (p k)
   have hplane (k : Fin 8) : (actual k).getLsbD 0 = false := by
     change cubeBitVec 9 (actual k) 0 = false
-    simpa [actual] using hcut k
+    simpa [actual] using (hhigh k).2
   have hstep (x : BitVec 9) (a : Fin 9) :
       cubeBitVec 9 (toggle x a) = flip (cubeBitVec 9 x) a := cubeBitVec_xor_single x a
   have hzero : cubeBitVec 9 (0 : BitVec 9) = Q9GrayPlacementNormalForm.origin := by decide
@@ -267,7 +271,7 @@ theorem exists_member {C : Finset (Q 9)} (hC : C.card = 72)
   have hmid' (i j : Fin 8) (hij : modelAdj wagner i j = true) :
       ∃ m : BitVec 9, m.getLsbD 0 = false ∧ ∀ k,
         (hypercube 9).Adj (cubeBitVec 9 m) (cubeBitVec 9 (actual k)) ↔ k = i ∨ k = j := by
-    obtain ⟨m, hm0, hm⟩ := hmid i j hij
+    obtain ⟨m, _, hm0, hm⟩ := hmid i j hij
     refine ⟨(cubeBitVec 9).symm m, ?_, ?_⟩
     · change cubeBitVec 9 ((cubeBitVec 9).symm m) 0 = false
       simpa using hm0
@@ -280,7 +284,7 @@ theorem exists_member {C : Finset (Q 9)} (hC : C.card = 72)
     decide
   have hrp : r = actual := funext fun k => heq k (hlabels wagner k)
   rw [hrp] at hmem
-  exact ⟨wagner, pattern, p, hmem, hmid⟩
+  exact ⟨g, σ, wagner, pattern, p, hg, hcut, fun k => (hhigh k).1, hmem, hmid⟩
 
 #print axioms exists_member
 

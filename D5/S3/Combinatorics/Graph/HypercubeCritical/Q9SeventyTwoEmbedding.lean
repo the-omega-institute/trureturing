@@ -44,12 +44,15 @@ The midpoint test used in the embedding enumeration holds for every edge. -/
 theorem normalized_embedding {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 20) :
-    ∃ (wagner : Bool) (pattern : Fin 5) (p : Fin 8 ↪ Q 9),
-      p 0 = origin ∧ (∀ k, p k 0 = false) ∧
+    ∃ (g : Q 9 ≃ Q 9) (σ : Fin 9 ≃ Fin 9)
+      (wagner : Bool) (pattern : Fin 5) (p : Fin 8 ↪ Q 9),
+      (∀ x i, g (flip x i) = flip (g x) (σ i)) ∧
+      (∀ x, g x 0 = false ↔ x 0 = b) ∧
+      p 0 = origin ∧ (∀ k, p k ∈ (coordinateSlice C b).image g ∧ p k 0 = false) ∧
       (∀ a, p (modelRootNeighbors wagner a) =
         flip (flip origin ((a.castLE (by decide : 3 ≤ 8)).succ)) (rootSecondAxes pattern a)) ∧
       ∀ i j, modelAdj wagner i j = true →
-        ∃ m : Q 9, m 0 = false ∧
+        ∃ m ∈ (coordinateSlice C b).image g, m 0 = false ∧
           ∀ k, (hypercube 9).Adj m (p k) ↔ k = i ∨ k = j := by
   classical
   let S := coordinateSlice C b
@@ -62,13 +65,16 @@ theorem normalized_embedding {C : Finset (Q 9)} (hC : C.card = 72)
   have hzero : e root = origin := by
     funext _
     simp [e, Q9GrayPlacementNormalForm.normalize, origin]
-  have hplane (x : (S : Set (Q 9))) : e x.val 0 = false := by
+  have hplane (x : Q 9) : e x 0 = false ↔ x 0 = b := by
     have hr0 : root 0 = b := (Finset.mem_filter.mp (vertices 0).property).2
-    have hx0 : x.val 0 = b := (Finset.mem_filter.mp x.property).2
     have hcut' : σ.symm 0 = 0 := (σ.symm_apply_eq).mpr hcut.symm
-    change (x.val (σ.symm 0) != root (σ.symm 0)) = false
-    simp [hcut', hr0, hx0]
-  refine ⟨wagner, pattern, p, hzero, fun k => hplane (vertices k), ?_, ?_⟩
+    change (x (σ.symm 0) != root (σ.symm 0)) = false ↔ x 0 = b
+    simp [hcut', hr0]
+  have hmem (x : (S : Set (Q 9))) : e x.val ∈ S.image e ∧ e x.val 0 = false :=
+    ⟨Finset.mem_image.mpr ⟨x.val, x.property, rfl⟩,
+      (hplane x.val).mpr (Finset.mem_filter.mp x.property).2⟩
+  refine ⟨e, σ, wagner, pattern, p, normalize_flip σ root, hplane, hzero,
+    fun k => hmem (vertices k), ?_, ?_⟩
   · intro a
     change e (vertices (modelRootNeighbors wagner a)).val = _
     have hfirst : σ (first a) = (a.castLE (by decide : 3 ≤ 8)).succ :=
@@ -91,7 +97,7 @@ theorem normalized_embedding {C : Finset (Q 9)} (hC : C.card = 72)
       symm
       apply Finset.eq_of_subset_of_card_le hsub
       simp [G.card_neighborFinset_eq_degree, hc, vertices.injective.ne hne]
-    refine ⟨e m.val, hplane m, fun k => ?_⟩
+    refine ⟨e m.val, (hmem m).1, (hmem m).2, fun k => ?_⟩
     change hammingDist (e m.val) (e (vertices k).val) = 1 ↔ _
     rw [normalize_hammingDist]
     change G.Adj m (vertices k) ↔ _
