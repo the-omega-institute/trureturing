@@ -2,16 +2,16 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Spectral;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
 
 internal sealed class CollinsScirihaMainSpectrumDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Combinatorics/Graph/Spectral/CollinsScirihaMainSpectrum.";
+        "D5/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum.";
     private static readonly LibraryNoteRef Question =
-        LibraryNoteRef.Create("D5/L/GraphSpectra/collinssciriha2019main");
+        LibraryNoteRef.Create("D5/L/Eigenstructure/collinssciriha2019main");
     private static readonly LibraryNoteRef Method =
-        LibraryNoteRef.Create("D5/L/GraphSpectra/yanwang2022bethetrees");
+        LibraryNoteRef.Create("D5/L/Eigenstructure/yanwang2022bethetrees");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite simple graphs with isomorphic bipartite double covers have the same main eigenvalues.",

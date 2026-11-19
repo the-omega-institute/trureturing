@@ -7,7 +7,7 @@ doi: 10.1016/j.laa.2022.01.001
 url: https://arxiv.org/abs/2201.01101v1
 claim: "Lemma 3 credits Teranishi with the equality of main spectra for a graph and its equitable quotient."
 strata_touched:
-  - D5/S3/Combinatorics/Graph/Spectral/CollinsScirihaMainSpectrum
+  - D5/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum
 license: citation-only
 triage: anchor
 ---
@@ -18,7 +18,9 @@ triage: anchor
 
 DOI: 10.1016/j.laa.2022.01.001
 
-Source: https://arxiv.org/pdf/2201.01101v1#page=4
+Manuscript: https://arxiv.org/abs/2201.01101v1
+
+Lemma locator: https://arxiv.org/pdf/2201.01101v1#page=4
 
 Lemma 3, p. 4, states that a graph and the divisor of an equitable
 partition have the same main spectrum. Yan and Wang credit

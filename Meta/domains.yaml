@@ -122,9 +122,6 @@ domains:
   GraphInvariants:
     stratum: S3
     definition: Polynomial and simplicial invariants of finite simple graphs, such as chromatic polynomials, independence complexes and their acyclic Morse matchings, and whether these invariants distinguish graphs.
-  GraphSpectra:
-    stratum: S3
-    definition: Adjacency spectra of finite simple graphs, including main eigenvalues, graph covers, and equitable quotients.
   Hamming:
     stratum: S3
     definition: Mixed-alphabet Hamming graph partitions, coordinate-line cliques, and their maximality and direction-completeness.

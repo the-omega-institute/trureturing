@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/Spectral/CollinsScirihaMainSpectrum
+/- GID: D5/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/Spectral/CollinsScirihaMainSpectrum
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
@@ -20,7 +20,7 @@ presented by Yan and Wang, arXiv:2201.01101v1, Lemma 3. -/
 open scoped BigOperators
 open Matrix
 
-namespace D5.S3.Combinatorics.Graph.Spectral.CollinsScirihaMainSpectrum
+namespace D5.S3.Combinatorics.SpectralGraph.CollinsScirihaMainSpectrum
 
 public section
 
@@ -110,4 +110,4 @@ theorem result {V W : Type*} [Fintype V] [Fintype W]
 
 end
 
-end D5.S3.Combinatorics.Graph.Spectral.CollinsScirihaMainSpectrum
+end D5.S3.Combinatorics.SpectralGraph.CollinsScirihaMainSpectrum

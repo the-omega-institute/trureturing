@@ -2,12 +2,12 @@
 bibkey: collinssciriha2019main
 authors: Luke Collins and Irene Sciriha
 year: 2019
-title: The walks and CDC of graphs with the same main eigenspace
-doi: 10.7151/dmgt.2386
+title: On the Walks and Bipartite Double Coverings of Graphs with the same Main Eigenspace
+doi: 10.48550/arXiv.1906.05790
 url: https://arxiv.org/abs/1906.05790v1
 claim: "Question 5.8 asks whether graphs with isomorphic canonical double covers have the same main eigenvalues."
 strata_touched:
-  - D5/S3/Combinatorics/Graph/Spectral/CollinsScirihaMainSpectrum
+  - D5/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum
 license: citation-only
 triage: anchor
 ---
@@ -16,17 +16,21 @@ triage: anchor
 
 ## Verified locator
 
-DOI: 10.7151/dmgt.2386
+DOI: https://doi.org/10.48550/arXiv.1906.05790
 
-Source: https://arxiv.org/html/1906.05790v1#S5.Thmlemma8
+Manuscript: https://arxiv.org/abs/1906.05790v1
+
+Question locator: https://arxiv.org/html/1906.05790v1#S5.Thmlemma8
 
 Question 5.8 of arXiv:1906.05790v1 asks:
 
 > Let G and H be two graphs with CDC(G) ≃ CDC(H). Do G and H have the same main eigenvalues?
 
-The journal version credits Irene Sciriha and Luke Collins and gives the
-same question as Question 16, p. 522 (PDF p. 16). The following Remark 17
-reports a check on at most eight vertices.
+Irene Sciriha and Luke Collins, *The walks and CDC of graphs with the same
+main eigenspace*, Discussiones Mathematicae Graph Theory 43 (2023),
+507–532, give the same question as Question 16, p. 522 (PDF p. 16).
+Remark 17 reports a check on at most eight vertices.
+https://doi.org/10.7151/dmgt.2386
 
 ## Definitions and scope
 
