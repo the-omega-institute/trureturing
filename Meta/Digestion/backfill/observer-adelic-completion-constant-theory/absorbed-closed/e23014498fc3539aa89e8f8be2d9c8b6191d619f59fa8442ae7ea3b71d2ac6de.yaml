@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e23014498fc3539aa89e8f8be2d9c8b6191d619f59fa8442ae7ea3b71d2ac6de
-  normalized_sha256: sha256:e23014498fc3539aa89e8f8be2d9c8b6191d619f59fa8442ae7ea3b71d2ac6de
-cas_ref: sha256:e23014498fc3539aa89e8f8be2d9c8b6191d619f59fa8442ae7ea3b71d2ac6de
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/GoldenBusemannCoordinate.golden_busemann_coordinate
-    target_statement_id: sha256:2ffddfbe69c4d975ebeee72ccef1b7c7d0677b1c769f6dd9065b1c0aae75f514
-receipts:
-  unresolved_subitems: []

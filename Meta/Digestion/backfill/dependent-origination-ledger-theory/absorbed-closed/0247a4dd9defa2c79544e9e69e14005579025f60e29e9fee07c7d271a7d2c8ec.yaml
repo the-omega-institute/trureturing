@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0247a4dd9defa2c79544e9e69e14005579025f60e29e9fee07c7d271a7d2c8ec
-  normalized_sha256: sha256:0247a4dd9defa2c79544e9e69e14005579025f60e29e9fee07c7d271a7d2c8ec
-cas_ref: sha256:0247a4dd9defa2c79544e9e69e14005579025f60e29e9fee07c7d271a7d2c8ec
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DependencyTopology/InfiniteMinimalCertifiedSupports.result
-    target_statement_id: sha256:88b16ac1db4c64ac14f98be34c6b8e534dbd0ba709cce4a23ddbf7010ab1db95
-receipts:
-  unresolved_subitems: []

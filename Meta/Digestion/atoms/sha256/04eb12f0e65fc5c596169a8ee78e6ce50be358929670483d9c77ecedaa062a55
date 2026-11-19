@@ -1,7 +1,0 @@
-但要把不同 \(P\) 的 tangent chart 胶合成一个 RH 证明，需要一个跨尺度规范。最可能提供该规范的是：
-
-* Gamma 因子；
-* 函数方程；
-* Riemann–Siegel saddle scale；
-* 或 canonical Nevanlinna kernel。
-

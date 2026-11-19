@@ -1,7 +1,0 @@
-Primary references read in the original computation:
-
-- https://arxiv.org/html/2511.22755v1 , Lemma 7.3 and Section 8.
-- https://arxiv.org/html/2607.23850v1 , Section 4 and the abstract's
-  no-Galerkin/product-error qualifications, 26 July 2026.
-- https://arxiv.org/html/2606.09096v1 , localized forms and operator domains.
-

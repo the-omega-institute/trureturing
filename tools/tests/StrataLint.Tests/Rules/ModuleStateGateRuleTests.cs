@@ -31,7 +31,7 @@ public sealed class ModuleStateGateRuleTests
     public void ObserveFindingDoesNotBlockAdmissionAndRemainsVisible()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         AddModule(fixture, ClosedPath, "def newClosed : Nat := 0", []);
         var changes = RawChangeSet.CreateWithKinds([(ClosedPath, RawChangeKind.Added)]);
         var context = fixture.Build(changes);

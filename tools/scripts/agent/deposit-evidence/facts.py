@@ -61,7 +61,6 @@ def main(worktree: str, readings: str | None) -> int:
     base = git(w, "merge-base", "HEAD", "origin/dev")
     changed = [p for p in git(w, "diff", "--name-only", "origin/dev...HEAD").splitlines() if p]
     states = [p for p in changed if p.startswith("Golden/Frozen/state/") and pathlib.Path(w, p).is_file()]
-    cover = [p for p in changed if p.startswith("Meta/Digestion/backfill/")]
     if len(states) != 1:
         print(f"BODY_FACTS_FAIL expected one changed state record, found {len(states)}", file=sys.stderr)
         return 3
@@ -80,22 +79,10 @@ def main(worktree: str, readings: str | None) -> int:
     missing = [n for n in authored_names if n not in {t[0] for t in surviving}]
     imports = re.findall(r'^\s*(?:public\s+)?import\s+([^\n]+)', src, re.M)
 
-    edges = []
-    for c in cover:
-        try:
-            import yaml  # type: ignore
-            y = yaml.safe_load(open(os.path.join(w, c)).read()) or {}
-            for g in (y.get("coverage_gids") or []):
-                edges.append((os.path.basename(c)[:-5], g.get("gid")))
-        except Exception:
-            pass
-
     print(f"head: `{head}`; branch: `{branch}`; merge-base with local origin/dev: `{base}`")
-    print(f"Changed paths: {len(changed)}; state records: {len(states)}; digestion paths: {len(cover)}")
+    print(f"Changed paths: {len(changed)}; state records: {len(states)}")
     print(f"State record: `{states[0]}`; module statement_id: `{record['statement_id']}`")
     print("Source imports: " + (", ".join(imports) or "none"))
-    if edges:
-        print("Coverage: " + "; ".join(f"{a} → {g}" for a, g in edges))
     print(f"Included declarations: {len(decls)}; authored public matches: {len(authored)}; unclassified: {len(unmatched)}")
     print("| Declaration | kind |")
     print("|---|---|")

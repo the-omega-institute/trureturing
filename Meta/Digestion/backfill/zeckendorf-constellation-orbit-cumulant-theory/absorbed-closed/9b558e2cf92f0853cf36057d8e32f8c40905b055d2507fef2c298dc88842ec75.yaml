@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9b558e2cf92f0853cf36057d8e32f8c40905b055d2507fef2c298dc88842ec75
-  normalized_sha256: sha256:9b558e2cf92f0853cf36057d8e32f8c40905b055d2507fef2c298dc88842ec75
-cas_ref: sha256:9b558e2cf92f0853cf36057d8e32f8c40905b055d2507fef2c298dc88842ec75
-coverage_gids:
-  - gid: D5/S3/Observer/Hankel/DiscreteSteinCompressionStability.complexEnergy_pos
-    target_statement_id: sha256:3e3936e6ccbc956a1fd6d79b02323a0258cbad762425fc1f295ad83ca0ee87d6
-receipts:
-  unresolved_subitems: []

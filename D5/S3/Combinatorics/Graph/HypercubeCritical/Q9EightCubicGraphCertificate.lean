@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9EightCubicGraphCertificate
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9EightCubicGraphCertificate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SeventyTwoThinSlice.compressed_cube_or_wagner; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/Q9EightCubicGraphCertificate.checked_normalized_codes
+   digest: Classifies actual eight-vertex triangle-free cubic graphs by checked relabeling. -/
+
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Nat.Bitwise

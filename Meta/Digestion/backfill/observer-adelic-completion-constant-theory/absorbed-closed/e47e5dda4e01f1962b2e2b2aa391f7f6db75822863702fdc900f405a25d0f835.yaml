@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e47e5dda4e01f1962b2e2b2aa391f7f6db75822863702fdc900f405a25d0f835
-  normalized_sha256: sha256:e47e5dda4e01f1962b2e2b2aa391f7f6db75822863702fdc900f405a25d0f835
-cas_ref: sha256:e47e5dda4e01f1962b2e2b2aa391f7f6db75822863702fdc900f405a25d0f835
-coverage_gids:
-  - gid: D5/S3/Observer/Completion/OmnicompleteIndifferentState.OmnicompleteSystem
-    target_statement_id: sha256:57d26dabc398e77e931aa62e9adf3e8b0e8d1cc19a3f0300933bb5d396940673
-receipts:
-  unresolved_subitems: []

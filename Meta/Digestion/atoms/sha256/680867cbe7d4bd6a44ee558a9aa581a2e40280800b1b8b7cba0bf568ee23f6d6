@@ -1,6 +1,0 @@
-### 92.4 来源与结论范围
-
-本节是已有条件吸收与有限前缀方法在同一实际 FIB 合同上的综合推导。[Hellman–Cover《Learning with Finite Memory》](https://isl.stanford.edu/~cover/papers/paper018.pdf)及[Berg–Ordentlich–Shayevitz《Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules》v1](https://arxiv.org/pdf/2005.07445v1)供应有限记忆、时间齐次控制及随机化的定义与边界背景。前者允许随机化，后者主问题限制确定转移；两者研究固定 iid 假设下的长期错误，不能直接证明这里允许增长动作、共同停止及全部实际历史最坏风险的结论。此处不作原创性、Lean 核验、物理记忆或速率最优性声明。
-
-（92.2）排除的是存在同一正数 $\delta$、在所有实际历史上错误都至多 $1/2-\delta$ 的固定有限记忆程序。它不排除每个历史都严格优于 $1/2$、但优势随深度消失的可能性，也不判定这种程序存在；历史最坏风险不是按（91.12）的质量加权的 Bayes 平均错误。外供时钟、索引或档案会改变控制器类，固定有限阶段则可计入 $Q$。目标只为旧交接深度的一位，不恢复旧记录；实际来源始终为有限深度，本节不加入理想标签，也不由此裁定实际目录中奇偶恢复的开放性。
-

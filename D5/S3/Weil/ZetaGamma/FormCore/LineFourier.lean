@@ -105,7 +105,7 @@ theorem raw_fourier_ae_eq_L2 {f : ℝ → ℂ}
     _ = ∫ ξ : ℝ, g ξ • F ξ := by
       simp [ψ, Function.comp_apply]
 
-private theorem raw_fourier_eLpNorm_eq {f : ℝ → ℂ}
+theorem raw_fourier_eLpNorm_eq {f : ℝ → ℂ}
     (hf₁ : Integrable f) (hf₂ : MemLp f 2) :
     eLpNorm (𝓕 f) 2 volume = eLpNorm f 2 volume := by
   calc

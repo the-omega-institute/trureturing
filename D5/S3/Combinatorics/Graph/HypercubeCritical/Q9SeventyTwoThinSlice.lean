@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/Q9SeventyTwoThinSlice
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/Q9SeventyTwoThinSlice
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
+   utility: none
+   digest: Classifies the compressed graph and normalizes the root coordinates of an actual twenty-vertex half. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.EighteenPointSlice
 import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression

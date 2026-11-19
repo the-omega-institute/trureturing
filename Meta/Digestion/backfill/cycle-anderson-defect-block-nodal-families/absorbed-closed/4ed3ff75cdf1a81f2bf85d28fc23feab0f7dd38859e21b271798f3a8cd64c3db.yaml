@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4ed3ff75cdf1a81f2bf85d28fc23feab0f7dd38859e21b271798f3a8cd64c3db
-  normalized_sha256: sha256:4ed3ff75cdf1a81f2bf85d28fc23feab0f7dd38859e21b271798f3a8cd64c3db
-cas_ref: sha256:4ed3ff75cdf1a81f2bf85d28fc23feab0f7dd38859e21b271798f3a8cd64c3db
-coverage_gids:
-  - gid: D5/S3/Combinatorics/Graph/Walks/CycleDiagonalUnitPropagation.cycle_diagonal_units_full
-    target_statement_id: sha256:9b8fa2097820f077207d222bc577a3ff64b6cd9ac15defda24eaa3adb96ac551
-receipts:
-  unresolved_subitems: []

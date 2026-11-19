@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3d6103c135edd200b28186418102d99b25343e206069b1253369d6c1071a311a
-  normalized_sha256: sha256:3d6103c135edd200b28186418102d99b25343e206069b1253369d6c1071a311a
-cas_ref: sha256:3d6103c135edd200b28186418102d99b25343e206069b1253369d6c1071a311a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Answering/SafeAnswerCoverageMaximality.fiberTargets
-    target_statement_id: sha256:07c6d4285d89895fd4932b6e12923f8b358e4db359123d276ccdc676e909b5f6
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:116c7ea2193c7b462c54a4e5d4a226fba3d2df7758db8592eecf20ad1455dc19
-  normalized_sha256: sha256:116c7ea2193c7b462c54a4e5d4a226fba3d2df7758db8592eecf20ad1455dc19
-cas_ref: sha256:116c7ea2193c7b462c54a4e5d4a226fba3d2df7758db8592eecf20ad1455dc19
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.native_predecessor_row_recovery
-    target_statement_id: sha256:945f692df605931393e1d4768b9d3ef1453327e6ee26f2780faa3b1b9576a330
-receipts:
-  unresolved_subitems: []

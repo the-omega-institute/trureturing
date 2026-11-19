@@ -21,7 +21,6 @@ namespace D5.S3.Arith.CharacterSums.PrimeCube
 
 noncomputable section
 
-open private bracket from D5.S3.Arith.CharacterSums.PascadiPrimeCubeSingularCover
 open private singular_quadratic_leading_unit from
   D5.S3.Arith.CharacterSums.PascadiSeventhHeightCover
 

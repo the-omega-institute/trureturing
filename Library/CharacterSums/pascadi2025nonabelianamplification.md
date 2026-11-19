@@ -23,6 +23,11 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiZeroDQuadratic
   - D5/S3/Arith/CharacterSums/PascadiZeroDCover
   - D5/S3/Arith/CharacterSums/PascadiZeroDBadDegreeAverage
+  - D5/S3/Arith/CharacterSums/PascadiRankFourFactor
+  - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
+  - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
+  - D5/S3/Arith/CharacterSums/PascadiTorusConductor
+  - D5/S3/Arith/CharacterSums/PascadiAffineVariance
 license: source-reference
 triage: anchor
 ---
@@ -68,6 +73,26 @@ coordinates with the strength required by Conjecture 6.1 remains open.
 Source: <https://arxiv.org/abs/2511.08445v2>, Section 6: Conjecture 6.1,
 bound (6.2), and Proposition 6.2, weaker $q=6$ bound (6.3), including the
 following remark on the parameter ranges where the conjecture follows.
+
+The repository module `PascadiTorusConductor` gives an exact character
+decomposition for the prime-cube cubic word associated with Section 6.
+The quadratic Cayley transform, on unit denominators, turns
+`x+y+z=d*x*y*z` into a product-one equation in the norm-one group.
+At an odd prime the reduction of that group from the cube to the square
+is onto with kernel of order `p`. The cube word mass therefore equals
+the square word mass divided by `p`, plus the signed primitive cubic
+character contribution. The quantitative bound for that contribution
+remains open.
+
+The repository module `PascadiAffineVariance` gives a centered coverage
+bound for complex weights on affine lines over `ZMod p`. If each
+nonzero Fourier mode annihilates at most `k` of the allowed directions,
+the variance is at most `k*p` times the sum of squared line weights. At
+a fixed third physical row the cubic word reduces modulo `p` to
+`u₁+u₂+1=D*u₁*u₂`, with `D=g*x₃*y₃`. For `D` a unit and `D ≠ -1`,
+the direction set is a nondegenerate hyperbola, yielding `k=2`.
+The weighted correlations between different pivot products remain
+part of the open fixed-coefficient estimate.
 
 The journal version is *Geometric and Functional Analysis* 36 (2026),
 1174–1243, <https://doi.org/10.1007/s00039-026-00746-0>.
@@ -240,6 +265,26 @@ This proves the selected zero-D branch average, not a larger total-count
 exponent. The delivered unconditional total-count range remains every fixed
 `alpha<26/7`; the nonzero-residual average and the full arbitrary-modulus
 conjecture remain separate open work. No literature priority is claimed.
+
+## Rank four and its original average
+
+Lemma 2.6 of the repository's
+`PASCADI_PRIME_CUBE_PROJECTION_IDEAL_ENDPOINT` volume is formalized in
+`PascadiRankFourFactor.rank_four_root_relevant_factor`. For a finite
+coefficient family with common value modulo the prime cube and common
+derivative modulo the prime, the three inequalities in (2.16) bound rational
+row rank by four. In rank four the primitive integer factor has the form
+`aT-n` with positive leading coefficient, unit leading reduction and
+`a*beta-n=0` modulo the prime. It divides the integer pencil of every row
+and its rational root has nonzero baseline linear value.
+
+`PascadiRankFourBadDegreeAverage.actual_long_bad_degree_average_rank_four`
+uses that factor on the actual maximizing family. The rank includes the
+baseline and all nonzero-reduction derivative-zero partners. At the common
+root every selected quadratic value is a common multiple of its linear
+value. This gives zero Dixon determinants and yields the original average
+above under `C6^2*(32*A/p^3)^13<p^10`. The degree still includes the
+zero-reduction partners and is zero for empty endpoint families.
 
 ## Quadratic nonzero middle sections
 
@@ -429,6 +474,7 @@ to the complete theory volume.
 | Original pencil divisibility and modular-zero partners | `Original.original_pencil_dvd`, `Original.actual_zero_reduction_partners_subpower_seventh` |
 | Literal row and pencil heights | `Original.actual_coefficient_bounds`, `Original.actual_pencil_coefficient_bounds` |
 | Dixon matrix, resultant identity and bounds | `PrimeCube.residualMatrix`, `PrimeCube.residual`, `PrimeCube.actual_residual_resultant`, `PrimeCube.actual_residual_dvd_fifth`, `PrimeCube.actual_residual_height` |
+| Nonzero Dixon coordinate saturation and discriminant strata, Lemmas 3.1–3.2 | `PrimeCube.nonzero_dixon_rank_three`, `Original.original_nonzero_dixon_rank_three` |
 | Quadratic-direction elimination, Lemma 2.4 | `PrimeCube.quadratic_direction_resultant_zero`; the constant-baseline repair is `PrimeCube.constant_base_dixon_quadratic_identity` and `PrimeCube.zero_dixon_quadratic_resultant_zero` |
 | Root-relevant factorization and mixed quadratic branch, Lemma 2.5 | `PrimeCube.localized_factor_cube`, `PrimeCube.cubic_quadratic_mixed_resultant_height`, `PrimeCube.quadratic_resultant_dvd_fifth`; `PrimeCube.actual_zero_dixon_singular_factor_cover` |
 | Actual factor-value and singular-partner counts, (2.15) | `Original.actual_fixed_factor_value_pairs_subpower`, `Original.actual_singular_factor_partner_count`, `Original.original_singular_unit_observations` |
@@ -458,3 +504,41 @@ its arXiv numbering is not a substitute. That result is not an input
 to this proof. This is preservation of a repository-derived ordinary
 endpoint proof, with no exhaustive literature novelty, global priority,
 official acceptance or completion of the main research goal claimed.
+
+## Prime-cube counts beyond the $15/4$ endpoint
+
+Let $A=XY$, $p^{3/2}\le X\le Y$, $6Y<p^2$, and $A\ll p^\alpha$
+for a fixed $\alpha<49/13$. The ordinary proof gives the original
+scalar six-return bound $O_\varepsilon(Y^2p^\varepsilon)$ for every
+prescribed pair of unit coefficients when $A^3\ll Y^2p^{15/2}$.
+For $15/4<\alpha<49/13$, the same bound holds simultaneously at all
+admissible widths outside an exceptional set of
+$O(p^{4\alpha-15}\log(2p))$ lifts modulo $p^3$ of each nonzero residue
+class modulo $p$ for the product $g=a_1a_2$. The set can depend on $p$,
+the area constant, and $\alpha$. Extending the balanced range to
+every prescribed $g$ requires a bound on the concentration of the
+last coefficient digit among irreducible simple-root configurations.
+
+The digit calculation uses the map
+$(x,s)\mapsto(C/x,Cs/x^2)$ on units modulo $p^2$ and digits modulo
+$p$. Completing the two digit sums leaves exactly the phase at each
+unit residue $a\bmod p$ satisfying
+$\bar A a^2=\bar C\bar B$ and $Da^2=-\bar CE$, with a factor $p^2$.
+Here $A,B,D,E$ in the phase denote frequencies. In the unit sector
+there are at most two surviving residues and the nonzero Fourier
+coefficients lie on paired frequency lines. The ordinary proof sums
+the interval weights on those lines using the shortest vector of the
+actual index-$p$ lattice. This pays the nonsplit branch at all
+admissible aspects. The split branch is controlled by the count of
+middles for a fixed kernel. Selecting the largest derivative line at
+each middle and applying an additive large sieve to the reducible
+relative cubics reduces the coefficient average to the irreducible
+simple-root configurations.
+
+`PascadiMixedQuotientFourier` formalizes the exact complete coefficient,
+mixed-sector vanishing, and unit-sector bound and support. Its
+Lean 4.35 scoped report verifies 45 declarations using
+`Classical.choice`, `Quot.sound`, and `propext`. The original lattice
+instance, weighted arithmetic estimate, and enlarged counting ranges
+are ordinary mathematics. Source-bound four-slot registration for the
+three Fourier theorems remains open.

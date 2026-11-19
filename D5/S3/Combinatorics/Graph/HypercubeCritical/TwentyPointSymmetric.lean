@@ -25,8 +25,6 @@ open private SideHigh compressed compressed_degree compressed_triangle_free from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open private neighbor_parts_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
-open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
-  D5.S3.Combinatorics.Graph.Brooks.General
 open private side_high_neighbors_card high_neighbors_compressed_separated from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
 

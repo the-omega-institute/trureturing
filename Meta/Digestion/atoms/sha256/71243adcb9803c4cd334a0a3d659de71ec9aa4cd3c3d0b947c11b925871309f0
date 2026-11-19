@@ -1,5 +1,0 @@
-## References
-
-[1] H. Monterde, *New results in vertex sedentariness*, arXiv:2401.00362v1 (31 December 2023), Definition 1 and Example 18. <https://arxiv.org/abs/2401.00362v1>. Published in *Discrete Mathematics* 349(4) (2026), 114959, DOI: [10.1016/j.disc.2025.114959](https://doi.org/10.1016/j.disc.2025.114959). The graph, adjacency convention, lower bound $1/n$ and sharp $n=5$ case are from Example 18; Theorem 1 gives the exact $n=15$ extrema.
-
-[2] A. L. Onishchik, “Kronecker theorem”, *Encyclopedia of Mathematics*, revision 47528 (5 June 2020), simultaneous approximation criterion and torus subgroup closure formulation. <https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528>. See also the repository's [source note](../../../Library/Fourier/onishchik2020kronecker.md). For the real-time flow the integer characters that vanish are precisely those with $c\cdot\lambda=0$; requiring $tc\cdot\lambda\in2\pi\mathbb Z$ for every real $t$ is equivalent to this equality.

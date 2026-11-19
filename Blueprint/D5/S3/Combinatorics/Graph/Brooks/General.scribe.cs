@@ -21,6 +21,17 @@ internal sealed class GeneralDocument : IScribeDocumentDefinition
                 Node("brooks", "brooks-alternative", "The arbitrary-degree alternative",
                     Graphs(Imp(Not(color), exception)),
                     "The coloring construction follows Rabern's surgery proof. Delete a maximal independent set, color the smaller induced graph, and extend across its clique or cycle obstruction. The low-degree vertex extension is supplied by its existing coloring theorem. The degree has no upper bound. The vertex type may be empty, and neither connectedness nor regularity is assumed."),
+                Describe.Lean(DescribeId.Create("cycle-isomorphism"),
+                    DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Brooks/General.cycle_iso_of_connected_degree_le_two"),
+                    H("Cycle isomorphism in a connected graph of maximum degree two"),
+                    StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "Let G be a finite connected simple graph of maximum degree at most two. "
+                        + "Given a closed walk p that is a cycle, there is a graph isomorphism "
+                        + "from the cycle graph of length p.length to G. "
+                        + "The cycle uses both available neighbors at every vertex it visits. "
+                        + "Connectedness then makes the cycle span G, and the cycle map is an isomorphism."))),
+                    DescribeRole.Theorem),
                 Node("brooks_connected", "connected-alternative", "Complete graphs and entire odd cycles",
                     Graphs(Imp(C("Connected", g), Or(color, Or(Eq(g, C("completeGraph", v)), cycle)))),
                     "A clique with maximum degree plus one vertices saturates every member's neighbors. No edge can leave it, so connectedness makes it the whole graph. A cycle in a graph of maximum degree at most two likewise saturates every cycle vertex. Connectedness makes its support all vertices and its edges all edges. The cycle length therefore equals the number of vertices. Its native cycle copy is bijective and reflects adjacency because both neighbor sets have cardinality two. A three-cycle is complete; every remaining odd cycle has length at least five. Complete graphs with one, two or three vertices are included."))));

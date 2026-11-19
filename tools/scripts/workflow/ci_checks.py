@@ -108,8 +108,6 @@ def current_phase(phase, data, plan, base, paths):
         if not plan["hits"]["current"]:
             result(phase, "not-applicable")
             return 0
-        if plan["theory"]:
-            return current_phase("check-delta", data, plan, base, paths)
         if plan["delta"] and not base:
             raise DetectError("selected source delta requires a readable protected base")
         return execute(phase, ["dotnet", CLI, "check-source", "--current",
@@ -208,8 +206,6 @@ def current_prerequisite(data, plan, base, paths):
                          current_phase("build-judge", data, plan, base, paths))
     if judge:
         result("source", "blocked")
-        if plan["theory"]:
-            result("check-delta", "blocked")
         status = "timeout" if judge in (124, 137) else "cancelled" if judge in (130, 143) else "judge-failed"
         return Prerequisite(judge, status, False)
     code = current_phase("source", data, plan, base, paths)
@@ -227,8 +223,6 @@ def current_run(data, plan, base, paths, prefix=None):
     prefix = prefix or current_prerequisite(data, plan, base, paths)
     if not prefix.allowed:
         for phase in ("lean-report", *READY_PHASES):
-            if phase == "check-delta" and plan["theory"]:
-                continue  # The theory delta is the source phase itself.
             result(phase, "blocked" if applicable_phase(plan, phase) else "not-applicable")
         return prefix.code
     failures = [prefix.code]

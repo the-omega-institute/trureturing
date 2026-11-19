@@ -1,0 +1,33 @@
+**Proposition 113.2 (The actual defining complex representation).**
+After unitary conjugacy, the connected subgroup $M^0$ is either
+
+$$
+U(n),\qquad\text{or}\qquad
+\mathbb T\operatorname{Sp}(m)\quad(n=2m).
+\tag{113.2}
+$$
+
+Here $\operatorname{Sp}(m)$ is the standard compact symplectic matrix
+subgroup of $U(2m)$. The second group is the image of scalar phases
+times that subgroup, a central product, not a faithful direct product.
+
+Proof. Apply [Albertini–D'Alessandro, §4, Theorem 4 and Lemma 4.2][AD]
+to the compact connected effective matrix action of $M^0$ in its
+actual defining complex representation. Their unitary sphere-transitive
+classification gives Lie algebra $\mathfrak{su}(n)$ or
+$\mathfrak u(n)$, or, for even $n=2m$, $\mathfrak{sp}(m)$ with or
+without the scalar $iI$. Lemma 4.2 and its Appendix proof supply
+unitary conjugacy of the symplectic embedding. Because
+$\mathbb T\subset M^0$, its Lie algebra contains $iI$. The remaining
+Lie algebras are therefore $\mathfrak u(n)$ and
+$\mathfrak{sp}(m)+\mathbb RiI$. The connected matrix subgroup of
+$U(n)$ with a given Lie algebra is unique, which gives (113.2). ∎
+
+This classifies $M^0$, not arbitrary $G$. A list of local isomorphism
+types for real sphere actions would not by itself identify these
+complex embeddings. The classification is a mature matrix-group
+input, not a conclusion about controllability by original words.
+The coincidence $SU(2)=\operatorname{Sp}(1)$ creates no missing case:
+all $n\le5$ are already covered by Corollary 112.2. The symplectic
+stabilizer argument below is needed only for even $n=2m\ge6$.
+

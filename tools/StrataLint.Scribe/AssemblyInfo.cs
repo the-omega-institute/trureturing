@@ -11,5 +11,3 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.FileMap")]
 
 [assembly: InternalsVisibleTo("StrataLint.FileMap.Tests")]
-
-[assembly: InternalsVisibleTo("StrataLint.CoverBatch.Tests")]
