@@ -611,7 +611,7 @@ private theorem productSpectrum_relabel_modes {m : ℕ} (ν μ : Fin m → ℂ)
   simp [Equiv.finsetCongr_apply, Finset.mem_map_equiv, he i]
 
 
-private theorem prefix_product_spectrum (m n k : ℕ) (W : Matrix (Fin (m + n)) (Fin k) ℂ)
+theorem prefix_product_spectrum (m n k : ℕ) (W : Matrix (Fin (m + n)) (Fin k) ℂ)
     (hW : W.conjTranspose * W = 1) : HasProductSpectrum (prefixSide m n) W := by
   classical
   let I := prefixSide m n
