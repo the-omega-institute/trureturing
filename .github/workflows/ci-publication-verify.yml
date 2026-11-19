@@ -20,6 +20,7 @@ jobs:
       actions: read
     env:
       STRATALINT_CACHE_WRITES: 'false'
+      SHARD_HANDOFF: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HANDOFF || 'legacy' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -118,8 +119,34 @@ jobs:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Check the selected cache handoff scenario
+        run: |
+          case "$SHARD_HANDOFF" in complete|partial|none|legacy) ;; *) exit 2 ;; esac
+      - id: shards
+        name: Restore the selected sharded project seed
+        if: steps.entry.outputs.hit == 'true' && (env.SHARD_HANDOFF == 'complete' || env.SHARD_HANDOFF == 'partial')
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          require-complete: ${{ env.SHARD_HANDOFF == 'complete' }}
+          targets: ${{ env.SHARD_HANDOFF == 'partial' && 'D5.S0.Tower.GoldenGapWord' || '' }}
+      - if: steps.entry.outputs.hit == 'true' && env.SHARD_HANDOFF != 'legacy'
+        name: Check the cache handoff evidence
+        env:
+          AVAILABLE: ${{ steps.shards.outputs.available }}
+          COMPLETE: ${{ steps.shards.outputs.complete }}
+        run: |
+          case "$SHARD_HANDOFF" in
+            complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
+            partial) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]] ;;
+            none) [[ ! -e .lake/build ]] ;;
+          esac
+          echo "LEAN_RELEASE_HANDOFF seed=$SHARD_HANDOFF available=${AVAILABLE:-0} complete=${COMPLETE:-false}"
       - id: project
-        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.project_key != ''
+        if: steps.entry.outputs.hit == 'true' && env.SHARD_HANDOFF == 'legacy' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -134,6 +161,11 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - if: steps.entry.outputs.hit == 'true' && env.SHARD_HANDOFF != 'legacy'
+        name: Complete the project compiler outputs for the pinned source
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: make lean FULL_BUILD=1
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
@@ -183,6 +215,128 @@ jobs:
           if [[ "$RESTORE" == full ]]; then
             test -s .lake/build/stratalint/raw-lean-report.json.reuse.json
           fi
+
+  cache-shards:
+    name: Verify Lean cache continuation transport
+    if: github.ref_protected
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    permissions:
+      contents: read
+      actions: write
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+      CACHE_SCOPE: D5.S0.Tower.GoldenGapWord
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2002
+          persist-credentials: false
+      - id: entry
+        name: Validate source and select cache transport changes
+        env:
+          CI_HIT_PATHS: |
+            .github/actions/lean-cache-shards/*
+            .github/workflows/ci-publication-verify.yml
+            tools/scripts/worktree/lean_actions_shards.py
+            tools/scripts/worktree/lean_cache_shards.py
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - if: steps.entry.outputs.hit == 'true'
+        id: keys
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: steps.entry.outputs.hit == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - if: steps.entry.outputs.hit == 'true'
+        id: dependency
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Prepare Lean dependencies and build the scoped checkpoint
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+        run: |
+          python3 tools/scripts/worktree/lean_actions.py restore --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          make lean LEAN_TARGETS="$CACHE_SCOPE"
+      - if: steps.entry.outputs.hit == 'true'
+        id: checkpoint
+        name: Save scoped producer continuation
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: save
+          state: resume
+          anchor: ${{ github.event.before }}
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Isolate the restored build
+        run: |
+          test -f .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          mv .lake/build .lake/shard-verification-source
+      - if: steps.entry.outputs.hit == 'true'
+        id: resumed
+        name: Restore the immutable producer continuation
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          state: resume
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Check the recovered bytes and Lake freshness
+        env:
+          SAVED: ${{ steps.checkpoint.outputs.available }}
+          UNSAVED: ${{ steps.checkpoint.outputs.missing }}
+          RESTORED: ${{ steps.resumed.outputs.available }}
+          MISSING: ${{ steps.resumed.outputs.missing }}
+        run: |
+          [[ "$SAVED" =~ ^[1-9][0-9]*$ && "$SAVED" == "$RESTORED" && "$UNSAVED" == 0 && "$MISSING" == 0 ]]
+          path=lib/lean/D5/S0/Tower/GoldenGapWord.olean
+          cmp ".lake/shard-verification-source/$path" ".lake/build/$path"
+          lake --no-build build "$CACHE_SCOPE"
+
+      - if: steps.entry.outputs.hit == 'true'
+        name: Evict one entry of this run's incomplete index
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          index=build/lean-cache/shards/index.json
+          prefix="$(python3 tools/scripts/worktree/lean_actions_shards.py identity --state resume | jq -er .prefix)"
+          digest="$(jq -er '.entries | to_entries[0].value' "$index")"
+          gh cache delete --ref "$GITHUB_REF" "${prefix}material-$digest"
+          mv .lake/build .lake/shard-verification-recovered
+      - if: steps.entry.outputs.hit == 'true'
+        id: evicted
+        name: Restore remaining checkpoint entries
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          state: resume
+          targets: ${{ env.CACHE_SCOPE }}
+      - if: steps.entry.outputs.hit == 'true'
+        name: Rebuild the missing checkpoint entry through Lake
+        env:
+          SAVED: ${{ steps.checkpoint.outputs.available }}
+          AVAILABLE: ${{ steps.evicted.outputs.available }}
+          MISSING: ${{ steps.evicted.outputs.missing }}
+        run: |
+          [[ "$AVAILABLE" =~ ^[0-9]+$ && "$MISSING" == 1 && $((AVAILABLE + 1)) == "$SAVED" ]]
+          make lean LEAN_TARGETS="$CACHE_SCOPE"
+          lake --no-build build "$CACHE_SCOPE"
 
   scribe:
     name: verify Scribe publication and fetch
