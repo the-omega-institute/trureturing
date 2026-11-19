@@ -32,11 +32,12 @@ Abhandlungen (1968), pages 343–405, without a volume number.
 The classification standardly attributed to this article states: a
 finite-dimensional associative algebra over the real numbers in which every
 nonzero element is invertible is isomorphic to the real numbers, the complex
-numbers or the quaternions. A short modern proof is R. S. Palais, The
-classification of real division algebras, American Mathematical Monthly 75
-(1968), no. 4, https://doi.org/10.2307/2313414; its DOI registration lists
-this title, the author R. S. Palais, volume 75, issue 4, April 1968, and only
-the first page 366.
+numbers or the quaternions. A later article whose title names the same
+classification is R. S. Palais, The classification of real division algebras,
+American Mathematical Monthly 75 (1968), no. 4,
+https://doi.org/10.2307/2313414; its DOI registration lists this title, the
+author R. S. Palais, volume 75, issue 4, April 1968, and only the first page
+366.
 
 ## Encoding and boundary
 

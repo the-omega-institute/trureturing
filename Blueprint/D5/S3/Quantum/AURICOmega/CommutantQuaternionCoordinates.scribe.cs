@@ -25,7 +25,7 @@ internal sealed class CommutantQuaternionCoordinatesDocument : IScribeDocumentDe
                     + "The argument runs as follows. A symmetric operator commuting with every element of U has an eigenspace invariant under U, which by irreducibility is all of E, so the operator is a scalar. "
                     + "Applied to T + T^-1 for T in V, this writes T as a scalar plus a skew operator commuting with U; applied to anticommutators, it shows that the anticommutator of two such skew operators is a scalar. "
                     + "Two noncommuting elements of V therefore yield, after rescaling and orthogonalization, skew operators J and K commuting with U with J J = -1, K K = -1 and K J = -J K. "
-                    + "For a unit vector e the four vectors e, J e, K e, J (K e) are orthonormal, so E has dimension four, and the isometry F sending them to 1, i, j, k turns J and K into left multiplication by i and j. "
+                    + "The space E is nonzero, because any two isometries of the zero space commute; hence E contains a unit vector. For a unit vector e the four vectors e, J e, K e, J (K e) are orthonormal, so E has dimension four, and the isometry F sending them to 1, i, j, k turns J and K into left multiplication by i and j. "
                     + "An element of U commutes with J and K, hence acts by right multiplication by the image of e. "
                     + "For an element T of V, the vectors w with F (T w) = F (T e) * F w form a subspace invariant under U that contains e, hence all of E. "
                     + "The statement asserts existence of such coordinates for each prescribed unit vector e; it asserts no uniqueness. "
