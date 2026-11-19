@@ -6,6 +6,18 @@
    utility: none
    digest: An n-point metric space with k central values has at least (k-1)⌈n/2⌉ central edges. -/
 
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#318)
+escape_witness: lengthEdges_card (each nonzero central length class covers every point, hence
+  has at least ⌈n/2⌉ edges)
+proof_shape:
+  len, lengthEdges: private definitions; consumers: lengthEdges_card, edge_cover_bound.
+  lengthEdges_card: content; consumer: edge_cover_bound.
+  edge_cover_bound: content via lengthEdges_card.
+Direct frozen dependency: D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges
+  (center, centralGraph).
+-/
+
 import D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 
 /-! # Edge-cover lower bound for central graphs

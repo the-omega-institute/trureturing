@@ -7,8 +7,6 @@ internal sealed class CentralEdgeCoverDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Geometry/CentralEdgeCover.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Topology/mazhang2026centraledges");
-    private static readonly LibraryNoteRef Prior =
-        LibraryNoteRef.Create("D5/L/Geometry/dovgosheyrovenska2026centraledges");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite metric space with n points and k central distances has at least (k−1)⌈n/2⌉ "
@@ -18,13 +16,14 @@ internal sealed class CentralEdgeCoverDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("central-edge-cover-bound"),
                 DeclarationHandle.Create(Prefix + "edge_cover_bound"),
                 H("The edge-cover bound"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source, Prior),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "Let X be a finite metric space with n points. Its center C(X) is the set of "
                     + "t ≥ 0 such that every point has a point at distance t, and the central graph "
                     + "joins distinct points whose distance lies in C(X). If C(X) has k elements, "
-                    + "the central graph has at least (k−1)⌈n/2⌉ edges; for the empty space the "
-                    + "bound is 0. Since d(x,x)=0, zero is central. For each nonzero central value "
+                    + "the central graph has at least (k−1)⌈n/2⌉ edges. For the empty space the "
+                    + "center is all of [0,∞), whose cardinality is recorded as 0, so the bound is "
+                    + "0. Since d(x,x)=0, zero is central. For each nonzero central value "
                     + "t choose for every x a point at distance t from x; it differs from x, so "
                     + "x lies on a central edge of length t. Each edge has two endpoints, so the "
                     + "edges of length t number at least ⌈n/2⌉. Edges of different lengths are "
