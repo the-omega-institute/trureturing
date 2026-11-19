@@ -7,7 +7,7 @@ internal sealed class HannaLaurentEndpointsDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/ArithSums/hanna2025a391810");
     private static readonly LibraryNoteRef MaZhang =
-        LibraryNoteRef.Create("D5/L/ArithSums/mazhang2026a391810");
+        LibraryNoteRef.Create("D5/L/ArithUnits/mazhang2026a391810");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The A391810 coefficients at x^(-m^2) and x^(-(m^2-1)) in rows 2m-1 and 2m are signed "
