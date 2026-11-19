@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fb0b1023f1776fd2b6fffc694f2198b6668113d00df9f7cef4bb10dff0067159
+  normalized_sha256: sha256:fb0b1023f1776fd2b6fffc694f2198b6668113d00df9f7cef4bb10dff0067159
+cas_ref: sha256:fb0b1023f1776fd2b6fffc694f2198b6668113d00df9f7cef4bb10dff0067159
+coverage_gids:
+  - gid: D5/S3/FiniteGroups/PowerMaps/PowerMapSeparation.result
+    target_statement_id: sha256:7313faac02327d5fdf7aad726896fbdd8037f711b2dcb596bf13f411a61a1d38
+receipts:
+  unresolved_subitems: []
