@@ -175,6 +175,19 @@ private theorem expanded_model {V : Type*} [Fintype V] {G : SimpleGraph V} {L R 
   let e := Equiv.ofBijective perm ⟨hp, Finite.surjective_of_injective hp⟩
   exact ⟨e.trans graphPoint, fun i j => (hmatrix i j).trans (hAdj (perm i) (perm j))⟩
 
+private theorem model_of_half {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 24) :
+    ∃ (index : Fin 53) (point : Fin 24 ≃ (coordinateSlice C b : Set (Q 9))),
+      ∀ i j : Fin 24, distance (modelAt index) i.val j.val = 1 ↔
+        (hypercube 9).Adj (point i).val (point j).val := by
+  obtain ⟨index, label, reverse, he, hc⟩ := colored_model_of_half hC hr hb b hs
+  obtain ⟨_, hlow, _, _, _⟩ := Q9TwentyFourCompression.half_degree_split hC hr hb b hs
+  obtain ⟨point, hp⟩ := expanded_model (parity_bipartite (coordinateSlice C b))
+    ((Fintype.card_coe _).trans hs) hlow index label reverse he hc
+  exact ⟨index, point, hp⟩
+
 #print axioms expanded_model
+#print axioms model_of_half
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourModelCoverage
