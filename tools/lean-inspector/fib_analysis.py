@@ -94,9 +94,10 @@ def _qualify_compiled(request, reading):
     continuation = reading.get("continuation_target")
     if isinstance(continuation, dict):
         continuation["predictive_closure"] = prediction
-        readings["predictive_closure"] = {
-            "kind": prediction["kind"],
-            "reason": prediction.get("reason", "compiled source-bound operation evidence")}
+    readings["predictive_closure"] = {
+        "kind": prediction["kind"],
+        "reason": prediction.get("reason", "compiled source-bound operation evidence")}
+
     def evidence(field, kind, reason):
         readings[field] = dict(kind=kind, reason=reason)
     if request.get("arena") == "law-family":

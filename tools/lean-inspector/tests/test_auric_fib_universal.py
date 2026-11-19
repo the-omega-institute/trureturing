@@ -317,9 +317,15 @@ end AuricFibUniversalProduction
             reading = row['reading']
             self.assertEqual(reading['association_coordinate']['family_capture'], compiled['family'])
             self.assertEqual(reading['layered_spectrum']['family_capture'], compiled['family'])
+            self.assertEqual(reading['disposition']['readings']['predictive_closure']['kind'],
+                             row['request']['compiled_prediction']['kind'])
             if row['request']['task'] is not None:
                 self.assertEqual(reading['continuation_target']['family_capture'], compiled['task'])
                 self.assertEqual(reading['continuation_target']['uses_delta'], compiled['uses_delta'])
+            else:
+                self.assertIsNone(compiled['task'])
+                self.assertIsNone(compiled['uses_delta'])
+                self.assertIsNone(reading['continuation_target'])
         # Replaying JSON at the public arithmetic entry acquires no theorem.
         strict = self.first['Law.Separation.strict']['request']
         result = subprocess.run([str(ROOT / 'tools/scripts/auric-fib-analysis.sh')],

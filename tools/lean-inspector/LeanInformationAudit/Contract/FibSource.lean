@@ -481,7 +481,8 @@ def request (bound : Bound) (target : Name) (family point claims task : Expr) : 
       ("reading", Json.mkObj [("kind", toJson (if capture == .unknown then "unknown" else "available")),
         ("reason", toJson (if capture == .unknown then
           "no family separation or identifiability witness supplied" else "compiled family witness"))]),
-      ("task", toJson (AuricFib.taskCapture capture usesDelta).label),
-      ("uses_delta", toJson usesDelta)])]
+      ("task", if taskJson == Json.null then Json.null else
+        toJson (AuricFib.taskCapture capture usesDelta).label),
+      ("uses_delta", if taskJson == Json.null then Json.null else toJson usesDelta)])]
 
 end LeanInformationAudit.FibLaw
