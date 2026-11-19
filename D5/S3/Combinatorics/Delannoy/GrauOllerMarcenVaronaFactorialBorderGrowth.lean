@@ -29,9 +29,9 @@ D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.tendsto_
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_bound: proof_shape: content; escape_witness: Q_le_M; Same-delivery owner closure: qAB and qAB_pos via Q_le_M and Q_nonneg.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_limit: proof_shape: bind-only; escape_witness: none; Same-delivery owner closure: qAB via Q_scaled_limit.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_Q_scaled_limit: proof_shape: content; escape_witness: Q_le_M; Same-delivery owner closure: qAB and qAB_pos via Q_le_M and Q_nonneg.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_factorial: proof_shape: content; escape_witness: d_eq_binomial; Same-delivery owner closure: qAB via d_eq_binomial.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_factorial: proof_shape: content; escape_witness: d_eq_binomial; Direct same-delivery owner reference: qAB. The proof also uses d_eq_binomial.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.ratio_transfer: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.result: proof_shape: content; escape_witness: border_convolution, d_eq_binomial; Same-delivery owner closure: qAB via factorial_first_order and Q_factorial.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.result: proof_shape: content; escape_witness: border_convolution, d_eq_binomial; Same-delivery owner closure: qAB via Q_factorial and qAB_pos via factorial_first_order, diagonal_Q_scaled_limit, and Q_nonneg.
 -/
 
 import D5.S3.Combinatorics.Matroids.SpeyerUniformNormality

@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#19939; Proved)
-escape_witness: R_scaled_limit, R_scaled_bound, R_border (admission remains external problem settlement)
+escape_witness: R_scaled_limit, R_scaled_bound (admission remains external problem settlement)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22168
 Same-delivery dependency: D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.
 Its frozen owner module is D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.
@@ -16,7 +16,7 @@ Baseline declaration _private.D5.S3.Combinatorics.Matroids.SpeyerUniformNormalit
 The recurrence and additive-limit statements use the conventions of #19938 and #19939.
 The unit-border array is qAB evaluated at one.
 All declarations have utility none: unbounded identities, estimates and limits.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaPowerBorderGrowth.result: proof_shape: content; escape_witness: R_scaled_limit, R_scaled_bound, R_border; Direct same-delivery dependencies from the factorial module: f, ratio_transfer, tendsto_of_scaled.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaPowerBorderGrowth.result: proof_shape: content; escape_witness: R_scaled_limit, R_scaled_bound; Direct same-delivery dependencies from the factorial module: f, ratio_transfer, tendsto_of_scaled.
 -/
 
 import D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth
