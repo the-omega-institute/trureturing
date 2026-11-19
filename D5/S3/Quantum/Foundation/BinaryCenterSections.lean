@@ -19,6 +19,7 @@ namespace D5.S3.Quantum.Foundation.BinaryCenterSections
 
 open CircuitBalancedConfirmation FacetZeroGluing ExclusionBallFaces
 open OriginalFacePolarity SingleLabelNormalBody ContinuousFrameSum BinaryCenterGeometry
+open ReciprocalExclusionLimits
 
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
@@ -81,7 +82,7 @@ private theorem center_graph_transverse (p : pure C u) (b : ExclusionChart C u p
     (x : EuclideanSpace ℝ (Fin b.dim)) (hx : ‖x‖ = 1) :
     Disjoint g.linear.range
       (hB (chartPure hc hs hg hB p b x hx)).some.param.linear.range := by
-  letI : Nonempty (Fin b.dim) := ⟨⟨0, b.dim_pos⟩⟩
+  let _ : Nonempty (Fin b.dim) := ⟨⟨0, b.dim_pos⟩⟩
   let q := chartPure hc hs hg hB p b x hx
   let a := (hB q).some
   let E := g '' Metric.closedBall 0 1
@@ -165,7 +166,8 @@ theorem whole_ball_center_section (hBC : binaryCompatible hB)
           (subset_intrinsicClosure hy) hseg
         have hbd : g w ∈ intrinsicFrontier ℝ (base C u) := by
           rw [hb w hw]
-          exact MixedExclusionGeometry.exclusion_frontier hc hs hg hB _ (chart_mem (hB _).some (by simp))
+          exact MixedExclusionGeometry.exclusion_frontier hc hs hg hB _
+            (chart_mem (hB _).some (by simp))
         rw [← closure_sdiff_intrinsicInterior] at hbd
         exact hbd.2 hri
       exact ⟨z, by simpa using hn, rfl⟩
