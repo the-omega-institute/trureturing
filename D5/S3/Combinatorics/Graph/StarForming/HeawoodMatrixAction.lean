@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodLift
 
+/-! An invertible point coordinate change acts contragrediently on lines. -/
+
 namespace D5.S3.Combinatorics.Graph.StarForming.HeawoodMatrixAction
 
 open HeawoodSwitching HeawoodLift Matrix
@@ -132,7 +134,8 @@ private theorem phi_transport (g : Matˣ) (s : Signing) :
   calc
     _ = ∑ e : Fin 21, transport g s (onFlag g e) •
         vecMulVec (coordinate (flags (onFlag g e)).1) (coordinate (flags (onFlag g e)).2) :=
-      ((onFlag g).sum_comp _).symm
+      ((onFlag g).sum_comp (fun f : Fin 21 => transport g s f •
+        vecMulVec (coordinate (flags f).1) (coordinate (flags f).2))).symm
     _ = _ := by
       apply Finset.sum_congr rfl
       intro e _
@@ -145,12 +148,18 @@ private def onVertex (g : Matˣ) : Vertex ≃ Vertex :=
 private theorem point_transport (g : Matˣ) (e : Fin 21) :
     onVertex g (point e) = point (onFlag g e) := by
   have hp (f : Fin 21) : point f = Fin.castAdd 7 (flags f).1 := rfl
-  simp [onVertex, hp, flag_coordinates]
+  rw [hp, hp, flag_coordinates]
+  unfold onVertex
+  rw [Equiv.trans_apply, Equiv.trans_apply, finSumFinEquiv_symm_apply_castAdd]
+  rfl
 
 private theorem line_transport (g : Matˣ) (e : Fin 21) :
     onVertex g (line e) = line (onFlag g e) := by
   have hl (f : Fin 21) : line f = Fin.natAdd 7 (flags f).2 := rfl
-  simp [onVertex, hl, flag_coordinates]
+  rw [hl, hl, flag_coordinates]
+  unfold onVertex
+  rw [Equiv.trans_apply, Equiv.trans_apply, finSumFinEquiv_symm_apply_natAdd]
+  rfl
 
 private theorem incidence_transport (g : Matˣ) (e : Fin 21) (v w : Vertex) :
     incident (onFlag g e) (onVertex g v) (onVertex g w) ↔ incident e v w := by
