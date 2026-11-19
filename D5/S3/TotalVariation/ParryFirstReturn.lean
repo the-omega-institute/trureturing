@@ -40,7 +40,7 @@ noncomputable def returnMap (r : RelationPath k) : RelationPath k :=
 noncomputable def sectionMeasure (μ : Measure (RelationPath k)) : Measure (RelationPath k) :=
   ProbabilityTheory.cond μ (zeroSection k)
 
-private theorem measurable_relationShift : Measurable (@relationShift k) := by
+theorem measurable_relationShift : Measurable (@relationShift k) := by
   apply Measurable.subtype_mk
   exact Measurable.of_eval fun t => (measurable_pi_apply (t + 1)).comp measurable_subtype_coe
 
@@ -264,7 +264,7 @@ private theorem returnMap_preserves_restrict (μ : Measure (RelationPath k))
   rw [← hunC, measure_iUnion hdisC hC, ← hunD, measure_iUnion hdisD hD]
   exact tsum_congr fun n => (hmass n).symm
 
-private theorem suffix_zero_iff
+theorem suffix_zero_iff
     (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
       let j := ((e z).val t).2.val
@@ -590,7 +590,7 @@ private theorem return_suffix_block_iff
         omega
       · rfl
 
-private theorem suffix_iterate_shift
+theorem suffix_iterate_shift
     (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
       let j := ((e z).val t).2.val
@@ -875,7 +875,7 @@ theorem return_time_cylinder_probability (hk : 2 ≤ k)
 def matchesRawWindow {m : ℕ} (r : RelationPath k) (word : Fin (m + 1) → Fin k) : Bool :=
   decide (∀ i : Fin m, r.val (i.val : ℤ) = decide ((word i.succ).val ≠ 0))
 
-private theorem suffix_edge (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+theorem suffix_edge (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (r : RelationPath k) (t : ℤ) :
     ((e (false, r)).val (t + 1)).2.val = 0 ∨
       ((e (false, r)).val (t + 1)).2.val = ((e (false, r)).val t).2.val + 1 := by
