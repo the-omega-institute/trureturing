@@ -277,6 +277,66 @@ theorem survives_eq_all_signConstraints (wagner : Bool) (p : Fin 8 → Q 9)
 
 end
 
+/-- A normalized high-vertex signing has seven free bits. -/
+def signsFromMask (n : Fin 128) : Fin 8 → Bool :=
+  Fin.cases false (cubeBitVec 7 (BitVec.ofFin n))
+
+private theorem exists_mask (bits : Fin 8 → Bool) (hroot : bits 0 = false) :
+    ∃ n : Fin 128, signsFromMask n = bits := by
+  let tail := (cubeBitVec 7).symm (fun j : Fin 7 => bits j.succ)
+  refine ⟨tail.toFin, ?_⟩
+  funext i
+  refine Fin.cases ?_ (fun j => ?_) i
+  · exact hroot.symm
+  · exact congrFun ((cubeBitVec 7).apply_symm_apply (fun j : Fin 7 => bits j.succ)) j
+
+private def refineMasks : List (Fin 8 × Fin 8 × Bool × Bool) → List (Fin 128) →
+    List (Fin 128)
+  | [], masks => masks
+  | (i, j, same, different) :: tail, masks =>
+    if same then
+      if different then refineMasks tail masks
+      else refineMasks tail (masks.filter fun n => signsFromMask n i == signsFromMask n j)
+    else
+      if different then refineMasks tail (masks.filter fun n => signsFromMask n i != signsFromMask n j)
+      else []
+
+private theorem mem_refineMasks (rows : List (Fin 8 × Fin 8 × Bool × Bool))
+    (masks : List (Fin 128)) (n : Fin 128) :
+    n ∈ refineMasks rows masks ↔ n ∈ masks ∧ rows.all (fun row =>
+      if signsFromMask n row.1 != signsFromMask n row.2.1 then row.2.2.2 else row.2.2.1) = true := by
+  induction rows generalizing masks with
+  | nil => simp [refineMasks]
+  | cons row rows ih =>
+    obtain ⟨i, j, same, different⟩ := row
+    cases same <;> cases different <;>
+      simp only [refineMasks, Bool.false_eq_true, ite_false, ite_true, ih, List.all_cons,
+        Bool.and_eq_true, List.mem_filter, not_false_eq_true]
+    all_goals cases h : (signsFromMask n i != signsFromMask n j) <;> simp_all <;> tauto
+
+/-- Enumerate the normalized signings of a placement, computing each
+pair's midpoint tests only once. -/
+def signMasks (wagner : Bool) (p : Fin 8 → Q 9) : List (Fin 128) :=
+  refineMasks (signConstraints wagner p) (List.finRange 128)
+
+/-- The enumeration contains exactly the midpoint-allowed sign codes. -/
+theorem mem_signMasks (wagner : Bool) (p : Fin 8 → Q 9) (n : Fin 128) :
+    n ∈ signMasks wagner p ↔ survives wagner p (signsFromMask n) = true := by
+  rw [signMasks, mem_refineMasks, survives_eq_all_signConstraints]
+  simp [List.mem_finRange]
+
+private def signingCount (wagner : Bool) (pattern : Fin 5) : ℕ :=
+  ((Q9SeventyTwoEmbeddingSearch.candidates wagner pattern).map fun p =>
+    (signMasks wagner (cubeBitVec 9 ∘ p)).length).sum
+
+set_option maxRecDepth 8192 in
+set_option maxHeartbeats 8000000 in
+-- Evaluate the finite placement and sign search once for each root pattern.
+theorem signingCount_eq (wagner : Bool) (pattern : Fin 5) :
+    signingCount wagner pattern =
+      (if wagner then ![0, 6, 0, 6, 0] else ![24, 6, 6, 6, 128]) pattern := by
+  cases wagner <;> fin_cases pattern <;> decide +kernel
+
 /-- Nonzero vertices of the reconstructed signed vector. -/
 def support (wagner : Bool) (p : Fin 8 → Q 9) (bits : Fin 8 → Bool) : Finset (Q 9) :=
   Finset.univ.filter fun x => complete wagner p (unitSign ∘ bits) x ≠ 0
