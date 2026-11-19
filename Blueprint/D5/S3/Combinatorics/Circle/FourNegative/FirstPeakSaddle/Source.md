@@ -47,5 +47,4 @@ These existing private declarations are consumed by the strict-saddle endpoint. 
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddle/Source.source_centered_bounds`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddle/Source.source_parity`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddle/Source.source_recurrences`
-- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/Descending/Endpoint](../Descending/Endpoint.md)
 - Dependency: [D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddle/Structure](Structure.md)

@@ -34,4 +34,3 @@ These existing private declarations are consumed by the strict-saddle endpoint. 
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleRemaining/Arithmetic.native_of_selection`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleRemaining/Arithmetic.scaled_to_rectangle`
-- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/Descending/Endpoint](../Descending/Endpoint.md)

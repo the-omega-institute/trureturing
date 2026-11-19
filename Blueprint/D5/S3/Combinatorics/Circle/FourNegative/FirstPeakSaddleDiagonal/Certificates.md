@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleDiagonal
 
 *Commentary.*
 
-Seven strict charts supply four margins each. The equality boundary uses six charts with K>=2 and six with J>=2, again four margins each. Each chart states explicit nonnegative polynomial slacks for nonnegative shifted integer parameters and proves them by ring normalization and positivity. GeneralArithmetic consumes these exact terms through its corner lemmas. The three chart modules supply 28 strict and 48 equality margins. GeneralArithmetic joins them in the physical construction.
+Seven strict charts supply four margins each. The equality boundary uses six charts with K>=2 and six with J>=2, again four margins each. Each chart states explicit nonnegative polynomial slacks for nonnegative shifted integer parameters and proves them by ring normalization and positivity. GeneralArithmetic consumes these exact terms through its corner lemmas. The chart families supply 28 strict and 48 equality margins. GeneralArithmetic joins them in the physical construction.
 
 These existing private declarations are consumed by the strict-saddle endpoint. This mirror documents their stated hypotheses and use; it makes no independent literature-novelty claim, no claim of a four-slot registration for every helper, and no claim to settle unrestricted four-gap J or Circle Conjecture 3.1.
 

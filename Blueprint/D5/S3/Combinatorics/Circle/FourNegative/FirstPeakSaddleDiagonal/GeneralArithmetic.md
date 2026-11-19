@@ -34,5 +34,4 @@ These existing private declarations are consumed by the strict-saddle endpoint. 
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleDiagonal/GeneralArithmetic.parameterChoice`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleDiagonal/GeneralArithmetic.rectangle_to_twelve`
-- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/Descending/Endpoint](../Descending/Endpoint.md)
 - Dependency: [D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleDiagonal/CyclicArithmetic](CyclicArithmetic.md)

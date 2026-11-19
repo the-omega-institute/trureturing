@@ -34,5 +34,4 @@ These existing private declarations are consumed by the strict-saddle endpoint. 
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleSmallGrain/Certificates.chart_K1_J1_0`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/FirstPeakSaddleSmallGrain/Certificates.margin`
-- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/Descending/Endpoint](../Descending/Endpoint.md)
 - Dependency: [D5/S3/Combinatorics/Circle/FourNegative/MaxPlusTwo/Chambers/Masks](../MaxPlusTwo/Chambers/Masks.md)
