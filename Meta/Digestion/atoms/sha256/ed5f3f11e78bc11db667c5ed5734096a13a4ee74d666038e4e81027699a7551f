@@ -1,0 +1,17 @@
+**Proposition 27.8 (Complementary sharp task).** For every finite
+$n\ge0$ and every projection $E$,
+
+$$
+\eta_n(I_3-E)=\eta_n(E).
+\tag{27.26}
+$$
+
+For nontrivial $E$ this includes the explicit rank-two task associated
+to each rank-one task above. Indeed $(F^n)^\dagger$ is unital, so
+the bijection $B\mapsto I_3-B$ negates the residual in (27.4).
+In (27.5) exchange $\sigma_1,\sigma_0$ along with the two effects;
+the output states then lie in the range and kernel of $I_3-E$,
+respectively. This gives an attaining complementary decoder. The
+trivial tasks $0,I_3$ both have zero error. This is the reused unital
+complement argument applied to the present optima.
+
