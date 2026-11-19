@@ -201,7 +201,7 @@ private theorem sparse_sum_bound (s : Finset ℕ)
 
 set_option maxHeartbeats 800000 in
 -- The floor and support estimates use repeated arithmetic elimination.
-private theorem sparse_mod (n k : ℕ) (h : spacedBits n) : spacedBits (n % 2^k) := by
+theorem sparse_mod (n k : ℕ) (h : spacedBits n) : spacedBits (n % 2^k) := by
   intro i j hij hi hj
   have hi' := (mem_bits_mod n k i).mp ((mem_bits _ _).mpr hi)
   have hj' := (mem_bits_mod n k j).mp ((mem_bits _ _).mpr hj)
@@ -209,7 +209,7 @@ private theorem sparse_mod (n k : ℕ) (h : spacedBits n) : spacedBits (n % 2^k)
 
 set_option maxHeartbeats 800000 in
 -- The floor and support estimates use repeated arithmetic elimination.
-private theorem tail_bound (n e : ℕ) (h : spacedBits n) (he : n.testBit e = true) :
+theorem tail_bound (n e : ℕ) (h : spacedBits n) (he : n.testBit e = true) :
     15 * (n % 2^e) < 2^e := by
   rw [← sum_bits (n % 2^e)]
   apply sparse_sum_bound
