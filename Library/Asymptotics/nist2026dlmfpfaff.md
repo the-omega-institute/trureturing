@@ -28,3 +28,11 @@ $P(r)=(1-r)^{-1/2}P(r/(r-1))$. For $r\in\mathbb C\setminus[1,\infty)$,
 the transformed argument lies in the same slit plane because
 $1-r/(r-1)=1/(1-r)$. Multiplying by the principal square root gives
 $P(r/(r-1))=(1-r)^{1/2}P(r)$. [DLMF 15.8.1](https://dlmf.nist.gov/15.8.E1)
+
+## Verified locator
+
+DLMF §15.8(i), equation 15.8.1, first Pfaff rearrangement, with principal
+values and $a=b=1/2$, $c=1$, $z=r$. [DLMF 15.8.1](https://dlmf.nist.gov/15.8.E1)
+
+DLMF equation 19.5.1 gives the normalization $P(r)=2K(k)/\pi$ for $r=k^2$.
+[DLMF 19.5.1](https://dlmf.nist.gov/19.5.E1)
