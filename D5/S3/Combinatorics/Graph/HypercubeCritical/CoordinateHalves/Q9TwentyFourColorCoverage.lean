@@ -16,7 +16,7 @@ open BalancedCriticalSpectrum (Q IsBalanced)
 open BalancedCubeLowerBound (coordinateSlice)
 open Q9TwentyFourCompression (half_suppression)
 open GirthSliceCounting (degreeThree)
-open private paritySide from
+open private paritySide parity_bipartite balanced_subset from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private suppress from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourCompression
@@ -337,9 +337,173 @@ private theorem count_direct_edges {V : Type*} [Fintype V] {G : SimpleGraph V}
         have hr : ir q hq = a := label.symm_apply_eq.mpr ha.symm
         exact ⟨q, hq, by rw [hl, hr]; exact ite_eq_right (Nat.not_lt_of_ge hij.le)⟩
 
+private theorem count_color_side {V : Type*} [Fintype V] {G : SimpleGraph V}
+    {L R : Finset V} (label : Fin 12 ≃ High G L R) (group : Nat) (reverse : Bool)
+    (hcolor : ∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse)) :
+    vertices.countP group.testBit =
+      if reverse then (degreeThree G L).card else (degreeThree G R).card := by
+  classical
+  let selected := (Finset.range 12).filter (fun i => group.testBit i = true)
+  have hset : (vertices.filter group.testBit).toFinset = selected := by
+    ext i
+    simp [vertices, selected]
+  have hcount : vertices.countP group.testBit = selected.card := by
+    rw [List.countP_eq_length_filter, ← hset, List.toFinset_card_of_nodup]
+    exact (List.nodup_range).filter _
+  let selectedSide := (Finset.univ : Finset (High G L R)).filter
+    (fun x => (side x ^^ reverse) = true)
+  have hmatch : selected.card = selectedSide.card := by
+    have bound (i : Nat) (hi : i ∈ selected) : i < 12 :=
+      Finset.mem_range.mp (mem_filter.mp hi).1
+    refine Finset.card_bij (fun i hi => label ⟨i, bound i hi⟩) ?_ ?_ ?_
+    · intro i hi
+      have h := (mem_filter.mp hi).2
+      exact mem_filter.mpr ⟨mem_univ _, (hcolor ⟨i, bound i hi⟩).symm.trans h⟩
+    · intro i hi j hj h
+      exact congrArg Fin.val (label.injective h)
+    · intro x hx
+      let i := label.symm x
+      have h := hcolor i
+      rw [label.apply_symm_apply x] at h
+      refine ⟨i.val, mem_filter.mpr ⟨Finset.mem_range.mpr i.isLt,
+        h.trans (mem_filter.mp hx).2⟩, label.apply_symm_apply x⟩
+  rw [hcount, hmatch]
+  cases reverse
+  · change selectedSide.card = (degreeThree G R).card
+    let f : SideHigh G R ↪ High G L R := ⟨Sum.inr, Sum.inr_injective⟩
+    have h : selectedSide = Finset.univ.map f := by
+      ext x
+      cases x <;> simp [selectedSide, side, f]
+    rw [h, card_map, card_univ, Fintype.card_coe]
+  · change selectedSide.card = (degreeThree G L).card
+    let f : SideHigh G L ↪ High G L R := ⟨Sum.inl, Sum.inl_injective⟩
+    have h : selectedSide = Finset.univ.map f := by
+      ext x
+      cases x <;> simp [selectedSide, side, f]
+    rw [h, card_map, card_univ, Fintype.card_coe]
+
+private theorem color_word {V : Type*} [Fintype V] {G : SimpleGraph V} {L R : Finset V}
+    (label : Fin 12 ≃ High G L R) (reverse : Bool) :
+    ∃ group < 4096, ∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse) := by
+  let f (i : Fin 12) := side (label i) ^^ reverse
+  let word := BitVec.ofBoolListLE (List.ofFn f)
+  refine ⟨word.toNat, ?_, fun i => ?_⟩
+  · simpa only [List.length_ofFn] using word.isLt
+  · change word.getLsbD i.val = f i
+    change (BitVec.ofBoolListLE (List.ofFn f)).getLsbD i.val = f i
+    rw [BitVec.getLsbD_ofBoolListLE, List.getD_eq_getElem?_getD,
+      List.getElem?_eq_getElem (by simpa only [List.length_ofFn] using i.isLt)]
+    simp only [Option.getD_some, List.getElem_ofFn]
+
+private theorem admissible_coloring {V : Type*} [Fintype V] {G : SimpleGraph V}
+    {L R : Finset V} (hbip : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hg : (8 : ℕ∞) ≤ G.egirth)
+    (hsum : (degreeThree G L).card + (degreeThree G R).card = 12)
+    (hsize : (degreeThree G L).card = 2 ∨ (degreeThree G L).card = 4 ∨
+      (degreeThree G L).card = 6 ∨ (degreeThree G L).card = 8 ∨ (degreeThree G L).card = 10)
+    (hcount : (∑ v ∈ degreeThree G R, (degreeThree G (G.neighborFinset v)).card) = 6)
+    (index : Fin 22) (label : Fin 12 ≃ High G L R)
+    (hlabel : ∀ i j : Fin 12, adjacent (decode representatives[index.val]!) i.val j.val = true ↔
+      (suppress G L R).Adj (label i) (label j)) :
+    ∃ (group : Nat) (reverse : Bool), group < 4096 ∧
+      (∀ i : Fin 12, group.testBit i.val = (side (label i) ^^ reverse)) ∧
+      admissible (graphEdges (decode representatives[index.val]!))
+        (ColorCase.cycles coloredCases[index.val]!) group = true := by
+  let l := (degreeThree G L).card
+  let r := (degreeThree G R).card
+  let reverse := if l = 6 then !side (label 0) else decide (l < r)
+  obtain ⟨group, hgroup, hcolor⟩ := color_word label reverse
+  refine ⟨group, reverse, hgroup, hcolor, ?_⟩
+  have hs := count_color_side label group reverse hcolor
+  change vertices.countP group.testBit = (if reverse then l else r) at hs
+  have hsize' : vertices.countP group.testBit = 2 ∨ vertices.countP group.testBit = 4 ∨
+      (vertices.countP group.testBit = 6 ∧ group.testBit 0 = true) := by
+    have hsum' : l + r = 12 := hsum
+    change l = 2 ∨ l = 4 ∨ l = 6 ∨ l = 8 ∨ l = 10 at hsize
+    rcases hsize with he | he | he | he | he
+    · left
+      have hr : l < r := by omega
+      simpa only [reverse, he, show (2 : Nat) ≠ 6 by decide, ite_false,
+        show decide (2 < r) = true from decide_eq_true (he ▸ hr), ite_true] using hs
+    · right
+      left
+      have hr : l < r := by omega
+      simpa only [reverse, he, show (4 : Nat) ≠ 6 by decide, ite_false,
+        show decide (4 < r) = true from decide_eq_true (he ▸ hr), ite_true] using hs
+    · right
+      right
+      have hr : r = 6 := by omega
+      refine ⟨by rw [hs, he, hr]; split <;> rfl, ?_⟩
+      have h := hcolor 0
+      change group.testBit 0 = (side (label 0) ^^ reverse) at h
+      rw [h]
+      simp [reverse, he]
+    · right
+      left
+      have hr : r = 4 := by omega
+      have hn : ¬ l < r := by omega
+      simpa [reverse, he, hr] using hs
+    · left
+      have hr : r = 2 := by omega
+      simpa [reverse, he, hr] using hs
+  let graph := decode representatives[index.val]!
+  let cert := coloredCases[index.val]!
+  have hc := checked index
+  unfold checkCase at hc
+  have hv := (Bool.and_eq_true_iff.mp hc).1
+  change (ColorCase.cycles cert).all (validCycle graph) = true at hv
+  have hdisj : Disjoint L R := by simpa only [Finset.disjoint_coe] using hbip.disjoint
+  have he := (count_direct_edges hbip graph label hlabel group reverse hcolor).trans hcount
+  unfold admissible
+  simp only [Bool.and_eq_true_iff, Bool.or_eq_true_iff, beq_iff_eq]
+  have hsize'' := or_assoc.symm.mp hsize'
+  exact ⟨⟨hsize'', he⟩, List.all_eq_true.mpr fun cycle hcycle =>
+    decide_eq_true (cycle_respects_girth hdisj hg index label hlabel group reverse hcolor
+      cycle (List.all_eq_true.mp hv cycle hcycle))⟩
+
+/-- Every twenty-four-point coordinate half has a compressed graph from the
+53 certified parity-colored models, up to globally exchanging the parts. -/
+private theorem colored_model_of_half {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 24) :
+    let S := coordinateSlice C b
+    let G := (hypercube 9).induce (S : Set (Q 9))
+    let L := paritySide S false
+    let R := paritySide S true
+    ∃ (model : Fin 53) (label : Fin 12 ≃ High G L R) (reverse : Bool),
+      (∀ i j : Fin 12, adjacent (decode models[model.val]!.1) i.val j.val = true ↔
+        (suppress G L R).Adj (label i) (label j)) ∧
+      (∀ i : Fin 12, models[model.val]!.2.testBit i.val = (side (label i) ^^ reverse)) := by
+  let S := coordinateSlice C b
+  let G := (hypercube 9).induce (S : Set (Q 9))
+  let L := paritySide S false
+  let R := paritySide S true
+  have hp : G.IsBipartiteWith (L : Set _) (R : Set _) := parity_bipartite S
+  have hg : (8 : ℕ∞) ≤ G.egirth :=
+    BalancedCubeGirth.eight_le_egirth S (balanced_subset hb (filter_subset _ _))
+  obtain ⟨_, _, hcount, hsum, hsize⟩ := Q9TwentyFourCompression.half_degree_split hC hr hb b hs
+  obtain ⟨idx, label, hlabel⟩ := representative_of_half hC hr hb b hs
+  obtain ⟨group, flipParts, hgroup, hcolor, hadm⟩ :=
+    admissible_coloring hp hg hsum hsize hcount idx label hlabel
+  obtain ⟨model, p, reverse, hmodel, hbit⟩ := colored_representative idx group hgroup hadm
+  refine ⟨model, p.symm.trans label, flipParts ^^ reverse, ?_, ?_⟩
+  · intro i j
+    have hm := hmodel (p.symm i) (p.symm j)
+    rw [p.apply_symm_apply, p.apply_symm_apply] at hm
+    rw [← hm]
+    exact hlabel _ _
+  · intro i
+    have hm := hbit (p.symm i)
+    rw [p.apply_symm_apply, hcolor] at hm
+    change models[model.val]!.2.testBit i.val = (side (label (p.symm i)) ^^ (flipParts ^^ reverse))
+    rw [← Bool.xor_assoc, hm, Bool.xor_assoc]
+    simp
+
 #print axioms representative_of_half
 #print axioms colored_representative
 #print axioms cycle_respects_girth
 #print axioms count_direct_edges
+#print axioms admissible_coloring
+#print axioms colored_model_of_half
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourColorCoverage
