@@ -161,8 +161,9 @@ private abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h (J := Empty) (fun j => nomatch j) (fun j => nomatch j)
-    (fun j => nomatch j) (fun i => nomatch i) (0 : ℂ) 0
+  exact h (E := EuclideanSpace ℂ (ULift.{u} Empty)) (J := ULift.{v} Empty)
+    (fun j => nomatch j.down) (fun j => nomatch j.down)
+    (fun j => nomatch j.down) (fun i => nomatch i.down) 0 0
 
 def family : Registration arena (type_of% @WuEndpointPauliFrame.overlap_le.{u, v}) where
   actual := actual
