@@ -10,8 +10,7 @@ internal sealed class FiniteFiberDocument : IScribeDocumentDefinition
         "Finite uniform coordinate fibres and disjoint coordinate-block averages.",
         H("Finite coordinate fibres and their exact averages"),
         Blocks(
-            Paragraph(Text("These are proof-organizing auxiliaries consumed by the full circular-orientation " +
-                "entropy lower bound, not independent escape witnesses. A finite uniform mean is a sum " +
+            Paragraph(Text("A finite uniform mean is a sum " +
                 "divided by the cardinality of its finite domain, with that cardinality cast to the " +
                 "scalar field. All restrictions below retain the actual coordinate values.")),
             Node("block_average_product", "Disjoint coordinate blocks factor a uniform average",

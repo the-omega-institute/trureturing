@@ -4,7 +4,7 @@
 
 Finite Fourier inversion, Gaussian point bounds and entropy estimates.
 
-Throughout, Ω is a nonempty finite type with its uniform law. For X on Ω, p(k)=|{ω∈Ω:X(ω)=k}|/|Ω|. For integer-valued X, φ_X(t)=|Ω|⁻¹ Σω exp(X(ω) i t), with real t and complex exponential. For natural-valued X bounded by n, H(X)=Σ_{k=0}^n -p(k) log₂ p(k), with the summand zero at p(k)=0. These abbreviations denote literal finite counts and sums, not arbitrary mass functions. The estimates are consumed by CircularOrientationEntropyLowerBound.whole_theorem_one_two and supply no separate escape witness.
+Throughout, Ω is a nonempty finite type with its uniform law. For X on Ω, p(k)=|{ω∈Ω:X(ω)=k}|/|Ω|. For integer-valued X, φ_X(t)=|Ω|⁻¹ Σω exp(X(ω) i t), with real t and complex exponential. For natural-valued X bounded by n, H(X)=Σ_{k=0}^n -p(k) log₂ p(k), with the summand zero at p(k)=0. The circular-orientation proof applies the point-mass bound to the number of vertices of a prescribed indegree.
 
 **Theorem 1.1 (A point-mass bound from characteristic-function decay).**
 

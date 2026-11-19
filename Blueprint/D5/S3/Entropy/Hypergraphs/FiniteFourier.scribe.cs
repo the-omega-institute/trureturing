@@ -14,9 +14,8 @@ internal sealed class FiniteFourierDocument : IScribeDocumentDefinition
                 "For X on Ω, p(k)=|{ω∈Ω:X(ω)=k}|/|Ω|. For integer-valued X, " +
                 "φ_X(t)=|Ω|⁻¹ Σω exp(X(ω) i t), with real t and complex exponential. " +
                 "For natural-valued X bounded by n, H(X)=Σ_{k=0}^n -p(k) log₂ p(k), " +
-                "with the summand zero at p(k)=0. These abbreviations denote literal finite " +
-                "counts and sums, not arbitrary mass functions. The estimates are consumed by " +
-                "CircularOrientationEntropyLowerBound.whole_theorem_one_two and supply no separate escape witness.")),
+                "with the summand zero at p(k)=0. The circular-orientation proof applies the point-mass " +
+                "bound to the number of vertices of a prescribed indegree.")),
             Node("finite_uniform_mass_bound", "A point-mass bound from characteristic-function decay",
                 All("X", Arrow(Id("Omega"), Integers()), All("k", Integers(), All("A", Reals(),
                     Implies(Lt(Num(0), Id("A")), Implies(
