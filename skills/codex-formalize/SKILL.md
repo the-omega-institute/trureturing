@@ -37,7 +37,7 @@ Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and
 
 ## State machine
 
-The [source theories repository](https://github.com/the-omega-institute/trureturing-source-theories) owns intake, selection by atom, coverage, settlement and retirement. An atom can supply the statement of a main-repository task. Record its source reference when relevant.
+The [source theories repository](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev) owns intake, selection by atom, coverage, settlement and retirement. An atom can supply the statement of a main-repository task. Record its source reference when relevant.
 ### 0. Establish the environment and isolation
 
 Observation-only requests, including source/atom inspection and issue work, follow CLAUDE.md §6.1 in the main checkout or a suitable existing worktree without creating a worktree or running a build. Do not run the mutation steps below for such a request; if a chosen inspection command requires building the CLI, report that prerequisite or use available source reads instead of treating the build as read-only.
