@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:0b97124c77df19482c189e512218008cceeffd5666080e16a6325a5c44c74b87
   normalized_sha256: sha256:0b97124c77df19482c189e512218008cceeffd5666080e16a6325a5c44c74b87
 cas_ref: sha256:0b97124c77df19482c189e512218008cceeffd5666080e16a6325a5c44c74b87
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Additive/PlasticTailStability.whole_theorem_three_three
+    target_statement_id: sha256:b0a77e4371157b3cedf708424b1dd4a1f517f0e82cd0c7a7a4ea9c72303c5307
 receipts:
   unresolved_subitems: []
