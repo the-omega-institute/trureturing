@@ -15,16 +15,16 @@ open BalancedCriticalSpectrum (Q IsBalanced flip)
 attribute [local instance] Classical.propDecidable
 open private diff from D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private coordinate_profile_weight_bound twenty_one_half_slice sixty_six_odd_coordinate_half from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private sixty_six_distance_seven_le_eight sixty_six_half_card_ge_twenty_one from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 open private unusedDirections unused_card distanceSevenPartners distanceSeven_partner_card
   distanceSeven_partner_degree hamming_pair_antipode antipode from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9PartnerGraphProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9PartnerGraphProbe
 open private eight_partner_adjacencies from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerShapesProbe
 

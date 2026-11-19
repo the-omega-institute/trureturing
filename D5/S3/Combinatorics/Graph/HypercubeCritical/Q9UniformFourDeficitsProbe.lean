@@ -14,19 +14,19 @@ open BalancedCriticalSpectrum (Q IsBalanced)
 local notation "flip" => BalancedCriticalSpectrum.flip
 attribute [local instance] Classical.propDecidable
 
-open private directions regular_directions from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions)
 open private antipode unusedDirections unused_card hamming_pair_antipode distanceSevenPartners
   distanceSeven_partner_card distanceSeven_partner_degree from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9PartnerGraphProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9PartnerGraphProbe
 open private coordinate_profile_weight_bound from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private distance_seven_agreement_excludes_minority from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerWeightsProbe
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 open private eight_partner_adjacencies from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerShapesProbe
 

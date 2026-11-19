@@ -9,12 +9,14 @@ set_option autoImplicit false
 open scoped BigOperators
 open Finset SimpleGraph
 open D5.S3.Combinatorics.Graph.Hypercube
-open private directions mem_directions regular_directions from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions)
+open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 open private coordinate_profile_weight_bound sixty_six_edge_weight_inequality from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 

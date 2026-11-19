@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDiameterProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixDiameterProbe
 import Mathlib.Data.Fin.Tuple.Sort
 
 /-! The one-point distance sum that constrains the 66-vertex coordinate profiles. -/
@@ -14,7 +14,7 @@ open BalancedCriticalSpectrum (Q IsBalanced)
 attribute [local instance] Classical.propDecidable
 
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private second third second_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyFourLayerRegularity
 open private root_data from D5.S3.Combinatorics.Graph.HypercubeCritical.HammingSeven
@@ -24,7 +24,7 @@ open private cubeParity from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private second_distance third_distance distance_parity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
 open private balanced_cubic_hamming_two_four from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9FourthLeafSignProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9FourthLeafSignProbe
 
 set_option maxHeartbeats 550000 in
 -- The degree, parity and distance filters involve the induced support subtype.
@@ -164,7 +164,9 @@ private lemma coordinate_profile_weight_bound {C : Finset (Q 9)} (hc : C.card = 
 open BalancedCriticalSpectrum (directionEndpoints directionEdges direction_edge_count)
 open private endpoint_card_twice from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
-open private directions mem_directions regular_directions from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions)
+open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 
 private lemma endpoint_weight_sum (C : Finset (Q 9))
@@ -269,7 +271,7 @@ open private balanced_subset coordinate_slice_degree_cases coordinate_slice_low_
   low_slice_card_eq_q parts_card sum_degrees_parts from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private sixty_six_half_card_ge_twenty_one from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 
 private lemma sixty_six_odd_coordinate_half {C : Finset (Q 9)} (hc : C.card = 66)
     (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)

@@ -16,7 +16,7 @@ attribute [local instance] Classical.propDecidable
 open private coordinate_profile_for_partner_cap from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private paritySide parity_bipartite parity_union from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private cubeParity from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
@@ -271,7 +271,9 @@ private lemma projected_weight_total {C : Finset (Q 9)} (b : Fin 9 → Bool) (k 
   rw [he,sum_const,card_erase_of_mem (mem_univ k),card_univ,Fintype.card_fin]
   decide
 
-open private directions mem_directions regular_directions from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions)
+open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 
 private lemma projected_weight_slack

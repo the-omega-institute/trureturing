@@ -15,12 +15,14 @@ open BalancedCriticalSpectrum (Q IsBalanced flip)
 
 attribute [local instance] Classical.propDecidable
 
-open private directions mem_directions flip_injective from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions)
+open private mem_directions flip_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private antipode unusedDirections unused_card hamming_pair_antipode
   agreeing_coordinate_unused distanceSevenPartners distanceSeven_partner_card
   distanceSeven_partner_degree from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9PartnerGraphProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9PartnerGraphProbe
 open private distance_seven_agreement_count sum_cube_membership_property from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixSignedModelProbe
 open private eight_partner_adjacencies from

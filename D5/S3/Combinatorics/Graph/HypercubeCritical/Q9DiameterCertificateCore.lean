@@ -19,9 +19,9 @@ open private DegreeCertificate DegreeCertificate.mk DegreeCertificate.deficit De
 open private cubeIndex from D5.S3.Combinatorics.Graph.HypercubeCritical.Q9ThreeSixDeficitsProbe
 open private cubic_parity_half_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixSignedModelProbe
-open private shell from D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+open private shell from D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 open private coordinate_profile_weight_bound from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 

@@ -18,21 +18,23 @@ attribute [local instance] Classical.propDecidable
 open private huangMatrix cubeParity from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 open private paritySide parity_bipartite parity_union from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
-open private directions mem_directions directions_card exterior_even regular_directions from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions exterior_even regular_directions)
+open private mem_directions directions_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private diff diff_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 open private coordinate_profile_weight_bound sixty_six_edge_weight_inequality sum_ofFn_int from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private distance_seven_agreement_excludes_minority from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixPartnerWeightsProbe
 open private agreeing_coordinate_unused unusedDirections unused_card antipode hamming_antipode_add
   matching_coordinate_pair_unused from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9PartnerGraphProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9PartnerGraphProbe
 open private matrix_flip_prefix from D5.S3.Combinatorics.Graph.HypercubeCritical.GrayGridComponent
 open private theta theta_flip theta_unit prod_true_sign from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GridWedgeSigning

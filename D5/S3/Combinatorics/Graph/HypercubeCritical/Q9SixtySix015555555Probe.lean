@@ -17,14 +17,16 @@ open BalancedCriticalSpectrum (Q IsBalanced)
 local notation "flip" => BalancedCriticalSpectrum.flip
 local notation "flip_flip" => BalancedCriticalSpectrum.flip_flip
 attribute [local instance] Classical.propDecidable
-open private directions mem_directions regular_directions exterior_even from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions exterior_even)
+open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private flip_comm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 open private coordinate_profile_weight_bound from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private sum_cube_membership_property from

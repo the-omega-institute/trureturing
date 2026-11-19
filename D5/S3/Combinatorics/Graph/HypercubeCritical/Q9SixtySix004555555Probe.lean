@@ -21,14 +21,16 @@ open private heavySupport heavySupport_sliceVertex sliceVertex flip_heavy_erase
   one_more_coordinate from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySix015555555Probe
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 open private coordinate_profile_weight_bound from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private flip_comm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private directions mem_directions directions_card regular_directions from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions)
+open private mem_directions directions_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private sum_cube_membership_property from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixSignedModelProbe

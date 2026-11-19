@@ -18,9 +18,9 @@ open private coordinate_profile_for_partner_cap orderedDeficits orderedDeficits_
   sum_ofFn_int from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
 open private shell from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtyShellCompositionProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtyPointSupport.Q9SixtyShellCompositionProbe
 open private sixty_six_distance_seven_le_eight from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixShellProbe
+  D5.S3.Combinatorics.Graph.HypercubeCritical.SixtySixPointSupport.Q9SixtySixShellProbe
 
 private def orient {n : ℕ} (b : Q n) (p : Fin n ≃ Fin n) : Q n ≃ Q n where
   toFun x i := decide (x (p i) = b (p i))
