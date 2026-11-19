@@ -23,7 +23,8 @@ outputs:
   project-key:
     description: 'Newly published or accepted restored project seed'
     value: >-
-      ${{ steps.sharded_project.outputs.key || steps.sharded_seed.outputs.key
+      ${{ steps.sharded_project.outputs.complete == 'true' && steps.sharded_project.outputs.key
+          || steps.sharded_seed.outputs.complete == 'true' && steps.sharded_seed.outputs.key
           || (inputs.shard-history-anchor == '' && (steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key
               || steps.project.outputs.cache-matched-key)) || '' }}
   dependency-key:
