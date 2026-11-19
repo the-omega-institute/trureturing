@@ -5,39 +5,40 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Fermionic;
 internal sealed class WeightedSlaterPairCutDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The ordinary marginal rank for disjoint orbitals with two nonzero endpoint amplitudes.",
-        H("Binary alternation rank for the weighted Slater marginal"),
+        "The exact purity of the ordinary Slater marginal for disjoint two-site orbitals.",
+        H("Purity from binary endpoint differences"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("weighted-ordered-marginal-rank"),
+                DescribeId.Create("weighted-ordered-marginal-purity"),
                 DeclarationHandle.Create(
-                    "D5/S3/Quantum/Fermionic/WeightedSlaterPairCut.orderedMarginal_rank_of_nonzero"),
-                H("Rank with both endpoints available"),
+                    "D5/S3/Quantum/Fermionic/WeightedSlaterPairCut.orderedMarginal_purity"),
+                H("Purity of the full ordinary marginal"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Split a finite linearly ordered site set into the retained side and " +
-                        "its complement. Choose disjoint two-site pairs on each side, with the " +
-                        "false endpoint earlier than the true endpoint. Assign an arbitrary " +
-                        "nonzero complex amplitude to every endpoint. Form the ordered Slater " +
-                        "cut matrix B using these columns in retained-first column order. " +
-                        "No normalization of the amplitudes is required.")),
+                        "its complement. Choose disjoint pairs on each side and order each " +
+                        "pair from its earlier endpoint to its later endpoint. Assign a complex " +
+                        "amplitude to each endpoint, allowing zero. Form the ordered Slater " +
+                        "cut matrix B using retained-first column order.")),
                     Paragraph(Text(
-                        "Let A be the binary matrix whose entries indicate whether the two " +
-                        "pairs alternate in site order. The matrix B times its conjugate " +
-                        "transpose has rank two to the power of the rank of A over the field " +
-                        "with two elements. The row carrier includes all occupations. " +
-                        "Empty pair lists and rank zero are included.")),
+                        "Let A be the binary matrix whose entries record whether the endpoints " +
+                        "of two pairs alternate in site order. The trace of the squared Gram " +
+                        "matrix of B is a sum over binary retained endpoint differences. " +
+                        "For each difference string, multiply the retained endpoint mass " +
+                        "autocorrelations by the square of the product of discarded endpoint " +
+                        "character sums. The character exponents come from the transpose of A " +
+                        "applied to the difference string. An endpoint mass is the squared " +
+                        "modulus of its amplitude. The identity holds for unnormalized weights.")),
                     Paragraph(Text(
-                        "On occupations that choose one endpoint from each pair, the actual " +
-                        "determinants give separate amplitude products and the binary " +
-                        "character of the cross interaction. The character descends to the " +
-                        "two images of the alternation matrix and its transpose. Normalize " +
-                        "the separate amplitude vectors on each nonempty fiber to obtain " +
-                        "the left and right isometries. Orthogonality of the image characters " +
-                        "gives full rank on the image, and the positive fiber masses supply " +
-                        "invertible row and column scalings. The supporting occupations " +
-                        "embed isometrically into the full carrier."))),
+                        "On occupations selecting one endpoint from each pair, the ordered " +
+                        "determinants give separate amplitude products and the character of " +
+                        "the cross interaction. Multiplying a Gram entry by its transpose " +
+                        "partner cancels the separate phases and squares the discarded " +
+                        "character sum. Translating the second retained string by the first " +
+                        "makes their difference the outer summation variable. The remaining " +
+                        "sums factor over individual endpoints. Isometric padding preserves " +
+                        "the trace on the full occupation space."))),
                 DescribeRole.Theorem))));
 }
