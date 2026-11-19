@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential
    mirror-E: none(waiver:static-algebraic-identifiability)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Kronecker]
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteLocalRecovery.normalized_local_recovery; instance=D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.check_finite
    digest: Periodic two-site marginal differential on a binary bond-two chart. -/
 import D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection
 import Mathlib.LinearAlgebra.Matrix.Kronecker
