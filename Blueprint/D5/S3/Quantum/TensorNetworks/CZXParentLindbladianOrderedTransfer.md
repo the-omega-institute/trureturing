@@ -86,7 +86,7 @@ $$\forall (m: \mathbb{N}), ((2 \le m) \Rightarrow (\forall (t: \mathbb{R}), ((0 
 
 *Commentary.*
 
-The unitary factor in the evolved difference gives singular values equal to the absolute diagonal coefficients. Centering the resulting word traces subtracts two. Each diagonal entry is bounded by the Euclidean norm of its corresponding row. Applying annealed growth to both coordinate rows yields the displayed bound. For positive time the growth factor divided by two is strictly below one.
+The evolved difference has the same conjugate-transpose product as the diagonal matrix of absolute coefficients. This diagonal is positive semidefinite, so the trace norm is the sum of those coefficients. Centering the resulting word traces subtracts two. Each diagonal entry is bounded by the Euclidean norm of its corresponding row. Applying annealed growth to both coordinate rows yields the displayed bound. For positive time the growth factor divided by two is strictly below one.
 
 ## References
 
@@ -97,6 +97,5 @@ The unitary factor in the evolved difference gives singular values equal to the 
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/CZXParentLindbladianOrderedTransfer.initial`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/CZXParentLindbladianOrderedTransfer.stationary`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)
-- Dependency: [D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation](../Foundation/FuchsLogarithmBasisRefutation.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/CZXParentLindbladianAnnealedGrowth](CZXParentLindbladianAnnealedGrowth.md)
 - Dependency: [D5/S3/Quantum/TensorNetworks/CZXParentLindbladianSteadyState](CZXParentLindbladianSteadyState.md)
