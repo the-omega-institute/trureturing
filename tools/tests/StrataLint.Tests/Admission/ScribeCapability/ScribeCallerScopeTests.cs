@@ -6,27 +6,6 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomDoesNotRequestScribeVerificationForChangedInputs()
-    {
-        var inputs = CoverWorld.Materialize(new CoverSpec());
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var verifier = new FakeScribeEmissionVerifier(null);
-        var environment = new ProductionCliEnvironment(temporary.Path,
-            new FakeRepositoryGateway(RawChangeSet.Create([]), CoverWorld.Raw(inputs.Files), CoverWorld.Raw(inputs.Baseline)),
-            new FakeLeanReportSource(inputs.Report), verifier);
-
-        var result = environment.CoverAtom(CoverArgs(inputs));
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(0, verifier.CallCount);
-        Assert.Empty(verifier.Scopes);
-        var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
-            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
-        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
-    }
-
-    [Fact]
     public void CheckCurrentScopeReadsTheProvidedNulSeparatedManifest()
     {
         using var temporary = new TemporaryDirectory();

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:10abd061626ad2977560a31b68dd9939fcee6aaca8d85614b57e5858806626a6
-  normalized_sha256: sha256:10abd061626ad2977560a31b68dd9939fcee6aaca8d85614b57e5858806626a6
-cas_ref: sha256:10abd061626ad2977560a31b68dd9939fcee6aaca8d85614b57e5858806626a6
-coverage_gids:
-  - gid: D5/S3/Arith/Coding/HorizontalCompletenessDepth.horizontal_completeness_depth
-    target_statement_id: sha256:93234f3101cad0d4a3489f50e57a38dfa9b3e1d291eb82474035400dbedb12fd
-receipts:
-  unresolved_subitems: []

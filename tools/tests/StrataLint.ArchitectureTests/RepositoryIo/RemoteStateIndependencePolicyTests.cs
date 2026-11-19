@@ -15,8 +15,6 @@ public sealed class RemoteStateEarlyFeedbackPolicyTests
         {
             ["tools/tests/StrataLint.Tests/Commands/WorktreeCommandTests.cs"] = File.ReadAllText(
                 Path.Combine(RepositoryRoot, "tools/tests/StrataLint.Tests/Commands/WorktreeCommandTests.cs")),
-            ["tools/tests/StrataLint.Digestion.Tests/Sources/DigestionSourceConflictMarkerTests.cs"] = File.ReadAllText(
-                Path.Combine(RepositoryRoot, "tools/tests/StrataLint.Digestion.Tests/Sources/DigestionSourceConflictMarkerTests.cs")),
         };
 
     [Fact]
@@ -287,7 +285,6 @@ public sealed class RemoteStateEarlyFeedbackPolicyTests
 
     [Theory]
     [InlineData("tools/tests/StrataLint.Tests/Commands/WorktreeCommandTests.cs")]
-    [InlineData("tools/tests/StrataLint.Digestion.Tests/Sources/DigestionSourceConflictMarkerTests.cs")]
     public void InertRemoteShapedLiteralsInExistingTestsStayGreen(string relativePath)
     {
         var source = InertLiteralSources[relativePath];

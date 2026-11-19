@@ -1,9 +1,0 @@
-\[
-\operatorname{truncatedZeroSum}
-(\operatorname{canonicalZeroData}(S),g,T)
-=
-\operatorname{truncatedZeroSum}(Z,g,T),
-\]
-
-对应的 `SymmetricConvergent` 命题等价，收敛后的 `zeroSum` 值相等。
-

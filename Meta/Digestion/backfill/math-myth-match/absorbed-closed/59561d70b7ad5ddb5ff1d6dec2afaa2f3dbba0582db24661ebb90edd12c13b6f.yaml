@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:59561d70b7ad5ddb5ff1d6dec2afaa2f3dbba0582db24661ebb90edd12c13b6f
-  normalized_sha256: sha256:59561d70b7ad5ddb5ff1d6dec2afaa2f3dbba0582db24661ebb90edd12c13b6f
-cas_ref: sha256:59561d70b7ad5ddb5ff1d6dec2afaa2f3dbba0582db24661ebb90edd12c13b6f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Agency/DeterministicSafePolicyExistence.deterministic_safe_policy_exists_iff
-    target_statement_id: sha256:d017219009782699d8096e37310ca467f18afceef074156a795ce2ca0d190797
-receipts:
-  unresolved_subitems: []

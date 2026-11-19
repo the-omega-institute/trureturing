@@ -102,16 +102,6 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(plan["report"])
         self.assertFalse(plan["delta"])
 
-    def test_theory_has_delta_but_no_report_or_global_checks(self):
-        self.put("docs/develop/theory/Theory.md", b"# Theory\n")
-        for purpose in ("pull-request", "push"):
-            plan = self.parity(purpose)
-            self.assertTrue(plan["theory"])
-            self.assertTrue(plan["delta"])
-            self.assertFalse(plan["report"])
-            self.assertEqual([k for k, v in plan["hits"].items() if v], ["current", "tests-repository-filemap"])
-            self.git("reset", "--soft", self.base)
-
     def test_real_infrastructure_keeps_behavioral_tests(self):
         self.put("tools/scripts/worktree/worktree_protocol.py", b"# infrastructure\n")
         self.assertTrue(self.parity()["hits"]["tests-worktree-contract"])
@@ -201,7 +191,7 @@ class ContractTests(unittest.TestCase):
         data, _ = contract.load(self.root)
         self.assertFalse(any(contract.selection(data, [], "pull-request")["hits"].values()))
         self.assertTrue(all(contract.selection(data, None, "pull-request")["hits"].values()))
-        self.assertFalse(contract.selection(data, None, "push")["theory"])
+        self.assertTrue(contract.selection(data, None, "push")["report"])
 
     def test_push_preserves_non_theory_delta_policy(self):
         self.put("D5/changed.lean", b"-- changed\n")

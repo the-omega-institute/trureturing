@@ -1,0 +1,55 @@
+**Proposition 115.2 (The pair gauge recovers the source overlap).**
+For distinct $Q,R\in\mathcal R_n$ and
+$S=\operatorname{ran}Q+\operatorname{ran}R$, one has
+
+$$
+c_{F_K(b(Q),b(R))}=\pi(I_S/2),\qquad
+g_F(\pi(A))^2=2\operatorname{Tr}(A^2)
+\quad\bigl(A\in\operatorname{Herm}(S),\ \operatorname{Tr}A=0\bigr).
+\tag{115.3}
+$$
+
+Consequently, for every $Q,R\in\mathcal R_n$, including $Q=R$,
+
+$$
+t(b(Q),b(R))=\operatorname{Tr}(QR).
+\tag{115.4}
+$$
+
+For distinct $Q,R$, the midpoint of $b(Q),b(R)$ is the center of
+their actual face exactly when the source rays are orthogonal.
+
+Proof. Proposition 110.2 identifies the whole face with
+$\pi(\mathcal D(S))$, whose center is $\pi(I_S/2)$. This center is
+intrinsic: two centers of a bounded centrally symmetric body would
+give a nonzero translation preserving that body, which boundedness
+excludes. The centered ellipsoid is a symmetric convex unit ball,
+so its Minkowski functional is a norm.
+
+Every traceless Hermitian $A$ on the two-plane has eigenvalues
+$a,-a$. The condition $I_S/2+A\ge0$ is $|a|\le1/2$. Thus the
+source centered gauge at $A$ is $2|a|$. The affine bijection onto
+the whole face transports the gauge, giving
+$g_F(\pi(A))^2=4a^2=2\operatorname{Tr}(A^2)$.
+
+For the pair in question put $A=(Q+R-I_S)/2$. Since $Q^2=Q$,
+$R^2=R$ and $I_SQ=Q$, $I_SR=R$,
+
+$$
+\operatorname{Tr}(A^2)=\frac12\operatorname{Tr}(QR),\qquad
+\pi(A)=\frac{b(Q)+b(R)}2-c_F.
+\tag{115.5}
+$$
+
+Equations (115.2)–(115.3) give (115.4) for distinct projectors.
+For $Q=R$ both sides are one by definition and $\operatorname{Tr}Q=1$.
+Finally injectivity on $\operatorname{Herm}(S)$ says that the
+midpoint is the center precisely when $Q+R=I_S$, equivalent to
+orthogonality of the two rank-one projectors. ∎
+
+In particular $0\le t(p,q)\le1$. Antipodes in an actual pair ball
+have $t=0$, while the diagonal has $t=1$. The construction also
+works for $n=2$, where every distinct pair spans the entire source.
+This local norm calculation assumes no global least-confirmation
+effect and uses no inaccessible face-reconstruction proposition.
+

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1c526c4df5cdf24a72e86553fa228b5128de3cff0a7967b0281084b537062825
-  normalized_sha256: sha256:1c526c4df5cdf24a72e86553fa228b5128de3cff0a7967b0281084b537062825
-cas_ref: sha256:1c526c4df5cdf24a72e86553fa228b5128de3cff0a7967b0281084b537062825
-coverage_gids:
-  - gid: D5/S3/Analytic/Dilation/ScaleShapeSeparation.scale_shape_separation
-    target_statement_id: sha256:7de0900f13d9eb77df55d5a16899d40f66d70853f74ad29a3a2b53cd14fde25c
-receipts:
-  unresolved_subitems: []

@@ -1,4 +1,0 @@
-2. For any finite positive number of positive-sized blocks and any
-   real zero-diagonal block matrix $N$ with $\rho(N)=\lambda\in(0,1)$,
-   if every remote delay is a positive integer at most one, then
-   $\rho(N^{(\delta)})=\sqrt\lambda<1$.

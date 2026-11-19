@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:995a29be352349c18208db72625b1a3c232ad9028ab10f4f5d9286c0bf4134e7
-  normalized_sha256: sha256:995a29be352349c18208db72625b1a3c232ad9028ab10f4f5d9286c0bf4134e7
-cas_ref: sha256:995a29be352349c18208db72625b1a3c232ad9028ab10f4f5d9286c0bf4134e7
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq
-    target_statement_id: sha256:accd04d85421c0847456ddb52626f272e79ea98e568dcf9dfeddc5035a1f2013
-receipts:
-  unresolved_subitems: []

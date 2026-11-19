@@ -1,0 +1,37 @@
+**定理 122.5（内参数的全效应单点排除）。** 对命题122.4的 $X,Y,s,t$，令 $h_X=su-S$、$h_Y=tu+S$。则
+
+$$
+\begin{gathered}
+N_X=\mathbb R_+h_X,\qquad N_Y=\mathbb R_+h_Y,\\
+\mathcal F_X=\{u-\alpha h_X:0\le\alpha\le(s+t)^{-1}\},\qquad
+\mathcal F_Y=\{u-\beta h_Y:0\le\beta\le(s+t)^{-1}\},\\
+\mathcal T_X(x)=\frac{S(x)+t u(x)}{s+t},\qquad
+\mathcal T_Y(x)=\frac{s u(x)-S(x)}{s+t}\qquad(x\in C_\lambda),\\
+D_X=\{Y\},\qquad D_Y=\{X\},\qquad
+\mathcal A_X=\{\mathcal T_X\},\qquad
+\mathcal A_Y=\{\mathcal T_Y\},\qquad X,Y\in P_0.
+\end{gathered}
+\tag{122.19}
+$$
+
+右侧最低函数同时是 $V$ 上的线性效应；等式的最低解释量化所有 $x\in C_\lambda$。二者之和为 $u$，且
+
+$$
+\mathcal T_X(w)=\frac{3t}{s+t}\in(1,2),\qquad
+\mathcal T_Y(w)=\frac{3s}{s+t}\in(1,2).
+\tag{122.20}
+$$
+
+证明。在 $x_0=3X$ 处，所有对角及二阶不等式严格，且(122.15)非零。因此在它的一个环境开邻域中，$C_\lambda$ 恰由 $d_\lambda\ge0$ 决定，$d_\lambda=0$ 是光滑边界。若 $h\in N_X$，则 $h(x_0)=0$；每个满足 $Dd_\lambda(x_0)[v]=0$ 的切向量都能由边界上穿过 $x_0$ 的双侧光滑曲线实现。$h$ 在这条曲线上非负且在中点为零，所以导数 $h(v)=0$。故 $h$ 必为 $Dd_\lambda(x_0)$ 的实倍数。非零正泛函在内点 $w$ 严格为正，而 $Dd_\lambda(x_0)[w]=3(1-s^2)>0$，倍数必须为正。再用(122.15)和命题122.4已证明的 $h_X\ge0$，便得整个 $N_X=\mathbb R_+h_X$。对参数 $-\lambda$ 作相同论证并沿 $R$ 运输，得 $N_Y=\mathbb R_+h_Y$。这里的法向计算使用实际局部边界，没有预置某张支持面代替原法向锥。
+
+若 $f\in\mathcal F_X$，则 $u-f\in N_X$，故且仅故它可写为 $u-\alpha h_X$、$\alpha\ge0$，再要求 $f\ge0$。因 $h_X\ge0$，上界 $f\le u$ 已自动成立。基底齐次性使 $f\ge0$ 等价于
+
+$$
+\alpha\max_{K_\lambda}h_X\le1.
+\tag{122.21}
+$$
+
+由完整的全局极值(122.13)，$\max_{K_\lambda}h_X=s+t$，恰在 $Y$ 达到。于是确认集合恰为(122.19)的整条闭线段。对于任何 $x\in C_\lambda$，$h_X(x)\ge0$，所以最低值在 $\alpha=(s+t)^{-1}$ 达到，得到所写线性公式。其归一零集是 $S=-t$ 的整个原支持面，由命题122.4它正好只有 $Y$。要求一个确认效应再在 $Y$ 取零，迫使 $\alpha=(s+t)^{-1}$，所以完整确认集合也是所写单点。$Y$ 的全部论证相同：$\max_{K_\lambda}h_Y=s+t$，唯一最大点为 $X$，由此取得其完整确认集合、最低值及完整零集。
+
+两个公式直接相加为 $u$。在 $w$ 处 $u(w)=3,S(w)=0$，得(122.20)；因为 $s,t\in(1/2,1)$，有 $2t>s$、$2s>t$，恰给两端严格界。至此最低值确实遍历整个 $[0,u]_{C_\lambda^*}$，没有把两张所选效应当作全部候选，也没有把局部严格弯曲当作完整排除的替代。证毕。
+

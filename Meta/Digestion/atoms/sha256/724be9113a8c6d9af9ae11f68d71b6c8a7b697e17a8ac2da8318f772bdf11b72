@@ -1,6 +1,0 @@
-这才是严格的“反码”：
-
-- 不翻转 Fibonacci 数位；
-- 不破坏 Zeckendorf 无相邻 \(1\) 约束；
-- 只翻转 transverse sign sheet。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a6f4c0fc9d2a57966d4b60e4d9963d698e3965e88bc035e43ca4565c284a5a07
-  normalized_sha256: sha256:a6f4c0fc9d2a57966d4b60e4d9963d698e3965e88bc035e43ca4565c284a5a07
-cas_ref: sha256:a6f4c0fc9d2a57966d4b60e4d9963d698e3965e88bc035e43ca4565c284a5a07
-coverage_gids:
-  - gid: D5/S1/Words/OriginalGenerationBoundary.original_generation_boundary
-    target_statement_id: sha256:2e49d907407e2e3087da9b881027db44ccce65cb6957186032a898957f468689
-receipts:
-  unresolved_subitems: []

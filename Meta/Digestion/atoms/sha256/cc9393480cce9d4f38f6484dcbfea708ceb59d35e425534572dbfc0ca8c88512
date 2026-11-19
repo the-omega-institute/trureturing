@@ -1,7 +1,0 @@
-\[
-P(x_V)
-=
-\prod_{v\in V}
-K_v(x_v\mid x_{\operatorname{pa}(v)}).
-\]
-

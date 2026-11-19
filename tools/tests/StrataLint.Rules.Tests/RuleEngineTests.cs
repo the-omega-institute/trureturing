@@ -65,27 +65,6 @@ public sealed class RuleEngineTests
         { 30, RuleFixture.BlueprintPath },
     };
 
-    [Fact]
-    public void DefaultFixtureUsesTheCanonicalDirectoryDigestionLedger()
-    {
-        var fixture = new RuleFixture();
-
-        Assert.DoesNotContain(BackfillInventoryLoader.RelativePath, fixture.Files.Keys);
-        var document = BackfillInventoryLoader.Load(
-            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes)).Current);
-        var source = Assert.Single(document.RequireDigestionSources());
-        var entry = Assert.Single(source.Entries);
-
-        Assert.Equal("fixture-source", source.SourceId);
-        Assert.Equal(RuleFixture.FixtureDigestionSourcePath, source.SourcePath);
-        Assert.Equal(AtomizerRegistry.GenericId, source.Atomizer);
-        Assert.Equal(RuleFixture.FixtureAtomId, entry.AtomId);
-        Assert.Equal(RuleFixture.FixtureCasReference, entry.Fingerprints.RawSha256);
-        Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
-        Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
-    }
-
     [Theory]
     [MemberData(nameof(BlockingCases))]
     public void ActiveRuleHasGreenAndRedExecutableFixtures(int number, string mutation)
@@ -93,7 +72,7 @@ public sealed class RuleEngineTests
         var green = new RuleFixture();
         if (number == 16)
         {
-            green.AddBackfillTargets();
+
         }
         var greenContext = number == 3
             ? green.Build()
@@ -110,7 +89,7 @@ public sealed class RuleEngineTests
         var red = new RuleFixture();
         if (number == 16)
         {
-            red.AddBackfillTargets();
+
         }
         red.Apply(mutation);
         var changedPath = RuleFixture.ChangedPathForMutation(mutation);
@@ -142,7 +121,7 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         if (number == 16)
         {
-            fixture.AddBackfillTargets();
+
         }
         fixture.Apply(mutation);
         var changedPath = RuleFixture.ChangedPathForMutation(mutation);
@@ -279,88 +258,6 @@ public sealed class RuleEngineTests
 
         Assert.Empty(diagnostics);
     }
-
-    [Fact]
-    public void WriterDerivedStatusIsTheSameWhetherOrNotFrozenStatementDriftIsInTheCandidateDelta()
-    {
-        // Current edges are validated regardless of whether the frozen drift itself is in
-        // the candidate delta, so both projections must report the same stale target.
-        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
-        var (fixture, frozenChanges) = FrozenStatementDriftFixture();
-
-        var touched = StatementDriftEvaluation(
-            fixture,
-            RawChangeSet.Create(frozenChanges));
-        var untouched = StatementDriftEvaluation(
-            fixture,
-            RawChangeSet.Create(["notes/unrelated.txt"]));
-
-        Assert.Contains(touched.Gaps, gap =>
-            gap.Code == "coverage-target-mismatch" && gap.Detail == coverageGid);
-        Assert.Contains(untouched.Gaps, static gap => gap.Code == "coverage-target-mismatch");
-        Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
-        Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
-    }
-
-    private static DigestionEntryEvaluation StatementDriftEvaluation(
-        RuleFixture fixture,
-        RawChangeSet changes)
-    {
-        var context = fixture.BuildScopeProbe(changes);
-        var document = BackfillInventoryLoader.Load(context.Current);
-        var evaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.ChangedSet,
-            document,
-            context.Current,
-            context.Lean,
-            casEvaluation: DigestionCasStore.EvaluateLedgerReferences(document, context.Current, changes),
-            changes: changes);
-        return Assert.Single(evaluation.Entries);
-    }
-
-    private static (RuleFixture Fixture, string[] FrozenChanges) FrozenStatementDriftFixture()
-    {
-        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
-        const string targetPath = coverageGid + ".lean";
-        var baselineStatementId = FrozenStatementReceiptTestData.Id('a');
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline })
-        {
-            files[targetPath] = fixture.Files[targetPath];
-            files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
-                .Replace(
-                    "target_statement_id: null",
-                    $"target_statement_id: {baselineStatementId}",
-                    StringComparison.Ordinal);
-        }
-
-        InstallFrozenStatement(fixture.Files, targetPath, FrozenStatementReceiptTestData.Id('b'));
-        InstallFrozenStatement(fixture.Baseline, targetPath, baselineStatementId);
-        var currentFrozenPaths = fixture.Files.Keys
-            .Where(static path => FrozenStatePath.IsUnderRoot(path));
-        var baselineFrozenPaths = fixture.Baseline.Keys
-            .Where(static path => FrozenStatePath.IsUnderRoot(path));
-        var frozenChanges = currentFrozenPaths
-            .Except(baselineFrozenPaths, StringComparer.Ordinal)
-            .Concat(baselineFrozenPaths.Except(currentFrozenPaths, StringComparer.Ordinal))
-            .Concat(currentFrozenPaths.Intersect(baselineFrozenPaths, StringComparer.Ordinal).Where(path =>
-                !string.Equals(
-                    fixture.Files[path],
-                    fixture.Baseline[path],
-                    StringComparison.Ordinal)))
-            .ToArray();
-        Assert.NotEmpty(frozenChanges);
-        return (fixture, frozenChanges);
-    }
-
-    private static void InstallFrozenStatement(
-        IDictionary<string, string> files,
-        string targetPath,
-        string statementId) =>
-        FrozenStatementReceiptTestData.AddLedger(
-            files,
-            new FrozenStatementReceiptTestData.Module(targetPath, statementId, []));
 
     [Fact]
     public void Sl001AllowsContentToImportTheAssumptionFoundationButNotTheReverse()

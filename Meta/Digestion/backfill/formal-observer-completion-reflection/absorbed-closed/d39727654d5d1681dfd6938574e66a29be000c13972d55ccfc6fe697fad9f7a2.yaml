@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d39727654d5d1681dfd6938574e66a29be000c13972d55ccfc6fe697fad9f7a2
-  normalized_sha256: sha256:d39727654d5d1681dfd6938574e66a29be000c13972d55ccfc6fe697fad9f7a2
-cas_ref: sha256:d39727654d5d1681dfd6938574e66a29be000c13972d55ccfc6fe697fad9f7a2
-coverage_gids:
-  - gid: D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition.traceZeroHermitian_eq_orthogonal
-    target_statement_id: sha256:4285bd16a50585b8149c6db81937dce9bba34dde1a26217971db425ff6d598eb
-receipts:
-  unresolved_subitems: []

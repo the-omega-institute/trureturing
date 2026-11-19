@@ -1,6 +1,0 @@
-**Theorem 3.2 (Edge-transitive cubic obstruction).** For every finite nonempty simple cubic graph whose automorphism group is edge-transitive, each of the three edge types has expected count different from $|E|/3$ under the author notebook's uniform signed-rotation law.
-
-Proof. Apply Corollary 2.2 to each type indicator, using Theorem 3.1. ∎
-
-This includes every graph in the theorem that is bridgeless. It does not require enumerating faces and does not rely on any sampled numerical estimate.
-
