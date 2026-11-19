@@ -8,6 +8,7 @@
 
 import D5.S3.HomologicalAlgebra.TotalUnimodularL1Repair
 import Mathlib.Analysis.InnerProductSpace.Spectrum
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.RootsExtrema
 import Mathlib.Analysis.SpecificLimits.Normed
 
 /-!
@@ -438,5 +439,289 @@ theorem residual_contracts_of_spectral_gap (A : Matrix F E ℝ) {M σ : ℝ}
   · have he := hsym.hasEigenvalue_eigenvalues (n := n) rfl i
     have h := laplacianOnRange_eigenvalue_bounds A hM hA he
     exact sub_le_sub_left (div_le_div_of_nonneg_right (hgap _ h.1 he) hM2.le) _
+
+private noncomputable def chebIter {V : Type*} [AddCommGroup V] [Module ℝ V]
+    (T : Module.End ℝ V) (v : V) : ℕ → V
+  | 0 => v
+  | 1 => T v
+  | j + 2 => (2 : ℝ) • T (chebIter T v (j + 1)) - chebIter T v j
+
+private theorem map_chebIter {V W : Type*} [AddCommGroup V] [Module ℝ V]
+    [AddCommGroup W] [Module ℝ W] (T : Module.End ℝ V) (S : Module.End ℝ W)
+    (L : V →ₗ[ℝ] W) (hL : ∀ v, L (T v) = S (L v)) (v : V) (j : ℕ) :
+    L (chebIter T v j) = chebIter S (L v) j := by
+  induction j using Nat.twoStepInduction with
+  | zero => rfl
+  | one => exact hL v
+  | more j ih0 ih1 => simp only [chebIter, map_sub, map_smul, hL, ih0, ih1]
+
+private noncomputable def centered (A : Matrix F E ℝ) (c h : ℝ) :
+    Module.End ℝ (EuclideanSpace ℝ F) :=
+  h⁻¹ • (((incidence A).comp (incidence Aᵀ)).toLinearMap - c • 1)
+
+private theorem centered_vanishes (A : Matrix F E ℝ) (c h : ℝ) (f : F) (j : ℕ)
+    (z : EuclideanSpace ℝ F) (hz : ∀ g ∉ faceBall A f j, z g = 0)
+    (g : F) (hg : g ∉ faceBall A f (j + 1)) : centered A c h z g = 0 := by
+  change h⁻¹ * (incidence A (incidence Aᵀ z) g - c * z g) = 0
+  rw [laplacian_vanishes A f j z hz g hg, hz g (fun hprev => hg (Or.inl hprev))]
+  ring
+
+private theorem chebIter_vanishes (A : Matrix F E ℝ) (c h : ℝ) (f : F) (j : ℕ) :
+    ∀ g ∉ faceBall A f j, chebIter (centered A c h) (faceUnit f) j g = 0 := by
+  have hbase : ∀ g ∉ faceBall A f 0, faceUnit f g = 0 := by
+    intro g hg
+    have hgf : g ≠ f := hg
+    simp [faceUnit, hgf]
+  induction j using Nat.twoStepInduction with
+  | zero => exact hbase
+  | one => exact centered_vanishes A c h f 0 _ hbase
+  | more j ih0 ih1 =>
+      intro g hg
+      have hprev : g ∉ faceBall A f j := fun hs =>
+        hg (faceBall_mono A f (Nat.le_add_right j 2) hs)
+      change (2 : ℝ) * centered A c h (chebIter (centered A c h) (faceUnit f) (j + 1)) g -
+        chebIter (centered A c h) (faceUnit f) j g = 0
+      rw [centered_vanishes A c h f (j + 1) _ ih1 g hg, ih0 g hprev, mul_zero, sub_zero]
+
+private noncomputable def chebValue (t : ℝ) (j : ℕ) : ℝ :=
+  (Polynomial.Chebyshev.T ℝ (j : ℤ)).eval t
+
+@[simp] private theorem chebValue_zero (t : ℝ) : chebValue t 0 = 1 := by
+  simp [chebValue]
+
+@[simp] private theorem chebValue_one (t : ℝ) : chebValue t 1 = t := by
+  simp [chebValue]
+
+private theorem chebValue_add_two (t : ℝ) (j : ℕ) :
+    chebValue t (j + 2) = 2 * t * chebValue t (j + 1) - chebValue t j := by
+  simp [chebValue, Polynomial.Chebyshev.T_add_two]
+
+private theorem chebIter_real (t v : ℝ) (j : ℕ) :
+    chebIter (t • (1 : Module.End ℝ ℝ)) v j = chebValue t j * v := by
+  induction j using Nat.twoStepInduction with
+  | zero => simp [chebIter]
+  | one => simp [chebIter, smul_eq_mul]
+  | more j ih0 ih1 =>
+      have hone (a : ℝ) : (1 : Module.End ℝ ℝ) a = a := rfl
+      simp only [chebIter, LinearMap.smul_apply, hone, smul_eq_mul, ih0, ih1,
+        chebValue_add_two]
+      ring
+
+private def chebMultiplicity (j : ℕ) : ℝ := if j = 0 then 1 else 2
+
+private theorem cheb_scalar_sum {r t s : ℝ} (hs : HasSum (fun j : ℕ =>
+    chebMultiplicity j * r ^ j * chebValue t j) s) :
+    (1 - 2 * r * t + r ^ 2) * s = 1 - r ^ 2 := by
+  let u := fun j : ℕ => r ^ j * chebValue t j
+  have hshift : HasSum (fun j : ℕ => 2 * u (j + 1)) (s - 1) := by
+    simpa [chebMultiplicity, u, mul_assoc] using (hasSum_nat_add_iff' 1).mpr hs
+  have hshift' : HasSum (fun j : ℕ => 2 * u (j + 2)) (s - 1 - 2 * (r * t)) := by
+    simpa [u, Nat.add_assoc] using (hasSum_nat_add_iff' 1).mpr hshift
+  have hu : HasSum u (1 + (2 : ℝ)⁻¹ * (s - 1)) := by
+    have hs' : HasSum (fun j : ℕ => u (j + 1)) ((2 : ℝ)⁻¹ * (s - 1)) := by
+      simpa [← mul_assoc] using hshift.mul_left (2 : ℝ)⁻¹
+    simpa [u, add_comm] using (hasSum_nat_add_iff 1).mp hs'
+  have hrec (j : ℕ) : 2 * u (j + 2) =
+      (2 * r * t) * (2 * u (j + 1)) - (2 * r ^ 2) * u j := by
+    simp only [u, chebValue_add_two]
+    rw [pow_succ r (j + 1), pow_succ r j]
+    ring
+  have hrecsum := (hshift.mul_left (2 * r * t)).sub (hu.mul_left (2 * r ^ 2))
+  have heq := hshift'.unique (hrecsum.congr_fun hrec)
+  linear_combination heq
+
+/-- The (j)-th edge term of the Chebyshev Green series. -/
+noncomputable def chebyshevTerm (A : Matrix F E ℝ) (M σ : ℝ) (f : F) (j : ℕ) :
+    EuclideanSpace ℝ E :=
+  let c := (M ^ 2 + σ ^ 2) / 2
+  let h := (M ^ 2 - σ ^ 2) / 2
+  let r := (σ - M) / (M + σ)
+  ((M * σ)⁻¹ * chebMultiplicity j * r ^ j) •
+    incidence Aᵀ (chebIter (centered A c h) (faceUnit f) j)
+
+/-- The Chebyshev series has the same support radius as the Neumann series. -/
+theorem chebyshevTerm_vanishes (A : Matrix F E ℝ) (M σ : ℝ) (f : F) (j : ℕ)
+    (e : E) (he : e ∉ edgeBall A f j) : chebyshevTerm A M σ f j e = 0 := by
+  change _ * incidence Aᵀ (chebIter (centered A _ _) (faceUnit f) j) e = 0
+  rw [transpose_vanishes A f j _ (chebIter_vanishes A _ _ f j) e he, mul_zero]
+
+/-- The weighted volume majorant for the Chebyshev series. -/
+noncomputable def chebyshevWeight (A : Matrix F E ℝ) (M σ : ℝ) (f : F) (j : ℕ) : ℝ :=
+  σ⁻¹ * (chebMultiplicity j * ((M - σ) / (M + σ)) ^ j) * Real.sqrt (edgeBall A f j).card
+
+/-- On the real incidence image, the Chebyshev Green series solves the unit
+syndrome and bounds both its absolute norm and its tails outside incidence balls. -/
+theorem chebyshev_repair (A : Matrix F E ℝ) {M σ : ℝ}
+    (hσ : 0 < σ) (hσM : σ < M) (hA : ‖incidence A‖ ≤ M)
+    (hgap : ∀ μ > 0, Module.End.HasEigenvalue (laplacianOnRange A) μ → σ ^ 2 ≤ μ)
+    (f : F) (hf : faceUnit f ∈ LinearMap.range (incidence A).toLinearMap) :
+    ∃ x : EuclideanSpace ℝ E, HasSum (chebyshevTerm A M σ f) x ∧
+      incidence A x = faceUnit f ∧ (∑ e, |x e|) ≤ ∑' j, chebyshevWeight A M σ f j ∧
+      ∀ J, (∑ e ∈ Finset.univ \ edgeBall A f J, |x e|) ≤
+        ∑' j, chebyshevWeight A M σ f (j + (J + 1)) := by
+  have hM := hσ.trans hσM
+  have hsumPos : 0 < M + σ := by positivity
+  let c := (M ^ 2 + σ ^ 2) / 2
+  let h := (M ^ 2 - σ ^ 2) / 2
+  let r := (σ - M) / (M + σ)
+  let ρ := (M - σ) / (M + σ)
+  have hh : 0 < h := by dsimp [h]; nlinarith
+  have hρ : 0 ≤ ρ := div_nonneg (sub_nonneg.mpr hσM.le) hsumPos.le
+  have hρ' : ρ < 1 := (div_lt_one hsumPos).mpr (by linarith)
+  have hr : |r| = ρ := by
+    dsimp [r, ρ]
+    rw [abs_div, abs_of_nonpos (sub_nonpos.mpr hσM.le), abs_of_pos hsumPos, neg_sub]
+  have hmult0 j : 0 ≤ chebMultiplicity j := by unfold chebMultiplicity; split <;> norm_num
+  have hmult2 j : chebMultiplicity j ≤ 2 := by unfold chebMultiplicity; split <;> norm_num
+  let H := LinearMap.range (incidence A).toLinearMap
+  let v : H := ⟨faceUnit f, hf⟩
+  let L := laplacianOnRange A
+  let T : Module.End ℝ H := h⁻¹ • (L - c • 1)
+  let hsym := laplacianOnRange_symmetric A
+  let n := Module.finrank ℝ H
+  let basis := hsym.eigenvectorBasis (n := n) rfl
+  let eigenvalues := hsym.eigenvalues (n := n) rfl
+  let t := fun i => (eigenvalues i - c) / h
+  have ht (i : Fin n) : |t i| ≤ 1 := by
+    have he := hsym.hasEigenvalue_eigenvalues (n := n) rfl i
+    have hμ := laplacianOnRange_eigenvalue_bounds A hM hA he
+    have hlo : σ ^ 2 ≤ eigenvalues i := hgap _ hμ.1 he
+    have hhi : eigenvalues i ≤ M ^ 2 := hμ.2
+    apply abs_le.mpr
+    dsimp only [t]
+    constructor
+    · apply (le_div_iff₀ hh).mpr
+      dsimp [c, h]
+      linarith
+    · apply (div_le_iff₀ hh).mpr
+      dsimp [c, h]
+      linarith
+  let coord (i : Fin n) : H →L[ℝ] ℝ :=
+    (PiLp.proj (𝕜 := ℝ) 2 (fun _ : Fin n => ℝ) i).comp
+      basis.repr.toLinearIsometry.toContinuousLinearMap
+  have hcoord (i : Fin n) (j : ℕ) :
+      coord i (chebIter T v j) = chebValue (t i) j * coord i v := by
+    rw [← chebIter_real]
+    exact map_chebIter T (t i • 1) (coord i).toLinearMap (fun w => by
+      have hd := hsym.eigenvectorBasis_apply_self_apply (n := n) rfl w i
+      change coord i (L w) = eigenvalues i * coord i w at hd
+      change coord i (h⁻¹ • (L w - c • w)) = t i * coord i w
+      rw [map_smul, map_sub, map_smul, hd]
+      simp only [smul_eq_mul, t, div_eq_mul_inv]
+      ring) v j
+  have hcheb (i : Fin n) (j : ℕ) : |chebValue (t i) j| ≤ 1 :=
+    Polynomial.Chebyshev.abs_eval_T_real_le_one _ (ht i)
+  have hnorm (j : ℕ) : ‖chebIter T v j‖ ≤ 1 := by
+    have hv : ‖v‖ = 1 := faceUnit_norm f
+    rw [← hv, ← sq_le_sq₀ (norm_nonneg _) (norm_nonneg _),
+      ← basis.repr.norm_map (chebIter T v j), ← basis.repr.norm_map v,
+      EuclideanSpace.real_norm_sq_eq, EuclideanSpace.real_norm_sq_eq]
+    apply Finset.sum_le_sum
+    intro i _
+    change (coord i (chebIter T v j)) ^ 2 ≤ (coord i v) ^ 2
+    rw [hcoord, mul_pow]
+    have hsq : chebValue (t i) j ^ 2 ≤ 1 := by
+      simpa only [sq_abs, one_pow] using pow_le_pow_left₀ (abs_nonneg _) (hcheb i j) 2
+    simpa only [one_mul] using mul_le_mul_of_nonneg_right hsq (sq_nonneg (coord i v))
+  let u (j : ℕ) : H := (chebMultiplicity j * r ^ j) • chebIter T v j
+  have huNorm (j : ℕ) : ‖u j‖ ≤ chebMultiplicity j * ρ ^ j := by
+    dsimp only [u]
+    rw [norm_smul, Real.norm_eq_abs, abs_mul, abs_pow, hr, abs_of_nonneg (hmult0 j)]
+    simpa only [mul_one] using
+      mul_le_mul_of_nonneg_left (hnorm j) (mul_nonneg (hmult0 j) (pow_nonneg hρ j))
+  have hu : Summable u := by
+    refine ((summable_geometric_of_lt_one hρ hρ').mul_left 2).of_norm_bounded fun j => ?_
+    exact (huNorm j).trans (mul_le_mul_of_nonneg_right (hmult2 j) (pow_nonneg hρ j))
+  let s := ∑' j, u j
+  have hLs : L s = (M * σ) • v := by
+    apply basis.repr.injective
+    ext i
+    have hs := hu.hasSum.map (coord i).toLinearMap.toAddMonoidHom (coord i).continuous
+    have hs' : HasSum (fun j => chebMultiplicity j * r ^ j * chebValue (t i) j * coord i v)
+        (coord i s) := by
+      refine hs.congr_fun fun j => ?_
+      symm
+      change coord i (u j) = _
+      dsimp only [u]
+      rw [map_smul, hcoord, smul_eq_mul, ← mul_assoc]
+    let b := fun j : ℕ => chebMultiplicity j * r ^ j * chebValue (t i) j
+    have hb : Summable b := by
+      refine ((summable_geometric_of_lt_one hρ hρ').mul_left 2).of_norm_bounded fun j => ?_
+      change |chebMultiplicity j * r ^ j * chebValue (t i) j| ≤ 2 * ρ ^ j
+      rw [abs_mul, abs_mul, abs_of_nonneg (hmult0 j), abs_pow, hr]
+      calc
+        _ ≤ (chebMultiplicity j * ρ ^ j) * 1 :=
+          mul_le_mul_of_nonneg_left (hcheb i j) (mul_nonneg (hmult0 j) (pow_nonneg hρ j))
+        _ ≤ _ := by rw [mul_one]; exact mul_le_mul_of_nonneg_right (hmult2 j) (pow_nonneg hρ j)
+    let B := ∑' j, b j
+    have hscalar := cheb_scalar_sum (s := B) hb.hasSum
+    have hcoordSum : coord i s = B * coord i v := hs'.unique (hb.hasSum.mul_right _)
+    have hden : eigenvalues i =
+        (M + σ) ^ 2 / 4 * (1 - 2 * r * t i + r ^ 2) := by
+      dsimp only [r, t, c, h]
+      have hdiff : M ^ 2 - σ ^ 2 ≠ 0 := by dsimp [h] at hh; linarith
+      field_simp
+      ring
+    have hnum : M * σ = (M + σ) ^ 2 / 4 * (1 - r ^ 2) := by
+      dsimp only [r]
+      field_simp
+      ring
+    have hd := hsym.eigenvectorBasis_apply_self_apply (n := n) rfl s i
+    change coord i (L s) = eigenvalues i * coord i s at hd
+    change coord i (L s) = coord i ((M * σ) • v)
+    have hscale : eigenvalues i * B = M * σ := by
+      rw [hden, mul_assoc, hscalar, ← hnum]
+    rw [hd, hcoordSum, map_smul, smul_eq_mul, ← mul_assoc, hscale]
+  let lift : H →L[ℝ] EuclideanSpace ℝ E :=
+    (M * σ)⁻¹ • (incidence Aᵀ).comp H.subtypeL
+  have hlift (j : ℕ) : lift (u j) = chebyshevTerm A M σ f j := by
+    have hproj := map_chebIter T (centered A c h) H.subtype (fun _ => rfl) v j
+    change (M * σ)⁻¹ • incidence Aᵀ ((u j : H) : EuclideanSpace ℝ F) = _
+    change (M * σ)⁻¹ • incidence Aᵀ (H.subtype (u j)) = _
+    dsimp only [u]
+    rw [map_smul, hproj, map_smul, smul_smul, ← mul_assoc]
+    rfl
+  have hAt : ‖incidence Aᵀ‖ ≤ M := by
+    rwa [incidence_transpose_eq_adjoint, LinearIsometryEquiv.norm_map]
+  have hterm (j : ℕ) :
+      ‖chebyshevTerm A M σ f j‖ ≤ σ⁻¹ * (chebMultiplicity j * ρ ^ j) := by
+    rw [← hlift]
+    change ‖(M * σ)⁻¹ • incidence Aᵀ ((u j : H) : EuclideanSpace ℝ F)‖ ≤ _
+    rw [norm_smul, Real.norm_of_nonneg (by positivity : 0 ≤ (M * σ)⁻¹)]
+    calc
+      _ ≤ (M * σ)⁻¹ * (‖incidence Aᵀ‖ * ‖u j‖) :=
+        mul_le_mul_of_nonneg_left ((incidence Aᵀ).le_opNorm _) (by positivity)
+      _ ≤ (M * σ)⁻¹ * (M * (chebMultiplicity j * ρ ^ j)) :=
+        mul_le_mul_of_nonneg_left
+          (mul_le_mul hAt (huNorm j) (norm_nonneg _) hM.le) (by positivity)
+      _ = _ := by field_simp
+  have hweight (j : ℕ) : (∑ e, |chebyshevTerm A M σ f j e|) ≤ chebyshevWeight A M σ f j := by
+    refine (sum_abs_le_ball A f j _ (fun e => chebyshevTerm_vanishes A M σ f j e)).trans ?_
+    rw [chebyshevWeight, mul_comm _ (Real.sqrt _)]
+    exact mul_le_mul_of_nonneg_left (hterm j) (Real.sqrt_nonneg _)
+  have hwSummable : Summable (chebyshevWeight A M σ f) := by
+    apply Summable.of_nonneg_of_le
+      (f := fun j => (σ⁻¹ * 2 * Real.sqrt (Fintype.card E)) * ρ ^ j)
+    · intro j
+      change 0 ≤ σ⁻¹ * (chebMultiplicity j * ρ ^ j) * Real.sqrt (edgeBall A f j).card
+      exact mul_nonneg (mul_nonneg (by positivity) (mul_nonneg (hmult0 j) (pow_nonneg hρ j)))
+        (Real.sqrt_nonneg _)
+    · intro j
+      change σ⁻¹ * (chebMultiplicity j * ρ ^ j) * Real.sqrt (edgeBall A f j).card ≤ _
+      calc
+        _ ≤ σ⁻¹ * (2 * ρ ^ j) * Real.sqrt (Fintype.card E) := by
+          gcongr
+          · exact hmult2 j
+          · exact Finset.card_le_univ _
+        _ = _ := by ring
+    · exact (summable_geometric_of_lt_one hρ hρ').mul_left _
+  have hx := (hu.hasSum.map lift.toLinearMap.toAddMonoidHom lift.continuous).congr_fun
+    (fun j => (hlift j).symm)
+  refine ⟨lift s, hx, ?_, sum_abs_hasSum_le Finset.univ hx hwSummable hweight,
+    sum_abs_tail_le A f hx hwSummable hweight (chebyshevTerm_vanishes A M σ f)⟩
+  have hface : incidence A (incidence Aᵀ (s : EuclideanSpace ℝ F)) =
+      (M * σ) • faceUnit f := congrArg Subtype.val hLs
+  change incidence A ((M * σ)⁻¹ • incidence Aᵀ (s : EuclideanSpace ℝ F)) = faceUnit f
+  rw [map_smul, hface, smul_smul, inv_mul_cancel₀ (mul_ne_zero hM.ne' hσ.ne'), one_smul]
 
 end D5.S3.HomologicalAlgebra.FiniteIncidenceGreen
