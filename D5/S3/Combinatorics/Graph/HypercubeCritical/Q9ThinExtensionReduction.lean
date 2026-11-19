@@ -98,4 +98,28 @@ theorem exists_paired_cube_of_extension {U C : Finset (Q 9)} (hU : U.card = 258)
 
 #print axioms exists_paired_cube_of_extension
 
+/-- The normalized high vertices for the disjoint-axis-pair pattern. -/
+def pairedHighs : Placement := ![0, 18, 36, 54, 72, 90, 108, 126]
+
+set_option maxRecDepth 8192 in
+set_option maxHeartbeats 8000000 in
+-- Check which geometric placements admit a normalized midpoint signing.
+private theorem pairedHighs_checked : (candidates false 4).all (fun highs =>
+    (signMasks false (cubeBitVec 9 ∘ highs)).isEmpty ||
+      (List.finRange 8).all fun i => decide (highs i = pairedHighs i)) = true := by
+  decide +kernel
+
+/-- The paired root pattern has a single normalized high-vertex placement
+among the candidates that admit a midpoint signing. -/
+theorem eq_pairedHighs_of_signing {highs : Placement} {signs : Fin 128}
+    (hh : highs ∈ candidates false 4)
+    (hs : signs ∈ signMasks false (cubeBitVec 9 ∘ highs)) : highs = pairedHighs := by
+  have h := List.all_eq_true.mp pairedHighs_checked highs hh
+  have hne : (signMasks false (cubeBitVec 9 ∘ highs)).isEmpty = false :=
+    List.isEmpty_eq_false_iff.mpr (List.ne_nil_of_mem hs)
+  rw [hne, Bool.false_or] at h
+  exact funext fun i => of_decide_eq_true (List.all_eq_true.mp h i (List.mem_finRange i))
+
+#print axioms eq_pairedHighs_of_signing
+
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9ThinExtensionReduction
