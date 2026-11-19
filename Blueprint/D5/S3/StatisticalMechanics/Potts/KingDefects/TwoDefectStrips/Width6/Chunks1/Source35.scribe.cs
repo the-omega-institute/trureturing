@@ -1,7 +1,7 @@
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks0;
+namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Chunks1;
 internal sealed class Source35Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Chunks1/Source35.";
