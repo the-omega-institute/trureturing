@@ -8,17 +8,7 @@ internal sealed class LyndonFactorTransportDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Automata/glensimpsonsmyth2017lyndonfactors");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A suffix-minimum scan computes distinct contiguous Lyndon factor strings.", H("Actual Lyndon factors and elementary transport"), Blocks(
-        Paragraph(Text("All scan statements quantify over an arbitrary linearly ordered alphabet A and finite lists. Lexicographic order treats a proper prefix as smaller. The three finite-index definitions are moved from the original refutation, with their namespace and bodies preserved; the original certificate imports this general owner. No new settlement of the original problem is claimed. The supplied Ma–Zhang manuscript gives the suffix-minimum scan argument. The elementary morphism is the classical lambda(a)=a, lambda(b)=ab; its proof uses the existing actual two-factor standard factorization. Richomme's Lyndon-morphism theory is prior literature; no novelty or global priority is asserted.")),
-            Node("factor", "Contiguous factors", FactorFormula(),
-                "Section 1, p. 1: “A finite word z is said to be a factor of a given finite word w if there exist words u, v such that w = uzv.” Positions start at zero. The displayed list drops i letters and takes l letters from the finite word; occurrences counted below satisfy 1 ≤ l and i + l ≤ n.",
-                AssessedProvenance.FromLiterature(Source)),
-            Node("lyndonOccurrences", "Lyndon-factor occurrences", OccurrencesFormula(),
-                "Section 1, p. 2: “A Lyndon word over Σ is a non-empty primitive word that is the lexicographically least word in its conjugacy class, i.e., w ∈ Σ or w < vu for all non-empty words u, v such that w = uv (e.g., see [10]).” IsLyndon is the rotation predicate on lists. The finite set records every valid nonempty occurrence, including repeated occurrences of the same factor and the whole word when it is Lyndon.",
-                AssessedProvenance.FromLiterature(Source)),
-            Node("distinctLyndon", "Distinct Lyndon factors", DistinctFormula(),
-                "Section 5, p. 8: “Let L(w) denote the number of distinct Lyndon factors in a word w.” Taking the image of the occurrence set before its cardinality counts equal factor lists once. Single letters and the whole Lyndon word are included. Section 6, p. 9 gives aaabaaabaab with seven distinct Lyndon factors and aababababab with eight.",
-                AssessedProvenance.FromLiterature(Source)),
-
+        Paragraph(Text("All scan statements quantify over an arbitrary linearly ordered alphabet A and finite lists. Lexicographic order treats a proper prefix as smaller. The scan is related to the original refutation's finite-index factor, occurrence and distinct-count definitions. The supplied Ma–Zhang manuscript gives the suffix-minimum scan argument. The elementary morphism is the classical lambda(a)=a, lambda(b)=ab; its proof uses the existing actual two-factor standard factorization. Richomme's Lyndon-morphism theory is prior literature; no novelty or global priority is asserted.")),
         N("leastSuffix", "Minimum nonempty suffix", Equal(Call("leastSuffix", F.Id("w")), Call("min", Call("nonemptySuffixes", F.Id("w")))), "For nonempty w this recursively takes the smaller of w and the minimum nonempty suffix of its tail. On the empty input it returns the empty sentinel; that sentinel is never compared in the acceptance test.", DescribeRole.Definition),
         N("suffixScan", "Scan a fixed right endpoint", Equal(Call("suffixScan", F.Id("w")), Call("recordMinima", Call("nonemptySuffixesShortestFirst", F.Id("w")))), "Start with the last letter. Prepend successively longer suffixes; accept exactly when a candidate is strictly less than the minimum already seen. This computes strings by comparisons and never tests IsLyndon.", DescribeRole.Definition),
         N("factorScan", "Identify equal accepted strings", Equal(Call("factorScan", F.Id("w")), Call("toFinset", Call("flatMap", Named("suffixScan"), Call("inits", F.Id("w"))))), "Run suffixScan on every prefix, including the harmless empty prefix, then deduplicate the resulting strings. Thus all right endpoints are covered and repeated occurrences count once.", DescribeRole.Definition),
@@ -44,9 +34,6 @@ internal sealed class LyndonFactorTransportDocument : IScribeDocumentDefinition
     private static Formula All(Formula x, Formula type, Formula body) =>
         Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
     private static Formula Equal(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
-    private static Formula Le(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
-    private static Formula And(Formula x, Formula y) =>
-        new Formula.Logic(Parenthesized(x), FormulaLogicOperator.And, Parenthesized(y));
     private static Formula Nats() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Fn(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
@@ -58,34 +45,4 @@ internal sealed class LyndonFactorTransportDocument : IScribeDocumentDefinition
         Formula sigma = SigmaLower, n = F.Id("n"), w = F.Id("w");
         return All(sigma, Nats(), All(n, Nats(), All(w, Fn(Fin(n), Fin(sigma)), body)));
     }
-
-    private static Formula FactorFormula()
-    {
-        Formula n = F.Id("n"), w = F.Id("w"), i = F.Id("i"), l = F.Id("l");
-        return Disp(WordParameters(All(i, Nats(), All(l, Nats(),
-            Equal(Call("factor", w, i, l),
-                Call("List.take", l, Call("List.drop", i, Call("List.map", w, Call("List.finRange", n)))))))));
-    }
-
-    private static Formula OccurrencesFormula()
-    {
-        Formula n = F.Id("n"), w = F.Id("w"), p = F.Id("p");
-        Formula i = Proj(p, D(1)), l = Proj(p, D(2));
-        Formula condition = And(Le(D(1), l), And(Le(new Formula.Binary(i, FormulaBinaryOperator.Add, l), n),
-            Call("IsLyndon", Call("factor", w, i, l))));
-        Formula pairs = Call("Finset.product", Call("Finset.range", n),
-            Call("Finset.range", new Formula.Binary(n, FormulaBinaryOperator.Add, D(1))));
-        return Disp(WordParameters(Equal(Call("lyndonOccurrences", w),
-            Call("Finset.filter", Lam(p, Seq(Nats(), Sp, Times, Sp, Nats()), condition), pairs))));
-    }
-
-    private static Formula DistinctFormula()
-    {
-        Formula w = F.Id("w"), p = F.Id("p");
-        return Disp(WordParameters(Equal(Call("distinctLyndon", w),
-            Call("Finset.card", Call("Finset.image",
-                Lam(p, Seq(Nats(), Sp, Times, Sp, Nats()), Call("factor", w, Proj(p, D(1)), Proj(p, D(2)))),
-                Call("lyndonOccurrences", w))))));
-    }
-
 }

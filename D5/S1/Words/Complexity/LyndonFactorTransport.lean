@@ -6,7 +6,7 @@
    utility: none
    digest: Suffix-minimum scanning computes the actual distinct contiguous Lyndon factors. -/
 
-import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
+import D5.S1.Words.Complexity.LyndonFactorChristoffelMinimumRefutation
 import Mathlib.Data.List.Infix
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonStandardFactorization
 
@@ -28,32 +28,13 @@ These are genuine universal content paths, with no new independent finite instan
 
 Existing frozen proof owners: LyndonOrder.isLyndon_iff_lt_suffix, isLyndon_append,
 its private list_lt_self_append, and LyndonStandardFactorization.isLyndon_standardLeft.
-The original three finite-index definitions retain their namespace and exact bodies; their
-original certificate consumer imports this general owner. No second refutation is introduced.
+The finite-index bridge uses factor, lyndonOccurrences and distinctLyndon from
+LyndonFactorChristoffelMinimumRefutation.
 New public audit targets are disclosed individually under #29680 if registration is unfinished.
 -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
-namespace D5.S1.Words.Complexity.LyndonFactorChristoffelMinimumRefutation
-open D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder (IsLyndon)
-
-/-- Drop `i` letters and take at most `l` letters of `w`. -/
-def factor {σ n : ℕ} (w : Fin n → Fin σ) (i l : ℕ) : List (Fin σ) :=
-  ((List.finRange n).map w).drop i |>.take l
-
-/-- Occurrences `(i, l)`, `l ≥ 1`, `i + l ≤ n`, of Lyndon factors of `w`. -/
-noncomputable def lyndonOccurrences {σ n : ℕ} (w : Fin n → Fin σ) : Finset (ℕ × ℕ) := by
-  classical
-  exact ((Finset.range n ×ˢ Finset.range (n + 1)).filter fun p =>
-    1 ≤ p.2 ∧ p.1 + p.2 ≤ n ∧ IsLyndon (factor w p.1 p.2))
-
-/-- `D(W)`: the number of distinct Lyndon factors of `W`. -/
-noncomputable def distinctLyndon {σ n : ℕ} (w : Fin n → Fin σ) : ℕ := by
-  classical
-  exact ((lyndonOccurrences w).image fun p => factor w p.1 p.2).card
-end D5.S1.Words.Complexity.LyndonFactorChristoffelMinimumRefutation
 
 namespace D5.S1.Words.Complexity.LyndonFactorTransport
 open D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
