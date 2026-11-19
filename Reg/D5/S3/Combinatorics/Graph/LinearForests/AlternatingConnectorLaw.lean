@@ -166,9 +166,9 @@ def registration :
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "arg", "fn", "arg", "arg", "arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg", "fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
