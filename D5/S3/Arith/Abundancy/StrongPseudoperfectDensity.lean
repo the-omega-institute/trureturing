@@ -92,7 +92,7 @@ private lemma complement_formula {m d : ℕ} (hd : d ∣ m) (q : ℕ) :
     m * q / d = q * (m / d) := by
   rw [Nat.mul_comm m q, Nat.mul_div_assoc q hd]
 
-private lemma divisor_split {m q d : ℕ} (hq : q.Prime)
+lemma divisor_split {m q d : ℕ} (hq : q.Prime)
     (hd : d ∈ (m * q).divisors) :
     d ∈ m.divisors ∨ ∃ e ∈ m.divisors, d = e * q := by
   rw [Nat.divisors_mul] at hd
