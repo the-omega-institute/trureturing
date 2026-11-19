@@ -344,9 +344,39 @@ private theorem singleton_class_cycle
   exact ⟨r, ha, hneighbors, hmatch, e,
     normalize_cycle_attachments e hneighbors hmatch (compressed_triangle_free hp.symm hg)⟩
 
+private theorem cross_neighbor_iff_degree_two
+    {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {L R : Finset V}
+    (hp : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {x y}, G.Adj x y → G.degree x = 2 → G.degree y = 2 → False)
+    (hg : (8 : ℕ∞) ≤ G.egirth) (x : SideHigh G L) :
+    (compressed G L).degree x = 2 ↔ ∃! y : SideHigh G R, G.Adj x.val y.val := by
+  let N := univ.filter (fun y : SideHigh G R => G.Adj x.val y.val)
+  have hn (y : SideHigh G R) : y ∈ N ↔ G.Adj x.val y.val := by simp [N]
+  have hc := side_high_neighbors_card hp (mem_filter.mp x.property).1
+  change N.card = _ at hc
+  have hd := compressed_degree hp hdeg (fun hxy hx hy => hlow hxy hx hy) hg x
+  rw [← hc] at hd
+  constructor
+  · intro hx
+    obtain ⟨y, hy⟩ := Finset.card_eq_one.mp (show N.card = 1 by omega)
+    refine ⟨y, (hn y).mp (hy.symm ▸ mem_singleton_self y), ?_⟩
+    intro z hz
+    have hz' := (hn z).mpr hz
+    rwa [hy, mem_singleton] at hz'
+  · rintro ⟨y, hy, huniq⟩
+    have he : N = {y} := by
+      ext z
+      rw [hn, mem_singleton]
+      exact ⟨huniq z, fun h => h.symm ▸ hy⟩
+    rw [he, card_singleton] at hd
+    omega
+
 /-- A 22-vertex coordinate half compresses to parity classes of orders 1 and 9,
 with three disjoint pairs attached to a six-cycle, or to
-two copies of the complete bipartite graph on parts of orders 2 and 3. -/
+two copies of the complete bipartite graph on parts of orders 2 and 3.
+On each of the latter two sides, the vertices of compressed degree two
+have exactly one actual high neighbor across the parity classes. -/
 theorem half_compression {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 22) :
@@ -368,7 +398,11 @@ theorem half_compression {C : Finset (Q 9)} (hC : C.card = 72)
               {(e (cycleLabel shift reverse i)).val,
                 (e (cycleLabel shift reverse (pairingModel opposite i))).val})) ∨
       (Nonempty (compressed G L ≃g turanGraph 5 2) ∧
-        Nonempty (compressed G R ≃g turanGraph 5 2)) := by
+        Nonempty (compressed G R ≃g turanGraph 5 2) ∧
+        (∀ x : SideHigh G L, (compressed G L).degree x = 2 ↔
+          ∃! y : SideHigh G R, G.Adj x.val y.val) ∧
+        (∀ y : SideHigh G R, (compressed G R).degree y = 2 ↔
+          ∃! x : SideHigh G L, G.Adj y.val x.val)) := by
   let S := coordinateSlice C b
   let G := (hypercube 9).induce (S : Set (Q 9))
   let L := paritySide S false
@@ -424,7 +458,9 @@ theorem half_compression {C : Finset (Q 9)} (hC : C.card = 72)
       ⟨five_vertices_six_edges _ ((hcard L).trans h) (heL.trans (by omega))
           (compressed_triangle_free hp hg),
         five_vertices_six_edges _ ((hcard R).trans (by omega)) (heR.trans (by omega))
-          (compressed_triangle_free hp.symm hg)⟩⟩
+          (compressed_triangle_free hp.symm hg),
+        cross_neighbor_iff_degree_two hp hdeg (fun hxy hx hy => hlow hxy hx hy) hg,
+        cross_neighbor_iff_degree_two hp.symm hdeg (fun hxy hx hy => hlow hxy hx hy) hg⟩⟩
   · have hcR := (hcard R).trans h
     exact ⟨true, Or.inl ⟨hcR, singleton_class_cycle hp.symm hdeg
       (fun hxy hx hy => hlow hxy hx hy) hg hcR ((hcard L).trans (by omega))⟩⟩
