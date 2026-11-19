@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/CubeCoordinateNormalization
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/CubeCoordinateNormalization
+   mirror-B: none(waiver:covered-by-q9-twenty-two-paired-exclusion-blueprint)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   anchors: [mathlib/module/Mathlib.Data.BitVec]
    utility: none
    digest: Transport cube flips through translations and coordinate permutations. -/
 

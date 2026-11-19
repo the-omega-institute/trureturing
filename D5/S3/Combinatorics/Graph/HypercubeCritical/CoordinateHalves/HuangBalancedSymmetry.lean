@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/HuangBalancedSymmetry
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/HuangBalancedSymmetry
+   mirror-B: none(waiver:covered-by-q9-twenty-two-paired-exclusion-blueprint)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Girth]
    utility: none
    digest: Transport Huang balance through cube symmetries. -/
 

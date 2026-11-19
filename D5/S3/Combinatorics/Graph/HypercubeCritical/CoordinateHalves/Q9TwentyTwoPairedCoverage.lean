@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedCoverage
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedCoverage
+   mirror-B: none(waiver:covered-by-q9-twenty-two-paired-exclusion-blueprint)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   anchors: [mathlib/module/Mathlib.Data.BitVec]
    utility: none
    digest: Show that the paired placement search covers every normalized embedding. -/
 

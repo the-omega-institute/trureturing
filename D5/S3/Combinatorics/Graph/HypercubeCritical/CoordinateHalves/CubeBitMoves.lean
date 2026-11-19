@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/CubeBitMoves
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/CubeBitMoves
+   mirror-B: none(waiver:covered-by-q9-twenty-two-paired-exclusion-blueprint)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   anchors: [mathlib/module/Mathlib.Data.BitVec]
    utility: none
    digest: Represent cube vertices and their coordinate moves as bit vectors. -/
 
