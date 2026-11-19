@@ -6,6 +6,7 @@ import LeanInformationAuditInterface.Contract.Registration
 /-! Faithful readout laws for the literal transfer interfaces. -/
 namespace Reg.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
 open _root_.D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.TableBridge
+open _root_.D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
