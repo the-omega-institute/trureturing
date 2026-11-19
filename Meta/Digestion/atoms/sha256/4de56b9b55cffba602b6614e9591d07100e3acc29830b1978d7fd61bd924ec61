@@ -1,0 +1,27 @@
+**Convention 3.4 (Seeds and non-discrete views).** The same criterion has
+an almost-everywhere version for a measurable classical view. To state it
+precisely, use standard Borel outcome spaces and measurable decoding
+channels. Let $\nu_h$ be its conditional probability measure given $h$,
+let $\lambda=\sum_h\nu_h$, and write $f_h=d\nu_h/d\lambda$.
+Then $\sum_h f_h=1$ almost everywhere and the view law is
+$2^{-n}\lambda$. At a view $a$ the conditional channel has weights
+$f_h(a)$. The proof of Theorem 3.3 applies almost everywhere: integrate
+the nonnegative Choi quadratic forms and use a finite basis of the
+orthogonal complement to obtain one common full-measure set. On it,
+all $h$ with $f_h(a)>0$ have the same class. A continuous view does
+not constitute a finite alphabet just because its individual points
+have probability zero.
+
+In particular, a discarded private seed is already averaged into $r$ or
+$\nu_h$. A visible seed correlated with $h$ is part of the counted view.
+If a shared seed $S$ is explicitly independent of the labels and is
+supplied separately without charge, condition on $S$. Exact averaged
+recovery and the positive-Choi argument imply conditional exact recovery
+for almost every $S$. Independence leaves all the finitely many histories
+with probability $2^{-n}$ at each such seed. Their simultaneous
+full-measure set exists because there are finitely many histories.
+The same class-count lower bound holds on each conditional alphabet.
+Independent shared randomness therefore cannot lower the finite
+alphabet bound. A history-dependent seed does not satisfy this
+independence premise.
+

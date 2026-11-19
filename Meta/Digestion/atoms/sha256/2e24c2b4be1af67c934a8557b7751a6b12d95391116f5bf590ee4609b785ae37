@@ -1,0 +1,42 @@
+**命题 4.2（实际 PVM、全五维幺正及无损分支）。** $\{R_0,R_1\}$ 是秩三、二的完整正交 PVM，$U_0,U_1$ 是全五维幺正。测量后按结果 $i$ 施加 $U_i$ 并报告 $i$，其末端矩阵为
+
+$$
+L_0=P+|s\rangle\langle r|,\qquad
+L_1=|g\rangle\langle g|+|y\rangle\langle w|,
+\qquad \sum_iL_i^\dagger L_i=I_5.
+\tag{4.3}
+$$
+
+证明。$c^2+\alpha^2=1$ 使 $(r,w)$ 为 $\operatorname{span}\{s,f\}$ 的正交基，与 $PH$ 及 $g$ 正交。因此 $R_0R_1=0$，$R_0+R_1=I_5$。又有 $d^2=c^2+k^2\alpha^2$，故 $(y,\zeta)$ 也是同一平面的正交基。$U_0$ 固定 $PH$ 和 $g$，把 $(r,w)$ 送到 $(s,f)$；$U_1$ 固定前三个方向，把 $(w,r)$ 送到 $(y,\zeta)$。每个都是完整正交基之间的映射，故两个方向的幺正恒等式均成立。
+
+更显式地，在整个 $H$ 的有序基 $(e_0,e_4,g,s,f)$ 中，
+
+$$
+U_0=I_3\oplus\begin{pmatrix}c&\alpha\\-\alpha&c\end{pmatrix},\qquad
+U_1=I_3\oplus\frac1d\begin{pmatrix}
+c^2+k\tau&(1-k)c\alpha\\(k-1)c\alpha&c^2+k\tau
+\end{pmatrix}.
+\tag{4.4}
+$$
+
+第二个二维块的列正交，其平方列范数的分子为
+
+$$
+(c^2+k\tau)^2+(k-1)^2c^2\tau
+=(c^2+\tau)(c^2+k^2\tau)=d^2.
+$$
+
+于是对未被选中子空间的作用也已完全指定。乘以 $R_i$ 即得 (4.3)；$L_i^\dagger L_i=R_i$，所以两结果全部保留并严格迹保持。展开还得到
+
+$$
+\begin{aligned}
+L_0&=P+cS+\alpha|s\rangle\langle f|,\\
+L_1&=Q+(h-1)|f\rangle\langle f|+bS
+-\frac{c\alpha}{d}|f\rangle\langle s|
+-\frac{kc\alpha}{d}|s\rangle\langle f|.
+\end{aligned}
+\tag{4.5}
+$$
+
+这里不需要任意 CPTP 后处理或丢弃结果。$\square$
+

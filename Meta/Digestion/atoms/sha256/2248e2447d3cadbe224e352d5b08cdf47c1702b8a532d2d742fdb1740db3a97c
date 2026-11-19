@@ -1,0 +1,55 @@
+**定理 3.10（非有效的统一严格间隙与定性稳定性）。** 在命题 3.6 的同一个紧外部松弛上定义
+
+$$
+B(\mathcal T)=\max\{b(\mathcal T),h(\mathcal T)\},\qquad
+\beta_{\rm joint}=\min_{\mathcal T\in\mathcal C}B(\mathcal T),\qquad
+\delta_{\rm joint}=\beta_{\rm joint}-L.
+\tag{3.30}
+$$
+
+则 $\delta_{\rm joint}>0$，且对每个实际有限深度、几乎必然终止及闭包模拟器，
+
+$$
+\|\mathcal J_\theta-\mathcal T\|_\diamond
+\ge\beta_{\rm joint}=L+\delta_{\rm joint}>L
+\qquad(\theta\in\mathbb R).
+\tag{3.31}
+$$
+
+(3.30) 是明确的有限维紧变分定义；这里没有求解该优化，也没有给出 $\delta_{\rm joint}$ 的数值、显式正闭式下界或有效稳定模量。
+
+证明。先在规范坐标中。命题 3.6 给出整个 $\mathcal C$ 上 $\mathcal G\le65$，所以 $b\ge L$，进而 $B\ge L$。$b$ 连续，$h$ 连续，$\mathcal C$ 非空且紧，故 (3.30) 的最小值由某个 $\mathcal T^\circ\in\mathcal C$ 取到。若 $\beta_{\rm joint}=L$，则
+
+$$
+L\le b(\mathcal T^\circ)\le B(\mathcal T^\circ)=L.
+$$
+
+于是 $\mathcal G(\mathcal T^\circ)=65$。定理 3.7 迫使它位于整个已分类的面中，引理 3.9 却给出 $B(\mathcal T^\circ)\ge h(\mathcal T^\circ)\ge U_0>L$，矛盾。因此 $\beta_{\rm joint}>L$。这排除的是趋近 $L$ 的全部实际通道序列，而不只是若干已展示的协议在 $L$ 处不取等。
+
+对同一个实际通道，$b$ 来自输入 $\psi_\rho$ 及输出二值支撑测量，$h$ 来自输入 $\psi_*$ 的完整输出；两者均不超过同一个完整菱形误差。由实际类包含在 $\mathcal C$ 中，
+
+$$
+\|\widehat{\mathcal J}-\mathcal T\|_\diamond
+\ge B(\mathcal T)\ge\min_{\mathcal C}B=\beta_{\rm joint}.
+$$
+
+较大的外部松弛上的最小值给出实际问题的下界，方向并未反转，也未声称松弛极小者可实施。角度为 $\theta$ 时，支撑测试用 (3.15)，相干测试输入为 $D_\theta^\dagger\psi_*$；用按旗标的输出坐标幺正消去 $T_j$ 后得到相同的两个读数。引理 2.1–2.2 因而把同一个正数传到所有角度与三个实际类。取共同下确界得到 $d_*\ge L+\delta_{\rm joint}>L$。
+
+还可给出等价的定性稳定说明。令 $m=(L+U_0)/2$，则存在 $\eta>0$ 使
+
+$$
+\mathcal T\in\mathcal C,\quad \mathcal G(\mathcal T)>65-\eta
+\quad\Longrightarrow\quad h(\mathcal T)>m.
+\tag{3.32}
+$$
+
+否则可选支撑分数趋向六十五、却有 $h\le m$ 的序列；紧性给出收敛子列，其极限支撑极大且 $h\le m<U_0$，与定理 3.7 和引理 3.9 矛盾。把通道分为 $\mathcal G\le65-\eta$ 与其补集，分别使用 $b\ge L+2\eta/N^2$ 与 $h>m$，得到
+
+$$
+B(\mathcal T)\ge L+
+\min\left\{\frac{2\eta}{N^2},\frac{U_0-L}{2}\right\}>L.
+\tag{3.33}
+$$
+
+这里只给出正间隙的形式，未给出 $\eta$ 的有效取值。证书没有求出 $\beta_{\rm joint}$，没有匹配倾斜上界，也没有识别原问题的最优实际仪器。它所增加的是整个支撑面与相干测试之间的统一分离；已经精确的单一支撑值本身没有被收紧。$\square$
+
