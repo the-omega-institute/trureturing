@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0e7e66e1ed750b1dca0559be80ce4dffc70b978dc7162ca5f55222caebdbcd48
+  normalized_sha256: sha256:0e7e66e1ed750b1dca0559be80ce4dffc70b978dc7162ca5f55222caebdbcd48
+cas_ref: sha256:0e7e66e1ed750b1dca0559be80ce4dffc70b978dc7162ca5f55222caebdbcd48
+coverage_gids:
+  - gid: D5/S3/Arith/Additive/PlasticTenPointEquality.whole_ten_point_equality
+    target_statement_id: sha256:55aad578c8b245fe847d550d8648acc74d796fb9239104e322bb7aec19be2c39
+receipts:
+  unresolved_subitems: []
