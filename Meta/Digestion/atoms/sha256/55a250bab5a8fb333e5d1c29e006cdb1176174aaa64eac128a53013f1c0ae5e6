@@ -1,0 +1,15 @@
+取整误差仍不超过 $1$。定义
+
+$$
+B_{k,r}(P)=P-\theta(P)+e_r(P)\ell,\qquad
+D_{\mathrm{safe},r}(P)=P-\theta(P)+e_r(P)\log(P/2).
+$$
+
+强素数定理使 $P-\theta(P)=o_r(P/\ell^r)$，故两个预算均满足
+
+$$
+B_{k,r}(P)\sim D_{\mathrm{safe},r}(P)\sim\frac{r!P}{\ell^r}.
+$$
+
+仍在 $J(P)=(P/2,3P/4]\cap\{p:p\text{ 为素数}\}$ 中删去恰好 $e_r(P)$ 个素数；由于 $|J(P)|\sim P/(4\ell)$ 且 $e_r(P)/|J(P)|\to0$，删集存在。得到大小为 $k_r(P)$、对数乘积不超过 $P-D_{\mathrm{safe},r}(P)$ 的基底，完全保持引理 7.3 的确定性保证。
+

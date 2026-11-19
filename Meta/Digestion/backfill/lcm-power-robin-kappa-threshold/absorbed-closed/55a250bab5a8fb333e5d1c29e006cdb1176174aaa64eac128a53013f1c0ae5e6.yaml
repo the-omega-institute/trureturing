@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:55a250bab5a8fb333e5d1c29e006cdb1176174aaa64eac128a53013f1c0ae5e6
+  normalized_sha256: sha256:55a250bab5a8fb333e5d1c29e006cdb1176174aaa64eac128a53013f1c0ae5e6
+cas_ref: sha256:55a250bab5a8fb333e5d1c29e006cdb1176174aaa64eac128a53013f1c0ae5e6
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/FactorialReserve.factorial_far_deletion
+    target_statement_id: sha256:eda323eb227c312a11ec72cc036a8d8af1840e5a80c5f1149dd34ac22ba2e9e8
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/FactorialReserve.factorial_reserve
+    target_statement_id: sha256:da16d271a7f4e5ced0aa74d4c19e2178c5baef75943f63b5281d9bbfbc5e575c
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/FactorialReserve.rounding
+    target_statement_id: sha256:6055e06e716e71c179a149ecbfa6551a78aa60f7b09898dbbac02c0450a4ac65
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/FarDeletion.far_window_capacity
+    target_statement_id: sha256:62af7826a9b15ac9bf1bd152156fb424144c8854f13a37e82cb6899fb2bc9254
+receipts:
+  unresolved_subitems: []
