@@ -46,7 +46,7 @@ The zero-budget branch has zero output information. The full-budget branch uses 
 
 ## Falsifier
 
-A counterexample to the formal conclusion requires budgets in $[0,1]$, a permitted crossover beyond every claimed threshold, and finite stochastic kernels meeting both rate constraints whose mutual information exceeds the specified BSC value. A failure of uniqueness or a crossover outside $[0,1/2]$ is a different statement. A prior settlement or a source mismatch affects attribution independently of kernel correctness.
+A counterexample to attainment fixes one budget pair in $[0,1]^2$. For every proposed threshold $\theta\in[0,1/2)$ it gives a crossover $p_\theta\in(\theta,1/2]$ and finite stochastic kernels meeting both rate constraints whose mutual information exceeds the specified BSC value. A failure of uniqueness or a crossover outside $[0,1/2]$ is a different statement. A prior settlement or a source mismatch affects attribution independently of kernel correctness.
 
 ## Evidence
 

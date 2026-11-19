@@ -49,6 +49,8 @@ F35: D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave; statement
 F36: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv; statement_id=sha256:e8867f89ff5d6dbfe903566df6ee22ac61ad20b965100eb78500fcd8a1d28307
 F37: D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2; statement_id=sha256:0d6c93f85b7e4c54a6cc869eee6cc53e301d2b85b55ae58405f8953d16d69a2a
 F38: D5/S3/Observer/ProductMeasures/FinitePmfLikelihood.pmfRealMass_sum; statement_id=sha256:e454f4ffe7f8278bdd1d7328ffaffa03673012acaec70317ba0cacde6a5b2daf
+F39: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h_image; statement_id=sha256:4df91e283e65dc679976e0f47d159af73616a3b9aa45c225a9bfb01b385b3675
+F40: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h; statement_id=sha256:284a16083fa547c8718507bae385b0542ebd97fc49aabbbf330bb0e75b8e75dc
 Declarations (frozen inputs above are followed through same-delivery helpers):
 hbInv: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: bscOptimal,bscOptimal_of_upper_bound,candidate_bias_interior,candidate_rate,claim,full_budget_bscOptimal,full_budget_upper,hbInv_zero,hb_inv_spec,interior_bscOptimal,result,zero_budget_bscOptimal
 dsbs: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,outputJoint,output_joint_nonneg,output_joint_posterior
@@ -73,7 +75,7 @@ output_joint_col_sum: proof_shape: bind-only; escape_witness: none; dependencies
 objective_product_formula: proof_shape: bind-only; escape_witness: none; dependencies: F6,F3,F1,F38; consumers: objective_productValue
 rate_posterior_formula: proof_shape: bind-only; escape_witness: none; dependencies: F2,F11,F6,F10,F8,F5,F4,F9,F12,F38; consumers: rate_phi
 hb_binEntropy: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: candidate_bias_interior,hbInv_zero,hb_inv_spec,phi_crossover
-hb_inv_spec: proof_shape: bind-only; escape_witness: none; dependencies: F32; consumers: candidate_bias_interior,candidate_rate,full_budget_upper,hbInv_zero,interior_bscOptimal,result
+hb_inv_spec: proof_shape: bind-only; escape_witness: none; dependencies: F32,F39,F40; consumers: candidate_bias_interior,candidate_rate,full_budget_upper,hbInv_zero,interior_bscOptimal,result
 bsc_apply_formula: proof_shape: bind-only; escape_witness: none; dependencies: none; consumers: objective_le_noiseless,output_mass_bsc,posterior_bias_bsc,rate_bsc
 rate_bsc: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1; consumers: candidate_rate
 candidate_rate: proof_shape: bind-only; escape_witness: none; dependencies: F32,F6,F3,F1; consumers: bscOptimal_of_upper_bound,zero_budget_bscOptimal
@@ -369,20 +371,23 @@ private theorem hb_binEntropy (a : ℝ) : D5.S3.Quantum.CloningMachine.binaryEnt
 
 private theorem hb_inv_spec (y : ℝ) (hy : y ∈ Set.Icc (0 : ℝ) 1) :
     D5.S3.Quantum.CloningMachine.binaryEntropyBits (hbInv y).val = y := by
-  have hc : Continuous D5.S3.Quantum.CloningMachine.binaryEntropyBits := by
-    simp_rw [show D5.S3.Quantum.CloningMachine.binaryEntropyBits = fun a => Real.binEntropy a / Real.log 2 by funext a; exact hb_binEntropy a]
-    exact Real.binEntropy_continuous.div_const _
-  have h0 : D5.S3.Quantum.CloningMachine.binaryEntropyBits 0 = 0 := by rw [hb_binEntropy]; simp
-  have h1 : D5.S3.Quantum.CloningMachine.binaryEntropyBits (1 / 2) = 1 := by
-    rw [hb_binEntropy]
-    rw [show (1 / 2 : ℝ) = 2⁻¹ by norm_num, Real.binEntropy_two_inv]
-    exact div_self (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'
-  have hy' : y ∈ Set.Icc (D5.S3.Quantum.CloningMachine.binaryEntropyBits 0) (D5.S3.Quantum.CloningMachine.binaryEntropyBits (1 / 2)) := by rwa [h0, h1]
-  obtain ⟨a, ha, he⟩ := intermediate_value_Icc (by norm_num : (0 : ℝ) ≤ 1 / 2)
-    hc.continuousOn hy'
+  have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have himage : y * Real.log 2 ∈
+      D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.h 1 ''
+        Set.Icc (0 : ℝ) (1 / 2) := by
+    rw [D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.h_image
+      (by norm_num)]
+    exact ⟨mul_nonneg hy.1 hlog.le, by simpa using mul_le_mul_of_nonneg_right hy.2 hlog.le⟩
+  obtain ⟨a, ha, hEntropy⟩ := himage
+  have hBinaryEntropy : Real.binEntropy a = y * Real.log 2 := by
+    simpa [D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.h] using hEntropy
   letI : Nonempty (Set.Icc (0 : ℝ) (1 / 2 : ℝ)) := ⟨⟨0, by norm_num⟩⟩
   unfold hbInv
-  exact Function.invFun_eq (f := fun a : (Set.Icc (0 : ℝ) (1 / 2 : ℝ)) => D5.S3.Quantum.CloningMachine.binaryEntropyBits a.val) ⟨⟨a, ha⟩, he⟩
+  have haBits : D5.S3.Quantum.CloningMachine.binaryEntropyBits a = y :=
+    (hb_binEntropy a).trans ((div_eq_iff hlog.ne').mpr hBinaryEntropy)
+  exact Function.invFun_eq
+    (f := fun p : Set.Icc (0 : ℝ) (1 / 2 : ℝ) =>
+      D5.S3.Quantum.CloningMachine.binaryEntropyBits p.val) ⟨⟨a, ha⟩, haBits⟩
 
 end D5.S3.Entropy.DoubleSidedBottleneckBSC
 
