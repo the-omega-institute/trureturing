@@ -80,11 +80,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckUsesCurrentProducerCapabilityDuringProtectedScribeGrowth()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
-        var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。covered。\n");
-        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, sourceBytes).Claims);
-        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+
         const string coveredDocumentGid = "D5/S0/Carrier/BackfillTarget";
         const string coveredGid = coveredDocumentGid + ".protectedTargetFixture";
         var targetPath = coveredDocumentGid + ".lean";
@@ -93,32 +89,15 @@ public sealed partial class ProductionEnvironmentTests
         const string definition = "// previously verified Scribe definition\n";
         const string emission = "# Previously verified emission\n";
         var targetStatementId = FrozenStatementReceiptTestData.Id('b');
-        var definitionHash = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(definition)).RawSha256;
-        var emissionHash = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(emission)).RawSha256;
+        var definitionHash = ("sha256:" + Trureturing.Truth.Sha256Sums.HashHex(Encoding.UTF8.GetBytes(definition)));
+        var emissionHash = ("sha256:" + Trureturing.Truth.Sha256Sums.HashHex(Encoding.UTF8.GetBytes(emission)));
         var record = new ScribeEmissionRecord(
             coveredDocumentGid,
             definitionPath,
             definitionHash,
             emissionPath,
             emissionHash);
-        var ledger = MapOnlyEntry(IngestLedger(atomizerId, atom), entry => entry with
-        {
-            Coverage = [new DigestionCoverageEdge(coveredGid, targetStatementId)],
-            ProjectedStatus = new DigestionStatus(
-                DigestionMigrationState.Absorbed,
-                DigestionTruthState.Closed),
-        });
         var attestation = Encoding.UTF8.GetString(ScribeEmissionAttestation.Write([record]).AsSpan());
-        var source = Encoding.UTF8.GetString(sourceBytes);
-        var cas = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
-        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = source;
-        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = source;
-        fixture.Files.Remove(RuleFixture.FixtureCasPath);
-        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
-        fixture.Files[captured.RelativePath] = cas;
-        fixture.Baseline[captured.RelativePath] = cas;
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, ledger);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, ledger);
         fixture.Files[definitionPath] = definition;
         fixture.Baseline[definitionPath] = definition;
         fixture.Files[emissionPath] = emission;
@@ -136,6 +115,8 @@ public sealed partial class ProductionEnvironmentTests
                 NameKey = "ns(n0,22:protectedTargetFixture)",
                 PrecomputedStatementId = targetStatementId,
             }]);
+        fixture.Files[targetPath] = RuleFixture.HeaderFor(coveredDocumentGid, "F") + "def protectedTargetFixture : Unit := ()\n";
+        fixture.Baseline[targetPath] = fixture.Files[targetPath];
         fixture.Reports[targetPath] = targetReport;
         fixture.BaselineReports[targetPath] = targetReport;
         var moduleStatementId = FrozenContentAddress.ComputeModuleStatementId(
@@ -174,45 +155,6 @@ public sealed partial class ProductionEnvironmentTests
                 _ => outcome.GetType().FullName,
             });
 
-        var baselineDocument = ledger;
-        var currentLean = Assert.IsType<LeanValidationOutcome.Accepted>(
-            LeanClosureValidator.Validate(current, currentReport)).Capability;
-        var currentStatus = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
-            baselineDocument,
-            current,
-            currentLean).Entries);
-        Assert.Equal(DigestionMigrationState.Absorbed, currentStatus.DerivedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, currentStatus.DerivedStatus.Truth);
-        Assert.True(currentStatus.Deletable);
-        Assert.Empty(currentStatus.Gaps);
-
-        const string changedEmission = "# Candidate changed a previously verified emission\n";
-        var changedEmissionHash = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(changedEmission)).RawSha256;
-        var changedLedger = ledger;
-        var changedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal)
-        {
-            [emissionPath] = changedEmission,
-            [GeneratedArtifactInventory.ScribeAttestation.Path] = Encoding.UTF8.GetString(
-                ScribeEmissionAttestation.Write(
-                [
-                    record with { EmissionSha256 = changedEmissionHash },
-                ]).AsSpan()),
-        };
-        DirectoryLedgerTestSupport.ReplaceWithProjection(changedFiles, changedLedger);
-        var changedSnapshot = Decode(Snapshot(changedFiles));
-        var changedLean = Assert.IsType<LeanValidationOutcome.Accepted>(
-            LeanClosureValidator.Validate(changedSnapshot, currentReport)).Capability;
-        var changedStatus = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
-            BackfillInventoryLoader.Load(changedSnapshot),
-            changedSnapshot,
-            changedLean).Entries);
-        Assert.Equal(DigestionMigrationState.Absorbed, changedStatus.DerivedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, changedStatus.DerivedStatus.Truth);
-        Assert.True(changedStatus.Deletable);
-        Assert.Empty(changedStatus.Gaps);
     }
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
@@ -259,18 +201,14 @@ public sealed partial class ProductionEnvironmentTests
             params string[] additionalChanges)
     {
         using var temporary = new TemporaryDirectory();
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-open/"
-            + RuleFixture.FixtureAtomId
-            + ".yaml";
         const string documentGid = "D5/S0/Carrier/BackfillTarget";
         const string coverageGid = documentGid + ".protectedTargetFixture";
         const string targetPath = documentGid + ".lean";
         const string baselineDefinition = "fixture Scribe definition\n";
         const string baselineEmission = "# Fixture Scribe emission\n";
         var fixture = new RuleFixture();
-        fixture.UseValidDirectoryBackfill();
-        fixture.AddBackfillTargets();
+        fixture.Files[targetPath] = RuleFixture.HeaderFor(documentGid, "F") + "def protectedTargetFixture : Unit := ()\n";
+
 
         var baselineTarget = fixture.Files[targetPath];
         fixture.Baseline[targetPath] = baselineTarget;
@@ -327,15 +265,10 @@ public sealed partial class ProductionEnvironmentTests
                 "baseline-only producer path-set marker\n";
         }
 
-        var definitionSha256 = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(baselineDefinition)).RawSha256;
-        var stockEmissionSha256 = baselineHasScribeGap
-            ? ReportDerivedScribeEmissionVerifier.EmissionSha256For([])
-            : DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
+        var definitionSha256 = ("sha256:" + Trureturing.Truth.Sha256Sums.HashHex(Encoding.UTF8.GetBytes(baselineDefinition)));
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             AddFrozenTarget(files, targetPath, moduleStatementId, fixture.Reports[targetPath]);
-            InstallLedger(files);
         }
 
         var verifier = new ReportDerivedScribeEmissionVerifier(
@@ -343,7 +276,7 @@ public sealed partial class ProductionEnvironmentTests
             coverageGid,
             documentGid,
             definitionSha256);
-        var changes = (reportInputsChanged ? new[] { atomPath, targetPath } : [])
+        var changes = (reportInputsChanged ? new[] { targetPath } : [])
             .Concat(additionalChanges)
             .ToArray();
         var currentRaw = Snapshot(fixture.Files);
@@ -366,20 +299,6 @@ public sealed partial class ProductionEnvironmentTests
             environment.Check(["--candidate-lean-report", candidateReport]),
             verifier);
 
-        void InstallLedger(Dictionary<string, string> files)
-        {
-            var document = BackfillInventoryLoader.Load(Decode(Snapshot(files)));
-            document = MapOnlyEntry(document, entry => entry with
-            {
-                Coverage =
-                [
-                    new DigestionCoverageEdge(
-                        coverageGid,
-                        FrozenStatementReceiptTestData.Id('b')),
-                ],
-            });
-            DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
-        }
     }
 
     private static void AddFrozenTarget(
@@ -415,8 +334,7 @@ internal sealed class ReportDerivedScribeEmissionVerifier(
     internal static string EmissionSha256For(IEnumerable<string> axioms)
     {
         var badge = AxiomBadge(axioms);
-        return DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes($"report-derived-axiom-badge:{badge}\n")).RawSha256;
+        return ("sha256:" + Trureturing.Truth.Sha256Sums.HashHex(Encoding.UTF8.GetBytes($"report-derived-axiom-badge:{badge}\n")));
     }
 
     public VerifiedScribeEmissions Verify(

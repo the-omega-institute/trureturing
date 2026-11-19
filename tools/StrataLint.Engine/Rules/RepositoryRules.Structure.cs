@@ -164,9 +164,9 @@ internal static partial class RepositoryRules
     internal static bool IsCapacityExcluded(string path) =>
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
-        || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
-        || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-        || DigestionCasStore.IsCanonicalPath(path)
+        || string.Equals(path, "Meta/BACKFILL.yaml", StringComparison.Ordinal)
+        || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
+        || path.StartsWith("Meta/Digestion/atoms/sha256/", StringComparison.Ordinal)
         || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));

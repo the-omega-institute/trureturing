@@ -7,11 +7,11 @@ internal static partial class RepositoryRules
     internal const int TheoryDocumentLineLimit = 5000;
 
     private static bool IsTheoryDocument(string path) =>
-        path.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
+        path.StartsWith(HistoricalTheoryPaths.TheoryRootPath, StringComparison.Ordinal)
         && path.EndsWith(".md", StringComparison.OrdinalIgnoreCase);
 
     internal static bool IsTheoryOnlyChange(RawChangeSet changes) =>
-        !changes.Paths.IsEmpty && changes.Paths.All(DigestionOpaquePathPolicy.IsTheoryDocument);
+        !changes.Paths.IsEmpty && changes.Paths.All(HistoricalTheoryPaths.IsTheoryDocument);
 
     internal static ImmutableArray<RuleFinding> TheoryCapacity(RepositorySnapshot current, RawChangeSet changes)
     {

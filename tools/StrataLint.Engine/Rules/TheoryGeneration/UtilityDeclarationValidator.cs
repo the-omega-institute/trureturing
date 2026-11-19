@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -34,7 +35,7 @@ internal sealed record UtilityValidationResult(
     internal bool IsAccepted => Failure is UtilityValidationFailure.None;
 }
 
-internal static class UtilityDeclarationValidator
+internal static partial class UtilityDeclarationValidator
 {
     internal static UtilityValidationResult Validate(
         UtilityValidationPhase phase,
@@ -126,58 +127,20 @@ internal static class UtilityDeclarationValidator
             }
         }
 
-        DigestionLedgerEntry? atomTarget = null;
-        var softTarget = declaration.BasisTarget;
-        if (softTarget is { Kind: UtilityTargetKind.Atom or UtilityTargetKind.Task })
+        if (declaration.BasisTarget is { Kind: UtilityTargetKind.Atom } externalAtom)
+            return Failure(declaration, UtilityValidationFailure.TargetDangling,
+                $"target=atom:{externalAtom.Value} reason=use-a-local-task-or-declaration");
+
+        if (declaration.BasisTarget is { Kind: UtilityTargetKind.Task } task)
         {
-            var atomSnapshot = softTarget.Kind is UtilityTargetKind.Atom
-                ? SelectAtomTarget(snapshot, softTarget.Value)
-                : null;
-            if (atomSnapshot is not null && atomSnapshot.Files.IsEmpty)
-                return Failure(declaration, UtilityValidationFailure.TargetDangling,
-                    $"target={TargetDisplay(softTarget)}");
-            BackfillInventoryDocument? backfill = null;
             try
             {
-                if (softTarget.Kind is UtilityTargetKind.Atom)
-                    backfill = BackfillInventoryLoader.LoadForDigestion(atomSnapshot!);
-                else if (!BackfillInventoryLoader.DeriveTickets(snapshot).Any(ticket =>
-                             string.Equals(ticket.CaseId, softTarget.Value, StringComparison.Ordinal)))
-                    return Failure(declaration, UtilityValidationFailure.TargetDangling,
-                        $"target={TargetDisplay(softTarget)}");
+                if (!HasTask(snapshot, task.Value))
+                    return Failure(declaration, UtilityValidationFailure.TargetDangling, $"target=task:{task.Value}");
             }
             catch (FormatException)
             {
-                return Failure(
-                    declaration,
-                    UtilityValidationFailure.InputUnknown,
-                    "reason=backfill-load-failed");
-            }
-
-            if (softTarget.Kind is UtilityTargetKind.Atom)
-            {
-                var matches = backfill!.RequireDigestionEntries()
-                    .Where(entry => string.Equals(
-                        entry.AtomId,
-                        softTarget.Value,
-                        StringComparison.Ordinal))
-                    .ToArray();
-                switch (matches)
-                {
-                    case []:
-                        return Failure(
-                            declaration,
-                            UtilityValidationFailure.TargetDangling,
-                            $"target={TargetDisplay(softTarget)}");
-                    case [var only]:
-                        atomTarget = only;
-                        break;
-                    default:
-                        return Failure(
-                            declaration,
-                            UtilityValidationFailure.InputUnknown,
-                            $"reason=ambiguous-atom-target:{softTarget.Value}");
-                }
+                return Failure(declaration, UtilityValidationFailure.InputUnknown, "reason=ambiguous-task-owner");
             }
         }
 
@@ -190,20 +153,6 @@ internal static class UtilityDeclarationValidator
         if (phase is not UtilityValidationPhase.FirstFreeze)
         {
             return Accepted(declaration);
-        }
-
-        if (declaration.BasisKind is UtilityBasisKind.Refutes
-            && softTarget is { Kind: UtilityTargetKind.Atom }
-            && !HasExactCoverage(
-                atomTarget!,
-                declaration.Result,
-                modulePath,
-                moduleReport!))
-        {
-            return Failure(
-                declaration,
-                UtilityValidationFailure.RefutesAtomNoCoverage,
-                $"atom={softTarget.Value}");
         }
 
         if (declaration.BasisKind is UtilityBasisKind.Consumer)
@@ -235,23 +184,26 @@ internal static class UtilityDeclarationValidator
         return Accepted(declaration);
     }
 
-    private static RepositorySnapshot SelectAtomTarget(RepositorySnapshot snapshot, string atomId)
+    private static bool HasTask(RepositorySnapshot snapshot, string task)
     {
-        var atomFiles = snapshot.Files
-            .Where(pair => BackfillInventoryLoader.IsCanonicalPath(pair.Key.Value)
-                && pair.Key.Value.EndsWith("/" + atomId + ".yaml", StringComparison.Ordinal))
-            .ToImmutableDictionary();
-        var selected = atomFiles.ToBuilder();
-        foreach (var atomPath in atomFiles.Keys)
+        var owners = new Dictionary<string, RepoPath>(StringComparer.Ordinal);
+        foreach (var (path, file) in snapshot.Files)
         {
-            var sourceEnd = atomPath.Value.IndexOf('/', BackfillInventoryLoader.RootPath.Length);
-            var metadataPath = RepoPath.CreateKnown(atomPath.Value[..(sourceEnd + 1)] + "source.toml");
-            if (snapshot.Files.TryGetValue(metadataPath, out var metadata))
-                selected[metadataPath] = metadata;
+            if (!path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                || !path.Value.EndsWith(".lean", StringComparison.Ordinal)) continue;
+            foreach (Match match in TaskDeclarationPattern().Matches(file.Text))
+            {
+                var id = match.Groups["case"].Value;
+                if (owners.TryGetValue(id, out var owner) && owner != path)
+                    throw new FormatException($"TASK case {id} has multiple owners");
+                owners[id] = path;
+            }
         }
-
-        return RepositorySnapshot.Create(selected.ToImmutable());
+        return owners.ContainsKey(task);
     }
+
+    [GeneratedRegex("TASK (?<case>D5-T[0-9]{4})", RegexOptions.CultureInvariant)]
+    private static partial Regex TaskDeclarationPattern();
 
     private static UtilityValidationResult Accepted(UtilityDeclaration declaration) =>
         new(declaration, UtilityValidationFailure.None, string.Empty);
@@ -351,39 +303,6 @@ internal static class UtilityDeclarationValidator
         declaration = matches.Length == 1 ? matches[0] : null;
         return declaration is not null;
     }
-
-    private static bool HasExactCoverage(
-        DigestionLedgerEntry atom,
-        Gid? result,
-        RepoPath modulePath,
-        LeanFileReport moduleReport) =>
-        atom.Coverage.Any(edge =>
-        {
-            if (result is null
-                || !string.Equals(edge.Gid, result.Value, StringComparison.Ordinal)
-                || edge.TargetStatementId is null
-                || !Gid.TryParse(edge.Gid, out var gid)
-                || gid.ToTarget() is not Target.Formal { Declaration: not null } target
-                || target.Path != modulePath
-                || !TryResolveDeclaration(gid, moduleReport, out var declaration))
-            {
-                return false;
-            }
-
-            return string.Equals(
-                edge.TargetStatementId,
-                CanonicalStatementWriter.DeclarationStatementId(modulePath, declaration!),
-                StringComparison.Ordinal);
-        });
-
-    private static string TargetDisplay(UtilityTarget target) =>
-        target.Kind switch
-        {
-            UtilityTargetKind.Gid => $"gid:{target.Value}",
-            UtilityTargetKind.Atom => $"atom:{target.Value}",
-            UtilityTargetKind.Task => $"task:{target.Value}",
-            _ => throw new ArgumentOutOfRangeException(nameof(target)),
-        };
 
     private enum ConsumerReachability
     {

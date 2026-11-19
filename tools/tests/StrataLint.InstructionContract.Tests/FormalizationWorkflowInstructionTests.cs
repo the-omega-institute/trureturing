@@ -45,25 +45,4 @@ public sealed class FormalizationWorkflowInstructionTests
             skill,
             StringComparison.Ordinal);
     }
-
-    [Fact]
-    public void TheoryIngestSkillTreatsLedgerAsEvidenceRatherThanFormalizationReceipt()
-    {
-        var skill = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
-            "skills",
-            "codex-theory-ingest",
-            "SKILL.md"));
-
-        Assert.DoesNotContain("supplies that receipt", skill, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("supplies that evidence", skill, StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            "coverage, and receipts are owned",
-            skill,
-            StringComparison.OrdinalIgnoreCase);
-        Assert.Contains(
-            "freezing, and coverage edges are owned",
-            skill,
-            StringComparison.Ordinal);
-    }
 }

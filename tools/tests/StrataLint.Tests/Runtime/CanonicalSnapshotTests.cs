@@ -16,7 +16,7 @@ public sealed class CanonicalSnapshotTests
     public void AuxiliaryDigestionInputDoesNotBlockLeanAdmission(string path)
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         fixture.Files[path] = "failure: [invalid\n";
         fixture.Files[RuleFixture.RingPath] += "-- candidate content\n";
         fixture.Files[RuleFixture.RingPath] = UtilityAdmissionTestSupport.WithUtility(
@@ -271,7 +271,7 @@ public sealed class CanonicalSnapshotTests
     public void UnchangedNoncanonicalStructuredArtifactDoesNotReplayItsFixedPoint()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"alpha\":1, \"omega\":2}\n";
         var changes = RawChangeSet.Create(["notes/unrelated.txt"]);
         var context = fixture.Build(changes);

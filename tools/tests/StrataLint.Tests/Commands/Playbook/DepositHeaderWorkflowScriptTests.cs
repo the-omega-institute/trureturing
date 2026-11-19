@@ -81,7 +81,6 @@ public sealed class DepositHeaderUtilityTests
 {
     [Theory]
     [InlineData("none")]
-    [InlineData("atom")]
     [InlineData("task")]
     public void DepositReadsOnlyRelevantLeanPolicyBaselineAndUtilityTarget(string kind)
     {
@@ -95,9 +94,9 @@ public sealed class DepositHeaderUtilityTests
         };
         if (kind == "task") fixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
         AddUtility(fixture, utility);
-        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/source.toml"] = "invalid TOML [\n";
-        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/residual-open/" + new string('f', 64) + ".yaml"] = "invalid: [\n";
-        fixture.Files[DigestionCasStore.RootPath + new string('f', 64)] = "unrelated CAS\n";
+        fixture.Files["Meta/Digestion/backfill/" + "unrelated/source.toml"] = "invalid TOML [\n";
+        fixture.Files["Meta/Digestion/backfill/" + "unrelated/residual-open/" + new string('f', 64) + ".yaml"] = "invalid: [\n";
+        fixture.Files["Meta/Digestion/atoms/sha256/" + new string('f', 64)] = "unrelated CAS\n";
         fixture.Files["docs/develop/theory/unrelated.md"] = "unrelated theory\n";
         var raw = UtilityAdmissionTestSupport.Raw(fixture.Files);
         var repository = new FakeRepositoryGateway(RawChangeSet.Create([RuleFixture.RingPath]), raw,
@@ -115,11 +114,11 @@ public sealed class DepositHeaderUtilityTests
                 ":(literal)" + FrozenStatePath.FromModulePath(RepoPath.CreateKnown(RuleFixture.RingPath)).Value },
             Assert.Single(repository.ScopedRevisionReads).Paths);
         Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
-            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/') || path == BackfillInventoryLoader.RelativePath
-                || path == "Meta" || path == "Golden/Frozen/state" || path == DigestionCasStore.RootPath.TrimEnd('/'));
+            path => path == "Meta/Digestion/backfill/".TrimEnd('/') || path == "Meta/BACKFILL.yaml"
+                || path == "Meta" || path == "Golden/Frozen/state" || path == "Meta/Digestion/atoms/sha256/".TrimEnd('/'));
         Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
             path => path == "docs/develop/theory" || path == "docs/develop/theory/unrelated.md");
-        if (kind != "atom") Assert.Empty(repository.CurrentPathSearches);
+        Assert.Empty(repository.CurrentPathSearches);
     }
 
     [Fact]
@@ -128,8 +127,8 @@ public sealed class DepositHeaderUtilityTests
         var fixture = new RuleFixture();
         AddUtility(fixture, UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
             $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
-        foreach (var path in fixture.Files.Keys.Where(path => path == BackfillInventoryLoader.RelativePath
-                     || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)).ToArray())
+        foreach (var path in fixture.Files.Keys.Where(path => path == "Meta/BACKFILL.yaml"
+                     || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)).ToArray())
             fixture.Files.Remove(path);
 
         var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));

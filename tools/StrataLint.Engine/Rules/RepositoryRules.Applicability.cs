@@ -32,7 +32,7 @@ internal static partial class RepositoryRules
         IsTheoryDocument(artifact.Path.Value)
         || !artifact.Path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
         && artifact.Path.Value != "lake-manifest.json"
-        && artifact.Path.Value != BackfillInventoryLoader.RelativePath;
+        && artifact.Path.Value != "Meta/BACKFILL.yaml";
 
     private static bool Formal(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
@@ -70,7 +70,7 @@ internal static partial class RepositoryRules
         || artifact.Path.Value.EndsWith("packages.lock.json", StringComparison.Ordinal);
 
     private static bool AllArtifacts(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        !DigestionOpaquePathPolicy.IsAuxiliaryData(artifact.Path);
+        !HistoricalTheoryPaths.IsAuxiliaryData(artifact.Path);
 
     private static bool LiteratureScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value == "Library/queries.yaml";
@@ -88,7 +88,7 @@ internal static partial class RepositoryRules
     private static bool StructuredOrChronicle(
         RepositoryFile artifact,
         RuleApplicabilityContext context) =>
-        !DigestionOpaquePathPolicy.IsAuxiliaryData(artifact.Path)
+        !HistoricalTheoryPaths.IsAuxiliaryData(artifact.Path)
         && (artifact.Path.Value.EndsWith(".json", StringComparison.Ordinal)
         || artifact.Path.Value.EndsWith(".yaml", StringComparison.Ordinal)
         || artifact.Path.Value.EndsWith(".yml", StringComparison.Ordinal)
