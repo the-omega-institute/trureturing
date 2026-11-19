@@ -312,7 +312,7 @@ private theorem primitive_line_pencil_zero {c : ℕ} [NeZero c] (J : ℝ) (hJ : 
   rw [hPform, hEzero, map_zero, zero_mul]
 
 private theorem actual_aligned_modular_zero_pencil (p : ℕ) (hp : p.Prime)
-    (J₁ J₂ M : ℝ) (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
+    (J₁ J₂ : ℝ) (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
     (R V q : Coordinate) (base e : Endpoint)
     (hr : IsUnit (R.1 : ZMod (p^3))) (ht : IsUnit (-(physical R V q).2 : ZMod (p^3)))
     (hanchor : IsUnit ((physical R V q).1 : ZMod (p^3)))
@@ -326,8 +326,8 @@ private theorem actual_aligned_modular_zero_pencil (p : ℕ) (hp : p.Prime)
     (he₁ : CoordinateBound J₁ J₂ e.1) (he₂ : CoordinateBound J₁ J₂ e.2)
     (hword : WordSolution (p^3) a₁ a₂ R V q e)
     (hred : (pencil q base e).map (Int.castRingHom (ZMod p)) = 0)
-    (hcap : (J₁*J₂)^5 ≤ M^5*(p : ℝ)^3)
-    (hlarge : (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ)) : pencil q base e = 0 := by
+    (h8 : 8*J₁*J₂ < (p : ℝ))
+    (hcube : 6*J₁^3 < (p : ℝ)^3) : pencil q base e = 0 := by
   letI : Fact p.Prime := ⟨hp⟩
   letI : NeZero (p^3) := ⟨pow_ne_zero _ hp.ne_zero⟩
   let reduction : ZMod (p^3) →+* ZMod p :=
@@ -397,7 +397,6 @@ private theorem actual_aligned_modular_zero_pencil (p : ℕ) (hp : p.Prime)
     linear_combination hred
   obtain ⟨hdet₁, hdet₂⟩ := aligned_field_pencil_partners
     (fc q) (fc base.1) (fc base.2) (fc e.1) (fc e.2) β hq0 ha hb hL hQ hD hpoly
-  obtain ⟨h8, hcube⟩ := original_small_determinants p hp J₁ J₂ M h₁₂ h₂ hcap hlarge
   have hJ₁ : 0 ≤ J₁ := by linarith
   have hJ₂ : 0 ≤ J₂ := by linarith
   have hsmall : 2*J₁*J₂ < (p : ℝ) := by nlinarith [mul_nonneg hJ₁ hJ₂]
@@ -441,7 +440,47 @@ private theorem actual_aligned_modular_zero_pencil (p : ℕ) (hp : p.Prime)
 
 /-- For an exactly aligned retained original baseline, the entire zero-reduction
 stratum consists of identically zero integer pencils. Its actual ordered
-partners have a uniform subpower count without a rational-fiber weight. -/
+partners have a uniform subpower count without a rational-fiber weight.
+The direct small-height hypotheses separate this lifting from any scale cap. -/
+theorem actual_aligned_zero_reduction_partners_subpower_of_small_heights (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ X Y : ℝ) (t w : ℤ)
+      (B : MiddleBasis (p^3) t w)
+      (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
+      (q : Coordinate) (base : Endpoint) (S : Finset Endpoint)
+      (hr : IsUnit (B.R.1 : ZMod (p^3)))
+      (ht : IsUnit (-(physical B.R B.V q).2 : ZMod (p^3)))
+      (hw : IsUnit (w : ZMod (p^3))),
+      physical B.R B.V q = (-w, -t) →
+      2*X < (p^3 : ℕ) → 2*Y < (p^3 : ℕ) → J₂ ≤ J₁ → 1 ≤ J₂ →
+      WordSolution (p^3) a₁ a₂ B.R B.V q base →
+      IsUnit ((physical B.R B.V base.1).1 : ZMod (p^3)) →
+      IsUnit ((physical B.R B.V base.2).1 : ZMod (p^3)) →
+      IsUnit (1-a₁*a₂*(ht.unit : ZMod (p^3))*((physical B.R B.V q).1 : ZMod (p^3))) →
+      Aligned q base → CoordinateBound J₁ J₂ q →
+      CoordinateBound J₁ J₂ base.1 → CoordinateBound J₁ J₂ base.2 →
+      (∀ e ∈ S, CoordinateBound J₁ J₂ e.1 ∧ CoordinateBound J₁ J₂ e.2) →
+      (∀ e ∈ S, WordSolution (p^3) a₁ a₂ B.R B.V q e) →
+      (∀ e ∈ S, physical B.R B.V e.1 ∈ literalBox X Y ∧
+        physical B.R B.V e.2 ∈ literalBox X Y) →
+      (∀ e ∈ S, (pencil q base e).map (Int.castRingHom (ZMod p)) = 0) →
+      8*J₁*J₂ < (p : ℝ) → 6*J₁^3 < (p : ℝ)^3 → J₁ ≤ (p : ℝ) →
+      (S.card : ℝ) ≤ C*(p : ℝ)^ε := by
+  obtain ⟨C, hC, hzero⟩ := actual_zero_polynomial_partners_subpower_of_coordinate_height ε hε
+  refine ⟨C, hC, ?_⟩
+  intro p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hanchor hXsmall hYsmall h₁₂ h₂ hbase hx hy hk haligned hq hb₁ hb₂
+    hS hword hbox hred h8 hcube hJp
+  have hanchorunit : IsUnit ((physical B.R B.V q).1 : ZMod (p^3)) := by
+    simpa only [hanchor, Int.cast_neg] using hw.neg
+  apply hzero p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂ hbox ?_ hJp
+  intro e he
+  exact actual_aligned_modular_zero_pencil p hp J₁ J₂ a₁ a₂ ha₁ ha₂ B.R B.V q base e
+    hr ht hanchorunit hbase hx hy hk h₁₂ h₂ haligned hq hb₁ hb₂
+    (hS e he).1 (hS e he).2 (hword e he) (hred e he) h8 hcube
+
+/-- The original cap-and-cutoff interface follows from the direct small-height
+aligned lifting theorem, without changing its statement. -/
 theorem actual_aligned_zero_reduction_partners_subpower (ε : ℝ) (hε : 0 < ε) :
     ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ M X Y : ℝ) (t w : ℤ)
       (B : MiddleBasis (p^3) t w)
@@ -466,25 +505,25 @@ theorem actual_aligned_zero_reduction_partners_subpower (ε : ℝ) (hε : 0 < ε
       (J₁*J₂)^5 ≤ M^5*(p : ℝ)^3 →
       (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
       (S.card : ℝ) ≤ C*(p : ℝ)^ε := by
-  obtain ⟨C, hC, hzero⟩ := actual_zero_polynomial_partners_subpower ε hε
+  obtain ⟨C, hC, hcount⟩ := actual_aligned_zero_reduction_partners_subpower_of_small_heights ε hε
   refine ⟨C, hC, ?_⟩
   intro p hp J₁ J₂ M X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
     hanchor hXsmall hYsmall h₁₂ h₂ hbase hx hy hk haligned hq hb₁ hb₂
     hS hword hbox hred hcap hlarge
-  have hanchorunit : IsUnit ((physical B.R B.V q).1 : ZMod (p^3)) := by
-    simpa only [hanchor, Int.cast_neg] using hw.neg
-  apply hzero p hp J₁ J₂ M X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
-    hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂ hbox ?_ hcap hlarge
-  intro e he
-  exact actual_aligned_modular_zero_pencil p hp J₁ J₂ M a₁ a₂ ha₁ ha₂ B.R B.V q base e
-    hr ht hanchorunit hbase hx hy hk h₁₂ h₂ haligned hq hb₁ hb₂
-    (hS e he).1 (hS e he).2 (hword e he) (hred e he) hcap hlarge
+  obtain ⟨h8, hcube⟩ := original_small_determinants p hp J₁ J₂ M h₁₂ h₂ hcap hlarge
+  have hprod : J₁ ≤ J₁*J₂ := le_mul_of_one_le_right (by linarith) h₂
+  have hJp : J₁ ≤ (p : ℝ) := by nlinarith
+  exact hcount p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hanchor hXsmall hYsmall h₁₂ h₂ hbase hx hy hk haligned hq hb₁ hb₂
+    hS hword hbox hred h8 hcube hJp
 
 /-- All actual original zero-reduction partners have a uniform subpower count.
 This includes both identically zero pencils and nonzero content-p pencils,
-with no nonalignment premise on the retained original baseline. -/
-theorem actual_zero_reduction_partners_subpower (ε : ℝ) (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ M X Y : ℝ) (t w : ℤ)
+with no nonalignment premise on the retained original baseline. The explicit
+small-height assumptions may be supplied by the seventh-power scale gap;
+there is no fifth-power cap or eighth-power cutoff in this interface. -/
+theorem actual_zero_reduction_partners_subpower_seventh (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ X Y : ℝ) (t w : ℤ)
       (B : MiddleBasis (p^3) t w)
       (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
       (q : Coordinate) (base : Endpoint) (S : Finset Endpoint)
@@ -503,21 +542,20 @@ theorem actual_zero_reduction_partners_subpower (ε : ℝ) (hε : 0 < ε) :
       (∀ e ∈ S, physical B.R B.V e.1 ∈ literalBox X Y ∧
         physical B.R B.V e.2 ∈ literalBox X Y) →
       (∀ e ∈ S, (pencil q base e).map (Int.castRingHom (ZMod p)) = 0) →
-      (J₁*J₂)^5 ≤ M^5*(p : ℝ)^3 →
-      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      8*J₁*J₂ < (p : ℝ) → 6*J₁^3 < (p : ℝ)^3 → J₁ ≤ (p : ℝ) →
       (S.card : ℝ) ≤ C*(p : ℝ)^ε := by
   classical
-  obtain ⟨C₁, hC₁, haligned⟩ := actual_aligned_zero_reduction_partners_subpower ε hε
+  obtain ⟨C₁, hC₁, haligned⟩ := actual_aligned_zero_reduction_partners_subpower_of_small_heights ε hε
   obtain ⟨C₂, hC₂, hnonaligned⟩ := original_modular_zero_partner_subpower ε hε
   refine ⟨C₁+C₂, by positivity, ?_⟩
-  intro p hp J₁ J₂ M X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+  intro p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
     hanchor hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂
-    hS hword hbox hred hcap hlarge
+    hS hword hbox hred h8 hcube hJp
   have hpow : 0 ≤ (p : ℝ)^ε := Real.rpow_nonneg (Nat.cast_nonneg _) _
   by_cases ha : Aligned q base
-  · exact (haligned p hp J₁ J₂ M X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+  · exact (haligned p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
       hanchor hXsmall hYsmall h₁₂ h₂ hbase hx hy hk ha hq hb₁ hb₂
-      hS hword hbox hred hcap hlarge).trans
+      hS hword hbox hred h8 hcube hJp).trans
         (mul_le_mul_of_nonneg_right (by linarith : C₁ ≤ C₁+C₂) hpow)
   letI : Fact p.Prime := ⟨hp⟩
   letI : NeZero (p^3) := ⟨pow_ne_zero _ hp.ne_zero⟩
@@ -538,7 +576,7 @@ theorem actual_zero_reduction_partners_subpower (ε : ℝ) (hε : 0 < ε) :
   have hsecond (e : Endpoint) (he : e ∈ S) : e.2 ∈ E :=
     Finset.mem_union.mpr (Or.inl (Finset.mem_union.mpr
       (Or.inr (Finset.mem_image.mpr ⟨e, he, rfl⟩))))
-  have hsmall := (original_small_determinants p hp J₁ J₂ M h₁₂ h₂ hcap hlarge).1
+  have hsmall := h8
   have hcount := hnonaligned p hp (p^3) (pow_ne_zero _ hp.ne_zero)
     (dvd_pow_self p (by decide : 3 ≠ 0)) J₁ J₂ E a₁ a₂ ha₁ ha₂ B.R B.V
     q base.1 base.2 hr ht (h₂.trans h₁₂) h₂ (by simp [E]) (by simp [E])
@@ -570,6 +608,44 @@ theorem actual_zero_reduction_partners_subpower (ε : ℝ) (hε : 0 < ε) :
     exact (show (S.card : ℝ) ≤ (modularZeroPartners E α β q base).card by
       exact_mod_cast Finset.card_le_card hsubset).trans hcount
   exact hSbound.trans (mul_le_mul_of_nonneg_right (by linarith : C₂ ≤ C₁+C₂) hpow)
+
+
+/-- The original cap-and-cutoff interface remains a direct consequence of the
+stronger small-height count for all zero-reduction partners. -/
+theorem actual_zero_reduction_partners_subpower (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (J₁ J₂ M X Y : ℝ) (t w : ℤ)
+      (B : MiddleBasis (p^3) t w)
+      (a₁ a₂ : ZMod (p^3)) (ha₁ : IsUnit a₁) (ha₂ : IsUnit a₂)
+      (q : Coordinate) (base : Endpoint) (S : Finset Endpoint)
+      (hr : IsUnit (B.R.1 : ZMod (p^3)))
+      (ht : IsUnit (-(physical B.R B.V q).2 : ZMod (p^3)))
+      (hw : IsUnit (w : ZMod (p^3))),
+      physical B.R B.V q = (-w, -t) →
+      2*X < (p^3 : ℕ) → 2*Y < (p^3 : ℕ) → J₂ ≤ J₁ → 1 ≤ J₂ →
+      WordSolution (p^3) a₁ a₂ B.R B.V q base →
+      IsUnit ((physical B.R B.V base.1).1 : ZMod (p^3)) →
+      IsUnit ((physical B.R B.V base.2).1 : ZMod (p^3)) →
+      IsUnit (1-a₁*a₂*(ht.unit : ZMod (p^3))*((physical B.R B.V q).1 : ZMod (p^3))) →
+      CoordinateBound J₁ J₂ q → CoordinateBound J₁ J₂ base.1 → CoordinateBound J₁ J₂ base.2 →
+      (∀ e ∈ S, CoordinateBound J₁ J₂ e.1 ∧ CoordinateBound J₁ J₂ e.2) →
+      (∀ e ∈ S, WordSolution (p^3) a₁ a₂ B.R B.V q e) →
+      (∀ e ∈ S, physical B.R B.V e.1 ∈ literalBox X Y ∧
+        physical B.R B.V e.2 ∈ literalBox X Y) →
+      (∀ e ∈ S, (pencil q base e).map (Int.castRingHom (ZMod p)) = 0) →
+      (J₁*J₂)^5 ≤ M^5*(p : ℝ)^3 →
+      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      (S.card : ℝ) ≤ C*(p : ℝ)^ε := by
+  obtain ⟨C, hC, hcount⟩ := actual_zero_reduction_partners_subpower_seventh ε hε
+  refine ⟨C, hC, ?_⟩
+  intro p hp J₁ J₂ M X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hanchor hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂
+    hS hword hbox hred hcap hlarge
+  obtain ⟨h8, hcube⟩ := original_small_determinants p hp J₁ J₂ M h₁₂ h₂ hcap hlarge
+  have hprod : J₁ ≤ J₁*J₂ := le_mul_of_one_le_right (by linarith) h₂
+  have hJp : J₁ ≤ (p : ℝ) := by nlinarith
+  exact hcount p hp J₁ J₂ X Y t w B a₁ a₂ ha₁ ha₂ q base S hr ht hw
+    hanchor hXsmall hYsmall h₁₂ h₂ hbase hx hy hk hq hb₁ hb₂
+    hS hword hbox hred h8 hcube hJp
 
 end
 end D5.S3.Arith.CharacterSums.Original

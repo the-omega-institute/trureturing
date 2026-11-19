@@ -6,7 +6,21 @@ The maximum cardinality of the actual derivative-zero fibers satisfies the origi
 
 For the actual finite retained endpoint chart E, actualRecordBadPartners(E,base) filters E by vanishing of the actual pencil derivative at the genuine physical ratio V1/R1 modulo p. The natural number actualRecordBadDegree is the finite maximum of these cardinalities over actual baselines in E, with value zero for the empty chart. It is an intrinsic count, not a supplied degree estimate.
 
-**Theorem 1.1 (Consume the complete partner bound for the actual maximum).**
+**Theorem 1.1 (The maximum actual bad degree under seventh height).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree.actual_record_bad_degree_subpower_seventh`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree.actual_record_bad_degree_subpower_seventh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+For every epsilon>0 choose C>0 before p and all original data. Under the original word, actual retained chart, basis and endpoint units, literal boxes and 1<=J2<=J1, the single condition seventhHeightConstant*(J1*J2)^7<p^5 implies actualRecordBadDegree<=C*p^epsilon*(1+6H/(p*sigma)). The empty chart has degree zero; for a nonempty chart select a literal baseline attaining the finite maximum and apply the complete derivative-zero seventh-height bound to its actual filtered partners. The original theorem and its complete original interface are retained by deriving the seventh-height gap from its old cutoffs. This statement supplies the actual defect term and does not by itself prove the full original conjecture.
+
+**Theorem 1.2 (Consume the complete partner bound for the actual maximum).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree.actual_record_bad_degree_subpower`
 
@@ -27,5 +41,6 @@ This supplies the actual defect term used by the good-record second-moment argum
 ## References
 
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree.actual_record_bad_degree_subpower`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiOriginalBadDegree.actual_record_bad_degree_subpower_seventh`
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalDerivativePartners](PascadiOriginalDerivativePartners.md)
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiOriginalGoodRecordMoment](PascadiOriginalGoodRecordMoment.md)

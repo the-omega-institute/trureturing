@@ -112,7 +112,7 @@ private theorem right_row {m n a b K : ℕ}
   · intro s hs
     simp [show s ≠ ⟨b,by omega⟩ from hs]
 
-private theorem history_formula {ℓ : ℕ} {sizes : Fin ℓ → ℕ}
+theorem history_formula {ℓ : ℕ} {sizes : Fin ℓ → ℕ}
     (M : Matrix (Vtx sizes) (Vtx sizes) ℝ) (δ : Fin ℓ → Fin ℓ → ℕ)
     (K : ℕ) (H : Fin (K+1) × Vtx sizes → ℂ) (z : ℂ) (hz : z ≠ 0)
     (he : (asyncMatrix M δ K).map (algebraMap ℝ ℂ) *ᵥ H = z • H) :

@@ -33,7 +33,7 @@ open D5.S3.Quantum.Divergence.TraceEntropyCalculus
 namespace D5.S3.Quantum.Divergence.UmegakiBKMPath
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma common_floor {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
+lemma common_floor {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
     (hA : A.PosDef) (hB : B.PosDef) :
     ∃ c : ℝ, 0 < c ∧ c • (1 : Matrix (Fin n) (Fin n) ℂ) ≤ A ∧
       c • (1 : Matrix (Fin n) (Fin n) ℂ) ≤ B := by
@@ -55,7 +55,7 @@ private lemma common_floor {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
         (algebraMap_mono (Matrix (Fin n) (Fin n) ℂ) (min_le_right a b)).trans hbB
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem continuousOn_logDeriv_of_floor {n : ℕ}
+theorem continuousOn_logDeriv_of_floor {n : ℕ}
     (B H : Matrix (Fin n) (Fin n) ℂ) (s : Set ℝ) (c : ℝ) (hc : 0 < c)
     (hfloor : ∀ t ∈ s, c • (1 : Matrix (Fin n) (Fin n) ℂ) ≤ B + t • H) :
     ContinuousOn (fun t : ℝ => logDeriv (B + t • H) H) s := by
@@ -167,7 +167,7 @@ theorem relativeEntropy_eq_integral_bkm {n : ℕ} (A B : Matrix (Fin n) (Fin n) 
   ring
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma weighted_bkm_integrable {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
+lemma weighted_bkm_integrable {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
     (hA : A.PosDef) (hB : B.PosDef) :
     IntervalIntegrable (fun t : ℝ => (1 - t) *
       ((A - B) * logDeriv (B + t • (A - B)) (A - B)).trace.re) volume 0 1 := by

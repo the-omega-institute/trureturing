@@ -209,7 +209,8 @@ private theorem singularFactorProduct_ne_zero {p : ℕ} [Fact p.Prime]
   exact mul_ne_zero (mul_ne_zero (pow_ne_zero 2 ha) hq)
     (mul_ne_zero (pow_ne_zero 2 ha) hqz) hh
 
-private theorem factor_coeff_bound (p : ℝ) (hp : 8 ≤ p) (P F : ℤ[X])
+/-- An actual factor of an integer cubic inherits a uniform polynomial height. -/
+theorem integer_cubic_factor_coeff_bound (p : ℝ) (hp : 8 ≤ p) (P F : ℤ[X])
     (hP : P ≠ 0) (hd : P.natDegree ≤ 3) (hF : F ∣ P)
     (hcoeff : ∀ j, |(P.coeff j : ℝ)| ≤ p^2) :
     ∀ j, |(F.coeff j : ℝ)| ≤ p^3 := by
@@ -524,35 +525,37 @@ theorem original_singular_unit_observations {c : ℕ} [NeZero c]
   rw [heq]
   exact hLu.neg.mul hshiftu
 
-private theorem fixed_factor_value_pairs_bound (ε : ℝ) (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) [Fact p.Prime], 16 ≤ (p : ℝ) →
+/-- The real height parameter is independent of the prime detecting a relevant
+factor. The constant is uniform in both and in the actual number field. -/
+theorem fixed_factor_value_pairs_envelope (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) [Fact p.Prime] (T : ℝ), 16 ≤ T →
       ∀ (F : ℤ[X]) [Fact (Irreducible (F.map (Int.castRingHom ℚ)))],
       F.IsPrimitive → F.natDegree ≤ 3 →
-      (∀ j, |(F.coeff j : ℝ)| ≤ (p : ℝ)^3) → ∀ (b : ℤ),
+      (∀ j, |(F.coeff j : ℝ)| ≤ T^3) → ∀ (b : ℤ),
       ((F.eval b : ℤ) : ZMod p) = 0 → ∀ (q : Coordinate) (base : Endpoint)
       (S : Finset Endpoint) (e₀ : Endpoint), e₀ ∈ S → F ∣ pencil q base e₀ →
       IsUnit (((endpointQ base).eval b : ℤ) : ZMod p) →
       IsUnit (((endpointQ base-endpointL q base*coordinateLinear q).eval b : ℤ) : ZMod p) →
-      |(coeffL q base : ℝ)| ≤ (p : ℝ)^2 → |(coeffM q base : ℝ)| ≤ (p : ℝ)^2 →
-      |(coeffQ base : ℝ)| ≤ (p : ℝ)^2 → |(coeffR base : ℝ)| ≤ (p : ℝ)^2 →
-      |(coeffS base : ℝ)| ≤ (p : ℝ)^2 →
+      |(coeffL q base : ℝ)| ≤ T^2 → |(coeffM q base : ℝ)| ≤ T^2 →
+      |(coeffQ base : ℝ)| ≤ T^2 → |(coeffR base : ℝ)| ≤ T^2 →
+      |(coeffS base : ℝ)| ≤ T^2 →
       (∀ e ∈ S, ∀ z ∈ ({e.1,e.2} : Finset Coordinate),
-        |(z.1 : ℝ)| ≤ p ∧ |(z.2 : ℝ)| ≤ p) →
-      ((singularFactorValuePairs F q base S).card : ℝ) ≤ C*(p : ℝ)^ε := by
+        |(z.1 : ℝ)| ≤ T ∧ |(z.2 : ℝ)| ≤ T) →
+      ((singularFactorValuePairs F q base S).card : ℝ) ≤ C*T^ε := by
   classical
   obtain ⟨C, hC, hcount⟩ :=
     D5.S3.Arith.Divisors.NumberFieldDivisorSubpower.fixed_product_pairs_subpower ε hε
   refine ⟨C, hC, ?_⟩
-  intro p _ hp F _ hprim hd hcoeff b hFb q base S e₀ he₀ hFe₀ hQu hQZu
+  intro p _ T hp F _ hprim hd hcoeff b hFb q base S e₀ he₀ hFe₀ hQu hQZu
     hl hm hu hv hw hS
   let D := singularFactorProduct F q base
   have hD : D ≠ 0 := singularFactorProduct_ne_zero F hprim b hFb q base hQu hQZu
-  have hpoint (x : Coordinate) (hx : |(x.1 : ℝ)| ≤ p) (hy : |(x.2 : ℝ)| ≤ p)
+  have hpoint (x : Coordinate) (hx : |(x.1 : ℝ)| ≤ T) (hy : |(x.2 : ℝ)| ≤ T)
       (σ : SingularFactorField F →+* ℂ) :
-      ‖σ (singularFactorValue F q base x : SingularFactorField F)‖ ≤ (p : ℝ)^18 :=
-    singular_value_embedding_bound (p : ℝ) hp F hprim.ne_zero hcoeff q base x
+      ‖σ (singularFactorValue F q base x : SingularFactorField F)‖ ≤ T^18 :=
+    singular_value_embedding_bound T hp F hprim.ne_zero hcoeff q base x
       hl hm hu hv hw hx hy σ
-  have hDemb (σ : SingularFactorField F →+* ℂ) : ‖σ (D : SingularFactorField F)‖ ≤ (p : ℝ)^36 := by
+  have hDemb (σ : SingularFactorField F →+* ℂ) : ‖σ (D : SingularFactorField F)‖ ≤ T^36 := by
     have hprod := actual_singular_factor_product F q base e₀ hFe₀
     have hx := hS e₀ he₀ e₀.1 (by simp)
     have hy := hS e₀ he₀ e₀.2 (by simp)
@@ -560,13 +563,13 @@ private theorem fixed_factor_value_pairs_bound (ε : ℝ) (hε : 0 < ε) :
     rw [← hprod]
     simp only [RingOfIntegers.coe_eq_algebraMap, map_mul, norm_mul]
     calc
-      _ ≤ (p : ℝ)^18*(p : ℝ)^18 := mul_le_mul (hpoint _ hx.1 hx.2 σ)
+      _ ≤ T^18*T^18 := mul_le_mul (hpoint _ hx.1 hx.2 σ)
         (hpoint _ hy.1 hy.2 σ) (norm_nonneg _) (by positivity)
       _ = _ := by ring
   have hnorm := algebraic_product_norm_bound (singularFactorField_degree F hd)
-    (p : ℝ) (by linarith) D hDemb
+    T (by linarith) D hDemb
   unfold singularFactorValuePairs
-  apply hcount (SingularFactorField F) (singularFactorField_degree F hd) (p : ℝ)
+  apply hcount (SingularFactorField F) (singularFactorField_degree F hd) T
     (by linarith) D hD hnorm
   · intro z hz
     obtain ⟨e, he, rfl⟩ := Finset.mem_image.mp hz
@@ -576,7 +579,7 @@ private theorem fixed_factor_value_pairs_bound (ε : ℝ) (hε : 0 < ε) :
     have hx := hS e (Finset.mem_filter.mp he).1 e.1 (by simp)
     exact hpoint e.1 hx.1 hx.2 σ
 
-private theorem actual_pencil_weighted_coeff (J₁ J₂ : ℝ) (q : Coordinate)
+theorem actual_pencil_weighted_coeff (J₁ J₂ : ℝ) (q : Coordinate)
     (base e : Endpoint) (h₁ : 1 ≤ J₁) (h₂ : 1 ≤ J₂)
     (hq : CoordinateBound J₁ J₂ q)
     (hb₁ : CoordinateBound J₁ J₂ base.1) (hb₂ : CoordinateBound J₁ J₂ base.2)
@@ -776,7 +779,7 @@ theorem actual_singular_value_pairs_subpower (ε : ℝ) (hε : 0 < ε) :
           letI : Fact (Irreducible (f.map (Int.castRingHom ℚ))) := ⟨hfQ⟩
           ((singularFactorValuePairs f q base S).card : ℝ) ≤ C*(p : ℝ)^ε) := by
   classical
-  obtain ⟨C, hC, hcount⟩ := fixed_factor_value_pairs_bound ε hε
+  obtain ⟨C, hC, hcount⟩ := fixed_factor_value_pairs_envelope ε hε
   refine ⟨C, hC, ?_⟩
   intro p hp J₁ J₂ M a₁ a₂ ha₁ ha₂ R V q base S hr ht h₁₂ h₂
     hbase hx hy hk hq hb₁ hb₂ hS hword hred hderiv hcap hlargeR hlargeQ
@@ -841,14 +844,14 @@ theorem actual_singular_value_pairs_subpower (ε : ℝ) (hε : 0 < ε) :
       ((((endpointQ base-endpointL q base*coordinateLinear q).eval b : ℤ) : ZMod p)) := by
     rw [← reduce_eval_at_lift reduction _ β b hb]
     exact hu.2.2.map reduction
-  have hcoeff := factor_coeff_bound (p : ℝ) (by linarith) (pencil q base e₀) f hP₀
+  have hcoeff := integer_cubic_factor_coeff_bound (p : ℝ) (by linarith) (pencil q base e₀) f hP₀
     (pencil_natDegree q base e₀) (hF f hf).2.2.1 hPcoeff
   have hc := actual_coefficient_bounds J₁ J₂ q base hq hb₁ hb₂
   have hJ13 : J₁ ≤ J₁^3 := by simpa using pow_le_pow_right₀ h₁ (by decide : 1 ≤ 3)
   have hJ23 : J₁^2 ≤ J₁^3 := pow_le_pow_right₀ h₁ (by decide : 2 ≤ 3)
   have hJJ : J₁*J₂ ≤ J₁^2 := by nlinarith
   have hJ₂sq : J₂^2 ≤ J₁^2 := pow_le_pow_left₀ hJ₂0 h₁₂ 2
-  apply hcount p hp16 f (hF f hf).2.1 (hFd f hf) hcoeff b (hF f hf).2.2.2.1 q base S e₀
+  apply hcount p (p : ℝ) hp16 f (hF f hf).2.1 (hFd f hf) hcoeff b (hF f hf).2.2.2.1 q base S e₀
     he₀ (hF f hf).2.2.1 hQu hQZu
     (hc.1.trans (by nlinarith)) (hc.2.1.trans (by nlinarith))
     (hc.2.2.1.trans (by nlinarith)) (hc.2.2.2.1.trans (by nlinarith))
