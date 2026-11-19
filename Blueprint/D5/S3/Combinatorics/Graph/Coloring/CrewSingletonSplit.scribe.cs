@@ -6,7 +6,7 @@ internal sealed class CrewSingletonSplitDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Coloring/CrewSingletonSplit.";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/GraphColoring/crew2026dichromatic");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/crew2026dichromatic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A beta-integral estimate bounds the singleton-split coefficient.",
