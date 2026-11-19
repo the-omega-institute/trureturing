@@ -125,22 +125,16 @@ theorem fourier_kernel (c : ℝ) {a : ℝ} (ha : 0 < a) (ξ : ℝ) :
       simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero, neg_div_neg_eq,
         mul_one_div, multiplier, b]
 
-private theorem integrable_oldLine_integrand_swap {c a : ℝ} (hc : 0 ≤ c) (ha : 0 < a)
-    {g₀ : ℝ → ℂ} (hg₀ : Integrable g₀) (t : ℝ) :
-    Integrable (fun s => kernel c a (t - s) * g₀ s) := by
-  have hm : Measurable (fun s => kernel c a (t - s)) :=
-    (measurable_kernel c a).comp (measurable_id.const_sub t)
-  refine (hg₀.norm.const_mul c).mono' (hm.aestronglyMeasurable.mul hg₀.aestronglyMeasurable) ?_
-  filter_upwards with s
-  rw [norm_mul]
-  exact mul_le_mul_of_nonneg_right (norm_kernel_le hc ha.le _) (norm_nonneg _)
-
 /-- The integrand in the old-line convolution is absolutely integrable at every point. -/
 theorem integrable_oldLine_integrand {c a : ℝ} (hc : 0 ≤ c) (ha : 0 < a)
     {g₀ : ℝ → ℂ} (hg₀ : Integrable g₀) (t : ℝ) :
     Integrable (fun s => kernel c a s * g₀ (t - s)) := by
-  have h := (integrable_oldLine_integrand_swap hc ha hg₀ t).comp_sub_left t
-  simpa only [sub_sub_cancel] using h
+  have hshift := hg₀.comp_sub_left t
+  refine (hshift.norm.const_mul c).mono'
+    ((measurable_kernel c a).aestronglyMeasurable.mul hshift.aestronglyMeasurable) ?_
+  filter_upwards with s
+  rw [norm_mul]
+  exact mul_le_mul_of_nonneg_right (norm_kernel_le hc ha.le _) (norm_nonneg _)
 
 private theorem continuous_oldLine {c a : ℝ} (hc : 0 ≤ c) (ha : 0 < a)
     {g₀ : ℝ → ℂ} (hg₀ : Integrable g₀) :
@@ -151,8 +145,9 @@ private theorem continuous_oldLine {c a : ℝ} (hc : 0 ≤ c) (ha : 0 < a)
   refine continuous_iff_continuousAt.2 fun t => ?_
   apply continuousAt_of_dominated
     (F := fun x s => kernel c a (x - s) * g₀ s) (bound := fun s => c * ‖g₀ s‖)
-  · exact Eventually.of_forall fun x =>
-      (integrable_oldLine_integrand_swap hc ha hg₀ x).aestronglyMeasurable
+  · refine Eventually.of_forall fun x => ?_
+    simpa only [sub_sub_cancel] using
+      ((integrable_oldLine_integrand hc ha hg₀ x).comp_sub_left x).aestronglyMeasurable
   · refine Eventually.of_forall fun x => ?_
     filter_upwards with s
     rw [norm_mul]

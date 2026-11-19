@@ -44,7 +44,8 @@ internal sealed class CausalExponentialStripTransferDocument : IScribeDocumentDe
                 + "is exp(−dt) g(t).",
                 DescribeRole.Definition),
             DescribeSource("section-at", "sectionAt", "Normalized vertical section",
-                "For complex F and real a and ξ, the section at a evaluated at ξ is "
+                "For a complex-valued function F on ℂ and real a and ξ, the section at a "
+                + "evaluated at ξ is "
                 + "F(a + 2πiξ).",
                 DescribeRole.Definition),
             DescribeSource("fourier-kernel", "fourier_kernel", "Transform of the kernel",
