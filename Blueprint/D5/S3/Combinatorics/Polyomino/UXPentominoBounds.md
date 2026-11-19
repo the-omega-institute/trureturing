@@ -56,7 +56,7 @@ $$\forall (P : \operatorname{Finset}\left(Point\right)), (0 < \operatorname{card
 
 *Commentary.*
 
-In integer coordinates (x + y, y), the center and the two vertical arms give the same finite column bound.
+Condon, Dugan, Goldman and Williams derive the X optimum in Section 5 and state its explicit formula in Theorem 6.4. The finite-set bound here uses the center and two vertical arms in integer coordinates (x + y, y).
 
 **Theorem 1.5 (Compressing X boards to U boards).**
 
@@ -70,7 +70,7 @@ $$\forall (P : \operatorname{Finset}\left(Point\right)), (\operatorname{IsPolyom
 
 *Commentary.*
 
-Stack each diagonal column at height zero while preserving its cardinality. An original board edge changes x + y by one, so original paths give paths along the new bottom row. Stacking the translation-anchor fibers fits every U arm by the same column bound.
+Section 3, Lemmas 3.1–3.3 and Figure 8 of the cited paper give the comparison that the U minimum is at most the X minimum. Here each diagonal column is stacked at height zero while preserving its cardinality. An original board edge changes x + y by one, so original paths give paths along the new bottom row. Stacking the translation-anchor fibers fits every U arm by the same column bound.
 
 **Theorem 1.6 (Equality for every positive threshold).**
 
@@ -88,7 +88,7 @@ $$\forall (N : \mathbb{N}), (0 < N) \Rightarrow (\operatorname{a}\left(U, N\righ
 
 *Commentary.*
 
-The U lower bound bounds the slack above N + 2. In coordinates (x + y, x − y), a balanced checkerboard rectangle realizes the corresponding anchor capacity. Trim a suffix of its last anchor row and delete the associated cells of the outer board row. Each deleted outer cell could only support deleted anchors. The full lower rows connect the resulting X board. The area-preserving transfer gives the other direction.
+The reverse U lower bound supplies the missing inequality in the Section 10 conjecture. It bounds the slack above N + 2. In coordinates (x + y, x − y), a balanced checkerboard rectangle realizes the corresponding anchor capacity. Trim a suffix of its last anchor row and delete the associated cells of the outer board row. Each deleted outer cell could only support deleted anchors. The full lower rows connect the resulting X board. The area-preserving transfer gives the Section 3 comparison.
 
 ## References
 

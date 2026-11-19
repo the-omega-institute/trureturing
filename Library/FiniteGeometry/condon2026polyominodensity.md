@@ -5,9 +5,10 @@ year: 2026
 title: "Polyomino Density"
 doi: 10.48550/arXiv.2608.29231
 url: https://arxiv.org/abs/2608.29231v1
-claim: "The instance sequence for the L n-omino is S(n, 1, 2) in general (Section 6.3)."
+claim: "Section 6.3 conjectures the L n-omino S(n, 1, 2) sequence. Section 10 conjectures equality of the U and X pentomino instance sequences."
 strata_touched:
   - D5/S3/Combinatorics/Polyomino/LPolyominoSkippedSequence
+  - D5/S3/Combinatorics/Polyomino/UXPentominoBounds
 license: citation-only
 triage: anchor
 ---
@@ -64,3 +65,14 @@ Prior-resolution evidence is bounded by the searches recorded in issue
 12562. Later citing works were not exhaustively checked: the citation service
 returned a rate-limit response. No priority claim follows from that negative
 search finding.
+
+## U and X pentomino instance sequences
+
+The row-shift, rotation and column-slide comparisons give
+$a_{U,N}\le a_{X,N}$ for every positive $N$. [Section 3, Lemmas 3.1–3.3](https://arxiv.org/html/2608.29231v1#S3) · [Figure 8](https://arxiv.org/html/2608.29231v1#S3.F8)
+
+The paper derives the X optimum and gives the explicit formula
+$a_{X,N}=N+2+\lceil\sqrt{8N-4}\rceil$ for every positive $N$. [Section 5](https://arxiv.org/html/2608.29231v1#S5) · [Theorem 6.4](https://arxiv.org/html/2608.29231v1#S6.Thmtheorem4)
+
+The U board lower bound supplies the reverse comparison and the Lean equality
+settles the conjecture, giving U the same formula. [Section 10](https://arxiv.org/html/2608.29231v1#S10) · [U/X Blueprint](../../Blueprint/D5/S3/Combinatorics/Polyomino/UXPentominoBounds.md)

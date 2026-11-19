@@ -45,6 +45,8 @@ The statement uses the translation-anchor, edge-connectivity and at-least-$N$ mi
 
 Tier 1 external conjecture. The target quantifies over all positive thresholds and concerns a pair of explicit fixed shapes.
 
+The proved equality settles the U case left open in Section 10. For every positive integer $N$, the U minimum is $a_{U,N}=N+2+\lceil\sqrt{8N-4}\rceil$ by the equality and the paper's X formula. [U/X Blueprint](../Blueprint/D5/S3/Combinatorics/Polyomino/UXPentominoBounds.md) · [Section 10](https://arxiv.org/html/2608.29231v1#S10) · [Theorem 6.4](https://arxiv.org/html/2608.29231v1#S6.Thmtheorem4)
+
 ## ASSUMED-UNVERIFIED
 
 Literature outside the bounded screen in issue #31880 remains unverified.
