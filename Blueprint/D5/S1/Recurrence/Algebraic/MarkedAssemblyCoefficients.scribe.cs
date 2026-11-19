@@ -27,8 +27,8 @@ internal sealed class MarkedAssemblyCoefficientsDocument : IScribeDocumentDefini
                 "support, order, color and marker function. Its factors are the support binomial coefficient, " +
                 "the support-size factorial, the color sum and |T|^d. Strong induction identifies this exact " +
                 "block-removal recurrence with the formal exponential derivative recurrence. The empty assembly " +
-                "gives the constant term. The existing Orders, support sums, colorSeries and signed prefix palettes " +
-                "are reused from HannaA300591AssemblyCoefficients; their definitions do not impose marker arity."),
+                "gives the constant term. The Orders, support sums, colorSeries and signed prefix palettes are " +
+                "defined in MarkedAssemblyCoefficients and are independent of marker arity."),
             Node("signed_prefix_residual_local_integral", "The compatible-prefix local residual",
                 ResidualStatement(),
                 "For every natural d and N>=1, integer sequence a, and prime p not dividing N, let P have " +
