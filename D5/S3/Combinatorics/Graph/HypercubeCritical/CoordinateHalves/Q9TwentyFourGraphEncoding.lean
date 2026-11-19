@@ -8,7 +8,8 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphEncoding
 
-open private Graph adjacent join degree canJoin from
+open private Graph adjacent join degree canJoin decode labels representatives relabels
+  candidate_has_witness from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphSearch
 
 open private Choices extendWith FollowsDiscovery candidates mem_search from
@@ -39,11 +40,6 @@ private theorem encoded_outside (edge : Fin 12 → Fin 12 → Bool) (i : Fin 12)
   rw [adjacent, encoded_row]
   change (BitVec.ofBoolListLE (List.ofFn (edge i))).getLsbD j = _
   simp [List.getD_eq_getElem?_getD, Nat.not_lt.mpr hj]
-
-private theorem encode_injective : Function.Injective encode := by
-  intro a b h
-  funext i j
-  rw [← encoded_adj a i j, h, encoded_adj]
 
 private theorem size_encode (edge : Fin 12 → Fin 12 → Bool) : (encode edge).size = 12 := by
   simp [encode]
@@ -573,6 +569,77 @@ private theorem classify_graph {V : Type*} [Fintype V] (G : SimpleGraph V)
     change G.Adj (label a) (label b) ↔ b.val < seen (a.val + 1) at hf
     exact decide_eq_true_iff.trans hf
 
+private theorem eraseDups_spec (xs : List Nat) :
+    List.Sublist xs.eraseDups xs ∧ xs.eraseDups.Nodup := by
+  cases xs with
+  | nil => simp
+  | cons x xs =>
+    rw [List.eraseDups_cons]
+    let tail := xs.filter (fun y => !y == x)
+    obtain ⟨hsub, hn⟩ := eraseDups_spec tail
+    refine ⟨(hsub.trans List.filter_sublist).cons₂ _, List.nodup_cons.mpr ⟨?_, hn⟩⟩
+    intro hx
+    have hf := (List.mem_filter.mp (List.mem_eraseDups.mp hx)).2
+    simp at hf
+termination_by xs.length
+decreasing_by
+  exact Nat.lt_succ_of_le (List.length_filter_le _ _)
+
+private noncomputable def witnessPerm (word : Nat) (hb : ∀ i < 12, labels word i < 12)
+    (hn : ((List.range 12).map (labels word)).eraseDups.length = 12) : Equiv.Perm (Fin 12) := by
+  let f := fun i : Fin 12 => (⟨labels word i.val, hb i.val i.isLt⟩ : Fin 12)
+  let l := (List.range 12).map (labels word)
+  have spec := eraseDups_spec l
+  have hlen : l.length = 12 := by simp [l]
+  have hself := spec.1.length_eq.mp (hn.trans hlen.symm)
+  have hnd : l.Nodup := hself ▸ spec.2
+  have hi := (List.nodup_map_iff_inj_on List.nodup_range).mp hnd
+  have injective : Function.Injective f := by
+    intro a b e
+    apply Fin.ext
+    exact hi _ (List.mem_range.mpr a.isLt) _ (List.mem_range.mpr b.isLt) (congrArg Fin.val e)
+  exact Equiv.ofBijective f ⟨injective, Finite.surjective_of_injective injective⟩
+
+/-- One of the 22 table entries represents any connected triangle-free cubic
+graph on twelve vertices, with a bijection preserving every adjacency. -/
+private theorem representative_of_graph {V : Type*} [Fintype V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] (hcard : Fintype.card V = 12) (hconn : G.Connected)
+    (hregular : G.IsRegularOfDegree 3)
+    (htriangle : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj c a → False) (start : V) :
+    ∃ (index : Fin 22) (label : Fin 12 ≃ V), ∀ i j,
+      adjacent (decode representatives[index.val]!) i.val j.val = true ↔
+        G.Adj (label i) (label j) := by
+  obtain ⟨number, hnum⟩ := classify_graph G hcard hconn hregular htriangle start
+  let edge : Fin 12 → Fin 12 → Bool := fun i j => decide (G.Adj (number i) (number j))
+  obtain ⟨word, hw⟩ := candidate_has_witness hnum
+  let index := word >>> 48
+  change ((decide (index < representatives.size) &&
+    (List.range 12).all (fun i => decide (labels word i < 12)) &&
+    (((List.range 12).map (labels word)).eraseDups.length == 12)) &&
+    (List.range 12).all (fun i => (List.range 12).all fun j => adjacent (encode edge) i j ==
+      adjacent (decode representatives[index]!) (labels word i) (labels word j))) = true at hw
+  obtain ⟨⟨⟨hindex, hbound⟩, hnodup⟩, hmatrix⟩ := by
+    simpa only [Bool.and_eq_true_iff] using hw
+  let p := witnessPerm word (fun i hi =>
+    of_decide_eq_true (List.all_eq_true.mp hbound _ (List.mem_range.mpr hi)))
+    (beq_iff_eq.mp hnodup)
+  have hr : representatives.size = 22 := rfl
+  let idx : Fin 22 := ⟨index, hr ▸ of_decide_eq_true hindex⟩
+  refine ⟨idx, p.symm.trans number, fun i j => ?_⟩
+  let a := p.symm i
+  let b := p.symm j
+  have h := List.all_eq_true.mp
+    (List.all_eq_true.mp hmatrix _ (List.mem_range.mpr a.isLt)) _
+    (List.mem_range.mpr b.isLt)
+  have ha : labels word a.val = i.val := congrArg Fin.val (p.apply_symm_apply i)
+  have hb : labels word b.val = j.val := congrArg Fin.val (p.apply_symm_apply j)
+  have he := beq_iff_eq.mp h
+  rw [ha, hb, encoded_adj edge a b] at he
+  change adjacent (decode representatives[index]!) i.val j.val = true ↔
+    G.Adj (number a) (number b)
+  rw [← he]
+  exact decide_eq_true_iff
+
 #print axioms join_encoded
 #print axioms canJoin_encoded
 #print axioms partial_step
@@ -581,5 +648,6 @@ private theorem classify_graph {V : Type*} [Fintype V] (G : SimpleGraph V)
 #print axioms advance_prefix
 #print axioms follows_order
 #print axioms classify_graph
+#print axioms representative_of_graph
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphEncoding
