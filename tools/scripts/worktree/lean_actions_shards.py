@@ -61,6 +61,14 @@ def binding(root, state):
     if state == "resume":
         key["producer_resume"] = resume_spec(root)["identity"]
         key["source_commit"] = source_commit(root)
+        handoff = os.environ.get("STRATALINT_RELEASE_RESUME", "")
+        if handoff:
+            ref = os.environ.get("GITHUB_REF", "")
+            if (handoff not in {"none", "partial"} or os.environ.get("GITHUB_EVENT_NAME") != "push"
+                    or os.environ.get("GITHUB_REF_PROTECTED") != "true"
+                    or not re.fullmatch(r"refs/heads/integration-ci-[A-Za-z0-9._/-]+-tests", ref)):
+                raise ValueError("Release resume requires a protected integration push and a cold seed mode")
+            key["release_resume"] = {"handoff": handoff, "run": os.environ["GITHUB_RUN_ID"]}
     return key
 
 
