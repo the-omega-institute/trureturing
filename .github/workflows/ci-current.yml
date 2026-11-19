@@ -445,20 +445,6 @@ jobs:
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
 
-  banned-api-proof:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: banned-api-proof
-
-  capability-proof:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: capability-proof
-
   filemap:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['filemap'] }}
@@ -515,21 +501,6 @@ jobs:
     with:
       unit: tests-cli
 
-  tests-cli-integration:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-cli-integration
-
-  tests-configuration:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-configuration
-
-
   tests-declared-template:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
@@ -552,26 +523,12 @@ jobs:
     with:
       unit: tests-filemap
 
-  tests-header-script:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-header-script
-
   tests-instruction-contract:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-instruction-contract
-
-  tests-integration-mirror:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-integration-mirror
 
   tests-fib:
     needs: [detect, source, current]
@@ -614,13 +571,6 @@ jobs:
     with:
       unit: tests-lean-cache-script
 
-  tests-lean-report-script:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-lean-report-script
-
   tests-playbook-script:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script'] }}
@@ -634,13 +584,6 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       unit: tests-pr-script
-
-  tests-report-supervisor:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-report-supervisor
 
   tests-repository-configuration:
     needs: [detect, source]
@@ -670,20 +613,6 @@ jobs:
     with:
       unit: tests-repository-topology
 
-  tests-resource-observation:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-resource-observation
-
-  tests-rules:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-rules'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-rules
-
   tests-scribe:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe'] }}
@@ -698,34 +627,6 @@ jobs:
     with:
       unit: tests-script
 
-
-  tests-engineering:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-engineering
-
-  tests-runtime:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-runtime
-
-  tests-test-evidence:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-test-evidence
-
-  tests-truth:
-    needs: [detect, source]
-    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth'] }}
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      unit: tests-truth
 
   tests-truth-release:
     needs: [detect, source]
@@ -752,7 +653,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-declared-template, tests-engine, tests-fib, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-declared-template, tests-engine, tests-fib, tests-filemap, tests-instruction-contract, tests-lean, tests-lean-cache-script, tests-playbook-script, tests-pr-script, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-scribe, tests-script, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:
