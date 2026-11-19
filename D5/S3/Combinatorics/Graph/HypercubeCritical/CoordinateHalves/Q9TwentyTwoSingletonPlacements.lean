@@ -1,4 +1,12 @@
-import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoSingletonPlacements
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoSingletonPlacements
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedExclusion.no_twenty_two_half; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedExclusion.no_twenty_two_half
+   digest: Check the reconstructed sizes of normalized singleton placements. -/
+
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 
 /-! Coordinate embeddings of the two six-cycle configurations with a singleton
 parity class. The root and its three solid neighbors occupy 0, 2, 4, 8. -/
@@ -8,7 +16,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 
 open private adjacent hasTwoSetBits moves toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 
 private abbrev Vertex := BitVec 9
 private abbrev Placement := Fin 10 → Vertex

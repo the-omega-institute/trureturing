@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoCompression
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoCompression
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedExclusion.no_twenty_two_half; instance=D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedExclusion.no_twenty_two_half
+   digest: Classify the compressed graphs of a balanced cubic twenty-two-point half. -/
+
 import Mathlib.Combinatorics.SimpleGraph.Extremal.Turan
 import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric

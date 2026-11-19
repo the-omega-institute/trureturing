@@ -1,4 +1,12 @@
-import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoAxes
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoAxes
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: none
+   digest: Normalize the first three axes and two-step move in a singleton compression. -/
+
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 
 /-! Relabel the cut, the three solid root axes, and the at most two remaining
@@ -9,13 +17,13 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoAxes
 
 open BalancedCriticalSpectrum (Q)
-open Q9GrayPlacementNormalForm (normalize origin)
+open CubeCoordinateNormalization (normalize origin)
 open private normalize_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 open private normalize_center from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GrayPlacementNormalForm
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 open private firstPointAxes from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 local notation "flip" => BalancedCriticalSpectrum.flip

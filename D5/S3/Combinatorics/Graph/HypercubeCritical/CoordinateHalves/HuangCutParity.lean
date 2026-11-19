@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/HuangCutParity
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/HuangCutParity
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: none
+   digest: Recover opposite-slice occupancy from the parity of a closed in-plane neighborhood. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 import D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 import Mathlib.Data.ZMod.Basic

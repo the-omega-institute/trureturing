@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedExtension
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedExtension
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: none
+   digest: Transport an excess-degree witness to an actual reconstructed cube support. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoPairedCoverage
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoReconstruction
 
@@ -19,7 +27,7 @@ open private flip_direction_injective from
 open private selected_neighbor_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
 open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 open private same_cut from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoReconstruction
 open private hasExcessDegree reconstructedMask from

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoSingletonExclusion
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoSingletonExclusion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: none
+   digest: Exclude both singleton compressions by the size of the reconstructed slice. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoAxes
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoReconstruction
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonLabels
@@ -27,7 +35,7 @@ open private coordinate_slice_low_independent coordinate_slice_degree_cases bala
 open HuangBalancedSymmetry (cube_action_regular_balanced)
 open private adjacent adjacent_iff hasTwoSetBits hasTwoSetBits_of_two_toggles
   moves toggle two_toggles_mem_moves from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 open private attachment solid hollow labels hollowEdges middleOptions valid root firstPointAxes from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 open private cycleIndex separated from

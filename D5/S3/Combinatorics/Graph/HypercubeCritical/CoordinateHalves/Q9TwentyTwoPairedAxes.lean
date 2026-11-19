@@ -1,4 +1,12 @@
-import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedAxes
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoPairedAxes
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: none
+   digest: Reduce paired compressions to two standard choices of root axes. -/
+
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 
 /-! Normalize the two subdivided paths and the matched edge at a paired root. -/
 
@@ -8,13 +16,13 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyT
 
 open BalancedCriticalSpectrum (Q flip_adj flip_apply_same)
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
-open Q9GrayPlacementNormalForm (normalize origin)
+open CubeCoordinateNormalization (normalize origin)
 open private adjacent_exists_flip flip_comm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private normalize_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 open private normalize_center from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GrayPlacementNormalForm
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeCoordinateNormalization
 local notation "flip" => BalancedCriticalSpectrum.flip
 
 private theorem seed_axes (a b e c d : Fin 9)

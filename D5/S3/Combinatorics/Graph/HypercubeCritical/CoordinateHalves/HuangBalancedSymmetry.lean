@@ -1,3 +1,11 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/HuangBalancedSymmetry
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/HuangBalancedSymmetry
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: none
+   digest: Transport Huang balance through cube symmetries. -/
+
 import D5.S3.Combinatorics.Graph.HypercubeCritical.HuangCubeCovariance
 
 /-! Cube symmetries transport regularity and Huang-balanced switching signs. -/

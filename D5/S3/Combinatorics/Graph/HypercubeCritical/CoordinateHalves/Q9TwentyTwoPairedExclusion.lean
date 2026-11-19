@@ -36,7 +36,7 @@ open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open HuangBalancedSymmetry (cube_action_regular_balanced)
 open private adjacent adjacent_iff hasTwoSetBits moves toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 open private labels middleOptions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 open private separated from

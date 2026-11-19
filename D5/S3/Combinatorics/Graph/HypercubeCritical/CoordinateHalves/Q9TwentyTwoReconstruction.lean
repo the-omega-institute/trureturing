@@ -1,3 +1,12 @@
+/- GID: D5/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoReconstruction
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeCritical/CoordinateHalves/Q9TwentyTwoReconstruction
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
+   utility: none
+   digest: Identify the reconstructed bits with the occupied opposite coordinate slice. -/
+
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CubeLayerDisjointness
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangCutParity
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonCoverage
 
@@ -19,7 +28,7 @@ open private indicator from
 open private flip_direction_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeLayerDisjointness
 open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.CubeBitMoves
 open Q9TwentyTwoSingletonCoverage (candidate_size_ne_fifty)
 open private candidates neighborMask reconstructionSize from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
