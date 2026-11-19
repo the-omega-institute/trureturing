@@ -16,6 +16,12 @@ triage: anchor
 
 # Properties of the Dichromatic Polynomial
 
+## Verified locator
+
+DOI `10.48550/arXiv.2611.13273` identifies the paper. The pinned source
+https://arxiv.org/abs/2611.13273v1 gives the colouring definition in
+Section 2 and the monotonicity question in Section 8.1, Conjecture 2.
+
 Section 2 defines the dichromatic polynomial by its values at positive
 integer palette sizes. A proper colouring is a map that assigns no directed
 cycle a single colour, so every fibre induces an acyclic digraph. A digon
