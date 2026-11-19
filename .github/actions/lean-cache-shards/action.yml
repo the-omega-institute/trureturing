@@ -2,15 +2,18 @@ name: Transport Lean cache shards
 description: Restore or publish immutable project shard entries and a bound index
 inputs:
   operation:
-    description: Restore or save
+    description: Restore or save project shards, or pack or adopt a PR preparation
     required: true
   state:
     description: Complete snapshot or producer continuation
     default: complete
   anchor:
-    description: Pinned dev commit used to derive a new layout
+    description: Pinned dev commit used to derive a layout and enable sharded PR preparation
   require-complete:
     description: Skip installation when any requested project shard is missing
+    default: 'false'
+  sharded-adoption:
+    description: Search for sharded PR preparation artifacts in addition to native preparations
     default: 'false'
   targets:
     description: Space-delimited project Lean modules whose imports are needed
@@ -23,6 +26,14 @@ outputs:
     description: Number of project cache entries verified
   missing:
     description: Number of requested project cache entries unavailable
+  artifact_name:
+    description: Name of the packed PR preparation artifact
+  artifact_path:
+    description: Directory containing the packed PR preparation artifact
+  adopted:
+    description: Whether a matching PR preparation was installed
+  sharded:
+    description: Whether the adopted preparation was assembled from project shards
 runs:
   using: node24
   main: run.mjs

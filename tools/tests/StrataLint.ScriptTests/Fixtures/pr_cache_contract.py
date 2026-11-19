@@ -16,6 +16,7 @@ from cache_fixture import REPO, CacheFixture
 
 sys.path.insert(0, str(REPO / "tools/scripts/worktree"))
 import lean_pr_cache as producer
+import lean_actions_shards as shards
 
 
 class PrCacheContracts(CacheFixture, unittest.TestCase):
@@ -296,8 +297,9 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
 
     def zip_preparation(self):
         with zipfile.ZipFile(self.zipped, "w") as archive:
-            for name in ("native.tar.gz", "preparation.json"):
-                archive.write(self.bundle / name, name)
+            for path in sorted(self.bundle.rglob("*")):
+                if path.is_file():
+                    archive.write(path, path.relative_to(self.bundle))
 
     def merged(self):
         self.pr.update(state="closed", merged=True, merged_at="2026-01-02T00:00:00Z", merge_commit_sha=self.actual_merge)
@@ -305,9 +307,9 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.env.update(GITHUB_EVENT_NAME="push", GITHUB_REF=self.identity["target_ref"], GITHUB_SHA=self.actual_merge)
         self.event_file.write_text(json.dumps(dict(after=self.actual_merge, ref=self.identity["target_ref"])))
 
-    def adopt(self, *, env=None, api=None, association=None):
+    def adopt(self, *, env=None, api=None, association=None, cache_action=None):
         with mock.patch.object(producer, "download", side_effect=lambda repo, aid, path: shutil.copyfile(self.zipped, path)) as download:
-            result = self.run_with(lambda: producer.adopt(self.root), env=env, api=api, association=association)
+            result = self.run_with(lambda: producer.adopt(self.root, cache_action), env=env, api=api, association=association)
         return result, download
 
     def test_association_retries_only_failed_page_before_adoption(self):
@@ -439,6 +441,69 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.assertEqual("adopted", result["status"])
         native_archive = unpack.call_args.args[1]
         self.assertFalse(native_archive.with_name("artifact.zip").exists())
+
+    def test_sharded_preparation_installs_bundled_and_referenced_files_together(self):
+        self.preparation()
+        packages, _ = self.dependency_files()
+        with tarfile.open(self.bundle / "native.tar.gz", "w:gz") as archive:
+            archive.add(packages, arcname=".lake/packages")
+        shutil.rmtree(self.root / ".lake")
+        group = [["D5.Fixture"]]
+        key = shards.group_identity(group)
+        compiler_path = "lib/lean/D5/Fixture.olean"
+        build = self.root / "producer-build"
+        material = {}
+        for entry, relative in [(key, compiler_path), (shards.REPORT, shards.REPORT_PATH)]:
+            path = build / relative
+            path.parent.mkdir(parents=True)
+            path.write_text(entry)
+            material[entry] = shards.write_payload(self.root, build, [relative])
+        packed = self.bundle / "shards"
+        packed.mkdir()
+        local = self.root / shards.transport_payload(material[key])
+        local.rename(packed / local.name)
+        with mock.patch.dict(os.environ, self.env, clear=True):
+            binding = shards.binding(self.root, "complete")
+        index = dict(binding=binding, state="complete", layout={key: group},
+            owner=dict(commit=self.identity["merge"], ref=self.identity["target_ref"], run="28", attempt="1"),
+            entries=material, required={key: [compiler_path], shards.REPORT: [shards.REPORT_PATH]},
+            fingerprints={entry: "a" * 64 for entry in material}, sources={"D5.Fixture": "b" * 64})
+        (self.bundle / "project.json").write_text(json.dumps(index))
+        self.artifact["name"] = producer.artifact_name(self.identity, sharded=True)
+        self.zip_preparation()
+
+        # Exercise the real Python validator and install while replacing network
+        # transport with the locally staged reference.
+        runtime = ("/fixture/node", "/fixture/cache-action")
+        run = subprocess.run
+
+        def restore(command, *args, **kwargs):
+            if tuple(command[:2]) != runtime:
+                return run(command, *args, **kwargs)
+            self.assertEqual("restore-preparation", command[2])
+            directory = pathlib.Path(command[3])
+            record = shards.read_index(directory / "project.json", binding, "complete")
+            result = shards.install(self.root, record, [], require_complete=True, preparation=directory)
+            return subprocess.CompletedProcess(command, 0 if result["complete"] else 3)
+
+        reference = self.root / shards.transport_payload(material[shards.REPORT])
+        unavailable = reference.with_suffix(".unavailable")
+        reference.rename(unavailable)
+        with mock.patch.object(producer.subprocess, "run", side_effect=restore):
+            result, download = self.adopt()
+            self.assertEqual("miss", result["status"])
+            download.assert_not_called()
+            result, _ = self.adopt(cache_action=runtime)
+            self.assertEqual("miss", result["status"])
+            self.assertFalse((self.root / ".lake/build").exists())
+            self.assertFalse((self.root / ".lake/packages").exists())
+            unavailable.rename(reference)
+            result, _ = self.adopt(cache_action=runtime)
+        self.assertEqual("adopted", result["status"])
+        self.assertIn("sharded=true", (self.root / "outputs").read_text())
+        self.assertEqual(key, (self.root / ".lake/build" / compiler_path).read_text())
+        self.assertEqual(shards.REPORT, (self.root / ".lake/build" / shards.REPORT_PATH).read_text())
+        self.assertTrue((self.root / ".lake/packages/mathlib/scripts/bench/size/run").is_file())
 
     def test_merge_activates_at_actual_event_checkout_without_second_publisher(self):
         self.preparation()
