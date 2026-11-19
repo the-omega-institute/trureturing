@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Kronecker]
    utility: kind=checker; basis=consumer=D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteLocalRecovery.normalized_local_recovery; instance=D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.check_finite
    digest: Periodic two-site marginal differential on a binary bond-two chart. -/
-import D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection
+import D5.S3.Quantum.TensorNetworks.PeriodicMPSTwoSiteAmbiguity
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
 import Mathlib.Analysis.Complex.RealDeriv
@@ -24,6 +24,7 @@ open Matrix
 set_option maxHeartbeats 1000000
 open scoped BigOperators Matrix Kronecker ComplexConjugate
 open PeriodicMPSParentIntersection (Bond Word twoFlattening)
+open PeriodicMPSTwoSiteAmbiguity (rawTwo)
 open UniformMPSExpectedDimensionRefutation (traceWord)
 
 private abbrev Bits := Fin 2 × Fin 2
@@ -38,10 +39,6 @@ noncomputable section
 
 /-- The affine chart with fixed first diagonal entry and unit upper-right entry. -/
 def chart (a : ℂ) (x : Fin 4 → ℂ) : Fin 2 → Bond := tensors a x
-
-/-- The actual unnormalized two-site density matrix on the periodic ring of length r+4. -/
-def rawTwo (A : Fin 2 → Bond) (r : ℕ) : Matrix Bits Bits ℂ :=
-  twoFlattening A r * (twoFlattening A r).conjTranspose
 
 private def along (x : Fin 4 → ℂ) (d : Direction) (t : ℝ) (j : Fin 4) : ℂ :=
   x j + if j = d.1 then (t : ℂ) * (if d.2 = 0 then 1 else Complex.I) else 0

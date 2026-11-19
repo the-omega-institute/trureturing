@@ -16,19 +16,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.cha
 
 The two symbol matrices are diag(a,b) and ((c,1),(d,e)). The chart fixes a and varies the real and imaginary parts of b,c,d,e.
 
-**Definition 1.2 (Actual two-site reduced density).**
-
-Lean statement: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.rawTwo`
-
-*Formalization.* `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.rawTwo` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For length r+4, the amplitude flattening uses the existing periodic traceWord at every prefix and complement. Its product with its conjugate transpose is the unnormalized two-site partial trace.
-
-**Definition 1.3 (Radial column and real coordinate derivatives).**
+**Definition 1.2 (Radial column and real coordinate derivatives).**
 
 Lean statement: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.augmented`
 
@@ -40,7 +28,7 @@ Lean statement: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.aug
 
 The value is the first column. The next eight columns are derivatives along the real and imaginary axes of b,c,d,e. Rows index all complex entries of the Hermitian marginal.
 
-**Theorem 1.4 (Full projective differential rank at every length).**
+**Theorem 1.3 (Full projective differential rank at every length).**
 
 $$\forall r \in Nat,\; \exists a \in Complex,\; \exists x \in Fin\left(4\right) \to Complex,\; \exists s \in Fin\left(9\right) \to Prod\left(Prod\left(Fin\left(2\right), Fin\left(2\right)\right), Prod\left(Fin\left(2\right), Fin\left(2\right)\right)\right),\; det\left(submatrix\left(augmented\left(r, a, x\right), s, id\right)\right) \neq 0$$
 
@@ -63,5 +51,4 @@ This differential result addresses local identifiability within the chart. Globa
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.augmented`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.chart`
 - Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.projective_rank_eight`
-- Truth anchor: `D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential.rawTwo`
-- Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection](PeriodicMPSParentIntersection.md)
+- Dependency: [D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteAmbiguity](PeriodicMPSTwoSiteAmbiguity.md)

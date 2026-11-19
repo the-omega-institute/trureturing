@@ -20,7 +20,8 @@ namespace D5.S3.Quantum.TensorNetworks.PeriodicMPSTwoSiteLocalRecovery
 open Matrix Set
 open scoped Matrix.Norms.Elementwise Topology ComplexConjugate NNReal
 open PeriodicMPSParentIntersection (Bond Word twoFlattening)
-open PeriodicMPSTwoSiteDifferential (chart rawTwo augmented projective_rank_eight)
+open PeriodicMPSTwoSiteAmbiguity (rawTwo)
+open PeriodicMPSTwoSiteDifferential (chart augmented projective_rank_eight)
 open UniformMPSExpectedDimensionRefutation (traceWord)
 
 private abbrev Coord := Fin 4 → ℂ

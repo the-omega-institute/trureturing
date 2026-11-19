@@ -83,7 +83,7 @@ internal sealed class PeriodicMPSTwoSiteLocalRecoveryDocument : IScribeDocumentD
         new Formula.Logic(Par(antecedent), FormulaLogicOperator.Implies, Par(consequent));
 
     private static Formula And(params Formula[] clauses) =>
-        clauses.Aggregate((left, right) => new Formula.Logic(Par(left), FormulaLogicOperator.And, Par(right)));
+        clauses.Reverse().Aggregate((right, left) => new Formula.Logic(Par(left), FormulaLogicOperator.And, Par(right)));
 
     private static Formula Bind(FormulaQuantifier q, string name, Formula type, Formula body) =>
         new Formula.Bind(q, FormulaIdentifier.Create(name), type, body);

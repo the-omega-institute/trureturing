@@ -15,8 +15,6 @@ internal sealed class PeriodicMPSTwoSiteDifferentialDocument : IScribeDocumentDe
         Blocks(
             Definition("chart", "Affine chart",
                 "The two symbol matrices are diag(a,b) and ((c,1),(d,e)). The chart fixes a and varies the real and imaginary parts of b,c,d,e."),
-            Definition("rawTwo", "Actual two-site reduced density",
-                "For length r+4, the amplitude flattening uses the existing periodic traceWord at every prefix and complement. Its product with its conjugate transpose is the unnormalized two-site partial trace."),
             Definition("augmented", "Radial column and real coordinate derivatives",
                 "The value is the first column. The next eight columns are derivatives along the real and imaginary axes of b,c,d,e. Rows index all complex entries of the Hermitian marginal."),
             Describe.Lean(
