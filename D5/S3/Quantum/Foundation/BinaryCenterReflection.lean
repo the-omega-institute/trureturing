@@ -7,6 +7,7 @@
    digest: The original binary center graph reflects a singleton ball into an entire pure sphere. -/
 
 import D5.S3.Quantum.Foundation.BinaryCenterNoncollapse
+import D5.S3.Quantum.Foundation.CommonSourceLiftObstruction
 
 /-! Reflection of the actual original center graph and its entire pure sphere. -/
 
