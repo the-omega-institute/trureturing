@@ -5,10 +5,11 @@ year: 2025
 title: "Kullback-Leibler divergence and primitive non-deficient numbers"
 doi: 10.48550/arXiv.2501.04209
 url: https://arxiv.org/abs/2501.04209v2
-claim: "Conjecture 22 asserts that every positive integer n outside {1, 12, 24, 30, 36, 48, 60, 72, 120, 180, 240, 360} satisfies v(n) >= 1/p^2 for its smallest prime factor p and the paper's divisor-weighted logarithmic sum v, while Conjecture 15 asserts that infinitely many positive integers are deficient and KL-primitive."
+claim: "Conjecture 22 asserts that every positive integer n outside {1, 12, 24, 30, 36, 48, 60, 72, 120, 180, 240, 360} satisfies v(n) >= 1/p^2 for its smallest prime factor p and the paper's divisor-weighted logarithmic sum v, Conjecture 15 asserts that infinitely many positive integers are deficient and KL-primitive, and page-12 question 1 asks whether infinitely many integers are both primitive non-deficient and KL-primitive."
 strata_touched:
   - D5/S0/Certificates/ZelinskyZhangConjectureTwentyTwoRefutation
   - D5/S3/Arith/Abundancy/ZelinskyZhangKLPrimitive
+  - D5/S3/Arith/Abundancy/ZelinskyZhangDoublePrimitive
 license: citation-only
 triage: anchor
 ---
@@ -29,11 +30,18 @@ and KL(d) < 0 for any d|n with d < n". On the same page,
 Conjecture 15 states: "There are infinitely many n which are deficient
 and KL-primitive." Here deficient means `sigma(n) < 2n`.
 
+On page 2, primitive non-deficient integers are "non-deficient n with
+no non-deficient divisors", with positive proper divisors understood.
+Page 12, question 1 asks: "Are there infinitely many n which are both
+primitive non-deficient and KL-primitive?"
+
 ## Verified locator
 
 - DOI: 10.48550/arXiv.2501.04209
 - URL: https://arxiv.org/abs/2501.04209v2
 - Locator: arXiv:2501.04209v2, page 14, Conjecture 22.
 - Locator: arXiv:2501.04209v2, page 12, Definition 1 and Conjecture 15; KL is defined in Equation (6).
+
+- Locator: arXiv:2501.04209v2, page 12, question 1; primitive non-deficiency is defined on page 2.
 
 The current arXiv record lists versions v1 and v2.
