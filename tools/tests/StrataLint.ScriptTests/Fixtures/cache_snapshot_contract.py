@@ -23,6 +23,48 @@ from cache_publication_contract import PublicationCases
 
 
 class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
+    def test_shard_writer_and_reader_round_trip_required_outputs(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        inventory = importlib.import_module("lean_artifact_inventory")
+        name = "D5.Fixture"
+        module = inventory.Module("fixture", pathlib.Path("D5/Fixture.lean"), pathlib.Path())
+        group = ((name,),)
+        key = shards.group_identity(group)
+        owner = {"commit": "b" * 40, "ref": "refs/heads/dev", "run": "17", "attempt": "2"}
+        source = self.root / module.source
+        source.parent.mkdir()
+        source.write_text("def fixture := 1\n")
+        build = self.root / shards.PROJECT_BUILD
+        compiler_paths = inventory.required_compiler_paths(name, module)
+        report_paths = {shards.REPORT_PATH + suffix for suffix in shards.report_reuse.publication.SUFFIXES}
+        report_paths.add(str(shards.REPORT_RECEIPT))
+        for relative in compiler_paths | report_paths:
+            file = build / relative
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_text(str(relative))
+        with mock.patch.dict(os.environ, self.env | {"GITHUB_REF_PROTECTED": "true"}, clear=True), \
+                mock.patch.object(shards, "workspace_modules", return_value={name: module}), \
+                mock.patch.object(shards, "project_imports", return_value={name: set()}), \
+                mock.patch.object(shards, "make_layout", return_value=[group]), \
+                mock.patch.object(shards, "current_owner", return_value=owner), \
+                mock.patch.object(shards, "resume_spec"), \
+                mock.patch.object(shards, "project_publication", return_value=(True, "new-work", 1)), \
+                mock.patch.object(shards, "actions_keys", return_value={"project_save_allowed": True}), \
+                mock.patch.object(shards.report_reuse, "read_receipt"), \
+                mock.patch.object(shards.report_reuse, "capture"), \
+                mock.patch.object(shards.report_reuse.publication.selection, "Selection") as selection, \
+                contextlib.redirect_stdout(io.StringIO()):
+            selection.return_value.modules.return_value = {name: {}}
+            index = self.root / "shards.json"
+            for state in ("complete", "resume"):
+                with self.subTest(state=state):
+                    record = shards.prepare(self.root, {}, state, None, owner["commit"])
+                    index.write_text(json.dumps(record))
+                    decoded = shards.read_index(index, {}, state)
+                    required = {key: sorted(map(str, compiler_paths)), "report": sorted(report_paths)}
+                    self.assertEqual(required if state == "complete" else {}, decoded["required"])
+
     def test_sharded_resume_recovers_verified_entries_and_reports_eviction(self):
         self.restore_owner()
         shards = importlib.import_module("lean_actions_shards")

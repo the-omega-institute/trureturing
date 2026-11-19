@@ -270,7 +270,7 @@ def prepare(root, identity, state, previous, anchor, targets=(), available=froze
                 entries[key] = write_payload(root, build, paths)
                 written.add(entries[key])
     record = {"binding": identity, "owner": current_owner(root), "state": state, "layout": layout,
-              "sources": sources, "entries": entries, "fingerprints": fingerprints}
+              "sources": sources, "entries": entries, "fingerprints": fingerprints, "required": required}
     if state == "complete" and REPORT not in entries:
         raise ValueError("cannot publish a complete Actions index without the report bundle")
     receipt("shards", "snapshot", complete=state == "complete", entries=len(entries),
