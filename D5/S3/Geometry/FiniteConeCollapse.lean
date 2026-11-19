@@ -6,15 +6,10 @@
    utility: none
    digest: Coordinate truncation and cone contraction give a based equivalence for the actual cone quotient. -/
 import Mathlib.AlgebraicTopology.SimplicialComplex.Basic
-import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Topology.Homotopy.Equiv
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.SplitIfs
+import Mathlib.Tactic
 
 /-!
 # Collapsing a finite cone subcomplex
