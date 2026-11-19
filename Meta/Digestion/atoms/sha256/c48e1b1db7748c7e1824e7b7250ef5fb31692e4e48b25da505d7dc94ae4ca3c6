@@ -1,0 +1,13 @@
+**Definition 4.2 (Sizes separated from register cardinality).** The
+construction just given can use $n$ transition tables of at most
+$2m_n$ entries each, hence at most $2nm_n$ entries in total, and a
+terminal table of at most $m_n$ inverse controls. The declared clock
+has the deterministic prefix values $0,\ldots,n$; its value is known
+from the horizon schedule and is not an extra observation of the
+history. The register itself has at most $m_n$ values. These are
+separate size statements. They assert neither bounded table size as
+$n$ varies nor any bound on the description of an exact matrix or its
+calibrated inverse. If a clock or table selection instead carries extra
+history, Definition 1.5 counts it in the view and Theorem 3.3 applies
+to the resulting joint variable.
+

@@ -1,0 +1,30 @@
+**命题 7.9（任意固定整数阶的精确渐近）。** 对每个固定整数 $r\ge2$，令 $L=\log x$、$\ell=\log L$，并定义
+
+$$
+T_r(x)=L\sum_{j=0}^{r-1}\frac{j!}{\ell^{j+1}},\qquad
+N_r(x)=\#\{n\in\mathbb Z:1\le n\le x,\ \omega(n)>T_r(x)\}.
+$$
+
+则 $N_r(x)$ 最终非零，且
+
+$$
+\log N_r(x)\sim
+\pi\sqrt{\frac{2r!}{3}}\,\frac L{\ell^{(r+1)/2}}
+\qquad(x\to\infty).
+$$
+
+这里 $r$ 在取极限前固定；结论不声称对增长的 $r=r(x)$ 一致。
+
+**证明。** 以下逐项给出相对于 $r=2$ 的替换，始终取中心 $P=L$、$\ell=\log P$。令
+
+$$
+\begin{aligned}
+a_r(P)&=P\sum_{j=0}^{r-1}\frac{j!}{\ell^{j+1}},&
+k_r(P)&=\lfloor a_r(P)\rfloor+1,\\
+e_r(P)&=\pi(P)-k_r(P),&
+Z_r(P)&=\frac P{\ell^{(r+1)/2}},\\
+c_r&=\frac{\pi}{\sqrt{6r!}},&
+K_r&=\pi\sqrt{\frac{2r!}{3}}=\frac{2A}{c_r}.
+\end{aligned}
+$$
+

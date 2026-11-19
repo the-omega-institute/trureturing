@@ -1,0 +1,29 @@
+**引理 2.2（几乎必然终止的有限逼近）。** 有
+
+$$
+\mathfrak S_{\rm fin}\subseteq\mathfrak S_{\rm as}\subseteq\mathfrak S_{\rm cl},
+\qquad \overline{\mathfrak S_{\rm as}}^{\diamond}=\mathfrak S_{\rm cl}.
+\tag{2.2}
+$$
+
+到固定目标的距离下确界在三类上相同。
+
+证明。这是源甲定理 18.2 的接口；以下给出所需范数与量词。对几乎必然终止协议，深度 $n$ 未终止路径的平均效应记为 $R_n$。完整结果树给出 $0\le R_n\le I_5$。在 $I_5/5$ 上几乎必然终止意味着 $\operatorname{Tr}R_n\to0$。把这些未终止路径立即停止，保留当时寄存器并赋固定旗标，得到合法的有限深度通道 $\mathcal T_n$。原续行与替代分别是效应同为 $R_n$ 的 CP 映射：整体不终止残余效应为正，且在忠实输入 $I_5/5$ 上迹为零，故该残余效应为零；因此未终止路径的实际续行恰好耗尽 $R_n$，无需另假设每个条件态上的统一终止界。
+
+任意有限维 CP 映射 $\Psi$ 都满足
+
+$$
+\|\Psi\|_\diamond=\|\Psi^\dagger(I)\|_\infty.
+\tag{2.3}
+$$
+
+为证明，堆叠 Kraus 算符为 $V$，则 $\Psi(X)=\operatorname{Tr}_E(VXV^\dagger)$，$V^\dagger V=\Psi^\dagger(I)$。迹范数对偶性及 $\|Y\otimes I_E\|_\infty=\|Y\|_\infty$ 给出偏迹的迹范数压缩性，对复算符及任意参考均成立。乘以 $V$ 与 $V^\dagger$ 的范数上界为 $\|V\|_\infty^2$，得到 (2.3) 的上界；以 $V^\dagger V$ 最大特征值的单位特征向量作输入则取到反向不等式。输入输出维度有限，故积分定义的 CP 映射同样有有限 Kraus 表示。这里的 Kraus 堆叠仅用于证明，不向协议添加辅助系统。因此
+
+$$
+\|\mathcal T-\mathcal T_n\|_\diamond
+\le2\|R_n\|_\infty\le2\operatorname{Tr}R_n\longrightarrow0.
+\tag{2.4}
+$$
+
+这证明第二个包含关系；第一个显然，取闭包得到其余等式。距离函数连续且有限深度类稠密，故三个下确界相同。不要求统一停止时限或有限期望时长，也不授予无限非终止操作。$\square$
+

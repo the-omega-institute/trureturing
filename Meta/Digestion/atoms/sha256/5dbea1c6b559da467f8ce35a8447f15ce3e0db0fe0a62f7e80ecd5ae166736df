@@ -1,0 +1,31 @@
+**引理 2.1（全输入等距对应）。** 定义
+
+$$
+\begin{gathered}
+F=|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|
+ +|e_3\rangle\langle e_4|+|e_4\rangle\langle e_3|+S,\qquad
+D_\theta=\cos\theta I_5+i\sin\theta F,\\
+u_-=q(e_0-e_3),\qquad v_-=q(e_1-e_4),\\
+T_0=[u\ \ u_-\ \ v\ \ v_-\ \ z],\qquad
+T_1=[u_-\ \ u\ \ v\ \ z\ \ v_-],\qquad H_j=P_j+qS.
+\end{gathered}
+$$
+
+则 $D_\theta,T_0,T_1$ 均为全五维幺正矩阵，并且
+
+$$
+A_j(\theta)=K_jD_\theta,\quad K_j=T_jH_j,\qquad
+\widehat{\mathcal J}(X)=\bigoplus_j H_jXH_j.
+\tag{2.1}
+$$
+
+对每个模拟器类，合法初始幺正预合成和按旗标的末端幺正后合成，给出 $\mathcal J_\theta$、$\mathcal J_0$、$\widehat{\mathcal J}$ 的等距模拟问题。
+
+证明。$F$ 交换 $e_0,e_1$ 及 $e_3,e_4$，固定 $s$，故 $F^\dagger=F$、$F^2=I$，并由定义 1.2 的 dyad 得到 $K_0F=K_1$、$K_1F=K_0$。于是 $D_\theta^\dagger D_\theta=I$ 且 $K_jD_\theta=A_j(\theta)$，从而
+
+$$
+\mathcal J_\theta=\mathcal J_0\circ\operatorname{Ad}_{D_\theta}.
+$$
+
+两个 $T_j$ 的列分别是正交归一的完整五维基。逐列作用给出 $T_j(P_j+qS)=K_j$。输出上的分块幺正 $\bigoplus_j T_j$ 把 $\widehat{\mathcal J}$ 变成 $\mathcal J_0$；在操作菜单中它只是按已知经典旗标施加 $T_j$。这些操作及其逆都合法，保持终止性质。幺正左右乘保持所有复算符的迹范数，也保持与任意参考张量后的范数，故保持菱形范数。连续性把同一双射延伸到闭包。没有角度例外。$\square$
+

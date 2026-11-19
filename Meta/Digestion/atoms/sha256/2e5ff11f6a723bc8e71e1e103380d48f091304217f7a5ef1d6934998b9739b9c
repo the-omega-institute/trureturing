@@ -1,0 +1,108 @@
+**Theorem 16.1 (Exact terminal resources with all declared permissions).**
+Fix any real $\theta$ and known horizon $n\ge0$ in Definition 11.1.
+Under Assumption 1.4 and the complete-view convention of
+Definition 1.5, the minimum finite terminal alphabet and minimum
+fixed-length binary register are, respectively,
+
+$$
+\min|\mathcal Y_n|=m_n(\theta),\qquad
+\min b_n=\lceil\log_2m_n(\theta)\rceil.
+\tag{16.1}
+$$
+
+These minima allow arbitrary randomized classical summaries and
+arbitrary terminal CPTP maps on all of $H$, with success required
+only after averaging. They recover every input on the embedded
+qutrit $R=B\mathbb C^3$, jointly with any untouched finite
+reference. A successful standard Borel complete view determines
+$\mathsf C_n$ measurably almost surely. An explicitly free
+independent shared seed, finite or standard Borel, preserves the
+same finite-alphabet and bit lower bounds for almost every seed.
+
+Proof. Apply the existing Theorem 3.3 to precisely the actual
+$Q_h(\theta)$, not to a replacement family with the same channel.
+At every positive summary value, all positively weighted histories
+must have one projective class. All $2^n$ histories have positive
+probability, so different classes require disjoint nonempty sets
+of summary values. Choosing one history per class proves the
+$m_n$ lower bound, including randomized kernels. The theorem's
+necessity already covers ensemble-only success and arbitrary
+full-$H$ CPTP decoders; neither possibility permits merging two
+classes. This uses its rank-one Choi argument with output $M_5$
+and input $M_3$ and the scalar cross terms (3.2).
+The primary correspondence is [KL, Theorem 3.2, (19)–(20)]
+with full qutrit code and conditional errors
+$F_h=\sqrt{w_{a,h}}Q_h$; the cross terms concern all pairs with
+positive conditional weight. The one-step measured-flag supplier
+[GW1, Proposition 2, §II.C.1] instead concerns the actual fine
+operators $t_j=V_j/\sqrt2$, for which
+$t_j^\dagger t_j=I_3/2$. The deferred-correction specialization
+of [GW2, Proposition 2, (10)–(12)] sets all its earlier corrections
+to identity. Its system here is the qutrit, not the entire $H$.
+These known correction interfaces supply intermediate principles;
+they supply no count of this family's coarsened terminal classes.
+
+Conversely store the class and choose any actual representative
+$Q_C$. The full-$H$ decoder is
+
+$$
+D_C=BQ_C^\dagger B^\dagger+(I_5-P_R),\qquad
+\mathcal D_C=\operatorname{Ad}_{D_C}.
+\tag{16.2}
+$$
+
+Its two orthogonal blocks make it unitary. For every history in
+class $C$, $D_CBQ_h$ is a scalar multiple of $B$; thus for every
+qutrit-reference density $\rho$,
+
+$$
+(\mathcal D_C\otimes\operatorname{id}_Z)
+\big((BQ_h\otimes I_Z)\rho(BQ_h\otimes I_Z)^\dagger\big)
+=(B\otimes I_Z)\rho(B\otimes I_Z)^\dagger.
+\tag{16.3}
+$$
+
+Averaging preserves this equality. There is no success
+postselection, and no full-$H$ input inversion is asserted.
+
+Theorem 4.1's online construction applies unchanged at this angle.
+Left multiplication by either $V_j$ respects projective prefix
+classes, and $[Q]\mapsto[V_0^{n-t}Q]$ injects the length-$t$
+classes into the length-$n$ classes. Label these prefix classes
+by injections into one alphabet of size $m_n$ and use the known
+prefix $t$ to select fixed transition tables. This retains at
+most $m_n$ values at every prefix without another history archive.
+A $b_n$-bit register has at most $2^{b_n}$ values, so its lower
+bound follows; an injection of these $m_n$ values into
+$\{0,1\}^{\lceil\log_2m_n\rceil}$ attains it.
+At $n=0$ both minima mean one value and zero bits.
+
+For a standard Borel view let $\nu_h$ be its conditional laws and
+$\lambda=\sum_h\nu_h$. The densities $f_h=d\nu_h/d\lambda$
+are measurable and sum to one almost everywhere. Convention 3.4,
+which integrates the nonnegative Choi quadratic forms of
+Theorem 3.3, states that the positive $f_h$ at a view all have the
+same class outside one common null set. Group their densities by
+class: $f_C=\sum_{h:[Q_h]=C}f_h$. Almost everywhere exactly one
+$f_C$ is positive. Its measurable support sets define the required
+class-valued function of the view. This argument uses measures,
+so no assumption about positive probabilities of individual
+continuous outcomes enters.
+
+Let $S$ now be an explicitly independent free shared seed in a
+finite or standard Borel space. Regular conditional laws exist in
+the latter case. Average exact recovery has rank-one Choi matrix
+$J(\iota)$; positivity first forces the conditional recovery
+channel to equal $\iota$ for almost every $S$. Its trace is three,
+fixing the scalar on that line, just as in Theorem 3.3.
+Independence leaves every one of the finitely many histories at
+conditional probability $2^{-n}$ on a common full-measure seed
+set. At each such seed the preceding disjoint-class argument
+requires at least $m_n$ values in any finite conditional register,
+hence at least $\lceil\log_2m_n\rceil$ fixed bits. The deterministic
+construction attains these bounds while ignoring the seed.
+Discarded private randomness is already integrated into the
+summary kernel; a history-correlated visible seed is part of the
+counted joint view, and is not covered by the free-seed exemption.
+$\square$
+

@@ -60,7 +60,7 @@ private lemma prime_window_capacity {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
       atTop (𝓝 (b - a)) := by
   simpa only [sub_div] using (prime_capacity hb).sub (prime_capacity ha)
 
-private lemma primeInterval_card {a b : ℝ} (hab : a ≤ b) :
+lemma primeInterval_card {a b : ℝ} (hab : a ≤ b) :
     ((primeInterval a b).card : ℝ) = primeCount b - primeCount a := by
   have he : primeInterval a b = Nat.primesLE ⌊b⌋₊ \ Nat.primesLE ⌊a⌋₊ := by
     ext p
