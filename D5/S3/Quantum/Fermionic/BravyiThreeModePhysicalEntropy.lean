@@ -84,14 +84,9 @@ def normalOutput {lam c p q : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤ 1)
   · change (channel lam (normalInput c p q)).trace = 1
     rw [trace_channel, trace_normalInput, hn, Complex.ofReal_one]
 
-private theorem comparator_normalized :
-    comparatorAmplitude ^ 2 + (0 : ℝ) ^ 2 + comparatorAmplitude ^ 2 = 1 := by
-  have hs : comparatorAmplitude ^ 2 = 1 / 2 := Real.sq_sqrt (by norm_num)
-  norm_num [hs]
-
 /-- The physical comparator is the output of the same channel on the comparator spinor. -/
 def comparatorOutput {lam : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤ 1) : DensityState (Fin 8) :=
-  normalOutput h0 h1 comparator_normalized
+  normalOutput h0 h1 comparator_norm
 
 private theorem roots_real_block {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A : Matrix ι ι ℝ} (hA : A.IsHermitian) :

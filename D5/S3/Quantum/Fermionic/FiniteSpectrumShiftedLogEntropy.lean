@@ -6,7 +6,6 @@
    utility: none
    digest: Finite-spectrum entropy order from actual shifted determinant order. -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Fermionic.BravyiThreeModeDeterminantOrder
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -215,11 +214,6 @@ private theorem eigenvalue_entropy_le_of_det_shift_le {ι : Type*} [Fintype ι] 
 section Bravyi
 
 open D5.S3.Quantum.Fermionic.BravyiThreeModeDeterminantOrder
-
--- Reuse the determinant module's block layout and comparator evaluations.
-open private sparse4 eval_shiftedDetPolynomial chiral_comparator_det_polynomial chiral_base_eval
-  complement_comparator_det complementBase from
-  D5.S3.Quantum.Fermionic.BravyiThreeModeDeterminantOrder
 
 theorem chiral_isHermitian (lam c p q : ℝ) : (chiral lam c p q).IsHermitian := by
   apply Matrix.IsHermitian.ext

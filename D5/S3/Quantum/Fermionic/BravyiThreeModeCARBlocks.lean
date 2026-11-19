@@ -208,16 +208,6 @@ private def majoranaRows (j : Fin 6) : Rows :=
 /-- The physical Majoranas `γ_j = -i P U_j`. -/
 def majorana (j : Fin 6) : SpinMatrix := asMatrix (majoranaRows j)
 
-private theorem gi_complex : GaussianInt.toComplex gi = Complex.I := by
-  simp [gi, GaussianInt.toComplex_def']
-
-theorem majorana_eq (j : Fin 6) : majorana j = (-Complex.I) • (parity * U j) := by
-  rw [parity, U, asMatrix_mul]
-  ext i k
-  by_cases h : k = (generatorRows j i).1 <;>
-    simp [majorana, asMatrix, mulRows, majoranaRows, parityRows, h, gi_complex,
-      Matrix.smul_apply, smul_eq_mul]
-
 private theorem majoranaRows_square (j : Fin 6) (i : Fin 8) :
     mulRows (majoranaRows j) (majoranaRows j) i = identityRows i := by
   revert i
