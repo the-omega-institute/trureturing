@@ -1,0 +1,46 @@
+**定义 141.1（原对象、根与维数约定）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。始终使用
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\qquad C^*=\{h\in V^*:h(C)\subseteq\mathbb R_+\},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p,\\
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p.
+\end{gathered}
+\tag{XI141.1}
+$$
+
+这里 $x$ 遍历每个原混态。$K$ 紧且张成 $V$；完整 $\mathcal E$ 紧，$\mathcal F_p$ 是含 $u$ 的非空紧集，故每个 minimum 达到。纯关系 $p\perp q\Longleftrightarrow q\in S_p$ 对称且反自反，见[VII103.1—103.2][Q141VII]。完整 EB3 要求每个原 $p\in P$ 的整个 $D_p$ 都是非退化仿射闭三球。另保留原 $\mathsf{Conn}$：任意两个原纯点间有有限原零边路，长度可依端点改变。
+
+在全部目标之前固定同一个原纯点 $o$，记
+
+$$
+Q(r)=\bigcup_{s\in S_r}S_s,\qquad Q=Q(o),\qquad
+\mathsf G(o):\ \exists U\subset V\text{ 开},\ o\in U,\ U\cap P\subseteq Q.
+\tag{XI141.2}
+$$
+
+本章在这个完整 EB3+$\mathsf{Conn}$+$\mathsf G(o)$ 域上，条件性地消费[XI137.2—137.3、XI139.1—139.2][Q141XI]的以下准确接口；这些支持结论不在本章重证。
+
+* 每个非空原真面是纯单点或某个完整 $D_a$，且 $S_a=\partial_{\rm rel}D_a$、$D_a=\operatorname{conv}S_a$。
+* $\mathcal A_p:=\{e\in\mathcal F_p:e|_{D_p}=0\}$ 为单点 $\{e_p\}$，$g_p=u-e_p$，$\dim_{\mathbb R}L_p=4$，且 $\{x\in K:g_p(x)=0\}=\{p\}$。
+* 有一个环境开集 $U_0\ni o$，满足 $U_0\cap D_o=\varnothing$，并且 $Q(q)=Q$ 对每个 $q\in U_0\cap P$ 成立。
+* $Q\subset P$ 在原 $V$ 中紧，且以原子空间拓扑为无边界四维拓扑流形。
+* 对原标签集 $\Lambda=\{a\in P:S_a\subseteq Q\}$，$\Lambda$ 在原 $V$ 中紧，整个球映射 $a\mapsto D_a$ 在整个 $\Lambda$ 上按环境 Hausdorff 距离连续；每个 $q\in U_0\cap P$ 都满足整个 $S_q\subseteq\Lambda$。
+
+第一项的原来源是 VII103.2 与 IX116.1。第二项不是从一个根的法向向别的根外推：[IX116.2][Q141IX]的孤立重复块结合 Conn 排除重复标签；IX119.10 在 EB3+Inj 下给 $\dim L_p=\dim_{\rm aff}\mathcal A_p+4$、沿每条原边的冗余不变及至少一个零冗余标签；沿原有限路径传播才取得全部 $P=P_0$。再用 IX120.2、120.8，得到上述法向及唯一零点性质。这正是[THREE_COPY VIII130.2][Q141TC]与 XI137.2 的复用组合。它既未把 $\mathcal F_p$ 缩为单点，也未取得 least 或正限制逆。
+
+本证明实际需要四维法向的根集合可进一步精确为：上界只用所得唯一零点像上的 $\dim L_p\le4$，下界只用 $p\in Q$ 上的 $\dim L_p\ge4$，另用根 $o$ 的 $g_o$。下文的像包含于 $Q$，所以只在 $Q$ 上消费四维法向；没有在 $\Lambda\setminus Q$ 上使用它，也没有对另一个根重新假设 $\mathsf G$。最后两项准确取自139.2第1、2项及139.8、式(XI139.24)；仅需其中的四维流形性、紧性、整球连续性与近根捕获，不消费 Euler 数、定向、交形式或 $\Lambda$ 上的两标签共同邻点。
+
+置 $n=\dim_{\mathbb R}V$、$d=n-1$、$A=\{u=1\}=\operatorname{aff}K$、$L=\ker u$。只为距离和拓扑选辅助欧氏内积。$\dim$ 表示覆盖维数，$\dim_H$ 表示这个原子空间度量的 Hausdorff 维数；凸集的仿射维数与锥的张成维数另行注明。选任意原 $z\in\operatorname{ri}K$，定义整个原对偶基及零面
+
+$$
+H_z=\{h\in V^*:h(z)=1\},\qquad K^*=C^*\cap H_z,\qquad
+Z(h)=\{x\in K:h(x)=0\},\qquad F_p^*=N_p\cap K^*.
+\tag{XI141.3}
+$$
+
+$K^*$ 的边界和开集均相对于整个 $H_z$，不相对于某个 $L_p$ 或选出的法向片。
+

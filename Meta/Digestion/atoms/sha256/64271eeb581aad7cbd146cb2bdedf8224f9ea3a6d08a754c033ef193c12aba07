@@ -1,0 +1,49 @@
+**定义 124.1（全部原量词及本章条件）。** 设 $V\ne0$ 为有限维实空间，$C\subset V$ 为闭、尖、生成凸锥，$u\in V^{\ast}$ 在 $C\setminus\{0\}$ 上严格正。始终保留
+
+$$
+\begin{gathered}
+C^{\ast}=\{f\in V^{\ast}:f(c)\ge0\quad(c\in C)\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\\
+\mathcal E=[0,u]_{C^{\ast}},\qquad
+F_p=\{f\in\mathcal E:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x)\quad(p\in P,\ x\in K),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{X124.1}
+$$
+
+这里的 $K$ 是整个原归一基，$P$ 是全部原纯点，最小化遍历整个原确认族，第二变量包括全部混态。由 [IX114.1][Q124IX]，$K,\mathcal E,F_p$ 紧，且这些最小值达到。$K$ 线性张成 $V$，$\operatorname{aff}K=\{u=1\}$。
+
+对 $0\ne f\in C^{\ast}$ 及 $x\in C\setminus\{0\}$，记
+
+$$
+Z(f)=K\cap\ker f,\qquad N_x=\{g\in C^{\ast}:g(x)=0\}.
+\tag{X124.2}
+$$
+
+在 $V$ 上固定一个辅助欧氏范数，只用于拓扑、直径及 Hausdorff 距离；这不是共同物理内积。使用以下条件：
+
+$$
+\begin{aligned}
+\mathrm{EB}_{\ge1}:&\quad
+\forall p\in P\ \exists d_p\in\mathbb N,\ d_p\ge1:
+D_p\simeq_{\mathrm{aff}}\overline B^{d_p},\\
+\mathrm{PE}:&\quad
+\forall p\in P\ \exists h_p\in C^{\ast}\setminus\{0\}:
+Z(h_p)=\{p\},\\
+\mathrm{NC}:&\quad
+\inf_{p\in P}\operatorname{diam}D_p>0,\\
+\mathrm{Inj}:&\quad
+\forall p,s\in P:\ D_p=D_s\Longrightarrow p=s,\\
+\mathrm{PR}:&\quad
+\forall p,q\in P:\ T_p(q)=T_q(p).
+\end{aligned}
+\tag{X124.3}
+$$
+
+$\mathrm{EB}_m$ 是所有 $d_p=m\ge1$ 的特例，EB3 是 $m=3$。PE 指每个原纯点是正泛函的单点零面；在这里可将 $h_p$ 除以 $\max_Kh_p>0$，等价地选在原效应区间内。PR 由 [IX114.3][Q124IX] 供应 PE，主应用不另输入 PE。PR 只交换两个纯端点的数值比较，不要求顺序测量交换。
+
+非塌缩 NC 要求同一个正下界适用于全部原球；每颗球各自非退化不等于 NC。UF 保留 IX115.8 的统一有限预算原义，只在下面固定 EB3+PR 的预算域内使用，不用作通用非塌缩的名称。有限维范数等价使 NC 的真假及整球趋单点的性质与辅助范数的选择无关。下文直到静态重构之前，不输入 Inj、Pair、least 确认效应、Jordan 结构或全局球族连续性。
+
+直接复用 [IX114.2及IX116.1][Q124IX] 的完整原面接口：在 $\mathrm{EB}_{\ge1}$ 下，每个 $D_p$ 是非单点紧暴露极大真面；每个非空真面恰为纯单点或某个完整 $D_s$。存在原 $e_p\in F_p$，其整个零面为 $D_p$。每个完整球 $F$ 的相对球面恰为 $S(F):=P\cap F$，且 $F=\operatorname{conv}S(F)$；不同完整球至多交于一个原纯点。变维版本使用 IX116.1 指明的 [VII103.2][Q124VII] 接口，不把固定维数版本扩大使用。
+

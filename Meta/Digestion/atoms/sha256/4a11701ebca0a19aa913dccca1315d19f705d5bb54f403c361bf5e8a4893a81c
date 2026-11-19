@@ -1,0 +1,11 @@
+For $C=\operatorname{Min}(\uparrow S\setminus S)$, Theorem 1.1 and its proof
+in the same paper identify this literal permutation as
+
+$$
+R(S)=(\operatorname{Inc}(C)\setminus S)
+\cup\bigl(\downarrow C\setminus
+\downarrow(\operatorname{Min}(S)\cap\downarrow C)\bigr), \tag{2.3}
+$$
+
+where $\operatorname{Inc}(C)$ contains the points incomparable with every
+member of $C$.

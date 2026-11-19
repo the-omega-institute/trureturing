@@ -1,0 +1,8 @@
+**引理 4.1（层比的增量表示）。** 设 $\kappa>1$，$y>1$，$t=1/y$，整数 $\ell\ge1$，$\sigma_m=t+t^2+\cdots+t^m$（$\sigma_0=0$），则
+
+$$
+\kappa\log y\cdot F^{[\kappa]}(y,\ell)=B(\sigma_\ell)-B(\sigma_{\ell-1}),\qquad \kappa\ell\log y\cdot F^{[\kappa]}(y^\ell,1)=B(t^\ell).
+$$
+
+**证明。** 把定义 4.2 中分子、分母的各项除以 $y^{(\ell+1)\kappa}$，得到分子 $=(1-t^{\ell+1})^\kappa-(t-t^{\ell+1})^\kappa$，分母 $=(1-t^\ell)^\kappa-(t-t^\ell)^\kappa$。两组底数之差都是 $1-t$，又 $(t-t^{m+1})/(1-t)=\sigma_m$，所以分子 $=(1-t)^\kappa C(\sigma_\ell)$，分母 $=(1-t)^\kappa C(\sigma_{\ell-1})$，第一式得证。第二式：$\bigl((y^\ell+1)^\kappa-1\bigr)/y^{\ell\kappa}=(1+t^\ell)^\kappa-t^{\ell\kappa}=C(t^\ell)$。证毕。
+

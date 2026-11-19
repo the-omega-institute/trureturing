@@ -1,0 +1,18 @@
+### 125.12 复用边界与成熟文献的已付前件
+
+本章的原域综合按repo-derived归属：125.3用实际球唯一支撑与全部原正法向，证明单个真实三角的准确九维张成；125.4—125.6将IX120.8的限制同构接到这个配置，取得效应配对、规范剩余、同一TFD关系及未预设正性的乘法代数；125.7将IX120.12—120.13接到同一实际种子的重心及跨球读数。球支撑的极值计算、有限维非退化配对、消去子和代数投影是成熟中间工具。三角重心内点性在旧W域已有VIII110.5，本章只在所需弱域给同一原面论证；不另作独立新原理。125.8是量词分工的条件应用，125.9—125.11完整复用既有静态及物理接口，不计为新分类。
+
+[Ududec—Barnum—Emerson][Q125UBE] Proposition 1及Appendix已有三缝包含—排除恒等式与二面线性张成的等价。其standing condition要求每个暴露面有唯一的中性互补滤子及唯一补滤子；命题还使用三个两两正交滤子及其生成的多缝滤子。本章125.6只在一个种子上证明线性乘法，未取得其全域滤子前件，故不将本章 $I-\pi_\triangle$ 当作已实现的三缝干涉操作，也不凭相同公式消费其操作结论。
+
+[Alfsen—Shultz][Q125AS]印刷页160的Hilbert ball property要求每一对原极点生成的最小面是norm-exposed且仿射同构Hilbert球。印刷页188 Corollary 7.5在有限维紧凸集上要求该性质与每个norm-exposed face均projective；strong spectrality不是此推论另列的第三个条件。印刷页158的P-projection是其order-unit／base-norm对偶中的弱星连续正压缩投影，存在同类quasicomplement，且两投影在原空间及其对偶上都满足正核／正像互补。单种子三球、九维配对或线性保单位投影均未支付这些全域条件。这里仅引用该已知条件接口，不将其重述为新定理。
+
+现有原源码[PositiveComplementaryProjections.whole_positive_projections][Q125Proj]也明确带weakPair前件，即每个原正交纯对生成真最小面；本章未调用它来提前取得 $T_i$ 正性。所有新增结论的前件均保留EB3对全部原纯标签的完整量词，没有以三张所选球、抽象关联图、选择性效应菜单或一般光滑凸壳替换原模型。本章不主张全球原创、逻辑独立性、自动接触或独立公理数减少。
+
+[Q125VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2、104.1及105：完整原面、强入口的原确认与共同延拓。"
+[Q125VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII109.2—109.3、111.2与111.12：全W三窗口、盲核及联合零效应分离；VIII113：既有分类。"
+[Q125IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX120.8、120.12、120.18—120.19：P0限制同构、邻标签传播和三周期全空间单位恒等式；IX116.17：既有静态重构。"
+[Q125T]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "121—122：残余稳定、原切扇、中点接触、实际影像和未证全域桥。"
+[Q125UBE]: https://arxiv.org/pdf/0909.4787v1 "Cozmin Ududec, Howard Barnum and Joseph Emerson, Three slit experiments and the structure of quantum theory, standing condition, Proposition 1 and Appendix."
+[Q125AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf "E. M. Alfsen and F. W. Shultz, State spaces of Jordan algebras, Acta Mathematica 140, DOI 10.1007/BF02392307，印刷页158、160、188。"
+[Q125Proj]: https://github.com/the-omega-institute/trureturing/blob/b81f2d41bb9f9bac626c602802613f9722a450c6/D5/S3/Quantum/Foundation/PositiveComplementaryProjections.lean "whole_positive_projections的weakPair前件。"
+

@@ -1,0 +1,8 @@
+同三位作者的
+[Inner approximations of convex sets and intersections of projectionally exposed cones，
+arXiv:2501.12717v1，Theorem 1.3、§2.1、§4.2][Q119LRS25]
+构造两张五维投影暴露闭凸锥，其交是amenable而非投影暴露。
+这区分成熟性质，不是本章EB3+Inj的反例；
+该构造没有供应“所有原完整排除集都是三球”的全称条件。
+上述文献也没有把本章正投影的原单位增益自动压到一。
+

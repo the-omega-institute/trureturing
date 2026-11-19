@@ -41,10 +41,6 @@ def archive_child(repository, root, mode):
     import lean_cache_release as release
 
     def operation():
-        if mode == "transport":
-            release.checked_run([sys.executable, __file__, "transport", str(root)],
-                                time.monotonic() + 60)
-            return 0
         target = root / ".lake/build"
         base = root / release.report_reuse.BASE_RECORD
         if mode != "install-empty":
@@ -52,6 +48,24 @@ def archive_child(repository, root, mode):
             (target / "previous").write_text("original build")
             base.parent.mkdir(parents=True, exist_ok=True)
             base.write_text("original base")
+        if mode == "transport":
+            def manifest(_partition, _tag, stage, *_args, **_kwargs):
+                (root / "transport-stage").write_text(str(stage))
+                (stage / release.ASSET).write_text("partial download")
+                return {"assets": []}, {"producer_commit_sha": "a" * 40,
+                    "archive_bytes": 1}, [{"name": release.ASSET}]
+
+            def download(deadline, *_args):
+                if deadline is not None:
+                    raise AssertionError("asset download has a deadline")
+                return release.checked_run([sys.executable, __file__, "transport", str(root)],
+                                           deadline).stdout
+
+            release.snapshot_manifest = manifest
+            release.snapshot_candidates = lambda *_args: [("partition", "tag")]
+            release.release_key = lambda *_args: {}
+            release.gh = download
+            return release.fetch_locked(root, "partition", release.operation_deadline(), refresh_stale=True)
         stage = root / "assets"
         stage.mkdir()
         source = root / "replacement/build"
@@ -87,7 +101,7 @@ def archive_child(repository, root, mode):
             return result
 
         Path.rename = rename
-        release.restore_snapshot(root, "partition", "tag", stage, time.monotonic() + 60,
+        release.restore_snapshot(root, "partition", "tag", stage, release.operation_deadline(),
                                  cache_key={}, refresh_stale=True,
                                  on_installed=pause if mode == "install" else None)
         return 0
@@ -212,7 +226,12 @@ class InterruptionTests(unittest.TestCase):
                        .read_text().splitlines()]
             self.assertTrue(any(row["event"] == "run_finished" and row["exit_code"] == 128 + signum
                                 and row.get("status") == "interrupted" for row in records))
-            if mode != "transport":
+            if mode == "transport":
+                self.assertFalse(Path((self.root / "transport-stage").read_text()).exists())
+                self.assertEqual("original build", (self.root / ".lake/build/previous").read_text())
+                self.assertEqual("original base", (self.root / ".lake/lean-report-seed-base.json").read_text())
+                self.assertEqual([], list((self.root / ".lake").glob(".release-*")))
+            else:
                 if mode == "install-empty":
                     self.assertFalse((self.root / ".lake/build").exists())
                     self.assertFalse((self.root / ".lake/lean-report-seed-base.json").exists())

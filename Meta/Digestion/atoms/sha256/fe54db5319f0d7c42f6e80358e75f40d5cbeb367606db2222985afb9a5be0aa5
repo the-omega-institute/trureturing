@@ -1,0 +1,33 @@
+### 128.9 新约束的准确边界与文献归属
+
+在固定 $\mathsf E_0$ 内，分类失败的准确同一原纯点见证仍是127.11a的(Q127.34a)：三个 $\Delta_i$ 全正、$D_p$ 与三颗种子球全不相交、三个原种子中点全在 $\operatorname{ri}K$。本章给这种见证增加的都是已推导必要条件：
+
+| 剩余分支 | 完整确认与法向尺寸 | 本章的额外原约束 |
+| --- | --- | --- |
+| $\nu_p=0$ | 一张完整确认效应；$\dim\operatorname{span}N_p=4$，$\dim\operatorname{span}N_{D_p}=1$ | 同一唯一效应仍须满足(Q128.15)—(Q128.20)的全部严格边际与总读数；该分支没有被排除 |
+| $\nu_p=1$ | 非退化确认线段；对应尺寸为五与二 | 两条真正对偶极射线不暴露；整个有限原边分支及其每颗完整球都满足三个严格内区条件，并有逐固定球正最小值；每张线段效应还须满足上述同一读数约束 |
+
+$\nu_p\ge2$ 已由实际两步球面族和法向尺寸矛盾排除，不再是允许分支。即使另证 $C^*$ 面面暴露，或者以别的方式得到全原 $\mathcal A_p$ 单点，也只会去掉第二行；“确认唯一”没有给第一行中的 $\Delta_i$ 自动取零。这个区别就是唯一确认的全内压缩纯点为何仍未排除。
+
+尚缺的入口桥精确为
+
+$$
+\mathsf E_0\ \Longrightarrow\
+\forall p\in P\ \exists i\ \exists q\in P:
+\quad p\perp q\ \text{且}\ p_i\perp q.
+\tag{Q128.37}
+$$
+
+由127.4a，它恰是 $\mathsf E_0\Rightarrow\mathsf{PC1}$，而非新的替代目标。右侧是每个原纯点到某个种子顶点的两条实际纯边；它不要求 $p\perp p_i$，也不把共同邻点误称为三角。$Z\cong\mathbb S^7$ 的连通性属于包含混态端点的较大紧关联空间，未证明只含纯端点的原正交图具有有限边路连通性。即便另有有限边路到达种子，它也只先传播 $\nu=0$；本章没有把任意有限路缩到两条边的论证。
+
+更早的裸EB3到原标签Inj、含 $P_0$ 顶点的实际三角、其联合分离及三个全锥正压缩，也不由本章补齐。在已付 $\mathsf E_0$ 内，既未取得(Q128.37)的证明，也未构造满足全部 $\mathsf E_0$ 而失败PC1的完整反模型。约束变严和载体变简洁不等于已经减少独立公理数。
+
+本章采用 `repo-derived` 的纸面归属，不主张全球原创或形式化核验。具体复用与新增的边界是：IX119.10的维数、沿原边常数冗余和至少一个零冗余点全部复用；125.3—125.6的种子配对、九维及规范映射，127.2—127.4a的实际共同尺与接触判据全部复用；126.1—126.2的紧原关联、纤维与关系平方全部复用；VIII114.8的差体范数身份全部复用。本章的综合推导是128.3的全标签点或线段约束、128.4—128.6的实际对偶及种子联合限制、128.7—128.8的唯一实际端点球面与全部真面分类，以及128.9—128.10的实际三元收缩、中点纤维、显式同伦及截面障碍。
+
+[Alberti][Q128Alberti]的原论文 Theorem 3、Definition 1.7提供正确索引下的成熟法向奇异层尺寸背景；128.2完整展开的是本处所需的较弱投影证明，不把它当成新的普遍凸分析原理。有限维支撑、双极定理、紧凸集的有限纯分解、Lipschitz映射的Hausdorff测度界、Lorentz严格内区凸性与Cauchy—Schwarz都是成熟中间工具。逐球端面和反射接口不供应全域projectivity或全二纯Hilbert ball property；127.11所引Alfsen—Shultz与Barnum—Müller—Ududec分类的原前件继续通过原满宽桥承担，不能从七维球面拓扑直接消费其Jordan结论。
+
+[Q128VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2、104.1：全部原真面与完整排除球接口。"
+[Q128VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII114.8：同一差体Minkowski泛函、原基范数和全效应的既有身份。"
+[Q128IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX119.1、119.10：准确原端面、法向维数、沿原边常数冗余和实际P0标签。"
+[Q128Alberti]: https://people.dm.unipi.it/alberti/ricerca/1989-91/convex.pdf "Giovanni Alberti, On the structure of singular sets of convex functions, Calculus of Variations and Partial Differential Equations 2 (1994), 17—27, DOI 10.1007/BF01234313；Theorem 3及Definition 1.7，单位法向维数索引。"
+

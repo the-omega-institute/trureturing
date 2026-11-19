@@ -1,0 +1,51 @@
+**定理 121.12（原正性给出的逐平面收缩）。** 对任意两个真实邻标签 $a,b\in S(D_p)$ 以及任意 $f\in E_b$，
+
+$$
+\|T_af\|_a\le\|f\|_b.
+\tag{Q121.39}
+$$
+
+证明。任取 $d=B_aD\in E_a$，以 $C^2$ 实际球面弧 $x_t=c_a+B_ai(t)$、$y_t=c_b+B_bj(t)$ 通过 $p$，使 $x_0=y_0=p$、$x'_0=d$、$y'_0=f$；非零速度可用(Q121.30)，零速度取常值弧。于是
+
+$$
+i(0)=s_a,\quad i'(0)=D,\quad
+1-i(t)\cdot s_a=\tfrac12t^2\|D\|^2+o(t^2).
+\tag{Q121.40}
+$$
+
+$k_a$ 有正下界且Lipschitz，故(Q121.37)在原 $V^*$ 中给 $g_{x_t}-g_p=O(|t|)$。评价于 $f\in L_p$ 时，分子在 $t=0$ 已为零，所以
+
+$$
+(g_{x_t}-g_p)(f)
+=-t\frac{D\cdot H_a(f)}{k_a(s_a)}+o(t)
+=-t\langle d,T_af\rangle_a+o(t).
+\tag{Q121.41}
+$$
+
+分母变化只贡献更高阶项，不需 $\rho_a$ 的任何方向导数。由(Q121.37)、(Q121.40)及在球 $D_b$ 上的同一公式，分别有
+
+$$
+\begin{gathered}
+g_{x_t}(p)=\tfrac12t^2\|d\|_a^2+o(t^2),\\
+g_p(y_{\tau t})=\tfrac12\tau^2t^2\|f\|_b^2+o(t^2)
+\qquad(\tau\in\mathbb R\text{ 固定}).
+\end{gathered}
+\tag{Q121.42}
+$$
+
+展开同一实际原效应在同一实际原态上的非负读数，准确写为
+
+$$
+\begin{aligned}
+0\le g_{x_t}(y_{\tau t})
+&=g_{x_t}(p)+g_p(y_{\tau t})
+ +(g_{x_t}-g_p)(y_{\tau t}-p)\\
+&=t^2\left(\tfrac12\|d\|_a^2
+          +\tfrac12\tau^2\|f\|_b^2
+          -\tau\langle d,T_af\rangle_a\right)+o(t^2).
+\end{aligned}
+\tag{Q121.43}
+$$
+
+这里 $g_p(p)=0$，$y_{\tau t}-p=\tau t f+O(t^2)$，而 $g_{x_t}-g_p=O(t)$，所以没有遗漏常数、一阶项或额外二阶余项。除以 $t^2$ 取极限，令 $\tau=1$、$d=T_af$，得 $0\le(\|f\|_b^2-\|T_af\|_a^2)/2$，即(Q121.39)。证毕。
+

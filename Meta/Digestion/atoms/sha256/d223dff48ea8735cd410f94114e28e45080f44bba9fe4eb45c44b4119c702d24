@@ -1,0 +1,102 @@
+**Theorem 4.1 (Minimal block count and positive delay bound).** Among
+real zero-diagonal block matrices with spectral radius
+$\lambda\in(0,1)$ and constant strictly positive remote delays,
+three blocks and maximum delay two are simultaneously sufficient and
+minimal for a delayed spectral radius at least one. More precisely:
+
+1. For arbitrary positive integers $m,n$, arbitrary real rectangular
+   matrices $U\in\mathbb R^{m\times n}$,
+   $V\in\mathbb R^{n\times m}$, and
+   $M_0=\begin{pmatrix}0&U\\V&0\end{pmatrix}$ with
+   $\rho(M_0)=\lambda\in(0,1)$, let the remote delays from the second
+   block to the first and from the first to the second be respectively
+   integers $1\le a,b\le k$. For any history length at least
+   $\max\{a,b\}$,
+
+   $$
+   \rho(M_0^{(\delta)})
+    =\lambda^{2/(a+b+2)}
+    \le\lambda^{1/(k+1)}<1.
+   \tag{4.1}
+   $$
+
+2. For any finite positive number of positive-sized blocks and any
+   real zero-diagonal block matrix $N$ with $\rho(N)=\lambda\in(0,1)$,
+   if every remote delay is a positive integer at most one, then
+   $\rho(N^{(\delta)})=\sqrt\lambda<1$.
+3. The family (1.3) has three scalar coordinates and attains radius
+   one at $c=(1+\lambda^2)/2$, and arbitrarily large radii as in (2.8),
+   with maximum positive remote delay two.
+
+The minimality assertion uses the strictly positive remote-delay
+convention. It makes no assertion for the convention permitting zero
+remote delays at maximum one.
+
+**Proof.** For part 1, work over $\mathbb C$ and put $L=a+b+2$.
+A nonzero eigenvalue $z$ of the history operator has an eigenvector
+whose newest slot is $(u,v)\ne0$ and whose slot $s$ is
+$z^{-s}(u,v)$, by the shift equations. Its update equations are
+
+$$
+zu=z^{-a}Uv,\qquad zv=z^{-b}Vu.
+\tag{4.2}
+$$
+
+If $u=0$, the second equation forces $v=0$, a contradiction.
+Eliminating $v$ gives
+
+$$
+z^L u=UVu.
+\tag{4.3}
+$$
+
+Conversely, for any nonzero eigenvalue $\mu$ of $UV$, choose a
+nonzero $u$ with $UVu=\mu u$. Every complex root $z$ of $z^L=\mu$
+is nonzero; setting $v=z^{-(b+1)}Vu$ verifies both equations (4.2).
+Their history vector is nonzero because $u\ne0$. Thus the nonzero
+spectrum of the delayed operator consists exactly of all $L$th roots
+of the nonzero spectrum of $UV$.
+
+For completeness, the rectangular block dimensions do not change the
+radius identification used here. If $UVu=\mu u$ with $\mu\ne0$,
+then $Vu\ne0$ and $VU(Vu)=\mu Vu$. Reversing $U,V$ proves that
+$UV$ and $VU$ have exactly the same nonzero eigenvalues as sets.
+Also $M_0^2=\operatorname{diag}(UV,VU)$. The elementary polynomial
+spectral-mapping identity for squaring gives
+$\rho(M_0)^2=\max\{\rho(UV),\rho(VU)\}$. Equivalently, over
+$\mathbb C$ the factorization
+$M_0^2-z^2I=(M_0-zI)(M_0+zI)$ shows that $z^2$ is a spectral
+value of $M_0^2$ exactly when $z$ or $-z$ is a spectral value of
+$M_0$. Since $\lambda>0$, both rectangular products consequently
+have radius $\lambda^2>0$. Equation (4.3) and its converse now yield
+$\rho(M_0^{(\delta)})=(\lambda^2)^{1/L}$.
+As $L\le2k+2$, we have $2/L\ge1/(k+1)$, and powers of a number
+in $(0,1)$ decrease as the exponent increases. This proves (4.1).
+Any additional zero eigenvalues have no effect on this positive radius.
+
+For part 2, all remote delays equal one, and the diagonal blocks
+contribute nothing. Thus $x(t+1)=Nx(t-1)$. This is precisely the
+uniform-contributing-delay case of Ortiz Marrero and Young's cited
+Lemma `L:uniform`, used here as a classical intermediate. With one
+preceding slot its history matrix is
+
+$$
+C=\begin{pmatrix}0&N\\I&0\end{pmatrix},\qquad
+C^2=\operatorname{diag}(N,N).
+$$
+
+The same spectral-mapping argument gives $\rho(C)^2=\rho(N)=\lambda$.
+For a longer history, the decomposition into the first two slots and
+the unused older slots has a nilpotent lower diagonal block exactly
+as in the last paragraph of Theorem 2.1. Hence the radius remains
+$\sqrt\lambda$.
+
+Part 3 follows from Theorem 2.1 and Corollary 2.2. A single zero-diagonal
+block is the zero matrix and cannot have positive radius $\lambda$.
+Part 1 rules out two blocks of any positive dimensions, and part 2
+rules out a maximum positive remote delay one with any number of
+blocks. Three scalar blocks have total dimension three; total
+dimension less than three permits at most two positive-sized blocks.
+Thus (1.3) attains both minima, including the minimum scalar dimension,
+under exactly the stated convention. $\square$
+

@@ -1,0 +1,24 @@
+**定理 148.3（最高秩邻球的支撑屏障）。** 在同一完整原域与忠实截面下，若 $S_p\cap P_{\max}\ne\varnothing$，则 $d_p>R$，每个 $x\in\operatorname{ri}D_p$ 均有 $\operatorname{rank}A(x)=d_p$，并且 $\overline P^{\,K}\cap D_p=S_p$。若更有 $S_p\subseteq P_{\max}$，则对任意原纯序列 $p_j\to p$ 均有 $D_{p_j}\to D_p$、$e_{p_j}\to e_p$。
+
+证明。对每个 $x\in D_p$，对径点 $2c_p-x\in D_p$ 给 $A(c_p)=(A(x)+A(2c_p-x))/2$，所以 $\operatorname{ran}A(x)\subseteq W_p$。取 $s\in S_p\cap P_{\max}$，有 $d_p\ge R$。若等号成立，$A(s)$ 在 $W_p$ 上正定。对任意 $x\in D_p\setminus\{s\}$ 取充分小 $0<\varepsilon<1$，则 $A(s)-\varepsilon A(x)\succeq0$。忠实截面等式给
+
+$$
+y=\frac{s-\varepsilon x}{1-\varepsilon}\in K,\qquad
+s=\varepsilon x+(1-\varepsilon)y,
+\tag{XI148.11}
+$$
+
+这违反原 $s$ 的纯性，故 $d_p>R$。$x,c_p$ 同在 $D_p$ 的相对内部时，各能减去对方的一个小正倍数而仍在 $C$；正矩阵的互相正支配使两者的核相同，故内点秩恒为 $d_p$。原纯像均秩不超过 $R$，而矩阵秩不超过 $R$ 是闭条件。因此任何原纯极限都不能在 $\operatorname{ri}D_p$，得到所述闭包交式。
+
+再设 $S_p\subseteq P_{\max}$。对任意 $p_j\to p$ 及其任意子列，取有界正交半轴及效应的共同再收敛子列，写
+
+$$
+D_{p_j}=c_j+B_j\overline{\mathbb B}^3\to E=c+B\overline{\mathbb B}^3,\qquad
+e_{p_j}\to f\in\mathcal E.
+\tag{XI148.12}
+$$
+
+$f(p)=1$、$f|_E=0$ 按原 minimum 定义给 $E\subseteq D_p$。对每个单位 $v$，原纯球缘 $c_j+B_jv$ 的极限在 $\overline P^{\,K}\cap D_p=S_p$，故 $c+BS^2\subseteq S_p$。若 $\operatorname{rank}B<3$，单位核方向补长度给 $BS^2=B\overline{\mathbb B}^3$；于是凸 $E$ 全包含于严格凸球面 $S_p$，只能是 $\{s\}$、$s\in S_p\subseteq P_{\max}$。148.2排除此分支。
+
+若 $\operatorname{rank}B=3$，$E,D_p$ 的仿射包相同，且 $\partial_{\rm rel}E\subseteq\partial_{\rm rel}D_p$。若 $E\ne D_p$，可取 $\operatorname{ri}E$ 内一点及 $\operatorname{ri}D_p\setminus E$ 内一点；连线第一次离开 $E$ 的点属于 $\partial E\cap\operatorname{ri}D_p$，矛盾。因此所有再子列均给 $E=D_p$，整列球连续。效应聚点在 $p$ 读一并在整个 $D_p$ 读零，唯一性给 $f=e_p$。这里没有把固定母球连续或同秩连续当作跨秩连续。证毕。
+

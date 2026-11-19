@@ -36,7 +36,7 @@ variable (hc : IsClosed (C : Set V))
 
 include hc hs hg in
 omit [Nontrivial V] in
-private theorem frontier_covered {x : V} (hx : x ∈ intrinsicFrontier ℝ (base C u)) :
+theorem frontier_covered {x : V} (hx : x ∈ intrinsicFrontier ℝ (base C u)) :
     ∃ p : pure C u, x ∈ exclusion C u p := by
   have hxK := intrinsicFrontier_subset (base_compact hc hs).isClosed hx
   have hxnot : x ∉ interior (C : Set V) := by
@@ -78,7 +78,7 @@ private theorem frontier_covered {x : V} (hx : x ∈ intrinsicFrontier ℝ (base
 
 include hc hs hg hB in
 omit [Nontrivial V] in
-private theorem exclusion_frontier (p : pure C u) :
+theorem exclusion_frontier (p : pure C u) :
     exclusion C u p ⊆ intrinsicFrontier ℝ (base C u) := by
   intro x hx
   rw [← closure_sdiff_intrinsicInterior]
@@ -215,7 +215,7 @@ private theorem chart_mixed (p : pure C u) (b : ExclusionChart C u p)
     linarith
 
 omit [FiniteDimensional ℝ V] [Nontrivial V] in
-private theorem chart_intrinsic (p : pure C u) (b : ExclusionChart C u p) :
+theorem chart_intrinsic (p : pure C u) (b : ExclusionChart C u p) :
     intrinsicInterior ℝ (exclusion C u p) = b.param '' Metric.ball 0 1 := by
   let E := EuclideanSpace ℝ (Fin b.dim)
   let A : AffineSubspace ℝ V := (⊤ : AffineSubspace ℝ E).map b.param
@@ -248,7 +248,7 @@ private theorem chart_intrinsic (p : pure C u) (b : ExclusionChart C u p) :
 
 include hc hs hg hB in
 omit [Nontrivial V] in
-private theorem exclusion_interior (p : pure C u) :
+theorem exclusion_interior (p : pure C u) :
     intrinsicInterior ℝ (exclusion C u p) = exclusion C u p \ pure C u := by
   let b := (hB p).some
   rw [chart_intrinsic p b]

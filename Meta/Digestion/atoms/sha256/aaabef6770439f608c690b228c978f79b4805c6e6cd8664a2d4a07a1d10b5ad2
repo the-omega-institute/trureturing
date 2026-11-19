@@ -1,0 +1,30 @@
+**定义 133.1（全部原对象与一个根的覆盖）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^\ast$。始终保留整个归一基、全部原纯点和完整原效应区间：
+
+$$ \begin{gathered} K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad C^\ast=\{h\in V^\ast:h(C)\subseteq\mathbb R_+\},\\ \mathcal E=[0,u]_{C^\ast},\qquad \mathcal F_p=\{f\in\mathcal E:f(p)=1\},\\ T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad D_p=\{x\in K:T_p(x)=0\}\quad(p\in P). \end{gathered} \tag{X133.1} $$
+
+$K$ 是紧基并线性张成 $V$。在从 $K$ 选出的一个线性基上，每个原效应的读数都在 $[0,1]$，故 $\mathcal E$ 是有限维对偶中的紧集；$\mathcal F_p$ 非空紧，最小值达到。因此 $x\in D_p$ 的准确含义是存在一张原 $f\in\mathcal E$，满足 $f(p)=1,f(x)=0$，其中 $x$ 遍历全部原混态，而非只遍历纯点。最低定义中的 $\mathcal F_p$ 不被较小的完整暴露尺族替代。
+
+对纯端点定义原零一关系、纯球缘及标签纤维：
+
+$$ \begin{gathered} p\perp q\quad\Longleftrightarrow\quad \exists f\in\mathcal E:\ f(p)=1,\ f(q)=0,\\ S_p=P\cap D_p,\qquad I(F)=\{t\in P:D_t=F\}. \end{gathered} \tag{X133.2} $$
+
+补效应 $u-f$ 给对称性，且 $p\not\perp p$。一个真实零三角指三个两两满足此关系的原纯点。三条边各有真实原全域效应见证；其定义不要求共同仪器，也不预先要求三张见证之和为 $u$。
+
+EB3 的唯一球形输入是
+
+$$ \forall p\in P,\qquad D_p\simeq_{\mathrm{aff}}\overline{\mathbb B}^{\,3}. \tag{X133.3} $$
+
+每张球都是最低定义给出的整个集合。对一个事先固定的 $o\in P$，置
+
+$$ \begin{aligned} \mathsf D_2(o):&\quad \forall q\in P:\quad o\perp q\ \lor\ \exists r\in P:\ o\perp r\ \land\ q\perp r,\\ \mathsf R_1:&\quad\exists o\in P\ \mathsf D_2(o),\\ \mathsf D_2:&\quad\forall p\in P\ \mathsf D_2(p). \end{aligned} \tag{X133.4} $$
+
+根 $o$ 在全部目标 $q$ 之前选定；每个目标所用的 $r$ 是同时承担两条边的同一个原纯点。相邻目标可由第一支满足条件，故定义尚未给指定邻边补出第三点。$q=o$ 时第一支不成立，但任取 $S_o$ 中的一个点就给第二支；相同端点并未被量词删除。
+
+完整候选为 (X133.1) 的同一有限维全域，加上 EB3 与 $\mathsf R_1$。它不输入 Inj、PR、$P$ 紧性、$P_0$、四维正零法向张成、实际种子、规范正压缩、自对偶、锥齐次性、全 Pair、球族连续或任何矩阵坐标。这里 Inj 指 $D_p=D_q\Rightarrow p=q$，PR 指 $T_p(q)=T_q(p)$ 对全部原纯对成立；它们稍后才成为结论。
+
+以下直接复用 [FINITE_PURE VII103.2、VII104.1][Q133VII] 与 [EXCLUSION IX116.1、IX120.1][Q133IX] 的裸 EB 面接口：
+
+$$ \begin{gathered} D_p\text{ 是非点紧暴露极大真面},\\ S_p=\partial_{\mathrm{rel}}D_p\simeq S^2,\qquad D_p=\operatorname{conv}S_p,\\ D_a\ne D_b\quad\Longrightarrow\quad D_a\cap D_b\text{ 为空或一个原纯单点}. \end{gathered} \tag{X133.5} $$
+
+全部非空原真面只有纯单点与这些完整球；这里原面不预先要求闭。这些接口的原证明不消费全 Pair 或 Inj。本章每次说球面，都指其原仿射子空间的相对边界，取从 $V$ 继承的拓扑；没有把整个 $P$ 预先当作紧流形。
+

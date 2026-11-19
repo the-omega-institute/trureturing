@@ -1,0 +1,15 @@
+证明。先核对任意 $u$ 的同时归一化。令
+
+$$
+W=\sum_{X\in\iota(C)}\operatorname{ran}X,\qquad n=\dim W\ge1.
+\tag{93.7}
+$$
+
+所有锥元均在 $W^\perp$ 上为零，$L_0=\operatorname{span}\iota(C)$ 使全部 $L_0$ 亦如此。将 $W$ 用任一正交基识别为 $\mathbb R^n$，限制到 $W$ 的映射 $R$ 在 $L_0$ 上是线性同构，其像 $L_W$ 的PSD截面恰为 $R\iota(C)$；没有丢失原态或效应。有限个锥元的像空间已张成 $W$，它们之和在 $W$ 上正定。把原 $u$ 运输为 $u_W$，在紧集
+
+$$
+\{X\in R\iota(C):u_W(X)=n\}
+\tag{93.8}
+$$
+
+上取行列式最大点 $M$。正定可行点使最大值严格正，故 $M\succ0$。对任意 $Y\in L_W\cap\ker u_W$，充分小的正负 $t$ 均使 $M+tY$ 留在(93.8)，行列式的一阶驻点条件给 $\operatorname{tr}(M^{-1}Y)=0$。这两个线性泛函因而成比例；代入 $M$，由 $u_W(M)=n=\operatorname{tr}(M^{-1}M)$ 得比例为一。

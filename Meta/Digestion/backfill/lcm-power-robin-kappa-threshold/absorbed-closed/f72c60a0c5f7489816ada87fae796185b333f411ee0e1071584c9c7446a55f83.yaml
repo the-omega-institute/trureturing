@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f72c60a0c5f7489816ada87fae796185b333f411ee0e1071584c9c7446a55f83
+  normalized_sha256: sha256:f72c60a0c5f7489816ada87fae796185b333f411ee0e1071584c9c7446a55f83
+cas_ref: sha256:f72c60a0c5f7489816ada87fae796185b333f411ee0e1071584c9c7446a55f83
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerLemmaFifteen.lemma415_F
+    target_statement_id: sha256:cf73d3e2d4928aa81598b101baa1ada69568cbafed09e1a2f67df8be972ccc6d
+  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerLemmaFifteen.lemma415_core
+    target_statement_id: sha256:e95872ad094b503b5068f49d827553bc6e528f23bdda7621ff2b4141b6ad8799
+receipts:
+  unresolved_subitems: []

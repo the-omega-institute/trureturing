@@ -1,0 +1,29 @@
+**定义 149.1（原对象及单标签互易）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留整个
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\quad D_p=\{x\in K:T_p(x)=0\},\\
+S_p=P\cap D_p,\quad
+\mathcal A_p=\{e\in\mathcal E:e(p)=1,\ e|_{D_p}=0\},\\
+P_{\rm s}=\{p\in P:\{r\in P:D_r=D_p\}=\{p\}\},\\
+N_p=\{h\in C^*:h(p)=0\},\quad L_p=\operatorname{span}N_p.
+\end{gathered}
+\tag{149.1}
+$$
+
+原确认菜单紧，minimum 对每个原混输入取得；特别地，$D_p$ 是全部确认零集的**并**。完整 EB3 要求每个 $D_p$ 仿射同构于非退化闭三球，其中心记为 $c_p$。原边 $p\perp q$ 指 $q\in S_p$；补效应使它对称。
+
+对实际完整球 $F$，记 $S(F)=P\cap F$、$I(F)=\{p\in P:D_p=F\}$。Inj 指全部原标签满足 $D_p=D_q\Rightarrow p=q$；Conn 指任意两个原纯点间有有限实际零边路。零图分支也按这种有限路径定义，不按环境拓扑定义。VII103.2供应原真面穷尽及完整暴露球；特别地，$S(F)=\partial_{\rm rel}F$，不同完整球至多交于一个原纯点。
+
+以下讨论完整 EB3 且输入整个原空间的 $\dim_{\mathbb R}V\le9$。由 [XII 推论147.8及定理147.1][S149XII]，维数恰为九，且每个实际 $p\in P_{\rm s}$ 有 $\mathcal A_p=\{e_p\}$。因此下式有定义：
+
+$$
+\mathsf{CR}_{\rm s}:\qquad
+\forall p,q\in P_{\rm s},\quad p\perp q\Longrightarrow e_p(c_q)=e_q(c_p).
+\tag{149.2}
+$$
+
+这是原域内新增的模型约束，不是定义恒等式。它只约束实际单标签点之间的实际零边。
+

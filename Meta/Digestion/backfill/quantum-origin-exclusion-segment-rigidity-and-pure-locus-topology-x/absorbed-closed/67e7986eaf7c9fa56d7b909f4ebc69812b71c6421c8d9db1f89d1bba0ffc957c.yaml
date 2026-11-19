@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:67e7986eaf7c9fa56d7b909f4ebc69812b71c6421c8d9db1f89d1bba0ffc957c
+  normalized_sha256: sha256:67e7986eaf7c9fa56d7b909f4ebc69812b71c6421c8d9db1f89d1bba0ffc957c
+cas_ref: sha256:67e7986eaf7c9fa56d7b909f4ebc69812b71c6421c8d9db1f89d1bba0ffc957c
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalFamily.normal_maximum
+    target_statement_id: sha256:505337f2027b9f63f89c619941ef4e07cf0320918a1e6d9caf555abb8ea6885f
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalFamily.original_coordinate_map
+    target_statement_id: sha256:ae922a450f1ee90602c8407baa7554e4197bff3919df031522d03142d19f7711
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalFamily.original_fixed_edge
+    target_statement_id: sha256:807e9ffb8f056dae3589368f6f8564c9bb98cb9d4b3f938257dc3fceffb45f1a
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalFamily.original_neighbor_support
+    target_statement_id: sha256:cacdd37b770b1fe737349f75f64e5d36fafd8434195cd3db573c37232c1f494a
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalFamily.original_whole_edge
+    target_statement_id: sha256:485467966979c7e35ccbdaa2797d13f226f738d18814c532b7703f80f0382759
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalFamily.rho_positive_iff
+    target_statement_id: sha256:e71599c892f84428a878204cdc039ca92d6d47931f5d55930b7b1dc2a215442a
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalRestriction.original_normal_restriction
+    target_statement_id: sha256:f07fef530c68d1e6cd42b4d902865c3430031eb9147591d3360802c7a421779d
+  - gid: D5/S3/Quantum/Foundation/OriginalRegularHeight.direction_domination
+    target_statement_id: sha256:15cf66e1f29e4048c173bb1f583bc51106c7c79c7aec323d91d2d24d577bebd9
+  - gid: D5/S3/Quantum/Foundation/OriginalRegularHeight.g_positive
+    target_statement_id: sha256:4714a4c04a7308ea248cde3f8dca7baf4e71ebca21882ad7e109637b6ba73801
+  - gid: D5/S3/Quantum/Foundation/OriginalRegularHeight.original_coordinates
+    target_statement_id: sha256:f4f36f0ed99093d78c0dd5dad81033c0896960c083de7e8246538a26fcaa1dac
+receipts:
+  unresolved_subitems: []

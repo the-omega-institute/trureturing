@@ -1,0 +1,44 @@
+**命题 126.11（原效应的定量平坦化）。** 在(Q126.23)的前件下，写
+
+$$
+ F=a+A_0\overline{\mathbb B^3},\qquad
+ x=a+A_0\xi,\qquad \|\xi\|<1,
+$$
+
+其中 $A_0:\mathbb R^3\to\ker u$ 单射，并令
+
+$$
+ L_{\mathcal E}=\max_{f\in\mathcal E}\|f|_{\ker u}\|_{\ast}.
+$$
+
+则任意 $f\in\mathcal E$ 满足 $f(x_n)=1$ 时
+
+$$
+ \sup_{z\in F}(1-f(z))
+ \le
+ \frac{2L_{\mathcal E}}{1-\|\xi\|}\,\|x_n-x\|,
+ \tag{Q126.27}
+$$
+
+任意 $h\in\mathcal E$ 满足 $h(x_n)=0$ 时
+
+$$
+ \sup_{z\in F}h(z)
+ \le
+ \frac{2L_{\mathcal E}}{1-\|\xi\|}\,\|x_n-x\|.
+ \tag{Q126.28}
+$$
+
+证明。$\mathcal E$ 的紧性及限制映射的连续性保证 $L_{\mathcal E}<\infty$。
+把 $h(a+A_0v)$ 写成 $\alpha+\langle\beta,v\rangle$。非负性给
+$\alpha\ge\|\beta\|$，故
+
+$$
+ h(x)\ge(1-\|\xi\|)\alpha,\qquad
+ \max_Fh=\alpha+\|\beta\|\le2\alpha.
+$$
+
+若 $h(x_n)=0$，则
+$h(x)\le L_{\mathcal E}\|x_n-x\|$，得到(Q126.28)。对
+$h=u-f$ 应用同一结论即得(Q126.27)。证毕。
+

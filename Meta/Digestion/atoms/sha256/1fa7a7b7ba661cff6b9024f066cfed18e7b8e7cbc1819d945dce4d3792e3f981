@@ -1,0 +1,38 @@
+**定理 3.4（实际有限先验的小球）。** 在假设 3.2 下，令
+
+$$
+b_n=10\rho^{\lfloor n/3\rfloor}.
+$$
+
+对每个单位 $t\in T$、每个 $c\in S^3$、整数 $n\ge0$ 和 $0<r\le1/2$，实际公平历史满足
+
+$$
+P_n(\|F_ht-c\|\le r)\le8r^3+b_n.
+\tag{3.3}
+$$
+
+证明。归一化 Haar 球面的弦距离球体积与中心无关，并为
+
+$$
+v(r)=\frac2\pi\int_0^{2\arcsin(r/2)}\sin^2u\,du.
+$$
+
+当 $0<r\le1$，置 $\vartheta=2\arcsin(r/2)$，有 $r\le\vartheta\le\pi r/3\le\pi/3$。利用此区间上的 $2u/\pi\le\sin u\le u$，得到
+
+$$
+\frac8{3\pi^3}r^3\le v(r)\le r^3.
+\tag{3.4}
+$$
+
+上界可由 $2\vartheta^3/(3\pi)\le(2\pi^2/81)r^3<r^3$ 看出。对固定 $t$，映射 $f\mapsto[G\mapsto f(Gt)]$ 是 $L^2(S^3)$ 到 $L^2(\mathcal G)$ 的等距嵌入，交织左卷积；两个行列式陪集的 Haar 测度均送到同一球面均匀测度，所以 (3.2) 也控制球面密度的均值零部分。
+
+独立于历史，将 $t$ 平滑成其半径 $r$ 球内均匀的 $t'$，并对二者施加同一个实际 $G_h$。因 $G_h$ 等距，$G_ht\in B(c,r)$ 蕴含 $G_ht'\in B(c,2r)$。初始密度的积分为一，其均值零部分的 $L^2$ 范数至多 $v(r)^{-1/2}$。由 (3.2) 与 Cauchy–Schwarz，后一个事件的概率不超过
+
+$$
+v(2r)+\rho^{\lfloor n/3\rfloor}\sqrt{v(2r)/v(r)}
+\le8r^3+\sqrt{3\pi^3}\,\rho^{\lfloor n/3\rfloor}
+\le8r^3+b_n.
+$$
+
+这里 $2r\le1$ 才允许两次使用 (3.4)。最后 $F_h=\lambda^{-n}G_h$ 只确定性旋转所测试的中心，保留距离与球面测度。此平滑论证给出的仍是实际有限先验 $P_n$ 的概率界；它从未用 Haar 先验取代实际历史，也未商掉相对相位。$\square$
+

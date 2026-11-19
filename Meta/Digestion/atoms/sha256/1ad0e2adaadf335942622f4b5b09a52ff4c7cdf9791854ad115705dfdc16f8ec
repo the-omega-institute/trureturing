@@ -1,0 +1,12 @@
+#### 定义 3.1：非反向端点及其关系量
+
+令 $a,b\in S^2$，$c=a\cdot b=\cos\theta$， $0<\theta<\pi$。定义
+
+$$
+C=ca,\qquad
+ u=\frac{b-ca}{\sin\theta},\qquad
+ B_{ab}=\frac{a\wedge b}{\sin\theta}=a\wedge u.
+$$
+
+则 $u\perp a$、$\left\|u\right\|=1$、$B_{ab}^2=-1$。
+

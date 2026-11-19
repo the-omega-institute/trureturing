@@ -1,0 +1,19 @@
+**Definition 6.1 (two-gap arithmetic cutoff).** For every $S\ge1$ and $0\le\varepsilon<1/2$, choose any admissible $k,c_k,r_k,a_k,L$ from (1.6), and write $J=2k+2$. Define
+
+$$
+\begin{aligned}
+D_{\rm BW}
+ &=4\pi^2 S(LS)^{2\kappa}+\pi(1+\varepsilon)J^{\kappa},\\
+D_{\rm int}
+ &=64S(LS)^{2K_0}+4(1+\varepsilon)J^{K_0},\\
+D_{\rm hyb}
+ &=16S\min\{70^{LS},\,4(LS)^{2K_0}\}
+   +2(1+\varepsilon)\min\{70^{k+1},\,2J^{K_0}\},\\
+N_{\rm hyb}
+ &=1+\left\lfloor D_{\rm hyb}/a_k\right\rfloor.
+\end{aligned}
+\tag{6.1}
+$$
+
+All these quantities depend on $(S,\varepsilon,k)$ and the fixed native phase; no comparator coefficient is an input. For rational $\varepsilon$, the definite choice $k=\lfloor(2-4\varepsilon)^{-1}\rfloor$ makes $N_{\rm hyb}$ an integer/rational arithmetic formula. The real exponent $\kappa$ is unnecessary for evaluating that formula. Effectivity here does not assert a useful computation cost for its very large integer powers.
+

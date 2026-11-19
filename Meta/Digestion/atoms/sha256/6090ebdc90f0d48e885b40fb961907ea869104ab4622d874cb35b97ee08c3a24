@@ -1,0 +1,61 @@
+**定理 125.7（同一原效应的跨球读数与边完成判据）。** 固定 $P_0$ 种子三角 $(p,q,r)$。对任意 $s\in P\cap D_p$、$t\in P\cap D_q$，均有
+
+$$
+e_s(t)=e_s(r)e_r(t),\qquad
+e_t(s)=e_t(r)e_r(s).
+\tag{Q125.24}
+$$
+
+取 $D_p=c+B\mathbb B^3$，写 $q=c+Bv_0$、$r=c-Bv_0$、$\|v_0\|=1$，令
+
+$$
+g=u-e_p,\quad H(c+Bw)=w,\quad s=q_v=c+Bv,\quad
+R=\rho_p(v),\quad \tau=v\cdot v_0,\quad
+\delta_p(s)=\frac{R-1}{R+1}.
+\tag{Q125.25}
+$$
+
+则 $0\le\delta_p(s)<1$，有
+
+$$
+\begin{aligned}
+e_s(q)&=\frac{R+\tau}{1+R},& e_q(s)&=\frac{1+\tau}{2},\\
+e_s(r)&=\frac{R-\tau}{1+R},& e_r(s)&=\frac{1-\tau}{2},\\
+e_s(q)-e_q(s)&=\frac{1-\tau}{2}\delta_p(s),&
+e_s(r)-e_r(s)&=\frac{1+\tau}{2}\delta_p(s),
+\end{aligned}
+\tag{Q125.26}
+$$
+
+以及
+
+$$
+\boxed{\quad
+\delta_p(s)=e_s(q)+e_s(r)-1
+=3e_s(\eta_\triangle)-1
+=\min_{x\in D_p}e_s(x)\ge0.
+\quad}
+\tag{Q125.27}
+$$
+
+下列条件等价：$\delta_p(s)=0$；$e_s(q_{-v})=0$；$(p,s,q_{-v})$ 是真实三角；原边 $(p,s)$ 可由某个原纯点完成；$e_s(\eta_\triangle)=1/3$。当 $s\ne q$ 时，还等价于 $e_s(q)=e_q(s)$。
+
+证明。全部到达点属 $P_0$ 已由IX120.12支付。$e_s(p)=0$，而 $p,r$ 是球 $D_q$ 内的对径。(Q125.9)给 $e_s|_{D_q}=e_s(r)e_r|_{D_q}$；在 $t$ 评价即得(Q125.24)第一式。反向把 $e_t$ 限制到 $D_p$ 同理。两个式子保留各自系数，未把它们当作互易性。
+
+种子使 $q\perp r$，IX120.13在 $v_0,-v_0$ 给 $\rho_p(v_0)=\rho_p(-v_0)=1$。IX120.12因而在整个 $V$ 上给
+
+$$
+e_q=(g+v_0\cdot H)/2,\quad
+e_r=(g-v_0\cdot H)/2,\quad
+e_s=(Rg+v\cdot H)/(1+R).
+\tag{Q125.28}
+$$
+
+在 $q,r,s$ 评价，得到(Q125.26)的前两行；相减并用 $\delta_p(s)=(R-1)/(R+1)$ 即得后两式。$R\ge1$ 且有限，给偏差范围。
+
+两个种子端点读数之和是 $2R/(1+R)$；$e_s(p)=0$，故其减一也等于 $3e_s(\eta_\triangle)-1$。在整个 $D_p$ 上，$e_s(c+Bw)=(R+v\cdot w)/(1+R)$，最小值在唯一对径 $q_{-v}$ 达到，为 $(R-1)/(R+1)$，得到(Q125.27)。
+
+偏差为零恰使这一原效应在 $q_{-v}$ 为零，给 $s\perp q_{-v}$；两者都已与 $p$ 原正交，故为真实三角。反向若任意 $t$ 完成边 $(p,s)$，它也在 $D_p$，$e_s$ 在球上于 $s,t$ 取一、零，迫使 $t=q_{-v}$，故偏差为零。重心条件由(Q125.27)等价。当 $s\ne q$ 时，$\tau<1$，(Q125.26)的严格正系数使最后的互易式也等价。证毕。
+
+IX120.13已经有 $\rho_p(v)=1$ 的局部对径判据；本定理增加的是它与同一实际种子重心、两端原读数及跨球乘法的准确联系。已有的是 $e_s(\eta_\triangle)\ge1/3$ 和两端比较的单向不等式；未证的是它们在全部方向取等。$\delta_p(s)>0$ 精确否定边 $(p,s)$ 的完成，并不否定 $s$ 通过另一组原三角属于 $\mathcal T$。
+

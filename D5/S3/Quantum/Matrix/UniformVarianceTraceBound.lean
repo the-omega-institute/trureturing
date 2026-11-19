@@ -30,7 +30,7 @@ private lemma re_diag_le_norm {a : Type*} [Fintype a] [DecidableEq a]
     (by simpa [he, Matrix.l2_opNorm_toEuclideanCLM] using
       (Matrix.toEuclideanCLM (n := a) (𝕜 := ℂ) B).le_opNorm e))
 
-private lemma re_trace_mul_le {a : Type*} [Fintype a] [DecidableEq a]
+lemma re_trace_mul_le {a : Type*} [Fintype a] [DecidableEq a]
     (B X : Matrix a a ℂ) : (B*X).trace.re ≤ ‖B‖ * traceNorm X := by
   classical
   let hH : (Xᴴ * X).IsHermitian := by

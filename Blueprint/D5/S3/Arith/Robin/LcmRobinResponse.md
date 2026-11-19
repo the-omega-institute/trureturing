@@ -4,7 +4,43 @@
 
 A negative Mertens response gives a strict Robin violation at the actual prefix lcm.
 
-**Theorem 1.1 (Strict Robin violation from a negative Mertens response).**
+**Definition 1.1 (The finite prime cutoff).**
+
+Lean statement: `D5/S3/Arith/Robin/LcmRobinResponse.primeCutoff`
+
+*Formalization.* `D5/S3/Arith/Robin/LcmRobinResponse.primeCutoff` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The cutoff consists of the positive natural primes at most floor(u). It is the exact support of the lcm Euler-tail estimate reused in the quantitative Mertens residual comparison.
+
+**Definition 1.2 (The first omitted lcm Euler factor).**
+
+Lean statement: `D5/S3/Arith/Robin/LcmRobinResponse.tailFactor`
+
+*Formalization.* `D5/S3/Arith/Robin/LcmRobinResponse.tailFactor` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a real cutoff u and natural p, tailFactor(u,p)=1/p^(Nat.log(p,floor(u))+1). On the prime cutoff it is the first power omitted by the prefix least common multiple. The quantitative Mertens residual comparison uses this exact exponent.
+
+**Theorem 1.3 (A square-root bound on the omitted lcm Euler tail).**
+
+Lean statement: `D5/S3/Arith/Robin/LcmRobinResponse.lcm_tail_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/LcmRobinResponse.lcm_tail_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real u>=10000, the sum over p<=u of -log(1-tailFactor(u,p)) is at most 4/sqrt(u). Splitting primes at sqrt(u) bounds the small-prime factors by 1/u and the large-prime factors by 1/p^2. The quantitative Mertens proof uses the bound to control the complete omitted prime-power residual.
+
+**Theorem 1.4 (Strict Robin violation from a negative Mertens response).**
 
 Lean statement: `D5/S3/Arith/Robin/LcmRobinResponse.common_robin_response`
 
@@ -23,6 +59,9 @@ The strict tangent loglog_tangent supplies the non-strict tangent bound by treat
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/LcmRobinResponse.common_robin_response`
+- Truth anchor: `D5/S3/Arith/Robin/LcmRobinResponse.lcm_tail_bound`
+- Truth anchor: `D5/S3/Arith/Robin/LcmRobinResponse.primeCutoff`
+- Truth anchor: `D5/S3/Arith/Robin/LcmRobinResponse.tailFactor`
 - Dependency: [D5/S3/Arith/GoldenResourceObjectiveFactorization](../GoldenResourceObjectiveFactorization.md)
 - Dependency: [D5/S3/Arith/Robin/LogarithmBounds](LogarithmBounds.md)
 - Dependency: [D5/S3/Arith/Robin/PrimeFiberPropagation](PrimeFiberPropagation.md)

@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:d6a3c53d81a6223868b2dee31af0501b41f4ad877e3153f880688a9b767fe314
+  normalized_sha256: sha256:d6a3c53d81a6223868b2dee31af0501b41f4ad877e3153f880688a9b767fe314
+cas_ref: sha256:d6a3c53d81a6223868b2dee31af0501b41f4ad877e3153f880688a9b767fe314
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.effect_difference_le_width
+    target_statement_id: sha256:56226801194c56d76a05340a1b3bfd450fe287daa0f1785166a493693ecee91d
+  - gid: D5/S3/Quantum/Foundation/OriginalNormalRestriction.original_normal_restriction
+    target_statement_id: sha256:f07fef530c68d1e6cd42b4d902865c3430031eb9147591d3360802c7a421779d
+  - gid: D5/S3/Quantum/Foundation/OriginalWidthContact.original_width_contact
+    target_statement_id: sha256:d7d7de6c7f42283ce12b05af8e08f08db1c0074682b428bdb250cfdc2dd21d79
+  - gid: D5/S3/Quantum/Foundation/SingleLabelNormalBody.positive_annihilator_maximum
+    target_statement_id: sha256:5a556cc688b451257c3935f565c475d409fdb8577265d1106cd503d408057e91
+  - gid: D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_formula
+    target_statement_id: sha256:2217b215d01bcd7dcd1664756cfdad13dc30d68b883ae5e7a09134e72d54198d
+  - gid: D5/S3/Quantum/Foundation/WholePairBallConfirmation.affine_nonneg_bound
+    target_statement_id: sha256:a738ca70296102746e9d4b25a8ffb263b0904a4fe645995c7d46682f8d228e0f
+  - gid: D5/S3/Quantum/Foundation/WholePairBallConfirmation.affine_zero_antipode
+    target_statement_id: sha256:ac047942e12a0b6a97875a535e5a684c63f462298c829ac486298a2e836bfc82
+receipts:
+  unresolved_subitems: []

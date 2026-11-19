@@ -1,0 +1,12 @@
+### 126.1 全部边界态上的原零关系
+
+定义
+
+$$
+ \mathcal Z(x)=
+ \{y\in K:\exists f\in\mathcal E,\ f(x)=0,\ f(y)=1\},
+ \qquad
+ \mathscr Z=\{(x,y)\in K^2:y\in\mathcal Z(x)\}.
+ \tag{Q126.3}
+$$
+

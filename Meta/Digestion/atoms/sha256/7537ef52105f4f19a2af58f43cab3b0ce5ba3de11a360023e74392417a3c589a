@@ -1,0 +1,94 @@
+**引理 102.7（原自身拷贝的 Bell 蛇式与 Choi 当且仅当）。** 固定每个局部块的正交基，令
+
+$$
+\begin{aligned}
+|I_i\rangle&=\sum_{a=1}^{n_i}|a\rangle\otimes|a\rangle,\qquad
+\Omega_i=|I_i\rangle\langle I_i|,\\
+\Omega&=\bigoplus_i\Omega_i\quad
+ \text{位于二份的 }(i,i)\text{ 块，其余块为零},\\
+\beta(z)&=\operatorname{Tr}(\Omega z),\qquad
+R=\sum_i n_i,\qquad L=\max_i n_i.
+\end{aligned}
+\tag{102.13}
+$$
+
+则 $\Omega\in C_2$，$u_2(\Omega)=R$，$\beta\in C_2^*$，
+$\Omega/R\in K_2$，且 $\beta/L\in\mathcal E_2$。
+不缩放的杯与帽满足精确恒等蛇式，归一杯与 proper 帽的蛇式为
+$\mathrm{id}_V/(RL)$。
+
+将 $m$ 对杯按原置换排成“全部参考腿、全部输入腿”，记所得为 $\Omega_m\in C_{2m}$；
+其参考扇区 $s$ 只与相同输入扇区 $s$ 配对，块为
+$|I_{D_s}\rangle\langle I_{D_s}|$。令 $\beta_m$ 表示逐对 $\beta$ 收缩。
+对每个 $F:W_m\to W_n$，按“参考 $m$ 腿、输出 $n$ 腿”的次序定义
+
+$$
+J(F)=(\mathrm{id}_{W_m}\otimes F)\Omega_m.
+\tag{102.14}
+$$
+
+有精确原锥判据
+
+$$
+F\text{ 原旁观正}\quad\Longleftrightarrow\quad J(F)\in C_{m+n}.
+\tag{102.15}
+$$
+
+**证明。** 二份整锥已经标准。$\Omega$ 各非零块的唯一非零本征值为 $n_i$，
+故 $0\le\Omega\le L\mathbf1$，迹为 $R$，给出所有正性与预算断言。
+除全部 $n_i=1$ 的情形外，$\beta$ 本身不满足单位上界。
+在一块中对 Hermitian $x,y$ 有
+
+$$
+\beta_i(x\otimes y)=\operatorname{Tr}(x^{\mathsf T}y),\qquad
+\Omega_i=\sum_{a,b}E_{ab}^{(i)}\otimes E_{ab}^{(i)}.
+\tag{102.16}
+$$
+
+矩阵单位展开在复线性扩张中书写，和式属于原实 Hermitian 张量空间。
+把 $x$ 与一个杯的参考腿用帽收缩，剩余腿为
+$\sum_{a,b}x_{ab}E_{ab}=x$；不同扇区间无项。
+这证明无转置余项的蛇式。缩放杯、帽分别乘 $1/R,1/L$，给 $1/(RL)$。
+
+最小界及原置换给 $\Omega_m\in C_{2m}$。
+对任意原 $C_{2m+b}$ 输入，逐对使用引理102.6给出的帽收缩均落入相应原剩余锥，
+所以 $\beta_m$ 是原正泛函且可在任意原旁观输入上切片。
+归一化版本 $\Omega_m/R^m$ 和逐对 $\beta/L$ 产生蛇式
+$\mathrm{id}_{W_m}/(RL)^m$；后者逐次为 proper 切片，故总预算也受单位控制。
+确切地，对剩余 $b$ 腿和任意 $z\in C_{2+b}$，最大界给
+
+$$
+0\le u_b\bigl[((\beta/L)\otimes\mathrm{id})z\bigr]
+ =((\beta/L)\otimes u_b)(z)\le u_{2+b}(z),
+\tag{102.16a}
+$$
+
+因为 $(u_2-\beta/L)\otimes u_b$ 对整个原联合锥正。
+迭代此预算即可，包括各次剩余输入有纠缠的情形。
+这些断言只用二份帽的正性和原最大界，不用 $C_{2m}$ 的 PSD 性。
+
+若 $F$ 原旁观正，在(102.11)取 $r=m$，将其作用于原 $\Omega_m$，即得正向。
+反向设 $J(F)\in C_{m+n}$。任取 $r\ge0$ 和
+$z\in C_{r+m}$，标记 $z$ 的腿为 $(R_0,X)$，$J(F)$ 的腿为 $(X',Y)$。
+最小界把 $z\otimes J(F)$ 放入原 $C_{r+2m+n}$。
+在 $X,X'$ 的对应腿上逐对用 $\beta$ 收缩，保留 $(R_0,Y)$。
+引理102.6说明输出在原 $C_{r+n}$，包括 $z$ 在 $R_0,X$ 间任意纠缠的情形。
+蛇式和实张量张成在整个向量空间给出
+
+$$
+\operatorname{cap}_{X,X'}\bigl[z_{R_0X}\otimes J(F)_{X'Y}\bigr]
+ =(\mathrm{id}_{W_r}\otimes F)(z).
+\tag{102.17}
+$$
+
+例如输入扇区 $s$、输出扇区 $t$ 的展开为
+$J(F)_{s,t}=\sum_{a,b}E_{ab}^{(s)}\otimes F_{t,s}(E_{ab}^{(s)})$；
+收缩恰把输入系数 $x_{ab}$ 送入该和式。
+一般带旁观者的恒等式由简单张量张成得到，而其正性已对原整个 $z$ 证明。
+若改用归一资源和 proper 帽，只得到此映射的正倍数
+$1/(RL)^m$；正锥允许恢复数学正性，却不允许据此把资源协议宣布为确定性事件。
+
+同一系数公式还说明 $J$ 是所有实线性映射与 $W_{m+n}$ 间的向量空间双射：
+在每对扇区上它保留每个矩阵单位的全部输出。
+这是自身 $m$ 份参考的判据，不预设任意矩阵辅助物，也未给高阶锥加自对偶假设。∎
+

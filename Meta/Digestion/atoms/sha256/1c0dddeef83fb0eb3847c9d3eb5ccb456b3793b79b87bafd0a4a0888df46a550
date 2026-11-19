@@ -1,0 +1,11 @@
+**引理 132.3（单标签球内的混极限迫使整球缩向标签）。** 另设 $I(F)=\{p\}$。若 $y\in\operatorname{ri}F$、$r_n\in P$、$r_n\to y$，则
+
+$$
+\max_{x\in D_{r_n}}\|x-p\|\longrightarrow0.
+\tag{Q132.8}
+$$
+
+证明。每个球面邻点 $a\in S(F)$ 的排除球亦单标签，直接复用[single_label_neighbor][Q132SN]，包括 $k=1$ 的线段情形。任取 $x_n\in D_{r_n}$ 的收敛子列 $x_n\to x$，并从完整 $\mathcal A_{r_n}$ 取同一效应子列 $e_n\to e\in\mathcal E$。有 $e(y)=1$、$e(x)=0$。因 $u-e\ge0$ 于 $K$ 且 $y\in\operatorname{ri}F$，有 $e|_F=1$，故 $x\in D_a$ 对每个 $a\in S(F)$ 成立。
+
+选两个不同 $a,a'\in S(F)$。它们的单标签性给 $D_a\ne D_{a'}$；原零对称又给 $p\in D_a\cap D_{a'}$。[原真面分类及整球交点性质][Q132BF]使该交集恰为 $\{p\}$，所以 $x=p$。紧性反证把所有选择的这一聚点结论升级为(Q132.8)。没有对混极限 $y$ 使用需要全局Inj的标签判据。证毕。
+

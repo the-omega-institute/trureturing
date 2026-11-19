@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:0166e99bc1e0bf5c609ec012e5c86f228be64fc6483886a3d16e79ec7b55e13b
+  normalized_sha256: sha256:0166e99bc1e0bf5c609ec012e5c86f228be64fc6483886a3d16e79ec7b55e13b
+cas_ref: sha256:0166e99bc1e0bf5c609ec012e5c86f228be64fc6483886a3d16e79ec7b55e13b
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wdigits_unique
+    target_statement_id: sha256:a85c044d3f237c1d3c2a95a515470e2bcc94ebca613e89c39f603471e61bd20f
+  - gid: D5/S1/Words/Hofstadter/OriginalHFoundation.h_characterization
+    target_statement_id: sha256:ee2ed0ffcb975ef59a288dfdd1402f8afd77350295174f37040d6444d313a64c
+  - gid: D5/S1/Words/Hofstadter/OriginalHFoundation.original_h_morphic_prefix
+    target_statement_id: sha256:b787aa48f2d92b3d525a2243f36f82c61b263996e95cb6f815e0988c8ff91f0d
+  - gid: D5/S1/Words/Hofstadter/OriginalHFoundation.word_characterization
+    target_statement_id: sha256:a3d798b50c787646a77f578eb69e5b567f92fec4427029b40bf55869582a2ba0
+  - gid: D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/WindowOriginalEncoder.local_source
+    target_statement_id: sha256:ed923ed173b8d21845f5713107df6f281af37892071361e83cd9cc2fd3c52b78
+  - gid: D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/WindowOriginalEncoder.original_bits
+    target_statement_id: sha256:313dc98b5494a6ddd0d2c51f9485b17709e7360c86b28c08bf403c7c3879ffaf
+  - gid: D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/WindowOriginalEncoder.padded_windows
+    target_statement_id: sha256:1655147de49b6b97eee1c77daa7d62d6621f8f944b8d723f131e916e7ae75ec1
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 3810010103b03ac9e3673b6b98edaa5989eb536664b58a6136d190e0811c17f7
+    - 6283053e222d7e14d1de84a52d8b471f7e00fed7d6f9ef14ad30b250ff1a9679

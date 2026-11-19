@@ -1,0 +1,13 @@
+**定理 146.4（全部有限层正规性及退化的图距离逃逸）。** 对任意固定原根 $a$ 及每个整数 $m\ge0$，$H_m(a)$ 环境紧且全纯，$D,c,e$ 在其上连续，且
+
+$$
+\forall m\ \exists\varepsilon_m,\delta_m>0\ \forall p\in H_m(a):\quad
+\kappa_p\le2-\varepsilon_m,\quad
+\text{$D_p$ 的全部三根半轴均不小于 }\delta_m.
+\tag{XI146.16}
+$$
+
+整个 $Q(a)$ 上 $D,c,e$ 也连续。它的根外部分同胚于 $S_a$ 上一个实际实秩二向量丛 $\xi_a$ 的总空间，而 $Q(a)$ 同胚于其 Thom 一点紧化；不预设根处为流形点或指定 Euler 数。若纯标签列 $p_j$ 满足下列任一完整趋向条件：$\operatorname{diam}D_{p_j}\to0$、$\kappa_{p_j}\to2$、或 $p_j$ 趋于混态，则其原零图距离 $d_\perp(a,p_j)\to\infty$。若 $p_j\to p\in P$ 并已选定 $d_H(D_{p_j},D_p)\ge\eta>0$ 的坏子列，则该选定子列亦逃出全部有限层。
+
+证明。单点层满足146.3的前件，因为 $\kappa_a<2$。逐层推进，再在 $H_m$ 与 $\mathcal N(H_m)$ 两个紧闭子集上粘合连续映射，两层余量和半轴下界分别取较小者，即得(XI146.16)。$Q(a)$ 的紧纯性直接取144.3；连续性由 $Q(a)\subseteq H_2(a)$ 限制得到，未以该包含本身证明紧性。根外丛直接复用139.5的单根构造：在 $S_a$ 上写连续秩三形状 $A_s$，令 $w_s=A_s^{\dagger/2}(a-c_s)$、$(\xi_a)_s=\operatorname{im}A_s\cap w_s^\perp$，逐纤维采用该证明式(XI139.16)—(XI139.17)的球极投影。逆的母标签坐标连续，因为紧 $S_a$ 的任何标签聚点都由原上关联及根外唯一共同邻点确定；未使用第二根补图。紧 $Q(a)$ 是该非紧总空间的一点紧化，紧基的 Thom 空间识别见[Hatcher，印刷页112][Q146VB]。若前三类退化列有无限多项落在一个固定 $H_m$，该层的紧纯性或统一下界立即矛盾。对坏子列，紧闭层使极限 $p$ 也在层内，该层连续性与固定 $\eta$ 矛盾。仅说整列存在一条不收敛子列，不足以让整列逃逸，因为可以交错插入固定 $p$。这里的量词是 $\forall m\exists\varepsilon_m,\delta_m$，没有取得 $\exists\varepsilon,\delta\forall m$。证毕。
+

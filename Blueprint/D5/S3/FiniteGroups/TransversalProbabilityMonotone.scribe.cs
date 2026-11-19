@@ -35,7 +35,11 @@ internal sealed class TransversalProbabilityMonotoneDocument : IScribeDocumentDe
                 AssessedProvenance.FromLiterature(Source),
                 "For every natural number n, orbitWeight n is the rational number n!/n^n. "
                 + "For positive n this is the factor f(n) appearing in Proposition 3.2 "
-                + "and Problem 5.6. The definition also fixes a total value at zero."),
+                + "and Problem 5.6. The definition also fixes a total value at zero. "
+                + "The numerator n! is positive and the denominator n^n is positive for n>0, giving positive weights; at zero the definition gives 1. For n>0, 0<n/(n+1)<1 and n is a nonzero exponent, so the existing adjacent identity orbitWeight (n+1)=orbitWeight n*((n:Q)/(n+1))^n gives a strict drop. Chaining consecutive drops proves strict decrease on positive indices. "
+                + "The total function is not globally strict because orbitWeight 0=orbitWeight 1=1. "
+                + "Consequently, for coordinate-comparable increasing lists of integers greater than one, the product is antitone coordinatewise "
+                + "and equality occurs exactly when every coordinate agrees. Indeed the smaller-index weight dominates each corresponding positive factor, and one strict coordinate forces a strict product inequality; this works without an ordering assumption within either list. For length zero both products are 1 and coordinate equality is vacuous."),
             Node("P", "The probability for one specified subgroup", PFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "Definition 3.1(ii), printed p. 8: “If H = K, we let P_G(H) ≔ "
@@ -59,7 +63,10 @@ internal sealed class TransversalProbabilityMonotoneDocument : IScribeDocumentDe
                     + "corresponding component for H ⊔ N: normality lets the N-factor pass through "
                     + "a group representative. Thus each upstairs component has at least the "
                     + "downstairs size. Comparing the factors within each nonempty fibre, and "
-                    + "then multiplying, proves the displayed inequality."))),
+                    + "then multiplying, proves the displayed inequality. This finite-surjection chain is the reusable comparison "
+                    + "for the factorial-product application; it does not itself assert the ALM counterexample, its common extensions, "
+                    + "or an equality classification. The separate ALM source keeps Theorem 4.6's distinct-prime hypothesis and leaves "
+                    + "Problems 5.1-5.5 and 5.7-5.8, group realization and related extremal claims outside the factorial-product return."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("alm2024"), ResolutionKind.Proved)))));

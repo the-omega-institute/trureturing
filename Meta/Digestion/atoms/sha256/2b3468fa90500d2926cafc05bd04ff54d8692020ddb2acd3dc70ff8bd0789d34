@@ -1,0 +1,222 @@
+**定理 12.2（实际点的完全显式频率分离与统一起点估计）。** 对定义 12.1 的 $\alpha$，所有整数 $L,H\ge1$ 都满足
+
+$$
+\lambda_L(H)\ge\exp(-128L^2H^2).
+$$
+
+对所有 $\beta\in\mathbb T^2$ 和整数 $N\ge\exp(256L^2)$，有一致于起点的估计
+
+$$
+\mathcal D_N(\beta,L)
+<\frac{73L}{\sqrt{\log N}}
+\le\frac{128L}{\sqrt{\log N}}.
+$$
+
+这是一组固定算术数据的复合显式估计。非挠性与模挠独立性复用 Brox，[固定提交 `61b82ccacfbefdff3d6e7cf986d6e6279afa1372`](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex) 的 “The quadratic-field elliptic curve” 一节，尤其 `lem:independent`；所需的只是其整数系数特例。典范高度的二次性与下述 Erdős–Turán–Koksma 不等式是既有中间结果。显式加性高度常数和它们对本条固定点的组合在证明中给出，不使用未指定常数的聚合迹高度强制性估计。
+
+**证明。** 先核对圆坐标的周期与距离。$C$ 的两条实半支各自贡献
+
+$$
+\int_1^\infty\frac{dx}{2\sqrt{x^3-x}}=\frac\Omega2.
+$$
+
+因此沿整圆积分为 $\Omega$。不变微分的平移不变性使积分模周期成为群同态；沿正定向走完一圈时积分严格增加一个周期，故它为一一对应的圆群坐标。它把归一化 Haar 测度送到 $\mathbb T$ 的长度测度。代换 $x=t^{-2}$ 给出完全显式的周期上界
+
+$$
+\Omega=2\int_0^1\frac{dt}{\sqrt{1-t^4}}
+<2\int_0^1\frac{dt}{\sqrt{1-t}}=4.
+$$
+
+若 $R\in C$ 且 $X=x(R)>1$，从 $R$ 到 $O$ 的同一半支弧长小于半个周期，所以它就是较短的积分弧。于是
+
+$$
+\|\theta(R)\|_{\mathbb T}
+=\frac1{2\Omega}\int_X^\infty\frac{dx}{\sqrt{x^3-x}}
+>\frac1{\Omega\sqrt X}
+>\frac1{4\sqrt X}.
+\tag{12.1}
+$$
+
+第一个严格不等式使用 $x^3-x<x^3$ 及 $\int_X^\infty x^{-3/2}\,dx=2/\sqrt X$。$O$ 的圆距离为 $0$；另一个端点 $(1,0)$ 的圆距离为 $1/2$，不对这两点使用式 (12.1)。
+
+现在给出高度误差的具体常数。倍点横坐标在射影线上由四次齐次式
+
+$$
+A(U,V)=(U^2+V^2)^2,\qquad
+B(U,V)=4UV(U^2-V^2),\qquad
+x([2]R)=[A(U,V):B(U,V)]
+\tag{12.2}
+$$
+
+表示，其中 $x(R)=[U:V]$。仿射公式来自 $x([2]R)=(x^2+1)^2/(4x(x^2-1))$；在 $O$ 与二挠点处用同一齐次式延拓。以下整数系数恒等式还保证 $A,B$ 没有共同的射影零点：
+
+$$
+\begin{aligned}
+16U^7&=(16U^3-12UV^2)A-(5U^2V+3V^3)B,\\
+16V^7&=(16V^3-12U^2V)A+(3U^3+5UV^2)B.
+\end{aligned}
+\tag{12.3}
+$$
+
+例如第一式右侧两部分展开为 $16U^7+20U^5V^2-8U^3V^4-12UV^6$ 与 $20U^5V^2-8U^3V^4-12UV^6$ 之差；第二式交换 $U,V$，同时注意 $B(V,U)=-B(U,V)$，即得。
+
+在每个有限处，把坐标除以模最大的非零坐标，归一化为 $\max(|U|_w,|V|_w)=1$。整数系数与超度量不等式给出上界 $\max(|A|_w,|B|_w)\le1$。式 (12.3) 中左侧至少一项的模为 $|2|_w^4$，右侧系数的模不超过 $1$，故
+
+$$
+|2|_w^4\le\max(|A|_w,|B|_w)\le1.
+\tag{12.4}
+$$
+
+在任一实或复嵌入同样归一化。交换坐标后，输出的模为 $|(1+t^2)^2|$ 与 $|4t(1-t^2)|$，其中 $|t|\le1$。它们都不超过 $8$。若第一项小于 $1/4$，则 $|1+t^2|<1/2$，从而 $|t|>1/\sqrt2$ 且 $|1-t^2|>3/2$，第二项大于 $3\sqrt2$。因此在所有无穷处都有
+
+$$
+\frac14\le\max(|A|,|B|)\le8.
+\tag{12.5}
+$$
+
+由齐次性，式 (12.4)–(12.5) 控制 $h(x([2]R))-4h(x(R))$。无穷处的归一化权重之和为 $1$，而乘积公式给出
+
+$$
+\frac1{[F_*:\mathbb Q]}\sum_{w\text{ 有限}}[F_{*,w}:\mathbb Q_w]\log|2|_w=-\log2.
+$$
+
+故对所有代数点，包括 $O$ 与挠点，都有
+
+$$
+4h(x(R))-6\log2
+\le h(x([2]R))
+\le4h(x(R))+3\log2.
+\tag{12.6}
+$$
+
+把相邻两项的差乘以 $4^{-m-1}$ 后求和，利用 $\sum_{m\ge0}4^{-m-1}=1/3$，得到
+
+$$
+h(x(R))\le2\widehat h(R)+2\log2,\qquad
+2\widehat h(R)\le h(x(R))+\log2.
+\tag{12.7}
+$$
+
+这里极限的归一化与 Silverman 第二版 VIII.9.1（Tate 命题，印刷页 247–248）一致；其 VIII.9.3（印刷页 248–249）在全体代数点上给出非负性、$\widehat h([m]R)=m^2\widehat h(R)$ 及平行四边形恒等式。本证明以式 (12.6)–(12.7) 替换一般高度比较中的未指定加性误差。
+
+定义 11.1 的两点都定义在指定实嵌入的数域
+
+$$
+F=\mathbb Q(\sqrt2,\sqrt{3-\sqrt2},\sqrt{3+\sqrt2}),
+\qquad e=[F:\mathbb Q]\le8.
+$$
+
+它们的横坐标是
+
+$$
+X_1=\frac{115-27\sqrt2}{56},\qquad
+X_2=\frac{115+27\sqrt2}{56}.
+$$
+
+二者均大于 $1$，且其本原不可约整系数多项式为
+
+$$
+448T^2-1840T+1681.
+$$
+
+事实上两根之和为 $115/28$、积为 $1681/448$；系数互素，判别式为 $2\cdot432^2$，不是有理平方。因此绝对高度的最小多项式公式给出
+
+$$
+h(X_1)=h(X_2)
+=\frac12\log(448X_1X_2)=\log41.
+$$
+
+结合式 (12.7)，得到
+
+$$
+\widehat h(P_1)+\widehat h(P_2)\le\log82.
+\tag{12.8}
+$$
+
+取 $0<\|h\|_\infty\le H$，令
+
+$$
+R=[Lh_1]P_1+[Lh_2]P_2,\qquad \Delta=L^2H^2\ge1.
+$$
+
+Brox 上述模挠独立性保证 $R$ 非挠，因此 $R\ne O$，也不等于二挠点 $(1,0)$。由于 $C$ 是子群，$R\in C$，故 $X=x(R)>1$，可以使用式 (12.1)。典范高度的平行四边形恒等式与非负性给出
+
+$$
+\begin{aligned}
+\widehat h(R)
+&\le2L^2\bigl(h_1^2\widehat h(P_1)+h_2^2\widehat h(P_2)\bigr)\\
+&\le2\Delta\log82.
+\end{aligned}
+$$
+
+这里没有用分别可达的最优值代替联合值；不等式来自对同一对点 $[Lh_1]P_1,[Lh_2]P_2$ 的平行四边形公式，舍去其差的非负高度。$R\in E_0(F)$，而 $h([X:1])$ 的每一个局部项都非负。指定实嵌入的权重是 $1/e$，于是 $\log X\le e h(X)\le8h(X)$。再用式 (12.7)，得到带有全部加性常数的界
+
+$$
+\log X\le32\Delta\log82+16\log2.
+\tag{12.9}
+$$
+
+将其代入式 (12.1)，并使用 $\theta(R)=L(h_1\alpha_1+h_2\alpha_2)$，得到
+
+$$
+\begin{aligned}
+\|Lh\cdot\alpha\|_{\mathbb T}
+&>\exp(-16\Delta\log82-10\log2)\\
+&\ge\exp\bigl(-(16\log41+26\log2)\Delta\bigr)\\
+&>\exp(-128\Delta).
+\end{aligned}
+\tag{12.10}
+$$
+
+最后一步只需 $41<2^6$ 与 $\log2<1$：$16\log41+26\log2<122<128$。对有限个非零频率取最小值即得所需分离；无需给出完整 Mordell–Weil 群或重新证明算术独立性。
+
+接着使用 Dick–Pillichshammer 上述预印本印刷页 84、定理 3.26 的极端差异度不等式。在维数 $2$，置 $r(h)=\max(1,|h_1|)\max(1,|h_2|)$，其准确形式为
+
+$$
+\mathcal D_N(\beta,L)
+\le\frac94\left(
+\frac2{H+1}
++\sum_{0<\|h\|_\infty\le H}\frac1{r(h)}
+\left|\frac1N\sum_{k=0}^{N-1}\exp(2\pi i h\cdot z_k)\right|
+\right).
+\tag{12.11}
+$$
+
+所有指数均可用任意实代表计算。对于 $u=Lh\cdot\alpha\ne0$ 于 $\mathbb T$，几何级数及 $|\sin(\pi u)|\ge2\|u\|_{\mathbb T}$ 给出
+
+$$
+\left|\frac1N\sum_{k=0}^{N-1}\exp(2\pi i h\cdot z_k)\right|
+\le\frac2{N|1-\exp(2\pi i u)|}
+\le\frac1{2N\|u\|_{\mathbb T}}.
+\tag{12.12}
+$$
+
+正弦下界来自 $\sin$ 在 $[0,\pi/2]$ 上的凹性；起点 $\beta$ 只贡献模为 $1$ 的因子。故式 (12.11) 为
+
+$$
+\mathcal D_N(\beta,L)
+\le\frac9{2(H+1)}+\frac{9S_H}{8N\lambda_L(H)},\qquad
+S_H=\left(1+2\sum_{j=1}^H\frac1j\right)^2-1\le8H^2.
+\tag{12.13}
+$$
+
+最后一个不等式由 $\sum_{j=1}^H1/j\le H$ 及 $4H^2+4H\le8H^2$ 得到。令 $t=\log N\ge256L^2$，选
+
+$$
+H=\left\lfloor\frac{\sqrt t}{16L}\right\rfloor\ge1.
+$$
+
+由频率分离，$N\lambda_L(H)\ge\exp(t-128L^2H^2)\ge\exp(t/2)$。又 $H+1>\sqrt t/(16L)$，且 $e^{t/2}\ge t^2/8$，所以
+
+$$
+\begin{aligned}
+\frac9{2(H+1)}&<\frac{72L}{\sqrt t},\\
+\frac{9S_H}{8N\lambda_L(H)}
+&\le\frac{9t}{256L^2}e^{-t/2}
+\le\frac9{32L^2t}
+\le\frac9{512}\frac L{\sqrt t}.
+\end{aligned}
+$$
+
+末步使用 $L\ge1$ 与 $\sqrt t\ge16L$。因为 $72+9/512<73$，得到所述严格的 $73$ 界，也得到 $128$ 界。全部估计均与 $\beta$ 无关。$\square$
+

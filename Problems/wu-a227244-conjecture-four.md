@@ -28,7 +28,8 @@ The external assertion is identified by [#27391](https://github.com/the-omega-in
 | Smallest prime factor equals 59 | `Nat.Prime 59`, integer divisibility by 59, and `59 ≤ q` for every natural prime q dividing the same integer |
 
 All exponents are natural. The multiplication and final subtraction are in
-Z. There is no claim at residue 26 and no claim that excluding it is necessary.
+Z. The original assertion makes no claim at residue 26. Its exceptional-class
+consequence is explained separately in the owning Blueprint Scribe.
 
 ## Motivation
 
@@ -73,14 +74,14 @@ without bounding the natural index.
 | C4 | Proved by `result` for the full unbounded family with the original exclusion. |
 | Mechanism | Periodic modular transfer and finite residues exclude all smaller primes while 59 divides the integer. |
 | C2 | Unresolved here; C4 provides no settlement. |
-| Necessity of excluding residue 26 | Unresolved here; no assertion is made on that class. |
+| Exceptional residue 26 | The owning Scribe derives least prime 47 from the original odd-index residue and smaller-prime exclusions; the original `result` retains its stated domain. |
 | General method or originality | No additional theorem or novelty claim; the proof composes existing APIs and consumed reductions. |
 
 ## ASSUMED-UNVERIFIED
 
 Literature completeness, global priority and a dominating theorem outside the
 searched scope are unverified. The four-slot audit is unfinished under the linked exception in
-[#27391](https://github.com/the-omega-institute/trureturing/issues/27391).
+[#27391, comment 6693936357](https://github.com/the-omega-institute/trureturing/issues/27391#issuecomment-6693936357).
 The dependent-family registration exceeded its elaboration heartbeat limit;
 source-selection reconstruction and current binding evidence are missing.
 No declared_validated status is claimed.

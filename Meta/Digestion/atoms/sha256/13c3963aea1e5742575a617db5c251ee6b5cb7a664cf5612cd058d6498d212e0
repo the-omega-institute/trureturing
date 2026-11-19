@@ -1,0 +1,36 @@
+**命题 7.8（第二阈值的尖锐下界）。** 对每个 $\varepsilon>0$，存在 $P_\varepsilon$，使对所有实数 $P\ge P_\varepsilon$，
+
+$$
+N_2(e^P)>0,\qquad
+\log N_2(e^P)\ge(K-\varepsilon)Z(P).
+$$
+
+**证明。** 缩小 $\varepsilon$ 只会加强结论，故可先设 $0<\varepsilon<K$。令 $\gamma=1/c$，并一次性固定
+
+$$
+\eta=\frac{\varepsilon}{8K},\qquad
+\rho=\frac{\varepsilon}{8\gamma}.
+$$
+
+由引理 7.7 选定 $U,m$ 与有限均匀网格，再取 $q_i=q(t_i)$。有
+
+$$
+\frac{C_{\mathrm{grid}}}{A(1+\eta)^2}
+\le\frac{1+\eta/2}{(1+\eta)^2}<1.
+$$
+
+因此引理 7.6 的每个交换选择最终均满足预算，所生成的整数恰有 $k(P)$ 个素因子。特别地，计数最终非空。利用 $2A\gamma=K$ 与 $1/(1+\eta)\ge1-\eta$，有
+
+$$
+\begin{aligned}
+\Lambda:=\frac{\gamma E_{\mathrm{grid}}}{1+\eta}
+&\ge\frac{\gamma(2A-\rho)}{1+\eta}\\
+&\ge K-K\eta-\varepsilon/8
+=K-\varepsilon/4.
+\end{aligned}
+$$
+
+在引理 7.6 中取 $\zeta=\varepsilon/2$，便对所有充分大的 $P$ 得到 $\log N_2(e^P)\ge(K-3\varepsilon/4)Z(P)\ge(K-\varepsilon)Z(P)$。
+
+量词顺序为：先给定 $\varepsilon$，再固定 $\eta,\rho,U,m,q_i$，最后选取单一的 $P_\varepsilon$，使有限多个箱容量极限、取整极限、远端分离、成本与熵估计同时成立。这里没有令网格随 $P$ 增长，也没有互换无限网格极限与 $P\to\infty$。代回 $P=\log x$ 即得定理 7.2 所需的下界。证毕。
+

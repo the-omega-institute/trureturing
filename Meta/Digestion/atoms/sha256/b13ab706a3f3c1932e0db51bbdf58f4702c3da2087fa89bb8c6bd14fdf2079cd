@@ -1,0 +1,18 @@
+**定理 7.5（全部时域的熵与字母表上界）。** 对整数 $n\ge0$ 与 $0<\varepsilon<1/4$，
+
+$$
+\begin{aligned}
+E_n(\varepsilon)&\le
+\min\{n,\;\log_2(28\pi^2\lceil4/\sqrt\varepsilon\rceil^3)\},\\
+M_n(\varepsilon)&\le
+\min\{2^n,\;28\pi^2\lceil4/\sqrt\varepsilon\rceil^3\}.
+\end{aligned}
+\tag{7.4}
+$$
+
+特别地 $E_0(\varepsilon)=0$、$M_0(\varepsilon)=1$。
+
+证明。取常种子，$m=\lceil4/\sqrt\varepsilon\rceil\ge8$。中间保留完整实际历史和所需工作区，在终点形成精确 $G_h$，作定义 7.1 的一次舍入。由引理 7.4，误差至多 $12/m^2\le3\varepsilon/4\le\varepsilon$。此时只留下 $Y=(d,q)$，完整历史、计算工作区、所有额外控制选择以及舍入随机带均在解码前真正丢弃。解码器仅接收这个标签，并使用 (7.3)；静态壳描述和概率表不包含其他运行信息。
+
+若一个分布支持于 $N$ 点，则对 $N$ 点均匀分布的 KL 非负性给出 $H(Y)=\log_2N-D(q\|\mathrm{unif}_N)/\ln2\le\log_2N$。由引理 7.3 得舍入项。另一方案保存公平完整历史，用 $BQ_h^\dagger B^\dagger+(I_5-P_R)$ 作精确酉校正，其熵为 $n$，字母表为 $2^n$；这个可行上界不需要历史到酉的单射。选取两方案之一即得 (7.4)。空历史用单标签和恒等校正达到熵零。所有上界均可用常种子实现。$\square$
+

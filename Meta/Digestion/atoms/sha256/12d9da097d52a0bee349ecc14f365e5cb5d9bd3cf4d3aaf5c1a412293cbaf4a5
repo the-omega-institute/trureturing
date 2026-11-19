@@ -1,0 +1,63 @@
+**命题 126.14（原零关联及去除重复对后的 proper 投影）。** 两个原投影
+
+$$
+ \pi_1,\pi_2:\mathscr Z\longrightarrow S
+ \tag{Q126.33}
+$$
+
+连续、满射且 proper，所有纤维都是单点或完整凸三球。
+
+固定重复对 $F,G$，令
+
+$$
+ A_0=F\cup G,\qquad B_0=(F\times G)\cup(G\times F).
+$$
+
+则
+
+$$
+ \pi_1^{-1}(A_0)=B_0=\pi_2^{-1}(A_0).
+ \tag{Q126.34}
+$$
+
+且限制
+
+$$
+ \mathscr Z\setminus B_0
+ \ \substack{\xrightarrow{\ \pi_1\ }\\[-1mm]\xrightarrow[\ \pi_2\ ]{}}
+ S\setminus A_0
+ \tag{Q126.35}
+$$
+
+仍是 proper 连续满射，纤维仍为非空紧凸集。目标 $S\setminus A_0$ 是开
+$m$-流形，源 $\mathscr Z\setminus B_0$ 是局部紧 Hausdorff 空间。其目标的紧支撑群为
+
+$$
+ \check H_c^j(S\setminus A_0;\mathbb F_2)
+ \cong\check H^j(S,A_0;\mathbb F_2)
+ =
+ \begin{cases}
+ \mathbb F_2,&j=1\text{ 或 }j=m,\\
+ 0,&\text{其他 }j.
+ \end{cases}
+ \tag{Q126.36}
+$$
+
+证明。引理126.1及边界上每点属于某颗完整球的事实说明 $\mathcal Z(x)$ 总是非空的纯单点或完整球。
+因此两投影满射，纤维由引理126.1和对称性给出。$\mathscr Z$ 紧、$S$ Hausdorff，
+故任一紧集的逆像为紧集，即两投影 proper。式(Q126.6)及对称性给(Q126.34)。
+若 $C_0\subset S\setminus A_0$ 紧，则它在 $S$ 中仍紧，两条原投影的逆像紧，
+且由(Q126.34)完全位于 $\mathscr Z\setminus B_0$。这证明(Q126.35)的 proper 性，
+不需要目标的开补集闭或紧。$B_0$ 闭，故其补是紧 Hausdorff 空间 $\mathscr Z$ 的开子空间，因而局部紧。
+
+$A_0$ 是两个不交的紧可缩球。采用 IX116.6 的 Čech 理论及紧支撑约定，紧空间的闭对给
+$\check H_c^j(S\setminus A_0;\mathbb F_2)\cong\check H^j(S,A_0;\mathbb F_2)$。
+相对长正合列中，$\check H^0(S)\to\check H^0(A_0)$ 是
+$\mathbb F_2\to\mathbb F_2^2$ 的对角嵌入；$A_0$ 的正次数群均为零，
+而 $S\cong S^m$、$m\ge5$。故一次相对群是该对角嵌入的余核 $\mathbb F_2$，
+$m$ 次相对群是 $\check H^m(S)=\mathbb F_2$，其余均为零，得到(Q126.36)。
+相同计算对 $m\ge2$ 成立。证毕。
+
+本命题不将 $\mathscr Z\setminus B_0$ 认定为流形、ANR 或球丛。
+两条映射拥有同一个目标；(Q126.36)没有产生两个不同维数的目标，不能单独排除重复对。
+

@@ -1,0 +1,25 @@
+**定理 132.4（局部共同零点迫每个原纯点进入真实三角）。** 在 $\mathrm{EB}_{\ge2}+\mathsf L$ 中，每个原纯点 $p$ 都存在原 $r,s\in P$，使 $p,r,s$ 两两不同且
+
+$$
+p\perp r,\qquad p\perp s,\qquad r\perp s.
+\tag{X132.4}
+$$
+
+证明。固定 $p$，反设 $p$ 不属于任何原纯零三角。沿130.2令
+
+$$
+S_p=P\cap D_p,\qquad B_p=\bigcup_{r\in S_p}D_r.
+\tag{X132.5}
+$$
+
+直接复用130.2及其[SAME_READBACK126.1][Q130SR]紧投影：$B_p$ 是实际固定的非空紧集。该反设下，130.2的原面取交论证给 $D_p\cap B_p=\varnothing$。其适用要点是：若 $D_p\cap D_r\ne\varnothing$、$r\in S_p$，必须从这个非空紧原面的极点取原纯 $s$，才得到 $p,r,s$ 三角；不能把任意混态交点当作纯点。不交结论仅在无三角反设下使用。
+
+原全效应区间紧，故固定确认族 $\mathcal F_p$ 有一致范数界 $M<\infty$；最低定义给 $|T_p(x)-T_p(y)|\le M\|x-y\|$。于是实际固定紧集 $B_p$ 上的最小值达到，且
+
+$$
+m_p:=\min_{x\in B_p}T_p(x)>0,
+\tag{X132.6}
+$$
+
+因为零集准确为 $D_p$。对 $\delta=\min\{m_p,\varepsilon_p\}>0$ 用132.2，得到原纯 $q$ 满足 $0<T_p(q)<\delta$。由 $\mathsf L$ 取得同一原纯 $r$，使 $T_p(r)=T_q(r)=0$。因此 $r\in S_p$；第二个零值经原零对称给 $q\in D_r\subset B_p$，与 $T_p(q)<m_p$ 矛盾。这里只交换零边，没有使用正比较值互易。故三角存在；原零关系不自反保证三个顶点不同。尤其 $p\notin D_p$，结论是 $p$ 为三角的一个顶点，不是 $D_p$ 包含三角或本身是三角。证毕。
+

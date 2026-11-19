@@ -1,0 +1,38 @@
+**定理 147.2（同秩趋近的原正尺提升）。** 在 EB3+$\mathsf{Conn}$ 及忠实截面(XI147.2)下，若 $p\perp q$、$q_j\in P$、$q_j\to q\in P$ 且最终 $r(q_j)=r(q)$，则存在实际原纯点 $p_j\in S_{q_j}$，使 $p_j\to p$。同一标签序列上还有 $D_{q_j}\to D_q$ 的 Hausdorff 连续性。本定理不要求 ZC。
+
+证明。先支付同一截面的正代表。取 $x_0\in\operatorname{int}C$。令 $W$ 为全部 $A(C)$ 像空间的共同线性张成。因 $V=\operatorname{span}C$，所有 $A(V)$ 都支撑于 $W$，压缩不损单射性。若 $v\in\ker A_{x_0}$，对任意 $c\in C$ 取充分小 $t>0$ 使 $x_0-tc\in C$；正性给 $0\le v^*(A_{x_0}-tA_c)v=-t v^*A_cv$，所以 $A_cv=0$。故压缩后 $A_{x_0}\succ0$。置 $\lambda_0=\lambda_{\min}(A_{x_0})>0$。对 $G\succeq0$，用实迹配对定义 $A^*(G)(x)=\operatorname{Tr}(GA_x)$，并有
+
+$$
+\lambda_0\operatorname{Tr}G\le A^*(G)(x_0).
+\tag{XI147.3}
+$$
+
+若 $A^*(G_i)$ 收敛，则正矩阵 $G_i$ 的迹及范数有界，存在收敛子列。因此 $A^*(\operatorname{PSD}_m)$ 闭。它的对偶锥恰为 $\{x:A_x\succeq0\}=C$，有限维双极定理遂给
+
+$$
+C^*=A^*(\operatorname{PSD}_m),\qquad
+N_q=A^*\{G\succeq0:\operatorname{ran}G\subseteq\ker A_q\}.
+\tag{XI147.4}
+$$
+
+第二式使用正矩阵的 $\operatorname{Tr}(GA_q)=0\Longleftrightarrow\operatorname{ran}G\subseteq\ker A_q$。这同时说明正代表确实在原全锥上非负；没有把任意 PSD 线性像自动当成闭锥。
+
+原 $e_p(q)=0$ 允许选 $G\succeq0$，使 $A^*(G)=e_p$ 且 $\operatorname{ran}G\subseteq\ker A_q$。令 $\Pi_j,\Pi$ 为相应矩阵核的正交投影。同秩矩阵收敛给 $\Pi_j\to\Pi$：极限矩阵的正谱有正间隙，谱投影在该间隙处连续，而相同核维数排除另有趋零的非零谱分支。定义
+
+$$
+G_j=\Pi_jG\Pi_j,\qquad h_j=A^*(G_j),\qquad
+\alpha_j=\max_Kh_j.
+\tag{XI147.5}
+$$
+
+于是 $h_j\in N_{q_j}$、$h_j\to e_p$，后者在紧 $K$ 上一致，故 $\alpha_j\to1$。以下最大面选择复用[IX118.11][Q147IX]，核投影在这里支付其所需的原零尺修复条件。充分大 $j$ 时 $f_j=h_j/\alpha_j$ 属于整个原 $\mathcal E$。在 $h_j$ 的非空紧最大面选一个极点 $p_j$；面的极点也是整个 $K$ 的极点，故
+
+$$
+f_j(p_j)=1,\qquad f_j(q_j)=0,\qquad p_j\in P\cap D_{q_j}=S_{q_j}.
+\tag{XI147.6}
+$$
+
+最后一个包含用同一原补效应或零对称。任一聚点 $p'\in K$ 满足 $e_p(p')=1$，唯一一值点迫 $p'=p$，故整列趋向 $p$。有限个前项可任取其实际球缘点。
+
+对每个固定 $p\in S_q$ 均得到上述实际逼近。任意 $z\in D_q$ 是球内一条直径两端的凸组合，分别提升这两个端点并保持系数，即得到 $D_{q_j}$ 中趋向 $z$ 的点。距离函数的统一一阶 Lipschitz 界和紧 $D_q$ 的有限网把逐点逼近变成统一下包含。上包含直接由紧原菜单给出：若 $z_j\in D_{q_j}$、$z_j\to z$，取共同零确认的效应聚点 $f$，则 $f(q)=1,f(z)=0$，所以 $z\in D_q$。紧性遂给整个球的 Hausdorff 收敛。这里真正构造了所需的原邻标签，没有用移动仿射包中的固定射线。证毕。
+

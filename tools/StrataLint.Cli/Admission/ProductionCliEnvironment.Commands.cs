@@ -27,6 +27,9 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult MigrateAtomContext(IReadOnlyList<string> arguments) =>
         AtomContextMigrationCommand.Run(repositoryRoot, repository, arguments);
 
+    public CommandResult RetireSources(IReadOnlyList<string> arguments) =>
+        RetireSourcesCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
+
     public CommandResult SourceDispatch(IReadOnlyList<string> arguments) =>
         SourceDispatchCommand.Run(repositoryRoot, repository, arguments);
 

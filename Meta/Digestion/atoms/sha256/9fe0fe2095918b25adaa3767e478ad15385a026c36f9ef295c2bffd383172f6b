@@ -1,0 +1,24 @@
+#### 命题 6.12：可逆过程的有限量子动力学
+
+同维 CPTP 过程若有 CPTP 左逆，则为酉共轭。 连续一参数 CPTP 群有自伴生成元 $A$，满足
+
+$$
+\mathcal T_t(\rho)=e^{-itA/\hbar}\rho e^{itA/\hbar},\qquad
+ i\hbar\dot\rho=[A,\rho].
+$$
+
+**证明。**
+
+两过程的 Kraus 项记为 $M_i,N_j$。恒等通道的 Choi 秩一给 $N_jM_i=c_{ji}I$。 对某个非零 $M_i$，逆过程保迹使至少一个乘积非零；同维使相应 $N_j$ 可逆， 故全部 $M_i$ 共线。合并成一个 $M$ 后，$M^*M=I$，所以 $M$ 酉。 有限维连续群有生成元 $\mathcal L$；星自同构给保星导子。 令 $D_0=\sum_k\mathcal L(E_{k1})E_{1k}$，导子律直接给 $[D_0,E_{ij}]=\mathcal L(E_{ij})$。 保星性使 $D_0+D_0^*$ 为中心，改取反自伴部分并写成 $-iA/\hbar$ 即得。
+
+$\square$
+
+选择纯态相位代表后得到 $i\hbar\dot\psi=A\psi$。 时间参数、作用量单位与具体生成元仍由来源指定。 对自伴 $X,Y$，正形式 $\operatorname{Tr}(\rho B^*C)$ 的二阶 Gram 正性给
+
+$$
+\operatorname{Var}_\rho X\,\operatorname{Var}_\rho Y
+ \ge\frac14|\operatorname{Tr}(\rho[X,Y])|^2;
+$$
+
+正则交换关系、时空、场的统计与规范群没有由 C136 单独选出。 反过来，标准有限复量子模型以向量加法为比较群、范数平方为自读、 实际效果与 Kraus 分支为上述接口，全部满足本节条件。 这证明该条件化理论包含完整有限量子模型，而不冒称候选已经供应所有物理接口。
+

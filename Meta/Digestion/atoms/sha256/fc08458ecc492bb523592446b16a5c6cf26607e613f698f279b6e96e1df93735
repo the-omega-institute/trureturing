@@ -1,0 +1,22 @@
+### 123.10 同一有限批真实球的统一负第三效应证书
+
+对任意固定 $\omega\in\operatorname{ri}K$，完整保留THREE_COPY第七卷121的归一化
+
+$$
+\mathscr H_\omega=\{h\in C^*:h(\omega)=1\},\qquad
+\beta_\omega(p)=\min_{\substack{x\in D_p\\h\in\mathscr H_\omega}}
+                  \frac{h(p)+h(x)}2.
+\tag{Q123.37}
+$$
+
+它满足准确原预算等价
+
+$$
+\forall x\in D_p:\ p+x-2\epsilon\omega\in C
+\quad\Longleftrightarrow\quad0\le\epsilon\le\beta_\omega(p)
+\qquad(\epsilon\ge0).
+\tag{Q123.38}
+$$
+
+因此 $\beta_\omega$ 中的 $1/2$ 不可删除，亦不把下面的方向支撑差误认成 $\beta_\omega$ 的数值。
+

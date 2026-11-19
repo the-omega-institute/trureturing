@@ -100,9 +100,10 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Theory]
-    [InlineData(null, 2580)]
-    [InlineData("21600", 21720)]
-    public void ArchiveFetchUsesDefaultOrConfiguredEnclosingBudget(string? configured, int expectedSeconds)
+    [InlineData(null)]
+    [InlineData("1")]
+    [InlineData("21600")]
+    public void ArchiveFetchHasNoEnclosingDeadline(string? configured)
     {
         const string variable = "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS";
         var previous = Environment.GetEnvironmentVariable(variable);
@@ -121,7 +122,7 @@ public sealed partial class LeanCacheEnsureCommandTests
 
             var invocation = Assert.Single(runner.Invocations,
                 static call => call.FileName == "/bin/bash");
-            Assert.Equal(TimeSpan.FromSeconds(expectedSeconds), invocation.Timeout);
+            Assert.Equal(Timeout.InfiniteTimeSpan, invocation.Timeout);
             Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
         }
         finally

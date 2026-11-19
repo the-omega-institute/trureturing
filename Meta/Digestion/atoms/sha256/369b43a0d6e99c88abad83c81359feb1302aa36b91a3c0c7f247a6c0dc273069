@@ -1,0 +1,4 @@
+$$ \forall x,y\in K:\quad \bigl[\forall i\ \forall b\in\mathcal E,\ b(p_i)=0\Rightarrow b(x)=b(y)\bigr]\Rightarrow x=y. \tag{X133.27} $$
+
+4. 按完整限制配对唯一确定的三个规范线性映射及其另行支付的全原锥正性：
+

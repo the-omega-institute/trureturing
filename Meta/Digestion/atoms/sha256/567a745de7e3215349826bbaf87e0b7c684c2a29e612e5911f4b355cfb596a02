@@ -1,0 +1,85 @@
+**引理 148.2（紧极点集上的仿射局部极小）。** 设 $K_0$ 是非空有限维紧凸集，
+$P_0=\operatorname{ext}K_0$ 紧，且每个非空真暴露面 $F$ 的
+$\operatorname{ext}F=P_0\cap F$ 连通。若 $\dim\operatorname{aff}K_0\ge2$，
+则任意仿射函数 $a:\operatorname{aff}K_0\to\mathbb R$ 在 $P_0$ 上的每个局部极小点，
+都是它在整个 $K_0$ 上的全局极小点。常量函数以及零维 $K_0$ 也有此结论。
+局部极小均取 $P_0$ 的相对拓扑。
+
+证明。在 $\operatorname{aff}K_0$ 中工作，记其方向空间维数为 $d$。
+常量情形直接成立。设 $a$ 非恒定，$p\in P_0$ 是局部极小点但不是全局极小点，
+置 $\alpha=a(p)$。存在 $P_0$ 中相对开邻域 $U\ni p$，使 $a\ge\alpha$ 于 $U$。
+若在 $K_0$ 有比 $\alpha$ 小的值，紧的全局最小面有极点；
+面的极点也是 $K_0$ 的极点，故可取 $q\in P_0$ 满足 $a(q)<\alpha$。
+
+令 $Q=P_0\setminus U$。它非空紧，且 $p\notin Q$。
+由成熟的有限维 Carathéodory 定理，$\operatorname{conv}Q$ 是
+$Q^{d+1}$ 与紧概率单纯形之积的连续像，所以紧。
+极端性使 $p\notin\operatorname{conv}Q$：若 $p$ 是 $Q$ 中点的有限凸组合，
+每个正权重点都须等于 $p$，与 $p\notin Q$ 矛盾。
+有限维严格分离给仿射函数 $b$，满足
+
+$$
+b(p)>\max_Q b.
+\tag{XII148.3}
+$$
+
+在模去常量的仿射函数空间中，保持此严格间隙的 $b$ 构成非空开集。
+由于 $d\ge2$ 且 $a$ 的线性部分非零，可使 $b$ 的线性部分不属于 $a$ 的线性部分所张成的直线：
+若原分离尺平行，就沿一个独立方向作足够小的扰动；紧 $Q\cup\{p\}$ 使严格间隙保留。
+这里没有要求 $p$ 本身暴露。
+
+对 $t\ge0$ 置
+
+$$
+g_t=b-ta,\qquad F_t=\operatorname{argmax}_{K_0}g_t,\qquad
+M_t=P_0\cap F_t=\operatorname{argmax}_{P_0}g_t.
+\tag{XII148.4}
+$$
+
+非平行性使每个 $g_t$ 在 $\operatorname{aff}K_0$ 非恒定，故 $F_t$ 总是非空紧真暴露面。
+成熟的极点—面传递给 $\operatorname{ext}F_t=P_0\cap F_t$，紧面的极点存在性又给
+$M_t\ne\varnothing$ 以及 (XII148.4) 最后的等号。
+假设使 $M_t$ 连通；紧 $P_0$ 与闭 $F_t$ 使 $M_t$ 紧。
+
+若 $x\in Q$ 且 $a(x)\ge\alpha$，对每个 $t\ge0$ 都有
+
+$$
+g_t(x)\le b(x)-t\alpha<b(p)-t\alpha=g_t(p).
+\tag{XII148.5}
+$$
+
+因此全部 $M_t$ 均包含于两个互不相交的相对开集
+$U$ 与 $W=\{x\in P_0:a(x)<\alpha\}$ 的并。
+这给出不能越过 $U$ 边界的具体障碍，而非假定某条极大点轨道连续。
+由 (XII148.3)，$M_0\subseteq U$。
+再选 $T>0$，使
+
+$$
+T(\alpha-a(q))>\max_{P_0}b-b(q).
+\tag{XII148.6}
+$$
+
+若 $a(x)\ge\alpha$，则
+$g_T(x)\le\max_{P_0}b-T\alpha<b(q)-Ta(q)=g_T(q)$，
+所以 $M_T\subseteq W$。
+
+考虑整个极大点图
+
+$$
+G=\{(t,x)\in[0,T]\times P_0:x\in M_t\}.
+\tag{XII148.7}
+$$
+
+它由对所有 $y\in P_0$ 的闭不等式 $g_t(x)\ge g_t(y)$ 定义，故在紧积中闭而紧。
+到 $[0,T]$ 的投影满射，各纤维为连通非空的 $M_t$。
+下面直接使用成熟的紧映射连通纤维论证。
+若 $G=C_1\sqcup C_2$ 是非空分离，则两部分在紧 $G$ 中闭，因而紧；
+它们在 $[0,T]$ 上的像是两个非空闭集且覆盖区间。
+区间连通使两像相交，于是某个纤维同时遇到 $C_1,C_2$。
+该纤维被二者分离，违反纤维连通性。所以 $G$ 连通。
+
+但 $G\cap([0,T]\times U)$ 与 $G\cap([0,T]\times W)$ 是两个互不相交的相对开集，
+覆盖 $G$；$M_0$ 和 $M_T$ 又使它们均非空，矛盾。
+所以 $p$ 在 $P_0$ 上全局极小；前述紧最小面的极点传递再将结论送到整个 $K_0$。
+证明未假设 $P_0$ 连通、路径连通、极大点对应下半连续或存在连续选择。证毕。
+

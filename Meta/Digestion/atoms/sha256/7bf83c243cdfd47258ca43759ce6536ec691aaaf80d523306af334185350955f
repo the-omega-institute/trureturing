@@ -1,0 +1,83 @@
+**命题 122.6（E：完整相交球的严格双宽度界）。**
+在本章入口之外，另设同一 $F$ 与同一 $G$ 相交。
+则
+
+$$
+F\cap G=\{r\},\qquad r\in P,\qquad p,s\in D_r.
+\tag{X122.20}
+$$
+
+记 $m_r=W(D_r)$，有 $0<m_r\le M$。
+对整个 $\mathcal A_p$ 的每个 $e$，置 $t_e=e(s)=e(y)$，则
+
+$$
+0<t_e<1,\qquad
+1-m_r<t_e\le m_s,\qquad
+m_s+m_r>1,\qquad M>\frac12.
+\tag{X122.21}
+$$
+
+若同一 $y$ 是混合态，上界也严格：$t_e<m_s$。
+若 $y$ 纯，上界允许取等。
+准确的逆否命题为：$M\le1/2$ 迫使这同一最大球 F 与定向纯接触球 G 不相交。
+
+证明。
+任选 $a\in\mathcal A_s$；旧面接口保证其存在。
+命题 122.2 给它在 F 的唯一最小点为 $r$，其原零面为 G。
+如果 F 与 G 相交，最小值为零，因而整个交集恰为 $\{r\}$。
+$r$ 是完整 F 的球面端点，故原纯。
+从 $r\in D_p\cap D_s$ 及原零关系对称，得 $p,s\in D_r$。
+这一步不能用于不相交分支。
+
+旧定理 IX120.21 对每个当前 $e\in\mathcal A_p$ 给
+$0<t_e=e(s)=e(y)<1$。
+它是每个效应的两个相同接触读数；不同 $e$ 的 $t_e$ 不被当成同一常数。
+又 $r\in D_p$ 给 $e(r)=0$。
+因 $r,y\in G$，
+
+$$
+t_e=e(y)-e(r)\le\operatorname{osc}_G e\le m_s.
+\tag{X122.22}
+$$
+
+严格下界应用的是 [EXCLUSION IX 的定理 119.8](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)，
+不是同卷的第 119.8 节。
+准确代换为：该定理的完整球取 $D_r$，球的 owner 标签取 $r$，
+相邻纯点取 $p\in P\cap D_r$，相邻完整确认取当前 $e\in\mathcal A_p$。
+再取一个完整确认 $a_r\in\mathcal A_r$。
+$a_r(r)=1$ 且 $r\in D_p$；全局 $M<1$ 给
+
+$$
+\min_{D_p}a_r\ge1-W(D_p)\ge1-M>0.
+\tag{X122.23}
+$$
+
+这正支付旧定理的一侧变分所需严格正下界。
+旧定理于是给原效应在 $D_r$ 上的严格改进，故
+
+$$
+\operatorname{osc}_{D_r}e<m_r.
+$$
+
+由于同一 $p,s\in D_r$，有
+
+$$
+1-t_e=e(p)-e(s)
+\le\operatorname{osc}_{D_r}e<m_r.
+\tag{X122.24}
+$$
+
+联合 (X122.22) 得 $1-m_r<t_e\le m_s$，于是 $m_s+m_r>1$。
+$m_s,m_r\le M$ 给 $2M>1$。
+
+若同一 $y$ 混合，它在 G 的相对内部。
+$e|_G$ 非恒定，因为 $e(r)=0<e(y)$。
+非恒定仿射函数不能在球内部达到最大值，所以
+$e(y)<\max_Ge$。
+原非负及 $e(r)=0$ 给 $\min_Ge=0$，故
+$t_e<\operatorname{osc}_Ge\le m_s$。
+纯 $y$ 没有这个内部严格性。证毕。
+
+这项新组合耦合两颗实际完整球的宽度；严格变分本身仍归旧定理 IX119.8。
+它不提供 F/G 相交，不排除 $1/2<M<1$，也不把所有接触效应的读数统一成一个 $t$。
+

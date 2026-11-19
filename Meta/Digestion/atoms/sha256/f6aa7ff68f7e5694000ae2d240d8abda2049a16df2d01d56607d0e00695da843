@@ -1,0 +1,14 @@
+### Proposition 11.1. The phase-zero obstruction
+
+Define W|s>=i^{|s|}|s>, where |s| is the number of occupied sites, and Z_par|s>=(-1)^{|s|}|s>. With only pulses exp(-it X_i), their conjugates W^dagger U W are real orthogonal matrices of determinant one. Equivalently, the antiunitary A=Z_par times coordinate conjugation commutes with every allowed U. The ray quantity |psi^T Z_par psi| is invariant.
+
+Consequently every finite adaptive protocol consisting of these pulses, word-basis projective measurements and hypothesis-independent classical choices gives identical complete-record probabilities on rho and A rho A^{-1}. In particular the orthogonal states
+
+$$|\psi_\pm\rangle=\frac{|0^n\rangle\pm|10^{n-1}\rangle}{\sqrt2} \tag{11.1}$$
+
+cannot be distinguished by that entire menu. A single pulse R_1(pi/2,pi/4) followed by word measurement distinguishes them perfectly.
+
+Proof. An enabled edge changes |s| by one, so W^dagger(-i X_i)W is real antisymmetric. Exponentiation proves the orthogonal statement. The identity Z_par X_i Z_par=-X_i, together with conjugation of i, gives A U A^{-1}=U and U^T Z_par U=Z_par. Word projectors also commute with A. Every fixed branch Kraus product therefore intertwines A, and its nonnegative probability on the two conjugate hypotheses is equal. The same conditional policy weights preserve equality for adaptive complete histories; summing records preserves it too. A exchanges the two vectors in (11.1). On their enabled two-dimensional block exp(-i pi Y/4) sends psi_+ to the occupied word and psi_- to the empty word. QED.
+
+This result is stronger than failure of one selected experiment. It describes a whole allowed control-and-readout class. It excludes coherent clock couplings or phase gates absent from that class. Full-flip monomial gates followed only by word measurement have the still smaller diagonal observable space of dimension d.
+

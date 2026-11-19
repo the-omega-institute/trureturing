@@ -1,0 +1,79 @@
+**推论 103.11（原锥上的相干叉口与 Schur 合拢）。** 在定理103.9的条件下，
+共同见证基给出两个原全旁观正映射
+
+$$
+\begin{aligned}
+v_i|a\rangle&=|aa\rangle,\\
+(Dx)_{i,i}&=v_i x_i v_i^*,\qquad (Dx)_{i,j}=0\ (i\ne j),\\
+(Mz)_i&=v_i^*z_{i,i}v_i.
+\end{aligned}
+\tag{103.25}
+$$
+
+$D:W_1\to W_2$ 保质量，$M:W_2\to W_1$ 不增质量。
+它们在实迹配对下满足 $M=D^*$，但二者的原旁观正性各自有资源证明，
+并不由未知高阶锥上的取伴随推断。
+单位是 $J=\bigoplus_iJ_i$，其中 $J_i=|\eta_i\rangle\langle\eta_i|$ 为全一矩阵，
+而不是 $\bigoplus_i I_{n_i}$。
+
+**证明。** 以下正性在定理103.5之后、使用定理103.8之前就已取得。
+在“输入参考、输出”次序，矩阵单位展开给
+
+$$
+J(D)=\bigoplus_i\sum_{a,b}E_{ab}^{(i)}\otimes E_{ab}^{(i)}\otimes E_{ab}^{(i)}=\Delta.
+\tag{103.26}
+$$
+
+对 $M$，输入块 $(i,j)$ 不匹配时输出为零；匹配时
+$v_i^*(E_{ab}\otimes E_{cd})v_i=\delta_{ac}\delta_{bd}E_{ab}$，所以
+其“两个参考腿、一个输出腿”的 Choi 元素也是(103.26)。
+这使用的是由原杯乘积构成的 $\Omega_2\in C_4$，并未假定 $C_4$ 标准。
+由原 $\Delta\in C_3$ 和引理103.4，分别得到 $D$ 与 $M$ 的全部原旁观正性。
+这是两个独立 Choi 代入；$M=D^*$ 只是另由迹恒等式核对的线性代数关系。
+
+因为 $v_i^*v_i=I_i$，$u_2D=u_1$。
+令 $Q$ 在匹配二份扇区上为 $v_iv_i^*=\sum_a|aa\rangle\langle aa|$，
+其他扇区为零。此时 $0\le Q\le I$ 是原二份 proper 效应，且
+$u_1M(z)=\operatorname{Tr}(Qz)\le u_2(z)$。
+与旁观单位的最大界把预算提升到所有原纠缠旁观者。
+单独的 $M$ 为零的非匹配块也保留其正补预算。
+
+逐块矩阵元给
+$M(x\otimes y)_i=x_i\odot y_i$，这里 $\odot$ 是逐项 Schur 乘积，
+并且 $MD=\mathrm{id}$。
+在每个块的向量基上，$v_i$ 是相干复制基向量的映射，
+$v_i^*|ab\rangle=\delta_{ab}|a\rangle$，单位向量为 $\eta_i=\sum_a|a\rangle$。
+这些是 Coecke–Pavlovic–Vicary，
+[*A new description of orthogonal bases*, arXiv:0810.0812v1](https://arxiv.org/abs/0810.0812v1)，
+定理5.1及第6节的成熟正交基／special commutative dagger-Frobenius 对应中的基公式，
+DOI [10.1017/S0960129512000047](https://doi.org/10.1017/S0960129512000047)。
+在此只把这些已知恒等式嵌入原锥推导，不另立 Frobenius 分类。
+
+具体地，在每个 $|a\rangle$ 上两种迭代 $v_i$ 都给 $|aaa\rangle$，且 $v_i^*v_i=I$。
+在 $|ab\rangle$ 上，下面三个算子的作用均为 $\delta_{ab}|aa\rangle$：
+
+$$
+v_iv_i^*=(v_i^*\otimes I)(I\otimes v_i)
+         =(I\otimes v_i^*)(v_i\otimes I)
+\tag{103.27}
+$$
+
+故相应合同映射满足交换、结合、special 与 Frobenius 恒等式。
+不匹配块上的所有这些复合均为零；匹配块逐块成立，因而可在整个原直和中组合。
+令 $q:\mathbb R\to W_1$ 为 $q(1)=J$，则
+$M(q\otimes\mathrm{id})=M(\mathrm{id}\otimes q)=\mathrm{id}$，
+因为 $J_i\odot x_i=x_i$。
+若把单位错取为 $I_i$，Schur 乘积只保留对角元，不能给此恒等式。
+相应相干余单位是 $q^*(x)=\sum_i\langle\eta_i|x_i|\eta_i\rangle$，
+满足 $(q^*\otimes\mathrm{id})D=(\mathrm{id}\otimes q^*)D=\mathrm{id}$。
+$u_1(J)=R$、$J_i\le n_iI_i$，所以 $J/R$ 归一、$q^*/L$ proper；
+使用这些归一预算时，单位式分别带 $1/R$，余单位式带 $1/L$，不能删除系数。
+
+对任意 $|\psi\rangle=\sum_a c_a|a\rangle$，
+$v_i|\psi\rangle=\sum_a c_a|aa\rangle$。
+这是相关的相干振幅，不是 $|\psi\rangle\otimes|\psi\rangle$；
+其 dyad 保留 $c_a\overline{c_b}|aa\rangle\langle bb|$ 的非对角项，
+因此也不是先去相干再广播的经典通道。
+新的原锥内容在于 $\mathsf F$ 使这两条叉口在全部原旁观者上正，
+以及它供应了命题103.7的两个资源；上述基恒等式本身是成熟数学。∎
+

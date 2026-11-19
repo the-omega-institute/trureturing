@@ -1,0 +1,86 @@
+**命题 121.6（联合三维空间中的实际正轴截面）。**
+令
+
+$$
+L_{\rm ax}=\operatorname{span}\{u,e_p,e_b\}
+=\operatorname{span}\{u,e_p,e_s\},\qquad g_x=u-e_x.
+\tag{X121.30}
+$$
+
+则
+
+$$
+\begin{gathered}
+\dim L_{\rm ax}=3,\quad e_x,g_x\in L_{\rm ax},\\
+S_x\cap L_{\rm ax}=\operatorname{span}\{g_x,e_b\},\\
+N_x\cap L_{\rm ax}=\operatorname{cone}\{e_b,e_y\},\\
+L_{\rm ax}=(S_x\cap L_{\rm ax})\oplus\mathbb R k_+,\qquad
+L_{\rm ax}\subset S_p+S_s,\\
+\dim\bigl(S_x/(S_x\cap L_{\rm ax})\bigr)=2.
+\end{gathered}
+\tag{X121.31}
+$$
+
+在实际 $D_x=c_x+B_x\overline{\mathbb B}^{3}$ 中令
+$b=c_x+B_xn_x$、$y=c_x-B_xn_x$、$\|n_x\|=1$，并取原读数 $H_x$。
+置 $R_b=\rho_x(n_x)$、$R_y=\rho_x(-n_x)$，则整个 $V$ 上有
+
+$$
+e_b=\frac{R_bg_x+n_x\cdot H_x}{1+R_b},\qquad
+e_y=\frac{R_yg_x-n_x\cdot H_x}{1+R_y}.
+\tag{X121.32}
+$$
+
+轴上 $\alpha g_x+\beta n_x\cdot H_x$ 的原全局正性恰为
+
+$$
+\begin{cases}
+\alpha\ge\beta R_b,&\beta\ge0,\\
+\alpha\ge(-\beta)R_y,&\beta\le0.
+\end{cases}
+\tag{X121.33}
+$$
+
+证明。
+从 (X121.9) 可解出 $v\cdot H$，因而两个生成空间相同。
+$u,e_p$ 独立，因为在 $p$ 读数同为一而在 $D_p$ 分别为一、零。
+$e_b|_{D_p}$ 非恒定，所以 $e_b$ 不在 $\operatorname{span}\{u,e_p\}$；
+这证明维数三。
+(X121.11) 及 (X121.9) 把 $e_x,g_x$ 放在同一空间。
+
+$g_x\in N_x$，实际边 $x\perp b$ 给 $e_b\in N_x$。
+在 $D_x$ 上，它们分别是恒定一和非恒定的 $e_b$，所以独立。
+评价 $\operatorname{ev}_x$ 在 $L_{\rm ax}$ 非零，因为 $u(x)=1$。
+而每个 $S_x$ 元素在 $x$ 为零。
+因此 $S_x\cap L_{\rm ax}$ 至多二维，以上两个独立元恰好张满它。
+
+(X121.32) 是旧的原邻点确认公式在锚 $x$ 的直接应用。
+旧的全局方向锥条件 (EXCLUSION IX120.11) 及 $\rho_x$ 的正齐次性，
+对 $\beta\ge0$ 给 $\rho_x(\beta n_x)=\beta R_b$，
+对 $\beta\le0$ 给 $\rho_x(\beta n_x)=(-\beta)R_y$。
+这正是 (X121.33)，其两个边界射线为原 $e_b,e_y$。
+当 $\beta=0$，条件是 $\alpha\ge0$，也在这两射线生成的锥内。
+更明确地，$R_b+R_y>0$ 且
+
+$$
+\alpha g_x+\beta n_x\cdot H_x
+=\frac{(1+R_b)(\alpha+\beta R_y)}{R_b+R_y}e_b
++\frac{(1+R_y)(\alpha-\beta R_b)}{R_b+R_y}e_y.
+\tag{X121.34}
+$$
+
+(X121.33) 恰使两个系数非负；反向也由原效应正性成立。
+所以正截面确在原 $C^*$ 中，而非仅在完整 $D_x$ 上非负。
+事实上 $\min_{D_x}e_b=D>0$；
+若把全部局部球正函数当作原正法向，会丢失这条真实边界。
+
+$k_+=u-e_p-e_s\in L_{\rm ax}$，命题 121.3 给 $k_+(x)<0$。
+$S_x$ 在 $x$ 为零，所以它与 $\mathbb R k_+$ 只有零交，得到直和。
+$g,e_s\in S_p$，而 $e_p\in S_s$，且 $u=g+e_p$，
+故 $L_{\rm ax}\subset S_p+S_s$。
+最后 $x\in P_0$ 给 $\dim S_x=4$，扣除二维轴截面便得商维数二。证毕。
+
+二维轴锥的计算应用已有方向锥；这里保留的是它在同一 $S_p+S_s$、
+$S_x$ 及严格有符号横线中的联合位置。
+它没有识别整个 $N_x$ 为 Lorentz 锥，也没有构造全正限制逆。
+

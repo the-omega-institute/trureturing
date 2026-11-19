@@ -1,0 +1,12 @@
+### 3.2　整数可生成的正锥，与完成后的正锥
+
+在阿贝尔化后的有限自由窗口 $\mathbb Z^m$ 中，将包络表示为实对称矩阵，定义原整数平方锥
+
+$$
+\mathcal C_\mathbb Z=
+ \left\{\sum_{j=1}^k\lambda_jz_jz_j^{\mathsf T}:
+ k<\infty,\ \lambda_j\ge0,\ z_j\in\mathbb Z^m\right\}.
+$$
+
+这个锥已经允许非负实系数，但尚未取极限。 不能把它与全部正半定矩阵未经证明地等同。
+

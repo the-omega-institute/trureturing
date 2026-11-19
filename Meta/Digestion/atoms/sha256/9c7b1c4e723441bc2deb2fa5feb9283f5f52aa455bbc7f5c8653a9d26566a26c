@@ -1,0 +1,31 @@
+**引理 4.1（终端重心存活）。** 对任意成功方案，固定一个单位 $t\in T$，记
+
+$$
+U(h)=F_ht,\qquad
+x_{y,s}=\sum_h2^{-n}p_s(y\mid h)U(h),\qquad
+A_s=\sum_y\|x_{y,s}\|.
+$$
+
+则 $0\le A_s\le1$，且 $\mathbb E_S A_S\ge1-\varepsilon$。
+
+证明。由三角不等式和核归一化，$\sum_y\|x_{y,s}\|\le\sum_{h,y}2^{-n}p_s(y\mid h)=1$。以命题 2.4 回缩任意全空间解码器，令 $Z_t=|t\rangle\langle\xi|$。它是迹范数为一的非 Hermitian 算子，并且
+
+$$
+\operatorname{Ad}_{Q_h}(Z_t)=|F_ht\rangle\langle\xi|.
+$$
+
+这个等式保留了 $\xi$ 与 $T$ 之间的实际相对相位。几乎每个固定种子仍有同一个实际公平先验，因为 $S$ 独立于整个历史。只作为分析量定义条件信道 $\mathcal C_s$，有
+
+$$
+\mathcal C_s(Z_t)=\sum_yD_{y,s}(|x_{y,s}\rangle\langle\xi|),\qquad
+\|\mathcal C_s(Z_t)\|_1\le A_s.
+$$
+
+第二式使用引理 2.3 对复算子的迹范数收缩。所有可数和按向量范数或迹范数绝对收敛。积分后，
+
+$$
+\|\mathcal C(Z_t)\|_1\le\mathbb E_S A_S.
+$$
+
+另一方面，平均钻石误差给出 $\|\mathcal C(Z_t)\|_1\ge1-\varepsilon$，从而得结论。这里直接使用任意终端核，没有在线峰值内存假设，也没有引入在线块量 $a_W$；平均成功未被改写成逐种子成功。$\square$
+

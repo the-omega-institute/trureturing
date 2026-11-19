@@ -1,0 +1,45 @@
+**引理 147.4（局部有限闭层及整球连续）。** 对每个整数 $m\ge1$，令 $Q_m\subset Q$ 由下列存在条件定义：
+
+$$
+\begin{gathered}
+x_1,\ldots,x_9\in S_q,\qquad \Gamma(x_1,\ldots,x_9)\ge1/m,\\
+g_j\in\mathcal A_{x_j},\qquad
+y_{j0},\ldots,y_{j3}\in D_{x_j},\qquad
+\tau(y_{j0},\ldots,y_{j3})\ge1/m\quad(1\le j\le9).
+\end{gathered}
+\tag{XII147.10}
+$$
+
+则 $Q=\bigcup_{m\ge1}Q_m$，每个 $Q_m$ 紧，且 $q\mapsto D_q$ 在每层按原环境 Hausdorff 距离连续。因此任意 $U$ 中有较小闭二盘 $Q'\subset U$，其球面内部非空，在其上整球连续。
+
+证明。每个实际三球的边界上有九个二次评估独立点：在标准 $S^2$ 取六个轴端点及
+
+$$
+(e_1+e_2)/\sqrt2,\quad(e_1+e_3)/\sqrt2,\quad(e_2+e_3)/\sqrt2.
+$$
+
+次数至多二的多项式 $c+\ell\cdot t+t^*At$，其中 $A$ 对称，若在这九点为零，六轴点给 $\ell=0,A_{ii}=-c$，后三点给全部非对角 $A_{ij}=0$。故核恰为 $c(1-\|t\|^2)$，十维多项式空间的评估秩为九。齐次化到四维 $\operatorname{span}D_q$，再延伸到 $V$，不改此秩。每个下一层实际三球 $D_{x_j}$ 又含非退化四面体。有限个严格正量可用同一 $1/m$ 下界，得到覆盖。
+
+设 $q_n\in Q_m\to q\in Q$。在紧 $K,\mathcal E$ 的有限乘积中，将全部见证及任取 $e_n\in\mathcal A_{q_n}$ 一起取共同收敛子列，极限记为 $x_j,y_{jk},g_j,e$。有
+
+$$
+e(q)=1,\quad e(x_j)=0,\quad g_j(x_j)=1,\quad
+g_j(y_{jk})=0,\quad\tau(y_{j0},\ldots,y_{j3})\ge1/m.
+\tag{XII147.11}
+$$
+
+第一对等式只先给 $x_j\in D_q$，不先给纯性。后一四面体使 $g_j$ 的零面非点。现在 $q\in P_{\rm s}$ 已由固定盘支付，引理147.3逐个给 $x_j\in S_q\cap P_{\rm s}$、$g_j\in\mathcal A_{x_j}$，且所有 $y_{jk}\in D_{x_j}$。连续评价保留 $\Gamma\ge1/m$。所以极限见证仍满足式(XII147.10)，$Q_m$ 闭于紧 $Q$。这正是全局 Inj 未被预付的闭性步骤。
+
+再设 $q_n\to q$ 于同一 $Q_m$。写
+
+$$
+D_{q_n}=c_n+B_n\overline{\mathbb B}^3,
+\qquad \|B_n\|\le\operatorname{diam}K/2.
+$$
+
+该界由全部 $c_n\pm B_nt\in K$，$\|t\|=1$，给出，不假设连续选轴。任意子列可再取 $c_n\to c,B_n\to B,e_n\to e$，故整球趋于 $E=c+B\overline{\mathbb B}^3\subseteq D_q$。同时取全部有限见证极限；已证九个极限点 $x_j\in E\cap S_q$，评估秩仍九。
+
+若 $B$ 秩至多二，九点位于仿射维数至多二的空间，次数至多二的多项式空间维数至多六，矛盾。因此 $E$ 为非退化三椭球，与 $D_q$ 有同一仿射三平面。每个 $x_j$ 是 $D_q$ 的极点，因 $x_j\in E\subseteq D_q$，亦是 $E$ 的极点。两边界二次形式均在该四维齐次空间的九点评估核中；核维数是一，故二次形式成非零比例，边界相同，取其凸包得 $E=D_q$。任意子列再极限均如此，故整列趋于 $D_q$。
+
+紧二盘 $Q$ 是 Baire 空间，可数闭覆盖中某层有非空相对内部；盘边界在盘中无处稠密，故可在这一内部中取球面内部非空的较小闭二盘 $Q'$。证毕。
+

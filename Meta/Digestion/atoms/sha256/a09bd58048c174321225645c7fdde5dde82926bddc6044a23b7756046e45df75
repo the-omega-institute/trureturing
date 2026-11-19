@@ -1,0 +1,8 @@
+**引理 2.1（Nicolas）。** 设 RH 成立，则对 $x\ge10^9$，
+
+$$
+\log\frac{P(x)}{e^\gamma\log\theta(x)}=-\log f(x)\ \ge\ \frac{2+W(x)}{\sqrt x\log x}-\frac{2.062}{\sqrt x\log^2x}.
+$$
+
+**证明。** 这是 Nicolas 上述论文命题 2.1 中不等式 (2.16) 的右半部分，即 $\log f(x)\le-(2+W(x))/(\sqrt x\log x)+2.062/(\sqrt x\log^2x)$，两边取负号即得。证毕。
+
