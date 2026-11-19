@@ -116,14 +116,14 @@ def rejected (i : Fin 3) : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R :=
-    R.readout 0 () (fun X : ℕ =>
+    R.readout (⟨0, by decide⟩ : Fin 3) () (fun X : ℕ =>
       (count (radicalComponentSet 2 ∩ {n | PrimitiveNonDeficient n}) X : ℝ) /
         radicalComponentCount 2 X) atTop (𝓝 0) ∧
-    R.readout 1 () (fun X : ℕ =>
+    R.readout (⟨1, by decide⟩ : Fin 3) () (fun X : ℕ =>
       (count (radicalComponentSet 2 ∩ {n | PrimitiveNonDeficient n ∧ Odd n}) X : ℝ) /
         radicalComponentCount 2 X) atTop (𝓝 0) ∧
     ∀ M : Finset ℕ, M.Nonempty → (∀ p ∈ M, p.Prime) →
-      R.readout 2 () (fun X : ℕ =>
+      R.readout (⟨2, by decide⟩ : Fin 3) () (fun X : ℕ =>
         (count (radicalComponentSet 2 ∩
           {n | PrimitiveNonDeficient n ∧ ∀ p ∈ M, ¬ p ∣ n}) X : ℝ) /
             radicalComponentCount 2 X) atTop (𝓝 0)
@@ -145,7 +145,8 @@ private theorem rejected_law (i : Fin 3) : ¬ arena.Law (rejected i) := by
 def family : Registration arena (type_of% @conjectures) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨conjectures, rejected 0, rejected_law 0⟩
+  variation :=
+    ⟨conjectures, rejected ⟨0, by decide⟩, rejected_law ⟨0, by decide⟩⟩
   sensitivity := by
     constructor
     · intro i
