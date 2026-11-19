@@ -1,0 +1,25 @@
+**Corollary 111.2 (Rank at most two versus all density matrices).**
+For every $\rho\in\mathcal D_n$ of rank one or two,
+
+$$
+\{\sigma\in\mathcal D_n:\pi(\sigma)=\pi(\rho)\}=\{\rho\}.
+\tag{111.3}
+$$
+
+Proof. For rank two take $S=\operatorname{ran}\rho$. Choose any two
+distinct source rays spanning $S$ and use their actual pair face.
+The image of $\rho$ belongs to $\pi(\mathcal D(S))$. Every competing
+$\sigma$ is supported on $S$ by (111.1), and the injectivity on
+$\operatorname{Herm}(S)$ gives $\sigma=\rho$. For rank one choose
+any two-plane containing its support, possible because $n\ge2$, and
+use exactly the same argument. This includes $n=2$; there is no
+rank-zero normalized state. ∎
+
+The comparison in (111.3) is against **every** density matrix,
+including matrices of larger rank. Injectivity only within the
+rank-at-most-two subset would not give the next sign-rank conclusion.
+Source spectral decomposition in (111.2) uses ordinary matrix
+positivity in the supplied PSD domain. It grants neither spectrality
+of the original cone before rigidity nor a native decomposition
+procedure for original preparations.
+

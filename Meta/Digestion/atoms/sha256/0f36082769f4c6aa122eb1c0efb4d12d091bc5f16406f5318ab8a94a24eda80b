@@ -1,7 +1,0 @@
-但物理实现必须给出：
-
-* 物理状态空间 \(W\)；
-* 状态编码 \(h:W\to X\)；
-* 协议编译器 \(C:P\to P_{\mathrm{phys}}\)；
-* 实际物理 law \(\mathcal L^{\mathrm{phys}}\)。
-

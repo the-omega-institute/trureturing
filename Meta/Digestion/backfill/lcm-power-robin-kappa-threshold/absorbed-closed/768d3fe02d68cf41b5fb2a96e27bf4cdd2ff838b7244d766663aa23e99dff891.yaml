@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:768d3fe02d68cf41b5fb2a96e27bf4cdd2ff838b7244d766663aa23e99dff891
-  normalized_sha256: sha256:768d3fe02d68cf41b5fb2a96e27bf4cdd2ff838b7244d766663aa23e99dff891
-cas_ref: sha256:768d3fe02d68cf41b5fb2a96e27bf4cdd2ff838b7244d766663aa23e99dff891
-coverage_gids:
-  - gid: D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel.prime_counting_factorial_residual
-    target_statement_id: sha256:2a2137dabaa96b2850870dcd1ce80af8e2235040d638a69e4bb9856cd5c339cd
-receipts:
-  unresolved_subitems: []

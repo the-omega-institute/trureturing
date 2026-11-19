@@ -74,7 +74,7 @@ public static class RepositoryCanonicalizer
             ValidateStructuredArtifacts(snapshot, policy, changes);
 
             foreach (var file in snapshot.Files.Values)
-                if (!file.ContentWasRead && !DigestionOpaquePathPolicy.IsAuxiliaryData(file.Path))
+                if (!file.ContentWasRead && !HistoricalTheoryPaths.IsAuxiliaryData(file.Path))
                     throw new FormatException($"Required admission input was not read: {file.Path.Value}.");
             var expectedEntries = snapshot.Files
                 .Where(static item => item.Value.ContentWasRead)

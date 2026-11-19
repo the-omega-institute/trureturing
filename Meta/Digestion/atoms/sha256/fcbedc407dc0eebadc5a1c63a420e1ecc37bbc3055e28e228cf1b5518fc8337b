@@ -1,4 +1,0 @@
-**定理 180.8（完整同坐标重建）。** 在上述精确背景下，$\mathsf Q_{\rm join}$ 等价于179.7的 $\mathsf Q_{\rm hyp}$，也等价于存在固定 $n\ge2$ 及同一个 $\theta:V\overset\sim\longrightarrow\operatorname{Herm}_n(\mathbb C)$，使对全部有限 $N\ge0$ 有 $\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N}$、$u_N=\operatorname{Tr}\circ\theta^{\otimes N}$。
-
-证明。177.5a及177.4逐面给 L2。180.2在完整三复制原域把 $\mathsf J_2$ 变为 AD，178.2给 NC，直接消费178.6或XIII162.16，得到同一个张量幂坐标，包括 $N=0$。反向标准复 PSD 的全部混态零面凸，支持二维球内的对径点零响应，180.2给(180.1)。与179.7的等价由179.8衔接，不额外假设 $\mathsf{PL}$、$\mathsf{EX}_0$、Dacey或模律；这些不是新候选的隐藏输入。$\square$
-

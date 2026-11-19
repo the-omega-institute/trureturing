@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:82cfc9af88f06583a2eaa43a494cdde8e5b4a6b86a3851a5fbfad49fde950f6d
-  normalized_sha256: sha256:82cfc9af88f06583a2eaa43a494cdde8e5b4a6b86a3851a5fbfad49fde950f6d
-cas_ref: sha256:82cfc9af88f06583a2eaa43a494cdde8e5b4a6b86a3851a5fbfad49fde950f6d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Discussion/BoundedDiscussionBlindSpotPersistence.bounded_discussion_cannot_remove_joint_blind_spot
-    target_statement_id: sha256:680d743c913baf9ec864fd409cdf3123e814e425b1d4f2b0b4864c6b67c9dcbb
-receipts:
-  unresolved_subitems: []

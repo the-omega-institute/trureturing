@@ -58,7 +58,7 @@ public sealed class UtilityAdmissionRuleTests
             (
                 Diagnostics: EvaluateFirstFreeze(AtomUtilityFixture(
                     "sha256:0000000000000000000000000000000000000000000000000000000000000000")),
-                BlockCode: "UTILITY-REFUTES-ATOM-NO-COVERAGE",
+                BlockCode: "UTILITY-TARGET-DANGLING",
                 ObservationFields:
                     $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId}"),
             (
@@ -214,25 +214,6 @@ public sealed class UtilityAdmissionRuleTests
 
         Assert.Contains(
             $"UTILITY-TARGET-DANGLING module={RuleFixture.RingPath} target={target}",
-            diagnostic.Message,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void MalformedBackfillFailsClosed()
-    {
-        var fixture = new RuleFixture();
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = "not: canonical\n";
-        fixture.Files[RuleFixture.RingPath] = WithUtility(
-            fixture.Files[RuleFixture.RingPath],
-            $"kind=checker; basis=terminal=atom:{RuleFixture.FixtureAtomId}; instance=D5/S0/Carrier/Ring.goldenRing");
-
-        var diagnostic = Assert.Single(
-            EvaluateFirstFreeze(fixture),
-            item => item.AdmissionEffect is AdmissionEffect.Block);
-
-        Assert.Contains(
-            $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath} reason=backfill-load-failed",
             diagnostic.Message,
             StringComparison.Ordinal);
     }

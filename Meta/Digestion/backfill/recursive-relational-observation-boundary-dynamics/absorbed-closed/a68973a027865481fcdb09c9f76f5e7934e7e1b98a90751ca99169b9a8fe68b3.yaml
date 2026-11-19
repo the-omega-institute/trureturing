@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a68973a027865481fcdb09c9f76f5e7934e7e1b98a90751ca99169b9a8fe68b3
-  normalized_sha256: sha256:a68973a027865481fcdb09c9f76f5e7934e7e1b98a90751ca99169b9a8fe68b3
-cas_ref: sha256:a68973a027865481fcdb09c9f76f5e7934e7e1b98a90751ca99169b9a8fe68b3
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ExperimentBoundary/FinitePrefixInfiniteCompletionSeparation.finite_prefix_infinite_completion_separation
-    target_statement_id: sha256:e643333f5f37d0690abc4f20c116c68e8bc491f64989c77affa4e318cf93724e
-receipts:
-  unresolved_subitems: []

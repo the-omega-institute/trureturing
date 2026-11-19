@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f7d8273644ac251e1eefcd84c93d8946b367f1348a18805656d520b8fe30d50f
-  normalized_sha256: sha256:f7d8273644ac251e1eefcd84c93d8946b367f1348a18805656d520b8fe30d50f
-cas_ref: sha256:f7d8273644ac251e1eefcd84c93d8946b367f1348a18805656d520b8fe30d50f
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/ModFiveCharacterWordQuotient.mod_five_character_word_scalar_quotient
-    target_statement_id: sha256:83635d1d03a8bd83f0a87f73d9d1762c16b298b18aa640aed6c523defea01f77
-receipts:
-  unresolved_subitems: []

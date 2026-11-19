@@ -1,9 +1,0 @@
-所以：
-
-- chronology 如果不影响 future law，可以遗忘；
-- 某些过去记录如果不再影响任何合法未来，也可以遗忘；
-- 不同 \((a,A,B)\) 不能遗忘；
-- pending0 与 pending1 不能合并；
-- active 与 delivered 不能合并；
-- 若 \(J_{\mathscr L}\neq0\)，不同 \(\kappa\) 不能合并。
-

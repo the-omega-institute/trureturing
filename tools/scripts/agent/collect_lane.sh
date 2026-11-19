@@ -24,8 +24,7 @@ else echo "=== envelope ABSENT"; fi
 echo "=== tree"; git -C "$WT" status --porcelain | head -5; echo "branch: $(git -C "$WT" rev-parse --abbrev-ref HEAD)"; MB=$(git -C "$WT" merge-base origin/dev HEAD 2>/dev/null || echo ''); [ -n "$MB" ] && git -C "$WT" log --oneline "$MB..HEAD" | cut -c1-110
 if [ -n "$MB" ]; then
   echo "=== non-added paths vs merge-base"; git -C "$WT" diff --name-status "$MB..HEAD" | grep -v '^A' | cut -c1-140
-  echo "=== out-of-scope paths"; git -C "$WT" diff --name-only "$MB..HEAD" | grep -v -E '^(D5|Blueprint|Golden|Meta/Digestion|Evidence)/' | cut -c1-140
-  echo "=== digestion delta"; git -C "$WT" diff --name-status "$MB..HEAD" -- Meta/Digestion/backfill | cut -c1-140
+  echo "=== out-of-scope paths"; git -C "$WT" diff --name-only "$MB..HEAD" | grep -v -E '^(D5|Blueprint|Golden|Reg|Evidence)/' | cut -c1-140
   echo "=== buckets"; for d in $(git -C "$WT" diff --name-only --diff-filter=A "$MB..HEAD" | grep '^D5/.*\.lean$' | xargs -n1 dirname 2>/dev/null | sort -u); do echo "$d dev=$(git -C "$WT" ls-tree origin/dev --name-only "$d/" | grep -c '\.lean$') +branch=$(git -C "$WT" diff --name-only --diff-filter=A "$MB..HEAD" | grep -c "^$d/[^/]*\.lean$")"; done
   echo "=== merge-tree"; git -C "$WT" merge-tree --write-tree origin/dev HEAD >/dev/null 2>&1 && echo clean || echo CONFLICT
 fi

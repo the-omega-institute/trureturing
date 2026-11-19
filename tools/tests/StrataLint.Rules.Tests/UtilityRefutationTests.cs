@@ -78,26 +78,15 @@ public sealed class UtilityRefutationTests
         Assert.False(Validate(RefutationFixture(), "PreDeposit", utility).IsAccepted);
     }
 
-    [Fact]
-    public void AtomCoverageMustNameDesignatedResultAndItsCurrentStatement()
+    [Theory]
+    [InlineData("ChangedContent")]
+    [InlineData("PreDeposit")]
+    [InlineData("FirstFreeze")]
+    public void ExternalAtomCannotSupplyLocalRefutationAuthority(string phase)
     {
         var fixture = RefutationFixture();
         var text = Refutes.Replace("gid:" + Claim, "atom:" + RuleFixture.FixtureAtomId, StringComparison.Ordinal);
-        Assert.True(Validate(fixture, "ChangedContent", text).IsAccepted);
-        Assert.True(Validate(fixture, "PreDeposit", text).IsAccepted);
-        Assert.Equal(UtilityValidationFailure.RefutesAtomNoCoverage, Validate(fixture, "FirstFreeze", text).Failure);
-
-        var report = fixture.Reports[RuleFixture.RingPath];
-        var claimId = CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown(RuleFixture.RingPath), report.Declarations[0]);
-        var resultId = CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown(RuleFixture.RingPath), report.Declarations[1]);
-        var original = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
-        foreach (var (gid, id, expected) in new[] { (Claim, claimId, false), (Result, claimId, false), (Result, resultId, true) })
-        {
-            fixture.Files[RuleFixture.FixtureBackfillAtomPath] = original
-                .Replace("D5/S0/Carrier/BackfillTarget", gid, StringComparison.Ordinal)
-                .Replace("target_statement_id: null", "target_statement_id: " + id, StringComparison.Ordinal);
-            Assert.Equal(expected, Validate(fixture, "FirstFreeze", text).IsAccepted);
-        }
+        Assert.Equal(UtilityValidationFailure.TargetDangling, Validate(fixture, phase, text).Failure);
     }
 
     [Fact]

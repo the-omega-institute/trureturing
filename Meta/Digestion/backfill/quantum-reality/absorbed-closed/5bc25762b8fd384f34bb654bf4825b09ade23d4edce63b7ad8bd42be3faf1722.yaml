@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5bc25762b8fd384f34bb654bf4825b09ade23d4edce63b7ad8bd42be3faf1722
-  normalized_sha256: sha256:5bc25762b8fd384f34bb654bf4825b09ade23d4edce63b7ad8bd42be3faf1722
-cas_ref: sha256:5bc25762b8fd384f34bb654bf4825b09ade23d4edce63b7ad8bd42be3faf1722
-coverage_gids:
-  - gid: D5/S3/Quantum/Recovery/WholeSmoothRecovery.whole_original_ST37
-    target_statement_id: sha256:109c007a79daa488fce6e1cfcf62ea3b26166753c6863a2453d04725a2981135
-receipts:
-  unresolved_subitems: []

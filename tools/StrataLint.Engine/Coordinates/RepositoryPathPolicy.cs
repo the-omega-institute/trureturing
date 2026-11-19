@@ -172,15 +172,13 @@ internal static partial class RepositoryPathPolicy
             or ".github/CODEOWNERS"
             || value.StartsWith("tools/", StringComparison.Ordinal)
             || FileMapDocuments.IsPolicyPath(value)
-            || DigestionCasStore.IsCanonicalPath(value)
-            || BackfillInventoryLoader.IsCanonicalPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenStatePath.TryToModulePath(value, out _)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith(ReportsRootPath, StringComparison.Ordinal)
             // Retained report licenses and the entrypoint still require FILEMAP coverage.
-            || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
+            || value.StartsWith(HistoricalTheoryPaths.TheoryRootPath, StringComparison.Ordinal)
             || value.StartsWith("docs/develop/archive/theory/", StringComparison.Ordinal)
                 && value.EndsWith(".md", StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
