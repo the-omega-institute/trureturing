@@ -38,7 +38,7 @@ noncomputable def nameReply (G : SimpleGraph V) (n : N) (f : V ↪ N) : Option (
   have h : f x ∈ Set.range f := ⟨x, rfl⟩
   rw [nameReply, dite_eq_left h, f.injective h.choose_spec]
 
-@[simp] private theorem answer_eq_none (G : SimpleGraph V) (f : V ↪ N) (q : N) :
+@[simp] theorem answer_eq_none (G : SimpleGraph V) (f : V ↪ N) (q : N) :
     nameReply G q f = none ↔ q ∉ Set.range f := by
   classical
   by_cases h : q ∈ Set.range f <;> simp [nameReply, h]
@@ -52,7 +52,7 @@ def revealedNames (T : History N) : Set N :=
 /-- Names for which the transcript records an unsuccessful query. -/
 def absentNames (T : History N) : Set N := {n | (⟨n, none⟩ : Σ _ : N, Option (Set N)) ∈ T}
 
-private theorem replay_iff {S : Type*} (read : N → S → Option (Set N))
+theorem replay_iff {S : Type*} (read : N → S → Option (Set N))
     (p : PassiveProtocol N (fun _ => Option (Set N))) (s t : S) :
     runPassiveProtocol read p s = runPassiveProtocol read p t ↔
       ∀ (entry : Σ _ : N, Option (Set N)), entry ∈ runPassiveProtocol read p t →
@@ -110,7 +110,7 @@ private theorem same_history_iff_avoids_absent (G : SimpleGraph V)
       · rw [(answer_eq_none G ref q).mpr hq] at hrow
         contradiction
 
-private theorem known_subset_range (G : SimpleGraph V)
+theorem known_subset_range (G : SimpleGraph V)
     (p : PassiveProtocol N (fun _ => Option (Set N))) (ref : V ↪ N) :
     revealedNames (runPassiveProtocol (nameReply G) p ref) ⊆ Set.range ref := by
   rintro n ⟨q, r, hentry, hn⟩
