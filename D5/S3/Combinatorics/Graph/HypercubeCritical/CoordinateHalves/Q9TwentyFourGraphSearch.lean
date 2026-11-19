@@ -14,39 +14,41 @@ private abbrev Graph := Array Nat
 private def adjacent (g : Graph) (v w : Nat) : Bool :=
   g[v]!.testBit w
 
-private def degree (g : Graph) (v : Nat) : Nat :=
-  (List.range 12).countP (adjacent g v)
+private def degree (order : Nat) (g : Graph) (v : Nat) : Nat :=
+  (List.range order).countP (adjacent g v)
 
 private def join (g : Graph) (v w : Nat) : Graph :=
   (g.set! v (g[v]! ||| (1 <<< w))).set! w (g[w]! ||| (1 <<< v))
 
-private def canJoin (g : Graph) (v w : Nat) : Bool :=
-  degree g w < 3 && !(adjacent g v w) && (g[v]! &&& g[w]!) == 0
+private def canJoin (order : Nat) (g : Graph) (v w : Nat) : Bool :=
+  degree order g w < 3 && !(adjacent g v w) && (g[v]! &&& g[w]!) == 0
 
-private def extensions (vertex discovered : Nat) :
+private def extensions (order : Nat) (vertex discovered : Nat) :
     List Nat → Graph → Nat → List (Graph × Nat)
   | [], graph, left =>
-    if discovered + left ≤ 12 then
+    if discovered + left ≤ order then
       let fresh := List.range' discovered left
       [(fresh.foldl (fun g w => join g vertex w) graph, discovered + left)]
     else []
   | next :: rest, graph, left =>
-    let skip := extensions vertex discovered rest graph left
-    if left > 0 && canJoin graph vertex next then
-      skip ++ extensions vertex discovered rest (join graph vertex next) (left - 1)
+    let skip := extensions order vertex discovered rest graph left
+    if left > 0 && canJoin order graph vertex next then
+      skip ++ extensions order vertex discovered rest (join graph vertex next) (left - 1)
     else skip
 
-private def search : Nat → Nat → Nat → Graph → List Graph
+private def search (order : Nat) : Nat → Nat → Nat → Graph → List Graph
   | 0, _, _, graph => [graph]
   | fuel + 1, vertex, discovered, graph =>
     if vertex < discovered then
       let candidates := List.range' (vertex + 1) (discovered - (vertex + 1))
-      (extensions vertex discovered candidates graph (3 - degree graph vertex)).flatMap
-        fun (extended, newCount) => search fuel (vertex + 1) newCount extended
+      (extensions order vertex discovered candidates graph (3 - degree order graph vertex)).flatMap
+        fun (extended, newCount) => search order fuel (vertex + 1) newCount extended
     else []
 
-private def candidates : List Graph :=
-  search 12 0 1 (Array.replicate 12 0)
+private def candidatesOfOrder (order : Nat) : List Graph :=
+  search order order 0 1 (Array.replicate order 0)
+
+private def candidates : List Graph := candidatesOfOrder 12
 
 /-- Specify which already discovered vertices are joined to the current
 vertex. The remaining edges introduce fresh vertices in discovery order. -/
@@ -56,20 +58,20 @@ private def extendWith (vertex discovered : Nat) (graph : Graph) (left : Nat)
   let fresh := List.range' discovered (left - chosen.length)
   (fresh.foldl (fun g w => join g vertex w) joined, discovered + fresh.length)
 
-private def Choices (vertex : Nat) : List Nat → Graph → Nat → List Nat → Prop
+private def Choices (order : Nat) (vertex : Nat) : List Nat → Graph → Nat → List Nat → Prop
   | [], _, _, chosen => chosen = []
   | next :: rest, graph, left, chosen =>
-    Choices vertex rest graph left chosen ∨
-      (0 < left ∧ canJoin graph vertex next = true ∧
+    Choices order vertex rest graph left chosen ∨
+      (0 < left ∧ canJoin order graph vertex next = true ∧
         ∃ tail, chosen = next :: tail ∧
-          Choices vertex rest (join graph vertex next) (left - 1) tail)
+          Choices order vertex rest (join graph vertex next) (left - 1) tail)
 
-private theorem extendWith_mem (vertex discovered : Nat) (available : List Nat)
+private theorem extendWith_mem (order : Nat) (vertex discovered : Nat) (available : List Nat)
     (graph : Graph) (left : Nat) (chosen : List Nat)
-    (hchoices : Choices vertex available graph left chosen)
-    (hbound : discovered + (left - chosen.length) ≤ 12) :
+    (hchoices : Choices order vertex available graph left chosen)
+    (hbound : discovered + (left - chosen.length) ≤ order) :
     extendWith vertex discovered graph left chosen ∈
-      extensions vertex discovered available graph left := by
+      extensions order vertex discovered available graph left := by
   induction available generalizing graph left chosen with
   | nil =>
     have hnil : chosen = [] := hchoices
@@ -78,36 +80,34 @@ private theorem extendWith_mem (vertex discovered : Nat) (available : List Nat)
   | cons next rest ih =>
     rcases hchoices with hskip | ⟨hleft, hj, tail, rfl, htail⟩
     · have hm := ih graph left chosen hskip hbound
-      by_cases h : left > 0 ∧ canJoin graph vertex next = true
+      by_cases h : left > 0 ∧ canJoin order graph vertex next = true
       · simpa [extensions, h] using Or.inl (b := extendWith vertex discovered graph left chosen ∈
-          extensions vertex discovered rest (join graph vertex next) (left - 1)) hm
+          extensions order vertex discovered rest (join graph vertex next) (left - 1)) hm
       · simpa [extensions, h] using hm
     · have he : left - (next :: tail).length = (left - 1) - tail.length := by
         simp [Nat.sub_sub, Nat.add_comm]
-      have hbound' : discovered + (left - 1 - tail.length) ≤ 12 := by
-        simpa only [← he] using hbound
-      have hm := ih (join graph vertex next) (left - 1) tail htail hbound'
+      have hm := ih (join graph vertex next) (left - 1) tail htail (he ▸ hbound)
       simp only [extensions, hleft, hj, ite_true, Bool.and_true, decide_true, List.mem_append]
       refine Or.inr ?_
       have hs : left - (tail.length + 1) = left - 1 - tail.length := by omega
       simpa [extendWith, hs] using hm
 
 /-- Follow the choices given by a labeled graph for the remaining vertices. -/
-private def FollowsDiscovery : Nat → Nat → Nat → Graph → Graph → Prop
+private def FollowsDiscovery (order : Nat) : Nat → Nat → Nat → Graph → Graph → Prop
   | 0, _, _, graph, target => target = graph
   | fuel + 1, vertex, discovered, graph, target =>
     vertex < discovered ∧
       ∃ chosen,
         let available := List.range' (vertex + 1) (discovered - (vertex + 1))
-        let left := 3 - degree graph vertex
+        let left := 3 - degree order graph vertex
         let updated := extendWith vertex discovered graph left chosen
-        Choices vertex available graph left chosen ∧
-          discovered + (left - chosen.length) ≤ 12 ∧
-          FollowsDiscovery fuel (vertex + 1) updated.2 updated.1 target
+        Choices order vertex available graph left chosen ∧
+          discovered + (left - chosen.length) ≤ order ∧
+          FollowsDiscovery order fuel (vertex + 1) updated.2 updated.1 target
 
-private theorem mem_search {fuel vertex discovered : Nat} {graph target : Graph}
-    (h : FollowsDiscovery fuel vertex discovered graph target) :
-    target ∈ search fuel vertex discovered graph := by
+private theorem mem_search {order fuel vertex discovered : Nat} {graph target : Graph}
+    (h : FollowsDiscovery order fuel vertex discovered graph target) :
+    target ∈ search order fuel vertex discovered graph := by
   induction fuel generalizing vertex discovered graph with
   | zero =>
     have htarget : target = graph := h
@@ -115,7 +115,7 @@ private theorem mem_search {fuel vertex discovered : Nat} {graph target : Graph}
   | succ fuel ih =>
     obtain ⟨hvertex, chosen, hchoices, hbound, hnext⟩ := h
     rw [search, ite_eq_left hvertex]
-    exact List.mem_flatMap.mpr ⟨_, extendWith_mem _ _ _ _ _ chosen hchoices hbound, ih hnext⟩
+    exact List.mem_flatMap.mpr ⟨_, extendWith_mem order _ _ _ _ _ chosen hchoices hbound, ih hnext⟩
 
 #print axioms mem_search
 
@@ -874,32 +874,32 @@ private def relabels (graph : Graph) (witness : Nat) : Bool :=
 
 private def relabelingCheck (branch : Nat × Nat × List Nat) : Bool :=
   let (code, discovered, certificates) := branch
-  let results := search 7 5 discovered (decode code)
+  let results := search 12 7 5 discovered (decode code)
   results.length == certificates.length &&
     (results.zipWith relabels certificates).all id
 
-private def frontier : Nat → Nat → Graph → Nat → List (Graph × Nat)
+private def frontier (order : Nat) : Nat → Nat → Graph → Nat → List (Graph × Nat)
   | 0, _, graph, discovered => [(graph, discovered)]
   | fuel + 1, vertex, graph, discovered =>
     if vertex < discovered then
       let available := List.range' (vertex + 1) (discovered - (vertex + 1))
-      (extensions vertex discovered available graph (3 - degree graph vertex)).flatMap
-        fun (extended, count) => frontier fuel (vertex + 1) extended count
+      (extensions order vertex discovered available graph (3 - degree order graph vertex)).flatMap
+        fun (extended, count) => frontier order fuel (vertex + 1) extended count
     else []
 
-private theorem search_frontier (first left vertex : Nat) (graph : Graph) (discovered : Nat) :
-    search (first + left) vertex discovered graph =
-      (frontier first vertex graph discovered).flatMap
-        (fun (g, d) => search left (vertex + first) d g) := by
+private theorem search_frontier (order first left vertex : Nat) (graph : Graph) (discovered : Nat) :
+    search order (first + left) vertex discovered graph =
+      (frontier order first vertex graph discovered).flatMap
+        (fun (g, d) => search order left (vertex + first) d g) := by
   induction first generalizing vertex graph discovered with
   | zero => simp [frontier]
   | succ first ih =>
     rw [show first + 1 + left = (first + left) + 1 by omega, search, frontier]
     split
     · simp only [List.flatMap_assoc]
-      apply congrArg (fun f => (extensions vertex discovered
+      apply congrArg (fun f => (extensions order vertex discovered
         (List.range' (vertex + 1) (discovered - (vertex + 1)))
-        graph (3 - degree graph vertex)).flatMap f)
+        graph (3 - degree order graph vertex)).flatMap f)
       funext pair
       obtain ⟨g,d⟩ := pair
       simpa only [show vertex + (first + 1) = vertex + 1 + first by omega] using
@@ -910,7 +910,7 @@ set_option maxRecDepth 8192 in
 set_option maxHeartbeats 40000000 in
 -- Check the five initial discovery steps against the certificate states.
 private theorem frontier_checked :
-    frontier 5 0 (Array.replicate 12 0) 1 =
+    frontier 12 5 0 (Array.replicate 12 0) 1 =
       branches.toList.map (fun (code, discovered, _) => (decode code, discovered)) := by
   decide +kernel
 
@@ -922,9 +922,9 @@ private theorem branches_checked (i : Fin 94) : relabelingCheck branches[i.val]!
 
 private theorem witness_of_branch (branch : Nat × Nat × List Nat)
     (check : relabelingCheck branch = true) {graph : Graph}
-    (hg : graph ∈ search 7 5 branch.2.1 (decode branch.1)) :
+    (hg : graph ∈ search 12 7 5 branch.2.1 (decode branch.1)) :
     ∃ witness, relabels graph witness = true := by
-  let results := search 7 5 branch.2.1 (decode branch.1)
+  let results := search 12 7 5 branch.2.1 (decode branch.1)
   let certificates := branch.2.2
   change (results.length == certificates.length &&
     (results.zipWith relabels certificates).all id) = true at check
@@ -942,7 +942,7 @@ private theorem witness_of_branch (branch : Nat × Nat × List Nat)
 
 private theorem candidate_has_witness {graph : Graph} (hg : graph ∈ candidates) :
     ∃ witness, relabels graph witness = true := by
-  change graph ∈ search (5 + 7) 0 1 (Array.replicate 12 0) at hg
+  change graph ∈ search 12 (5 + 7) 0 1 (Array.replicate 12 0) at hg
   rw [search_frontier, frontier_checked] at hg
   obtain ⟨branchState, hm, hg'⟩ := List.mem_flatMap.mp hg
   obtain ⟨branch, hb, hbs⟩ := List.mem_map.mp hm

@@ -12,22 +12,24 @@ open private Graph adjacent join degree canJoin decode labels representatives re
   candidate_has_witness from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphSearch
 
-open private Choices extendWith FollowsDiscovery candidates mem_search from
+open private Choices extendWith FollowsDiscovery candidatesOfOrder mem_search from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphSearch
 
 open private seenAfter seenAfter_nodup seen_prefix discoveryLabels still_available
   new_neighbors_contiguous from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourDiscovery
 
-private def encode (edge : Fin 12 → Fin 12 → Bool) : Graph :=
+variable {order : Nat}
+
+private def encode (edge : Fin order → Fin order → Bool) : Graph :=
   Array.ofFn fun i => (BitVec.ofBoolListLE (List.ofFn (edge i))).toNat
 
-private theorem encoded_row (edge : Fin 12 → Fin 12 → Bool) (i : Fin 12) :
+private theorem encoded_row (edge : Fin order → Fin order → Bool) (i : Fin order) :
     (encode edge)[i.val]! = (BitVec.ofBoolListLE (List.ofFn (edge i))).toNat := by
   unfold encode
   rw [getElem!_pos _ _ (by simp), Array.getElem_ofFn]
 
-private theorem encoded_adj (edge : Fin 12 → Fin 12 → Bool) (i j : Fin 12) :
+private theorem encoded_adj (edge : Fin order → Fin order → Bool) (i j : Fin order) :
     adjacent (encode edge) i.val j.val = edge i j := by
   rw [adjacent, encoded_row]
   change (BitVec.ofBoolListLE (List.ofFn (edge i))).getLsbD j.val = _
@@ -35,13 +37,13 @@ private theorem encoded_adj (edge : Fin 12 → Fin 12 → Bool) (i j : Fin 12) :
   rw [List.getElem?_eq_getElem (by simpa only [List.length_ofFn] using j.isLt)]
   simp only [Option.getD_some, List.getElem_ofFn]
 
-private theorem encoded_outside (edge : Fin 12 → Fin 12 → Bool) (i : Fin 12)
-    {j : Nat} (hj : 12 ≤ j) : adjacent (encode edge) i.val j = false := by
+private theorem encoded_outside (edge : Fin order → Fin order → Bool) (i : Fin order)
+    {j : Nat} (hj : order ≤ j) : adjacent (encode edge) i.val j = false := by
   rw [adjacent, encoded_row]
   change (BitVec.ofBoolListLE (List.ofFn (edge i))).getLsbD j = _
   simp [List.getD_eq_getElem?_getD, Nat.not_lt.mpr hj]
 
-private theorem size_encode (edge : Fin 12 → Fin 12 → Bool) : (encode edge).size = 12 := by
+private theorem size_encode (edge : Fin order → Fin order → Bool) : (encode edge).size = order := by
   simp [encode]
 
 private theorem graph_ext {g h : Graph} (hsize : g.size = h.size)
@@ -89,31 +91,31 @@ private theorem adjacent_join (g : Graph) (u v : Nat)
         Array.getElem!_set!_ne _ v i _ (Ne.symm hiv), hu', hv', Bool.false_and, Bool.or_false]
 
 /-- Adding an edge updates its two symmetric entries in the mask matrix. -/
-private theorem join_encoded (edge : Fin 12 → Fin 12 → Bool) (u v : Fin 12)
+private theorem join_encoded (edge : Fin order → Fin order → Bool) (u v : Fin order)
     (hne : u ≠ v) :
     join (encode edge) u.val v.val =
       encode (fun i j => edge i j || (i == u && j == v) || (i == v && j == u)) := by
-  let f : Fin 12 → Fin 12 → Bool :=
+  let f : Fin order → Fin order → Bool :=
     fun i j => edge i j || (i == u && j == v) || (i == v && j == u)
   have hu : u.val < (encode edge).size := (size_encode edge).symm ▸ u.isLt
   have hv : v.val < (encode edge).size := (size_encode edge).symm ▸ v.isLt
   have hneq : u.val ≠ v.val := fun he => hne (Fin.ext he)
   change join (encode edge) u.val v.val = encode f
-  have hsize : (join (encode edge) u.val v.val).size = 12 := by
+  have hsize : (join (encode edge) u.val v.val).size = order := by
     simp only [join, Array.size_set!, size_encode]
   apply graph_ext (hsize.trans (size_encode f).symm)
   intro i hi j
-  let a : Fin 12 := ⟨i, hsize ▸ hi⟩
+  let a : Fin order := ⟨i, hsize ▸ hi⟩
   rw [adjacent_join _ _ _ hu hv hneq]
-  by_cases hjlt : j < 12
-  · let b : Fin 12 := ⟨j, hjlt⟩
+  by_cases hjlt : j < order
+  · let b : Fin order := ⟨j, hjlt⟩
     have he := encoded_adj edge a b
     have hf := encoded_adj f a b
     change adjacent (encode edge) i j = edge a b at he
     change adjacent (encode f) i j = f a b at hf
     rw [he, hf]
     rfl
-  · have ho : 12 ≤ j := Nat.le_of_not_gt hjlt
+  · have ho : order ≤ j := Nat.le_of_not_gt hjlt
     have hjU : j ≠ u.val := by omega
     have hjV : j ≠ v.val := by omega
     have he := encoded_outside edge a ho
@@ -122,11 +124,11 @@ private theorem join_encoded (edge : Fin 12 → Fin 12 → Bool) (u v : Fin 12)
     change adjacent (encode f) i j = false at hf
     simp [he, hf, hjU, hjV]
 
-private theorem degree_eq_card (g : Graph) (i : Nat) :
-    degree g i = ((Finset.range 12).filter fun j => adjacent g i j = true).card := by
-  let l := (List.range 12).filter (adjacent g i)
+private theorem degree_eq_card (order : Nat) (g : Graph) (i : Nat) :
+    degree order g i = ((Finset.range order).filter fun j => adjacent g i j = true).card := by
+  let l := (List.range order).filter (adjacent g i)
   have hn : l.Nodup := (List.nodup_range).filter _
-  have hset : l.toFinset = (Finset.range 12).filter (fun j => adjacent g i j = true) := by
+  have hset : l.toFinset = (Finset.range order).filter (fun j => adjacent g i j = true) := by
     ext j
     simp [l]
   rw [degree, List.countP_eq_length_filter, ← hset]
@@ -134,26 +136,26 @@ private theorem degree_eq_card (g : Graph) (i : Nat) :
 
 /-- Any missing edge of a triangle-free cubic target passes the search's
 degree and triangle tests as long as the current graph is a subgraph. -/
-private theorem canJoin_encoded {part full : Fin 12 → Fin 12 → Bool}
+private theorem canJoin_encoded {part full : Fin order → Fin order → Bool}
     (hsub : ∀ a b, part a b = true → full a b = true)
-    (hdegree : ∀ a : Fin 12, degree (encode full) a.val = 3)
+    (hdegree : ∀ a : Fin order, degree order (encode full) a.val = 3)
     (hsymm : ∀ a b, full a b = full b a)
     (htriangle : ∀ a b c, full a b = true → full b c = true → full c a = true → False)
-    (u v : Fin 12) (hedge : full u v = true)
+    (u v : Fin order) (hedge : full u v = true)
     (hmiss : part u v = false) (hmiss' : part v u = false) :
-    canJoin (encode part) u.val v.val = true := by
-  have hd : degree (encode part) v.val < 3 := by
+    canJoin order (encode part) u.val v.val = true := by
+  have hd : degree order (encode part) v.val < 3 := by
     rw [← hdegree v, degree_eq_card, degree_eq_card]
     apply Finset.card_lt_card
     apply Finset.ssubset_iff_subset_ne.mpr
     constructor
     · intro j hj
       obtain ⟨hjlt, hjadj⟩ := Finset.mem_filter.mp hj
-      let x : Fin 12 := ⟨j, Finset.mem_range.mp hjlt⟩
+      let x : Fin order := ⟨j, Finset.mem_range.mp hjlt⟩
       exact Finset.mem_filter.mpr ⟨hjlt,
         (encoded_adj full v x).trans (hsub v x ((encoded_adj part v x).symm.trans hjadj))⟩
     · intro he
-      have hf : u.val ∈ (Finset.range 12).filter
+      have hf : u.val ∈ (Finset.range order).filter
           (fun j => adjacent (encode full) v.val j = true) :=
         Finset.mem_filter.mpr ⟨Finset.mem_range.mpr u.isLt,
           (encoded_adj full v u).trans ((hsymm v u).trans hedge)⟩
@@ -167,8 +169,8 @@ private theorem canJoin_encoded {part full : Fin 12 → Fin 12 → Bool}
     rw [Nat.testBit_and]
     change (adjacent (encode part) u.val j && adjacent (encode part) v.val j) =
       (0 : Nat).testBit j
-    by_cases hj : j < 12
-    · let x : Fin 12 := ⟨j, hj⟩
+    by_cases hj : j < order
+    · let x : Fin order := ⟨j, hj⟩
       have hu := encoded_adj part u x
       have hv := encoded_adj part v x
       rw [hu, hv]
@@ -187,18 +189,19 @@ private theorem canJoin_encoded {part full : Fin 12 → Fin 12 → Bool}
 
 /-- The state after processing all vertices below `u` and inspecting the
 neighbors of `u` below `k`. -/
-private def prefixEdges (edge : Fin 12 → Fin 12 → Bool) (u k : Nat) (a b : Fin 12) : Bool :=
+private def prefixEdges (edge : Fin order → Fin order → Bool) (u k : Nat)
+    (a b : Fin order) : Bool :=
   edge a b && decide (a.val < u ∨ b.val < u ∨
     (a.val = u ∧ b.val < k) ∨ (b.val = u ∧ a.val < k))
 
-private theorem partial_step (edge : Fin 12 → Fin 12 → Bool)
-    (hsym : ∀ a b, edge a b = edge b a) (u v : Fin 12) (huv : u.val < v.val) :
+private theorem partial_step (edge : Fin order → Fin order → Bool)
+    (hsym : ∀ a b, edge a b = edge b a) (u v : Fin order) (huv : u.val < v.val) :
     (if edge u v then join (encode (prefixEdges edge u.val v.val)) u.val v.val
       else encode (prefixEdges edge u.val v.val)) =
       encode (prefixEdges edge u.val (v.val + 1)) := by
   classical
   have hn : u ≠ v := fun h => (Nat.ne_of_lt huv) (congrArg Fin.val h)
-  have compare (a b : Fin 12) :
+  have compare (a b : Fin order) :
       (a.val < u.val ∨ b.val < u.val ∨ (a.val = u.val ∧ b.val < v.val + 1) ∨
         (b.val = u.val ∧ a.val < v.val + 1)) ↔
       (a.val < u.val ∨ b.val < u.val ∨ (a.val = u.val ∧ b.val < v.val) ∨
@@ -243,21 +246,21 @@ private theorem partial_step (edge : Fin 12 → Fin 12 → Bool)
 
 /-- Follow the branch prescribed by the edges to previously discovered
 vertices, updating the adjacency matrix at each selected neighbor. -/
-private theorem select_prefix (edge : Fin 12 → Fin 12 → Bool)
+private theorem select_prefix (edge : Fin order → Fin order → Bool)
     (hsym : ∀ a b, edge a b = edge b a)
-    (hdegree : ∀ a : Fin 12, degree (encode edge) a.val = 3)
+    (hdegree : ∀ a : Fin order, degree order (encode edge) a.val = 3)
     (htriangle : ∀ a b c, edge a b = true → edge b c = true → edge c a = true → False)
-    (u : Fin 12) (k n left : Nat) (hu : u.val < k) (hk : k + n ≤ 12)
+    (u : Fin order) (k n left : Nat) (hu : u.val < k) (hk : k + n ≤ order)
     (hlen : ((List.range' k n).filter (adjacent (encode edge) u.val)).length ≤ left) :
     let row := adjacent (encode edge) u.val
     let chosen := (List.range' k n).filter row
-    Choices u.val (List.range' k n) (encode (prefixEdges edge u.val k)) left chosen ∧
+    Choices order u.val (List.range' k n) (encode (prefixEdges edge u.val k)) left chosen ∧
       chosen.foldl (fun g v => join g u.val v) (encode (prefixEdges edge u.val k)) =
         encode (prefixEdges edge u.val (k + n)) := by
   induction n generalizing k left with
   | zero => simp [Choices]
   | succ n ih =>
-    let v : Fin 12 := ⟨k, by omega⟩
+    let v : Fin order := ⟨k, by omega⟩
     have hrow : adjacent (encode edge) u.val k = edge u v := encoded_adj edge u v
     have hstep := partial_step edge hsym u v hu
     change (if edge u v then join (encode (prefixEdges edge u.val k)) u.val k
@@ -301,14 +304,14 @@ private theorem range_split {a b : Nat} (h : a ≤ b) :
       rw [List.range_eq_range', Nat.zero_add]
     _ = List.range b := by rw [List.range'_append_1, Nat.add_sub_of_le h, List.range_eq_range']
 
-private theorem degree_prefix (edge : Fin 12 → Fin 12 → Bool)
-    (u : Fin 12) {k : Nat} (hu : u.val ≤ k) (hk : k ≤ 12) :
-    degree (encode (prefixEdges edge u.val k)) u.val =
+private theorem degree_prefix (edge : Fin order → Fin order → Bool)
+    (u : Fin order) {k : Nat} (hu : u.val ≤ k) (hk : k ≤ order) :
+    degree order (encode (prefixEdges edge u.val k)) u.val =
       (List.range k).countP (adjacent (encode edge) u.val) := by
-  have row (j : Nat) (hj : j < 12) :
+  have row (j : Nat) (hj : j < order) :
       adjacent (encode (prefixEdges edge u.val k)) u.val j =
         (adjacent (encode edge) u.val j && decide (j < k)) := by
-    let v : Fin 12 := ⟨j, hj⟩
+    let v : Fin order := ⟨j, hj⟩
     have hp := encoded_adj (prefixEdges edge u.val k) u v
     have hf := encoded_adj edge u v
     change adjacent (encode (prefixEdges edge u.val k)) u.val j =
@@ -329,29 +332,29 @@ private theorem degree_prefix (edge : Fin 12 → Fin 12 → Bool)
     intro j hj
     have hjk := List.mem_range.mp hj
     simp only [row j (hjk.trans_le hk), hjk, decide_true, Bool.and_true]
-  have hrest : (List.range' k (12 - k)).countP
+  have hrest : (List.range' k (order - k)).countP
       (adjacent (encode (prefixEdges edge u.val k)) u.val) = 0 := by
     apply List.countP_eq_zero.mpr
     intro j hj
     obtain ⟨i, hi, rfl⟩ := List.mem_range'.mp hj
-    have hjlt : k + 1 * i < 12 := by omega
+    have hjlt : k + 1 * i < order := by omega
     have hn : ¬ k + 1 * i < k := by omega
     simp only [row _ hjlt, hn, decide_false, Bool.and_false, Bool.false_eq_true, not_false_eq_true]
   rw [hprefix, hrest, Nat.add_zero]
 
-private theorem advance_prefix (edge : Fin 12 → Fin 12 → Bool)
+private theorem advance_prefix (edge : Fin order → Fin order → Bool)
     (hsym : ∀ a b, edge a b = edge b a)
     (hloop : ∀ a, edge a a = false)
-    (hdegree : ∀ a : Fin 12, degree (encode edge) a.val = 3)
+    (hdegree : ∀ a : Fin order, degree order (encode edge) a.val = 3)
     (htriangle : ∀ a b c, edge a b = true → edge b c = true → edge c a = true → False)
-    (u : Fin 12) (discovered next : Nat) (hu : u.val < discovered)
-    (hd : discovered ≤ next) (hn : next ≤ 12)
-    (hnew : ∀ v : Fin 12, discovered ≤ v.val → (edge u v = true ↔ v.val < next)) :
+    (u : Fin order) (discovered next : Nat) (hu : u.val < discovered)
+    (hd : discovered ≤ next) (hn : next ≤ order)
+    (hnew : ∀ v : Fin order, discovered ≤ v.val → (edge u v = true ↔ v.val < next)) :
     let available := List.range' (u.val + 1) (discovered - (u.val + 1))
     let chosen := available.filter (adjacent (encode edge) u.val)
     let graph := encode (prefixEdges edge u.val (u.val + 1))
-    let left := 3 - degree graph u.val
-    Choices u.val available graph left chosen ∧
+    let left := 3 - degree order graph u.val
+    Choices order u.val available graph left chosen ∧
       discovered + (left - chosen.length) = next ∧
       extendWith u.val discovered graph left chosen =
         (encode (prefixEdges edge (u.val + 1) (u.val + 2)), next) := by
@@ -359,11 +362,11 @@ private theorem advance_prefix (edge : Fin 12 → Fin 12 → Bool)
   let available := List.range' (u.val + 1) (discovered - (u.val + 1))
   let chosen := available.filter row
   let graph := encode (prefixEdges edge u.val (u.val + 1))
-  let left := 3 - degree graph u.val
+  let left := 3 - degree order graph u.val
   let fresh := List.range' discovered (next - discovered)
-  have hrow {j : Nat} (hj : j < 12) (hj' : discovered ≤ j) :
+  have hrow {j : Nat} (hj : j < order) (hj' : discovered ≤ j) :
       row j = true ↔ j < next := by
-    let v : Fin 12 := ⟨j, hj⟩
+    let v : Fin order := ⟨j, hj⟩
     have he : row j = edge u v := encoded_adj edge u v
     rw [he]
     exact hnew v hj'
@@ -372,21 +375,21 @@ private theorem advance_prefix (edge : Fin 12 → Fin 12 → Bool)
     intro j hj
     obtain ⟨i, hi, rfl⟩ := List.mem_range'.mp hj
     exact (hrow (by omega) (by omega)).mpr (by omega)
-  have hzero : (List.range' next (12 - next)).countP row = 0 := by
+  have hzero : (List.range' next (order - next)).countP row = 0 := by
     apply List.countP_eq_zero.mpr
     intro j hj
     obtain ⟨i, hi, rfl⟩ := List.mem_range'.mp hj
     exact fun hh => by have := (hrow (by omega) (by omega)).mp hh; omega
   have hcount := hdegree u
-  change (List.range 12).countP row = 3 at hcount
+  change (List.range order).countP row = 3 at hcount
   rw [← range_split hn, List.countP_append, hzero, Nat.add_zero,
     ← range_split hd, List.countP_append] at hcount
   change (List.range discovered).countP row + fresh.countP row = 3 at hcount
   rw [← range_split (Nat.succ_le_of_lt hu), List.countP_append,
-    ← degree_prefix edge u (by omega) (by omega : u.val + 1 ≤ 12),
+    ← degree_prefix edge u (by omega) (by omega : u.val + 1 ≤ order),
     List.countP_eq_length_filter, List.countP_eq_length_filter, hfresh,
     show fresh.length = next - discovered by simp [fresh]] at hcount
-  change degree graph u.val + chosen.length + (next - discovered) = 3 at hcount
+  change degree order graph u.val + chosen.length + (next - discovered) = 3 at hcount
   have hleft : left - chosen.length = next - discovered := by
     dsimp only [left]
     omega
@@ -435,7 +438,8 @@ private theorem advance_prefix (edge : Fin 12 → Fin 12 → Bool)
         · exact (hnew a (Nat.le_of_not_gt hlt)).mp ((hsym u a).trans hab)
       simp only [prefixEdges, hab, Bool.true_and, decide_eq_decide]
       omega
-  change Choices u.val available graph left chosen ∧ discovered + (left - chosen.length) = next ∧
+  change Choices order u.val available graph left chosen ∧
+    discovered + (left - chosen.length) = next ∧
     extendWith u.val discovered graph left chosen =
       (encode (prefixEdges edge (u.val + 1) (u.val + 2)), next)
   refine ⟨hchoices, by omega, ?_⟩
@@ -447,46 +451,46 @@ private theorem advance_prefix (edge : Fin 12 → Fin 12 → Bool)
     (encode (prefixEdges edge u.val discovered)), next) = _
   rw [hf', he]
 
-private theorem follows_order (edge : Fin 12 → Fin 12 → Bool)
+private theorem follows_order (edge : Fin order → Fin order → Bool)
     (hsym : ∀ a b, edge a b = edge b a) (hloop : ∀ a, edge a a = false)
-    (hdegree : ∀ a : Fin 12, degree (encode edge) a.val = 3)
+    (hdegree : ∀ a : Fin order, degree order (encode edge) a.val = 3)
     (htriangle : ∀ a b c, edge a b = true → edge b c = true → edge c a = true → False)
     (seen : Nat → Nat) (hinit : seen 0 = 1)
     (hmono : ∀ i, seen i ≤ seen (i + 1))
-    (hsize : ∀ i, seen i ≤ 12)
-    (hvertex : ∀ i < 12, i < seen i)
-    (hnew : ∀ u v : Fin 12, seen u.val ≤ v.val →
+    (hsize : ∀ i, seen i ≤ order)
+    (hvertex : ∀ i < order, i < seen i)
+    (hnew : ∀ u v : Fin order, seen u.val ≤ v.val →
       (edge u v = true ↔ v.val < seen (u.val + 1))) :
-    encode edge ∈ candidates := by
-  have follow (fuel vertex : Nat) (h : vertex + fuel = 12) :
-      FollowsDiscovery fuel vertex (seen vertex)
+    encode edge ∈ candidatesOfOrder order := by
+  have follow (fuel vertex : Nat) (h : vertex + fuel = order) :
+      FollowsDiscovery order fuel vertex (seen vertex)
         (encode (prefixEdges edge vertex (vertex + 1))) (encode edge) := by
     induction fuel generalizing vertex with
     | zero =>
-      have hv : vertex = 12 := by omega
+      have hv : vertex = order := by omega
       subst vertex
-      change encode edge = encode (prefixEdges edge 12 13)
+      change encode edge = encode (prefixEdges edge order (order + 1))
       congr 1
       funext a b
       simp [prefixEdges, a.isLt]
     | succ fuel ih =>
-      have hv : vertex < 12 := by omega
-      let u : Fin 12 := ⟨vertex, hv⟩
+      have hv : vertex < order := by omega
+      let u : Fin order := ⟨vertex, hv⟩
       let available := List.range' (vertex + 1) (seen vertex - (vertex + 1))
       let chosen := available.filter (adjacent (encode edge) vertex)
       let graph := encode (prefixEdges edge vertex (vertex + 1))
-      let left := 3 - degree graph vertex
+      let left := 3 - degree order graph vertex
       obtain ⟨hc, hn, hr⟩ := advance_prefix edge hsym hloop hdegree htriangle
         u (seen vertex) (seen (vertex + 1)) (hvertex vertex hv) (hmono vertex)
         (hsize (vertex + 1)) (hnew u)
-      change Choices vertex available graph left chosen at hc
+      change Choices order vertex available graph left chosen at hc
       change seen vertex + (left - chosen.length) = seen (vertex + 1) at hn
       change extendWith vertex (seen vertex) graph left chosen =
         (encode (prefixEdges edge (vertex + 1) (vertex + 2)), seen (vertex + 1)) at hr
       refine ⟨hvertex vertex hv, chosen, hc, ?_, ?_⟩
-      · change seen vertex + (left - chosen.length) ≤ 12
+      · change seen vertex + (left - chosen.length) ≤ order
         exact hn.trans_le (hsize (vertex + 1))
-      · change FollowsDiscovery fuel (vertex + 1)
+      · change FollowsDiscovery order fuel (vertex + 1)
           (extendWith vertex (seen vertex) graph left chosen).2
           (extendWith vertex (seen vertex) graph left chosen).1 (encode edge)
         rw [hr]
@@ -500,23 +504,35 @@ private theorem follows_order (edge : Fin 12 → Fin 12 → Bool)
         simp [prefixEdges, hloop]
       · simp [prefixEdges, ha, hb]
     · by_cases hb : b.val = 0 <;> simp [prefixEdges, ha, hb]
-  have hzero : encode (fun _ _ => false) = Array.replicate 12 0 := by decide
-  have hm := follow 12 0 rfl
+  have hzero : encode (fun _ _ : Fin order => false) = Array.replicate order 0 := by
+    apply graph_ext (by simp only [size_encode, Array.size_replicate])
+    intro i hi j
+    rw [size_encode] at hi
+    let u : Fin order := ⟨i, hi⟩
+    have hz : adjacent (Array.replicate order 0) i j = false := by
+      have hi' : i < (Array.replicate order (0 : Nat)).size := by simpa using hi
+      rw [adjacent, getElem!_pos (Array.replicate order (0 : Nat)) i hi',
+        Array.getElem_replicate, Nat.zero_testBit]
+    rw [hz]
+    by_cases hj : j < order
+    · exact encoded_adj _ u ⟨j, hj⟩
+    · exact encoded_outside _ u (Nat.le_of_not_gt hj)
+  have hm := follow order 0 (Nat.zero_add order)
   rw [hinit, hfirst, hzero] at hm
   exact mem_search hm
 
 private theorem degree_label {V : Type*} [Fintype V] (G : SimpleGraph V)
-    [DecidableRel G.Adj] (label : Fin 12 ≃ V) (i : Fin 12) :
-    degree (encode (fun a b => decide (G.Adj (label a) (label b)))) i.val =
+    [DecidableRel G.Adj] (label : Fin order ≃ V) (i : Fin order) :
+    degree order (encode (fun a b => decide (G.Adj (label a) (label b)))) i.val =
       G.degree (label i) := by
   classical
-  let edge : Fin 12 → Fin 12 → Bool := fun a b => decide (G.Adj (label a) (label b))
+  let edge : Fin order → Fin order → Bool := fun a b => decide (G.Adj (label a) (label b))
   let row := adjacent (encode edge) i.val
-  change degree (encode edge) i.val = G.degree (label i)
+  change degree order (encode edge) i.val = G.degree (label i)
   rw [degree_eq_card, ← G.card_neighborFinset_eq_degree]
-  change ((Finset.range 12).filter fun j => row j = true).card = _
-  have bound (j : Nat) (hj : j ∈ (Finset.range 12).filter (fun j => row j = true)) :
-      j < 12 := Finset.mem_range.mp (Finset.mem_filter.mp hj).1
+  change ((Finset.range order).filter fun j => row j = true).card = _
+  have bound (j : Nat) (hj : j ∈ (Finset.range order).filter (fun j => row j = true)) :
+      j < order := Finset.mem_range.mp (Finset.mem_filter.mp hj).1
   refine Finset.card_bij (fun j hj => label ⟨j, bound j hj⟩) ?_ ?_ ?_
   · intro j hj
     have he : row j = edge i ⟨j, bound j hj⟩ := encoded_adj edge i ⟨j, bound j hj⟩
@@ -533,19 +549,19 @@ private theorem degree_label {V : Type*} [Fintype V] (G : SimpleGraph V)
     · exact label.apply_symm_apply v
 
 /-- The discovery order of every connected triangle-free cubic graph on
-twelve vertices occurs in the finite search. -/
+any given number of vertices occurs in the finite search. -/
 private theorem classify_graph {V : Type*} [Fintype V] (G : SimpleGraph V)
-    [DecidableRel G.Adj] (hcard : Fintype.card V = 12) (hconn : G.Connected)
+    [DecidableRel G.Adj] (hcard : Fintype.card V = order) (hconn : G.Connected)
     (hregular : G.IsRegularOfDegree 3)
     (htriangle : ∀ a b c, G.Adj a b → G.Adj b c → G.Adj c a → False)
     (start : V) :
-    ∃ label : Fin 12 ≃ V,
-      encode (fun a b => decide (G.Adj (label a) (label b))) ∈ candidates := by
+    ∃ label : Fin order ≃ V,
+      encode (fun a b => decide (G.Adj (label a) (label b))) ∈ candidatesOfOrder order := by
   classical
   let labels := discoveryLabels G hconn start
-  let label : Fin 12 ≃ V := (Fin.castOrderIso hcard.symm).toEquiv.trans labels
+  let label : Fin order ≃ V := (Fin.castOrderIso hcard.symm).toEquiv.trans labels
   let seen (i : Nat) := (seenAfter G start i).length
-  let edge (a b : Fin 12) := decide (G.Adj (label a) (label b))
+  let edge (a b : Fin order) := decide (G.Adj (label a) (label b))
   refine ⟨label, follows_order edge ?_ ?_ ?_ ?_ seen rfl ?_ ?_ ?_ ?_⟩
   · intro a b
     simp only [edge, G.adj_comm]
