@@ -4,6 +4,8 @@
 
 Signed cylinder packing and width bounds for short returns in paired components.
 
+The return graph may be any finite quiver. The width theorem uses the signed golden-base cylinders with the fixed contraction and guard endpoints of the original digit system.
+
 **Lemma 1.1 (Phase divisibility bounds the synchronization length).**
 
 $$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall p \in \mathbb{N},\; \left(0 < p \land \left(p \mid a \land \left(p \mid b \land \left(a \le n \land b \le 2 \cdot n - 1\right)\right)\right)\right) \Rightarrow lcm\left(a, b\right) \le p \cdot \lfloor\frac{n}{p}\rfloor \cdot \lfloor\frac{2 \cdot n - 1}{p}\rfloor$$

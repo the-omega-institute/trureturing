@@ -1,5 +1,5 @@
 /- GID: D5/S1/Words/ReturnWords/ShortReturnWidthTransport
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Words/ReturnWords/ShortReturnWidthTransport
    mirror-E: none(waiver:abstract-return-width-estimate)
    anchors: []

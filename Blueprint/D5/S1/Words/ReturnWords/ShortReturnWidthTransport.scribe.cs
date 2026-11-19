@@ -19,6 +19,7 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
         "Signed cylinder packing and width bounds for short returns in paired components.",
         H("Cylinder packing and short-return width"),
         Blocks(
+            Paragraph(Text("The return graph may be any finite quiver. The width theorem uses the signed golden-base cylinders with the fixed contraction and guard endpoints of the original digit system.")),
             Describe.Lean(
                 DescribeId.Create("short-return-synchronization-bound"),
                 DeclarationHandle.Create(Prefix + "synchronized_length_le_phase_bound"),
