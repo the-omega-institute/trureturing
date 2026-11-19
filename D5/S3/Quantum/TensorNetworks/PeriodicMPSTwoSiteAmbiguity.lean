@@ -107,11 +107,11 @@ private lemma rawTwo_entry (A : Fin 2 → Bond) (r : ℕ) (p s : Fin 2 × Fin 2)
     rawTwo A r p s = ∑ w, twoFlattening A r p w * star (twoFlattening A r s w) := by
   simp [rawTwo, Matrix.mul_apply, Matrix.conjTranspose_apply]
 
-private lemma rawTwo_star_swap (A : Fin 2 → Bond) (r : ℕ) (p s : Fin 2 × Fin 2) :
+lemma rawTwo_star_swap (A : Fin 2 → Bond) (r : ℕ) (p s : Fin 2 × Fin 2) :
     star (rawTwo A r p s) = rawTwo A r s p := by
   simp only [rawTwo_entry, star_sum, star_mul, star_star]
 
-private lemma parity_cross (a b q : ℂ) (r : ℕ) (i j k : Fin 2) :
+lemma parity_cross (a b q : ℂ) (r : ℕ) (i j k : Fin 2) :
     rawTwo (parityPair a b q) r (i, i) (j, k) = 0 ∨ j = k := by
   by_cases h : j = k
   · exact Or.inr h

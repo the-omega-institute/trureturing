@@ -22,13 +22,13 @@ open scoped BigOperators Matrix
 
 noncomputable section
 
-private def changePhysical (U : Bond) (A : Fin 2 → Bond) : Fin 2 → Bond :=
+def changePhysical (U : Bond) (A : Fin 2 → Bond) : Fin 2 → Bond :=
   fun i => ∑ j, U i j • A j
 
 private def wordBasis (U : Bond) (n : ℕ) : Matrix (Word n) (Word n) ℂ :=
   fun w v => ∏ i, U (w i) (v i)
 
-private def pairBasis (U : Bond) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+def pairBasis (U : Bond) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   fun p s => U p.1 s.1 * U p.2 s.2
 
 private lemma wordMatrix_changePhysical (U : Bond) (A : Fin 2 → Bond) {n : ℕ} (w : Word n) :
@@ -107,7 +107,7 @@ private lemma flattening_changePhysical (U : Bond) (A : Fin 2 → Bond) (r : ℕ
   rw [flattening_entry]
   ring
 
-private lemma changePhysical_unitary_raw (U : Matrix.unitaryGroup (Fin 2) ℂ)
+lemma changePhysical_unitary_raw (U : Matrix.unitaryGroup (Fin 2) ℂ)
     (A : Fin 2 → Bond) (r : ℕ) :
     rawTwo (changePhysical U.val A) r =
       pairBasis U.val * rawTwo A r * (pairBasis U.val).conjTranspose := by
