@@ -48,7 +48,7 @@ def posTrace {n : Type*} [Fintype n] [DecidableEq n]
 def E {n : Type*} [Fintype n] [DecidableEq n]
     (γ : ℝ) (ρ σ : Matrix n n ℂ) : ℝ := posTrace (ρ - γ • σ)
 
-private def ptr {R A : Type*} [Fintype R] [DecidableEq R]
+def ptr {R A : Type*} [Fintype R] [DecidableEq R]
     [Fintype A] [DecidableEq A]
     (X : Matrix (R × A) (R × A) ℂ) : Matrix R R ℂ := partialTraceRight X
 
@@ -77,7 +77,7 @@ noncomputable def ratios
         0 < gap γ ρ σ ∧
         x = gap γ (amp N ρ) (amp N σ) / gap γ ρ σ}
 
-private theorem state_nonempty {n : Type*} [Fintype n]
+theorem state_nonempty {n : Type*} [Fintype n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef ∧ X.trace = 1) : Nonempty n := by
   classical
   by_contra hn
@@ -361,7 +361,7 @@ theorem amp_entry {A B R : Type*} [Fintype A] [DecidableEq A]
       act N (fun a a' => X (r, a) (s, a')) b d := by
   rfl
 
-private theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (t : ℝ) (X : Matrix (R × A) (R × A) ℂ) :
     amp N (t • X) = t • amp N X := by
@@ -370,7 +370,7 @@ private theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
       ((referenceLinear N).comp CStarMatrix.ofMatrixₗ.toLinearMap)
   exact (T.restrictScalars ℝ).map_smul t X
 
-private theorem amp_sub_smul {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_sub_smul {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (t : ℝ) (X Y : Matrix (R × A) (R × A) ℂ) :
     amp N (X - t • Y) = amp N X - t • amp N Y := by
@@ -380,7 +380,7 @@ private theorem amp_sub_smul {A B R : Type*} [Fintype A] [DecidableEq A]
   exact ((T.restrictScalars ℝ).map_sub X (t • Y)).trans
     (congrArg (fun Z => T X - Z) ((T.restrictScalars ℝ).map_smul t Y))
 
-private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
+theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
     [Fintype A] [DecidableEq A]
     (t : ℝ) (X Y : Matrix (R × A) (R × A) ℂ) :
     ptr (X - t • Y) = ptr X - t • ptr Y := by

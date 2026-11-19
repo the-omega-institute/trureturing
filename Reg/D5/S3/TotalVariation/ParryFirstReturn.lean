@@ -145,5 +145,99 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
 
 #print axioms evidence
 #print axioms registration
+
+namespace ReturnCylinders
+
+abbrev signature : Signature where
+  Params := Σ k : ℕ, List (Fin k)
+  State p := RelationPath p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p r => matchesReturnTimes r p.2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law F := ∀ {k : ℕ}
+    (_hk : 2 ≤ k)
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (μ : ProbabilityMeasure (RelationPath k))
+    (_hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (_hμ : (μ : Measure (RelationPath k)).map relationShift = μ)
+    (_hcylinder : ∀ (ell : ℤ) (m : ℕ) (v : Fin (m + 1) → Fin k),
+      (μ : Measure (RelationPath k))
+        {r | (fun i : Fin (m + 1) => ((e (false, r)).val (ell + i.val)).2) = v} =
+        ENNReal.ofReal (suffixLaw k (v 0)) * ∏ i : Fin m,
+          ENNReal.ofReal (suffixKernel k (v i.castSucc) (v i.succ)))
+    (ns : List (Fin k)),
+    sectionMeasure (μ : Measure (RelationPath k)) {r | F.readout () ⟨k, ns⟩ r = true} =
+      ENNReal.ofReal ((ns.map fun n => parryParameter k ^ (n.val + 1)).prod)
+
+private theorem positive : arena.Law actual := @return_time_cylinder_probability
+
+private theorem negative : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨e, μ, ν, hsign, hsuffix, hread, hcode, hμ, hν, hpush, hcyl, hsource⟩ :=
+    bilateral_parry_law 2 (by decide)
+  have bad := h (k := 2) (by decide) e μ hsuffix hμ hsource []
+  simp [rejected, realize] at bad
+
+def evidence : Registration arena (type_of% (@return_time_cylinder_probability)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, rejected, negative⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, negative⟩, fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨⟨2, [0]⟩, zeroPath, alternatingPath, ?_⟩
+    change matchesReturnTimes zeroPath [0] ≠ matchesReturnTimes alternatingPath [0]
+    simp [matchesReturnTimes, zeroTime, alternatingTime]
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@return_time_cylinder_probability) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.TotalVariation.ParryFirstReturn.return_time_cylinder_probability
+  realizationName := `Reg.D5.S3.TotalVariation.ParryFirstReturn.ReturnCylinders.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p r => matchesReturnTimes r p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.TotalVariation.ParryFirstReturn
+    definition := none
+    coordinates := #[0, 7]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "arg", "body", "fn", "arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end ReturnCylinders
 end
 end Reg.D5.S3.TotalVariation.ParryFirstReturn
