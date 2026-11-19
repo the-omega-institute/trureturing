@@ -7,7 +7,9 @@
    digest: A cone with a linear remainder has an exact support compensation and positive surplus. -/
 
 import D5.S3.Combinatorics.Graph.DUFComponents
+import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Tactic.FieldSimp
 
 set_option autoImplicit false
 
