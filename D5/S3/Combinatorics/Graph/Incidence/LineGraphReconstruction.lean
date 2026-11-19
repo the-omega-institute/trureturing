@@ -135,7 +135,7 @@ private theorem image_star {V : Type u} {W : Type v}
 
 /-- Every prescribed line graph isomorphism has exactly one vertex lift under the
 triangle-free and two-distinct-neighbor hypotheses. -/
-theorem existsUnique_lineGraph_lift {V : Type u} {W : Type v}
+theorem exists_unique_line_graph_lift {V : Type u} {W : Type v}
     (G : SimpleGraph V) (H : SimpleGraph W)
     (hG : G.CliqueFree 3) (hH : H.CliqueFree 3)
     (hdegG : ∀ x : V, Nontrivial (G.neighborSet x))

@@ -50,7 +50,7 @@ internal sealed class LineGraphReconstructionDocument : IScribeDocumentDefinitio
         H("Reconstructing vertices from incident edges"),
         Blocks(Describe.Lean(
             DescribeId.Create("unique-line-graph-lift"),
-            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Incidence/LineGraphReconstruction.existsUnique_lineGraph_lift"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Incidence/LineGraphReconstruction.exists_unique_line_graph_lift"),
             H("The unique lift of the supplied edge isomorphism"),
             StatementSource.FromAuthor(Disp(Statement())),
             AssessedProvenance.FromRepo(),
