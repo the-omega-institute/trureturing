@@ -65,7 +65,8 @@ set_option autoImplicit false
 namespace D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality
 
 open PowerSeries
-open private integral_of_local expSeries_constant local_exp_of_log_difference
+open D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality (integral_of_local)
+open private expSeries_constant local_exp_of_log_difference
   local_int_div_nat IsRIntegralRat.sum
   from D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 open D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure (IntegralSeries)
