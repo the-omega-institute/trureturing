@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9c360034a4c5b78c16ee537b9390cacbcd7f55db2e44ace74390b20c434bb561
-  normalized_sha256: sha256:9c360034a4c5b78c16ee537b9390cacbcd7f55db2e44ace74390b20c434bb561
-cas_ref: sha256:9c360034a4c5b78c16ee537b9390cacbcd7f55db2e44ace74390b20c434bb561
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Agency/SelfConstraintMonotonicity.appended_record_shrinks_consistent_actions
-    target_statement_id: sha256:34b9cf518df708bd5c1b7e476334ea57ec5ec6cf579850c52286e02babc684a4
-receipts:
-  unresolved_subitems: []

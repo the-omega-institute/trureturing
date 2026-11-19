@@ -1,0 +1,69 @@
+**定理 124.4（不输入Pair的同锥同单位等价）。** 在定义124.1的正则立方双曲原域中，以下三项等价：
+
+$$
+\begin{aligned}
+&\mathrm{EB}_{\ge1};\\
+&\mathrm{Pair}+\mathrm{EB}_{\ge1};\\
+&\exists\text{有限维秩三EJA }J,\ 
+\Phi:J\overset{\sim}{\longrightarrow}V:\quad
+\Phi(J_+)=C,\quad u\Phi=\operatorname{tr}_J.
+\end{aligned}
+\tag{124.10}
+$$
+
+$\operatorname{tr}_J$ 是每个本原幂等元取一的规范迹。表示覆盖同一个原锥、原归一泛函、全部原态和全部原效应。完整S、原least确认、全部纯值互易及Inj是后果。
+
+证明。第一项到第二项由定理124.3。第二项到第三项直接应用VII103.4；其前件在这里逐项就是有限维、闭尖生成的同一 $C$、严格正的同一 $u$、整个 $K,P,[0,u]$、全Pair及完整EB$_{\ge1}$。VII103.2—103.4先给原面穷尽、点球双射、全锥序least及全部纯比较互易，随后才消费[Library的完整S桥][Q124CubicS]。后者供应谱性、忠实自对偶、projectivity与滤子保纯，并调用Barnum—Müller—Ududec Theorem 16；它们不是本章另加的输入。本章不重建这些成熟及已发表中间结果。
+
+第三项到第二项直接用VII103.6的完整反向。具体地，若 $p=\Phi c$、$c$ 为本原幂等元，则全部效应对应 $0\le a\le1_J$，原least为
+
+$$
+e_p(x)=\operatorname{tr}_J(c\circ\Phi^{-1}x),\qquad
+D_p=\Phi\{y\in J_0(c)\cap J_+:\operatorname{tr}_J y=1\}.
+\tag{124.11}
+$$
+
+秩三的 $J_0(c)$ 是秩二EJA，其整个迹一基为正维球，包括非简单秩二的线段。两个不同本原支撑的并为秩二，故整个二纯最小面真于 $K$。同一序同构的对偶双射整个效应区间与确认切片，所以这里运输的是原最小值和整个 $D_p$，没有用一个自选零面代替它。第二项到第一项直接成立。
+
+对任意非零 $x\in C$，都由 $x=u(x)\widehat x$、$\widehat x\in K$ 齐次运输；$x=0$ 映到零，所有效应和最低确认函数在零都为零。反向不在零质量上作归一，也不把非零本原元漏出原基。原 $u$ 与规范迹的匹配是VII103.6已处理的同单位归一，不需要假定原坐标中 $u$ 就是某个迹。证毕。
+
+此分类的全部支路，直接沿VII103.7及VIII113.7的成熟秩三EJA分类，为
+
+$$
+\mathbb R\oplus\operatorname{spin}_d\ (d\ge1),\qquad
+H_3(\mathbb R),\ H_3(\mathbb C),\ H_3(\mathbb H),\ H_3(\mathbb O).
+\tag{124.12}
+$$
+
+其中 $\operatorname{spin}_d=\mathbb R\oplus\mathbb R^d$，规范迹为 $2t$，$d=1$ 包含经典 $\mathbb R^3$。参数与完整排除维数是分类后的结论：
+
+| 秩三支路 | $\dim V$ | 全部完整 $D_p$ 的球维数 |
+| --- | --- | --- |
+| $\mathbb R\oplus\operatorname{spin}_d$ | $d+2$ | 旗标标签为 $d$，所有球纯标签为 $1$ |
+| $H_3(\mathbb R)$ | $6$ | 全部为 $2$ |
+| $H_3(\mathbb C)$ | $9$ | 全部为 $3$ |
+| $H_3(\mathbb H)$ | $15$ | 全部为 $5$ |
+| $H_3(\mathbb O)$ | $27$ | 全部为 $9$ |
+
+每一支都确实出现在立方类别中：取其Jordan单位 $1_J$ 和三次Jordan行列式，成熟谱定理给 $\det_J(t1_J-y)=\prod_{i=1}^3(t-\mu_i(y))$，全部 $\mu_i(y)$ 为实数，且 $J_+=\{y:\mu_i(y)\ge0\}$。所以该行列式关于 $1_J$ 双曲，整个闭分支就是平方锥；有限EJA的平方锥闭、尖且满维。这里复用的是分类后的谱字典，不以谱性作为前向证明的输入。
+
+一般结论不能擅自删掉第一、第二、第四、第五行。例如对 $d\ge1$，
+
+$$
+\begin{gathered}
+V=\mathbb R\oplus\mathbb R\oplus\mathbb R^d,\quad
+h(s,t,v)=s(t^2-|v|^2),\quad e=(1,1,0),\\
+C=\{s\ge0,\ t\ge|v|\},\qquad u(s,t,v)=s+2t
+\end{gathered}
+\tag{124.13}
+$$
+
+就是正则立方双曲实现：$h$ 的根来自线性因子与Lorentz二次因子，含 $e$ 的开分支为 $s>0,t>|v|$。其全基是旗标 $f=(1,0,0)$ 与整球 $B=\{(0,1/2,v/2):|v|\le1\}$ 的join，全部纯点为 $f$ 和 $b_n=(0,1/2,n/2)$、$|n|=1$。VII103.7的完整效应字典给
+
+$$
+D_f=B,\qquad D_{b_n}=[f,b_{-n}].
+\tag{124.14}
+$$
+
+所以变维和线段确实出现于全原域，并非人为删点或限制效应造成的现象。(124.10)给的是秩三EJA的完整分类；复型选择还须使用应用对象实际具有的信息。
+

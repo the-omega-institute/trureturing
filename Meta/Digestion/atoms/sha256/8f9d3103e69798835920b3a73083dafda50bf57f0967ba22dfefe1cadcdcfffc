@@ -1,0 +1,13 @@
+### 123.10 二元窗口与三元兼容的几何含义
+
+三个对角种子像三扇固定的二能级窗口：每扇都能看到一整颗实心三球，边界上的每个点都是原纯点，投向窗口的规范压缩始终为正。只改变三个窗口共同参与的三线性耦合，不会改变这些窗口自身。因此只检查三个对角顶点，无法看见三元拼接是否相容。沿第一扇窗口的边缘选方向 $v$，实际确认尺(123.11)在窗口对面的原面上读零。三次约束把另外两条边锁成 $z_2=-M_vz_3$，而允许自由通过的方向恰是 $M_v$ 不损失长度的子空间。再加上一条对角方向，这个准确暴露面的维数就是 $1+m_v$。只有另知该标签背后的整个排除集合是球时，才由它自身的中心反射和严格凸性把这个面识别为整颗球。
+
+若两条线性无关边缘方向的完整排除都必须是三球，每个方向就必须让二维横向空间完整通过，不能损失长度。全方向收缩把任何可能的损失写成一个非负二次型；它在两条独立线上全为零，只能处处为零。这就把连续的方向兼容缩成有限的精确代数条件，而二维正交矩阵束随后只能给复数乘法的实部。指定的第三条斜方向当然也相容；它在这个已知三线性且全方向收缩的族内是冗余检测。整个推导只需二阶实矩阵、两个平方项和一个非负二次型，不需要在七维切空间研究Hessian。得到的是明确族内的复三能级静态几何；一般原E0为什么必有接触，以及完整物理所需的实际来源、任意有限复合、操作、记录和时间，仍按(123.30)与上述原合同保留。
+
+[Q123SR]: https://github.com/the-omega-institute/trureturing/blob/18995bad7b93a8ca351c75862c415d5161171e52/docs/develop/theory/QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "125—131：原完整定义、固定E0、PC1／IC0条件链、静态字典；SECTION127.10及其完整引用链：全部物理合同。"
+[Q123BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "121.6—121.8：九维EB3+Inj的唯一完整确认、未付接触与完整物理范围。"
+[Q123VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "103.2：EB≥1下完整暴露与真面穷尽；其第一段为点态中心反射，Pair不参与此段。106.12保留其W及原等价条件。"
+[Q123EVIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "113.7—113.9：整个W下的G、秩三Jordan分类、状态谱、谱唯一和准确复三能级字典。"
+[Q123X]: https://github.com/the-omega-institute/trureturing/blob/18995bad7b93a8ca351c75862c415d5161171e52/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "125：完整EB3+PR中的共同近零确认及CS／UF／NC条件链；没有自动接触。"
+[Q123PolarVI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md "89.7及(89.13)：同一原装饰元组与全部两尺度、原质量和整个输出合同；完整链沿SAME_READBACK127.10继承。"
+

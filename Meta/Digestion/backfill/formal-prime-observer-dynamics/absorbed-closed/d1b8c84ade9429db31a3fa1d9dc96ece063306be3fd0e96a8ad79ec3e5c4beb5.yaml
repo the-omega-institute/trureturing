@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d1b8c84ade9429db31a3fa1d9dc96ece063306be3fd0e96a8ad79ec3e5c4beb5
-  normalized_sha256: sha256:d1b8c84ade9429db31a3fa1d9dc96ece063306be3fd0e96a8ad79ec3e5c4beb5
-cas_ref: sha256:d1b8c84ade9429db31a3fa1d9dc96ece063306be3fd0e96a8ad79ec3e5c4beb5
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaEntropyPlane/LocalEvidenceOrderThreshold.local_evidence_order_critical_thresholds
-    target_statement_id: sha256:d9a4b5596152ddc286493891e152fed2a715828bd5cb9e825327e4f3c838d9a3
-receipts:
-  unresolved_subitems: []

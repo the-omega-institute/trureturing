@@ -1,4 +1,0 @@
-Other outcomes remain possible. Classical candidate validation and repeated samples are not omitted.
-
-If only P_tau^d s=s has been verified, d is a returning exponent, possibly a multiple of the true period. A primitive certificate consists of a complete prime factorization of d together with nonreturn at d/p for every distinct prime divisor p. This certifies minimality because the true period divides d. Obtaining that factorization has a computational cost; it is not a free byproduct of measuring the clock.
-

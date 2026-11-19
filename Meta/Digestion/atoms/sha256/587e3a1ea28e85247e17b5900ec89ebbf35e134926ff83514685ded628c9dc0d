@@ -1,7 +1,0 @@
-仓库已经有一个抽象的 `ParityWeylInterval`：
-
-* even channels 给出一组下界；
-* odd channels 给出一组上界；
-* 二者共同确定一个坐标无关的可允许谱参数区间；
-* 正谱完成恰好位于该区间中。
-

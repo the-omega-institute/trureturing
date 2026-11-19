@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8489d6747fe596140a47b2984018e0244ada2db1f25a614825853e4fe4b55657
-  normalized_sha256: sha256:8489d6747fe596140a47b2984018e0244ada2db1f25a614825853e4fe4b55657
-cas_ref: sha256:8489d6747fe596140a47b2984018e0244ada2db1f25a614825853e4fe4b55657
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_inverse_bijective
-    target_statement_id: sha256:039f3e252252042b488b25fd745cec59f5439e3175aadc654158c65c00396d91
-receipts:
-  unresolved_subitems: []

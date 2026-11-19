@@ -87,6 +87,21 @@ internal sealed class FakeRepositoryGateway(
         return Scoped(ReadWholeRevision(revision), paths);
     }
 
+    private static RawRepositorySnapshot WithFileMap(RawRepositorySnapshot raw)
+    {
+        if (raw.Entries.Any(entry => entry.Path == FileMapLoader.RelativePath)) return raw;
+        var files = (raw.Entries
+                .Where(entry => !entry.Path.StartsWith("Meta/", StringComparison.Ordinal))
+                .Select(entry => entry.Path)).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)
+            .Select(path => "{ pattern = " + System.Text.Json.JsonSerializer.Serialize(path)
+                + ", kind = \"data\", admission_plane = \"content\", produced_by = \"none\", consumed_by = [\"reader\"], "
+                + "verified_by = [\"SnapshotDecoder\"], artifact_id = \"none\", runtime_disposition = \"committed-source\" }");
+        var policy = "schema_version = 6\nfiles = [\n" + string.Join(",\n", files)
+            + "\n]\n[evidence.artifact_kinds.md]\nprofile = \"opaque-text\"\nselectors = [\"result\"]\npath_selectors = [\"formal\"]\n[residence_policy]\ncase_id = \"TEST\"\ndesired = \"data-must-live-outside-tools\"\nknown_violation_count = 0\nstatus = \"closed\"\n";
+        return RawRepositorySnapshot.Create(raw.Entries.Add(RawRepositoryEntry.FromText(
+            FileMapLoader.RelativePath, policy)), raw.PathInventory);
+    }
+
     private RawRepositorySnapshot ReadWholeCurrent()
     {
         ReadCount++;
@@ -94,7 +109,7 @@ internal sealed class FakeRepositoryGateway(
         var snapshot = currentReader?.Invoke()
             ?? current
             ?? throw new InvalidOperationException("current snapshot should not be read");
-        return addSourcePolicy ? DigestionTestSupport.WithSourcePolicy(snapshot) : snapshot;
+        return addSourcePolicy ? WithFileMap(snapshot) : snapshot;
     }
 
     private RawRepositorySnapshot ReadWholeRevision(string revision)

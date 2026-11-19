@@ -275,19 +275,21 @@ class CpuContracts(unittest.TestCase):
     def test_support_binding_failure_precedes_any_legacy_node_decode(self):
         import prime_slab_cpu as driver
         root=Path(self.tmp.name);bindings=[]
+        theories = root / 'source-theories'
         for path in ('docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md',driver.PROGRAMS[-1]):
-            target=root/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_text('fixture')
+            target = (theories if path.startswith('docs/develop/theory/') else root) / path
+            target.parent.mkdir(parents=True, exist_ok=True); target.write_text('fixture')
             bindings.append(dict(path=path,sha256=driver.sha(target)))
         manifest=dict(experiment=cpu.EXPERIMENT,source_bindings=bindings,
                       retained_supports=[dict(primes=[5,7,11],support_complete=True)])
         path=root/'explicit input.json';path.write_text(cpu.dumps(manifest))
-        self.assertEqual(manifest,driver.bind_inputs(path,driver.sha(path),root))
+        self.assertEqual(manifest,driver.bind_inputs(path,driver.sha(path),root,theories))
         manifest['retained_supports'].append(dict(primes=[23,2,3],record='named-record',support_complete=True))
         path.write_text(cpu.dumps(manifest))
         with self.assertRaisesRegex(cpu_store.InputGap,'named-record'):
-            driver.bind_inputs(path,driver.sha(path),root)
+            driver.bind_inputs(path,driver.sha(path),root,theories)
         with self.assertRaisesRegex(cpu_store.InputGap,'SHA-256'):
-            driver.bind_inputs(path,'0'*64,root)
+            driver.bind_inputs(path,'0'*64,root,theories)
 
     def test_dataset_hashing_streams_instead_of_allocating_the_whole_database(self):
         import prime_slab_cpu as driver

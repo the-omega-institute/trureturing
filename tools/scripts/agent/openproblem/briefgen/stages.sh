@@ -24,8 +24,6 @@ python3 - "$S/briefs/impl-op-w1-$L.stageB.md" <<'PY'
 from common import Context
 import sys,re,pathlib
 p=pathlib.Path(sys.argv[1]); t=p.read_text()
-t,n=re.subn(r'\n5′\. \*\*Anchor cover \(mandatory\):\*\*[^\n]*', '\n5′. **No atom, no cover.** This lane settles an external named open problem through `make deposit-uncovered`; there is no anchor atom and no `make cover` step.', t, count=1)
-assert n==1, 'anchor-cover paragraph not found'
 t=t.replace('`git push -u origin','`LEAN4_GUARDRAILS_BYPASS=1 git push -u origin').replace('Then `make pr-open','Then `LEAN4_GUARDRAILS_BYPASS=1 make pr-open')
 t+='\n\n## Push verification\nA host hook may silently block `git push`; the env prefix above disables it. After pushing, prove the push with `git ls-remote origin <branch>` equal to `git rev-parse HEAD` and report both SHAs; a local HEAD alone is not a push.\n'
 impl=pathlib.Path(str(p).replace('.stageB.md','.md')).read_text()

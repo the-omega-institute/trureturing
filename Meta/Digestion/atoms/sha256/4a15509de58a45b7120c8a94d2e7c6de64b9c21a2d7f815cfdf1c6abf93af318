@@ -1,8 +1,0 @@
-## 4. An all-layer bound for a nonzero-residual rank-three family
-
-We count actual ordered integer endpoints throughout. In particular, a
-one-dimensional projection is not identified with an endpoint, and a
-fixed residual value is not identified with the union of its layers.
-The endpoint-line estimate needed below will be proved inside the
-argument; it carries no additional physical multiplicity weight.
-
