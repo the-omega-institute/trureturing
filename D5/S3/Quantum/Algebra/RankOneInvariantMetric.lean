@@ -125,7 +125,7 @@ private theorem min_frequency (D : L →ₗ[ℝ] L)
       simp [he]
 
 
-private theorem min_frame (br : L →ₗ[ℝ] L →ₗ[ℝ] L)
+theorem min_frame (br : L →ₗ[ℝ] L →ₗ[ℝ] L)
     (halt : ∀ z : L, br z z = 0)
     (hjac : ∀ x y z : L, br x (br y z) = br (br x y) z + br y (br x z))
     (a : L) (ha : ‖a‖ = 1)
