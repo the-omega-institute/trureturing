@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Fermionic.OrderedSlaterPrefix
 import D5.S3.Quantum.Fermionic.SlaterFixedFillingPhase
 import D5.S3.Quantum.Fermionic.SlaterSpectatorMinor
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.Logic.Equiv.Set
 
 /-! # Ordered Slater marginal spectra at fixed particle number -/
@@ -98,7 +99,11 @@ private theorem signed_reindexed_gram {A B : Type*} [Fintype A] [Fintype B] [Dec
       _ = D * (Y * (E * E.conjTranspose) * Y.conjTranspose) * D.conjTranspose := by
         simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
       _ = _ := by rw [hb, Matrix.mul_one]
-  rw [hGram, Matrix.charpoly_mul_comm, ← Matrix.mul_assoc, ha, Matrix.one_mul]
+  rw [hGram]
+  have hConjugate : (D * (Y * Y.conjTranspose) * D.conjTranspose).charpoly =
+      (Y * Y.conjTranspose).charpoly :=
+    D5.S3.Quantum.Information.PartialTraceMutualInformation.charpoly_conj_unitary ha
+  rw [hConjugate]
   change ((M.submatrix e f) * (M.submatrix e f).conjTranspose).charpoly = _
   rw [Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv]
   exact Matrix.charpoly_reindex e.symm (M * M.conjTranspose)
@@ -543,10 +548,7 @@ theorem fixed_filling_spectral_criteria [Fintype ι] (I : Set ι) (k : ℕ) :
       alternating_fixed_filling_compression_twins hI hk hk'
     refine ⟨V, W, hV, hW, heq, ?_⟩
     rw [hVpoly, hWpoly]
-    intro h
-    have hc := congrArg (Polynomial.eval (1 : ℂ)) h
-    simp at hc
-    norm_num at hc
+    exact distinct_padded_spectra _ _
   constructor
   · refine ⟨hpos, ?_⟩
     intro h

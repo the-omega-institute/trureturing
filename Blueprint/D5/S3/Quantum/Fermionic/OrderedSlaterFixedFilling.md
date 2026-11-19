@@ -61,3 +61,4 @@ Let T be a subset of a finite index type and let v be a normalized complex vecto
 - Dependency: [D5/S3/Quantum/Fermionic/OrderedSlaterPrefix](OrderedSlaterPrefix.md)
 - Dependency: [D5/S3/Quantum/Fermionic/SlaterFixedFillingPhase](SlaterFixedFillingPhase.md)
 - Dependency: [D5/S3/Quantum/Fermionic/SlaterSpectatorMinor](SlaterSpectatorMinor.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)

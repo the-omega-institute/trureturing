@@ -295,7 +295,7 @@ private theorem groupedGram_charpoly :
   rw [Matrix.charpoly_fin_two, Matrix.det_mul, hd, zero_mul, ht]
   simp [pow_two, mul_sub]
 
-private theorem distinct_padded_spectra (n m : ℕ) :
+theorem distinct_padded_spectra (n m : ℕ) :
     Polynomial.X ^ n * (Polynomial.X - Polynomial.C ((1 : ℂ) / 2)) ^ 2 ≠
       Polynomial.X ^ m * (Polynomial.X - 1) := by
   intro h
