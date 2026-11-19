@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d57c54076ad9aeac27a78a6aeacc9465e96a29f05cfe2bd3f85919d8081cd66e
-  normalized_sha256: sha256:d57c54076ad9aeac27a78a6aeacc9465e96a29f05cfe2bd3f85919d8081cd66e
-cas_ref: sha256:d57c54076ad9aeac27a78a6aeacc9465e96a29f05cfe2bd3f85919d8081cd66e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.cellPosterior
-    target_statement_id: sha256:dd7814fc0543383f61a4aaa9c0b9cc961d6aaae168a5f6a42bf4e05551eace3e
-receipts:
-  unresolved_subitems: []

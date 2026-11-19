@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6b28d54867458d2fd576b7e26f27e4480f5aa0079b6780b4f341f7b390889fd0
-  normalized_sha256: sha256:6b28d54867458d2fd576b7e26f27e4480f5aa0079b6780b4f341f7b390889fd0
-cas_ref: sha256:6b28d54867458d2fd576b7e26f27e4480f5aa0079b6780b4f341f7b390889fd0
-coverage_gids:
-  - gid: D5/S3/Topology/FiniteOrbitChainMidpoint.compact_original_quotient_midpoints
-    target_statement_id: sha256:44fd2c043b9c7a6f2d7a6fda2ead6bbbf34036270976d77eaf3259098cc1d38e
-receipts:
-  unresolved_subitems: []

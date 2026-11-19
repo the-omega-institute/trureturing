@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bc2e3b4d86f6b9f7a2cfcf81a5006904864495a7a3fc206bdd6b409624c59cbe
-  normalized_sha256: sha256:bc2e3b4d86f6b9f7a2cfcf81a5006904864495a7a3fc206bdd6b409624c59cbe
-cas_ref: sha256:bc2e3b4d86f6b9f7a2cfcf81a5006904864495a7a3fc206bdd6b409624c59cbe
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/ExternalSupportInvisibility.external_support_invisibility
-    target_statement_id: sha256:f9a185c1fe4364246536f2bfb47e9132ead2cb556996d654a0db9db315be6996
-receipts:
-  unresolved_subitems: []

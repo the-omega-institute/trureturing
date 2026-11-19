@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0cb014c6a90a3110b726aedb933a2c7eb55aedb1db7a651b43fbdd2bfe8e08dd
-  normalized_sha256: sha256:0cb014c6a90a3110b726aedb933a2c7eb55aedb1db7a651b43fbdd2bfe8e08dd
-cas_ref: sha256:0cb014c6a90a3110b726aedb933a2c7eb55aedb1db7a651b43fbdd2bfe8e08dd
-coverage_gids:
-  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditionalMutualInformation
-    target_statement_id: sha256:26a976bb737f2e94217d977ee8dcfce78b1a190e14d98c4e49556693ee69c7ea
-receipts:
-  unresolved_subitems: []

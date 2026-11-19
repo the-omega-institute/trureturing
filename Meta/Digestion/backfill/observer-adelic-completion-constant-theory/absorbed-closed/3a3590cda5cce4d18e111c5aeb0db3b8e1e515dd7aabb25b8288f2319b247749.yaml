@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3a3590cda5cce4d18e111c5aeb0db3b8e1e515dd7aabb25b8288f2319b247749
-  normalized_sha256: sha256:3a3590cda5cce4d18e111c5aeb0db3b8e1e515dd7aabb25b8288f2319b247749
-cas_ref: sha256:3a3590cda5cce4d18e111c5aeb0db3b8e1e515dd7aabb25b8288f2319b247749
-coverage_gids:
-  - gid: D5/S3/Zeros/Symmetry/SymmetricSimpleZeroFixedAxis.symmetric_simple_zero_fixed_axis
-    target_statement_id: sha256:c987f96b8bed85d9560b901e9068b55b3e0dc68e758bcf233b458dd25851b8ba
-receipts:
-  unresolved_subitems: []

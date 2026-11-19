@@ -1,6 +1,0 @@
-义务波 E1：
-
-- 目标只限 canonical `ZeroData`、非空洞性和枚举不变性；
-- 若局部有限性需要本仓尚无的全局零点计数 theorem，则停止 E1，把缺口移至中期 analytic 账；
-- 不把前若干已计算零点包装成全体 `ZeroData`。
-
