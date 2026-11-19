@@ -15,7 +15,7 @@ internal sealed class FiniteFourierDocument : IScribeDocumentDefinition
                 "φ_X(t)=|Ω|⁻¹ Σω exp(X(ω) i t), with real t and complex exponential. " +
                 "For natural-valued X bounded by n, H(X)=Σ_{k=0}^n -p(k) log₂ p(k), " +
                 "with the summand zero at p(k)=0. The circular-orientation proof applies the point-mass " +
-                "bound to the number of vertices of a prescribed indegree.")),
+                "bound to the number of vertices with positive indegree.")),
             Node("finite_uniform_mass_bound", "A point-mass bound from characteristic-function decay",
                 All("X", Arrow(Id("Omega"), Integers()), All("k", Integers(), All("A", Reals(),
                     Implies(Lt(Num(0), Id("A")), Implies(
