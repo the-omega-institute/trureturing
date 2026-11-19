@@ -552,10 +552,17 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Fetch the fixed dev history for the shard layout
+        if: vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+        env:
+          ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+        run: |
+          [[ "$ANCHOR" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags --depth=2002 origin "$ANCHOR"
+          [[ "$(git rev-parse FETCH_HEAD)" == "$ANCHOR" ]]
       - name: Validate the protected push and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
-          CI_LEAN_SHARD_HISTORY_ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
