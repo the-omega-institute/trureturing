@@ -1,5 +1,5 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangCutParity
-import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonCoverage
 
 /-! Relate the bitwise opposite-half count to parity on the cube. -/
 
@@ -11,6 +11,8 @@ open Finset
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q IsBalanced flip flip_flip flip_adj)
 open BalancedCubeLowerBound (coordinateSlice)
+open private coordinate_slice_card_sum from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open HuangCutParity (halfParity mem_flip_iff_halfParity)
 open private indicator from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangCutParity
@@ -18,7 +20,8 @@ open private flip_direction_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeLayerDisjointness
 open private toggle from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
-open private neighborMask from
+open Q9TwentyTwoSingletonCoverage (candidate_size_ne_fifty)
+open private candidates neighborMask reconstructionSize from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 
 private abbrev Vertex := BitVec 9
@@ -203,5 +206,97 @@ theorem bit_iff_opposite_mem {C : Finset (Q 9)}
     simp [bitValue]
 
 #print axioms bit_iff_opposite_mem
+
+/-- The integer counted by the placement search is the cardinality of the
+actual opposite half. -/
+theorem reconstruction_size {C : Finset (Q 9)}
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (half : List Vertex) (hn : half.Nodup)
+    (hm : ∀ x : Vertex, x ∈ half ↔ cubeBitVec 9 x ∈ coordinateSlice C false) :
+    reconstructionSize half = (coordinateSlice C true).card := by
+  classical
+  let e := cubeBitVec 9
+  let mask := half.foldl (fun m x => m ^^^ neighborMask x) 0
+  let T := (Finset.range 256).filter (fun i => mask.testBit i = true)
+  have hcount : reconstructionSize half = T.card := by
+    change (List.range 256).countP mask.testBit = _
+    rw [List.countP_eq_length_filter,
+      ← List.toFinset_card_of_nodup ((List.nodup_range (n := 256)).filter _),
+      List.toFinset_filter]
+    apply congrArg Finset.card
+    apply Finset.ext
+    intro i
+    simp only [T, Finset.mem_filter, List.mem_toFinset, List.mem_range, Finset.mem_range]
+  rw [hcount]
+  have hplace (i : Nat) (hi : i < 256) :
+      (BitVec.ofNat 9 (2 * i) : Vertex).toNat = 2 * i := by
+    rw [BitVec.toNat_ofNat, Nat.mod_eq_of_lt (by omega)]
+  have hplane (i : Nat) (hi : i < 256) :
+      (BitVec.ofNat 9 (2 * i) : Vertex).getLsbD 0 = false := by
+    change (BitVec.ofNat 9 (2 * i)).toNat.testBit 0 = false
+    exact Nat.mod_two_eq_zero_iff_testBit_zero.mp (by rw [hplace i hi]; omega)
+  let f (i : Nat) := flip (e (BitVec.ofNat 9 (2 * i))) 0
+  apply Finset.card_bij (fun i _ => f i)
+  · intro i hi
+    obtain ⟨hi, hb0⟩ := Finset.mem_filter.mp hi
+    have hlt := Finset.mem_range.mp hi
+    have hp := hplane i hlt
+    have he := bit_iff_opposite_mem hr hb half hn hm hp
+    rw [hplace i hlt, show 2 * i / 2 = i by omega] at he
+    exact Finset.mem_filter.mpr ⟨he.mp hb0, by
+      simp [f, show e (BitVec.ofNat 9 (2 * i)) 0 = false from hp]⟩
+  · intro i hi j hj hij
+    have hlt := Finset.mem_range.mp (Finset.mem_filter.mp hi).1
+    have hjt := Finset.mem_range.mp (Finset.mem_filter.mp hj).1
+    have hx := congrArg (fun z : Q 9 => flip z 0) hij
+    change flip (flip (e (BitVec.ofNat 9 (2 * i))) 0) 0 =
+      flip (flip (e (BitVec.ofNat 9 (2 * j))) 0) 0 at hx
+    simp only [BalancedCriticalSpectrum.flip_flip] at hx
+    have he := congrArg BitVec.toNat (e.injective hx)
+    rw [hplace i hlt, hplace j hjt] at he
+    omega
+  · intro z hz
+    obtain ⟨hzC, hz1⟩ := Finset.mem_filter.mp hz
+    let y := e.symm (flip z 0)
+    have he : e y = flip z 0 := e.apply_symm_apply _
+    have hy : y.getLsbD 0 = false := by
+      change e y 0 = false
+      rw [he]
+      simp [hz1]
+    have hylt := y.isLt
+    let i := y.toNat / 2
+    have hi : i < 256 := by change 2 ^ 9 > y.toNat at hylt; dsimp [i]; omega
+    have hi2 : 2 * i = y.toNat := by
+      have hy0 := Nat.mod_two_eq_zero_iff_testBit_zero.mpr hy
+      dsimp [i]
+      omega
+    have hy' : BitVec.ofNat 9 (2 * i) = y := by
+      apply BitVec.toNat_inj.mp
+      rw [hplace i hi, hi2]
+    have hf : f i = z := by
+      unfold f
+      rw [hy', he, BalancedCriticalSpectrum.flip_flip]
+    have hi1 : mask.testBit i = true := by
+      apply (bit_iff_opposite_mem hr hb half hn hm hy).mpr
+      rw [show cubeBitVec 9 y = flip z 0 from he, BalancedCriticalSpectrum.flip_flip]
+      exact hzC
+    exact ⟨i, Finset.mem_filter.mpr ⟨Finset.mem_range.mpr hi, hi1⟩, hf⟩
+
+#print axioms reconstruction_size
+
+/-- A half belonging to the normalized singleton-parity search cannot be the
+22-point half of a balanced cubic support of order 72. -/
+theorem no_listed_singleton_half {C : Finset (Q 9)} (hc : C.card = 72)
+    (hs : (coordinateSlice C false).card = 22)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (half : List Vertex) (hn : half.Nodup)
+    (hm : ∀ x : Vertex, x ∈ half ↔ cubeBitVec 9 x ∈ coordinateSlice C false)
+    {opposite : Bool} (hp : half ∈ candidates opposite) : False := by
+  have h := candidate_size_ne_fifty hp
+  rw [reconstruction_size hr hb half hn hm] at h
+  have hsum := coordinate_slice_card_sum C
+  omega
+
+#print axioms no_listed_singleton_half
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoReconstruction
