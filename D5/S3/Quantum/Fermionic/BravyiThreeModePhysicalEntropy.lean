@@ -4,7 +4,7 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Von Neumann entropy comparison for the physical three-mode Bravyi channel on its normal form. -/
+   digest: Physical output entropy of the three-mode Bravyi channel on its normal form. -/
 
 import D5.S3.Quantum.Fermionic.BravyiThreeModeCARBlocks
 import D5.S3.Quantum.Fermionic.FiniteSpectrumShiftedLogEntropy
@@ -30,7 +30,7 @@ open BravyiThreeModeCARBlocks BravyiThreeModeDeterminantOrder FiniteSpectrumShif
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition (DensityState)
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching (vonNeumannEntropy)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
-  (charpoly_conj_unitary density_posSemidef entropy_eq_spectral spectralEntropy)
+  (charpoly_conj_unitary entropy_eq_spectral)
 
 noncomputable section
 
@@ -64,7 +64,8 @@ private theorem sum_weight (lam : ℝ) : (∑ m : Fin 64, weight lam (degree m))
     simp
   rw [← hgroup]
   simp only [Finset.sum_const, degree_count, nsmul_eq_mul]
-  norm_num [Fin.sum_univ_succ, weight, Nat.choose] <;> ring
+  norm_num [Fin.sum_univ_succ, weight, Nat.choose]
+  ring
 
 private theorem trace_channel (lam : ℝ) (A : SpinMatrix) : (channel lam A).trace = A.trace := by
   unfold channel
@@ -85,8 +86,8 @@ def normalOutput {lam c p q : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤ 1)
 
 private theorem comparator_normalized :
     comparatorAmplitude ^ 2 + (0 : ℝ) ^ 2 + comparatorAmplitude ^ 2 = 1 := by
-  rw [comparatorAmplitude, Real.sq_sqrt (by norm_num : 0 ≤ (1 : ℝ) / 2)]
-  norm_num
+  have hs : comparatorAmplitude ^ 2 = 1 / 2 := Real.sq_sqrt (by norm_num)
+  norm_num [hs]
 
 /-- The physical comparator is the output of the same channel on the comparator spinor. -/
 def comparatorOutput {lam : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤ 1) : DensityState (Fin 8) :=
@@ -100,20 +101,21 @@ private theorem roots_real_block {ι : Type*} [Fintype ι] [DecidableEq ι]
   simp only [RCLike.ofReal_real_eq_id, id_eq, Polynomial.map_prod, Polynomial.map_sub,
     Polynomial.map_X, Polynomial.map_C]
   rw [Polynomial.roots_prod]
-  · simp [Function.comp_def]
+  · simp
   · simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero]
 
-private theorem output_spectrum {lam c p q : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤ 1)
+/-- The multiset of physical eigenvalues contains both copies of the complementary spectrum. -/
+theorem normalOutput_spectrum {lam c p q : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤ 1)
     (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1) :
-    let h := (density_posSemidef (normalOutput h0 h1 hn)).isHermitian
+    let h := (channel_posSemidef (normalInput_posSemidef c p q) h0 h1).isHermitian
     let M := Finset.univ.val.map (chiral_isHermitian lam c p q).eigenvalues
     let N := Finset.univ.val.map (complement_isHermitian lam c q).eigenvalues
     Finset.univ.val.map h.eigenvalues = M + (N + N) := by
   dsimp only
   let A := channel lam (normalInput c p q)
-  have hA : A.IsHermitian := (density_posSemidef (normalOutput h0 h1 hn)).isHermitian
+  have hA : A.IsHermitian := (channel_posSemidef (normalInput_posSemidef c p q) h0 h1).isHermitian
   have hU : star signedBasis * signedBasis = 1 :=
-    Matrix.mul_eq_one_comm.mp signedBasis_isUnitary
+    mul_eq_one_comm.mp signedBasis_isUnitary
   have hchar : A.charpoly =
       ((chiral lam c p q).charpoly.map Complex.ofRealHom) *
       ((complement lam c q).charpoly.map Complex.ofRealHom *
@@ -131,8 +133,9 @@ private theorem output_spectrum {lam c p q : ℝ} (h0 : 0 ≤ lam) (h1 : lam ≤
     Polynomial.roots_mul (mul_ne_zero hN hN), roots_real_block (chiral_isHermitian lam c p q),
     roots_real_block (complement_isHermitian lam c q), hA.roots_charpoly_eq_eigenvalues] at hroots
   have hreal := congrArg (Multiset.map Complex.re) hroots
-  simpa only [Multiset.map_add, Multiset.map_map, Function.comp_def,
-    RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re] using hreal
+  simp only [Multiset.map_add, Multiset.map_map, Function.comp_def,
+    RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re] at hreal
+  exact hreal
 
 /-- Physical von Neumann entropy is the chiral block entropy plus twice the complementary
 block entropy, with each sum taken over the entire spectrum of its real matrix. -/
@@ -142,12 +145,15 @@ theorem normalOutput_entropy_eq_blocks {lam c p q : ℝ} (h0 : 0 ≤ lam) (h1 : 
     let u := (complement_isHermitian lam c q).eigenvalues
     vonNeumannEntropy (normalOutput h0 h1 hn) =
       -((∑ i, a i * Real.log (a i)) + 2 * (∑ i, u i * Real.log (u i))) := by
-  rw [entropy_eq_spectral, spectralEntropy]
-  simp only [Real.negMulLog, neg_mul, Finset.sum_neg_distrib]
+  rw [entropy_eq_spectral]
+  let hA := (channel_posSemidef (normalInput_posSemidef c p q) h0 h1).isHermitian
+  change (∑ i, Real.negMulLog (hA.eigenvalues i)) = _
+  simp only [Real.negMulLog, neg_mul, Finset.sum_neg_distrib, two_mul]
+  simp only [Finset.sum_eq_multiset_sum]
   have hs := congrArg (fun xs : Multiset ℝ => (xs.map (fun x => x * Real.log x)).sum)
-    (output_spectrum h0 h1 hn)
+    (normalOutput_spectrum h0 h1 hn)
   simp only [Multiset.map_add, Multiset.map_map, Multiset.sum_add, Function.comp_def] at hs
-  rw [two_mul, ← hs]
+  exact congrArg Neg.neg hs
 
 /-- The physical Bravyi comparator minimizes output entropy on the normalized three-mode
 normal form over the full closed interval of isotropic attenuations. -/
