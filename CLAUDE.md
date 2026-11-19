@@ -38,7 +38,7 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 
 **消化系统只是辅助追踪，不承担数学真值。** 其索引、覆盖路由和账目状态的一致性偏差，在相关现有记录中简短注明原因即可；不要求另立案、立即结算、全局对齐或专门派席反复审计，不为账本完美而扩建工具、重跑验证或占用形式化主线。能够随手完成的 canonical 结算照做；其余允许暂存偏差，继续真正缺失的数学内容。若现役机器门实际阻断形式化提交，只做恢复该提交所需的最小处理。不得伪报覆盖、证明或检查通过；Lean 核验、公理边界和冻结真值保护仍须严格执行。本款优先于本文件其他条款对消化记账、结算及修器的投入要求，但不豁免下款。
 
-纯消化任务在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)中由对应 writer 和该仓的 required checks 结算。第 4.3 条只去 `private` 的公开化仍由本仓 required checks 验证消费者。
+纯消化任务在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)中由对应 writer 和该仓的 required checks 结算。第 4.3 条只去 `private` 的公开化仍由本仓 required checks 验证消费者。
 本款优先于第 5.6、5.7 条与第 6.1 条对独立评审的要求。只要交付新增或首冻 D5 声明，就是实质形式化，判形、准入、探针、冻结前判形与三席评审照旧。
 
 **形式化直接写 Lean 与 Scribe。** 在本仓提交 D5 Lean、对应 Blueprint Scribe 和适用的 Reg，使用 `make deposit GID=…` 冻结。来自理论卷的任务可在理论仓按已发布的主仓版本补记覆盖。第 3.2 条判形、第 3.3 条用途准入和第 3.7 条文献要求适用于每次实质形式化。
@@ -53,7 +53,7 @@ Lean → 编译报告与冻结状态 → truth-export → 理论源仓的覆盖�
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
-- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)维护。普通主仓检出、构建、CI 和首次冻结均独立运行。
+- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)维护。并行合并带回的正文与消化账本副本可暂留主仓，后续按批次归并。新消化工作在理论源仓 `dev` 进行。普通主仓检出、构建、CI 和首次冻结均独立运行。
 
 ### 1.3 真值图、冻结与两个偏序
 
@@ -241,7 +241,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.8 理论正文与追加纪律
 
 - **形式化遇到理论缺口，可以直接推理补足。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补足的内容可以直接写成 D5 Lean 与 Blueprint Scribe，不必先写入理论卷(第 1.2 条)；选择写入理论卷时，归入理论仓既有相关卷。补足须保持原问题的目标、假设与量词；尚未证成的部分明确标为待证，不冒称定理。数学真值仍只由内核验证的形式化代码承担。
-理论卷的写作、追加、勘误、引文和行数要求见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)的写卷规范。正式源码复用文献时按本仓第 3.7 条登记。
+理论卷的写作、追加、勘误、引文和行数要求见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)的写卷规范。正式源码复用文献时按本仓第 3.7 条登记。
 
 ### 3.9 登记即声明模板与 delta 判官
 
@@ -324,7 +324,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.7 生产链、冻结与消化状态
 
-主仓通过 `make deposit GID=…` 核验目标模块与 Blueprint 镜像并写入 `Golden/Frozen/state/**`。主仓提出数学陈述和编译证据，理论仓按需选择已冻结且声明身份匹配的导出结果，独立写入覆盖。检索、摄入、拆分、结算和归档均在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)执行。
+主仓通过 `make deposit GID=…` 核验目标模块与 Blueprint 镜像并写入 `Golden/Frozen/state/**`。主仓提出数学陈述和编译证据，理论仓默认读取主仓 `dev` 分支上目标模块的冻结状态片，按声明名登记覆盖，并自动记录来源提交。检索、摄入、拆分、结算和归档均在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)执行。
 
 - **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;删除状态片是合法的成员变更,不产生判词,不改变已验证陈述的真值(第 1.3 条)。SL-008 检查状态片路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
 
@@ -704,12 +704,15 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 
 ### 8.7 原生同步等待与外部轮询边界
 
-**有原生等待就不用自制挂钟**:sleep 循环会藏红、重复自写退出条件、与真实时长失配。用对象自带的同步阻塞原语,整个放一个宿主后台作业:`gh pr checks <n> --watch --fail-fast`(全出结果或首红退)、`gh run watch <run-id>`、`gh pr merge --auto`、子进程 `wait`、make 本身。写 sleep 前先查原语,有则用。
-**确无原语的外部状态**才可有界轮询:间隔对齐实际事件节奏,每轮给时间戳/关键读数,开跑前固定判据,不事后定。临时读数供判断,不按过程材料留存(第 2.10 条)。
+**等待 PR required checks 一律按第 8.11 条。** 同一 PR 的当前 head 只用一个仓库原生 watcher。禁止用 `gh pr checks --watch`、`gh run watch`、API 或自写循环等待这组检查。watcher 不可用时，该 head 的检查结论记为未验证。
+
+**其他等待有原生同步阻塞原语时就使用它。** 用一个宿主后台作业运行对应原语，如子进程 `wait` 或 make。PR required checks 之外的 workflow 用 `gh run watch <run-id>` 等待已确认的 run。
+
+**其他确无原生等待原语的外部状态才可有界轮询。** 间隔对齐实际事件节奏，每轮给时间戳和关键读数，开跑前固定判据。临时读数供判断，按第 2.10 条处理。
 
 ### 8.8 完成通知与唯一等待通道
 
-**宿主会主动通知完成时,该通知就是唯一等待通道**:不得再用 `TaskOutput` 或等价阻塞任务读取等同一作业。收到通知后按输出路径读一次是消费产物,允许。判据是完成时本来是否会被叫醒;不会通知的外部事件仍用第 8.7 条 `gh … --watch`、wait、make 等原语。
+**宿主会主动通知完成时,该通知就是唯一等待通道**:不得再用 `TaskOutput` 或等价阻塞任务读取等同一作业。收到通知后按输出路径读一次是消费产物,允许。判据是完成时本来是否会被叫醒。不会通知的外部事件按第 8.7 条选择等待原语，PR required checks 一律按第 8.11 条等待。
 *成熟锚*:事件驱动、单等待通道、回调/epoll、收到事件后消费、弃用 API 不因可调而沿用。〔守护:**软+硬投影**·转录可枚举 block=true/timeout 违规;现役自审器 `judge()` 三元组的 (iii-a) 枚举 TaskOutput block=true,(iii-b) 判 Bash 同时含 sleep 与宿主 `.../tasks/*.output` 路径。`--selftest` 15 例含通知后单读/只 sleep 无任务路径/创建后台作业三阴性对照,防过度收紧。器不在任何门,CI 无会话转录,每次反思自审才生效,不称硬门。反例两维为非 sleep 延时、变量间接路径、非 Bash、宿主目录布局变化,以及无人运行;尚未 lint 不豁免第二等待通道〕
 
 ### 8.9 所有脚本的通用性与可复用工具的仓库居所
@@ -730,7 +733,12 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 
 ### 8.11 PR open/watch 的消息与退出契约
 
-**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr HEAD=b MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`(pr-open 同义) 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 默认 arm auto-merge → 等 required CI,可辨退出码返回。`AUTO_MERGE=0` 不 arm 但仍等 CI;`DRAFT=1` 传 `--draft`,创建成功输出 PR 号后返回,不 arm、不等 CI,优先于 `AUTO_MERGE=1`。直调 `pr.sh open` 仍由显式 `--auto-merge` 开启自动合并,`--draft` 同样优先;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用;判词携带固定 head 与实际 check/run 身份。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
+**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr HEAD=b MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`(pr-open 同义) 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 默认 arm auto-merge → 等 required CI,可辨退出码返回。`AUTO_MERGE=0` 不 arm 但仍等 CI;`DRAFT=1` 传 `--draft`,创建成功输出 PR 号后返回,不 arm、不等 CI,优先于 `AUTO_MERGE=1`。直调 `pr.sh open` 仍由显式 `--auto-merge` 开启自动合并,`--draft` 同样优先;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用。stdout 的终态行 `PR_WATCH_RESULT` 给出 PR 编号、固定 head 和 outcome，适用时还给出检查名称和状态。实际 check ID、run ID 和 attempt 由作业终止后的核验取得。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
+
+**每个 PR 的当前 head 只用一个等待作业。** 非草稿 `make pr` 自带固定 head 的 required checks 等待。确认 PR 的当前 head 后，若同一 PR、同一 SHA 已有 `make pr` 或 `pr-watch` 等待作业，按第 8.8 条续接其宿主原生句柄并收取退出结果。若该 PR 和 SHA 没有等待作业，用一个宿主后台作业运行 `make pr-watch PR=<编号> HEAD_SHA=<40 位提交 SHA>`。换 head 时先确认新的当前 SHA，再按同一规则续接或启动。终态只适用于作业固定的 head。
+
+**每小时恢复巡检读取一次队列快照，取完所有页。** 快照用于发现待恢复项，逐 PR 的 required checks 仍按上述作业等待。作业终止后可按固定 head、事件、run ID 和 attempt 核验结论。实际合并和该合并提交的首次 `dev` push 按第 6.1 条单独核验，首次 push 的 workflow 用 `gh run watch <run-id>` 等待其确切 run。
+
 **make 门只保真绿/不绿**:配方失败统一返回 make 2。`1` 红、`4` CLOSED 未合、`69` 查询不可用、`124` 超时只在直调 canonical `tools/scripts/pr.sh watch` 可辨;经 make 判原因读 stdout 末行 `PR_WATCH_RESULT ... outcome=`。
 
 ### 8.12 CI 分类、持续集成与真实事件验证
@@ -968,7 +976,7 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 
 - **地图 / GID 文法 / 风格**:`agents/CONTEXT.md`(≤2K token,有限上下文唯一必读)
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
-- 理论卷、归档和消化工具见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)。
+- 理论卷、归档和消化工具见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)。
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
 
 ### 12.2 发现、逻辑、账与美
