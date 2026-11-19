@@ -6,6 +6,22 @@
    utility: none
    digest: For n ≥ 4 the least central-edge count of a three-central n-point metric is 2⌈n/2⌉. -/
 
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#319)
+escape_witness: center_eq (the narrow-band space has center exactly {0,1,2}), with edges_le
+  (its central graph lies in the two pair classes, so it has at most 2⌈n/2⌉ edges)
+proof_shape:
+  fA, fB, half, SA, SB, code, d, Space: definitions; consumers: the lemmas below.
+  disjoint_AB, cover_A, cover_B, code_le, code_inj, d_bounds, d_other, center_eq, edges_le:
+    content; consumer: three_central_minimum.
+  cover_A', cover_B', d_self, code_comm, code_pos, d_comm, one_mem, two_mem, center_card:
+    bind-only helpers; consumers: center_eq, the metric instance, three_central_minimum.
+  three_central_minimum: content (lower bound is the k = 3 instance of edge_cover_bound,
+    bundled with the attaining construction).
+Direct frozen dependencies: D5/S3/Combinatorics/Geometry/CentralEdgeCover (edge_cover_bound),
+  D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges (center, centralGraph).
+-/
+
 import D5.S3.Combinatorics.Geometry.CentralEdgeCover
 
 /-! # The sharp three-central minimum

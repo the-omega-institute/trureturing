@@ -16,7 +16,7 @@ internal sealed class ThreeCentralMinimumDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("three-central-minimum-space"),
                 DeclarationHandle.Create(Prefix + "Space"),
                 H("The narrow-band space"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "Space N is the point set {0,…,n−1} with n=N+4. The pairs {2k,2k+1} "
                     + "(closed by {0,n−1} when n is odd) are at distance 1; the pairs {2k+1,2k+2} "
@@ -25,7 +25,9 @@ internal sealed class ThreeCentralMinimumDocument : IScribeDocumentDefinition
                     + "point, and the classes are disjoint. Every other pair {i,j} with i<j is at "
                     + "distance 1+(n·i+j+1)/(n²+1), a value strictly between 1 and 2 that no other "
                     + "pair takes. All nonzero distances lie in [1,2], so the triangle inequality "
-                    + "holds."))),
+                    + "holds. This is the construction in Ma–Zhang's proof of Theorem 3, with the "
+                    + "class lengths fixed to 1 and 2; it uses the narrow-band realization of "
+                    + "O. Dovgoshey and O. Rovenska (Theorem 3.8, formula (19))."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("three-central-minimum-result"),
                 DeclarationHandle.Create(Prefix + "three_central_minimum"),

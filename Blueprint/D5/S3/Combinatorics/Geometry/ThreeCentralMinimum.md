@@ -10,13 +10,11 @@ Lean statement: `D5/S3/Combinatorics/Geometry/ThreeCentralMinimum.Space`
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/ThreeCentralMinimum.Space` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska Conjecture 4.2, arXiv:2610.11596v1, Section 4, p. 13: sharp bounds and corollaries of Petrov (2022) and Dovgoshey et al. (2026)*. DOI: [10.5281/zenodo.24369118](https://doi.org/10.5281/zenodo.24369118). URL: <https://doi.org/10.5281/zenodo.24369118>.
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *Refuting Dovgoshey–Rovenska Conjecture 4.2, arXiv:2610.11596v1, Section 4, p. 13: sharp bounds and corollaries of Petrov (2022) and Dovgoshey et al. (2026)*. DOI: [10.5281/zenodo.24369118](https://doi.org/10.5281/zenodo.24369118). URL: <https://doi.org/10.5281/zenodo.24369118>.
 
 *Commentary.*
 
-Space N is the point set {0,…,n−1} with n=N+4. The pairs {2k,2k+1} (closed by {0,n−1} when n is odd) are at distance 1; the pairs {2k+1,2k+2} (closed by {0,n−1} when n is even and by {0,2} when n is odd) are at distance 2; each of these two classes has ⌈n/2⌉ pairs and covers every point, and the classes are disjoint. Every other pair {i,j} with i<j is at distance 1+(n·i+j+1)/(n²+1), a value strictly between 1 and 2 that no other pair takes. All nonzero distances lie in [1,2], so the triangle inequality holds.
+Space N is the point set {0,…,n−1} with n=N+4. The pairs {2k,2k+1} (closed by {0,n−1} when n is odd) are at distance 1; the pairs {2k+1,2k+2} (closed by {0,n−1} when n is even and by {0,2} when n is odd) are at distance 2; each of these two classes has ⌈n/2⌉ pairs and covers every point, and the classes are disjoint. Every other pair {i,j} with i<j is at distance 1+(n·i+j+1)/(n²+1), a value strictly between 1 and 2 that no other pair takes. All nonzero distances lie in [1,2], so the triangle inequality holds. This is the construction in Ma–Zhang's proof of Theorem 3, with the class lengths fixed to 1 and 2; it uses the narrow-band realization of O. Dovgoshey and O. Rovenska (Theorem 3.8, formula (19)).
 
 **Theorem 1.2 (The minimum is 2⌈n/2⌉).**
 
