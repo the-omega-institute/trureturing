@@ -1,0 +1,92 @@
+**引理 3.2（共同右支撑的完整分支界）。** 令 $E$ 为非零输入投影，$B_t=B_tE$ 为有限或可数末端矩阵族，赋旗标 $j_t\in\{0,1\}$，并满足
+
+$$
+\sum_tB_t^\dagger B_t=E.
+$$
+
+在 $EH$ 上记 $A_j=EC_j^\dagger C_jE$。则
+
+$$
+\sum_t|\operatorname{Tr}(C_{j_t}^\dagger B_t)|^2
+\le\max_{0\le p\le1}
+\left[\operatorname{Tr}_{EH}\sqrt{pA_0+(1-p)A_1}\right]^2.
+\tag{3.5}
+$$
+
+这是实际子树的必要上界；满足所列代数条件的更大矩阵族只作为外部松弛，不是新增操作原语。
+
+证明。对 $EH$ 上任意正定 $Y$，其分数幂在 $E^\perp H$ 上以零延伸。对从 $EH$ 到 $H$ 的矩阵 $C_jEY^{-1/2}$ 与 $BY^{1/2}$ 用 Hilbert–Schmidt Cauchy–Schwarz。由 $B=BE$ 及迹的循环性，二者内积为
+
+$$
+\operatorname{Tr}_{EH}(Y^{-1/2}EC_j^\dagger BY^{1/2})
+=\operatorname{Tr}(C_j^\dagger B),
+$$
+
+平方范数分别是 $\operatorname{Tr}_{EH}(A_jY^{-1})$ 与 $\operatorname{Tr}_{EH}(YB^\dagger B)$。故
+
+$$
+|\operatorname{Tr}(C_j^\dagger B)|^2
+\le\operatorname{Tr}_{EH}(A_jY^{-1})\,
+   \operatorname{Tr}_{EH}(YB^\dagger B).
+\tag{3.6}
+$$
+
+若两个旗标均有 $\operatorname{Tr}_{EH}(A_jY^{-1})\le1$，对后代求和及使用完整效应恒等式就给出上界 $\operatorname{Tr}_{EH}Y$。可数族由非负部分和的极限给出同一结论。右侧 $Y$ 幂的放置由共同右支撑决定，不能任意换成左侧加权。
+
+为构造这样的 $Y$，固定 $\varepsilon>0$，记
+
+$$
+A_{j,\varepsilon}=A_j+\varepsilon I_{EH},\qquad
+A_\varepsilon(p)=pA_{0,\varepsilon}+(1-p)A_{1,\varepsilon},\qquad
+h_\varepsilon(p)=\operatorname{Tr}_{EH}\sqrt{A_\varepsilon(p)}.
+$$
+
+正函数 $h_\varepsilon$ 在闭区间上取到最大值且可微。这里不要求矩阵可交换：若 $Z=\sqrt{A_\varepsilon(p)}$，由 $Z^2=A_\varepsilon(p)$ 得
+
+$$
+ZZ'+Z'Z=A_0-A_1.
+$$
+
+在正定 $Z$ 的本征基中，线性映射 $X\mapsto ZX+XZ$ 的各系数乘以两个正本征值之和，因此可逆，给出平方根的可微性。左乘 $Z^{-1}$ 后取迹即得
+
+$$
+h_\varepsilon'(p)=\frac12\operatorname{Tr}_{EH}
+\left[A_\varepsilon(p)^{-1/2}(A_0-A_1)\right].
+\tag{3.7}
+$$
+
+取一个最大点 $p_*$，令 $h=h_\varepsilon(p_*)$，$Y=h\sqrt{A_\varepsilon(p_*)}$，并置 $t_j=\operatorname{Tr}_{EH}(A_{j,\varepsilon}Y^{-1})$。直接由定义有
+
+$$
+p_*t_0+(1-p_*)t_1=1,\qquad
+h_\varepsilon'(p_*)=\frac h2(t_0-t_1).
+$$
+
+内点最大时 $t_0=t_1=1$。若 $p_*=0$，右导数非正，故 $t_0\le t_1=1$；若 $p_*=1$，左导数非负，故 $t_1\le t_0=1$。所以在包括两个端点的所有情形中，
+
+$$
+\operatorname{Tr}_{EH}(A_jY^{-1})\le t_j\le1.
+$$
+
+式 (3.6) 因而把后代总和界为
+
+$$
+\operatorname{Tr}_{EH}Y=h^2=\max_p h_\varepsilon(p)^2.
+$$
+
+最后令 $\varepsilon\downarrow0$。若 $r=\operatorname{rank}E$，标量正则化使每个本征值增加 $\varepsilon$，而 $0\le\sqrt{\lambda+\varepsilon}-\sqrt\lambda\le\sqrt\varepsilon$。于是对所有 $p$ 一致有
+
+$$
+0\le\operatorname{Tr}_{EH}\sqrt{A(p)+\varepsilon I_{EH}}
+      -\operatorname{Tr}_{EH}\sqrt{A(p)}\le r\sqrt\varepsilon,
+\qquad A(p)=pA_0+(1-p)A_1.
+$$
+
+设 $M=\max_j\|A_j\|_\infty$，无正则化的迹至多 $r\sqrt M$。平方迹的差因此一致至多
+
+$$
+r\sqrt\varepsilon\,(2r\sqrt M+r\sqrt\varepsilon)\longrightarrow0.
+$$
+
+最大值随之收敛，得到 (3.5)，也覆盖奇异压缩及端点最大。证明没有把松弛的最优矩阵族宣称为可实现协议。$\square$
+

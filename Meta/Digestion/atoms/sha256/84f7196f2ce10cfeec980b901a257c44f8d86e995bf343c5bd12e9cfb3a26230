@@ -1,0 +1,47 @@
+**定义 1.2（实际五维仪器）。** 取 $H=\mathbb C^5$，固定正交基 $(e_0,e_1,e_2,e_3,e_4)$，并令
+
+$$
+\begin{gathered}
+q=1/\sqrt2,\quad s=e_2,\quad S=|s\rangle\langle s|,\quad
+P=|e_0\rangle\langle e_0|+|e_4\rangle\langle e_4|,\quad
+Q=|e_1\rangle\langle e_1|+|e_3\rangle\langle e_3|,\\
+P_0=P,\quad P_1=Q,\quad P+Q+S=I_5,\\
+u=q(e_0+e_3),\quad v=q(e_1+e_4),\quad z=e_2,\\
+K_0=|u\rangle\langle e_0|+q|v\rangle\langle s|+|z\rangle\langle e_4|,\qquad
+K_1=|u\rangle\langle e_1|+q|v\rangle\langle s|+|z\rangle\langle e_3|.
+\end{gathered}
+$$
+
+这些是源甲定义 1.3、2.1 与定理 2.2 的实际矩阵。为明确其测量含义，环境 $E=\mathbb C^2$ 以正交基 $(f_0,f_1)$ 的 $f_0$ 为准备态，准备子空间上的相互作用为
+
+$$
+\begin{aligned}
+\mathcal V e_0&=u\otimes f_0,& \mathcal V e_1&=u\otimes f_1,&
+\mathcal V e_2&=v\otimes(f_0+f_1)/\sqrt2,\\
+\mathcal V e_3&=z\otimes f_1,& \mathcal V e_4&=z\otimes f_0.
+\end{aligned}
+$$
+
+五个像正交归一，所以 $\mathcal V$ 是等距映射；补全定义域与像的正交基即可得到 $H\otimes E$ 上的幺正扩张。测量环境正交基
+
+$$
+g_0=\cos\theta f_0-i\sin\theta f_1,\qquad
+g_1=-i\sin\theta f_0+\cos\theta f_1
+$$
+
+给出实际分支
+
+$$
+A_0(\theta)=\cos\theta K_0+i\sin\theta K_1,\qquad
+A_1(\theta)=i\sin\theta K_0+\cos\theta K_1.
+$$
+
+目标保留测量所得的经典旗标及量子输出：
+
+$$
+\mathcal J_\theta(X)=\bigoplus_{j=0}^1 A_j(\theta)XA_j(\theta)^\dagger.
+\tag{1.1}
+$$
+
+直和表示对角二值经典旗标，不授予模拟器新的量子存储器。输入是整个 $M_5$，包括与任意不被读取的有限参考 $Z$ 纠缠的输入；目标不是仅在 $R=\operatorname{span}\{u,v,z\}$ 上的编码仪器。两分支的迹之和为输入迹，因为 $K_0^\dagger K_0=P+S/2$、$K_1^\dagger K_1=Q+S/2$，而分支重组矩阵是幺正的。
+

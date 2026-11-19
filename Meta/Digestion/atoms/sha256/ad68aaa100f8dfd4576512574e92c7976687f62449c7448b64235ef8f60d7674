@@ -1,0 +1,24 @@
+**Convention 1.2 (Owning sources).** The five-window space, half-parameter
+channel, and invariant three-dimensional image are those of
+[AURIC FIB five-window quantum memory, §§17–21][OWN]. In particular,
+Definition 17.2 and Theorem 17.3 own the matrices and full-complex-input
+population law, and equation (18.4) owns their restricted permutation
+matrices. Sections 18–20 study fixed states, the superoperator, and finite
+iterations of the discarded-environment channel. Definition 21.1 and
+Theorem 21.2 concern exact codes initially contained in its image when the
+labels are absent. Those are different recovery permissions from the
+measured-label task below. The matrices are reused here, with their
+five-input realization displayed to fix both measured instruments.
+
+The standard one-step measured-flag inverse is already supplied by
+[Minimal record dilations, Theorem 2.2 and Assumption 2.3][DIL]. Its named
+random-unitary realization acts on its entire system space. Here the
+correspondence is to the restricted system $R\cong\mathbb C^3$, with weights
+$1/2,1/2$ and branch unitaries $U_j$ or $V_j$. It is not a correspondence
+between that supplier's full system and the present $H=\mathbb C^5$:
+the present five-dimensional Kraus operators are not scaled unitaries.
+The additional synthesis here is the pair of actual instruments for this
+same full channel, their terminal summary criterion, and the different
+multi-step projective-word counts. The one-step correction principle is
+used inside that synthesis.
+

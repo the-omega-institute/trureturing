@@ -1,0 +1,82 @@
+**Theorem 14.1 (A sufficient algebraic and transcendental criterion).**
+Suppose $\cos\theta\ne0$ and set $z=i\tan\theta$.
+If $z$ is transcendental, or if its primitive irreducible polynomial
+$f\in\mathbb Z[X]$ has even $f(1)$, then
+
+$$
+m_n(\theta)=2^n\qquad(n\ge0).
+\tag{14.1}
+$$
+
+The sign choice for $f$ does not affect the condition. For algebraic
+$z$, even $f(1)$ is exactly the criterion for the particular residue
+map $\mathbb Z[z]\to\mathbb F_2$, $z\mapsto1$ used below;
+it is a sufficient condition for (14.1), with no asserted converse.
+
+Proof. Use the actual basis $(b_1,b_2)$ of $T$ in Definition 8.1,
+with its fixed coordinate change $C$. In that basis
+
+$$
+\widehat U_0=\begin{pmatrix}1&0\\-1&-1\end{pmatrix},\quad
+\widehat U_1=\begin{pmatrix}0&1\\-1&-1\end{pmatrix},\quad
+\widehat W=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{14.2}
+$$
+
+Dividing both actual restricted letters by the same nonzero
+$c=\cos\theta$ gives matrices over $\mathbb Z[z]$,
+
+$$
+P_0=\widehat U_0+z\widehat U_1
+ =\begin{pmatrix}1&z\\-1-z&-1-z\end{pmatrix},\qquad
+P_1=z\widehat U_0+\widehat U_1
+ =\begin{pmatrix}z&1\\-1-z&-1-z\end{pmatrix}=P_0\widehat W.
+\tag{14.3}
+$$
+
+Their determinants are $z^2-1$ and $1-z^2$.
+For real $\theta$ the number $z$ is purely imaginary, so both
+are nonzero. At a fixed length $n$, equality of the $P$ products
+is exactly equality of the actual restrictions, since their common
+factor is $c^n$ and their coordinate change is invertible.
+Equation (11.2) then identifies it with qutrit projective equality.
+
+Suppose a ring map $\phi:\mathbb Z[z]\to\mathbb F_2$ sends
+$z$ to one. Entrywise reduction gives
+
+$$
+\phi(P_0)=\phi(P_1)=E=\begin{pmatrix}1&1\\0&0\end{pmatrix},
+\quad E^2=E\ne0,\quad
+\phi(\widehat W)E=\begin{pmatrix}0&0\\1&1\end{pmatrix}\ne E.
+\tag{14.4}
+$$
+
+Every nonempty positive product thus has residue $E$. Assume two
+distinct words of the same length have equal $P$ products. Cancel
+their common factors from the left over $\mathbb C$, until the
+first unequal factor. Interchange the two sides if necessary to
+write $P_0X=P_1Y=P_0\widehat W Y$. The remaining tails have the
+same length $k$. Invertibility over $\mathbb C$ gives
+$X=\widehat W Y$. If $k=0$, this says $I_2=\widehat W$,
+which is false. If $k\ge1$, reduction gives
+$E=\phi(\widehat W)E$, contradicting (14.4). All cancellations
+precede reduction; no singular matrix is inverted in $\mathbb F_2$.
+Chronological reversal merely reorders which end is read first and
+is a bijection of the binary histories. This proves injectivity
+at every length once the residue map exists.
+
+For transcendental $z$, evaluation identifies $\mathbb Z[z]$
+with the polynomial ring $\mathbb Z[X]$, and evaluation at
+$X=1$ modulo two is the required map. For algebraic $z$, the
+kernel of evaluation $\mathbb Z[X]\to\mathbb Z[z]$ is $(f)$.
+Here $f$ need not be monic: over $\mathbb Q[X]$ every vanishing
+polynomial is divisible by its minimal polynomial and therefore
+by $f$, and Gauss's lemma for primitive integral polynomials makes
+the quotient integral. More explicitly, write a rational quotient
+as $(a/b)q_0$ with $q_0$ primitive integral and $a,b$ coprime;
+primitivity of $fq_0$ forces $b=1$ when the product is integral.
+The homomorphism $X\mapsto1\pmod2$ therefore descends to the
+quotient exactly when $f(1)$ is even. Conversely every map with
+$z\mapsto1$ must annihilate $f(z)$ and so has that same condition.
+This proves precisely the stated sufficient region. $\square$
+
