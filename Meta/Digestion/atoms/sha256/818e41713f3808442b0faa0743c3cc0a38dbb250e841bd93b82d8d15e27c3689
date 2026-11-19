@@ -1,0 +1,102 @@
+**Lemma 3.2 (The coordinate discriminant and its two strata).**
+
+Under Lemma 3.1, the primitive integer generator
+$(a_0,b_0,c_0,0,0)$ of $W\cap\{\ell=m=0\}$ has
+
+$$
+\Delta_0=b_0^2-4a_0c_0=p^2d\ne0,\qquad |d|\ll B^4/p^2.
+$$
+
+Either $v_p(\Delta_0)=2$, $p\nmid d$, and $(d/p)=1$; or
+$v_p(\Delta_0)=3$ and $v_p(d)=1$. The first stratum may be rationally
+split. The second is a ramified quadratic field locally at $p$.
+
+*Proof.*
+
+In the local coordinates of the saturation proof, $a\in p^3\mathbb Z_p$,
+$b\in p\mathbb Z_p$, $c\in\mathbb Z_p^*$. Divide by $c$ and eliminate the last
+quadratic coordinate of the other two rows to obtain
+
+$$
+u=(\xi,\gamma,0,1,0),\quad v=(\zeta,\eta,0,0,1),\quad
+ k=(a,b,1,0,0),\quad \zeta\in p^3\mathbb Z_p,\quad
+ \omega=\xi-\eta\in p\mathbb Z_p.
+$$
+
+Their exact residual is
+
+$$
+\tag{3.3}
+ -\{(a\gamma+\zeta)^2+a\omega^2-ab\gamma\omega
+       -b^2\gamma\zeta+b\zeta\omega\}.
+$$
+
+If $v_p(b^2-4a)\ge4$, including zero, then $b\in p^2\mathbb Z_p$
+and $a\in p^4\mathbb Z_p$; every displayed term is divisible by $p^6$,
+contradicting valuation five. Thus the discriminant has valuation two
+or three. The integer cofactor vector
+$([q,\ell,m],[r,\ell,m],[s,\ell,m])$ is a nonzero integer multiple of
+the primitive kernel, and has sizes $O(I^2B),O(B^2),O(J^2B)$.
+This proves $|\Delta_0|\ll B^4$. In valuation two,
+$(b^2-4a)/p^2\equiv(b/p)^2\not\equiv0\pmod p$ locally.
+The determinant-one coordinate change and primitive unit scaling
+change this by a unit square, proving the assertion globally.
+In valuation three necessarily
+
+$$
+\tag{3.4}
+ v_p(a)=3,\qquad v_p(b)\ge2,\qquad v_p(\omega)=1.
+$$
+
+The first two follow from $a\in p^3$ and the discriminant valuation.
+In (3.3) all terms other than
+$a\omega^2$ have valuation at least six, so valuation five forces the
+last assertion. In the single ramified field, normalized by $v(p)=1$,
+both roots $\tau$ of $a+bT+T^2$ have valuation $3/2$. Hence
+
+$$
+E_{\rm coord}=\zeta-\omega\tau-\gamma\tau^2,
+ \qquad v(E_{\rm coord})=5/2:
+$$
+
+the middle term has valuation $5/2$, strictly below the other two.
+No unit condition on $\gamma$ or baseline resultant was used.
+
+Write $M=\left(\begin{smallmatrix}r&v\\s&z\end{smallmatrix}\right)$,
+$rz-sv=p^3$, with $r,s$ $p$-units. Its product-coefficient action is
+
+$$
+T(M)=\begin{pmatrix}r^2&rv&v^2\\2rs&rz+sv&2vz\\s^2&sz&z^2\end{pmatrix}.
+$$
+
+Put $K_0(T)=a_0+b_0T+c_0T^2$ and
+$(A_0,B_0,C_0)=T(M)(a_0,b_0,c_0)$, with $\rho_0=s/r$.
+Exactly,
+
+$$
+\begin{aligned}
+ A_0&=r^2K_0(v/r),\\
+ B_0-2\rho_0 A_0&=p^3K'_0(v/r),\\
+ C_0-\rho_0 B_0+\rho_0^2A_0&=p^6c_0/r^2.
+\end{aligned}
+$$
+
+In the valuation-two stratum $v_pK'_0(v/r)=1$, so the complete content
+is $p^j$, $j\in\{3,4\}$. In valuation three,
+$v_pK_0(v/r)=3$ and $v_pK'_0(v/r)\ge2$ by
+(3.4), so $A_0$ has valuation exactly three:
+the complete content is exactly $p^3$. No other prime can enter the
+content, since $T(M)$ is invertible away from $p$ and the coordinate
+kernel is primitive. Define $(a,b,c)=p^{-j}(A_0,B_0,C_0)$ with fixed sign.
+It is independent of the middle basis, and
+
+$$
+\tag{3.5}
+ b^2-4ac=p^{8-2j}d.
+$$
+
+In particular the ramified stratum is only $j=3$, with physical
+discriminant $p^2d$, $v_p(d)=1$, and $p\nmid abc$.
+The kernel polynomial $a+bT+cT^2$ must be distinguished from the dual
+middle form $F(W,T)=cW^2-bWT+aT^2$.
+

@@ -1,0 +1,9 @@
+### 6.11 Assembly of the arithmetic branches
+
+The $j=4$ contribution is (2.17), with threshold $233/61$
+and endpoint relative-$A$ exponent $-17/36$; it was not treated by the
+$j=3$ norm identity. Rank four has threshold $49/13$, zero residual
+has threshold $23/6$, and the source moment allows $\alpha\le15/4$.
+Together with (6.19) these bounds give the required
+actual bad-degree average at the endpoint.
+
