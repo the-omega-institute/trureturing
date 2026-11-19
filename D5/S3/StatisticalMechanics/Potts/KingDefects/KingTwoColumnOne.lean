@@ -8,36 +8,36 @@
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed helpers of the settlement on the live path of result)
-flags: proof_shape=bind-only; consumers=normal_iff, good_bound, finish_flags, prefix_cons
-lift: proof_shape=bind-only; consumers=row, normal_iff, prefix_cons
-row: proof_shape=bind-only; consumers=good_bound, finish_flags, prefix_cons
-normal_iff: proof_shape=bind-only; consumers=prefix_cons
-good_bound: proof_shape=bind-only; consumers=prefix_cons
-finish_flags: proof_shape=bind-only; consumers=prefix_cons
-Prefix: proof_shape=bind-only; consumers=prefix_cons, prefix_zero
-prefix_cons: proof_shape=bind-only; consumers=accepted_iff, literal_bridge
-prefix_zero: proof_shape=bind-only; consumers=literal_bridge
-cost: proof_shape=bind-only; consumers=Accepted, transfer_counts
-acceptedDecidable: proof_shape=bind-only; consumers=count, count_step
-Accepted: proof_shape=bind-only; consumers=accepted_iff, count_step, count_matrix
-tailCost: proof_shape=bind-only; consumers=tailCost_step, adjacent_tail, accepted_iff, grid_defects, literal_bridge
-tailCost_step: proof_shape=bind-only; consumers=accepted_iff
-adjacent_tail: proof_shape=bind-only; consumers=grid_defects
-grid_defects: proof_shape=bind-only; consumers=literal_bridge
-accepted_iff: proof_shape=content; consumers=literal_bridge
-count: proof_shape=bind-only; consumers=count_step, count_matrix, literal_bridge
-count_step: proof_shape=bind-only; consumers=count_matrix
-transfer: proof_shape=bind-only; consumers=certificate, count_matrix, result
-terminal: proof_shape=bind-only; consumers=certificate, count_matrix, result
-index: proof_shape=bind-only; consumers=transfer_counts, count_matrix
-transfer_counts: proof_shape=bind-only; consumers=count_matrix
-count_matrix: proof_shape=content; consumers=result
-literal_bridge: proof_shape=content; consumers=result
-backwardTable: proof_shape=bind-only; consumers=certificate, powers_table
-powers_table: proof_shape=bind-only; consumers=result
-certificate: proof_shape=bind-only; consumers=powers_table, result
-result: proof_shape=content; consumers=none (external open-problem-resolution #30655 C1)
+escape_witness: accepted_iff, count_matrix (new all-length continuation and counting relations used by literal_bridge and result)
+flags: proof_shape=bind-only; consumers=normal_iff, good_bound, finish_flags, prefix_cons; reason=Encodes the supplied colour threshold as three Boolean comparisons.
+lift: proof_shape=bind-only; consumers=row, normal_iff, prefix_cons; reason=Embeds a colour by adding one; the bound is arithmetic normalization.
+row: proof_shape=bind-only; consumers=good_bound, finish_flags, prefix_cons; reason=Forms a constant width-one row from lift.
+normal_iff: proof_shape=bind-only; consumers=prefix_cons; reason=Unfolds the frozen scanner predicate and normalizes four colour cases.
+good_bound: proof_shape=bind-only; consumers=prefix_cons; reason=Unfolds good and allowed; four colour cases reduce to order arithmetic.
+finish_flags: proof_shape=bind-only; consumers=prefix_cons; reason=Unfolds the frozen finish update and normalizes threshold comparisons.
+Prefix: proof_shape=bind-only; consumers=prefix_cons, prefix_zero; reason=Defines the earlier-colour predicate used by the scanner adapters.
+prefix_cons: proof_shape=bind-only; consumers=accepted_iff, literal_bridge; reason=Instantiates frozen normal_cons through normal_iff, good_bound and finish_flags.
+prefix_zero: proof_shape=bind-only; consumers=literal_bridge; reason=Unfolds Prefix and Canonical and removes the impossible bound below zero.
+cost: proof_shape=bind-only; consumers=Accepted, transfer_counts; reason=Defines the equality indicator used by the exact-budget transfer.
+acceptedDecidable: proof_shape=bind-only; consumers=count, count_step; reason=Builds decidability recursively from the supplied Accepted constructors.
+Accepted: proof_shape=bind-only; consumers=accepted_iff, count_step, count_matrix; reason=Defines the exact-budget canonical continuation predicate.
+tailCost: proof_shape=bind-only; consumers=tailCost_step, adjacent_tail, accepted_iff, grid_defects, literal_bridge; reason=Directly aliases the frozen KingPath.errors function.
+tailCost_step: proof_shape=bind-only; consumers=accepted_iff; reason=Unfolds one frozen errors constructor and the cost indicator.
+adjacent_tail: proof_shape=bind-only; consumers=grid_defects; reason=Instantiates frozen KingPath.errors_eq and reindexes the finite sum.
+grid_defects: proof_shape=bind-only; consumers=literal_bridge; reason=Instantiates frozen KingGrid.sum_edges and adjacent_tail at width one.
+accepted_iff: proof_shape=content; consumers=literal_bridge; reason=Induction establishes the new all-length Accepted/prefix/exact-error correspondence.
+count: proof_shape=bind-only; consumers=count_step, count_matrix, literal_bridge; reason=Defines the finite indicator sum of Accepted continuations.
+count_step: proof_shape=bind-only; consumers=count_matrix; reason=Transports the sum through Fin.consEquiv and unfolds one Accepted constructor.
+transfer: proof_shape=bind-only; consumers=certificate, count_matrix, result; reason=Supplies the literal transition coefficients and index conditions.
+terminal: proof_shape=bind-only; consumers=certificate, count_matrix, result; reason=Supplies the literal zero-budget indicator vector.
+index: proof_shape=bind-only; consumers=transfer_counts, count_matrix; reason=Defines the finite encoding of the colour threshold and residual budget.
+transfer_counts: proof_shape=bind-only; consumers=count_matrix; reason=Finite index cases normalize the supplied coefficients for an arbitrary vector.
+count_matrix: proof_shape=content; consumers=result; reason=Induction establishes the new all-length count/matrix relation, beyond finite normalization.
+literal_bridge: proof_shape=content; consumers=result; reason=After helper inlining, the counting equivalence uses the new accepted_iff invariant.
+backwardTable: proof_shape=bind-only; consumers=certificate, powers_table; reason=Supplies the literal finite vector table used by the recurrence calculation.
+powers_table: proof_shape=bind-only; consumers=result; reason=The bounded Fin induction unfolds forward and the normalized literal certificate.
+certificate: proof_shape=bind-only; consumers=powers_table, result; reason=All entries are supplied by transfer, terminal and backwardTable; only finite linear arithmetic remains.
+result: proof_shape=content; consumers=none (external open-problem-resolution #30655 C1); reason=After helper inlining, forward_shift consumes the new count_matrix and accepted_iff relations.
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical

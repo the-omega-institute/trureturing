@@ -7,9 +7,9 @@
    digest: Exact multiplicities of width-six class successors. -/
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-own_counts: proof_shape=bind-only; consumers=counts
-counts: proof_shape=bind-only; consumers=Width6.Counts.Check3.counts
+escape_witness: none (literal classList multiplicities and T coefficients normalize; no new row-successor proposition)
+own_counts: proof_shape=bind-only; consumers=counts; reason=Literal classList/T entries for classes 24 through 35 reduce to finite list/count arithmetic.
+counts: proof_shape=bind-only; consumers=Width6.Counts.Check3.counts; reason=After inlining own_counts, combines the preceding range with literal normalization for classes 24 through 35.
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Counts.Check1

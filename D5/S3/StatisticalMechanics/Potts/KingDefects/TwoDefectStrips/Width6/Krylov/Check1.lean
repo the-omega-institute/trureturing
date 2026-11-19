@@ -7,9 +7,9 @@
    digest: Coordinate certificates for the width-six transfer. -/
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-own_certificate: proof_shape=bind-only; consumers=certificate
-certificate: proof_shape=bind-only; consumers=Width6.Krylov.Check2.certificate
+escape_witness: none (the supplied W/T entries reduce all coordinate and polynomial identities to finite linear arithmetic)
+own_certificate: proof_shape=bind-only; consumers=certificate; reason=Supplied W/T entries at coordinates 12 through 23 reduce both conjuncts to finite linear arithmetic.
+certificate: proof_shape=bind-only; consumers=Width6.Krylov.Check2.certificate; reason=After inlining own_certificate, combines coordinate ranges and normalizes the supplied W/T arithmetic through coordinate 23.
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Krylov.Check0

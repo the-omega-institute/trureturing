@@ -8,16 +8,17 @@
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed owner adapters on the live path of HardinA229753.result)
-twoRows: proof_shape=bind-only; consumers=raw_pair,exact_image
-raw: proof_shape=bind-only; consumers=raw_pair,raw_iff_shift,weighted
-raw_pair: proof_shape=bind-only; consumers=exact_image
-exact_image: proof_shape=bind-only; consumers=raw_iff_shift
-offsets: proof_shape=bind-only; consumers=raw_iff_shift,weighted
-raw_iff_shift: proof_shape=bind-only; consumers=weighted
-weighted: proof_shape=bind-only; consumers=transition_counts
-owner_matrix: proof_shape=bind-only; consumers=transition_counts
-transition_counts: proof_shape=bind-only; consumers=Width6.Certificate.transition_counts
+escape_witness: none (frozen zoneEquiv/zones_iff supply the successor structure; cl/T and offset counts only normalize its representation)
+twoRows: proof_shape=bind-only; consumers=raw_pair,exact_image; reason=Defines the two-row presentation of the frozen owner input.
+raw: proof_shape=bind-only; consumers=raw_pair,raw_iff_shift,weighted; reason=Defines zero total bond defects for the two-row presentation.
+<local-instance Decidable (raw p r)>: proof_shape=bind-only; consumers=weighted,transition_counts; reason=Infers equality decidability for the supplied raw predicate; this is a source locator for the anonymous instance.
+raw_pair: proof_shape=bind-only; consumers=exact_image; reason=Unfolds Proper and the supplied bond sets and normalizes the zero-defect conjunction.
+exact_image: proof_shape=bind-only; consumers=raw_iff_shift; reason=Instantiates frozen zoneEquiv at two rows and projects its inverse laws.
+offsets: proof_shape=bind-only; consumers=raw_iff_shift,weighted; reason=Defines the XOR-normalized row used by the frozen owner.
+raw_iff_shift: proof_shape=bind-only; consumers=weighted; reason=Projects frozen zones_iff through exact_image and normalizes with frozen XOR laws.
+weighted: proof_shape=bind-only; consumers=transition_counts; reason=Reindexes the supplied raw_iff_shift image using frozen XOR cancellation for injectivity.
+owner_matrix: proof_shape=bind-only; consumers=transition_counts; reason=Frozen offsets and the supplied cl/T tables fix every case; finite class/cardinality normalization remains.
+transition_counts: proof_shape=bind-only; consumers=Width6.Certificate.transition_counts; reason=After helper inlining, rewrites the frozen owner image and normalizes the zero-budget indicator.
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
