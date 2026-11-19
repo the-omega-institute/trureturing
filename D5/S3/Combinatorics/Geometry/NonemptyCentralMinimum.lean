@@ -13,7 +13,8 @@ escape_witness: equality_shape (a nonempty central graph with ⌈n/2⌉ edges is
   n), with nonempty_facts (one central edge gives every point a central neighbour and a second
   central value).
 proof_shape:
-  EqualityDegrees, adjLab: definitions; consumers: nonempty_minimum, realize.
+  EqualityDegrees: definition; consumers: equality_shape, realize, nonempty_minimum.
+  adjLab: definition; consumers: plab_adjLab, realize, nonempty_minimum.
   nonempty_facts: content; consumers: equality_shape, nonempty_minimum.
   equality_shape: content; consumer: nonempty_minimum.
   plab_adjLab: bind-only helper; consumer: realize.
@@ -27,8 +28,10 @@ Direct frozen dependencies: D5/S3/Combinatorics/Geometry/CentralEdgeCover (edge_
   D5/S3/Combinatorics/Geometry/CentralSizeEdgeMinima (Feasible, all_center_sizes), the last two
   frozen by the-omega-institute/trureturing#31926.
 Search record (§3.1): Mathlib's SimpleGraph.sum_degrees_eq_twice_card_edges,
-  degree_pos_iff_exists_adj and Fin.exists_ne_and_ne_of_two_lt are reused; no frozen module
-  classifies the equality graphs of the central-edge bound.
+  degree_pos_iff_exists_adj, Finset.sum_eq_sum_iff_of_le, Finset.card_nsmul_le_sum and
+  Fin.exists_ne_and_ne_of_two_lt are reused; Mathlib's isPerfectMatching_iff_forall_degree covers
+  only the even pattern, so the degrees are stated directly. No frozen module classifies the
+  equality graphs of the central-edge bound.
 -/
 
 import D5.S3.Combinatorics.Geometry.CentralSizeEdgeMinima
