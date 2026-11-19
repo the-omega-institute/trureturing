@@ -244,6 +244,75 @@ theorem q9_sixty_six_normalized_signed_constraints {C : Finset (Q 9)} (hC : C.ca
 
 #print axioms q9_sixty_six_normalized_signed_constraints
 
+private lemma selected_coordinate_count_bound {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (r : Fin 9 → ℤ)
+    (hhalf : ∀ i, ((C.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33)
+    (J : Finset (Fin 9)) (K : ℤ)
+    (hK : ∀ x ∈ C, (∑ i ∈ J, if x i then (1 : ℤ) else 0) ≤ K) :
+    ∑ i ∈ J, (110 - 6 * r i) ≤ 198 * K := by
+  let a (i : Fin 9) : ℤ := if i ∈ J then 1 else 0
+  let t (x : Q 9) (i : Fin 9) : ℤ := if x i then a i else 0
+  let w (x : Q 9) : ℤ := ∑ i, t x i
+  let g (x : Q 9) : ℤ := K - w x
+  have hw (x : Q 9) : w x = ∑ i ∈ J, if x i then (1 : ℤ) else 0 := by
+    calc
+      w x = ∑ i ∈ J, t x i := (sum_subset (subset_univ J) (by
+        intro i _ hi
+        simp [t, a, hi])).symm
+      _ = _ := by
+        apply sum_congr rfl
+        intro i hi
+        simp [t, a, hi]
+  have hn (x : Q 9) (hx : x ∈ C) : 0 ≤ g x := by
+    dsimp only [g]
+    exact sub_nonneg.mpr ((hw x).trans_le (hK x hx))
+  have hlocal (i : Fin 9) (x : Q 9) (hx : x ∈ directionEndpoints C i) :
+      a i ≤ g x + g (flip x i) := by
+    have hxC := (mem_filter.mp hx).1
+    have hfC := (mem_filter.mp hx).2
+    have hsplit (y : Q 9) :
+        w y = (∑ j ∈ (univ : Finset (Fin 9)).erase i, t y j) + t y i :=
+      (sum_erase_add _ _ (mem_univ i)).symm
+    have hs : (∑ j ∈ (univ : Finset (Fin 9)).erase i, t (flip x i) j) =
+        ∑ j ∈ (univ : Finset (Fin 9)).erase i, t x j := by
+      apply sum_congr rfl
+      intro j hj
+      simp [t, BalancedCriticalSpectrum.flip, (mem_erase.mp hj).1]
+    have hdiff : g (flip x i) - g x = t x i - t (flip x i) i := by
+      dsimp [g]
+      rw [hsplit x, hsplit (flip x i), hs]
+      ring
+    cases hi : x i <;>
+      simp [t, BalancedCriticalSpectrum.flip_apply_same, hi] at hdiff <;>
+      linarith [hn x hxC, hn _ hfC]
+  have hedge := sixty_six_edge_weight_inequality hC hreg hb a g hlocal
+  have ha : (∑ i, a i) = (J.card : ℤ) := by
+    change (∑ i, if i ∈ J then (1 : ℤ) else 0) = _
+    have hJ : (univ : Finset (Fin 9)).filter (· ∈ J) = J := by
+      ext i
+      simp
+    rw [← sum_filter, hJ, sum_const]
+    simp
+  have htotal : (∑ x ∈ C, w x) = ∑ i ∈ J, (33 - 2 * r i) := by
+    simp_rw [hw]
+    rw [sum_comm]
+    apply sum_congr rfl
+    intro i _
+    rw [← sum_filter, sum_const]
+    simpa using eq_sub_of_add_eq (hhalf i)
+  have hgap : (∑ x ∈ C, g x) = 66 * K - ∑ i ∈ J, (33 - 2 * r i) := by
+    dsimp only [g]
+    rw [sum_sub_distrib, sum_const, hC, nsmul_eq_mul, htotal]
+    norm_num
+  have heq : (∑ i ∈ J, (110 - 6 * r i)) =
+      11 * J.card + 3 * ∑ i ∈ J, (33 - 2 * r i) := by
+    simp only [sum_sub_distrib, sum_const, nsmul_eq_mul, ← mul_sum]
+    ring
+  rw [ha, hgap] at hedge
+  rw [heq]
+  linarith
+
 /-- Eight or more deficit-five coordinates force a point with at least
 `52 - ∑ i, r i` distance-seven partners. In particular, a uniform cap of
 six rules out all such profiles. -/
@@ -372,5 +441,113 @@ theorem q9_sixty_six_mem_profiles_after_partner_bound {C : Finset (Q 9)} (hC : C
 
 #print axioms sixtySixProfilesAfterPartnerBound_length
 #print axioms q9_sixty_six_mem_profiles_after_partner_bound
+
+private lemma prefix_weight_le_of_card_le {r : Fin 9 → ℤ} (hmono : Monotone r)
+    (hr : ∀ i, 0 ≤ r i) {a b : Fin 9} {T : Finset (Fin 9)}
+    (hT : T ⊆ Ici a) (hcard : (Icc a b).card ≤ T.card) :
+    ∑ i ∈ Icc a b, r i ≤ ∑ i ∈ T, r i := by
+  let P := Icc a b
+  have hP := card_sdiff_add_card_inter P T
+  have hQ := card_sdiff_add_card_inter T P
+  rw [inter_comm T P] at hQ
+  have hdiff : ((P \ T).card : ℤ) ≤ (T \ P).card := by
+    change P.card ≤ T.card at hcard
+    exact_mod_cast (show (P \ T).card ≤ (T \ P).card by omega)
+  have hupper : ∑ i ∈ P \ T, r i ≤ ((P \ T).card : ℤ) * r b := by
+    rw [← nsmul_eq_mul, ← sum_const]
+    exact sum_le_sum fun i hi => hmono (mem_Icc.mp (mem_sdiff.mp hi).1).2
+  have hlower : ((T \ P).card : ℤ) * r b ≤ ∑ i ∈ T \ P, r i := by
+    rw [← nsmul_eq_mul, ← sum_const]
+    apply sum_le_sum
+    intro i hi
+    obtain ⟨hiT, hiP⟩ := mem_sdiff.mp hi
+    exact hmono (le_of_not_ge fun hib => hiP (mem_Icc.mpr ⟨mem_Ici.mp (hT hiT), hib⟩))
+  have hsumP := sum_inter_add_sum_sdiff P T r
+  have hsumT := sum_inter_add_sum_sdiff T P r
+  rw [inter_comm T P] at hsumT
+  change ∑ i ∈ P, r i ≤ ∑ i ∈ T, r i
+  linarith [mul_le_mul_of_nonneg_right hdiff (hr b)]
+
+private def suffixConflict (r : Fin 9 → ℤ) (K : ℤ) (a b : Fin 9) : Prop :=
+  a ≤ b ∧ K < ∑ i ∈ Icc a b, r i ∧
+    198 * ((b.val - a.val : ℕ) : ℤ) < ∑ i ∈ Ici a, (110 - 6 * r i)
+
+private instance (r : Fin 9 → ℤ) (K : ℤ) (a b : Fin 9) :
+    Decidable (suffixConflict r K a b) := by
+  unfold suffixConflict
+  infer_instance
+
+private lemma no_suffix_conflict {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    {r : Fin 9 → ℤ} (hmono : Monotone r) (hr : ∀ i, 0 ≤ r i)
+    (hhalf : ∀ i, ((C.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33)
+    {K : ℤ} (hK : ∀ x ∈ C, (∑ i, if x i then r i else 0) ≤ K)
+    (a b : Fin 9) : ¬ suffixConflict r K a b := by
+  rintro ⟨hab, hprefix, hsum⟩
+  have hbound (x : Q 9) (hx : x ∈ C) :
+      (∑ i ∈ Ici a, if x i then (1 : ℤ) else 0) ≤ ((b.val - a.val : ℕ) : ℤ) := by
+    let T := (Ici a).filter (fun i => x i = true)
+    rw [← sum_filter, sum_const]
+    simp only [nsmul_eq_mul, mul_one]
+    change (T.card : ℤ) ≤ _
+    suffices hcard : T.card ≤ b.val - a.val by exact_mod_cast hcard
+    by_contra! hcard
+    have hp : (Icc a b).card ≤ T.card := by
+      rw [Fin.card_Icc]
+      change a.val ≤ b.val at hab
+      omega
+    have hw := prefix_weight_le_of_card_le hmono hr (filter_subset _ _) hp
+    have htotal : ∑ i ∈ T, r i ≤ ∑ i, if x i then r i else 0 := by
+      rw [← sum_filter]
+      apply sum_le_sum_of_subset_of_nonneg
+      · intro i hi
+        exact mem_filter.mpr ⟨mem_univ _, (mem_filter.mp hi).2⟩
+      · intro i _ _
+        exact hr i
+    linarith [hK x hx]
+  have h := selected_coordinate_count_bound hC hreg hb r hhalf (Ici a)
+    ((b.val - a.val : ℕ) : ℤ) hbound
+  linarith
+
+private def hasSuffixConflict (profile : List ℤ) : Bool :=
+  let r := fun i : Fin 9 => profile[i.val]?.getD 0
+  let K := (profile.sum - 4) / 2
+  (List.finRange 9).any fun a => (List.finRange 9).any fun b =>
+    decide (suffixConflict r K a b)
+
+/-- Sorted deficit profiles surviving the restrictions on every suffix of coordinates. -/
+def sixtySixProfilesAfterSuffixBounds : List (List ℤ) :=
+  sixtySixCandidateProfiles.filter fun profile => !hasSuffixConflict profile
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+-- The kernel checks all coordinate intervals in the finite profile list.
+theorem sixtySixProfilesAfterSuffixBounds_length :
+    sixtySixProfilesAfterSuffixBounds.length = 156 := by
+  decide +kernel
+
+/-- Every 66-point support gives a profile surviving the suffix bounds. -/
+theorem q9_sixty_six_mem_profiles_after_suffix_bounds {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C) :
+    ∃ (S : Finset (Q 9)) (r : Fin 9 → ℤ),
+      S.card = 66 ∧ ((hypercube 9).induce (S : Set (Q 9))).IsRegularOfDegree 3 ∧
+      IsBalanced S ∧ (∀ i, ((S.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33) ∧
+      List.ofFn r ∈ sixtySixProfilesAfterSuffixBounds := by
+  obtain ⟨S, r, hS, hregS, hbS, _, hmono, hr, hhalf, hK, hm⟩ :=
+    exists_sorted_minority_cube_support hC hreg hb
+      (huang_balanced_cubic_sixty_six_diameter_le_seven hC hreg hb)
+  refine ⟨S, r, hS, hregS, hbS, hhalf, ?_⟩
+  rw [sixtySixProfilesAfterSuffixBounds, List.mem_filter]
+  refine ⟨sorted_deficits_mem_sixtySixCandidateProfiles r hmono hr hm, ?_⟩
+  have he : (fun i : Fin 9 => (List.ofFn r)[i.val]?.getD 0) = r := by
+    funext i
+    simp only [List.getElem?_ofFn, dif_pos i.isLt, Option.getD_some]
+  simp only [Bool.not_eq_true', hasSuffixConflict, he, sum_ofFn_int, List.any_eq_false,
+    Bool.not_eq_true, decide_eq_false_iff_not]
+  intro a _ b _
+  exact no_suffix_conflict hS hregS hbS hmono (fun i => (hr i).1) hhalf hK a b
+
+#print axioms sixtySixProfilesAfterSuffixBounds_length
+#print axioms q9_sixty_six_mem_profiles_after_suffix_bounds
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
