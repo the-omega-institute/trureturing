@@ -4,7 +4,7 @@
 
 Actual sharp regular bipartite graphs
 
-For every d at least three the actual finRotate graph has order 4d+2, degree d, a proper bipartition, beta=2d+1 and SF=2d+2. The displayed high classes and hubs are minimal forming. The beta proof uses symbolic neighborhood counts for d at least five, the C4-free threshold at d=3 and eighteen actual uniformly weighted squares at d=4. Two-connectivity, all-degree square weights and broken-edge rings remain separate obligations.
+For every d at least three the actual finRotate graph has order 4d+2, degree d, a proper bipartition, beta=2d+1 and SF=2d+2. The displayed high classes and hubs are minimal forming. The beta proof uses symbolic neighborhood counts for d at least five, a kernel-checked finite maximum at d=3 and eighteen actual uniformly weighted squares at d=4. Two-connectivity, all-degree square weights and broken-edge rings remain separate obligations.
 
 **Definition 1.1 (Side).**
 
@@ -194,4 +194,3 @@ Exact declaration: theorem cyclic_parameters (d : ℕ) (hd : 3 ≤ d) : Fintype.
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularBound](RegularBound.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/SquareCapacity](SquareCapacity.md)
-- Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds](../SubQuorum/C4RepresentativeBounds.md)
