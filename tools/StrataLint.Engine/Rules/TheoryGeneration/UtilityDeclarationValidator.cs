@@ -19,7 +19,6 @@ internal enum UtilityValidationFailure
     PremisesMissing,
     InputUnknown,
     TargetDangling,
-    RefutesAtomNoCoverage,
     ConsumerUnreachable,
     OrdinaryInstanceForbidden,
     ClassificationDowngrade,

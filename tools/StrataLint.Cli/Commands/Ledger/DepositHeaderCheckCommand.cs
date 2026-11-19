@@ -162,8 +162,6 @@ internal static class DepositHeaderCheckCommand
         UtilityValidationFailure.PremisesMissing => "DEPOSIT_HEADER_UTILITY_PREMISES_MISSING",
         UtilityValidationFailure.InputUnknown => "DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN",
         UtilityValidationFailure.TargetDangling => "DEPOSIT_HEADER_UTILITY_TARGET_DANGLING",
-        UtilityValidationFailure.RefutesAtomNoCoverage =>
-            "DEPOSIT_HEADER_UTILITY_REFUTES_ATOM_NO_COVERAGE",
         UtilityValidationFailure.ConsumerUnreachable =>
             "DEPOSIT_HEADER_UTILITY_CONSUMER_UNREACHABLE",
         UtilityValidationFailure.OrdinaryInstanceForbidden => "DEPOSIT_HEADER_UTILITY_ORDINARY_INSTANCE_BANNED",
