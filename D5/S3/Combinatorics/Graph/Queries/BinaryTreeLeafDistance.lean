@@ -4,8 +4,9 @@
    mirror-E: none(waiver:symbolic-distance-identity)
    anchors: []
    utility: none
-   digest: The inverse powers of two of distances from a vertex to the leaves of a complete binary tree have an exact sum. -/
+   digest: The dyadic distance weights of the leaves of a complete binary tree have an exact sum. -/
 
+import D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry
 import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Combinatorics.SimpleGraph.Walk.Maps
 import Mathlib.Algebra.BigOperators.Group.List.Basic
@@ -18,6 +19,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open SimpleGraph
+open D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry
 
 namespace D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance
 
@@ -37,112 +39,68 @@ private def wordDist : List Bool → List Bool → ℕ
   | _ :: xs, [] => xs.length + 1
   | x :: xs, y :: ys => if x = y then wordDist xs ys else xs.length + ys.length + 2
 
-private theorem wordDist_self (x : List Bool) : wordDist x x = 0 := by
-  induction x with
-  | nil => rfl
-  | cons b xs ih => simp [wordDist, ih]
-
-private theorem child_difference (x y : List Bool) (b : Bool) :
-    wordDist x y ≤ wordDist (x ++ [b]) y + 1 ∧
-      wordDist (x ++ [b]) y ≤ wordDist x y + 1 := by
+private theorem wordDist_eq_prefixDistance (x y : List Bool) :
+    wordDist x y = distance x y := by
   induction x generalizing y with
-  | nil =>
-    cases y with
-    | nil => simp [wordDist]
-    | cons c rest =>
-      by_cases h : b = c
-      · simp [wordDist, h]
-        omega
-      · simp [wordDist, h]
-  | cons a rest ih =>
-    cases y with
-    | nil => simp [wordDist]
-    | cons c tail =>
-      by_cases h : a = c
-      · simpa only [List.cons_append, wordDist, ite_eq_left h] using ih tail
-      · simp [wordDist, h]
-        omega
-
-private theorem wordDist_le_walk {x y : List Bool} (p : wordTree.Walk x y) :
-    wordDist x y ≤ p.length := by
-  induction p with
-  | nil => exact (wordDist_self _).le
-  | @cons x z y edge walk ih =>
-    have hStep : wordDist x y ≤ wordDist z y + 1 := by
-      rw [wordTree, fromRel_adj] at edge
-      rcases edge.2 with ⟨b, rfl⟩ | ⟨b, rfl⟩
-      · exact (child_difference x y b).1
-      · exact (child_difference z y b).2
-    simp only [Walk.length_cons]
-    omega
-
-private abbrev branch (b : Bool) : wordTree →g wordTree where
-  toFun := List.cons b
-  map_rel' := by
-    intro x y edge
-    rw [wordTree, fromRel_adj] at edge
-    rcases edge.2 with ⟨a, rfl⟩ | ⟨a, rfl⟩
-    · exact child_adj (b :: x) a
-    · exact (child_adj (b :: y) a).symm
-
-private def fromRoot : ∀ x, wordTree.Walk [] x
-  | [] => .nil
-  | b :: xs => .cons (child_adj [] b) ((fromRoot xs).map (branch b))
-
-private theorem fromRoot_length (x : List Bool) : (fromRoot x).length = x.length := by
-  induction x with
-  | nil => rfl
-  | cons b xs ih =>
-    change ((fromRoot xs).map (branch b)).length + 1 = xs.length + 1
-    rw [Walk.length_map, ih]
-
-private theorem fromRoot_support (x : List Bool) :
-    ∀ z ∈ (fromRoot x).support, z.length ≤ x.length := by
-  induction x with
-  | nil => simp [fromRoot]
-  | cons b xs ih =>
-    intro z hz
-    change z ∈ [] :: ((fromRoot xs).map (branch b)).support at hz
-    rcases List.mem_cons.mp hz with rfl | hm
-    · simp
-    · rw [Walk.support_map] at hm
-      obtain ⟨y, hy, rfl⟩ := List.mem_map.mp hm
-      exact Nat.succ_le_succ (ih y hy)
-
-private theorem wordDist_achieved (x y : List Bool) :
-    ∃ p : wordTree.Walk x y, p.length = wordDist x y ∧
-      ∀ z ∈ p.support, z.length ≤ max x.length y.length := by
-  induction x generalizing y with
-  | nil =>
-    exact ⟨fromRoot y, fromRoot_length y, fun z hz =>
-      (fromRoot_support y z hz).trans (le_max_right _ _)⟩
+  | nil => simp [wordDist, distance, lcp]
   | cons a xs ih =>
     cases y with
-    | nil =>
-      refine ⟨(fromRoot (a :: xs)).reverse, by simp [fromRoot_length, wordDist], ?_⟩
-      intro z hz
-      rw [Walk.support_reverse, List.mem_reverse] at hz
-      exact (fromRoot_support (a :: xs) z hz).trans (le_max_left _ _)
+    | nil => simp [wordDist, distance, lcp]
     | cons b ys =>
       by_cases h : a = b
-      · subst b
-        obtain ⟨p, hp, hSupp⟩ := ih ys
-        refine ⟨p.map (branch a), by simp [wordDist, hp], ?_⟩
-        intro z hz
-        change z ∈ (p.map (branch a)).support at hz
-        rw [Walk.support_map] at hz
-        obtain ⟨c, hc, rfl⟩ := List.mem_map.mp hz
-        have hc' := hSupp c hc
-        change c.length + 1 ≤ max (xs.length + 1) (ys.length + 1)
+      · have hLeft := (shortest_pop_append xs ys).1.1.length_le
+        have hRight := (shortest_pop_append xs ys).1.2.1.length_le
+        rw [wordDist, ite_eq_left h, ih]
+        simp only [distance, lcp, ite_eq_left h, List.length_cons]
         omega
-      · refine ⟨(fromRoot (a :: xs)).reverse.append (fromRoot (b :: ys)), ?_, ?_⟩
-        · simp [wordDist, h, fromRoot_length]
-          omega
-        · intro z hz
-          rw [Walk.mem_support_append_iff, Walk.support_reverse, List.mem_reverse] at hz
-          exact hz.elim
-            (fun hz => (fromRoot_support (a :: xs) z hz).trans (le_max_left _ _))
-            (fun hz => (fromRoot_support (b :: ys) z hz).trans (le_max_right _ _))
+      · simp [wordDist, distance, lcp, h]
+        omega
+
+private theorem step_adj {x y : Word} (h : Step x y) : wordTree.Adj x y := by
+  cases h with
+  | append _ b => exact child_adj _ b
+  | pop _ b => exact (child_adj _ b).symm
+
+private theorem adj_step {x y : Word} (h : wordTree.Adj x y) : Step x y := by
+  rw [wordTree, fromRel_adj] at h
+  rcases h.2 with ⟨b, rfl⟩ | ⟨b, rfl⟩
+  · exact .append x b
+  · exact .pop y b
+
+private def pathWalk {x y : Word} : Path x y → wordTree.Walk x y
+  | .nil _ => .nil
+  | .cons h p => .cons (step_adj h) (pathWalk p)
+
+private def walkPath {x y : Word} : wordTree.Walk x y → Path x y
+  | .nil => .nil _
+  | .cons h p => .cons (adj_step h) (walkPath p)
+
+private theorem pathWalk_length {x y : Word} (p : Path x y) :
+    (pathWalk p).length = p.length := by
+  induction p with
+  | nil => rfl
+  | cons h p ih => simp [pathWalk, Path.length, ih]
+
+private theorem walkPath_length {x y : Word} (p : wordTree.Walk x y) :
+    (walkPath p).length = p.length := by
+  induction p with
+  | nil => rfl
+  | cons h p ih => simp [walkPath, Path.length, ih]
+
+private theorem pathWalk_support {x y : Word} {k : ℕ} (p : Path x y)
+    (h : p.Within k) : ∀ z ∈ (pathWalk p).support, z.length ≤ k := by
+  induction p with
+  | nil w =>
+    intro z hz
+    change z ∈ [w] at hz
+    obtain rfl := List.mem_singleton.mp hz
+    exact h
+  | @cons x v y edge p ih =>
+    intro z hz
+    change z ∈ x :: (pathWalk p).support at hz
+    rcases List.mem_cons.mp hz with rfl | hz
+    · exact h.1
+    · exact ih h.2 z hz
 
 /-- The complete tree truncated at depth k. -/
 abbrev boundedWordTree (k : ℕ) : SimpleGraph {x : List Bool // x.length ≤ k} :=
@@ -150,20 +108,25 @@ abbrev boundedWordTree (k : ℕ) : SimpleGraph {x : List Bool // x.length ≤ k}
 
 private theorem finite_distance_eq (k : ℕ) (x y : {x : List Bool // x.length ≤ k}) :
     (boundedWordTree k).dist x y = wordDist x.1 y.1 := by
-  obtain ⟨p, hp, hSupp⟩ := wordDist_achieved x.1 y.1
+  obtain ⟨_, hLower, p, hp, hCap⟩ := shortest_pop_append x.1 y.1
   let vertices : Set (List Bool) := {x | x.length ≤ k}
-  have hIn : ∀ z ∈ p.support, z ∈ vertices := fun z hz =>
-    (hSupp z hz).trans (max_le x.2 y.2)
-  let pIn : (boundedWordTree k).Walk x y := p.induce vertices hIn
+  let pFull := pathWalk p
+  have hIn : ∀ z ∈ pFull.support, z ∈ vertices := fun z hz =>
+    (pathWalk_support p hCap z hz).trans (max_le x.2 y.2)
+  let pIn : (boundedWordTree k).Walk x y := pFull.induce vertices hIn
   have hLen : pIn.length = p.length := by
-    change (p.induce vertices hIn).length = p.length
+    change (pFull.induce vertices hIn).length = p.length
     rw [← Walk.length_map (Embedding.induce vertices).toHom, Walk.map_induce]
-    rfl
+    exact pathWalk_length p
   obtain ⟨q, hq⟩ := (show (boundedWordTree k).Reachable x y from ⟨pIn⟩).exists_walk_length_eq_dist
-  have hLower : wordDist x.1 y.1 ≤ q.length := by
-    have hm := wordDist_le_walk (q.map (Embedding.induce vertices).toHom)
-    rwa [Walk.length_map] at hm
-  exact ((boundedWordTree k).dist_le pIn).trans_eq (hLen.trans hp) |>.antisymm (hq ▸ hLower)
+  have hShortest : distance x.1 y.1 ≤ q.length := by
+    let qFull := q.map (Embedding.induce vertices).toHom
+    calc
+      _ ≤ (walkPath qFull).length := hLower (walkPath qFull)
+      _ = qFull.length := walkPath_length qFull
+      _ = q.length := Walk.length_map _ _
+  rw [wordDist_eq_prefixDistance]
+  exact ((boundedWordTree k).dist_le pIn).trans_eq (hLen.trans hp) |>.antisymm (hq ▸ hShortest)
 
 /-- The list of leaves of the complete tree of depth k. -/
 def leafWords : ℕ → List (List Bool)

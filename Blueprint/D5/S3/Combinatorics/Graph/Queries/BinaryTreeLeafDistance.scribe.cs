@@ -20,12 +20,12 @@ internal sealed class BinaryTreeLeafDistanceDocument : IScribeDocumentDefinition
                     + "to the words obtained by appending one bit. The depth-k leaf list "
                     + "contains each depth-k word exactly once. For a vertex at depth d, "
                     + "weight each leaf by one half raised to the graph distance from that "
-                    + "vertex. The total is three halves minus one half raised to d plus one.")),
+                    + "vertex. The total is three halves minus one half raised to the power (d + 1).")),
                 Paragraph(Text(
                     "The distance is the number of edges from the starting word back to "
                     + "the longest common prefix and then forward to the target word. "
-                    + "Extending a word by one bit changes this number by at most one, "
-                    + "and the route through the common prefix realizes it within the depth cap. "
+                    + "Transport the existing shortest pop and append paths to graph walks, "
+                    + "preserving their lengths and the depth bound. "
                     + "At the root all leaves contribute a total of one. At a non-root vertex, "
                     + "the same first-bit branch retains the shorter-tree sum. All leaves in "
                     + "the other branch pass through the root and contribute one half raised "
