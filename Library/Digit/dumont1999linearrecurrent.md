@@ -14,6 +14,16 @@ triage: anchor
 
 # Representations with a digit cap one below a multiple of the radix
 
+## Verified locator
+
+DOI: 10.4064/aa-88-4-371-396
+
+Source: https://matwbn.icm.edu.pl/ksiazki/aa/aa88/aa8847.pdf
+
+Lemma 6.6 (p. 386) and Proposition 6.8 (p. 387).
+
+## Statement
+
 Jean-Marie Dumont, Nikita Sidorov and Alain Thomas, *Number of representations related to a
 linear recurrent basis*, Acta Arithmetica 88 (1999), no. 4, 371–396,
 DOI 10.4064/aa-88-4-371-396.
