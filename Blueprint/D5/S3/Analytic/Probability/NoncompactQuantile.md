@@ -53,4 +53,4 @@ Weight the joint law by the positive and negative parts of y-x and project each 
 - Truth anchor: `D5/S3/Analytic/Probability/NoncompactQuantile.absolute_tail_le`
 - Truth anchor: `D5/S3/Analytic/Probability/NoncompactQuantile.exists_martingale_approximations`
 - Truth anchor: `D5/S3/Analytic/Probability/NoncompactQuantile.tested_measurable_of_continuous`
-- Dependency: [D5/S3/Analytic/Probability/ConditionalMeanApproximation](ConditionalMeanApproximation.md)
+- Dependency: [D5/S3/Analytic/Probability/ConditionalMeanIntegrable](ConditionalMeanIntegrable.md)

@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/Analytic/Probability/FiniteMartingaleCoupling
   - D5/S3/Analytic/Probability/ConditionalMeanAtoms
   - D5/S3/Analytic/Probability/ConditionalMeanApproximation
+  - D5/S3/Analytic/Probability/ConditionalMeanIntegrable
   - D5/S3/Analytic/Probability/CompactStrassen
   - D5/S3/Analytic/Probability/NoncompactQuantile
 license: citation-only
