@@ -135,7 +135,7 @@ private theorem option_inventory_colors [Finite A] (s d : A → Bool) (a b i j :
     Finset.card_filter, Fintype.sum_option, Option.elim'_none, Option.elim'_some]
   ac_rfl
 
-private theorem balance_of_compatible [Finite A] (s d : A → Bool)
+theorem balance_of_compatible [Finite A] (s d : A → Bool)
     (ρ : Compatible s d) : inventory s d false true = inventory s d true false := by
   apply inventory_balanced
   exact (Nat.card_congr (Equiv.subtypeEquiv ρ.1 (fun x => by rw [ρ.2.2.2 x]) :
@@ -205,7 +205,7 @@ private def contractAt [Finite C] (s d : C → Bool) (x y : C)
   rw [he]
   exact e.apply_eq_iff_eq.symm
 
-private theorem contracted_balance_at [Finite C] (s d : C → Bool) (x y : C)
+theorem contracted_balance_at [Finite C] (s d : C → Bool) (x y : C)
     (hxy : y ≠ x) (hy : s y = d x) (ρ : Compatible s d) :
     inventory (contractedSource s x y) (fun z => d z.1) false true =
       inventory (contractedSource s x y) (fun z => d z.1) true false := by
