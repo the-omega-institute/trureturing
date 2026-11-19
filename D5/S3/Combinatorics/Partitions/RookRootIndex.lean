@@ -55,7 +55,7 @@ private theorem ofFn_getD {N : ℕ} (l : List ℤ) (hl : l.length = N) :
       exact List.getD_eq_getElem l 0 i.isLt
     _ = l := List.ofFn_getElem
 
-private theorem mem_rootPermutations_iff {N : ℕ} (z a : Fin N → ℤ) :
+theorem mem_rootPermutations_iff {N : ℕ} (z a : Fin N → ℤ) :
     a ∈ rootPermutations z ↔ (List.ofFn a).Perm (List.ofFn z) := by
   constructor
   · intro h
@@ -69,7 +69,7 @@ private theorem mem_rootPermutations_iff {N : ℕ} (z a : Fin N → ℤ) :
     funext i
     simp [List.getD_eq_getElem]
 
-private theorem index_spec (m : ℕ) {N : ℕ} (z : Fin N → ℤ)
+theorem index_spec (m : ℕ) {N : ℕ} (z : Fin N → ℤ)
     (a : ↥(indices m z)) :
     (List.ofFn a.val).Perm (List.ofFn z) ∧ Admissible m a.val := by
   classical
@@ -137,7 +137,7 @@ private theorem pad_board (m : ℕ) {N : ℕ} {z : Fin N → ℤ} (a : ↥(indic
 def paddedRoots (m N : ℕ) (b : PositiveColumns) (i : Fin N) : ℤ :=
   (m : ℤ) * (i.val : ℤ) - ((pad N b).getD i.val 0 : ℤ)
 
-private theorem paddedRoots_board (m : ℕ) {N : ℕ} {z : Fin N → ℤ}
+theorem paddedRoots_board (m : ℕ) {N : ℕ} {z : Fin N → ℤ}
     (a : ↥(indices m z)) : paddedRoots m N (board m a) = a.val := by
   funext i
   rw [paddedRoots, pad_board]
@@ -182,7 +182,7 @@ private theorem board_area (m : ℕ) {N : ℕ} {z : Fin N → ℤ}
   rw [hs, Nat.cast_sum]
   exact Finset.sum_congr rfl (fun i _ => decode_spec m a.val (index_spec m z a).2 i)
 
-private theorem reconstruction_area (m : ℕ) {N : ℕ} (d : Fin N → ℕ)
+theorem reconstruction_area (m : ℕ) {N : ℕ} (d : Fin N → ℕ)
     (a : ↥(indices m (root m d))) : area (board m a) = ∑ i, d i := by
   have hp := (index_spec m (root m d) a).1.sum_eq
   have hs : (∑ i : Fin N, a.val i) = ∑ i : Fin N, root m d i := by

@@ -176,7 +176,7 @@ theorem candidate_padding (m : ℕ) (hm : 0 < m) (b : PositiveColumns) (N : ℕ)
 
 open D5.S3.Combinatorics.Partitions.RookAugmentedLevels
 open D5.S3.Combinatorics.Partitions.RookRootCriterion
-open private column_anti from D5.S3.Combinatorics.Partitions.BarreseSourceNormalization
+open D5.S3.Combinatorics.Partitions.BarreseSourceNormalization (column_anti)
 
 private theorem sourcePadding_levels (m N : ℕ) (hm : 0 < m) (b : PositiveColumns)
     (hN : area b + 1 ≤ N) (i : Fin N) :
@@ -259,8 +259,8 @@ private theorem operator_sum (m : ℕ) (hm : 0 < m) (b : PositiveColumns) :
   simpa only [sourcePadding, List.sum_append, List.sum_replicate, nsmul_zero, zero_add] using
     sourcePadding_sum m (area b+1) hm b (by omega)
 
-open private paddedRoots_board reconstruction_area mem_rootPermutations_iff index_spec
-  from D5.S3.Combinatorics.Partitions.RookRootIndex
+open D5.S3.Combinatorics.Partitions.RookRootIndex
+  (paddedRoots_board reconstruction_area mem_rootPermutations_iff index_spec)
 
 private theorem board_seed (m N : ℕ) (hm : 0 < m) (b : PositiveColumns)
     (hN : area b + 1 ≤ N) (a : ↥(indices m (seedRoots m N b)))

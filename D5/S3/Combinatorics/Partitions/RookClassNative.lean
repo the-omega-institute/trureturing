@@ -27,7 +27,7 @@ def cells (b : PositiveColumns) : Finset (ℕ × ℕ) :=
 /-- Literal number of cells in the normalized source tuple. -/
 def area (b : PositiveColumns) : ℕ := b.val.sum
 
-private theorem cells_card (b : PositiveColumns) : (cells b).card = area b := by
+theorem cells_card (b : PositiveColumns) : (cells b).card = area b := by
   have h := congrArg Subtype.val (normalizedColumnsEquiv.apply_symm_apply b)
   change (normalizedColumnsEquiv.symm b).transpose.rowLens.reverse = b.val at h
   rw [area, ← h, List.sum_reverse, YoungDiagram.sum_rowLens_eq_card,
@@ -108,7 +108,7 @@ private theorem cells_injective : Function.Injective cells := by
   apply normalizedColumnsEquiv.symm.injective
   exact YoungDiagram.ext h
 
-private theorem cell_bound (b : PositiveColumns) (x : ℕ × ℕ) (hx : x ∈ cells b) :
+theorem cell_bound (b : PositiveColumns) (x : ℕ × ℕ) (hx : x ∈ cells b) :
     x.1 < area b ∧ x.2 < area b := by
   have hr : Finset.range (x.1+1) ×ˢ ({x.2} : Finset ℕ) ⊆ cells b := by
     intro y hy

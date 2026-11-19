@@ -9,7 +9,6 @@
 import D5.S3.Combinatorics.Partitions.RookLevelSelection
 import D5.S3.Combinatorics.Partitions.RookRootCriterion
 import Mathlib.Data.Fintype.CardEmbedding
-import Batteries.Tactic.OpenPrivate
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Algebra.Polynomial.Sequence
@@ -245,8 +244,8 @@ private theorem partial_completion_count (m N t : ℕ) (b : PositiveColumns) :
   simp [Fintype.card_fun, Nat.mul_comm]
 
 open D5.S3.Combinatorics.Partitions.RookClassNative
-open private column_cell columns_row_bound from D5.S3.Combinatorics.Partitions.BarreseSourceNormalization
-open private cell_bound cells_card from D5.S3.Combinatorics.Partitions.RookClassNative
+open D5.S3.Combinatorics.Partitions.BarreseSourceNormalization (column_cell columns_row_bound)
+open D5.S3.Combinatorics.Partitions.RookClassNative (cell_bound cells_card)
 
 /-- Coordinates in the genuine Young-diagram carrier, including the required
     horizontal reflection of the source column index. -/
