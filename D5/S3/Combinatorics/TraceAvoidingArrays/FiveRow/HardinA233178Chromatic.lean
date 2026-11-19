@@ -7,15 +7,14 @@
    digest: Exact height-five three-label continuation recurrence. -/
 
 /-
-admission_basis: consumed auxiliary of the unfrozen literal FullE unit; no independent content claim
-proof_shape: bind-only for every theorem, including result and all finite certificate helpers.
-escape_witness: none
-moves_exact and moves_nodup feed step_fast; table_base and table_steps_fast feed table_steps;
-step_fast and table_steps feed powers_table; table_certificate and powers_table feed
-vector_certificate; vector_certificate feeds result. These helpers are on the live path from
-HardinA233178Recurrence.result through chromatic_recurrence to this result.
-The numerical premise is the complete finite vector relation, proved before its arbitrary shifts.
-The entry tests, vectors and coefficients are mathematical certificate data, not copied OEIS code.
+admission_basis: escape-witness
+proof_shape: moves_eq_filter, table_steps_fast and table_certificate establish computed
+premises. moves_exact reuses moves_eq_filter in step_fast, which also uses moves_nodup.
+The transfer proof composes step_fast, table_steps_fast and table_base in powers_table.
+The public result is content after inlining the computed premises and propagates the
+vector relation to every shift.
+escape_witness: the exact finite vector relation (vector_certificate), consumed by result
+and, through chromatic_recurrence, by HardinA233178Recurrence.result.
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
@@ -23,6 +22,7 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Logic.Equiv.Fin.Basic
 import Lean.Elab.Tactic.Omega
 
 set_option maxRecDepth 100000
@@ -308,8 +308,20 @@ private def coefficients : Fin 10 → ℤ := ![-36,72,192,-514,93,417,-163,-97,3
 
 set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
-private theorem moves_exact : ∀ p q : Column, q ∈ moves p ↔ Bond p q := by
-  decide +kernel
+private theorem moves_eq_filter (p : Column) :
+    moves p = (List.finRange 243).filter (fun q => decide (Bond p q)) := by
+  -- Each kernel check handles nine consecutive rows of the same list certificate.
+  have checked : ∀ (block : Fin 27) (offset : Fin 9),
+      let col := finProdFinEquiv (block, offset)
+      moves col = (List.finRange 243).filter (fun q => decide (Bond col q)) := by
+    intro block
+    fin_cases block <;> decide +kernel
+  obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 27) (n := 9)).surjective p
+  exact checked block offset
+
+private theorem moves_exact (p q : Column) : q ∈ moves p ↔ Bond p q := by
+  rw [moves_eq_filter]
+  simp
 
 set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
@@ -337,7 +349,10 @@ set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
 private theorem table_steps_fast : ∀ k : Fin 11, ∀ p : Column,
     table k.succ p = ((moves p).map (table k.castSucc)).sum := by
-  decide +kernel
+  -- Each application checks one exponent and leaves the remaining exponents.
+  repeat' (refine Fin.cases ?_ ?_
+           · decide +kernel)
+  exact fun k => Fin.elim0 k
 
 private theorem table_steps (k : Fin 11) : table k.succ = T.mulVec (table k.castSucc) := by
   funext p
@@ -351,7 +366,14 @@ set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
 private theorem table_certificate : ∀ p : Column,
     table 11 p = ∑ j : Fin 10, coefficients j * table ⟨1+j.val, by omega⟩ p := by
-  decide +kernel
+  have checked : ∀ (block : Fin 9) (offset : Fin 27),
+      let col := finProdFinEquiv (block, offset)
+      table 11 col = ∑ j : Fin 10, coefficients j * table ⟨1+j.val, by omega⟩ col := by
+    intro block
+    fin_cases block <;> decide +kernel
+  intro p
+  obtain ⟨⟨block, offset⟩, rfl⟩ := (finProdFinEquiv (m := 9) (n := 27)).surjective p
+  exact checked block offset
 
 private theorem vector_certificate :
     (T ^ (1+10)).mulVec (1 : Column → ℤ) =
