@@ -1,4 +1,0 @@
-**命题 9.4（What the N=2 boundary does and does not recover）。** The Gram equality (9.9) is the exact compatibility needed to turn the three whole-input boundary embeddings into one common temporal unitary. It does not assert equality for inserted interventions, measured successor histories, or a process tensor. The pure qutrit and mixed qubit states are prepared once in $E$; no environment is reset between $n=0,1,2$, and no clock label is read out. The qutrit result is a common-prefix realization, whereas the terminal rank statement (8.3) is a fresh terminal-channel contract.
-
-**证明。** This is the direct specialization of Lemma 9.2 to $F=[J_0\ J_1]$ and $G=[J_1\ J_2]$. The reduced identities are linear identities on all matrices, so untouched references are included. The stated intervention and history claims would require additional joint maps and readout interfaces absent from (9.1), and therefore do not follow from the Gram calculation. $\square$
-

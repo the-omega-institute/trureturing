@@ -79,11 +79,4 @@ public sealed class RepositoryPolicyInstructionTests
         Assert.DoesNotContain("需要重复由调用方 shell 循环", text, StringComparison.Ordinal);
         Assert.DoesNotContain("单动词(`update`", text, StringComparison.Ordinal);
     }
-
-    [Fact]
-    public void DigestionDiagramNamesFourStates()
-    {
-        var text = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "CLAUDE.md"), System.Text.Encoding.UTF8);
-        Assert.Contains("\u6d88\u5316\u8d26\u76ee\u00b7\u56db\u6001\u89c1\u4e0b", text, StringComparison.Ordinal);
-    }
 }

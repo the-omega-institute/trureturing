@@ -32,8 +32,37 @@ open D5.S3.Quantum.Divergence.TraceEntropyCalculus
 
 namespace D5.S3.Quantum.Divergence.UmegakiBKMPath
 
+section Reindex
+universe ua ub
+variable {a : Type ua} {b : Type ub}
+  [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+
+/-- Simultaneously relabel the rows and columns as a real star-algebra equivalence. -/
+def reindexStar (e : a ≃ b) : Matrix a a ℂ ≃⋆ₐ[ℝ] Matrix b b ℂ :=
+  StarAlgEquiv.ofAlgEquiv (Matrix.reindexAlgEquiv ℝ ℂ e) (by
+    intro X
+    ext i j
+    rfl)
+
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma common_floor {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
+/-- Relabeling commutes with the Bochner resolvent formula for the logarithmic derivative. -/
+lemma reindex_logDeriv (e : a ≃ b) (Z H : Matrix a a ℂ) :
+    reindexStar e (logDeriv Z H) = logDeriv (reindexStar e Z) (reindexStar e H) := by
+  let E := (Matrix.reindexLinearEquiv ℝ ℂ e e).toContinuousLinearEquiv
+  have hi (X : Matrix a a ℂ) : reindexStar e X⁻¹ = (reindexStar e X)⁻¹ := by
+    exact (Matrix.inv_reindex e e X).symm
+  unfold D5.S3.Divergence.LogDerivTrace.logDeriv
+  change E (∫ t in Set.Ioi (0 : ℝ), (Z+t • 1)⁻¹ * H * (Z+t • 1)⁻¹) = _
+  rw [← E.integral_comp_comm]
+  apply integral_congr_ae
+  filter_upwards [] with t
+  change reindexStar e (_ * H * _) = _
+  simp only [map_mul, hi, map_add, map_smul, map_one]
+
+end Reindex
+
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+lemma common_floor {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
     (hA : A.PosDef) (hB : B.PosDef) :
     ∃ c : ℝ, 0 < c ∧ c • (1 : Matrix (Fin n) (Fin n) ℂ) ≤ A ∧
       c • (1 : Matrix (Fin n) (Fin n) ℂ) ≤ B := by
@@ -55,7 +84,7 @@ private lemma common_floor {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
         (algebraMap_mono (Matrix (Fin n) (Fin n) ℂ) (min_le_right a b)).trans hbB
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem continuousOn_logDeriv_of_floor {n : ℕ}
+theorem continuousOn_logDeriv_of_floor {n : ℕ}
     (B H : Matrix (Fin n) (Fin n) ℂ) (s : Set ℝ) (c : ℝ) (hc : 0 < c)
     (hfloor : ∀ t ∈ s, c • (1 : Matrix (Fin n) (Fin n) ℂ) ≤ B + t • H) :
     ContinuousOn (fun t : ℝ => logDeriv (B + t • H) H) s := by
@@ -167,7 +196,7 @@ theorem relativeEntropy_eq_integral_bkm {n : ℕ} (A B : Matrix (Fin n) (Fin n) 
   ring
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma weighted_bkm_integrable {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
+lemma weighted_bkm_integrable {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
     (hA : A.PosDef) (hB : B.PosDef) :
     IntervalIntegrable (fun t : ℝ => (1 - t) *
       ((A - B) * logDeriv (B + t • (A - B)) (A - B)).trace.re) volume 0 1 := by

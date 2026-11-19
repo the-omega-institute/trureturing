@@ -248,7 +248,7 @@ public sealed class SnapshotTests
         var raw = RawRepositorySnapshot.Create(
         [
             new RawRepositoryEntry(
-                DigestionCasStore.RootPath + "not-a-hash",
+                "Meta/Digestion/atoms/sha256/" + "not-a-hash",
                 ImmutableArray.Create<byte>(0xff)),
         ]);
 

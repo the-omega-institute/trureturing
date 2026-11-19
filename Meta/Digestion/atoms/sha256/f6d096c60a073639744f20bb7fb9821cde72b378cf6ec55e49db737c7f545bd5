@@ -1,7 +1,0 @@
-### 15.3 因果逻辑迹与未完成宏
-
-物理日志始终按 Event 保存每个
-$\mathsf{localStep}$、$\mathsf{update}(\widehat e)$ 和
-$\mathsf{read}(\widehat e,q,y)$，其中 $y=r_{\widehat r}(q)$ 是原四值物理回复。
-Native 的 stop 本身不追加 Event；终止输出 $o$ 另接在末端观察中。
-

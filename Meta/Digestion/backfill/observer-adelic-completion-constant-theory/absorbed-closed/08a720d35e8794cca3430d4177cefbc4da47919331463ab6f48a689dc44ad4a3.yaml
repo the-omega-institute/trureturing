@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:08a720d35e8794cca3430d4177cefbc4da47919331463ab6f48a689dc44ad4a3
-  normalized_sha256: sha256:08a720d35e8794cca3430d4177cefbc4da47919331463ab6f48a689dc44ad4a3
-cas_ref: sha256:08a720d35e8794cca3430d4177cefbc4da47919331463ab6f48a689dc44ad4a3
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenShadowOperator.golden_shadow_operator_theorem
-    target_statement_id: sha256:25df225f56910101a1ed3b8472b0de9bf156efbd31fbba33cc730c088f9974f4
-receipts:
-  unresolved_subitems: []

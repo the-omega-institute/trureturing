@@ -1,6 +1,0 @@
-\[
-\operatorname{Defect}(q,t)
-=
-\{(x,y):q(x)=q(y),\ t(x)\neq t(y)\}.
-\]
-

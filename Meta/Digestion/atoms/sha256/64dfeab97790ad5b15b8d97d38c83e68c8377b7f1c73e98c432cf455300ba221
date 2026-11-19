@@ -1,4 +1,0 @@
-**来源 1280.1（来源分类和项目接口）。** 第 1262–1266 节在有限二元乘积模型中给出解析推导，从正支撑、二维面行列式和图匹配取得全部可恢复来源及成本谱；第 1268 节直接复用本卷第 1126 节的高维最优成本，第 1269 节直接复用第 1127 节的公平加点来源后验公式。它们没有把既有高维主阶或后验恒等式重新申报为发现，也不作本批原创声明。
-
-项目完整核读 `D5/S3/Entropy/Observation/DeterministicReadoutEntropyDecomposition.lean` 与 `D5/S3/Entropy/Forgetting/DeterministicEntropyEquality.lean`，只使用其有限概率、确定读数、正支撑与信息方向的实际接口。源码阅读不等于当前 kernel 或 axiom 闭包验证；它们没有单独承担匹配分类或预算前沿。
-

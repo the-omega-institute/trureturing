@@ -89,7 +89,7 @@ the portable way to use a skill is to ask the agent to read its canonical
   Searches for reusable results first, then works on formalization or settlement
   of that source claim; a new theorem or closure is not guaranteed.
 
-- **[codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md)**
+- **[codex-theory-ingest](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/skills/codex-theory-ingest/SKILL.md)**
 
   Externally authored material: “Ingest the document at `<path>` from
   `<source-URL>` under `<license>`.”
@@ -97,7 +97,7 @@ the portable way to use a skill is to ask the agent to read its canonical
   Brings reference input through the digestion workflow into open formalization
   atoms; ingestion is not proof.
 
-- **[theory-volume-template](../skills/theory-volume-template/SKILL.md)**
+- **[theory-volume-template](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/skills/theory-volume-template/SKILL.md)**
 
   Your own volume: “Draft a new volume on `<topic>`,” or “Append to
   `<volume-path>` while preserving existing atoms.”
@@ -203,10 +203,11 @@ validated branch in the same session worktree, following
 Other branch kinds are `math` and `theory`; file-level checks still apply.
 Maintainers use `BASE=origin/dev`.
 
-The worktree starts without a Lean cache. Its first `make lean` prepares a
-private cache, using a compatible local donor when available or downloading
-dependencies. Use `make lean` before any `lake env lean` debugging command in a
-new worktree. `make lean-cache-ensure` is an optional explicit prewarm command.
+The worktree starts without a Lean cache. Ordinary tasks need no full Lean
+build or full project cache. If a change needs Lean verification, run
+`make lean LEAN_TARGETS="..."` with the affected module names. For a cold
+project layer in a linked worktree, see the guarded scoped build in
+[§8.3](../CLAUDE.md#83-worktree-与-lean-缓存入口).
 
 For a documentation edit, change the owning source, check links and preview
 the Markdown. If you publish a command or example, run it. A typo fix needs no
@@ -221,7 +222,7 @@ new Lean theorem or test. Then follow the applicable checks and PR steps below.
 | Blueprint or paper narrative | The corresponding `*.scribe.cs` source; regenerate with `make emit` |
 | Experimental evidence | `Evidence/` or the experiment's registered location |
 | Harness code and tests | `tools/` and `tools/tests/` |
-| Research input | `docs/develop/theory/`, under the append-only theory rules |
+| Research input | [Theory source repository](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev), under its append-only theory rules |
 
 Read [AGENTS.md](../AGENTS.md) and [agents/CONTEXT.md](../agents/CONTEXT.md) before
 editing. The [specification](develop/spec/golden-ledger-repo-spec.md) defines
@@ -275,15 +276,19 @@ iteration use `make -C tools check-fast` and the affected test project:
 make -C tools test TEST_PROJECT=tools/tests/<Project>/<Project>.csproj
 ```
 
-`make test` generates the Lean report and runs check-current. For local validation
-of cross-tree constraints, resolve an explicit base and run the independent commands:
+For local validation of cross-tree constraints, resolve an explicit base and preview
+the checks selected for your diff.
 
 ```sh
 base_sha="$(git rev-parse upstream/dev^{commit})"
-make gate BASE="$base_sha"
+make gate-plan BASE="$base_sha"
 ```
 
-The gate runs lean-report, check-current, Scribe, filemap-conform and check-delta.
+Run `make gate BASE="$base_sha"` when the plan fits the local check scope. If the
+plan includes a full Lean report, use the focused checks relevant to your change
+unless a full report is needed. For an explicitly scoped whole-repository check,
+`make gate BASE="$base_sha" FULL_BUILD=1` authorizes the selected full-report phase.
+`make test FULL_BUILD=1` builds the full Lean report and runs check-current.
 Base supplies data only. Use `origin/dev` when that is your project remote.
 Commit and push each logical change; local checks provide early feedback alongside
 remote CI. Report actual commands and exit codes. Local success does not replace

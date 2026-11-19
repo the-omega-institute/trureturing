@@ -50,8 +50,7 @@ internal static class ForkScopedEntry
     private static int Audit(string root, Request request, LeanAxiomReport report)
     {
         var raw = GitRepositorySnapshotReader.ReadCurrentProjection(root, static path =>
-            path.EndsWith(".lean", StringComparison.Ordinal)
-            || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal));
+            path.EndsWith(".lean", StringComparison.Ordinal));
         var snapshot = SnapshotDecoder.Decode(raw) switch
         {
             SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,

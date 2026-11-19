@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:806b2f25cab74faca9c945c3817f88943329e76888b8be235dccd3839361a1c5
-  normalized_sha256: sha256:806b2f25cab74faca9c945c3817f88943329e76888b8be235dccd3839361a1c5
-cas_ref: sha256:806b2f25cab74faca9c945c3817f88943329e76888b8be235dccd3839361a1c5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.local_row_extends_raw_join
-    target_statement_id: sha256:0d3d552033761e6dd7cc45a2c31a34ecc65b6767dfb18414210ddff4186ab4e4
-receipts:
-  unresolved_subitems: []

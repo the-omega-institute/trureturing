@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d315a1e1e45b2b371cc476a2e9f27c26d4514026d6e69c31bf6220b7e5eaf94d
-  normalized_sha256: sha256:d315a1e1e45b2b371cc476a2e9f27c26d4514026d6e69c31bf6220b7e5eaf94d
-cas_ref: sha256:d315a1e1e45b2b371cc476a2e9f27c26d4514026d6e69c31bf6220b7e5eaf94d
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaObservation/PrimeChannelLogEvidence.zetaFamilyLogEvidence_eq_tsum_prime
-    target_statement_id: sha256:6e32c252be2f0a72c9435c23c84f9579ce2078ae1a7c8bf0a2f73e2dad4c6dd5
-receipts:
-  unresolved_subitems: []

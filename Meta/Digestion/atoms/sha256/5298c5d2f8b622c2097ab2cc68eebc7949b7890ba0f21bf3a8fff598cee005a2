@@ -1,7 +1,0 @@
-**定理 332.2（去相干模拟误差的精确值）。** 对任意 Hermitian \(F\)，
-\[
-\boxed{
-\sup_{\rho}
-\left|
-\operatorname{Tr}(F\rho)
--

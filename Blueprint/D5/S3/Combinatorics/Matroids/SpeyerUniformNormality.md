@@ -4,7 +4,31 @@
 
 Growing uniform-matroid ranks satisfy both the central and local normal limit theorems.
 
-**Definition 1.1 (g).**
+**Definition 1.1 (The binomial polynomial).**
+
+$$\forall (a: \mathbb{N}), \forall (b: \mathbb{N}), \operatorname{qAB}\left(a, b\right) = \sum_{j \in \operatorname{Finset}.\operatorname{range}\left(a + 1\right)} (\operatorname{C}\left(((\operatorname{Nat}.\operatorname{choose}\left(a, j\right) \cdot \operatorname{Nat}.\operatorname{choose}\left(b, j\right): \mathbb{N}): \mathbb{R})\right) \cdot (X + 1)^{j})$$
+
+*Formalization.* `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The polynomial sums the products of the two binomial coefficients against powers of X + 1. The product of natural binomial coefficients is cast to the reals. Evaluation at one gives the unit-border Delannoy binomial sum.
+
+**Theorem 1.2 (Positivity on the half-line).**
+
+$$\forall (a: \mathbb{N}), \forall (b: \mathbb{N}), \forall (x: \mathbb{R}), (0 - 1 \le x) \Rightarrow (0 < \operatorname{Polynomial}.\operatorname{eval}\left(x, \operatorname{qAB}\left(a, b\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural parameters a and b, qAB a b is strictly positive at every real x at least −1. Its constant summand is one and every summand is nonnegative on this half-line.
+
+**Definition 1.3 (g).**
 
 $$\forall (n: \mathbb{N}), \forall (d: \mathbb{N}), \operatorname{g}\left(n, d\right) = \sum_{i \in \operatorname{Finset}.\operatorname{Icc}\left(1, \operatorname{min}\left(d, n - d\right)\right)} (\operatorname{C}\left(\frac{(\operatorname{Nat}.\operatorname{factorial}\left(n - i - 1\right): \mathbb{R})}{(\operatorname{Nat}.\operatorname{factorial}\left(d - i\right): \mathbb{R}) \cdot (\operatorname{Nat}.\operatorname{factorial}\left(n - d - i\right): \mathbb{R}) \cdot (\operatorname{Nat}.\operatorname{factorial}\left(i - 1\right): \mathbb{R})}\right) \cdot (X)^{i})$$
 
@@ -16,7 +40,7 @@ $$\forall (n: \mathbb{N}), \forall (d: \mathbb{N}), \operatorname{g}\left(n, d\r
 
 Proposition 1.1, page 1: “For any n ≥ 2 and 1 ≤ d ≤ n − 1, the g-polynomial of the uniform matroid Uₙ,ᵈ is given by” the displayed factorial sum. Every subtraction inside a factorial is natural-number subtraction; the factorial values are cast to the reals. The Lean index interval is Finset.Icc 1 (min d (n-d)).
 
-**Definition 1.2 (claim).**
+**Definition 1.4 (claim).**
 
 $$(claim) \Leftrightarrow (\forall (d: \mathbb{N} \to \mathbb{N}), (\operatorname{Filter}.\operatorname{Eventually}\left((n: \mathbb{N} \mapsto (1 \le d\left(n\right)) \land (d\left(n\right) \le \operatorname{Nat}.\operatorname{div}\left(n, 2\right))), atTop\right)) \Rightarrow ((\operatorname{Tendsto}\left(d, atTop, atTop\right)) \Rightarrow ((\operatorname{CLT}\left((n: \mathbb{N} \mapsto \operatorname{g}\left(n, d\left(n\right)\right))\right)) \land (\operatorname{LLT}\left((n: \mathbb{N} \mapsto \operatorname{g}\left(n, d\left(n\right)\right))\right)))))$$
 
@@ -28,7 +52,7 @@ $$(claim) \Leftrightarrow (\forall (d: \mathbb{N} \to \mathbb{N}), (\operatornam
 
 Conjecture 4.8, page 13, states verbatim: If d = d(n) is a real function of n such that d(n) → +∞ as n → +∞, then the coefficient of Speyer’s g-polynomial gₙ,ᵈ₍ₙ₎(t), namely Sᵢ(n,d(n)), is asymptotically normal by local and central limit theorems. The encoding uses an integer-valued rank sequence d, the eventual standing conditions 1 ≤ d(n) and d(n) ≤ Nat.div n 2, and Tendsto d atTop atTop. The conclusion is CLT and LLT for the sequence g(n,d(n)). These predicates use StatLean.HypothesisTesting.stdNormalCDF and stdNormalPDF, respectively, whose formulas are the source Gaussian integral and density. The g-polynomial is the literal factorial sum of Proposition 1.1. The floor in the local limit is an integer floor; Nat.div is natural-number division.
 
-**Theorem 1.3 (result).**
+**Theorem 1.5 (result).**
 
 $$claim$$
 
@@ -50,5 +74,7 @@ Every eventually admissible rank sequence tending to infinity satisfies both lim
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.claim`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.g`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB`
+- Truth anchor: `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB_pos`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.result`
 - Dependency: [D5/S3/Analytic/Probability/BernoulliTriangularLimits](../../Analytic/Probability/BernoulliTriangularLimits.md)

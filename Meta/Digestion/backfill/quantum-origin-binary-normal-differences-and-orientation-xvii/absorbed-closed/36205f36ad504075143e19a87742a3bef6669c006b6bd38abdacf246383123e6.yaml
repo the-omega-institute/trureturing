@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:36205f36ad504075143e19a87742a3bef6669c006b6bd38abdacf246383123e6
-  normalized_sha256: sha256:36205f36ad504075143e19a87742a3bef6669c006b6bd38abdacf246383123e6
-cas_ref: sha256:36205f36ad504075143e19a87742a3bef6669c006b6bd38abdacf246383123e6
-coverage_gids:
-  - gid: D5/S3/Quantum/Foundation/HitPureCompactness.hit_pure_closed_compact
-    target_statement_id: sha256:687282856a502422d729f60e7ccfbfbd7cb9eb1a30986ac6e77aa02c873de434
-receipts:
-  unresolved_subitems: []

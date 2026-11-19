@@ -1,9 +1,0 @@
-## 30. 有限链通过时间的精确预解式接口
-
-令暂态矩阵为 $K_j$，起点为暂态切点 $i<L_j$，并记
-
-$$
-M_j=\epsilon_j\tau_j,
-\qquad q=e^{-s\epsilon_j},\quad s\ge0.
-$$
-

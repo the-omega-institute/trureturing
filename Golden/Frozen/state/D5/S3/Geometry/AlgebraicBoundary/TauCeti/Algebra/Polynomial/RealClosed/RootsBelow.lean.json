@@ -1,0 +1,1 @@
+{"statement_id":"sha256:f0567f721de4d696886756caaf57f3856a0e8fe7ae0a501d1c47daf82209af1f","declarations":[{"declaration_name_key":"ns(ns(n0,10:Polynomial),23:card_nthRootsFinset_two)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,10:Polynomial),35:card_roots_toFinset_comp_C_sub_X_sq)","kind":"theorem"}]}

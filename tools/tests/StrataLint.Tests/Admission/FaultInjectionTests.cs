@@ -202,7 +202,7 @@ public sealed class FaultInjectionTests
     private static AdmissionOutcome CreateAdmission()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var context = fixture.Build();
         var loadedPolicy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(

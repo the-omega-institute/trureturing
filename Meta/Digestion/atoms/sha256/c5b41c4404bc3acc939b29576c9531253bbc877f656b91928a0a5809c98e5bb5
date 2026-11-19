@@ -1,4 +1,0 @@
-In particular, for $g=\gcd(m,n)$, the distinct pairs $(n/g,0)$ and $(0,m/g)$ collide.
-
-2. If $m=0<n$, then $c=0$, $F=I$, and, with $z=(I-T^n)^{-1}d$,
-

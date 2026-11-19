@@ -1,5 +1,0 @@
-source_id = "fib-atom-whitebox-certificate-persistence"
-path = "docs/develop/theory/FIB_ATOM_WHITEBOX_CERTIFICATE_PERSISTENCE.md"
-atomizer = "generic-v1"
-genre_registry_check = "no-registry"
-unregistered_genres = []

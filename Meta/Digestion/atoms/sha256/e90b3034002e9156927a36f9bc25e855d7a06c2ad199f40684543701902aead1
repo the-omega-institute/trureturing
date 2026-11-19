@@ -1,7 +1,0 @@
-### 归属表
-
-| 命题范围 | 归属 | 需要的先例/边界 |
-| --- | --- | --- |
-| §§379.1–379.5 | repo-derived finite specialization | 因果运输文献为背景；具体有限律、成本和严格间隙由本文证明 |
-| §§380.1–380.5 | repo-derived finite recursion | Bellman 与因果核分解为背景；目标边缘和停止合同是本文显式假设 |
-| §§381–385 | repo-derived corrections and counterexamples | 文献只作概念背景；XOR、压缩和 singleton-kernel 反例由本文直接计算 |

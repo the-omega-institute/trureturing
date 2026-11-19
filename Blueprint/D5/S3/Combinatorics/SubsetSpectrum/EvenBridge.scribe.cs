@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SubsetSpectrum;
 
@@ -22,6 +24,11 @@ internal sealed class EvenBridgeDocument : IScribeDocumentDefinition
                 "Each odd index subset contributes one occurrence of its coefficient sum."),
             Definition("full-spectrum", "fullSubsetSums", "The full occurrence spectrum",
                 "Each index subset, including the empty set exactly once, contributes one occurrence of its sum."),
+            Describe.Lean(DescribeId.Create("parity-counts"), DeclarationHandle.Create(Prefix + "parity_counts"),
+                H("Both parity classes have half the subsets"), StatementSource.FromAuthor(Disp(ParityCountsFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "Every nonempty finite index set has equally many even and odd subsets, each contributing one to its real-valued count."))),
+                DescribeRole.Theorem),
             Theorem("even-first-moment", "even_first_moment", "The even incidence first moment",
                 "If s has at least two indices, summing the even spectrum gives "
                 + "2^(|s|-2) times the sum of the coefficients. Inserting one index splits "
@@ -49,4 +56,19 @@ internal sealed class EvenBridgeDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+    private static Formula ParityCountsFormula()
+    {
+        var a = F.Id("A"); var s = F.Id("s");
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula Op(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+        Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+        Formula Count(string name) => Seq(new Formula.Subscript(Sum, Seq(F.Id("t"), InMacro, Op(name, s))), Parenthesized(Seq(D(1), Colon, real)));
+        var exponent = new Formula.Binary(new Formula.Apply(Seq(Operatorname, Grp(F.Id("Finset"), Dot, F.Id("card"))), [s]), FormulaBinaryOperator.Subtract, D(1));
+        var half = new Formula.Power(Parenthesized(Seq(D(2), Colon, real)), exponent);
+        var statement = new Formula.Logic(Parenthesized(Equal(Count("evenSubsets"), half)), FormulaLogicOperator.And, Parenthesized(Equal(Count("oddSubsets"), half)));
+        var implication = new Formula.Logic(new Formula.Apply(Seq(Operatorname, Grp(F.Id("Finset"), Dot, F.Id("Nonempty"))), [s]), FormulaLogicOperator.Implies, Parenthesized(statement));
+        return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("A"), Seq(F.Id("Type"), Star),
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("s"), Op("Finset", a), implication));
+    }
+
 }

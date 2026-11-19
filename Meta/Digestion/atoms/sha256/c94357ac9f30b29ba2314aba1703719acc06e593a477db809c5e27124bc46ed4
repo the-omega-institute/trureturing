@@ -1,8 +1,0 @@
-第 54.3 部的 `TransportSemantics` 把以下项目全部留作互不相关的 Prop 级接口：
-
-- `strictSubset`；
-- `inNewOnlyDomain`；
-- `predictionDefined`；
-- `predictionFails`；
-- `refutes`。
-

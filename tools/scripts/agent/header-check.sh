@@ -104,8 +104,6 @@ __main() {
               (docs/develop/*) continue ;;
               (lake-manifest.json) continue ;;
               (Meta/BACKFILL.yaml) continue ;;
-              (Meta/Digestion/backfill/*) continue ;;
-              (Meta/Digestion/atoms/sha256/*) continue ;;
               (Golden/Frozen/state/*) continue ;;
               (Golden/Frozen/state/*) continue ;;
               (Blueprint/*.md) continue ;;

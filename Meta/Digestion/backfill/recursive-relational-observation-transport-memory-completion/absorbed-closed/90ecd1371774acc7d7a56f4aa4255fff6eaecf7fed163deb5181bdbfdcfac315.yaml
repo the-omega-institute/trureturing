@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:90ecd1371774acc7d7a56f4aa4255fff6eaecf7fed163deb5181bdbfdcfac315
-  normalized_sha256: sha256:90ecd1371774acc7d7a56f4aa4255fff6eaecf7fed163deb5181bdbfdcfac315
-cas_ref: sha256:90ecd1371774acc7d7a56f4aa4255fff6eaecf7fed163deb5181bdbfdcfac315
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/ActualDyadicDeadlineSupport.actual_deadline_staircase
-    target_statement_id: sha256:356db421f3307acdd4f1445dda4d9a5114de94974e9ea285e9c0f3a47462701d
-receipts:
-  unresolved_subitems: []

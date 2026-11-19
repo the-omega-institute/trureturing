@@ -23,7 +23,6 @@ noncomputable section
 
 open private padded_rational_resultant_zero localized_common_of_constant_complement from
   D5.S3.Arith.CharacterSums.PascadiSeventhHeightCover
-open private bracket from D5.S3.Arith.CharacterSums.PascadiPrimeCubeSingularCover
 
 /-- All nonzero-reduction singular pencils with zero actual triple Dixon
 residuals admit at most three primitive irreducible root-relevant factors at
