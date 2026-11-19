@@ -18,6 +18,7 @@ strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSInteriorGenericity
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSQuotient
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
+  - D5/S3/Quantum/TensorNetworks/PeriodicMPSTwoSiteDifferential
 license: citation-only
 triage: anchor
 ---
@@ -109,6 +110,12 @@ The proof combines the real C1 dimension obstruction with the actual amplitude-c
 The uniform witness starts from $A_0=\left(\begin{smallmatrix}1&2\\3&4\end{smallmatrix}\right)$, $A_1=\left(\begin{smallmatrix}5&6\\7&8\end{smallmatrix}\right)$, $l=(1,0)$ and $r=(1,2)^T$. An exact full-length gauge gives canonical $l=(-3,1)$, $A_0=\left(\begin{smallmatrix}1&1/2\\4&3/2\end{smallmatrix}\right)$, $A_1=\left(\begin{smallmatrix}-1/2&2\\-3/2&7\end{smallmatrix}\right)$, and $r_N=2^{N-1}(5,17)^T$. The original positive sum matrix preserves positive coherent boundaries, on which the exact chart factors do not vanish. The tail COLUMN MATRIX $\left(\begin{smallmatrix}5&17\\11&23\end{smallmatrix}\right)$ has determinant $-72$ and its Gram determinant is $5184$. The original tail Gram is positive definite after every positive iterate, and the fixed prefix row pair has determinant $-36$, so the fixed density block stays invertible. The canonical $\det S=-2$ is distinct from a transfer-operator determinant.
 
 This parameter-open result does not establish a dense intrinsic real-algebraic open locus in the actual state image, its descent to phase classes, or phase saturation of arbitrary open state loci. Those are separate obligations for full C9 PREFIX generic minimality. No interior-window, normalized-state, dynamical or thermodynamic conclusion is inferred.
+
+## Periodic two-site differential identifiability
+
+Conjecture 10 in Section 2 concerns a generic periodic binary, bond-dimension-two matrix product state. It asks for determination up to phase from the reduced density matrix on four adjacent sites, with a no-fewer clause. The observation is a Hermitian partial trace of the actual periodic trace-word state. The parameter-space differential of its two-site version is a separate question from generic uniqueness among all states in the actual image.
+
+`PeriodicMPSTwoSiteDifferential.projective_rank_eight` supplies a chart point for each ring length $N\geq 4$. Fix the entry $a$ in $A_0=\operatorname{diag}(a,b)$ and take the first and second rows of $A_1$ to be $(c,1)$ and $(d,e)$. The raw two-site density, together with its eight real coordinate derivatives in $b,c,d,e$, has a nonsingular nine-row minor in the complex entries of the Hermitian observation. The derivative modulo the real radial line has rank eight at the witness. The proof transports the actual trace-word marginal to a Kronecker transfer contraction, reduces Gaussian integer coefficients modulo 13, and checks the minors over the 162 complement lengths supplied by a dual transfer recurrence. Generic global phase recovery from two sites remains open in this result.
 
 ## Verified locator
 
