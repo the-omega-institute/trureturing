@@ -115,7 +115,7 @@ For item 6, the relative violation is (L−R)/R with L = φρ(A♮B) and R = √
 
 ### Evidence and scope
 
-The item-6 Lean theorem proves the outer envelope equality for every δ ∈ [0,1). It establishes the upper bound for all faithful complex qubit densities and constructs a positive definite family attaining the limiting value for a density of each contrast. A separate fixed-density sharpness theorem for every density is not asserted.
+The item-6 Lean theorem proves the outer envelope equality for every δ ∈ [0,1). It establishes the upper bound for all faithful complex qubit densities and constructs a positive definite family whose relative violations converge to the bound for a density of each contrast. A written corollary transfers this supremum to every faithful qubit density at the prescribed contrast. [Problem dossier](../../Problems/ann-item-six.md)
 
 The independent experiment is `the-omega-institute/trureturing-experiments`, commit `899d34d8041742cedebc176045cf870d202805a2`, file `docs/reports/michelson-trace-violation-two-dim/check.py`, SHA256 `c38a22de5c2abd02f88fce0dac6b6444e2f856c112698a8887cb50157c4e6ae0`. Its recorded exit is 0 with `ALL_CHECKS_OK`: 2800 scalar cases, 756 complex-vector cases, non-diagonal unitary transport and symbolic identities. These are experimental readings from issue #22896, separate from the Lean proof.
 
