@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { copyFile, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
 import { dirname, join, resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -90,7 +90,7 @@ async function paced(items, parallelism, perMinute, invoke) {
   }));
 }
 
-function waitForDownloadQuota() {
+function waitForCacheQuota() {
   return delay(60000 + Math.floor(Math.random() * 10000));
 }
 
@@ -120,7 +120,7 @@ async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) 
     }
   }
   if (retry) {
-    await waitForDownloadQuota();
+    await waitForCacheQuota();
     return restoreExactIndex(retry);
   }
 }
@@ -160,7 +160,7 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
       console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
         operation: 'retry-download', attempt: retries, requested: pending.length, perMinute: rate,
       }));
-      await waitForDownloadQuota();
+      await waitForCacheQuota();
     }
     await paced(pending, 24, rate, download);
     pending = pending.filter(digest => !downloaded.has(digest));
@@ -270,6 +270,9 @@ async function save(cache, cacheVersion, identity) {
     extra.push('--index', indexPath, '--available', available);
   }
 
+  if (!previous && process.env['INPUT_REQUIRE-EXISTING-INDEX'] === 'true') {
+    throw new Error('indexed publication requires the previous layout; the long producer can bootstrap');
+  }
   const record = python('prepare', extra);
   const digests = [...new Set(Object.values(record.entries))];
   const confirmed = new Set(digests.filter(digest => known.has(digest)));
@@ -281,27 +284,50 @@ async function save(cache, cacheVersion, identity) {
     await setOutputs({ key: savedIndex.key, available: confirmed.size, missing: 0, complete: true });
     return;
   }
-  await paced(pending, 8, 170, async digest => {
+  const upload = async (digest, inventory) => {
     const path = payloadPath(digest);
     const key = payloadKey(identity, digest);
     try {
-      if (!matches(before, key, cacheVersion(path)) && await cache.saveCache([path], key) >= 0) {
+      if (!matches(inventory, key, cacheVersion(path)) && await cache.saveCache([path], key) >= 0) {
         confirmed.add(digest);
         return;
       }
-      // A collision is accepted only when the stored bytes match the key.
-      await rm(path, { force: true });
-      if (await cache.restoreCache([path], key, []) === key && await digestFile(path) === digest) {
-        confirmed.add(digest);
+      // The cache version uses the original path. Preserve the packed bytes
+      // while checking the remote entry so a failed check can be retried.
+      const original = path + '.upload';
+      await rename(path, original);
+      try {
+        if (await cache.restoreCache([path], key, []) === key && await digestFile(path) === digest) {
+          confirmed.add(digest);
+        }
+      } finally {
+        await rename(original, path);
       }
     } catch (error) {
       console.log('LEAN_ACTIONS_SHARDS save failed for ' + digest + ': ' + error.message);
     }
-  });
-  const after = visibleEntries(ownerRef, prefix);
-  const visible = new Set(after.map(row => row.key + '/' + row.version));
-  for (const digest of confirmed) {
-    if (!visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest)))) confirmed.delete(digest);
+  };
+  const reconcile = () => {
+    const rows = visibleEntries(ownerRef, prefix);
+    const visible = new Set(rows.map(row => row.key + '/' + row.version));
+    for (const digest of confirmed) {
+      if (!visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest)))) confirmed.delete(digest);
+    }
+    return rows;
+  };
+  // GitHub allows 200 uploads per repository per minute. Leave room for
+  // another producer and the repository's ordinary cache writes.
+  await paced(pending, 8, 85, digest => upload(digest, before));
+  reconcile();
+  if (pending.some(digest => !confirmed.has(digest))) {
+    await waitForCacheQuota();
+    const inventory = reconcile();
+    const retry = pending.filter(digest => !confirmed.has(digest));
+    console.log('LEAN_ACTIONS_SHARDS ' + JSON.stringify({
+      operation: 'retry-upload', requested: retry.length, perMinute: 50,
+    }));
+    await paced(retry, 8, 50, digest => upload(digest, inventory));
+    reconcile();
   }
   const missing = digests.length - confirmed.size;
   if (state === 'complete' && missing) throw new Error('complete cache index is missing ' + missing + ' shards');
