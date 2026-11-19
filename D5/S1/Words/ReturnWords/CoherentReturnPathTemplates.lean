@@ -117,6 +117,59 @@ def BoundedPhases {V : Type u} [Quiver.{v} V] {α : Type w}
       ∀ {a b : Component S} (e : a ⟶ b),
         componentLabel label S e = P (θ a) ∧ θ b = θ a + 1
 
+/-- A bounded phase certificate determines the endpoint phase and the exact letter
+at every position of every actual internal path. -/
+theorem path_output_of_bounded_phases {V : Type u} [Quiver.{v} V] [Finite V]
+    {α : Type w} (label : EdgeLabel V α) (S : StronglyConnectedComponent V)
+    (hP : BoundedPhases label S) :
+    ∃ p : Nat, 0 < p ∧ p ≤ Nat.card (Component S) ∧
+      ∃ P : ZMod p → α, ∃ θ : Component S → ZMod p,
+        (∀ {a b : Component S} (e : a ⟶ b),
+          componentLabel label S e = P (θ a) ∧ θ b = θ a + 1) ∧
+        ∀ {a b : Component S} (H : Path a b),
+          θ b = θ a + (H.length : ZMod p) ∧
+          ∀ (i : Nat), i < H.length →
+            (output (componentLabel label S) H)[i]? =
+              some (P (θ a + (i : ZMod p))) := by
+  classical
+  obtain ⟨p, hp, hbound, P, θ, hedge⟩ := hP
+  let W := Component S
+  let ℓ : EdgeLabel W α := componentLabel label S
+  have outcons {a b c : W} (H : Path a b) (e : b ⟶ c) :
+      output ℓ (H.cons e) = output ℓ H ++ [ℓ e] := by
+    simp only [output, Path.weight_cons, FreeMonoid.toList_mul,
+      FreeMonoid.of, FreeMonoid.toList_ofList]
+  have outlen {a b : W} (H : Path a b) :
+      (output ℓ H).length = H.length := by
+    induction H with
+    | nil => simp [output]
+    | cons H e ih =>
+        rw [outcons, List.length_append, List.length_singleton,
+          Path.length_cons, ih]
+  have pathlaw {a b : W} (H : Path a b) :
+      θ b = θ a + (H.length : ZMod p) ∧
+      ∀ i, i < H.length →
+        (output ℓ H)[i]? = some (P (θ a + (i : ZMod p))) := by
+    induction H with
+    | nil => exact ⟨by simp, by simp⟩
+    | @cons b c H e ih =>
+        obtain ⟨he, hθ⟩ := hedge e
+        refine ⟨?_, ?_⟩
+        · rw [hθ, ih.1, Path.length_cons, Nat.cast_add, Nat.cast_one, add_assoc]
+        · intro i hi
+          rw [outcons]
+          by_cases hiH : i < H.length
+          · rw [List.getElem?_append_left (by rw [outlen]; exact hiH)]
+            exact ih.2 i hiH
+          · have hieq : i = H.length := by simp only [Path.length_cons] at hi; omega
+            subst i
+            rw [List.getElem?_append_right (by rw [outlen]), outlen, Nat.sub_self]
+            change some (ℓ e) = _
+            change ℓ e = P (θ b) at he
+            rw [he, ih.1]
+  refine ⟨p, hp, hbound, P, θ, hedge, ?_⟩
+  exact fun H => pathlaw H
+
 /-- Each entry chooses one positive purely periodic stream before all finite paths.
 Indexing by `Option` includes empty paths without choosing a default letter. -/
 def PeriodicPrefixes {V : Type u} [Quiver.{v} V] {α : Type w}
@@ -299,27 +352,8 @@ theorem coherent_component_phases {V : Type u} [Quiver.{v} V] [Finite V]
         (wordPower (L / B.length) (output ℓ B))[i]?
       rw [List.getElem?_eq_none (by omega), List.getElem?_eq_none (by omega)]
   have phases_to_prefix (hP : BoundedPhases label S) : PeriodicPrefixes label S := by
-    obtain ⟨p, hp, hbound, P, θ, hedge⟩ := hP
-    have pathlaw {a b : W} (H : Path a b) :
-        θ b = θ a + (H.length : ZMod p) ∧
-        ∀ i, i < H.length → (output ℓ H)[i]? = some (P (θ a + (i : ZMod p))) := by
-      induction H with
-      | nil => exact ⟨by simp, by simp⟩
-      | @cons b c H e ih =>
-        obtain ⟨he, hθ⟩ := hedge e
-        refine ⟨?_, ?_⟩
-        · rw [hθ, ih.1, Path.length_cons, Nat.cast_add, Nat.cast_one, add_assoc]
-        · intro i hi
-          rw [outcons]
-          by_cases hiH : i < H.length
-          · rw [List.getElem?_append_left (by rw [outlen]; exact hiH)]
-            exact ih.2 i hiH
-          · have hieq : i = H.length := by simp only [Path.length_cons] at hi; omega
-            subst i
-            rw [List.getElem?_append_right (by rw [outlen]), outlen, Nat.sub_self]
-            change some (ℓ e) = _
-            change ℓ e = P (θ b) at he
-            rw [he, ih.1]
+    obtain ⟨p, hp, _, P, θ, _, pathlaw⟩ :=
+      path_output_of_bounded_phases label S hP
     intro a
     refine ⟨fun n => P (θ a + (n : ZMod p)), p, hp, ?_, ?_⟩
     · intro n
@@ -525,32 +559,10 @@ theorem result {V : Type u} [Quiver.{v} V] [Finite V]
       have hJout : output (componentLabel label S) J.val = output label H := by
         rw [← component_inclusion_output label S J.val, J.property]
       by_cases hc : Cyclic S
-      · obtain ⟨p, hp, hps, B, θ, hedge⟩ :=
-          (coherent_component_phases label S hc).1.mp (hcoherent S hc)
+      · obtain ⟨p, hp, hps, B, θ, _, pathlaw⟩ :=
+          path_output_of_bounded_phases label S
+            ((coherent_component_phases label S hc).1.mp (hcoherent S hc))
         have hpn : p ≤ n := hps.trans (componentbound S)
-        have pathlaw {x y : Component S} (K : Path x y) :
-            θ y = θ x + (K.length : ZMod p) ∧
-            ∀ i, i < K.length → (output (componentLabel label S) K)[i]? =
-              some (B (θ x + (i : ZMod p))) := by
-          induction K with
-          | nil => exact ⟨by simp, by simp [output]⟩
-          | @cons y z K e ih =>
-            obtain ⟨he, hθ⟩ := hedge e
-            have hlength : (output (componentLabel label S) K).length = K.length := by
-              rw [← component_inclusion_output label S K, outlen, component_inclusion_length]
-            refine ⟨?_, ?_⟩
-            · rw [hθ, ih.1, Path.length_cons, Nat.cast_add, Nat.cast_one, add_assoc]
-            · intro i hi
-              simp only [output, Path.weight_cons, FreeMonoid.toList_mul,
-                FreeMonoid.toList_of]
-              change (output (componentLabel label S) K ++ [componentLabel label S e])[i]? = _
-              by_cases hiK : i < K.length
-              · rw [List.getElem?_append_left (by omega)]
-                exact ih.2 i hiK
-              · have hieq : i = K.length := by simp only [Path.length_cons] at hi; omega
-                subst i
-                rw [List.getElem?_append_right (by omega), hlength, Nat.sub_self]
-                simp only [List.getElem?_cons_zero, he, ih.1]
         let P : List α := List.ofFn fun i : Fin p => B (θ ⟨a, rfl⟩ + (i.val : ZMod p))
         let r : List α := List.ofFn fun i : Fin (H.length % p) =>
           B (θ ⟨a, rfl⟩ + (i.val : ZMod p))

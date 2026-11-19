@@ -1,0 +1,21 @@
+**定义 1.3（允许的模拟器及范数）。** 模拟器只在原寄存器 $H$ 上使用任意幺正操作、完整 Lüders PVM $\{R_a\}$ 的操作 $X\mapsto R_aXR_a$、与输入独立的可测经典随机性、按既往结果选择操作的经典反馈，以及把最终经典记录粗化为旗标 $j$。每次运行保留所有结果及全部概率质量，量子输出是剩余的同一寄存器。禁止增加量子寄存器或能级、重置、非投影 Lüders 操作、任意 CPTP 后处理原语、参考读取及成功后选择。
+
+$\mathfrak S_{\rm fin}$ 表示存在统一有限操作深度上界的协议；$\mathfrak S_{\rm as}$ 表示在每个输入上几乎必然有限终止的协议；$\mathfrak S_{\rm cl}=\overline{\mathfrak S_{\rm fin}}^{\diamond}$。独立经典随机选择可预先采样为标准 Borel 随机带，包括每个可能有限反馈历史处的选择。固定整条带后得到确定的有限分叉量子结果树。闭包只包含归一化通道的极限，不把不终止的无限乘积当作原语。
+
+采用源甲定义 17.2 的不折半范数：
+
+$$
+\|\Lambda\|_\diamond=
+\sup_{k\ge1}\sup_{X\ne0}
+\frac{\|(\Lambda\otimes\operatorname{id}_{\mathbb C^k})(X)\|_1}{\|X\|_1}.
+\tag{1.2}
+$$
+
+内层包括任意复算符。原问题是确定
+
+$$
+d_*(\theta)=\inf_{\mathcal T\in\mathfrak S_{\rm fin}}
+\|\mathcal J_\theta-\mathcal T\|_\diamond.
+\tag{1.3}
+$$
+

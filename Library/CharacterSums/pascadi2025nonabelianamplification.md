@@ -23,6 +23,8 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiZeroDQuadratic
   - D5/S3/Arith/CharacterSums/PascadiZeroDCover
   - D5/S3/Arith/CharacterSums/PascadiZeroDBadDegreeAverage
+  - D5/S3/Arith/CharacterSums/PascadiRankFourFactor
+  - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
   - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
 license: source-reference
 triage: anchor
@@ -242,6 +244,26 @@ exponent. The delivered unconditional total-count range remains every fixed
 `alpha<26/7`; the nonzero-residual average and the full arbitrary-modulus
 conjecture remain separate open work. No literature priority is claimed.
 
+## Rank four and its original average
+
+Lemma 2.6 of the repository's
+`PASCADI_PRIME_CUBE_PROJECTION_IDEAL_ENDPOINT` volume is formalized in
+`PascadiRankFourFactor.rank_four_root_relevant_factor`. For a finite
+coefficient family with common value modulo the prime cube and common
+derivative modulo the prime, the three inequalities in (2.16) bound rational
+row rank by four. In rank four the primitive integer factor has the form
+`aT-n` with positive leading coefficient, unit leading reduction and
+`a*beta-n=0` modulo the prime. It divides the integer pencil of every row
+and its rational root has nonzero baseline linear value.
+
+`PascadiRankFourBadDegreeAverage.actual_long_bad_degree_average_rank_four`
+uses that factor on the actual maximizing family. The rank includes the
+baseline and all nonzero-reduction derivative-zero partners. At the common
+root every selected quadratic value is a common multiple of its linear
+value. This gives zero Dixon determinants and yields the original average
+above under `C6^2*(32*A/p^3)^13<p^10`. The degree still includes the
+zero-reduction partners and is zero for empty endpoint families.
+
 ## Quadratic nonzero middle sections
 
 `PascadiQuadraticMiddleCount.quadratic_nonzero_middle_box_count` proves a
@@ -286,6 +308,180 @@ the row reduction and starts actual coefficient realization; the supplied paper
 proof and archived Lean endpoint have distinct provenance from this implementation.
 These repository results are not attributed to Pascadi as published theorems and
 do not claim to settle his full uniform conjecture.
+
+## Ordinary endpoint proof and its formal boundary
+
+The complete repository-derived ordinary proof is
+[Projection–ideal averages for prime-cube six-letter returns](../../docs/develop/theory/PASCADI_PRIME_CUBE_PROJECTION_IDEAL_ENDPOINT.md).
+Its Theorem 1.1 states: for every $\varepsilon>0$ and $C_0\ge1$ there is
+$C(\varepsilon,C_0)>0$ such that, for every prime $p$, every fixed pair
+$a_1,a_2\in(\mathbb Z/p^3\mathbb Z)^\times$, and real widths
+
+$$
+p^{3/2}\le X\le Y,\qquad XY\le C_0p^{15/4},\qquad 6Y<p^2,
+$$
+
+the number of literal integer tuples with odd coordinates in $[-X,X]$
+and even coordinates in $[-Y,Y]$, summed over every scalar
+$\gamma\in\mathbb Z/p^3\mathbb Z$ with $\gamma^2=1$, satisfying
+
+$$
+\prod_{i=1}^3
+ \begin{pmatrix}a_1h_{2i-1}&-1\\1&0\end{pmatrix}
+ \begin{pmatrix}a_2h_{2i}&-1\\1&0\end{pmatrix}
+ =\gamma I_2
+$$
+
+is at most $C(\varepsilon,C_0)Y^2p^\varepsilon$. The constant is uniform
+in the prime, widths and units. The coefficients remain fixed in every
+average. The ordinary endpoint includes all strict $\alpha<15/4$ ranges;
+it does not assert the arbitrary-modulus conjecture. Earlier statements
+above that leave larger total-count exponents open describe the scope of
+the corresponding Lean results; the ordinary mathematical range is now
+the one stated here.
+
+Sections 1–7 retain the full ordinary proof, including the original
+six-chart cover and unconditional retained moment, maximum bad-degree
+selection, zero-reduction partners, rank four, zero Dixon residual,
+saturation, both coordinate-discriminant strata, all residual layers,
+and the retained older ideal-only auxiliary estimate. Rank four has
+threshold $49/13$, zero residual has threshold $23/6$, and the $j=4$
+contribution has threshold $233/61$ and endpoint saving $p^{-17/36}$
+relative to $A=XY$. The $j=4$ branch does not use the $j=3$ identity
+$D_L=\pm p^8\kappa$.
+
+For all three $j=3$ cases—unramified nonsplit, rationally split, and
+ramified—the proof uses the same selected actual family and the actual
+primitive physical lattice. Its indices and principal-ideal norm give
+$h\mid\kappa$, $n=|\kappa|/h$, and $|N(E)|=p^8n/(h^2c^3)$.
+The unramified fixed ideal factor is $(p)^3\mathfrak p^2$; the ramified
+factor is $(p)^4$, also of norm $p^8$. The latter is proved in the single
+ramified field with $v(p)=1$, including the local value $v(E)=4$ and
+the conductor-order gluing. The raw determinant functional retains the
+selected maximum baseline, and its zero layer is counted. With
+$K=C_DA^7/p^{26}$, the actual partner bound is
+$p^{o(1)}(1+(K/(hn))^{1/3})$. The same actual triple gives
+$h\ll T$, $n\ll K/T$ on a height segment $T$.
+
+The affine module keeps $X_*\in J^2$ with its rational coefficients;
+no global denominator is cleared. Five unit-safe shears give actual
+projection intervals of lengths $O(TX),O(TY)$ and a four-coordinate
+inverse graph modulo $p^2$. Original middles remain in their short
+integer box with difference lattice $\Gamma_0$. Projections use the
+sheared difference lattice $\Gamma_z=S_z\Gamma_0$. The sheared actual
+witness need only lie in $O(X)\times O(Y)$, and shortest-vector counting
+on the difference lattice handles affine projection cosets. Split null
+directions are retained. Long projection intervals are residue existence
+indicators; choosing one lift injects their residue support into the
+actual integer projection coset. The middle and projection Fourier
+slopes are both units and may differ. The fixed-data support bound is
+
+$$
+M_T\ll_\eta p^\eta(T^2A^2/p^6+p^{3/2}).
+$$
+
+Generator pairs, rather than merely kernels admitting a generator, are
+counted using ideal cube classes, unit cubes and index-$p$ subgroups.
+The complete gcd-aware Kloosterman bound is the published input in
+Pascadi, Lemma 3.3, Section 3.2. The quadratic-order input is
+Bhargava–Varma, *The mean number of 3-torsion elements in the class
+groups and ideal groups of quadratic orders*, Proceedings of the London
+Mathematical Society 112 (2016), 235–266,
+[DOI 10.1112/plms/pdv062](https://doi.org/10.1112/plms/pdv062),
+[arXiv:1401.5875](https://arxiv.org/abs/1401.5875), Theorem 2(a),(b).
+It supplies the ordinary $\operatorname{Pic}(\mathcal O_d)[3]$ mean over
+all quadratic orders of each sign, including nonmaximal orders. Local
+restrictions are dropped before applying that mean; no average uniform
+in varying local specifications is claimed. Rationally split orders have
+their own explicit gluing-class and ideal counts in Section 6.9.
+
+The joint summation gives the actual weighted $j=3$ contribution
+
+$$
+\mathcal W_{j=3}\ll_\eta Y^2p^\eta
+ \left(\frac{A^{12}}{p^{45}}+\frac{A^{10}}{p^{75/2}}\right).
+$$
+
+At $A\le C_0p^{15/4}$ both area factors are bounded constants.
+Subpower exponents are split among the divisor, layer, ideal, Fourier
+and dyadic estimates; no strict area saving absorbs a logarithm.
+The retained moment uses $A^4/p^{15}\le C_0^4$. Separate doubling of
+the two widths, the factor 64, at most four scalar centers, all removed
+charts and the bounded-prime count complete the original theorem.
+
+The current Lean total-count theorem remains
+`D5.S3.Arith.CharacterSums.Original.prime_cube_scalar_return_count_of_exponent`
+in `D5/S3/Arith/CharacterSums/PascadiPrimeCubeCount.lean`, with
+`alpha<26/7`. The manuscript's original-count source reference is
+[PR #31391](https://github.com/the-omega-institute/trureturing/pull/31391),
+merged commit `1ba767ed7b91862093486b62812d05071ff5a392`.
+This preservation adds no Lean declaration and does not
+assert enlarged-range Lean, kernel or official acceptance. The four
+scoped zero-D results are integrated by
+[PR #31431](https://github.com/the-omega-institute/trureturing/pull/31431),
+merged as `0997d09`; the supplied publication evidence records successful
+required PR CI and a first-dev CI run still running at dispatch. No
+successful first-dev result is inferred from that observation. These
+four scoped results certify their own statements, not the endpoint
+assembly. The unfinished registration boundary under issue #31176 above
+is retained.
+
+### Exact locators for the mathematical inputs
+
+In this table `Original` abbreviates
+`D5.S3.Arith.CharacterSums.Original` and `PrimeCube` abbreviates
+`D5.S3.Arith.CharacterSums.PrimeCube`. These are source locators for
+already proved intermediate inputs, not new declarations or a claim
+that the endpoint is formalized. Section and equation numbers refer
+to the complete theory volume.
+
+| Mathematical clause | Existing exact source locator |
+| --- | --- |
+| Word and real-box membership, Section 2.1 | `D5.S3.Arith.CharacterSums.returnStep`, `sixReturnWord`, `scalarReturn`; `Original.mem_scalarSolutionsReal` |
+| Four minus equations and third minor, Lemma 2.1 | `D5.S3.Arith.CharacterSums.sixReturnWord_minus_iff`, `D5.S3.Arith.CharacterSums.MinusEquations.third_minor` |
+| Scalar factor 64 and doubled separate widths, (2.2) | `Original.scalarSolutionsReal_card_le_minus_doubled` |
+| Three-width unit-middle reduction, (2.4) | `Original.Nminus_le_three_Uminus_of_three_width` |
+| Six-chart cover, Section 2.2 | The partition used inside `Original.actual_unit_middle_tuple_count_seventh`; its old whole-count seventh-height estimate is not applied at the new endpoint. The five individual chart bounds below are combined with the new retained-family estimate. |
+| Nonunit shortest and short unit shortest charts | `Original.actual_nonunit_shortest_tuple_count`, `Original.actual_unit_shortest_short_tuple_count` |
+| Long nonunit right side, zero endpoint and nonunit endpoint charts | `Original.actual_long_nonunit_rhs_tuple_count`, `Original.actual_zero_endpoint_tuple_count`, `Original.actual_nonunit_endpoint_tuple_count` |
+| Pencil and maximum bad degree, Section 2.3 | `Original.endpointL`, `Original.endpointQ`, `Original.pencil`, `Original.recordBeta`, `Original.actualRecordBadPartners`, `Original.actualRecordBadDegree` |
+| Retained moments (2.6)–(2.7), Proposition 2.2 | `Original.actual_retained_endpoint_count`, `Original.actual_dyadic_retained_endpoint_count` |
+| Good-record second moments and original-row reconstruction | `Original.actual_large_retained_second_moment`, `Original.actual_dyadic_large_second_moment`, `Original.actual_retained_rows_dyadic_count`, `Original.actual_record_product_bounds`, `Original.actual_record_reconstruction` |
+| Exact height scales (2.8) | `Original.ReducedMiddleBasis.coordinate_bound`, `Original.ReducedMiddleBasis.anchor_coordinate_bound`, `Original.ReducedMiddleBasis.long_scale_bounds` |
+| Endpoint numerical absorption, Corollary 2.3 | `Original.range_error_absorption_of_exponent`, in `PascadiOriginalRangeEstimates.lean`, with `alpha<=15/4` and arbitrary `C0>=1` |
+| Original pencil divisibility and modular-zero partners | `Original.original_pencil_dvd`, `Original.actual_zero_reduction_partners_subpower_seventh` |
+| Literal row and pencil heights | `Original.actual_coefficient_bounds`, `Original.actual_pencil_coefficient_bounds` |
+| Dixon matrix, resultant identity and bounds | `PrimeCube.residualMatrix`, `PrimeCube.residual`, `PrimeCube.actual_residual_resultant`, `PrimeCube.actual_residual_dvd_fifth`, `PrimeCube.actual_residual_height` |
+| Nonzero Dixon coordinate saturation and discriminant strata, Lemmas 3.1–3.2 | `PrimeCube.nonzero_dixon_rank_three`, `Original.original_nonzero_dixon_rank_three` |
+| Quadratic-direction elimination, Lemma 2.4 | `PrimeCube.quadratic_direction_resultant_zero`; the constant-baseline repair is `PrimeCube.constant_base_dixon_quadratic_identity` and `PrimeCube.zero_dixon_quadratic_resultant_zero` |
+| Root-relevant factorization and mixed quadratic branch, Lemma 2.5 | `PrimeCube.localized_factor_cube`, `PrimeCube.cubic_quadratic_mixed_resultant_height`, `PrimeCube.quadratic_resultant_dvd_fifth`; `PrimeCube.actual_zero_dixon_singular_factor_cover` |
+| Actual factor-value and singular-partner counts, (2.15) | `Original.actual_fixed_factor_value_pairs_subpower`, `Original.actual_singular_factor_partner_count`, `Original.original_singular_unit_observations` |
+| Actual index-$p^2$ physical-weight average | `Original.actual_physical_weight_average` |
+| Scoped zero-D bad-degree average | `Original.actual_long_bad_degree_average_zero_dixon` |
+
+The preserved ordinary source is
+`pascadi-prime-cube-projection-average.tex`, SHA256
+`53c289cd83adeee1cdc34b4d61ac09ae1fbcb045f4985555d3b6314bdfeed30b`.
+The theory volume retains that complete 41-page proof, with the explicit
+support and lift argument supplied by
+`pascadi-endpoint-support-lift-independent.proof.txt`. Neither local
+evidence file is needed to fill a proof step in the repository volume.
+The problem is Pascadi's; the named Kloosterman and Bhargava–Varma
+results remain external inputs. Derivative and global-arithmetic routes
+originated in prior Pro proposals and independently derived actual-family
+mathematics. The earlier Pro Section 2 error is not used: the retained
+proof uses the repaired actual local, ideal, index and correlation
+arguments. Native Codex supplied implementation, mathematical derivations
+and independent ordinary-proof reviews in a repository-exposed setting.
+No model-family diversity or sterile independence is asserted.
+
+The bounded primary-text comparisons recorded above found no covering
+theorem in their checked scope. The final JNT 220 (2021), Lemma 15,
+DOI `10.1016/j.jnt.2020.06.014`, remains unobtained and unverified;
+its arXiv numbering is not a substitute. That result is not an input
+to this proof. This is preservation of a repository-derived ordinary
+endpoint proof, with no exhaustive literature novelty, global priority,
+official acceptance or completion of the main research goal claimed.
 
 ## Prime-cube counts beyond the $15/4$ endpoint
 

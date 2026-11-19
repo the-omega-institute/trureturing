@@ -1,0 +1,39 @@
+**Definition 11.1 (Angle-dependent measured words).** For every real
+$\theta$, use the isometry, ready state and outgoing basis $g_0,g_1$
+of Definition 2.1, with precisely the permissions of Assumption 1.4
+and the complete view of Definition 1.5. Write
+
+$$
+a=V_0(\theta)=U_0e^{i\theta W},\qquad
+b=V_1(\theta)=aW,\qquad
+Q_h(\theta)=V_{h_n}(\theta)\cdots V_{h_1}(\theta),
+\qquad m_n(\theta)=|\{[Q_h(\theta)]:|h|=n\}|.
+\tag{11.1}
+$$
+
+Here $U_0,U_1,W$ are the actual qutrit matrices of Theorem 2.2;
+$\xi,T$ and the orthonormal basis $(t_1,t_2)$ are those of
+Theorem 6.1. Theorem 2.2 applies at every real $\theta$: these are
+measured instruments of the same full complex-linear channel
+$\Phi_\circ$ on $M_5$, also after adjoining any untouched finite
+reference. Every length-$n$ history has probability $2^{-n}$ on
+all permitted inputs. In particular, the family changes the measured
+instrument, while keeping that averaged channel fixed.
+
+On $\mathbb C\xi$ both letters act by $e^{i\theta}$. Therefore, for
+histories of the same length $n$,
+
+$$
+Q_h=\lambda Q_g\quad\Longleftrightarrow\quad
+Q_h=Q_g\quad\Longleftrightarrow\quad Q_h|_T=Q_g|_T.
+\tag{11.2}
+$$
+
+Indeed the first equality on $\xi$ forces $\lambda=1$, and the
+common reducing line has the same action for both words. Thus $m_n$
+counts exact products of $a_T,b_T$ in $U(2)$. Their images in $PU(2)$
+will be used to study a generated group; equality in $PU(2)$ alone
+is not the equivalence relation in (11.2). Theorem 8.2 already gives
+the stronger, cross-length injectivity assertion at $\pi/6$; that
+special assertion is not assumed at other angles.
+

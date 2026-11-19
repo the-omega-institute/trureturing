@@ -1,0 +1,70 @@
+### 2.4 The polynomial partition and the sixth-height zero case
+
+Select the maximizing baseline once at each nonempty middle. Every
+row in that chosen bad family has the same
+$\lambda=Q_b(\beta)/L_b(\beta)\pmod{p^3}$ and
+
+$$
+\delta=\frac{Q'_b(\bar\beta)-\lambda L'_b(\bar\beta)}
+               {L_b(\bar\beta)}\pmod p.
+$$
+
+The original word makes the denominators units. Its pencil-divisibility identity gives $p^3\mid P_{b,e}(\beta)$, and the bad-family definition gives $p\mid P'_{b,e}(\beta)$. The original modular-zero partner estimate of [R](#reference-formalsource) removes the modular-zero pencils under the numerical premises
+
+$$
+\tag{2.10}
+
+ 8IJ<p,\qquad6I^3<p^3,\qquad I\leq p.
+$$
+
+They hold for sufficiently large $p$ under $B\ll p^{\alpha-3}$,
+$\alpha<4$. It counts both identically zero and content-$p$
+pencils, with no nonalignment assumption on the baseline.
+
+Write the remaining coefficient rows, including the baseline row
+indexed by $0$, as
+
+$$
+(q_i,r_i,s_i,\ell_i,m_i),\qquad
+ Q_i=q_i+r_iT+s_iT^2,\quad L_i=\ell_i+m_iT,\quad
+ P_i=L_0Q_i-L_iQ_0.
+$$
+
+The actual source coefficient bounds are
+
+$$
+\tag{2.11}
+
+ |q_i|\leq I^2,\quad |r_i|\leq2IJ,\quad |s_i|\leq J^2,
+ \quad |\ell_i|\leq3I,\quad |m_i|\leq3J,
+ \qquad I\geq J\geq1,
+$$
+
+and $|[T^j]P_i|\leq18I^{3-j}J^j$.
+These are the original coefficient and pencil-height estimates of [R](#reference-formalsource).
+
+For three rows let $[f,g,h]$ denote the determinant of the three
+indicated columns, and define the Dixon residual
+
+$$
+\tag{2.12}
+
+ \mathscr D=\det\begin{pmatrix}
+ [r,q,\ell]&[s,q,\ell]+[r,q,m]&[s,q,m]\\
+ [s,q,\ell]&[s,r,\ell]+[s,q,m]&[s,r,m]\\
+ [m,q,\ell]&[m,r,\ell]&[m,s,\ell]
+ \end{pmatrix}.
+$$
+
+The exact Dixon resultant identity of [R](#reference-formalsource) is
+
+$$
+\tag{2.13}
+
+ \mathop{\mathrm{Res}}_{3,3}(P_1,P_2)
+ =(m_0^2q_0-\ell_0m_0r_0+\ell_0^2s_0)\mathscr D.
+$$
+
+The subscripts denote the padded Sylvester resultant, so that a
+separate argument is needed when both pencils have degree two.
+

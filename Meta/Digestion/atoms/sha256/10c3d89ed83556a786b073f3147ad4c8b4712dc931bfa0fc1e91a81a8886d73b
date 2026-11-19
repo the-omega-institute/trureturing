@@ -1,0 +1,76 @@
+**Theorem 16.2 (All-angle retained-memory consequences).** Under
+Theorem 16.1's permissions, a uniformly finite exact terminal
+alphabet exists if and only if $\theta\in(\pi/2)\mathbb Z$.
+At those angles the exact optimal counts and bits are
+
+$$
+\begin{array}{c|cccc}
+ n&0&1&2&n\ge3\\\hline
+ \min|\mathcal Y_n|&1&2&4&6\\
+ \min b_n&0&1&2&3
+\end{array}
+\tag{16.4}
+$$
+
+The single homogeneous accumulator of Theorem 12.1 realizes the
+uniform six-value bound. At every other angle, for all $n\ge1$,
+
+$$
+\left\lceil\log_2\max\{n+1,\beta^n\}\right\rceil
+\le\min b_n\le n,\qquad
+\lim_{n\to\infty}\frac{\min b_n}{n}=h_0(\theta).
+\tag{16.5}
+$$
+
+In the maximal regions of Theorems 14.1–14.2 the exact minimum is
+$n$ bits and $2^n$ values. The explicit colliding angle satisfies
+$\min|\mathcal Y_6|\le63$ and has asymptotic fixed-bit rate at
+most $\log_2(63)/6<1$, while retaining the positive lower rate
+$\log_2\beta$. The complete terminal view, and its conditional
+version with an independent shared seed, determine the measured
+history itself at collision-free angles. Its discrete Shannon
+entropy is then at least $n$ (conditionally at least $n$ given
+the seed), attained by retaining the uniform history.
+
+Proof. Equations (16.1), (12.1)–(12.2), (13.1) and (14.1)
+give the stated alphabets, fixed bits and their uniform or linear
+growth. Rounding changes $\log_2m_n$ by less than one, so
+(15.4) proves the limit in (16.5). At $\theta_*$,
+submultiplicativity gives $m_{6k}\le63^k$ for every $k$;
+(15.6) gives the full limiting rate. This is a bound on alphabets
+and fixed bits, without any assertion that class probabilities
+are uniform at that angle.
+
+If there are no collisions, the finite class variable is bijective
+with the history. The measurable determination in Theorem 16.1
+therefore determines that history as well. For a discrete complete
+view $Y$, the entropy chain rule gives
+$H_{\rm Sh}(Y)\ge H_{\rm Sh}(\mathsf H_n)=n$, also when
+$Y$ is countable with infinite entropy. Conditioning on a free
+independent seed gives the same statement almost everywhere and
+then $H_{\rm Sh}(Y\mid S)\ge n$. Storing the history by the
+online shift register (9.6) attains equality and (16.2) corrects it.
+A non-discrete complete view gives measurable determination of the
+finite history, not a differential-entropy lower bound. At
+colliding angles, (15.7) describes the actual class entropy;
+no entropy optimum or Shannon rate is inferred from $m_n$ alone.
+
+All angles still have exactly the same averaged full $M_5$ channel
+by Theorem 2.2. The differing retained-record optima depend on the
+actual measured instruments and the complete terminal view.
+Every construction processes every supplied label in the fixed
+known-horizon, fresh-environment task. Between acquisitions only
+classical updates occur. Reference access, intermediate quantum
+feedback, adaptive instruments, retained quantum environments,
+quantum summaries and postselection are outside these hypotheses.
+The $n$ acquisitions and preparations, their communication,
+calibration, precision, exact inverse controls, static descriptions
+and the deterministic clock are the separate resources of
+Definition 1.5. The generic prefix construction can have $2nm_n$
+transition entries and $m_n$ inverse controls, as in Definition 4.2;
+the register minimum is not a bound on those other costs.
+A history-dependent clock, control program, archive or table choice
+is counted jointly in the view. The unitary extension (16.2) acts
+on all of $H$, while its recovery target remains only $R$ and
+untouched references. $\square$
+

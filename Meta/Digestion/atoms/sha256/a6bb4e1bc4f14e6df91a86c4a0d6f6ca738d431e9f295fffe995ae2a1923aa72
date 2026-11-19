@@ -1,0 +1,91 @@
+**Corollary 26.3 (Exhaustion of sharp tasks and a common task decoder).**
+Under Definition 26.1 the infima defining $\eta_{n,p}(E)$ and
+$\eta_{n,p}(\mathscr E)$ are attained. For every finite projection
+list $\mathscr E$,
+
+$$
+\eta_{n,p}(\mathscr E)=0
+\quad\Longleftrightarrow\quad
+\operatorname{alg}^*(I_3,\mathscr E)\subseteq\mathcal C_{n,p}.
+\tag{26.18}
+$$
+
+For one prescribed projection the complete list is
+
+$$
+\eta_{n,p}(E)=0
+\quad\Longleftrightarrow\quad
+\begin{cases}
+E\text{ is any orthogonal projection in }M_3,&n=0,\\
+[E,W]=0,&n=1,\\
+E\in\{0,I_3,P,I_3-P\},&n\ge2.
+\end{cases}
+\tag{26.19}
+$$
+
+At $n=1$ such a projection is an arbitrary projection on
+$\operatorname{span}\{\xi,t_2\}$ direct-summed with either zero
+or identity on $\mathbb Ct_1$. At $n\ge2$, $P$ is the only
+nontrivial sharp binary task up to exchange of its two outcomes.
+In every case the relevant map (26.6) corrects all the admitted
+projections simultaneously, on all qutrit input states.
+
+Proof. For any fixed CPTP $\mathcal D$ the error in (26.4) is
+
+$$
+\left\|(\mathcal D\circ\mathcal N_{n,p})^\dagger(E)-E
+\right\|_{\rm op}.
+\tag{26.20}
+$$
+
+Indeed the difference is Hermitian, so the supremum of the absolute
+expectation over density matrices is its largest absolute eigenvalue,
+attained on an eigenvector density. In output-first convention the
+Choi matrices of qutrit CPTP maps form the nonempty set
+
+$$
+\{J\in M_3\otimes M_3:J\succeq0,
+                   \operatorname{Tr}_{\rm out}J=I_3\}.
+\tag{26.21}
+$$
+
+It is closed and bounded, since its positive elements have trace
+three, hence compact in finite dimension. The expression (26.20)
+is continuous in $J$; so is its maximum over a finite list. Both
+infima are consequently minima. Thus zero error means one actual
+CPTP decoder realizes the equality, including when the definition
+is initially phrased using an infimum.
+
+For such a decoder put $\mathcal T=\mathcal D\circ\mathcal N_{n,p}$.
+Equality of Born probabilities on all density matrices is equivalent
+to $\mathcal T^\dagger(E_j)=E_j$ by (26.20). For one projection,
+linearity and $\mathcal T^\dagger(I_3)=I_3$ already fix its entire
+algebra $\operatorname{span}\{E_j,I_3-E_j\}$. For a list, apply
+the defect (26.7) to each $E_j$: its square is itself, so that
+defect is zero without assuming that the generated algebra is
+already fixed. It follows that every Kraus matrix $M_{rh}$ of
+$\mathcal T$ and its adjoint commute with every $E_j$. They
+therefore commute with all finite sums and products generating
+$\operatorname{alg}^*(I_3,\mathscr E)$. For each $X$ in that algebra,
+
+$$
+\mathcal T^\dagger(X)=\sum_{r,h}M_{rh}^\dagger XM_{rh}
+ =X\sum_{r,h}M_{rh}^\dagger M_{rh}=X.
+\tag{26.22}
+$$
+
+Theorem 26.2 now gives the forward implication of (26.18).
+Conversely, containment there lets the single explicit decoder
+in (26.6) fix every $E_j$, giving zero error for the whole list.
+This constructs simultaneity directly; it does not combine
+separately chosen optimizing channels.
+
+For $n\ge2$, a projection in
+$\mathbb CP\oplus\mathbb C(I_3-P)$ has the form
+$\alpha P+\beta(I_3-P)$. Self-adjointness and idempotence force
+$\alpha,\beta\in\{0,1\}$, proving exactly the four possibilities.
+The other horizons follow from (26.5) and (26.9). The invariant
+$P$ task itself is the existing [Purity arithmetic, Theorem 86.2][PA26];
+the exhaustion here uses the additional relative-product necessity
+and full-qutrit commutant. $\square$
+

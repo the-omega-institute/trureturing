@@ -544,7 +544,7 @@ theorem augmented_det_ne_zero_of_oriented_cofactors {d : ℕ}
 open scoped BigOperators
 open Matrix
 
-private theorem det_topRow {R : Type*} [CommRing R] {d : ℕ}
+theorem det_topRow {R : Type*} [CommRing R] {d : ℕ}
     (M : Matrix (Fin d) (Fin (d+1)) R) (a : Fin (d+1) → R) :
     ((augment M).updateRow 0 a).det = ∑ j, a j * cofactor M j := by
   rw [Matrix.det_succ_row_zero]
@@ -568,7 +568,7 @@ private theorem topRow_mul {R : Type*} [CommRing R] {d : ℕ}
   · simp only [Matrix.updateRow_self, Matrix.mul_apply, Matrix.vecMul, dotProduct]
   · simp only [Matrix.updateRow_ne (Fin.succ_ne_zero i), augment_succ, Matrix.mul_apply]
 
-private theorem cofactor_mul_right_cross {R : Type*} [CommRing R] {d : ℕ}
+theorem cofactor_mul_right_cross {R : Type*} [CommRing R] {d : ℕ}
     (M : Matrix (Fin d) (Fin (d+1)) R)
     (W : Matrix (Fin (d+1)) (Fin (d+1)) R) :
     W *ᵥ cofactor (M * W) = W.det • cofactor M := by

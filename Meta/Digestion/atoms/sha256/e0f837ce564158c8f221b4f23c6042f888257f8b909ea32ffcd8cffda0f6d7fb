@@ -1,0 +1,97 @@
+### 6.9 Generator pairs, unit classes, and quadratic orders
+
+Fix an order discriminant $d$ and a small integral invertible ideal
+$\mathfrak A$ of norm $n$; then sum over the allowed cube-root ideal
+classes. In the unramified case fix also one of the two $p$-primes and
+write $\mathfrak Q=(p)^3\mathfrak p^2$. In the ramified case put
+$\mathfrak Q=(p)^4$ and use (6.2). In either
+case $N\mathfrak Q=p^8$, and an allowed class satisfies
+$[\mathfrak a]^3=[\mathfrak Q\mathfrak A]^{-1}$.
+For a fractional representative $\mathfrak a$ of norm $\nu$, choose
+$(\eta_0)=\mathfrak Q\mathfrak A\mathfrak a^3$, so
+$|N\eta_0|=p^8n\nu^3$. Write $J_0=\chi\mathfrak a$.
+Locally at $p$, $J_p=\mathcal O_p$, $J_{0,p}=(\mathcal O_d)_p$, and their index is
+$p$ in both strata. Away from $p$ the orders agree. Consequently
+
+$$
+\Lambda=\chi^{-1}J\subset\mathfrak a,\qquad
+ [\mathfrak a:\Lambda]=p.
+$$
+
+There are exactly $p+1$ index-$p$ additive subgroups of $\mathfrak a$;
+allowing all of them is a valid upper bound. No other conductor prime
+is removed.
+
+The equality of principal ideals gives $e=hE=\chi^3\eta_0\epsilon$.
+Modulo cube units there are three choices in a real quadratic order,
+and at most three in an imaginary quadratic order. Absorb cube units
+into $\chi$; they merely permute the same $p+1$ subgroups. With a fixed
+representative $\eta=\eta_0\epsilon_r$, the ordered basis
+
+$$
+v_1=\chi^{-1},\qquad v_2=\chi^{-1}\theta
+$$
+
+determines *both* $\theta=v_2/v_1$ and $e=\eta/v_1^3$.
+Thus the following counts pairs, not just kernels admitting a generator.
+The height proof of Proposition 5.4 uses only
+$h\le K$, not a fixed $h$. With $H=O(H_3/T)$ it gives
+$T_+T_-\ll\nu H$, covolume $p\nu\sqrt d$, and lower embedding bounds
+from $|\eta_\sigma|\le6KY^3T_\sigma^3/p^3$.
+The product of those lower bounds is
+$\frac{p^{14/3}n^{1/3}\nu}{(6K)^{2/3}Y^2}$; the aspect-ratio window has
+polynomial width, hence $O(\log p)$ dyadic intervals. The Euclidean
+basis lemma gives $O(H/(p\sqrt d))$ bases per subgroup and interval.
+The $p+1$ subgroups cancel that $p$.
+For imaginary $d$, the complex embedded lattice has covolume
+$p\nu\sqrt{|d|}/2$, and
+$|v_1|^2+|v_2|^2=\nu(c+|a|)\ll\nu H$; the same basis lemma and
+finite cube-unit choices give the same estimate without an aspect ratio.
+For each fixed $\mathfrak A$ this proves, uniformly over all actual
+$h\le K$,
+
+$$
+\tag{6.15}
+ \#\{(\text{kernel},e)\}\ll_\eta p^\eta
+       \frac{H_3}{T\sqrt{|d|}}\,|\operatorname{Pic}(\mathcal O_d)[3]|.
+$$
+
+Applying this union bound separately in the later $h$ sum is safe
+overcounting; there is no missing $h$, generator, or unit factor.
+Ramification has introduced no $p$ loss: its fixed norm is still $p^8$.
+
+For rationally split $d=f^2$, use
+$\mathbb Q\times\mathbb Q$ and $\mathcal O_{f^2}=\{(r,s)\in\mathbb Z^2:r\equiv s\pmod f\}$.
+The primitive ideal $I=(c,(-b+\sqrt\Delta)/2)$ satisfies
+$I\overline I=c\mathcal O$ because, after division by $c$, the product ideal
+contains $a,b,c$ and thus $1$. It is invertible and proper. The actual
+nonzero norm of $E$ ensures both components of $E,\eta,\chi,v_1$ used
+in divisions are nonzero. Here $p\nmid f$, so the local algebra at $p$
+is unramified split and the fixed factor is $(p)^3\mathfrak p^2$.
+The same index-$p$ extension and Euclidean basis argument apply to its
+two real components. Its units are a subgroup of $\{\pm1\}^2$ and
+all are cubes. To bound classes explicitly, extension to $\mathbb Z\times\mathbb Z$
+makes each component ideal principal. After choosing their generators,
+an invertible ideal is specified by gluing their reductions modulo $f$
+by a unit in $(\mathbb Z/f\mathbb Z)^*$, up to changing those generators by signs.
+Hence $|\operatorname{Pic}(\mathcal O_{f^2})|\le\varphi(f)\le f$, and
+
+$$
+\tag{6.16}
+ \sum_{f\le\sqrt D}\frac{|\operatorname{Pic}(\mathcal O_{f^2})[3]|}{f}\ll\sqrt D.
+$$
+
+The small-ideal HNF proof also applies to this split order verbatim.
+For nonsplit orders, the precise all-order mean theorem of
+Bhargava–Varma [Bhargava–Varma, Theorem 2(a),(b)](#reference-bhargavavarma2016), stated in
+(5.35), gives
+
+$$
+\tag{6.17}
+ \sum_{0<\pm d\le D}\frac{|\operatorname{Pic}(\mathcal O_d)[3]|}{\sqrt{|d|}}\ll\sqrt D.
+$$
+
+Drop the restrictions of splitting at $p$ or $v_p(d)=1$ before this
+average. It includes all remaining nonmaximal orders, so no estimate
+uniform in a varying local specification is asserted or needed.
+

@@ -1,0 +1,182 @@
+**Theorem 2.2 (Full-channel equality and unitary branches on the image).**
+Definition 2.1 admits a unitary completion on $H\otimes E$. Both bases
+are orthonormal and give actual instruments. Their averaged channels
+coincide on every complex $M_5$ input and every spectator reference,
+and equal the half-parameter owning channel $\Phi_\circ$.
+Their restrictions to $R$ have the form
+
+$$
+K_jB=qBU_j,\qquad A_jB=qBV_j,
+$$
+
+where all four $3\times3$ matrices are unitary. On inputs supported in
+$R$, each outcome has probability $1/2$, including inputs entangled with
+an untouched reference. This fairness assertion is restricted to $R$.
+
+Proof. The five images of $\mathcal V$ are orthonormal. Distinct system
+vectors $u,v,z$ are orthogonal; repeated system vectors occur only with
+orthogonal environment vectors. Hence $\mathcal V^\dagger\mathcal V=I_5$.
+The map $x\otimes f_0\mapsto\mathcal Vx$ is an isometry between
+five-dimensional subspaces of the ten-dimensional $H\otimes E$.
+Complete an orthonormal basis in each complement and map one completed
+basis to the other. The resulting unitary $\mathsf U$ satisfies
+$\mathsf U(x\otimes f_0)=\mathcal Vx$. The preparation, interaction,
+and measurement are thus all specified within a unitary dilation;
+no outcome label is appended to an unmeasured reduced channel.
+
+Contracting with $f_j$ gives exactly the supplier's operators
+
+$$
+\begin{aligned}
+K_0&=|u\rangle\langle e_0|+q|v\rangle\langle e_2|
+                              +|z\rangle\langle e_4|,\\
+K_1&=|u\rangle\langle e_1|+q|v\rangle\langle e_2|
+                              +|z\rangle\langle e_3|.
+\end{aligned}
+$$
+
+Their full matrices, in the order of Definition 1.3, are
+
+$$
+K_0=\begin{pmatrix}
+q&0&0&0&0\\0&0&1/2&0&0\\0&0&0&0&1\\
+q&0&0&0&0\\0&0&1/2&0&0
+\end{pmatrix},\qquad
+K_1=\begin{pmatrix}
+0&q&0&0&0\\0&0&1/2&0&0\\0&0&0&1&0\\
+0&q&0&0&0\\0&0&1/2&0&0
+\end{pmatrix}.
+$$
+
+In particular,
+
+$$
+K_0^\dagger K_0=\operatorname{diag}(1,0,1/2,0,1),\qquad
+K_1^\dagger K_1=\operatorname{diag}(0,1,1/2,1,0).
+$$
+
+Their sum is $I_5$. The Kraus formula gives complete positivity and
+trace preservation on $M_5$; their ranges lie in $R$.
+These are the half-parameter eight-edge assignments of [OWN, (17.6)]:
+
+$$
+\alpha_0=\beta_0=f_0,\quad \alpha_1=\beta_1=f_1,\quad
+\gamma_0=\gamma_1=(f_0+f_1)/\sqrt2,\quad
+\delta_0=f_1,\quad\delta_1=f_0.
+$$
+
+All eight vectors have norm one. The required pairs
+$(\alpha_0,\alpha_1)$, $(\beta_0,\beta_1)$ and $(\delta_0,\delta_1)$
+are orthogonal; the owning model does not require the two $\gamma$
+vectors to be orthogonal.
+
+For completeness, the all-input population interface is
+
+$$
+Q_{1/2}=\begin{pmatrix}
+1/2&0&0&1/2&0\\1/2&0&0&1/2&0\\
+0&1/2&0&0&1/2\\0&0&1&0&0\\0&0&1&0&0
+\end{pmatrix},
+$$
+
+$$
+\operatorname{diag}\Phi_\circ(X)=
+\begin{pmatrix}
+(X_{00}+X_{11})/2\\X_{22}/2\\X_{33}+X_{44}\\
+(X_{00}+X_{11})/2\\X_{22}/2
+\end{pmatrix}
+=Q_{1/2}^{\mathsf T}\operatorname{diag}X.
+$$
+
+Indeed the coefficients of $|u\rangle\langle u|$,
+$|v\rangle\langle v|$, $|z\rangle\langle z|$ are respectively
+$X_{00}+X_{11}$, $X_{22}$, $X_{33}+X_{44}$. Every cross operator between
+these three vectors has zero computational diagonal, since their
+computational supports are disjoint. This argument applies to arbitrary
+complex $X$, with no positivity, Hermiticity, or reality hypothesis.
+It verifies precisely the owning population interface, not merely its
+values on diagonal densities.
+
+The matrix
+
+$$
+C_\theta=\begin{pmatrix}c&is\\is&c\end{pmatrix}
+$$
+
+is unitary: its column norms are $c^2+s^2=1$ and their inner product
+vanishes. The vectors $g_0,g_1$ are its adjoint columns in the $f$ basis
+and are therefore orthonormal. Contracting $\mathcal V$ with them gives
+
+$$
+A_0=cK_0+isK_1,\qquad A_1=isK_0+cK_1.
+$$
+
+Expanding the two conjugations gives, for every complex $X$,
+
+$$
+\begin{aligned}
+\sum_{j=0}^1A_jXA_j^\dagger
+&=(c^2+s^2)(K_0XK_0^\dagger+K_1XK_1^\dagger)\\
+&\quad+(-ics+ics)K_0XK_1^\dagger
+       +(ics-ics)K_1XK_0^\dagger\\
+&=\Phi_\circ(X).
+\end{aligned}
+$$
+
+This is full-channel equality, stronger than the common population law.
+The same algebra, with each operator tensored with $I_Z$, proves equality
+on all $M_5\otimes\mathcal B(Z)$ for any spectator $Z$.
+
+Applying the displayed $K_j$ to $u,v,z$ gives
+
+$$
+U_0=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\qquad
+U_1=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},
+\qquad K_jB=qBU_j.
+$$
+
+Both $U_j$ are permutations. For the rotated branches one obtains
+
+$$
+V_0=cU_0+isU_1,\qquad V_1=isU_0+cU_1.
+$$
+
+Their unitarity requires the actual relative matrix, not just unitarity
+of the summands. Direct multiplication gives
+
+$$
+W=U_0^\dagger U_1=
+\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\qquad
+W^\dagger=W,\quad W^2=I_3,\quad U_1=U_0W.
+$$
+
+The reflection identity implies
+
+$$
+cI_3+isW=e^{i\theta W},\qquad
+V_0=U_0e^{i\theta W},\qquad V_1=V_0W.
+$$
+
+These are products of unitaries. Equivalently the cross terms in
+$V_j^\dagger V_j$ cancel because $W^\dagger=W$. A general complex
+linear combination of two unitaries need not be unitary, so the reflection
+calculation is essential. We have proved $A_jB=qBV_j$ as well.
+
+For either instrument let $L_j$ be its full operator and $Q_j$ its
+normalized restricted unitary. Then
+
+$$
+B^\dagger L_j^\dagger L_jB=I_3/2,
+$$
+
+and on any qutrit-reference density $\rho$ the unnormalized branch is
+
+$$
+\frac12(BQ_j\otimes I_Z)\rho(BQ_j\otimes I_Z)^\dagger.
+$$
+
+Its trace is $1/2$ and its system output remains in $R$.
+On all of $H$ the effect is not $I_5/2$: for example the first
+unrotated outcome has probabilities one on $e_0$ and zero on $e_1$.
+This establishes the asserted scope of fairness and recovery. $\square$
+

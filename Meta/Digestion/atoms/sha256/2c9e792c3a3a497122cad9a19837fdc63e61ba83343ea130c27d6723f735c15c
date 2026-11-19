@@ -1,0 +1,34 @@
+**Lemma 4.7 (A usable auxiliary baseline in every row plane).**
+
+The polynomial $\mathfrak E|_{\mathcal V}$ is absolutely irreducible.
+In particular it is not identically zero on a two-dimensional linear
+subspace of $\mathcal V$. If $f$ is a primitive integer functional on
+a rank-three integer row lattice in $\mathcal V$, and $b_0,c_0$ is an
+integer basis of $\ker f$, one can choose
+$b=b_0+jc_0$, $j\in\{0,1,2,3\}$, with $\mathfrak E(b)\ne0$.
+The pair $b,c_0$ is still an integer basis of that kernel.
+
+*Proof.*
+
+Use (4.11). On $\mathcal V$,
+
+$$
+\mathfrak E=(\ell^2-dm^2)s
+    +m\bigl[-\gamma\ell^2+(\xi-\eta)\ell m+\zeta m^2\bigr].
+$$
+
+The two homogeneous coefficients in $(\ell,m)$ have resultant
+
+$$
+(\zeta-\gamma d)^2-d(\xi-\eta)^2=-\mathcal D_0\ne0.
+$$
+
+They are coprime over the algebraic closure. Gauss’s lemma for a
+primitive polynomial linear in $s$ proves absolute irreducibility.
+Its vanishing on a whole linear plane would give a linear factor, a
+contradiction. Finally the nonzero polynomial
+$\mathfrak E(b_0+Tc_0)$ has degree at most three, so one of the four
+displayed integer values is nonzero. These statements survive the
+invertible rational binary-coordinate change used in the proof:
+$\mathfrak E$ is a binary resultant and changes by a nonzero scalar.
+
