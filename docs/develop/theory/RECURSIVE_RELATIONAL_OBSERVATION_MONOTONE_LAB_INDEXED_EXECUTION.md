@@ -2899,29 +2899,17 @@ uncompleted backing obligations. A law evaluator still cannot provide
 an actual Read reply. All earlier work roots and original source
 provenance remain required for later composition.
 
-The original strict findings `ML-N-evaluator-execution` and
-`ML-Cost-full-evaluator-session` remain. Completing these two component
-dependencies does not declare B complete or release C. D and fresh
-independent acceptance remain subsequent obligations. Ordinary
-correspondence is a conditional mathematical proof, not a new Lean
-verification, physical realization, encoding minimum, full serial-history
-recovery or quantum frontend. The initial-control premise is explicit;
-removing ML-I allocation/field/control rights would require a different
-theorem. The native field and installation graphs introduce no such
-rights for the original observation source.
+The full evaluator and its resource account require the initial
+allocation, field and control rights of ML-I. The native field and
+installation graphs operate only with those supplied rights.
 
-**Definition 20.5 (source correspondence and evidence use).** The
-executable definitions are `native_engine.Core.build` and
-`NativeEngine.microtick` for §§18–18.5, `native_install.Installer` and
-`native_bits.initialize` for §19, and their actual directory traversal
-and event counters for §20. The connected caller composes the unchanged
+**Definition 20.5 (source correspondence).** The executable definitions
+are `native_engine.Core.build` and `NativeEngine.microtick` for §§18–18.5,
+`native_install.Installer` and `native_bits.initialize` for §19, and their
+directory traversal and event counters for §20. The service caller composes
 `field_decoder.lower`, `field_graph.loader/driver/growth` and
-`field_io.conversions/output_decoder/print_buffer`. Its production mode
-is the original conversion/driver/output path. Its additional probe
-mode is a real installed caller of the same decoder, transferring its
-actual result fields with End/Ack/Return; it does not inject an
-instruction into the production driver. Native conversion and output
-checks consume these installed primitive paths.
+`field_io.conversions/output_decoder/print_buffer` on the original
+conversion, execution and output path.
 
 All-image byte provenance and the A interface are unchanged. The source
 and license scope in §9 and §§10–14 remains: NWMG and the licensed stack
@@ -2930,10 +2918,8 @@ ordinary repository-derived implementation/refinement and accounting
 argument. The later C119/C123 conditional comparison/filter results do
 not supply an original-port service, a LAB-native quantum map or any
 missing literal controller. No new literature novelty is claimed.
-Exact finite author results corroborate their stated component cases;
-the all-family conclusions use Theorems 18.4 and 19.4, with all their
-premises. Result data and reproducible experiment sources are private;
-process logs and model reasoning are not theory evidence.
+The all-family conclusions use Theorems 18.4 and 19.4 with their
+supplied finite material and literal primitive operations.
 
 ## 追加锚（本行以下为增补区）
 
@@ -3315,10 +3301,9 @@ enters precisely the same complete evaluator path. Predict contains no
 original-call operation. Close emits its framed closed response and
 ends at a permanent input-disabled waiting gate.
 
-The frontend-only author component replaces the evaluator suffix by an
-explicit backed busy/ready latch and waiting gate. It supplies no output,
-normalizer, ratio or returned head and is never a production evaluator.
-A check at that gate establishes only the acquired evaluator input.
+A frontend ending at the backed busy/ready gate stops at the acquired
+evaluator input. A computed output and returned head require the
+evaluator suffix.
 
 **Theorem 23.5 (conditional particular-service composition).** For every
 valid original initialization and finite legal command history, the
@@ -3439,7 +3424,7 @@ allocator or reclaim all retired backing. Fixed-width component fixtures
 also provide no widening/overlap proof. Those missing constructions cannot
 be inferred by summing these partial censuses. $\square$
 
-**Definition 24.3 (exact executable correspondence and evidence scope).**
+**Definition 24.3 (executable correspondence).**
 `field_service.Service.receive/routines` implements §22;
 `Service.classifier/commands` implements §23's actual operands, linked
 receipts, paired cache, Predict serialization and framed responses.
@@ -3458,28 +3443,13 @@ obligations whenever that path is used; they are not relabelled audit-only.
 An original full-execution acceptance must actually use the replacement
 path through arithmetic return, framing and the next original Read.
 
-The author checks distinguish independent field-transition grammar
-comparisons, installed native frontend/Read/Predict checks, the actual
-complete-image conversion/initial-loader prefix, and the separate existing
-component/reference suites. A missing original arithmetic LAB execution is
-not replaced by a frontend ready latch, fixture output or stack-reference
-run. Operation omissions must change actual received-source operands,
-receipts, cache or output, in addition to any count discrepancy. A source
-mutation, replay substitution or host-calculated answer is no success case.
-The exact private results bind source bytes and measured component cuts.
-They are finite corroboration of the ordinary all-family inductions, not
-new Lean verification or independent acceptance.
-
-**Definition 24.4 (remaining original objects).** The conditional service
-correspondence and its selected native consumers do not close the original
-integrated LAB-driver delivery, shared jobs/free-pool/width overlap and
-cleanup, full source-observer common timeline, or whole-family integrated
-author checks. The original strict objects `ML-N-evaluator-execution` and
-`ML-Cost-full-evaluator-session` remain not-executed until the original full
-positive and null evaluator runs, actual Arithmetic output/framing, original
-Read continuation and complete same-run census execute. B completion, C
-release, D completion, fresh independent acceptance and completion of the
-long research goal remain separate later obligations.
+**Realization scope.** The selected consumers implement the frontend,
+source interoperation and service control. The arithmetic realization
+requires installation, a computed evaluator result and its framed
+delivery. The source interface must then support Read on the original
+port before Close. A resource claim requires a single chronology covering
+the actual allocation, width overlap, cleanup and full source-observer
+census.
 
 The source supply remains NWMG, the licensed stack compiler and the exact
 UJB/AA/PG scopes in §§9–21. This appendix is ordinary repository-derived
@@ -3487,7 +3457,7 @@ parser/controller/refinement mathematics, with no new universality,
 minimality, physical realization, actual serial-history recovery, FIB or
 quantum frontend claim. The source port and initial primitive-control,
 valid-literal-input and current-rights premises are retained. Input is
-repo-prior-exposed; no context sterility or model diversity is asserted.
+taken from the original source-port domain.
 
 ## 追加锚（本行以下为增补区）
 
@@ -3500,20 +3470,20 @@ the unchanged source arena rooted at the supplied $F_1(z)$ object.  A
 configuration cut is the tuple
 
 $$
- C_t=(I_t,S_t,O_t,Gamma_t,D_t,ho_t,pi_t,chi_t,omega_t),
+ C_t=(I_t,S_t,O_t,Gamma_t,D_t,\rho_t,pi_t,chi_t,omega_t),
 $$
 
 where $I_t$ contains the installed code, image pages, native control and
 reserve; $S_t$ contains the original root, its provider fields and all
 retained preparation; $O_t$ contains the service connection, input and
 reply latches, receipts, cache, output buffers and free pool; $Gamma_t$ is
-the ordered receipt chain; $D_t$ is the paired indexed cache; $ho_t$ is
+the ordered receipt chain; $D_t$ is the paired indexed cache; $\rho_t$ is
 the native reference/control location; $pi_t$ is the service phase and
 its literal continuation; $chi_t$ is the pending operand/reply state; and
 $omega_t$ is the owner-indexed reference-width vector.  Every cursor,
 counter, selector, pending latch and result in this tuple is an actual
 field or finite-control bit of its owner.  Audit counters and independent
-inspection views are not members of $ho_t$ or $pi_t$.
+inspection views are not members of $\rho_t$ or $pi_t$.
 
 **Assumption 25.2 (the integrated ML-I boundary).** The supplied native
 primitive graph, current grants and finite reserve are valid at the initial
@@ -3668,16 +3638,19 @@ request while busy, an absent grant, an occupied input/reply latch, a
 wrong field selector, and an exhausted finite reserve.  Omitting an
 operand-bit transfer leaves the actual connection latch unoccupied and
 prevents the original call.  Omitting an indexed cache write leaves the
-receipt but changes the returned cache state.  Removing a source-field
-read, a grant delivery, or a free-pool cleanup event makes the incremental
-census disagree with the direct one.  These are state and census
-failures, not merely result-file comparisons.
+receipt but changes the returned cache state. Omitting a source-field
+read from the ledger removes a required operation from its trace. If
+the source operation still occurs, its omission leaves the storage
+census unchanged. Likewise, the grant or free-pool event must be
+checked against its recorded owner state and the operation trace.
 
 *Proof.* Each refusal is the negative branch of the corresponding guard in
 Lemma 25.4.  The two omission cases remove the only actual write that can
 occupy the latch or set the indexed mask/value pair, so the subsequent
-source call or cache invariant fails.  The census claims follow from the
-allocation, field and cleanup cases in the proof of Theorem 25.7. $\square$
+source call or cache invariant fails. A source read has zero retained
+storage delta by Theorem 25.7, while the trace records each read at
+its source transition. The owner state identifies the grant and free
+pool transitions independently of the retained storage totals. $\square$
 
 **Theorem 25.9 (whole-family composition).** Under Assumptions 1.2 and
 25.2, the preceding correspondences compose for every finite bilateral
@@ -3713,28 +3686,11 @@ ratio.  Thus each clause is preserved by composition.  The final sentence
 is a scope boundary: the two strict executions require the subsequent
 full positive/null evaluator runs and complete same-run census. $\square$
 
-**Definition 25.10 (author evidence and remaining boundary).** The private
-author result `rro-lab-execution/integration-results.json` records the
-actual installed service run: $69$ original calls, $57$ distinct
-operands, $29{,}266{,}611$ native steps, $185{,}513$ field actions and
-$44{,}916{,}792$ installation steps.  Its common cut has installation,
-connection and original-source widths $(21,12,14)$ and direct/incremental
-census equality at all $69$ source-call boundaries.  The same result
-re-runs the finite whole-family author checks: $1{,}722$ B
-program/input instances, $490$ bounded nonhalting boundaries, $511$ V
-words, all $32{,}768$ within-slot masks, and $8{,}248$ original-port
-calls.  Source binding and compatibility checks retain the two operational
-mutant falsifiers `actual_port_transfer_occupied` and `actual_cache_write`.
-
-These results close B-LAB-driver, B-allocation-width-and-common-timeline,
-and B-whole-family-correspondence for the stated conditional ML-I
-construction.  The strict objects `ML-N-evaluator-execution` and
-`ML-Cost-full-evaluator-session` remain not executed.  Therefore this unit
-is B-complete for its assigned outcomes, while C is not released, D is not
-complete, independent acceptance has not occurred, and the long research
-goal remains open.  No Lean declaration, digestion settlement, judge
-change, minimality claim, hardware claim, quantum frontend, or actual
-serial-history recovery is made.
+**Scope of the composition.** The conditional LAB result supplies the
+driver, allocation-width census and common timeline for the selected
+finite prefixes. Complete evaluator execution and a full-session census
+require the actual evaluator, its installation and same-source
+continuation, all represented at the same resource cut.
 
 ## 追加锚（本行以下为增补区）
 
@@ -3751,7 +3707,7 @@ $$
 $$
 
 where $U$ is a finite set of host slots. Each slot has a shape tag
-$\sigma=(r,b)$, an owner tag, $r$ reference fields, and $b$ bit fields. A reference field contains either the null code or a pair $(o,i)$ naming one slot in the session's owner-tagged slot union; a bit field contains $0$ or $1$. The slot's grant bit, shape tag, and owner tag are stored separately from its fields. A slot remains present after cleanup and is moved to the owner's free list; cleanup never changes its identity or grant. The reference width $w$ is stored in the arena header and is the width used for every modeled reference transport in that owner.
+$\sigma=(r,b)$, an owner tag, $r$ reference fields, and $b$ bit fields. A reference field contains either the null code or a pair $(o,i)$ naming one slot in the session's owner-tagged slot union. A binary field contains $0$ or $1$. A schema may mark a bit position as nullable when the original arena permits the cleared value `None`, as in Definition 27.3. That position stores one of $0$, $1$, or the cleared tag. A cleared nullable position remains part of the slot's arity. The slot's grant bit, shape tag, and owner tag are stored separately from its fields. A slot remains present after cleanup and is moved to the owner's free list; cleanup never changes its identity or grant. The reference width $w$ is stored in the arena header and is the width used for every modeled reference transport in that owner.
 
 The fixed shape table is the source table
 
@@ -3781,7 +3737,7 @@ from every retained, pending, or free-pool host slot to every corresponding sour
 
 1. Shape, owner, grant, and width agree. A slot with shape $(r,b)$ decodes to an object with exactly $r$ reference positions and $b$ bit positions, and its grant bit agrees with the source grant. Installation source descriptors, target descriptors, initializer nodes, code pages, LAB cells, route headers, input cells, receipts, cache cells, and connection latches all have their declared owner.
 2. For each reference position, null decodes to null and a host pair $(o,i)$ decodes to $\iota_H(o,i)$. Thus equal host references decode to equal source identities and unequal host references remain unequal, including two equal-valued observations at different original indices.
-3. Every bit position, marked value, operation tag, encoded opcode, selector, literal, and width flag decodes to the source bit at the same literal position. A schema tag never changes the source-visible field name.
+3. Every binary position, marked value, operation tag, encoded opcode, selector, literal, and width flag decodes to the source bit at the same literal position. Every nullable arena bit decodes to the corresponding source value, with the cleared tag decoding to `None` and remaining distinct from both binary values. A schema tag never changes the source-visible field name.
 4. The controller headers decode to the source controller state. In particular, `pc`, `old.pc`, the operand latches, destination, phase, selector index, waiting flags, output flags, source cursor, pending target, LAB head/arm/frontier, growth continuation, and returned active header are equal after decoding.
 5. The receipt table decodes occurrence-for-occurrence. Its order, original indices, operand words, returned headers, cache masks and cache values agree, including repeats, partial slots, informative absences, and arrays outside the earlier support.
 6. The host charge accumulator is not part of the source state. Its event prefix records the same owner, operation, field, grant, pending status, free-pool status, and old/new width as the source event ledger of Definition 25.6.
@@ -3810,7 +3766,21 @@ A compiled host row is therefore a serialization of the `Native`/`Code` row alre
 
 ### 26.3. Installation, LAB, and the returned-head boundary
 
-**Definition 26.10 (two-pass host installation).** The host installer has a source descriptor chain and a target descriptor chain. For each source descriptor it executes, in order, shape dispatch, fresh target allocation, grant delivery, target-field clearing, bit initialization through the literal bit-kernel vertices, source-reference reads, forward-reference reads, target-reference writes, directory linking, and the entry forward read. Source descriptors, pending targets, initializer nodes, source/target buffers, and the bit-kernel cursor remain retained throughout. The target is not a bulk clone: every copied reference is obtained from the source field and then translated through the source descriptor's actual forward link.
+**Definition 26.10 (two-pass host installation).** The installer traverses
+the source descriptor chain twice. On the first pass, it selects each
+shape, allocates and grants a fresh target, clears and links its directory
+entry, and writes the source descriptor's forward link to that target.
+It then clears the payload reference fields and initializes the payload
+bits through the literal bit-kernel vertices. At the end of the first
+pass, every descriptor has its forward link.
+
+The second pass reads each literal payload reference from the source.
+It preserves null and translates each nonnull descriptor reference
+through that descriptor's forward link before writing the corresponding
+target field. After relocation, the installer reads the supplied entry's
+forward link and writes the execution location. Source descriptors,
+pending targets, initializer nodes, buffers and the bit-kernel cursor
+remain retained throughout.
 
 **Theorem 26.11 (installation refinement).** If the source descriptor chain is valid and has sufficient finite grants, every installation prefix has a packed realization related by $\mathcal R$ to the corresponding ML-I installation prefix. At completion, the returned `pc` is exactly the forward image of the supplied entry descriptor. A malformed shape, missing forward link, absent grant, or exhausted target pool refuses at the same source guard.
 
@@ -3838,10 +3808,10 @@ $$
 
 The sum includes source descriptors, target descriptors, code and image material, grants, free-pool cells, old jobs and roots, pending objects, source/provider and connection material, receipts, indexed cache cells, output buffers, decoder scratch, and the old/new images during widening. A common cut uses one timestamp for all owners; independent peaks are not added.
 
-**Definition 26.17 (packed host storage).** Let $n$ be the total number of retained host slots, $I=\lceil\log_2(n+1)\rceil\vee1$, and $A=\lceil\log_2(k+1)\rceil\vee1$ for the $k$ owner tags. A reference is stored as a null bit or an $(A+I)$-bit owner/local-index pair. If $N_{o,\sigma}$ slots of owner $o$ have shape $\sigma=(r_\sigma,b_\sigma)$, and $G_o$ is the number of header bits and schema/grant tags for that owner, the logical packed host storage is
+**Definition 26.17 (packed host storage).** Let $n$ be the total number of retained host slots, $I=\lceil\log_2(n+1)\rceil\vee1$, and $A=\lceil\log_2(k+1)\rceil\vee1$ for the $k$ owner tags. A reference is stored as a null bit or an $(A+I)$-bit owner/local-index pair. If $N_{o,\sigma}$ slots of owner $o$ have shape $\sigma=(r_\sigma,b_\sigma)$, and $G_o$ is the number of header bits and schema/grant tags for that owner, write $C_o$ for the total number of nullable payload bit positions in its retained slots. One extra host bit per nullable position encodes the cleared tag. The logical packed host storage is
 
 $$
- B_{\mathrm{pack}}(H)=\sum_o\left(G_o+\sum_\sigma N_{o,\sigma}
+ B_{\mathrm{pack}}(H)=\sum_o\left(G_o+C_o+\sum_\sigma N_{o,\sigma}
        \bigl(1+\mathsf{tag}(\sigma,o)+r_\sigma(A+I)+b_\sigma\bigr)\right).
 $$
 
@@ -3862,26 +3832,22 @@ at every common cut, including installation and source/connection material. The 
 
 *Proof.* Every allocation, field materialization, widening, decoder append and cleanup is an event in the source ledger. A finite event prefix has finite maxima, and the direct/incremental census theorem gives the same tuple to the packed implementation. Dominating the tuple prevents a source refusal due only to unavailable paid material. The argument supplies feasibility for that selected finite run, not one reserve for all finite inputs and not termination of an arbitrary B program. $\square$
 
-### 26.5. Bounded constructor evidence and limits
+### 26.5. Constructor falsifiers and limits
 
-The following finite checks are the acceptance tests for this constructor, rather than a substitute for C. They are source-level falsifiers for the relation $\mathcal R$.
+The following finite checks can falsify constructor correspondence under the relation $\mathcal R$.
 
 1. **Identity and alias test.** Construct every fixed shape, two equal-valued observations, a shared reference, a cycle, a pending target, and a free-pool cell. Encode, decode, and compare all fields and alias classes. Mutating one reference ID must change the decoded successor or fail the alias check.
 2. **Primitive and phase test.** Exercise every host primitive and every zero/one branch on null, non-null, bit-zero, bit-one, occupied, acknowledged, wrong-shape, absent-grant, and exhausted states. Compare each decoded commit and refusal with the source operation. A mutation that skips a code-bit read, selector read, latch write, or successor read must fail the event census.
 3. **Installer test.** Exercise shapes $(4,8)$, $(4,21)$, $(1,0)$, $(0,1)$, $(0,32768)$ and $(2,0)$ with a pending target at each allocation and each bit/ref relocation. Compare source and target aliases, grants, widths, and the final returned entry. Removing one source bit read or one forward read must fail before completion.
 4. **LAB-prefix test.** Use all B directions, marks, branches, crossings, frontiers, immediate halt, and bounded nonhalting prefixes. Compare the decoded old/new head, arm, program reference, mark, route cells, and pending growth at every commit and one internal cut between every pair of commits.
 5. **Session test.** Use the four actual Read replies, informative absence, repeats, distinct equal words, old-index rereads, partial-to-complete slots, long operands, both once-shared full injections, an outside-support array, and a zero-normalizer frame. Compare occurrence order, original indices, receipt links, cache masks/values, returned-head decoding, and continued Reads on the same original port. Mutating an index or cache write must change the decoded history.
-6. **Census and resource test.** At every source-call boundary compare direct and incremental owner censuses, retain pending End/Ack/Return cuts, free-pool cleanup, width overlap, old jobs and roots, decoder/cleanup material, and the common-cut sum. Omit any one grant, widening overlap, decoder bit, or cleanup event and require a mismatch. Measure host bytes and wall time for the bounded constructor; do not extrapolate them to the complete evaluator.
-
-A bounded constructor probe exercised all six fixed shapes, fifteen owner-tagged slots, cross-owner references, an alias, a cycle, a pending target, a retained free-pool slot, literal bit/reference operations, and a three-slot forward relocation. It detected an intentional alias mutation, preserved owner widths $(4,8,12)$, and reported $33{,}309$ logical packed bits, $26{,}230{,}784$ bytes of process high-water RSS, and $0.010382500$ seconds on the bounded probe. This probe is representation evidence only: it does not execute the full source service, does not measure a C run, and does not convert logical packed bits into modeled savings.
-
-The existing finite native and service checks provide source bindings for these falsifiers at the pinned private experiment tree. `rro-lab-execution/packed_constructor.py` and `packed_constructor_checks.py` execute the bounded representation checks above; they do not yet consume the complete original service. The prior object-identity implementation and the bounded packed probe therefore do not certify the packed constructor as a complete evaluator backend. Until packed consumer integration and a run-specific $U$ are available, `ML-N-evaluator-execution` and `ML-Cost-full-evaluator-session` remain open, C remains unreleased, and D remains unreleased.
+6. **Census and resource test.** At every source-call boundary compare direct and incremental owner censuses, retain pending End/Ack/Return cuts, free-pool cleanup, width overlap, old jobs and roots, decoder/cleanup material, and the common-cut sum. Omit any one grant, widening overlap, or decoder bit from the incremental census and require a census mismatch. At every cleanup cut, compare the ordered operation prefix with the independently executed source ledger. Also compare the decoded owner state with the source state before and after the transition, including the free-pool links and membership, the cell identity, and all reference and bit field values. An omitted cleanup event must fail the trace comparison. A retained binary value in a nullable field the source clears to `None`, or a retained nonnull reference in a field the source clears to null, must fail the state comparison. Moving a retained cell into an existing free pool can leave the storage census unchanged. Measure host bytes and wall time for the bounded constructor; do not extrapolate them to the complete evaluator.
 
 **Theorem 26.20 (scope of the prerequisite).** Definitions 26.1--26.17 and Theorems 26.9, 26.11, 26.13, 26.15 and 26.18 provide a faithful host-realization prerequisite for the unchanged finite LAB/ML-I/source path when their finite packed implementation and checks satisfy the stated premises. They do not provide a full evaluator run, a universal reserve, a new routing algorithm, a source reset, a reroot, a resampling, an answer injection, or a complete simultaneous ML.16 vector.
 
 *Proof.* The decode relation, primitive simulation, installer induction, LAB induction, session/decoder induction, and common-cut census compose on one finite supplied run. Each theorem preserves the original objects, fields, chronology, and tariffs. Proposition 26.19 supplies only a run-specific paid continuation condition. The listed omissions are outside the premises and therefore remain obligations of the original C acceptance. $\square$
 
-**Source boundary.** The construction is mapped to `rro-lab-execution/field_graph.py` (`Cell`, `Node`, `Engine`), `primitive_engine.py` (`CPU`, `PrimitiveEngine`), `native_engine.py` (`Native`, `NativeEngine`), `native_install.py` (`Block`, `Source`, `Installer`, `BitKernel`), `field_io.py` (conversion and returned-head scan), `field_decoder.py` (literal page selector), `field_service.py` and `service_native.py` (received session and original-port connection), `lab.py` (`Arena`, `Buffer`, and LAB growth), and `integration_checks.py` (common-cut author checks). The source remains the pinned private experiment snapshot supplied for the preceding B correspondence. The finite checks are ordinary executable evidence, not Lean verification or a claim of world-level originality.
+**Source boundary.** The construction is mapped to `rro-lab-execution/field_graph.py` (`Cell`, `Node`, `Engine`), `primitive_engine.py` (`CPU`, `PrimitiveEngine`), `native_engine.py` (`Native`, `NativeEngine`), `native_install.py` (`Block`, `Source`, `Installer`, `BitKernel`), `field_io.py` (conversion and returned-head scan), `field_decoder.py` (literal page selector), `field_service.py` and `service_native.py` (received session and original-port connection), `lab.py` (`Arena`, `Buffer`, and LAB growth). These source objects supply the representation and operational bindings used by the correspondence.
 
 **Continuation boundary.** The next execution may use this representation only after a fresh packed implementation has passed the alias, primitive, installer, LAB-prefix, session, and census falsifiers and after its measured $U$ supplies each owner at a common cut. It must still execute the unchanged fixed table/compiler/adapter/copier/B/LAB path on acquired positive N4, partial/cylinder, and authentic null N9 inputs, perform Arithmetic Print/End/Ack/Return, continue Reads on the same original port, and record the complete simultaneous ML.16 vector. Loading completion, a component output, a host-memory saving, or the existence of a finite $U$ is not C completion.
 
@@ -4123,13 +4089,12 @@ $$
               +(h_D+h_S+h_R+h_A+h_b).
 $$
 
-The original selected cases therefore require at least $W H_{cell}$ host
-bytes in this concrete backend. If this lower bound exceeds a proposed
-resident reservation, that reservation fails before a full run starts. If
-it exceeds both available memory and an explicitly backed paging supply,
-this backend has no such supported host plan. This is an allocation lower
-bound derived from retained source objects, not extrapolation from a small
-run's RSS or from a compressed code description.
+The original selected cases require at least $W H_{cell}$ allocated host
+bytes in this concrete backend. If all counted allocations must remain
+resident, the resident reservation must cover this lower bound. If the
+host permits paging, the comparison uses the total usable backing for
+those same allocations, including any admitted paging supply. The count
+follows from the distinct retained records of the concrete layout.
 
 *Proof.* Each constructor creates its own proxy, record, reference vector
 and bytearrays; each block additionally creates its reference view. None is
@@ -4147,7 +4112,7 @@ such a bound, but Proposition 26.19 cannot be used circularly to authorize that
 very run without its own backing. No sufficient $K$, host reservation, or
 complete ML.16 vector is supplied here. The original positive law, partial
 conditional law and authentic NullEvidence executions, their continued
-same-port Reads, C, D and independent acceptance remain outstanding.
+same-port Reads require a sufficient combined allocation and control construction.
 
 The pairing and byte round-trip facts are standard encodings. The concrete
 consumer correspondence and allocation bounds here are repo-derived ordinary
@@ -4358,7 +4323,7 @@ calls including the final same-port Read, the triples
 $(q,A,S(C_s)+S(C_c)+\max(w_sR_s,w_cR_c))$ are respectively
 
 $$
- (74,2176,420577),\quad(73,2115,418648),\quad(149,9676,2092449).
+ (75,2178,420736),\quad(74,2117,418807),\quad(150,9678,2092630).
 \tag{ML.41}
 $$
 
@@ -4367,12 +4332,13 @@ Thus their pointwise bounds are $S_I(K)$ plus the displayed last
 coordinate, subject to all the premises of Theorem 29.3.
 
 Proof. The acquisition words are the eight fixed initial probes,
-all selected original bit addresses in increasing index order, the five
-fixed final acquisition probes, and the final continued Read. Counting
-their actual lengths gives the first two coordinates. Evaluation makes
-no original-source call. Substitution into (ML.38)–(ML.40) gives the
-third coordinate. This statement prescribes the complete chronology;
-it does not replace evaluation by the acquisition subsequence. $\square$
+all selected original bit addresses in increasing index order and the five
+fixed final acquisition probes. Their totals are $(74,2176)$, $(73,2115)$
+and $(149,9676)$, as in Immutable Spine Proposition 10.1. The continued
+$\mathrm{Read}(LL)$ occurs after evaluation and adds one call and two
+operand bits to each row. Evaluation makes no original-source call.
+Substitution into (ML.38)–(ML.40) gives the third coordinate under the
+sufficient-reserve premise for the entire chronology. $\square$
 
 ## 30. A FIFO directory for distinct work-bit allocation
 
@@ -4649,9 +4615,9 @@ For this FS1 consumer, a complete primitive realization consists of an
 actual installed finite graph for Definition 31.1 or 31.3, a relation on
 its initialized and every internal busy/refusal state, and a
 source-respecting ML-F/ML-Q input/output binding. Its evaluator return
-must traverse the computed register-zero word, perform the actual
-Print/End/Ack/Return/Close phases, then enable the unchanged original
-port. Receipts remain by occurrence and slots by original index,
+must traverse the computed register-zero word and perform the actual
+Print, End, Ack and Return phases. Return enables Read on the original
+port. Close follows the final Read and terminates the session. Receipts remain by occurrence and slots by original index,
 including old-slot rereads, informative absences and partial reads.
 The binding must work on all of §31.2's domains, including source arrays
 outside the prior support. Law evaluation never supplies an actual reply.

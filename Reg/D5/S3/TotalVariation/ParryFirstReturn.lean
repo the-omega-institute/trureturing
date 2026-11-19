@@ -239,5 +239,108 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   options := #[] }
 
 end ReturnCylinders
+
+namespace RawWindows
+
+abbrev signature : Signature where
+  Params := Σ k : ℕ, Σ m : ℕ, Fin (m + 1) → Fin k
+  State p := RelationPath p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p r => matchesRawWindow r p.2.2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law F := ∀ {k : ℕ}
+    (_hk : 2 ≤ k)
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (μ : ProbabilityMeasure (RelationPath k))
+    (_hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (_hμ : (μ : Measure (RelationPath k)).map relationShift = μ)
+    (_hcylinder : ∀ (ell : ℤ) (m : ℕ) (v : Fin (m + 1) → Fin k),
+      (μ : Measure (RelationPath k))
+        {r | (fun i : Fin (m + 1) => ((e (false, r)).val (ell + i.val)).2) = v} =
+        ENNReal.ofReal (suffixLaw k (v 0)) * ∏ i : Fin m,
+          ENNReal.ofReal (suffixKernel k (v i.castSucc) (v i.succ)))
+    {m : ℕ} (word : Fin (m + 1) → Fin k) (_initial : (word 0).val = 0)
+    (_allowed : ∀ i : Fin m,
+      (word i.succ).val = 0 ∨ (word i.succ).val = (word i.castSucc).val + 1),
+    sectionMeasure (μ : Measure (RelationPath k))
+      {r | F.readout () ⟨k, m, word⟩ r = true} =
+        ENNReal.ofReal
+          (parryParameter k ^ m * suffixWeight k (parryParameter k) (word (Fin.last m)))
+
+private theorem positive : arena.Law actual := @zero_section_raw_window
+
+private theorem negative : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨e, μ, ν, hsign, hsuffix, hread, hcode, hμ, hν, hpush, hcyl, hsource⟩ :=
+    bilateral_parry_law 2 (by decide)
+  have bad := h (k := 2) (by decide) e μ hsuffix hμ hsource
+    (m := 0) (fun _ => 0) rfl Fin.elim0
+  have weight : suffixWeight 2 (parryParameter 2) 0 = 1 := by
+    simpa [suffixWeight, rootSum] using (parry_stationary_law 2 (by decide)).1.2.2
+  simp [rejected, realize, weight] at bad
+
+def evidence : Registration arena (type_of% (@zero_section_raw_window)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, rejected, negative⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, negative⟩, fun i => nomatch i⟩
+  dependence := by
+    intro _
+    refine ⟨⟨2, 1, fun _ => 0⟩, zeroPath, alternatingPath, ?_⟩
+    change matchesRawWindow (m := 1) zeroPath (fun _ => 0) ≠
+      matchesRawWindow (m := 1) alternatingPath (fun _ => 0)
+    decide
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@zero_section_raw_window) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.TotalVariation.ParryFirstReturn.zero_section_raw_window
+  realizationName := `Reg.D5.S3.TotalVariation.ParryFirstReturn.RawWindows.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p r => matchesRawWindow r p.2.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.TotalVariation.ParryFirstReturn
+    definition := none
+    coordinates := #[0, 7, 8]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn", "arg", "arg", "arg", "body", "fn", "arg"]
+      stateBinder := 11
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end RawWindows
+
 end
 end Reg.D5.S3.TotalVariation.ParryFirstReturn

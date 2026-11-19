@@ -8,13 +8,9 @@ abbreviated ML. It does not establish a completely backed native UJB session.
 In particular, its finite native prefix bound is not a sufficient reservation
 for one of the complete acquired-input evaluations.
 
-The definitions and proofs are `repo-derived` mathematical prose, without a
-fresh Lean check or a claim of originality for persistence or universality.
-The implementation source is the private experiment tree's
-`rro-lab-execution/native-prerequisite/immutable_spine.py`;
-`immutable-spine-results.json` contains its finite results. The implementation
-and ordinary mathematical exposition have one author under the repository
-reasoning and theory-volume skills; independent acceptance is not asserted.
+The word-spine translation and common-cut accounting are repository-derived.
+The result applies to the specified immutable word representation and paid
+native interface.
 
 ## 1. The actual domain and the object that is shared
 
@@ -211,8 +207,7 @@ is finite for every finite source graph; no hidden source or numeric answer
 is used during graph construction. The standalone native installer copies
 actual public descriptors and relocates their actual references by ML19–20's
 existing `Installer`. The original descriptors, forward links, installer
-seed, initialized reserve and targets are all retained. Installation of the
-complete fixed UJB candidate has not been executed by the finite checks here.
+seed, initialized reserve and targets are all retained. These installation counts concern the standalone graph.
 
 ## 3. Actual loading, computed return and the same-source interface
 
@@ -278,8 +273,7 @@ original terminal handler. A law value cannot fill the reply latch.
 return relations of Definition 3.3 and the old service's entire primitive
 prefix relation are realized at common cuts, the new evaluator preserves
 UJB17.1's conditional laws and the old service's actual stationary Read
-continuation on the unchanged source. Without those realized relations,
-Corollary 3.2 and a hosted acquisition replay do not establish this conclusion.
+continuation on the unchanged source. The statement is conditional on both realized cut relations.
 
 Proof. At entry, (IS.3) supplies the actual arithmetic input. The retained cache
 and receipt chains are disjoint from the write targets of Definition 2.2;
@@ -292,13 +286,10 @@ where its normalizer is positive. Zero evidence retains its designated output.
 Induction gives the conditional statement. Neither of its two cut relations
 is supplied by equality of numerical answers alone. $\square$
 
-The native IS2/service splice in (IS.3) and the full acknowledged-return
-relation are unresolved for this candidate. The finite native checks use a
-standalone actually initialized input chain and a computed printer; the
-74/73/149-call replays below exercise the existing hosted acquisition path.
-No check here performs a Read after a completed IS2 UJB evaluation. The
-candidate's allowed primitive set does not yet install the original source
-connection or the service's indirect-return bindings.
+The standalone construction supplies an initialized input chain and computed
+output. Composition with the original service requires the source connection
+at (IS.3), the indirect-return bindings and the full acknowledged-return
+relation.
 
 ## 4. A precise reserve census and the missing full-session terms
 
@@ -469,17 +460,15 @@ the separate mutable B component. No redundant geometry-only decoder can
 restore that missing head/control state. No minimum-memory or actual serial
 history recovery follows. $\square$
 
-## 6. Bound finite evidence and source correspondence
+## 6. Source correspondence and fixed image data
 
-The reproducible private check uses the unchanged original assembler for the
-original evaluator and checks its serialized bytes against
-`constructor/evaluator.stack.bin`. It then generates, but does not execute
-or fully install, the fixed translated evaluator. Its deterministic source
-identity is SHA256
+The static inventory below supplies the fixed translation parameters
+used in the subsequent layout calculations. Its source binding uses the
+original evaluator assembler and the serialized evaluator bytes. The
+supplied translated image SHA-256 is
 `7257d4ad4b5730860ad811d41c3057ea6accdf1c413dbf7af75be206a5b24595`.
-The resulting counts are:
 
-| Quantity | Actual generated count |
+| Quantity | Count |
 | --- | ---: |
 | Original ML-S source states | 22202 |
 | Translated source states | 10983 |
@@ -497,18 +486,6 @@ or a measured total speedup. The native count includes source-boundary entry
 vertices, saved-head paths, seed, loader and computed printer. The fixed
 installer seed is additional material as required by (IS.5).
 
-The small actual native installations use $K=2048$, with exact alias,
-addition and multiplication checks and addition of a 131-bit operand. Empty
-input with immediate true and false halt is checked at the actual terminal
-bit and its framed output. The
-checks inspect every tested native cut for immutable input backing and reject
-writes to published frame/token fields. The emitted result is checked
-externally against the independent small arithmetic result. Additional checks
-exercise an empty pool and a denied current grant at an unchanged native PC.
-The expected answer is used only by the checker, never by native execution.
-These finite cases neither prove the universal theorems nor establish any
-complete UJB consumer or composed-source reservation.
-
 The three source chronologies are exactly the preexisting acquisition schedules,
 including the final acquisition-only old-slot probe. They keep every real
 occurrence, all four replies, partial slots and original indexed cache values.
@@ -520,11 +497,9 @@ Their acquired arithmetic frames have the following unchanged identities:
 | positive-partial | 4 | 386 | 73 / 2115 | `1a4ae049cf81b1f434398aa05cb8eabcf4d8689f7873f8d75f9ae1e870c34764` |
 | null-nine-distinct-left | 9 | 839 | 149 / 9676 | `f5518d034eef5bd00c87ff9d43c5ca878ef9d012f47e04bedcbe45163ee3e29d` |
 
-Replaying this existing hosted acquisition is a source/data binding check.
-It does not claim that the candidate's computed-output/Read service cut has
-been reached. The exact remaining gap is (IS.3), its acknowledged return and
-actual continuation relation, and the prospective bounds/backing of (IS.7).
-A larger unbacked evaluator run is not a check of either missing premise.
+The acquired-frame data fix the original invocation schedules. The service
+realization of (IS.3) additionally needs a computed acknowledged return
+and the original-port continuation under the resource conditions of (IS.7).
 
 **Source and literature status.** The native realization, arithmetic consumer
 translation and census above are `repo-derived` interface results. ML10–11
@@ -2538,14 +2513,16 @@ unreduced words. If the actual mixture numerator is zero the old ratio
 absence bit remains zero. Otherwise the same positive denominator
 and cross-products give $Z(D\wedge C)/Z(D)$. No ratio at a null
 conditioning event is introduced. This termwise equality establishes
-the whole original domain, beyond the finite component checks.
+the whole original domain under the source hypotheses.
 $\square$
 
 ## 20. The changed image and its common-cut populations
 
-**Definition 20.1 (literal binding).** The complete changed production
-image is the fixed composition generated by ep.build, SharingGraph,
-prune, field_graph and compose. Its stack SHA-256 is
+**Image data 20.1.** The layout calculations in §§20–22 take as inputs
+the following inventories and field data for the composition generated
+by ep.build, SharingGraph, prune, field_graph and compose. Their binding
+to the complete production image requires the corresponding experiment
+sources. The supplied stack SHA-256 is
 `ff8ea0ad5ffe02bbc1bbc59240170407ef17702a0472f15f6be83b398c443afc`;
 its composed field fingerprint is
 `326af82c315be2e1fb83cf6df5bcffdbb75888543473a3d3261f7d3d4a8d8d30`.
@@ -2600,10 +2577,8 @@ The original source, connection, separately retained mutable B owner,
 and one subtraction for physically shared immutable wires retain
 exactly §§10, 13 and 17's identities at the common cuts. $\square$
 
-All earlier source proofs, installed censuses and finite checks retain
-their stated image pins. Their general lowering and counting identities
-are reused here; their old numerical image census or installation
-measurements do not certify this changed image.
+The lowering and counting identities also apply to the changed image.
+Its numerical census uses the inventories in Image data 20.1.
 
 ## 21. Complete-message demand after the local substitution
 
@@ -2617,7 +2592,7 @@ syntactic child multiplicities are
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | multiplicity | 11 | 3 | 2 | 12 | 1 | 6 | 6 | 1 | 5 | 2 | 6 |
 
-Use $\lambda_{\rm inject}=2N+2$ for these three message shapes.
+$\lambda_{\rm inject}=2N+2$ is the demand parameter for these three message shapes. The numerical substitutions also use the supplied site and child tables.
 Set its incident and odometer edges to zero. In the null-nine row
 also keep its eq edge zero, because the earlier degree return precedes
 both new tests. Other own sites, local multipliers and the previous
@@ -2721,106 +2696,22 @@ unpriced coordinates in (IS.41) remain, as do (IS.42)'s offers and
 ABI obligations. A smaller sufficient $K$ alone does not settle this
 consumer's worth criterion.
 
-## 23. Finite native evidence and the unresolved star return
+## 23. Native star-return boundary
 
-The reusable private experiment program is
-`rro-lab-execution/native-prerequisite/guarded_star_component.py`;
-`guarded-star-component-results.json` binds its source and data bytes.
-Its production-image construction is source-only. Its executing driver
-is a separate component: first read the actual original frame's prior
-and acquired cache, derive its partitions by the existing side/blocks
-routines, then call the unchanged-signature guarded inject. Further
-public component arguments exercise both orientations, repeated
-incidences, degree endpoints, overdegree, native conjunction conflict
-and a nonstar conjunction. Expected counts are read only by the
-checking observer after a returned word; they never supply a runtime
-word or a Read reply.
+The unchanged-signature guard preserves the indexed normalizer under the
+partition and lowering premises of §19. The complete resource comparison
+also requires an installed native execution with actual acquired partitions,
+the returned word, its End/Ack/Return sequence, the post-return Read on the
+original port and Close. Those events and all associated charges must belong
+to the same execution. The component construction covers a prefix of the
+production branch and stops at the general fallback entry. It therefore
+cannot certify the complete fallback or the complete consumer.
 
-The component compiles only the routine closure it uses. It retains
-exactly the production inject prefix through `inject.general`; that
-cut has a rejecting terminal in the component and the full original
-enumerator in production. A reached component cut would therefore
-be a stopped fallback-entry prefix, not completed fallback execution.
-No such cut was reached in the bounded result below.
-
-The component's distinct field fingerprint is
-`bd9abc7d8c0ffd455537a875c25af8b20beb848d4663adb79892535329f6969b`.
-It has 4824 stack states, 36683 field nodes, 133198 native code
-vertices, 406 reference registers and 57 bit registers. Its single
-actual installed owner used a supplied 140000-cell reserve. All
-273662 source blocks and their installed relocations were verified.
-Its actual retained native census was 919559 objects, 3653637
-reference slots and 10002845 bit fields at reference width 20,
-including source shadows, descriptors, the initializer and shared
-wire banks. These are component populations, not (IS.44)'s complete
-production-image populations.
-
-The one bounded batch returned exit 1 with these executed readings:
-
-| Reading | Result |
-| --- | ---: |
-| actual installation transitions | 23887951 |
-| actual subsequent native transitions | 10386962 |
-| aggregate native transitions, including installation | 34274913 |
-| original source calls / fresh acquisition receipt occurrences | 74 / 74 |
-| native transitions before the component request | 1187381 |
-| initialized reserve cells consumed at termination | 140000 |
-| completed native star returns | 0 |
-| reached general-entry prefixes | 0 |
-| measured batch seconds | 67.18984474998433 |
-| self peak resident bytes | 312410112 |
-| compiler-child peak resident bytes | 43417600 |
-| conservative sum of the two resident peaks | 355827712 |
-
-The acquired cache matched the original positive-full frame with
-SHA-256 `37dfee71eda5a8fbee3d373aab446982f15976785ef965ec2e4a1b6ea98c5402`.
-Its 74 authentic receipt occurrence identities were distinct. The
-source preparer, original provider, frontend, actual acquired-cache
-framing, compiler and input delivery were executed and retained;
-they were not numerical evidence oracles. Their work remains distinct
-from native transitions: the provider/source hosted operations and
-compiler/runtime costs are not priced by that transition count.
-The source census was 10064 objects, 11727 reference slots and
-9393 bit fields; the connection census was 4724 objects, 4882
-reference slots and 4574 bit fields. No mutable B instance was
-installed for this isolated component batch; its whole-session term
-in §§20–22 remains prospective and separately required.
-
-The batch terminated with a native fault, exhausted supplied pool and
-no completed case. It did not retain the terminal fault label or exact
-pending arithmetic location, so that location is unverified. Its 12
-planned cases remain uncompleted: acquired $r=s=1$ on each source,
-repeated-incidence $r=1,s=2$ and $r=2,s=1$ on each source,
-$s=27,28$ at $r=1$, $r=8,9$ at $s=1$, a conjunction conflict,
-and the nonstar-conjunction prefix. Receipt preservation after this
-failed component, computed End/Ack/Return, post-evaluation old-slot
-Read and Close were not checked. No full original evaluator or
-chronology ran. The allowance was not renewed and no reserve was
-expanded.
-
-Consequently the required actually computed native star return and
-strict native work-removal comparison remain unresolved. The new
-ordinary source/guard/arithmetic and all-cut construction in §19 is
-conditional; the finite batch does not certify its completed consumer.
-The next necessary evidence is a genuinely backed acquisition-to-star
-return prefix with all new guard/arithmetic costs charged, followed
-by the remaining planned cases and complete-session cost comparison
-under a separately authorized allowance. The failed fixed reserve
-does not prove that another faithful execution is impossible.
-
-The supplied star count identities and original degree/source
-identities are reused from [UJB15–17](RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)
-and the original supplier sources. The arithmetic and lowering
-contracts are those of [ML](RECURSIVE_RELATIONAL_OBSERVATION_MONOTONE_LAB_INDEXED_EXECUTION.md)
-and §§1–2; persistence and amortized-counting context remains the
-existing [Tarjan note](../../../Library/Computability/tarjan1985amortized.md).
-The existing NWMG literature correspondence keeps its original
-scope. The contribution here is the concrete changed consumer,
-ordinary native correspondence and changed-image accounting, with
-its explicit failed execution boundary. It is repo-derived ordinary
-mathematics and implementation, without a fresh Lean verification,
-world-originality claim, independent acceptance or completion of any
-of the six original outcomes. The continuing research goal remains
-unchanged and active.
+The supplied star count identities and original degree/source identities
+are reused from [UJB15–17](RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md).
+The arithmetic and lowering contracts are those of
+[ML](RECURSIVE_RELATIONAL_OBSERVATION_MONOTONE_LAB_INDEXED_EXECUTION.md)
+and §§1–2. Persistence and amortized-counting context is given in
+[Tarjan](../../../Library/Computability/tarjan1985amortized.md).
 
 ## 追加锚（本行以下为增补区）
