@@ -244,8 +244,6 @@ theorem physical_chart_coefficient_overlap_normalized (D : LatticeData) (hu : Is
     (slot : X → OriginalFourMActualChart.Puncture) (colour : X → Fin D.rank) (upperA : Bool)
     {x : ℝ} (hx : 0 < x) (hx₁ : x < 1) {w : ℂ} (hwA : w ^ 2 = parameter .A x) (hw : ‖w‖ < 1)
     (n : X ⊕ X → ℕ) (l : List (X ⊕ X))
-    (hf : ∀ c a, AnalyticAt ℂ (fun z : (X ⊕ X) → ℂ =>
-        physicalProduct D hu slot colour upperA x c a (z ∘ Sum.inl) (z ∘ Sum.inr)) 0)
     (a : ModTwoCharge D) :
     let jet := fun c a => spatialCoefficient n l (fun z : (X ⊕ X) → ℂ =>
       physicalProduct D hu slot colour upperA x c a (z ∘ Sum.inl) (z ∘ Sum.inr)) 0
@@ -253,7 +251,7 @@ theorem physical_chart_coefficient_overlap_normalized (D : LatticeData) (hu : Is
     (2 : ℂ) ^ (12 : ℕ) * ((x : ℂ) ^ (6 : ℕ))⁻¹ * jet .B a =
       ∑ b, fourierSign D a b * quadraticSign D b * jet .A b := by
   have h := physical_chart_coefficient_overlap D hu hD hr slot colour upperA hx hx₁ hwA hw
-    n l hf a
+    n l a
   dsimp only at h ⊢
   have hroot : (periodRoot .A x ^ (12 : ℕ))⁻¹ = (x : ℂ) ^ (6 : ℕ) := by
     change ((((rootZ x)⁻¹) ^ (12 : ℕ))⁻¹) = _

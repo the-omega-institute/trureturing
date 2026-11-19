@@ -32,5 +32,20 @@ internal sealed class OriginalFourMSewnProjectionDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("In charts A and B the Taylor coefficient of the full "
                     + "physical sector equals the convergent charge sum of the literal native "
-                    + "four-occupation readout at the stated nome."))), DescribeRole.Theorem))));
+                    + "four-occupation readout at the stated nome."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-radial-occupation-section-overlap"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.radial_occupation_section_overlap"),
+                H("Fourier overlap of the original radial occupation sections"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual D chart jet and the radial B occupation sum "
+                    + "are Fourier rows of the radial A occupation sums. The B row includes "
+                    + "the factor x to the power minus six."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-signed-diagonal-sewn-readout"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSewnProjection.signed_diagonal_sewn_readout"),
+                H("The signed diagonal occupation projection as a sewn readout"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original left lowering ranges, parity and factorials "
+                    + "combine into one readout on the signed diagonal."))), DescribeRole.Theorem))));
 }

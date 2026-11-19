@@ -335,4 +335,133 @@ theorem radial_sector_four_occupation (D : LatticeData) (hu : IsUnit D.G.det)
     coordinateJet_const_mul, colour, mul_assoc]
   rfl
 
+open LatticeDiscriminantTheta (gramReal)
+open OriginalFourMChargeCoset (fourierSign quadraticSign)
+open OriginalFourMProjectionModes (physical_chart_coefficient_overlap_normalized)
+
+private def radialOccupationSection (D : LatticeData) {X : Type*} (slot : X → Puncture)
+    (mode : X → Index D) (words : Puncture → List X) (c : Chart) (x : ℝ) (w : ℂ)
+    (a : ModTwoCharge D) : ℂ :=
+  let l := (punctureWords words).flatMap Prod.snd
+  let W := fun s => inverseLoweredWord D c x s ((words s).map mode)
+  let P := W (firstLeft c)
+  let Q := W (secondLeft c)
+  let R := W (firstRight c)
+  let S := W .S
+  ∑' q : {q : Charge D // reduceCharge D q = a},
+    (l.map fun i => relative c (slot i)).prod * (1 - w ^ 2) ^ (3 : ℕ) *
+      ∑ d ∈ P.support, ∑ g ∈ Q.support, ∑ r ∈ R.support, ∑ s ∈ S.support,
+        (P.coeff d * Q.coeff g * R.coeff r * S.coeff s) *
+          ((weight d : ℂ) * (weight g : ℂ) * (weight r : ℂ) * (weight s : ℂ)) *
+          sewnChargeTerm D d g r s q.val w
+
+/-- The rank-24 Fourier overlap on the actual A and B radial occupation
+sums and the actual D chart jet, with the B normalization `x⁻⁶`.
+Each radial nome equation refers to the original scalar nome. -/
+theorem radial_occupation_section_overlap (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24)
+    (a : ModTwoCharge D) (N : ℕ) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1) (upperA : Bool)
+    {wA wB : ℂ} (hwA : ‖wA‖ < 1) (hwB : ‖wB‖ < 1)
+    (hsA : wA ^ 2 = parameter .A x) (hsB : wB ^ 2 = parameter .B x)
+    (hNomeA : Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA .A x) = Q0 (wA ^ 2))
+    (hNomeB : Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA .B x) = Q0 (wB ^ 2))
+    {X : Type*} [Fintype X] [DecidableEq X]
+    (slot : X → Puncture) (mode : X → Index D) (bound : ∀ i, (mode i).2 ≤ N)
+    (words : Puncture → List X) (hslot : ∀ s j, j ∈ words s → slot j = s)
+    (hl : ((punctureWords words).flatMap Prod.snd).Nodup)
+    (hbox : ∀ c s d, d ∈ (inverseLoweredWord D c x s ((words s).map mode)).support →
+      ∀ i ∈ d.support, i.2 ≤ N) :
+    let A := radialOccupationSection D slot mode words .A x wA
+    let B := radialOccupationSection D slot mode words .B x wB
+    let l := (punctureWords words).flatMap Prod.snd
+    let d := spatialCoefficient (Sum.elim (fun i => (mode i).2) (fun _ => 1))
+      (l.map Sum.inr ++ l.map Sum.inl) (fun z =>
+        physicalProduct D hu slot (fun i => (mode i).1) upperA x .D a
+          (z ∘ Sum.inl) (z ∘ Sum.inr)) 0
+    (2 : ℂ) ^ (12 : ℕ) * d = ∑ b, fourierSign D a b * A b ∧
+    (2 : ℂ) ^ (12 : ℕ) * ((x : ℂ) ^ (6 : ℕ))⁻¹ * B a =
+      ∑ b, fourierSign D a b * quadraticSign D b * A b := by
+  dsimp only
+  let l := (punctureWords words).flatMap Prod.snd
+  let n : X ⊕ X → ℕ := Sum.elim (fun i => (mode i).2) (fun _ => 1)
+  let k := l.map Sum.inr ++ l.map Sum.inl
+  let J := fun c b =>
+    spatialCoefficient n k (fun z =>
+      physicalProduct D hu slot (fun i => (mode i).1) upperA x c b (z ∘ Sum.inl) (z ∘ Sum.inr)) 0
+  have hA (b : ModTwoCharge D) : radialOccupationSection D slot mode words .A x wA b = J .A b :=
+    (radial_sector_four_occupation D hu hD h24 b N hx hx₁ upperA .A (Or.inl rfl)
+      hwA hsA hNomeA slot mode bound words hslot hl (hbox .A)).tsum_eq
+  have hB : radialOccupationSection D slot mode words .B x wB a = J .B a :=
+    (radial_sector_four_occupation D hu hD h24 a N hx hx₁ upperA .B (Or.inr rfl)
+      hwB hsB hNomeB slot mode bound words hslot hl (hbox .B)).tsum_eq
+  simp only [hA, hB]
+  exact physical_chart_coefficient_overlap_normalized D hu hD h24
+    slot (fun i => (mode i).1) upperA hx hx₁ hsA hwA n k a
+
+open LatticeHalfFockChargedCoefficients (omega)
+open OriginalFourMChargeCoset (oscillatorLower)
+open OriginalFourMProjectionModes (project_occupations_on_signed_diagonal)
+open private projectOccupations from
+  D5.S3.VertexAlgebra.TwistedGround.OriginalFourMChargeNormal
+
+private def modesBounded (D : LatticeData) (N : ℕ) (P : Oscillator D) : Prop :=
+  ∀ d ∈ P.support, ∀ i ∈ d.support, i.2 ≤ N
+
+private theorem sewnReadout_four (D : LatticeData) (q : Charge D) (N : ℕ) (w : ℂ)
+    (P Q R S : Oscillator D) (hP : modesBounded D N P) (hQ : modesBounded D N Q)
+    (hR : modesBounded D N R) (hS : modesBounded D N S) :
+    sewnReadout D q N w (boxedOscillator D N false false P * boxedOscillator D N false true Q *
+      boxedOscillator D N true false R * boxedOscillator D N true true S) =
+      ∑ d ∈ P.support, ∑ g ∈ Q.support, ∑ r ∈ R.support, ∑ s ∈ S.support,
+        (P.coeff d * Q.coeff g * R.coeff r * S.coeff s) *
+          ((weight d : ℂ) * (weight g : ℂ) * (weight r : ℂ) * (weight s : ℂ)) *
+          sewnChargeTerm D d g r s q w := by
+  classical
+  let F := boxedOscillator D N false false P * boxedOscillator D N false true Q *
+    boxedOscillator D N true false R * boxedOscillator D N true true S
+  change sewnReadout D q N w F = _
+  calc
+    _ = ∑ d ∈ F.support, F.coeff d * ((weight d : ℂ) *
+        ((chargeScalar D q * chargeScalar D (-q)) * w ^ (2 * (chargeEnergy D q).toNat) *
+          sewn D q (externalLabel D N) d w)) := by
+      conv_lhs => rw [F.as_sum]
+      simp only [map_sum, sewnReadout_monomial]
+    _ = _ := boxed_four_sewn_projection D q N w P Q R S hP hQ hR hS
+
+private def loweringSum (D : LatticeData) (K : ℕ) (P : Oscillator D) : Oscillator D :=
+  ∑ j ∈ Finset.range K,
+    ((-1 : ℂ) ^ j / (j.factorial : ℂ)) • (oscillatorLower D ^ j) P
+
+/-- The original signed-diagonal projection of a sewn charge term is one
+readout of the negative-lowered left words and the original right inputs. -/
+theorem signed_diagonal_sewn_readout (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (N H K E : ℕ) (t dR dS : ℤ) (w : ℂ) (P Q R S : Oscillator D)
+    (hP : P.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (H : ℤ) - 3))
+    (hQ : Q.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (K : ℤ) - 3))
+    (hR : R.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) dR)
+    (hS : S.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) dS)
+    (ht : 2 * (t - (E : ℤ) + 1) = dR - dS)
+    (hPb : ∀ j ∈ Finset.range (H - 1), modesBounded D N ((oscillatorLower D ^ j) P))
+    (hQb : ∀ i ∈ Finset.range (K - 1), modesBounded D N ((oscillatorLower D ^ i) Q))
+    (hRb : modesBounded D N R) (hSb : modesBounded D N S) :
+    (-1 : ℂ) ^ (K : ℤ) * sewnReadout D q N w
+      (boxedOscillator D N false false (loweringSum D (H - 1) P) *
+        boxedOscillator D N false true (loweringSum D (K - 1) Q) *
+        boxedOscillator D N true false R * boxedOscillator D N true true S) =
+      projectOccupations D H K E t P Q R S (fun d g r s => sewnChargeTerm D d g r s q w) := by
+  classical
+  rw [project_occupations_on_signed_diagonal D hu H K E t dR dS P Q R S hP hQ hR hS ht]
+  congr 1
+  simp only [loweringSum, map_sum, map_smul, Finset.mul_sum, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro i hi
+  apply Finset.sum_congr rfl
+  intro j hj
+  simp only [smul_mul_assoc, mul_smul_comm, map_smul, smul_eq_mul]
+  rw [sewnReadout_four D q N w _ _ _ _ (hPb j hj) (hQb i hi) hRb hSb]
+  simp only [Finset.mul_sum]
+  refine Finset.sum_congr rfl fun d _ => Finset.sum_congr rfl fun g _ =>
+    Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
+  ring
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSewnProjection
