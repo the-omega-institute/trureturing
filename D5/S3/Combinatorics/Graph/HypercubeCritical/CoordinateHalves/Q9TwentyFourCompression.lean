@@ -14,7 +14,8 @@ open BalancedCriticalSpectrum (Q IsBalanced directionEdges direction_edge_count)
 open BalancedCubeLowerBound (coordinateSlice)
 open GirthSliceCounting (degreeTwo degreeThree)
 open private paritySide parity_bipartite parity_union parts_card sum_degrees_parts
-  coordinate_slice_degree_cases coordinate_slice_low_independent low_slice_card_eq_q balanced_subset from
+  coordinate_slice_degree_cases coordinate_slice_low_independent low_slice_card_eq_q
+  balanced_subset from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 
 open private sum_high_neighbors sum_degree_parts neighbor_parts_card from
@@ -204,10 +205,135 @@ private theorem suppress_triangle_free (hp : G.IsBipartiteWith (L : Set V) (R : 
   · exact mainRight a b c
   · exact compressed_triangle_free hp.symm hg _ _ _ a b c
 
+open private one_three_cross_impossible three_walk_endpoint_injective from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
+
+private theorem no_square_through_direct_edge
+    (hp : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hg : (8 : ℕ∞) ≤ G.egirth) (x : SideHigh G L) (y : SideHigh G R)
+    (z t : SideHigh G L ⊕ SideHigh G R) (hxy : G.Adj x.val y.val)
+    (hyz : (suppress G L R).Adj (.inr y) z) (hzt : (suppress G L R).Adj z t)
+    (htx : (suppress G L R).Adj t (.inl x))
+    (hxz : Sum.inl x ≠ z) (hyt : Sum.inr y ≠ t) : False := by
+  obtain ⟨hxL, hx3⟩ := mem_filter.mp x.property
+  obtain ⟨hyR, hy3⟩ := mem_filter.mp y.property
+  cases z with
+  | inl z =>
+    have hxz' : x ≠ z := fun h => hxz (congrArg Sum.inl h)
+    cases t with
+    | inl t =>
+      exact (high_neighbors_compressed_separated hp.symm hg hyR hy3 hxy.symm hyz hxz').2
+        t (show (compressed G L).Adj t x from htx).symm hzt
+    | inr t =>
+      exact one_three_cross_impossible hp hg hxL hxL hxy
+        (show G.Adj t.val x.val from htx).symm
+        (show G.Adj z.val t.val from hzt).symm (show G.Adj y.val z.val from hyz).symm
+        (fun h => hxz' (Subtype.ext h))
+        (fun h => hyt (congrArg Sum.inr (Subtype.ext h.symm))) ⟨rfl, rfl⟩
+  | inr z =>
+    cases t with
+    | inr t =>
+      exact (high_neighbors_compressed_separated hp hg hxL hx3 hxy
+        (show G.Adj t.val x.val from htx).symm (fun h => hyt (congrArg Sum.inr h))).2
+        z hyz (show (compressed G R).Adj z t from hzt).symm
+    | inl t =>
+      obtain ⟨hyz', m, hm2, hym, hzm⟩ := show (compressed G R).Adj y z from hyz
+      obtain ⟨htx', n, hn2, htn, hxn⟩ := show (compressed G L).Adj t x from htx
+      have he := three_walk_endpoint_injective hp hg hxL hxL
+        hxy hym hzm.symm hxn htn.symm
+        (show G.Adj z.val t.val from hzt).symm
+        (by intro h; have := h ▸ hx3; omega)
+        (fun h => hyz' (Subtype.ext h))
+        (fun h => htx' (Subtype.ext h.symm))
+        (by intro h; have hz3 := (mem_filter.mp z.property).2; rw [← h] at hz3; omega)
+        ⟨rfl, rfl⟩
+      have := he.2.1 ▸ hy3
+      omega
+
 end SuppressVertices
 
+/-- In a triangle-free cubic graph on twelve vertices, disconnection forces
+every edge to lie on a four-cycle. -/
+private theorem connected_of_edge_without_square {W : Type*} [Fintype W] [DecidableEq W]
+    {J : SimpleGraph W} [DecidableRel J.Adj] (hcard : Fintype.card W = 12)
+    (hr : J.IsRegularOfDegree 3)
+    (htri : ∀ u v w, J.Adj u v → J.Adj v w → J.Adj w u → False)
+    {a b : W} (hab : J.Adj a b)
+    (hno : ∀ c d, J.Adj b c → J.Adj c d → J.Adj d a → a ≠ c → b ≠ d → False) :
+    J.Connected := by
+  classical
+  have hdegree (x : W) : (J.neighborFinset x).card = 3 :=
+    (J.card_neighborFinset_eq_degree x).trans (hr x)
+  have hdisjoint {x y : W} (hxy : J.Adj x y) :
+      Disjoint (J.neighborFinset x) (J.neighborFinset y) := by
+    apply Finset.disjoint_left.mpr
+    intro z hx hy
+    exact htri _ _ _ hxy ((J.mem_neighborFinset _ _).mp hy)
+      ((J.mem_neighborFinset _ _).mp hx).symm
+  refine J.connected_iff_exists_forall_reachable.mpr ⟨a, ?_⟩
+  intro w
+  by_contra hnot
+  let D := (univ : Finset W).filter (J.Reachable a)
+  let A := J.neighborFinset a ∪ J.neighborFinset b
+  have hA : A ⊆ D := by
+    intro z hz
+    refine mem_filter.mpr ⟨mem_univ _, ?_⟩
+    rcases mem_union.mp hz with hz | hz
+    · exact ((J.mem_neighborFinset _ _).mp hz).reachable
+    · exact hab.reachable.trans ((J.mem_neighborFinset _ _).mp hz).reachable
+  have hAc : A.card = 6 := by
+    rw [show A = _ by rfl, card_union_of_disjoint (hdisjoint hab), hdegree, hdegree]
+  obtain ⟨w', hw'⟩ : (J.neighborFinset w).Nonempty := by
+    apply Finset.card_pos.mp
+    rw [hdegree]
+    decide
+  have hww' := (J.mem_neighborFinset _ _).mp hw'
+  let B := J.neighborFinset w ∪ J.neighborFinset w'
+  have hB : B ⊆ (univ : Finset W) \ D := by
+    intro z hz
+    refine mem_sdiff.mpr ⟨mem_univ _, ?_⟩
+    intro h
+    have haz := (mem_filter.mp h).2
+    apply hnot
+    rcases mem_union.mp hz with hz | hz
+    · exact haz.trans ((J.mem_neighborFinset _ _).mp hz).reachable.symm
+    · exact haz.trans (((J.mem_neighborFinset _ _).mp hz).reachable.symm.trans hww'.reachable.symm)
+  have hBc : B.card = 6 := by
+    rw [show B = _ by rfl, card_union_of_disjoint (hdisjoint hww'), hdegree, hdegree]
+  have hd := card_le_card hB
+  rw [hBc] at hd
+  have hDA : A = D := by
+    apply eq_of_subset_of_card_le hA
+    have hcount := card_sdiff_add_card_eq_card (subset_univ D)
+    rw [card_univ, hcard] at hcount
+    omega
+  have hother (x y : W) : ∃ z ∈ J.neighborFinset x, z ≠ y := by
+    by_contra! h
+    have hs : J.neighborFinset x ⊆ {y} := fun z hz => mem_singleton.mpr (h z hz)
+    have hc := card_le_card hs
+    rw [hdegree, card_singleton] at hc
+    omega
+  obtain ⟨c, hcb, hca⟩ := hother b a
+  obtain ⟨d, hda, hdb⟩ := hother a b
+  have hbc := (J.mem_neighborFinset _ _).mp hcb
+  have hcd : J.Adj c d := by
+    have hs : J.neighborFinset c ⊆ J.neighborFinset a := by
+      intro z hz
+      have hcz := (J.mem_neighborFinset _ _).mp hz
+      have hdz : z ∈ D := mem_filter.mpr ⟨mem_univ _,
+        hab.reachable.trans (hbc.reachable.trans hcz.reachable)⟩
+      rw [← hDA] at hdz
+      rcases mem_union.mp hdz with hz | hz
+      · exact hz
+      · exact (Finset.disjoint_left.mp (hdisjoint hbc) hz
+          (show z ∈ J.neighborFinset c from (J.mem_neighborFinset _ _).mpr hcz)).elim
+    have he : J.neighborFinset c = J.neighborFinset a :=
+      eq_of_subset_of_card_le hs (by rw [hdegree, hdegree])
+    exact (J.mem_neighborFinset _ _).mp (he.symm ▸ hda)
+  exact hno c d hbc hcd ((J.mem_neighborFinset _ _).mp hda).symm hca.symm hdb.symm
+
 /-- Suppressing all twelve degree-two vertices in a twenty-four-point half
-gives a triangle-free cubic graph on twelve vertices. -/
+gives a connected triangle-free cubic graph on twelve vertices. -/
 theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 24) :
@@ -218,7 +344,7 @@ theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
     let J := suppress G L R
     Fintype.card (SideHigh G L ⊕ SideHigh G R) = 12 ∧
       J.IsRegularOfDegree 3 ∧
-      (∀ x y z, J.Adj x y → J.Adj y z → J.Adj z x → False) := by
+      (∀ x y z, J.Adj x y → J.Adj y z → J.Adj z x → False) ∧ J.Connected := by
   let S := coordinateSlice C b
   let G := (hypercube 9).induce (S : Set (Q 9))
   let L := paritySide S false
@@ -226,13 +352,30 @@ theorem half_suppression {C : Finset (Q 9)} (hC : C.card = 72)
   have hp : G.IsBipartiteWith (L : Set _) (R : Set _) := parity_bipartite S
   have hg : (8 : ℕ∞) ≤ G.egirth :=
     BalancedCubeGirth.eight_le_egirth S (balanced_subset hb (filter_subset _ _))
-  obtain ⟨_, hlow, _, hhigh, _⟩ := half_degree_split hC hr hb b hs
+  obtain ⟨_, hlow, hdirect, hhigh, _⟩ := half_degree_split hC hr hb b hs
   have hdeg (v : (S : Set (Q 9))) : G.degree v = 2 ∨ G.degree v = 3 :=
     coordinate_slice_degree_cases v.property hr
   have hc : Fintype.card (SideHigh G L ⊕ SideHigh G R) = 12 := by
     rw [Fintype.card_sum, Fintype.card_coe, Fintype.card_coe]
     exact hhigh
-  exact ⟨hc, suppress_regular hp hdeg (hlow _ _) hg, suppress_triangle_free hp hg⟩
+  have hj := suppress_regular hp hdeg (hlow _ _) hg
+  have ht := suppress_triangle_free hp hg
+  have he : ∃ y ∈ degreeThree G R, 0 < (degreeThree G (G.neighborFinset y)).card := by
+    by_contra! h
+    have hz : (∑ y ∈ degreeThree G R, (degreeThree G (G.neighborFinset y)).card) = 0 := by
+      exact Finset.sum_eq_zero (fun y hy => Nat.eq_zero_of_le_zero (h y hy))
+    have hh : (0 : Nat) = 6 := hz.symm.trans hdirect
+    omega
+  obtain ⟨y, hy, hpY⟩ := he
+  obtain ⟨x, hx⟩ := Finset.card_pos.mp hpY
+  obtain ⟨hxN, hx3⟩ := Finset.mem_filter.mp hx
+  have hxy := (G.mem_neighborFinset _ _).mp hxN
+  have hxL : x ∈ L := hp.mem_of_mem_adj' (mem_filter.mp hy).1 hxy.symm
+  let a : SideHigh G L := ⟨x, mem_filter.mpr ⟨hxL, hx3⟩⟩
+  let b' : SideHigh G R := ⟨y, hy⟩
+  have hab : (suppress G L R).Adj (.inl a) (.inr b') := hxy.symm
+  exact ⟨hc, hj, ht, connected_of_edge_without_square hc hj ht hab
+    (fun c d => no_square_through_direct_edge hp hg a b' c d hxy.symm)⟩
 
 #print axioms half_suppression
 
