@@ -2,7 +2,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.Perm
 import Mathlib.Tactic.FinCases
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9OrbitCertificateProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9OrbitCertificateProbe
 
 /-! Intersection matrices for two partitions of the nine coordinates into triples. -/
 

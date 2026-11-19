@@ -1,5 +1,5 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoThinSlice
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9GrayPlacementNormalForm
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GrayPlacementNormalForm
 import Batteries.Tactic.OpenPrivate
 
 /-! Translate the root to zero and choose axes for a cubical embedding of

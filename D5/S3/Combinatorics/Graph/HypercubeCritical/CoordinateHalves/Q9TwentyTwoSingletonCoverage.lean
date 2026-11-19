@@ -7,7 +7,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonCoverage
 
 open private adjacent adjacent_iff moves from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
 open private attachment solid hollow middleOptions valid root cycleVertices firstPointAxes
   highPlacements highCandidates labels hollowEdges fillMiddles candidates reconstructionSize checked
   from D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements

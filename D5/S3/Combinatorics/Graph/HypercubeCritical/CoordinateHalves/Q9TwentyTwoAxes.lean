@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 
 /-! Relabel the cut, the three solid root axes, and the at most two remaining
@@ -11,11 +11,11 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyT
 open BalancedCriticalSpectrum (Q)
 open Q9GrayPlacementNormalForm (normalize origin)
 open private normalize_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
 open private normalize_center from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9GrayPlacementNormalForm
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GrayPlacementNormalForm
 open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
 open private firstPointAxes from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 local notation "flip" => BalancedCriticalSpectrum.flip

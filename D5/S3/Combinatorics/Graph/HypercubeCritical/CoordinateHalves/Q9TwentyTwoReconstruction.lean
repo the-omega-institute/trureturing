@@ -19,7 +19,7 @@ open private indicator from
 open private flip_direction_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubeLayerDisjointness
 open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
 open Q9TwentyTwoSingletonCoverage (candidate_size_ne_fifty)
 open private candidates neighborMask reconstructionSize from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements

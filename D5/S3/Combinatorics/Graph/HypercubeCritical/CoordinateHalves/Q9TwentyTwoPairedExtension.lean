@@ -19,7 +19,7 @@ open private flip_direction_injective from
 open private selected_neighbor_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
 open private toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
 open private same_cut from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoReconstruction
 open private hasExcessDegree reconstructedMask from

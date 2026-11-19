@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
 
 /-! Normalize the two subdivided paths and the matched edge at a paired root. -/
 
@@ -12,9 +12,9 @@ open Q9GrayPlacementNormalForm (normalize origin)
 open private adjacent_exists_flip flip_comm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 open private normalize_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
 open private normalize_center from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9GrayPlacementNormalForm
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9GrayPlacementNormalForm
 local notation "flip" => BalancedCriticalSpectrum.flip
 
 private theorem seed_axes (a b e c d : Fin 9)

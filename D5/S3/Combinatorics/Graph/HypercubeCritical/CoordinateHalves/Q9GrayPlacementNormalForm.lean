@@ -1,5 +1,5 @@
 import D5.S3.Combinatorics.Graph.Hypercube
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TriplePartitionOrbits
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TriplePartitionOrbits
 
 /-! Simultaneous normalization of two Gray placements by a single cube symmetry. -/
 

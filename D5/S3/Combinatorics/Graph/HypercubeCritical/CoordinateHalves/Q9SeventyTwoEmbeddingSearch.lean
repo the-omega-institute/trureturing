@@ -1,5 +1,5 @@
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbedding
-import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9OrbitCertificateProbe
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbedding
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9OrbitCertificateProbe
 import Batteries.Tactic.OpenPrivate
 
 /-! Exhaustive extension of the five root patterns. A prefix survives if

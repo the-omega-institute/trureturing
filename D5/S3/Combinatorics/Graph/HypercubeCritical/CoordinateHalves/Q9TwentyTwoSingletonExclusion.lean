@@ -1,7 +1,7 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoAxes
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoReconstruction
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonLabels
-import D5.S3.Combinatorics.Graph.HypercubeCritical.HuangBalancedSymmetry
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangBalancedSymmetry
 
 /-! Exclude the singleton-parity case by normalizing its actual cubical
 embedding and using unsigned opposite-half reconstruction. -/
@@ -27,7 +27,7 @@ open private coordinate_slice_low_independent coordinate_slice_degree_cases bala
 open HuangBalancedSymmetry (cube_action_regular_balanced)
 open private adjacent adjacent_iff hasTwoSetBits hasTwoSetBits_of_two_toggles
   moves toggle two_toggles_mem_moves from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
 open private attachment solid hollow labels hollowEdges middleOptions valid root firstPointAxes from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 open private cycleIndex separated from

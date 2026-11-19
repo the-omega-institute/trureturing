@@ -6,7 +6,7 @@
    utility: none
    digest: Excludes a 22-vertex coordinate half of an order-72 Huang-balanced cubic support. -/
 
-import D5.S3.Combinatorics.Graph.HypercubeCritical.HuangBalancedSymmetry
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangBalancedSymmetry
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoPairedAxes
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoPairedExtension
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoPairedMatching
@@ -36,7 +36,7 @@ open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open HuangBalancedSymmetry (cube_action_regular_balanced)
 open private adjacent adjacent_iff hasTwoSetBits moves toggle from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoEmbeddingSearch
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SeventyTwoEmbeddingSearch
 open private labels middleOptions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 open private separated from
