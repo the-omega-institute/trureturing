@@ -73,13 +73,9 @@ python3 <skill-directory>/scripts/check.py \
 通过现役准入与冻结前评审后，复用仓内 writer；不要手写状态片或建立第二份冻结账本：
 
 ```sh
-# 内容不存在对应理论卷
-make deposit-uncovered BASE="$CONTRIBUTION_BASE" GID=D5/My/Module.theorem_name
-
-# 内容已有对应理论卷和 atom
-make deposit BASE="$CONTRIBUTION_BASE" ATOM_ID=<atom-id> GID=D5/My/Module.theorem_name
+make deposit BASE="$CONTRIBUTION_BASE" GID=D5/My/Module.theorem_name
 ```
 
-GID 使用 slash 路径与现有 selector；dotted module name 只用于 Lean targets。既有冻结声明用 `make cover` 复用，不重复新增或首冻。上述 writer 自己运行定向编译、头部/utility 准入、Scribe 生成和 ledger 对齐；同样继承冷构建环境。写后检查源码、生成 Markdown 和状态片 diff，修正问题后重跑受影响检查。
+主仓 writer 按 GID 核验目标模块、生成 Scribe 并写入冻结状态。GID 使用 slash 路径与声明 selector，Lean targets 使用 dotted module name。检查源码、生成 Markdown 和状态片的 diff。若有对应 atom，等声明合入主仓 `dev` 后，在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)的检出目录运行 `make cover ATOM_ID="$atom" GID="$gid"`。复用已冻结声明时可直接在理论源仓执行这一步。
 
 用 `git push origin HEAD` 提交到开发者自己的 fork，并向原仓库的 `dev` 提 PR，避免工作分支跟踪 `upstream/dev` 时默认推错 remote。PR 写清数学交付、冻结/覆盖变化、定向验证范围和未完成审计 issue。先看 `make gate-plan BASE="$CONTRIBUTION_BASE"`；不要为本地验证启动全库 gate/build。required CI 由维护端承担完整准入范围。等待准确 head 的 required checks、MERGED 和合并后的首次 dev push 核验后才能称交付完成。发布、合并与消息发送仍受用户授权范围约束。

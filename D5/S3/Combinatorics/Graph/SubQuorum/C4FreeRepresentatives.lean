@@ -6,6 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim; result=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.result; claim=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim
    digest: Pappus dissociation refutation of the cubic C4-free half-order bound. -/
 
+import D5.S3.Combinatorics.Graph.StarForming.Comparison
+import D5.S3.Combinatorics.Graph.StarForming.DegreeCapacity
 import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Int.CardIntervalMod

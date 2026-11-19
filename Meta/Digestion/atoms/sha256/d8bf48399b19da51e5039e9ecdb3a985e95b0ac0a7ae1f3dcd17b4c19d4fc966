@@ -1,6 +1,0 @@
-**约定 32.13（来源、文献与证明边界）。** 本节是 `repo-derived` 的普通数学推导。原取得供应结果已给强制中点实际历史、全来源读数饱和、取得的预末前缀及实际整周期商；新增桥梁是引理 32.4 的全剩余原始词重放对状态共享的排除，以及随之而来的完整状态普查和有限控制表实现。定理 32.6 的下界覆盖定义 32.1 的全部竞争控制器；定理 32.7 提供实际来源、隐藏装置和原目标的逐状态对应，不把构造计数单独称作最小值。
-
-有限状态输入、输出与终止的背景见 J. J. M. Rutten，*Universal coalgebra: a theory of systems*，CWI CS-R9652，1996，[原报告](https://ir.cwi.nl/pub/4802/4802D.pdf)，第 3 节的系统与 transducer 表示。输出反馈与实现关系的背景见 Majumdar、Ozay、Schmuck，*On Abstraction-Based Controller Design With Output Feedback*，[arXiv:2002.02687v1](https://arxiv.org/abs/2002.02687v1)，及 Reissig、Weber、Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/abs/1503.03715v3)。这些背景是 `literature-attested`，不承担本来源的 $K_{\min}$ 或含 Stop 的期限公式。本节不提出文献原创主张。
-
-以上只证明所列原子 $c,u,v$、全原来源和精确原始读取合同下的纸面结论。它不覆盖带来源相关应答、免费时钟、额外档案、额外读取或改变输出目标的合同，不证明全局物理可实现性，也不声称新增结论已有 Lean kernel 核验。有限例算或有限控制表枚举仅可检验其相应有限参数，不能替代这里对全部 $d$ 和全部竞争控制器的普通证明。
-

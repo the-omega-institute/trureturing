@@ -44,8 +44,11 @@ parameters equal seven while the distinct star-forming parameter equals eight. -
 theorem heawood_parameters : beta HeawoodParameters.graph 2 = 7 ∧
     psiSq HeawoodParameters.graph = 7 ∧ Omega HeawoodParameters.graph = 7 ∧
     SF HeawoodParameters.graph 2 = 8 := by
+  have regular : ∀ v, HeawoodParameters.graph.degree v = 3 := by
+    simpa only [SimpleGraph.degree, SimpleGraph.neighborFinset_eq_filter] using
+      HeawoodParameters.graph_class.2
   have hp := threshold_parameters HeawoodParameters.graph heawoodColor heawoodColor_valid
-    heawood_free 3 7 (by decide) HeawoodParameters.graph_class.2 heawoodColor_sides (by decide)
+    heawood_free 3 7 (by decide) regular heawoodColor_sides (by decide)
   exact ⟨hp.1,hp.2.1,hp.2.2,HeawoodParameters.sf_graph⟩
 
 /-- Binary-label Heawood graph used by the written mixed-support example.
@@ -61,7 +64,8 @@ instance : DecidableRel binaryHeawood.Adj := fun v w => inferInstanceAs (Decidab
 
 private theorem binaryColor_valid : ∀ v w, binaryHeawood.Adj v w →
     heawoodColor v ≠ heawoodColor w := by decide +kernel
-private theorem binary_regular : ∀ v, DegreeCapacity.degree binaryHeawood v = 3 := by
+private theorem binary_regular : ∀ v, binaryHeawood.degree v = 3 := by
+  simp only [SimpleGraph.degree, SimpleGraph.neighborFinset_eq_filter]
   decide +kernel
 private theorem binary_free : NoFourCycle binaryHeawood.Adj := by
   apply noFour_of_common_cap

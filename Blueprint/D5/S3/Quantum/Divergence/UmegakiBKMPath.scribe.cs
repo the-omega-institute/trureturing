@@ -7,6 +7,12 @@ internal sealed class UmegakiBKMPathDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual noncommuting matrix relative entropy is the weighted integral of its BKM resolvent form.",
         H("Umegaki divergence along a positive matrix segment"), Blocks(
+            Describe.Lean(DescribeId.Create("reindex-logderiv"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.reindex_logDeriv"),
+                H("Reindexing the logarithmic derivative"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An equivalence between two finite carriers relabels both matrix indices as a real star-algebra equivalence. Applying it to logDeriv(Z,H) gives the logarithmic derivative with both Z and H relabeled, for arbitrary complex matrices Z and H. The continuous linear equivalence passes through the Bochner integral, and relabeling preserves each inverse and product in the resolvent integrand."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("common-positive-floor"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.common_floor"),
                 H("A common positive spectral floor"),
@@ -27,6 +33,12 @@ internal sealed class UmegakiBKMPathDocument : IScribeDocumentDefinition
                     Paragraph(Text("The original affine-log derivative in AudenaertBinaryHolevoBound and the original trace-entropy derivative in TraceEntropyCalculus are applied directly. The resolvent representation and logarithmic directional derivative are standard ingredients of Audenaert's Quantum Skew Divergence. This assembly is repository-derived and makes no literature-priority claim.")),
                     Paragraph(Text("Positive spectral floors for A and B give a common positive floor c along the closed segment. The norm of the two-resolvent sandwich is bounded by the integrable function norm(H)/(c+u) squared. Shifted inverse differentiability gives pointwise continuity without choosing eigenvectors along the path; dominated convergence then gives continuity of the matrix-valued logDeriv and of its real trace pairing. The first derivative of F(t)=Re Tr(Z(t)log Z(t)) is G(t)=Re Tr(H(log Z(t)+I)), and G has derivative Q(t)=Re Tr(H logDeriv(Z(t),H)). Scalar FTC gives the integral of G, and integration by parts with weight 1-t gives the stated identity. Endpoint continuity is proved on the closed interval; two-sided derivatives are used only in its interior.")),
                     Paragraph(Text("For equal traces the correction Re Tr(A-B) is zero by linearity, in particular for normalized density states. Positive definiteness is essential to this delivered scope; no singular endpoint limit is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("weighted-bkm-integrable"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.weighted_bkm_integrable"),
+                H("Integrability of the weighted BKM path"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For positive definite complex A and B on Fin n, the real trace of (A-B) times the logarithmic derivative at B+t(A-B) in direction A-B, weighted by 1-t, is interval integrable on [0,1]. The faithful conditional proof transports this integrability to arbitrary finite carriers for the joint and marginal paths."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("conditional-block-bkm-path"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiBKMPath.conditional_relativeEntropy_eq_integral_bkm"),

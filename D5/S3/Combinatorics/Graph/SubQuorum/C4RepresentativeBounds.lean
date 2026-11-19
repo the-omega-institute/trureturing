@@ -1,17 +1,18 @@
 /- GID: D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
    utility: none
    digest: Actual representative maxima, C4-free thresholds and support rigidity. -/
 
-import D5.S3.Combinatorics.Graph.StarForming.RegularCompensation
 import D5.S3.Combinatorics.Graph.SubQuorum.DissociationColoring
+import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Finset.Card
+import Mathlib.Tactic.Linarith
 
-/-! General representative proofs from Sahbi source revision
+/-! General representative proofs from the subquorum-colorings source revision
 48728b42d39ab3de5de251c61da5a404ec418a69, Apache-2.0.
 All declarations concern arbitrary graph predicates, exact finite suprema or
 symbolic bounds and their graph-level derivation. No finite instance table,
@@ -21,7 +22,6 @@ The Pappus and Heawood applications use these bounds at their respective graph o
 
 namespace D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
 open StarFormingDissociationRefutation
-open StarForming
 open scoped BigOperators
 
 def NoFourCycle {Vertex : Type} (adjacency : Vertex → Vertex → Prop) : Prop :=
@@ -107,30 +107,6 @@ private theorem packing_forces_many_unused (capacity unused excess : Int)
     simp [Int.mul_add, Int.mul_comm]
   omega
 
-private theorem positive_excess_size_threshold (capacity left right matching excess order : Int)
-    (hcapacity : 0 < capacity) (hleft : 0 ≤ left) (hright : 0 ≤ right)
-    (hmatching : 0 ≤ matching) (hexcess : 0 < excess)
-    (hleftPacking : capacity * (left + excess) ≤ left * (left - 1))
-    (hrightPacking : capacity * (right + excess) ≤ right * (right - 1))
-    (hpartition : matching + left + right + excess = order) :
-    2 * capacity + 5 ≤ order := by
-  have hleftBound := packing_forces_many_unused capacity left excess
-    hcapacity hleft hexcess hleftPacking
-  have hrightBound := packing_forces_many_unused capacity right excess
-    hcapacity hright hexcess hrightPacking
-  omega
-
-private theorem no_positive_excess_below_threshold (capacity left right matching excess order : Int)
-    (hcapacity : 0 < capacity) (hleft : 0 ≤ left) (hright : 0 ≤ right)
-    (hmatching : 0 ≤ matching) (hexcess : 0 < excess)
-    (hleftPacking : capacity * (left + excess) ≤ left * (left - 1))
-    (hrightPacking : capacity * (right + excess) ≤ right * (right - 1))
-    (hpartition : matching + left + right + excess = order)
-    (horder : order ≤ 2 * capacity + 4) : False := by
-  have hthreshold := positive_excess_size_threshold capacity left right matching excess order
-    hcapacity hleft hright hmatching hexcess hleftPacking hrightPacking hpartition
-  omega
-
 private theorem positive_excess_matching_budget (capacity left right matching excess order : Int)
     (hcapacity : 0 < capacity) (hleft : 0 ≤ left) (hright : 0 ≤ right)
     (hexcess : 0 < excess)
@@ -157,18 +133,6 @@ private theorem zero_excess_packing (capacity unused : Int) (hunused : 0 ≤ unu
     have hexpand : unused * (capacity - 1) = capacity * unused - unused := by
       simp [Int.mul_sub, Int.mul_comm]
     omega
-
-private theorem optimal_support_one_side (capacity left right matching order : Int)
-    (hleft : 0 ≤ left) (hright : 0 ≤ right) (hmatching : 0 ≤ matching)
-    (hleftPacking : capacity * left ≤ left * (left - 1))
-    (hrightPacking : capacity * right ≤ right * (right - 1))
-    (hpartition : matching + left + right = order)
-    (horder : order ≤ 2 * capacity + 1) : left = 0 ∨ right = 0 := by
-  rcases zero_excess_packing capacity left hleft hleftPacking with hzero | hbound
-  · exact Or.inl hzero
-  · rcases zero_excess_packing capacity right hright hrightPacking with hzero | hother
-    · exact Or.inr hzero
-    · omega
 
 section Representatives
 variable {V : Type} [Fintype V] [DecidableEq V]
@@ -202,14 +166,7 @@ theorem objective_le_omega (T : Finset V) (M : Finset (V × V)) (h : Feasible G 
     Finset.mem_filter.mpr ⟨Finset.mem_product.mpr ⟨by simp,by simp⟩,h⟩
   exact Finset.le_sup (f := fun p : Finset V × Finset (V × V) => p.1.card + p.2.card) hm
 
-/-- Every actual dissociation selection is a feasible empty-matching pair. -/
-theorem dissociation_feasible (T : Finset V) (hT : IsKIndependent G 2 T) :
-    Feasible G T ∅ := by
-  refine ⟨by simp,by simp,by simp [endpoints],?_⟩
-  intro v hv
-  simpa only [endpoints,Finset.biUnion_empty,Finset.union_empty] using
-    (Nat.lt_succ_iff.mp (hT v hv))
-
+/-- Each color class contains one endpoint per matching edge, counted without repetitions. -/
 private theorem endpoints_side_card (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (c : Bool) :
@@ -268,7 +225,7 @@ private theorem side_partition (color : V → Bool)
 private theorem unused_neighbor_capacity (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M)
-    (D : ℕ) (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (D : ℕ) (hr : ∀ v, G.degree v = D)
     (c : Bool) (v : V) (hv : v ∈ T) (hvc : color v ≠ c) :
     D - 1 ≤ ((unusedSide T M color c).filter (G.Adj v)).card := by
   classical
@@ -293,10 +250,12 @@ private theorem unused_neighbor_capacity (color : V → Bool)
     intro w hw hh
     exact (Finset.mem_filter.mp (Finset.mem_filter.mp hh).1).2.1
       (Finset.mem_filter.mp hw).1
-  have hc := congrArg Finset.card he
-  rw [Finset.card_union_of_disjoint hd] at hc
-  have hdeg := hr v
-  change (Finset.univ.filter (G.Adj v)).card = D at hdeg
+  have hdeg : (Finset.univ.filter (G.Adj v)).card = D := by
+    have hneighbors : G.neighborFinset v = Finset.univ.filter (G.Adj v) := by
+      ext w
+      simp
+    rw [← hneighbors, SimpleGraph.card_neighborFinset_eq_degree, hr v]
+  rw [he, Finset.card_union_of_disjoint hd] at hdeg
   have hcap := hf.capacity v hv
   change (A.filter (G.Adj v)).card ≤ 1 at hcap
   change D - 1 ≤ (B.filter (G.Adj v)).card
@@ -305,7 +264,7 @@ private theorem unused_neighbor_capacity (color : V → Bool)
 private theorem representative_pack (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (T : Finset V) (M : Finset (V × V))
-    (hf : Feasible G T M) (D : ℕ) (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hf : Feasible G T M) (D : ℕ) (hr : ∀ v, G.degree v = D)
     (c : Bool) :
     (D - 1) * (D - 2) * (T.filter (fun v => color v ≠ c)).card ≤
       (unusedSide T M color c).card * ((unusedSide T M color c).card - 1) := by
@@ -333,7 +292,7 @@ obtained from both actual C4-free pair counts. -/
 theorem positive_excess_budget (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D)
-    (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hr : ∀ v, G.degree v = D)
     (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M)
     (hexcess : N < T.card + M.card) :
@@ -394,7 +353,7 @@ is at most one bipartition side. No connectedness hypothesis is needed. -/
 theorem objective_threshold (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D)
-    (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hr : ∀ v, G.degree v = D)
     (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N)
     (hN : N ≤ 2 * (D - 1) * (D - 2) + 4)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) :
@@ -411,7 +370,7 @@ hypothesis. This keeps positive excess and matching costs distinct. -/
 theorem objective_general_bound (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D)
-    (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hr : ∀ v, G.degree v = D)
     (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) :
     T.card + M.card ≤ max N (2*N - 2*((D-1)*(D-2)) - 4) := by
@@ -426,7 +385,7 @@ theorem objective_general_bound (color : V → Bool)
 theorem first_excess_matching_empty (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D)
-    (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hr : ∀ v, G.degree v = D)
     (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N)
     (hN : N = 2*((D-1)*(D-2))+5)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M)
@@ -441,7 +400,7 @@ least (D-1)(D-2)+1. There is no assertion that matching edges vanish. -/
 theorem zero_excess_unused (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (D N : ℕ)
-    (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hr : ∀ v, G.degree v = D)
     (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M)
     (hc : T.card + M.card = N) (c : Bool) :
@@ -474,7 +433,7 @@ singletons in one side and occupies every vertex of that side. -/
 theorem objective_one_side_support (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (D N : ℕ)
-    (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hr : ∀ v, G.degree v = D)
     (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N)
     (hN : N ≤ 2*((D-1)*(D-2))+1)
     (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M)
@@ -693,7 +652,7 @@ D>=3 hypotheses are all retained; connectedness is unnecessary. -/
 theorem threshold_parameters (color : V → Bool)
     (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
     (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D)
-    (hr : ∀ v, DegreeCapacity.degree G v = D)
+    (hr : ∀ v, G.degree v = D)
     (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N)
     (hN : N ≤ 2 * (D - 1) * (D - 2) + 4) :
     beta G 2 = N ∧ psiSq G = N ∧ Omega G = N := by
@@ -708,41 +667,6 @@ theorem threshold_parameters (color : V → Bool)
     exact Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,side_dissociation G color hcolor false⟩)
   have hp := parameter_comparison G
   omega
-
-/-- Projective-plane parameter specialization is valid for every incidence
-structure with the exact plane cardinalities, degrees and unique-pair property;
-no finite-field or Desarguesian hypothesis occurs. -/
-theorem plane_parameter_specialization (color : V → Bool)
-    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
-    (hfree : NoFourCycle G.Adj) (q : ℕ) (hq : 2 ≤ q)
-    (hr : ∀ v, DegreeCapacity.degree G v = q + 1)
-    (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = q*q+q+1) :
-    beta G 2 = q*q+q+1 ∧ psiSq G = q*q+q+1 ∧ Omega G = q*q+q+1 := by
-  apply threshold_parameters G color hcolor hfree (q+1) (q*q+q+1) (by omega) hr hsides
-  have h1 : q + 1 - 1 = q := by omega
-  have h2 : q + 1 - 2 = q - 1 := by omega
-  have h3 : q - 1 + 1 = q := by omega
-  rw [h1,h2]
-  nlinarith
-
-/-- The support conclusion for every projective plane of order at least three.
-It concerns singleton support; the matching part may remain nonempty. -/
-theorem plane_optimal_support (color : V → Bool)
-    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
-    (hfree : NoFourCycle G.Adj) (q : ℕ) (hq : 3 ≤ q)
-    (hr : ∀ v, DegreeCapacity.degree G v = q+1)
-    (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = q*q+q+1)
-    (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M)
-    (hc : T.card+M.card = q*q+q+1) :
-    ∃ c : Bool, (∀ v ∈ T, color v = c) ∧
-      (∀ v, color v = c → v ∈ T ∪ endpoints M) := by
-  apply objective_one_side_support G color hcolor hfree (q+1) (q*q+q+1) hr hsides
-    ?_ T M hf hc
-  have h1 : q+1-1 = q := by omega
-  have h2 : q+1-2 = q-1 := by omega
-  have h3 : q-1+1 = q := by omega
-  rw [h1,h2]
-  nlinarith
 
 end RepresentativeConsequences
 

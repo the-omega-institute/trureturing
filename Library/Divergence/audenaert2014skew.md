@@ -11,8 +11,10 @@ strata_touched:
   - D5/S3/Quantum/Divergence/UmegakiBKMPath
   - D5/S3/Quantum/Divergence/UmegakiRareFlagBKM
   - D5/S3/Quantum/Divergence/UmegakiArithmeticBKM
-  - D5/S3/Quantum/Divergence/UmegakiFaithfulLowerRatio
   - D5/S3/Quantum/Divergence/UniversalCommonCenter
+  - D5/S3/Quantum/Divergence/UniversalPositiveScalarizer
+  - D5/S3/Quantum/Divergence/PositiveKrausCompression
+  - D5/S3/Quantum/Divergence/UmegakiConditionalBKM
 license: citation-only
 triage: anchor
 ---
@@ -55,68 +57,34 @@ evaluation and spectral trace expansion are reused; Bochner integrability and
 finite-sum interchange connect the two representations. This formal assembly
 is repository-derived support, not an originality claim attributed to the paper.
 
-For arbitrary correlated finite quantum references, the faithful conditional
-application assumes a uniform arithmetic-kernel bound
-`q(TZ,TV,u) ≤ c q(Z,V,u)` for every complex direction with actual partial trace
-zero, every `u ∈ [0,1]`, and positive definite `Z,TZ`, with unchanged `c ≥ 0`.
-Here `T` is the canonical channel's actual reference action. For canonical
-density-state endpoints `rho,sigma,T rho,T sigma` that are positive definite,
-the application gives
-`D_fin(T rho,T sigma)-D_fin(rho_R,sigma_R) ≤
-c (D_fin(rho,sigma)-D_fin(rho_R,sigma_R))`, using the actual
-`SupportAwareRelativeEntropy.finiteTraceLogRelativeEntropy` branch and native
-partial-trace marginals. The amplified trace-preservation theorem proves the
-input and output marginals coincide for both states.
+For arbitrary correlated finite quantum references,
+`UmegakiConditionalBKM.faithful_conditional_relativeEntropy_contraction`
+derives contraction of the faithful conditional Umegaki divergence from the
+uniform endpoint bound on the native inverse quadratic form at u = 0.
+The endpoint hypothesis ranges over every finite reference, every positive
+definite joint weight and every complex direction with zero partial trace.
+The coefficient ranges over the closed unit interval. The channel image of
+the input identity is assumed positive definite.
 
-The same-center residual has zero partial trace and identifies the difference
-of joint and marginal inverse pairings. Canonical channel module covariance
-comes from complex blockwise linearity. Native inverse continuity supplies
-inner interval integrability; the ordinary `relativeEntropy_eq_integral_bkm`
-is applied separately to the actual joint and marginal pairs, with the native
-weighted BKM integrability and cancellation of trace corrections by
-`trace_partialTraceRight`. Iterated integration keeps the weight `1-t` and
-requires no Fubini exchange. The conditional block-family theorem does not
-supply this correlated-reference application.
+For c < 1 the endpoint estimate yields the universal positive trace-infimum
+test at k = c/(1-c). Both common-state residual Gram estimates are used with
+the same center. Two weighted Cauchy–Schwarz inequalities lift the estimate
+to every arithmetic interpolation parameter. The zero-output form is
+handled before division, and the ordinary contraction follows from the
+uncentered estimate and the positive defect at c = 1.
 
-This application is a bind-only consequence of the existing analytic suppliers
-and finite matrix normalization, not a new standalone mathematical declaration
-or a result attributed to Audenaert. The uniform metric bound is an explicit
-intermediate premise. Support removal, singular limits and the remaining
-coefficient comparisons are not established by that application. Final coefficient
-division still requires the original strictly positive finite denominator.
-The all-finite Umegaki coefficient equality remains unproved; the open-problem
-KPI remains zero.
-
-`UmegakiFaithfulLowerRatio.faithful_density_pair_ratio_approx` supplies an
-actual density-pair lower-ratio intermediate under the additional assumption
-that the channel's actual identity image `N(I_A)` is positive definite. For
-every finite reference R, positive definite complex Z on R times A, arbitrary
-complex V on that space with `partialTraceRight V = 0`, and strictly positive
-`qin = Re Tr(V adjoint Z inverse V)`, put
-`qout = Re Tr((TV) adjoint (TZ) inverse TV)` for the canonical reference action T.
-For every tolerance eta greater than zero, it constructs actual `DensityState`
-values rho and sigma on `(Fin 2 times R) times A`, with faithful input and
-canonical output matrices, equal input and output reference marginals,
-`SupportContained` for both pairs, and strictly positive canonical input
-`finiteTraceLogRelativeEntropy`. Their actual output/input divergence ratio
-differs from `qout/qin` by less than eta. The conditional output numerator
-equals the output divergence because the actual output reference marginals
-agree. V need not be Hermitian; qout may vanish, and no division by qout,
-approach from below or attainment is asserted.
-
-The construction first chooses a positive rare-flag weight delta, then a
-nonzero sufficiently small perturbation epsilon. Its input base is
-`diag(Z,delta I)` with off-diagonal direction V and V adjoint; the output
-lower block is `delta T(I)`, not an assumed identity image. Shared trace
-normalization cancels in the ratio. The original rare-flag logarithmic
-derivative limit, BKM path identity, uniform-floor continuity and real scaling
-of `logDeriv` are reused to control the ordered limits. This is a
-repository-derived assembly serving Hirche, George, Nuradha and Wilde,
-arXiv:2608.27171v1, Definition 2, Remark 2 and section 9; it is not a theorem
-attributed to Audenaert's paper or a claim of external priority. Singular
-identity images still require canonical support compression and amplified
-relative-entropy equality. Full coefficient integration and the original
-all-channel coefficient chain remain unproved; the open-problem KPI is zero.
+The joint-minus-marginal inverse form equals the inverse form on a
+zero-partial-trace residual. The amplified channel transports that residual
+with the same marginal center, so separate integrations in the arithmetic
+parameter and along the joint and marginal state paths give the inequality.
+The four pairs lie in the finite support branch. Their individually
+normalized traces cancel the trace corrections. The mathematical argument
+uses the resolvent and path ingredients supported by this reference and
+the repository's common positive state and matrix transport results.
+`UmegakiChannelSupportedExtension` extends the contraction to the finite
+support branch for arbitrary channels by output regularization. Its
+`conditionalCoefficient_eq_completeCoefficient` proves the all-channel
+coefficient equality.
 
 The associated finite semidefinite supplier
 `UniversalCommonCenter.exists_common_center_of_posDef_trace_inf_le` concerns
@@ -131,6 +99,39 @@ then uses Hermitian-matrix PSD self-duality and strict separation.
 This common-center inference is derived from the supplied repository-first
 assessment, not attributed to Audenaert's article. It is step 3 support for the
 same Umegaki complete-versus-conditional contraction problem served by the BKM
-path identity. The weighted quotient-duality bridge, amplified common scalarizer
-and final coefficient comparison remain open. No originality or solution of
-that original problem is asserted.
+path identity. The subsequent coefficient equality is a repository result
+for the Umegaki case of the question in arXiv:2608.27171v1, §9.
+
+The actual selected-column inference is formalized in
+`UniversalPositiveScalarizer.selected_column_joint_gram`. For finite nonempty
+input and output carriers and an actual quantum channel, its universal
+positive-definite trace-inf premise supplies one scalar family for the whole
+matrix-unit basis. With the canonical Kraus isometry J, pi(A)=A tensor I_Env
+and e=I-J J adjoint, vertically stack C_i=J adjoint pi(E_i)e and
+D_i=Phi*(E_i)-x_i I. The conclusion is positivity of k C C adjoint-D D adjoint,
+including k=0. The packed actual defect is proved equal to C C adjoint.
+For a full matrix center X, the selected residual column is D, while the
+other columns form R. The proof uses P P adjoint=D D adjoint+R R adjoint
+and positivity of the latter remainder; it imposes no sparsity on X.
+
+This inference is a repository construction using the finite common-center
+supplier, not a result attributed to Audenaert's paper. The selected joint
+Gram is consumed by `UniversalPositiveScalarizer.common_positive_state_scalarizer`,
+which constructs one possibly singular positive trace-one `DensityState b`,
+independent of the reference and joint input. For every finite reference,
+including the empty carrier, and every complex joint matrix, its ordinary
+unnormalized weighted partial-trace center is the same in both residual Gram
+inequalities. The construction uses native rectangular Douglas factorization,
+complex-linear trace duality, the singular polar factor, and the supported Gram
+flip; no faithful-state, invertibility, unitary-polar, or dimension
+normalization assumption is added.
+
+`PositiveKrausCompression` contains the supported factor and its positive
+trace-one replacement. Its rectangular Euclidean transport applies the existing
+Hilbert-space Douglas theorem on a direct sum and extracts the appropriate
+block. `UniversalPositiveScalarizer` amplifies the fixed replacement to give both
+Gram bounds for every finite reference.
+
+These results supply the common-state bounds used in the faithful contraction.
+The supported extension combines that contraction with output regularization
+and the density-pair lower bound to obtain the all-channel comparison.

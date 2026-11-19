@@ -1,4 +1,0 @@
-**推论 3.2（每个分支至多三值）。** 在定理 3.1 的设定下,若 $H_t$ 的每个连通分支的顶点集 $C$ 上,$\{\lambda_u:\ u\in C\}$ 至多含三个元素,则 $\rho_t=r(\pi_t)$。特别地,当 $f_t$ 在被占据方上至多取三个值时 $\rho_t=r(\pi_t)$,这正是母卷命题 4.1。
-
-**证明。** 由定理 3.1(a)(b),只需对每个分支 $C$ 构造 (b) 中的族。若 $\lambda$ 在 $C$ 上只取一个值,则 $C$ 内没有 $H_t$ 的边,取 $\beta_u=1$。若取两个值 $a\ne b$,则 $C$ 内每条边连接取值 $a$ 与取值 $b$ 的顶点,取 $\beta_u=s$,其中 $s\in F^\times$ 满足 $s^2=a+b$(平方映射是 $F$ 的双射)。若取三个值 $a,b,c$,取母卷命题 4.1 证明中的 $\beta_a,\beta_b,\beta_c$,它们满足 $\beta_a\beta_b=a+b$、$\beta_b\beta_c=b+c$、$\beta_a\beta_c=a+c$,并令 $\beta_u=\beta_{\lambda_u}$。在每种情形下 $C$ 内的边 $uv$ 都满足 $\lambda_u\ne\lambda_v$ 与 $\beta_u\beta_v=\lambda_u+\lambda_v$。∎
-

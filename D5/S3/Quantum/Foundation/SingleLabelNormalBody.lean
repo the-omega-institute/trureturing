@@ -267,7 +267,7 @@ theorem chart_mem {p : V} (a : ExclusionChart C u p)
     {z} (hz : ‖z‖ ≤ 1) : a.param z ∈ exclusion C u p :=
   a.whole ▸ mem_image_of_mem a.param (by simpa using hz)
 
-private def chartPure (hc : IsClosed (C : Set V))
+def chartPure (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p : pure C u) (a : ExclusionChart C u p)

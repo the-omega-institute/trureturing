@@ -4,7 +4,9 @@
 
 General C4-free representative bounds
 
-Actual finite representative maxima and graph-level pair ownership prove beta<=psiSq<=Omega, the equal-side regular C4-free threshold, positive-excess matching budgets and support rigidity. Projective-plane specializations keep their precise degree, cardinality and unique-pair hypotheses. These proofs concern arbitrary finite graphs; they do not assert rectangular-grid equality.
+Actual finite representative maxima and graph-level pair ownership prove beta<=psiSq<=Omega, the equal-side regular C4-free threshold, positive-excess matching budgets and support rigidity. A dissociation set gives a feasible representative pair by taking the matching to be empty. For a finite projective plane of order q at least two, apply the threshold with degree q+1 and side size q squared plus q plus one. Unique incidence pairs exclude four-cycles and the threshold inequality reduces to q squared minus three q plus three being positive. From order three, the same degree and side size also satisfy the one-side support bound. The support bound applies to singletons and allows matching edges. The q=2 example in the source has singletons on both sides.
+
+The bound on each feasible objective gives the same upper bound on Omega by Finset.sup_le. At the first possible excess, the matching is empty and Feasible.capacity gives the dissociation condition on the singleton set. Under the one-side support conclusion, every occupied vertex on the other side is a matching endpoint.
 
 **Definition 1.1 (NoFourCycle).**
 
@@ -12,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.NoFo
 
 *Formalization.* `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.NoFourCycle` (`✓ std3`).
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
@@ -24,7 +26,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.neig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.neighbor_pair_unique_owner` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
@@ -36,7 +38,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pair
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pair_packing` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
@@ -48,7 +50,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pair
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pair_packing_lower` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
@@ -60,7 +62,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.endp
 
 *Formalization.* `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.endpoints` (`✓ std3`).
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
@@ -72,7 +74,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.Feas
 
 *Formalization.* `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.Feasible` (`✓ std3`).
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
@@ -84,7 +86,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.Omeg
 
 *Formalization.* `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.Omega` (`✓ std3`).
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
@@ -96,179 +98,143 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.obje
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_le_omega` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
 Exact declaration: theorem objective_le_omega (T : Finset V) (M : Finset (V × V)) (h : Feasible G T M) : T.card + M.card ≤ Omega G.
 
-**Theorem 1.9 (dissociation feasible).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.dissociation_feasible`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.dissociation_feasible` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem dissociation_feasible (T : Finset V) (hT : IsKIndependent G 2 T) : Feasible G T ∅.
-
-**Theorem 1.10 (positive excess budget).**
+**Theorem 1.9 (positive excess budget).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.positive_excess_budget`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.positive_excess_budget` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
-Exact declaration: theorem positive_excess_budget (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hexcess : N < T.card + M.card) : (M.card : ℤ) + ((T.card : ℤ) + M.card - N) ≤ (N : ℤ) - 2 * ((D - 1) * (D - 2) : ℕ) - 4.
+Exact declaration: theorem positive_excess_budget (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, G.degree v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hexcess : N < T.card + M.card) : (M.card : ℤ) + ((T.card : ℤ) + M.card - N) ≤ (N : ℤ) - 2 * ((D - 1) * (D - 2) : ℕ) - 4.
 
-**Theorem 1.11 (objective threshold).**
+**Theorem 1.10 (objective threshold).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_threshold`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_threshold` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
-Exact declaration: theorem objective_threshold (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2 * (D - 1) * (D - 2) + 4) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) : T.card + M.card ≤ N.
+Exact declaration: theorem objective_threshold (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, G.degree v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2 * (D - 1) * (D - 2) + 4) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) : T.card + M.card ≤ N.
 
-**Theorem 1.12 (objective general bound).**
+**Theorem 1.11 (objective general bound).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_general_bound`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_general_bound` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
-Exact declaration: theorem objective_general_bound (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) : T.card + M.card ≤ max N (2*N - 2*((D-1)*(D-2)) - 4).
+Exact declaration: theorem objective_general_bound (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, G.degree v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) : T.card + M.card ≤ max N (2*N - 2*((D-1)*(D-2)) - 4).
 
-**Theorem 1.13 (first excess matching empty).**
+**Theorem 1.12 (first excess matching empty).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.first_excess_matching_empty`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.first_excess_matching_empty` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
-Exact declaration: theorem first_excess_matching_empty (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N = 2*((D-1)*(D-2))+5) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N+1) : M = ∅.
+Exact declaration: theorem first_excess_matching_empty (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, G.degree v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N = 2*((D-1)*(D-2))+5) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N+1) : M = ∅.
 
-**Theorem 1.14 (zero excess unused).**
+**Theorem 1.13 (zero excess unused).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.zero_excess_unused`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.zero_excess_unused` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
-Exact declaration: theorem zero_excess_unused (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N) (c : Bool) : (unusedSide T M color c).card = 0 ∨ (D-1)*(D-2)+1 ≤ (unusedSide T M color c).card.
+Exact declaration: theorem zero_excess_unused (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hr : ∀ v, G.degree v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N) (c : Bool) : (unusedSide T M color c).card = 0 ∨ (D-1)*(D-2)+1 ≤ (unusedSide T M color c).card.
 
-**Theorem 1.15 (objective one side support).**
+**Theorem 1.14 (objective one side support).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_one_side_support`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.objective_one_side_support` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
-Exact declaration: theorem objective_one_side_support (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2*((D-1)*(D-2))+1) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N) : ∃ c : Bool, (∀ v ∈ T, color v = c) ∧ (∀ v, color v = c → v ∈ T ∪ endpoints M).
+Exact declaration: theorem objective_one_side_support (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hr : ∀ v, G.degree v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2*((D-1)*(D-2))+1) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card + M.card = N) : ∃ c : Bool, (∀ v ∈ T, color v = c) ∧ (∀ v, color v = c → v ∈ T ∪ endpoints M).
 
-**Theorem 1.16 (coloring representatives).**
+**Theorem 1.15 (coloring representatives).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.coloring_representatives`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.coloring_representatives` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
 Exact declaration: theorem coloring_representatives {C : Type} [DecidableEq C] (c : V → Option C) (hc : IsSubQuorum G c) : ∃ T : Finset V, ∃ M : Finset (V × V), Feasible G T M ∧ T.card + M.card = (palette c Finset.univ).card ∧ (M = ∅ → ∀ v w, c v ≠ none → c w = c v → ¬ G.Adj v w).
 
-**Theorem 1.17 (palette le omega).**
+**Theorem 1.16 (palette le omega).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.palette_le_omega`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.palette_le_omega` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
 Exact declaration: theorem palette_le_omega {C : Type} [DecidableEq C] (c : V → Option C) (hc : IsSubQuorum G c) : (palette c Finset.univ).card ≤ Omega G.
 
-**Theorem 1.18 (psiSq le omega).**
+**Theorem 1.17 (psiSq le omega).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.psiSq_le_omega`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.psiSq_le_omega` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
 Exact declaration: theorem psiSq_le_omega : psiSq G ≤ Omega G.
 
-**Theorem 1.19 (parameter comparison).**
+**Theorem 1.18 (parameter comparison).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.parameter_comparison`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.parameter_comparison` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
 Exact declaration: theorem parameter_comparison : beta G 2 ≤ psiSq G ∧ psiSq G ≤ Omega G.
 
-**Theorem 1.20 (threshold parameters).**
+**Theorem 1.19 (threshold parameters).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.threshold_parameters`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.threshold_parameters` (`✓ std3`). ∎
 
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+*Citation.* The Omega Institute repository contributors (2026). *Exact sub-quorum values from C4-free pair packing*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/48728b42d39ab3de5de251c61da5a404ec418a69/docs/C4_FREE_REPRESENTATIVE_EQUALITY.md>.
 
 *Commentary.*
 
-Exact declaration: theorem threshold_parameters (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, DegreeCapacity.degree G v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2 * (D - 1) * (D - 2) + 4) : beta G 2 = N ∧ psiSq G = N ∧ Omega G = N.
-
-**Theorem 1.21 (plane parameter specialization).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_parameter_specialization`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_parameter_specialization` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem plane_parameter_specialization (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (q : ℕ) (hq : 2 ≤ q) (hr : ∀ v, DegreeCapacity.degree G v = q + 1) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = q*q+q+1) : beta G 2 = q*q+q+1 ∧ psiSq G = q*q+q+1 ∧ Omega G = q*q+q+1.
-
-**Theorem 1.22 (plane optimal support).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_optimal_support`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_optimal_support` (`✓ std3`). ∎
-
-*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
-
-*Commentary.*
-
-Exact declaration: theorem plane_optimal_support (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (q : ℕ) (hq : 3 ≤ q) (hr : ∀ v, DegreeCapacity.degree G v = q+1) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = q*q+q+1) (T : Finset V) (M : Finset (V × V)) (hf : Feasible G T M) (hc : T.card+M.card = q*q+q+1) : ∃ c : Bool, (∀ v ∈ T, color v = c) ∧ (∀ v, color v = c → v ∈ T ∪ endpoints M).
+Exact declaration: theorem threshold_parameters (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (hfree : NoFourCycle G.Adj) (D N : ℕ) (hD : 3 ≤ D) (hr : ∀ v, G.degree v = D) (hsides : ∀ c, (Finset.univ.filter (fun v => color v = c)).card = N) (hN : N ≤ 2 * (D - 1) * (D - 2) + 4) : beta G 2 = N ∧ psiSq G = N ∧ Omega G = N.
 
 ## References
 
@@ -276,7 +242,6 @@ Exact declaration: theorem plane_optimal_support (color : V → Bool) (hcolor : 
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.NoFourCycle`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.Omega`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.coloring_representatives`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.dissociation_feasible`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.endpoints`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.first_excess_matching_empty`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.neighbor_pair_unique_owner`
@@ -288,11 +253,8 @@ Exact declaration: theorem plane_optimal_support (color : V → Bool) (hcolor : 
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.pair_packing_lower`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.palette_le_omega`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.parameter_comparison`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_optimal_support`
-- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.plane_parameter_specialization`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.positive_excess_budget`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.psiSq_le_omega`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.threshold_parameters`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds.zero_excess_unused`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](../StarForming/RegularCompensation.md)
 - Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/DissociationColoring](DissociationColoring.md)

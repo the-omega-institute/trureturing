@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:83e02df4523a3d3c52cb5b0b4709e1e52b508e974677e1a8d5e60a674b14e2f8
-  normalized_sha256: sha256:83e02df4523a3d3c52cb5b0b4709e1e52b508e974677e1a8d5e60a674b14e2f8
-cas_ref: sha256:83e02df4523a3d3c52cb5b0b4709e1e52b508e974677e1a8d5e60a674b14e2f8
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaGamma/ObserverModeConfinement.two_direction_archimedean_confinement
-    target_statement_id: sha256:b14253b57cc4a8fe5974088342bbf39e91887b83f662f9df260b2d6a254b8c4e
-receipts:
-  unresolved_subitems: []

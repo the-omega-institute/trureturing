@@ -147,7 +147,7 @@ theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
   · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
   · exact (adjacent 3).symm.trans ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm))
 
-private def alternating (n : ℕ) (a b : Fin 3) : Fin 5 × Fin n → Fin 3 :=
+def alternating (n : ℕ) (a b : Fin 3) : Fin 5 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
 
 private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
@@ -157,7 +157,7 @@ private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
   have hpar : (j.val + 1) % 2 = 0 ↔ ¬ j.val % 2 = 0 := by omega
   by_cases h : j.val % 2 = 0 <;> simp [h, hpar, hab, Ne.symm hab]
 
-private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
+theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 5 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) :
     ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b := by
@@ -435,10 +435,10 @@ def Q : Matrix (Fin 41) (Fin 41) ℤ := ![
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
   ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1]]
 private def weights : Fin 41 → ℤ := ![96, 96, 48, 96, 48, 48, 24, 24, 48, 96, 48, 24, 24, 48, 48, 24, 24, 12, 24, 12, 12, 12, 24, 48, 24, 24, 48, 96, 48, 24, 24, 48, 24, 12, 12, 12, 24, 12, 24, 24, 48]
-private def representatives : Fin 41 → Col := ![(0,0,0,0,0), (0,0,0,0,1), (0,0,0,1,0), (0,0,0,1,1), (0,0,0,1,2), (0,0,1,0,0), (0,0,1,0,1), (0,0,1,0,2), (0,0,1,1,0), (0,0,1,1,1), (0,0,1,1,2), (0,0,1,2,0), (0,0,1,2,1), (0,0,1,2,2), (0,1,0,0,0), (0,1,0,0,1), (0,1,0,0,2), (0,1,0,1,0), (0,1,0,1,1), (0,1,0,1,2), (0,1,0,2,0), (0,1,0,2,1), (0,1,0,2,2), (0,1,1,0,0), (0,1,1,0,1), (0,1,1,0,2), (0,1,1,1,0), (0,1,1,1,1), (0,1,1,1,2), (0,1,1,2,0), (0,1,1,2,1), (0,1,1,2,2), (0,1,2,0,0), (0,1,2,0,1), (0,1,2,0,2), (0,1,2,1,0), (0,1,2,1,1), (0,1,2,1,2), (0,1,2,2,0), (0,1,2,2,1), (0,1,2,2,2)]
+def representatives : Fin 41 → Col := ![(0,0,0,0,0), (0,0,0,0,1), (0,0,0,1,0), (0,0,0,1,1), (0,0,0,1,2), (0,0,1,0,0), (0,0,1,0,1), (0,0,1,0,2), (0,0,1,1,0), (0,0,1,1,1), (0,0,1,1,2), (0,0,1,2,0), (0,0,1,2,1), (0,0,1,2,2), (0,1,0,0,0), (0,1,0,0,1), (0,1,0,0,2), (0,1,0,1,0), (0,1,0,1,1), (0,1,0,1,2), (0,1,0,2,0), (0,1,0,2,1), (0,1,0,2,2), (0,1,1,0,0), (0,1,1,0,1), (0,1,1,0,2), (0,1,1,1,0), (0,1,1,1,1), (0,1,1,1,2), (0,1,1,2,0), (0,1,1,2,1), (0,1,1,2,2), (0,1,2,0,0), (0,1,2,0,1), (0,1,2,0,2), (0,1,2,1,0), (0,1,2,1,1), (0,1,2,1,2), (0,1,2,2,0), (0,1,2,2,1), (0,1,2,2,2)]
 def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
   Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e e)))
-private theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 5) :
+theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 5) :
     column (relabel e c) r = e (column c r) := by
   fin_cases r <;> rfl
 private theorem compatible_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
@@ -448,7 +448,7 @@ set_option maxRecDepth 100000 in
 theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
     cls (relabel e c) = cls c := by decide +kernel
 set_option maxRecDepth 100000 in
-private theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
+theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
     relabel e c = representatives (cls c) := by decide +kernel
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
@@ -492,12 +492,12 @@ private theorem initial_weights (s : Fin 41) :
       simp
     _ = ∑ i : Fin 41, classWeights i * Q i s := by simp_rw [initial_class_counts]
     _ = _ := by fin_cases s <;> rfl
-private def gridEquiv (n : ℕ) : (Fin 5 × Fin n → Fin 3) ≃ (Fin n → Col) where
+def gridEquiv (n : ℕ) : (Fin 5 × Fin n → Fin 3) ≃ (Fin n → Col) where
   toFun P j := (P (0,j),P (1,j),P (2,j),P (3,j),P (4,j))
   invFun f p := column (f p.2) p.1
   left_inv P := by funext p; rcases p with ⟨r,j⟩; fin_cases r <;> rfl
   right_inv f := rfl
-private theorem column_grid (n : ℕ) (P : Fin 5 × Fin n → Fin 3)
+theorem column_grid (n : ℕ) (P : Fin 5 × Fin n → Fin 3)
     (j : Fin n) (r : Fin 5) : column (gridEquiv n P j) r = P (r,j) := by
   fin_cases r <;> rfl
 private theorem tail_iff (a b : Col) (xs : List Col) :
@@ -570,7 +570,7 @@ def W : Fin 12 → Fin 41 → ℤ := ![
   ![5714699808, 2428286892, 1786071108, 2372039916, 462744516, 1776553854, 1130218524, 429577152, 1436892528, 2526101382, 760417884, 64536228, 483242874, 506892534, 1794483762, 968763108, 573102660, 762233496, 1151459670, 265428474, 370944006, 53524158, 400369098, 1445305332, 1020878634, 307940562, 1354550544, 2857349904, 1073736348, 154803954, 765192474, 926734584, 106523436, 11012070, 112298868, 164148678, 625094184, 367985028, 187315224, 468129420, 731617620],
   ![61051776924, 25939228116, 19081127928, 25339665234, 4941644988, 18979182138, 12074072952, 4588030326, 15350261016, 26986703574, 8121775080, 688964268, 5162740950, 5414409822, 19170864012, 10349117706, 6121303698, 8142986700, 12301097724, 2834784432, 3962993910, 571428762, 4276654674, 15439997250, 10906233570, 3288677688, 14469950022, 30525888462, 11469278094, 1652967300, 8174894358, 9899667984, 1137755148, 117535506, 1199747040, 1753245894, 6678084414, 3931086252, 2000471382, 5001143310, 7815839562],
   ![652216306656, 277099897740, 203843789832, 270698972820, 52785403032, 202753867506, 128986171596, 49009985160, 163985386296, 288297900318, 86758735104, 7358664744, 55153947462, 57839442558, 204802017882, 110558217504, 65389788876, 86991005040, 131411798202, 30281310222, 42336964590, 6103374090, 45685629426, 164943614496, 116510986758, 35129393658, 154579060152, 326108153328, 122520837588, 17656009374, 87332803074, 105755358324, 12153813132, 1255290654, 12816982872, 18728674938, 71342069304, 41995166556, 21368946228, 53427168792, 83495882436]]
-private def coefficients : Fin 7 → ℤ := ![-8,48,-84,17,76,-64,16]
+def coefficients : Fin 7 → ℤ := ![-8,48,-84,17,76,-64,16]
 private theorem table_zero : W 0 = (1 : Fin 41 → ℤ) := by
   exact List.ofFn_inj.mp rfl
 set_option maxRecDepth 100000 in
@@ -578,12 +578,12 @@ set_option maxHeartbeats 10000000 in
 private theorem table_steps : ∀ k : Fin 11, W k.succ = Q.mulVec (W k.castSucc) := by
   intro k
   fin_cases k <;> exact List.ofFn_inj.mp rfl
-private theorem powers_table : ∀ k : Fin 12,
+theorem powers_table : ∀ k : Fin 12,
     (Q^k.val).mulVec (1 : Fin 41 → ℤ) = W k :=
   TransferMatrix.tabulatedPowers Q 11 W table_zero table_steps
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
-private theorem power_polynomial : (Q^(4+7)).mulVec (1 : Fin 41 → ℤ) =
+theorem power_polynomial : (Q^(4+7)).mulVec (1 : Fin 41 → ℤ) =
     ∑ j : Fin 7, coefficients j • (Q^(4+j.val)).mulVec (1 : Fin 41 → ℤ) := by
   rw [show 4+7 = (11 : Fin 12).val from rfl, powers_table]
   have hh (j : Fin 7) : (Q^(4+j.val)).mulVec (1 : Fin 41 → ℤ) =

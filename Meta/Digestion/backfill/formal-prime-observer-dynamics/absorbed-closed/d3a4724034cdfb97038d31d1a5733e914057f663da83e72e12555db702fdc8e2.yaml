@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d3a4724034cdfb97038d31d1a5733e914057f663da83e72e12555db702fdc8e2
-  normalized_sha256: sha256:d3a4724034cdfb97038d31d1a5733e914057f663da83e72e12555db702fdc8e2
-cas_ref: sha256:d3a4724034cdfb97038d31d1a5733e914057f663da83e72e12555db702fdc8e2
-coverage_gids:
-  - gid: D5/S3/Entropy/NamingWindow/GreenClassWindowHellinger.hellingerSq_windowLaw_product_defect
-    target_statement_id: sha256:b11da9db04680ce38d0b6dd7f145ab32a358c4c70f2c9e36cde30bf2fe15c77f
-receipts:
-  unresolved_subitems: []

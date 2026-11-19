@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7846c64026412160275eb73de849fa53e68a9e94829c7ca28619fbc7b491d3c9
-  normalized_sha256: sha256:7846c64026412160275eb73de849fa53e68a9e94829c7ca28619fbc7b491d3c9
-cas_ref: sha256:7846c64026412160275eb73de849fa53e68a9e94829c7ca28619fbc7b491d3c9
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineRecoveryExactThreshold.deterministic_recovery_exact_threshold
-    target_statement_id: sha256:d085a7b51dfa7ceed5810d4ae996e461325bbb3012830f76d702314694399f9f
-receipts:
-  unresolved_subitems: []

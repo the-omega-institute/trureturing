@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:50a65fc73f800a5c397eb164c7451697b73b4b7e0abf8e7c3395c2029be5766e
-  normalized_sha256: sha256:50a65fc73f800a5c397eb164c7451697b73b4b7e0abf8e7c3395c2029be5766e
-cas_ref: sha256:50a65fc73f800a5c397eb164c7451697b73b4b7e0abf8e7c3395c2029be5766e
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/PredictionPseudometrics/FiniteHorizonPredictionPseudometric.finite_horizon_prediction_pseudometric
-    target_statement_id: sha256:2e99b58910c486fbda766b0e70fc820816e7f34625411de39ad4a1d045a75ecb
-receipts:
-  unresolved_subitems: []

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:7e331fc9b47550b2e69184d7737b25aeb62a088c3060d17235f70460d328dd19","declarations":[{"declaration_name_key":"ns(ns(n0,10:Polynomial),26:subresultant_natDegree_gcd)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,10:Polynomial),44:subresultant_eq_C_mul_of_monic_commonDivisor)","kind":"theorem"}]}

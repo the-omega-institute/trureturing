@@ -5,11 +5,16 @@
    anchors: []
    digest: A finite word power is repeated concatenation, read modulo its period. -/
 
-import Mathlib.Data.List.Basic
+module
+
+public import Mathlib.Data.List.Basic
+
+public section
 
 namespace D5.S1.Words.Powers
 
 /-- The `k`-fold concatenation power of a finite word. -/
+@[expose]
 def wordPower {α : Type*} (k : Nat) (u : List α) : List α :=
   (List.replicate k u).flatten
 

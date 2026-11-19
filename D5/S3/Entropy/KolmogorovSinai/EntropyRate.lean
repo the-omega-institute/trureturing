@@ -580,7 +580,7 @@ namespace D5.S3.Entropy.KolmogorovSinai
 
 variable {α : Type*} {ι κ : Type*} {𝒜 : MeasurableSpace α} [mα : MeasurableSpace α]
 
-private theorem entropy_joinCells_of_refines [Fintype ι] [Fintype κ] {μ : Measure α}
+theorem entropy_joinCells_of_refines [Fintype ι] [Fintype κ] {μ : Measure α}
     (s : ι → Set α) (hs_meas : ∀ i, MeasurableSet (s i))
     (hs_disj : Pairwise (AEDisjoint μ on s)) (t : κ → Set α)
     (g : κ → ι) (hrefine : ∀ j, t j ≤ᵐ[μ] s (g j)) :

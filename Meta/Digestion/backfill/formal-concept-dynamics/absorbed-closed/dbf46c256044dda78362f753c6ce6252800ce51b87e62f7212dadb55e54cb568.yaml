@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dbf46c256044dda78362f753c6ce6252800ce51b87e62f7212dadb55e54cb568
-  normalized_sha256: sha256:dbf46c256044dda78362f753c6ce6252800ce51b87e62f7212dadb55e54cb568
-cas_ref: sha256:dbf46c256044dda78362f753c6ce6252800ce51b87e62f7212dadb55e54cb568
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.runWord
-    target_statement_id: sha256:2f9f059e60415f429623128efb6c8c285febf97c5fa064a3b9d5f3a9796b56ad
-receipts:
-  unresolved_subitems: []

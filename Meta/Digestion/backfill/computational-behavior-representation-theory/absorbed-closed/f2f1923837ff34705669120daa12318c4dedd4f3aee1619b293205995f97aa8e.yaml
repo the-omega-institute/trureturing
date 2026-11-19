@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f2f1923837ff34705669120daa12318c4dedd4f3aee1619b293205995f97aa8e
-  normalized_sha256: sha256:f2f1923837ff34705669120daa12318c4dedd4f3aee1619b293205995f97aa8e
-cas_ref: sha256:f2f1923837ff34705669120daa12318c4dedd4f3aee1619b293205995f97aa8e
-coverage_gids:
-  - gid: D5/S3/Observer/Hankel/FiniteSampleRankAmbiguity.finite_sample_rank_ambiguity
-    target_statement_id: sha256:50e22fef4bd807f281c24a9fb24c6a48bdc7f11675ce96ee6a7c9fdaafdb68ac
-receipts:
-  unresolved_subitems: []

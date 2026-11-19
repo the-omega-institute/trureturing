@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e852e61312b8f5870e9fd4b1e981bb1146091deb9695bd9b80f2d77271afc3db
-  normalized_sha256: sha256:e852e61312b8f5870e9fd4b1e981bb1146091deb9695bd9b80f2d77271afc3db
-cas_ref: sha256:e852e61312b8f5870e9fd4b1e981bb1146091deb9695bd9b80f2d77271afc3db
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaLinear/FiniteInversePoissonCriterion.finite_inverse_poisson_rh_criterion
-    target_statement_id: sha256:80d3c60ae9f00c0986adf55bdd255967a03f51974168c7136beb109cfa27374e
-receipts:
-  unresolved_subitems: []

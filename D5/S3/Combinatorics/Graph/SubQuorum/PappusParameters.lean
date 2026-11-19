@@ -7,6 +7,7 @@
    digest: Exact Pappus representative and sub-quorum maxima. -/
 
 import D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
+import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
 
 /-! The representative maximum and sub-quorum parameter of the fixed Pappus
 graph both equal ten. These positive certificates have no qualifying refutation
@@ -35,15 +36,14 @@ set_option maxRecDepth 8192 in
 /-- The Pappus representative upper bound is a consequence of the pair-packing bound. -/
 theorem omega_pappus : Omega pappusGraph = 10 := by
   classical
+  have regular : ∀ v, pappusGraph.degree v = 3 := by
+    simpa only [SimpleGraph.degree, SimpleGraph.neighborFinset_eq_filter, DegreeCapacity.degree]
+      using pappus_class.2.1
   have hu : Omega pappusGraph ≤ 10 := by
     apply omega_upper_of_objective_bound
     intro T M hf
-    by_cases he : T.card + M.card ≤ 9
-    · omega
-    · have hh := positive_excess_budget pappusGraph pappusColor pappusColor_valid
-        pappus_class.2.2 3 9 (by decide) pappus_class.2.1 (paritySide_card 9) T M hf (by omega)
-      norm_num at hh
-      omega
+    simpa using objective_general_bound pappusGraph pappusColor pappusColor_valid
+      pappus_class.2.2 3 9 (by decide) regular (paritySide_card 9) T M hf
   have hh := parameter_comparison pappusGraph
   rw [beta_pappus] at hh
   omega

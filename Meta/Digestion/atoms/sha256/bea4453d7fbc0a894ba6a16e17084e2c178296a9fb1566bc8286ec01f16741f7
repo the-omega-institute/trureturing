@@ -1,7 +1,0 @@
-**Definition 8.1 (the original fixed eight-state serving table).** Keep exactly the FCS Definition 10.1 / POC Proposition 11.1 table, writing $D_j$ for its three Read names. Install those three Reads and five whole-row Halts $H_0,\ldots,H_4$, with the entire §2 outputs and original entries $e_0=D_1,e_1=D_3$.
-
-| Read | Literal | alpha successor | beta successor | branch successor | absent successor |
-| --- | --- | --- | --- | --- | --- |
-| $D_1$ | $LLR$ | $H_1$ | $H_0$ | $D_2$ | $H_0$ |
-| $D_2$ | $LRR$ | $H_2$ | $H_0$ | $H_0$ | $H_0$ |
-| $D_3$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |

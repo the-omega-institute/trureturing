@@ -1,7 +1,0 @@
-例如 \(\mathcal M\) 可只读取：
-
-* 每个尺度的 diagonal Toeplitz block；
-* 各尺度 budget；
-* 若干 Loewner entries；
-* 少量 cross-scale pairings。
-

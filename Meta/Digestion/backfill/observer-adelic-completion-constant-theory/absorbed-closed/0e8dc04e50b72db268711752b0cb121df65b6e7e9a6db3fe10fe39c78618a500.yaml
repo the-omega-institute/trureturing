@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0e8dc04e50b72db268711752b0cb121df65b6e7e9a6db3fe10fe39c78618a500
-  normalized_sha256: sha256:0e8dc04e50b72db268711752b0cb121df65b6e7e9a6db3fe10fe39c78618a500
-cas_ref: sha256:0e8dc04e50b72db268711752b0cb121df65b6e7e9a6db3fe10fe39c78618a500
-coverage_gids:
-  - gid: D5/S3/Analytic/Characterizations/SymmetricShiftToroidalDefect.symmetric_shift_toroidal_hermite_biehler_defect
-    target_statement_id: sha256:ac1014adb0a39aacdc0531a9aa92b537508124504c3267b82efa208710140159
-receipts:
-  unresolved_subitems: []
