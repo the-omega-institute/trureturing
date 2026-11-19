@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The frozen six-column proper-colouring owner supplies the zero-temperature block.
+The six-column proper-colouring correspondence determines the zero-temperature block.
 
 **Definition 1.1 (The two-row rectangle).**
 

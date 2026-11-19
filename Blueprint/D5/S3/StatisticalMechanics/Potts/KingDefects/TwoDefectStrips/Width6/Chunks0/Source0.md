@@ -4,7 +4,7 @@
 
 Exact successor multisets at canonical boundary states.
 
-The finite certificate establishes the domain successor multiset and its labelled-row multiplicities. These transition facts supply content for the later transfer proof.
+For the source indices in the displayed range, the sorted list of admissible labelled successors, mapped to their residual-budget classes, equals the class list selected by the source class. Repeated class entries record successor multiplicities.
 
 **Theorem 1.1 (Source states 0 through 2).**
 
@@ -18,7 +18,7 @@ $$\forall (i: \operatorname{Fin}\left(3\right)), (\operatorname{Data}.\operatorn
 
 *Commentary.*
 
-The source table supplies a canonical row and residual budget. Every admissible labelled next row contributes its new class, including multiplicity; sorting gives the class list. The three source identities are checked separately and assembled by cases on the source index. These identities determine the quotient transfer.
+The source table supplies a canonical row and residual budget. Every admissible labelled next row contributes its new class, including multiplicity; sorting gives the class list. These identities determine the quotient transfer.
 
 ## References
 

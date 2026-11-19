@@ -4,7 +4,7 @@
 
 Coordinate identities for width-six king transfers.
 
-This certificate checks the terminal indicator on every admissible row and residual budget. It establishes the domain meaning of the terminal vector. The six colour coordinates are reconstructed exactly, with the first two fixed before each finite kernel check.
+For every admissible six-position row and residual budget, the terminal class value is the indicator that the residual budget is zero.
 
 **Theorem 1.1 (Terminal).**
 

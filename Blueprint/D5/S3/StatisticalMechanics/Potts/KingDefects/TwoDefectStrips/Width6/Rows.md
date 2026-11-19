@@ -4,7 +4,7 @@
 
 Canonical width-six boundary rows.
 
-The row table and equality-pattern index are data definitions. Reconstruction is the content certificate that every canonical boundary is represented by its selected entry.
+The equality-pattern index selects a row-table entry for each boundary. For every canonical boundary, the selected entry equals that boundary.
 
 **Remark 1.1 (Canonical rows).**
 

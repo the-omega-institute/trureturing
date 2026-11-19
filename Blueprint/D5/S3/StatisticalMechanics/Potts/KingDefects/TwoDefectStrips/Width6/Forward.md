@@ -4,7 +4,7 @@
 
 The finite data support the literal width-six king-grid recurrence.
 
-The initial and terminal certificates establish the domain interpretation of the table. The Krylov identities normalize the resulting integer entries; the combined certificate retains the domain content.
+The initial vector counts admissible first rows, and the terminal vector indicates zero residual budget. The forward vectors are successive products with the transfer matrix and satisfy the displayed order-six relation.
 
 **Theorem 1.1 (Acceptance, initialization and the forward relation).**
 
@@ -18,7 +18,7 @@ $$(\forall (p: \operatorname{Data}.\operatorname{Row}), (\forall (d: \operatorna
 
 *Commentary.*
 
-For every valid row and budget, the terminal entry is the zero-budget indicator. The initial vector counts first rows. W(0)=initial and W(i+1)=W(i)T for i=0,...,10. Finally W(11)=-8W(5)+36W(6)-66W(7)+63W(8)-33W(9)+9W(10). Every identity is kernel checked.
+For every valid row and budget, the terminal entry is the zero-budget indicator. The initial vector counts first rows. W(0)=initial and W(i+1)=W(i)T for i=0,...,10. Finally W(11)=-8W(5)+36W(6)-66W(7)+63W(8)-33W(9)+9W(10).
 
 ## References
 

@@ -7,7 +7,7 @@ internal sealed class RowsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Rows.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229753");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Canonical width-six boundary rows.", H("Canonical row enumeration"), Blocks(Paragraph(Text("The row table and equality-pattern index are data definitions. Reconstruction is the content certificate that every canonical boundary is represented by its selected entry.")),
+        "Canonical width-six boundary rows.", H("Canonical row enumeration"), Blocks(Paragraph(Text("The equality-pattern index selects a row-table entry for each boundary. For every canonical boundary, the selected entry equals that boundary.")),
             Describe.Remark(DescribeId.Create("rows"), DeclarationHandle.Create(Prefix + "rows"),
                 H("Canonical rows"), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "The type is Fin 187 -> Data.Row. Each entry is a six-position word over Fin 4 in first-appearance order. The reconstruction theorem pins this table's coverage.")))),

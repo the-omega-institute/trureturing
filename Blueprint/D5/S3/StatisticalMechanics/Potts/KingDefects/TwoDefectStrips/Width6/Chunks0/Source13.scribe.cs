@@ -7,7 +7,7 @@ internal sealed class Source13Document : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Chunks0/Source13.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229753");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exact successor multisets at canonical boundary states.", H("Width-six source transitions"), Blocks(Paragraph(Text("The finite certificate establishes the domain successor multiset and its labelled-row multiplicities. These transition facts supply content for the later transfer proof.")),
+        "Exact successor multisets at canonical boundary states.", H("Width-six source transitions"), Blocks(Paragraph(Text("For the source indices in the displayed range, the sorted list of admissible labelled successors, mapped to their residual-budget classes, equals the class list selected by the source class. Repeated class entries record successor multiplicities.")),
             Describe.Lean(DescribeId.Create("successor-rows"), DeclarationHandle.Create(Prefix + "successor_rows"),
                 H("Source states 0 through 47"), StatementSource.FromAuthor(Disp(Formula())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(

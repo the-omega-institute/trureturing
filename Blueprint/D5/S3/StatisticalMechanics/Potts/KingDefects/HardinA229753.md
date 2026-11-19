@@ -4,7 +4,7 @@
 
 Four-colour width-six king arrays with exactly two monochromatic bonds.
 
-The result uses the new defect-domain successor and initial certificates, the list-to-grid bridge and the colour-normalization proof. Inlining these dependencies retains their mathematical content; the subsequent Krylov and integer calculations normalize the certified table.
+The successor multiplicities and initial row counts define a 96-class transfer for labelled width-six arrays with exactly two monochromatic bonds. Its forward vectors satisfy an order-six relation, and colour normalization gives the recurrence for the literal grid count.
 
 **Theorem 1.1 (The width-six six-term recurrence).**
 

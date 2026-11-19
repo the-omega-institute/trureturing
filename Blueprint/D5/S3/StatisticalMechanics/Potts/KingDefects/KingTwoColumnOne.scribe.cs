@@ -11,7 +11,7 @@ internal sealed class KingTwoColumnOneDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Canonical four-colour paths with exactly two equal adjacent pairs.", H("Two-defect paths"),
-        Blocks(Paragraph(Text("The prefix and adjacent-edge reconstructions, finite state transition counts and count-to-matrix induction establish the domain counting correspondence. The recurrence consumes this content together with the arithmetic matrix certificate.")),
+        Blocks(Paragraph(Text("The prefix and adjacent-edge reconstructions express the number of canonical two-defect paths as a sum of walk weights on the twelve states recording the number of introduced colours and the residual defect budget. The transition multiplicities and matrix iterates give the displayed recurrence.")),
             Node("result", "The width-one six-term recurrence", Formula0(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
                 "A one-column king array is a path. Its canonical word starts with colour zero. After this first cell, a state records the number m of introduced colours and the remaining defect budget d, where 1 <= m <= 4 and 0 <= d <= 2. There are m-1 existing colours different from the preceding colour, one equal colour if a defect remains, and one new colour when m < 4. These transitions count two-colour words as well as words using three or four colours."),

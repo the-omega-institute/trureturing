@@ -10,7 +10,7 @@ internal sealed class ZeroTemperatureDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Automata/hardin2013a233166");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The frozen six-column proper-colouring owner supplies the zero-temperature block.",
+        "The six-column proper-colouring correspondence determines the zero-temperature block.",
         H("Width-six proper successors from the zone owner"),
         Blocks(
             Node("two-rows", "The two-row rectangle", "twoRows",

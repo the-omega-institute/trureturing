@@ -6,7 +6,7 @@ internal sealed class TerminalDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229753");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Coordinate identities for width-six king transfers.", H("Width-six transfer identities"), Blocks(Paragraph(Text("This certificate checks the terminal indicator on every admissible row and residual budget. It establishes the domain meaning of the terminal vector. The six colour coordinates are reconstructed exactly, with the first two fixed before each finite kernel check.")),
+        "Coordinate identities for width-six king transfers.", H("Width-six transfer identities"), Blocks(Paragraph(Text("For every admissible six-position row and residual budget, the terminal class value is the indicator that the residual budget is zero.")),
             Describe.Lean(DescribeId.Create("certificate"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/Potts/KingDefects/TwoDefectStrips/Width6/Pins/Terminal.certificate"),
                 H("Terminal"), StatementSource.FromAuthor(Disp(All("p", Call("Data.Row"), All("d", Call("Fin", Num("3")), Imp(Call("Data.Valid", V("p"), Call("Fin.val", V("d"))), Eq(Call("Data.terminal", Call("Data.cl", V("p"), Call("Fin.val", V("d")))), Conditional(Eq(Call("Fin.val", V("d")), Num("0")), Num("1"), Num("0")))))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("At every valid source the terminal class value is one exactly when the residual budget is zero."))), DescribeRole.Theorem))));

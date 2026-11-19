@@ -4,7 +4,7 @@
 
 The finite data support the literal fixed-width king-grid recurrence.
 
-The list-length induction establishes the decomposition of the defect count into row and interface sums. The literal bridge uses that decomposition on its live counting path.
+The defect count of a row list is the sum of its horizontal row costs and consecutive-row interface costs. Under the king-bond formulas, this sum equals the number of monochromatic grid bonds.
 
 **Theorem 1.1 (Row-list costs as two finite sums).**
 

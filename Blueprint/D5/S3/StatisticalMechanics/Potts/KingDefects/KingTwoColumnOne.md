@@ -4,7 +4,7 @@
 
 Canonical four-colour paths with exactly two equal adjacent pairs.
 
-The prefix and adjacent-edge reconstructions, finite state transition counts and count-to-matrix induction establish the domain counting correspondence. The recurrence consumes this content together with the arithmetic matrix certificate.
+The prefix and adjacent-edge reconstructions express the number of canonical two-defect paths as a sum of walk weights on the twelve states recording the number of introduced colours and the residual defect budget. The transition multiplicities and matrix iterates give the displayed recurrence.
 
 **Theorem 1.1 (The width-one six-term recurrence).**
 

@@ -11,7 +11,7 @@ internal sealed class HardinA229753Document : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-colour width-six king arrays with exactly two monochromatic bonds.", H("Two-defect width-six king arrays"),
-        Blocks(Paragraph(Text("The result uses the new defect-domain successor and initial certificates, the list-to-grid bridge and the colour-normalization proof. Inlining these dependencies retains their mathematical content; the subsequent Krylov and integer calculations normalize the certified table.")),
+        Blocks(Paragraph(Text("The successor multiplicities and initial row counts define a 96-class transfer for labelled width-six arrays with exactly two monochromatic bonds. Its forward vectors satisfy an order-six relation, and colour normalization gives the recurrence for the literal grid count.")),
             Node("result", "The width-six six-term recurrence", Formula0(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source),
                 "The literal count T(n,6) includes exactly two monochromatic horizontal, vertical, diagonal or antidiagonal bonds and uses row-major colour introduction. The 96-class exact-budget transfer counts labelled colourings. For n >= 2, KingTwoGrid.labelled_eq_twentyFour divides by 24; three occurring colours suffice for the free permutation action. The recurrence holds for every n >= 12, including the threshold."),
