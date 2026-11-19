@@ -12,6 +12,7 @@ open D5.S3.Combinatorics.Graph.Hypercube
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical
 
 open BalancedCriticalSpectrum (Q IsBalanced)
+attribute [local instance] Classical.propDecidable
 
 open private sum_ofFn_int from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
