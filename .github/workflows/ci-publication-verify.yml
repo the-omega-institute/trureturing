@@ -270,7 +270,7 @@ jobs:
           index=build/lean-cache/shards/index.json
           prefix="$(python3 tools/scripts/worktree/lean_actions_shards.py identity --state resume | jq -er .prefix)"
           digest="$(jq -er '.entries | to_entries[0].value' "$index")"
-          gh cache delete --ref "$GITHUB_REF" "${prefix}material-$digest"
+          gh cache delete --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF" "${prefix}material-$digest"
           mv .lake/build .lake/shard-verification-recovered
       - if: steps.entry.outputs.hit == 'true'
         id: evicted
