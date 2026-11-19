@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0c2b3aa95969e2b430be276e27b24cb01d2dc05a321000a95596643f57d8de21
-  normalized_sha256: sha256:0c2b3aa95969e2b430be276e27b24cb01d2dc05a321000a95596643f57d8de21
-cas_ref: sha256:0c2b3aa95969e2b430be276e27b24cb01d2dc05a321000a95596643f57d8de21
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Provenance/SourceCutsetHittingDuality.source_cutset_hitting_duality
-    target_statement_id: sha256:d8360d8a3699f80ebf9fff1e30c1846e56f93c1d14b12208933586d2b56bb931
-receipts:
-  unresolved_subitems: []

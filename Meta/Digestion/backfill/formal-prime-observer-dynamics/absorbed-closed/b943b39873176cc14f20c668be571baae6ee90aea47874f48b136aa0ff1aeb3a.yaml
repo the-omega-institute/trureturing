@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b943b39873176cc14f20c668be571baae6ee90aea47874f48b136aa0ff1aeb3a
-  normalized_sha256: sha256:b943b39873176cc14f20c668be571baae6ee90aea47874f48b136aa0ff1aeb3a
-cas_ref: sha256:b943b39873176cc14f20c668be571baae6ee90aea47874f48b136aa0ff1aeb3a
-coverage_gids:
-  - gid: D5/S3/Factorization/Embeddings/FiniteValuationPortraitObjectLayer.finite_valuation_portrait_eq_iff_base_unit_ratio
-    target_statement_id: sha256:11b890ec8d2055e9925ffab15bcdc407fa06a43961d94615bf15ca9315ef9a20
-receipts:
-  unresolved_subitems: []

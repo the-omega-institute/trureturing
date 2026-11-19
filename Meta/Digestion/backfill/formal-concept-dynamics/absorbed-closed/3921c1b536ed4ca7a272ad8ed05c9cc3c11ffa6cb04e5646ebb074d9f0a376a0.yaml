@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3921c1b536ed4ca7a272ad8ed05c9cc3c11ffa6cb04e5646ebb074d9f0a376a0
-  normalized_sha256: sha256:3921c1b536ed4ca7a272ad8ed05c9cc3c11ffa6cb04e5646ebb074d9f0a376a0
-cas_ref: sha256:3921c1b536ed4ca7a272ad8ed05c9cc3c11ffa6cb04e5646ebb074d9f0a376a0
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Topology/ConnectedDiscreteNamingDiscontinuity.connected_discrete_naming_discontinuity
-    target_statement_id: sha256:3b3e87d80bdbfdcfb1c5f744dbccef21707d2b76ac0c433b3fba6ea60d50d894
-receipts:
-  unresolved_subitems: []

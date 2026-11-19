@@ -1,0 +1,18 @@
+**Lemma 118.1 (The original $H^0$ is pure transitive).** The identity
+component $H^0$ of the given compact matrix group acts transitively
+on all of $P$.
+
+Proof. By Lemma 116.1, $P$ is connected. A compact matrix Lie group
+has finitely many components, and $H^0$ is normal. For $p\in P$
+and representatives $h_i$ of $H/H^0$, transitivity of $H$ gives
+
+$$
+P=Hp=\bigcup_i H^0h_i p.
+\tag{118.1}
+$$
+
+Every orbit in this finite union is compact, hence closed. Distinct
+orbits are disjoint, so their distinct values form a finite closed
+partition of connected $P$. Each part has closed complement, and
+there can only be one. ∎
+

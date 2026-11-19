@@ -1,5 +1,0 @@
-它是缺陷忠实的：
-
-* 反射会遗忘 \(\operatorname{sgn}\delta\)；
-* 但不会遗忘 \(|\delta|\)。
-

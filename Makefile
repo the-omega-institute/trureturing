@@ -15,14 +15,14 @@ export FULL_BUILD ?= 0
 export LEAN_SKIP_LOCK ?= 0
 # .NET processes started from these targets create no diagnostic pipes or sockets.
 export DOTNET_EnableDiagnostics ?= 0
-.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch ingest migrate-atom-context mathlib-reanchor source-dispatch search-atoms show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose settle settle-clear retire-sources worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test compiled-fib-test require-full-build
+.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch mathlib-reanchor truth-export deliver-check deposit deposit-uncovered worktree worktree-clean worktree-remove worktree-pending worktree-checkpoint worktree-publish worktree-finalize worktree-return worktree-stale pr pr-open pr-watch gate gate-plan ci-unit compiled-judge-test compiled-fib-test require-full-build
 
 require-full-build:
 	@test "$(FULL_BUILD)" = 1 || { echo 'full build requires explicit FULL_BUILD=1; use scoped targets instead' >&2; exit 2; }
 
 help:
 	@printf '%s\n' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR and wait for checks; this is no merge certificate; after MERGED and first dev push verification continue in the same worktree from fresh dev per CLAUDE.md 6.1; use worktree-stale when finished; auto-merge defaults on; drafts return without watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit; this is no merge certificate' 'make lean-cache-ensure [RESTORE_DEPENDENCIES=1]  Ensure cache; explicitly add missing dependencies to an already-stamped linked worktree, retaining existing bytes for native Lake validation' 'make lean LEAN_TARGETS="..." | make lean FULL_BUILD=1 [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test FULL_BUILD=1  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Reuse compatible clean trees; notify background maintenance without waiting for cleanup' 'make gate [BASE=origin/dev] [PURPOSE=pull-request|push]  Run all applicable shared CI checks' 'make gate-plan [BASE=origin/dev] [PURPOSE=pull-request|push]  Show identities and applicable checks without execution' 'make ci-unit UNIT=id  Run one declared CI unit with its canonical preparation and evidence' 'make lean-report-scoped LEAN_TARGETS="D5.Module [Reg.Module ...]"  Build and inspect explicit targets, named utility inputs and imports; requires no full report' 'make lean-report FULL_BUILD=1 [REBUILD_REPORT_CACHE=1 | REGENERATE_REPORT_ARTIFACTS=1]  Full report; regenerate explicitly discards generated reports while retaining compiled Lean' 'make emit [BASE=origin/dev] [PATHS=FILE] [EMIT_FULL_REPORT=FILE]  Emit from selected scoped Lean inputs or an existing validated full report bundle' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make filemap-conform [FILEMAP_SCOPE=path | FILEMAP_PRODUCER=name]  Build and run standalone conformance' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack' 'make worktree-pending  Show the current-agent advisory pending view' \
-		'make worktree-checkpoint MESSAGE=FILE  Commit the ordinary whole working snapshot' 'make worktree-publish HEAD=BRANCH [COMMIT=HEAD]  Non-force publication with fresh remote ancestry confirmation' 'make worktree-finalize HEAD=BRANCH WRITERS_JOINED=1  Publish after host joins this task writers' 'make worktree-stale [WORKTREE_PATH=DIR]  Mark the current branch stale' 'make worktree-return [WORKTREE_PATH=DIR]  Same native stale marker' 'make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]  Remove named worktrees; explicit FORCE=1 disables the 1800-second removal timeout' 'make retire-sources SOURCES="id id ..." [MODE=archive|delete] [WRITE=1]  Preview or atomically retire complete theory sources and their atoms; retain Lean and CAS' 'make source-dispatch SOURCES="id id ..." [DEFAULT=excluded|eligible]  Read or update source default dispatch' 'make mathlib-reanchor BASE=REV [OLD_REPORT=PATH]  Reanchor Frozen using the candidate report and optional historical content witness' 'make search-atoms SOURCE=id [SELECTION=default-dispatch]  Search stored paths or default candidates'
+		'make worktree-checkpoint MESSAGE=FILE  Commit the ordinary whole working snapshot' 'make worktree-publish HEAD=BRANCH [COMMIT=HEAD]  Non-force publication with fresh remote ancestry confirmation' 'make worktree-finalize HEAD=BRANCH WRITERS_JOINED=1  Publish after host joins this task writers' 'make worktree-stale [WORKTREE_PATH=DIR]  Mark the current branch stale' 'make worktree-return [WORKTREE_PATH=DIR]  Same native stale marker' 'make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]  Remove named worktrees; explicit FORCE=1 disables the 1800-second removal timeout' 'make mathlib-reanchor BASE=REV [OLD_REPORT=PATH]  Reanchor Frozen using the candidate report and optional historical content witness'
 
 test: require-full-build
 	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; git diff --name-only -z "$(BASE)" -- > "$$paths"; git ls-files --others --exclude-standard -z >> "$$paths"; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)" --scribe-paths-from "$$paths"
@@ -99,30 +99,9 @@ scribe-release-publish scribe-release-fetch: export PREFIX ?= scribe-resources
 scribe-release-publish: export TARGET ?=
 scribe-release-fetch: export DIGEST ?=
 
-ingest:
-	@/bin/bash tools/scripts/ingest.sh ingest "$(SOURCE)"
-
 mathlib-reanchor:
-	@/bin/bash tools/scripts/ingest.sh mathlib-reanchor "$(BASE)" "$$REANCHOR_OLD_REPORT"
+	@/bin/bash tools/scripts/mathlib-reanchor.sh "$(BASE)" "$$REANCHOR_OLD_REPORT"
 mathlib-reanchor: export REANCHOR_OLD_REPORT := $(value OLD_REPORT)
-
-migrate-atom-context:
-	@dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo --verbosity quiet && dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- migrate-atom-context $(if $(SOURCE),--source "$(SOURCE)",--all) $(if $(ATOM_ID),--atom-id "$(ATOM_ID)",) $(if $(SOURCE_REVISION),--source-revision "$(SOURCE_REVISION)",) $(if $(filter 1,$(WRITE)),--write,)
-
-source-dispatch:
-	@args=(); for source in $$DISPATCH_SOURCES; do args+=(--source "$$source"); done; test -z "$$DISPATCH_DEFAULT" || args+=(--default "$$DISPATCH_DEFAULT"); dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- source-dispatch "$${args[@]}"
-source-dispatch: export DISPATCH_SOURCES := $(value SOURCES)
-source-dispatch: export DISPATCH_DEFAULT := $(value DEFAULT)
-unexport SOURCES DEFAULT
-
-search-atoms:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- search-atoms --source "$(SOURCE)" $(if $(SELECTION),--selection "$(SELECTION)",) $(if $(TEXT),--text "$(TEXT)",) $(if $(STATE),--state "$(STATE)",) $(if $(LIMIT),--limit "$(LIMIT)",)
-
-show-atom:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- show-atom --atom-id "$(ATOM_ID)" $(if $(SOURCE),--source "$(SOURCE)",)
-
-atom-context:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- atom-context --atom-id "$(ATOM_ID)" $(if $(SOURCE),--source "$(SOURCE)",)
 
 truth-export:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- truth-export --out "$(OUT)" --candidate-lean-report "$(LEAN_REPORT)"
@@ -132,32 +111,10 @@ deliver-check:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deliver-check "$(BASE)"
 
 deposit:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deposit "$(BASE)" "$(ATOM_ID)" "$(GID)"
+	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deposit "$(BASE)" "$(GID)"
 
 deposit-uncovered:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deposit-uncovered "$(BASE)" "$(GID)"
-
-cover:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(ATOM_ID)" "$(GID)"
-
-cover-batch:
-	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover-batch "$(ATOMS)"
-
-decompose:
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- decompose-atom --atom "$(ATOM_ID)" $(foreach offset,$(SPLIT_AT),--split-at "$(offset)") $(if $(filter 1,$(DRY_RUN)),--dry-run,)
-
-settle:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --request "$(REQUEST)"
-
-retire-sources:
-	@/bin/bash tools/scripts/retire-sources.sh
-retire-sources: export RETIRE_SOURCES := $(value SOURCES)
-retire-sources: export RETIRE_MODE := $(if $(MODE),$(value MODE),archive)
-retire-sources: export RETIRE_WRITE := $(if $(WRITE),$(value WRITE),0)
-unexport SOURCES MODE WRITE
-
-settle-clear:
-	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --clear "$(ATOM_ID)"
 
 worktree:
 	@/bin/bash tools/scripts/worktree-init.sh "$(KIND)" "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)" "$${WORKTREE_ALLOW_LOW_DISK}"

@@ -1,6 +1,0 @@
-**Definition 18.3 (a source-independent entry traversal).** Starting with the armed entry, maintain a finite stack of logical addresses, initially just $\varepsilon$. At each visit to an address $p$, issue the real $P_p$ and consume its complete reply.
-
-1. A branch refusal records a branch and schedules $pL,pR$ in left-first order.
-2. Growth$(P,p)$ records an entry $\alpha$ leaf and completes its edit assay.
-3. A wrong-type refusal records an entry $\beta$ leaf; issue the real $S_p$, consume Growth$(S,p)$, and complete its edit assay.
-

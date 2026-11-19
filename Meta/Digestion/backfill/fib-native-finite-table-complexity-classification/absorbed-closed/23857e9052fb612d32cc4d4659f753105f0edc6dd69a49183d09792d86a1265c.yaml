@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:23857e9052fb612d32cc4d4659f753105f0edc6dd69a49183d09792d86a1265c
-  normalized_sha256: sha256:23857e9052fb612d32cc4d4659f753105f0edc6dd69a49183d09792d86a1265c
-cas_ref: sha256:23857e9052fb612d32cc4d4659f753105f0edc6dd69a49183d09792d86a1265c
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeInclusiveImagePartition.finite_exact_native_partition
-    target_statement_id: sha256:ea16ec65a482d412080a2a3ae637e488e0c419af71c0adf2ef0e85fe84816f6f
-receipts:
-  unresolved_subitems: []

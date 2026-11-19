@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:178002ff1bf2f09e57e6ae5b42f15dbfddb87bfc31417cd6a7b9e3b3b98139c8
-  normalized_sha256: sha256:178002ff1bf2f09e57e6ae5b42f15dbfddb87bfc31417cd6a7b9e3b3b98139c8
-cas_ref: sha256:178002ff1bf2f09e57e6ae5b42f15dbfddb87bfc31417cd6a7b9e3b3b98139c8
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Acquisition/NativeAncestryAcquisition.optimal_canonical_queries
-    target_statement_id: sha256:376ae1ff8bc1484a06d7824507d95bb546ecfe117bbdb6dbf07811a60f3ed20c
-receipts:
-  unresolved_subitems: []

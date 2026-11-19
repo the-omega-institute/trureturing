@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:20761c2ccb8187e0bddb45becc43fc85c0542598ac5da525bab41f9e6f47861d
-  normalized_sha256: sha256:20761c2ccb8187e0bddb45becc43fc85c0542598ac5da525bab41f9e6f47861d
-cas_ref: sha256:20761c2ccb8187e0bddb45becc43fc85c0542598ac5da525bab41f9e6f47861d
-coverage_gids:
-  - gid: D5/S3/Quantum/PredictionDepth/IncompleteObserverPhysicalCounterexample.incomplete_observer_physical_counterexample
-    target_statement_id: sha256:e4e4e43c09aa1990696271b873f1f436b43f378cb31a2294975cdd93641ade61
-receipts:
-  unresolved_subitems: []

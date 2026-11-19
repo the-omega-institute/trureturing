@@ -1,4 +1,0 @@
-## 442. 由有限控制器的名义证书取得完整停止输出预算
-
-第 441 节的完整停止输出界需要名义与实际两端的平均调用次数。本节固定第 440 节的装置，用一个有限活动空间上的名义算子不等式取得这两个预算，再直接代入定理 441.2。成本估计复用 [WAVE 卷第 68.1—68.3、70.1—70.2 条](https://github.com/the-omega-institute/trureturing/blob/fdde41e8bf565b35ce20bd7462d83e7b3a2c1b11/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md)的完整仪器漂移证书；装置、相位与停止输出均按[同一固定版本的本卷第 413、415、440、441 节](https://github.com/the-omega-institute/trureturing/blob/fdde41e8bf565b35ce20bd7462d83e7b3a2c1b11/docs/develop/theory/QUANTUM-REALITY.md)。
-

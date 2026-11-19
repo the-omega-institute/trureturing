@@ -7,7 +7,15 @@
    digest: Actual positive-word cutoff balls have weighted Lyndon polynomial growth. -/
 
 import Batteries.Tactic.OpenPrivate
+import D5.S1.Words.Complexity.PositivePairs.Coefficients.CutoffCoefficientAlgebra
+import D5.S1.Words.Complexity.PositivePairs.Coefficients.MagnusWordCoefficients
+import D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
+import D5.S1.Words.Complexity.PositivePairs.Digits.ActualLyndonDirections
+import D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitWords
+import D5.S1.Words.Complexity.VivionBinomialConverseFails
 import D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
+
+open D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall (scatteredCount_singleton_eq_count)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,7 +29,7 @@ open D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
 open D5.S1.Words.Complexity.PositivePairs.Digits.ActualLyndonDirections
 open D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitWords
 open D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
-open private scatteredCount_singleton_eq_count count_flatMap_replicate_of_nodup
+open private count_flatMap_replicate_of_nodup
   length_flatMap_replicate_le letterActualLyndonEquiv letterOrder letterBoxWord
   scaleDenominator fittingScale from
   D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall

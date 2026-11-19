@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c32245236310feda3567e05b919bf77ffa1f6b94ce4cc8761b21252633a65bdd
-  normalized_sha256: sha256:c32245236310feda3567e05b919bf77ffa1f6b94ce4cc8761b21252633a65bdd
-cas_ref: sha256:c32245236310feda3567e05b919bf77ffa1f6b94ce4cc8761b21252633a65bdd
-coverage_gids:
-  - gid: D5/S3/ResourceOrder/PriceCoordinates/AbundanceAccessBoundary.abundance_preserves_paid_access_difference
-    target_statement_id: sha256:d8375cef04e49ca525380fa16e9bef78fb7ded432624c3023af692e3cdf99f65
-receipts:
-  unresolved_subitems: []

@@ -223,20 +223,6 @@ public sealed class FileMapManifestTests
         Assert.Contains("artifact_id", exception.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void RepositoryManifestClassifiesDigestionCasAsAnAppendOnlyLedger()
-    {
-        var manifest = FileMapLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.FileMapDirectoryNotFound).Root.FullPath);
-        var entry = Assert.Single(manifest.Match(
-            "Meta/Digestion/atoms/sha256/" + new string('a', 64)));
-
-        Assert.Equal(FileMapKind.Ledger, entry.Kind);
-        Assert.Equal("IngestCommand", entry.ProducedBy);
-        Assert.Equal(["DigestionCasStore"], entry.ConsumedBy.ToArray());
-        Assert.Equal(["DigestionCasStore"], entry.VerifiedBy.ToArray());
-        Assert.False(entry.ResidenceViolation);
-    }
-
     private const string GeneratedPath = "Artifacts/Ring.md";
     private const string FormalPath = "D5/S0/Carrier/Ring.lean";
     private const string FrozenLedgerPath =

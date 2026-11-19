@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9a520e63594c921ae4bb3939e2855922b62a0dc5dc576511ab3058b7af476c35
-  normalized_sha256: sha256:9a520e63594c921ae4bb3939e2855922b62a0dc5dc576511ab3058b7af476c35
-cas_ref: sha256:9a520e63594c921ae4bb3939e2855922b62a0dc5dc576511ab3058b7af476c35
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometryLaws/WeightedJointUltrapseudometric.selectedJointReadout
-    target_statement_id: sha256:d873141d97c884e407a69165b31c9a8608d1322442555941698a2b3f815507c0
-receipts:
-  unresolved_subitems: []

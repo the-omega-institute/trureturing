@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:58cf69028307876badfcd4dc07cb7a3de8262b64ccd78424192c853d47ebffb0
-  normalized_sha256: sha256:58cf69028307876badfcd4dc07cb7a3de8262b64ccd78424192c853d47ebffb0
-cas_ref: sha256:58cf69028307876badfcd4dc07cb7a3de8262b64ccd78424192c853d47ebffb0
-coverage_gids:
-  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
-    target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
-receipts:
-  unresolved_subitems: []
