@@ -6,7 +6,7 @@
    utility: none
    digest: Pure-point exhaustion on the full original carrier gives an attained mixed-state comparison and complementary least confirming effects. -/
 
-import D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
+import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 import Mathlib.Analysis.Convex.KreinMilman
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
@@ -35,102 +35,6 @@ def cConfirms (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (p : A)
 def cComparison (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (p x : A) : ℝ :=
   sInf {r | ∃ f : A →L[ℝ] ℝ, cConfirms C u p f ∧ f x = r}
 
-private theorem cProper_eq_set (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
-    {f : A →L[ℝ] ℝ | cProper C u f} =
-      {f : A →L[ℝ] ℝ | ∀ x : C, 0 ≤ f x ∧ f x ≤ u x} := by
-  ext f
-  constructor
-  · intro hf x
-    exact hf x.1 x.2
-  · intro hf x hx
-    exact hf ⟨x, hx⟩
-
-private theorem cProper_closed (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
-    IsClosed {f : A →L[ℝ] ℝ | cProper C u f} := by
-  rw [cProper_eq_set]
-  have h0 : IsClosed (⋂ x : C, {f : A →L[ℝ] ℝ | 0 ≤ f x}) :=
-    isClosed_iInter (fun x : C => isClosed_le continuous_const
-      (ContinuousLinearMap.apply ℝ ℝ (x : A)).continuous)
-  have h1 : IsClosed (⋂ x : C, {f : A →L[ℝ] ℝ | f x ≤ u x}) :=
-    isClosed_iInter (fun x : C => isClosed_le
-      (ContinuousLinearMap.apply ℝ ℝ (x : A)).continuous continuous_const)
-  rw [show {f : A →L[ℝ] ℝ | ∀ x : C, 0 ≤ f x ∧ f x ≤ u x} =
-      (⋂ x : C, {f : A →L[ℝ] ℝ | 0 ≤ f x}) ∩
-        (⋂ x : C, {f : A →L[ℝ] ℝ | f x ≤ u x}) by
-    ext f
-    simp only [Set.mem_inter_iff, Set.mem_iInter, Set.mem_setOf_eq, forall_and]]
-  exact h0.inter h1
-
-private theorem pure_representation
-    (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (hclosed : IsClosed (C : Set A))
-    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hspan : Submodule.span ℝ (C : Set A) = ⊤) :
-    ∀ i : Fin (Module.finrank ℝ A),
-      ∃ (s : Finset A) (c : A → ℝ),
-        (↑s : Set A) ⊆ pure C u ∧ Function.support c ⊆ (↑s : Set A) ∧
-          (∑ a ∈ s, c a • a) = Module.finBasis ℝ A i := by
-  intro i
-  have hK := base_compact hclosed hstrict
-  have hP := pure_span hK hstrict hspan
-  obtain ⟨c, s, hs, hcs, hsum⟩ := Submodule.mem_span_iff_exists_finset_subset.mp
-    (by rw [hP]; trivial : Module.finBasis ℝ A i ∈ Submodule.span ℝ (pure C u))
-  exact ⟨s, c, hs, hcs, hsum⟩
-
-private theorem cProper_basis_bound
-    (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (hclosed : IsClosed (C : Set A))
-    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hspan : Submodule.span ℝ (C : Set A) = ⊤) :
-    ∃ M : ℝ, 0 ≤ M ∧
-      ∀ f : A →L[ℝ] ℝ, cProper C u f →
-        ‖f‖ ≤ Fintype.card (Fin (Module.finrank ℝ A)) •
-          ‖((Module.finBasis ℝ A).equivFunL : A →L[ℝ] (Fin (Module.finrank ℝ A) → ℝ))‖ * M := by
-  classical
-  choose s c hs hcs hsum using pure_representation C u hclosed hstrict hspan
-  let M : ℝ := ∑ i : Fin (Module.finrank ℝ A), ∑ a ∈ s i, ‖c i a‖
-  have hM : 0 ≤ M := by
-    dsimp [M]
-    exact Finset.sum_nonneg (fun i _ => Finset.sum_nonneg (fun a _ => abs_nonneg _))
-  refine ⟨M, hM, ?_⟩
-  intro f hf
-  apply Module.Basis.opNorm_le (Module.finBasis ℝ A) hM
-  intro i
-  have hterm (a : A) (ha : a ∈ s i) : ‖f (c i a • a)‖ ≤ ‖c i a‖ := by
-    have haP : a ∈ pure C u := hs i ha
-    have haC := (pure_mem ⟨a, haP⟩).1
-    have hau := (pure_mem ⟨a, haP⟩).2
-    have hfa := hf a haC
-    have hnorm : ‖f a‖ ≤ 1 := by
-      rw [Real.norm_eq_abs]
-      exact (abs_le.2 ⟨by linarith [hfa.1], hau ▸ hfa.2⟩)
-    calc
-      ‖f (c i a • a)‖ = ‖c i a • f a‖ := by rw [map_smul]
-      _ = ‖c i a‖ * ‖f a‖ := norm_smul _ _
-      _ ≤ ‖c i a‖ * 1 := mul_le_mul_of_nonneg_left hnorm (norm_nonneg _)
-      _ = ‖c i a‖ := mul_one _
-  have hbi : ‖f (Module.finBasis ℝ A i)‖ ≤ ∑ a ∈ s i, ‖c i a‖ := by
-    rw [← hsum i, map_sum]
-    exact (norm_sum_le _ _).trans (Finset.sum_le_sum fun a ha => hterm a ha)
-  exact hbi.trans (Finset.single_le_sum (s := Finset.univ)
-    (f := fun j : Fin (Module.finrank ℝ A) => ∑ a ∈ s j, ‖c j a‖)
-    (fun j _ => Finset.sum_nonneg (fun a _ => norm_nonneg _)) (Finset.mem_univ i))
-
-theorem proper_compact
-    (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (hclosed : IsClosed (C : Set A))
-    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hspan : Submodule.span ℝ (C : Set A) = ⊤) :
-    IsCompact {f : A →L[ℝ] ℝ | cProper C u f} := by
-  apply Metric.isCompact_iff_isClosed_bounded.mpr
-  refine ⟨cProper_closed C u, ?_⟩
-  obtain ⟨M, hM, hbound⟩ := cProper_basis_bound C u hclosed hstrict hspan
-  refine isBounded_iff_forall_norm_le.mpr ⟨
-    Fintype.card (Fin (Module.finrank ℝ A)) •
-      ‖((Module.finBasis ℝ A).equivFunL : A →L[ℝ] (Fin (Module.finrank ℝ A) → ℝ))‖ * M, ?_⟩
-  intro f hf
-  exact hbound f hf
-
 theorem face_nonempty
     (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x) (p : pure C u) :
@@ -154,7 +58,7 @@ theorem face_compact
       ({f : A →L[ℝ] ℝ | cConfirms C u p f} : Set (A →L[ℝ] ℝ)).Nonempty := by
   have hnonempty := face_nonempty C u hstrict p
   refine ⟨?_, ?_, hnonempty⟩
-  · apply (proper_compact C u hclosed hstrict hspan).inter_right
+  · apply (ContinuousFrameSum.effects_compact hstrict hspan).inter_right
     exact isClosed_eq
       (ContinuousLinearMap.apply ℝ ℝ (p : A)).continuous continuous_const
   · intro _
@@ -189,32 +93,14 @@ theorem cComparison_eq_comparison
   · rintro ⟨f, hf, hfx⟩
     exact ⟨LinearMap.toContinuousLinearMap f, ⟨fun y hy => hf.1 y hy, hf.2⟩, hfx⟩
 
-theorem comparison_attained
+private theorem comparison_attained_linear
     (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (hclosed : IsClosed (C : Set A))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hspan : Submodule.span ℝ (C : Set A) = ⊤)
-    (p : pure C u) (x : A) (hx : x ∈ C) :
+    (p : pure C u) (x : A) :
     ∃ f : A →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = comparison C u p x := by
-  obtain ⟨hcompact, _, hnonempty⟩ := face_compact C u hclosed hstrict hspan p
-  obtain ⟨f, hf, hmin⟩ := hcompact.exists_isMinOn hnonempty
-    ((ContinuousLinearMap.apply ℝ ℝ x).continuous.continuousOn)
-  have hbounded : BddBelow {r : ℝ | ∃ g : A →L[ℝ] ℝ,
-      cConfirms C u p g ∧ g x = r} := ⟨0, by
-    rintro r ⟨g, hg, rfl⟩
-    exact (hg.1 x hx).1⟩
-  refine ⟨f.toLinearMap, ⟨fun y hy => hf.1 y hy, hf.2⟩, ?_⟩
-  rw [← cComparison_eq_comparison C u p x]
-  apply le_antisymm
-  · refine le_csInf (s := {r : ℝ | ∃ g : A →L[ℝ] ℝ,
-      cConfirms C u p g ∧ g x = r}) ?_ ?_
-    · obtain ⟨g, hg⟩ := face_nonempty C u hstrict p
-      exact ⟨g x, g, hg, rfl⟩
-    · intro r hr
-      obtain ⟨g, hg, hgr⟩ := hr
-      have hfg : f x ≤ g x := hmin hg
-      exact hgr ▸ hfg
-  · exact csInf_le hbounded ⟨f, hf, rfl⟩
+  obtain ⟨f, hf, hvalue⟩ := ExclusionWidthCompactness.comparison_attained hstrict hspan p x
+  exact ⟨f.toLinearMap, ⟨hf.1, hf.2⟩, hvalue.symm⟩
 
 private theorem cComparison_lower
     (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (hclosed : IsClosed (C : Set A))
@@ -303,8 +189,7 @@ private theorem pair_relation_mixed
     have h := hrel p
     rw [cComparison_self C u hclosed hstrict hspan p] at h
     linarith
-  obtain ⟨fq, hfq, hfp⟩ := comparison_attained C u hclosed hstrict hspan q (p : A)
-    (pure_mem p).1
+  obtain ⟨fq, hfq, hfp⟩ := comparison_attained_linear C u hstrict hspan q (p : A)
   have hfp0 : fq p = 0 := by
     rw [hfp, ← cComparison_eq_comparison C u q (p : A), hpq0]
   let Fq : A →L[ℝ] ℝ := LinearMap.toContinuousLinearMap fq
@@ -357,8 +242,8 @@ private theorem pair_relation_mixed
       (base_convex C u)]
     exact closure_minimal hsubsetS hclosedS
   intro x hx
-  obtain ⟨ep, hep, hepx⟩ := comparison_attained C u hclosed hstrict hspan p x hx.1
-  obtain ⟨eq, heq, heqx⟩ := comparison_attained C u hclosed hstrict hspan q x hx.1
+  obtain ⟨ep, hep, hepx⟩ := comparison_attained_linear C u hstrict hspan p x
+  obtain ⟨eq, heq, heqx⟩ := comparison_attained_linear C u hstrict hspan q x
   have hpoint := hbaseS hx ⟨LinearMap.toContinuousLinearMap ep,
       ⟨fun y hy => hep.1 y hy, by simpa using hep.2⟩⟩ ⟨LinearMap.toContinuousLinearMap eq,
       ⟨fun y hy => heq.1 y hy, by simpa using heq.2⟩⟩
@@ -632,8 +517,7 @@ theorem pure_exhaustion_entry
     rw [cComparison_self C u hclosed hstrict hspan q] at h
     linarith
   have hzero : ∃ f : A →ₗ[ℝ] ℝ, confirms C u q f ∧ f p = 0 := by
-    obtain ⟨f, hf, hfx⟩ := comparison_attained C u hclosed hstrict hspan q (p : A)
-      (pure_mem p).1
+    obtain ⟨f, hf, hfx⟩ := comparison_attained_linear C u hstrict hspan q (p : A)
     refine ⟨f, hf, ?_⟩
     rw [hfx, ← cComparison_eq_comparison C u q (p : A)]
     have h := hrel p
