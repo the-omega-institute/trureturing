@@ -41,3 +41,4 @@ The boundary alternative permits a different original ball; the interior alterna
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterReflection.original_reflected_alternatives`
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterReflection.reflected_center_ball`
 - Dependency: [D5/S3/Quantum/Foundation/BinaryCenterNoncollapse](BinaryCenterNoncollapse.md)
+- Dependency: [D5/S3/Quantum/Foundation/CommonSourceLiftObstruction](CommonSourceLiftObstruction.md)
