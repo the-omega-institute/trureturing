@@ -85,5 +85,25 @@ internal sealed class ParryFirstReturnDocument : IScribeDocumentDefinition
                         + "the weight ratios telescope. The one-coordinate initial mass "
                         + "cancels with the section normalization. The remaining power of p "
                         + "splits into one factor per duration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("parry-zero-section-raw-window"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/ParryFirstReturn.zero_section_raw_window"),
+                H("Probability of a legal raw window"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Start in the zero section of the bilateral Parry source and condition the "
+                        + "same source probability on that section. Take a legal suffix path of m "
+                        + "transitions starting at zero. Read each successive destination as a zero "
+                        + "on a reset and a one on an increment. The probability of the resulting "
+                        + "raw bit window is p^m times the weight of the final suffix.")),
+                    Paragraph(Text(
+                        "The first suffix is known. At each step the raw bit determines which "
+                        + "transition to take, hence determines the next suffix. Thus the raw window "
+                        + "on the section is exactly one suffix cylinder. The product of transition "
+                        + "weights telescopes and leaves the final suffix weight. That weight is one "
+                        + "when the last bit is a reset."))),
                 DescribeRole.Theorem))));
 }

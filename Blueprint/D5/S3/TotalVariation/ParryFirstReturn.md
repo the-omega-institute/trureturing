@@ -40,8 +40,23 @@ A return of duration d has suffix coordinates 0, 1, ..., d-1, 0. These statement
 
 On an allowed transition from suffix i to suffix j, the kernel is p times the ratio of the positive suffix weights at j and i. The initial and terminal suffixes of the cylinder are zero, so the weight ratios telescope. The one-coordinate initial mass cancels with the section normalization. The remaining power of p splits into one factor per duration.
 
+**Theorem 1.3 (Probability of a legal raw window).**
+
+Lean statement: `D5/S3/TotalVariation/ParryFirstReturn.zero_section_raw_window`
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParryFirstReturn.zero_section_raw_window` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Start in the zero section of the bilateral Parry source and condition the same source probability on that section. Take a legal suffix path of m transitions starting at zero. Read each successive destination as a zero on a reset and a one on an increment. The probability of the resulting raw bit window is p^m times the weight of the final suffix.
+
+The first suffix is known. At each step the raw bit determines which transition to take, hence determines the next suffix. Thus the raw window on the section is exactly one suffix cylinder. The product of transition weights telescopes and leaves the final suffix weight. That weight is one when the last bit is a reset.
+
 ## References
 
 - Truth anchor: `D5/S3/TotalVariation/ParryFirstReturn.actual_first_return_system`
 - Truth anchor: `D5/S3/TotalVariation/ParryFirstReturn.return_time_cylinder_probability`
+- Truth anchor: `D5/S3/TotalVariation/ParryFirstReturn.zero_section_raw_window`
 - Dependency: [D5/S3/TotalVariation/ParryBilateralLaw](ParryBilateralLaw.md)

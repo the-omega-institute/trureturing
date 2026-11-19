@@ -10,7 +10,7 @@
 Public result: proof_shape: content; escape_witness:
 D5.S1.Words.WeakShuffleNormalization.APath.exponents; admission_basis: open-problem-resolution
 (#15815; Proved).
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16034 (result).
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16034 (result). Published owner audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30339 (diagonal).
 Direct frozen dependencies: none (the proof uses pinned Mathlib and same-delivery helpers only).
 The public claim retains the preregistered wsWord/wsMul/norm1/norm2 conventions literally; proofs
 use the local implementation helpers without introducing duplicate public aliases.
@@ -931,7 +931,7 @@ private lemma Run.q_identity [CharZero K] (f1 f2 : X → X → K) (hws : IsWeakS
 end D5.S1.Words.WeakShuffleNormalization
 namespace D5.S1.Words.WeakShuffleNormalization
 variable {X K : Type*} [Field K] [DecidableEq X]
-private noncomputable def diagonal (r : List X → K) : KX X K →ₗ[K] KX X K :=
+noncomputable def diagonal (r : List X → K) : KX X K →ₗ[K] KX X K :=
   Finsupp.linearCombination K (fun w => Finsupp.single w (r w))
 omit [DecidableEq X] in
 @[simp] private lemma diagonal_single (r : List X → K) (w : List X) (c : K) :

@@ -31,6 +31,8 @@ The source port selects the live entropy/generator closure of
 parts of `Multifractal/SymbolicDimension.lean`,
 `Multifractal/SymbolicDimensionBernoulli.lean` and
 `Multifractal/BernoulliEntropy.lean`.
+The increasing-partition bound in `Generator.lean` uses the conditional
+entropy comparison in `ErgodicTheory/Entropy/GeneratorTheoremTwoSided.lean`.
 The entropy is the supremum over all finite measurable partitions of
 the limit of normalized Shannon entropies of iterated joins, in nats.
 The generator theorem assumes measure preservation, a generating partition,

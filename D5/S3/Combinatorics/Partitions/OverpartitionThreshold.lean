@@ -138,7 +138,7 @@ private def count (n : ℕ) : ℤ := ∑ p : Nat.Partition n, weight p
 private def threshold (k n r : ℕ) : ℤ :=
   ∑ p : Nat.Partition n, if k ≤ p.parts.count r then weight p else 0
 
-private def shiftEquiv (n k r : ℕ) (hr : 0 < r) (hn : k * r ≤ n) :
+def shiftEquiv (n k r : ℕ) (hr : 0 < r) (hn : k * r ≤ n) :
     {p : Nat.Partition n // k ≤ p.parts.count r} ≃ Nat.Partition (n - k * r) where
   toFun p := {
     parts := p.1.parts - Multiset.replicate k r

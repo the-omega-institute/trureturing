@@ -108,9 +108,33 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             return dict(workflow_run_id=28)
         self.fail("unexpected API request: " + path)
 
-    def run_with(self, function, *, env=None, api=None):
+    def run_with(self, function, *, env=None, api=None, association=None):
+        run = subprocess.run
+
+        def transport(command, **kwargs):
+            if command[:2] != ["gh", "api"]:
+                return run(command, **kwargs)
+            _, owner, repository, path = command[2].split("/", 3)
+            repository = owner + "/" + repository
+            if path.startswith("commits/") and association is not None:
+                self.assertNotIn("--method", command)
+                self.assertGreater(kwargs["timeout"], 0)
+                self.assertLessEqual(kwargs["timeout"], 60)
+                status, stdout, stderr, code = association(path)
+            else:
+                body = kwargs.get("input")
+                value = (api or self.api)(repository, path, json.loads(body) if body is not None else None)
+                status, stdout, stderr, code = "200 OK", json.dumps(value), "", 0
+            if "--include" in command and status is not None:
+                stdout = f"HTTP/2.0 {status}\r\nX-Fixture: private-header\r\n\r\n{stdout}"
+            if kwargs.get("check") and code:
+                raise subprocess.CalledProcessError(code, command, stdout, stderr)
+            if not kwargs.get("text"):
+                stdout, stderr = stdout.encode(), stderr.encode()
+            return subprocess.CompletedProcess(command, code, stdout, stderr)
+
         with mock.patch.dict(os.environ, env or self.env, clear=True), \
-                mock.patch.object(producer, "api", side_effect=api or self.api), contextlib.redirect_stdout(io.StringIO()):
+                mock.patch.object(subprocess, "run", side_effect=transport), contextlib.redirect_stdout(io.StringIO()):
             return function()
 
     def test_label_dispatch_pins_event_identity_and_one_exact_target_run(self):
@@ -281,10 +305,91 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         self.env.update(GITHUB_EVENT_NAME="push", GITHUB_REF=self.identity["target_ref"], GITHUB_SHA=self.actual_merge)
         self.event_file.write_text(json.dumps(dict(after=self.actual_merge, ref=self.identity["target_ref"])))
 
-    def adopt(self, *, env=None, api=None):
+    def adopt(self, *, env=None, api=None, association=None):
         with mock.patch.object(producer, "download", side_effect=lambda repo, aid, path: shutil.copyfile(self.zipped, path)) as download:
-            result = self.run_with(lambda: producer.adopt(self.root), env=env, api=api)
+            result = self.run_with(lambda: producer.adopt(self.root), env=env, api=api, association=association)
         return result, download
+
+    def test_association_retries_only_failed_page_before_adoption(self):
+        self.preparation()
+        self.merged()
+        unrelated = dict(self.pr, merge_commit_sha=self.identity["merge"])
+        association = mock.Mock(side_effect=[
+            ("200 OK", json.dumps([unrelated] * 100), "", 0),
+            ("500 Internal Server Error", "", "gh: unexpected end of JSON input", 1),
+            ("200 OK", json.dumps([self.pr]), "", 0),
+        ])
+        result, download = self.adopt(association=association)
+        self.assertEqual("adopted", result["status"])
+        self.assertEqual(self.actual_merge, result["actual_merge"])
+        download.assert_called_once()
+        path = f"commits/{self.actual_merge}/pulls?per_page=100&page="
+        self.assertEqual([mock.call(path + str(page)) for page in (1, 2, 2)], association.call_args_list)
+        self.assertIn(("pulls/12", None), self.calls)
+        self.assertIn(("actions/artifacts/81", None), self.calls)
+
+    def test_manual_association_recovers_truncated_or_interrupted_reads(self):
+        self.merged()
+        env = dict(self.env, GITHUB_EVENT_NAME="workflow_dispatch", GITHUB_SHA=self.runtime_sha,
+                   STRATALINT_CACHE_SOURCE_VALIDATED="true", STRATALINT_CACHE_SOURCE_REF=self.identity["target_ref"],
+                   STRATALINT_CACHE_SOURCE_COMMIT=self.actual_merge, STRATALINT_CACHE_CHECKED_OUT_SHA=self.actual_merge)
+        for first in (("200 OK", "", "", 0),
+                      ("200 OK", '[{"number":', "", 0),
+                      (None, "", "gh: unexpected EOF", 1)):
+            with self.subTest(first=first):
+                association = mock.Mock(side_effect=[first, ("200 OK", json.dumps([self.pr]), "", 0)])
+                result = self.run_with(lambda: producer.consumer_context(self.root), env=env, association=association)
+                self.assertTrue(result["merged"])
+                self.assertEqual(self.actual_merge, result["checkout"])
+                self.assertEqual(2, association.call_count)
+                self.assertEqual(*association.call_args_list)
+
+    def test_association_empty_listing_is_immediate_miss(self):
+        self.merged()
+        association = mock.Mock(return_value=("200 OK", "[]", "", 0))
+        with mock.patch.object(sys, "argv", ["lean_pr_cache.py", "adopt", "--repository", str(self.root)]):
+            self.assertEqual(0, self.run_with(producer.main, association=association))
+        association.assert_called_once()
+        self.assertEqual([], self.calls)
+        self.assertEqual("adopted=false\n", (self.root / "outputs").read_text())
+
+    def test_association_retry_does_not_extend_the_page_deadline(self):
+        self.merged()
+        association = mock.Mock(return_value=("500 Internal Server Error", "", "", 1))
+        clock = mock.Mock()
+        clock.monotonic.side_effect = [100, 100, 159.9]
+        with mock.patch.object(producer, "time", clock), self.assertRaisesRegex(ValueError, "HTTP 500"):
+            self.run_with(lambda: producer.consumer_context(self.root), association=association)
+        association.assert_called_once()
+        clock.sleep.assert_not_called()
+
+    def test_association_errors_fail_closed_without_using_partial_pages(self):
+        self.merged()
+        temporary = ("502 Bad Gateway", "", "gh: unexpected end of JSON input", 1)
+        first_page = ("200 OK", json.dumps([self.pr] + [dict(self.pr, merged_at=None)] * 99), "", 0)
+        cases = [
+            ([first_page, temporary, temporary], "HTTP 502", (1, 2, 2)),
+            ([("403 Forbidden", "", "gh: unexpected end of JSON input", 1)], "HTTP 403", (1,)),
+            ([("404 Not Found", "", "gh: unexpected end of JSON input", 1)], "HTTP 404", (1,)),
+            ([("200 OK", '{"items":[]}', "", 0)], "invalid API listing", (1,)),
+            ([("200 OK", "[invalid]", "", 0)], "invalid JSON", (1,)),
+            ([(None, "", "gh: unexpected end of JSON input", 1)], "no HTTP status", (1,)),
+        ]
+        for responses, expected, pages in cases:
+            with self.subTest(expected=expected), \
+                    mock.patch.object(sys, "argv", ["lean_pr_cache.py", "adopt", "--repository", str(self.root)]), \
+                    mock.patch.object(producer, "download") as download, contextlib.redirect_stderr(io.StringIO()) as errors:
+                (self.root / "outputs").unlink(missing_ok=True)
+                association = mock.Mock(side_effect=responses)
+                self.assertEqual(2, self.run_with(producer.main, association=association))
+                path = f"commits/{self.actual_merge}/pulls?per_page=100&page="
+                self.assertEqual([mock.call(path + str(page)) for page in pages], association.call_args_list)
+                self.assertIn(expected, errors.getvalue())
+                self.assertNotIn("private-header", errors.getvalue())
+                self.assertEqual("adopted=false\n", (self.root / "outputs").read_text())
+                self.assertEqual([], self.calls)
+                self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+                download.assert_not_called()
 
     def test_confirm_binds_immutable_artifact_instead_of_ordinary_cache_keys(self):
         result = self.run_with(lambda: producer.confirm(self.root, self.identity, 81), env=self.runtime())
