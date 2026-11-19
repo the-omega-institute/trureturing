@@ -30,7 +30,31 @@ internal sealed class HardinActualTransfersDocument : IScribeDocumentDefinition
                 "For finite state sets A and B and matrices T and Q over the integers, fix a map c from A to B. If every row of T has total Q(c(a),b) in the fibre over b, then for every a and every m≥0, the a-entry of T^m on ones equals the c(a)-entry of Q^m on ones. Regroup the successor sum into fibres at each induction step. The degree-zero case includes every state."),
             Node("lag-relation", "IsLagRelation", "Lag convention", DescribeRole.Definition,
                 "For a length-d coefficient list c, the relation with shift b equates T^(b+d) on ones with the sum of c_j times T^(b+d−j) on ones for j from one through d. Diagonal strip columns use b=1 and proper row words use b=0."),
-            Paragraph(Text("The labelled counts here feed the existing normalization by complementary pairs. For the connected diagonal rectangles, multiplying by 2 raised to the number of cells and adding the established correction gives the literal count after division by 48. The edgeless width-one count follows its separate source formula.")))));
+            Paragraph(Text("Write T(h,n) for the cardinality of the literal normalized diagonal arrays of positive height h and width n. "
+                + "Read the columns in increasing order and recover the colour at (r,j) from position r of column j. "
+                + "The column compatibility test compares the labels at positions r and t whenever their distance is at most one. "
+                + "Reading the rows in increasing order instead recovers the colour at (r,j) from position j of row r. "
+                + "Each row is a proper word, and successive rows compare the two opposite diagonals at every adjacent pair of positions. "
+                + "These inverse maps give the exact graph colourings in either orientation. The unique empty tail gives the all-one vector, "
+                + "and each successor step is multiplication by the same matrix, indexed by current state and then successor state.")),
+            Paragraph(Text("Every diagonal strip of width at least two is connected, has an edge and is bipartite by column parity. "
+                + "Horizontal edges link the vertices in each row, and each pair of successive rows is joined by a diagonal. "
+                + "If L counts its labelled three-colourings, the literal normalization is 48 T(h,n) = 2^(hn)(L+6). "
+                + "At width one the strip is edgeless, and 48 T(h,1) = 6^h + 3·4^h + 15·2^h.")),
+            Paragraph(Text("For any of the transfer matrices M, let W_M(s) = s·1ᵀ(I−sM)⁻¹1 in the formal power series ring. "
+                + "Its constant coefficient is zero, and its coefficient at degree m+1 is 1ᵀM^m1. "
+                + "The coefficient matrix at degree m of the inverse is M^m, as multiplying by I−sM cancels every positive-degree coefficient. "
+                + "Clearing the inverse with the polynomial adjugate gives denominator det(I−sM), whose constant coefficient is one.")),
+            Paragraph(Text("At fixed h, put s = 2^h x. The row series is "
+                + "T(h,1)x + (W_(C_h)(s) − 3^h s + 6s²/(1−s))/48. "
+                + "The subtraction removes the contribution of all 3^h labelled first columns in degree one, and the geometric correction begins at degree two. "
+                + "At fixed k ≥ 2, put s = 2^k x. The column series is (W_(R_k)(s) + 6s/(1−s))/48, "
+                + "with the connected identity already applicable in degree one. "
+                + "These denominators can be taken as (1−s)det(I−sM) after absorbing 1/48 into the numerator.")),
+            Paragraph(Text("For width one the column series is "
+                + "(6x/(1−6x) + 3·4x/(1−4x) + 15·2x/(1−2x))/48. "
+                + "Each series begins in degree one and admits a polynomial denominator with constant coefficient one. "
+                + "The argument applies to every fixed positive dimension.")))));
 
     private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string statement) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
