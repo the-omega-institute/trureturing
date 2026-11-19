@@ -182,5 +182,105 @@ def registration :
   familyRecord := none
   options := #[] }
 
+
+section CoordinateCylinder
+
+universe v
+
+private abbrev cylinderSignature : Signature where
+  Params := Σ P : Type u, Σ F : P → Type v, ∀ p, Fintype (F p)
+  State params := Finset params.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def cylinderSize : Realization cylinderSignature.{u,v} :=
+  realize cylinderSignature (fun _ params s =>
+    ∏ p ∈ s, @Fintype.card (params.2.1 p) (params.2.2 p)) (fun e => nomatch e)
+
+private def alwaysTwo : Realization cylinderSignature.{u,v} :=
+  realize cylinderSignature (fun _ _ _ => 2) (fun e => nomatch e)
+
+private abbrev cylinderArena : Arena where
+  signature := cylinderSignature.{u,v}
+  Law R := ∀ {P : Type u} [Fintype P] [DecidableEq P]
+    (F : P → Type v) [inst : ∀ p, Fintype (F p)] [∀ p, Nonempty (F p)]
+    (s : Finset P) (a : ∀ p : s, F p),
+    (uniformPmf (∀ p, F p)).toOuterMeasure {f | ∀ p : s, f p = a p} =
+      (R.readout () ⟨P,F,inst⟩ s : ℝ≥0∞)⁻¹
+
+private abbrev testDomain := ULift.{u} Unit
+private abbrev testFamily (_ : testDomain.{u}) := ULift.{v} Bool
+
+private theorem alwaysTwo_invalid : ¬ cylinderArena.{u,v}.Law alwaysTwo := by
+  intro h
+  let μ := uniformPmf (∀ p : testDomain.{u}, testFamily.{u,v} p)
+  let E : Set (∀ p : testDomain.{u}, testFamily.{u,v} p) :=
+    {f | ∀ p : (∅ : Finset testDomain.{u}), f p = (⟨false⟩ : ULift.{v} Bool)}
+  have hE : E = Set.univ := Set.eq_univ_of_forall fun _ p =>
+    (Finset.notMem_empty p.1 p.2).elim
+  have hbad := h testFamily.{u,v} ∅ (fun _ => ⟨false⟩)
+  change μ.toOuterMeasure E = (2 : ℝ≥0∞)⁻¹ at hbad
+  rw [hE, (μ.toOuterMeasure_apply_eq_one_iff Set.univ).mpr (Set.subset_univ _)] at hbad
+  have hone : (1 : ℝ≥0∞) = 2 := by
+    simpa only [inv_one, inv_inv] using congrArg (Inv.inv : ℝ≥0∞ → ℝ≥0∞) hbad
+  have impossible : (1 : ℕ) = 2 := by exact_mod_cast hone
+  omega
+
+private theorem cylinderSize_varies :
+    cylinderSize.{u,v}.readout () ⟨testDomain.{u},testFamily.{u,v},fun _ => inferInstance⟩ ∅ ≠
+    cylinderSize.{u,v}.readout () ⟨testDomain.{u},testFamily.{u,v},fun _ => inferInstance⟩
+      {⟨()⟩} := by
+  simp [cylinderSize, realize]
+
+def cylinderEvidence : Registration cylinderArena.{u,v}
+    (type_of% (@uniform_coordinate_cylinder.{u,v})) where
+  actual := cylinderSize
+  bridge := Iff.rfl
+  variation := ⟨@uniform_coordinate_cylinder.{u,v}, alwaysTwo, alwaysTwo_invalid⟩
+  sensitivity := ⟨fun i => ⟨alwaysTwo, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, alwaysTwo_invalid⟩, fun e => nomatch e⟩
+  dependence := fun _ => ⟨⟨testDomain.{u},testFamily.{u,v},fun _ => inferInstance⟩,
+    ∅, {⟨()⟩}, cylinderSize_varies⟩
+
+def cylinderRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@uniform_coordinate_cylinder.{u,v}) (Realization cylinderSignature.{u,v}) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.FixedNeighborOrder.uniform_coordinate_cylinder
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.FixedNeighborOrder.cylinderEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨cylinderArena.{u,v}⟩
+  objectArena := .source ⟨cylinderArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source cylinderArena.{u,v} ⟨cylinderEvidence.{u,v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize cylinderSignature (fun _ params s =>
+    ∏ p ∈ s, @Fintype.card (params.2.1 p) (params.2.2 p)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Queries.FixedNeighborOrder
+    definition := none
+    coordinates := #[0, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end CoordinateCylinder
+
 end
 end Reg.D5.S3.Combinatorics.Graph.Queries.FixedNeighborOrder
