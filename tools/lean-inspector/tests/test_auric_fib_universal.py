@@ -106,7 +106,7 @@ end AuricFibUniversalProduction
             if 'fib_analysis' in plain['modules'][0]:
                 raise AssertionError('nonparticipants must not acquire a FIB partition')
         raw = json.loads(cls.report.read_text())
-        if raw['schema'] != 'stratalint-raw-lean-report-v3':
+        if raw['schema'] != 'stratalint-raw-lean-report-v4':
             raise AssertionError('parent report schema must remain v3')
         if set(raw['modules'][0]['fib_analysis']) != {'applications'}:
             raise AssertionError('FIB partition must have no independent version field')

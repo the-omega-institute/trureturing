@@ -147,7 +147,7 @@ public sealed class ScribeLeanInputSelectionTests
                 [source] = new(implicitInit ? ["Init"] : [], []),
             }));
         File.WriteAllText(reportPath, File.ReadAllText(reportPath).Replace(
-            "stratalint-raw-lean-report-v3", "stratalint-scoped-lean-report-v1", StringComparison.Ordinal));
+            "stratalint-raw-lean-report-v4", "stratalint-scoped-lean-report-v1", StringComparison.Ordinal));
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(["emit", "--paths-from", "-", "--scoped"], root.Path,

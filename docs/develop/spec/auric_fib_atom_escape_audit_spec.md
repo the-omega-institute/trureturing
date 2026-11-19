@@ -554,7 +554,7 @@ AURIC FIB 分析是开发者可选的逃逸审计扩展：来源所有者通过�
 
 正常 Inspector 编译报告中的独立 `fib_analysis` 下游分区承载来源所有者 Reg
 分析合同的取得数据，闭键形态为 `{applications}`，不定义独立 `schema_version`；
-可选导出也不带独立版本字段。主报告沿用 `stratalint-raw-lean-report-v3`，原
+可选导出也不带独立版本字段。主报告沿用 `stratalint-raw-lean-report-v4`，原
 `information_templates` 的版本契约不变。无参与合同的模块不产生该分区，也不调用
 FIB 提取器。通用接口须接受任意定理种类的忠实合同，并将原声明绑定与
 可选有限取得分开；`NullReplyFiber.native_execution` 的名称或命题类型均不得定义

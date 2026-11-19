@@ -21,7 +21,7 @@ public sealed class PrecomputedLeanReportSourceTests
         RawLeanReportArtifact.WriteFile(reportPath, selectedSnapshot,
             LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [selected.Path] = new([], []) }));
         File.WriteAllText(reportPath, File.ReadAllText(reportPath).Replace(
-            "stratalint-raw-lean-report-v3", "stratalint-scoped-lean-report-v1", StringComparison.Ordinal));
+            "stratalint-raw-lean-report-v4", "stratalint-scoped-lean-report-v1", StringComparison.Ordinal));
         var previous = Environment.GetEnvironmentVariable("STRATALINT_LEAN_REPORT");
         Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", reportPath);
         try
