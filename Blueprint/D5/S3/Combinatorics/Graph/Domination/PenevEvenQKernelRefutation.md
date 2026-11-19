@@ -26,6 +26,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/PenevEvenQKernelRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/penev-stein-trujillo-negrete-2026-even-q-kernel` (refuted) by `D5/S3/Combinatorics/Graph/Domination/PenevEvenQKernelRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"penev-stein-trujillo-negrete-2026-even-q-kernel","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/PenevEvenQKernelRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Irena Penev, Maya Stein, and Ana Trujillo-Negrete (2026). *Small q-kernels in digraphs*. DOI: [10.48550/arXiv.2608.00825](https://doi.org/10.48550/arXiv.2608.00825). URL: <https://arxiv.org/abs/2608.00825v1>.

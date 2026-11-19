@@ -32,7 +32,10 @@ internal sealed class PenevEvenQKernelRefutationDocument : IScribeDocumentDefini
                     Paragraph(Text("Take the directed cycle 0 → 1 → 2 → 3 → 4 → 5 → 0 and the arc 0 → 6. The three branches are 6 → 7 → 8 → 9 → 10, 6 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19, and 6 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28. Add 15 → 6 and 24 → 6. Every vertex has an in-neighbor. Alternating colors on the cycle and along the branches gives a bipartition, since both return arcs start at odd depth. Deleting 5 → 0 and the two return arcs gives an out-arborescence rooted at 0.")),
                     Paragraph(Text("Two centers on the directed six-cycle are compulsory. It has no incoming arc from outside, and one center reaches at most five cycle vertices within four arcs. If the hub 6 is absent, the demands 10, 14, 19, 23 and 28 have pairwise disjoint predecessor intervals after excluding 6. If the hub is present, the demands 15 and 19 can share only predecessor 15, which independence excludes because of 15 → 6. The demands 24 and 28 similarly cannot share 24. The two pairs require four branch centers in addition to the hub. Both cases force at least five centers outside the cycle.")),
                     Paragraph(Text("The proof checks predecessor membership and disjointness by kernel reduction on the fixed graph. It then counts centers in an arbitrary cover using the disjoint cycle and branch parts. Seven centers imply 5|Q| at least 35, while the source bound on 29 vertices gives 5|Q| at most 34."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("penev-stein-trujillo-negrete-2026-even-q-kernel"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static Formula ClaimFormula()
