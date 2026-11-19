@@ -337,6 +337,37 @@ theorem signingCount_eq (wagner : Bool) (pattern : Fin 5) :
       (if wagner then ![0, 6, 0, 6, 0] else ![24, 6, 6, 6, 128]) pattern := by
   cases wagner <;> fin_cases pattern <;> decide +kernel
 
+private def cubePatternZeroHasObstruction (p : Q9SeventyTwoEmbeddingSearch.Placement)
+    (n : Fin 128) : Bool :=
+  ([33, 51, 53, 57] : List (BitVec 9)).any fun x =>
+    decide (1 < (complete false (cubeBitVec 9 ∘ p) (unitSign ∘ signsFromMask n)
+      (cubeBitVec 9 x)).natAbs)
+
+set_option maxRecDepth 8192 in
+set_option maxHeartbeats 8000000 in
+private theorem cubePatternZeroChecked :
+    (Q9SeventyTwoEmbeddingSearch.candidates false 0).all (fun p =>
+      (signMasks false (cubeBitVec 9 ∘ p)).all (cubePatternZeroHasObstruction p)) = true := by
+  decide +kernel
+
+private theorem no_unit_cubePatternZero {p : Fin 8 → Q 9} {bits : Fin 8 → Bool}
+    (hp : (fun i => (cubeBitVec 9).symm (p i)) ∈
+      Q9SeventyTwoEmbeddingSearch.candidates false 0)
+    (hroot : bits 0 = false) (hs : survives false p bits = true)
+    (hunit : ∀ x, (complete false p (unitSign ∘ bits) x).natAbs ≤ 1) : False := by
+  let q : Q9SeventyTwoEmbeddingSearch.Placement := fun i => (cubeBitVec 9).symm (p i)
+  have hq : cubeBitVec 9 ∘ q = p := funext fun i => (cubeBitVec 9).apply_symm_apply (p i)
+  obtain ⟨n, rfl⟩ := exists_mask bits hroot
+  have hn : n ∈ signMasks false (cubeBitVec 9 ∘ q) := by
+    rw [hq]
+    exact (mem_signMasks false p n).mpr hs
+  have hcheck := List.all_eq_true.mp (List.all_eq_true.mp cubePatternZeroChecked q hp) n hn
+  obtain ⟨x, _, hx⟩ := List.any_eq_true.mp hcheck
+  have hlarge : 1 < (complete false (cubeBitVec 9 ∘ q) (unitSign ∘ signsFromMask n)
+      (cubeBitVec 9 x)).natAbs := of_decide_eq_true hx
+  rw [hq] at hlarge
+  exact (Nat.not_lt_of_ge (hunit (cubeBitVec 9 x))) hlarge
+
 /-- Nonzero vertices of the reconstructed signed vector. -/
 def support (wagner : Bool) (p : Fin 8 → Q 9) (bits : Fin 8 → Bool) : Finset (Q 9) :=
   Finset.univ.filter fun x => complete wagner p (unitSign ∘ bits) x ≠ 0
@@ -353,7 +384,8 @@ theorem exists_surviving_signs {C : Finset (Q 9)} (hC : C.card = 72)
       (p : Fin 8 ↪ Q 9) (bits : Fin 8 → Bool),
       (∀ x i, g (flip x i) = flip (g x) (σ i)) ∧
       (fun i => (cubeBitVec 9).symm (p i)) ∈ Q9SeventyTwoEmbeddingSearch.candidates wagner pattern ∧
-      bits 0 = false ∧ survives wagner p bits = true ∧ C.image g = support wagner p bits := by
+      bits 0 = false ∧ survives wagner p bits = true ∧ (wagner = false → pattern ≠ 0) ∧
+      C.image g = support wagner p bits := by
   obtain ⟨g, σ, wagner, pattern, p, m, z, hg, hcut, hmem, hslice, hm, hu, hz, he, hw⟩ :=
     Q9SeventyTwoSignedSearch.exists_signed_candidate hC hr hb b hs
   have hslice' : coordinateSlice (C.image g) false =
@@ -396,8 +428,11 @@ theorem exists_surviving_signs {C : Finset (Q 9)} (hC : C.card = 72)
   let bits (i : Fin 8) : Bool := decide (v (p i) = -1)
   have hbits (i : Fin 8) : unitSign (bits i) = v (p i) := by
     rcases hvunit _ (high i) with h | h <;> simp [bits, unitSign, h]
-  refine ⟨g, σ, wagner, pattern, p, bits, hg, hmem, by simp [bits, hvroot], ?_, ?_⟩
-  · apply List.all_eq_true.mpr
+  have hroot : bits 0 = false := by simp [bits, hvroot]
+  have hcomplete := complete_eq_of_actual p m v hslice' hm hvunit hvzero hvedge hvrow
+  have hfun : unitSign ∘ bits = fun i => v (p i) := funext hbits
+  have hsurv : survives wagner p bits = true := by
+    apply List.all_eq_true.mpr
     intro i _
     apply List.all_eq_true.mpr
     intro j _
@@ -424,9 +459,15 @@ theorem exists_surviving_signs {C : Finset (Q 9)} (hC : C.card = 72)
       intro k _
       simpa only [decide_eq_true_eq] using hm e k
     · rfl
-  · have hcomplete := complete_eq_of_actual p m v hslice' hm hvunit hvzero hvedge hvrow
-    have hfun : unitSign ∘ bits = fun i => v (p i) := funext hbits
-    unfold support
+  refine ⟨g, σ, wagner, pattern, p, bits, hg, hmem, hroot, hsurv, ?_, ?_⟩
+  · rintro rfl rfl
+    apply no_unit_cubePatternZero hmem hroot hsurv
+    intro x
+    rw [hfun, hcomplete]
+    by_cases hx : x ∈ C.image g
+    · rcases hvunit x hx with h | h <;> simp [h]
+    · simp [hvzero x hx]
+  · unfold support
     rw [hfun, hcomplete]
     ext x
     simp only [Finset.mem_filter, Finset.mem_univ, true_and]
