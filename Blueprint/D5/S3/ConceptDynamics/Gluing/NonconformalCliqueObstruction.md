@@ -48,7 +48,7 @@ If a global tuple restricted into every R(e), any distinct x,y in C would occur 
 
 For this specific relation construction the color threshold is sharp: with card(C) colors, inject C into Fin(card(C)) and extend the assignment to V using a default color outside C. Every scope restriction belongs to its full injective-clique relation.
 
-This is a known-result formalization in the classical theory of acyclic database schemes, not a novelty claim: Beeri, Fagin, Maier, and Yannakakis, On the Desirability of Acyclic Database Schemes, Journal of the ACM 30(3), 1983, DOI 10.1145/2402.322389. The Lean proof supplies the indexed-scope and finite-alphabet construction explicitly. This module establishes only the nonconformal branch and does not establish the full classification.
+Theorem 3.4 gives the classification for finite database schemes. The Lean theorem establishes the nonconformal branch by an explicit construction for arbitrary scope indices and a finite alphabet.
 
 ## References
 
