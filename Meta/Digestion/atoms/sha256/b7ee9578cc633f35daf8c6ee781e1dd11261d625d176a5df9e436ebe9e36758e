@@ -1,0 +1,45 @@
+**Lemma 3.1 (Actual saturation).**
+
+Let the actual row span $W\subset\mathbb Q^5$ have dimension three and contain
+an independent actual triple with $D\ne0$. Every such triple generates
+$(W\otimes\mathbb Q_p)\cap\mathbb Z_p^5$ over $\mathbb Z_p$.
+
+*Proof.*
+
+Only for this local calculation make a determinant-one $\mathbb Z_p$ change
+of binary coordinates that sends the actual slope $\beta$ to zero.
+The common word and derivative conditions are
+
+$$
+q-\lambda\ell\in p^3\mathbb Z_p,\qquad
+ r^{(1)}-\delta\ell-\lambda m\in p\mathbb Z_p.
+$$
+
+The $L=(\ell,m)$ projection of an independent triple has rank two,
+otherwise the last row of the Dixon matrix vanishes. A nonzero
+$L$-minor has absolute value $O(B)<p$, so it is a $p$-unit. Thus the
+actual $\mathbb Z_p$ row lattice has a basis $u,v,p^h k$, where the $L$
+projections of $u,v$ are $(1,0),(0,1)$ and $k=(a,b,c,0,0)$ is primitive
+in the saturated lattice. Since the saturated residual is integral,
+$5-3h\ge0$, so $h\in\{0,1\}$.
+If $h=1$, the first congruence on $pk$ gives $a\in p^2\mathbb Z_p$.
+Modulo $p^3$ write
+
+$$
+u=(\lambda,\gamma,C,1,0),\qquad
+ v=(0,\eta,F,0,1),\qquad \tau=\eta-\lambda\in p\mathbb Z_p.
+$$
+
+Put $G=F-\gamma$. The exact Dixon expansion for these rows is
+
+$$
+D(u,v,k)=a\{(b\tau-aG)(Cb+cG)-(c\tau+Ca)^2\}.
+$$
+
+It is divisible by $p^3$, contradicting the required valuation
+$5-3h=2$. Replacing the two omitted $q$-entries changes this integer
+polynomial only modulo $p^3$, so the same contradiction applies to the
+original rows. Hence $h=0$. The change of binary coordinates was
+used for valuations only; all real height estimates remain in the
+original reduced coordinates.
+

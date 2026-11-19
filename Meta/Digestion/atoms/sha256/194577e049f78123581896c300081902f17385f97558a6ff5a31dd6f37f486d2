@@ -1,0 +1,34 @@
+**Lemma 4.4 (No actual point on an $\mathbb A^1$ curve).**
+
+The actual retained unit chart in (4.12) contains
+no point on any geometric image of a nonconstant morphism
+$\mathbb A^1$ into that affine section.
+
+*Proof.*
+
+Split the quadratic algebra over an algebraic closure. Equation
+(4.12) becomes (4.14) with
+
+$$
+(u,v,U,V)=(W_+,W_-,W'_+,W'_-),\qquad
+ (a,b,c,d)=(\nu_+,\nu_-,C_+,C_-).
+$$
+
+Here $a,b$ are nonzero and have positive valuation in the chosen
+embeddings into $\overline{\mathbb Q}_p$, whereas $c,d$ are units. This holds
+in the ramified field as well as in the locally split algebra. Every actual $u,v,U,V$ is a
+unit by Lemma 4.2. If an $\mathbb A^1$ image
+contained such a point, Lemma 4.3 would
+put it in a constant fiber. Its constant $k$ would be a unit. But
+
+$$
+H_u(k)\equiv dk^2\ne0\pmod{\mathfrak m},\qquad
+ H_v(k)\equiv ck^2\ne0\pmod{\mathfrak m},
+$$
+
+and $k\ne0$, contradicting that classification. A curve defined over an
+extension causes no exception: at an actual point its constant equals
+the corresponding actual unit coordinate in an embedding into
+$\overline{\mathbb Q}_p$. The finitely many constants in the
+classification are algebraic.
+

@@ -361,7 +361,7 @@ private theorem inventory_le_side [Finite C] (s d : C → Bool) (a b : Bool) :
       (⟨x.1, x.2.1⟩ : Side s a))
     (fun x y h => Subtype.ext (congrArg (fun z : Side s a => (z : C)) h))
 
-private theorem cross_inventory [Finite C] (s : C → Bool) (b : Bool) :
+theorem cross_inventory [Finite C] (s : C → Bool) (b : Bool) :
     inventory s (fun x => !(s x)) b (!b) = Nat.card (Side s b) := by
   apply Nat.card_congr
   exact Equiv.subtypeEquivRight (fun x => by cases hs : s x <;> cases b <;> simp [hs])
