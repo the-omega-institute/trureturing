@@ -100,5 +100,5 @@ internal sealed class ZelinskyRadicalComponentConjecturesDocument : IScribeDocum
                     + "This correction is compatible with the three "
                     + "conjectures: their numerators have density zero "
                     + "and their common denominator has positive density."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }
