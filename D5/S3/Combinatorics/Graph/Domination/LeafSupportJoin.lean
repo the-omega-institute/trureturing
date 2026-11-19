@@ -12,18 +12,26 @@ escape_witness: dominating_iff (a set dominates the join exactly when each slice
   copy, the support being dominated inside its copy through the leaf), with domEquiv.
 proof_shape:
   domPoly, joinAdj, join, slice: definitions; consumers: the lemmas below.
-  dominating_iff, domEquiv, domPoly_join, join_connected: content; consumers: domEquiv,
-    domEquiv_card, domPoly_join, leaf_support_join.
-  join_adj_same, mem_slice, domEquiv_card: bind-only helpers; consumers: dominating_iff,
-    join_connected, domEquiv, domPoly_join, leaf_support_join.
+  dominating_iff: content; consumers: domEquiv, leaf_support_join.
+  domEquiv: content; consumers: domEquiv_card, domPoly_join, leaf_support_join.
+  domPoly_join: content; consumer: leaf_support_join.
+  join_connected: bind-only helper (Reachable.map along two graph homomorphisms); consumer:
+    leaf_support_join.
+  join_adj_same: bind-only helper; consumers: dominating_iff, join_connected.
+  mem_slice: bind-only helper; consumers: dominating_iff, domEquiv, domEquiv_card.
+  domEquiv_card: bind-only helper; consumers: domPoly_join, leaf_support_join.
   leaf_support_join: content.
 Direct frozen dependencies: D5/S3/Combinatorics/Graph/DominatingSetAverage (domSets,
   mem_domSets), D5/S3/ConceptDynamics/GraphColoring/GraphCoverDomination (IsDominating).
-Search record (§3.1): MinusFourReassembly's private support_replication_evaluation and
-  support_replication_connected treat copies joined to a new hub, and its public reassembly is
-  an integer-evaluation identity for core/branch decompositions without edges between branch
-  roots; RatherBookRootRefutation.dominationPolynomial is real-valued. None states the join
-  along an arbitrary graph F or the product in ℤ[x], so domPoly is the integer polynomial here.
+Search record (§3.1): MinusFourReassembly.reassembly with k = 0 gives the pointwise integer
+  evaluation of the product for Fin-labelled decompositions, root–root edges allowed; its
+  bijection configEquiv and dominating_assemble_iff are private and pass through root-state
+  messages. Reusing them would need a Σ→Fin relabelling, the Decomposition laws and polynomial
+  extensionality, and still not give the explicit restriction/union bijection or the ℤ[x]
+  identity, so the direct Σ-type proof is kept. MinusFourReassembly's private
+  support_replication_* treat copies joined to a new hub, and
+  RatherBookRootRefutation.dominationPolynomial is real-valued, so domPoly is the integer
+  polynomial here.
 -/
 
 import D5.S3.Combinatorics.Graph.DominatingSetAverage

@@ -5,7 +5,7 @@ year: 2026
 title: "Alikhani–Griswold, Section 4(3): connected graphs with domination root −4"
 doi: "10.5281/zenodo.23919066"
 url: "https://doi.org/10.5281/zenodo.23919066"
-claim: "Lemma 1: joining leaf supports v_i of graphs H_i along a graph F keeps dominating sets componentwise, so D(J_F,x) = prod_i D(H_i,x), and J_F is connected when every H_i and F is."
+claim: "Lemma 1: joining leaf supports v_i of graphs H_i along a graph F keeps dominating sets componentwise, so D(J_F,x) = prod_i D(H_i,x), and for r >= 1 J_F is connected when every H_i and F is."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Domination/LeafSupportJoin
 license: citation-only
@@ -17,7 +17,7 @@ triage: anchor
 ## Verified locator
 
 The written proof is by **Haobo Ma and Wenlin Zhang**, version 1, exact-version DOI
-https://doi.org/10.5281/zenodo.23919066, Lemma 1 in Section 1 of `note.tex` in the public source
+https://doi.org/10.5281/zenodo.23919066, Lemma 1 in Section 1 of `connected-minus-four/note.tex` in the public source
 archive https://zenodo.org/api/records/23919066/files/source-v1.zip/content. The DOI is
 10.5281/zenodo.23919066; the concept DOI is 10.5281/zenodo.23919065.
 
