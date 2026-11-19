@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/Divisors/KarttunenA401714.leastMissingPrime`
 
 *Commentary.*
 
-The least missing prime is the smallest prime that does not divide N. The frozen least-missing-prime threshold theorem supplies existence. Nat.find selects the least witness to primality and nondivisibility.
+The least missing prime is the smallest prime that does not divide N. Mathlib's Nat.exists_infinite_primes supplies a prime greater than N, which cannot divide the positive integer N. Nat.find selects the least witness to primality and nondivisibility.
 
 **Theorem 1.2 (The divisor-sum implication).**
 
@@ -41,4 +41,3 @@ For every positive integer N, if N/rad(N) is less than its least missing prime, 
 - Truth anchor: `D5/S3/Arith/Divisors/KarttunenA401714.leastMissingPrime`
 - Truth anchor: `D5/S3/Arith/Divisors/KarttunenA401714.result`
 - Dependency: [D5/S3/Arith/Divisors/UnitaryProductBridge](UnitaryProductBridge.md)
-- Dependency: [D5/S3/Arith/GoldenResource/GoldenSmallestMissingPrime](../GoldenResource/GoldenSmallestMissingPrime.md)

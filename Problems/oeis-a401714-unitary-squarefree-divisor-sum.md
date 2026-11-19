@@ -80,9 +80,9 @@ change the problem rather than settle it.
 
 `D5/S3/Arith/Divisors/KarttunenA401714.result` states the implication for
 every natural N with 0<N, using the existing actual divisor sums.
-`leastMissingPrime` is defined by `Nat.find` on primes not dividing N;
-existence is projected from the frozen
-`GoldenSmallestMissingPrime.exists_smallest_missing_prime_threshold`.
+`leastMissingPrime` is defined by `Nat.find` on primes that do not divide N.
+Mathlib's `Nat.exists_infinite_primes` supplies a prime at least N+1,
+which cannot divide positive N by `Nat.le_of_dvd`.
 The result derives
 mandatory support from the strict least-prime comparison and invokes
 `UnitaryProductBridge.unitary_squarefree_ge_twice_of_support`.

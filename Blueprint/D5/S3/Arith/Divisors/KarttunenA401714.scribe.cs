@@ -24,7 +24,8 @@ internal sealed class KarttunenA401714Document : IScribeDocumentDefinition
                 H("The least missing prime"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
                     "The least missing prime is the smallest prime that does not divide N. "
-                    + "The frozen least-missing-prime threshold theorem supplies existence. "
+                    + "Mathlib's Nat.exists_infinite_primes supplies a prime greater than N, "
+                    + "which cannot divide the positive integer N. "
                     + "Nat.find selects the least witness to primality and nondivisibility."))),
                 DescribeRole.Definition),
             Describe.Lean(
