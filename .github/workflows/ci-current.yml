@@ -324,9 +324,12 @@ jobs:
       - id: prepared
         name: Adopt a matching PR preparation for this event
         if: needs.detect.outputs.report == 'true'
+        uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+        with:
+          operation: adopt-preparation
+          sharded-adoption: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) }}
       - id: keys
         if: needs.detect.outputs.report == 'true'
         env:
@@ -453,7 +456,7 @@ jobs:
           key: ${{ needs.source.outputs.judge_key }}
       - id: sharded_project_push
         name: Publish the indexed push project seed
-        if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && steps.sharded_project.outputs.complete == 'true' && steps.lean_report.outcome == 'success' }}
+        if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && (steps.sharded_project.outputs.complete == 'true' || steps.prepared.outputs.sharded == 'true') && steps.lean_report.outcome == 'success' }}
         continue-on-error: true
         uses: ./.github/actions/lean-cache-shards
         env:

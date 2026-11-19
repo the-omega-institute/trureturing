@@ -592,11 +592,11 @@ GitHub 按 schedule 每 6 小时触发定时 Release，每次作业独立计时�
 
 准备 producer 使用 `contents:read/pull-requests:read/actions:read`；开工核对当前源 PR open/head/target、源 run 的 event/workflow/head/attempt、受保护目标、B 在目标历史内以及本地 `HEAD=M`、父提交 `B,H`。完成打包和上传确认允许同 head/target 的 PR 已实际 merged，但不允许 closed-unmerged。`run.pull_requests` 的可变关联不参与身份判定。B 可落后 tip，M 不必为目标祖先，不启用 strict=true。真实 `GITHUB_SHA=T`、workflow ref/SHA、producer run/attempt 与源 M 分列；`ci-entry.sh` 只在自身调用中用 M 校验 checkout。
 
-Actions artifact 名为 `lean-pr-preparation-<PR>-<H>`；这是精确发现地址，不是新 cache key 或格式代际。artifact 内仅 `preparation.json` 与 `native.tar.gz`：前者绑定源身份、producer runtime、现有 native partition 与 elan pin key，不含 schema/version；后者从 `lean_actions.native_archive_paths` 和 `Meta/ci-cache-paths.json` 展开原生 project/dependency 成员，保留隐藏文件与可执行权限。toolchain 仍由普通 elan restore/install 负责。artifact ID 是不可变取回地址；同一 run 重试上传替换名称对应的旧 artifact 时取得新 ID。消费者核对该 ID 的 workflow run/SHA、记录的精确 producer attempt 成功以及 artifact 创建时点落在该 attempt 区间；latest run 状态与可变 PR 关联不替代精确 attempt。源身份、M 父提交与 protected runtime history 继续校验。
+原生准备名为 `lean-pr-preparation-<PR>-<H>`，分片准备名为 `lean-pr-preparation-shards-v1-<PR>-<H>`。每份准备都包含 `preparation.json` 和 `native.tar.gz`。身份记录绑定源身份、producer runtime、现有 native partition 与 elan pin key。原生归档按 `lean_actions.native_archive_paths` 和 `Meta/ci-cache-paths.json` 展开已登记成员，保留隐藏文件与可执行权限。启用分片且目标 ref 有兼容索引时，原生归档携带 dependency，`project.json` 记录绑定 M、目标 ref、run/attempt 的完整项目索引，`shards/` 携带目标确切可见 key 无法供给的项目载荷。其余准备的原生归档同时携带 project 与 dependency。启用分片的读者查询两种名称，其他读者查询原生名称。toolchain 由普通 elan restore/install 负责。artifact ID 是不可变取回地址。同一 run 重试上传替换名称对应的旧 artifact 时取得新 ID。消费者核对该 ID 的 workflow run/SHA、记录的精确 producer attempt 成功以及 artifact 创建时点落在该 attempt 区间。源身份、M 父提交与 protected runtime history 继续校验。
 
 `current` 的报告路径、`ci-unit` 的 `lean=build` 路径和共享长核心在普通 dependency/project restore 前尝试显式采用；纯理论和 `lean=none/toolchain` 不增加此工作。源 PR 仅可取自身仍 open 的相同 PR/H/target 准备，允许 event M 的基线已推进，随后仍须通过当前 head 的全部 required。目标 push 由实际 event.after/ref 与 checkout 相等，再从该 commit 的 PR 关联中确认唯一实际 merged PR、目标和 `merge_commit_sha=checkout=K`；手动 protected build 对固定 source checkout 作相同确认。K 与准备 M 分列，不要求 SHA 相同。未合并、关闭未合并、另一 PR、另一 head 或目标均不取得该准备的使用资格。多提交 push 中 checkout 不是该 PR 的实际 merge commit 时不选该准备；后续普通 target cache 复用沿原规则，不扫描历史候选。
 
-采用前先校验身份并在临时目录解包；拒绝重复、越界、未登记成员与逃逸链接。完成后替换 job 本地 native 目录，并在运输树之外写当前 run/attempt/checkout/artifact 的采用记录。普通 restore actions 跳过这两层，`lean_actions.restore` 也保留已采用材料。既有报告与程序消费者承担实际载荷校验与 Lake 增量；运输与 trace 不证明 producer/consumer 语义兼容，不加入 producer 程序字节指纹。若实际合并树、配置或源输入漂移，必要的原生增量仍须执行并计入 120m 计算预算；下载和准备不扣该预算，外层平台上限独立。
+采用前先校验身份并在临时目录解包。拒绝重复、越界、未登记成员与逃逸链接。分片准备在暂存目录合并随包成员和按 key 取回的成员，按完整索引校验 SHA-256 和必需输出。引用缺失时放弃该准备，继续寻找合格准备或走普通恢复。完整载荷就绪后替换 job 本地 native 目录，并在运输树之外写当前 run/attempt/checkout/artifact 的采用记录。普通 restore actions 跳过这两层，`lean_actions.restore` 保留已采用材料。既有报告与程序消费者承担实际载荷校验与 Lake 增量。若实际合并树、配置或源输入漂移，必要的原生增量仍须执行并计入 120m 计算预算。下载和准备在外层平台上限内完成。
 
 合并本身使匹配准备对该目标事件具备采用资格；不需第二个异步 publisher 完成，不强制重复完整冷编译。调度、API 可见性和下载仍有延迟。target 报告成功且工作量已知时，已验证采用可保存现有普通 project key，真实零工作也保留 `build_work=0`；无采用的普通零工作仍抑制上传。`project_seed_available` 只认可确认的普通发布，或普通缓存已接受且报告零工作；artifact 存在、已采用或 upload 成功均不单独抑制长 fallback。若短保存失败，长核心仍优先采用同一匹配准备，不能忽略它而冗余冷构建。
 
@@ -628,7 +628,7 @@ project 恢复在 current 与 Lean build 单元中先查读者可见的种子：
 
 编译依赖 trace、utility 输入与报告格式标识决定报告复用，Lake traces 决定实际模块重建；复用行保留原 producer 来源。正常报告入口仍执行原生构建与严格 publication 校验，不借恢复绕过 Lean kernel、utility/audit 或报告验证。定时 Release 缓存发布与 integration 的 cache publication 验证独立保留；验证事件、来源、run/attempt、归档材料与空目标恢复按其既有程序核对，不外推为 truth 发布成功。
 
-**分片缓存试运行。** 受保护分支可以通过 `LEAN_CACHE_SHARDS_REF` 选择 Actions 项目缓存的索引读取入口。长构建的 `shard_history_anchor` 固定布局所用的 dev 第一父历史，未登记模块单独成片。每个逻辑片最多四个模块，每个 Actions 条目最多八个逻辑片。条目内容摘要、Actions 运输版本和 ref 分别校验。成功索引要求完整报告收据及声明的编译产物在场，后续读取逐条处理驱逐。resume 索引绑定编译来源且不携带成功收据。源 PR 准备仍经同一身份核验与 artifact 入口。
+**分片缓存试运行。** 受保护分支可以通过 `LEAN_CACHE_SHARDS_REF` 选择 Actions 项目缓存的索引读取入口。长构建的 `shard_history_anchor` 固定布局所用的 dev 第一父历史，未登记模块单独成片。每个逻辑片最多四个模块，每个 Actions 条目最多八个逻辑片。条目内容摘要、Actions 运输版本和 ref 分别校验。成功索引要求完整报告收据及声明的编译产物在场，后续读取逐条处理驱逐。下载按作业限速，库存仍可见的未取回条目等待配额窗口后降速重试。resume 索引绑定编译来源且不携带成功收据。源 PR 准备仍经同一身份核验与 artifact 入口。
 
 受保护 dev 的 Release producer 在 `LEAN_CACHE_SHARDS_REF=dev` 时尝试恢复可用的 Actions 分片，缺失产物由 Lake 补齐。无可用分片时尝试旧项目缓存，缺少项目缓存时自行构建。生产 Release 写入格式由 `LEAN_CACHE_RELEASE_INDEXED_REF=dev` 独立选择。集成验证使用同一供给入口选择完整、指定闭包或空的项目种子。
 

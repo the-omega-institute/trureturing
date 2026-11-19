@@ -43,10 +43,12 @@ runs:
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
     - id: prepared
       if: inputs.preparation-only != 'true'
+      uses: ./.github/actions/lean-cache-shards
       env:
         GH_TOKEN: ${{ github.token }}
-      shell: bash
-      run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+      with:
+        operation: adopt-preparation
+        sharded-adoption: ${{ inputs.shard-history-anchor != '' }}
     - id: keys
       env:
         GH_TOKEN: ${{ github.token }}

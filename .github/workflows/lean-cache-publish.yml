@@ -207,16 +207,39 @@ jobs:
           native-report-batch-modules: ${{ inputs.native_report_batch_modules }}
           release-seed-tag: ${{ inputs.release_seed_tag }}
           release-seed-producer: ${{ inputs.release_seed_producer }}
-      - id: pack
+      - id: pack_transport
+        name: Select a preparation transport supported by the source checkout
+        env:
+          ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
+        run: |
+          supported=false
+          if [[ -n "$ANCHOR" ]]; then
+            options="$(python3 tools/scripts/worktree/lean_pr_cache.py pack --help)"
+            if [[ "$options" == *--previous-index* ]]; then
+              supported=true
+            fi
+          fi
+          echo "sharded=$supported" >> "$GITHUB_OUTPUT"
+      - id: pack_sharded
+        name: Package preparation with project shard references
+        if: steps.pack_transport.outputs.sharded == 'true'
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: pack-preparation
+          anchor: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
+      - id: pack_legacy
         name: Package the registered native cache paths
+        if: steps.pack_transport.outputs.sharded == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/lean_pr_cache.py pack --repository "$GITHUB_WORKSPACE" --directory "$RUNNER_TEMP/pr-preparation"
       - id: preparation
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ steps.pack.outputs.artifact_name }}
-          path: ${{ steps.pack.outputs.artifact_path }}/
+          name: ${{ steps.pack_sharded.outputs.artifact_name || steps.pack_legacy.outputs.artifact_name }}
+          path: ${{ steps.pack_sharded.outputs.artifact_path || steps.pack_legacy.outputs.artifact_path }}/
           if-no-files-found: error
           compression-level: 0
           overwrite: true
@@ -412,5 +435,6 @@ jobs:
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
           LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && hashFiles('.github/actions/lean-cache-release-seed/action.yml') != '' && '1' || '0' }}
         run: make lean-cache-to-github-without-mathlib FULL_BUILD=1

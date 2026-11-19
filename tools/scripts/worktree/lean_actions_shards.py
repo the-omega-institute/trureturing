@@ -17,8 +17,8 @@ import tarfile
 import tempfile
 
 from lean_actions import (
-    actions_keys, dependency_inputs, manual_source_is_valid, native_archive_paths, project_publication,
-    receipt, resume_spec, write_small_record,
+    actions_keys, dependency_inputs, manual_source_is_valid, native_archive_paths, preparation_source_is_valid,
+    project_publication, project_work, receipt, resume_spec, write_small_record,
 )
 from lean_artifact_inventory import (
     PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports,
@@ -36,6 +36,10 @@ REPORT = "report"
 REPORT_PATH = "stratalint/raw-lean-report.json"
 REPORT_RECEIPT = PurePosixPath(REPORT_PATH + ".reuse.json")
 RESUME_RECORD = STAGE / "resumed.json"
+
+
+class IncompatibleShardBinding(ValueError):
+    """The index was produced for a different Lake cache partition."""
 
 
 def digest(value):
@@ -103,9 +107,11 @@ def read_index(path, identity, state):
     if len(data) > 32 * 1024 * 1024:
         raise ValueError("Actions shard index too large")
     record = json.loads(data, object_pairs_hook=pairs)
-    if (not isinstance(record, dict) or record.get("binding") != identity or record.get("state") != state
+    if (not isinstance(record, dict) or record.get("state") != state
             or set(record) != {"binding", "state", "owner", "layout", "entries", "sources", "fingerprints", "required"}):
         raise ValueError("incompatible Actions shard index")
+    if record["binding"] != identity:
+        raise IncompatibleShardBinding("incompatible Actions shard index binding")
     owner = record["owner"]
     if (not isinstance(owner, dict) or set(owner) != {"commit", "ref", "run", "attempt"}
             or not isinstance(owner["commit"], str) or not re.fullmatch(r"[0-9a-f]{40}", owner["commit"])
@@ -216,8 +222,11 @@ def resume_verified(root):
         return False
 
 
-def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset()):
-    if state == "complete":
+def prepare(root, identity, state, previous, anchor, targets=(), available=frozenset(), *, preparation=False):
+    if preparation:
+        if state != "complete" or not preparation_source_is_valid() or project_work(root) is None:
+            raise ValueError("Actions shard preparation requires a validated build at the protected PR runtime")
+    elif state == "complete":
         allowed, reason, _ = project_publication(root)
         keys = actions_keys(root)
         migrated = reason == "no-build-work" and (manual_source_is_valid() or resume_verified(root))
@@ -331,14 +340,14 @@ def install_continuation(target, unpacked, paths, backup):
         raise
 
 
-def install(root, record, targets, *, require_complete=False):
+def install(root, record, targets, *, require_complete=False, preparation=None):
     selected = selected_keys(root, record, targets)
     required = record["required"]
     registrations = native_archive_paths(root, ["project"])["project"]
-    lake = root / ".lake"
+    lake = (preparation / "native" if preparation else root) / ".lake"
     if lake.is_symlink():
         raise ValueError("Actions shards require a private build")
-    lake.mkdir(exist_ok=True)
+    lake.mkdir(parents=True, exist_ok=True)
     available, missing = set(), set()
     with cache_guard(root), tempfile.TemporaryDirectory(prefix=".shards-", dir=lake) as temporary:
         stage = Path(temporary)
@@ -346,6 +355,10 @@ def install(root, record, targets, *, require_complete=False):
         paths = set()
         for key, digest_value in sorted(selected.items()):
             payload = root / transport_payload(digest_value)
+            if preparation:
+                packed = preparation / "shards" / payload.name
+                if packed.is_file():
+                    payload = packed
             if not payload.is_file() or archive_sha(payload, None) != digest_value:
                 missing.add(digest_value)
                 continue
@@ -357,7 +370,7 @@ def install(root, record, targets, *, require_complete=False):
                 raise ValueError("duplicate artifact across Actions shards")
             paths.update(entries)
             available.add(digest_value)
-        target = root / PROJECT_BUILD
+        target = lake / "build"
         if target.is_symlink() or (target.exists() and not target.is_dir()):
             raise ValueError("Actions shards require a private build directory")
         if record["state"] == "complete" and target.is_dir() and any(target.iterdir()):
@@ -385,7 +398,10 @@ def main():
     parser.add_argument("--available", type=Path)
     parser.add_argument("--target", action="append", default=[])
     parser.add_argument("--require-complete", action="store_true")
+    parser.add_argument("--preparation", type=Path)
     args = parser.parse_args()
+    if args.preparation and (args.state != "complete" or args.operation != "install" or args.target):
+        parser.error("preparation requires a complete, unscoped install")
     root = args.repository.resolve()
     identity = binding(root, args.state)
     if args.operation == "identity":
@@ -407,7 +423,8 @@ def main():
     else:
         if args.state == "resume":
             (root / RESUME_RECORD).unlink(missing_ok=True)
-        result = install(root, record, args.target, require_complete=args.require_complete)
+        result = install(root, record, args.target, require_complete=args.require_complete,
+                         preparation=args.preparation)
         if args.state == "resume" and result["available"]:
             write_small_record(root / RESUME_RECORD, {"binding": identity, "owner": current_owner(root)})
         print(json.dumps(result))

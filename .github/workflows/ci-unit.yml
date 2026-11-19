@@ -62,9 +62,12 @@ jobs:
       - id: prepared
         name: Adopt a matching PR preparation for this event
         if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'
+        uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+        with:
+          operation: adopt-preparation
+          sharded-adoption: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) }}
       - id: keys
         if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none'
         env:
