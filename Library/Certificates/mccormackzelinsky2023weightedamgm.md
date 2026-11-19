@@ -5,18 +5,19 @@ year: 2023
 title: "Weighted Versions of the Arithmetic-Mean-Geometric Mean Inequality and Zaremba's Function"
 doi: 10.48550/arXiv.2312.11661
 url: https://arxiv.org/abs/2312.11661v4
-claim: "McCormack and Zelinsky ask in Question 43 whether the strongly pseudoperfect integers have positive natural density and in Question 44 whether strong pseudoperfectness is a strong restriction, a weak restriction, or neither within the Euler forms; Wang and Zelinsky repeat Question 43 as Question 22 and define a positive integer n to be strongly pseudoperfect when a subset S of its positive divisors is closed under d ↦ n/d and sums to 2n. Question 45 asks whether D1, the independent pseudoperfect condition together with an S1 satisfying A(S1,n) <= C(S1,n), is strong, weak, or neither."
+claim: "Question 34 asks for an odd primitive non-deficient n with a divisor set S1 containing 1, summing to 2n, and satisfying A(S1,n)>C(S1,n). Question 43 asks whether the strongly pseudoperfect integers have positive natural density and Question 44 whether strong pseudoperfectness is a strong restriction, a weak restriction, or neither within the Euler forms; Wang and Zelinsky repeat Question 43 as Question 22. Question 45 asks whether D1, the independent pseudoperfect condition together with an S1 satisfying A(S1,n) <= C(S1,n), is strong, weak, or neither."
 strata_touched:
   - D5/S3/Arith/Abundancy/StrongPseudoperfectDensity
   - D5/S3/PrimeGaps/ChiFourWeightedMangoldt
   - D5/S3/PrimeGaps/ModFourChebyshev
   - D5/S3/Arith/Abundancy/StrongPseudoperfectEulerDensity
   - D5/S3/Arith/Abundancy/WeightedTotientEulerDensity
+  - D5/S3/Arith/Abundancy/McCormackZelinskyQuestion34
 license: citation-only
 triage: anchor
 ---
 
-# Strongly pseudoperfect integers and natural density
+# Weighted totient inequalities and pseudoperfect integers
 
 McCormack and Zelinsky, page 18, Question 43:
 
@@ -55,6 +56,14 @@ The earlier definitions state:
 
 The S1 condition imposes no complementary-divisor closure. The D1 definition
 retains the independent pseudoperfect requirement.
+
+Page 15, Question 34 asks:
+
+> Is there an odd primitive non-deficient n which is pseudoperfect with set S1, with 1 ∈ S1, and where A(S1, n) > C(S1, n)?
+
+Here the S1 convention is a set of divisors with sum 2n. The displayed example
+C({13,26,39,78},78) uses a set with sum 156=2·78.
+
 Page 19 states:
 
 > Similarly, let D1 be the statement “n is pseudoperfect with some S1 where A(S1, n) ≤ C(S1, n).”
@@ -70,6 +79,7 @@ strongly pseudoperfect.
 ## Verified locator
 
 - Locator: arXiv:2312.11661v4, S0/S1 definitions; page 14, equations (12)--(14); pages 18--19, E and strong/weak definitions; page 19, D1 and Question 45.
+- Locator: arXiv:2312.11661v4, page 15, Question 34; page 14, the example C({13,26,39,78},78).
 - DOI: 10.48550/arXiv.2312.11661
 - URL: https://arxiv.org/abs/2312.11661v4
 - Locator: arXiv:2312.11661v4, page 18, definition of strongly pseudoperfect and Question 43.

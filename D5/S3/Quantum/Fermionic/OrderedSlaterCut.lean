@@ -302,7 +302,7 @@ theorem distinct_padded_spectra (n m : ℕ) :
   have he := congrArg (Polynomial.eval (1 : ℂ)) h
   norm_num [pow_two] at he
 
-private def embedMatrix {ι κ : Type*} [DecidableEq ι] (e : κ ↪ ι) : Matrix ι κ ℂ :=
+def embedMatrix {ι κ : Type*} [DecidableEq ι] (e : κ ↪ ι) : Matrix ι κ ℂ :=
   fun i j => if i = e j then 1 else 0
 
 private theorem embed_adjoint_mul {ι κ : Type*} [Fintype ι] [DecidableEq ι]
@@ -322,7 +322,7 @@ private theorem embed_adjoint_mul {ι κ : Type*} [Fintype ι] [DecidableEq ι]
       · simp [h]
     _ = _ := by simp [Matrix.one_apply]
 
-private theorem paddedGram_charpoly {ι κ α β : Type*}
+theorem paddedGram_charpoly {ι κ α β : Type*}
     [Fintype ι] [Fintype κ] [Fintype α] [Fintype β]
     [DecidableEq ι] [DecidableEq κ] [DecidableEq α]
     (e : α ↪ ι) (f : β ↪ κ) (B : Matrix α β ℂ) :
@@ -455,7 +455,7 @@ private theorem grouped_singleton_orbitals {ι : Type*} [LinearOrder ι]
   simp only [pairedOrbitals, orbitalEntry, hx, hy, hxt, hys, ite_true, ite_false,
     zero_mul, sub_zero, h10, halfRoot_mul]
 
-private theorem eq_padding {ι κ α β : Type*} [Fintype α] [Fintype β]
+theorem eq_padding {ι κ α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq ι] [DecidableEq κ]
     (e : α ↪ ι) (f : β ↪ κ) (M : Matrix ι κ ℂ) (A : Matrix α β ℂ)
     (active : ∀ i j, M (e i) (f j) = A i j)
