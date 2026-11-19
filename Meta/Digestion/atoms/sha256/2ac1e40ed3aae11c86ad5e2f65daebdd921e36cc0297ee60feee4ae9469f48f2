@@ -1,0 +1,92 @@
+**Lemma 2.6 (Rank bound and rank-four relevant factor).**
+
+For the coefficient family above assume the common value and derivative
+conditions, and
+
+$$
+\tag{2.16}
+
+ 2160B^4<p^4,\qquad233280B^6<p^5,\qquad93312B^6J<p^5.
+$$
+
+Its rational row rank is at most four. If its rank is four, a single
+primitive linear polynomial $f$ divides every $P_i$, with nonzero
+reduction and $f(\beta)=0\pmod p$. Its root $\theta\in\mathbb Q$
+satisfies $L_0(\theta)\ne0$.
+
+*Proof.*
+
+Choose integer lifts of the common $\lambda,\delta$ and set
+
+$$
+v_0=(1,\beta,\beta^2,-\lambda,-\lambda\beta),\qquad
+ v_1=(0,1,2\beta,-\delta,-\lambda-\delta\beta).
+$$
+
+Every row pairs with $v_0$ in $p^3\mathbb Z$ and with $v_1$ in $p\mathbb Z$.
+The matrix $T=[v_0,v_1,e_2,e_3,e_4]$ has determinant one. Any
+five-row determinant is therefore divisible by $p^4$, while its
+absolute value is at most $2160B^4$. This proves the rank bound.
+
+Choose four independent actual rows and let $U_j$ be their signed
+$4\times4$ cofactors. Then $U\ne0$ and every row annihilates $U$.
+The direct determinant bounds are
+
+$$
+\begin{aligned}
+ |U_0|&\leq432I^2J^4,&|U_1|&\leq216I^3J^3,&
+ |U_2|&\leq432I^4J^2,\\
+ |U_3|&\leq144I^3J^4,&|U_4|&\leq144I^4J^3.
+\end{aligned}
+$$
+
+In particular every $|U_j|<p^4$. Let $w$ be the cofactors after
+multiplication by $T$. Then $U=Tw$ and
+
+$$
+p\mid w_0,\quad p^3\mid w_1,\quad
+ p^4\mid w_2,w_3,w_4.
+$$
+
+Consequently
+
+$$
+\begin{aligned}
+ U_0U_2-U_1^2&=w_0w_2-w_1^2\in p^5\mathbb Z,\\
+ U_0U_4-U_1U_3
+   &=\delta w_1^2+w_0w_4-\beta w_0w_3-w_1w_3\in p^5\mathbb Z.
+\end{aligned}
+$$
+
+Their respective heights are at most $233280B^6$ and $93312B^6J$.
+Both minors vanish by (2.16). If $U_0=0$,
+the first gives $U_1=0$, hence $w_0=w_1=0$; all five $U_j$ would
+be divisible by $p^4$ and strictly smaller than $p^4$, a contradiction.
+Thus $U_0\ne0$. The third scroll minor follows from
+
+$$
+U_0(U_1U_4-U_2U_3)
+  =U_1(U_0U_4-U_1U_3)-U_3(U_0U_2-U_1^2).
+$$
+
+Writing $\theta=U_1/U_0$ and $\zeta=U_3/U_0$, the row equations
+become $Q_i(\theta)+\zeta L_i(\theta)=0$, hence $P_i(\theta)=0$.
+
+Write $\theta=b/a$ in lowest terms with $a>0$. Integrality of
+$U_2=U_1^2/U_0$ gives
+$(U_0,U_1,U_2)=d(a^2,ab,b^2)$ for a nonzero integer $d$, so
+$w_2=d(b-a\beta)^2$. If $p\nmid b-a\beta$, then $p^4\mid d$;
+the displayed divisibilities and $U=Tw$ would again force every
+$U_j$ to be zero. Thus $p\mid b-a\beta$, and primitivity gives
+$p\nmid a$. Gauss’s lemma now makes $f=aT-b$ an integer divisor
+of every $P_i$, with the asserted modular relevance. Finally
+$aL_0(\theta)=a\ell_0+bm_0\equiv aL_0(\beta)\not\equiv0\pmod p$,
+so $L_0(\theta)\ne0$.
+
+This proof uses actual row heights and no unit baseline resultant.
+It costs the same root-relevant factor weight
+(2.15). Since $J\leq\sqrt B$, the last
+gap follows from $93312^2B^{13}<p^{10}$. Thus it holds whenever
+$B\ll p^{\alpha-3}$ with fixed $\alpha<49/13$; in particular
+throughout $A\le C_0p^{15/4}$ for each fixed $C_0$.
+

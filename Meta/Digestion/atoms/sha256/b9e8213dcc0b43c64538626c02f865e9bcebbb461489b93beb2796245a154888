@@ -1,0 +1,24 @@
+**Lemma 3.4 (The easy physical branches).**
+
+Writing $\mathcal M$ for the set of selected actual middles,
+
+$$
+\#\mathcal M_4\ll A^7/p^{23},\qquad
+ \#\mathcal M_{3,\mathrm{split}}\ll_\varepsilon p^\varepsilon A^5/p^{15}.
+$$
+
+*Proof.*
+
+A nonzero residual requires $A\gg p^{26/7}$. For $j=4$ the smallest
+coefficient-box height is
+$X^2A/p^7=A^3/(Y^2p^7)\gg A^3/p^{11}\gg p^{1/7}$,
+using $Y<p^2/3$. Thus all floor and zero-coefficient terms are absorbed
+in the product of the three heights. There are $O(A^6/p^{21})$
+integer kernels; Lemma 3.3 proves the first bound.
+For $j=3$ the unit slope forces $p\nmid abc$.
+In the rationally split case $b^2-4ac=p^2e^2$, $e\ge1$.
+Put $H_2\asymp A^2/p^6$. There are $O(H_2^2/p)$ pairs $(b,e)$,
+and each determines a nonzero integer $ac$ of polynomial height.
+The divisor bound gives $O_\varepsilon(p^\varepsilon)$ ordered signed pairs $(a,c)$.
+Multiplying by the fixed-kernel support proves the second assertion.
+
