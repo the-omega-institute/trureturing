@@ -9,6 +9,7 @@ claim: "Lemma 2: a finite metric space with n points and k central distances (ze
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
   - D5/S3/Combinatorics/Geometry/CompleteCentralParity
+  - D5/S3/Combinatorics/Geometry/MinimumCentralOrder
 license: citation-only
 triage: anchor
 ---
@@ -33,3 +34,8 @@ Theorem 5 (Section 4): for n >= 1 a metric space of order n with complete n-cent
 exists if and only if n = 1 or n is even. For odd n >= 3 Lemma 2 would require more than
 n(n-1)/2 edges; for even n a one-factorization of K_n (Harary) with one distance per factor
 realizes it.
+
+Corollary 6 (Section 4): for k >= 1 the least order v(k) of a metric space with |C(X)| = k is
+1 for k = 1, k for even k, and k+1 for odd k >= 3. This answers Problem 4.3 of Dovgoshey and
+Rovenska. A space has at most n central values; at equality the central graph is complete, so
+Theorem 5 excludes odd n >= 3, and capping the round-robin distances attains every bound.
