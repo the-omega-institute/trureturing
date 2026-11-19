@@ -28,7 +28,7 @@ internal sealed class CZXParentLindbladianOrderedTransferDocument : IScribeDocum
                 "The original exponential factors over all even starts. On the weighted gauge sector the factors independently refresh the cyclic middle pairs. Summing the second bit of each pair gives the literal transfer letter. Contraction around the cycle traces the product in increasing block order. Both starts on a four-site ring occur in the factorization.",
                 DescribeRole.Theorem),
             Node("fixed_time_delta_upper", "Fixed-time quantum bound", BoundStatement(),
-                "The unitary factor in the evolved difference gives singular values equal to the absolute diagonal coefficients. Centering the resulting word traces subtracts two. Each diagonal entry is bounded by the Euclidean norm of its corresponding row. Applying annealed growth to both coordinate rows yields the displayed bound. For positive time the growth factor divided by two is strictly below one.",
+                "The evolved difference has the same conjugate-transpose product as the diagonal matrix of absolute coefficients. This diagonal is positive semidefinite, so the trace norm is the sum of those coefficients. Centering the resulting word traces subtracts two. Each diagonal entry is bounded by the Euclidean norm of its corresponding row. Applying annealed growth to both coordinate rows yields the displayed bound. For positive time the growth factor divided by two is strictly below one.",
                 DescribeRole.Theorem)
         ), []));
 

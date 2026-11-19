@@ -9,7 +9,6 @@
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAnnealedGrowth
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
-import D5.S3.Quantum.Foundation.FuchsLogarithmBasisRefutation
 
 /-! The weighted gauge sector of the CZX evolution and its ordered transfer formula. -/
 
@@ -643,7 +642,7 @@ private lemma czx_gram (n : ℕ) :
   change (cz n * tensorX n)ᴴ * (cz n * tensorX n) = _
   rw [Matrix.conjTranspose_mul, mul_assoc, ← mul_assoc (cz n)ᴴ, hz, one_mul, hx]
 
-open scoped MatrixOrder in
+open scoped ComplexOrder MatrixOrder in
 private lemma traceNorm_diagonal_sector (n : ℕ) (f : Config n → ℝ) :
     FiniteTraceDistance.traceNorm (czxUnitary n * Matrix.diagonal (fun x => (f x : ℂ))) =
       ∑ x, |f x| := by
@@ -656,11 +655,21 @@ private lemma traceNorm_diagonal_sector (n : ℕ) (f : Config n → ℝ) :
     congr 1
     funext x
     simp [pow_two]
-  unfold FiniteTraceDistance.traceNorm
-  rw [hgram, FuchsLogarithmBasisRefutation.sqrt_diag _ (fun _ => sq_nonneg _),
-    Matrix.trace_diagonal]
-  simp only [Real.sqrt_sq_eq_abs, map_sum]
-  rfl
+  let D := Matrix.diagonal (fun x => (|f x| : ℂ))
+  have hD : D.PosSemidef :=
+    Matrix.PosSemidef.diagonal (fun x => Complex.zero_le_real.mpr (abs_nonneg (f x)))
+  have hDgram : Dᴴ * D = Matrix.diagonal (fun x => ((f x ^ 2 : ℝ) : ℂ)) := by
+    rw [D, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
+    congr 1
+    funext x
+    simp [pow_two, ← Complex.ofReal_mul]
+  calc
+    _ = FiniteTraceDistance.traceNorm D := by
+      unfold FiniteTraceDistance.traceNorm
+      rw [hgram, hDgram]
+    _ = ∑ x, |f x| := by
+      simpa [D, Matrix.trace_diagonal, map_sum] using
+        congrArg Complex.re (FiniteTraceDistance.traceNorm_of_posSemidef hD)
 
 private lemma delta_ordered_identity (m : ℕ) (hm : 2 ≤ m) (t : ℝ) :
     delta m t = (2 : ℝ)⁻¹ ^ m / 2 * ((4 : ℝ)⁻¹ ^ m *
