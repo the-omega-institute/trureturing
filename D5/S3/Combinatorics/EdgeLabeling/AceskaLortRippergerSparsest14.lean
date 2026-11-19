@@ -29,6 +29,7 @@ exempt from four-slot escape registration (CLAUDE.md §3.9).
 -/
 
 import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Int.Interval
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Combinatorics.Digraph.Orientation
@@ -100,21 +101,20 @@ private theorem witness_oriented : Std.Asymm witness.Adj := by
   decide +kernel
 
 private theorem labels_consecutive : IsConsecutiveLabeling labels := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro v _
-    change 1 ≤ (v.val : ℤ) + 1 ∧ (v.val : ℤ) + 1 ≤ (Fintype.card (Fin 14) : ℤ)
-    simp only [Fintype.card_fin]
-    constructor <;> omega
-  · intro u _ v _ h
-    apply Fin.ext
-    change (u.val : ℤ) + 1 = (v.val : ℤ) + 1 at h
-    omega
-  · intro z hz
-    obtain ⟨hz1, hz14⟩ := hz
-    simp only [Fintype.card_fin] at hz14
-    refine ⟨⟨(z-1).toNat, by omega⟩, Set.mem_univ _, ?_⟩
-    dsimp [labels]
-    omega
+  let shift : ℕ ↪ ℤ := Nat.castEmbedding.trans (addLeftEmbedding 1)
+  let shiftedFin : Fin 14 ↪ ℤ := Fin.valEmbedding.trans shift
+  have image_eq : shiftedFin '' Set.univ = Set.Icc (1 : ℤ) (↑(14 : ℕ)) := by
+    rw [← Finset.coe_univ, ← Finset.coe_map, ← Finset.coe_Icc,
+      show shiftedFin = Fin.valEmbedding.trans shift from rfl, ← Finset.map_map,
+      Fin.map_valEmbedding_univ, Nat.Iio_eq_range, Int.Icc_eq_finset_map,
+      add_sub_cancel_right, Int.toNat_natCast]
+  have labels_eq : (shiftedFin : Fin 14 → ℤ) = labels := by
+    funext v
+    change (1 : ℤ) + (v.val : ℤ) = (v.val : ℤ) + 1
+    exact add_comm _ _
+  have bijective := shiftedFin.injective.bijOn_image (s := Set.univ)
+  rw [image_eq, labels_eq] at bijective
+  simpa only [IsConsecutiveLabeling, Fintype.card_fin] using bijective
 
 private theorem witness_weights : ∀ x : Fin 14, weight witness labels x = 0 := by
   intro x
@@ -137,13 +137,13 @@ private theorem witness_connected :
   refine ⟨0, ?_⟩
   have h0 : witness.toSimpleGraphInclusive.Reachable 0 0 := SimpleGraph.Reachable.refl _
   have h4 : witness.toSimpleGraphInclusive.Reachable 0 4 :=
-    h0.trans (show witness.toSimpleGraphInclusive.Adj 0 4 from by decide +kernel).reachable
+    (show witness.toSimpleGraphInclusive.Adj 0 4 from by decide +kernel).reachable
   have h11 : witness.toSimpleGraphInclusive.Reachable 0 11 :=
-    h0.trans (show witness.toSimpleGraphInclusive.Adj 0 11 from by decide +kernel).reachable
+    (show witness.toSimpleGraphInclusive.Adj 0 11 from by decide +kernel).reachable
   have h7 : witness.toSimpleGraphInclusive.Reachable 0 7 :=
-    h0.trans (show witness.toSimpleGraphInclusive.Adj 0 7 from by decide +kernel).reachable
+    (show witness.toSimpleGraphInclusive.Adj 0 7 from by decide +kernel).reachable
   have h8 : witness.toSimpleGraphInclusive.Reachable 0 8 :=
-    h0.trans (show witness.toSimpleGraphInclusive.Adj 0 8 from by decide +kernel).reachable
+    (show witness.toSimpleGraphInclusive.Adj 0 8 from by decide +kernel).reachable
   have h2 : witness.toSimpleGraphInclusive.Reachable 0 2 :=
     h8.trans (show witness.toSimpleGraphInclusive.Adj 8 2 from by decide +kernel).reachable
   have h1 : witness.toSimpleGraphInclusive.Reachable 0 1 :=
