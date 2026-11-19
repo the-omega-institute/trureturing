@@ -9,10 +9,12 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonLabels
 
 open Finset SimpleGraph
-open private cycleLabel pairingModel from
+open private cycleLabel pairingModel singleton_class_cycle from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoCompression
-open private attachment from
+open private attachment solid hollow from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
+open private SideHigh compressed from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 
 private def representative (opposite : Bool) : Fin 3 → Fin 6 :=
   if opposite then ![0, 1, 2] else ![0, 1, 3]
@@ -26,7 +28,8 @@ private theorem pair_labels :
   decide +kernel
 
 private theorem representative_label :
-    ∀ (opposite : Bool) (j : Fin 3), attachment opposite (representative opposite j) = rootIndex j := by
+    ∀ (opposite : Bool) (j : Fin 3),
+      attachment opposite (representative opposite j) = rootIndex j := by
   decide
 
 private theorem cycleLabel_injective (shift : Fin 6) (reverse : Bool) :
@@ -81,5 +84,137 @@ theorem label_paired_cycle {V : Type*} [Fintype V] [DecidableEq V]
   exact label_attachments H A hA c opposite hpair
 
 #print axioms label_paired_cycle
+
+private def cycleIndex (i : Fin 6) : Fin 10 := ⟨i.val + 4, by omega⟩
+
+private theorem split_index :
+    ∀ i : Fin 10, i = 0 ∨ (∃ j, i = rootIndex j) ∨ ∃ j, i = cycleIndex j := by
+  decide
+
+private theorem solid_cases :
+    ∀ i j : Fin 10, solid i j = true ↔
+      (i = 0 ∧ ∃ k, j = rootIndex k) ∨ j = 0 ∧ ∃ k, i = rootIndex k := by
+  decide
+
+private theorem hollow_cases :
+    ∀ (b : Bool) (i j : Fin 10), hollow b i j = true →
+      (∃ u v, i = cycleIndex u ∧ j = cycleIndex v ∧ (cycleGraph 6).Adj u v) ∨
+      (∃ u v, i = rootIndex u ∧ j = cycleIndex v ∧ attachment b v = rootIndex u) ∨
+      ∃ u v, i = cycleIndex v ∧ j = rootIndex u ∧ attachment b v = rootIndex u := by
+  decide +kernel
+
+private theorem cycleLabel_adj :
+    ∀ (shift : Fin 6) (reverse : Bool) (i j : Fin 6),
+      (cycleGraph 6).Adj i j →
+        (cycleGraph 6).Adj (cycleLabel shift reverse i) (cycleLabel shift reverse j) := by
+  decide +kernel
+
+attribute [local instance] Classical.propDecidable
+
+/-- The singleton-parity compression realizes the two labeled graphs used by
+the embedding search, with ten actual high vertices and a degree-two
+subdivision of each specified hollow edge. -/
+theorem singleton_model {V : Type*} [Fintype V] [DecidableEq V]
+    {G : SimpleGraph V} {L R : Finset V}
+    (hp : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {x y}, G.Adj x y → G.degree x = 2 → G.degree y = 2 → False)
+    (hg : (8 : ℕ∞) ≤ G.egirth)
+    (hL : Fintype.card (SideHigh G L) = 1)
+    (hR : Fintype.card (SideHigh G R) = 9) :
+    ∃ (b : Bool) (p : Fin 10 ↪ V), (∀ i, G.degree (p i) = 3) ∧
+      (∀ i j, G.Adj (p i) (p j) ↔ solid i j = true) ∧
+      ∀ i j, hollow b i j = true →
+        ∃ m, G.degree m = 2 ∧ G.Adj (p i) m ∧ G.Adj (p j) m := by
+  obtain ⟨r, ha, _, _, e, shift, reverse, b, hpair⟩ :=
+    singleton_class_cycle hp hdeg (fun hxy hx hy => hlow hxy hx hy) hg hL hR
+  let A := Finset.univ.filter (fun x : SideHigh G R => G.Adj r.val x.val)
+  let B := Finset.univ \ A
+  let H := compressed G R
+  obtain ⟨roots, hroots, hlink⟩ := label_paired_cycle H A B ha e shift reverse b hpair
+  let cyc : Fin 6 ↪ SideHigh G R := ⟨fun i => (e (cycleLabel shift reverse i)).val,
+    fun _ _ h => cycleLabel_injective shift reverse (e.injective (Subtype.ext h))⟩
+  have hrA (i : Fin 3) : roots i ∈ A := by
+    rw [← hroots]
+    exact Finset.mem_image.mpr ⟨i, Finset.mem_univ _, rfl⟩
+  have hcB (i : Fin 6) : cyc i ∈ B := (e (cycleLabel shift reverse i)).property
+  have hrc (i : Fin 3) (j : Fin 6) : roots i ≠ cyc j :=
+    fun he => (Finset.mem_sdiff.mp (hcB j)).2 (he ▸ hrA i)
+  have hLR (x : SideHigh G R) : r.val ≠ x.val := by
+    intro he
+    have hr := (Finset.mem_filter.mp r.property).1
+    have hx := (Finset.mem_filter.mp x.property).1
+    exact Set.disjoint_left.mp hp.disjoint hr (he.symm ▸ hx)
+  let p : Fin 10 → V :=
+    Fin.append (Fin.cases r.val (fun i : Fin 3 => (roots i).val)) (fun i => (cyc i).val)
+  have p0 : p 0 = r.val := by rfl
+  have pr (i : Fin 3) : p (rootIndex i) = (roots i).val := by
+    change p (i.succ.castAdd 6) = _
+    simp only [p, Fin.append_left, Fin.cases_succ]
+  have pc (i : Fin 6) : p (cycleIndex i) = (cyc i).val := by
+    have hi : cycleIndex i = i.natAdd 4 := Fin.ext (by simp [cycleIndex, Nat.add_comm])
+    simp only [p, hi, Fin.append_right]
+  have hinj : Function.Injective p := by
+    intro i j he
+    rcases split_index i with rfl | ⟨u, rfl⟩ | ⟨u, rfl⟩ <;>
+      rcases split_index j with rfl | ⟨v, rfl⟩ | ⟨v, rfl⟩
+    · rfl
+    · exact (hLR (roots v) (by simpa only [p0, pr] using he)).elim
+    · exact (hLR (cyc v) (by simpa only [p0, pc] using he)).elim
+    · exact (hLR (roots u) (by simpa only [p0, pr] using he.symm)).elim
+    · exact congrArg rootIndex (roots.injective (Subtype.ext (by simpa only [pr] using he)))
+    · exact (hrc u v (Subtype.ext (by simpa only [pr, pc] using he))).elim
+    · exact (hLR (cyc u) (by simpa only [p0, pc] using he.symm)).elim
+    · exact (hrc v u (Subtype.ext (by simpa only [pr, pc] using he.symm))).elim
+    · exact congrArg cycleIndex (cyc.injective (Subtype.ext (by simpa only [pc] using he)))
+  let p' : Fin 10 ↪ V := ⟨p, hinj⟩
+  have haR (u v : SideHigh G R) : ¬G.Adj u.val v.val := by
+    intro huv
+    have hu := (Finset.mem_filter.mp u.property).1
+    have hv := (Finset.mem_filter.mp v.property).1
+    exact Set.disjoint_left.mp hp.disjoint (hp.mem_of_mem_adj' hu huv.symm) hv
+  have hr_adj (i : Fin 3) : G.Adj r.val (roots i).val :=
+    (Finset.mem_filter.mp (hrA i)).2
+  have hc_non (i : Fin 6) : ¬G.Adj r.val (cyc i).val :=
+    fun h => (Finset.mem_sdiff.mp (hcB i)).2 (Finset.mem_filter.mpr ⟨Finset.mem_univ _, h⟩)
+  refine ⟨b, p', ?_, ?_, ?_⟩
+  · intro i
+    change G.degree (p i) = 3
+    rcases split_index i with rfl | ⟨j, rfl⟩ | ⟨j, rfl⟩
+    · rw [p0]; exact (Finset.mem_filter.mp r.property).2
+    · rw [pr]; exact (Finset.mem_filter.mp (roots j).property).2
+    · rw [pc]; exact (Finset.mem_filter.mp (cyc j).property).2
+  · intro i j
+    change G.Adj (p i) (p j) ↔ _
+    have hzero : ∀ j, solid 0 j = true ↔ ∃ i, j = rootIndex i := by decide
+    have hsym : ∀ i j, solid i j = solid j i := by decide
+    have hroot : ∀ i, rootIndex i ≠ 0 := by decide
+    have hcyc : ∀ i, cycleIndex i ≠ 0 := by decide
+    have hnone : ∀ i j, cycleIndex i ≠ rootIndex j := by decide
+    rcases split_index i with rfl | ⟨u, rfl⟩ | ⟨u, rfl⟩ <;>
+      rcases split_index j with rfl | ⟨v, rfl⟩ | ⟨v, rfl⟩
+    · simp only [p0, G.loopless.irrefl, hzero]
+      exact ⟨False.elim, fun ⟨i, h⟩ => hroot i h.symm⟩
+    · simp [p0, pr, hzero, hr_adj v]
+    · simp [p0, pc, hzero, hc_non v, hnone]
+    · rw [G.adj_comm, hsym]; simp [p0, pr, hzero, hr_adj u]
+    · simp [pr, solid_cases, hroot, haR]
+    · simp [pr, pc, solid_cases, hroot, hcyc, haR]
+    · rw [G.adj_comm, hsym]; simp [p0, pc, hzero, hc_non u, hnone]
+    · simp [pr, pc, solid_cases, hroot, hcyc, haR]
+    · simp [pc, solid_cases, hcyc, haR]
+  · intro i j hij
+    change ∃ m, G.degree m = 2 ∧ G.Adj (p i) m ∧ G.Adj (p j) m
+    rcases hollow_cases b i j hij with ⟨u, v, rfl, rfl, huv⟩ |
+      ⟨u, v, rfl, rfl, huv⟩ | ⟨u, v, rfl, rfl, huv⟩
+    · have hc : H.Adj (cyc u) (cyc v) :=
+        e.map_rel_iff.mpr (cycleLabel_adj shift reverse u v huv)
+      simpa only [pc] using hc.2
+    · have hx : H.Adj (roots u) (cyc v) := (hlink u v).mpr huv
+      simpa only [pr, pc] using hx.2
+    · have hx : H.Adj (cyc v) (roots u) := ((hlink u v).mpr huv).symm
+      simpa only [pr, pc] using hx.2
+
+#print axioms singleton_model
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonLabels
