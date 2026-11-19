@@ -12,6 +12,8 @@ escape_witness: none
 The settling result and its consumed helpers use finite-sum/parity rewriting,
 existing estimates, and normalization; no declaration claims independent content.
 Definitions describe the source objects and the auxiliary finite matrix certificate.
+The public phi keeps the preregistered power of −1. The proofs use complexSign
+and identify the two forms at phi_outer_entry via complex_sign_val.
 Direct frozen dependencies are declaration identities at base 3476ce98dd3c4326181683b37fc2ddad3e33a743.
 The publicized selectors retain their base private declaration identities until canonical re-pin.
   F1: D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.partialTraceFirst
@@ -46,20 +48,24 @@ The publicized selectors retain their base private declaration identities until 
     statement_id: sha256:83ac791e170c8f29d6ff3fedd7eb6d261e6a7ec791b03ef14422460da17cc9dc
   F16: D5/S3/Weil/ProjectiveRayleigh/ScaledComplexQuadraticRowBound.norm_complex_quadratic_le_scaled_rows
     statement_id: sha256:0546d1b31c5831f1ec46dc0ae54d7592aac449e3f961a4ea5c4b83a26803cd2a
-proof_shape: sign: bind-only; consumers: sign_sq, sign_flip, moment_two, moment_four, phi_outer_entry, rho_entry, perf_entry, performance_eq_L
-  Direct frozen dependencies: none
+  F17: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.complexSign
+  F18: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.sign_square
+  F19: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.complexSign_add
+  F20: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.sign_one
+  F21: D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.complex_sign_val
+  F22: Matrix.trace_submatrix
 proof_shape: sign_sq: bind-only; consumers: moment_two, moment_four
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F18
 proof_shape: sign_flip: bind-only; consumers: moment_two, moment_four
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F19, F20
 proof_shape: sum_flip_zero: bind-only; consumers: moment_two, moment_four
   Direct frozen dependencies: none
 proof_shape: moment_two: bind-only; consumers: moment_four
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F18, F19, F20
 proof_shape: momentEntry: bind-only; consumers: moment_four, momentEntry_eq, momentEntry_nonneg, momentEntry_symm, L, L_nonneg, L_symm, L_row, performance_eq_L
   Direct frozen dependencies: none
 proof_shape: moment_four: bind-only; consumers: performance_eq_L
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F18, F19, F20
 proof_shape: momentEntry_eq: bind-only; consumers: momentEntry_nonneg, momentEntry_symm
   Direct frozen dependencies: none
 proof_shape: momentEntry_nonneg: bind-only; consumers: L_nonneg
@@ -107,9 +113,9 @@ proof_shape: choi_reindex: bind-only; consumers: choi_gram, perf_pair
 proof_shape: choi_gram: bind-only; consumers: result
   Direct frozen dependencies: F4, F5, F6, F8, F15, F3, F7, F14
 proof_shape: choi_tensor_pair: bind-only; consumers: perf_pair
-  Direct frozen dependencies: F13, F3
+  Direct frozen dependencies: F13, F3, F22
 proof_shape: trace_right_pair: bind-only; consumers: perf_pair
-  Direct frozen dependencies: F12, F1, F10
+  Direct frozen dependencies: F12, F1, F10, F22
 proof_shape: trace_left_pair: bind-only; consumers: perf_pair
   Direct frozen dependencies: F11, F10
 proof_shape: perf: bind-only; consumers: performance, perf_pair, perf_entry, performance_eq_L, meanFidelity_pair
@@ -117,17 +123,17 @@ proof_shape: perf: bind-only; consumers: performance, perf_pair, perf_entry, per
 proof_shape: performance: bind-only; consumers: performance_eq_L, meanFidelity_pair, result
   Direct frozen dependencies: none
 proof_shape: phi_outer_entry: bind-only; consumers: rho_entry
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F21
 proof_shape: rho_entry: bind-only; consumers: perf_entry
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F21
 proof_shape: perf_pair: bind-only; consumers: meanFidelity_pair
-  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10
+  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10, F22
 proof_shape: perf_entry: bind-only; consumers: performance_eq_L
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F21
 proof_shape: performance_eq_L: bind-only; consumers: result
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F17, F18, F19, F20, F21
 proof_shape: meanFidelity_pair: bind-only; consumers: result
-  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10
+  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10, F22
 proof_shape: trace_outer_re: bind-only; consumers: trace_L_gram_bound
   Direct frozen dependencies: F2
 proof_shape: trace_L_outer: bind-only; consumers: trace_L_gram_bound
@@ -135,13 +141,16 @@ proof_shape: trace_L_outer: bind-only; consumers: trace_L_gram_bound
 proof_shape: trace_L_gram_bound: bind-only; consumers: result
   Direct frozen dependencies: F2, F16
 proof_shape: result: bind-only; consumers: settling result
-  Direct frozen dependencies: F4, F12, F5, F9, F1, F6, F8, F15, F2, F13, F3, F11, F7, F14, F10, F16
+  Direct frozen dependencies: F4, F12, F5, F9, F1, F6, F8, F15, F2, F13, F3, F11, F7, F14, F10, F16, F17, F18, F19, F20, F21, F22
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31047
 -/
 
 import D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
 import D5.S3.Quantum.Information.HedgingMajorityThreshold
+import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
+import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth
 import D5.S3.Weil.ProjectiveRayleigh.ScaledComplexQuadraticRowBound
@@ -156,22 +165,32 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
 
+open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.SignQuotient (complexSign complexSign_add)
+open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (complex_sign_val)
+
 open scoped BigOperators
 namespace D5.S3.Quantum.QuantumChannels.AmiriArrazolaHiddenMatchingCloningBound
 noncomputable section
 
-private def sign (s : Fin 2) : ℂ := (-1 : ℂ) ^ s.val
-
-private theorem sign_sq (s : Fin 2) : sign s * sign s = 1 := by
-  fin_cases s <;> norm_num [sign]
+private theorem sign_sq (s : Fin 2) :
+    complexSign (s.val : ZMod 2) * complexSign (s.val : ZMod 2) = 1 :=
+  D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.sign_square (s.val : ZMod 2)
 
 private theorem sign_flip {n : ℕ} (i j : Fin n) (x : Fin n → Fin 2) :
-    sign ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _)) x j) = (if j = i then -1 else 1) * sign (x j) := by
+    complexSign (((Equiv.piCongrRight
+      (fun k => if k = i then finRotate 2 else Equiv.refl _)) x j).val : ZMod 2) =
+      (if j = i then -1 else 1) * complexSign ((x j).val : ZMod 2) := by
   by_cases h : j = i
   · subst j
-    have hs : sign (finRotate 2 (x i)) = -sign (x i) := by
-      generalize x i = s
-      fin_cases s <;> norm_num [sign, finRotate_apply, Fin.add_def]
+    have hcast : ((finRotate 2 (x i)).val : ZMod 2) = ((x i).val : ZMod 2) + 1 := by
+      simp only [finRotate_apply, Fin.val_add, Fin.val_one, ZMod.natCast_mod,
+        Nat.cast_add, Nat.cast_one]
+    have hs : complexSign ((finRotate 2 (x i)).val : ZMod 2) =
+        -complexSign ((x i).val : ZMod 2) := calc
+      _ = complexSign (((x i).val : ZMod 2) + 1) := congrArg complexSign hcast
+      _ = -complexSign ((x i).val : ZMod 2) := by
+        rw [complexSign_add, D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.sign_one,
+          mul_neg_one]
     simpa [Equiv.piCongrRight] using hs
   · simp [Equiv.piCongrRight, h]
 
@@ -184,7 +203,7 @@ private theorem sum_flip_zero {n : ℕ} (i : Fin n) (f : (Fin n → Fin 2) → �
   linear_combination hs / 2
 
 private theorem moment_two {n : ℕ} (a b : Fin n) :
-    (∑ x : Fin n → Fin 2, sign (x a) * sign (x b)) =
+    (∑ x : Fin n → Fin 2, complexSign ((x a).val : ZMod 2) * complexSign ((x b).val : ZMod 2)) =
       (2 : ℂ)^n * (if a = b then 1 else 0) := by
   by_cases h : a = b
   · subst b
@@ -202,7 +221,8 @@ private def momentEntry {ι : Type*} [DecidableEq ι] (a b c d : ι) : ℝ :=
   2 * (if a = b ∧ b = c ∧ c = d then 1 else 0)
 
 private theorem moment_four {n : ℕ} (a b c d : Fin n) :
-    (∑ x : Fin n → Fin 2, sign (x a) * sign (x b) * sign (x c) * sign (x d)) =
+    (∑ x : Fin n → Fin 2, complexSign ((x a).val : ZMod 2) * complexSign ((x b).val : ZMod 2) *
+      complexSign ((x c).val : ZMod 2) * complexSign ((x d).val : ZMod 2)) =
       (2 : ℂ)^n * (momentEntry a b c d : ℂ) := by
   by_cases hab : a = b
   · subst b
@@ -213,10 +233,12 @@ private theorem moment_four {n : ℕ} (a b c d : Fin n) :
   · by_cases hac : a = c
     · subst c
       have hp (x : Fin n → Fin 2) :
-          sign (x a) * sign (x b) * sign (x a) * sign (x d) =
-            sign (x b) * sign (x d) := by
+          complexSign ((x a).val : ZMod 2) * complexSign ((x b).val : ZMod 2) *
+            complexSign ((x a).val : ZMod 2) * complexSign ((x d).val : ZMod 2) =
+            complexSign ((x b).val : ZMod 2) * complexSign ((x d).val : ZMod 2) := by
         calc
-          _ = (sign (x a) * sign (x a)) * (sign (x b) * sign (x d)) := by ring
+          _ = (complexSign ((x a).val : ZMod 2) * complexSign ((x a).val : ZMod 2)) * (
+            complexSign ((x b).val : ZMod 2) * complexSign ((x d).val : ZMod 2)) := by ring
           _ = _ := by rw [sign_sq, one_mul]
       simp_rw [hp]
       rw [moment_two]
@@ -224,16 +246,19 @@ private theorem moment_four {n : ℕ} (a b c d : Fin n) :
     · by_cases had : a = d
       · subst d
         have hp (x : Fin n → Fin 2) :
-            sign (x a) * sign (x b) * sign (x c) * sign (x a) =
-              sign (x b) * sign (x c) := by
+            complexSign ((x a).val : ZMod 2) * complexSign ((x b).val : ZMod 2) *
+              complexSign ((x c).val : ZMod 2) * complexSign ((x a).val : ZMod 2) =
+              complexSign ((x b).val : ZMod 2) * complexSign ((x c).val : ZMod 2) := by
           calc
-            _ = (sign (x a) * sign (x a)) * (sign (x b) * sign (x c)) := by ring
+            _ = (complexSign ((x a).val : ZMod 2) * complexSign ((x a).val : ZMod 2)) * (
+              complexSign ((x b).val : ZMod 2) * complexSign ((x c).val : ZMod 2)) := by ring
             _ = _ := by rw [sign_sq, one_mul]
         simp_rw [hp]
         rw [moment_two]
         by_cases hbc : b = c <;> simp_all [momentEntry, eq_comm]
       · have hz : (∑ x : Fin n → Fin 2,
-            sign (x a) * sign (x b) * sign (x c) * sign (x d)) = 0 := by
+            complexSign ((x a).val : ZMod 2) * complexSign ((x b).val : ZMod 2) *
+              complexSign ((x c).val : ZMod 2) * complexSign ((x d).val : ZMod 2)) = 0 := by
           apply sum_flip_zero a
           intro x
           rw [sign_flip a a x, sign_flip a b x, sign_flip a c x, sign_flip a d x]
@@ -490,11 +515,11 @@ private theorem choi_tensor_pair {a : ℕ} {B : Type*} [Fintype B]
   have hleft : trace (MatrixMap.choi_matrix N' * (Matrix.reindex b b Q ⊗ₖ P)) =
       trace (MatrixMap.choi_matrix N * (Q ⊗ₖ P)) := by
     rw [hJ, hQ, Matrix.submatrix_mul_equiv]
-    exact e.symm.sum_comp (fun p => (MatrixMap.choi_matrix N * (Q ⊗ₖ P)) p p)
+    exact Matrix.trace_submatrix (MatrixMap.choi_matrix N * (Q ⊗ₖ P)) e.symm
   have hright : trace (Matrix.reindex b b Q * N' Pᵀ) = trace (Q * N Pᵀ) := by
     change trace (Q.submatrix b.symm b.symm * (N Pᵀ).submatrix b.symm b.symm) = _
     rw [Matrix.submatrix_mul_equiv]
-    exact b.symm.sum_comp (fun i => (Q * N Pᵀ) i i)
+    exact Matrix.trace_submatrix (Q * N Pᵀ) b.symm
   exact hleft.symm.trans (h.trans hright)
 
 
@@ -513,7 +538,7 @@ private theorem trace_right_pair {A B : Type*} [Fintype A] [Fintype B]
   rw [hprod, Matrix.submatrix_mul_equiv] at h
   have htr : trace (((P ⊗ₖ (1 : Matrix B B ℂ)) * O).submatrix e e) =
       trace ((P ⊗ₖ (1 : Matrix B B ℂ)) * O) :=
-    e.sum_comp (fun p => ((P ⊗ₖ (1 : Matrix B B ℂ)) * O) p p)
+    Matrix.trace_submatrix ((P ⊗ₖ (1 : Matrix B B ℂ)) * O) e
   exact htr.symm.trans h
 
 
@@ -545,13 +570,14 @@ private def performance (n : ℕ) : Matrix ((Fin n × Fin n × Fin n)) ((Fin n �
   (((2 : ℂ)^n)⁻¹ / 2) • ∑ x : (Fin n → Fin 2), perf n x
 
 private theorem phi_outer_entry (n : ℕ) (x : (Fin n → Fin 2)) (i j : Fin n) :
-    phi n x i * star (phi n x j) = (n : ℂ)⁻¹ * sign (x i) * sign (x j) := by
+    phi n x i * star (phi n x j) = (n : ℂ)⁻¹ * complexSign ((x i).val : ZMod 2) * complexSign ((x j).val : ZMod 2) := by
   have hs : (Real.sqrt (n : ℝ) : ℂ)^2 = (n : ℂ) := by
     exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ n by positivity)
   have hden : (Real.sqrt (n : ℝ) : ℂ)⁻¹ * (Real.sqrt (n : ℝ) : ℂ)⁻¹ = (n : ℂ)⁻¹ := by
     rw [← mul_inv, ← sq, hs]
-  simp only [phi, sign, star_mul, star_inv₀, star_pow, star_neg, star_one,
-    Complex.star_def, Complex.conj_ofReal]
+  simp only [phi, star_mul, star_inv₀, star_pow, star_neg, star_one,
+    Complex.star_def, Complex.conj_ofReal, complex_sign_val,
+    ZMod.val_natCast_of_lt (x i).isLt, ZMod.val_natCast_of_lt (x j).isLt]
   calc
     _ = ((Real.sqrt (n : ℝ) : ℂ)⁻¹ * (Real.sqrt (n : ℝ) : ℂ)⁻¹) *
         ((-1 : ℂ) ^ (x i).val * (-1 : ℂ) ^ (x j).val) := by ring
@@ -559,7 +585,7 @@ private theorem phi_outer_entry (n : ℕ) (x : (Fin n → Fin 2)) (i j : Fin n) 
 
 private theorem rho_entry (n : ℕ) (x : (Fin n → Fin 2)) (i j : Fin n) :
     CStarMatrix.ofMatrix.symm (rho n x) i j =
-      (n : ℂ)⁻¹ * sign (x i) * sign (x j) :=
+      (n : ℂ)⁻¹ * complexSign ((x i).val : ZMod 2) * complexSign ((x j).val : ZMod 2) :=
   phi_outer_entry n x i j
 
 private theorem perf_pair (n : ℕ) (Ψ : QuantumChannel (Fin n) (Fin n × Fin n)) (x : (Fin n → Fin 2)) :
@@ -578,10 +604,9 @@ private theorem perf_pair (n : ℕ) (Ψ : QuantumChannel (Fin n) (Fin n × Fin n
       ((((R ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ)) + (1 ⊗ₖ R)) ⊗ₖ Rᵀ).submatrix
       (Equiv.prodComm (Fin n) (Fin n × Fin n)) (Equiv.prodComm (Fin n) (Fin n × Fin n)))) = _
     rw [Matrix.submatrix_mul_equiv]
-    simpa only [Matrix.trace, Matrix.diag_apply, Matrix.submatrix_apply, V] using
-      (Equiv.prodComm (Fin n) (Fin n × Fin n)).sum_comp
-        (fun p : (Fin n × Fin n) × Fin n =>
-          (MatrixMap.choi_matrix ((matrixAction Ψ.toCompletelyPositiveMap)) * V) p p)
+    exact Matrix.trace_submatrix
+      (MatrixMap.choi_matrix (matrixAction Ψ.toCompletelyPositiveMap) * V)
+      (Equiv.prodComm (Fin n) (Fin n × Fin n))
   rw [hr, choi_tensor_pair, Matrix.transpose_transpose, Matrix.add_mul, trace_add,
     trace_right_pair, trace_left_pair]
   change trace (Matrix.vecMulVec (phi n x) (star (phi n x)) * eta n Ψ x) +
@@ -593,9 +618,11 @@ private theorem perf_pair (n : ℕ) (Ψ : QuantumChannel (Fin n) (Fin n × Fin n
 private theorem perf_entry (n : ℕ) (x : (Fin n → Fin 2)) (p q : (Fin n × Fin n × Fin n)) :
     perf n x p q = ((n : ℂ)⁻¹)^2 *
       ((if p.2.2 = q.2.2 then
-          sign (x p.1) * sign (x p.2.1) * sign (x q.1) * sign (x q.2.1) else 0) +
+          complexSign ((x p.1).val : ZMod 2) * complexSign ((x p.2.1).val : ZMod 2) *
+            complexSign ((x q.1).val : ZMod 2) * complexSign ((x q.2.1).val : ZMod 2) else 0) +
        (if p.2.1 = q.2.1 then
-          sign (x p.1) * sign (x p.2.2) * sign (x q.1) * sign (x q.2.2) else 0)) := by
+          complexSign ((x p.1).val : ZMod 2) * complexSign ((x p.2.2).val : ZMod 2) *
+            complexSign ((x q.1).val : ZMod 2) * complexSign ((x q.2.2).val : ZMod 2) else 0)) := by
   simp only [perf, Matrix.submatrix_apply, Prod.swap, kroneckerMap_apply,
     Matrix.transpose_apply, Matrix.add_apply, Matrix.one_apply, rho_entry n]
   split_ifs <;> ring
