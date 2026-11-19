@@ -199,9 +199,9 @@ open private TwentyFourLayerRegularity.second third third_witness from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyFourLayerRegularity
 open private endpoint_eq_of_short_paths from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GirthSliceCounting
-open private adjacent_exists_flip from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private directions mem_directions regular_directions from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions)
+open private adjacent_exists_flip from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth open private mem_directions from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private third_distance distance_parity from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
