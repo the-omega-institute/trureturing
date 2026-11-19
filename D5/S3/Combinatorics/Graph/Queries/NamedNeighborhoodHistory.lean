@@ -32,7 +32,7 @@ noncomputable def nameReply (G : SimpleGraph V) (n : N) (f : V ↪ N) : Option (
   classical
   exact if h : n ∈ Set.range f then some (f '' G.neighborSet h.choose) else none
 
-@[simp] private theorem answer_at_name (G : SimpleGraph V) (f : V ↪ N) (x : V) :
+@[simp] theorem answer_at_name (G : SimpleGraph V) (f : V ↪ N) (x : V) :
     nameReply G (f x) f = some (f '' G.neighborSet x) := by
   classical
   have h : f x ∈ Set.range f := ⟨x, rfl⟩

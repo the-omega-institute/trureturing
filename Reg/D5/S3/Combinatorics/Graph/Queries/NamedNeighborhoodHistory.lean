@@ -220,5 +220,84 @@ def replayRegistration :
   familyRecord := none
   options := #[] }
 
+private abbrev answerSignature : Signature where
+  Params := Type v
+  State N := Set N
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ N := Option (Set N)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def answerActual : Realization answerSignature.{v} :=
+  realize answerSignature (fun _ _ neighbors => some neighbors) (fun e => nomatch e)
+
+private def answerMiss : Realization answerSignature.{v} :=
+  realize answerSignature (fun _ _ _ => none) (fun e => nomatch e)
+
+private abbrev answerArena : Arena where
+  signature := answerSignature.{v}
+  Law R := ∀ {V : Type u} {N : Type v} (G : SimpleGraph V) (f : V ↪ N) (x : V),
+    nameReply G (f x) f = R.readout () N (f '' G.neighborSet x)
+
+private theorem rejectsMiss : ¬ answerArena.{u, v}.Law answerMiss := by
+  intro h
+  let f : ULift.{u} Unit ↪ ULift.{v} Unit :=
+    ⟨fun _ => ⟨()⟩, fun _ _ _ => Subsingleton.elim _ _⟩
+  have hmiss := h (⊥ : SimpleGraph (ULift.{u} Unit)) f ⟨()⟩
+  rw [answer_at_name] at hmiss
+  change some _ = none at hmiss
+  cases hmiss
+
+private theorem answerVaries :
+    answerActual.{v}.readout () (ULift.{v} Unit) ∅ ≠
+      answerActual.{v}.readout () (ULift.{v} Unit) Set.univ := by
+  change some ∅ ≠ some (Set.univ : Set (ULift.{v} Unit))
+  exact fun h => Set.notMem_empty (⟨()⟩ : ULift.{v} Unit)
+    ((Option.some.inj h).symm ▸ Set.mem_univ _)
+
+def answerEvidence : Registration answerArena.{u, v} (type_of% (@answer_at_name.{u, v})) where
+  actual := answerActual
+  bridge := Iff.rfl
+  variation := ⟨@answer_at_name.{u, v}, answerMiss, rejectsMiss⟩
+  sensitivity := ⟨fun i => ⟨answerMiss, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl,
+    rejectsMiss⟩, fun e => nomatch e⟩
+  dependence := fun _ => ⟨ULift.{v} Unit, ∅, Set.univ, answerVaries⟩
+
+def answerRegistration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@answer_at_name.{u, v}) (Realization answerSignature.{v}) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.NamedNeighborhoodHistory.answer_at_name
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.NamedNeighborhoodHistory.answerEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨answerArena.{u, v}⟩
+  objectArena := .source ⟨answerArena.{u, v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source answerArena.{u, v} ⟨answerEvidence.{u, v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize answerSignature (fun _ _ neighbors => some neighbors)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Queries.NamedNeighborhoodHistory
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end
 end Reg.D5.S3.Combinatorics.Graph.Queries.NamedNeighborhoodHistory
