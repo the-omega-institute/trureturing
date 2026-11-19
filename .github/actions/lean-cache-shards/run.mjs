@@ -98,23 +98,30 @@ async function fetchIndex(cache, cacheVersion, identity, protectedOnly = false) 
   const ref = process.env.GITHUB_BASE_REF ? 'refs/heads/' + process.env.GITHUB_BASE_REF : identity.owner.ref;
   const refs = state === 'resume' || protectedOnly ? [ref] : [...new Set([ref, 'refs/heads/dev'])];
   await rm(indexPath, { force: true });
-  const candidates = [];
-  for (const candidateRef of refs.filter(value => /^refs\/heads\/(dev|integration-[A-Za-z0-9._/-]+)$/.test(value))) {
-    const prefix = identity.prefix + 'snapshot-';
-    const rows = visibleEntries(candidateRef, prefix)
-      .filter(row => row.key.startsWith(prefix) && /^[1-9][0-9]*-[1-9][0-9]*$/.test(row.key.slice(prefix.length))
-        && row.version === cacheVersion(indexPath))
-      .sort((left, right) => right.key.localeCompare(left.key, 'en', { numeric: true }));
-    candidates.push(...rows.slice(0, 3));
-  }
-  for (const [position, row] of [...candidates, ...candidates.slice(0, 1)].entries()) {
-    if (position === candidates.length) await waitForDownloadQuota();
+  let retry;
+  const restoreExactIndex = async row => {
     const matched = await cache.restoreCache([indexPath], row.key, []);
-    if (matched !== row.key) continue;
+    if (matched !== row.key) return;
     const record = JSON.parse(await readFile(indexPath, 'utf8'));
     matchIndex(identity, matched, record);
     if (record.owner.ref !== row.ref) throw new Error('Actions index owner ref mismatch');
     return matched;
+  };
+  for (const candidateRef of refs.filter(value => /^refs\/heads\/(dev|integration-[A-Za-z0-9._/-]+)$/.test(value))) {
+    const prefix = identity.prefix + 'snapshot-';
+    const rows = optionalInventory(candidateRef, prefix)
+      .filter(row => row.key.startsWith(prefix) && /^[1-9][0-9]*-[1-9][0-9]*$/.test(row.key.slice(prefix.length))
+        && row.version === cacheVersion(indexPath))
+      .sort((left, right) => right.key.localeCompare(left.key, 'en', { numeric: true }));
+    retry ||= rows[0];
+    for (const row of rows.slice(0, 3)) {
+      const matched = await restoreExactIndex(row);
+      if (matched) return matched;
+    }
+  }
+  if (retry) {
+    await waitForDownloadQuota();
+    return restoreExactIndex(retry);
   }
 }
 
@@ -160,7 +167,7 @@ async function restorePayloads(cache, cacheVersion, identity, index, preparation
     if (pending.length === 0 || retries === 2) break;
     if (retries === 0) {
       const { owner } = JSON.parse(await readFile(index, 'utf8'));
-      const material = visibleEntries(owner.ref, identity.prefix + 'material-');
+      const material = optionalInventory(owner.ref, identity.prefix + 'material-');
       const visible = new Set(material.map(row => row.key + '/' + row.version));
       pending = pending.filter(digest => visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest))));
     }
@@ -200,6 +207,15 @@ function visibleEntries(ref, prefix) {
   return listing.trim().split('\n').filter(Boolean).map(line => JSON.parse(line)).filter(row => row.ref === ref);
 }
 
+function optionalInventory(ref, prefix) {
+  try {
+    return visibleEntries(ref, prefix);
+  } catch (error) {
+    console.log('LEAN_ACTIONS_SHARDS inventory unavailable for ' + ref + ': ' + error.message);
+    return [];
+  }
+}
+
 function matches(entries, key, version) {
   return entries.some(row => row.key === key && row.version === version);
 }
@@ -211,7 +227,7 @@ async function packPreparation(directory) {
     const identity = python('identity');
     if (await fetchIndex(cache, cacheVersion, identity, true)) {
       const record = JSON.parse(await readFile(indexPath, 'utf8'));
-      const material = visibleEntries(identity.owner.ref, identity.prefix + 'material-');
+      const material = optionalInventory(identity.owner.ref, identity.prefix + 'material-');
       const visible = new Set(material.map(row => row.key + '/' + row.version));
       const digests = [...new Set(Object.values(record.entries))].filter(digest =>
         visible.has(payloadKey(identity, digest) + '/' + cacheVersion(payloadPath(digest))));
