@@ -10,9 +10,9 @@ module
 
 public import Mathlib.Data.Finset.Powerset
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-public import Mathlib.Tactic.Push
-public import Mathlib.Tactic.Tauto
-public import Mathlib.Tactic.Ext
+import Mathlib.Tactic.Push
+import Mathlib.Tactic.Tauto
+import Mathlib.Tactic.Ext
 
 public section
 

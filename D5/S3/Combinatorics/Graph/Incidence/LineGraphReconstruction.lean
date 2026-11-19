@@ -11,6 +11,7 @@ module
 public import D5.S3.Combinatorics.Graph.DUFStructure
 public import Mathlib.Combinatorics.SimpleGraph.LineGraph
 public import Mathlib.Combinatorics.SimpleGraph.Clique
+import Mathlib.Tactic.Ext
 
 /-!
 # Reconstruction from prescribed line graph isomorphisms
