@@ -80,7 +80,21 @@ Put L=lcm(a,b) and M=p floor(n/p) floor((2n-1)/p). Applying the affine packing t
 
 The chain statement uses abstract intervals with positive affine orientation. The full guard cylinders supply separation, and the smaller images supply containment in the original piece.
 
-**Theorem 1.7 (Width at every basepoint of an incoherent cyclic component).**
+**Theorem 1.7 (A shortest return and a failing simple-path test).**
+
+Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.exists_bounded_detecting_returns`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.exists_bounded_detecting_returns` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In any incoherent finite cyclic strongly connected component with n vertices, fix a base vertex. There is a shortest positive return of length at most n. Choose simple paths to and from each vertex with length less than n, using empty paths at the base. A positive test return of length at most 2n−1 has a different label word after synchronization with the shortest return.
+
+A test joins the two paths at a vertex or inserts one actual directed edge between them. If every nonempty test agreed with the shortest return, the least period of its repeated word would divide the lengths of those test returns. The vertex and edge tests then give a phase and determine the label on each edge, implying coherence.
+
+**Theorem 1.8 (Width at every basepoint of an incoherent cyclic component).**
 
 Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_incoherent_basepoint`
 
@@ -100,7 +114,7 @@ The independently supplied phase has modulus p and increases by one on every edg
 
 The statement takes the original piece and guard intervals, their affine return maps, and the separation of whole guard cylinders as premises. Application to Proposition 51.3 requires deriving those premises and the second-label phase from the original legal graph.
 
-**Theorem 1.8 (Disjoint open cylinders for distinct legal words).**
+**Theorem 1.9 (Disjoint open cylinders for distinct legal words).**
 
 Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.legal_word_open_cylinders_disjoint`
 
@@ -114,7 +128,7 @@ Two distinct words of the same length start in a common guard. Each word is lega
 
 At the first differing label, the open images lie in distinct intervals of the original five-branch partition. A common preceding label determines the next guard and acts by an injective affine map. Closed cylinders can share endpoints.
 
-**Theorem 1.9 (Width bound using the original first-projection edges).**
+**Theorem 1.10 (Width bound using the original first-projection edges).**
 
 Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_original_first_piece`
 
@@ -124,13 +138,13 @@ Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_orig
 
 *Commentary.*
 
-Fix a vertex of a finite cyclic strongly connected component with incoherent first labels. Assume each arrow projects to an edge of the original endpoint graph with that label, and assume a positive phase modulus p with increment one on each arrow. Take n to be the component size, d the full guard width at the base vertex, w the width of its first piece, and g the positive contraction magnitude of the original three-bit deletion.
+Fix a vertex of a finite cyclic strongly connected component with incoherent first labels. Its first pieces have ordered endpoints. Each arrow satisfies the legality and whole-interval containment tests of the original endpoint graph. Assume a positive phase modulus p with increment one on each arrow. Take n to be the component size, d the full guard width at the base vertex, w the width of its first piece, and g the positive contraction magnitude of the original three-bit deletion.
 
 Set M equal to $p \cdot \lfloor\frac{n}{p}\rfloor \cdot \lfloor\frac{2 \cdot n - 1}{p}\rfloor$. Then w is at least $\frac{g^{M}}{1 - g^{M}} \cdot d$.
 
 Edge containment gives the affine transport of each original piece along a full return, and the guard law makes its output word legal. The open-cylinder theorem supplies separation for the synchronized returns in the width argument. The next two results supply the phase from the original second-label projection and apply it jointly.
 
-**Theorem 1.10 (A singleton projection supplies a common label phase).**
+**Theorem 1.11 (A singleton projection supplies a common label phase).**
 
 Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.singleton_projection_phases`
 
@@ -140,11 +154,11 @@ Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.singleton_pro
 
 *Commentary.*
 
-A finite cyclic strongly connected component projects to the original endpoint graph, with one fixed label on each projected arrow. If one projected piece is a singleton, there is a positive phase modulus p bounded by the component size. The label depends only on the phase at the source, and each edge advances that phase by one.
+A finite cyclic strongly connected component projects to the original endpoint graph, with one fixed label on each projected arrow. If one projected piece is a singleton in its guard interval, there is a positive phase modulus p bounded by the component size. The label depends only on the phase at the source, and each edge advances that phase by one.
 
 Any return word prepends to the legal encodings of the singleton, preserving its guard and scalar. This is an injection because the same prefix has a unique deleted tail. The signed-series fiber classification makes the encoding fiber finite, so the injection is surjective. Both synchronized words must then be prefixes of one actual encoding and agree because they have the same length. Coherence supplies the bounded phase.
 
-**Theorem 1.11 (The short-return width bound for a paired component with a singleton projection).**
+**Theorem 1.12 (The short-return width bound for a paired component with a singleton projection).**
 
 Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.paired_singleton_short_return_width`
 
@@ -154,16 +168,17 @@ Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.paired_single
 
 *Commentary.*
 
-Suppose a finite cyclic strongly connected component projects along each of its two labelings to legal original endpoint-graph edges. Assume first-label incoherence and a singleton second piece at some vertex. Write n for the size of the same component in both projections. There is one positive modulus p at most n, with a second-label phase that advances by one on each edge and determines its second label.
+Suppose a finite cyclic strongly connected component projects along each of its two labelings to legal original endpoint-graph edges. Assume first-label incoherence, ordered endpoints of the first pieces, and a singleton second piece in its guard interval at some vertex. Write n for the size of the same component in both projections. There is one positive modulus p at most n, with a second-label phase that advances by one on each edge and determines its second label.
 
 Set M equal to $p \cdot \lfloor\frac{n}{p}\rfloor \cdot \lfloor\frac{2 \cdot n - 1}{p}\rfloor$. At every vertex, the first-piece width is at least $\frac{g^{M}}{1 - g^{M}} \cdot d$, where d is the full first guard width and g is the contraction magnitude.
 
-The singleton projection supplies the phase, and the first edges supply the legal return words, piece containment and full-cylinder separation. This uses the supplied paired component of Proposition 51.3. Reachability or a particular endpoint color assignment is outside the width calculation.
+The singleton projection supplies the phase, and the first edges supply the legal return words, piece containment and full-cylinder separation. Proposition 51.3 uses these edge laws on its supplied paired component for any admissible endpoint set. Reachability or a particular endpoint color assignment is outside the width calculation.
 
 ## References
 
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.affine_cylinder_chain_packing`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.contraction_ratio_antitone`
+- Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.exists_bounded_detecting_returns`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.finite_interval_chain_packing`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.legal_word_open_cylinders_disjoint`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.paired_singleton_short_return_width`

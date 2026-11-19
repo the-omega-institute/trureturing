@@ -134,6 +134,27 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                         + "containment in the original piece."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("bounded-detecting-returns"),
+                DeclarationHandle.Create(Prefix + "exists_bounded_detecting_returns"),
+                H("A shortest return and a failing simple-path test"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "In any incoherent finite cyclic strongly connected component with n "
+                        + "vertices, fix a base vertex. There is a shortest positive return "
+                        + "of length at most n. Choose simple paths to and from each vertex with "
+                        + "length less than n, using empty paths at the base. A positive test "
+                        + "return of length at most 2n−1 has a different label word after "
+                        + "synchronization with the shortest return.")),
+                    Paragraph(Text(
+                        "A test joins the two paths at a vertex or inserts one actual directed "
+                        + "edge between them. If every nonempty test agreed with the shortest "
+                        + "return, the least period of its repeated word would divide the "
+                        + "lengths of those test returns. The vertex and edge tests then "
+                        + "give a phase and determine the label on each edge, implying coherence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("width-at-incoherent-basepoint"),
                 DeclarationHandle.Create(Prefix + "width_at_incoherent_basepoint"),
                 H("Width at every basepoint of an incoherent cyclic component"),
@@ -200,8 +221,9 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text(
                         "Fix a vertex of a finite cyclic strongly connected component with "
-                        + "incoherent first labels. Assume each arrow projects to an edge of "
-                        + "the original endpoint graph with that label, and assume a positive "
+                        + "incoherent first labels. Its first pieces have ordered endpoints. Each arrow "
+                        + "satisfies the legality and whole-interval containment tests of the "
+                        + "original endpoint graph. Assume a positive "
                         + "phase modulus p with increment one on each arrow. Take n to be "
                         + "the component size, d the full guard width at the base vertex, "
                         + "w the width of its first piece, and g the positive contraction "
@@ -228,7 +250,7 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "A finite cyclic strongly connected component projects to the original "
                         + "endpoint graph, with one fixed label on each projected arrow. If one "
-                        + "projected piece is a singleton, there is a positive phase modulus p "
+                        + "projected piece is a singleton in its guard interval, there is a positive phase modulus p "
                         + "bounded by the component size. The label depends only on the phase "
                         + "at the source, and each edge advances that phase by one.")),
                     Paragraph(Text(
@@ -250,8 +272,9 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "Suppose a finite cyclic strongly connected component projects along "
                         + "each of its two labelings to legal original endpoint-graph edges. "
-                        + "Assume first-label incoherence and a singleton second piece at some "
-                        + "vertex. Write n for the size of the same component in both projections. "
+                        + "Assume first-label incoherence, ordered endpoints of the first pieces, and a "
+                        + "singleton second piece in its guard interval at some vertex. "
+                        + "Write n for the size of the same component in both projections. "
                         + "There is one positive modulus p at most n, with a second-label phase "
                         + "that advances by one on each edge and determines its second label.")),
                     Paragraph(Text("Set M equal to "),
@@ -262,8 +285,9 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "The singleton projection supplies the phase, and the first edges "
                         + "supply the legal return words, piece containment and full-cylinder "
-                        + "separation. This uses the supplied paired component of Proposition 51.3. "
-                        + "Reachability or a particular endpoint color assignment is outside "
+                        + "separation. Proposition 51.3 uses these edge laws on its supplied paired "
+                        + "component for any admissible endpoint set. Reachability or a particular "
+                        + "endpoint color assignment is outside "
                         + "the width calculation."))),
                 DescribeRole.Theorem))));
 

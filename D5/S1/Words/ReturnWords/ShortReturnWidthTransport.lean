@@ -166,10 +166,10 @@ private theorem exists_nodup_path {V : Type u} [Quiver.{v} V] {a b : V}
         exact ⟨hq, by simp, by simpa [List.disjoint_left] using hc⟩
 
 private theorem exists_short_path {V : Type u} [Quiver.{v} V] [Finite V] {a b : V}
-    (p : Path a b) : ∃ q : Path a b, q.length < Nat.card V := by
+    (p : Path a b) : ∃ q : Path a b, q.vertices.Nodup ∧ q.length < Nat.card V := by
   let _ := Fintype.ofFinite V
   obtain ⟨q, hq⟩ := exists_nodup_path p
-  refine ⟨q, ?_⟩
+  refine ⟨q, hq, ?_⟩
   have h := Fintype.card_le_of_injective q.vertices.get hq.injective_get
   rw [Fintype.card_fin, Path.vertices_length] at h
   simpa [Nat.card_eq_fintype_card] using (Nat.lt_of_succ_le h)
@@ -178,16 +178,25 @@ private theorem exists_short_positive_return {V : Type u} [Quiver.{v} V] [Finite
     (p : Path a a) (hp : 0 < p.length) :
     ∃ q : Path a a, 0 < q.length ∧ q.length ≤ Nat.card V := by
   obtain ⟨b, e, r, _, _⟩ := p.length_ne_zero_iff_eq_comp.mp (Nat.ne_of_gt hp)
-  obtain ⟨s, hs⟩ := exists_short_path r
+  obtain ⟨s, _, hs⟩ := exists_short_path r
   refine ⟨e.toPath.comp s, ?_, ?_⟩ <;> simp only [Path.length_comp, Path.length_toPath] <;> omega
 
-private theorem exists_bounded_detecting_returns
+/-- The shortest positive return detects an incoherent component against a
+vertex test or a single-edge test formed from simple paths to and from the base. -/
+theorem exists_bounded_detecting_returns
     {V : Type u} [Quiver.{v} V] [Finite V]
     {α : Type w} (label : EdgeLabel V α) (S : StronglyConnectedComponent V)
     (hcyclic : Cyclic S) (hbad : ¬ Coherent label S) (q : Component S) :
     ∃ C D : Path q q,
       0 < C.length ∧ C.length ≤ Nat.card (Component S) ∧
+      (∀ P : Path q q, 0 < P.length → C.length ≤ P.length) ∧
       0 < D.length ∧ D.length ≤ 2 * Nat.card (Component S) - 1 ∧
+      (∃ (A : ∀ v : Component S, Path q v) (B : ∀ v : Component S, Path v q),
+        (∀ v, (A v).vertices.Nodup ∧ (B v).vertices.Nodup ∧
+          (A v).length < Nat.card (Component S) ∧ (B v).length < Nat.card (Component S)) ∧
+        (A q).length = 0 ∧ (B q).length = 0 ∧
+        ((∃ v, D = (A v).comp (B v)) ∨
+          ∃ (v w : Component S) (e : v ⟶ w), D = ((A v).cons e).comp (B w))) ∧
       wordPower (Nat.lcm C.length D.length / C.length) (output (componentLabel label S) C) ≠
       wordPower (Nat.lcm C.length D.length / D.length) (output (componentLabel label S) D) := by
   classical
@@ -206,24 +215,51 @@ private theorem exists_bounded_detecting_returns
     simp only [Path.length_comp]
     omega
   obtain ⟨P, hP⟩ := positive
-  obtain ⟨C, hCpos, hCbound⟩ := exists_short_positive_return P hP
+  have hlength : ∃ k, ∃ C : Path q q, 0 < C.length ∧ C.length = k := ⟨P.length, P, hP, rfl⟩
+  obtain ⟨C, hCpos, hCfind⟩ := Nat.find_spec hlength
+  have hmin (D : Path q q) (hD : 0 < D.length) : C.length ≤ D.length := by
+    rw [hCfind]
+    exact Nat.find_min' hlength ⟨D, hD, rfl⟩
+  obtain ⟨C₀, hC₀pos, hC₀bound⟩ := exists_short_positive_return P hP
+  have hCbound := (hmin C₀ hC₀pos).trans hC₀bound
   let n := Nat.card W
   let bound := 2 * n - 1
-  have hconn (a b : W) : ∃ A : Path a b, A.length < n := by
-    obtain ⟨A⟩ := connected a b
-    exact exists_short_path A
-  choose A hA using hconn q
-  choose B hB using fun a => hconn a q
+  have hn : 0 < n := hCpos.trans_le hCbound
+  have hconn (a b : W) :
+      ∃ A : Path a b, A.vertices.Nodup ∧ A.length < n ∧ (a = b → A.length = 0) := by
+    by_cases h : a = b
+    · subst b
+      exact ⟨.nil, by simp, hn, fun _ => rfl⟩
+    · obtain ⟨A⟩ := connected a b
+      obtain ⟨A', hnodup, hbound⟩ := exists_short_path A
+      exact ⟨A', hnodup, hbound, fun e => (h e).elim⟩
+  choose A hAnodup hA hAz using hconn q
+  choose B hBnodup hB hBz using fun a => hconn a q
+  let isTest (D : Path q q) : Prop :=
+    (∃ v, D = (A v).comp (B v)) ∨
+      ∃ (v w : W) (e : v ⟶ w), D = ((A v).cons e).comp (B w)
+  have test_bound (D : Path q q) (hD : isTest D) : D.length ≤ bound := by
+    rcases hD with ⟨v, rfl⟩ | ⟨v, w, e, rfl⟩
+    · have h₁ := hA v
+      have h₂ := hB v
+      simp only [bound, Path.length_comp]
+      omega
+    · have h₁ := hA v
+      have h₂ := hB w
+      simp only [bound, Path.length_comp, Path.length_cons]
+      omega
   let comparison (D : Path q q) : Prop :=
     wordPower (Nat.lcm C.length D.length / C.length) (output ℓ C) =
     wordPower (Nat.lcm C.length D.length / D.length) (output ℓ D)
-  by_cases h : ∃ D : Path q q, 0 < D.length ∧ D.length ≤ bound ∧ ¬ comparison D
-  · obtain ⟨D, hDpos, hDbound, hD⟩ := h
-    exact ⟨C, D, hCpos, hCbound, hDpos, hDbound, hD⟩
-  have hsync (D : Path q q) (hDpos : 0 < D.length) (hDbound : D.length ≤ bound) :
+  by_cases h : ∃ D : Path q q, 0 < D.length ∧ isTest D ∧ ¬ comparison D
+  · obtain ⟨D, hDpos, hDtest, hD⟩ := h
+    refine ⟨C, D, hCpos, hCbound, hmin, hDpos, test_bound D hDtest, ?_, hD⟩
+    exact ⟨A, B, fun v => ⟨hAnodup v, hBnodup v, hA v, hB v⟩,
+      hAz q rfl, hBz q rfl, hDtest⟩
+  have hsync (D : Path q q) (hDpos : 0 < D.length) (hDtest : isTest D) :
       comparison D := by
     by_contra he
-    exact h ⟨D, hDpos, hDbound, he⟩
+    exact h ⟨D, hDpos, hDtest, he⟩
   exfalso
   apply hbad
   apply (coherent_component_phases label S hcyclic).1.mpr
@@ -249,7 +285,7 @@ private theorem exists_bounded_detecting_returns
       rw [Function.iterate_succ_apply']
       change (shift^[k] Y) (i + 1) = _
       rw [ih]; congr 1; omega
-  have common (D : Path q q) (hDpos : 0 < D.length) (hDbound : D.length ≤ bound) (i : Nat) :
+  have common (D : Path q q) (hDpos : 0 < D.length) (hDtest : isTest D) (i : Nat) :
       X i = (output ℓ D)[i % D.length]? := by
     let L := Nat.lcm C.length D.length
     have ht : i % L < L := Nat.mod_lt _ (Nat.lcm_pos hCpos hDpos)
@@ -257,7 +293,7 @@ private theorem exists_bounded_detecting_returns
       rw [outlen]; exact Nat.div_mul_cancel (Nat.dvd_lcm_left _ _)
     have hd : L / D.length * (output ℓ D).length = L := by
       rw [outlen]; exact Nat.div_mul_cancel (Nat.dvd_lcm_right _ _)
-    have heq := congrArg (fun U : List α => U[i % L]?) (hsync D hDpos hDbound)
+    have heq := congrArg (fun U : List α => U[i % L]?) (hsync D hDpos hDtest)
     rw [wordPower_getElem? _ _ _ (by rw [hc]; exact ht),
       wordPower_getElem? _ _ _ (by rw [hd]; exact ht), outlen, outlen,
       Nat.mod_mod_of_dvd _ (Nat.dvd_lcm_left _ _),
@@ -271,11 +307,11 @@ private theorem exists_bounded_detecting_returns
   have hp := periodC.minimalPeriod_pos hCpos
   have hple := periodC.minimalPeriod_le hCpos
   let _ : NeZero p := ⟨hp.ne'⟩
-  have retdiv (D : Path q q) (hDbound : D.length ≤ bound) : p ∣ D.length := by
+  have retdiv (D : Path q q) (hDtest : isTest D) : p ∣ D.length := by
     by_cases hD : 0 < D.length
     · have hperiod : Function.IsPeriodicPt shift D.length X := by
         funext i
-        rw [shift_iter, common D hD hDbound, common D hD hDbound, Nat.add_mod_right]
+        rw [shift_iter, common D hD hDtest, common D hD hDtest, Nat.add_mod_right]
       exact hperiod.minimalPeriod_dvd
     · have hz : D.length = 0 := by omega
       rw [hz]; exact dvd_zero p
@@ -301,23 +337,15 @@ private theorem exists_bounded_detecting_returns
   have htlen : T.length = (A a).length + 1 + (B b).length := by
     simp only [T, Path.length_comp, Path.length_cons]
   have hTpos : 0 < T.length := by omega
-  have hTbound : T.length ≤ bound := by
-    have := hA a
-    have := hB b
-    dsimp only [bound]
-    omega
-  have hvertex : ((A b).comp (B b)).length ≤ bound := by
-    have := hA b
-    have := hB b
-    simp only [Path.length_comp, bound]
-    omega
-  have hzEdge := (ZMod.natCast_eq_zero_iff _ _).mpr (retdiv T hTbound)
-  have hzVertex := (ZMod.natCast_eq_zero_iff _ _).mpr (retdiv _ hvertex)
+  have hTtest : isTest T := Or.inr ⟨a, b, e, rfl⟩
+  have hzEdge := (ZMod.natCast_eq_zero_iff _ _).mpr (retdiv T hTtest)
+  have hzVertex := (ZMod.natCast_eq_zero_iff _ _).mpr
+    (retdiv _ (Or.inl ⟨b, rfl⟩))
   rw [htlen, Nat.cast_add, Nat.cast_add, Nat.cast_one] at hzEdge
   simp only [Path.length_comp, Nat.cast_add] at hzVertex
   refine ⟨?_, add_right_cancel (hzVertex.trans hzEdge.symm)⟩
   have hi : (A a).length < T.length := by omega
-  have hchar := (common T hTpos hTbound (A a).length).symm
+  have hchar := (common T hTpos hTtest (A a).length).symm
   rw [Nat.mod_eq_of_lt hi] at hchar
   change (output ℓ (((A a).cons e).comp (B b)))[(A a).length]? = _ at hchar
   rw [outcomp, List.getElem?_append_left (by rw [outlen, Path.length_cons]; omega),
@@ -444,7 +472,7 @@ theorem width_at_incoherent_basepoint
     g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p)) /
       (1 - g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p))) *
       (gb - ga) ≤ r - l := by
-  obtain ⟨C, D, hCpos, hCb, hDpos, hDb, hword⟩ :=
+  obtain ⟨C, D, hCpos, hCb, _, hDpos, hDb, _, hword⟩ :=
     exists_bounded_detecting_returns label S hcyclic hbad q
   let L := Nat.lcm C.length D.length
   let C' := returnPower C (L / C.length)
@@ -571,12 +599,21 @@ theorem legal_word_open_cylinders_disjoint {s s₁ s₂ : Bool} {u v : List Labe
         exact hdis ⟨wordScalar u x, hx', rfl⟩ ⟨wordScalar v y, hy', hxy⟩
 
 
+/-- An original piece, retaining its incoming guard and both real endpoints. -/
+abbrev GuardPiece := Bool × ℝ × ℝ
+
+/-- The original edge rule for pieces from a supplied endpoint set. -/
+def guardPieceEdge (a : GuardPiece) (l : Label) (b : GuardPiece) : Prop :=
+  lawful a.1 l b.1 ∧
+    Icc a.2.1 a.2.2 ⊆ branch l '' stateInterval b.1 ∧
+    Icc b.2.1 b.2.2 ⊆ inverseBranch l '' Icc a.2.1 a.2.2
+
 private theorem endpoint_path {W : Type u} [Quiver.{v} W]
-    (ℓ : EdgeLabel W Label) {Q : ℕ} {R : ℝ} (first : W → Vertex Q R)
-    (hedge : ∀ {a b : W} (e : a ⟶ b), edge (first a) (ℓ e) (first b))
+    (ℓ : EdgeLabel W Label) (first : W → GuardPiece)
+    (hedge : ∀ {a b : W} (e : a ⟶ b), guardPieceEdge (first a) (ℓ e) (first b))
     {a b : W} (P : Path a b) :
-      SourcePath (first a).val.1 (output ℓ P) (first b).val.1 ∧
-      MapsTo (wordScalar (output ℓ P)) (piece (first b)) (piece (first a)) ∧
+      SourcePath (first a).1 (output ℓ P) (first b).1 ∧
+      MapsTo (wordScalar (output ℓ P)) ((Icc (first b).2.1 (first b).2.2)) ((Icc (first a).2.1 (first a).2.2)) ∧
       (output ℓ P).length = P.length := by
   have hg : 0 < g := pow_pos golden_relations.1 3
   induction P with
@@ -586,7 +623,7 @@ private theorem endpoint_path {W : Type u} [Quiver.{v} W]
     exact ⟨.nil _, fun _ h => h, rfl⟩
   | @cons b c P e ih =>
     have he := hedge e
-    have hstep : MapsTo (branch (ℓ e)) (piece (first c)) (piece (first b)) := by
+    have hstep : MapsTo (branch (ℓ e)) ((Icc (first c).2.1 (first c).2.2)) ((Icc (first b).2.1 (first b).2.2)) := by
       intro x hx
       obtain ⟨y, hy, rfl⟩ := he.2.2 hx
       have hinv : branch (ℓ e) (inverseBranch (ℓ e) y) = y := by
@@ -610,24 +647,24 @@ have disjoint interiors. A phase of the other projection remains an input. -/
 theorem width_at_original_first_piece {V : Type u} [Quiver.{v} V] [Finite V]
     (label : EdgeLabel V Label) (S : StronglyConnectedComponent V)
     (hcyclic : Cyclic S) (hbad : ¬ Coherent label S) (q : Component S)
-    {Q : ℕ} {R : ℝ} (first : Component S → Vertex Q R)
+    (first : Component S → GuardPiece)
     (hedge : ∀ {a b : Component S} (e : a ⟶ b),
-      edge (first a) (componentLabel label S e) (first b))
+      guardPieceEdge (first a) (componentLabel label S e) (first b))
+    (hpiece : (first q).2.1 ≤ (first q).2.2)
     {p : ℕ} (hp : 0 < p) (phase : Component S → ZMod p)
     (hphase : ∀ {a b : Component S}, (a ⟶ b) → phase b = phase a + 1) :
     g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p)) /
       (1 - g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p))) *
-      ((if (first q).val.1 then t else 1 + t) - (-1)) ≤
-      (first q).val.2.2 - (first q).val.2.1 := by
+      ((if (first q).1 then t else 1 + t) - (-1)) ≤
+      (first q).2.2 - (first q).2.1 := by
   let ℓ : EdgeLabel (Component S) Label := componentLabel label S
   have hg : 0 < g := pow_pos golden_relations.1 3
   have hlt : g < 1 := by
     rw [golden_relations.2.2.2.1]
     linarith [golden_relations.2.1]
   have hpath {a b : Component S} (P : Path a b) := endpoint_path ℓ first hedge P
-  have hguard : (-1 : ℝ) < if (first q).val.1 then t else 1 + t := by
+  have hguard : (-1 : ℝ) < if (first q).1 then t else 1 + t := by
     split <;> linarith [golden_relations.1]
-  have hpiece := (first q).property.2.2.2.2.1
   have hscalar (C : Path q q) :
       wordScalar (output ℓ C) =
         fun x => wordScalar (output ℓ C) 0 + (-g) ^ C.length * x := by
@@ -718,19 +755,20 @@ private theorem fixed_guard_fiber_prefix {s : Bool} {y : ℝ} {w : List Label}
 Prepending any return word permutes the finite legal-address fiber of the singleton. -/
 theorem singleton_projection_phases {V : Type u} [Quiver.{v} V] [Finite V]
     (label : EdgeLabel V Label) (S : StronglyConnectedComponent V) (hcyclic : Cyclic S)
-    {Q : ℕ} {R : ℝ} (project : Component S → Vertex Q R)
+    (project : Component S → GuardPiece)
     (hedge : ∀ {a b : Component S} (e : a ⟶ b),
-      edge (project a) (componentLabel label S e) (project b))
-    (o : Component S) (hsingle : (project o).val.2.1 = (project o).val.2.2) :
+      guardPieceEdge (project a) (componentLabel label S e) (project b))
+    (o : Component S) (hsingle : (project o).2.1 = (project o).2.2)
+    (hstate : (project o).2.1 ∈ stateInterval (project o).1) :
     BoundedPhases label S := by
   apply (coherent_component_phases label S hcyclic).1.mp
   refine ⟨o, ?_⟩
   let ℓ : EdgeLabel (Component S) Label := componentLabel label S
   let b := project o
-  let z := b.val.2.1
-  have hz : z ∈ piece b := ⟨le_rfl, hsingle.le⟩
-  have hstate : z ∈ stateInterval b.val.1 := b.property.2.2.1
-  rw [← closed_observation_graph_realization.2.1 b.val.1] at hstate
+  let z := b.2.1
+  have hz : z ∈ Icc b.2.1 b.2.2 := ⟨le_rfl, hsingle.le⟩
+  change z ∈ stateInterval b.1 at hstate
+  rw [← closed_observation_graph_realization.2.1 b.1] at hstate
   obtain ⟨x, hxguard, hxval⟩ := hstate
   have hpref (P : Path o o) : ∃ y : LegalDigits, addressPrefix (output ℓ P) x y := by
     have hpath := endpoint_path ℓ project hedge P
@@ -764,12 +802,14 @@ at every first-projection vertex of the same original paired component. -/
 theorem paired_singleton_short_return_width {V : Type u} [Quiver.{v} V] [Finite V]
     (firstLabel secondLabel : EdgeLabel V Label) (S : StronglyConnectedComponent V)
     (hcyclic : Cyclic S) (hbad : ¬ Coherent firstLabel S)
-    {Q : ℕ} {R : ℝ} (first second : Component S → Vertex Q R)
+    (first second : Component S → GuardPiece)
     (hedge₁ : ∀ {a b : Component S} (e : a ⟶ b),
-      edge (first a) (componentLabel firstLabel S e) (first b))
+      guardPieceEdge (first a) (componentLabel firstLabel S e) (first b))
     (hedge₂ : ∀ {a b : Component S} (e : a ⟶ b),
-      edge (second a) (componentLabel secondLabel S e) (second b))
-    (o : Component S) (hsingle : (second o).val.2.1 = (second o).val.2.2) :
+      guardPieceEdge (second a) (componentLabel secondLabel S e) (second b))
+    (hpieces : ∀ q : Component S, (first q).2.1 ≤ (first q).2.2)
+    (o : Component S) (hsingle : (second o).2.1 = (second o).2.2)
+    (hstate : (second o).2.1 ∈ stateInterval (second o).1) :
     ∃ p : ℕ, 0 < p ∧ p ≤ Nat.card (Component S) ∧
       ∃ letters : ZMod p → Label, ∃ phase : Component S → ZMod p,
         (∀ {a b : Component S} (e : a ⟶ b),
@@ -777,12 +817,12 @@ theorem paired_singleton_short_return_width {V : Type u} [Quiver.{v} V] [Finite 
         ∀ q : Component S,
           g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p)) /
             (1 - g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p))) *
-            ((if (first q).val.1 then t else 1 + t) - (-1)) ≤
-            (first q).val.2.2 - (first q).val.2.1 := by
+            ((if (first q).1 then t else 1 + t) - (-1)) ≤
+            (first q).2.2 - (first q).2.1 := by
   obtain ⟨p, hp, hp_le, letters, phase, hphase⟩ :=
-    singleton_projection_phases secondLabel S hcyclic second hedge₂ o hsingle
+    singleton_projection_phases secondLabel S hcyclic second hedge₂ o hsingle hstate
   refine ⟨p, hp, hp_le, letters, phase, hphase, fun q => ?_⟩
-  exact width_at_original_first_piece firstLabel S hcyclic hbad q first hedge₁
+  exact width_at_original_first_piece firstLabel S hcyclic hbad q first hedge₁ (hpieces q)
     hp phase fun e => (hphase e).2
 
 end LegalCylinders
