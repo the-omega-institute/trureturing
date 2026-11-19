@@ -69,7 +69,7 @@ def circleAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Analytic.Dilation.DuplicationCircleRigidity
     definition := none

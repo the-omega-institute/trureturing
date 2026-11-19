@@ -1,9 +1,9 @@
 /- GID: D5/S3/Analytic/Dilation/DuplicationCircleRigidity
    generality: G
    mirror-B: D5/B/S3/Analytic/Dilation/DuplicationCircleRigidity
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none; basis=not_applicable
+   utility: none
    digest: Continuity and the unit fibre determine faithful real duplication solutions. -/
 
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
