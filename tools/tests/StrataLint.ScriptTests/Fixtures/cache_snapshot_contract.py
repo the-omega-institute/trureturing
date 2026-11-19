@@ -23,6 +23,107 @@ from cache_publication_contract import PublicationCases
 
 
 class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
+    def test_shard_writer_and_reader_round_trip_required_outputs(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        inventory = importlib.import_module("lean_artifact_inventory")
+        name = "D5.Fixture"
+        module = inventory.Module("fixture", pathlib.Path("D5/Fixture.lean"), pathlib.Path())
+        group = ((name,),)
+        key = shards.group_identity(group)
+        owner = {"commit": "b" * 40, "ref": "refs/heads/dev", "run": "17", "attempt": "2"}
+        source = self.root / module.source
+        source.parent.mkdir()
+        source.write_text("def fixture := 1\n")
+        build = self.root / shards.PROJECT_BUILD
+        compiler_paths = inventory.required_compiler_paths(name, module)
+        report_paths = {shards.REPORT_PATH + suffix for suffix in shards.report_reuse.publication.SUFFIXES}
+        report_paths.add(str(shards.REPORT_RECEIPT))
+        for relative in compiler_paths | report_paths:
+            file = build / relative
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_text(str(relative))
+        with mock.patch.dict(os.environ, self.env | {"GITHUB_REF_PROTECTED": "true"}, clear=True), \
+                mock.patch.object(shards, "workspace_modules", return_value={name: module}), \
+                mock.patch.object(shards, "project_imports", return_value={name: set()}), \
+                mock.patch.object(shards, "make_layout", return_value=[group]), \
+                mock.patch.object(shards, "current_owner", return_value=owner), \
+                mock.patch.object(shards, "resume_spec"), \
+                mock.patch.object(shards, "project_publication", return_value=(True, "new-work", 1)), \
+                mock.patch.object(shards, "actions_keys", return_value={"project_save_allowed": True}), \
+                mock.patch.object(shards.report_reuse, "read_receipt"), \
+                mock.patch.object(shards.report_reuse, "capture"), \
+                mock.patch.object(shards.report_reuse.publication.selection, "Selection") as selection, \
+                contextlib.redirect_stdout(io.StringIO()):
+            selection.return_value.modules.return_value = {name: {}}
+            index = self.root / "shards.json"
+            for state in ("complete", "resume"):
+                with self.subTest(state=state):
+                    record = shards.prepare(self.root, {}, state, None, owner["commit"])
+                    index.write_text(json.dumps(record))
+                    decoded = shards.read_index(index, {}, state)
+                    required = {key: sorted(map(str, compiler_paths)), "report": sorted(report_paths)}
+                    self.assertEqual(required if state == "complete" else {}, decoded["required"])
+
+    def test_sharded_resume_recovers_verified_entries_and_reports_eviction(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        root = self.root
+        producer = root / "producer"
+        names = ["lib/lean/D5/First.olean", "lib/lean/D5/Second.olean"]
+        payloads = []
+        for name in names:
+            compiled = producer / name
+            compiled.parent.mkdir(parents=True, exist_ok=True)
+            compiled.write_text(name)
+            payloads.append(shards.write_payload(root, producer, [name]))
+        groups = [[["D5.First"]], [["D5.Second"]]]
+        keys = [shards.group_identity(group) for group in groups]
+        identity = {"producer_resume": "isolated"}
+        record = {
+            "binding": identity, "state": "resume", "required": {},
+            "owner": {"commit": "b" * 40, "ref": "refs/heads/dev", "run": "17", "attempt": "2"},
+            "layout": dict(zip(keys, groups, strict=True)),
+            "entries": dict(zip(keys, payloads, strict=True)),
+            "fingerprints": {key: "c" * 64 for key in keys},
+            "sources": {name: "d" * 64 for name in ("D5.First", "D5.Second")},
+        }
+        index = root / "shard-index.json"
+        index.write_text(json.dumps(record))
+        decoded = shards.read_index(index, identity, "resume")
+        with self.assertRaisesRegex(ValueError, "incompatible"):
+            shards.read_index(index, identity, "complete")
+        (root / shards.transport_payload(payloads[1])).unlink()
+        result = shards.install(root, decoded, [])
+        self.assertEqual(1, result["available"])
+        self.assertEqual([payloads[1]], result["missing"])
+        build = root / ".lake/build"
+        self.assertEqual(names[0], (build / names[0]).read_text())
+        self.assertFalse((build / names[1]).exists())
+
+    def test_complete_shard_index_requires_every_declared_compiler_group(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        group = [["D5.Fixture"]]
+        key = shards.group_identity(group)
+        record = {
+            "binding": {}, "state": "complete",
+            "owner": {"commit": "b" * 40, "ref": "refs/heads/dev", "run": "17", "attempt": "2"},
+            "layout": {key: group},
+            "entries": {key: "a" * 64, "report": "b" * 64},
+            "fingerprints": {key: "c" * 64, "report": "d" * 64},
+            "sources": {"D5.Fixture": "e" * 64},
+            "required": {key: ["lib/lean/D5/Fixture.olean"], "report": [shards.REPORT_PATH]},
+        }
+        index = self.root / "shards.json"
+        index.write_text(json.dumps(record))
+        self.assertEqual(record, shards.read_index(index, {}, "complete"))
+        del record["entries"][key]
+        del record["fingerprints"][key]
+        index.write_text(json.dumps(record))
+        with self.assertRaisesRegex(ValueError, "required Actions shard inventory"):
+            shards.read_index(index, {}, "complete")
+
     def lookup_keys(self, responses=(), *, wait=None, real_wait=False, streams=None, **environment):
         owner = self.restore_owner()
         result, errors = streams or (io.StringIO(), io.StringIO())
@@ -710,53 +811,24 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         self.assertTrue((self.root / ".lake/.stratalint-lean-cache-stamp.json").is_file())
         self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
 
-    def test_ordinary_seed_allows_resume_without_certifying_an_incomplete_report(self):
+    def test_ordinary_seed_does_not_certify_an_incomplete_report(self):
         owner = self.resume_setup()
         self.work(0, 0)
-        action = (CACHE.parents[3] / ".github/actions/lean-cache-produce/action.yml").read_text()
-
-        def selected(step, values):
-            block = next(block for block in action.split("\n    - ") if block.startswith(step + "\n"))
-            condition = next(line.removeprefix("      if: ") for line in block.splitlines()
-                             if line.startswith("      if: "))
-            results = []
-            for term in condition.split(" && "):
-                field, operator, literal = term.split()
-                self.assertEqual("!=", operator)
-                self.assertTrue(literal.startswith("'") and literal.endswith("'"))
-                results.append(values[field] != literal[1:-1])
-            return all(results)
-
         for seeded in ("0", "1"):
-            for adopted in ("false", "true"):
-                for released in ("false", "true"):
-                    with self.subTest(seeded=seeded, adopted=adopted, released=released):
-                        env = dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED=seeded,
-                                   STRATALINT_REPORT_SUCCEEDED="false")
-                        values = {"steps.prepared.outputs.adopted": adopted,
-                                  "env.STRATALINT_ACTIONS_CACHE_SEEDED": seeded,
-                                  "steps.release.outputs.restored": released}
-                        with mock.patch.dict(os.environ, env, clear=True), \
-                                contextlib.redirect_stdout(io.StringIO()) as receipts:
-                            owner.resume_record(self.root).unlink(missing_ok=True)
-                            spec = owner.resume_spec(self.root)
-                            owner.resume_snapshot(self.root, spec)
-                            lookup = selected("id: resume_lookup", values)
-                            values["steps.resume_lookup.outputs.cache-matched-key"] = spec["key"] if lookup else ""
-                            extracted = selected("id: resume", values)
-                            if selected("name: Validate the producer continuation", values):
-                                owner.resume_restore(self.root, spec, spec["key"] if extracted else "",
-                                                     "success" if extracted else "skipped")
-                            expected = adopted == "false" and released == "false"
-                            self.assertEqual(expected, lookup)
-                            self.assertEqual(expected, extracted)
-                            self.assertEqual(expected, owner.resume_verified(self.root))
-                            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
-                            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
-                            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
-                        self.assertIn('"complete": false', receipts.getvalue())
-                        self.assertIn("project_ready=false", receipts.getvalue())
-                        self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
+            with self.subTest(seeded=seeded), mock.patch.dict(os.environ,
+                    dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED=seeded,
+                         STRATALINT_REPORT_SUCCEEDED="false"), clear=True), \
+                    contextlib.redirect_stdout(io.StringIO()) as receipts:
+                spec = owner.resume_spec(self.root)
+                owner.resume_snapshot(self.root, spec)
+                owner.resume_restore(self.root, spec, spec["key"], "success")
+                self.assertTrue(owner.resume_verified(self.root))
+                self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+                self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+                owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+                self.assertIn('"complete": false', receipts.getvalue())
+                self.assertIn("project_ready=false", receipts.getvalue())
+                self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
         self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
 
     def test_incompatible_or_failed_resume_restore_discards_material_and_cannot_promote(self):

@@ -628,6 +628,12 @@ project 恢复在 current 与 Lean build 单元中先查读者可见的种子：
 
 编译依赖 trace、utility 输入与报告格式标识决定报告复用，Lake traces 决定实际模块重建；复用行保留原 producer 来源。正常报告入口仍执行原生构建与严格 publication 校验，不借恢复绕过 Lean kernel、utility/audit 或报告验证。定时 Release 缓存发布与 integration 的 cache publication 验证独立保留；验证事件、来源、run/attempt、归档材料与空目标恢复按其既有程序核对，不外推为 truth 发布成功。
 
+**分片缓存试运行。** 受保护分支可以通过 `LEAN_CACHE_SHARDS_REF` 选择 Actions 项目缓存的索引读取入口。长构建的 `shard_history_anchor` 固定布局所用的 dev 第一父历史，未登记模块单独成片。每个逻辑片最多四个模块，每个 Actions 条目最多八个逻辑片。条目内容摘要、Actions 运输版本和 ref 分别校验。成功索引要求完整报告收据及声明的编译产物在场，后续读取逐条处理驱逐。resume 索引绑定编译来源且不携带成功收据。源 PR 准备仍经同一身份核验与 artifact 入口。
+
+受保护 dev 的 Release producer 在 `LEAN_CACHE_SHARDS_REF=dev` 时尝试恢复可用的 Actions 分片，缺失产物由 Lake 补齐。无可用分片时尝试旧项目缓存，缺少项目缓存时自行构建。生产 Release 写入格式由 `LEAN_CACHE_RELEASE_INDEXED_REF=dev` 独立选择。集成验证使用同一供给入口选择完整、指定闭包或空的项目种子。
+
+显式 `LEAN_CACHE_INDEXED=1` 选择 Release v5。独立压缩成员跨卷保留连续偏移，清单及卷绑定来源与摘要。发布依既有锁完成报告核验及远端 draft 资产核验。集成发布同时读取指定 import 闭包与完整快照。主检出可用 `LEAN_CACHE_TARGETS` 选择定向恢复。定向路径校验 Lake 配置、当前源码闭包、Range 响应与 trace 所列输出，只安装与已有有效文件相容的内容。完整恢复保留原子替换，可读取兼容的 v4 快照。Release 只需要该标签内的资产、工具链与外部依赖。
+
 **退出与部署。** raw 0 为成功，1 为候选检查失败，2 为输入/基础设施失败，3 只表示 SL-022 保护面变更标注。只有其余义务已通过才可将 3 归一为 workflow 成功；make 配方失败会折叠为 2，报告时保留底层退出码与 Block 列表。缺失报告或无效 TRX 不得成为成功。
 
 工作流不新增文本形状测试；消费 workflow 的生产逻辑可以使用既有合成夹具。实际事件、候选版本、required 名称、权限、覆盖、缓存与性能必须依 CLAUDE.md §8.12 真跑核验。integration 保持每个原始 PR 的独立复测和稳定条数要求，部署资格与本地实现/测试成功分开报告。产物只保留正式结果、必要实验程序与读数，不保存迁移流水。
