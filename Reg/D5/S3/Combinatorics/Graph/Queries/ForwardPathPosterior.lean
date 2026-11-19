@@ -16,7 +16,7 @@ noncomputable section
 universe u v w
 
 private abbrev PathSignature : Signature where
-  Params := Type u × Type v
+  Params := Σ _ : Type u, Type v
   State p := List (Entry p.1 (p.2 × p.2) p.2)
   Role := Unit
   finiteRole := inferInstance

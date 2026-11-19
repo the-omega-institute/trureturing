@@ -8,6 +8,16 @@ internal sealed class ForwardPathPosteriorDocument : IScribeDocumentDefinition
         "The graph posterior after a nonbacktracking path disclosure.",
         H("Conditioning on the edges of a disclosed path"),
         Blocks(
+            Definition("path-schedule", "Schedule", "Schedule of requested slots",
+                "A schedule is a list of pairs containing a position and a Boolean slot."),
+            Definition("path-entry", "Entry", "A row of the disclosure",
+                "A row stores the requested position and slot, the state before the step, "
+                + "and the disclosed vertex."),
+            Definition("path-run", "run", "Replay of the scheduled observations",
+                "At each requested slot, apply the order at its position to the slot, "
+                + "read the corresponding candidate at the current state, record the row, "
+                + "and update the state for the remaining schedule. An empty schedule "
+                + "produces no rows."),
             Describe.Lean(
                 DescribeId.Create("graph-path-posterior"),
                 DeclarationHandle.Create(
@@ -26,8 +36,10 @@ internal sealed class ForwardPathPosteriorDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Fix the rows of a reference disclosure. The rows never backtrack, "
                         + "each visited position has one common incoming pair, and the partial "
-                        + "slot table records precisely the values of the rows. In every world "
-                        + "containing a row's incoming edge, require that its observed vertex "
+                        + "slot table records precisely the values of the rows. The set of "
+                        + "observed positions contains exactly those with at least one recorded "
+                        + "slot. In every world containing a row's incoming edge, require "
+                        + "that its observed vertex "
                         + "is a candidate exactly when it is a neighbor other than the predecessor.")),
                     Paragraph(Text(
                         "For a disclosure of positive mass, the posterior probability of any "
@@ -39,4 +51,16 @@ internal sealed class ForwardPathPosteriorDocument : IScribeDocumentDefinition
                         + "at the next step. The likelihood of the compatible slot table then "
                         + "cancels from numerator and denominator."))),
                 DescribeRole.Theorem))));
+
+    private static DocumentBlock.Describe Definition(
+        string id, string declaration, string title, string text) =>
+        Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(
+                "D5/S3/Combinatorics/Graph/Queries/ForwardPathPosterior." + declaration),
+            H(title),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))),
+            DescribeRole.Definition);
 }
