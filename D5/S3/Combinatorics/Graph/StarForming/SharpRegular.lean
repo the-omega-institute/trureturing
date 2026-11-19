@@ -10,7 +10,6 @@ import D5.S3.Combinatorics.Graph.StarForming.RegularCompensation
 import D5.S3.Combinatorics.Graph.StarForming.PrivateClauses
 import D5.S3.Combinatorics.Graph.StarForming.RegularBound
 import D5.S3.Combinatorics.Graph.StarForming.SquareCapacity
-import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.Fintype.Option
 
@@ -424,28 +423,11 @@ private theorem rotate_ne {d : ℕ} (hd : 2 ≤ d) (i : Fin d) : finRotate d i �
 
 private abbrev cycleGraph (d : ℕ) : SimpleGraph (Vertex (Fin d)) := graph (finRotate d)
 
-private theorem cubic_free :
-    SubQuorum.C4FreeRepresentatives.NoFourCycle (cycleGraph 3).Adj := by
-  unfold SubQuorum.C4FreeRepresentatives.NoFourCycle
+set_option maxRecDepth 32768 in
+set_option maxHeartbeats 1000000 in
+private theorem cubic_beta : beta (cycleGraph 3) 2 = 7 := by
   decide +kernel
 
-private theorem cubic_beta : beta (cycleGraph 3) 2 = 7 := by
-  have hc : ∀ v w, (cycleGraph 3).Adj v w → v.1 ≠ w.1 := by
-    rintro ⟨b,v⟩ ⟨c,w⟩ h
-    cases b <;> cases c <;> simp_all [cycleGraph,graph]
-  have hr : ∀ v, (cycleGraph 3).degree v = 3 := by
-    intro v
-    have hneighbors : (cycleGraph 3).neighborFinset v =
-        Finset.univ.filter ((cycleGraph 3).Adj v) := by
-      ext w
-      simp
-    rw [← SimpleGraph.card_neighborFinset_eq_degree, hneighbors]
-    simpa [cycleGraph, DegreeCapacity.degree] using
-      regular (finRotate 3) (rotate_ne (by decide)) v
-  have hs : ∀ b : Bool, (Finset.univ.filter (fun v : Vertex (Fin 3) => v.1 = b)).card = 7 := by
-    decide +kernel
-  exact (SubQuorum.C4FreeRepresentatives.threshold_parameters (cycleGraph 3)
-    Prod.fst hc cubic_free 3 7 (by decide) hr hs (by decide)).1
 private def fourCycles : List (List (Vertex (Fin 4))) := [
   [(false,none), (true,some (true,0)), (false,some (true,0)), (true,some (true,3))],
   [(false,none), (true,some (true,0)), (false,some (true,1)), (true,some (true,1))],
@@ -496,7 +478,7 @@ private theorem quartic_beta : beta (cycleGraph 4) 2 = 9 := by
   omega
 
 /-- For every d at least three, the actual cyclic graph G_d attains the sharp
-positive gap one. The two boundary cases use their actual C4-free or square
+positive gap one. The cubic case computes the finite maximum and the quartic case uses a square
 certificate; every d at least five uses symbolic neighborhood counting. -/
 theorem cyclic_parameters (d : ℕ) (hd : 3 ≤ d) :
     Fintype.card (Vertex (Fin d)) = 4*d+2 ∧
