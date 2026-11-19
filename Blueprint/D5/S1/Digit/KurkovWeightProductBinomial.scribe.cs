@@ -19,7 +19,7 @@ internal sealed class KurkovWeightProductBinomialDocument : IScribeDocumentDefin
                 + "definition of D5/S1/Digit/DyadicRowPolynomialRecurrence (A000120), reused "
                 + "by import, and a is A284005. The operator div is natural floor "
                 + "division, and binom(r,k) is Nat.choose r k. All additions, products, "
-                + "powers, and sums are in N. Only Kurkov's April 24, 2023 binomial conjecture "
+                + "powers, and sums are in N. Kurkov's April 24, 2023 binomial conjecture "
                 + "is asserted here. The 2019 bit-flip recursion, the 2023 mod-2 binomial "
                 + "transform of A329369, and the representation A000005(A283477(n)) are "
                 + "outside this statement.")),
@@ -28,7 +28,14 @@ internal sealed class KurkovWeightProductBinomialDocument : IScribeDocumentDefin
                 + "binary weight before the index is divided by two. The OEIS NAME "
                 + "states the recurrence for indices greater than one; the data supplies "
                 + "a(1)=2, also obtained from the displayed successor clause.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("a_two_pow_mul_odd", "The odd-parent product law", OddParentFormula(),
+                "For all natural m and n, including zero, multiplication of the odd index 2*n+1 by 2^m yields "
+                + "a(2^m*(2*n+1))=(wt(n)+2)^(m+1)*a(n). The repository derives this law by induction "
+                + "from the A284005 recurrence and binary-weight identities. "
+                + "This original-owner helper is used by result below and by DyadicExtendedStirlingEdge.result; "
+                + "it introduces no alternate sequence and asserts no additional external problem settlement.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Kurkov's binomial identity", ResultFormula(),
                 "Multiplication by a power of two preserves binary weight. Induction "
                 + "gives a(2^k*n)=(1+wt(n))^k*a(n), including n=0. At odd indices a "
@@ -36,16 +43,16 @@ internal sealed class KurkovWeightProductBinomialDocument : IScribeDocumentDefin
                 + "The binomial expansion of ((1+wt(n))+1)^(m+1), followed by the "
                 + "first identity in each summand, gives the result. The sum includes "
                 + "both endpoints k=0 and k=m+1, exactly Finset.range(m+2).",
-                DescribeRole.Theorem,
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a284005-kurkov-weight-product-binomial"),
                     ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, OpenProblemResolutionClaim? claim = null) =>
-        Describe.Lean(DescribeId.Create("a284005-" + name),
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
+        Describe.Lean(DescribeId.Create("a284005-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role, claim);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
@@ -69,6 +76,14 @@ internal sealed class KurkovWeightProductBinomialDocument : IScribeDocumentDefin
                 Call("a", Call("div", successor, D(2)))));
         return Disp(Seq(Parenthesized(Equal(Call("a", D(0)), D(1))), Sp, Land, Sp,
             Parenthesized(Universal(n, step))));
+    }
+
+    private static Formula OddParentFormula()
+    {
+        Formula m = F.Id("m"), n = F.Id("n");
+        return Disp(Universal(Seq(m, Comma, Sp, n), Equal(
+            Call("a", Mul(new Formula.Power(D(2), m), Parenthesized(Add(Mul(D(2), n), D(1))))),
+            Mul(new Formula.Power(Parenthesized(Add(Call("wt", n), D(2))), Add(m, D(1))), Call("a", n)))));
     }
 
     private static Formula ResultFormula()

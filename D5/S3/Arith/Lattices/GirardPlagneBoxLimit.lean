@@ -411,7 +411,7 @@ private theorem cofactor_smul {R : Type*} [CommRing R] {d : ℕ}
   simp only [cofactor,he,Matrix.det_smul,Fintype.card_fin]
   ring
 
-private theorem cofactor_map {R S : Type*} [CommRing R] [CommRing S] {d : ℕ}
+theorem cofactor_map {R S : Type*} [CommRing R] [CommRing S] {d : ℕ}
     (f : R →+* S) (M : Matrix (Fin d) (Fin (d+1)) R) (j : Fin (d+1)) :
     cofactor (M.map f) j=f (cofactor M j) := by
   simp only [cofactor,map_mul,map_pow,map_neg,map_one]

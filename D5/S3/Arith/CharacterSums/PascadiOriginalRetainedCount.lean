@@ -59,8 +59,8 @@ private theorem parameter_box_count {X Y : ℝ} (hX : 1 ≤ X) (hY : 1 ≤ Y)
 Actual coordinate reconstruction, parameter cardinality and the bad-degree
 average are proved internally. Only the explicit numerical separation
 conditions remain to be supplied from the original asymptotic range. -/
-theorem actual_retained_long_tuple_count (ε : ℝ) (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ)
+theorem actual_retained_long_tuple_count_seventh (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (X Y H : ℝ)
       (a₁ a₂ : ZMod (p^3)) (T : Finset ReturnRows)
       (B : ∀ wt : Coordinate, wt ∈ T.image originalMiddle →
         ReducedMiddleBasis (p^3) wt.2 wt.1 X Y),
@@ -76,9 +76,7 @@ theorem actual_retained_long_tuple_count (ε : ℝ) (hε : 0 < ε) :
       (∀ wt (hw : wt ∈ T.image originalMiddle), IsUnit ((B wt hw).R.1 : ZMod (p^3))) →
       (∀ wt ∈ T.image originalMiddle,
         IsUnit (1+a₁*a₂*(wt.2 : ZMod (p^3))*(wt.1 : ZMod (p^3)))) →
-      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
-      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
-      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      seventhHeightConstant*(32*(X*Y/(p : ℝ)^3))^7 < (p : ℝ)^5 →
       (T.card : ℝ) ≤
         C*(p : ℝ)^ε*(X*Y+(X*Y/p)*(1+Real.log (2*p)/Real.log 2)+
           (X*Y)^2/(p : ℝ)^4) +
@@ -86,10 +84,10 @@ theorem actual_retained_long_tuple_count (ε : ℝ) (hε : 0 < ε) :
           (1+Real.log (2*p)/Real.log 2)) := by
   classical
   obtain ⟨C₁, hC₁, hrows⟩ := actual_retained_rows_dyadic_count ε hε
-  obtain ⟨C₂, hC₂, haverage⟩ := actual_long_bad_degree_average ε hε
+  obtain ⟨C₂, hC₂, haverage⟩ := actual_long_bad_degree_average_seventh ε hε
   refine ⟨2*C₂+9*C₁, by positivity, ?_⟩
-  intro p hp M X Y H a₁ a₂ T B hX1 hXY hsmall hAcut hH hHsq hHp ha₁ ha₂
-    hbox hword hunit hendunit hlong hr hrhs hcap hlargeR hlargeQ
+  intro p hp X Y H a₁ a₂ T B hX1 hXY hsmall hAcut hH hHsq hHp ha₁ ha₂
+    hbox hword hunit hendunit hlong hr hrhs hgap
   let A := X*Y
   let L := 1+Real.log (2*p)/Real.log 2
   let F := A+(A/p)*L+A^2/(p : ℝ)^4
@@ -135,9 +133,9 @@ theorem actual_retained_long_tuple_count (ε : ℝ) (hε : 0 < ε) :
   have hD : (∑ wt ∈ T.image originalMiddle,
       (actualRecordBadDegree p (q wt) (RV wt).1 (RV wt).2 (E wt) : ℝ)) ≤
       C₂*(p : ℝ)^ε*F := by
-    exact haverage p hp M X Y H a₁ a₂ q RV (T.image originalMiddle) E
+    exact haverage p hp X Y H a₁ a₂ q RV (T.image originalMiddle) E
       hX1 hXY hYcube hAcut hH hHsq hHp ha₁ ha₂ hsbox hred hanchor hlong' hr'
-      hsunit hrhs heword heunit hebox hcap hlargeR hlargeQ
+      hsunit hrhs heword heunit hebox hgap
   have hcard : ((T.image originalMiddle).card : ℝ) ≤ 9*A :=
     parameter_box_count hX1 hY1 _ hsbox
   have hdefect : 2*(∑ wt ∈ T.image originalMiddle,
@@ -161,6 +159,59 @@ theorem actual_retained_long_tuple_count (ε : ℝ) (hε : 0 < ε) :
         mul_le_mul_of_nonneg_right (by linarith) (by positivity)
       _ = _ := by ring
   exact hbound.trans (add_le_add hdefect (Real.sqrt_le_sqrt harg))
+
+/-- Preserve the original numerical-cutoff statement. -/
+theorem actual_retained_long_tuple_count (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (p : ℕ) (hp : p.Prime) (M X Y H : ℝ)
+      (a₁ a₂ : ZMod (p^3)) (T : Finset ReturnRows)
+      (B : ∀ wt : Coordinate, wt ∈ T.image originalMiddle →
+        ReducedMiddleBasis (p^3) wt.2 wt.1 X Y),
+      1 ≤ X → X ≤ Y → 3*Y < (p : ℝ)^2 → X*Y < 2*(p : ℝ)^4 →
+      0 < H → H^2 = X*Y → (p : ℝ) ≤ H → IsUnit a₁ → IsUnit a₂ →
+      (∀ h ∈ T, ∀ i, |(h.1 i : ℝ)| ≤ X ∧ |(h.2 i : ℝ)| ≤ Y) →
+      (∀ h ∈ T, sixReturnWord a₁ a₂ (h.1 0) (h.2 2) (h.1 1)
+        (h.2 0) (h.1 2) (h.2 1) = scalarReturn (-1)) →
+      (∀ h ∈ T, IsUnit (h.1 2 : ZMod (p^3)) ∧ IsUnit (h.2 2 : ZMod (p^3))) →
+      (∀ h ∈ T, IsUnit (h.1 0 : ZMod (p^3)) ∧ IsUnit (h.1 1 : ZMod (p^3))) →
+      (∀ wt (hw : wt ∈ T.image originalMiddle),
+        (p^3 : ℝ)^2 < (X*Y)*weightedSq X Y (B wt hw).R) →
+      (∀ wt (hw : wt ∈ T.image originalMiddle), IsUnit ((B wt hw).R.1 : ZMod (p^3))) →
+      (∀ wt ∈ T.image originalMiddle,
+        IsUnit (1+a₁*a₂*(wt.2 : ZMod (p^3))*(wt.1 : ZMod (p^3)))) →
+      (32*(X*Y/(p : ℝ)^3))^5 ≤ M^5*(p : ℝ)^3 →
+      (10368*(3 : ℝ)^9)^5*M^35 < (p : ℝ)^4 →
+      (24*(8*(18 : ℝ))^4)^5*M^40 < (p : ℝ) →
+      (T.card : ℝ) ≤
+        C*(p : ℝ)^ε*(X*Y+(X*Y/p)*(1+Real.log (2*p)/Real.log 2)+
+          (X*Y)^2/(p : ℝ)^4) +
+        Real.sqrt (C*(p : ℝ)^ε*(X*Y)^6/(p : ℝ)^15*
+          (1+Real.log (2*p)/Real.log 2)) := by
+  classical
+  obtain ⟨C, hC, hcount⟩ := actual_retained_long_tuple_count_seventh ε hε
+  refine ⟨C, hC, ?_⟩
+  intro p hp M X Y H a₁ a₂ T B hX1 hXY hsmall hAcut hH hHsq hHp ha₁ ha₂
+    hbox hword hunit hendunit hlong hr hrhs hcap _hlargeR hlargeQ
+  by_cases hT : T.Nonempty
+  · obtain ⟨h, hh⟩ := hT
+    have hw : originalMiddle h ∈ T.image originalMiddle := Finset.mem_image.mpr ⟨h, hh, rfl⟩
+    have hlongB : ((p^3 : ℕ) : ℝ)^2 < H^2*weightedSq X Y (B (originalMiddle h) hw).R := by
+      rw [hHsq]
+      simpa only [Nat.cast_pow] using hlong (originalMiddle h) hw
+    have hB := long_chart_area_height_one_le p hp X Y H
+      (originalMiddle h).2 (originalMiddle h).1 (B (originalMiddle h) hw)
+      (by linarith : 0 < X) (by linarith : 0 < Y) hH hHsq hlongB
+    have hgap := seventh_height_gap_of_old_cutoffs (32*(X*Y/(p : ℝ)^3)) M (p : ℝ)
+      (by exact_mod_cast hp.pos) hB hcap hlargeQ
+    exact hcount p hp X Y H a₁ a₂ T B hX1 hXY hsmall hAcut hH hHsq hHp ha₁ ha₂
+      hbox hword hunit hendunit hlong hr hrhs hgap
+  · have hT0 : T = ∅ := Finset.not_nonempty_iff_eq_empty.mp hT
+    simp only [hT0, Finset.card_empty, Nat.cast_zero]
+    have hX : 0 < X := by linarith
+    have hY : 0 < Y := by linarith
+    have hp1 : 1 ≤ (p : ℝ) := by exact_mod_cast hp.one_le
+    have hlog : 0 ≤ Real.log (2*(p : ℝ)) := Real.log_nonneg (by linarith)
+    have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+    positivity
 
 end
 end D5.S3.Arith.CharacterSums.Original

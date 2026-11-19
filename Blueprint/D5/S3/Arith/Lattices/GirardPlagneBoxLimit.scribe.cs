@@ -40,7 +40,29 @@ internal sealed class GirardPlagneBoxLimitDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("girard-plagne-2026-box-davenport-limit"),
-                    ResolutionKind.Proved)))));
+                    ResolutionKind.Proved)),
+            Describe.Lean(DescribeId.Create("cofactor-map"),
+                DeclarationHandle.Create("D5/S3/Arith/Lattices/GirardPlagneBoxLimit.cofactor_map"),
+                H("Signed cofactors under a ring homomorphism"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, Parenthesized(Seq(F.Id("R"), Sp, F.Id("S"), Sp, Colon, Sp, Call("Type"))), Sp,
+                    Parenthesized(Seq(Call("CommRing"), Sp, F.Id("R"))), Sp,
+                    Parenthesized(Seq(Call("CommRing"), Sp, F.Id("S"))), Sp,
+                    Parenthesized(Seq(F.Id("d"), Sp, Colon, Sp, Mathbb, Grp(F.Id("N")))), Comma, Sp,
+                    Forall, Sp, Parenthesized(Seq(F.Id("f"), Sp, Colon, Sp,
+                        Call("RingHom"), Parenthesized(Seq(F.Id("R"), Comma, F.Id("S"))))), Sp,
+                    Parenthesized(Seq(F.Id("M"), Sp, Colon, Sp, Call("Matrix"), Sp,
+                        Parenthesized(Seq(Call("Fin"), Sp, F.Id("d"))), Sp,
+                        Parenthesized(Seq(Call("Fin"), Sp, Parenthesized(Seq(F.Id("d"), Plus, D(1))))),
+                        Sp, F.Id("R"))), Sp,
+                    Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, Call("Fin"), Sp,
+                        Parenthesized(Seq(F.Id("d"), Plus, D(1))))), Comma, Sp,
+                    Call("cofactor"), Parenthesized(Seq(Call("map"), Parenthesized(Seq(F.Id("M"), Comma, F.Id("f"))),
+                        Comma, F.Id("j"))), Sp, Eq, Sp,
+                    F.Id("f"), Parenthesized(Seq(Call("cofactor"), Parenthesized(Seq(F.Id("M"), Comma, F.Id("j")))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Applying the homomorphism entrywise commutes with each signed cofactor."))),
+                DescribeRole.Theorem))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name) => Seq(Operatorname, Grp(F.Id(name)));

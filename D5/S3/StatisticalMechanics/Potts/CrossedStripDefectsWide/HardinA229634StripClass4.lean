@@ -1,0 +1,64 @@
+/- GID: D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass4
+   generality: I
+   mirror-B: D5/B/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634StripClass4
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634Strip.result; premises=D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/HardinA229634Strip.finite_certificate
+   digest: Exact width-five two-defect HDA transfer. -/
+
+/-
+admission_basis: open-problem-resolution (#31328; Proved)
+escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA229634Strip.result)
+transition_counts: proof_shape=bind-only; consumers=HardinA229634Strip.finite_certificate
+-/
+
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripCut
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripData
+import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripData
+import D5.S3.StatisticalMechanics.Potts.CrossedStripDefects.HardinA229531StripClasses
+
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+
+open scoped BigOperators
+open D5.S3.StatisticalMechanics.Potts.StripDefects
+namespace D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass4
+open DefectTransfer (bondDefects)
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
+set_option maxRecDepth 100000
+set_option maxHeartbeats 0
+set_option Elab.async false
+set_option synthInstance.maxSize 100000
+open HardinA229634StripData
+open D5.S3.StatisticalMechanics.Potts.CrossedStripDefects
+open HardinA229531StripData (Row horizontal between)
+
+theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
+    (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+      cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 24
+      then (1 : ℤ) else 0) = T (cl p d.val) 24 := by
+  have table : ∀ p, HardinA229531StripData.Valid p 0 →
+      HardinA229531StripData.T (HardinA229531StripData.cl p 0) 10 = T (cl p 0) 24 := by
+    decide +kernel
+  have remaining : ∀ p (d : Fin 3), Valid p d.val → Canonical p →
+      ¬ (d.val ≤ 1 ∧ HardinA229531StripData.Valid p d.val) →
+      (∑ r : Row, if bondDefects between p r + bondDefects horizontal r r ≤ d.val ∧
+        cl r (d.val - (bondDefects between p r + bondDefects horizontal r r)) = 24
+        then (1 : ℤ) else 0) = T (cl p d.val) 24 := by
+    unfold Canonical
+    intro p
+    generalize h0 : p 0 = c0
+    generalize h1 : p 1 = c1
+    fin_cases c0 <;> fin_cases c1 <;> decide +kernel +revert
+  intro p d hp hn
+  by_cases hz : d.val = 0 ∧ HardinA229531StripData.Valid p 0
+  · have dz : d = 0 := Fin.ext hz.1
+    subst d
+    refine Eq.trans ?_ ((HardinA229531StripClasses.transition_counts p 0 hz.2 10).trans (table p hz.2))
+    apply Finset.sum_congr rfl
+    intro r _
+    exact ite_congr (propext (HardinA229634StripCut.zero_cut p r 4)) (fun _ => rfl) (fun _ => rfl)
+  · by_cases ho : d.val ≤ 1 ∧ HardinA229531StripData.Valid p d.val
+    · exact HardinA229634StripCut.old_counts p ⟨d.val, by omega⟩ ho.2 4
+    · exact remaining p d hp hn ho
+end D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.HardinA229634StripClass4
