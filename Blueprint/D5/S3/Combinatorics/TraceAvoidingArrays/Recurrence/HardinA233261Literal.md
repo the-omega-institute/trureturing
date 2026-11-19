@@ -78,7 +78,7 @@ $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operato
 
 Exact complementary-pair count.
 
-The pair labels identify {0,5}, {1,4}, and {2,3}. Canonical first occurrences fix the pair names and the first side of each used pair. A pattern with k used pairs has 2^(6*n-k) lifts. At width at least two, every proper pattern uses two or three labels, and every orbit under label permutations has six members. When one label is omitted, the common neighbours of consecutive rows force each column to be constant, including the last column. The two remaining labels alternate with column parity. Exactly one such pattern is canonical. Summing the two possible lift weights gives the displayed identity.
+The pair labels identify {0,5}, {1,4}, and {2,3}. Canonical first occurrences fix the pair names and the first side of each used pair. A pattern with k used pairs has 2^(6*n-k) lifts. At width at least two, every proper pattern uses two or three labels, and every orbit under label permutations has six members. When one label is omitted, the common neighbours of consecutive rows force each column to be constant, including the last column. The two remaining labels alternate with column parity. These are the six-row counterparts of HardinA233258Strip.columns_constant and HardinA233177Ladder.two_label_classification, respectively. Exactly one two-label pattern is canonical. Summing the two possible lift weights gives the displayed identity.
 
 **Theorem 1.7 (The ten-lag integer recurrence).**
 
@@ -96,17 +96,11 @@ $$\forall (n: \operatorname{Int}), ((16 < n) \Rightarrow ((\operatorname{D5}.\op
 
 The ten-lag integer recurrence.
 
-A column has six independent pair labels. Its 729 raw states have exactly the horizontal and antidiagonal transitions in the literal array. The sparse successor lists are checked against all raw column pairs. The seventeen tabulated right vectors are checked successive powers on the all-ones vector. Their degree-ten identity after six transitions is propagated by arbitrary further matrix powers. The polynomial vanishes at one, preserving the constant correction six. Scaling lag j by 64^j and cancelling 48 gives the stated integer recurrence at every n greater than sixteen. All lagged widths are at least seven.
+A column has six independent pair labels. Its 729 raw states have exactly the horizontal and antidiagonal transitions in the literal array. The sparse successor lists are checked against all raw column pairs. TransferMatrix.tabulatedPowers identifies the seventeen tabulated vectors with successive powers of the transfer matrix applied to the all-ones vector. The degree-ten polynomial annihilates the vector after six transitions. TransferMatrix.scalarRelationShift propagates the identity to the scalar counts L at every width from seventeen onward. The polynomial vanishes at one, so the same recurrence holds for L + 6. In scale_recurrence, counting_bridge scales each lag-j coefficient by 64^j, and the common factor 48 cancels.
 
-At width one there are no bonds. The count remains the literal finite function count; the displayed bridge is asserted only at widths at least two. Absent colours remain allowed throughout. The recurrence has no premise about computation, finite cutoffs, or the occurrence of all colours.
+At each positive width, a is the number of individual arrays satisfying the stated conditions. At width one there are no bonds. The counting bridge applies at widths at least two. The theorem result proves Hardin's ten-lag recurrence for these literal counts at every integer n greater than sixteen. All lagged widths are at least seven.
 
-Proof classification: counting_bridge and result are both bind-only. The live consumer of counting_bridge is scale_recurrence, which feeds result. The structural two-label arguments are finite transports of the existing HardinA233258Strip.columns_constant and HardinA233177Ladder.two_label_classification suppliers; the unchanged proof repeats those arguments rather than importing an adapter. The transfer propagation directly reuses TransferMatrix.tabulatedPowers and TransferMatrix.scalarRelationShift. No escape witness or new general method is claimed. The result's proposed admission_basis is open-problem-resolution for the complete external assertion, with counting_bridge a consumed auxiliary.
-
-Problems/hardin233261.md gives the complete event, its clause-by-clause correspondence and Triage. Its immutable event identifier is 932336f06d425b3988e1c636ab6db5275e017dd94af2eccba1f0f52fb052d93f; the preregistration is https://github.com/the-omega-institute/trureturing/issues/28857 and the fixed event is in comment 6768941004. The Proved claim concerns this whole event, including the literal finite-count definitions, not a finite prefix. Library/Automata/hardin2013a233261.md records the source and literature limits. Worldwide continued openness, priority and originality are unverified.
-
-The counting_bridge and result information-escape bindings remain declared_unresolved: IE-C050 ClosedTruthReadout reason=unclassified_form rule=source.residual_requires_open, empty site/readout, certificate=null and escape_from=null. Their compiled Reg attempts do not supply validated bindings. The unfinished-audit disclosure is https://github.com/the-omega-institute/trureturing/issues/28857#issuecomment-6771906994. Independent admission confirmation and canonical freezing remain pending.
-
-Source: R. H. Hardin, OEIS A233261, revision 8, https://oeis.org/A233261. Source licensing: https://oeis.org/LICENSE. The source calls the recurrence Empirical; no literature priority claim is made.
+R. H. Hardin gives the array definition and labels the recurrence Empirical in OEIS A233261, revision 8. The OEIS entry is licensed under CC BY-SA 4.0. See https://oeis.org/A233261 and https://oeis.org/LICENSE.
 
 ## References
 
