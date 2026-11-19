@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Queries;
 
 internal sealed class CompleteNeighborhoodHistoryDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class CompleteNeighborhoodHistoryDocument : IScribeDocumentDefin
         Blocks(Describe.Lean(
             DescribeId.Create("complete-neighborhood-history"),
             DeclarationHandle.Create(
-                "D5/S3/Combinatorics/Graph/CompleteNeighborhoodHistory.history_eq_iff_extension"),
+                "D5/S3/Combinatorics/Graph/Queries/CompleteNeighborhoodHistory.history_eq_iff_extension"),
             H("Edge inclusion and degree saturation characterize replay"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

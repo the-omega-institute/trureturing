@@ -1,4 +1,4 @@
-import D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory
+import D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -6,9 +6,9 @@ import Reg.Support.DependentFamily
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
-open _root_.D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory
+open _root_.D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory
 
-namespace Reg.D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory
+namespace Reg.D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory
 
 noncomputable section
 
@@ -124,8 +124,8 @@ def evidence : Registration historyArena.{u} (type_of% (@history_eq_iff_extensio
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@history_eq_iff_extension.{u}) (Realization historySignature.{u}) Unit Unit := {
-  unitName := `Reg.D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory.history_eq_iff_extension
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory.evidence
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory.history_eq_iff_extension
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨historyArena.{u}⟩
@@ -141,7 +141,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory
+    owner := `D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -157,4 +157,4 @@ def registration :
 end Counterexample
 
 end
-end Reg.D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory
+end Reg.D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory

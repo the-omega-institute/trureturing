@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/CompleteNeighborhoodHistory
+/- GID: D5/S3/Combinatorics/Graph/Queries/CompleteNeighborhoodHistory
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/CompleteNeighborhoodHistory
+   mirror-B: D5/B/S3/Combinatorics/Graph/Queries/CompleteNeighborhoodHistory
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -16,7 +16,7 @@ answers takes the same branches of the deterministic adaptive protocol. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory
+namespace D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory
 
 open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
 
@@ -97,4 +97,4 @@ theorem history_eq_iff_extension [Finite V] (G H : SimpleGraph V)
         rw [ih _ (le_trans (revealedEdges_mono htail) hext)
           (fun a ha => hdegree a (htail a ha))]
 
-end D5.S3.Combinatorics.Graph.CompleteNeighborhoodHistory
+end D5.S3.Combinatorics.Graph.Queries.CompleteNeighborhoodHistory

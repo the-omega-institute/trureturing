@@ -6,9 +6,9 @@ Complete neighborhood transcripts on finite named simple graphs.
 
 **Theorem 1.1 (Edge inclusion and degree saturation characterize replay).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/CompleteNeighborhoodHistory.history_eq_iff_extension`
+Lean statement: `D5/S3/Combinatorics/Graph/Queries/CompleteNeighborhoodHistory.history_eq_iff_extension`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CompleteNeighborhoodHistory.history_eq_iff_extension` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Queries/CompleteNeighborhoodHistory.history_eq_iff_extension` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ For a distribution supported on graphs with the same degree as H at each named v
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/CompleteNeighborhoodHistory.history_eq_iff_extension`
-- Dependency: [D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound](../../ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/Queries/CompleteNeighborhoodHistory.history_eq_iff_extension`
+- Dependency: [D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound](../../../ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.md)
