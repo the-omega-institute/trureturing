@@ -1718,7 +1718,7 @@
       "lean": "none",
       "project": "",
       "command": "make filemap-conform",
-      "cache-dependency-path": "tools/StrataLint.FileMap/packages.lock.json\ntools/StrataLint.Configuration/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\n"
+      "cache-dependency-path": ".github/scripts/filemap-release.py\ntools/StrataLint.FileMap/packages.lock.json\ntools/StrataLint.Configuration/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\n"
     },
     "selftest": {
       "dotnet": true,
