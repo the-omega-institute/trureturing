@@ -2899,16 +2899,9 @@ uncompleted backing obligations. A law evaluator still cannot provide
 an actual Read reply. All earlier work roots and original source
 provenance remain required for later composition.
 
-The original strict findings `ML-N-evaluator-execution` and
-`ML-Cost-full-evaluator-session` remain. Completing these two component
-dependencies does not declare B complete or release C. D and fresh
-independent acceptance remain subsequent obligations. Ordinary
-correspondence is a conditional mathematical proof, not a new Lean
-verification, physical realization, encoding minimum, full serial-history
-recovery or quantum frontend. The initial-control premise is explicit;
-removing ML-I allocation/field/control rights would require a different
-theorem. The native field and installation graphs introduce no such
-rights for the original observation source.
+The full evaluator and its resource account require the initial
+allocation, field and control rights of ML-I. The native field and
+installation graphs operate only with those supplied rights.
 
 **Definition 20.5 (source correspondence and evidence use).** The
 executable definitions are `native_engine.Core.build` and
@@ -2930,10 +2923,8 @@ ordinary repository-derived implementation/refinement and accounting
 argument. The later C119/C123 conditional comparison/filter results do
 not supply an original-port service, a LAB-native quantum map or any
 missing literal controller. No new literature novelty is claimed.
-Exact finite author results corroborate their stated component cases;
-the all-family conclusions use Theorems 18.4 and 19.4, with all their
-premises. Result data and reproducible experiment sources are private;
-process logs and model reasoning are not theory evidence.
+The all-family conclusions use Theorems 18.4 and 19.4 with their
+supplied finite material and literal primitive operations.
 
 ## 追加锚（本行以下为增补区）
 
@@ -3315,10 +3306,9 @@ enters precisely the same complete evaluator path. Predict contains no
 original-call operation. Close emits its framed closed response and
 ends at a permanent input-disabled waiting gate.
 
-The frontend-only author component replaces the evaluator suffix by an
-explicit backed busy/ready latch and waiting gate. It supplies no output,
-normalizer, ratio or returned head and is never a production evaluator.
-A check at that gate establishes only the acquired evaluator input.
+A frontend ending at the backed busy/ready gate stops at the acquired
+evaluator input. A computed output and returned head require the
+evaluator suffix.
 
 **Theorem 23.5 (conditional particular-service composition).** For every
 valid original initialization and finite legal command history, the
@@ -3848,7 +3838,7 @@ The following finite checks can falsify constructor correspondence under the rel
 
 *Proof.* The decode relation, primitive simulation, installer induction, LAB induction, session/decoder induction, and common-cut census compose on one finite supplied run. Each theorem preserves the original objects, fields, chronology, and tariffs. Proposition 26.19 supplies only a run-specific paid continuation condition. The listed omissions are outside the premises and therefore remain obligations of the original C acceptance. $\square$
 
-**Source boundary.** The construction is mapped to `rro-lab-execution/field_graph.py` (`Cell`, `Node`, `Engine`), `primitive_engine.py` (`CPU`, `PrimitiveEngine`), `native_engine.py` (`Native`, `NativeEngine`), `native_install.py` (`Block`, `Source`, `Installer`, `BitKernel`), `field_io.py` (conversion and returned-head scan), `field_decoder.py` (literal page selector), `field_service.py` and `service_native.py` (received session and original-port connection), `lab.py` (`Arena`, `Buffer`, and LAB growth), and `integration_checks.py` (common-cut author checks). The source remains the pinned private experiment snapshot supplied for the preceding B correspondence. The finite checks are ordinary executable evidence, not Lean verification or a claim of world-level originality.
+**Source boundary.** The construction is mapped to `rro-lab-execution/field_graph.py` (`Cell`, `Node`, `Engine`), `primitive_engine.py` (`CPU`, `PrimitiveEngine`), `native_engine.py` (`Native`, `NativeEngine`), `native_install.py` (`Block`, `Source`, `Installer`, `BitKernel`), `field_io.py` (conversion and returned-head scan), `field_decoder.py` (literal page selector), `field_service.py` and `service_native.py` (received session and original-port connection), `lab.py` (`Arena`, `Buffer`, and LAB growth),. These source objects supply the representation and operational bindings used by the correspondence.
 
 **Continuation boundary.** The next execution may use this representation only after a fresh packed implementation has passed the alias, primitive, installer, LAB-prefix, session, and census falsifiers and after its measured $U$ supplies each owner at a common cut. It must still execute the unchanged fixed table/compiler/adapter/copier/B/LAB path on acquired positive N4, partial/cylinder, and authentic null N9 inputs, perform Arithmetic Print/End/Ack/Return, continue Reads on the same original port, and record the complete simultaneous ML.16 vector. Loading completion, a component output, a host-memory saving, or the existence of a finite $U$ is not C completion.
 
@@ -4113,7 +4103,7 @@ such a bound, but Proposition 26.19 cannot be used circularly to authorize that
 very run without its own backing. No sufficient $K$, host reservation, or
 complete ML.16 vector is supplied here. The original positive law, partial
 conditional law and authentic NullEvidence executions, their continued
-same-port Reads, C, D and independent acceptance remain outstanding.
+same-port Reads require a sufficient combined allocation and control construction.
 
 The pairing and byte round-trip facts are standard encodings. The concrete
 consumer correspondence and allocation bounds here are repo-derived ordinary

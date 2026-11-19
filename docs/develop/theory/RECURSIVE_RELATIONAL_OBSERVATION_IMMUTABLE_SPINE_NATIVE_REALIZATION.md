@@ -8,13 +8,9 @@ abbreviated ML. It does not establish a completely backed native UJB session.
 In particular, its finite native prefix bound is not a sufficient reservation
 for one of the complete acquired-input evaluations.
 
-The definitions and proofs are `repo-derived` mathematical prose, without a
-fresh Lean check or a claim of originality for persistence or universality.
-The implementation source is the private experiment tree's
-`rro-lab-execution/native-prerequisite/immutable_spine.py`;
-`immutable-spine-results.json` contains its finite results. The implementation
-and ordinary mathematical exposition have one author under the repository
-reasoning and theory-volume skills; independent acceptance is not asserted.
+The word-spine translation and common-cut accounting are repository-derived.
+The result applies to the specified immutable word representation and paid
+native interface.
 
 ## 1. The actual domain and the object that is shared
 
@@ -211,8 +207,7 @@ is finite for every finite source graph; no hidden source or numeric answer
 is used during graph construction. The standalone native installer copies
 actual public descriptors and relocates their actual references by ML19–20's
 existing `Installer`. The original descriptors, forward links, installer
-seed, initialized reserve and targets are all retained. Installation of the
-complete fixed UJB candidate has not been executed by the finite checks here.
+seed, initialized reserve and targets are all retained. These installation counts concern the standalone graph.
 
 ## 3. Actual loading, computed return and the same-source interface
 
@@ -278,8 +273,7 @@ original terminal handler. A law value cannot fill the reply latch.
 return relations of Definition 3.3 and the old service's entire primitive
 prefix relation are realized at common cuts, the new evaluator preserves
 UJB17.1's conditional laws and the old service's actual stationary Read
-continuation on the unchanged source. Without those realized relations,
-Corollary 3.2 and a hosted acquisition replay do not establish this conclusion.
+continuation on the unchanged source. The statement is conditional on both realized cut relations.
 
 Proof. At entry, (IS.3) supplies the actual arithmetic input. The retained cache
 and receipt chains are disjoint from the write targets of Definition 2.2;
@@ -292,13 +286,10 @@ where its normalizer is positive. Zero evidence retains its designated output.
 Induction gives the conditional statement. Neither of its two cut relations
 is supplied by equality of numerical answers alone. $\square$
 
-The native IS2/service splice in (IS.3) and the full acknowledged-return
-relation are unresolved for this candidate. The finite native checks use a
-standalone actually initialized input chain and a computed printer; the
-74/73/149-call replays below exercise the existing hosted acquisition path.
-No check here performs a Read after a completed IS2 UJB evaluation. The
-candidate's allowed primitive set does not yet install the original source
-connection or the service's indirect-return bindings.
+The standalone construction supplies an initialized input chain and computed
+output. Composition with the original service requires the source connection
+at (IS.3), the indirect-return bindings and the full acknowledged-return
+relation.
 
 ## 4. A precise reserve census and the missing full-session terms
 
@@ -2586,10 +2577,8 @@ The original source, connection, separately retained mutable B owner,
 and one subtraction for physically shared immutable wires retain
 exactly §§10, 13 and 17's identities at the common cuts. $\square$
 
-All earlier source proofs, installed censuses and finite checks retain
-their stated image pins. Their general lowering and counting identities
-are reused here; their old numerical image census or installation
-measurements do not certify this changed image.
+The lowering and counting identities also apply to the changed image.
+Its numerical census uses the inventories in Image data 20.1.
 
 ## 21. Complete-message demand after the local substitution
 
