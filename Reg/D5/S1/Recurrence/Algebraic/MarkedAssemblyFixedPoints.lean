@@ -7,7 +7,6 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S1.Recurrence.Algebraic.MarkedAssemblyFixedPoints
 
 open _root_.D5.S1.Recurrence.Algebraic.MarkedAssemblyFixedPoints
-open _root_.D5.S1.Recurrence.Algebraic.HannaA300591FixedAssemblies (fixedVertices movedVertices)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Finset
 open scoped BigOperators

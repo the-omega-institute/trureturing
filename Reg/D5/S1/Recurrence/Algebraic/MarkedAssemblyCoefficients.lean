@@ -9,7 +9,6 @@ namespace Reg.D5.S1.Recurrence.Algebraic.MarkedAssemblyCoefficients
 
 open _root_.D5.S1.Recurrence.Algebraic.MarkedAssemblyCoefficients
 open _root_.D5.S1.Recurrence.Algebraic.MarkedAssemblyFixedPoints
-open _root_.D5.S1.Recurrence.Algebraic.HannaA300591AssemblyCoefficients (colorSeries prefixSeries)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Finset PowerSeries
 open scoped BigOperators
