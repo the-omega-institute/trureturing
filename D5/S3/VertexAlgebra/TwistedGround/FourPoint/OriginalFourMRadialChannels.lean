@@ -657,4 +657,50 @@ theorem radial_AB_crossing (D : LatticeData) (hu : IsUnit D.G.det)
 
 #print axioms radial_AB_crossing
 
+private theorem radial_openings {x : ℝ} (hx : 1 / 2 < x) (hx₁ : x < 1) :
+    ∃ wA wB : ℂ, ‖wA‖ < 1 ∧ ‖wB‖ < 1 ∧
+      wA ^ 2 = parameter .A (x : ℂ) ∧ wB ^ 2 = parameter .B (x : ℂ) := by
+  let y : ℝ := x⁻¹ - 1
+  have hx₀ : 0 < x := by linarith
+  have hy₀ : 0 ≤ y := by
+    dsimp [y]
+    linarith [(one_lt_inv₀ hx₀).mpr hx₁]
+  have hxi : x⁻¹ < 2 := by
+    rw [inv_eq_one_div, div_lt_iff₀ hx₀]
+    linarith
+  have hy₁ : y < 1 := by dsimp [y]; linarith
+  have hnA : Real.sqrt y < 1 := (Real.sqrt_lt' zero_lt_one).mpr (by simpa using hy₁)
+  have hnB : Real.sqrt x < 1 := (Real.sqrt_lt' zero_lt_one).mpr (by simpa using hx₁)
+  refine ⟨I * (Real.sqrt y : ℂ), (Real.sqrt x : ℂ), ?_, ?_, ?_, ?_⟩
+  · simpa only [norm_mul, norm_I, one_mul, norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (Real.sqrt_nonneg _)] using hnA
+  · simpa only [norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _)] using hnB
+  · rw [mul_pow, I_sq, ← ofReal_pow, Real.sq_sqrt hy₀, neg_one_mul]
+    simp only [y, parameter, ofReal_sub, ofReal_inv, ofReal_one]
+    ring
+  · rw [← ofReal_pow, Real.sq_sqrt hx₀.le, parameter]
+
+/-- On the entire real overlap the original channels cross with the native
+nome identifications as the radial analytic hypotheses. -/
+theorem radial_AB_crossing_on_overlap (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (h24 : D.rank = 24) (b : ModTwoCharge D)
+    (H K L : ℕ) (m n r : ℤ) {x : ℝ} (hx : 1 / 2 < x) (hx₁ : x < 1)
+    (upperA : Bool)
+    (hNomeA : exp ((Real.pi : ℂ) * I * chartTau upperA .A x) = Q0 (parameter .A (x : ℂ)))
+    (hNomeB : exp ((Real.pi : ℂ) * I * chartTau upperA .B x) = Q0 (parameter .B (x : ℂ)))
+    (P Q R S : Oscillator D)
+    (hP : P.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (H : ℤ) - 3))
+    (hQ : Q.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (K : ℤ) - 3))
+    (hR : R.IsWeightedHomogeneous (fun i => (omega D i : ℤ)) (2 * (L : ℤ) - 3))
+    (hS : S.IsWeightedHomogeneous (fun i => (omega D i : ℤ))
+      (2 * ((H : ℤ) + K + L - (m + n + r) - 2) - 3)) :
+    slitChannelA D H K (m + n + r) P Q R S b (parameter .A (x : ℂ)) =
+      (2 : ℂ) ^ (12 : ℕ) * (x : ℂ) ^ (m + n + r + 2) *
+        slitChannelB D H K L m n r P Q R S b (parameter .B (x : ℂ)) := by
+  obtain ⟨wA, wB, hwA, hwB, hsA, hsB⟩ := radial_openings hx hx₁
+  exact radial_AB_crossing D hu hD h24 b H K L m n r hx hx₁ upperA hwA hwB hsA hsB
+    (by simpa only [hsA] using hNomeA) (by simpa only [hsB] using hNomeB) P Q R S hP hQ hR hS
+
+#print axioms radial_AB_crossing_on_overlap
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMRadialChannels
