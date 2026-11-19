@@ -127,4 +127,5 @@ For a positive definite trace-one reference on a nonempty finite index type, all
 - Dependency: [D5/S3/Quantum/Entanglement/PermutationCriteria/BellBlocks](../Entanglement/PermutationCriteria/BellBlocks.md)
 - Dependency: [D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM](../Entanglement/TavakoliMorelliIncompleteEAM.md)
 - Dependency: [D5/S3/Quantum/Recovery/BKMRelativeDensity](BKMRelativeDensity.md)
+- Dependency: [D5/S3/Quantum/Recovery/BKMSpectralVariance](BKMSpectralVariance.md)
 - Dependency: [D5/S3/Quantum/Schatten/TraceNorm](../Schatten/TraceNorm.md)
