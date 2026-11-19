@@ -132,11 +132,13 @@ b(k, ell, n) ≤ Q^(m mod 2) H^⌊m/2⌋ with Q = ell^(r−1) and H = Q² − Q/
 b(k, ell, n) = O(n^((log_ell H)/2)) with (log_ell H)/2 < r − 1. It is Theorem 1, equation (3),
 of the outreach note registered in the-omega-institute/trureturing-requests#300, and it
 improves `DigitCapQuotientBound.count_le_pow` (Q^m) for caps at most ell^r − 2. Its case r = 2 is
-exactly the sufficient condition quoted above; together with `count_square_sub_one` and cap
-monotonicity it bears on CW2, which is not settled here as a separate claim.
+exactly the sufficient condition quoted above.
 
 The least cap whose upper exponent reaches r − 1 is ell^r − 1 (`DigitCapLeastCap.least_cap`):
 the cap ell^r − 1 grows like n^(r−1) by the product formula of Theorem 2, and every smaller cap
-is subcritical. For r = 2 this is the least cap with linear maximal growth, as asked in CW2;
-the combination is Corollary 2 of the outreach note registered in
-the-omega-institute/trureturing-requests#301.
+is subcritical. With the exact count n/ell + 1 at ell² − 1, the case r = 2 answers CW2, which
+Coons lists as open, in the sense that no smaller cap has upper exponent at least 1; this is
+Corollary 2 of the outreach note registered in the-omega-institute/trureturing-requests#301.
+Separately, `DigitCapLeastCap.least_linear_min` formalizes CW3, "Is k = ℓ²−1 the first time we
+get linear minimum growth?", which Coons answers in his Theorem 1: ell² − 1 is the least cap
+with c·n ≤ b(k, ell, n) for all large n.
