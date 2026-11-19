@@ -11,7 +11,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoSignedSearch
 
 open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Hypercube
-open BalancedCriticalSpectrum (Q IsBalanced)
+open BalancedCriticalSpectrum (Q IsBalanced flip_adj flip_flip)
 open BalancedCubeLowerBound (coordinateSlice)
 open Q9EightCubicGraphCertificate (modelAdj)
 open private cube_action_regular_balanced from
@@ -24,6 +24,8 @@ open private matrix_true_prefix from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixSignedModelProbe
 open private theta theta_unit from
   D5.S3.Combinatorics.Graph.HypercubeCritical.GridWedgeSigning
+open private diff diff_of_adj_flip from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CubeSmallSupport
 
 attribute [local instance] Classical.propDecidable
 local notation "flip" => BalancedCriticalSpectrum.flip
@@ -62,7 +64,7 @@ theorem slice_eq_highs_union_middles (S : Finset (Q 9)) (hS : S.card = 20)
   choose mid hmS hmAdj using fun e : (modelEdges wagner : Set (Fin 8 × Fin 8)) =>
     hm e.val.1 e.val.2 (edges e).2
   have hpar : ∀ i, cubeParity (p i) = cubeParity (p 0) := by
-    apply constant_on_model
+    apply constant_on_model wagner
     intro i j hij
     obtain ⟨m, _, hadj⟩ := hm i j hij
     have hbool : ∀ a b c : Bool, a ≠ b → a ≠ c → b = c := by decide
@@ -174,5 +176,49 @@ theorem opposite_middle_signs (x : Q 9) {i j : Fin 9} (hij : i ≠ j) :
   exact_mod_cast hs
 
 #print axioms opposite_middle_signs
+
+/-- At distinct endpoints, the signed product identifies the first flip
+of the length-two path and hence the middle vertex. -/
+theorem signed_middle_unique {x y : Q 9} (hxy : x ≠ y) {i j k l : Fin 9}
+    (hy : flip (flip x i) j = y) (hy' : flip (flip x k) l = y)
+    (hsign : truePrefixSign x i * truePrefixSign (flip x i) j =
+      truePrefixSign x k * truePrefixSign (flip x k) l) : i = k := by
+  classical
+  by_contra hik
+  have hij : i ≠ j := by
+    intro hij
+    subst j
+    exact hxy ((flip_flip x i).symm.trans hy)
+  have hy_swap : flip (flip x j) i = y := (flip_comm x i j).symm.trans hy
+  obtain ⟨hi, hcount⟩ := diff_of_adj_flip hxy i (hy ▸ flip_adj (flip x i) j)
+  have hj := (diff_of_adj_flip hxy j (hy_swap ▸ flip_adj (flip x j) i)).1
+  have hk := (diff_of_adj_flip hxy k (hy' ▸ flip_adj (flip x k) l)).1
+  have hpair : ({i, j} : Finset (Fin 9)) = diff x y := by
+    apply Finset.eq_of_subset_of_card_le
+    · intro a ha
+      rcases (by simpa using ha : a = i ∨ a = j) with rfl | rfl
+      · exact hi
+      · exact hj
+    · simp [hij, hcount]
+  have hkj : k = j := by
+    rw [← hpair] at hk
+    exact (by simpa using hk : k = i ∨ k = j).resolve_left (fun h => hik h.symm)
+  subst k
+  have hli : l = i := by
+    by_contra hne
+    have he := congrFun (hy'.trans hy_swap.symm) l
+    change flip (flip x j) l l = flip (flip x j) i l at he
+    rw [BalancedCriticalSpectrum.flip_apply_same,
+      show flip (flip x j) i l = (flip x j) l from Function.update_of_ne hne _ _] at he
+    have hbool : ∀ a : Bool, Bool.not a ≠ a := by decide
+    exact hbool _ he
+  subst l
+  have hopen := opposite_middle_signs x hij
+  have hzero : truePrefixSign x j * truePrefixSign (flip x j) i = 0 := by omega
+  have hnonzero (u : Q 9) (a : Fin 9) : truePrefixSign u a ≠ 0 := by
+    exact pow_ne_zero _ (by decide : (-1 : ℤ) ≠ 0)
+  exact (mul_ne_zero (hnonzero x j) (hnonzero (flip x j) i)) hzero
+
+#print axioms signed_middle_unique
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoSignedSearch
