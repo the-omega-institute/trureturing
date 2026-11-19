@@ -491,87 +491,198 @@ theorem differential_on_basis (a : UCharge) (ha : chargeEnergy hyperbolicData a 
 #print axioms Q_top
 #print axioms differential_on_basis
 
+/-- The explicit differential on the four coordinates ordered by `ShellIndex`. -/
+def coordinateDifferential (a : Fin 2 → ℤ) : Module.End ℂ (ShellIndex → ℂ) where
+  toFun x
+    | .inl _ => 0
+    | .inr (.inl i) => (a i : ℂ) * x bottom
+    | .inr (.inr _) => -(a 1 : ℂ) * x (middle 0) - (a 0 : ℂ) * x (middle 1)
+  map_add' x y := by
+    funext k
+    rcases k with (_ | (i | _)) <;> simp [Pi.add_apply] <;> ring
+  map_smul' c x := by
+    funext k
+    rcases k with (_ | (i | _)) <;> simp [Pi.smul_apply, smul_eq_mul] <;> ring
+
+/-- The inverse coefficients on the two axes give one formula for the homotopy.
+On either nonzero null axis the inverse of the vanishing coefficient is zero. -/
+def coordinateHomotopy (a : Fin 2 → ℤ) : Module.End ℂ (ShellIndex → ℂ) where
+  toFun x
+    | .inl _ => (a 0 : ℂ)⁻¹ * x (middle 0) + (a 1 : ℂ)⁻¹ * x (middle 1)
+    | .inr (.inl i) => -(if i = 0 then (a 1 : ℂ)⁻¹ else (a 0 : ℂ)⁻¹) * x top
+    | .inr (.inr _) => 0
+  map_add' x y := by
+    funext k
+    rcases k with (_ | (i | _)) <;> simp only [Pi.add_apply] <;> ring
+  map_smul' c x := by
+    funext k
+    rcases k with (_ | (i | _)) <;>
+      simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply] <;> ring
+
+/-- The coordinate differential squares to zero on both null axes, including the origin. -/
+theorem coordinateDifferential_squared (a : Fin 2 → ℤ) (ha : a 0 * a 1 = 0) :
+    coordinateDifferential a * coordinateDifferential a = 0 := by
+  apply LinearMap.ext
+  intro x
+  funext k
+  change coordinateDifferential a (coordinateDifferential a x) k = 0
+  rcases k with (_ | (i | _))
+  · rfl
+  · simp [coordinateDifferential, bottom]
+  · have hz : (a 0 : ℂ) * (a 1 : ℂ) = 0 := by exact_mod_cast ha
+    simp only [coordinateDifferential, LinearMap.coe_mk, AddHom.coe_mk, middle]
+    linear_combination (-2 * x bottom) * hz
+
+/-- The explicit homotopy contracts the coordinate complex at every nonzero integral null charge. -/
+theorem coordinateHomotopy_contracts (a : Fin 2 → ℤ) (ha : a 0 * a 1 = 0) (hne : a ≠ 0) :
+    coordinateDifferential a * coordinateHomotopy a +
+      coordinateHomotopy a * coordinateDifferential a = 1 := by
+  have cast_ne {z : ℤ} (hz : z ≠ 0) : (z : ℂ) ≠ 0 := by exact_mod_cast hz
+  apply LinearMap.ext
+  intro x
+  funext k
+  change coordinateDifferential a (coordinateHomotopy a x) k +
+    coordinateHomotopy a (coordinateDifferential a x) k = x k
+  rcases mul_eq_zero.mp ha with ha0 | ha1
+  · have ha1 : a 1 ≠ 0 := by
+      intro hz
+      apply hne
+      funext i
+      fin_cases i <;> assumption
+    rcases k with (⟨⟩ | (i | ⟨⟩))
+    · simp [coordinateDifferential, coordinateHomotopy, bottom, middle, ha0, cast_ne ha1]
+    · fin_cases i <;>
+        simp [coordinateDifferential, coordinateHomotopy, bottom, middle, top, ha0,
+          ← mul_assoc, cast_ne ha1]
+    · simp [coordinateDifferential, coordinateHomotopy, middle, top, ha0, cast_ne ha1]
+  · have ha0 : a 0 ≠ 0 := by
+      intro hz
+      apply hne
+      funext i
+      fin_cases i <;> assumption
+    rcases k with (⟨⟩ | (i | ⟨⟩))
+    · simp [coordinateDifferential, coordinateHomotopy, bottom, middle, ha1, cast_ne ha0]
+    · fin_cases i <;>
+        simp [coordinateDifferential, coordinateHomotopy, bottom, middle, top, ha1,
+          ← mul_assoc, cast_ne ha0]
+    · simp [coordinateDifferential, coordinateHomotopy, middle, top, ha1, cast_ne ha0]
+
+/-- Exactness of the explicit complex at each nonzero integral null charge. -/
+theorem coordinateDifferential_exact (a : Fin 2 → ℤ) (ha : a 0 * a 1 = 0) (hne : a ≠ 0) :
+    LinearMap.range (coordinateDifferential a) = LinearMap.ker (coordinateDifferential a) := by
+  apply le_antisymm
+  · rintro x ⟨y, rfl⟩
+    exact LinearMap.mem_ker.mpr (by
+      simpa only [Module.End.mul_apply, LinearMap.zero_apply] using
+        LinearMap.congr_fun (coordinateDifferential_squared a ha) y)
+  · intro x hx
+    have hz := LinearMap.mem_ker.mp hx
+    refine ⟨coordinateHomotopy a x, ?_⟩
+    simpa only [LinearMap.add_apply, Module.End.mul_apply, Module.End.one_apply,
+      hz, map_zero, add_zero] using LinearMap.congr_fun (coordinateHomotopy_contracts a ha hne) x
+
+/-- Coordinates in the checked native null-shell basis. -/
+def shellCoordinates (a : UCharge) (ha : chargeEnergy hyperbolicData a = 0) :
+    relativeMassShell a ≃ₗ[ℂ] (ShellIndex → ℂ) :=
+  (shellBasis a ha).equivFun
+
+/-- In these basis coordinates the restricted native Q is the explicit differential.
+The intertwining equation holds also at zero charge. -/
+theorem differential_conjugate (a : UCharge) (ha : chargeEnergy hyperbolicData a = 0)
+    (x : relativeMassShell a) :
+    shellCoordinates a ha (differential a x) =
+      coordinateDifferential a (shellCoordinates a ha x) := by
+  let B := shellBasis a ha
+  let e := shellCoordinates a ha
+  have he (k : ShellIndex) : e (B k) = Pi.single k 1 := by
+    funext j
+    change B.equivFun (B k) j = (Pi.single k 1 : ShellIndex → ℂ) j
+    rw [B.equivFun_self, Pi.single_apply] <;>
+      (by_cases hkj : k = j <;> simp [hkj, Ne.symm])
+  have h : e.toLinearMap.comp (differential a) =
+      (coordinateDifferential a).comp e.toLinearMap := by
+    apply B.ext
+    obtain ⟨hb, hm0, hm1, ht⟩ := differential_on_basis a ha
+    change differential a (B bottom) = _ at hb
+    change differential a (B (middle 0)) = _ at hm0
+    change differential a (B (middle 1)) = _ at hm1
+    change differential a (B top) = _ at ht
+    rintro (⟨⟩ | (i | ⟨⟩))
+    · change e (differential a (B bottom)) = coordinateDifferential a (e (B bottom))
+      rw [hb, e.map_add, e.map_smul, e.map_smul, he, he, he]
+      funext k
+      rcases k with (⟨⟩ | (i | ⟨⟩))
+      · simp [coordinateDifferential, bottom, middle]
+      · fin_cases i <;> norm_num [coordinateDifferential, Pi.single_apply, bottom, middle]
+      · simp [coordinateDifferential, bottom, middle]
+    · fin_cases i
+      · change e (differential a (B (middle 0))) =
+          coordinateDifferential a (e (B (middle 0)))
+        rw [hm0, e.map_smul, he, he]
+        funext k
+        rcases k with (⟨⟩ | (i | ⟨⟩)) <;>
+          norm_num [coordinateDifferential, Pi.single_apply, bottom, middle, top]
+      · change e (differential a (B (middle 1))) =
+          coordinateDifferential a (e (B (middle 1)))
+        rw [hm1, e.map_smul, he, he]
+        funext k
+        rcases k with (⟨⟩ | (i | ⟨⟩)) <;>
+          norm_num [coordinateDifferential, Pi.single_apply, bottom, middle, top]
+    · change e (differential a (B top)) = coordinateDifferential a (e (B top))
+      rw [ht, e.map_zero, he]
+      funext k
+      rcases k with (⟨⟩ | (i | ⟨⟩)) <;>
+        simp [coordinateDifferential, bottom, middle, top]
+  exact LinearMap.congr_fun h x
+
 /-- At nonzero null momentum the restricted differential admits a contracting homotopy. -/
 theorem exists_contraction (a : UCharge) (ha : chargeEnergy hyperbolicData a = 0)
     (hne : a ≠ 0) :
     ∃ h : Module.End ℂ (relativeMassShell a),
       differential a * h + h * differential a = 1 := by
-  classical
-  let B := shellBasis a ha
-  let d := differential a
-  obtain ⟨hd0, hd10, hd11, hd2⟩ := differential_on_basis a ha
-  change d (B bottom) = (a 0 : ℂ) • B (middle 0) + (a 1 : ℂ) • B (middle 1) at hd0
-  change d (B (middle 0)) = -(a 1 : ℂ) • B top at hd10
-  change d (B (middle 1)) = -(a 0 : ℂ) • B top at hd11
-  change d (B top) = 0 at hd2
-  change ∃ h : Module.End ℂ (relativeMassShell a), d * h + h * d = 1
-  have hnull : a 0 = 0 ∨ a 1 = 0 :=
-    mul_eq_zero.mp ((hyperbolic_chargeEnergy a).symm.trans ha)
-  have cast_ne {z : ℤ} (hz : z ≠ 0) : (z : ℂ) ≠ 0 := by exact_mod_cast hz
-  rcases hnull with hzero | hzero
-  · have hnonzero : a 1 ≠ 0 := by
-      intro hz
-      apply hne
-      funext i
-      fin_cases i <;> assumption
-    let h : Module.End ℂ (relativeMassShell a) := B.constr ℂ (fun k =>
-      match k with
-      | .inl _ => 0
-      | .inr (.inl i) => if i = 1 then (a 1 : ℂ)⁻¹ • B bottom else 0
-      | .inr (.inr _) => -((a 1 : ℂ)⁻¹) • B (middle 0))
-    have hh (k : ShellIndex) : h (B k) = _ := B.constr_basis ℂ _ k
-    refine ⟨h, B.ext ?_⟩
-    rintro (⟨⟩ | (i | ⟨⟩))
-    · change d (h (B bottom)) + h (d (B bottom)) = B bottom
-      simp [hd0, hh, hzero, smul_smul, cast_ne hnonzero]
-    · fin_cases i
-      · change d (h (B (middle 0))) + h (d (B (middle 0))) = B (middle 0)
-        simp [hd10, hh, smul_smul, cast_ne hnonzero]
-      · change d (h (B (middle 1))) + h (d (B (middle 1))) = B (middle 1)
-        simp [hd0, hd11, hh, hzero, smul_smul, cast_ne hnonzero]
-    · change d (h (B top)) + h (d (B top)) = B top
-      simp [hd10, hd2, hh, smul_smul, cast_ne hnonzero]
-  · have hnonzero : a 0 ≠ 0 := by
-      intro hz
-      apply hne
-      funext i
-      fin_cases i <;> assumption
-    let h : Module.End ℂ (relativeMassShell a) := B.constr ℂ (fun k =>
-      match k with
-      | .inl _ => 0
-      | .inr (.inl i) => if i = 0 then (a 0 : ℂ)⁻¹ • B bottom else 0
-      | .inr (.inr _) => -((a 0 : ℂ)⁻¹) • B (middle 1))
-    have hh (k : ShellIndex) : h (B k) = _ := B.constr_basis ℂ _ k
-    refine ⟨h, B.ext ?_⟩
-    rintro (⟨⟩ | (i | ⟨⟩))
-    · change d (h (B bottom)) + h (d (B bottom)) = B bottom
-      simp [hd0, hh, hzero, smul_smul, cast_ne hnonzero]
-    · fin_cases i
-      · change d (h (B (middle 0))) + h (d (B (middle 0))) = B (middle 0)
-        simp [hd0, hd10, hh, hzero, smul_smul, cast_ne hnonzero]
-      · change d (h (B (middle 1))) + h (d (B (middle 1))) = B (middle 1)
-        simp [hd11, hh, smul_smul, cast_ne hnonzero]
-    · change d (h (B top)) + h (d (B top)) = B top
-      simp [hd11, hd2, hh, smul_smul, cast_ne hnonzero]
+  let e := shellCoordinates a ha
+  let F := e.conjRingEquiv
+  have hd : F (differential a) = coordinateDifferential a := by
+    apply LinearMap.ext
+    intro x
+    change e (differential a (e.symm x)) = coordinateDifferential a x
+    rw [differential_conjugate, e.apply_symm_apply]
+  refine ⟨F.symm (coordinateHomotopy a), F.injective ?_⟩
+  rw [F.map_add, F.map_mul, F.map_mul, F.apply_symm_apply, hd, F.map_one]
+  exact coordinateHomotopy_contracts a ((hyperbolic_chargeEnergy a).symm.trans ha) hne
 
 /-- Relative BRST cohomology vanishes at each nonzero null hyperbolic momentum. -/
 theorem differential_exact (a : UCharge) (ha : chargeEnergy hyperbolicData a = 0)
     (hne : a ≠ 0) :
     LinearMap.range (differential a) = LinearMap.ker (differential a) := by
-  let d := differential a
-  obtain ⟨h, hh⟩ := exists_contraction a ha hne
+  let e := shellCoordinates a ha
+  have hex := coordinateDifferential_exact a ((hyperbolic_chargeEnergy a).symm.trans ha) hne
   apply le_antisymm
   · rintro x ⟨y, rfl⟩
-    exact LinearMap.mem_ker.mpr (by
-      simpa only [pow_two, Module.End.mul_apply, LinearMap.zero_apply] using
-        LinearMap.congr_fun (differential_squared a) y)
+    apply LinearMap.mem_ker.mpr
+    apply e.injective
+    have hmem : coordinateDifferential a (e y) ∈
+        LinearMap.range (coordinateDifferential a) := ⟨e y, rfl⟩
+    rw [hex] at hmem
+    exact (differential_conjugate a ha (differential a y)).trans
+      ((congrArg (coordinateDifferential a) (differential_conjugate a ha y)).trans
+        ((LinearMap.mem_ker.mp hmem).trans e.map_zero.symm))
   · intro x hx
-    have hz : d x = 0 := LinearMap.mem_ker.mp hx
-    refine ⟨h x, ?_⟩
-    have h' := LinearMap.congr_fun hh x
-    change d (h x) + h (d x) = x at h'
-    simpa only [hz, map_zero, add_zero] using h'
+    have hz : coordinateDifferential a (e x) = 0 := by
+      exact (differential_conjugate a ha x).symm.trans
+        ((congrArg e (LinearMap.mem_ker.mp hx)).trans e.map_zero)
+    have hmem : e x ∈ LinearMap.range (coordinateDifferential a) :=
+      hex.symm ▸ LinearMap.mem_ker.mpr hz
+    obtain ⟨y, hy⟩ := hmem
+    refine ⟨e.symm y, e.injective ?_⟩
+    change shellCoordinates a ha (differential a (e.symm y)) = e x
+    rw [differential_conjugate, e.apply_symm_apply]
+    exact hy
 
+#print axioms coordinateDifferential_squared
+#print axioms coordinateHomotopy_contracts
+#print axioms coordinateDifferential_exact
+#print axioms differential_conjugate
 #print axioms exists_contraction
 #print axioms differential_exact
 
