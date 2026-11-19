@@ -15,7 +15,8 @@ internal sealed class HardinA229698StripDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name,string title,Formula f,bool theorem,string prose) =>
         Describe.Lean(DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(title),
           StatementSource.FromAuthor(Disp(f)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229698")),
-          Blocks(Paragraph(Text(prose))),theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+          Blocks(Paragraph(Text(prose))),theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+          name == "result" ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229698"), ResolutionKind.Proved) : null);
     private static Formula Ex(string n, Formula t, Formula b) => Seq(Exists,Sp,Typed(V(n),t),Comma,Sp,Parenthesized(b));
     private static Formula Lt(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula Imp(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Implies,Parenthesized(b));

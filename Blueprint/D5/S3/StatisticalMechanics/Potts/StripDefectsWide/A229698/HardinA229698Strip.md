@@ -40,6 +40,10 @@ $$\forall (n: \operatorname{Nat}), (\operatorname{Int}.\operatorname{ofNat}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/StripDefectsWide/A229698/HardinA229698Strip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin229698` (proved) by `D5/S3/StatisticalMechanics/Potts/StripDefectsWide/A229698/HardinA229698Strip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin229698","declaration_gid":"D5/S3/StatisticalMechanics/Potts/StripDefectsWide/A229698/HardinA229698Strip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229698: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229698>.
