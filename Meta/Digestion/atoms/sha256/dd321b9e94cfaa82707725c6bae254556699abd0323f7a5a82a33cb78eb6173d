@@ -1,0 +1,41 @@
+**Definition 8.1 (Actual letters and integral coordinates).** In this
+section fix the instrument of Definition 2.1 at $\theta=\pi/6$, so that
+$c=\sqrt3/2$, $s=1/2$. Retain the actual qutrit matrices $U_0,U_1,W$
+of Theorem 2.2 and set
+
+$$
+V_0=cU_0+isU_1,\qquad V_1=isU_0+cU_1=V_0W,\qquad
+\zeta=e^{i\pi/6}=\frac{\sqrt3+i}{2}.
+\tag{8.1}
+$$
+
+The reducing summands are $\mathbb C\xi$ and $T=\xi^\perp$ as in
+Theorem 6.1. Besides its orthonormal basis $(t_1,t_2)$, use the basis
+
+$$
+b_1=(1,0,-1)^{\mathsf T},\qquad b_2=(0,1,-1)^{\mathsf T},\qquad
+C=\begin{pmatrix}
+1/\sqrt2&-1/\sqrt2\\
+\sqrt{3/2}&\sqrt{3/2}
+\end{pmatrix}.
+\tag{8.2}
+$$
+
+Here $[b_1\ b_2]=[t_1\ t_2]C$ and $\det C=\sqrt3$. For an
+operator $L$ preserving $T$, denote its matrix in $(b_1,b_2)$ by
+$\widehat L=C^{-1}L_TC$. These are coordinates on the same subspace;
+the basis $b_1,b_2$ is not asserted orthonormal. Put
+
+$$
+\tau=i\sqrt3,\qquad \mathcal O=\mathbb Z[\tau]\subset\mathbb C,
+\qquad \tau^2=-3,\qquad P_j=-2i\widehat V_j.
+\tag{8.3}
+$$
+
+For a chronological history $h=(h_1,\ldots,h_n)$ write
+$P_h=P_{h_n}\cdots P_{h_1}$, with $P_{\varnothing}=I_2$.
+Thus $P_h=(-2i)^nC^{-1}(Q_h)_TC$, where $Q_h$ retains the
+chronological convention of Definition 3.1. The scalar in (8.3) is
+an algebraic device for proving identities, not a replacement of an
+instrument branch.
+

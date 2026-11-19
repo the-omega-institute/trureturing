@@ -1,0 +1,33 @@
+**Definition 26.5 (Application scope).** The algebra criterion used
+inside Theorem 26.2 is the literature result [BKK26, Definition 8,
+Theorem 9 and Corollary 10][BKK26]. The actual matrices and their
+all-angle identities are (11.1), (12.4) and Theorem 6.1; the
+three-dimensional permutation commutant is also supplied by
+[HG26, §6][HG26]. The fixed-angle spectator task is already
+[PA26, Theorem 86.2][PA26]. The source-specific deduction here
+is the full-qutrit finite-horizon algebra (26.5), its boundary
+horizons, the exhaustive sharp-task and simultaneous-decoder
+statements, and the support counterexamples. The equality of
+averaged channels and differing record counts in §§11–16 are
+separate existing results and are not an additional conclusion
+of this classification.
+
+The scope is unital star algebras and prescribed orthogonal
+projections, on the entire qutrit input space, with qutrit CPTP
+decoders after complete history erasure. Arbitrary unsharp effects,
+operator systems, smaller input codes and different decoder menus
+are not classified. These are exact statements at each finite
+horizon; they provide no approximate recovery bound, critical
+long-word estimate or full-state memory law uniform over unbounded
+horizons. The extension to correlated laws concerns the same
+word matrices with different input-independent weights. It does
+not change the fair fresh-environment law of the actual instrument.
+The conclusions are ordinary finite-dimensional mathematical
+applications under the stated premises, without a physical
+realization or literature-priority assertion.
+
+[BKK26]: https://arxiv.org/html/0705.1574v1
+[NOTE26]: ../../../Library/Quantum/benykempfkribs2007observables.md
+[HG26]: https://github.com/the-omega-institute/trureturing/blob/2cd10a669fdb32fb481abd7136cac1b9ef480ee0/docs/develop/theory/AURIC_FIB_FIVE_WINDOW_HALF_GRAM_CLASSIFICATION.md
+[PA26]: https://github.com/the-omega-institute/trureturing/blob/2cd10a669fdb32fb481abd7136cac1b9ef480ee0/docs/develop/theory/AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md
+

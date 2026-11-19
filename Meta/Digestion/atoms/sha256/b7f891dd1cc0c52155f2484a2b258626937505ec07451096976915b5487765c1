@@ -1,0 +1,17 @@
+**Definition 7.3 (Remaining counting problem).** Determining the exact
+sequence $m_n^{\mathrm{rot}}$, or a stronger asymptotic lower bound,
+is a separate open counting problem. Theorem 6.1 establishes only
+$n\le m_n^{\mathrm{rot}}\le2^n$ for $n\ge1$ and unboundedness.
+It supplies neither an exact rotated sequence nor an exponential
+lower bound. The separation rests on the all-$n$ spectral and
+same-horizon conjugacy argument, not on any finite enumeration of
+rotated products.
+
+[OWN]: https://github.com/the-omega-institute/trureturing/blob/c447c32041b270a42a625aa715088565ddfd1771/docs/develop/theory/AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md
+[DIL]: https://github.com/the-omega-institute/trureturing/blob/c447c32041b270a42a625aa715088565ddfd1771/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md
+[KL]: https://arxiv.org/html/quant-ph/9604034v1
+[GW1]: https://arxiv.org/html/quant-ph/0209025v1
+[GW2]: https://arxiv.org/html/quant-ph/0403092v1
+[NC]: https://arxiv.org/html/quant-ph/9703032v1
+[DRW]: https://arxiv.org/html/1611.09541v2
+
