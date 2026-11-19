@@ -7,9 +7,9 @@
    digest: The full literal Barker numerator follows from the exact quotient annihilator and initial convolutions. -/
 
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
+import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.RingTheory.PowerSeries.Inverse
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 
 /-! The reproduced formula is attributed to Colin Barker, OEIS A286848,
@@ -28,7 +28,6 @@ open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
-open private rowEval orbit_values from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 
 /-- Lift a quotient vector to every full state in its literal class. -/
 def lift : Vector →ₗ[ℤ] (State → ℤ) where

@@ -52,7 +52,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.
 
 The 49 coefficients in increasing degree order are exactly those of Colin Barker's denominator in OEIS A286848, https://oeis.org/A286848. Its constant coefficient is 1 and its degree is 48. Attribution and CC-BY-SA-4.0 apply to the reproduced formula: https://creativecommons.org/licenses/by-sa/4.0/.
 
-**Definition 1.5 (Integer linear multiplication).**
+**Definition 1.5 (Sparse row evaluation).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.rowEval`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.rowEval` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Sum each listed integer weight times the vector coordinate at its column. The series intertwining proof uses this evaluation to match the sum over full-state successors with the quotient row.
+
+**Definition 1.6 (Integer linear multiplication).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.step`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.
 
 Sparse row evaluation is packaged as an integer linear map, so sums and integer scalar multiples commute with each matrix step.
 
-**Theorem 1.6 (Check every successive vector).**
+**Theorem 1.7 (Check every successive vector).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.power_steps`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.
 
 For every k in Fin 48 and every i in Fin 59, step(values(k.castSucc))(i) = values(k.succ)(i). Kernel decisions verify every coordinate.
 
-**Theorem 1.7 (Check the initial vector).**
+**Theorem 1.8 (Check the initial vector).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.initial_vector`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.
 
 values(0) = terminal. The equality is definitional.
 
-**Theorem 1.8 (Check all residual coordinates).**
+**Theorem 1.9 (Check all residual coordinates).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.finite_annihilator`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.
 
 For every i in Fin 59, the sum over j in Fin 49 of denominator(j) times values(48-j)(i) is zero. Every one of the 59 coordinates is kernel checked.
 
-**Definition 1.9 (The unrestricted matrix orbit).**
+**Definition 1.10 (The unrestricted matrix orbit).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.orbit`
 
@@ -112,7 +124,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.
 
 orbit(0) = terminal and orbit(k+1) = step(orbit(k)) for every natural k.
 
-**Theorem 1.10 (Every shift).**
+**Theorem 1.11 (The first 49 orbit vectors).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.orbit_values`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.orbit_values` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every k in Fin 49, orbit(k.val) equals values(k). Induction uses the checked initial vector and successive steps. The series proof uses this equality to evaluate its initial coefficients from the certificate.
+
+**Theorem 1.12 (Every shift).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.shifted_annihilator`
 
@@ -132,7 +156,9 @@ The supplied numerical certificate has SHA-256 ab0c5370648ec80cad7798774a9ce6ad7
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.finite_annihilator`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.initial_vector`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.orbit`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.orbit_values`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.power_steps`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.rowEval`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.rows`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.shifted_annihilator`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.step`
