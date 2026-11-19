@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2608.29231v1
 claim: "The instance sequence for the L n-omino is S(n, 1, 2) in general (Section 6.3)."
 strata_touched:
   - D5/S3/Combinatorics/Polyomino/LPolyominoSkippedSequence
+  - D5/S3/Combinatorics/Polyomino/Figure26Prismaticity
 license: citation-only
 triage: anchor
 ---
@@ -64,3 +65,19 @@ Prior-resolution evidence is bounded by the searches recorded in issue
 12562. Later citing works were not exhaustively checked: the citation service
 returned a rate-limit response. No priority claim follows from that negative
 search finding.
+
+## Figure 26
+
+The caption on printed p. 33 reads “Two de Bruijn polyhexes we conjecture are
+prismatic.” Section 9.1 gives the hexagonal-lattice analogue of the paper's
+density and prismaticity definitions. The subsequent paragraph conjectures
+that the two displayed boards are dense and therefore prismatic. The source
+for the cell positions and the gray or white indication is the pinned
+[Figure 26](https://arxiv.org/pdf/2608.29231v1#page=33).
+
+The [arXiv version record](https://arxiv.org/abs/2608.29231v1) links the
+article's [CC BY-NC-ND 4.0 notice](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+This note cites the article and identifies the mathematical board data.
+The Lean source encodes axial cell coordinates and Boolean color values
+read from the panels. The repository delivery contains the mathematical
+transcription and proof, with that source attribution.
