@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Arbitrary deletions from consecutive plastic powers retain a smaller sumset than the golden powers.
+After any h deletions leaving n consecutive-interval plastic powers with n at least eight and 11h + 24 at most 3n, their sumset is smaller than the golden-power sumset.
 
 Fix r > 1 with r³ = r + 1. For natural numbers n,h and an integer a, let I(a,n,h) = [a,a+n+h−1] be an integer interval. For any H contained in I(a,n,h) with |H| = h, put E = I(a,n,h) ∖ H and A(r,a,n,h,H) = {rᵉ : e ∈ E}. Let φ = (1+√5)/2, G(n) = {φᵉ : e an integer, 0 ≤ e ≤ n−1}, and M(n) = n(n+1)/2. All sums and products below are those of actual finite sets of real numbers. The conditions n ≥ 8 and 11h+24 ≤ 3n express exactly the integer range 0 ≤ h ≤ floor((3n−24)/11). Natural-number subtraction in the conclusion agrees with integer subtraction throughout this range.
 

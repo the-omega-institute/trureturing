@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Additive;
 internal sealed class PlasticDeletionBoundDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Arbitrary deletions from consecutive plastic powers retain a smaller sumset than the golden powers.",
+        "After any h deletions leaving n consecutive-interval plastic powers with n at least eight and 11h + 24 at most 3n, their sumset is smaller than the golden-power sumset.",
         H("Arbitrary deletions from a plastic-power interval"),
         Blocks(
             Paragraph(Text("Fix r > 1 with r³ = r + 1. For natural numbers n,h and an integer a, let I(a,n,h) = [a,a+n+h−1] be an integer interval. "

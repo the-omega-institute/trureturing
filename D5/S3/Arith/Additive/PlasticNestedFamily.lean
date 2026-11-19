@@ -9,7 +9,9 @@
 import D5.S3.Arith.Additive.PlasticPowerCollisions
 import Mathlib.NumberTheory.Real.GoldenRatio
 
-/-! Native real power sets for the complete original nested-family theorem. -/
+/-! Native real power sets for the complete original nested-family theorem.
+
+Escape audit for `golden_sum_lower`: https://github.com/the-omega-institute/trureturing/issues/26203. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
