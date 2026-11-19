@@ -508,7 +508,7 @@ private theorem product_on_punctured
 
 /- The zero supplier is unconditional; reflection is used only to orient one
 entry into the half-plane `Re ρ ≥ 1/2`. -/
-private theorem exists_nontrivial_zero_re_ge_half :
+theorem exists_nontrivial_zero_re_ge_half :
     ∃ ρ : ℂ, IsNontrivialZero ρ ∧ 1 / 2 ≤ ρ.re := by
   let Z := zetaZeroData
   let ρ : ℂ := Z.zero 0

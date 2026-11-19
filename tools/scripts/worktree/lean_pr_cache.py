@@ -83,6 +83,19 @@ def source_identity(root):
     return identity
 
 
+def require_target_ancestor(repository, ancestor, target, reason):
+    if ancestor == target:
+        return
+    # The history endpoint can establish ancestry without computing changed files.
+    history = api(repository, "commits?" + urlencode({"sha": target, "per_page": 100}))
+    require(isinstance(history, list) and history and history[0].get("sha") == target,
+            "commit history does not bind the protected target")
+    if any(commit.get("sha") == ancestor for commit in history):
+        return
+    comparison = api(repository, "compare/" + ancestor + "..." + target)
+    require(comparison["merge_base_commit"]["sha"] == ancestor, reason)
+
+
 def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
     validate_identity(identity)
     repository = identity["repository"]
@@ -90,8 +103,10 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
     branch = identity["target_ref"].removeprefix("refs/heads/")
     target = api(repository, "branches/" + quote(branch, safe=""))
     require(target.get("protected") is True, "producer target is not protected")
-    comparison = api(repository, "compare/" + identity["base"] + "..." + quote(branch, safe=""))
-    require(comparison["merge_base_commit"]["sha"] == identity["base"], "B is not in the target history")
+    target_head = target.get("commit", {}).get("sha")
+    require(isinstance(target_head, str) and re.fullmatch(r"[0-9a-f]{40}", target_head),
+            "protected target has no commit identity")
+    require_target_ancestor(repository, identity["base"], target_head, "B is not in the target history")
     # B may be old. M is an unmerged candidate, never claimed to be target history.
     pr = api(repository, "pulls/" + identity["pr"])
     require(pr["number"] == int(identity["pr"]), "source PR identity differs")
@@ -109,6 +124,7 @@ def validate_remote(identity, *, allow_merged=False, require_opt_in=False):
             and run["event"] == "pull_request" and run["head_sha"] == identity["head"]
             and run["path"] == ".github/workflows/" + WORKFLOW,
             "source run does not bind the PR head and workflow")
+    return target_head
 
 
 def receipt(status, identity, **fields):
@@ -144,10 +160,8 @@ def producer_context(root, identity, *, allow_merged=False):
             + "@" + identity["target_ref"] and os.environ["GITHUB_WORKFLOW_SHA"] == runtime_sha,
             "workflow is not the pinned target runtime")
     checkout_identity(root, identity)
-    validate_remote(identity, allow_merged=allow_merged, require_opt_in=not allow_merged)
-    comparison = api(identity["repository"], "compare/" + runtime_sha + "..." +
-                     quote(identity["target_ref"].removeprefix("refs/heads/"), safe=""))
-    require(comparison["merge_base_commit"]["sha"] == runtime_sha, "workflow runtime is outside target history")
+    target_head = validate_remote(identity, allow_merged=allow_merged, require_opt_in=not allow_merged)
+    require_target_ancestor(identity["repository"], runtime_sha, target_head, "workflow runtime is outside target history")
     return dict(ref=os.environ["GITHUB_REF"], sha=runtime_sha, workflow_ref=os.environ["GITHUB_WORKFLOW_REF"],
                 workflow_sha=os.environ["GITHUB_WORKFLOW_SHA"], run=os.environ["GITHUB_RUN_ID"],
                 attempt=os.environ["GITHUB_RUN_ATTEMPT"])
@@ -365,12 +379,11 @@ def validate_preparation(root, value, context, artifact):
             datetime.fromisoformat(artifact["created_at"].replace("Z", "+00:00")) <=
             datetime.fromisoformat(run["updated_at"].replace("Z", "+00:00")),
             "artifact does not belong to producer attempt interval")
-    validate_remote(identity, allow_merged=context["merged"])
+    target_head = validate_remote(identity, allow_merged=context["merged"])
     commit = api(repository, "git/commits/" + identity["merge"])
     require(commit["sha"] == identity["merge"] and [p["sha"] for p in commit["parents"]] ==
             [identity["base"], identity["head"]], "prepared M parents are not B,H")
-    comparison = api(repository, "compare/" + runtime["sha"] + "..." + quote(identity["target_ref"].removeprefix("refs/heads/"), safe=""))
-    require(comparison["merge_base_commit"]["sha"] == runtime["sha"], "producer runtime is outside target history")
+    require_target_ancestor(repository, runtime["sha"], target_head, "producer runtime is outside target history")
     current = dict(partition=actions.partition_path(root), elan_key=actions.elan_key(root))
     prepared = {key: value[key] for key in current}
     if prepared != current:

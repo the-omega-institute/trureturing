@@ -7,6 +7,7 @@ doi: 10.1090/S0002-9904-1943-08042-1
 claim: "Bibliographic record: J. Certaine, Bull. Amer. Math. Soc. 49 (1943), 869-877, whose title names the ternary operation (abc) = ab^{-1}c of a group; the paper's interior was not read for this note."
 strata_touched:
   - D5/S3/Quantum/AURICOmega/TernaryComparisonGroup
+  - D5/S3/Quantum/AURICOmega/TernaryComparisonReflection
 license: citation-only
 triage: anchor
 ---

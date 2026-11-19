@@ -1,0 +1,15 @@
+Sub-quorum colorings research artifact
+Copyright 2026 The Omega Institute and contributors
+
+The two Lean modules under formal/D5/ are reproduced without changes from
+the-omega-institute/trureturing, commit
+a53350d0255768f5c26c8b36bf34d47eeb00296f, under Apache-2.0.
+See formal/UPSTREAM.json for source hashes.
+
+Research attribution:
+Rafik Sahbi, Sub-quorum colorings of graphs, arXiv:2609.25128v1 (2026).
+Hao Huang, Induced subgraphs of hypercubes and a proof of the Sensitivity
+Conjecture, Annals of Mathematics 190 (2019), 949-955.
+The draft cites the foundational quorum-coloring literature as well.
+
+Mathlib, Lean, and other dependencies are not redistributed in this artifact.
