@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:89f5104d48ee80a39725150475dc9896e8ba4400f6942d7ee8db746c8a0eee5c
-  normalized_sha256: sha256:89f5104d48ee80a39725150475dc9896e8ba4400f6942d7ee8db746c8a0eee5c
-cas_ref: sha256:89f5104d48ee80a39725150475dc9896e8ba4400f6942d7ee8db746c8a0eee5c
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetLeakConsequences.exact_target_leak_consequences
-    target_statement_id: sha256:ad2e3e8503bd409a4b8bdba47cbb8186d5429b5708325673bc58502948109df2
-receipts:
-  unresolved_subitems: []

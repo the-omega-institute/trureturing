@@ -1,7 +1,0 @@
-Direct substitution gives
-$\sigma^3(0)01=0100101=01\tau(0)$ and
-$\sigma^3(1)01=01001=01\tau(1)$. If the first equality in (IV.157)
-holds for $u$ and $v$, then
-$\sigma^3(u)\sigma^3(v)01=\sigma^3(u)01\tau(v)
-=01\tau(u)\tau(v)$. Starting with the empty word proves it for
-every finite $w$.

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f774d37971d2777c28349ce131cb249e6318e4280fcb0fc5febcb7d22de99534
-  normalized_sha256: sha256:f774d37971d2777c28349ce131cb249e6318e4280fcb0fc5febcb7d22de99534
-cas_ref: sha256:f774d37971d2777c28349ce131cb249e6318e4280fcb0fc5febcb7d22de99534
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/NormativeStructure/UniversalValueRoleInvariance.Reciprocity
-    target_statement_id: sha256:41d375025ffd7ac7c7c9b2e2033b1285cf9cd1b77c8a55cb64d03bbd00dfbf5b
-receipts:
-  unresolved_subitems: []

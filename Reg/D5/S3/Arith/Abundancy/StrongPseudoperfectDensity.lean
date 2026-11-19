@@ -90,4 +90,88 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end Limit
 
+namespace PrimeCodes
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => ℕ) (fun _ => Finset ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ m => primeCodes m) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m q : ℕ}, q.Prime → ¬ q ∣ m →
+    StronglyPseudoperfect (m * q) → q ∈ R.readout () () m
+
+private theorem six_stronglyPseudoperfect : StronglyPseudoperfect 6 := by
+  refine ⟨by norm_num, (6 : ℕ).divisors, Finset.Subset.rfl, ?_, ?_⟩
+  · intro d hd
+    constructor
+    · intro h
+      apply Nat.mem_divisors.mpr
+      exact ⟨Nat.div_dvd_of_dvd (Nat.dvd_of_mem_divisors hd), by norm_num⟩
+    · intro h
+      exact hd
+  · rw [show (6 : ℕ).divisors = {1, 2, 3, 6} by decide]
+    norm_num
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h' := h (m := 3) (q := 2) (by norm_num) (by norm_num)
+    six_stronglyPseudoperfect
+  simpa [rejected, realize] using h'
+
+def family : Registration arena
+    (type_of% @_root_.D5.S3.Arith.Abundancy.StrongPseudoperfectDensity.prime_mem_codes) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨prime_mem_codes, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change primeCodes 0 ≠ primeCodes 1
+    norm_num [primeCodes, Finset.ext_iff,
+      show ({1} : Finset ℕ).powerset = {∅, {1}} by decide]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@_root_.D5.S3.Arith.Abundancy.StrongPseudoperfectDensity.prime_mem_codes)
+    (Realization signature) Unit Unit where
+  unitName := `D5.S3.Arith.Abundancy.StrongPseudoperfectDensity.prime_mem_codes.audit
+  realizationName := `Reg.D5.S3.Arith.Abundancy.StrongPseudoperfectDensity.PrimeCodes.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Abundancy.StrongPseudoperfectDensity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end PrimeCodes
+
 end Reg.D5.S3.Arith.Abundancy.StrongPseudoperfectDensity

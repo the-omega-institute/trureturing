@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
 # 统一落地器(铸器,替代 sed 克隆链;器律③)
-# 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N] [--cover ATOM GID]...
+# 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N]
 # 语义: [等待 PR N 合入] → cd LANE → checkout/建 BRANCH(自 origin/dev,已存在则合 dev)
-#       → make lean-report(合 dev 可能带进新 D5 模块)→ 逐对 make cover
+#       → make lean-report(合 dev 可能带进新 D5 模块)
 #       → make gate → builder commit → push → pr-open → 等 MERGED。
-#       零 cover 对 = 纯 deposit 分支照落。
 set -x
 LAND_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/$(basename "${BASH_SOURCE[0]}")"
 [ "$#" -ge 3 ] || { echo LAND_ARGUMENTS_REQUIRED; exit 64; }
 LANE=$1; BRANCH=$2; MSG=$3; shift 3
-WAITPR=""; COVERS=(); WAIT_ARGUMENTS=()
+WAITPR=""; WAIT_ARGUMENTS=()
 while [ $# -gt 0 ]; do case "$1" in
   --wait-pr) [ "$#" -ge 2 ] || exit 64; WAITPR=$2; WAIT_ARGUMENTS=(--wait-pr "$2"); shift 2;;
-  --cover) [ "$#" -ge 3 ] || exit 64; COVERS+=(--cover "$2" "$3"); shift 3;;
   *) echo "UNKNOWN_ARG $1"; exit 64;; esac; done
 # The adapter changes cwd on entry. Anchor relative inputs without inspecting
 # the target before entry, and forward argument boundaries through each restart.
@@ -27,7 +25,7 @@ if [ -z "${LAND_PARTICIPATION_HELD:-}" ] && [ -z "${LAND_VALIDATION_HELD:-}" ]; 
   # Validation builds only after shared entry and an affected tools scope.
   python3 -B "$PROTOCOL" --source "$LANE" with --path "$LANE" -- \
     env LAND_VALIDATION_HELD=1 /bin/bash "$LAND_SCRIPT" "$LANE" "$BRANCH" "$MSG" \
-    "${WAIT_ARGUMENTS[@]}" "${COVERS[@]}" || exit $?
+    "${WAIT_ARGUMENTS[@]}" || exit $?
   # The checkout transformation runs through the same identity wrapper as the
   # validation and publication steps; lifecycle custody is not required.
   python3 -B "$PROTOCOL" --source "$LANE" with --path "$LANE" -- /bin/bash -c '
@@ -41,7 +39,7 @@ if [ -z "${LAND_PARTICIPATION_HELD:-}" ] && [ -z "${LAND_VALIDATION_HELD:-}" ]; 
   # Keep the continuation environment explicit for the recursive script call.
   exec python3 -B "$PROTOCOL" --source "$LANE" with --path "$LANE" -- \
     env LAND_PARTICIPATION_HELD=1 /bin/bash "$LAND_SCRIPT" "$LANE" "$BRANCH" "$MSG" \
-    "${WAIT_ARGUMENTS[@]}" "${COVERS[@]}"
+    "${WAIT_ARGUMENTS[@]}"
 fi
 [ -d "$LANE/.git" ] || [ -f "$LANE/.git" ] || { echo "BAD_LANE=$LANE"; exit 88; }
 [ -r "$MSG" ] && [ -s "$MSG" ] || { echo "BAD_MSG=$MSG"; exit 89; }
@@ -100,9 +98,6 @@ names.append(os.environ.get("STRATALINT_LEAN_REPORT_LOG_DIR", report + ".logs"))
 names.append(os.environ.get("STRATALINT_LEAN_BUILD_WORK_FILE", "build/lean-cache/build-work.json"))
 if os.environ.get("STRATALINT_LEAN_PRODUCER_DLL"):
     names.append(os.environ["STRATALINT_LEAN_PRODUCER_DLL"])
-if command[1] == "cover":
-    names.extend(("Meta/Digestion", "Meta/BACKFILL.yaml", "Golden/Frozen/state",
-                  "D5", "Reg", "Trureturing.lean"))
 protect(names)
 declaration = json.loads((root / "lean-report-inputs.json").read_text())
 # Lock the literal discovery prefix of each registered glob, including
@@ -118,46 +113,6 @@ for pattern in patterns:
     prefix = pattern.split("*", 1)[0]
     prefixes.append(prefix.rsplit("/", 1)[0] or "." if "*" in pattern else pattern)
 protect(prefixes)
-if command[1] == "cover":
-    # The child searches and chains current rows, and may migrate/delete
-    # paths and prune directories. Hold the complete ledger discovery root.
-    # Metadata identity strings use the existing loader's literal TOML form.
-    sources = []
-    for metadata in (root / "Meta/Digestion/backfill").glob("*/source.toml"):
-        for line in metadata.read_text().splitlines():
-            if line.startswith('path = "') and line.endswith('"'):
-                sources.append(line[len('path = "'):-1])
-    # Valid tail artifacts live under tools/Authorizations. Also coordinate
-    # any scalar candidate path the child reads before rejecting its receipt.
-    for row in (root / "Meta/Digestion/backfill").glob("*/*/*.yaml"):
-        lines = [line for line in row.read_text().splitlines()
-                 if line.strip() and not line.strip().startswith("#")]
-        for index, line in enumerate(lines):
-            match = re.fullmatch(r"\s*path\s*:\s*(.+)", line)
-            if match:
-                value = match[1].strip()
-                if value[:1] == value[-1:] == '"':
-                    try: value = json.loads(value)
-                    except ValueError: value = value[1:-1]
-                elif value[:1] == value[-1:] == "'":
-                    value = value[1:-1]
-                if value in ("|", "|-", "|+", ">", ">-", ">+"):
-                    # The supported YAML subset joins trimmed block lines
-                    # with newlines for every block marker.
-                    indent = len(line) - len(line.lstrip(" "))
-                    block = []
-                    for following in lines[index + 1:]:
-                        if len(following) - len(following.lstrip(" ")) <= indent:
-                            break
-                        block.append(following.strip())
-                    value = "\n".join(block)
-                if value not in ("null", "~", ""):
-                    sources.append(value)
-    for name in sources:
-        target = (root / name).resolve()
-        if Path(name).is_absolute() or root not in target.parents:
-            raise protocol.Refused("landing_ledger_input_outside_tree:" + name)
-    protect(sources)
 os.chdir(root)
 log.parent.mkdir(parents=True, exist_ok=True)
 descriptor = os.open(log, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
@@ -170,12 +125,6 @@ PY_LANDING_CHILD
 landing_child "$L/flights/$TAG-leanreport.log" make lean-report; R=$?
 echo "LEANREPORT_EXIT=$R"
 [ "$R" -eq 0 ] || { echo HALT_LEAN_REPORT; exit 97; }
-for ((i=0; i<${#COVERS[@]}; i+=3)); do
-  A=${COVERS[i+1]}; G=${COVERS[i+2]}
-  landing_child "$L/flights/$TAG-cover-${A:17:8}.log" make cover "ATOM_ID=$A" "GID=$G"; C=$?
-  echo "COVER_EXIT=$C atom=${A:17:8}"
-  [ "$C" -eq 0 ] || { echo HALT_COVER_RED; exit 93; }
-done
 python3 -B "$PROTOCOL" --source "$LANE" with --path "$LANE" -- make gate BASE="$BASE" > "$L/flights/$TAG-gate.log" 2>&1; P=$?; echo "GATE_EXIT=$P"
 [ "$P" -eq 0 ] || { echo HALT_GATE; exit 94; }
 python3 -B "$PROTOCOL" --source "$LANE" checkpoint --path "$LANE" \

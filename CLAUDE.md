@@ -38,27 +38,22 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 
 **消化系统只是辅助追踪，不承担数学真值。** 其索引、覆盖路由和账目状态的一致性偏差，在相关现有记录中简短注明原因即可；不要求另立案、立即结算、全局对齐或专门派席反复审计，不为账本完美而扩建工具、重跑验证或占用形式化主线。能够随手完成的 canonical 结算照做；其余允许暂存偏差，继续真正缺失的数学内容。若现役机器门实际阻断形式化提交，只做恢复该提交所需的最小处理。不得伪报覆盖、证明或检查通过；Lean 核验、公理边界和冻结真值保护仍须严格执行。本款优先于本文件其他条款对消化记账、结算及修器的投入要求，但不豁免下款。
 
-**纯消化任务不做验证工作。** 纯消化任务指不新增、不首冻 D5 数学声明的交付，包括：用既有冻结声明 `make cover` / `cover-batch`，`make settle` / `settle-batch` / `settle-clear`（非命题与仅由钉版上游闭合的命题），写入账本的 `make decompose`，以及第 4.3 条只去 `private`、由 canonical writer 重钉并登记的公开。这类任务的流程：
-- 不要求逐句探针、证据存档或活路径读数，不派评审三席、补证席或修复席；
-- 现役 writer 命令退出 0、PR 的 required checks 绿，即可合入；第 4.3 条「公开化须验证消费者」由 required checks（含重建受影响模块的 `current`）承担；
-- PR 正文如实写出账目进出与未结条目，仍不得伪报覆盖、证明或检查通过；
-- 账目偏差按上款简注，事后由 writer 修正。
-
+纯消化任务在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)中由对应 writer 和该仓的 required checks 结算。第 4.3 条只去 `private` 的公开化仍由本仓 required checks 验证消费者。
 本款优先于第 5.6、5.7 条与第 6.1 条对独立评审的要求。只要交付新增或首冻 D5 声明，就是实质形式化，判形、准入、探针、冻结前判形与三席评审照旧。
 
-**形式化直接写 Lean 与 Scribe。** 形式化交付的必需面是 D5 Lean 与对应的 Blueprint Scribe，不以先写理论卷为前置。所形式化的内容**已有理论卷**(`docs/develop/theory/**` 中存在对应 markdown)时，必须经消化系统入链：该卷尚未摄入就先 `make ingest`，再用 `make show-atom`/`make atom-context` 定位对应 atom，在同一交付中经 `make deposit ATOM_ID=… GID=…` 冻结并覆盖，或对既有冻结声明 `make cover`；不得绕过已有理论卷直接 `deposit-uncovered`。**只有不存在对应理论卷**时，才直接写 D5 Lean 与 Scribe，经 `make deposit-uncovered GID=…` 冻结，不要求先补 `docs/develop/theory/**` 正文或运行 `make ingest`。理论卷可按第 3.8 条另写，用于散文推理、地形图或日后消化，不是这类形式化的前置。无 atom 不豁免第 3.2 条判形与准入依据、第 3.3 条用途规则及第 3.7 条文献表态。
-**形式化不改判官**(τ=0 owner 2026-09-29,原话「形式化过程中, 不要改判官, 如果信息逃逸无法登记也不要改判官」):形式化 lane 与形式化交付只改内容面(D5、Blueprint、Reg 声明源码与内容模板、消化账本、理论卷),不得修改判官——`tools/**`(含 StrataLint、lean-inspector、报告生成与调度脚本)、判官 Interface/Impl 包、`.github/**` 及其它准入面。判官缺陷或判官阻塞形式化时,新建或复用 issue 写明阻塞判词与读数,继续其余数学工作;判官修复归判官所有者线,不在形式化交付中夹带。本款对形式化 lane 优先于第 5.5 条的当场 hotfix 要求。
+**形式化直接写 Lean 与 Scribe。** 在本仓提交 D5 Lean、对应 Blueprint Scribe 和适用的 Reg，使用 `make deposit GID=…` 冻结。来自理论卷的任务可在理论仓按已发布的主仓版本补记覆盖。第 3.2 条判形、第 3.3 条用途准入和第 3.7 条文献要求适用于每次实质形式化。
+**形式化不改判官**(τ=0 owner 2026-09-29,原话「形式化过程中, 不要改判官, 如果信息逃逸无法登记也不要改判官」):形式化 lane 与形式化交付只改内容面(D5、Blueprint、Reg 声明源码与内容模板),不得修改判官——`tools/**`(含 StrataLint、lean-inspector、报告生成与调度脚本)、判官 Interface/Impl 包、`.github/**` 及其它准入面。判官缺陷或判官阻塞形式化时,新建或复用 issue 写明阻塞判词与读数,继续其余数学工作;判官修复归判官所有者线,不在形式化交付中夹带。本款对形式化 lane 优先于第 5.5 条的当场 hotfix 要求。
 〔守护：**工作优先级与软纪律**；本条不把消化收据升级为证明，也不宣称既有机器检查已随文字修改。〕
 
 **整个系统是一张不可逆真值 DAG**,架构三分:
 
 ```
-docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)◄──针对它── C# harness
-  只进不承重,定位在消化账本       kernel 只看代码          治理/验证/发射/守门,自身零内容
+Lean → 编译报告与冻结状态 → truth-export → 理论源仓的覆盖记录
+理论源仓内：理论正文 → 摄入 → atom、上下文与消化状态
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
-- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付不以先写理论卷为前置，但内容已有理论卷时须先摄入并经 deposit/cover 入链(第 1.2 条「形式化直接写 Lean 与 Scribe」)；已完全覆盖或经 canonical writer 结算为无需形式化的整卷，可由 `make retire-sources` 将 atoms 移出活跃账目，并归档或删除理论原文；未决命题不得因暂不能证明而退役。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
+- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)维护。并行合并带回的正文与消化账本副本可暂留主仓，后续按批次归并。新消化工作在理论源仓 `dev` 进行。普通主仓检出、构建、CI 和首次冻结均独立运行。
 
 ### 1.3 真值图、冻结与两个偏序
 
@@ -193,7 +188,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 **作用域**:新增声明与 bind-only 包装禁令覆盖新增或修改的未冻结 D5 内容,以及首次 Freeze 的全部声明。既有冻结身份只取受保护 immutable baseline 上的 `Golden/Frozen/state/<module>.lean.json`;candidate 新增首个状态片即首次 Freeze,不得用本次写出的 pin 冒充既有冻结前置或取得豁免。不得通过私有化、拆文件、换名、伴随声明或选择不同 deposit anchor 绕过。既有冻结节点仍按第 1.3 条保留,不得追溯撤销真值。
 **准入依据之一(escape-witness)**:`admission_basis: escape-witness` 要求模块存在真实逃逸内容,且每条新增定理逐项通过上述判形与活路径审查;任一新增定理为无消费者的 bind-only 即拒绝该交付,不得以同模块其他 content 掩护;有消费的 bind-only 辅助声明按「有消费的辅助声明」处理,但不能替模块提供逃逸内容。全部为 bind-only 的候选须报 `admission_basis: none`,不得新增 Lean 声明、首次冻结、deposit,也不得另派实施席重做。探针只用于核实判形，一经确认 bind-only 即停止重复数学实施，简记复用依据并按第 1.2 条处理消化；外部具名开放问题的例外见下款「开放问题结算依据」。
 **开放问题结算依据(τ=0 owner 2026-09-15 裁决)**:`admission_basis: open-problem-resolution` 是与 `escape-witness` 并列的第二个准入依据,只适用于第 3.6 条第一、二档的**外部具名开放问题**:交付的公开结论逐字对应一条已发表、经文献核对仍无证明或反驳的具名猜想或问题(OEIS `%C`/`%F` 猜想行、论文末尾 conjecture/question、Erdős 旁问等),且该结算在探针之前已预登记(issue 载逐字出处、量词写全的陈述、档位与文献核对读数)。此时**结算本身即新增数学内容**——新颖性在于「该具名断言此前未被文献判定」,不在证明步骤——故即使证明按本条判形为 bind-only(仅由钉版 Mathlib 前置经实例化、投影与规范化得到),该公开结论仍可首次冻结。四项条件缺一即评审打回:(a) 交付面只含结算该断言所需的声明:定义、一条 `result`,以及在其活推导路径上被使用的辅助声明(按「有消费的辅助声明」);不得夹带无消费者的 bind-only 伴随定理或包装;(b) 逐声明如实报 `proof_shape`(bind-only 照实写,不得冒称 content),PR 正文写 `admission_basis: open-problem-resolution` 并引用预登记 issue;(c) Scribe 带 `OpenProblemResolutionClaim`(Proved / Refuted)与 Problems 卷宗,文献核对按第 3.6 条 ②;(d) 第 3.3 条用途规则照判,不因本依据豁免。仓内 atom(理论卷子句)不适用本依据:那是消化结算的对象,仍按上款直接 cover。探针对外部开放问题核实为 bind-only 后不「转消化结算」,而是如实标注后继续实施。
-**全 bind-only atom 停止重复投入**：连读 atom 及上下文,逐子句核对既有前置、参数替换、假设与规范化关系;只有全部命题子句均可由既有冻结或钉版上游前置经本条允许的实例化、投影与规范化推出,且无遗漏条件或未证前提,才可判全 bind-only。确认后简记既有结果及复用依据，不得继续把该 atom 当作待形式化靶、拆成新的绑定义务、等待未来消费者或为覆盖制造新定理。能低成本完成的消化随手结算；否则简注原因并继续实质形式化，不为追求终态追加投入。现役路径是引用一个或多个既有冻结声明,由 `make cover` / `make cover-batch` 写入覆盖并由机器派生 `absorbed-closed`;覆盖可以由既有声明经本条允许的实例化、投影与规范化共同完成,不要求先造一条与 atom 逐字同形的定理。多子句 atom 先按既有 `make decompose` 契约建立子句链,分别完成覆盖并对齐父项;实际申报终态时仍须满足子句完整性与链闭合检查；尚未完成消化就如实保留未完成状态，不要求为此阻塞形式化。
+**全 bind-only atom 停止重复投入**：连读 atom 及上下文,逐子句核对既有前置、参数替换、假设与规范化关系;只有全部命题子句均可由既有冻结或钉版上游前置经本条允许的实例化、投影与规范化推出,且无遗漏条件或未证前提,才可判全 bind-only。确认后简记既有结果及复用依据，不得继续把该 atom 当作待形式化靶、拆成新的绑定义务、等待未来消费者或为覆盖制造新定理。能低成本完成的消化随手结算；否则简注原因并继续实质形式化，不为追求终态追加投入。现役路径是引用一个或多个既有冻结声明,在理论仓由 `make cover` / `make cover-batch` 写入覆盖并由机器派生 `absorbed-closed`;覆盖可以由既有声明经本条允许的实例化、投影与规范化共同完成,不要求先造一条与 atom 逐字同形的定理。多子句 atom 先按既有 `make decompose` 契约建立子句链,分别完成覆盖并对齐父项;实际申报终态时仍须满足子句完整性与链闭合检查；尚未完成消化就如实保留未完成状态，不要求为此阻塞形式化。
 **混合 atom**:只将真正缺少 content 的子句保留为形式化前沿;bind-only 子句按上款结算。母 atom 只有在全部子项及自身覆盖均完成后才可报终态,不得以部分绑定覆盖冒领整项完成。判形有未核实前提时不得先称全 bind-only。
 **终态必须由现役 writer 产生**:不得用 quarantine、失败的 cover disposition、手改目录或手填状态冒领已处理。`cover` 只接受既有冻结项目声明 GID;仅由钉版上游(Mathlib 及 manifest 闭包)前置闭合而仓内无可用 GID 的命题 atom,**需要结算时用现有 `settle-atom`(`make settle`)写收据终结**,`justification` 写明由哪些上游声明闭合、仓内无 GID——不新增终态、不新增 writer、不做机器判形(τ=0 owner 2026-09-15 裁决:账本这类非 Lean 真源只需文本标记,无人消费的状态不值一台机器;案 #8049);判形真实性仍是本条软评审边界,不得回派数学实施或新增绑定包装补 GID。
 **先库后证与停手**:上游已有证明必须直接复用,禁止重证或新增无消费者的包装。连续两次候选靶均为 bind-only(按「开放问题结算依据」准入的外部开放问题结算不计),简记复用依据后按第 7.11 条换 Γ，转向真正缺失的数学内容；消化结算及工具缺口按第 1.2 条从简处理；席位空闲不构成派题理由。
@@ -213,8 +208,8 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.4 用途机器面、停用机制与软边界
 
 **当前机器面(候选判官 SL-031,硬、delta-only、fail-closed)**:现行选择为「present byte-changed 且 baseline 未冻结的 D5 Lean」与「首次 state pin」之去重并集,无 state、只改正文、缺头、Modified、rename/copy 目的路径均不逃逸;同时命中时按 FirstFreeze 判。所有选中模块(含 `none`)须有绑定当前源码的非错误 Lean report;缺头、文法错、缺报告、报告坏或 stale、引用悬空、输入 unknown、普通实例不走 refutes 均 Block。baseline-frozen 的 utility 棘轮与 SL-008 不变。已知普通分类仅换 label 且头后正文逐字节不变时 `UTILITY-CLASSIFICATION-DOWNGRADE` Block;分类变更(含缺失/坏 label)另出 `UTILITY-CLASSIFICATION-CHANGED`,每个选中模块出 `UTILITY-OBSERVED`。
-**有界形式反驳(硬)**:`claim` 指向唯一 included、无自由项或宇宙参数的闭合 `Prop` 定义;`result` 指向本模块唯一 included、闭合 kernel theorem,claim 的编译类型必须字面为 `Prop`，result 的编译类型必须字面为 `Not claim`，证明项的类型正确性由 Lean 编译期内核检查,claim/result 公理闭包仅限既有许可集。`refutes=gid` 必须等于该 claim;atom/TASK 必须可解析。额外未证假设、自我反驳、外模块/非 theorem result、正向结果伪贴 refutes、缺失或不匹配 typed evidence 均不通过。证据由 inspector 对编译项计算产生，经 source-bound loader 消费，不进入 statement identity；不展开定义、不化简、不接受定义性别名。
-**阶段与历史基线(硬)**:ChangedContent、PreDeposit 共用上述检查,非 refutes 的 checker 须有 `instance`,归约须有 `premises` 且 basis=consumer;不要求 freeze 后才产生的 atom coverage。FirstFreeze 另要求 `refutes=atom` coverage 精确绑定指定 result 的当前 statement identity,consumer 有 import 可达路径。`make deposit` 将 BASE 解析成 immutable commit SHA 并传给头部预检,仅 baseline 的 pin 取得历史豁免,candidate 自带 pin 无效,baseline 失败即错误。
+**有界形式反驳(硬)**:`claim` 指向唯一 included、无自由项或宇宙参数的闭合 `Prop` 定义;`result` 指向本模块唯一 included、闭合 kernel theorem,claim 的编译类型必须字面为 `Prop`，result 的编译类型必须字面为 `Not claim`，证明项的类型正确性由 Lean 编译期内核检查,claim/result 公理闭包仅限既有许可集。`refutes=gid` 必须等于该 claim;新目标使用仓内可解析的 TASK 或声明 GID。额外未证假设、自我反驳、外模块/非 theorem result、正向结果伪贴 refutes、缺失或不匹配 typed evidence 均不通过。证据由 inspector 对编译项计算产生，经 source-bound loader 消费，不进入 statement identity；不展开定义、不化简、不接受定义性别名。
+**阶段与历史基线(硬)**:ChangedContent、PreDeposit 共用上述检查,非 refutes 的 checker 须有 `instance`,归约须有 `premises` 且 basis=consumer;FirstFreeze 另要求 consumer 有 import 可达路径。`make deposit` 将 BASE 解析成 immutable commit SHA 并传给头部预检,仅 baseline 的 pin 取得历史豁免,candidate 自带 pin 无效,baseline 失败即错误。
 **反驳证据的输入闭包(硬)**:report 中同时绑定 claim 源码路径与 SHA-256。claim 即使不在 result 的 import 闭包内也参与声明身份和闭合性检查,故模块 report facet 把该 claim 的编译导出与传递编译工件作为输入依赖,其变更、删除或传递依赖变化均使 refutation 重查;strict loader 不接受把当前 claim 报告拼接进旧反驳证据。此依赖只服务报告正确失效,不是用途或证明依赖的通用分类器。
 **用途软边界(Observe + 评审)**:分类真实与否、是否真解决独立问题(`terminal`)、独立问题或 atom/TASK 到 claim 的忠实映射、无关反例夹带、消费者在活推导路径上的实际证明使用、前提是否同域同向、一般定理支配仍由独立评审按第 3.3 条「用途判据」逐声明判。**残余(如实记 `open`)**:fresh `none` 或正文真实变化后的重分类不等于机器证明一般性;观察明确标 `semantics=unverified-by-machine`,由 Observe + 评审 + #5515 接住,不冒领为机器已判「无用」。不以名字、数字、binder 数、tactic 或关键词建立通用语义分类器,证明依赖图也不自动解决该边界。typed claim/result 关系由编译项的字面类型核对,不得继续把它记成只查引用;该形式检验也不证明源句忠实性或全部用途语义。
 **自查**:必须说清解决何问题、履行何义务、反驳何断言;导入/覆盖/认证数不替代用途。禁为旧管道造消费者、跨参数冒用数值界或重复计算源句所报告的枚举。
@@ -245,13 +240,8 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 3.8 理论正文与追加纪律
 
-- **形式化遇到理论缺口，可以直接推理补足。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补足的内容可以直接写成 D5 Lean 与 Blueprint Scribe，不必先写入理论卷(第 1.2 条)；选择写入理论卷时，归入既有相关理论卷并遵守本节追加纪律。补足须保持原问题的目标、假设与量词；尚未证成的部分明确标为待证，不冒称定理。数学真值仍只由内核验证的形式化代码承担。
-- **新增理论 PR 可不做消化。** 仅新增或追加 `docs/develop/theory/**` 正文、且不提交形式化、覆盖、冻结或消化工件的 PR，可以不运行 `make ingest`，不要求同时新增 atom CAS 或 backfill，也不要求先取得任何消化状态。正文仍须遵守本节的纯数学、文献尽调与追加纪律；若以后需要把该卷接入消化账本，另行提交 canonical ingest PR。含有 ingest、cover、deposit 或其它消化工件的 PR，仍按第 4.7 条对应链路核对。
-- **理论推理只包含定义、假设、定理与证明。** `docs/develop/theory/**` 的正文保持纯数学:引理、命题、推论归入定理,例子与反例写成命题并给出证明,符号约定与数学引文附于对应条目。不得混入模型调用、工程实现、代码或测试、核验日志、摄入流程、评审记录、工单与交付状态;正式成果按既有归属置于正文之外;过程材料依第 2.10 条不保存。
-- **理论单卷上限为 5,000 行。** SL-003 的 delta 谓词检查 `docs/develop/theory/**` 中新增或修改的 Markdown 全文,包括空行,末尾换行符不多计一行;超过上限即拒绝,未触及的历史长卷不进入检查。超出单卷篇幅的新内容写入同主题续卷并通过引用衔接,保留既有卷的条目、编号与引用;不得用新卷重复已有内容。
-- **理论文档须可持续追加。** 新理论接在文末,保留既有条目的文本、编号与引用;新定义、新假设和新定理使用新编号,不复用旧编号、不整体重排。需要修正时,追加明确指向原条目的更正命题、适用假设与证明,说明替代关系;不得静默改写旧假设、结论或证明,也不得把被更正的结论继续当作有效前提。追加纪律自卷合入 `dev` 起生效;合入前的草稿可在其 PR 内就地修订。
-- **禁止把已存在的理论新增到 `docs/develop/theory/**`。** 新卷与新增章节的承重命题必须是本仓新增的数学内容。凡经第 3.7 条尽调判为 `literature-attested`(整体、逐字或仅换记号地对应已发表定理、已公开草稿或教科书结果)者,不得作为新卷、新章或新增定理写入,只以 `Library/` note 引用;需要形式化时走第 3.6 条硬规则①的 `make cover` 或 `FromLiterature` 前置。已知定理只可作为新内容承重推导的中间步骤附于新条目之内,逐条标注先例,不单列为定理;一卷或一批增补的承重命题全部为已知结果者,评审打回、不得合入。
-〔守护:**硬+软**·单卷行数由 SL-003 delta 谓词执法;正文的数学边界、追加方式及是否为已有理论由作者与独立评审检查,不冒称已有机器强制;不可 lint 不豁免,冒充新内容与第 2.4 条冒领同罪。〕
+- **形式化遇到理论缺口，可以直接推理补足。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补足的内容可以直接写成 D5 Lean 与 Blueprint Scribe，不必先写入理论卷(第 1.2 条)；选择写入理论卷时，归入理论仓既有相关卷。补足须保持原问题的目标、假设与量词；尚未证成的部分明确标为待证，不冒称定理。数学真值仍只由内核验证的形式化代码承担。
+理论卷的写作、追加、勘误、引文和行数要求见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)的写卷规范。正式源码复用文献时按本仓第 3.7 条登记。
 
 ### 3.9 登记即声明模板与 delta 判官
 
@@ -334,52 +324,9 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.7 生产链、冻结与消化状态
 
-**理论产出是一条单向链:什么源产什么、什么 PR 落哪几个面、冻结与消化是两个正交状态。**
-本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；内容已有理论卷的形式化交付须先经 ingest 取得 atom，再在同一交付 deposit 并 cover；只有不存在对应理论卷时，形式化交付才直接从 `D5/<GID 路径>.lean` 入链，经 `make deposit-uncovered` 冻结，不产 coverage 边(第 1.2 条)；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
-
-```
-docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
-  │ make ingest (纯理论 PR 可选；形式化内容已有本卷时必经)
-  ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
-  └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·四态见下
-  │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出;仅当不存在对应理论卷时从此处起步
-  ▼
-D5/<GID 路径>.lean                           数学唯一真源
-  │ 手写 Scribe 定义(叙事 canonical 源)
-  ▼
-Blueprint/D5/<同一 GID 路径>.scribe.cs
-  │ make emit
-  ▼
-Blueprint/D5/<同一 GID 路径>.md              投影·禁手改
-  │ make deposit ATOM_ID=x GID=g(无 atom:make deposit-uncovered GID=g,止于冻结)
-  └─► Golden/Frozen/state/<模块路径>.lean.json            冻结成员状态片·`{statement_id, declarations}`·当前态
-  │ make cover / cover-batch
-  ▼
-backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
-```
-
-**GID 路径在三处逐段同形**(`D5/….lean` ↔ `Blueprint/D5/….scribe.cs` ↔ `Blueprint/D5/….md`),这是第 4.2 条"地址由算法算出"的落点:三处对不齐即地址错,不是文件少写了一个。
-**纯理论正文 PR 不进入上述消化链**:它可以只落 `docs/develop/theory/**`，不要求本 PR 生成 atom、backfill 或 coverage；该 PR 不声明任何消化终态。后续若提交 ingest、cover 或 deposit，才按下列对应形态核对。
-**三类改动形态,面集合封闭;deposit 与 cover 可在同一 PR、同一工作树顺序执行**:
-
-- **deposit**(含无 atom 的 deposit-uncovered):`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/state/**`。
-- **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
-- **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
-**停用机制边界**:两 PR 律、预登记 formalization 收据及其机器均已退役;「边即数据,不记动作」,不得据此重建动作收据或要求 deposit/cover 分两 PR。
-**coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;账本 loader 只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`cover-atom` 在写入前按当前 report 与冻结账本解析本次 GID，未解析即失败；任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
-**冻结态与消化态是两个正交状态机,禁互相冒充**:
+主仓通过 `make deposit GID=…` 核验目标模块与 Blueprint 镜像并写入 `Golden/Frozen/state/**`。主仓提出数学陈述和编译证据，理论仓默认读取主仓 `dev` 分支上目标模块的冻结状态片，按声明名登记覆盖，并自动记录来源提交。检索、摄入、拆分、结算和归档均在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)执行。
 
 - **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;删除状态片是合法的成员变更,不产生判词,不改变已验证陈述的真值(第 1.3 条)。SL-008 检查状态片路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
-
-- **消化态(账目侧)**：`residual-open` 表示尚无 GID 覆盖，`partial-closed` 表示部分子项覆盖，`absorbed-closed` 表示本项与子链满足覆盖条件，`nonpropositional-inapplicable` 表示无需项目覆盖的终结：非命题，或命题仅由钉版上游闭合而仓内无 GID。第四态由 `receipts.nonpropositional` 的 justification 与真实邻居经目标处理命令派生，不由 atom 字节或 kind 自动判定。唯一写者是 `settle-atom`（`make settle` / `make settle-clear`）；写前以 `make atom-context ATOM_ID=x` 连读前后 atom，writer 复算邻接不等即拒，`--clear` 删除目标收据并退回 `residual-open`。目标 writer 拒绝所处理记录的非法字段共存与坏形；无关账目的目录或收据偏差不触发准入审计。链闭合要求父项自身完成且全部子项为 Absorbed 或 Nonpropositional；该状态对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。整卷退役由 `make retire-sources` 独立核对全部终结条件和存续引用后移除活跃账目，不改变 `Deletable` 或四态语义，不删除 Lean 定理、冻结状态和既有 CAS。
-- **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结登记。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
-- **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。历史账目可以携带 `receipts.quarantine` 或 `receipts.cover_disposition`，loader 保留其结构并将其作为当前一致性输入；现役流程不再提供独立 quarantine 管理或 cover disposition 重试命令，cover 失败直接返回给 AI 修正后重新调用。
-- **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 2.4 条冒领。
-**含消化或冻结工件的理论 PR 说明须写清三项(承第 5.2 条产地,不另立格式)**:①**形态**(deposit / deposit-uncovered / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID,无 atom 时写明无 atom 及冻结的 GID;③**落地后的状态**——模块状态片路径与 `statement_id`(deposit),或 atom 由哪态迁到哪态(cover)。纯理论正文 PR 不要求这三项，只需明确其未进入消化链。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
-**反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 4.2 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— 既有 CAS blob 不属于第 1.2 条的退役写集合,勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
-**多驱动者并行不必分配领域**:GID 代数定地址(第 4.2 条);两人重证同命题却不会使机器红,故开工前、开 PR 前各查本仓声明(第 3.1 条)。
-*成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、按实体分区的状态表、git 历史、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 检查冻结成员路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门判；新增形式化的精确 ATOM 覆盖依据由 SL-031 按交付目标检查，不做全账一致性审计。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
 
 ### 4.8 生长、抽象与容量压力
 
@@ -686,7 +633,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 **本地 Lean 核验默认定向，全量须显式确认。** 需要 Lean 核验时，用非空 `LEAN_TARGETS` 的 `make lean` 或 `make lean-report-scoped`，覆盖受影响的目标及其必要依赖。全量编译、整库报告及其间接入口仅用于用户明确要求的整库核验或定向检查无法覆盖的具体集成义务。确需全量时，先说明所需范围及原因，再在每条入口命令中显式传入 `FULL_BUILD=1`：`make lean FULL_BUILD=1`、`make lean-report FULL_BUILD=1`、`make test FULL_BUILD=1`、`make warm-donor FULL_BUILD=1`；`build`、缓存生产及其他间接入口同样适用。`make gate` / `ci-unit` 先用 `make gate-plan` 判断范围，若选择会触发全量编译的检查，调用时也须显式传入 `FULL_BUILD=1`。直接脚本调用将 `FULL_BUILD=1` 写在该条命令的环境赋值中，不能用空目标、裸 `lake build` 或默认导出变量规避确认。缓存缺失、报告失败、重试和“最终检查”均不自动构成全量理由。Make 全量入口及其直接脚本入口在缺少 `FULL_BUILD=1` 时拒绝执行；CI required checks 保持原有范围，全量 CI 作业须在调用处明确确认，不要求再跑一遍本地全量。〔守护：**硬+软**·入口强制确认参数，必要性由指令与评审核对〕
 
-本地检查使用与 CI 相同的独立程序。器代码迭代用 `make -C tools check-fast` 与定向项目测试;数学迭代用非空显式目标的 `make lean LEAN_TARGETS=…`；需机器可读声明、公理与材料核对时用 `make lean-report-scoped LEAN_TARGETS=…`。`deposit`/`deposit-uncovered`/`cover` 自动选 GID 模块，`cover-batch` 选整批目标并集；覆盖同时纳入所选 atom 及其传递 chain atom 的既有覆盖目标，写前核对当前声明身份，缺报告即拒绝。`emit` 从所选 Scribe 的类型化声明引用取 Lean 输入；这些本地入口只构建目标、其准入检查点名的 utility 输入及各自 import 闭包，不需要整库报告成功收据。窄报告使用独立路径与格式，不覆盖整库报告或收据；空范围、解析失败、缺失或陈旧输入非零退出。`make test FULL_BUILD=1` 运行 lean-report 与 check-current;`make gate BASE=<commit> [PURPOSE=pull-request|push]` 经 `ci_checks.py` 运行与 CI 相同的适用单元、子检查、测试过滤器及 TRX 校验,只把固定 base 当数据；本地包含 staged/unstaged/untracked 与 rename 两端,不删除 remotes；`make gate-plan` 仅输出选择。单项目测试用 `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj`。
+本地检查使用与 CI 相同的独立程序。器代码迭代用 `make -C tools check-fast` 与定向项目测试;数学迭代用非空显式目标的 `make lean LEAN_TARGETS=…`；需机器可读声明、公理与材料核对时用 `make lean-report-scoped LEAN_TARGETS=…`。`make deposit GID=…` 按所选 GID 构建报告并执行冻结。`emit` 从所选 Scribe 的类型化声明引用取 Lean 输入；这些本地入口只构建目标、其准入检查点名的 utility 输入及各自 import 闭包，不需要整库报告成功收据。窄报告使用独立路径与格式，不覆盖整库报告或收据；空范围、解析失败、缺失或陈旧输入非零退出。`make test FULL_BUILD=1` 运行 lean-report 与 check-current;`make gate BASE=<commit> [PURPOSE=pull-request|push]` 经 `ci_checks.py` 运行与 CI 相同的适用单元、子检查、测试过滤器及 TRX 校验,只把固定 base 当数据；本地包含 staged/unstaged/untracked 与 rename 两端,不删除 remotes；`make gate-plan` 仅输出选择。单项目测试用 `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj`。
 
 本地结果是早反馈,远端 required checks 仍是合并权威。Local WIP checkpoints may remain unpublished; publication requires a complete, currently checked source/projection unit. 本地保存遵守 §6.1 的时点；发布边界完成后及时推送，必要的其余本地核验与 CI 并行，不以完整本地验证作为推送前置。源文件或投影输入变更后，发布前重跑受影响的生产者及检查；连续 WIP checkpoint 以明确的 publication base、publication tip 与两者间的累计 diff 标识同一完整评审单元，不要求压成一个提交，不重写已发布历史。本地绿不替代远端结果,改 CI 自身仍按 §8.12 核验真实事件。
 
@@ -757,12 +704,15 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 
 ### 8.7 原生同步等待与外部轮询边界
 
-**有原生等待就不用自制挂钟**:sleep 循环会藏红、重复自写退出条件、与真实时长失配。用对象自带的同步阻塞原语,整个放一个宿主后台作业:`gh pr checks <n> --watch --fail-fast`(全出结果或首红退)、`gh run watch <run-id>`、`gh pr merge --auto`、子进程 `wait`、make 本身。写 sleep 前先查原语,有则用。
-**确无原语的外部状态**才可有界轮询:间隔对齐实际事件节奏,每轮给时间戳/关键读数,开跑前固定判据,不事后定。临时读数供判断,不按过程材料留存(第 2.10 条)。
+**等待 PR required checks 一律按第 8.11 条。** 同一 PR 的当前 head 只用一个仓库原生 watcher。禁止用 `gh pr checks --watch`、`gh run watch`、API 或自写循环等待这组检查。watcher 不可用时，该 head 的检查结论记为未验证。
+
+**其他等待有原生同步阻塞原语时就使用它。** 用一个宿主后台作业运行对应原语，如子进程 `wait` 或 make。PR required checks 之外的 workflow 用 `gh run watch <run-id>` 等待已确认的 run。
+
+**其他确无原生等待原语的外部状态才可有界轮询。** 间隔对齐实际事件节奏，每轮给时间戳和关键读数，开跑前固定判据。临时读数供判断，按第 2.10 条处理。
 
 ### 8.8 完成通知与唯一等待通道
 
-**宿主会主动通知完成时,该通知就是唯一等待通道**:不得再用 `TaskOutput` 或等价阻塞任务读取等同一作业。收到通知后按输出路径读一次是消费产物,允许。判据是完成时本来是否会被叫醒;不会通知的外部事件仍用第 8.7 条 `gh … --watch`、wait、make 等原语。
+**宿主会主动通知完成时,该通知就是唯一等待通道**:不得再用 `TaskOutput` 或等价阻塞任务读取等同一作业。收到通知后按输出路径读一次是消费产物,允许。判据是完成时本来是否会被叫醒。不会通知的外部事件按第 8.7 条选择等待原语，PR required checks 一律按第 8.11 条等待。
 *成熟锚*:事件驱动、单等待通道、回调/epoll、收到事件后消费、弃用 API 不因可调而沿用。〔守护:**软+硬投影**·转录可枚举 block=true/timeout 违规;现役自审器 `judge()` 三元组的 (iii-a) 枚举 TaskOutput block=true,(iii-b) 判 Bash 同时含 sleep 与宿主 `.../tasks/*.output` 路径。`--selftest` 15 例含通知后单读/只 sleep 无任务路径/创建后台作业三阴性对照,防过度收紧。器不在任何门,CI 无会话转录,每次反思自审才生效,不称硬门。反例两维为非 sleep 延时、变量间接路径、非 Bash、宿主目录布局变化,以及无人运行;尚未 lint 不豁免第二等待通道〕
 
 ### 8.9 所有脚本的通用性与可复用工具的仓库居所
@@ -783,7 +733,12 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 
 ### 8.11 PR open/watch 的消息与退出契约
 
-**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr HEAD=b MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`(pr-open 同义) 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 默认 arm auto-merge → 等 required CI,可辨退出码返回。`AUTO_MERGE=0` 不 arm 但仍等 CI;`DRAFT=1` 传 `--draft`,创建成功输出 PR 号后返回,不 arm、不等 CI,优先于 `AUTO_MERGE=1`。直调 `pr.sh open` 仍由显式 `--auto-merge` 开启自动合并,`--draft` 同样优先;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用;判词携带固定 head 与实际 check/run 身份。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
+**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr HEAD=b MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`(pr-open 同义) 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 默认 arm auto-merge → 等 required CI,可辨退出码返回。`AUTO_MERGE=0` 不 arm 但仍等 CI;`DRAFT=1` 传 `--draft`,创建成功输出 PR 号后返回,不 arm、不等 CI,优先于 `AUTO_MERGE=1`。直调 `pr.sh open` 仍由显式 `--auto-merge` 开启自动合并,`--draft` 同样优先;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用。stdout 的终态行 `PR_WATCH_RESULT` 给出 PR 编号、固定 head 和 outcome，适用时还给出检查名称和状态。实际 check ID、run ID 和 attempt 由作业终止后的核验取得。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
+
+**每个 PR 的当前 head 只用一个等待作业。** 非草稿 `make pr` 自带固定 head 的 required checks 等待。确认 PR 的当前 head 后，若同一 PR、同一 SHA 已有 `make pr` 或 `pr-watch` 等待作业，按第 8.8 条续接其宿主原生句柄并收取退出结果。若该 PR 和 SHA 没有等待作业，用一个宿主后台作业运行 `make pr-watch PR=<编号> HEAD_SHA=<40 位提交 SHA>`。换 head 时先确认新的当前 SHA，再按同一规则续接或启动。终态只适用于作业固定的 head。
+
+**每小时恢复巡检读取一次队列快照，取完所有页。** 快照用于发现待恢复项，逐 PR 的 required checks 仍按上述作业等待。作业终止后可按固定 head、事件、run ID 和 attempt 核验结论。实际合并和该合并提交的首次 `dev` push 按第 6.1 条单独核验，首次 push 的 workflow 用 `gh run watch <run-id>` 等待其确切 run。
+
 **make 门只保真绿/不绿**:配方失败统一返回 make 2。`1` 红、`4` CLOSED 未合、`69` 查询不可用、`124` 超时只在直调 canonical `tools/scripts/pr.sh watch` 可辨;经 make 判原因读 stdout 末行 `PR_WATCH_RESULT ... outcome=`。
 
 ### 8.12 CI 分类、持续集成与真实事件验证
@@ -830,8 +785,8 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成�
 
 ### 8.15 dev 红时的内容 lane 改投
 
-**dev 因 harness 红,仅增加数据的内容/理论 lane 改投 `integration-theory-<date>`。** 适用面封闭为①`D5/**/*.lean`;②`Blueprint/**/*.scribe.cs` 及其 md 投影;③`Golden/Frozen/state/**`;④`Meta/Digestion/**`。仅加 DAG 节点、不改判官/门/workflow;触 tools/**、.github/workflows/** 或任何判官/准入面不得援引,须第 8.12/8.14 条。
-判据为红因层次:dev 全部 required checks因判官逻辑/自锁/workflow/准入面红,该 lane 自身未红且只在四面才可改投。Lean 编译、SL-008、coverage 等内容判词须自己修;不能只凭所改路径认定无因果关系。
+**dev 因 harness 红,仅增加数据的内容/理论 lane 改投 `integration-theory-<date>`。** 适用面封闭为①`D5/**/*.lean`;②`Blueprint/**/*.scribe.cs` 及其 md 投影;③`Golden/Frozen/state/**`。仅加 DAG 节点、不改判官/门/workflow;触 tools/**、.github/workflows/** 或任何判官/准入面不得援引,须第 8.12/8.14 条。
+判据为红因层次:dev 全部 required checks因判官逻辑/自锁/workflow/准入面红,该 lane 自身未红且只在上述内容面才可改投。Lean 编译、SL-008、coverage 等内容判词须自己修;不能只凭所改路径认定无因果关系。
 **步骤**:从当时 dev 建新日子命名分支,内容 PR base 改投它;若他人已建且当前绿,直接共用,不另建。dev 全部 required checks一恢复绿即整体 PR 回 dev,带其新增量复测全部 required checks,不得跨过下一次 harness 红。创建/红绿时间由 CI 可查;分支若跨第二红说明首次绿未及时合。合回即删除,下次取新日子重建,不复用陈旧支。
 改投不绕门:integration 全部 required checks照跑,只改候选/受保护基线,不改变 pull_request 使用 PR merge-tree workflow;逐 run 版本/范围依第 8.12 条,回 dev 再验。改投不替代第 7.14 条恢复 dev。重复红在无关 harness 时应换 base,不陪跑。**归因边界**:测试由 CI workflow 内的单元白名单选择,单项目入口校验其真实执行证据;一个实证 dev 红不推出全部 open PR 同红,未逐一核实者 `ASSUMED-UNVERIFIED`。
 〔守护:**全软+no consumer**·红因及 PR 引 dev 具名判词原文靠对手官核验;tools/.github 无字段消费者、正文可改,有无引用现役门同判,不称硬投影;缺引用仍无改投评审依据,不豁免任何检测〕
@@ -1021,7 +976,7 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 
 - **地图 / GID 文法 / 风格**:`agents/CONTEXT.md`(≤2K token,有限上下文唯一必读)
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
-- **理论源**(参考输入；补充按第 3.8 条):`docs/develop/theory/`(PZG–BEDC 内核卷、GICT 卷)
+- 理论卷、归档和消化工具见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)。
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
 
 ### 12.2 发现、逻辑、账与美

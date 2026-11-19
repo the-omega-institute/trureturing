@@ -1,0 +1,24 @@
+**Theorem 109.2 (Projected-PSD rigidity with a supplied unitary group).**
+Assume Definition 109.1. Suppose a compact subgroup $G\le U(n)$ acts
+transitively on all $\mathcal R_n$ by conjugation and preserves $N$:
+
+$$
+gNg^*=N\qquad(g\in G).
+\tag{109.5}
+$$
+
+Then $N=0$. The inverse $\Phi=\pi^{-1}$ is a real-linear bijection on
+the same entire original carrier, with
+
+$$
+\Phi(C)=\operatorname{PSD}_n,\qquad
+\operatorname{Tr}\Phi(x)=u(x)\quad(x\in V).
+\tag{109.6}
+$$
+
+For $2\le n\le5$, the same conclusion follows from Definition 109.1
+without any group hypothesis. The dimension bound (109.4) itself forces
+the full three-ball shape of every actual pair face. No independence
+or minimality claim for these premises is made. Sections 110–114 give
+the proof.
+

@@ -81,7 +81,6 @@ public sealed class DepositHeaderUtilityTests
 {
     [Theory]
     [InlineData("none")]
-    [InlineData("atom")]
     [InlineData("task")]
     public void DepositReadsOnlyRelevantLeanPolicyBaselineAndUtilityTarget(string kind)
     {
@@ -95,9 +94,9 @@ public sealed class DepositHeaderUtilityTests
         };
         if (kind == "task") fixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
         AddUtility(fixture, utility);
-        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/source.toml"] = "invalid TOML [\n";
-        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/residual-open/" + new string('f', 64) + ".yaml"] = "invalid: [\n";
-        fixture.Files[DigestionCasStore.RootPath + new string('f', 64)] = "unrelated CAS\n";
+        fixture.Files["Meta/Digestion/backfill/" + "unrelated/source.toml"] = "invalid TOML [\n";
+        fixture.Files["Meta/Digestion/backfill/" + "unrelated/residual-open/" + new string('f', 64) + ".yaml"] = "invalid: [\n";
+        fixture.Files["Meta/Digestion/atoms/sha256/" + new string('f', 64)] = "unrelated CAS\n";
         fixture.Files["docs/develop/theory/unrelated.md"] = "unrelated theory\n";
         var raw = UtilityAdmissionTestSupport.Raw(fixture.Files);
         var repository = new FakeRepositoryGateway(RawChangeSet.Create([RuleFixture.RingPath]), raw,
@@ -115,11 +114,11 @@ public sealed class DepositHeaderUtilityTests
                 ":(literal)" + FrozenStatePath.FromModulePath(RepoPath.CreateKnown(RuleFixture.RingPath)).Value },
             Assert.Single(repository.ScopedRevisionReads).Paths);
         Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
-            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/') || path == BackfillInventoryLoader.RelativePath
-                || path == "Meta" || path == "Golden/Frozen/state" || path == DigestionCasStore.RootPath.TrimEnd('/'));
+            path => path == "Meta/Digestion/backfill/".TrimEnd('/') || path == "Meta/BACKFILL.yaml"
+                || path == "Meta" || path == "Golden/Frozen/state" || path == "Meta/Digestion/atoms/sha256/".TrimEnd('/'));
         Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
             path => path == "docs/develop/theory" || path == "docs/develop/theory/unrelated.md");
-        if (kind != "atom") Assert.Empty(repository.CurrentPathSearches);
+        Assert.Empty(repository.CurrentPathSearches);
     }
 
     [Fact]
@@ -128,8 +127,8 @@ public sealed class DepositHeaderUtilityTests
         var fixture = new RuleFixture();
         AddUtility(fixture, UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
             $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
-        foreach (var path in fixture.Files.Keys.Where(path => path == BackfillInventoryLoader.RelativePath
-                     || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)).ToArray())
+        foreach (var path in fixture.Files.Keys.Where(path => path == "Meta/BACKFILL.yaml"
+                     || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)).ToArray())
             fixture.Files.Remove(path);
 
         var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
@@ -171,72 +170,6 @@ public sealed class DepositHeaderUtilityTests
             + "target=D5/S0/Carrier/Ring.missing\n",
             result.Output);
         Assert.Equal(1, source.CallCount);
-    }
-
-    [Fact]
-    public void DepositHeaderCheckResolvesAtomAndTaskWithoutCoverageChecks()
-    {
-        var atomFixture = new RuleFixture();
-        AddUtility(
-            atomFixture,
-            UtilityAdmissionTestSupport.AddRefutationEvidence(atomFixture,
-                $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
-        var atomSource = new FakeLeanReportSource(LeanAxiomReport.Create(atomFixture.Reports));
-
-        var atomResult = Run(atomFixture, atomSource);
-
-        Assert.Equal(0, atomResult.ExitCode);
-        Assert.Equal(1, atomSource.CallCount);
-
-        var taskFixture = new RuleFixture();
-        taskFixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
-        AddUtility(
-            taskFixture,
-            "kind=checker; basis=terminal=task:D5-T0098; instance=D5/S0/Carrier/Ring.goldenRing");
-        var taskSource = new FakeLeanReportSource(LeanAxiomReport.Create(taskFixture.Reports));
-
-        var taskResult = Run(taskFixture, taskSource);
-
-        Assert.Equal(0, taskResult.ExitCode);
-        Assert.Equal(1, taskSource.CallCount);
-    }
-
-    [Fact]
-    public void AmbiguousAtomTargetClassifiedConsistentlyAcrossPhases()
-    {
-        var fixture = new RuleFixture();
-        AddUtility(
-            fixture,
-            UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
-                $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath.Replace(
-            "/partial-open/",
-            "/residual-open/",
-            StringComparison.Ordinal)] = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
-
-        var preDeposit = Run(fixture, source);
-        var statePath = FrozenStatePath.FromModulePath(
-            RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
-        fixture.Files[statePath] =
-            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\",\"declarations\":[]}\n";
-        var firstFreeze = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(31),
-            fixture.Build(RawChangeSet.CreateWithKinds(
-                [(statePath, RawChangeKind.Added)]))).Diagnostics;
-
-        Assert.Equal(1, preDeposit.ExitCode);
-        Assert.Equal(
-            $"DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN module={RuleFixture.RingPath} "
-            + $"reason=ambiguous-atom-target:{RuleFixture.FixtureAtomId}\n",
-            preDeposit.Output);
-        var firstFreezeBlock = Assert.Single(
-            firstFreeze,
-            diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block);
-        Assert.Equal(
-            $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath} "
-            + $"reason=ambiguous-atom-target:{RuleFixture.FixtureAtomId}",
-            firstFreezeBlock.Message);
     }
 
     [Fact]

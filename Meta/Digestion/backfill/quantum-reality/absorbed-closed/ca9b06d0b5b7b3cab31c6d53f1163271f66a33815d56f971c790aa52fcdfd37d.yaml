@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ca9b06d0b5b7b3cab31c6d53f1163271f66a33815d56f971c790aa52fcdfd37d
-  normalized_sha256: sha256:ca9b06d0b5b7b3cab31c6d53f1163271f66a33815d56f971c790aa52fcdfd37d
-cas_ref: sha256:ca9b06d0b5b7b3cab31c6d53f1163271f66a33815d56f971c790aa52fcdfd37d
-coverage_gids:
-  - gid: D5/S3/Factorization/LogarithmicLength.factorization_log_length_eq_log
-    target_statement_id: sha256:98e819e84ea1e30d096ce0cfef41e4b76e313a6960081918f077f17ee28deb37
-receipts:
-  unresolved_subitems: []

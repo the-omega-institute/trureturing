@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4185535d105dfd81604deb049e7437be063f084d0b7ffe57acbac85209a31285
-  normalized_sha256: sha256:4185535d105dfd81604deb049e7437be063f084d0b7ffe57acbac85209a31285
-cas_ref: sha256:4185535d105dfd81604deb049e7437be063f084d0b7ffe57acbac85209a31285
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/PrimeSwapCurvature.primeSwapCurvature
-    target_statement_id: sha256:b666a39d41690cefe812ea00c51690d9ab4af04ace4dbc23d66d1e9b095e5c2d
-receipts:
-  unresolved_subitems: []

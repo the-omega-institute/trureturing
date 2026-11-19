@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:848d11cb428699a69d58a1e92384cb362616ad259c195329de7fd449294a5f22
-  normalized_sha256: sha256:848d11cb428699a69d58a1e92384cb362616ad259c195329de7fd449294a5f22
-cas_ref: sha256:848d11cb428699a69d58a1e92384cb362616ad259c195329de7fd449294a5f22
-coverage_gids:
-  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLocalCoefficientKernel.local_coefficient_bound
-    target_statement_id: sha256:47c8d385cbb2463b0f929b9fc9fe917310c96955d089b1111fc4f0c0e2ff6629
-receipts:
-  unresolved_subitems: []

@@ -1,7 +1,0 @@
-**数学引文 27.2（固定宽度计数供应的三个界与类型）。** 外部版本固定为 OpenAI, *The Exponential Time Hypothesis is False*, [7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a 的论文](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf)，修订版日期为 2026-10-25。以下均为 `literature-attested` 的外部供应，应用明确依赖该算法结论，不把源码阅读当作本卷的外部重新编译或独立内核认证。令 $n$ 为声明变量数，$m$ 为子句数，$k\ge2$ 固定，$L$ 为供应者的规范编码位长度。
-
-| 供应及精确地址 | 时间上界；空间均为相应输入规模的多项式 |
-| --- | --- |
-| [形式化范围说明 `lean/docs/378.md`](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/docs/378.md) | $(L+1)^{O_k(1)}2^{O_k(n(\log\log n)^2/\sqrt{\log n})}$ |
-| 论文 Theorem 1.1，一般 $m$，$n\ge20$ | $(n+m)^{O_k(1)}2^{O_k(n\log\log n/\sqrt{\log n})}$ |
-| 同一定理，$m\le Dn$，$D>0$ 固定 | $(n+m)^{O_{k,D}(1)}2^{O_{k,D}(n/\sqrt{\log n})}$ |

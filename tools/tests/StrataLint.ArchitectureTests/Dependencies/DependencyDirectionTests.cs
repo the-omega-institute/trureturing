@@ -22,7 +22,7 @@ public sealed class DependencyDirectionTests
     {
         // YamlDotNet also supplies the parser for SL-030.
         Assert.Equal(
-            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "StrataLint.Engineering", "StrataLint.Runtime", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
+            ["Dunet", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "StrataLint.Engineering", "StrataLint.Runtime", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 
@@ -103,9 +103,7 @@ public sealed class DependencyDirectionTests
                 "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
                 "../../TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
                 "../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
-                "../../TestSupport/StrataLint.CoverTestSupport/StrataLint.CoverTestSupport.csproj",
                 "../../TestSupport/StrataLint.DeclaredTemplateTestSupport/StrataLint.DeclaredTemplateTestSupport.csproj",
-                "../../TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
                 "../../TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
                 "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
                 "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",

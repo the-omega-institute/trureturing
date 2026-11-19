@@ -1,7 +1,0 @@
-当前文档 §§36–37 已明确给出边界反例：
-
-- 相同 live counts、phase 和 future law，可以有不同 chronology；
-- 相同 future law，可以有不同 selected-count bank；
-- 非单例正支持下，单次抽取的隐藏深度 $K$ 不能被零误差识别；
-- pending0、pending1、delivered 都可能有剩余 Read 数 $0$，但未来义务分别是 Stop0、Stop1 和空转录。
-
