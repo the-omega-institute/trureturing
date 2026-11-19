@@ -117,6 +117,9 @@ jobs:
             echo "STRATALINT_CACHE_CHECKED_OUT_SHA=$SOURCE_SHA"
             echo "STRATALINT_CACHE_SOURCE_VALIDATED=true"
           } >> "$GITHUB_ENV"
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
       - name: Validate candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
@@ -149,6 +152,8 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - name: Validate the PR merge candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
@@ -185,6 +190,9 @@ jobs:
           ref: ${{ inputs.source_sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
       - name: Validate the unmerged source and protected workflow runtime
         env:
           GH_TOKEN: ${{ github.token }}
@@ -237,6 +245,8 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        run: python3 .github/scripts/install-tools.py
       - name: Validate candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
@@ -359,6 +369,9 @@ jobs:
           ref: ${{ needs.manual-release-authorize.outputs.source_sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the pinned tools release
+        if: hashFiles('Meta/tools-release.json', '.github/scripts/install-tools.py') != ''
+        run: python3 .github/scripts/install-tools.py
       - name: Validate candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'

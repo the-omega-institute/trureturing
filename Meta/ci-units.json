@@ -3,6 +3,8 @@
     "# Shared candidate-entry and routing inputs. Project and runtime",
     "# inputs belong to each actual consumer below.",
     "[*]",
+    ".github/scripts/install-tools.py",
+    "Meta/tools-release.json",
     ".github/workflows/ci-current.yml",
     ".github/workflows/ci-unit.yml",
     "tools/scripts/workflow/ci-entry.sh",
@@ -1718,7 +1720,7 @@
       "lean": "none",
       "project": "",
       "command": "make filemap-conform",
-      "cache-dependency-path": ".github/scripts/filemap-release.py\ntools/StrataLint.FileMap/packages.lock.json\ntools/StrataLint.Configuration/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\n"
+      "cache-dependency-path": "tools/StrataLint.FileMap/packages.lock.json\ntools/StrataLint.Configuration/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\n"
     },
     "selftest": {
       "dotnet": true,
