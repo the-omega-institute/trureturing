@@ -1,0 +1,5 @@
+source_id = "finite-group-power-map-separation"
+path = "docs/develop/theory/FINITE_GROUP_POWER_MAP_SEPARATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

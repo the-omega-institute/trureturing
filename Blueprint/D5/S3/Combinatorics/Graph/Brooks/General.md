@@ -16,7 +16,19 @@ $$\forall V \in \mathrm{Type},\; [\operatorname{Fintype}\left(V\right)] \forall 
 
 The coloring construction follows Rabern's surgery proof. Delete a maximal independent set, color the smaller induced graph, and extend across its clique or cycle obstruction. The low-degree vertex extension is supplied by its existing coloring theorem. The degree has no upper bound. The vertex type may be empty, and neither connectedness nor regularity is assumed.
 
-**Theorem 1.2 (Complete graphs and entire odd cycles).**
+**Theorem 1.2 (Cycle isomorphism in a connected graph of maximum degree two).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Brooks/General.cycle_iso_of_connected_degree_le_two`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Brooks/General.cycle_iso_of_connected_degree_le_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let G be a finite connected simple graph of maximum degree at most two. Given a closed walk p that is a cycle, there is a graph isomorphism from the cycle graph of length p.length to G. The cycle uses both available neighbors at every vertex it visits. Connectedness then makes the cycle span G, and the cycle map is an isomorphism.
+
+**Theorem 1.3 (Complete graphs and entire odd cycles).**
 
 $$\forall V \in \mathrm{Type},\; [\operatorname{Fintype}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)] \operatorname{Connected}\left(G\right) \Rightarrow \left(\operatorname{Colorable}\left(G, \operatorname{maxDegree}\left(G\right)\right) \lor \left(G = \operatorname{completeGraph}\left(V\right) \lor \left(\exists n \in \mathrm{Nat},\; \operatorname{Odd}\left(n\right) \land \left(5 \le n \land \operatorname{Nonempty}\left(\operatorname{GraphIso}\left(\operatorname{cycleGraph}\left(n\right), G\right)\right)\right)\right)\right)\right)$$
 
@@ -32,4 +44,5 @@ A clique with maximum degree plus one vertices saturates every member's neighbor
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Brooks/General.brooks`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Brooks/General.brooks_connected`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Brooks/General.cycle_iso_of_connected_degree_le_two`
 - Dependency: [D5/S3/Combinatorics/Graph/Brooks/Surgery](Surgery.md)

@@ -1,0 +1,49 @@
+## 5. A joint square-and-cube obstruction
+
+For $t\in T_i$, define a subset of the underlying set of $S_i$ solely by two power operations:
+
+$$
+N_i(t)=\{x^2:x\in S_i,\ x^3=t\}.                               \tag{5.1}
+$$
+
+Every $x$ with cube $t$ is outside $P_i$, because elements of $P_i$ have cube $1$. Equations (3.6)–(3.7) identify all such $x$ as $bt$ with $b\in C_i(t)$. Squaring permutes $C_i(t)$, whose exponent divides $3$. Consequently
+
+$$
+N_i(t)=C_i(t).                                                  \tag{5.2}
+$$
+
+By (3.4), these sets are graphs of the maps $v\mapsto B_i(v,w)$ over the same first coordinate. Therefore
+
+$$
+\begin{aligned}
+N_i(t_i(w,z))=N_i(t_i(w',z'))
+&\iff B_i(v,w)=B_i(v,w')\quad(\forall v\in V)\\
+&\iff w-w'\in K_i.                                             \tag{5.3}
+\end{aligned}
+$$
+
+In the first equivalence, equality of sets forces equality at each $v$, because each graph contains exactly one point with that first coordinate. Thus each equivalence class of involutions under equality of the sets (5.1) has size $|K_i||Z|$. Equation (2.4) gives
+
+$$
+\begin{array}{c|cc}
+ &S_0&S_1\\ \hline
+\text{size of every equal-}N\text{ class in }T_i&3^2=9&3^3=27.
+\end{array}                                                     \tag{5.4}
+$$
+
+Suppose, for contradiction, that $f:S_0\to S_1$ is a bijection preserving squares and cubes. The identity is the unique element satisfying both $x^2=x$ and $x^3=x$: already $x^2=x$ in a group forces $x=1$. Preservation of squares gives $f(1)^2=f(1)$, hence $f(1)=1$. Injectivity and preservation of squares imply
+
+$$
+t\ne1,\ t^2=1\quad\iff\quad f(t)\ne1,\ f(t)^2=1.
+$$
+
+By surjectivity this makes $f$ a bijection $T_0\to T_1$. Preservation of squares and cubes also gives
+
+$$
+f[N_0(t)]=N_1(f(t)).                                           \tag{5.5}
+$$
+
+Indeed $x^3=t$ implies $f(x)^3=f(t)$ and $f(x^2)=f(x)^2$, giving one inclusion. Conversely, for $y^3=f(t)$ choose $x$ with $f(x)=y$. Then $f(x^3)=f(t)$, so injectivity gives $x^3=t$, and $y^2=f(x^2)$ gives the other inclusion.
+
+Since images under a bijection preserve and reflect equality of subsets, (5.5) makes $f:T_0\to T_1$ an isomorphism of the equality-of-$N$ equivalence relations. It must biject each equivalence class onto the class of its image. This contradicts (5.4). Thus no bijection preserves both squares and cubes, and in particular none preserves all integer powers simultaneously. This proves (1.6) and Theorem 1.3. ∎
+

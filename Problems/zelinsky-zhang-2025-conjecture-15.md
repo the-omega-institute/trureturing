@@ -147,9 +147,12 @@ priority.
   least-divisor construction retains these properties and gives d>B.
   In particular it answers the source's page-12 question 2 affirmatively:
   infinitely many odd integers are deficient and KL-primitive.
-- **Unresolved: question 1.** The source asks whether infinitely many
-  integers are both primitive non-deficient and KL-primitive. The
-  deficient family constructed here does not answer that question.
+- **Proved in Lean elsewhere: question 1.** The source asks whether
+  infinitely many integers are both primitive non-deficient and
+  KL-primitive. The deficient family constructed here does not answer
+  that question; `ZelinskyZhangDoublePrimitive.result` answers it
+  affirmatively with integers 2^k p (see
+  `Problems/zelinsky-zhang-2025-question-1.md`).
 - **Proved on paper: relation to the source's 2^{k−1}p route.** Both
   routes obtain a deficient integer with nonnegative KL and then extract
   a KL-primitive divisor. The present squarefree construction uses many

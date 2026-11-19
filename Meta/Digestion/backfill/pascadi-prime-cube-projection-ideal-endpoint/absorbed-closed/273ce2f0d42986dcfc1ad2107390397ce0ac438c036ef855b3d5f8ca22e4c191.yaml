@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:273ce2f0d42986dcfc1ad2107390397ce0ac438c036ef855b3d5f8ca22e4c191
+  normalized_sha256: sha256:273ce2f0d42986dcfc1ad2107390397ce0ac438c036ef855b3d5f8ca22e4c191
+cas_ref: sha256:273ce2f0d42986dcfc1ad2107390397ce0ac438c036ef855b3d5f8ca22e4c191
+coverage_gids:
+  - gid: D5/S3/Arith/CharacterSums/PascadiOriginalRankThreeLocal.original_nonzero_dixon_rank_three
+    target_statement_id: sha256:c2c55e70ce9ab7f33bf8dd341dfc940829e0a24a324e3e501cd7ba69d0191e59
+  - gid: D5/S3/Arith/CharacterSums/PascadiRankThreeLocal.nonzero_dixon_rank_three
+    target_statement_id: sha256:88ea19c94142a97fa9bdf71558595c8d5a23dea65c07066e482259910734cd5e
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,49 @@
+**Lemma 2.1 (The four minus equations).**
+
+Assume $a_1,a_2\in(\mathbb Z/c\mathbb Z)^*$ and put $g=a_1a_2$. Then
+$W_{a_1,a_2}(a,t,b,d,w,v)=-I_2$ if and only if
+
+$$
+\tag{2.1}
+
+ a+b+w=gtab,\qquad t+d+v=gwdv,\qquad wd=ta,\qquad wv=tb
+ \pmod c.
+$$
+
+These equations also imply $av=bd\pmod c$.
+
+*Proof.*
+
+The four-equation equivalence and third-minor identity are original-count inputs from [R](#reference-formalsource).
+The matrix proof cancels only the units $a_1,a_2$; it does not divide
+by any of the six letters. Thus zero and nonunit letters are retained.
+
+The original scalar-to-minus comparison of [R](#reference-formalsource) gives, for every $\gamma^2=1$,
+
+$$
+\tag{2.2}
+
+ N_\gamma(c;X,Y;a_1,a_2)
+ \leq64\,N_{-1}(c;2X,2Y;a_1,a_2).
+$$
+
+Both widths are doubled separately. There is no assumption that the
+scalar center was already $-1$. For $c=p^3$, the number of centers
+$\gamma^2=1$ is at most four (and is two for odd $p$). The final
+center sum consequently costs an absolute factor only.
+
+For most of this section we work with a minus-return box $(X,Y)$
+satisfying
+
+$$
+\tag{2.3}
+
+ 1\leq X\leq Y,\qquad 3Y<p^2,\qquad
+ p^3\leq A:=XY\leq C_0p^\alpha,
+$$
+
+where $p$ is prime, $a_1,a_2$ are units modulo $p^3$, and $C_0$ is
+fixed. The original hypothesis $6Y_0<p^2$ will imply precisely this
+three-width condition after $(X,Y)=(2X_0,2Y_0)$ in
+(2.2).
+

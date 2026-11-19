@@ -79,7 +79,7 @@ The theorem uses only the standard axioms `propext`, `Classical.choice`, and `Qu
 
 3. **Reasoning — a locally Lipschitz endpoint function also fails.** If $F(1)=1$ and $F$ is locally Lipschitz at 1, then $1-F(Q_a)\le L(1-Q_a)$ near 1 for some finite $L$. The diverging ratio gives $1-J_a>L(1-Q_a)$, whence $F(Q_a)>J_a$. Thus no such $F$ satisfies $F(Q)\le J$ for all states. The obstruction is the logarithmic entropy deficit near orthogonal supports and already occurs for commuting, classical states.
 
-4. **Not addressed — neighboring assertions.** The upper conjunct $\operatorname{QJS}_2\le\operatorname{QTD}$ and the metric conjecture for $\sqrt{\operatorname{QTD}}$ are not settled here.
+4. **Not addressed — neighboring assertions.** The upper conjunct $\operatorname{QJS}_2\le\operatorname{QTD}$ is not settled here. The metric conjecture for $\sqrt{\operatorname{QTD}}$ is treated in the [triangle-inequality dossier](liu-2025-qtd-triangle-inequality-refutation.md).
 
 5. **Literature note.** The classical joint range of triangular discrimination and Jensen–Shannon divergence was not checked against this specific claim. No novelty or priority conclusion follows from this refutation.
 

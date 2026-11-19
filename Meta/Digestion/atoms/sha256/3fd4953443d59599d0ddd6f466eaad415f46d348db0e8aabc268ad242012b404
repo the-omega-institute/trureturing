@@ -1,0 +1,28 @@
+**Lemma 5.3 (Short bases in a Euclidean lattice).**
+
+Let $\Lambda$ be a lattice in $\mathbb R^2$ of covolume $V$.
+The number of ordered $\mathbb Z$-bases $(u,v)$ of $\Lambda$ satisfying
+$|u|,|v|\le R$ is $O(R^2/V)$, with an absolute constant.
+
+*Proof.*
+
+If such a basis exists, let $u_0$ be a shortest nonzero vector and put
+$\lambda=|u_0|$. It is primitive, and an independent vector of length
+at most $R$ gives $V\le\lambda R$. The only primitive vectors on its
+central line are $\pm u_0$; their basis completions contribute
+$O(1+R/\lambda)=O(R^2/V)$.
+
+The other parallel lattice lines have spacing $V/\lambda$, with point
+spacing $\lambda$ on each line. If a noncentral vector occurs in the
+$T$-ball, then $T\ge\lambda$ and $T\lambda\ge V$. Counting lines and
+then points shows that the number of noncentral vectors in that ball
+is $O(T^2/V)$. For a primitive $u$ of length in $(T/2,T]$, its basis
+completions form, for each orientation, an affine progression of step
+$u$, with $O(1+R/T)$ terms in the $R$-ball. Summing over
+$T=R,R/2,\ldots$ gives
+
+$$
+\sum_T O\left(\frac{T^2}{V}\left(1+\frac RT\right)\right)
+       =O(R^2/V).
+$$
+

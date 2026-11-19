@@ -23,6 +23,8 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiZeroDQuadratic
   - D5/S3/Arith/CharacterSums/PascadiZeroDCover
   - D5/S3/Arith/CharacterSums/PascadiZeroDBadDegreeAverage
+  - D5/S3/Arith/CharacterSums/PascadiRankFourFactor
+  - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
 license: source-reference
 triage: anchor
 ---
@@ -241,6 +243,26 @@ exponent. The delivered unconditional total-count range remains every fixed
 `alpha<26/7`; the nonzero-residual average and the full arbitrary-modulus
 conjecture remain separate open work. No literature priority is claimed.
 
+## Rank four and its original average
+
+Lemma 2.6 of the repository's
+`PASCADI_PRIME_CUBE_PROJECTION_IDEAL_ENDPOINT` volume is formalized in
+`PascadiRankFourFactor.rank_four_root_relevant_factor`. For a finite
+coefficient family with common value modulo the prime cube and common
+derivative modulo the prime, the three inequalities in (2.16) bound rational
+row rank by four. In rank four the primitive integer factor has the form
+`aT-n` with positive leading coefficient, unit leading reduction and
+`a*beta-n=0` modulo the prime. It divides the integer pencil of every row
+and its rational root has nonzero baseline linear value.
+
+`PascadiRankFourBadDegreeAverage.actual_long_bad_degree_average_rank_four`
+uses that factor on the actual maximizing family. The rank includes the
+baseline and all nonzero-reduction derivative-zero partners. At the common
+root every selected quadratic value is a common multiple of its linear
+value. This gives zero Dixon determinants and yields the original average
+above under `C6^2*(32*A/p^3)^13<p^10`. The degree still includes the
+zero-reduction partners and is zero for empty endpoint families.
+
 ## Quadratic nonzero middle sections
 
 `PascadiQuadraticMiddleCount.quadratic_nonzero_middle_box_count` proves a
@@ -429,6 +451,7 @@ to the complete theory volume.
 | Original pencil divisibility and modular-zero partners | `Original.original_pencil_dvd`, `Original.actual_zero_reduction_partners_subpower_seventh` |
 | Literal row and pencil heights | `Original.actual_coefficient_bounds`, `Original.actual_pencil_coefficient_bounds` |
 | Dixon matrix, resultant identity and bounds | `PrimeCube.residualMatrix`, `PrimeCube.residual`, `PrimeCube.actual_residual_resultant`, `PrimeCube.actual_residual_dvd_fifth`, `PrimeCube.actual_residual_height` |
+| Nonzero Dixon coordinate saturation and discriminant strata, Lemmas 3.1–3.2 | `PrimeCube.nonzero_dixon_rank_three`, `Original.original_nonzero_dixon_rank_three` |
 | Quadratic-direction elimination, Lemma 2.4 | `PrimeCube.quadratic_direction_resultant_zero`; the constant-baseline repair is `PrimeCube.constant_base_dixon_quadratic_identity` and `PrimeCube.zero_dixon_quadratic_resultant_zero` |
 | Root-relevant factorization and mixed quadratic branch, Lemma 2.5 | `PrimeCube.localized_factor_cube`, `PrimeCube.cubic_quadratic_mixed_resultant_height`, `PrimeCube.quadratic_resultant_dvd_fifth`; `PrimeCube.actual_zero_dixon_singular_factor_cover` |
 | Actual factor-value and singular-partner counts, (2.15) | `Original.actual_fixed_factor_value_pairs_subpower`, `Original.actual_singular_factor_partner_count`, `Original.original_singular_unit_observations` |

@@ -1,0 +1,78 @@
+**Lemma 2.5 (Zero-residual root-relevant cover).**
+
+Suppose the family above has the bounds (2.11),
+unit $L_0(\beta)$, and nonzero pencil reductions, with
+$p^3\mid P_i(\beta)$ and $p\mid P_i'(\beta)$.
+Assume $\mathscr D(0,i,j)=0$ for every pair. There is an absolute constant
+$C_*$ such that $C_*B^6<p^5$ guarantees a set of at most three
+primitive irreducible nonconstant integer polynomials covering every
+$P_i$ by divisibility. Every covering polynomial vanishes at $\beta$
+modulo $p$ and has nonzero reduction modulo $p$.
+
+*Proof.*
+
+The root-localized cubic factorization of [R](#reference-formalsource), which has no numerical separation premise, gives
+
+$$
+P_i=R_iU_i,\qquad U_i(\beta)\in(\mathbb Z/p\mathbb Z)^*,\qquad
+ \deg R_i\in\{2,3\}.
+$$
+
+Here $R_i$ is primitive, retains the $p^3$ value and $p$ derivative
+divisibilities, has coefficients bounded by
+$8\cdot18I^{3-j}J^j$, and every irreducible factor of $R_i$ is
+root-relevant at $\bar\beta$.
+
+We show that $R_i,R_j$ have a common rational factor. If one has
+degree three, its original $P_i$ is a genuine cubic and $U_i$ is a
+nonzero constant. Equations (2.13) and
+$\mathscr D=0$ give a zero ordinary rational resultant: converting
+the padded resultant is legitimate because this cubic has nonzero
+leading coefficient. A common irreducible factor lies in $R_i$ and
+cannot divide $U_j$, since the factor vanishes at $\bar\beta$ whereas
+$U_j(\beta)$ is a unit. Hence it divides $R_j$.
+
+If both $R$ factors have degree two and one original $P$ has degree three, use the genuine-cubic quadratic-factor height estimate of [R](#reference-formalsource):
+
+$$
+|\mathop{\mathrm{Res}}_{2,2}(R_i,R_j)|\leq24(8\cdot18)^4 B^6.
+$$
+
+The double-root quadratic resultant divisibility of [R](#reference-formalsource) gives divisibility by $p^5$, so the resultant is zero under the stated gap. If both originals have degree two, apply
+Lemma 2.4; its height hypothesis follows
+from $I^6J^4\leq B^6$. The complements are then constants, so the
+same factor transfer applies. This last step cannot be replaced by
+the padded $3,3$ resultant, which vanishes at infinity for two
+quadratics regardless of their finite common roots.
+
+For a nonempty family fix one $R_{\rm ref}$. Its at most three
+primitive irreducible factors cover all the $R_i$ by the pairwise
+common-factor conclusion. They are root-relevant, and cannot reduce
+to zero because $R_{\rm ref}$ does not. An empty family is trivial.
+
+No rank-three assumption or unit condition on the coefficient
+$m_0^2q_0-\ell_0m_0r_0+\ell_0^2s_0$ was used in this lemma. In
+particular it includes low row rank, linear-projection rank at most
+one, and a zero baseline resultant. The original algebraic factor-value and singular-partner estimates of [R](#reference-formalsource) then bound this family by
+
+$$
+\tag{2.15}
+
+ O_\eta\!\left(p^\eta\left(1+
+       \frac{6H}{p\sqrt{Q_{X,Y}(R^{(2)}_{w,t})}}\right)\right),
+$$
+
+where $R^{(2)}_{w,t}$ is a reduced shortest vector for the index-$p^2$
+lattice. The factor-value theorem permits coordinate bounds up to
+$p$, and requires no old $B^7$ gap or unit baseline resultant.
+The three required modular units follow from the actual original word by its singular-unit identities in [R](#reference-formalsource). The original physical-weight average gives
+
+$$
+\sum_{(w,t)\in s}\left(1+
+       \frac{H}{p\sqrt{Q_{X,Y}(R^{(2)}_{w,t})}}\right)
+ \leq2048\left(A+\frac ApL(p)+\frac{A^2}{p^4}\right).
+$$
+
+Thus this case contributes to the old admissible average without the
+seventh-height restriction.
+

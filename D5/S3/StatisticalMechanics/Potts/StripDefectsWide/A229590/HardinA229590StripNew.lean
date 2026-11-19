@@ -29,7 +29,7 @@ set_option maxRecDepth 100000
 set_option Elab.async false
 
 set_option maxHeartbeats 0 in
-private theorem cross_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
+theorem cross_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
     cross (relabel e a) (column (relabel e b)) = cross a (column b) := by
   simp only [cross, bondDefects, column_relabel, e.injective.eq_iff]
 

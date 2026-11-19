@@ -1,0 +1,38 @@
+**Corollary 2.3 (The sufficient bad-degree average).**
+
+Fix $\alpha\leq15/4$. If, uniformly for the actual retained families
+and for every $\eta>0$, one proves
+
+$$
+\tag{2.9}
+
+ \sum_{(w,t)\in s}d(w,t)\ll_{\eta,C_0,\alpha}p^\eta Y^2,
+$$
+
+then the original unit-middle count, and hence the minus count, is
+$O_{\varepsilon,C_0,\alpha}(Y^2p^\varepsilon)$.
+
+*Proof.*
+
+There are at most $(2X+1)(2Y+1)\leq9A$ occupied middles. The square
+root in (2.7) is therefore
+
+$$
+O_\eta\!\left(p^{\eta/2}A^3p^{-15/2}\sqrt{L(p)}\right).
+$$
+
+Since $A\leq C_0p^\alpha$ and $4\alpha\leq15$, we have
+$A^4/p^{15}\leq C_0^4$; the last expression is
+$O_\eta(Ap^{\eta/2}\sqrt{L(p)})$. Choose $\eta$ smaller than
+$\varepsilon$ and absorb the logarithm into the remaining power. Use
+$A\leq Y^2$ for both this term and the five discarded-chart bounds.
+This proves $\#T_G\ll Y^2p^\varepsilon$, then $U_-\ll Y^2p^\varepsilon$.
+Equation (2.4) completes the minus reduction.
+The same numerical absorption applies to the $A$ and $A^2/p^4$ errors. For every $\alpha\le15/4$ and arbitrary $C_0\ge1$, the endpoint inequality $A^4/p^{15}\le C_0^4$ is a fixed bound, not a required vanishing quantity. No translated-box partition is needed.
+
+The new rank-three arithmetic estimate naturally has scale $Y^2$.
+Corollary 2.3 does not replace it by
+the stronger and unjustified scale $A$. In particular one must insert
+(2.9) into the moment above, rather than
+call the old whole-count seventh-height wrapper.
+
