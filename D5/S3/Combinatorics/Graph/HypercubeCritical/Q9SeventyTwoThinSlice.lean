@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoThinSlice
 attribute [local instance] Classical.propDecidable
 
 open D5.S3.Combinatorics.Graph.Hypercube
-open BalancedCriticalSpectrum (Q IsBalanced directionEdges direction_edge_count)
+open BalancedCriticalSpectrum (Q IsBalanced directionEdges direction_edge_count flip)
 open BalancedCubeLowerBound (coordinateSlice)
 open GirthSliceCounting (degreeTwo degreeThree)
 open private coordinate_slice_degree_cases coordinate_slice_low_independent low_slice_card_eq_q
@@ -25,6 +25,8 @@ open private highWithHigh high_neighbor_deficit from
   D5.S3.Combinatorics.Graph.HypercubeCritical.EighteenPointSlice
 open private SideHigh compressed compressed_degree compressed_triangle_free from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
+open private adjacent_exists_flip from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 
 /-- A twenty-vertex half has twelve cut endpoints and eight cubic vertices.
 Every edge joins different degree classes, so suppressing the degree-two
@@ -159,5 +161,96 @@ theorem compressed_cube_or_wagner {C : Finset (Q 9)} (hC : C.card = 72)
     Function.Embedding.trans_apply, Equiv.toEmbedding_apply] using h
 
 #print axioms compressed_cube_or_wagner
+
+/-- The neighbors of vertex zero in the two compressed graph models. -/
+def modelRootNeighbors (wagner : Bool) : Fin 3 → Fin 8 :=
+  if wagner then ![1, 4, 7] else ![1, 2, 4]
+
+/-- In either model, the three two-edge paths out of the root use distinct
+first axes. Each second axis lies outside the first three axes. No axis is
+the coordinate defining the half. -/
+theorem compressed_root_axes {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 20) :
+    let S := coordinateSlice C b
+    let G := (hypercube 9).induce (S : Set (Q 9))
+    ∃ (wagner : Bool) (vertices : Fin 8 ↪ (S : Set (Q 9)))
+      (first : Fin 3 ↪ Fin 9) (second : Fin 3 → Fin 9),
+      (∀ x y, Q9EightCubicGraphCertificate.modelAdj wagner x y = true ↔
+        x ≠ y ∧ ∃ m, G.degree m = 2 ∧ G.Adj (vertices x) m ∧ G.Adj (vertices y) m) ∧
+      (∀ a, ((vertices (modelRootNeighbors wagner a)).val : Q 9) =
+        flip (flip (vertices 0).val (first a)) (second a)) ∧
+      (∀ a, first a ≠ 0 ∧ second a ≠ 0) ∧
+      ∀ a d, second a ≠ first d := by
+  classical
+  let S := coordinateSlice C b
+  let G := (hypercube 9).induce (S : Set (Q 9))
+  obtain ⟨wagner, vertices, hrealize⟩ := compressed_cube_or_wagner hC hr hb b hs
+  let leaf := modelRootNeighbors wagner
+  have hleaf : Function.Injective leaf := by
+    cases wagner <;> decide
+  have hmodel (a : Fin 3) :
+      Q9EightCubicGraphCertificate.modelAdj wagner 0 (leaf a) = true := by
+    cases wagner <;> fin_cases a <;> decide
+  have hpaths (a : Fin 3) := (hrealize 0 (leaf a)).mp (hmodel a)
+  choose middle hmid hroot hleafAdj using fun a => (hpaths a).2
+  have hmiddle_inj : Function.Injective middle := by
+    intro a d had
+    by_contra hne
+    have h0a := vertices.injective.ne ((hpaths a).1)
+    have h0d := vertices.injective.ne ((hpaths d).1)
+    have had' := vertices.injective.ne (hleaf.ne hne)
+    have hsubset : ({vertices 0, vertices (leaf a), vertices (leaf d)} :
+        Finset (S : Set (Q 9))) ⊆ G.neighborFinset (middle a) := by
+      intro v hv
+      apply (G.mem_neighborFinset _ _).mpr
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hv
+      rcases hv with rfl | rfl | rfl
+      · exact (hroot a).symm
+      · exact (hleafAdj a).symm
+      · rw [had]
+        exact (hleafAdj d).symm
+    have hcount := Finset.card_le_card hsubset
+    have hdeg : G.degree (middle a) = 2 := hmid a
+    simp [G.card_neighborFinset_eq_degree, hdeg, h0a, h0d, had'] at hcount
+  choose first hfirst using fun a => adjacent_exists_flip
+    (show (hypercube 9).Adj (vertices 0).val (middle a).val from hroot a)
+  choose second hsecond using fun a => adjacent_exists_flip
+    (show (hypercube 9).Adj (middle a).val (vertices (leaf a)).val from (hleafAdj a).symm)
+  have hfirst_inj : Function.Injective first := by
+    intro a d had
+    apply hmiddle_inj
+    apply Subtype.ext
+    rw [hfirst a, hfirst d, had]
+  have hflip (x y : (S : Set (Q 9))) (i : Fin 9) (h : y.val = flip x.val i) : i ≠ 0 := by
+    intro hi
+    subst i
+    have hx := (Finset.mem_filter.mp x.property).2
+    have hy := (Finset.mem_filter.mp y.property).2
+    have hzero := congrFun h (0 : Fin 9)
+    rw [BalancedCriticalSpectrum.flip_apply_same, hx, hy] at hzero
+    cases b <;> contradiction
+  refine ⟨wagner, vertices, ⟨first, hfirst_inj⟩, second, hrealize, ?_, ?_, ?_⟩
+  · intro a
+    change (vertices (leaf a)).val = flip (flip (vertices 0).val (first a)) (second a)
+    rw [hsecond a, hfirst a]
+  · intro a
+    exact ⟨hflip _ _ _ (hfirst a), hflip _ _ _ (hsecond a)⟩
+  · intro a d had
+    change second a = first d at had
+    have hlast := (hsecond a).trans
+      (congrArg (fun x => BalancedCriticalSpectrum.flip x (second a)) (hfirst a))
+    rw [had] at hlast
+    have hne : first a ≠ first d := by
+      intro heq
+      rw [← heq, BalancedCriticalSpectrum.flip_flip] at hlast
+      exact (hpaths a).1 (vertices.injective (Subtype.ext hlast.symm))
+    have hm (v : (S : Set (Q 9))) : v.val ∈ C :=
+      (Finset.mem_filter.mp v.property).1
+    exact BalancedCubeGirth.no_selected_square hb hne
+      (hm (vertices 0)) (hfirst a ▸ hm (middle a)) (hfirst d ▸ hm (middle d))
+      (hlast ▸ hm (vertices (leaf a)))
+
+#print axioms compressed_root_axes
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoThinSlice
