@@ -26,6 +26,7 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiRankFourFactor
   - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
   - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
+  - D5/S3/Arith/CharacterSums/PascadiTorusConductor
 license: source-reference
 triage: anchor
 ---
@@ -71,6 +72,16 @@ coordinates with the strength required by Conjecture 6.1 remains open.
 Source: <https://arxiv.org/abs/2511.08445v2>, Section 6: Conjecture 6.1,
 bound (6.2), and Proposition 6.2, weaker $q=6$ bound (6.3), including the
 following remark on the parameter ranges where the conjecture follows.
+
+The repository module `PascadiTorusConductor` gives an exact character
+decomposition for the prime-cube cubic word associated with Section 6.
+The quadratic Cayley transform, on unit denominators, turns
+`x+y+z=d*x*y*z` into a product-one equation in the norm-one group.
+At an odd prime the reduction of that group from the cube to the square
+is onto with kernel of order `p`. The cube word mass therefore equals
+the square word mass divided by `p`, plus the signed primitive cubic
+character contribution. The quantitative bound for that contribution
+remains open.
 
 The journal version is *Geometric and Functional Analysis* 36 (2026),
 1174–1243, <https://doi.org/10.1007/s00039-026-00746-0>.
