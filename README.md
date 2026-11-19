@@ -214,7 +214,7 @@ adding this readout?
 The current declared-template binding rule issues
 **Observe warnings that do not block admission**
 ([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
-[implementation](https://github.com/the-omega-institute/trureturing-tools/blob/v0.1.0-dev.3/tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+[implementation](https://github.com/the-omega-institute/trureturing-tools/blob/v0.1.0-dev.4/tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
 Other admission checks still apply. Its module selection is
 separate from the mathematical comparison above.
 The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
