@@ -34,28 +34,6 @@ private theorem child_adj (p : List Bool) (b : Bool) : wordTree.Adj p (p ++ [b])
   have := congrArg List.length h
   simp at this
 
-private def wordDist : List Bool → List Bool → ℕ
-  | [], ys => ys.length
-  | _ :: xs, [] => xs.length + 1
-  | x :: xs, y :: ys => if x = y then wordDist xs ys else xs.length + ys.length + 2
-
-private theorem wordDist_eq_prefixDistance (x y : List Bool) :
-    wordDist x y = distance x y := by
-  induction x generalizing y with
-  | nil => simp [wordDist, distance, lcp]
-  | cons a xs ih =>
-    cases y with
-    | nil => simp [wordDist, distance, lcp]
-    | cons b ys =>
-      by_cases h : a = b
-      · have hLeft := (shortest_pop_append xs ys).1.1.length_le
-        have hRight := (shortest_pop_append xs ys).1.2.1.length_le
-        rw [wordDist, ite_eq_left h, ih]
-        simp only [distance, lcp, ite_eq_left h, List.length_cons]
-        omega
-      · simp [wordDist, distance, lcp, h]
-        omega
-
 private theorem step_adj {x y : Word} (h : Step x y) : wordTree.Adj x y := by
   cases h with
   | append _ b => exact child_adj _ b
@@ -107,7 +85,7 @@ abbrev boundedWordTree (k : ℕ) : SimpleGraph {x : List Bool // x.length ≤ k}
   wordTree.induce {x : List Bool | x.length ≤ k}
 
 private theorem finite_distance_eq (k : ℕ) (x y : {x : List Bool // x.length ≤ k}) :
-    (boundedWordTree k).dist x y = wordDist x.1 y.1 := by
+    (boundedWordTree k).dist x y = distance x.1 y.1 := by
   obtain ⟨_, hLower, p, hp, hCap⟩ := shortest_pop_append x.1 y.1
   let vertices : Set (List Bool) := {x | x.length ≤ k}
   let pFull := pathWalk p
@@ -125,7 +103,6 @@ private theorem finite_distance_eq (k : ℕ) (x y : {x : List Bool // x.length �
       _ ≤ (walkPath qFull).length := hLower (walkPath qFull)
       _ = qFull.length := walkPath_length qFull
       _ = q.length := Walk.length_map _ _
-  rw [wordDist_eq_prefixDistance]
   exact ((boundedWordTree k).dist_le pIn).trans_eq (hLen.trans hp) |>.antisymm (hq ▸ hShortest)
 
 /-- The list of leaves of the complete tree of depth k. -/
@@ -150,12 +127,11 @@ private theorem length_of_mem_leafWords {k : ℕ} {x : List Bool} (hx : x ∈ le
 
 private theorem sum_constant_on {A : Type*} (xs : List A) (f : A → ℚ) (c : ℚ)
     (h : ∀ x ∈ xs, f x = c) : (xs.map f).sum = (xs.length : ℚ) * c := by
-  induction xs with
-  | nil => simp
-  | cons x xs ih =>
-    simp only [List.map_cons, List.sum_cons, List.length_cons, Nat.cast_add, Nat.cast_one]
-    rw [h x List.mem_cons_self, ih (fun y hy => h y (List.mem_cons_of_mem _ hy))]
-    ring
+  have hConst : ∀ z ∈ xs.map f, z = c := by
+    intro z hz
+    obtain ⟨y, hy, rfl⟩ := List.mem_map.mp hz
+    exact h y hy
+  simpa only [List.length_map, nsmul_eq_mul] using List.sum_eq_length_nsmul (xs.map f) c hConst
 
 private theorem cancel_pow_two (k : ℕ) :
     (↑(2 ^ k : ℕ) : ℚ) * (1 / 2 : ℚ) ^ k = 1 := by
@@ -164,23 +140,26 @@ private theorem cancel_pow_two (k : ℕ) :
   norm_num
 
 private theorem weight_other_branch (a b : Bool) (h : a ≠ b) (xs : List Bool) (k : ℕ) :
-    ((leafWords k).map (fun ys => (1 / 2 : ℚ) ^ wordDist (a :: xs) (b :: ys))).sum =
+    ((leafWords k).map (fun ys => (1 / 2 : ℚ) ^ distance (a :: xs) (b :: ys))).sum =
       (1 / 2 : ℚ) ^ (xs.length + 2) := by
   rw [sum_constant_on _ _ ((1 / 2 : ℚ) ^ (xs.length + k + 2)), length_leafWords]
   · rw [show xs.length + k + 2 = k + (xs.length + 2) by omega, pow_add,
       ← mul_assoc, cancel_pow_two, one_mul]
   · intro y hy
-    simp [wordDist, h, length_of_mem_leafWords hy]
+    rw [distance_cons, ite_eq_right h]
+    congr 1
+    simp only [List.length_cons, length_of_mem_leafWords hy]
+    omega
 
-private theorem weight_wordDist (k : ℕ) (x : List Bool) (hx : x.length ≤ k) :
-    ((leafWords k).map (fun y => (1 / 2 : ℚ) ^ wordDist x y)).sum =
+private theorem weight_prefix_distance (k : ℕ) (x : List Bool) (hx : x.length ≤ k) :
+    ((leafWords k).map (fun y => (1 / 2 : ℚ) ^ distance x y)).sum =
       3 / 2 - (1 / 2 : ℚ) ^ (x.length + 1) := by
   induction x generalizing k with
   | nil =>
     rw [sum_constant_on _ _ ((1 / 2 : ℚ) ^ k), length_leafWords, cancel_pow_two]
     · norm_num
     · intro y hy
-      simp [wordDist, length_of_mem_leafWords hy]
+      simp only [distance_nil_left, length_of_mem_leafWords hy]
   | cons a xs ih =>
     cases k with
     | zero => simp at hx
@@ -188,17 +167,19 @@ private theorem weight_wordDist (k : ℕ) (x : List Bool) (hx : x.length ≤ k) 
       have hxs : xs.length ≤ k := by simpa using hx
       have hs := ih k hxs
       have hWeight :
-          ((leafWords k).map (fun ys => (1 / 2 : ℚ) ^ wordDist (a :: xs) (a :: ys))).sum =
+          ((leafWords k).map (fun ys => (1 / 2 : ℚ) ^ distance (a :: xs) (a :: ys))).sum =
             3 / 2 - (1 / 2 : ℚ) ^ (xs.length + 1) := by
-        simpa only [wordDist, ite_true] using hs
+        simpa only [distance_cons, ite_true] using hs
       rw [leafWords, List.map_append, List.sum_append, List.map_map, List.map_map]
       cases a with
       | false =>
-        rw [Function.comp_def, Function.comp_def, hWeight, weight_other_branch false true (by decide)]
+        rw [Function.comp_def, Function.comp_def, hWeight,
+          weight_other_branch false true (by decide)]
         simp only [List.length_cons, pow_succ _ (xs.length + 1)]
         ring
       | true =>
-        rw [Function.comp_def, Function.comp_def, weight_other_branch true false (by decide), hWeight]
+        rw [Function.comp_def, Function.comp_def, weight_other_branch true false (by decide),
+          hWeight]
         simp only [List.length_cons, pow_succ _ (xs.length + 1)]
         ring
 
@@ -238,14 +219,14 @@ theorem weighted_leaf_distance (k : ℕ) (x : {x : List Bool // x.length ≤ k})
   have he :
       (leafWords k).attach.map (fun y => (1 / 2 : ℚ) ^
         (boundedWordTree k).dist x ⟨y.1, (length_of_mem_leafWords y.2).le⟩) =
-      (leafWords k).map (fun y => (1 / 2 : ℚ) ^ wordDist x.1 y) := by
+      (leafWords k).map (fun y => (1 / 2 : ℚ) ^ distance x.1 y) := by
     calc
-      _ = (leafWords k).attach.map ((fun y => (1 / 2 : ℚ) ^ wordDist x.1 y) ∘ Subtype.val) := by
+      _ = (leafWords k).attach.map ((fun y => (1 / 2 : ℚ) ^ distance x.1 y) ∘ Subtype.val) := by
         apply List.map_congr_left
         intro y _
         rw [finite_distance_eq]
         rfl
       _ = _ := by rw [← List.map_map]; simp
-  rw [he, weight_wordDist k x.1 x.2]
+  rw [he, weight_prefix_distance k x.1 x.2]
 
 end D5.S3.Combinatorics.Graph.Queries.BinaryTreeLeafDistance

@@ -29,6 +29,6 @@ internal sealed class BinaryTreeLeafDistanceDocument : IScribeDocumentDefinition
                     + "At the root all leaves contribute a total of one. At a non-root vertex, "
                     + "the same first-bit branch retains the shorter-tree sum. All leaves in "
                     + "the other branch pass through the root and contribute one half raised "
-                    + "to d plus one. Induction then evaluates the geometric sum."))),
+                    + "to the power (d + 1). Induction then evaluates the geometric sum."))),
             DescribeRole.Theorem))));
 }
