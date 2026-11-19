@@ -88,6 +88,17 @@ class ContractTests(unittest.TestCase):
         self.assertFalse(data["units"]["tests-fib"]["dotnet"])
         self.assertEqual(data["units"]["tests-declared-template"]["lean"], "none")
 
+    def test_search_reduction_runtime_inputs_select_compiled_audit(self):
+        data, _ = contract.load(self.root)
+        for path in ("tools/scripts/search-reduction-runner.sh",
+                     "tools/scripts/search-reduction-probe-cache.py"):
+            for purpose in ("pull-request", "push"):
+                with self.subTest(path=path, purpose=purpose):
+                    plan = contract.selection(data, [path], purpose)
+                    self.assertTrue(plan["report"])
+                    self.assertTrue(plan["hits"]["tests-lean"])
+                    self.assertTrue(plan["compiled-audit"])
+
     def test_regular_owner_change_does_not_force_explicit_fib_suite(self):
         self.put("Reg/D5/NewOwner.lean", b"-- compiled Application inputs decide\n")
         plan = self.parity()

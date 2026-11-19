@@ -20,7 +20,7 @@ public sealed class RawLeanReportArtifactTests
         + "\"imports\": [], \"information_registration_errors\": [], \"module\": \"Trureturing\", "
         + "\"source_path\": \"Trureturing.lean\", \"source_sha256\": "
         + "\"sha256:da33f5efbd5a92bd6c18a7a11a36dfbcd0ac00fbe05c267a85dec98370deadd4\"}], "
-        + "\"schema\": \"stratalint-raw-lean-report-v3\"}\n";
+        + "\"schema\": \"stratalint-raw-lean-report-v4\"}\n";
 
     [Fact]
     public void DownstreamFibPartitionSurvivesWithoutChangingProofInputs()
@@ -44,8 +44,8 @@ public sealed class RawLeanReportArtifactTests
     public void PreviousReportFormatIsRejected()
     {
         // The strict reader accepts only the current extraction format.
-        var previous = CanonicalReport.Replace("stratalint-raw-lean-report-v3",
-            "stratalint-raw-lean-report-v2", StringComparison.Ordinal);
+        var previous = CanonicalReport.Replace("stratalint-raw-lean-report-v4",
+            "stratalint-raw-lean-report-v3", StringComparison.Ordinal);
         Assert.Throws<FormatException>(() =>
             RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(previous), Snapshot()));
     }
@@ -56,8 +56,8 @@ public sealed class RawLeanReportArtifactTests
         var snapshot = Snapshot();
         var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("Trureturing.lean")]);
         var scoped = CanonicalReport.Replace(
-            "stratalint-raw-lean-report-v3",
-            "stratalint-scoped-lean-report-v1",
+            "stratalint-raw-lean-report-v4",
+            "stratalint-scoped-lean-report-v2",
             StringComparison.Ordinal).Replace("\"imports\": []", "\"imports\": [\"Init\"]", StringComparison.Ordinal);
 
         var report = RawLeanReportArtifact.ReadForScope(
@@ -66,6 +66,10 @@ public sealed class RawLeanReportArtifactTests
         Assert.True(report.IsScoped);
         Assert.Throws<FormatException>(() =>
             RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(scoped), snapshot));
+        var previous = scoped.Replace(RawLeanReportArtifact.ScopedSchema,
+            "stratalint-scoped-lean-report-v1", StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.ReadForScope(Encoding.UTF8.GetBytes(previous), scope));
     }
 
     [Theory]
@@ -86,7 +90,7 @@ public sealed class RawLeanReportArtifactTests
         switch (defect)
         {
             case "missing":
-                bytes = "{\"modules\": [], \"schema\": \"stratalint-scoped-lean-report-v1\"}\n";
+                bytes = "{\"modules\": [], \"schema\": \"stratalint-scoped-lean-report-v2\"}\n";
                 File.Delete(RawLeanReportArtifact.MaterialsPath(path));
                 using (var archive = ZipFile.Open(RawLeanReportArtifact.MaterialsPath(path), ZipArchiveMode.Create)) { }
                 break;

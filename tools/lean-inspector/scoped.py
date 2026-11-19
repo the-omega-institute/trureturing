@@ -25,7 +25,7 @@ import materials
 import native
 import publication as public
 
-SCHEMA = 'stratalint-scoped-lean-report-v1'
+SCHEMA = 'stratalint-scoped-lean-report-v2'
 PROVENANCE_SCHEMA = 'stratalint-scoped-lean-report-provenance-v1'
 ATTESTATION_SCHEMA = 'stratalint-scoped-lean-report-input-attestation-v1'
 MODULE = re.compile(r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*")

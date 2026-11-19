@@ -136,6 +136,7 @@ runs:
       run: |
         # Reject untrusted input before Make can expand environment values.
         python3 tools/lean-inspector/native.py batch-size
+        make search-reduction-index-fixtures
         producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
         if [[ -n "$producer" ]]; then
           export STRATALINT_LEAN_PRODUCER_DLL="$producer"
