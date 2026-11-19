@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:955df62df23918fe5e9f9194e082e9681ab805ebcef97f711f9b5d53055771b0
+  normalized_sha256: sha256:955df62df23918fe5e9f9194e082e9681ab805ebcef97f711f9b5d53055771b0
+cas_ref: sha256:955df62df23918fe5e9f9194e082e9681ab805ebcef97f711f9b5d53055771b0
+coverage_gids:
+  - gid: D5/S3/Combinatorics/GreedyBrick/RestBlock.firstZeroBin
+    target_statement_id: sha256:2d9ba7e05d1e45b8768cff38a6a06d0500b7e51ca15fa7d8acc43d78ae601804
+  - gid: D5/S3/Combinatorics/GreedyBrick/RestBlock.placeBricks
+    target_statement_id: sha256:a7fa10397daf3dd06c5bb6835eb2fe991e05b66ad66595fb8e59afee252f71e5
+  - gid: D5/S3/Combinatorics/GreedyBrick/RestBlock.restCapacity
+    target_statement_id: sha256:b8c145c6b6d15bd74ad6ff16f717e4c6a20cf5c49f883dff4522b95eabd970fe
+receipts:
+  unresolved_subitems: []

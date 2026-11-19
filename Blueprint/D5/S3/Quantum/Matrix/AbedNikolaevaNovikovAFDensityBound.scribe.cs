@@ -18,7 +18,7 @@ internal sealed class AbedNikolaevaNovikovAFDensityBoundDocument : IScribeDocume
                 "For an arbitrary finite index type iota, bornProbability(rho,Y) is the existing unnormalized complex trace Tr(rho Y). "
                 + "The set consists exactly of real q obtained from A positive semidefinite, B Hermitian, and A+iB nonzero. "
                 + "Both traces are projected to their real parts. Positivity of rho makes the denominator strictly positive. "
-                + "The definition is Section 5.12 of arXiv:2610.34388v1, with the standing positive definite density convention of Section 3.1.",
+                + "The definition is Section 5.12 of arXiv:2610.34388v1, with the standing positive definite density assumption of Section 3.1.",
                 DescribeRole.Definition),
             Entry("supremum", "a", "The real supremum", IndexBinders(All("rho", Mat(Id("iota")),
                 Eqn(Call("a",Id("rho")),Call("sSup",Call("quotientValues",Id("rho")))))),
@@ -31,6 +31,9 @@ internal sealed class AbedNikolaevaNovikovAFDensityBoundDocument : IScribeDocume
                 + "For Q=sqrt(A), expand any v in the same basis. Triangle inequality and finite Cauchy–Schwarz bound norm(Q v) squared by card(iota) times the sum of norm(z_j) squared h_j, "
                 + "and hence by card(iota) times inner(v,P v). Zero eigenvalues and the zero-dimensional case remain included; no singular value is inverted.",
                 DescribeRole.Theorem),
+            Entry("positive-trace-pair", "trace_pair_pos", "Strict positivity of the trace pairing", TracePairPositive(),
+                "For every finite index type, a positive definite complex matrix rho has strictly positive real trace pairing with every nonzero positive semidefinite matrix P.",
+                DescribeRole.Lemma),
             Entry("claim", "claim", "The original boundedness question", ResultStatement(),
                 "For every positive dimension there exists one finite real bound before the quantifier over positive definite densities. The quotient set must be nonempty and its real supremum must be a least upper bound.", DescribeRole.Definition),
             Entry("density-bound", "result", "The complete fixed-dimension boundedness assertion", ResultStatement(),
@@ -52,6 +55,17 @@ internal sealed class AbedNikolaevaNovikovAFDensityBoundDocument : IScribeDocume
         Describe.Lean(DescribeId.Create(id),DeclarationHandle.Create(Prefix+name),H(title),
             StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))),role,resolution);
+
+    private static Formula TracePairPositive()
+    {
+        var rho = Id("rho"); var p = Id("P");
+        var weight = Seq(Parenthesized(new Formula.FunctionCall(
+            FormulaIdentifier.Create("bornProbability"), [rho, p])), Dot, Id("re"));
+        return IndexBinders(All("rho", Mat(Id("iota")), All("P", Mat(Id("iota")),
+            Implies(Call("PosDef", rho), Implies(Call("PosSemidef", p),
+                Implies(Neqn(p, D(0)), Seq(D(0), Sp, Lt, Sp, weight)))))));
+    }
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula QuotientDefinition()
     {
