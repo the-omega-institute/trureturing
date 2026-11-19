@@ -70,6 +70,10 @@ $$\neg (\forall D \in \operatorname{Digraph}\left(\operatorname{Fin}\left(14\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/EdgeLabeling/AceskaLortRippergerSparsest14.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-alr2606sparse` (refuted) by `D5/S3/Combinatorics/EdgeLabeling/AceskaLortRippergerSparsest14.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-alr2606sparse","declaration_gid":"D5/S3/Combinatorics/EdgeLabeling/AceskaLortRippergerSparsest14.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Roza Aceska; McKailyn Lort; Allison Ripperger (2026). *Ornaments and Difference Distance Magic Oriented Graphs*. DOI: [10.48550/arXiv.2606.16001](https://doi.org/10.48550/arXiv.2606.16001). URL: <https://arxiv.org/abs/2606.16001v3>.

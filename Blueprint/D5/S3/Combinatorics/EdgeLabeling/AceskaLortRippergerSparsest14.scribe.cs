@@ -62,7 +62,9 @@ internal sealed class AceskaLortRippergerSparsest14Document : IScribeDocumentDef
                     + "There are no loops or opposite arcs, and the label interval is exactly 1 through 14. "
                     + "Thus a connected DDMOG has 23 edges, contradicting the asserted lower bound. "
                     + "This gives no lower bound excluding 21 or 22 edges and no general minimum formula."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-alr2606sparse"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(
