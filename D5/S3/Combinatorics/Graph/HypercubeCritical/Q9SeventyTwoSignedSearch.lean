@@ -18,6 +18,12 @@ open private cube_action_regular_balanced from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixNormalizeProbe
 open private cubeParity cubeParity_ne_of_adj from
   D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+open private flip_comm from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
+open private matrix_true_prefix from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixSignedModelProbe
+open private theta theta_unit from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.GridWedgeSigning
 
 attribute [local instance] Classical.propDecidable
 local notation "flip" => BalancedCriticalSpectrum.flip
@@ -143,5 +149,30 @@ theorem exists_signed_candidate {C : Finset (Q 9)} (hC : C.card = 72)
   rw [← h, add_sub_cancel_left]
 
 #print axioms exists_signed_candidate
+
+/-- The two orders of distinct flips give opposite products of the
+integer edge signs used to select the middle of a compressed edge. -/
+theorem opposite_middle_signs (x : Q 9) {i j : Fin 9} (hij : i ≠ j) :
+    truePrefixSign x i * truePrefixSign (flip x i) j =
+      -(truePrefixSign x j * truePrefixSign (flip x j) i) := by
+  have h := congrFun (BalancedCubeGirth.gamma_anticommute hij (fun _ => (1 : ℝ))) x
+  simp only [Pi.neg_apply, BalancedCriticalSpectrum.gamma_apply, mul_one] at h
+  rw [matrix_true_prefix x i, matrix_true_prefix (flip x i) j,
+    matrix_true_prefix x j, matrix_true_prefix (flip x j) i, flip_comm x j i] at h
+  have t (u : Q 9) : theta u ^ 2 = 1 := by
+    rcases theta_unit u with hu | hu <;> rw [hu] <;> norm_num
+  have tn (u : Q 9) : theta u ≠ 0 := by
+    rcases theta_unit u with hu | hu <;> rw [hu] <;> norm_num
+  have cancel (a b c u v : ℝ) (hb : b ^ 2 = 1) :
+      (a * b * u) * (b * c * v) = (a * c) * (u * v) := by
+    calc
+      _ = b ^ 2 * ((a * c) * (u * v)) := by ring
+      _ = _ := by rw [hb, one_mul]
+  rw [cancel _ _ _ _ _ (t (flip x i)), cancel _ _ _ _ _ (t (flip x j)),
+    ← mul_neg] at h
+  have hs := mul_left_cancel₀ (mul_ne_zero (tn x) (tn (flip (flip x i) j))) h
+  exact_mod_cast hs
+
+#print axioms opposite_middle_signs
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SeventyTwoSignedSearch
