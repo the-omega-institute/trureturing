@@ -43,13 +43,4 @@ theorem exists_representative (s : Signing) (h : (graph s).Preconnected) :
   obtain ⟨e⟩ := HeawoodMatrixAction.isomorphic_of_phi_conjugate (representative k) s g he
   exact ⟨k, ⟨e.symm⟩⟩
 
-/-- The same six graphs cover the connected lifts presented by edge voltages. -/
-theorem exists_voltage_representative (s : BinaryLift.Voltage base)
-    (h : (BinaryLift.graph base s).Preconnected) :
-    ∃ k : Fin 6, Nonempty (BinaryLift.graph base s ≃g graph (representative k)) := by
-  have hsign : (graph (signingOfVoltage s)).Preconnected :=
-    (voltageIso s).preconnected_iff.mp h
-  obtain ⟨k, ⟨e⟩⟩ := exists_representative (signingOfVoltage s) hsign
-  exact ⟨k, ⟨(voltageIso s).trans e⟩⟩
-
 end D5.S3.Combinatorics.Graph.StarForming.HeawoodSixRepresentatives
