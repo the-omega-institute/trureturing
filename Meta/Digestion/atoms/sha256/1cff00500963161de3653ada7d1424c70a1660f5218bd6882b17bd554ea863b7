@@ -1,0 +1,79 @@
+**Theorem 114.1 (Completion of Theorem 109.2).** Under the hypotheses
+of Theorem 109.2, $N=0$.
+
+Proof. Corollary 112.2 handles $n\le5$, so assume $n\ge6$. Since
+$N$ is a closed finite-dimensional real subspace invariant under
+$M^0$, a Haar average of conjugates of any $A\in N$ over a compact
+subgroup of $M^0$ remains in $N$. Suppose $A\ne0$. There is a unit
+vector $v$ with
+
+$$
+a=\langle v,Av\rangle\ne0.
+\tag{114.1}
+$$
+
+First let $M^0=U(n)$. Average over its full subgroup $U(n-1)$ fixing
+$v$ pointwise. Relative to $\mathbb Cv\oplus v^\perp$, the element
+$I_{\mathbb Cv}\oplus(-I_{v^\perp})$ kills the off-diagonal blocks
+of the invariant average. The complementary Hermitian block is
+scalar: invariance under $U(n-1)$ makes its quadratic form constant
+on the complementary unit sphere, and polarization determines the
+Hermitian operator. The average is therefore
+
+$$
+\overline A=aP_v+b(I-P_v),\qquad b=-\frac{a}{n-1}.
+\tag{114.2}
+$$
+
+Trace zero gives the displayed value of $b$. The $v$ expectation
+remains $a$, so $\overline A\ne0$. Its smaller sign rank is one,
+contradicting Proposition 112.1 for $\overline A\in N$.
+
+Now let $M^0=\mathbb T\operatorname{Sp}(m)$, $n=2m\ge6$, in the
+standard embedding of Proposition 113.2. This contains the full
+$\operatorname{Sp}(m)$. Choose its defining antiunitary $J$ with
+$J^2=-I$, and put
+
+$$
+T_v=\operatorname{span}_{\mathbb C}\{v,Jv\}.
+\tag{114.3}
+$$
+
+Antiunitarity and $J^2=-I$ give $v\perp Jv$. Thus $T_v$ is a
+$J$-stable complex two-plane and $T_v^\perp$ is also $J$-stable.
+Complete $v$ to a quaternionic orthonormal basis. In that basis the
+pointwise stabilizer of $T_v$ inside the full $\operatorname{Sp}(m)$
+is exactly the embedded standard $\operatorname{Sp}(m-1)$ acting
+on $T_v^\perp$. In particular it contains
+$I_{T_v}\oplus(-I_{T_v^\perp})$ and is transitive on the unit sphere
+of $T_v^\perp$. These are properties of the full embedded stabilizer,
+not consequences of a local isomorphism label alone.
+
+Average $A$ over this compact stabilizer. The sign element kills
+the cross terms. Sphere transitivity makes the quadratic form of the
+complementary block constant on its sphere, hence makes that block
+scalar. The result has the form
+
+$$
+\overline A=B\oplus bI_{T_v^\perp},\qquad
+B\in\operatorname{Herm}(T_v),\qquad
+\operatorname{Tr}B+(n-2)b=0.
+\tag{114.4}
+$$
+
+The stabilizer fixes $v$, so $\langle v,\overline A v\rangle=a\ne0$.
+If $b\ge0$, the negative eigenspace of $\overline A$ is contained
+in $T_v$ and has dimension at most two. If $b\le0$, the positive
+eigenspace has dimension at most two. This includes $b=0$. Either
+case contradicts (112.1) for the nonzero $\overline A\in N$.
+Both alternatives in (113.2) therefore force $N=0$. Surjectivity of
+$\pi$ and (109.3) finish (109.6). ∎
+
+This proof does not assume irreducibility of the conjugation action
+on Hermitian matrices. Quaternionic notation identifies a subgroup
+of the original complex $U(2m)$; it does not change the source to a
+quaternionic PSD cone. Haar averages are mathematical elements of
+an invariant subspace, not averages of supplied native operations.
+The enlargement by phases and the full stabilizers create no
+original gate, preparation or control interface.
+

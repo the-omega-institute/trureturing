@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3c87854e87ab3cf3864ffc7ca9bc3588e55b44e73444c615ca89afc7568f67ca
-  normalized_sha256: sha256:3c87854e87ab3cf3864ffc7ca9bc3588e55b44e73444c615ca89afc7568f67ca
-cas_ref: sha256:3c87854e87ab3cf3864ffc7ca9bc3588e55b44e73444c615ca89afc7568f67ca
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/NormativeStructure/PosteriorApprovalAuthorizationGap.posterior_approval_does_not_imply_prior_authorization
-    target_statement_id: sha256:031f24a9e2f484cd51af04e146812af4e893523ea1d462f8e6df7304333bea12
-receipts:
-  unresolved_subitems: []

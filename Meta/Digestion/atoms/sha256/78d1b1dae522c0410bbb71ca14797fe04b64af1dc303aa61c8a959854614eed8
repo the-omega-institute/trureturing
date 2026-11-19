@@ -1,4 +1,0 @@
-**Proposition 8.5 (no cap-only amplitude or lifetime-width bound).** Fixed $R$ does not bound startup scalar widths, preparation amplitudes or later literal output widths.
-
-Proof. At $R=N=1$, $T=(1/2)$ and entry field $x^{\rm in}=M\in\mathbb Q$, the first Read already returns arbitrary $M$. Here $s=1$ and the startup ends at $x_*=M/8+1/4$. The one-pair preparation input is $u_0=1-Tx_*=7/8-M/16$, whose amplitude is unbounded as $M$ ranges over rational integers. Even after the unit origin has been earned, the passive root $2^{-k}$ has denominator width $k+1$ at epoch $k$. A finite controller and finite native order therefore do not bound the storage or traffic of all finite continuations. $\square$
-

@@ -1,7 +1,0 @@
-- In an accepting run of Theorem 6.2 insert one writer update after final
-  validation and before Return. The whole boundary is unchanged but
-  Return source/count changes. A validation stamp is not a Return bound.
-
-The missing conditions are selection, exact capture lag, reachedness and
-the separate Return event. None disputes truthful records at validation.
-

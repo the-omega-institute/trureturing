@@ -1,0 +1,9 @@
+**约定 123.8（成熟工具及本章的范围）。** 本章采用 `repo-derived` 的纸面综合归属。三次双曲锥、二维正交乘法及PSD量子字典都已有成熟来源；新增消费者是把这个收缩实三线性族的整个原效应域接到准确零面(123.12)，只在指定标签的整球前件下识别完整最低排除，再由两个独立边缘标签得到整个族的正规形。两个方向到全部方向使用非负二次型(123.19)，不把有限采样当作一般无限条件的替代。
+
+| 来源 | 准确使用范围 |
+| --- | --- |
+| Renegar，*Hyperbolic Programs, and Their Derivative Relaxations*，原始稿§2，Proposition 1、Theorems 2—3 [Q123R] | 含双曲方向的连通分支、闭包、凸性及内方向不变性；不提供本章全效应排除或共同线性三阶Hermitian表示 |
+| Saunderson，*Certifying polynomial non-negativity via hyperbolic optimization*，arXiv:1904.00491v2，§5.1、Proposition 5.1 [Q123S] | 对准确正规式 $s^3-3s|y|^2+2q(y)$，关于 $e_0$ 的双曲性等价于 $\max_{|y|=1}|q(y)|\le1$；说明有界三次型与双曲性的关系已有先例，不供应完整 $D_p$ 或有限边缘检测 |
+| Chi—Wang，*Orthogonal multiplications of type $[3,4,p],p\le12$*，arXiv:1705.04762v1，Introduction及§2 [Q123CW] | 正交乘法是满足 $|F(x,y)|=|x||y|$ 的双线性映射，采用定义域和值域正交等价；其引言明确回溯Hurwitz的 $[l,l,l]$ 分类。本章只用已展开的 $[2,2,2]$ 情形，不将复数乘法分类计为新成果 |
+| VII103.2 [Q123VII] | 中心反射给原完整排除面的暴露性；本章只抽取该证明对指定标签有效的部分，再消费精确 $F_v$；不输入Pair |
+| SAME_READBACK125—131、本卷121及VIII113.7—113.9 [Q123SR] [Q123BV] [Q123EVIII] | 固定完整入口中的种子、共同尺、确认唯一、PC1／IC0／W条件链及全部静态字典；既有密度、法向层和状态谱不重证、不计新成果 |

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c2a26203f38fe1e1379d6091bdfcb1c0c46c018b370ae7ed45ddfdb19f139963
-  normalized_sha256: sha256:c2a26203f38fe1e1379d6091bdfcb1c0c46c018b370ae7ed45ddfdb19f139963
-cas_ref: sha256:c2a26203f38fe1e1379d6091bdfcb1c0c46c018b370ae7ed45ddfdb19f139963
-coverage_gids:
-  - gid: D5/S3/Observer/ProbabilisticClosure/SingleDeflectionOptimalController.single_deflection_optimal_controller
-    target_statement_id: sha256:f179961154cbe610df759a429c7b54a6ace6d0fa3dd1faab93a98d3385d3f5c0
-receipts:
-  unresolved_subitems: []

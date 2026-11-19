@@ -85,7 +85,7 @@ golden-ledger/
 
 **文献笔记容量(delta-only)。** SL-003 对 `Library/**` 下新增或修改的 Markdown 文件检查候选全文，硬上限为 3,000 行；扩展名不区分大小写，空行计入，末尾换行符不额外计一行。超过上限即 Block，诊断包含路径、实测行数和上限。改名或复制的目标路径视为新增；修改已有长文时仍须满足候选全文上限，即使修改未增加行数。删除及未触及的历史长文不在本项检查范围，判官实现变更也不扩大选集。Library Markdown 不适用通用文件行数软硬上限，check-current 及 repository capacity-audit 不检查其行数，目录容量照常计算。超出单篇篇幅的内容拆为独立笔记并以引用衔接。
 
-**理论文档容量(delta-only)。** SL-003 对 `docs/develop/theory/**` 中新增或修改的 Markdown 检查候选全文,硬上限为 5,000 行;扩展名不区分大小写,空行计入,末尾换行符不额外计一行。超过上限即 Block,诊断包含路径、实测行数和上限。删除路径不读正文;未触及的历史长卷、check-current 及 repository capacity-audit 不进行这项检查,判官实现变更也不扩大理论文档选集。新内容超出单卷篇幅时写入同主题续卷并通过引用衔接,保留既有条目、编号与引用。此谓词只约束文档大小,不校验理论数学内容,也不建立 Lean 对理论正文的依赖。
+理论正文的文件准入由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)负责。
 
 ## 2.4 第五坐标:通用性(理论自分类之工程兑现)
 文件头声明 `generality: G|I|E`——G 通用机器(任意实二次域/任意无理;**自然普遍性律:能免费一般化者必须一般化陈述**,证于 `Zsqrtd d` 末行特化);I 实例运气(h=1、模数 5;**I 承重须警示注**——现查唯一承重 I 为 h=1/UFD,推广至 h>1 需理想论翻修);E 极值指纹(Hurwitz/Markov 根/复杂度地板——理论签名,不可亦无需一般化)。实测分解 G80%/I9%/E9%,承重 13G+1I。**因子分解落位(v7.4)**:G 层就地为根包 `Metallic/`(不析出——析出仅当外部需求已证实,且走 lake package 边界非分仓);实例层 `D<disc>/`;**跨族比较定理居 `Moduli/`**(Hurwitz 极值、Markov 谱、Lagrange 谱、分类表)——分库将使全族最好的定理无家可归,故不分。
@@ -115,13 +115,13 @@ golden-ledger/
 
 **A5.1 用途准入(SL-031;政策原文 CLAUDE.md 第 5⁗ 条)** 受保护 immutable baseline 未冻结且本次 present byte-changed 的 D5 Lean 模块,与本次首次取得 `Golden/Frozen/state/<module>.lean.json` 的模块,取去重并集。修改正文、缺头、无 state、Modified change record、rename/copy 目的路径均参与;同时首冻按 FirstFreeze 判。未变历史不因 judge-only 变化被重审,baseline-frozen 的 utility 棘轮和 SL-008 保留。
 
-选中模块须在 `anchors` 与 `digest` 间有一行 `utility: ...`。值为 `none`,或按顺序 `kind=<kind>; basis=<basis>` 后接可选的 `instance=<declaration-gid>`、`premises=<gid>,<gid>...`、`result=<declaration-gid>`、`claim=<declaration-gid>`;分隔恰为 `; `,可选键顺序固定,不接受重复/未知键。kind 闭集为 `bounded-enumeration|checker|numeric-reduction|certified-instance`;basis 为 `consumer=<declaration-gid>` 或 `refutes=<target>` 或 `terminal=<target>`,target 为 `gid:<declaration-gid>`、`atom:<64-lower-hex>`、`task:D5-Tnnnn`。C# `UtilitySyntax` 只判文法,`UtilityDeclarationValidator` 判用途。
+选中模块须在 `anchors` 与 `digest` 间有一行 `utility: ...`。值为 `none`,或按顺序 `kind=<kind>; basis=<basis>` 后接可选的 `instance=<declaration-gid>`、`premises=<gid>,<gid>...`、`result=<declaration-gid>`、`claim=<declaration-gid>`;分隔恰为 `; `,可选键顺序固定,不接受重复/未知键。kind 闭集为 `bounded-enumeration|checker|numeric-reduction|certified-instance`;basis 为 `consumer=<declaration-gid>` 或 `refutes=<target>` 或 `terminal=<target>`,target 为 `gid:<declaration-gid>`、`task:D5-Tnnnn`。C# `UtilitySyntax` 只判文法,`UtilityDeclarationValidator` 判用途。
 
-普通正向有限实例不得准入:`certified-instance` / `bounded-enumeration` 仅可走有效 `refutes`,否则 `UTILITY-ORDINARY-INSTANCE-BANNED`;consumer、terminal、自指及附加 result 无豁免。checker / numeric-reduction 仍可承载一般基础设施;非 refutes 的 checker 须有 instance,归约须有 premises 且 basis=consumer。G/I/E 与用途正交,不以命名、数值语法或 tactic 判分类。缺失/坏 utility 或当前 report(含 `none`)阻断;所有 GID 必须唯一解析到当前 report 的 included 声明,atom/TASK 必须解析。已知普通类别换成其他 label 而头后正文逐字节不变时 `UTILITY-CLASSIFICATION-DOWNGRADE` 阻断;分类改变(包括缺失/坏 label)产生 `UTILITY-CLASSIFICATION-CHANGED`。每个选中模块有 `UTILITY-OBSERVED ... semantics=unverified-by-machine`。
+普通正向有限实例不得准入:`certified-instance` / `bounded-enumeration` 仅可走有效 `refutes`,否则 `UTILITY-ORDINARY-INSTANCE-BANNED`;consumer、terminal、自指及附加 result 无豁免。checker / numeric-reduction 仍可承载一般基础设施;非 refutes 的 checker 须有 instance,归约须有 premises 且 basis=consumer。G/I/E 与用途正交,不以命名、数值语法或 tactic 判分类。缺失/坏 utility 或当前 report(含 `none`)阻断;所有 GID 必须唯一解析到当前 report 的 included 声明,TASK 必须解析。已知普通类别换成其他 label 而头后正文逐字节不变时 `UTILITY-CLASSIFICATION-DOWNGRADE` 阻断;分类改变(包括缺失/坏 label)产生 `UTILITY-CLASSIFICATION-CHANGED`。每个选中模块有 `UTILITY-OBSERVED ... semantics=unverified-by-machine`。
 
 所有 refutes 必须同时给 claim 与 result。claim 是唯一 included、无自由项/宇宙参数的闭合 Prop definition;result 是当前准入模块唯一 included、闭合 theorem。Lean 编译期内核检查 theorem 的证明项；inspector 逐字核对 claim 的编译类型为 `Prop`、result 的编译类型为 `Not claim`，不展开定义、不化简、不接受定义性别名或 Reg 证书,claim/result 公理闭包只能含既有许可公理。自我反驳、额外未证假设、非 theorem/外模块 result、正向结果伪标 refutes 均失败。`basis=refutes=gid` 的目标必须等于 claim。
 
-`lean-utility-input` 使用唯一 C# utility parser 发出结构化义务,由既有 inspector 消费。报告 optional module 字段 `utility_refutation` 闭集为 `{claim_gid,claim_source_path,claim_source_sha256,result_gid,is_closed_negation}`;strict source-bound loader 校验当前头部与 claim 源码路径/哈希绑定。claim 即使不在 result 的 Lean import 闭包内也参与声明身份和闭合性检查,故模块 report facet 将该 claim 的编译导出及传递编译工件作为依赖,其变更、删除或传递输入变化使相关反驳重新检查,不只跟踪 imports。缺失该可选字段不满足 refutes 的证据要求。证据不进入 canonical statement material、declaration statement ID 或 frozen identity。ChangedContent 与 PreDeposit 共用解析、禁令、当前报告和 typed refutation 检查;FirstFreeze 另要求 consumer import 可达,以及 refutes=atom 的 coverage 精确指向指定 result 的当前 statement ID。前两阶段不要求 freeze 后才有的 coverage。
+`lean-utility-input` 使用唯一 C# utility parser 发出结构化义务,由既有 inspector 消费。报告 optional module 字段 `utility_refutation` 闭集为 `{claim_gid,claim_source_path,claim_source_sha256,result_gid,is_closed_negation}`;strict source-bound loader 校验当前头部与 claim 源码路径/哈希绑定。claim 即使不在 result 的 Lean import 闭包内也参与声明身份和闭合性检查,故模块 report facet 将该 claim 的编译导出及传递编译工件作为依赖,其变更、删除或传递输入变化使相关反驳重新检查,不只跟踪 imports。缺失该可选字段不满足 refutes 的证据要求。证据不进入 canonical statement material、declaration statement ID 或 frozen identity。ChangedContent 与 PreDeposit 共用解析、禁令、当前报告和 typed refutation 检查;FirstFreeze 另要求 consumer import 可达。既有冻结模块按受保护基线识别。
 
 `make deposit` 把 BASE 解析为 commit SHA,传入 `deposit-header-check --target <path> --protected-base <sha>`;预检从 repository gateway 读取该 immutable protected baseline,仅其 frozen membership 获历史豁免,candidate 自带 pin 不获豁免,baseline 不可读即错误。预检 utility 失败使用相应 `DEPOSIT_HEADER_UTILITY_*` 诊断。该门不替代 SL-008 或最终 admission,不独立重构 ledger writer。
 
@@ -310,7 +310,7 @@ Inspector privately stages, canonically validates and publishes raw-v3 rows, all
 
 The optional `report_execution` manifest declaration names the supported tools (`lake`, `lean`), their required registered identity file (`toolchain: "lean-toolchain"`), platform coordinates (`system`, `machine`) and explicit semantic environment variables. Report reuse binds the authored pin and those coordinates; it does not execute compiler version commands or require installed compiler binaries. Missing, changed or excluded pin registration cannot yield reusable evidence. CI restores optional project/dependency caches and installs the pinned toolchain as needed. Selected program builds and report misses still require the normal toolchain; if publication rejects a seed after planning, the normal entry obtains the missing toolchain and builds, retaining build failures. The normal Inspector entry first seals a `.reuse.json` sidecar after a successful native `:report` invocation with the Inspector default program targets or the caller-provided sorted JSON `STRATALINT_LEAN_BUILD_TARGETS` and complete publication. A receipt hit checks the bundle envelope and input coordinates on a private snapshot and republishes the report while separately fulfilling the selected program-build obligations. It binds the report format identifier, the declared report-module and configuration inventory with file modes, the execution environment and the five-file report; producer program files, including the Lean Inspector and audit library, are never part of this binding. Program compilation is an independent obligation selected by the Inspector default targets or the sorted JSON `STRATALINT_LEAN_BUILD_TARGETS` override: a receipt hit still builds those targets through Lake, and a miss builds them together with `:report` in one invocation. Empty target selection permits report reuse without restoring heavy Lean caches. Unscoped calls build the Inspector default program targets. A selected program build failure remains nonzero and removes the output reuse receipt. Reusing this successful invocation requires the report format and all bound inputs to remain identical, the private snapshot to match the receipt's bundle bytes, and its envelope and input coordinates to be current; the rows were validated when produced and are not validated again. An absent, old, damaged or mismatched receipt requests native Lake work; invalid registration and actual build/check failures remain failures. Producer implementation and judge rule changes do not prevent reuse and do not invalidate per-module artifacts. Contract interface changes require migration of every use and deletion of old paths in the same delivery; affected Reg compiler closures rebuild and are reassessed automatically. Hashing producer or judge program bytes into a reuse condition of a data product is prohibited. A per-module report artifact traces the module's own compiler closure, utility inputs and report format identifier; the Inspector executable is demanded and awaited without entering that trace. Judge fixes do not retrospectively reassess unchanged registrations; delta-only DTR does not consume unchanged registrations. A requested historical reassessment uses an explicit uncached complete report. Changes to extraction semantics, including declarations, statement identity or axiom closure, or to the report format update the format identifier, reject old reports through strict readers and re-extract every module.
 
-A22 的报告路径在 current 中恢复可用的 dependency/project/toolchain 缓存，随后生产或复用一份聚合 Lean report；纯理论路径不使用 Lean report。报告、材料和项目编译产物随同一 project buildDir 运输，current/delta 消费聚合报告，各 unit job 分别承担自己的测试或反证结果。原生模块产物仍供报告生产和聚合复用，没有移除完整报告架构。truth-release bundle 离线验证不选择 CI run 或下载报告。没有独立报告 cache/store、暂停后续跑协议、baseline adapter 或 delta/cohort planner。`ci-current.yml` 的 detect 只按其单元模式选工；Scribe current 消费 `Meta/ReportProducers/scribe-content.json`，不读 base。
+A22 的报告路径在 current 中恢复可用的 dependency/project/toolchain 缓存，随后生产或复用一份聚合 Lean report。报告、材料和项目编译产物随同一 project buildDir 运输，current/delta 消费聚合报告，各 unit job 分别承担自己的测试或反证结果。原生模块产物仍供报告生产和聚合复用，没有移除完整报告架构。truth-release bundle 离线验证不选择 CI run 或下载报告。没有独立报告 cache/store、暂停后续跑协议、baseline adapter 或 delta/cohort planner。`ci-current.yml` 的 detect 只按其单元模式选工；Scribe current 消费 `Meta/ReportProducers/scribe-content.json`，不读 base。
 
 
 **Compiled contract production and inputs.** Production report generation reads each requested module and its imported declarations from serialized compiler artifacts through `RawArtifacts.Store`. It does not initialize extensions, construct an Environment, invoke elaboration or Meta, or run a content-supplied driver. Typed inputs are identified by their compiled Contract type heads and owner facts; constructor trees and safe constant references are decoded as data. Values requiring evaluation, missing parts, unknown layouts and read failures receive named diagnostics and have no fallback path. Each row is computed from its own artifact data. The raw reader checks compiler header identity and constant-table structure; native Lake traces select the compiler dependencies.
@@ -422,9 +422,9 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 | `make -C tools selftest` | 执行 selftest 的放行与拒绝判据。 |
 | `make -C tools compile-proof PROOF=capability-proof` / `PROOF=banned-api-proof` | 构建并调用 `StrataLint.TestEvidence` 验证预期的编译拒绝及具名诊断，任意编译失败不替代反证；CLI 的同名入口复用该实现。 |
 | `make lean-report` | 经受保护的 Lean 缓存入口和原生 Lake 增量生产规范报告。 |
-| `check-source --current [--protected-base <40-hex-sha>]` | 仅运行报告前的源码前置子集：SL-003 current 容量与 SL-015 路径/组合保护；显式 base 时另取原 delta affectedness 与容量核心。没有 Lean closure 或完整准入证书；普通 push 不传 base，纯理论仍用原 report-free check-delta。 |
+| `check-source --current [--protected-base <40-hex-sha>]` | 仅运行报告前的源码前置子集：SL-003 current 容量与 SL-015 路径/组合保护；显式 base 时另取原 delta affectedness 与容量核心。没有 Lean closure 或完整准入证书；普通 push 不传 base。 |
 | `check-current --candidate-lean-report FILE` | 当前树有效性；context 无 base 或 changes，可在根提交、无 remote 的仓库中独立运行。 |
-| `check-delta --protected-base <40-hex-sha> [--candidate-lean-report FILE]` | 读取固定 base 数据；无报告仅接受非空且完全位于 `docs/develop/theory/` 的变更，沿既有快照、FILEMAP、路径保护与 SL-003 理论文档容量检查。其它变更必须提供报告，验证跨树保护、分区、首次冻结、棘轮及候选测试拓扑；删除测试项目不因基线登记缺失而阻断。 |
+| `check-delta --protected-base <40-hex-sha> --candidate-lean-report FILE` | 读取固定 base 数据和候选 Lean 报告，验证跨树保护、分区、首次冻结、棘轮及候选测试拓扑；删除测试项目不因基线登记缺失而阻断。 |
 | `tools/scripts/workflow/scribe-content-checks.sh REPORT [SCRIBE_DLL] [PATHS_FILE]` | 调用 `content-check --report REPORT [--paths-from PATHS_FILE]`，在一个进程中加载一次显式报告，依次运行 `projections --check`、`describe-report --check` 与 `markdown-check`；保留各检查的输出与首个失败退出码。 |
 | `filemap-conform` | 独立核对当前 FILEMAP、路径、producer/verifier 与生成物契约。 |
 
@@ -557,7 +557,7 @@ GitHub 按 schedule 每 6 小时触发定时 Release，每次作业独立计时�
 
 手动 Release 使用 `lean-cache-publish.yml` 的 `operation=release`，与默认的 `operation=build` 分开。运行分支与发布源码分别记录；integration runtime 也只发布已校验的 dev 内容。GitHub 的触发按钮仍遵循仓库原生权限；非 `loning` 请求由入口拒绝，未获授权不运行发布。定时发布的入口与账号策略保持独立。
 
-纯理论免报告只接受真实 delta 非空、全部路径为 `docs/develop/theory/` 下理论文档且非删除输入已经读取的情况：PR base 为 `M^1`，push base 为固定 `event.before`，沿既有快照/FILEMAP 与 `ExecuteTheoryDelta` 执行 `SL-003`、`SL-015`。不恢复 Lean 缓存、不生产报告、不运行全局 current/Scribe、不触发自动 producer；其它命中单元照常运行。混合变更必须提供报告；空 delta 即使进入无报告入口也会拒绝，未读取的理论输入也拒绝，均不构成免检。无可读 before 的事件走完整报告选择，不用未知 delta 猜纯理论。
+主仓的 `check-delta` 使用受保护的 Git 基线和对应候选报告。理论稿件与消化记录在独立理论仓接受该仓的检查。
 
 **状态与决策。** 兼容种子须具有规范报告、四个 sidecar 与成功收据，并满足 A14.9 的格式和工件检查；格式相符不表示输入未变。
 
@@ -594,7 +594,7 @@ GitHub 按 schedule 每 6 小时触发定时 Release，每次作业独立计时�
 
 Actions artifact 名为 `lean-pr-preparation-<PR>-<H>`；这是精确发现地址，不是新 cache key 或格式代际。artifact 内仅 `preparation.json` 与 `native.tar.gz`：前者绑定源身份、producer runtime、现有 native partition 与 elan pin key，不含 schema/version；后者从 `lean_actions.native_archive_paths` 和 `Meta/ci-cache-paths.json` 展开原生 project/dependency 成员，保留隐藏文件与可执行权限。toolchain 仍由普通 elan restore/install 负责。artifact ID 是不可变取回地址；同一 run 重试上传替换名称对应的旧 artifact 时取得新 ID。消费者核对该 ID 的 workflow run/SHA、记录的精确 producer attempt 成功以及 artifact 创建时点落在该 attempt 区间；latest run 状态与可变 PR 关联不替代精确 attempt。源身份、M 父提交与 protected runtime history 继续校验。
 
-`current` 的报告路径、`ci-unit` 的 `lean=build` 路径和共享长核心在普通 dependency/project restore 前尝试显式采用；纯理论和 `lean=none/toolchain` 不增加此工作。源 PR 仅可取自身仍 open 的相同 PR/H/target 准备，允许 event M 的基线已推进，随后仍须通过当前 head 的全部 required。目标 push 由实际 event.after/ref 与 checkout 相等，再从该 commit 的 PR 关联中确认唯一实际 merged PR、目标和 `merge_commit_sha=checkout=K`；手动 protected build 对固定 source checkout 作相同确认。K 与准备 M 分列，不要求 SHA 相同。未合并、关闭未合并、另一 PR、另一 head 或目标均不取得该准备的使用资格。多提交 push 中 checkout 不是该 PR 的实际 merge commit 时不选该准备；后续普通 target cache 复用沿原规则，不扫描历史候选。
+`current` 的报告路径、`ci-unit` 的 `lean=build` 路径和共享长核心在普通 dependency/project restore 前尝试显式采用；`lean=none/toolchain` 不增加此工作。源 PR 仅可取自身仍 open 的相同 PR/H/target 准备，允许 event M 的基线已推进，随后仍须通过当前 head 的全部 required。目标 push 由实际 event.after/ref 与 checkout 相等，再从该 commit 的 PR 关联中确认唯一实际 merged PR、目标和 `merge_commit_sha=checkout=K`；手动 protected build 对固定 source checkout 作相同确认。K 与准备 M 分列，不要求 SHA 相同。未合并、关闭未合并、另一 PR、另一 head 或目标均不取得该准备的使用资格。多提交 push 中 checkout 不是该 PR 的实际 merge commit 时不选该准备；后续普通 target cache 复用沿原规则，不扫描历史候选。
 
 采用前先校验身份并在临时目录解包；拒绝重复、越界、未登记成员与逃逸链接。完成后替换 job 本地 native 目录，并在运输树之外写当前 run/attempt/checkout/artifact 的采用记录。普通 restore actions 跳过这两层，`lean_actions.restore` 也保留已采用材料。既有报告与程序消费者承担实际载荷校验与 Lake 增量；运输与 trace 不证明 producer/consumer 语义兼容，不加入 producer 程序字节指纹。若实际合并树、配置或源输入漂移，必要的原生增量仍须执行并计入 120m 计算预算；下载和准备不扣该预算，外层平台上限独立。
 
@@ -714,7 +714,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 `ci-current.yml` 的 `detect` 与本地 gate 按 `Meta/ci-units.json` 中唯一 `CI_UNITS` 判定命中单元。
 current、FILEMAP、selftest、编译反证与各测试项目分别运行；
 `required` 合取实际命中单元的成功与未命中单元的跳过。
-current 的报告路径生产一份 Lean 报告供 check-current、Scribe 与适用的 PR check-delta 消费；纯理论路径依 A22 执行文件/容量检查。
+current 的报告路径生产一份 Lean 报告供 check-current、Scribe 与适用的 PR check-delta 消费。
 作业、缓存和退出契约见 A22；本节不维护第二份作业清单。
 
 ---
@@ -828,7 +828,7 @@ current 的报告路径生产一份 Lean 报告供 check-current、Scribe 与适
 
 每份文件内部的 pattern 按 Ordinal 排序；合并后 pattern 和非 `none` 的 artifact_id 全局唯一，重叠匹配仍由原检查拒绝，不存在覆盖优先级。主文件与分片均为普通文件、属判官面；缺失分片、非法命名、重复引入及坏格式均失败。工作树加载读取同一工作树，历史检查读取同一 Git 快照，禁止用当前文件补齐历史缺项。reports 登记保存在 `Meta/FILEMAP.docs.reports.toml`。
 
-FILEMAP 条目的可选 `exclude` 是非空、Ordinal 排序且无重复的安全 glob 字符串数组；条目匹配集合为 `pattern` 减去 `exclude` 的并集。严格读取、准入分面与 symlink 身份检查使用同一集合语义，排除项参与 canonical policy 身份。条目之间仍须恰一匹配，不引入优先级。理论输入以 `docs/develop/theory/**` 保持开放域，只扣除另有字面 symlink 声明的五个 reader 地址；新增常规 generic 输入无需逐文件登记，archive 与 reader 均无摄入资格。
+FILEMAP 条目的可选 `exclude` 是非空、Ordinal 排序且无重复的安全 glob 字符串数组；条目匹配集合为 `pattern` 减去 `exclude` 的并集。严格读取、准入分面与 symlink 身份检查使用同一集合语义，排除项参与 canonical policy 身份。条目之间仍须恰一匹配，不引入优先级。理论仓独立管理其来源路径。
 
 整个系统遵守 `CLAUDE.md` 第 2.10 条，只留结果，不留过程。实验程序、结果数据及其说明归入独立的私有仓库 `the-omega-institute/trureturing-experiments`，原相对路径保留。主仓库的 `docs/reports/` 只保留入口说明和正式源码引用的第三方许可证。正式成果归入对应的代码、理论正文或文献条目；实施日记、构建日志、席位回执、转录和重复快照直接删除，不搬到其他目录，也不在正文保留历史链接。
 
@@ -963,88 +963,9 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 **卷宗原子性仍未机器可判（承 §11.20.3 的 loader 注释）。** 「一份卷宗恰锚定一个显式命题」这条判据当前只靠散文与评审：`ProblemPoolPaths` 只判两条路径正则、`ProblemCandidateCatalog` 只判封闭键集与八节非空，**都不判锚定命题的个数**；而自由的非空锚定字符串在原理上立不了原子性——须先定义一个**封闭的单锚形式与可判边界**，才谈得上执法。**现存违例已点名**：`wall-sun-sun-golden-unit-lift`（Existence 与 Stronger 两个锚）、`random-zeckendorf-game-gaussianity`（Conjecture 1.7 / Question 6.5 / Question 6.6，其中只有一个「should be」半锚）；`mub-six-fourth-basis` 提到四条命题但**不**违例——其正文明写「本卷宗刻意只锚定 Problem 10.2」，故判据是「有没有恰一个显式锚」，**不是**「散文里出现了几条命题」。该门记 `open`。
 
-## 11.21 ATOM 消化与局部处理
-<!-- BACKFILL_ENTRY_ACCEPTANCE: required=atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;optional=- -->
-`Meta/Digestion/backfill/` 是 **Digestion Ledger** 唯一真源,采用一 source 一目录、一 atom 一 YAML 的现役目录 schema。每个 source 的 `source.toml` 定义 `{source_id,path,atomizer}` 及其分类投影,其中 `source_id` 全局唯一。每个 atom YAML 只含 `{fingerprints:{raw_sha256,normalized_sha256},cas_ref,coverage_gids,receipts}`;持久化 `coverage_gids` 是封闭边列表,每项恰为 `{gid,target_statement_id}`,其中 target 可为 `null`;`receipts` 承载链、非命题和历史治理字段等非 coverage 数据。`status` 由状态目录名投影,`atom_id` 由文件名投影。`atom_id` 的唯一公式为 `raw_sha256` 去掉 `sha256:` 后的裸 64 位小写十六进制,故 YAML 文件名、CAS blob 文件名与 `atom_id` 逐字相同;不得拼接方言、kind、序数或其他后缀,也不得保存任何位置元数据。同一内容在一卷或多卷出现时全局只保留一条 entry,owner 按 `source_id` 字典序确定,coverage 边按 GID 取并集。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。查询输出中的同名 `coverage_gids` 是持久边中 `.gid` 按 ordinal 排序派生的纯字符串列表,由 `show-atom` 输出;不得把该字符串元素形写回 atom YAML,也不得建立第二持久字段。`show-atom` 以 `atom_id` 定位并直接读取已提交 CAS blob;已入 git 者完全可信,禁止 source replay 重放验证。
+## 11.21 理论输入与跨仓覆盖
 
-**Source default dispatch.** `source.toml` optionally ends with `default_dispatch = "excluded"`; omission means eligible. This is the sole reversible source-owned default-selection choice, separate from classification, mathematical truth, migration, coverage, receipts and status-authority identity. Strict metadata loading rejects other values, arrays, duplicates, unknown keys and noncanonical encodings. Writers retain the choice through ingest and every source metadata rewrite. New source registration omits the field.
-
-`source-dispatch --source SOURCE_ID_OR_PATH [--source ...] [--default excluded|eligible]` reads the selected current choices, or updates them as one validated batch. IDs and paths may be mixed; every selector must resolve uniquely to registered canonical metadata before any write. Selected metadata alone is read; no atom, source prose, CAS, coverage or frozen evidence is rewritten. Setting eligible removes the field; repeating a setting is a byte no-op. Updates reuse the canonical ledger atomic writer with selected-input optimistic byte checks and batch rollback on failure. The make door is `make source-dispatch SOURCES="id id ..." DEFAULT=excluded` (eligible restores; omit DEFAULT to inspect). It requires the current Release CLI built through `make -C tools dotnet`.
-
-`search-atoms --selection default-dispatch` is an explicitly distinct dispatch query. It strictly reads the selected current source metadata and filters standard stored paths by eligibility, retaining the raw search state/text/limit behavior. It accepts the usual explicit source range or repeated `--atom-id ID` for cached candidate emission; atom selectors are unavailable in raw mode and ambiguous owners fail closed. It reads no atom YAML, source prose, atomizer or Lean. Every automatic consumer, including codex-formalize, prime_pick.sh and pick_atom.sh, checks the current choice when emitting candidates, even for a pool made before the choice. `prime_pick.sh REPO OUT.tsv [EXCLUDE.txt] --pool POOL.tsv` filters an existing prime pool; ordinary generation also filters before output. Pools remain transient inputs, never policy authority or a persistent index. Explicit raw search, inspection, targeted decompose/cover/deposit and foreign-child reads/reuse remain available regardless of choice. No age cutoff, readiness score, excluded-source list or global consistency scan is introduced.
-
-**coverage 边终态 contract(owner 2026-09-03 定)**:账本只有一个读取面,只接受这一 schema:`coverage_gids` 必须是列表,每个元素必须是 mapping 且键集恰为 `{gid,target_statement_id}`;`gid` 为非空 scalar,`target_statement_id` 为非空 scalar 或 `null`。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 均非现役 schema,一律 fail-closed。writer 只产对象形;仓内没有迁移命令或双读分支。
-
-
-**双轴状态由目标操作派生,status 是辅助目录投影,不承载数学真值。**迁移轴为 `{residual,partial,absorbed,nonpropositional}`:仅完成 extract/identify 而无语义目标或收据进展者为 residual;已识别目标 GID 或已有迁移收据但合取未齐者为 partial;原子本地收据与全部 `chain_atoms` 均闭合者才为 absorbed;经 canonical `receipts.nonpropositional` 作本项判定且全部 `chain_atoms` 闭合者为 nonpropositional；该收据仍在而后代未闭合时为 partial-open。真值轴为 `{closed,tail,open,inapplicable}`:对承载 coverage 的 `{residual,partial,absorbed}` 三种迁移态而言,Lean 闭包 Closed 才是 closed;`inapplicable` 表示经 `receipts.nonpropositional` 判定无可覆盖之命题,与 Lean 闭包无关,亦不计入已证;Tail 只有在 migration 已 absorbed 且 `tools/Authorizations/digestion-tail/<atom_id>.json` 之 canonical 工件逐字绑定 atom 与全部 Tail GID 时才投影为 **absorbed-tail**,否则一律 open;Tail 不计已证。新增轴值的合法新对恰为一对:`nonpropositional-inapplicable`;loader 对 `residual-inapplicable`、`nonpropositional-open` 等其他组合一律 fail-closed。摄入、分解、结算与覆盖命令在请求范围内检查各自必需的 source、指纹、目标和收据，并派生成功写入所需的目录。准入 catalog 不含 SL-016，不自动重算全账状态、传播目录变化或检查全部 CAS；辅助记录的既存偏差不阻断无关 Lean 交付。SL-015 与 SL-019 不扫描理论正文、消化账目或 CAS 的通用正文格式；目标 writer 的 strict 读取与 SL-031 的精确 ATOM 覆盖依据继续适用。
-
-**非命题终态(owner 2026-09-06 定,#5770 方向③)。**`receipts.nonpropositional` 的键集恰为 `{justification, previous_atom_id, next_atom_id}`,后两者为裸 64 位小写十六进制 atom_id 或 `null`(`null` 只表示已核实的源首/尾边界);该收据与非空 `coverage_gids`、`receipts.quarantine`、`receipts.cover_disposition` 互斥,loader 对任何共存或错形一律 fail-closed。该状态是无需 coverage 的终态,不再承担形式化义务,亦不计入可形式化分母。`settle-atom` 是唯一 writer。两种动词形态均先以 atom_id 定位唯一 entry(`ATOM_ABSENT` / `ATOM_AMBIGUOUS`)。leaf 与带 `chain_atoms` 的父项均可成为显式请求的目标；后代终态不代替父项自身的 supported justification。父项准入是 **admission-logic feature**，按 CLAUDE.md 第 8.12/8.14 条集成验证，不是恢复既有行为的 hotfix。
-
-**set:**`settle-atom --request FILE` 读取 strict TOML，必需键集为 `{atom_id, justification, previous_atom_id, next_atom_id}`，仅重复源出现时另需 `occurrence_index`。`atom_id` 为裸 64 位小写十六进制 id，前后邻居为同形 id 或字面量 `source-boundary`。其前置依次为 stored state 恰为 `residual-open`(`NOT_RESIDUAL_OPEN`；已有 nonpropositional 收据者亦为该码)、`coverage_gids` 为空(`COVERAGE_PRESENT`)、无 `receipts.quarantine`(`QUARANTINE_PRESENT`)、无 `receipts.cover_disposition`(`COVER_DISPOSITION_PRESENT`)、`unresolved_subitems` 为空(`UNRESOLVED_SUBITEMS_PRESENT`)。此后 `DigestionAtomContextProjection` 遍历保存的源版本 occurrence 与邻居，其缺失/歧义及 CAS 错误原码传播。多次出现缺索引为 `OCCURRENCE_INDEX_REQUIRED`；索引须为按源字节序的 1-based occurrence ordinal，非整数、非正或越界为 `OCCURRENCE_INDEX_INVALID`；单次出现携索引为 `REQUEST_KEYS_INVALID`。选定出现的 previous / next 必须逐字相等，且 `source-boundary` 必须对应真实源边界，否则为 `CONTEXT_MISMATCH`；不持久化索引。
-
-父项 set 在上述检查后还须验证自身及完整传递后代：每个 id 恰解析一项，CAS 实际字节、raw/normalized 指纹、cas_ref 与 atom_id 相符；每层沿现有 `DigestionDecomposition.Plan` / ordinary `Materialize` 合同校验完整无损铺砌、无歧义、无重叠、顺序与既存链一致，不创建任何 CAS 或子项。所有后代经现有 `DigestionStatusEvaluator` 复算须与 stored status 一致，迁移为 absorbed 或 nonpropositional、真值非 open、无 gap、无 quarantine/cover disposition；失败为 `CHAIN_INCOMPLETE`。后代带 coverage 时须读取并验证当前 Lean report；无 report 不以 stored 目录替代验证。每条后代 nonpropositional 收据还须匹配其所属源中至少一个真实出现的外部邻居，否则为 `CONTEXT_MISMATCH`；重复出现仍沿现有不持久化索引的收据合同。损坏/缺失 CAS、身份或计划错误按现有 context/基础设施诊断 fail-closed，全部发生在写入前。成功仅给 target 写自身原 schema 收据，打印 `SETTLED_NONPROPOSITIONAL atom_id=… path=…`。这不证明自然语言 justification 或纯上游判形，语义忠实性仍由评审判。
-
-**clear:**`settle-atom --clear ATOM_ID` 要求 target 携带 `receipts.nonpropositional`，缺席为 `NONPROPOSITIONAL_ABSENT`；既可从终态清除，也可清除后代重开并在下一次 ATOM 范围查询中派生为 partial-open。clear 只删除 target 自身收据、派生 `residual-open` 并移 shard，保留其 chain、子项、兄弟项和所有源/CAS 原字节，不要求后代仍闭合；成功打印 `SETTLE_CLEARED atom_id=… path=…`。无 `--replace`；传入即 `ARGUMENTS_INVALID`，更正须先 clear 再 set。
-
-两种转换均经 `BackfillInventoryWriter.WriteAtom` 序列化、`BackfillInventoryLoader` 重载并要求逐字节相同 replay(`ROUND_TRIP_FAILED`)；随后恰调用一次 `IngestCommand.ApplyLedgerUpdatesAtomically`，进行 optimistic 旧账校验及 target shard 原子更新；旧 shard 不唯一为 `SHARD_AMBIGUOUS`。后代 clear 只更新被请求 atom 的收据与目录，链状态由下一次 ATOM 范围查询派生，不提供全局对齐命令。loader 读取错误、`ledger changed under us`、IO 等未分类失败统一为 `SETTLE_INVALID INFRASTRUCTURE <detail>`；其余为 `SETTLE_INVALID <CODE> <detail>`。失败直接返回给 AI 修正后重试；无新状态、writer、receipt schema 或机器判形器。
-
-**纯上游闭合的命题 atom(owner 2026-09-15 裁决,案 #8049)。**全部子句仅由钉版上游(`lake-manifest.json` 所钉 Mathlib 及其传递依赖)的既有声明经实例化、投影与规范化推出、且仓内无可用冻结 GID 的命题 atom,**不新增终态、不新增 writer、不做机器判形**:直接以 `settle-atom` 写 `receipts.nonpropositional`,其 `justification` 须写明由哪些上游全限定声明名闭合、仓内无 GID;收据形状、邻居复算与目录一致性检查照上款,判形真实性只由 PR 正文与评审判(CLAUDE.md 第 3.2 条软边界)。同日早先拟定的第五终态 `upstream-closed`/`receipts.upstream`/`settle-upstream`/`Meta/Digestion/upstream/**` 已撤回(机器 #8169 精确逆 revert;dev 上从未落地实例)。
-
-**链闭合规则。**`DeriveMigration` 固定点与 `CompleteChainGaps` 共用同一谓词：子项迁移为 absorbed 或 nonpropositional 即闭。父项 `LocalComplete` 仍是独立必要条件，可由自身有效 coverage 路径或自身有效 nonpropositional 收据履行，并须结构对齐。没有 coverage 也没有自身收据的父项始终 residual-open，终态子项只移除相应 `chain-migration-incomplete` gap。自身 nonpropositional 收据与完整后代链同时闭合才派生 nonpropositional-inapplicable；后代重开时保留该收据、派生 partial-open，绝不保留假终态。查询只派生当前目录状态，不制造或清除收据。
-
-**局部查询。**`show-atom --atom-id ID` 与 `atom-context --atom-id ID` 接受重复的 `--source SOURCE_ID_OR_PATH`；make 入口接受 `SOURCE=…`。先在当前工作树按路径和文件名搜索，只解析命中记录及其源 metadata。未指定源时 ID 搜索跨源，多个命中报 ambiguous；指定源时只在所选范围查找。搜索包含未提交记录，删除的记录不命中。无关账目、理论和 CAS 不进入查询快照，不做全账一致性检查；命中记录仍须可读取和解析。
-
-**邻居上下文查询。** `atom-context` 按已登记 ID 读取保存的 atom 指针及 CAS，不读取现行理论正文，不重新切分或全文定位，不枚举源内全部 atom 记录或 CAS。CURRENT 始终是目标完整 immutable CAS；PREVIOUS / NEXT 是目标整个子树外的最近叶项。邻居保留 ID、stored state / `unregistered`、原始字节及已核实的 source-boundary sentinel。WORK_CONTEXT 展示保存的 heading ancestry、enclosing scope、完整 governing list 或 table / definition scope；它不替代邻居或结算收据。输出保留 `transient=true`，表示本次显示投影不承载数学真值，不表示重新读取原文。
-
-**持久关系。** 每个 source 的 `context/<atom_id>.json` 保存一个严格 JSON 版本数组；schema 1 每个版本的键集恰为 `{SchemaVersion,SourceId,SourcePath,Atomizer,SourceSha256,Entries}`，`SchemaVersion=1`，`Entries` 恰含该文件 ID 的 `{AtomId,Occurrences}`。版本按 `(SourceSha256, GraphSha256)` 排序且不重复；schema 1 的 graph key 为空并排在同 source 的 schema 2 之前。schema 2 在同一键集上增加必填的 `GraphSha256`，其余形状相同。相同正文出现不同实际 child chains 时，writer 以完整观察关系的 SHA256 建立单独 graph key，追加关系并逐字保留既有版本对象；该键标识一次关系观察，不是读取时重算全图的收据。正常分解在同一保存 graph 内更新叶关系。每个 occurrence 恰含 `{OccurrenceIndex,StreamIndex,StreamCount,PreviousAtomId,NextAtomId,StartByte,EndByte,PreviousStartByte,NextStartByte,GoverningContext}`；scope 恰为 `{Relation,AtomId}`。所有正文，包括未登记的邻居及 governing scope，复用既有 CAS。没有第二份原文快照或 coverage。
-
-source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最早摄入时的版本。字节区间只在关系内标识该版本的具体 occurrence 与其子树，不写入 atom YAML，也不在查询时回原文定位。邻居引用由同一 source/version/graph 的 ID 与 occurrence 起点共同确定，不能仅凭内容 hash 将重复位置混接；读取会核对引用目标与 CAS。`null` 仅表示已核实的实际源首/尾边界；缺失版本、关系、引用或 CAS 均明确拒绝，未知历史不作边界。单次 `Resolve` 对多个保存的出现报 `OCCURRENCE_AMBIGUOUS`；CLI 按保存的版本及字节序输出 occurrence ordinal，结算用相同排序选择。多个版本分别显示 source hash；schema 2 同时显示 graph hash，不混接同正文的不同链图。
-
-关系由正常 ingest（含复用 ID）、decompose 及显式 `migrate-atom-context` writer 与 CAS/账本事务维护。新摄入保存当前源中有证据的关系，保留其他版本；分解从 immutable parent CAS 与已保存的 parent occurrence 组合子关系，更新所有已保存 source 绑定中的外侧叶指针及受影响的序号、计数，不依赖现行原文。原文改写、移动或删除不破坏既存 atom，也不触发 raw-mismatch corruption。没有保存关系时返回 `OCCURRENCE_MISSING CONTEXT_UNAVAILABLE`，要求显式迁移；没有旧格式运行时回退。
-
-`make migrate-atom-context [SOURCE=<id-or-path>] [WRITE=1]` 是已有账目的显式迁移门，省略 SOURCE 选择全部已登记 source，省略 WRITE 只预览。它读取登记身份、实际 chain_atoms、CAS 及观察到的源，验证原有计划后保存能由该证据建立的关系，不摄入新 atom、不改变状态、收据、coverage 或 Lean 冻结。缺失源、缺失/歧义引用、不相容历史切分或无匹配出现逐项报告 unresolved，并以非零退出表达未完成；不虚构历史前后关系。可恢复的 source 独立原子写入，不将部分迁移报成全量完成。重复同证据迁移为 byte no-op。make 可加 `SOURCE_REVISION=<40位commit-SHA>`（CLI 为 `--source-revision <40位commit-SHA>`），仅从该不可变修订读取当前登记路径的正文；登记身份、atomizer、chains、coverage 与 FILEMAP 仍取现行受验证输入。该参数不声称恢复原摄入版本，也不扫描 Git 历史或尝试旧路径。已有保存版本计入已恢复关系；当前观察中缺失不抹去它们。独立历史根交叉且无共同 ancestry 时，该区域以观察版本的 atomizer 建立叶流，旧跨度仅在端点兼容时保存，否则保持 unresolved，不让交叉切分阻断其他受支持的出现。
-
-**局部写入。**拆分只加载目标、生成子项的既有命中、实际子链以及包含目标的各 source 保存关系以更新受影响的序号和计数；结算只加载目标与所需的真实邻居、后代收据及其覆盖依据；cover 与 cover-batch 只加载请求目标和实际后代账目，同时保留当前 Lean 报告、冻结成员与声明绑定校验。无关账目不参与当前操作，也不因无关记录的格式或覆盖偏差阻断它。批量命令保留自己的成功写入供后续项使用；实际引用的缺失、冲突或坏 CAS 仍须拒绝，原子写入和失败回滚继续适用。
-
-`migrate-atom-context --source SOURCE --atom-id ID ...`（make 单项为 `SOURCE=… ATOM_ID=…`）可显式选择同一 source 的已登记 atom。writer 按所选 source 的 owner 路径与 CAS 出现发现观察根，保留真实邻根的 chain 语义，不因缩小 owner 选择把已分解邻根改成整块叶项。已有同正文观察时，先以所选子树及其相关根、邻居的实际 chain 核对局部边；一致则直接保留该保存图和序号，不重建远处根。否则从观察根及实际引用闭包建立关系。所选身份、实际引用及 CAS 仍经相同 strict loader 与计划验证；未参与该操作的无效账目不进入核对。该模式不替代全 source 迁移的完整性判词；缺失或歧义目标直接拒绝，同 source hash 的路径或 atomizer 不相容时报 `CONTEXT_VERSION_CONFLICT`；实际链图改变时追加独立 graph，不覆盖原图。
-
-历史治理字段按既有 schema 读取，不新增 quarantine 管理命令。
-
-**范围搜索。**`search-atoms --source SOURCE_ID_OR_PATH` 接受重复的 `--source`，可用 `--state STATE`、`--text LITERAL` 和 `--limit N` 限制结果。必须明确源范围，默认查迁移轴为 residual 或 partial 的目录，默认最多返回 100 项。无关键词时只搜索当前标准账本路径，不读取或解析 YAML、不加载 Lean/CAS、不核验状态，不输出总数或账本摘要。关键词按大小写不敏感的原文子串匹配：沿所选标准账本路径的 ID 逐条读取 CAS 文本，匹配与输出达到上限即停止；不读取 YAML、源正文或 atomizer，不核验 CAS 指纹。命中不等于证明、就绪或一致性核验；AI 读取目标及上下文后决定处理方式。make 入口为 `make search-atoms SOURCE=… [TEXT=…] [STATE=…] [LIMIT=…]`。cover 失败由调用方修正 ATOM 后再次调用 cover。
-
-**Canonical CAS 分解。** `DigestionDecomposition.Plan` 是 emitted plans、CLI 分解、aligner、policy 与 context MaterializedStream 的唯一计划权威。输入为父 entry、不可变 CAS、登记的 atomizer 与请求范围 snapshot。已物化父的普通读取首先从 stored `chain_atoms` 的 CAS 顺序重建计划并校验；fresh grammar 不重释历史。原有 direct-child 身份、次序、字节和 receipts 不因生成规则改变而变化。重建按 child CAS 的唯一父字节子区间定位，补回未物化的 structural 间隙；仅有间隙时复用 canonical structural spans 验证其完整边界，遗漏或截短的 claim 不得当作 structural。连续 stored chain 不重跑 AST。
-
-尚未物化的计划沿既有 Markdown AST 选择内部 section / claim 单位。编号 claim 复用既有 scoped-table / proof 归属；列表及嵌套列表保留 governing lead 和 enclosing item，表格保留完整 header、delimiter、rows 与列意义所在的 section / definition scope。依赖行不另作独立任务。代码、数学中的 apparent marker 不开新任务；作者、机构等 cosmetic bold front matter 不作为单独子句。没有通用 byte-size 阈值或 semantic readiness classifier。计划以 `{claim, structural}` 完整铺砌父区间；structural 段不物化为 child。所有计划继续检查完整无损铺砌、UTF-8、唯一 subspan、identity、顺序及 CAS 字节一致性。分解计划本身不持久化；上下文关系按上述持久关系合同保存。
-
-`decompose-atom --atom ID [--dry-run] [--split-at BYTE ...] [--reconcile-chain]` 的 make door 为 `make decompose ATOM_ID=ID [DRY_RUN=1]`。canonical 与 explicit plan 不同仍为 `PLAN_CONFLICT`；普通写入不能改既存 chain，explicit reconciliation 保留既有 live-obligation、旧链验证、传递闭包及不得丢旧 child 的 guards。子 CAS 与账目更新仍在同一事务内，失败只回滚本次新建的 CAS。重复普通分解是 byte no-op。policy 复用同一 canonical grammar 判断未分解多子句，不另设 raw-line grammar；父项自身 completion 仍是独立必要条件，后代终态不制造父 coverage 或收据。
-
-**条目引用核对。**条目的 atom 按账目引用读取并核对 raw 指纹与对应 CAS 字节；不做全量 CAS 扫描或孤儿检查。源文档当前是否仍能切出同一 atom 不改变按需读取结果。
-
-**目标状态推导。**目标命令只取当前树中请求 atom 与实际引用链、CAS、所需源文档、Lean report 和冻结状态，不读 git 基线。输入选择不改变被选条目的推导规则；未选条目不参与此次操作。需要唯一 atom 的操作遇到重复命中时返回歧义，不建立全账重复检查或自动传播。
-
-**Canonical chain reconciliation.** `decompose-atom --reconcile-chain` permits a lossless regrouping of an existing nonempty chain. The ordinary `Plan` authority selects the registered canonical plan, or, when no canonical plan exists, the existing `--split-at BYTE_OFFSET` interface; canonical-plan conflicts, UTF-8 boundaries, unique subspans and exact full tiling remain mandatory. Ordinary decomposition without this flag still rejects any differing nonempty chain. Reconciliation requires the parent to have no coverage, unresolved subitems, tail authorization, quarantine, cover disposition or nonpropositional receipt, even for a no-op plan. Its old direct chain must reconstruct the entire parent CAS. Old descendants and proposed existing descendants must resolve to unique entries with matching atom IDs, CAS bytes and both fingerprints; each nested chain must pass the same `Plan`/ordinary `Materialize` authority. Every old direct child must remain reachable in the new chain. Reachability alone cannot admit a malformed nested chain, missing child, cycle or changed identity. Existing descendants, coverage, receipts and state directories are retained byte-for-byte; the parent retains its state and receives only the validated chain. Serialization, loader round-trip, optimistic ledger check, atomic CAS/ledger writer and rollback of only newly created CAS are unchanged. Split points are not persisted and no new schema or status is introduced. This is a graph operation, not semantic entailment or absorption evidence; source/coverage review and the parent's own completion evidence plus complete child closure remain required under the chain-closure rule above.
-**无标记 CAS 的显式分解。**当登记 atomizer 与 canonical 标记语法均无计划时，`decompose-atom --atom ID --split-at BYTE_OFFSET [--split-at BYTE_OFFSET ...] [--dry-run]`（`make decompose ATOM_ID=ID SPLIT_AT="偏移 ..."`）接受相对父 CAS 的 UTF-8 字节切点。切点须严格递增、位于首尾之间且落在字符边界；所有片段均为 claim，完整保留标题、条件、公式及收尾字节，并沿用无损铺砌与唯一子区间校验。显式计划不得替换既有 canonical 计划；已物化的不同子链仅可经上款 `--reconcile-chain` 的全部守卫替换；相同计划重跑为字节 no-op。只持久化既有子 CAS 与 `chain_atoms`，不增加切点或计划字段；后续分解、邻居查询及内容分类在 canonical 计划缺席时由子 CAS 按链顺序重建计划，核验身份、完整铺砌及子项存在性，孩子沿已验证链继承父内容类别。未知格式、歧义及非法计划不进入此回退。子句的语义划分与覆盖忠实性仍由逐子句核对保证，字节校验不证明语义独立；父项仍须自身覆盖与全部子项闭合后才能被吸收；自身显式 nonpropositional/upstream 收据的终结沿上款 set 与链闭合合同。
-
-**Scribe 收据机制已整体退役(owner 2026-09-07 裁决 #5942:「改动都在 git,不需要纠结。把预防"有人偷偷改的"删了吧」)。**此处原记述总单 #5533 第 8 层的 `coverage→Scribe 收据` delta 门与 `align-scribe-receipt --seed-missing` 机械登记,二者连同 `receipts.scribe` 字段本身**均已不存在**:L1 停执法、#6130 停 writer、#6168 使 producer 能够到已提交字节、#6323–#6331 清空全部 28,205 条、#6334 使 loader 对该键 fail-closed 并删除模型与 `strip-scribe-receipts`。**现役形态**:account 的收据面只剩 `unresolved_subitems`、`chain_atoms`、`tail_authorization`、`quarantine`、`cover_disposition`、`nonpropositional`;带 `receipts.scribe` 的条目按未知键被拒。历史形态由 git 查证(第 6 条:现状唯一,历史归 git)。
-
-“cover-atom” 在当前 report 与冻结账本上解析本次新增 coverage 边的 target；已有边不经全局刷新。
-
-
-
-`DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage target mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;闭合仍要求 entry 的全部 GID 边与 Lean 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 的写前门以命令启动时读到的账本为参照:按 `(code,atom_id,detail)` 不阻断其中已存在的同一 fatal identity,本次写入新增的 identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。`cover-atom` 与 `cover-batch` 不读 git 修订与变更集,不接受 `--base`。
-
-**cover 失败处理**：cover 只写入成功的 coverage 边与派生目录；失败零写入并把诊断返回给 AI。AI 修正 ATOM 或证明输入后再次调用 cover。历史 `receipts.cover_disposition` 仅按既有 schema 读取，不提供独立管理或重试命令。
-**终结内容可退役，未决内容保留。**`make retire-sources SOURCES="id id ..." [MODE=archive|delete] [WRITE=1]` 是整卷及其活跃 atom 账目的退役入口，默认 archive、默认只预览。CLI 为 `retire-sources --source SOURCE_ID_OR_PATH [--source ...] --mode archive|delete [--write | --lean-inputs]`。退役单位是完整摄入源，不能只删源内若干 YAML 而保留可重新摄入的正文。混合源必须先完成其余 atom；暂不能证明、资源不足、缺先决条件、语义未定或未决命题均不构成退役依据。
-
-writer 按现役 CAS、完整分解链与状态推导核对所选源全部 atom 和实际后代。覆盖项须当前 Lean 报告与冻结绑定支持 `absorbed-closed` 且 `Deletable`；非命题或仅由钉版上游闭合者须已有合法 canonical settlement、真实上下文与 `nonpropositional-inapplicable`。后者可退役不代表成为 Lean 命题，也不改变 `Deletable` 语义。残余子项、tail、quarantine、cover disposition、坏 CAS、未摄入的新 claim 和存续引用均拒绝。祖先、子链、上下文与共享 atom 的反向引用检查读取存续账目原文，不借此引入全账状态核验；不相关坏账不参与终结判定。文档引用同时核对 Markdown 目的地址和原路径或文件名的保守匹配，指向被删理论或账目路径的已声明别名同样阻断退役。误命中须核对实际消费者；零命中不等于对任意外部引用的证明。
-
-archive 将原文移到 `docs/develop/archive/theory/` 的相同相对路径并调整 Markdown 相对链接；delete 移除原文。两者均删除所选源目录下的活跃 atom、source metadata 与 context pointers，保留 Lean、Scribe、Reg、冻结状态与所有既有 CAS。archive 不覆盖既存目标，FILEMAP 须将目标唯一声明为普通只读非摄入路径。写前复核已读输入与引用集合，沿用 canonical 原子写入和失败回滚；退出 0 仅表示本次 writer 完成，不等于检查、PR 或合并完成。不另存收据副本、历史 metadata 或过程档案；历史由 git 与既有 CAS 保留。普通摄入仍只接受 eligible 的活跃常规源，archive 不会被自动重新摄入。回收既有 CAS 或迁移、删除 Lean 声明是另有依赖与许可边界的工作，不由 atom 退役隐式触发。
-
-理论切分仅支持 `generic-v1`，无可执行方言表、格式别名或其他 parser。parser-bearing 操作在解析正文或写入前拒绝所有其他 atomizer 标识，包括任意 `dialect:*`、`none` 和未知值；generic Markdown 不因与历史格式相似而被拒绝。既有 generic source 分类投影字段保持原形。`docs/develop/archive/theory/` 只供阅读，不参与摄入、发现或默认派发；当前正文需要的旧路径可用 FILEMAP 声明的静态相对文件 symlink 直指常规 archive 原件。引用路径与 archive 目标均不具备 `digestion_source` 资格。源发现与 parser-bearing 选择按 FILEMAP 唯一匹配的 eligible 常规文件身份执行，不将 symlink 当作正文。普通 raw scoped query 仍只读所选账本路径及必要 CAS，不加载 parser 或验证历史格式。退役 source 不再出现在 active backfill，历史来源由 Git 与原有 immutable CAS 保存，不伪造终态或复制历史 metadata 档案。共享 Markdown AST、内容哈希、stored decomposition 与 foreign chain 语义保持：同一 raw 内容重复出现时仍全局合并，coverage 边按 GID 取并集。摄入协议固定为 **extract → identify → subtract digested → admit residual**；摄入必须显式指定一个或多个源，新写集仍须通过 append-only、CAS 内容身份与原子回滚校验。
-
-**Selected intake identity recovery.** Ordinary intake is append-only. Within its selected candidate identity scope, the canonical ingest writer may remove exactly one redundant `residual-open` occurrence when the same source has exactly one `absorbed-closed` occurrence of that atom: source identity, atomizer, raw/normalized fingerprints and CAS reference must agree; raw identity and CAS must equal the atom ID; both receipts must be empty; only the closed occurrence may have coverage, with every edge carrying a canonical target statement ID. The retained covered YAML and existing CAS bytes are preserved without rewriting, union, ranking or repinning. Other duplicate shapes reject before publication. Recovery and any new intake use the existing ledger/CAS transaction, with captured scoped input byte checks and rollback; no global ledger audit or Git-merge prevention is implied.
-
-
+[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)拥有理论正文、归档、atom CAS、上下文、分解与结算。通过 `truth-export` 读取指定主仓提交的冻结状态和声明级 `statement_id`。本仓的 checkout、CI、Lean 编译、冻结与真值导出可独立执行。
 ## 11.22 编排文件与一致性自检(deferred)
 编排文件 schema、模型升级流程与 spec ↔ 仓库漂移自检当前均为 `deferred`;登记于 2026-08-15,无执法机器,重启须先建门,不得冒领为现役 CI 作业。
 
@@ -1065,28 +986,9 @@ archive 将原文移到 `docs/develop/archive/theory/` 的相同相对路径并�
 **大件数据律**:大于阈值之产物(零点表/谱表)入 LFS 或声明"可再生"(脚本+预算);二者皆无 = CI 红;断链即红——git 内只存哈希与再生方式。
 **继任预案**:`docs/SUCCESSION.md`——维护权移交规则、密钥托管、"若本库十年无人维护"之自动开放遗嘱(归档触发条件)——**理论要活得比我们久,就把这句话写进制度。**
 
-## 11.27 理论勘误事件类(TheoryErratum)
-**触发与边界**:机器发现一条**已摄入**的 claim **涉嫌**数学错误、内部矛盾、空洞性问题或与已冻结 Lean 真值冲突之一,始得归本类;每条已摄入 claim 均由 11.21 的 loader 不变量携 `cas_ref`,不存在需另行排除的无 `cas_ref` 收据。证据门裁决前只称“涉嫌”,不得断言问题存在。四项排除各归既有路径:风格措辞不是理论错;普通未证猜想照常以 `open` 消化;外部文献勘误走 L 平面路径;harness/Lean 自身证明洞走既有后代撤销路径。须分清两层状态:全局 truth DAG 为 `closed/open/tail/semantic` 四态;`BACKFILL.status.truth` 在命题子域仅为 `closed/tail/open` 三态投影,全局 `semantic` 在 BACKFILL 投影为 `open`,不得把 `semantic` 写成 BACKFILL 第四值;非命题终态的 `inapplicable` 位于该命题子域之外,只表示无可覆盖命题,不映射为全局 truth DAG 新值。〔守护:**硬+评审**·机器保证 claim 已摄入及 `cas_ref`/`atom_id` 合规;四类涉嫌触发、排除项及忠实分类当前由评审守护〕
+## 11.27 理论勘误
 
-**立案**:以 `(cas_ref, atom_id)` 二元组唯一定址 claim;重复发现必须先按该二元组检索并复用唯一案件,只追加证据、尸检或处置记录,不得另立平行案。`D5/X_Frontier/*` 中的永久 `TASK` 正文与反馈 issue 必须双向持久记录同一组 `case_id`、`cas_ref`、`atom_id`,issue 引用 TASK GID,TASK 引用 issue;需要 TASK GID 时按 `case_id` 搜索对应 D5 声明，不另存手工镜像，也不借全账准入扫描建立映射；搜索结果不得冒充 claim 身份或案件双向绑定。本类只定义既有载体的处置规范:零新状态、零新 schema、零新 workflow、零新服务。〔守护:**目标检查+评审**·目标命令验证被选 atom 的身份与唯一命中；二元组检索复用及 TASK↔issue 三字段双向绑定由评审核对，不由全仓准入审计保证。〕
-
-**证据门**:宣称“原 claim 被反驳”或“其非平凡性主张被反驳”的必要条件是三环闭合:**CAS 原句 → 独立忠实 echo(复核席逐字对照原文)→ 可重放反证**。可重放证书仅限三类:(a) Lean 证明 `¬claim` 或证明其与冻结声明冲突,且 axiom 闭包必须满足仓库绝对白名单 `axiom closure ⊆ {propext, Classical.choice, Quot.sound}`;(b) 精确算术、区间或有限反例经独立 checker 复核;(c) 空洞性证明——claim 为真但由弱前提平凡成立,故证书反驳的是其**非平凡性主张**,绝不得冒充 `¬claim`。每个 Lean witness 的陈述必须自描述所反驳的对象:是原 claim、与冻结声明的相容性,还是指定的非平凡性主张。三环未闭合者不定错:证据不足则案件记录保持 `open`;语义不能消歧则全局节点归 `semantic`、BACKFILL 仍投影为 `status.truth: open`。叙事、多模型共识或浮点异常均不足以称理论错;O5 先例仅证重做者之错,不证理论之错。〔守护:**硬+评审**·Lean inspector/SL-020 校验 witness 公理已登记;truth DAG 将含非标准公理的节点判为 `tail`,目标消化操作据此禁止 `closed` 投影。勘误 witness 的上述三公理**绝对白名单**判别当前属评审守护,升提专用 lint 后才成为硬门;触发分类、忠实 echo、三类证书判别及空洞性所反驳对象的忠实性亦由评审守护〕
-
-**双轴结算**:证书最终以 Lean witness 冻结为**正真值节点**;其声明按证据门自描述“claim X 之否定/反例”或“claim X 所附非平凡性主张之反驳”,使负知识单调入 DAG。`BACKFILL` 中原 claim 只用现役 `coverage_gids[].gid` 指向该 Lean witness GID,同一边的 `target_statement_id` 绑定当前冻结 statement;现役 schema 没有 `refutes` 字段,反驳语义只由 witness 的 Lean 陈述内容表达。判真轴上,`BACKFILL.status.truth: closed` **仅**表示 coverage 目标在 truth DAG 中为 Lean `Closed`,不表示原 claim 为真,也不表示案件处置完毕。案件闭合当且仅当下列清单三项显式合取全真,即 `case_closed ⇔ (a) ∧ (b) ∧ (c)`:
-- [ ] **(a) 三环证据链闭合**:`CAS 原句 → 独立忠实 echo → 可重放反证 witness GID` 逐环在案;
-- [ ] **(b) witness 判真闭合**:该 witness GID 由 `coverage_gids[].gid` 指向,其 target 等于当前冻结 statement,且 truth DAG 将其判为 Lean `Closed`;
-- [ ] **(c) 送达工件在案**:送达工件逐字绑定本案 `case_id`、claim 主键 `(cas_ref, atom_id)` 与该 witness GID。
-无 witness GID 的路径——无论证据不足而保持 `open`,还是语义不能消歧而归 `semantic`——均令 (a)、(b) 为假,故案件永不闭合,不受该 claim 既有 `status.migration` 影响。`status.migration: absorbed` 可由立案前的普通消化预先成立,只陈述迁移轴事实;它既不得单独、也不得与送达工件合取作为结案凭据。二轴不得混写:**判真唯 Lean**,harness 只判现役 coverage/Scribe 数据与投影合规;送达工件及其与案件的对应当前由评审守护。〔守护:**目标检查+评审**·目标覆盖命令验证 `coverage_gids[].gid` 与 `target_statement_id`，并派生所处理条目的 `status.truth` 与 `status.migration`；Lean 声明真值由 kernel 判；三环忠实性、送达工件及链接是否确实反驳目标由评审守护。〕
-
-**案件生命周期**:永久 X_Frontier `TASK` 定性为**历史账**,不是处置轴上的永久活义务:SL-013 禁删且 truth DAG 因其路径/`TASK` 标记恒判 `open`,该 `open` 是载体结构态,不得用来冒充案件处置状态。四种归宿逐案追加留痕:(1)送达成功——记录送达工件引用;仅当双轴结算清单 (a)–(c) 同时满足时案件闭合,TASK 作为历史账保留,任何既有 `status.migration: absorbed` 均不替代 (a) 或 (b);(2)送达失败——记录失败收据,issue 标 `open` 并重试,不得称闭合;(3)反证链接误配——依 11.14 追加勘正工件并重开案件,旧 CAS、TASK 与错误链接均不改写;(4)反证本身被勘误——走既有后代撤销路径,追加勘误工件并重开案件,其后只接受新证据重新结算。现役载体尚不能机器区分这四种案件归宿,**暂由评审守护,机器化待升提**,不得以 TASK 的结构性 `open` 或永久存在冒充专用生命周期 schema。
-
-**反馈闭环**:立 issue、携 `case_id`、`cas_ref`、`atom_id` 与证据 GID 通知理论作者、取得送达收据及失败重试,均为本类的**规范性动作**;**当前未机器执法,由评审守护,机器化待升提律**。证据不足而只有 `open` 异常、尚无 witness GID 时,仍须在 TASK 记录该异常,反馈 issue 引用 `case_id` 并携 `cas_ref`、`atom_id`,明确“证据不足”;此路由不改 coverage 边,无任何 coverage 状态变更。送达收据结清的只是通知义务,作者回应绝非结案前置;送达失败时 issue 保持 `open` 并重试。作者修订投卷仍走既有 `theory-ingest`:新 atom 按现役 ingest 入账,旧 CAS 与旧案均保留,修订历史归 git;现役 ingest 不投影 `supersedes` 边,故不得冒领该关系。〔守护:**评审**·issue 创建、双向绑定、通知内容、无 GID 路由、送达收据、重试、作者修订路由及“不声称 supersedes”当前全由评审守护,专用机器执法待升提〕
-
-**权属与裁决**:agent 禁改理论卷正文,修文唯作者;记错义务归发现者/消化层。**判真唯 Lean**;harness 不裁决数学真假,只裁决收据存在性与路由合规。若 Lean witness 证明理论 claim 与冻结真值冲突,按本类结算;若反查证实**库内**节点证明有洞,则走既有“勘误 ≠ 解冻”之后代撤销路径。〔守护:**硬+评审**·Lean kernel 与现役 harness 各守其机器可判边界;agent 禁改理论卷、作者修文权及处置归类由评审守护〕
-
-**升提律**:TheoryErratum 专用 schema/lint 规则仅在第二个同构实例出现,或已有路由被证实失效时再立;届时再机器化触发分类、唯一案件复用、issue/送达/重试等尚由评审守护的规范性动作,依第 8 条不预建空壳。〔守护:**元准则+评审**·第二同构实例或路由失效是升提前提;当前不冒领专用 schema/lint〕
-
-
+理论作者在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)处理原文、归档与 atom 勘误。针对主仓数学内容的反证须按本仓 Lean、冻结及公理规则验证。
 ## 11.28 CLAUDE.md 引用材料
 
 本节保存 CLAUDE.md 引用的命令速查、样本读数、单案边界与古典引语；这些资料不增设、替代或改变 CLAUDE.md 的规范性规则。
@@ -1175,14 +1077,8 @@ archive 将原文移到 `docs/develop/archive/theory/` 的相同相对路径并�
 | 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
 | 核对指定 Lean 模块、utility 输入及 imports / 发射所选 Scribe | `make lean-report-scoped LEAN_TARGETS="<点分模块名>"` / `make emit [PATHS=<NUL分隔路径文件>]` |
 | 显式整库 Lean 报告（CI / 整库核验） | `make lean-report` |
-| 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
-| 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
-| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
-| 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
-| 构建并冻结无对应理论卷(故无 atom)的形式化 | `make deposit-uncovered GID=<gid>` |
-| 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
-| 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
-| 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
+| 构建并冻结形式化模块 | `make deposit GID=<gid>` |
+| 摄入、查阅、覆盖或退役理论 atom | 在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)运行相应 Make 目标 |
 | 快速 .NET 结构检查 | `make -C tools check-fast`（不验证 Lean 或完整准入） |
 | 基线到当前工作树的完整增量检查 | `make gate BASE=<40位commit-SHA>` |
 | .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |

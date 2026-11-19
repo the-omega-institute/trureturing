@@ -1,6 +1,0 @@
-**Corollary 6.1.** Under the additional-depth premise of Theorem 5.1:
-
-1. Every exact common conf/law or conf/conf endpoint observer satisfies E_G(M)≥e_*.
-2. Every sequence of finite observers on the same source and prior whose corresponding two excesses tend to zero satisfies liminf E_G(M_n)≥e_*. Their state counts may grow without bound.
-3. Every finite observer with E_G(M)≤e_*/2 satisfies max(ε_p,ε_β)≥c_*.
-

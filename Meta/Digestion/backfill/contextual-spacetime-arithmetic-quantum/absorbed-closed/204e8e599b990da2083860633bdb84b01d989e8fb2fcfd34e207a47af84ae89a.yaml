@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:204e8e599b990da2083860633bdb84b01d989e8fb2fcfd34e207a47af84ae89a
-  normalized_sha256: sha256:204e8e599b990da2083860633bdb84b01d989e8fb2fcfd34e207a47af84ae89a
-cas_ref: sha256:204e8e599b990da2083860633bdb84b01d989e8fb2fcfd34e207a47af84ae89a
-coverage_gids:
-  - gid: D5/S3/Quantum/PredictionDepth/FiniteInformationalEffectCertificate.finite_informational_effect_certificate
-    target_statement_id: sha256:4971e5ecc42ec94b5de86dd9d77320728c88e70ac043bbc0c45287f8565a53b2
-receipts:
-  unresolved_subitems: []

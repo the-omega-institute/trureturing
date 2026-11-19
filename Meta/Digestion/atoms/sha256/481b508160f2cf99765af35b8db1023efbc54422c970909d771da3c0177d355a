@@ -1,9 +1,0 @@
-**Proposition 9.4 (all-address binary bridge).** On the five fixed current
-trees $(t_h)_{h=0}^4$ from (NBP.9.6), every finite native address has at
-most two different replies. At each of the two occurrences of $a$, a
-query can separate the group $\{1,2\}$ from its complement; for $c$ the
-corresponding group is $\{3,4\}$. At a $b_j$ occurrence, any nonconstant
-query separates only $j$. These are statements about actual native
-replies on these witnesses, not about the number of replies on the
-whole fiber.
-

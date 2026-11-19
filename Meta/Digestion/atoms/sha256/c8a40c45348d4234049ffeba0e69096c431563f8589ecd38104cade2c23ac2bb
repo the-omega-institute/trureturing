@@ -1,6 +1,0 @@
-所以严格程序应为：
-
-1. 在每个有界窗口排除有限原子 Blaschke 除子；
-2. 证明不存在 singular inner 残余；
-3. 使用 exhaustion 得到全局 outer 性。
-

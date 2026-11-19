@@ -1,7 +1,0 @@
-## 143. Exact slack identities and the unrestricted local lower bound
-
-Fix $q\in I$ and evaluate all contact quantities at (141.8). Let
-$P=aa^{\mathsf T}$ for $a=(\sqrt p,\sqrt x,\sqrt y)^{\mathsf T}$,
-and let $A=P-\mathcal R_0(q)\Phi_q(P)$. The nine phases
-$U_{j\ell}$ remain exactly those of (134.1).
-

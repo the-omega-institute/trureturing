@@ -1,0 +1,34 @@
+**Proposition 116.2 (All-ray Wigner intertwining).** For every
+$h\in\operatorname{Aut}(C,u)$ there is a unitary or antiunitary
+$W$ on $\mathbb C^n$ such that, with
+$\Gamma_W(X)=WXW^{-1}$ on Hermitian matrices,
+
+$$
+f_h(Q)=\Gamma_W(Q)\quad(Q\in\mathcal R_n),\qquad
+\pi\Gamma_W=h\pi
+\quad\text{on all }\operatorname{Herm}_n(\mathbb C).
+\tag{116.3}
+$$
+
+In particular $\Gamma_W(N)=N$.
+
+Proof. Apply the unnumbered Wigner theorem in [Gehér, §1,
+equation (1), arXiv:1407.0527v1][Geher] to the map on **all**
+self-adjoint rank-one projectors in (116.1). It preserves every
+$\operatorname{Tr}(QR)$ by Lemma 116.1. The cited theorem supplies
+a linear or antilinear isometry on the whole Hilbert space; in
+finite dimension it is respectively unitary or antiunitary. Its
+statement needs neither bijectivity nor separability, although our
+map is bijective. This applies also when $n=2$.
+
+Conjugation by either kind of implementer is real-linear on the
+Hermitian space. Equality of $\pi\Gamma_W$ and $h\pi$ on all
+rank-one projectors extends to their real span, proving (116.3).
+This identity gives $\Gamma_W(N)\subset N$; applying the inverse
+identity gives equality. ∎
+
+No choice of $W$ here is asserted continuous or multiplicative in
+$h$. Orthogonality-only Uhlhorn theorems and their dimension-three
+restrictions are unnecessary, because (115.4) provides the full
+all-pair overlap on the entire ray space.
+

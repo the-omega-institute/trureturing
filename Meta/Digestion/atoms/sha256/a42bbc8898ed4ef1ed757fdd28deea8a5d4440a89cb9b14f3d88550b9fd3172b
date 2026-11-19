@@ -1,7 +1,0 @@
-[literature-attested]
-
-- `AlexKontorovich/Lean-RH`：Brandon Gomes 与 Alex Kontorovich 的 “Riemann Hypothesis in Lean (with or without mathlib)” 仓库，重点是用 Dirichlet eta／zeta 接口精确陈述 RH，并比较独立公理化与 mathlib 版本；不是 RH 证明。arXiv 号检索未证实。
-- `anthropics/zeta-23-lean`：公开宣称形式化 Alpöge–Furman 2026 比例定理。应固定 commit 后核对最终导出 theorem 与常数。
-- 本仓 `D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.lean` 已导入 `Zeta23`，说明本仓已在消费相邻外部形式化，但该依赖的来源 commit、导出 API 与 axioms 应进入固定账。
-- 本次检索未发现一个获得公认、完整 kernel-checked 的 RH 证明；凡声称“Lean 已证明 RH”的材料，若不能给出可构建源树、无 `sorry`／自定义不受控公理审计和准确 theorem statement，均不得进入 literature-attested 栏。
-
