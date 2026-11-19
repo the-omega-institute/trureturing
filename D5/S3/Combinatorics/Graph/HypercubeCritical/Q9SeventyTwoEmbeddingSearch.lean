@@ -135,6 +135,17 @@ private def fill (wagner : Bool) (placed : List (Fin 8))
 def candidates (wagner : Bool) (pattern : Fin 5) : List Placement :=
   fill wagner (initialLabels wagner) (initialPlacement wagner pattern) (remainingLabels wagner)
 
+set_option maxHeartbeats 1200000 in
+set_option maxRecDepth 4096 in
+/-- The geometric candidate counts in the five normalized root patterns,
+before sign checks or identifying coordinate relabelings. -/
+theorem embedding_candidate_lengths (wagner : Bool) (pattern : Fin 5) :
+    (candidates wagner pattern).length =
+      (if wagner then ![24, 3, 0, 3, 0] else ![48, 6, 6, 6, 29]) pattern := by
+  cases wagner <;> fin_cases pattern <;> decide +kernel
+
+#print axioms embedding_candidate_lengths
+
 private theorem valid_of_actual (wagner : Bool) (placed : List (Fin 8)) (q p : Placement)
     (hagrees : ∀ k ∈ placed, q k = p k)
     (hinj : Function.Injective p)
