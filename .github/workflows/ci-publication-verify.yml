@@ -221,7 +221,7 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
-          python3 tools/scripts/worktree/lean_actions.py restore --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+          python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
           make lean LEAN_TARGETS="$CACHE_SCOPE"
       - if: steps.entry.outputs.hit == 'true'
         id: checkpoint
