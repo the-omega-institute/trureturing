@@ -70,7 +70,21 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.la
 
 For a matrix H, real vector e and index i, multiply the Lagrange factors (H-e(j)I)/(e(i)-e(j)) for j different from i, in the fixed list order. It is a spectral projection when H has that simple spectrum; no such interpretation is claimed for repeated energies.
 
-**Definition 1.4 (HermitianSpace).**
+**Theorem 1.4 (lagrangeProjector_spectralMatrix).**
+
+Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector_spectralMatrix`
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector_spectralMatrix` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Schnell, Alexander; Ketzmerick, Roland; Eckardt, André (2018). *On the number of Bose-selected modes in driven-dissipative ideal Bose gases*. DOI: [10.1103/PhysRevE.97.032136](https://doi.org/10.1103/PhysRevE.97.032136). URL: <https://arxiv.org/abs/1802.04088v2>.
+
+*Commentary.*
+
+For every dimension, RCLike field, unitary U and injective real energy vector e, the i-th polynomial Lagrange projector of U diag(e) U* equals U times the i-th coordinate projector times U*. This supplies the intrinsic spectral/physical rate bridge without choosing eigenvector phases.
+
+**Definition 1.5 (HermitianSpace).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.HermitianSpace`
 
@@ -84,7 +98,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.He
 
 The subtype of n by n matrices satisfying IsHermitian, with the inherited ordinary matrix topology. At the real field this is the real symmetric matrix space; at the complex field it is the full Hermitian matrix space.
 
-**Theorem 1.5 (continuous_increasingSpectrum_complex).**
+**Theorem 1.6 (continuous_increasingSpectrum_complex).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.continuous_increasingSpectrum_complex`
 
@@ -98,7 +112,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.co
 
 Each increasing ordered eigenvalue is continuous on the full complex Hermitian n by n matrix space. The proof uses the existing HermitianEigenvaluePerturbation entrywise perturbation bound, not continuity merely along real perturbations.
 
-**Theorem 1.6 (continuous_increasingSpectrum_real).**
+**Theorem 1.7 (continuous_increasingSpectrum_real).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.continuous_increasingSpectrum_real`
 
@@ -112,7 +126,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.co
 
 Each increasing ordered eigenvalue is continuous on the entire real symmetric n by n matrix space, including repeated eigenvalues. The proof restricts complex Hermitian eigenvalue continuity along complexification and proves agreement of ordered spectra.
 
-**Definition 1.7 (matrixWeight).**
+**Definition 1.8 (matrixWeight).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixWeight`
 
@@ -126,7 +140,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.ma
 
 Take the real diagonal entry at coordinate r of the Lagrange projector at ordered level i of the actual Hermitian matrix. On the simple spectrum domain this is the physical fixed-coordinate-bath weight.
 
-**Definition 1.8 (matrixRates).**
+**Definition 1.9 (matrixRates).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixRates`
 
@@ -140,7 +154,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.ma
 
 For n at least five and a real exponent d, apply the original asym to the increasing spectrum and the two intrinsic matrixWeight vectors at coordinates zero and one. Under a simple ordered diagonalization matrixRates_eq identifies these rates with physical expectation rates.
 
-**Theorem 1.9 (matrixRates_eq).**
+**Theorem 1.10 (matrixRates_eq).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixRates_eq`
 
@@ -154,7 +168,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.ma
 
 For every real exponent d, n at least five, Hermitian H and unitary diagonalization H=U diag(e) U* with strictly increasing e, the intrinsic matrixRates equal fixedBathRates from the actual expectations of the two fixed coordinate projections. This equality holds for all real d; the source physical exponent domain is d positive.
 
-**Theorem 1.10 (exists_open_fixedBathHamiltonians).**
+**Theorem 1.11 (exists_open_fixedBathHamiltonians).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_fixedBathHamiltonians`
 
@@ -168,7 +182,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.ex
 
 For any RCLike field and n at least five, there exists a nonempty open set of simple-spectrum matrices. Every member has a normalized first-five cubic selection, selected rank four and global normalized uniqueness allowing all competing supports. The exported conclusion leaves strict positivity of all bath weights throughout O unspecified. Ordered-spectrum continuity is supplied inside the proof: the canonical real or complex field equivalence transports the corresponding continuity theorem above, including at repeated eigenvalues. The real symmetric conclusion is the application exists_open_fixedBathHamiltonians (𝕜 := ℝ) hn; the full complex Hermitian conclusion uses (𝕜 := ℂ). Both retain arbitrary finite n at least five and every competing support.
 
-**Theorem 1.11 (fixedBath_local_exponent).**
+**Theorem 1.12 (fixedBath_local_exponent).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.fixedBath_local_exponent`
 
@@ -192,11 +206,9 @@ For every dimension n at least five, RCLike field and fixed Hermitian H whose cu
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum_of_charpoly`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector`
+- Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector_spectralMatrix`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixRates`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixRates_eq`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.matrixWeight`
-- Dependency: [D5/S3/Analytic/SeriesInequalities/StampachWaclawekExpansionRefutation](../Analytic/SeriesInequalities/StampachWaclawekExpansionRefutation.md)
-- Dependency: [D5/S3/Geometry/FiniteCoordinateTruncation](../Geometry/FiniteCoordinateTruncation.md)
 - Dependency: [D5/S3/SpectralTopology/HermitianEigenvaluePerturbation](../SpectralTopology/HermitianEigenvaluePerturbation.md)
-- Dependency: [D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation](BoseSelectionCubicTwoBathRefutation.md)
 - Dependency: [D5/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction](BoseSelectionFixedBathConstruction.md)
