@@ -48,3 +48,4 @@ Exact declaration: theorem pappus_parameters : beta pappusGraph 2 = 10 ∧ psiSq
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/PappusParameters.omega_upper_of_objective_bound`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/PappusParameters.pappus_parameters`
 - Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives](C4FreeRepresentatives.md)
+- Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds](C4RepresentativeBounds.md)
