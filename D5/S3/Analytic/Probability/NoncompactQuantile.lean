@@ -847,7 +847,9 @@ theorem exists_martingale_approximations {μ ν : ProbDist ℝ}
     (ae_of_all _ hsubμ)
   have hv := setIntegral_mono_set hνint.integrableOn (ae_of_all _ fun x => abs_nonneg x)
     (ae_of_all _ hsubν)
-  linarith [hbμ n, hbν n]
+  refine (add_le_add hu hv).trans_lt ?_
+  have htail := add_lt_add (hbμ n) (hbν n)
+  rwa [add_halves] at htail
 
 /-- Continuous bounded displacement tests determine all measurable bounded displacement tests
 when both coordinates are integrable. -/
