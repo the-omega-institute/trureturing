@@ -92,6 +92,127 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   familyRecord := none
   options := #[] }
 
+private abbrev nilSignature : Signature where
+  Params := Unit
+  State _ := Word
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def nilDistance : Realization nilSignature :=
+  realize nilSignature (fun _ _ v => distance [] v) (fun e => nomatch e)
+
+private def nilOne : Realization nilSignature :=
+  realize nilSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private abbrev nilArena : Arena where
+  signature := nilSignature
+  Law r := ∀ v : Word, r.readout () () v = v.length
+
+private theorem nilOne_invalid : ¬ nilArena.Law nilOne := by
+  intro h
+  have bad := h []
+  change (1 : ℕ) = 0 at bad
+  exact Nat.one_ne_zero bad
+
+private theorem nilDistance_varies :
+    nilDistance.readout () () [] ≠ nilDistance.readout () () [true] := by decide
+
+def nilDistanceEvidence : Registration nilArena (type_of% distance_nil_left) where
+  actual := nilDistance
+  bridge := Iff.rfl
+  variation := ⟨distance_nil_left, nilOne, nilOne_invalid⟩
+  sensitivity := ⟨fun i => ⟨nilOne, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, nilOne_invalid⟩, fun e => nomatch e⟩
+  dependence := fun _ => ⟨(), [], [true], nilDistance_varies⟩
+
+def nilDistanceRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@distance_nil_left) (Realization nilSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.distance_nil_left
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.nilDistanceEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨nilArena⟩
+  objectArena := .source ⟨nilArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source nilArena ⟨nilDistanceEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize nilSignature (fun _ _ v => distance [] v) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+private abbrev consArena : Arena where
+  signature := signature
+  Law r := ∀ (a b : Bool) (u v : Word),
+    distance (a :: u) (b :: v) =
+      if a = b then r.readout () u v else (a :: u).length + (b :: v).length
+
+private theorem consOne_invalid : ¬ consArena.Law rejected := by
+  intro h
+  have bad := h false false [] []
+  change (0 : ℕ) = 1 at bad
+  exact Nat.zero_ne_one bad
+
+def consDistanceEvidence : Registration consArena (type_of% distance_cons) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨distance_cons, rejected, consOne_invalid⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, consOne_invalid⟩, fun e => nomatch e⟩
+  dependence := source_registration.dependence
+
+def consDistanceRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@distance_cons) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.distance_cons
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.consDistanceEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨consArena⟩
+  objectArena := .source ⟨consArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source consArena ⟨consDistanceEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ u v => distance u v) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 #print axioms source_registration
 #print axioms registration
 
