@@ -63,6 +63,7 @@ private inductive Row where
   | pairUpper (x y : Bits)
   | pairLower (x y : Bits)
   | shellLower (x : Bits)
+  | forcedEdge (x : Bits) (i : Fin 9)
   | agreementEdge (x y : Bits) (i : Fin 9)
   | agreement (x : Bits) (i : Fin 9) (factor : ℤ)
 
@@ -79,6 +80,7 @@ private def Row.terms : Row → List Term
   | .shellLower x => single x (2 * weight deficit x + 12 - ∑ i, deficit i) ::
       cubeTerms (fun y => decide (hammingDist (cube x) (cube y) = 7) && allowedFar deficit x y)
         (fun y => pair x y (-1))
+  | .forcedEdge x i => [single x 1, pair x (bitFlip x i) (-1)]
   | .agreementEdge x y i => [pair x y 1, pair x (bitFlip x i) 1, single x (-1)]
   | .agreement x i factor => single x (-factor) ::
       (if (allowed deficit) (bitFlip x i) then [pair x (bitFlip x i) factor] else []) ++
@@ -349,6 +351,8 @@ private lemma half_eq_rows {C : Finset Vertex} (hC : C.card = 66)
 
 private def Row.Valid : Row → Prop
   | .agreementEdge x y i => farAgreement x y i = true
+  | .forcedEdge x i => 2 * weight deficit x + 12 = (∑ j, deficit j) + 8 ∧
+      cube x i = true ∧ 2 ≤ deficit i
   | .agreement x _ k => k = 4 ∨ (k = -2 ∧ 2 * weight deficit x + 12 = (∑ i, deficit i) + 8)
   | _ => True
 
@@ -356,7 +360,8 @@ private instance Row.validDecidable (row : Row) : Decidable (Row.Valid deficit r
   cases row <;> unfold Row.Valid <;> infer_instance
 
 private def Row.SignAllowed (sign : ℤ) : Row → Prop
-  | .pairUpper .. | .pairLower .. | .shellLower .. | .agreementEdge .. | .agreement .. => sign = 1
+  | .pairUpper .. | .pairLower .. | .shellLower .. | .forcedEdge ..
+  | .agreementEdge .. | .agreement .. => sign = 1
   | _ => True
 
 private instance Row.signAllowedDecidable (sign : ℤ) (row : Row) :
@@ -539,6 +544,18 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
     have he' := cube_lifted_agreement_row hd hf.1 hf.2
     simp [Row.terms, evalTerms, single, pair, value, cube_bitFlip]
     linarith only [he']
+  have hforced (x : Bits) (i : Fin 9) (hvalid : Row.Valid deficit (.forcedEdge x i)) :
+      evalTerms (Row.terms deficit (Row.forcedEdge x i)) (value C) ≤ 0 := by
+    obtain ⟨hw, hbit, hmin⟩ := hvalid
+    by_cases hx : cube x ∈ C
+    · obtain ⟨hc, h⟩ := hshell _ hx
+      change 2 * weight deficit x + 12 ≤ (∑ j, deficit j) + ((shell C (cube x) 7).card : ℤ) at h
+      have h8 : (shell C (cube x) 7).card = 8 := by rw [hw] at h; omega
+      have hf := eight_partners_force_minority_directions_used hC hreg hb hd
+        (fun _ => true) deficit hhalf (fun j => (hrange j).1) hx h8 hbit hmin
+      simp [Row.terms, evalTerms, single, pair, value, cube_bitFlip,
+        cubePairMembership, cubeMembership, hx, hf]
+    · simp [Row.terms, evalTerms, single, pair, value, cubePairMembership, cubeMembership, hx]
   unfold Row.SignAllowed at hineq
   cases row with
   | size => simp [hs, Row.bound]
@@ -549,6 +566,7 @@ private lemma support_rows {C : Finset Vertex} (hC : C.card = 66)
   | pairUpper x y => simpa only [hineq, one_mul, Row.bound] using hpair x y
   | pairLower x y => simpa only [hineq, one_mul, Row.bound] using hpairLower x y
   | shellLower x => simpa only [hineq, one_mul, Row.bound] using hshellLower x
+  | forcedEdge x i => simpa only [hineq, one_mul, Row.bound] using hforced x i hrow
   | agreementEdge x y i => simpa only [hineq, one_mul, Row.bound] using hedge x y i hrow
   | agreement x i k =>
     rcases hrow with h | ⟨h, hw⟩
@@ -678,5 +696,59 @@ theorem q9_sixty_six_excludes_014455555 {C : Finset (Q 9)} (hC : C.card = 66)
   · decide +kernel
 
 #print axioms q9_sixty_six_excludes_014455555
+
+
+private def deficit004445555 : Fin 9 → ℤ := ![0, 0, 4, 4, 4, 5, 5, 5, 5]
+
+private def certificate004445555 : List (Row × ℤ × ℤ) :=
+  [(.pairUpper 28 29, 1, 53), (.pairUpper 29 28, 1, 53),
+   (.pairUpper 29 31, 1, 53), (.pairUpper 31 29, 1, 53),
+   (.agreementEdge 12 403 5, 1, 35), (.agreementEdge 13 402 5, 1, 70),
+   (.agreementEdge 15 400 5, 1, 35), (.agreementEdge 36 403 6, 1, 140),
+   (.agreementEdge 36 283 6, 1, 140), (.agreementEdge 37 402 6, 1, 280),
+   (.agreementEdge 37 282 6, 1, 280), (.agreementEdge 39 400 6, 1, 140),
+   (.agreementEdge 39 280 6, 1, 140), (.agreementEdge 44 402 0, 1, 420),
+   (.agreementEdge 387 44 4, 1, 140), (.agreementEdge 45 403 0, 1, 420),
+   (.agreementEdge 45 400 1, 1, 420), (.agreementEdge 386 45 4, 1, 280),
+   (.agreementEdge 47 401 0, 1, 420), (.agreementEdge 384 47 4, 1, 140),
+   (.agreementEdge 96 403 2, 1, 35), (.agreementEdge 97 402 2, 1, 70),
+   (.agreementEdge 99 400 2, 1, 35), (.agreementEdge 100 402 0, 1, 140),
+   (.agreementEdge 402 100 0, 1, 140), (.agreementEdge 101 403 0, 1, 140),
+   (.agreementEdge 403 101 0, 1, 140), (.shellLower 44, 1, 47),
+   (.shellLower 45, 1, 93), (.shellLower 47, 1, 47),
+   (.shellLower 100, 1, 35), (.shellLower 101, 1, 70),
+   (.shellLower 103, 1, 35), (.size, 1, 228),
+   (.direction 2, 1, 32), (.degree 12, 1, 47),
+   (.degree 13, 1, 93), (.degree 15, 1, 47),
+   (.degree 32, 1, 4), (.degree 33, 1, 8),
+   (.degree 35, 1, 4), (.degree 36, 1, 82),
+   (.degree 37, 1, 163), (.degree 39, 1, 82),
+   (.half 2, -1, 254), (.half 5, -1, 397),
+   (.direction 5, -1, 4), (.degree 28, -1, 26),
+   (.degree 29, -1, 53), (.degree 31, -1, 26),
+   (.degree 44, -1, 210), (.degree 45, -1, 420),
+   (.degree 47, -1, 210), (.degree 100, -1, 140),
+   (.degree 103, -1, 140), (.forcedEdge 100 2, 1, 228),
+   (.forcedEdge 100 5, 1, 210), (.forcedEdge 101 2, 1, 735),
+   (.forcedEdge 101 5, 1, 981), (.forcedEdge 103 2, 1, 228),
+   (.forcedEdge 103 5, 1, 210)]
+
+set_option maxRecDepth 16000 in
+set_option maxHeartbeats 0 in
+-- The kernel reduces the 61 sparse rows and combines their orbit coefficients.
+/-- The normalized deficit profile `[0,0,4,4,4,5,5,5,5]` is impossible. -/
+theorem q9_sixty_six_excludes_004445555 {C : Finset (Q 9)} (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C)
+    (hhalf : ∀ i : Fin 9, ((C.filter fun x => x i = true).card : ℤ) +
+      2 * (![0, 0, 4, 4, 4, 5, 5, 5, 5] : Fin 9 → ℤ) i = 33) : False := by
+  apply certificate_contradiction deficit004445555 certificate004445555
+    (by decide +kernel) hC hreg hb hhalf
+  · simp only [certificate004445555, List.forall_mem_cons]
+    repeat' apply And.intro
+    all_goals first | exact List.forall_mem_nil _ | decide +kernel
+  · decide +kernel
+
+#print axioms q9_sixty_six_excludes_004445555
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
