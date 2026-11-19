@@ -49,33 +49,9 @@ private instance witnessAdjDecidable : DecidableRel witness.Adj :=
 private instance witnessUnderlyingAdjDecidable : DecidableRel witness.toSimpleGraphInclusive.Adj :=
   inferInstanceAs (DecidableRel (SimpleGraph.fromRel witness.Adj).Adj)
 
-private theorem witness_oriented : Oriented witness := by
-  unfold Oriented
-  decide
-
-private theorem witness_connected : witness.toSimpleGraphInclusive.Connected := by
-  apply (SimpleGraph.connected_iff_exists_forall_reachable witness.toSimpleGraphInclusive).mpr
-  refine ⟨0, fun i => ?_⟩
-  fin_cases i
-  · exact SimpleGraph.Reachable.refl _
-  · exact (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 0 3 by decide)).trans
-      (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 3 1 by decide))
-  · exact (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 0 7 by decide)).trans
-      (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 7 2 by decide))
-  all_goals exact SimpleGraph.Adj.reachable (by decide)
-
 /-- Ordered adjacent pairs are the arcs. -/
 def arcCount {V : Type*} (G : Digraph V) : ℕ :=
   Nat.card {p : V × V // G.Adj p.1 p.2}
-
-private theorem witness_arcCount : arcCount witness = 19 := by
-  unfold arcCount
-  rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
-  have h : Finset.univ.filter (fun p : Fin 13 × Fin 13 => witness.Adj p.1 p.2) = arcs := by
-    ext p
-    simp [witness]
-  rw [h]
-  decide
 
 /-- The counted maps have only the adjacency-preservation condition. -/
 private def directedHomCount {V W : Type*} (D : Digraph V) (G : Digraph W) : ℕ :=
@@ -157,14 +133,15 @@ private def mapEquiv {V : Type*} (R : V → V → Prop) : MapPreserving R ≃ Ro
 
 /-- Forgetting the orientation of the source yields exactly the arc conditions
     with a symmetric target relation. -/
-private theorem map_underlying_iff {V : Type*} (H : SimpleGraph V) (f : Fin 13 → V) :
+private theorem map_underlying_iff {V : Type*} (hD : Oriented witness) (H : SimpleGraph V)
+    (f : Fin 13 → V) :
     (∀ u v, witness.toSimpleGraphInclusive.Adj u v → H.Adj (f u) (f v)) ↔
     (∀ u v, witness.Adj u v → H.Adj (f u) (f v)) := by
   constructor
   · intro h u v huv
-    exact h u v (underlying_adj witness_oriented |>.mpr (Or.inl huv))
+    exact h u v ((underlying_adj hD).mpr (Or.inl huv))
   · intro h u v huv
-    rcases underlying_adj witness_oriented |>.mp huv with huv | hvu
+    rcases (underlying_adj hD).mp huv with huv | hvu
     · exact h u v huv
     · exact (h v u hvu).symm
 
@@ -236,11 +213,12 @@ private theorem directed_count_eq_sum {V : Type*} [Fintype V] (G : Digraph V) :
     directedHomCount witness G = ∑ x, middleCount G.Adj x * leafCount G.Adj x :=
   mapCount_eq_sum G.Adj
 
-private theorem undirected_count_eq_sum {V : Type*} [Fintype V] (G : SimpleGraph V) :
+private theorem undirected_count_eq_sum {V : Type*} [Fintype V] (hD : Oriented witness)
+    (G : SimpleGraph V) :
     Nat.card {f : Fin 13 → V // ∀ u v, witness.toSimpleGraphInclusive.Adj u v →
       G.Adj (f u) (f v)} = ∑ x, middleCount G.Adj x * leafCount G.Adj x := by
   rw [← mapCount_eq_sum G.Adj]
-  exact Nat.card_congr (Equiv.subtypeEquivRight (map_underlying_iff G))
+  exact Nat.card_congr (Equiv.subtypeEquivRight (map_underlying_iff hD G))
 
 private theorem indicator_underlying {V : Type*} {G : Digraph V} (hG : Oriented G) (a b : V) :
     indicator (G.toSimpleGraphInclusive.Adj a b) =
@@ -343,11 +321,11 @@ private theorem middle_bound {V : Type*} [Fintype V] {G : Digraph V}
 
 /-- On `Fin`-labelled carriers, the undirected count is the repository's existing `homCount`.
     The choice of finite labelling is arbitrary. -/
-private theorem witness_bound_relabelled {V : Type*} [Fintype V] {n : ℕ} (G : Digraph V)
-    (hG : Oriented G) (e : V ≃ Fin n) :
+private theorem witness_bound_relabelled {V : Type*} [Fintype V] {n : ℕ} (hD : Oriented witness)
+    (G : Digraph V) (hG : Oriented G) (e : V ≃ Fin n) :
     2 ^ 19 * directedHomCount witness G ≤
       homCount witness.toSimpleGraphInclusive (G.toSimpleGraphInclusive.comap e.symm) := by
-  rw [homCount_relabel_host, directed_count_eq_sum, undirected_count_eq_sum, Finset.mul_sum]
+  rw [homCount_relabel_host, directed_count_eq_sum, undirected_count_eq_sum hD, Finset.mul_sum]
   refine Finset.sum_le_sum fun x _ => ?_
   calc
     _ = (2 ^ 17 * middleCount G.Adj x) * (4 * leafCount G.Adj x) := by ring
@@ -355,14 +333,15 @@ private theorem witness_bound_relabelled {V : Type*} [Fintype V] {n : ℕ} (G : 
 
 /-- The inequality holds for every finite oriented host and counts all vertex maps
     that preserve adjacency. -/
-private theorem witness_bound {V : Type*} [Finite V] (G : Digraph V) (hG : Oriented G) :
+private theorem witness_bound {V : Type*} [Finite V] (hD : Oriented witness)
+    (G : Digraph V) (hG : Oriented G) :
     2 ^ 19 * directedHomCount witness G ≤
       Nat.card {f : Fin 13 → V // ∀ u v, witness.toSimpleGraphInclusive.Adj u v →
         G.toSimpleGraphInclusive.Adj (f u) (f v)} := by
   let _ := Fintype.ofFinite V
   let e := Fintype.equivFin V
   rw [← homCount_relabel_host _ _ e]
-  exact witness_bound_relabelled G hG e
+  exact witness_bound_relabelled hD G hG e
 
 /-- Each underlying edge of an oriented graph has a unique direction. -/
 private theorem arcCount_eq_edgeCount {V : Type*} (G : Digraph V) (hG : Oriented G) :
@@ -391,22 +370,39 @@ def RelativelyAntiSidorenko {n : ℕ} (D : Digraph (Fin n)) : Prop :=
       (Nat.card {f : Fin n → V // ∀ u v, D.toSimpleGraphInclusive.Adj u v →
         G.toSimpleGraphInclusive.Adj (f u) (f v)} : ℚ)
 
-private theorem witness_relativeAntiSidorenko : RelativelyAntiSidorenko witness := by
-  intro V _ G hG
-  have h := witness_bound G hG
-  rw [← witness_arcCount, arcCount_eq_edgeCount witness witness_oriented] at h
-  rw [one_div, inv_pow, ← div_eq_inv_mul]
-  apply (le_div_iff₀ (by positivity)).mpr
-  rw [mul_comm]
-  exact_mod_cast h
-
 /-- Question 5.3 of arXiv:2611.23222v1. The proof supplies a pattern on 13
 vertices with 19 arcs. -/
 theorem question_5_3 :
     ∃ (n : ℕ) (D : Digraph (Fin n)), Oriented D ∧ D.toSimpleGraphInclusive.Connected ∧
       arcCount D % 4 = 3 ∧ RelativelyAntiSidorenko D := by
-  refine ⟨13, witness, witness_oriented, witness_connected, ?_, witness_relativeAntiSidorenko⟩
-  rw [witness_arcCount]
+  have hD : Oriented witness := by
+    unfold Oriented
+    decide
+  have hArcCount : arcCount witness = 19 := by
+    unfold arcCount
+    rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
+    have h : Finset.univ.filter (fun p : Fin 13 × Fin 13 => witness.Adj p.1 p.2) = arcs := by
+      ext p
+      simp [witness]
+    rw [h]
+    decide
+  refine ⟨13, witness, hD, ?_, by rw [hArcCount], ?_⟩
+  · apply (SimpleGraph.connected_iff_exists_forall_reachable witness.toSimpleGraphInclusive).mpr
+    refine ⟨0, fun i => ?_⟩
+    fin_cases i
+    · exact SimpleGraph.Reachable.refl _
+    · exact (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 0 3 by decide)).trans
+        (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 3 1 by decide))
+    · exact (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 0 7 by decide)).trans
+        (SimpleGraph.Adj.reachable (show witness.toSimpleGraphInclusive.Adj 7 2 by decide))
+    all_goals exact SimpleGraph.Adj.reachable (by decide)
+  · intro V _ G hG
+    have h := witness_bound hD G hG
+    rw [← hArcCount, arcCount_eq_edgeCount witness hD] at h
+    rw [one_div, inv_pow, ← div_eq_inv_mul]
+    apply (le_div_iff₀ (by positivity)).mpr
+    rw [mul_comm]
+    exact_mod_cast h
 
 end
 
