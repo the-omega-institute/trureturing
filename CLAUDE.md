@@ -38,7 +38,7 @@ Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存�
 
 **消化系统只是辅助追踪，不承担数学真值。** 其索引、覆盖路由和账目状态的一致性偏差，在相关现有记录中简短注明原因即可；不要求另立案、立即结算、全局对齐或专门派席反复审计，不为账本完美而扩建工具、重跑验证或占用形式化主线。能够随手完成的 canonical 结算照做；其余允许暂存偏差，继续真正缺失的数学内容。若现役机器门实际阻断形式化提交，只做恢复该提交所需的最小处理。不得伪报覆盖、证明或检查通过；Lean 核验、公理边界和冻结真值保护仍须严格执行。本款优先于本文件其他条款对消化记账、结算及修器的投入要求，但不豁免下款。
 
-纯消化任务在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)中由对应 writer 和该仓的 required checks 结算。第 4.3 条只去 `private` 的公开化仍由本仓 required checks 验证消费者。
+纯消化任务在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)中由对应 writer 和该仓的 required checks 结算。第 4.3 条只去 `private` 的公开化仍由本仓 required checks 验证消费者。
 本款优先于第 5.6、5.7 条与第 6.1 条对独立评审的要求。只要交付新增或首冻 D5 声明，就是实质形式化，判形、准入、探针、冻结前判形与三席评审照旧。
 
 **形式化直接写 Lean 与 Scribe。** 在本仓提交 D5 Lean、对应 Blueprint Scribe 和适用的 Reg，使用 `make deposit GID=…` 冻结。来自理论卷的任务可在理论仓按已发布的主仓版本补记覆盖。第 3.2 条判形、第 3.3 条用途准入和第 3.7 条文献要求适用于每次实质形式化。
@@ -53,7 +53,7 @@ Lean → 编译报告与冻结状态 → truth-export → 理论源仓的覆盖�
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
-- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)维护。普通主仓检出、构建、CI 和首次冻结均独立运行。
+- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)维护。并行合并带回的正文与消化账本副本可暂留主仓，后续按批次归并。新消化工作在理论源仓 `dev` 进行。普通主仓检出、构建、CI 和首次冻结均独立运行。
 
 ### 1.3 真值图、冻结与两个偏序
 
@@ -241,7 +241,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.8 理论正文与追加纪律
 
 - **形式化遇到理论缺口，可以直接推理补足。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补足的内容可以直接写成 D5 Lean 与 Blueprint Scribe，不必先写入理论卷(第 1.2 条)；选择写入理论卷时，归入理论仓既有相关卷。补足须保持原问题的目标、假设与量词；尚未证成的部分明确标为待证，不冒称定理。数学真值仍只由内核验证的形式化代码承担。
-理论卷的写作、追加、勘误、引文和行数要求见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)的写卷规范。正式源码复用文献时按本仓第 3.7 条登记。
+理论卷的写作、追加、勘误、引文和行数要求见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)的写卷规范。正式源码复用文献时按本仓第 3.7 条登记。
 
 ### 3.9 登记即声明模板与 delta 判官
 
@@ -324,7 +324,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.7 生产链、冻结与消化状态
 
-主仓通过 `make deposit GID=…` 核验目标模块与 Blueprint 镜像并写入 `Golden/Frozen/state/**`。主仓提出数学陈述和编译证据，理论仓按需选择已冻结且声明身份匹配的导出结果，独立写入覆盖。检索、摄入、拆分、结算和归档均在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)执行。
+主仓通过 `make deposit GID=…` 核验目标模块与 Blueprint 镜像并写入 `Golden/Frozen/state/**`。主仓提出数学陈述和编译证据，理论仓默认读取主仓 `dev` 分支上目标模块的冻结状态片，按声明名登记覆盖，并自动记录来源提交。检索、摄入、拆分、结算和归档均在[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)执行。
 
 - **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;删除状态片是合法的成员变更,不产生判词,不改变已验证陈述的真值(第 1.3 条)。SL-008 检查状态片路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
 
@@ -976,7 +976,7 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 
 - **地图 / GID 文法 / 风格**:`agents/CONTEXT.md`(≤2K token,有限上下文唯一必读)
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
-- 理论卷、归档和消化工具见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories)。
+- 理论卷、归档和消化工具见[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)。
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
 
 ### 12.2 发现、逻辑、账与美
