@@ -571,6 +571,39 @@ theorem legal_word_open_cylinders_disjoint {s s₁ s₂ : Bool} {u v : List Labe
         exact hdis ⟨wordScalar u x, hx', rfl⟩ ⟨wordScalar v y, hy', hxy⟩
 
 
+private theorem endpoint_path {W : Type u} [Quiver.{v} W]
+    (ℓ : EdgeLabel W Label) {Q : ℕ} {R : ℝ} (first : W → Vertex Q R)
+    (hedge : ∀ {a b : W} (e : a ⟶ b), edge (first a) (ℓ e) (first b))
+    {a b : W} (P : Path a b) :
+      SourcePath (first a).val.1 (output ℓ P) (first b).val.1 ∧
+      MapsTo (wordScalar (output ℓ P)) (piece (first b)) (piece (first a)) ∧
+      (output ℓ P).length = P.length := by
+  have hg : 0 < g := pow_pos golden_relations.1 3
+  induction P with
+  | nil =>
+    have hout : output ℓ (Path.nil : Path a a) = [] := by simp [output]
+    rw [hout]
+    exact ⟨.nil _, fun _ h => h, rfl⟩
+  | @cons b c P e ih =>
+    have he := hedge e
+    have hstep : MapsTo (branch (ℓ e)) (piece (first c)) (piece (first b)) := by
+      intro x hx
+      obtain ⟨y, hy, rfl⟩ := he.2.2 hx
+      have hinv : branch (ℓ e) (inverseBranch (ℓ e) y) = y := by
+        unfold branch inverseBranch
+        field_simp [hg.ne']
+        ring
+      exact hinv.symm ▸ hy
+    have ho : output ℓ (P.cons e) = output ℓ P ++ [ℓ e] := by
+      simp only [output, Path.weight_cons, FreeMonoid.toList_mul, FreeMonoid.of,
+        FreeMonoid.toList_ofList]
+    rw [ho]
+    refine ⟨path_append ih.1 (.cons he.1 (.nil _)), ?_, ?_⟩
+    · intro x hx
+      rw [wordScalar_append]
+      exact ih.2.1 (hstep hx)
+    · simp [ih.2.2]
+
 /-- When every first-projection arrow is an original endpoint-graph edge, the
 return maps preserve the original piece and distinct equal-length guard cylinders
 have disjoint interiors. A phase of the other projection remains an input. -/
@@ -591,34 +624,7 @@ theorem width_at_original_first_piece {V : Type u} [Quiver.{v} V] [Finite V]
   have hlt : g < 1 := by
     rw [golden_relations.2.2.2.1]
     linarith [golden_relations.2.1]
-  have hpath {a b : Component S} (P : Path a b) :
-      SourcePath (first a).val.1 (output ℓ P) (first b).val.1 ∧
-      MapsTo (wordScalar (output ℓ P)) (piece (first b)) (piece (first a)) ∧
-      (output ℓ P).length = P.length := by
-    induction P with
-    | nil =>
-      have hout : output ℓ (Path.nil : Path a a) = [] := by simp [output]
-      rw [hout]
-      exact ⟨.nil _, fun _ h => h, rfl⟩
-    | @cons b c P e ih =>
-      have he := hedge e
-      have hstep : MapsTo (branch (ℓ e)) (piece (first c)) (piece (first b)) := by
-        intro x hx
-        obtain ⟨y, hy, rfl⟩ := he.2.2 hx
-        have hinv : branch (ℓ e) (inverseBranch (ℓ e) y) = y := by
-          unfold branch inverseBranch
-          field_simp [hg.ne']
-          <;> ring
-        exact hinv.symm ▸ hy
-      have ho : output ℓ (P.cons e) = output ℓ P ++ [ℓ e] := by
-        simp only [output, Path.weight_cons, FreeMonoid.toList_mul, FreeMonoid.of,
-          FreeMonoid.toList_ofList]
-      rw [ho]
-      refine ⟨path_append ih.1 (.cons he.1 (.nil _)), ?_, ?_⟩
-      · intro x hx
-        rw [wordScalar_append]
-        exact ih.2.1 (hstep hx)
-      · simp [ih.2.2]
+  have hpath {a b : Component S} (P : Path a b) := endpoint_path ℓ first hedge P
   have hguard : (-1 : ℝ) < if (first q).val.1 then t else 1 + t := by
     split <;> linarith [golden_relations.1]
   have hpiece := (first q).property.2.2.2.2.1
@@ -636,6 +642,148 @@ theorem width_at_original_first_piece {V : Type u} [Quiver.{v} V] [Finite V]
     rw [← hscalar C, ← hscalar D]
     apply legal_word_open_cylinders_disjoint (hpath C).1 (hpath D).1 _ hwords
     simpa only [(hpath C).2.2, (hpath D).2.2] using hlen
+
+
+open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
+open D5.S1.Digit.Infinite.SignedSeriesFibres (seam leftStream rightStream signed_series_fibres)
+open D5.S1.Digit.Infinite.SignedSeriesRange (signedValue signed_series_range)
+
+private theorem finite_guard_scalar_fiber (s : Bool) (y : ℝ) :
+    Set.Finite {x : LegalDigits | stateAddress s x ∧ kappa x = y} := by
+  classical
+  let F := {x : LegalDigits | stateAddress s x ∧ kappa x = y}
+  by_cases h : ∃ x, x ∈ F
+  · obtain ⟨a, ha⟩ := h
+    have hval (x : LegalDigits) (hx : x ∈ F) : signedValue x = signedValue a := by
+      have he := hx.2.trans ha.2.symm
+      rw [closed_observation_graph_realization.1, closed_observation_graph_realization.1] at he
+      have ht : t ^ 2 ≠ 0 := pow_ne_zero _ golden_relations.1.ne'
+      exact neg_injective ((div_left_inj' ht).mp he)
+    by_cases hs : signedValue a ∈ Set.range seam
+    · obtain ⟨w, hw⟩ := hs
+      apply (Set.finite_singleton (leftStream w)).insert (rightStream w) |>.subset
+      intro x hx
+      have hcases := ((signed_series_fibres.1 w).2 x).1 ((hval x hx).trans hw.symm)
+      simpa [or_comm] using hcases
+    · have hb := signed_series_range.1 ▸ (show signedValue a ∈ Set.range signedValue from ⟨a, rfl⟩)
+      obtain ⟨z, _, hz⟩ := signed_series_fibres.2.2 _ hb hs
+      apply (Set.finite_singleton z).subset
+      exact fun x hx => hz x (hval x hx)
+  · have hF : F = ∅ := Set.eq_empty_iff_forall_notMem.mpr fun x hx => h ⟨x, hx⟩
+    change F.Finite
+    rw [hF]
+    exact Set.finite_empty
+
+private theorem addressPrefix_tail_unique (w : List Label) {x y z : LegalDigits}
+    (hy : addressPrefix w x y) (hz : addressPrefix w x z) : y = z := by
+  induction w generalizing x with
+  | nil => exact hy.symm.trans hz
+  | cons _ _ ih => exact ih hy.2 hz.2
+
+private theorem addressPrefix_word_unique {u v : List Label} {x y z : LegalDigits}
+    (hlen : u.length = v.length) (hu : addressPrefix u x y) (hv : addressPrefix v x z) : u = v := by
+  induction u generalizing v x with
+  | nil => exact (List.length_eq_zero_iff.mp hlen.symm).symm
+  | cons l u ih =>
+    cases v with
+    | nil => simp at hlen
+    | cons m v =>
+      have he : l = m := hu.1.symm.trans hv.1
+      exact congrArg₂ List.cons he (ih (Nat.succ.inj hlen) hu.2 hv.2)
+
+private theorem fixed_guard_fiber_prefix {s : Bool} {y : ℝ} {w : List Label}
+    (hw : SourcePath s w s) (hfix : wordScalar w y = y)
+    (x : LegalDigits) (hs : stateAddress s x) (hx : kappa x = y) :
+    ∃ z : LegalDigits, addressPrefix w x z := by
+  classical
+  let F := {x : LegalDigits | stateAddress s x ∧ kappa x = y}
+  let : Finite F := (finite_guard_scalar_fiber s y).to_subtype
+  have hex (z : F) : ∃ a : F, addressPrefix w a.val z.val := by
+    obtain ⟨a, ha, hp⟩ := source_path_realization hw z.val z.property.1
+    refine ⟨⟨a, ha, ?_⟩, hp⟩
+    exact (prefix_scalar _ _ _ hp).trans ((congrArg (wordScalar w) z.property.2).trans hfix)
+  let embed : F → F := fun z => Classical.choose (hex z)
+  have hprefix (z : F) : addressPrefix w (embed z).val z.val := Classical.choose_spec (hex z)
+  have hinj : Function.Injective embed := by
+    intro a b hab
+    apply Subtype.ext
+    exact addressPrefix_tail_unique w (hprefix a) (hab.symm ▸ hprefix b)
+  obtain ⟨z, hz⟩ := Finite.surjective_of_injective hinj (⟨x, hs, hx⟩ : F)
+  refine ⟨z.val, ?_⟩
+  have hh := hprefix z
+  rw [hz] at hh
+  exact hh
+
+/-- A singleton in one original projection enforces a common label phase.
+Prepending any return word permutes the finite legal-address fiber of the singleton. -/
+theorem singleton_projection_phases {V : Type u} [Quiver.{v} V] [Finite V]
+    (label : EdgeLabel V Label) (S : StronglyConnectedComponent V) (hcyclic : Cyclic S)
+    {Q : ℕ} {R : ℝ} (project : Component S → Vertex Q R)
+    (hedge : ∀ {a b : Component S} (e : a ⟶ b),
+      edge (project a) (componentLabel label S e) (project b))
+    (o : Component S) (hsingle : (project o).val.2.1 = (project o).val.2.2) :
+    BoundedPhases label S := by
+  apply (coherent_component_phases label S hcyclic).1.mp
+  refine ⟨o, ?_⟩
+  let ℓ : EdgeLabel (Component S) Label := componentLabel label S
+  let b := project o
+  let z := b.val.2.1
+  have hz : z ∈ piece b := ⟨le_rfl, hsingle.le⟩
+  have hstate : z ∈ stateInterval b.val.1 := b.property.2.2.1
+  rw [← closed_observation_graph_realization.2.1 b.val.1] at hstate
+  obtain ⟨x, hxguard, hxval⟩ := hstate
+  have hpref (P : Path o o) : ∃ y : LegalDigits, addressPrefix (output ℓ P) x y := by
+    have hpath := endpoint_path ℓ project hedge P
+    have hfixed : wordScalar (output ℓ P) z = z := by
+      have h := hpath.2.1 hz
+      exact le_antisymm (h.2.trans hsingle.ge) h.1
+    exact fixed_guard_fiber_prefix hpath.1 hfixed x hxguard hxval
+  intro C D _ _
+  let L := Nat.lcm C.length D.length
+  let C' := returnPower C (L / C.length)
+  let D' := returnPower D (L / D.length)
+  have hc : C'.length = L := by
+    rw [length_returnPower]
+    exact Nat.div_mul_cancel (Nat.dvd_lcm_left _ _)
+  have hd : D'.length = L := by
+    rw [length_returnPower]
+    exact Nat.div_mul_cancel (Nat.dvd_lcm_right _ _)
+  obtain ⟨y, hy⟩ := hpref C'
+  obtain ⟨t', ht'⟩ := hpref D'
+  have hlen : (output ℓ C').length = (output ℓ D').length :=
+    (endpoint_path ℓ project hedge C').2.2.trans
+      (hc.trans (hd.symm.trans (endpoint_path ℓ project hedge D').2.2.symm))
+  have he := addressPrefix_word_unique hlen hy ht'
+  change output ℓ (returnPower C (L / C.length)) = output ℓ (returnPower D (L / D.length)) at he
+  rw [output_returnPower, output_returnPower] at he
+  exact he
+
+
+/-- A singleton in the second projection supplies one phase for the width bounds
+at every first-projection vertex of the same original paired component. -/
+theorem paired_singleton_short_return_width {V : Type u} [Quiver.{v} V] [Finite V]
+    (firstLabel secondLabel : EdgeLabel V Label) (S : StronglyConnectedComponent V)
+    (hcyclic : Cyclic S) (hbad : ¬ Coherent firstLabel S)
+    {Q : ℕ} {R : ℝ} (first second : Component S → Vertex Q R)
+    (hedge₁ : ∀ {a b : Component S} (e : a ⟶ b),
+      edge (first a) (componentLabel firstLabel S e) (first b))
+    (hedge₂ : ∀ {a b : Component S} (e : a ⟶ b),
+      edge (second a) (componentLabel secondLabel S e) (second b))
+    (o : Component S) (hsingle : (second o).val.2.1 = (second o).val.2.2) :
+    ∃ p : ℕ, 0 < p ∧ p ≤ Nat.card (Component S) ∧
+      ∃ letters : ZMod p → Label, ∃ phase : Component S → ZMod p,
+        (∀ {a b : Component S} (e : a ⟶ b),
+          componentLabel secondLabel S e = letters (phase a) ∧ phase b = phase a + 1) ∧
+        ∀ q : Component S,
+          g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p)) /
+            (1 - g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p))) *
+            ((if (first q).val.1 then t else 1 + t) - (-1)) ≤
+            (first q).val.2.2 - (first q).val.2.1 := by
+  obtain ⟨p, hp, hp_le, letters, phase, hphase⟩ :=
+    singleton_projection_phases secondLabel S hcyclic second hedge₂ o hsingle
+  refine ⟨p, hp, hp_le, letters, phase, hphase, fun q => ?_⟩
+  exact width_at_original_first_piece firstLabel S hcyclic hbad q first hedge₁
+    hp phase fun e => (hphase e).2
 
 end LegalCylinders
 
