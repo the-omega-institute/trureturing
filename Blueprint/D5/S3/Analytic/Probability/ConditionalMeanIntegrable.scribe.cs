@@ -29,7 +29,7 @@ internal sealed class ConditionalMeanIntegrableDocument : IScribeDocumentDefinit
                         Comma, Sp, Call("Upper", V("mu"), V("t")), Sp, Leq, Sp,
                         Call("Upper", V("nu"), V("t")))
                 ]))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/lyng2026compactstrassen")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Convexity/lyng2026compactstrassen")),
                 Blocks(Paragraph(Text("Compare at the stop-loss threshold given by the right quantile. At an interior level this threshold attains the bound for the right law. At level one both upper integrals vanish."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("lowerintegratedquantile-ge-of-upper-le"),
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/ConditionalMeanIntegrable.lowerIntegratedQuantile_ge_of_upper_le"),
@@ -44,7 +44,7 @@ internal sealed class ConditionalMeanIntegrableDocument : IScribeDocumentDefinit
                         Call("Lower", V("nu"), V("t")), Sp, Leq, Sp,
                         Call("Lower", V("mu"), V("t")))
                 ]))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/lyng2026compactstrassen")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Convexity/lyng2026compactstrassen")),
                 Blocks(Paragraph(Text("Split the integral of each quantile at the given level. The total quantile integral equals the original mean, so subtracting the upper integral gives the reverse inequality on the lower interval."))), DescribeRole.Theorem),
             Paragraph(Text("For a positive integer n, BinIntegrable(rho,n) asserts Lebesgue integrability of the quantile of rho on every bin (k/n,(k+1)/n] with k in Fin n. BinMean is n times that integral. PrefixSum sums the bin means through and including index K, and Lower integrates the same quantile over (0,t] at level t.")),
             Describe.Lean(DescribeId.Create("integrable-quantile-bin"),
@@ -54,7 +54,7 @@ internal sealed class ConditionalMeanIntegrableDocument : IScribeDocumentDefinit
                     Call("IntegrableIdentity", V("mu")), Sp, Rightarrow,
                     Forall, Sp, V("n"), Colon, Sp, Nat, Comma, Sp, D(0), Lt, V("n"),
                     Sp, Rightarrow, Call("BinIntegrable", V("mu"), V("n"))))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/lyng2026compactstrassen")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Convexity/lyng2026compactstrassen")),
                 Blocks(Paragraph(Text("The quantile on (0,1] is integrable by the original law and its finite absolute first moment. Restrict to each quantile bin."))), DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("condmeanatom-monotone-of-integrable-bins"),
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/ConditionalMeanIntegrable.condMeanAtom_monotone_of_integrable_bins"),
@@ -62,7 +62,7 @@ internal sealed class ConditionalMeanIntegrableDocument : IScribeDocumentDefinit
                     Forall, Sp, V("n"), Colon, Sp, Nat, Comma, Sp, D(0), Lt, V("n"), Sp, Rightarrow,
                     Call("BinIntegrable", V("mu"), V("n")), Sp, Rightarrow,
                     Call("Monotone", Seq(V("k"), Mapsto, Call("BinMean", V("mu"), V("n"), V("k"))))))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/lyng2026compactstrassen")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Convexity/lyng2026compactstrassen")),
                 Blocks(Paragraph(Text("For two ordered bins, values of the quantile on the earlier bin are bounded above by values on the later bin almost everywhere. The bins have equal mass and their quantile integrals are finite."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("condmeanatomize-partial-sum-eq-of-integrable-bins"),
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/ConditionalMeanIntegrable.condMeanAtomize_partial_sum_eq_of_integrable_bins"),
@@ -75,7 +75,7 @@ internal sealed class ConditionalMeanIntegrableDocument : IScribeDocumentDefinit
                         V("n"), Sp, Cdot, Sp,
                         Call("Lower", V("mu"), Seq(Open, V("K"), Plus, D(1), Close, Slash, V("n"))))
                 ]))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/lyng2026compactstrassen")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Convexity/lyng2026compactstrassen")),
                 Blocks(Paragraph(Text("The first K+1 right-closed bins form a disjoint union up to their final endpoint. Finite additivity of the integral sums their means, with the same scaling factor n on every bin."))), DescribeRole.Theorem),
             Paragraph(Text("BinLaw is the uniform finite law of the bin means. WeakLimit uses its embedding into probability measures. ConvexOrder compares the expectations of every convex real test for the two finite laws.")),
             Describe.Lean(DescribeId.Create("condmeanatomize-tendsto-of-integrable-bins"),
@@ -87,7 +87,7 @@ internal sealed class ConditionalMeanIntegrableDocument : IScribeDocumentDefinit
                     Seq(Call("WeakLimit", Seq(V("n"), Sp, Mapsto, Sp,
                         Call("BinLaw", V("mu"), Seq(V("n"), Plus, D(1)))), V("mu")))
                 ]))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/lyng2026compactstrassen")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Convexity/lyng2026compactstrassen")),
                 Blocks(Paragraph(Text("At an interior continuity point of the quantile, the bin containing the point shrinks to it. The bin means converge there, and the exceptional set has measure zero. Bounded continuous tests give dominated convergence for the probability laws."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("condmeanatomize-convexorder-of-lowerintegratedquantile"),
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/ConditionalMeanIntegrable.condMeanAtomize_convexOrder_of_lowerIntegratedQuantile"),
@@ -104,6 +104,6 @@ internal sealed class ConditionalMeanIntegrableDocument : IScribeDocumentDefinit
                     Seq(Call("ConvexOrder", Call("BinLaw", V("mu"), V("n")),
                         Call("BinLaw", V("nu"), V("n"))))
                 ]))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/lyng2026compactstrassen")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Convexity/lyng2026compactstrassen")),
                 Blocks(Paragraph(Text("Both vectors of bin means are increasing and have equal total sums. The lower quantile integrals order their prefix sums at each bin endpoint. Finite majorization compares the expectations of every convex test."))), DescribeRole.Theorem))));
 }
