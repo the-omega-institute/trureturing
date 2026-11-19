@@ -682,6 +682,25 @@ if sys.argv[0].endswith("lean_cache_release.py"):
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertFalse((self.root / "build-runs").exists())
 
+    def test_candidate_exact_restore_can_seed_from_published_legacy_verification(self):
+        self.verification_fixture()
+        published = self.verification("publish")
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        tag = next(self.remote.iterdir()).name
+        self.assertTrue(tag.startswith("lean-cache-verify-v1-"))
+        self.assertTrue(tag.endswith("-ci-123-1"))
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.candidate_transport("fetch", tag, **self.candidate_consumer())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        write(self.root / ".lake/build/keep.txt", "keep current material")
+        result = self.transport("fetch", arguments=("--mode", "candidate", "--source-commit", "f" * 40,
+                                                     "--tag", tag),
+            **{**self.verification_environment, **self.candidate_consumer()})
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn("snapshot does not match this exact publication", result.stdout)
+        self.assertEqual("keep current material", (self.root / ".lake/build/keep.txt").read_text())
+
     def test_candidate_restore_rejects_ordinary_ci_and_wrong_source_without_replacing_build(self):
         self.candidate_fixture()
         tag = self.candidate_tag()
