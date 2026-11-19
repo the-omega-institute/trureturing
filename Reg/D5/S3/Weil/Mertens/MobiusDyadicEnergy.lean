@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.MobiusDyadicEnergy
-import Batteries.Tactic.OpenPrivate
+import D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
 import Reg.Support.SingleDependentReadout
 
 /-! The accumulated shell energy is the readout at every finite cutoff. -/
@@ -14,8 +14,8 @@ open scoped BigOperators
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Weil.Mertens.MobiusDyadicEnergy
-open private exists_nontrivial_zero_re_ge_half
-  from D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
+open _root_.D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
+  (exists_nontrivial_zero_re_ge_half)
 
 namespace Reg.D5.S3.Weil.Mertens.MobiusDyadicEnergy
 

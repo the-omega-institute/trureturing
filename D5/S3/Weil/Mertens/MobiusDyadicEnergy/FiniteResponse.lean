@@ -7,7 +7,6 @@
    digest: Finite zero-forced response and square-integral transfer for the signed Möbius energy proof. -/
 
 import D5.S3.Weil.Mertens.MobiusDyadicEnergy.Kernel
-import Batteries.Tactic.OpenPrivate
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
@@ -244,7 +243,7 @@ private theorem norm_q_le_beta {a : ℝ → ℂ} (ha : Measurable a)
       dsimp [beta]
       ring
 
-private theorem norm_q_le {a : ℝ → ℂ} (ha : Measurable a)
+theorem norm_q_le {a : ℝ → ℂ} (ha : Measurable a)
     (hbound : ∀ t : ℝ, 0 ≤ t → ‖a t‖ ≤ (1 + t) * Real.exp (-t / 2))
     {lambda : ℂ} (hlambda : 0 ≤ lambda.re)
     (hzero : (∫ u in Ioi (0 : ℝ), damped a lambda u ∂volume) = 0)
@@ -375,24 +374,22 @@ open scoped Topology Convolution BigOperators NNReal ENNReal
 
 namespace MobiusCausalPrefixEnergy
 
-open private MobiusCausalKernel.a MobiusCausalKernel.h MobiusCausalKernel.causal_identity
-  MobiusKernelLaplace.at_nontrivial_zero
-  from D5.S3.Weil.Mertens.MobiusDyadicEnergy.Kernel
+open D5.S3.Analytic.Fourier.ConvolutionL2 (complex_l2_integral)
 
 private abbrev aC (t : ℝ) : ℂ := (MobiusCausalKernel.a t : ℂ)
-private abbrev hC (t : ℝ) : ℂ := (MobiusCausalKernel.h t : ℂ)
-private def lambda (rho : ℂ) : ℂ := rho - 1 / 2
-private def q (rho : ℂ) : ℝ → ℂ := CausalResolventL1.resolvent aC (lambda rho)
-private def causal (f g : ℝ → ℂ) (t : ℝ) : ℂ := ∫ u in (0 : ℝ)..t, f u * g (t-u)
-private def response (rho : ℂ) (t : ℝ) : ℂ := causal (q rho) hC t
-private def explicitOutput (rho : ℂ) (t : ℝ) : ℂ :=
+abbrev hC (t : ℝ) : ℂ := (MobiusCausalKernel.h t : ℂ)
+def lambda (rho : ℂ) : ℂ := rho - 1 / 2
+def q (rho : ℂ) : ℝ → ℂ := CausalResolventL1.resolvent aC (lambda rho)
+def causal (f g : ℝ → ℂ) (t : ℝ) : ℂ := ∫ u in (0 : ℝ)..t, f u * g (t-u)
+def response (rho : ℂ) (t : ℝ) : ℂ := causal (q rho) hC t
+def explicitOutput (rho : ℂ) (t : ℝ) : ℂ :=
   (Complex.exp (lambda rho * (t : ℂ)) -
     (1 + rho * (t : ℂ)) * Complex.exp (-(t : ℂ) / 2)) / rho^2
 
 private def cut {E : Type*} [Zero E] (T : ℝ) (f : ℝ → E) : ℝ → E :=
   (Icc 0 T).indicator f
 
-private lemma bounded_interval {E : Type*} [NormedAddCommGroup E]
+lemma bounded_interval {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E]
     {f : ℝ → E} (hf : Measurable f) {T M : ℝ} (hT : 0 ≤ T)
     (hb : ∀ t ∈ Icc 0 T, ‖f t‖ ≤ M) : IntervalIntegrable f volume 0 T := by
@@ -413,7 +410,7 @@ private lemma cut_integrable {E : Type*} [NormedAddCommGroup E]
     exact hb t ht
   exact hi.integrable_indicator measurableSet_Icc
 
-private lemma cut_bound {E : Type*} [NormedAddCommGroup E] {f : ℝ → E}
+lemma cut_bound {E : Type*} [NormedAddCommGroup E] {f : ℝ → E}
     {T M : ℝ} (hM : 0 ≤ M) (hb : ∀ t ∈ Icc 0 T, ‖f t‖ ≤ M) (t : ℝ) :
     ‖cut T f t‖ ≤ M := by
   by_cases ht : t ∈ Icc 0 T
@@ -436,14 +433,14 @@ private lemma frac_interval (a b : ℝ) : IntervalIntegrable frac volume a b := 
   simpa only [frac, Real.norm_eq_abs, abs_of_nonneg (Int.fract_nonneg (Real.exp t))] using
     (Int.fract_lt_one (Real.exp t)).le
 
-private lemma aC_measurable : Measurable aC := by
+lemma aC_measurable : Measurable aC := by
   have hp : Continuous (fun t : ℝ => ∫ u in (0 : ℝ)..t, frac u) :=
     intervalIntegral.continuous_primitive frac_interval 0
   exact Complex.continuous_ofReal.measurable.comp
     ((by fun_prop : Measurable (fun t : ℝ => Real.exp (-t/2))).mul
       ((measurable_const.sub frac_measurable).add hp.measurable))
 
-private lemma aC_envelope (t : ℝ) (ht : 0 ≤ t) :
+lemma aC_envelope (t : ℝ) (ht : 0 ≤ t) :
     ‖aC t‖ ≤ (1+t)*Real.exp (-t/2) := by
   have h0 : 0 ≤ ∫ u in (0 : ℝ)..t, frac u :=
     intervalIntegral.integral_nonneg_of_forall ht (fun u => Int.fract_nonneg _)
@@ -472,7 +469,7 @@ private lemma aC_local_bound {T t : ℝ} (ht : t ∈ Icc 0 T) : ‖aC t‖ ≤ 1
     _ ≤ (1+t)*1 := mul_le_mul_of_nonneg_left he (by linarith [ht.1])
     _ ≤ 1+T := by linarith [ht.2]
 
-private lemma hC_measurable : Measurable hC := by
+lemma hC_measurable : Measurable hC := by
   let F : ℕ → ℝ := fun N => ∑ n ∈ Finset.Icc 1 N,
     (ArithmeticFunction.moebius n : ℝ)/(n : ℝ)
   have hm : Measurable
@@ -483,7 +480,7 @@ private lemma hC_measurable : Measurable hC := by
       (hm.comp Real.measurable_exp))
 
 /-- Cutoff normalization only: reuse the stronger frozen public reciprocal bound. -/
-private lemma hC_local_bound {T t : ℝ} (ht : t ∈ Icc 0 T) :
+lemma hC_local_bound {T t : ℝ} (ht : t ∈ Icc 0 T) :
     ‖hC t‖ ≤ Real.exp (T/2) := by
   have hm := D5.S3.Arith.MoebiusLogarithmic.abs_reciprocalSum_le_one (Real.exp t)
   have hc : Finset.Icc 1 ⌊Real.exp t⌋₊ = Finset.Ioc 0 ⌊Real.exp t⌋₊ := by
@@ -502,21 +499,21 @@ private lemma hC_local_bound {T t : ℝ} (ht : t ∈ Icc 0 T) :
     _ ≤ Real.exp (t/2)*1 := mul_le_mul_of_nonneg_left hm' (Real.exp_pos _).le
     _ ≤ Real.exp (T/2) := by simpa using Real.exp_le_exp.mpr (by linarith [ht.2])
 
-private lemma rho_ne_zero {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re) : rho ≠ 0 := by
+lemma rho_ne_zero {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re) : rho ≠ 0 := by
   intro hz
   rw [hz] at hh
   norm_num at hh
 
-private lemma lambda_re_nonneg {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re) :
+lemma lambda_re_nonneg {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re) :
     0 ≤ (lambda rho).re := by simp only [lambda, Complex.sub_re]; norm_num; linarith
 
-private lemma actual_zero {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re)
+lemma actual_zero {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re)
     (hl : rho.re < 1) (hz : riemannZeta rho = 0) :
     (∫ u in Ioi (0 : ℝ), CausalResolventL1.damped aC (lambda rho) u) = 0 := by
   simpa only [CausalResolventL1.damped, lambda] using
     (MobiusKernelLaplace.at_nontrivial_zero hh hl hz).2
 
-private lemma q_measurable {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re) : Measurable (q rho) :=
+lemma q_measurable {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re) : Measurable (q rho) :=
   CausalResolventL1.resolvent_measurable aC_measurable aC_envelope (lambda_re_nonneg hh)
 
 /-- The supplier computes 20 by integrating (2t+6)exp(-t/2): 2*4+6*2=20.
@@ -530,7 +527,7 @@ private lemma q_budget {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re)
     CausalResolventL1.integral_norm_q_global_le_twenty aC_measurable aC_envelope
       (lambda_re_nonneg hh) h0⟩
 
-private lemma q_local_bound {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re)
+lemma q_local_bound {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re)
     (hl : rho.re < 1) (hz : riemannZeta rho = 0) {T t : ℝ} (ht : t ∈ Icc 0 T) :
     ‖q rho t‖ ≤ 2*T+6 := by
   have hb := CausalResolventL1.norm_q_le aC_measurable aC_envelope
@@ -739,7 +736,7 @@ private lemma elementary_response {rho : ℂ} (hr : rho ≠ 0) (t : ℝ) :
 
 /-- Actual finite integrability and exact output at EVERY nonnegative time.
 The only zero-transform input is for a, supplied by MobiusKernelLaplace. -/
-private theorem response_integrable_and_eq {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re)
+theorem response_integrable_and_eq {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho.re)
     (hl : rho.re < 1) (hz : riemannZeta rho = 0) {t : ℝ} (ht : 0 ≤ t) :
     IntervalIntegrable (fun u => q rho u * hC (t-u)) volume 0 t ∧
     response rho t = explicitOutput rho t := by
@@ -775,9 +772,8 @@ private theorem response_integrable_and_eq {rho : ℂ} (hh : (1/2 : ℝ) ≤ rho
     _ = explicitOutput rho t := elementary_response (rho_ne_zero hh) t
 
 
-open private complex_l2_integral from D5.S3.Analytic.Fourier.ConvolutionL2
 
-private lemma cut_prefix_transfer {rho : ℂ} (hh : (1 / 2 : ℝ) ≤ rho.re)
+lemma cut_prefix_transfer {rho : ℂ} (hh : (1 / 2 : ℝ) ≤ rho.re)
     (hl : rho.re < 1) (hz : riemannZeta rho = 0) {T M : ℝ} (hT : 0 ≤ T)
     {f : ℝ → ℂ} (hf : Measurable f) (hb : ∀ t ∈ Icc 0 T, ‖f t‖ ≤ M) :
     IntervalIntegrable (fun t => ‖causal (q rho) f t‖^2) volume 0 T ∧
@@ -844,56 +840,14 @@ private lemma cut_prefix_transfer {rho : ℂ} (hh : (1 / 2 : ℝ) ≤ rho.re)
     _ ≤ _ := hglobal
 
 
-private def lead (rho : ℂ) (t : ℝ) : ℂ := Complex.exp (lambda rho*(t : ℂ))
+def lead (rho : ℂ) (t : ℝ) : ℂ := Complex.exp (lambda rho*(t : ℂ))
 
-private lemma lead_norm_sq (rho : ℂ) (t : ℝ) :
+lemma lead_norm_sq (rho : ℂ) (t : ℝ) :
     ‖lead rho t‖^2 = Real.exp ((2*rho.re-1)*t) := by
   have hn : ‖lead rho t‖ = Real.exp ((rho.re-1/2)*t) := by
     simp [lead, lambda, Complex.norm_exp]
   rw [hn, pow_two, ← Real.exp_add]
   congr 1
   ring
-
-private def affineExpPrimitive (d b0 b1 t : ℝ) : ℝ :=
-  -(b0/d + b1*(t/d+1/d^2))*Real.exp (-d*t)
-
-private lemma affineExpPrimitive_deriv {d : ℝ} (hd : d ≠ 0) (b0 b1 t : ℝ) :
-    HasDerivAt (affineExpPrimitive d b0 b1) ((b0+b1*t)*Real.exp (-d*t)) t := by
-  have hp :=
-    (((((hasDerivAt_id t).div_const d).add_const (1/d^2)).const_mul b1).const_add (b0/d)).neg
-  have he := ((hasDerivAt_id t).const_mul (-d)).exp
-  convert hp.mul he using 1
-  · rfl
-  · dsimp
-    field_simp [hd] <;> ring
-
-/-- The constant and linear exponential moments used in the cross bounds. -/
-private lemma affine_exp_integral {d : ℝ} (hd : 0 < d) (b0 b1 : ℝ) :
-    IntegrableOn (fun t : ℝ => (b0+b1*t)*Real.exp (-d*t)) (Ioi 0) ∧
-    (∫ t in Ioi (0 : ℝ), (b0+b1*t)*Real.exp (-d*t)) = b0/d+b1/d^2 := by
-  have i0 : IntegrableOn (fun t : ℝ => Real.exp (-d*t)) (Ioi 0) :=
-    integrableOn_exp_mul_Ioi (by linarith : -d < 0) 0
-  have i1 : IntegrableOn (fun t : ℝ => t*Real.exp (-d*t)) (Ioi 0) := by
-    simpa only [Real.rpow_one] using integrableOn_rpow_mul_exp_neg_mul_rpow
-      (s := (1 : ℝ)) (p := (1 : ℝ)) (b := d) (by norm_num) (by norm_num) hd
-  have ie : IntegrableOn (fun t : ℝ => (b0+b1*t)*Real.exp (-d*t)) (Ioi 0) := by
-    apply ((i0.const_mul b0).add (i1.const_mul b1)).congr
-    filter_upwards with t
-    simp only [Pi.add_apply]
-    ring
-  have hlim0 : Tendsto (fun t : ℝ => Real.exp (-d*t)) atTop (𝓝 0) := by
-    simpa using tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 0 d hd
-  have hlim1 : Tendsto (fun t : ℝ => t*Real.exp (-d*t)) atTop (𝓝 0) := by
-    simpa only [Real.rpow_one] using tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 d hd
-  have hlim : Tendsto (affineExpPrimitive d b0 b1) atTop (𝓝 0) := by
-    have h := ((hlim0.const_mul (b0/d+b1/d^2)).add (hlim1.const_mul (b1/d))).neg
-    simp only [mul_zero, add_zero, neg_zero] at h
-    apply h.congr'
-    filter_upwards with t
-    dsimp [affineExpPrimitive]
-    ring
-  have hv := integral_Ioi_of_hasDerivAt_of_tendsto'
-    (fun t (_ : t ∈ Ici (0 : ℝ)) => affineExpPrimitive_deriv hd.ne' b0 b1 t) ie hlim
-  exact ⟨ie, by simpa [affineExpPrimitive, div_eq_mul_inv] using hv⟩
 
 end MobiusCausalPrefixEnergy

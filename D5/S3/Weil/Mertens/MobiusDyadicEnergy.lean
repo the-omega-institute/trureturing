@@ -7,7 +7,7 @@
    digest: An actual zeta zero forces cumulative signed Möbius shell energy growth. -/
 
 import D5.S3.Weil.Mertens.MobiusDyadicEnergy.FiniteResponse
-import Batteries.Tactic.OpenPrivate
+import D5.S3.Weil.Mertens.MobiusDyadicEnergy.Kernel
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 
 set_option autoImplicit false
@@ -34,14 +34,51 @@ def mobiusDyadicShellEnergy (k : ℕ) : ℝ :=
 /-- The exponential energy of a zero of real part β on a logarithmic prefix. -/
 def K (β U : ℝ) : ℝ := ∫ t in (0 : ℝ)..U, Real.exp ((2 * β - 1) * t)
 
-open private MobiusCausalKernel.h from D5.S3.Weil.Mertens.MobiusDyadicEnergy.Kernel
-open private CausalResolventL1.norm_q_le q causal response explicitOutput
-  hC hC_measurable hC_local_bound q_measurable q_local_bound
-  bounded_interval cut_prefix_transfer response_integrable_and_eq
-  lambda rho_ne_zero lead lead_norm_sq affine_exp_integral
-  cut_bound aC_measurable aC_envelope lambda_re_nonneg actual_zero
-  affineExpPrimitive affineExpPrimitive_deriv
-  from D5.S3.Weil.Mertens.MobiusDyadicEnergy.FiniteResponse
+open MobiusCausalPrefixEnergy (q causal response explicitOutput hC hC_measurable hC_local_bound q_measurable q_local_bound
+  bounded_interval cut_prefix_transfer response_integrable_and_eq lambda rho_ne_zero lead
+  lead_norm_sq cut_bound aC_measurable aC_envelope lambda_re_nonneg actual_zero)
+
+private def affineExpPrimitive (d b0 b1 t : ℝ) : ℝ :=
+  -(b0/d + b1*(t/d+1/d^2))*Real.exp (-d*t)
+
+private lemma affineExpPrimitive_deriv {d : ℝ} (hd : d ≠ 0) (b0 b1 t : ℝ) :
+    HasDerivAt (affineExpPrimitive d b0 b1) ((b0+b1*t)*Real.exp (-d*t)) t := by
+  have hp :=
+    (((((hasDerivAt_id t).div_const d).add_const (1/d^2)).const_mul b1).const_add (b0/d)).neg
+  have he := ((hasDerivAt_id t).const_mul (-d)).exp
+  convert hp.mul he using 1
+  · rfl
+  · dsimp
+    field_simp [hd] <;> ring
+
+/-- The constant and linear exponential moments used in the cross bounds. -/
+private lemma affine_exp_integral {d : ℝ} (hd : 0 < d) (b0 b1 : ℝ) :
+    IntegrableOn (fun t : ℝ => (b0+b1*t)*Real.exp (-d*t)) (Ioi 0) ∧
+    (∫ t in Ioi (0 : ℝ), (b0+b1*t)*Real.exp (-d*t)) = b0/d+b1/d^2 := by
+  have i0 : IntegrableOn (fun t : ℝ => Real.exp (-d*t)) (Ioi 0) :=
+    integrableOn_exp_mul_Ioi (by linarith : -d < 0) 0
+  have i1 : IntegrableOn (fun t : ℝ => t*Real.exp (-d*t)) (Ioi 0) := by
+    simpa only [Real.rpow_one] using integrableOn_rpow_mul_exp_neg_mul_rpow
+      (s := (1 : ℝ)) (p := (1 : ℝ)) (b := d) (by norm_num) (by norm_num) hd
+  have ie : IntegrableOn (fun t : ℝ => (b0+b1*t)*Real.exp (-d*t)) (Ioi 0) := by
+    apply ((i0.const_mul b0).add (i1.const_mul b1)).congr
+    filter_upwards with t
+    simp only [Pi.add_apply]
+    ring
+  have hlim0 : Tendsto (fun t : ℝ => Real.exp (-d*t)) atTop (𝓝 0) := by
+    simpa using tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 0 d hd
+  have hlim1 : Tendsto (fun t : ℝ => t*Real.exp (-d*t)) atTop (𝓝 0) := by
+    simpa only [Real.rpow_one] using tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 d hd
+  have hlim : Tendsto (affineExpPrimitive d b0 b1) atTop (𝓝 0) := by
+    have h := ((hlim0.const_mul (b0/d+b1/d^2)).add (hlim1.const_mul (b1/d))).neg
+    simp only [mul_zero, add_zero, neg_zero] at h
+    apply h.congr'
+    filter_upwards with t
+    dsimp [affineExpPrimitive]
+    ring
+  have hv := integral_Ioi_of_hasDerivAt_of_tendsto'
+    (fun t (_ : t ∈ Ici (0 : ℝ)) => affineExpPrimitive_deriv hd.ne' b0 b1 t) ie hlim
+  exact ⟨ie, by simpa [affineExpPrimitive, div_eq_mul_inv] using hv⟩
 
 private def dyadicShift : ℝ := Real.log 2
 private def dyadicWeight : ℝ := Real.exp (-dyadicShift / 2)

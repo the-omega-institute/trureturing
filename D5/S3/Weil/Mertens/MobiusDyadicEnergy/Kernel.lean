@@ -30,12 +30,12 @@ open scoped BigOperators
 open D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
 
 /-- The actual arithmetic kernel, used only on nonnegative times. -/
-private def a (t : ℝ) : ℝ :=
+def a (t : ℝ) : ℝ :=
   Real.exp (-t / 2) *
     (1 - Int.fract (Real.exp t) + ∫ u in (0 : ℝ)..t, Int.fract (Real.exp u))
 
 /-- The existing literal weighted Mobius partial sum in logarithmic time. -/
-private def h (t : ℝ) : ℝ := Real.exp (t / 2) * mobiusPartialSum (Real.exp t)
+def h (t : ℝ) : ℝ := Real.exp (t / 2) * mobiusPartialSum (Real.exp t)
 
 private def b (t : ℝ) : ℝ :=
   1 - Int.fract (Real.exp t) + ∫ u in (0 : ℝ)..t, Int.fract (Real.exp u)
@@ -396,7 +396,7 @@ private lemma integrand_finite {T u : ℝ} (hu : u ∈ Icc 0 T) :
 
 /-- The requested identity for the literal kernel and literal Mobius sum,
 at every nonnegative real time. -/
-private theorem causal_identity {T : ℝ} (hT : 0 ≤ T) :
+theorem causal_identity {T : ℝ} (hT : 0 ≤ T) :
     (∫ u in (0 : ℝ)..T, a u * h (T - u)) = T * Real.exp (-T / 2) := by
   calc
     _ = ∫ u in (0 : ℝ)..T, ∑ k ∈ cutoff T, ∑ n ∈ cutoff T, pair T k n u := by
@@ -700,7 +700,7 @@ private theorem at_zero {rho : ℂ} (hpos : 0 < rho.re) (hpole : rho ≠ 1)
 
 /-- The requested actual nontrivial-zero input, without RH,
 a simple-zero premise, or any assumption about a transform of h. -/
-private theorem at_nontrivial_zero {rho : ℂ} (hhalf : (1 / 2 : ℝ) ≤ rho.re)
+theorem at_nontrivial_zero {rho : ℂ} (hhalf : (1 / 2 : ℝ) ≤ rho.re)
     (hlt : rho.re < 1) (hzero : riemannZeta rho = 0) :
     IntegrableOn
       (fun t : ℝ => (MobiusCausalKernel.a t : ℂ) *
