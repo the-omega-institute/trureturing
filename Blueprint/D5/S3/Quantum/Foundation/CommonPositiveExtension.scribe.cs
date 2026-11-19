@@ -28,12 +28,14 @@ internal sealed class CommonPositiveExtensionDocument : IScribeDocumentDefinitio
     private static Formula Res(Formula b, Formula f) => App(C("restriction", b), f);
     private static Formula Pos(Formula h) => C("ballPositive", h);
     private static Formula In(Formula x, Formula s) => Seq(x, InMacro, Sp, s);
-    private static Formula Context(Formula body) => All("V", V("Type"), Seq(
+    private static Formula NormedContext(Formula body) => All("V", V("Type"), Seq(
         OpenBracket, C("NormedAddCommGroup", Space), CloseBracket, Sp,
-        OpenBracket, C("NormedSpace", R, Space), CloseBracket, Sp,
+        OpenBracket, C("NormedSpace", R, Space), CloseBracket, Sp, body));
+    private static Formula ConeContext(Formula body) =>
+        All("C", C("PointedCone", R, Space), All("u", Dual, body));
+    private static Formula Context(Formula body) => NormedContext(Seq(
         OpenBracket, C("FiniteDimensional", R, Space), CloseBracket, Sp,
-        OpenBracket, C("Nontrivial", Space), CloseBracket, Sp,
-        All("C", C("PointedCone", R, Space), All("u", Dual, body))));
+        OpenBracket, C("Nontrivial", Space), CloseBracket, Sp, ConeContext(body)));
     private static Formula UnderW(Formula body) => Context(Imp(C("IsClosed", Cone),
         Imp(All("x", Space, Imp(In(V("x"),Cone), Imp(Seq(V("x"),Neq,Sp,D(0)),
             Seq(D(0),F.Lt,Sp,App(Unit,V("x")))))),
@@ -63,8 +65,8 @@ internal sealed class CommonPositiveExtensionDocument : IScribeDocumentDefinitio
                 Paragraph(Text("Source correspondence: original VII105.4 in QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII, with only the normal-form and least clauses of VII105.3. The consumer is VIII108.5 in QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII. V is the same nonzero finite dimensional real space, C the same closed generating pointed cone, u the same strictly positive original unit, K its entire normalized compact base, P all original extreme points, and proper effects the entire original interval [0,u] on ALL C. Exclusion dimensions may vary and include one. The only pair premise is weakPair on original orthogonal pairs.")),
                 Describe.Lean(DescribeId.Create("zero-positive"),DeclarationHandle.Create(Owner+"zeroPositive"),
                     H("The actual original annihilating positive cone"),StatementSource.FromAuthor(Disp(
-                        Context(All("p",P,All("f",Dual,new Formula.Logic(In(f,C("zeroPositive",Cone,Unit,p)),FormulaLogicOperator.Iff,
-                            And(All("x",Space,Imp(In(x,Cone),Le(D(0),App(f,x)))),Eq(App(f,p),D(0))))))))),
+                        NormedContext(ConeContext(All("p",Space,All("f",Dual,new Formula.Logic(In(f,C("zeroPositive",Cone,Unit,p)),FormulaLogicOperator.Iff,
+                            And(All("x",Space,Imp(In(x,Cone),Le(D(0),App(f,x)))),Eq(App(f,p),D(0)))))))))),
                     AssessedProvenance.FromRepo(),Blocks(Paragraph(Text("Z_p contains every original positive linear functional vanishing at p. It is not a selected effect subset or the whole signed annihilator of p."))),DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("ball-positive"),DeclarationHandle.Create(Owner+"ballPositive"),
                     H("Positivity on the whole ball"),StatementSource.WithoutFormula(),AssessedProvenance.FromRepo(),
@@ -76,8 +78,8 @@ internal sealed class CommonPositiveExtensionDocument : IScribeDocumentDefinitio
                     H("Signed normals are differences of positive normals"),StatementSource.WithoutFormula(),AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("Every member of the real span of the whole original positive annihilator cone is a difference of two members of that cone. This uses the standard reproducing-cone theorem in the actual span; it imposes no Pair or extension hypothesis."))),DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("positive-lift"),DeclarationHandle.Create(Owner+"PositiveLift"),
-                    H("The three extension laws"),StatementSource.FromAuthor(Disp(Context(All("p",P,All("b",Chart(p),All("Lambda",Lift(b),
-                        new Formula.Logic(C("PositiveLift",b,l),FormulaLogicOperator.Iff,positiveLift))))))),AssessedProvenance.FromRepo(),
+                    H("The three extension laws"),StatementSource.FromAuthor(Disp(NormedContext(ConeContext(All("p",Space,All("b",Chart(p),All("Lambda",Lift(b),
+                        new Formula.Logic(C("PositiveLift",b,l),FormulaLogicOperator.Iff,positiveLift)))))))),AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("A real-linear map is a PositiveLift when restriction after it is the identity on every signed affine function, all its outputs vanish at p, and every nonnegative affine function has an output nonnegative on all C. These are conclusions of the construction, never premises replacing W."))),DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("extension-laws"),DeclarationHandle.Create(Owner+"ExtensionLaws"),
                     H("Unit, inverses, order budget and intrinsic agreement"),StatementSource.WithoutFormula(),AssessedProvenance.FromRepo(),
