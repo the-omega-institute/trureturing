@@ -3500,20 +3500,23 @@ the unchanged source arena rooted at the supplied $F_1(z)$ object.  A
 configuration cut is the tuple
 
 $$
- C_t=(I_t,S_t,O_t,Gamma_t,D_t,ho_t,pi_t,chi_t,omega_t),
+ C_t=(I_t,S_t,O_t,Gamma_t,D_t,
+ho_t,pi_t,chi_t,omega_t),
 $$
 
 where $I_t$ contains the installed code, image pages, native control and
 reserve; $S_t$ contains the original root, its provider fields and all
 retained preparation; $O_t$ contains the service connection, input and
 reply latches, receipts, cache, output buffers and free pool; $Gamma_t$ is
-the ordered receipt chain; $D_t$ is the paired indexed cache; $ho_t$ is
+the ordered receipt chain; $D_t$ is the paired indexed cache; $
+ho_t$ is
 the native reference/control location; $pi_t$ is the service phase and
 its literal continuation; $chi_t$ is the pending operand/reply state; and
 $omega_t$ is the owner-indexed reference-width vector.  Every cursor,
 counter, selector, pending latch and result in this tuple is an actual
 field or finite-control bit of its owner.  Audit counters and independent
-inspection views are not members of $ho_t$ or $pi_t$.
+inspection views are not members of $
+ho_t$ or $pi_t$.
 
 **Assumption 25.2 (the integrated ML-I boundary).** The supplied native
 primitive graph, current grants and finite reserve are valid at the initial
@@ -3713,28 +3716,11 @@ ratio.  Thus each clause is preserved by composition.  The final sentence
 is a scope boundary: the two strict executions require the subsequent
 full positive/null evaluator runs and complete same-run census. $\square$
 
-**Definition 25.10 (author evidence and remaining boundary).** The private
-author result `rro-lab-execution/integration-results.json` records the
-actual installed service run: $69$ original calls, $57$ distinct
-operands, $29{,}266{,}611$ native steps, $185{,}513$ field actions and
-$44{,}916{,}792$ installation steps.  Its common cut has installation,
-connection and original-source widths $(21,12,14)$ and direct/incremental
-census equality at all $69$ source-call boundaries.  The same result
-re-runs the finite whole-family author checks: $1{,}722$ B
-program/input instances, $490$ bounded nonhalting boundaries, $511$ V
-words, all $32{,}768$ within-slot masks, and $8{,}248$ original-port
-calls.  Source binding and compatibility checks retain the two operational
-mutant falsifiers `actual_port_transfer_occupied` and `actual_cache_write`.
-
-These results close B-LAB-driver, B-allocation-width-and-common-timeline,
-and B-whole-family-correspondence for the stated conditional ML-I
-construction.  The strict objects `ML-N-evaluator-execution` and
-`ML-Cost-full-evaluator-session` remain not executed.  Therefore this unit
-is B-complete for its assigned outcomes, while C is not released, D is not
-complete, independent acceptance has not occurred, and the long research
-goal remains open.  No Lean declaration, digestion settlement, judge
-change, minimality claim, hardware claim, quantum frontend, or actual
-serial-history recovery is made.
+**Scope of the composition.** The conditional LAB result supplies the
+driver, allocation-width census and common timeline for the selected
+finite prefixes. Complete evaluator execution and a full-session census
+require the actual evaluator, its installation and same-source
+continuation, all represented at the same resource cut.
 
 ## 追加锚（本行以下为增补区）
 
@@ -3862,9 +3848,9 @@ at every common cut, including installation and source/connection material. The 
 
 *Proof.* Every allocation, field materialization, widening, decoder append and cleanup is an event in the source ledger. A finite event prefix has finite maxima, and the direct/incremental census theorem gives the same tuple to the packed implementation. Dominating the tuple prevents a source refusal due only to unavailable paid material. The argument supplies feasibility for that selected finite run, not one reserve for all finite inputs and not termination of an arbitrary B program. $\square$
 
-### 26.5. Bounded constructor evidence and limits
+### 26.5. Constructor falsifiers and limits
 
-The following finite checks are the acceptance tests for this constructor, rather than a substitute for C. They are source-level falsifiers for the relation $\mathcal R$.
+The following finite checks can falsify constructor correspondence under the relation $\mathcal R$.
 
 1. **Identity and alias test.** Construct every fixed shape, two equal-valued observations, a shared reference, a cycle, a pending target, and a free-pool cell. Encode, decode, and compare all fields and alias classes. Mutating one reference ID must change the decoded successor or fail the alias check.
 2. **Primitive and phase test.** Exercise every host primitive and every zero/one branch on null, non-null, bit-zero, bit-one, occupied, acknowledged, wrong-shape, absent-grant, and exhausted states. Compare each decoded commit and refusal with the source operation. A mutation that skips a code-bit read, selector read, latch write, or successor read must fail the event census.
@@ -3872,10 +3858,6 @@ The following finite checks are the acceptance tests for this constructor, rathe
 4. **LAB-prefix test.** Use all B directions, marks, branches, crossings, frontiers, immediate halt, and bounded nonhalting prefixes. Compare the decoded old/new head, arm, program reference, mark, route cells, and pending growth at every commit and one internal cut between every pair of commits.
 5. **Session test.** Use the four actual Read replies, informative absence, repeats, distinct equal words, old-index rereads, partial-to-complete slots, long operands, both once-shared full injections, an outside-support array, and a zero-normalizer frame. Compare occurrence order, original indices, receipt links, cache masks/values, returned-head decoding, and continued Reads on the same original port. Mutating an index or cache write must change the decoded history.
 6. **Census and resource test.** At every source-call boundary compare direct and incremental owner censuses, retain pending End/Ack/Return cuts, free-pool cleanup, width overlap, old jobs and roots, decoder/cleanup material, and the common-cut sum. Omit any one grant, widening overlap, decoder bit, or cleanup event and require a mismatch. Measure host bytes and wall time for the bounded constructor; do not extrapolate them to the complete evaluator.
-
-A bounded constructor probe exercised all six fixed shapes, fifteen owner-tagged slots, cross-owner references, an alias, a cycle, a pending target, a retained free-pool slot, literal bit/reference operations, and a three-slot forward relocation. It detected an intentional alias mutation, preserved owner widths $(4,8,12)$, and reported $33{,}309$ logical packed bits, $26{,}230{,}784$ bytes of process high-water RSS, and $0.010382500$ seconds on the bounded probe. This probe is representation evidence only: it does not execute the full source service, does not measure a C run, and does not convert logical packed bits into modeled savings.
-
-The existing finite native and service checks provide source bindings for these falsifiers at the pinned private experiment tree. `rro-lab-execution/packed_constructor.py` and `packed_constructor_checks.py` execute the bounded representation checks above; they do not yet consume the complete original service. The prior object-identity implementation and the bounded packed probe therefore do not certify the packed constructor as a complete evaluator backend. Until packed consumer integration and a run-specific $U$ are available, `ML-N-evaluator-execution` and `ML-Cost-full-evaluator-session` remain open, C remains unreleased, and D remains unreleased.
 
 **Theorem 26.20 (scope of the prerequisite).** Definitions 26.1--26.17 and Theorems 26.9, 26.11, 26.13, 26.15 and 26.18 provide a faithful host-realization prerequisite for the unchanged finite LAB/ML-I/source path when their finite packed implementation and checks satisfy the stated premises. They do not provide a full evaluator run, a universal reserve, a new routing algorithm, a source reset, a reroot, a resampling, an answer injection, or a complete simultaneous ML.16 vector.
 
@@ -4123,13 +4105,12 @@ $$
               +(h_D+h_S+h_R+h_A+h_b).
 $$
 
-The original selected cases therefore require at least $W H_{cell}$ host
-bytes in this concrete backend. If this lower bound exceeds a proposed
-resident reservation, that reservation fails before a full run starts. If
-it exceeds both available memory and an explicitly backed paging supply,
-this backend has no such supported host plan. This is an allocation lower
-bound derived from retained source objects, not extrapolation from a small
-run's RSS or from a compressed code description.
+The original selected cases require at least $W H_{cell}$ allocated host
+bytes in this concrete backend. If all counted allocations must remain
+resident, the resident reservation must cover this lower bound. If the
+host permits paging, the comparison uses the total usable backing for
+those same allocations, including any admitted paging supply. The count
+follows from the distinct retained records of the concrete layout.
 
 *Proof.* Each constructor creates its own proxy, record, reference vector
 and bytearrays; each block additionally creates its reference view. None is
@@ -4358,7 +4339,7 @@ calls including the final same-port Read, the triples
 $(q,A,S(C_s)+S(C_c)+\max(w_sR_s,w_cR_c))$ are respectively
 
 $$
- (74,2176,420577),\quad(73,2115,418648),\quad(149,9676,2092449).
+ (75,2178,420736),\quad(74,2117,418807),\quad(150,9678,2092630).
 \tag{ML.41}
 $$
 
@@ -4367,12 +4348,13 @@ Thus their pointwise bounds are $S_I(K)$ plus the displayed last
 coordinate, subject to all the premises of Theorem 29.3.
 
 Proof. The acquisition words are the eight fixed initial probes,
-all selected original bit addresses in increasing index order, the five
-fixed final acquisition probes, and the final continued Read. Counting
-their actual lengths gives the first two coordinates. Evaluation makes
-no original-source call. Substitution into (ML.38)–(ML.40) gives the
-third coordinate. This statement prescribes the complete chronology;
-it does not replace evaluation by the acquisition subsequence. $\square$
+all selected original bit addresses in increasing index order and the five
+fixed final acquisition probes. Their totals are $(74,2176)$, $(73,2115)$
+and $(149,9676)$, as in Immutable Spine Proposition 10.1. The continued
+$\mathrm{Read}(LL)$ occurs after evaluation and adds one call and two
+operand bits to each row. Evaluation makes no original-source call.
+Substitution into (ML.38)–(ML.40) gives the third coordinate under the
+sufficient-reserve premise for the entire chronology. $\square$
 
 ## 30. A FIFO directory for distinct work-bit allocation
 
