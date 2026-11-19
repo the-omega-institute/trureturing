@@ -27,7 +27,7 @@ All private lemmas are bind-only; their consumers are:
   row_sum_primitive -> row_sum_evaluation
   cheb_zero_nat -> row_sum_evaluation
   row_sum_evaluation -> numerator_eq
-  numerator_eq -> result, BrowneA164660RootCount.window_eq_numerator (now public)
+  numerator_eq (public) -> result, BrowneA164660RootCount.window_eq_numerator
 The private primitive is a rational polynomial, used by its derivative, degree
 and endpoint lemmas. No nonbinding escape content is claimed.
 -/

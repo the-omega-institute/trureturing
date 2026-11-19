@@ -44,7 +44,7 @@ internal sealed class BrowneA164660RootCountDocument : IScribeDocumentDefinition
             Node("numerator", "Identification with A164660", "window_eq_numerator",
                 "For r ≥ 2 and every integer s the translated product equals a(n+1). The "
                 + "2-adic valuation of C_r(n) is e_2−⌈e_2/r⌉, which is positive exactly when "
-                + "e_2 ≥ 2, so C_r(n) is even exactly when 4 ∣ n; the existing Chebyshev "
+                + "e_2 ≥ 2, so C_r(n) is even exactly when 4 ∣ n; the Chebyshev numerator "
                 + "evaluation gives a(n+1)=1 when 4 ∣ n and −1 otherwise.",
                 DescribeRole.Theorem))));
 
