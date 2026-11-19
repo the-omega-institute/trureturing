@@ -36,7 +36,7 @@ private def extensionEquiv (E : V → V → Prop) (k : V → Bool) :
   left_inv _ := rfl
   right_inv _ := rfl
 
-private theorem ambient_card [Finite V] (k : V → Bool) (n : ℕ) (hn : 0 < n)
+theorem ambient_card [Finite V] (k : V → Bool) (n : ℕ) (hn : 0 < n)
     (hr : Nat.card (Side k false) = n) (hb : Nat.card (Side k true) = n) :
     Nat.card (AlternatingFullCycle k) = n.factorial * (n - 1).factorial := by
   have hRed : inventory k (fun x => !(k x)) false true = n :=

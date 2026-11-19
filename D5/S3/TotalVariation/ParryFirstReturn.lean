@@ -663,7 +663,8 @@ private theorem conditioned_reset_prefix (hk : 2 ≤ k)
     reset_prefix_kernel_product hk word initial allowed, ← mul_assoc,
     ENNReal.inv_mul_cancel hsystem.2.2.1.ne' noInfinite, one_mul]
 
-private def returnSpan : List (Fin k) → ℕ
+/-- The total number of original shift steps in a list of returns. -/
+def returnSpan : List (Fin k) → ℕ
   | [] => 0
   | n :: ns => n.val + 1 + returnSpan ns
 

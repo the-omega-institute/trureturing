@@ -22,9 +22,6 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.SmallRegularCycle
 
 open SimpleGraph
 
-open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
-  D5.S3.Combinatorics.Graph.Brooks.General
-
 variable {V : Type*} [Fintype V] [Nonempty V]
 variable (H : SimpleGraph V) [DecidableRel H.Adj]
 

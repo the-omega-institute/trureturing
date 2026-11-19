@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.localiz
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.quadrat
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
@@ -42,7 +42,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.quadrat
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
@@ -56,7 +56,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.quadrat
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
@@ -70,13 +70,69 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.quadrat
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 quadratic singular resultant zero.
 
-**Definition 1.6 (residualMatrix).**
+**Definition 1.6 (bracket).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket`
+
+*Formalization.* `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+The determinant of the three indicated Dixon columns.
+
+**Theorem 1.7 (bracket_scale).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket_scale`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket_scale` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+Scaling each column multiplies its Dixon bracket by the product of the scalars.
+
+**Theorem 1.8 (residual_translate).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residual_translate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residual_translate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+Translation of the common binary variable preserves the Dixon residual.
+
+**Theorem 1.9 (bracket_uniform_bound).**
+
+Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket_uniform_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket_uniform_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
+
+*Commentary.*
+
+Three columns bounded by the same real height have bracket height at most six times its cube.
+
+**Definition 1.10 (residualMatrix).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residualMatrix`
 
@@ -84,13 +140,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residua
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 A fixed Dixon matrix gives the universal integer residual, including Δ = 0.
 
-**Definition 1.7 (residual).**
+**Definition 1.11 (residual).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residual`
 
@@ -98,13 +154,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residua
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 residual.
 
-**Definition 1.8 (linear).**
+**Definition 1.12 (linear).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.linear`
 
@@ -112,13 +168,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.linear`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 linear.
 
-**Definition 1.9 (quadratic).**
+**Definition 1.13 (quadratic).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.quadratic`
 
@@ -126,13 +182,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.quadrat
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 quadratic.
 
-**Definition 1.10 (pair).**
+**Definition 1.14 (pair).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.pair`
 
@@ -140,13 +196,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.pair`
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 pair.
 
-**Theorem 1.11 (pair_coefficients).**
+**Theorem 1.15 (pair_coefficients).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.pair_coefficients`
 
@@ -154,13 +210,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.pair_co
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 pair coefficients.
 
-**Theorem 1.12 (actual_residual_resultant).**
+**Theorem 1.16 (actual_residual_resultant).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_residual_resultant`
 
@@ -168,13 +224,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 An identity for the actual LQᵢ − LᵢQ pair, without cancelling a specialization of Δ.
 
-**Definition 1.13 (chartResidual).**
+**Definition 1.17 (chartResidual).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.chartResidual`
 
@@ -182,13 +238,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.chartRe
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 The explicit residual in a chart with common leading cubic factor A.
 
-**Theorem 1.14 (actual_residual_dvd_fifth).**
+**Theorem 1.18 (actual_residual_dvd_fifth).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_residual_dvd_fifth`
 
@@ -196,13 +252,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 The chart transfer uses only powers of L(β), never a division by Δ.
 
-**Theorem 1.15 (actual_residual_height).**
+**Theorem 1.19 (actual_residual_height).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_residual_height`
 
@@ -210,13 +266,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 Explicit binary-weight seven height of the universal integer residual.
 
-**Theorem 1.16 (actual_pair_resultant_zero).**
+**Theorem 1.20 (actual_pair_resultant_zero).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_pair_resultant_zero`
 
@@ -224,13 +280,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 Smallness and the proved fifth-power divisor force the actual padded resultant to vanish.
 
-**Definition 1.17 (familyPolynomial).**
+**Definition 1.21 (familyPolynomial).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.familyPolynomial`
 
@@ -238,13 +294,13 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.familyP
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
 Actual integer pencil member with a distinguished baseline L and Q.
 
-**Theorem 1.18 (actual_singular_factor_cover).**
+**Theorem 1.22 (actual_singular_factor_cover).**
 
 Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_singular_factor_cover`
 
@@ -252,7 +308,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. URL: <https://arxiv.org/abs/2511.08445v2>.
+*Acknowledgement.* Alexandru Pascadi (2026). *Non-abelian amplification and bilinear forms with Kloosterman sums*. DOI: [10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0). URL: <https://arxiv.org/abs/2511.08445v2>.
 
 *Commentary.*
 
@@ -265,6 +321,9 @@ A root-relevant primitive integer factor cover of the actual singular pencil. Bo
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_residual_height`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_residual_resultant`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.actual_singular_factor_cover`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket_scale`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.bracket_uniform_bound`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.chartResidual`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.familyPolynomial`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.linear`
@@ -278,4 +337,5 @@ A root-relevant primitive integer factor cover of the actual singular pencil. Bo
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.quadratic_singular_resultant_zero`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residual`
 - Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residualMatrix`
+- Truth anchor: `D5/S3/Arith/CharacterSums/PascadiPrimeCubeSingularCover.residual_translate`
 - Dependency: [D5/S3/Arith/CharacterSums/PascadiLocalizedFactor](PascadiLocalizedFactor.md)
