@@ -784,6 +784,8 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 ### 8.11 PR open/watch 的消息与退出契约
 
 **PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr HEAD=b MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`(pr-open 同义) 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 默认 arm auto-merge → 等 required CI,可辨退出码返回。`AUTO_MERGE=0` 不 arm 但仍等 CI;`DRAFT=1` 传 `--draft`,创建成功输出 PR 号后返回,不 arm、不等 CI,优先于 `AUTO_MERGE=1`。直调 `pr.sh open` 仍由显式 `--auto-merge` 开启自动合并,`--draft` 同样优先;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用;判词携带固定 head 与实际 check/run 身份。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
+**等待现有 PR 的 required checks 统一走 `pr-watch`。** 用一个宿主后台作业运行 `make pr-watch PR=<编号> HEAD_SHA=<40 位提交 SHA>`。已在等待同一 PR、同一 SHA 时，续接该作业的句柄并收集退出结果。禁止调用方用 API、`gh run watch` 或自写循环轮询同一组检查。定时队列巡检可全页读取一次当前 PR。作业结束后可按提交、事件和 attempt 核验结论。实际合并及该合并提交的首次 `dev` push 按第 6.1 条单独核验。
+
 **make 门只保真绿/不绿**:配方失败统一返回 make 2。`1` 红、`4` CLOSED 未合、`69` 查询不可用、`124` 超时只在直调 canonical `tools/scripts/pr.sh watch` 可辨;经 make 判原因读 stdout 末行 `PR_WATCH_RESULT ... outcome=`。
 
 ### 8.12 CI 分类、持续集成与真实事件验证
