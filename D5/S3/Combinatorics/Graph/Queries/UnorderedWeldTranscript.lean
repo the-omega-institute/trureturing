@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/Queries/UnorderedWeldTranscript
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Queries/UnorderedWeldTranscript
    mirror-E: none(waiver:symbolic-conditioning-law)
    anchors: []
