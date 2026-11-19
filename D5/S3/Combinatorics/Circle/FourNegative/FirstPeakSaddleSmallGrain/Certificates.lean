@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:private-consumed-full-saddle-implementation)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Twelve parameterized c2 charts and their 228 native polynomial margin proofs. -/
 import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:consumed-half-step-interpolation)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Half-step chart interpolation, complete residues and native dyadic masks. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.HalfK4Certificates

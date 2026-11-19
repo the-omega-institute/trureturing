@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:private-consumed-full-saddle-implementation)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Native small-c2 choice, capacities and direct submask construction. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain.Certificates

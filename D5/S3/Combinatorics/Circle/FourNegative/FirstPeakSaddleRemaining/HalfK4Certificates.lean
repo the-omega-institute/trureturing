@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:consumed-unbounded-polynomial-margins)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Exact unbounded nonnegative polynomial margins for saddle selection. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:private-consumed-full-saddle-implementation)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Euclidean cover, affine reduction and seventy-six exact unbounded corner margins. -/
 import Mathlib.Data.Int.ModEq

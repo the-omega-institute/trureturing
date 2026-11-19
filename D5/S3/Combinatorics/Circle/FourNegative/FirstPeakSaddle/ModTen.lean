@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:private-consumed-full-saddle-implementation)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Exact dyadic mod-ten phases shared by direct small-c2 and quarter-step. -/
 import Mathlib.Tactic

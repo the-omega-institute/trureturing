@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:consumed-native-selection-arithmetic)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Native cyclic residues, dyadic masks and affine rectangle interpolation. -/
 import Batteries.Tactic.OpenPrivate

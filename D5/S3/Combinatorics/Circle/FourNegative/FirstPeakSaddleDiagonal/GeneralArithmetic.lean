@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-full-saddle-implementation)
    mirror-E: none(waiver:private-consumed-full-saddle-implementation)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Arbitrary-grain diagonal choice and general z>=4 rectangle-to-twelve proof. -/
 import Batteries.Tactic.OpenPrivate
