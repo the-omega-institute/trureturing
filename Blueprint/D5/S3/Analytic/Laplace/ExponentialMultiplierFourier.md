@@ -45,5 +45,5 @@ For real σ, c, t and any complex function F, evaluate the inverse Fourier trans
 - Truth anchor: `D5/S3/Analytic/Laplace/ExponentialMultiplierFourier.targetInverse_eq_vertical_integral`
 - Truth anchor: `D5/S3/Analytic/Laplace/ExponentialMultiplierFourier.targetInverse_memLp`
 - Truth anchor: `D5/S3/Analytic/Laplace/ExponentialMultiplierFourier.targetMultiplier`
+- Dependency: [D5/S3/Analytic/Fourier/RawFourierL2](../Fourier/RawFourierL2.md)
 - Dependency: [D5/S3/Analytic/Laplace/ExponentialMultiplierContour](ExponentialMultiplierContour.md)
-- Dependency: [D5/S3/Weil/ZetaGamma/FormCore/LineFourier](../../Weil/ZetaGamma/FormCore/LineFourier.md)

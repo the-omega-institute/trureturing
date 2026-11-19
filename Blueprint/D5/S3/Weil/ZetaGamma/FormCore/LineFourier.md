@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.continuous_raw_fourie
 
 *Commentary.*
 
-For any integrable complex function on the real line, its raw Mathlib Fourier transform is continuous. Continuity follows from VectorFourier.fourierIntegral_continuous and supplies the measurability needed by the L1/L2 bridge and energy Tonelli proof.
+For any integrable complex function on the real line, its raw Mathlib Fourier transform is continuous. Continuity follows from VectorFourier.fourierIntegral_continuous and supplies the measurability needed by the energy Tonelli proof.
 
 **Theorem 1.2 (squared mass eq eLpNorm).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angular_extended_plan
 
 *Commentary.*
 
-For every complex L1 and L2 input, extended spatial squared mass equals 1/(2*pi) times extended angular Fourier squared mass. The proof identifies the raw transform with the L2 transform almost everywhere and changes frequency variables by exactly 2*pi.
+For every complex L1 and L2 input, extended spatial squared mass equals 1/(2*pi) times extended angular Fourier squared mass. The proof uses the L² seminorm identity from RawFourierL2 and changes frequency variables by exactly 2*pi.
 
 **Theorem 1.6 (raw fourier sub).**
 
@@ -162,6 +162,7 @@ For every complex whole-line L1 and L2 input, the density-weighted translation-g
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.lineGapMass`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.raw_fourier_sub`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.squared_mass_eq_eLpNorm`
+- Dependency: [D5/S3/Analytic/Fourier/RawFourierL2](../../../Analytic/Fourier/RawFourierL2.md)
 - Dependency: [D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity](../../TestFunctions/ConvolutionSquarePositivity.md)
 - Dependency: [D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition](../ArchimedeanJumpDecomposition.md)
 - Dependency: [D5/S3/Weil/ZetaGamma/PeriodicEnergyTransport](../PeriodicEnergyTransport.md)

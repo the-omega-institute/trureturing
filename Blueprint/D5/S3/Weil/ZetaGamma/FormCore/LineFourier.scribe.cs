@@ -14,7 +14,7 @@ internal sealed class LineFourierDocument : IScribeDocumentDefinition
                 H("continuous raw fourier"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For any integrable complex function on the real line, its raw Mathlib Fourier transform is continuous. Continuity follows from VectorFourier.fourierIntegral_continuous and supplies the measurability needed by the L1/L2 bridge and energy Tonelli proof."))),
+                Blocks(Paragraph(Text("For any integrable complex function on the real line, its raw Mathlib Fourier transform is continuous. Continuity follows from VectorFourier.fourierIntegral_continuous and supplies the measurability needed by the energy Tonelli proof."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("gamma-form-core-linefourier-squared-mass-eq-elpnorm"),
@@ -46,7 +46,7 @@ internal sealed class LineFourierDocument : IScribeDocumentDefinition
                 H("angular extended plancherel"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every complex L1 and L2 input, extended spatial squared mass equals 1/(2*pi) times extended angular Fourier squared mass. The proof identifies the raw transform with the L2 transform almost everywhere and changes frequency variables by exactly 2*pi."))),
+                Blocks(Paragraph(Text("For every complex L1 and L2 input, extended spatial squared mass equals 1/(2*pi) times extended angular Fourier squared mass. The proof uses the L² seminorm identity from RawFourierL2 and changes frequency variables by exactly 2*pi."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("gamma-form-core-linefourier-raw-fourier-sub"),

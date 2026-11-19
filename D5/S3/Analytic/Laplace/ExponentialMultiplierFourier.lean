@@ -6,8 +6,8 @@
    utility: none
    digest: Exponential smoothing contracts the raw inverse Fourier transform in L². -/
 
+import D5.S3.Analytic.Fourier.RawFourierL2
 import D5.S3.Analytic.Laplace.ExponentialMultiplierContour
-import D5.S3.Weil.ZetaGamma.FormCore.LineFourier
 
 /-! The exponential multiplier in Mathlib's normalized inverse Fourier convention. -/
 
@@ -46,7 +46,7 @@ theorem targetInverse_memLp {c : ℝ} (hc : 0 < c) {f : ℝ → ℂ} (hf : MemLp
   have h₂ : MemLp g 2 := hf.mono h₁g.aestronglyMeasurable (Filter.Eventually.of_forall hle)
   let G : Lp ℂ 2 volume := 𝓕 (h₂.toLp g)
   have hae : (𝓕 g : ℝ → ℂ) =ᵐ[volume] G :=
-    D5.S3.Weil.ZetaGamma.FormCore.LineFourier.raw_fourier_ae_eq_L2 h₁g h₂
+    D5.S3.Analytic.Fourier.RawFourierL2.raw_fourier_ae_eq_L2 h₁g h₂
   have hraw : MemLp (𝓕 g) 2 := MemLp.ae_eq hae.symm (Lp.memLp G)
   have hflip : 𝓕⁻ g = (𝓕 g) ∘ (fun x : ℝ => -x) := by
     funext x
@@ -56,7 +56,7 @@ theorem targetInverse_memLp {c : ℝ} (hc : 0 < c) {f : ℝ → ℂ} (hf : MemLp
   rw [hflip]
   refine ⟨hraw.comp_measurePreserving hpres, ?_⟩
   rw [eLpNorm_comp_measurePreserving hraw.aestronglyMeasurable hpres]
-  exact (D5.S3.Weil.ZetaGamma.FormCore.LineFourier.raw_fourier_eLpNorm_eq h₁g h₂).le.trans
+  exact (D5.S3.Analytic.Fourier.RawFourierL2.raw_fourier_eLpNorm_eq h₁g h₂).le.trans
     (eLpNorm_mono h₁g.aestronglyMeasurable hle)
 
 /-- The normalized raw inverse integral is the target-line integral divided by `2 * π`. -/

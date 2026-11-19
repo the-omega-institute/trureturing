@@ -4,9 +4,10 @@
    mirror-E: none(waiver:analytic-Gamma-form-core)
    anchors: []
    utility: none
-   digest: Raw whole-line Fourier bridge and actual-Gamma spectral energy. -/
+   digest: Angular Plancherel and actual-Gamma spectral energy on the whole line. -/
 
 
+import D5.S3.Analytic.Fourier.RawFourierL2
 import D5.S3.Weil.PrimePoleTerms
 import D5.S3.Weil.TestFunctions.ConvolutionSquarePositivity
 import D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
@@ -67,53 +68,11 @@ theorem continuous_raw_fourier {f : ℝ → ℂ} (hf : Integrable f) :
     Continuous (𝓕 f) := by
   exact Zeta23.EF.continuous_fourier_of_integrable hf
 
-private theorem raw_fourier_test {f : ℝ → ℂ} (hf : Integrable f)
-    (ψ : SchwartzMap ℝ ℂ) :
-    (∫ ξ : ℝ, ψ ξ • 𝓕 f ξ) = ∫ x : ℝ, 𝓕 ψ x • f x := by
-  simpa [SchwartzMap.fourier_coe, Real.fourier_eq, VectorFourier.fourierIntegral,
-    Real.inner_apply, smul_eq_mul, mul_comm] using!
-    VectorFourier.integral_bilin_fourierIntegral_eq_flip
-      (f := f) (g := (ψ : ℝ → ℂ)) (.mul ℂ ℂ) (L := innerₗ ℝ)
-      (μ := (volume : Measure ℝ)) (ν := (volume : Measure ℝ))
-      Real.continuous_fourierChar continuous_inner hf (ψ.integrable (μ := volume))
-
 theorem raw_fourier_ae_eq_L2 {f : ℝ → ℂ}
     (hf₁ : Integrable f) (hf₂ : MemLp f 2) :
     (𝓕 f : ℝ → ℂ) =ᵐ[volume]
-      (𝓕 (hf₂.toLp f) : Lp ℂ 2 volume) := by
-  let F : Lp ℂ 2 volume := 𝓕 (hf₂.toLp f)
-  apply ae_eq_of_integral_contDiff_smul_eq
-    (continuous_raw_fourier hf₁).locallyIntegrable
-    ((Lp.memLp F).locallyIntegrable (by norm_num))
-  intro g hg hgc
-  have hg₁ : HasCompactSupport (Complex.ofRealCLM ∘ g) := hgc.comp_left rfl
-  have hg₂ : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (Complex.ofRealCLM ∘ g) :=
-    Complex.ofRealCLM.contDiff.comp hg
-  let ψ : SchwartzMap ℝ ℂ := hg₁.toSchwartzMap hg₂
-  have hdist := congrArg (fun T : TemperedDistribution ℝ ℂ => T ψ)
-    (Lp.fourier_toTemperedDistribution_eq (hf₂.toLp f))
-  simp only [TemperedDistribution.fourier_apply, Lp.toTemperedDistribution_apply] at hdist
-  calc
-    (∫ ξ : ℝ, g ξ • 𝓕 f ξ) = ∫ ξ : ℝ, ψ ξ • 𝓕 f ξ := by
-      simp [ψ, Function.comp_apply]
-    _ = ∫ x : ℝ, 𝓕 ψ x • f x := raw_fourier_test hf₁ ψ
-    _ = ∫ x : ℝ, 𝓕 ψ x • (hf₂.toLp f) x := by
-      apply integral_congr_ae
-      filter_upwards [hf₂.coeFn_toLp] with x hx
-      rw [hx]
-    _ = ∫ ξ : ℝ, ψ ξ • F ξ := hdist
-    _ = ∫ ξ : ℝ, g ξ • F ξ := by
-      simp [ψ, Function.comp_apply]
-
-theorem raw_fourier_eLpNorm_eq {f : ℝ → ℂ}
-    (hf₁ : Integrable f) (hf₂ : MemLp f 2) :
-    eLpNorm (𝓕 f) 2 volume = eLpNorm f 2 volume := by
-  calc
-    _ = eLpNorm (𝓕 (hf₂.toLp f) : Lp ℂ 2 volume) 2 volume :=
-      eLpNorm_congr_ae (raw_fourier_ae_eq_L2 hf₁ hf₂)
-    _ = ‖𝓕 (hf₂.toLp f)‖ₑ := (Lp.enorm_def _).symm
-    _ = ‖hf₂.toLp f‖ₑ := (Lp.fourierTransformₗᵢ ℝ ℂ).enorm_map _
-    _ = _ := Lp.enorm_toLp hf₂
+      (𝓕 (hf₂.toLp f) : Lp ℂ 2 volume) :=
+  D5.S3.Analytic.Fourier.RawFourierL2.raw_fourier_ae_eq_L2 hf₁ hf₂
 
 theorem squared_mass_eq_eLpNorm (f : ℝ → ℂ)
     (hf : AEStronglyMeasurable f volume) :
@@ -127,7 +86,7 @@ private theorem raw_fourier_extended_plancherel {f : ℝ → ℂ}
   rw [squared_mass_eq_eLpNorm (𝓕 f)
       ((continuous_raw_fourier hf₁).aestronglyMeasurable),
     squared_mass_eq_eLpNorm f hf₂.aestronglyMeasurable,
-    raw_fourier_eLpNorm_eq hf₁ hf₂]
+    D5.S3.Analytic.Fourier.RawFourierL2.raw_fourier_eLpNorm_eq hf₁ hf₂]
 
 private theorem lintegral_dilate (H : ℝ → ℝ≥0∞) {c : ℝ} (hc : c ≠ 0) :
     (∫⁻ ξ : ℝ, H (c * ξ)) =
