@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Dilation;
 internal sealed class DuplicationQuadraticGermDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Analytic/kuczma1964cosine");
+        LibraryNoteRef.Create("D5/L/Asymptotics/kuczma1964cosine");
     private const string Declaration =
         "D5/S3/Analytic/Dilation/DuplicationQuadraticGerm.eq_cos_of_quadratic_germ";
 
