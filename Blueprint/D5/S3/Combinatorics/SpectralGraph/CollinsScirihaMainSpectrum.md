@@ -22,6 +22,10 @@ $$\forall (V : \operatorname{Type} u), \forall (W : \operatorname{Type} w), \for
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/collins-sciriha-main-spectrum-double-cover` (proved) by `D5/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"collins-sciriha-main-spectrum-double-cover","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/CollinsScirihaMainSpectrum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Luke Collins and Irene Sciriha (2019). *On the Walks and Bipartite Double Coverings of Graphs with the same Main Eigenspace*. DOI: [10.48550/arXiv.1906.05790](https://doi.org/10.48550/arXiv.1906.05790). URL: <https://arxiv.org/abs/1906.05790v1>.

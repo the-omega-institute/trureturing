@@ -45,7 +45,10 @@ internal sealed class CollinsScirihaMainSpectrumDocument : IScribeDocumentDefini
                     + "eigenvalue. Reindexing by a cover isomorphism preserves both adjacency "
                     + "multiplication and the coordinate sum. Using the isomorphism and its inverse "
                     + "gives the two implications."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("collins-sciriha-main-spectrum-double-cover"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula MainFormula()
     {
