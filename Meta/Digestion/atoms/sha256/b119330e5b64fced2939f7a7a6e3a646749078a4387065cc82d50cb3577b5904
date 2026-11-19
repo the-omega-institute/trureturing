@@ -1,0 +1,52 @@
+**定义 3.1（归一化输入与支撑泛函）。** 在引理 2.1 的规范坐标中工作，目标为 $\widehat{\mathcal J}(X)=\bigoplus_jH_jXH_j$，其中 $H_j=P_j+qS$。取同一输入密度及其五维未读取参考纯化
+
+$$
+\rho=\frac{\sqrt2(P+Q)+3S}{N},\qquad
+|\psi_\rho\rangle=\sum_{k=0}^4\sqrt{\rho_{kk}}\,e_k\otimes e_k,
+\qquad N=3+4\sqrt2.
+\tag{3.1}
+$$
+
+输出优先向量化记为 $|B\rangle\!\rangle=\sum_kBe_k\otimes e_k$，故 $\langle\!\langle B|C\rangle\!\rangle=\operatorname{Tr}(B^\dagger C)$。置
+
+$$
+\begin{gathered}
+b_j=|H_j\sqrt\rho\rangle\!\rangle,\qquad a_j=\sqrt2\,b_j,\qquad
+\Pi=\bigoplus_{j=0}^1|a_j\rangle\langle a_j|,\\
+\omega=(\widehat{\mathcal J}\otimes\operatorname{id})(|\psi_\rho\rangle\langle\psi_\rho|),\qquad
+\mathcal F(\mathcal T)=\operatorname{Tr}\!\left[\Pi(\mathcal T\otimes\operatorname{id})(|\psi_\rho\rangle\langle\psi_\rho|)\right],\\
+C_j=2P_j+3S.
+\end{gathered}
+\tag{3.2}
+$$
+
+这里 $\operatorname{Tr}\rho=(4\sqrt2+3)/N=1$，且 $\rho$ 严格正定，故纯化归一化。又因 $H_j^2=P_j+S/2$，
+
+$$
+\|b_j\|^2=\operatorname{Tr}(\rho H_j^2)
+=\frac{2\sqrt2+3/2}{N}=\frac12.
+$$
+
+因此 $a_j$ 是单位向量，其三个非零 Schmidt 平方权重为 $2\sqrt2/N,2\sqrt2/N,3/N$，并非等权。不同旗标使 $\Pi$ 成为正交投影，而且
+
+$$
+\omega=\frac12\bigoplus_j|a_j\rangle\langle a_j|,
+\qquad \operatorname{Tr}\omega=\operatorname{Tr}(\Pi\omega)=1.
+\tag{3.3}
+$$
+
+赋给旗标 $j$ 的末端 Kraus 矩阵 $B$ 对泛函的贡献为
+
+$$
+\begin{aligned}
+f_j(B)
+&=|\langle a_j,|B\sqrt\rho\rangle\!\rangle\rangle|^2
+ =2|\operatorname{Tr}(\rho H_jB)|^2
+ =\frac{|\operatorname{Tr}(C_j^\dagger B)|^2}{N^2},\\
+\sqrt2\,\rho H_j&=C_j/N.
+\end{aligned}
+\tag{3.4}
+$$
+
+第一等式后的迹来自 $\operatorname{Tr}(\sqrt\rho H_jB\sqrt\rho)$ 的循环性；内积中第一变量的共轭及所有归一化因子均已包含。一个规范模拟器的 $\mathcal F$ 是这些非负贡献的总和或积分；固定经典带时 Kraus 矩阵不含带的概率权，积分才引入该权。末端粗化合并正的 Kraus–Choi 项，不把不同记录的 Kraus 矩阵相干相加。
+

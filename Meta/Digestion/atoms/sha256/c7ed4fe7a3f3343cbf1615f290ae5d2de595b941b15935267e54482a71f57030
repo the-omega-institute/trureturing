@@ -1,0 +1,107 @@
+**Theorem 21.2 (Tensor minimum two and direct-sum minimum six).** For
+every angle, the full-input flagged instrument has minimum pure
+ancilla dimension $m=2$ in the tensor class, of total dimension ten.
+It has minimum total register dimension $N=6$ in the direct-sum
+class. The six-dimensional construction returns all quantum output
+to the embedded $R$ and leaves the extra level empty.
+
+Proof. For the tensor upper construction reuse exactly the isometry
+and unitary completion of Definition 2.1 and Theorem 2.2. Prepare
+$f_0$ in $E_2$, apply the unitary $\mathsf U$ there, measure
+$\{I_5\otimes|g_j\rangle\langle g_j|:j=0,1\}$, supply its
+classical outcome, and discard $E_2$. The contraction
+$(I_5\otimes\langle g_j|)\mathsf U(x\otimes f_0)=A_jx$
+holds for every $x\in H$. It gives (17.1) on all complex operators
+and with references, with system output in $R$.
+Equivalently the ready-subspace map is
+$x\mapsto\sum_j A_jx\otimes f_j$ with readout in the $f$ basis;
+its isometry follows from $\sum_j A_j^\dagger A_j=I_5$.
+Extending orthonormal bases of two five-dimensional complements
+supplies a joint unitary, as in the cited theorem. This upper
+construction is an existing dilation supplier. The new minimum
+conclusion uses Theorem 18.1: $m=1$ leaves exactly the original
+five-level menu and cannot simulate the target, even in its
+almost-sure or diamond closure. Thus $m=2$ is minimal.
+
+For the direct-sum upper construction use the orthonormal basis
+$h_0,\ldots,h_5$ of $\widehat H_6$, with $Je_k=h_k$ for
+$0\le k\le4$. Let $C_0,C_1:R\to\widehat H_6$ be the
+isometries given by
+
+$$
+\begin{array}{c|ccc}
+ &u&v&z\\\hline
+ C_0&h_0&h_1&h_2\\
+ C_1&h_3&h_4&h_5
+\end{array},\qquad
+\Gamma_j=C_jC_j^\dagger.
+\tag{21.1}
+$$
+
+Their ranges are orthogonal and exhaust $\widehat H_6$.
+Thus $W_\theta x=C_0A_0x+C_1A_1x$ is an isometry on the
+entire five-dimensional input: orthogonality removes the cross
+terms and $W_\theta^\dagger W_\theta=\sum_jA_j^\dagger A_j=I_5$.
+Here $C_j$ is applied only to the known range $R$ of $A_j$.
+An explicit unitary completion is
+
+$$
+\begin{gathered}
+Z_0=[h_0\ \ h_3\ \ (h_1+h_4)/\sqrt2\ \ h_5\ \ h_2
+                          \ \ (h_1-h_4)/\sqrt2],\\
+Z_\theta=Z_0(D_\theta\oplus1),\qquad Z_\theta J=W_\theta.
+\end{gathered}
+\tag{21.2}
+$$
+
+Indeed the first five columns of $Z_0$ are
+$C_0K_0e_k+C_1K_1e_k$ in order. The displayed sixth column is
+orthogonal to them and has unit length. Hence $Z_0$ is unitary;
+(17.4) proves the general-angle identity without any new dimension.
+
+It remains to return the postmeasurement output to the original
+register; just reading $\Gamma_j$ would leave different output
+supports. Put
+
+$$
+\begin{gathered}
+O=[Ju\ \ Jv\ \ Jz\ \ Ju_-\ \ Jv_-\ \ h_5],\qquad
+E^{(0)}=[h_0\ \ h_1\ \ h_2\ \ h_3\ \ h_4\ \ h_5],\\
+E^{(1)}=[h_3\ \ h_4\ \ h_5\ \ h_0\ \ h_1\ \ h_2],\qquad
+R_j=O(E^{(j)})^\dagger.
+\end{gathered}
+\tag{21.3}
+$$
+
+All three displayed column lists are orthonormal bases, so $R_j$
+is unitary and $R_jC_jy=Jy$ for every $y\in R$.
+Apply $Z_\theta$, measure the complete PVM
+$\{\Gamma_0,\Gamma_1\}$, retain flag $j$ and apply $R_j$.
+The complete fine branch identity is
+
+$$
+R_j\Gamma_jZ_\theta J=JA_j.
+\tag{21.4}
+$$
+
+Conjugating any input operator and tensoring with $I_Z$ proves
+exact flagged equality, including all reference correlations.
+Its output support is $JR\subset JH$; in particular its
+$h_5$ component is zero after feedback. No probability is rejected.
+
+For minimality, $N<5$ cannot isometrically embed the specified
+arbitrary five-dimensional input. At $N=5$ such an embedding is
+unitary onto the whole register; conjugating every protocol by
+that unitary gives a protocol in the original menu. Theorem 18.1
+excludes exact simulation there, including the extensions of
+Theorem 18.2. Hence $N\ge6$, attained by (21.1)–(21.4).
+A direct-sum extra level and a tensor qubit are different additions:
+$5+1=6$, whereas $5\cdot2=10$. Neither construction transfers
+the ownership or environment-access permissions of the separate
+full-system model [DIL, Definition 1.1, Theorem 2.2 and Assumption 2.3].
+That supplier's $\mathbb C^5\otimes\mathbb C^2$ system is not
+the present five-dimensional input system. Here both constructions
+are conditional single-use mathematical realizations under Definition
+21.1; they provide no automatic fresh preparation or reset at a
+later use. $\square$
+

@@ -78,9 +78,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     ENNReal.ofReal_pos.mpr (Real.rpow_pos_of_pos (by norm_num) _)
   exact (ne_of_gt hpos) hh.symm
 
-private def halfBlock : Matrix (Fin 1) (Fin 1) ℝ := fun _ _ => 1/2
+def halfBlock : Matrix (Fin 1) (Fin 1) ℝ := fun _ _ => 1/2
 
-private theorem half_radius : radius (zeroDiagonal halfBlock halfBlock) = ENNReal.ofReal (1/2) := by
+theorem half_radius : radius (zeroDiagonal halfBlock halfBlock) = ENNReal.ofReal (1/2) := by
   let A := (zeroDiagonal halfBlock halfBlock).map (algebraMap ℝ ℂ)
   have hentry (p q : Vtx (![1,1] : Fin 2 → ℕ)) :
       A p q = if p.1=q.1 then 0 else (1/2:ℂ) := by
