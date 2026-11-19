@@ -1,0 +1,47 @@
+**Theorem 42.1 (actual four-atom acquisition).** With Assumption 40.4's
+complete record access and the fixed always-right policy, one actual
+run determines
+
+$$
+(a_e,a_{e+1},a_{e+2},a_{e+3})
+\quad\hbox{and}\quad \mathcal R_4(e)
+\qquad(e\in\mathbb Z).
+\tag{IV.132}
+$$
+
+Let $K$ be the retained number of actual queries at first stop, also
+equal to $|h_5.\mathrm{actions}|$. Its exact decoding table is
+
+| $K$ | $f(e)f(e+1)f(e+2)f(e+3)$ | One canonical origin $e$ |
+| --- | --- | --- |
+| $1$ | $0010$ | $2$ |
+| $2$ | $1001$ | $1$ |
+| $3$ | $0100$ | $0$ |
+| $4$ | $1010$ | $4$ |
+| $5$ | $0101$ | $3$ |
+
+All five cases are attained in the one natural generated word.
+Consequently any exact summary of this policy's records sufficient for
+the task (IV.132) needs at least five values, and the summary $K$ attains
+that bound. This counts task-summary values, not the physical memory,
+controller state or total cost of acquisition.
+
+**Proof.** Theorem 41.1 ensures $1\le K\le5$. Before its terminal $00$
+edge, the root/right word alternates. If $K=1$, the two known letters
+are $00$; no $000$ forces the next letter to be $1$, and no $11$
+forces the following letter to be $0$. If $K=2$, the known word is
+$100$ and no $000$ forces the fourth letter to be $1$. At $K=3$ the
+known word is $0100$. At $K=4,5$ the words through the marker are
+$10100,010100$, respectively, giving the displayed four-letter
+prefixes. The inference of a letter beyond a terminal marker is a
+consequence of the fixed source promise (IV.128); it is not an
+additional source query.
+
+Exact blocks at the listed origins begin, respectively,
+$00101001$, $10010100$, $01001010$, $10100100$, $01010010$.
+Thus all rows occur. Substituting each recovered bit by its atom in
+(IV.119), and applying precisely (IV.121) to each atom, gives
+(IV.132). The two atomic $\rho$ outputs are distinct, so the five
+different input tuples also give five different output tuples. Any
+sufficient summary must distinguish them. $\square$
+

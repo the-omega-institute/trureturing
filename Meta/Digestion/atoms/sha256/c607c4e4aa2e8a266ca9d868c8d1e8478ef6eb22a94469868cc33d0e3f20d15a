@@ -1,0 +1,38 @@
+**Proposition 51.2 (original generation through an explicit word boundary).**
+Let $\sigma(0)=01$, $\sigma(1)=0$ be the frontier action of the
+original $\rho$, and put $\tau(0)=B_5$, $\tau(1)=B_3$.
+For an actually acquired finite return-type word $w=g_0\cdots g_{m-1}$,
+the original marker-to-marker segment is $\tau(w)$, and
+
+$$
+\sigma^3(w)01=01\tau(w),\qquad W_m=U_K\tau(w)00.
+\tag{IV.157}
+$$
+
+These are frontier word equalities with their displayed boundaries,
+not equalities of unknown bracketed trees or native edit histories.
+
+**Proof.** Theorem 46.1 gives the return expansion, and Theorem 51.1
+identifies each acquired $g_n$ on the exact original source with its
+reversed hidden index. Direct substitution gives
+$\sigma^3(0)01=0100101=01\tau(0)$ and
+$\sigma^3(1)01=01001=01\tau(1)$. If the first equality in (IV.157)
+holds for $u$ and $v$, then
+$\sigma^3(u)\sigma^3(v)01=\sigma^3(u)01\tau(v)
+=01\tau(u)\tau(v)$. Starting with the empty word proves it for
+every finite $w$. The second equality is the actual prefix invariant.
+The conjugating boundary is $01$, whereas the acquisition's shared
+marker is $00$; they are not interchangeable cuts.
+
+Return expansions, induced codings and morphism conjugacy are classical
+methods in the cited return-word literature. Their use here fixes the
+source, orientation and boundary in the acquired original-generation
+correspondence. The additional premises for tree consumption remain
+those of §49. In particular neither (IV.156) nor (IV.157) supplies
+unknown brackets, historical selection order, rights to perform
+$\rho^3$, or a mutable-source continuation after edits. The relative
+space, comparison order, marked boundary and retained record inverses
+of §50 have precisely that canonical successful domain; they assert
+no universal inverse, physical elapsed time or globally minimal
+relation structure. $\square$
+
