@@ -5,6 +5,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Coloring;
 internal sealed class DichromaticMonotonicityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.";
+    private const string ProblemSlug = "crew-et-al-2026-dichromatic-monotonicity";
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/GraphInvariants/crew2026dichromatic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive transfers along singleton splits give real dichromatic monotonicity.",
@@ -13,6 +16,10 @@ internal sealed class DichromaticMonotonicityDocument : IScribeDocumentDefinitio
             Paragraph(Text("Crew, Keller, Kuehr, Lin, Monroy Rodríguez and Williams pose Conjecture 2 "
                 + "in Section 8.1 of Properties of the Dichromatic Polynomial. "
                 + "https://arxiv.org/html/2611.13273v1#Thmconj2")),
+            Paragraph(Text("The original Tier 1 preregistration specifies weak monotonicity and an exact finite search for a reversal. "
+                + "https://github.com/the-omega-institute/trureturing/issues/31546")),
+            Paragraph(Text("The all-order derivation supplies the singleton-split transfer argument used in the proof. "
+                + "https://github.com/the-omega-institute/trureturing/issues/31546#issuecomment-7022343508")),
             Node("normalized-polynomial", "normalizedDichromaticPolynomial", "The normalized dichromatic polynomial",
                 "Divide the polynomial by the nth power of the real palette parameter, where n is the vertex count. "
                 + "At order one and palette parameter zero, evaluate the derivative of the polynomial at zero. "
@@ -29,9 +36,12 @@ internal sealed class DichromaticMonotonicityDocument : IScribeDocumentDefinitio
                 + "The beta-moment bound makes each genuine transfer positive. Acyclicity is preserved by splitting, "
                 + "so summation over acyclic partitions gives a nonnegative derivative. Continuity gives the closed endpoint "
                 + "at orders at least two, and the extended quotient is constant at smaller orders.",
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create(ProblemSlug), ResolutionKind.Proved))), []));
 
-    private static DocumentBlock Node(string id, string declaration, string title, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string id, string declaration, string title, string prose,
+        DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))),
+            role, openProblemResolutionClaim: resolution);
 }

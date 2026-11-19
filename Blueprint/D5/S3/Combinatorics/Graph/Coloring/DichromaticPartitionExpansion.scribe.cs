@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Coloring;
 internal sealed class DichromaticPartitionExpansionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.";
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/GraphInvariants/crew2026dichromatic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Acyclic colourings of a finite digraph give a falling-factorial expansion.",
@@ -62,5 +64,5 @@ internal sealed class DichromaticPartitionExpansionDocument : IScribeDocumentDef
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
         DescribeRole role) => Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

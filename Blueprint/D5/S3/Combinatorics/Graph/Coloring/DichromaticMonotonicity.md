@@ -6,6 +6,10 @@ Positive transfers along singleton splits give real dichromatic monotonicity.
 
 Crew, Keller, Kuehr, Lin, Monroy Rodríguez and Williams pose Conjecture 2 in Section 8.1 of Properties of the Dichromatic Polynomial. https://arxiv.org/html/2611.13273v1#Thmconj2
 
+The original Tier 1 preregistration specifies weak monotonicity and an exact finite search for a reversal. https://github.com/the-omega-institute/trureturing/issues/31546
+
+The all-order derivation supplies the singleton-split transfer argument used in the proof. https://github.com/the-omega-institute/trureturing/issues/31546#issuecomment-7022343508
+
 **Definition 1.1 (The normalized dichromatic polynomial).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.normalizedDichromaticPolynomial`
@@ -13,6 +17,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.norm
 *Formalization.* `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.normalizedDichromaticPolynomial` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Lila Crew, Benjamin Keller, Katharina Kuehr, Shao Yuan Lin, Megan Ixchel Monroy Rodríguez, Tabitha Williams (2026). *Properties of the Dichromatic Polynomial*. DOI: [10.48550/arXiv.2611.13273](https://doi.org/10.48550/arXiv.2611.13273). URL: <https://arxiv.org/abs/2611.13273v1>.
 
 *Commentary.*
 
@@ -24,7 +30,13 @@ Lean statement: `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.norm
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.normalizedDichromaticPolynomial_monotoneOn` (`✓ std3`). ∎
 
+*Resolves.* `Problems/crew-et-al-2026-dichromatic-monotonicity` (proved) by `D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.normalizedDichromaticPolynomial_monotoneOn`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"crew-et-al-2026-dichromatic-monotonicity","declaration_gid":"D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.normalizedDichromaticPolynomial_monotoneOn","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Lila Crew, Benjamin Keller, Katharina Kuehr, Shao Yuan Lin, Megan Ixchel Monroy Rodríguez, Tabitha Williams (2026). *Properties of the Dichromatic Polynomial*. DOI: [10.48550/arXiv.2611.13273](https://doi.org/10.48550/arXiv.2611.13273). URL: <https://arxiv.org/abs/2611.13273v1>.
 
 *Commentary.*
 
