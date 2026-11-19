@@ -469,17 +469,15 @@ the separate mutable B component. No redundant geometry-only decoder can
 restore that missing head/control state. No minimum-memory or actual serial
 history recovery follows. $\square$
 
-## 6. Bound finite evidence and source correspondence
+## 6. Source correspondence and fixed image data
 
-The reproducible private check uses the unchanged original assembler for the
-original evaluator and checks its serialized bytes against
-`constructor/evaluator.stack.bin`. It then generates, but does not execute
-or fully install, the fixed translated evaluator. Its deterministic source
-identity is SHA256
+The static inventory below supplies the fixed translation parameters
+used in the subsequent layout calculations. Its source binding uses the
+original evaluator assembler and the serialized evaluator bytes. The
+supplied translated image SHA-256 is
 `7257d4ad4b5730860ad811d41c3057ea6accdf1c413dbf7af75be206a5b24595`.
-The resulting counts are:
 
-| Quantity | Actual generated count |
+| Quantity | Count |
 | --- | ---: |
 | Original ML-S source states | 22202 |
 | Translated source states | 10983 |
@@ -497,18 +495,6 @@ or a measured total speedup. The native count includes source-boundary entry
 vertices, saved-head paths, seed, loader and computed printer. The fixed
 installer seed is additional material as required by (IS.5).
 
-The small actual native installations use $K=2048$, with exact alias,
-addition and multiplication checks and addition of a 131-bit operand. Empty
-input with immediate true and false halt is checked at the actual terminal
-bit and its framed output. The
-checks inspect every tested native cut for immutable input backing and reject
-writes to published frame/token fields. The emitted result is checked
-externally against the independent small arithmetic result. Additional checks
-exercise an empty pool and a denied current grant at an unchanged native PC.
-The expected answer is used only by the checker, never by native execution.
-These finite cases neither prove the universal theorems nor establish any
-complete UJB consumer or composed-source reservation.
-
 The three source chronologies are exactly the preexisting acquisition schedules,
 including the final acquisition-only old-slot probe. They keep every real
 occurrence, all four replies, partial slots and original indexed cache values.
@@ -520,11 +506,9 @@ Their acquired arithmetic frames have the following unchanged identities:
 | positive-partial | 4 | 386 | 73 / 2115 | `1a4ae049cf81b1f434398aa05cb8eabcf4d8689f7873f8d75f9ae1e870c34764` |
 | null-nine-distinct-left | 9 | 839 | 149 / 9676 | `f5518d034eef5bd00c87ff9d43c5ca878ef9d012f47e04bedcbe45163ee3e29d` |
 
-Replaying this existing hosted acquisition is a source/data binding check.
-It does not claim that the candidate's computed-output/Read service cut has
-been reached. The exact remaining gap is (IS.3), its acknowledged return and
-actual continuation relation, and the prospective bounds/backing of (IS.7).
-A larger unbacked evaluator run is not a check of either missing premise.
+The acquired-frame data fix the original invocation schedules. The service
+realization of (IS.3) additionally needs a computed acknowledged return
+and the original-port continuation under the resource conditions of (IS.7).
 
 **Source and literature status.** The native realization, arithmetic consumer
 translation and census above are `repo-derived` interface results. ML10–11

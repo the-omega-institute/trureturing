@@ -3439,7 +3439,7 @@ allocator or reclaim all retired backing. Fixed-width component fixtures
 also provide no widening/overlap proof. Those missing constructions cannot
 be inferred by summing these partial censuses. $\square$
 
-**Definition 24.3 (exact executable correspondence and evidence scope).**
+**Definition 24.3 (executable correspondence).**
 `field_service.Service.receive/routines` implements §22;
 `Service.classifier/commands` implements §23's actual operands, linked
 receipts, paired cache, Predict serialization and framed responses.
@@ -3458,28 +3458,13 @@ obligations whenever that path is used; they are not relabelled audit-only.
 An original full-execution acceptance must actually use the replacement
 path through arithmetic return, framing and the next original Read.
 
-The author checks distinguish independent field-transition grammar
-comparisons, installed native frontend/Read/Predict checks, the actual
-complete-image conversion/initial-loader prefix, and the separate existing
-component/reference suites. A missing original arithmetic LAB execution is
-not replaced by a frontend ready latch, fixture output or stack-reference
-run. Operation omissions must change actual received-source operands,
-receipts, cache or output, in addition to any count discrepancy. A source
-mutation, replay substitution or host-calculated answer is no success case.
-The exact private results bind source bytes and measured component cuts.
-They are finite corroboration of the ordinary all-family inductions, not
-new Lean verification or independent acceptance.
-
-**Definition 24.4 (remaining original objects).** The conditional service
-correspondence and its selected native consumers do not close the original
-integrated LAB-driver delivery, shared jobs/free-pool/width overlap and
-cleanup, full source-observer common timeline, or whole-family integrated
-author checks. The original strict objects `ML-N-evaluator-execution` and
-`ML-Cost-full-evaluator-session` remain not-executed until the original full
-positive and null evaluator runs, actual Arithmetic output/framing, original
-Read continuation and complete same-run census execute. B completion, C
-release, D completion, fresh independent acceptance and completion of the
-long research goal remain separate later obligations.
+**Realization scope.** The selected consumers implement the frontend,
+source interoperation and service control. The arithmetic realization
+requires installation, a computed evaluator result and its framed
+delivery. The source interface must then support Read on the original
+port before Close. A resource claim requires a single chronology covering
+the actual allocation, width overlap, cleanup and full source-observer
+census.
 
 The source supply remains NWMG, the licensed stack compiler and the exact
 UJB/AA/PG scopes in §§9–21. This appendix is ordinary repository-derived
@@ -3487,7 +3472,7 @@ parser/controller/refinement mathematics, with no new universality,
 minimality, physical realization, actual serial-history recovery, FIB or
 quantum frontend claim. The source port and initial primitive-control,
 valid-literal-input and current-rights premises are retained. Input is
-repo-prior-exposed; no context sterility or model diversity is asserted.
+taken from the original source-port domain.
 
 ## 追加锚（本行以下为增补区）
 
@@ -4631,9 +4616,9 @@ For this FS1 consumer, a complete primitive realization consists of an
 actual installed finite graph for Definition 31.1 or 31.3, a relation on
 its initialized and every internal busy/refusal state, and a
 source-respecting ML-F/ML-Q input/output binding. Its evaluator return
-must traverse the computed register-zero word, perform the actual
-Print/End/Ack/Return/Close phases, then enable the unchanged original
-port. Receipts remain by occurrence and slots by original index,
+must traverse the computed register-zero word and perform the actual
+Print, End, Ack and Return phases. Return enables Read on the original
+port. Close follows the final Read and terminates the session. Receipts remain by occurrence and slots by original index,
 including old-slot rereads, informative absences and partial reads.
 The binding must work on all of §31.2's domains, including source arrays
 outside the prior support. Law evaluation never supplies an actual reply.
