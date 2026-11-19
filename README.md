@@ -214,7 +214,7 @@ adding this readout?
 The current declared-template binding rule issues
 **Observe warnings that do not block admission**
 ([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
-[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+[implementation](https://github.com/the-omega-institute/trureturing-tools/blob/v0.1.0-dev.4/tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
 Other admission checks still apply. Its module selection is
 separate from the mathematical comparison above.
 The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
@@ -256,10 +256,10 @@ you also need Git, Make and Bash.
 elan selects Lean from [lean-toolchain](lean-toolchain). Mathlib is declared in
 [lakefile.toml](lakefile.toml), with resolved dependencies in
 [lake-manifest.json](lake-manifest.json). For contribution checks, add Python
-3.11+ as `python3`; see the [full prerequisites](docs/CONTRIBUTING.md#prerequisites).
+3.12+ as `python3`; see the [full prerequisites](docs/CONTRIBUTING.md#prerequisites).
 
 Clone the project, then build just the introductory module. The `make` entry
-prepares a private Lean cache; the first run may download dependencies.
+installs the tools release pinned in `Meta/tools-release.json` and prepares a private Lean cache.
 
 ```sh
 git clone https://github.com/the-omega-institute/trureturing.git

@@ -14,3 +14,4 @@
 /.github/workflows/ci-*.yml @loning
 /CLAUDE.md @loning
 /AGENTS.md @loning
+/.github/scripts/install-tools.py @loning
