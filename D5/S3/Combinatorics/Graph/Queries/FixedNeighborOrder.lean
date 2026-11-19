@@ -28,7 +28,7 @@ section UniformTable
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable (F : V → Type*) [∀ v, Fintype (F v)] [∀ v, Nonempty (F v)]
 
-private theorem uniform_coordinate_cylinder (s : Finset V) (a : ∀ v : s, F v) :
+theorem uniform_coordinate_cylinder (s : Finset V) (a : ∀ v : s, F v) :
     (uniformPmf (∀ v, F v)).toOuterMeasure
         {f : ∀ v, F v | ∀ v : s, f v = a v} =
       ((∏ v ∈ s, Fintype.card (F v) : ℕ) : ℝ≥0∞)⁻¹ := by
