@@ -8,7 +8,6 @@
 
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
-import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
@@ -114,8 +113,6 @@ private def Page (p : Fin 73) : Prop := ∀ r : Fin 64,
   let s : State := ⟨64 * p.val + r.val, by omega⟩
   List.Perm (successors s) (quotientSuccessors (classOf s)) ∧
     BarkerMinimalGridTransfer.terminal s = BarkerMinimalGridQuotient.terminal (classOf s)
-
-open private closed from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 
 private def windowVertices : List (Vertex 5) :=
   (List.finRange 3).flatMap fun r => (List.finRange 5).map fun c => (r, c)

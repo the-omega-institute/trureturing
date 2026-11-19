@@ -254,7 +254,7 @@ def present (w : Window) (v : Vertex 5) : Bool := decide ((w v.2).val < 8)
 def selected (w : Window) (v : Vertex 5) : Bool :=
   present w v && (w v.2).val.testBit v.1.val
 
-private def closed (u v : Vertex 5) : Bool :=
+def closed (u v : Vertex 5) : Bool :=
   decide (Nat.dist u.1.val v.1.val + Nat.dist u.2.val v.2.val ≤ 1)
 
 /-- Domination and existential closed private witnesses at the real middle

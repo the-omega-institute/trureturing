@@ -548,6 +548,18 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.
 
 For every natural k, the actual inclusion-minimal dominating subset count of the ordinary open grid of width k+2, cast to the integers, equals the sum of fullOrbit k over all 64 starts. This includes width two with no transitions.
 
+**Definition 1.46 (The finite-window closed neighbourhood).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.closed`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.closed` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two window vertices are closed neighbours exactly when the sum of their row and column distances is at most one.
+
 The generic CycleItalianDominationRecurrence.sum_pathWeight sums arbitrary intermediate states between fixed endpoints u and v for n+1 edges. At a positive suffix length k its parameters would be the state type Fin 4672, the unit admitted-edge matrix M, and n=k−1, followed by a terminal-weighted endpoint sum and a mask-word correspondence. The argument here defines each continuation by append and identifies its weight with the actual local tests for every k, including zero.
 
 ## References
@@ -566,6 +578,7 @@ The generic CycleItalianDominationRecurrence.sum_pathWeight sums arbitrary inter
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.actualCount_fullOrbit`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.actualCount_one`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.append`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.closed`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.columns`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.columns_append`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.decode`
