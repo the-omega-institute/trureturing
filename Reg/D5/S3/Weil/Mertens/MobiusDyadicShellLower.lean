@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.Arith.Robin.PrimePrefixMobiusDirectedAbel
 import D5.S3.Weil.Mertens.MobiusDyadicShellLower
 import D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
 import Reg.Support.SingleDependentReadout
@@ -13,6 +14,7 @@ noncomputable section
 open MeasureTheory Set
 open scoped BigOperators
 open LeanInformationAudit
+open _root_.D5.S3.Arith.Robin.PrimePrefixMobiusDirectedAbel (harmonicPrefix)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Weil.Mertens.MobiusDyadicEnergy
   (mobiusDyadicDifference mobiusDyadicShellEnergy)
@@ -48,13 +50,10 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
   have hq : 0 < (2 : ℝ) ^ (2 * ρ.re - 1) := Real.rpow_pos_of_pos (by norm_num) _
   exact (not_le_of_gt (mul_pos hc (pow_pos hq k))) hk
 
-private def weightedAt (n : ℕ) : ℝ :=
-  ∑ m ∈ Finset.Icc 1 n, (ArithmeticFunction.moebius m : ℝ) / (m : ℝ)
-
-private theorem weightedAt_succ (n : ℕ) :
-    weightedAt (n + 1) = weightedAt n +
+private theorem harmonicPrefix_succ (n : ℕ) :
+    harmonicPrefix (n + 1) = harmonicPrefix n +
       (ArithmeticFunction.moebius (n + 1) : ℝ) / ((n + 1 : ℕ) : ℝ) := by
-  unfold weightedAt
+  unfold harmonicPrefix
   rw [Finset.sum_Icc_succ_top (Nat.succ_le_succ (Nat.zero_le n))]
 
 -- Both natural floors are constant on the left-closed half-step.
@@ -63,9 +62,9 @@ private theorem shellPiece {a b : ℝ} (n m : ℕ) (hlen : b - a = 1 / 2)
     (hlo₂ : (m : ℝ) ≤ 2 * a) (hhi₂ : 2 * b ≤ (m : ℝ) + 1) :
     IntervalIntegrable (fun x => mobiusDyadicDifference x ^ 2) volume a b ∧
       (∫ x in a..b, mobiusDyadicDifference x ^ 2) =
-        (weightedAt n - weightedAt m) ^ 2 / 2 := by
+        (harmonicPrefix n - harmonicPrefix m) ^ 2 / 2 := by
   have hab : a ≤ b := by linarith only [hlen]
-  let value := (weightedAt n - weightedAt m) ^ 2
+  let value := (harmonicPrefix n - harmonicPrefix m) ^ 2
   have heq : EqOn (fun x => mobiusDyadicDifference x ^ 2) (fun _ => value) (Ico a b) := by
     intro x hx
     have hxn : (n : ℝ) ≤ x := hlo.trans hx.1
@@ -76,7 +75,7 @@ private theorem shellPiece {a b : ℝ} (n m : ℕ) (hlen : b - a = 1 / 2)
       (Nat.floor_eq_iff (mul_nonneg (by norm_num) hx0)).2
         ⟨by linarith only [hlo₂, hx.1], by linarith only [hhi₂, hx.2]⟩
     change mobiusDyadicDifference x ^ 2 = value
-    dsimp only [value, mobiusDyadicDifference, mobiusPartialSum, weightedAt]
+    dsimp only [value, mobiusDyadicDifference, mobiusPartialSum, harmonicPrefix]
     rw [hfloor, hfloor₂]
   have hconst : IntervalIntegrable (fun _ : ℝ => value) volume a b := intervalIntegrable_const
   refine ⟨(intervalIntegrable_iff_integrableOn_Ico_of_le hab).2
@@ -89,7 +88,7 @@ private theorem shellPiece {a b : ℝ} (n m : ℕ) (hlen : b - a = 1 / 2)
     _ = ∫ _ in Ico a b, value := setIntegral_congr_fun measurableSet_Ico heq
     _ = ∫ _ in a..b, value := by
       rw [intervalIntegral.integral_of_le hab, integral_Ico_eq_integral_Ioc]
-    _ = (weightedAt n - weightedAt m) ^ 2 / 2 := by
+    _ = (harmonicPrefix n - harmonicPrefix m) ^ 2 / 2 := by
       rw [intervalIntegral.integral_const, smul_eq_mul, hlen]
       dsimp only [value]
       ring
@@ -112,26 +111,26 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     simpa [hμ₂, hμ₃] using h
   have hμ₇ : ArithmeticFunction.moebius 7 = -1 :=
     ArithmeticFunction.moebius_apply_prime (by decide)
-  have h₁ : weightedAt 1 = 1 := by
-    rw [weightedAt, Finset.Icc_self, Finset.sum_singleton]
+  have h₁ : harmonicPrefix 1 = 1 := by
+    rw [harmonicPrefix, Finset.Icc_self, Finset.sum_singleton]
     norm_num [ArithmeticFunction.moebius_apply_one]
-  have h₂ : weightedAt 2 = 1 / 2 := by
-    have h := weightedAt_succ 1
+  have h₂ : harmonicPrefix 2 = 1 / 2 := by
+    have h := harmonicPrefix_succ 1
     norm_num [h₁, hμ₂] at h ⊢ <;> exact h
-  have h₃ : weightedAt 3 = 1 / 6 := by
-    have h := weightedAt_succ 2
+  have h₃ : harmonicPrefix 3 = 1 / 6 := by
+    have h := harmonicPrefix_succ 2
     norm_num [h₂, hμ₃] at h ⊢ <;> exact h
-  have h₄ : weightedAt 4 = 1 / 6 := by
-    have h := weightedAt_succ 3
+  have h₄ : harmonicPrefix 4 = 1 / 6 := by
+    have h := harmonicPrefix_succ 3
     norm_num [h₃, hμ₄] at h ⊢ <;> exact h
-  have h₅ : weightedAt 5 = -(1 / 30) := by
-    have h := weightedAt_succ 4
+  have h₅ : harmonicPrefix 5 = -(1 / 30) := by
+    have h := harmonicPrefix_succ 4
     norm_num [h₄, hμ₅] at h ⊢ <;> exact h
-  have h₆ : weightedAt 6 = 2 / 15 := by
-    have h := weightedAt_succ 5
+  have h₆ : harmonicPrefix 6 = 2 / 15 := by
+    have h := harmonicPrefix_succ 5
     norm_num [h₅, hμ₆] at h ⊢ <;> exact h
-  have h₇ : weightedAt 7 = -(1 / 105) := by
-    have h := weightedAt_succ 6
+  have h₇ : harmonicPrefix 7 = -(1 / 105) := by
+    have h := harmonicPrefix_succ 6
     norm_num [h₆, hμ₇] at h ⊢ <;> exact h
   have h12 := shellPiece (a := 1) (b := 3 / 2) 1 2
     (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
