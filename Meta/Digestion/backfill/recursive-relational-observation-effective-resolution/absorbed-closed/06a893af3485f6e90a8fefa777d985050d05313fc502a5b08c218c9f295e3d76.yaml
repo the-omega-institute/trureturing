@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:06a893af3485f6e90a8fefa777d985050d05313fc502a5b08c218c9f295e3d76
+  normalized_sha256: sha256:06a893af3485f6e90a8fefa777d985050d05313fc502a5b08c218c9f295e3d76
+cas_ref: sha256:06a893af3485f6e90a8fefa777d985050d05313fc502a5b08c218c9f295e3d76
+coverage_gids:
+  - gid: D5/S3/TotalVariation/ParryReturnPrefix.iid_return_prefix
+    target_statement_id: sha256:3ba279c790ff09ed22a5e85acdaf9018771cec3a089ce9dc7be0344b14d52401
+receipts:
+  unresolved_subitems: []

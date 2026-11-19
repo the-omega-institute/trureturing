@@ -290,7 +290,7 @@ private theorem pencil_transpose_swap (x y : ℕ) :
       shift1 y i.2 j.2 * shift1 x j.1 i.1
   simp only [mul_comm]
 
-private theorem pencil_rank_of_ge (x y : ℕ) (hyx : y ≤ x) :
+theorem pencil_rank_of_ge (x y : ℕ) (hyx : y ≤ x) :
     (pencil x y).rank = (x + 1) * y := by
   rw [← Matrix.rank_transpose, pencil_transpose_swap, Matrix.rank_submatrix,
     pencil_rank_of_le y x hyx]

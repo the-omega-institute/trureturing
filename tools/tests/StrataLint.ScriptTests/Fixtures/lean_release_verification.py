@@ -162,6 +162,39 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
 
+    def verification_restore_budget_probe(self, extraction_seconds):
+        environment = self.deadline_probe(10)
+        with (self.bin / "sitecustomize.py").open("a") as probe:
+            probe.write('''
+import sys
+def advance_restore_clock(frame, event, arg):
+    global clock
+    if event == "call" and frame.f_code.co_name == "restore_snapshot":
+        clock = 8  # Packing used most of the original publication budget.
+    if event == "call" and frame.f_code.co_name == "extract_members":
+        clock += int(os.environ["FAKE_EXTRACTION_SECONDS"])
+sys.setprofile(advance_restore_clock)
+''')
+        return {**environment, "FAKE_EXTRACTION_SECONDS": str(extraction_seconds)}
+
+    def test_verification_handoff_uses_completed_restore_budget(self):
+        self.verification_fixture()
+        result = self.verification("publish", **self.verification_restore_budget_probe(3))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertIn('"status":"published"', result.stdout)
+        self.assertEqual("locally-produced-olean",
+            (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def test_verification_restore_still_rejects_expired_local_budget(self):
+        self.verification_fixture()
+        result = self.verification("publish", **self.verification_restore_budget_probe(11))
+        self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("Release operation deadline exhausted", result.stdout)
+        self.assertNotIn('"status":"unpacked"', result.stdout)
+        self.assertNotIn('"status":"published"', result.stdout)
+        self.assertFalse((self.root / ".lake/build").exists())
+
     def assert_verification_fits_restore_workspace(self, chunk_bytes=None):
         self.verification_fixture(chunk_bytes)
         payload = random.Random(31).randbytes(64 * 1024)

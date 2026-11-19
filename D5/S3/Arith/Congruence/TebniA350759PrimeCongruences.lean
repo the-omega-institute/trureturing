@@ -227,29 +227,29 @@ private theorem H_coeff (k : ℕ) :
 
 
 
-private noncomputable def diagonal : PowerSeries (Polynomial ℚ) →ₐ[ℚ] PowerSeries ℚ :=
+noncomputable def diagonal : PowerSeries (Polynomial ℚ) →ₐ[ℚ] PowerSeries ℚ :=
   (PowerSeries.eval₂Hom
     (φ := Polynomial.eval₂RingHom (PowerSeries.C : ℚ →+* PowerSeries ℚ) (1 + X))
     continuous_of_discreteTopology (PowerSeries.HasEval.X (R := ℚ))).toRatAlgHom
 
-private theorem diagonal_apply (f : PowerSeries (Polynomial ℚ)) :
+theorem diagonal_apply (f : PowerSeries (Polynomial ℚ)) :
     diagonal f = PowerSeries.eval₂ (Polynomial.eval₂RingHom PowerSeries.C (1 + X)) X f := by
   rw [diagonal, RingHom.toRatAlgHom_apply, PowerSeries.coe_eval₂Hom]
 
-private theorem diagonal_continuous : Continuous diagonal := by
+theorem diagonal_continuous : Continuous diagonal := by
   change Continuous (fun f => diagonal f)
   simp_rw [diagonal_apply]
   exact PowerSeries.continuous_eval₂
     (φ := Polynomial.eval₂RingHom (PowerSeries.C : ℚ →+* PowerSeries ℚ) (1 + X))
     continuous_of_discreteTopology (PowerSeries.HasEval.X (R := ℚ))
 
-private theorem diagonal_C (p : Polynomial ℚ) : diagonal (C p) = (Polynomial.eval₂RingHom PowerSeries.C (1 + X)) p := by
+theorem diagonal_C (p : Polynomial ℚ) : diagonal (C p) = (Polynomial.eval₂RingHom PowerSeries.C (1 + X)) p := by
   rw [diagonal_apply, PowerSeries.eval₂_C]
 
-private theorem diagonal_X : diagonal X = X := by
+theorem diagonal_X : diagonal X = X := by
   rw [diagonal_apply, PowerSeries.eval₂_X]
 
-private theorem diagonal_subst (f : PowerSeries ℚ) (b : PowerSeries (Polynomial ℚ))
+theorem diagonal_subst (f : PowerSeries ℚ) (b : PowerSeries (Polynomial ℚ))
     (hb : constantCoeff b = 0) (hdb : constantCoeff (diagonal b) = 0) :
     diagonal (subst b f) = subst (diagonal b) f := by
     have h := MvPowerSeries.comp_subst_apply
@@ -260,7 +260,7 @@ private theorem diagonal_subst (f : PowerSeries ℚ) (b : PowerSeries (Polynomia
     rw [← PowerSeries.substAlgHom_eq_aeval hd] at h
     simpa only [PowerSeries.coe_substAlgHom] using h
 
-private theorem diagonal_lift (f : PowerSeries ℚ) :
+theorem diagonal_lift (f : PowerSeries ℚ) :
     diagonal (f.map (algebraMap ℚ (Polynomial ℚ))) = f := by
     rw [PowerSeries.map_algebraMap_eq_subst_X,
       diagonal_subst f X (by simp) (by rw [diagonal_X]; simp), diagonal_X, PowerSeries.X_subst]

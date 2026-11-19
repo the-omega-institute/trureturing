@@ -1,0 +1,56 @@
+**Lemma 4.3 (Classification of the affine-line curves).**
+
+Over an algebraically closed field of characteristic zero, consider
+
+$$
+\tag{4.14}
+ uU=a(v+V)+c,\qquad vV=b(u+U)+d,\qquad ab\ne0.
+$$
+
+Every nonconstant morphism $\mathbb A^1$ into this affine surface is
+contained in one of at most sixteen fixed coordinate fibers. For
+$u=k$ or $U=k$ the possible constants are $k=0$ and the roots of
+
+$$
+H_u(k)=bk^3+dk^2+bck+a^2b^2.
+$$
+
+For $v=k$ or $V=k$ they are $k=0$ and the roots of
+
+$$
+H_v(k)=ak^3+ck^2+adk+a^2b^2.
+$$
+
+For $u=0$, the fiber is the polynomial curve
+
+$$
+v=T,\qquad V=-c/a-T,\qquad U=(TV-d)/b.
+$$
+
+For $k\ne0$ with $H_u(k)=0$, the fiber $u=k$ is the union of the two
+affine lines $v=ab/k$ and $V=ab/k$, with $U$ determined linearly.
+The other fibers have the analogous descriptions.
+
+*Proof.*
+
+Pull back the four coordinates to polynomials. If all four are
+nonconstant, their positive degrees $i,j,I,J$ satisfy
+
+$$
+i+I\leq\max(j,J),\qquad j+J\leq\max(i,I),
+$$
+
+which is impossible after addition. Thus some coordinate is constant.
+For $u=k\ne0$, eliminate $U$ to obtain
+
+$$
+\tag{4.15}
+ (kv-ab)(kV-ab)=H_u(k).
+$$
+
+If $H_u(k)\ne0$, both factors are constant polynomials, and then all
+four coordinates are constant. Otherwise the descriptions follow from
+(4.15) and the two equations. The
+$k=0$ fiber is computed directly. The other coordinates follow by
+exchanging endpoints and/or exchanging the two equations.
+

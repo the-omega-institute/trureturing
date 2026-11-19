@@ -1,0 +1,14 @@
+## Mathematical references
+
+<a id="reference-pascadi2026"></a>
+
+[Pascadi] Alexandru Pascadi, *Non-abelian amplification and bilinear forms with Kloosterman sums*, Geometric and Functional Analysis **36** (2026), 1174–1243, [DOI:10.1007/s00039-026-00746-0](https://doi.org/10.1007/s00039-026-00746-0), [arXiv:2511.08445v2](https://arxiv.org/abs/2511.08445v2), Section 6; complete Kloosterman bound: Lemma 3.3, Section 3.2.
+
+<a id="reference-bhargavavarma2016"></a>
+
+[Bhargava–Varma] Manjul Bhargava and Ila Varma, *The mean number of 3-torsion elements in the class groups and ideal groups of quadratic orders*, Proceedings of the London Mathematical Society **112** (2016), 235–266, [DOI:10.1112/plms/pdv062](https://doi.org/10.1112/plms/pdv062), [arXiv:1401.5875](https://arxiv.org/abs/1401.5875), Theorems 1–2 and Lemma 13. The all-order means used here are Theorem 2(a),(b).
+
+<a id="reference-formalsource"></a>
+
+[R] The Omega Institute, *Original prime-cube return-count reductions*, [trureturing](https://github.com/the-omega-institute/trureturing). Section 2 uses its real-box scalar comparison, six-chart estimates, retained moments, root-localized factors, singular-partner and physical-weight estimates, with their explicit hypotheses as stated there. The [owning source note](../../../Library/CharacterSums/pascadi2025nonabelianamplification.md#exact-locators-for-the-mathematical-inputs) identifies these mathematical inputs precisely.
+

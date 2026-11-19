@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:51ca15d136724e948f29b2242b573dd41ad645c94587a872942290c34621a559
+  normalized_sha256: sha256:51ca15d136724e948f29b2242b573dd41ad645c94587a872942290c34621a559
+cas_ref: sha256:51ca15d136724e948f29b2242b573dd41ad645c94587a872942290c34621a559
+coverage_gids:
+  - gid: D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_original_first_piece
+    target_statement_id: sha256:1521d5b145339dec5f682be99faea819f709ffbdf68b3abe3524a9f63a1a7e66
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,185 @@
+**Proposition 5.4 (Height count with a fixed real ideal class).**
+
+Fix $d>0$, a split branch $\mathfrak p\mid p$, an integral invertible
+$\mathcal O_d$-ideal $\mathfrak A$ of norm $n\le K$, and a class
+$[\mathfrak a]$ satisfying
+
+$$
+[\mathfrak a]^3=[\mathfrak p]^{-2}[\mathfrak A]^{-1}.
+$$
+
+The number of kernels (5.3) admitting actual
+rows as above and having $[J_0]=[\mathfrak a]$ is
+
+$$
+\tag{5.19}
+
+ \ll \frac{H_3}{\sqrt d}\log(2p).
+$$
+
+The constant is independent of the ideal representative, its generator,
+and the regulator.
+
+*Proof.*
+
+Put $H=H_3$. Choose any invertible fractional representative
+$\mathfrak a$, write $\nu=N(\mathfrak a)$, and choose a generator
+
+$$
+\tag{5.20}
+
+ (\eta_0)=(p)^3\mathfrak p^2\mathfrak A\mathfrak a^3,
+ \qquad |N(\eta_0)|=p^8n\nu^3.
+$$
+
+No bound on this representative or generator is required.
+For each kernel choose $\chi\in F_d^\times$ with
+$J_0=\chi\mathfrak a$. Since the two orders agree away from $p$, and
+at $p$ we have $J=\mathcal O$ and $J_0=\mathcal O_0$, locally,
+
+$$
+\tag{5.21}
+
+ [J_0:J]=p,
+ \qquad \Lambda:=\chi^{-1}J\subset\mathfrak a,
+ \qquad[\mathfrak a:\Lambda]=p.
+$$
+
+There are exactly $p+1$ index-$p$ subgroups of the free rank-two group
+$\mathfrak a$, corresponding to the lines in
+$\mathfrak a/p\mathfrak a$.
+
+By (5.14),
+$hE=\chi^3\eta_0\epsilon$ for a unit
+$\epsilon\in\mathcal O_0^\times$. The units of a real quadratic order
+are $\{\pm1\}$ times an infinite cyclic group, so
+
+$$
+|\mathcal O_0^\times/(\mathcal O_0^\times)^3|=3.
+$$
+
+Choose representatives $\epsilon_1,\epsilon_2,\epsilon_3$.
+Absorbing a cube unit into $\chi$, we obtain
+
+$$
+\tag{5.22}
+
+ hE=\chi^3\eta_r,
+ \qquad \eta_r=\eta_0\epsilon_r,
+ \qquad |N(\eta_r)|=p^8n\nu^3.
+$$
+
+This changes $\Lambda$ to a unit multiple inside $\mathfrak a$,
+which is still one of the same $p+1$ subgroups. There is no additional
+unit-index or ring-class factor.
+
+We next obtain the height constraint that uses the actual rows. Since
+their linear projections have rank two, choose $i,j$ for which
+$M_{ij}=\ell_i m_j-\ell_jm_i\ne0$. Both projections lie in
+$\Gamma_{w,t}$, so $p^3\mid M_{ij}$ and $|M_{ij}|\ge p^3$.
+The exact identity
+
+$$
+\tag{5.23}
+
+ L_i(\theta)Q_j(\theta)-L_j(\theta)Q_i(\theta)=M_{ij}E
+$$
+
+and the actual factorizations in
+(5.5) imply, in either real embedding,
+
+$$
+\tag{5.24}
+
+ |E_\sigma|
+   \le\frac{6(X+Y|\theta_\sigma|)^3}{p^3}
+   \le\frac{6Y^3}{p^3}(1+|\theta_\sigma|)^3,
+ \qquad\sigma\in\{+,-\}.
+$$
+
+In particular all rational denominators in $U,V,E$ are retained in
+(5.23).
+
+Fix $r$ and $\Lambda$. The vectors
+
+$$
+v_1=\chi^{-1},\qquad v_2=\chi^{-1}\theta
+$$
+
+are a $\mathbb Z$-basis of $\Lambda$. Put
+$T_\sigma=|(v_1)_\sigma|+|(v_2)_\sigma|$.
+Since $N(J_0)=1/c$, we have
+$|N(\chi)|=1/(c\nu)$. The norm, trace and discriminant of $\theta$
+give
+
+$$
+\tag{5.25}
+
+ T_+T_-
+   =\nu\bigl(|a|+c+\max\{|b|,p\sqrt d\}\bigr)
+   \le(2+\sqrt5)\nu H=:M.
+$$
+
+Here the cross products use
+$|x|+|y|=\max\{|x+y|,|x-y|\}$ for real $x,y$.
+The embedded lattice $\Lambda$ has covolume $p\nu\sqrt d$.
+
+On the other hand, (5.22) and
+(5.24) give
+
+$$
+|(\eta_r)_\sigma|
+   =h|E_\sigma||(v_1)_\sigma|^3
+   \le\frac{6KY^3}{p^3}T_\sigma^3.
+$$
+
+Consequently
+
+$$
+\tag{5.26}
+
+ T_\sigma\ge\mathcal L_\sigma
+      :=\frac{p|(\eta_r)_\sigma|^{1/3}}{(6K)^{1/3}Y},
+ \qquad
+ \mathcal L_+\mathcal L_-
+      =\frac{p^{14/3}n^{1/3}\nu}{(6K)^{2/3}Y^2}.
+$$
+
+Thus $T_+$ lies between $\mathcal L_+$ and $M/\mathcal L_-$,
+an interval of multiplicative width
+
+$$
+\tag{5.27}
+
+ \frac{M}{\mathcal L_+\mathcal L_-}
+   \ll\frac{HY^2K^{2/3}}{p^{14/3}n^{1/3}}
+   \ll p^2.
+$$
+
+The last estimate uses $H\ll p^2$, $Y<p^2$, $K<p$, and $n\ge1$.
+If the width is less than one there are no kernels. Otherwise the
+interval is covered by $O(\log(2p))$ dyadic intervals.
+
+On an interval $S\le T_+<2S$, we have $T_-\le M/S$.
+The determinant-one real map
+
+$$
+(x_+,x_-)\longmapsto
+ \left(\frac{\sqrt M}{S}x_+,\frac{S}{\sqrt M}x_-\right)
+$$
+
+sends both basis vectors into the ball of radius $\sqrt{5M}$.
+Lemma 5.3 bounds their number by
+
+$$
+O\left(\frac{M}{p\nu\sqrt d}\right)
+       =O\left(\frac{H}{p\sqrt d}\right).
+$$
+
+The ordered basis determines $\theta=v_2/v_1$ and hence its primitive
+integer minimal polynomial, with the chosen sign $c>0$. Thus this is
+a count of kernels, even when a kernel has several actual witnesses.
+Multiplying by the dyadic intervals, the three unit classes, and the
+$p+1$ subgroups proves (5.19).
+There is no summation over $h,\iota,\varkappa$.
+

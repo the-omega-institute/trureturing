@@ -1,0 +1,25 @@
+**定义 12.1（The strict-unbalanced terminal contract）。** Keep the source configurations, transports, full input space and frame of §§1–3. Let
+
+$$
+\mathcal D_{\ne}=\{(p,q,r):p,q,r>0,\ p+q+r<1,\ p\ne q\}.
+$$
+
+For $(p,q,r)\in\mathcal D_{\ne}$ set
+
+$$
+t=p+q,\qquad B=1-t,\qquad A=B-r,\qquad
+\alpha=\sqrt{p/t},\quad \beta=\sqrt{q/t},\quad
+\eta=\sqrt{A/B},\quad \zeta=\sqrt{r/B}.
+\tag{12.1}
+$$
+
+Then $B,t,A>0$, $\alpha,\beta,\eta,\zeta>0$, $\alpha^2+\beta^2=1$, $\eta^2+\zeta^2=1$, and $\alpha\ne\beta$. Let $L_0,L_1$ be exactly the two source Kraus operators in (2.6), and put
+
+$$
+T_0=B^{-1/2}L_0,\qquad T_1=t^{-1/2}L_1,\qquad
+\Phi_{\ne}(X)=B T_0XT_0^*+tT_1XT_1^*.
+\tag{12.2}
+$$
+
+The terminal contract is the fixed unread channel power $\Phi_{\ne}^N$, obtained by composing this same reduced channel with an independently prepared fresh pure environment at every step and tracing each outgoing environment. No successor measurement, retained control, clock readout or intervention is inserted. The input is the whole $H=\mathbb C^5\otimes\mathbb C^2$ and may be coherent or entangled with any untouched finite reference.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3bde152f7389b475352fceb43c5a56d70653bbd49aae463538da604dc964dd86
+  normalized_sha256: sha256:3bde152f7389b475352fceb43c5a56d70653bbd49aae463538da604dc964dd86
+cas_ref: sha256:3bde152f7389b475352fceb43c5a56d70653bbd49aae463538da604dc964dd86
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/FactorialAsymptotic.factorial_tail_asymptotic
+    target_statement_id: sha256:dc8e2f95faa47c4da2503db73d60fcd8ddaa0f3a336ede3d48046604bbca2990
+receipts:
+  unresolved_subitems: []

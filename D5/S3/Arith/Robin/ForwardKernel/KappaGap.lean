@@ -30,7 +30,7 @@ noncomputable section
 /-- The supremum of the real parts of zeros in the open critical strip. -/
 def zeroAbscissa : ℝ := sSup (Complex.re '' {ρ : ℂ | IsNontrivialZero ρ})
 
-private lemma zero_real_parts_nonempty :
+lemma zero_real_parts_nonempty :
     (Complex.re '' {ρ : ℂ | IsNontrivialZero ρ}).Nonempty :=
   D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction.isNontrivialZero_infinite.nonempty.image _
 

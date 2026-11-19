@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:13c3963aea1e5742575a617db5c251ee6b5cb7a664cf5612cd058d6498d212e0
+  normalized_sha256: sha256:13c3963aea1e5742575a617db5c251ee6b5cb7a664cf5612cd058d6498d212e0
+cas_ref: sha256:13c3963aea1e5742575a617db5c251ee6b5cb7a664cf5612cd058d6498d212e0
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/Exchange.fixed_grid_lower
+    target_statement_id: sha256:1090afa3a44578697ec520e98849b5671d1e3c2aefab564e2ff791b35dba409f
+  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/LogisticGrid.exists_uniform_rightEndpoint_grid
+    target_statement_id: sha256:0f00d61b7e8c749c787e525fcc9aa89537825cbb3436a7d9faaaf6c6bdfcf070
+receipts:
+  unresolved_subitems: []

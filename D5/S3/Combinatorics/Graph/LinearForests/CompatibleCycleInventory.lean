@@ -39,17 +39,17 @@ variable {C : Type u} {A : Type v}
 abbrev Compatible (s d : C → Bool) :=
   {ρ : Perm C // Nonempty C ∧ ρ.IsCycleOn Set.univ ∧ ∀ x, d x = s (ρ x)}
 
-private def insertLabel [DecidableEq A] (ρ : Perm A) (y : A) : Perm (Option A) :=
+def insertLabel [DecidableEq A] (ρ : Perm A) (y : A) : Perm (Option A) :=
   swap none (some y) * ρ.optionCongr
 
-private theorem insert_none [DecidableEq A] (ρ : Perm A) (y : A) :
+theorem insert_none [DecidableEq A] (ρ : Perm A) (y : A) :
     insertLabel ρ y none = some y := by simp [insertLabel]
 
-private theorem insert_some [DecidableEq A] (ρ : Perm A) (y x : A) :
+theorem insert_some [DecidableEq A] (ρ : Perm A) (y x : A) :
     insertLabel ρ y (some x) = if ρ x = y then none else some (ρ x) := by
   by_cases h : ρ x = y <;> simp [insertLabel, h, swap_apply_def]
 
-private theorem insert_cycle_iff [Finite A] [DecidableEq A] (ρ : Perm A) (y : A) :
+theorem insert_cycle_iff [Finite A] [DecidableEq A] (ρ : Perm A) (y : A) :
     (insertLabel ρ y).IsCycleOn Set.univ ↔ ρ.IsCycleOn Set.univ := by
   let g := insertLabel ρ y
   let S : Set (Option A) := Set.range (some : A → Option A)
@@ -159,7 +159,7 @@ private def loopInsertionEquiv [Finite A] [Nonempty A] [DecidableEq A]
     have hp := (insert_compatible_iff s d c ρ y).mp (he ▸ σ.2.2.2)
     exact ⟨(⟨y, hp.1⟩, ⟨ρ, inferInstance, hc, hp.2⟩), Subtype.ext he⟩
 
-private def compatibleTransport (e : C ≃ A) (s d : C → Bool) :
+def compatibleTransport (e : C ≃ A) (s d : C → Bool) :
     Compatible s d ≃ Compatible (s ∘ e.symm) (d ∘ e.symm) :=
   Equiv.subtypeEquiv e.permCongr (fun ρ => by
     constructor
@@ -361,7 +361,7 @@ private theorem inventory_le_side [Finite C] (s d : C → Bool) (a b : Bool) :
       (⟨x.1, x.2.1⟩ : Side s a))
     (fun x y h => Subtype.ext (congrArg (fun z : Side s a => (z : C)) h))
 
-private theorem cross_inventory [Finite C] (s : C → Bool) (b : Bool) :
+theorem cross_inventory [Finite C] (s : C → Bool) (b : Bool) :
     inventory s (fun x => !(s x)) b (!b) = Nat.card (Side s b) := by
   apply Nat.card_congr
   exact Equiv.subtypeEquivRight (fun x => by cases hs : s x <;> cases b <;> simp [hs])
@@ -610,7 +610,7 @@ private theorem endpoint_balance [Finite V] (E : V → V → Prop) (k : V → Bo
   change Nat.card {x : V // k x = false} = Nat.card {x : V // k x = true} at hb
   omega
 
-private theorem inventory_balanced [Finite C] (s d : C → Bool)
+theorem inventory_balanced [Finite C] (s d : C → Bool)
     (h : Nat.card (Side s true) = Nat.card (Side d true)) :
     inventory s d false true = inventory s d true false := by
   have hs := side_card s d true

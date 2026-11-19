@@ -1,0 +1,10 @@
+## 2. The gate-state-machine interface must retain amplitude phases
+
+Let S be a finite nonempty set with orthonormal basis {|s>}. A deterministic map f:S->S has a same-register unitary realization U|s>=|f(s)> exactly when f is bijective. Necessity follows by preservation of inner products; sufficiency follows because a permutation of an orthonormal basis is unitary.
+
+For a general finite map f:S->T, reversibility can instead retain a residual label:
+
+$$V|s\rangle=|f(s)\rangle|g_s\rangle.$$
+
+Within each fiber of f the normalized residual vectors must be pairwise orthogonal. Thus their Hilbert space needs dimension at least max_t |f^{-1}(t)|. This is attained by numbering each fiber in a common residual basis. It constructs an isometry, extendible to a unitary after choosing sufficiently large padded registers. An efficient numbering algorithm, padding rule and reset procedure are further requirements. Keeping the original input as work is another standard construction, whose interference cost is examined in Section 6.
+

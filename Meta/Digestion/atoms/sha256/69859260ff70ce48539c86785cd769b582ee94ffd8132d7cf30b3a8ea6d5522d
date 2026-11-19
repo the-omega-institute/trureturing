@@ -1,0 +1,96 @@
+**Lemma 3.3 (Physical height and fixed-kernel support).**
+
+For $j\in\{3,4\}$ the physical kernel has
+
+$$
+|a|\ll X^2A/p^{3+j},\quad |b|\ll A^2/p^{3+j},
+ \quad |c|\ll Y^2A/p^{3+j}.
+$$
+
+Each fixed primitive physical kernel arises at $O(A/p^2)$ distinct
+actual integer middles in the literal box. This counts middles, not
+residue classes, and is uniform in the choices of actual triples.
+
+*Proof.*
+
+If the coordinate cofactor vector is $m(a_0,b_0,c_0)$, then its physical
+counterpart is $\det(M)T(M)$ times that vector, hence has content
+$p^{3+j}|m|$. Expanding the physical cofactors gives bounds
+$54X^2A,108A^2,54Y^2A$, proving the heights.
+For the middle quadratic
+
+$$
+F(W,T)=aT^2-bWT+cW^2
+$$
+
+finite Taylor expansion at $s/r$, followed by $t/w-s/r\in p^3\mathbb Z_p$,
+gives exactly
+
+$$
+v_pF(w,t)=6-j,\qquad
+ v_p(2a(t/w)-b)=4-j\quad\text{in the valuation-two stratum}.
+$$
+
+In particular $F(w,t)\ne0$ as an integer. For $j=4$ the discriminant
+is a $p$-unit: the unit slope $t/w$ lies in at most two simple root
+classes modulo $p^2$. For unramified $j=3$, the roots in $\mathbb Z_p$ differ by valuation one,
+and $v_pF(w,t)=3$ forces root distances one and two; again there are
+two slope classes modulo $p^2$. For ramified $j=3$, the transport
+identities give $b-2\rho_0a\in p^2\mathbb Z_p$ and
+$v(c-\rho_0b+\rho_0^2a)=3$. Replacing $\rho_0$ by $t/w$ changes the
+last value only by $p^5\mathbb Z_p$, so $v_pF(w,t)=3$ here as well.
+Completing the square,
+
+$$
+\tag{3.6}
+ F(W,T)=c(W-bT/(2c))^2-p^2dT^2/(4c).
+$$
+
+Since $t$ is a unit and the second term has valuation three, the
+integer valuation of $w-bt/(2c)$ must be at least two. Thus there is
+one class $W\equiv(b/(2c))T\pmod{p^2}$. Every vector of this lattice
+has $F$ divisible by $p^3$ by the same identity, and $d$ cannot be a
+rational square.
+For each of these at most two classes $\eta$ all these middles belong to
+
+$$
+\Lambda_\eta=\{(W,T)\in\mathbb Z^2:T\equiv\eta W\pmod{p^2}\},
+ \qquad \det\Lambda_\eta=p^2,
+$$
+
+and $F(\Lambda_\eta)\subset p^{6-j}\mathbb Z$. In the ramified case this was
+just proved by completing the square. In the unramified repeated-root case
+this follows by expanding
+$F(m,\eta m+p^2n)=m^2f(\eta)+p^2mnf'(\eta)+p^4an^2$.
+
+We use the elementary quantized quadratic count
+
+$$
+\tag{3.7}
+ \#\{v\in\Lambda:|v|\le R,\ F(v)\ne0\}
+ \le1+2R\sqrt{M/q}+6R^2/D,
+$$
+
+when $\det\Lambda=D$, $F(\Lambda)\subset q\mathbb Z$ and
+$|F(v)|\le M|v|^2$. Take a shortest primitive vector $u$ of length
+$\lambda\le R$. The noncentral parallel lattice lines are spaced
+$D/\lambda$ apart and contribute at most
+$(2R\lambda/D)(1+2R/\lambda)\le6R^2/D$.
+If $F(u)=0$ the central line contributes no counted point.
+Otherwise $q\le |F(u)|\le M\lambda^2$, and that line contributes at
+most $1+2R\sqrt{M/q}$. Empty sections are immediate.
+
+Apply the determinant-one weighting
+$(W,T)\mapsto(W\sqrt{Y/X},T\sqrt{X/Y})$.
+The box lies in a disk of radius $\sqrt{2A}$ and the form bound holds
+with $M\ll A^2/p^{3+j}$. Summing (3.7) over the
+two lattices gives
+
+$$
+O(1+A/p^2+A^{3/2}/p^{9/2})=O(A/p^2).
+$$
+
+Here $A\ge p^3$ and $A\ll p^\alpha$, $\alpha<4$, absorb the boundary
+term for large $p$. The argument includes rational null directions
+and therefore does not delete a split branch.
+

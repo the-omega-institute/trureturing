@@ -1,0 +1,109 @@
+**Proposition 5.6 (Both signs of the discriminant).**
+
+Let $N_+$ and $N_-$ be the numbers of kernels admitting the actual
+generation above with respectively $d>0$ and $d<0$. For every
+$\delta>0$,
+
+$$
+\tag{5.31}
+
+ \begin{aligned}
+ N_-&\ll_\delta H_3\sqrt{D_{\max}}K^{1+\delta},\\
+ N_+&\ll_\delta H_3\sqrt{D_{\max}}K^{1+\delta}\log(2p).
+ \end{aligned}
+$$
+
+In particular, for every $\varepsilon>0$,
+$N_++N_-\ll_\varepsilon p^\varepsilon H_3\sqrt{D_{\max}}K$.
+
+*Proof.*
+
+For an order discriminant $d$, put
+$t_3(d)=|\operatorname{Pic}(\mathcal O_d)[3]|$.
+For fixed $\mathfrak p,\mathfrak A$, equation
+(5.15) admits at most $t_3(d)$ classes $[J_0]$.
+Lemma 5.5 gives, uniformly in $d$,
+
+$$
+\tag{5.32}
+
+ \#\{\mathfrak A:N(\mathfrak A)\le K\}
+       \ll_\delta K^{1+\delta}.
+$$
+
+The count includes every integral invertible ideal, even at
+primes in the remaining conductor. There are two choices of
+$\mathfrak p$.
+
+For $d>0$, Proposition 5.4 now gives
+
+$$
+\tag{5.33}
+
+ N_+\ll_\delta H_3K^{1+\delta}\log(2p)
+          \sum_{0<d\le D_{\max}}\frac{t_3(d)}{\sqrt d},
+$$
+
+where the sum is over nonsquare real quadratic-order discriminants.
+
+For $d<0$, a proper positive definite class of discriminant $\Delta$
+has $O(H_3/\sqrt{|\Delta|})$ forms with coefficients bounded by $H_3$.
+Indeed, realize it as an oriented complex ideal lattice of covolume
+$\sqrt{|\Delta|}/2$; such forms arise from its bases with both vectors
+of length at most $\sqrt{H_3}$, and apply
+Lemma 5.3. Multiplication by $-1$
+handles negative definite forms.
+The extension map from $\operatorname{Pic}(\mathcal O_{p^2d})$ to
+$\operatorname{Pic}(\mathcal O_d)$ has fibers of size at most $p-1$:
+the order exact sequence has local term
+
+$$
+(\mathcal O_d/p\mathcal O_d)^*/(\mathbb Z/p\mathbb Z)^*,
+$$
+
+of order $p-1$ because $p$ splits. Combining this with
+(5.32) and
+(5.15) gives
+
+$$
+\tag{5.34}
+
+ N_-\ll_\delta H_3K^{1+\delta}
+          \sum_{-D_{\max}\le d<0}\frac{t_3(d)}{\sqrt{|d|}}.
+$$
+
+The use of the largest height $H_3$ is essential here; the analogous
+bound with $H_2$ does not hold for arbitrary anisotropic boxes.
+
+Bhargava–Varma [Bhargava–Varma, Theorem 2(a),(b)](#reference-bhargavavarma2016) prove the
+finite mean values
+
+$$
+1+\frac{\zeta(2)}{\zeta(3)}\quad(d<0),\qquad
+ 1+\frac{\zeta(2)}{3\zeta(3)}\quad(d>0)
+$$
+
+for $t_3(d)$ over all orders in imaginary and real quadratic fields,
+respectively, ordered by absolute discriminant. Their class group is
+the group of invertible fractional ideals modulo principal ideals,
+so it is the ordinary $\operatorname{Pic}(\mathcal O_d)$ used here.
+In particular, for either sign,
+
+$$
+\tag{5.35}
+
+ \sum_{0<\pm d\le D}t_3(d)\ll D,
+ \qquad
+ \sum_{0<\pm d\le D}\frac{t_3(d)}{\sqrt{|d|}}\ll\sqrt D,
+$$
+
+the second estimate following by partial summation. These are sums
+over all quadratic orders, including nonmaximal orders. We simply drop
+the restrictions $p\nmid d$ and splitting at $p$; no average with
+varying local specifications is required. Inserting
+(5.35) into
+(5.33) and
+(5.34) proves (5.31).
+For the final estimate take $\delta=\varepsilon/2$ and use $K<p$
+to bound $K^\delta\log(2p)\ll_\varepsilon p^\varepsilon$.
+

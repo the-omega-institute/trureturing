@@ -1,0 +1,41 @@
+**命题 3.8（同一通道的旗标、输出与相干关系；仅支撑加 $S$ 测试的限制）。** 对整个极大面，用同一个 $t$，在每个复矩阵上有
+
+$$
+\begin{aligned}
+\mathcal T_{t,0}(X)&=PXP+t(PXS+SXP)+tSXS,\\
+\mathcal T_{t,1}(X)&=QXQ+(1-t)(QXS+SXQ)+(1-t)SXS.
+\end{aligned}
+\tag{3.23}
+$$
+
+其效应为 $P+tS$、$Q+(1-t)S$，在 $S$ 上的完整带旗标输出为 $(tS,(1-t)S)$，故
+
+$$
+e_S(\mathcal T_t):=\|(\widehat{\mathcal J}-\mathcal T_t)(S)\|_1
+=2|t-1/2|.
+\tag{3.24}
+$$
+
+对正输入，每旗标的量子输出均在 $P_j+S$ 中；在这些子空间之外的输出泄漏为零。两旗标的目标相干系数均为 $q$，而极大面上分别为 $t$ 与 $1-t$；它们之和为一，不能同时等于 $q$，因为 $2q=\sqrt2>1$。特别地，精确的 $S$ 输出迫使 $t=1/2$，此时两个相干系数都是 $1/2$。
+
+更精确地，对任意通道记
+
+$$
+b(\mathcal T)=2\left[1-\frac{\mathcal G(\mathcal T)}{N^2}\right],
+\qquad B_S(\mathcal T)=\max\{b(\mathcal T),e_S(\mathcal T)\}.
+\tag{3.25}
+$$
+
+这里函数 $b(\mathcal T)$ 与 §4 的控制标量 $b$ 不同。则
+
+$$
+\min_{\mathcal T\in\mathfrak S_{\rm fin}}B_S(\mathcal T)
+=\min_{\mathcal T\in\mathfrak S_{\rm as}}B_S(\mathcal T)
+=\min_{\mathcal T\in\mathfrak S_{\rm cl}}B_S(\mathcal T)=L.
+\tag{3.26}
+$$
+
+证明。展开两个端点的 Kraus 操作并作凸组合即得 (3.23)；取迹和代入 $S$ 得效应与 (3.24)。这些 Kraus 的像均在相应 $P_j+S$，给出输出支撑结论；相干系数的比较也是同一展开的直接结果。所有这些约束来自同一仪器，未把不同实现的最优边缘拼合。
+
+定理 3.4 的二值支撑测量论证其实给出 $\|\widehat{\mathcal J}-\mathcal T\|_\diamond\ge b(\mathcal T)$；定理 3.3 又使实际类上 $b\ge L$。所以 $B_S\ge L$。但实际公平混合 $\mathcal T_{1/2}$ 满足 $\mathcal G=65$，并且 $\mathcal T_{1/2}(S)=\widehat{\mathcal J}(S)$，连同旗标及量子输出都精确相等。于是同一个有限深度协议有 $b=L$、$e_S=0$，从而 $B_S=L$。这证明三个最小值及有限取到。这一反例只限制指定的“两个测试取最大值”证书，不排除利用其他信息的联合论证；它同时说明命题 3.5 的一个端点有 $S$ 误差，不能替代整个极大面的分析。$\square$
+

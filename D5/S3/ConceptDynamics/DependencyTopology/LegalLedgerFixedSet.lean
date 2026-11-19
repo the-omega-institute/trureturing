@@ -199,7 +199,7 @@ theorem addWithCertificate_admissible (p : P) (C : Certificate k p) :
     exact ⟨fun _ h => h, fun _ _ h => h, fun _ _ _ => rfl⟩
   · simpa only [addWithCertificate, if_neg hp] using appendCertificate_extends L C.val
 
-private theorem frozen_proved (L : LegalLedger k) {p : P} (hp : p ∈ Frozen L) :
+theorem frozen_proved (L : LegalLedger k) {p : P} (hp : p ∈ Frozen L) :
     Proved k p :=
   ⟨L.core.witness ⟨p, hp⟩, L.core.property.1 ⟨p, hp⟩, L.core.property.2.1 ⟨p, hp⟩⟩
 
@@ -226,3 +226,14 @@ theorem fixed_eq_frozen_union_unprovable (laws : SourceLaws k) (L : LegalLedger 
         fun h => (hu (frozen_proved (T L) h)).elim⟩
 
 end D5.S3.ConceptDynamics.DependencyTopology.LegalLedgerFixedSet
+
+namespace D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed
+
+open LegalLedgerFixedSet
+
+/-- The exact finite node sets admitting some accepted, closed, acyclic witness selection. -/
+def supportFamily {P Proof Ax Model : Type*} (k : KernelData P Proof Ax Model) :
+    Set (Set P) :=
+  {S | ∃ C : CertifiedNodes k, (↑C.nodes : Set P) = S}
+
+end D5.S3.ConceptDynamics.DependencyTopology.SupportFamilyNotIntersectionClosed

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:21e57df70ea95f4e4c5d8341ea1948a1efc9a466beb8ca0ed3aa19f2eabafc14
+  normalized_sha256: sha256:21e57df70ea95f4e4c5d8341ea1948a1efc9a466beb8ca0ed3aa19f2eabafc14
+cas_ref: sha256:21e57df70ea95f4e4c5d8341ea1948a1efc9a466beb8ca0ed3aa19f2eabafc14
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic reference within the references list, specifying source provenance and the use of cited literature. It states no independent mathematical proposition; this receipt asserts no Lean coverage or Shor probability result.
+    previous_atom_id: 5881fdd6bfb32ace3800d494849d9457076147450e1f16efcac9d6dc74f2e53a
+    next_atom_id: ef01a37c8d270d7a56360e72e1fe38823fc5a7f9dfed3fb657de2728cfc778c2

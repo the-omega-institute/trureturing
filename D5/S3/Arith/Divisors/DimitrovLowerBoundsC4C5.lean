@@ -12,15 +12,15 @@ escape_witness: none
 proof_shape: every theorem below is bind-only after inlining all same-delivery helpers.
   h_mono: bind-only; consumer: ordered_reciprocal_bound.
   ordered_reciprocal_bound: bind-only; consumers: prove4, prove5.
-  psi_ge: bind-only; consumers: prove4, prove5.
-  sigma_ge_psi: bind-only; consumers: prove4, prove5.
-  mixed_bound: bind-only; consumers: prove4, prove5.
+  psi_ge: bind-only; consumers: prove4, prove5, DimitrovNesbittC8.result.
+  sigma_ge_psi: bind-only; consumers: prove4, prove5, DimitrovNesbittC8.result.
+  mixed_bound: bind-only; consumers: prove4, prove5, DimitrovNesbittC8.result.
   prove4: bind-only; consumer: result4.
   prove5: bind-only; consumer: result5.
   result4: bind-only; consumer: none; external endpoint: #30196.
   result5: bind-only; consumer: none; external endpoint: #30197.
 claim4 and claim5 are source definitions consumed by result4 and result5 respectively.
-The private auxiliaries are retained only as consumed proof organization, not as escape witnesses.
+The auxiliaries are retained only as consumed proof organization, not as escape witnesses.
 The source definitions and both claims preserve the complete original quantifier range and pointwise-power convention.
 -/
 import D5.S3.Arith.Divisors.OeisA344695GcdSigmaPsiPrimes
@@ -123,7 +123,7 @@ private lemma ordered_reciprocal_bound {X Y Z R : ℝ}
   have hRZ : R ≤ Z / X := le_trans hRle (div_le_div_of_nonneg_right hYZ hX.le)
   simpa only [one_div] using (three_term_ratio_inequality hX hY hZ hR hRle hRZ)
 
-private lemma psi_ge {n : ℕ} (hn : 2 ≤ n) : n + 1 ≤ psi n := by
+lemma psi_ge {n : ℕ} (hn : 2 ≤ n) : n + 1 ≤ psi n := by
   classical
   have hn0 : n ≠ 0 := by omega
   let p := n.minFac
@@ -161,7 +161,7 @@ private lemma psi_ge {n : ℕ} (hn : 2 ≤ n) : n + 1 ≤ psi n := by
   change n + 1 ≤ (n / (∏ q ∈ n.primeFactors, q)) * (∏ q ∈ n.primeFactors, (q + 1))
   exact Nat.succ_le_of_lt hmul_lt'
 
-private lemma sigma_ge_psi {n : ℕ} (hn : 2 ≤ n) : psi n ≤ ArithmeticFunction.sigma 1 n := by
+lemma sigma_ge_psi {n : ℕ} (hn : 2 ≤ n) : psi n ≤ ArithmeticFunction.sigma 1 n := by
   classical
   have hn0 : n ≠ 0 := by omega
   rw [psi_prod hn0, ArithmeticFunction.sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul (k := 1) hn0]
@@ -178,7 +178,7 @@ private lemma sigma_ge_psi {n : ℕ} (hn : 2 ≤ n) : psi n ≤ ArithmeticFuncti
   have hpnonneg : 0 ≤ p ^ (n.factorization p - 1) := by positivity
   nlinarith [hpp.two_le]
 
-private lemma mixed_bound {a b c q : ℝ} {m : ℕ}
+lemma mixed_bound {a b c q : ℝ} {m : ℕ}
     (ha : 0 < a) (hab : a ≤ b) (hbc : b ≤ c) (hm : 1 ≤ m)
     (hq : 1 ≤ q) (hql : q ≤ b / a) :
     let A := a ^ m * (b + c)

@@ -10,6 +10,7 @@ import D5.S3.Quantum.Dynamics.SpinCoupledEvenHypercubeGroverFixedPoint
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
+import D5.S3.Quantum.Information.PartialTrace.Isometries
 
 /-! The real orthogonal Pauli action used by the spin-four witness channel. -/
 
@@ -246,52 +247,6 @@ def dickeIsometry (n : ℕ) : Matrix (Fin n → Fin 2) (Fin (n + 1)) ℂ :=
   fun x r => if (∑ k, (x k).val) = r.val then
     (Real.sqrt (n.choose r.val : ℝ) : ℂ)⁻¹ else 0
 
-set_option backward.isDefEq.respectTransparency false in
-theorem partialTrace_isometries {a b i j : Type*}
-    [Fintype a] [Fintype b] [Fintype i] [Fintype j]
-    [DecidableEq j] (v : Matrix a i ℂ) (w : Matrix b j ℂ)
-    (hw : wᴴ * w = 1) (z : Matrix (i × j) (i × j) ℂ) :
-    partialTraceRight (Matrix.kronecker v w * z * (Matrix.kronecker v w)ᴴ) =
-      v * partialTraceRight z * vᴴ := by
-  have hb (k l : j) : (∑ d : b, w d k * star (w d l)) = if k = l then 1 else 0 := by
-    have h := congrFun (congrFun hw l) k
-    simpa [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
-      mul_comm, eq_comm] using h
-  ext x y
-  dsimp only [Matrix.kronecker, Matrix.kroneckerMap]
-  simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Matrix.of_apply, Fintype.sum_prod_type, star_mul]
-  simp_rw [Finset.sum_mul]
-  conv_lhs =>
-    rw [Finset.sum_comm]
-    arg 2
-    ext k
-    rw [Finset.sum_comm]
-    arg 2
-    ext l
-    rw [Finset.sum_comm]
-    arg 2
-    ext m
-    rw [Finset.sum_comm]
-  have he (k m : i) (l n : j) :
-      (∑ d : b, v x m * w d n * z (m, n) (k, l) *
-        (star (w d l) * star (v y k))) =
-      v x m * z (m, l) (k, l) * star (v y k) * (if n = l then 1 else 0) := by
-    calc
-      _ = (v x m * z (m, n) (k, l) * star (v y k)) *
-          (∑ d : b, w d n * star (w d l)) := by
-        rw [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro d _
-        ring
-      _ = _ := by rw [hb]; split_ifs with h <;> simp_all
-  simp_rw [he]
-  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
-    ite_true]
-  simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
-  apply Finset.sum_congr rfl
-  intro k _
-  rw [Finset.sum_comm]
 
 def dickeCoefficient (n w r : ℕ) : ℂ :=
   if w = r then (Real.sqrt (n.choose r : ℝ) : ℂ)⁻¹ else 0

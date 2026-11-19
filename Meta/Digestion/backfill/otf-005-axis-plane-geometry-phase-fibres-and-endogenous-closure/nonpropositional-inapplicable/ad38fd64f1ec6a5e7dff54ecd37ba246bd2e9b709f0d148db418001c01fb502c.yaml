@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad38fd64f1ec6a5e7dff54ecd37ba246bd2e9b709f0d148db418001c01fb502c
+  normalized_sha256: sha256:ad38fd64f1ec6a5e7dff54ecd37ba246bd2e9b709f0d148db418001c01fb502c
+cas_ref: sha256:ad38fd64f1ec6a5e7dff54ecd37ba246bd2e9b709f0d148db418001c01fb502c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Interpretive paragraph, not a mathematical claim: it contrasts the end-point algebra summary of a closed loop with the full transport, distinguishing an actually performed internal control step from the derived projection point C = (a.b)a. Its mathematical content is stated and covered in the preceding claim-and-proof child.'
+    previous_atom_id: e73579864aacfa66789326375195543d6c1593cf406dd87ec2649f5077d64d43
+    next_atom_id: c9714b4f338d263a1cb73d32ba0c82c8273b32150aca640c24452d57038e667c

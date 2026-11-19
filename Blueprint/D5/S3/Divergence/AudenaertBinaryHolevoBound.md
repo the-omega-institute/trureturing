@@ -16,9 +16,22 @@ $$\forall (n: \mathbb{N}), \forall (sigma: \operatorname{Matrix}\left(\operatorn
 
 Audenaert, Quantum Skew Divergence, Theorem 14, bounds Holevo information by the classical mixing entropy times the maximal trace distance. For an equiprobable binary ensemble the mixing entropy is one bit. The matrices may be singular. The matrix-log resolvent integral gives the derivative along a positive affine path. Positivity of that derivative and its trace pairing bound the skew divergence by trace distance times the negative logarithm of the mixing weight. Specializing the weight to one half gives the binary inequality for strictly positive states. Adding epsilon times the identity and dividing by one plus n epsilon preserves trace one, and continuity of x log x extends the estimate to singular states.
 
+**Theorem 1.2 (Real scaling of the logarithmic derivative direction).**
+
+Lean statement: `D5/S3/Divergence/AudenaertBinaryHolevoBound.logDeriv_smul`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/AudenaertBinaryHolevoBound.logDeriv_smul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, all complex matrices m and X on Fin n and every real c, logDeriv(m,c times X) equals c times logDeriv(m,X). Here logDeriv is LogDerivTrace.logDeriv, the actual Bochner integral of the two-resolvent sandwich. The equality uses the totalized Bochner integral and does not assume positive definiteness, integrability, a sign for c or a nonzero dimension. This scaling identity serves the differential skew bound and the local second-order expansion in UmegakiFaithfulLowerRatio. The repository assembly is not a new result attributed to Audenaert's paper.
+
 ## References
 
 - Truth anchor: `D5/S3/Divergence/AudenaertBinaryHolevoBound.binaryHolevoBound`
+- Truth anchor: `D5/S3/Divergence/AudenaertBinaryHolevoBound.logDeriv_smul`
 - Dependency: [D5/S3/ArithSums/TwoPointSlabSupport](../ArithSums/TwoPointSlabSupport.md)
 - Dependency: [D5/S3/Divergence/LogDerivTrace](LogDerivTrace.md)
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Quantum/Entanglement/ConicalDesignConcurrenceComparability.md)

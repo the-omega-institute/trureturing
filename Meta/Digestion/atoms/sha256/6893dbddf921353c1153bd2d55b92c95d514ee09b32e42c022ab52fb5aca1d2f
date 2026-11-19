@@ -1,0 +1,14 @@
+**定义 132.3（每点小正比较带的共同原纯零点）。** 在同一原域定义局部条件
+
+$$
+\begin{aligned}
+\mathsf L:\quad
+&\forall p\in P\ \exists\varepsilon_p\in(0,1)\ \forall q\in P:\\
+&0<T_p(q)<\varepsilon_p\quad\Longrightarrow\quad
+\exists r\in P:\ T_p(r)=T_q(r)=0.
+\end{aligned}
+\tag{X132.3}
+$$
+
+两个零值必须由同一个原纯点 $r$ 实现；$\varepsilon_p$ 可依赖 $p$，没有全域统一阈值或连续选择的要求。比较带用 $T_p(q)$ 定义，未改成 $T_q(p)$。
+

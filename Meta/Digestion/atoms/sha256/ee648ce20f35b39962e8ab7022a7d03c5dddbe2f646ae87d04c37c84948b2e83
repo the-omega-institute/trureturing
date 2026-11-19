@@ -1,0 +1,26 @@
+**Assumption 40.4 (acquired port and readout contract).** The mathematical
+record results refer to the actual $h_n$ just defined. To apply them to
+a geometric acquisition, suppose an actually bound handle refers to one
+pointed selected chain, with the orientation, calibration and marker
+comparison (IV.125). Its two cursors start at that same anchor and obey
+the side counts; the handle, cursors and replies remain bound to that
+source throughout the run. The controller has the specified query
+rights and progress, and preserves every actual action, reply and stop
+flag. For results that read $h_n$, access to that complete record and
+its finite postprocessing is supplied. A public attempt clock may
+select $n=4$ without changing the native stop flag. The seed, controller,
+clock, references, records and source-independent scratch carry no
+additional $e$-dependent advice. Random seeds, if used, have a law
+independent of $e$.
+
+This is a mathematical port premise, not an assertion of physical
+installation. There is no reset, extra sample, independent second arm,
+postselection, free phase/origin read or new source output after
+absorption. Evaluating (IV.122) as syntax is a finite function of
+recovered atoms. Executing those operations on an original native tree
+additionally requires that actual tree reference, its known operand
+addresses or supplied scaffold, current edit rights, lawful phase,
+backing, writer, owed-action and return contract. The original AA/AAII
+contracts and all the earlier native-history fibres in this volume
+retain those premises. The selected-gap port does not provide them.
+

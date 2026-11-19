@@ -862,7 +862,7 @@ raise SystemExit(37)
         producer = write('candidate.dll', 'fixture candidate producer')
         report = write('public/report.json', 'previous report')
         self.phases.write_text('{"phase":"stale"}\n')
-        environment = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED='1',
+        environment = dict(os.environ, FULL_BUILD="1", STRATALINT_INSPECTOR_SUPERVISED='1',
             STRATALINT_LEAN_BUILD_TARGETS='[]', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             LAKE_BIN=str(lake))
         result = subprocess.run(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
@@ -1005,7 +1005,7 @@ class EntryPointTests(unittest.TestCase):
                 if phase == 'inputs':
                     (root / 'lean-report-inputs.json').unlink()
                 record = root / 'calls'
-                env = dict(os.environ, PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'],
+                env = dict(os.environ, FULL_BUILD="1", PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'],
                     CALLS=str(record), LAKE_BIN=str(root / 'bin/lake'), STRATALINT_INSPECTOR_SUPERVISED='1',
                     STRATALINT_LEAN_BUILD_TARGETS='[]',
                     STRATALINT_FIB_REGRESSIONS_SELECTED='true' if phase == 'fib-regressions' else 'false',

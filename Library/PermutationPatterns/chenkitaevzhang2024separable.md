@@ -15,6 +15,7 @@ strata_touched:
   - D5/S1/Words/Patterns/Separable/RecordTransport
   - D5/S1/Words/Patterns/Separable/RecordFirstDecline
   - D5/S1/Words/Patterns/Separable/RecordNewtonPositivity
+  - D5/S1/Words/Patterns/Separable/RecordAllIndex
 license: citation-only
 triage: anchor
 ---
@@ -63,7 +64,8 @@ a_{X,t}(n,k)&\le a_{X,t}(n,3).
 $$
 
 A maximum at three is interpreted weakly; uniqueness is not needed for these
-inequalities. All four full assertions remain open in the project.
+inequalities. `RecordAllIndex.actual_ckz_conjecture_two` proves all four
+full assertions on the actual carrier.
 
 The [strict-record mathematical source](../../docs/develop/theory/SEPARABLE_SIGNED_RECORD_WEIGHTS.md)
 states the known block-sum identities for arbitrary actual permutations,
@@ -151,17 +153,38 @@ $E_2=(1+u)^2(1-2u-2u^2+4u^3)$, propagate by that recurrence to every
 remaining kernel. The reduction uses the actual scalar identity
 $t(1+q)=q(1-q)$; there is no parameter cutoff or assumed sign premise.
 
-The declining inequalities at arbitrary $k\ge4$ and the global maximum
-at three remain open. The missing inference is the normalized actual
-record-coefficient formula and its Newton transform connecting each
-actual difference to these nonnegative kernels. The unbounded sign law
-alone supplies neither correspondence.
+[`RecordAllIndex.actual_ckz_conjecture_two`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordAllIndex.md)
+proves the full weak-peak statement for every $n\ge5$ and natural record
+index. The proof derives the actual weighted quadratic using the
+least-cut record fibers, rather than assuming a generating-function
+correspondence. With $H=1+u$ and
+$B_j(u)=\sum_{r=0}^j\binom jrT_r(u)$, its exact normalization is
+
+$$
+J_{j+2}(t)=t^{j+2}H(q(t))^2B_j(q(t)),\qquad
+J_k-J_{k+1}=t^k\sum_{r=0}^{k-3}\binom{k-3}{r}G_r(q(t))\quad(k\ge3).
+$$
+
+The coefficient identity `J_coeff`, the Newton identity
+`actual_adjacent_difference`, and the scalar relation
+$t(1+q)=q(1-q)$ supply the actual coefficient/sign bridge. Taking each
+length coefficient gives `actual_rmax_decline` for every natural length
+and every $k\ge3$. The existing exact transports and rising theorem then
+give the four adjacent laws and global weak maximum at three, including
+zero tails. There is no length cutoff, shifted statistic, surrogate
+permutation class, uniqueness claim or assumed sign premise. Section 8
+of the strict-record mathematical source states the corresponding
+normalization and binomial-kernel identities.
+
 The [problem dossier](../../Problems/chenkitaevzhang-2024-separable-record-peak-three.md)
-keeps the complete target distinct from them. Full CKZ Conjecture 2 and C15
-remain OPEN; no partial theorem is a full external resolution, novelty or
-priority claim. The relevant scalar cut and cardinality results are in
-`ActualCardinality`, `MinimumCutKernel`, `CutFactorization` and `ProperCut`;
-descent statistics in Fu–Lin–Zeng are a different question.
+records the complete target and its limits. Conjecture 15 of
+arXiv:2608.27583v1 and Fu–Lin–Zeng's descent question are separate and
+remain open. Reg/enrollment is owner-paused under
+[issue 12664](https://github.com/the-omega-institute/trureturing/issues/12664);
+the public theorem audit is unfinished under the linked-issue exception,
+and no `declared_validated` status is asserted. The typed Scribe resolution
+identifies the mathematical source-v1 target and supplies no novelty
+or priority evidence.
 
 The supplied bounded literature screen reports examination of the primary
 and manuscript bodies, five known citing bodies, and related record, descent,
@@ -175,5 +198,6 @@ journal-formatted manuscript for DOI 10.1016/j.dam.2025.09.017; and
 Han–Kitaev–Zhang, arXiv:2408.12865v1. The screen found no equivalent proof
 or refutation of Conjecture 2 within that corpus. This scope does not establish
 global priority, exhaustive citation coverage, exclusive ownership, or the
-unavailable journal body's contents. No originality or open-problem resolution
-is attributed to these partial conclusions.
+unavailable journal body's contents. The mathematical theorem settles the
+stated source-v1 weak inequalities; it supplies no worldwide priority,
+exhaustive novelty or newly solved-problem KPI claim.

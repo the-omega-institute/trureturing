@@ -267,6 +267,8 @@ structure Scope where
   selection : SourceSelection
   telescope : Array SourceBinder
   coordinates : Array SourceBinder
+  /-- Original lexical indices of the complete dependency-closed parameter packing. -/
+  parameterSlots : Array Nat := #[]
   readouts : Array ReadoutScope
 
 private partial def dictionary (type : Expr) : M Bool := do
@@ -343,13 +345,48 @@ def resolve (info : ConstantInfo) (selection : SourceSelection)
     (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
   let scope ← resolveOriginal info selection universeArguments
   let source := scope.expanded
-  let slots := selection.coordinates
-  if slots.size > 64 || selection.readouts.isEmpty || selection.readouts.size > 64 then
+  let selectedSlots := selection.coordinates
+  let mut last : Option Nat := none
+  for i in selectedSlots do
+    debit
+    unless last.all (· < i) do fail "unclassified_form:source.coordinate_order"
+    last := some i
+  if selectedSlots.size > 64 || selection.readouts.isEmpty || selection.readouts.size > 64 then
     fail "unclassified_form:source.selection_size"
   if (selection.readouts.map (·.path)).toList.eraseDups.length != selection.readouts.size then
     fail "unclassified_form:source.duplicate_occurrence"
   let occurrences ← selection.readouts.mapM fun selected => atPath source selected.path
   let coordinateContext := occurrences[0]!.1
+  -- Capture only dictionaries actually required by the selected source terms.
+  -- They remain fixed background at each full parameter; clients cannot select
+  -- dictionaries as independently variable coordinates.
+  let mut required := selectedSlots
+  for (context, observation) in occurrences do
+    let expanded ← expandLets context context.size observation
+    for i in [:context.size] do
+      debit
+      if expanded.hasLooseBVar (context.size - 1 - i) && !required.contains i then
+        required := required.push i
+  for i in (Array.range coordinateContext.size).reverse do
+    if required.contains i then
+      let earlier := coordinateContext.extract 0 i
+      let domain ← expandLets earlier earlier.size coordinateContext[i]!.domain
+      for j in [:i] do
+        debit
+        if domain.hasLooseBVar (i - 1 - j) && !required.contains j then
+          required := required.push j
+  let mut captured := #[]
+  for i in required do
+    debit
+    if !selectedSlots.contains i && i < coordinateContext.size then
+      let b := coordinateContext[i]!
+      if b.value.isNone && b.info == .instImplicit then
+        let eligible ← inContext (coordinateContext.extract 0 i) fun locals => do
+          let domain := b.domain.instantiateRev locals
+          return !(← isProp domain) && (← dictionary domain)
+        if eligible then captured := captured.push i
+  let slots := (selectedSlots ++ captured).qsort (· < ·)
+  if slots.size > 64 then fail "unclassified_form:source.selection_size"
   let mut previous : Option Nat := none
   let mut coordinates := #[]
   for i in slots do
@@ -364,9 +401,10 @@ def resolve (info : ConstantInfo) (selection : SourceSelection)
         fail "unclassified_form:source.captured_coordinate"
     inContext (coordinateContext.extract 0 i) fun locals => do
       let domain := b.domain.instantiateRev locals
-      if b.info == .instImplicit || domain == mkSort .zero ||
-          (← isProp domain) || (← dictionary domain) then
-        fail "unclassified_form:source.dictionary_or_proof_coordinate"
+      if selectedSlots.contains i then
+        if b.info == .instImplicit || domain == mkSort .zero ||
+            (← isProp domain) || (← dictionary domain) then
+          fail "unclassified_form:source.dictionary_or_proof_coordinate"
     if b.value.isSome then fail "unclassified_form:source.let_coordinate"
     let domain ← transport (coordinateContext.extract 0 i) (slots.filter (· < i)) b.domain
     coordinates := coordinates.push { b with domain }
@@ -449,6 +487,7 @@ def resolve (info : ConstantInfo) (selection : SourceSelection)
     selection := selection
     telescope := scope.telescope
     coordinates := coordinates
+    parameterSlots := slots
     readouts := readouts }
 
 private partial def packedType (domains : Array SourceBinder) (i : Nat)

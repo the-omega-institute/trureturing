@@ -78,7 +78,19 @@ $$\forall X \in Type,\; \forall K \in Type,\; [Field\left(K\right)] [DecidableEq
 
 On the diagonal norm2 keeps f2; off the diagonal it uses the reversed first normalized coefficient, exactly as in the source's bullets.
 
-**Definition 1.7 (Mammez Conjecture 3.10).**
+**Definition 1.7 (Diagonal word rescaling).**
+
+$$\forall (X : Type), \forall (K : Type), [Field\left(K\right)], \forall (r : List\left(X\right) \to K), diagonal\left(r\right) = \operatorname{Finsupp.linearCombination}\left(K, \operatorname{fun} (w: List\left(X\right)) \mapsto \operatorname{Finsupp.single}\left(w, r\left(w\right)\right)\right)$$
+
+*Formalization.* `D5/S1/Words/WeakShuffleNormalization.diagonal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The linear map multiplies each word coefficient by the prescribed scalar r w.
+
+**Definition 1.8 (Mammez Conjecture 3.10).**
 
 $$\forall K \in Type,\; [Field\left(K\right)] [CharZero\left(K\right)] \forall X \in Type,\; [DecidableEq\left(X\right)] \forall f1 \in X \to \left(X \to K\right),\; \forall f2 \in X \to \left(X \to K\right),\; (IsWeakShuffle\left(f1, f2\right)) \Rightarrow (\exists Phi \in LinearEquiv\left(K, KX\left(X, K\right), KX\left(X, K\right)\right),\; (Phi\left(\operatorname{Finsupp.single}\left([], 1\right)\right) = \operatorname{Finsupp.single}\left([], 1\right)) \land (\forall x \in KX\left(X, K\right),\; \forall y \in KX\left(X, K\right),\; Phi\left(wsMul\left(f1, f2, x, y\right)\right) = wsMul\left(norm1\left(f1\right), norm2\left(f1, f2\right), Phi\left(x\right), Phi\left(y\right)\right)))$$
 
@@ -90,7 +102,7 @@ $$\forall K \in Type,\; [Field\left(K\right)] [CharZero\left(K\right)] \forall X
 
 Verbatim source statement (Conjecture 3.10, printed p. 18): “Proposition [3.9] is still true for any countable alphabet.” The Lean claim quantifies over every alphabet X and expresses the algebra isomorphism as a linear equivalence fixing the empty word.
 
-**Theorem 1.8 (Normalization for every alphabet).**
+**Theorem 1.9 (Normalization for every alphabet).**
 
 $$claim$$
 
@@ -113,6 +125,7 @@ The diagonal word rescaling has finite-support exponents. Associativity forces b
 - Truth anchor: `D5/S1/Words/WeakShuffleNormalization.IsWeakShuffle`
 - Truth anchor: `D5/S1/Words/WeakShuffleNormalization.KX`
 - Truth anchor: `D5/S1/Words/WeakShuffleNormalization.claim`
+- Truth anchor: `D5/S1/Words/WeakShuffleNormalization.diagonal`
 - Truth anchor: `D5/S1/Words/WeakShuffleNormalization.norm1`
 - Truth anchor: `D5/S1/Words/WeakShuffleNormalization.norm2`
 - Truth anchor: `D5/S1/Words/WeakShuffleNormalization.result`

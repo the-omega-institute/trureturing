@@ -1,0 +1,9 @@
+**命题 5.2（Branch expressions in $V_2$ do not acquire arbitrary history labels）。** In the two-step expansion from root $0$, the legal histories $(0,0,0)$ and $(0,4,0)$ have identical normalized terminal-internal-record vectors, for every internal input. At four steps, the two oppositely oriented square loops also have identical normalized terminal-internal-record vectors, although their signed square currents are different. These collisions occur throughout $\mathcal D$.
+
+**证明。** The loop history $(0,0,0)$ contributes
+$A|0\rangle\psi\otimes f_0\otimes f_0$. The leaf return contributes
+$r|0\rangle b^\dagger b\psi\otimes f_0\otimes f_0
+=r|0\rangle\psi\otimes f_0\otimes f_0$. Both coefficients are positive, but the normalized vectors agree. A putative isometry sending two independently orthogonal history inputs to these vectors would violate inner-product preservation, irrespective of internal or reference input. In the actual two-step map, those inputs were never independently supplied; their amplitudes interfere.
+
+For $h_+=(0,1,2,3,0)$ the transport is $S^4=-I_K$, and for $h_-=(0,3,2,1,0)$ it is $(S^\dagger)^4=-I_K$. All four edge records are $f_1$ on either loop. The normalized outputs are therefore $-|0\rangle\psi\otimes f_1^{\otimes4}$ for both. If these paths are actually acquired by the measured instrument of Theorem 5.4, their probabilities from root $0$ are respectively $p^4,q^4$ and their currents are $+4,-4$. Under the separately declared uniform stationary initialization they are $p^4/5,q^4/5$. Their source §123.2 stationary direction-likelihood values are $\pm4\log(p/q)$; when $p=q$ both likelihood values vanish but the two paths and currents still differ. This uses the stipulated §127 transports; it does not import §124's assignment. The source's current statistic is sufficient for a fixed stationary forward/reverse likelihood comparison, not a bounded exact path archive or a proof of future prediction. $\square$
+

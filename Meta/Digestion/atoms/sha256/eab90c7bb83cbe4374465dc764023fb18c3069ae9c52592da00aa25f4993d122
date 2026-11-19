@@ -1,0 +1,21 @@
+## 6. Mathematical source correspondences
+
+The prime-exponent phenomenon in [F, Lemma 3.1(i), §6][F] and [L, §5, p.14][L] identifies same-order prime-exponent examples under a single compatible power bijection. The repository's [PowerInvariantRefinement construction](../../../D5/S3/FiniteGroups/PowerInvariantRefinement.lean), its [mathematical exposition](../../../Blueprint/D5/S3/FiniteGroups/PowerInvariantRefinement.md), [Scribe source](../../../Blueprint/D5/S3/FiniteGroups/PowerInvariantRefinement.scribe.cs), [literature note](../../../Library/FiniteGroups/fernandes2026invariants.md), and [problem statement](../../../Problems/fernandes-2026-intermediate-group-invariant.md) use this phenomenon on $F^5$ to answer the first alternative of Problem 6.2. Their three alternating-form groups have the same scalar integer-power operations. They therefore supply simultaneous-power-equivalent pairs, whereas (1.6) requires simultaneous-power inequivalence. None of those pairs is used as a witness in Theorem 1.3.
+
+The groups in (1.2) are classical bilinear groups, with the exact correspondences (1.4)–(1.5). Wilson's main subgroup-profile theorem [W, Theorem 1.1][W] has different hypotheses and a different conclusion; it is not an input to (1.6). Likewise the nilpotent-group conclusion $\sim_5=\sim_2$ in [F, Theorem 1.8][F] concerns the nilpotent class. The proof above establishes its witnesses and their power maps directly from (1.1)–(1.3).
+
+The cycle-with-attached-trees description is standard for functional graphs; see Qureshi–Reis [QR, §2.1][QR]. Their further formulas for flower groups require the common-pistil condition in [QR, Definition 3.1][QR], and those formulas are not premises of (4.1). Larson [L] uses undirected multigraphs for the maps considered there; the directed, loop-retaining convention here is exactly [F, Definition 1.4][F].
+
+Power quandles in Szymik–Vik [SV, Definition 1.1, Theorems 3.1–3.2][SV] retain conjugation together with all powers. Their center and central-quotient conclusions use preservation of conjugation. By contrast (5.1)–(5.5) use only squares and cubes. The graph reconstruction statements in Mirzargar–Sorgun–Nadjafi-Arani [MSN, §3][MSN] concern cyclic-subgroup and unlabelled power-type graph data, rather than the separately conjugated functional maps in Definition 1.1. No reconstruction statement from that paper is needed here. Panja–Singh [PS] concerns power-map images, roots, and related group families; no estimate from that survey is a premise of (1.6).
+
+For the orthogonal radicals in Hao–Yang [HY, Theorem 6.1][HY], $q$ is odd, $a,M\ge1$, and $J,J'$ are invertible symmetric $M\times M$ matrices. The logarithmic coordinates in their proof satisfy $u_J(X,Z)^j=u_J(jX,jZ)$ for every integer $j$. Thus the coordinate bijection $u_J(X,Z)\mapsto u_{J'}(X,Z)$ preserves all element powers simultaneously. Their further nonisomorphism conclusion for differing Witt types, with $a\ge3$ and positive even $M$, does not change this power equivalence. That result is therefore different from (1.6); group nonisomorphism is not the obstruction proved in §5.
+
+[F]: https://arxiv.org/abs/2609.20516v1 "Arthur Fernandes, Claudio Qureshi, Lucas Reis and Sávio Ribas, On a class of combinatorial group invariants, arXiv:2609.20516v1"
+[W]: https://arxiv.org/abs/1612.01444v1 "James B. Wilson, The threshold for subgroup profiles to agree is Ω(log n), arXiv:1612.01444v1"
+[L]: https://math.colgate.edu/~integers/t58/t58.pdf "Matt Larson, Power maps in finite groups, Integers 19, A58"
+[QR]: https://arxiv.org/abs/2107.00584v2 "Claudio Qureshi and Lucas Reis, On the functional graph of the power map over finite groups, arXiv:2107.00584v2"
+[SV]: https://arxiv.org/abs/2111.08998v1 "Markus Szymik and Torstein Vik, Groups, conjugation and powers, arXiv:2111.08998v1"
+[MSN]: https://arxiv.org/abs/2511.12374v1 "M. Mirzargar, S. Sorgun and M. J. Nadjafi-Arani, Cyclic Subgroup Lattices as Universal Sources of Power-Type Graphs, arXiv:2511.12374v1"
+[PS]: https://arxiv.org/abs/2411.07017v1 "Saikat Panja and Anupam Singh, A survey on power maps in groups, arXiv:2411.07017v1"
+[HY]: https://arxiv.org/abs/2610.29976v1 "Qingchun Hao and Yang Yang, Characters and Polynomiality for Maximal Parabolic Unipotent Radicals in Finite Classical Groups, arXiv:2610.29976v1"
+

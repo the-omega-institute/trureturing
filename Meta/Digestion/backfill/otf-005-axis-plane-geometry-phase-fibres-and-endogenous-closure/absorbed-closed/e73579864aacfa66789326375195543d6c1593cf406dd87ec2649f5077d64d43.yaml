@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:e73579864aacfa66789326375195543d6c1593cf406dd87ec2649f5077d64d43
+  normalized_sha256: sha256:e73579864aacfa66789326375195543d6c1593cf406dd87ec2649f5077d64d43
+cas_ref: sha256:e73579864aacfa66789326375195543d6c1593cf406dd87ec2649f5077d64d43
+coverage_gids:
+  - gid: D5/S3/Quantum/Information/GroupInvariantPsi/C129QubitBargmann.triple_bargmann_bloch
+    target_statement_id: sha256:64e8028d9bc0936a22b581b593e42682a33f6c93a0831089d555d5799770ae15
+  - gid: D5/S3/Quantum/Information/GroupInvariantPsi/ShortestGateHolonomy.rotor_shortest_gate
+    target_statement_id: sha256:cf91533e369ffe34f90a56b57464927eb6d086a2e58c7be3635c0282d4e96741
+  - gid: D5/S3/Quantum/Information/GroupInvariantPsi/ShortestGateHolonomy.shortest_gate_triangle_holonomy
+    target_statement_id: sha256:6d17ea21a88be04f098472187e5df623d0403697552a65bf8b096645cc6e8302
+  - gid: D5/S3/Quantum/Information/GroupInvariantPsi/ShortestGateHolonomy.triangle_gram
+    target_statement_id: sha256:0b0457a4a53f573f760f2f6d2cbefc9c01a8a3605c3520e767c09f7c5b9e7567
+receipts:
+  unresolved_subitems: []

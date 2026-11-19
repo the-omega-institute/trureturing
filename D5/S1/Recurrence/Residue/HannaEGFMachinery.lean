@@ -28,6 +28,7 @@ expSum_four_mod_eight: proof_shape: bind-only; escape_witness: none; consumer: H
 exp_residual: proof_shape: bind-only; escape_witness: none; consumer: HannaA232694Congruences.result, HannaA232695Congruences.result
 escape_witness: multiple_cancel (triangular cancellation), residual_transfer (integral inverse recurrence and modular transport)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21758.
+Escape audit for the public inverse and ring-map lemmas is unfinished: https://github.com/the-omega-institute/trureturing/issues/26285.
 The rational series equation is stated as printed; coefficient congruences concern n! times coeff n A.
 The convolution and power constructions are reused from ExponentialImplicitParityPeriodThree.
 -/
@@ -44,15 +45,15 @@ open PowerSeries Finset
 open D5.S1.Recurrence.Residue.IntegralEGFComposition
 open D5.S1.Recurrence.Residue.QuarticEGFFixedPoint (encode eCoeff_encode eCoeff_ext constantCoeff_encode)
 
-open D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
+open D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree hiding X coeff
 open D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree (egfSeries_mul)
-open private egfOne egfPow_congr_at egfSeries_pow egfSeries_egfCoeffs
+open private egfPow_congr_at egfSeries_pow egfSeries_egfCoeffs
   from D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
 
 namespace D5.S1.Recurrence.Residue.HannaEGFMachinery
 variable {R S : Type*} [CommRing R] [CommRing S]
 
-private def seqInv (f : ℕ → R) : ℕ → R
+def seqInv (f : ℕ → R) : ℕ → R
   | 0 => 1
   | n+1 => - ∑ i : Fin (n+1), ((n+1).choose (i+1) : R) * f (i+1) * seqInv f (n-i)
 termination_by n => n
@@ -65,7 +66,7 @@ private def inner (f : ℕ → R) (k : ℕ) (recip : Bool) : ℕ → R
 private def rhs (f : ℕ → R) (k p : ℕ) (recip : Bool) : ℕ → R :=
   egfPow (composition f (inner f k recip)) p
 
-private theorem conv_map (φ : R →+* S) (f g : ℕ → R) (n : ℕ) :
+theorem conv_map (φ : R →+* S) (f g : ℕ → R) (n : ℕ) :
     φ (egfMul f g n) = egfMul (fun j => φ (f j)) (fun j => φ (g j)) n := by
   simp [egfMul]
 
@@ -79,7 +80,7 @@ private theorem seqPow_map (φ : R →+* S) (f : ℕ → R) (k n : ℕ) :
     funext j
     exact ih j
 
-private theorem seqInv_map (φ : R →+* S) (f : ℕ → R) (n : ℕ) :
+theorem seqInv_map (φ : R →+* S) (f : ℕ → R) (n : ℕ) :
     φ (seqInv f n) = seqInv (fun j => φ (f j)) n := by
   induction n using Nat.strong_induction_on with
   | h n ih =>
@@ -92,7 +93,7 @@ private theorem seqInv_map (φ : R →+* S) (f : ℕ → R) (n : ℕ) :
       intro i _
       rw [ih (n-i) (by omega)]
 
-private theorem seqInv_congr {f g : ℕ → R} {n : ℕ}
+theorem seqInv_congr {f g : ℕ → R} {n : ℕ}
     (h : ∀ i ≤ n, f i = g i) : seqInv f n = seqInv g n := by
   induction n using Nat.strong_induction_on with
   | h n ih =>
@@ -177,7 +178,7 @@ private theorem encode_unit : encode (egfOne : ℕ → ℚ) = 1 := by
   change egfSeries (egfOne : ℕ → ℚ) = 1
   simpa only [egfPow, pow_zero] using egfSeries_pow (fun _ : ℕ => (0 : ℚ)) 0
 
-private theorem eCoeff_inv {f : PowerSeries ℚ} (hf : constantCoeff f = 1) (n : ℕ) :
+theorem eCoeff_inv {f : PowerSeries ℚ} (hf : constantCoeff f = 1) (n : ℕ) :
     eCoeff f⁻¹ n = seqInv (eCoeff f) n := by
   have he : encode (seqInv (eCoeff f)) = f⁻¹ := by
     apply (PowerSeries.eq_inv_iff_mul_eq_one (by rw [hf]; norm_num)).mpr

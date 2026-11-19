@@ -1,0 +1,10 @@
+### Primary references and ownership
+
+- [S97] P. W. Shor, *Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer*, SIAM Journal on Computing 26 (1997), 1484-1509. [arXiv:quant-ph/9508027](https://arxiv.org/abs/quant-ph/9508027), DOI 10.1137/S0097539795293172. Established reversible arithmetic, Fourier period finding and classical factoring reduction.
+- [K95] A. Yu. Kitaev, *Quantum measurements and the Abelian Stabilizer Problem*, [arXiv:quant-ph/9511026](https://arxiv.org/abs/quant-ph/9511026). Established eigenvalue measurement and Abelian-action formulation.
+- [AFCB14] M. Araujo, A. Feix, F. Costa and C. Brukner, *Quantum circuits cannot control unknown operations*, New Journal of Physics 16 (2014), 093026. [arXiv:1309.7976](https://arxiv.org/abs/1309.7976), DOI 10.1088/1367-2630/16/9/093026. The oracle-model distinction between an unknown channel and phase-referenced coherent control.
+- [TW26] E. Tang and J. Wright, *Are controlled unitaries helpful?*, [arXiv:2508.00055v2](https://arxiv.org/abs/2508.00055v2), revised 23 April 2026. Phase-averaged decontrolling for the paper's access/task model. Cited to delimit the no-go inference, not as an implementation performed here.
+- [IBM] IBM Quantum Learning, *Phase-estimation and factoring*, especially *Shor's algorithm*, [course](https://quantum.cloud.ibm.com/learning/en/courses/fundamentals-of-quantum-algorithms/phase-estimation-and-factoring/shor-algorithm) and [implementation tutorial](https://quantum.cloud.ibm.com/docs/en/tutorials/shors-algorithm). Explicit power-access, clock-precision and classical-reconstruction explanation.
+
+Monomial spectral decomposition, tensor-conjugate cancellation, finite Fourier orthogonality and reversible computation are established mathematical tools. The work here supplies their concrete gate-word correspondence, phase-offset counterexample, clean-work criterion and modular companion interface. Their historical novelty has not been established.
+

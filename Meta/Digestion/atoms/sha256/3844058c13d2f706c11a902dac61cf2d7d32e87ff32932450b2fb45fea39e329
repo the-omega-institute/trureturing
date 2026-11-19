@@ -1,0 +1,26 @@
+**Proposition 44.2 (no transfer of the finite-mixture source law).**
+Under any probability distribution on the origins $e$ in (IV.124), the
+root/right cylinder $000$ has probability zero. In the existing
+`sourceMixture` law with root-one probability $0<p<1$, finitely many
+parameters $0<q_i<1$ and positive weights $w_i$ summing to one, its
+probability is
+
+$$
+(1-p)\sum_i w_i(1-q_i)^2>0.
+\tag{IV.141}
+$$
+
+Thus that law cannot be substituted for the present generated source.
+
+**Proof.** The absence of $000$ is (IV.128), pointwise in $e$.
+The actual `transition` supplier sends $0$ to $1$ with probability
+$q_i$ and $1$ to $0$ deterministically. Conditional on root $0$, two
+successive zeros on a fixed arm therefore have probability
+$(1-q_i)^2$. Weighting by the root probability and mixture weights
+gives (IV.141). In addition `conditionalSourceLaw` supplies two
+conditionally independent outward Markov trajectories, whereas
+(IV.124) supplies opposite parts of one fixed chain. The pointwise
+`stopped_root_recovery` used above needs neither law equality nor arm
+independence. No finite-atom carrier dimension, mixture identification
+or Markov stopping tail is inferred for $S_e$. $\square$
+
