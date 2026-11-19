@@ -29,6 +29,28 @@ private instance (k : Fin 5) (t x : BitVec 9) : Decidable (InSupports k t x) :=
 def supports (k : Fin 5) (t : BitVec 9) : Finset (BitVec 9) :=
   univ.filter (InSupports k t)
 
+theorem mem_supports (k : Fin 5) (t v : BitVec 9) :
+    v ∈ supports k t ↔
+      cubeBitVec 9 v ∈ Q9GrayPlacementNormalForm.placement
+        Q9TriplePartitionOrbits.standardLabels Q9GrayPlacementNormalForm.origin ∨
+      cubeBitVec 9 v ∈ Q9GrayPlacementNormalForm.placement
+        (Q9TriplePartitionOrbits.secondLabels k) (cubeBitVec 9 t) := by
+  simp only [supports, mem_filter, mem_univ, true_and, InSupports,
+    Q9GrayPlacementNormalForm.mem_placement]
+  apply or_congr Iff.rfl
+  constructor
+  · intro h
+    simpa [BitVec.xor_assoc] using Q9GrayRelativeCenters.fits_xor_center _ (v ^^^ t) t h
+  · intro h
+    -- The coordinatewise relation is symmetric in the common XOR shift.
+    have hxor (i : Fin 9) :
+        cubeBitVec 9 (v ^^^ t) i ≠ Q9GrayPlacementNormalForm.origin i ↔
+          cubeBitVec 9 v i ≠ cubeBitVec 9 t i := by
+      change (v ^^^ t).getLsbD i.val ≠ false ↔ v.getLsbD i.val ≠ t.getLsbD i.val
+      rw [BitVec.getLsbD_xor]
+      cases v.getLsbD i.val <;> cases t.getLsbD i.val <;> decide
+    simpa only [Q9GrayPlacementNormalForm.Fits, hammingDist, hxor] using h
+
 /-- Coordinates outside the closed neighborhoods of both supports. -/
 def residual (k : Fin 5) (t : BitVec 9) : Finset (BitVec 9) :=
   univ.filter fun x => ¬ InSupports k t x ∧
@@ -105,19 +127,14 @@ theorem residual_card_le (k : Fin 5) (t : BitVec 9)
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 8000000 in
 -- Count both supports after taking their literal union at each representative.
-private theorem supports_card : ∀ (k : Fin 5) (t : BitVec 9),
+theorem supports_card : ∀ (k : Fin 5) (t : BitVec 9),
     t ∈ representativeCenters k → (supports k t).card = 108 := by
   decide +kernel
 
-/-- A candidate containing both supports as a union of components has size at
-most 257 in each of the eighteen boundary-and-stars cases. -/
-theorem candidate_card_le (k : Fin 5) (t : BitVec 9)
-    (ht : t ∈ representativeCenters k)
-    (h0 : ¬ (k = 0 ∧ t = 63)) (h1 : ¬ (k = 1 ∧ t = 504))
-    (U : Finset (BitVec 9)) (hU : supports k t ⊆ U)
-    (hclosed : ∀ x ∈ supports k t, ∀ y ∈ U, cube.Adj x y → y ∈ supports k t)
-    (hdeg : ∀ v ∈ U, (U.filter (cube.Adj v)).card ≤ 3) : U.card ≤ 257 := by
-  have hsub : U \ supports k t ⊆ residual k t := by
+/-- A vertex outside the selected components must avoid their neighborhoods. -/
+theorem sdiff_subset_residual (k : Fin 5) (t : BitVec 9) (U : Finset (BitVec 9))
+    (hclosed : ∀ x ∈ supports k t, ∀ y ∈ U, cube.Adj x y → y ∈ supports k t) :
+    U \ supports k t ⊆ residual k t := by
     intro v hv
     obtain ⟨hvU, hvS⟩ := mem_sdiff.mp hv
     refine mem_filter.mpr ⟨mem_univ _, fun h => hvS (mem_filter.mpr ⟨mem_univ _, h⟩), ?_⟩
@@ -127,7 +144,16 @@ theorem candidate_card_le (k : Fin 5) (t : BitVec 9)
       rw [cubeBitVec_xor_single]
       exact BalancedCriticalSpectrum.flip_adj _ _
     exact hvS (hclosed _ (mem_filter.mpr ⟨mem_univ _, hi⟩) v hvU hadj.symm)
-  have h := residual_card_le k t ht h0 h1 (U \ supports k t) hsub (fun v hv =>
+/-- A candidate containing both supports as a union of components has size at
+most 257 in each of the eighteen boundary-and-stars cases. -/
+theorem candidate_card_le (k : Fin 5) (t : BitVec 9)
+    (ht : t ∈ representativeCenters k)
+    (h0 : ¬ (k = 0 ∧ t = 63)) (h1 : ¬ (k = 1 ∧ t = 504))
+    (U : Finset (BitVec 9)) (hU : supports k t ⊆ U)
+    (hclosed : ∀ x ∈ supports k t, ∀ y ∈ U, cube.Adj x y → y ∈ supports k t)
+    (hdeg : ∀ v ∈ U, (U.filter (cube.Adj v)).card ≤ 3) : U.card ≤ 257 := by
+  have h := residual_card_le k t ht h0 h1 (U \ supports k t)
+    (sdiff_subset_residual k t U hclosed) (fun v hv =>
     (card_le_card (filter_subset_filter _ sdiff_subset)).trans (hdeg v (mem_sdiff.mp hv).1))
   rw [card_sdiff_of_subset hU, supports_card k t ht] at h
   omega
