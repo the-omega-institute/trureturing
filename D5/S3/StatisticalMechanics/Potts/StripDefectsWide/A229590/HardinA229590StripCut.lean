@@ -38,7 +38,7 @@ theorem column_boundary (r : Fin 5 → Fin 3) : column (boundary r) = r := by
   exact funext (column_grid 1 (fun p : Fin 5 × Fin 1 => r p.1) 0)
 
 set_option maxHeartbeats 0 in
-private theorem column_sum (f : Col → ℤ) :
+theorem column_sum (f : Col → ℤ) :
     (∑ r : Fin 5 → Fin 3, f (boundary r)) = ∑ c : Col, f c := by
   change (∑ r : Fin 5 → Fin 3, f (r 0,r 1,r 2,r 3,r 4)) = ∑ c : Col, f c
   simpa [Fintype.sum_prod_type] using

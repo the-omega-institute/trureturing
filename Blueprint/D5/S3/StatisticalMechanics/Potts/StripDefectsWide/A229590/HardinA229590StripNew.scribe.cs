@@ -8,6 +8,7 @@ internal sealed class HardinA229590StripNewDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Five-row HA arrays with exactly one equal-colour bond.",H("Five-row one-defect strips"),Blocks(
         Paragraph(Text("Columns have five labelled colours. The one-defect transition counts reduce to forty-one classes under colour permutations.")),
+        Node("cross_relabel","cross relabel",All("e",Call("Equiv.Perm",Fin(Num(3))),All("a",Owner("Col"),All("b",Owner("Col"),Eq(Data("cross",Owner("relabel",V("e"),V("a")),Owner("column",Owner("relabel",V("e"),V("b")))),Data("cross",V("a"),Owner("column",V("b"))))))),true,"The same permutation of the three colours preserves all equal-colour bonds."),
         Node("quotient_rows","quotient rows",All("b",Owner("Col"),All("s",Fin(Num("41")),Eq(Sum("c",Owner("Col"),If(And(Eq(Data("cross" ,V("b"),Owner("column" ,V("c"))),Num("1")),Eq(Owner("cls" ,V("c")),V("s"))),Typed(Num("1"),Q("Int")),Typed(Num("0"),Q("Int")))),Data("R" ,Owner("cls" ,V("b")),V("s"))))),true,"Exactly one monochromatic bond is added across this pair of adjacent columns. Colour permutations preserve that event and the successor class."))));
 
     private static DocumentBlock Node(string name,string title,Formula f,bool theorem,string prose) =>
