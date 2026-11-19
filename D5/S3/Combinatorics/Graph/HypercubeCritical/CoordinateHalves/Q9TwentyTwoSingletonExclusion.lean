@@ -15,12 +15,14 @@ open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q IsBalanced flip_adj)
 open BalancedCubeLowerBound (coordinateSlice)
 open Q9TwentyTwoSingletonCoverage (high_candidate_of_normalized candidate_of_normalized)
-open Q9TwentyTwoSingletonLabels (select_subdivision_vertices)
+open Q9TwentyTwoSingletonLabels (select_subdivision_vertices singleton_model)
 open Q9TwentyTwoAxes (normalize_root_and_first_point)
 open Q9TwentyTwoReconstruction (no_listed_singleton_half)
 open private adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
-open private coordinate_slice_low_independent from
+open Q9TwentyTwoCompression (half_compression)
+open private coordinate_slice_low_independent coordinate_slice_degree_cases balanced_subset
+  paritySide parity_bipartite from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
 open private cube_action_regular_balanced from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixNormalizeProbe
@@ -33,6 +35,8 @@ open private cycleIndex separated from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonCoverage
 open private mem_hollowEdges rootIndex from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonLabels
+open private SideHigh compressed from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 
 local notation "flip" => BalancedCriticalSpectrum.flip
 private abbrev Vertex := BitVec 9
@@ -293,5 +297,56 @@ theorem no_singleton_model {C : Finset (Q 9)} (hc : C.card = 72)
   exact no_listed_singleton_half hTcard hsT hrT hbT half hn hmap hmem
 
 #print axioms no_singleton_model
+
+/-- Both parity classes in a 22-point half compress to the complete
+bipartite graph on parts of orders two and three. -/
+theorem paired_compression {C : Finset (Q 9)} (hc : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 22) :
+    let S := coordinateSlice C b
+    let G := (hypercube 9).induce (S : Set (Q 9))
+    ∃ side : Bool,
+      let L := paritySide S side
+      let R := paritySide S (!side)
+      Nonempty (compressed G L ≃g SimpleGraph.turanGraph 5 2) ∧
+      Nonempty (compressed G R ≃g SimpleGraph.turanGraph 5 2) ∧
+      (∀ x : SideHigh G L, (compressed G L).degree x = 2 ↔
+        ∃! y : SideHigh G R, G.Adj x.val y.val) ∧
+      (∀ y : SideHigh G R, (compressed G R).degree y = 2 ↔
+        ∃! x : SideHigh G L, G.Adj y.val x.val) := by
+  obtain ⟨side, h | h⟩ := half_compression hc hr hb b hs
+  · let S := coordinateSlice C b
+    let G := (hypercube 9).induce (S : Set (Q 9))
+    let L := paritySide S side
+    let R := paritySide S (!side)
+    obtain ⟨hL, r, hA, _, _, e, _, _, _, _⟩ := h
+    let A := Finset.univ.filter (fun x : SideHigh G R => G.Adj r.val x.val)
+    let B := Finset.univ \ A
+    have hB : B.card = 6 := by
+      have h := Nat.card_congr e.toEquiv
+      have he : Nat.card (B : Set (SideHigh G R)) = B.card :=
+        Nat.card_eq_fintype_card.trans (Fintype.card_coe B)
+      change Nat.card (Fin 6) = Nat.card (B : Set (SideHigh G R)) at h
+      rw [Nat.card_fin, he] at h
+      exact h.symm
+    have hR : Fintype.card (SideHigh G R) = 9 := by
+      have ht := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ A)
+      rw [Finset.card_univ] at ht
+      change B.card + A.card = _ at ht
+      change A.card = 3 at hA
+      omega
+    have hp : G.IsBipartiteWith (L : Set _) (R : Set _) := by
+      cases side
+      · exact parity_bipartite S
+      · exact (parity_bipartite S).symm
+    have hdeg (x : (S : Set (Q 9))) : G.degree x = 2 ∨ G.degree x = 3 :=
+      coordinate_slice_degree_cases x.property hr
+    have hg := BalancedCubeGirth.eight_le_egirth S (balanced_subset hb (filter_subset _ _))
+    obtain ⟨opposite, p, hhigh, hsolid, hmid⟩ := singleton_model hp hdeg
+      (fun hxy hx hy => coordinate_slice_low_independent hr hb hxy hx hy) hg hL hR
+    exact (no_singleton_model hc hr hb b hs opposite p hhigh hsolid hmid).elim
+  · exact ⟨side, h⟩
+
+#print axioms paired_compression
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonExclusion
