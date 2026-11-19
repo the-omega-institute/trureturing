@@ -41,13 +41,6 @@ theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
 theorem actual_positive : arena.{v}.Law actual.{v} :=
   source_bridge.mp (@whole_native_tangent_disjointness.{v})
 
-theorem erased_negative (P : Inputs.{v})
-    (hc : IsClosed (P.cone : Set P.V))
-    (hs : ∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x)
-    (hg : Submodule.span ℝ (P.cone : Set P.V) = ⊤)
-    (hB : exclusionBalls P.cone P.unit) (hW : weakPair P.cone P.unit) :
-    ¬ arena.{v}.Law erased.{v} := fun h => h P hc hs hg hB hW
-
 /-- This whole-theorem observation cannot provide a varying state readout. -/
 theorem dependence_impossible : ¬ ObservationalDependence signature.{v} actual.{v} := by
   intro h
@@ -59,7 +52,6 @@ abbrev pendingEvidence := Registration arena.{v} sourceScope.{v}
 
 #print axioms source_bridge
 #print axioms actual_positive
-#print axioms erased_negative
 #print axioms dependence_impossible
 
 end Reg.D5.S3.Quantum.Foundation.NativeTangentDisjointness

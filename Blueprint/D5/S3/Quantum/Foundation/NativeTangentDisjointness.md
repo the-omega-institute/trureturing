@@ -40,7 +40,7 @@ $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\oper
 
 *Commentary.*
 
-Directly consume CommonPositiveExtension.whole_arc_effect: one family a of actual common effects, its uniqueness, and the full-space ArcFamily. For each nonzero common candidate z, each actual chart yields independent positive h=1/norm(w), an original opposite r, a signed B with B(z)=1/(2h), vanishing on the whole span of p and D_p, and the all-space circle identity. The map w is the actual chart preimage of the SAME vector z. The two coordinate norms remain independent.
+Directly consume CommonPositiveExtension.whole_arc_effect: one family a of actual common effects, its uniqueness, and the full-space ArcFamily. For each nonzero common candidate z, each actual chart yields independent positive h=1/norm(w), an original opposite r, a signed B with B(z)=1/(2h), vanishing on the whole span of p and D_p, and the all-space circle identity. The vector w is the actual chart preimage of the SAME vector z. The two coordinate norms remain independent.
 
 Every real pair c,s with c squared plus s squared equal to one is realized by an angle, using pinned mathlib Complex.arg, cos_arg and sin_arg. Consequently the supplied circle consists of actual original pure states, with state expression ((1+c)/2)p+((1-c)/2)r+s h z and corresponding original effect ((1+c)/2)a_p+((1-c)/2)a_r+s B. This obtains the rational half-angle states from original sphere points, not arbitrary formal perturbations.
 
