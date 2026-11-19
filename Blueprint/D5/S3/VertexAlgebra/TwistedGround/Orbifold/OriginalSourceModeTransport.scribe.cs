@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.TwistedGround;
 internal sealed class OriginalSourceModeTransportDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/VertexAlgebra/TwistedGround/OriginalSourceModeTransport.";
+        "D5/S3/VertexAlgebra/TwistedGround/Orbifold/OriginalSourceModeTransport.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Mixed Jacobi Identity on the Original Fixed Sector",
