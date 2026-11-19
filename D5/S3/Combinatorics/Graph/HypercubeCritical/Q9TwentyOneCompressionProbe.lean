@@ -23,8 +23,6 @@ open private compressed_edge_count from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 open private paritySide parity_bipartite parity_union parts_card sum_degrees_parts from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
-open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
-  D5.S3.Combinatorics.Graph.Brooks.General
 
 /-- The high vertices of a twenty-one-point slice split as two and eight or four and six. -/
 private lemma twenty_one_high_parity_split (S : Finset (Q 9)) (hS : S.card = 21)

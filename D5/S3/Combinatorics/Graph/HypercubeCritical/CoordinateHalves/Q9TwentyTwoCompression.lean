@@ -26,8 +26,6 @@ open private side_high_neighbors_card high_neighbors_compressed_separated from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
 open private two_neighbor_table from
   D5.S3.Combinatorics.Graph.HypercubeCritical.FifteenSliceStructure
-open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
-  D5.S3.Combinatorics.Graph.Brooks.General
 
 private def pairingModel (opposite : Bool) : Fin 6 → Fin 6 :=
   if opposite then ![3, 4, 5, 0, 1, 2] else ![2, 4, 0, 5, 1, 3]
