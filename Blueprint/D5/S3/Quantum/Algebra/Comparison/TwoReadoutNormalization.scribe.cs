@@ -65,6 +65,8 @@ internal sealed class TwoReadoutNormalizationDocument : IScribeDocumentDefinitio
         Bind(FormulaQuantifier.ForAll, name, type, body);
     private static Formula Ex(string name, Formula type, Formula body) =>
         Bind(FormulaQuantifier.Exists, name, type, body);
+    private static Formula OverGroups(Formula body) => F.Disp(All("G", F.Id("Type"),
+        If(new Formula.FunctionCall(FormulaIdentifier.Create("Group"), [G]), body)));
     private static Formula App(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Read(Formula x) => App(P, x);
     private static Formula Eq(Formula l, Formula r) => new Formula.Relation(l, FormulaRelationOperator.Equal, r);
@@ -97,12 +99,12 @@ internal sealed class TwoReadoutNormalizationDocument : IScribeDocumentDefinitio
         return Ex("m", R, And(Lt(M, One), And(bound, equation)));
     }
 
-    private static Formula CoefficientStatement() => F.Disp(All("p", FunType,
+    private static Formula CoefficientStatement() => OverGroups(All("p", FunType,
         If(Even, If(Central, If(Faithful,
             All("a", R, All("b", R, All("d", R, All("u", G,
                 If(OneSidedLaw, If(Ne(Mul(U, U), One), Eq(B, new Formula.Negate(One)))))))))))));
 
-    private static Formula SymmetricStatement() => F.Disp(All("p", FunType,
+    private static Formula SymmetricStatement() => OverGroups(All("p", FunType,
         If(Eq(Read(One), One), If(Even, If(Central, If(Bound, If(Nonconstant,
             All("a", FunType, All("d", FunType, If(SymmetricLaw, Normalized()))))))))));
 
@@ -110,7 +112,7 @@ internal sealed class TwoReadoutNormalizationDocument : IScribeDocumentDefinitio
     {
         Formula involutions = All("u", G, If(Eq(Mul(U, U), One), Eq(U, One)));
         Formula laws = All("u", G, If(Ne(U, One), Ex("a", R, Ex("b", R, Ex("d", R, OneSidedLaw)))));
-        return F.Disp(All("p", FunType, If(Even, If(Central, If(Faithful,
+        return OverGroups(All("p", FunType, If(Even, If(Central, If(Faithful,
             If(Bound, If(Nonconstant, If(involutions, If(laws, Normalized())))))))));
     }
 }

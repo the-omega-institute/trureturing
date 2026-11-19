@@ -6,8 +6,7 @@
    utility: none
    digest: A bounded even class function with affine two-readout data reduces to d'Alembert. -/
 
-import Mathlib.Algebra.Order.Archimedean.Basic
-import Mathlib.Data.Real.Basic
+import D5.S3.Analytic.Dilation.DuplicationCircleRigidity
 import Mathlib.Tactic
 
 /-! Affine two-readout equations on an abstract group. -/
@@ -17,16 +16,13 @@ namespace D5.S3.Quantum.Algebra.Comparison.TwoReadoutNormalization
 private theorem nonpos_of_bounded_squaring {G : Type*} [Mul G] (f : G → ℝ) {B : ℝ}
     (hbound : ∀ g, f g ≤ B) (hgrowth : ∀ g, 2 * f g ≤ f (g * g)) (g : G) :
     f g ≤ 0 := by
-  have hiter (n : ℕ) : ∀ x, (2 : ℝ) ^ n * f x ≤ B := by
-    induction n with
-    | zero => simpa using hbound
-    | succ n ih =>
-      intro x
-      rw [pow_succ, mul_assoc]
-      exact (mul_le_mul_of_nonneg_left (hgrowth x) (by positivity)).trans (ih (x * x))
-  by_contra! h
-  obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt (B / f g) (by norm_num : (1 : ℝ) < 2)
-  exact (not_lt_of_ge (hiter n g)) ((div_lt_iff₀ h).mp hn)
+  apply D5.S3.Analytic.Dilation.DuplicationCircleRigidity.le_zero_of_bounded_doubling
+    (s := Set.range f) id (C := B)
+  · rintro _ ⟨x, rfl⟩
+    exact hbound x
+  · rintro _ ⟨x, rfl⟩
+    exact ⟨f (x * x), ⟨x * x, rfl⟩, hgrowth x⟩
+  · exact ⟨g, rfl⟩
 
 /-- Faithfulness forces the coefficient of the forward readout at a non-involutive step. -/
 theorem coefficient_eq_neg_one {G : Type*} [Group G] (ψ : G → ℝ)
