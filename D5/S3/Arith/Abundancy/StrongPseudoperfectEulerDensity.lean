@@ -187,7 +187,7 @@ private lemma sigma_square_sum_nat (T : ℕ) :
       rw [← mul_sum]
       exact Nat.mul_le_mul_left T (sum_Icc_id_le_sq (T / a))
 
-private lemma reciprocal_square_sum_le_two (T : ℕ) :
+lemma reciprocal_square_sum_le_two (T : ℕ) :
     (∑ a ∈ Icc 1 T, 1 / (a : ℝ) ^ 2) ≤ 2 := by
   have hI : Icc 1 T = Ioo 0 (T + 1) := by
     ext a
