@@ -7,9 +7,9 @@
    digest: Coordinate certificates for the width-six transfer. -/
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
-own_certificate: proof_shape=bind-only; consumers=certificate
-certificate: proof_shape=bind-only; consumers=Width6.Krylov.Check7.certificate
+escape_witness: own_certificate (computed matrix updates and recurrence equality at coordinates 72 through 83 used by certificate)
+own_certificate: proof_shape=content; consumers=certificate
+certificate: proof_shape=content; consumers=Width6.Krylov.Check7.certificate
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Krylov.Check5

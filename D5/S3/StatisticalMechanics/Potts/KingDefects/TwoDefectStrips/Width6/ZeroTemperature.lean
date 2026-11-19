@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: none (consumed owner adapters on the live path of HardinA229753.result)
+escape_witness: owner_matrix (computed zero-budget matrix rows and offset counts used by transition_counts)
 twoRows: proof_shape=bind-only; consumers=raw_pair,exact_image
 raw: proof_shape=bind-only; consumers=raw_pair,raw_iff_shift,weighted
 raw_pair: proof_shape=bind-only; consumers=exact_image
@@ -16,8 +16,8 @@ exact_image: proof_shape=bind-only; consumers=raw_iff_shift
 offsets: proof_shape=bind-only; consumers=raw_iff_shift,weighted
 raw_iff_shift: proof_shape=bind-only; consumers=weighted
 weighted: proof_shape=bind-only; consumers=transition_counts
-owner_matrix: proof_shape=bind-only; consumers=transition_counts
-transition_counts: proof_shape=bind-only; consumers=Width6.Certificate.transition_counts
+owner_matrix: proof_shape=content; consumers=transition_counts
+transition_counts: proof_shape=content; consumers=Width6.Certificate.transition_counts
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
