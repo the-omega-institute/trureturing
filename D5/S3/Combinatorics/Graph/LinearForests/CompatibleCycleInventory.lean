@@ -476,7 +476,7 @@ private theorem positive_inventory_card [Finite C] (s d : C → Bool)
           _ = _ := by rw [hfac _ ht]
     · exact no_loop_card s d (not_exists.mp hl) hb hp
 
-private theorem inventory_zero [Finite C] (s d : C → Bool) (a b : Bool)
+theorem inventory_zero [Finite C] (s d : C → Bool) (a b : Bool)
     (hz : inventory s d a b = 0) (x : C) (hs : s x = a) (hd : d x = b) : False := by
   letI : Nonempty {x : C // s x = a ∧ d x = b} := ⟨⟨x, hs, hd⟩⟩
   have hp : 0 < inventory s d a b := Nat.card_pos
