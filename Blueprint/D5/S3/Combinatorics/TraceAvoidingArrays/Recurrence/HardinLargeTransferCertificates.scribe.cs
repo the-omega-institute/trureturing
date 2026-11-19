@@ -31,7 +31,6 @@ internal sealed class HardinLargeTransferCertificatesDocument : IScribeDocumentD
             Node("column7", "wordSeven", "Full-state relation at width 7", DescribeRole.Theorem,
                 "On all 192 proper words at width 7, the power at exponent 20 on ones equals the source lag-weighted sum of the power vectors at exponents 19 down to 0. The coefficient sum is one."),
             Paragraph(Text("The verified multiset of successor classes gives the exact quotient action on each actual state. The checked power table begins at one on every class, and each row is obtained by multiplying by its quotient matrix. The final vector relation pulls back through the class map to the actual source states.")),
-            H("The five-row array recurrence"),
             Paragraph(Text(
                 "Let T(5,n) count the literal normalized arrays of height five and width n with both diagonal "
                 + "bonds. The row-major equivalence of HardinThinGraphTransport identifies these arrays with the "
