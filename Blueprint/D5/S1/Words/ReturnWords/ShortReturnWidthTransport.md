@@ -78,7 +78,27 @@ $$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall n \in \mathbb{
 
 Put L=lcm(a,b) and M=p floor(n/p) floor((2n-1)/p). Applying the affine packing theorem derives k g^L d<=(1-g^L)w from the interval hypotheses. The arithmetic helpers give L<=M and decrease the ratio, yielding w>=k g^M d/(1-g^M). The k=1 specialization recovers the two-cylinder width bound. The cardinality factor retains the full chain estimate; no packing inequality is assumed as a premise of this chain application.
 
-These are abstract intervals with positive affine orientation. The graph/SCC existence argument, actual short returns at each basepoint, the phase-divisibility bridge for those returns, and identification of the separate interval families with original legal cylinders are outside these statements. The universal assertion for every original first piece in Proposition 51.3 therefore remains unproved. In particular the original full guard cylinders need not be contained in the piece; the required inclusion concerns the smaller images. Neither the coherence/phase characterization nor the SevenCycle examples supplies the missing general short-return and legal-cylinder bridges.
+The chain statement uses abstract intervals with positive affine orientation. The full guard cylinders supply separation, and the smaller images supply containment in the original piece.
+
+**Theorem 1.7 (Width at every basepoint of an incoherent cyclic component).**
+
+Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_incoherent_basepoint`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_incoherent_basepoint` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix a vertex of a finite cyclic strongly connected component that is incoherent for a single-symbol edge label. Let n be its vertex count. Assume a positive phase modulus p with increment one on every edge and a contraction 0 < g < 1. A nondegenerate guard interval has width d and a closed piece has width w. For every return C of length L, its map has slope (−g)^L and sends the piece into itself. Returns of equal length with distinct label words send the open guard interval to disjoint images.
+
+Set M equal to $p \cdot \lfloor\frac{n}{p}\rfloor \cdot \lfloor\frac{2 \cdot n - 1}{p}\rfloor$. Then w is at least $\frac{g^{M}}{1 - g^{M}} \cdot d$.
+
+In a component of n vertices, find two actual returns at the given basepoint with different synchronized label words. Their positive lengths are at most n and 2n−1. Short paths to and from each vertex define a bounded return test. If every test agreed with a short reference return, the reference word’s least period would define a phase and a label at every edge. That would give coherence for the component.
+
+The independently supplied phase has modulus p and increases by one on every edge. It divides both return lengths. At their least common multiple the two whole guard cylinders have disjoint interiors, while the two original-piece images belong to the original piece. Their common slope can have either sign. Comparing endpoints yields the packing inequality at the least common multiple and hence the stated uniform bound.
+
+The statement takes the original piece and guard intervals, their affine return maps, and the separation of whole guard cylinders as premises. Application to Proposition 51.3 requires deriving those premises and the second-label phase from the original legal graph.
 
 ## References
 
@@ -88,3 +108,5 @@ These are abstract intervals with positive affine orientation. The graph/SCC exi
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.short_return_width_lower_bound`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.short_return_width_lower_bound_of_chain`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.synchronized_length_le_phase_bound`
+- Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_incoherent_basepoint`
+- Dependency: [D5/S1/Words/ReturnWords/CoherentReturnPathTemplates](CoherentReturnPathTemplates.md)

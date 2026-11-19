@@ -137,9 +137,22 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                 DescribeId.Create("width-at-incoherent-basepoint"),
                 DeclarationHandle.Create(Prefix + "width_at_incoherent_basepoint"),
                 H("Width at every basepoint of an incoherent cyclic component"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
+                    Paragraph(Text(
+                        "Fix a vertex of a finite cyclic strongly connected component that is incoherent "
+                        + "for a single-symbol edge label. Let n be its vertex count. Assume a positive "
+                        + "phase modulus p with increment one on every edge and a contraction 0 < g < 1. "
+                        + "A nondegenerate guard interval has width d and a closed piece has width w. "
+                        + "For every return C of length L, its map has slope (−g)^L and sends the piece "
+                        + "into itself. Returns of equal length with distinct label words send the open "
+                        + "guard interval to disjoint images.")),
+                    Paragraph(Text("Set M equal to "),
+                        Math(Bound),
+                        Text(". Then w is at least "),
+                        Math(Mul(Ratio(F.Id("M")), D)),
+                        Text(".")),
                     Paragraph(Text(
                         "In a component of n vertices, find two actual returns at the given basepoint "
                         + "with different synchronized label words. Their positive lengths are at most "
