@@ -30,9 +30,10 @@ internal sealed class BalaA295462QuotientDocument : IScribeDocumentDefinition
                     + "divide 6r+1 it is the ordinary nonnegativity of "
                     + "⌊15x⌋+⌊2x⌋−⌊10x⌋−⌊6x⌋−⌊x⌋ on the grid of multiples of 1/30. When "
                     + "6r+1=tq, parity and residues modulo three leave t∈{1,5}, and "
-                    + "⌊30r/q⌋=5t−1 settles both cases. The same argument with "
-                    + "⌊(10n+1)/q⌋ in place of ⌊10n/q⌋ leaves t∈{1,3,7,9} with "
-                    + "⌊30r/q⌋=3t−1, so 10n+1 divides m.")),
+                    + "⌊30r/q⌋=5t−1 settles both cases. With ⌊(10n+1)/q⌋ in place of "
+                    + "⌊10n/q⌋ the reduction is the same; when 10r+1=tq, parity and "
+                    + "residues modulo five leave t∈{1,3,7,9}, and ⌊30r/q⌋=3t−1 settles "
+                    + "each case, so 10n+1 divides m.")),
                 Paragraph(Text(
                     "Since 5(6n+1)−3(10n+1)=2 and both factors are odd, they are coprime, so "
                     + "their product divides m. The product is odd, so b=m/((6n+1)(10n+1)) "
