@@ -27,6 +27,38 @@ open private side_high_neighbors_card high_neighbors_compressed_separated from
 open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
   D5.S3.Combinatorics.Graph.Brooks.General
 
+private def pairingModel (opposite : Bool) : Fin 6 → Fin 6 :=
+  if opposite then ![3, 4, 5, 0, 1, 2] else ![2, 4, 0, 5, 1, 3]
+
+private def cycleLabel (shift : Fin 6) (reverse : Bool) (i : Fin 6) : Fin 6 :=
+  if reverse then shift - i else shift + i
+
+set_option maxRecDepth 8192 in
+set_option maxHeartbeats 8000000 in
+private theorem checked_pairing_values (a : Fin 6) :
+    ∀ b c d e f : Fin 6,
+      let m : Fin 6 → Fin 6 := ![a, b, c, d, e, f]
+      (∀ i, m (m i) = i ∧ m i ≠ i ∧ ¬(cycleGraph 6).Adj i (m i)) →
+      ∃ (shift : Fin 6) (reverse opposite : Bool), ∀ i,
+        m (cycleLabel shift reverse i) = cycleLabel shift reverse (pairingModel opposite i) := by
+  fin_cases a <;> decide +kernel
+
+/-- A perfect matching of the six-cycle's vertices by nonedges has two possible
+forms up to a rotation or reflection. -/
+theorem cycle_pairing_normal_form (m : Fin 6 → Fin 6)
+    (hm : ∀ i, m (m i) = i ∧ m i ≠ i ∧ ¬(cycleGraph 6).Adj i (m i)) :
+    ∃ (shift : Fin 6) (reverse opposite : Bool), ∀ i,
+      m (cycleLabel shift reverse i) = cycleLabel shift reverse (pairingModel opposite i) := by
+  have he : (![m 0, m 1, m 2, m 3, m 4, m 5] : Fin 6 → Fin 6) = m := by
+    funext i
+    fin_cases i <;> rfl
+  have h := checked_pairing_values (m 0) (m 1) (m 2) (m 3) (m 4) (m 5)
+  dsimp only at h
+  rw [he] at h
+  exact h hm
+
+#print axioms cycle_pairing_normal_form
+
 attribute [local instance] Classical.propDecidable
 
 private theorem three_vertices_not_three_edges {V : Type*} [Fintype V]
