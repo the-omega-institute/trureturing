@@ -9,10 +9,10 @@ public sealed partial class ProductionEnvironmentTests
 {
     [Theory]
     [InlineData("Meta/Digestion/backfill/unrelated/residual-open/" +
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml", false)]
-    [InlineData("Meta/Digestion/backfill/unrelated/source.toml", false)]
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml", true)]
+    [InlineData("Meta/Digestion/backfill/unrelated/source.toml", true)]
     [InlineData("Meta/Digestion/atoms/sha256/" +
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false)]
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]
     [InlineData("Meta/Digestion/atoms/sha256/not-a-canonical-id", false)]
     public void CheckSkipsUnrelatedDigestionBodiesWhileEnforcingCanonicalPaths(
         string unrelatedPath, bool canonicalPath)
