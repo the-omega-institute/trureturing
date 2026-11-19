@@ -30,7 +30,22 @@ internal sealed class HardinLargeTransferCertificatesDocument : IScribeDocumentD
                 "The coefficients at lags one through 20 are (42, −590, 3167, −1918, −37505, 95138, 67348, −449955, 266387, 629595, −841378, −28007, 588908, −332461, 7999, 44409, −11184, −342, 380, −32)."),
             Node("column7", "wordSeven", "Full-state relation at width 7", DescribeRole.Theorem,
                 "On all 192 proper words at width 7, the power at exponent 20 on ones equals the source lag-weighted sum of the power vectors at exponents 19 down to 0. The coefficient sum is one."),
-            Paragraph(Text("The verified multiset of successor classes gives the exact quotient action on each actual state. The checked power table begins at one on every class, and each row is obtained by multiplying by its quotient matrix. The final vector relation pulls back through the class map to the actual source states."))
+            Paragraph(Text("The verified multiset of successor classes gives the exact quotient action on each actual state. The checked power table begins at one on every class, and each row is obtained by multiplying by its quotient matrix. The final vector relation pulls back through the class map to the actual source states.")),
+            H("The five-row array recurrence"),
+            Paragraph(Text(
+                "Let T(5,n) count the literal normalized arrays of height five and width n with both diagonal "
+                + "bonds. The row-major equivalence of HardinThinGraphTransport identifies these arrays with the "
+                + "normalized colourings of the ladder graph. For n at least 2, connectedness and bipartiteness "
+                + "give 48 T(5,n) = 32^n (L(n) + 6), where L(n) counts the proper three-colourings. "
+                + "HardinActualTransfers.column_count gives L(n) by summing the C5 power on ones at exponent n − 1. "
+                + "Every one of the 243 initial columns contributes its own continuation count.")),
+            Paragraph(Text(
+                "For each n at least 12, apply C5^(n − 12) to the height-five vector identity and sum the entries. "
+                + "This gives L(n) = sum over j from 1 through 10 of c_j L(n − j), "
+                + "where c_j is the jth height-five coefficient displayed above. The sum of the c_j is one, "
+                + "so L(n) + 6 satisfies the same identity. Each lagged width n − j is at least 2. "
+                + "Substituting the connected-strip formula and using 32^n = 32^j 32^(n − j) gives "
+                + "T(5,n) = sum over j from 1 through 10 of 32^j c_j T(5,n − j)."))
         )));
 
     private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string statement) =>
