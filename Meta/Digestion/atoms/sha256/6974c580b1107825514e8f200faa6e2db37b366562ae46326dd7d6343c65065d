@@ -1,0 +1,253 @@
+**Theorem 26.2 (Largest common-correctable algebra of the actual words).**
+For every real $\theta$, every finite $n\ge0$ and every law (26.2),
+the unique largest commonly correctable unital star algebra is
+
+$$
+\begin{aligned}
+\mathcal C_{n,p}
+&:=\{K_h^\dagger K_g:h,g\in\{0,1\}^n\}'
+ =\{Q_h^\dagger Q_g:h,g\in\{0,1\}^n\}'\\
+&=\begin{cases}
+M_3,&n=0,\\
+\{W\}'\cong M_2\oplus\mathbb C,&n=1,\\
+\mathbb CP\oplus\mathbb C(I_3-P),&n\ge2.
+\end{cases}
+\end{aligned}
+\tag{26.5}
+$$
+
+The prime denotes the simultaneous commutant in all of $M_3$.
+A unital star algebra is correctable exactly when it is contained
+in the corresponding algebra in (26.5). One decoder correcting
+the entire displayed algebra, and therefore every one of its
+subalgebras simultaneously, is respectively
+
+$$
+\mathcal D_0=\operatorname{id}_3,\qquad
+\mathcal D_1=\operatorname{Ad}_{a^\dagger},\qquad
+\mathcal D_n=\operatorname{id}_3\quad(n\ge2).
+\tag{26.6}
+$$
+
+Proof. The general correction interface being used is
+Bény–Kempf–Kribs, *Quantum Error Correction of Observables*,
+[arXiv:0705.1574v1][BKK26], Definition 8, equation (7), Theorem 9
+and Corollary 10. The existing [observable-correction note][NOTE26]
+records that interface. In their notation the channel is
+$\mathcal E=\mathcal N_{n,p}$, its operation elements are $E_h=K_h$,
+the correction is $\mathcal R=\mathcal D$, and the code projection
+in their equation (7) is $P_{\rm code}=I_3$. Thus their condition
+is precisely (26.3), and their compressed products
+$P_{\rm code}E_h^\dagger E_gP_{\rm code}$ are $K_h^\dagger K_g$.
+The spectator $P$ in (26.1) is not their code projection. The
+commutant criterion and its general maximality are reused literature
+results. The following argument supplies the needed necessity and
+explicit recoveries for these particular full-qutrit channels.
+
+Suppose (26.3) holds for $\mathcal A$. Choose Kraus matrices $L_r$
+for $\mathcal D$ and put $M_{rh}=L_rK_h$, so these are Kraus
+matrices of $\mathcal T=\mathcal D\circ\mathcal N_{n,p}$ and
+$\sum_{r,h}M_{rh}^\dagger M_{rh}=I_3$. For $X\in\mathcal A$,
+the elements $X,X^\dagger,X^\dagger X$ all belong to $\mathcal A$.
+Expansion of the Schwarz defect gives
+
+$$
+\begin{aligned}
+&\sum_{r,h}(XM_{rh}-M_{rh}X)^\dagger(XM_{rh}-M_{rh}X)\\
+&\quad=\mathcal T^\dagger(X^\dagger X)
+ -\mathcal T^\dagger(X^\dagger)X
+ -X^\dagger\mathcal T^\dagger(X)+X^\dagger X=0.
+\end{aligned}
+\tag{26.7}
+$$
+
+Every summand is positive. Evaluating on every vector shows that each
+$XM_{rh}-M_{rh}X$ vanishes. Applying the same argument to $X^\dagger$
+and taking adjoints also gives $[X,M_{rh}^\dagger]=0$. Consequently
+$X$ commutes with
+
+$$
+\sum_r M_{rh}^\dagger M_{rg}
+ =K_h^\dagger\left(\sum_rL_r^\dagger L_r\right)K_g
+ =K_h^\dagger K_g.
+\tag{26.8}
+$$
+
+This proves $\mathcal A\subseteq\mathcal C_{n,p}$ for every common
+CPTP decoder, without assuming that decoder unitary. Moreover
+$K_h^\dagger K_g=\sqrt{p_hp_g}\,Q_h^\dagger Q_g$.
+Full support makes every scalar nonzero, proving the first line
+of (26.5). No independence of the labels enters this step.
+
+At $n=0$ the only relative is $I_3$ and the channel is identity.
+At $n=1$ the relatives are $I_3$ and
+$a^\dagger b=b^\dagger a=W$, because $b=aW$ and $W^2=I_3$.
+Thus $\mathcal C_{1,p}=\{W\}'$. In the orthonormal basis
+$S_0=[\xi,t_1,t_2]$ of Theorem 6.1,
+$S_0^\dagger WS_0=\operatorname{diag}(1,-1,1)$, and its commutant is
+
+$$
+S_0^\dagger\mathcal C_{1,p}S_0
+ =\left\{\begin{pmatrix}
+x_{11}&0&x_{13}\\0&x_{22}&0\\x_{31}&0&x_{33}
+\end{pmatrix}:x_{jk}\in\mathbb C\right\}.
+\tag{26.9}
+$$
+
+This is $M_2$ on $\operatorname{span}\{\xi,t_2\}$ and $\mathbb C$
+on $\mathbb Ct_1$. In particular it includes coherences between
+the spectator and $t_2$. Undoing the known reference letter gives
+
+$$
+\mathcal D_1\circ\mathcal N_{1,p}
+ =p_0\operatorname{id}_3+p_1\operatorname{Ad}_W.
+\tag{26.10}
+$$
+
+Its adjoint fixes every element of (26.9). This proves both the
+one-step attainability and its full-qutrit scope.
+
+Now fix $n\ge2$. Three actual histories suffice for the upper
+inclusion. Write $o=0^n$, $e_1=(1,0,\ldots,0)$ and
+$e_2=(0,1,0,\ldots,0)$, with the nonzero entries in the first
+and second chronological positions. Direct cancellation in the
+actual order gives
+
+$$
+\begin{aligned}
+Q_o&=a^n,\\
+Q_{e_1}&=a^{n-1}b=a^nW,\\
+Q_{e_2}&=a^{n-2}ba=a^{n-1}Wa,\\
+Q_o^\dagger Q_{e_1}&=W,\qquad
+Q_o^\dagger Q_{e_2}=a^{-1}Wa.
+\end{aligned}
+\tag{26.11}
+$$
+
+They all have positive probability by (26.2); hence
+$\mathcal C_{n,p}\subseteq\{W,a^{-1}Wa\}'$. Reuse the actual
+permutation identities (12.4), valid at every real angle:
+
+$$
+aWa^{-1}=U_0WU_0,\qquad W(U_0WU_0)W=U_0.
+\tag{26.12}
+$$
+
+Conjugating the two-relative commutant by $a$ therefore gives
+
+$$
+\begin{aligned}
+a\{W,a^{-1}Wa\}'a^\dagger
+ &=\{U_0WU_0,W\}'\\
+ &=\{U_0,W\}'=\{U_0,U_1\}'
+ =\mathbb CP\oplus\mathbb C(I_3-P).
+\end{aligned}
+\tag{26.13}
+$$
+
+For the middle equality, commuting with $W$ and $U_0WU_0$
+implies commuting with their product $W(U_0WU_0)W=U_0$;
+the reverse implication follows by multiplying those matrices.
+The equality with $\{U_0,U_1\}'$ uses $U_1=U_0W$ and
+$W=U_0^\dagger U_1$. The last equality is the existing
+three-dimensional permutation commutant in [Half-Gram classification,
+§6, equation (6.4) and its proof][HG26]: in its recurrent coordinates
+$(u,v,z)$ the matrices are precisely the present $U_0,U_1$, its
+vector $s$ is $B\xi$, and its recurrent identity $P_{R_3}$ is
+$BI_3B^\dagger$. Thus its algebra
+$\operatorname{span}\{|s\rangle\langle s|,
+P_{R_3}-|s\rangle\langle s|\}$ becomes the last algebra in
+(26.13). This uses the full three-dimensional commutant, including
+the spectator line.
+
+The cross-block equations make that last point explicit. In
+$\mathbb C\xi\oplus T$ write a commuting matrix as
+$Y=\left(\begin{smallmatrix}\alpha&r\\c&C\end{smallmatrix}\right)$.
+Theorem 6.1 supplies
+
+$$
+W=1\oplus J,\qquad U_0=1\oplus S,\qquad
+J=\begin{pmatrix}-1&0\\0&1\end{pmatrix},\qquad
+S=\begin{pmatrix}1/2&\sqrt3/2\\\sqrt3/2&-1/2\end{pmatrix}.
+\tag{26.14}
+$$
+
+Commutation forces $Jc=c$, $Sc=c$, $rJ=r$ and $rS=r$.
+The $J$ equations give $c=(0,z)^{\mathsf T}$ and $r=(0,w)$;
+the first coordinates of the $S$ equations give
+$\sqrt3 z/2=\sqrt3 w/2=0$. Both cross blocks vanish.
+The active-block calculation in Theorem 12.1 says $C$ is scalar:
+$[C,J]=0$ makes it diagonal, and $[C,S]=0$ equates its two
+diagonal entries. Hence no spectator-active coherence is omitted
+in (26.13). A scalar commutant on $T$ alone would not establish
+this full-qutrit assertion.
+
+Both $U_0$ and $W$ fix $\xi$, so $a\xi=b\xi=e^{i\theta}\xi$.
+Their unitarity makes $\mathbb C\xi\oplus T$ reducing. In
+particular $a$ commutes with $P$, and conjugation by $a$ fixes
+$\mathbb CP\oplus\mathbb C(I_3-P)$ pointwise. Equation (26.13)
+then proves
+$\mathcal C_{n,p}\subseteq\mathbb CP\oplus\mathbb C(I_3-P)$.
+Conversely, every $Q_h$ commutes with $P$. Thus every
+$Q_h^\dagger Q_g$ commutes with both $P$ and $I_3-P$, proving
+the opposite inclusion in (26.5). Also, for
+$X=\alpha P+\beta(I_3-P)$,
+
+$$
+\mathcal N_{n,p}^\dagger(X)=\sum_hp_hQ_h^\dagger XQ_h=X.
+\tag{26.15}
+$$
+
+Identity is therefore one common recovery for the entire algebra
+at every $n\ge2$. The necessity (26.8) excludes every algebra
+not contained in it. Together with (26.9)–(26.10) and the empty
+horizon, this proves uniqueness, maximality and all the stated
+recoveries.
+
+The correspondence to the fixed actual $\theta=\pi/6$ model can
+also be made entrywise, without substituting different word
+matrices. In (26.14) the active letter is
+
+$$
+\begin{aligned}
+A_\theta=a|_T
+ &=S\operatorname{diag}(e^{-i\theta},e^{i\theta}),\qquad b|_T=A_\theta J,\\
+A_{\pi/6}
+ &=\frac14\begin{pmatrix}
+\sqrt3-i&3+i\sqrt3\\3-i\sqrt3&-\sqrt3-i
+\end{pmatrix}=A,\\
+A_\theta^\dagger JA_\theta
+ &=\begin{pmatrix}
+1/2&-\sqrt3 e^{2i\theta}/2\\
+-\sqrt3 e^{-2i\theta}/2&-1/2
+\end{pmatrix}.
+\end{aligned}
+\tag{26.16}
+$$
+
+Here $A,J$ are exactly [Purity arithmetic, Proposition 63.2,
+(63.4)–(63.6)][PA26], and its $f_1,f_2$ equal the present
+$t_1,t_2$. The off-diagonal entries of the second relative
+are nonzero for every real $\theta$, including the bounded
+angles of Theorem 12.1. At $\pi/6$ they are
+$-\sqrt3/4-3i/4$ and $-\sqrt3/4+3i/4$.
+To retain the spectator phase in that source's notation, put
+$\lambda=e^{i\pi/6}$ and
+$G_h=g_{h_n}\cdots g_{h_1}$ with $g_0=A,g_1=AJ$. Its
+Definition 51.1 gives
+
+$$
+\begin{aligned}
+Q_h&=\lambda^nS_0(1\oplus\lambda^{-n}G_h)S_0^\dagger,\\
+Q_h^\dagger Q_g&=S_0(1\oplus G_h^\dagger G_g)S_0^\dagger
+\qquad(|h|=|g|=n).
+\end{aligned}
+\tag{26.17}
+$$
+
+Both scalar phases cancel in the relatives; their spectator block
+is still one. In particular the two relatives in (26.11) are
+$S_0(1\oplus J)S_0^\dagger$ and
+$S_0(1\oplus A^\dagger JA)S_0^\dagger$ at that angle.
+This verifies the exact actual-parameter specialization. $\square$
+

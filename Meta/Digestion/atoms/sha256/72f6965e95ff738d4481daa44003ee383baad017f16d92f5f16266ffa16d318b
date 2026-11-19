@@ -1,0 +1,23 @@
+**定义 7.1（严格阈值与尺度）。** 对正整数 $n$，令 $\omega(n)=\#\{p:p\text{ 为素数},\ p\mid n\}$，特别地 $\omega(1)=0$。本章所有对数均为自然对数。对实数 $x>e$，记
+
+$$
+L=\log x,\qquad \ell=\log L,\qquad
+T_2(x)=\frac L\ell+\frac L{\ell^2},\qquad
+N_2(x)=\#\{n\in\mathbb Z:1\le n\le x,\ \omega(n)>T_2(x)\}.
+$$
+
+在变量 $P=L\to\infty$ 下，使用下列记号：
+
+$$
+\begin{aligned}
+a(P)&=\frac P{\log P}+\frac P{(\log P)^2},&
+k(P)&=\lfloor a(P)\rfloor+1,\\
+g(P)&=\frac P{\log P},&
+Z(P)&=\frac P{(\log P)^{3/2}},\\
+A&=\frac{\pi^2}{6},&
+c&=\frac{\pi}{2\sqrt3},\qquad K=\frac{2\pi}{\sqrt3}.
+\end{aligned}
+$$
+
+因此 $N_2(e^P)$ 精确地计数 $\omega(n)\ge k(P)$ 的整数，包括 $a(P)$ 恰为整数的情形。另记 $\pi(t)=\#\{p\le t:p\text{ 为素数}\}$、$\theta(t)=\sum_{p\le t}\log p$；素数求和中的 $p$ 总遍历正素数。圆周率与素数计数函数由是否带自变量区分。
+

@@ -1,0 +1,63 @@
+#### 1.4.8 Perron／Parry 回返权与均匀块权不同
+
+采用仓内已给的唯一根
+
+$$
+\sum_{\ell=1}^k\lambda_k^{-\ell}=1,
+\qquad 1<\lambda_k<2.
+$$
+
+状态 $i\in\{0,\ldots,k-1\}$ 记录已经读到的末尾连续一的个数。令
+
+$$
+h_i=\sum_{\ell=1}^{k-i}\lambda_k^{-\ell},\qquad h_0=1.
+$$
+
+仓内固定初态零的 Perron 转移为
+
+$$
+P(i\xrightarrow{0}0)=\frac{h_0}{\lambda_kh_i},
+\qquad
+P(i\xrightarrow{1}i+1)=\frac{h_{i+1}}{\lambda_kh_i}\quad(i<k-1),
+$$
+
+最后状态只有输出零的转移。沿从零返回零的块 $1^r0$ 相乘，权重望远镜消去，得到
+
+$$
+p_r=\Pr(B(r)\mid\text{刚处于状态零})
+=\lambda_k^{-(r+1)},\qquad 0\le r<k.
+$$
+
+它们的和为一。每个块结束后都回到同一个状态零；对任意有限块字，逐段使用相同转移便得到
+
+$$
+\Pr([a_0\cdots a_{n-1}]_{\mathrm{block}})
+=\prod_{i<n}p_{a_i}
+=\lambda_k^{-L(a)}.
+$$
+
+所以固定回返边界后，这份根律对应非均匀 iid 块概率 $(p_r)$。对于每个有限 $k\ge2$，$p_0=\lambda_k^{-1}$ 与 $p_1=\lambda_k^{-2}$ 不相等，故它不是均匀块测度。
+
+更一般地，任意块 iid 权重 $(p_r)$ 对原始窗口 $w=W(a)1^j$ 给出
+
+$$
+\Pr([w]_{X_k})
+=\left(\prod_{i<|a|}p_{a_i}\right)
+\left(\sum_{r=j}^{k-1}p_r\right).
+$$
+
+$j=0$ 时最后一因子为一。在上述 Perron 权重下，若 $N=|w|$，则这恰化成仓内的柱公式
+
+$$
+\Pr([w]_{X_k})=\lambda_k^{-N}h_j.
+$$
+
+这也再次识别了初始律：
+
+$$
+\Pr([0])=\lambda_k^{-1},
+\qquad
+\Pr(\sigma^{-1}[0])=2\lambda_k^{-2}\ne\lambda_k^{-1}.
+$$
+
+故固定初态零的根律不平稳。通常称作最大熵 Parry 概率的平稳版本，还要用相应平稳状态分布；

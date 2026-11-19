@@ -1,0 +1,123 @@
+**Theorem 19.1 (A common infimum and a specific simulator).** Define
+
+$$
+d_*(\theta)=\inf_{\mathcal T\in\mathfrak S_{\rm fin}}
+                 \|\mathcal J_\theta-\mathcal T\|_\diamond.
+\tag{19.1}
+$$
+
+The same definition using either class in Theorem 18.2 gives the
+same number. It is independent of $\theta$, denoted $d_*$, and
+
+$$
+\frac4{25}\le d_*\le1-\frac1{\sqrt2}.
+\tag{19.2}
+$$
+
+For every angle there is an explicit legal finite-depth simulator
+$\mathcal T_\theta$ whose distance is exactly the upper value.
+This equality for the displayed simulator does not identify $d_*$.
+
+Proof. Precomposition by $\operatorname{Ad}_{D_\theta}$ is a
+bijection on each simulator class, with inverse precomposition by
+$D_\theta^\dagger$. It is available as one initial legal unitary
+and is an isometry for the diamond norm. Equation (17.4) therefore
+makes the infimum independent of the angle. The lower bound is
+Theorems 18.1–18.2.
+
+To construct the upper simulator, put $P_0=P$, $P_1=Q$ and use
+the following explicit unitary polar extensions. With
+$u_-=q(e_0-e_3)$ and $v_-=q(e_1-e_4)$, specify their ordered
+columns by
+
+$$
+T_0=[u\ \ u_-\ \ v\ \ v_-\ \ z],\qquad
+T_1=[u_-\ \ u\ \ v\ \ z\ \ v_-].
+\tag{19.3}
+$$
+
+Each is an orthonormal basis, so $T_j$ is unitary, and the actual
+matrices satisfy
+
+$$
+K_j=T_j(P_j+qS),\qquad q=1/\sqrt2.
+\tag{19.4}
+$$
+
+At angle zero toss a fair independent coin. One value selects
+PVM $\{P+S,Q\}$; the other selects $\{P,Q+S\}$. In both
+cases assign flag zero to the first outcome and flag one to the
+second, and apply $T_j$ conditional on that flag. The resulting
+fine operations are
+
+$$
+\mathcal T_{0,j}(X)=\frac12T_j
+ \big((P_j+S)X(P_j+S)+P_jXP_j\big)T_j^\dagger.
+\tag{19.5}
+$$
+
+All four outcomes of the two possible PVMs are retained. Its
+flag-$j$ effect is $P_j+S/2$, already exactly the target effect.
+Expansion of (19.4)–(19.5) gives, on every complex input,
+
+$$
+\Delta_j(X):=K_jXK_j^\dagger-\mathcal T_{0,j}(X)
+=\epsilon T_j(P_jXS+SXP_j)T_j^\dagger,\qquad
+\epsilon=\frac1{\sqrt2}-\frac12>0.
+\tag{19.6}
+$$
+
+Consider a unit vector $\psi$ on $H\otimes Z$, and let
+$x_P=(P\otimes I_Z)\psi$, $x_Q=(Q\otimes I_Z)\psi$,
+$x_S=(S\otimes I_Z)\psi$, with squared norms $p,q',s$.
+These are orthogonal and $p+q'+s=1$. Each flag block in
+$(\mathcal J_0-\mathcal T_0)\otimes\operatorname{id}_Z$
+applied to $|\psi\rangle\langle\psi|$ is, up to its unitary,
+$\epsilon(|x_{P_j}\rangle\langle x_S|
++|x_S\rangle\langle x_{P_j}|)$. Its two nonzero eigenvalues
+are $\pm\epsilon\|x_{P_j}\|\|x_S\|$, with zeros allowed
+at a boundary. The direct sum over flags has trace norm
+
+$$
+2\epsilon\sqrt s(\sqrt p+\sqrt{q'})
+\le2\epsilon\sqrt{2s(1-s)}
+\le\sqrt2\epsilon=1-\frac1{\sqrt2}.
+\tag{19.7}
+$$
+
+Convexity gives the same bound for mixed states and arbitrary
+reference dimension. To see that this is a diamond bound on
+all operators, write $\Delta=\mathcal J_0-\mathcal T_0$.
+For any reference operator input $X$, form the Hermitian block
+$Y=\tfrac12\left(\begin{smallmatrix}0&X\\X^\dagger&0\end{smallmatrix}\right)$
+using one more untouched reference factor. Then
+$\|Y\|_1=\|X\|_1$ and
+$\|(\Delta\otimes\operatorname{id})(Y)\|_1
+=\|(\Delta\otimes\operatorname{id})(X)\|_1$ by Hermiticity
+preservation and the singular values of an off-diagonal block.
+The positive and negative parts of $Y$ have total trace
+$\|Y\|_1$. Applying the state bound separately and the triangle
+inequality proves the desired bound times $\|X\|_1$.
+Thus no restriction to unentangled or positive test operators
+has been imposed on (17.2).
+
+Equality is attained already without a reference by
+
+$$
+\psi_*=(e_0+e_1)/2+e_2/\sqrt2.
+\tag{19.8}
+$$
+
+Here $p=q'=1/4$ and $s=1/2$, so both inequalities in (19.7)
+are equalities. Therefore
+$\|\mathcal J_0-\mathcal T_0\|_\diamond=1-1/\sqrt2$.
+For general angle set
+$\mathcal T_\theta=\mathcal T_0\circ\operatorname{Ad}_{D_\theta}$.
+It uses the same coin and PVMs after one initial unitary, has the
+same exact error, and is saturated by $D_\theta^\dagger\psi_*$.
+Equivalently its PVM projections are conjugated by
+$D_\theta^\dagger$, and its conditional unitaries are
+$T_jD_\theta$. This completes the construction and (19.2).
+No matching optimality proof for this simulator is implied.
+$\square$
+

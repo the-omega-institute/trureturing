@@ -26,7 +26,7 @@ Now let x, y and z be real numbers in the closed unit ball, so their squared coo
 
 At (1,0,0) the three entropy values are 0, ln(2) and ln(2). Changing the nonzero coordinate to -1 or permuting coordinates gives the same total. Thus the universal lower bound 2 ln(2) is sharp.
 
-The equality cases follow from the existing private radial_concave lemma in QubitEntropyContraction. Set L=ln(2)>0 and f(u)=h((1+sqrt(u))/2) for u in [0,1]. This lemma supplies concavity of f, with f(0)=L and f(1)=0. Subtract the endpoint chord to define g(u)=f(u)-(1-u)L. Then g is concave, g(0)=g(1)=0, and g(u) is nonnegative throughout [0,1]. At the interior point u=1/4, sqrt(u)=1/2 and h(3/4)=2L-(3/4)ln(3), so $\operatorname{g}(\frac{1}{4})=\frac{5L-3\operatorname{ln}(3)}{4}=\frac{\operatorname{ln}(32)-\operatorname{ln}(27)}{4}> 0$. The logarithm identities ln(32)=5 ln(2) and ln(27)=3 ln(3), together with 0<27<32 and strict increase of the natural logarithm on positive numbers, give this strict sign.
+The equality cases follow from the radial_concave lemma in QubitEntropyContraction. Set L=ln(2)>0 and f(u)=h((1+sqrt(u))/2) for u in [0,1]. This lemma supplies concavity of f, with f(0)=L and f(1)=0. Subtract the endpoint chord to define g(u)=f(u)-(1-u)L. Then g is concave, g(0)=g(1)=0, and g(u) is nonnegative throughout [0,1]. At the interior point u=1/4, sqrt(u)=1/2 and h(3/4)=2L-(3/4)ln(3), so $\operatorname{g}(\frac{1}{4})=\frac{5L-3\operatorname{ln}(3)}{4}=\frac{\operatorname{ln}(32)-\operatorname{ln}(27)}{4}> 0$. The logarithm identities ln(32)=5 ln(2) and ln(27)=3 ln(3), together with 0<27<32 and strict increase of the natural logarithm on positive numbers, give this strict sign.
 
 For 0<u<=1/4, write u=(1-4u)0+(4u)(1/4). Both weights are nonnegative and sum to one. Concavity of g gives $\operatorname{g}(u)\ge 4u\,\operatorname{g}(\frac{1}{4})> 0$. For 1/4<u<1, write u=(4(1-u)/3)(1/4)+((4u-1)/3)1. Again the weights are nonnegative and sum to one, and concavity gives $\operatorname{g}(u)\ge \frac{4(1-u)}{3}\,\operatorname{g}(\frac{1}{4})> 0$. Hence g(u)>0 for every 0<u<1. This uses the existing concavity and one positive chord gap; no strict-concavity assertion or new derivative argument is needed.
 
@@ -36,7 +36,73 @@ Write H=h((1+x)/2)+h((1+y)/2)+h((1+z)/2) and s=x squared+y squared+z squared. Th
 
 For every real x,y,z with x squared+y squared+z squared<=1, the complete conclusion is H>=2 ln(2), with H=2 ln(2) if and only if (x squared=1 and y=z=0), or (y squared=1 and x=z=0), or (z squared=1 and x=y=0). Equivalently, the minimizers are exactly (1,0,0), (-1,0,0), (0,1,0), (0,-1,0), (0,0,1) and (0,0,-1). Every interior point has H>2 ln(2). This classification applies the existing scalar concavity and contraction results. Here h is Real.binEntropy on [0,1], with natural logarithms and zero endpoint terms. The conclusion concerns real coordinates; a physical Born-probability interpretation, a stronger uncertainty relation and a literature novelty claim are outside this derivation.
 
+**Definition 1.2 (radialEntropy).**
+
+$$\forall (\operatorname{u} : \mathbb{R}), (\operatorname{radialEntropy} \operatorname{u} = (\operatorname{Real} . \operatorname{binEntropy} ((1 + \operatorname{Real} . \operatorname{sqrt} \operatorname{u}) / 2)))$$
+
+*Formalization.* `D5/S3/Quantum/Information/QubitEntropyContraction.radialEntropy` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed equality defines the entropy-coordinate function.
+
+**Definition 1.3 (logRatio).**
+
+$$\forall (\operatorname{r} : \mathbb{R}), (\operatorname{logRatio} \operatorname{r} = (\operatorname{Real} . \operatorname{log} (1 + \operatorname{r}) - \operatorname{Real} . \operatorname{log} (1 - \operatorname{r})))$$
+
+*Formalization.* `D5/S3/Quantum/Information/QubitEntropyContraction.logRatio` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed equality defines the entropy-coordinate function.
+
+**Theorem 1.4 (radial deriv).**
+
+$$\forall (\operatorname{u} : \mathbb{R}), ((\operatorname{u} \in \operatorname{Ioo} (0 : \mathbb{R}) 1) \implies (\operatorname{HasDerivAt} \operatorname{radialEntropy} (- \operatorname{logRatio} (\operatorname{Real} . \operatorname{sqrt} \operatorname{u}) / (4 \cdot \operatorname{Real} . \operatorname{sqrt} \operatorname{u})) \operatorname{u}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed derivative or order property holds throughout the indicated real interval.
+
+**Theorem 1.5 (radial deriv2).**
+
+$$\forall (\operatorname{u} : \mathbb{R}), ((\operatorname{u} \in \operatorname{Ioo} (0 : \mathbb{R}) 1) \implies (\operatorname{HasDerivAt} (\operatorname{fun} \operatorname{u} \mapsto - \operatorname{logRatio} (\operatorname{Real} . \operatorname{sqrt} \operatorname{u}) / (4 \cdot \operatorname{Real} . \operatorname{sqrt} \operatorname{u})) ((\operatorname{logRatio} (\operatorname{Real} . \operatorname{sqrt} \operatorname{u}) - 2 \cdot \operatorname{Real} . \operatorname{sqrt} \operatorname{u} / (1 - \operatorname{u})) / (8 \cdot \operatorname{Real} . \operatorname{sqrt} \operatorname{u} ^{3})) \operatorname{u}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed derivative or order property holds throughout the indicated real interval.
+
+**Theorem 1.6 (radial concave).**
+
+$$\operatorname{ConcaveOn} \mathbb{R} (\operatorname{Icc} (0 : \mathbb{R}) 1) \operatorname{radialEntropy}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed derivative or order property holds throughout the indicated real interval.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Information/QubitEntropyContraction.logRatio`
 - Truth anchor: `D5/S3/Quantum/Information/QubitEntropyContraction.qubit_holevo_contraction`
+- Truth anchor: `D5/S3/Quantum/Information/QubitEntropyContraction.radialEntropy`
+- Truth anchor: `D5/S3/Quantum/Information/QubitEntropyContraction.radial_concave`
+- Truth anchor: `D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv`
+- Truth anchor: `D5/S3/Quantum/Information/QubitEntropyContraction.radial_deriv2`
+- Dependency: [D5/S3/Quantum/Divergence/VonNeumannEntropyPinching](../Divergence/VonNeumannEntropyPinching.md)
 - Dependency: [D5/S3/Quantum/Information/QubitNormalFormState](QubitNormalFormState.md)

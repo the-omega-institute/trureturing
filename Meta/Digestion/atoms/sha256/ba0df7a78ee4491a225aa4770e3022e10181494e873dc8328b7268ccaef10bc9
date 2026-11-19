@@ -1,0 +1,72 @@
+**定理 3.7（整个支撑极大面与全部后代取等条件）。** 定义两个实际仪器
+
+$$
+\begin{array}{ll}
+\mathcal A_{+,0}=\operatorname{Ad}_{P+S},&
+\mathcal A_{+,1}=\operatorname{Ad}_Q,\\
+\mathcal A_{-,0}=\operatorname{Ad}_P,&
+\mathcal A_{-,1}=\operatorname{Ad}_{Q+S},
+\end{array}
+\qquad
+\mathcal T_t=t\mathcal A_++(1-t)\mathcal A_-,\quad 0\le t\le1.
+$$
+
+则完整的暴露面恰为
+
+$$
+\{\mathcal T\in\mathcal C:\mathcal G(\mathcal T)=65\}
+=\{\mathcal T_t:0\le t\le1\}.
+\tag{3.19}
+$$
+
+两个端点分别测量 $\{P+S,Q\}$、$\{P,Q+S\}$，按所列顺序报告旗标并保留寄存器；经典混合实现整条线段。因此三个实际类中的全部支撑最大者也恰为这条线段。
+
+证明。先考察 $\mathcal K$ 中分数为六十五的通道。命题 3.6 的严格界排除纯幺正与除 $3+2$ 外的所有分拆。记秩三投影为 $E_3$；(3.11) 的严格单调性迫使 $\operatorname{Tr}(E_3S)=1$，故 $E_3s=s$，互补秩二投影 $E_2=I-E_3$ 满足 $E_2s=0$。两支的分数必须分别达到各自上界四十九与十六。
+
+对秩三支，连续分支表达式有一个最大点 $p\in[0,1]$。令 $M(p)=4pP+4(1-p)Q+9S$。分数四十九要求
+
+$$
+\operatorname{Tr}_{E_3H}\sqrt{E_3M(p)E_3}
+=7=\operatorname{Tr}_{E_3H}\sqrt{4E_3+5S}.
+$$
+
+这里两个被开方矩阵有正次序关系。一般地，若 $0\le A\le B$ 且 $\operatorname{Tr}\sqrt A=\operatorname{Tr}\sqrt B$，有序本征值单调性及平方根严格递增性迫使每个对应本征值相等；于是正矩阵 $B-A$ 的迹为零，故 $A=B$。应用之得到
+
+$$
+E_3M(p)E_3=4E_3+5S,
+\qquad E_3[(1-p)P+pQ]E_3=0.
+\tag{3.20}
+$$
+
+若 $0<p<1$，方括号的核恰为 $SH$，正性会把三维 $E_3H$ 放进该一维核中，矛盾。若 $p=1$，有 $QE_3=0$，故 $E_3\le P+S$，同秩给出 $E_3=P+S$。若 $p=0$，同理 $E_3=Q+S$。这确定了首次 PVM 的两种规范方向，而非仅展示一个取等实例。
+
+还须确定这些方向的所有 Kraus 后代及其旗标。先取 $E_3=P+S$。在该子空间上选
+
+$$
+Y=14P+21S=7C_0|_{E_3H},\qquad
+\alpha_j=\operatorname{Tr}_{E_3H}(E_3C_j^2E_3Y^{-1}).
+$$
+
+则 $\operatorname{Tr}Y=49$、$\alpha_0=1$、$\alpha_1=3/7$。对后代 $B=B E_3$ 写 $d_B=\operatorname{Tr}(YB^\dagger B)\ge0$。式 (3.6) 及完整效应说明总亏损为
+
+$$
+49-\sum_B|\operatorname{Tr}(C_{j_B}^\dagger B)|^2
+=\sum_B\left[(1-\alpha_{j_B})d_B+
+\alpha_{j_B}d_B-|\operatorname{Tr}(C_{j_B}^\dagger B)|^2\right].
+\tag{3.21}
+$$
+
+每一项均非负。取等迫使每个旗标一后代的 $d_B=0$，由 $Y$ 在支撑上正定知该后代为零。每个非零旗标零后代必须在 Hilbert–Schmidt Cauchy–Schwarz 中取等，亦即
+
+$$
+BY^{1/2}=\lambda C_0E_3Y^{-1/2},\qquad
+B=\lambda C_0E_3Y^{-1}=(\lambda/7)E_3.
+\tag{3.22}
+$$
+
+完整效应又给出这些标量的模平方和为一。所以整支操作恰为旗标零上的 $\operatorname{Ad}_{P+S}$，无论 Kraus 记录怎样细分。
+
+互补支为 $E_2=Q$。取 $Y=8Q$，其迹为十六；旗标一的系数为一，旗标零的系数为零。同一非负亏损分解排除全部旗标零后代，Cauchy–Schwarz 取等迫使其余后代均为 $Q$ 的标量倍数，模平方和为一。故此支恰为旗标一上的 $\operatorname{Ad}_Q$，整个通道是 $\mathcal A_+$。交换 $P,Q$ 与两个旗标得到 $\mathcal A_-$。证明允许任意 CP 后代，故包含一切实际自适应后代；对可数族，非负亏损和为零仍逐项强制上述结论。
+
+任意 $\mathcal T\in\mathcal C$ 都有有限凸组合表示。若 $\mathcal G(\mathcal T)=65$，所有正权分量都必须达到六十五，因此只可能是刚分类的两个端点。反之，两个实际端点及其经典混合均达到六十五。由 (3.18) 以及整段属于 $\mathfrak S_{\rm fin}$，三个实际类的面与 (3.19) 相同。若从实际树本身描述取等，经典带上的非负支撑亏损积分为零，故几乎每条有权带都取等；定理 3.3 的忠实输入与残余效应论证使几乎必然终止类的这些带具有完整可数后代效应，所以其非零后代亦服从 (3.22) 及互补支条件。这里不对零测度异常带作额外停止断言。$\square$
+

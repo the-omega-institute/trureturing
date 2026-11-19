@@ -510,7 +510,7 @@ private theorem eraseKraus_complete : (∑ a : ι, (((1 : Matrix (n × ι) (n ×
     Matrix.submatrix_apply, Matrix.one_apply, Prod.mk.injEq, apply_ite, ite_and, eq_comm]
   split_ifs <;> simp_all
 
-private theorem exists_eraseChannel :
+theorem exists_eraseChannel :
     ∃ Φ : D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel (n × ι) n,
       ∀ X : Matrix (n × ι) (n × ι) ℂ,
         CStarMatrix.ofMatrix.symm (Φ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =

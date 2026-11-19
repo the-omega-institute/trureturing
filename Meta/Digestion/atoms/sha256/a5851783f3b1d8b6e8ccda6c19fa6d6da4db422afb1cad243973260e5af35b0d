@@ -1,0 +1,67 @@
+**Theorem 14.2 (All nonbounded rational angles are maximal).** If
+$\theta/\pi\in\mathbb Q\setminus\tfrac12\mathbb Z$, then
+$m_n(\theta)=2^n$ for every $n\ge0$.
+
+Proof. Write $\theta/\pi=p/q$ in lowest terms, $q>0$.
+The hypothesis is exactly $q>2$; in particular $\cos\theta\ne0$.
+Set $\zeta=e^{2i\theta}$, a primitive $q$-th root of unity, and
+$d=\varphi(q)$. For the cyclotomic polynomial $\Phi_q$ put
+
+$$
+F_q(X)=(1-X)^d\Phi_q\!\left(\frac{1+X}{1-X}\right).
+\tag{14.5}
+$$
+
+Expansion shows $F_q\in\mathbb Z[X]$.
+The actual parameter satisfies
+$z=i\tan\theta=(\zeta-1)/(\zeta+1)$, so $F_q(z)=0$.
+Its leading coefficient is $(-1)^d\Phi_q(-1)\ne0$, since $q>2$,
+and its degree is $d$. The inverse fractional transformation is
+$\zeta=(1+z)/(1-z)$, with nonzero denominators in both directions.
+Thus $\mathbb Q(z)=\mathbb Q(\zeta)$ has degree $d$.
+The primitive part of $F_q$ consequently is the primitive
+irreducible polynomial of $z$, up to sign. This justifies
+irreducibility rather than inferring it from one root alone.
+Evaluation of (14.5) by its polynomial expansion gives
+
+$$
+F_q(1)=2^d,\qquad F_q(0)=\Phi_q(1).
+\tag{14.6}
+$$
+
+To determine the content, first suppose $q$ is not a power of two.
+Write $q=2^a m$ with odd $m>1$. In $\mathbb F_2[X]$,
+$X^q-1=(X^m-1)^{2^a}$, and the multiplicity of $X=1$ is exactly
+$2^a$ because $(X^m-1)'(1)=1$. In the integral cyclotomic
+factorization, the divisors $1,2,\ldots,2^a$ already contribute
+all this multiplicity after reduction: $\Phi_1=X-1$ contributes
+one, and $\Phi_{2^j}=X^{2^{j-1}}+1$ contributes $2^{j-1}$
+for $1\le j\le a$. Their sum is $2^a$. No other cyclotomic
+divisor of $X^q-1$, in particular $\Phi_q$, can vanish at one
+modulo two. Hence $\Phi_q(1)$ is odd. The positive integral
+content of $F_q$ divides both values in (14.6), and therefore
+is one. Its primitive part has even value $2^d$ at one.
+
+If $q=2^a\ge4$, then $d=2^{a-1}\ge2$ and
+$\Phi_q(U)=U^d+1$. Thus
+
+$$
+F_q(X)=(1+X)^d+(1-X)^d.
+\tag{14.7}
+$$
+
+All coefficients are even and the constant coefficient is exactly
+two. Its content is exactly two; its primitive part has value
+$2^{d-1}$ at one, again even. Theorem 14.1 proves the conclusion
+in both cases, for all denominators, rather than for a finite
+selection of cyclotomic polynomials.
+
+For example $\theta=\pi/4$ has $z=i$ and primitive polynomial
+$X^2+1$. The angle $\pi/6$ has $z=i/\sqrt3$ and primitive
+polynomial $3X^2+1$; its all-length, including cross-length,
+qutrit injectivity is already Theorem 8.2. The cases
+$\cos\theta=0$, excluded from (14.3), are exactly odd multiples
+of $\pi/2$ and have the bounded counts of Theorem 12.1. The other
+excluded rational angles are integral multiples of $\pi$, also
+covered there. $\square$
+
