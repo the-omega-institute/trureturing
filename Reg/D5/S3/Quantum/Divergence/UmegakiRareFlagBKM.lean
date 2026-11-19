@@ -299,4 +299,93 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end TraceCrossSpectral
 
+namespace BlockDiagPosDef
+
+abbrev signature : Signature where
+  Params := Σ _ : Type u, Type v
+  State p := Matrix (p.1 ⊕ p.2) (p.1 ⊕ p.2) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ M => M.PosDef) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {iota : Type u} {kappa : Type v} [Fintype iota] [DecidableEq iota]
+    [Fintype kappa] [DecidableEq kappa]
+    (Z : Matrix iota iota ℂ) (C : Matrix kappa kappa ℂ)
+    (hZ : Z.PosDef) (hC : C.PosDef) {δ : ℝ} (hδ : 0 < δ),
+    R.readout () ⟨iota, kappa⟩ (Matrix.fromBlocks Z 0 0 (δ • C))
+
+private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
+  intro h
+  exact h (iota := ULift.{u} Unit) (kappa := ULift.{v} Unit)
+    1 1 Matrix.PosDef.one Matrix.PosDef.one (δ := 1) zero_lt_one
+
+private theorem dependence : ObservationalDependence signature.{u, v} actual := by
+  intro i
+  refine ⟨⟨ULift.{u} Unit, ULift.{v} Unit⟩, 1, 0, ?_⟩
+  intro he
+  have hp : (0 : Matrix (ULift.{u} Unit ⊕ ULift.{v} Unit)
+      (ULift.{u} Unit ⊕ ULift.{v} Unit) ℂ).PosDef := Eq.mp he Matrix.PosDef.one
+  have hz : (0 : ℂ) < 0 := hp.diag_pos (i := Sum.inl ⟨()⟩)
+  exact (lt_irrefl _) hz
+
+def family : Registration arena.{u, v} (type_of% @block_diag_posDef.{u, v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@block_diag_posDef, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@block_diag_posDef.{u, v}) (Realization signature.{u, v}) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.UmegakiRareFlagBKM.block_diag_posDef.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.UmegakiRareFlagBKM.BlockDiagPosDef.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u, v}⟩
+  objectArena := .source ⟨arena.{u, v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u, v} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ M => M.PosDef) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.UmegakiRareFlagBKM
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+
+end BlockDiagPosDef
+
 end Reg.D5.S3.Quantum.Divergence.UmegakiRareFlagBKM

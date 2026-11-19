@@ -182,7 +182,7 @@ private theorem logDeriv_self {n : ℕ} (m : Matrix (Fin n) (Fin n) ℂ) (hm : m
   exact sub_eq_zero.mp hx
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private theorem logDeriv_smul {n : ℕ} (m X : Matrix (Fin n) (Fin n) ℂ) (c : ℝ) :
+theorem logDeriv_smul {n : ℕ} (m X : Matrix (Fin n) (Fin n) ℂ) (c : ℝ) :
     D5.S3.Divergence.LogDerivTrace.logDeriv m (c•X)=
       c•D5.S3.Divergence.LogDerivTrace.logDeriv m X := by
   unfold D5.S3.Divergence.LogDerivTrace.logDeriv
