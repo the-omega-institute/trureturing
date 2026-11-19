@@ -1,0 +1,73 @@
+### 6.7 Shortest root lattices, split directions, and support
+
+Let $F(r,s)=cr^2-brs+as^2$ and
+$\Gamma=\{(r,s)\in\mathbb Z^2:r\equiv\lambda_0s\pmod q\}$.
+In the unramified case one norm factor is divisible by $p^2$ and the
+other by $p$, so $F(\Gamma)\subset p^3\mathbb Z$. In the ramified case the
+same assertion follows directly from (3.6).
+If $F(v)\ne0$, then
+
+$$
+p^3\le|F(v)|\ll A^2\tau\|v\|_*^2,\qquad
+ \|v\|_*:=\max(|r|/X,|s|/Y).
+$$
+
+Since $p\tau\ll_{C_0}p^{-5/4}/T$ is bounded,
+$\|v\|_*\gg p^2/A$. For a rationally split $F$ a nonzero null
+vector may occur; retain an actual middle $m=(w,t)$ in this branch.
+Lemma 3.3 gives $v_pF(m)=3$, so $F(m)\ne0$.
+A null vector $v$ is independent of $m$, and
+$0\ne\det(v,m)\in q\mathbb Z$, whereas
+$|\det(v,m)|\le2A\|v\|_*$. This proves the same lower bound.
+The ramified field has no rational null line, since $v_p(d)=1$.
+Keep the original middle difference lattice $\Gamma_0=\Gamma$.
+Under the finite shear $S_z(W,T)=(W,T+zW)$, the projection difference
+lattice is
+
+$$
+\Gamma_z=S_z\Gamma_0
+ =\{(r,s)\in\mathbb Z^2:r\equiv\lambda' s\pmod q\},
+ \qquad \det\Gamma_z=q,\qquad F'(S_zv)=F(v).
+$$
+
+The same actual witness becomes $m_z=(w,t+zw)$, with
+$F'(m_z)=F'(w,t+zw)=F(w,t)\ne0$, $|(m_z)_1|\le X$ and $|(m_z)_2|\ll Y$.
+It need not lie in a box short modulo $q$. If $v\in\Gamma_z$ is a
+nonzero null vector for $F'$, then $0\ne\det(v,m_z)\in q\mathbb Z$
+and $|\det(v,m_z)|\ll A\|v\|_*$, proving the same shortest-vector
+bound. For nonnull vectors the coefficient heights and
+$F'(\Gamma_z)\subset p^3\mathbb Z$ give that bound. The transformed
+projection coset in (6.11) is an affine translate of $\Gamma_z$.
+Divisibility of $F'$ is asserted on the linear difference lattice,
+not on that affine translate.
+
+For a rank-two lattice of determinant $q$ with this shortest-vector bound,
+normalize by $(r,s)\mapsto(r/X,s/Y)$, so its covolume is $D=q/A$ and
+shortest Euclidean length $\lambda\gg D$. A translated box of widths
+$RX,RY$ lies after normalization in a disk of radius $O(R)$. If it
+contains at most one point the bound is immediate; otherwise
+$\lambda\ll R$. Parallel lattice lines have spacing $D/\lambda$ and
+points on a line have spacing $\lambda$, so the count is at most
+
+$$
+(1+O(R\lambda/D))(1+O(R/\lambda))
+ \ll1+R/\lambda+R^2/D.
+$$
+
+Using $\lambda\gg D$ gives, for every translate and $R\ge1$,
+
+$$
+\#\ll1+RA/q+R^2A/q\ll R^2A/q,
+$$
+
+since $A\ge p^3$. Take $R=1$ with $\Gamma_0$ for the original middle
+box, and $R=T$ with the difference lattice $\Gamma_z$ for the affine
+projection coset. This proves
+
+$$
+\tag{6.12}
+ N_{\rm mid}\ll A/p^2,\qquad N_{\rm proj}\ll T^2A/p^2.
+$$
+
+These are integer support counts; the projection count does not count lifts.
+

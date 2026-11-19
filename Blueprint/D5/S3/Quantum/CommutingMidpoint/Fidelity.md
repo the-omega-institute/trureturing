@@ -30,7 +30,35 @@ $$\forall ( n: Type)[\operatorname{Fintype}\left( n\right)][\operatorname{Decida
 
 For every finite decidable index type, PSD S,V and PD T, B(T,S,V) equals the squared Frobenius norm displayed above. No trace normalization is required. Expand the norm using the Frobenius trace identity. The diagonal terms are tr(S), tr(V); the two cross terms have equal real parts because they are conjugate traces. This proves nonnegativity even for singular S or V.
 
-**Theorem 1.3 (The actual qubit quotient).**
+**Theorem 1.3 (The trace of a qubit square root).**
+
+$$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{ C}\right)),\quad\operatorname{PSD}\left( S\right)\Rightarrow \Re(\operatorname{tr}\left(\sqrt{ S}\right))^{2}=\Re(\operatorname{tr}\left( S\right))+2\sqrt{\Re(\operatorname{det}\left( S\right))}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/CommutingMidpoint/Fidelity.sqrt_trace_square_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
+
+*Commentary.*
+
+For every positive semidefinite complex two by two matrix S, the square of the real trace of CFC.sqrt S is Re tr(S) plus twice sqrt(Re det(S)). Singular matrices are included. The identity follows from the two-dimensional trace recurrence and the determinant of the positive square root. It is used by rootFidelity_sq_formula and by the QTD inverse-root calculation.
+
+**Theorem 1.4 (The qubit square root times its trace).**
+
+$$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{ C}\right)),\quad\operatorname{PSD}\left( S\right)\Rightarrow \Re(\operatorname{tr}\left(\sqrt{ S}\right))\sqrt{ S}= S+\sqrt{\Re(\operatorname{det}\left( S\right))} I$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/CommutingMidpoint/Fidelity.sqrt_times_trace_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Haobo Ma, Reza Rajaei, Wenlin Zhang (2026). *Generalized Fidelity, the Data Processing Inequality, and Convexity*. URL: <https://arxiv.org/html/2609.09753v3>.
+
+*Commentary.*
+
+For every positive semidefinite complex two by two matrix S, the real trace of CFC.sqrt S, cast to a complex scalar, times CFC.sqrt S equals S plus sqrt(Re det(S)) times the identity. No invertibility or trace normalization is required. This is the Cayley-Hamilton identity for the actual positive root; it also supplies the root formula in the QTD refutation.
+
+**Theorem 1.5 (The actual qubit quotient).**
 
 $$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{ C}\right))( V:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{ C}\right))( T:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{ C}\right)),\quad\operatorname{PSD}\left( S\right)\land \operatorname{tr}\left( S\right)=1\land \operatorname{PSD}\left( V\right)\land \operatorname{tr}\left( V\right)=1\land \operatorname{PD}\left( T\right)\land \operatorname{tr}\left( T\right)=1\Rightarrow 0<\operatorname{U}\left( T,  S\right)\land 0<\operatorname{U}\left( T,  V\right)\land \Re(\operatorname{F}\left( T,  S,  V\right))=\frac{\operatorname{U}\left( T,  S\right)^{2}+\operatorname{U}\left( T,  V\right)^{2}+\operatorname{U}\left( S,  V\right)^{2}-1}{2\operatorname{U}\left( T,  S\right)\operatorname{U}\left( T,  V\right)}$$
 
@@ -42,7 +70,7 @@ $$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 Put a=U(T,S), b=U(T,V), c=U(S,V). For every pair of qubit density matrices and every trace-one PD reference T, a and b are strictly positive and the real ordered fidelity is the stated quotient. The proof uses the two-dimensional trace recurrence for actual matrix square roots and determinants, including singular S,V.
 
-**Definition 1.4 (Binary root fidelity).**
+**Definition 1.6 (Binary root fidelity).**
 
 $$\forall ( p:\mathbb{ R})( q:\mathbb{ R}),\quad\operatorname{H}\left( p,  q\right)=\sqrt{ p q}+\sqrt{(1- p)(1- q)}$$
 
@@ -56,7 +84,7 @@ $$\forall ( p:\mathbb{ R})( q:\mathbb{ R}),\quad\operatorname{H}\left( p,  q\rig
 
 H(p,q)=sqrt(pq)+sqrt((1-p)(1-q)); its probabilistic uses have p,q in [0,1].
 
-**Theorem 1.5 (A half-order lower bound).**
+**Theorem 1.7 (A half-order lower bound).**
 
 $$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{ C}\right))( T:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{ C}\right)),\quad\operatorname{PSD}\left( S\right)\land \operatorname{tr}\left( S\right)=1\land\operatorname{PSD}\left( T\right)\land\operatorname{PSD}\left( T-\frac{1}{2} S\right)\Rightarrow\frac{1}{2}\le\operatorname{U}\left( T,  S\right)^{2}$$
 
@@ -70,7 +98,7 @@ $$\forall ( S:\operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 For every density S and PSD T with T-S/2 PSD, U(T,S) squared is at least one half. Congruence by sqrt(S), operator monotonicity of sqrt, and positivity of trace give U(S,T)>=sqrt(1/2). The actual qubit formula proves symmetry U(S,T)=U(T,S). There is no invertibility assumption on S and no trace-one requirement on T.
 
-**Theorem 1.6 (Classical binary preparation).**
+**Theorem 1.8 (Classical binary preparation).**
 
 $$\forall ( p:\mathbb{ R})( q:\mathbb{ R})( x:\mathbb{ R})( y:\mathbb{ R}),\quad0\le p\le1\land 0\le q\le1\land 0\le x\le1\land 0\le y\le1\Rightarrow \operatorname{H}\left( p,  q\right)\le\operatorname{H}\left( p x+(1- p) y,  q x+(1- q) y\right)$$
 
@@ -92,6 +120,8 @@ For all p,q,x,y in the closed unit interval, preparing binary probabilities x,y 
 - Truth anchor: `D5/S3/Quantum/CommutingMidpoint/Fidelity.fidelity_sq_lower_bound_from_half_order`
 - Truth anchor: `D5/S3/Quantum/CommutingMidpoint/Fidelity.qubit_root_fidelity_quotient`
 - Truth anchor: `D5/S3/Quantum/CommutingMidpoint/Fidelity.rootFidelity`
+- Truth anchor: `D5/S3/Quantum/CommutingMidpoint/Fidelity.sqrt_times_trace_two`
+- Truth anchor: `D5/S3/Quantum/CommutingMidpoint/Fidelity.sqrt_trace_square_two`
 - Dependency: [D5/S0/Observation/MatrixTracePowerSum](../../../S0/Observation/MatrixTracePowerSum.md)
 - Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
 - Dependency: [D5/S3/Quantum/GeneralizedFidelity](../GeneralizedFidelity.md)

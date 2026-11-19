@@ -1,0 +1,42 @@
+### 2.3 The finite maximum and the unconditional retained moment
+
+For one middle, write its negative anchor in basis coordinates as $q$,
+so $\operatorname{physical}(R,V,q)=(-w,-t)$. An ordered endpoint pair
+$e=(x,y)$ consists of two vectors $x,y\in\mathbb Z^2$ in these same basis
+coordinates. Define
+
+$$
+\begin{aligned}
+ L_e(T)&=(x_1+y_1-q_1)+(x_2+y_2-q_2)T,\\
+ Q_e(T)&=(x_1+x_2T)(y_1+y_2T),\\
+ P_{b,e}(T)&=L_b(T)Q_e(T)-L_e(T)Q_b(T),\qquad
+ \beta=V_xR_x^{-1}\pmod{p^3}.
+\end{aligned}
+$$
+
+The anchor is subtracted in $L_e$; it is not a free independent coefficient.
+
+Let $E_{w,t}$ be the actual finite endpoint family of the retained
+chart, reconstructed bijectively from its original integer rows. Put
+
+$$
+\tag{2.5}
+
+ B_{w,t}(b)=\{e\in E_{w,t}:P'_{b,e}(\bar\beta)=0\pmod p\},
+ \qquad d(w,t)=\max_{b\in E_{w,t}}\#B_{w,t}(b),
+$$
+
+with $d(w,t)=0$ when $E_{w,t}$ is empty. For a nonempty finite family the maximum is attained by one actual retained baseline. No sum over possible baselines is present in the subsequent average.
+
+Let $G(E)$ count ordered pairs $(b,e)\in E^2$ with nonzero derivative.
+For each $b$, $\#E\leq\#\{e:P'_{b,e}(\bar\beta)\ne0\}+d$.
+Summing gives
+
+$$
+(\#E)^2\leq G(E)+(\#E)d.
+$$
+
+Consequently $(\#E)^2\leq2G(E)$ if $2d\leq\#E$. Families with
+$\#E<2d$ pay their actual maximum once. Cauchy–Schwarz applied to
+the other families gives the following proved interface.
+

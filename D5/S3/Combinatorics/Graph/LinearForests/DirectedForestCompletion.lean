@@ -238,7 +238,7 @@ private theorem component_completion_classification [Finite V] (E : V → V → 
   · intro σ A
     simpa [K] using hΨ σ (q A)
 
-private theorem path_to_tail [Finite V] (E : V → V → Prop)
+theorem path_to_tail [Finite V] (E : V → V → Prop)
     (hout : Relator.RightUnique E) (ha : ∀ x, ¬ TransGen E x x)
     {x : V} (y : Tail E) (hc : EqvGen E x y) : ReflTransGen E x y := by
   have ht := (terminal_component E hout ha hc).trans (terminal_fixed E ha y)
@@ -406,7 +406,7 @@ theorem full_cycle_card [Finite V] (hV : 2 ≤ Nat.card V) :
 open D5.S0.Diagonal.Probability.EquivariantEscape (uniformPmf)
 open scoped ENNReal BigOperators
 
-private theorem uniform_equiv {A B : Type*} [Fintype A] [Nonempty A] [Fintype B] [Nonempty B]
+theorem uniform_equiv {A B : Type*} [Fintype A] [Nonempty A] [Fintype B] [Nonempty B]
     (e : A ≃ B) : (uniformPmf A).map e = uniformPmf B := by
   classical
   apply PMF.ext
@@ -414,7 +414,7 @@ private theorem uniform_equiv {A B : Type*} [Fintype A] [Nonempty A] [Fintype B]
   simp only [PMF.map_apply, uniformPmf, PMF.ofFintype_apply, ← e.symm_apply_eq]
   simp [Fintype.card_congr e]
 
-private theorem uniform_filter {A : Type*} [Fintype A] [Nonempty A] (p : A → Prop)
+theorem uniform_filter {A : Type*} [Fintype A] [Nonempty A] (p : A → Prop)
     [Fintype {a // p a}] [Nonempty {a // p a}]
     (hs : ∃ a ∈ {a | p a}, a ∈ (uniformPmf A).support) :
     (uniformPmf A).filter {a | p a} hs =

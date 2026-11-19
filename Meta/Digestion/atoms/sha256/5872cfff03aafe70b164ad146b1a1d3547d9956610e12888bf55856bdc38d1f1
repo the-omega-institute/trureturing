@@ -1,0 +1,21 @@
+**Proposition 43.3 (equal spatial chart, different obtained times).**
+There are distinct actual chronological transcripts on one and the
+same source with identical rooted metric chart and boundary. Neither
+that chart nor its boundary alone determines the query chronology.
+
+**Proof.** At $e=13$, the factor at indices $10$ through $14$ is
+$00101$, with root at $13$. The chronological side words
+
+$$
+LRLL,\qquad LLRL,\qquad RLLL
+\tag{IV.138}
+$$
+
+all have replies $0001$, end at $(l,r)=(3,1)$ and visit precisely
+$[e-3,e+1]$ in gap-site indices. Their last comparison is between
+indices $11,10$, the unique $00$. Their chart is the same five tiles
+$00101$, with lengths
+$\varphi^2,\varphi^2,\varphi,\varphi^2,\varphi$, and the same root
+tile. Their acquired action lists differ. This also attains the
+fibre count $\binom32=3$ in Theorem 43.2. $\square$
+

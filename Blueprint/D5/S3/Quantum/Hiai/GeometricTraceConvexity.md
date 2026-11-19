@@ -42,7 +42,7 @@ $$\forall u: \operatorname{Level}(), d: \operatorname{Type}(u), [\operatorname{F
 
 For every finite complex carrier d, including the empty carrier, supportPairDomain consists exactly of pairs (A,B) with A and B positive semidefinite and ker A contained in ker B. The unchanged geometricTrace formula is ConvexOn over this coupled set of pairs for 1 <= alpha <= 2 and 1/2 <= p <= 1. The mean is the classical base-first quasi-geometric mean G of Hiai, with A to exponent p as its base. It is distinct from SG and tilde-SG.
 
-Fix a supported pair. Q=I-spectralSupport(A) is the kernel projection, and both A Q and B Q vanish. Finite-spectrum CFC gives the exact decomposition of (A+epsilon I) to exponent -p/2 into a support-restricted factor and epsilon to exponent -p/2 times Q. The inner sandwich is the supported sandwich plus Q, because the powered B regularization acts on Q as epsilon to exponent p. These use the actual curves (A+epsilon I) to exponent p and (B+epsilon I) to exponent p.
+Fix a supported pair. The SupportPowerLimits spectral identities give Q=I-spectralSupport(A) as the kernel projection, and both A Q and B Q vanish. Finite-spectrum CFC gives the exact decomposition of (A+epsilon I) to exponent -p/2 into a support-restricted factor and epsilon to exponent -p/2 times Q. The inner sandwich is the supported sandwich plus Q, because the powered B regularization acts on Q as epsilon to exponent p. These use the actual curves (A+epsilon I) to exponent p and (B+epsilon I) to exponent p.
 
 The support-restricted negative powers converge on the fixed finite spectrum. Positive powers are continuous on PSD matrices. At the limit, finite spectral intertwining removes Q between the outer A to exponent p/2 factors. The resulting mean is exactly the original Moore-Penrose CFC formula, including A=B=0 and empty carriers. Positive 1/p power continuity and trace continuity give the required real trace limit.
 
@@ -57,4 +57,4 @@ The limit concerns simultaneous additive epsilon I regularization of a fixed sup
 - Dependency: [D5/S3/Quantum/Entanglement/PrecessionUniversalThresholdRefutation](../Entanglement/PrecessionUniversalThresholdRefutation.md)
 - Dependency: [D5/S3/Quantum/Hiai/CarlenLiebConvexity](CarlenLiebConvexity.md)
 - Dependency: [D5/S3/Quantum/Hiai/InverseGeometricIdentification](InverseGeometricIdentification.md)
-- Dependency: [D5/S3/Quantum/Recovery/SpectralTransposeRecovery](../Recovery/SpectralTransposeRecovery.md)
+- Dependency: [D5/S3/Quantum/Hiai/SupportPowerLimits](SupportPowerLimits.md)

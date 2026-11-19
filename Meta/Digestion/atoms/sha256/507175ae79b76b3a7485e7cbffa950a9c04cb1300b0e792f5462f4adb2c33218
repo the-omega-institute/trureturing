@@ -1,0 +1,42 @@
+**Theorem 4.1 (Exact terminal alphabet and prefix bound).** For either
+instrument at any known horizon $n$, the minimum finite terminal
+alphabet for Assumption 1.4 is exactly $m_n$. It is attained by an online
+classical procedure using at most $m_n$ register values at every prefix,
+a declared deterministic clock, and fixed time-dependent tables.
+The bound includes randomized compression and arbitrary CPTP recovery.
+
+Proof. Every one of the $2^n$ histories has positive probability. At
+least one terminal value receives positive weight from each history.
+By Theorem 3.3, histories in different projective classes have disjoint
+sets of such values. Choosing one history per class therefore requires
+at least $m_n$ values. Conversely, storing its class is sufficient and
+uses $m_n$ values, with inverse (3.3).
+
+This terminal statistic can be accumulated without a larger history
+register. If two prefix products differ only by a phase, left
+multiplication by either $Q_j$ preserves that relation. Thus the rule
+
+$$
+[Q]\longmapsto[Q_jQ]
+$$
+
+is well-defined. Also, for $0\le t\le n$ the map
+
+$$
+\mathcal P_t\longrightarrow\mathcal P_n,\qquad
+[Q]\longmapsto[Q_0^{\,n-t}Q]
+\tag{4.1}
+$$
+
+is injective, since $Q_0^{n-t}$ is invertible and can be cancelled from
+a projective equality. Its image consists of the histories obtained by
+appending $n-t$ zeros. Consequently $|\mathcal P_t|\le m_n$.
+
+For each $t$ choose a fixed injection
+$\ell_t:\mathcal P_t\to\{1,\ldots,m_n\}$.
+Initialize at $\ell_0([I_3])$. At step $t+1$ the table sends
+$\ell_t([Q])$, on input $j$, to $\ell_{t+1}([Q_jQ])$.
+Unreachable entries can be filled arbitrarily. The decoder table at
+$t=n$ assigns (3.3) to each reachable terminal class. This realizes the
+claimed register bound with no auxiliary archive. $\square$
+

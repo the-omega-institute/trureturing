@@ -1,0 +1,10 @@
+#### 定义 7.3：旋量提升与相位纤维
+
+归一化旋量构成 $S^3\subset\mathbb C^2$， 映射
+
+$$
+\psi\longmapsto n,\qquad n_j=\psi^\dagger\sigma_j\psi
+$$
+
+把相差共同相位的旋量送到同一方向。 其纤维为 $\{e^{\mathrm i\chi}\psi:\chi\in\mathbb R/(2\pi\mathbb Z)\}$， 故 $S^3/U(1)\simeq\mathbb{CP}^1\simeq S^2$。 这是一套状态表示；是否可读相位差取决于内部参考与允许的操作。
+

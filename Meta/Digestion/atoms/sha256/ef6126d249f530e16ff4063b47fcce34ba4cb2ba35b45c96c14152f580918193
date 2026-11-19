@@ -1,0 +1,41 @@
+**Proposition 24.1 (A wrong-sign first-order probe).** At actual angle
+$-d$, $d>0$, use the state update (23.2) with $k=0$, but mistakenly
+use $+d$ in the one-step decoder (23.5). Let the resulting corrected
+qutrit-coordinate channel be $\widetilde{\mathcal C}_1$. As $d\to0$,
+
+$$
+\widetilde{\mathcal C}_1
+ =\operatorname{id}_3-2id[W,\,\cdot\,]+O(d^2).
+\tag{24.1}
+$$
+
+For $\psi=(\xi+t_1)/\sqrt2$ and $\rho=|\psi\rangle\langle\psi|$,
+its unhalved output trace-norm error is $4d+O(d^2)$. Thus the
+nonnegative distance $\delta$ in (23.1) cannot replace the signed
+$\eta$ in the decoder. The calibration sign is static information;
+retaining it does not require another history state.
+
+Proof. Write $\widehat H_c=0\oplus H_c$. From (23.4),
+$Y^d_{1,U_j}$ has $\xi$ block $e^{id}$ and $T$ block
+$e^{idH_c}U_{j,T}e^{-idH_c}$. Hence the wrong-sign residual
+$(Y^d_{1,U_j})^\dagger V_j(-d)$ has $\xi$ block $e^{-2id}$
+and $T$ expansion
+
+$$
+I_T-id\bigl(U_{j,T}^\dagger H_cU_{j,T}-H_c+J\bigr)+O(d^2)
+ =I_T-id\bigl(2J+(-1)^jA\bigr)+O(d^2).
+\tag{24.2}
+$$
+
+Averaging the two conjugations cancels the $A$ term. Since
+$W=1|_{\mathbb C\xi}\oplus J$, this proves (24.1), with a remainder
+bounded in diamond norm by a constant times $d^2$ near zero; this also
+follows directly from analyticity of the finite matrix exponentials.
+On the two-dimensional span of $\xi,t_1$, $W$ has eigenvalues $1,-1$.
+The matrix $-2i[W,\rho]$ there is
+$\left(\begin{smallmatrix}0&-2i\\2i&0\end{smallmatrix}\right)$,
+with eigenvalues $2,-2$ and trace norm four. The reverse triangle
+inequality now gives $4d+O(d^2)$. The isometric embedding leaves this
+error unchanged. This is an encoded input witness, not a claim about
+full-$H$ recovery or a typical history. $\square$
+

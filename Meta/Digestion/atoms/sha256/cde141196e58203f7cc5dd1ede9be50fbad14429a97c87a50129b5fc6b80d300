@@ -1,0 +1,113 @@
+**Theorem 3.3 (Projective-word summary criterion).** Under Assumption 1.4,
+a compression kernel admits exact terminal recovery if and only if, for
+every $a$ with $p_a>0$, the set
+
+$$
+\{[Q_h]:r(a\mid h)>0\}
+$$
+
+has one member. Necessity holds even when recovery is demanded only for
+the ensemble averaged over $a$, and even for arbitrary CPTP decoders on
+$H$. Sufficiency recovers every qutrit-reference input. In particular,
+random compression cannot merge two projective classes by using a
+nonunitary decoder.
+
+Proof. In qutrit input coordinates, the averaged requirement is the
+channel identity
+
+$$
+\sum_a p_a\,\mathcal D_a\circ\iota\circ\mathcal N_a=\iota.
+\tag{3.1}
+$$
+
+Equality on all densities implies this identity on the complex algebra:
+Hermitian matrices are real linear combinations of densities, and every
+complex matrix is a complex linear combination of Hermitian matrices.
+It therefore also specifies the action on all references.
+
+Here is the identity-channel extremality argument in the required
+input-output dimensions. For a map $\Lambda:M_3\to M_5$ use its
+output-first, unnormalized Choi matrix
+
+$$
+J(\Lambda)=\sum_{i,j=0}^2\Lambda(|i\rangle\langle j|)
+                               \otimes|i\rangle\langle j|.
+$$
+
+Then $J(\iota)=|B\rangle\!\rangle\langle\!\langle B|$ has rank one
+and trace three. Each channel
+$\mathcal E_a=\mathcal D_a\circ\iota\circ\mathcal N_a$ is CPTP.
+For a vector $y$ orthogonal to $|B\rangle\!\rangle$, equation (3.1)
+gives
+
+$$
+0=\sum_a p_a\langle y,J(\mathcal E_a)y\rangle.
+$$
+
+Every summand is nonnegative. For each $p_a>0$ its quadratic form
+vanishes on the entire orthogonal complement. A positive matrix with
+zero quadratic form on a vector annihilates that vector, by its positive
+square root. Hence $J(\mathcal E_a)$ is supported on the same single
+line. Its trace is three by trace preservation, so
+$J(\mathcal E_a)=J(\iota)$ and $\mathcal E_a=\iota$.
+For square input-output coordinates this is exactly rank-one-Choi
+extremality of the identity channel. In particular, different summaries
+cannot compensate for an erroneous positive-probability branch.
+
+Fix such an $a$. A Kraus family for $\mathcal N_a$ is
+$F_h=\sqrt{w_{a,h}}Q_h$. Choose any Kraus family $d_\ell$ of
+$\mathcal D_a$ on $H$. The composed embedding channel has Kraus operators
+$d_\ell BF_h$. Its rank-one Choi matrix forces every individual
+vectorized Kraus operator to lie in the line spanned by $B$:
+
+$$
+d_\ell BF_h=c_{\ell h}B.
+$$
+
+Indeed its Choi matrix is the sum of the positive rank-one matrices of
+these vectors; testing an orthogonal vector gives the same nonnegativity
+argument. Trace preservation of $\mathcal D_a$ now gives directly
+
+$$
+\begin{aligned}
+F_h^\dagger F_k
+&=F_h^\dagger B^\dagger
+       \left(\sum_\ell d_\ell^\dagger d_\ell\right)BF_k\\
+&=\sum_\ell\overline{c_{\ell h}}c_{\ell k}I_3.
+\end{aligned}
+\tag{3.2}
+$$
+
+This is the Knill–Laflamme cross-term condition with code $I_3$, or
+$P_R$ in the embedded description [KL, Theorem 3.2, (19)–(20)].
+Its hypotheses have been derived for the actual coarsened branch;
+input-independent fine-label probabilities alone do not imply (3.2).
+For positive $w_{a,h},w_{a,k}$ it follows that
+
+$$
+Q_h^\dagger Q_k=\lambda I_3.
+$$
+
+The left side is unitary, so $|\lambda|=1$. Thus every positively
+weighted history in this summary lies in one projective class.
+This argument uses no restriction of the decoder to $R$, no unitary
+assumption about it, and no omission of complex cross terms.
+
+Conversely, choose a representative $Q_a$ for the unique class of a
+positive summary. Phases disappear under conjugation, so
+$\mathcal N_a=\operatorname{Ad}_{Q_a}$. Define on all of $H$
+
+$$
+D_a=BQ_a^\dagger B^\dagger+(I_5-P_R).
+\tag{3.3}
+$$
+
+The summands act on orthogonal reducing subspaces. Their products with
+their adjoints sum to $P_R+(I_5-P_R)=I_5$ in both orders, so $D_a$ is
+unitary. Its conjugation is a CPTP full-$H$ decoder with
+$D_aBQ_a=B$. Every positive conditional branch therefore recovers
+$\iota$, and summing recovers (3.1). Tensoring that identity with
+$\operatorname{id}_Z$ recovers every entangled reference input.
+The choice of decoder uses just the counted representative index and
+fixed control specifications. $\square$
+

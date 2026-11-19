@@ -16,7 +16,7 @@ $$\forall N \in \mathbb{N}, \operatorname{unitarySum}\left(N\right) = \sum_{d \i
 
 *Commentary.*
 
-A divisor d is unitary when d and N/d are coprime. The quotient is exact on the divisor set. This definition also includes N itself.
+A divisor d is unitary when d and N/d are coprime. The quotient is exact on the divisor set. For positive N, this definition also includes N itself.
 
 **Definition 1.2 (The squarefree divisor sum).**
 
@@ -30,7 +30,35 @@ $$\forall N \in \mathbb{N}, \operatorname{squarefreeSum}\left(N\right) = \sum_{d
 
 The sum ranges over divisors containing no square factor greater than one. Its prime-support product is obtained from Mathlib's powerset identity.
 
-**Theorem 1.3 (The Euler-form inclusion).**
+**Theorem 1.3 (A prime-power product upper bound).**
+
+Lean statement: `D5/S3/Arith/EulerFormDivisorSum.unitarySum_le_product`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/EulerFormDivisorSum.unitarySum_le_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* OEIS Foundation Inc. (2026). *OEIS A388986*. URL: <https://oeis.org/A388986>.
+
+*Commentary.*
+
+For every nonzero natural N, its unitary divisor sum is at most the product of p^v_p(N)+1 over its distinct prime divisors. A unitary divisor selects either the entire prime power or none for each prime; the powerset expansion bounds its sum.
+
+**Theorem 1.4 (The squarefree divisor product).**
+
+Lean statement: `D5/S3/Arith/EulerFormDivisorSum.squarefreeSum_eq_product`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/EulerFormDivisorSum.squarefreeSum_eq_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* OEIS Foundation Inc. (2026). *OEIS A388986*. URL: <https://oeis.org/A388986>.
+
+*Commentary.*
+
+For every nonzero natural N, its squarefree divisor sum equals the product of p+1 over its distinct prime divisors. Each subset of the prime support gives exactly one squarefree divisor.
+
+**Theorem 1.5 (The Euler-form inclusion).**
 
 $$\forall p \in \mathbb{N}, \forall a \in \mathbb{N}, \forall r \in \mathbb{N}, \operatorname{prime}\left(p\right) \land p \bmod 4 = 1 \land \operatorname{Odd}\left(r\right) \land 1 < r \land \operatorname{gcd}\left(p, r\right) = 1 \Rightarrow \operatorname{unitarySum}\left({p}^{4 \cdot a + 1} \cdot {r}^{2}\right) + \operatorname{squarefreeSum}\left({p}^{4 \cdot a + 1} \cdot {r}^{2}\right) < 2 \cdot {p}^{4 \cdot a + 1} \cdot {r}^{2}$$
 
@@ -46,10 +74,12 @@ $$\forall p \in \mathbb{N}, \forall a \in \mathbb{N}, \forall r \in \mathbb{N}, 
 
 *Commentary.*
 
-After dividing by positive N, the distinguished prime contributes at most six fifths to each product. Every prime from r has exponent at least two. A finite reciprocal-square product bound, with separate cases for whether the support contains three and another prime, bounds the remaining sum strictly below five thirds. Their product is strictly below two. The hypothesis r>1 supplies a nonempty support; for r=1 and p=5 the claimed inequality would fail.
+After dividing by positive N, the distinguished prime contributes at most six fifths to each product. Every prime from r has exponent at least two. A finite reciprocal-square product bound, with separate cases for whether the support contains three and another prime, bounds the remaining sum strictly below five thirds. Their product is strictly below two. The hypothesis r>1 supplies a nonempty support. For r=1, p=5 and a=0 the claimed inequality would fail.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/EulerFormDivisorSum.euler_form_lt`
 - Truth anchor: `D5/S3/Arith/EulerFormDivisorSum.squarefreeSum`
+- Truth anchor: `D5/S3/Arith/EulerFormDivisorSum.squarefreeSum_eq_product`
 - Truth anchor: `D5/S3/Arith/EulerFormDivisorSum.unitarySum`
+- Truth anchor: `D5/S3/Arith/EulerFormDivisorSum.unitarySum_le_product`

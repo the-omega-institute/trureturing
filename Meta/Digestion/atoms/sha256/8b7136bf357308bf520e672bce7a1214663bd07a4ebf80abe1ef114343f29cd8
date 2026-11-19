@@ -1,0 +1,55 @@
+**Theorem 42.2 (five atoms cannot be uniformly acquired).** There is no
+policy on the original absorbing menu and no postprocessing of its
+one actual run, even with its complete trace, arbitrary later horizons,
+source-independent auxiliary storage and independent randomized
+control, that supplies $\mathcal R_5(e)$ exactly for every nonnegative
+origin $e$. The same impossibility holds for the first five atomic
+labels and even for their concatenated original-$\rho$ output
+frontier. This does not forbid five-label recovery at particular
+origins or under additional source advice.
+
+**Proof.** Before the first reply, a fixed seed chooses either $R$ or
+$L$. If it chooses $R$, compare $e=20$ and $e=10$. Their first five
+bits are, respectively,
+
+$$
+00100,\qquad00101.
+\tag{IV.133}
+$$
+
+Both immediately mark on $R$. Their actual state is identical:
+actions $[R]$, replies $[1]$, stopped $=1$. If it chooses $L$, compare
+$e=21$ and $e=11$. Their first five bits are
+
+$$
+01001,\qquad01010,
+\tag{IV.134}
+$$
+
+and both have $f(e-1)=f(e)=0$. Both immediately mark on $L$, with
+identical actions $[L]$, replies $[1]$ and terminal flag. Each pair
+consists of origins of the same sequence. All later states agree by
+absorption; every native query afterwards rejects. Source-independent
+postprocessing therefore cannot return different answers on the pair.
+The atomic tuples differ, and injectivity of the two atomic outputs
+in (IV.121) makes their $\mathcal R_5$ tuples differ. Even the flattened
+outputs differ:
+
+$$
+\begin{array}{c|cc}
+\text{first side}&\text{first origin's output}&\text{second origin's output}\\
+R&010100101&01010010\\
+L&01001010&01001001.
+\end{array}
+\tag{IV.135}
+$$
+
+For independent randomized control let $p$ be the probability of
+choosing $R$ first. Coupling the same seed and any later decoder coins
+on the right witness pair shows that its two error probabilities have
+sum at least $p$. On the left witness pair that sum is at least $1-p$.
+One of these is positive. Indeed the worst error over the four fixed
+origins is at least $\max(p,1-p)/2\ge1/4$. Exact recovery almost surely
+at every origin is therefore impossible. No change to the allowed
+menu has been used. $\square$
+

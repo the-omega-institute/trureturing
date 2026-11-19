@@ -47,7 +47,7 @@ private lemma reciprocal_square_succ_le_telescope (x : Real) (hx : 0 < x) :
 
 /-- A finite reciprocal-square progression with positive real first term is at
 most its first term plus the corresponding infinite telescoping envelope. -/
-private lemma reciprocal_square_shifted_finite_tail_le (a : Real) (n : Nat)
+lemma reciprocal_square_shifted_finite_tail_le (a : Real) (n : Nat)
     (ha : 0 < a) :
     (∑ k ∈ Finset.range n, 1 / (a + (k : Real)) ^ 2) <=
       1 / a ^ 2 + 1 / a := by

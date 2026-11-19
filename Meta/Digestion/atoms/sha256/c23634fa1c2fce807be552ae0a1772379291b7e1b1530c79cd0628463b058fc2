@@ -1,0 +1,44 @@
+### 6.10 Joint summation and the endpoint
+
+At each middle one $W$ is selected, so projection support requires only
+existence of its lift. Its endpoint weight is (6.3).
+For fixed $d,\mathfrak A$, use (6.15); then sum
+that weight over $h\ll T$, $n\ll K/T$ by
+(6.5a). Finally sum over discriminants using
+(6.4), (6.16) and
+(6.17). The weighted data count is
+
+$$
+\tag{6.18}
+ \mathcal D_T\ll_\rho p^\rho
+                 \frac{H_3\sqrt{D_{\max}}K}{T^2}.
+$$
+
+One factor $T^{-1}$ is the coefficient height, and the other is the
+square root of the discriminant cutoff $D_{\max}/T^2$.
+Multiplying by (6.14) and summing over dyadic
+$1\le T\ll K$ gives a logarithm for the principal terms and the bounded
+sum $\sum_TT^{-2}$ for the errors. After assigning arbitrarily small
+subpower exponents to each input and the logarithm, for every $\eta>0$,
+
+$$
+\mathcal W_{j=3}\ll_\eta p^\eta H_3\sqrt{D_{\max}}K
+                            (A^2/p^6+p^{3/2}).
+$$
+
+Since $H_3\sqrt{D_{\max}}\ll Y^2A^3/p^{13}$ and
+$K=C_DA^7/p^{26}$, this proves for all three $j=3$ strata
+
+$$
+\tag{6.19}
+ \mathcal W_{j=3}\ll_\eta Y^2p^\eta
+                \left(\frac{A^{12}}{p^{45}}+
+                      \frac{A^{10}}{p^{75/2}}\right).
+$$
+
+At $A\le C_0p^{15/4}$ the two factors are at most $C_0^{12}$ and
+$C_0^{10}$. Logarithms and $K^\delta$ have been absorbed by splitting
+the prescribed final exponent, not by appealing to negative area powers.
+For strict $\alpha<15/4$ the corresponding exponents are
+$12\alpha-45$ and $10\alpha-75/2$.
+

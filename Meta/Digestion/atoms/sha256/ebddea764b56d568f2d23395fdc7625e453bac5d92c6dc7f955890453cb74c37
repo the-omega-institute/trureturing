@@ -1,0 +1,57 @@
+**Proposition 2.2 (Original retained moment).**
+
+Suppose $s$ is a finite set of original middles and its retained
+endpoint families satisfy the original word, physical boxes, unit
+conditions, common reduced bases and longness conditions above.
+If their anchor and endpoints have one common coordinate bound
+$(I,J)$, with $I,J\geq1$, then
+
+$$
+\tag{2.6}
+
+ \sum_{(w,t)\in s}\#E_{w,t}
+ \leq2\sum_{(w,t)\in s}d(w,t)
+    +\sqrt{\#s\,C_\eta p^\eta(9IJ)^5}.
+$$
+
+After the actual reduced-basis scales are summed dyadically, the
+corresponding conclusion is
+
+$$
+\tag{2.7}
+
+ \sum_{(w,t)\in s}\#E_{w,t}
+ \leq2\sum_{(w,t)\in s}d(w,t)
+   +\sqrt{\#s\,C_\eta p^\eta(A/p^3)^5L(p)}.
+$$
+
+Neither statement assumes a seventh-height separation.
+
+*Proof.*
+
+These are the original fixed-scale and dyadic retained-moment inputs of [R](#reference-formalsource). Their second-moment input is the original large-retained record incidence count and its dyadic version. The original rows reconstruct injectively in coordinates, and $\#T_G=\sum_{(w,t)}\#E_{w,t}$, so (2.7) holds for $T_G$ itself. The argument uses the finite inequality just displayed and Cauchy–Schwarz with that incidence count; no endpoint-count estimate is assumed as an input.
+
+For completeness, the good-record integer uniqueness has no strict area
+saving hidden in it. On this good chart both coordinates of $R$ are
+units, and reducedness gives $0<|R_1R_2|<p^3$, since
+$2|R_1R_2|\le Q_{X,Y}(R)<2p^3$. In a long chart the reconstructed second
+basis vector has $|V_1|<3X/2$. Equal record data give
+$V_1'\equiv V_1\pmod{p^3}$, whereas
+$|V_1'-V_1|<3X\le3Y<p^2\le p^3$; hence $V_1'=V_1$ and the determinant
+$p^3$ fixes $V_2$ too. This is the original good-record reconstruction of [R](#reference-formalsource). The fixed-good-record
+realization count uses at most three simple roots and the divisor bound
+for $R_1R_2$; it needs the stated width, not $A=o(p^{15/4})$.
+
+In a dyadic bin $s_0^2\leq Q_{X,Y}(R)<4s_0^2$, the original reduced-basis coordinate, anchor and long-scale estimates of [R](#reference-formalsource) give
+
+$$
+\tag{2.8}
+
+ I=\frac{8H}{s_0},\quad J=\frac{4Hs_0}{p^3},\quad
+ J\leq I,\quad J>2,\quad IJ=\frac{32A}{p^3},
+ \quad I<\frac{16A}{p^3},\quad J<5\sqrt{A/p^3}.
+$$
+
+The notation $B=IJ$ below denotes this coordinate area, not the bad
+degree $d(w,t)$.
+
