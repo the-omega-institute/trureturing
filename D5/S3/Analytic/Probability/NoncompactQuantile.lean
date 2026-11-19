@@ -837,12 +837,12 @@ theorem exists_martingale_approximations {μ ν : ProbDist ℝ}
       (condMeanAtomize μ (n + 1) (Nat.succ_pos n)).toProbDist.toMeasure := by
     rw [DiscreteLaw.toProbDist_toMeasure]
     exact integrable_finsetSum_measure.mpr fun i _ =>
-      (integrable_dirac (by finiteness)).smul_measure ENNReal.ofReal_ne_top
+      (integrable_dirac enorm_lt_top).smul_measure ENNReal.ofReal_ne_top
   have hνint : Integrable (fun x : ℝ => |x|)
       (condMeanAtomize ν (n + 1) (Nat.succ_pos n)).toProbDist.toMeasure := by
     rw [DiscreteLaw.toProbDist_toMeasure]
     exact integrable_finsetSum_measure.mpr fun i _ =>
-      (integrable_dirac (by finiteness)).smul_measure ENNReal.ofReal_ne_top
+      (integrable_dirac enorm_lt_top).smul_measure ENNReal.ofReal_ne_top
   have hu := setIntegral_mono_set hμint.integrableOn (ae_of_all _ fun x => abs_nonneg x)
     (ae_of_all _ hsubμ)
   have hv := setIntegral_mono_set hνint.integrableOn (ae_of_all _ fun x => abs_nonneg x)
