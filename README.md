@@ -168,11 +168,11 @@ with resolution and error bounds require further results. Links to physical
 spacetime or holographic duality remain research questions.
 
 Theory inputs study
-[event archives](https://github.com/the-omega-institute/trureturing-source-theories/blob/main/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+[event archives](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
 retaining time, position, causal order and provenance;
-[when observations preserve](https://github.com/the-omega-institute/trureturing-source-theories/blob/main/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+[when observations preserve](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
 composition, shared sources and targets; and
-[experimental distances](https://github.com/the-omega-institute/trureturing-source-theories/blob/main/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+[experimental distances](https://github.com/the-omega-institute/trureturing-source-theories/blob/dev/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
 defined through allowed experiments and responses. Their prose does not certify
 formal coverage.
 
@@ -225,7 +225,7 @@ describes a wider design whose implementation remains incomplete.
 Mathematical reuse rests on the statements, checked proof terms and axiom
 dependencies in the [Lean source](D5/). The
 [frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
-[Theory prose](https://github.com/the-omega-institute/trureturing-source-theories/tree/main/docs/develop/theory/) supplies research input, and
+[Theory prose](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev/docs/develop/theory/) supplies research input, and
 [experiments](Evidence/) supply observations within their declared scope;
 neither substitutes for a Lean proof. The C# harness checks repository rules,
 proof reports and frozen state. Independent review examines whether statements
