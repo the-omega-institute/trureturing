@@ -94,12 +94,21 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "incompatible"):
             shards.read_index(index, identity, "complete")
         (root / shards.transport_payload(payloads[1])).unlink()
+        build = root / ".lake/build"
+        (build / names[0]).parent.mkdir(parents=True, exist_ok=True)
+        (build / names[0]).write_text("earlier first module")
+        (build / names[1]).write_text("earlier second module")
+        with mock.patch.object(shards, "install_scoped", side_effect=OSError("install interrupted")):
+            with self.assertRaisesRegex(OSError, "install interrupted"):
+                shards.install(root, decoded, [])
+        self.assertEqual("earlier first module", (build / names[0]).read_text())
+        self.assertEqual("earlier second module", (build / names[1]).read_text())
+
         result = shards.install(root, decoded, [])
         self.assertEqual(1, result["available"])
         self.assertEqual([payloads[1]], result["missing"])
-        build = root / ".lake/build"
         self.assertEqual(names[0], (build / names[0]).read_text())
-        self.assertFalse((build / names[1]).exists())
+        self.assertEqual("earlier second module", (build / names[1]).read_text())
 
     def test_complete_shard_index_requires_every_declared_compiler_group(self):
         self.restore_owner()

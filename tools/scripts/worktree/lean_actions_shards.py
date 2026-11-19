@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import stat
 import subprocess
 import tarfile
 import tempfile
@@ -23,7 +24,7 @@ from lean_artifact_inventory import (
     PROJECT_BUILD, build_inventory, import_closure, lake_configuration, project_imports,
     required_compiler_paths, workspace_modules,
 )
-from lean_cache_release import cache_guard, install_scoped, report_reuse
+from lean_cache_release import cache_guard, has_unsafe_parent, install_scoped, report_reuse
 from lean_cache_release_io import archive_sha, copy_chunks
 from lean_cache_shards import group_identity, make_layout
 from lean_release_index import safe_path, valid_digest
@@ -306,6 +307,30 @@ def extract_payload(path, destination, registrations, restored):
             target.chmod(entry.mode & 0o777)
 
 
+def install_continuation(target, unpacked, paths, backup):
+    replacements = []
+    for path in sorted(paths):
+        destination = target / path
+        if has_unsafe_parent(target, path):
+            raise ValueError("Actions continuation has an unsafe parent: " + str(path))
+        if os.path.lexists(destination):
+            if not stat.S_ISREG(destination.lstat().st_mode):
+                raise ValueError("Actions continuation conflicts with a local artifact path: " + str(path))
+            replacements.append(path)
+    try:
+        for path in replacements:
+            saved = backup / path
+            saved.parent.mkdir(parents=True, exist_ok=True)
+            os.replace(target / path, saved)
+        install_scoped(target, unpacked, paths, None)
+    except BaseException:
+        for path in replacements:
+            saved = backup / path
+            if saved.is_file():
+                os.replace(saved, target / path)
+        raise
+
+
 def install(root, record, targets, *, require_complete=False):
     selected = selected_keys(root, record, targets)
     required = record["required"]
@@ -316,7 +341,8 @@ def install(root, record, targets, *, require_complete=False):
     lake.mkdir(exist_ok=True)
     available, missing = set(), set()
     with cache_guard(root), tempfile.TemporaryDirectory(prefix=".shards-", dir=lake) as temporary:
-        unpacked = Path(temporary)
+        stage = Path(temporary)
+        unpacked = stage / "unpacked"
         paths = set()
         for key, digest_value in sorted(selected.items()):
             payload = root / transport_payload(digest_value)
@@ -332,10 +358,14 @@ def install(root, record, targets, *, require_complete=False):
             paths.update(entries)
             available.add(digest_value)
         target = root / PROJECT_BUILD
-        if target.is_symlink() or (target.is_dir() and any(target.iterdir())):
+        if target.is_symlink() or (target.exists() and not target.is_dir()):
+            raise ValueError("Actions shards require a private build directory")
+        if record["state"] == "complete" and target.is_dir() and any(target.iterdir()):
             raise ValueError("Actions shards require an empty build destination")
         if require_complete and missing:
             available.clear()
+        elif record["state"] == "resume":
+            install_continuation(target, unpacked, paths, stage / "base")
         else:
             install_scoped(target, unpacked, paths, None)
     complete = record["state"] == "complete" and not missing and not targets
