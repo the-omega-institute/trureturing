@@ -33,27 +33,27 @@ open private sum_cube_membership_property from
 private def heavySupport (x : Q 9) : Finset (Fin 7) :=
   univ.filter fun i => x i.succ.succ = true
 
-private def sliceVertex (b : Bool) (s : Finset (Fin 7)) : Q 9 :=
-  Fin.cases b (Fin.cases true (fun i => decide (i ∈ s)))
+private def sliceVertex (b : Bool × Bool) (s : Finset (Fin 7)) : Q 9 :=
+  Fin.cases b.1 (Fin.cases b.2 (fun i => decide (i ∈ s)))
 
-private lemma heavySupport_sliceVertex (b : Bool) (s : Finset (Fin 7)) :
+private lemma heavySupport_sliceVertex (b : Bool × Bool) (s : Finset (Fin 7)) :
     heavySupport (sliceVertex b s) = s := by
   ext i
   simp [heavySupport, sliceVertex]
 
 private lemma sliceVertex_heavySupport (x : Q 9) (hx : x 1 = true) :
-    sliceVertex (x 0) (heavySupport x) = x := by
+    sliceVertex (x 0, true) (heavySupport x) = x := by
   funext i
   refine Fin.cases rfl (fun j => ?_) i
   refine Fin.cases hx.symm (fun k => ?_) j
   change decide (k ∈ heavySupport x) = x k.succ.succ
   cases h : x k.succ.succ <;> simp [heavySupport, h]
 
-private lemma sliceVertex_injective (b : Bool) : Function.Injective (sliceVertex b) := by
+private lemma sliceVertex_injective (b : Bool × Bool) : Function.Injective (sliceVertex b) := by
   intro s t h
   simpa only [heavySupport_sliceVertex] using congrArg heavySupport h
 
-private lemma flip_heavy_erase (b : Bool) {s : Finset (Fin 7)} {i : Fin 7}
+private lemma flip_heavy_erase (b : Bool × Bool) {s : Finset (Fin 7)} {i : Fin 7}
     (hi : i ∈ s) :
     flip (sliceVertex b s) i.succ.succ = sliceVertex b (s.erase i) := by
   funext j
@@ -70,7 +70,7 @@ private lemma flip_heavy_erase (b : Bool) {s : Finset (Fin 7)} {i : Fin 7}
     simp [BalancedCriticalSpectrum.flip, sliceVertex, hi]
   · simp [BalancedCriticalSpectrum.flip, sliceVertex, h]
 
-private lemma flip_heavy_insert (b : Bool) {s : Finset (Fin 7)} {i : Fin 7}
+private lemma flip_heavy_insert (b : Bool × Bool) {s : Finset (Fin 7)} {i : Fin 7}
     (hi : i ∉ s) :
     flip (sliceVertex b s) i.succ.succ = sliceVertex b (insert i s) := by
   have h := congrArg (fun x => flip x i.succ.succ) (flip_heavy_erase b (mem_insert_self i s))
@@ -84,7 +84,7 @@ private def heavyDirection : Fin 7 ↪ Fin 9 :=
 
 private lemma slice_top_directions {C : Finset (Q 9)}
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
-    (b : Bool) {s : Finset (Fin 7)} (h3 : s.card = 3) (hs : sliceVertex b s ∈ C)
+    (b : Bool × Bool) {s : Finset (Fin 7)} (h3 : s.card = 3) (hs : sliceVertex b s ∈ C)
     (hforced : ∀ i ∈ s, flip (sliceVertex b s) i.succ.succ ∈ C) :
     directions C (sliceVertex b s) = s.map heavyDirection := by
   classical
@@ -97,7 +97,7 @@ private lemma slice_top_directions {C : Finset (Q 9)}
 
 private lemma four_directions {C : Finset (Q 9)}
     (hCap : ∀ x ∈ C, lastSevenWeight x ≤ 3)
-    (b : Bool) {s : Finset (Fin 7)} (h4 : s.card = 4) :
+    (b : Bool × Bool) {s : Finset (Fin 7)} (h4 : s.card = 4) :
     directions C (sliceVertex b s) =
       ((s.filter fun i => sliceVertex b (s.erase i) ∈ C).map heavyDirection) := by
   classical
@@ -135,7 +135,7 @@ private lemma four_directions {C : Finset (Q 9)}
     simp [mem_directions, hi, hnot]
 
 private lemma no_three_top_in_four {C : Finset (Q 9)} (hb : IsBalanced C)
-    (b : Bool) {s : Finset (Fin 7)} {i j k : Fin 7}
+    (b : Bool × Bool) {s : Finset (Fin 7)} {i j k : Fin 7}
     (hi : i ∈ s) (hj : j ∈ s) (hk : k ∈ s) (hij : i ≠ j) (hik : i ≠ k) (hjk : j ≠ k)
     (hsel : ∀ d ∈ s, sliceVertex b (s.erase d) ∈ C →
       ∀ e ∈ s.erase d, flip (sliceVertex b (s.erase d)) e.succ.succ ∈ C)
@@ -186,31 +186,32 @@ private lemma one_more_coordinate {p t : Finset (Fin 7)}
   · rw [card_erase_of_mem hit, hc, Nat.add_sub_cancel]
 
 open Classical in
-private noncomputable def topFamily (C : Finset (Q 9)) (b : Bool) :
+private noncomputable def topFamily (C : Finset (Q 9)) (b : Bool × Bool)
+    (H : Finset (Fin 7)) :
     Finset (Finset (Fin 7)) :=
-  (univ.powersetCard 3).filter fun s => sliceVertex b s ∈ C
+  (H.powersetCard 3).filter fun s => sliceVertex b s ∈ C
 
-private lemma mem_topFamily {C : Finset (Q 9)} {b : Bool} {s : Finset (Fin 7)} :
-    s ∈ topFamily C b ↔ s.card = 3 ∧ sliceVertex b s ∈ C := by
+private lemma mem_topFamily {C : Finset (Q 9)} {b : Bool × Bool} {H s : Finset (Fin 7)} :
+    s ∈ topFamily C b H ↔ s ⊆ H ∧ s.card = 3 ∧ sliceVertex b s ∈ C := by
   classical
-  simp [topFamily, mem_powersetCard]
+  simp [topFamily, mem_powersetCard, and_assoc]
 
 private lemma topFamily_four {C : Finset (Q 9)}
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
     (hCap : ∀ x ∈ C, lastSevenWeight x ≤ 3)
-    (b : Bool)
-    (hforced : ∀ s ∈ topFamily C b, ∀ i ∈ s, flip (sliceVertex b s) i.succ.succ ∈ C)
-    (s : Finset (Fin 7)) (h4 : s.card = 4) :
-    Even ((topFamily C b).filter (· ⊆ s)).card ∧
-      ((topFamily C b).filter (· ⊆ s)).card ≤ 2 := by
+    (b : Bool × Bool) (H : Finset (Fin 7))
+    (hforced : ∀ s ∈ topFamily C b H, ∀ i ∈ s, flip (sliceVertex b s) i.succ.succ ∈ C)
+    (s : Finset (Fin 7)) (h4 : s.card = 4) (hsH : s ⊆ H) :
+    Even ((topFamily C b H).filter (· ⊆ s)).card ∧
+      ((topFamily C b H).filter (· ⊆ s)).card ≤ 2 := by
   classical
   let D := s.filter fun i => sliceVertex b (s.erase i) ∈ C
-  have hcard : D.card = ((topFamily C b).filter (· ⊆ s)).card := by
+  have hcard : D.card = ((topFamily C b H).filter (· ⊆ s)).card := by
     apply card_bij (fun i _ => s.erase i)
     · intro i hi
       obtain ⟨his, hiC⟩ := mem_filter.mp hi
-      exact mem_filter.mpr
-        ⟨mem_topFamily.mpr ⟨by rw [card_erase_of_mem his, h4], hiC⟩, erase_subset _ _⟩
+      exact mem_filter.mpr ⟨mem_topFamily.mpr ⟨(erase_subset _ _).trans hsH,
+        by rw [card_erase_of_mem his, h4], hiC⟩, erase_subset _ _⟩
     · intro i hi j hj he
       by_contra hne
       have hm := mem_erase.mpr ⟨hne, (mem_filter.mp hi).1⟩
@@ -218,7 +219,7 @@ private lemma topFamily_four {C : Finset (Q 9)}
       exact (notMem_erase i s) hm
     · intro t ht
       obtain ⟨htT, hts⟩ := mem_filter.mp ht
-      obtain ⟨ht3, htC⟩ := mem_topFamily.mp htT
+      obtain ⟨_, ht3, htC⟩ := mem_topFamily.mp htT
       obtain ⟨i, his, _, he⟩ := one_more_coordinate hts (by rw [h4, ht3])
       exact ⟨i, mem_filter.mpr ⟨his, he.symm ▸ htC⟩, he⟩
   rw [← hcard]
@@ -237,23 +238,24 @@ private lemma topFamily_four {C : Finset (Q 9)}
     obtain ⟨his, hiC⟩ := mem_filter.mp hi
     obtain ⟨hjs, hjC⟩ := mem_filter.mp hj
     obtain ⟨hks, hkC⟩ := mem_filter.mp hk
-    exact no_three_top_in_four hb b his hjs hks hij hik hjk
-      (fun d hd hC => hforced _ (mem_topFamily.mpr ⟨by rw [card_erase_of_mem hd, h4], hC⟩))
-      hiC hjC hkC
+    refine no_three_top_in_four hb b his hjs hks hij hik hjk (fun d hd hC => ?_) hiC hjC hkC
+    exact hforced _ (mem_topFamily.mpr
+      ⟨(erase_subset _ _).trans hsH, by rw [card_erase_of_mem hd, h4], hC⟩)
 
 private lemma topFamily_pair {C : Finset (Q 9)}
-    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (b : Bool)
-    (hforced : ∀ s ∈ topFamily C b, ∀ i ∈ s, flip (sliceVertex b s) i.succ.succ ∈ C)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (b : Bool × Bool) (H : Finset (Fin 7))
+    (hforced : ∀ s ∈ topFamily C b H, ∀ i ∈ s, flip (sliceVertex b s) i.succ.succ ∈ C)
     (p : Finset (Fin 7)) (h2 : p.card = 2) :
-    ((topFamily C b).filter (p ⊆ ·)).card ≤ 3 := by
+    ((topFamily C b H).filter (p ⊆ ·)).card ≤ 3 := by
   classical
-  let U := (topFamily C b).filter (p ⊆ ·)
+  let U := (topFamily C b H).filter (p ⊆ ·)
   change U.card ≤ 3
   by_cases hU : U.Nonempty
   · have hcoord (t : Finset (Fin 7)) (ht : t ∈ U) :
         ∃ i ∈ t, i ∉ p ∧ t.erase i = p := by
       obtain ⟨htT, hpt⟩ := mem_filter.mp ht
-      exact one_more_coordinate hpt (by rw [(mem_topFamily.mp htT).1, h2])
+      exact one_more_coordinate hpt (by rw [(mem_topFamily.mp htT).2.1, h2])
     obtain ⟨t, ht⟩ := hU
     obtain ⟨i, hi, _, he⟩ := hcoord t ht
     have hp : sliceVertex b p ∈ C := by
@@ -270,7 +272,7 @@ private lemma topFamily_pair {C : Finset (Q 9)}
           apply (mem_directions C _ _).mpr
           change flip (sliceVertex b p) (f a.val a.property).succ.succ ∈ C
           rw [flip_heavy_insert b (hfout a.val a.property), hins _ _]
-          exact (mem_topFamily.mp (mem_filter.mp a.property).1).2
+          exact (mem_topFamily.mp (mem_filter.mp a.property).1).2.2
         · intro a _ a' _ h
           apply Subtype.ext
           rw [← hins a.val a.property, ← hins a'.val a'.property, heavyDirection.injective h]
@@ -281,28 +283,29 @@ private lemma topFamily_pair {C : Finset (Q 9)}
 private lemma slice_count {C : Finset (Q 9)}
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
     (hCap : ∀ x ∈ C, lastSevenWeight x ≤ 3)
-    (b : Bool) (hT : (topFamily C b).Nonempty)
-    (hforced : ∀ s ∈ topFamily C b, ∀ i ∈ s, flip (sliceVertex b s) i.succ.succ ∈ C) :
+    (b : Bool) (hT : (topFamily C (b, true) univ).Nonempty)
+    (hforced : ∀ s ∈ topFamily C (b, true) univ, ∀ i ∈ s, flip (sliceVertex (b, true) s) i.succ.succ ∈ C) :
     18 ≤ (C.filter fun x => x 0 = b ∧ x 1 = true).card := by
   classical
-  let T := topFamily C b
+  let T := topFamily C (b, true) univ
   let P := (univ.powersetCard 2 : Finset (Finset (Fin 7))).filter
-    fun p => sliceVertex b p ∈ C
-  have hP (p : Finset (Fin 7)) : p ∈ P ↔ p.card = 2 ∧ sliceVertex b p ∈ C := by
+    fun p => sliceVertex (b, true) p ∈ C
+  have hP (p : Finset (Fin 7)) : p ∈ P ↔ p.card = 2 ∧ sliceVertex (b, true) p ∈ C := by
     simp [P, mem_powersetCard]
   have ht : 9 ≤ T.card := nine_le_top_triple_family (by decide) T
-    (fun t ht => (mem_topFamily.mp ht).1) hT (topFamily_four hr hb hCap b hforced)
-    (topFamily_pair hr b hforced)
+    (fun t ht => (mem_topFamily.mp ht).2.1) hT
+    (fun s hs => topFamily_four hr hb hCap (b, true) univ hforced s hs (subset_univ _))
+    (topFamily_pair hr (b, true) univ hforced)
   have hp (p : Finset (Fin 7)) (h : p ∈ P) : (T.filter (p ⊆ ·)).card ≤ 3 :=
-    topFamily_pair hr b hforced p ((hP p).mp h).1
+    topFamily_pair hr (b, true) univ hforced p ((hP p).mp h).1
   have hcount (t : Finset (Fin 7)) (ht : t ∈ T) : (P.filter (· ⊆ t)).card = 3 := by
-    have h3 := (mem_topFamily.mp ht).1
+    have h3 := (mem_topFamily.mp ht).2.1
     have he : P.filter (· ⊆ t) = t.powersetCard 2 := by
       ext p
       rw [mem_filter, hP, mem_powersetCard]
       refine ⟨fun h => ⟨h.2, h.1.1⟩, fun h => ⟨⟨h.2, ?_⟩, h.1⟩⟩
       obtain ⟨i, hi, _, he⟩ := one_more_coordinate h.1 (by rw [h3, h.2])
-      simpa only [flip_heavy_erase b hi, he] using hforced t ht i hi
+      simpa only [flip_heavy_erase (b, true) hi, he] using hforced t ht i hi
     rw [he, card_powersetCard, h3]
     decide
   have hdouble : (∑ t ∈ T, (P.filter (· ⊆ t)).card) = ∑ p ∈ P, (T.filter (p ⊆ ·)).card := by
@@ -313,14 +316,14 @@ private lemma slice_count {C : Finset (Q 9)}
   have hdisjoint : Disjoint T P := by
     apply disjoint_left.mpr
     intro s hs hp
-    have h3 := (mem_topFamily.mp hs).1
+    have h3 := (mem_topFamily.mp hs).2.1
     have h2 := ((hP s).mp hp).1
     omega
   have hinj : (T ∪ P).card ≤ (C.filter fun x => x 0 = b ∧ x 1 = true).card := by
-    apply card_le_card_of_injOn (sliceVertex b) _ (sliceVertex_injective b).injOn
+    apply card_le_card_of_injOn (sliceVertex (b, true)) _ (sliceVertex_injective (b, true)).injOn
     intro t h
-    have hmem : sliceVertex b t ∈ C := (mem_union.mp h).elim
-      (fun h => (mem_topFamily.mp h).2) (fun h => ((hP t).mp h).2)
+    have hmem : sliceVertex (b, true) t ∈ C := (mem_union.mp h).elim
+      (fun h => (mem_topFamily.mp h).2.2) (fun h => ((hP t).mp h).2)
     exact mem_filter.mpr ⟨hmem, rfl, rfl⟩
   rw [card_union_of_disjoint hdisjoint] at hinj
   omega
@@ -400,24 +403,24 @@ theorem q9_sixty_six_excludes_015555555 {C : Finset (Q 9)} (hC : C.card = 66)
     have h := hhalf i.succ.succ
     change _ + 2 * (5 : ℤ) = 33 at h
     omega
-  have hforced (b : Bool) (s : Finset (Fin 7)) (hs : s ∈ topFamily C b)
-      (i : Fin 7) (hi : i ∈ s) : flip (sliceVertex b s) i.succ.succ ∈ C := by
-    obtain ⟨hs3, hsel⟩ := mem_topFamily.mp hs
-    have hw : lastSevenWeight (sliceVertex b s) = 3 := by
-      change (heavySupport (sliceVertex b s)).card = 3
+  have hforced (b : Bool) (s : Finset (Fin 7)) (hs : s ∈ topFamily C (b, true) univ)
+      (i : Fin 7) (hi : i ∈ s) : flip (sliceVertex (b, true) s) i.succ.succ ∈ C := by
+    obtain ⟨_, hs3, hsel⟩ := mem_topFamily.mp hs
+    have hw : lastSevenWeight (sliceVertex (b, true) s) = 3 := by
+      change (heavySupport (sliceVertex (b, true) s)).card = 3
       rw [heavySupport_sliceVertex, hs3]
-    have htrue : sliceVertex b s i.succ.succ = true := by simpa [sliceVertex] using hi
+    have htrue : sliceVertex (b, true) s i.succ.succ = true := by simpa [sliceVertex] using hi
     exact eight_partners_force_minority_directions_used hC hr hb hd
       (fun _ => true) deficit hhalf hr_nonneg hsel (h8 _ hsel rfl hw) htrue
       (show (2 : ℤ) ≤ 5 by decide)
   obtain ⟨x, hx, hx1, hx3⟩ := q9_top_triple_on_deficit_one_true_side hC hr hb hheavy hlow hcap
   have hxSlice := sliceVertex_heavySupport x hx1
-  have htx : heavySupport x ∈ topFamily C (x 0) := mem_topFamily.mpr ⟨hx3, by rwa [hxSlice]⟩
+  have htx : heavySupport x ∈ topFamily C (x 0, true) univ := mem_topFamily.mpr ⟨subset_univ _, hx3, by rwa [hxSlice]⟩
   have hno : flip x 1 ∉ C := by
     intro hf
     have hm := (mem_directions C _ _).mpr hf
     have h3 : (heavySupport x).card = 3 := hx3
-    have he := slice_top_directions hr (x 0) h3 (mem_topFamily.mp htx).2
+    have he := slice_top_directions hr (x 0, true) h3 (mem_topFamily.mp htx).2.2
       (hforced (x 0) _ htx)
     rw [hxSlice] at he
     rw [he] at hm
@@ -432,8 +435,8 @@ theorem q9_sixty_six_excludes_015555555 {C : Finset (Q 9)} (hC : C.card = 66)
   obtain ⟨hyC, hyDist, hy1⟩ := mem_filter.mp hy
   have hy1' := hy1.symm.trans hx1
   obtain ⟨hopp, hy3⟩ := partner_opposite_slice hx1 hy1' hyDist hx3 (hcap y hyC)
-  have hty : heavySupport y ∈ topFamily C (y 0) :=
-    mem_topFamily.mpr ⟨hy3, by rwa [sliceVertex_heavySupport y hy1']⟩
+  have hty : heavySupport y ∈ topFamily C (y 0, true) univ :=
+    mem_topFamily.mpr ⟨subset_univ _, hy3, by rwa [sliceVertex_heavySupport y hy1']⟩
   have hleft := slice_count hr hb hcap (x 0) ⟨_, htx⟩ (hforced (x 0))
   have hright := slice_count hr hb hcap (y 0) ⟨_, hty⟩ (hforced (y 0))
   have hdj : Disjoint (C.filter fun v => v 0 = x 0 ∧ v 1 = true)
