@@ -1,0 +1,50 @@
+**Theorem 11.2 (Full-qutrit symmetries and pair equivalence).** The
+actual letters satisfy
+
+$$
+V_j(\theta+\pi/2)=iV_{1-j}(\theta),\qquad
+V_j(-\theta)=\overline{V_j(\theta)}.
+\tag{11.3}
+$$
+
+Consequently $m_n$ is even and $\pi/2$-periodic for every $n$.
+Moreover the following specified equivalences of pairs have no other
+parameter identifications. Simultaneous qutrit unitary conjugation,
+individual scalar phases on the two letters, and optional interchange
+of their labels relate parameters $\theta,\varphi$ if and only if
+$\varphi-\theta\in(\pi/2)\mathbb Z$. Allowing complex conjugation
+as well gives exactly $\varphi\equiv\pm\theta\pmod{\pi/2}$.
+This classifies those operations on pairs, rather than arbitrary
+abstract group isomorphisms or coincidences of count sequences.
+
+Proof. Substitution of $\cos(\theta+\pi/2)=-\sin\theta$ and
+$\sin(\theta+\pi/2)=\cos\theta$ proves the first identity on the
+full qutrit. The matrices $U_j$ are real, proving the second.
+At a fixed horizon the first identity contributes the common scalar
+$i^n$ and complements every label; conjugation preserves equality.
+Both operations therefore give bijections of the counted classes.
+
+The unique common eigenline of $a,b$ is $\mathbb C\xi$.
+To see uniqueness, a common eigenvector is also an eigenvector of
+$W=a^{-1}b$, and hence of $U_0=ae^{-i\theta W}$. On $T$, in the
+basis of Theorem 6.1, $W_T=\operatorname{diag}(-1,1)$ and
+$U_{0,T}$ has both off-diagonal entries $\sqrt3/2$. Neither
+$W_T$ eigenline is invariant under $U_{0,T}$. A vector in the
+$+1$ eigenspace of $W$ has the form $\alpha\xi+\beta t_2$;
+the $t_1$ component of its $U_0$ image forces $\beta=0$ if
+it is a common eigenvector. The $-1$ eigenspace is $\mathbb Ct_1$,
+already excluded. This proves uniqueness, including mixed vectors.
+
+Suppose a unitary $C$ satisfies
+$CV_j(\theta)C^\dagger=\lambda_jV_{\sigma(j)}(\varphi)$,
+where $\sigma$ is identity or label interchange. Uniqueness makes
+$C$ preserve $\mathbb C\xi$ and $T$. Evaluation on $\xi$ gives
+$\lambda_0=\lambda_1=e^{i(\theta-\varphi)}=\lambda$.
+The actual restrictions have determinants
+$\det V_{0,T}=-1$, $\det V_{1,T}=1$. Thus $\lambda^2=1$
+without interchange and $\lambda^2=-1$ with interchange. These
+are exactly the required multiples of $\pi/2$, with the matching
+interchange parity. Iterating (11.3) proves sufficiency. Complex
+conjugation first replaces $\theta$ by $-\theta$ and gives the
+last assertion. $\square$
+

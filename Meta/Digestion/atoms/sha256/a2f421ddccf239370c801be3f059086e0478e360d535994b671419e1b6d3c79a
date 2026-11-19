@@ -1,0 +1,135 @@
+**Theorem 27.5 (The boundary $q=0$).** Suppose $q=0$, $p+r=1$ and
+$n\ge2$ is finite. Set $a=(1+\tau)/2$, $b=(1-\tau)/2$, so
+$a+b=1$, $a-b=\tau>0$ and $b\ge1/4$. Define
+
+$$
+h_\tau(w)=\begin{cases}
+bw/a,&0\le w\le a,\\
+(aw-\tau)/b,&a\le w\le1.
+\end{cases}
+\tag{27.13}
+$$
+
+With $k=\sqrt{pr}$, the exact value is
+
+$$
+\eta_n(E)=\begin{cases}
+k,&h_\tau(r)\le k,\\[2pt]
+\displaystyle\frac{b(\tau-ar)+a\sqrt{\tau^2p+b^2r^2}}{\tau},
+ &h_\tau(r)>k.
+\end{cases}
+\tag{27.14}
+$$
+
+Proof. Remove phases first. Averaging an attainable effect over the
+phase of $e$ preserves $E$, preserves attainability and cannot increase
+the residual norm. It kills the $\xi$–$e$ entry, so it suffices to use
+diagonal $K$. Write $w=C_{ff}$. Order its active controls as $(D,J)$
+so that
+
+$$
+(K_{ee},K_{ff})=\begin{cases}(D,J),&s>0,\\(J,D),&s<0,
+\end{cases}
+\qquad C_{ee}=aD+bJ,\quad w=bD+aJ.
+\tag{27.15}
+$$
+
+At fixed $w$, minimizing $C_{ee}$ over $0\le D,J\le1$ gives precisely
+$h_\tau(w)$. For $w\le a$, choose $(D,J)=(0,w/a)$; for $w\ge a$,
+choose $((w-a)/b,1)$. For example, eliminating $J$ gives
+$C_{ee}=bw/a+(\tau/a)D$, so the least feasible $D$ is respectively
+zero or $(w-a)/b$. This also proves the lower bound at fixed $w$.
+
+Put $A=C_{\xi\xi}-p$ and $d_0=w-r$. The residual on $(\xi,f)$ has
+norm
+
+$$
+\frac{|A+d_0|+\sqrt{(A-d_0)^2+4pr}}2
+ \ \ge\ \sqrt{pr+d_0^2},
+\tag{27.16}
+$$
+
+with equality at $A=-d_0$, that is $C_{\xi\xi}=1-w\in[0,1]$.
+To see minimality, the square-root function of $A$ is 1-Lipschitz,
+so its decrease away from $A=-d_0$ is at most $|A+d_0|$.
+Thus both independent diagonal choices attain the exact reduction
+
+$$
+\eta_n(E)=\min_{0\le w\le1}
+ \max\{h_\tau(w),\sqrt{pr+(w-r)^2}\}.
+\tag{27.17}
+$$
+
+Values $w>r$ cannot improve the objective, since both entries are
+nondecreasing there. If $h_\tau(r)\le k$, choose $w=r$ and obtain
+the floor. Otherwise $r>a$: for $r\le a$,
+$k^2-(br/a)^2=r(1-r-b^2r/a^2)\ge rb\tau/a\ge0$.
+At $w=a$ the second entry is at least the first $h_\tau(a)=b$, since
+$pr+(a-r)^2-b^2=\tau p\ge0$. At $w=r$ the inequality is reversed.
+The first entry increases strictly and the second decreases on $[a,r]$,
+so there is exactly one crossing $w$ in $[a,r)$, and it minimizes
+(27.17). At the crossing $t=h_\tau(w)$ and $w=(bt+\tau)/a$.
+Squaring $t^2=pr+(w-r)^2$ yields
+
+$$
+\tau t^2+2b(ar-\tau)t+2a\tau r-\tau^2-a^2r=0.
+\tag{27.18}
+$$
+
+Its constant coefficient is negative: it is
+$-\tau^2+a(2\tau-a)r$, whose values at $r=0,1$ are
+$-\tau^2,-b^2$, respectively. Hence there is a unique positive root.
+Its discriminant after dividing by four is
+$a^2(\tau^2p+b^2r^2)$, giving exactly the second line of (27.14).
+The crossing argument identifies this root with the admissible $t$;
+no extraneous squared root is used.
+
+In either branch the attaining $K$ is diagonal: take
+$K_{\xi\xi}=1-w$ and the controls in (27.15) minimizing $C_{ee}$.
+Take $w=r$ in the floor branch and $w=(bt+\tau)/a$ otherwise.
+Together with $B=U_0KU_0^\dagger$ and (27.5), this specifies a
+terminal CPTP decoder, including $r=0$ and $r=1$.
+
+For a matching all-input dual in the floor branch use
+$Y=(|\xi\rangle\langle f|+|f\rangle\langle\xi|)/2$.
+Its trace norm is one, $F^n(Y)=0$ and $\operatorname{Tr}(YE)=k$.
+In the crossing branch put $\Delta=r-w\ge0$ and
+
+$$
+\begin{gathered}
+\mu=\frac{at}{at+b\Delta},\qquad
+\nu=\frac{b\Delta}{at+b\Delta},\qquad
+Y_0\big|_{(\xi,f)}=
+ \begin{pmatrix}0&k/(2t)\\k/(2t)&\Delta/t\end{pmatrix},\\
+Y_0e=0,\qquad Y=\mu Y_0-\nu|e\rangle\langle e|.
+\end{gathered}
+\tag{27.19}
+$$
+
+Here $t>0$ and $at+b\Delta>0$. Since $t^2=k^2+\Delta^2$,
+$\|Y_0\|_1=1$, also when $k=0$; the orthogonal $e$ block gives
+$\|Y\|_1=\mu+\nu=1$. To evaluate the support in the actual output
+coordinates, use (27.7). Order the physical active basis as
+$(U_0e,U_0f)$ if $s>0$ and $(U_0f,U_0e)$ if $s<0$.
+These are exactly the coordinates whose diagonal entries in $B$ are
+$(D,J)$. In that order $F^n(Y)$ has coefficients
+
+$$
+-\nu a+\mu b\Delta/t=0,\qquad
+-\nu b+\mu a\Delta/t=\frac{\mu\Delta\tau}{at}\ge0,
+\tag{27.20}
+$$
+
+and zero on $\xi$. Thus the chosen $J=1$ effect maximizes its support
+over the entire qutrit effect interval, not merely over diagonal effects.
+On $(\xi,f)$ the residual $E-C$ is
+$\left(\begin{smallmatrix}-\Delta&k\\k&\Delta\end{smallmatrix}\right)$,
+and its $e$ entry is $-t$. Therefore
+$\operatorname{Tr}(Y_0(E-C))=(k^2+\Delta^2)/t=t$ and
+$\operatorname{Tr}(Y(E-C))=\mu t+\nu t=t$.
+Support attainment makes this exactly the lower expression in (27.4).
+Proposition 27.2 transfers both certificates to every complex phase.
+The endpoint $r=0$ is in the floor branch and the endpoint $r=1$ has
+$w=a$, $\Delta=t=b$ in the crossing branch. The case $n=1$ is (27.8),
+not (27.13), whose second denominator would vanish. $\square$
+
