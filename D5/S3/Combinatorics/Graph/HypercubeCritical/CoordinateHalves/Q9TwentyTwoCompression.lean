@@ -18,10 +18,12 @@ open GirthSliceCounting (degreeTwo degreeThree)
 open private paritySide parity_bipartite parity_union parts_card sum_degrees_parts
   coordinate_slice_degree_cases coordinate_slice_low_independent low_slice_card_eq_q
   balanced_subset from D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeLowerBound
-open private SideHigh compressed compressed_triangle_free from
+open private SideHigh compressed compressed_degree compressed_triangle_free from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
 open private compressed_edge_count from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
+open private side_high_neighbors_card high_neighbors_compressed_separated from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
 
 attribute [local instance] Classical.propDecidable
 
@@ -71,8 +73,114 @@ private theorem five_vertices_six_edges {V : Type*} [Fintype V]
     simpa [hV, hE, turanNumber_two] using hle
   exact hV ▸ hm.nonempty_iso_turanGraph
 
+private theorem singleton_class_remainder
+    {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {L R : Finset V}
+    (hp : G.IsBipartiteWith (L : Set V) (R : Set V))
+    (hdeg : ∀ v, G.degree v = 2 ∨ G.degree v = 3)
+    (hlow : ∀ {x y}, G.Adj x y → G.degree x = 2 → G.degree y = 2 → False)
+    (hg : (8 : ℕ∞) ≤ G.egirth)
+    (hL : Fintype.card (SideHigh G L) = 1)
+    (hR : Fintype.card (SideHigh G R) = 9) :
+    ∃ r : SideHigh G L,
+      let H := compressed G R
+      let A := univ.filter (fun x : SideHigh G R => G.Adj r.val x.val)
+      let B := univ \ A
+      A.card = 3 ∧ B.card = 6 ∧
+      (∀ x ∈ A, H.degree x = 2 ∧ H.neighborFinset x ⊆ B) ∧
+      (∀ y ∈ B, ∃! x, x ∈ A ∧ H.Adj y x) ∧
+      (H.induce (B : Set _)).IsRegularOfDegree 2 := by
+  let H := compressed G R
+  have hn : Nonempty (SideHigh G L) := Fintype.card_pos_iff.mp (by omega)
+  let r : SideHigh G L := Classical.choice hn
+  let A := univ.filter (fun x : SideHigh G R => G.Adj r.val x.val)
+  let B := (univ : Finset (SideHigh G R)) \ A
+  have hrL := (mem_filter.mp r.property).1
+  have hr3 := (mem_filter.mp r.property).2
+  have hr0 : (compressed G L).degree r = 0 := by
+    have h := (compressed G L).degree_lt_card_verts r
+    omega
+  have hc := compressed_degree hp hdeg (fun hxy hx hy => hlow hxy hx hy) hg r
+  rw [hr0] at hc
+  have ha := (side_high_neighbors_card hp hrL).trans (by omega :
+    (degreeThree G (G.neighborFinset r.val)).card = 3)
+  change A.card = 3 at ha
+  have hb : B.card = 6 := by
+    rw [show B.card = _ from card_sdiff_of_subset (subset_univ A), card_univ, hR, ha]
+  have ha_mem (x : SideHigh G R) : x ∈ A ↔ G.Adj r.val x.val := by simp [A]
+  have hb_mem (x : SideHigh G R) : x ∈ B ↔ x ∉ A := by simp [B]
+  have hsep {x y : SideHigh G R} (hx : x ∈ A) (hy : y ∈ A) (hne : x ≠ y) :=
+    high_neighbors_compressed_separated hp hg hrL hr3
+      ((ha_mem x).mp hx) ((ha_mem y).mp hy) hne
+  have hsub : Subsingleton (SideHigh G L) := by
+    rw [← Fintype.card_le_one_iff_subsingleton]
+    omega
+  have hd (x : SideHigh G R) : H.degree x = if x ∈ A then 2 else 3 := by
+    let M := univ.filter (fun y : SideHigh G L => G.Adj x.val y.val)
+    have hm : M = if x ∈ A then {r} else ∅ := by
+      ext y
+      have hy : y = r := hsub.elim _ _
+      subst y
+      by_cases hx : x ∈ A
+      · simp [M, hx, ((ha_mem x).mp hx).symm]
+      · have h : ¬G.Adj x.val r.val := fun h => hx ((ha_mem x).mpr h.symm)
+        simp [M, hx, h]
+    have hN := side_high_neighbors_card hp.symm (mem_filter.mp x.property).1
+    change M.card = _ at hN
+    have hd := compressed_degree hp.symm hdeg (fun hxy hx hy => hlow hxy hx hy) hg x
+    change H.degree x + _ = _ at hd
+    rw [← hN, hm] at hd
+    split_ifs at hd ⊢ <;> simp only [card_singleton, card_empty] at hd <;> omega
+  have hneighbors (x : SideHigh G R) (hx : x ∈ A) : H.neighborFinset x ⊆ B := by
+    intro y hy
+    have hxy := (H.mem_neighborFinset _ _).mp hy
+    exact (hb_mem y).mpr (fun hyA => (hsep hx hyA hxy.ne).1 hxy)
+  have hdis : (A : Set (SideHigh G R)).PairwiseDisjoint (fun x => H.neighborFinset x) := by
+    intro x hx y hy hxy
+    exact disjoint_left.mpr fun z hxz hyz =>
+      (hsep hx hy hxy).2 z ((H.mem_neighborFinset _ _).mp hxz) ((H.mem_neighborFinset _ _).mp hyz)
+  have hcover : A.biUnion (fun x => H.neighborFinset x) = B := by
+    apply eq_of_subset_of_card_le
+    · intro y hy
+      obtain ⟨x, hx, hxy⟩ := mem_biUnion.mp hy
+      exact hneighbors x hx hxy
+    · rw [card_biUnion hdis, hb]
+      have hs : ∑ x ∈ A, (H.neighborFinset x).card = ∑ _x ∈ A, 2 := by
+        apply sum_congr rfl
+        intro x hx
+        rw [H.card_neighborFinset_eq_degree, hd, ite_eq_left hx]
+      rw [hs, sum_const, ha]
+      decide
+  have hmatch (y : SideHigh G R) (hy : y ∈ B) : ∃! x, x ∈ A ∧ H.Adj y x := by
+    rw [← hcover] at hy
+    obtain ⟨x, hx, hxy⟩ := mem_biUnion.mp hy
+    have hxy := (H.mem_neighborFinset _ _).mp hxy
+    refine ⟨x, ⟨hx, hxy.symm⟩, ?_⟩
+    intro z hz
+    by_contra hne
+    exact (hsep hz.1 hx hne).2 y hz.2.symm hxy
+  refine ⟨r, ha, hb, fun x hx => ⟨(hd x).trans (ite_eq_left hx), hneighbors x hx⟩, hmatch, ?_⟩
+  intro y
+  obtain ⟨x, hx, huniq⟩ := hmatch y.val y.property
+  have hinter : H.neighborFinset y.val ∩ B = (H.neighborFinset y.val).erase x := by
+    ext z
+    rw [mem_inter, mem_erase, H.mem_neighborFinset, hb_mem]
+    constructor
+    · rintro ⟨hyz, hz⟩
+      exact ⟨fun e => hz (e.symm ▸ hx.1), hyz⟩
+    · rintro ⟨hne, hyz⟩
+      exact ⟨hyz, fun hz => hne (huniq z ⟨hz, hyz⟩)⟩
+  have hdY : H.degree y.val = 3 := by rw [hd, ite_eq_right ((hb_mem _).mp y.property)]
+  have hc := congrArg Finset.card (H.map_neighborFinset_induce (s := (B : Set _)) y)
+  rw [card_map, (H.induce (B : Set _)).card_neighborFinset_eq_degree,
+    Finset.toFinset_coe, hinter, card_erase_of_mem ((H.mem_neighborFinset _ _).mpr hx.2),
+    H.card_neighborFinset_eq_degree, hdY] at hc
+  change (H.induce (B : Set _)).degree y = 2
+  rw [← SimpleGraph.ncard_neighborSet] at hc ⊢
+  exact hc.trans (show (3 : ℕ) - 1 = 2 by decide)
+
 /-- A 22-vertex coordinate half compresses to parity classes of orders 1 and 9,
-or to two copies of the complete bipartite graph on parts of orders 2 and 3. -/
+with three disjoint pairs attached to a two-regular six-vertex graph, or to
+two copies of the complete bipartite graph on parts of orders 2 and 3. -/
 theorem half_compression {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 22) :
@@ -81,8 +189,14 @@ theorem half_compression {C : Finset (Q 9)} (hC : C.card = 72)
       let G := (hypercube 9).induce (S : Set (Q 9))
       let L := paritySide S p
       let R := paritySide S (!p)
-      (Fintype.card (SideHigh G L) = 1 ∧ Fintype.card (SideHigh G R) = 9 ∧
-        (compressed G L).edgeFinset.card = 0 ∧ (compressed G R).edgeFinset.card = 12) ∨
+      (Fintype.card (SideHigh G L) = 1 ∧ ∃ r : SideHigh G L,
+        let H := compressed G R
+        let A := univ.filter (fun x : SideHigh G R => G.Adj r.val x.val)
+        let B := univ \ A
+        A.card = 3 ∧ B.card = 6 ∧
+        (∀ x ∈ A, H.degree x = 2 ∧ H.neighborFinset x ⊆ B) ∧
+        (∀ y ∈ B, ∃! x, x ∈ A ∧ H.Adj y x) ∧
+        (H.induce (B : Set _)).IsRegularOfDegree 2) ∨
       (Nonempty (compressed G L ≃g turanGraph 5 2) ∧
         Nonempty (compressed G R ≃g turanGraph 5 2)) := by
   let S := coordinateSlice C b
@@ -133,15 +247,17 @@ theorem half_compression {C : Finset (Q 9)} (hC : C.card = 72)
   have hsplit : (degreeThree G L).card = 1 ∨ (degreeThree G L).card = 5 ∨
       (degreeThree G R).card = 1 := by omega
   rcases hsplit with h | h | h
-  · exact ⟨false, Or.inl ⟨(hcard L).trans h, (hcard R).trans (by omega),
-      heL.trans (by omega), heR.trans (by omega)⟩⟩
+  · have hcL := (hcard L).trans h
+    exact ⟨false, Or.inl ⟨hcL, singleton_class_remainder hp hdeg
+      (fun hxy hx hy => hlow hxy hx hy) hg hcL ((hcard R).trans (by omega))⟩⟩
   · exact ⟨false, Or.inr
       ⟨five_vertices_six_edges _ ((hcard L).trans h) (heL.trans (by omega))
           (compressed_triangle_free hp hg),
         five_vertices_six_edges _ ((hcard R).trans (by omega)) (heR.trans (by omega))
           (compressed_triangle_free hp.symm hg)⟩⟩
-  · exact ⟨true, Or.inl ⟨(hcard R).trans h, (hcard L).trans (by omega),
-      heR.trans (by omega), heL.trans (by omega)⟩⟩
+  · have hcR := (hcard R).trans h
+    exact ⟨true, Or.inl ⟨hcR, singleton_class_remainder hp.symm hdeg
+      (fun hxy hx hy => hlow hxy hx hy) hg hcR ((hcard L).trans (by omega))⟩⟩
 
 #print axioms half_compression
 
