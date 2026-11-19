@@ -60,7 +60,31 @@ internal sealed class HardinLargeTransferCertificatesDocument : IScribeDocumentD
                 + "becomes n − j − 1. The coefficient sum is one, so L(n) + 6 satisfies the same relation. "
                 + "Since n − j is at least 2 for each j from 1 through 47, the connected-strip formula applies "
                 + "to every term. Substituting it and using 128^n = 128^j 128^(n − j) gives "
-                + "T(7,n) = sum over j from 1 through 47 of 128^j c_j T(7,n − j), using the signed coefficients above."))
+                + "T(7,n) = sum over j from 1 through 47 of 128^j c_j T(7,n − j), using the signed coefficients above.")),
+            Paragraph(Text(
+                "For the width-seven column of A233174, let T(m,7) count the literal row-major normalized "
+                + "arrays of height m and width seven. The first row has three choices of initial pair label "
+                + "and two choices at each of the six following positions, giving 192 proper words. In R7, "
+                + "the transition from one such word to another requires unequal labels across each of the two "
+                + "diagonals between successive rows. HardinThinGraphTransport.colouringEquiv reads proper "
+                + "three-colourings as row sequences, and HardinActualTransfers.word_continuations gives the "
+                + "number of tails with any specified first word. Summing over all first words gives "
+                + "L(m) = 1ᵀ R7^(m − 1) 1 for every m at least 1.")),
+            Paragraph(Text(
+                "HardinThinGraphTransport.literalEquiv uses the row-major order to identify the literal arrays "
+                + "with legal graph colourings. HardinGraphNormalization.literalPartitionEquiv describes those "
+                + "colourings by independent-set partitions and free choices within the complementary pairs. "
+                + "At width seven, the strip has an edge and is connected and bipartite by column parity even "
+                + "at height one. HardinGraphNormalization.connected_count gives 48 T(m,7) = 128^m (L(m) + 6) "
+                + "for every m at least 1.")),
+            Paragraph(Text(
+                "For every natural m at least 21, apply R7^(m − 21) to the width-seven vector relation and sum "
+                + "its entries. The left exponent is m − 1, and the exponent at lag j is m − j − 1. "
+                + "The coefficients sum to one, so the resulting recurrence for L(m) also holds for L(m) + 6. "
+                + "Since m − j is at least 1 for j from 1 through 20, the normalization formula applies at "
+                + "every lag, including height one when m = 21 and j = 20. Factoring 128^m as 128^j times "
+                + "128^(m − j) gives T(m,7) = sum over j from 1 through 20 of 128^j c_j T(m − j,7), "
+                + "using the signed width-seven coefficients above."))
         )));
 
     private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string statement) =>
