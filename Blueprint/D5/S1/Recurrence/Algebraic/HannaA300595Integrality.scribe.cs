@@ -53,7 +53,8 @@ internal sealed class HannaA300595IntegralityDocument : IScribeDocumentDefinitio
                 "the prime two. A nonintegral rational coefficient would have a prime dividing its reduced " +
                 "denominator, contradicting these two exhaustive cases. The degree-one identity forces " +
                 "coefficient one directly, and strong induction covers every subsequent index.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a300595"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula statement, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>

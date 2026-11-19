@@ -34,6 +34,10 @@ $$(\exists F: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA300595Integrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a300595` (proved) by `D5/S1/Recurrence/Algebraic/HannaA300595Integrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a300595","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaA300595Integrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2018). *OEIS A300595 cubic-exponential ordinary series*. URL: <https://oeis.org/A300595>.
