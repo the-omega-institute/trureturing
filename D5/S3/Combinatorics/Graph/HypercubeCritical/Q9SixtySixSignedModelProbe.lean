@@ -1,5 +1,6 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixNormalizeProbe
 import D5.S3.Combinatorics.Graph.HypercubeCritical.GridWedgeSigning
+import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9OrbitCertificateProbe
 
 /-! The integer switching equations used by the finite Q9 support model. -/
 
@@ -868,5 +869,53 @@ theorem cube_lifted_square_row {C : Finset (Q 9)} (hb : IsBalanced C) (x : Q 9)
 #print axioms cube_lifted_pair_rows
 #print axioms cube_lifted_forbidden_pair_row
 #print axioms cube_lifted_square_row
+
+open private reindex reindex_regular reindex_balanced from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CubicFiftyFourReconstruction
+
+/-- Transport a normalized support in the direction used by the orbit average.
+The transported vertex indicators are exactly the precomposed indicators, and
+the equations for the minority halves retain the same coordinate profile. -/
+theorem transport_lifted_cube_support {C : Finset (Q 9)} {r : Fin 9 → ℤ}
+    (hC : C.card = 66)
+    (hreg : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
+    (hb : IsBalanced C)
+    (hhalf : ∀ i, ((C.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33)
+    (p : deficitPermutations r) :
+    ∃ T : Finset (Q 9), T.card = 66 ∧
+      ((hypercube 9).induce (T : Set (Q 9))).IsRegularOfDegree 3 ∧ IsBalanced T ∧
+      (∀ i, ((T.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33) ∧
+      ∀ x, cubeMembership T x = cubeMembership C (p • x) := by
+  let e := reindex p.val.symm
+  let T := C.image e
+  have hcard : T.card = 66 := by
+    simpa only [T, card_image_of_injective C e.injective] using hC
+  refine ⟨T, hcard, reindex_regular hreg p.val.symm, reindex_balanced hb p.val.symm, ?_, ?_⟩
+  · intro i
+    have hfilter : T.filter (fun x => x i = true) =
+        (C.filter (fun x => x (p.val i) = true)).image e := by
+      ext x
+      simp only [T, mem_filter, mem_image]
+      constructor
+      · rintro ⟨⟨y, hy, rfl⟩, hbit⟩
+        exact ⟨y, ⟨hy, hbit⟩, rfl⟩
+      · rintro ⟨y, ⟨hy, hbit⟩, rfl⟩
+        exact ⟨⟨y, hy, rfl⟩, hbit⟩
+    have hp : r (p.val i) = r i := p.property i
+    rw [hfilter, card_image_of_injective _ e.injective, ← hp]
+    exact hhalf (p.val i)
+  · intro x
+    have hx : x ∈ T ↔ e.symm x ∈ C := by
+      constructor
+      · intro h
+        obtain ⟨y, hy, rfl⟩ := mem_image.mp h
+        simpa only [Equiv.symm_apply_apply] using hy
+      · intro h
+        exact mem_image.mpr ⟨e.symm x, h, e.apply_symm_apply x⟩
+    change (if x ∈ T then (1 : ℤ) else 0) =
+      (if e.symm x ∈ C then (1 : ℤ) else 0)
+    simp only [hx]
+
+#print axioms transport_lifted_cube_support
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical
