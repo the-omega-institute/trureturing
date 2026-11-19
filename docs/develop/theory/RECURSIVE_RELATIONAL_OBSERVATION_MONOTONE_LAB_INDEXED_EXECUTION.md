@@ -3641,16 +3641,19 @@ request while busy, an absent grant, an occupied input/reply latch, a
 wrong field selector, and an exhausted finite reserve.  Omitting an
 operand-bit transfer leaves the actual connection latch unoccupied and
 prevents the original call.  Omitting an indexed cache write leaves the
-receipt but changes the returned cache state.  Removing a source-field
-read, a grant delivery, or a free-pool cleanup event makes the incremental
-census disagree with the direct one.  These are state and census
-failures, not merely result-file comparisons.
+receipt but changes the returned cache state. Omitting a source-field
+read from the ledger removes a required operation from its trace. If
+the source operation still occurs, its omission leaves the storage
+census unchanged. Likewise, the grant or free-pool event must be
+checked against its recorded owner state and the operation trace.
 
 *Proof.* Each refusal is the negative branch of the corresponding guard in
 Lemma 25.4.  The two omission cases remove the only actual write that can
 occupy the latch or set the indexed mask/value pair, so the subsequent
-source call or cache invariant fails.  The census claims follow from the
-allocation, field and cleanup cases in the proof of Theorem 25.7. $\square$
+source call or cache invariant fails. A source read has zero retained
+storage delta by Theorem 25.7, while the trace records each read at
+its source transition. The owner state identifies the grant and free
+pool transitions independently of the retained storage totals. $\square$
 
 **Theorem 25.9 (whole-family composition).** Under Assumptions 1.2 and
 25.2, the preceding correspondences compose for every finite bilateral
@@ -3766,7 +3769,21 @@ A compiled host row is therefore a serialization of the `Native`/`Code` row alre
 
 ### 26.3. Installation, LAB, and the returned-head boundary
 
-**Definition 26.10 (two-pass host installation).** The host installer has a source descriptor chain and a target descriptor chain. For each source descriptor it executes, in order, shape dispatch, fresh target allocation, grant delivery, target-field clearing, bit initialization through the literal bit-kernel vertices, source-reference reads, forward-reference reads, target-reference writes, directory linking, and the entry forward read. Source descriptors, pending targets, initializer nodes, source/target buffers, and the bit-kernel cursor remain retained throughout. The target is not a bulk clone: every copied reference is obtained from the source field and then translated through the source descriptor's actual forward link.
+**Definition 26.10 (two-pass host installation).** The installer traverses
+the source descriptor chain twice. On the first pass, it selects each
+shape, allocates and grants a fresh target, clears and links its directory
+entry, and writes the source descriptor's forward link to that target.
+It then clears the payload reference fields and initializes the payload
+bits through the literal bit-kernel vertices. At the end of the first
+pass, every descriptor has its forward link.
+
+The second pass reads each literal payload reference from the source.
+It preserves null and translates each nonnull descriptor reference
+through that descriptor's forward link before writing the corresponding
+target field. After relocation, the installer reads the supplied entry's
+forward link and writes the execution location. Source descriptors,
+pending targets, initializer nodes, buffers and the bit-kernel cursor
+remain retained throughout.
 
 **Theorem 26.11 (installation refinement).** If the source descriptor chain is valid and has sufficient finite grants, every installation prefix has a packed realization related by $\mathcal R$ to the corresponding ML-I installation prefix. At completion, the returned `pc` is exactly the forward image of the supplied entry descriptor. A malformed shape, missing forward link, absent grant, or exhausted target pool refuses at the same source guard.
 
