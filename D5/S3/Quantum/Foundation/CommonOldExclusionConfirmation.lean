@@ -231,11 +231,11 @@ def oldChart (h3 : threeBallExclusions C u) (p : pure C u) :
 /-- The old complete ball's affine center. -/
 def oldCenter (h3 : threeBallExclusions C u) (p : pure C u) : V := oldChart h3 p 0
 
-private theorem three_implies_balls (h3 : threeBallExclusions C u) : exclusionBalls C u := by
+theorem three_implies_balls (h3 : threeBallExclusions C u) : exclusionBalls C u := by
   intro p
   exact ⟨⟨3, by norm_num, oldChart h3 p, (h3 p).choose_spec.1, (h3 p).choose_spec.2⟩⟩
 
-private theorem old_geometry
+theorem old_geometry
     (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (h3 : threeBallExclusions C u)

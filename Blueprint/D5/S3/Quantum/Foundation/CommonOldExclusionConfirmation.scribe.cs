@@ -24,6 +24,12 @@ internal sealed class CommonOldExclusionConfirmationDocument : IScribeDocumentDe
         Describe.Lean(DescribeId.Create("old-ball-center"), DeclarationHandle.Create(Owner + "oldCenter"),
             H("The old complete ball's center"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
             Paragraph(Text("The chosen affine chart maps zero to the old center c_p. Reflection preserves the whole ball. The main theorem proves that every symmetry center equals this point, so the center is independent of the chart.")))),
+        Describe.Lean(DescribeId.Create("three-implies-balls"), DeclarationHandle.Create(Owner + "three_implies_balls"),
+            H("The original EB3 charts are full exclusion charts"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For the same original C and u, threeBallExclusions supplies exclusionBalls by taking each original injective affine three-ball chart. BinaryCenterNoncollapse uses these complete original charts and the same intrinsic centers."))), DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("old-geometry"), DeclarationHandle.Create(Owner + "old_geometry"),
+            H("Whole original reflection and pure antipodes"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Under the original closedness, strict positivity, generating span and EB3 hypotheses, for every original pure p the chosen oldCenter lies in the whole D(p), reflection x mapped to twice oldCenter minus x preserves that whole ball, and every original pure q in D(p) has an original pure reflected partner r in D(p) with q+r=2 oldCenter. The fixed-sphere diameter bound uses these original reflected partners and identifies oldCenter with ContinuousFrameSum.center by whole-ball center uniqueness."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("actual-full-zero-effects"), DeclarationHandle.Create(Owner + "fullZeroEffects"),
             H("The actual full-zero confirmer family"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
             Paragraph(Text("A_p is exactly the continuous-dual representation of FixedZeroObstruction.fullZeroConfirmers: an original full-interval effect confirming p and vanishing at every mixed point of the complete D_p.")))),
