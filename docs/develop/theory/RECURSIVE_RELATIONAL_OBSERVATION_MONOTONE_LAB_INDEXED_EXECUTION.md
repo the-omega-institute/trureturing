@@ -3470,23 +3470,20 @@ the unchanged source arena rooted at the supplied $F_1(z)$ object.  A
 configuration cut is the tuple
 
 $$
- C_t=(I_t,S_t,O_t,Gamma_t,D_t,
-ho_t,pi_t,chi_t,omega_t),
+ C_t=(I_t,S_t,O_t,Gamma_t,D_t,\rho_t,pi_t,chi_t,omega_t),
 $$
 
 where $I_t$ contains the installed code, image pages, native control and
 reserve; $S_t$ contains the original root, its provider fields and all
 retained preparation; $O_t$ contains the service connection, input and
 reply latches, receipts, cache, output buffers and free pool; $Gamma_t$ is
-the ordered receipt chain; $D_t$ is the paired indexed cache; $
-ho_t$ is
+the ordered receipt chain; $D_t$ is the paired indexed cache; $\rho_t$ is
 the native reference/control location; $pi_t$ is the service phase and
 its literal continuation; $chi_t$ is the pending operand/reply state; and
 $omega_t$ is the owner-indexed reference-width vector.  Every cursor,
 counter, selector, pending latch and result in this tuple is an actual
 field or finite-control bit of its owner.  Audit counters and independent
-inspection views are not members of $
-ho_t$ or $pi_t$.
+inspection views are not members of $\rho_t$ or $pi_t$.
 
 **Assumption 25.2 (the integrated ML-I boundary).** The supplied native
 primitive graph, current grants and finite reserve are valid at the initial

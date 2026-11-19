@@ -1,0 +1,50 @@
+**定义 13.3（同锥的三个实质入口）。** 在 (13.1) 的同一个 $V,C,u,K$ 上，记 $P=\operatorname{ext}K$，使用整个数学 proper 区间
+
+$$
+[0,u]=\{e\in V^*:e(C)\ge0, (u-e)(C)\ge0\},\qquad
+F_v=\{e\in[0,u]:e(v)=1\},\qquad
+\mathcal T_v(z)=\min_{e\in F_v}e(z).
+\tag{13.6}
+$$
+
+这里 $v\in P,z\in K$；命题 13.2 和 PRE77.1–77.2 的紧 proper 区间论证给非空紧 $F_v$ 与最小值达到。为避免混淆，$T_j$ 表示移位，$\mathcal T_v$ 表示比较。要求如下。
+
+比较入口是完整 S：每个 $v\in P$ 有一个最小确认者 $e_v\in F_v$，在整个对偶锥序下满足 $e_v\le e$ 对所有 $e\in F_v$ 成立，并且 $e_v(w)=e_w(v)$ 对所有 $v,w\in P$ 成立。它等价于
+
+$$
+\mathcal T_v\!\left(\sum_i\lambda_iw_i\right)
+ =\sum_i\lambda_i\mathcal T_{w_i}(v),\qquad
+v,w_i\in P,\quad\lambda_i\ge0,\quad\sum_i\lambda_i=1,
+\tag{13.7}
+$$
+
+量化全部有限列表、重标签及零权。也可原样采用 [Library 固定半附录][L13] 的同载体等价入口
+
+$$
+\mathcal T_v\!\left(\frac{w+z}{2}\right)
+ =\frac{\mathcal T_w(v)+\mathcal T_v(z)}2
+\qquad(v,w\in P, z\in K),
+\tag{13.8}
+$$
+
+其中 $z$ 必须包含任意原混态余项。另一等价写法为 9.3 所列全部纯参照的全部支持极小有限回路平衡；其闭尖生成锥、严格单位、完整基、全部极点和整个 proper 区间前件均取本定义，不能只查某些实际字或某张纯二项表。这里不采用只在一个 ready 上的版本，因为 9.3 用于该削减的原生端点交换尚未作为本章前提。
+
+作用入口逐原地址要求
+
+$$
+T_j\in\operatorname{Aut}(C)^0\qquad(j=0,\ldots,10),\qquad
+\operatorname{Aut}(C)=\{A\in GL(V):A(C)=C\}.
+\tag{13.9}
+$$
+
+上标 $0$ 为完整数学锥自同构群的单位连通分支；它是有限维闭矩阵群，所以等价于存在连续路径 $A_j:[0,1]\to\operatorname{Aut}(C)$，$A_j(0)=I,A_j(1)=T_j$。中间 $A_j(t)$ 不必保持 $u$，更不表示实际可调用的控制。若给出 $\operatorname{Aut}(C,u)$ 内路径，当然也足够，但那是较强的见证条件。原移位本身已由 13.2 保单位。
+
+局部几何入口是存在两个不同纯 profiles $v,w\in P$，其整个最小锥面 $F(v,w)$ 满足
+
+$$
+\dim\operatorname{aff}\bigl(F(v,w)\cap\{u=1\}\bigr)=3.
+\tag{13.10}
+$$
+
+$F(v,w)$ 是所有同时含两条纯射线的锥面的交，不是任选一个三维截面、坐标图、三个标签或整个 $K$ 的维数。三个入口均是关于原行所生成对象的条件；有限秩、概率归一与统计回返没有自动供应它们。
+

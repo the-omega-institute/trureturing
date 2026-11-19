@@ -1,0 +1,63 @@
+**定理 17.2（一个 row relation 与 native Born 的等价及同锥后果）。** 只假设 III150 的实际有限预测秩、统计 $\mathrm R_{10}$ 和 uniform ready-return (150.4)–(150.5)，并保留原始射影群密度、ready 轨道密度和全部原终端 future。这些前件给出唯一连续
+$q:\mathbb P(\mathcal K)\to[0,1]$ 及
+$p(a)=q([K_ae_0])$。在这些共同前件下，(17.3) 当且仅当存在唯一 Hermitian $0\le E\le I$ 使
+
+$$
+ p(a)=\operatorname {Tr}(EP_{K_ae_0})
+ \qquad(a\in\mathsf W_{11}),
+\tag{17.7}
+$$
+
+若 $E$ 非标量，则原行空间 $V_{\mathrm w}$ 及其完成生成锥
+$C_{\mathrm w}=\overline{\operatorname {cone}\{x_a\}}$ 与整个
+$\operatorname {Herm}_{89}(\mathbb C)$ 及 $\operatorname {PSD}_{89}(\mathbb C)$ 保单位地同构，预测秩为
+
+$$
+ r=89^2=7921;
+\tag{17.8}
+$$
+
+constant branch 则为 $q\equiv c$、$E=cI$、$r=1$。非恒定分支的整个数学 proper 区间恰对应 $0\le F\le I$，且 VII9.2 的 whole-proper fixed-half comparison 是结论。这里不以该比较律、EJA 或预先指定的 PSD 锥／秩为前提；完成锥和数学效应的识别不构造实际准备、混合或菜单。
+
+证明。III150.3 将定义 17.1 的实际行下降到唯一连续 $q$。由 (17.6)，(17.3) 先给每个实际 future $f$ 上的 $\nu(q\circ K_f)=0$；原 $[K_f]$ 在 $\mathrm {PU}(89)$ 中稠密，连续性遂给 (16.1)。定理 16.3 给 (17.7)。反向，(16.2) 共轭于每个原 $K_f$ 后与 $E$ 配对，逐个 future 得 (17.3)，所以确为等价。
+
+下面直接识别原行，不调用比较入口。写 $d=89$，对全部 Hermitian $Z$ 定义
+
+$$
+ \iota_E(Z)=\left(\operatorname {Tr}Z,
+ \bigl(\operatorname {Tr}(K_f^*EK_fZ)\bigr)_{f\in\mathsf W_{11}}\right).
+\tag{17.9}
+$$
+
+它是到原有界坐标行的连续实线性映射，且 $\iota_E(P_{\chi_a})=x_a$。若 $E$ 非标量，$E_0=E-(\operatorname {Tr}E)I/d\ne0$ 的酉共轭轨道张成全部迹零 Hermitian 空间。可直接看出：把 $E_0$ 对角化，交换两个不等特征值并相减给一个 $P_i-P_j$；再作置换及二维酉旋转，就张成全部对角差、实和虚非对角方向。原 $[K_f]$ 的稠密性使对该实际轨道的正交性延拓到整个酉轨道。因此 $\iota_E(Z)=0$ 先由星坐标给 $\operatorname {Tr}Z=0$，再给 $Z$ 对所有迹零 Hermitian 矩阵正交，故 $Z=0$。
+
+$\iota_E$ 的有限维像闭合。原 ready 射线稠密，原有限维 $V_{\mathrm w}$ 也闭合，故对每个数学射线 $y$，$\iota_E(P_y)$ 是实际 $x_a$ 的极限且属于 $V_{\mathrm w}$。所有秩一投影实张成 Hermitian 空间，于是 $\operatorname {ran}\iota_E=V_{\mathrm w}$，得到 $r=d^2$。同一稠密性与有限谱分解又给
+
+$$
+ \overline{\operatorname {cone}\{x_a\}}
+ =\iota_E(\operatorname {PSD}_d),\qquad
+ \overline{\operatorname {conv}\{x_a\}}
+ =\iota_E\{\rho\ge0:\operatorname {Tr}\rho=1\},
+ \qquad u\iota_E=\operatorname {Tr}.
+\tag{17.10}
+$$
+
+这正是原完成生成锥及其归一化基，不是扩大到逐坐标非负锥。迹配对把其整个 proper 区间精确识别为 $0\le F\le I$。若 $P=|v\rangle\langle v|$ 为单位纯投影，确认它的 $F$ 满足 $\langle v,Fv\rangle=1$；$I-F\ge0$ 给 $Fv=v$，Hermitian 性消去交叉块，故 $F=P\oplus F_\perp\ge P$。取 $F=P$ 达到最小值，所以在同一完整密度基上
+
+$$
+ T_P(\rho)=\min_{0\le F\le I,\ \operatorname {Tr}(FP)=1}
+             \operatorname {Tr}(F\rho)=\operatorname {Tr}(P\rho).
+\tag{17.11}
+$$
+
+对任意纯投影 $S$ 和任意原完成基中的混态余项 $\rho$，因此有
+$T_P((S+\rho)/2)=(T_S(P)+T_P(\rho))/2$，恰为完整固定半比较。该比较及混合几何均为后果。若 $q$ 恒定，所有实际行相同且非零，故秩一，$E=cI$；此时不识别为 $d^2$ 维锥。上述闭包、谱分解和矩阵对应只完成原行的数学几何，不增加任何实际制备、混合、测试、极限门或档案身份。证毕。
+
+旧事件 $Q$ 的识别另行保持 VII10.4 的精确接口：还须有原不变性
+
+$$
+ p(aj)=p(a)\quad(2\le j\le10),
+$$
+
+以及两项源标定 $q([e_0])=0$、$q([e_1^{\mathrm {cal}}])=1$。VII10.9–10.10 的块群不变性随后给 $E=Q$。两个标定本身不能替代不变性；例如另一个秩一效果也可命中两点。这里没有把 actual named acceptance、actual return 或记录条件核写成 (17.3) 的推论。
+

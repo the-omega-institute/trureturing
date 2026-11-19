@@ -1,0 +1,17 @@
+**命题 12.2（条件推导的范围与尚存的起源问题）。** 9.2–10.4 的结论是相对于已供复射线／控制几何的原终端概率刻画。它们不推出原记录条件核、纯更新、CP 仪器、关联复合或物理动力学；也不提供物理混合、完整效应菜单、任意射线准备或有限认证。
+
+证明。10.1 的行只读 $P_{\mathsf T(af)}(A)$，不包含 $P_{\mathsf R(a,h)}(A\mid i,z)$。因此即使取得 (10.8) 或 $E=Q$，仍没有给 III (150.19) 的档案条件核等式，也没有给记录质量 $m_i(a)$ 或实际后继。原 III150.4、III144 及本卷前八章的记录定理必须继续使用各自完整的条件域；不得从本节终端替代包中删去其 C、D、支撑、纯后继、历史／档案充分性和原失败合同。全标签归一化只在 12.1 的共同载体前件齐备时才给 POVM，POVM 数值本身仍不决定任何更新。
+
+同样，数学凸包、Haar 平均、全 proper 对偶和群闭包是证明对象，不是源中新增的准备、测试、概率查询、重置、参考、辅助载体或极限操作。独立复合和关联联合锥须另供共同实现与相容性；PRE79.8、82 的过程／CP 消费者仍有各自全域、同事件及参考前件。时钟、单位、能量规范和动力学须与原物理来源逐项对应，调用次数或数学连续群不支付它们。
+
+本节仍显式保留复射线与全酉控制几何、实际有限预测秩、统计回返、ready 预测回返和同一全效应比较律。特别是比较律尚未由唯一 $\Omega$、归一化、矩阵恒等式或终端下降导出，11.2 已区分这些条件。所得增益是从这项内禀关系推得原预测锥、原生等变性和 Born 效应，并在另保留事件不变性及标定时认回原 $Q$；不是 Hilbert／Born 的完整物理起源，不是整个量子起源目标的完成，也不比较两种完整物理假设包的净强弱或数目。有限实秩和一个参照的等价表述均不供应字长、计算、精度、确认次数、样本成本或统一误差界；不作绝对最小性或穷尽文献的新颖性断言。∎
+
+[II9]: https://github.com/the-omega-institute/trureturing/blob/4a7117cee792c7d5598d7f4770577d557fb45137/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md
+[III9]: https://github.com/the-omega-institute/trureturing/blob/4a7117cee792c7d5598d7f4770577d557fb45137/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[L9]: https://github.com/the-omega-institute/trureturing/blob/4a7117cee792c7d5598d7f4770577d557fb45137/Library/QuantumStates/mullerududec2012selfduality.md
+[PRE9]: https://github.com/the-omega-institute/trureturing/blob/4a7117cee792c7d5598d7f4770577d557fb45137/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md
+[CB9]: https://github.com/the-omega-institute/trureturing/blob/4a7117cee792c7d5598d7f4770577d557fb45137/Blueprint/D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.md
+[GM9]: https://arxiv.org/html/1610.04859v3
+[BMU9]: https://arxiv.org/html/1403.4147v4
+[BH9]: https://arxiv.org/html/1904.03753v1
+

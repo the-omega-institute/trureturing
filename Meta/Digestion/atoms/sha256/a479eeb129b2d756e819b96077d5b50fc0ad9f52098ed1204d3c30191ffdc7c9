@@ -1,0 +1,7 @@
+**定义 8.4（包含前件与结论的普通中文）。** 在这套已经给定复数路径载体、原相干门、唯一 ready、普通因果概率、全部实际终端 Born、正质量纯投影后继、零支撑规则以及完整档案和零失败范围的装置模型里，只需再要求两件实际关系：任意一个真实有限前缀附近，凡另一个真实前缀的最终射线足够接近，记录概率也足够接近，邻近尺度可以随中心变化；以及在每个真实前缀上，插入一次仍保留记录和档案的中途读取，只在比较终端边缘时对记录求和，不改变原来那个“编号为一的旧位取值为一”的终端事件边缘。这两件事恰好等价于所有真实前缀上的记录概率都是对应投影的平方范数，因为那个终端比较在能区分两个记录分支时已经锁定权重，分不清的点则由原来源中确实存在的邻近有限字和局部连续关系接上；射线完全相同的两个真实前缀也已被局部关系强制给同一读数。这样可以省去事先在整个数学射线域上定义一个连续记录函数的要求，而且确有同源固定规则满足局部关系却无法作这种连续延拓，同时完整保留原校准、有限误差、成本与档案范围；但加上插读关系后，两条路线选择的实际成功记录完全相同。结论之后得到的全射线函数只是数学延拓，既没有准备新的射线，也没有决定未知细档案核，更没有导出复结构、独立复合、混态、任意测量、时钟、全部动力学、有限认证或完整物理起源。
+
+[source]: https://github.com/the-omega-institute/trureturing/tree/46927cc328c58a872092e1d1c3bf102e48fa0426
+[II]: https://github.com/the-omega-institute/trureturing/blob/46927cc328c58a872092e1d1c3bf102e48fa0426/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md
+[III]: https://github.com/the-omega-institute/trureturing/blob/46927cc328c58a872092e1d1c3bf102e48fa0426/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[FLW]: https://arxiv.org/html/math/0103200v1
+

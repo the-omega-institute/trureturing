@@ -1,0 +1,34 @@
+**定义 4.1（一次固定的域外中心）。** 复用 II134.1 的等距
+
+$$
+\mathscr L=K_9^2K_7^2R_0:H\longrightarrow\mathcal K,\qquad
+t_*=x^4.
+\tag{4.1}
+$$
+
+II134.3–134.5 已给每个单位 $\psi\in H$ 上
+
+$$
+t_0(\mathscr L\psi)=t_*,\qquad
+\ell(\mathscr L\psi)=1-t_*,
+\qquad \ell(\xi)=\|(I-P_{\mathcal C})\xi\|^2,\quad
+P_{\mathcal C}=JJ^*.
+\tag{4.2}
+$$
+
+这里及以下 $\ell([u])=\operatorname{Tr}((I-P_{\mathcal C})P_u)$，与单位代表上的 (4.2) 一致；代码投影只定义模型，不是一个新增检测操作。
+
+令 $\overline{\mathbb Q}\subset\mathbb C$ 为代数数域。原矩阵 (1.4)、ready 基向量及 $\mathscr L$ 的全部元素都在该域内。故每个实际前缀射线均可用代数坐标向量表示。有限原门和非零计算投影产生的向量也保持这一性质；归一化只需开正代数数的平方根。
+
+固定原路径单位向量 $v'=e_{00000}\perp v$，再一次性固定
+$\omega\in\mathbb C$，满足 $|\omega|=1$ 且 $\omega$ 不是代数数。这样的单位复数存在，因为代数数可数而单位圆不可数。置
+
+$$
+\psi^\dagger=(v+\omega v')/\sqrt2,\qquad
+z^\dagger=[\mathscr L\psi^\dagger]\in X.
+\tag{4.3}
+$$
+
+此中心不在 $X_{\mathrm{act}}$。否则 $\mathscr L\psi^\dagger$ 的射线可由代数坐标表示，对该代表施加代数矩阵 $\mathscr L^*$，其 $v'$ 与 $v$ 两坐标之比便既是代数数又等于 $\omega$，矛盾。整体相位不影响这个比值。(4.2) 给该中心
+$t_0=t_*$、$\ell=1-t_*>0$。中心是模型公式中的固定数学系数，不增加 ready、相位参考或读口，也没有实际制备这个中心。
+

@@ -1,0 +1,15 @@
+**物理时间、时钟与 Hamiltonian。** 仍另需真实物理时间上的连续、时间齐次、可逆
+$*$-自同构群 $\alpha_{t+s}=\alpha_t\alpha_s$、实际逆、原时钟、控制、ready/flags、
+时间和能量单位以及共同正 $\hbar$ 的对应。
+连续群不能非平凡置换有限中央块；每个复块上的连续一参数自同构由内导子生成，故
+
+$$
+ U_i(t)=e^{-itH_i/\hbar},\qquad H_i=H_i^*,\qquad
+ \rho_i(t)=U_i(t)\rho_i(0)U_i(t)^*,\qquad
+ \dot\rho_i=-\frac{i}{\hbar}[H_i,\rho_i],\qquad H_i\sim H_i+c_iI.
+\tag{28.13}
+$$
+
+这是实际时间群和单位合同的消费者，不由离散门密度、(24.5) 的数学逆字或 terminal 回返推出。
+无限维正常性、生成元域、收敛和原动态域条件仍须各自来源。
+

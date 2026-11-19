@@ -1,0 +1,38 @@
+**定义 24.1（同一来源上的无秩入口）。** 严格保留定义 10.1、17.1 的原来源：
+$\mathcal K=V_{12}^{\mathbf1}$、$d=89$、唯一 ready $e_0$、全部原十一地址有限正向字
+$\mathsf W_{11}$、$K_{ab}=K_bK_a$、原事件 $A=\{b_1=1\}$，以及原实际数
+
+$$
+ p(a)=P_{\mathsf T(a)}(A),\qquad
+ P_a=P_{K_ae_0},\qquad P_e=P_{e_0},\qquad
+ x_a=\bigl(1,(p(af))_{f\in\mathsf W_{11}}\bigr).
+\tag{24.1}
+$$
+
+令 $I=\{\star\}\sqcup\mathsf W_{11}$，
+$V=\operatorname{span}_{\mathbb R}\{x_a\}\subset\ell^\infty(I,\mathbb R)$，
+$\widehat V=\overline V^{\|\cdot\|_\infty}$。这里不假定 $V$ 有限维，也不假定 $V$ 闭合。
+原矩阵、全 $89$ 维相干语义、$J:H\otimes\mathbb C^2\to\mathcal K$、整个 $26$ 维代码与
+$63$ 维正交补、原调用次序及 (10.5) 的射影群和 ready 轨道密度全部保持。
+本节不采用假设 1.3 中已给终端 Born 的较强模型，而采用 III150.1、(24.1) 的未知实际终端律。
+原普通非负归一因果律、理想精确零失败范围及有限供应、可靠性、成本合同各守原域；
+零失败坐标保留，不把理想数学范围等同实际执行保证。
+
+以下两条统计关系分别为
+
+$$
+\begin{aligned}
+\mathrm R_{10}:\quad &p(aj^{10}f)=p(af)
+ &&(a,f\in\mathsf W_{11},\ 0\le j\le10),\\
+\mathrm {UR}:\quad &d_{\mathbb P}(P_{c_n},P_e)\longrightarrow0
+ &\Longrightarrow\quad&\|x_{c_n}-x_\epsilon\|_\infty\longrightarrow0
+ \quad\text{对每列实际有限字 }(c_n).
+\end{aligned}
+\tag{24.2}
+$$
+
+$d_{\mathbb P}(P,Q)=\|P-Q\|_{\rm op}=\tfrac12\|P-Q\|_1$ 始终是原纯态距离。
+$\mathrm {UR}$ 中范数先取**全部**原 terminal futures 的上确界，不能换成对每个固定 future 的逐点收敛。
+矩阵恒等式 $K_j^{10}=I$ 与统计 $\mathrm R_{10}$ 是不同层的前件。
+记录后七地址、一般档案、条件核和其它 typed 过程继续使用自己的原定义；本行不声称包含它们。
+

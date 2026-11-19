@@ -1,0 +1,64 @@
+**定理 25.1（无容量前件的下降）。** 保持定义 24.1 的全部原几何、密度及程序域，有
+
+$$
+ \boxed{\quad
+ \mathrm R_{10}+\mathrm {UR}
+ \quad\Longleftrightarrow\quad
+ \exists!\,q\in C(\mathbb {CP}^{88},[0,1]):\ p(a)=q(P_a)
+ \quad(a\in\mathsf W_{11}).
+ \quad}
+\tag{25.1}
+$$
+
+正向还给唯一范数连续的行延拓
+
+$$
+ \Phi:\mathbb {CP}^{88}\longrightarrow\widehat V,
+ \qquad
+ \Phi(P)=\bigl(1,(q(K_fPK_f^*))_{f\in\mathsf W_{11}}\bigr),
+ \qquad \Phi(P_a)=x_a.
+\tag{25.2}
+$$
+
+本定理不把 $\Phi$ 的值域提前放入未证闭合的 $V$。
+
+证明。先用度量空间通常的序列判据，把 $\mathrm {UR}$ 写成
+
+$$
+ \lim_{s\downarrow0}\omega_{\rm ret}(s)=0.
+\tag{25.3}
+$$
+
+若该极限不为零，单调性给某个 $\eta>0$，对每个 $n$ 都有
+$\omega_{\rm ret}(1/n)\ge\eta$。按上确界定义选实际 $c_n$，使
+$d_{\mathbb P}(P_{c_n},P_e)\le1/n$ 而 $\Delta(c_n,\epsilon)>\eta/2$，与 $\mathrm {UR}$ 矛盾。
+反向，(25.3) 直接控制任意 ready 回返序列。
+常值零距离序列也在 $\mathrm {UR}$ 的量词内，所以零距离的 return 行差必为零。
+
+由 (24.8)，$\omega_{\rm pair}$ 同样趋零，且 $\omega_{\rm pair}(0)=0$。
+因此实际射线域上的赋值 $P_a\mapsto x_a$ 首先与表示字无关，其次在 $\ell^\infty$ 范数中一致连续。
+对任一数学射线 $P$，取原实际射线列 $P_{a_n}\to P$。上述一致性使 $x_{a_n}$ 是 Cauchy 列；
+完备 Banach 空间 $\ell^\infty(I,\mathbb R)$ 给极限，而该极限属于 $\widehat V$。
+两种逼近列交错后仍是同一极限，故得到唯一一致连续延拓 $\Phi$。
+这是命题 2.3 所用的通常稠密一致连续延拓工具，值域改为完备的 $\widehat V$；不另主张一般延拓新定理。
+坐标评价连续，所以空 future 坐标给连续 $q(P)=\Phi(P)(\epsilon)\in[0,1]$。
+对每个固定 $f$，实际点上有
+$\Phi(P_a)(f)=p(af)=q(K_fP_aK_f^*)$；两边连续、实际点稠密，故得 (25.2) 于整个射影空间。
+唯一性亦由原 ready 密度给出。
+
+反向，设连续 $q$ 表示全部实际 $p$。紧射影空间上的一致连续性给
+
+$$
+ \eta_q(s)=\sup_{d_{\mathbb P}(P,Q)\le s}|q(P)-q(Q)|
+ \longrightarrow0\quad(s\downarrow0).
+\tag{25.4}
+$$
+
+所有 $K_f$ 等距，故 $\Delta(c,\epsilon)\le\eta_q(d_{\mathbb P}(P_c,P_e))$，给 $\mathrm {UR}$。
+矩阵 $K_j^{10}=I$ 又在这个已按射线表示的模型内给全部统计 $\mathrm R_{10}$。
+这不是对未知原律从矩阵恒等式直接推统计回返；射线表示本身是此反向的前件。证毕。
+
+本定理取代 III150.3 正向下降中对有限维预测等距群紧性的需要。
+III150.3 的原有限秩版本及其有限未来结论仍在其原前件下有效；没有将它们改判为无秩定理。
+特别是 (150.7) 的固定有限分离框架和 (150.8) 的一个固定 future 障碍，尚不能从本节独立得到。
+

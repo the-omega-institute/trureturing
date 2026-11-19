@@ -1,0 +1,46 @@
+**命题 27.2（没有统计回返，统一 ready 回返和四前缀仍不够）。** 固定单位 $w\perp e_0$，
+取 $0\le\lambda_j\le1$ 不全相同、至少一项为一。置
+
+$$
+ p(\epsilon)=0,\qquad
+ p(a)=\lambda_{\operatorname {last}(a)}\operatorname {Tr}(P_wP_a)
+ \quad(a\ne\epsilon).
+\tag{27.3}
+$$
+
+则 $\Delta(c,\epsilon)\le d_{\mathbb P}(P_c,P_e)$，故 $\mathrm {UR}$ 成立；
+完整四前缀行关系成立；但统计 $\mathrm R_{10}$ 和实际射线充分性失败。
+实际秩至多 $d^2+1$。
+
+证明。对非空 future $f$，末地址只由 $f$ 决定，所以相应坐标是同一个
+$\lambda_{\operatorname {last}(f)}P_w$ 的共轭线性读数。
+效果的纯态迹差绝对值至多 $d_{\mathbb P}$；空 future 在 ready 上为零，且
+$\operatorname {Tr}(P_wP_c)\le1-\operatorname {Tr}(P_eP_c)=d_{\mathbb P}(P_c,P_e)^2$。
+故空和非空坐标都给所称统一界。
+四前缀的每个非空 future 坐标由 (16.2) 的原四投影恒等式消去；
+空 future 的三个非空前缀都以 $9$ 结尾，且 $\operatorname {Tr}(P_wP_e)=0$，故也消去。
+
+选 $j,k$ 使 $\lambda_j\ne\lambda_k$。
+以 $k$ 结尾的实际射线仍稠密，因为它们是全部 ready 轨道经固定酉 $K_k$ 的像。
+故可选以 $k$ 结尾且 $\operatorname {Tr}(P_wP_a)>0$ 的 $a$。
+$a$ 与 $aj^{10}$ 矩阵射线相同、空 future 读数却不同，精确否定 $\mathrm R_{10}$ 及射线充分性。
+非空 futures 的行是 Hermitian 空间的有限维线性像，星坐标由迹给出；再加入独立的空 future 坐标，秩至多 $d^2+1$。证毕。
+
+可以把差别写到端点：取 $\lambda_0=1$、其它 $\lambda_j=0$。
+以 $0$ 结尾的非空 futures 的矩阵仍稠密，它们的共轭 $P_w$ 因而遍历稠密的纯投影轨道。
+对任意实际 $c$，这些坐标的 supremum 恰为 $\|P_c-P_e\|_{\rm op}$，所以
+
+$$
+ \Delta(c,\epsilon)=d_{\mathbb P}(P_c,P_e),\qquad
+ \omega_{\rm ret}(s)=s,
+ \qquad\omega_{\rm pair}(0)=1.
+\tag{27.4}
+$$
+
+最后一式由以 $0$ 结尾、射线趋于 $P_w$ 的字 $a$ 及同射线字 $a1^{10}$ 给出：
+二者全部非空 future 读数相同，只有空 future 差趋一。
+而 $\omega_{\rm ret}(0)=0$。
+限制到星及非空 futures 的映射在 Hermitian 空间上单射，其实际像秩为 $d^2$；
+上述同射线行差在该限制的核中给一个非零空坐标方向，故全实际秩恰为 $d^2+1$。
+这精确展示统计逆字缺失时，全局模与 ready 模如何分离；它不是旧校准物理模型。
+
