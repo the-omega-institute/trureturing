@@ -40,6 +40,21 @@ internal sealed class OriginalFourMSpatialWickDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text("For the native radial nome, the readout includes the "
                     + "original determinant, charge energy and scalar. The period normalization "
                     + "adds the cube of the complementary parameter."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-spatial-coefficient-has-sum"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.spatialCoefficient_hasSum"),
+                H("Taylor extraction for a normally convergent series"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A summable majorant on a common polydisk lets each coordinate "
+                    + "Taylor extraction pass through the infinite sum."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fourm-physical-chart-jet-has-sum"),
+                DeclarationHandle.Create(
+                    "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_jet_hasSum"),
+                H("Taylor extraction through the physical charge fiber"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Positive definite lattice energy dominates the linear marked "
+                    + "charge source on a common external polydisk. The coefficient sum uses the "
+                    + "original mod-two charge fiber and period normalization."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fourm-physical-chart-coefficient-overlap"),
                 DeclarationHandle.Create(
                     "D5/S3/VertexAlgebra/TwistedGround/FourPoint/OriginalFourMSpatialWick.physical_chart_coefficient_overlap"),

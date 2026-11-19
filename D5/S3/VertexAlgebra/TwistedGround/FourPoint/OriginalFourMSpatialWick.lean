@@ -7,6 +7,7 @@
    digest: Spatial Taylor extraction for simultaneous marked Gaussian products. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMJointWick
+import Mathlib.Analysis.Complex.Liouville
 
 /-! Each term of the marked Wick recurrence uses the head coordinate in
 one singleton or one pair. Spatial Taylor extraction distributes over this
@@ -126,6 +127,141 @@ theorem spatialCoefficient_congr (n : X → ℕ) (l : List X) {f g : (X → ℂ)
   induction l generalizing f g with
   | nil => exact h
   | cons i l ih => exact ih (take_congr n i h)
+
+private theorem update_mem_ball (i : X) {u : X → ℂ} {t : ℂ} {r : ℝ}
+    (hu : u ∈ Metric.ball 0 r) (ht : t ∈ Metric.ball 0 r) :
+    inserts i t u ∈ Metric.ball 0 r := by
+  rw [mem_ball_zero_iff] at hu ht ⊢
+  apply lt_of_le_of_lt _ (max_lt hu ht)
+  apply (pi_norm_le_iff_of_nonneg (le_max_of_le_left (norm_nonneg u))).2
+  intro j
+  by_cases hj : j = i
+  · subst j
+    simpa [inserts] using (le_max_right ‖u‖ ‖t‖)
+  · exact (by simpa only [inserts, Function.update_of_ne hj] using
+      (norm_le_pi_norm u j).trans (le_max_left ‖u‖ ‖t‖))
+
+private theorem take_analyticOnNhd (n : X → ℕ) (i : X) {f : (X → ℂ) → ℂ}
+    {r : ℝ} (hr : 0 < r) (hf : AnalyticOnNhd ℂ f (Metric.ball 0 r)) :
+    AnalyticOnNhd ℂ (take n i f) (Metric.ball 0 r) := by
+  intro u hu
+  let G : (X → ℂ) → ℂ := fun z => f (z + inserts i 0 u)
+  have h0 : inserts i 0 u ∈ Metric.ball 0 r := update_mem_ball i hu (Metric.mem_ball_self hr)
+  have hg : AnalyticAt ℂ G 0 := (hf _ h0).comp_of_eq
+    (analyticAt_id.add analyticAt_const) (zero_add _)
+  have he : (fun z => take n i G (z - u)) = take n i f := by
+    funext z
+    simp only [take, G]
+    congr 1
+    funext t
+    change f (inserts i t (z - u) + inserts i 0 u) = f (inserts i t z)
+    congr 1
+    ext j
+    by_cases hj : j = i
+    · subst j
+      simp [inserts]
+    · simp [inserts, Function.update_of_ne hj]
+  rw [← he]
+  exact (take_analytic n i G hg).comp_of_eq
+    (analyticAt_id.sub analyticAt_const) (sub_self u)
+
+private theorem locallyUniform_iteratedDeriv {Y : Type*} {p : Filter Y}
+    {F : Y → ℂ → ℂ} {f : ℂ → ℂ} {U : Set ℂ}
+    (h : TendstoLocallyUniformlyOn F f p U)
+    (hF : ∀ y, AnalyticOnNhd ℂ (F y) U) (hU : IsOpen U) (k : ℕ) :
+    TendstoLocallyUniformlyOn (fun j => iteratedDeriv k (F j)) (iteratedDeriv k f) p U := by
+  have hA (j : Y) (n : ℕ) : AnalyticOnNhd ℂ (iteratedDeriv n (F j)) U := by
+    induction n with
+    | zero => simpa only [iteratedDeriv_zero] using hF j
+    | succ n ih => rw [iteratedDeriv_succ]; exact ih.deriv
+  induction k with
+  | zero => simpa only [iteratedDeriv_zero] using h
+  | succ k ih =>
+    simp only [iteratedDeriv_succ]
+    exact ih.deriv (Eventually.of_forall fun j => (hA j k).differentiableOn) hU
+
+private theorem take_hasSum {Y : Type*} {f : Y → (X → ℂ) → ℂ} {b : Y → ℝ}
+    (hb : Summable b) {r : ℝ} (hf : ∀ j, AnalyticOnNhd ℂ (f j) (Metric.ball 0 r))
+    (hbound : ∀ j u, u ∈ Metric.ball 0 r → ‖f j u‖ ≤ b j)
+    (n : X → ℕ) (i : X) {u : X → ℂ} (hu : u ∈ Metric.ball 0 r) (hr : 0 < r) :
+    HasSum (fun j => take n i (f j) u) (take n i (fun z => ∑' j, f j z) u) := by
+  let F (j : Y) (t : ℂ) := f j (inserts i t u)
+  have hA : ∀ j, AnalyticOnNhd ℂ (F j) (Metric.ball 0 r) := by
+    intro j t ht
+    refine (hf j _ (update_mem_ball i hu ht)).comp_of_eq
+      (f := fun t => inserts i t u) ?_ rfl
+    rw [analyticAt_pi_iff]
+    intro k
+    by_cases hk : k = i
+    · subst k
+      simp only [inserts, Function.update_self]
+      exact analyticAt_id
+    · simp [inserts, Function.update_of_ne hk, analyticAt_const]
+  have hFin (s : Finset Y) : AnalyticOnNhd ℂ (fun t => ∑ j ∈ s, F j t) (Metric.ball 0 r) :=
+    fun t ht => Finset.analyticAt_fun_sum s (fun j _ => hA j t ht)
+  have h := (tendstoUniformlyOn_tsum (f := F) hb
+    (fun j t ht => hbound j _ (update_mem_ball i hu ht))).tendstoLocallyUniformlyOn
+  have hd := (locallyUniform_iteratedDeriv h hFin Metric.isOpen_ball (n i)).tendsto_at
+    (Metric.mem_ball_self hr : (0 : ℂ) ∈ Metric.ball 0 r)
+  have hEq (s : Finset Y) : iteratedDeriv (n i) (fun t => ∑ j ∈ s, F j t) 0 =
+      ∑ j ∈ s, iteratedDeriv (n i) (F j) 0 :=
+    iteratedDeriv_fun_sum (fun j _ => (hA j _ (Metric.mem_ball_self hr)).contDiffAt)
+  have hs : HasSum (fun j => iteratedDeriv (n i) (F j) 0)
+      (iteratedDeriv (n i) (fun t => ∑' j, F j t) 0) := by
+    simpa only [hEq, HasSum, SummationFilter.unconditional_filter] using hd
+  simpa only [take, coefficient, F, inserts, div_eq_mul_inv] using
+    hs.mul_right (((n i).factorial : ℂ)⁻¹)
+
+private theorem take_bound {f : (X → ℂ) → ℂ} {r B : ℝ} (hr : 0 < r)
+    (hf : AnalyticOnNhd ℂ f (Metric.ball 0 r))
+    (hB : ∀ u ∈ Metric.ball 0 r, ‖f u‖ ≤ B) (n : X → ℕ) (i : X)
+    {u : X → ℂ} (hu : u ∈ Metric.ball 0 r) :
+    ‖take n i f u‖ ≤ B / (r / 2) ^ n i := by
+  have hr2 : 0 < r / 2 := by positivity
+  have hslice : DifferentiableOn ℂ (fun t => f (inserts i t u)) (Metric.ball 0 r) := by
+    intro t ht
+    apply DifferentiableAt.differentiableWithinAt
+    refine (hf _ (update_mem_ball i hu ht)).differentiableAt.comp t ?_
+    rw [differentiableAt_pi]
+    intro j
+    by_cases hj : j = i
+    · subst j
+      simpa [inserts] using (differentiableAt_id : DifferentiableAt ℂ (fun t : ℂ => t) t)
+    · simp [inserts, Function.update_of_ne hj, differentiableAt_const]
+  have hclosed : Metric.closedBall (0 : ℂ) (r / 2) ⊆ Metric.ball 0 r := by
+    exact Metric.closedBall_subset_ball (by linarith)
+  have hdiff := hslice.diffContOnCl_ball hclosed
+  have hs : ∀ t ∈ Metric.sphere (0 : ℂ) (r / 2), ‖f (inserts i t u)‖ ≤ B :=
+    fun t ht => hB _ (update_mem_ball i hu (hclosed (Metric.sphere_subset_closedBall ht)))
+  have h := Complex.norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le (n i) hr2 hdiff hs
+  simp only [take, coefficient, norm_div, Complex.norm_natCast]
+  apply (div_le_iff₀ (by positivity : 0 < ((n i).factorial : ℝ))).2
+  rw [show B / (r / 2) ^ n i * ((n i).factorial : ℝ) =
+    ((n i).factorial : ℝ) * B / (r / 2) ^ n i by ring]
+  exact h
+
+/-- The spatial coefficient of a normally convergent series at the origin is
+the sum of its spatial coefficients. The majorant is on one common polydisk. -/
+theorem spatialCoefficient_hasSum {Y : Type*} {f : Y → (X → ℂ) → ℂ}
+    {b : Y → ℝ} (hb : Summable b) {r : ℝ} (hr : 0 < r)
+    (hf : ∀ j, AnalyticOnNhd ℂ (f j) (Metric.ball 0 r))
+    (hbound : ∀ j u, u ∈ Metric.ball 0 r → ‖f j u‖ ≤ b j)
+    (n : X → ℕ) (l : List X) :
+    HasSum (fun j => spatialCoefficient n l (f j) 0)
+      (spatialCoefficient n l (fun z => ∑' j, f j z) 0) := by
+  induction l generalizing f b with
+  | nil =>
+    exact (hb.of_norm_bounded fun j => hbound j 0 (Metric.mem_ball_self hr)).hasSum
+  | cons i l ih =>
+    have he : take n i (fun z => ∑' j, f j z) =ᶠ[𝓝 0]
+        (fun z => ∑' j, take n i (f j) z) := by
+      filter_upwards [Metric.ball_mem_nhds (0 : X → ℂ) hr] with u hu
+      exact (take_hasSum hb hf hbound n i hu hr).tsum_eq.symm
+    have hh := ih (hb.div_const ((r / 2) ^ n i)) (fun j => take_analyticOnNhd n i hr (hf j))
+      (fun j u hu => take_bound hr (hf j) (hbound j) n i hu)
+    simp only [spatialCoefficient]
+    rw [(spatialCoefficient_congr n l he).eq_of_nhds]
+    exact hh
 
 private theorem take_add (n : X → ℕ) (i : X) {f g : (X → ℂ) → ℂ}
     (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
@@ -658,6 +794,333 @@ theorem physical_product_marked_charge_fiber (D : LatticeData) (hu : IsUnit D.G.
   erw [hQ, hL']
   simp only [Complex.exp_add]
   ring
+
+open LatticeDiscriminantTheta (gramReal)
+open D5.S3.Fourier.MatrixGaussian (quadratic exists_quadratic_lower_bound)
+open private summable_scalar_gaussian summable_fin_prod from D5.S3.Fourier.MatrixGaussianPoisson
+
+private theorem continuousAt_bound {Z : Type*} [TopologicalSpace Z] {z : Z} {f : Z → ℂ}
+    (hf : ContinuousAt f z) : ∃ M : ℝ, 0 ≤ M ∧ ∀ᶠ v in 𝓝 z, ‖f v‖ ≤ M := by
+  refine ⟨‖f z‖ + 1, by positivity, ?_⟩
+  exact (hf.norm.eventually_lt (continuousAt_const (y := ‖f z‖ + 1)) (by linarith)).mono
+    (fun _ h => h.le)
+
+private theorem charge_exponential_majorant {Z : Type*} [TopologicalSpace Z] {z : Z}
+    (D : LatticeData) (hD : (gramReal D).PosDef) (τ : ℂ) (hτ : 0 < τ.im)
+    (Q : Z → ℂ) (L : Fin D.rank → Z → ℂ)
+    (hQ : ContinuousAt Q z) (hL : ∀ j, ContinuousAt (L j) z) :
+    ∃ b : Charge D → ℝ, Summable b ∧ ∀ᶠ v in 𝓝 z, ∀ q : Charge D,
+      ‖Complex.exp ((Real.pi : ℂ) * Complex.I * τ * (bilinear D q q : ℂ) / 2) *
+        Complex.exp (Q v + ∑ j, (q j : ℂ) * L j v)‖ ≤ b q := by
+  classical
+  obtain ⟨C, hC, hQc⟩ := continuousAt_bound hQ
+  choose M hM hMc using fun j => continuousAt_bound (hL j)
+  obtain ⟨c, hc, hcoercive⟩ := exists_quadratic_lower_bound (gramReal D) hD
+  let d : ℝ := Real.pi * τ.im * c / 4
+  have hd : 0 < d := by dsimp [d]; positivity
+  let p (q : ℤ) := Real.exp (-d * (q : ℝ)^2)
+  let E := Real.exp (C + ∑ j, (M j)^2 / (4 * d))
+  refine ⟨fun q => E * ∏ j, p (q j),
+    (summable_fin_prod (fun _ : Fin D.rank => p)
+      (fun _ => summable_scalar_gaussian d hd) (fun _ _ => (Real.exp_pos _).le)).mul_left E, ?_⟩
+  filter_upwards [hQc, eventually_all.mpr hMc] with v hv hvL
+  intro q
+  have hEq : (bilinear D q q : ℝ) =
+      quadratic (gramReal D) (fun j => (q j : ℝ)) := by
+    unfold bilinear quadratic gramReal Matrix.mulVec dotProduct
+    push_cast
+    simp only [Matrix.map_apply, Finset.mul_sum, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hdecay := mul_le_mul_of_nonneg_left (hcoercive (fun j => (q j : ℝ)))
+    (show 0 ≤ Real.pi * τ.im / 2 by positivity)
+  rw [← hEq] at hdecay
+  have hlin (j : Fin D.rank) :
+      ((q j : ℂ) * L j v).re ≤ d * (q j : ℝ)^2 + (M j)^2 / (4 * d) := by
+    refine (Complex.re_le_norm _).trans ?_
+    rw [norm_mul, Complex.norm_intCast]
+    refine (mul_le_mul_of_nonneg_left (hvL j) (abs_nonneg (q j : ℝ))).trans ?_
+    have hsq := mul_nonneg hd.le (sq_nonneg (|(q j : ℝ)| - M j / (2 * d)))
+    have hpoly : d * (|(q j : ℝ)| - M j / (2 * d))^2 =
+        d * (q j : ℝ)^2 - |(q j : ℝ)| * M j + (M j)^2 / (4 * d) := by
+      rw [sub_sq, sq_abs]
+      field_simp
+      <;> ring
+    rw [hpoly] at hsq
+    linarith only [hsq]
+  have hsum := Finset.sum_le_sum (fun j (_ : j ∈ Finset.univ) => hlin j)
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum] at hsum
+  have hqr := (Complex.re_le_norm (Q v)).trans hv
+  simp only [norm_mul, Complex.norm_exp, E, p, ← Real.exp_sum, ← Real.exp_add]
+  apply Real.exp_le_exp.mpr
+  have hmain : ((Real.pi : ℂ) * Complex.I * τ * (bilinear D q q : ℂ) / 2).re =
+      -(Real.pi * τ.im / 2) * (bilinear D q q : ℝ) := by
+    rw [show (bilinear D q q : ℂ) = ((bilinear D q q : ℝ) : ℂ) by push_cast; rfl]
+    simp [Complex.mul_re, Complex.mul_im, Complex.div_re]
+    <;> ring
+  have hreal : (∑ j, (q j : ℂ) * L j v).re =
+      ∑ j, ((q j : ℂ) * L j v).re :=
+    map_sum Complex.reAddGroupHom _ _
+  rw [hmain, Complex.add_re, hreal]
+  change -(Real.pi * τ.im / 2) * (bilinear D q q : ℝ) +
+    ((Q v).re + ∑ j, ((q j : ℂ) * L j v).re) ≤ _
+  rw [← Finset.mul_sum]
+  dsimp only [d] at hdecay hsum ⊢
+  linarith only [hdecay, hsum, hqr]
+
+private def markedQuadratic (D : LatticeData) (slot : X → Puncture)
+    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ) (z : (X ⊕ X) → ℂ) : ℂ :=
+  (1 / 2 : ℂ) * ∑ i, ∑ j, physicalEntry D upperA c x slot colour i j
+    (z (.inl i)) (z (.inl j)) *
+      (relative c (slot i) * z (.inr i)) * (relative c (slot j) * z (.inr j))
+
+private def markedLinear (D : LatticeData) (slot : X → Puncture)
+    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ)
+    (j : Fin D.rank) (z : (X ⊕ X) → ℂ) : ℂ :=
+  ∑ i, -(D.G (colour i) j : ℂ) * physicalSource c x (slot i) (z (.inl i)) /
+    chartPeriod upperA c x * (relative c (slot i) * z (.inr i))
+
+private def physicalChargeSummand (D : LatticeData) (slot : X → Puncture)
+    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ)
+    (q : Charge D) (z : (X ⊕ X) → ℂ) : ℂ :=
+  Complex.exp ((Real.pi : ℂ) * Complex.I * chartTau upperA c x * (bilinear D q q : ℂ) / 2) *
+  Complex.exp (markedQuadratic D slot colour upperA c x z +
+    ∑ i, physicalMean D q upperA c x slot colour i (z (.inl i)) *
+      (relative c (slot i) * z (.inr i)))
+
+private theorem markedLinear_eq (D : LatticeData) (slot : X → Puncture)
+    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) (x : ℝ)
+    (q : Charge D) (z : (X ⊕ X) → ℂ) :
+    (∑ i, physicalMean D q upperA c x slot colour i (z (.inl i)) *
+      (relative c (slot i) * z (.inr i))) =
+      ∑ j, (q j : ℂ) * markedLinear D slot colour upperA c x j z := by
+  classical
+  simp only [markedLinear, physicalMean, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro i _
+  have hrow : bilinear D (unitCharge D (colour i)) q = ∑ j, D.G (colour i) j * q j := by
+    unfold bilinear unitCharge
+    simp only [ite_mul, one_mul, zero_mul, Finset.sum_ite_irrel, Finset.sum_const_zero,
+      Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  rw [hrow, Int.cast_sum, ← Finset.sum_neg_distrib, Finset.sum_mul,
+    Finset.sum_div, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro j _
+  push_cast
+  ring
+
+private theorem marked_source_analytic (D : LatticeData) (slot : X → Puncture)
+    (colour : X → Fin D.rank) (upperA : Bool) (c : Chart) {x : ℝ}
+    (hx : 0 < x) (hx₁ : x < 1) :
+    AnalyticAt ℂ (markedQuadratic D slot colour upperA c x) 0 ∧
+      ∀ j, AnalyticAt ℂ (markedLinear D slot colour upperA c x j) 0 := by
+  have hp (i : X ⊕ X) : AnalyticAt ℂ (fun z : (X ⊕ X) → ℂ => z i) 0 :=
+    analytic_projection i
+  constructor
+  · unfold markedQuadratic
+    refine analyticAt_const.mul (Finset.analyticAt_fun_sum _ fun i _ =>
+      Finset.analyticAt_fun_sum _ fun j _ => ?_)
+    have hK : AnalyticAt ℂ (fun uv : ℂ × ℂ =>
+        physicalEntry D upperA c x slot colour i j uv.1 uv.2) (0, 0) :=
+      analyticAt_const.mul (physicalCovariance_analytic upperA hx hx₁ c (slot i) (slot j))
+    exact ((hK.comp_of_eq ((hp (.inl i)).prod (hp (.inl j))) rfl).mul
+      (analyticAt_const.mul (hp (.inr i)))).mul (analyticAt_const.mul (hp (.inr j)))
+  · intro j
+    unfold markedLinear
+    refine Finset.analyticAt_fun_sum _ fun i _ => ?_
+    have h := (physicalSource_analytic hx hx₁ c (slot i)).comp_of_eq (hp (.inl i)) rfl
+    exact ((analyticAt_const.mul h).div_const).mul (analyticAt_const.mul (hp (.inr i)))
+
+open OriginalFourMPeriodSource (dPeriod)
+open D5.S3.Analytic.OriginalHalfBinomialSlitPeriod (slitPeriod slitPeriod_ne_zero tau tau_im_pos)
+open private slit_of_re_lt doubleSlit_of_re chartA_mem dPeriod_ne_zero lipSign from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPeriodSource
+
+private theorem chart_charge_data (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x)
+    (hx₁ : x < 1) : chartPeriod upperA c x ≠ 0 ∧ 0 < (chartTau upperA c x).im := by
+  let pA := slitPeriod (parameter .A (x : ℂ))
+  let pB := slitPeriod (x : ℂ)
+  let tB := Complex.I * pB / slitPeriod (1 - (x : ℂ))
+  let tD := Complex.I * dPeriod upperA ((x : ℂ)⁻¹) / pA
+  have hpA : pA ≠ 0 := slitPeriod_ne_zero (chartA_mem hx)
+  have hpB : pB ≠ 0 := slitPeriod_ne_zero (slit_of_re_lt (by simpa using hx₁))
+  have hpD : dPeriod upperA ((x : ℂ)⁻¹) ≠ 0 := by
+    simpa only [Complex.ofReal_inv] using dPeriod_ne_zero upperA ((one_lt_inv₀ hx).2 hx₁)
+  have htB : 0 < tB.im := by
+    have ht := tau_im_pos (doubleSlit_of_re (r := 1 - (x : ℂ))
+      (by simpa [Complex.sub_re] using sub_pos.mpr hx₁)
+      (by simpa [Complex.sub_re] using hx))
+    simpa only [tB, pB, tau, sub_sub_cancel] using ht
+  have htEq : tD = tB + lipSign upperA := by
+    dsimp only [tD]
+    rw [dPeriod, inv_inv]
+    change Complex.I * ((tau (1 - (x : ℂ)) + lipSign upperA) * pA / Complex.I) / pA = _
+    rw [tau, sub_sub_cancel]
+    change Complex.I * ((tB + lipSign upperA) * pA / Complex.I) / pA = _
+    field_simp [hpA, Complex.I_ne_zero]
+  have htD : 0 < tD.im := by
+    rw [htEq]
+    cases upperA <;> simpa [lipSign, Complex.add_im] using htB
+  have hinv {τ : ℂ} (h : 0 < τ.im) : 0 < (-1 / τ).im := by
+    rw [div_eq_mul_inv, neg_one_mul, Complex.neg_im, Complex.inv_im, neg_div, neg_neg]
+    exact div_pos h (Complex.normSq_pos.mpr fun hn => by simpa [hn] using h)
+  cases c with
+  | A => exact ⟨hpA, htD⟩
+  | B => exact ⟨hpB, hinv htB⟩
+  | D => exact ⟨hpD, hinv htD⟩
+
+/-- At a fixed point of the real overlap, the simultaneous spatial and
+marking Taylor coefficient of the physical sector is the convergent sum
+of the same coefficient of its literal charge summands. -/
+theorem physical_chart_jet_hasSum (D : LatticeData) (hu : IsUnit D.G.det)
+    (hD : (gramReal D).PosDef) (slot : X → Puncture) (colour : X → Fin D.rank)
+    (upperA : Bool) (c : Chart) {x : ℝ} (hx : 0 < x) (hx₁ : x < 1)
+    (hp : chartPeriod upperA c x ≠ 0) (hτ : 0 < (chartTau upperA c x).im)
+    (a : ModTwoCharge D) (n : X ⊕ X → ℕ) (l : List (X ⊕ X)) :
+    HasSum (fun q : {q : Charge D // reduceCharge D q = a} =>
+      (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
+        spatialCoefficient n l (physicalChargeSummand D slot colour upperA c x q.val) 0)
+      (spatialCoefficient n l (fun z => physicalProduct D hu slot colour upperA x c a
+        (z ∘ Sum.inl) (z ∘ Sum.inr)) 0) := by
+  classical
+  let Q := markedQuadratic D slot colour upperA c x
+  let L := markedLinear D slot colour upperA c x
+  obtain ⟨hQ, hL⟩ := marked_source_analytic D slot colour upperA c hx hx₁
+  obtain ⟨b, hb, hbound⟩ := charge_exponential_majorant D hD
+    (chartTau upperA c x) hτ Q L hQ.continuousAt (fun j => (hL j).continuousAt)
+  have he : ∀ᶠ z in 𝓝 (0 : (X ⊕ X) → ℂ),
+      (AnalyticAt ℂ Q z ∧ (∀ j, AnalyticAt ℂ (L j) z)) ∧
+      ∀ q : Charge D, ‖physicalChargeSummand D slot colour upperA c x q z‖ ≤ b q := by
+    filter_upwards [hQ.eventually_analyticAt,
+      eventually_all.mpr (fun j => (hL j).eventually_analyticAt), hbound] with z hz hsz hB
+    refine ⟨⟨hz, hsz⟩, fun q => ?_⟩
+    simpa only [physicalChargeSummand, markedLinear_eq] using hB q
+  obtain ⟨r, hr, hballs⟩ := Metric.eventually_nhds_iff.mp he
+  have hF (q : {q : Charge D // reduceCharge D q = a}) :
+      AnalyticOnNhd ℂ (physicalChargeSummand D slot colour upperA c x q.val)
+        (Metric.ball 0 r) := by
+    intro z hz
+    obtain ⟨hzQ, hzL⟩ := (hballs hz).1
+    unfold physicalChargeSummand
+    simp_rw [markedLinear_eq]
+    refine analyticAt_const.mul ((hzQ.add ?_).cexp)
+    exact Finset.analyticAt_fun_sum _ fun j _ => analyticAt_const.mul (hzL j)
+  have hs := spatialCoefficient_hasSum (hb.subtype (fun q => reduceCharge D q = a)) hr hF
+    (fun q z hz => (hballs hz).2 q.val) n l
+  have heq : (fun z => physicalProduct D hu slot colour upperA x c a
+      (z ∘ Sum.inl) (z ∘ Sum.inr)) = fun z => (chartPeriod upperA c x ^ (12 : ℕ))⁻¹ *
+        ∑' q : {q : Charge D // reduceCharge D q = a},
+          physicalChargeSummand D slot colour upperA c x q.val z := by
+    funext z
+    exact physical_product_marked_charge_fiber D hu slot colour upperA c x hp a _ _
+  rw [heq, spatialCoefficient_const_mul]
+  exact hs.mul_left _
+
+private theorem restriction_take_inl (n : X ⊕ X → ℕ) (i : X)
+    (f : ((X ⊕ X) → ℂ) → ℂ) (u v : X → ℂ) :
+    take n (.inl i) f (Sum.elim u v) =
+      take (n ∘ Sum.inl) i (fun u' => f (Sum.elim u' v)) u := by
+  unfold take
+  refine congrArg (coefficient _) (funext fun t => congrArg f ?_)
+  funext j
+  cases j with
+  | inl j => by_cases h : j = i <;> simp [Function.update_apply, h]
+  | inr j => by_cases h : j = i <;> simp [Function.update_apply, h]
+
+private theorem restriction_take_inr (n : X ⊕ X → ℕ) (i : X)
+    (f : ((X ⊕ X) → ℂ) → ℂ) (u v : X → ℂ) :
+    take n (.inr i) f (Sum.elim u v) =
+      take (n ∘ Sum.inr) i (fun v' => f (Sum.elim u v')) v := by
+  unfold take
+  refine congrArg (coefficient _) (funext fun t => congrArg f ?_)
+  funext j
+  cases j with
+  | inl j => by_cases h : j = i <;> simp [Function.update_apply, h]
+  | inr j => by_cases h : j = i <;> simp [Function.update_apply, h]
+
+private theorem restriction_spatial_inl (n : X ⊕ X → ℕ) (l : List X)
+    (f : ((X ⊕ X) → ℂ) → ℂ) (u v : X → ℂ) :
+    spatialCoefficient n (l.map Sum.inl) f (Sum.elim u v) =
+      spatialCoefficient (n ∘ Sum.inl) l (fun u' => f (Sum.elim u' v)) u := by
+  induction l generalizing f with
+  | nil => rfl
+  | cons i l ih =>
+    simp only [List.map_cons, spatialCoefficient]
+    rw [ih, show (fun u' => take n (.inl i) f (Sum.elim u' v)) =
+      take (n ∘ Sum.inl) i (fun u' => f (Sum.elim u' v)) from
+        funext fun u' => restriction_take_inl n i f u' v]
+
+private theorem restriction_spatial_inr (n : X ⊕ X → ℕ) (l : List X)
+    (f : ((X ⊕ X) → ℂ) → ℂ) (u v : X → ℂ) :
+    spatialCoefficient n (l.map Sum.inr) f (Sum.elim u v) =
+      spatialCoefficient (n ∘ Sum.inr) l (fun v' => f (Sum.elim u v')) v := by
+  induction l generalizing f with
+  | nil => rfl
+  | cons i l ih =>
+    simp only [List.map_cons, spatialCoefficient]
+    rw [ih, show (fun v' => take n (.inr i) f (Sum.elim u v')) =
+      take (n ∘ Sum.inr) i (fun v' => f (Sum.elim u v')) from
+        funext fun v' => restriction_take_inr n i f u v']
+
+private theorem split_spatial (n : X → ℕ) (l : List X)
+    (f : ((X ⊕ X) → ℂ) → ℂ) :
+    spatialCoefficient (Sum.elim n (fun _ => 1)) (l.map Sum.inr ++ l.map Sum.inl) f 0 =
+      spatialCoefficient n l (fun u => spatialCoefficient (fun _ => 1) l
+        (fun v => f (Sum.elim u v)) 0) 0 := by
+  have happ (k m : List (X ⊕ X)) (g : ((X ⊕ X) → ℂ) → ℂ) :
+      spatialCoefficient (Sum.elim n (fun _ => 1)) (k ++ m) g =
+        spatialCoefficient (Sum.elim n (fun _ => 1)) m
+          (spatialCoefficient (Sum.elim n (fun _ => 1)) k g) := by
+    induction k generalizing g with
+    | nil => rfl
+    | cons i k ih => exact ih _
+  rw [happ]
+  have h0 : (0 : (X ⊕ X) → ℂ) = Sum.elim (0 : X → ℂ) (0 : X → ℂ) := by
+    ext i
+    cases i <;> rfl
+  conv_lhs => rw [h0, restriction_spatial_inl]
+  change spatialCoefficient n l _ 0 = _
+  exact congrArg (fun g => spatialCoefficient n l g 0)
+    (funext fun u => restriction_spatial_inr _ l f u 0)
+
+private theorem mark_coefficient_eq_jet (l : List X) (hl : l.Nodup)
+    (f : (X → ℂ) → ℂ) (u : X → ℂ) (hu : ∀ i ∈ l, u i = 0) :
+    spatialCoefficient (fun _ => 1) l f u = coordinateJet l f u := by
+  induction l generalizing f u with
+  | nil => rfl
+  | cons i l ih =>
+    simp only [spatialCoefficient, coordinateJet]
+    have hi := (List.nodup_cons.mp hl).1
+    rw [ih (List.nodup_cons.mp hl).2 _ _ (fun j hj => hu j (List.mem_cons_of_mem _ hj))]
+    let updateZero := fun v : X → ℂ => Function.update v i 0
+    have hc (g : (X → ℂ) → ℂ) (j : X) (hj : j ≠ i) :
+        coordinateDerivative j (g ∘ updateZero) = coordinateDerivative j g ∘ updateZero := by
+      ext v
+      simp only [coordinateDerivative, Function.comp_apply, updateZero, Function.update_of_ne hj]
+      congr 1
+      funext t
+      rw [Function.update_comm hj]
+    have hcomm (g : (X → ℂ) → ℂ) :
+        coordinateJet l (g ∘ updateZero) = coordinateJet l g ∘ updateZero := by
+      clear ih hl hu
+      induction l generalizing g with
+      | nil => rfl
+      | cons j l ih =>
+        have hj : j ≠ i := fun hj => hi (hj ▸ List.mem_cons_self)
+        rw [coordinateJet, coordinateJet, hc g j hj, ih (fun ht => hi (List.mem_cons_of_mem _ ht))]
+    have he : take (fun _ => 1) i f = coordinateDerivative i f ∘ updateZero := by
+      ext v
+      simp only [take, coefficient, iteratedDeriv_one, Nat.factorial_one, Nat.cast_one, div_one,
+        Function.comp_apply, coordinateDerivative, updateZero, Function.update_self,
+        Function.update_idem]
+    rw [he, hcomm]
+    simp only [Function.comp_apply]
+    rw [show updateZero u = u by
+      simp only [updateZero, ← hu i List.mem_cons_self, Function.update_eq_self]]
 
 open LatticePositiveEnergy (chargeEnergy chargeEnergy_nonneg two_chargeEnergy)
 open LatticeHalfFockChargedTensorCoefficients (chargeScalar chargeNorm)
