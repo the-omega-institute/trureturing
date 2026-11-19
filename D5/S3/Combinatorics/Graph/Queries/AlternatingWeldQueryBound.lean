@@ -97,9 +97,7 @@ private theorem unclosed_component {V : Type*} [Finite V] (E : V → V → Prop)
     apply Subtype.ext
     exact hσ.symm
   have hEq : (Φ σ).1 A = A := hEqAB.trans hs
-  obtain ⟨D, hDA⟩ := exists_ne A
-  obtain ⟨i, hi⟩ := ((Φ σ).2.2 (Set.mem_univ A) (Set.mem_univ D)).exists_nat_pow_eq
-  exact hDA (hi.symm.trans (Equiv.Perm.pow_apply_eq_self_of_apply_eq_self hEq i))
+  exact ((Φ σ).2.apply_ne Set.nontrivial_univ (Set.mem_univ A)) hEq
 
 open scoped BigOperators
 
@@ -373,14 +371,10 @@ private theorem color_partition_card {L : Type*} [Fintype L] (k : L → Bool) (n
     (h0 : Nat.card (Side k false) = n) (h1 : Nat.card (Side k true) = n) :
     Fintype.card L = 2 * n := by
   classical
+  let other : Side k true ≃ {x : L // ¬ k x = false} :=
+    Equiv.subtypeEquivRight (fun x => by cases k x <;> simp)
   let e : (Side k false ⊕ Side k true) ≃ L :=
-    { toFun := Sum.elim Subtype.val Subtype.val
-      invFun := fun x => if hx : k x = false then Sum.inl ⟨x, hx⟩
-        else Sum.inr ⟨x, Bool.eq_true_of_not_eq_false hx⟩
-      left_inv := by
-        intro x
-        rcases x with ⟨x, hx⟩ | ⟨x, hx⟩ <;> simp [hx]
-      right_inv := by intro x; by_cases hx : k x = false <;> simp [hx] }
+    ((Equiv.refl (Side k false)).sumCongr other).trans (Equiv.sumCompl (fun x => k x = false))
   rw [← Fintype.card_congr e, Fintype.card_sum, ← Nat.card_eq_fintype_card,
     ← Nat.card_eq_fintype_card, h0, h1, two_mul]
 
