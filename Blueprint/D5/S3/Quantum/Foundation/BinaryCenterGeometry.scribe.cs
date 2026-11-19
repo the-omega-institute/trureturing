@@ -25,7 +25,6 @@ internal sealed class BinaryCenterGeometryDocument : IScribeDocumentDefinition
     private static Formula P => Call("pure", C, U);
     private static Formula K => Call("base", C, U);
     private static Formula D(Formula p) => Call("exclusion", C, U, p);
-    private static Formula Center(Formula p) => Call("center", Id("B"), p);
     private static Formula Combo(Formula t, Formula p, Formula q) => Call("binaryMixture", t, p, q);
     private static Formula Active(Formula t) => And(Lt(F.D(0),t),Lt(t,F.D(1)));
     private static Formula Domain(Formula body, bool chosen = false)
