@@ -26,10 +26,10 @@ internal sealed class AlternatingCompletionLawDocument : IScribeDocumentDefiniti
                     + "are in bijection with compatible cycles on these components, with the same "
                     + "tail-to-head connector equation as in the classification theorem.")),
                 Paragraph(Text(
-                    "There is a uniform probability mass on the actual alternating full cycles "
-                    + "of the original carrier, with mass 1 divided by n! times (n−1)! at each cycle. "
-                    + "The event of extending all prescribed edges has outer measure M divided "
-                    + "by n! times (n−1)!, where M counts the actual alternating completions. "
+                    "Let D be the product of n! and (n−1)!. The uniform probability mass on the "
+                    + "actual alternating full cycles of the original carrier assigns 1/D to each cycle. "
+                    + "The event of extending all prescribed edges has outer measure M/D, "
+                    + "where M counts the actual alternating completions. "
                     + "This event has positive mass exactly when a completion exists.")),
                 Paragraph(Text(
                     "For every support witness of the event, filtering the ambient mass is "
