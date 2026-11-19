@@ -30,7 +30,7 @@ internal sealed class AbedNikolaevaNovikovItemSixDocument : IScribeDocumentDefin
                 SourceQuotation + " The item-6 equality holds for the entire faithful interval. "
                 + "A completed square controls the two-dimensional off-diagonal contribution. The trace/determinant identity for contrast yields the uniform upper bound after unitary diagonalization. "
                 + "Positive definite matrices approaching a rank-one limit give the lower bound for a density of each contrast. "
-                + "Both suprema are nonempty and bounded above on this interval. Separate fixed-density sharpness for every density, higher dimensions and the singular endpoint are outside this theorem.", false, DescribeRole.Theorem,
+                + "Both suprema are nonempty and bounded above on this interval. A written corollary transfers the value to each faithful qubit density of the prescribed contrast by unitary conjugation and positive rescaling.", false, DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("ann-item-six"),
                     ResolutionKind.Proved)))));
@@ -67,10 +67,6 @@ internal sealed class AbedNikolaevaNovikovItemSixDocument : IScribeDocumentDefin
     private static Formula Sq(Formula a) => new Formula.Power(a, D(2));
     private static Formula Weight(Formula rho, Formula y) =>
         Seq(Parenthesized(Call("bornProbability", rho, y)), Dot, Id("re"));
-    private static Formula Spectrum(Formula rho) => Call("spectrum", Real, rho);
-    private static Formula Contrast(Formula rho) => Fraction(
-        Sub(Call("sSup", Spectrum(rho)), Call("sInf", Spectrum(rho))),
-        Add(Call("sSup", Spectrum(rho)), Call("sInf", Spectrum(rho))));
     private static Formula SetOf(string name, Formula type, Formula body) =>
         Seq(OpenBrace, Id(name), Colon, Sp, type, Sp, Bar, Sp, body, CloseBrace);
     private static Formula Violation()
@@ -86,7 +82,7 @@ internal sealed class AbedNikolaevaNovikovItemSixDocument : IScribeDocumentDefin
     {
         var delta = Id("delta"); var rho = Id("rho"); var r = Id("r");
         return All("delta", Real, Eqn(Call("envelope", delta), Call("sSup", SetOf("r", Real,
-            Ex("rho", Mat, Conj(Call("PosDef", rho), Conj(Eqn(Contrast(rho), delta),
+            Ex("rho", Mat, Conj(Call("PosDef", rho), Conj(Eqn(Call("contrast", rho), delta),
                 Eqn(r, Call("V", rho)))))))));
     }
     private static Formula ClaimBody()

@@ -33,7 +33,7 @@ The equality gives the sharp outer envelope for every faithful complex qubit den
 
 ## Gap
 
-The source stated the equality as Conjecture 11.1, item 6. The source's stronger fixed-density sharpness, the singular endpoint, dimensions at least three and the remaining conjecture items are separate questions.
+The source stated the envelope equality as Conjecture 11.1, item 6. The singular endpoint, dimensions at least three and the remaining conjecture items are separate questions.
 
 ## Route
 
@@ -49,7 +49,7 @@ The kernel-checked settling declaration is `D5/S3/Quantum/Matrix/AbedNikolaevaNo
 
 The independent checker is pinned to commit `899d34d8041742cedebc176045cf870d202805a2` in `the-omega-institute/trureturing-experiments`, path `docs/reports/michelson-trace-violation-two-dim/check.py`, SHA-256 `c38a22de5c2abd02f88fce0dac6b6444e2f856c112698a8887cb50157c4e6ae0`. Running `python3 /tmp/ann2610i6-check.py` at that immutable source exits 0 and reports 2800 exact scalar cases, 756 complex-vector/density cases, a non-diagonal unitary transport check, symbolic determinant and trace identities, the sharp-family limit, and `ALL_CHECKS_OK`.
 
-The escape audit for newly public non-result declarations remains unfinished under [issue #24453](https://github.com/the-omega-institute/trureturing/issues/24453). No `declared_validated` registration is claimed without the required CI reading.
+The escape audit for `AbedNikolaevaNovikovItemSix.result` and `AbedNikolaevaNovikovAFDensityBound.trace_pair_pos` remains unfinished. [Issue #24453](https://github.com/the-omega-institute/trureturing/issues/24453)
 
 ## Triage
 
@@ -57,12 +57,14 @@ The escape audit for newly public non-result declarations remains unfinished und
 - **Proved — uniform upper bound.** `trace_bound`, `quotient_bound` and `V_bound` combine the contrast trace/determinant identity with the scalar estimate to prove the uniform upper bound for every positive definite complex qubit density; this is kernel-checked evidence.
 - **Proved — sharp outer supremum.** `sharp_positive`, `sharp_traces`, `family_limit` and `sharp_lower` construct a positive definite family approaching the bound for each $\delta\in[0,1)$ and prove the matching outer supremum equality; this is kernel-checked evidence.
 - **Computed — independent exact checker.** The pinned experiment command exits 0 with `ALL_CHECKS_OK` for exactly 2800 scalar cases, 756 complex-vector cases, non-diagonal unitary transport, determinant and trace identities, and the sharp-family limit. Its script SHA-256 is `c38a22de5c2abd02f88fce0dac6b6444e2f856c112698a8887cb50157c4e6ae0`; this finite computation is separate from the Lean proof.
-- **Open — fixed-density equivalence and sharpness.** A separately formalized theorem giving the equivalence and sharpness statement for every individual faithful density is not claimed.
+- **Written corollary — fixed-density sharp supremum.** Let the eigenvalues of a faithful qubit density be $M\ge m>0$, with $\delta=(M-m)/(M+m)$. Writing $c=(M+m)/2$ gives $M=c(1+\delta)$ and $m=c(1-\delta)$. Thus every density at contrast $\delta$ is a positive multiple of a unitary conjugate of $\operatorname{diag}(1+\delta,1-\delta)$.
+
+  For any unitary $U$, the definition of the spectral geometric mean commutes with conjugation by $U$. Matrix products, inversion and the powers of positive definite matrices in that definition all commute with this conjugation. Simultaneous conjugation of $\rho,A,B$ therefore preserves each trace in the relative violation by trace cyclicity. It also gives a bijection of the positive definite input pairs. Rescaling $\rho$ by a positive scalar multiplies both the numerator and the denominator by that scalar. Consequently $V(\rho)$ is constant on the nonempty set of faithful qubit densities with contrast $\delta$, so its outer supremum equals its value at every density in that set. The fixed-density equality follows from the Lean envelope theorem and these written invariance steps.
 - **Open — neighbouring regimes.** Dimension at least three, the endpoint $\delta=1$, the other Conjecture 11.1 items and attainment classification beyond the proved limit are outside this result.
 
 ### What the settlement shows
 
-The item-6 conjecture is proved on the full faithful qubit interval. The completed-square mechanism controls the off-diagonal contribution, while the trace/determinant identity converts spectral contrast into the exact envelope. The same argument supplies the matching limit through positive definite matrices, so the result is sharp as an outer supremum even when no individual positive definite pair is asserted to attain it. The source's fixed-density, higher-dimensional and singular-endpoint questions remain open.
+The limiting construction certifies a sharp supremum. Attainment by positive definite input pairs remains a separate question.
 
 ## ASSUMED-UNVERIFIED
 

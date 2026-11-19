@@ -10,8 +10,7 @@
 admission_basis: open-problem-resolution (#22896; Proved)
 escape_witness: none
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24453.
-The literal spectral contrast occurs in envelope; proofs use the existing
-AbedNikolaevaNovikovTwoContrastYoung.contrast through contrast_expression.
+The envelope uses AbedNikolaevaNovikovTwoContrastYoung.contrast.
 The real trace functional is bornProbability followed by Complex.re.
 All proposition proofs are bind-only after expanding same-delivery helpers;
 none supplies an escape witness. The public result settles claim.
@@ -39,9 +38,8 @@ F16: D5.S3.Quantum.Matrix.SpectralPower.posDef_two; declaration statement_id: sh
 F17: D5.S3.TotalVariation.Hellinger.sq_sqrt_sub_sqrt_le_abs_sub; declaration statement_id: sha256:cde097da805e4c97be512a336451e1b15559dcceb2beaa5278d333e19b1e918d.
 Per-declaration inventory (the module basis above applies to every row):
 V: proof_shape: bind-only; escape_witness: none; consumers: envelope, V_bound, sharp_lower, result; Direct frozen dependencies: F2, F11.
-envelope: proof_shape: bind-only; escape_witness: none; consumers: claim, result; Direct frozen dependencies: F2, F11.
-claim: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F2, F11.
-contrast_expression: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F4.
+envelope: proof_shape: bind-only; escape_witness: none; consumers: claim, result; Direct frozen dependencies: F2, F4, F11.
+claim: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F2, F4, F11.
 difference_sq_le: proof_shape: bind-only; escape_witness: none; consumers: scalar_squared; Direct frozen dependencies: F17.
 quadratic_nonneg: proof_shape: bind-only; escape_witness: none; consumers: scalar_squared; Direct frozen dependencies: none.
 scalar_squared: proof_shape: bind-only; escape_witness: none; consumers: diagonal_trace_bound; Direct frozen dependencies: F17.
@@ -109,16 +107,11 @@ def V (ρ : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
 /-- The envelope over all faithful complex qubit densities of prescribed contrast. -/
 def envelope (δ : ℝ) : ℝ :=
   sSup {r : ℝ | ∃ (ρ : Matrix (Fin 2) (Fin 2) ℂ), ρ.PosDef ∧
-    (sSup (spectrum ℝ ρ) - sInf (spectrum ℝ ρ)) /
-      (sSup (spectrum ℝ ρ) + sInf (spectrum ℝ ρ)) = δ ∧ r = V ρ}
+    contrast ρ = δ ∧ r = V ρ}
 
 /-- Conjecture 11.1, item 6, for the faithful range. -/
 def claim : Prop :=
   ∀ (δ : ℝ), 0 ≤ δ → δ < 1 → envelope δ = 1 / Real.sqrt (1 - δ ^ 2) - 1
-
-private lemma contrast_expression (R : Matrix (Fin 2) (Fin 2) ℂ) :
-    contrast R = (sSup (spectrum ℝ R) - sInf (spectrum ℝ R)) /
-      (sSup (spectrum ℝ R) + sInf (spectrum ℝ R)) := rfl
 
 private lemma difference_sq_le (x y : ℝ) (hx : 0 ≤ x) (hy : 0 ≤ y) :
     (x-y)^2 ≤ |x^2-y^2| := by
@@ -555,7 +548,6 @@ private theorem sharp_lower (δ : ℝ) (hδ : 0 ≤ δ) (hδ1 : δ < 1) :
 theorem result : claim := by
   intro δ hδ hδ1
   unfold envelope
-  simp_rw [← contrast_expression]
   have hd := density_data δ hδ hδ1
   let G := 1/Real.sqrt (1-δ^2)-1
   have hb : ∀ r ∈ {r : ℝ | ∃ R : Matrix (Fin 2) (Fin 2) ℂ, R.PosDef ∧ contrast R=δ ∧ r=V R}, r ≤ G := by
