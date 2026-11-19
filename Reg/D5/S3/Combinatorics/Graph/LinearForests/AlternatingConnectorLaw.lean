@@ -174,5 +174,181 @@ def registration :
   familyRecord := none
   options := #[] }
 
+namespace Balance
+
+private abbrev signature : Signature where
+  Params := Σ C : Type u, C → Bool
+  State p := p.1 → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature.{u} :=
+  realize signature (fun _ p d => inventory p.2 d false true) (fun e => nomatch e)
+
+private def one : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {A : Type u} [Finite A] (s d : A → Bool) (_ρ : Compatible s d),
+    R.readout () ⟨A, s⟩ d = inventory s d true false
+
+private theorem rejectsOne : ¬ arena.{u}.Law one := by
+  intro h
+  have hbad := h (fun _ : Two.{u} => false) (fun _ => false) cycle
+  simp [one, realize, inventory, Nat.card_eq_fintype_card] at hbad
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro _
+  refine ⟨⟨Two.{u}, fun _ => false⟩, (fun _ => false), (fun _ => true), ?_⟩
+  change inventory (fun _ : Two.{u} => false) (fun _ => false) false true ≠
+    inventory (fun _ : Two.{u} => false) (fun _ => true) false true
+  simp [inventory, Two, Nat.card_eq_fintype_card]
+
+def evidence : Registration arena.{u} (type_of% (@balance_of_compatible.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@balance_of_compatible.{u}, one, rejectsOne⟩
+  sensitivity := ⟨fun i => ⟨one, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, rejectsOne⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@balance_of_compatible.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingConnectorLaw.balance_of_compatible
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingConnectorLaw.Balance.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨evidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p d => inventory p.2 d false true)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.LinearForests.AlternatingConnectorLaw
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end Balance
+
+namespace ContractedBalance
+
+private abbrev signature : Signature where
+  Params := Σ C : Type u, Σ _ : C → Bool, Σ _ : C, C
+  State p := {z : p.1 // z ≠ p.2.2.1} → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature.{u} :=
+  realize signature (fun _ p d =>
+    inventory (contractedSource p.2.1 p.2.2.1 p.2.2.2) d false true)
+    (fun e => nomatch e)
+
+private def one : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {C : Type u} [Finite C] (s d : C → Bool) (x y : C)
+    (_hxy : y ≠ x) (_hy : s y = d x) (_ρ : Compatible s d),
+    R.readout () ⟨C, s, x, y⟩ (fun z => d z.1) =
+      inventory (contractedSource s x y) (fun z => d z.1) true false
+
+private theorem contractedConstant {C : Type u} (x y : C) :
+    contractedSource (fun _ : C => false) x y = fun _ => false := by
+  classical
+  funext z
+  simp [contractedSource]
+
+private theorem rejectsOne : ¬ arena.{u}.Law one := by
+  intro h
+  have hbad := h (fun _ : Two.{u} => false) (fun _ => false) left right endpoints_ne rfl cycle
+  simp [one, realize, contractedConstant, inventory, Nat.card_eq_fintype_card] at hbad
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro _
+  refine ⟨⟨Two.{u}, (fun _ => false), left, right⟩, (fun _ => false), (fun _ => true), ?_⟩
+  let B := {z : Two.{u} // z ≠ left}
+  let : Nonempty B := ⟨⟨right, endpoints_ne⟩⟩
+  change inventory (contractedSource (fun _ : Two.{u} => false) left right)
+      (fun _ => false) false true ≠
+    inventory (contractedSource (fun _ : Two.{u} => false) left right) (fun _ => true) false true
+  have hB : Nat.card B ≠ 0 := Nat.ne_of_gt Nat.card_pos
+  simpa [contractedConstant, inventory] using hB.symm
+
+def evidence : Registration arena.{u} (type_of% (@contracted_balance_at.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@contracted_balance_at.{u}, one, rejectsOne⟩
+  sensitivity := ⟨fun i => ⟨one, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, rejectsOne⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@contracted_balance_at.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingConnectorLaw.contracted_balance_at
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingConnectorLaw.ContractedBalance.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨evidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p d =>
+    inventory (contractedSource p.2.1 p.2.2.1 p.2.2.2) d false true)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.LinearForests.AlternatingConnectorLaw
+    definition := none
+    coordinates := #[0, 2, 4, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end ContractedBalance
+
 end
 end Reg.D5.S3.Combinatorics.Graph.LinearForests.AlternatingConnectorLaw
