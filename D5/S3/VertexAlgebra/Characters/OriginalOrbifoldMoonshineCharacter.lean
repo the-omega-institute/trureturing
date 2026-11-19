@@ -22,7 +22,9 @@ open scoped MatrixGroups ModularForm
 namespace D5.S3.VertexAlgebra.OriginalOrbifoldMoonshineCharacter
 
 open ModularForm (E₄ discriminant)
-open OriginalOrbifoldAnalyticCharacter (character)
+open ActualLeechHyperbolic (leechData leech_spec)
+open TwistedGround.OriginalOrbifoldConformal (L)
+open OriginalOrbifoldAnalyticCharacter (character character_eq_literal_shifted_trace)
 open OriginalOrbifoldCharacterModularity (character_mul_discriminant_slash_invariant)
 open OriginalOrbifoldCuspExpansion (weightedCharacter_holomorphic weightedCharacter_bounded
   weightedCharacter_sub_eisensteinCube_qExpansion)
@@ -43,8 +45,8 @@ private def weightedTraceForm : ModularForm 𝒮ℒ 12 where
     rw [character_mul_discriminant_slash_invariant]
     exact weightedCharacter_bounded
 
-/-- The literal shifted trace of the constructed Golay–Leech orbifold equals `j − 744`
-at every point of the upper half-plane. -/
+/-- The shifted trace of the constructed Golay–Leech orbifold, expressed using its two
+sector multiplicities, equals `j − 744` at every point of the upper half-plane. -/
 theorem character_eq_eisensteinCube_div_discriminant_sub_744 (τ : ℍ) :
     character τ = E₄ τ ^ (3 : ℕ) / discriminant τ - 744 := by
   let f : ModularForm 𝒮ℒ 12 := weightedTraceForm - ModularForm.mcast (by decide) (E₄.pow 3)
@@ -70,6 +72,15 @@ theorem character_eq_eisensteinCube_div_discriminant_sub_744 (τ : ℍ) :
   rw [eq_sub_iff_add_eq, eq_div_iff (ModularForm.discriminant_ne_zero τ)]
   linear_combination -hcτ
 
+/-- The moonshine identity written directly with the original conformal zero-mode eigenspaces. -/
+private theorem literal_shifted_trace_eq_eisensteinCube_div_discriminant_sub_744 (τ : ℍ) :
+    (∑' n : ℕ, Complex.exp (2 * Real.pi * Complex.I * (τ : ℂ) * (n - 1)) *
+      (Module.finrank ℂ ((L leechData leech_spec.2.1 leech_spec.2.2.1 0).eigenspace (n : ℂ)) : ℂ)) =
+      E₄ τ ^ (3 : ℕ) / discriminant τ - 744 :=
+  (character_eq_literal_shifted_trace τ).symm.trans
+    (character_eq_eisensteinCube_div_discriminant_sub_744 τ)
+
 #print axioms character_eq_eisensteinCube_div_discriminant_sub_744
+#print axioms literal_shifted_trace_eq_eisensteinCube_div_discriminant_sub_744
 
 end D5.S3.VertexAlgebra.OriginalOrbifoldMoonshineCharacter

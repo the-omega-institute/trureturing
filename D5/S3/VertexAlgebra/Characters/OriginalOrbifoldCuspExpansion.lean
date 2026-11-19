@@ -22,7 +22,7 @@ open scoped Topology Manifold MatrixGroups
 
 namespace D5.S3.VertexAlgebra.OriginalOrbifoldCuspExpansion
 
-open OriginalOrbifoldAnalyticCharacter (character)
+open OriginalOrbifoldAnalyticCharacter (character multiplicity_eq_finrank_eigenspace)
 open TwistedGround.OriginalOrbifoldLowSpectrum (actual_leech_low_spectrum)
 open D5.S3.Arith.ModularForms (discriminantCoefficient discriminantCoefficient_correct)
 open ModularForm (E₄)
@@ -91,12 +91,13 @@ private theorem multiplicity_zero_one_two :
   let hD := ActualLeechHyperbolic.leech_spec
   let L₀ := TwistedGround.OriginalOrbifoldConformal.L D hD.2.1 hD.2.2.1 0
   let rankAt (z : ℂ) := Module.finrank ℂ (L₀.eigenspace z)
+  simp only [multiplicity_eq_finrank_eigenspace]
   refine ⟨?_, ?_, ?_⟩
   · change rankAt ((0 : ℕ) : ℂ) = 1
     exact (congrArg rankAt (Nat.cast_zero (R := ℂ))).trans actual_leech_low_spectrum.2.2.2.1
   · change rankAt ((1 : ℕ) : ℂ) = 0
     exact (congrArg rankAt (Nat.cast_one (R := ℂ))).trans actual_leech_low_spectrum.2.2.2.2.1
-  · simpa only [OriginalOrbifoldAnalyticCharacter.multiplicity, Nat.cast_ofNat] using
+  · simpa only [Nat.cast_ofNat] using
       actual_leech_low_spectrum.2.2.2.2.2.1
 
 /-- The coefficients of the normalized trace are the actual conformal zero-mode multiplicities. -/

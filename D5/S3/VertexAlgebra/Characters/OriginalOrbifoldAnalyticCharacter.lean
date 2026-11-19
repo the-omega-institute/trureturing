@@ -43,6 +43,8 @@ open D5.S3.Combinatorics.Partitions.EtaOddOccupation (oddCoefficientSeries
 
 open private naturalFiberEquiv energyIndex baseTerm base_summable base_sum from
   D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentThermal
+open private fixedEnergy oddEnergy fixedEnergy_finite oddEnergy_finite finrank_eigenspace from
+  D5.S3.VertexAlgebra.TwistedGround.OriginalOrbifoldLowSpectrum
 
 /-- The canonical half nome on the upper half-plane. -/
 def halfNome (τ : ℂ) : ℂ := exp (Real.pi * I * τ)
@@ -257,13 +259,29 @@ def negativeTwistedCharacter (τ : ℂ) : ℂ :=
   (4096 * halfNome τ) *
     ((oddCoefficientSeries 24 (halfNome τ) - oddCoefficientSeries 24 (-halfNome τ)) / 2)
 
-/-- The multiplicity of the literal original Leech orbifold conformal zero mode. -/
+/-- The fixed and negative-parity sector multiplicities at integer conformal weight `n`. -/
 def multiplicity (n : ℕ) : ℕ :=
-  Module.finrank ℂ ((L leechData leech_spec.2.1 leech_spec.2.2.1 0).eigenspace (n : ℂ))
+  Module.finrank ℂ (fixedEnergy leechData (n : ℂ)) +
+    Module.finrank ℂ (oddEnergy leechData leech_spec.2.1 (n : ℂ))
+
+/-- The sector dimensions give exactly the dimension of the full original `L₀` eigenspace. -/
+theorem multiplicity_eq_finrank_eigenspace (n : ℕ) :
+    multiplicity n =
+      Module.finrank ℂ ((L leechData leech_spec.2.1 leech_spec.2.2.1 0).eigenspace (n : ℂ)) := by
+  let := fixedEnergy_finite leechData leech_spec.2.2.1 (n : ℂ) (n : ℤ) (Int.cast_natCast n)
+  let := oddEnergy_finite leechData leech_spec.2.1 leech_spec.2.2.1 leech_spec.1 n
+  exact (finrank_eigenspace leechData leech_spec.2.1 leech_spec.2.2.1 (n : ℂ)).2.symm
 
 /-- The actual shifted orbifold trace with central charge 24. -/
 def character (τ : ℂ) : ℂ :=
   ∑' n : ℕ, exp (2 * Real.pi * I * τ * (n - 1)) * (multiplicity n : ℂ)
+
+/-- The sector presentation of the character equals the literal shifted `L₀` trace. -/
+theorem character_eq_literal_shifted_trace (τ : ℂ) :
+    character τ = ∑' n : ℕ, exp (2 * Real.pi * I * τ * (n - 1)) *
+      (Module.finrank ℂ ((L leechData leech_spec.2.1 leech_spec.2.2.1 0).eigenspace (n : ℂ)) : ℂ) := by
+  unfold character
+  simp_rw [multiplicity_eq_finrank_eigenspace]
 
 private theorem ambient_shifted (τ : ℂ) (hτ : 0 < τ.im) :
     Summable (fun n : ℕ => ‖shiftedWeight τ n *
@@ -329,7 +347,7 @@ theorem actual_leech_shifted_character (τ : ℂ) (hτ : 0 < τ.im) :
   let t : ℕ → ℂ := fun n => shiftedWeight τ n * twistedCoefficient n
   have hterm (n : ℕ) : shiftedWeight τ n * (multiplicity n : ℂ) =
       (a n + s n) / 2 + t n := by
-    rw [multiplicity, actual_leech_graded_character_coefficient]
+    rw [multiplicity_eq_finrank_eigenspace, actual_leech_graded_character_coefficient]
     dsimp [a, s, t, twistedCoefficient]
     ring
   refine ⟨?_, ?_, negativeTwisted_eta τ hτ, shiftedCharacter_add_one τ⟩
@@ -356,6 +374,8 @@ theorem actual_leech_shifted_character (τ : ℂ) (hτ : 0 < τ.im) :
       rw [hterm, div_eq_inv_mul]
     · simp only [div_eq_inv_mul]
 
+#print axioms multiplicity_eq_finrank_eigenspace
+#print axioms character_eq_literal_shifted_trace
 #print axioms actual_leech_shifted_character
 
 end D5.S3.VertexAlgebra.OriginalOrbifoldAnalyticCharacter
