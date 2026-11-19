@@ -65,13 +65,13 @@ internal sealed class HardSquareStraightBlockObstructionDocument : IScribeDocume
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula Statement() =>
-        Seq(Forall, Sp, F.Id("k"), Sp, Geq, Sp, D(3), Comma, Sp,
+        Seq(Forall, Sp, F.Id("k"), Sp, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            D(3), Sp, Leq, Sp, F.Id("k"), Sp, Implies, Sp,
             Forall, Sp, F.Id("A"), Comma, F.Id("B"), Comma, F.Id("C"), Comma, F.Id("D"),
-            Sp, new Formula.LatexMacro(FormulaLatexMacro.In), Sp,
-            Mathbb, Grp(F.Id("C")), Caret, Grp(Times), Comma, Sp,
-            Forall, Sp, F.Id("Ω"), Sp, Subseteq, Sp, Mathbb, Grp(F.Id("C")), Comma, Sp,
-            Call("IsOpen", F.Id("Ω")), Sp, Land, Sp, Call("IsConnected", F.Id("Ω")), Sp, Implies, Sp,
-            Neg, Sp, Call("HasFamily", F.Id("k"), F.Id("Ω"),
+            Sp, Colon, Sp, Mathbb, Grp(F.Id("C")), Caret, Grp(Times), Comma, Sp,
+            Forall, Sp, F.Id("U"), Sp, Subseteq, Sp, Mathbb, Grp(F.Id("C")), Comma, Sp,
+            Call("IsOpen", F.Id("U")), Sp, Land, Sp, Call("IsConnected", F.Id("U")), Sp, Implies, Sp,
+            Neg, Sp, Call("HasFamily", F.Id("k"), F.Id("U"),
                 Call("blocked", F.Id("A"), F.Id("B"), F.Id("C"), F.Id("D"))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
