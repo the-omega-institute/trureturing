@@ -27,7 +27,7 @@ open scoped ENNReal BigOperators
 
 variable {k : ℕ}
 
-private theorem kernel_nonneg (hk : 2 ≤ k) (i j : Fin k) :
+theorem kernel_nonneg (hk : 2 ≤ k) (i j : Fin k) :
     0 ≤ suffixKernel k i j := by
   have hparam := parry_stationary_law k hk
   have hp : 0 < parryParameter k := lt_trans (by norm_num) hparam.1.1
@@ -39,7 +39,7 @@ private theorem kernel_nonneg (hk : 2 ≤ k) (i j : Fin k) :
     · exact div_nonneg (mul_nonneg hp.le (hw j)) (hw i)
     · exact le_rfl
 
-private theorem kernel_log_on_edge (hk : 2 ≤ k) (i j : Fin k)
+theorem kernel_log_on_edge (hk : 2 ≤ k) (i j : Fin k)
     (h : j.val = 0 ∨ j.val = i.val + 1) :
     0 < suffixKernel k i j ∧
       Real.log (suffixKernel k i j) =
@@ -62,7 +62,7 @@ private theorem kernel_log_on_edge (hk : 2 ≤ k) (i j : Fin k)
 private noncomputable def wordMass {n : ℕ} (w : Fin (n + 1) → Fin k) : ℝ :=
   suffixLaw k (w 0) * ∏ i : Fin n, suffixKernel k (w i.castSucc) (w i.succ)
 
-private theorem suffixLaw_pos (hk : 2 ≤ k) (i : Fin k) : 0 < suffixLaw k i := by
+theorem suffixLaw_pos (hk : 2 ≤ k) (i : Fin k) : 0 < suffixLaw k i := by
   have hparam := parry_stationary_law k hk
   have hp : 0 < parryParameter k := lt_trans (by norm_num) hparam.1.1
   unfold suffixLaw
@@ -161,17 +161,17 @@ private theorem entropy_of_reference_mass {ι : Type*} [Fintype ι] (a b : ι �
       _ ≤ ∑ i, Real.negMulLog (b i) := Finset.sum_le_sum fun i _ => lower_term i
 
 
-private def suffixBlock (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+def suffixBlock (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (start : ℤ) (n : ℕ) (r : RelationPath k) (i : Fin n) : Fin k :=
   ((e (false, r)).val (start + i.val)).2
 
-private theorem measurable_suffixBlock (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+theorem measurable_suffixBlock (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (start : ℤ) (n : ℕ) : Measurable (suffixBlock e start n) := by
   refine Measurable.of_eval fun i => ?_
   exact measurable_snd.comp ((measurable_pi_apply (start + (i.val : ℤ))).comp
     (measurable_subtype_coe.comp (e.measurable.comp (measurable_const.prodMk measurable_id))))
 
-private noncomputable def blockPartition (μ : Measure (RelationPath k))
+noncomputable def blockPartition (μ : Measure (RelationPath k))
     (e : (Bool × RelationPath k) ≃ᵐ ResetPath k) (start : ℤ) (n : ℕ) :=
   fiberPartition μ (suffixBlock e start n) (measurable_suffixBlock e start n)
 
@@ -221,16 +221,16 @@ private theorem block_entropy_bounds (hk : 2 ≤ k)
     ⟨fun _ => ENNReal.toReal_nonneg, Q.sum_toReal_measure_eq_one⟩ hac _ _ herr
 
 
-private def suffixAt (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+def suffixAt (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (t : ℤ) (r : RelationPath k) : Fin k :=
   ((e (false, r)).val t).2
 
-private theorem measurable_suffixAt (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+theorem measurable_suffixAt (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (t : ℤ) : Measurable (suffixAt e t) :=
   measurable_snd.comp ((measurable_pi_apply t).comp
     (measurable_subtype_coe.comp (e.measurable.comp (measurable_const.prodMk measurable_id))))
 
-private noncomputable def suffixPartition (ρ : Measure (RelationPath k))
+noncomputable def suffixPartition (ρ : Measure (RelationPath k))
     (e : (Bool × RelationPath k) ≃ᵐ ResetPath k) (t : ℤ) : MeasurePartition ρ (Fin k) :=
   fiberPartition ρ (suffixAt e t) (measurable_suffixAt e t)
 
@@ -282,7 +282,7 @@ private theorem block_saturations (ρ : Measure (RelationPath k))
         ((le_iSup (fun j : ℕ => MeasurableSpace.comap (suffixAt e (-(r : ℤ) + j)) _) n).trans
           (le_iSup σ r))
 
-private theorem suffix_seq_eq_block {ρ : Measure (RelationPath k)}
+theorem suffix_seq_eq_block {ρ : Measure (RelationPath k)}
     (T : MeasurePreserving (@relationShift k) ρ ρ)
     (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (hshift : ∀ r : RelationPath k, ∀ n : ℕ, ∀ t : ℤ,
@@ -324,7 +324,7 @@ private theorem block_entropy_eq_origin {ρ : Measure (RelationPath k)}
   rw [← hpre, (T.iterate r).measure_preimage
     ((blockPartition ρ e (-(r : ℤ)) n).measurable w).nullMeasurableSet]
 
-private theorem ks_eq_suffix_partition {ρ : Measure (RelationPath k)} [IsProbabilityMeasure ρ]
+theorem ks_eq_suffix_partition {ρ : Measure (RelationPath k)} [IsProbabilityMeasure ρ]
     (T : MeasurePreserving (@relationShift k) ρ ρ)
     (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
     (hbits : ∀ r : RelationPath k, ∀ t : ℤ, (suffixAt e t r).val = 0 ↔ r.val (t - 1) = false)
