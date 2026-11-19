@@ -107,14 +107,19 @@ def preserve_extra_files(entries):
                 if relative in build_dirs and item.is_dir():
                     continue
                 if item.is_file() and (relative in files or
-                                       (parent in python_caches and item.suffix == ".pyc")):
+                                       (parent in python_caches and
+                                        re.fullmatch(r".+\.pyc(?:\.[0-9]+)?", item.name))):
                     continue
             if backup is None:
                 backup = Path(tempfile.mkdtemp(prefix="previous-", dir=CACHE))
                 print(f"Preserving extra tools files at {backup}", file=sys.stderr)
             destination = backup / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
-            item.rename(destination)
+            try:
+                item.rename(destination)
+            except FileNotFoundError:
+                if os.path.lexists(item):
+                    raise
 
 
 def installation_matches(archive):
