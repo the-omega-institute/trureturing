@@ -46,7 +46,7 @@ section
 open scoped LSeries.notation Topology
 open Asymptotics Complex Filter MeasureTheory Metric Set Real
 open ConjectureMachines.Semantics.Riemann.VonMangoldtCount
-  (norm_riemannZeta_sub_one_le_three_fourths)
+  (norm_riemannZeta_sub_one_le_three_fourths one_fourth_le_norm_riemannZeta_of_two_le_re)
 
 /-! ### Fractional-part bound for the strip estimate -/
 
@@ -189,10 +189,7 @@ private theorem norm_riemannZeta_le_three_mul_norm {s : ℂ}
 private lemma norm_zeta_lower_of_two_le_re {s : ℂ} (hs : 2 ≤ s.re) :
     1 / 4 ≤ ‖riemannZeta s‖ ∧ ‖riemannZeta s‖ ≤ 7 / 4 ∧ ‖zetaInv s‖ ≤ 4 := by
   have hsub := norm_riemannZeta_sub_one_le_three_fourths hs
-  have h_lo : 1 / 4 ≤ ‖riemannZeta s‖ := by
-    have htri := norm_sub_norm_le (1 : ℂ) (riemannZeta s)
-    rw [norm_one, norm_sub_rev] at htri
-    linarith
+  have h_lo := one_fourth_le_norm_riemannZeta_of_two_le_re hs
   have h_hi : ‖riemannZeta s‖ ≤ 7 / 4 := by
     have htri := norm_add_le (1 : ℂ) (riemannZeta s - 1)
     simp only [add_sub_cancel, norm_one] at htri
