@@ -381,22 +381,26 @@ def validate_preparation(root, value, context, artifact):
 
 
 def unpack(root, archive_path, directory):
-    with tarfile.open(archive_path, "r:gz") as archive:
-        members = archive.getmembers()
-        names = [member.name for member in members]
-        require(len(names) == len(set(names)), "duplicate native archive member")
-        for member in members:
+    names = set()
+    files = []
+
+    def checked_members(archive):
+        for member in archive:
             path = pathlib.PurePosixPath(member.name)
+            require(member.name not in names, "duplicate native archive member")
             require(not path.is_absolute() and ".." not in path.parts and
                     (member.name in (".lake/build", ".lake/packages") or member.name.startswith(".lake/build/")
                      or member.name.startswith(".lake/packages/")), "native archive member outside cache roots")
-        archive.extractall(directory, filter="data")
+            names.add(member.name)
+            if not member.isdir():
+                files.append(pathlib.Path(member.name))
+            yield member
+
+    with tarfile.open(archive_path, "r:gz") as archive:
+        archive.extractall(directory, members=checked_members(archive), filter="data")
     selected = set(native_paths(directory, root))
     require(selected, "empty native preparation")
-    for member in members:
-        if member.isdir():
-            continue
-        relative = pathlib.Path(member.name)
+    for relative in files:
         require(relative in selected or any(parent in selected for parent in relative.parents),
                 "native archive member outside registered membership: " + str(relative))
     for name in ("packages", "build"):
@@ -428,7 +432,11 @@ def adopt(root):
         with tempfile.TemporaryDirectory(prefix="lean-pr-preparation-") as temporary:
             directory = pathlib.Path(temporary)
             artifact_zip = directory / "artifact.zip"
+            download_started = time.monotonic()
             download(repository, artifact["id"], artifact_zip)
+            downloaded_bytes = artifact_zip.stat().st_size
+            download_seconds = time.monotonic() - download_started
+            unpack_started = time.monotonic()
             with zipfile.ZipFile(artifact_zip) as archive:
                 require(sorted(archive.namelist()) == ["native.tar.gz", "preparation.json"], "invalid preparation artifact members")
                 archive.extractall(directory)
@@ -442,6 +450,7 @@ def adopt(root):
                 continue
             identity, runtime = validated
             unpack(root, directory / "native.tar.gz", directory / "native")
+            unpack_seconds = time.monotonic() - unpack_started
         actions.stamp_restored_dependency(root, actions.actions_keys(root))
         actions.write_small_record(record, dict(run=os.environ["GITHUB_RUN_ID"], attempt=os.environ["GITHUB_RUN_ATTEMPT"],
             repository=str(root.resolve()), checkout=context["checkout"], ref=os.environ["GITHUB_REF"],
@@ -449,6 +458,8 @@ def adopt(root):
         actions.output(dict(adopted=True))
         actions.output(dict(STRATALINT_ACTIONS_CACHE_SEEDED="0"), "GITHUB_ENV")
         return receipt("adopted", identity, runtime=runtime, artifact=artifact["id"],
+                       downloaded_bytes=downloaded_bytes, download_seconds=round(download_seconds, 3),
+                       unpack_seconds=round(unpack_seconds, 3),
                        checkout=context["checkout"], actual_merge=context["checkout"] if context["merged"] else None)
     return receipt("miss", context, reason="no unexpired preparation from a successful producer")
 
