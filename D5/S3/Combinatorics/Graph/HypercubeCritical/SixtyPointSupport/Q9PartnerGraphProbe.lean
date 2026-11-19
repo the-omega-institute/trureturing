@@ -22,7 +22,9 @@ open D5.S3.Combinatorics.Graph.HypercubeCritical
 open BalancedCriticalSpectrum (Q flip IsBalanced)
 attribute [local instance] Classical.propDecidable
 
-open private directions mem_directions regular_directions directions_card exterior_even from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions regular_directions exterior_even)
+open private mem_directions directions_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private flip_comm adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth

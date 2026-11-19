@@ -385,7 +385,7 @@ private theorem referenceState_conjugate (U : Matrix.unitaryGroup B ℂ)
     (CStarMatrix.ofMatrix.symm P.1) a b) j) k
   exact h.symm
 
-private theorem referenceState_comp (T : QuantumChannel B C)
+theorem referenceState_comp (T : QuantumChannel B C)
     (S : QuantumChannel A B) {R : Type*} [Fintype R] [DecidableEq R]
     (P : DensityState (R × A)) :
     referenceState (T.comp S) P = referenceState T (referenceState S P) := by
