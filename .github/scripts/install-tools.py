@@ -82,8 +82,44 @@ def unpack(archive, stage):
             raise ValueError("tools release is missing tools/Makefile")
 
 
+def preserve_extra_files(entries):
+    files = {Path(entry.name) for entry in entries if entry.isfile()}
+    directories = {parent for path in files for parent in path.parents}
+    project_dirs = {path.parent for path in files if path.suffix == ".csproj"}
+    build_dirs = {parent / name for parent in project_dirs for name in ("bin", "obj")}
+    build_dirs.update(path.parent / ".lake" for path in files
+                      if path.name in {"lakefile.lean", "lakefile.toml"})
+    python_caches = {path.parent / "__pycache__" for path in files if path.suffix == ".py"}
+    generated = Path("tools/Generated/scribe-emissions.v1.json")
+    directories.update(python_caches | {generated.parent})
+    files.update({Path("tools") / STAMP, generated})
+
+    backup = None
+    pending = [Path("tools")]
+    while pending:
+        parent = pending.pop()
+        for item in (ROOT / parent).iterdir():
+            relative = parent / item.name
+            if not item.is_symlink():
+                if relative in directories and item.is_dir():
+                    pending.append(relative)
+                    continue
+                if relative in build_dirs and item.is_dir():
+                    continue
+                if item.is_file() and (relative in files or
+                                       (parent in python_caches and item.suffix == ".pyc")):
+                    continue
+            if backup is None:
+                backup = Path(tempfile.mkdtemp(prefix="previous-", dir=CACHE))
+                print(f"Preserving extra tools files at {backup}", file=sys.stderr)
+            destination = backup / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            item.rename(destination)
+
+
 def installation_matches(archive):
     with tarfile.open(archive, "r:gz") as package:
+        preserve_extra_files(package.getmembers())
         for entry in package:
             if entry.isdir():
                 continue
@@ -107,19 +143,26 @@ def install(archive, pin):
     if target.is_symlink():
         raise ValueError(f"unexpected symbolic link at {target}")
     installed = stamp.read_text().strip() if stamp.is_file() else None
-    if installed == pin["sha256"] and installation_matches(archive):
-        return
     if git("ls-files", "--", "tools"):
         raise ValueError("the checkout still tracks files under tools/")
+    clean = False
+    if installed and re.fullmatch(r"[0-9a-f]{64}", installed):
+        previous_archive = CACHE / (installed + ".tar.gz")
+        if installed == pin["sha256"]:
+            clean = installation_matches(archive)
+            if clean:
+                return
+        elif previous_archive.is_file() and digest(previous_archive) == installed:
+            clean = installation_matches(previous_archive)
     with tempfile.TemporaryDirectory(dir=CACHE) as tmp:
         stage = Path(tmp)
         unpack(archive, stage)
         (stage / "tools" / STAMP).write_text(pin["sha256"] + "\n")
         previous = None
         if target.exists():
-            # Keep unmanaged files from a checkout that previously tracked tools.
+            # Retain local edits and installations with an unavailable manifest.
             previous = stage / "previous"
-            if not installed:
+            if not clean:
                 previous = Path(tempfile.mkdtemp(prefix="previous-", dir=CACHE)) / "tools"
             target.rename(previous)
         try:
@@ -128,7 +171,7 @@ def install(archive, pin):
             if previous is not None:
                 previous.rename(target)
             raise
-        if previous is not None and installed is None:
+        if previous is not None and not clean:
             print(f"Preserved the previous tools directory at {previous}", file=sys.stderr)
     print(f"Installed tools {pin['version']}")
 

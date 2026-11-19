@@ -169,7 +169,19 @@ The root Makefile installs the release selected by `Meta/tools-release.json`.
 Run `make install-tools` before using `make -C tools`, a script under `tools/`,
 or Lake directly in `Reg/`. For an offline checkout, install a copy of the
 same release asset with `python3 .github/scripts/install-tools.py --archive /path/to/trureturing-tools.tar.gz`.
-The installer verifies the pinned SHA-256 in both cases.
+The installer verifies the pinned SHA-256 in both cases. It moves extra tool
+source files to the reported location under `build/tools-releases/previous-*`
+and keeps the current release’s .NET and Lean build outputs.
+
+To build a revision that tracked `tools/`, use a fresh worktree so the historical
+compiler sees exactly that revision’s sources. Set `historical_commit` to the
+commit to build and use an unused directory.
+
+```sh
+git worktree add --detach ../trureturing-historical "$historical_commit"
+cd ../trureturing-historical
+make -C tools help
+```
 
 ## Your first change
 
