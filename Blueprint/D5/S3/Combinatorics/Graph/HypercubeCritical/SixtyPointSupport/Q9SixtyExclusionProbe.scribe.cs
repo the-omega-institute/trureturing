@@ -12,7 +12,7 @@ internal sealed class Q9SixtyExclusionProbeDocument : IScribeDocumentDefinition
                 DescribeId.Create("q9-sixty-support-claim"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/SixtyPointSupport/Q9SixtyExclusionProbe.claim"),
                 H("claim"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("An induced cubic Huang-balanced subgraph of the nine-cube has exactly sixty vertices."))),
+                Blocks(Paragraph(Text("There exists a Huang-balanced induced cubic subgraph of the nine-cube on sixty vertices."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("q9-sixty-support-result"),
