@@ -37,29 +37,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 variable {m : ℕ}
 
-private theorem mem_moves {R Q : Finset (Vertex m)} :
-    Q ∈ moves R ↔ geoHull R = Set.univ ∧ ∃ x ∈ R, R.erase x = Q := by
-  classical
-  by_cases h : geoHull R = Set.univ <;> simp [moves, h]
-
-
-private theorem grundy_eq (R : Finset (Vertex m)) :
-    grundy R = mex ((moves R).image grundy) := by
-  classical
-  rw [grundy, WellFounded.fix_eq]
-  congr 1
-  ext t
-  simp only [mem_image, mem_attach]
-  constructor
-  · rintro ⟨Q, _, hQ⟩
-    exact ⟨Q.1, Q.2, hQ⟩
-  · rintro ⟨Q, hQ, ht⟩
-    exact ⟨⟨Q, hQ⟩, trivial, ht⟩
-
-
 private theorem mem_moves_selected {S T : Finset (Vertex m)} :
     Tᶜ ∈ moves Sᶜ ↔ geoHull Sᶜ = Set.univ ∧ ∃ x ∉ S, insert x S = T := by
-  rw [mem_moves]
+  rw [OddCycleTER.mem_moves]
   apply and_congr_right
   intro _
   constructor
@@ -85,7 +65,7 @@ private theorem readout_dependence : ObservationalDependence signature actual :=
     intro zero
     have noMex := (mex_spec ((moves (∅ : Finset (Vertex 2))ᶜ).image grundy)).1
     have start : mex ((moves (∅ : Finset (Vertex 2))ᶜ).image grundy) = 0 :=
-      (grundy_eq _).symm.trans (conjecture_5_5 2 (by decide))
+      (OddCycleTER.grundy_eq _).symm.trans (conjecture_5_5 2 (by decide))
     exact noMex (mem_image.mpr ⟨_, option, zero.trans start.symm⟩)
   exact ⟨2, {v}, ∅, fun equal => different (equal.trans (conjecture_5_5 2 (by decide)))⟩
 

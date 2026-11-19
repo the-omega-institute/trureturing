@@ -195,17 +195,11 @@ private def Invariant (k : ℕ) (R : Finset (Vertex m)) : Prop :=
 private def BlockLive (R : Finset (Vertex m)) : Prop :=
   ∀ a, (R ∩ block m a).Nonempty
 
-private theorem erase_inter {α : Type*} [DecidableEq α] (R B : Finset α) (x : α) :
-    R.erase x ∩ B = (R ∩ B).erase x := by
-  ext z
-  simp only [mem_erase, mem_inter]
-  tauto
-
 private theorem first_erase_live {k : ℕ} {R : Finset (Vertex m)} (hk : 2 ≤ k)
     (h : Invariant k R) (x : Vertex m) : BlockLive (R.erase x) := by
   intro a
   apply card_pos.mp
-  rw [erase_inter]
+  rw [Finset.erase_inter]
   have hc := pred_card_le_card_erase (s := R ∩ block m a) (a := x)
   have hb := h.2 a
   omega
@@ -218,7 +212,7 @@ private theorem rank_reply {k : ℕ} {R : Finset (Vertex m)} (hk : 2 ≤ k)
   · rw [card_erase_of_mem hy, card_erase_of_mem hx, h.1]
     omega
   · intro a
-    rw [erase_inter, erase_inter]
+    rw [Finset.erase_inter, Finset.erase_inter]
     have hb := h.2 a
     let B := R ∩ block m a
     change k ≤ B.card at hb
@@ -328,7 +322,7 @@ private theorem four_terminal_reply {R : Finset (Vertex m)} (hR : R.card = 4)
   have hmem : y ∈ R ∩ block m a := by simp [hy]
   refine ⟨y, (mem_inter.mp hmem).1, fun h => ?_⟩
   have hne := h a
-  rw [erase_inter, hy, erase_singleton] at hne
+  rw [Finset.erase_inter, hy, erase_singleton] at hne
   exact not_nonempty_empty hne
 
 
@@ -561,7 +555,7 @@ noncomputable def moves (R : Finset (Vertex m)) : Finset (Finset (Vertex m)) := 
   classical
   exact if geoHull R = Set.univ then R.image R.erase else ∅
 
-private theorem mem_moves {R Q : Finset (Vertex m)} :
+theorem mem_moves {R Q : Finset (Vertex m)} :
     Q ∈ moves R ↔ geoHull R = Set.univ ∧ ∃ x ∈ R, R.erase x = Q := by
   classical
   by_cases h : geoHull R = Set.univ <;> simp [moves, h]
@@ -579,7 +573,7 @@ noncomputable def grundy : Finset (Vertex m) → ℕ := by
   exact (measure Finset.card).wf.fix fun R rec =>
     mex ((moves R).attach.image (fun Q => rec Q.1 (move_card_lt Q.2)))
 
-private theorem grundy_eq (R : Finset (Vertex m)) :
+theorem grundy_eq (R : Finset (Vertex m)) :
     grundy R = mex ((moves R).image grundy) := by
   classical
   rw [grundy, WellFounded.fix_eq]
