@@ -107,7 +107,7 @@ private theorem equal_from_one_edge [Finite V] (σ τ : Perm V)
 
 def shadow (σ : Perm V) : SimpleGraph V := SimpleGraph.fromRel (fun x y => σ x = y)
 
-private theorem shadow_adj (hn : 3 ≤ Fintype.card V) (σ : Perm V)
+theorem shadow_adj (hn : 3 ≤ Fintype.card V) (σ : Perm V)
     (hσ : σ.IsCycleOn Set.univ) (x y : V) :
     (shadow σ).Adj x y ↔ σ x = y ∨ σ y = x := by
   rw [shadow, SimpleGraph.fromRel_adj]
@@ -170,7 +170,7 @@ structure Lift (F : SimpleGraph V) where
   full : σ.IsCycleOn Set.univ
   extension : ∀ x y, E x y → σ x = y
 
-private def reverseLift {F : SimpleGraph V} (l : Lift F) : Lift F where
+def reverseLift {F : SimpleGraph V} (l : Lift F) : Lift F where
   E x y := l.E y x
   σ := l.σ⁻¹
   edge x y h := (l.edge y x h).symm
@@ -193,7 +193,7 @@ private theorem forced_orientation {F : SimpleGraph V} (hn : 3 ≤ Fintype.card 
     · have hr := l.extension _ _ h
       exact ((no_short_cycle hn l.σ l.full x).2 (by rw [hs,hr])).elim
 
-private theorem lift_ext {F : SimpleGraph V} (hn : 3 ≤ Fintype.card V)
+theorem lift_ext {F : SimpleGraph V} (hn : 3 ≤ Fintype.card V)
     {a b : Lift F} (h : a.σ = b.σ) : a = b := by
   have he : a.E = b.E := by
     funext x y
@@ -221,7 +221,7 @@ private def canonicalLift (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
   full := hf
   extension _ _ h := h.2
 
-private theorem reverse_distinct {F : SimpleGraph V} (hn : 3 ≤ Fintype.card V)
+theorem reverse_distinct {F : SimpleGraph V} (hn : 3 ≤ Fintype.card V)
     (l : Lift F) : l ≠ reverseLift l := by
   intro h
   have he := congrArg Lift.σ h
@@ -253,7 +253,7 @@ private theorem forget_reverse (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
   simp only [Perm.inv_eq_iff_eq]
   tauto
 
-private theorem forget_surjective (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) :
+theorem forget_surjective (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) :
     Function.Surjective (forget hn (F := F)) := by
   classical
   intro C
@@ -265,7 +265,7 @@ private theorem forget_surjective (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V
   ext x y
   exact (shadow_adj hn σ hσ x y).trans (hgraph x y).symm
 
-private theorem forget_fiber (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
+theorem forget_fiber (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
     (a b : Lift F) : forget hn b = forget hn a ↔ b = a ∨ b = reverseLift a := by
   constructor
   · intro h
