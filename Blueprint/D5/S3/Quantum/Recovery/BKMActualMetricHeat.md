@@ -62,21 +62,9 @@ Lean statement: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.changedProjection`
 
 *Commentary.*
 
-Use the relative BKM operator as the coefficient Z. The density sandwich supplies the positive lower bound in reference coordinates.
+Use the relative BKM operator as the coefficient Z. The density sandwich supplies the positive lower bound in reference coordinates. Pulling the projection back to matrix space gives a residual that pairs to zero with every member of B in the BKM form at a, by the Gram equation and the relative BKM operator identity.
 
-**Theorem 1.6 (Physical BKM orthogonality).**
-
-Lean statement: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.changedProjection_bkm_orthogonal`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/BKMActualMetricHeat.changedProjection_bkm_orthogonal` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Pull the changed projection back to matrix space through the reference coordinates. Its residual pairs to zero with every member of B in the BKM form at a.
-
-**Definition 1.7 (Generator in reference coordinates).**
+**Definition 1.6 (Generator in reference coordinates).**
 
 Lean statement: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.referenceGenerator`
 
@@ -88,7 +76,7 @@ Lean statement: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.referenceGenerator`
 
 Conjugate the bounded physical generator L by the square-root coordinates of b.
 
-**Theorem 1.8 (Physical heat defect identity and bound).**
+**Theorem 1.7 (Physical heat defect identity and bound).**
 
 Lean statement: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.bkm_heat_defect_comparison`
 
@@ -114,7 +102,6 @@ $\left\lVert D \right\rVert \leq \frac{u - l}{2 \cdot \sqrt{u \cdot l}} \cdot (\
 
 - Truth anchor: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.bkm_heat_defect_comparison`
 - Truth anchor: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.changedProjection`
-- Truth anchor: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.changedProjection_bkm_orthogonal`
 - Truth anchor: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.referenceGenerator`
 - Truth anchor: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.relativeProjection`
 - Truth anchor: `D5/S3/Quantum/Recovery/BKMActualMetricHeat.relativeProjection_fix`
