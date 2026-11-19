@@ -150,7 +150,9 @@ internal static partial class RepositoryPathPolicy
             && !value.StartsWith("Library/", StringComparison.Ordinal)
             && !value.StartsWith("Papers/", StringComparison.Ordinal)
             && !value.StartsWith("Chronicle/", StringComparison.Ordinal)
-            && !value.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
+            && (!value.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
+                || value.StartsWith("Meta/Digestion/atoms/sha256/", StringComparison.Ordinal)
+                || value.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal))
             && !value.StartsWith("Golden/", StringComparison.Ordinal))
             return null;
 
