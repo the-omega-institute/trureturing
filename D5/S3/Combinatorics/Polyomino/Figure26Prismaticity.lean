@@ -6,7 +6,7 @@
    utility: none
    digest: The two displayed Figure 26 binary-colored polyhexes are prismatic. -/
 
-import D5.S3.StatisticalMechanics.HardCore.OrderedGridMemory
+import D5.S3.Combinatorics.Polyomino.Figure26PanelData
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,6 +16,7 @@ namespace D5.S3.Combinatorics.Polyomino.Figure26Prismaticity
 open Finset
 open scoped Pointwise
 open D5.S3.StatisticalMechanics.HardCore.OrderedGridMemory (Point)
+open D5.S3.Combinatorics.Polyomino.Figure26PanelData
 
 /-- Axial differences across one edge of a hexagonal cell. -/
 def hexSteps : Finset Point := {(1, 0), (-1, 0), (0, 1), (0, -1), (1, -1), (-1, 1)}
@@ -67,12 +68,6 @@ def FigureWitness (P : Fin 4 → Point) (B : Finset Point) (color : Point → Bo
 def IsPrismatic (P : Fin 4 → Point) (B : Finset Point) (color : Point → Bool) : Prop :=
   FigureWitness P B color ∧ IsDense P 16 B
 
-/-- Figure 26 left, in axial coordinates suited to the three arms. -/
-private def leftPattern : Fin 4 → Point := ![(0, 1), (0, 0), (-1, 0), (1, -1)]
-
-/-- Figure 26 right, in axial coordinates suited to the two columns. -/
-private def rightPattern : Fin 4 → Point := ![(1, 1), (1, 0), (0, 2), (0, 0)]
-
 private def checkTree (B seen : Finset Point) : List (Point × Point) → Bool
   | [] => decide (B ⊆ seen)
   | (q, p) :: edges =>
@@ -111,60 +106,20 @@ private theorem tree_polyhex (B : Finset Point) (root : Point) (edges : List (Po
       exact (Relation.ReflTransGen.single ⟨h.2.1, h.1, adj_symm h.2.2⟩).trans ih
   exact (reverse (hreach p hp)).trans (hreach q hq)
 
-private def leftBoard : Finset Point :=
-  {(0, 0), (0, 1), (1, -1), (1, 0), (1, 1), (1, 2), (2, -1),
-   (2, 0), (2, 1), (2, 2), (2, 3), (3, -2), (3, -1), (3, 0),
-   (3, 1), (3, 2), (3, 3), (4, -2), (4, -1), (4, 0), (4, 1),
-   (4, 2), (5, -3), (5, -2), (5, -1), (5, 0), (6, -3), (6, -2)}
-
-private def leftGray : Finset Point :=
-  {(1, 0), (1, 2), (2, -1), (2, 1), (2, 2), (3, -1), (3, 0),
-   (3, 1), (4, 1), (4, 2), (5, -3), (5, 0), (6, -2)}
-
-private def leftColor (p : Point) : Bool := decide (p ∈ leftGray)
-
 private theorem left_pattern_polyhex : IsPolyhex (offsets leftPattern) := by
-  refine tree_polyhex (offsets leftPattern) (-1, 0) [
-    ((0, 0), (-1, 0)), ((0, 1), (0, 0)), ((1, -1), (0, 0))] (by decide) ?_
+  refine tree_polyhex (offsets leftPattern) (-1, 0) leftPatternTree (by decide) ?_
   decide +kernel
 
 private theorem left_board_polyhex : IsPolyhex leftBoard := by
-  refine tree_polyhex leftBoard (0, 0) [
-    ((1, 0), (0, 0)), ((0, 1), (0, 0)), ((1, -1), (0, 0)), ((2, 0), (1, 0)),
-    ((1, 1), (1, 0)), ((2, -1), (1, 0)), ((3, 0), (2, 0)), ((2, 1), (2, 0)),
-    ((3, -1), (2, 0)), ((1, 2), (1, 1)), ((3, -2), (2, -1)), ((4, 0), (3, 0)),
-    ((3, 1), (3, 0)), ((4, -1), (3, 0)), ((2, 2), (2, 1)), ((4, -2), (3, -1)),
-    ((5, 0), (4, 0)), ((4, 1), (4, 0)), ((5, -1), (4, 0)), ((3, 2), (3, 1)),
-    ((5, -2), (4, -1)), ((2, 3), (2, 2)), ((5, -3), (4, -2)), ((4, 2), (4, 1)),
-    ((6, -2), (5, -1)), ((3, 3), (3, 2)), ((6, -3), (5, -2))] (by decide) ?_
+  refine tree_polyhex leftBoard (0, 0) leftBoardTree (by decide) ?_
   decide +kernel
 
-private def rightBoard : Finset Point :=
-  {(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),
-   (0, 7), (1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
-   (1, 6), (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (2, 5),
-   (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (4, 1), (4, 2)}
-
-private def rightGray : Finset Point :=
-  {(0, 1), (0, 3), (1, 0), (1, 2), (1, 3), (1, 6), (2, 0),
-   (2, 1), (2, 3), (2, 4), (2, 5), (3, 3)}
-
-private def rightColor (p : Point) : Bool := decide (p ∈ rightGray)
-
 private theorem right_pattern_polyhex : IsPolyhex (offsets rightPattern) := by
-  refine tree_polyhex (offsets rightPattern) (0, 0) [
-    ((1, 0), (0, 0)), ((1, 1), (1, 0)), ((0, 2), (1, 1))] (by decide) ?_
+  refine tree_polyhex (offsets rightPattern) (0, 0) rightPatternTree (by decide) ?_
   decide +kernel
 
 private theorem right_board_polyhex : IsPolyhex rightBoard := by
-  refine tree_polyhex rightBoard (0, 0) [
-    ((1, 0), (0, 0)), ((0, 1), (0, 0)), ((2, 0), (1, 0)), ((1, 1), (1, 0)),
-    ((0, 2), (0, 1)), ((3, 0), (2, 0)), ((2, 1), (2, 0)), ((1, 2), (1, 1)),
-    ((0, 3), (0, 2)), ((3, 1), (3, 0)), ((2, 2), (2, 1)), ((1, 3), (1, 2)),
-    ((0, 4), (0, 3)), ((4, 1), (3, 1)), ((3, 2), (3, 1)), ((2, 3), (2, 2)),
-    ((1, 4), (1, 3)), ((0, 5), (0, 4)), ((4, 2), (4, 1)), ((3, 3), (3, 2)),
-    ((2, 4), (2, 3)), ((1, 5), (1, 4)), ((0, 6), (0, 5)), ((3, 4), (3, 3)),
-    ((2, 5), (2, 4)), ((1, 6), (1, 5)), ((0, 7), (0, 6))] (by decide) ?_
+  refine tree_polyhex rightBoard (0, 0) rightBoardTree (by decide) ?_
   decide +kernel
 
 /-- The three steps in the coordinates given by the two arm differences. -/
@@ -892,20 +847,6 @@ private theorem right_prismatic : IsPrismatic rightPattern rightBoard rightColor
   · have hc : rightBoard.card = 28 := witness.2.2.2.1
     simpa only [hc] using lower_of_sumset_lower rightPattern right_sumset_lower B hB
 
-private def leftAxes : Point ≃+ Point where
-  toFun p := (-p.1, -p.2)
-  invFun p := (-p.1, -p.2)
-  left_inv p := by ext <;> simp
-  right_inv p := by ext <;> simp
-  map_add' p q := by ext <;> simp [add_comm]
-
-private def rightAxes : Point ≃+ Point where
-  toFun p := (-p.2, -p.1)
-  invFun p := (-p.2, -p.1)
-  left_inv p := by ext <;> simp
-  right_inv p := by ext <;> simp
-  map_add' p q := by ext <;> simp [add_comm]
-
 /-- The offset lists of issues #31892 and #31893, in the Figure 26 word order. -/
 def leftIssuePattern : Fin 4 → Point := ![(0,-1), (0,0), (1,0), (-1,1)]
 
@@ -942,20 +883,12 @@ private theorem adj_axes (e : Point ≃+ Point) (h : hexSteps.map e.toEquiv.toEm
   rw [← map_sub, ← h]
   exact mem_axes.mpr hpq
 
-private def pointAxes (e : Point ≃+ Point) (s : Point) : Point ↪ Point where
-  toFun p := e p + s
-  inj' := fun _ _ h => e.injective (add_right_cancel h)
-
 private theorem adj_pointAxes (e : Point ≃+ Point) (s : Point)
     (h : hexSteps.map e.toEquiv.toEmbedding = hexSteps) (p q : Point) (hpq : Adj p q) :
     Adj (pointAxes e s p) (pointAxes e s q) := by
   change (e q + s) - (e p + s) ∈ hexSteps
   rw [add_sub_add_right_eq_sub]
   exact adj_axes e h p q hpq
-
-private def anchorAxes (e : Point ≃+ Point) (s : Point) : Point ↪ Point where
-  toFun t := e t - s
-  inj' := fun _ _ h => e.injective (sub_left_inj.mp h)
 
 private theorem anchor_target (e : Point ≃+ Point) (s t a : Point) :
     anchorAxes e s t + (e a + s) = e (t + a) := by
