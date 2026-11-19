@@ -55,12 +55,9 @@ theorem targetInverse_memLp {c : ℝ} (hc : 0 < c) {f : ℝ → ℂ} (hf : MemLp
   change MemLp (𝓕⁻ g) 2 ∧ eLpNorm (𝓕⁻ g) 2 ≤ eLpNorm f 2
   rw [hflip]
   refine ⟨hraw.comp_measurePreserving hpres, ?_⟩
-  rw [eLpNorm_comp_measurePreserving hraw.aestronglyMeasurable hpres, eLpNorm_congr_ae hae]
-  calc
-    eLpNorm G 2 = ‖G‖ₑ := (Lp.enorm_def G).symm
-    _ = ‖h₂.toLp g‖ₑ := (Lp.fourierTransformₗᵢ ℝ ℂ).enorm_map _
-    _ = eLpNorm g 2 := Lp.enorm_toLp h₂
-    _ ≤ eLpNorm f 2 := eLpNorm_mono h₁g.aestronglyMeasurable hle
+  rw [eLpNorm_comp_measurePreserving hraw.aestronglyMeasurable hpres]
+  exact (D5.S3.Weil.ZetaGamma.FormCore.LineFourier.raw_fourier_eLpNorm_eq h₁g h₂).le.trans
+    (eLpNorm_mono h₁g.aestronglyMeasurable hle)
 
 /-- The normalized raw inverse integral is the target-line integral divided by `2 * π`. -/
 theorem targetInverse_eq_vertical_integral (σ c t : ℝ) (F : ℂ → ℂ) :
