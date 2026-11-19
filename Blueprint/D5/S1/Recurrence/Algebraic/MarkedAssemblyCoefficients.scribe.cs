@@ -35,13 +35,13 @@ internal sealed class MarkedAssemblyCoefficientsDocument : IScribeDocumentDefini
                 "ordinary coefficient a(j) for 0<j<N and zero otherwise. Assume precisely the displayed lower " +
                 "degree-f equations for 1<=f<N. The degree-N residual then has rational denominator coprime " +
                 "to p. No restriction on d, coefficient signs, or the next source coefficient is imposed. " +
-                "The existing finite unit-signed palette realizes P. Full assemblies and rooted assemblies " +
+                "The finite palette realizes P, and each color has sign one or minus one independently of marker arity. Full assemblies and rooted assemblies " +
                 "carry the actual simultaneous permutation actions. A rooted object has one distinguished " +
                 "vertex and d independent markers; its remaining assembly retains the whole ambient marker " +
                 "set, including the removed vertex. For a permutation with f>=1 fixed vertices and moved-part " +
                 "signed sum M, the fixed-object subtraction equals M f! times the degree-f residual with scalar " +
                 "f^d. Fixed blocks restrict every marker to the fixed vertices; moved blocks keep the original " +
-                "ambient set. Signed Burnside is reused at its original owner. A Sylow p-subgroup of the " +
+                "ambient set. Signed Burnside splits the action into its positive and negative weight fibers. A Sylow p-subgroup of the " +
                 "symmetric group has full order p^v_p(N!). Every element fixes a vertex since p does not divide " +
                 "N; a nonidentity element fixes fewer than N vertices. Its residual therefore vanishes by the " +
                 "actual lower equations. The identity moved part is uniquely empty. The resulting integer " +
@@ -52,8 +52,10 @@ internal sealed class MarkedAssemblyCoefficientsDocument : IScribeDocumentDefini
     {
         var prefix = Call("prefixSeries", V("N"), V("a"));
         Formula E(Formula n) => Call("exp", Mul(Pow(Call("castQ", n), V("d")), prefix));
-        Formula R(Formula n) => Sub(Coeff(n, E(n)), Mul(Pow(Call("castQ", n), V("d")), Coeff(Sub(n, D(1)), E(n))));
-        var lower = All("f", N(), Imp(And(Leq(D(1), V("f")), Lt(V("f"), V("N"))), Eqn(R(V("f")), D(0))));
+        Formula Previous(Formula n) => Mul(Pow(Call("castQ", n), V("d")), Coeff(Sub(n, D(1)), E(n)));
+        Formula R(Formula n) => Sub(Coeff(n, E(n)), Previous(n));
+        var f = V("f");
+        var lower = All("f", N(), Imp(Leq(D(1), f), Imp(Lt(f, V("N")), Eqn(Coeff(f, E(f)), Previous(f)))));
         var premise = And(Leq(D(1), V("N")), And(Call("Prime", V("p")),
             And(Seq(Neg, Sp, Call("Dvd", V("p"), V("N"))), lower)));
         return All("d", N(), All("N", N(), All("a", Call("Function", N(), Z()), All("p", N(),

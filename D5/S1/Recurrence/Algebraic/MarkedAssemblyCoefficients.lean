@@ -7,7 +7,6 @@
    digest: Exact signed decoration sums for ordered blocks with ambient markers. -/
 
 import D5.S1.Recurrence.Algebraic.MarkedAssemblyFixedPoints
-import D5.S1.Recurrence.Algebraic.HannaA300591AssemblyCoefficients
 import D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
 import Mathlib.GroupTheory.GroupAction.Quotient
@@ -23,17 +22,99 @@ open scoped BigOperators
 namespace D5.S1.Recurrence.Algebraic.MarkedAssemblyCoefficients
 
 open MarkedAssemblyFixedPoints
-open HannaA300591FixedAssemblies (fixedVertices movedVertices)
-open HannaA300591AssemblyCoefficients (Orders orders_card Supports order_length supports_sum
-  colorSum colorSeries colorSeries_zero choose_factorial PrefixColor prefixAllowed prefixSign
-  prefixSeries prefix_series_eq signed_burnside fixed_erase moved_erase sylow_fixed_card
-  proper_fixed_card)
-
 noncomputable section
 
 variable {d : ℕ}
 
 variable {V C : Type} [Fintype V] [Fintype C] [decV : DecidableEq V]
+
+/-- All orders of a prescribed vertex support. -/
+abbrev Orders (U : Finset V) :=
+  {l : {l : List V // l.Nodup} // l.val.toFinset = U}
+
+private def ordersEquiv (U : Finset V) :
+    Orders U ≃ {l : List V // l ∈ U.toList.permutations.toFinset} where
+  toFun l := ⟨l.val.val, by
+    rw [List.mem_toFinset, List.mem_permutations]
+    apply List.perm_of_nodup_nodup_toFinset_eq l.val.property U.nodup_toList
+    simpa using l.property⟩
+  invFun l := by
+    have hp : l.val.Perm U.toList := List.mem_permutations.mp (List.mem_toFinset.mp l.property)
+    exact ⟨⟨l.val, hp.nodup_iff.mpr U.nodup_toList⟩,
+      by simpa using List.toFinset_eq_of_perm _ _ hp⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+theorem orders_card (U : Finset V) : Fintype.card (Orders U) = U.card.factorial := by
+  rw [Fintype.card_congr (ordersEquiv U), Fintype.card_coe,
+    List.toFinset_card_of_nodup (List.nodup_permutations _ U.nodup_toList),
+    List.length_permutations, length_toList]
+
+/-- The signed color multiplicity at a block size. -/
+def colorSum (allowed : ℕ → C → Prop) (sign : C → ℤ) (j : ℕ) : ℤ :=
+  by classical exact ∑ c : {c : C // allowed j c}, sign c.val
+
+abbrev Supports (S : Finset V) (x : V) :=
+  {U : Finset V // U ⊆ S ∧ x ∈ U}
+
+omit [Fintype V] in
+theorem order_length {U : Finset V} (l : Orders U) : l.val.val.length = U.card := by
+  exact (List.toFinset_card_of_nodup l.val.property).symm.trans (congrArg Finset.card l.property)
+
+private def supportsEquiv (S : Finset V) (x : V) (hx : x ∈ S) :
+    Supports S x ≃ ↥((S.erase x).powerset) where
+  toFun U := ⟨U.val.erase x, mem_powerset.mpr (by
+    intro y hy
+    exact mem_erase.mpr ⟨(mem_erase.mp hy).1, U.property.1 (mem_erase.mp hy).2⟩)⟩
+  invFun R := ⟨insert x R.val, (by
+    intro y hy
+    rcases mem_insert.mp hy with rfl | hy
+    · exact hx
+    · exact (mem_erase.mp (mem_powerset.mp R.property hy)).2), mem_insert_self _ _⟩
+  left_inv U := Subtype.ext (insert_erase U.property.2)
+  right_inv R := Subtype.ext (erase_insert (by
+    intro h
+    exact (mem_erase.mp (mem_powerset.mp R.property h)).1 rfl))
+
+theorem supports_sum (S : Finset V) (x : V) (hx : x ∈ S) (h : ℕ → ℚ) :
+    (∑ U : Supports S x, h U.val.card) =
+      ∑ k ∈ range S.card, ((S.card - 1).choose k : ℚ) * h (k + 1) := by
+  classical
+  calc
+    _ = ∑ R : ↥((S.erase x).powerset), h (R.val.card + 1) := by
+      apply Fintype.sum_equiv (supportsEquiv S x hx)
+      intro U
+      dsimp [supportsEquiv]
+      rw [card_erase_of_mem U.property.2]
+      have := card_pos.mpr ⟨x, U.property.2⟩
+      congr 1
+      omega
+    _ = ∑ R ∈ (S.erase x).powerset, h (R.card + 1) := by
+      exact sum_coe_sort _ (fun R : Finset V => h (R.card + 1))
+    _ = _ := by
+      rw [sum_powerset]
+      simp_rw [sum_powersetCard _ _ (fun j => h (j + 1))]
+      simp only [nsmul_eq_mul, card_erase_of_mem hx]
+      have := card_pos.mpr ⟨x, hx⟩
+      congr 2
+      omega
+
+/-- The formal exponent has ordinary signed color coefficients at positive degrees. -/
+def colorSeries (allowed : ℕ → C → Prop) (sign : C → ℤ) : PowerSeries ℚ :=
+  mk fun j => if j = 0 then 0 else (colorSum allowed sign j : ℚ)
+
+theorem colorSeries_zero (allowed : ℕ → C → Prop) (sign : C → ℤ) :
+    constantCoeff (colorSeries allowed sign) = 0 := by
+  simp [colorSeries]
+
+theorem choose_factorial (n k : ℕ) (hk : k ≤ n) :
+    (n.choose k : ℚ) * ((k + 1).factorial : ℚ) * ((n - k).factorial : ℚ) =
+      (n.factorial : ℚ) * (k + 1 : ℚ) := by
+  have he : (n.choose k : ℚ) * (k.factorial : ℚ) * ((n - k).factorial : ℚ) =
+      (n.factorial : ℚ) := by
+    exact_mod_cast Nat.choose_mul_factorial_mul_factorial hk
+  rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  linear_combination (k + 1 : ℚ) * he
 
 private abbrev Decorations (allowed : ℕ → C → Prop) (T U : Finset V) :=
   Orders U × {c : C // allowed U.card c} × (Fin d → ↥T)
@@ -205,6 +286,77 @@ theorem assembly_sum_coefficient (allowed : ℕ → C → Prop) (S T : Finset V)
 
 variable [decC : DecidableEq C]
 variable {allowed : ℕ → C → Prop}
+
+/-- A finite signed palette for an arbitrary integer strict prefix. -/
+abbrev PrefixColor (N : ℕ) (a : ℕ → ℤ) :=
+  Σ j : Fin N, Fin (a j.val).toNat ⊕ Fin (-a j.val).toNat
+
+/-- A color is available precisely at its own block size. -/
+def prefixAllowed (N : ℕ) (a : ℕ → ℤ) (j : ℕ) (c : PrefixColor N a) : Prop :=
+  c.1.val = j
+
+/-- Positive and negative palette components carry unit signs. -/
+def prefixSign (N : ℕ) (a : ℕ → ℤ) (c : PrefixColor N a) : ℤ :=
+  c.2.elim (fun _ => 1) (fun _ => -1)
+
+/-- The ordinary strict-prefix polynomial as a rational formal power series. -/
+def prefixSeries (N : ℕ) (a : ℕ → ℤ) : PowerSeries ℚ :=
+  mk fun j => if 0 < j ∧ j < N then (a j : ℚ) else 0
+
+private def prefixColorEquiv (N : ℕ) (a : ℕ → ℤ) (j : ℕ) (hj : j < N) :
+    {c : PrefixColor N a // prefixAllowed N a j c} ≃
+      Fin (a j).toNat ⊕ Fin (-a j).toNat where
+  toFun c := by
+    obtain ⟨⟨⟨k, hk⟩, d⟩, he⟩ := c
+    change k = j at he
+    subst k
+    exact d
+  invFun d := ⟨⟨⟨j, hj⟩, d⟩, rfl⟩
+  left_inv c := by
+    obtain ⟨⟨⟨k, hk⟩, d⟩, he⟩ := c
+    change k = j at he
+    subst k
+    rfl
+  right_inv _ := rfl
+
+private theorem prefix_color_sum (N : ℕ) (a : ℕ → ℤ) (j : ℕ) :
+    colorSum (prefixAllowed N a) (prefixSign N a) j = if j < N then a j else 0 := by
+  classical
+  unfold colorSum
+  by_cases hj : j < N
+  · rw [ite_eq_left hj]
+    calc
+      _ = ∑ d : Fin (a j).toNat ⊕ Fin (-a j).toNat,
+          d.elim (fun _ => (1 : ℤ)) (fun _ => -1) := by
+        apply Fintype.sum_equiv (prefixColorEquiv N a j hj)
+        intro c
+        obtain ⟨⟨⟨k, hk⟩, d⟩, he⟩ := c
+        change k = j at he
+        subst k
+        rfl
+      _ = a j := by
+        rw [Fintype.sum_sum_type]
+        simp only [Sum.elim_inl, Sum.elim_inr, sum_const, card_univ,
+          Fintype.card_fin, nsmul_eq_mul, mul_one, mul_neg]
+        simpa [sub_eq_add_neg] using (a j).toNat_sub_toNat_neg
+  · rw [ite_eq_right hj]
+    apply sum_eq_zero
+    intro c _
+    exact False.elim (hj (c.property ▸ c.val.1.isLt))
+
+theorem prefix_series_eq (N : ℕ) (a : ℕ → ℤ) :
+    colorSeries (prefixAllowed N a) (prefixSign N a) = prefixSeries N a := by
+  ext j
+  simp only [colorSeries, prefixSeries, coeff_mk, prefix_color_sum]
+  by_cases hz : j = 0
+  · simp [hz]
+  · by_cases hj : j < N <;> simp [hz, hj, Nat.pos_of_ne_zero hz]
+
+private theorem prefix_sign_unit (N : ℕ) (a : ℕ → ℤ) (c : PrefixColor N a) :
+    prefixSign N a c = 1 ∨ prefixSign N a c = -1 := by
+  rcases c with ⟨j, d | d⟩
+  · exact Or.inl rfl
+  · exact Or.inr rfl
 
 private theorem relabel_one (b : Block V C d) : relabel 1 b = b := by
   rcases b with ⟨⟨l, hl⟩, c, m⟩
@@ -428,6 +580,83 @@ private theorem pointed_action_fixed_sum (allowed : ℕ → C → Prop) (sign : 
         simp only [Fintype.sum_prod_type, sum_const, card_univ, Fintype.card_fun,
           Fintype.card_fin, Fintype.card_coe, nsmul_eq_mul, Nat.cast_pow]
 
+private def weightFiberAction {Γ X : Type} [Group Γ] [MulAction Γ X]
+    (w : X → ℤ) (hw : ∀ (g : Γ) (x : X), w (g • x) = w x) (z : ℤ) :
+    MulAction Γ {x : X // w x = z} where
+  smul g x := ⟨g • x.val, (hw g x.val).trans x.property⟩
+  one_smul x := Subtype.ext (one_smul _ x.val)
+  mul_smul g h x := Subtype.ext (mul_smul g h x.val)
+
+private def fiberFixedEquiv {Γ X : Type} [Group Γ] [MulAction Γ X]
+    (w : X → ℤ) (hw : ∀ (g : Γ) (x : X), w (g • x) = w x) (z : ℤ) (g : Γ) :
+    letI := weightFiberAction w hw z
+    {x : MulAction.fixedBy X g // w x.val = z} ≃
+      MulAction.fixedBy {x : X // w x = z} g := by
+  letI := weightFiberAction w hw z
+  exact
+    { toFun := fun x => ⟨⟨x.val.val, x.property⟩, Subtype.ext x.val.property⟩
+      invFun := fun x => ⟨⟨x.val.val, congrArg Subtype.val x.property⟩, x.val.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+
+theorem signed_burnside {Γ X : Type} [Group Γ] [Fintype Γ] [Fintype X]
+    [MulAction Γ X] (w : X → ℤ) (hw : ∀ (g : Γ) (x : X), w (g • x) = w x)
+    (hs : ∀ x, w x = 1 ∨ w x = -1) :
+    letI (g : Γ) : Fintype (MulAction.fixedBy X g) := Fintype.ofFinite _
+    (Fintype.card Γ : ℤ) ∣ ∑ g : Γ, ∑ x : MulAction.fixedBy X g, w x.val := by
+  classical
+  letI (g : Γ) : Fintype (MulAction.fixedBy X g) := Fintype.ofFinite _
+  let P := {x : X // w x = 1}
+  let N := {x : X // w x = -1}
+  letI : MulAction Γ P := weightFiberAction w hw 1
+  letI : MulAction Γ N := weightFiberAction w hw (-1)
+  letI (g : Γ) : Fintype (MulAction.fixedBy P g) := Fintype.ofFinite _
+  letI (g : Γ) : Fintype (MulAction.fixedBy N g) := Fintype.ofFinite _
+  letI : Fintype (MulAction.orbitRel.Quotient Γ P) := Fintype.ofFinite _
+  letI : Fintype (MulAction.orbitRel.Quotient Γ N) := Fintype.ofFinite _
+  have he (g : Γ) : (∑ x : MulAction.fixedBy X g, w x.val) =
+      (Fintype.card (MulAction.fixedBy P g) : ℤ) -
+        (Fintype.card (MulAction.fixedBy N g) : ℤ) := by
+    have hsplit := Fintype.sum_subtype_add_sum_subtype
+      (fun x : MulAction.fixedBy X g => w x.val = 1) (fun x => w x.val)
+    have hp : (∑ x : {x : MulAction.fixedBy X g // w x.val = 1}, w x.val.val) =
+        (Fintype.card (MulAction.fixedBy P g) : ℤ) := by
+      simp_rw [show ∀ x : {x : MulAction.fixedBy X g // w x.val = 1},
+        w x.val.val = 1 from fun x => x.property]
+      simp only [sum_const, card_univ, nsmul_eq_mul, mul_one]
+      exact_mod_cast Fintype.card_congr (fiberFixedEquiv w hw 1 g)
+    let en : {x : MulAction.fixedBy X g // ¬w x.val = 1} ≃
+        {x : MulAction.fixedBy X g // w x.val = -1} :=
+      Equiv.subtypeEquivRight (fun x => by
+        constructor
+        · intro hx; exact (hs x.val).resolve_left hx
+        · intro hx he; omega)
+    have hn : (∑ x : {x : MulAction.fixedBy X g // ¬w x.val = 1}, w x.val.val) =
+        -(Fintype.card (MulAction.fixedBy N g) : ℤ) := by
+      calc
+        _ = ∑ x : {x : MulAction.fixedBy X g // w x.val = -1}, w x.val.val :=
+          Fintype.sum_equiv en _ _ (fun _ => rfl)
+        _ = -(Fintype.card (MulAction.fixedBy N g) : ℤ) := by
+          simp_rw [show ∀ x : {x : MulAction.fixedBy X g // w x.val = -1},
+            w x.val.val = -1 from fun x => x.property]
+          simp only [sum_const, card_univ, nsmul_eq_mul, mul_neg, mul_one]
+          congr 1
+          exact_mod_cast Fintype.card_congr (fiberFixedEquiv w hw (-1) g)
+    rw [hp, hn] at hsplit
+    exact hsplit.symm
+  simp_rw [he]
+  rw [sum_sub_distrib]
+  have hp := MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group Γ P
+  have hn := MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group Γ N
+  have hp' : (∑ g : Γ, (Fintype.card (MulAction.fixedBy P g) : ℤ)) =
+      (Fintype.card (MulAction.orbitRel.Quotient Γ P) : ℤ) * (Fintype.card Γ : ℤ) := by
+    exact_mod_cast hp
+  have hn' : (∑ g : Γ, (Fintype.card (MulAction.fixedBy N g) : ℤ)) =
+      (Fintype.card (MulAction.orbitRel.Quotient Γ N) : ℤ) * (Fintype.card Γ : ℤ) := by
+    exact_mod_cast hn
+  rw [hp', hn', ← sub_mul]
+  exact dvd_mul_left _ _
+
 private theorem weight_unit_sign (sign : C → ℤ) (hs : ∀ c, sign c = 1 ∨ sign c = -1)
     (E : Finset (Block V C d)) : weight sign E = 1 ∨ weight sign E = -1 := by
   induction E using Finset.induction_on with
@@ -460,6 +689,22 @@ private theorem signed_assembly_burnside (allowed : ℕ → C → Prop) (sign : 
   rw [sum_sub_distrib, Nat.card_eq_fintype_card]
   exact dvd_sub hE hR
 
+
+theorem fixed_erase (g : Equiv.Perm V)
+    (v : ↥(fixedVertices g (univ : Finset V))) :
+    fixedVertices g (univ.erase v.val) = (fixedVertices g univ).erase v.val := by
+  ext x
+  simp [fixedVertices, and_assoc, and_left_comm, and_comm]
+
+theorem moved_erase (g : Equiv.Perm V)
+    (v : ↥(fixedVertices g (univ : Finset V))) :
+    movedVertices g (univ.erase v.val) = movedVertices g univ := by
+  have hv : g v.val = v.val := (mem_filter.mp v.property).2
+  ext x
+  by_cases hx : x = v.val
+  · subst x
+    simp [movedVertices, hv]
+  · simp [movedVertices, hx]
 
 /-- The signed subtraction uses fixed points of the actual two permutation actions.
 For positive fixed-vertex count, it is the lower source residual times the same
@@ -520,6 +765,26 @@ private theorem fixed_point_subtraction_coefficient (allowed : ℕ → C → Pro
     exact_mod_cast heN
   rw [Int.cast_sub, hE, hR, hfac, pow_succ]
   ring
+
+theorem sylow_fixed_card (p : ℕ) [Fact p.Prime]
+    (P : Sylow p (Equiv.Perm V)) (g : P) (hpn : ¬p ∣ Fintype.card V) :
+    1 ≤ (fixedVertices g.val (univ : Finset V)).card := by
+  have hcyc := P.isPGroup'.to_subgroup (Subgroup.zpowers g)
+  have hpn' : ¬p ∣ Nat.card V := by simpa only [Nat.card_eq_fintype_card] using hpn
+  obtain ⟨x, hx⟩ := hcyc.nonempty_fixed_point_of_prime_not_dvd_card V hpn'
+  have hfix : g.val x = x := hx ⟨g, Subgroup.mem_zpowers g⟩
+  exact card_pos.mpr ⟨x, mem_filter.mpr ⟨mem_univ _, hfix⟩⟩
+
+theorem proper_fixed_card (g : Equiv.Perm V) (hg : g ≠ 1) :
+    (fixedVertices g (univ : Finset V)).card < Fintype.card V := by
+  by_contra h
+  have he : fixedVertices g (univ : Finset V) = univ :=
+    eq_of_subset_of_card_le (subset_univ _) (by simpa using Nat.le_of_not_gt h)
+  apply hg
+  ext x
+  change g x = x
+  have hx : x ∈ fixedVertices g (univ : Finset V) := by rw [he]; exact mem_univ _
+  exact (mem_filter.mp hx).2
 
 /-- The actual signed Burnside subtraction is divisible by the full Sylow order.
 Only the lower coefficient equations are premises; the action, fixed counts and
@@ -641,9 +906,8 @@ theorem signed_prefix_residual_local_integral (d : ℕ) (N : ℕ) (a : ℕ → �
     DoldExponentialIntegrality.IsRIntegralRat p
       (coeff N H - (N : ℚ) ^ d * coeff (N - 1) H) := by
   classical
-  have hs := (HannaA300591AssemblyCoefficients.signed_prefix_assembly_coefficient N a (∅ : Finset (Fin N)) ∅).1
   have he := signed_residual_local_integral (d := d) (V := Fin N) (prefixAllowed N a)
-    (prefixSign N a) hs (by simpa using hN) p hp (by simpa using hpn)
+    (prefixSign N a) (prefix_sign_unit N a) (by simpa using hN) p hp (by simpa using hpn)
   simp only [Fintype.card_fin, prefix_series_eq] at he
   exact he hlower
 

@@ -6,7 +6,6 @@
    utility: none
    digest: Signed ordered assemblies factor over fixed vertices and obey block-removal recursion. -/
 
-import D5.S1.Recurrence.Algebraic.HannaA300591FixedAssemblies
 import Mathlib.Data.Fintype.List
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic
@@ -20,9 +19,20 @@ open scoped BigOperators
 
 namespace D5.S1.Recurrence.Algebraic.MarkedAssemblyFixedPoints
 
-open HannaA300591FixedAssemblies (fixedVertices movedVertices fixed_of_map_eq)
-
 noncomputable section
+
+/-- The actual fixed vertices of g. -/
+def fixedVertices {V : Type} [Fintype V] [DecidableEq V] (g : Equiv.Perm V) (S : Finset V) : Finset V :=
+  S.filter fun x => g x = x
+
+/-- The actual moved vertices of g. -/
+def movedVertices {V : Type} [Fintype V] [DecidableEq V] (g : Equiv.Perm V) (S : Finset V) : Finset V :=
+  S.filter fun x => g x ≠ x
+
+theorem fixed_of_map_eq {V : Type} {g : Equiv.Perm V} (l : List V) (h : l.map g = l) :
+    ∀ x ∈ l, g x = x := by
+  have he : l.map g = l.map id := by simpa using h
+  exact List.map_inj_left.mp he
 
 variable {k : ℕ}
 

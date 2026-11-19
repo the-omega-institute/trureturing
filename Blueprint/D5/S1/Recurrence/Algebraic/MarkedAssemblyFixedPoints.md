@@ -32,4 +32,3 @@ For every x in S, rootSum sums sign(color(b)) times the assembly sum on S minus 
 
 - Truth anchor: `D5/S1/Recurrence/Algebraic/MarkedAssemblyFixedPoints.assembly_weight_point_recursion`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/MarkedAssemblyFixedPoints.fixed_assembly_weight_factorization`
-- Dependency: [D5/S1/Recurrence/Algebraic/HannaA300591FixedAssemblies](HannaA300591FixedAssemblies.md)

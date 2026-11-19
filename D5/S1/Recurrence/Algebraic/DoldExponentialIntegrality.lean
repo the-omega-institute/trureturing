@@ -691,7 +691,7 @@ theorem localRat_iff_val_nonneg (p : ℕ) (hp : p.Prime) (q : ℚ) :
       omega
     · exact hd
 
-theorem integral_of_local (f : PowerSeries ℚ)
+private theorem integral_of_local (f : PowerSeries ℚ)
     (h : ∀ p : ℕ, p.Prime → IsRIntegralPS p f) : IntegralSeries f := by
   intro n
   have hd : (coeff n f).den = 1 := by

@@ -17,7 +17,7 @@ internal sealed class HannaA300595IntegralityDocument : IScribeDocumentDefinitio
                 "the scalar is the rational cube of n, and both extractions are ordinary coefficients. " +
                 "The subtraction n-1 is used only in this positive-index domain. This is the normalized " +
                 "ordinary generating function specified by OEIS A300595 NAME and OFFSET; no integrality " +
-                "condition is included in its definition. Formal exp(t F) means the preexisting " +
+                "condition is included in its definition. Formal exp(t F) uses " +
                 "HannaA300591RationalModel.expSeries t F, namely substitution of C(t)F into PowerSeries.exp Q. " +
                 "All substitutions used below have zero constant input.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -31,7 +31,7 @@ internal sealed class HannaA300595IntegralityDocument : IScribeDocumentDefinitio
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The complete cubic source event", ResultBody(),
                 "The first conjunct proves existence and uniqueness among all normalized rational solutions " +
-                "of the source identity. It uses the preexisting triangular_exists_unique with both scalar " +
+                "of the source identity. It uses the rational model's triangular_exists_unique with both scalar " +
                 "functions equal to n^3; their nonvanishing follows from n>=1. This rational construction " +
                 "precedes every integrality argument. The second conjunct applies to every rational source F " +
                 "and every positive natural m, and supplies an integer equal to its ordinary coefficient. " +

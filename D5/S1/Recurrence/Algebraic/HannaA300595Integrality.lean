@@ -20,7 +20,7 @@ namespace D5.S1.Recurrence.Algebraic.HannaA300595Integrality
 open HannaA300591RationalModel (expSeries expSeries_zero expSeries_agree
   expSeries_derivative expSeries_residual triangular_exists_unique expSeries_nat
   log_expSeries expSeries_log local_automatic_bound)
-open HannaA300591AssemblyCoefficients (prefixSeries)
+open MarkedAssemblyCoefficients (prefixSeries)
 open DoldExponentialIntegrality
 
 /-- The normalized rational ordinary-series definition of OEIS A300595. -/
