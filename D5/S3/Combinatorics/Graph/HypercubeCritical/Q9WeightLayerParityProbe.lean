@@ -9,9 +9,9 @@ noncomputable section
 
 open Finset
 open D5.S3.Combinatorics.Graph.Hypercube
-open BalancedCriticalSpectrum (Q IsBalanced)
-
 namespace D5.S3.Combinatorics.Graph.HypercubeCritical
+
+open BalancedCriticalSpectrum (Q IsBalanced)
 
 open private sum_ofFn_int from
   D5.S3.Combinatorics.Graph.HypercubeCritical.Q9SixtySixDistanceSumProbe
