@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e304988fdd4467453b9bd0ea024d26e7d28568da88512618462e97bd0896e2cc
-  normalized_sha256: sha256:e304988fdd4467453b9bd0ea024d26e7d28568da88512618462e97bd0896e2cc
-cas_ref: sha256:e304988fdd4467453b9bd0ea024d26e7d28568da88512618462e97bd0896e2cc
-coverage_gids:
-  - gid: D5/S3/Quantum/Completion/TransfiniteBasisResidualTower.transfinite_basis_residual_tower
-    target_statement_id: sha256:12609c6f13efb1435402d1eba49693ec294565132872642e57cb2cbded1b7b68
-receipts:
-  unresolved_subitems: []

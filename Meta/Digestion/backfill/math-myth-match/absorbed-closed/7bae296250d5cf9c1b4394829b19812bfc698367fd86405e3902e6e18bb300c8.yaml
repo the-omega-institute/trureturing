@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7bae296250d5cf9c1b4394829b19812bfc698367fd86405e3902e6e18bb300c8
-  normalized_sha256: sha256:7bae296250d5cf9c1b4394829b19812bfc698367fd86405e3902e6e18bb300c8
-cas_ref: sha256:7bae296250d5cf9c1b4394829b19812bfc698367fd86405e3902e6e18bb300c8
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/NormativeRequirements/NecessarySafeguardObstruction.violated_requirement_excludes_permission
-    target_statement_id: sha256:0df5acecc13405b0e0031920b049e6106a30e89289f7354806b73f44298aa0b1
-receipts:
-  unresolved_subitems: []

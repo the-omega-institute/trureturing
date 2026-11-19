@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:00e86a76c9963af0e7424a60c5aee1197b21d617d31450dae7b44d5a123ca6d8
-  normalized_sha256: sha256:00e86a76c9963af0e7424a60c5aee1197b21d617d31450dae7b44d5a123ca6d8
-cas_ref: sha256:00e86a76c9963af0e7424a60c5aee1197b21d617d31450dae7b44d5a123ca6d8
-coverage_gids:
-  - gid: D5/S3/Observer/LinearMemory/GramNonzeroSpectrumMultiplicity.gram_nonzero_spectrum_with_algebraic_multiplicity
-    target_statement_id: sha256:7708de663f26922dea4b58a3fc16571990b2d9702cdc298afe1a6e3dea7c0de8
-receipts:
-  unresolved_subitems: []

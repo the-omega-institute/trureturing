@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:156a482612a3fb8bb8df7f7ded877af2304a4b74e7c876aaff42b62a52ab4dfb
-  normalized_sha256: sha256:156a482612a3fb8bb8df7f7ded877af2304a4b74e7c876aaff42b62a52ab4dfb
-cas_ref: sha256:156a482612a3fb8bb8df7f7ded877af2304a4b74e7c876aaff42b62a52ab4dfb
-coverage_gids:
-  - gid: D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_eq
-    target_statement_id: sha256:5a044405001714759e84100093dfda4bb4ca8f42313a9fb4d7339e8d84a7e2d4
-receipts:
-  unresolved_subitems: []

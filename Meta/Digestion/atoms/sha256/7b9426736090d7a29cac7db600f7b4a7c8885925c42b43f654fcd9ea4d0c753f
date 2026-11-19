@@ -1,4 +1,0 @@
-**来源 1000.1（数学与项目）。** 第 981–986 节沿用本卷第 941–971 节的三观察负相关模型、已解区间与严格下界，补充显式二乘积分解、候选比较、边界导数及对称平均分析。背景仍为 Allman 等关于非负秩二张量的几何研究（arXiv:1305.0539v1）；本批实际分解在正文直接给出，不以文献标题替代构造。上述解析综合及第 991 节充分误差界不作原创申报。
-
-第 988 节引用 `D5/S3/Observer/Hankel/FiniteSampleRankAmbiguity.lean` 的 `finite_sample_rank_ambiguity`；第 989 节引用 `FiniteHoKalmanBlocks.lean` 的 `finite_samples_exact_recovery` 与 `finite_samples_order_lower_bound`；第 990 节引用 `RankOneInfiniteHorizonRisk.lean` 的 `rank_one_infinite_horizon_risk`。上述三个文件均位于 `D5/S3/Observer/Hankel/` 目录。本文按源码陈述保留参考实现、样本长度、可逆块、确定性估计器、合法噪声与全未来量词；静态潜变量个数不与线性最小维数互换。
-

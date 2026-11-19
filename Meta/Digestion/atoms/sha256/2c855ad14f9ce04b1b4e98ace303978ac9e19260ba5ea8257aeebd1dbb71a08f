@@ -1,9 +1,0 @@
-## Proof: transfer probability
-The antisymmetric vector $e_1-e_{16}$ has eigenvalue zero, so $U(t)_{16,1}=f(t)-1$. The convex cosine formula gives $C(15)\leq f(t)\leq1$. Taking the supremum, using the orbit-closure minimizer above, proves
-$$
- \sup_{t>0}|U(t)_{16,1}|^2
-   =(1-C(15))^2=(337/480)^2=113569/230400.
-$$
-This is a supremal transfer probability below one.
-
-

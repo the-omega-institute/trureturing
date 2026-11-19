@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3e75319eb83dab478020046d0cee5332358804a629cd64d36eb77aec94003d6a
-  normalized_sha256: sha256:3e75319eb83dab478020046d0cee5332358804a629cd64d36eb77aec94003d6a
-cas_ref: sha256:3e75319eb83dab478020046d0cee5332358804a629cd64d36eb77aec94003d6a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/OperationalTuition/InstitutionalMappingAndCaptureFiltration.capture_ladder_filtration_and_t1_nondecreasing
-    target_statement_id: sha256:8509b8539e519354d75209a580c0e8f060473acc29d40bc2cf1af723c0863219
-receipts:
-  unresolved_subitems: []

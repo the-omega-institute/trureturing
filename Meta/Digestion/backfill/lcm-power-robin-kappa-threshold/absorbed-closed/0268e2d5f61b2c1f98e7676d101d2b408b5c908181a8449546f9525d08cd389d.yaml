@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0268e2d5f61b2c1f98e7676d101d2b408b5c908181a8449546f9525d08cd389d
-  normalized_sha256: sha256:0268e2d5f61b2c1f98e7676d101d2b408b5c908181a8449546f9525d08cd389d
-cas_ref: sha256:0268e2d5f61b2c1f98e7676d101d2b408b5c908181a8449546f9525d08cd389d
-coverage_gids:
-  - gid: D5/S3/Arith/Robin/Analytic/OmegaTail/MovingBoxCapacity.primeInterval_moving_log_power_capacity
-    target_statement_id: sha256:009c5acab584451453f9fef44b9c1f015f8f8b1bec047b91b92d13f67aa859e3
-receipts:
-  unresolved_subitems: []

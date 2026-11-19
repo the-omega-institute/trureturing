@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:43388160b01071ef5dda7c50b9fbf57236468e55b779455acb14b0adeaba2e08
-  normalized_sha256: sha256:43388160b01071ef5dda7c50b9fbf57236468e55b779455acb14b0adeaba2e08
-cas_ref: sha256:43388160b01071ef5dda7c50b9fbf57236468e55b779455acb14b0adeaba2e08
-coverage_gids:
-  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ThreeValueConservedComparison.three_value_conserved_comparison
-    target_statement_id: sha256:bc56cdf2b01e08172ecf79372a22826b918fc81ba101fb5ffa41dd95032e3456
-receipts:
-  unresolved_subitems: []

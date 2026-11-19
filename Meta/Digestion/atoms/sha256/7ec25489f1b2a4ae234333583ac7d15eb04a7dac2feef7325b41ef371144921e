@@ -1,4 +1,0 @@
-#### 定义 2.2：Clifford 乘积与定向体积元
-
-在 $\operatorname{Cl}_{3,0}$ 中，$uv+vu=2u\cdot v$， 几何积为 $uv=u\cdot v+u\wedge v$。 取正定向正交单位基，令 $I=e_1e_2e_3$。 逆序运算 $\widetilde{\cdot}$ 反转乘积中因子的顺序。 标量单位写作 $1$，体积元写作 $I$，二者不混用。
-

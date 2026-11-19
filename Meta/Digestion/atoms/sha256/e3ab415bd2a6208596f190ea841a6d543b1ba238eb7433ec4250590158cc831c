@@ -1,7 +1,0 @@
-**Corollary 13.3 (literal sums in the shared-table criterion).** For
-finite $P,R_*$ with nonempty actual fiber and the four integer upper
-budgets, the joint feasibility problem (NBP.13.3) is decidable. A
-positive answer supplies an acquired encoder and one fixed-address
-stationary Moore table on the entire actual fiber under the supplied
-services.
-

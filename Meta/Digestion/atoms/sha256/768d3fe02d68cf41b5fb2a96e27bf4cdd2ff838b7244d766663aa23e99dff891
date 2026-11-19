@@ -1,8 +1,0 @@
-第一处替换是阈值展开的阶数。引理 7.3 证明中取 $m=r$ 的经典有限阶展开给出
-
-$$
-\pi(P)=a_r(P)+\frac{r!P}{\ell^{r+1}}
-+O_r\!\left(\frac P{\ell^{r+2}}\right),\qquad
-e_r(P)\sim\frac{r!P}{\ell^{r+1}}.
-$$
-

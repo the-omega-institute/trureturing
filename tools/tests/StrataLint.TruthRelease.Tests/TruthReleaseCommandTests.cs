@@ -378,32 +378,10 @@ public sealed partial class TruthReleaseCommandTests
         const string sourcePath = "docs/fixture.md";
         const string sourceText = "x";
         var sourceBytes = Encoding.UTF8.GetBytes(sourceText);
-        var fingerprints = DigestionFingerprint.Compute(sourceBytes);
-        var captured = DigestionCasStore.Capture(sourceBytes);
-        var status = new DigestionStatus(
-            DigestionMigrationState.Partial,
-            DigestionTruthState.Closed);
-        var entry = new DigestionLedgerEntry(
-            "fixture-source",
-            sourcePath,
-            AtomizerRegistry.GenericId,
-            "receipt-mismatch",
-            fingerprints,
-            [new DigestionCoverageEdge(
-                BlueprintGid + ".golden_spectral_marker",
-                "sha256:" + new string('0', 64))],
-            new DigestionReceipts([], [], null),
-            status,
-            captured.Reference);
-        var document = DigestionTestSupport.Document(
-            AtomizerRegistry.GenericId,
-            [entry],
-            "fixture-source",
-            sourcePath,
-            GenreRegistryCheck.NoGenreRegistry);
         files[sourcePath] = sourceText;
-        files[captured.RelativePath] = sourceText;
-        DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
+        var id = Convert.ToHexStringLower(SHA256.HashData(sourceBytes));
+        files["Meta/Digestion/atoms/sha256/" + id] = sourceText;
+        files[$"Meta/Digestion/backfill/fixture-source/partial-closed/{id}.yaml"] = "malformed: [\n";
     }
 
     private static LeanDeclaration Declaration(string name) => new(

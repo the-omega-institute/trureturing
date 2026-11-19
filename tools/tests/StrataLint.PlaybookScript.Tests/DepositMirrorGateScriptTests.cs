@@ -15,7 +15,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         fixture.AddNewFormalization(withMirror: false);
 
         var result = fixture.Run(command, TransactionFixture.NewGid,
-            atomId: command == "deposit" ? TransactionFixture.AtomId : null, baseRevision: "HEAD");
+            atomId: null, baseRevision: "HEAD");
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
@@ -39,7 +39,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var before = fixture.CommitCount();
 
         var result = fixture.Run(command, TransactionFixture.NewGid,
-            atomId: command == "deposit" ? TransactionFixture.AtomId : null, baseRevision: "HEAD");
+            atomId: null, baseRevision: "HEAD");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(before, fixture.CommitCount());

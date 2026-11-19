@@ -69,17 +69,6 @@ private theorem bouquetInclusion_off (ds : BouquetSpec) (i : Fin ds.length)
     bouquetInclusion ds i v = some ⟨i, ⟨v, hv⟩⟩ := by
   exact dif_neg hv
 
-/-- The singleton complex retains a genuine point when a sphere list is empty. -/
-def vertexComplex {V : Type*} [DecidableEq V] (v : V) :
-    PreAbstractSimplicialComplex V where
-  faces := {{v}}
-  isRelLowerSet_faces := by
-    rintro s rfl
-    refine ⟨by simp, ?_⟩
-    intro t hts ht
-    exact Set.mem_singleton_iff.mpr (Finset.eq_singleton_iff_nonempty_unique_mem.mpr
-      ⟨ht, fun w hw => Finset.mem_singleton.mp (hts hw)⟩)
-
 /-- The literal finite coordinate bouquet; no zero-dimensional sphere is a summand. -/
 def bouquetComplex (ds : BouquetSpec) : PreAbstractSimplicialComplex (BouquetVertices ds) :=
   vertexComplex none ⊔ ⨆ i, (sphereComplex (ds.get i).val).map (bouquetInclusion ds i)

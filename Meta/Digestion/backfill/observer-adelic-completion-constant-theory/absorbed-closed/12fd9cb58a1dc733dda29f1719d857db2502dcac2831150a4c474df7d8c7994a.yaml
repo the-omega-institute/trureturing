@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:12fd9cb58a1dc733dda29f1719d857db2502dcac2831150a4c474df7d8c7994a
-  normalized_sha256: sha256:12fd9cb58a1dc733dda29f1719d857db2502dcac2831150a4c474df7d8c7994a
-cas_ref: sha256:12fd9cb58a1dc733dda29f1719d857db2502dcac2831150a4c474df7d8c7994a
-coverage_gids:
-  - gid: D5/S3/Resource/LogDet/LogDetInformationSubmodularity.log_det_information_monotone_submodular
-    target_statement_id: sha256:349847303b5b6afd28e81a99f0de7a648788625064df244efdeb90aedb510474
-receipts:
-  unresolved_subitems: []

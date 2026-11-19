@@ -1,2 +1,0 @@
-**W-6**:反驳。\(\lnot\bigl(\forall m,n,\ \mathrm{CA}(m)\to \mathrm{CA}(n)\to m<n\to(\forall k,\ m<k<n\to\lnot\mathrm{CA}(k))\to 2D(m)\le D(n)\bigr)\)。
-
