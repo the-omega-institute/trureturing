@@ -1,0 +1,8 @@
+**定义 22.1（承重增量与成熟工具）。** [多项式零响应卷31–35](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)已经使用整个 $O(2)$ 轨道反号，证明单位第三标签子系统不足。该反号机制、标准矩阵模型和逐对复共轭正性在这里直接复用，不计新内容。那个指定轨道含其原正交对，因而不保留准确标准横向值；其32.5只保留相应平方和正交身份。18.2的承重增量是用两块不同的共同正交化条件，使修改轨道避开**所有** Jordan 正交对，再由20节同一读取的纵向Gram分离证明**整个**极限面积族仍成立。单位第三标签子族与极限估计族是不同子系统，没有声称本模型也满足前者。17节的预算代入和取极限单独不构成新增结论。
+
+[多项式零响应卷36–45](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)在其指定标量端点多项式原域已经识别全部无迹输入对的共同取向，并消去全部混合输出的常数和一次项。这些结论直接复用，不能把18.1的两个完整矩阵块当作那个原域，或把明确违反全PB的 $\widehat D$ 当作它们的反例。该卷46–50进一步在同一标量端点多项式原域，支付常数单位偏置下纯轴横向行的整份输出无迹性、对两个输入的正交性及实多项式模线性；非零仿射参数的幅度、一般非横向输入及非恒定中央偏置仍守该卷49.1的准确未付范围。这些结论不由18.2证明或反驳。中央续卷133–135的准确原横向行、中央 $Q$ 及标量平方差运输全部保持原范围；中央续卷150.1、151.1、152.1和153.2的已付混合投影、有限检出、实轴偏移完整值及两份非对角块也完整保留，准确剩余见22.3。
+
+本处结果归为 $\texttt{repo-derived}$ 的精确子系统分离，不主张历史优先权或文献穷尽。Pauli乘法、实二阶正交换基、有限简单 Jordan 块、正泛函Gram和 Cauchy–Schwarz 是成熟中间工具；Jordan与自旋背景沿 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)。它们各只承担19–20中写出的有限矩阵和正读取步骤。
+
+Cabello–Peralta，[*Weak-2-local symmetric maps on C*-algebras*](https://arxiv.org/html/1510.00915v1)，Theorem 2.5要求对每两个完整复输入和每份对偶读取，存在一个共同复线性保星映射准确实现两份读取值；面积上界没有供应这种共同等值插值。Ayupov–Arzikulov–Umrzaqov–Nuriddinov，[*2-Local and local derivations on Jordan matrix rings over commutative involutive rings*](https://arxiv.org/html/2108.03993v4)，Theorem 3在其含单位、交换、带对合且 $2$ 可逆的系数环及 $H_2$ 入口要求每两个输入由同一个真实内导子实现；本模型没有这种前件，也不以该分类承担证明。Alfsen–Shultz，[*Orientation in Operator Algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，Dynamical Correspondences及Theorem 1的入口已要求到斜序导子的全域线性动力对应。局部横向线性和两份绝对预算不支付该入口。三种文献关系都不能由名称相近替代其准确共同实现或线性条件。
+

@@ -153,10 +153,44 @@ theorem gradeProjection_mem (D : LatticeData) (n : ℤ) (v : Carrier D) :
   change carrierCoeffEquiv D (gradeProjection D n v) a = 0
   simpa [ha] using gradeProjection_coeff D n v a
 
+theorem gradeProjection_eq_self_of_mem_grade (D : LatticeData) (n : ℤ)
+    (v : Carrier D) (hv : v ∈ grade D n) :
+    gradeProjection D n v = v := by
+  apply (carrierCoeffEquiv D).injective
+  ext a
+  rw [gradeProjection_coeff]
+  by_cases ha : energy D a = n
+  · simp [ha]
+  · rw [if_neg ha]
+    exact ((mem_grade_iff D n v).mp hv a ha).symm
+
+theorem gradeProjection_zero_of_mem_grade_ne (D : LatticeData)
+    (n m : ℤ) (hmn : m ≠ n) (v : Carrier D) (hv : v ∈ grade D m) :
+    gradeProjection D n v = 0 := by
+  apply (carrierCoeffEquiv D).injective
+  ext a
+  simp only [map_zero, Finsupp.zero_apply]
+  rw [gradeProjection_coeff]
+  by_cases ha : energy D a = n
+  · have ham : energy D a ≠ m := by
+      intro h
+      exact hmn (h.symm.trans ha)
+    rw [if_pos ha]
+    exact (mem_grade_iff D m v).mp hv a ham
+  · simp [ha]
+
 /-- The finite set of energies present in an arbitrary actual state. -/
 def stateEnergies (D : LatticeData) (v : Carrier D) : Finset ℤ := by
   classical
   exact (carrierCoeffEquiv D v).support.image (energy D)
+
+theorem stateEnergies_nonneg {D : LatticeData}
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (v : Carrier D) (E : ℤ) (hE : E ∈ stateEnergies D v) : 0 ≤ E := by
+  obtain ⟨a,ha,rfl⟩ := Finset.mem_image.mp hE
+  have hn := chargeEnergy_nonneg D hD a.1
+  dsimp [energy]
+  omega
 
 theorem sum_gradeProjections (D : LatticeData) (v : Carrier D) :
     ∑ n ∈ stateEnergies D v, gradeProjection D n v = v := by

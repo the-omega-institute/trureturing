@@ -1,0 +1,93 @@
+**定理 11.2（单输入特征关系支付核支撑）。** 设原 $a,b\in E$ 和实数 $\lambda$ 满足精确元素等式 $a\circ b=\lambda b$。对同一个固定输出 $g=D(a,b)$，有
+
+$$
+\boxed{(1+\lambda^2)\phi(b\circ g)^2
+\le\lambda^2\phi(b^2)\phi(g^2)\quad(\phi\ge0),
+\qquad gq_b=q_bg=0.}
+\tag{11.2}
+$$
+
+特别，$g=s_bgs_b$；若 $p\in A$ 是实际投影且 $b=pbp$，则 $g=pgp\in(pAp)_{\rm sa}$，不要求 $a\in pAp$。本定理不要求角分类。
+
+证明。原零槽使实际 $\operatorname{PB}(a;b,0)$ 的内构造为 $v=g,w=\lambda b$；因此准确的两份外调用及其差是
+
+$$
+L_+=D(b+g,\lambda b),\quad L_-=D(b-g,-\lambda b),
+\qquad L_+-L_-=-2b\circ g.
+\tag{11.3}
+$$
+
+此时未假定 $g$ 或外标签有任何角支撑。固定同一 $\phi$，置 $B=\phi(b^2),G=\phi(g^2),C=\phi(b\circ g)$。已知乘法展开给
+
+$$
+\begin{aligned}
+B_\phi(b+g,\lambda b)
+ &=\lambda^2\{(B+2C+G)B-(B+C)^2\},\\
+B_\phi(b-g,-\lambda b)
+ &=\lambda^2\{(B-2C+G)B-(B-C)^2\}\\
+ &=\lambda^2(BG-C^2).
+\end{aligned}
+\tag{11.4}
+$$
+
+首行也等于末项。$BG-C^2\ge0$ 是正泛函的实 Cauchy–Schwarz。不等式 (11.1) 分别用于这两份真实外值，再读取 (11.3)，得到
+
+$$
+2|C|\le |\phi L_+|+|\phi L_-|
+\le2|\lambda|\sqrt{BG-C^2}.
+\tag{11.5}
+$$
+
+平方移项即得 (11.2) 的标量界；没有除以 $\lambda$、$B$、$G$ 或任何质量。
+
+令 $q=q_b$。对每个 $\eta\in\ker b$，原输入 $(a,b)$ 的向量读取在 (11.1) 中第二平方为零，所以 $\langle\eta,g\eta\rangle=0$。在 $\ker b$ 上对固定自伴 $g$ 作复极化，得到
+
+$$
+qgq=0,\qquad g\eta\in(\ker b)^\perp
+=\overline{\operatorname{ran}b}.
+\tag{11.6}
+$$
+
+末等式来自 $(\operatorname{ran}b)^\perp=\ker b^*=\ker b$。
+
+固定这样的 $\eta$，再固定任意 $\zeta\in\mathcal H$。只改变数学读取
+
+$$
+\phi_\varepsilon(y)=\langle\eta+\varepsilon\zeta,
+ y(\eta+\varepsilon\zeta)\rangle,\qquad\varepsilon\in\mathbb R.
+\tag{11.7}
+$$
+
+因 $b\eta=0$，准确有
+
+$$
+\begin{aligned}
+\phi_\varepsilon(b^2)&=\varepsilon^2\|b\zeta\|^2,\\
+\phi_\varepsilon(g^2)&=\|g\eta+\varepsilon g\zeta\|^2,\\
+\phi_\varepsilon(b\circ g)&=
+\varepsilon\operatorname{Re}\langle b\zeta,g\eta\rangle
++\varepsilon^2\operatorname{Re}\langle b\zeta,g\zeta\rangle.
+\end{aligned}
+\tag{11.8}
+$$
+
+在 (11.2) 取此读取，对非零 $\varepsilon$ 除以 $\varepsilon^2$，再对每个固定 $\zeta$ 取标量极限，得
+
+$$
+(1+\lambda^2)\bigl(\operatorname{Re}\langle b\zeta,g\eta\rangle\bigr)^2
+\le\lambda^2\|b\zeta\|^2\|g\eta\|^2.
+\tag{11.9}
+$$
+
+由 (11.6)，可选 $\zeta_n$ 使 $b\zeta_n\to g\eta$。将每个 $\zeta_n$ 代入已经成立的 (11.9)，再取这些向量的范数极限，得到
+
+$$
+(1+\lambda^2)\|g\eta\|^4\le\lambda^2\|g\eta\|^4,
+\qquad g\eta=0.
+\tag{11.10}
+$$
+
+无需 $\zeta_n$ 有界或 $\operatorname{ran}b$ 闭合。由全部核向量得 $gq=0$，自伴性给 $qg=0$。若 $b=pbp$，则 $(1-p)\mathcal H\subseteq\ker b$，故 $g=pgp$；忠实性将这个等式返回原 $A$。
+
+$\lambda=0$ 时 (11.5) 直接给 $C=0$，(11.9)–(11.10) 仍成立。$b=0$ 时原零槽给 $g=0$；零泛函、零向量以及任意非负质量倍数都已包含。所有极限只读取固定的 $b,g,L_+,L_-$；没有对变化输入上的未知 $D$ 取极限，也没有对 $q_b,s_b$ 调用 $D$。∎
+

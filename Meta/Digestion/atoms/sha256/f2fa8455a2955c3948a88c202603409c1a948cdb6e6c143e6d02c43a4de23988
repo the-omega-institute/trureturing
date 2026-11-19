@@ -1,0 +1,8 @@
+将定理 21.3 精确用于限制 $G,U|_G,d|_{G^2}$，记所得最小表示为 $F_G:G\to H_G$，漂移为 $t_G=F_G(Ue)$，并令 $Z=\ker F_G$。则在全部原标签上有两个端点的独立不变性：
+
+$$
+d(a\cdot z,b\cdot w)=d(a,b)
+\qquad(a,b\in M,\ z,w\in Z).
+\tag{23.5}
+$$
+

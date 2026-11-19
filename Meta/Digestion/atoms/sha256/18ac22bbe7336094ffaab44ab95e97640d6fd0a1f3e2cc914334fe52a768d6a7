@@ -1,0 +1,8 @@
+**约定 18.2（分类范围与承重归属）。** 定理 17.2 是 (17.1) 整个有限输入类的共同读取支撑结论，既未断言全部原 PB 消去每个非零 $s$，也未给任何非零 $s$ 的全 PB 证书。关于固定 P2，直接复用本卷定理 13.1：$\operatorname{rank}(V|_{\ker D_{\rm env}})=2$ 或不平衡秩一时已经有 $s=0$；余下只有平衡秩一与秩零的 Schur 平衡非零区间。秩零的阈值继续由定理 8.1 支付，不重新计为定理 17.2 的内容。
+
+旧移位实星形的全部实参数已由上述固定提交的运输卷定理 12.3 精确分类；零移位星形和零演员对角、无角外连线类分别复用[承载卷](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md)定理 42.2、41.2。$s=0$ 的原预算充分性直接复用本卷 §1。已知有限维完整 $\mathsf H_A(D)$ 分类及[双角卷](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_TWO_CORNER_POSITIVE_CERTIFICATE_CONTINUATION.md)定理 44.2 要求其各自更强前件，不是 (17.7) 的固定输出分类。平衡秩一和 Schur 平衡秩零中，除上述准确已付子类以外，全部原 PB 与非零残量区间的交仍待判定；定理 17.2 只把它等价地放到同一个原六维以内读取支撑上。
+
+(17.3) 的最小范数步骤是在环境像 $q=D_{\rm env}y$ 中保持线性读取后作正交投影，不是保持 $\|y\|$ 的断言。它使用成熟的最小范数插值／representer 原理，背景见 Argyriou–Micchelli–Pontil，[*When Is There a Representer Theorem? Vector Versus Matrix Regularizers*](https://jmlr.org/papers/v10/argyriou09a.html)，JMLR 10 (2009), 2507–2529，§§1–3；这里只使用复有限维正交分解，并已在证明中建立所需性质，不调用该文关于一般正则项的刻画。Moore–Penrose 逆沿 §15 的 Penrose 引文；正 Gram、谱分解和行列式根工具沿本卷及运输卷的既有归属。这些成熟工具不单列为新增数学定理。新的 repo-derived 综合是 (17.2) 同时保留两份环境线性读取、(17.5)–(17.6) 同一非负余项对全部原探针的恒等式，以及据此得到的逐质量、逐预算全正泛函等价；不作历史优先权或文献穷尽主张。
+
+此处只讨论已知矩阵和原数学泛函，不给未知总响应 $D$ 添加正则性、可加性、齐次性、协变性、单位平移中性、压缩或商自然性，也不增加实际准备或读取标签。运输卷 (12.29) 的一般共同实现义务 $\mathcal E_+^D=\mathcal E_-^D$、一般稳定性目标 $N_\omega(\varepsilon)^2\to0$、完整原 $\mathsf H$ 与总 $D$，以及本卷 §§6、15 的同一递归钉版实际物理来源全文均保持原范围。它们不是有限读取支撑的结论。
+

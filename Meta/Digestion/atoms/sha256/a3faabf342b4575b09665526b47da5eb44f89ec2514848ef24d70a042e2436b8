@@ -1,0 +1,27 @@
+**定理 103.7（分类参数是后果，非输入）。** (VII103.20)的全部模型，在忠实同单位坐标中恰为
+
+$$
+J=\mathbb R\oplus\operatorname{spin}_d\quad(d\ge1),
+\qquad\text{或}\qquad
+H_3(\mathbb R),\ H_3(\mathbb C),\ H_3(\mathbb H),\ H_3(\mathbb O).
+\tag{VII103.26}
+$$
+
+这里 $\operatorname{spin}_d=\mathbb R\oplus\mathbb R^d$ 的积为
+
+$$
+(a,x)\circ(b,y)=(ab+x\cdot y,ay+bx),
+\qquad \tau(a,x)=2a,
+\tag{VII103.27}
+$$
+
+其迹一态空间为 $B^d$；$d=1$ 是 split $\mathbb R^2$，所以 $\mathbb R\oplus\operatorname{spin}_1\simeq\mathbb R^3$ 包含经典三角形。非简单分支的态空间是旗标 join $\Delta_0*B^d$，不是另一种简单三能级。
+
+在此域内，全部 $D_p$ 维数至少二当且仅当 $J$ 简单；此时参数恰为
+
+| 简单代数 $J$ | $\operatorname{affdim}K$ | 每个整个 $D_p$ 的球维数 |
+| --- | --- | --- |
+| $H_3(\mathbb R)$ | $5$ | $2$ |
+| $H_3(\mathbb C)$ | $8$ | $3$ |
+| $H_3(\mathbb H)$ | $14$ | $5$ |
+| $H_3(\mathbb O)$ | $26$ | $9$ |

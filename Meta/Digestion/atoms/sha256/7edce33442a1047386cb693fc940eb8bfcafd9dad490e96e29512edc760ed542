@@ -1,0 +1,57 @@
+**定理 166.1（同一原轴行的完整受限混合值）。** 在161.1下，对全部实 $R,\mu,\lambda$ 及任意原 $v\in V_h$，
+
+$$
+\boxed{D(Rh,\mu u+\lambda h+v)=RTv.}
+\tag{166.1}
+$$
+
+两种实偏移可同时非零；$v$ 的平方允许非中央、非可逆、奇异或连续谱，范数不受小窗口限制。
+
+证明。先取 $R=1$。150.1给164.1的分解；164.1消费实际 $\mathrm{PB}(h,x,k)$ 得 $v\circ\rho=0$。165.1对这份固定旧输出使用原P2，得到 $\rho=0$，故 $D(h,x)=Tv$。$\mu=0$ 的已付152.1及 $v=0$ 的同轴零行也与此一致。
+
+$R=0$ 时原P2与评价分离给 $D(0,x)=0$。现设 $R\ne0$，固定同一实际旧值
+
+$$
+g=D(Rh,x)=RTv+\rho,\qquad\rho=P_{\rm com}g,
+\tag{166.2}
+$$
+
+其中分解用163.1的 $s=0,r=R$，不是假设第一槽齐次。若 $\mu=0$，$(Rh)\circ x=R\lambda u$；前卷18.1给 $(Rh)\circ g=0$。由于 $R\ne0$ 且 $h\circ g=h\rho$、$h^2=u$，便有 $\rho=0$。
+
+若 $\mu\ne0$，仍令 $c=\mu u+\lambda h,k=hc$，只在原PB中取 $(a,b,z)=(Rh,x,Rk)$。同轴零行给 $D(Rh,Rk)=0$；完整位移与外层为
+
+$$
+\begin{aligned}
+\nu&=g-R^2c,&\omega&=Rk,\\
+(b+\nu,z+\omega)&=((1-R^2)c+v+g,2Rk),\\
+(b-\nu,z-\omega)&=((1+R^2)c+v-g,0).
+\end{aligned}
+\tag{166.3}
+$$
+
+负外层为零。用 $x\circ c=c^2+\mu v$、$k^2=c^2$，再用反对称性，准确得到
+
+$$
+\boxed{D(2Rk,(1-R^2)c+v+g)=2x\circ g-2R^2\mu v.}
+\tag{166.4}
+$$
+
+左侧用163.1，完整参数为 $s=2R\lambda,r=2R\mu,y=(1-R^2)c+v+g$，横向投影是
+
+$$
+2R\mu T(v+RTv)=2R\mu Tv-2R^2\mu v.
+\tag{166.5}
+$$
+
+右侧因 $x\circ g=R\mu Tv+c\circ\rho+v\circ\rho$，横向投影是(166.5)加 $2v\circ\rho$，故仍得 $v\circ\rho=0$。这一步包含负 $R$ 及 $R^2=1$ 的端点，不以第二标签预先横向为条件。
+
+最后，对全部数学态的原P2有
+
+$$
+|\phi(g/R)|^2\le B_\phi(h,x),\qquad
+B_\phi(Rh,x)=R^2B_\phi(h,x).
+\tag{166.6}
+$$
+
+这里除的是固定元素和显式Gram，不是改写 $D(Rh,x)/R$ 为 $D(h,x)$。对 $g/R=Tv+\rho/R$ 用165.1，得到 $\rho/R=0$。所有分支共同证明(166.1)。∎
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ad8f081fb8ffc8c60050309d75c5245ab7fe0b7d91bbc83032ea5f613a0b7a1d
+  normalized_sha256: sha256:ad8f081fb8ffc8c60050309d75c5245ab7fe0b7d91bbc83032ea5f613a0b7a1d
+cas_ref: sha256:ad8f081fb8ffc8c60050309d75c5245ab7fe0b7d91bbc83032ea5f613a0b7a1d
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/LinearJoinRetraction.real_join_retractions
+    target_statement_id: sha256:3f7ae4a8137a8cf580903662d03cc040c1422920dd4f56b25499fb6923dc98d6
+receipts:
+  unresolved_subitems: []

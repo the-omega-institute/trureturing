@@ -23,9 +23,8 @@ open private physicalDomain eOn rOn collide eExponent rExponent eWeight rWeight
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalArithmetic
 open private qHead qNewHead qMask qMass
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
-open private size base newBase charge chainStart chainLength oldValue newValue negatives
-  chain_values chainOf chain_index source_signs
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private charge chain_values chain_index source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainStart chainLength oldValue newValue negatives chainOf)
 
 private def eBits (a b : ℕ) : Finset ℕ :=
   if eOn a b then {eExponent a b} else ∅
@@ -148,7 +147,7 @@ private theorem physical_mem (a b c d i : ℕ) (bank : Fin 4) :
         chainStart b c d chain + e = i := by
   simp [physicalBank,Finset.mem_biUnion,Finset.mem_image]
 
-private theorem physical_chain_unique (a b c d : ℕ) (r s : Fin 4) (e f : ℕ)
+theorem physical_chain_unique (a b c d : ℕ) (r s : Fin 4) (e f : ℕ)
     (he : e < chainLength a b c d r - 1)
     (hf : f < chainLength a b c d s - 1)
     (heq : chainStart b c d r + e = chainStart b c d s + f) : r=s := by

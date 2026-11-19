@@ -1,0 +1,144 @@
+# Moving positive annihilators
+
+## Abstract
+
+Finite fixed source tests obstruct low-dimensional common positive lifts on the entire original cone.
+
+**Definition 1.1 (positiveZeros).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.positiveZeros`
+
+*Formalization.* `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.positiveZeros` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every actual original pure t, positiveZeros(t) contains all original real-linear b that are nonnegative on the entire cone C and exactly zero at t. There is no upper bound by the original unit u.
+
+**Definition 1.2 (baseMaximum).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.baseMaximum`
+
+*Formalization.* `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.baseMaximum` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original real-linear b, baseMaximum(b) is the real supremum of b on the entire original base K=base(C,u). Compactness and an actual pure label make this an attained maximum.
+
+**Definition 1.3 (exclusionDeviation).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.exclusionDeviation`
+
+*Formalization.* `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.exclusionDeviation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For original pure p,t, exclusionDeviation(p,t) is the supremum over every x in D(t) of its infimum distance to the entire fixed D(p), in the unchanged original norm. Both sets are compact nonempty balls under the geometric hypotheses, so both extrema are attained.
+
+**Definition 1.4 (unitTruncation).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.unitTruncation`
+
+*Formalization.* `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.unitTruncation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original real-linear b, unitTruncation(b) is b divided by max(1,baseMaximum(b)). The same global maximum and original unit are used for every source point.
+
+**Definition 1.5 (sourceNorm).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.sourceNorm`
+
+*Formalization.* `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.sourceNorm` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original pure p and every original real-linear b, sourceNorm(p,b) is the real supremum of absolute b(x) over every x in the entire fixed D(p). Under the original ball hypotheses this is an attained finite seminorm; it need not be a norm.
+
+**Definition 1.6 (positiveSourceDistance).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.positiveSourceDistance`
+
+*Formalization.* `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.positiveSourceDistance` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For original pure p,t and original linear h, positiveSourceDistance(p,t,h) is the infimum of sourceNorm(p,b-h) over every b in positiveZeros(t). The infimum uses the entire original positive cone, includes zero, has no unit upper bound and is not assumed attained. Each candidate is one functional on the whole cone, exactly zero at the same t.
+
+**Theorem 1.7 (Uniform moving-label bound).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_control`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_control` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite dimensional real normed V, original closed pointed cone C spanning V, original real-linear u strictly positive on all nonzero cone vectors, and positive-dimensional whole exclusionBalls(C,u), there exists A>0 satisfying norm(b in the original continuous dual)<=A stateNorm(b) for every original real-linear b. For every original pure p and every sequence tn in the actual original pure subtype tending to p, exclusionDeviation(p,tn(n)) tends to zero. For all original pure p,t and every b in positiveZeros(t), if A exclusionDeviation(p,t)<1, then baseMaximum(b)<=faceMaximum(p,b)/(1-A exclusionDeviation(p,t)). No local or global label uniqueness, common ball dimension, closed pure locus, bounded positive slice or positive-lift existence is assumed.
+
+The restriction to K is an injective linear map on the original finite dimensional continuous dual: the frozen pure_span theorem supplies injectivity. The pinned finite-dimensional antilipschitz theorem therefore supplies one norm-control constant. The frozen exclusion_upper_eventually theorem gives uniform one-sided whole-ball convergence at every pure limiting label. For nonzero b, SingleLabelNormalBody.positive_annihilator_maximum supplies an original pure global maximizer in the same D(t). Its nearest point in D(p), the derived dual-norm control and the fixed-source maximum give B<=max_F(b)+AB alpha. Rearranging the positive denominator proves the stated bound. The zero functional is included directly.
+
+**Theorem 1.8 (Arbitrary source limits and the common original unit).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_normalization`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_normalization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under exactly the same original hypotheses, fix any original pure p, any original pure tn tending to p in P, and any sequence bn of entire-cone positive original real-linear functionals with bn(n)(tn(n))=0. Let ell be any function from the entire subtype D(p) to the reals with every value in [0,1]; assume the restrictions bn(n)|D(p) converge uniformly to ell. For f(n)=unitTruncation(bn(n)), every f(n) is a proper original effect on all C, f(n)(tn(n))=0, the restrictions f(n)|D(p) converge uniformly to the same ell, and stateNorm(f(n)-bn(n)) tends to zero. If the supremum of the range of ell equals one, baseMaximum(bn(n)) tends to one. No linear extension or prior continuity of ell is assumed; the source is the entire fixed original ball.
+
+The preceding moving_positive_control theorem is used on the live proof path. Uniform convergence bounds max_F bn by 1+epsilon/2, and the positive denominator tends to one. Thus max(1,Bn) tends to one. Original cone homogeneity, via the frozen cone_bound theorem, makes every truncation proper on all C. At each original normalized state the truncation error is bounded by max(1,Bn)-1; the continuous-map norm gives the whole-K error limit. The triangle inequality gives uniform convergence on the fixed source ball. When sup ell=1, uniform approximation gives 1<=Bn+epsilon, supplying the matching lower bound without assuming attainment of any positive-lift infimum.
+
+These are conditional mathematical statements on the original state and effect domain. They do not construct positive lifts, prove local pure-limit existence or make a physical realization or originality claim. Source-bound Reg bridges retain the complete telescopes and actual-positive laws; lawful four-slot registration additionally requires whole-family variation and observational sensitivity.
+
+**Theorem 1.9 (Finite tests on one common returned ball).**
+
+Lean statement: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.common_positive_source_obstruction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.common_positive_source_obstruction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite dimensional real normed V, original closed pointed generating cone C, original linear u strictly positive on every nonzero cone vector, and positive-dimensional whole exclusionBalls(C,u), fix any original pure p with SingleLabel(C,u,p) and any ambient y in intrinsicInterior(real,D(p)). There exist a nonempty finite set S of ambient states, a map a from S to original pure points and a family h of original linear functionals, all chosen before any r,t, such that a(i)=i, a(i) belongs to the entire D(p), and h(i) is a fullZeroConfirmer at a(i). There exist epsilon>0 and delta>0 such that for every original pure r with norm(r-y)<epsilon and every original pure t in the entire D(r), either the affine direction dimension of the entire D(t) is at least the affine direction dimension of the entire D(p) plus one, or delta is at most the maximum over the same finite S of positiveSourceDistance(p,t,h(i)). Thus all positive-extension tests share one returned label t and use the entire fixed source ball. The finite-set supremum in Lean is exactly this maximum.
+
+For every tau>0 there also exists epsilonTau>0 such that for every original pure r with norm(r-y)<epsilonTau and every original pure t in D(r), all fixed readouts h(i)(t)<=tau hold simultaneously. The fixed family is independent of tau,r,t. The earlier epsilon can be intersected with epsilonTau to retain the dimension-or-error alternative. If a pure sequence approaches y and returned labels are selected on its actual incidence, all these readouts tend to zero; along low-dimensional returns their positive-cone source errors retain the common lower bound. No such approaching pure sequence is asserted to exist.
+
+Choose a small affine-basis simplex about y in the source affine direction space. The frozen chart_boundary identity and convex-hull sphere identity express every source point as a finite convex combination of original pure source points. The union of finitely many supports gives S with full source affine span and y in the intrinsic interior of its convex hull. Each h(i) is selected from the full original confirmer fiber. The frozen single_label_neighbor theorem gives local uniqueness at every a(i); the full one-value face of h(i) is consequently just that original pure point. Original zero symmetry gives h(i)(p)=0.
+
+If no uniform epsilon,delta exist, select common r(n),t(n) with r(n) tending to y, returned-ball dimension at most the fixed source dimension, and every positive source infimum error tending to zero. Select approximate candidates directly from each infimum; no attainment is used. local_single_label_collapse forces these same t(n) to tend to p. moving_positive_normalization supplies proper original effects at every index. The frozen zero_effect_maximizer supplies all-index original pure maximizers in each common D(t(n)), including indices with zero functionals. Compactness, pure-label upper association and the local singleton one-value face force each maximizer sequence to its own a(i).
+
+Extract one constant returned-chart dimension and one whole-ball compact limit G. Every fixed test point belongs to G, while exclusion_limit_labels puts G inside D(p); hence their affine spans agree. The original parameter_subsequence supplier realizes G as an affine image of the same fixed-dimensional Euclidean closed ball. Its linear range has the source dimension, bounded above by the returned dimension, so rank-nullity makes the limiting chart injective. Only after this full-rank conclusion does affine_ball_boundary_limit put y in the limiting intrinsic frontier, since zero symmetry places r(n) in each original returned pure sphere. The finite source convex hull instead places y in the intrinsic interior of G, a contradiction. This uses neither global Inj nor a common global exclusion dimension, and does not treat a rank-deficient sphere image as an intrinsic frontier.
+
+These are conditional original-domain mathematical results. The unit excludes local pure-limit existence, positive-lift existence, the further conditions of 132.5 and the appended direction-sector theory. It does not infer a physical realization, an original pure-state closure theorem or a global novelty claim. The Reg mirror retains exact source equivalences and actual-positive laws; whole-family intervention, observational sensitivity and a lawful four-slot registration are additional unfinished audit obligations.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.baseMaximum`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.common_positive_source_obstruction`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.exclusionDeviation`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_control`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_normalization`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.positiveSourceDistance`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.positiveZeros`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.sourceNorm`
+- Truth anchor: `D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.unitTruncation`
+- Dependency: [D5/S3/Quantum/Foundation/FixedZeroObstruction](../FixedZeroObstruction.md)
+- Dependency: [D5/S3/Quantum/Foundation/FixedZeroObstruction/LocalPureLimit](LocalPureLimit.md)
+- Dependency: [D5/S3/Quantum/Foundation/SingleLabelNormalBody](../SingleLabelNormalBody.md)

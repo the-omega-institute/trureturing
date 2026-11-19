@@ -1,0 +1,26 @@
+#### 定理 4.2：纯标记互补关系
+
+若完整标记空间可以测量，则
+
+$$
+\mathcal V=2\sqrt{pq}|\gamma|,
+ \qquad
+ \mathcal D=
+ \left\|p|m_0\rangle\langle m_0|-q|m_1\rangle\langle m_1|\right\|_1
+ =\sqrt{1-4pq|\gamma|^2}.
+$$
+
+最佳猜测路径成功率为 $(1+\mathcal D)/2$，且
+
+$$
+\boxed{\mathcal D^2+\mathcal V^2=1.}
+$$
+
+**证明。**
+
+偏迹后的路径交叉元是 $\sqrt{pq}e^{-\mathrm i\phi}\gamma$， 平衡读出概率为 $1/2+\sqrt{pq}\Re(e^{-\mathrm i\phi}\gamma)$， 给出 $\mathcal V$。 记 $\Delta=p|m_0\rangle\langle m_0|-q|m_1\rangle\langle m_1|$。 猜测路径 $0$ 的效应为 $G$ 时，成功率是 $q+\operatorname{tr}(G\Delta)$，其最大值为 $q+\operatorname{tr}\Delta_+=(1+\left\|\Delta\right\|_1)/2$。 在两标记的张成空间内，$\Delta$ 的迹为 $p-q$、 行列式为 $-pq(1-|\gamma|^2)$， 所以非零特征值给出 $\left\|\Delta\right\|_1=\sqrt{1-4pq|\gamma|^2}$。 线性相关、零先验等边界直接代入或由连续性得到。
+
+$\square$
+
+该结构与标准路径可辨识度–可见度关系一致[\[1\]](#ref-englert)。 若标记只能通过受限菜单访问， $\mathcal D_{\rm acc}\leq\mathcal D$， 故仍有 $\mathcal D_{\rm acc}^2+\mathcal V^2\leq1$， 但不保证等号。 特别地，在 $p=q=1/2$、标记正交的例子中， 不访问标记可使 $\mathcal D_{\rm acc}=0$，而 $\mathcal V=0$ 仍不变。 一般先验下仍有 $\mathcal D_{\rm acc}\ge|p-q|$； 减少知识不会自动解除已经发生的标记耦合。
+

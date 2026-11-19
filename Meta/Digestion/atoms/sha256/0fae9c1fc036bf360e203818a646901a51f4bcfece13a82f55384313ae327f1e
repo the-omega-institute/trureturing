@@ -1,0 +1,61 @@
+**命题 107.5（全线段分支内的全局后果与域外义务）。** 在
+$\mathsf W+\mathrm{Seg}_{\rm all}$ 中，取107.2的三顶点及其对偶效应 $a_i$，
+则105.1的共同中心和原最大三读数平方为
+
+$$
+\begin{gathered}
+c_{p_i}=\frac{p_j+p_k}{2}\quad(\{i,j,k\}=\{1,2,3\}),\qquad
+U=p_1+p_2+p_3,\qquad w=U/3,\\
+p_i+2c_{p_i}=U,\qquad
+Q_3(v)=\sum_{i=1}^3 a_i(v)^2\quad(v\in V).
+\end{gathered}
+\tag{VIII107.17}
+$$
+
+因此该分支供应 $\mathrm G$、全 $V$ 的 $\mathrm{PL}_3$、完整 $S$、全Pair和覆盖律。
+这结算第七卷开放问题104.8的全线段子类，并在105.15及106.16的同域替换中
+供应该载体的几何项；在不加
+$\mathrm{Seg}_{\rm all}$ 的原 $\mathsf W$ 域内，
+$\mathsf W\Rightarrow\mathrm G$、
+$\mathsf W+\mathrm G\Rightarrow\mathrm{PL}_3$、
+$\mathsf W\Rightarrow\mathrm{PL}_3$ 仍未由此证明。
+存在维数至少二的完整排除球时的一般重构也未由此完成。
+
+证明。完整排除集是三条边，球心公式和共同 $U$ 直接成立。
+任一原joint三框架的纯点是全部三个顶点的某个排列；
+其三张效应由三个顶点上的Kronecker读数唯一确定为同序的 $a_i$。
+所以在整个原 $V$ 上，105.1的最大值始终是同一个平方和，
+包括所有有符号向量和全部实尺度；它满足平行四边形律。
+由107.2反向证明的 $T_{p_i}=a_i$，这些效应是原全锥序least，
+且 $a_i(p_j)=a_j(p_i)$，完整 $S$ 成立。
+每对不同顶点的最小面为真边，故全Pair已成立；
+此后第七卷104.7及105.8的覆盖、长度与Jordan等价才可直接消费。
+第七卷106.10—106.11还直接给出该分支的PAIRJET2、JET2、H2、CUB3和J1；
+这是既有等价链的应用，没有在拓扑证明之前预付任何一个二阶切形条件。
+没有用这些较强结论反向填补107.2的拓扑证明。
+
+104.9已处理的有限纯点三角形结论在这里直接保留；
+107.2额外排除的是不加基数限制的全线段模型，
+107.3把潜在覆盖反例限制到至少一张厚球和连续统纯点。
+这两项仍允许混合球维数，不把“至少一张厚球”加强成“全部球厚”，
+也不把必要条件当成反例存在证明。
+105.2—105.5已经在整个 $\mathsf W$ 中成立的唯一整球零尺、
+全域least、共同正线性延拓和数学projectivity保持其原域，
+并不是本全线段条件才取得的结论。
+
+本命题的对象仍是单个原 $(V,C,u)$ 及其全部数学效应。
+第七卷105.15、105.17及106.16、106.18的同一来源、指定复合、实际菜单、CP与仪器、
+记录和合法未来、原钟及单位等合同，继续保留各自量词。
+107.2不供应指定复合层级或实际事件，也不由辅助圆周、
+置换或静态坐标制造物理时间。
+[全有限层级VII][Q107Hierarchy]的102.11使用其全有限强分块域、原 $S_3$
+及B1—B3；该层级卷103.9的另一条路线使用同一层级域、原 $S_2+\mathsf F$
+及该层级卷103.1三项具名低二份供应。本分支只供应同一单载体的 $S_1$，
+不自动供应全部指定复合、这些较高份比较或共同基三腿资源。
+已有单系统、原生过程及全有限层级结果按各自原前提使用，
+不能将本分支的三结果结构升格为三副本比较或实际事件饱和。证毕。
+
+[Q107VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md
+[Q107Hierarchy]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q107H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology, Theorem 1.7, Propositions 1.14, 1.31 and 1.40(a); the disjoint-translate condition (*) for covering space actions."
+

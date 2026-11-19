@@ -1,0 +1,48 @@
+**定义 115.1（整球参数、辅助拓扑与正则区域）。** 本章始终在定义114.1的同一个有限维实空间 $V$、闭尖生成锥 $C$、严格正单位 $u$ 上工作，并假设 $\mathrm{EB3}+\mathrm{PR}$。完整原域和比较函数明确为
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x)\ (x\in K),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+$$
+
+在 $V$ 上固定一个辅助欧氏范数 $\|\cdot\|$（并限制到 $\ker u$），只用于有限维拓扑、Hausdorff 距离和长度；它不是由模型取得的物理内积。对 $p\in P$ 写
+
+$$
+\mathcal D(p)=D_p,\qquad d(p)=\operatorname{diam}_{\|\cdot\|}D_p,\qquad
+a(p)=a_{D_p},\qquad \beta(p)=\beta_{D_p}=\frac1{2a(p)}.
+\tag{IX115.1}
+$$
+
+这里 $a_{D_p}$ 和 $\beta_{D_p}$ 是114.5—114.6在该一张完整排除三球上定义的量；只在同一球内使用其共同系数，不对不同球宣称 $a$ 相等。若 $F=D_p$，取任一仿射球坐标 $b_F:B^3\to F$，则
+
+$$
+T_{b_F(v)}(b_F(z))=1-a(p)+a(p)\,v\cdot z
+\qquad(v\in S^2,\ z\in B^3).
+\tag{IX115.2}
+$$
+
+令 $d_H$ 为该欧氏范数诱导的 Hausdorff 距离，并定义
+
+$$
+S_j=\{p\in P:d(p)\ge 1/j\},\qquad
+\mathcal R=\bigcup_{j\ge1}\operatorname{int}_P S_j,
+\qquad \Sigma=P\setminus\mathcal R.
+\tag{IX115.3}
+$$
+
+正则区的两个全纤维空间记为
+
+$$
+\mathscr B_{\mathcal R}=\{(p,x)\in\mathcal R\times K:x\in D_p\},
+\qquad
+\mathscr Z_{\mathcal R}=\{(p,q)\in\mathcal R\times P:q\in D_p\},
+\tag{IX115.4}
+$$
+
+并取它们的第一投影到 $\mathcal R$。第二个空间保留每个完整纤维 $P\cap D_p$ 的全部端点；其第二坐标可以属于 $\Sigma$。
+

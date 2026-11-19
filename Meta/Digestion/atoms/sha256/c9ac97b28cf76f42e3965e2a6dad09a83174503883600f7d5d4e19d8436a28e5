@@ -1,0 +1,21 @@
+### Theorem 13.1. Five-pulse CZ and nine-pulse nearest-neighbor CNOT
+
+The separator pulse D_q=R_{2q}(0,pi) satisfies
+
+$$D_qJ_m=J_m\,\operatorname{diag}(-1,1,1,1)_{q,q+1}. \tag{13.2}$$
+
+Let S_q=R_{2q+1}(0,pi/2)R_{2q-1}(0,pi/2). Then
+
+$$S_q^\dagger D_q S_qJ_m=J_m\operatorname{CZ}_{q,q+1}. \tag{13.3}$$
+
+Define h_q=R_{2q-1}(0,pi/2)R_{2q-1}(pi/2,pi/4). Its encoded action is -i times the Hadamard gate. For either orientation of adjacent data bits c,t,
+
+$$h_t(S_q^\dagger D_q S_q)h_t^\dagger J_m
+=J_m\operatorname{CNOT}_{c\to t},\qquad q=\min(c,t). \tag{13.4}$$
+
+The pulse counts in (13.3) and (13.4) are five and nine, respectively, counting inverses separately.
+
+Proof. If the adjacent data bits are 00, the separator is an enabled two-state block and exp(-i pi X)=-I on it. It returns to zero with phase minus one. If either data bit is one, the separator is blocked and the pulse is the identity. This gives (13.2), including exact restoration of the work bit. On code states S_q acts as -X_q X_{q+1}, so conjugation moves the minus sign from 00 to 11; its global minus sign cancels with its adjoint. This gives (13.3). Direct Pauli multiplication gives R_x(pi/2)R_y(pi/4)=-i H. The two opposite phases of h_t and h_t^dagger cancel, and H_t CZ H_t=CNOT. Every identity is an equality on the entire encoded Hilbert space, and thus also holds with an arbitrary external reference system. QED.
+
+For a CNOT between data bits a,b at distance delta=|a-b|, move the control next to the target with delta-1 adjacent SWAPs, apply the adjacent CNOT, then undo the SWAPs. Each SWAP uses three adjacent CNOTs. Thus one such gate needs at most 6(delta-1)+1 adjacent CNOTs, or 9[6(delta-1)+1] native pulses. No layout information is discarded.
+

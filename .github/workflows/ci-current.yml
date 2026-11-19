@@ -389,7 +389,7 @@ jobs:
           STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
         run: |
           rc=0
-          python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
+          FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
           if [[ "$rc" != 0 ]]; then
             echo "::error title=Lean report failed::Inspect the preceding error. A missing compatible native seed requires the independent lean-cache-produce long job; wait for its successful exact-head production and retry."
           fi

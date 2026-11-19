@@ -1,0 +1,43 @@
+**Proposition 13 (Conditional integral rigidity).**
+Let integer weights $w_i=g v_i$ have $g>0$, $v_i\in\mathbb Z$.
+Suppose the $v_i$ generate $\mathbb Z$, and the actual integer-zero
+subset rows generate
+
+$$
+L=\ker\Psi,\qquad\Psi:F\to\mathbb Z,\quad\Psi(e_i)=v_i.
+\tag{25}
+$$
+
+Then every full integer-zero symmetry satisfies
+$v_{p(i)}=\epsilon v_i$ for a single $\epsilon\in\{1,-1\}$. Its full
+group is trivial if and only if the $v_i$ are pairwise distinct and
+their multiset is not invariant under negation. In particular, distinct
+normalized weights and failure of negation invariance imply rigidity
+under the two stated hypotheses of completeness and generation.
+
+*Proof.* Multiplication by nonzero $g$ in $\mathbb Z$ is injective,
+so the original and normalized weights have the same zero subsets and
+$\ker\Phi_w=\ker\Psi$. Proposition 4 and (25) identify $U$ with
+$\mathbb Z$; the unnormalized image is $g\mathbb Z$. An automorphism
+of $\mathbb Z$ and its inverse send $1$ to integers $a,b$ with
+$ab=1$, hence $a=b=1$ or $a=b=-1$. Theorem 2 proves the claimed
+single sign. Theorem 3 identifies the kernel as the product of
+permutation groups of equal normalized-weight fibers. A repeated value
+allows a nontrivial transposition, so triviality requires distinctness.
+The support group contains $-1$ exactly when the multiset is invariant
+under negation. If it does, it has a lift by Theorem 3, and that lift is
+nonidentity: generation ensures a nonzero weight, which changes sign.
+If it does not, only $+1$ remains; with distinct fibers the entire group
+is trivial. This proves both directions.
+
+Absence of nonzero opposite pairs is sufficient for failure of negation
+invariance, since generation guarantees a nonzero weight. These
+conditions do not establish (25). For example, weights $1,2$ generate
+$\mathbb Z$, are distinct, and have no opposite pair, but only the empty
+subset is zero. Thus $L=0$, whereas $2e_0-e_1\in\ker\Psi$ is nonzero,
+and the full label group is $\operatorname{Sym}(2)$. An application to
+any particular integer family therefore requires independent proofs of
+(25), generation, distinctness, and failure of negation invariance. The
+following corollary discharges them for the stated exceptional19 family.
+$\square$
+

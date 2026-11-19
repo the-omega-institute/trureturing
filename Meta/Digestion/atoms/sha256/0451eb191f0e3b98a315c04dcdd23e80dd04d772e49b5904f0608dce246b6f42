@@ -1,0 +1,16 @@
+**命题 C-12.2（相位与概率不匹配共同决定纯态任务）。** 局部行列重相位 $`\theta_{ij}\mapsto\theta_{ij}+\alpha_i+\beta_j`$ 保持 Φ。该純态为乘积态当且仅当 $`\det𝒜=0`$；正底面时等价于 Δ=0 且 Φ=0。其纯态 concurrence 为 $`2|\det𝒜|`$，并有
+
+
+<table><tbody><tr><td>
+
+```math
+r^2|\det𝒜|^2=
+(\sqrt{p_0p_{13}}-\sqrt{p_1p_3})^2+
+4\sqrt{p_0p_1p_3p_{13}}\sin^2(\Phi/2).
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** 四个行列相位在交替和中消去。二部纯态可分恰为非零系数矩阵秩一，即行列式零。令复对角乘积 $`l=c_0c_{13},h=c_1c_3`$，展开 $`|l-h|^2`$ 给所列式；四底角正时两项分别非负，第一项零等价于 $`p_0p_{13}=p_1p_3`$，第二项零等价于 Φ=0。若有零振幅，直接用 $`|l-h|^2`$，不定义 $`\arg0`$；不完整 $`K_{2,2}`$ 支撑是森林，沒有四边相位循环。标准 concurrence 的纯态中间式 [C-L4] 式 (7) 是 $`|\langle\psi|\widetilde\psi\rangle|`$，将 $`\widetilde\psi=(\sigma_y\otimes\sigma_y)\overline\psi`$ 代入，内积绝对值为 $`2|\det𝒜|`$。此使用不扩展到未知混态公式。□
+

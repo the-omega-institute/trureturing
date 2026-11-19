@@ -1,0 +1,23 @@
+**定义 46.1（完整原资料与环境系数）。** 完整采用 16.1、24.1、32.1 的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、全部原 P2 和完整原 PB，P2、PB 的准确量词与元素式取 (32.1)。A3 仍使用同一个固定有理 $0<\theta\le1$。原 $E$ 是自身任意含单位实 JB 完成 $X$ 中的稠密含单位实 Jordan 子代数，允许不完备；不增加原投影、原根、原逆元或有限谱供应。三角卷 128.1、206.1、250.1 的全部实际来源合同及七项消费者原样保留。下述条件只选择已知 Jordan 几何中的输入分支，不给旧 $D$ 增添独立公理。
+
+沿三角卷 240.2、248.1 已得的忠实、含单位、等距且保锥并反映锥的 JC 包含识别原元素，取
+
+$$
+E\subset X\subset(A_0)_{\rm sa},\qquad
+A_0=C^*(X),\qquad Z=Z(A_0)_{\rm sa}.
+\tag{46.1}
+$$
+
+这里 $Z$ 是环境中心的自伴实部，不要求 $Z\subset X$ 或 $Z\subset E$，也不要求 $X=(A_0)_{\rm sa}$。环境乘法只在已知交换时与 Jordan 乘法相同；特别 $fx=f\circ x$ 对 $f\in Z$、$x\in(A_0)_{\rm sa}$ 成立。由 van de Wetering，[*Commutativity in Jordan Operator Algebras*，arXiv:1912.01903v1](https://arxiv.org/html/1912.01903v1)，Proposition 3.2，原 Jordan 算子中心 $Z(X)$ 的像包含于 $Z$。不把 $A_0$ 的乘法识别为未知旧 $\circ-iD$ 的完整原乘法。
+
+固定实际原 $h^2=u$，准确使用 34.2 的归一化：
+
+$$
+\rho=1/\sqrt3,\qquad a=\rho h\in E,\qquad
+V_h=\{b\in E:h\circ b=0\},\qquad
+Jb=D(a,b)/\rho\quad(b\in V_h).
+\tag{46.2}
+$$
+
+零 $X$ 单列，所有下述窗口为零，不取字符或态。非零情形中的 $J$ 始终只接收原输入，不预付它在不同原平面间可加、连续或可测，不预付全域双线性、一般商下降、完成延拓、$\mathsf F$、原 R 或不同 $h$ 的共同取向。
+

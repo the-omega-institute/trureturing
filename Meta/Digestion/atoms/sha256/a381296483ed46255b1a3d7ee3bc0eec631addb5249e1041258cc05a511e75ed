@@ -1,0 +1,15 @@
+**定理 493.3（双侧正比例振荡）。** 设 $E$ 局部有界 Borel 可测，(490.2) 与 (493.1) 在指数带 $\alpha<\theta<\beta$ 上成立，$g\in L^1(0,1)$ 实值且不几乎处处为零。令 $v=\frac12(2^{1-\theta}-1)Q(g)$，$K$ 为引理 493.1 给出的 $\sup_X\mathbb E_{\mu_X}Z_X^4$ 的上界（$K\ll C_4\|g\|_1^4$），
+
+$$
+K_1=8\Bigl(K+\frac{v^2}4\Bigr),\qquad \Lambda=\frac{(v/2)^{3/2}}{\sqrt{K_1}},\qquad c=\frac\Lambda8,\qquad \delta=\frac{\Lambda^2}{16\sqrt{K_1}} .
+$$
+
+则对所有充分大的 $X$，
+
+$$
+\mu_X\Bigl\{\mathcal T_{\theta,g}>c\sqrt{S_X}\Bigr\}\ge\delta,\qquad \mu_X\Bigl\{\mathcal T_{\theta,g}<-c\sqrt{S_X}\Bigr\}\ge\delta .
+\tag{493.2}
+$$
+
+证明。由定理 490.6，$\mathbb EZ_X^2\to Q(g)(2^{1-\theta}-1)/\log2>2v$，且该定理的证明给出 $Q(g)>0$；故充分大时 $\mathbb E Z_X^2\ge v>0$（$\mathbb E=\mathbb E_{\mu_X}$）；由引理 493.1，$\mathbb EZ_X^4\le K$；由引理 493.2，$\varepsilon_X=|\mathbb EZ_X|\to0$，故充分大时 $\varepsilon_X\le\min\{\sqrt{v/2},\Lambda/8\}$。以下是经典的 Paley–Zygmund 型论证。令 $W=Z_X-\mathbb EZ_X$，则 $\mathbb EW=0$，$\mathbb EW^2\ge v-\varepsilon_X^2\ge v/2$，$\mathbb EW^4\le8(\mathbb EZ_X^4+\varepsilon_X^4)\le K_1$。由插值不等式 $\mathbb EW^2\le(\mathbb E|W|)^{2/3}(\mathbb EW^4)^{1/3}$，$\mathbb E|W|\ge\Lambda$；又 $\mathbb EW=0$ 给出 $\mathbb EW_+=\mathbb EW_-=\frac12\mathbb E|W|\ge\Lambda/2$。取 $a=\Lambda/4$，由 $\mathbb EW_+\le a+(\mathbb EW_+^2)^{1/2}\mu_X(W>a)^{1/2}$ 与 $\mathbb EW_+^2\le\mathbb EW^2\le\sqrt{K_1}$，得 $\mu_X(W>\Lambda/4)\ge\delta$；同理 $\mu_X(W<-\Lambda/4)\ge\delta$。最后 $|\mathbb EZ_X|\le\Lambda/8$，故 $W>\Lambda/4\Rightarrow Z_X>c$、$W<-\Lambda/4\Rightarrow Z_X<-c$。证毕。
+

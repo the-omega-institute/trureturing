@@ -1,0 +1,38 @@
+**引理 69.1（任意偶数矩阵的相位分解）。** 设 $d=2m\ge2$，$U\in\mathcal U(A_n)$，$A_n\cong M_d$。存在一份标量相位及 $2(d-1)$ 份有实际伴轴的配平反射相位，准确相乘为 $U$；每份相位参数的绝对值不超过 $\pi$。
+
+证明。有限维谱定理给两两正交秩一投影 $P_1,\ldots,P_d$，其和为1，并给 $\theta_i\in[-\pi,\pi]$，使 $U=\sum_i e^{i\theta_i}P_i$。置
+
+$$
+\alpha=d^{-1}\sum_i\theta_i,\qquad
+\beta_i=\theta_i-\alpha\quad(i<d).
+\tag{69.1}
+$$
+
+对每个 $i<d$，选含 $i$ 而不含 $d$ 的 $m$ 元指标集 $S_i$，令 $S_i'=(S_i\setminus\{i\})\cup\{d\}$，并定义
+
+$$
+H_i=2\sum_{k\in S_i}P_k-1,\qquad
+H_i'=2\sum_{k\in S_i'}P_k-1.
+\tag{69.2}
+$$
+
+两反射的正负本征空间均为 $m$ 维。对每一个这样的指标集 $S$，取正负空间正交基之间的双射，逐对交换基向量，所得 $e_S\in A_n$ 满足 $e_S=e_S^*$、$e_S^2=1$、$e_SH_S=-H_Se_S$。故每个反射都有实际伴轴，包括 $d=2$。
+
+全部这些反射彼此交换，且 $H_i-H_i'=2(P_i-P_d)$。又
+
+$$
+\sum_i\theta_iP_i
+=\alpha1+\sum_{i<d}\beta_i(P_i-P_d),
+\tag{69.3}
+$$
+
+因为最后一坐标为 $\alpha-\sum_{i<d}(\theta_i-\alpha)=\theta_d$。于是
+
+$$
+\boxed{U=e^{i\alpha1}
+\prod_{i<d}e^{i\beta_iH_i/2}e^{-i\beta_iH_i'/2}.}
+\tag{69.4}
+$$
+
+$|\alpha|\le\pi$、$|\beta_i/2|\le\pi$。这是有限准确恒等式，不用二进制指标或 Walsh 字符。∎
+

@@ -1,0 +1,20 @@
+#### 命题 3.1：几何乘积的准确类型
+
+定向 Euclidean 空间中的单位向量满足
+
+$$
+\mathbf o\mathbf n
+ =\mathbf o\cdot\mathbf n+\mathbf o\wedge\mathbf n
+ =\cos\theta+B\sin\theta,\qquad 0<\theta<\pi,
+$$
+
+其中 $B=(\mathbf o\wedge\mathbf n)/\sin\theta$ 为单位二向量。 第一项是标量，第二项是二向量；$B$ 本身依赖这对方向。
+
+**证明。**
+
+Clifford 关系把乘积分为对称标量与反对称二向量。 单位向量内积为 $\cos\theta$， 其外积范数为 $\sin\theta$；归一化即得。 在共线端点二向量为零，其单位方向没有由该对向量唯一指定。
+
+$\square$
+
+这个代数恒等式不单独定义量子仪器。 三维单位轴自身有两个角坐标； 相对夹角只足够确定某个简单二元概率， 并不包含转动平面的全部信息，也不包含耦合强度和记录访问。
+

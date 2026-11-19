@@ -16,7 +16,19 @@ Lean statement: `D5/S3/Quantum/Schatten/Partition.rootTrace_sum`
 
 For every real q in [1,2], every finite PSD family A_j and every PSD square Z, Re Tr((Z* (sum_j A_j)^q Z)^(1/q)) is at most the sum of the individual traces Re Tr((Z* A_j^q Z)^(1/q)). The power 1/q is a spectral matrix power inside the trace. The existing fixed-congruence Carlen-Lieb convexity theorem is reused. CFC scalar homogeneity converts convexity into subadditivity for positive definite arguments. Regularizing each input and Z by epsilon I, then applying genuine positive-power continuity, proves the singular case. Finite induction includes an empty family.
 
-**Theorem 1.2 (Every compatible rectangular complex matrix).**
+**Theorem 1.2 (The actual rectangular Schatten power).**
+
+Lean statement: `D5/S3/Quantum/Schatten/Partition.rectangularNorm_rpow`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Schatten/Partition.rectangularNorm_rpow` (`✓ std3`). ∎
+
+*Citation.* Suvrit Sra (2026). *The p-Bures-Wasserstein distance via 3-by-3 block matrices (with application to p-Bures-Wasserstein barycenters)*. URL: <https://arxiv.org/abs/2610.15889v1>.
+
+*Commentary.*
+
+For every positive real p and every finite rectangular complex matrix X, rectangularNorm X p raised to p equals the real trace of (XX*)^(p/2). This is the existing proof, exposed without changing its hypotheses or body so that the Peled rank-one compound consumer can reuse it. Empty dimensions and zero singular values remain included.
+
+**Theorem 1.3 (Every compatible rectangular complex matrix).**
 
 Lean statement: `D5/S3/Quantum/Schatten/Partition.partition_rectangular`
 
@@ -32,7 +44,7 @@ Set K=H^(-1/p), M=K XX* K, Z=sqrt(M) and q=2/p. Apply PSD trace-root subadditivi
 
 Empty row or column dimensions give a zero row Gram trace, so both sides are zero. An empty partition has H=0 and can satisfy positive definiteness only in empty row dimension; the finite-sum base case and the same zero trace computation cover it. No nonempty index or dimension premise is added, and no operator norm is asserted to equal one in a zero space.
 
-**Theorem 1.3 (The existing actual Schatten functional).**
+**Theorem 1.4 (The existing actual Schatten functional).**
 
 Lean statement: `D5/S3/Quantum/Schatten/Partition.partition`
 
@@ -48,5 +60,6 @@ This is Theorem 1.2 in the existing schattenNorm notation, using the proved rect
 
 - Truth anchor: `D5/S3/Quantum/Schatten/Partition.partition`
 - Truth anchor: `D5/S3/Quantum/Schatten/Partition.partition_rectangular`
+- Truth anchor: `D5/S3/Quantum/Schatten/Partition.rectangularNorm_rpow`
 - Truth anchor: `D5/S3/Quantum/Schatten/Partition.rootTrace_sum`
-- Dependency: [D5/S3/Quantum/Hiai/GeometricTraceConvexity](../Hiai/GeometricTraceConvexity.md)
+- Dependency: [D5/S3/Quantum/Hiai/CarlenLiebConvexity](../Hiai/CarlenLiebConvexity.md)

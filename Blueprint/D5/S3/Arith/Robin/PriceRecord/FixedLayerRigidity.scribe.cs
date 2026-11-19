@@ -15,6 +15,13 @@ internal sealed class FixedLayerRigidityDocument : IScribeDocumentDefinition
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(
+            Describe.Lean(
+                DescribeId.Create("fixedlayerrigidity-objective-exchange-delta"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.objective_exchange_delta"),
+                H("Exact objective change for a legal finite exchange"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary real lambda, positive m, disjoint finite prime sets D,U and every donor dividing m, set d=product(D), u=product(U), n=(m/d)*u. The exact objective difference is the sum of inserted marginals at the original valuation plus one, minus the removed marginals at the original valuation, plus lambda*(log(d)-log(u)). This identity retains donor valuation excess and includes both fee signs; it supplies the actual five-mode predecessor calculation."))),
+                DescribeRole.Theorem),
                 Paragraph(Text(
                     "Fix a natural number j>=2 and a real epsilon>0. There is a real T>0, "
                         + "depending only on j and epsilon, such that every natural m>=2 and "

@@ -1,0 +1,51 @@
+**命题 2.2（双线性且满足 $R$ 仍可有零完整前向原核）。** 在定义 2.1 的同一原域上，完整 PB 对所有原 $a,b,c$ 和全部 $\alpha\in\mathcal P$ 成立，$D$ 已经实双线性，并满足原换括号关系 $R$。令 $\tau(t)=t$ 为原元，置
+
+$$
+F_\tau(x,y)=\bigl(D(\tau,x)-\tau y,\ \tau x+D(\tau,y)\bigr)=(-\tau y,\tau x).
+$$
+
+在完成的复化 $C(I,\mathbb C)$ 中用 $x+\mathrm i y$ 识别 $E\oplus E$，并定义完成上的 Cayley 变换
+
+$$
+T_\tau=(I+F_\tau)(I-F_\tau)^{-1},\qquad
+T_\tau p=\frac{1+\mathrm i\tau}{1-\mathrm i\tau}\,p.
+$$
+
+其完整前向原核
+
+$$
+\mathcal K_\tau=\{p\in E+\mathrm iE:T_\tau^n p\in E+\mathrm iE\text{ 对所有 }n\ge0\}
+$$
+
+恰为 $\{0\}$。但是对每个有限 $N\ge0$，非零原元 $p_N=(1-\mathrm i\tau)^N$ 满足
+
+$$
+T_\tau^n p_N=(1+\mathrm i\tau)^n(1-\mathrm i\tau)^{N-n}\in E+\mathrm iE
+\qquad(0\le n\le N),
+$$
+
+所以任意有限合法前缀仍然存在。这里的种子 $p_N$ 随 $N$ 选择；每个有限 $N$ 都存在非零种子，不等于存在同一个非零种子适用于全部 $N$。
+
+证明。先核对完整配平。对任意 $a,b,c\in E$，在配平主卷定义 128.1 的配平记号中，此处 $D=0$ 使
+
+$$
+r_+=b-ac,\quad s_+=c+ab,\qquad
+r_-=b+ac,\quad s_-=c-ab.
+$$
+
+逐点交换乘法给出
+
+$$
+r_+^2+s_+^2=r_-^2+s_-^2=(1+a^2)(b^2+c^2).
+$$
+
+每个 $\alpha\in\mathcal P$ 因而读到相同的两侧，这正是全部原 PB；没有调用完成中的新输入。$D=0$ 显然为实双线性，且原 $R$ 的两侧都等于 $abc$，因为逐点乘法结合。故命题的完整数学入口，包括所有正读者、全部质量、零及重复标签，均已满足。
+
+再证明 Cayley 断言。$1-\mathrm i t$ 在 $I$ 上处处非零，所以它在 $C(I,\mathbb C)$ 中可逆，且 $F_\tau$ 在 $x+\mathrm i y$ 坐标下就是乘以 $\mathrm i\tau$。若 $p\ne0$ 且某个 $n$ 使 $T_\tau^n p=q$ 属于 $E+\mathrm iE$，则在区间 $I$ 上有
+
+$$
+(1+\mathrm i t)^n p(t)=(1-\mathrm i t)^n q(t).
+$$
+
+两边是复系数多项式，区间上的相等即为多项式恒等式。线性因子 $1-\mathrm i t$ 与 $1+\mathrm i t$ 互素，故 $(1-\mathrm i t)^n$ 必整除 $p$。若这对所有 $n$ 成立，非零多项式 $p$ 将被任意高次的同一线性因子整除，矛盾；所以 $\mathcal K_\tau=\{0\}$。另一方面，显示的 $p_N$ 对 $0\le n\le N$ 的公式是多项式恒等式，给出每个有限前缀。整个证明中 $D$ 的调用只有原 $E$ 中的零值；逆元和 $T_\tau$ 只在完成的数学复化中使用。∎
+

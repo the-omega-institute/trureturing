@@ -1,0 +1,101 @@
+**定理 89.4（内在商的同载体等价）。** 在定义89.1的全部前件下，
+
+$$
+\boxed{(\mathrm B+\mathrm{Boundary})\ \Longleftrightarrow
+(\mathrm B+\mathrm Q)\ \Longleftrightarrow
+(\mathrm B+\mathrm H)\ \Longleftrightarrow\ S.}
+\tag{89.5}
+$$
+
+$\mathrm H$ 准确沿用88.2：每个纯 $p$ 有同一个 $g_p\in C^*$，$g_p(p)>0$，且它零于全部 $r_{p,F}$；记固定 $p$ 的存在条件为 $\mathrm H_p$。在 $\mathrm B$ 下，非单点时对每个 $p$ 及任意(89.4b)的仿射基均有
+
+$$
+\mathrm Q_p\ \Longleftrightarrow\quad
+z_p\in\operatorname{rbd}K\ \Longleftrightarrow\quad
+\mathrm{Boundary}_p\ \Longleftrightarrow\ \mathrm H_p.
+\tag{89.5a}
+$$
+
+这些真值与仿射基选择无关：成功时所有这类重心均在相对边界，失败时所有这类重心均在 $\operatorname{ri}K$。主候选采用 $\mathrm B+\mathrm{Boundary}$；$\mathrm Q$ 是同一条件的商表示。在其成立时，无须预付正泛函或 proper 尺，原商唯一给出
+
+$$
+V=\mathbb Rp\oplus N_p,\qquad
+V/N_p=\mathbb R[p],\qquad
+[x]=e_p(x)[p],\qquad N_p=\ker e_p.
+\tag{89.6}
+$$
+
+非单点时还得到
+
+$$
+C^*\cap z_p^\perp=\mathbb R_{\ge0}e_p,
+\qquad z_p^\perp=\{g\in V^*:g(z_p)=0\}.
+\tag{89.6a}
+$$
+
+这说明重心处的相对支撑超平面唯一，不断言零面 $K\cap\ker e_p$ 是 facet；支撑法向唯一并不规定接触面的维数。
+
+商(89.6)所定义的实线性 $e_p$ 正是完整 $S$ 的最小确认；对每个上述整球有
+
+$$
+e_p(\chi^{-1}s)=\frac{1+n\cdot s}{2}\quad(\|s\|\le1),\qquad
+T_p\!\left(\sum_i\lambda_iq_i\right)
+=\sum_i\lambda_iT_{q_i}(p)
+\quad(\lambda_i\ge0,\ \sum_i\lambda_i=1).
+\tag{89.7}
+$$
+
+第二式对任意有限纯准备成立，含重复点和零权；第一式允许任意有限球维及 $B^1$。
+
+证明。先仅设 $\mathrm B$。对固定 $p$，每个不同纯 $q$ 由(89.4)属于 $\mathbb Rp+N_p$，而 $p$ 自己亦属于它；纯点张成 $V$，故
+
+$$
+V=\mathbb Rp+N_p.
+\tag{89.8}
+$$
+
+若 $p\notin N_p$，该和为直和，商恰好一维；$p\ne0$ 来自 $u(p)=1$。由商中相对非零基 $[p]$ 的唯一系数定义 $e_p$，即得实线性、$e_p(p)=1$ 及核等式。到此没有使用正性或 proper 上界。
+
+固定一个球，(89.2)给 $e_p(r)=0$、$e_p(T)=0$。由(89.3)和 $e_p(p)=1$，得到 $e_p(c)=e_p(Jn)=1/2$。把 $s=(n\cdot s)n+s_\perp$ 分解，便有
+
+$$
+e_p(tc+Js)=\frac{t+n\cdot s}{2}.
+\tag{89.9}
+$$
+
+特别是归一球上的值属于 $[0,1]$。遍历每个纯 $q\ne p$ 的整个 $H(p,q)$，再加 $e_p(p)=1$，得到所有纯点上的零一界。现在才由 $K=\operatorname{conv}P$ 和 $C=\operatorname{cone}P$ 推出 $e_p\in[0,u]$；不是把局部效应未经拼合就当成全局效应。它零于全部对径且在 $p$ 取一，故固定 $p$ 已给 $\mathrm H_p$。
+
+为自含地核对完整最小性，任取 $h\in F_p$。在同一个球上写 $h(\chi^{-1}s)=\alpha+v\cdot s$。proper 界和确认给 $\alpha\ge\|v\|$、$\alpha+\|v\|\le1$、$\alpha+v\cdot n=1$。Cauchy–Schwarz 的等号条件遂给
+
+$$
+v=\beta n,\quad\alpha=1-\beta,\quad0\le\beta\le\tfrac12,\qquad
+h(\chi^{-1}s)-e_p(\chi^{-1}s)
+=(\tfrac12-\beta)(1-n\cdot s)\ge0.
+\tag{89.10}
+$$
+
+此即88.5—88.6的球限制计算，含 $v=0$。对所有纯 $q\ne p$ 得 $h(q)\ge e_p(q)$，同点相等；由纯射线生成整个锥，得到 $h-e_p\in C^*$。在全称 $\mathrm Q$ 下，对每个纯点都已构造上述 $e_q$；再在同一个 $H(p,q)$ 中对 $e_q$ 使用(89.9)，有
+
+$$
+e_p(q)=\frac{1+\chi(p)\cdot\chi(q)}2=e_q(p).
+\tag{89.11}
+$$
+
+所以 $S$ 全部成立，$T_p=e_p$，线性和互反给(89.7)第二式。此正向不使用分类、全局正泛函存在、全局比较数或纯点暴露性。
+
+最小确认也唯一：若 $\widehat e_p\in F_p$ 同样为全锥序最小元，则 $e_p\le\widehat e_p\le e_p$，差在 $C$ 上恒零；$C$ 生成 $V$ 使两者作为线性泛函相等。这里唯一的是最小确认，并不声称 $F_p$ 只有一个 proper 确认。
+
+反过来，在 $\mathrm B$ 下固定 $p$，若 $\mathrm H_p$ 成立，取其同一个 $g_p$。球上写 $g_p(\chi^{-1}s)=\alpha+v\cdot s$，非负性和对径零值给 $\alpha\ge\|v\|$、$\alpha=v\cdot n$，故 $v=\alpha n$、$g_p(p)=2\alpha>0$。于是 $g_p$ 消灭赤道方向 $2a-p-r$ 及 $r$，从而消灭整个 $N_p$；$g_p(p)>0$ 立即推出 $p\notin N_p$。此方向只在新商桥内部使用成熟支持函数等号论证。
+
+现在证明边界入口，并核对它没有预付 $g(p)>0$。设 $K$ 非单点。若 $z_p\in\operatorname{rbd}K$，有限维凸集的相对支撑超平面定理给 $\operatorname{aff}K$ 上非恒定的仿射函数 $\ell$，使 $\ell\ge0$ 于 $K$ 且 $\ell(z_p)=0$。这是成熟凸支撑定理在此处的应用。任取 $x_0\in K$，写 $\ell(x_0+w)=a+\varphi(w)$（$w\in\ker u$），按唯一分解 $V=\mathbb Rx_0\oplus\ker u$ 定义 $g(tx_0+w)=ta+\varphi(w)$。它是 $\ell$ 的唯一齐次线性延伸。每个非零 $c\in C$ 都可写为 $u(c)k$、$k\in K$，故 $g(c)=u(c)\ell(k)\ge0$。因此 $g\in C^*\setminus\{0\}$、$g(z_p)=0$；此时还没有断言 $g(p)>0$。
+
+由所有权重 $1/k>0$ 和 $g(r_i)\ge0$，等式 $0=g(z_p)=k^{-1}\sum_i g(r_i)$ 迫使每个 $g(r_i)=0$。仿射张成再给 $g$ 零于全部 $R_p$。若 $g(p)=0$，则每个 $F\in\mathcal F_p$ 的球心 $c_F=(p+r_{p,F})/2$ 也取零。非负仿射函数在球的相对内点取零，必在整个球取零：对任意 $y\in F$，可取小的 $\delta>0$ 使 $c_F\pm\delta(y-c_F)\in F$，两处非负性给 $\pm\delta g(y)\ge0$，所以 $g(y)=0$。各 $H(p,q)$ 连同 $p$ 覆盖全部 $P$，$\operatorname{span}P=V$ 遂迫使 $g=0$，矛盾。故 $g(p)>0$，得到 $\mathrm H_p$；前述 $\mathrm H_p\Rightarrow\mathrm Q_p$ 的论证给 $\mathrm Q_p$。这样严格正值是结论。
+
+若 $\mathrm Q_p$ 成立，前面的商构造已给非零 $e_p\in C^*$，在 $p$ 取一并零于全部 $R_p$，故也零于 $\operatorname{conv}R_p$。非零正泛函不可能在 $\operatorname{ri}K$ 取零：若取零，同样的相对内点双向微扰使它零于 $\operatorname{aff}K$，进而由 $\operatorname{span}K=V$ 恒零。因此 $\operatorname{conv}R_p\subseteq K\cap\ker e_p\subseteq\operatorname{rbd}K$，得到 $\mathrm{Boundary}_p$。反向，$\mathrm{Boundary}_p$ 与 $z_p\in\operatorname{conv}R_p$ 直接给 $z_p\in\operatorname{rbd}K$。这完成(89.5a)的全部方向。任一仿射基重心都适用相同证明，所以若 $\mathrm Q_p$ 失败，每个重心都属于 $K\setminus\operatorname{rbd}K=\operatorname{ri}K$。
+
+同一论证还证明(89.6a)。任取非零 $g\in C^*$ 且 $g(z_p)=0$，正权重、仿射张成和球心反证再次给 $g|_{R_p}=0$、$g(p)>0$。在每个球上，非负性和对径零值给前述 $\mathrm H_p$ 方向的球公式，因此 $g/g(p)$ 等于(89.9)的局部半内积尺。它在 $p$ 及每个不同纯 $q$ 上均等于 $e_p$，由 $\operatorname{span}P=V$ 得 $g=g(p)e_p$。反向包含由 $e_p\ge0$、$e_p(z_p)=0$ 立即成立；零泛函也在右侧。这是从边界几何导出的唯一支撑射线，不是先选一把正尺再将边界定义成它的零集。
+
+若从 $S$ 出发，复用88.4／88.10的完整逆向及[Library完整桥][L]，先得同载体一般有限 EJA 表示、全部二态整球与 $\mathrm H$，再由已证的 $\mathrm H_p\Rightarrow\mathrm Q_p$ 得 $\mathrm Q$ 及等价的 $\mathrm{Boundary}$。该已归属桥包含正对偶剥离、共同完整框架、忠实自对偶配对、有符号谱性、正面投影、projectivity 与滤波纯性，准确消费 Barnum–Müller–Ududec Theorem 16 的完整前件；不换用强对称的 Theorem 17。等价中的这段分类是复用，不是新分类或隐藏前提。
+
+若 $P=\{p\}$，紧凸分解给 $K=\{p\}$、$V=\mathbb Rp$；$N_p=0$，商系数为 $e_p=u$，且 $F_p=\{u\}$。$\mathrm{Boundary}$ 为空真，$\mathrm Q$、$S$、$\mathrm H$ 直接成立，无须选择不存在的球、赤道、仿射基或重心；(89.5a)的重心命题及(89.6a)仅用于非单点。其余证明未要求纯点集有限、闭或暴露，已覆盖所有声明的退化分支。证毕。
+

@@ -1,0 +1,2 @@
+**产地与证据边界。** 使用 `formal-thinking-and-answer`、`theory-volume-template` 与 `nyxid`。主 Codex 基于 ChatGPT oracle 的研究推导撰写并逐项核对数学连接；交付采用三个相互隔离的只读本地 Codex CLI 纸面评审席，均属同一模型家族。票与 required CI 的实际结果在拉取请求中给出，不作 kernel 证明或物理实现认证。没有 Lean、数学程序、实验、局部构建或消化冻结。
+

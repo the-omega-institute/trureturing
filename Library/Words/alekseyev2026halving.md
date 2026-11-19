@@ -33,9 +33,12 @@ family predicates use fixed integral coefficients on every natural input,
 including zero. Enumeration of a finite index type does not require independent
 constituent sequences or invertible matrices.
 
-The source supplies the definition and question. The dyadic list classification,
-cardinality formula and recurrence obstruction are repository proofs, rather
-than assertions attributed to the paper.
+The source supplies the definition and question. The dyadic list classification
+and cardinality formula have direct repository proofs; the enumerative identity
+is also a specialization of Alekseyev's prior fixed-length Theorem 5. The
+recurrence obstruction answers the separate regularity question. The
+[weighted source](mazhang2026weightedhalving.md) retains the later extensions
+and the prior enumeration, dilation and lower-bound attributions.
 
 ## Verified locator
 

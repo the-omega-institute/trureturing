@@ -1,0 +1,42 @@
+**Definition 9.6 (source correspondence and attribution).**
+The analytic contact and clock inputs are
+[CONTACT, Theorems 116.3--116.4, (116.8)--(116.14)] for this
+properly associated process, and its positive-time source law
+[CONTACT, Theorem 117.2, (117.2)--(117.3)].
+The full-versus-killed domain distinction (116.11) is retained:
+the hitting argument uses the full non-Friedrichs process, whose
+killed part is the original Friedrichs operator, not a replacement
+full source. [DPCR, Definition 9.1 and Theorem 9.2] supplies the
+defect and centered heat estimate in (9.6). The actual posterior
+and B updates are (2.2)--(2.5); stopped weighting and waiting use
+§6 without changing its full-history meaning.
+
+The complete product future kernel and static tail/past distinction
+are [OWGR, Definitions 15.1 and Proposition 16.3]; its Theorem 5.2,
+(5.2)--(5.3), transports the entire endpoint, source, domains
+and clock used in (9.21).
+[SRO, Definition 21.1 and Theorem 22.1,
+(SRO.150)--(SRO.151)] authorizes only the paid fixed-reference
+calls and the common-event branch argument; [DPCR, (11.30)]
+supplies their certified defects. [DPCR, Definition 12.1 and
+Theorem 12.4] retains its stronger total-name requirements.
+No unknown-source heat evaluator has been inferred from an
+abstract parameter name. The resource and actual-return boundaries
+of [FEA, Definitions 16.2 and 18.3] persist.
+
+Strong Markov conditioning, signed-measure variation, kernel
+contraction, finite-prefix martingales, Ville's maximal inequality
+[VILLE], rational interval arithmetic and countable union bounds
+are established intermediates, not new general theorems here.
+[THREAD] supplies the existing level/event-TV framework; citing
+its statement does not assert a fresh application compiled in
+Lean. The source-specific composition (9.3)--(9.5), its earned
+finite guard (9.19)--(9.20), and the conditional consumer
+(9.23)--(9.25) are repo-derived ordinary mathematical deductions.
+They do not claim fresh Lean verification or worldwide novelty.
+
+[CONTACT]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md
+[THREAD]: ../../../D5/S3/Estimation/DataProcessing/InverseLimitEventTotalVariation.lean
+[VILLE]: https://arxiv.org/html/1808.03204v5#S2.SS3
+[NCO]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATION_ORDER_ACQUISITION.md
+

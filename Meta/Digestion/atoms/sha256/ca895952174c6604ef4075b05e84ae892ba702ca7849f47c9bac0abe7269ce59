@@ -1,0 +1,71 @@
+**定理 C-20.2（正因子化制备的精确切口秩）。** 对 𝑁≥2、真正切口 $`1\le k\lt N`$，定义
+
+
+```math
+\begin{aligned}
+|L_s\rangle&=
+\sum_{\substack{b_1,\ldots,b_k\text{ 合法}\\b_k=s}}
+\sqrt{\prod_{i=1}^kw_i^{b_i}}\,
+|b_1\cdots b_k\rangle,\\
+|R_t\rangle&=
+\sum_{\substack{b_{k+1},\ldots,b_N\text{ 合法}\\b_{k+1}=t}}
+\sqrt{\prod_{i=k+1}^Nw_i^{b_i}}\,
+|b_{k+1}\cdots b_N\rangle .
+\end{aligned}
+```
+
+
+则
+
+
+<table><tbody><tr><td>
+
+```math
+|\Psi_N\rangle=
+\frac{|L_0\rangle\otimes(|R_0\rangle+|R_1\rangle)
++|L_1\rangle\otimes|R_0\rangle}{\sqrt{𝒵_N}},
+```
+
+</td></tr></tbody></table>
+
+
+且此切口 Schmidt 秩恰为二，纠缠熵以比特计满足 $`0\lt S_{\mathrm{cut}}\le1`$。
+
+**证明。** 左右内部合法性已各自计入；跨切口只禁止 11，另外三种配对全部允许，因子化平方根权遂给显示的三项。两侧零、一组各有不交的正交基支撑，因此同侧向量正交。每侧非空，全部零位串和只把触边位设一的位串分别属于两组；正活动使四向量均非零。
+
+令 $`\ell_s=\|L_s\|^2\gt 0,\ r_t=\|R_t\|^2\gt 0`$。归一化四组向量后，在两侧正交单位基中的系数矩阵为
+
+
+```math
+C_{\mathrm{cut}}=
+\frac1{\sqrt{𝒵_N}}
+\begin{pmatrix}
+\sqrt{\ell_0r_0}&\sqrt{\ell_0r_1}\\
+\sqrt{\ell_1r_0}&0
+\end{pmatrix},
+\qquad
+\det C_{\mathrm{cut}}
+=-\frac{\sqrt{\ell_0\ell_1r_0r_1}}{𝒵_N}\ne0.
+```
+
+
+二侧纯态的 Schmidt 系数是系数矩阵的奇异值，故秩恰为二。这是既有 Schmidt/SVD 工具和等振幅合法链秩至多二证明的正权精确秩应用。[^CE-S] 两个约化谱概率为 𝜆,1-𝜆，$`0\lt \lambda\lt 1`$。其熵
+$`h_2(\lambda)=-\lambda\log_2\lambda-(1-\lambda)\log_2(1-\lambda)`$ 严格正；导数为
+$`\log_2((1-\lambda)/\lambda)`$，二阶导数
+$`-1/((\ln2)\lambda(1-\lambda))\lt 0`$，唯一最大点 1/2 给一比特。□
+
+例如 $`N=2,\ w=(4,9)`$，
+
+
+```math
+|\Psi_2\rangle=\frac{|00\rangle+3|01\rangle+2|10\rangle}{\sqrt{14}},
+\quad C_{\mathrm{cut}}=\frac1{\sqrt{14}}
+\begin{pmatrix}1&3\\2&0\end{pmatrix},
+\quad\det C_{\mathrm{cut}}=-\frac37.
+```
+
+
+𝑁=1 没有真实两侧切口；人为给空侧时只有秩一、熵零。零活动导致某些组消失，须按实际支撑另算，不能延用严格非零下界。任意相干振幅即使同样支撑于合法位串，也不必因子化；固定零接缝可制备
+$`F_{m+1}^{-1/2}\sum_{u\in𝒲_{m-1}}|u0\rangle\otimes|0u\rangle`$，
+$`𝒲_{m-1}`$ 为合法长 𝑚-1 词，其正交 Schmidt 秩为 $`F_{m+1}`$。这是既有明确见证，说明两态合法性接缝并不普遍限制相干秩。[^CE-S]
+

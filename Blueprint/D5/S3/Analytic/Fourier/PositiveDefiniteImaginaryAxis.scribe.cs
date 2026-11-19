@@ -1,9 +1,17 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Fourier;
 
 internal sealed class PositiveDefiniteImaginaryAxisDocument : IScribeDocumentDefinition
 {
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Coefficient(Formula function, Formula field, Formula degree) =>
+        Call("div", Call("iteratedDeriv", degree, function, D(0)),
+            Call("factorial", field, degree));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Imaginary radius bounds from finite positive semidefinite kernels.",
         H("Analytic positive definite functions"), Blocks(
@@ -31,6 +39,22 @@ internal sealed class PositiveDefiniteImaginaryAxisDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Fourier/furuichi2022bounds")),
                 Blocks(Paragraph(Text("For natural k and m with m at most 2k, put u(j)=(-1)^j choose(k,j) for j from zero to k. The sum over i and j of u(i)u(j)(i-j)^m is zero below degree 2k and is (-1)^k (2k)! at degree 2k. Two successive forward differences give the identity, including the case k=0."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("real-axis-taylor-data"),
+                DeclarationHandle.Create("D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.real_taylor_data"),
+                H("All Taylor coefficients of a real-preserving germ"),
+                StatementSource.FromAuthor(Disp(All("F", new Formula.TypeArrow(F.Id("Complex"), F.Id("Complex")), Seq(
+                    Call("AnalyticAt", F.Id("Complex"), F.Id("F"), D(0)), Sp, Land, Sp,
+                    Call("EventuallyRealOnRealAxis", F.Id("F")), Sp, Implies, Sp,
+                    Call("AnalyticAt", F.Id("Real"), Call("realRestriction", F.Id("F")), D(0)),
+                    Sp, Land, Sp,
+                    All("n", F.Id("Nat"), Seq(
+                        Call("im", Coefficient(F.Id("F"), F.Id("Complex"), F.Id("n"))), Sp, Eq, Sp, D(0),
+                        Sp, Land, Sp,
+                        Call("re", Coefficient(F.Id("F"), F.Id("Complex"), F.Id("n"))), Sp, Eq, Sp,
+                        Coefficient(Call("realRestriction", F.Id("F")), F.Id("Real"), F.Id("n")))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let F be complex analytic at zero, with imaginary part zero at every real argument in some neighborhood of zero. Its real restriction is the real function x mapped to Re(F(x)), with the real argument embedded in the complex numbers. This restriction is real analytic at zero. For every natural n, the complex coefficient iteratedDeriv(n,F,0)/n! has imaginary part zero and real part equal to the corresponding derivative coefficient of the real restriction. Degree zero is included. The construction precomposes the scalar-restricted series by the real-to-complex continuous linear embedding before projecting real and imaginary parts."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("positive-definite-imaginary-radius"),
                 DeclarationHandle.Create("D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.le_re_of_positiveDefinite"),
                 H("The imaginary radius lower bound"), StatementSource.WithoutFormula(),

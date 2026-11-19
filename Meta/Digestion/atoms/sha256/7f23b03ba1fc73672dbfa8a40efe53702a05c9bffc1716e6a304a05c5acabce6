@@ -1,0 +1,56 @@
+**定义 182.1（完整原候选与反射分支）。** 完整采用173.1–173.2的同一原
+$(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、全部原P2和完整原PB。
+具体地，A1保留所有原标签的两条有向Hermitian二表正性；A2保留实际
+相加三表 $(a+b,a,b)$ 及其排列在整个实三空间上的实部半正定性及
+$(1,-1,-1)$ 的零二次值；A3保留 $S(u,u)=u$ 和同一固定有理
+$0<\vartheta_0\le1$ 上的 $0\le y\le\vartheta_0u\Rightarrow S(y,y)\le y$。
+原正评价分离元素并准确决定原锥，全部零、不等和次归一质量保留。
+沿前卷16.1–16.2的同一忠实、含单位、等距且准确保锥JC包含，仍写
+
+$$
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\quad\mathcal A=C^*(X),\quad
+S(a,b)=a\circ b=(ab+ba)/2.
+\tag{182.1}
+$$
+
+$E$ 可以不完备、无限维、不可分，$X$ 不必填满 $\mathcal A_{\rm sa}$。
+旧 $D:E^2\to E$ 不预付一般可加、齐次、连续、可测、协变、商下降或
+完成延拓。固定同一实际原 $h,e,j=D(h,e)$，消费133.1–134.1的
+$h^2=e^2=j^2=u$、两两Jordan正交，以及辅助中央自伴对合
+$Q=ihej\in Z(\mathcal A)$；不要求 $Q\in E$。
+
+另给一份明确的充分分支资料：原 $s\in E$ 满足
+
+$$
+s^2=u,\qquad [s,h]=[s,e]=0.
+\tag{182.2}
+$$
+
+这是对同一原域内已有标签的条件，不由A1–A3或PB推断其存在。取任意
+$\lambda,\nu\in\mathbb R$、$\nu\ne0$ 及原 $z\in E$、$hz=-zh$，固定
+
+$$
+\begin{gathered}
+c=\lambda h+\nu s,\quad x=c+z,\quad
+t=D(h,z)=iQhz,\quad d=D(h,x)=t+r,\quad
+[h,r]=0,\quad k=h\circ x=hc=\lambda u+\nu hs.
+\end{gathered}
+\tag{182.3}
+$$
+
+这里 $[h,r]=0$ 来自150.1；$r$ 始终是这份旧输出的同一余量，而不是
+另选的候选输出。174.1已给 $D(h,c)=D(h,k)=0$，但不先把混合响应
+拆开。对 $a=h,s$，记原有限Jordan算子
+
+$$
+U_a y=2a\circ(a\circ y)-y=aya,\qquad
+P_a^\pm=(I\pm U_a)/2,\qquad y_{\rm e}=P_s^+y,\quad y_{\rm o}=P_s^-y.
+\tag{182.4}
+$$
+
+特别 $z_{\rm e},z_{\rm o},r_{\rm e},r_{\rm o},t_{\rm e},t_{\rm o}$ 都是原
+标签。$U_h,U_s$ 对易；括号只表示已知环境交换子，不定义新的响应。
+所有结合乘法、表示和数学态仅用于证明，不把原域外的根、逆元、谱符号
+或归一化元素送进 $D$。
+

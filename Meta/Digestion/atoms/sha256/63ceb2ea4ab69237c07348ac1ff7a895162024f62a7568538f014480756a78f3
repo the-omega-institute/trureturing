@@ -1,0 +1,17 @@
+**命题 80.4（完整转置平均模型的包络）。** 在 78.5 的固定完整原接口 (78.16) 中，$0<\lambda<1$ 时
+$$
+\boxed{\mathcal D_\lambda=8(1-\lambda^2)(7+2\lambda^2)>0.} \tag{80.6}
+$$
+同一个模型在全部单框架上的最小 $q$ 却为零；在真正生成整个 $A$ 的三框架族上，旧 $\delta$ 的下确界为零而没有零见证。因此最小单框架、生成族下确界与全框架最大值不能互换。
+
+**证明。** 保留 (78.16) 的全部原 $A,D,E,L,p,\omega$，包括同一个四维首腿偏迹、两实张成、全实 $Z$、$U=I_{16},G=I_{64}$ 和整个原锥上的 C13；该模型的 $D_J$ 失败、$D_H$ 成立。这里只计算新包络，不另造边缘代替实际接口。对单位 $v\in\mathbb C^4$ 及 $e=vv^*$，令 $a=(1+\lambda)/2,b=(1-\lambda)/2$。$e^T=\bar v v^T$，故 $\operatorname{Tr}(ee^T)=|v^Tv|^2$，从而
+$$
+\operatorname{Tr}[(T_\lambda e)^2]=a^2+b^2+2ab|v^Tv|^2
+=\frac{1+\lambda^2}{2}+\frac{1-\lambda^2}{2}|v^Tv|^2. \tag{80.7}
+$$
+对任意完整秩一框架 $B$，置 $S_B=\sum_{e\in B}\operatorname{Tr}[(T_\lambda e)^2]$、$d_B=4-S_B$。由 $0\le|v^Tv|^2\le1$，有 $0\le d_B\le2(1-\lambda^2)$。同一原接口的第一表平方范数和为 $4S_B$，第二表为 $4S_B^2$；因此
+$$
+q_J(B)=4d_B,\qquad q_H(B)=4d_B(8-d_B),\qquad q(B)=4d_B(9-d_B). \tag{80.8}
+$$
+最后的多项式在 $0\le d_B\le2$ 上严格递增。取两个不交 $2\times2$ 角中 $Y$ 的正负本原投影，即由 $(1,\pm i,0,0)/\sqrt2$、$(0,0,1,\pm i)/\sqrt2$ 给出的完整框架。四个向量均有 $v^Tv=0$，达到 $d_B=2(1-\lambda^2)$，代入即得 (80.6)。实正交基给 $d_B=q(B)=0$，证明最小单框架为零。78.5 的真生成族 $\mathfrak B_\theta$ 则满足 $\delta(\mathfrak B_\theta)\to0$，而固定的 $\langle Jp_+,Jp_-\rangle=2(1-\lambda^2)>0$ 排除任何生成族零见证。后者是非闭生成族上的下确界，不是已达到的生成族最小值。证毕。
+

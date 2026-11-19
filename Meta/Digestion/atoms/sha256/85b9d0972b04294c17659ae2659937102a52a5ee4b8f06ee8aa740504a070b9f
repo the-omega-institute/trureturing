@@ -1,0 +1,87 @@
+**定理 111.7（原纯自检测的二分之一下界）。** 在W与G下，固定任意原joint $F$。
+若 $Z_F\ne0$，则存在原纯点 $x\in P$，使
+
+$$
+\delta_F(x)=a_x(\mathcal I_Fx)\ge\frac12.
+\tag{VIII111.24}
+$$
+
+所用尺必须是这个 $x$ 自己的原least确认尺 $a_x$；
+本结论不只给一张事后任选的有符号泛函。
+它是条件性的统一下界，不宣称该常数锐，也不宣称存在满足W与G而 $Z_F\ne0$ 的模型。
+
+证明。选 $0\ne z\in Z_F$。
+此时已经假设G，故可以准确复用VII105.10在W加G域中的有符号三谱存在，
+而不要求全纯互易或Jordan。
+得到某个原joint $H=(x_1,x_2,x_3)$ 和实系数
+
+$$
+z=\sum_{i=1}^3\lambda_i x_i,\qquad
+\sum_i\lambda_i=u(z)=0,\qquad(\lambda_i)_i\ne0.
+\tag{VIII111.25}
+$$
+
+$H$ 可与固定观测框架 $F$ 不同，全部对象仍属于同一个原模型。
+记 $X_i=\pi_Fx_i$、$Y_i=Y_{a_{x_i}}$。
+由G的框架和、Riesz线性性及109.2的共同核，分别有
+
+$$
+\sum_iX_i=\pi_FU=U,\qquad
+\sum_iY_i=Y_{\sum_i a_{x_i}}=Y_u=U,\qquad
+\sum_i\lambda_iX_i=\pi_Fz=0.
+\tag{VIII111.26}
+$$
+
+第一式只用 $U$ 是固定 $F$ 的三个点之和，故 $\pi_FU=U$；
+第二式用原joint尺和为 $u$；没有将 $x\mapsto a_x$ 预设成全空间线性映射。
+令 $v_i=X_i-U/3$。
+则 $\sum_i v_i=0$，且由 $\sum_i\lambda_i=0$ 有 $\sum_i\lambda_i v_i=0$。
+系数列 $(1,1,1)$ 与非零零和列 $(\lambda_1,\lambda_2,\lambda_3)$ 线性独立，
+故从 $\mathbb R^3$ 向 $V_F$、$e_i\mapsto v_i$ 的线性映射有至少二维核，
+其像维数至多一。这严格给出三个可见中心向量共线，包含全部为零的情形。
+
+若全部 $v_i=0$，则 $h_F(Y_i,X_i)=h_F(Y_i,U/3)=1/3$，
+所以三个 $\delta_F(x_i)$ 都为 $2/3$，已得结论。
+否则在这条直线上取 $h_F$ 单位向量 $e$；它与 $U$ 正交。
+定义实数列
+
+$$
+v_i=\alpha_i e,\qquad
+\beta_i=h_F(e,Y_i-U/3),\qquad
+\sum_i\alpha_i=\sum_i\beta_i=0,\qquad
+|\alpha_i|,|\beta_i|\le a=\sqrt{2/3}.
+\tag{VIII111.27}
+$$
+
+$\beta_i$ 的界是正交投影收缩，由111.6的中心范数界给出，
+不要求 $Y_i-U/3$ 也在同一条直线上。
+两列来自同一个谱框架与同一个固定 $F$，不能各自更换实现。
+由此准确计算
+
+$$
+\delta_F(x_i)=\frac23-\alpha_i\beta_i.
+\tag{VIII111.28}
+$$
+
+只需证明三个乘积中至少一个不超过 $a^2/4=1/6$。
+若某个乘积非正，已成立。
+否则各项 $\alpha_i,\beta_i$ 都非零且逐项同号。
+零和三元列必有两项同号；同时给两列换整体符号后，
+可重标号使 $\alpha_1,\alpha_2,\beta_1,\beta_2>0$。
+于是
+
+$$
+\begin{gathered}
+\alpha_1+\alpha_2=-\alpha_3\le a,\qquad
+\beta_1+\beta_2=-\beta_3\le a,\\
+\sqrt{\alpha_1\beta_1}+\sqrt{\alpha_2\beta_2}
+\le\sqrt{(\alpha_1+\alpha_2)(\beta_1+\beta_2)}\le a.
+\end{gathered}
+\tag{VIII111.29}
+$$
+
+两乘积不可能都大于 $a^2/4$，否则左边严格大于 $a$。
+故某个 $i$ 有 $\alpha_i\beta_i\le1/6$，代入(VIII111.28)得
+$\delta_F(x_i)\ge2/3-1/6=1/2$。
+以上包括零系数、中心像为零和零切块；没有用滤子保纯或Peirce分类。证毕。
+

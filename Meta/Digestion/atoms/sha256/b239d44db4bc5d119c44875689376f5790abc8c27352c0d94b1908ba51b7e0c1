@@ -1,0 +1,19 @@
+**命题 488.4（二倍区间均方上界）。** 设 RH，并设短区间均方估计 $\int_X^{2X}|E((1+\theta)x)-E(x)|^2dx\ll\theta X^2\log^2(2/\theta)$（$0<\theta\le1$；Saffari–Vaughan，见 Chan [More precise pair correlation of zeros and primes in short intervals, J. London Math. Soc. 68 (2003)] 式 (2)）。则
+
+$$
+\int_X^{2X}\mathcal T(x)^2\,\frac{dx}x\ll X^{1/5}(\log X)^2 .
+\tag{488.6}
+$$
+
+证明。令 $D(x,\theta)=E((1+\theta)x)-E(x)$。换元 $u=\theta x$ 并由 $0<\rho_x(u)\le1$ 与 Cauchy–Schwarz，
+
+$$
+\frac{\mathcal T(x)^2}x\le\frac x{H_x^3}\int_0^{x^{-1/5}}D(x,\theta)^2\,d\theta .
+$$
+
+在 $[X,2X]$ 上积分，交换次序并代入 Selberg 型估计，右边至多 $\ll X^{-7/5}\int_0^{X^{-1/5}}\theta X^2\log^2(2/\theta)\,d\theta\ll X^{1/5}(\log X)^2$。证毕。
+
+**范围说明。** 定理 488.3 把 §487 的 $\log\log x$ 提升为 $|\mathcal T|$ 的幂次下界 $x^{1/40}\sqrt{\log x}$；命题 488.4 说明在二倍区间上 $\mathcal T$ 的均方至多 $X^{1/5}(\log X)^2$，即二次平均意义下的量级不超过 $x^{1/10}\log x$。以下仍未决：二倍区间上的下界 $\int_X^{2X}\mathcal T^2dx/x\gg X^{1/5}\log X$（Chan 前引文讨论的是普通短区间方差渐近与强对相关的等价，不直接涉及本核的加权下界）；带符号的幂次 $\Omega_\pm$——均方只控制 $|\mathcal T|$，而 §487 的 Dirichlet 同步只保证 $\log y$ 量级；以及 §481 所述被选整数来源上的下界。
+
+**范围与文献归属。** 经典输入：RH、von Koch 界、(487.2)、(488.1)、(488.2)、Saffari–Vaughan 短区间均方上界；高斯反演、Plancherel 与 Young 不等式。(488.2) 及其 $\ell\le2$ 情形的来源见上文；de la Bretèche–Fiorilli [Math. Ann. 381 (2021)] 的平滑短区间矩下界要求偶的内层平滑与非负 Fourier 变换，不能直接用于本核的单侧、随 $x$ 变化的权。本节的 `repo-derived` 内容：引理 488.1 对本核的高斯边界公式（含半直线修正与余项移线）；引理 488.2 由 (488.2) 推出的零点余弦和窗口均方下界；定理 488.3 把该下界运输到 $\mathcal T$ 的幂次均方下界与 $\Omega(x^{1/40}\sqrt{\log x})$；命题 488.4 对本核的二倍区间均方上界。本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
+

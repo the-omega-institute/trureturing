@@ -1,0 +1,52 @@
+**定义 36.1（完整候选与所检验的较弱接口）。** 完整候选仍取[原多项式零响应卷](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)89.1的同一原 $E,C,u,N,\mathcal P,S,D$、A1–A3、准确锥、全部质量、全部原P2及完整PB；一般原域与全部实际来源不变。本增补另给一个不满足完整PB的总映射，检验以下资料能否消去该卷93.1的全幅秩一余量：全部P2、全部共同二阶角的标准值、全部严格小连接秩一行、同一参照任意两份实倍数的整族PB，以及交换演员后的零标签与重复标签PB。这里不消费本卷27–35的额外实际全局标架。
+
+取 $E=X=H_3(\mathbb C)$，单位、Jordan乘法、锥、范数及全部正实线性评价均为标准者，全部零、不等和次归一质量保留。记
+
+$$
+\begin{gathered}
+p=E_{11},\quad q=E_{22}+E_{33},\quad X_{ij}=E_{ij}+E_{ji},\\
+A=2X_{12}+q,\quad T=X_{12},\quad
+0<\varepsilon\le1/\sqrt5,\quad d=\varepsilon X_{13},\\
+K(x,y)=\frac i2[x,y],\quad
+K_0=-\varepsilon\{2(E_{31}-E_{13})+E_{32}-E_{23}\},\quad
+H_{K_0}(x,y)=\frac{xK_0y-yK_0x}{2}.
+\end{gathered}
+\tag{36.1}
+$$
+
+直接复用原多项式零响应卷96.2、97.2的五份正表，按下表记其实际有序基和已付输出：
+
+$$
+\begin{array}{c|c|c|c}
+i&a_i&b_i&h_i\\ \hline
+0&p&A&d\\
++&p-d&T&-p+d/2\\
+-&p+d&-T&-p-d/2\\
+s+&A+d&T&H_{K_0}(A+d,T)\\
+s-&A-d&-T&H_{K_0}(A-d,-T)
+\end{array}
+\tag{36.2}
+$$
+
+令 $P_i=\operatorname{span}_{\mathbb R}\{a_i,b_i\}$。五个平面两两不同，每个基实线性无关，且均由实对称矩阵组成；这些事实复用该卷98.1的平面比较。对实线性无关的 $(x,y)\in P_i^2$，唯一写成
+
+$$
+\binom{x}{y}=M\binom{a_i}{b_i},\qquad M\in GL_2(\mathbb R).
+\tag{36.3}
+$$
+
+定义同一个总映射 $\widetilde D:E^2\to E$：实线性相关输入取零；独立输入属于某个 $P_i^2$ 时，若 $i\ne0$，取 $(\det M)h_i$；若 $i=0$ 且 $M_{12}^2+M_{22}^2\ge1$，仍取 $(\det M)d$；其他全部输入取 $K(x,y)$。独立输入不能同时属于两个不同 $P_i^2$，所以定义单值。相关输入的标准交换子及上述行列式值也均为零，不发生交叠矛盾。
+
+记 $\operatorname{PB}_{\widetilde D}(a;b,c)$ 为同一原PB的元素式：置
+
+$$
+v=\widetilde D(a,b)-a\circ c,\qquad
+w=a\circ b+\widetilde D(a,c),
+\quad
+\widetilde D(b+v,c+w)-\widetilde D(b-v,c-w)
+=-2b\circ v-2c\circ w.
+\tag{36.4}
+$$
+
+本节保留的只是下面逐项证明的PB子族，不把它们改称完整候选。
+

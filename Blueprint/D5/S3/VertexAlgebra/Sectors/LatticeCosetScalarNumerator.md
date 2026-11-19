@@ -1,0 +1,55 @@
+# Binary scalar polynomials from the actual compressed fields
+
+## Abstract
+
+LatticeCosetScalarNumerator
+
+D is the original LatticeData, e : Nat is arbitrary, B : Matrix (Fin D.rank) (Fin e) Int is arbitrary, and C : Matrix (Fin e) (Fin e) Int comes with hC : forall i j, C i j = C j i and hCe : forall i, Even (C i i). Original and external rank zero are included. hD : (gramReal D).PosDef concerns only the ORIGINAL Gram form; there is no positivity or inverse requirement on the ambient block. Set I = compressed D B C hC hCe, S = schur D B C with its complete C term, and G[a](h) = rationalGrade D (moduleShift D B a) h. The original fields, states and half-diagonal cocycle are retained.
+
+The vector coefficient H is EXACTLY LatticeCosetWeakAssociativity.numerator D B C hC hCe, and Psi is EXACTLY that supplier's sharedNumerator, using its finite coordinateChange. JP is its productCoefficient, the actual nested pair of compressed modes. H and Psi have two nonnegative coefficient indices, so the scalar polynomials below have variables Fin 2. The three original input states u,v,w do not make this a trivariate polynomial theorem.
+
+**Definition 1.1 (scalarDegrees).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetScalarNumerator.scalarDegrees`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetScalarNumerator.scalarDegrees` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For an external charge a and original state u, the consumed private stateWeights D B a u is the finite image of (carrierCoeffEquiv D u).support under weight D (moduleShift D B a). The public definition scalarDegrees D B C a b c u v w F R M N is the image of ((stateWeights(a,u) times stateWeights(b,v)) times stateWeights(c,w)) times F under (hu,hv,hw,hp) -> (N:Rat)+(R:Rat)+(M:Rat)+S(a,b)+S(a,c)+S(b,c)+hp-hu-hv-hw. It requires arbitrary a,b,c : Fin e -> Int, u,v,w : Carrier D, F : Finset Rat and R,M,N : Int; it has no hD, hC, hCe or test-functional premise. These are actual finite input coefficient supports, not an assumed finite vector-valued support for H or Psi.
+
+**Theorem 1.2 (actual_scalar_numerator).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetScalarNumerator.actual_scalar_numerator`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeCosetScalarNumerator.actual_scalar_numerator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every D,e,B,C,hC,hCe as above, hD, arbitrary a,b,c : Fin e -> Int, arbitrary original u,v,w : Carrier D, phi : Module.Dual Complex (Carrier D), F : Finset Rat, and hphi : forall h x, x in G[a+b+c](h) -> h notin F -> phi x = 0, and every SIGNED R,M,N : Int, define T = scalarDegrees D B C a b c u v w F R M N and K : Nat = T.sup (fun q => (ceil(q):Int).toNat). Define the binary formal power series A(d) = phi(H a b c u v w R M N (d 0) (d 1)) and Q(d) = phi(Psi a b c u v w R M N (d 0) (d 1)). The theorem concludes ALL FOUR statements: for every d,k : Nat, nonzero phi(H ... d k) implies (d:Rat)+(k:Rat) in T; for every d,k, nonzero phi(Psi ... d k) implies the same membership; there exists a UNIQUE P : MvPolynomial (Fin 2) Complex with its power-series coercion equal to A and P.totalDegree <= K; and there exists a UNIQUE such P with coercion equal to Q and totalDegree <= K. A, Q and K are constructed in the conclusion; neither a polynomial nor its existence is assumed. No homogeneous-input, vector finite-total-support, Jacobi, recovery, truncation-witness or separately chosen scalar-cutoff premise occurs.
+
+The test condition hphi is finite OUTPUT WEIGHT support for the original rational grading in the total sector a+b+c. The functional may act arbitrarily within each supported weight space. It is the stated algebraic restricted-dual condition; the theorem does not extend to an unrestricted algebraic dual. F may be empty, all original carrier states remain available, and R,M,N need not be nonnegative or be previously identified as actual cutoffs.
+
+Proof mechanism, before testing: product_grade consumes Energy/LatticeCosetCompressedEnergy.actual_compressed_mode_grade twice and schur_add_right to put JP(m,n) in G[a+b+c](hu+hv+hw-m-n-S(a,b)-S(a,c)-S(b,c)-2) for homogeneous inputs. Each summand in the literal numerator has modes N+R-1-d-i and M-1-k+i. Their sum is independent of i, so numerator_grade puts H(d,k) in G[a+b+c](hu+hv+hw-S(a,b)-S(a,c)-S(b,c)-N-R-M+d+k). This is a proved vector-valued grade, with no charged-Borcherds or recovery identity used as a premise.
+
+For homogeneous inputs, hphi forces a nonzero tested coefficient into some hp in F, hence d+k=N+R+M+S(a,b)+S(a,c)+S(b,c)+hp-hu-hv-hw. For general original states, the exact private coefficientProjection, projection_mem and projection_sum suppliers from Sectors/LatticeDualCosetGrading give their finite homogeneous decompositions. numerator_sum_left, numerator_sum_middle and numerator_sum_right follow from the actual linear fields and finite sums; numerator_decomposition then expands H over all three input weight sets. homogeneous_scalar_support applied to those summands proves numerator_scalar_support with the computed T. shared_scalar_support unfolds the actual sharedNumerator and coordinateChange: its finite shear uses H(d+j,k-j) for j<=k, preserving d+k. It therefore proves the SAME T bound for Psi, without assuming a support statement about either vector family.
+
+The final extraction directly reuses the private word_polynomial_of_degree_support from Sectors/LatticeSectorScalarNumerator. A binary exponent has total degree d(0)+d(1). If its tested coefficient is nonzero, membership in T bounds that natural degree by K, using ceil_natCast and toNat_natCast. The existing supplier constructs each scalar polynomial; MvPolynomial.coe_injective proves uniqueness. There is no replacement extraction theorem, extra wrapper or retained finite example. With alpha=-S(a,b), beta=-S(a,c), gamma=-S(b,c), the same exact degree expression is N+R+M-(alpha+beta+gamma)+hp-hu-hv-hw, with no reduction modulo integers.
+
+Exact suppliers are Energy/LatticeCosetCompressedEnergy for the actual signed grading, Sectors/LatticeCosetWeakAssociativity for productCoefficient, numerator, sharedNumerator and coordinateChange, Sectors/LatticeDualCosetGrading for the coefficient projections, and Sectors/LatticeSectorScalarNumerator for scalar polynomial extraction. Mathlib.Data.Rat.Floor supplies the ceiling normalization. The actual consumer chain within this root is product_grade -> numerator_grade -> homogeneous_scalar_support, together with numerator_decomposition -> numerator_scalar_support -> shared_scalar_support -> actual_scalar_numerator. No downstream analytic or categorical identification is supplied by this delivery.
+
+The actual original proof source is preserved from import to EOF, with supplied export SHA256 c0c34a65cb7326468d552cd9c16d490e8973c4690a01d46ee49de010a4351767. Imported suppliers retain their attribution; no literature novelty is asserted. The source-bound escape audit is unfinished: https://github.com/the-omega-institute/trureturing/issues/29386. No validated registration is claimed.
+
+Scope and interpretation limits: these are actual finite-output-weight tested BINARY algebraic scalar numerators with exact rational degree support and computed polynomial bounds. Identifying chosen R,M,N with actual cutoffs, identifying H/Psi with analytic sewn channels, analytic continuation, occupation or ground-propagator identifications, fusion/F, BPZ, pentagon, category realization, spacetime dynamics, string theory and AdS/CFT completion are not established here.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetScalarNumerator.actual_scalar_numerator`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetScalarNumerator.scalarDegrees`
+- Dependency: [D5/S3/VertexAlgebra/Energy/LatticeCosetCompressedEnergy](../Energy/LatticeCosetCompressedEnergy.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity](LatticeCosetWeakAssociativity.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeSectorScalarNumerator](LatticeSectorScalarNumerator.md)

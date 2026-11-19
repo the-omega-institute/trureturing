@@ -1,0 +1,2 @@
+**范围。** 比例窗与加法窗之间的方差转移另见 Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185] 定理 $C_1,C_2,D_1,D_2$，那里的定量结论要求幂次节省的误差。Leung 前引文定理 10.1 的移动窗结论在 RH、LI 与 QLI 下对对数取样 $x=e^u$ 成立，并要求 $\log(1/\delta)=o(\log U)$，不覆盖这里固定 $\theta<1$ 的普通二倍区间取样。定理 490.6 只控制 $|\mathcal T_{\theta,g}|$，不给出带符号的幂次 $\Omega_\pm$。
+

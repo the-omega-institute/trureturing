@@ -10,7 +10,40 @@ internal sealed class FiniteOffsetSingularSeriesDocument : IScribeDocumentDefini
         "Complete blocking is a finite prime check; the singular series is a convergent "
             + "product of the local correlation factors over every prime.",
         H("Finite Offset Singular Series"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("offset-local-factor"),
+                DeclarationHandle.Create("D5/S3/Analytic/PrimeProducts/FiniteOffsetSingularSeries.offsetLocalFactor"),
+                H("offset local factor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a finite set H of integer offsets and a prime p, the local factor is (1-localResidueCount(H,p)/p) divided by (1-1/p) raised to the cardinality of H."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("offset-singular-series"),
+                DeclarationHandle.Create("D5/S3/Analytic/PrimeProducts/FiniteOffsetSingularSeries.offsetSingularSeries"),
+                H("offset singular series"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The singular series of a finite set of integer offsets is the infinite product of offsetLocalFactor over all primes."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("local-residue-count-eq-card-of-diameter-lt"),
+                DeclarationHandle.Create("D5/S3/Analytic/PrimeProducts/FiniteOffsetSingularSeries.local_residue_count_eq_card_of_diameter_lt"),
+                H("local residue count eq card of diameter lt"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If every absolute difference between two integer offsets in H is at most a natural diameter, then for every natural modulus p larger than that diameter the forbidden-residue count modulo p equals the cardinality of H."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("binomial-remainder-le"),
+                DeclarationHandle.Create("D5/S3/Analytic/PrimeProducts/FiniteOffsetSingularSeries.binomial_remainder_le"),
+                H("binomial remainder le"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real x in [0,1] and every natural n, the difference between (1-x)^n and 1-nx is at most n squared times x squared."))),
+                DescribeRole.Theorem),
+Describe.Lean(
             DescribeId.Create("finite-offset-blocking-and-singular-series"),
             DeclarationHandle.Create(
                 "D5/S3/Analytic/PrimeProducts/FiniteOffsetSingularSeries."

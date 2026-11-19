@@ -1,7 +1,4 @@
 import Lake
-import Lake.CLI.Build
-import Lake.Util.StoreInsts
-import Std.Sync.Semaphore
 open Lake DSL System
 open Lean (Json)
 
@@ -63,24 +60,20 @@ private def observePhase (phase boundary : String)
 
 -- Compiler graph fetches may await Lake jobs. A thread mutex held across an
 -- await can deadlock when the runtime runs a contending callback on that same
--- worker. Keep the state exclusive with a task-aware semaphore instead.
+-- worker. Atomically append a promise to a task queue and await its predecessor.
 private structure CompilerMutex (α : Type) where
   value : IO.Ref α
-  gate : Std.Semaphore
+  tail : IO.Ref (Task Unit)
 
 private def CompilerMutex.new (value : α) : BaseIO (CompilerMutex α) :=
-  return ⟨← IO.mkRef value, ← Std.Semaphore.new 1⟩
+  return ⟨← IO.mkRef value, ← IO.mkRef (Task.pure ())⟩
 
 private def CompilerMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
     (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m β := do
-  discard <| IO.wait (← mutex.gate.acquire).result!
-  try action mutex.value finally mutex.gate.release
-
-private def CompilerMutex.tryAtomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
-    (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m (Option β) := do
-  if ← mutex.gate.tryAcquire then
-    try some <$> action mutex.value finally mutex.gate.release
-  else return none
+  let complete ← IO.Promise.new
+  let previous ← (mutex.tail.swap complete.result! : BaseIO (Task Unit))
+  discard <| IO.wait previous
+  try action mutex.value finally complete.resolve ()
 
 private structure ReportState where
   started : IO.Ref Lean.NameSet
@@ -265,6 +258,20 @@ private structure PreparedArtifact where
 module_data inspectorPreparedReport : PreparedArtifact
 module_data inspectorModuleReport : ReportArtifact
 
+private def reportModuleInputs (mod : Module) (records : Json) : FetchM (String × Array Module) := do
+  let encoded ← IO.ofExcept (records.getObjValAs? String mod.name.toString)
+  let record ← IO.ofExcept (Json.parse encoded)
+  let mut sources := #[mod]
+  for name in ← strings record "claims" do
+    let some claim := (← getWorkspace).findModule? name.toName
+      | error s!"utility claim module is not in the Lake workspace: {name}"
+    sources := sources.push claim
+  return (encoded, sources)
+
+private def fetchReportExports (state : ReportState) (sources : Array Module) :
+    FetchM (Array (Job ModuleExportInfo)) :=
+  state.graphFetch.atomically fun _ => sources.mapM (·.exportInfo.fetch)
+
 private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := withCurrPackage mod.pkg do
   observePhase "lake-module-inputs" "start"
   let pkg := (← getWorkspace).root
@@ -273,29 +280,22 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let utility := root / ".lake/build/lean-inspector" / "inputs" / s!"{mod.name}.json"
   let config ← (← fetch <| pkg.facet `reportInputData).await
   let records ← IO.ofExcept (config.getObjVal? "records")
-  let encoded ← IO.ofExcept (records.getObjValAs? String mod.name.toString)
+  let (encoded, sourceModules) ← reportModuleInputs mod records
   IO.FS.createDirAll utility.parent.get!
   writeBinFileIfChanged utility encoded.toUTF8
-  let record ← IO.ofExcept (Json.parse encoded)
-  let claims ← strings record "claims"
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
-  -- Lake's lookup/create/store is not atomic. Serialize graph registration,
-  -- while compiler jobs and input classification continue asynchronously.
-  let (deps, projection, inspector, exports, sourceModules, closures, reported) ←
+  -- An individual module facet needs the same compiler barrier for its own
+  -- roots. Collection preparation reuses the completed native export jobs.
+  let exports ← fetchReportExports reportState sourceModules
+  discard <| (Job.mixArray exports).await
+  let (deps, projection, inspector, closures, reported) ←
       reportState.graphFetch.atomically fun _ => do
     let deps ← fetch <| pkg.facet `reportProducer
     let projection ← fetch <| mod.facet `judgeInputs
     let inspector ← reportInspector.fetch
-    let mut exports := #[(← mod.exportInfo.fetch)]
-    let mut sourceModules := #[mod]
-    for name in claims do
-      let some claim := (← getWorkspace).findModule? name.toName
-        | error s!"utility claim module is not in the Lake workspace: {name}"
-      exports := exports.push (← claim.exportInfo.fetch)
-      sourceModules := sourceModules.push claim
     let closures ← sourceModules.mapM (·.transImports.fetch)
     let reported ← fetch <| pkg.facet `reportSourceModules
-    return (deps, projection, inspector, exports, sourceModules, closures, reported)
+    return (deps, projection, inspector, closures, reported)
   -- Only production consumes this source whitelist. Warm artifacts still trace
   -- the complete compiler exports below. Missing artifacts prepare the same
   -- Lake-owned closure before extraction; no dependency parser or additional
@@ -465,29 +465,31 @@ private def runBatch (pkg : Package) (requests : Array (String × Array String))
   finally
     removeFileIfExists requestFile
 
--- Bound the continuation depth when collecting thousands of module jobs.
-private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array α) := Id.run do
-  let mut level : Array (Job (Array α)) := #[]
-  let mut start := 0
-  while start < jobs.size do
-    level := level.push (Job.collectArray (jobs.extract start (min (start + 64) jobs.size)))
-    start := start + 64
-  if level.isEmpty then
-    return Job.collectArray #[]
+-- Combine already-fetched jobs in short folds and then a balanced tree.
+private def foldModuleJobs {α β : Type} (jobs : Array (Job α))
+    (leaf : Array (Job α) → Job β) (join : Job β → Job β → Job β) : Job β := Id.run do
+  if jobs.isEmpty then return leaf #[]
+  let mut level := #[]
+  for start in [0:jobs.size:64] do
+    level := level.push (leaf (jobs.extract start (start + 64)))
   while level.size > 1 do
-    let mut next : Array (Job (Array α)) := #[]
-    let mut i := 0
-    while i < level.size do
-      if i + 1 < level.size then
-        next := next.push ((level[i]!).zipWith (sync := true) (· ++ ·) (level[i + 1]!))
-        i := i + 2
-      else
-        next := next.push level[i]!
-        i := i + 1
+    let mut next := #[]
+    for i in [0:level.size:2] do
+      let left := level[i]!
+      next := next.push <| match level[i + 1]? with
+        | some right => join left right
+        | none => left
     level := next
-  return level[0]?.getD (Job.collectArray #[])
+  return level[0]!
 
-private def collectNativeReports (pkg : Package) (names : Array String) :
+private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array α) :=
+  foldModuleJobs jobs (fun chunk => Job.collectArray chunk)
+    (fun left right => left.zipWith (sync := true) (· ++ ·) right)
+
+private def mixModuleJobs {α : Type} (jobs : Array (Job α)) : Job Unit :=
+  foldModuleJobs jobs (fun chunk => Job.mixArray chunk) Job.mix
+
+private def collectNativeReports (pkg : Package) (config : Json) :
     FetchM (Job (Array ReportArtifact)) := do
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
   -- The report owns registered modules. The caller supplies program targets
@@ -499,23 +501,42 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
   try observePhase "lake-prepare-register" "start" catch _ => pure ()
-  -- Start every compiler projection before awaiting classifications below.
-  -- This keeps compilation parallel while shared graph registration is serial.
-  reportState.graphFetch.atomically fun _ => do
-    for name in names do
-      let some mod := (← getWorkspace).findModule? name.toName
-        | error s!"registered report module is not in the Lake workspace: {name}"
-      unless alreadyStarted.contains mod.name do
-        observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
-        discard <| fetch <| mod.facet `judgeInputs
-        observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
-  for name in names do
+  let records ← IO.ofExcept (config.getObjVal? "records")
+  let mut modules := #[]
+  let mut roots := #[]
+  let mut seen : Lean.NameSet := {}
+  for name in ← strings config "modules" do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
+    modules := modules.push mod
+    let (_, sources) ← reportModuleInputs mod records
+    for source in sources do
+      unless seen.contains source.name do
+        seen := seen.insert source.name
+        roots := roots.push source
+  -- Submit every root to Lake before the collector waits. Each artifact
+  -- traces its own exports independently of this ordering barrier.
+  let exports ← fetchReportExports reportState roots
+  discard <| (mixModuleJobs exports).await
+  -- Keep classifier processes and late graph registration sequential.
+  for mod in modules do
     unless alreadyStarted.contains mod.name do
+      let name := mod.name.toString
+      observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
+      let projection ← reportState.graphFetch.atomically fun _ =>
+        fetch <| mod.facet `judgeInputs
+      -- A continuation may reenter graphFetch; never hold it while awaiting.
+      discard <| projection.await
+      observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
+  for mod in modules do
+    unless alreadyStarted.contains mod.name do
+      let name := mod.name.toString
       members := members.insert mod.name
       observePhase "lake-prepare-module" "start" name "prepared-report-fetch"
-      prepared := prepared.push (← preparedModuleReport mod)
+      let job ← preparedModuleReport mod
+      -- Preparation can discover late judge dependencies. Drain it outside graphFetch.
+      discard <| job.await
+      prepared := prepared.push job
       observePhase "lake-prepare-module" "finish" name "prepared-report-fetch"
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
@@ -524,7 +545,7 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
     let requests := (artifacts.filter fun request =>
       request.artifact?.isNone && request.args[6]!.isEmpty).qsort fun a b => a.args[1]! < b.args[1]!
     -- Keep bounded native batches, committing each successful chunk before
-    -- starting the next. Compiler/projection jobs above remain asynchronous.
+    -- starting the next. Compiler/projection preparation above is complete.
     let mut start := 0
     while start < requests.size do
       let chunk := requests.extract start (min (start + 100) requests.size)
@@ -544,11 +565,7 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
     try observePhase "lake-source-whitelists" "finish" catch _ => pure ()
   let batch ← registerJob "Inspector native production batch" batch
   reportState.batch.set (some (members, batch))
-  let mut rows := #[]
-  for name in names do
-    let some mod := (← getWorkspace).findModule? name.toName
-      | error s!"registered report module is not in the Lake workspace: {name}"
-    rows := rows.push (← nativeModuleReport mod)
+  let rows ← modules.mapM nativeModuleReport
   return collectModuleJobs rows
 
 -- The scoped caller supplies complete membership through reportInputData and
@@ -556,7 +573,7 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
 package_facet moduleReports (owner : Package) : Array FilePath := withCurrPackage owner do
   let pkg := (← getWorkspace).root
   let config ← (← fetch <| pkg.facet `reportInputData).await
-  return (← collectNativeReports pkg (← strings config "modules")).map (·.map (·.path))
+  return (← collectNativeReports pkg config).map (·.map (·.path))
 
 package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   let pkg := (← getWorkspace).root
@@ -565,9 +582,8 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   let root ← repositoryDir pkg
   proc (← nativeCommand pkg #["aggregate-inputs", root.toString])
   let inputs := root / ".lake/build/lean-inspector" / "inputs.json"
-  let names ← strings config "modules"
   observePhase "lake-inputs" "finish"
-  let rows ← collectNativeReports pkg names
+  let rows ← collectNativeReports pkg config
   let membership ← inputBinFile inputs
   (rows.zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts => do
     let root ← repositoryDir pkg

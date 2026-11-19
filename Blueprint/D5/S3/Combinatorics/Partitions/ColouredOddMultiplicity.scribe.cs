@@ -9,6 +9,11 @@ internal sealed class ColouredOddMultiplicityDocument : IScribeDocumentDefinitio
  Paragraph(Text("An occupation assigns a nonnegative integer to each colour and mode. Mode n contributes the positive odd weight 2n+1. Forgetting colours gives an ordinary partition; at each occurring part, its multiplicity is allocated among the finite colour set by a weak composition.")),
  Paragraph(Text("Conversely, every allocation at an odd part k contributes the corresponding exponents at mode k/2. Oddness makes this mode recovery injective. Counting each part and each colour proves both inverse laws, including the empty partition and the empty colour set.")),
  Paragraph(Text("The finite count is the coefficient of the weighted partition GenFun. At each positive odd part k, its local factor has coefficient multichoose(r,N/k) when k divides N and zero otherwise. Reindexing the positive part and positive multiplicity factors yields the formal product of (1-X^(2n+1))^(-r), including rank zero and degree zero.")),
+
+            Describe.Lean(DescribeId.Create("h3-local-factor-of-coeff"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.local_factor_of_coeff"), H("Shared positive-multiplicity factor reconstruction"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any commutative topological ring with separated topology, the prescribed divisibility-filtered coefficients reconstruct the local factor 1+sum over positive multiplicities. This extracts the original complex-factor proof in its owner; both the original odd-multiplicity product and the integer coloured Euler ledger now consume it."))), DescribeRole.Theorem),
  Describe.Lean(DescribeId.Create("ones-partition"), DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.onesPartition"),
  H("The partition into ones"), StatementSource.FromAuthor(Disp(new Formula.Bind(
  FormulaQuantifier.ForAll, FormulaIdentifier.Create("N"), F.Id("Nat"),

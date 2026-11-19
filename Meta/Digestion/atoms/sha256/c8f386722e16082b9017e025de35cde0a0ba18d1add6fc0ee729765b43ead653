@@ -1,0 +1,160 @@
+**定理 97.4（任意严格正原单位下的曲线障碍）。** 对任意 $d\ge2$，令
+
+$$
+\nu_d(s,t)=(s^d,s^{d-1}t,\ldots,t^d)^{\mathsf T},\qquad
+L_d=\operatorname{span}_{\mathbb R}\{\nu_d(s,t)\nu_d(s,t)^{\mathsf T}:(s,t)\ne0\},\qquad
+C_d=L_d\cap\operatorname{PSD}_{d+1}.
+\tag{97.12}
+$$
+
+对 $C_d\setminus\{0\}$ 上任意严格正原泛函 $u$，取整个原基及其全部 proper 效应。
+则 $\mathrm G_2$ 失败：存在原纯点 $p,q,r$，满足
+
+$$
+T_p(q)=T_p(r)=0,\qquad T_p((q+r)/2)>0.
+\tag{97.13}
+$$
+
+同一结论在任意可逆整体合同表示中成立。
+
+证明。有理正规曲线非退化、全实且次数等于余维加一。
+Blekherman–Smith–Velasco，*Sums of Squares and Varieties of Minimal Degree*，
+[arXiv:1308.0751v1 Theorem 1.1、Example 4.5][BSV97min] 因而适用：其非负二次型都是线性形式平方和。
+对偶识别给 $C_d$ 由曲线的实点评价秩一射线生成，故它确为ROG。
+这里还使用该例中有理正规曲线的二次理想：它由
+$\left(\begin{smallmatrix}x_0&\cdots&x_{d-1}\\x_1&\cdots&x_d\end{smallmatrix}\right)$
+的二阶子式生成。因此 $C_d$ 的全部秩一纯射线恰为(97.12)的参数族，没有额外纯点。
+这只是所引成熟结果在以下障碍证明中的前置。
+
+先保留任意原 $u$。对原泛函 $f\in L_d^*$ 定义二元齐次形式
+
+$$
+F_f(s,t)=f(\nu_d\nu_d^{\mathsf T}),\qquad
+U(s,t)=u(\nu_d\nu_d^{\mathsf T}),\qquad
+p_{[s:t]}=\frac{\nu_d\nu_d^{\mathsf T}}{U(s,t)}.
+\tag{97.14}
+$$
+
+$U$ 在所有非零实向量上严格正。每个次数 $2d$ 的二元单项式都是两个次数 $d$ 单项式的乘积，
+所以环境二次型拉回曲线满射到 $\mathbb R[s,t]_{2d}$；其核恰为 $L_d^\perp$。
+故 $f\mapsto F_f$ 是 $L_d^*$ 与全部次数 $2d$ 二元形式的线性同构，且由ROG有精确字典
+
+$$
+f\in[0,u]_{C_d^*}\ \Longleftrightarrow\ 0\le F_f\le U
+\quad\text{在全部 }\mathbb R^2\text{ 上成立}.
+\tag{97.15}
+$$
+
+确认参数 $\zeta$ 是 $F_f(\zeta)=U(\zeta)$，排除参数 $\eta$ 是 $F_f(\eta)=0$。
+此字典包含整个原效应区间，不把非负性换成环境正收缩。
+
+为取得可排除开弧，现准确使用93.2及96.1的同单位归一化。
+它将嵌入变成 $A\nu_d$，$A$ 为可逆实矩阵，得到 $I_{d+1}\in L$、$u=\operatorname{tr}$。
+(97.14)—(97.15)仍成立，只将 $\nu_d$ 换成 $A\nu_d$；
+特别 $U=\|A\nu_d\|^2$，并非预设原任意单位已是标准迹。
+$\dim L=2d+1$，故 $\dim L^\perp=d(d-1)/2>0$。
+取非零 $N\in L^\perp$。纯向量张成整个环境，故存在原单位纯向量 $v$ 满足 $Nv\ne0$。
+由纯点约束 $v^{\mathsf T}Nv=0$。96.2的同一补框架给
+
+$$
+I_{d+1}=vv^{\mathsf T}+\sum_{j=2}^{d+1}w_jw_j^{\mathsf T},\qquad
+(v,w_2,\ldots,w_{d+1})\text{ 正交归一}.
+\tag{97.16}
+$$
+
+至少一个 $w=w_j$ 满足 $v^{\mathsf T}Nw\ne0$。
+曲线的实参数在 $w$ 附近有连续局部单位提升 $w(\tau)$。
+对充分靠近该参数的 $\tau$，置
+
+$$
+\alpha(\tau)=-\frac{v^{\mathsf T}w(\tau)}{v^{\mathsf T}Nw(\tau)},\qquad
+M(\tau)=I+\alpha(\tau)N,\qquad E(\tau)=M(\tau)vv^{\mathsf T}M(\tau).
+\tag{97.17}
+$$
+
+在 $w$ 处 $\alpha=0$，故缩小邻域后 $M\succ0$。
+又 $v^{\mathsf T}Mv=1$、$v^{\mathsf T}Mw(\tau)=0$。
+因为 $E=M^{1/2}zz^{\mathsf T}M^{1/2}$、$z=M^{1/2}v$ 且 $\|z\|=1$，有 $0\preceq E\preceq M$。
+$M-I\in L^\perp$ 使 $M$ 在原 $L$ 上表示同一个原单位，故
+$f_\tau(X)=\operatorname{tr}(E(\tau)X)$ 是原 proper 效应，确认 $p=vv^{\mathsf T}$
+并排除 $w(\tau)w(\tau)^{\mathsf T}$。于是
+
+$$
+Z_p=\{\eta\in\mathbb{RP}^1:p\perp p_\eta\}
+\tag{97.18}
+$$
+
+含非空开弧。确认集 $F_p$ 紧，$(f,\eta)\mapsto f(p_\eta)$ 连续，
+所以其零集在 $F_p\times\mathbb{RP}^1$ 中紧，投影 $Z_p$ 闭。
+而 $p\not\perp p$，故 $Z_p$ 不是整个射影圆周。
+取 $\operatorname{int}Z_p$ 的一个非空连通分支及其一个端点 $a$。
+则 $a\in\partial Z_p\subset Z_p$，并有不同于 $a$ 的 $a_j\in Z_p$ 趋于 $a$。
+端点确为 $Z_p$ 的边界：若它在 $Z_p$ 内部，该开分支便可越过端点延长。
+
+反设 $\mathrm G_2$ 成立。参数作一个实射影变换，将确认点 $p$ 放到无穷远；
+它与 $a$ 不同，故 $a$ 为有限实参数。次数 $d$ 的完整二元线性系在此变换下仍由可逆矩阵运输，
+(97.15)保持原效应的全部量词。
+以下将齐次形式写为仿射多项式 $F(z)=F(z,1)$、$U(z)=U(z,1)$，
+无穷远的齐次值就是 $z^{2d}$ 的系数，且 $U(\infty)>0$。
+对每个 $j$，$\mathrm G_2$ 给原效应 $F_j$，满足
+
+$$
+0\le F_j\le U,\qquad F_j(\infty)=U(\infty),\qquad
+F_j(a)=F_j(a_j)=0.
+\tag{97.19}
+$$
+
+实非负多项式的每个实零具有偶数重数，故
+
+$$
+F_j(z)=(z-a)^2(z-a_j)^2G_j(z),\qquad
+\deg G_j\le2d-4,\qquad G_j(z)\ge0\quad(z\in\mathbb R).
+\tag{97.20}
+$$
+
+$0\le F_j\le U$ 使 $F_j$ 的系数有界：在固定的 $2d+1$ 个不同有限实参数处，
+取值有界，Vandermonde 逆矩阵遂界定全部系数。
+取收敛子列。除数首一且系数连续趋于 $(z-a)^4$，多项式长除的递推使商系数亦连续收敛。
+故极限给
+
+$$
+F(z)=(z-a)^4G(z),\qquad G\ge0,\qquad
+0\le F\le U,\qquad F(\infty)=U(\infty)>0.
+\tag{97.21}
+$$
+
+对 $\varepsilon>0$ 定义同次数的候选形式，其仿射式为
+
+$$
+F_\varepsilon(z)=\bigl((z-a)^2-\varepsilon^2\bigr)^2G(z).
+\tag{97.22}
+$$
+
+它非负且最高次系数不变，故仍确认无穷远的同一个原 $p$。
+当 $|z-a|\ge\varepsilon/\sqrt2$ 时，
+
+$$
+F_\varepsilon(z)-F(z)
+=\bigl(\varepsilon^4-2\varepsilon^2(z-a)^2\bigr)G(z)\le0.
+\tag{97.23}
+$$
+
+为控制剩余区域，固定 $\delta>0$，令
+$m=\min_{|z-a|\le\delta}U(z)>0$、$B=\max_{|z-a|\le\delta}G(z)\ge0$。
+取所有充分小 $\varepsilon>0$ 使 $\varepsilon<\delta$、$\varepsilon^4B\le m$。
+在 $|z-a|<\varepsilon/\sqrt2$ 中有
+$0\le F_\varepsilon(z)\le\varepsilon^4B\le U(z)$；外部由(97.23)控制，
+无穷远仍取同一个齐次值。因此
+
+$$
+0\le F_\varepsilon\le U\text{ 在整个 }\mathbb{RP}^1\text{ 上成立},\qquad
+F_\varepsilon(a-\varepsilon)=F_\varepsilon(a+\varepsilon)=0.
+\tag{97.24}
+$$
+
+由(97.15)，每个充分小的 $\varepsilon$ 都给一把真正的原全域确认效应。
+所以 $a$ 两侧所有充分近的参数都属于 $Z_p$，加上 $a\in Z_p$，说明 $a$ 是内点，与边界矛盾。
+故 $\mathrm G_2$ 失败，存在其失败三纯点；$F_p$ 的紧性使无共同零时的中点最小值严格正，得(97.13)。
+最后以整锥同构及其对偶运回任意原 $u$ 或任意整体合同表示。
+$d=1$ 则是完整实二阶块，93.2给 $\mathrm G_2$，所以次数下界不能删去。证毕。
+

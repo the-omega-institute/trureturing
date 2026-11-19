@@ -1,0 +1,30 @@
+## 53. 非零局部作用不能缩回零
+
+在活跃点记 $s=tf(x)$、$q=u-p$、$\alpha=(1-is)^{-1}$。因 $Jr=isp$，有准确分块式
+
+$$
+\begin{gathered}
+A=(q+\alpha p)W,\\
+qX_rp=\tfrac12(qWp+\bar\alpha qW^*p),\qquad
+qY_rp=-\tfrac J2(qWp-\bar\alpha qW^*p).
+\end{gathered}
+\tag{53.1}
+$$
+
+因此 $\|qWp\|+|\alpha|\|qW^*p\|<4$ 是合格的充分条件；必要条件则包括
+
+$$
+\|qWp\|=\|qAp\|\le\|qX_rp\|+\|qY_rp\|<4.
+\tag{53.2}
+$$
+
+二者不能混用。另有
+
+$$
+\|A-W\|=\|(\alpha-1)pW\|\le |s|\|W\|,
+\qquad |\alpha-1|=\frac{|s|}{\sqrt{1+s^2}}.
+\tag{53.3}
+$$
+
+式中可用全局 $\|W\|$ 作为上界。
+

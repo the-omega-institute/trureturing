@@ -1,0 +1,42 @@
+**推论 179.1（同一原表的自交换充分接口）。** 在173.1下，对每个原 $x$，
+静态卷引理5.7直接给
+
+$$
+\boxed{[r,x]=0\quad\Longleftrightarrow\quad r=0.}
+\tag{179.1}
+$$
+
+这是一份已有逐对标量铅笔结果的参数应用，不是新的谱定理，
+也没有生产一般 $[r,x]=0$。
+
+证明。反向直接成立。正向利用已付的 $[r,h]=0$；在已知环境的含单位
+C*子代数
+
+$$
+\mathcal A_0=C^*(u,h,x,r,Q)
+\tag{179.2}
+$$
+
+中，$r,Q$ 都中央。任取其非零不可约表示 $\pi$，存在实
+$\lambda$ 和 $\epsilon\in\{1,-1\}$ 使
+$\pi(r)=\lambda I,\pi(Q)=\epsilon I$。令
+
+$$
+p=\pi(h),\qquad q=\pi(x),\qquad
+\delta=\epsilon\pi(d)=\frac i2[p,q]+\epsilon\lambda I.
+\tag{179.3}
+$$
+
+每个 $\pi(\mathcal A_0)$ 的态先拉回 $\mathcal A_0$，再正延拓到
+$\mathcal A$；其限制读取的正是同一实际 $(h,x,d)$ 原P2。
+所以它的二表对角准确为 $p^2,q^2$、实非对角为 $p\circ q$。
+若 $\epsilon=-1$，将数值Hermitian二表复共轭只反转虚非对角符号，
+仍半正定。因此所有这些态对179.3的 $\delta$ 都满足静态卷5.7的准确前件。
+该引理以 $(p,q,\tau)=(\pi(h),\pi(x),\epsilon\lambda)$ 给
+$\epsilon\lambda=0$。不可约表示分离 $\mathcal A_0$，故 $r=0$。
+
+这里只对同一实际原表作表示读取，没有定义表示像上的 $D$，
+没有假设 $D(\epsilon h,x)=\epsilon D(h,x)$。
+静态卷5.7的有界自伴算子、全态二表及实标量余项前件已逐项对应，
+其谱边界子证明不在这里重证。∎
+

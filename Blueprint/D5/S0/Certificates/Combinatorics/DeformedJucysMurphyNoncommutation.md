@@ -8,7 +8,7 @@ Coulter and Do's b-deformed Jucys--Murphy operators fail to commute on the cycli
 
 $$\forall k : \mathbb{N}, \operatorname{P}\left(k\right) = \{p : \operatorname{Fin}\left(2 \cdot k\right) \to \operatorname{Fin}\left(2 \cdot k\right) \mid (\forall x : \operatorname{Fin}\left(2 \cdot k\right), p\left(p\left(x\right)\right) = x) \land (\forall x : \operatorname{Fin}\left(2 \cdot k\right), p\left(x\right) \ne x)\}$$
 
-*Formalization.* `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.P` (`✓ std3`).
+*Formalization.* `D5/S0/Certificates/Combinatorics/NormalizedPfaffian.P` (`✓ std3`).
 
 *Citation.* Coulter, Xavier; Do, Norman (2025). *From Weingarten calculus for real Grassmannians to deformations of monotone Hurwitz numbers and Jucys–Murphy elements*. DOI: [10.48550/arXiv.2506.04002](https://doi.org/10.48550/arXiv.2506.04002). URL: <https://arxiv.org/abs/2506.04002v1>.
 
@@ -20,7 +20,7 @@ A pair partition is encoded by its fixed-point-free involutive partner map. Its 
 
 $$\forall k : \mathbb{N}, \forall x : \operatorname{Fin}\left(2 \cdot k\right), \operatorname{val}\left(\operatorname{val}\left(\operatorname{e}\left(k\right)\right)\left(x\right)\right) = \operatorname{ite}\left(\operatorname{mod}\left(\operatorname{val}\left(x\right), 2\right) = 0, \operatorname{val}\left(x\right) + 1, \operatorname{natSub}\left(\operatorname{val}\left(x\right), 1\right)\right)$$
 
-*Formalization.* `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.e` (`✓ std3`).
+*Formalization.* `D5/S0/Certificates/Combinatorics/NormalizedPfaffian.e` (`✓ std3`).
 
 *Citation.* Coulter, Xavier; Do, Norman (2025). *From Weingarten calculus for real Grassmannians to deformations of monotone Hurwitz numbers and Jucys–Murphy elements*. DOI: [10.48550/arXiv.2506.04002](https://doi.org/10.48550/arXiv.2506.04002). URL: <https://arxiv.org/abs/2506.04002v1>.
 
@@ -147,13 +147,14 @@ Let v = J_6 J_6 J_5 J_4 J_3 e_6 and T = (1 5 | 2 7 | 3 9 | 4 11 | 6 10 | 8 12). 
 ## References
 
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.J`
-- Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.P`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.X`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.act`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.charge`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.claim`
-- Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.e`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.result`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.single`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.walk`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.weight`
+- Truth anchor: `D5/S0/Certificates/Combinatorics/NormalizedPfaffian.P`
+- Truth anchor: `D5/S0/Certificates/Combinatorics/NormalizedPfaffian.e`
+- Dependency: [D5/S0/Certificates/Combinatorics/NormalizedPfaffian](NormalizedPfaffian.md)

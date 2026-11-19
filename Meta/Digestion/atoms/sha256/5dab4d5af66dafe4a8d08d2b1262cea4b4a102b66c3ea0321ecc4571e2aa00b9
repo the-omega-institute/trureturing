@@ -1,0 +1,62 @@
+**定理 6.1（保留全部原核部分的精确提升）。** 固定定理 5.2 的分量。令 $\mathcal E=E\oplus iE$ 为形式复化，只使用它的向量空间、原共轭和原实虚部；此时不赋予未知结合乘法。置
+
+$$
+T(Z)=\rho(a)+i\rho(b)\quad(Z=a+ib\in\mathcal E).
+\tag{6.1}
+$$
+
+$T$ 可以有核。记 $\mathcal F_0$ 为支撑于某个有限 $L\subset H_0$ 的全部有限秩复算子。$j$ 的复化给唯一原提升
+
+$$
+\ell:\mathcal F_0\longrightarrow(E\cap I)\oplus i(E\cap I),
+\quad T\ell(k)=k,\quad
+\ell(k^*)=\ell(k)^*.
+\tag{6.2}
+$$
+
+对 $A,B\in1+\mathcal F_0$、$Z\in\mathcal E$，定义实际原标签变换
+
+$$
+\mathscr L_A Z=Z+\ell((A-1)T(Z)),\qquad
+\mathscr R_B Z=Z+\ell(T(Z)(B-1)).
+\tag{6.3}
+$$
+
+这些变换均有定义，且
+
+$$
+\begin{gathered}
+T(\mathscr L_A Z)=AT(Z),\quad
+T(\mathscr R_B Z)=T(Z)B,\\
+\mathscr L_A\mathscr L_B Z=\mathscr L_{AB}Z,\qquad
+\mathscr L_A\mathscr R_B Z=\mathscr R_B\mathscr L_A Z
+=Z+\ell(AT(Z)B-T(Z)).
+\tag{6.4}
+\end{gathered}
+$$
+
+右乘次序准确为 $\mathscr R_A\mathscr R_B=\mathscr R_{BA}$。其他分量的原坐标不变；这些公式始终在 $\mathcal E$ 内成立，而非仅在 $T(\mathcal E)$ 内成立。特别地，若 $W\in\ker T$，变换对 $Z+W$ 的结果是对 $Z$ 的结果再加同一个 $W$。
+
+证明。对 $Z=a+ib$，$T(Z)$ 和 $T(Z)^*$ 都保持 $H_0$，由 5.2 的全部原演员保持性得到。若 $k=P_LkP_L\in\mathcal F_0$，则 $kT(Z)$ 的实部和虚部支撑在有限空间 $L+T(Z)^*L\subset H_0$，而 $T(Z)k$ 用 $L+T(Z)L$。所以两者均在 $\mathcal F_0$；(5.4) 给其每个自伴部分在 $E\cap I$ 中的唯一提升。这是 [170.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#170-核内有限乘子取向与数学读取) 的有限乘子论证，但提升落在原理想中，不要求 $\rho|_E$ 单射。
+
+$\ell$ 的唯一性仅来自 $j$ 在 $I$ 上的单射，给实虚线性和伴随对应。将 (6.3) 逐次代入，所有修正项都属于同一个原理想复化，故可由 $\ell$ 的线性相加；例如左乘复合的修正是
+
+$$
+\ell((B-1)T(Z))+\ell((A-1)BT(Z))
+=\ell((AB-1)T(Z)).
+\tag{6.5}
+$$
+
+这证明实际标签等式，不是从相同表示像倒推相同原标签。其余公式同理。$\rho_\mu(I)=0$、$\mu\ne\lambda$ 给其他分量不变。$W\in\ker T$ 时修正项完全相同，故原 $W$ 从未被删除、另选代表或归零。
+
+令 $\tau Z=iZ^*$，这是实际原实虚部交换。提升还准确满足
+
+$$
+\tau\mathscr L_A Z=\mathscr R_{A^*}\tau Z,
+\qquad
+\tau\mathscr R_A Z=\mathscr L_{A^*}\tau Z.
+\tag{6.6}
+$$
+
+这些也是对同一原理想修正直接取共轭所得，不要求旧 $D$ 在核纤维上不变。∎
+

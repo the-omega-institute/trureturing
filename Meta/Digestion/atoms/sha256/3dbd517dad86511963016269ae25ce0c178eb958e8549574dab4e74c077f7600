@@ -1,0 +1,35 @@
+**推论 5.2（一个实际输出的联合 P2 预算）。** 对固定同一原 $b,c$，记
+
+$$
+d=D(b,c),\quad P=b\circ c,\quad Q=Jb\circ Jc,\quad
+Y=b\circ Jc+Jb\circ c.
+$$
+
+对每个数学正实泛函 $\phi:X\to\mathbb R$，包括原评价的连续延拓，不要求归一化，令
+
+$$
+a=\phi(b^2),\quad e=\phi(c^2),\quad
+p=\phi(P),\quad q=\phi(Q),\quad s=\phi(Y),\quad
+\delta=\phi(d).
+$$
+
+则 $ae-\delta^2\ge0$，且
+
+$$
+\boxed{\quad |p+q|+\sqrt{(p-q)^2+s^2}
+\ \le\ 2\sqrt{ae-\delta^2}.\quad}
+\tag{5.5}
+$$
+
+证明。5.1 使每个同步圆角使用同一实际 $d$，自身平方使对角读数始终为同一 $a,e$。唯一变动的交叠读数是已知实三角多项式
+
+$$
+\phi(\mathcal R_\theta b\circ\mathcal R_\theta c)
+=\frac{p+q}{2}+\frac{p-q}{2}\cos2\theta+\frac{s}{2}\sin2\theta.
+\tag{5.6}
+$$
+
+逐角原 P2 给其绝对值不超过 $\sqrt{ae-\delta^2}$。实式 $A+B\cos t+C\sin t$ 的绝对值最大值为 $|A|+\sqrt{B^2+C^2}$，代入即得 (5.5)。这一步只优化已知的同一交叠，不把分别可达的旧输出拼成一个输出。零泛函、$a=0$ 或 $e=0$ 时原 P2 先给相应零预算，仍无需除法。
+
+这份预算不消除所有正余量；特别 (5.1) 中的 $D(Jb,c)+D(b,Jc)=0$ 是旧响应关系，不等于 Jordan 乘积关系 $Y=0$。因而本推论只辅助一般混合问题，不由它宣布 $P=Q$、$Y=0$ 或 $J$ 可加。∎
+

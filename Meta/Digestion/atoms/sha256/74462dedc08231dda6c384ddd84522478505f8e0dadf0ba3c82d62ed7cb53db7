@@ -1,0 +1,25 @@
+## 54. 先消去混合输出的标量余量
+
+对每个充分小的 $\xi>0$，先在上述网络取 $\gamma=0$、$t=0$，再选择有限斜率 $M$。53.8 在目标点给
+
+$$
+\delta(\xi)[\alpha r-\beta p](\xi)=0.
+\tag{54.1}
+$$
+
+对交换后的实际原对 $(b,a)$ 作同一构造；反对称性给输出 $-d$，因此还有
+
+$$
+\delta(\xi)[\beta q-\alpha p](\xi)=0.
+\tag{54.2}
+$$
+
+若 $\delta(\xi)\ne0$，两式使 $(\alpha(\xi),\beta(\xi))$ 落在矩阵 $\left(\begin{smallmatrix}r&-p\\-p&q\end{smallmatrix}\right)$ 的核中。但其行列式 $L(\xi)>0$，故两标量都为零，与零点附近的严格正性矛盾。目标 $d$ 一直是同一固定输出，故多项式恒等原理给
+
+$$
+\boxed{\delta=0,\qquad v\cdot z=w\cdot z=0.}
+\tag{54.3}
+$$
+
+因此 53.8 对每个后续选定的实际网络简化为 $\tau(v\cdot m+\alpha L)=\gamma s$。
+

@@ -1,0 +1,65 @@
+**定理 8.1（非本质块的全部旧值识别）。** 对每个非经典分量及每个原 $Z\in\mathcal E$，$\mathfrak F_\lambda(Z)=0$。经典分量的全部原 $D$ 坐标为零。因此 (1.7) 对每一对原输入成立。
+
+证明。这里准确消费 [173.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#173-原核足以执行固定输出的双侧零预算)／[152.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#152-同时对准算子及其伴随使固定残差预算趋零) 的固定输出双侧预算；不是把 [167.2](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#167-指定本质复紧理想与一个原有限投影) 应用于一个未定义旧 $D$ 的商。固定原 $Z$，记 $T=T(Z)$。若 $T=0$，两个原实输入在本分量的表示像都为零，(5.8) 直接使 $\rho_\lambda D(\operatorname{Re}Z,\operatorname{Im}Z)=0$，残差也为零。
+
+设 $T\ne0$、$M=\|T\|$。固定任意单位 $\xi\in H_0$，选单位 $v_n\in H_0$，使
+
+$$
+r_n=\|Tv_n\|>0,\quad r_n\longrightarrow M,
+\qquad w_n=Tv_n/r_n\in H_0.
+\tag{8.1}
+$$
+
+存在 $R_n,L_n\in\mathcal U_0$，分别把 $\xi$ 送到 $v_n$、把 $w_n$ 送到 $\xi$；只在至多二维的核内子空间延拓相应一维等距匹配。实际原标签为
+
+$$
+Z_n=\mathscr L_{L_n}\mathscr R_{R_n}Z=a_n+ib_n\in\mathcal E,
+\quad T(Z_n)=W_n=L_nTR_n,
+\quad\mathfrak F_\lambda(Z_n)=\mathfrak F_\lambda(Z).
+\tag{8.2}
+$$
+
+最后一式由 7.1 在原标签上给出；没有把 $Z_n$ 改成任何别的同像代表。
+
+[173.3](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#173-原核足以执行固定输出的双侧零预算)–[173.4](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#173-原核足以执行固定输出的双侧零预算) 的已知算子估计适用于这个 $T$：若 $A=T^*T$、$\delta_n=\sqrt{M^2-r_n^2}$，则
+
+$$
+\begin{gathered}
+\|(A-r_n^2)v_n\|^2\le r_n^2(M^2-r_n^2),\\
+W_n\xi=r_n\xi,\qquad
+\|W_n^*\xi-r_n\xi\|\le\delta_n,\\
+\|\rho_\lambda(b_n)\xi\|\le\delta_n/2,
+\qquad\|\rho_\lambda(a_n)\xi\|\le M.
+\tag{8.3}
+\end{gathered}
+$$
+
+对这两个真正原输入用 (5.8)，比较交换子的读数也有相同的 Cauchy–Schwarz 界。因此
+
+$$
+\begin{aligned}
+|\langle\xi,\mathfrak F_\lambda(Z)\xi\rangle|
+&=|\langle\xi,\mathfrak F_\lambda(Z_n)\xi\rangle|\\
+&\le2\|\rho_\lambda(a_n)\xi\|\,
+          \|\rho_\lambda(b_n)\xi\|
+\le M\delta_n\longrightarrow0.
+\end{aligned}
+\tag{8.4}
+$$
+
+左边是一个固定有界自伴输出残差的同一读数，故为零。对全部单位 $\xi\in H_0$ 成立；稠密性和固定有界算子的二次型连续性、极化给残差为零。极限仅在已知算子估计和固定输出读取中使用，不要求 $Z_n$ 收敛，不对旧 $D$ 作输入极限。有限维 $H$ 也适用，且此时 $H_0=H$。不可分 $H$ 中只为一个固定 $T$ 选近范数序列，未要求可数稠密核。
+
+若 $H_\lambda$ 一维，$\rho_\lambda(a),\rho_\lambda(b)$ 是实数。它们的实 Gram 行列式恒为零，P2 经这个正表示读取直接给 $\rho_\lambda D(a,b)=0$；不用相位论证。
+
+至此对原任意 $a,b$ 均取得 (1.7)。特别是
+
+$$
+\rho_\lambda a=\rho_\lambda a',\quad
+\rho_\lambda b=\rho_\lambda b'
+\ \Longrightarrow\
+\rho_\lambda D(a,b)=\rho_\lambda D(a',b')
+\tag{8.5}
+$$
+
+现在才成为结论。原输入纤维相容性没有先于识别使用；这只是本原子族条件分支的结论，不结清 [178.2](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#178-固定输入作用的读取纤维)、[185.3](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#185-消费全单位行与尚未支付的纤维桥) 在一般 C* 背景中的输入作用纤维问题。∎
+

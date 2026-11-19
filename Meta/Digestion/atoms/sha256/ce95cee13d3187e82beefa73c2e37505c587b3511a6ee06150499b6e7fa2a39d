@@ -1,0 +1,47 @@
+**定理 34.2（所有小周期参数的同一原转向）。** 对全部 $\rho,\sigma\in\mathcal R_1$，有 $G_\rho=G_\sigma$ 作为 $V_h$ 上原映射。共同映射可固定为
+
+$$
+J=G_{1/\sqrt3}.
+\tag{34.2}
+$$
+
+证明。记 $J=G_\rho$，取
+
+$$
+\alpha=\tan\!\left(\tfrac12\arctan\sigma\right),\qquad
+\beta=\rho,\qquad\kappa=\alpha\rho.
+$$
+
+于是 $0<\alpha<1$、$\sigma=2\alpha/(1-\alpha^2)$。33.1 对周期参数 $\rho$ 和外层强度 $\alpha$ 给真正内响应 $d=\alpha Jz$。定义实际原元及旧值
+
+$$
+y=z+\alpha Jz,\quad w=z-\alpha Jz,\quad
+q=\rho(1+\alpha^2)>0,\quad
+e=F_q(y)/q,\quad k=G_\sigma w,\quad R=z^2.
+$$
+
+(34.1) 的第一份单位偏移为零；第二份外层强度是 $\rho(1-\alpha^2)$，其单位偏移与强度之比正是 $\sigma$。33.1 因而支付该输出，留下准确元素式
+
+$$
+(1+\alpha^2)e=(1-\alpha^2)k-2\alpha w.
+\tag{34.3}
+$$
+
+不要求 $q<1$：对 $e$ 只用全强度 (32.3)。它与自身圆共同给
+
+$$
+e\circ y=k\circ w=0,\qquad
+e^2=k^2=y^2=w^2=(1+\alpha^2)R,
+\qquad w\circ y=(1-\alpha^2)R.
+$$
+
+将 (34.3) 与 $y$ 作 Jordan 积，除以非零实数 $1-\alpha^2$，得 $k\circ y=2\alpha R$。再与 $k\circ w=0$ 联用，得到
+
+$$
+k\circ Jz=R,\qquad k\circ z=\alpha R,
+\qquad \bigl(k-(Jz+\alpha z)\bigr)^2=0.
+\tag{34.4}
+$$
+
+自伴平方零使 $k=Jz+\alpha z=Jw$。而 $z\mapsto z-\alpha Jz$ 的自身平面逆为 $w\mapsto(w+\alpha Jw)/(1+\alpha^2)$，故它满射 $V_h$；于是 $G_\sigma=G_\rho$。$1/\sqrt3$ 对应 $k=1,m=3$，属于 $\mathcal R_1$。整个联合平方证书不要求 $R$ 中央、可逆或有谱隙。∎
+

@@ -1,0 +1,22 @@
+**情形 B：$e\ne0$ 且 $b=0$。** 取 $X=0$、$u=(\rho,1)^{\mathsf T}$。此时
+
+$$
+R_\delta u=(-2\delta d\rho,-3\delta e)^{\mathsf T},\qquad
+S_\delta u=(d\rho,e+\delta s)^{\mathsf T},\qquad
+\psi_u(L)=-2se .
+\tag{38.20}
+$$
+
+两列为实列，故二维实面积就是行列式的绝对值：
+
+$$
+\mathcal A_\delta=|d\rho|\,|\delta e-2s|,\qquad
+H_0=|e-2s|+|e+2s|>0 .
+\tag{38.21}
+$$
+
+若 $d\ne0$，取
+$\rho=|se|/(|d|H_0)>0$；则两笔面积之和是 $|se|$，而
+$|\psi_u(L)|=2|se|$。若 $d=0$，取 $\rho=1$，两笔面积都为零而左端为
+$2|se|$。所以两种情况下都有有限严格差额，且两个坐标均非零。
+

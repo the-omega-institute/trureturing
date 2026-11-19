@@ -1,0 +1,64 @@
+**定理 157.2（R2：同一旧残差的原生共同交换子包含）。** 对每个原
+$x\in V_e$，置 $y=D(e,x)$。则 $y\in V_e$、$y^2=x^2$、
+$D(e,y)=-x$，并且
+
+$$
+\boxed{\rho_h(x)\in E\cap\{h,e,j\}'=\mathcal B_0.}
+\tag{157.2}
+$$
+
+因而对任意原 $b,c\in V_e$，固定首轴的加性缺陷
+
+$$
+\delta_h(b,c):=D(h,b+c)-D(h,b)-D(h,c)
+$$
+
+满足
+
+$$
+\boxed{\delta_h(b,c)\in E\cap\{h,e,j\}'=\mathcal B_0.}
+\tag{157.3}
+$$
+
+输入平方不要求标量、中央、可逆或有限谱。
+
+证明。133.1对实际框架 $(e,h,-j)$ 给出
+$y=iQex\in V_e$、$y^2=x^2$ 及 $D(e,y)=-x$。在原PB中取
+
+$$
+(a,b,c)=\left(e,\frac{h-j}{2},\frac{x+y}{2}\right).
+$$
+
+133.1还给 $x\circ y=0$。两份内层位移准确为
+$\nu=-(h+j)/2$、$\omega=(y-x)/2$，故
+$b\circ\nu=-(h^2-j^2)/4=0$、
+$c\circ\omega=(y^2-x^2)/4=0$。两份外层准确为 $(-j,y)$ 与 $(h,x)$，
+完整PB的右侧遂为零，得到
+
+$$
+D(-j,y)=D(h,x)=:d_x.
+\tag{157.4}
+$$
+
+对实际框架 $(-j,e,h)$ 使用150.1，记
+$\widehat T_{-j}=[L_h,L_e]$。此框架的中央取向仍为 $Q$，所以
+
+$$
+P_j^-d_x=\widehat T_{-j}y=\widehat T_hx.
+\tag{157.5}
+$$
+
+其中 $\widehat T_{-j}y=\tfrac{iQ}{2}[-j,y]$；代入 $y=iQex$，
+再用 $ex=-xe$、$je=iQh$、$ej=-iQh$，即得最后一个等号。
+150.1本身给 $P_h^-d_x=\widehat T_hx$，而 $\widehat T_hx$ 同时属于
+$h,j$ 的奇块，故 $\rho_h(x)$ 与 $h,j$ 普通交换。又 $Q$ 中央且
+$e=-iQhj$，它也与 $e$ 交换，证明157.2。由于 $\widehat T_h$ 是已知
+线性Jordan算子，
+
+$$
+\delta_h(b,c)=\rho_h(b+c)-\rho_h(b)-\rho_h(c),
+$$
+
+所以157.3成立。这里没有把 $D(h,b+c)$ 拆成两项；PB只识别了同一个旧值
+$D(-j,y)$。∎
+

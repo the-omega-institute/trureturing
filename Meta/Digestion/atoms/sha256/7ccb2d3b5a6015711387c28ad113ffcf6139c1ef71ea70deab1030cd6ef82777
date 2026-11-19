@@ -1,0 +1,18 @@
+**引理 17.1（有真实开闭支持的小连接行）。** 设 $U\subset X$ 非空开闭，$\chi=1_U$，$p\in M_n(\mathbb C)$ 为常值秩一正交投影。记 $\|B\|_U=\sup_{\eta\in U}\|B(\eta)\|$。对任意 $\alpha\in A_{\rm sa}$、实际 $a\in E$，若
+
+$$
+r=\chi\alpha p,\qquad \|(1-p)ap\|_U<2,
+\tag{17.1}
+$$
+
+则有真正全域元素等式 $D(r,a)=K(r,a)$。不对 $a$ 在 $X\setminus U$ 的幅度施加限制。
+
+证明。在 $\eta\in U$，取 OP83.1的单块商 $\pi_\eta$，首像 $\mu p=\alpha(\eta)p$。若 $p=vv^*$，其连接向量为 $z=(1-p)a(\eta)v$，范数严格小于二；$\beta=v^*a(\eta)v$、$B=(1-p)a(\eta)(1-p)$ 都不受幅度限制。16.2给共同符号 $Q(\eta)$，所以 OP83.1准确给
+
+$$
+\pi_\eta D(r,a)=\frac{J(\eta)}2[r(\eta),a(\eta)].
+\tag{17.2}
+$$
+
+在 $\eta\notin U$，实际首输入的像 $r(\eta)=0$；16.1的数学正向量零预算直接给 $\pi_\eta D(r,a)=0$，已知 $K$ 在该点也为零。两部分合起来覆盖全部 $X$，故两份实际 $E$ 元素相等。OP83.1没有被要求在窗口外满足小连接条件，也没有先使用中央下降。∎
+

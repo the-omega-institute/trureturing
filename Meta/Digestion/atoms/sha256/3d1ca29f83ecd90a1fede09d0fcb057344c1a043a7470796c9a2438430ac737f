@@ -1,0 +1,49 @@
+**Proposition 8.1 (literal segment cost accounting).** List the planned
+linear segments of Definition 5.1 in time order. A segment $j$ has
+duration $d_j>0$ and increment $v_j=(A_j,B_j)$. Let
+$\theta_j\in[0,1]$ be the fraction of its duration executed before
+$S_n$; completed segments have fraction one, unexecuted segments zero,
+and at most one is partial. For (5.4), exactly
+
+$$
+\begin{aligned}
+\mathsf V_\chi&=\sum_j\theta_j|B_j|,\qquad
+\operatorname{Var}(\widehat a_n)=\sum_j\theta_j|A_j|,\\
+\mathsf L_{I_2}&=\sum_j\theta_j\sqrt{A_j^2+B_j^2},\\
+\mathsf E_{I_2}&=\sum_j\theta_j\frac{A_j^2+B_j^2}{d_j}.
+\end{aligned}
+\tag{8.1}
+$$
+
+The first quantity is the original phase variation N, (10.4). The last
+two use precisely the additional identity-matrix norm of N, (10.3);
+they are not a physical energy calibration. Every displayed cost is
+finite for each finite sample and stage. The constant identity matrix
+is defined on a larger interior cylinder containing
+$[l,u]\times\mathbb T^2$, so costs at the killing boundary and on
+the held source history are well defined. No distance constrained to
+the open killing cylinder is being substituted for these path costs.
+For a completely executed cell its contributions are
+
+$$
+\begin{aligned}
+\mathsf V_{\chi,i}&=|\Delta_i^2|+2|\lambda|\sqrt\delta,\\
+\operatorname{Var}(a)_i&=|\Delta_i^1|+2\sqrt\delta,\\
+\mathsf L_i&=\sqrt{(\Delta_i^1)^2+(\Delta_i^2)^2}
+                  +2(1+|\lambda|)\sqrt\delta,\\
+\mathsf E_i&=\frac2\delta\{(\Delta_i^1)^2+(\Delta_i^2)^2\}
+                  +16(1+\lambda^2).
+\end{aligned}
+\tag{8.2}
+$$
+
+Proof. On a segment the velocity is $v_j/d_j$; integrate its phase
+absolute velocity, Euclidean norm and squared norm for time
+$\theta_jd_j$. The chord has duration $\delta/2$. The four rectangle
+increments are $(\sqrt\delta,0),(0,\lambda\sqrt\delta),
+(-\sqrt\delta,0),(0,-\lambda\sqrt\delta)$, each with duration
+$\delta/8$. Substitution gives (8.2). Holds after the cutoff have
+zero cost. In particular a partial final chord contributes its actual
+elapsed fraction, not the full chord cost and not the cost of a
+rescaled shorter-time replacement. $\square$
+

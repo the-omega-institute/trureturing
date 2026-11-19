@@ -1,0 +1,68 @@
+**定理 40.5（八次扩张的最小正交双胞胎反例）。** 令
+$$
+F=\mathbb Q,\qquad D=\mathbb Q(\alpha),\qquad \alpha^8=2,
+$$
+并定义
+$$
+X=\langle1,\alpha,\alpha^3,\alpha^4\rangle_{\mathbb Q},
+\qquad
+Z=\langle\alpha,\alpha^2,\alpha^3,\alpha^6\rangle_{\mathbb Q}.
+\tag{40.14}
+$$
+则
+$$
+d_X(r)=d_Z(r)\le2\quad(r\in D^\times\setminus\mathbb Q^\times),
+\qquad
+Z\ne\gamma X\quad(\gamma\in D^\times).
+\tag{40.15}
+$$
+因此八次是 corrected low-overlap 问题出现反例的最小环境次数。
+
+**证明。** $T^8-2$ 的 Eisenstein 判别给出 $1,\alpha,\ldots,\alpha^7$ 的有理基。记
+$$
+S=\{0,1,3,4\},\qquad S^c=\{2,5,6,7\}.
+$$
+由
+$$
+\operatorname{Tr}_{D/\mathbb Q}(\alpha^j)=0
+\quad(1\le j\le7)
+$$
+及 $\operatorname{Tr}(\alpha^8)\ne0$，可直接核对
+$$
+Z=X^\perp.
+\tag{40.16}
+$$
+将 (40.2) 用于 $n=8,k=4$，得到
+$$
+d_X(r)=d_Z(r)\qquad(r\in D^\times).
+\tag{40.17}
+$$
+
+写 $r=\sum_{i=0}^7c_i\alpha^i$。把乘法后投影到
+$\operatorname{span}_{\mathbb Q}\{\alpha^2,\alpha^5,\alpha^6,\alpha^7\}$，相对于 $X$ 的基 $(1,\alpha,\alpha^3,\alpha^4)$，矩阵为
+$$
+M_r=
+\begin{pmatrix}
+c_2&c_1&2c_7&2c_6\\
+c_5&c_4&c_2&c_1\\
+c_6&c_5&c_3&c_2\\
+c_7&c_6&c_4&c_3
+\end{pmatrix},
+\tag{40.18}
+$$
+故 $d_X(r)=4-\operatorname{rank}M_r$。若 $d_X(r)\ge3$，所有二阶子式均为零。由行 $1,3$、列 $1,4$ 的子式得
+$$
+c_2^2=2c_6^2,
+$$
+故 $c_2=c_6=0$。此时行 $1,4$、列 $1,3$ 的子式给 $c_7=0$，行 $1,2$、列 $2,4$ 的子式给 $c_1=0$；再由行 $2,3$、列 $1,2$ 的子式得 $c_5=0$，由行 $2,4$、列 $2,3$ 及行 $3,4$、列 $3,4$ 依次得 $c_4=c_3=0$。所以 $r\in\mathbb Q^\times$，证明非标量时 $d_X(r)\le2$。结合 (40.17) 即得第一部分。
+
+若 $\gamma X=Z$，因 $1\in X$，有
+$$
+\gamma=a\alpha+b\alpha^2+c\alpha^3+d\alpha^6.
+$$
+条件 $\alpha\gamma\in Z$ 迫使 $c=d=0$；再由 $\alpha^3\gamma\in Z$ 迫使 $a=b=0$，与 $\gamma\ne0$ 矛盾。故 $Z$ 与 $X$ 不在同一标量轨道。$\square$
+
+**边界与范围。** 对次数六和七，维数公式还给出所有四维窗口的商支持都是 $D^\times$，所以只看 $Q(W)$ 在这些次数中完全没有区分力。七次刚性使用了完整的逐标签支配和低交维，而不是纯支持包含。八次反例的秩矩阵是本卷本轮的纸面构造；迹正交补和非退化配对沿用前卷工具。这里没有使用 Lean、CAS、数值实验或有限域枚举，不作全球优先权声明，也不把该结果外推为量子力学、$\mathbb Z\subset\mathbb Q$ 的丢番图定义或 Hilbert 第十问题结论。
+
+白话说：把“高交叠”排除后，四到六次其实没有可用的低交维窗口，七次仍能用正交补把问题降成三个方向的商关系，并证明两个窗口只能整体缩放。到了八次，四维空间和它的迹正交补各自只在非标量标签上重合至多两维，却对所有标签给出同一份交维表；这两个空间又不是整体乘数的关系。因此低交维本身不是最后的刚性来源，八维中的正交对偶是必须额外打破的隐藏关系。
+

@@ -1,0 +1,12 @@
+**命题 50.1（任意 Jordan 乘子不能代替中心系数）。** 47.1 若将中央乘法相容改成对任意原 Jordan 乘子的 $J(m\circ b)=m\circ Jb$，即使两端输入都原有且横向，也为假。
+
+证明。在完整标准模型 $E=M_2(\mathbb C)_{\rm sa}$、$D=[\ ,\ ]/(2\mathrm i)$ 中，取 $h=\sigma_z$、$b=\sigma_x$，于是 $Jb=\sigma_y$。令非中央 $m=\sigma_y$，则
+
+$$
+m\circ b=0\in V_h,\qquad
+J(m\circ b)=0,\qquad m\circ Jb=u.
+\tag{50.1}
+$$
+
+模型的完整 P2、PB 仍由静态卷 35.2 的 $\kappa=-1$ 给出。该反例只否定任意乘子版本，不否定 47.1、一般加法或其他有额外前件的非中央系数结果。∎
+

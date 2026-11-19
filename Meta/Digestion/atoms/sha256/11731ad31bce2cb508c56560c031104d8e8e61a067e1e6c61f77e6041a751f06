@@ -1,0 +1,60 @@
+**定理 112.4（不用共同中心的边界拼接）。** 在同一条件下，原 $S$ 同胚于
+$\pi_1,\pi_2$ 的double mapping cylinder；其两个半部是秩 $d$ 向量盘丛
+$B_1,B_2$，共同边界为同一个 $\mathcal A$，且
+
+$$
+S\cong B_1\cup_{\mathcal A}B_2\cong S^N,\qquad N=n-2.
+\tag{VIII112.11}
+$$
+
+此处 $B_i$ 是盘丛总空间，不是112.2的形状算子 $B_p$。
+
+证明。直接在原边界定义
+
+$$
+b:\mathcal A\times[0,1]\longrightarrow S,\qquad
+b((p,q,r),t)=c_p+t(q-c_p).
+\tag{VIII112.12}
+$$
+
+像在真面 $D_p\subset S$，故不需以谱方向构造另一个球面。
+$t=0$ 的像为 $c_p$，它不纯。
+若 $c_p=c_{p'}$，同一非纯边界点的唯一面标签迫 $p=p'$；
+因此零端的纤维恰为 $\pi_1$ 的完整纤维。
+$t=1$ 的像恰为纯点 $q$，所以一端的纤维恰为 $\pi_2$ 的完整纤维。
+
+若 $0<t<1$，该点在 $\operatorname{ri}D_p$ 且不等于 $c_p$。
+由非纯边界唯一标签先恢复 $p$，再唯一恢复
+
+$$
+t=\sqrt{g_p(x-c_p,x-c_p)},\qquad
+q=c_p+(x-c_p)/t,\qquad r=2c_p-q.
+\tag{VIII112.13}
+$$
+
+这样的内点不能与任何别的球心相同；否则其唯一标签相同后又有非零半径。
+它也不纯，不能与一端相碰。因此所有内部纤维均为单点，且没有漏掉的跨端纤维。
+每个非纯边界点属于唯一 $\operatorname{ri}D_p$；非中心点用(VIII112.13)表示，
+中心点用零端表示。每个纯点则因可补joint而出现在一端。
+所以 $b$ 满射。
+
+将 $\mathcal A\times[0,1]$ 的零端按 $\pi_1$、一端按 $\pi_2$ 压缩，
+所得紧商空间到原Hausdorff边界连续双射，故为同胚。
+对 $t\in[0,1/2]$，用 $(p,2t(q-c_p))$ 识别为 $D(\xi)$；
+对 $t\in[1/2,1]$，用 $(q,2(1-t)(p-c_q))$ 识别为另一份 $D(\xi)$。
+在 $t=1/2$ 两者的单位球边界都是同一 $\mathcal A$，其边界投影分别为 $\pi_1,\pi_2$。
+这些是商空间中实际盘丛的同胚，不声称第二半部在原 $V$ 中也是以纯点为球心的仿射球。
+第三投影 $\pi_3$ 仍保留在这个共同边界，受112.3的实际置换作用。
+
+单位盘丛的径向变量在其球边界给出乘积collar $\mathcal A\times[0,\epsilon)$。
+两侧collar粘成 $\mathcal A\times(-\epsilon,\epsilon)$，
+故两半部有开加厚，分别形变收缩到 $B_i$，交集形变收缩到 $\mathcal A$。
+这正是下文Mayer–Vietoris与相对excision所需的条件；
+也使盘边包含为cofibration。无须宣称 $P$ 或 $B_i$ 是流形。
+
+最后，$C$ 生成 $V$ 使 $\operatorname{aff}K=\{u=1\}$。
+任选 $z\in\operatorname{ri}K$，射线 $z+\mathbb R_+v$ 各有唯一边界端点，
+所以 $x\mapsto(x-z)/\|x-z\|_0$ 是 $S$ 到 $H$ 中单位球面的连续双射。
+紧性使其为同胚，得到 $S^{n-2}$；这也正是110.3已用的凸体径向论证。
+这里 $z$ 任取内点，未把尚未得到的G中心放进证明。证毕。
+

@@ -27,7 +27,7 @@ open Matrix MeasureTheory
 namespace D5.S3.VertexAlgebra.LatticeDiscriminantWeil
 open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeDiscriminantTheta
 open D5.S3.Fourier.MatrixGaussian
-open private class_representative shift_eq phase_mk pairRaw pairing_mk pairing_symm
+open private class_representative shift_eq pairing_mk pairing_symm
   pairing_add pairing_neg pairing_zero character_orthogonality zero_sector
   from D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
 

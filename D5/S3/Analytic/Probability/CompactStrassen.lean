@@ -104,7 +104,7 @@ private lemma ProbabilityMeasure.continuous_map_snd :
 
 /-- **Weak-limit marginals.** If `πₙ → πInf` weakly and each `πₙ` has marginals `(μₙ, νₙ)` with
 `μₙ → μ`, `νₙ → ν`, then `πInf` has marginals `(μ, ν)`. -/
-private lemma IsCoupling.coupling_of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → ProbDist ℝ}
+lemma IsCoupling.coupling_of_weak_limit {μ ν : ProbDist ℝ} {μ_seq ν_seq : ℕ → ProbDist ℝ}
     {π_seq : ℕ → ProbDist (ℝ × ℝ)} {πInf : ProbDist (ℝ × ℝ)}
     (hπcoup : ∀ n, IsCoupling (μ_seq n) (ν_seq n) (π_seq n))
     (hπlim : Tendsto (fun n => (π_seq n : ProbabilityMeasure (ℝ × ℝ))) atTop (𝓝 πInf))
@@ -522,7 +522,7 @@ end Econlib.Probability
 
 namespace Econlib.Probability
 
-private lemma IsMartingaleCoupling.condExp_snd_eq_fst {μ ν : ProbDist ℝ}
+lemma IsMartingaleCoupling.condExp_snd_eq_fst {μ ν : ProbDist ℝ}
     {π : ProbDist (ℝ × ℝ)} (h : IsMartingaleCoupling μ ν π) :
     π.toMeasure[Prod.snd | (borel ℝ).comap Prod.fst] =ᵐ[π.toMeasure] Prod.fst := by
   have hm : ((borel ℝ).comap (Prod.fst : ℝ × ℝ → ℝ)) ≤ (inferInstance : MeasurableSpace (ℝ × ℝ)) :=

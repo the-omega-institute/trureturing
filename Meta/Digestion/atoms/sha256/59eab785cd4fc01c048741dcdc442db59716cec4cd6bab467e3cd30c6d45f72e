@@ -1,0 +1,30 @@
+**定理146.3（实际控制已解析目录的尖锐全记录律）。** 对每个有限分拆(XII146.1)，令
+
+$$
+I_+=\{i:k_i\ge2\},\qquad \alpha_i=\sqrt{1-1/k_i}\quad(i\in I_+),
+$$
+
+空最大值取零，并定义
+
+$$
+\delta_*(Q)=
+\min_{\substack{w_i\ge0\ (i\in I_+)\\\sum_{i\in I_+}w_i\le1}}
+       \max_{i\in I_+}\alpha_i(1-w_i).
+\tag{XII146.4}
+$$
+
+则下列量词同时成立。
+
+1. 对每个 $\Pi\in\mathfrak C_{\rm res}^{\rm ret}$、每个 $\widehat{\mathcal L}_Q\in\mathfrak L_Q(\Pi)$，有 $\Delta(\Pi,\widehat{\mathcal L}_Q)\ge\delta_*(Q)$。不要求单个协议或不同协议之间具有统一有限树、bank、读数次数、深度或容量界。
+2. 在所需实角和精确有限经典 law 已供应的参考目录中，存在有限扫描协议 $\Pi_*$ 及一个固定全理想 lift，满足 $\Delta(\Pi_*,\widehat{\mathcal L}_{Q,*})=\delta_*(Q)$。因此 $\delta(\mathfrak C_{\rm ref}^{\rm fin},Q)=\delta(\mathfrak C_{\rm ref}^{\rm ret},Q)=\delta_*(Q)$，且有限目录达到此值。
+3. 在有效角括号、公平位、实际端点控制和原服务均已供应的 dyadic 目录中，对每个 $\varepsilon>0$，存在有限扫描协议及同实际命令标签的固定全理想 lift，满足 $\Delta\le\delta_*(Q)+\varepsilon$。故 $\delta(\mathfrak C_{\rm dy}^{\rm fin},Q)=\delta(\mathfrak C_{\rm dy}^{\rm ret},Q)=\min\overline{\mathcal E_{\rm dy}(Q)}=\delta_*(Q)$；在有限协议目录中一般只是 infimum。任何夹在该有限 dyadic 子目录与 $\mathfrak C_{\rm res}^{\rm ret}$ 之间、且使用相同输出合同的目录也有此值。
+
+若 $|I_+|\le1$，值为零；若 $|I_+|\ge2$，$\delta_*>0$ 是下式的唯一非负根：
+
+$$
+\sum_{i\in I_+}\max\{0,1-\delta_*/\alpha_i\}=1.
+\tag{XII146.5}
+$$
+
+本定理是附加实际控制解析条件下的秩依赖数学结论及匹配构造。它不确定未解析旧定义32.2的尖锐值，不扩大旧定理33.1的控制范围；特别是 $2+2$ 的新值 $1/(2\sqrt2)$ 不取代其原范围的 $1/4$ 下界。
+

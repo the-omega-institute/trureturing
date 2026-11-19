@@ -1,0 +1,22 @@
+**定义 8.3（普通几何读法）。** 把整份区间输入想成沿一条线段连续摆放的矩阵。每个矩阵各自有一条特征线，不代表这些线能直接连续挑选；原矩阵可以重根或秩跳变。这里先把整条矩阵路径轻微挪开有限代数坏点，只给近似路径挑线。线段没有绕回接头，局部编号可逐段对齐；近投影的明确酉搬运再把一条线补成整套连续标架。搬运保留的是原矩阵与所选线之间很小的连接，绝不是把原输入换成近似输入后取旧答案。
+
+有了这条近似不变线，原配平关系才能真正开始作用。演员的幅度在全区间统一取大，只压小反向连接；正向连接的小预算由那条线提供。两个实际内值分别通过原二表及已有小行结论，才允许调用原三对象配平。逆元让负端逐字回到当前那份输入，所以运走的始终是同一旧缺陷。两次接近相反半圈的有限动作相加成任意小相位，有限重复得到任意连续相位；没有把无穷大演员或稠密角度极限当作合法步骤。
+
+一条线附近可以挑出足够多的方向，它们在普通有限矩阵空间里张成全部自伴方向。同一标架把它们连续带到区间各点。普通有限维坐标把任何足够小的整份酉旋转准确写成有限个这种方向的相位；每个小相位前缀都有统一余量，内部大动作的前缀又有各自不变的连接预算。换到任意当前旋转后都能重做这一构造，于是固定缺陷在整个酉截面群中处处局部不变。整张旋转表可沿区间收缩到一张常表，再把这一个普通矩阵转回单位，因此所有旋转都保持同一缺陷。这只用未知函数的局部常值，不假定它连续。
+
+最后再选一份可逆近似，仅借它的极分解制造旋转。旋转后的原输入接近一个正矩阵，故其实际虚部任意小。二表把对应旧缺陷的范数压到任意小，而精确运输已把这个范数认作原先固定那一个。因此固定缺陷只能为零。近似过程中旧答案可以没有任何输入连续性；论证从未要求一串不同答案趋于某个答案。
+
+实JB丛的情形先用已付类型定理说明纤维必须是复矩阵自伴部，再沿线段把相邻Jordan图在接点准确对齐。整套坐标变换是原域上的双射，旧响应跟着同一双射换坐标，不是向大空间延拓或换一张标准响应表。由此任意幅度、任意背景和全部原代表的旧答案都被同一个常左右手锁定。这个左右手是乘法方向，不是物理空间维数，也不生产一项可执行控制。
+
+就分类缺口而言，这条线段论证新补的是三阶：四阶及以上的完整局部平凡复矩阵丛，独立作者的已提交 AT17.3 已在任意紧 Hausdorff 基上认回同一旧表，并去掉额外截断比较；本卷的统一高阶结论与之重叠。一般紧基的三阶全表仍未解决，共同零线或 reducing 线的已成局部结论不等于这份全分类。
+
+完整量子候选还要把这份静态入口接到同一原世界的七路实际来源。数学线、坐标、旋转和参数不生产准备、复制、事件、菜单、接受端、过程、完整输出未来、CountRead返回或物理钟。原有有限读取、支持事件、被动解码和有限返回数值校准照原适用域复用；未供应的全未来返回及具名全菜单分析器仍须实际构造。零和失败分支、整个环境、所有细记录、拒绝、停止、销毁及合法未来都继续存在。故本卷给出完整区间数学分类和条件候选，没有宣告整个原 $\Omega$ 的量子起源完成，也没有从尚缺来源推出不可能性。
+
+[SQ]: https://github.com/the-omega-institute/trureturing/blob/70ca2d8fba4197189402b352ad513842cf539304/docs/develop/theory/AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md
+[OP]: https://github.com/the-omega-institute/trureturing/blob/70ca2d8fba4197189402b352ad513842cf539304/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md
+[PB]: https://github.com/the-omega-institute/trureturing/blob/70ca2d8fba4197189402b352ad513842cf539304/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md
+[SF]: https://github.com/the-omega-institute/trureturing/blob/70ca2d8fba4197189402b352ad513842cf539304/docs/develop/theory/AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md
+[FPB]: https://github.com/the-omega-institute/trureturing/blob/2addd6f369b7387226c2b0cc984623dd3efe40a1/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md
+[AT]: https://github.com/the-omega-institute/trureturing/blob/2addd6f369b7387226c2b0cc984623dd3efe40a1/docs/develop/theory/AURIC_ORIGINAL_ATOMIC_SEPARATION_AND_PB_RECONSTRUCTION_CONTINUATION.md
+[HOS]: https://hanche.folk.ntnu.no/joa/
+

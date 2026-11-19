@@ -1,0 +1,106 @@
+**定理 56.1（不加分离前件的原缺陷定位）。** 在55.1–55.3的完整原条件下，对任意原 $h$-偶 $c$、任意原 $h$-奇 $z$ 及每个实 $R$，同一55.5的 $r,v$ 满足
+
+$$
+\boxed{\quad U_p(v)=0\quad(p\in W(c,h)),\qquad v\in K(c,h).\quad}
+\tag{56.1}
+$$
+
+不要求 $c$ 有限谱、所给窗有全局共同分割、$[c,e]=0$、$[c,z]=0$、谱值孤立或存在总覆盖；不先假定 $[c,r]=0$ 或 $K(c,h)=0$。
+
+证明。零原对象上各项均为零。$R=0$ 时，P2在首平方为零的原输入 $(0,x)$ 上及原评价分离给 $D(0,x)=0$，故 $r=v=0$。以下固定任意非零实 $R$，全程保持同一原 $c,z,x,g,r$。
+
+先说明本卷41.2–41.11的局部生产为何不需要全局有限谱。任选两个正交实际原投影 $q_a,q_b$，满足
+
+$$
+\begin{gathered}
+cq_a=aq_a,\qquad cq_b=bq_b,\qquad a\ne b,\\
+hq_a=\epsilon q_a,\qquad hq_b=\epsilon q_b,
+\qquad \epsilon\in\{1,-1\}.
+\end{gathered}
+$$
+
+若有零投影，则 $q_arq_b=0$ 已成立。非零时，准确沿41.2–41.6取
+
+$$
+\begin{gathered}
+p'=q_a+eq_ae,\qquad s=u-2p',\qquad H=h\circ s=hs,\\
+A=R\epsilon(a+b),\qquad B=R(b-a),\qquad
+T=Au+BH,\qquad V=T-2Rhc.
+\end{gathered}
+\tag{56.2}
+$$
+
+这些全是原标签。确实，$eq_ae=2e\circ(e\circ q_a)-q_a\in E$；它位于 $h$ 的 $-\epsilon$ 角，与 $q_a$ 以及 $q_b$ 正交。故 $p'$ 为投影，$ep'e=p'$、$[p',h]=0$，从而 $s^2=u$、$[s,h]=[s,e]=0$。两选中角上有 $Hq_a=-\epsilon q_a$、$Hq_b=\epsilon q_b$。不要求 $s$ 与整个 $c$ 交换。
+
+[中央续卷182.2](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md#182-原系数反射给出的第二份实际框架)于是供应真正旧值 $J_H=D(H,e)=sj$ 和同一取向 $iHeJ_H=Q$。该引理若按182.1的完整参数实例化，可取其背景为 $s$、$\lambda=0,\nu=1,z_0=0$；这只支付新框架，不替换当前目标背景 $c$，也不调用该背景的混合行结论。继而中央163.1在实际框架 $(H,e,J_H)$ 上对全部实 $A,B$ 及原 $y$ 给
+
+$$
+P_H^-D(Au+BH,y)=BiQH P_H^-y,
+\qquad P_H^-y=(y-HyH)/2.
+\tag{56.3}
+$$
+
+$B=0$ 也在163.1的范围内。该式是实际旧输出的已付投影，不是换轴协变或首槽齐次假设。
+
+56.2的两角本征等式给 $Vq_a=q_aV=Vq_b=q_bV=0$。因此41.7–41.11准确作用于同一个原三元组 $\operatorname{PB}(Rh,x,T-Rhc)$。为展示其全部局部前件，记这一次的实际外层与右端为
+
+$$
+\begin{gathered}
+A_+=x+g+R^2c-RhT,\qquad A_-=x-g-R^2c+RhT,\\
+D(A_+,T)-D(A_-,V)=\mathcal J,\\
+\mathcal J=-2x\circ g-2R^2z\circ c+2Rz\circ(hT).
+\end{gathered}
+\tag{56.4}
+$$
+
+内值 $D(Rh,T-Rhc)=0$ 由55.6支付。41.8的抵消只用 $[h,c]=[h,T]=0$ 和
+
+$$
+c\circ(hT)=\frac{hcT+hTc}{2}=T\circ(hc),
+$$
+
+没有交换 $c,T$。令 $q=q_a+q_b$，固定同一外值 $\mathscr O=D(V,A_-)$。对每个环境正泛函 $\omega$，$\phi(y)=\omega(qyq)$ 是55.2的合法数学正读取，且 $\phi(V^2)=0$。P2迫使 $\phi(\mathscr O)=0$；全部环境正泛函分离自伴元，故 $q\mathscr Oq=0$。这只读取同一原表，不产生新准备。
+
+另一外值用56.3读取。$q_a,q_b$ 的 $H$ 符号相反，而 $z,t$ 为 $h$-奇，$c,hT$ 在选中两角上对角；所以41.9–41.10逐项给
+
+$$
+\begin{gathered}
+q_aA_+q_b=q_arq_b,\qquad
+q_aD(T,A_+)q_b=iQ\epsilon R(a-b)q_arq_b,\\
+q_a\mathcal Jq_b=-(a+b)q_arq_b,\\
+\bigl[iQ\epsilon R(a-b)-(a+b)u\bigr]q_arq_b=0.
+\end{gathered}
+\tag{56.5}
+$$
+
+最后一式还消费原反对称性，将56.4左端准确写为 $\mathscr O-D(T,A_+)$。左乘共轭因子并用同一个中央自伴对合 $Q$，正是已刊41.11：
+
+$$
+\bigl((a+b)^2+R^2(a-b)^2\bigr)q_arq_b=0,
+\qquad q_arq_b=0.
+\tag{56.6}
+$$
+
+严格正性只用 $R\ne0,a\ne b$。$a+b=0$、$a=0$ 或 $b=0$ 均包含在内。以上局部生产只用了选中两投影的实际性、正交性和本征等式；41.12的全局有限求和尚未使用，所以没有从有限谱定理41.1直接删去前件，也没有假定两个投影是完整本征投影或多项式投影。
+
+现任取 $p\in W(c,h)$ 的任意55.3表示 $p=\sum_{i=1}^nq_i$。在原已知结合环境中直接展开同一个55.5的 $v$：
+
+$$
+\begin{aligned}
+q_i(c^2\circ r)q_j
+&=\frac{a_i^2+a_j^2}{2}\,q_irq_j,\\
+q_i\{c\circ(c\circ r)\}q_j
+&=\frac{(a_i+a_j)^2}{4}\,q_irq_j,\\
+q_ivq_j&=\frac{(a_i-a_j)^2}{4}\,q_irq_j.
+\end{aligned}
+\tag{56.7}
+$$
+
+本征等式的右乘版本来自自伴性。若 $\epsilon_i\ne\epsilon_j$，则55.5的 $[h,r]=0$ 给 $(\epsilon_i-\epsilon_j)q_irq_j=0$。若符号相同而 $a_i\ne a_j$，用56.6。若 $a_i=a_j$，56.7的系数直接为零，不要求重数块内 $q_irq_j=0$。这三类穷尽全部 $i,j$，包括对角项、重复值及零投影。因此
+
+$$
+U_p(v)=pvp=\sum_{i,j=1}^nq_ivq_j=0.
+$$
+
+空和也为零。对每个原有限窗分别如此，得到56.1。进入55.4交集的始终是原 $v\in E$；未对环境交换子应用原核分离。∎
+

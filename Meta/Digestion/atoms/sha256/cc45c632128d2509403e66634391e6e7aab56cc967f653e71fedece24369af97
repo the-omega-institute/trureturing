@@ -1,0 +1,31 @@
+**命题 85.9（共同解码器的定量后果）。** 若 $\psi$ 对活跃腿相容，固定一个共同 $C_\psi$，令 $\kappa=\|C_\psi\|$。在普通未归一 Choi 及总迹规范中，对任一 HP $\Phi$，
+
+$$
+\mathcal K_{3,\alpha}(\Phi)(\rho_\psi)\ge-\epsilon I
+\quad\Longrightarrow\quad J(\Phi)\ge-\delta I,
+\qquad\delta=\kappa^2\epsilon,\quad\epsilon\ge0.
+\tag{85.18}
+$$
+
+因而 $\Phi+\delta\Delta$ CP，其中 $\Delta(X)=\operatorname{Tr}(X)I_d$。若另外 $\Phi$ TP，则
+
+$$
+\widehat\Phi=\frac{\Phi+\delta\Delta}{1+d\delta}\text{ CPTP},\qquad
+\|\Phi-\widehat\Phi\|_\diamond\le2d\delta.
+\tag{85.19}
+$$
+
+这些常数未声称最优。
+
+**证明。** (85.8) 压缩下界给 $J(\Phi)\ge-\epsilon C_\psi C_\psi^*\ge-\kappa^2\epsilon I$。$J(\Delta)=I$，故相加后 CP。TP 时 $\operatorname{Tr}\Delta(X)=d\operatorname{Tr}X$，分母恢复 TP。取 CPTP 的 $\mathcal R=\Delta/d$，则 $\Phi-\widehat\Phi=d\delta(\widehat\Phi-\mathcal R)$；两份 CPTP 的 diamond 范数为一，三角不等式给结论，未假定 $\Phi$ 本来 CP。证毕。
+
+在推论 85.7 的最大秩纯向量集合上，核恒为固定的 $\mathfrak b_d$。对全三腿作用限制到 $\mathfrak b_d^\perp$，记其最小奇异值为 $\sigma_\psi>0$，则 Moore–Penrose 逆给
+
+$$
+C_\psi=\Sigma\mathbb V_\psi^+,\qquad
+\|C_\psi\|\le\frac{\sqrt3}{\sigma_\psi}.
+\tag{85.20}
+$$
+
+这是因为 $\mathbb V_\psi^+\mathbb V_\psi$ 为到 $\mathfrak b_d^\perp$ 的正交投影，而 $\Sigma$ 消去 $\mathfrak b_d$，且 $\|\Sigma\|=\sqrt3$。在任一固定最大秩点附近，限制作用仍单射，其 Gram 逆与伪逆连续，$\sigma_\psi$ 保持正下界；故这些解码器连续且局部有界。它们同时适用于任意活跃子集。这里的邻域在同维归一化纯态流形内；较低秩但仍相容的 GHZ 点没有被该恒秩连续性论证自动覆盖，也没有得到全部合格纯探针上的统一常数。数学修正不修复实际程序、菜单、记录或未来来源。
+

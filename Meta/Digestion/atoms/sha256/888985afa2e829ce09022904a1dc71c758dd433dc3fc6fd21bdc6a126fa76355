@@ -1,0 +1,26 @@
+**定理 27A.2（实际有限见证的扩大排除域）。** 对定义 27A.1 的同一输入，每个取向分别有下列结论。
+
+1. 若 $\rho\ne0$ 且
+
+   $$
+   2697\varepsilon^2<1039\rho^2,
+   \tag{27A.5}
+   $$
+
+   则存在 $\delta_*(\rho,\varepsilon)>0$，使每个 $0<\delta<\delta_*$ 的 (27A.4) 都满足 $\mathcal G_\sigma(x_\delta,\phi_{\sigma,\delta})>0$，两笔原预算均严格为正。这里不要求 P2。
+2. 在明确的统一有限域
+
+   $$
+   0<|\rho|\le\frac12,\qquad 0<\varepsilon\le\frac{|\rho|}{2},
+   \tag{27A.6}
+   $$
+
+   固定取 $\delta=10^{-6}$，有
+
+   $$
+   \boxed{\mathcal G_\sigma(x_\delta,\phi_{\sigma,\delta})>\frac{\rho^2}{2}.}
+   \tag{27A.7}
+   $$
+
+   这些输入同时属于已付的完整全正 P2 区间 (25.2)。
+

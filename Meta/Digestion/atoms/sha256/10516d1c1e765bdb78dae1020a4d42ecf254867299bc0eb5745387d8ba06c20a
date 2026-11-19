@@ -1,0 +1,16 @@
+**定理 3.4（碰撞参数集可数）。** 对素数 $p\ne q$，$\mathcal S_{p,q}$ 可数，因而 Lebesgue 测度为零。对所有素数对取并仍为可数零测集，所以对几乎每个 $\kappa>1$，各 $E_p^{[\kappa]}$ 两两不交。
+
+**证明。** 固定 $i,j$，令 $D(\kappa)=F_\kappa(p,i)-F_\kappa(q,j)$，它在 $(1,\infty)$ 上实解析。只需证 $D\not\equiv0$，此时其零点离散，而 $(i,j)$ 只有可数多对。
+
+记 $r_{x,a}=(x^a-1)/(x^{a+1}-1)$，$s_{x,a}=(x^a-x)/(x^{a+1}-x)$，有 $0\le s_{x,a}<r_{x,a}<1$。分出最大幂得
+
+$$
+F_\kappa(x,a)=F_\infty(x,a)+\frac{\log(1-r_{x,a}^\kappa)-\log(1-s_{x,a}^\kappa)}{\kappa\log x},\qquad F_\infty(x,a)=\frac{1}{\log x}\log\frac{x^{a+1}-1}{x^{a+1}-x}.
+$$
+
+因此 $\kappa\to\infty$ 时 $F_\infty(x,a)-F_\kappa(x,a)\sim r_{x,a}^\kappa/(\kappa\log x)$。若 $D\equiv0$，取极限得 $F_\infty(p,i)=F_\infty(q,j)$，于是两侧余项在 $\kappa\to\infty$ 时也相等：
+- 若 $r_{p,i}\ne r_{q,j}$，两侧指数衰减率不同，不可能相等；
+- 若 $r_{p,i}=r_{q,j}$，比较系数得 $1/\log p=1/\log q$，与 $p\ne q$ 矛盾。
+
+证毕。
+

@@ -1,0 +1,13 @@
+**推论 494.3（尺度混合极限）。** 设对每个 $k\ge1$，Brownian 型 $(\mathrm M_k)$ 成立。令 $U$ 在 $[1,2]$ 上有密度 $1/(u\log2)$，$G\sim N(0,\kappa Q(g))$ 与 $U$ 独立。则对每个 $k$，$\mathbb E_{\mu_X}Z_X^k\to\mathbb E\,(U^rG)^k$；$Z_X$ 依分布收敛到 $U^rG$，其特征函数为
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}e^{itZ_X}=\frac1{\log2}\int_1^2\exp\Bigl(-\frac{t^2\kappa Q(g)}2\,u^{\kappa}\Bigr)\frac{du}u ;
+\tag{494.6}
+$$
+
+若 $g$ 不几乎处处为零，则 $\mu_X\{Z_X>0\}\to\frac12$，$\mu_X\{Z_X<0\}\to\frac12$。
+
+证明。偶数 $k$ 时，与定理 494.2 的证明相同，对 $W_k$ 的每个配对用 Fubini 得 $Q(g)^{k/2}$，配对数为 $(k-1)!!$（Isserlis 公式），故由定理 494.1，$\lim\mathbb E Z_X^k=c_k\kappa^{k/2}(k-1)!!\,Q(g)^{k/2}=\mathbb E U^{kr}\cdot\mathbb E G^k=\mathbb E(U^rG)^k$；奇数阶两边都为 $0$。在 $U$ 上取条件期望，$\mathbb Ee^{tU^rG}=\mathbb E\exp\bigl(\frac{t^2\kappa Q(g)}2U^{2r}\bigr)\le\exp\bigl(\frac{t^2\kappa Q(g)}22^{2r}\bigr)$，故 $U^rG$ 的分布由矩唯一确定。对任意 $X_n\to\infty$，由矩方法（Billingsley, Probability and Measure, 3rd ed., Theorem 30.2）得 $Z_{X_n}$ 依分布收敛到 $U^rG$，从而 $Z_X$ 依分布收敛。(494.6) 由在 $U$ 上取条件期望得到。若 $Q(g)>0$，$U^rG$ 关于 $0$ 对称且 $\mathbb P(U^rG=0)=0$，故 $(0,\infty)$ 与 $(-\infty,0)$ 都是极限分布的连续集，其概率都是 $\frac12$，由 portmanteau 定理得结论。证毕。
+
+**范围。** 定理 494.1、494.2 与推论 494.3 是抽象接口上的结论；对 $E=\psi-\mathrm{id}$，(494.3) 与推论 494.3 所需的 Brownian 型接口都未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 猜想 1 关于固定加法长度 $H=H(N)$、$n\le N$ 变动时的单长度矩，不直接提供 (494.3)：后者涉及四个不同移动长度 $s_jx^\theta$ 的混合矩及其与宏观位置 $U_X$ 的渐近独立性。Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下研究比例长度 $\delta x$ 的多个不交区间，采用对数取样 $\frac1{\log X}\int_2^X(\cdots)\frac{dx}x$，得到 $\delta\to0$ 时的高斯近似；其单个移动区间的结果另设 QLI，取 $\log x$ 在 $[U,2U]$ 上均匀分布、$\delta=o(1)$ 且 $\log(1/\delta)=o(\log U)$（该文定理 10.1）。两者的取样都不是本节 $[X,2X]$ 上的 $dx/(x\log2)$，长度也不是幂次 $x^\theta$，且都不处理移动价格核。本节的新内容限于：带宏观权 $U_X^{kr}$ 的矩传递对任意实值 $L^1$ 剖面与原价格权成立，以及由此得到的显式常数 (494.4)–(494.6)；尺度混合本身是经典机制。矩方法、Isserlis 公式与 Hölder、Fubini、控制收敛都是标准工具。
+

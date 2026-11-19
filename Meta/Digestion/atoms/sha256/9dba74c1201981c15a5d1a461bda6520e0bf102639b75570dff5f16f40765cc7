@@ -1,0 +1,28 @@
+**定理 72.1（任意无限 UHF 的共同角取向）。** 在71.2的条件下，存在唯一 $\sigma\in\{\pm1\}$，使(71.2)对全部 $p\in\mathcal P_{\rm even}$ 同时以 $\sigma_p=\sigma$ 成立。
+
+证明。无限维保证矩阵大小无界，因而 $\mathcal P_{\rm even}$ 非空，且任一阶段之后都存在重数 $k_{m,n}\ge2$ 的后续阶段。任取 $p,q\in\mathcal P_{\rm even}$，放入共同实际阶段 $A_n$，各自秩仍为正偶数。取该矩阵中的极小投影 $x\le p$、$y\le q$。
+
+若 $x\ne y$，它们的有限维像线不同，$r=x\vee y$ 为其二维线性张成空间的正交投影；$r\in A_n$、矩阵秩为2，且 $x,y\le r$。不要求 $x,y$ 交换或正交。
+
+选 $m\ge n$ 使 $k=k_{m,n}\ge2$。在 $A_m$ 中，同一 $x,y$ 各有矩阵秩 $k$，所以可分别选实际矩阵秩二投影 $s\le x$、$t\le y$。全部包含关系准确为
+
+$$
+s\le x\le p,r,\qquad t\le y\le q,r;\qquad
+r,s,t\in\mathcal P_{\rm even}.
+\tag{72.1}
+$$
+
+在 $sA_ms\cong M_2$ 中选自伴 $a_s,b_s$ 使 $[a_s,b_s]\ne0$。它们同时属于完整 $pAp$ 与完整 $rAr$。71.2对同一实际原输出给
+
+$$
+D(a_s,b_s)=\frac{\sigma_p i}{2}[a_s,b_s]
+=\frac{\sigma_r i}{2}[a_s,b_s],
+\tag{72.2}
+$$
+
+故 $\sigma_p=\sigma_r$。以 $t$ 同样得 $\sigma_q=\sigma_r$。若 $x=y$，直接在其后续秩 $k\ge2$ 的放大中取实际秩二 $s\le x\le p,q$，以同一非零交换子比较即可。
+
+因此全部角符号相同；一个实际秩二角的非零交换子给唯一性。整个比较使用原有限标签及同一 $D$ 的两份已证公式，不使用 $D$ 可加性、输入极限、压缩自然性或任何假想物理子系统。∎
+
+本定理只识别两输入同处某完整实际偶角时的响应。即使符号相同，也尚未给出 $h\in pAp$、$b\notin pAp$ 时的混合整行 $D(Rh,b)=\sigma i[Rh,b]/2$。
+

@@ -1,0 +1,11 @@
+**定义 C-10.1（记录闭路；[C-L3] 式 (1)）。** 对同一归一化记录族 $`e_0,\ldots,e_{m-1}`$，令 $`g_{ij}=\langle e_i,e_j\rangle`$，
+
+
+```math
+B_{ijk}=g_{ij}g_{jk}g_{ki},\qquad
+B_{0\cdots m-1}=g_{01}g_{12}\cdots g_{m-1,0}.
+```
+
+
+它们是 Bargmann 关系不变量，区别于二部振幅表的四角相位。
+

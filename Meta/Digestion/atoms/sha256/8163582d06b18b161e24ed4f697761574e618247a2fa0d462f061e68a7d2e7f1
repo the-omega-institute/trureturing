@@ -1,0 +1,61 @@
+**约定 129.1（固定完整原域）。** 始终使用127.1的同一个非零有限维实空间 $V$、闭尖生成锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$，以及全部原对象
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:\mathcal T_p(x)=0\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad
+N_{D_p}=\{h\in C^*:h|_{D_p}=0\},\\
+\mathcal A_p=\{f\in\mathcal E:f(p)=1,\ f|_{D_p}=0\},\qquad
+P_0=\{p\in P:\mathcal A_p\text{ 为单点}\}.
+\end{gathered}
+\tag{Q129.1}
+$$
+
+原纯边仍是 $p\perp q\Longleftrightarrow\exists f\in\mathcal E:\ f(p)=1,f(q)=0$。不更换原单位，不缩小原态或原效应区间。固定入口 $\mathsf E_0=\mathsf{Ent}_\triangle$ 逐项保留127.1：完整EB3、原标签Inj、一组含 $P_0$ 顶点的实际原正交三角 $(p_1,p_2,p_3)$、同一三角的全部原零效应联合分离 $\mathsf J_\triangle$，以及三个规范 $T_i$ 在整个 $C$ 上的正性。其中
+
+$$
+\begin{gathered}
+\forall x,y\in K:\quad
+[\forall i\ \forall b\in\mathcal E,\ b(p_i)=0\Rightarrow b(x)=b(y)]
+\Rightarrow x=y,\\
+M_i=\operatorname{span}D_{p_i},\qquad
+h(T_i x)=h(x)\quad(h\in\operatorname{span}N_{p_i},\ x\in V),\qquad
+T_i:V\to M_i,\quad T_i(C)\subseteq C.
+\end{gathered}
+\tag{Q129.2}
+$$
+
+这些条件并未由裸EB3自动支付。本章不把全原PC1加入 $\mathsf E_0$，也不输入全局自对偶、全纯谱分解、$P$ 闭或移动球连续性。
+
+直接复用125.3—125.6及127.2—127.4a。写 $D_i=D_{p_i}$、$C_i=\operatorname{cone}D_i$、$e_i=e_{p_i}$、$w=p_1+p_2+p_3$，则 $\dim V=9$、$\sum_i e_i=u$、$w/3\in\operatorname{ri}K\cap\operatorname{int}C$。共同正定型 $B$ 满足
+
+$$
+\begin{gathered}
+B(w,x)=u(x),\quad B(w,w)=3,\quad B(p_i,p_j)=\delta_{ij},\quad
+B|_{L_i}=g_i/2,\\
+\|x\|_B^2=u(x)^2-2\sum_i\Delta_i(x)\quad(x\in V),\qquad
+\Delta_i(x)\ge0\quad(x\in C).
+\end{gathered}
+\tag{Q129.3}
+$$
+
+准确坐标沿用127.2：$V=\bigoplus_i\mathbb Rp_i\oplus\bigoplus_iL_i$，写 $x=\sum_i a_ip_i+\sum_i\ell^{(i)}$、$a_i=e_i(x)$，则对互异 $i,j,k$，$\Delta_i(x)=a_ja_k-g_i(\ell^{(i)},\ell^{(i)})/4$。这里 $g_i$ 是实际种子球的度量；横向的二分之一尺度保持不变。$T_i$ 是 $B$ 正交投影，$C_i\subset M_i$ 在 $B|_{M_i}$ 下为自对偶Lorentz锥。此处局部自对偶不意味着 $C=C^{*B}$。对实际种子球面标签，已有
+
+$$
+\begin{gathered}
+q\in P\cap D_i\ \Longrightarrow\ e_q=B(q,\cdot)\in\mathcal A_q,\qquad q\in P_0,\\
+\Delta_i(p)=0\ \Longleftrightarrow\ D_p\cap D_i\ne\varnothing
+\ \Longleftrightarrow\ (p+p_i)/2\in\partial_{\rm rel}K\quad(p\in P),\\
+C\cap\ker T_i=\mathbb R_+p_i,\qquad uT_i=u-e_i.
+\end{gathered}
+\tag{Q129.4}
+$$
+
+完整原面接口也保持原量词：每个 $D_p$ 是暴露极大真面且为完整仿射三球，$\mathcal A_p$ 非空紧凸；每张 $f\in\mathcal A_p$ 的整个零面恰为 $D_p$，整个一值面恰为 $\{p\}$。不同完整球至多交于一个原纯点，$P\cap D_p=\partial_{\rm rel}D_p$，纯端点零关系互易。
+
+**既有稠密性。** [IX120.9][Q129IX]已经证明：对任意 $p\in P$ 及任意 $x\in\operatorname{ri}D_p$，存在 $p_n\in P_0$、$x_n\in\operatorname{ri}D_{p_n}$，使 $p_n\to p$、$x_n\to x$；特别地 $\overline{P_0}^{\,P}=P$。[THREE_COPY VII121.6][Q129TCVII]进一步给出 $P_0$ 为稠密 $G_\delta$，以及非塌缩层上完整确认集合的闭图。原宽度的上半连续、饱和层与紧层直接按IX120.4和IX118的原结论使用。这些均不是本章新增结果；下面的域压缩只需要已付的 $P_0$ 稠密性和一个固定范数的连续性，不需要移动球或移动确认效应收敛。
+

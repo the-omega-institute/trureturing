@@ -11,6 +11,51 @@ internal sealed class FourthMomentAsymptoticDocument : IScribeDocumentDefinition
         H("Cumulative fourth-moment asymptotics"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("band-lengths"),
+                DeclarationHandle.Create(Prefix + "band_lengths"),
+                H("Band lengths"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For Y>=1 and 0<alpha<beta<1, every length between Y^alpha and Y^beta lies between one and Y."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("band-log-lower"),
+                DeclarationHandle.Create(Prefix + "band_log_lower"),
+                H("Band log lower"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For positive Y and v with v<=Y^beta, log(Y/v) is at least (1-beta) log Y."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("log-ratio-abs-le"),
+                DeclarationHandle.Create(Prefix + "log_ratio_abs_le"),
+                H("Log ratio abs le"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For 1<=v<=Y and 1<=y<=Y, the absolute value of log(y/v) is at most log Y."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("log-square-integrable"),
+                DeclarationHandle.Create(Prefix + "log_square_integrable"),
+                H("Log square integrable"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For 0<a<=b and v>0, the square of log(y/v)+B is interval integrable from a to b."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("log-square-integral-le"),
+                DeclarationHandle.Create(Prefix + "log_square_integral_le"),
+                H("Log square integral le"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For 0<a<=b and v>0, if |log(y/v)+B|<=T throughout [a,b] with T>=0, its squared integral is at most (b-a) T^2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fourth-moment-asymptotic-for"),
                 DeclarationHandle.Create(Prefix + "FourthMomentAsymptoticFor"),
                 H("The uniform cumulative formula"),

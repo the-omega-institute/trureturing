@@ -368,19 +368,21 @@ theorem local_geometric_power_coeff (r k : ℕ) (hk : k ≠ 0) (N : ℕ) :
   rw [he, PowerSeries.coeff_expand]
   simp only [PowerSeries.coeff_mk]
 
-private theorem local_factor (r k : ℕ) (hk : k ≠ 0) :
-    (1 : PowerSeries ℂ) + ∑' j : ℕ,
-        (Nat.multichoose r (j+1) : ℂ) • PowerSeries.X ^ (k*(j+1)) =
-      (((1 : PowerSeries ℂ) - PowerSeries.X ^ k)⁻¹) ^ r := by
+/-- Generic formal factor reconstruction, shared by the original complex
+geometric factors and the integer Euler-ledger counting bridge. -/
+theorem local_factor_of_coeff {R : Type*} [CommRing R] [TopologicalSpace R]
+    [IsTopologicalRing R] [T2Space R] (f : ℕ → R) (hf : f 0 = 1)
+    (k : ℕ) (hk : k ≠ 0) (G : PowerSeries R)
+    (hG : ∀ N, PowerSeries.coeff N G = if k ∣ N then f (N / k) else 0) :
+    (1 : PowerSeries R) + ∑' j : ℕ, f (j + 1) • PowerSeries.X ^ (k * (j + 1)) = G := by
   ext N
-  rw [local_geometric_power_coeff r k hk]
-  rw [map_add, (Nat.Partition.summable_genFun_term'
-    (fun _ m => (Nat.multichoose r m : ℂ)) hk).map_tsum _
+  rw [hG, map_add, (Nat.Partition.summable_genFun_term'
+    (fun _ m => f m) hk).map_tsum _
       (PowerSeries.WithPiTopology.continuous_coeff _ _)]
   simp only [map_smul, PowerSeries.coeff_X_pow, smul_eq_mul, mul_ite, mul_one, mul_zero]
   by_cases hn : N = 0
   · subst N
-    simp [hk, Nat.mul_ne_zero hk (Nat.succ_ne_zero _)]
+    simp [hk, hf, Nat.mul_ne_zero hk (Nat.succ_ne_zero _)]
   · by_cases hd : k ∣ N
     · rw [if_pos hd]
       have hq : 0 < N / k := Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero hn) hd)
@@ -392,12 +394,20 @@ private theorem local_factor (r k : ℕ) (hk : k ≠ 0) :
       · intro j hj
         have hne : N ≠ k * (j+1) := by
           intro heq
-          have he : N/k = j+1 := by rw [heq, Nat.mul_div_cancel_left _ (Nat.pos_of_ne_zero hk)]
+          have he : N/k = j+1 := by
+            rw [heq, Nat.mul_div_cancel_left _ (Nat.pos_of_ne_zero hk)]
           omega
         simp [hne]
     · rw [if_neg hd]
       have hz (j : ℕ) : N ≠ k * (j+1) := fun h => hd ⟨j+1,h⟩
       simp [hn, hz]
+
+private theorem local_factor (r k : ℕ) (hk : k ≠ 0) :
+    (1 : PowerSeries ℂ) + ∑' j : ℕ,
+        (Nat.multichoose r (j+1) : ℂ) • PowerSeries.X ^ (k*(j+1)) =
+      (((1 : PowerSeries ℂ) - PowerSeries.X ^ k)⁻¹) ^ r := by
+  exact local_factor_of_coeff (fun m => (Nat.multichoose r m : ℂ)) (by simp)
+    k hk _ (local_geometric_power_coeff r k hk)
 
 /-- Correct positive-part and positive-multiplicity factors for the independent count. -/
 theorem hasProd_partitionGenFun (r : ℕ) :

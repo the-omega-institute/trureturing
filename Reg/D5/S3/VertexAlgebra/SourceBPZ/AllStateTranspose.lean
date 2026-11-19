@@ -111,4 +111,77 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 
 #print axioms family
 
+namespace FlowVariableSupport
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize _ (fun _ _ p => p) (fun e => nomatch e)
+def rejected : Realization signature := realize _ (fun _ _ _ => False) (fun e => nomatch e)
+
+private def oneLattice : LatticeData where
+  rank := 1
+  G := 0
+  symmetric := by intro i j; rfl
+  even_diagonal := by intro i; exact ⟨0, rfl⟩
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (D : LatticeData) (α : Charge D) (i : Fin D.rank) (p : ℕ),
+    R.readout () () (SourceMobius.flowPolynomial D α (X (i,p)) =
+      (∑ s ∈ Finset.range (p+1), Polynomial.monomial (p-s)
+        (((p+1).choose (s+1) : ℂ) • (X (i,s) : Oscillator D))) +
+      Polynomial.monomial (p+1) (C (bilinear D (unitCharge D i) α : ℂ)))
+
+private theorem source_bridge :
+    (type_of% (@flow_X_polynomial)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h oneLattice 0 ⟨0, by decide⟩ 0
+
+def family : Registration arena (type_of% (@flow_X_polynomial)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp flow_X_polynomial, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), True, False, ?_⟩
+    intro h
+    exact Eq.mp h True.intro
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@flow_X_polynomial)
+    (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.SourceBPZ.AllStateTranspose.flow_X_polynomial "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.SourceBPZ.AllStateTranspose.FlowVariableSupport.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some Prop
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end FlowVariableSupport
+
 end Reg.D5.S3.VertexAlgebra.SourceBPZ.AllStateTranspose

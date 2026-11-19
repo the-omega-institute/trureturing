@@ -109,7 +109,7 @@ theorem take_drop_append_eq_left {x y : List α} {p n : Nat}
   simp only [List.length_drop]
   omega
 
-private theorem flatMap_window_infix_one_or_two {f : α → List β} {l : List α}
+theorem flatMap_window_infix_one_or_two {f : α → List β} {l : List α}
     {p n : Nat} (hnpos : 0 < n) (hblocks : ∀ a ∈ l, n < (f a).length)
     (hend : p + n ≤ (l.flatMap f).length) :
     (∃ a, [a] <:+: l ∧ ((l.flatMap f).drop p).take n <:+: f a) ∨

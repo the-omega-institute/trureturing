@@ -1,0 +1,5 @@
+All weights are positive and sum to one. Hence some full word
+$w_i\in D^{n_i}$ has $Q_{w_i}^H(E_i)>1-2\theta$; otherwise their
+weighted average could not exceed that number. Retain these finitely
+many words and the already chosen common windows and horizon.
+

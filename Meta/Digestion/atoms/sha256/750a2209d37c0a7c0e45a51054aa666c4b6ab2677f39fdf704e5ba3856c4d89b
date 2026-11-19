@@ -1,0 +1,75 @@
+**Theorem 13.3 (bounded-bank obstruction, including convex encoding).**
+Take the actual rows and windows of Theorem 13.2 with
+$0<\epsilon<1$. For every integer $M\ge1$, every common bank of
+$M$ normalized rows $\nu_s$ on $\mathcal L^H$, and every choice
+of probability vectors $\lambda_i$,
+
+$$
+\max_{1\le i\le K}
+ \operatorname{TV}\left(R_{u_i}^H,
+                 \sum_{s=1}^M\lambda_i(s)\nu_s\right)
+ >1-\epsilon-\frac MK.
+\tag{13.11}
+$$
+
+In particular, for every fixed source and every handoff family of
+Definition 13.1 with a uniform finite bound $M$,
+
+$$
+\sup_{t\ge1}\ \sup_{u\in\mathcal L^t}\ \sup_{H\ge1}
+ \operatorname{TV}(R_u^H,\mu_u^{t,H})=1.
+\tag{13.12}
+$$
+
+All these histories have positive source probability. This is a
+supremum over finite histories and finite requested horizons, not
+an assertion that some finite query attains error one.
+
+*Proof.* Put $b_{is}=\nu_s(E_i)$. Normalization and disjointness
+give $\sum_i b_{is}\le1$ for every $s$. For
+$\mu_i=\sum_s\lambda_i(s)\nu_s$, finite nonnegative summation yields
+
+$$
+\sum_{i=1}^K\mu_i(E_i)
+ =\sum_{s=1}^M\sum_{i=1}^K\lambda_i(s)b_{is}
+ \le\sum_{s=1}^M\sum_{i=1}^Kb_{is}\le M.
+\tag{13.13}
+$$
+
+Consequently some $i$ has $\mu_i(E_i)\le M/K$. Its event-TV
+distance is at least
+$R_{u_i}^H(E_i)-\mu_i(E_i)>1-\epsilon-M/K$, proving (13.11).
+This elementary stochastic-channel counting bound is an intermediate;
+the source-specific content is the common-cut packing that makes it
+applicable here. No restriction to deterministic encoders or bank
+rows drawn from the actual predictive family was used.
+
+For any $0<\delta<1$, choose a rational $0<\epsilon<\delta/2$
+and an integer $K>2M/\delta$. Theorem 13.2 supplies a common
+$t,H$ before the bank at that $t,H$ is compared. Equation (13.11)
+then gives an actual finite-history error greater than $1-\delta$.
+The universal upper bound on TV is one, proving (13.12) even when
+the bank changes arbitrarily with $t,H$. Also, if error at most
+$\delta$ is required on a given packing, necessarily
+
+$$
+M>K(1-\epsilon-\delta).
+\tag{13.14}
+$$
+
+For randomized retention the law error used here is the more
+favorable order of averaging: convexity gives
+$\sum_s\lambda_i(s)\operatorname{TV}(R_{u_i}^H,\nu_s)
+\ge\operatorname{TV}(R_{u_i}^H,\mu_i)$. Thus an expected
+per-configuration row-error guarantee cannot evade the bound.
+Even if a common source-independent random seed $Z$ is granted
+to both encoder and decoder, the same conclusion holds for the
+marginalized law: condition on $Z=z$, apply (13.13) to its bank
+and encoding weights, and integrate. The sum of the $K$ resulting
+event masses is still at most $M$, so one fixed $i$ has marginal
+mass at most $M/K$. This grants independent randomization, not a
+history-dependent bank selector disguised as an independent seed.
+Any actual retained seed or auxiliary storage keeps its material
+charge, and every history-bearing part remains within the
+configuration accounting of Definition 13.1. $\square$
+

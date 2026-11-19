@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53547ba447699f2e10e94af73fcd43887f6d0d6ce5d0ea0c5b4c16cb57d6cac1
+  normalized_sha256: sha256:53547ba447699f2e10e94af73fcd43887f6d0d6ce5d0ea0c5b4c16cb57d6cac1
+cas_ref: sha256:53547ba447699f2e10e94af73fcd43887f6d0d6ce5d0ea0c5b4c16cb57d6cac1
+coverage_gids:
+  - gid: D5/S3/ContinuousObservables/PhaseSynthesisLifting.native_phase_lifting
+    target_statement_id: sha256:5d7587a0290f4afc3dcffcbfcc2a18474a8c9775f7d54661224a4d3875b84d24
+  - gid: D5/S3/ContinuousObservables/ProjectedUnitaryLifting.polynomial_lifting
+    target_statement_id: sha256:09193f72812f8e9f5318bb2ac383daa4cb30bac1326f05dacd630cfbd6ef7896
+receipts:
+  unresolved_subitems: []

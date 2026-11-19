@@ -1,0 +1,2 @@
+**约定 39.2（既有零行的有限谱消费者）。** 若原自伴 $v,x$ 交换且各有有限谱，取实 $\lambda$ 避开有限联合谱上的所有碰撞，令 $t=v+\lambda x$。有限实多项式插值给 $v=P(t),x=Q(t)$，所以[原多项式零响应卷](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)定理 3.1 直接给 $D(v,x)=0$。这是该既有定理的应用，不另计作新增零响应定理。原谱可含零，联合谱可有任意重数。
+

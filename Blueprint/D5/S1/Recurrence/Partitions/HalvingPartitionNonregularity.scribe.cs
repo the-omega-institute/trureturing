@@ -14,6 +14,7 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
         "The exact halving-partition count admits no finite integral family closed under both decimations.",
         H("Halving partitions and unrestricted finite integer families"),
         Blocks(
+            Paragraph(Text("The historical integer result remains declared_validated. The full arbitrary-ring audit compiles its realization, variation, sensitivity and dependence proofs, but current source binding is declared_unresolved with IE-C050 source.dictionary_or_proof_coordinate. Newly exposed supplier audits are unfinished. The exact per-target records and missing evidence are listed in https://github.com/the-omega-institute/trureturing/issues/28691 under CLAUDE section 3.9. This audit exception supplies no mathematical proof or independent final acceptance.")),
             Paragraph(Text("Alekseyev's Halving Partitions and Hyperbinary Expansions, "
                 + "arXiv:2611.01243v1, Definition 1 and section 6, supplies the source count "
                 + "and asks whether it is 2-regular. The source objects here are actual ordered "
@@ -94,6 +95,26 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 resolution: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("alekseyev-halving-partitions-nonregularity"),
                     ResolutionKind.Refuted)),
+            Supplier("powerWord", DescribeRole.Definition),
+            Supplier("oddWord", DescribeRole.Definition),
+            Supplier("powerWord_length", DescribeRole.Theorem),
+            Supplier("oddWord_length", DescribeRole.Theorem),
+            Supplier("odd_follows", DescribeRole.Theorem),
+            Supplier("powerWord_sum_short", DescribeRole.Theorem),
+            Supplier("powerWord_sum_long", DescribeRole.Theorem),
+            Supplier("oddWord_sum", DescribeRole.Theorem),
+            Supplier("dyadic_source_classification", DescribeRole.Theorem),
+            Supplier("oddWord_prefix_injective", DescribeRole.Theorem),
+            Supplier("Threshold", DescribeRole.Definition),
+            Supplier("DyadicCode", DescribeRole.Definition),
+            Supplier("codeParams", DescribeRole.Definition),
+            Supplier("code_bounds", DescribeRole.Theorem),
+            Supplier("codeSource", DescribeRole.Definition),
+            Supplier("codeSource_bijective", DescribeRole.Theorem),
+            Supplier("dyadic_source_count", DescribeRole.Theorem),
+            Supplier("threshold_mono", DescribeRole.Theorem),
+            Supplier("dyadic_plateau", DescribeRole.Theorem),
+            Supplier("nonregularity_over", DescribeRole.Theorem),
             Paragraph(Text("For m at least two, every source list at total 2^m+1 has one "
                 + "prefix of rounded-up values followed by deterministic powers of two and, "
                 + "when the length exceeds m, a tail of ones. If its length l is at most m, "
@@ -112,6 +133,52 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "block at least that long. Mathlib's recurrence-uniqueness theorem forces "
                 + "the whole subsequent tail to be zero, contradicting the next one. "
                 + "Only forward propagation is used; the matrices may be singular.")))));
+
+    private static string Exact(string name) => name switch
+    {
+        "IsHalf" => "Exact source declaration: def IsHalf (previous next : ℕ) : Prop := next = previous / 2 ∨ next = (previous + 1) / 2",
+        "Follows" => "Exact source declaration: def Follows : ℕ → List ℕ → Prop | _, [] => True | previous, next :: rest => IsHalf previous next ∧ Follows next rest",
+        "SourceLists" => "Exact source declaration: def SourceLists (n : ℕ) := {parts : List ℕ // (∀ x ∈ parts, 0 < x) ∧ parts.sum = n ∧ Follows n parts}",
+        "HalvingCompositions" => "Exact source declaration: def HalvingCompositions (n : ℕ) := {c : Composition n // Follows n c.blocks}",
+        "sourceEquiv" => "Exact source declaration: def sourceEquiv (n : ℕ) : SourceLists n ≃ HalvingCompositions n where toFun p := ⟨⟨p.1, fun h => p.2.1 _ h, p.2.2.1⟩, p.2.2.2⟩ invFun c := ⟨c.1.blocks, ⟨fun _ h => c.1.blocks_pos h, c.1.blocks_sum, c.2⟩⟩ left_inv p := by cases p; rfl right_inv c := by cases c; rfl",
+        "count" => "Exact source declaration: noncomputable def count (n : ℕ) : ℕ := Nat.card (SourceLists n)",
+        "MatrixFamily" => "Exact source declaration: def MatrixFamily (a : ℕ → ℤ) : Prop := ∃ d : ℕ, ∃ hd : 0 < d, ∃ F : ℕ → Fin d → ℤ, ∃ M0 M1 : Matrix (Fin d) (Fin d) ℤ, (∀ n, F n ⟨0, hd⟩ = a n) ∧ (∀ n, F (2 * n) = M0.mulVec (F n)) ∧ (∀ n, F (2 * n + 1) = M1.mulVec (F n))",
+        "ClosedFamily" => "Exact source declaration: def ClosedFamily (a : ℕ → ℤ) : Prop := ∃ d : ℕ, ∃ hd : 0 < d, ∃ b : Fin d → ℕ → ℤ, ∃ c0 c1 : Fin d → Fin d → ℤ, (∀ n, b ⟨0, hd⟩ n = a n) ∧ (∀ i n, b i (2 * n) = ∑ j, c0 i j * b j n) ∧ (∀ i n, b i (2 * n + 1) = ∑ j, c1 i j * b j n)",
+        "claim" => "Exact source declaration: def claim : Prop := ¬ MatrixFamily (fun n => (count n : ℤ))",
+        "powerWord" => "Exact source declaration: def powerWord : ℕ → ℕ → List ℕ | _, 0 => [] | 0, l + 1 => 1 :: powerWord 0 l | m + 1, l + 1 => 2 ^ m :: powerWord m l",
+        "oddWord" => "Exact source declaration: def oddWord : ℕ → ℕ → ℕ → List ℕ | _, _, 0 => [] | 0, _, l + 1 => 1 :: powerWord 0 l | m + 1, 0, l + 1 => 2 ^ m :: powerWord m l | m + 1, j + 1, l + 1 => (2 ^ m + 1) :: oddWord m j l",
+        "powerWord_length" => "Exact source declaration: theorem powerWord_length (m l : ℕ) : (powerWord m l).length = l",
+        "oddWord_length" => "Exact source declaration: theorem oddWord_length (m j l : ℕ) : (oddWord m j l).length = l",
+        "odd_follows" => "Exact source declaration: theorem odd_follows (m : ℕ) (p : List ℕ) (hp : ∀ x ∈ p, 0 < x) : Follows (2 ^ m + 1) p ↔ ∃ j, j ≤ m ∧ j ≤ p.length ∧ p = oddWord m j p.length",
+        "powerWord_sum_short" => "Exact source declaration: theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) : (powerWord m l).sum + 2 ^ (m - l) = 2 ^ m",
+        "powerWord_sum_long" => "Exact source declaration: theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) : (powerWord m l).sum + 1 = 2 ^ m + (l - m)",
+        "oddWord_sum" => "Exact source declaration: theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) : (oddWord m j l).sum = (powerWord m l).sum + j",
+        "dyadic_source_classification" => "Exact source declaration: theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) : ∃ j, j ≤ m ∧ j ≤ p.1.length ∧ p.1 = oddWord m j p.1.length ∧ (p.1.length ≤ m → j = 2 ^ (m - p.1.length) + 1) ∧ (m ≤ p.1.length → j + (p.1.length - m) = 2)",
+        "oddWord_prefix_injective" => "Exact source declaration: theorem oddWord_prefix_injective (m l j k : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) (hkm : k ≤ m) (hkl : k ≤ l) (he : oddWord m j l = oddWord m k l) : j = k",
+        "Threshold" => "Exact source declaration: abbrev Threshold (m : ℕ) := {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m}",
+        "DyadicCode" => "Exact source declaration: abbrev DyadicCode (m : ℕ) := Fin 3 ⊕ Threshold m",
+        "codeParams" => "Exact source declaration: def codeParams (m : ℕ) : DyadicCode m → ℕ × ℕ | .inl i => if i = 0 then (m, 2) else if i = 1 then (m + 1, 1) else (m + 2, 0) | .inr r => (m - r.1.val, 2 ^ r.1.val + 1)",
+        "code_bounds" => "Exact source declaration: theorem code_bounds (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) : (codeParams m c).2 ≤ m ∧ (codeParams m c).2 ≤ (codeParams m c).1",
+        "codeSource" => "Exact source declaration: def codeSource (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) : SourceLists (2 ^ m + 1) := by let l := (codeParams m c).1 let j := (codeParams m c).2 have hb := code_bounds m hm c refine ⟨oddWord m j l, oddWord_positive m j l, code_total m hm c, ?_⟩ apply (odd_follows m _ (oddWord_positive m j l)).mpr refine ⟨j, hb.1, ?_, ?_⟩ · simpa only [oddWord_length] using hb.2 · rw [oddWord_length]",
+        "codeSource_bijective" => "Exact source declaration: theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) : Function.Bijective (codeSource m hm)",
+        "dyadic_source_count" => "Exact source declaration: theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) : count (2 ^ m + 1) = 3 + Fintype.card {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m}",
+        "threshold_mono" => "Exact source declaration: theorem threshold_mono {r s : ℕ} (h : r ≤ s) : 2 ^ r + r + 1 ≤ 2 ^ s + s + 1",
+        "dyadic_plateau" => "Exact source declaration: theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r) (hlo : 2 ^ r + r + 1 ≤ m) (hhi : m < 2 ^ (r + 1) + (r + 1) + 1) : count (2 ^ m + 1) = 3 + r",
+        "nonregularity_over" => "Exact source declaration: theorem nonregularity_over (R : Type*) [CommRing R] [Nontrivial R] : ¬ BinaryDecimation.MatrixFamily (fun n => (count n : R))",
+        "ArbitraryFamily" => "Exact source declaration: def ArbitraryFamily (a : ℕ → ℤ) : Prop := ∃ (ι : Type) (hι : Fintype ι), letI : Fintype ι := hι; ∃ (b : ι → ℕ → ℤ) (i0 : ι) (c0 c1 : ι → ι → ℤ), (∀ n, b i0 n = a n) ∧ (∀ i n, b i (2 * n) = ∑ j, c0 i j * b j n) ∧ (∀ i n, b i (2 * n + 1) = ∑ j, c1 i j * b j n)",
+        "result" => "Exact source declaration: theorem result : (¬ MatrixFamily (fun n => (count n : ℤ))) ∧ (∀ a : ℕ → ℤ, ClosedFamily a ↔ MatrixFamily a) ∧ (∀ a : ℕ → ℤ, ArbitraryFamily a ↔ MatrixFamily a) ∧ (¬ ArbitraryFamily (fun n => (count n : ℤ))) ∧ (∀ n, count n = Fintype.card (HalvingCompositions n)) ∧ count 0 = 1",
+        _ => name
+    };
+
+    private static DocumentBlock Supplier(string name, DescribeRole role) => Describe.Lean(
+        DescribeId.Create("halving-source-" + name.Replace('_', '-').ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
+        name is "dyadic_source_classification" or "dyadic_source_count"
+            ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+        Blocks(Paragraph(Text(
+            name == "nonregularity_over"
+                ? "The actual count has no fixed binary matrix representation over every nonzero commutative unital ring, including positive characteristic and zero divisors."
+                : "The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.")), Paragraph(Text(Exact(name)))), role);
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool literature = false, bool acknowledgeSource = false,

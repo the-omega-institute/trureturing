@@ -1,0 +1,40 @@
+**推论 124.11（有限统一预算即单位饱和；偏离迫使实际塌缩）。** 在同一完整 EB3+PR 域中，
+
+$$
+\sup_{F\in\mathscr B}\beta_F<\infty
+\quad\Longleftrightarrow\quad
+\forall F\in\mathscr B:\ \beta_F=1.
+\tag{X124.20a}
+$$
+
+若存在实际完整球 $F$ 使 $\beta_F>1$，则
+
+$$
+\sup_{F\in\mathscr B}\beta_F=+\infty,\qquad
+\inf_{p\in P}\operatorname{diam}D_p=0,
+\tag{X124.20b}
+$$
+
+并存在实际原标签列及纯点 $p,q\in P$，使
+
+$$
+\begin{gathered}
+p_i\longrightarrow p,\qquad q\in D_p,\qquad p\ne q,\\
+d_H(D_{p_i},\{q\})\longrightarrow0,\qquad
+a(p_i)\longrightarrow0,\qquad\beta(p_i)\longrightarrow+\infty.
+\end{gathered}
+\tag{X124.20c}
+$$
+
+证明。若 $\sup_F\beta_F=M<\infty$，(X124.18b)先给 NC；推论124.8再给 Inj；此时 IX118.8 才给同原锥、同原单位静态复三能级，IX114.9 的反向结论给全部 $\beta_F=1$。反向的统一有限上界直接取一。因此无需另输入预算的数值一。
+
+若某个 $\beta_F>1$，(X124.20a)排除有限上确界；定理124.10已在重构前证明的 NC 与 UF 等价于是给 $\inf_p d(p)=0$。对每个 $i$ 选实际 $p_i\in P$ 使 $d(p_i)<1/i$，并选 $q_i\in P\cap D_{p_i}$。IX114.4 的 $P$ 紧性给子列使 $p_i\to p\in P$、$q_i\to q\in P$。由于
+
+$$
+\max_{x\in D_{p_i}}\|x-q\|\le d(p_i)+\|q_i-q\|\longrightarrow0,
+$$
+
+这些实际完整球整体趋于 $\{q\}$。IX115.4 的原零闭图给 $q\in D_p$，而 $T_p(p)=1$ 给 $p\ne q$；这正是 IX115.5—115.6 保留的单点分支。最后 $0<2a(p_i)\le Ld(p_i)\to0$ 及 $\beta(p_i)=1/(2a(p_i))$ 给其余极限。极限标签本身仍有 $a(p)>0$、$\beta(p)<\infty$；没有把单个球的预算说成无穷。证毕。
+
+此推论在出现偏离时强制产生实际整球塌缩，不断言存在具有 $\beta_F>1$ 的原 EB3+PR 模型。逐球各自有限也不等于统一有限；自动 NC 或自动 UF 仍须另证。
+

@@ -1,0 +1,24 @@
+**命题 103.3（迹配对的准确可积域）。** 令
+
+$$
+\mathfrak m_\tau=\{c\in M:\tau(|c|)<\infty\}=M\cap L^1(M,\tau).
+$$
+
+对全部 $a,b\in M_{\rm sa}$、$c\in\mathfrak m_\tau\cap M_{\rm sa}$，两侧乘积均可积且
+
+$$
+\tau(D(a,b)c)=-\tau(bD(a,c)).
+\tag{103.3}
+$$
+
+证明。$\mathfrak m_\tau$ 是双侧 $*$-理想，故 $Jabc,Jbac,bJac,bJca$ 等均可积；迹循环律和 $J$ 中央给
+
+$$
+\tau(D(a,b)c)
+=\tfrac12\tau(Jabc-Jbac)
+=\tfrac12\tau(bcJa-bJac)
+=-\tau(bD(a,c)).
+$$
+
+每个有限支撑自伴 $c$ 都在此域，因为 $|c|\le\|c\|p$、$\tau(p)<\infty$。不要求 $a,b$ 可积，也不声称任意三个有界自伴元均可取这份有限复数迹配对；不作 $\infty-\infty$ 运算。这是识别后的后果，不作为共同导子、线性或有限首行的前件。∎
+

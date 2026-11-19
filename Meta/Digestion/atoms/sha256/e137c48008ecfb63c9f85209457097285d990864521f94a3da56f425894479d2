@@ -1,0 +1,155 @@
+**Theorem 12.7 (ready-row separation, actual-law transfer and all
+error terms).** Fix a deterministic original gate $T$ of
+Definition 9.1, with its generated bound
+$\mathbb E_e e(Y_{<T})\le\eta^+$, and use §9's one all-later-cut
+comparison event $\mathcal D$ with
+$\mathbb P_e(\mathcal D^c)\le\gamma$ and
+
+$$
+\operatorname{TV}(R_{T+j}^\infty,Q_{W_j}^\infty)\le\epsilon
+\quad\text{for every }j\ge0\text{ on }\mathcal D.
+\tag{12.24}
+$$
+
+Let $\mathcal A$, of failure at most $\alpha$, include the valid
+finite witness certificate and an actually acquired normalized
+ready row $\rho$ on some finite horizon $H\ge1$, with
+
+$$
+\operatorname{TV}(\rho,Q_\emptyset^H)\le\zeta.
+\tag{12.25}
+$$
+
+Let $\mathsf E$ be the event of eligibility at the gate: the
+finite table, $\rho$ and the selector's finite description are
+actually ready then. Selection can use the stopped original
+history $u$ and a pre-gate service state $V$ only when the complete
+joint future hidden trajectory and fresh emission noises,
+conditional on $u,V$, have their original conditional law given
+$u$. In particular the output future has law $R_u$. Conditional
+on $u,V=v$, any selector seed has a fixed law $\lambda_{u,v}$
+independent of that entire joint future. Use the same seed law
+and rule under the comparison kernel. These are exactly the
+source-information and seed conditions of Definition 11.3,
+without imposing its B-mask restriction on the present full-label
+rule. Thresholds,
+error bounds and mass allowances here are fixed; source/data
+selection among countably many descriptions is covered below.
+
+For any fixed ready valid family, (12.15) gives the more precise
+conditional transfer
+
+$$
+\begin{aligned}
+R_u(I=0)&\le\min\{1,\delta+e(u),M_u\delta\},\\
+\mathbb P_e(\mathsf E\cap\mathcal A\cap\{I=0\})
+ &\le\delta+\eta^+.
+\end{aligned}
+\tag{12.26}
+$$
+
+It also holds for a family chosen from the allowed pre-gate state
+and history, with its own finite $N$, when its certificate has the
+same $t,\delta$. Consequently
+
+$$
+\mathbb P_e(\mathsf E\cap\mathcal A\cap\mathcal D\cap\{I=1\})
+ \ge\mathbb P_e(\mathsf E)-\alpha-\gamma-\delta-\eta^+.
+\tag{12.27}
+$$
+
+On this common event, suppose an actual completed normalized output
+$\rho_{\rm out}$ targets precisely the cut $C=T+J$, has captured,
+retained and assimilated every original label through that cut,
+and has separately charged, genuinely generated output error
+$\operatorname{TV}(\rho_{\rm out},\rho)\le\xi_{\rm actual}$.
+Then the necessary lower bounds are
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q_{W_J}^H,\rho_{\rm out})
+ &>c-t-\zeta-\xi_{\rm actual},\\
+\operatorname{TV}(R_C^H,\rho_{\rm out})
+ &>c-t-\epsilon-\zeta-\xi_{\rm actual}.
+\end{aligned}
+\tag{12.28}
+$$
+
+They are strictly positive whenever the corresponding displayed
+right side is nonnegative. In particular a current-row accuracy
+claim below these bounds fails on the indicated hit event.
+No assertion is made on a non-hit, on physical noncompletion, or
+for an output whose actual target has moved beyond $T+J$ without
+further analysis of that actual cut.
+
+*Proof.* For a fixed family its non-hit event is a measurable
+function of a finite prefix, with stationary probability less
+than $\delta$. Comparing the complete laws by (12.15) changes
+this probability by at most $e(u)$; domination by $M_u$ supplies
+the other bound. For allowed $u,V$ and any fixed selected valid
+family, the same calculation applies to its own prefix length.
+Integrating an independent allowed seed preserves the bound.
+In particular no assertion of independence of $J$ from the full
+label sequence is needed or true here.
+
+For clarity one cannot condition a confidence event on a successful
+acquisition and substitute its data into a new-law estimate.
+Instead, among possible pre-gate outputs call a family valid if
+its true stationary inequalities (12.18) hold. This is a property
+of that finite description for the fixed source. On $\mathcal A$
+every eligible selected family is valid. Conditional on $u,V$,
+restrict to eligible valid choices and apply the preceding bound
+before imposing $\mathcal A$. Integrating gives at most
+$\delta+\mathbb E_e e(Y_{<T})\le\delta+\eta^+$.
+Intersecting also with $\mathcal A$ can only decrease this
+non-hit probability. This proves the second line of (12.26).
+The union bound with $\mathcal A^c,\mathcal D^c$ proves (12.27).
+It does not assert a lower bound for $\mathbb P_e(\mathsf E)$.
+A certificate which is never ready has no eligibility guarantee.
+
+On a hit the first-future-label event $\{3\}$ has probability
+less than $t$ under $Q_{W_J}^H$ and probability $c$ under
+$Q_\emptyset^H$. Event-TV and the triangle inequality through
+(12.25) and the actual output error prove the first line of
+(12.28). The reverse triangle inequality through (12.24) proves
+the second. An actually generated certificate $c_-\le c$ gives
+the entirely certified weaker lower bound
+$c_--t-\epsilon-\zeta-\xi_{\rm actual}$; the strict rational test
+$c_->t+\epsilon+\zeta+\xi_{\rm actual}$ certifies its positivity.
+The acquisition event can include the corresponding lower
+endpoint for $c$ and all approximation certificates, so this
+introduces no exact probability query.
+
+For countably many predeclared descriptions $\kappa$, retain each
+fixed gate, horizons, rational margins, finite selector and allowed
+service-state rules. Give its acquisition, dynamic and non-hit
+terms the common budgets $\alpha$, $\gamma_\kappa$ and
+$\delta_\kappa+\eta_\kappa^+$, respectively. Intersect the
+acquisition event with the dynamic events and the complements
+of the valid-eligible non-hit events for every deterministic
+source-valid description. Its probability is at least
+
+$$
+1-\alpha-\sum_\kappa
+ (\gamma_\kappa+\delta_\kappa+\eta_\kappa^+).
+\tag{12.29}
+$$
+
+On that event any eligible selected description hits and has
+(12.28), subject to the actual output premises. Invalid branches
+are omitted before the union bound, as in §9. This is the required
+common-event way to select a gate or tolerance from acquired
+data; an individual bound for a deterministic gate cannot simply
+be asserted for an arbitrarily selected gate.
+
+The Q statement in Theorem 12.3 supplies the stationary finite
+witness table and its law-transfer calculation. Its separate R
+statement says that the actual current posterior itself has
+arbitrarily low next-3 values almost surely after every authentic
+history, even without the numerical contact event. The latter
+is qualitative: it supplies neither acquired exact R rows nor
+a certified actual-R stopping interface. Equations (12.24)–(12.28)
+are the finite acquired Q-table consumer for the actual target.
+Neither use erases any of the actual execution premises.
+$\square$
+

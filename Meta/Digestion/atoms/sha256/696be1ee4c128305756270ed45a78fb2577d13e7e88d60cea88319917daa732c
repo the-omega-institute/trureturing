@@ -1,0 +1,40 @@
+**引理 5.1（同一旧响应的同步圆不变性）。** 在 1.1 的完整候选中，对全部真正原 $b,c\in V_h$ 及全部实 $\theta,\psi$，不加任何平方窗口条件，有
+
+$$
+\begin{gathered}
+D(\mathcal R_\theta b,\mathcal R_\theta c)=D(b,c),\\
+D(Jb,Jc)=D(b,c),\qquad D(Jb,c)=-D(b,Jc),\\
+D(\mathcal R_\theta b,\mathcal R_\psi c)
+=D(b,\mathcal R_{\psi-\theta}c).
+\end{gathered}
+\tag{5.1}
+$$
+
+这是完整 PB 与已付自身圆接口的直接辅助消费者，不作为独立的全域线性原理。
+
+证明。对任意实 $t$ 和真正原 $x,w\in V_h$，原 PB $(th,x,w)$ 的位移是 $tJx,tJw$，右端为零，故
+
+$$
+D(x+tJx,w+tJw)=D(x-tJx,w-tJw).
+\tag{5.2}
+$$
+
+取真正原标签
+
+$$
+x=\frac{b+tJb}{1+t^2},\qquad
+w=\frac{c+tJc}{1+t^2}.
+\tag{5.3}
+$$
+
+(1.3) 只在两个各自平面内计算，给 $x-tJx=b,w-tJw=c$，以及
+
+$$
+x+tJx=\frac{1-t^2}{1+t^2}b+\frac{2t}{1+t^2}Jb,
+\qquad
+w+tJw=\frac{1-t^2}{1+t^2}c+\frac{2t}{1+t^2}Jc.
+\tag{5.4}
+$$
+
+半角代换覆盖所有非反点圆角；反点由已付的各槽奇性给 $D(-b,-c)=D(b,c)$。因此得到第一式，未对未知 $D$ 缩放或相加。取四分之一圆得第二行；其中交叉斜式也可将第一式用于 $(b,Jc)$ 并用 $J^2=-I$、奇性取得。再对输入对 $(\mathcal R_\theta b,\mathcal R_\psi c)$ 同步施加角 $-\theta$，用自身圆作用律即得最后一式。全部标签仍在原 $E$。∎
+

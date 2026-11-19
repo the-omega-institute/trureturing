@@ -1,0 +1,40 @@
+**定义 103.1（Pair、EB与原面链高）。** 严格沿用[VI89.1][Q103VI]：$V\ne0$ 有限维，$C\subset V$ 为原闭尖生成凸锥，$u\in V^*$ 在 $C\setminus\{0\}$ 上严格正，$K=C\cap\{u=1\}$ 是整个原紧基，$P=\operatorname{ext}K$ 是全部原纯点，效应是整个原区间 $[0,u]_{C^*}$。归一基上的仿射效应与这些线性效应一一对应，不另选测试子菜单。记
+
+$$
+\begin{gathered}
+F_p=\{f\in[0,u]:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\\
+p\perp x\ \Longleftrightarrow\ \exists f\in F_p,\ f(x)=0,
+\qquad D_p=\{x\in K:p\perp x\}=\{x:T_p(x)=0\},\\
+E_p=P\cap D_p,\qquad
+H(p,q)=\text{包含 }p,q\text{ 的整个原最小面}.
+\end{gathered}
+\tag{VII103.1}
+$$
+
+最小面亦为两条原纯射线生成的最小锥面的归一基；不取线段、截面或所选子面代替它。$F_p$ 的紧性和最小值达到见103.2；这里尚未假定 $T_p$ 仿射或是同一张效应。两个条件准确为
+
+$$
+\begin{aligned}
+\mathrm{Pair}:&\quad p,q\in P,\ p\ne q
+                 \ \Longrightarrow\ H(p,q)\ne K,\\
+\mathrm{EB}_{\ge1}:&\quad
+\forall p\in P\ \exists d_p\in\mathbb N,\ d_p\ge1:
+                 \ D_p\simeq_{\rm aff} B^{d_p}.
+\end{aligned}
+\tag{VII103.2}
+$$
+
+$B^d$ 指整个闭欧氏单位球；$d=1$ 是线段。$\mathrm{EB}_{\ge1}$ 起初只要求整个原集合 $D_p$ 为这样的仿射球，不预设它是面或暴露面，也不预给各 $d_p$ 相等。定义 $\mathrm{EB}_{\ge2}$ 为同样全称条件中要求 $d_p\ge2$，$\mathrm{EB}_3$ 为要求全部 $d_p=3$。
+
+对非空面使用通常的凸面定义，不先要求闭。原面链高约定为链中面数：
+
+$$
+h(K)=\max\{k:\ \varnothing\ne F_1\subsetneq F_2
+              \subsetneq\cdots\subsetneq F_k=K,
+              \ F_i\text{ 为原面}\}.
+\tag{VII103.3}
+$$
+
+有限维下每次严格包含都增大仿射维数，故此最大值存在；例如单点高一，线段高二。本章输入只有上述载体与两条(VII103.2)，不要求 $P$ 有限或闭，不预付 $\mathrm B$、PSD、Jordan、自对偶、谱性、projectivity、局部效应延拓或可逆群。完整 $S$ 始终取VI89.1的全部内容：每个纯 $p$ 有一个原 $e_p\in F_p$，满足 $g-e_p\in C^*$ 对全部 $g\in F_p$ 成立，并且 $e_p(q)=e_q(p)$ 对全部纯点成立。
+

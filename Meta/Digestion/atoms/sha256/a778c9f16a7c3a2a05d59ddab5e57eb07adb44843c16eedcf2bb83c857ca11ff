@@ -1,0 +1,32 @@
+**定义 84.2（同一原基底）。** 直接保留定义 83.1 的 $\mathrm{PRE}_0^{1/2}$。对每个 $X=A,D,E$，具有非零有限维实空间、闭尖生成锥 $C_X=X_+$、在非零正元上严格正的 $u_X$、整个紧态基 $K_X=\{x\in C_X:u_X(x)=1\}$、全部 proper 效应 $[0,u_X]$ 与纯态集 $P_X=\operatorname{ext}K_X$。仅对纯第一端点定义比较，并对全部纯 $\xi,\eta$ 及全部原混态 $x\in K_X$ 要求 FH1：
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\frac{\eta+x}{2}\right)=\frac{T^X_\eta(\xi)+T^X_\xi(x)}2.
+\tag{84.3}
+$$
+先直接应用固定来源 [FH] 的同载体定理 $\mathrm B_{1/2}\Longleftrightarrow S\Longleftrightarrow\mathrm B_{\rm mix}$，恢复完整有限混合律 $S$ 及全部实 $t\in[0,1]$ 的
+$$
+T^X_\xi(t\eta+(1-t)x)=tT^X_\eta(\xi)+(1-t)T^X_\xi(x),
+$$
+再复用同一一般有限 EJA 条件纸面桥。正对偶生成、共同框架、忠实态效应对应、面投影、项目性与滤波纯性等义务全部保留；不将该桥归为 Müller–Ududec 的 bit symmetry 定理直接给出。混态余项遍及整个原态基，不能缩为纯二项比较。忠实坐标中 $u_X=\tau_X$，每个简单理想的本原幂等元迹一，原态基、效应区间、单位与比较配对均被保留。使用 $\langle x,y\rangle_X=\tau_X(x\circ y)$、$\|x\|_2^2=\tau_X(x^2)$ 与 $P_x=2\ell_x^2-\ell_{x^2}$，其中 $\ell_xy=x\circ y$。入口允许非同型直和、秩一及 Albert，不先假复型、不可约性或 $\mathsf{JG}_3$。
+
+唯一原始映射仍是整个原锥上正的实双线性 $L:D\times A\to E$ 与实线性 $p:E\to D$：
+$$
+L(D_+,A_+)\subseteq E_+,\qquad p(E_+)\subseteq D_+.
+$$
+记 $n=\tau_A1_A$、$m=\tau_D1_D$、$\omega=1_D/m$，并始终从原式派生
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H_{\rm s}(d)&=L(d,1_A),&B_1&=pH_{\rm s},&Q(a,b,c)&=L(M(a,b),c),\\
+U&=M(1_A,1_A),&G&=H_{\rm s}1_D.
+\end{aligned}
+$$
+两次均为同一个原 $p$，参考始终为同一个原 $\omega$；不供应独立 $M$、另一参考或实际重置程序。保留
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\qquad
+Z:\ B_1M(a,b)=\tau_A(a)Jb\quad(a,b\in A).
+$$
+全锥正性包括原联合锥的纠缠方向；实张成不表示正锥由正乘积生成。正性与两实张成在任何零关系之前已给 $U,G>0$：正输入分别由单位的正倍数支配；若单位输出有非零正支撑泛函为零，该泛函就对所有正输入输出为零，继而由生成性和实张成对整个目标为零，矛盾。因此此时已能定义 $F=P_{U^{-1/2}}M$，且 $F(1_A,1_A)=1_D$；尚不据此声称等距。
+

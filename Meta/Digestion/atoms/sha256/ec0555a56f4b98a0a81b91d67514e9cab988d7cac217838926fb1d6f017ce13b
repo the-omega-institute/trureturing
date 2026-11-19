@@ -1,0 +1,181 @@
+### 39.5 复用原环境运输，并给出直接正预算的有限尺度
+
+固定 $E\ne0$，取 (39.16) 中一个 $F\ne0$ 的核，保留它的全部 $\lambda,u,X,\zeta_\delta,\alpha_\delta,a_\delta$。这是 §32.5 的同一零模运输机制，下面把其常数列和一个显式有限尺度全部展开。对实 $\rho$ 令
+
+$$
+x_\rho=(\rho X)\oplus0_m,\qquad \xi_\rho=(u,\rho\eta),\qquad
+\psi(A)=\xi_\rho^*A\xi_\rho .
+\tag{39.19}
+$$
+
+完整的两个算子是
+
+$$
+\begin{aligned}
+R_\delta(x_\rho)
+&=\begin{pmatrix}
+\rho(X+\delta\iota[C,X]/2)-\delta(CB+BC)/2&-\delta CV/2\\
+-\delta V^*C/2&0_m
+\end{pmatrix},\\
+S_\delta(x_\rho)
+&=\begin{pmatrix}
+B+\delta\bigl(\rho(CX+XC)/2+\iota[C,B]/2+E\bigr)&V+\delta\iota CV/2\\
+V^*-\delta\iota V^*C/2&D_{\rm env}
+\end{pmatrix} .
+\end{aligned}
+\tag{39.20}
+$$
+
+尤其下左块都是 $V^*$ 型，不能把 $V^*Cu$ 或 $V^*u$ 换成维数不合的 $VCu$ 或 $Vu$。由同一原 $V\eta=q,D_{\rm env}\eta=0$，完整列乘法给
+
+$$
+\begin{aligned}
+R_\delta(x_\rho)\xi_\rho
+&=\rho(a_\delta,0)+P_\delta,\qquad
+P_\delta=\left(-\frac\delta2(CB+BC)u,-\frac\delta2V^*Cu\right),\\
+S_\delta(x_\rho)\xi_\rho
+&=\rho\zeta_\delta(a_\delta,0)+Q_\delta,\\
+Q_\delta
+&=\left(\bigl(B+\delta[\iota(CB-BC)/2+E]\bigr)u,
+         V^*(I-\delta\iota C/2)u\right),\\
+t\xi_\rho&=(Bu+\rho q,V^*u),\qquad
+s\xi_\rho=(Eu,0),\qquad x_\rho\xi_\rho=(\rho Xu,0).
+\end{aligned}
+\tag{39.21}
+$$
+
+所有范数仍取 $\mathbb C^3\oplus\mathbb C^m$ 的完整列。未删去 $B$、任一其余环境连线或它们的预算贡献；$D_{\rm env}\eta=0$ 只取消本次输入向量的对应项。
+
+定义有限常数
+
+$$
+\begin{gathered}
+e_\delta=Q_\delta-\zeta_\delta P_\delta,\qquad
+b=\operatorname{Re}\bigl((Bu)^*Eu\bigr),\qquad
+C_0=\sum_{\delta=\pm1}\frac{\|e_\delta\|^2}{\alpha_\delta},\\
+M=1+\max\left\{
+\frac{C_0+2|b|}{2|F|},\quad
+\max_{\delta=\pm1}
+\frac{\|P_\delta\|+1+2\|e_\delta\|/\alpha_\delta}{\|a_\delta\|}
+\right\},\qquad
+\rho=-\operatorname{sign}(F)M .
+\end{gathered}
+\tag{39.22}
+$$
+
+$F$ 为非零实数；(39.14) 保证所有 $\alpha_\delta,\|a_\delta\|$ 严格正，因此 $M$ 有限。置
+
+$$
+r_\delta=R_\delta(x_\rho)\xi_\rho,\qquad
+S_\delta(x_\rho)\xi_\rho=\zeta_\delta r_\delta+e_\delta,\qquad
+k_\delta=\psi(K_\sigma(R_\delta,S_\delta)).
+$$
+
+写 $\operatorname{Im}_\iota(a+\iota d)=d$（$a,d\in\mathbb R$）。自伴列恒等式给
+
+$$
+k_\delta=-\operatorname{Im}_\iota
+ \bigl(r_\delta^*(\zeta_\delta r_\delta+e_\delta)\bigr).
+\tag{39.23}
+$$
+
+现在逐笔估计，始终使用完整输出列。由 (39.22) 的严格余量及三角不等式，
+
+$$
+\begin{aligned}
+\|r_\delta\|
+&\ge |\rho|\|a_\delta\|-\|P_\delta\|\\
+&>1+2\|e_\delta\|/\alpha_\delta,\\
+\delta k_\delta
+&\ge\alpha_\delta\|r_\delta\|^2
+       -|r_\delta^*e_\delta|\\
+&\ge\alpha_\delta\|r_\delta\|^2
+       -\|r_\delta\|\|e_\delta\|\\
+&\ge\frac{\alpha_\delta}{2}\|r_\delta\|^2>0 .
+\end{aligned}
+\tag{39.24}
+$$
+
+第三行到末行只用 $\|r_\delta\|>2\|e_\delta\|/\alpha_\delta$。故 $k_+>0,k_-<0$，且 $|k_\delta|=\delta k_\delta$。
+
+仍令 $A_\delta(\psi)=\sqrt{B_\psi(R_\delta,S_\delta)}$ 为原未中心化实 Gram 预算。不能用复 Gram 行列式代替它。准确分解是
+
+$$
+\begin{aligned}
+A_\delta(\psi)^2
+&=\|r_\delta\|^2\|\zeta_\delta r_\delta+e_\delta\|^2
+ -\left[\operatorname{Re}
+       \bigl(r_\delta^*(\zeta_\delta r_\delta+e_\delta)\bigr)\right]^2\\
+&=k_\delta^2+\Delta_\delta,\\
+\Delta_\delta
+&=\|r_\delta\|^2\|e_\delta\|^2-|r_\delta^*e_\delta|^2\ge0 .
+\end{aligned}
+\tag{39.25}
+$$
+
+第二步先用 $|z|^2=(\operatorname{Re}z)^2+(\operatorname{Im}_\iota z)^2$ 分出 $k_\delta^2$，再展开 $\zeta_\delta r_\delta+e_\delta$；其 $|\zeta_\delta|^2$ 项和交叉项在复 Gram 差中相消，留下所示 $\Delta_\delta$。非负性是完整列的复 Cauchy–Schwarz。由 (39.24)，每笔原预算本身严格正，并且
+
+$$
+\begin{aligned}
+0\le A_\delta(\psi)-|k_\delta|
+&=\frac{\Delta_\delta}{A_\delta(\psi)+|k_\delta|}\\
+&\le\frac{\|r_\delta\|^2\|e_\delta\|^2}{2|k_\delta|}\\
+&\le\frac{\|e_\delta\|^2}{\alpha_\delta} .
+\end{aligned}
+\tag{39.26}
+$$
+
+这里的分母非零，且 $2|k_\delta|\ge\alpha_\delta\|r_\delta\|^2$。因此
+
+$$
+A_+(\psi)+A_-(\psi)\le k_+-k_-+C_0 .
+\tag{39.27}
+$$
+
+左端仍须由原 $L$ 计算。父卷 §1 的标准零残量恒等式，在加回同一 $s$ 后准确成为
+
+$$
+L=K_\sigma(R_+,S_+)-K_\sigma(R_-,S_-)
+       -2\bigl(t\circ s+K_\sigma(x_\rho,s)\bigr).
+\tag{39.28}
+$$
+
+这是同一结合代数中的等式：$L$ 的残量增量是 $-2t\circ s$，两份 $K$ 之差的残量增量是 $2K_\sigma(x_\rho,s)$，所以从零残量等式立刻得到 (39.28)。用 (39.21) 的完整列，
+
+$$
+\begin{aligned}
+\psi(t\circ s)&=\operatorname{Re}\bigl((Bu+\rho q)^*Eu\bigr),\\
+\psi(K_\sigma(x_\rho,s))
+ &=-\rho\operatorname{Im}_\iota\bigl((Xu)^*Eu\bigr),\\
+\psi(t\circ s+K_\sigma(x_\rho,s))
+ &=b+\rho\operatorname{Re}\bigl((q-\iota Xu)^*Eu\bigr)
+ =b+\rho F .
+\end{aligned}
+\tag{39.29}
+$$
+
+由于 $M>(C_0+2|b|)/(2|F|)$、$\rho F=-M|F|$，
+
+$$
+\begin{aligned}
+2M|F|-2b
+&>C_0+2|b|-2b\ge C_0,\\
+\psi(L)
+&=k_+-k_-+2M|F|-2b\\
+&>k_+-k_-+C_0\ge A_+(\psi)+A_-(\psi)>0 .
+\end{aligned}
+\tag{39.30}
+$$
+
+因此 $|\psi(L)|$ 严格超过两笔预算之和，且两笔预算已经同时正，无需另作趋零扰动。这是 §32.5 的原空间有限运输在新核上的显式尺度版本，不把环境常数视为零或把运输机制计为新的来源结论。
+
+最后给任意指定 $0<\mu<\infty$，令
+
+$$
+\phi_\mu(A)=\frac{\mu}{\|\xi_\rho\|^2}\xi_\rho^*A\xi_\rho,
+\qquad \|\xi_\rho\|^2=\|u\|^2+M^2\|\eta\|^2>0 .
+\tag{39.31}
+$$
+
+这是完整原代数上的正复线性泛函，$\phi_\mu(I)=\mu$。正倍数 $a\psi$ 使 $\psi(L)$ 和每个 $A_\delta(\psi)$ 都同乘 $a$，因为 $B_{a\psi}=a^2B_\psi$。所以 (39.30) 的严格违反及两笔正预算一起保持。两份符号始终使用同一个 $x_\rho,\xi_\rho,t$ 和原环境。
+

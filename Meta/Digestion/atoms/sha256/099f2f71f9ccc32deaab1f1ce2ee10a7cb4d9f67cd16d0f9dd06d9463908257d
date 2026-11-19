@@ -1,0 +1,6 @@
+**定义 85.2（文献中的共同实现者与本窗口）。** Cabello–Peralta，[*Weak-2-local symmetric maps on C*-algebras*，arXiv:1510.00915v1](https://arxiv.org/pdf/1510.00915v1)，§1、Lemma 2.4、Theorem 2.5，研究整个复 C* 代数 $A\to B$ 的映射：每对复输入 $a,b$ 及每个 $B^*$ 泛函 $\phi$，都有同一个复线性、保星的 $T_{a,b,\phi}$ 同时实现两份读取。Theorem 2.5 在这些前件下给线性，其证明实际调用 $h+ik$、$a+ia^*$ 等复输入。原实行 $G:V_h\to V_h$ 的 P2、逐圆公式及 (81.2) 没有供应这族共同实现者或全部复输入，故该定理不直接应用于这里；先定义复扩张也不能预付其线性。
+
+Ayupov–Arzikulov–Umrzaqov–Nuriddinov，[*Description of 2-local derivations and automorphisms on finite dimensional Jordan algebras*，arXiv:1911.03194v2](https://arxiv.org/pdf/1911.03194v2)，Definitions 2.1–2.2、Theorem 2.3，要求有限维 $V$ 上的自映射 $V\to V$、一组固定基和一个各项非零的固定矩阵 $\Lambda$；每对输入须由同一个相对此基为 $\Lambda$ 对称的线性自同态实现。这里既没有给出该实现者族，也没有 $G(W)\subset W$，不能将其自映射结论套到本窗口。共同基配对的线性代数思想是成熟工具；(81.13) 的原 PB 适用性及其对实际旧值的识别仍须由 81.2 自身支付。
+
+上述来源不承担未知 $D$ 的一般可加性；$\texttt{repo-derived}$ 仅标记所写假设下的仓内综合推导，不表示历史原创、文献穷尽或世界优先权。
+

@@ -102,6 +102,18 @@ The uniform integral period-four reduction identifies the joint ideal in every r
 
 Every target unit is reached by the actual numbered-history shift at the normalized generator. The exponent bounds targetBound are 1,2,4,4 in residue order. Units are respectively {1}, {1,tau}, {1,3,4,2}, and {1,i,-1,-i}. In the binary group algebra, expansion in the two literal coefficients and the augmentation ring map force a unit's coefficient sum to be one. The two coefficient possibilities give exactly 1 or tau. For Gaussian units, the standard norm-one criterion gives a^2+b^2=1. Integer bounds restrict each coefficient to -1,0,1 and yield the four displayed possibilities. In ZMod(5) each unit has one of the four explicit powers of 3. The actual rho_unitShift equation, map_pow, and the polynomial action law transport these powers to the original native action. unitValue denotes the underlying ring element of a unit; the final power is the group power of the actual history shift. targetTimeUnit has value targetTime and literal inverse 1,tau,2,-i in residue order, and every target unit equals its bounded group power.
 
+**Theorem 1.8 (The four Gaussian integer units).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.gaussian_unit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.gaussian_unit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every unit u of the Gaussian integers, its underlying ring element is one of 1, i, -1, or -i. The norm of a unit is one, so the squares of its two integer coordinates sum to one. Exactly one coordinate is zero and the other is 1 or -1.
+
 Application to the full native action. Write N=DimensionGroup(resetMatrix q), Theta=resetTheta q, e=generator q hq and Phi=nativeIntEquiv q hq. The ring B is literally Int[X]/(F(q)); its polynomial scalar extension is fp:Int[X]->B, with x=fp(X). N has its integer module structure. Put J=id+Theta^2, H=range(J), Q=N/H and pi=H.mkQ. Every product on Q in this application is transported through nativeSquareEquiv; no product on N is used.
 
 Let C be the actual subring centralizer of Theta in End_Int(N), with (f*g)(v)=f(g(v)). Multiplication on B defines Psi(b)(Phi(c))=Phi(b*c). This is an oriented ring equivalence B->C, whose inverse is f->Phi.inverse(f(e)). Indeed LinearMap.ofAEval promotes a commuting integer-linear map to polynomial linearity. The surjectivity of Int[X]->B then makes it B-linear, so its value on 1 determines it on every vector. The chart fixes Psi(x)=Theta and Psi(1+x^2)=J. These constructions use the existing native_presentation and the standard polynomial-module and conjugation universal properties.
@@ -130,6 +142,7 @@ The chart is integral and includes q=1 directly. It assumes no parity, q>=2, fie
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.arithmeticChart`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.eta`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.gaussian_unit`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.nativeArithmeticEquiv`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.nativeIntEquiv`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.nativePolynomialEquiv`

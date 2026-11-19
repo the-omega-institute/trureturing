@@ -1,0 +1,54 @@
+**命题 126.12（归一化正法向的统一残值与最大面集中）。** 在(Q126.23)的前件下，令
+
+$$
+ \mathcal N_1(x_n)=
+ \{h\in\mathcal E:h(x_n)=0,\ \max_Kh=1\}.
+ \tag{Q126.29}
+$$
+
+每个 $\mathcal N_1(x_n)$ 非空且紧。取 IX116.3 给定重复侧 $G$ 的统一确认残值
+$\varepsilon_G>0$，满足
+
+$$
+ f(y)\ge\varepsilon_G
+ \quad(q\in S(G),\ y\in G,\ f\in\mathcal F_q).
+$$
+
+则
+
+$$
+ \boxed{\liminf_n\
+ \inf_{h\in\mathcal N_1(x_n)}
+ \min_{y\in G}h(y)\ge\varepsilon_G.}
+ \tag{Q126.30}
+$$
+
+而且
+
+$$
+ \sup_{h\in\mathcal N_1(x_n)}
+ \sup_{\substack{p\in K\\h(p)=1}}d(p,G)\longrightarrow0.
+ \tag{Q126.31}
+$$
+
+证明。边界点 $x_n$ 的支撑超平面给一个非零 $b_n\in C^{\ast}$，满足 $b_n(x_n)=0$。
+因 $K$ 线性张成 $V$，$M_n=\max_Kb_n>0$，所以
+$b_n/M_n\in\mathcal N_1(x_n)$。评价和 $h\mapsto\max_Kh$ 连续，故该集合是紧集
+$\mathcal E$ 的闭子集。
+
+取任意子列及 $h_n\in\mathcal N_1(x_n)$，再用 $\mathcal E$ 紧性取
+$h_n\to h$。有 $h(x)=0$ 且 $\max_Kh=1$，并由 $x\in\operatorname{ri}F$ 得
+$h|_F=0$。每个最大面含一个纯点
+$p_n$；取子列 $p_n\to p$，则 $p\in\mathcal Z(x)=G$ 且 $h(p)=1$。把
+$p$ 写成 $G$ 的有限纯分解，$h(p)=1$ 迫使其中至少一个
+$q\in S(G)$ 满足 $h(q)=1$。于是 $h\in\mathcal F_q$，由
+$\varepsilon_G$ 得 $h|_G\ge\varepsilon_G$。若(Q126.30)不成立，则存在固定 $\epsilon>0$、
+子列及 $h_n\in\mathcal N_1(x_n)$、$y_n\in G$，使
+$h_n(y_n)<\varepsilon_G-\epsilon$。同时取 $h_n\to h$、$y_n\to y\in G$，
+与刚证的 $h(y)\ge\varepsilon_G$ 矛盾。
+
+若(Q126.31)不成立，则存在固定 $\epsilon>0$、子列及
+$h_n\in\mathcal N_1(x_n)$、$t_n\in K$，满足
+$h_n(t_n)=1$、$d(t_n,G)\ge\epsilon$。取共同收敛子列 $h_n\to h$、$t_n\to t$，
+则 $h(x)=0$、$h(t)=1$，所以 $t\in\mathcal Z(x)=G$，矛盾。证毕。
+

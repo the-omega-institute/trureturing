@@ -1,0 +1,219 @@
+**定理 89.2（中心缺陷与同一原 $D$ 可加性的充要桥）。** 在定义 89.1 的同一 $\mathsf H_{\rm orig}+\mathsf{PB}$ 背景中，
+
+$$
+\boxed{
+\mathsf C_{\rm add}
+\quad\Longleftrightarrow\quad
+\delta_a(b,c)=0\ \text{对全部原 }a,b,c\in E
+\quad\Longleftrightarrow\quad
+D\text{ 对第二槽可加}.}
+\tag{89.5}
+$$
+
+反对称性使最后一项同时等价于第一槽可加。结合原 P2 的同一范数界，它还给同一个旧 $D$ 的实双线性。这里的正向蕴含是一个条件结论：$\mathsf C_{\rm add}$ 仍须由未改变的原 P2/PB 对任意原输入另行供应；本定理不把它提升为新原公理，也不声称已从 $\mathsf H_{\rm orig}+\mathsf{PB}$ 无条件推出它。
+
+证明。若 $E=0$，所有式子直接成立。以下设 $E\ne0$，并在 $X$ 中写 $x\circ y=S(x,y)$。先逐项支付所需的 R-free 接口。原 P2 的 Hermitian 性及评价分离给反对称性与 $D(a,a)=0$；约定 32.1 的 (32.1)–(32.2) 只用同一 $S$ 的范数界、P2 和原族的 norming 公式，给逐点范数界。全单位行准确消费[配平三角续卷定理 183.2](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)：其定义 183.1 的原资料、A1–A3、准确锥、全部 P2、完整 PB 和任意 JB 完成，逐项就是本节背景；该定理不要求原 R 或原域完备。因此
+
+$$
+D(a,b)=-D(b,a),\qquad D(tu,b)=D(a,tu)=0,
+\qquad N(D(a,b))\le N(a)N(b).
+\tag{89.6}
+$$
+
+式 (89.6) 不借用需要 R 的引理 3.1–3.2、4.3 或单位桥定理 7.2。范数界也给 $D(a,0)=D(0,a)=0$。此外，同一 P2 可以由原锥传给全部数学正泛函：对原 $a,b$、$z_1,z_2\in\mathbb C$，元素
+
+$$
+|z_1|^2a^2+|z_2|^2b^2
++2\operatorname{Re}(\overline{z_1}z_2)a\circ b
++2\operatorname{Im}(\overline{z_1}z_2)D(a,b)
+$$
+
+被全部原评价读为非负，故属于 $C$。任意数学正泛函遂读取同一正二表。这正是[配平三角续卷引理 129.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)的原锥子论证；不调用以 R 为共同背景的引理 5.1 的整个前件，也不添加实际准备。特别，以下所有完成态和商态均可读取这张原二表。
+
+现假设 $\mathsf C_{\rm add}$。$Z_E$ 在原赋范空间 $E$ 中闭，故线性空间商 $E/Z_E$ 有范数 $\|v+Z_E\|_{\rm q}=\inf_{z\in Z_E}N(v+z)$。固定原 $a$，考虑准确的映射
+
+$$
+f_a:E\longrightarrow E/Z_E,\qquad f_a(b)=D(a,b)+Z_E.
+$$
+
+它的定义域是原 $E$。由 (89.4)，它可加，且 $\|f_a(b)\|_{\rm q}\le N(a)N(b)$；可加性遂给 $\|f_a(b)-f_a(c)\|_{\rm q}\le N(a)N(b-c)$。因此它有理齐次。对任意实 $t$，取有理 $r_n\to t$，则
+
+$$
+\|f_a(tb)-t f_a(b)\|_{\rm q}
+\le |t-r_n|N(a)N(b)+|t-r_n|\|f_a(b)\|_{\rm q}\longrightarrow0.
+$$
+
+所以 $f_a$ 实线性，特别 $D(a,tb)-tD(a,b)\in Z_E$。反对称性把加法及实齐次缺陷的中心性转到第一槽。此处只用了原域上的有界可加映射，不要求商完备，也没有声称 $f_a$ 已以 $E/Z_E$ 为定义域或在这个线性商上定义旧 $D$。
+
+令 $Z=Z(X)$。它是闭的含单位关联交换 JB 子代数；其字符分离 $Z$。对任一字符 $\chi:Z\to\mathbb R$，取
+
+$$
+I_\chi=\overline{\operatorname{span}\{z\circ x:z\in\ker\chi,\ x\in X\}},
+\qquad J_\chi=X/I_\chi,
+\qquad \pi=\pi_\chi.
+\tag{89.7}
+$$
+
+中心关联性给 $(z\circ x)\circ y=z\circ(x\circ y)$，使 $I_\chi$ 成为闭 Jordan 理想。将 $\chi$ 实 Hahn–Banach 等范延拓为 $X$ 上的 $\varphi$，则 $\|\varphi\|=\varphi(u)=1$。对 $0\le x\le u$，$\|u-x\|\le1$ 给 $\varphi(x)=1-\varphi(u-x)\ge0$，缩放即得正性。若 $z\in\ker\chi$，则 $\varphi(z^2)=\chi(z^2)=0$，状态 Schwarz 使 $\varphi(z\circ x)=0$。所以 $\varphi(I_\chi)=0$，但 $\varphi(u)=1$，从而 $I_\chi$ 为真理想。于是 $J_\chi$ 是非零含单位 JB 代数，且
+
+$$
+\pi(z)=\chi(z)1\qquad(z\in Z).
+\tag{89.8}
+$$
+
+这只复用定义 4.1、引理 4.2 中针对任意含单位 JB 代数的子论证：Hanche-Olsen–Størmer 的 Lemma 2.5.3、Theorems 3.2.2、3.4.2、Lemma 3.6.2 分别供应关联中心、交换谱表示、闭理想商和状态 Schwarz。不要求 $Z_E$ 在 $Z$ 中稠密，不声称 $J_\chi$ 的整个中心只有标量；只有原中心的商像在 (89.8) 中为标量。
+
+固定原 $a$，置
+
+$$
+\lambda=\min_{\rho\in\mathcal S(J_\chi)}\rho(\pi(a)),
+\qquad a_0=a-\lambda u,
+\qquad h=\pi(a_0)\ge0.
+\tag{89.9}
+$$
+
+单生成 JB 函数演算及端点态的正延拓给取到该最小值的状态 $\rho_0$。由 $0\le h^2\le\|h\|h$，有 $\rho_0(h)=\rho_0(h^2)=0$。刚才支付的商态 P2 对每个原 $b$ 给
+
+$$
+\rho_0(\pi D(a_0,b))=0,
+\qquad
+\|\pi D(a_0,b)\|\le\|h\|\,\|\pi(b)\|.
+\tag{89.10}
+$$
+
+其中范数界来自对全部商态应用 $|\rho(\pi D(a_0,b))|^2\le\rho(h^2)\rho(\pi(b)^2)$，再用 JB 范数的状态表征。上一步已证明 $b\mapsto\pi D(a_0,b)$ 的每个加性及实齐次缺陷都是标量；(89.10) 的第一式把这些标量逐个消掉。因此该实际原行在 $E$ 上实线性。第二式使它在 $\ker(\pi|_E)$ 上为零，故在 $\pi(E)$ 上良定义，并唯一延拓为有界实线性算子 $T_a:J_\chi\to J_\chi$。原 P2 的更精确界按已知 Jordan 乘法和该线性延拓的连续性传到全部 $x\in J_\chi$，给
+
+$$
+|\rho(T_ax)|^2\le \rho(h^2)\rho(x^2)\qquad(x\in J_\chi).
+\tag{89.11}
+$$
+
+若 $x\ge0$ 且商态 $\rho(x)=0$，则 $0\le x^2\le\|x\|x$ 给 $\rho(x^2)=0$，所以 (89.11) 给 $\rho(T_ax)=0$。引理 5.2 的一般有界线性零面判据适用于这个完备序单位空间，故 $T_a$ 为有界顺序导子。式 (89.6) 的 R-free 单位行给 $T_a1=\pi D(a_0,u)=0$，于是它是斜顺序导子，也就是 Jordan 导子。现在行已线性，故
+
+$$
+T_a\pi(a)=T_a(h+\lambda1)
+=\pi D(a_0,a_0)+\lambda\pi D(a_0,u)=0.
+$$
+
+又 $|\lambda|\le\|\pi(a)\|$，所以 $\|T_a\|\le\|h\|\le2\|\pi(a)\|$。第一槽加法缺陷为中心，而 $a=a_0+\lambda u$、$D(\lambda u,b)=0$，给精确标量比较
+
+$$
+T_a\pi(b)-\pi D(a,b)\in\mathbb R1,
+\qquad \|T_a\|\le2\|\pi(a)\|.
+\tag{89.12}
+$$
+
+这逐项重用的是引理 5.4–5.5 的边界行、零面与标量比较子论证：原中心缺陷和全单位行已在本节独立支付，不沿用那些引理的 R 背景。零面接口的文献版本为 Niestegge §4 Lemma 3，斜顺序导子与 Jordan 导子的等价取 Alfsen–Shultz 的动力对应节；这里不调用动力对应重构定理。
+
+对原 $a,a'$，算子
+
+$$
+T_{a+a'}-T_a-T_{a'},
+\qquad T_{ta}-tT_a
+$$
+
+在稠密的 $\pi(E)$ 上取标量值：这是 (89.12) 与第一槽加法、实齐次缺陷的中心性。它们都是有界斜顺序导子，且 $\mathbb R1$ 闭，所以在整个 $J_\chi$ 上取标量值。定义 5.3 的标量范围判据只需这些条件：若这样的算子为 $T$，则 $T1=0$ 给 $T^2=0$，而 $e^{tT}$ 是保单位的序自同构，故对序单位范数等距；$e^{tT}x=x+tTx$ 对所有实 $t$ 范数不变，迫使 $Tx=0$。所以两算子均为零，$a\mapsto T_a$ 实线性。
+
+由 $\|T_a\|\le2\|\pi(a)\|$，它在 $\ker(\pi|_E)$ 上为零，并先在稠密的 $\pi(E)$ 上良定义，再延拓为
+
+$$
+\psi:J_\chi\longrightarrow\operatorname{Der}_{\rm skew}(J_\chi),
+\qquad \mathcal B(A,B):=\psi_A(B).
+\tag{89.13}
+$$
+
+有界 Jordan 导子在算子范数下构成闭实线性空间，故延拓仍取值于其中，且 $\|\psi_A\|\le2\|A\|$。由 $T_a\pi(a)=0$ 和稠密性，$\mathcal B(A,A)=0$；双线性极化给反对称性，单位行给最后一式。因此它满足
+
+$$
+\mathcal B(A,A)=0,
+\qquad \mathcal B(A,B)=-\mathcal B(B,A),
+\qquad \mathcal B(A,1)=0,
+\tag{89.14}
+$$
+
+且每个 $B\mapsto\mathcal B(A,B)$ 是 Jordan 导子。这里的 $\mathcal B$ 是证明用的有界实双线性比较器。只构造了引理 5.6 第一段的线性赋值；没有使用该引理依赖原 R 的 (5.13)–(5.14) 或负交换子式，也没有使用定理 5.8 的 C* 识别。此时尚未认回旧 $D$。
+
+现在固定任意原 $a,b$，严格区分原标签与商坐标，记
+
+$$
+e=D(a,b)\in E,\qquad q_E=S(a,b)\in E,
+\qquad A=\pi(a),\quad B=\pi(b),\quad d=\pi(e),\quad Q=\pi(q_E)=A\circ B.
+$$
+
+由 (89.12)，存在 $s\in\mathbb R$ 使
+
+$$
+d=\mathcal B(A,B)+s1.
+\tag{89.15}
+$$
+
+由 (89.6) 有 $D(a,0)=0$。在完整 PB 中取原三元组 $(a,b,0)$，则 (22.3) 的 $t=\pm1$ 标签准确为 $(b+e,q_E)$ 和 $(b-e,-q_E)$；两个旧外层调用均为
+
+$$
+D(b+e,q_E),\qquad D(b-e,-q_E),
+\qquad b\pm e,\ \pm q_E\in E.
+$$
+
+将 (22.4) 中已知的 Jordan 平方展开：$(b+e)^2-(b-e)^2=4b\circ e$、$q_E^2-(-q_E)^2=0$。同一个原评价的配平及原族分离给准确原等式
+
+$$
+D(b+e,q_E)-D(b-e,-q_E)=-2S(b,e).
+\tag{89.16}
+$$
+
+式 (89.16) 仍是原 $E$ 中的等式，$Q$ 从未作为旧 $D$ 的输入。现在才应用 $\pi$；对这两份实际原对分别使用 (89.12)，得
+
+$$
+\begin{aligned}
+\pi D(b+e,q_E)&\equiv\mathcal B(B+d,Q),\\
+\pi D(b-e,-q_E)&\equiv\mathcal B(B-d,-Q)
+\end{aligned}
+\pmod{\mathbb R1}.
+$$
+
+记 $[x]=x+\mathbb R1$。只在这个向量商中对已线性的 $\mathcal B$ 展开，而不展开未知旧 $D$，便有
+
+$$
+2[\mathcal B(B,Q)]=-2[B\circ d].
+\tag{89.17}
+$$
+
+Jordan 导子律和 (89.14) 给
+
+$$
+\mathcal B(B,Q)
+=\mathcal B(B,A)\circ B+A\circ\mathcal B(B,B)
+=-\mathcal B(A,B)\circ B.
+$$
+
+代入 (89.15) 与 (89.17)，即
+
+$$
+2[sB]=0\quad\text{在 }J_\chi/\mathbb R1.
+\tag{89.18}
+$$
+
+若 $B$ 非标量，则 $[B]\ne0$，从而 $s=0$。若 $B=t1$，则 $\mathcal B(A,B)=0$，所以 $d=s1$。取 $A$ 的谱端点状态 $\rho$；P2 在该状态下给
+
+$$
+s^2\le \rho(A^2)\rho(B^2)-\rho(A\circ B)^2
+=t^2\bigl(\rho(A^2)-\rho(A)^2\bigr)=0.
+\tag{89.19}
+$$
+
+故每个原对都满足同一旧值识别
+
+$$
+\pi D(a,b)=\mathcal B(\pi a,\pi b).
+\tag{89.20}
+$$
+
+对 (89.1)，右侧在商中由 (89.20) 的双线性而为零；而左侧属于 $Z_E$，故由 (89.8) 得 $\chi(\delta_a(b,c))=0$。所有中心字符分离 $Z$，遂有
+
+$$
+\delta_a(b,c)=0\qquad(a,b,c\in E).
+\tag{89.21}
+$$
+
+这证明了 $\mathsf C_{\rm add}\Rightarrow$ 第二槽可加。反向若 $D$ 第二槽可加，则每个缺陷为零，当然满足 (89.4)；故 (89.5) 的充要性成立。反对称性给第一槽可加，(89.6) 的范数界再对原 $E$ 中每条已可加行给连续性，以有理逼近取得实齐次性，于是同一个原 $D$ 实双线性。全程旧 $D$ 的每次调用均为原 $E$ 中的实际输入；$J_\chi$、状态、谱端点和 $\mathcal B$ 只作证明中的辅助对象，未在完成输入上延拓未知旧 $D$。∎
+

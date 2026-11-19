@@ -1,0 +1,34 @@
+**五、将原法向送入同一原状态体的凸次微分。** 在原仿射空间 $A\cong\mathbb R^d$ 中定义外法锥
+
+$$
+\widehat N_K(p)=\{v\in L:\langle v,x-p\rangle\le0\ (x\in K)\}.
+\tag{XI141.13}
+$$
+
+借助 $L$ 上的欧氏 Riesz 识别，$h\mapsto-h|_L$ 将 $N_p$ 送入该外法锥。它在 $L_p$ 上单射：若 $h|_L=0$，则 $h=t u$；而 $L_p$ 中全部泛函都在 $p$ 为零，故 $t=0$。因此对每个 $p\in Q$，$\widehat N_K(p)$ 的线性张成维数至少四。
+
+令 $a(x)=\operatorname{dist}(x,K)$，定义于整个 $A$。它有限值且 $1$-Lipschitz；凸性由两个最近点的凸组合与三角不等式直接得到。对 $p\in K$，
+
+$$
+\partial a(p)=\widehat N_K(p)\cap\overline{\mathbb B}_L.
+\tag{XI141.14}
+$$
+
+确实，次梯度在全部 $K$ 上的零值给法向不等式，$1$-Lipschitz 性给其范数不超过一。反向，若 $v$ 在右端，对任意 $y\in A$ 取 $k\in K$ 为最近点，则
+
+$$
+\langle v,y-p\rangle
+=\langle v,y-k\rangle+\langle v,k-p\rangle
+\le\|y-k\|=a(y).
+$$
+
+这正是全域次梯度不等式。右端包含零，且锥中每个方向均能缩入单位球，故其仿射张成维数等于原外法锥的张成维数。于是
+
+$$
+Q\subseteq\Sigma_4(a),\qquad
+\Sigma_k(a)=\{x\in A:\dim_{\rm aff}\partial a(x)\ge k\}.
+\tag{XI141.15}
+$$
+
+这里的次微分定义在整个原 $A$ 上；没有把函数只定义在 $Q$ 或某个面上。
+

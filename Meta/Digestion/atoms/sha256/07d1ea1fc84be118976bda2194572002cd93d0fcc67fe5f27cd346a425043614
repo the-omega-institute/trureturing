@@ -1,0 +1,32 @@
+**命题 73.9（同一 p 两次的尺度反例与精确共轭不变性）。** 对每个 $\kappa>0$，(73.21) 的数据都满足保留的静态原定义；四项补全的存在性及每个指定局部映射的联合延拓均不依赖 $\kappa$。因此这些关系不可能单独固定第二尺度。
+
+**证明。** 记原双份首腿读回
+
+$$
+(sd)_j=\sum_i\operatorname{Tr}_i d_{ij},\qquad
+\omega=1_D/n^2,\qquad e=1_A/n.
+$$
+
+在 $L_\kappa(d,a)=\kappa d\otimes a$、$p_\kappa=\kappa^{-1}\operatorname{Tr}_1$ 中，直接从原定义计算
+
+$$
+\begin{aligned}
+p_\kappa L_\kappa(d,a)&=s(d)\otimes a,\\
+K_\kappa(a)&=e\otimes a,\qquad sK_\kappa(a)=a,\\
+p_\kappa L_\kappa\bigl(p_\kappa L_\kappa(\omega,a),b\bigr)
+ &=a\otimes b.
+\tag{73.24}
+\end{aligned}
+$$
+
+两次都是同一个 $p_\kappa$，中间没有换读回或参考。正性、实张成保留；$J$、$p_\kappa H_\kappa$ 与全实 $Z$ 不变；$H_\kappa=\kappa H_1$ 将 $D_H$ 的配对乘以正数 $\kappa^2$，保持其零关系。原插入 $I^{\rm raw}_\kappa=\kappa I^{\rm raw}_1$，所以 C13 与 NB 均保留；三载体的比较律、全态全效应也没有改变。这是 65.11、66.7、67.6、67.12 的已获尺度族在当前问题上的实际控制，不另计一项旧尺度分类。
+
+对 $L_\kappa$，其滤波 $C_G=\kappa\operatorname{id}_E$，因此对任一槽的任一实线性局部映射，完整实空间上的延拓严格满足
+
+$$
+C_GT C_G^{-1}=T.
+\tag{73.25}
+$$
+
+等价地，$\widetilde L_\kappa=\kappa\widetilde L_1$，所以其与局部张量作用的共轭不变。输入、输出两个尺度逐项抵消，正性、全部谱、局部与联合预算均完全相同；反复要求这种相同的共轭关系也无从区分 $\kappa$。这并非近似不可见性。最小实例已是 $A=D=E=\mathbb R$：$L(d,a)=2da,p(z)=z/2$，同一 $p$ 两次仍给 $M(a,b)=ab$，双侧补全和 C13 都成立。$\square$
+

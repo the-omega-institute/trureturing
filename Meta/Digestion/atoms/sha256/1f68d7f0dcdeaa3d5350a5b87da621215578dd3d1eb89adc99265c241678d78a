@@ -1,0 +1,14 @@
+**引理 493.2（移动价格核的一阶均值消失）。** 设 (490.2)，取固定 $\theta<\nu<\beta$。则对每个实值 $g\in L^1(0,1)$，
+
+$$
+\int_X^{2X}\mathcal T_{\theta,g}(x)\,\frac{dx}x\ll\|g\|_1\sqrt{\log X}\,\bigl(X^{(1-\nu)/2}+X^{(\nu-\theta)/2}\bigr)=o\bigl(\sqrt{S_X}\bigr).
+$$
+
+证明。令 $M=X^\nu$、$\mathscr A_Mf(x)=\frac1M\int_0^Mf(x+r)\,dr$。由引理 491.2，$\|\mathscr A_Mf_s\|_{L^2[X,2X]}\ll\frac hM\sqrt{X\log X}\sqrt M$；由引理 491.1，$\|f_s\|_2\ll\sqrt{X\log X}\sqrt h$；两者对 $s\in[0,1]$ 一致。令 $P_s(t)=\int_X^tf_s$（$X\le t\le2X$）。由 Fubini，$\int_X^t\mathscr A_Mf_s=\frac1M\int_0^M\int_{X+r}^{t+r}f_s$，它与 $P_s(t)$ 只相差长度至多 $M$ 的两个端点条；故由 Cauchy–Schwarz，
+
+$$
+|P_s(t)|\le\sqrt X\,\|\mathscr A_Mf_s\|_2+2\sqrt M\,\|f_s\|_2\ll\sqrt{\log X}\,\Bigl(\frac{X\,h}{\sqrt M}+\sqrt{XhM}\Bigr),
+$$
+
+对 $t$ 与 $s$ 一致。令 $q_s(x)=x^{-1/2-\theta}\rho_x(sx^\theta)$。由 §481 的显式 $w$，$(\log w)'=O(x^{-1})$、$(\log w)''=O(x^{-2})$，从而（与定理 491.6 的证明相同）对 $s\in[0,1]$ 一致地 $q_s=O(X^{-1/2-\theta})$、$q_s'=O(X^{-3/2-\theta})$，故 $|q_s(2X)|+\int_X^{2X}|q_s'|\ll X^{-1/2-\theta}$。分部积分给出 $\bigl|\int_X^{2X}q_sf_s\bigr|\le\sup_t|P_s(t)|\bigl(|q_s(2X)|+\int_X^{2X}|q_s'|\bigr)\ll\sqrt{\log X}\bigl(X^{(1-\nu)/2}+X^{(\nu-\theta)/2}\bigr)$。由于 $\int_X^{2X}\mathcal T_{\theta,g}\,\frac{dx}x=\int_0^1g(s)\int_X^{2X}q_sf_s\,dx\,ds$（$E$ 局部有界，Fubini 成立），得第一式；除以 $\sqrt{S_X}$ 为 $O\bigl(X^{-(\nu-\theta)/2}+X^{-(1-\nu)/2}\bigr)=o(1)$。证毕。
+

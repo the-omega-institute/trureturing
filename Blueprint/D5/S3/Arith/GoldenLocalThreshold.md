@@ -20,7 +20,20 @@ The proof identifies each adjacent objective difference with log p times margina
 
 This is only the sufficiency direction for one fixed prime. It does not prove local necessity, combine prime directions, define the global bounds L or U, characterize highly abundant numbers, reduce absent prime checks to the smallest missing prime, or classify all endpoint ties.
 
+**Theorem 1.2 (The adjacent objective increment).**
+
+$$\forall p \in \mathbb{N}, lambda \in \mathbb{R}, a \in \mathbb{N},\; Prime\left(p\right) \Rightarrow goldenPrimeLocalObjective\left(lambda, p, a + 1\right) - goldenPrimeLocalObjective\left(lambda, p, a\right) = \left(goldenLayerMarginal\left(p, a + 1\right) - lambda\right) \cdot log\left(p\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenLocalThreshold.golden_prime_local_objective_diff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p, real price lambda, and natural exponent a, the objective increment from a to a+1 equals the next marginal minus lambda, multiplied by log p. This identity supplies the adjacent differences used in the threshold criterion and in actual integer occupation estimates.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/GoldenLocalThreshold.golden_prime_local_objective_diff`
 - Truth anchor: `D5/S3/Arith/GoldenLocalThreshold.golden_prime_local_objective_maximal_of_threshold`
 - Dependency: [D5/S3/Arith/GoldenResourceOptimalInteger](GoldenResourceOptimalInteger.md)

@@ -1,0 +1,24 @@
+**定义 1.1（来源与量词）。**称[《互为探针与平方几何的内生恢复》](AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md)为母卷，[《Fourier 交叠与全框架 Born 刚性》](AURIC_C139_FOURIER_OVERLAPS_AND_GLOBAL_FRAMED_BORN_RIGIDITY.md)为 Fourier 卷，[《固定实源比较器与原生事件的边界》](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md)为固定源卷。采用母卷命题 13.1、定义 16.1 及固定源卷定义 19.1 的具体三进来源：
+
+$$
+R_+=\mathbb N[1/3],\qquad
+S_+=R_+[u]/(u^3=1),\qquad
+\Delta=1+u+u^2,
+\qquad \zeta=e^{2\pi i/3}.
+\tag{1.1}
+$$
+
+每个半环元素有唯一的三个非负系数，半环内不置 $\Delta=0$。定义
+
+$$
+\phi(a+bu+cu^2)=a+b\zeta+c\zeta^2,\quad
+\epsilon(a+bu+cu^2)=a+b+c,\quad
+Fx=(\phi(x_j))_j,\quad
+\nu(x)=\sum_j\epsilon(x_j).
+\tag{1.2}
+$$
+
+输入是一张已经实际供应的有限表，内有两个预定父块 $X,Y\in S_+^3$，总表 $t=X+Y$；父位置、发生位置、分路和档案全部保留。它另带一个原未归一质量 $m\ge0$。不是先造两个准备再联合，不把 $m$ 分成两份父质量，也不由 $X+Y$ 推断物理复制、独立性或实际混合。所有参考、副本及相关联合均取原来实际供应的同一实现。
+
+全原 $\Omega$ 的准备、事件、过程、输入输出类型、ready、设备、端口、时钟及其单位、控制、旗、细记录、失败、拒绝、停止、销毁、返回、合法历史和未来均不删减。本文给某个表域的全称结论时明确称其为代数域结论；用于指定原端口时，还须实际证明该端口的输入、终表及接续落在所述域。不同参考实现的边缘不能合成一份来源证据。
+

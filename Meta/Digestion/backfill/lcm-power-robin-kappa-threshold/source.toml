@@ -1,0 +1,5 @@
+source_id = "lcm-power-robin-kappa-threshold"
+path = "docs/develop/theory/LCM_POWER_ROBIN_KAPPA_THRESHOLD.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

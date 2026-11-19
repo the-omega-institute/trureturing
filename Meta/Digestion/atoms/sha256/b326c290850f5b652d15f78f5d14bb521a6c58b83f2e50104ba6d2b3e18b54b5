@@ -1,0 +1,35 @@
+**引理 3.1（实广义特征纤维上的残量消失）。** 在任意忠实表示 $\pi:A\hookrightarrow B(\mathcal H)$ 中，若 $\xi\in\mathcal H$ 和 $\lambda\in\mathbb R$ 满足
+
+$$
+(\pi(t)-\lambda\pi(c))\xi=0,
+\tag{3.1}
+$$
+
+则
+
+$$
+\langle\pi(s)\xi,\xi\rangle=0.
+\tag{3.2}
+$$
+
+若 $E_\lambda=\ker(\pi(t)-\lambda\pi(c))$，则 $\pi(s)$ 在 $E_\lambda$ 上的压缩为零。
+
+**证明。** 对 (2.2) 取 $x=\lambda$，把同一个 $\xi$ 代入任意 $y\in\mathbb R$。由 (3.1)，
+
+$$
+X_{\lambda,y}\xi=-i\sigma y\,\pi(c)\xi,
+$$
+
+故正性给
+
+$$
+y^2\|\pi(c)\xi\|^2+2y\langle\pi(s)\xi,\xi\rangle\ge0
+\qquad(y\in\mathbb R).
+\tag{3.3}
+$$
+
+令 $y\downarrow0$ 与 $y\uparrow0$，线性项必须为零，得到 (3.2)。同一 $E_\lambda$ 中的任意复线性组合仍满足 (3.1)，因此对 $\xi+\eta$ 和 $\xi+i\eta$ 使用 (3.2) 的复极化，得
+$\langle\pi(s)\xi,\eta\rangle=0$。∎
+
+在定理 4.1 的实际秩一 $p,q$ 中，所消费的准确读取是 $\xi_p=(1,0,-\overline v/d)^T$ 与 $\xi_q=(0,1,-\overline w/d)^T$：它们分别满足 $p\xi_p=e_1,q\xi_p=0$ 和 $p\xi_q=0,q\xi_q=e_2$，所以 (3.2) 分别读出 $\rho=0$ 与 $\eta=0$。一般算子块的联合读取张成／忠实性桥尚未证明，准确义务见 §5。这里没有把未知 $D$ 压缩或下降到商代数，也不使用其可加性、齐次性或连续性。
+

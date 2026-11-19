@@ -1,0 +1,33 @@
+**定义 240.1（原资料、数学商与任意原像）。** 完整沿用 128.1、183.1 的同一原 $\Omega/\mathrm{native}$、$E,C,u,N,\mathcal P,S,D$、A1–A3、准确锥、全部原 P2 和完整 PB。消费已经给定的无 R 接口
+
+$$
+E\subset X,\qquad S=\circ,\qquad
+\overline E^{\|\cdot\|_X}=X,\qquad
+C=E\cap X_+,\qquad N=\|\cdot\|_X|_E,
+\tag{240.1}
+$$
+
+其中 $X$ 是任意含单位实 JB 代数，$E$ 是其含单位实 Jordan 子代数，允许不完备。原评价分离并准确决定原锥，全部零、不等及次归一质量 $m_\alpha=\alpha(u)$ 保持。$D:E^2\to E$ 仍只是同一份原总映射，不另付可加、齐次、连续、可测、协变、跨轴单位平移、NN、Jacobi、$\mathsf F$、原 R、输出在小代数内闭合、商下降或完成延拓。
+
+任取有限维 JB 代数 $Y$ 和满 Jordan 同态 $\pi:X\to Y$。这等价于取一个有限维 Jordan 商及其同构；同态自动正且收缩，满射使 $\pi(u)=1_Y$。它只是数学读取，不是原全词 $K/J/q$ 中的来源商，也不要求单射、原范数恢复、Jordan 截面或任何实际商操作。任取 $p^2=p\in Y$，写 $J=Y_2(p)=\{y:p\circ y=y\}$，并设这个角具有自旋形式
+
+$$
+\begin{aligned}
+J&=\mathbb Rp\oplus H,\\
+(sp+x)\circ(tp+y)&=(st+\langle x,y\rangle)p+sy+tx,\\
+J_+&=\{sp+x:s\ge\|x\|\},\qquad
+\|sp+x\|=|s|+\|x\|.
+\end{aligned}
+\tag{240.2}
+$$
+
+先取 $p\ne0$；$p=0$ 的角为零，另行包含。$H$ 是有限维实内积空间，不预设维数。定义实际原像域
+
+$$
+T=\{a\in E:\pi a\in J\},\qquad
+h_{a,b}=\pi(D(a,b))\quad(a,b\in T).
+\tag{240.3}
+$$
+
+下标始终保留实际原标签；在证明所需纤维一致性以前，不把 $h_{a,b}$ 写成商上的二元函数。不假定 $p$ 有原幂等提升。下文的 $e\in E$ 仅满足 $\pi e=p$，可以 $e^2\ne e$。
+

@@ -1,0 +1,4 @@
+**归属 17.3（既有结论与被消费的成熟事实）。** AH 的直接身份保持 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`；W、CC 的直接身份保持定义 6.1 所用的 `3b10aed60f60e4901bae6cf2e160bf439d642e64`；OP46–47 按 AH42.1 的引用链取 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7`，各自递归引文不被压平。AH43.1 供应同表数学正读取与零槽；主定理 7.1 供应局部反射的全部非对角块。W119–120 的两输入同角闭合、CC147–150 的全单位框架和 AH59–60 的全单位反射及迹／窗前件，各守原范围。OP46–47 是指定 $M_2$ 多项式原域的既有小像及横向结论；AH5.3 的秩一行要求真实 Hilbert 秩一和原有限角提升。它们不把任意完成 $B$ 的模块块免费变成有限秩几何。定理 12.1–13.1 和应用 14.1 的已成范围直接复用，不把分别识别两条边当作其和的识别。
+
+忠实 C* 表示、态分离和数学 GNS 沿定义 10.1 的 Gelfand–Naimark、Segal；Peirce 角术语沿 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.6.2、Lemma 2.6.3；UHF 归纳模型沿 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)，II.8.2.2(iv)。复 Cauchy–Schwarz、Gram 行列式的列消元、复极化和非负实多项式零点的一次系数事实仅在上述证明内消费，不单列为新数学。这里的 $\texttt{repo-derived}$ 差额是：在原主定理留下的两份对角余量上，用等右 Gram 同时供应核向量与两个复等号向量，识别同一个相反双模之和的旧响应。归属限于所引范围内的条件纸面综合，不主张文献穷尽、历史原创或外部开放问题解决。
+

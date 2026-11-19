@@ -1,0 +1,42 @@
+**定义 113.1（可变维数的原球族）。** 始终保留107.1、110.1及112.1的同一个
+非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的
+原泛函 $u$、整个紧基 $K=C\cap\{u=1\}$、全部纯点 $P=\operatorname{ext}K$
+及全部原效应 $\mathcal E=[0,u]_{C^*}$。明确地，
+
+$$
+\begin{gathered}
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\\
+p\perp q\ \Longleftrightarrow\ \exists f\in\mathcal E:
+ f(p)=1,\ f(q)=0,\\
+\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp},\\
+\mathrm{EB}_{\ge1}:\quad
+\forall p\in P\ \exists d_p\in\mathbb N,\ d_p\ge1:\ D_p\simeq_{\rm aff}B^{d_p},\\
+\mathrm{Pair}_{\perp}:\quad
+p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\end{gathered}
+\tag{VIII113.1}
+$$
+
+这里 $x$ 遍历整个原 $K$，$H(p,q)$ 是原最小面，球是完整零集而非其中的子球。
+记 $n=\dim V$、$N=n-2$、$S=\partial K\cong S^N$、$M=S\setminus P$。
+这采用112章的 $n,N$ 记号，不采用110章以 $N$ 表示 $\dim V$ 的记号。
+108.2给 $1\le d_p\le N$，joint存在给 $n\ge3$。
+称 $d_p\ge2$ 的球为厚球，$d_p=1$ 的球为薄球。
+
+直接复用110.2—110.3的连续标签 $\sigma:M\to P$、连续球心 $c_p$、
+同胚 $c:P\to B=\{c_p:p\in P\}$ 和保留标签的强形变收缩
+
+$$
+H(x,t)=(1-t)x+t c_{\sigma(x)},\qquad \sigma H(x,t)=\sigma(x).
+\tag{VIII113.2}
+$$
+
+$P$ 是紧有限维ENR，其连通分量为有限多个开闭道路分量。
+全部非点真面是 $D_p$，$P\cap D_p=\partial_{\rm rel}D_p$；
+不同这样的面若相交只交于纯点，每个纯点可补joint，球的对径与joint互相对应。
+这些都是原W内的既有结论。
+本章不输入G、球维数局部常定、纯点连通或流形、全Pair、全纯互易、谱性、
+状态三谱、保纯或 $\sigma$ 为fibration。
+

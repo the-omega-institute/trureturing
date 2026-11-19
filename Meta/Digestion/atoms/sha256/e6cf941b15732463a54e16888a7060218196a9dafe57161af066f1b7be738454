@@ -1,0 +1,25 @@
+**定义 84.3（完整候选及减少的独立数学要求）。** 在明确的79.1模型类 $\Gamma_{\rm cont}$ 内，有全域分类
+
+$$
+\mathsf H_{\rm orig}+\mathsf{PB}
+\quad\Longleftrightarrow\quad
+\exists!Q\in Z(M)_{\rm sa},\ Q^2=1,\
+D(a,b)=iQ[a,b]/2\ (a,b\in E).
+\tag{84.10}
+$$
+
+因此，在同一完整原来源合同 $\mathcal C_{\rm src}$ 下，完整条件候选有同域等价
+
+$$
+\begin{aligned}
+&\Gamma_{\rm cont}+\mathsf H_{\rm orig}+\mathsf{PB}
++\mathcal C_{\rm src}\\
+&\qquad\Longleftrightarrow\quad
+\Gamma_{\rm cont}+\mathsf H_{\rm orig}+\mathsf P_3
++\mathsf{PB}+\mathcal C_{\rm src}.
+\end{aligned}
+\tag{84.11}
+$$
+
+原 R、双线性、全部有限复 Gram 和共同乘法不必另列为此模型类中的独立数学要求。没有计算一般量子起源的最小独立公理数，也没有证明模型类、准确锥、完整原域或七项来源合同之间的独立性。完整物理来源同时成立仍是候选的实际条件。
+

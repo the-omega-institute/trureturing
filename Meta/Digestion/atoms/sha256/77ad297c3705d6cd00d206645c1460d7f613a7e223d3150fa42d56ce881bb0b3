@@ -1,0 +1,31 @@
+#### 定理 5.2：全程成功记录的泄漏界
+
+若 $\rho=P\rho P$ 且 $\operatorname{tr}\rho=1$，$N$ 次记录均为 $P$ 的概率为 $p_N=\operatorname{tr}(A_N\rho A_N^\dagger)$，并满足
+
+$$
+0\le1-p_N\le
+ \frac{t^2\left\|QHP\right\|^2}{N\hbar^2}.
+$$
+
+**证明。**
+
+令 $H_0=PHP+QHQ$。Duhamel 公式给出
+
+$$
+(e^{-\mathrm iH\delta/\hbar}-e^{-\mathrm iH_0\delta/\hbar})P
+ =-\frac{\mathrm i}{\hbar}\int_0^\delta
+ e^{-\mathrm iH(\delta-u)/\hbar}(H-H_0)
+ e^{-\mathrm iH_0u/\hbar}P\,\mathrm du .
+$$
+
+右侧中 $(H-H_0)e^{-\mathrm iH_0u/\hbar}P =QHP e^{-\mathrm iPHPu/\hbar}P$。 左乘 $Q$ 后，因 $Qe^{-\mathrm iH_0\delta/\hbar}P=0$，得到
+
+$$
+\left\|Qe^{-\mathrm iH\delta/\hbar}P\right\|
+ \le|\delta|\left\|QHP\right\|/\hbar .
+$$
+
+每个留存的子归一化态支撑于 $P$，其迹至多为一， 故单步失去的概率至多为 $\delta^2\left\|QHP\right\|^2/\hbar^2$。 对 $N$ 个步骤的概率损失求和即得。
+
+$\square$
+

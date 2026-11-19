@@ -1,0 +1,95 @@
+**定义 27.1（联合二次型）。** 准确沿用定义 17.1 的任意有限输入 (17.1)、本卷 (1.1)–(1.2)，以及[承载卷定义 41.1](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md#411-原完整问题与较弱的固定输出接口)的原标签。固定一个 $\sigma\in\{1,-1\}$，记
+
+$$
+C=\operatorname{diag}(1,2),\qquad S_A=\operatorname{diag}(s_1,s_2),\qquad
+s=S_A\oplus0_m,\qquad g_\sigma=\frac{\sigma i}{2}[c,t]+s.
+\tag{27.1}
+$$
+
+$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意，$s_1,s_2$ 为任意实数；此处不假设 P2。$D_{\rm env}$ 始终只是同一个已知输入 $t$ 的环境矩阵。
+
+直接取定义 17.1 的 $\mathcal E_0\subseteq\mathbb C^m$ 和 $\mathcal H_0=\mathbb C^2\oplus\mathcal E_0$。定理 17.2 已给出 $d:=\dim_{\mathbb C}\mathcal E_0\le4$ 及逐预算、逐质量的全正泛函等价。选定该子空间的一组复正交归一基，以等距嵌入 $F:\mathbb C^d\to\mathbb C^m$ 表示，定义实线性坐标
+
+$$
+Y(v)=F(v_1+i v_{d+1},\ldots,v_d+i v_{2d})^{\mathsf T},
+\qquad v\in\mathbb R^{2d}.
+\tag{27.2}
+$$
+
+$d=0$ 时 $v$ 为空、$Y=0$。对 $a\in\mathbb R^4$ 定义全部 Hermitian 演员探针的坐标
+
+$$
+X(a)=\begin{pmatrix}a_1&a_3+i a_4\\a_3-i a_4&a_2\end{pmatrix},\qquad
+H_\sigma(X)=\frac{\sigma i}{2}[C,X],\qquad J_C(X)=C\circ X.
+\tag{27.3}
+$$
+
+以下把原 $\mathcal H=\mathbb C^2\oplus\mathbb C^m$ 当作实 Hilbert 空间，只使用其实内积
+$\langle z,w\rangle_{\mathbb R}=\operatorname{Re}(z^*w)$，范数仍为原复 Hilbert 范数。固定任意单位演员方向 $u\in\mathbb C^2$，不要求它的任一坐标非零。令
+
+$$
+n=5+2d\le13,\qquad z=(a,v,\tau)\in\mathbb R^n.
+$$
+
+定义下列从 $\mathbb R^n$ 到原 $\mathcal H$ 的实线性映射；每个像都保留其演员与环境分量：
+
+$$
+\begin{aligned}
+\mathcal Xz&=(X(a)u,0),&
+\mathcal H_\sigma z&=(H_\sigma(X(a))u,0),&
+\mathcal Jz&=(J_C(X(a))u,0),\\
+\mathcal Tz&=(\tau Bu+VY(v),\ \tau V^*u+D_{\rm env}Y(v)),\\
+\mathcal Kz&=(\tau(C\circ B)u+\tfrac12 CVY(v),\ \tfrac\tau2 V^*Cu),\\
+\mathcal G_sz&=(\tau(\tfrac{\sigma i}{2}[C,B]+S_A)u
+                      +\tfrac{\sigma i}{2}CVY(v),\ -\tfrac{\sigma i\tau}{2}V^*Cu).
+\end{aligned}
+\tag{27.4}
+$$
+
+对 $\delta\in\{1,-1\}$，再置
+
+$$
+\begin{gathered}
+\mathcal R_\delta=\mathcal X+\delta(\mathcal H_\sigma-\mathcal K),\qquad
+\mathcal S_{\delta,s}=\mathcal T+\delta(\mathcal J+\mathcal G_s),\\
+\ell_s(z)=-2\langle\mathcal Xz,(\mathcal H_\sigma-\mathcal K)z\rangle_{\mathbb R}
+           -2\langle\mathcal Tz,(\mathcal J+\mathcal G_s)z\rangle_{\mathbb R}.
+\end{gathered}
+\tag{27.5}
+$$
+
+若 $\mathcal A,\mathcal B$ 是这类实线性映射，记
+$\operatorname{Sym}(\mathcal A,\mathcal B)
+=(\mathcal A^{\mathsf T}\mathcal B+\mathcal B^{\mathsf T}\mathcal A)/2$，其中转置对上述原实内积取伴随。令
+
+$$
+\mathscr L_s=-2\operatorname{Sym}(\mathcal X,\mathcal H_\sigma-\mathcal K)
+              -2\operatorname{Sym}(\mathcal T,\mathcal J+\mathcal G_s),
+\qquad z^{\mathsf T}\mathscr L_sz=\ell_s(z).
+$$
+
+索引 $\theta$ 只含下列变量：
+
+$$
+\theta=(u,\epsilon,\alpha_+,\alpha_-,\beta_+,\beta_-),\qquad
+\|u\|=1,\quad\epsilon\in\{1,-1\},\quad
+0<\alpha_+,\alpha_-<\infty,\quad\beta_+,\beta_-\in\mathbb R.
+\tag{27.6}
+$$
+
+这里的 $\epsilon$ 是绝对值的两个实符号，与固定的取向 $\sigma$ 分开。对每个 $\theta$ 定义实对称系数矩阵
+
+$$
+\boxed{\quad
+\mathscr Q_{\sigma,s}(\theta)=
+\sum_{\delta=\pm1}\left[
+\alpha_\delta\mathcal R_\delta^{\mathsf T}\mathcal R_\delta
++\alpha_\delta^{-1}
+ (\mathcal S_{\delta,s}-\beta_\delta\mathcal R_\delta)^{\mathsf T}
+ (\mathcal S_{\delta,s}-\beta_\delta\mathcal R_\delta)
+\right]-2\epsilon\mathscr L_s .\quad}
+\tag{27.7}
+$$
+
+矩阵的阶数为 $n\le13$，其条目由 (27.2)–(27.5) 的原空间实内积唯一确定。$(a,v,\tau)$ 是构造系数时的二次型变量，不属于索引 $\theta$，也不是额外的探针或读取量词。换取 $\mathcal E_0$ 的另一组复正交归一基只在 $v$ 坐标上作实正交变换，故 (27.7) 相应作合同变换；其半正定性不变，原 $B,V,D_{\rm env}$ 并未被替换。
+

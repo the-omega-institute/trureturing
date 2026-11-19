@@ -1,0 +1,47 @@
+**定理 12.1（共同算子强度的跨平面可加）。** 在 11.1、(11.4) 下，同一旧 $G$ 满足
+
+$$
+\boxed{G(b+c)=G(b)+G(c).}
+\tag{12.1}
+$$
+
+证明。先准确复用三角卷 212.1–213.1 与本卷 8.1：若 $\alpha,\beta>0$，原 $y=b/\sqrt\alpha,z=c/\sqrt\beta$ 满足 $y^2=z^2=R$，且 $y\circ z=\gamma R/\sqrt{\alpha\beta}$ 半定，所以 213.1 直接给混合相容；8.1 还原实缩放。零平方情形平凡。因此
+
+$$
+G(b)\circ G(c)=b\circ c,\qquad
+b\circ G(c)+G(b)\circ c=0
+\tag{12.1a}
+$$
+
+是既有结果的直接消费者，不作为新增结论，也不另行重证。所需 $G(v)^2=v^2$、$G(0)=0$、奇性和全部实齐次分别消费 200.2、210.1、8.1。
+
+现在置 $B=b+c$、$g=G(B)$、$j=G(b)$、$k=G(c)$。若 $R=0$，结论直接成立；若 $B=0$，由 $c=-b$、8.1 的奇性与零行成立。其余情形有
+
+$$
+B^2=(\alpha+\beta+2\gamma)R,\qquad
+B\circ b=(\alpha+\gamma)R,\qquad
+B\circ c=(\beta+\gamma)R.
+\tag{12.2}
+$$
+
+$B^2\ge0$、$R\ge0$ 非零使 $\alpha+\beta+2\gamma>0$，所以 $(B,b)$、$(B,c)$ 仍满足 (11.4) 的前件。分别消费这两对和 $(b,c)$ 的既有混合相容 (12.1a)，得
+
+$$
+g\circ j=B\circ b,\qquad
+g\circ k=B\circ c,\qquad
+j\circ k=b\circ c.
+$$
+
+现在只对已经识别的元素计算准确缺陷平方：
+
+$$
+\begin{aligned}
+(g-j-k)^2
+&=B^2+(j+k)^2-2g\circ(j+k)\\
+&=B^2+B^2-2(B\circ b+B\circ c)=0.
+\end{aligned}
+\tag{12.3}
+$$
+
+自伴平方零给 $g=j+k$。没有先展开 $G(b+c)$，也没有将缺陷平方改写本身当作新的刚性。承重连接是把同一既有混合相容用于三份实际输入对；没有将只适用一份输入对的关系当作任意和上的关系。∎
+

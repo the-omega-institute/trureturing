@@ -1,0 +1,14 @@
+**（三）支撑归一化推广有限保零。** 仍在一般 EJA 中，设 $T:X\to Y$ 正实线性，$h=T1>0$，且在某个 Jordan 生成完整框架族的每套内部保零。固定其中一套，写 $x_i=Te_i$、$q_i=\operatorname{supp}x_i$，零像规定 $q_i=0$。支撑两两正交；$\sum_i x_i=h>0$ 蕴含 $\sum_iq_i=1$，非零 $x_i$ 在其 $Y_1(q_i)$ 角内正可逆。块内谱计算遂给
+$$
+\Phi=P_{h^{-1/2}}T,\qquad \Phi1=1,\qquad
+\Phi e_i=q_i,\qquad [\ell_h,\ell_{q_i}]=0. \tag{75.15}
+$$
+逆只施于全局 $h$；零像不求逆，也不要求 $q_i$ 本原。$\Phi$ 正且每个选定 $e_i$ 零平方缺陷，故（一）与源生成性给 $\mathcal D_\Phi=X$，$\Phi$ 为保单位 Jordan 同态。由（二），$\Phi^{-1}(\mathcal C_h)$ 是含全部选定原子的 Jordan 子代数；再次用生成性得 $\Phi(X)\subseteq\mathcal C_h$。两个闭包分别负责同态性与权重交换，不能省略后者。
+对 $z\in\Phi(X)$，把 $[\ell_h,\ell_z]=0$ 作用于 $h$，得 $\ell_h^2z=\ell_{h^2}z$，从而 $P_hz=h^2\circ z$。自伴随性、$P_{\sqrt h}^2=P_h$ 及迹内积结合性给全部实 $x,y$ 的
+$$
+\langle Tx,Ty\rangle_Y
+=\langle\Phi x,P_h\Phi y\rangle_Y
+=\langle\Phi x\circ\Phi y,h^2\rangle_Y
+=\langle\Phi(x\circ y),h^2\rangle_Y. \tag{75.16}
+$$
+因此正交正元的像正交；反向，全域保零当然给每套框架内保零。此步骤无单射、无非零像、无结合矩阵表示或 CP 前件。

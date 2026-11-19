@@ -409,7 +409,7 @@ private lemma phase_injective : Function.Injective phase :=
   Subtype.coe_injective.comp ((AddCircle.injective_toCircle one_ne_zero).comp
     qmodToReal_injective)
 
-private lemma phase_mk (x : ℚ) :
+lemma phase_mk (x : ℚ) :
     phase (x : QmodZ) = Complex.exp (2 * Real.pi * Complex.I * (x : ℂ)) := by
   change (AddCircle.toCircle (((x : ℝ) : AddCircle (1 : ℝ))) : ℂ) = _
   rw [AddCircle.toCircle_apply_mk, Circle.coe_exp]
@@ -420,7 +420,7 @@ private lemma phase_mk (x : ℚ) :
 private lemma qmod_integer (z : ℤ) : ((z : ℚ) : QmodZ) = 0 :=
   (AddCircle.coe_eq_zero_iff (1 : ℚ)).mpr ⟨z, by simp⟩
 
-private def pairRaw (D : LatticeData) (r s : Charge D) : ℚ :=
+def pairRaw (D : LatticeData) (r s : Charge D) : ℚ :=
   dualVector D r ⬝ᵥ (fun i => (s i : ℚ))
 
 private lemma pairRaw_symm (D : LatticeData) (r s : Charge D) :
@@ -549,7 +549,7 @@ private lemma half_pair_mod (D : LatticeData) (hD : (gramReal D).PosDef)
 def quadraticClass (D : LatticeData) (a : Discriminant D) : QmodZ :=
   ((pairRaw D (representative D a) (representative D a) / 2 : ℚ) : QmodZ)
 
-private lemma quadraticClass_mk (D : LatticeData) (hD : (gramReal D).PosDef)
+lemma quadraticClass_mk (D : LatticeData) (hD : (gramReal D).PosDef)
     (r : Charge D) : quadraticClass D (classOf D r) = ((pairRaw D r r / 2 : ℚ) : QmodZ) :=
   half_pair_mod D hD _ r (class_representative D _)
 

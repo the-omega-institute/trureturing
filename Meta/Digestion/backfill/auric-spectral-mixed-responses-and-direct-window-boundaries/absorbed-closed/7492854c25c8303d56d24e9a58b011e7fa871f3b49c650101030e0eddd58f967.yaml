@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7492854c25c8303d56d24e9a58b011e7fa871f3b49c650101030e0eddd58f967
+  normalized_sha256: sha256:7492854c25c8303d56d24e9a58b011e7fa871f3b49c650101030e0eddd58f967
+cas_ref: sha256:7492854c25c8303d56d24e9a58b011e7fa871f3b49c650101030e0eddd58f967
+coverage_gids:
+  - gid: D5/S3/Quantum/Matrix/CommutingResidualAllStateBudget.witness
+    target_statement_id: sha256:40bcfc697b05b1efb08f3835b939fb0b07d9ca3c2579c2804ec2d9996cf092b6
+receipts:
+  unresolved_subitems: []

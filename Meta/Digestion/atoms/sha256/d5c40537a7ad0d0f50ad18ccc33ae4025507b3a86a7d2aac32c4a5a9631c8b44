@@ -1,0 +1,35 @@
+#### 定理 2.2：内部受控仪器的幺正实现
+
+给定有限正交程序基 $\{|c\rangle\}$， 用零项补齐各设置的结果和 Kraus 指标。 定义
+
+$$
+V=\sum_c|c\rangle\langle c|\otimes
+ \left(\sum_{b,\mu}K_{b\mu}^{(c)}\otimes|b,\mu\rangle\right).
+$$
+
+则 $V^\dagger V=I$。加入内部准备寄存器后， $V$ 可扩张为整体中的幺正交互。
+
+**证明。**
+
+控制投影正交，因此
+
+$$
+V^\dagger V=
+ \sum_c|c\rangle\langle c|\otimes
+ \sum_{b,\mu}K_{b\mu}^{(c)\dagger}K_{b\mu}^{(c)}
+ =I_C\otimes I.
+$$
+
+准备子空间和像子空间同维，分别补齐正交归一基， 即可把子空间间的等距映射扩张为总空间幺正。
+
+$\square$
+
+若控制与目标的联合态为
+
+$$
+\xi_{CS}=\sum_c|c\rangle\langle c|\otimes\rho_c,
+ \qquad \rho_c\geq0,\quad\sum_c\operatorname{tr}\rho_c=1,
+$$
+
+则结果 $b$ 的非归一输出是 $\sum_c\mathcal I_b^{(c)}(\rho_c)$。 不能在程序与目标相关时，把所有 $\rho_c$ 擅自替换成同一个系统边缘态乘以程序概率。 相干程序还含 $c\ne d$ 的交叉块， 它们只在相应寄存器被忽略或不可访问后才从该局部描述中消失。
+

@@ -210,7 +210,7 @@ def vertexCoordinate (d : V → ℕ) (z : R) (eta : V → R) (v : V) : R :=
 
 def linearCoordinate (d : V → ℕ) (t : V → R) : R := ∑ v, (d v : R) * t v
 
-private theorem sum_off_diagonal (f : V → V → R) :
+theorem sum_off_diagonal (f : V → V → R) :
     (∑ u, ∑ v, if u = v then 0 else f u v) = (∑ u, ∑ v, f u v) - ∑ u, f u u := by
   classical
   have h (u v : V) : (if u = v then 0 else f u v) =

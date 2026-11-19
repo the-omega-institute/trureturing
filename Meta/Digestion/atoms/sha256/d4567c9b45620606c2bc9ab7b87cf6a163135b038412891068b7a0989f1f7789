@@ -1,0 +1,79 @@
+**定理 243.1（任意实际纯像代表的准确面积）。** 若实际 $a,b\in T$ 满足 $\pi a=x\in H$、$\pi b=y\in H$，则
+
+$$
+h_{a,b}\in H,\qquad
+h_{a,b}\perp x,y,\qquad
+\|h_{a,b}\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2.
+\tag{243.1}
+$$
+
+量词包含同一 $x,y$ 的全部原像；这里仍未声称这些原像给同一个方向。
+
+证明。先取 $x\perp y$ 且 $X_0=\|x\|>0$、$Y_0=\|y\|>0$。(241.1) 给 $x\circ h_{a,b}=y\circ h_{a,b}=0$；按自旋乘法展开，输出像的标量部分为零，向量部分垂直两者。P2 以该向量的单位方向读取给
+
+$$
+\|h_{a,b}\|=\kappa X_0Y_0,\qquad0\le\kappa\le1.
+$$
+
+以下只复用母卷 109.1 的已知 Gram 计算，补全它在任意原像下的实际调用接口。固定任意 $e\in T$、$\pi e=p$。对任意有限 $\lambda,\eta>0$，令
+
+$$
+\begin{aligned}
+t_0&=\sqrt{\lambda^2X_0^2+\eta^2},&
+c&=t_0e+\lambda a,\\
+e_1&=x/X_0,& e_2&=y/Y_0,&
+n&=-\frac{\lambda X_0}{t_0}e_1+\frac\eta{t_0}e_2.
+\end{aligned}
+\tag{243.2}
+$$
+
+242.1 只给 $\pi D(a,c)=0$，不要求实际 $D(a,c)=0$。原 PB 的两份实际外层为
+
+$$
+r_\pm=b\pm D(a,b)\mp a\circ c,\qquad
+s_\pm=c\pm a\circ b\pm D(a,c).
+\tag{243.3}
+$$
+
+它们的像准确为
+
+$$
+\begin{aligned}
+R_\pm&=\mp\lambda X_0^2p+y\pm h_{a,b}\mp t_0x,\\
+S_\pm&=t_0p+\lambda x,
+\end{aligned}
+\tag{243.4}
+$$
+
+且 PB 右端像为 $2\lambda X_0^2y$。$s_+$、$s_-$、$c$ 可以是三个不同原标签；分别对真实 $(r_+,s_+)$、$(r_-,s_-)$ 用 P2，不将它们替换为同像标签。
+
+以同一 $\phi_n$ 读取。由 (241.4)，$\mathcal L_nS_\pm=\eta e_2$、$\mathcal L_nR_\pm=y\pm A$，其中
+
+$$
+A=h_{a,b}-t_0x-\lambda X_0^2n,\qquad
+\langle A,e_1\rangle=-X_0\eta^2/t_0.
+$$
+
+输出像垂直 $e_1,e_2$，所以两张实 Gram 行列式的平方根均为
+
+$$
+X_0\eta\sqrt{\eta^4/t_0^2+\kappa^2Y_0^2}.
+$$
+
+PB 的同一读取与两个 P2 预算给
+
+$$
+\frac{2\lambda X_0^2Y_0\eta}{t_0}
+\le2X_0\eta\sqrt{\eta^4/t_0^2+\kappa^2Y_0^2},
+$$
+
+$$
+(1-\kappa^2)\lambda^2X_0^2Y_0^2
+\le\eta^4+\kappa^2Y_0^2\eta^2.
+\tag{243.5}
+$$
+
+固定 $\eta$，若 $\kappa<1$，只须选一个足够大但有限的 $\lambda$ 即矛盾。实际内层 $D(a,b)$ 始终固定，不对未知 $D$ 取极限，也不要求各次外层输出相容。$h_{a,b}=0$ 时同一计算适用，不虚设第三方向。因此 $\kappa=1$。
+
+对任意纯像对，以实际 SO(2) 标签旋转对角化它们的实二阶 Gram；185.1 保持实际旧输出，输入平面及面积行列式也保持。独立时应用刚证结果；相关时可使一项的像为零，(241.1) 消去输出像。由此得到 (243.1)，包括零输入、零面积及所有原像。没有重新分类原自旋域上的 $D$；新增接口在于上述外层原标签可以只在商像上具有自旋坐标。∎
+

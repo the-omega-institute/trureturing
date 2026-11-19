@@ -554,7 +554,7 @@ theorem marked_double_count_of_equiv (n ell k : Nat) (T : Type*) [Fintype T]
 def rotateWord {n : Nat} (w : Fin n → Bool) (i : Fin n) : Fin n → Bool :=
   fun j => w (cycAdd i j.val)
 
-private lemma cycAdd_index_add {n : Nat} (i a : Fin n) (j : Nat) :
+lemma cycAdd_index_add {n : Nat} (i a : Fin n) (j : Nat) :
     cycAdd i (cycAdd a j).val = cycAdd (cycAdd i a.val) j := by
   change cycAdd i ((a.val + j) % n) = _
   rw [cycAdd_mod, cycAdd_assoc]

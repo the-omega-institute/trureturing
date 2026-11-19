@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14b0298fc1bb2ea0b22554d127c19a4a45ab9b987a4ec706dfff33691d22e716
+  normalized_sha256: sha256:14b0298fc1bb2ea0b22554d127c19a4a45ab9b987a4ec706dfff33691d22e716
+cas_ref: sha256:14b0298fc1bb2ea0b22554d127c19a4a45ab9b987a4ec706dfff33691d22e716
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section introduction and notation/literature orientation. It declares that F is not used in this section, q denotes p squared and S denotes the seminorm background; completion and complexification are auxiliary, with conclusions to be pulled back to the original domain. The attribution to existing one-sided absolute-valued algebra literature and absence of a priority claim are bibliographic framing. This heading is not an independent mathematical proposition, and its settlement proves none of the following lemmas or their exact Lean applications.
+    previous_atom_id: de9e52a22d663b739dc1c353e75a73a783c2762a2964089924986b8840a2881c
+    next_atom_id: c93dd111c65417cb28b599a71fd0e4135cdf9e97f3c9d32eb6b72fa97ef09e5b

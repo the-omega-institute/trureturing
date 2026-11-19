@@ -5,10 +5,11 @@ year: 2019
 title: Palindromic length of words and morphisms in class P
 doi: 10.1016/j.tcs.2019.02.024
 url: https://arxiv.org/abs/1812.00711v2
-claim: Section 4 recalls Frid's Fibonacci prefix conjecture; Section 6 defines mixed pal-antipal length and conjectures unbounded equal-cost Thue-Morse prefixes.
+claim: Section 4 recalls Frid's Fibonacci prefix conjecture; Section 6 defines mixed pal-antipal length, suggests the sharp factor-two comparison for Thue-Morse prefixes in Table 1, and conjectures unbounded equal-cost prefixes in Table 2.
 strata_touched:
   - D5/S1/Words/Palindromes/FridPrefix/FridPrefixPalindromicLength
   - D5/S1/Words/Palindromes/ThueMorseSignedCut
+  - D5/S1/Words/Palindromes/ThueMorseSharpPrefix
 license: citation-only
 triage: anchor
 ---
@@ -79,3 +80,22 @@ standard Thue-Morse prefix. The source's finite table does not prove this
 unbounded assertion. The signed-potential cut inequality and mixed-prefix
 lower bound are repository deductions, rather than results quoted from AKMP.
 They do not by themselves close the unbounded equality assertion.
+
+## Sharp factor-two prefix scope
+
+Section 6 explicitly introduces its computations as palindromic and combined
+pal-antipal lengths of prefixes of the Thue-Morse word. Its final paragraph,
+first sentence, says:
+
+> Our computations suggest that including both palindromes and antipalindromes into the factorization of Thue-Morse word, one can reduce the number of factors by half (and not more), see Table 1.
+
+In that prefix context, the quantified reading is that every positive prefix
+has ordinary minimum P(n) at most twice its mixed minimum C(n), and equality
+P(n)=2C(n)>0 occurs. Table 1 already lists the finite attainer n=2, P=2, C=1.
+The universal bound is a computational suggestion, not a numbered theorem;
+its quantified reading and source limits are stated in the
+[sharp factor-two dossier](../../Problems/ambroz-kadlec-masakova-pelantova-2019-thue-morse-sharp-factor-two-prefix.md).
+The subsequent Table 2 assertion concerns unbounded equal costs C=P and is a
+distinct event. Neither an unbounded P=2C family nor all shifted factors is
+part of the sharp factor-two settlement. These locators refer to the cited
+arXiv v2; equivalence with the unread journal body is not asserted.

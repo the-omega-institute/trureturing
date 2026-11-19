@@ -1,0 +1,59 @@
+### 18.4 局部有界符号的边界与面积估计
+
+设 $A$ 是闭圆盘 $\{|z|\le r\}$ 上的有限维迹类矩阵值 $C^1$ 函数，且
+$\sup\|A\|_1\le1$、$\sup\|\partial_{\bar z}A\|_1\le L$。对 $a$ 满足 $d_a=|a|<r$，逐矩阵元的 Cauchy–Pompeiu 公式为 $A(z)=H(z)-T(z)$，其中
+
+$$
+\begin{aligned}
+H(z)&=\frac1{2\pi i}\int_{|\zeta|=r}
+            \frac{A(\zeta)}{\zeta-z}\,d\zeta,\\
+T(z)&=\frac1\pi\int_{|\zeta|<r}
+            \frac{\partial_{\bar\zeta}A(\zeta)}{\zeta-z}\,dA(\zeta).
+\end{aligned}
+\tag{18.16}
+$$
+
+边界核的差为 $a/[\zeta(\zeta-a)]$。把迹范数放入积分，利用边界长度 $2\pi r$ 及 $|\zeta-a|\ge r-d_a$，得
+
+$$
+\|H(a)-H(0)\|_1
+\le\frac1{2\pi}(2\pi r)\frac{d_a}{r(r-d_a)}
+=\frac{d_a}{r-d_a}.
+\tag{18.17}
+$$
+
+面积项在原点满足
+
+$$
+\|T(0)\|_1
+\le\frac L\pi\int_{|\zeta|<r}\frac{dA(\zeta)}{|\zeta|}
+=2Lr.
+\tag{18.18}
+$$
+
+原圆盘包含于以 $a$ 为中心、半径 $r+d_a$ 的圆盘；在后者上积分
+$1/|\zeta-a|$ 恰为 $2\pi(r+d_a)$，故
+
+$$
+\|T(a)\|_1\le2L(r+d_a).
+\tag{18.19}
+$$
+
+合并三个估计，得到这个局部关系的全部常数：
+
+$$
+\|A(a)-A(0)\|_1
+\le\frac{d_a}{r-d_a}+2L(2r+d_a).
+\tag{18.20}
+$$
+
+对 (18.13)–(18.15) 取 $r=4d_a>0$、$L=2\delta\sqrt m$，即有
+
+$$
+\|A(a)-A(0)\|_1
+\le\frac13+36\delta\sqrt m\,d_a.
+\tag{18.21}
+$$
+
+边界积分的固定加项 $1/3$ 保留在式中；这里没有断言 (17.4) 的无条件平方旋转估计。
+

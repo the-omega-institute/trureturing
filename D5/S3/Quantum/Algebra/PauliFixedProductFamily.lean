@@ -102,13 +102,13 @@ private theorem gamma_tmul (t : ℝ) (a b c d : J) :
     Gamma t (a ⊗ₜ b) (c ⊗ₜ d) = D t a c ⊗ₜ S b d + S a c ⊗ₜ D t b d := by
   simp [Gamma]
 
-private theorem s_comm (a b : J) : S a b = S b a := by
+theorem s_comm (a b : J) : S a b = S b a := by
   ext i; fin_cases i <;> simp [S, spin] <;> ring
 private theorem s_unit (a : J) : S (e 0) a = a := by
   ext i; fin_cases i <;> simp [S, spin, e, PiLp.single_apply]
 private theorem s_unit_right (a : J) : S a (e 0) = a := by
   rw [s_comm, s_unit]
-private theorem c_anti (a b : J) : C a b = -(C b a) := by
+theorem c_anti (a b : J) : C a b = -(C b a) := by
   ext i; fin_cases i <;> simp [C, cross, cross_apply] <;> ring
 private theorem c_unit (a : J) : C (e 0) a = 0 := by
   ext i; fin_cases i <;> simp [C, cross, cross_apply, e, PiLp.single_apply]
@@ -699,7 +699,7 @@ private theorem spin_attained : ‖S balanced balanced‖=Real.sqrt 2 := by
 /-- The finite curvature entry uses the original complete basis and spin multiplication. -/
 def curvature (i j k : Fin 4) : J := S (e i) (S (e j) (e k))-S (e j) (S (e i) (e k))
 
-private theorem spin_commutator (a b c : J) :
+theorem spin_commutator (a b c : J) :
     S a (S b c)-S b (S a c) = -(C (C a b) c) := by
   have hv : ![(C a b) 1,(C a b) 2,(C a b) 3] =
       crossProduct ![a 1,a 2,a 3] ![b 1,b 2,b 3] := by

@@ -13,6 +13,37 @@ internal sealed class OrthogonalPointwiseStabilizersDocument : IScribeDocumentDe
         "Orthogonal pointwise stabilizers.",
         H("Orthogonal pointwise stabilizers"),
         Blocks(
+            PublicEntry("quotientLieHom", "The pointwise-stabilizer quotient action",
+                FormContext(Call("LieHom", X("k"), Call("stabilizer", X("B"), X("W")),
+                    Call("skewAdjointLieSubalgebra", QuotientForm))),
+                "The canonical restriction and radical-quotient action is a Lie homomorphism from the actual pointwise stabilizer to the actual skew algebra of the reduced form. Its original proof body is reused by both the semisimple and full derivation constructions.", DescribeRole.Definition),
+            PublicEntry("quotientLieHom_surjective", "Surjectivity without a trivial-radical assumption",
+                FormContext(Instance(Call("FiniteDimensional", X("k"), X("V")),
+                    Apply(Qualified("Function", "Surjective"), QuotientMap))),
+                "In finite dimension, the canonical pointwise-stabilizer quotient map is surjective. Neither nondegeneracy of the original ambient form nor trivial radical of the stabilizer is assumed. A nondegenerate complement to the restricted radical gives an orthogonal extension of every quotient skew operator. Zero and isotropic subspaces are included.", DescribeRole.Theorem),
+            PublicEntry("quotientLieHom_kernel_triple_zero", "The actual quotient kernel is two-step nilpotent",
+                FormContext(Instance(Call("FiniteDimensional", X("k"), X("V")),
+                    Hyp(Apply(Seq(X("B"), Dot, Name("Nondegenerate"))),
+                    All(X("f"), QuotientKernel, All(X("g"), QuotientKernel, All(X("h"), QuotientKernel,
+                        Eq(Call("lie", X("f"), Call("lie", X("g"), X("h"))), D(0)))))))),
+                "When the ambient form is nondegenerate, every nested triple bracket in the actual kernel vanishes. This exposes the stronger bound from the canonical nilpotent-kernel proof for use in the full evolution-derivation kernel. It does not require the restricted subspace or its span to be nondegenerate.", DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("setwise-preserver"),
+                DeclarationHandle.Create(Prefix + "preserver"),
+                H("Setwise skew preserver"),
+                StatementSource.FromAuthor(Disp(PreserverFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any bilinear form B over a field and subspace W, these are the actual B-skew endomorphisms carrying W into W. Pointwise stabilizers are included. This is the carrier needed after subtracting the class scalar diagonal of a full evolution derivation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("setwise-quotient-action"),
+                DeclarationHandle.Create(Prefix + "preserverQuotientLieHom"),
+                H("Action on the nondegenerate quotient"),
+                StatementSource.FromAuthor(Disp(FormContext(Call("LieHom", X("k"),
+                    Call("preserver", X("B"), X("W")), Call("skewAdjointLieSubalgebra", QuotientForm))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For symmetric B, restriction to W-perpendicular preserves the kernel of the restricted form and therefore induces an actual skew Lie action on the quotient. This construction retains every zero, isotropic and degenerate subspace, and does not require B itself to be nondegenerate or the Lie algebra to be semisimple. The existing pointwise-stabilizer action factors through this canonical construction."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("stabilizer-stabilizer"),
                 DeclarationHandle.Create(Prefix + "stabilizer"),
@@ -62,6 +93,19 @@ internal sealed class OrthogonalPointwiseStabilizersDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("Over an algebraically closed field of characteristic zero, a finite-dimensional nondegenerate symmetric form has the standard orthogonal Lie algebra of its dimension."))),
                 DescribeRole.Theorem))));
 
+    private static DocumentBlock.Describe PublicEntry(string name, string title, Formula formula, string text, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(name.Replace('_','-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+            H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), role);
+    private static Formula QuotientMap => Call("quotientLieHom", X("B"), X("W"), X("hB"));
+    private static Formula QuotientKernel => Apply(Qualified("LieHom", "ker"), QuotientMap);
+    private static Formula PreserverFormula() => AlgebraContext(
+        All(X("B"), Bilin, All(X("W"), Submodule,
+        Eq(Call("preserver", X("B"), X("W")), Seq(OpenBrace, X("f"), Sp, Colon, Sp,
+            Apply(Qualified("Module", "End"), X("k"), X("V")), Sp, Mid, Sp,
+            And(Member(X("f"), Call("skewAdjointLieSubalgebra", X("B"))),
+                All(X("w"), X("V"), Imp(Member(X("w"), X("W")),
+                    Member(Apply(X("f"), X("w")), X("W"))))), CloseBrace)))));
     private static Formula Parenthesized(Formula content) =>Seq(Open, content, Close);
     private static Formula X(string name) =>F.Id(name);
     private static Formula Name(string name) =>Seq(Operatorname, Grp(X(name)));

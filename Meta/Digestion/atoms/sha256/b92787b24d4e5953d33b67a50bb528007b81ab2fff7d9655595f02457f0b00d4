@@ -1,0 +1,55 @@
+**定理 146.3（原邻域保持紧纯、连续与严格预算余量）。** 设非空 $A\subseteq P$ 环境紧，$x\mapsto D_x$ 在 $A$ 上连续，并且存在事先对整个 $A$ 选定的 $\varepsilon>0$，使 $\kappa_x\le2-\varepsilon$ 对全部 $x\in A$ 成立。则 $\mathcal N(A)$ 环境紧且全纯，$D,c,e$ 在其上连续，而且存在 $\varepsilon',\delta'>0$，使
+
+$$
+\kappa_y\le2-\varepsilon',\qquad
+\text{$D_y$ 的全部三根半轴均不小于 }\delta'
+\quad(y\in\mathcal N(A)).
+\tag{XI146.10}
+$$
+
+证明。连续非退化三球的相对球缘连续，使用[IX118.2][Q146IX]。故实际关联集
+
+$$
+I_A=\{(x,y):x\in A,\ y\in S_x\}
+\tag{XI146.11}
+$$
+
+在紧 $A\times K$ 中闭而紧，第二坐标投影恰为 $\mathcal N(A)$。投影中的点按定义全部原纯；没有把未知闭性的 $P$ 与紧集取交后宣称紧。
+
+取 $y_j\to y$ 于该邻域，选择母标签 $x_j\in A$ 使 $y_j\in S_{x_j}$，再取 $x_j\to x\in A$。母球连续给 $y\in S_x$。146.2将任何球聚点限制为 $D_y$ 或 $\{x\}$。反设有子列 $D_{y_j}\to\{x\}$。
+
+每个 $z\in S_x$ 满足 $x\in S_z$，故 $c_z\ne x$。144.2供应固定 $S_x$ 上中心连续，所以
+
+$$
+m_x:=\min_{z\in S_x}\|c_z-x\|>0.
+\tag{XI146.12}
+$$
+
+令 $M_E=\max_{f\in\mathcal E}\|f\|_*>0$。母层的统一余量和 ZC 使每张 $S_{x_j}$ 都至少有一点 $z_j$ 满足
+
+$$
+e_{x_j}(c_{z_j})\le1-\varepsilon/2,\qquad
+\|c_{z_j}-x_j\|\ge\frac{\varepsilon}{2M_E}.
+\tag{XI146.13}
+$$
+
+充分大 $j$ 时，其中心到 $x$ 的距离至少为 $\varepsilon/(4M_E)$；但 $c_{y_j}\to x$。取
+
+$$
+0<r<\min\left(m_x,\frac{\varepsilon}{4M_E}\right).
+\tag{XI146.14}
+$$
+
+每张固定 $S_{x_j}$ 连通，且144.2使该张球面上的中心像连续。因此可取 $w_j\in S_{x_j}$，使 $\|c_{w_j}-x\|=r$。紧 $I_A$ 允许再取 $w_j\to w\in S_x$。146.2使 $D_{w_j}$ 的任一聚点只能为 $D_w$ 或 $\{x\}$，中心极限到 $x$ 的距离遂分别至少为 $m_x$ 或等于零，都不可能为 $r$。点塌缩被排除。
+
+于是所有球聚点均为 $D_y$，子列判据给邻域上的整球连续。中心、形状算子及恒秩三的像投影连续，复用139.4的支持函数式(XI139.14)。效应任一聚点在极限标签读一、在整个极限球读零，唯一性给邻域上的 $e_y$ 连续。
+
+现在才在紧 $I_A$ 上取
+
+$$
+\mu_A=\max_{(x,y)\in I_A}e_y(c_x)<1.
+\tag{XI146.15}
+$$
+
+函数连续，且混点 $c_x$ 处读数严格小于一，故最大值仍严格小于一。ZC 给 $\kappa_y\le1+e_y(c_x)\le1+\mu_A$，可取 $\varepsilon'=1-\mu_A$。紧基上连续的秩三形状算子的最小正特征值有正下界，给 $\delta'$。没有假定 $\kappa$ 连续，也没有把母层常数直接延用到下一层。证毕。
+

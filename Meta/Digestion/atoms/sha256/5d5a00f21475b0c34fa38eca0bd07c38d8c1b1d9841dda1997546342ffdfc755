@@ -1,0 +1,22 @@
+**定义 84.4（原显式二阶权及零关系）。** 完整复用定义 83.2。写原中心简单理想分解 $A=\bigoplus_iA_i$，单位、规范迹、秩及实维数为 $1_i,\tau_i,r_i,d_i$，并令
+$$
+P_i a_i=\frac{\tau_i(a_i)}{r_i}1_i,\qquad P_i^0=I_{A_i}-P_i,\qquad
+\mathsf C_i=\begin{cases}I_{A_i},&r_i=1,\\ P_i+\dfrac{r_i-1}{d_i-1}P_i^0,&r_i>1,\end{cases}
+\qquad \mathsf C_A=\bigoplus_i\mathsf C_i,\quad \mathsf D_A=\mathsf C_A^{1/2}.
+$$
+$\mathsf C_A$ 是几何权算子，与态锥 $C_A$ 区分；秩一简单因子没有迹零项，不出现 $0/0$。令 $\mathcal T=H_{\rm s}\widetilde F:A\otimes_{\mathbb R}A\to E$。完整零关系直接取原 (83.8)：
+$$
+\|J\mathsf D_A\|_{\rm HS}^2+
+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2
+=\|U\|_2^2+\|G\|_2^2.
+\tag{84.5}
+$$
+按 83.3—83.4，它也等价于两项分别满足 $\|J\mathsf D_A\|_{\rm HS}^2=\|U\|_2^2$ 和 $\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2=\|G\|_2^2$；在同一原域恢复的恰为两个全量词谓词 $D_J$ 且 $D_H$，从而恢复精确 PRE。这里
+$$
+\begin{aligned}
+D_J:\quad&a,b\in A_+,\ \langle a,b\rangle_A=0\Longrightarrow\langle Ja,Jb\rangle_D=0,\\
+D_H:\quad&d,d'\in D_+,\ \langle d,d'\rangle_D=0\Longrightarrow\langle H_{\rm s}d,H_{\rm s}d'\rangle_E=0.
+\end{aligned}
+$$
+$D_H$ 遍及整个 $D_+$，含全部纠缠方向；二者是谓词，不是可相加数值。83.4 的零集证明与 83.11 的同数据回接直接复用，不重证其框架工具。几何积分中的乘积测度只作用于两个数学变量，不增加实际系统、制备、事件或原 $L,p,\omega$ 的物理独立性；(84.5) 不把原物理态锥换成球或椭球。
+

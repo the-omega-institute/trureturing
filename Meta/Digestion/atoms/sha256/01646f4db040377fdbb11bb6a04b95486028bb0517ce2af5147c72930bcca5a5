@@ -1,0 +1,41 @@
+### 13.2 秩一时的原空间行与锐条件
+
+若 $r=1$，取 $N_1$ 的单位生成元 $q$，置
+
+$$
+v=C^{-1/2}Vq,\qquad \gamma=\|v\|>0,\qquad n=v/\gamma,
+\qquad e^*n=0,\quad\|e\|=1,\quad U=[e,n],
+$$
+
+$$
+A=U^*C^{-1/2}HC^{-1/2}U
+=\begin{pmatrix}a&b\\\overline b&d\end{pmatrix},\qquad
+S_0=U^*C^{-1/2}\operatorname{diag}(s_1,s_2)C^{-1/2}U.
+\tag{13.5}
+$$
+
+$a,d$ 为实数。下列两行作用在原来的 $\mathbb C^2\oplus\mathbb C^m$ 右端项上，不重新选择环境度量：
+
+$$
+L=e^*C^{-1/2}\begin{bmatrix}I_2&-VD^\dagger\end{bmatrix},\qquad
+j=\gamma^{-1}\begin{bmatrix}0_{1\times2}&q^*\end{bmatrix},\qquad
+G=\begin{bmatrix}L-bj\\j\end{bmatrix},
+$$
+
+$$
+Q=(GG^*)^{-1}=\begin{pmatrix}q_1&h\\\overline h&q_2\end{pmatrix},\qquad
+R=\sqrt{q_1q_2},\qquad \Delta=R^2-|h|^2.
+\tag{13.6}
+$$
+
+$G$ 的第二行在演员两列为零，而第一行在那里为非零的 $e^*C^{-1/2}$；第二行本身非零。因此 $G$ 满行秩，$Q>0$，$q_1,q_2,\Delta>0$。两行均消去 $N_0$，所以在原空间或其正交约化空间计算 $GG^*$ 得到同一个矩阵。
+
+当原演员坐标中的 $|n_1|^2=|n_2|^2=1/2$ 时，称这个零模连线平衡。令 $Z=\operatorname{diag}(1,-1)$，则
+
+$$
+U^*ZU=\begin{pmatrix}0&\omega\\\overline\omega&0\end{pmatrix},\qquad
+\omega=(U^*ZU)_{12},\quad |\omega|=1,\qquad
+J=\operatorname{Im}(\overline h\,\omega).
+\tag{13.7}
+$$
+

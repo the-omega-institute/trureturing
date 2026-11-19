@@ -117,14 +117,14 @@ def heightTorus (lambda : Fˣ) : MulAut (Matrix.SpecialLinearGroup (Fin n) F) wh
     rw [← mul_assoc (Matrix.diagonal (fun i : Fin n => (lambda:F)^i.val))
       (Matrix.diagonal (fun i => ((lambda⁻¹:Fˣ):F)^i.val)),hi,one_mul]
 
-private theorem torus_entry (lambda : Fˣ) (a : Matrix.SpecialLinearGroup (Fin n) F)
+theorem torus_entry (lambda : Fˣ) (a : Matrix.SpecialLinearGroup (Fin n) F)
     (i j : Fin n) : (heightTorus lambda a) i j=
       ((lambda⁻¹:Fˣ):F)^i.val*a i j*(lambda:F)^j.val := by
   change (Matrix.diagonal (fun k : Fin n => ((lambda⁻¹:Fˣ):F)^k.val)*a.val*
     Matrix.diagonal (fun k : Fin n => (lambda:F)^k.val)) i j=_
   simp only [Matrix.diagonal_mul,Matrix.mul_diagonal]
 
-private theorem torus_depth (lambda : Fˣ) (k : ℕ)
+theorem torus_depth (lambda : Fˣ) (k : ℕ)
     (a : Matrix.SpecialLinearGroup (Fin n) F) (ha : LayerDepth k (a.val-1)) :
     LayerDepth k ((heightTorus lambda a).val-1) := by
   intro i j hij

@@ -14,10 +14,6 @@ open scoped BigOperators unitInterval
 namespace D5.S3.Geometry.FiniteComponentClosure
 
 open private
-  nativeCylinder
-  from D5.S3.Geometry.FiniteComponentClosure.Transport
-
-open private
   bouquetVertex_face
   bouquetBases
   normalVertex_face

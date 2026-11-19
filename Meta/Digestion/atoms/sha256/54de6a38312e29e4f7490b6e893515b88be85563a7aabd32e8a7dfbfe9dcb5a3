@@ -1,0 +1,25 @@
+**定义 101.1（余维一有限端点入口）。** 固定定义98.1（位于§98.1）的同一个非零有限维实向量空间
+$V$、闭尖生成凸锥 $C$、严格正原单位 $u$、全基 $K=C\cap\{u=1\}$、原纯集
+$P=\operatorname{ext}K$、$W=\ker u$、全效应区间 $\mathcal E=[0,u]_{C^*}$、确认面 $F_p$
+和下包络 $T_p$。写 $d=\dim W$。当 $d\ge2$ 时，给定 $d-1$ 个纯对
+$(p_i,q_i)$，令
+
+$$
+ s_i=\frac{p_i-q_i}{2}\in W,
+ \qquad S=\operatorname{span}\{s_1,\ldots,s_{d-1}\},
+ \qquad \dim S=d-1,
+$$
+
+并只假定
+
+$$
+\begin{aligned}
+\mathrm{E2}_i&:\quad T_{p_i}(r)+T_{q_i}(r)=1 &&(r\in P),\\
+\mathrm{R}_{i,+}&:\quad T_{p_i}(r)=T_r(p_i) &&(r\in P),\\
+\mathrm{R}_{i,-}&:\quad T_{q_i}(r)=T_r(q_i) &&(r\in P).
+\end{aligned}
+\tag{101.1}
+$$
+
+这里没有假定两个非参考纯点之间的互反，也没有把 $\mathrm E2_i$ 解释成有限个标量读数；每个式子仍遍历全部原纯目标，且 $u\in F_p$ 对每个 $p$ 都保留。$d=1$ 时单独要求一个非空端点对满足同样的 $\mathrm E2$ 及两端的 $\mathrm R$；$d=0$ 被非空 $\mathrm E2$ 排除。
+

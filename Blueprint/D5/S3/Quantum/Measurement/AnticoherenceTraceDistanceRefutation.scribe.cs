@@ -16,7 +16,11 @@ internal sealed class AnticoherenceTraceDistanceRefutationDocument : IScribeDocu
         Blocks(
             Node("spinAction", "The spin representation in Dicke coordinates", SpinAction(),
                 "Embed spin n/2 into n qubits by the normalized Dicke embedding, apply n copies of the single-qubit special unitary matrix u, and compress back to Dicke coordinates. "
-                    + "This gives a matrix of size n plus one. The symmetric-subspace interpretation is the one in arxiv.tex, lines 150–161; the displayed compression specifies its coordinates.",
+                    + "This gives a matrix of size n plus one. The symmetric-subspace interpretation is the one in arxiv.tex, lines 150–161; the displayed compression specifies its coordinates. "
+                    + "Let e0 be the Dicke coordinate vector at index zero and let q_u(x) be the product, over all sites i, of u(x(i),0). For every n at least one and every special unitary qubit matrix u, dickeIsometry n applied to spinAction n u applied to e0 equals q_u; conversely, spinAction n u applied to e0 equals the Dicke adjoint applied to q_u. "
+                    + "The original tensor_preserves_symmetric and dicke_isometry statements give these two identities, since the zeroth Dicke column is the all-zero computational word. "
+                    + "For every unit vector h in real three-dimensional Euclidean space, the original blochPure_surjective statement in NumericalRange supplies a normalized qubit vector with pure projection (I plus h dot Pauli)/2. Completing that vector by the column (-conjugate(v1), conjugate(v0)) gives a special unitary matrix u, so the tensor identities apply to a representative at every direction. "
+                    + "This existence statement requires no continuous global representative. It changes proof coordinates and supplies no operation depending on an unknown direction.",
                 AssessedProvenance.FromRepo(Source)),
             Node("reducedState", "The reduced state in symmetric coordinates", ReducedState(),
                 "For t at most n, embed the matrix into n qubits, group the first t coordinates and the last n minus t coordinates by appending the two words, and trace over the second group. "

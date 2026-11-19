@@ -1,0 +1,13 @@
+**定理 6.1（纯增益的正恢复单位条件）。**对 $G=\alpha u^hI_3$、$\alpha\in R_+\setminus\{0\}$、$h\in\mathbb Z/3$，存在同一自由三端 $S_+$ 表载体上的正线性左逆 $R$，即 $RG=I_3$，当且仅当
+
+$$
+\alpha=3^z\quad\text{某个 }z\in\mathbb Z.
+\tag{6.1}
+$$
+
+若这样的逆存在，其唯一表矩阵为 $R=\alpha^{-1}u^{-h}I_3$。这是代数逆的结论，不表示原来源已执行该逆或已经满足定义 2.3。
+
+**证明。**$\epsilon(ab)=\epsilon(a)\epsilon(b)$，而非零正元素的 $\epsilon$ 严格为正，故 $S_+$ 无零因子；其非负系数也不允许加法抵消。逐项看 $RG=I$，非对角元必为零，对角元满足 $R_{jj}\alpha u^h=1$。与单色项相乘只循环移色并缩放，故 $R_{jj}$ 必为 $\alpha^{-1}u^{-h}$。因此存在性等价于 $\alpha^{-1}\in\mathbb N[1/3]$。
+
+写 $\alpha=a/3^r$、$a\in\mathbb N_{>0}$。若其逆也在该半环，则某个 $b,s$ 满足 $ab=3^{r+s}$，所以 $a$ 的全部素因子都是三，$\alpha$ 是三的整数次幂。反向这种幂的逆仍是三进正有理数，所写 $R$ 确给 $RG=I$。零和自由半环的可逆矩阵结构是成熟背景，见 Dolzan–Oblak，[*Invertible and nilpotent matrices over antirings*，v2，§2 Theorem 1](https://arxiv.org/html/0806.2996v2)；这里的逐项论证只将其正逆思想用于本三色同增益和确切系数单位。证明完毕。
+

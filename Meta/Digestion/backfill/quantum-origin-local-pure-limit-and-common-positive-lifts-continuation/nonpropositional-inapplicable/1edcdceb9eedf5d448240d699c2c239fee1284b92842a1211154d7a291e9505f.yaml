@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1edcdceb9eedf5d448240d699c2c239fee1284b92842a1211154d7a291e9505f
+  normalized_sha256: sha256:1edcdceb9eedf5d448240d699c2c239fee1284b92842a1211154d7a291e9505f
+cas_ref: sha256:1edcdceb9eedf5d448240d699c2c239fee1284b92842a1211154d7a291e9505f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 133.4 is the scope convention for the explicit common-direction premise, not a proof of excluded consequences. sectorViolation and original_return_geometry keep Q133.14 as an extra eventual antecedent at the same actual label, retain varying dimensions and actual unit coordinates, and do not assert a sequence exists. The Scribe preserves repeated-label scope and the exclusions concerning LP, common positive lifts, equivalence, collapse, countermodels and outside closure(P). This nonpropositional settlement records the definition and assertion boundary only; it proves none of those excluded claims or their negations.
+    previous_atom_id: 0ec6d2be118e3b395c8a8be3dc136cba7d74ccaf71948da2df9994612fad6420
+    next_atom_id: null

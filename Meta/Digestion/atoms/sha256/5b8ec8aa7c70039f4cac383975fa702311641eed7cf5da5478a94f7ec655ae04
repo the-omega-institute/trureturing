@@ -1,0 +1,26 @@
+### 27.5 局部重标相与唯一循环相位
+
+**定义 C-27.5.1（有向记录闭环）。** 固定标号和取向的简单循环，<span>𝑁≥3</span>，令
+
+<div>
+𝑔<sub>𝑖</sub>=⟨𝑒<sub>𝑖</sub>,𝑒<sub>𝑖+1</sub>⟩,  𝑒<sub>𝑁+1</sub>=𝑒<sub>1</sub>,  Ω<sub>𝑁</sub>=∏<sub>𝑖=1</sub><sup>𝑁</sup>𝑔<sub>𝑖</sub>.
+</div>
+
+仅当每条 <span>𝑔<sub>𝑖</sub>≠0</span> 时定义 <span>Φ<sub>𝐺</sub>= arg Ω<sub>𝑁</sub></span> 模 <span>2π</span>。这是同一关系报告的 Bargmann 环积；反向取向给 <span>conj(Ω<sub>𝑁</sub>)</span> 和 <span>-Φ<sub>𝐺</sub></span>。[^GL-B]
+
+**命题 C-27.5.2（开放相位消去与单环分类）。** 记录重标相
+
+<div>
+𝑒<sub>𝑖</sub>↦𝑒<sup>𝑖α<sub>𝑖</sub></sup>𝑒<sub>𝑖</sub>,  𝑔<sub>𝑖</sub>↦𝑒<sup>𝑖(α<sub>𝑖+1</sub>-α<sub>𝑖</sub>)</sup>𝑔<sub>𝑖</sub>,  𝐺↦𝐷<sup>†</sup>𝐺𝐷
+</div>
+
+不改变正性、秩及完整循环乘积。开放路径全部非零边都能标为正实。在一个固定简单循环上，固定各非零模长时，两份边相位赋值规范等价，当且仅当它们的 <span>Φ<sub>𝐺</sub></span> 相同。[^GL-R] §1、Lemma 1.1、Lemma 2.2、Lemma 3.1 提供标准单位增益图的规范背景；这里的增益是 <span>𝑔<sub>𝑖</sub>/|𝑔<sub>𝑖</sub>|</span>，不是任意模长的 <span>𝑔<sub>𝑖</sub></span> 本身。
+
+**证明。** 写 <span>𝑔<sub>𝑖</sub>=|𝑔<sub>𝑖</sub>|𝑒<sup>𝑖θ<sub>𝑖</sub></sup></span>。在路径上任选根相位，再依次令 <span>α<sub>𝑖+1</sub>=α<sub>𝑖</sub>-θ<sub>𝑖</sub></span>，每一步消去下一边的相位。在闭环上先消前 <span>𝑁-1</span> 条边，最后一条留下相位 <span>∑<sub>𝑖</sub>θ<sub>𝑖</sub></span>。循环乘积中的每个顶点相位一正一负、全部抵消，证明必要性。反之，两份模长相同、环相位相同的赋值都能消前 <span>𝑁-1</span> 边，留下同一个末边，因此属于同一个规范类，证明充分性。
+
+若某条边为零，删除零支撑边后的图是森林，可在各分支重复路径构造；<span>Ω<sub>𝑁</sub>=0</span> 的辐角无定义，也没有此单环的残余相位。均匀 <span>𝑟<sub>𝑔</sub>=0</span> 时矩阵为 <span>𝐼<sub>𝑁</sub></span>，所有名义相位参数给同一矩阵。<span>□</span>
+
+开放乘积 <span>𝑃=∏<sub>𝑖=1</sub><sup>𝑁-1</sup>𝑔<sub>𝑖</sub></span> 会乘以 <span>𝑒<sup>𝑖(α<sub>𝑁</sub>-α<sub>1</sub>)</sup></span>，它不是单独的规范不变量。闭合 <span>𝑐=𝑔<sub>𝑁</sub></span> 乘以相反因子，故 <span>𝑃𝑐</span> 不变。实际相位参照和比较探针须共同变换；表示重标相不提供免费的物理控制。固定叠加 <span>∑<sub>𝑖</sub>𝑎<sub>𝑖</sub>𝑒<sub>𝑖</sub></span> 的系数同时变为 <span>𝑒<sup>-𝑖α<sub>𝑖</sub></sup>𝑎<sub>𝑖</sub></span>。
+
+若全部复 <span>𝑔<sub>𝑖</sub></span> 已经在同一标架中供应，<span>Ω<sub>𝑁</sub></span> 已由乘法确定，不能再称为额外独立未知数。这里的信息遗漏是相对于只给模长、或各开放局部独立规范后的报告而言。形式相位变量、来源名称与矩阵书写均不供应实际相干取得。
+

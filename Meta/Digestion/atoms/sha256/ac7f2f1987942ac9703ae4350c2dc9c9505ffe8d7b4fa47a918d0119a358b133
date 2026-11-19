@@ -1,0 +1,48 @@
+### 20.4 未触终端令牌与精确最终人口
+
+记 $v=n(+d e_x)$、$c=h\cdot v$。终端令牌独立于整个先前运行，故最终参考边缘可仅由 $\mathcal T^q(\tau_h)\otimes\rho_v$ 计算；旧 $R$–记忆相关不影响这一约化计算。由 OTF004 (13.14)、(16.8) 的原总自旋系数，忽略共同标量相位，
+
+$$
+U_{\rm term}=\Pi_++z\Pi_-,\qquad z=\exp(idD/m).
+\tag{20.27}
+$$
+
+在该等式中忽略的只是全局相位。$e_0\otimes|\downarrow\rangle_h$ 与 $e_1\otimes|\uparrow\rangle_h$ 间的跃迁振幅模平方恰为
+
+$$
+\left|\frac{\sqrt m(1-z)}D\right|^2
+ =\frac{4m}{D^2}\sin^2\left(\frac{dD}{2m}\right)=g_m.
+\tag{20.28}
+$$
+
+只有初始参考层 $0,1$ 能贡献最终第 $0$ 层人口。参考输入对角，终端自旋的非对角项不另贡献此人口；自旋人口分别为 $(1+c)/2$ 和 $(1-c)/2$。从初始第 $0$ 层流出的量为 $g_m(1-c)\pi_0^{(q)}/2$，由第 $1$ 层流入的量为 $g_m(1+c)\pi_1^{(q)}/2$。所以对同一完整实际 $\Omega_{n,h}$，最终泄漏精确为
+
+$$
+\begin{aligned}
+p_{\rm final}(n,h)
+&:=1-\operatorname{Tr}[(\tau_h\otimes I_K)\Omega_{n,h}]\\
+&=1-\pi_0^{(q)}
+ +\frac{g_m}{2}\left[
+ (1-c)\pi_0^{(q)}-(1+c)\pi_1^{(q)}\right].
+\end{aligned}
+\tag{20.29}
+$$
+
+$c$ 的系数为 $-g_m(\pi_0^{(q)}+\pi_1^{(q)})/2\le0$，所以最大值在 $c=-1$。分布 $\pi^{(q)}$ 与方向无关；对每个原允许场 $n$，$h=-n(+d e_x)$ 都是允许方向。因此精确一致泄漏为
+
+$$
+\sup_{n,h}p_{\rm final}(n,h)
+ =1-(1-g_m)\pi_0^{(q)}.
+\tag{20.30}
+$$
+
+再用 (20.26)，得到
+
+$$
+\sup_{n,h}p_{\rm final}(n,h)
+ \le1-(1-g_m)\left(1-\frac m{D^2}\right)^q=r_e.
+\tag{20.31}
+$$
+
+这是完整输出的实际参考边缘结论；没有把约化 CP 返回界提升到新增保留口。
+

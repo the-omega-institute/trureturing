@@ -1,0 +1,23 @@
+**引理 44.2（乘法粘合及全部原对象的保持）。** 式(44.1)定义局部平凡含单位复 C* 代数丛 $\mathfrak B_\sigma$；其底层复向量丛为 $\mathfrak J_{\mathbb C}$。其截面代数 $M_\sigma=\Gamma(X,\mathfrak B_\sigma)$ 满足
+
+$$
+(M_\sigma)_{\rm sa}=E,\quad (M_\sigma)_+=C,\quad
+1=u,\quad\|a\|_{M_\sigma}=N(a),\quad
+a\cdot_\sigma b=a\circ b-iK_\sigma(a,b).
+\tag{44.2}
+$$
+
+全部原评价及质量也保持。
+
+证明。对任意重叠，(42.2)与 $s_\beta=e_{\beta\alpha}s_\alpha$ 给
+
+$$
+G_{\beta\alpha}(A\cdot_{s_\alpha}B)
+=G_{\beta\alpha}(A)\cdot_{s_\beta}G_{\beta\alpha}(B).
+\tag{44.3}
+$$
+
+因此局部结合乘法粘合。$s_\alpha$ 局部常值；在其正支用恒等图，在负支用复线性转置 $A\mapsto A^{\mathsf T}$，即可将每个局部相反代数也识别成普通 $M_n(\mathbb C)$。这些图之间的过渡都为复星同构，故确实是主源30.1所需的局部平凡 C* 代数丛。范数、伴随、单位与 C* 恒等式逐点相容，完整性按一致极限得到。
+
+自伴复化截面准确为 $E$，标准与相反乘法的自伴平方均为原 Jordan 平方，正锥及序单位范数也相同。对自伴两输入，标准或相反矩阵乘法展开即(44.2)末式。原 $\gamma$ 没有变成另一评价；其唯一复线性延拓 $\gamma_{\mathbb C}(a+ib)=\gamma(a)+i\gamma(b)$ 在这个 C* 代数上为正，因为同一个正锥为 $C$，且 $\gamma_{\mathbb C}(u)=m_\gamma$。零质量仍为零，不作归一。∎
+

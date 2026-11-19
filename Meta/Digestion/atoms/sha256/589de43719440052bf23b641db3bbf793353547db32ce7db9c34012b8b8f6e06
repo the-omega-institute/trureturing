@@ -1,0 +1,22 @@
+**Proposition 11.5 (a strict causal example on the actual labels).**
+After any fixed gate use no extra seed and put
+
+$$
+J_B=\inf\{j\ge1:Y_{T+j-1}=B\}.
+\tag{11.12}
+$$
+
+This B-mask-adapted index is finite almost surely and satisfies
+(11.6)–(11.7), but is not independent of the entire post-gate label
+sequence, even conditional on a stopped history.
+
+*Proof.* The waiting law is precisely the already proved $L=1$
+case of (6.18), applied to the fresh masks after the stopped history
+using (11.8): its tail is $(3/4)^n$ and its mean is four labels.
+The events $\{J_B=1\}$ and $\{Y_T=B\}$ coincide and have probability
+$1/4$, so their joint probability is $1/4$, whereas independence
+would give $1/16$. This refutes full-label independence, not the
+source-to-mask independence. Theorem 11.4 applies. The index is a
+mathematical function of actual labels; it installs no serializer,
+executor or new physical Return. $\square$
+

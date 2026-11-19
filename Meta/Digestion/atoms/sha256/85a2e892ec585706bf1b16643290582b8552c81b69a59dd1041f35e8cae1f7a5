@@ -1,0 +1,74 @@
+**定理 103.4（原球几何到完整S及面高三）。** 在同一个原载体上，$\mathrm{Pair}+\mathrm{EB}_{\ge1}$ 推出 $\mathrm A$、完整 $S$ 及 $h(K)=3$。103.2构造的 $e_p$ 就是原全锥序 least，满足
+
+$$
+\begin{gathered}
+T_p=e_p\text{ 于整个 }K,\qquad
+\{x\in K:e_p(x)=0\}=D_p,\qquad
+\{x\in K:e_p(x)=1\}=\{p\},\\
+T_p(q)=T_q(p)\quad(p,q\in P),\\
+T_p\!\left(\sum_i\lambda_iq_i\right)
+ =\sum_i\lambda_iT_{q_i}(p)
+\quad(\lambda_i\ge0,\ \sum_i\lambda_i=1).
+\end{gathered}
+\tag{VII103.10}
+$$
+
+立即消费VI89.4／V88.4、88.10及[Library完整S桥][Q103S]，得到一个有限维 EJA $J$ 和线性双射 $\Phi:J\to V$，使
+
+$$
+\Phi(J_+)=C,\qquad u\Phi=\tau_J,
+\qquad \Phi\{x\in J_+:\tau_Jx=1\}=K.
+\tag{VII103.11}
+$$
+
+$\tau_J$ 是每个本原幂等元取一的规范迹，且 $\operatorname{rank}J=3$。这是原整个锥、原单位、原全部效应和原全部纯点的忠实表示，不是换一个完成体。
+
+证明。固定纯 $p$，取任意过 $p$ 的原二纯球 $F$。它与 $D_p$ 不同，103.3给唯一纯交点 $r$。原 $e_p$ 在 $p$ 取一、在 $r$ 取零，且在整个 $F$ 上 proper。取球图 $\chi:F\to B^d$，记 $n=\chi(p)$。一个球上有零一两端的 proper 仿射函数必沿唯一的一对对径达到两端，所以 $\chi(r)=-n$，并且
+
+$$
+e_p(\chi^{-1}z)=\frac{1+\langle n,z\rangle}{2}.
+\tag{VII103.12}
+$$
+
+为核对这一等号条件及 least，任取原 $g\in F_p$，在整个球上写 $g(\chi^{-1}z)=a+\langle b,z\rangle$。有 $\|b\|\le a$、$a+\|b\|\le1$ 及 $a+\langle b,n\rangle=1$。因此
+
+$$
+\begin{gathered}
+b=\lambda n,\qquad a=1-\lambda,\qquad0\le\lambda\le\tfrac12,\\
+g(\chi^{-1}z)-e_p(\chi^{-1}z)
+=(\tfrac12-\lambda)(1-\langle n,z\rangle)\ge0.
+\end{gathered}
+\tag{VII103.13}
+$$
+
+对 $e_p$ 再用 $e_p(r)=0$，便迫使 $\lambda=1/2$，得到(VII103.12)及对径唯一。这也见证原 $p\perp r$，遍及全部球与其全部纯点即为 $\mathrm A$。
+
+每个不同纯 $q$ 都与 $p$ 共处一个这样的整个球，故(VII103.13)给 $g(q)\ge e_p(q)$；在 $p$ 两者相等。用原 $K=\operatorname{conv}P$、$C=\operatorname{cone}P$，得 $g-e_p\in C^*$。这才证明全锥序 least，故 $T_p=e_p$；此前未从点态下确界中预选 least。在同一个 $H(p,q)$ 对 $e_q$ 使用(VII103.12)，得到
+
+$$
+e_p(q)=\frac{1+\langle\chi(p),\chi(q)\rangle}{2}=e_q(p).
+\tag{VII103.14}
+$$
+
+这包括所有非零比较值，取值并非仅限零一。同点值为一；不同球内的不同纯点内积严格小于一，所以 $e_p$ 唯一确认 $p$，对任意混态用有限纯分解即得唯一确认面的断言。线性和互易给(VII103.10)末式。至此已精确取得VI89.1定义的完整 $S$，没有遗留一般重构前件。
+
+现在直接应用既有桥。其源空间取本章的 $V$，正锥取同一个 $C$，规范泛函取同一个 $u$，效应取整个 $[0,u]$，纯点取全部 $P$，least 和 reciprocal 分别由(VII103.13)、(VII103.14)供给。Library中的正对偶剥离、共同完整框架、忠实自对偶配对、有符号谱性、正面投影、projectivity 与滤波纯性全部按其既有证明复用；最后消费的是 Barnum–Müller–Ududec 的 Theorem 16，非另需强对称的 Theorem 17。本章不重证这些一般步骤，也不以“$D_p$ 暴露”替代其中 projectivity 的完整接口。其同载体归一给(VII103.11)。
+
+面高由分类前的原几何已可读出。103.2说明全部非空真面只有纯单点和极大的整个 $D_p$；取任一球边界纯点 $q\in D_p$，有严格链
+
+$$
+\{q\}\subsetneq D_p\subsetneq K.
+\tag{VII103.15}
+$$
+
+不可能插入其他非空面，故 $h(K)=3$。有限 EJA 的成熟面字典把非零锥面与非零幂等元的支撑对应，包含对应幂等元序，严格包含严格增加秩；完整本原 Jordan 框架的部分和给长度恰为秩的最大非空链。原线性同构保持整个面格，故 $\operatorname{rank}J=h(K)=3$。此处只将既有 EJA 面格字典应用于(VII103.15)，不新增 Jordan 分类。证毕。
+
+(VII103.12)还精确消费VI90.8的全部局部球效应延拓：若 $h(z)=a+\langle b,z\rangle$ 且 $0\le a-\|b\|\le a+\|b\|\le1$，$b\ne0$ 时取 $s=\chi^{-1}(b/\|b\|)$，原延拓为
+
+$$
+\widehat h=(a-\|b\|)u+2\|b\|e_s\in[0,u].
+\tag{VII103.16}
+$$
+
+$b=0$ 时取 $au$。两端系数界保证其全域 proper，(VII103.12)给其限制恰为 $h$。这是既有逐效应延拓的参数对应，不另计为新一般定理，不供应共同正线性扩张或物理操作。
+

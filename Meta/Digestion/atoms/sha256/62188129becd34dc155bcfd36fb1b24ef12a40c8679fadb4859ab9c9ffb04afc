@@ -1,0 +1,49 @@
+**Lemma 6.2 (the original word square).** Put $N=H+r$, let
+$z^{\mathsf R}$ denote word reversal, and set
+
+$$
+ \begin{aligned}
+ h_z&=P^L(F_z-q(z)),\\
+ A_N(L)&=\frac12\sum_{|z|=N}\|h_z\|_2\\
+ &=\frac12\sum_{|z|=N}
+ \sqrt{\,4^{2L-1}q(z^{\mathsf R}B^{2L-1}z)-q(z)^2\,}.
+ \end{aligned}
+ \tag{6.4}
+$$
+
+Every radicand is nonnegative. With the full-source defect
+$\Theta(\lambda)=(1-d_\lambda)/d_\lambda$ of [DPCR, Definition 9.1],
+
+$$
+ A_N(L)\le\frac{4^N}{2}
+       \sqrt{\Theta\!\left(\frac1{2Ld}\right)}.
+ \tag{6.5}
+$$
+
+*Proof.* Self-adjointness of $P$ and the original constant $f_B=1/4$
+give, for every integer $b\ge0$,
+
+$$
+ q(z^{\mathsf R}B^bz)=4^{-b}\langle F_z,P^{b+1}F_z\rangle_m.
+ \tag{6.6}
+$$
+
+Indeed, write the cylinder integral as successive multiplication by
+$f_y$ and application of $P$. Moving the factors of the reversed left
+word across the pairing leaves $F_z$ on the left; the $b$ constant
+multipliers leave $P^{b+1}$ between the two copies of $F_z$.
+For $b=2L-1$, conservation and $\int F_z\,dm=q(z)$ give
+
+$$
+ \|h_z\|_2^2
+ =\langle F_z-q(z),P^{2L}(F_z-q(z))\rangle_m
+ =4^{2L-1}q(z^{\mathsf R}B^{2L-1}z)-q(z)^2.
+ \tag{6.7}
+$$
+
+Since $0\le F_z\le1$, the centered function has sup norm at most one.
+Apply the supplied centered heat estimate [DPCR, Theorem 9.2] at
+$s=2Ld$ to (6.7), then sum over the $4^N$ words. This uses the
+full original endpoint defect, with neither a spectral gap nor an
+effective uniform rate. $\square$
+

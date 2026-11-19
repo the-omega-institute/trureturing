@@ -78,7 +78,21 @@ $$(\operatorname{claim}) \Leftrightarrow (\forall al \in \mathbb{N}, be \in \mat
 
 Conjecture 1, page 3: "Every triple (A, B, C) of positive integer solutions to (3) can be obtained from the initial triple (7) where (α, β, γ) are positive integers such that (α : β : γ) ∈ ℚP² are the rational points that belong to the quadrilateral with vertices {(0 : 0 : 1); (1/2 : 0 : 1) ≡ (1 : 0 : 2); (1 : 1 : 1); (0 : 2 : 1)} depicted in the following figure via mutations (5) and permutations along the Markoff tree." The same page says: "It can be reformulated in terms of the initial triple (7) such that under every series of mutations along the Markoff tree the triple (α, β, γ) remain positive." The symbols al, be, ga encode α, β, γ. Equation (8) and the boundary vertices give the nonnegative integer reading. The zero triple is excluded; ga > 0 selects the affine chart. The tree is precisely the rooted tree of Sections 2 and 5, with every finite word after the mandatory r, l moves. Arbitrary independent permutations at the root are outside this assertion.
 
-**Theorem 1.7 (The exact positivity region).**
+**Theorem 1.7 (Growth of a rational recurrence).**
+
+$$\forall t \in \mathbb{N} \to \mathbb{Q},\; \forall k \in \mathbb{Q},\; (3 \le k) \Rightarrow ((0 < t\left(0\right)) \Rightarrow ((t\left(0\right) < t\left(1\right)) \Rightarrow ((t\left(1\right) \le k \cdot t\left(0\right)) \Rightarrow ((\forall n \in \mathbb{N},\; t\left(n + 2\right) = k \cdot t\left(n + 1\right) - t\left(n\right)) \Rightarrow (\forall n \in \mathbb{N},\; (0 < t\left(n\right)) \land ((t\left(n\right) < t\left(n + 1\right)) \land (t\left(n + 1\right) \le k \cdot t\left(n\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/BoninShadowMarkoffPositivity.real_recurrence_growth` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nathan Bonin (2024). *Conditions of positivity on a shadow Markoff tree*. DOI: [10.48550/arXiv.2403.07668](https://doi.org/10.48550/arXiv.2403.07668). URL: <https://arxiv.org/abs/2403.07668>.
+
+*Commentary.*
+
+A rational sequence with coefficient at least three, positive first term, and initially increasing terms bounded by the coefficient times the preceding term remains positive, strictly increasing, and subject to the same bound at every index.
+
+**Theorem 1.8 (The exact positivity region).**
 
 $$\forall al \in \mathbb{N}, be \in \mathbb{N}, ga \in \mathbb{N},\; ((al, be, ga) \ne (0, 0, 0)) \Rightarrow ((\forall C \in \operatorname{List}\left(Move\right),\; \forall t \in \mathbb{Q}\times\mathbb{Q}\times\mathbb{Q}\times\mathbb{Q}\times\mathbb{Q}\times\mathbb{Q},\; (t \in \operatorname{path}\left((al: \mathbb{Q}), (be: \mathbb{Q}), (ga: \mathbb{Q}), C\right)) \Rightarrow (\operatorname{IsNatNode}\left(t\right))) \Leftrightarrow ((0 < ga) \land ((\frac{(al: \mathbb{Q})}{(ga: \mathbb{Q})}, \frac{(be: \mathbb{Q})}{(ga: \mathbb{Q})}) \in \operatorname{quadrilateral})))$$
 
@@ -103,6 +117,7 @@ The shifted shadows 3x − σa, with σ the sum of the initial shadows, satisfy 
 - Truth anchor: `D5/S3/Factorization/BoninShadowMarkoffPositivity.claim`
 - Truth anchor: `D5/S3/Factorization/BoninShadowMarkoffPositivity.path`
 - Truth anchor: `D5/S3/Factorization/BoninShadowMarkoffPositivity.quadrilateral`
+- Truth anchor: `D5/S3/Factorization/BoninShadowMarkoffPositivity.real_recurrence_growth`
 - Truth anchor: `D5/S3/Factorization/BoninShadowMarkoffPositivity.result`
 - Truth anchor: `D5/S3/Factorization/BoninShadowMarkoffPositivity.step`
 - Dependency: [D5/S3/Factorization/MarkovEquationMutation](MarkovEquationMutation.md)

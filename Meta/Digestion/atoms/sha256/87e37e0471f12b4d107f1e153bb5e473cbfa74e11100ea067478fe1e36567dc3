@@ -1,0 +1,11 @@
+为在原域中取等，沿用 §29 的可分分裂与最优块下降、§30 的独立归一化，但用同一个核约束所有份额。$h=1$ 时，(31.4) 的 $A=D$ 一项已经等于 $m_1$，任意非零原 $p_1\in W_1$ 都见证正交叠。以下设 $h\ge2$。令 $M=\sum_i m_i$，取 $D/F$ 的有限正规闭包 $K$，记 $G=\operatorname{Gal}(K/F)$、$\Omega=\operatorname{Hom}_F(D,K)$。对各 $X_i$ 取 $F$-基 $x_{i1}=1,x_{i2},\ldots,x_{im_i}$。令 $b_{i,\sigma}=(\sigma(x_{ij}))_j$ 为第 $i$ 个坐标块中的行，令 $\widetilde b_{i,\sigma}$ 为在 $K^M$ 的该块外补零的行。对非空 $S\subseteq\Omega$ 记
+
+$$
+P_\sigma=\bigoplus_{i=1}^h K\widetilde b_{i,\sigma},\qquad
+q_i(S)=\dim_K\langle b_{i,\sigma}:\sigma\in S\rangle_K,\qquad
+\dim_K\sum_{\sigma\in S}P_\sigma=\sum_i q_i(S).
+\tag{31.5}
+$$
+
+每个 $P_\sigma$ 维数为 $h$。若两空间相等，则逐块的两行成比例，且首坐标为 $1$ 使比例为一。因 $F(X_1,\ldots,X_h)=D$，对应嵌入相等，故这是一族互异的子空间。
+

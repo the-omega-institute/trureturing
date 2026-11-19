@@ -1,0 +1,32 @@
+**定理 14.3（纯等式关系商中的非零读数）。**令 $L=\mathbb R^{(\mathcal T^2)}$ 为有序项对上的有限支撑自由实向量空间，基向量记为 $\varepsilon_{s,t}$。令 $J\subseteq L$ 为下列所有向量的实线性张成：
+
+$$
+\varepsilon_{s,s},\qquad
+\sum_{k=0}^2\varepsilon_{a\cdot V^ku,b\cdot V^kv}
+-3\varepsilon_{a,b}-3\varepsilon_{u,v}
+\qquad(s,a,b,u,v\in\mathcal T).
+\tag{14.10}
+$$
+
+定义与七项读数对应的向量
+
+$$
+\begin{aligned}
+\mathbf h={}&\varepsilon_{A\cdot V1,Z}-\varepsilon_{A,Z}
+-\varepsilon_{V1,Z}+\varepsilon_{1,Z}\\
+&-\varepsilon_{A\cdot V1,1}+\varepsilon_{A,1}+\varepsilon_{V1,1}.
+\end{aligned}
+\tag{14.11}
+$$
+
+则 $\mathbf h+J\ne0$ 于 $L/J$。特别，零对角与全部完整关系的有限实线性组合不能单独推出 $h=0$。
+
+**证明。**对固定 $\sigma$，以
+
+$$
+\Lambda_\sigma\left(\sum_{s,t}\lambda_{s,t}\varepsilon_{s,t}\right)
+=\sum_{s,t}\lambda_{s,t}d_\sigma(s,t)
+$$
+
+定义实线性泛函。向量有限支撑，故不要求 $d_\sigma$ 有界，也无收敛问题。定理 14.2 说明 $\Lambda_\sigma$ 消去 $J$ 的每个生成元，因此消去 $J$；但 $\Lambda_\sigma(\mathbf h)=\sigma\ne0$。所以 $\mathbf h\notin J$。这是纯线性等式关系商的结论，没有引入序锥、正分离或非负扩张定理，也没有推出非负核存在。证毕。
+

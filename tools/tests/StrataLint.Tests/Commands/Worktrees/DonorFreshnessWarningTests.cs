@@ -61,7 +61,7 @@ public sealed partial class WorktreeCommandTests
         Assert.True(result.Success, result.Error);
         using var receipt = ParseInitReceipt(result.Output);
         Assert.Equal("mismatch", receipt.RootElement.GetProperty("donor_cache_pin").GetString());
-        Assert.Contains("WARNING", result.Error, StringComparison.Ordinal);
+        Assert.Contains("WARNING donor", result.Error, StringComparison.Ordinal);
         // 给的是可执行的命令,不是一句结论。
         Assert.Contains("make lean", result.Error, StringComparison.Ordinal);
     }
@@ -82,11 +82,11 @@ public sealed partial class WorktreeCommandTests
         Assert.True(result.Success, result.Error);
         using var receipt = ParseInitReceipt(result.Output);
         Assert.Equal("absent", receipt.RootElement.GetProperty("donor_cache_pin").GetString());
-        Assert.Contains("WARNING", result.Error, StringComparison.Ordinal);
+        Assert.Contains("WARNING donor", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ACurrentAndMatchingDonorEmitsNoWarningAtAll()
+    public void ACurrentAndMatchingDonorEmitsNoDonorWarning()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -103,8 +103,8 @@ public sealed partial class WorktreeCommandTests
         using var receipt = ParseInitReceipt(result.Output);
         Assert.Equal(0, receipt.RootElement.GetProperty("donor_behind_base").GetInt32());
         Assert.Equal("match", receipt.RootElement.GetProperty("donor_cache_pin").GetString());
-        // 没有可报的就一个字都不说 —— 否则 warning 会退化成背景噪音。
-        Assert.Equal(string.Empty, result.Error);
+        Assert.DoesNotContain("WARNING donor", result.Error, StringComparison.Ordinal);
+        Assert.Contains("WORKTREE_AGENT_PENDING ", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]

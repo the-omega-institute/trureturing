@@ -1,0 +1,43 @@
+**定义 59.2（固定原输出及辅助供应）。** 固定一份实际框架
+
+$$
+\begin{gathered}
+h^2=e^2=j^2=1,\qquad he=-eh,\quad hj=-jh,\quad ej=-je,\\
+j=D(h,e),\qquad Q=ihej\in Z(A),\quad Q^*=Q,\quad Q^2=1.
+\end{gathered}
+\tag{59.4}
+$$
+
+实际指元素属于同一原域，不指已取得物理操作。中央续卷134.1供应这里的 $Q$。任取原自伴 $c,z$，$[h,c]=0$、$hz=-zh$，并取实数 $R$。运输续卷118.3供应
+
+$$
+\begin{gathered}
+x=c+z,\quad t=D(h,z)=iQhz,\quad g=D(Rh,x),\quad r=g-Rt,\\
+[h,r]=0,\qquad ht=-th,\qquad z\circ t=0.
+\end{gathered}
+\tag{59.5}
+$$
+
+$x,t,g,r$ 在以下全部分割中固定。谱混合卷55.6还给
+
+$$
+[h,y]=0\quad\Longrightarrow\quad
+D(\alpha1+\beta h,y)=0
+\qquad(\alpha,\beta\in\mathbb R,\ y\in E).
+\tag{59.6}
+$$
+
+设一族有限正迹 $\mathcal T$ 分离 $A$ 的正元素，记 $m_\tau=\tau(1)$、$\|b\|_{2,\tau}^2=\tau(b^*b)$，允许零迹。给定固定 $L>0$；对趋于无穷的整数 $N$，供应两两正交的实际投影 $q_{\epsilon k}$，$\epsilon=\pm1$、$1\le k\le N$，以及实中心 $|a_k|\le L$，满足
+
+$$
+\begin{gathered}
+\sum_{\epsilon,k}q_{\epsilon k}=1,\qquad
+hq_{\epsilon k}=\epsilon q_{\epsilon k},\\
+d_N=\sum_{\epsilon,k}a_kq_{\epsilon k},\qquad
+\Delta_N=c-d_N,\qquad\|\Delta_N\|\le\kappa_N.
+\end{gathered}
+\tag{59.7}
+$$
+
+零窗仍保留索引。不要求 $[c,q_{\epsilon k}]=0$ 或 $[c,d_N]=0$；供应可以只依赖 $c,h,N$。这些供应条件用于60.1的一般充分定理；61.1在CAR中实际证明它们，不将其另列为CAR公理。
+

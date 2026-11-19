@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:45f88a0a650e616ab3e6d6a75c6b0ab4c70bac60db662f3ae3d8220eabd45b99
+  normalized_sha256: sha256:45f88a0a650e616ab3e6d6a75c6b0ab4c70bac60db662f3ae3d8220eabd45b99
+cas_ref: sha256:45f88a0a650e616ab3e6d6a75c6b0ab4c70bac60db662f3ae3d8220eabd45b99
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Coefficient/resource-scope clarification with no new Lean declaration. A unital map from ZMod m to a field can exist only when the field characteristic divides m; for composite m its prime characteristic p is smaller than m, so the distinct residue p and zero can be identified. The elementary example ZMod 4 -> ZMod 2 maps 2 and 0 to 0, by pinned ZMod cast laws and normalization. Such an output map need not be injective, unlike E_p in the prime-recoding child, so it does not identify all original continuation responses. The dimension lemmas used in the linear children have Field hypotheses; they state no minimal module dimension over a composite residue ring. The deterministic task counts reachable behavior classes, while the linear task measures the span with common transitions and two scalar outputs; finite field carrier size does not turn these two resources into the same invariant. The unchanged source defines outputs as legality/quantity pairs, never a one-hot vector for each residue. This is the original applicability boundary, not a new positive composite-ring theorem, finite-bit claim or alteration of the source.
+    previous_atom_id: d09af692d9569e58d9010c25c4066fe92d7e0775b23feb877a584e143a432ffa
+    next_atom_id: 7db9513bc8267fa2c10c6c732bd323ea1070642f798c37e860188f4928cce926

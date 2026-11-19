@@ -1,0 +1,18 @@
+**定义 241.2（同一角态的正读取）。** 对 $n\in H$、$\|n\|\le1$，令
+
+$$
+\beta_n(sp+x)=s+\langle n,x\rangle,\qquad
+\phi_n=\beta_n\circ U_p\circ\pi|_E,
+\quad U_p=2L_p^2-L_p.
+\tag{241.3}
+$$
+
+$U_p:Y\to J$ 保正，且在 $J$ 上为恒等，故 $\phi_n$ 是原域的数学正泛函，按 129.1 合法读取每个原 P2 和 PB。所有比较都使用同一份 $\phi_n$ 读取两边。它不必是原实际准备，不改变原评价族及其质量。对 $\|n\|=1$，已知实线性图
+
+$$
+\mathcal L_n(sp+x)=x+sn
+\tag{241.4}
+$$
+
+满足 $\beta_n(v^2)=\|\mathcal L_n v\|^2$、$\beta_n(v\circ w)=\langle\mathcal L_n v,\mathcal L_n w\rangle$。因此原二表的实 Gram 行列式可在这个已知内积空间中准确计算；这不是在商上定义响应。
+

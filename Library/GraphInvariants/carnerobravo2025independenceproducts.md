@@ -11,9 +11,14 @@ strata_touched:
   - D5/S3/Geometry/HereditaryLexicographicProduct
   - D5/S3/Geometry/FiniteGraphSubgraphSuspension
   - D5/S3/Geometry/IndependenceComplexTorsionSeed
+  - D5/S3/Combinatorics/Graph/Products/CarneroBravoKingRoutes
   - D5/S3/Geometry/FiniteSimplicialSingularHomology
   - D5/S3/Geometry/IndependenceComplexTorsionSeedSingular
   - D5/S3/Geometry/SphereBouquetHomology
+  - D5/S3/Geometry/FiniteGraphSuspensionMoves
+  - D5/S3/Geometry/PrescribedSubdivisionHomology
+  - D5/S3/Geometry/KingFiniteReplay
+  - D5/S3/Geometry/KingFinalComposition
 license: citation-only
 triage: anchor
 ---
@@ -123,9 +128,8 @@ cutoffs and normalization. Their actual intersection is homotopy equivalent
 to the coordinate realization of $I(G)$; the existing open-cover reduced
 Mayer--Vietoris theorem and homotopy invariance then give the integral
 singular homology shift in degrees $q+1$ and $q$, for $q\geq1$.
-This is supporting machinery for Question 32. It does not settle that
-question: the seed singular comparison, complete gadget replay, king-grid
-rotation and sphere-bouquet torsion obstruction remain further obligations.
+This supplies the single-move homology input for the complete Question 32
+composition below. Its local suspension theorem alone is not a counterexample.
 
 The general mechanisms of graph suspension, independence-complex splitting
 and star clusters have classical sources, including:
@@ -140,10 +144,63 @@ and star clusters have classical sources, including:
   complexes*, Electronic Journal of Combinatorics 16 (2009), Research Paper 11,
   https://doi.org/10.37236/77.
 
-These are references [3], [5] and [11] of Carnero Bravo's v2 paper. The
+These are references [1], [5] and [11] of Carnero Bravo's v2 paper. The
 explicit coordinate neighborhood construction here does not claim that the
 general suspension or star-cluster mechanism is new, and these supporting
 modules carry no claim of original-problem acceptance or priority.
+
+The geometric predecessor is Brent N. Clark, Charles J. Colbourn and
+David S. Johnson, *Unit disk graphs*, Discrete Mathematics 86 (1990),
+165--177, https://doi.org/10.1016/0012-365X(90)90358-O, proof of Theorem 5.1,
+pp. 172--173. For a planar graph of maximum degree three, that proof
+constructs an induced square-grid subdivision with each original edge
+replaced by a path of length $3k_e+1$. Its orthogonal embedding input is
+Lemma 2.1, p. 168, credited there to Valiant. Theorem 5.1 itself states
+NP-completeness of GRID DOMINATING SET; the geometric construction is in
+its proof.
+
+The planar independence-complex realization is Skwarski's result, explicitly
+credited and alternatively proved in Barmak,
+[arXiv:1007.0418v1](https://arxiv.org/abs/1007.0418v1), Theorem 7.3,
+pp. 19--20: every finite complex is homotopy equivalent, after iterated
+suspension, to the independence complex of a finite planar graph.
+Barmak's Theorem 7.5, p. 20, separately gives maximum degree at most three;
+its statement does not assert planarity.
+
+To retain planarity in the degree reduction of its proof (p. 21), fix a
+plane embedding and choose two cyclically consecutive edges $ww_1,ww_2$
+at a vertex $w$ of degree $d>3$. Apply Definition 7.1, p. 19, with the
+subgraph having exactly these two edges. Writing $a=v_{\{w\}}$ and
+$b=v_{\{w_1,w_2\}}$, the replacement deletes $ww_1,ww_2$ and inserts
+the path $w-b-v-a$ and edges $aw_1,aw_2$. Every other old edge, including
+a possible ambient $w_1w_2$, is retained. Take a small disk about $w$
+meeting only its incident arcs. The selected ports are consecutive, so
+their junction $a$ can be split off into their common sector and joined
+to $w$ by the subdivided path inside the disk, keeping the other ports
+and the drawing outside the disk fixed. This embeds the local tree
+without crossings. The degree of $w$ drops to $d-1$, the new degrees
+are three at $a$ and two at $b,v$, and all other old degrees are unchanged.
+Iteration therefore terminates in a planar graph of maximum degree three;
+Proposition 7.2, p. 19, gives one suspension at each step.
+
+Csorba, Theorem 11, p. 6, gives one suspension when an edge is replaced
+by a path of length four. Thus the subsequent Clark--Colbourn--Johnson
+paths of lengths $3k_e+1$ give $\sum_e k_e$ further suspensions by
+successive triple subdivisions, with no need for equal $k_e$.
+Finally $T(x,y)=(x+y,x-y)$ is injective and satisfies
+$\|T(u)-T(v)\|_\infty=\|u-v\|_1$, since
+$\max(|a+b|,|a-b|)=|a|+|b|$. Hence distinct square-lattice points are
+neighbors exactly when their images are king-grid neighbors, and a finite
+image translates into a finite rectangle. The planar degree reduction
+and square-to-king conversion are elementary deductions given here,
+not theorem statements quoted from Barmak or Clark--Colbourn--Johnson.
+
+Starting with a finite triangulation of $\mathbb{RP}^2$, these classical
+constructions and the two connections produce an induced king-grid graph
+whose independence complex is homotopy equivalent to an iterated suspension
+of $\mathbb{RP}^2$, hence has positive-degree integral two-torsion. This
+qualitative existence consequence supplies no numerical parameters for the
+explicit finite implementation below.
 
 The unfinished source-readout registrations for the public lemmas in these
 four supporting modules are tracked in [issue #25180](https://github.com/the-omega-institute/trureturing/issues/25180).
@@ -168,9 +225,22 @@ hereditary property at those larger widths.
 
 `IndependenceComplexTorsionSeed` constructs an order-two class in the
 integer finite ordered chain homology of the independence complex of the
-complement of the graph with graph6 encoding `JEhbtj{rve?`. This exact
-classical graph6 seed appears in Adamaszek, *Small flag complexes with
-torsion* (2012), [arXiv:1208.3892v1](https://arxiv.org/abs/1208.3892v1).
+complement of the graph with graph6 encoding `JEhbtj{rve?`. The encoding
+is taken from the unprinted TeX-source appendix of Adamaszek, *Small flag
+complexes with torsion* (2012),
+[arXiv:1208.3892v1](https://arxiv.org/abs/1208.3892v1),
+[source appendix](https://arxiv.org/src/1208.3892v1).
+The four eleven-vertex H1-torsion examples and their minimality were proved
+earlier by Mordechai Katzman, *Characteristic-independence of Betti numbers
+of graph ideals*, Journal of Combinatorial Theory, Series A 113 (2006),
+435--454, https://doi.org/10.1016/j.jcta.2005.04.005; see
+[arXiv:math/0408016v2](https://arxiv.org/abs/math/0408016v2), abstract,
+p. 1, and Section 5, p. 16. Adamaszek explicitly credits Katzman for
+Theorem 1(a),(b) on p. 1. His Section 3, p. 4, records that two of the four
+clique complexes are homeomorphic to $\mathbb{RP}^2$ and the other two
+collapse to it. The local independence graph is the complement of the
+catalogued clique graph; no identification with a numbered Katzman graph
+is asserted.
 The local explicit Lean proof supplies all 32 increasing edges, all 24
 increasing triangles, the cycle, a chain bounding its double and a mod-two
 detecting functional. The classical seed and its local formal proof do not
@@ -194,12 +264,52 @@ nonzero and killed by two in singular H1 of the original coordinate
 realization, with the same integer coefficient object. No abstract
 comparison is assumed.
 
-Transport through the proposed graph construction, the remaining suspension
-steps and induced king-grid embedding, and assembly with the sphere-source
-obstruction below remain necessary for a complete Question 32 counterexample. The singular seed itself does
-not settle the question. The new comparison audit is unfinished under
+The finite replay and prescribed-subdivision transport below carry this
+class into the selected king-grid graph. The singular seed itself does not
+settle Question 32. The comparison audit is unfinished under
 issue #25205; the original finite-chain seed audit remains unfinished
 under issue #25149.
+
+## Prescribed king-grid routing interface
+
+`CarneroBravoKingRoutes` specifies the actual 141 natural-labelled vertices,
+178 original edges and 178 integer polylines with 1,283 corners. The prescribed
+subdivision inserts `3*k(e)` distinct fresh vertices on each edge, with
+`sum k(e) = 31286`, giving 93,999 vertices and 94,036 edges. Its
+induced embedding has target `P_9337` strong `P_9061`. The literal transform
+`T(x,y) = (x+y+25,x-y+1705)` has inclusive one-based bounds; the map into
+`Fin 9337` times `Fin 9061` subtracts one from both coordinates.
+
+`PrescribedSubdivision`, `IntegerPolyline` and `LatticeRouting` provide
+Lean-verified tagged paths, corner-expansion semantics, occupancy-checker
+soundness and strong-product conversion. The computational tags retain the
+actual edge numbers and natural positions; their injection and exact graph
+correspondence with the dependent fresh vertices are proved. The concrete
+kernel-checked occupancy reduction proves coordinate injection and both
+directions of adjacency for the literal routes. `inducedEmbedding` maps into
+the stated finite strong product, and `inducedIso` identifies the routed graph
+with the induced graph on its range. `endpoint_inventory`,
+`endpoint_pair_injective` and `baseGraph_iff_endpoints` identify the route
+endpoints with all original edges. `sum_subdivisions`, `actual_vertex_count`,
+`actual_edge_count`, `selected_vertex_count` and `selected_edge_count` give
+the exact multiplicity and graph counts. The evaluator proposes occupancy
+trees and proof blocks; Lean's kernel checks the exact fill equations and
+every block. No native-evaluation axiom or assumed certificate correctness
+is used.
+
+The exact seed encoding is from Adamaszek's catalogue; the earlier
+eleven-vertex four-example and minimality result is due to Katzman.
+The supplied graph-move route uses the Barmak/Lozin approach, with the Lozin
+homotopy effect proved by Biyikoglu--Civan,
+[arXiv:1302.3064v1](https://arxiv.org/abs/1302.3064v1), Lemma 3.3 and
+Proposition 3.4, p. 7. The explicit coordinate construction is local proof
+content, not a theorem attributed to Carnero Bravo or an originality claim.
+The forty-move replay, prescribed-subdivision suspension transport and
+sphere-wedge obstruction are combined in `KingFinalComposition` below. This
+routing interface alone does not settle Question 32 and makes no claim about Question
+35 or an additional solved original problem.
+The source-readout registrations remain unfinished under
+[issue #25256](https://github.com/the-omega-institute/trureturing/issues/25256).
 
 ## Actual singular homology obstruction for sphere sources
 
@@ -232,10 +342,9 @@ supplier modules. No literature novelty claim is made. The generic ring
 statements use Mathlib's regular-scalar meaning of module torsion-freeness;
 the nonzero-integer injectivity statement uses the integral-domain endpoint.
 
-This obstruction batch contributes zero original-problem resolution credit
-for Question 32. Its intended use takes n=2. Applying it to the comparison
-above, the remaining suspension and graph construction steps, the
-induced-coordinate embedding and the final refutation are still required.
+This obstruction batch alone contributes zero original-problem resolution
+credit for Question 32. The complete composition below applies it with n=2
+to the transported seed class in the actual selected induced graph.
 
 The new source modules' readout registration remains unfinished under
 [issue #25194](https://github.com/the-omega-institute/trureturing/issues/25194).
@@ -243,3 +352,72 @@ The dependent-family interface is available, but an actual homology/quotient
 source arena, complete source reconstruction and equivalence bridge, and
 whole-family variation, sensitivity and observational-dependence proofs
 have not been delivered. No `declared_validated` status is claimed.
+
+
+## Induced king-grid counterexample to Question 32
+
+`KingFiniteReplay.fortyMoves` starts at the actual complement of the graph
+encoded by `JEhbtj{rve?` in Adamaszek's catalogue. Its literal finite vertex
+and edge lists verify ten triple subdivisions, five matching suspensions and
+twenty-five Lozin replacements. The endpoint has 141 vertices and 178 edges.
+The local edge and star subgraphs are arbitrary subgraphs: extra ambient
+edges in moves 11, 13, 15, 19 and 39 are retained. The suspension mechanisms
+are classical, with attribution to Barmak, Proposition 7.2, and
+Biyikoglu–Civan, Proposition 3.4, in the corresponding move sources.
+
+`PrescribedSubdivisionHomology` treats an arbitrary finite endpoint inventory
+with injective unordered endpoint pairs. Partial paths retain an original
+edge at multiplicity zero. Increasing one multiplicity identifies the graph
+with one literal triple subdivision of its terminal edge. A proved label
+bijection accounts for all old and fresh vertices, and recursion on the sum
+of multiplicities composes the single-move homology shifts. Thus every
+positive degree q shifts by the prescribed sum; no graph or homology
+correctness premise is supplied by the caller.
+
+`KingFinalComposition` identifies the finite replay endpoint with the actual
+routing base graph by its natural labels and complete edge inventory. The
+forty moves and the 31286 prescribed triple subdivisions transport the
+original nonzero integral singular H1 seed class into ordinary integral
+singular H31327 of the independence realization of the selected induced
+graph. `selectedSingularClass_nonzero_killed_by_two` proves that the class is
+nonzero and twice it is zero. This is homology of the actual finite-coordinate
+realization, with coefficient object `ModuleCat.of ℤ ℤ`.
+
+The selected realization is compact. Applying
+`SphereBouquetHomology.compact_sourceSP_smul_eq_zero` contradicts this class,
+so `selected_not_sourceSP` excludes the original contractible-or-sphere-wedge
+alternatives. Arbitrary sphere index families, natural dimensions including
+S0, arbitrary sphere basepoints and the ordinary quotient wedge topology
+remain in scope. The argument does not assume a finite original sphere
+family or replace the realization with a homology record.
+
+`question32_counterexample` supplies the nonempty selected set, its 93999
+vertices and 94036 edges, and its failure of sourceSP inside the strong
+product of paths on 9337 and 9061 vertices. `rectangle_not_sourceSW` and
+`result : ¬ claim` refute the universal positive-order hereditary extension
+of Theorem 31 asked in Question 32. The sourceSW convention excludes empty
+induced sets, while the paper does not specify the vertexless convention;
+this counterexample is nonempty. No conclusion about the full-rectangle
+Question 35 follows.
+
+The literal construction is identified by SHA-256
+`ff9876310835eca475074719e41da20ea0d5056d76b996c3ea7d5b63fcaa0980`.
+The original-statement evidence pins arXiv v2 and distinguishes Questions
+32 and 35. The qualitative existence of an induced king-grid torsion
+obstruction follows from the cited classical constructions and the explicit
+connections above. This is distinct from a paper explicitly announcing a
+solution under Carnero Bravo's Question 32 numbering. No priority, uniqueness
+or exhaustive open-status claim is made. Lean verification
+of this construction does not itself constitute independent fidelity review,
+required CI, publication acceptance or a priority certificate.
+
+The 377 public theorem audit targets, including the universe-polymorphic
+`KingFinalComposition.result`, remain unfinished under
+[issue #25577](https://github.com/the-omega-institute/trureturing/issues/25577).
+The typed dependent-family attempt for `KingFiniteReplay.rowBits_spec` has a
+compiled equivalence bridge, rejected whole-family intervention, sensitivity
+and actual observational dependence. Its native binding is
+`declared_unresolved` at `source.state_binder`, with no certificate. The
+remaining targets lack completed per-target registrations. No
+`declared_validated` registration is claimed. Earlier supporting audit
+issues above remain separate.

@@ -1,0 +1,92 @@
+**定理 45.6（有限直积上的三坐标总模型与全部平移核的同时和式）。**在整个集合 $N_{[3]}=N^3$ 上逐坐标定义
+
+$$
+\begin{aligned}
+(z\star_{[3]}w)_r&=z_r\star w_r,&(V_{[3]}z)_r&=Vz_r,\\
+(A_{[3]}z)_r&=Az_r,&e_{[3]}&=(e,e,e),\\
+d_{[3]}(z,w)&=\frac13\sum_{r=0}^2d(z_r,w_r)&& (r=0,1,2).
+\end{aligned}
+\tag{45.24}
+$$
+
+这是满足全部原始前件与完整 (R) 的三坐标总模型，$A_{[3]}$ 是与 $V_{[3]}$ 交换且保核的含幺自同构。对 $a\in N,u\in S$ 定义实际数组
+
+$$
+\Psi(a,u)_r=(A^ra)\star u\quad(r=0,1,2).
+\tag{45.25}
+$$
+
+则在这同一个模型中，对全部整数 $m$ 同时成立
+
+$$
+\begin{aligned}
+d_{[3]}(A_{[3]}^m\Psi(a,u),\Psi(b,v))
+&=F_m(a,b)+F_m(u,v),\\
+A_{[3]}\Psi(a,u)&=\Psi(Aa,Au).
+\end{aligned}
+\tag{45.26}
+$$
+
+对角映射 $\Delta s=(s,s,s)$ 保留实际单位、两个运算、自同构及每个有向核值，且 $\Psi(e,u)=\Delta u$。因此 $\Delta x_i,\Delta y_i$ 是真正的双向来源链，并精确保全原 $\delta$ 的 $V^3$ 环境和 $P$ 环境，以及原单位预算 $B_0$。
+
+**证明。**运算在所有三元组上有定义，$e_{[3]}$ 是真实双侧单位，核处处有限、非负且零对角。对任意四个三元组 $z,w,s,t$，逐坐标使用 (45.1)，有限求和给
+
+$$
+\begin{aligned}
+&\sum_{k=0}^2d_{[3]}(z\star_{[3]}V_{[3]}^ks,
+                         w\star_{[3]}V_{[3]}^kt)\\
+&\quad=\frac13\sum_{r=0}^2\bigl[3d(z_r,w_r)+3d(s_r,t_r)\bigr]
+=3d_{[3]}(z,w)+3d_{[3]}(s,t).
+\end{aligned}
+\tag{45.27}
+$$
+
+所以完整 (R) 在整个 $N^3$ 上成立，不限于 $\Psi$ 的像。$A_{[3]}$ 的各项性质逐坐标继承。再由定义及 (45.5)，
+
+$$
+\begin{aligned}
+d_{[3]}(A_{[3]}^m\Psi(a,u),\Psi(b,v))
+&=\frac13\sum_{r=0}^2F_m((A^ra)\star u,(A^rb)\star v)\\
+&=\frac13\sum_{r=0}^2L_m(r)=D_m.
+\end{aligned}
+\tag{45.28}
+$$
+
+底层模型和全部映射都不依赖 $m$，不是逐 $m$ 分别选择实现。自同构的保乘法性又给 $A_{[3]}\Psi(a,u)=\Psi(Aa,Au)$；$Aa$ 与 $Au$ 在这里一起推进，并未将 $V$ 作用在乘积上改写。
+
+对角映射的各项保留由逐坐标定义立即成立。特别，
+
+$$
+\begin{aligned}
+&V_{[3]}\Delta x_i=A_{[3]}\Delta x_i=\Delta x_{i+1},\qquad
+V_{[3]}\Delta y_i=A_{[3]}\Delta y_i=\Delta y_{i+1},\\
+&p_{[3],j}:=V_{[3]}^je_{[3]}=\Delta p_j,\qquad
+P_{[3]}z:=z\star_{[3]}p_{[3],3},\\
+&P_{[3]}\Delta s=\Delta(Ps),\qquad
+d_{[3]}(\Delta s,\Delta t)=d(s,t).
+\end{aligned}
+\tag{45.29}
+$$
+
+于是两个实际缺陷分别为
+
+$$
+\begin{aligned}
+d_{[3]}(V_{[3]}^3\Delta x_0,\Delta y_0)
+-d_{[3]}(\Delta x_0,\Delta y_0)&=\delta,\\
+d_{[3]}(P_{[3]}\Delta x_0,\Delta y_0)
+-d_{[3]}(\Delta x_0,\Delta y_0)&=\delta.
+\end{aligned}
+\tag{45.30}
+$$
+
+单位生成的每个实际项仍为对角项，因此其子代数为 $\Delta E$，且
+
+$$
+\sum_{j=1}^2\bigl[d_{[3]}(p_{[3],j},e_{[3]})
++d_{[3]}(e_{[3]},p_{[3],j})\bigr]=B_0.
+\tag{45.31}
+$$
+
+这里是有限直积上的总模型，不是有限基数载体；$N$ 无限时 $N^3$ 也无限。归一因子 $1/3$ 只支付三项平均，不缩小对角来源的单位预算。对一般 $\Psi(a,u)$，既未得 $V_{[3]}\Psi(a,u)=A_{[3]}\Psi(a,u)$，也未得 $\Psi$ 保乘法；命题 45.7 给前一等式的明确反例。因此此构造不提供反复来源化，也不与定理 23.2 拼接成同时保全这些乘积环境和零单位预算的构造。证毕。
+

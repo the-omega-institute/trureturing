@@ -1,0 +1,54 @@
+**定理 88.4（同载体等价）。** 在定义 88.1 的全部前件下，
+
+$$
+\boxed{\mathrm{Z0}+\mathrm B+\mathrm A\ \Longleftrightarrow\ S.}
+\tag{88.3}
+$$
+
+这里完整 $S$ 准确指：每个 $p\in P$ 有 $e_p\in F_p$，在整个对偶锥序下满足 $e_p\le h$ 对所有 $h\in F_p$ 成立，且 $e_p(q)=e_q(p)$ 对全部纯 $p,q$ 成立。因而 $T_p(x)=\min_{f\in F_p}f(x)=e_p(x)$，全部有限实概率准备满足
+
+$$
+T_p\!\left(\sum_i\lambda_iq_i\right)=\sum_i\lambda_iT_{q_i}(p),\qquad
+q_i\in P,\quad\lambda_i\ge0,\quad\sum_i\lambda_i=1.
+\tag{88.4}
+$$
+
+允许重标签、零权、任意原混态及单点基；“最小”不是仅为极小，也不是只在球内最小。
+
+证明：正向。若有两个不同纯点，则对每个 $p$ 选一个不同纯 $q$；$\mathrm B+\mathrm A$ 给 $H(p,q)$ 中的对径 $r\in D_p$，故引理 88.3 对每个 $p$ 供应一个共同 $f_p$。现在固定任意不同纯 $p,q$，选同一球图 $\chi:H(p,q)\to B^d$，写 $n_p=\chi(p)$、$n_q=\chi(q)$，两者均为单位向量。$p$ 的对径 $r=\chi^{-1}(-n_p)$ 由 $\mathrm A$ 属于 $D_p$，因此 $f_p(r)=0$。
+
+对任意全局 $h\in F_p$，其在整个球上的限制是仿射函数 $h(\chi^{-1}s)=\alpha+v\cdot s$。球上的 proper 界给 $\alpha-\|v\|\ge0$、$\alpha+\|v\|\le1$，确认给 $\alpha+v\cdot n_p=1$。于是
+
+$$
+1=\alpha+v\cdot n_p\le\alpha+\|v\|\le1,
+\quad v=\beta n_p,\quad\alpha=1-\beta,\quad0\le\beta\le\tfrac12.
+\tag{88.5}
+$$
+
+等号条件包括 $v=0$。同样用于 $f_p$，再代入 $s=-n_p$ 的零值，得到 $\beta=1/2$，所以
+
+$$
+f_p(\chi^{-1}s)=b_p(s):=\frac{1+n_p\cdot s}{2},\qquad
+h(\chi^{-1}s)-b_p(s)=(\tfrac12-\beta)(1-n_p\cdot s)\ge0.
+\tag{88.6}
+$$
+
+因此 $f_p(q)\le h(q)$。对 $q=p$ 两者同为一；遍及全部纯 $q$，再由有限维紧凸几何的 $K=\operatorname{conv}P$、$C=\operatorname{cone}P$，得到整个锥序上的 $f_p\le h$。没有把球内最小函数未经延伸就当成全局效应：全局 $f_p$ 先由引理构造，$\mathrm A$ 才固定其局部限制。
+
+对同一个 $H(p,q)$ 的 $q$ 应用上述论证，其对径也由 $\mathrm A$ 全局可排除，故 $f_q(\chi^{-1}s)=(1+n_q\cdot s)/2$。在同一球图中
+
+$$
+f_p(q)=\frac{1+n_p\cdot n_q}{2}=f_q(p).
+\tag{88.7}
+$$
+
+这才得到非零比较的完整互反性。置 $e_p=f_p$ 即有 $S$；其线性、最小性和互反性直接给 (88.4)。这一正向证明不调用 Jordan 分类或任何未证的新分类。
+
+若某个 $D_p$ 为空，则 $\mathrm B+\mathrm A$ 排除任何不同纯 $q$ 的存在。由 $K=\operatorname{conv}P$ 得 $K=\{p\}$，生成性给 $V=\mathbb Rp$。此时 $F_p=\{u\}$，取 $e_p=u$，$S$ 和 (88.4) 均直接成立；$\mathrm B,\mathrm A$ 无不同纯点可量化，$\mathrm{Z0}$ 亦成立。故没有使用不存在的相对内点。
+
+证明：逆向。直接复用 [Library 完整 $S$ 桥][L87] 的 *Reciprocal least confirmation and the spectrality bridge*、*Least confirmation forces face-filter purity* 及 *Two pure states, comparison bounds and Jordan geometry*。其正对偶剥离、共同框架、忠实自对偶配对、有符号谱性、面投影、projectivity 和滤波纯性供应 [Barnum–Müller–Ududec Theorem 16](https://arxiv.org/html/1403.4147v4#Thmtheorem16) 的完整前件，给同载体的一般有限 EJA 迹表示；不改用要求强对称的 Theorem 17。
+
+在该表示中，纯态是迹一的本原幂等元 $a$，最小确认是 $e_a(x)=\tau(a\circ x)$。每个不同纯对的整个并面秩二，其归一基是闭欧氏球：跨简单因子为线段，同一因子用标准秩二面／spin-factor 球几何。实、复、四元数、Albert 的相应球维数为 $2,3,5,9$，一般 spin factor 保留其有限球维数。因此有 $\mathrm B$，不删经典或直和。
+
+若此秩二面的单位为 $s$，其中任一纯 $a$ 的球对径为 $r=s-a$；它是本原纯点且 $a\circ r=0$。全局 proper 效应 $e_a$ 满足 $e_a(a)=1,e_a(r)=0$，故有 $\mathrm A$。最后最小性给 $D_p=\{x\in K:e_p(x)=0\}$：任何排除见证 $h$ 都有 $0\le e_p(x)\le h(x)=0$，反向由 $e_p$ 自身见证。该零集闭凸，给 $\mathrm{Z0}$。逆向仅使用已归属的完整桥和标准 EJA 面几何。证毕。
+

@@ -1,0 +1,26 @@
+**定义 31.1（共同见证、独立缩放与端点）。** 设 $F$ 为特征零域，$L/F$ 为有限扩张，$h\ge1$ 为整数，$W_i\le_F L$ 为非零窗口，$m_i=\dim_F W_i$。令
+
+$$
+\begin{aligned}
+D_i&=F(W_i/W_i),&D&=F(W_i/W_i:1\le i\le h),&N&=[D:F],\\
+E_i&=\{c\in L:cW_i\subseteq W_i\},&E&=\bigcap_{i=1}^h E_i,&e&=[E:F].
+\end{aligned}
+\tag{31.1}
+$$
+
+比值的分母只取非零元素，所有域和窗口均取自原 $L$。对任意原标签元组 $r=(r_2,\ldots,r_h)\in(L^\times)^{h-1}$，约定 $r_1=1$，记 $I(r)=\bigcap_i r_iW_i$、$d(r)=\dim_F I(r)$、$\delta_h=\min_{d(r)>0}d(r)$。正标签存在；事实上 $d(r)>0$ 当且仅当有同一组非零 $p_i\in W_i$ 使 $r_i=p_1/p_i$ 对每个 $i\ge2$ 成立。此时 $p_1\in I(r)$。当 $h=1$ 时标签为空元组、交空间就是 $W_1$。当各 $W_i$ 都等于 $W$ 时写 $\delta_h(W)$。
+
+若独立替换 $W_i$ 为 $c_iW_i$，其中 $c_i\in L^\times$，原元组 $r$ 对应新元组 $((c_1/c_i)r_i)_{i\ge2}$，新交空间恰为 $c_1 I(r)$。特别地，任取非零 $b_i\in W_i$，置 $X_i=b_i^{-1}W_i$，则 $1\in X_i\subseteq D_i$、$F(X_i)=D_i$（$W_i/W_i=X_i/X_i$），且对所有原标签，包括零交叠的标签，有
+
+$$
+\rho_i=(b_i/b_1)r_i,\qquad
+I(r)=b_1\bigcap_{i=1}^h \rho_iX_i,\qquad
+r_i=(b_1/b_i)\rho_i
+\quad(\rho_1=1).
+\tag{31.2}
+$$
+
+若交叠为正，则由同一见证 $p_1$ 得 $\rho_i=(p_1/b_1)/(p_i/b_i)\in D^\times$。这只限制归一化标签；原标签在相应的 $(b_1/b_i)D^\times$ 中，不必在 $D$ 中。各 $E_i$ 是子域：非零稳定元素在 $W_i$ 上的乘法单射故满射，逆元也稳定；又 $c=(cb_i)/b_i\in D_i$ 对 $c\in E_i$ 成立。独立缩放不改各 $E_i$，也不改 $D_i$。每个 $I(r)$ 是 $E$-空间，故正维数是 $e$ 的正倍数。
+
+对实际中间域 $F\subseteq A\subseteq D$，记 $AW_i=\operatorname{span}_A W_i$、$a(A)=[A:F]$、$t_i(A)=\dim_F AW_i-m_i$、$\Lambda_h(A)=a(A)-\sum_i t_i(A)$。独立缩放保持各损失，因为 $A X_i=b_i^{-1}AW_i$。$A=E$ 和 $A=D$ 分别给出 $\Lambda_h(E)=e$ 和 $\Lambda_h(D)=\sum_i m_i-(h-1)N$；后一式用 $DW_i=b_iD$。
+

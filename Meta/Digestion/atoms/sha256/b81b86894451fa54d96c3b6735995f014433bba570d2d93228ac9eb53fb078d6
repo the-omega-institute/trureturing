@@ -1,0 +1,65 @@
+**Theorem 8.2 (finite successful certification with the existing
+suppliers).** Fix a deterministic $S$, finite $H,r\ge1$, rational
+$\epsilon,\zeta>0$, and rational $\alpha,\delta>0$ with
+$\alpha+\delta<1$. In the paid retained-record and finite-computation
+setting of [SRO, Definition 21.1], the original earned startup,
+reference defect and finite-word suppliers suffice for a finite
+successful certificate as in (8.1), on an event of probability at
+least $1-\alpha-\delta$. The certificate includes a generated finite
+$L$, every rational row (7.9), all positive normalization guards,
+the row error (7.10), the dynamic test (7.13), and all $r$ actual
+labels after the reached gate. No exact original parameter or
+stationary-law oracle is input.
+
+*Proof.* Split $\alpha=\alpha_{\rm st}+\alpha_{\rm acq}$ positively.
+Run [SRO, Theorem 21.2]'s startup. Its possible returned positive
+clock bounds $l_i$, $i\ge1$, form a deterministic list. For every
+branch $i$, predeclare packets of Definition 7.1 at the fixed
+$N=H+r$, with $t_s=2^{-s}$ and allowances
+$\beta_{i,s}=\alpha_{\rm acq}2^{-i-s}$, $i,s\ge1$.
+Choose $D_{0,i}^->0$ below $D_4(l_i)$ once. The other reference
+names and (7.2) allow deterministic increasing $n_{i,s}$ and
+refined $D_{n_{i,s}}^-$ satisfying (7.4). Indeed both terms of
+$V_{n,N}^+$ tend to zero as $n$ and reference precision grow.
+Each search terminates with any prescribed lower bound on $n$.
+This is the same packet-generation argument as [SRO,
+(SRO.152)], now using the existing unmarked word-vector bound.
+
+Intersect startup's common validity/termination event with every
+packet event in the deterministic branches for which $l_i\le\tau$.
+The probability is at least $1-\alpha$. Execute only the selected
+branch. On this event its packet marginals converge to $q$ by
+(7.6), and $a_s(3)-t_s\to c>0$. Proposition 7.3 therefore gives
+a finite stage with every normalization guard positive and
+$\zeta^{\mathrm{gen}}\le\zeta$. Stop the packet search at its
+first such stage with $a_s(3)-t_s>0$. Choose a dyadic
+$c_m=2^{-m}$, $m\ge1$, with $c_m\le a_s(3)-t_s$ by a finite
+integer search. This is an earned $c_-=c_m>0$ on the same event.
+
+For every deterministic pair $(i,m)$, predeclare
+$\delta_{i,m}=\delta2^{-i-m}$. Generate $L_{i,m}$ and its reference
+enclosure using Proposition 7.4 with $l_i,c_m,\epsilon,\delta_{i,m}$.
+This terminates for every positive rational branch input.
+Theorem 8.1 applies to these candidates, with the fixed $S,H,r$
+and tolerances and the total dynamic allowance at most $\delta$.
+Thus the data selection of $(i,m)$ does not consume an unbudgeted
+conditional use of (6.14).
+
+For the selected finite $L$, scan the retained original labels from
+$S$ in the prescribed disjoint blocks, extending the same record
+as needed. Proposition 6.6 makes its gate finite almost surely.
+The countable collection of candidate gates is simultaneously finite
+on a probability-one event, so selecting a candidate does not change
+this finiteness statement. Obtain and retain every next label through
+cut $T+r$ without discarding any intervening labels. Only finitely
+many reached finite computations and reads are needed on the common
+event. All strict guards above have positive slack eventually,
+so this is finite successful certification, not just a limiting
+statistical assertion.
+
+The certificate can finish after a tested prefix or even after the
+forecast cuts: the retained original record is used throughout.
+Actual completion includes every intervening read and its storage.
+No assertion that computation finishes by $T$ or catches up during
+$[T,T+r]$ is used in the finite-stopping proof. $\square$
+

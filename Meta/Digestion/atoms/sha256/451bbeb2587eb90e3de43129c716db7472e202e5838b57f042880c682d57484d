@@ -1,0 +1,20 @@
+**对应 32.2（已证明行上的普通量子代数）。** 对定理 29.1 的同一实际输入，准确有
+
+$$
+S(c,t)-iD(c,t)
+=\begin{cases}ct,&\sigma=1,\\tc,&\sigma=-1\end{cases}-is.
+\tag{32.1}
+$$
+
+因此已经识别的非对角块等于通常乘法或相反乘法的相应块；定理 30.1 的整行还保留 $-i\sum_{a_i\ne0}\rho_i p_i$。只有余量为零时，例如满足 (31.6) 的定理 31.2，才有完整行
+
+$$
+S(c,t)-iD(c,t)=
+\begin{cases}ct,&\sigma=1,\\tc,&\sigma=-1.\end{cases}
+\tag{32.2}
+$$
+
+在已经整体分类的 $C$ 上，AH64.1、75.1 的既有消费者给 $S-iD$ 的复线性延拓为通常或相反 $C^*$-乘法，保持伴随、准确锥、单位 $P$ 和原范数；全部有限角内旧复 Gram 正，每个原限制评价有数学 GNS，循环向量平方范数准确为 $\gamma(P)$，零质量给零向量。数学正泛函、角及 Hilbert 表示不成为实际准备。局部行和共同符号没有给整个未知环境增加全域双线性、结合乘法或全部有限旧复 Gram。
+
+Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，PNAS **95**，6596–6601，DOI `10.1073/pnas.95.12.6596`，Dynamical Correspondences、Theorem 1，提供 Jordan 相容乘法与取向的成熟对应。该 dynamical correspondence 的前件是到 skew order derivations 的**线性**映射；(30.2) 的部分行不代付这个全域前件，也不供应物理时间。
+

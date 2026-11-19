@@ -1,0 +1,42 @@
+**证明。** 先在 $h=z$ 的坐标计算。令 $e=|j,j\rangle$、$f=|j,j-1\rangle$、$m=D-1$，并把 $S$ 的标准基记为 $\uparrow,\downarrow$。直接由 $J_z e=je$、$J_+e=0$、$J_-e=\sqrt{2j}\,f$ 得
+$$
+\begin{aligned}
+\Pi_+(e\otimes\uparrow)&=e\otimes\uparrow,\\
+\Pi_-(e\otimes\uparrow)&=0,\\
+\Pi_+(e\otimes\downarrow)&=\frac{e\otimes\downarrow+\sqrt m\,f\otimes\uparrow}{D},\\
+\Pi_-(e\otimes\downarrow)&=\frac{m\,e\otimes\downarrow-\sqrt m\,f\otimes\uparrow}{D}.
+\end{aligned}
+\tag{13.14}
+$$
+令 $\tau_e=|e\rangle\langle e|$、$\tau_f=|f\rangle\langle f|$、$|++\rangle=|+\rangle_H|+\rangle_E$、$|--\rangle=|-\rangle_H|-\rangle_E$。对一个独立 $I_S/2$ 探针，(13.5)–(13.8) 的完整 $R,S,H,E$ 输出等于
+$$
+\begin{aligned}
+\Omega_z^{(1)}
+={}&\left[
+\frac{|e\uparrow\rangle\langle e\uparrow|}{2}
++\frac{|e\downarrow+\sqrt m\,f\uparrow\rangle
+ \langle e\downarrow+\sqrt m\,f\uparrow|}{2D^2}
+\right]\otimes|++\rangle\langle++|\\
+&+\frac{m^2\tau_e+m\tau_f}{2D^2}
+ \otimes\frac{I_S}{2}\otimes|--\rangle\langle--|.
+\end{aligned}
+\tag{13.15}
+$$
+把同一个 $\mathcal C$ 施于理想 $z$-投影仪器，得到
+$$
+\xi_z=\frac{P_{z,+}}2\otimes|++\rangle\langle++|
++\frac{I_S}{4}\otimes|--\rangle\langle--|,
+\tag{13.16}
+$$
+故理想完整槽态为 $\tau_e\otimes\xi_z$。正负旗标块正交。正块差的迹为 $1/(2D)$；负块差为
+$$
+\frac{-(2D-1)\tau_e+(D-1)\tau_f}{2D^2}\otimes\frac{I_S}{2},
+\tag{13.17}
+$$
+其迹范数为 $(3D-2)/(2D^2)$。因此
+$$
+D(\Omega_z^{(1)},\tau_e\otimes\xi_z)
+=\frac12\left[\frac1{2D}+\frac{3D-2}{2D^2}\right]
+=\kappa_D.
+\tag{13.18}
+$$

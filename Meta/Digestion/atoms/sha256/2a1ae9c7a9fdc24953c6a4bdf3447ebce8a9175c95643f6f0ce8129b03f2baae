@@ -1,0 +1,47 @@
+**定理 90.1（同一旧行的标量交叠平移）。** 在88.1下，不另要求 $z\circ K=0$。同一 $H_z$ 在 $K$ 上实线性，并满足
+
+$$
+\begin{aligned}
+H_z(k)\circ H_z(\ell)&=k\circ\ell,\\
+G(z)\circ H_z(k)&=z\circ k,\\
+k\circ H_z(\ell)+H_z(k)\circ\ell&=0,\\
+z\circ H_z(k)+k\circ G(z)&=0.
+\end{aligned}
+\tag{90.1}
+$$
+
+对任意 $k_0\in K$ 和非零实数 $s$，还有
+
+$$
+H_{z+k_0}=H_z,\qquad H_{sz}=H_z.
+\tag{90.2}
+$$
+
+这些是每个原仿射陪集的斜率；尚不将它等同于 $H_0=G|_K$。
+
+证明。取任意有限维原 $F\subset K$。写 $z\circ k=\lambda(k)u$，其中 $\lambda:F\to\mathbb R$ 为实线性泛函。有限维正定内积给原 $v_0\in F$，使 $g(v_0,k)=\lambda(k)$ 对全部 $k\in F$ 成立。实际原 $z_0=z-v_0$ 与 $F$ Jordan正交，故89.1给 $H_{z_0}|_F$ 实线性。于是对 $k\in F$，
+
+$$
+\begin{aligned}
+H_z(k)
+&=G(z_0+v_0+k)-G(z_0+v_0)\\
+&=H_{z_0}(v_0+k)-H_{z_0}(v_0)
+=H_{z_0}(k).
+\end{aligned}
+\tag{90.3}
+$$
+
+这同时支付 $H_z|_F$ 的线性与全部两点Gram。任意有限输入和其组合都含于一份这样的 $F$；不同 $F$ 上的式子均等于原定义(88.1)，故在整个 $K$ 上相容。未要求 $K$ 完备或存在向整个无限维 $K$ 的原投影。
+
+现在才展开已识别的 $G(z+tk)=G(z)+tH_z(k)$。其旧平方等于 $(z+tk)^2$，比较实参数 $t$ 的系数给(90.1)第二式。旧自身正交 $(z+tk)\circ G(z+tk)=0$ 在 $t=1,-1$ 处给 $k\circ H_z(k)=0$ 及第四式；对此已线性的 $H_z$ 极化，给第三式。
+
+仿射线性直接给 $H_{z+k_0}=H_z$。对 $s\ne0$，只使用原 $G$ 已付的全实齐次，
+
+$$
+H_{sz}(k)=s\bigl(G(z+k/s)-G(z)\bigr)
+=sH_z(k/s)=H_z(k).
+\tag{90.4}
+$$
+
+零 $s$ 不在该式结论中，不能由此把核外斜率接到 $H_0$。∎
+

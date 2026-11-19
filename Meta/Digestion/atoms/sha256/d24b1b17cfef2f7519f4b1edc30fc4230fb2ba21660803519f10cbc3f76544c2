@@ -1,0 +1,9 @@
+**定义 99.1（同一完整实ROG载体）。** 保留97.1的原 $(V,C,u,K,P,[0,u]_{C^*})$，但不再限制共同支撑维数 $n$ 或余维 $c=\dim L^\perp$。取矩阵环境的共同支撑 $E\simeq\mathbb R^n$ 及整体实线性同构
+
+$$
+\iota:V\longrightarrow L\subseteq\operatorname{Sym}(E),\qquad
+\iota(C)=L\cap\operatorname{PSD}(E).
+$$
+
+以下以 $C,u,K,P$ 简记 $\iota(C),u\circ\iota^{-1},\iota(K),\iota(P)$，效应按同一对偶运输，每次整体换坐标时同时更新 $\iota$；原状态空间 $V$ 与秩一向量所在的环境 $E$ 不混同。$L^\perp$ 在 $\operatorname{Sym}(E)$ 的迹内积中取，Gram字典中的矩阵 $H,M,A,B,N,I_E$ 均作用于 $E$，纯方向 $v,w\in E$ 满足 $vv^{\mathsf T},ww^{\mathsf T}\in L$。令 $u$ 在 $C\setminus\{0\}$ 上严格正。未作93.2的同载体归一化时，不同时假定 $I_E\in L$ 与 $u=\operatorname{tr}|_L$；先按93.2的行列式最大点运输同一个原数据，再在归一化坐标中使用 $I_E\in L$、$u=\operatorname{tr}|_L$。沿用96.1、97.1的全部原纯点、混态、proper 效应、$F_p$、$T_p$ 和 $\mathrm G_2$；矩阵纯点 $p_v$ 对应的原状态始终是 $\iota^{-1}(p_v)$。
+

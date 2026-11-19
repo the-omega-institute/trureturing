@@ -39,6 +39,7 @@ internal sealed class ThetaReflectedKernelComparisonDocument : IScribeDocumentDe
                         + "matrices, the full Weil pairing, Robin's inequality or RH."))),
                 DescribeRole.Theorem)),
         [
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Analytic/Convexity/StrictConcaveSymmetricSum")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Analytic/Fourier/ThetaRadialCurvature")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Zeros/Jensen/SourceThetaMomentBounds"))
         ]));

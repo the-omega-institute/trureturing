@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01cf81552508ac59ddf180a3cdcb773105d64c73a96a11d8bed30f8434b0bd6b
+  normalized_sha256: sha256:01cf81552508ac59ddf180a3cdcb773105d64c73a96a11d8bed30f8434b0bd6b
+cas_ref: sha256:01cf81552508ac59ddf180a3cdcb773105d64c73a96a11d8bed30f8434b0bd6b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'The prepared environment and measured basis are fixed model data. The testable isometry and unitary-extension assertions are upstream-only consequences: expand the displayed K0 and K1 to obtain diagonal effects diag(1,0,1/2,0,1) and diag(0,1,1/2,1,0), whose sum is I5; Real.sq_sqrt and finite matrix/inner-product normalization establish completeness and measurement orthonormality. LinearIsometry.extend and LinearIsometry.extend_apply extend the resulting isometry from H5 tensor span(f0) to H5 tensor H2, with finite-dimensional square-isometry surjectivity supplying the unitary realization. Taking the specified bras gives exactly A0,A1. No suitable project GID is needed for this concrete normalization and upstream extension; no new theorem or physical-realization claim is introduced.'
+    previous_atom_id: 964ae871a8c3cab6a54785f7013acbf7629b79c31b3f461c0f5dd0024ffa158d
+    next_atom_id: f4c4a9d3b701f29b7d73e12cf8191f97fe844ba3707ddf944f5be0df2fd77cef

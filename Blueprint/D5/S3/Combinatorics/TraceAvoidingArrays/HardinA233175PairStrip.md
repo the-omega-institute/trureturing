@@ -246,6 +246,62 @@ $$\left(1 - 4 \cdot X\right) \cdot \left(1 - 8 \cdot X - 32 \cdot (X)^{2}\right)
 
 The literal filtered count equals total(v(n-1)) at every positive width, by decomposition into the first column and its tail. The seven-step identity has polynomial z^2*(z^3-12*z^2+128)*(z^2-4*z-16). The listed initial values eliminate the extra factor for the scalar count and yield a(n)=12*a(n-1)-128*a(n-3) for n at least five. Comparing every power-series coefficient gives the identity. The cast from natural counts to integers is taken before forming the series.
 
+**Definition 1.18 (Deciding the next-colour condition).**
+
+$$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall c: \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{instDecidableAllowed}\left(s, c\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{allowed}\left(s, c\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left(((((c = (2: \operatorname{Fin}\left(6\right))) \lor ((c = (3: \operatorname{Fin}\left(6\right))) \lor (c = (4: \operatorname{Fin}\left(6\right))))) \implies (\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true})) \land ((c = (3: \operatorname{Fin}\left(6\right))) \implies (\operatorname{Prod}.\operatorname{snd}\left(s\right) = \operatorname{Bool}.\operatorname{true})))\right))\right)))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.instDecidableAllowed` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the two displayed implications. The colour numerals have type Fin 6.
+
+**Definition 1.19 (Row-major normalization).**
+
+$$\forall n: Nat, (\forall A: ((\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right))) \to \operatorname{Fin}\left(6\right), ((\operatorname{normal}\left(A\right)) \iff (\forall p: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((((A\left(p\right) = 2) \lor ((A\left(p\right) = 3) \lor (A\left(p\right) = 4))) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 1)))) \land ((A\left(p\right) = 3) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 2))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.normal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+Every colour two, three or four has an earlier colour one, and every colour three has an earlier colour two, in the row-major rank r*n+j.
+
+**Definition 1.20 (Deciding the normalization).**
+
+$$\forall n: \operatorname{Nat}, (\forall A: ((\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right))) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{instDecidableNormal}\left(A\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{normal}\left(A\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left((\forall p: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((((A\left(p\right) = 2) \lor ((A\left(p\right) = 3) \lor (A\left(p\right) = 4))) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 1)))) \land ((A\left(p\right) = 3) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 2))))))\right))\right)))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.instDecidableNormal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the displayed universally quantified conjunction of the two implications.
+
+**Definition 1.21 (Deciding a word scan).**
+
+$$\begin{aligned}\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall f: (\operatorname{Fin}\left(0\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{instDecidableGood}\left(s, f\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, f\right))\right)) = \operatorname{Decidable}.\operatorname{isTrue}\left(\operatorname{True}.\operatorname{intro}\right)))\\\forall n: \operatorname{Nat}, (\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall f: (\operatorname{Fin}\left(n + 1\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{instDecidableGood}\left(s, f\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, f\right))\right)) = \operatorname{instDecidableAnd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{instDecidableAllowed}\left(s, f\left((0: \operatorname{Fin}\left(n + 1\right))\right)\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{instDecidableGood}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{advance}\left(s, f\left((0: \operatorname{Fin}\left(n + 1\right))\right)\right), \operatorname{Fin}.\operatorname{tail}\left(f\right)\right)\right))))\end{aligned}$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.instDecidableGood` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+These are the zero and successor equations of the defining induction on n. The empty word uses isTrue trivial. The successor combines the allowed decision with the recursive decision on Fin.tail and the advanced flags.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Col`
@@ -260,6 +316,10 @@ The literal filtered count equals total(v(n-1)) at every positive width, by deco
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good_iff`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.instDecidableAllowed`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.instDecidableGood`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.instDecidableNormal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.pairs`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.step`

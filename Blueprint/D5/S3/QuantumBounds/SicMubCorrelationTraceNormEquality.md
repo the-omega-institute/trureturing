@@ -80,7 +80,19 @@ $$\forall (d: \mathbb{N}), (\forall (\iota: Type), (\forall (P: (\iota \to Matri
 
 Two complex square matrices are equal when their trace pairings agree on a family whose complex linear span is the full matrix space.
 
-**Theorem 1.7 (The equality follows from two frames and an isometry).**
+**Theorem 1.7 (Independent scaled isometries).**
+
+Lean statement: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.scaled_isometry_traceNorm`
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.scaled_isometry_traceNorm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For finite index types a,b,m,n, with decidable equality on a and b, let U be an m by a complex matrix, V an n by b complex matrix and X an a by b complex matrix. For positive real alpha and beta, if U adjoint times U is alpha squared times the identity and V adjoint times V is beta squared times the identity, then traceNorm(U X V adjoint) equals alpha times beta times traceNorm(X).
+
+**Theorem 1.8 (The equality follows from two frames and an isometry).**
 
 $$claim$$
 
@@ -108,6 +120,7 @@ For the dimensions, families, and operator in claim, correlation_transition expr
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.claim`
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.mubCorrelation`
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.result`
+- Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.scaled_isometry_traceNorm`
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.sicCorrelation`
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.sicEffect`
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.trace_pairing_ext`

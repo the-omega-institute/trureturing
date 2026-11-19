@@ -1,0 +1,12 @@
+### 126.6 靠近重复球内点时的整球、效应和法向联动
+
+固定重复对 $F,G=\tau F$，取
+$x\in\operatorname{ri}F$ 及
+
+$$
+ x_n\in S\setminus(F\cup G),\qquad x_n\to x.
+ \tag{Q126.23}
+$$
+
+对每个 $n$ 任选一颗包含 $x_n$ 的完整球 $H_n$。
+

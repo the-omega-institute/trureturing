@@ -1,0 +1,17 @@
+**推论 75.7（保持原消费者）。** 完整 $S$ 桥与恢复的既有组合接口经 66.3、66.8 [R]，在 C13 之前已给
+$$
+A=\bigoplus_iH_{n_i}(\mathbb C),\quad D=\bigoplus_{i,k}H_{n_in_k}(\mathbb C),\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),\qquad
+\Pr(f\mid\rho)=\sum_\lambda\operatorname{Tr}(f_\lambda\rho_\lambda), \tag{75.22}
+$$
+其中 $\rho_\lambda\ge0,\sum_\lambda\operatorname{Tr}\rho_\lambda=1,0\le f_\lambda\le I_\lambda$ 是整个原态与原效应域；单份纯态空间为 $\bigsqcup_i\mathbb{CP}^{n_i-1}$，同区纯比较为模方 Born、异区为零。允许经典及多个量子扇区。H13 只补相对方向相容性，此后才沿 66.10、65.9—65.12 同时取普通二份、三份辅助张量，并接回原 $L,p,M$ 的完整正滤波族与逆向。
+全部 $u_{ik},g_{ijk}>0$ 及唯一逆迹平衡 $\sum_{i,k}n_i\operatorname{Tr}(u_{ik}^{-1})=n^2$ 保留；原 $\omega$ 不变。辅助归一化一般不保原迹一截面，不能据此宣布原 $M,H_{\mathrm s}$ 保单位或原 $p$ 保迹，亦不强迫跨块对称或 $u,g$ 交换。若另要标准原归一化，可在已恢复方向后沿第五卷定义 73.2、73.10 与定理 73.11、73.16 [V] 加两个实际接口各自双侧的四项正重置补全及 $\mathrm A_0:\tau_E L(\omega,1_A/n)=1$。按其完整全锥、同接合与固定重置量词，恰得 $u=g=I$、原张量准备和原偏迹读回；校准不是本章候选前提，数学补全不等同装置供应。
+操作仍按 69.1—69.11 [R] 的额外前件：先固定同一旁观者族 $\Psi_\Phi=C_DT_\Phi C_D^{-1}$、$(T_\Phi X)_{jk}=\sum_i(\Phi_{ji}\otimes\mathrm{id}_k)X_{ik}$，分支另限块 CP；若 Kraus 效应为 $F^a_{ji}=\sum_\ell K_{a,ji,\ell}^\dagger K_{a,ji,\ell}$，有限分支须满足两预算
+$$
+\sum_{a,j}F^a_{ji}\le I_i,\qquad
+\sum_{a,j}F^a_{ji}\otimes u_{jk}\le I_i\otimes u_{ik}\quad(\forall i,k). \tag{75.23}
+$$
+部分仪器用聚合预算；完整仪器两式都等号，即局部及原始联合总映射都 TP。固定输出扇区 $j_0$、其中任意密度 $\sigma$ 与同一个 $0<c\le1$，令 $R(a)_j=\delta_{j,j_0}(\sum_i\operatorname{Tr}a_i)\sigma$。正权弱共同重置 $cR$ 能在同族补成两边均 TP 的有限 CP 仪器，当且仅当 $u_{ik}=v_k$ 与输入行无关。充分小的 $c$ 仅使分支满足双预算，不保证共同补全；行一致时两预算才合为普通 Kraus 预算，取得整个标准有限局部 CP 仪器菜单，仍不校准 $g$ 或迫使 $v_k=I_k$。
+Born 分支概率为原输出迹，只有正概率才除以该迹定义条件态；顺序复合与粗粒化仅在上述固定族内复用。若从实际事件导出 CP，还须供应同一事件的乘积延拓及足够大实际参考上的全锥正性，逐输入块至少其维数的参考才支持 Choi/Bell 判据。效应不唯一指定更新；唯一 Lüders 压缩还须该实际 CP 分支效应为相应锐投影，并在每个确定接受的归一态上逐点不变。源识别、共同重置、参考及数学滤波的物理可用性均另有前件。
+若另给以原物理时间为参数的连续、时间齐次、可逆 $*$ 自同构群，才有逐复块的内 Hamiltonian 演化；时间、能量单位和 $\hbar$ 的识别仍来自原动力学来源。一般不可逆过程、独立右载体、四份以上组合及无限维一致性不由本章供应。比较端点互反不表示实际顺序测量交换。∎
+

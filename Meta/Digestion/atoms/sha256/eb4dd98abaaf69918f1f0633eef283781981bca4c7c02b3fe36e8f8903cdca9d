@@ -1,0 +1,85 @@
+**定理 149.1（全部对角块保留时的精确向量恒等式）。** 在 $\mathcal A$ 的忠实含单位Hilbert表示中，内积第一槽共轭线性。固定 $\sigma\in\{1,-1\}$，取任意单位向量
+
+$$
+\xi\in H_{\sigma,-}:=\{\xi:Q\xi=\sigma\xi,\ h\xi=-\xi\},
+\qquad \eta=q\xi,
+\tag{149.1}
+$$
+
+其中 $(p,q)$ 是147.5的任一锚；空空间无需取向量。对 $\delta>0$，令 $\phi_\delta$ 为单位向量 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 的数学向量态，并令
+
+$$
+\mathfrak p_\eta w=w-\operatorname{Re}\langle\eta,w\rangle\eta.
+\tag{149.2}
+$$
+
+它是底层实Hilbert空间中去掉实方向 $\eta$ 的正交投影。对每个任意固定自伴 $W\in E$，无须 $W\in V_h$，均有
+
+$$
+\boxed{B_{\phi_\delta}(n,W)
+=\frac{4\delta^2}{(1+\delta^2)^2}
+\left\|\mathfrak p_\eta(W\xi+\delta W\eta)\right\|^2.}
+\tag{149.3}
+$$
+
+因此148.2推出，对全部实 $t$，
+
+$$
+\boxed{
+2\left|t+\operatorname{Re}\langle\eta,v\xi\rangle\right|
+\le
+\left\|\mathfrak p_\eta((v+g)\xi)-t p\xi\right\|
++\left\|\mathfrak p_\eta((v-g)\xi)+t p\xi\right\|.}
+\tag{149.4}
+$$
+
+证明。两份锚都满足 $qp=je=iQh$，所以
+
+$$
+\|\eta\|=1,\qquad h\eta=\eta,\quad Q\eta=\sigma\eta,
+\qquad p\xi=-i\sigma\eta.
+\tag{149.5}
+$$
+
+这里 $Q$ 中央，故 $p,q$ 和所有固定原元素都保持其两个谱子空间。$h$ 自伴使 $\xi\perp\eta$；又 $n\xi=0,n\eta=2\eta,n^2=2n$。直接读取固定 $W$ 得
+
+$$
+\begin{aligned}
+\phi_\delta(n^2)&=\frac{4\delta^2}{1+\delta^2},\\
+\phi_\delta(W^2)&=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)
+&=\frac{2\delta}{1+\delta^2}
+\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle.
+\end{aligned}
+\tag{149.6}
+$$
+
+最后一式使用 $W=W^*$，故 $\langle\eta,W\eta\rangle$ 为实数。代入Gram行列式，正好是去掉一个实正交分量后的范数平方，得到(149.3)。这些公式没有删除 $W$ 的任何对角作用。
+
+$tq+v\in V_h$，其两份对角读取为零，所以
+
+$$
+\phi_\delta(tq+v)=\frac{2\delta}{1+\delta^2}
+\left(t+\operatorname{Re}\langle\eta,v\xi\rangle\right).
+\tag{149.7}
+$$
+
+将(149.3)分别用于148.2的完整 $W_+,W_-$，将(149.7)用于左侧，约去共同正因子 $2\delta/(1+\delta^2)$，得
+
+$$
+2\left|t+\operatorname{Re}\langle\eta,v\xi\rangle\right|
+\le\sum_{s\in\{+,-\}}
+\left\|\mathfrak p_\eta(W_s\xi+\delta W_s\eta)\right\|.
+\tag{149.8}
+$$
+
+现在只对固定向量范数令 $\delta\downarrow0$。由 $x+k=nc+v$、$c$ 与 $h$ 交换及 $n\xi=0$，有 $(x+k)\xi=v\xi$。又 $q\xi=\eta$、$p\xi=-i\sigma\eta$，所以
+
+$$
+\mathfrak p_\eta(q\xi)=0,\qquad
+\mathfrak p_\eta(p\xi)=p\xi.
+\tag{149.9}
+$$
+
+两份极限向量准确是(149.4)右侧。$g$ 自始至终是固定的完整旧值；其 $h$-交换分量仍在 $(v\pm g)\xi$ 中。全部极限只读取已固定元素，不曾令 $D$ 的输入收敛。∎
+

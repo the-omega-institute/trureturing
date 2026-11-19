@@ -1,0 +1,16 @@
+**定理50.2的证明：排除余量。** 将51.6第一式左乘 $e_0$ 后取有限矩阵迹，循环性给
+
+$$
+\begin{aligned}
+0&=\operatorname{Tr}\bigl(e_0(R\circ e_0)\bigr)
+  +\operatorname{Tr}\bigl(e_0K(e_0,F)\bigr)\\
+ &=\operatorname{Tr}(Re_0^2),
+\qquad
+\operatorname{Tr}\bigl(e_0K(e_0,F)\bigr)
+ =\frac{\sigma i}{2}\operatorname{Tr}(e_0^2F-e_0Fe_0)=0.
+\end{aligned}
+\tag{51.7}
+$$
+
+在 $R$ 的正交特征基 $v_j$ 中，51.7为 $\sum_j\lambda_j\|e_0v_j\|^2=0$。半定性使非零 $\lambda_j$ 同号，故 $e_0$ 杀掉 $\operatorname{ran}R$。$e_0$ 自伴，因而只可能支撑于 $\ker R$；51.6第二式再给 $e_0=0$。$R=0$ 时 $q=I$，同一支撑式已直接给零。正、负半定及退化核全部包括，50.4成立。∎
+

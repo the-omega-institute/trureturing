@@ -1,0 +1,30 @@
+**定理119.13（全原回缩候选的条件静态结论）。**
+候选(IX119.28)等价于IX116.17的同原锥、同原单位复三能级表示：
+
+$$
+\Phi:H_3(\mathbb C)\overset{\sim}{\longrightarrow}V,\qquad
+\Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{IX119.30}
+$$
+
+证明。任意球效应 $a:F=D_p\to[0,1]$ 与 $r_p$ 复合，
+得到整个原 $K$ 上的仿射函数 $a\circ r_p$，值在 $[0,1]$。
+用引理119.12中相同的线性关系论证，它唯一齐次化为 $V^*$ 的原泛函；
+非负性及其补的非负性说明它属于完整原 $\mathcal E$。
+它限制到 $F$ 恰为 $a$。
+因此每条球内直径都有原一、零读数，尤其每个 $W(D_p)=1$。
+此时才调用IX116.5和IX116.17：
+前者消去重复标签并给纯点紧性，后者在全部EB3+W1原量词下给(IX119.30)。
+Inj、全Pair及实际三元完成都是该链的后果，不是本定理输入。
+这是一条对既有完整静态判据的几何应用，不是另一个独立分类定理。
+
+反向必须在整个矩阵模型计算，而不能只展示某张面。
+令 $V=H_3(\mathbb C),C=\mathrm{PSD}_3,u=\operatorname{Tr}$。
+全部原纯点为 $p=vv^*,v^*v=1$，全部原效应为
+$f_A(\rho)=\operatorname{Tr}(A\rho)$，$0\preceq A\preceq I$。
+若 $f_A(p)=1$，则 $(I-A)v=0$，故在
+$\mathbb Cv\oplus v^\perp$ 上 $A=p\oplus B$，$0\preceq B\preceq I$。
+反向这些矩阵全是确认效应。对任意原归一 $\rho$，取最小的 $B=0$ 得
+
+$$
+T_p(\rho)=\operatorname{Tr}(p\rho),\quad

@@ -1,0 +1,50 @@
+**定理 44.3（同一原响应与取向截面的准确分类）。** 在41.1–41.3及 $\overline{L(X)}=X$ 下，映射
+
+$$
+\sigma\longmapsto K_\sigma
+\tag{44.4}
+$$
+
+给 $\Gamma(X,\mathcal O_{\rm alg}(\mathfrak J))$ 与所有满足 $\mathsf H_{\mathfrak J}(D)$ 的同域总映射之间的一一对应，逆为 $D\mapsto\sigma_D$。准确地，
+
+$$
+\mathsf H_{\mathfrak J}(D)
+\iff\exists!\sigma\in\Gamma(X,\mathcal O_{\rm alg}(\mathfrak J))\quad
+D(a,b)=K_\sigma(a,b)\ (\forall a,b\in E).
+\tag{44.5}
+$$
+
+证明，正向。先用43.2取得 $\sigma_D$，再用44.1–44.2构造 $\mathfrak B_{\sigma_D}$。此时才可直接应用主源30.3：底空间、固定 $n\ge3$、局部平凡复星过渡、完整自伴域、准确锥、范数、单位、所有原评价和质量、同一个全部原关系以及稠密 $L$，逐项均已支付。没有重证31–33章的全丛运输。
+
+30.3给唯一连续 $Q:X\to\{\pm1\}$，使
+
+$$
+D(a,b)=Q\frac i2[a,b]_\sigma=QK_{\sigma_D}(a,b).
+\tag{44.6}
+$$
+
+在43.5的每个实际局部锚点上，$D(h_V,e_V)(x)=K_{\sigma_D}(h_V,e_V)(x)\ne0$。与(44.6)比较给每个 $x$ 的 $Q(x)=1$。所以全部旧值准确为 $K_{\sigma_D}$；并非只在锚点、同像商或稠密点上识别。
+
+证明，逆向及全部 PB。任取 $\sigma$，在已构造的 $M_\sigma$ 中令 $D=K_\sigma=i[, ]_\sigma/2$。主源33.2的 $Q=1$ 已给任意紧 $X$ 的逆向；这里同时写明其全原三元组接线。每份原正评价的 C* Cauchy–Schwarz 给全部两向(41.4)；实相加 Gram 的二次值为 $\gamma((\sum_rt_ra_r)^2)\ge0$，指定差向量合成为零。谱序给 $e^2\le\vartheta e\le e$，故 A2、A3 不缺。
+
+对任意实际 $a,b,d$，以该 $D$ 生成(41.6)的真实 $v,w,r_\pm,s_\pm$。定义 $Z=b+id$，所有乘法均用 $\cdot_\sigma$，则
+
+$$
+\begin{gathered}
+v+iw=ia\cdot_\sigma Z,\qquad
+r_\pm+is_\pm=(u\pm ia)\cdot_\sigma Z,\\
+q_{K_\sigma}(x+iy):=x^2+y^2+2K_\sigma(x,y)
+=(x+iy)^*\cdot_\sigma(x+iy).
+\end{gathered}
+\tag{44.7}
+$$
+
+两端的正平方都准确等于
+
+$$
+Z^*\cdot_\sigma(u+a^2)\cdot_\sigma Z.
+\tag{44.8}
+$$
+
+因此每份原评价给(41.7)，包括所有任意幅度、背景、零、重复及嵌套实际三元组；没有仅核局部或秩一 PB。各质量未变。最后，若两个取向给同一 $D$，43.5的每点实际非零锚点使它们相同；而 $\sigma_{K_\sigma}=\sigma$ 也由这些锚点得到。∎
+

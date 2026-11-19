@@ -1,0 +1,14 @@
+**引理 492.4（原移动长度与原价格权下的尖峰交叉项）。** 对引理 492.2 的 $F$，
+
+$$
+C_F(X_n)=\Bigl(\frac{(b-a)^2}4+o(1)\Bigr)\,R_b(X_n)\qquad(n\to\infty).
+$$
+
+证明。固定 $X=X_n$，记 $h=h_n$、$k=k_n$、$A=A_n$。对 $x\in[X,2X]$ 及长度至多 $2k$ 的前向增量，只有第 $n$ 个尖峰出现，且 $x\ge X+k$ 时两个前向增量都为零（$\ell$ 在 $[k,\infty)$ 上为零）。令 $y=x-X\ge0$，则 $\int_0^1D^F_{sq}(x)\,ds=A\,B_q(y)$。在 $0\le y\le2k$ 上，$x^a/h=1+O(k/X)$、$x^b/k=1+O(k/X)$、$x^{-a-b}=X^{-a-b}(1+O(k/X))$。对 $y\ge h$，$\ell$ 在 $[h,k]$ 上为 $\log(t/k)$（导数 $1/t$ 递减），在 $k$ 处导数降为零并此后保持常数，故 $f_y(t)=\ell(y+t)-\ell(y)$ 在 $[0,\infty)$ 上递增、凹且 $f_y(0)=0$；于是 $r\le q$ 时 $f_y(sr)\le f_y(sq)\le\frac qrf_y(sr)$，对 $s$ 积分得 $B_r(y)\le B_q(y)\le\frac qrB_r(y)$；这把移动长度 $x^a,x^b$ 换成 $h,k$，相对误差为 $O(k/X)$。在 $0\le y<h$ 上，充分大时 $x^a\le2h$，$B_{x^a}(y)\le\log3$、$B_{x^b}(y)\le L$，贡献为 $O(hL)$。对价格权，由引理 489.1 的证明 $1-4u/x\le\rho_x(u)\le1$；这里 $u\le2k$ 且两个前向增量非负，所以价格权在相对误差 $O(k/X)$ 内被夹住。由引理 492.3，
+
+$$
+C_F(X)=A^2X^{-a-b}\Bigl[\frac h4L^2+O(hL)+O\Bigl(\frac kXhL^2\Bigr)\Bigr],
+$$
+
+而 $A^2X^{-a-b}\cdot\frac h4L^2=\frac{(b-a)^2}4\,X^{1-b}(\log X)^3/\log\log X$。证毕。
+

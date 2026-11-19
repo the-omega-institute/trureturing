@@ -1,0 +1,22 @@
+**定义 17.1（复二维空间上的对称有号全项模型）。**令
+
+$$
+\omega=-\frac12+i\frac{\sqrt3}{2},\qquad
+1+\omega+\omega^2=0,\qquad \omega^3=1.
+$$
+
+取 $M=\mathbb C^2$，单位 $0=(0,0)$，乘法为向量加法，且
+
+$$
+Ux=\omega x+(1,1),\qquad p(t)=(t,t)\quad(t\in\mathbb C).
+$$
+
+在任意 $x,y\in M$ 上置
+
+$$
+E(x,y)=-\frac12\operatorname{Re}\bigl((x_1-y_1)(x_2-y_2)(x_1-x_2+y_1-y_2)\bigr).
+\tag{17.1}
+$$
+
+这是处处有限的实值核；它允许有号取值，因而暂不属于原问题的非负核类。
+

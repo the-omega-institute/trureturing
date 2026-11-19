@@ -256,7 +256,7 @@ variable {ι : Type*} (b : Module.Basis ι k V)
 variable (hn : ∀ i j, i ≠ j → μ (b i) (b j) = 0)
 
 include hn in
-private theorem zero_square_mem_ann (i : ι) (hi : μ (b i) (b i) = 0) : b i ∈ (LinearMap.ker μ) := by
+theorem zero_square_mem_ann (i : ι) (hi : μ (b i) (b i) = 0) : b i ∈ (LinearMap.ker μ) := by
   change μ (b i) = 0
   apply b.ext
   intro j

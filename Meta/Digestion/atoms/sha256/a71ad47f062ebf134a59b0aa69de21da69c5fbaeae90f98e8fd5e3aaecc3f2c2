@@ -1,0 +1,33 @@
+### 17.1 第一步：统一标量估计与格点和
+
+写 $g_s(\zeta)=s^2\overline\zeta/(s^2+|\zeta|^2)$，$r=|\zeta|$。直接求导得
+
+$$
+\partial_{\overline\zeta}g_s=\frac{s^4}{(s^2+r^2)^2},\qquad
+\partial_\zeta g_s=-\frac{s^2\overline\zeta^{2}}{(s^2+r^2)^2}.
+\tag{17.9}
+$$
+
+其内禀二阶导数统一不超过 $C/s$：在 $r\le2s$ 用 $g_s(\zeta)=s g_1(\zeta/s)$；在 $s\le r\le1$ 对上述有理函数求导；在 $r\ge1$ 则用 $|\eta|\le1$ 上的 $g_s=s^2\eta/(1+s^2|\eta|^2)$。同样三个区域给统一的一阶导数界。
+
+在以 $h$ 为中心的旋转相干坐标中，令 $a_w(h),b_w(h)$ 分别为 $f_w$ 在坐标原点的反全纯及全纯导数绝对值。若 $d=d(h,w)$ 为球面距离，则 $r=\tan(d/2)$，坐标变换导数绝对值为 $1+r^2$，因而
+
+$$
+\begin{aligned}
+a_w(h)&=(1+r^2)\frac{s^4}{(s^2+r^2)^2}
+       \le C\min\{1,(s/d)^4\},\\
+b_w(h)&=(1+r^2)\frac{s^2r^2}{(s^2+r^2)^2}
+       \le C\min\{1,(s/d)^2\},\\
+|f_w(h)|&\le C\min\{s,s^2/d\}.
+\end{aligned}
+\tag{17.10}
+$$
+
+在 $d=0$ 处按连续意义解释；反足处用倒数坐标。格点位于固定有界球极投影矩形，故球面间距至少 $cs$。由互不相交的小球冠，任意 $h$ 的距离 $R$ 邻域内格点数至多 $C(1+(R/s)^2)$。按 $d\asymp2^ks$ 的二进环带求和，(17.10) 分别给 $C2^{-2k}$ 和 $Cs2^{-k}$ 的环带上界，最内球冠占据数有统一界。于是对整个球面统一有
+
+$$
+\sum_{w\in W_J}a_w(h)\le C,\qquad
+\sum_{w\in W_J}|f_w(h)|b_w(h)\le Cs.
+\tag{17.11}
+$$
+

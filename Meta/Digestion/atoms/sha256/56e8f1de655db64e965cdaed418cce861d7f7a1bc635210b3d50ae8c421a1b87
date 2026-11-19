@@ -1,0 +1,24 @@
+## 489. 原前向价格核的二倍区间均方渐近
+
+沿用 §481 的 $E,H_x,w,\rho_x$ 与 (481.1) 的 $\mathcal T$，其中 $H_x=x^{4/5}$。记
+
+$$
+D_u(x)=E(x+u)-E(x),\qquad B_h(x)=\int_0^hD_u(x)\,du,\qquad P_h(x)=\frac{B_h(x)}{h^2},\qquad V(Y,h)=\int_1^YD_h(x)^2\,dx .
+$$
+
+本节只使用以下三项作为假设。von Koch 界：$E(x)\ll\sqrt x\log^2x$。命题 488.4 的短区间均方上界：存在 $C,X_0$，使对 $X\ge X_0$、$0<\theta\le1$，
+
+$$
+\int_X^{2X}\bigl(E((1+\theta)x)-E(x)\bigr)^2\,dx\le C\theta X^2\log^2(2/\theta).
+\tag{489.1}
+$$
+
+以及在 $h\asymp Y^{4/5}$ 附近一致的普通短区间方差渐近：
+
+$$
+\sup_{Y^{3/4}\le h\le Y^{7/8}}\left|\frac{V(Y,h)}{Yh\log(Y/h)}-1\right|\longrightarrow0\qquad(Y\to\infty).
+\tag{489.2}
+$$
+
+在 RH 下，(489.2) 由 Montgomery 强对相关猜想推出：Goldston–Montgomery [Pair correlation of zeros and primes in short intervals, Progr. Math. 70 (1987)] 证明了普通方差渐近与强对相关的等价；见 Goldston [Notes on pair correlation of zeros and prime numbers, arXiv:math/0412313] §9 定理 7 与式 (9.3)，那里的渐近对相对长度 $h/Y\in[Y^{-B_2},Y^{-B_1}]$（$0<B_1\le B_2<1$ 固定）一致成立，取 $B_1=1/8$、$B_2=1/4$ 即给出 (489.2)。指数 $3/4$、$7/8$ 可换为任意 $4/5\mp\eta$（$0<\eta<1/5$）。(489.2) 是本节额外采用的一致方差渐近假设；(488.2) 在 RH 下已知，它是固定 $\alpha$ 区间 $[17,19]$ 上的平均下界，而二倍 $x$ 区间对应的 $\alpha$ 区间长度为 $\log2/\log T$，故 (488.2) 不能替代这里所需的局部渐近信息。
+

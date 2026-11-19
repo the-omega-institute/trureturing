@@ -1,0 +1,30 @@
+**引理 54.2（投影场也不能给过好的近似不变线）。** 设连续矩阵场 $T$ 满足
+
+$$
+T(z)^n=czI,\qquad \|T(z)\|\le M_0,\qquad
+c>0,\ M_0>0,\ n\ge2.
+\tag{54.2}
+$$
+
+不存在全局连续秩一正交投影场 $p$ 使每点都有
+
+$$
+\|(I-p(z))T(z)p(z)\|<\frac{c}{nM_0^{n-1}}.
+\tag{54.3}
+$$
+
+证明。令 $\lambda(z)=\operatorname{Tr}(T(z)p(z))$，迹为普通未归一矩阵迹，故 $\lambda$ 连续。逐点取单位向量 $v$ 生成 $p$，无需连续选取；则 $\lambda=v^*Tv$、$|\lambda|\le M_0$，并且 $\|(T-\lambda I)v\|=\|(I-p)Tp\|$。由多项式因式分解，
+
+$$
+\begin{aligned}
+|cz-\lambda^n|
+&=\|(T^n-\lambda^n I)v\|\\
+&\le\sum_{k=0}^{n-1}|\lambda|^k\|T\|^{n-1-k}
+\|(T-\lambda I)v\|\\
+&\le nM_0^{n-1}\|(I-p)Tp\|<c.
+\end{aligned}
+\tag{54.4}
+$$
+
+这与54.1矛盾。障碍因而覆盖投影场意义下的近似线，并非只针对连续特征向量的选择。∎
+

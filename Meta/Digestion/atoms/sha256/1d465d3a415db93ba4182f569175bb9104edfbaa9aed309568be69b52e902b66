@@ -1,0 +1,33 @@
+**条件应用 143.4（二元不塌缩候选与同原完整静态量子模型）。** 在定义143.1的全部原量词下，下列两项等价：
+
+$$
+\boxed{\mathrm{EB3}+\mathsf{Conn}+\mathsf U};
+\qquad
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V\text{ 实线性},\quad
+\Phi(\operatorname{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\tag{XI143.17}
+$$
+
+在左项下，每条有向原边实际上有 $d_{pq}=0$，每条完整排除球的每条直径均有原满刻度效应，全部 $e_p$ 才取得 least 及 $T_p=e_p$ 的整个原混态结论。此处是既有不塌缩分类的原效应表述，不另计为新增分类定理。
+
+证明。在 $V$ 固定任意环境范数，整个原效应区间紧，故
+
+$$
+0<M:=\max_{e\in\mathcal E}\|e\|_*<\infty.
+\tag{XI143.18}
+$$
+
+对每个 $q$ 选 $\mathsf U$ 的同一个真实边见证 $p$。原 $p,s_{pq}$ 都在整个 $D_q$ 中，因而
+
+$$
+\varepsilon\le1-d_{pq}=e_p(p)-e_p(s_{pq})
+\le M\|p-s_{pq}\|\le M\operatorname{diam}D_q.
+\tag{XI143.19}
+$$
+
+于是全部原球直径统一不小于 $\varepsilon/M>0$。Conn按VIII130.2支付Inj，现在直接复用[IX118.8第二项到第四项][Q143IX]，得到同一个原锥、原单位的 $\Phi$。纯点紧性、整球连续、拓扑与Jordan分类由该已付路线承担，本章不重新证明。这里没有从逐球非退化跳到统一不塌缩；统一性恰由 $\mathsf U$ 的量词供应。
+
+反向在整个标准复三能级域计算，再沿同一个 $\Phi$ 运输。任意纯态为 $p=vv^*$、$\|v\|=1$，整个 $D_p$ 是 $v^\perp$ 上全部迹一正矩阵的完整三球，$c_p=(I_3-p)/2$，唯一整球零尺为 $e_p(\rho)=\operatorname{Tr}(p\rho)$。若 $p\perp q$，则 $s_{pq}=I_3-q-p$ 是第三个正交秩一投影，$d_{pq}=0$。每颗完整球有原纯球缘点，故 $\mathsf U$ 可取 $\varepsilon=1$，且更强的 $\mathsf H$ 也成立。任意两条不同复射线在复三维中有共同正交射线，给至多两条真实零边的连接；相同射线取零长路。因此完整 $\mathsf{Conn}$ 成立。证毕。
+
+特别地，半刻度候选 EB3+$\mathsf{Conn}$+$\mathsf H$ 也与该静态表示等价。143.2—143.3另外给不预装分类的原正性证明：正缺陷边要求两端增益之积至少四，而每端分别严格小于二，矛盾。分类本身不需要经过这条较长预算路线，也不需要把数值 $1/2$ 选为主前件。
+

@@ -1,0 +1,86 @@
+**定理 30.3（三矩相等时 Schur 多项式逐索引恒等）。** 保持定理 30.2 的相同 $B$、$C$ 和三矩，令 $s=\rho T_A\oplus0$、$T_A=\operatorname{diag}(1,-2)$。按 (27.23)–(27.25) 在各自原环境中定义 $q_0^{(j)},q_1^{(j)},q_2^{(j)}$。对每个相同的原有限索引
+
+$$
+\theta=(u,\epsilon,\alpha_+,\alpha_-,\beta_+,\beta_-),\qquad
+\|u\|=1,\quad\epsilon=\pm1,\quad
+0<\alpha_\pm<\infty,\quad\beta_\pm\in\mathbb R,
+\tag{30.19}
+$$
+
+以及每个分别固定的 $\sigma$，有
+
+$$
+\boxed{\quad
+q_0^{(1)}(\theta)+\rho q_1^{(1)}(\theta)+\rho^2q_2^{(1)}(\theta)
+=q_0^{(2)}(\theta)+\rho q_1^{(2)}(\theta)+\rho^2q_2^{(2)}(\theta)
+\quad(\rho\in\mathbb R).\quad}
+\tag{30.20}
+$$
+
+所以三个系数各自相等。演员方向 $u$ 不变，四个有限变分参数和 $\epsilon$ 不变；包括 $u_1u_2=0$ 的演员轴、奇异 $A$、秩亏三矩和空环境。
+
+证明。在第 $j$ 份环境中，$\mathcal E_{0,j}=T_j\mathcal K_j$，$T_j|_{\mathcal K_j}$ 是到此截面的复线性双射。由 (30.17) 定义双射
+
+$$
+\Lambda:\mathcal E_{0,1}\longrightarrow\mathcal E_{0,2},
+\qquad \Lambda(T_1q)=T_2Uq.
+\tag{30.21}
+$$
+
+选取 (27.2) 所用的任意复正交归一基，令 $\Lambda_{\mathbb R}$ 为其实坐标矩阵。两份截面的维数同为 $k_\Gamma$。令
+
+$$
+\mathcal P=\operatorname{diag}(I_4,\Lambda_{\mathbb R},1),\qquad
+z_2=\mathcal Pz_1,\quad z_j=(a,v_j,\tau).
+\tag{30.22}
+$$
+
+这是系数变量的可逆实线性变换，保持四个原探针坐标和最后的 $\tau$；不是 (30.19) 的索引变换。
+
+核对齐次化的所有列，不仅核对 $\tau=1$ 的真实向量。若 $Y_1(v_1)=T_1q$、$Y_2(v_2)=T_2Uq$，则 (27.4) 的 $\mathcal T,\mathcal K,\mathcal G_s$ 分别为
+
+$$
+\begin{aligned}
+\mathcal T_jz_j
+ &=\bigl(\tau Bu+G_j^*q_j,\ \tau F_ju+q_j\bigr),\\
+\mathcal K_jz_j
+ &=\bigl(\tau(C\circ B)u+CG_j^*q_j/2,\ \tau F_jCu/2\bigr),\\
+\mathcal G_{s,j}z_j
+ &=\bigl(\tau(\sigma i[C,B]/2+\rho T_A)u
+                   +\sigma iCG_j^*q_j/2,\ -\sigma i\tau F_jCu/2\bigr),
+\end{aligned}
+\tag{30.23}
+$$
+
+其中 $q_1=q$、$q_2=Uq$；此处的 $q_j$ 是环境像，非 Schur 标量系数。其余 $\mathcal X,\mathcal H_\sigma,\mathcal J$ 只有相同的演员分量。由 (30.17)，所有这些输出在 $I_2\oplus U$ 下相等，因此 (27.5) 的 $\ell_s$ 和 (27.7) 的全部二次型对每个 $a,v_1,\tau,\rho$ 都相等：
+
+$$
+\mathscr Q^{(1)}_{\sigma,\rho T_A}(\theta)
+=\mathcal P^{\mathsf T}
+  \mathscr Q^{(2)}_{\sigma,\rho T_A}(\theta)\mathcal P.
+\tag{30.24}
+$$
+
+还须证明消元后的标量相等，不能对非正交的 $\Lambda_{\mathbb R}$ 套用伪逆的正交合同公式。按 (27.23) 写第 $j$ 份系数矩阵，令 $b_j(\rho)=b_{0,j}+\rho b_{1,j}$、$\gamma_j(\rho)=\gamma_{0,j}+\rho\gamma_{1,j}+\rho^2\kappa_j$。由 (27.24) 与整个 $W=0$ 分支的定理 28.2，对每个原 $\theta$ 都有
+
+$$
+A_j\succeq0,\qquad b_{0,j},b_{1,j}\in\operatorname{ran}A_j.
+\tag{30.25}
+$$
+
+所以对每个实 $\rho$，成熟的广义 Schur 配方给出实际达到的最小值
+
+$$
+\begin{aligned}
+\min_w\ (w,1)^{\mathsf T}\mathscr Q^{(j)}_{\sigma,\rho T_A}(\theta)(w,1)
+ &=\gamma_j(\rho)-b_j(\rho)^{\mathsf T}A_j^\dagger b_j(\rho)\\
+ &=q_0^{(j)}(\theta)+\rho q_1^{(j)}(\theta)+\rho^2q_2^{(j)}(\theta).
+\end{aligned}
+\tag{30.26}
+$$
+
+具体地，二次式等于右侧加
+$(w+A_j^\dagger b_j(\rho))^{\mathsf T}A_j(w+A_j^\dagger b_j(\rho))$；取 $w=-A_j^\dagger b_j(\rho)$ 达到最小值。式 (30.22) 在 $\tau=1$ 的两个全部 $w$ 空间之间是双射，故 (30.24) 使这两个最小值相等。得到 (30.20) 对所有实 $\rho$ 的恒等，再由实多项式恒等得到每个系数相等。证明只要求 (30.25)，不要求 $A_j$ 可逆；定理 28.2 的轴向一维核、空环境的核及所有奇异块因而都在范围内。∎
+
+这一恒等比“对全部索引的正性有同一真值”更强，但不提供任何未决系数的符号。它也说明三矩实现中选择不同的实 $\lambda$、不同 Gram 基或不同合法 Hermitian 扩张，不改变同一原索引处的整个标量 Schur 多项式。
+

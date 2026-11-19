@@ -42,7 +42,7 @@ def baseNorm
     (C : ConvexCone ℝ V) (u : V →ₗ[ℝ] ℝ) (x : V) : ℝ :=
   sInf (coneDecompositionCosts C u x)
 
-private theorem functional_nonneg_on_cone
+theorem functional_nonneg_on_cone
     {V : Type*} [AddCommGroup V] [Module ℝ V]
     (C : ConvexCone ℝ V) (u : V →ₗ[ℝ] ℝ)
     (hStrictPositive : ∀ a : V, a ∈ C → a ≠ 0 → 0 < u a)

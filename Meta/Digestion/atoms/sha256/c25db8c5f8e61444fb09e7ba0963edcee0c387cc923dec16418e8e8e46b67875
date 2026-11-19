@@ -1,0 +1,44 @@
+**Corollary 19.1 (order matching in complete native accuracy).**
+For every deterministic sequence $\eta_n\downarrow0$ in the range
+of Definition 16.1, the finite commands of Theorem 18.1 attain the
+necessary expected cost powers of Theorem 13.2. More explicitly,
+writing lower and upper limits along this sequence, one has
+
+$$
+\begin{aligned}
+\mathbb ES
+ &\le\liminf_n\eta_n\mathbb E V_{\eta_n}^a
+ \le\limsup_n\eta_n\mathbb E V_{\eta_n}^a
+ \le16\mathbb ES/\mu_\lambda,\\
+\mathbb ES/2
+ &\le\liminf_n\eta_n\mathbb E V_{\eta_n}^b
+ \le\limsup_n\eta_n\mathbb E V_{\eta_n}^b
+ \le32\mathbb ES/\mu_\lambda,\\
+\sqrt5\,\mathbb ES/2
+ &\le\liminf_n\eta_n\mathbb E L_{\eta_n}
+ \le\limsup_n\eta_n\mathbb E L_{\eta_n}
+ \le48\mathbb ES/\mu_\lambda,\\
+5\pi^2\mathbb ES/24
+ &\le\liminf_n\eta_n^2\mathbb E E_{\eta_n}
+ \le\limsup_n\eta_n^2\mathbb E E_{\eta_n}
+ \le2688\nu_\lambda\mathbb ES/\mu_\lambda.
+\end{aligned}
+\tag{19.1}
+$$
+
+Here $\mathbb ES>0$. The lower coefficients are necessary native
+bounds; the displayed upper coefficients are constructive bounds and
+are not claimed sharp. In particular, full-native expected order
+attainment in this offline class is established; the sharp full-native
+optimization problem remains unresolved.
+
+Proof. The same deterministic native tolerance $\eta_n$ occurs in
+(17.11) and (13.2). The lifetime and chronological hypotheses of the
+latter hold by Proposition 17.3. Fatou's lemma gives the lower
+inequalities from its pathwise bounds. Substitution of
+$\rho=\eta_n/4$ into (18.1) gives the upper inequalities. The
+terms involving $\rho$ or the additive energy constant vanish under
+the displayed normalizations. This comparison uses a proved complete
+wrapped-path accuracy, not a mesh count or a free stage label.
+$\square$
+

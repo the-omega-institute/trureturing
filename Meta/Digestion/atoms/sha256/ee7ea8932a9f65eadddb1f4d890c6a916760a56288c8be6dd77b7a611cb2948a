@@ -1,0 +1,25 @@
+**Theorem 13.2 (arbitrarily large near-disjoint actual rows at one cut).**
+For each source fixed in Definition 13.1, every integer $K\ge2$ and
+every positive rational $\epsilon$, there exist finite integers
+$t,H\ge1$, distinct words $u_1,\ldots,u_K\in\mathcal L^t$ with
+$p(u_i)>0$, and integer endpoints
+
+$$
+\begin{gathered}
+L_1=0,\qquad L_i<U_i\quad(1\le i\le K),\\
+U_i=L_{i+1}\quad(1\le i<K),\qquad U_K=H.
+\end{gathered}
+\tag{13.3}
+$$
+
+such that, with $E_i=E^H(L_i,U_i)$,
+
+$$
+R_{u_i}^H(E_i)>1-\epsilon\qquad(1\le i\le K).
+\tag{13.4}
+$$
+
+The $E_i$ are disjoint first-3 waiting-time windows. Every row is
+an actual full-history posterior of the original $e$-start source;
+no stationary preparation or event-only posterior replaces it.
+

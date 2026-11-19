@@ -410,7 +410,7 @@ private lemma tail_difference_bound {x : ℝ} (hx : 2 ≤ x)
   have hQ : |Q x| ≤ ∫ u in Ioi x, |psiErrorKernel u| := abs_integral_le_integral_abs
   exact (abs_sub _ _).trans (by linarith)
 
-private theorem complete_mangoldt_le_neg_E3 {x : ℝ} (hx : 2 ≤ x) :
+theorem complete_mangoldt_le_neg_E3 {x : ℝ} (hx : 2 ≤ x) :
     Mertens.E₂Λ x ≤ -Mertens.E₃ x := by
   let K : ℕ := ⌊Real.log x / Real.log 2⌋₊
   have hx1 : 1 ≤ x := by linarith

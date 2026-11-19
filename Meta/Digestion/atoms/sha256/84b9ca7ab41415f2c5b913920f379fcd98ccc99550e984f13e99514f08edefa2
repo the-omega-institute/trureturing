@@ -1,0 +1,117 @@
+**命题 84.1（窗口假设与一般目标的边界）。** 把正定 $q_1$ 换成半正定时，上述行接口本身不足以固定核内外的共同符号；这不证明正定性是完整原候选可加的必要条件。完整 PB 对已消费的平方饱和有实质作用，而一般输入的中央平方入口也不是完整原候选的必要后果。
+
+证明。分别给出三个范围明确的构造。
+
+以下显示的 $4\times4$ 常量矩阵均按 $x\mapsto x\otimes I_2$ 含单位地嵌入 (83.1) 的原域；$u$ 仍是 $I_8$。第一，取五根两两反交换的自伴单位轴
+
+$$
+h=\sigma_z\otimes I_2,\quad
+f_1=\sigma_x\otimes I_2,\quad
+f_2=\sigma_y\otimes\sigma_x,\quad
+f_3=\sigma_y\otimes\sigma_y,\quad
+f_4=\sigma_y\otimes\sigma_z.
+$$
+
+在原 $W_0=\operatorname{span}_{\mathbb R}\{f_1,f_2,tf_3,tf_4\}\subset V_h$ 上，写
+
+$$
+v=x_1f_1+x_2f_2+y_1tf_3+y_2tf_4,
+\qquad v^2=|x|^2u+|y|^2R_0,\quad R_0=t^2u.
+\tag{84.1}
+$$
+
+令实线性 $J$ 分别在 $(f_1,f_2)$、$(tf_3,tf_4)$ 上旋转九十度，第一根送到第二根，第二根送到第一根的负值。定义一份行片段
+
+$$
+\widetilde G(v)=
+\begin{cases}
+Jv,&y\ne0,\\
+-Jv,&y=0.
+\end{cases}
+\tag{84.2}
+$$
+
+$J$ 分别保持两个坐标平面的实内积并且斜，故 $\widetilde G$ 实齐次、平方保持、$v\circ\widetilde G(v)=0$、$\widetilde G^2(v)=-v$。自生圆的 $y$ 坐标长度不变，所以整条圆始终使用同一符号，直接给
+
+$$
+\widetilde G(\cos\eta\,v+\sin\eta\,\widetilde G(v))
+=-\sin\eta\,v+\cos\eta\,\widetilde G(v).
+$$
+
+若 $v^2-w^2\in\mathbb Ru$，$u,R_0$ 独立使两份 $y$ 长度相等；二者同在核内或同在核外。因此两点使用同一个 $\pm J$，连 (81.10) 所要求的 Gram 保持及混合斜关系都成立。但
+
+$$
+\widetilde G(f_1+tf_3)=f_2+tf_4,\qquad
+\widetilde G(f_1)+\widetilde G(tf_3)=-f_2+tf_4.
+\tag{84.3}
+$$
+
+这里 $q_1(v)=|y|^2$ 只半正定。这只是上述行接口不足以排除核内外符号脱接的构造；没有定义整个 $E^2$ 上满足全部 P2、完整 PB 的总 $D$，不能称为完整候选反模型，不能由它推出正定性对一般恢复必要。
+
+第二，复用静态卷 35.1–35.2 的同原域收缩族
+
+$$
+D_\kappa(a,b)=\frac{\kappa i}{2}[a,b],\qquad |\kappa|<1.
+$$
+
+原域、锥、范数、评价和全部质量不变。其有向表为通常 Gram 与反向 Gram 的权 $(1+\kappa)/2,(1-\kappa)/2$ 凸组合，故 A1–A3 及全部 P2 保持。为固定 PB 系数，取原常量
+
+$$
+a=h=\sigma_z\otimes I_2,\quad b=\sigma_x\otimes I_2,
+\quad c=u+a,\quad y=\sigma_y\otimes I_2.
+$$
+
+依三角卷 (128.4)、(128.6) 的同一约定，位移及外层为
+
+$$
+\nu=-\kappa y-u-a,\quad \omega=0,\qquad
+r_+=b-\kappa y-u-a,\quad r_-=b+\kappa y+u+a,
+\quad s_+=s_-=c.
+$$
+
+直接的已知乘法给
+
+$$
+\begin{aligned}
+r_+^2-r_-^2&=-4b,\\
+D_\kappa(r_+,c)-D_\kappa(r_-,c)&=2\kappa^2b,\\
+-2b\circ\nu-2c\circ\omega&=2b.
+\end{aligned}
+$$
+
+若 $Q_\kappa(x,z)=x^2+z^2+2D_\kappa(x,z)$，则原 Q 形式的 PB 差准确为
+
+$$
+Q_\kappa(r_+,s_+)-Q_\kappa(r_-,s_-)
+=4(\kappa^2-1)b\ne0;
+\tag{84.4}
+$$
+
+有限差分形式的左边减右边则为 $2(\kappa^2-1)b$。取 $b$ 的正谱向量评价即可读出非零差。另有
+
+$$
+D_\kappa(rh,D_\kappa(rh,b))=-\kappa^2r^2b.
+\tag{84.5}
+$$
+
+它反测完整 PB 对饱和及归一化负平方的作用；$D_\kappa$ 本身仍双线性，所以没有证明删 PB 必致非可加。
+
+第三，在完整有效的 (83.1) 模型中取原常量
+
+$$
+h=\begin{pmatrix}I_2&0\\0&-I_2\end{pmatrix},\quad
+b_0=\begin{pmatrix}0&B\\B&0\end{pmatrix},\quad
+c_0=\begin{pmatrix}0&C\\C&0\end{pmatrix},
+\quad B=\operatorname{diag}(1,2),\quad C=\sigma_x.
+$$
+
+两者属于原 $V_h$，但
+
+$$
+[B^2,C]=\begin{pmatrix}0&-3\\3&0\end{pmatrix}\ne0,
+\qquad
+G_0(c_0)=\begin{pmatrix}0&iC\\-iC&0\end{pmatrix}.
+$$
+
+于是 $[b_0^2,c_0+rG_0(c_0)]$ 的右上块为 $(1+ir)[B^2,C]\ne0$。实际共享 PB 外层的第一输入平方是 $(1+r^2)b_0^2$，故 17.1 的中央平方交换前件确实失败。整个 $D_0$ 却满足全部 P2、完整 PB 且可加。因此中央性是这条方法的窗口条件，不能提升为一般可加所必需的条件。∎
+

@@ -1,0 +1,10 @@
+**命题 C-27.11.1（开放、内部与闭合乘积的完整分解）。** 对任意加权简单环 <span>𝑁≥3</span>，令 <span>𝐷<sub>𝑁</sub><sup>open</sup></span> 为只代数切去末边 <span>𝑔<sub>𝑁</sub></span> 后的路径行列式，<span>𝐷<sub>𝑁-2</sub><sup>mid</sup></span> 为记录 <span>2,…,𝑁-1</span> 的内部路径行列式。则
+
+<div>
+ det 𝐺<sub>𝑁</sub>=𝐷<sub>𝑁</sub><sup>open</sup>-|𝑔<sub>𝑁</sub>|<sup>2</sup>𝐷<sub>𝑁-2</sub><sup>mid</sup>+2(-1)<sup>𝑁-1</sup> Re (∏<sub>𝑖=1</sub><sup>𝑁</sup>𝑔<sub>𝑖</sub>).
+</div>
+
+内部边恰为 <span>𝑔<sub>2</sub>,…,𝑔<sub>𝑁-2</sub></span>；<span>𝑁=3</span> 时内部只有一记录、<span>𝐷<sub>1</sub>=1</span>。末边模长是另供的数据，不能把本式解释为三个未指定标量就恢复整份关系矩阵。
+
+**证明。** 在 §27.6 的全部置换分类中，不用末边的匹配恰给开放行列式。把末边作首尾二换位的匹配贡献 <span>-|𝑔<sub>𝑁</sub>|<sup>2</sup></span>，剩余任意允许置换在内部路径上，恰给 <span>𝐷<sub>𝑁-2</sub><sup>mid</sup></span>。其余使用末边的置换只能沿整个环走两种取向，符号均为 <span>(-1)<sup>𝑁-1</sup></span>，贡献环积与其共轭。三类不交且穷尽。三角环的两个三循环正是末类，零边仍按无辐角多项式式处理。<span>□</span>
+

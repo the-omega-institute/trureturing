@@ -1,0 +1,47 @@
+**定义 96.1（实复ROG域与 $\mathrm G_k$）。** 取 $\mathbb F=\mathbb R$ 或 $\mathbb C$，分别记
+$\mathcal H_n(\mathbb R)=\operatorname{Sym}_n(\mathbb R)$、
+$\mathcal H_n(\mathbb C)=\operatorname{Herm}_n(\mathbb C)$，均作为实内积空间，配对为
+$\langle X,Y\rangle=\operatorname{Re}\operatorname{tr}(XY)$。实域的星号表示转置。
+原非零有限维 $(V,C,u)$、整个基 $K$、全部纯点 $P$ 和整个 $[0,u]_{C^*}$ 保持89.1、93.1、94.1的含义。
+要求整个原锥有相应域的ROG表示：它是一个线性PSD截面，每个锥元都是其中相应域秩一PSD矩阵的有限和；
+原 $u$ 可以是任意严格正归一泛函。
+
+只使用93.2或94.2的共同支撑限制和行列式最大点归一化。记其保原单位的整锥同构为 $\Psi$，
+共同支撑在 $\mathbb F$ 上的维数为 $n\ge1$，原 $h=\Psi^{-1}(I_n)$。运输后省略撇号，得到
+
+$$
+\begin{gathered}
+L=\Psi(V)\subseteq\mathcal H_n(\mathbb F),\qquad
+C=L\cap\mathcal H_{n,+}(\mathbb F),\qquad I_n\in L,\qquad u=\operatorname{tr}|_L,\\
+K=\{X\in C:\operatorname{tr}X=1\},\qquad
+P=\{vv^*\in L:\|v\|=1\},\qquad
+c=\dim_{\mathbb R}L^\perp.
+\tag{96.1}
+\end{gathered}
+$$
+
+因此环境实维数分别为 $n(n+1)/2$ 和 $n^2$，$c$ 始终相对于各自环境计算。
+合同归一化保持秩和环境实余维，$\Psi$ 的对偶运输双射全部原效应、确认集及排除关系；
+以下每个结论均沿这一双射返回原 $u$。没有在任意 $u$ 下另取一个未经归一化的保迹同构。
+特别地，复秩一不被实化为实秩一。
+
+沿用 $F_p=\{f\in[0,u]:f(p)=1\}$、$T_p(x)=\min_{f\in F_p}f(x)$ 及
+$p\perp x\Longleftrightarrow T_p(x)=0$。对每个整数 $k\ge1$，定义
+
+$$
+\mathrm G_k:\quad
+\forall p,q_1,\ldots,q_k\in P,\qquad
+\bigl[\forall j,\ p\perp q_j\bigr] \Longrightarrow\
+p\perp\frac1k\sum_{j=1}^kq_j.
+\tag{96.2}
+$$
+
+纯点允许重复，前件的各个零可以由不同原效应实现，后件要求一把共同原效应。
+$\mathrm G_1$ 恒真，$\mathrm G_2$ 正是(94.24)的三纯点关系。
+非负性使排除这个平均等价于同时排除每个 $q_j$，也等价于排除它们任何全部权重严格正的有限凸组合。
+重复量词保证 $\mathrm G_k$ 包含每个至多 $k$ 元非空纯零集合的共同排除条件，
+并有 $\mathrm G_{k+1}\Rightarrow\mathrm G_k$。
+完整 $\mathrm{Z0}$ 仍量化所有 $p\in P$ 和所有原混态 $x,y\in K$，如(93.3)。
+$n>1$ 时，$\mathrm{FC}$ 取同一 $h$ 给出的原固定补态 $(h-p)/(n-1)$，如(94.3)—(94.4)；
+$n=1$ 时 $\mathrm{FC}$ 为真，不定义这个商。
+

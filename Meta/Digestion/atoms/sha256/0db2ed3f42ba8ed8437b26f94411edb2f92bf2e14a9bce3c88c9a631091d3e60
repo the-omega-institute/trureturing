@@ -1,0 +1,27 @@
+**定义 74.1（$\mathrm{PRE}_0$）。** 对每个 $X=A,D,E$，保留非零有限维实空间、闭尖生成锥 $C_X$、在非零正元上严格正的线性泛函 $u_X$、紧全态基 $K_X=\{x\in C_X:u_X(x)=1\}$、全部效应 $[0,u_X]$ 及 $P_X=\operatorname{ext}K_X$。仅在纯第一端点定义比较，并要求完整有限混合律：
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\quad \xi\in P_X,\ x\in K_X,\qquad
+T^X_\xi\!\left(\sum_\ell v_\ell\eta_\ell\right)=\sum_\ell v_\ell T^X_{\eta_\ell}(\xi). \tag{74.1}
+$$
+最后一式量化每个有限纯态族、每组概率权重及每个纯 $\xi$，不是仅要求纯端点互反。完整复用 65.1、66.1、72.1 及 [2] 的 $S$ 到一般有限 EJA 条件纸面桥，包括正对偶生成、共同框架、面投影、项目性及滤波纯性推导；不另加 Jordan 公理，也不把仓内综合归给一个前件较强的外文定理。其忠实坐标满足 $\tau_X\Phi_X=u_X$、$\Phi_XU_X=1_X$、$B_X(x,y)=\tau_X(\Phi_Xx\circ\Phi_Xy)$ 及 $T^X_\xi(x)=B_X(\xi,x)$，双射整个原态基与整个原效应区间。此后就在该坐标中书写，原对象不变。
+规范迹 $\tau_X$ 令每个简单理想的每个本原幂等元迹一；写 $\langle x,y\rangle_X=\tau_X(x\circ y)$、$\ell_xy=x\circ y$、$P_x=2\ell_x^2-\ell_{x^2}$。对正元，$x\perp y$ 指零迹配对，等价于 $x\circ y=0$ 及支撑正交。$x>0$ 表示正可逆内点；一般 EJA 始终允许 Albert、直和与秩一因子。
+令 $n=\tau_A1_A$、$m=\tau_D1_D$。唯一供应的映射及原参考为
+$$
+L:D\times A\to E\ \text{实双线性},\quad p:E\to D\ \text{实线性},\quad
+L(D_+,A_+)\subseteq E_+,\quad p(E_+)\subseteq D_+,\quad \omega=1_D/m. \tag{74.2}
+$$
+内部对象全部由同一个原 $p$ 定义，两次调用不能独立供应：
+$$
+\begin{aligned}
+\mathcal B(d,c)&=pL(d,c),& K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),\\
+J(a)&=M(a,1_A),&H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},\\
+Q(a,b,c)&=L(M(a,b),c),&U&=M(1_A,1_A),&G&=H_{\mathrm s}1_D.
+\end{aligned} \tag{74.3}
+$$
+要求两条实张成和全部实输入上的 $Z$：
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad \operatorname{span}_{\mathbb R}L(D,A)=E,\qquad
+B_1M(a,b)=\tau_A(a)Jb\quad(a,b\in A). \tag{74.4}
+$$
+$\mathrm{PRE}_0$ 正是 72.1 的 PRE 只删除 $D_J,D_H$。被删的两条分别是 $a,b\in A_+,a\perp b\Rightarrow Ja\perp Jb$ 与 $d,d'\in D_+,d\perp d'\Rightarrow H_{\mathrm s}d\perp H_{\mathrm s}d'$。原 $L,p$ 的正性仍遍及整个锥，包括双份、三份全部纠缠方向；实张成不表示正乘积生成正锥。此时没有 C13、校准、原保单位或保迹、CP 或物理滤波输入。
+

@@ -8,6 +8,13 @@ internal sealed class AllStateTransposeDocument : IScribeDocumentDefinition
         "All-state original-source BPZ", H("All-state original-source BPZ"), Blocks(
             Paragraph(Text("The pairing is the complex bilinear OriginalSourcePairing.sourcePairing on the original finite-charge oscillator-polynomial Carrier. The field is literally LatticeAllStateField.Y. D ranges over every symmetric even integral LatticeData for which the integer determinant is a unit, including rank zero and indefinite Gram matrices. The grade is the exact signed coefficient-support grade of LatticePositiveEnergy; no positivity or finite dimension of that grade is required.")),
             Describe.Lean(
+                DescribeId.Create("sourcebpz-all-state-flow-variable"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/AllStateTranspose.flow_X_polynomial"),
+                H("Polynomial flow of an original oscillator variable"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every lattice D, charge alpha, coordinate i and natural order p, flowPolynomial applied to X(i,p) is the finite sum of monomials z^(p-s) with coefficient choose(p+1,s+1) times X(i,s), for s from zero through p, plus z^(p+1) times the charge coefficient bilinear(unitCharge i,alpha). No inverse Gram matrix or transpose supplier is assumed. This original support proof is consumed by polynomialPair_insertion and by the arbitrary-bilinear-form OriginalWord choice expansion; public visibility adds no new mathematical result."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sourcebpz-all-state-original-source-transpose"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/AllStateTranspose.sourcePairing_allState"),
                 H("Canonical all-state BPZ"), StatementSource.WithoutFormula(),

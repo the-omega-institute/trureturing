@@ -1,0 +1,13 @@
+**对应 22.2（指定混合值与既有静态后端）。** 在定理 19.2、推论 20.1 识别的这一份实际输入对上，准确有
+
+$$
+S(a,b)-iD(a,b)
+=\frac{ab+ba}{2}+\frac\sigma2(ab-ba)
+=\begin{cases}ab,&\sigma=1,\\ba,&\sigma=-1.\end{cases}
+\tag{22.1}
+$$
+
+在已经整体分类的 $pAp$ 和 $PAP$ 上，AH64.1、75.1 的既有消费者给通常或相反 C* 乘法、全部有限旧复 Gram 正性，以及每份原限制评价的数学 GNS。两角单位分别为 $p,P$，循环向量平方范数分别为 $\gamma(p),\gamma(P)$；零角质量给零向量。共同符号使两份角内公式在实际交叠上相容。角同构、局部相容和 (22.1) 的单对识别没有取得整个三进环境的旧行可加性、全域双线性、结合乘法或全部有限旧复 Gram。
+
+Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，PNAS **95**，6596–6601，DOI `10.1073/pnas.95.12.6596`，Dynamical Correspondences、Theorem 1，给取向与 Jordan 相容复乘法的成熟对应。其 dynamical correspondence 是到 skew order derivations 的**线性**映射；此原始前件不能由本节的部分输出识别替代，也不能用它给任意总 $D$ 补上线性或物理时间演化。
+

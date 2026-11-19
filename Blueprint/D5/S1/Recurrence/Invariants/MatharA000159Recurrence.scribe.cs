@@ -46,6 +46,15 @@ internal sealed class MatharA000159RecurrenceDocument : IScribeDocumentDefinitio
                 + "\" — R. J. Mathar, Nov 02 2015. The quantifier ranges over every natural n at least nine, "
                 + "the first index whose six backward shifts all belong to the sequence's domain.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("prefactor_subst_coeff", "Finite coefficient extraction with a prefactor",
+                PrefactorFormula(),
+                "For every commutative ring R, formal series f, G and W over R, and natural n, "
+                + "the degree-n coefficient of G times f evaluated at XW is a finite sum over k from zero "
+                + "through n. Its k-th term is the degree-k coefficient of f times the degree-n "
+                + "coefficient of G times (XW)^k. The notation subst(f,XW) means f.subst(XW). "
+                + "The factor X makes the inner constant coefficient zero, so terms of degree greater "
+                + "than n contribute zero. No invertibility or convergence hypothesis is required.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The recurrence holds at every source-domain index", Disp(ClaimBody()),
                 "Coefficient extraction converts the rook sum into a rational affine expression in the "
                 + "factorial series evaluated at X/(1+X)^2. The factorial series satisfies a first-order formal "
@@ -61,7 +70,7 @@ internal sealed class MatharA000159RecurrenceDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? claim = null) => Describe.Lean(
-        DescribeId.Create("mathar-a000159-" + name.ToLowerInvariant()),
+        DescribeId.Create("mathar-a000159-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
@@ -85,6 +94,21 @@ internal sealed class MatharA000159RecurrenceDocument : IScribeDocumentDefinitio
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(Parenthesized(value), exponent);
     private static Formula Minus(Formula value) => Seq(F.Minus, value);
     private static Formula Number(long value) => new Formula.Number(value);
+
+    private static Formula PrefactorFormula()
+    {
+        Formula f = F.Id("f"), g = F.Id("G"), w = F.Id("W"),
+            n = F.Id("n"), k = F.Id("k"), xw = Mul(F.Id("X"), w);
+        Formula term = Mul(Call("coeff", k, f), Call("coeff", n, Mul(g, Pow(xw, k))));
+        Formula sum = Seq(new Formula.Subscript(Sum,
+            Seq(k, Sp, InMacro, Sp, Call("range", Add(n, D(1))))), Sp, term);
+        return Disp(Seq(Bound("R", Named("Type")), OpenBracket,
+            Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp,
+            Bound("f", Call("PowerSeries", F.Id("R"))),
+            Bound("G", Call("PowerSeries", F.Id("R"))),
+            Bound("W", Call("PowerSeries", F.Id("R"))), Bound("n", Naturals()),
+            Equal(Call("coeff", n, Mul(g, Call("subst", f, xw))), sum)));
+    }
 
     private static Formula UFormula()
     {

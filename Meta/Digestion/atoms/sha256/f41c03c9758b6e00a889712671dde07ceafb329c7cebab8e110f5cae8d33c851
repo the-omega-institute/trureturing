@@ -1,0 +1,20 @@
+**引理 90.1（二维不定Hermitian形式的支配）。** 设复二维空间上的Hermitian矩阵 $J$ 有一正一负两个特征值。若另一Hermitian矩阵 $T$ 满足
+
+$$
+|y^*Ty|\le |y^*Jy|\qquad(\text{全部 }y),
+\tag{90.1}
+$$
+
+则唯一存在实数 $\chi\in[-1,1]$ 使 $T=\chi J$。
+
+证明。只对固定已知矩阵用谱定理，取 $J=\operatorname{diag}(\lambda,-\nu)$，$\lambda,\nu>0$。每个 $y_\theta=(\sqrt\nu,e^{i\theta}\sqrt\lambda)$ 都满足 $y_\theta^*Jy_\theta=0$，所以
+
+$$
+\nu T_{11}+\lambda T_{22}
+ +2\sqrt{\lambda\nu}\operatorname{Re}(e^{i\theta}T_{12})=0
+\quad(\theta\in\mathbb R).
+\tag{90.2}
+$$
+
+比较 $\theta=0,\pi,\pi/2,3\pi/2$，得 $T_{12}=0$、$\nu T_{11}+\lambda T_{22}=0$。故 $T=\chi J$，其中 $\chi=T_{11}/\lambda$；在第一特征向量上用90.1得 $|\chi|\le1$。唯一性由 $J\ne0$。这只是有限Hermitian二次型的成熟零锥刚性，不是未知 $D$ 的线性结论。∎
+

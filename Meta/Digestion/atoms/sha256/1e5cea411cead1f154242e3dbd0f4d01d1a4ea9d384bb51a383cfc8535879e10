@@ -1,0 +1,32 @@
+**定义 86.1（同一原基底）。** 对每个 $X=A,D,E$，保留非零有限维实空间、闭尖生成锥 $C_X$、在非零正元上严格正的原 $u_X$、整个紧态基 $K_X=\{x\in C_X:u_X(x)=1\}$、全部 proper 效应 $[0,u_X]$ 与纯态集 $P_X=\operatorname{ext}K_X$。只对纯第一端点定义比较，要求全部纯 $\xi,\eta$ 与全部原混态 $x\in K_X$ 满足
+
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\frac{\eta+x}{2}\right)
+=\frac{T^X_\eta(\xi)+T^X_\xi(x)}2.
+\tag{86.1}
+$$
+
+这里直接复用 [S] 的固定对半同载体定理，恢复每个有限纯态族、任意实概率权的完整比较律 $S$，以及纯端加任意混态、全部 $t\in[0,1]$ 的比较律。随后使用原一般有限 EJA 忠实条件桥：正对偶生成、共同完整框架、忠实态效应对应、面投影、项目性与滤波纯性的全部义务保留。该桥不是仅由 bit symmetry、自对偶或纯端互反直接取得的外文定理。入口允许非同型直和、秩一和 Albert；复型留作后果。
+
+忠实坐标保持原整个态基、效应区间、单位及比较配对，写作 $C_X=X_+$、$u_X=\tau_X$、$\langle x,y\rangle_X=\tau_X(x\circ y)$，每个简单理想的每个本原幂等元迹一。令 $\mathsf P_x=2\ell_x^2-\ell_{x^2}$ 为 Jordan 二次表示，$\ell_xy=x\circ y$。唯一供应的映射及原参考仍是
+
+$$
+L:D\times A\to E,\quad p:E\to D,\quad
+L(D_+,A_+)\subseteq E_+,\quad p(E_+)\subseteq D_+,\quad
+n=\tau_A1_A,\quad m=\tau_D1_D,\quad\omega=1_D/m.
+$$
+
+$L$ 实双线性，$p$ 实线性，正性遍及整个原联合锥，包括纠缠输入。所有内部映射由同一个 $p$ 两次派生：
+
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H(d)&=L(d,1_A),&B_1&=pH:D\to D,&Q(a,b,c)&=L(M(a,b),c),\\
+U&=M(1_A,1_A),&G&=H1_D.
+\end{aligned}
+\tag{86.2}
+$$
+
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$，以及全部实 $a,b\in A$ 上的 $Z:B_1M(a,b)=\tau_A(a)Jb$。实张成不等于联合正锥由正乘积生成。这些正性、张成和原定义在零关系之前已给 $U,G>0$，因而能定义 $F=\mathsf P_{U^{-1/2}}M$；此时不预称其等距。上述就是原 $\mathrm{PRE}_0^{1/2}$，不独立供应 $M$、另一参考或物理重置。
+

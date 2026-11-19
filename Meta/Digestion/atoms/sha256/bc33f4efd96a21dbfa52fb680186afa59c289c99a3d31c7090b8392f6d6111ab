@@ -1,0 +1,50 @@
+**定理 10.3（整个纤维与整个有向核下降）。**在上述条件下，
+
+$$
+\gamma(a)=\gamma(b)\quad\Longrightarrow\quad\beta(a)=\beta(b)
+\quad\Longrightarrow\quad a\approx b.
+\tag{10.10}
+$$
+
+因此有唯一的 $C:A^2\to[0,\infty)$，满足 $c(a,b)=C(\gamma(a),\gamma(b))$；它处处有限、零对角，并在加法群 $A$ 上保留完整 (R)，标记为 $x\mapsto\rho x+\tau$。
+
+**证明。**固定 $z$ 和 (10.4) 的任一实泛函。对 $(a,b)\in K$，令
+
+$$
+h(a,b)=\alpha(\beta(a)-\beta(b)),\qquad
+M_\alpha=\sup_{(a,b)\in K}|h(a,b)|.
+$$
+
+由 (10.1)，$0\le M_\alpha\le C<\infty$。因 $\beta(a\cdot U^kd)=\xi_k(a,d)+t_k$，(9.4) 给
+
+$$
+\sum_{k=0}^2 h(a\cdot U^kd,b\cdot U^kd)=3h(a,b).
+\tag{10.11}
+$$
+
+这只在两个背景相减后使用；两边共有的 $\sum_kt_k$ 恰好抵消。所有子对仍在 $K$，因为其 $\gamma$ 差等于 $\gamma(a)-\gamma(b)$。
+
+对给定 $(a,b)\in K$ 选定 (9.8) 的实际括号项 $d=d_a$。由 $\gamma(d)=-\gamma(a)=-\gamma(b)$，$a\cdot d$ 与 $b\cdot d$ 均在 $N_0$。定理 10.2 使 (10.11) 的 $k=0$ 项为零，故
+
+$$
+|h(a,b)|\le\frac23M_\alpha.
+$$
+
+在整个 $K$ 上取上确界，得到 $M_\alpha\le2M_\alpha/3$，因其有限，必为零。两个配对次序对每个 $z$ 都为零，共同非退化性给 $\beta(a)=\beta(b)$。这等价于 $e_a-e_b\in\mathcal N$，引理 2.3 随即给全部行、全部列的相等，而非只给 $c(a,b)=0$。
+
+定义 $C(\gamma(a),\gamma(b))=c(a,b)$；完整行列相等使其与两个代表元的选择无关。$\gamma$ 满到 $A$，故任意四个群元素都可由原四标签代表。由 (9.6) 及 $\gamma(U^ku)=\rho^k\gamma(u)+\tau_k$，其中
+
+$$
+\tau_0=0,\quad\tau_1=\tau,\quad\tau_2=(I+\rho)\tau,
+$$
+
+原 (R) 正好下降为
+
+$$
+\sum_{k=0}^2 C(x+\rho^ks+\tau_k,y+\rho^kt+\tau_k)
+=3C(x,y)+3C(s,t)\qquad(x,y,s,t\in A).
+\tag{10.12}
+$$
+
+没有把核预先对称化，也没有只下降其零对角或某个标量投影。
+

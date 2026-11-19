@@ -118,32 +118,6 @@ theorem thetaRep_charge_energy_neg (D : LatticeData) (a : Charge D) :
     chargeEnergy D (-a) = chargeEnergy D a := by
   simp [chargeEnergy, bilinear]
 
-private theorem gradeProjection_eq_self_of_mem_grade (D : LatticeData) (n : ℤ)
-    (v : Carrier D) (hv : v ∈ grade D n) :
-    gradeProjection D n v = v := by
-  apply (carrierCoeffEquiv D).injective
-  ext a
-  rw [gradeProjection_coeff]
-  by_cases ha : energy D a = n
-  · simp [ha]
-  · rw [if_neg ha]
-    exact ((mem_grade_iff D n v).mp hv a ha).symm
-
-private theorem gradeProjection_zero_of_mem_grade_ne (D : LatticeData)
-    (n m : ℤ) (hmn : m ≠ n) (v : Carrier D) (hv : v ∈ grade D m) :
-    gradeProjection D n v = 0 := by
-  apply (carrierCoeffEquiv D).injective
-  ext a
-  simp only [map_zero, Finsupp.zero_apply]
-  rw [gradeProjection_coeff]
-  by_cases ha : energy D a = n
-  · have ham : energy D a ≠ m := by
-      intro h
-      exact hmn (h.symm.trans ha)
-    rw [if_pos ha]
-    exact (mem_grade_iff D m v).mp hv a ham
-  · simp [ha]
-
 private theorem gradeProjection_zero_of_not_mem (D : LatticeData) (n : ℤ)
     (v : Carrier D) (hv : n ∉ stateEnergies D v) :
     gradeProjection D n v = 0 := by

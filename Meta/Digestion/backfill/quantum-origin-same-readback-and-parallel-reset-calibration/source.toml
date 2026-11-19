@@ -1,0 +1,5 @@
+source_id = "quantum-origin-same-readback-and-parallel-reset-calibration"
+path = "docs/develop/theory/QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

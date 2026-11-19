@@ -71,9 +71,11 @@ public sealed partial class MakeWorkflowTests
         "decompose",
         "settle",
         "settle-clear",
+        "retire-sources",
         "worktree",
         "worktree-clean",
         "worktree-remove",
+        "worktree-pending",
         "worktree-checkpoint",
         "worktree-publish",
         "worktree-finalize",
@@ -87,6 +89,7 @@ public sealed partial class MakeWorkflowTests
         "ci-unit",
         "compiled-judge-test",
         "compiled-fib-test",
+        "require-full-build",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -100,6 +103,11 @@ public sealed partial class MakeWorkflowTests
         "research-readouts-test",
         "compiled-dependencies",
         "compiled-dependencies-test",
+        "worktree-maintenance-install",
+        "worktree-maintenance-uninstall",
+        "worktree-maintenance-notify",
+        "worktree-maintenance-run",
+        "worktree-maintenance-status",
         "help",
         "settle-batch",
         "dotnet",
@@ -151,7 +159,7 @@ public sealed partial class MakeWorkflowTests
     public void IngestWrapperKeepsReportFreeDigestionIndependent()
     {
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Contains("make test  Run lean-report and check-current", makefile, StringComparison.Ordinal);
+        Assert.Contains("make test FULL_BUILD=1  Run lean-report and check-current", makefile, StringComparison.Ordinal);
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 
@@ -333,7 +341,8 @@ public sealed partial class MakeWorkflowTests
     }
 
     private static int RecipeCount(string makefile, string target) =>
-        RecipeLines(makefile, target).Count;
+        RecipeLines(makefile.Replace("\\\r\n", string.Empty, StringComparison.Ordinal)
+            .Replace("\\\n", string.Empty, StringComparison.Ordinal), target).Count;
 
     private static string Recipe(string makefile, string target) =>
         Assert.Single(RecipeLines(makefile, target));

@@ -1,0 +1,89 @@
+## 20. 同一个正读取支付整个极限面积族
+
+证明18.2第3项。先取 $(A,B)\notin\mathcal S$。此时 $x=\widehat D(A,B)=D_*(A,B)$，所有横向值也都是 $D_*(A,z)$。预算(17.4)仅含这些内层值及已知Jordan乘积，所以与标准完整PB模型提取的同一预算逐项相同，因而成立。这里比较的是标量预算，没有假称 $\widehat D$ 的实际外层满足PB。
+
+以下取任意 $(A,B)\in\mathcal S$。19节已给每块 $A_r,B_r$ 无迹且 $A_r\ne0$。用(19.3)的欧氏坐标写
+
+$$
+\begin{gathered}
+A_r=\alpha_r\cdot\sigma,\quad \rho_r=|\alpha_r|>0,\quad
+n_r=\alpha_r/\rho_r,\quad B_r=\beta_r\cdot\sigma,\\
+c_r=n_r\cdot\beta_r,\qquad
+x=\widehat D(A,B)=-D_*(A,B),\qquad q=A\circ B.
+\end{gathered}
+\tag{20.1}
+$$
+
+Pauli坐标可用通常的三轴；(18.1)中 $J=-\sigma_y$ 的符号不改变点积、正交或长度。$x_r$ 无迹且垂直 $n_r$，而 $q_r=\rho_rc_rI$。
+
+每一个正实读取恰可写为
+
+$$
+\phi(v)=\sum_{r=1}^2m_r(\lambda_r+\eta_r\cdot v_r),
+\qquad v_r^{\rm matrix}=\lambda_r I+v_r\cdot\sigma,
+\qquad m_r\ge0,\quad |\eta_r|\le1.
+\tag{20.2}
+$$
+
+$m_r=0$ 时可任取 $\eta_r=0$。此处不令 $m_1+m_2=1$，也不在证明中除以任何质量。对逐块无迹的 $v,w$，同一读取的实Gram恰为
+
+$$
+\phi(v\circ w)=\sum_rm_rv_r\cdot w_r,
+\qquad
+B_\phi(v,w)=\|v\|_m^2\|w\|_m^2-\langle v,w\rangle_m^2,
+\tag{20.3}
+$$
+
+其中 $\langle v,w\rangle_m=\sum_rm_rv_r\cdot w_r$ 可以退化。普通 Cauchy–Schwarz 仍适用，或将每块向量乘 $\sqrt{m_r}$ 后使用通常欧氏内积。
+
+任取实际 $A\circ z=0$。每块 $A_r\ne0$ 使 $z_r$ 的标量部分为零且向量垂直 $n_r$。令
+
+$$
+T_Az=D_*(A,z),\qquad w_\pm=z\pm T_Az,\qquad
+C_0=\sum_rm_rc_r^2,\quad Z=\sum_rm_r|z_r|^2,\quad
+R_0=\sum_rm_r\rho_r^2|z_r|^2.
+\tag{20.4}
+$$
+
+在每块，$T_Az$ 垂直 $z_r,n_r$ 且长度为 $\rho_r|z_r|$。所以两份 $w_\pm$ 都垂直共同纵向向量 $L=(c_rn_r)_r$，并且
+
+$$
+\|w_+\|_m^2=\|w_-\|_m^2=Z+R_0,\qquad \|L\|_m^2=C_0.
+$$
+
+将 $B\pm x=L+P_\pm$，其中 $P_\pm$ 逐块垂直 $n_r$。在同一个加权Gram中分离 $L$，再用 Cauchy–Schwarz，得到
+
+$$
+\begin{aligned}
+B_\phi(B\pm x,w_\pm)
+&=C_0(Z+R_0)+\|P_\pm\|_m^2\|w_\pm\|_m^2
+ -\langle P_\pm,w_\pm\rangle_m^2\\
+&\ge C_0(Z+R_0).
+\end{aligned}
+\tag{20.5}
+$$
+
+另一方面，$q_r=\rho_rc_rI$ 及同一个(20.2)给
+
+$$
+\begin{aligned}
+|\phi(z\circ q)|
+&=\left|\sum_rm_r\rho_rc_r\,\eta_r\cdot z_r\right|\\
+&\le\sqrt{\Bigl(\sum_rm_rc_r^2\Bigr)
+                 \Bigl(\sum_rm_r\rho_r^2(\eta_r\cdot z_r)^2\Bigr)}
+\le\sqrt{C_0R_0}.
+\end{aligned}
+\tag{20.6}
+$$
+
+两式一起给
+
+$$
+2|\phi(z\circ q)|\le2\sqrt{C_0R_0}
+\le2\sqrt{C_0(Z+R_0)}
+\le\sqrt{B_\phi(B+x,w_+)}+\sqrt{B_\phi(B-x,w_-)}.
+\tag{20.7}
+$$
+
+这就是全部(17.4)。整个证明允许 $C_0,Z,R_0$ 任一为零、读取全零或只读一块；两根号和左端始终使用同一个正读取。它没有分别选择两个优化读取，也没有对未知响应作连续性假设。对三个指定单位轴，$\rho_r=1$，于是 $R_0=Z$，右端至少 $2\sqrt{2C_0Z}$，左端至多 $2\sqrt{C_0Z}$。当 $C_0Z>0$，这份严格余量具体显示绝对面积没有强迫所需取向饱和。∎
+

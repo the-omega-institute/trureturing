@@ -1,0 +1,34 @@
+### 18.2 同一实际边缘与有界符号
+
+对 $R$ 偏迹消去 (18.6) 的两个交叉项，给出
+
+$$
+\omega_h=F_h\sigma F_h^\dagger+Z_h,
+\qquad Z_h=\operatorname{Tr}_R(B_h\sigma B_h^\dagger)\ge0,
+\qquad \operatorname{Tr}Z_h=q_h\le\delta.
+\tag{18.11}
+$$
+
+对任意 $h,g$，展开
+
+$$
+F_h\sigma F_h^\dagger-F_g\sigma F_g^\dagger
+=(F_h-F_g)\sigma F_h^\dagger
+ +F_g\sigma(F_h^\dagger-F_g^\dagger).
+$$
+
+由 (18.7) 及伴随的迹范数相同，两项的迹范数均不超过
+$\|(F_h-F_g)\sigma\|_1$。因此
+
+$$
+\begin{aligned}
+\tfrac12\|F_h\sigma F_h^\dagger-F_g\sigma F_g^\dagger\|_1
+&\le\|(F_h-F_g)\sigma\|_1,\\
+D_{\rm tr}(\omega_h,\omega_g)
+&\le\|(F_h-F_g)\sigma\|_1+\delta.
+\end{aligned}
+\tag{18.12}
+$$
+
+最后一项来自 $(q_h+q_g)/2\le\delta$，未以比较边缘替换任一个实际 $\omega_h$。
+

@@ -1,0 +1,22 @@
+#### 定理 3.2：关系包络的完整识别
+
+令 $V=G_{\mathrm{ab}}\otimes_\mathbb Z\mathbb R$，则有规范同构
+
+$$
+\boxed{\mathcal U(G)\cong\operatorname{Sym}^2_\mathbb R(V),\qquad
+ \langle g\rangle+\mathcal I\longmapsto \bar g_\mathbb R\odot\bar g_\mathbb R,}
+$$
+
+其中 $u\odot v=(u\otimes v+v\otimes u)/2$。 满足 C136 的自读表，恰为这个包络上在全部 $\langle g\rangle+\mathcal I$ 上非负的实线性泛函。 若 $\dim_\mathbb RV=m<\infty$，则 $\dim_\mathbb R\mathcal U(G)=m(m+1)/2$。
+
+**证明。**
+
+阿贝尔化后的平方张量满足原关系，给出线性映射 $\pi:\mathcal E(G)\to\operatorname{Sym}^2(V)$。 群像 $\bar g_\mathbb R$ 张成 $V$；对任意 $g,h$， $`\pi(\langle gh\rangle-\langle g\rangle-\langle h\rangle)
+=2\bar g_\mathbb R\odot\bar h_\mathbb R`$，故 $\pi$ 满。 任意自读 $q$ 唯一延伸为自由符号空间上的线性泛函； 它能下降到 $\mathcal E(G)$ 恰好是 C136 等式， 在全部 $\langle g\rangle$ 上非负恰好是 $q\ge0$。 表示定理 2.2 说明每个这样的正泛函 均由 $V$ 上的正半定形式通过 $\pi$ 拉回，故 $\operatorname{ker}\pi\subseteq\mathcal I$。
+
+若 $z\notin\operatorname{ker}\pi$，则非零对称张量 $\pi z$ 的全部分量落在某个有限维子空间中。 存在实线性函数 $\ell$，使 $(\ell\otimes\ell)(\pi z)\ne0$： 在有限基下，这就是说一个非零实二次多项式不能处处为零。 将 $\ell$ 线性延伸到 $V$，其秩一形式 $B(u,v)=\ell(u)\ell(v)$ 非负，拉回便得某个 $\lambda\in\mathcal C^*$ 满足 $\lambda(z)\ne0$。 故 $\mathcal I\subseteq\operatorname{ker}\pi$。两者相等，得到同构及泛函刻画。 最后，$m$ 维空间的对称平方有对角 $m$ 项和交叉 $m(m-1)/2$ 项。
+
+$\square$
+
+若 $G$ 本身阿贝尔，向量值极化 $\mathcal B(g,h)=(\langle g+h\rangle-\langle g-h\rangle)/4$ 直接给 $\mathcal E(G)\cong\operatorname{Sym}^2(G\otimes\mathbb R)$， 此时 $\mathcal I=0$。对一般群，上述同构针对共同可见商； 没有把未经正评价商的原 $\mathcal E(G)$ 预先认作对称平方。 单个实际 $q$ 还可能看不见更多方向，须再保留自己的零空间。
+

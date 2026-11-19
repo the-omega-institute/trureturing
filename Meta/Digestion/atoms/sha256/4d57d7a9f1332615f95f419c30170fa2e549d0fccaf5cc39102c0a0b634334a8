@@ -1,0 +1,66 @@
+## 66. 两次同轴配平使实际输出变纯
+
+先在证明内部取得输出结构。若 $v=0$ 或 $w=0$，242.1 或零像预算给零，结论成立。以下设 $\|v\|=r>0$、$\|w\|=s>0$；严格定号使 $\lambda\ne0$。只在当前矩阵空间选 Pauli 坐标，使 $v=r\sigma_z,w=s\sigma_x$，写同一份实际输出
+
+$$
+d=D(a,b)(\xi)
+=\delta I_2+z_x\sigma_x+z_y\sigma_y+z_z\sigma_z.
+$$
+
+坐标选择不改变原标签，也不假定 $D$ 酉协变。对单位 Bloch 向量 $n$ 的数学正读取，46.5 的同一 P2 行列式为
+
+$$
+s^2\bigl((\lambda n_z+r)^2+\lambda^2n_y^2\bigr).
+\tag{66.1}
+$$
+
+因 $r<|\lambda|$，取 $n_y=0,n_z=-r/\lambda$ 及两个相反非零 $n_x$，两份预算均为零，故
+
+$$
+z_x=0,\qquad \lambda\delta=rz_z.
+\tag{66.2}
+$$
+
+反设 $\delta\ne0$。取实际第三标签 $c_1=t(a-\lambda u)$，其中普通实常数 $t=\delta/r^2$。实际仿射同轴零值给 $D(a,c_1)=0$。在当前点，记 $c=c_1(\xi)=z_z\sigma_z/\lambda$、$z=z_y\sigma_y$；PB $(a,b,c_1)$ 的位移像及外层像准确为
+
+$$
+\nu(\xi)=z,\quad\omega(\xi)=\lambda w,\qquad
+R_\pm=w\pm z,\quad S_\pm=c\pm\lambda w.
+\tag{66.3}
+$$
+
+两对实际外层的点像都纯，全部幅度的 62.2 因而直接适用，不需要靠近零端点或任何小范数。PB 右端的像为零。只展开已经识别的 $K$，得到 $2K(z,c)=0$。$\delta\ne0$ 和 (66.2) 使 $c\ne0$，而 $z\perp c$；面积式使 $z=0$。因此 $d=\delta I_2+z_z\sigma_z$ 与 $v$ 交换。
+
+再令 $k=\lambda+\lambda^{-1}$。有 $|k|>|\lambda|>r$，当前已知矩阵
+
+$$
+c'=\frac{(kI_2-v)d}{k^2-r^2}
+=\alpha I_2+\gamma v,\qquad
+\alpha=\frac{\delta}{\lambda(k^2-r^2)}\ne0
+\tag{66.4}
+$$
+
+具有有限实系数 $\alpha,\gamma$。第二个等式由 (66.2) 展开；在原域只取实际标签 $c_2=\alpha u+\gamma(a-\lambda u)$，不把点矩阵逆当成原输入。再次有 $D(a,c_2)=0$，且在当前点
+
+$$
+a(\xi)\circ c'=d-c'/\lambda.
+$$
+
+PB $(a,b,c_2)$ 因而给 $\nu(\xi)=c'/\lambda,\omega(\xi)=\lambda w$。其两对外层像分别满足 $S_+=\lambda R_+$、$S_-=-\lambda R_-$。点像比例关系使两份实际外层旧输出像均由 P2 归零。PB 右端却为
+
+$$
+-2w\circ(c'/\lambda)-2c'\circ(\lambda w)
+=-2k\alpha w\ne0.
+\tag{66.5}
+$$
+
+矛盾。因此 $\delta=0$，(66.2) 再给 $z_z=0$。对当前实际代表已取得
+
+$$
+D(a,b)(\xi)\ \text{纯},\qquad
+D(a,b)(\xi)\perp v,w.
+\tag{66.6}
+$$
+
+这是 46–47 的两份同轴代入在完整纯像接口 62.2 下的点消费者；未使用该旧证明中的多项式唯一延拓。所有调用都保留实际原标签。
+

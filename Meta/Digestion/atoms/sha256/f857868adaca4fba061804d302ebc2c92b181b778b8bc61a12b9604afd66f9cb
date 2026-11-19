@@ -1,0 +1,34 @@
+**定义 26.1（原元组、内部尺度与绝对窗口）。** 精度、场、初始方向、允许控制器、成功事件、实际输出及两项资源上限均取定义 19.1；特别地，公共元组始终是 (19.1) 在 $e$ 处的元组，而非较小内部精度处的元组。置
+
+$$
+ a=e/64,\qquad s=a/12=e/768,\qquad m=m_e=D_e-1,\qquad
+ t=me^2,\qquad \lambda=ms^2=t/768^2.
+ \tag{26.1}
+$$
+
+沿用 (25.6) 的 $F,q,\alpha,u$ 以及 (25.8) 的固定函数常数 $z_0,M_F,A,B,R_0,C_{\rm fail},C_{\rm return},t_*$；这些常数不依赖 $e,m$、辅助维数或求积点数。定义
+
+$$
+\begin{aligned}
+ C_t&=1{,}440{,}000{,}000{,}000,\qquad B_*=3R_0+2C_{\rm fail},\\
+ \Lambda&=\max\{t_*,2C_{\rm fail},A^2,64B_*^2,64C_{\rm return}^2\},\\
+ K_{\rm risk}&=3\cdot768^2C_{\rm fail}+1,\\
+ e_*&=\min\left\{\frac1{100},
+ \sqrt{\frac{C_t}{768^2\Lambda}},
+ \frac{C_t}{6K_{\rm risk}},\frac{C_t}{393216}\right\},\\
+ r_0&=\max\{7,\lceil\log_2(1/e_*)\rceil\}.
+\end{aligned}
+\tag{26.2}
+$$
+
+以下均量化于每个正有理 $0<e\le e_*$，故包含每个 $e_r=2^{-r}$、$r\ge r_0$。命题 25.2 的精确原曲线关系直接给
+
+$$
+ t\ge C_t e^{-2}\log^2(1/e)\ge C_t/e^2,\qquad
+ \lambda\ge\Lambda,\qquad t\ge6K_{\rm risk}/e.
+ \tag{26.3}
+$$
+
+又 $\log(24/e)\le24/e$，结合 $e\le C_t/393216$ 得
+$t\ge16384\log(24/e)$；同时 $s<1/640$、$ma^2=144\lambda\ge t_*$。这里仅把 (25.4) 用于尺度比较，不改变原 $D_e,L_e,Q_e$。
+

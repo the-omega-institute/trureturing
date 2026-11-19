@@ -177,7 +177,7 @@ private lemma eigenvalue_nonneg_of_psd (hA : A.IsHermitian) (hP : A.PosSemidef)
   let e : Fin (Fintype.card m) ≃ m := Fintype.equivOfCardEq (Fintype.card_fin _)
   simpa only [Matrix.IsHermitian.eigenvalues, e, Equiv.symm_apply_apply] using hP.eigenvalues_nonneg (e i)
 
-private lemma rayleigh_ge_of_support (hA : A.IsHermitian) (k : Fin (Fintype.card m)) (x : m → ℝ)
+lemma rayleigh_ge_of_support (hA : A.IsHermitian) (k : Fin (Fintype.card m)) (x : m → ℝ)
     (hz : ∀ i, k < i → (((Matrix.isSymmetric_toEuclideanLin_iff.mpr hA).eigenvectorBasis finrank_euclideanSpace)).repr (WithLp.toLp 2 x) i = 0) :
     hA.eigenvalues₀ k * (x ⬝ᵥ x) ≤ x ⬝ᵥ (A *ᵥ x) := by
   let y := WithLp.toLp 2 x

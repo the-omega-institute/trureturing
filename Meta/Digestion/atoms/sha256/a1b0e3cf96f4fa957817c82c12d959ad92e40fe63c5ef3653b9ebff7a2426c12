@@ -1,0 +1,33 @@
+**命题 22.4（固定允许场上的原目标方向分离）。** 令 $c_d=\sqrt{1-d^2}$，在半径 $1/3$ 的开圆盘上取同一个场
+
+$$
+n_\dagger(x,y)=\left(c_dx-d\sqrt{1-x^2-y^2},\ y,\ dx+c_d\sqrt{1-x^2-y^2}\right).
+\tag{22.13}
+$$
+
+它满足定义 19.1 的全部场条件，且 $n_\dagger(d,0)=z$。设备仍固定 $k=x$。对 $0<\theta\le\pi/6$ 的两个邻近方向 $h_\pm=(\pm\sin\theta,0,\cos\theta)$，同一实际读数 (22.5) 及原目标满足
+
+$$
+\begin{aligned}
+\mathbb E_{n_\dagger,h_+}O-\mathbb E_{n_\dagger,h_-}O
+ &=2A_g\sin\theta,\\
+[D_{h_+}(n_\dagger)]_2-[D_{h_-}(n_\dagger)]_2
+ &=-\frac{c_d}{2}\sin\theta,\\
+\operatorname{TV}(\mathcal L_{h_+}(O),\mathcal L_{h_-}(O))
+ &\ge |A_g|\sin\theta.
+\end{aligned}
+\tag{22.14}
+$$
+
+这里 $\operatorname{TV}$ 是实际经典读数律的总变差。故在固定允许场上，信号分辨的方向确实进入原估计目标，不是固定场下独立于 $h$ 的侧律。
+
+**证明。** (22.13) 是既有 $n_*(x,y)=(x,y,\sqrt{1-x^2-y^2})$ 的固定正旋转。它保留秩二、原点一阶导数范数一及闭轴段上的二阶导数界 $(1-u^2)^{-3/2}<2$，并把 $n_*(d,0)$ 送到 $z$。其原点值和导数为
+$n_\dagger(0)=(-d,0,c_d)$、$n_{\dagger,x}(0)=(c_d,0,d)$、$n_{\dagger,y}(0)=(0,1,0)$，所以
+
+$$
+D_h(n_\dagger)=\left(h_y/2,-(c_dh_x+dh_z)/4,0,h_y/2\right).
+\tag{22.15}
+$$
+
+(22.5) 和 (22.15) 给出前两式。$|O|\le1$ 意味着任意两个实际律的均值差不超过其总变差的两倍，给出第三式。更具体地，在 $h=(u,0,\sqrt{1-u^2})$、$|u|\le1/2$ 上，(22.5) 的均值除以非零 $A_g$ 就是 $u$，原目标第二分量是 $-(c_du+d\sqrt{1-u^2})/4$；它的导数绝对值至少 $(c_d-d/\sqrt3)/4>0$。这是所测方向量到原目标分量的明确局部映射，不是全场、全方向或高置信度解码器。$\square$
+

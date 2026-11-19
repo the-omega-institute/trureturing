@@ -1,0 +1,39 @@
+**Corollary 12.2 (equal control tubes and expected costs).** With
+$d_a=d_b=1$, on the event of Theorem 12.1,
+
+$$
+\liminf_n\epsilon_n V_n^a\ge S,\qquad
+\liminf_n\epsilon_n\mathsf V_{\chi,n}\ge S,\qquad
+\liminf_n\epsilon_n L_n\ge\sqrt2S,\qquad
+\liminf_n\epsilon_n^2E_n\ge\frac{\pi^2S}{3}.
+\tag{12.13}
+$$
+
+Consequently all four costs tend to infinity on every such coupled
+realization. If the quantitative assumptions hold almost surely and
+$\epsilon_n$ are deterministic, then
+
+$$
+\begin{aligned}
+\liminf_n\epsilon_n\mathbb EV_n^a&\ge\mathbb ES,&
+\liminf_n\epsilon_n\mathbb EV_n^b&\ge\mathbb ES,\\
+\liminf_n\epsilon_n\mathbb EL_n&\ge\sqrt2\mathbb ES,&
+\liminf_n\epsilon_n^2\mathbb EE_n&\ge\pi^2\mathbb ES/3.
+\end{aligned}
+\tag{12.14}
+$$
+
+For random errors, the valid statements place the errors inside the
+expectations, for example
+$\liminf_n\mathbb E[\epsilon_n^2E_n]\ge\pi^2\mathbb ES/3$;
+there is no replacement of this expectation by
+$(\mathbb E\epsilon_n)^2\mathbb EE_n$ without further hypotheses.
+
+Proof. Specialize (12.1) and use $S>0$, $\epsilon_n\to0$.
+Fatou's lemma applies to each nonnegative normalized cost. The stopping
+coefficient is $\mathbb ES\in(0,T]$, not $T$ in general. The elementary
+variation/length bound $L_n^2\le TE_n$ gives the energy floor $2S^2/T$;
+using $L_n^2\le S_nE_n$ and $S_n\to S>0$ improves it to $2S$.
+Both are below the stronger coefficient $\pi^2S/3$ supplied by
+(12.12). $\square$
+

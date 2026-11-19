@@ -1,0 +1,54 @@
+**Theorem 39.1 (same-family coupled killing).** For the actual family
+above, retain the metric $d_\zeta$ of Theorem 24.1, with $\infty$
+an isolated no-death mark, and $C_T$ of (31.1). If $\delta\le T/2$,
+
+$$
+\begin{aligned}
+\mathbb P({\bf1}_{\{\zeta^{\rm N}_\eta<\infty\}}
+       \ne{\bf1}_{\{\zeta<\infty\}})
+ &=\mathbb P(T-\delta<\tau\le T)\le C_T\delta,\\
+\mathbb E d_\zeta(\zeta^{\rm N}_\eta,\zeta)
+ &\le(1+C_T)\delta.
+\end{aligned}
+\tag{39.1}
+$$
+
+Along every deterministic sequence $\eta_n\downarrow0$ the same-source
+held triples and full native paths converge uniformly almost surely,
+and the censored lifetimes converge almost surely with eventually equal
+death marks. The killed paths converge almost surely in $J_1$ in the
+space of Definition 4.1. In contrast, for every fixed $\eta$, on
+$\{\tau\le T\}$ the same-clock uniform distance between the two
+isolated-cemetery paths is exactly $2$.
+
+Proof. Formula (37.2) is an explicit coupled lifetime identity, separate
+from the tube. Its mark discrepancy event is exactly the one in (39.1).
+The height and its law are unchanged by the central component. The
+one-sided first-passage densities (31.3), summed over the two height
+faces on $[T-\delta,T]$, therefore give exactly the bound $C_T\delta$
+used in Proposition 31.1. On equal finite marks the delay is $\delta$;
+on unequal marks the metric is $1$. This proves the second inequality.
+
+For any such deterministic sequence, intersect its probability-one
+construction events. When $\tau<T$, eventually $\tau+\delta_n<T$
+and the delay tends to zero. When $\tau>T$ both marks are infinite.
+The remaining event $\tau=T$ has probability zero by Proposition 4.5.
+Equation (37.3) proves uniform convergence of these same held triples
+and their native images, jointly with the lifetimes; no independent
+coupling or matching marginal law is substituted.
+
+The isolated-cemetery distance is $2$ at time $\tau\le T$, because
+only the target has died then. For $0<\tau<\tau+\delta<T$, the
+piecewise linear increasing homeomorphism sending $(0,\tau,T)$ to
+$(0,\tau+\delta,T)$ has displacement at most $\delta$. Before the
+compared death times, the triangle inequality and (37.3) bound the
+state error by $\eta+\omega_{\bar q}(\delta)$; afterwards both
+paths equal $\dagger$. This is the argument of Proposition 31.2,
+which requires only the lifetime identity and continuity of this held
+target. Its modulus of continuity tends to zero, also with the added
+continuous central component. If $\tau>T$ the identity homeomorphism
+suffices. Thus the asserted almost-sure $J_1$ convergence follows.
+This homeomorphism compares observations only: it does not retime
+execution, chronological integration or any resource in (38.1).
+$\square$
+

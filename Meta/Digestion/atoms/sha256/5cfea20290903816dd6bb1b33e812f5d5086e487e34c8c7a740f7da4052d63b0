@@ -1,0 +1,42 @@
+**定义 13.1（固定的原始均匀任务）。** 令 $j\in\frac12\mathbb Z_{>0}$、$D=2j+1$、$R=\operatorname{Sym}^{2j}(\mathbb C^2)$、$\tau_h=|j,h\rangle\langle j,h|$，其中 $h\in S^2$。固定
+$$
+d=\frac1{64},\quad r=\frac14,\quad B_{\rm field}=2,\quad G=1,\quad
+\epsilon=\frac1{16},\quad\beta=\frac1{100},\quad\tau _0=1.
+\tag{13.1}
+$$
+场 $n:U\to S^2$ 的定义域 $U\subset\mathbb R^2$ 是包含两条完整闭轴段 $\{t e_x:|t|\le r\}\cup\{t e_y:|t|\le r\}$ 的开集，$p=0$。$n$ 在 $U$ 上属于 $C^2$ 且秩为二，并满足
+$$
+\|n_{aa}(t e_a)\|\le B_{\rm field}\quad(a=x,y,\ |t|\le r),\qquad
+\|n_x(0)\|,\|n_y(0)\|\le G.
+\tag{13.2}
+$$
+每个点 $z$ 的一次重置供应 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$，重置彼此独立；比较不同 $h$ 时场源的完整概率律不变。$R$ 的初态是唯一含未知 $h$ 的输入，所有设备、初态辅助和控制均不得依赖 $n$ 或 $h$。令
+$$
+D_h(n)=\left(\frac{h\cdot[n(0)\times n_x(0)]}{2},
+\frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+\frac{h\cdot n_y(0)}2\right).
+\tag{13.3}
+$$
+任务要求一个与 $n,h$ 无关的固定有限解码器，在每个这样的 $n$ 和每个 $h$ 上以至少 $1-\beta$ 的概率输出 $\widehat D$，使 $\|\widehat D-D_h(n)\|_\infty\le\epsilon$。这是真实同一运行的有限成功事件，不是有限时间精确重建。
+
+取整数 $N$，使
+$$
+N\ge N_*:=2000(\epsilon d/2)^{-2}=8{,}388{,}608{,}000,\quad
+M=10N,\quad L=M,\quad Q=18N+1,\quad D\ge8{,}000{,}000N^2,
+\tag{13.4}
+$$
+并写 $\eta=\epsilon d/2=1/2048$。每个元组先固定，再比较协议。$L,Q$ 是调用上限；所构造协议恰用 $M$ 个获取槽和 $18N+1$ 次场重置。一般原始比较类允许任意有限混合辅助、量子记忆、先前输出回用及因果反馈，但除至多 $L$ 次指定槽和一次强制终端交换外，其操作在原始标记 $R$ 上均为恒等，不直接读取、旋转、拆分、重置或替换 $R$。初始 $R$ 与其余输入独立；固定 $n$ 后非 $R$ 来源、辅助及操作的完整律对所有 $h$ 相同。程序及解码器均与实际 $n,h$ 无关；场值只能经上述共同重置服务取得。原始仪器仍是
+$$
+\mathcal A(X)=\sum_{b=\pm}\Pi_bX\Pi_b\otimes|b\rangle\langle b|_H,
+\qquad
+\Pi_+=\frac{J\cdot\sigma+(j+1)I}{D},\quad
+\Pi_-=\frac{jI-J\cdot\sigma}{D}.
+\tag{13.5}
+$$
+在本批使用其声明的原生等距输出
+$$
+V=\sum_{b=\pm}\Pi_b\otimes|b\rangle_H|b\rangle_E,
+\tag{13.6}
+$$
+并保留 $R,S,H,E$。式 (13.6) 是本批所需的原生接口假设；它不由抽象 CP 记号自动提供。
+

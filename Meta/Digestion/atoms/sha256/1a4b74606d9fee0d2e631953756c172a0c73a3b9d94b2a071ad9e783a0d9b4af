@@ -1,0 +1,86 @@
+**定理 2.1（全局投影场的有限相位运输）。** 在1.1–1.2的模型及 $\mathsf H_I(D)$ 下，设 $p\in E$ 在每点都是秩一正交投影，$W\in M$，且
+
+$$
+c=\|(u-p)Wp\|<4,\qquad d=\|(u-p)W^*p\|.
+\tag{2.1}
+$$
+
+则对每个实连续函数 $\theta:I\to\mathbb R$，有同一实际全域等式
+
+$$
+F(e^{i\theta p}W)=F(W).
+\tag{2.2}
+$$
+
+每份等式由有限次实际 PB 得到，不对 $D$ 或 $F$ 取输入极限。
+
+证明。取有限 $T>0$ 使 $c+d/\sqrt{1+T^2}<4$。先考虑任意连续实函数 $\tau$ 满足 $\inf_t|\tau(t)|>T$。定义同一原域的实际演员和逆元
+
+$$
+r=Q\tau p\in E,\quad Jr=i\tau p,\qquad
+A=(u-Jr)^{-1}=(u-p)+\alpha p,\quad \alpha=(1-i\tau)^{-1},
+\qquad Z_0=AW=x_0+Jy_0.
+\tag{2.3}
+$$
+
+投影乘法逐点验证 $A$ 是左右逆；所有函数均连续，且 $x_0,y_0\in E$。不要求 $W$ 可逆。置 $v_0=(u-p)Wp$、$w_0=(u-p)W^*p$，有准确全域分块式
+
+$$
+(u-p)x_0p=\tfrac12(v_0+\bar\alpha w_0),\qquad
+(u-p)y_0p=-\tfrac J2(v_0-\bar\alpha w_0).
+\tag{2.4}
+$$
+
+两连接范数均至多 $(c+\|\alpha\|d)/2<2$。每点将(1.7)分别用于同一实际 $(r,x_0)$ 和 $(r,y_0)$，首系数为 $Q(t)\tau(t)$；全部背景仍在 $x_0,y_0$ 中。于是先取得两份全域旧内值
+
+$$
+D(r,x_0)=K(r,x_0),\qquad D(r,y_0)=K(r,y_0).
+\tag{2.5}
+$$
+
+现在才对实际三元组 $(r,x_0,y_0)$ 调用(1.4)–(1.5)。SQ32.2 的同一展开给
+
+$$
+v+Jw=JrZ_0,\qquad
+(r_\pm+Js_\pm)=(u\pm Jr)Z_0,
+\tag{2.6}
+$$
+
+其中 $r_\pm,s_\pm$ 正是本调用的实际外层。负端点严格等于
+
+$$
+(u-Jr)Z_0=W,
+\tag{2.7}
+$$
+
+正端点等于 $C_\tau W$，其中
+
+$$
+C_\tau=(u+Jr)(u-Jr)^{-1}
+=(u-p)+\frac{1+i\tau}{1-i\tau}p
+=e^{2i\arctan(\tau)p}.
+\tag{2.8}
+$$
+
+PB 先给两个 $q_D$ 相等；两份普通 Gram 都为 $Z_0^*(u+r^2)Z_0$，故 $F(C_\tau W)=F(W)$。这也可直接视为 SQ52.1 的全局连续投影类实例。演员中的 $Q$ 保证普通相位的符号是 $+2\arctan\tau$；没有漏掉反向取向。
+
+任意连续实 $\beta$ 作用后 $W'=e^{i\beta p}W$，准确满足
+
+$$
+(u-p)W'p=(u-p)Wp,\qquad
+(u-p)W'^*p=e^{-i\beta}(u-p)W^*p.
+\tag{2.9}
+$$
+
+故同一 $c,d,T$ 沿这个方向所有相位保持。令 $\theta_0=2\arctan T<\pi$，选 $\varepsilon>0$ 使 $3\varepsilon/2<\pi-\theta_0$。若 $\|\theta\|_\infty<\varepsilon$，置
+
+$$
+\phi_1=\pi-\varepsilon+\theta/2,\qquad
+\phi_2=-\pi+\varepsilon+\theta/2.
+\tag{2.10}
+$$
+
+它们的全部值分别位于 $(\theta_0,\pi)$、$(-\pi,-\theta_0)$；离 $\pm\pi$ 至少 $\varepsilon/2$。因此 $\tau_j=\tan(\phi_j/2)$ 是有限连续函数，紧性给统一有界，且 $\inf|\tau_j|>T$。作两次(2.3)–(2.8)，第二次的前件由(2.9)支付；$\phi_1+\phi_2=\theta$ 给(2.2)。没有在 Cayley 图的端点取无穷参数。
+
+一般连续 $\theta$ 在紧区间有界，取一个有限整数 $N$ 使 $\|\theta/N\|_\infty<\varepsilon$，重复上述两步 $N$ 次即可。每个内部大相位前缀都由(2.9)保留前件，不需要靠近单位。零连接、零相位和 $d=0$ 都包含；$\theta=0$ 的等式亦直接成立。∎
+

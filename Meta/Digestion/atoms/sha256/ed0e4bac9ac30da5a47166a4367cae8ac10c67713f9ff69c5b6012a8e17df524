@@ -1,0 +1,26 @@
+**推论 64.1（原代数及全部质量的静态后果）。** 在63.1下，自伴输入上的 $a\star b=a\circ b-iD(a,b)$ 双复线性延成同一原复空间上的乘法
+
+$$
+x\star y=\frac{xy+yx}{2}+\frac\sigma2(xy-yx)
+=\begin{cases}xy,&\sigma=1,\\yx,&\sigma=-1.\end{cases}
+\tag{64.1}
+$$
+
+它给 $A$ 或 $A^{\rm op}$ 的C*结构，保持原伴随、锥、单位和范数。原 $D$ 的实双线性、范数连续性、任意单位平移中性及闭理想上的核平移不变性都是识别后的结论。对任意有限原输入，全部旧复Gram表为正，并满足原R：
+
+$$
+\begin{gathered}
+\sum_{k,l}\overline z_kz_l
+\{\gamma(a_k\circ a_l)-i\gamma D(a_k,a_l)\}
+=\gamma_{\mathbb C}(Z^*\star Z)\ge0,
+\qquad Z=\sum_lz_la_l,\\
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)).
+\end{gathered}
+\tag{64.2}
+$$
+
+每份原评价有数学GNS表示，向量质量准确为 $\|\xi_\gamma\|^2=m_\gamma$；它们的直和忠实、保单位、等距并反映原锥，零质量给零向量。
+
+证明。64.1是63.1的直接代入；两种乘法都结合且有同一自伴平方，所以C*范数、正锥及单位保持。64.2第一式为正平方展开，第二式为结合律实部。GNS及正泛函延拓在这同一结构上应用，原评价分离使直和忠实，完全沿55.1–55.2的成熟后端，不用它反推未知 $D$ 的线性。该表示像不必为全 $B(H)$；CAR载体、数学Hilbert表示、Fock表示的选择和实际准备是不同前件。∎
+

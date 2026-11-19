@@ -15,8 +15,9 @@ elab "unitLayer%" id:ident : term => do
   let env ← getEnv
   let owner := "PartIIUnitriangularLayers"
   let suffix := ".NikolovSegal." ++ owner ++ "." ++ id.getId.toString
+  let publicName := "NikolovSegal." ++ owner ++ "." ++ id.getId.toString
   let cs := env.constants.toList.filter fun (n,_) =>
-    n.toString.endsWith suffix && match env.getModuleIdxFor? n with
+    (n.toString == publicName || n.toString.endsWith suffix) && match env.getModuleIdxFor? n with
       | none => false
       | some i => env.header.moduleNames[i.toNat]!.toString == "D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.PartIIUnitriangularLayers"
   match cs with

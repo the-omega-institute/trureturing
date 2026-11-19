@@ -1,0 +1,23 @@
+一般混合行与增长谱窗口仍有两笔独立义务：
+
+1. **精确余量的跨调用消去。** 在原定理 29.1 的有限谱条件下，$c=\sum_i a_ip_i$、$S=\sum_{a_i\ne0}p_i$、$g=D(c,t)=K_\sigma(c,t)+s$，其中 $s=s^*\in SAS$、$[c,s]=0$。原命题 31.1 对两份实际缺陷
+
+   $$
+   E_+=D(c-g,k)-K_\sigma(c-g,k),\qquad
+   E_-=D(c+g,-k)-K_\sigma(c+g,-k),\qquad k=c\circ t
+   $$
+
+   给 $E_+-E_-=2cs$，且 $E_+=E_-$ 当且仅当 $s=0$；在原定理 30.1 的逐格标量范围，这又当且仅当所有非零谱格的 $\rho_i=0$。原定理 31.2 在 $(1-P)tS=0$ 上已支付该相等。一般非返回输入仍有原 (31.8)
+
+   $$
+   \begin{aligned}
+   W_+&=(c-g)+\jmath k=c-s+\jmath tc,&W_+S&=W_+,\\
+   W_-&=(c+g)-\jmath k=c+s-\jmath tc,&W_-S&=W_-,\\
+   (1-P)W_\pm&=\pm\jmath(1-P)tc.
+   \end{aligned}
+   $$
+
+   若 $(1-P)tS\ne0$，则 $(1-P)tc\ne0$，两份外层对不能全部放入已分类的 $C$。右支撑不代付返回；首个一般混合行缺口仍准确是 **$E_+=E_-$，或其适用范围内的逐格 $\rho_i=0$**，不是只剩误差累加。这里没有把该相等增加为公理。
+
+2. **近似误差的可累加性。** 定理 33.2 没有显式收敛率。由 $\omega_{M,\lambda_*}(\varepsilon)\to0$ 不能推出增长谱窗口中的 $N\omega_{M,\lambda_*}(\varepsilon)^2\to0$，也不能用已有 $N\kappa^2\to0$ 的其他误差预算替代响应误差。它只在 $c^\flat l=\lambda l,c^\flat m=-\lambda m$ 且 $|\lambda|\ge\lambda_*$ 的近相反谱对上成立；原定理 28.2 的一般相异谱值精确结论不自动给出任意 $a\ne b$ 的近似模数。
+

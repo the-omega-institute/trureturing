@@ -6,7 +6,7 @@ internal sealed class TripartiteH1RepairDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/TripartiteH1Repair.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/dotterrer2012coboundary");
+        LibraryNoteRef.Create("D5/L/Topology/dotterrer2012coboundary");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete-tripartite H1 exactness, antipodal minimum representatives, and exact "

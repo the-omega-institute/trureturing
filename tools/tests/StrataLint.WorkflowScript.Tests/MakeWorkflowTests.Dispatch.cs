@@ -8,6 +8,28 @@ namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    [Theory]
+    [InlineData("\t", false, 2)]
+    [InlineData("\t\t", false, 2)]
+    [InlineData("\t", true, 1)]
+    [InlineData("\t\t", true, 1)]
+    public void ThinDispatchCountsCommandsByContinuation(string indentation, bool continued, int expected)
+    {
+        var makefile = "help:\n\t@printf '%s\\n' 'first'" + (continued ? " \\" : string.Empty)
+            + "\n" + indentation + "'second'\n\nnext:\n\t@true\n";
+
+        Assert.Equal(expected, RecipeCount(makefile, "help"));
+    }
+
+    [Fact]
+    public void ThinDispatchCountsAnIndependentCommandAfterTheCurrentHelpContinuation()
+    {
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Equal(1, RecipeCount(makefile, "help"));
+        Assert.Contains("\\\n\t\t", makefile, StringComparison.Ordinal);
+
+        Assert.Equal(2, RecipeCount(makefile.Replace("\\\n\t\t", "\n\t\t", StringComparison.Ordinal), "help"));
+    }
 
     [Fact(DisplayName = "Makefile remains a thin complete dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
@@ -436,9 +458,9 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Equal(0, rootResult.ExitCode);
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
-        Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make test FULL_BUILD=1  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev] [PURPOSE=pull-request|push]  Run all applicable shared CI checks", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1 | REGENERATE_REPORT_ARTIFACTS=1]  Full report; regenerate explicitly discards generated reports while retaining compiled Lean", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report FULL_BUILD=1 [REBUILD_REPORT_CACHE=1 | REGENERATE_REPORT_ARTIFACTS=1]  Full report; regenerate explicitly discards generated reports while retaining compiled Lean", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report-scoped LEAN_TARGETS=", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);

@@ -1,0 +1,51 @@
+**定理 123.5（同一正规锚点域上的紧完整影像）。** 若 $p\in P_{\rm reg}$，取定理123.4的 $\sigma=\sigma_p\le1$，则
+
+$$
+\boxed{\quad Z_p=S=
+ \left\{\frac{H(x)}{g(x)}:x\in K,\ g(x)\ge\sigma\right\}.\quad}
+\tag{Q123.19}
+$$
+
+因此 $Z_p$ 是三维紧凸且严格凸的完整实际影像；全部支撑值仍由真实原态达到。$v\mapsto z_v$ 在整个 $S^2$ 连续，$\rho_p$ 在 $\mathbb R^3\setminus\{0\}$ 上为 $C^1$，并且
+
+$$
+\nabla\rho_p(v)=-z_{v/\|v\|},\qquad
+ C+(\operatorname{span}N_p)^\perp\text{ 闭}.
+\tag{Q123.20}
+$$
+
+证明。令(Q123.19)右侧为 $A$。它是紧集的连续像，故紧，且 $A\subseteq Z_p\subseteq S$。它也凸：若 $x_i\in K$、$g_i=g(x_i)\ge\sigma$，按THREE_COPY第七卷122.4的实际混合公式
+
+$$
+x=\frac{\lambda x_1/g_1+(1-\lambda)x_2/g_2}
+         {\lambda/g_1+(1-\lambda)/g_2}
+\quad(0\le\lambda\le1)
+$$
+
+有 $x\in K$，比值为两比值的同系数凸组合，且
+$g(x)=1/(\lambda/g_1+(1-\lambda)/g_2)\ge\sigma$。每个真实支撑值 $z_v$ 又由 $a_v$ 实现，且 $g(a_v)\ge\sigma$，所以 $z_v\in A$。于是对每个单位方向 $-v$，$h_A(-v)=h_S(-v)$。若 $S\not\subseteq A$，紧凸分离会在某一方向给严格不同的支撑值，矛盾。因此 $A=S=Z_p$。
+
+由(Q123.18)，现在每个完整支撑面都只有一个点。若边界存在非平凡线段，在其中点取支撑超平面，整段都会处于同一支撑面，矛盾；故严格凸。所有支撑函数最大值由 $a_v$ 实际达到。对 $v_n\to v$，紧 $Z_p$ 中任一 $z_{v_n}$ 的聚点都最大化方向 $-v$；该最大点唯一为 $z_v$，故整个映射连续。
+
+为明确可微结论，对非零法向 $n$ 令 $z(n)$ 为 $n\cdot z$ 的唯一最大点。若 $n+k\ne0$，最大值的两侧比较给
+
+$$
+0\le h_S(n+k)-h_S(n)-k\cdot z(n)
+\le k\cdot(z(n+k)-z(n)).
+$$
+
+右侧绝对值至多 $\|k\|\|z(n+k)-z(n)\|=o(\|k\|)$，故 $\nabla h_S(n)=z(n)$；刚证连续性使导数连续。代入 $\rho_p(v)=h_S(-v)$ 即得(Q123.20)的梯度公式。
+
+最后令 $\Pi=(g,H)$、$L=(\operatorname{span}N_p)^\perp$。已付限制同构给 $\Pi$ 满射、$\ker\Pi=L$。准确像为
+
+$$
+\Pi(C)=\{0\}\cup\{s(1,z):s>0,\ z\in Z_p\}.
+\tag{Q123.21}
+$$
+
+紧有界 $Z_p$ 使此锥闭，故 $C+L=\Pi^{-1}(\Pi(C))$ 闭；这也是THREE_COPY第七卷122.6的准确闭像接口。证毕。
+
+THREE_COPY第七卷122.5已有 $S$ 每个边界点的唯一支撑超平面；本定理补上严格凸，而不是重证该法锥分类。THREE_COPY第七卷122.8在任意 $P_0$ 锚点所描述的平支撑面，会迫使一串真实邻球的高度趋零；(Q123.14)表明这样的平面在 $P_{\rm reg}$ 锚点不能发生。这里用的是锚点自身的全原标签稳定性，并未把残余集限制到到达球面。
+
+本结论只量化 $p\in P_{\rm reg}$ 的这些法向面。它不证明原 $C^*$ 对每个面都具有闭延拓，即不主张全局FDC或niceness；更不制造原单位保持的正过滤。
+

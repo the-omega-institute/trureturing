@@ -1,0 +1,99 @@
+**定理 25.1（保留完整响应平方的像下界）。** 在 24.1 下，固定原 $a,b$，记 $d=D(a,b)$、$c=a\circ b$。若在 $A'$ 中
+
+$$
+[\bar a^2,\bar b]=[\bar b^2,\bar a]
+=[\bar d^2,\bar a]=[\bar d^2,\bar b]=0,
+\tag{25.1}
+$$
+
+则
+
+$$
+\bar a^2\bar b^2-\bar c^2\le\bar d^2.
+\tag{25.2}
+$$
+
+证明。将 17.1 的中央读取构造放在实际目标代数中：
+
+$$
+B_0=C^*(1,\bar a,\bar b,\bar d^2),\qquad
+Z_0=C^*(1,\bar a^2,\bar b^2,\bar c,\bar d^2)\subset Z(B_0).
+$$
+
+中央性由 (25.1) 及结合展开得到；不假定 $\bar d$ 是否属于 $B_0$。取任意字符 $\chi$，记其四份读数为 $\alpha,\beta,\gamma,\delta^2$，$\delta\ge0$。201.1 的字符正延拓与 GNS 构造给非零含单位中央商。对真正原 $a,b$ 作一个实 SO$(2)$ 旋转，得到 $\xi,\eta\in E$ 且 $D(\xi,\eta)=d$，其像在该商满足
+
+$$
+\widehat\xi^2=X^21,\quad\widehat\eta^2=Y^21,
+\quad\widehat{\xi\circ\eta}=0,\quad
+\widehat{\bar d^2}=\delta^21,\quad
+X^2Y^2=\alpha\beta-\gamma^2.
+\tag{25.3}
+$$
+
+这里帽号只指 $B_0$ 中已列入的像元素的中央商像。$XY=0$ 时当前字符的目标平凡。以下 $X,Y>0$。任一商态拉回并正延拓到 $A'$；将所得同一态记为 $\phi$。Schwarz 给
+
+$$
+\phi((g-\kappa1)^2)=0
+\quad\Longrightarrow\quad
+\phi(gw)=\phi(wg)=\kappa\phi(w)
+\qquad(w\in A').
+\tag{25.4}
+$$
+
+记真正原 $e=\xi\circ\eta$。PB $(\xi,\eta,0)$ 及其交换输入的两个元素式仍是 (17.5) 的实际原调用；外层第二标签分别为 $e,-e$。由于 $\phi(\bar e^2)=0$，(24.1) 逐份消去它们的输出读取，得到 $\phi(\bar\xi\circ\bar d)=\phi(\bar\eta\circ\bar d)=0$。只取得这一份读取的正交，不冒称原算子正交或商响应。
+
+对任意有限 $\lambda>0$，令 $T=\sqrt{1+\lambda^2X^2}$。商中两个反交换对称元为 $e_1=\widehat\xi/X,e_2=\widehat\eta/Y$。取
+
+$$
+n=(-\lambda Xe_1+e_2)/T,\qquad
+m=(e_1+\lambda Xe_2)/T.
+$$
+
+$n^2=m^2=1,nm=-mn$，故 $n$ 的正负谱值均存在。选读取 $n$ 为 $1$ 的支撑态，再拉回并正延拓，得到
+
+$$
+\phi(\bar\xi)=-\lambda X^2/T,\quad
+\phi(\bar\eta)=Y/T,\quad
+\phi(\bar d)=0,\quad\phi(\bar d^2)=\delta^2,
+\quad\phi(\bar\xi^2\circ\bar d)=0.
+\tag{25.5}
+$$
+
+具体地，原 $n_0=-\lambda\xi/T+\eta/(TY)$ 的像在当前商为 $n$；所选态使 $\phi((\bar n_0-1)^2)=0$。(25.4) 与前段两份正交读取先给 $\phi(\bar d)=0$；再用 $\phi((\bar\xi^2-X^21)^2)=0$ 得最后一式。$n$ 不是商单位，$\bar d^2$ 的完整读取未被压缩为 $\bar d$ 在某个输入纤维内的平方。
+
+取真正原 $z=Tu+\lambda\xi$，既有仿射零行使 $D(\xi,z)=0$。令原
+
+$$
+\nu=d-T\xi-\lambda\xi^2,\quad
+U_\pm=\eta\pm\nu,\quad V_\pm=z\pm e.
+$$
+
+一次原 PB 准确给
+
+$$
+D(U_+,V_+)-D(U_-,V_-)
+=-2\eta\circ\nu-2z\circ e.
+\tag{25.6}
+$$
+
+现在只在同一 $\phi$ 中计算它的像。(25.4)–(25.5) 支付含 $\bar e,\bar d$ 的交叉项；其余正是 17.1 的已知乘法展开：
+
+$$
+\begin{gathered}
+\phi(\bar\nu^2)=X^2+\delta^2,\qquad
+\phi(\bar\eta\circ\bar\nu)=-\lambda X^2Y/T,\\
+\phi(\bar z^2)=1,\quad
+\phi(\bar\eta\circ\bar z)=Y,\quad
+\phi(\bar\nu\circ\bar z)=-\lambda X^2/T.
+\end{gathered}
+$$
+
+两张实际外层 P2 的行列式预算都为 $X^2/T^2+\delta^2$，而 PB 右端像的读取为 $2\lambda X^2Y/T$。故
+
+$$
+\lambda^2X^2(X^2Y^2-\delta^2)\le X^2+\delta^2.
+\tag{25.7}
+$$
+
+若 $X^2Y^2>\delta^2$，选一个足够大但有限的 $\lambda$ 即矛盾，包括 $\delta=0$。因此所有字符都读到 $\alpha\beta-\gamma^2\le\delta^2$；字符判序给 (25.2)。每份未知输出始终只在实际 $U_\pm,V_\pm$ 调用后取 $q$ 像，没有把同像标签互换，也没有定义任何商上的 $D$。∎
+

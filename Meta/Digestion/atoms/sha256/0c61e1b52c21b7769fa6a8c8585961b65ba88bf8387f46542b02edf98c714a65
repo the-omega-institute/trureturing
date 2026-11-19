@@ -1,0 +1,26 @@
+**Proposition 13.3 (full original realization of the new table).** Each table of Theorem 13.2 has the original-domain product realization of Section 11.4 and [PAID, Lemma 2.1.1]. Its fourth-phase actual label rows at every positive original history are its unweighted stationary rows. Its full original phase configuration-risk suprema are
+
+$$
+R_{\mathrm{conf},p}
+ =\sup_{k:\mu(k)>0}\sum_i\pi_i\operatorname{TV}(Q_i,P_{p,r_k}),
+\qquad
+R_{\mathrm{conf},\beta}
+ =\sup_{k:\mu(k)>0}\sum_\ell\tau_\ell
+       \operatorname{TV}(W_\ell,P_{\beta,r_k}),
+\tag{13.13}
+$$
+
+with the evident exchanged notation for the symmetric construction.
+
+**Proof.** Retain the entire original $C_0$. Use fair synthesis before the third latch, perform the original third record write and latch, and sample the new p row independently of the source in that same update. Use the table's $B$ after every actual or synthetic p-beta and its $A$ after every actual or synthetic suspended-alpha. Completing letters clear the label and enter the matching original pendingStop; its unique Stop and delivery retain their original transitions. Projection to $C_0$ is its original update at every operation. Thus induction preserves all paid rejections, both seeds, marker words and partial parses, records, fields, permissions and event blocks, without resampling the once-drawn $K$.
+
+At the latch the row is $\pi$; (13.3) or (13.11) gives $\tau$ after a p-beta and $\pi$ after a suspended-alpha. The private sampler and updates are independent of the actual source. Conditioning on an acquired word consequently does not reweight configurations by synthetic emission probabilities. These are the rows at every positive finite fourth-phase history on every record fibre.
+
+The generated raw laws are exactly those proved in (13.10) and its symmetric version. The renderer $I_{C_0(h)}$ adds all original future records, operation blocks, completion and Stop, preserving complete TV and residual operation deletion. Noncompletion is retained; its zero mass follows from the full generation proof, without conditioning on completion. The pre-latch and terminal laws are those of this same product generator.
+
+At any fourth-phase history the actual target remains the countable posterior mixture $T_{s,h}=\sum_k\nu_h(k)P_{s,r_k}$ under the same installed prior. Configurationwise TV convexity gives the upper direction of (13.13). The lower direction is [CLIP, Proposition 2.3], using positive finite paid rejection histories concentrating at each supported depth with a fixed legal seed/marker suffix; [PAID, Lemma 14.1] supplies the countable-prior likelihood domination. Their hypotheses are exactly the source, stationary rows and complete same-update laws just established. Thus all original supported targets and all positive histories are retained.
+
+For a p-finite construction the unchanged p marginal also preserves the loss against every posterior target on its raw record fibre. The specified suspended pure-target losses are preserved, but a suspended loss against a posterior mixture need not equal its old value. Equation (13.13), rather than such a per-history equality, is the consumer below. $\square$
+
+Only the finite table and its active label are installed with $C_0$; the descriptors, measures, disintegrations and moment integrals are proof data. Turning this abstract table into an effective exact observer additionally requires permitted finitely represented exact samplers for its latch row, both acquired kernels and emissions. All representation, sampler states, persistent randomness, program, indices and workspace belong to COMPLETE, and all acquired Reads, fresh bits, internal work, synthesis and output remain charged. The support bounds are label bounds, not fixed COMPLETE, hard-defect or worst-case work bounds.
+

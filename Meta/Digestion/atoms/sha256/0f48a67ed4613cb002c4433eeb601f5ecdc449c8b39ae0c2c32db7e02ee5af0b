@@ -1,0 +1,30 @@
+**定义30.2（全部原关系）。** 对每个实际 $a,b\in E$、每个原评价，A1/P2 保留全部有向及反向 Hermitian 二表
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{30.3}
+$$
+
+A2 是每个 $(a+b,a,b)$ 及全部排列的实部三表在整个 $\mathbb R^3$ 上半正定，原顺序的指定向量 $(1,-1,-1)$ 及对应排列准确给零。A3 保留 $S(u,u)=u$，以及同一个固定有理 $0<\vartheta\le1$ 上全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。A2 不被加强或改写成假定复三表正性。
+
+对每个实际 $a,b,d\in E$，只用旧 $D$ 定义
+
+$$
+v=D(a,b)-a\circ d,\quad w=a\circ b+D(a,d),\quad
+r_\pm=b\pm v,\quad s_\pm=d\pm w.
+\tag{30.4}
+$$
+
+全部原 PB 是对全部原评价要求
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+\tag{30.5}
+$$
+
+所有零、重复、缩放、平移及嵌套实际输入都保留。不能以同一纤维中的同像标签替换这里的外层标签。记这些条件为 $\mathsf H(\mathfrak B;D)$。
+

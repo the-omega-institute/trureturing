@@ -1,0 +1,54 @@
+**定理 121.7（原零效应的残余Hausdorff连续性）。** 对每个原纯标签定义完整集合
+
+$$
+\mathcal B(p)=\{h\in\mathcal E:h(p)=0\}.
+\tag{Q121.18}
+$$
+
+存在 $P$ 中稠密 $G_\delta$ 集 $R$，使对每个 $p\in R$ 和每条原纯序列 $p_n\to p$，
+
+$$
+d_H(\mathcal B(p_n),\mathcal B(p))\longrightarrow0.
+\tag{Q121.19}
+$$
+
+因此可取同一个在整个 $P$ 中稠密的 $G_\delta$
+
+$$
+P_*=P_0\cap R.
+\tag{Q121.20}
+$$
+
+它的连续性量化整个 $\mathcal B$ 和所有趋近纯标签，不是对每对邻球方向另取一个残余集。
+
+证明。每个 $\mathcal B(p)$ 是含零的非空紧凸集。若 $p_n\to p\in P$、$h_n\in\mathcal B(p_n)$、$h_n\to h$，则 $h\in\mathcal E$、$h(p)=0$，故图闭。对固定 $b\in\mathcal E$，置
+
+$$
+\varphi_b(p)=\operatorname{dist}(b,\mathcal B(p)).
+\tag{Q121.21}
+$$
+
+它有界且下半连续：沿实现下极限的子列取达到距离的 $h_n\in\mathcal B(p_n)$；紧性取 $h_n\to h$，闭图给 $h\in\mathcal B(p)$，于是 $\varphi_b(p)\le\|b-h\|=\liminf\varphi_b(p_n)$。
+
+以下直接证明有界下半连续函数 $\varphi$ 的残余连续性。对 $\eta>0$，令 $U_\eta$ 为所有存在邻域 $G$ 且 $\sup_G\varphi-\inf_G\varphi<\eta$ 的点。它开。任取非空开集 $O\subset P$，令 $M=\sup_O\varphi<\infty$，选 $p\in O$ 使 $\varphi(p)>M-\eta/3$。下半连续给非空开邻域 $G\subset O$，在其上 $\varphi>\varphi(p)-\eta/3>M-2\eta/3$；又 $\varphi\le M$，故 $G\subset U_\eta$。所以 $U_\eta$ 稠密。Baire性使 $\bigcap_{m\ge1}U_{1/m}$ 稠密；在其中任一点，邻域振幅可任意小，正是通常连续性。
+
+在紧度量效应区间取可数稠密集 $\{b_k\}_{k\ge1}$，对所有 $\varphi_{b_k}$ 的上述开稠密集取可数交，得同一个稠密 $G_\delta$ 集 $R$。固定 $p\in R$、$p_n\to p$。全部距离函数在测试变量 $b$ 上统一为1-Lipschitz：
+
+$$
+|\operatorname{dist}(b,A)-\operatorname{dist}(c,A)|\le\|b-c\|
+\tag{Q121.22}
+$$
+
+对任意非空 $A\subset\mathcal E$ 成立。给定 $\delta>0$，从 $\{b_k\}$ 中选有限 $\delta$ 网。其上 $\varphi_{b_k}(p_n)\to\varphi_{b_k}(p)$，再用(Q121.22)得
+
+$$
+\sup_{b\in\mathcal E}
+|\operatorname{dist}(b,\mathcal B(p_n))-
+  \operatorname{dist}(b,\mathcal B(p))|\longrightarrow0.
+\tag{Q121.23}
+$$
+
+对任意非空紧 $A,B\subset\mathcal E$，上式的距离函数一致差恰为 $d_H(A,B)$：一侧由三角不等式；另一侧分别把测试点取在 $A$、$B$ 内，得到两个有向Hausdorff距离。因此(Q121.23)就是(Q121.19)。121.6给 $P_0$ 稠密 $G_\delta$，Baire性保证与 $R$ 的交仍在全部 $P$ 中稠密。证毕。
+
+若写 $N_p=\{h\in C^*:h(p)=0\}$，则 $\mathcal B(p)$ 张成 $\operatorname{span}N_p$：任一非零 $h\in N_p$ 除以 $\max_Kh>0$ 就属于 $\mathcal B(p)$。这里 $N_p$ 是正法向锥，不是VIII108中某个正投影的核。
+

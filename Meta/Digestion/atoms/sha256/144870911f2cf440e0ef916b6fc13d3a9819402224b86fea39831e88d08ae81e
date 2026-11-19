@@ -1,0 +1,25 @@
+**定理 115.7（正则区的完整球丛与纯零球丛）。** 第一投影
+$\mathscr B_{\mathcal R}\to\mathcal R$ 是局部平凡的 $B^3$ 丛，第一投影
+$\mathscr Z_{\mathcal R}\to\mathcal R$ 是局部平凡的 $S^2$ 丛。第二个丛的总空间仍为完整的 $\{(p,q):q\in P\cap D_p\}$，不把 $q$ 限制在 $\mathcal R$ 内。
+
+证明。令 $H_0=\ker u$，用辅助欧氏范数识别 $H_0$ 与其对偶。每个三球唯一有中心 $c(p)$，并有唯一的半正定形状算子 $Q(p)$，秩为三，使其支撑函数写成
+
+$$
+h_{D_p}(\xi)=\langle c(p),\xi\rangle+\sqrt{\langle Q(p)\xi,\xi\rangle}
+\qquad(\xi\in H_0).
+\tag{IX115.16}
+$$
+
+中心由支撑函数的奇部确定，$Q$ 由偶部平方确定。定理115.6已给 $p\mapsto D_p$ 在 $\mathcal R$ 上 Hausdorff 连续；有限维紧凸集的支撑函数随 Hausdorff 距离一致连续，所以 $c(p)$、$Q(p)$ 在 $\mathcal R$ 上连续。$Q(p)$ 恒秩三。固定 $p_0\in\mathcal R$，在 $Q(p_0)$ 的像空间中选三个线性无关的列；连续性保证同一个三阶子式在某邻域内不为零，Gram–Schmidt 给出该邻域上连续的等距标架
+$U(p):\mathbb R^3\to\operatorname{ran}Q(p)$。
+
+正平方根 $Q(p)^{1/2}$ 连续，且极分解说明
+$D_p=c(p)+Q(p)^{1/2}U(p)B^3$。因此
+
+$$
+\Phi(p,z)=\bigl(p,\ c(p)+Q(p)^{1/2}U(p)z\bigr)
+\tag{IX115.17}
+$$
+
+是从该邻域的 $\times B^3$ 到 $\mathscr B_{\mathcal R}$ 的连续双射；其逆映射由 $Q(p)^{-1/2}$ 在 $\operatorname{ran}Q(p)$ 上的逆和 $U(p)^*$ 连续给出，故是局部平凡化。由114.2，$P\cap D_p=\partial D_p$，所以将 $z$ 限制为 $S^2$ 即得到 $\mathscr Z_{\mathcal R}$ 的局部平凡化。证毕。
+

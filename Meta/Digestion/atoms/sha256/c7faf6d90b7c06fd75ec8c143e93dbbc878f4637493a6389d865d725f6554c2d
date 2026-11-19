@@ -1,0 +1,43 @@
+**定理 45.5（实际乘积碰撞的来源行列障碍）。**若 $a,b\in K$、$u,v\in S$ 且有实际标签等式 $a\star u=b\star v$，则
+
+$$
+d(a,b)=d(b,a)=d(u,v)=d(v,u)=0,
+\tag{45.19}
+$$
+
+并且对全部 $w\in S$，
+
+$$
+d(u,w)=d(v,w),\qquad d(w,u)=d(w,v).
+\tag{45.20}
+$$
+
+因此若保留的 $\delta\ne0$，则对任意 $a,b\in K$ 都有实际不等式
+
+$$
+a\star x_3\ne b\star x_0.
+\tag{45.21}
+$$
+
+**证明。**记碰撞的共同标签为 $z$。只对原始核 $F_0=d$ 使用零对角和 (45.14)，得
+
+$$
+0=d(z,z)=d(a,b)+d(u,v),\qquad
+0=d(z,z)=d(b,a)+d(v,u).
+\tag{45.22}
+$$
+
+非负性给四项分别为零。对 $w\in S$，比较同一个实际 $z$ 与 $a\star w$ 的两个表达，仍用 (45.14)，有
+
+$$
+\begin{aligned}
+d(z,a\star w)&=d(a\star u,a\star w)=d(u,w),\\
+d(z,a\star w)&=d(b\star v,a\star w)=d(b,a)+d(v,w)=d(v,w),\\
+d(a\star w,z)&=d(a\star w,a\star u)=d(w,u),\\
+d(a\star w,z)&=d(a\star w,b\star v)=d(a,b)+d(w,v)=d(w,v).
+\end{aligned}
+\tag{45.23}
+$$
+
+于是得来源行列相等。若 $u=x_3,v=x_0,w=y_0$，第一条相等便给 $d(x_3,y_0)=d(x_0,y_0)$，与 $x_3=V^3x_0$ 和 $\delta\ne0$ 矛盾。这一证明以实际乘积相等为前件，不把两个费用为零的不同标签擅自识别；结论 (45.20) 也只对来源探针 $w\in S$ 断言。证毕。
+

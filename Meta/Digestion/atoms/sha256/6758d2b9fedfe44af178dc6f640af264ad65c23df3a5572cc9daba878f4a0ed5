@@ -1,0 +1,58 @@
+**引理 2.1（标量平方差的原两圆接口）。** 在 1.1 下，取真正原 $y,z\in V_h$，满足 $y^2-z^2\in\mathbb Ru$，并记
+
+$$
+\begin{gathered}
+P=y\circ z,\quad Q=Jy\circ Jz,\quad
+U=y\circ Jz,\quad V=Jy\circ z,\\
+X_0=P-Q,\qquad Y_0=U+V.
+\end{gathered}
+\tag{2.1}
+$$
+
+则同一原响应给
+
+$$
+P^2=Q^2,\qquad X_0^2=Y_0^2,\qquad
+X_0\circ Y_0=0,\qquad P\circ Y_0=0.
+\tag{2.2}
+$$
+
+这是[三角卷 定理 212.1 及式 (212.2)](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md) 的两圆计算；下面只写明 [中央卷 18.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) 在当前一般 JC 入口中逐次成立的理由，不将这些方程计为新的混合刚性。
+
+证明。固定实数 $r=1/2$，令 $\ell=1+r^2$。原 PB $(rh,y,z)$ 的位移准确为 $rJy,rJz$，右端因自身正交为零。因此两份真正原外层共用一个旧值
+
+$$
+K=D(y+rJy,z+rJz)=D(y-rJy,z-rJz).
+\tag{2.3}
+$$
+
+两份外层的两个输入平方分别为 $\ell y^2,\ell z^2$，其差是标量单位；[中央卷 18.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) 因而分别适用。由 $y^2-z^2\in\mathbb Ru$，$y^2,z^2$ 交换；两份准确面积是同一环境乘积的等式
+
+$$
+K^2+(P+r^2Q+rY_0)^2
+=\ell^2y^2z^2
+=K^2+(P+r^2Q-rY_0)^2.
+\tag{2.4}
+$$
+
+相减得到 $(P+r^2Q)\circ Y_0=0$。没有拆开任何未知的 $D$ 值。
+
+对任意两份独立原圆标签 $y_\eta=\mathcal R_\eta y,z_\zeta=\mathcal R_\zeta z$，自身平方仍为 $y^2,z^2$，实际响应由 (1.3) 识别，故上面的每个前件继续合法。置
+
+$$
+A=P+Q,\quad B=U-V,\quad
+\alpha=(1+r^2)/2,\quad\beta=(1-r^2)/2>0,
+\quad\sigma=\eta+\zeta,\quad\delta=\zeta-\eta.
+$$
+
+[三角卷 式 (212.2)](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md) 的已知乘积展开给
+
+$$
+\bigl[\alpha(A\cos\delta+B\sin\delta)
++\beta(X_0\cos\sigma+Y_0\sin\sigma)\bigr]
+\circ(Y_0\cos\sigma-X_0\sin\sigma)=0.
+\tag{2.5}
+$$
+
+$\sigma,\delta$ 独立。比较 $\delta$ 与 $\delta+\pi$ 的和，取 $\sigma=0,\pi/4$，得到 $X_0\circ Y_0=0$、$X_0^2=Y_0^2$；比较其差，再取 $\delta=0$ 和 $\sigma=0,\pi/2$，得到 $A\circ Y_0=A\circ X_0=0$。其中 $A\circ X_0=P^2-Q^2$，且 $P=(A+X_0)/2$，所以有 (2.2)。内层参考演员始终是同一原 $rh$，两份外层准确保留 (2.3) 的原输入及旧 $D$；没有构造商响应或以数学代表替换演员。∎
+

@@ -1,0 +1,57 @@
+**Definition 7.1 (the finite original-word packet).** Write
+$\tau=a^2d/\eta$ only in the analysis; its value and the original
+$a,\eta,d$ are not supplied as exact names. Use the earned positive
+rational lower clock bound $l=\tau_-\le\tau$ of [SRO, Theorems 21.2--22.1]
+and the total, paid fixed-reference computation there. Denote its
+defect by
+
+$$
+ D_v(l)=d^{\mathrm{ref}}_{1/(vl)}.
+ \tag{7.1}
+$$
+
+The exact full-domain source scaling gives
+$d^{\mathrm{orig}}_{1/(vd)}=D_v(\tau)$. Its retained properties
+[SRO, (SRO.150)--(SRO.151)] are
+
+$$
+ 0<D_v(l)<1,\qquad l\le\tau\Longrightarrow D_v(l)\le D_v(\tau),
+ \qquad D_v(l)\longrightarrow1\quad(v\longrightarrow\infty).
+ \tag{7.2}
+$$
+
+These are mathematical/reference computations, not specimen actions.
+
+For $N=H+r$, choose deterministic $n\ge1$ and rational $t,\beta>0$,
+and compute rational lower enclosures
+
+$$
+ 0<D_0^-\le D_4(l),\qquad 0<D_n^-\le D_n(l),\qquad
+ V_{n,N}^+=\frac{2N-1}{4n}
+                   +2\frac{1-D_n^-}{D_n^-}.
+ \tag{7.3}
+$$
+
+Require the rational input test
+
+$$
+ 4^{2N}V_{n,N}^+\le4\beta^2t^2D_0^-.
+ \tag{7.4}
+$$
+
+Use all actual length-$N$ original-word counters from [DPCR,
+Definition 9.3], with $n$ overlapping windows. They use exactly
+$n+N-1$ labels, $Y_0$ through $Y_{n+N-2}$, ending at
+$(n+N)d$. Put
+
+$$
+ a(x)=\sum_{\substack{|z|=N\\z\text{ starts with }x}}
+       \frac{A_{n,N}(z)}n\quad(|x|\le N),\qquad a(\varepsilon)=1.
+ \tag{7.5}
+$$
+
+All $a(x)$ are rational and consistent prefix marginals of one
+probability vector. They are calculated from the retained original
+initial record; a later suffix is never reinterpreted as a fresh
+$e$-start.
+

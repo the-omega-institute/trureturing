@@ -1,0 +1,26 @@
+### 9.2 从圆 containment 到闭区间
+
+用 $J=\operatorname{Im}(\overline h\,\omega)$ 展开 (8.2) 的平方，且保留其必要的 $R-|\rho|/(2\beta)\ge0$，得到
+
+$$
+R|\rho|-\sigma J\rho\le\beta(R^2-|h|^2)=\beta\Delta.
+\tag{9.10}
+$$
+
+对 $\rho\ge0$ 和 $\rho\le0$ 分别整理，恰为 (8.3)。反向地，(9.10) 给出 $(R-|J|)|\rho|\le\beta\Delta$，因此由 $|J|\le|h|<R$，
+
+$$
+\frac{|\rho|}{2\beta}\le\frac{\Delta}{2(R-|J|)}
+\le\frac{R+|h|}{2}<R.
+$$
+
+故反向平方时两边非负，没有丢失符号条件；该界同样包含 $\rho=0$ 和闭区间的两个端点。相位变换 $U\mapsto U\operatorname{diag}(e^{i\theta_1},e^{i\theta_2})$ 同时把 $h,\omega$ 乘以同一个相位，(8.2) 与 $J$ 不变；按 $\alpha+\beta,\alpha-\beta$ 的有序标记固定交换自由度。
+
+这也给出越过区间的明确反例。若 (8.3) 失败，则圆上存在 $k$ 使 $|h+\sigma\rho\omega k|>R$；若唯一最大点是被闭包删去的 $k=0$，取其附近的非零圆点即可。由 (9.7) 取到一个非实 $w$，令 $M=M(w)$。此时 $Q+M$ 的行列式为 $q_1q_2-|h+\sigma\rho\omega k|^2<0$，取 $u$ 使 $u^*(Q+M)u<0$，再令 $z=G^*Qu$，则 $Gz=u$ 且
+
+$$
+z^*(I+G^*MG)z=u^*(Q+M)u<0.
+$$
+
+最后取原空间向量 $\xi=X(w)^{-1}z$，就有 $\xi^*\mathcal F(w)\xi<0$。因此区间外不是未检验的数值猜测，而是由一个非实铅笔点和一个具体的数学向量反向击穿 P2；反之 (9.4)–(9.9) 对所有非实点成立，再加实轴上的平方项，完成充分性。
+

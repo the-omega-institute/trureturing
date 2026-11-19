@@ -1,0 +1,50 @@
+**定理45.2的证明：实际二次标签。** 在原域中定义
+
+$$
+c=\frac{\mu}{2L}(a^2-a),\qquad F=\pi c=\alpha P,\qquad
+\alpha=\frac{\mu L}{2},\qquad C_0=p\circ A=\frac L2T.
+\tag{46.4}
+$$
+
+原 $E$ 对实线性组合及Jordan平方封闭，所以 $c$ 是真正原标签。等式 $A^2-A=L^2P$ 给其商像；原多项式零响应卷3.1给同一实际 $D(a,c)=0$，不以商像交换代替该零值。
+
+对演员 $a$、第二标签 $r$、第三标签 $c$ 使用一次原PB。令其实际外层为
+
+$$
+x_\pm=r\pm\bigl(D(a,r)-a\circ c\bigr),\qquad
+y_\pm=c\pm\bigl(a\circ r+D(a,c)\bigr).
+$$
+
+反对称性给 $D(a,r)=-D(r,a)$，故
+
+$$
+\begin{aligned}
+X_+&=\pi x_+=\mu p-d-AF,&Y_+&=\pi y_+=F+\mu C_0=\mu Lp_+,\\
+X_-&=\pi x_-=\mu p+d+AF,&Y_-&=\pi y_-=F-\mu C_0=\mu Lp_-,\\
+f_\pm&=(e\pm f)/\sqrt2,&p_\pm&=f_\pm f_\pm^* .
+\end{aligned}
+\tag{46.5}
+$$
+
+$F$ 与 $A$ 交换，所以 $A\circ F=AF$。原PB右端中
+$2\mu p\circ AF-2F\circ(\mu C_0)=0$，因而它准确成为
+
+$$
+\pi D(x_+,y_+)-\pi D(x_-,y_-)=2\mu p\circ d.
+\tag{46.6}
+$$
+
+所有外层仍是刚生成的实际原元素，没有改用预选的商提升。
+
+相对于各自秩一投影 $p_\pm$，$X_\pm$ 的连接向量为
+
+$$
+\begin{aligned}
+\zeta_+&=\left(\frac{\mu(L+2)}4-Lx+iy\right)f_--\frac v{\sqrt2},\\
+\zeta_-&=\left(\frac{\mu(2-L)}4+Lx+iy\right)f_++\frac v{\sqrt2}.
+\end{aligned}
+\tag{46.7}
+$$
+
+这由 $X_+$ 的两个对角元 $\mu-\delta,-\alpha$ 和 $X_-$ 的两个对角元 $\mu+\delta,\alpha$ 直接换数学基得到；没有使用旧 $D$ 的协变性。
+

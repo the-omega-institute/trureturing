@@ -48,6 +48,32 @@ Each competing original real-linear model descends through the same derived radi
 
 For the converse, expand the three original outputs F(x)+t F(y), F(x)+t omega F(y), and t omega F(x)+F(y). The equations conj(omega) omega=1 and 1+omega+conj(omega)=0 cancel every mixed inner-product term, leaving the exact original right side, including its original readouts at tx and ty. Constant nonnegative q is admitted through the zero model; it supplies no escape or novelty claim. The completion represents the original observations and does not assert availability of new preparations.
 
+Application to finite actual menus. Work on the same complex plane C, regarded as R squared, and fix U(z)=omega*z with omega=-1/2+i sqrt(3)/2, exactly ThreeWayPositiveKernel.omega. Let M be any finite family of actual triples (x,y,t) in C times C times R, including the empty family. Repeated triples may be identified because they ask the identical equality at identical points. For each triple retain the seven actual reading points x+t*y, x+t*U(y), t*U(x)+y, x, y, t*x and t*y. Let A be their union together with zero, let G={1,omega,omega^2,-1,-omega,-(omega^2)}, and set S={g*a : g in G, a in A}. Every occurrence of the same actual point has the same readout; the two sides are never sampled independently.
+
+For this same S and every real epsilon>0 define the following real-valued functions on all of C. The square outside P is the square of the entire product.
+
+$$
+\operatorname{P}\left(z\right) = \prod_{a \in S} \operatorname{norm}\left(z - a\right)^{2}, q_{\varepsilon}(z) = \operatorname{norm}\left(z\right)^{2} + \varepsilon \cdot \operatorname{P}\left(z\right)^{2}, \varepsilon > 0
+$$
+
+Each factor norm(z-a) squared is (Re(z)-Re(a)) squared plus (Im(z)-Im(a)) squared. Finite products, squares and sums therefore make q_epsilon a polynomial in the two real coordinates and give ContDiff R infinity q_epsilon, with no smoothness premise. This asserts real smoothness on R squared. Both summands are nonnegative, and norm(z) squared is strictly positive for every z other than zero. Since zero belongs to S, P(0)=0 and q_epsilon(0)=0. These conclusions hold for every finite M and every positive epsilon.
+
+The exact phase satisfies omega cubed=1 and norm(omega)=1. Multiplication by omega and by -1 permutes S. For either multiplier g, reindexing the same finite product by a=g*b and using norm(g*z-g*b)=norm(z-b) gives P(g*z)=P(z). Thus q_epsilon(U(z))=q_epsilon(z) and q_epsilon(-z)=q_epsilon(z) for all z. The finite-set reindexing uses Finset.prod_image and Finset.card_image_of_injective; no extra invariance hypothesis on q_epsilon is introduced.
+
+For every actual point a in S one product factor vanishes, so P(a)=0 and q_epsilon(a)=norm(a) squared. In particular every reading in every triple of M agrees exactly with the standard square model. The original check for a readout q is the displayed equality, including its baseline and the unaltered readouts at t*x and t*y.
+
+$$
+\operatorname{q}\left(x + t \cdot y\right) + \operatorname{q}\left(x + t \cdot \operatorname{U}\left(y\right)\right) + \operatorname{q}\left(t \cdot \operatorname{U}\left(x\right) + y\right) + 3 \cdot \operatorname{q}\left(0\right) = 2 \cdot \operatorname{q}\left(x\right) + \operatorname{q}\left(y\right) + \operatorname{q}\left(t \cdot x\right) + 2 \cdot \operatorname{q}\left(t \cdot y\right)
+$$
+
+Apply the arbitrary-model converse of original_hilbert_characterization with V=C as a real vector space, H=C with its usual complete complex Hilbert structure, F the identity real-linear map, U(z)=omega*z and q(z)=norm(z) squared. Its norm and phase equations are identities, so this standard readout passes the original equality for every x,y in C and every real t. Substitution of the identical actual readings and zero baseline proves that q_epsilon passes every listed check.
+
+To see why the same q_epsilon fails a genuine original instance, put B=sum over a in S of norm(a) and c=q_epsilon(1). Choose a real r>max(B+1,1,(c+1)/epsilon). Finset.single_le_sum and norm_sub_norm_le give norm(r-a)>1 for every a in S. The zero factor is r squared; Finset.mul_prod_erase and Finset.one_le_prod₀ give P(r)>=r squared. Consequently q_epsilon(r)>=r^2+epsilon*r^4>c*r^2. All real r here are embedded in the same C, and epsilon>0 is the original arbitrary parameter.
+
+If q_epsilon satisfied every original F140 check, its nonnegativity would allow the forward implication of original_hilbert_characterization to supply a complete minimal HilbertModel for this same U and q_epsilon. Its original real-linear label L and zero baseline give q_epsilon(r)=norm(L(r*1)) squared=r squared*norm(L(1)) squared=r squared*q_epsilon(1) for every real r, contradicting the preceding strict inequality. Negating the universal original check therefore gives actual x,y in C and an actual real t where the displayed equality fails. This triple lies outside M because every triple in M passes. Completion and label-preserving minimal uniqueness are supplied by the existing characterization; no new representation construction is needed.
+
+This application concerns unrestricted readout functions and preserves all original real parameters. It includes empty menus and coincident reading points. A known finite-dimensional function class can have a different finite certification theorem whose hypotheses and range require their own justification. The argument distinguishes finite readouts used by each verification from one fixed finite menu certifying the universal law. It supplies a mathematical application of the existing characterization and finite-product/calculus facts, with no claim of literature novelty, physical realization or access to additional preparations.
+
 ## References
 
 - Truth anchor: `D5/S3/QuadraticForms/RealThreePathRepresentation.original_hilbert_characterization`

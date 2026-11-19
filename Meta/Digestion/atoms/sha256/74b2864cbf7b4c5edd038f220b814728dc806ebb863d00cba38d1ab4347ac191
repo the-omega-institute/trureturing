@@ -1,0 +1,75 @@
+**定理 48.1（中心变化的共同强度支付原加法）。** 在 46.1 下，取原 $b,c\in V_h$。若有同一个环境正元 $R\in(A_0)_+$ 和 $f_1,f_2,f_3\in Z$，使
+
+$$
+b^2=f_1R,\qquad c^2=f_2R,\qquad b\circ c=f_3R,
+\tag{48.1}
+$$
+
+则同一原 $J$ 满足
+
+$$
+\boxed{\begin{gathered}
+Jb\circ Jc=b\circ c,\qquad
+b\circ Jc+Jb\circ c=0,\\
+J(b+c)=Jb+Jc.
+\end{gathered}}
+\tag{48.2}
+$$
+
+$R$ 不要求原有、属于 $X$、中央、可逆或有限谱；$f_1,f_2$ 不要求在全部中心上非负。特别，对任意实 $\alpha,\beta,s,\ell$，
+
+$$
+D(sh,\alpha b+\beta c+\ell u)
+=s(\alpha Jb+\beta Jc).
+\tag{48.3}
+$$
+
+证明。用 $Z_0=C^*(u,f_1,f_2,f_3)$ 构造 (47.4) 的同一中央商族。47.1 证明中给出的非零性、闭 JC 像、原像稠密性和联合分离逐项适用；没有额外商响应。对一个字符 $\chi$，记
+
+$$
+B=q_\chi(b),\quad C=q_\chi(c),\quad R_\chi=\pi_\chi(R)\ge0,
+\qquad \alpha_\chi=\chi(f_1),\quad
+\beta_\chi=\chi(f_2),\quad\gamma_\chi=\chi(f_3).
+$$
+
+于是
+
+$$
+B^2=\alpha_\chi R_\chi,\qquad
+C^2=\beta_\chi R_\chi,\qquad
+B\circ C=\gamma_\chi R_\chi.
+\tag{48.4}
+$$
+
+若 $R_\chi=0$，则 $B=C=0$。若 $R_\chi\ne0$ 而 $\alpha_\chi=\beta_\chi=0$，仍有 $B=C=0$。这两种情形中，对三个实际原第二标签 $b,c,b+c$ 分别应用零像吸收，给 $q_\chi(Jb)=q_\chi(Jc)=q_\chi(J(b+c))=0$，(48.2) 的三份像等式均成立；没有在零强度上归一。
+
+余下设 $R_\chi$ 非零。由 $B^2,C^2\ge0$ 和正锥的尖性，$\alpha_\chi,\beta_\chi\ge0$；本情形至少一个严格正。若 $\alpha_\chi>0$，则
+
+$$
+R_\chi=q_\chi(b^2/\alpha_\chi)\in q_\chi(E)\cap(Y_\chi)_+.
+\tag{48.5}
+$$
+
+若只有 $\beta_\chi>0$，改用原 $c^2/\beta_\chi$。这正好支付 27.2 的“强度在原像中”的前件。这里只除一个非零实数；没有把 $R$ 或 $R_\chi$ 当作可送入原 $D$ 的标签。若一个系数为零，另一个严格正，零标签及其混合项由 27.2 的退化分支保留。
+
+始终固定实际 $a=\rho h$。由 26.2，
+
+$$
+F_a(B)=q_\chi(Jb),\qquad
+F_a(C)=q_\chi(Jc),\qquad
+F_a(B+C)=q_\chi(J(b+c)).
+\tag{48.6}
+$$
+
+(48.4)–(48.5) 已给 27.2 的全部前件，所以它直接支付这三个像之间的两份混合关系和加法。27.2 的原 PB、两圆及三对缺陷平方证明在此按已证范围复用，不将三角卷 213.1 的半定条件直接用于任意原对。
+
+由中央商联合分离，将三个原元素差
+
+$$
+Jb\circ Jc-b\circ c,\quad
+b\circ Jc+Jb\circ c,\quad
+J(b+c)-Jb-Jc
+$$
+
+从像零提升为原零。所有差都已在 $E$ 中，故返回的正是同一原输出而非另造的线性映射。对 $\alpha b,\beta c$，(48.1) 的系数改成 $\alpha^2f_1,\beta^2f_2,\alpha\beta f_3$ 即可；再用已付实径向及 36.1，得到 (48.3)。$b+c$ 的像为零、相关输入、退化 Gram 和任意零支撑都已包含，没有对未知 $D$ 取谱近似或输入极限。∎
+

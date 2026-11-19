@@ -1,0 +1,96 @@
+**定理 4.1（环境耦合族的固定输出刚性）。** 取
+
+$$
+A=M_3(\mathbb C),\qquad P=S=e_{11}+e_{22},\qquad
+p=e_{11},\quad q=e_{22},\quad C=PAP\cong M_2(\mathbb C),\quad
+c=\operatorname{diag}(1,2,0).
+$$
+
+任取 $a,b,d\in\mathbb R$，其中 $d\ne0$，以及 $v,w,\zeta\in\mathbb C$，满足精确的实际条目关系 $\zeta d=v\overline w$，并令
+
+$$
+t=
+\begin{pmatrix}
+a&\zeta&v\\
+\overline\zeta&b&w\\
+\overline v&\overline w&d
+\end{pmatrix},
+\qquad
+s=\rho e_{11}+\eta e_{22},
+\qquad
+g=K_\sigma(c,t)+s.
+\tag{4.1}
+$$
+
+其中 $\rho,\eta\in\mathbb R$ 正好穷尽这两个秩一角的自伴残量。对两种取向 $\sigma\in\{1,-1\}$，若 (1.1) 对所有正泛函成立，则 $\rho=\eta=0$。因此 $g=K_\sigma(c,t)$，由 §1 的标准比较证明，(1.2) 对全部实际 $x\in C_{\rm sa}$ 成立；同时要求这些预算不改变结论。
+
+这里
+
+$$
+ptp=a p,\qquad qtq=b q,
+$$
+
+所以两个对角输入可以任意取值，包括零；同时
+
+$$
+(1-P)tP=(1-S)tS=
+\begin{pmatrix}0&0&0\\0&0&0\\\overline v&\overline w&0\end{pmatrix}.
+$$
+
+该实际真角 $C\cong M_2(\mathbb C)$ 到 $1-P=e_{33}$ 环境的连线非零，当且仅当 $(v,w)\ne(0,0)$；当 $v,w$ 均非零时，两个旧角都连到同一个环境。实际模型中的整个 $C$ 可作为已分类角；下列固定输出证明本身无需任何未知 $D$。
+
+**证明。** 在同一个实际 $t$ 上置
+
+$$
+\xi_p=\begin{pmatrix}1\\0\\-\overline v/d\end{pmatrix},
+\qquad
+\xi_q=\begin{pmatrix}0\\1\\-\overline w/d\end{pmatrix}.
+$$
+
+关系 $\zeta d=v\overline w$ 及其共轭给出精确乘法
+
+$$
+\begin{aligned}
+t\xi_p&=\begin{pmatrix}a-|v|^2/d\\0\\0\end{pmatrix}
+       =\left(a-\frac{|v|^2}{d}\right)c\xi_p,\\
+t\xi_q&=\begin{pmatrix}0\\b-|w|^2/d\\0\end{pmatrix}
+       =\frac{b-|w|^2/d}{2}\,c\xi_q.
+\end{aligned}
+\tag{4.2}
+$$
+
+因为 $a,b,d$ 为实数，二者分别是 (3.1) 的实广义特征向量，参数为
+$\lambda_p=a-|v|^2/d$ 和 $\lambda_q=(b-|w|^2/d)/2$。由引理 3.1，
+
+$$
+0=\langle s\xi_p,\xi_p\rangle=\rho,
+\qquad
+0=\langle s\xi_q,\xi_q\rangle=\eta.
+$$
+
+故 $s=0$，再由 (4.1) 得 $g=K_\sigma(c,t)$。∎
+
+定理 4.1 不要求 $v,w$ 非零；一个或两个为零时，同一证明不变。$d\ne0$ 只用于写出精确的数学向量，不取 $v,w$ 的逆，不归一化 $\phi$，也没有对未知 $D$ 取无穷小极限。$a,b$ 完全任意，故不要求 $ptp$、$qtq$ 为零，也不要求它们非零。该证明只使用真实 $M_3$ 乘法与全部正泛函的 P2 读数。
+
+这条实际条目关系可由成熟的 Schur 补消元直接看出。令 $r=1-S=e_{33}$，则 $rtr=dr$ 在实际一维环境角 $rAr$ 内可逆，逆元为 $d^{-1}r$，该角单位为 $r$。在 $p,q$ 坐标下，数学 Schur 补准确为
+
+$$
+StS-Str(rtr)^{-1}rtS
+\longleftrightarrow
+\begin{pmatrix}
+a-|v|^2/d&\zeta-v\overline w/d\\
+\overline\zeta-w\overline v/d&b-|w|^2/d
+\end{pmatrix}.
+\tag{4.3}
+$$
+
+它为对角矩阵当且仅当 $\zeta d=v\overline w$。这是同一个实际 $t$ 的条目间关系，只是已知矩阵消元；没有压缩未知响应，也没有引入物理 Schur 仪器。这一关系是输入族限制，不是新的 $D$ 公理，也不重定义完整目标。
+
+例如取 $v=u,w=d,\zeta=u$，其中 $u,d\in\mathbb R$、$ud\ne0$，便得到
+
+$$
+t=\begin{pmatrix}a&u&u\\u&b&d\\u&d&d\end{pmatrix}.
+$$
+
+这只是定理 4.1 已覆盖的实参数子情形，不另立推论或重复证明。
+

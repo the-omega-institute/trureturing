@@ -1,0 +1,57 @@
+**引理 147.2（局部端面与冗余公式）。** 在 EB3 下，对每个 $p\in P_{\rm s}$ 有
+
+$$
+\begin{gathered}
+e\in\mathcal A_p\Rightarrow
+K\cap\{e=0\}=D_p,\quad K\cap\{e=1\}=\{p\},\\
+\max_K h=\max_{D_p}h\quad(h\in N_p),\\
+\dim L_p=a(p)+4,\qquad
+N_{D_p}=\operatorname{cone}\mathcal A_p,\qquad
+\dim\operatorname{span}N_{D_p}=a(p)+1,\\
+q\in S_p\Rightarrow a(q)=a(p).
+\end{gathered}
+\tag{XII147.4}
+$$
+
+证明。零面包含极大真面 $D_p$，又不含 $p$，故恰为 $D_p$。若原纯 $s$ 在 $e$ 取一，则 $D_p\subseteq D_s$，极大性给 $D_s=D_p$，本点的单标签性给 $s=p$。紧一值面由其原极点凸生成，故是 $\{p\}$。
+
+对非零 $h\in N_p$，令 $M=\max_Kh>0$，在最大面取原纯 $s$。原效应 $h/M$ 在 $s,p$ 读一、零，故 $s\in D_p$，得到最大值公式。零函数亦满足。此公式本身不需单标签性。
+
+写 $D_p=c+B\overline{\mathbb B}^3$，$B:\mathbb R^3\to\ker u$ 单射。每个 $q_v=c+Bv\in S_p$，$\|v\|=1$，亦在 $P_{\rm s}$。任取 $b_v\in\mathcal A_{q_v}$，则 $b_v(p)=0$，且球支持等号给
+
+$$
+b_v(c+Bw)=1-\beta_v+\beta_v v\cdot w,
+\qquad 0<\beta_v\le\tfrac12.
+\tag{XII147.5}
+$$
+
+斜率为零会使 $b_v$ 在整张 $D_p$ 为一，违反已证一值面仅含 $q_v$。在六个轴端点选一次效应，再加 $u-e\in N_p$、其在 $D_p$ 恒为一，便知 $R_p:L_p\to\operatorname{Aff}(D_p)$ 满射。这只用了 $p$ 及其六个原邻点的单标签性。
+
+对 $h\in\operatorname{ri}N_p$，其零面是 $N_p$ 的公共零集：任意 $k\in N_p$ 有某个 $t>0$ 使 $h-tk\in N_p$，故 $h(x)=0\Rightarrow k(x)=0$。$u-e\in N_p$ 的零面已是 $\{p\}$，所以 $h$ 也恰在 $p$ 为零。
+
+取非零 $h_0\in\operatorname{ri}N_p$，写其球限制为 $\alpha+v\cdot w$。若 $v\ne0$，加上式(XII147.5)中方向 $-v/\|v\|$ 的一个非负倍数，消去斜率。相对内部加锥仍在相对内部；所得非零正泛函的限制为常数，正性及最大值公式保证此常数严格正。归一得
+
+$$
+g_c\in\operatorname{ri}N_p,\qquad g_c|_{D_p}=1.
+\tag{XII147.6}
+$$
+
+这里 $g_c$ 只是本证明所取的常数限制代表。准确切片等式为
+
+$$
+\mathcal A_p=u-\{g\in N_p:R_pg=1\}.
+\tag{XII147.7}
+$$
+
+其中 $g\le u$ 由原最大值公式在整个 $K$、继而整个 $C$ 上支付。切片遇相对内部，仿射维数是 $\dim L_p-4$。这证明第一维数公式。
+
+若 $0\ne h\in N_{D_p}$，令 $M=\max_Kh>0$，则 $h/M$ 的任何纯最大点 $s$ 满足 $D_s=D_p$，故 $s=p$，$M=h(p)>0$，且 $h/M\in\mathcal A_p$。于是 $N_{D_p}=\operatorname{cone}\mathcal A_p$，而 $\mathcal A_p$ 是其 $h(p)=1$ 紧切片，给后一维数公式。
+
+最后固定 $q=c+Bv\in S_p$。$\mathcal A_q\subset N_p$，其限制都属仿射族 $1-\beta+\beta v\cdot w$。允许 $\beta\in\mathbb R$，将该限制族在 $L_p$ 中的逆像记为 $J_q$；其维数为 $\dim\ker R_p+1=a(p)+1$。选 $k\in L_p$ 满足 $R_pk=v\cdot w$，则充分小 $t>0$ 时
+
+$$
+h=(g_c+tk)/(1+t)\in\operatorname{ri}N_p\cap J_q.
+$$
+
+取 $r\in D_q\setminus\{p\}$。已证 $h(r)>0$，而全部 $\mathcal A_q$ 在 $r$ 为零。因此评价 $r$ 在 $J_q$ 中切出真仿射超平面，$a(q)\le a(p)$。交换 $p,q$，二者均已在 $P_{\rm s}$，得反向不等式。没有使用别的图分支的标签唯一性。证毕。
+

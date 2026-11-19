@@ -1,0 +1,35 @@
+**命题 143.2（原环境可严格大于保持原自伴部的新完成）。** 存在满足137.1背景的原域，使 $Q,z_\pm$ 不属于 $\mathcal C$，且相同向量包含 $\mathcal C\subset\mathcal A$ 不保持矩阵正性。
+
+证明。只为显示这些边界，取
+
+$$
+E=X=\{(x,x^{\mathsf T}):x\in M_2(\mathbb C)_{\rm sa}\}
+\subset M_2(\mathbb C)\oplus M_2(\mathbb C),
+\tag{143.2}
+$$
+
+单位、Jordan乘法、范数、锥和全部正评价均从第一坐标运输，旧响应取同一图上的标准响应
+
+$$
+D\bigl((x,x^{\mathsf T}),(y,y^{\mathsf T})\bigr)
+=\bigl(i[x,y]/2,(i[x,y]/2)^{\mathsf T}\bigr).
+\tag{143.3}
+$$
+
+它是标准二阶C*模型的原Jordan、旧响应同构，故全部原P2/PB成立；标准模型的这些关系直接复用前卷29.2所引任意C*乘法身份。取 $h=(\sigma_z,\sigma_z)$、$e=(\sigma_x,\sigma_x)$、$j=(-\sigma_y,\sigma_y)$。直接相乘得到
+
+$$
+Q=(I,-I),\quad z_+=(I,0),\quad z_-=(0,I),\qquad
+\mathcal A=C^*(X)=M_2(\mathbb C)\oplus M_2(\mathbb C).
+\tag{143.4}
+$$
+
+最后一个身份也可直接看出：$Q$ 属于生成代数，两个中央投影分别切出整个两份全矩阵。另一方面，
+
+$$
+\mathcal C=X+iX=\{(z,z^{\mathsf T}):z\in M_2(\mathbb C)\}
+\tag{143.5}
+$$
+
+按(139.6)相乘，等于一份 $M_2(\mathbb C)$；它不含(143.4)的三个取向元素。第一坐标到原环境的向量包含是 $z\mapsto(z,z^{\mathsf T})$。其第二腿转置在一级上保正，但在二阶矩阵上，正元 $\sum_{r,s=1}^2E_{rs}\otimes E_{rs}=|\Omega\rangle\langle\Omega|$、$\Omega=e_1\otimes e_1+e_2\otimes e_2$，被送到翻转算子 $\sum_{r,s}E_{rs}\otimes E_{sr}$。它在 $e_1\otimes e_2-e_2\otimes e_1$ 上的本征值为 $-1$，故不保正。这是成熟转置现象在所构造两层环境上的应用，不把该例另立为新的标准矩阵理论，也不把数学矩阵正元当作实际相关准备。∎
+

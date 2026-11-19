@@ -1,0 +1,71 @@
+**定理 83.1（原像版小连接混合行）。** 固定第 $j$ 块的秩一投影 $p=ee^*$、$\|e\|=1$，其余块分量取零。这里 $e$ 是数学向量，与81的实际单位提升无关。对任意实际 $r,a\in E$，设
+
+$$
+\begin{gathered}
+\pi r=\mu p,\qquad
+(\pi a)_j=\beta p+H(z)+B,\\
+q=I_{n_j}-p,\quad H(z)=ze^*+ez^*,\quad
+z\in q\mathbb C^{n_j},\quad B=qBq=B^*.
+\end{gathered}
+\tag{83.1}
+$$
+
+若 $\|z\|<2$，则对任意实 $\mu$、任意 $\beta,B$ 及任意其他块背景，
+
+$$
+\boxed{(\pi D(r,a))_j=\mu H(-i\sigma_j z/2),\qquad
+(\pi D(r,a))_l=0\ (l\ne j).}
+\tag{83.2}
+$$
+
+$n_j=1$ 时 $z=0$，结论为零。所有实际原代表均包括；首标签不必是实际秩一投影或某个预选提升。
+
+证明。该连接消费主卷138.1的固定矩阵预算，但必须重新支付原标签。$\mu=0$ 用241.1。以下 $\mu\ne0$，记同一旧输出像 $d=\pi D(r,a)$。其他块及本块 $q$ 空间的全部向量读取使首平方对角为零；129.1及固定Hermitian二次型极化给
+
+$$
+d_l=0\ (l\ne j),\qquad d_j=\delta p+H(w).
+\tag{83.3}
+$$
+
+选择实际 $c_0=(r/\mu)\circ a$，其像只支撑于第 $j$ 块且为 $C_0=\beta p+H(z)/2$。在原PB中取演员 $a$、第二标签 $r$、第三标签零；两个实际外层像为 $\mu p-d,\mu C_0$ 和 $\mu p+d,-\mu C_0$，准确PB给
+
+$$
+\pi D(r-D(r,a),r\circ a)
+-\pi D(r+D(r,a),-r\circ a)=2\mu p\circ d.
+\tag{83.4}
+$$
+
+这不是对同像标签的替换；所写四标签就是原PB生成的实际元素。
+
+分别对这两个实际旧输出使用原P2；除以 $|\mu|$ 仅来自已知矩阵Gram缩放，得到每个本块向量 $\xi$ 的
+
+$$
+2|\phi_\xi(p\circ d)|
+\le\sqrt{\Delta_\xi(\mu p-d,C_0)}
+  +\sqrt{\Delta_\xi(\mu p+d,C_0)}.
+\tag{83.5}
+$$
+
+令 $v$ 为 $w$ 在 $(\mathbb Cz)^\perp$ 的分量，$z=0$ 时取 $v=w$；写 $\kappa=\|v\|^2$、$\xi_s=e+sv$。两份已知Gram多项式由138.5准确给出：令 $A_\pm(s)=\mu\pm\delta\pm s\kappa$、$\rho=\operatorname{Re}\langle w,z\rangle$，则
+
+$$
+\Delta_{\xi_s}(\mu p\pm d,C_0)
+=\frac{\|z\|^2}{4}A_\pm(s)^2
+\mp\beta\rho A_\pm(s)
++\|w\|^2\left(\beta^2+\frac{\|z\|^2}{4}\right)-\frac{\rho^2}{4}.
+\tag{83.6}
+$$
+
+83.5左侧为 $2|\delta+s\kappa|$。仅比较固定标量多项式的最高增长项，得 $2\kappa\le\kappa\|z\|$。严格小连接条件使 $\kappa=0$，即 $w\in\mathbb Cz$；$z=0$ 同样给 $w=0$。未对未知 $D$ 作输入极限。
+
+此时83.4的两对实际外层像才共同支撑在 $\operatorname{span}_{\mathbb C}\{e,z\}$ 的秩至多二角。80.2、82.1识别这两个实际旧值；对已知 $K_j(x,y)=\sigma_j i[x,y]/2$ 展开得到
+
+$$
+2\mu p\circ d
+=2\mu^2K_j(p,C_0)
+=\mu^2H(-i\sigma_jz/2).
+\tag{83.7}
+$$
+
+左侧为 $2\mu\delta p+\mu H(w)$，故 $\delta=0,w=-i\mu\sigma_jz/2$，得到83.2。其他块背景一直保留在实际 $a$ 中；$B$ 既不被删去，也不要求与 $z,w$ 交换。∎
+

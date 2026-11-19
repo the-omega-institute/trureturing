@@ -1,0 +1,48 @@
+**定理 125.4（单种子的双侧非退化配对）。** 另设真实三角的一个顶点属于 $P_0$。则三个顶点均属于 $P_0$；写 $e_i=e_{p_i}$，有
+
+$$
+e_1+e_2+e_3=u\quad\text{于整个 }V.
+\tag{Q125.11}
+$$
+
+定义
+
+$$
+S_i=S_{p_i},\qquad
+\mathcal S_\triangle=S_1+S_2+S_3,\qquad
+\mathcal Q_i=\{f\in S_i:f(p_j)=f(p_k)=0\}.
+\tag{Q125.12}
+$$
+
+则 $\dim S_i=4$、$\dim\mathcal Q_i=2$，且
+
+$$
+\begin{gathered}
+S_i=\operatorname{span}\{e_j,e_k\}\oplus\mathcal Q_i,\\
+\mathcal S_\triangle=
+\operatorname{span}\{e_1,e_2,e_3\}
+\oplus\mathcal Q_1\oplus\mathcal Q_2\oplus\mathcal Q_3,
+\qquad\dim\mathcal S_\triangle=9,\\
+\operatorname{res}_{U_\triangle}:\mathcal S_\triangle
+\overset\sim\longrightarrow U_\triangle^*.
+\end{gathered}
+\tag{Q125.13}
+$$
+
+证明。IX120.12使一个 $P_0$ 标签的全部真实邻点仍在 $P_0$，故三个顶点均属 $P_0$。在每颗球上，另外两顶点由确认效应读一、零，确为对径；沿IX120.14的实际对径行走恰形成三周期。于是IX120.18—120.19给(Q125.11)，这是全 $V$ 上的恒等式，不是仅在九维空间上相加。
+
+IX120.8给每个限制 $S_i\to\operatorname{Aff}(D_i)$ 为线性同构，维数四。$e_j,e_k\in N_{p_i}$，其在 $p_j,p_k$ 的读数是两条坐标向量，故两个端点评价独立，$\mathcal Q_i$ 维数二，且给第一行直和。
+
+一个在球 $D_i$ 上于对径两端为零的仿射函数，常数项及直径方向系数均为零；其余正是 $L_i$ 上的任意线性函数。因此限制
+
+$$
+\mathcal Q_i\longrightarrow L_i^*
+\tag{Q125.14}
+$$
+
+是同构。$S_i$ 全在 $p_i$ 为零，故 $\mathcal Q_i$ 在全部三个顶点为零。(Q125.9)对正泛函成立，因而对其线性张成 $S_i$ 也成立，所以 $\mathcal Q_i$ 消去 $L_j,L_k$。
+
+于是(Q125.13)的效应块与(Q125.8)的态向量块逐块配对：三个 $e_i$ 分离三个顶点并消去全部横向平面；$\mathcal Q_i$ 只读自己的 $L_i$，且给其全部线性读数。这证明所列效应和为直和，并且限制到 $U_\triangle$ 的矩阵逐块可逆，得到九维及同构。证毕。
+
+这里使用 $S_i$ 的线性同构，尚未使用或证明 $N_{p_i}$ 对整个球正仿射锥满射。后者是正性问题，不能由四维数相同或限制线性可逆代付。
+

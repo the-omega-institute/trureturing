@@ -1,0 +1,141 @@
+**定理 111.3（原可见六块的两侧球界）。** 只假设W，固定任意原joint $F$，
+尚不假设 $\mathcal I_F=0$。在(VIII111.4)的代数直和上定义正定对称型 $h_F$：
+六个块彼此正交，三个 $p_i$ 为正交单位向量，且
+
+$$
+\begin{gathered}
+h_F|_{V_{ij}}=\tfrac12 g_{p_k}|_{V_{ij}},\qquad
+U_F=p_1+p_2+p_3,\qquad
+h_F(U_F,v)=u(v)\quad(v\in V_F),\qquad
+\|U_F\|_{h_F}^2=u(U_F)=3.
+\end{gathered}
+\tag{VIII111.5}
+$$
+
+对每个原 $f\in V^*$，记 $Y_f\in V_F$ 为其限制 $f|_{V_F}$ 的Riesz向量，
+即 $h_F(Y_f,v)=f(v)$ 对全部 $v\in V_F$ 成立。
+则对全部非负质量原向量和全部原正效应尺度，有
+
+$$
+\boxed{\quad
+\|\pi_F v\|_{h_F}\le u(v)\quad(v\in C),\qquad
+\|Y_f\|_{h_F}\le f(U_F)\quad(f\in C^*).
+\quad}
+\tag{VIII111.6}
+$$
+
+特别地 $\|\pi_F x\|_{h_F}\le1$ 对整个原 $K$ 成立。
+$Y_f$ 是原正泛函的限制所对应的向量；此处不把它当作原正态，
+也不主张 $\pi_F$、$E_{ij}$ 或 $\mathcal I_F$ 保正。
+
+证明。对互异 $i,j,k$，W已给 $p_i,p_j$ 是 $D_{p_k}$ 的对径。
+因此
+
+$$
+\begin{gathered}
+c_{p_k}=\frac{p_i+p_j}{2},\qquad
+ e_{ij}=\frac{p_i-p_j}{2},\qquad g_{p_k}(e_{ij},e_{ij})=1,\\
+L_{p_k}=\mathbb Re_{ij}\oplus V_{ij},\qquad
+ g_{p_k}(e_{ij},V_{ij})=0.
+\end{gathered}
+\tag{VIII111.7}
+$$
+
+这正是109.2的切块及VIII108.5的球内直径公式：
+在 $L_{p_k}$ 上 $a_{p_i}(z)=g_{p_k}(e_{ij},z)/2$，而 $V_{ij}$ 是其核。
+三个 $V_{ij}$ 允许为零空间。$u$ 在各 $V_{ij}$ 上为零，在每个 $p_i$ 上取一，
+故按块定义确实给正定 $h_F$，并给(VIII111.5)，没有先对整个 $V$ 指定内积。
+
+先证明状态侧。取任意 $v\in C$，写
+$t_i=a_{p_i}(v)\ge0$、$m=u(v)=\sum_i t_i$、$z_{ij}=E_{ij}v$。
+原 $\Pi_{p_k}$ 保正，且正像恰为 $\operatorname{cone}D_{p_k}$，所以
+
+$$
+\begin{aligned}
+\Pi_{p_k}v
+ &=t_i p_i+t_j p_j+z_{ij}\\
+ &=(t_i+t_j)c_{p_k}+(t_i-t_j)e_{ij}+z_{ij}
+ \in\operatorname{cone}D_{p_k}.
+\end{aligned}
+\tag{VIII111.8}
+$$
+
+球锥的准确条件及(VIII111.7)给
+
+$$
+(t_i-t_j)^2+g_{p_k}(z_{ij},z_{ij})\le(t_i+t_j)^2,
+\qquad
+\|z_{ij}\|_{h_F}^2\le2t_it_j.
+\tag{VIII111.9}
+$$
+
+若 $t_i+t_j=0$，两个质量均零，球锥只能给零向量，故 $z_{ij}=0$；
+(VIII111.9)仍成立。若一项质量为零，也由该式迫切块为零。
+把三个不同球锥所得的界放回同一个原向量的六块，得到
+
+$$
+\|\pi_Fv\|_{h_F}^2
+ =\sum_i t_i^2+\sum_{i<j}\|z_{ij}\|_{h_F}^2
+ \le\sum_i t_i^2+2\sum_{i<j}t_it_j=m^2.
+\tag{VIII111.10}
+$$
+
+这包括任意非负 $m$；$m=0$ 时原严格正单位使 $v=0$。
+没有对 $\pi_Fv$ 的原锥正性作任何使用。
+
+再证明效应侧，独立于状态侧的投影解释。
+取任意 $f\in C^*$，令 $s_i=f(p_i)\ge0$。Riesz向量的分块准确为
+
+$$
+Y_f=\sum_i s_i p_i+\sum_{i<j}y_{ij},\qquad
+ y_{ij}\in V_{ij},\qquad
+ f(z)=\frac12g_{p_k}(y_{ij},z)\quad(z\in V_{ij}).
+\tag{VIII111.11}
+$$
+
+在整个原球 $D_{p_k}$ 上，任意点可写为
+$c_{p_k}+\tau e_{ij}+z$，其中 $z\in V_{ij}$、
+$\tau^2+g_{p_k}(z,z)\le1$。
+原正泛函在该整球上的值和最小值分别为
+
+$$
+\begin{aligned}
+f(c_{p_k}+\tau e_{ij}+z)
+ &=\frac{s_i+s_j}{2}+\frac{s_i-s_j}{2}\tau
+       +\frac12g_{p_k}(y_{ij},z),\\
+\min_{D_{p_k}}f
+ &=\frac{s_i+s_j}{2}
+   -\sqrt{\left(\frac{s_i-s_j}{2}\right)^2
+                     +\frac14 g_{p_k}(y_{ij},y_{ij})}\ \ge0.
+\end{aligned}
+\tag{VIII111.12}
+$$
+
+这是同一球的欧氏对偶范数公式；零系数时最小值在整球或相应直径上达到。
+特别地 $g(y_{ij},y_{ij})/4=\|y_{ij}\|_{h_F}^2/2$，
+不是 $\|y_{ij}\|_{h_F}^2$。因此准确得到
+
+$$
+\left(\frac{s_i+s_j}{2}\right)^2
+ \ge\left(\frac{s_i-s_j}{2}\right)^2+\frac{\|y_{ij}\|_{h_F}^2}{2},
+\qquad
+\|y_{ij}\|_{h_F}^2\le2s_is_j.
+\tag{VIII111.13}
+$$
+
+当 $s_i+s_j=0$ 或某个端点读数为零，所写切块同样被迫为零；
+零维切块时也适用。正性只给 $s_i\ge0$，不要求 $f\le u$，
+所以任意正倍尺度都保留。相加即得
+
+$$
+\|Y_f\|_{h_F}^2
+ =\sum_i s_i^2+\sum_{i<j}\|y_{ij}\|_{h_F}^2
+ \le\left(\sum_i s_i\right)^2=f(U_F)^2.
+\tag{VIII111.14}
+$$
+
+$f(U_F)\ge0$，取非负平方根得到效应侧结论。
+若 $f(U_F)=0$，则所有这些系数均零，$Y_f=0$；
+当 $V_F\ne V$ 时，这一步不声称原 $f$ 必为零。
+两侧推导均在W中完成，未使用G、全纯互易或状态谱性。证毕。
+

@@ -1,0 +1,35 @@
+**定义 57.1（同一实际接触的两笔标量代价）。** 沿用 (46.5)–(46.8)
+及定理 56.3 的整个零阶极小集 $\mathcal M_0$，置
+
+$$
+\begin{gathered}
+\Omega=\{(x,y,s):0<x<1,\ y>1,\ s>0\},\qquad d=1-x,\\
+s=\kappa_0+3=\frac{6d(t-1/4)}x,\qquad
+t=\frac14+\frac{xs}{6d},\qquad
+c_{\rm cost}=\frac{yd}{2xs(y^2-1)},\\
+a=s+\frac{4-x}{2},\qquad
+b=\left(s-\frac52\right)y-\frac{d(3d+xs)}y,\qquad
+W=a^2+b^2,\\
+F=-a+ib,\qquad
+G=-\frac{2-\ell}{4}
+ \left[8+\frac{2s(5x-3)}{3d}
+       +\frac{2i(x+1)(3d+xs)}{dy}\right],\qquad \ell=x+iy,\\
+U=c_{\rm cost}W,\qquad
+V=\frac{c_{\rm cost}|G|^2}{2t},\qquad
+\widehat P=2tW-|G|^2=\frac{2t}{c_{\rm cost}}(U-V).
+\end{gathered}
+\tag{57.1}
+$$
+
+这里 $c_{\rm cost}$ 是正实标量，与原矩阵 $C=\operatorname{diag}(1,2)$
+不同；$U,V$ 也不表示原演员列或可见列。
+这些式子由原 $\kappa_0,F,G,\mathcal R_0$ 代入得到：
+$\widehat P(x,y,s)=P(x,y,t(x,s))$，$U=\mathcal R_0(x,y,t(x,s))$，
+而 $V$ 是 (52.5) 所用第二种代价在接触面外的同一代数表达式。
+$U=V$ 恰为实际零阶接触条件；面外的两笔代价不另作来源实现。
+记坐标映射为 $\iota(x,y,t)=(x,y,6d(t-1/4)/x)$。
+它将整个 $\mathcal M_0$ 连续地送入 $\Omega$；下文在
+$\mathcal M_0$ 上使用新坐标函数时均指沿 $\iota$ 拉回。
+偏导 $\partial_x,\partial_s$ 在新坐标中分别固定 $y,s$ 和 $x,y$；
+原 $P_t,\nu=\partial_t\mathcal R_0$ 始终固定原 $x,y$。
+

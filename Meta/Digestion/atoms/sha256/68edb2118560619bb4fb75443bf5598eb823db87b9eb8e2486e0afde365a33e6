@@ -1,0 +1,54 @@
+**定理 8.1（可逆有限环境上的固定 P2 谱分类）。** 对全部正泛函的固定 P2（等价地，前述标量正算子铅笔对所有实 $x,y$ 非负）有如下互斥分类。
+这里的“固定”是对给定的取向 $\sigma$；若另要求两个取向同时成立，应将相应的两个闭区间取交集。
+
+1. 若 $A_{11}\ne A_{22}$，或 $A_{12}=0$，则固定 P2 成立当且仅当 $s=0$。
+2. 若 $A_{11}=A_{22}=\alpha$ 且 $\beta:=|A_{12}|>0$，取酉矩阵 $U$ 使
+  
+  $$
+  U^*AU=\Lambda:=\operatorname{diag}(\alpha+\beta,\alpha-\beta),\qquad
+  Z=\operatorname{diag}(1,-1),\qquad
+  \omega=(U^*ZU)_{12}.
+  $$
+  
+  则 $\lvert\omega\rvert=1$，并且固定 P2 成立当且仅当存在 $\rho\in\mathbb R$ 使
+  
+  $$
+  \operatorname{diag}(s_1,s_2)=\operatorname{diag}(c_1\rho,-c_2\rho),\qquad
+  G=U^*C^{-1/2}\begin{bmatrix}I_2&-VD^{-1}\end{bmatrix},\qquad
+  Q=(GG^*)^{-1}=\begin{pmatrix}q_1&h\\\overline h&q_2\end{pmatrix},
+  $$
+  
+  $$
+  R=\sqrt{q_1q_2},\qquad \Delta=R^2-|h|^2>0,\qquad J=\operatorname{Im}(\overline h\,\omega),
+  $$
+  
+  且满足下列两个等价的锐条件：
+  
+  $$
+  \left|h+\frac{i\sigma\rho\,\omega}{2\beta}\right|+\frac{|\rho|}{2\beta}\le R,
+\tag{8.2}
+  $$
+  
+  $$
+  -\frac{\beta\Delta}{R+\sigma J}\le \rho\le
+  \frac{\beta\Delta}{R-\sigma J}.
+\tag{8.3}
+  $$
+
+在第二种情形中，$Q$ 由完整实际输入与原空间范数决定；准确地，
+
+$$
+GG^*=U^*C^{-1/2}(I_2+VD^{-2}V^*)C^{-1/2}U.
+$$
+
+因此完整耦合幅度及环境度量都参与，不能只从环境耦合的列空间或 $H$ 读取 $Q$。因为 $\lvert J\rvert\le\lvert h\rvert<R$，(8.3) 的两个分母严格为正；$\Delta>0$ 还说明区间包含非零内点。因而每一个平衡的非对角 Schur 输入都有一段真正的非零固定-P2 残量，而不是只有零点。端点也包括在内。第一种情形包含旧的对角 Schur 子类。
+
+当 $m=0$、$c_1\ne c_2$ 且 $B=v\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$、$v>0$ 时，才恰好恢复 PB34.1 的两块标量族。此时直接代入
+
+$$
+\beta=\frac{v}{\sqrt{c_1c_2}},\qquad R=\frac{c_1+c_2}{2},\qquad
+\Delta=c_1c_2,\qquad J=0,
+$$
+
+得到 $|\rho|\le2v\sqrt{c_1c_2}/(c_1+c_2)$。定理 8.1 本身仍允许 $c_1=c_2$ 和一般 $B$，这些输入不归为 PB34.1 的原范围。
+

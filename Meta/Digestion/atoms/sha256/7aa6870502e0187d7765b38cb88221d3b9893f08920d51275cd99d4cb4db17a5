@@ -1,0 +1,12 @@
+每个 $V_j$ 均酉。对任意嵌入三能级输入及其与有限参考系统的任意纠缠，每轮实际标签都是条件公平的新比特。长度 $n$ 的实际历史 $\mathsf H_n=h=(h_1,\ldots,h_n)$ 的概率为 $P_n(h)=2^{-n}$，分支为 $2^{-n/2}BQ_h$，其中
+
+$$
+\begin{aligned}
+\xi&=(1,1,1)^{\mathsf T}/\sqrt3,\qquad T=\xi^\perp,\qquad\lambda=e^{i\pi/6},\\
+Q_h&=V_{h_n}\cdots V_{h_1}=\lambda^n\oplus G_h
+\quad\text{于 }\mathbb C\xi\oplus T,\\
+g_j&=V_j|_T,\qquad G_h=g_{h_n}\cdots g_{h_1},\qquad
+F_h=\lambda^{-n}G_h.
+\end{aligned}
+$$
+

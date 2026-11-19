@@ -1,0 +1,321 @@
+**定理 174.1（全部原 $h$-交换类）。** 在173.1的原背景下，对每个原
+$c\in E$，
+
+$$
+\boxed{[h,c]=0\quad\Longrightarrow\quad D(h,c)=0.}
+\tag{174.1}
+$$
+
+结论包含不定号、非中央平方、无限谱及不完备原域。关于这条旧行的额外
+响应信息只用173.5；证明是[原多项式卷](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)
+4.2的定点角局部化，不将角压缩误当成全域Jordan同态。
+
+证明。固定原 $c$ 与 $d_0=D(h,c)$，二者都与 $h$ 交换。零代数直接成立。
+对 $\epsilon=\pm1$ 置
+
+$$
+p=\frac{u+\epsilon h}{2},\qquad
+\kappa(v)=\mathcal U_p(v)=pvp,\qquad
+Y=\mathcal U_pX,\quad E_p=\mathcal U_pE,\qquad
+B=\kappa(c),\quad H=\kappa(d_0).
+\tag{174.2}
+$$
+
+$p=0$ 的角直接贡献零。其余 $Y$ 是单位为 $p$ 的JB代数，$E_p$ 是
+$Y$ 中范数稠密的原Jordan子代数。$p$ 和 $\mathcal U_p$ 本身是有限原
+Jordan表达式，所以 $E_p\subset E$，没有添加标签。
+
+先限定压缩的乘法用途。$\kappa$ 对全部 $X$ 正，但一般不保乘法。若
+$v$ 与 $h$ 交换，它在 $p,u-p$ 两块间没有交叉项，故对任意 $w\in X$
+
+$$
+\kappa(v^2)=\kappa(v)^2,\qquad
+\kappa(v\circ w)=\kappa(v)\circ\kappa(w).
+\tag{174.3}
+$$
+
+第二式只要求因子 $v$ 为偶；$w$ 不必为偶。因此当原表的两个输入都偶时，
+$\beta\kappa$ 对它的P2给
+
+$$
+|\beta\kappa D(v,w)|^2
+\le\beta(\kappa(v)^2)\beta(\kappa(w)^2)
+   -\beta(\kappa(v)\circ\kappa(w))^2
+\tag{174.4}
+$$
+
+对每个 $Y$ 上正 $\beta$ 成立。若这样的第二输入 $\kappa(w)=0$，两份
+输入平方规则使右侧为零；正泛函分离才给 $\kappa D(v,w)=0$。
+没有关于非偶输入或一般输出的局部性断言。
+
+先在证明内部支付有符号平方零行。实际上，只要此角的 $B$ 半定，便有
+$H=0$。反设 $H\ne0$，在 $C^*(p,H)\subset p\mathcal A p$ 选择
+$H$ 的非零谱值 $\tau$ 的字符，正延拓为角环境态，限制到 $Y$ 记作
+$\beta$。它满足
+
+$$
+\beta(H)=\tau\ne0,\qquad
+\beta((H-\tau p)^2)=0.
+\tag{174.5}
+$$
+
+取真正原比例第三标签 $q_0=\tau h/2$，173.4给 $D(h,q_0)=0$。
+PB $(h,c,q_0)$ 的两份完整外层及其角像为
+
+$$
+\begin{array}{c|c|c|c}
+R_+&S_+&\kappa R_+&\kappa S_+\\ \hline
+c+d_0-\tau u/2&\tau h/2+hc&B+H-\tau p/2&\epsilon(B+\tau p/2)
+\end{array}
+$$
+
+及
+
+$$
+\begin{array}{c|c|c|c}
+R_-&S_-&\kappa R_-&\kappa S_-\\ \hline
+c-d_0+\tau u/2&\tau h/2-hc&B-H+\tau p/2&-\epsilon(B-\tau p/2).
+\end{array}
+\tag{174.6}
+$$
+
+由174.5，在半内积 $\beta(v\circ w)$ 中两组角输入分别成比例，故两张
+实际P2的输出读取都为零。PB右侧准确是 $-2c\circ d_0$，因为
+$h\circ(h\circ c)=c$；其角像为 $-2B\circ H$。
+Schwarz和174.5给 $\beta(B\circ H)=\tau\beta(B)$，所以 $\beta(B)=0$。
+若 $B$ 为正或负，谱序不等式
+$0\le B^2\le\|B\|(\pm B)$ 给 $\beta(B^2)=0$。
+原 $(h,c)$ 表的174.4于是给 $\tau^2\le0$，矛盾。
+
+这个论证对每个原偶输入及每个非零角都成立。因此若原偶 $q$ 在两角中
+分别半定，$D(h,q)=0$。特别对每个原偶 $v$ 和每个符号 $\eta=\pm1$，
+
+$$
+D(h,\eta v^2)=0.
+\tag{174.7}
+$$
+
+两角可取不同符号，零角及半定元素的零支撑也已包含。这里只用了比例零值，
+没有把两个偏移零值相减来拆未知 $D$。
+
+现在消去一般 $B$ 的符号抵消。固定 $Y$ 的纯态 $\beta$，先设
+$\beta(H)\ne0$。在 $M=Y^{**}$ 中取其最小支撑投影 $f$，
+$\beta(f)=1$ 且 $\mathcal U_f(v)=\beta(v)f$。这些是原多项式卷4.2所用的
+成熟支撑工具：Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，
+Theorem4.4.3，以及Hamhalter，[*Pure states on Jordan algebras*](https://dml.cz/bitstream/handle/10338.dmlcz/133911/MathBohem_126-2001-1_7.pdf)，
+§1，页82–83。$f$ 可以只在数学双对偶中存在；不要求原域有最小投影。
+令
+
+$$
+K=\frac{\epsilon H}{2},\qquad \alpha=\beta(K)\ne0,
+\qquad C_0=\frac{\mathcal U_K(f)}{\alpha}.
+\tag{174.8}
+$$
+
+$\mathcal U_K$ 保正，故 $C_0$ 按 $\alpha$ 的符号半定。
+将 $K=\alpha f+v+w$ 作Peirce $1,1/2,0$ 分解；同书Lemma2.6.3给
+
+$$
+\mathcal U_K(f)=\alpha^2 f+\alpha v+(v^2)_0,
+\qquad C_0-K=(v^2)_0/\alpha-w\in M_0(f),
+\qquad\beta((C_0-K)^2)=0.
+\tag{174.9}
+$$
+
+同书Lemma4.1.9的有界集乘法联合强连续性和Theorem4.5.12的Kaplansky
+密度，先在 $Y$ 中给 $|C_0|^{1/2}$ 的有界强逼近，再用 $E_p$ 在 $Y$ 中
+的范数稠密性，给实际原 $v_i\in E_p$。可以取一致范数有界的网，使
+$v_i\to|C_0|^{1/2}$ 强收敛。令
+
+$$
+q_i=\operatorname{sgn}(\alpha)v_i^2\in E_p\subset E,
+\qquad \delta_i=2q_i-\epsilon H,
+\qquad \eta_i=\beta(\delta_i^2)^{1/2}\longrightarrow0.
+\tag{174.10}
+$$
+
+$q_i$ 一致有界并强趋于 $C_0$，最后一式由174.9得到。
+网而非序列保留不可分情形。每个 $q_i$ 都是实际偶有符号平方，故174.7
+已经给全原值 $D(h,q_i)=0$；没有对双对偶标签调用 $D$。
+
+对每个 $i$ 真正使用PB $(h,c,q_i)$，保留两份实际外层
+
+$$
+\begin{aligned}
+R_+^{(i)}&=c+d_0-h\circ q_i,& S_+^{(i)}&=q_i+hc,\\
+R_-^{(i)}&=c-d_0+h\circ q_i,& S_-^{(i)}&=q_i-hc.
+\end{aligned}
+\tag{174.11}
+$$
+
+它们都偶，角像满足
+
+$$
+\kappa S_+^{(i)}-\epsilon\kappa R_+^{(i)}
+=\kappa S_-^{(i)}+\epsilon\kappa R_-^{(i)}=\delta_i.
+\tag{174.12}
+$$
+
+给第二向量加第一向量的实倍数不改Gram行列式。两张实际P2因此各给
+
+$$
+|\beta\kappa D(R_\pm^{(i)},S_\pm^{(i)})|
+\le\beta((\kappa R_\pm^{(i)})^2)^{1/2}\eta_i
+\le M_0\eta_i,
+\tag{174.13}
+$$
+
+其中 $M_0<\infty$ 由固定 $B,H$ 及 $\sup_i\|q_i\|<\infty$ 给出。
+PB右侧角像却始终固定为
+
+$$
+-2B\circ(H-\epsilon q_i)-2q_i\circ(\epsilon B)
+=-2B\circ H.
+\tag{174.14}
+$$
+
+故 $|\beta(B\circ H)|\le M_0\eta_i$，得到 $\beta(B\circ H)=0$。
+这是用每份实际表估计一个固定元素；若固定读取非零，一个足够准确的
+$q_i$ 就已矛盾，不是取 $D$ 的输入或输出极限。
+
+还须处理纯态的零读取。如果 $\beta(H)=\beta(H^2)=0$，Schwarz直接给
+$\beta(B\circ H)=0$。若 $\beta(H)=0$ 而 $\beta(H^2)>0$，取足够小非零实
+$s$，使 $p+sH$ 正且在 $Y$ 中可逆。其二次表示是正锥自同构，所以
+
+$$
+\beta_s(y)=\frac{\beta(\mathcal U_{p+sH}y)}
+ {\beta((p+sH)^2)}
+\tag{174.15}
+$$
+
+仍是纯态。单生成演算给
+
+$$
+\beta_s(H)=\frac{2s\beta(H^2)+s^2\beta(H^3)}
+ {1+s^2\beta(H^2)}\ne0
+\tag{174.16}
+$$
+
+对充分小的非零 $s$ 成立。已经证明的情形使 $\beta_s(B\circ H)=0$；
+$\mathcal U_{p+sH}=I+2sL_H+s^2\mathcal U_H$ 给 $\beta_s\to\beta$ 范数收敛。
+故零读取情形同样成立。这里的逆元和纯态变形仅作用于已知 $Y$，
+不向原域补根、补逆或补准备。纯态分离 $Y$，于是
+
+$$
+B\circ H=0,\qquad BH=-HB.
+\tag{174.17}
+$$
+
+还不能由反交换直接断言 $H=0$。取第二份固定实际调用PB $(c,h,\epsilon c)$。
+173.4给 $D(c,\epsilon c)=0$，反对称性给 $D(c,h)=-d_0$。
+其完整正负外层是
+
+$$
+\begin{aligned}
+a&=h-d_0-\epsilon c^2,&b&=\epsilon c+hc,\\
+a_-&=h+d_0+\epsilon c^2,&b_-&=\epsilon c-hc.
+\end{aligned}
+\tag{174.18}
+$$
+
+四个输入都偶，$\kappa(b_-)=0$；174.4使 $\kappa D(a_-,b_-)=0$。
+PB右侧为 $2h\circ d_0$，故两张固定原表准确给
+
+$$
+\begin{array}{c|c|c}
+\text{第一输入角像}&\text{第二输入角像}&\text{同一旧输出角像}\\ \hline
+\epsilon p&B&H\\
+A:=\epsilon(p-B^2)-H&2\epsilon B&2\epsilon H.
+\end{array}
+\tag{174.19}
+$$
+
+这只是固定实际表的三个角像，不是在角上定义响应。
+
+由174.17，$B^2$ 与 $H$ 交换。对交换C*代数
+$C^*(p,B^2,H)\subset p\mathcal A p$ 的任一字符，写
+$B^2\mapsto v\ge0,H\mapsto\tau$。若 $\tau=0$，所需谱关系已成立。
+若 $\tau\ne0$，正延拓给一个GNS循环单位向量 $\xi$，满足
+$B^2\xi=v\xi,H\xi=\tau\xi$。第一张表给 $|\tau|\le\sqrt v$，故 $v>0$。
+反交换使 $\xi$ 与 $B\xi/\sqrt v$ 正交，二者张成的子空间对 $B,H$ 不变；
+在这份二维空间上
+
+$$
+B=\sqrt v\,\sigma_x,\qquad H=\tau\sigma_z,\qquad
+A=\epsilon(1-v)I-\tau\sigma_z.
+\tag{174.20}
+$$
+
+对实单位向量 $(\cos\theta,\sin\theta)$ 读第二张固定表，置
+$\gamma=\cos2\theta$。旧输出均值为 $2\epsilon\tau\gamma$，两输入作用向量
+的面积绝对值为 $2\sqrt v\,|\epsilon(1-v)\gamma-\tau|$，所以
+
+$$
+|\tau\gamma|\le\sqrt v\,|\epsilon(1-v)\gamma-\tau|
+\quad(-1\le\gamma\le1),\qquad |\tau|\le\sqrt v.
+\tag{174.21}
+$$
+
+若 $v\ne1$，记 $a_0=\epsilon(1-v)\ne0$。
+当 $0<|\tau|\le|a_0|$ 时取 $\gamma=\tau/a_0$，右侧零而左侧非零。
+当 $|\tau|>|a_0|$ 时取 $\gamma=\operatorname{sgn}(a_0\tau)$，得
+$|\tau|\le\sqrt v(|\tau|-|a_0|)$。$v<1$ 时立即矛盾；$v>1$ 时推出
+
+$$
+|\tau|\ge\frac{\sqrt v(v-1)}{\sqrt v-1}
+=\sqrt v(\sqrt v+1)>\sqrt v,
+$$
+
+仍违反第一张表。因此非零 $\tau$ 只能在 $v=1$。字符分离，包括
+$v=0,\tau=0$ 的退化情形，给
+
+$$
+(B^2-p)H=0.
+\tag{174.22}
+$$
+
+最后消去 $v=1$ 上的残余。取真正原输出和标签
+
+$$
+k_0=D(b,a),\qquad g=b\circ a.
+$$
+
+174.19与反对称性给 $\kappa(k_0)=-2\epsilon H$，已知乘法给
+
+$$
+G:=\kappa(g)=2(B-B^3),\qquad GH=HG=0,\qquad A\circ H=-H^2.
+\tag{174.23}
+$$
+
+这里用174.17和174.22；$g,a,b$ 都偶，但 $k_0$ 不要求偶。
+实际PB $(b,a,0)$ 的两份外层完整保留为
+
+$$
+D(a+k_0,g)-D(a-k_0,-g)=-2a\circ k_0.
+\tag{174.24}
+$$
+
+对任意 $Y$ 上正 $\rho$，使用正读取
+$\phi=\rho\circ\mathcal U_H\circ\kappa|_E$。因为 $g$ 偶，174.3使两个
+实际第二平方对角均为
+
+$$
+\phi(g^2)=\rho(HG^2H)=0.
+$$
+
+因此P2消去两份实际输出的 $\phi$ 读取，完全不需要压缩
+$(a\pm k_0)^2$。右侧的混合项则由 $a$ 偶这一因子单独保证
+$\kappa(a\circ k_0)=A\circ\kappa(k_0)$，即使 $k_0$ 不偶仍合法。
+174.24遂给
+
+$$
+0=4\epsilon\rho\bigl(\mathcal U_H(A\circ H)\bigr)
+=-4\epsilon\rho(H^4).
+\tag{174.25}
+$$
+
+正泛函分离得 $H^4=0$，C*范数恒等式给 $H=0$。两角都如此，
+$d_0$ 偶又给 $d_0=\kappa_+(d_0)+\kappa_-(d_0)=0$，定理得证。
+从头至尾只有原有限标签及实际旧输出进入 $D$，没有完成响应、商响应、
+输出局部性或 $D$ 连续性。∎
+

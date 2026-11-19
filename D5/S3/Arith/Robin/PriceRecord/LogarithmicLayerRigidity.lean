@@ -386,7 +386,7 @@ private theorem shrinking_rounded_exchanges (C : ℝ) (hC : 0 < C) :
       (fun q hq => (hUP q hq).2.2)
     simpa only [hEQcard, hUPcard, pow_one] using hbound
 
-private theorem record_ratio_limit {α : Type*} {l : Filter α}
+theorem record_ratio_limit {α : Type*} {l : Filter α}
     (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
     (hlambda : ∀ x, 0 < lambda x)
     (hrecord : ∀ x n, 0 < n → n < m x →
@@ -401,7 +401,7 @@ private theorem record_ratio_limit {α : Type*} {l : Filter α}
   filter_upwards [hP.eventually_ge_atTop T] with x hx
   simpa only [Real.dist_eq] using hT (m x) (hm x) (lambda x) (hlambda x) (hrecord x) hx
 
-private theorem coarse_scale_limits {α : Type*} {l : Filter α} (P Q : α → ℝ)
+theorem coarse_scale_limits {α : Type*} {l : Filter α} (P Q : α → ℝ)
     (j : ℕ) (hj : 2 ≤ j) (hQnonneg : ∀ x, 0 ≤ Q x)
     (hP : Tendsto P l atTop)
     (hfirst : Tendsto (fun x => Q x ^ j / P x) l (𝓝 (j : ℝ))) :
@@ -579,7 +579,7 @@ private theorem ratio_one_of_sub_zero {α : Type*} {l : Filter α} {A L : α →
   field_simp
   <;> ring
 
-private theorem record_logarithmic_balance_limit {α : Type*} {l : Filter α}
+theorem record_logarithmic_balance_limit {α : Type*} {l : Filter α}
     (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
     (hlambda : ∀ x, 0 < lambda x)
     (hrecord : ∀ x n, 0 < n → n < m x →
@@ -793,7 +793,7 @@ private theorem record_logarithmic_balance_limit {α : Type*} {l : Filter α}
       exact mul_le_mul_of_nonneg_left (sub_le_sub_right hx.2 1) hl.le
   exact hscaled
 
-private theorem record_second_order_limit {α : Type*} {l : Filter α}
+theorem record_second_order_limit {α : Type*} {l : Filter α}
     (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
     (hlambda : ∀ x, 0 < lambda x)
     (hrecord : ∀ x n, 0 < n → n < m x →

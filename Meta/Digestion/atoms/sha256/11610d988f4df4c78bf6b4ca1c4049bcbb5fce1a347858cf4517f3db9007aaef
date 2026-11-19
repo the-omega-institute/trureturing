@@ -1,0 +1,15 @@
+## 19. 平衡零模族的原零探针刚性
+
+本节与 §20 准确沿用承载卷在 `caf0f3b3064a987b753b67aaa3836d6d86e73f75` 的定义 41.1，以及本卷 (1.1)–(1.2)。记 $S_\pm=t\pm(r+g_\sigma)$，即 (1.2) 中的同一 $V_\pm$；不改变任何读取标签。始终取
+
+$$
+C=\operatorname{diag}(1,2),\quad c=C\oplus0_m,\quad P=I_2\oplus0_m,
+\quad t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix}=t^*,
+\quad g_\sigma=\frac{\sigma i}{2}[c,t]+s,
+\quad\sigma\in\{1,-1\}.
+\tag{19.1}
+$$
+
+$D_{\rm env}$ 是已知有限 Hermitian 环境矩阵。全部正泛函仍是完整 $M_{m+2}(\mathbb C)$ 上的全部正复线性泛函，包含零泛函与任意有限质量。对原空间向量 $\xi$，使用 $\phi_\xi(A)=\xi^*A\xi$；因此
+$\phi_\xi(A^2)=\|A\xi\|^2$、$\phi_\xi(A\circ B)=\operatorname{Re}((A\xi)^*B\xi)$，所有乘积均取原完整矩阵乘法。实 Gram 的这些恒等式及正泛函背景沿 §§1、5、11 的成熟归属；本节的增量是下述特定输入的显式共同见证，不另立通用 Gram 定理。
+

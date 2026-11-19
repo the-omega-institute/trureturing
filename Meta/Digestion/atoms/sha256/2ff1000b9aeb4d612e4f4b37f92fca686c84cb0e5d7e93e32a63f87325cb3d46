@@ -1,0 +1,47 @@
+**Proposition 7.1 (lawful paired counterexamples to one-readout inversion).** There are regular original product observers with $f=C\mathbf1$ and unequal emissions and complete p laws. There are also such observers with $h=H\mathbf1$ and unequal emissions and complete p laws.
+
+**Proof.** Take two p and two suspended labels, fair rows and $B=A=I$. These are two persistent singleton components on one source-independent randomized initializer. For the first example use (5.2) separately with $t=23/100$ and $t=7/30$. The resulting regular emissions are
+
+$$
+(u_0,v_0)=
+\left(\frac{68771837}{187046820},\frac{215103843}{591374915}\right),
+\quad
+(u_1,v_1)=
+\left(\frac{42933491}{117348750},\frac{27381375}{74415259}\right).
+$$
+
+Both p event readouts equal $C$ by construction. The first pair is the supplied phase-p model A of [PH, Theorem 2.1]; it is reused as a comparison component, without a new attainment claim. The suspended readouts are respectively
+
+$$
+\frac{11570335464}{14784372875},
+\qquad \frac{870126854}{1116228885},
+$$
+
+which are unequal. The p laws differ already on alpha because $u_0\ne u_1$.
+
+For the second example choose $v_0=367/1000$, $v_1=369/1000$ and set
+
+$$
+g_i=1-c/v_i,\qquad U_i=g_i/(1-v_i),\qquad u_i=1-U_i.
+$$
+
+Then $h_i=1-v_i+v_i g_i=H$. The regular p emissions are
+
+$$
+u_0=\frac{2319397}{6272397},\qquad
+u_1=\frac{2279653}{6286653},
+$$
+
+and the p event readouts are respectively
+
+$$
+\frac{1483518258989}{2894441502429},
+\qquad \frac{1500952786739}{2891854093347},
+$$
+
+which are unequal. All regularity inequalities follow by cross-multiplication against $a,b$. The probabilities of infinite noncompletion are zero by (3.3).
+
+Install each table using the existing original product construction: keep $C_0$, use fair synthetic letters before the third latch, sample the fair label independently in the update that writes the third record and then latches, and use $B,A$ on the original noncompleting acquired letters. Completing letters clear private labels and retain the original matching pendingStop and unique Stop. On every record fibre, the decoder is exactly the same finite program's generated full law. Induction over original operations preserves all records, permissions, seeds, markers and paid histories. The examples add neither a source action nor a hidden depth or clock. $\square$
+
+These examples only show the need for the paired readouts in the inverse. They are not near-optimal witnesses and are not asserted independent of every earlier excluded subclass.
+

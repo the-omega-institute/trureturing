@@ -1,0 +1,100 @@
+**定理 148.1（保留全部输出块的共享预算）。** 对147.4的任意固定原 $x,g$、147.5的任一实际锚、每个实 $t$ 及同一个数学正读取 $\phi$，令
+
+$$
+W_+=x+k+g-t(p+q),\qquad
+W_-=x+k-g+t(p-q).
+\tag{148.1}
+$$
+
+则
+
+$$
+\boxed{2|\phi(tq+v)|\le
+\sqrt{B_\phi(n,W_+)}+\sqrt{B_\phi(n,W_-)}.}
+\tag{148.2}
+$$
+
+$W_\pm$ 可以含任意 $h$-交换分量，不预付它们横向。
+
+证明。对全部有限实 $t,\alpha$，只调用同一个原PB三元组
+
+$$
+(a,b,z)=(h,tp+\alpha n,x).
+\tag{148.3}
+$$
+
+两份内层原响应由(147.4)、(147.6)准确为 $tq,g$；相应位移及两份完整外层原输入为
+
+$$
+\begin{aligned}
+\nu&=tq-k,&\omega&=\alpha n+g,\\
+R_+&=t(p+q)-k+\alpha n,&S_+&=x+g+\alpha n,\\
+R_-&=t(p-q)+k+\alpha n,&S_-&=x-g-\alpha n.
+\end{aligned}
+\tag{148.4}
+$$
+
+每个标签都在原 $E$。由于 $n\circ q=q$，且
+
+$$
+n\circ k=c+hc,\qquad n\circ x=c+hc+v,
+\qquad n\circ k-n\circ x=-v,
+\tag{148.5}
+$$
+
+原PB的右端完整展开为
+
+$$
+\begin{aligned}
+D(R_+,S_+)-D(R_-,S_-)
+&=-2(tp+\alpha n)\circ(tq-k)-2x\circ(\alpha n+g)\\
+&=2t\,p\circ k-2x\circ g-2\alpha(tq+v).
+\end{aligned}
+\tag{148.6}
+$$
+
+$2t\,p\circ k$ 与 $-2x\circ g$ 都保留；任何一般交换性或输出横向性都未用来删项。对两个未知完整外值分别施加同一个 $\phi$ 的原P2，再作标量三角不等式，得到
+
+$$
+\left|\phi(2t\,p\circ k-2x\circ g)-2\alpha\phi(tq+v)\right|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{148.7}
+$$
+
+为准确处理大 $\alpha$，对任意固定原自伴 $A,B,n$ 和 $s\in\{1,-1\}$，已知实Jordan乘法的双线性给
+
+$$
+\begin{aligned}
+B_\phi(A+\alpha n,B+s\alpha n)
+&=B_\phi(A,B)+2\alpha C_s(A,B;n)
++\alpha^2B_\phi(n,B-sA),\\
+C_s(A,B;n)
+&=s\phi(A^2)\phi(n\circ B)+\phi(n\circ A)\phi(B^2)\\
+&\quad-\phi(A\circ B)\{\phi(n\circ B)+s\phi(n\circ A)\}.
+\end{aligned}
+\tag{148.8}
+$$
+
+确实，三份已知读取分别展开为
+
+$$
+\begin{aligned}
+\phi((A+\alpha n)^2)&=\phi(A^2)+2\alpha\phi(n\circ A)+\alpha^2\phi(n^2),\\
+\phi((B+s\alpha n)^2)&=\phi(B^2)+2s\alpha\phi(n\circ B)+\alpha^2\phi(n^2),\\
+\phi((A+\alpha n)\circ(B+s\alpha n))
+&=\phi(A\circ B)+\alpha\{\phi(n\circ B)+s\phi(n\circ A)\}
++s\alpha^2\phi(n^2).
+\end{aligned}
+\tag{148.9}
+$$
+
+在前两式乘积减第三式平方中，四次、三次项各自相消；二次项为
+
+$$
+\phi(n^2)\phi((B-sA)^2)-\phi(n\circ(B-sA))^2,
+$$
+
+即(148.8)所写的Gram行列式。正外层取 $A=t(p+q)-k,B=x+g,s=1$；负外层取 $A=t(p-q)+k,B=x-g,s=-1$，故二次系数准确是 $B_\phi(n,W_+)$ 与 $B_\phi(n,W_-)$。
+
+把(148.7)除以 $|\alpha|$，只在这些显式标量二次式中令 $|\alpha|\to\infty$，得到(148.2)。二次系数为零时，除后的相应根号仍趋于零，未丢退化情形。两份未知外值在每个有限 $\alpha$ 已由原P2逐份上界，不存在 $D$ 的输入极限或未知输出连续性前件。∎
+

@@ -1,0 +1,58 @@
+**定理 11.2（全部不可约纤维的精确分类）。** 在 11.1 下，对每个不可约表示 $\pi$ 有如下穷尽分类。
+
+1. 若 $r=0$，则 $t=0$，且 $\pi(\mathsf A)=\pi(\mathsf X)=\pi(\mathsf Y)=0$；该纤维只有一维标量不可约表示。
+2. 若 $t=0$，则 $\pi(\mathsf X)=\pi(\mathsf Y)=0$，且纤维的不可约表示均为一维；当 $r>0$ 时 $\pi(\mathsf A)=2\sqrt r$ 或 $-2\sqrt r$，实际纤维可保留其中一个或两个符号。
+3. 若 $t>0$，则纤维不可约表示恰为二维。令
+
+   $$
+   e_1=\frac{\pi(\mathsf X)}{\sqrt t},\qquad
+   e_2=\frac{\pi(\mathsf Y)}{\sqrt t}.
+   \tag{11.3}
+   $$
+   它们是反交换的自伴酉元。若 $0<t<4r$，再令 $e_3=\pi(\mathsf A)/\sqrt s$；则
+
+   $$
+   e_1^2=e_2^2=e_3^2=I,
+   \qquad e_i e_j=-e_j e_i\ (i\ne j),
+   \tag{11.4}
+   $$
+   且取向只能有两种；实际纤维可保留其中一种或二者
+
+   $$
+   \varepsilon(\pi)=-\mathrm i e_1e_2e_3\in\{+I,-I\}.
+   \tag{11.5}
+   $$
+   适当选取二维基后，准确写成
+
+   $$
+   \pi(\mathsf X)=\sqrt t\,\sigma_z,
+   \qquad
+   \pi(\mathsf Y)=\sqrt t\,\sigma_x,
+   \qquad
+   \pi(\mathsf A)=\varepsilon\sqrt{4r-t}\,\sigma_y.
+   \tag{11.6}
+   $$
+   若 $t=4r>0$，则 $\pi(\mathsf A)=0$，而 $(\pi(\mathsf X),\pi(\mathsf Y))$ 仍是一份二维 Pauli 对；此边界没有第三轴取向。 因而任何一维标量不可约纤维必有 $t=0$。
+
+证明。若 $r=0$，(11.2) 给 $t=0$，再由 (10.5) 的三个平方等式和自伴平方零得到三像全为零。若 $t=0$，$\mathsf X^2=\mathsf Y^2=0$ 给两像为零；剩下的像由一个自伴元 $\pi(\mathsf A)$ 生成，且平方为 $4rI$，不可约性遂给一维表示及所列两个标量值。
+
+设 $t>0$。式 (10.5) 给 $e_1,e_2$ 为反交换自伴酉元。令 $H_+$、$H_-$ 为 $e_1$ 的正、负特征空间；$e_2$ 在二者之间给酉双射。因此存在 Hilbert 空间 $K$ 使
+
+$$
+H_\pi\cong\mathbb C^2\otimes K,\qquad
+ e_1=\sigma_z\otimes I_K,\qquad
+ e_2=\sigma_x\otimes I_K.
+\tag{11.7}
+$$
+当 $s=0$，这两元生成 $M_2(\mathbb C)\otimes I_K$；不可约性迫使 $K=\mathbb C$，故表示二维。
+
+当 $s>0$，$e_3$ 也是与前两元反交换的自伴酉元。与 (11.7) 的两元反交换的算子必为
+
+$$
+ e_3=\sigma_y\otimes W
+\tag{11.8}
+$$
+其中 $W=W^*$ 且 $W^2=I_K$。前两元已生成 $\sigma_y\otimes I_K$，与 $e_3$ 相乘又给 $I_2\otimes W$，故生成代数为 $M_2(\mathbb C)\otimes C^*(W)$。$W$ 的正、负特征空间正交直和为 $K$；任取其中一个非零特征向量，其张成的一维空间与 $\mathbb C^2$ 的张量积是生成代数的不变子空间。不可约性迫使 $K$ 一维、$W=\varepsilon I$，其中 $\varepsilon=\pm1$。标准 Pauli 乘法 $\sigma_z\sigma_x=\mathrm i\sigma_y$ 遂给 (11.5)–(11.6)。
+
+这对应成熟的 $\mathrm{Cl}_2(\mathbb C)\simeq M_2(\mathbb C)$ 与 $\mathrm{Cl}_3(\mathbb C)\simeq M_2(\mathbb C)\oplus M_2(\mathbb C)$ 表示分类；各纤维只保留实际商中存在的表示。∎
+

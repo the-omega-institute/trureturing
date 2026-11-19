@@ -1,0 +1,32 @@
+**引理 99.1（同一原范数下的双向指数保锥）。** 本条的前件仅为以下独立资料，不继承原量子重构的其它前件。任取实 Banach 空间 $V$，保留其给定范数和拓扑；任取凸锥 $K\subset V$ 与 $u\in V$，满足 $0\in K$、$K$ 在该拓扑下闭、$K\cap(-K)=\{0\}$ 及 $u\in\operatorname{int}K$。任取在该给定范数下连续的实线性算子 $H:V\to V$。若对原连续实对偶中的每个 $\beta$ 均有
+
+$$
+\bigl(\forall z\in K,\ \beta(z)\ge0\bigr)
+\quad\Longrightarrow\quad
+\bigl(\forall c\in K,\ \beta(c)=0\Longrightarrow\beta(Hc)=0\bigr),
+\tag{99.1}
+$$
+
+则同一个原连续算子的指数满足
+
+$$
+\forall t\in\mathbb R\ \forall c\in K,\qquad \exp(tH)c\in K.
+\tag{99.2}
+$$
+
+这里允许 $V=0$，也包含零泛函和全部负时间；不要求有限维、锥正规、原范数等于序单位范数或 $H(u)=0$。指数在原连续线性自映射代数中定义。
+
+证明。先考虑正零接触处只有 $\beta(Hc)\ge0$ 的单向条件。记由 $(K,u)$ 定义的序单位范数为 $p$；闭锥的序半径取到性给 $p(Hu)u-Hu\in K$。置 $a=p(Hu)+1$、$d=au-Hu$，于是 $d-u\in K$。对 $y\in K$ 和 $0<\varepsilon<1$，在原拓扑中取
+
+$$
+w(s)=(1-\varepsilon)\exp(sH)y+\varepsilon e^{as}u,
+\qquad w'(s)=H(w(s))+\varepsilon e^{as}d.
+\tag{99.3}
+$$
+
+凸组合内点性质给 $w(0)\in\operatorname{int}K$。若某个非负时间 $S$ 处不再为内点，则闭坏时集 $[0,S]\cap w^{-1}((\operatorname{int}K)^c)$ 在紧实区间中有最小元 $T>0$。此前均为内点，原闭性给 $w(T)\in K$。闭凸锥的边界支撑分离给原连续正泛函 $\beta$，使 $\beta(w(T))=0$、$\beta(u)>0$。左差商非正，故 $\beta(w'(T))\le0$；另一方面，$d-u\in K$ 给 $\beta(d)\ge\beta(u)>0$，而单向零接触条件给 $\beta(H(w(T)))\ge0$，与(99.3)矛盾。紧性只用于实时间区间，不用于 $V$。
+
+故对每个固定 $s\ge0$，$w(s)$ 都在内点。令 $\varepsilon\downarrow0$，原拓扑中的连续性及 $K$ 的闭性给 $\exp(sH)y\in K$。条件(99.1)同时给 $H$ 与 $-H$ 的单向条件；在负时间对 $-H$ 使用非负时间结论，并以 $(-t)(-H)=tH$ 认回同一指数，即得(99.2)。零空间也在上述量词内；其中不存在需要支撑分离的坏时刻。整个推导没有把序单位范数替换为原范数。∎
+
+本条是原拓扑下的零接触供应结果，推导复用闭凸分离、实时间首出及连续算子指数微分，并把首出论证用于同一原 Banach 轨道；不主张文献原创性。28.5 所引 Niestegge 的零面判据是相关的成熟来源。对28.5的参数对应为 $V=X$、$K=X_+$、$H=\delta_a$，但应用仍须分别供应这个原闭尖实心锥、原 $\delta_a$ 的有界实线性及(99.1)。原正元素平方界、原 $q$ 与评价到全部连续正对偶的运输、$D(a,u)=0$、保单位到 Jordan 自同构及 Leibniz 的接口、双对偶 JBW 延拓和完整结合子刚性均不由本条的条件结论取得。数学指数也不提供物理钟。
+

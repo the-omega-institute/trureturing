@@ -1,0 +1,45 @@
+**定义 18.1（域、三轴及三个混合对）。** 取
+
+$$
+\begin{gathered}
+E=X=(M_2(\mathbb C)\oplus M_2(\mathbb C))_{\rm sa},\qquad u=(I,I),\\
+S(A,B)=A\circ B=\tfrac12(AB+BA),\qquad
+C=E\cap(M_2\oplus M_2)_+,\qquad
+N(A)=\max_r\|A_r\|,\\
+D_*(A,B)=\tfrac{\mathrm i}{2}[A,B],\\
+H=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+K=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+J=\begin{pmatrix}0&\mathrm i\\-\mathrm i&0\end{pmatrix},\\
+h=(H,H),\qquad e=(K,K),\qquad j=(J,J),\\
+b=(H+K+J,\ 2H+3K+4J).
+\end{gathered}
+\tag{18.1}
+$$
+
+评价族取全部正实线性泛函，保留全部非负质量。特别 $D_*(h,e)=j$、$D_*(e,j)=h$、$D_*(j,h)=e$，且
+
+$$
+b^2=(3I,29I),\qquad
+h\circ b=(I,2I),\quad e\circ b=(I,3I),\quad j\circ b=(I,4I).
+\tag{18.2}
+$$
+
+令 $\mathcal S$ 是三个实际对 $(h,b),(e,b),(j,b)$ 的完整 $O(2)$ 轨道之并。换基作用是
+
+$$
+O\cdot(A,B)=(o_{11}A+o_{12}B,\ o_{21}A+o_{22}B).
+$$
+
+在整个 $E^2$ 定义同一个总函数
+
+$$
+\widehat D(A,B)=
+\begin{cases}
+-D_*(A,B),&(A,B)\in\mathcal S,\\
+D_*(A,B),&(A,B)\notin\mathcal S.
+\end{cases}
+\tag{18.3}
+$$
+
+重叠轨道也给相同规则，不需为三条行各选一个映射。$\widehat D$ 只用于下面明确列出的子系统。
+

@@ -6,6 +6,7 @@
    utility: none
    digest: Hanna's logarithmic integer-series closure for every positive pointwise power. -/
 
+import D5.S1.Recurrence.Algebraic.IntegralPowerSeries
 import D5.S1.Recurrence.Periodic.IntegralEgfTotientPeriod
 import D5.S1.Recurrence.Periodic.ScaledLogColumnPeriodicity
 import Mathlib.Algebra.BigOperators.Field
@@ -20,8 +21,6 @@ noncomputable def egf {K : Type*} [Field K] [CharZero K] (L : ℕ → K) : Power
 noncomputable def logarithmicTransform {K : Type*} [Field K] [CharZero K]
     (L : ℕ → K) : PowerSeries K := (egf L).subst (log K)
 
-def IntegralSeries {K : Type*} [Field K] [CharZero K] (f : PowerSeries K) : Prop :=
-  ∀ n, ∃ z : ℤ, coeff n f = (z : K)
 
 /-
 Copyright (c) 2026 Ralf Stephan. All rights reserved.

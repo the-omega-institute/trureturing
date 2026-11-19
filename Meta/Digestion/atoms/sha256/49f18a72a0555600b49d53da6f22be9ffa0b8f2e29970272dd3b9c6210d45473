@@ -1,0 +1,18 @@
+**定理 147.1（九维单标签区域的完整原确认）。** 若 EB3 且整个 $\dim_{\mathbb R}V=9$，则对每个 $p\in P_{\rm s}$，
+
+$$
+\mathcal A_p=\{e_p\},\qquad \dim L_p=4,\qquad
+N_{D_p}=\mathbb R_+e_p.
+\tag{XII147.2}
+$$
+
+此外，$e_p$ 的整个零面为 $D_p$、整个一值面为 $\{p\}$；置 $g_p=u-e_p$，则
+
+$$
+R_p:L_p\overset\sim\longrightarrow\operatorname{Aff}(D_p),\quad h\mapsto h|_{D_p},
+\qquad g_p\in\operatorname{ri}N_p,\qquad K\cap\ker g_p=\{p\}.
+\tag{XII147.3}
+$$
+
+第147.7节还给全部原法向的边界射线、完整归一法向基、固定整张 $S_p$ 上的 Lipschitz 确认效应及原全边效应区间。这里没有把 $\mathcal A_p$ 与整个 $F_p$ 混同，没有断言 $R_p^{-1}$ 为正映射或 $e_p$ 是 $F_p$ 的 least。式(XII147.2)的证明在第147.6节完成，第147.7节证明式(XII147.3)及其全部所列接口。
+

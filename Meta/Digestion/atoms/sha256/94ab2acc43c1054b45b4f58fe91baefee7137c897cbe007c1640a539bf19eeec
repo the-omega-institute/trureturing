@@ -1,0 +1,12 @@
+**定理 44.1（有限角的全部实际代表）。** 设 $\pi:A\to B(H)$ 不可约且 $K(H)\subset\pi(A)$。对每个秩二 $P$，存在唯一 $\sigma(P)=\pm1$，使
+
+$$
+\pi D(a,b)=\frac{\sigma(P)i}{2}[\pi a,\pi b]
+\qquad(a,b\in T_P).
+\tag{44.1}
+$$
+
+秩零、一的共同支撑给零值。若 $\dim H\ge2$，所有秩二角共用同一个输入无关符号 $\sigma_\pi$。
+
+证明分为下列实际调用步骤。它们移植PT241–245、OP59–61及80–82的证明，不把 $a\mapsto P\pi(a)P$ 当作整个 $A$ 上的Jordan商。
+

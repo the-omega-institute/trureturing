@@ -1,0 +1,14 @@
+**推论 83.5（Pythagorean 等式的准确意义）。** 令 $S_z=\|U\|_2^2+\|G\|_2^2>0$，定义实 Hilbert–Schmidt 算子
+$$
+X_z=\operatorname{diag}\bigl(J\mathsf D_A,\mathcal T(\mathsf D_A\otimes\mathsf D_A)\bigr):
+A\oplus(A\otimes_{\mathbb R}A)\longrightarrow D\oplus E,\qquad \Phi_z=X_z/\sqrt{S_z}.
+\tag{83.7}
+$$
+全部原模型都有 $\|\Phi_z\|_{\rm HS}\le1$；零缺陷恰为其可实现派生像中的球面点，即
+$$
+\|J\mathsf D_A\|_{\rm HS}^2+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2
+=\|U\|_2^2+\|G\|_2^2.\tag{83.8}
+$$
+**证明与范围。** (83.4) 给 $\|X_z\|_{\rm HS}^2=S_z-\mathcal Q_\times$，再用 83.4。该直接重写不是独立的新结构定理：原 $L,p$、同 $p$ 两次、$Z$、正性及 $F$ 的约束仍为原约束，未证明 $z\mapsto\Phi_z$ 满射到整球。原态正锥与效应区间没有被换成球或椭球。
+第 81 章的 $\mathsf W_A=\int\Pi_B\otimes\Pi_B$ 仍是同变量相关矩。对简单 $A$ 且 $d>n>1$，81.10 的同一 $\Xi$ 给 $\langle\Xi,\mathsf W_A\Xi\rangle=n$，而 $\langle\Xi,(\mathsf C_A\otimes\mathsf C_A)\Xi\rangle=1+(n-1)^2/(d-1)<n$。本章改变被平均的非负函数及积分域，绝没有证明 $\mathsf W_A=\mathsf C_A\otimes\mathsf C_A$，也不把 $\mathcal Q_\times$ 与原 $\mathcal Q$ 视为同一标量。
+

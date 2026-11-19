@@ -1,0 +1,6 @@
+**定理 120.8（唯一确认时的原限制同构）。** 若 $p\in P_0$，则 $R_p$ 为线性同构，$g_p\in\operatorname{ri}N_p$，且 $\dim\operatorname{span}N_p=4$。
+
+证明。对120.7所得 $h_0\in\operatorname{ri}N_p$、$h_0|_F=1$，原最大值公式给 $0\le h_0\le u$ 于整个 $C$。于是 $u-h_0\in\mathcal A_p$，唯一性迫使 $h_0=g_p$。
+
+若 $k\in\ker R_p$，相对内部性使充分小的 $t>0$ 满足 $g_p\pm tk\in N_p$。两者在 $F$ 上均为一；再次由(IX120.4)，二者均不超过 $u$。它们的补效应均在 $\mathcal A_p$，故均为 $e_p$，于是 $k=0$。满射已由120.7支付，故为同构。证毕。
+

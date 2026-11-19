@@ -1,0 +1,21 @@
+**定义 104.1（同域完整量子候选）。** 在明确模型类 $\Gamma_{\rm sf,cont}$ 中，完整条件候选为
+
+$$
+\Gamma_{\rm sf,cont}+\mathsf H_{\rm orig}+\mathsf{PB}+\mathcal C_{\rm src},
+\tag{104.1}
+$$
+
+其中 $\mathsf H_{\rm orig}$、PB保留98.2的全部数学量词，$\mathcal C_{\rm src}$ 是105逐项全文及全部纳入的上游量词的共同合取。由98.3、103.2，准确有
+
+$$
+\begin{aligned}
+&\Gamma_{\rm sf,cont}+\mathsf H_{\rm orig}+\mathsf{PB}+\mathcal C_{\rm src}\\
+&\quad\Longleftrightarrow\quad
+\Gamma_{\rm sf,cont}+\mathsf H_{\rm orig}+\mathsf P_3+
+\mathsf{PB}+\mathcal C_{\rm src}.
+\end{aligned}
+\tag{104.2}
+$$
+
+所以在这个模型类内，旧 $D$ 双线性、全有限复 Gram、P3、R与共同乘法不必另列为独立数学要求。并未计算一般量子起源的最小独立信息量、公理数或实际取得成本。
+

@@ -1,0 +1,16 @@
+**推论 132.5（局部候选的同原完整静态表示及反向）。** 在130.1的整个原域，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathsf L,\qquad \mathrm{EB3}+\mathsf D_2,\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{X132.7}
+$$
+
+证明。132.4使每个原纯点属于真实三角；[IX120.4][Q130IX]遂给全部原球宽度一，此时才由IX120.5消费IX116.17—116.18的同锥同单位静态分类。全部原对象的对应完整复用130.3及(X130.12)：整个 $K$ 的全部密度矩阵与凸混合、全部 $P$ 的复射线、整个 $\mathcal E$ 的 $0\preceq E\preceq I_3$、每个完整混态球 $D_p$，以及 $f_E(\Phi\rho)=\operatorname{Tr}(E\rho)$。对单位 $v,w$，纯比较为 $T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2$；全部有限原数学效应单位分解恰为全部有限数学POVM。谱、joint、中心、共同迹尺和Jordan乘法也都取同一130.3字典，不是另一次分类。
+
+反向仍在这个整个原模型中核对。IX116.17的全部确认计算给 $vv^*\oplus B$、$0\preceq B\preceq I_{v^\perp}$，所以最低读数及完整 $D_p$ 对所有原混态均为(X130.12)，且全部 $D_p$ 是完整三球。对任意原 $p=\Phi(vv^*)$、$q=\Phi(ww^*)$，取单位 $z\in\operatorname{span}_{\mathbb C}\{v,w\}^{\perp}$，令 $r=\Phi(zz^*)$。则 $r$ 是同一原纯点，且 $T_p(r)=T_q(r)=0$。因此可为每个 $p$ 取 $\varepsilon_p=1/2$，得到 $\mathsf L$ 的全部量词；这也给 $\mathsf D_2$，后者与表示的既有等价直接复用130.3。证毕。
+

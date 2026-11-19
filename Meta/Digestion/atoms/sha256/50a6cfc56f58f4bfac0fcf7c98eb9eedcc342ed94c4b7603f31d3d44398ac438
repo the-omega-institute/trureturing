@@ -1,0 +1,30 @@
+### 39.6 零残量在全部正泛函上的充分性
+
+$E=0$ 时，直接消费父卷 §1 的标准 $K_\sigma$ 恒等式，(39.28) 的最后一项为零。对完整原 $A$ 上任一正复线性泛函 $\phi$、任意自伴 $U,Z$，正性给复 Cauchy–Schwarz
+
+$$
+|\phi(UZ)|^2\le\phi(U^2)\phi(Z^2),\qquad
+\phi(UZ)=\phi(U\circ Z)-\iota\phi(K_\sigma(U,Z)).
+$$
+
+两个自伴读数均为实，故
+
+$$
+\phi(K_\sigma(U,Z))^2
+\le\phi(U^2)\phi(Z^2)-\phi(U\circ Z)^2=B_\phi(U,Z).
+\tag{39.32}
+$$
+
+对 $U=R_\delta,Z=S_\delta$ 各用一次，再用三角不等式，得到
+
+$$
+|\phi(L)|\le
+|\phi(K_\sigma(R_+,S_+))|+|\phi(K_\sigma(R_-,S_-))|
+\le A_+(\phi)+A_-(\phi).
+\tag{39.33}
+$$
+
+此充分性覆盖混合、非忠实、奇异和零预算泛函，完全独立于必要性所选的向量及零模。质量零时，正泛函的 Cauchy–Schwarz 给 $|\phi(A)|^2\le\phi(I)\phi(A^*A)=0$，所以只有零泛函，PB 是零等式，不能单凭零质量辨别残量。每个指定正质量的必要性则由 (39.31) 支付。
+
+所有构造和估计只用 $\iota^2=-1$、$\overline\iota=-\iota$ 与同一原复线性数据。因而对 $\sigma=1$ 和 $\sigma=-1$ 分别执行，即各得整个结论；不需共轭替换 $B,V,D_{\rm env},q$，也不声称两取向必须共用同一见证。定理 39.2 得证。∎
+

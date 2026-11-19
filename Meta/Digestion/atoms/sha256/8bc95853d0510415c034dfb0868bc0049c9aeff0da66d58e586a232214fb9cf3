@@ -1,0 +1,40 @@
+#### 定理 8.2：$\cos z=\pm z$ 的全部复根
+
+对每个整数 $n\ge1$，令 $y_n>0$ 为 $G(y_n)=n\pi$ 的唯一解，并定义
+
+$$
+x_n=(-1)^n\bigl(n\pi-\beta(y_n)\bigr).
+$$
+
+则正号方程的全部根恰为
+
+$$
+\boxed{\quad
+ \{z:\cos z=z\}
+ =\{\alpha\}\cup
+ \{x_n+\mathrm iy_n,\ x_n-\mathrm iy_n:n\ge1\}.\quad}
+$$
+
+负号方程的根集是上述集合整体取负。
+
+**证明。**
+
+实根已由定理 6.2 给出。 设 $z=x+\mathrm iy$、$y>0$ 是正号根。 分离实虚部：
+
+$$
+\cos x\cosh y=x,\qquad-\sin x\sinh y=y.
+$$
+
+第二式等价于 $\sin x=-a(y)$。 第一式要求 $\cos x$ 与 $x$ 同号，并排除 $x=0$ 或 $\cos x=0$。 因此全部可能分支只有
+
+$$
+\begin{cases}
+ x=2k\pi-\beta(y),&k\ge1,\quad \cos x=b(y),\\
+ x=-(2k+1)\pi+\beta(y),&k\ge0,\quad \cos x=-b(y).
+ \end{cases}
+$$
+
+分别代入第一式，得到 $G(y)=2k\pi$ 或 $G(y)=(2k+1)\pi$。 引理 8.1 保证每个分支恰有一个解， 合并偶数、奇数指标即得 $(x_n,y_n)$。 反向代入也立即验证每一所列点确为根，故没有遗漏。 实系数保证下半平面根由共轭得到。 最后，$\cos(-z)=\cos z$ 表明 $\cos z=z$ 当且仅当 $\cos(-z)=-(-z)$， 所以负号根集整体取负。
+
+$\square$
+

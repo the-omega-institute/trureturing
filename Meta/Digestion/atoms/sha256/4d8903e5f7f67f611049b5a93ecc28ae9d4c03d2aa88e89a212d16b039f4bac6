@@ -1,0 +1,130 @@
+**定理 13.1（有限族的衰减交叉估计）。** 在定义 12.1 的同一个有限族中，对任意 $h$ 只在证明内选择以 $h$ 为中心的相干坐标，令 $e_0=e_h$、$e_1$ 为第一降低向量，并置
+
+$$
+f_l=f_l(h),\qquad g_l=\partial_{\bar z}f_l(h),\qquad
+H_l=\mathcal L_{\eta,K_0}(|f_l\rangle\langle g_l|),
+\qquad T_\eta=\sum_l\|H_l\|_1.
+\tag{13.1}
+$$
+
+则对每个 $r\ge r_0$、每个 $h$ 和每个 $\eta\in[0,1]$，
+
+$$
+\frac{\sqrt\eta}{2s}-\frac1\lambda
+\le T_\eta\le\frac{A\sqrt\eta}{s}+\frac2\lambda.
+\tag{13.2}
+$$
+
+这里 (12.1) 作为有限通道对实 $\eta$ 也有定义；控制器及有限公共描述的结论仍以有理 $\eta$ 为域。
+
+证明。先明确所复用的真空衰减数学及参数对应。令 $\mathcal H_{\rm osc}=\ell^2(\mathbb N)$，$\mathsf D(\alpha)$ 为单模 Weyl 位移，
+
+$$
+u_\alpha=\mathsf D(\alpha)|0\rangle
+=\left(e^{-|\alpha|^2/2}\frac{\alpha^k}{\sqrt{k!}}\right)_{k\ge0},
+\qquad v_\alpha=\mathsf D(\alpha)|1\rangle
+=(\mathfrak a^\dagger-\bar\alpha)u_\alpha.
+\tag{13.3}
+$$
+
+二者正交且范数为一。真空环境衰减通道 $\mathcal L_\eta$ 取振幅参数 $\sqrt\eta,\sqrt{1-\eta}$，保持模为第一模；其 Fock 作用及全部输入的位移关系复用
+[BeamSplitter 的 `beamUnitary_fock`](../../../D5/S3/Quantum/QuantumChannels/FockAttenuator/BeamSplitter.lean)、
+[DisplacementCovariance 的 `beam_displacement` 与 `partialTrace_pairDisplacement`](../../../D5/S3/Quantum/QuantumChannels/FockAttenuator/DisplacementCovariance.lean)
+及其对应的 [BeamSplitter](../../../Blueprint/D5/S3/Quantum/QuantumChannels/FockAttenuator/BeamSplitter.md)、[DisplacementCovariance](../../../Blueprint/D5/S3/Quantum/QuantumChannels/FockAttenuator/DisplacementCovariance.md) 数学叙述。`Attenuator` 中的 `pureAttenuatorOperator` 取环境概率 $p_0=1$、$p_n=0$（$n>0$）。单独的 `coherent_output_covariance` 只陈述相干输入的结论，不足以作为下面非对角算子的全部依据；所用的是上述任意双模向量的位移传输和偏迹关系。
+
+这些是 `literature-attested` 的既有衰减数学：[Van Herstraeten–Guha–Cerf，arXiv:2312.15623v2](https://arxiv.org/html/2312.15623v2) 的 (44) 给任意输入的位移协变，(45) 给 Fock 环境定义，此处只取真空 $n=0$。来源对应见 [Library 文献条目](../../../Library/QuantumStates/vanherstraeten2024nongaussian.md)；[Hertz 等的损耗文献条目](../../../Library/QuantumChannels/hertz2025lossbeamsplitters.md) 使用同一真空损耗参数。第二模的相位约定不影响偏迹通道。不使用非真空环境不等式或熵最优化命题。
+
+具体地，既有双模位移关系取输入位移 $(\alpha,0)$，输出位移为 $(\sqrt\eta\alpha,\sqrt{1-\eta}\alpha)$；偏迹消去第二模的位移。故对迹类算子 $X$，
+
+$$
+\mathcal L_\eta(\mathsf D(\alpha)X\mathsf D(\alpha)^\dagger)
+=\mathsf D(\sqrt\eta\alpha)\mathcal L_\eta(X)
+\mathsf D(\sqrt\eta\alpha)^\dagger.
+\tag{13.4}
+$$
+
+从任意向量的纯态关系到秩一交叉算子，可对 $|x+i^a y\rangle\langle x+i^a y|$（$a=0,1,2,3$）作极化；再由线性和迹范数连续性延伸到迹类。Fock 公式在真空和一光子上给
+
+$$
+\begin{aligned}
+U_\eta|0,0\rangle&=|0,0\rangle,\\
+U_\eta|1,0\rangle&=\sqrt\eta|1,0\rangle
++\sqrt{1-\eta}|0,1\rangle,\\
+\mathcal L_\eta(|0\rangle\langle1|)&=\sqrt\eta|0\rangle\langle1|,\\
+\mathcal L_\eta(|u_\alpha\rangle\langle v_\alpha|)
+&=\sqrt\eta|u_{\sqrt\eta\alpha}\rangle
+\langle v_{\sqrt\eta\alpha}|.
+\end{aligned}
+\tag{13.5}
+$$
+
+第二行的失去光子项与第一行有正交的第二模向量，因而其交叉偏迹为零；最后一行由 (13.4) 得到。这些双模向量仅用于通道恒等式，不是 (12.1) 生成的额外实际口。一般 Fock 公式同样表明 $\mathcal L_\eta$ 限制到占据 $0,\ldots,K_0$ 的输入时，恰为 (12.1) 的有限和，输出没有更高占据数。
+
+现在固定定义 3.1 的原截断和原求积，令 $f_l^\infty,g_l^\infty$ 为同一求积点上不截断的序列及其 $\partial_{\bar z}$ 导数。归一化因子仍是 (3.3) 的因子。由 (2.5)、$Z_s\ge z_0s^2/2$、$\sum_lw_l=1$ 及 (3.6)，
+
+$$
+\begin{aligned}
+u_{\rm tail}&=\left(\sum_l\|(I-P_K)f_l^\infty\|^2\right)^{1/2}
+\le\frac{C_0}{sK_+},\\
+v_{\rm tail}&=\left(\sum_l\|(I-P_K)g_l^\infty\|^2\right)^{1/2}
+\le\frac{C_0}{s^2K_+}.
+\end{aligned}
+\tag{13.6}
+$$
+
+这里 $P_K$ 截到 $0,\ldots,K_0$；对导数使用中心图关系
+$|(z\circ g_l^{-1})'(0)|=1+|z(g_l^{-1}h)|^2\le2$，因为非零支撑内 $|z(g_l^{-1}h)|<s<1$。$C_0$ 由 (2.6) 同时控制 $\sqrt{2/z_0}M_0$ 和 $2\sqrt{2/z_0}M_1$。球冠边界及支撑外的零延拓在数算子图范数内光滑，图极点不在非零支撑内，所以这些界对全部 $h$ 和标架一致。
+
+由 (3.7) 的 $\|f\|\le1$、$\|g\|\le A/s$，秩一迹范数公式和 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\sum_l\bigl\||f_l^\infty\rangle\langle g_l^\infty|
+-|f_l\rangle\langle g_l|\bigr\|_1
+&\le E_{\rm tail},\\
+E_{\rm tail}&=u_{\rm tail}(A/s+v_{\rm tail})+v_{\rm tail}\\
+&\le\frac{3C_0^2}{s^2K_+}
+\le\frac{3C_0^{-6}s^2}{\lambda}\le\frac1\lambda.
+\end{aligned}
+\tag{13.7}
+$$
+
+中间一步使用 $A\le C_0$、$C_0\ge2$ 和原来的
+$K_+\ge C_0^8\lambda s^{-4}\ge1/s$、$\lambda\ge1$；没有按 $\eta$ 改选截断。把同一分解用于范数乘积，也得到其差的绝对值之和至多 $E_{\rm tail}$。
+
+OTF004 (26.8) 及全纯坐标变换给每个球冠内的标量 $a_l,\kappa_l$，使
+
+$$
+f_l^\infty=a_lu_{\alpha_l},\qquad
+g_l^\infty=a_l\kappa_lv_{\alpha_l},\qquad
+\alpha_l=\frac{\bar w_l'}{1-|w_l'|^2},\quad
+w_l'=z(g_l^{-1}h)/s.
+\tag{13.8}
+$$
+
+这里 $w_l'$ 是局部复坐标，区别于求积权重 $w_l$。在振幅为零处取零向量；平坦边界由连续延拓处理。因此 (13.5) 给
+
+$$
+\|\mathcal L_\eta(|f_l^\infty\rangle\langle g_l^\infty|)\|_1
+=\sqrt\eta\|f_l^\infty\|\,\|g_l^\infty\|.
+\tag{13.9}
+$$
+
+记 $I_\infty=\sum_l\|f_l^\infty\|\,\|g_l^\infty\|$。正交截断不增加每个范数，故由同一有限族的 (3.8) 及 (13.7)，
+
+$$
+\frac1{2s}\le I_\infty
+\le\sum_l\|f_l\|\,\|g_l\|+E_{\rm tail}
+\le A/s+E_{\rm tail}.
+\tag{13.10}
+$$
+
+CPTP 映射对非 Hermitian 迹类算子也收缩迹范数：其伴随为保单位 CP 映射，Schwarz 不等式给算子范数收缩，再用 Schatten 范数对偶。将它用于 (13.7)，由 (13.9) 得
+
+$$
+|T_\eta-\sqrt\eta I_\infty|\le E_{\rm tail}.
+\tag{13.11}
+$$
+
+结合 (13.10)、$0\le\sqrt\eta\le1$ 即为 (13.2)。证明从未除以 $\eta$，故同时覆盖零、端点一及随 $e$ 变化的透射率。所新增的估计是原固定有限球冠族在这一衰减下的交叉质量，不将 (13.4)–(13.5) 的既有通道恒等式作为新增内容。$\square$
+

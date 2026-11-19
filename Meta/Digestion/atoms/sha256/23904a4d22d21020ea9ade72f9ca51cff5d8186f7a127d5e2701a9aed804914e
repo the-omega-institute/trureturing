@@ -1,0 +1,11 @@
+**定义 86.9（原双份投影与中间嵌入）。** 定义 $E\to E$ 的算子及 $A\to E$ 的映射
+
+$$
+P_{12}=\frac{HH^*}{n},\qquad P_{23}=\frac{p^*p}{n},\qquad
+\kappa(a)=Q(1_A,a,1_A)=\eta\beta(a)=\iota\alpha(a),\qquad
+P_2=\frac{\kappa\kappa^*}{n^2}.
+\tag{86.11}
+$$
+
+本章 $P_{12},P_{23}$ 是投影，不是因子交换。记 $B_{12}=\eta(D)$、$B_{23}=\iota(D)$。
+

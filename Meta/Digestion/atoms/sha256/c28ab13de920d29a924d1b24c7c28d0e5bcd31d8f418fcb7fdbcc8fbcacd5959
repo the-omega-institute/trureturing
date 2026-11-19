@@ -1,0 +1,12 @@
+**定义 143.1（三层对象与一级序）。** 原系数星代数 $\mathfrak b$ 可以无限维、非交换、不完备；$\mathcal B$ 是它的数学C*完成。$\mathcal A=C^*(X)$ 用原JC环境的乘法生成，$\mathcal C=X+iX$ 用由三轴确定的 $\star$ 相乘。它们不得默认相等。$\Phi:\mathcal C\to M_2(\mathcal B)$ 作为C*同构完全等距且完全保正；但从 $\mathcal C$ 到原 $\mathcal A$ 的相同向量包含，只在自伴部保证140.3的原范数和一级正锥，未保证原环境继承的全部矩阵序或CP。
+
+原环境也可用成熟矩阵单位识别为二阶矩阵，但其系数与乘法不同：置 $\mathcal R=\{r\in\mathcal A:[r,h]=[r,e]=0\}$，其矩阵单位为
+
+$$
+t_{11}=\tfrac12(u+h),\quad t_{22}=\tfrac12(u-h),\quad
+t_{12}=\tfrac12(e-iQj),\quad t_{21}=\tfrac12(e+iQj).
+\tag{143.1}
+$$
+
+在原环境乘法下代入轴关系即得完整矩阵单位，且 $\mathcal R$ 是其共同交换域；系数到角仍需(140.6)同形的识别。因此 Blackadar II.9.4.3给 $\mathcal A\cong M_2(\mathcal R)$。这里的 $t_{12},t_{21}$ 未必属于 $E_{\mathbb C}$，$\mathcal R$ 的原乘法不能替代 $\mathcal B$ 的 $\star$，所以这个成熟环境分解不承担140.1的原域结论。
+

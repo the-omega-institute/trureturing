@@ -39,4 +39,5 @@ The source is Fokkink and Joshi, Anti-Recurrence Sequences, arXiv:2506.13337v1, 
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/AntiRecurrenceAutomaticity.result`
+- Dependency: [D5/S0/Automata/CanonicalDFAOKernel](../../S0/Automata/CanonicalDFAOKernel.md)
 - Dependency: [D5/S0/Automata/DFAOStateLowerBound](../../S0/Automata/DFAOStateLowerBound.md)

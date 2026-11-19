@@ -211,7 +211,7 @@ def bind (original info : ConstantInfo) (occurrence client : Expr) : M Bound := 
     ("level_count", toJson original.levelParams.length),
     ("source", describe source), ("signature", describe signature),
     ("actual", describe actual), ("rebuild", describe law),
-    ("coordinates", toJson selected.coordinates),
+    ("coordinates", toJson scope.parameterSlots),
     ("readouts", toJson (scope.readouts.mapIdx fun i r => Json.mkObj [
       ("role", toJson i), ("path", toJson selected.readouts[i]!.path),
       ("scope_size", toJson r.rawContext.size),

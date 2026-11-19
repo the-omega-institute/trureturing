@@ -1,0 +1,104 @@
+**定理 125.1（全原横向输入的交叉投影）。** 在123.1下，每个原 $z\in V_h$ 均满足
+
+$$
+\boxed{\Pi Gz=T\Pi z.}
+\tag{125.1}
+$$
+
+允许 $z$ 同时含100.1的全部四份分量，平方不必中央、标量、可逆或具有有限谱。
+
+证明。在 $\mathcal A$ 的忠实含单位Hilbert表示中读取固定原元素，内积第一槽共轭线性。以下省略表示符号；$K=je$ 是辅助环境元，满足
+
+$$
+K^*=-K,\quad K^2=-I,\quad Kh=hK,\quad Ke=-eK,\quad Kj=-jK.
+\tag{125.2}
+$$
+
+它与原全词接口的 $K$ 区分。固定 $\sigma\in\{1,-1\}$，取任意单位向量
+
+$$
+\xi\in H_\sigma=\{\xi:h\xi=-\xi,\ K\xi=i\sigma\xi\},\qquad \eta=j\xi.
+\tag{125.3}
+$$
+
+空子空间无需取向量。$\eta$ 为单位向量，且 $h\eta=\eta$、$K\eta=-i\sigma\eta$、$e\xi=i\sigma\eta$。对 $\delta>0$ 取数学向量态 $\phi_\delta$，向量为 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$。对每个固定自伴 $v\in V_h$，反交换关系准确给
+
+$$
+\begin{aligned}
+\phi_\delta(v)&=\frac{2\delta\operatorname{Re}\langle\eta,v\xi\rangle}{1+\delta^2},&
+\phi_\delta(n)&=\frac{2\delta^2}{1+\delta^2},\\
+\phi_\delta(v^2)&=
+\frac{\|v\xi\|^2+\delta^2\|v\eta\|^2}{1+\delta^2}.&&
+\end{aligned}
+\tag{125.4}
+$$
+
+定义已知向量空间上的实正交投影 $P_\eta w=w-\operatorname{Re}\langle\eta,w\rangle\eta$。将(125.4)代入124.1的 $(p,q)=(e,j)$，约去 $2\delta/(1+\delta^2)$ 后，两个根号准确变成
+
+$$
+\sqrt{\|P_\eta(v_\pm\xi)\|^2+\delta^2\|v_\pm\eta\|^2}.
+$$
+
+于是令 $\delta\downarrow0$，只在这些固定已知向量范数中取极限，得到对全部实 $t$ 的
+
+$$
+2|\operatorname{Re}\langle\eta,(j+tz)\xi\rangle|
+\le\|P_\eta(v_+\xi)\|+\|P_\eta(v_-\xi)\|.
+\tag{125.5}
+$$
+
+令 $a=\langle\eta,z\xi\rangle,b=\langle\eta,g\xi\rangle$。在 $t=0$，两个未投影向量分别为 $(1+i\sigma)\eta,(-1+i\sigma)\eta$，投影后均为 $i\sigma\eta$。故(125.5)在零点饱和为 $2=1+1$，两份范数均在非零向量处可微。左侧导数为 $2\operatorname{Re}a$，右侧导数为
+
+$$
+\begin{aligned}
+&\operatorname{Re}\langle i\sigma\eta,-P_\eta((z+g)\xi)\rangle
++\operatorname{Re}\langle i\sigma\eta,P_\eta((z-g)\xi)\rangle\\
+&\hspace{3em}=-2\sigma\operatorname{Im}b.
+\end{aligned}
+$$
+
+因不等式对零点两侧的 $t$ 都成立，饱和处导数必须相等，即
+
+$$
+\operatorname{Re}a=-\sigma\operatorname{Im}b.
+\tag{125.6}
+$$
+
+现在使用124.1的另一份实际锚 $(p,q)=(j,-e)$。仍有 $qp=K$，而 $\eta'=q\xi=-i\sigma\eta$；(125.4)–(125.6)逐式适用。此时 $a'=i\sigma a,b'=i\sigma b$，故 $\operatorname{Re}b=\sigma\operatorname{Im}a$。联合两份实等式得到
+
+$$
+b=-i\sigma a,\qquad
+\langle j\xi,(g+i\sigma z)\xi\rangle=0.
+\tag{125.7}
+$$
+
+这里没有对旧 $D$ 求导；$g=Gz$ 从始至终固定。所有微分只涉及 $t$ 的显式仿射向量及非零处的普通范数。
+
+令 $Q_\sigma$ 为 $H_\sigma$ 的Hilbert投影，$R_\sigma=jQ_\sigma j$。$j$ 将 $H_\sigma$ 等距映到 $h=1,K=-i\sigma$ 的共同子空间。式(125.7)对 $H_\sigma$ 中全部向量成立，普通复极化因而给
+
+$$
+Q_\sigma j(g+i\sigma z)Q_\sigma=0,
+\qquad R_\sigma gQ_\sigma=-i\sigma R_\sigma zQ_\sigma.
+\tag{125.8}
+$$
+
+具体地，对任意两个向量分别代入其和及其中一个乘 $i$ 的和，即消去两个有序非对角项；这里极化的是固定有界算子的复二次式，不是未知响应或未给的联合正性。
+
+为把压缩读数接回原投影，取辅助自伴对称元 $O=ihK$。其共轭恰为原有限Jordan自同构
+
+$$
+\mathcal F=U_hU_eU_j,\qquad \mathcal F(v)=OvO,\qquad
+\mathcal F|_{V_h}=-U_eU_j,\qquad
+\Pi=\tfrac12(I+\mathcal F)|_{V_h}.
+\tag{125.9}
+$$
+
+不要求 $\mathcal F=I$。$O$ 在 $H_\sigma$ 及 $R_\sigma H$ 上的符号同为 $\sigma$，在另一个 $h=1$ 子空间上符号相反。故对 $v\in V_h$，
+
+$$
+(\Pi v)Q_\sigma=R_\sigma vQ_\sigma.
+\tag{125.10}
+$$
+
+另一方面，102.2的已知代数式给 $Tw=Kw$ 对所有 $w\in A_1\oplus A_2$ 成立；$K$ 在 $R_\sigma H$ 上为 $-i\sigma$。因此(125.8)–(125.10)说明 $\Pi g$ 与 $T\Pi z$ 在每个 $H_\sigma$ 上相同。这两份空间之和是整个 $h=-1$ 子空间。两个待比较算子均自伴并与 $h$ 反交换，所以另一非对角块由伴随确定，也相同。忠实性给原元素等式(125.1)。$Q_\sigma,R_\sigma,O$ 都只承担数学读取，未成为任何旧调用的输入。∎
+

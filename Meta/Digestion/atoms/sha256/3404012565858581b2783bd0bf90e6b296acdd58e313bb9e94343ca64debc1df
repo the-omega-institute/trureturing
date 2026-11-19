@@ -1,0 +1,22 @@
+**定理 77.1（不先要求输出闭合的完整四维窗）。** 在76.1下，对全部实 $s,t$、$x,y\in U$，
+
+$$
+\boxed{D(su+x,tu+y)=x\times y.}
+\tag{77.1}
+$$
+
+所以同一个旧 $D$ 在整个 $B^2$ 上实交替双线性，输出落在 $U$，任意单位平移中性成立。
+
+证明。若 $s=t=0$，63.1已给。否则令 $T=\sqrt{s^2+t^2}>0$，对原两输入作真正的SO(2)变换
+
+$$
+\binom{a'}{b'}=\frac1T
+\begin{pmatrix}t&-s\\s&t\end{pmatrix}
+\binom{su+x}{tu+y}
+=\binom{x'}{Tu+y'},
+\quad x'=\frac{tx-sy}{T},\quad y'=\frac{sx+ty}{T}.
+\tag{77.2}
+$$
+
+16.2所复用的原SO(2)不变性保持同一个旧输出；76.2给 $D(a',b')=x'\times y'$。显式旋转行列式为一，故 $x'\times y'=x\times y$。这是对原标签的已付变换，不是对未知映射作线性展开。其余结论由所识别的公式直接得到。∎
+

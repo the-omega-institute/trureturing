@@ -1,0 +1,8 @@
+**引理 489.1（去掉价格权）。** 令 $\mathcal T_0(x)=\sqrt x\,P_{H_x}(x)$。则 $\mathcal T(x)-\mathcal T_0(x)=O(\log^2x)$。
+
+证明。对 $x\ge3$，$(\log w)'(x)=-\frac2x+\frac1{x(1+\log x)}-\frac2{x\log x}$，其中 $0<-x(\log w)'(x)=2+\frac2{\log x}-\frac1{1+\log x}<4$。令 $A_x(u)=-\int_x^{x+u}(\log w)'(v)\,dv$，则 $\rho_x(u)=e^{-A_x(u)}$ 且 $0\le A_x(u)\le4\log(1+u/x)\le4u/x$，故 $0\le1-\rho_x(u)\le A_x(u)\le4u/x$（$0\le u\le H_x$）。由 von Koch 界，$|D_u(x)|\ll\sqrt x\log^2x$。于是 $|\mathcal T-\mathcal T_0|\ll\frac{\sqrt x}{H_x^2}\int_0^{H_x}\sqrt x\log^2x\cdot\frac{4u}x\,du\ll\log^2x$。证毕。
+
+由此 $\|\mathcal T-\mathcal T_0\|_{L^2([X,2X],dx/x)}=O(\log^2X)$，且 $\int_X^{2X}\mathcal T_0^2\,dx/x=\int_X^{2X}P_{H_x}(x)^2\,dx$。
+
+以下引理 489.2–489.3 是经典方差转移方法（由普通方差经极化得协方差，再作三角平均）在本节长度尺度上的实现。
+

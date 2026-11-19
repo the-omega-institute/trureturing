@@ -1,0 +1,108 @@
+**定理 17.1（只保留平方的环境面积下界）。** 在 16.1 下，任取原 $a,b$，记 $d=D(a,b)$、$c=a\circ b$。在 (16.2) 的环境中，若
+
+$$
+[a^2,b]=[b^2,a]=[d^2,a]=[d^2,b]=0,
+\tag{17.1}
+$$
+
+则
+
+$$
+a^2b^2-c^2\le d^2.
+\tag{17.2}
+$$
+
+证明。令 $B_0=C^*(u,a,b,d^2)$、$Z_0=C^*(u,a^2,b^2,c,d^2)$。结合展开给 $[a,c]=[a^2,b]/2=0$、$[b,c]=[b^2,a]/2=0$，所以 $Z_0\subset Z(B_0)$。只将 $d^2$ 列为生成元；不依赖 $d$ 是否属于 $B_0$，也不定义其商像。
+
+固定 $Z_0$ 的任意字符 $\chi$。201.1 的非零中央商构造可在这个实际含单位 C* 子代数中直接使用：把字符的态正延拓到 $B_0$，中央性和 GNS 使每个 $z-\chi(z)u$ 在循环表示中为零，故其生成理想被消去而单位保留。这个构造不涉及 $E$ 是否填满 $A_{\rm sa}$。记 $\chi(a^2)=\alpha,\chi(b^2)=\beta,\chi(c)=\gamma,\chi(d^2)=\delta^2$，$\delta\ge0$。由全部实际 $(sa+tb)^2\ge0$，实 Gram 半正定。一个实 SO$(2)$ 角度旋转实际原输入为 $\xi,\eta$，185.1 保持 $D(\xi,\eta)=d$；当前商中有
+
+$$
+\bar\xi^2=X^2u,\quad\bar\eta^2=Y^2u,\quad
+\bar e=0,\ e=\xi\circ\eta,\quad
+\overline{d^2}=\delta^2u,\quad
+X^2Y^2=\alpha\beta-\gamma^2.
+\tag{17.3}
+$$
+
+若 $XY=0$，当前字符的目标平凡。以下 $X,Y>0$。任一商态拉回并正延拓到整个 $A$，记为 $\phi$。普通态的 Cauchy–Schwarz 给
+
+$$
+\phi((g-\kappa u)^2)=0
+\ \Longrightarrow\
+\phi(gw)=\phi(wg)=\kappa\phi(w)\quad(w\in A).
+\tag{17.4}
+$$
+
+不要求 $g,w$ 交换。$\phi(e^2)=0$，而两次实际原 PB 是
+
+$$
+\begin{aligned}
+D(\eta+d,e)-D(\eta-d,-e)&=-2\eta\circ d,\\
+D(\xi-d,e)-D(\xi+d,-e)&=2\xi\circ d.
+\end{aligned}
+\tag{17.5}
+$$
+
+四份外层的第二输入平方读零，原 P2 逐份给零输出读数。因此每份这样的延拓态都满足 $\phi(\xi\circ d)=\phi(\eta\circ d)=0$；这不是原算子正交。
+
+取任意有限 $\lambda>0$、$T=\sqrt{1+\lambda^2X^2}$。商中 $e_1=\bar\xi/X,e_2=\bar\eta/Y$ 反交换且平方为单位。取
+
+$$
+n=(-\lambda Xe_1+e_2)/T,\qquad
+m=(e_1+\lambda Xe_2)/T.
+$$
+
+$n^2=m^2=u,nm=-mn$，所以 $mnm=-n$ 使 $n$ 的正负谱值都存在。选 $\psi(n)=1$ 的支撑态；Schwarz 给 $\psi(m)=0$。拉回并延拓后，
+
+$$
+\phi(\xi)=-\lambda X^2/T,\qquad \phi(\eta)=Y/T.
+$$
+
+原 $n_0=-\lambda\xi/T+\eta/(TY)$ 的商像是 $n$；只有所选态令 $\phi((n_0-u)^2)=0$，不将商元 $n$ 当作单位。(17.4)–(17.5) 及 $\phi((\xi^2-X^2u)^2)=0$ 给
+
+$$
+\phi(d)=0,\qquad \phi(d^2)=\delta^2,\qquad
+\phi(\xi^2\circ d)=0.
+\tag{17.6}
+$$
+
+最后一式不需要 $[\xi^2,d]=0$；完整 $\phi(d^2)$ 也不丢掉 $d$ 跨输入中心纤维的分量。
+
+实际原第三标签 $z=Tu+\lambda\xi$ 满足 $D(\xi,z)=0$。PB $(\xi,\eta,z)$ 的全部外层为
+
+$$
+\nu=d-T\xi-\lambda\xi^2,\quad
+U_\pm=\eta\pm\nu,\quad V_\pm=z\pm e,
+\qquad
+D(U_+,V_+)-D(U_-,V_-)=-2\eta\circ\nu-2z\circ e.
+\tag{17.7}
+$$
+
+保留全局原标签 $e$，只用 (17.4) 在同一读取中消去其交叉项。式 (17.6) 支付全部含 $d$ 的交叉项；其余是式 (7.12) 的同一已知乘法计算，准确给
+
+$$
+\begin{gathered}
+\phi(\nu^2)=X^2+\delta^2,\quad
+\phi(\eta\circ\nu)=-\lambda X^2Y/T,\quad
+\phi(z^2)=1,\\
+\phi(\eta\circ z)=Y,\qquad
+\phi(\nu\circ z)=-\lambda X^2/T.
+\end{gathered}
+$$
+
+因此两张完整原 P2 的预算与 PB 右端读数为
+
+$$
+\Delta_\pm=X^2/T^2+\delta^2,\qquad
+\phi(-2\eta\circ\nu-2z\circ e)=2\lambda X^2Y/T.
+$$
+
+两份 P2 和三角不等式给
+
+$$
+\lambda^2X^2(X^2Y^2-\delta^2)\le X^2+\delta^2.
+\tag{17.8}
+$$
+
+若 $X^2Y^2>\delta^2$，一个满足 $\lambda^2>(X^2+\delta^2)/(X^2(X^2Y^2-\delta^2))$ 的有限实数就给矛盾。故每个字符满足 $\alpha\beta-\gamma^2\le\delta^2$。差 $d^2-(a^2b^2-c^2)$ 属于交换代数 $Z_0$，字符判定正序，得 (17.2)。未知外层输出不必留在 $B_0$；同一环境态逐份读取它们。没有未知 $D$ 极限、完成标签或环境满稠密前件。∎
+

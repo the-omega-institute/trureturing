@@ -1,0 +1,48 @@
+**定义 112.1（同维完整排除球候选）。** 始终取107.1、109.1及111.1的同一个
+非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的
+原泛函 $u$、整个原紧基 $K=C\cap\{u=1\}$、全部原纯点
+$P=\operatorname{ext}K$ 及整个原效应区间 $\mathcal E=[0,u]_{C^*}$。
+完整保留
+
+$$
+\begin{gathered}
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\\
+p\perp q\ \Longleftrightarrow\
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0,\\
+\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp},\\
+\mathrm{EB}_{\ge1}:\quad
+\forall p\in P\ \exists d_p\in\mathbb N,\ d_p\ge1:\ D_p\simeq_{\rm aff}B^{d_p},\\
+\mathrm{Pair}_{\perp}:\quad
+p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\end{gathered}
+\tag{VIII112.1}
+$$
+
+$x$ 遍历全部原 $K$，$F_p$ 遍历全部原确认效应，$H(p,q)$ 是原最小面。
+在W之上唯一附加的几何条件为
+
+$$
+\mathrm{UniformEB}_{\ge2}:\quad
+\exists d\in\mathbb N,\ d\ge2\quad
+\forall p\in P:\ D_p\simeq_{\rm aff}B^d.
+\tag{VIII112.2}
+$$
+
+这里的 $D_p$ 必须是原二元排除关系的完整纤维，不是其中挑出的球、直径或纯点子集。
+条件只说这些完整纤维有相同仿射维数；不比较不同球的原有尺，
+不输入G、全Pair、全纯数值互易、谱性、全局内积、滤子保纯、
+纯点流形、三元二面可辨、TRI2或整体维数。
+记 $n=\dim V$、$H=\ker u$、$S=\partial K$，边界始终相对 $\{u=1\}$。
+
+直接复用VII104.2—104.7、VII105.2—105.5及105.9：$P$ 紧，
+全部非空真面只有纯单点与非点暴露极大真面 $D_p$，$p\mapsto D_p$ 双射；
+不同非点真面的交若非空只能是一个原纯点。
+每个 $D_p$ 的相对边界恰为 $P\cap D_p$，其对径端点原正交；
+任意原正交对有唯一第三joint，每个纯点均可补成joint。
+W已给原全域least尺 $a_p\in F_p$、$a_p|_{D_p}=0$，以及原正投影 $\Pi_p$。
+球心 $c_p$ 的连续性是VII105.9的既有结论。
+110.2已给每个非纯边界点的唯一球标签，110.3已给 $P$ 为紧ENR；
+这些结论均不包含纯点流形假设。
+

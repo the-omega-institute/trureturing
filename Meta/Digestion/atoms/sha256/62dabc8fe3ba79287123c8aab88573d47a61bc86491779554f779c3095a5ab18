@@ -1,0 +1,31 @@
+**定理45.2的证明：原预算。** $\mu=0$ 时直接用配平三角续卷241.1。各槽奇性已由中央卷16.2援引的原接口给出，所以只需证 $\mu>0$；负值对实际 $-r$ 应用正值结论，不使用一般齐次性。
+
+固定同一 $d=\pi D(r,a)$。原多项式零响应卷83.3的零平方读取与固定Hermitian二次型极化给
+
+$$
+d=\delta p+H(w),\qquad
+w=(x+iy)f+v,\qquad x,y\in\mathbb R,\quad v\perp e,f.
+\tag{46.1}
+$$
+
+这里仅复用其支撑论证，不调用83.1尚不满足的小连接前件。对任意数学向量 $\xi=e+\eta$、$\eta\perp e$，P2沿同一商拉回的正读取给
+
+$$
+\bigl(\delta+2\operatorname{Re}\langle w,\eta\rangle\bigr)^2
+\le \mu^2\left(\|Lf+\eta\|^2+
+L^2(\operatorname{Im}\langle f,\eta\rangle)^2\right).
+\tag{46.2}
+$$
+
+这些未归一向量读取的质量可以不为一，属于原准确锥已允许的数学读取。取 $\eta=-Lf$ 得 $\delta=2Lx$。再写 $\eta=-Lf+\zeta$，以正定实二次型
+$\|\zeta\|^2+L^2(\operatorname{Im}\langle f,\zeta\rangle)^2$
+的对偶范数求46.2，得到
+
+$$
+\delta=2Lx,\qquad
+x^2+\|v\|^2+\frac{y^2}{1+L^2}\le\frac{\mu^2}{4}.
+\tag{46.3}
+$$
+
+具体地，线性泛函 $\operatorname{Re}\langle w,\zeta\rangle$ 在 $f$ 的实方向、虚方向及其正交补上的对偶范数平方依次为 $x^2,y^2/(1+L^2),\|v\|^2$；46.2的系数二给46.3。此计算只处理固定已知二次型，没有对未知 $D$ 求输入导数或取输入极限。
+

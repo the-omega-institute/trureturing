@@ -1,0 +1,128 @@
+**定理 28.1（原输入齐次核的零模定位与精确配对）。** 沿用定义 17.1、27.1 及定理 27.4 的同一有限输入和系数。$B,V,D_{\rm env}$ 任意，$m\ge0$ 任意有限，每个 $\sigma$ 分别解释，不假设 P2。记
+
+$$
+N=\ker D_{\rm env},\qquad W=V|_N,\qquad
+N_1=N\ominus\ker W,\qquad \mathcal W=\operatorname{ran}W,
+\qquad J=(W|_{N_1})^{-1}:\mathcal W\longrightarrow N_1.
+\tag{28.1}
+$$
+
+$J$ 正是定义 17.1 的逆；零空间之间仍取零映射。固定任意一个 (27.6) 的有限索引 $\theta$，定义
+
+$$
+\zeta_\delta=\beta_\delta-i\epsilon\sigma\delta\alpha_\delta,
+\qquad \delta\in\{1,-1\}.
+\tag{28.2}
+$$
+
+令 $\mathcal K_{\sigma,\theta}(\mathcal W)$ 为所有满足下面两个复向量等式的 $(X,w)\in M_2(\mathbb C)_{\rm sa}\times\mathcal W$ 所组成的实向量空间：
+
+$$
+\boxed{\quad
+w+\delta\left(J_C(X)u+\frac{\sigma i}{2}Cw\right)
+=\zeta_\delta\left(Xu+\delta\left(H_\sigma(X)u-\frac12Cw\right)\right)
+\quad(\delta=1,-1).
+\quad}
+\tag{28.3}
+$$
+
+则原实坐标中的齐次核准确为
+
+$$
+\ker A
+=\{(a,v):\ \exists w\in\mathcal W:\quad
+     (X(a),w)\in\mathcal K_{\sigma,\theta}(\mathcal W),\ Y(v)=Jw\}.
+\tag{28.4}
+$$
+
+特别地，每个核方向的实际环境列都满足 $Y(v)\in N_1$；环境的非零谱读取方向不产生核方向。在这个核上，定理 27.4 的原残量列满足准确配对公式
+
+$$
+\boxed{\quad
+(a,v)^{\mathsf T}b_1
+=2\epsilon\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right),
+\qquad T_A=\operatorname{diag}(1,-2).
+\quad}
+\tag{28.5}
+$$
+
+因此，对这份同一输入和这个索引，
+
+$$
+b_1\in\operatorname{ran}A
+\quad\Longleftrightarrow\quad
+\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right)=0
+\quad\text{对每个 }(X,w)\in\mathcal K_{\sigma,\theta}(\mathcal W).
+\tag{28.6}
+$$
+
+这刻画所有零模耦合秩 $0,1,2$ 的核与配对。它只把齐次值域问题定位到原 $\mathcal W$，不把原算子乘法改成截面上的压缩乘法。
+
+证明。以下只在本定理的推导内消费成熟的复 Gram 配方。原复内积记为 $\langle f,g\rangle_{\mathbb C}=f^*g$，其实部仍是定义 27.1 的实内积。§1 已有的标准零残量换位恒等式及 (27.10) 给
+
+$$
+\ell_0(z)=-\sigma\sum_{\delta=\pm1}\delta\,
+  \operatorname{Im}\langle\mathcal R_\delta z,
+                       \mathcal S_{\delta,0}z\rangle_{\mathbb C}.
+\tag{28.7}
+$$
+
+先在 $\tau=1$ 上直接引用该原恒等式；两边都是 $z$ 的齐次实二次型，再按 (27.14) 即得全部 $z$ 上的等式。没有在 $\mathcal H_0$ 上相乘原算子的压缩。将 (28.7) 代入 (27.7)，逐项配方得到
+
+$$
+z^{\mathsf T}\mathscr Q_{\sigma,0}(\theta)z
+=\sum_{\delta=\pm1}\alpha_\delta^{-1}
+ \|\mathcal S_{\delta,0}z-\zeta_\delta\mathcal R_\delta z\|^2.
+\tag{28.8}
+$$
+
+这里交叉项准确为
+$2\epsilon\sigma\delta\operatorname{Im}\langle\mathcal R_\delta z,
+\mathcal S_{\delta,0}z\rangle_{\mathbb C}$。这是 §1 的复 Gram 与 §27 配方在原作用像上的中间恒等式，不另立通用定理。
+
+对 $k=(a,v)$，置 $z=(k,0)$、$X=X(a)$、$y=Y(v)$、$w=Vy$。原映射 (27.4)–(27.5) 在此处给
+
+$$
+\begin{aligned}
+\mathcal R_\delta(k,0)
+ &=\left(Xu+\delta(H_\sigma(X)u-Cw/2),\ 0\right),\\
+\mathcal S_{\delta,0}(k,0)
+ &=\left(w+\delta(J_C(X)u+\sigma iCw/2),\ D_{\rm env}y\right).
+\end{aligned}
+\tag{28.9}
+$$
+
+实对称 $A\succeq0$ 已由 (27.24) 给出；故 $k\in\ker A$ 当且仅当 $k^{\mathsf T}Ak=0$。在 (28.8) 的正系数平方和中，这又当且仅当每个差向量都为零。因 (28.9) 的每个 $\mathcal R_\delta(k,0)$ 的环境分量为零，首先必有 $D_{\rm env}y=0$。由 (17.2) 的原正交直和，
+
+$$
+\mathcal E_0\cap N=N_1.
+\tag{28.10}
+$$
+
+于是 $y\in N_1$，$w=Wy\in\mathcal W$，且 $y=Jw$。其余演员分量恰好是 (28.3)。反之，(28.3) 和 $y=Jw$ 使 (28.9) 的两个完整差向量都为零，故给出核方向。这证明 (28.4)，包括空环境和任意奇异 $D_{\rm env}$。$(X,w)\mapsto(a,v)$ 是实线性双射，因为 $X(a)$ 与 $Y(v)$ 都是各自给定空间的坐标同构。
+
+现在在同一个核方向上计算残量列。沿用 (27.28) 中的 $\mathcal M_\delta=\mathcal S_{\delta,0}-\beta_\delta\mathcal R_\delta$ 及 $w_u=(T_Au,0)$。核等式给
+
+$$
+\mathcal M_\delta(k,0)
+=-i\epsilon\sigma\delta\alpha_\delta\mathcal R_\delta(k,0),
+\qquad \mathcal T(k,0)=(w,0).
+$$
+
+因 $b_1$ 是 (27.28) 中 $h$ 的前 $n-1$ 个实坐标，原实伴随的定义给
+
+$$
+\begin{aligned}
+k^{\mathsf T}b_1
+ &=\sum_{\delta=\pm1}\delta\alpha_\delta^{-1}
+     \langle\mathcal M_\delta(k,0),w_u\rangle_{\mathbb R}
+      +2\epsilon\langle\mathcal T(k,0),w_u\rangle_{\mathbb R}\\
+ &=\langle-2i\epsilon\sigma(Xu,0),w_u\rangle_{\mathbb R}
+      +2\epsilon\langle(w,0),w_u\rangle_{\mathbb R}\\
+ &=2\epsilon\operatorname{Re}((w-i\sigma Xu)^*T_Au),
+\end{aligned}
+\tag{28.11}
+$$
+
+其中使用 $\mathcal R_+(k,0)+\mathcal R_-(k,0)=2(Xu,0)$。这证明 (28.5)。最后只用实对称矩阵的成熟关系 $\operatorname{ran}A=(\ker A)^\perp$，便得到 (28.6)。所以 $B$、环境非零谱和 $J$ 所携带的环境范数虽仍参与原系数及预算，值域是否成立却完全由 (28.3)、(28.6) 的原零模像和该索引决定。∎
+

@@ -1,0 +1,4 @@
+**定义 63.1（后置的代数取向）。** 只在全复型分支选择 Jordan 图 $\theta_\alpha$，对合法旧响应该类型由62.2支付：每个原局部模型任选一点的保单位同构到 $H_n(\mathbb C)$，与原图复合即可。沿用42.1–42.4：实 Jordan 过渡 $g_{\beta\alpha}$ 的复线性保星延拓或保乘法或反乘法，连续字符 $\varepsilon(g)\in\{\pm1\}$ 给覆盖 $\mathcal O_{\rm alg}$，其截面满足 $s_\beta=\varepsilon(g_{\beta\alpha})s_\alpha$。覆盖独立于所选图；它是乘法方向覆盖，不是普通实行列式取向。
+
+给定截面 $\sigma$，在复化 $\mathfrak J_{\mathbb C}$ 的局部正支用 $AB$、负支用 $BA$，并置 $K_\sigma(a,b)_\alpha=s_\alpha i[a_\alpha,b_\alpha]/2$。42–44的粘合给 C* 丛 $\mathfrak B_\sigma$ 及 $M_\sigma=\Gamma(X,\mathfrak B_\sigma)$，准确保持 $(M_\sigma)_{\rm sa}=E$、正锥 $C$、单位 $u$、范数 $N$ 和全部原评价质量，且 $a\cdot_\sigma b=S(a,b)-iK_\sigma(a,b)$。
+

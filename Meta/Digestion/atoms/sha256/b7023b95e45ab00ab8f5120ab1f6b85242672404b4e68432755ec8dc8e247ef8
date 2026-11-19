@@ -1,0 +1,44 @@
+## 12. 底面相干实现：概率完整仍未决定乘积态
+
+**假设 C-12.1（另供纯底面双量子位）。** $`r\gt 0`$，在条件 𝑧=0 下真实供应归一化纯态，其系数矩阵为
+
+
+```math
+𝒜=\frac1{\sqrt r}\begin{pmatrix}
+\sqrt{p_0}e^{i\theta_0}&\sqrt{p_3}e^{i\theta_3}\\
+\sqrt{p_1}e^{i\theta_1}&\sqrt{p_{13}}e^{i\theta_{13}}
+\end{pmatrix}.
+```
+
+
+行、列是两个端点的 0,1 标签。此条件模型不供应顶点与底面的相干，也不等于原树酉表示。四底角正时定义 $`\Phi=\theta_0+\theta_{13}-\theta_1-\theta_3\pmod{2\pi}`$。
+
+**命题 C-12.2（相位与概率不匹配共同决定纯态任务）。** 局部行列重相位 $`\theta_{ij}\mapsto\theta_{ij}+\alpha_i+\beta_j`$ 保持 Φ。该純态为乘积态当且仅当 $`\det𝒜=0`$；正底面时等价于 Δ=0 且 Φ=0。其纯态 concurrence 为 $`2|\det𝒜|`$，并有
+
+
+<table><tbody><tr><td>
+
+```math
+r^2|\det𝒜|^2=
+(\sqrt{p_0p_{13}}-\sqrt{p_1p_3})^2+
+4\sqrt{p_0p_1p_3p_{13}}\sin^2(\Phi/2).
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** 四个行列相位在交替和中消去。二部纯态可分恰为非零系数矩阵秩一，即行列式零。令复对角乘积 $`l=c_0c_{13},h=c_1c_3`$，展开 $`|l-h|^2`$ 给所列式；四底角正时两项分别非负，第一项零等价于 $`p_0p_{13}=p_1p_3`$，第二项零等价于 Φ=0。若有零振幅，直接用 $`|l-h|^2`$，不定义 $`\arg0`$；不完整 $`K_{2,2}`$ 支撑是森林，沒有四边相位循环。标准 concurrence 的纯态中间式 [C-L4] 式 (7) 是 $`|\langle\psi|\widetilde\psi\rangle|`$，将 $`\widetilde\psi=(\sigma_y\otimes\sigma_y)\overline\psi`$ 代入，内积绝对值为 $`2|\det𝒜|`$。此使用不扩展到未知混态公式。□
+
+**命题 C-12.3（同经典律的乘积与最大纠缠见证）。** 五态均匀律条件底面四概率均 1/4。可以供应
+
+
+```math
+|\psi_0\rangle=(|00\rangle+|01\rangle+|10\rangle+|11\rangle)/2
+=|+\rangle|+\rangle,
+```
+
+
+或 $`|\psi_\pi\rangle=(|00\rangle+|01\rangle+|10\rangle-|11\rangle)/2`$。后者 concurrence 一、两个约化态都是 𝐼/2，前者零。
+
+**证明。** 前者系数外积；后者系数矩阵 $`\frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}`$ 与其伴随乘积为 𝐼/2，行列式 -1/2。实际供应的 $`U_\phi=I+(e^{i\phi}-1)|11\rangle\langle11|`$ 可改变该闭路相位而不改占位概率；没有该资源不声称能操作它。经典对角混合 $`\sum(p_{ij}/r)|i\rangle\langle i|\otimes|j\rangle\langle j|`$ 始终可分，所以同概率不证明相干或纠缠。□
+

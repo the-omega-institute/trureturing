@@ -1,0 +1,102 @@
+**Theorem 3.1 (Sharp delay-robust boundary for the family).** Under
+(1.2), the following conditions are equivalent:
+
+1. $2c-\lambda^2<1$.
+2. For every integer $K\ge0$ and every constant nonnegative array
+   $\delta$ with zero local delays and $\max\delta\le K$, (1.1)
+   converges to zero for every real initial history.
+3. For the fixed array $\delta_*$, (1.4) converges to zero for every
+   real initial history.
+
+Moreover, for each fixed bound $K\ge2$, condition 1 is also equivalent
+to convergence for every such array bounded by $K$, and to convergence
+for every positive remote-delay array bounded by $K$.
+At $2c-\lambda^2=1$ the array $\delta_*$ has a nondecaying real
+periodic history. At $2c-\lambda^2>1$ it has a real history with an
+exponentially growing subsequence. The necessity statement with a
+fixed bound is asserted only for $K\ge2$.
+
+**Proof.** Write $W=|M|$ entrywise and $S=c+d=2c-\lambda^2$.
+The same three-by-three determinant expansion gives
+$\det(zI-W)=z(z^2-S)$, so $\rho(W)=\sqrt S$.
+The absolute-matrix contraction criterion is a classical intermediate:
+see Bertsekas and Tsitsiklis, *Some Aspects of Parallel and Distributed
+Iterative Algorithms—A Survey*, Automatica 27(1), 3–21,
+[author-hosted text, §6.1, equations (6.1)–(6.2) and example (a),
+p. 14](https://web.mit.edu/dimitrib/www/Some_Aspects_DB.pdf).
+The [existing problem's sufficient-condition argument](../../../Problems/aksoy-et-al-2023-asynchronous-iteration-spectral-radius-refutation.md)
+also gives its weighted-history form. For the present family its entire
+sufficiency argument, including $d=0$, can be made explicit as follows.
+
+If $S<1$, choose $q$ with $\sqrt S<q<1$, and put
+
+$$
+\varepsilon=\frac{q^2-S}{4q}>0,\qquad
+w=\left(1,\frac cq+\varepsilon,\frac dq+\varepsilon\right)^{\mathsf T}.
+$$
+
+Every entry of $w$ is positive. Its first absolute row sum is
+$w_2+w_3=(S+q^2)/(2q)<q$, while
+$c\le q w_2$ and $d\le q w_3$. Thus $Ww\le q w$ coordinatewise.
+For any of the arrays and bounds in condition 2, let
+$\eta=q^{1/(K+1)}\in(0,1)$ and use the norm
+
+$$
+\|y\|_*=\max_{0\le s\le K,\,1\le i\le3}
+           \frac{\eta^s|y_{s,i}|}{w_i}.
+\tag{3.1}
+$$
+
+For each newest coordinate, (1.1) and $0\le\delta_{ji}\le K$ give
+
+$$
+\begin{aligned}
+\frac{|(B_{\delta,K}y)_{0,i}|}{w_i}
+ &\le\sum_j\frac{|M_{ij}|w_j}{w_i}\eta^{-\delta_{ji}}\|y\|_*\\
+ &\le q\eta^{-K}\|y\|_*=\eta\|y\|_*.
+\end{aligned}
+$$
+
+Every shifted coordinate has weighted size at most
+$\eta\|y\|_*$ as well. Therefore
+$\|B_{\delta,K}^t y\|_*\le\eta^t\|y\|_*$, which tends to zero.
+This proves condition 2 and sufficiency for each fixed bound; the rate
+here depends on that bound. Condition 2 implies condition 3 by taking
+$K=2$ and $\delta=\delta_*$.
+
+For the converse, if $S\ge1$, Theorem 2.1 gives a radius $r\ge1$
+and a nonzero eigenvalue $z=ir$. An explicit nonzero vector in its
+newest slot is
+
+$$
+u_z=(1,cz^{-2},-dz^{-3})^{\mathsf T}.
+\tag{3.2}
+$$
+
+Indeed, the second and third equations for
+$(u_z,z^{-1}u_z,z^{-2}u_z)$ to be a $z$-eigenvector of (2.5) hold
+by its definition. The first reduces to
+$z=cz^{-3}-dz^{-5}$, exactly $z^6-cz^2+d=0$.
+For every integer $t$, set
+
+$$
+x(t)=\operatorname{Re}(z^t u_z).
+\tag{3.3}
+$$
+
+Because (1.4) has real coefficients, this is a real solution for all
+$t$, so its values at $-2,-1,0$ form an allowed history. Its first
+coordinate satisfies $x_1(2m)=(-1)^m r^{2m}$ for $m\ge0$.
+It does not tend to zero. If $S=1$, then $r=1$, and (3.3) is
+periodic with period four. If $S>1$, the displayed subsequence grows
+exponentially in magnitude. This contradicts condition 3, proving
+necessity including equality.
+
+For a fixed $K\ge2$, the same array $\delta_*$ is allowed even when
+all remote delays are required to be positive. Extending (3.3) back
+to $-K$ gives a legal longer initial history and the same failure.
+Together with sufficiency, this proves both fixed-bound equivalences.
+The uniform positive-delay class at bound one has the different radius
+law in Theorem 4.1; it cannot be used for this necessity implication.
+$\square$
+

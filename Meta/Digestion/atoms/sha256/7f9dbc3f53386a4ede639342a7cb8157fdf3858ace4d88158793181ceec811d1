@@ -1,0 +1,20 @@
+**命题 76.4（生成性不是所选两点表的后处理）。** 在同一个 $A=H_4(\mathbb C)$ 中，令 $X,Y,Z$ 为 Pauli 矩阵、$I=I_2$，省略张量符号。对 $s,t\in\{\pm1\}$ 定义
+$$
+\begin{aligned}
+E_{st}&=(I_4+sZI+tIZ+stZZ)/4,&F_{st}&=(I_4+sXI+tIX+stXX)/4,\\
+G^{\mathrm r}_{st}&=(I_4+sXZ+tZX+stYY)/4,&G^{\mathrm c}_{st}&=(I_4+sYI+tIY+stYY)/4.
+\end{aligned} \tag{76.12}
+$$
+两个有标签框架三元组 $(E,F,G^{\mathrm r})$ 与 $(E,F,G^{\mathrm c})$ 的全部十二原子两点表 $\operatorname{Tr}(pq)$ 完全相同：同框架为 Kronecker delta，异框架恒为 $1/4$。前者 Jordan 闭包为 $H_4(\mathbb R)$，实维数十；后者闭包为 $H_4(\mathbb C)$，实维数十六。
+
+**证明。** 每套使用两个可交换自伴随对合 $A_0,B_0$，而 $A_0,B_0,A_0B_0$ 均迹零。因此 $(I_4+sA_0)(I_4+tB_0)/4$ 是四个和为单位的正交迹一投影，故完整本原。第三套用 $(XZ)(ZX)=(-iY)(iY)=YY$。Pauli 张量迹正交；每个三元组中，各套使用的三个非单位 Pauli 张量集合不相交，故跨套配对只剩 $\operatorname{Tr}I_4/16=1/4$。
+把 $E$ 记为对角投影 $e_j$；$F_{++}=q=\mathbf1\mathbf1^*/4$。对 $j\ne k$，$4e_j\circ(e_k\circ q)=(E_{jk}+E_{kj})/4$。所以 $E,F$ 生成全部实对称矩阵单位，又都实，闭包恰为 $H_4(\mathbb R)$。$G^{\mathrm r}$ 也实，因为 $YY$ 实，加入它不扩大闭包。
+另一方面，$\sum_{s,t}sG^{\mathrm c}_{st}=YI$，其一个非零虚 Peirce 分量给 $I_{13}=iE_{13}-iE_{31}$，差一个非零实因子。已有全部 $R_{jk}=E_{jk}+E_{kj}$；三个不同指标的矩阵单位乘法给
+$$
+2R_{12}\circ I_{13}=I_{23},\quad 2R_{23}\circ I_{13}=I_{12},\qquad
+2I_{jk}\circ R_{k\ell}=I_{j\ell},\quad 2R_{jk}\circ I_{j\ell}=I_{k\ell}\quad(j<k<\ell). \tag{76.13}
+$$
+先得前三点的全部虚边，再经第四点得 $I_{14},I_{24},I_{34}$，与全部实边、对角元组成 $H_4(\mathbb C)$ 的实基。证毕。
+
+该命题比较同一环境内的两个框架见证，不是两个完整 PRE 模型。它分离的是生成见证的充分性；不反驳保留生成性时的定理 76.3，也不反驳全部原态上的 $S$。相同有限两点表的任何后处理都无法分开这两个见证；需要原空间内 Jordan 乘积及其闭包所保留的关系。
+

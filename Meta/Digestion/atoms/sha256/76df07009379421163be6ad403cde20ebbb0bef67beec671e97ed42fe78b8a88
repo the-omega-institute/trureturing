@@ -1,0 +1,57 @@
+**命题 109.15（三张完整二元窗口如何锁定同一几何）。** 本章的数学内容可完整解释如下。
+
+证明与解释。首先仍只有原来的全部态和全部零一效应。
+每个纯态背后，所有能被确认它的某张尺完全排除的原态，已经按W组成一个完整实心球。
+W还把正交的两个纯点补成一个原三元框架，并为每张球确定共同的正线性读回。
+新的关系只说：固定任意这样一个框架，收齐所有至少在三个框架点之一读零的原效应，
+它们合起来必须区分任意两个原态。每一张窗口内允许完整的二元信息；
+不是只留下三个接受概率，也不是声称每个窗口单独足以看清整个状态。
+
+109.2—109.3说明这条话准确禁止一个三阶共同盲核。
+若它非零，原状态体的内部允许沿它正反微移成两个真实态；
+三张完整读回看到的结果一模一样，原全效应却仍能把它们分开。
+禁止这种盲核，等价于把整个原向量精确重构为三张二元读回之和，
+再扣掉重复计入的三个单点读回。它同时把VIII108的维数不等式压成等号。
+
+接着固定一个纯点。背后球的每个纯邻点，又有一张经过这个固定点的原球。
+沿每张球面伸出的切箭头原来各有自己的长度，不同标签不能共用非零箭头。
+三元恒等式先保证任一对径标签的两组箭头恰好线性填满剩余空间。
+用一张球的原非负尺去读另一张球的真实圆弧，得到跨球收缩。
+若按两种对径拆法分别量长，在对方每个块上的总平方长度都只能缩小；
+把各块相加得到互为倒数的两条迹界。
+两条界一起迫所有相对伸缩因子等于一，所以长度真正拼成同一个内积。
+此时各组箭头才成为同一内积下的正交投影，并具有准确的等倾夹角。
+
+这一约束也排除了厚球旁边的零秩切空间。
+沿一张底球，再在一个邻点处循环，已经足以迫出所需的局部同秩，
+不用先宣布整个纯态集连通或光滑。
+等倾投影的反射满足反对易式；对称性使其随底球坐标线性变化。
+这才产生真实的光滑向量子丛。它的单位球丛紧、与全部单位剩余箭头同维，
+而不同标签零交使评价注入。不变域于是保证每根剩余箭头恰被一张球接住。
+这里用拓扑取得覆盖，不用预先列出Hopf或Clifford模的全部类型。
+
+然后只看固定点周围这一颗原纯星。
+原圆弧效应的共同延拓把每颗星点的原尺在整个空间上锁成同一对称配对，
+包括剩余方向上的二分之一尺度。
+若某个原向量对所有星点都非负，109.9的二次式判据把它分成两件：
+一条真实的星纯射线和背后实心球锥中的正残量。
+零质量边界和零横向分量分别处理，不靠极限猜测。
+因此星生成的锥恰为自己的对偶；原锥既包含它，又因原正效应而被其对偶包含，
+两边夹逼迫原锥与星锥相等。星紧且本来全是原pure，原状态体的全部极点于是也都在星上。
+到这一步才取得全部原纯点的数值互易；原全域least早已由W给出，
+两者共同满足既有完整S桥，再到同原锥同原单位的秩三Jordan几何。
+
+若每一张完整排除球都是三球，原维数至少九；
+维数恰九正好使三张读回没有剩余盲核，因而足以给复三能级的全部密度态、全部效应与Born概率。
+若只看到一张三球，经典旗标加spin三球已经是另一种模型，不能选出复三能级。
+最后，单体几何不等于实际过程：复合仍需同一全有限模型的联合条件，
+CP的数学识别仍需该层级，实际事件、条件更新和物理钟仍需原供应。
+因而新关系给出一条完整的单载体条件重构，
+一般W是否自动满足它以及完整动态的起源仍是明确保留的原目标。证毕。
+
+[Q109UBE]: https://arxiv.org/pdf/0909.4787v1 "Cozmin Ududec, Howard Barnum and Joseph Emerson, Three slit experiments and the structure of quantum theory, Proposition 1 and Appendix; standing condition of unique neutral complemented filters."
+[Q109H]: https://pi.math.cornell.edu/~hatcher/AT/ATch2.pdf "Allen Hatcher, Algebraic Topology, Theorem 2B.3 and Corollary 2B.4, printed p172."
+[Q109S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge
+[Q109BMU]: https://arxiv.org/html/1403.4147v4 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16 and Proposition 29."
+[Q109Hierarchy]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+

@@ -1,0 +1,44 @@
+### 21.8. Common source, provenance and joint attainable images
+
+The acquisition-side bridge has the same coupling requirement. In the
+source-faithful result
+`D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut`,
+`actualRoute` is followed by a verifier segment `v` and an ordered same-source
+acquisition suffix `a`. In an acquisition cut, `RouteExit` has two cases: if the decoder
+returns `none` on `kappa_hist (actualRoute p U)`, then `v = []` and acquisition
+may begin immediately after the route without a mismatch. If the decoder
+selects a prototype with `some i`, then `v` ends at the first literal mismatch
+report against `F i`, and acquisition starts immediately afterward. In both
+cases, `h = actualRoute p U ++ v ++ a`, with `a` a prefix of
+`acquisitionTrace [] U`. The `acquisition_provenance_contract`
+only applies to an actual terminal prefix satisfying the declared policy and,
+for the completed observer, to every positive $N$ with $1\le N$ and
+`Allowed N U`; it carries the exact route, the selected prototype's first
+mismatch when applicable, continuation policy, terminal prefix and ordered
+foldl cache update over `a` seeded by `firstRaw (actualRoute p U ++ v)`.
+A malformed phase, counterfactual word, or arbitrary history is not provenance.
+The companion
+`ActualAcquisitionCacheFiber` result identifies the **nominal coarse-history
+raw-lift fiber** (including impossible branch/absent choices and absent lifts);
+it does not filter actual sources or replace raw replies by independently
+selected coarse lifts.
+In the notation of Sparse Literal §1.2 and §3.1, fix a certified finite
+history $w$, an epoch $M\ge N(w)$, and a finite address support
+$S\subseteq\mathcal P$; the common source domain is $u\in\mathcal T$,
+with replacement $\rho$ and literal readout $r_y(p)$. The same-source image is
+
+$$
+J_{M,S}:=\{(r_{\rho^M u}(p))_{p\in S}:u\in\mathcal T\}\subseteq\mathcal A^S.
+\tag{21.25}
+$$
+
+The sparse-literal transport theorem uses this same-source set and its
+continuation intersection, rather than a product of coordinate images. The
+factorization result
+`D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage` makes the
+finite analogue explicit: two residue marginals form a joint point exactly
+when they agree after reduction to the common gcd modulus. Thus surjective
+local readouts, or two separately attainable FIB fibers, never justify
+multiplying marginal attainable sets; a common source or compatibility
+coupling is required.
+

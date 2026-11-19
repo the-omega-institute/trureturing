@@ -1,0 +1,16 @@
+**推论 260.8（完整静态字典与带前件的过程、时间）。** 在260.1的原维数四背景和260.2任一等价条件下，记 $\Theta_N=\theta^{\otimes N}$、$d_N=2^N$。同一坐标给下表；涉及过程、时间和设备的条目保留各行的额外前件。
+
+| 原对象或额外前件 | 同一坐标中的对应 |
+| --- | --- |
+| 全部归一原态、原纯点、凸混合 | 全部密度矩阵 $\rho\succeq0,\operatorname{Tr}\rho=1$；全部秩一 $P_v$，纯域 $\mathbb{CP}^{d_N-1}$；原混合为矩阵凸混合，谱分解为正交纯态概率分解 |
+| 全部原效应、配对及有限单位分解 | 全部 $0\preceq E\preceq I$；$e_E(x)=\operatorname{Tr}(E\Theta_Nx)$；全部数学 POVM $E_j\succeq0,\sum_jE_j=I$，Born 概率 $p_j=\operatorname{Tr}(E_j\rho)$ |
+| 原确认菜单及零邻关系 | $e(P_v)=1$ 恰对应 $E=P_v+B$、$0\preceq B\preceq I-P_v$、$B=(I-P_v)B(I-P_v)$；最小确认者 $P_v$，$T_{p_v}(x)=\operatorname{Tr}(P_v\Theta_Nx)$，零邻点生成实际支持面 $\mathcal D(v^\perp)$ |
+| 单份和实际小面几何 | $\rho=(I+r\cdot\sigma)/2$、$\|r\|\le1$；二支持球 $\mathcal D_2$ 的纯壳 $S^2$，外三角 $\mathcal D_3$ 的纯域 $\mathbb{CP}^2$；仿射维数分别三、八，齐次维数四、九 |
+| 纯态间的量子几何 | $\operatorname{Tr}(P_vP_w)=|v^*w|^2$；HS 距离平方 $2(1-|v^*w|^2)$；取通常归一约定的 Fubini–Study 距离 $\arccos|v^*w|$ |
+| 所有有限复合、原产品、置换、重括号和丢弃 | 标准复 Hilbert 张量积上的整个联合 PSD、原迹配对及偏迹；纯纠缠是 Schmidt 秩大于一，混态可分体是产品密度体的凸包 |
+| 实线性 $L:W_a\to W_b$，另要求对每个有限 $M\ge0$ 的整个原锥 $L\otimes\operatorname{id}_{W_M}\ge0$ | $\Phi=\Theta_bL\Theta_a^{-1}$ 的唯一复线性延拓为 CP；等价于 $J(\Phi)\succeq0$ 及有限矩形 Kraus 表示 $\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^*$ |
+| 上行再给全正输入的质量约束 $u_bL\le u_a$ 或等号 | 分别为 TNI、TP，即 $\sum_\alpha K_\alpha^*K_\alpha\preceq I$ 或等于 $I$；以未归一 Bell 向量定义 Choi 时等价于 $\operatorname{Tr}_{\rm out}J\preceq I$ 或等于 $I$ |
+| 有限分支 $L_j$ 各全旁观正，另给总预算 $u_b\sum_jL_j=u_a$ | 数学仪器：$\rho_j=\Phi_j(\rho)$、$p_j=\operatorname{Tr}\rho_j$；仅 $p_j>0$ 时条件态为 $\rho_j/p_j$。各支 TNI 不替代总和预算 |
+| 同层正线性分支另有投影效应 $A$，且在整个 certain-yes 支持的每个纯态逐点中性 | 唯一锐更新 $\Phi(X)=AXA$；仅有锐效应或可重复性不替代该中性前件 |
+| 另给连续可逆、保锥保单位的同层实一参数群 | 酉共轭动力学，$\dot\rho=-i[H_{\rm gen},\rho]$；纯态择相位后 $i\dot\psi=H_{\rm gen}\psi$。生成元可加标量；物理钟、能量及 $H_{\rm phys}=\hbar H_{\rm gen}$ 的标定另给 |
+| 数学菜单到实际设备，或无限／近似极限 | 事件饱和、记录、接线、可用操作及仪器实现须另给；无限系统须指定连接映射、相容态、拓扑完备化及所需 normal 延拓；近似公理须另有稳定性、范数、误差与资源界 |

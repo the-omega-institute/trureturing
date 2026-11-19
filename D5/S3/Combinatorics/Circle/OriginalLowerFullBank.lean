@@ -8,7 +8,7 @@
 module
 public import D5.S3.Combinatorics.Circle.OriginalSourceRows
 import all D5.S3.Combinatorics.Circle.OriginalSourceRows
-import all D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import all D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
 
 /-! # A full retained bank for original LOWER sources
 

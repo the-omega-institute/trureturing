@@ -1,0 +1,41 @@
+**定理 104.7（精确的剩余关联缺口）。** 在本章弱入口下，含空面与 $K$ 的整个原面格 $\mathcal L(K)$ 已为完整正交模格。对非空面定义
+
+$$
+ F^\perp=\bigcap_{q\in P\cap F}D_q,
+ \qquad\varnothing^\perp=K.
+\tag{VII104.15}
+$$
+
+则 $\{p\}^\perp=D_p$、$D_p^\perp=\{p\}$、$K^\perp=\varnothing$。在此同一域内，下列条件准确等价：
+
+$$
+\begin{aligned}
+&\forall p,q\in P,\ p\ne q:\ D_p\cap D_q\ne\varnothing\\
+&\quad\Longleftrightarrow\ \mathrm{Pair}\\
+&\quad\Longleftrightarrow\ \mathcal L(K)\text{ 满足覆盖律}\\
+&\quad\Longleftrightarrow\ S\\
+&\quad\Longleftrightarrow\ \text{同原锥、同原单位的rank-three有限EJA表示}.
+\end{aligned}
+\tag{VII104.16}
+$$
+
+覆盖律指：对面 $F$ 及不在其中的纯点 $q$，$F\vee\{q\}$ 与 $F$ 之间没有严格中间面。完整 $S$ 仍含原全锥序 least 和全部纯数值互易，不用唯一确认或局部 least 替代。
+
+证明。103.2和104.4已给全部面类型及点球双射。全部面闭，任意交是面，面族的任意 join 可取包含其并的所有面的交，故格完整。零对称先给 $p\in D_p^\perp$。若纯 $s\in D_p^\perp$，则 $P\cap D_p\subseteq D_s$；球的极点凸生成整球，故 $D_p\subseteq D_s$，极大性和单射给 $s=p$。任意混点的有限纯分解留在定义(VII104.15)的每张面中，故也只能为 $p$。同理，若 $K^\perp$ 非空，其中的纯点 $s$ 将满足 $s\in D_s$，矛盾。
+
+逐一检查面类型，便得反序对合 $F^{\perp\perp}=F$，以及 $F\wedge F^\perp=\varnothing$、$F\vee F^\perp=K$。正交模律唯一非平凡的真包含是 $\{q\}\subsetneq D_p$。此时 $p\perp q$，104.3使 $D_p\cap D_q=\{r\}$，104.2使 $q,r$ 为 $D_p$ 的对径，故
+
+$$
+ D_p=\{q\}\vee\{r\}
+     =\{q\}\vee(D_p\wedge\{q\}^\perp).
+\tag{VII104.17}
+$$
+
+其余包含为空面、相等或顶面情形，正交模恒等式直接成立。
+
+若 $D_p\cap D_q$ 非空，交中有纯 $r$，零对称给 $p,q\in D_r$，所以 $H(p,q)\ne K$。反向若全 $\mathrm{Pair}$ 成立，103.2使 $H(p,q)=D_r$，于是 $r\in D_p\cap D_q$。这证明(VII104.16)首个等价。
+
+若存在 $H(p,q)=K$，选一个含 $p$ 的非点真面 $L$；这样的 $L$ 可由 $s\in P\cap D_p$ 和零对称取 $L=D_s$。严格链 $\{p\}\subsetneq L\subsetneq\{p\}\vee\{q\}=K$ 违反覆盖律。若全 $\mathrm{Pair}$ 成立，则两个不同原子的join是非点极大真面，它与任一所含原子间不能插入面；非点极大面加面外原子得到 $K$，同样不能插入面。空面加原子的情形也成立，穷尽全部情况。这证明覆盖律等价。
+
+余下等价直接复用103.4—103.6及[Library完整S桥][Q103S]，参数逐字取本章原 $V,C,u,K,P,[0,u]$。本章已由EB得到 $h(K)=3$，故完整 $S$ 的既有一般EJA桥恰落在秩三；同单位反向也恰为103.6。这里不重新证明正对偶剥离、谱性、自对偶、projectivity、滤波纯性或分类，更不在取得 $S$ 以前借用这些结论。证毕。
+

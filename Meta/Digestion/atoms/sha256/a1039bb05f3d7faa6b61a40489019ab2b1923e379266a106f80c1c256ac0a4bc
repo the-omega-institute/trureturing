@@ -1,0 +1,29 @@
+### 126.9 来源、文献条件与边界
+
+本章的面与重复块接口直接复用
+[完整排除面第七卷][Q126VII] 的 VII103.2 及
+[排除球第九卷][Q126IX] 的 IX116.1—116.6；重复块的两侧标签、无第三球交和统一正残值均只在这些前件下使用。第125章的同一原域与静态回接见
+[单个真实三角一二五章][Q126T] 的 Q125.1、Q125.31—Q125.33。
+
+本章给出上述原域中的纸面数学证明，不声称 Lean kernel 核验。
+
+[THREE_COPY 第八卷124][Q126VIII] 的定理124.5另以其假设124.1的全部全有限层级条件、
+整个原联合 $S_2$、三条条件桥、$L=3$、同一含相位 $\mathsf F_{r,2}$ 种子及
+$2/3\le t<1$ 为前件。它对每个有限 $a\ge0,k\ge1$ 分类 $H_{a;k}$ 中的普通秩一 dyad，
+并包括零 dyad；不分类全部 $P_N$、原极端射线、整个 $H_{a;k}$ 或
+$H_{a;k}\cap\mathrm{PSD}$，也不证明 $\mathsf F_{\max}$。这些较强前件和受限结论
+不替代本章的全域静态候选与动态合同。
+
+唯一用于紧支撑同调传递的外部结果是 J. D. Lawson,
+*A generalized version of the Vietoris–Begle Theorem*, Fundamenta Mathematicae
+65 (1969), 65–72，Corollary 3.7（印刷 p.71）及其 §2 的
+Alexander–Wallace–Spanier Čech 理论；本章只用其对紧 Hausdorff 连续满射、逐纤维可缩的
+cohomology 传递，并未把未知商目标说成 ENR 或流形。Lawson 原刊扫描见
+[Corollary 3.7][Q126L]；一点紧化和紧支撑群的使用遵循 IX116.6 的同一约定。
+
+[Q126VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2：EB条件下完整暴露面与真面穷尽。"
+[Q126IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1—116.6：原域、重复球刚性、统一残值、单标签球与Lawson商矛盾。"
+[Q126T]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "Q125.1、Q125.31—Q125.33：同一原域的EB3候选与Herm_3(C)/PSD_3条件静态字典。"
+[Q126VIII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "第124章假设124.1及定理124.5：完整全有限层级、原S2、三条条件桥、L=3、含相位F_{r,2}及2/3≤t<1下的普通秩一dyad分类。"
+[Q126L]: https://web.archive.org/web/20250613232023id_/http://matwbn.icm.edu.pl/ksiazki/fm/fm65/fm6517.pdf "J. D. Lawson, A generalized version of the Vietoris–Begle Theorem, Fundamenta Mathematicae 65 (1969), 65–72；§2、Corollary 3.7，印刷p.71。"
+

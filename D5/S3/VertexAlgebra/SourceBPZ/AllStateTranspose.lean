@@ -70,7 +70,7 @@ private theorem polynomialPair_monomial (D : LatticeData) (α : Charge D)
       modePair D α (K-j) u v q := by
   exact Polynomial.sum_monomial_index _ _ (map_zero _)
 
-private theorem flow_X_polynomial (D : LatticeData) (α : Charge D)
+theorem flow_X_polynomial (D : LatticeData) (α : Charge D)
     (i : Fin D.rank) (p : ℕ) :
     flowPolynomial D α (X (i,p)) =
       (∑ s ∈ Finset.range (p+1), Polynomial.monomial (p-s)

@@ -1,0 +1,41 @@
+**推论 114.4（PR下全部原纯点的紧性）。** 在定义114.1的完整原域中，
+PR蕴含 $P=\operatorname{ext}K$ 紧。本结论不要求EB3，也不以 $P$ 已闭为前件。
+
+证明。单点基直接成立。其余情形由114.3，每个纯点有一张全域暴露确认效应。
+选 $V$ 上范数，令
+
+$$
+L_0=\max_{f\in\mathcal E}\|f\|_{\ast}<\infty.
+$$
+
+每个固定的 $T_p$ 是一族具有共同Lipschitz常数 $L_0$ 的效应的最小值，
+故对全部 $y,z\in K$，
+
+$$
+|T_p(y)-T_p(z)|\le L_0\|y-z\|.
+\tag{IX114.13}
+$$
+
+设 $p_n\in P$、$p_n\to x\in K$，而 $x$ 非纯。
+有限维紧凸集的有限纯点分解可写成
+
+$$
+x=\lambda r+(1-\lambda)y,\qquad
+r\in P,\quad y\in K,\quad 0<\lambda<1,\quad x\ne r.
+$$
+
+置 $\varepsilon_n=L_0\|p_n-x\|$。对每个 $f\in F_{p_n}$，有 $f(x)\ge1-\varepsilon_n$。
+固定原效应的普通仿射性与非负余量给
+
+$$
+\varepsilon_n\ge1-f(x)
+=\lambda(1-f(r))+(1-\lambda)(1-f(y))
+\ge\lambda(1-f(r)).
+$$
+
+这对整个 $F_{p_n}$ 成立，故 $T_{p_n}(r)\ge1-\varepsilon_n/\lambda$。
+PR给 $T_r(p_n)=T_{p_n}(r)$；固定 $T_r$ 的(IX114.13)于是迫 $T_r(x)=1$。
+但114.3给仅在 $r$ 取一的原确认效应 $e_r$，而 $x\ne r$，
+所以 $T_r(x)\le e_r(x)<1$，矛盾。$P$ 因而闭于紧 $K$，故紧。
+这里仿射的是每个固定 $f$，没有把各自最小化的比较函数当作全域仿射函数。证毕。
+

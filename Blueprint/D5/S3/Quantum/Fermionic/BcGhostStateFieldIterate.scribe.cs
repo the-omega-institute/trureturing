@@ -7,7 +7,7 @@ internal sealed class BcGhostStateFieldIterateDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The signed integer residue law of the actual occupation-state ghost fields.",
         H("Actual ghost integer iterate"), Blocks(
-            Paragraph(Text("The finite-support residue constructor and translation telescope adapt StateFieldResidueReconstruction and its attributed Scott Carnahan vertexAlg source. The reverse sum carries the product of the integer residue sign and the homogeneous parity sign. Signed locality of the actual residues and vacuum uniqueness identify their fields with the field of the actual mode product.")),
+            Paragraph(Text("SignedFieldResidueLocality supplies the vectorwise finite residue constructor, all-integer signed locality, negative-residue formula and translation covariance. The local ResidueField interface projects its operator, coefficient identity and two finite-support proofs from that constructor. The reverse sum carries the product of the integer residue sign and the homogeneous parity sign. Creation on the actual vacuum and signed occupation-basis uniqueness identify the residue with the field of the actual mode product.")),
             Describe.Lean(DescribeId.Create("bc-state-field-signed-integer-iterate"),
                 DeclarationHandle.Create("D5/S3/Quantum/Fermionic/BcGhostStateFieldIterate.stateField_iterate"),
                 H("All-integer signed iterate with actual finite sums"), StatementSource.WithoutFormula(),

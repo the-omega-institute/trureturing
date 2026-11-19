@@ -1,0 +1,24 @@
+**定义 0.1（原域、候选与外卷记号）。** 称[《原多项式零响应与 Cayley 原域边界》](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)为原多项式卷，称[《配平三角的共同取向与秩一响应续卷》](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)为配平主卷，称[《任意维小窗口单位桥》](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md)为单位桥卷，称[《任意维静态量子重构》](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)为静态重构卷，称[《中央响应平方与径向一致》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md)为中央响应平方卷，称[《移位单位铅笔与非中央平方的配对一致》](AURIC_SHIFTED_UNIT_PENCILS_AND_NONCENTRAL_REFERENCE_CONSISTENCY.md)为移位单位铅笔卷。本卷编号为 §§1–5；带卷名的编号只指相应外卷。原多项式卷 §§8–11 的通勤图成果及 §§12–14 的自由词无正交锚成果均为外卷既有结果。
+
+一般原候选准确沿用配平主卷定义 128.1、183.1 及单位桥卷的同一 $(E,C,u,N,\mathcal P,S,D)$：$E$ 是自身含单位实 JB 完成 $X$ 中的含单位范数稠密实 Jordan 子代数，$C=E\cap X_+$，原正实线性评价族分离 $E$ 并准确决定 $C$，$S(a,b)=a\circ b$。A1 为全部原有向 Hermitian 二表正性，A2 为相加三表及其排列的实部正性和指定相加向量的零二次值，A3 为 $S(u,u)=u$ 和同一固定有理 $0<\theta\le1$ 下 $0\le e\le\theta u\Rightarrow S(e,e)\le e$；全部原 P2、完整 PB 及其元素式取配平主卷 (128.3)、(128.4)、(128.6)。保留全部原输入、评价及零／不等／次归一质量，不给未知一般 $D$ 预付可加、齐次、连续、可测、单位平移或完成延拓。
+
+本卷全路径定理固定原多项式卷定义 8.1 的标准模型。对每个整数 $n\ge2$、区间坐标 $t\in[0,1]$，令
+
+$$
+\begin{aligned}
+E_n&=\left\{\lambda I_n+\sum_{k=1}^{m}t^kA_k:
+ \lambda\in\mathbb R,\ m\in\mathbb N_0,\ A_k\in M_n(\mathbb C)_{\rm sa}\right\},\\
+\mathcal A_n&=\{F\in C([0,1],M_n(\mathbb C)):F(0)\in\mathbb C I_n\},\\
+X_n&=(\mathcal A_n)_{\rm sa},\qquad u=I_n,\qquad
+S(F,G)=F\circ G=(FG+GF)/2,\\
+D_*(F,G)&=\frac{\mathrm i}{2}(FG-GF),\qquad
+C_n=E_n\cap(X_n)_+,\qquad
+N(F)=\sup_{0\le t\le1}\|F(t)\|_{\rm op}.
+\end{aligned}
+\tag{0.1}
+$$
+
+原评价为 $\mathcal A_n$ 上全部数学正泛函在 $E_n$ 的限制及其非负质量倍数；它们分离原域并准确决定锥，质量不归一。$m$ 遍取全部有限次数，没有共同次数上界，零点只容许实标量矩阵。原多项式卷定义 8.1 已给稠密性、不完备性和无非平凡原投影；静态重构卷定义 35.1、定理 35.2 以 $\mathcal A=\mathcal A_n$、$\mathcal A_0=E_n+\mathrm iE_n$、$\kappa=1$ 供应全部原 A1–A3、P2、全有限复正表与完整 PB，且 $S-\mathrm iD_*$ 就是同一参考乘法。数学读取不成为实际准备，点纤维矩阵不成为原轴。以下是这个固定完整模型中的普通纸面数学推导；一般未知 $D$ 的命题仅限 §4 的单边结论。
+
+## 1. 全部原全 PB 外层对的多项式运输
+

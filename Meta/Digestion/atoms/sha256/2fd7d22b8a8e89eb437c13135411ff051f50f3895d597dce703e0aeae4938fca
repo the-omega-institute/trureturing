@@ -1,0 +1,83 @@
+**定理 101.4（余维一支持约束的欧氏闭合）。** 在定义101.1下，$N^2$ 是一个正定二次型。更准确地，令
+$A=L|_S:S\to S^*$，则 $A$ 对称正定，
+
+$$
+ Z=\ker L,
+ \qquad W=S\oplus Z,
+ \qquad \dim Z=1,
+$$
+
+并存在 $\kappa>0$ 使得对 $s\in S,z\in Z$，
+
+$$
+ N(s+z)^2=A(s)(s)+\kappa\,\xi(z)^2,
+\tag{101.5}
+$$
+
+其中 $\xi$ 是 $Z$ 上任取的线性坐标（改变坐标只改变 $\kappa$）。因此
+$W=S\oplus_2 Z$ 是原范数的真实欧氏直和，而不是分类假设。
+
+**证明。** 置 $F=N^2$，它在有限维 $W$ 上处处有限、连续且凸。由次梯度定义得到范数平方的专门化公式
+
+$$
+ \partial F(x)=
+ \begin{cases}
+  2N(x)\,J\!\left(\dfrac{x}{N(x)}\right),&x\ne0,\\
+  \{0\},&x=0.
+ \end{cases}
+\tag{101.6}
+$$
+
+具体地，$x\ne0$ 时写 $n=N(x)$。对 $j\in J(x/n)$，
+$F(y)-F(x)-2nj(y-x)\ge(N(y)-n)^2\ge0$，故 $2nj\in\partial F(x)$。
+反向，若 $\varphi\in\partial F(x)$，对 $(1+t)x$ 的次梯度不等式令 $t\to0^\pm$ 得
+$\varphi(x)=2n^2$；再对 $y=tv$ 使用该不等式，得
+$t\varphi(v)\le t^2N(v)^2+n^2$ 对所有实 $t$ 成立，故
+$|\varphi(v)|\le2nN(v)$。于是 $\varphi/(2n)\in J(x/n)$。
+在零点，次梯度不等式为 $t\varphi(v)\le t^2N(v)^2$；令 $t\to0^\pm$ 得
+$\varphi(v)=0$，而 $0\in\partial F(0)$ 由 $F\ge0$ 成立。
+
+(101.4)、齐次性及零点公式说明，对每个 $x\in W$ 和每个 $\varphi\in\partial F(x)$，在 $S$ 上都满足
+
+$$
+ \varphi|_S=2L(x).
+\tag{101.7}
+$$
+
+在 $W,W^*$ 的自然配对下，Rockafellar，§6 Theorem 11(a)、式(6.13)（印刷页34）适用于上述连续凸 $F$，给出
+$F'(y;v)=\max_{\varphi\in\partial F(y)}\varphi(v)$；此处复用的是方向导数表示，(101.6)由前段另行专门化。
+对任意 $h\in S$，置 $g(t)=F(x+th)$。对每个实 $t$，由该表示及(101.7)，
+$g'_+(t)=\max\varphi(h)=2L(x+th)(h)$，
+$g'_-(t)=-F'(x+th;-h)=\min\varphi(h)=2L(x+th)(h)$，其中极值遍历 $\partial F(x+th)$。
+若 $x+th=0$，还可直接算得 $\lim_{\varepsilon\to0}F(\varepsilon h)/\varepsilon=\lim_{\varepsilon\to0}\varepsilon N(h)^2=0$。
+故 $g$ 在整条实线上可微，且 $g'(t)=2L(x+th)(h)$ 连续；一元微积分基本定理在任意有限区间 $[a,b]$ 上适用，包括经过零点的区间，特别得到
+
+$$
+ F(x+h)-F(x)=\int_0^1 2L(x+th)(h)\,dt
+\tag{101.8}
+$$
+
+这里仅证明沿 $S$ 中方向的连续导数，没有假定 $F$ 在全空间光滑。
+
+先在 $S$ 内取 $x=0$、$h=s$。由 $L(ts)=tL(s)$，
+
+$$
+ F(s)=\int_0^1 2tL(s)(s)\,dt=A(s)(s).
+\tag{101.9}
+$$
+
+而 $F(s)=N(s)^2>0$ 对 $s\ne0$，故二次型 $A(s)(s)$ 正定。对参考基向量，$\mathrm R_{i,+}$ 应用于目标
+$c+s_j$ 给
+$j_i(s_j)=j_j(s_i)$，所以 $A$ 对称。
+
+正定性使 $A:S\to S^*$ 为同构。于是 $Z=\ker L$ 为一维，且 $W=S\oplus Z$。对任意 $z\in Z$ 和 $s\in S$，(101.8)中取 $x=z,h=s$；由于
+$L(z+ts)=tL(s)$，得到
+
+$$
+ F(s+z)-F(z)=A(s)(s).
+\tag{101.10}
+$$
+
+$Z$ 一维，$F|_Z$ 偶且二次齐次，故取非零 $e\in Z$ 后
+$F(\lambda e)=\lambda^2F(e)=\kappa\lambda^2$，其中 $\kappa=F(e)>0$。代回(101.10)即得(101.5)。证毕。
+

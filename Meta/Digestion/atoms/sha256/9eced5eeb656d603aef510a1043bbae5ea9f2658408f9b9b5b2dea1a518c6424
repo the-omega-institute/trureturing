@@ -1,0 +1,15 @@
+**定义 79.1（保留的 PRE）。** PRE 完全取第四卷定义 71.1：每个 $X=A,D,E$ 为非零有限维实空间，具有闭尖生成锥 $C_X$、非零正元上严格正的归一化泛函 $u_X$、整个紧态基 $K_X=\{x\in C_X:u_X(x)=1\}$、全部效应 $[0,u_X]$ 及其纯态集。比较只以纯态为第一端点，且完整保留
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\sum_rv_r\eta_r\right)=\sum_rv_rT^X_{\eta_r}(\xi). \tag{79.1}
+$$
+量词遍及每个纯参照、每个有限纯态族及每组概率权重。一般 EJA 的忠实规范迹、正对偶生成、共同框架、面投影、项目性与滤波纯性沿 75.1 所引完整条件纸面桥保留；不将自对偶性或纯端点互反单独冒充这条桥。在忠实坐标中 $u_X=\tau_X$，整个原态基与效应区间均保留。
+唯一供应的接合和读回仍是整个原锥上正的实双线性 $L:D\times A\to E$、实线性 $p:E\to D$，原参考为 $\omega=1_D/\tau_D1_D$。全部内部量仍由同一个实际 $p$ 定义：
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&Q(a,b,c)&=L(M(a,b),c),\\
+J(a)&=M(a,1_A),&H(d)&=L(d,1_A),&B_1&=pH.
+\end{aligned} \tag{79.2}
+$$
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$，全部正交正元对上的 $D_J,D_H$ 及全实 $Z:B_1M(a,b)=u_A(a)Jb$。特别地，$D_H$ 与 $L,p$ 的正性覆盖整个实际联合锥，包括纠缠方向；实张成不表示正乘积生成整个正锥。没有预设 $p$ TP、$M$ 归一化、$C_{\rm joint}$、C13、NB、H13 或重置补全。
+

@@ -1,0 +1,40 @@
+**定理 9.2（非零平移的全部正读取零探针余量）。** 对每个实数 $\lambda\ne0$ 定义
+
+$$
+\begin{aligned}
+T_\lambda&=\sqrt{5\lambda^2+6},&N_\lambda&=\sqrt{17\lambda^2+9/2},&j&=3/2,\\
+I_\lambda&=\sqrt{\frac9{16\lambda^2}+\frac43+\frac{16\lambda^2}{9}},&
+\kappa_\lambda&=\max\{|\lambda|,|\lambda|^{-1}\},\\
+m_\lambda&=\frac1{144\kappa_\lambda^2I_\lambda^6(T_\lambda^2+j^2)N_\lambda(T_\lambda+j)},&
+\varepsilon_\lambda&=\min\left\{\frac12,\frac{m_\lambda}{8(T_\lambda+N_\lambda)}\right\}.
+\end{aligned}
+\tag{9.4}
+$$
+
+则对任一 $\sigma$ 及全部 $|\rho|\le\varepsilon_\lambda$，(9.3)的 P2 对全部数学正泛函成立，且原 $x=0$ 的完整标签
+
+$$
+R_+=-k,\quad R_-=k,\quad S_\pm=t\pm g,\quad
+L_0=-\{t,g\},\qquad \{a,b\}=ab+ba
+\tag{9.5}
+$$
+
+满足统一余量
+
+$$
+\sqrt{B_\phi(-k,t+g)}+\sqrt{B_\phi(k,t-g)}-|\phi(-\{t,g\})|
+\ge\frac{m_\lambda}{2}\phi(1_\star)\qquad(\phi\ge0).
+\tag{9.6}
+$$
+
+因此每个非零 $\lambda$ 都容许明确的非零 $\rho$，例如取 $\rho=\varepsilon_\lambda/2>0$。特别地
+
+$$
+\lambda=1,\qquad \rho=\frac1{398131200}
+\quad\Longrightarrow\quad
+\text{(9.6)左侧}\ge\frac{\phi(1_\star)}{11059200}.
+\tag{9.7}
+$$
+
+同一定理的实际应用取定义1.1中 $n=3$ 的 $M=C([0,1],M_3(\mathbb C))$，将全部矩阵置为常值截面。对每份数学正泛函 $\Psi$，P2 与(9.6)原样成立，质量为 $\Psi(u)$。而同一非零 $\rho$ 在 $\lambda=0$ 的常值数据被 $\mathsf F$ 定理42.2的一份向量读取复合任意点值映射排除。因此演员轴平移的 P2 不变性不蕴含零探针预算的反向运输。此结论不声称任何非零探针预算、完整响应模型或 $\mathsf H_I(D)$。
+

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:5b9857fec0cea18d42340ad1310e968402e556cffe443b8955abfe6f46745627","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),16:BinaryDecimation),10:BaseFamily)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),16:BinaryDecimation),16:powerBase_binary)","kind":"theorem"}]}

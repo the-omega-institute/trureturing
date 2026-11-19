@@ -216,7 +216,7 @@ private theorem two_path_series_concentration (p q : ℕ) (hp : 1 ≤ p) (hq : 1
 open SimpleGraph
 open D5.S3.StatisticalMechanics.HardCore.PartitionRelabeling
 
-private lemma configurations_sum {α β : Type*} [DecidableEq α] [DecidableEq β]
+lemma configurations_sum {α β : Type*} [DecidableEq α] [DecidableEq β]
     (G : SimpleGraph α) (H : SimpleGraph β) [DecidableRel G.Adj] [DecidableRel H.Adj]
     (V : Finset α) (W : Finset β) :
     configurations (G ⊕g H) (V.disjSum W) =
@@ -262,7 +262,7 @@ private lemma configurations_sum {α β : Type*} [DecidableEq α] [DecidableEq �
       (Finset.disjSum_mono (Finset.mem_powerset.mp hs) (Finset.mem_powerset.mp ht)),
       (hi S T).mpr ⟨hiS,hiT⟩⟩
 
-private lemma partition_sum {α β K : Type*} [DecidableEq α] [DecidableEq β]
+lemma partition_sum {α β K : Type*} [DecidableEq α] [DecidableEq β]
     [CommSemiring K] (G : SimpleGraph α) (H : SimpleGraph β)
     [DecidableRel G.Adj] [DecidableRel H.Adj]
     (V : Finset α) (W : Finset β) (w : α ⊕ β → K) :

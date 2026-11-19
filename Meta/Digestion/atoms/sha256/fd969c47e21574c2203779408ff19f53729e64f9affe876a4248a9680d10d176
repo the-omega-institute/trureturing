@@ -1,0 +1,26 @@
+对每个这样的 $p$，令 $Q=I-p,c_p=Q/2$，置
+
+$$
+\mathcal R_pX=QXQ+\operatorname{Tr}(pX)c_p,\qquad
+r_p=\mathcal R_p|_K.
+\tag{IX119.32}
+$$
+
+对全部 $X\succeq0$，两个加项均PSD且支撑于 $Q$；
+$\operatorname{Tr}(\mathcal R_pX)=\operatorname{Tr}(QX)+\operatorname{Tr}(pX)=\operatorname{Tr}X$。
+所以 $r_p$ 把整个 $K$ 映入整个 $D_p$，保全部原混合。
+对每个 $\rho\in D_p$，$Q\rho Q=\rho,\operatorname{Tr}(p\rho)=0$，
+故 $r_p(\rho)=\rho$，像准确等于 $D_p$，且 $\mathcal R_p$ 幂等。
+最后用同一个 $\Phi$ 共轭 $\mathcal R_p$，
+把这些结论运输到全部原 $p,K,D_p,u$；
+全部原纯点由 $\Phi$ 双射运输，故反向没有遗漏标签或原混态。证毕。
+
+这个候选压缩的是条件的几何表述和标签忠实性的推导；
+不声称它比IX116.17逻辑更弱、独立假设更少，或裸EB3已经能推出它。
+与定理119.2的实质区别只有原单位预算，而这一区别正是未闭合的数学桥。
+(IX119.32)还把 $p$ 送到混态 $c_p$，不保纯；
+它也不同于仅保留 $Q\rho Q$ 的分支。
+仿射回缩或正投影的存在本身，不附带Lüders、完全正性、物理可逆性、
+仪器或实际实验室可调用性的结论。
+即使在重构后对某个具体矩阵映射另行证明通道性质，原实际可用性仍需操作合同。
+

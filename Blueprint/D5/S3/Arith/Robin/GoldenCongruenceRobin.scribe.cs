@@ -8,7 +8,8 @@ internal sealed class GoldenCongruenceRobinDocument : IScribeDocumentDefinition
         "Strict Robin holds throughout the 5040 divisibility and power-congruence branch, "
             + "without an upper bound on the number of distinct prime factors.",
         H("Strict Robin for the Complete 5040 Power-Congruence Branch"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
             DescribeId.Create("golden-complete-congruence-robin"),
             DeclarationHandle.Create(
                 "D5/S3/Arith/Robin/GoldenCongruenceRobin.robin_of_modEq_2241"),

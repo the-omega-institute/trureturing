@@ -1,0 +1,73 @@
+**定义 56.1（实际系数的清分母形式）。** 沿用 (46.5)–(46.8) 的
+$F,G,P,\mathcal R_0$，限定在
+
+$$
+0<x<1,\qquad Y=y^2>1,\qquad y=\sqrt Y>1,\qquad q=4t-1>0.
+\tag{56.1}
+$$
+
+本节 $q$ 是实标量；原可见列另记为 $q_{\rm vis}$。
+置辅助标量
+
+$$
+\begin{gathered}
+d=1-x,\qquad e=2-x,\qquad \mathfrak c=\sqrt{2(q+1)},\\
+a_F=5x-3dq,\qquad b_F=3xd^2(q+2),\\
+a_G=8x+(5x-3)q,\qquad b_G=3x(x+1)(q+2),\\
+R_F=a_F-x(9-x),\\
+\mathfrak Q=Y R_F^2+(a_FY+b_F)^2,\qquad
+\mathfrak W=(Y+e^2)(Ya_G^2+b_G^2),\\
+N=\mathfrak c^2\mathfrak Q-\mathfrak W
+  =c_2Y^2+c_1Y+c_0,
+\end{gathered}
+\tag{56.2}
+$$
+
+其中
+
+$$
+\begin{aligned}
+c_2&=\mathfrak c^2a_F^2-a_G^2,\\
+c_1&=\mathfrak c^2(R_F^2+2a_Fb_F)-e^2a_G^2-b_G^2,\\
+c_0&=\mathfrak c^2b_F^2-e^2b_G^2.
+\end{aligned}
+\tag{56.3}
+$$
+
+$\mathfrak Q,\mathfrak W,N$ 均为辅助实多项式；$d$ 不作预算指标，
+$\mathfrak c$ 不是原有限参数 $\rho=k/\lambda^2$，
+$\mathfrak W$ 也不是前卷的直接来源响应 $\mathcal S$。
+偏导 $N_Y,N_q$ 分别固定其余两个变量 $x,q$ 和 $x,Y$。
+价格导数仍记 $\nu=\partial_t\mathcal R_0$，演员始终记为 $u_r$。
+
+这些定义与原系数之间有精确接口
+
+$$
+\begin{gathered}
+F=\frac{R_F}{2x}-i\frac{a_FY+b_F}{2x\sqrt Y},\qquad
+G=\frac{\ell-2}{4x}\left(a_G+i\frac{b_G}{\sqrt Y}\right),\\
+|F|^2=\frac{\mathfrak Q}{4x^2Y},\qquad
+|G|^2=\frac{\mathfrak W}{16x^2Y},\qquad
+N(x,y^2,4t-1)=16x^2y^2P(x,y,t),\\
+a_G-a_F=x(3+2q)>0.
+\end{gathered}
+\tag{56.4}
+$$
+
+为核对第一式，将 (46.9) 写成
+$F=F(1/4)+(q/4)f_1$，并用
+$\overline\ell(\ell-1)=Y-xd+iy$。
+其实部是 $(x-4)/2-3dq/(2x)=R_F/(2x)$，虚部是
+
+$$
+-\frac{5Y+6d^2}{2y}+\frac{3dq(Y-xd)}{2xy}
+=-\frac{a_FY+b_F}{2xy}.
+$$
+
+对第二式，(46.10) 的 $z=q+1$ 给
+$D=8+(5-3/x)q=a_G/x$、$\beta=3(q+2)$，
+而 $-(2-\ell)=\ell-2$，遂得到所列因式。
+因此 (56.4) 没有更换 $F,G$ 或来源方程。
+条件 $y=\sqrt Y>1$ 始终保留：在当前 $q>0$ 下，
+$y=-\sqrt Y$ 不通过原不利过滤 $y(4t-1)>0$。
+

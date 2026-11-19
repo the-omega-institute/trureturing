@@ -1,0 +1,12 @@
+**定义 120.3（原三角顶点集）。** 在裸EB3域定义
+
+$$
+\mathcal T=\{p\in P:\exists q,r\in P,
+\ p\perp q, p\perp r, q\perp r\},
+\qquad
+\mathsf{DT}:\quad\overline{\mathcal T}^{\,P}=P.
+\tag{IX120.5}
+$$
+
+关系的反自反性自动保证三点各异。主候选为 $\mathrm{EB3}+\mathsf{DT}$。它不输入Inj、唯一确认标签、球丛、中心函数、回缩函数或共同三结果菜单；稠密性不是有限采样验证条件。
+

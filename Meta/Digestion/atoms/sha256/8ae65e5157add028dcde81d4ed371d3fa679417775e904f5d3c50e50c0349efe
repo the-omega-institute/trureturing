@@ -1,0 +1,23 @@
+**定义 96.10（低余维纯纯候选）。** 取94.5、89.7的同一个原装饰元组 $\mathcal O$。
+记 $\mathcal N_{89.7}(\mathcal O)$ 为定义89.7除每个 $X=A,D,E$ 的几何项
+$\mathrm B+\mathrm{Boundary}$ 外的全部条件，逐条保留其原量词、原对象和共同 $\mathfrak S(\mathcal O)$。
+特别包括原概率像与整个测试像、中点与非负质量缩放、同一个 $L:D\times A\to E$ 和同一读回 $p$ 两次、
+两实张成、全实 $Z$、含秩一分支的完整(83.8)、C2、整个 $G=1_E$，以及恢复精确PRE以后
+同一个原资格态的整个输出H13；迹、伴随、中央质量、零分支和空活跃集按原定义。
+此记号是对那一整组条件的引用，不用这些列举取代其完整正文。
+
+令 $\mathcal D_{\le2}^{\mathbb C}(\mathcal O)$ 要求每个原 $X=A,D,E$ 都有94.1的整个复秩一ROG表示，
+原 $u_X$ 任意严格正，并在94.2各自归一化后的复环境中满足实余维 $c_X\le2$。
+定义唯一这一同数据候选
+
+$$
+\mathsf R_{\mathrm G_2,\le2}(\mathcal O):=
+\mathcal D_{\le2}^{\mathbb C}(\mathcal O)\ \land\
+\mathcal N_{89.7}(\mathcal O)\ \land\
+\bigwedge_{X=A,D,E}\mathrm G_2(V_X,C_X,u_X).
+\tag{96.38}
+$$
+
+它仅在明示的同一个低余维域中，以纯纯 $\mathrm G_2$ 替换94.5的固定补态 $\mathrm{FC}$。
+没有以矩阵子空间 $L_X$ 替换原过程 $L$，也没有改变任何原来源、准备、菜单、参考、事件或合法未来。
+

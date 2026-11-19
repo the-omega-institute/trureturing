@@ -1,0 +1,88 @@
+**引理 40.3（存活环境的实 Gram 代价）。** 在 (40.1) 中暂不要求 $e\ne0$。对任意 $u=(u_2,u_3)^{\mathsf T}$、$u_2u_3\ne0$ 和任意 Hermitian $X\in M_2(\mathbb C)$，取
+
+$$
+\begin{gathered}
+q=aC_Eu,\qquad w=-\frac{au}{\kappa},\qquad
+\ell=\left(-\frac{\iota q}{u_2},\frac{\iota q}{u_3}\right),\qquad
+\xi=(0,u_2,u_3,w,0)^{\mathsf T},\\
+x=\begin{pmatrix}0&\ell&0_{1,2}\\
+\ell^*&X&0_{2,2}\\0_{2,1}&0_{2,2}&0_{2,2}\end{pmatrix},\qquad
+\chi_\xi(A)=\xi^*A\xi .
+\end{gathered}
+\tag{40.4}
+$$
+
+则 $x=x^*=PxP$，$\xi\ne0$，且原完整作用列准确满足
+
+$$
+\begin{aligned}
+R_\delta\xi&=(0,R_{\delta,E}u,0,-\delta\gamma u_2),\\
+S_\delta\xi&=(0,S_{\delta,E}u,0,\gamma(1-\delta\iota)u_2),\\
+\chi_\xi(L)&=u^*L_Eu .
+\end{aligned}
+\tag{40.5}
+$$
+
+上式的块顺序是 $e_1,(e_2,e_3),f_1,f_2$。令
+
+$$
+\begin{gathered}
+A_\delta=\|R_{\delta,E}u\|^2,\qquad
+D_\delta=\|S_{\delta,E}u\|^2,\qquad
+C_\delta=\operatorname{Re}((R_{\delta,E}u)^*S_{\delta,E}u),\\
+G_{\delta,E}=A_\delta D_\delta-C_\delta^2,\qquad
+n=\gamma^2|u_2|^2>0 .
+\end{gathered}
+$$
+
+则完整原预算为
+
+$$
+\begin{aligned}
+B_{\chi_\xi}(R_\delta,S_\delta)
+ &=G_{\delta,E}+n(2A_\delta+D_\delta+2\delta C_\delta)+n^2,\\
+2A_\delta+D_\delta+2\delta C_\delta
+ &=\|S_{\delta,E}u+\delta R_{\delta,E}u\|^2
+   +\|R_{\delta,E}u\|^2\ge0,\\
+\sqrt{B_{\chi_\xi}(R_\delta,S_\delta)}&\ge n>0 .
+\end{aligned}
+\tag{40.6}
+$$
+
+证明。首先 $\ell u=0$、$\ell C_Eu=\iota q$、$\kappa w=-au$。在原完整空间中直接相乘给
+
+$$
+\begin{array}{c|cccc}
+ &e_1&E&f_1&f_2\\ \hline
+x\xi&0&Xu&0&0\\
+xc\xi&\iota q&XC_Eu&0&0\\
+cx\xi&0&C_EXu&0&0\\
+t\xi&0&Tu&0&\gamma u_2\\
+tc\xi&q&TC_Eu&0&2\gamma u_2\\
+ct\xi&0&C_ETu&0&0
+\end{array}
+\tag{40.7}
+$$
+
+于是 $h\xi$ 与 $k_t\xi$ 的第一格均为 $q/2$，$r\xi$ 与 $g\xi$ 的第一格分别为 $\iota q/2$、$-\iota q/2$；其 $E$ 块准确是二维定义的对应列。它们的 $f_1$ 格均为零，$f_2$ 格依次是 $0,\gamma u_2,0,-\iota\gamma u_2$，故得到 (40.5) 的前两式。由原自伴列恒等式
+
+$$
+\chi_\xi(U^2)=\|U\xi\|^2,\qquad
+\chi_\xi(U\circ Z)=\operatorname{Re}((U\xi)^*Z\xi)
+\tag{40.8}
+$$
+
+计算 $L$，新增的环境贡献只有
+$-2\operatorname{Re}(\overline{\gamma u_2}(-\iota\gamma u_2))=0$，给出第三式。两笔预算各自使用同一个完整向量和探针，其两范数平方为 $A_\delta+n,D_\delta+2n$，实内积为 $C_\delta-\delta n$。展开
+$(A_\delta+n)(D_\delta+2n)-(C_\delta-\delta n)^2$ 即为 (40.6)。$G_{\delta,E}\ge0$ 是二维列的实 Gram 非负性。
+
+因此第二环境列增加了必须保留的代价，不能由二维严格违反直接推出完整 PB 严格违反。(40.5) 只断言所选向量上的两列与一个期望值；没有断言 $L\xi$ 为 $L_Eu$ 的嵌入，也没有算子交织或全正泛函之间的等价。原归一因子为
+
+$$
+N_u=\|u\|^2+\frac{|au|^2}{\kappa^2}>0,\qquad
+\phi_{\mu,u}(A)=\frac{\mu}{N_u}\xi^*A\xi .
+\tag{40.9}
+$$
+
+它在完整原 $M_5$ 上正且质量恰为 $\mu$；PB 左端与每笔预算平方根均乘同一个正因子 $\mu/N_u$。证毕。
+

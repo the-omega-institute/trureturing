@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:969be8eda9f8c09353b7ffae94ba4075e8e411ff856c695449fb472290ffb51d
+  normalized_sha256: sha256:969be8eda9f8c09353b7ffae94ba4075e8e411ff856c695449fb472290ffb51d
+cas_ref: sha256:969be8eda9f8c09353b7ffae94ba4075e8e411ff856c695449fb472290ffb51d
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/ZeroAbscissaPower.actual_zero_abscissa_power_bound
+    target_statement_id: sha256:3445aaa75e608c6270886c58071a0b71a3bee0a5ede352f5a32dc65d1e6b96a8
+receipts:
+  unresolved_subitems: []

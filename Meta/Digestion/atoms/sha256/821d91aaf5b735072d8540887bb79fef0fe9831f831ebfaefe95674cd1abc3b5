@@ -1,0 +1,23 @@
+**定义 39.1（共振两腿输入）。** 完整沿用定义 32.1、(32.2)–(32.3)。为避免与 $S_\delta$ 混淆，本节把定义 32.1 的对角残量矩阵 $S$ 记为 $E$，即
+
+$$
+\begin{gathered}
+\mathcal H=\mathbb C^3\oplus\mathbb C^m,\quad A=M_{m+3}(\mathbb C),
+\quad P=I_3\oplus0_m,\quad C=\operatorname{diag}(1,2,3),\quad c=C\oplus0_m,\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix}=t^*,\qquad
+E=\operatorname{diag}(s_1,s_2,s_3),\quad s_\ell\in\mathbb R,\quad s=E\oplus0_m,\\
+\sigma\in\{1,-1\}\text{ 分别固定},\quad \iota=\sigma i,\quad
+K_\sigma(a,b)=\iota[a,b]/2,\quad g=K_\sigma(c,t)+s .
+\end{gathered}
+\tag{39.1}
+$$
+
+只增加以下原输入条件：存在同一原环境中的一个向量 $\eta$，满足
+
+$$
+D_{\rm env}\eta=0,\qquad V\eta=q=(q_1,q_2,0)^{\mathsf T},\qquad q_1q_2\ne0.
+\tag{39.2}
+$$
+
+$B,D_{\rm env}$ 任意 Hermitian，$V$ 的其余列任意。不要求 $\mathcal W=V(\ker D_{\rm env})$ 包含于 $12$ 平面，不要求整个 $V$ 秩一，也不要求原 $t$ 有任何演员约化平面。$\eta\ne0$ 随 (39.2) 自动成立。所有伴随、平方、预算及正泛函都在完整原 $A$ 中计算。
+

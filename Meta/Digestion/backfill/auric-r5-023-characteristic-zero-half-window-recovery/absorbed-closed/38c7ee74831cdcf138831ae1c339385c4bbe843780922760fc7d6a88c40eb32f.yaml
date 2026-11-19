@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:38c7ee74831cdcf138831ae1c339385c4bbe843780922760fc7d6a88c40eb32f
+  normalized_sha256: sha256:38c7ee74831cdcf138831ae1c339385c4bbe843780922760fc7d6a88c40eb32f
+cas_ref: sha256:38c7ee74831cdcf138831ae1c339385c4bbe843780922760fc7d6a88c40eb32f
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/SymbolicHyperplaneGeneralPosition.symbolic_block_common_rows_basis_partition_rank
+    target_statement_id: sha256:4557fd39912f79a6e25d2749128bda44fdba171890e0ad1b91779a46a1435292
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,31 @@
+**定理72.1的证明：保留小间距的强制预算。** 固定任意 $\tau\in\mathcal T$，在矩形角 $q_i\mathcal A q_j$ 上用半内积
+$\langle X,Y\rangle_\tau=\tau(X^*Y)$。左乘 $c_i$ 自伴；右乘 $c_j$ 的自伴性由迹循环性给出。二者对易，故
+$L(X)=c_iX+Xc_j$ 自伴。左乘中央 $Q$ 又是与 $L$ 对易的自伴等距算子。因此
+$\langle QX,LX\rangle_\tau$ 为实数，73.9中虚系数的交叉项准确为零：
+
+$$
+\|O_{ij}\|_{2,\tau}^2
+=R^2(a-b)^2\|X_{ij}\|_{2,\tau}^2
+ +\|c_iX_{ij}+X_{ij}c_j\|_{2,\tau}^2.
+\tag{74.1}
+$$
+
+这也可直接展开有限迹表达式取得，不要求 $\tau$ 忠实；无需完成原域，更没有完成或下降旧 $D$。令 $m_i=\tau(q_i),m_j=\tau(q_j)$。由73.8，
+
+$$
+O_{ij}^*O_{ij}\le4R^2\varepsilon^2M^2q_j,\qquad
+O_{ij}O_{ij}^*\le4R^2\varepsilon^2M^2q_i.
+$$
+
+两者的迹相同，故74.1给
+
+$$
+\|O_{ij}\|_{2,\tau}^2
+\le4R^2\varepsilon^2M^2\min(m_i,m_j),\qquad
+\|X_{ij}\|_{2,\tau}
+\le\frac{2\varepsilon M}{|a-b|}\sqrt{\min(m_i,m_j)}.
+\tag{74.2}
+$$
+
+这里只约去同一个非零 $R^2$，未优化强度，也未将分别可达的表拼接成共同实现。中心间距的倒数明确保留；$a+b=0$、某一中心为零及某一窗质量为零均不造成例外。
+

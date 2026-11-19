@@ -911,3 +911,279 @@ $$
 ## 12. 后续追加锚点
 
 后续结果须保持 (9.1)—(9.2) 的同一实际源、增益、共同漂移与六读数，并明确填补第 8 节某个保留范围或原始历史桥梁的哪一项义务。必要符号条件本身不作为合法实现。
+
+## 13. BC 交换关系与两个剩余漂移窗口的排除
+
+**引理 13.1（BC 对的交叉源参数）。** 设同一 $\mathcal K_{\mathbf c,d}$ 中两个不同合法世界共享 $B,C$，且第 3 节的差参数满足 $3<\theta<6$。将两个终端矩阵同时乘其共同条目符号，仍记所得正矩阵为 $X_i$。在 (6.1)—(6.2) 的源图表中记
+
+$$
+x_i=\frac{a_i}{c_i}=\frac{b_i}{e_i}\in(1/3,1/2),\qquad
+\rho_i=\frac{e_i}{c_i}>0,\qquad
+t_i=\frac{3x_i-1}{1-2x_i}>0.
+\tag{13.1}
+$$
+
+这里 $c_i$ 是终端矩阵条目，$t_i$ 是源图表参数，不是祖先迹。定义
+
+$$
+\Phi_\theta(x)=\frac{1+\theta x}{\theta-1-x}.
+\tag{13.2}
+$$
+
+则 $x_1\ne x_2$，并且
+
+$$
+\rho_1=\Phi_\theta(x_2),\qquad
+\rho_2=\Phi_\theta(x_1),\qquad
+\frac9{14}<\rho_i<\frac53.
+\tag{13.3}
+$$
+
+特别地，$t_1>t_2$ 蕴含 $\rho_1<\rho_2$。
+
+**证明。** 同乘共同符号不改变物理源、碰撞等式或 $\theta$。由 (3.9)，对某个 $w\ne0$ 有
+
+$$
+c_2-c_1=b_2-b_1=-w,\qquad
+e_2-e_1=\theta w,\qquad a_2-a_1=(1-\theta)w.
+\tag{13.4}
+$$
+
+若 $x_1=x_2=x$，则 $b_i=xe_i$ 给 $-w=x\theta w$，与 $x,\theta>0$ 矛盾。分别使用 $a_i=x_ic_i$ 和 $b_i=x_ie_i$，得到
+
+$$
+(x_1-x_2)c_1=(\theta-1-x_2)w,\qquad
+(x_1-x_2)e_1=(1+\theta x_2)w.
+\tag{13.5}
+$$
+
+分母 $\theta-1-x_2>3/2$，相除得到第一式；交换编号得到第二式。又
+
+$$
+\partial_x\Phi_\theta(x)=
+ \frac{\theta^2-\theta+1}{(\theta-1-x)^2}>0,\qquad
+\partial_\theta\Phi_\theta(x)=
+ -\frac{1+x+x^2}{(\theta-1-x)^2}<0.
+\tag{13.6}
+$$
+
+因此 $\Phi_6(1/3)=9/14<\rho_i<\Phi_3(1/2)=5/3$。函数 $t(x)$ 严格递增，故交叉公式同时给出最后的反序关系。∎
+
+**引理 13.2（高漂移的源区域与严格单调性）。** 对 $D\in[72,96]$ 定义
+
+$$
+\begin{gathered}
+\alpha_D=36(D-24),\quad \beta_D=45(D-48),\quad
+\gamma_D=20(D-312/5),\\
+s_0=1+\rho t,\quad j_N=\rho+t,\quad
+v_N=1+\rho+\rho t,\quad m_N=j_N+v_N,\\
+\mathscr Z_D(t,\rho)=10D-\alpha_D\frac{s_0}{j_N}
+ +\beta_D\frac{s_0}{v_N}-\gamma_D\frac{s_0}{m_N},
+\qquad \rho_0=25/23.
+\end{gathered}
+\tag{13.7}
+$$
+
+对 $t,\rho>0$，这就是源 (6.2) 的 $Z_P(D)$。它具有以下性质：
+
+$$
+\begin{array}{ll}
+\text{(i)}&0<t\le1,\quad 9/14\le\rho\le3/2
+       \quad\Longrightarrow\quad\mathscr Z_D(t,\rho)<0;\\
+\text{(ii)}&t\ge1,\quad\rho\ge\rho_0
+       \quad\Longrightarrow\quad\mathscr Z_D(t,\rho)<0;\\
+\text{(iii)}&t\ge1,\quad0<\rho\le\rho_0
+       \quad\Longrightarrow\quad
+       \partial_t\mathscr Z_D>0,\quad\partial_\rho\mathscr Z_D<0.
+\end{array}
+\tag{13.8}
+$$
+
+**证明。** 全部显示的分母严格正。直接微分给
+
+$$
+\begin{aligned}
+\partial_t\mathscr Z_D
+ &=\frac{\alpha_D(1-\rho^2)}{j_N^2}
+   +\frac{\beta_D\rho^2}{v_N^2}
+   +\frac{\gamma_D(1-2\rho^2)}{m_N^2},\\
+\partial_\rho\mathscr Z_D
+ &=\frac{\alpha_D(1-t^2)}{j_N^2}
+   -\frac{\beta_D}{v_N^2}
+   +\frac{\gamma_D(2-t^2)}{m_N^2}.
+\end{aligned}
+\tag{13.9}
+$$
+
+在所述 $D$ 区间，$\alpha_D,\beta_D,\gamma_D>0$，且
+
+$$
+\beta_D-\gamma_D=25D-912>0,\quad
+\beta_D-2\gamma_D=5D+336>0,\quad
+\alpha_D-\beta_D=1296-9D>0.
+\tag{13.10}
+$$
+
+先证 (iii)。事实上 $t\ge1$ 时对所有 $\rho>0$ 都有 $\partial_\rho\mathscr Z_D<0$：若 $t^2\ge2$，(13.9) 第二式各项非正且第二项严格负；若 $1\le t^2<2$，最后一项小于 $\gamma_D/v_N^2<\beta_D/v_N^2$，第一项仍非正。
+
+若 $0<\rho\le1$，则 $\partial_t\mathscr Z_D>0$。当 $2\rho^2\le1$ 时从 (13.9) 直接得到；否则用 $m_N>v_N$、$\beta_D>\gamma_D$ 和 $\rho^2\ge2\rho^2-1$ 比较后两项即可。
+
+若 $1\le\rho\le\rho_0$，令 $R=v_N/j_N$。因为
+
+$$
+\partial_t R=\frac{\rho^2-\rho-1}{j_N^2}<0,\qquad
+R\le\frac{1+2\rho}{1+\rho}\le\frac{73}{48}<\frac85,
+\qquad
+\rho^2-1\le\frac{96}{529}<\frac3{16},
+\tag{13.11}
+$$
+
+其中对 $R$ 的上界使用 $t\ge1$，(13.9) 给
+
+$$
+\begin{aligned}
+v_N^2\partial_t\mathscr Z_D
+ &=-\alpha_D(\rho^2-1)R^2+\beta_D\rho^2
+   -\gamma_D(2\rho^2-1)(v_N/m_N)^2\\
+ &> -\frac{12}{25}\alpha_D
+       +(\beta_D-2\gamma_D)\rho^2+\gamma_D\\
+ &\ge\beta_D-\gamma_D-\frac{12}{25}\alpha_D
+   =\frac{193D-12432}{25}\ge\frac{1464}{25}>0.
+\end{aligned}
+\tag{13.12}
+$$
+
+这证明 (iii)。
+
+下面证 (i)。$\mathscr Z_D$ 关于 $D$ 仿射，只须对同一 $(t,\rho)$ 检查 $D=72,96$。若 $9/14\le\rho\le1$、$0\le t\le1$，物理迹满足
+
+$$
+u=\frac{\rho+t}{1+\rho t}\le1,\qquad
+v=1+\frac\rho{1+\rho t}\ge1+\frac\rho{1+\rho}
+\ge\frac{32}{23}.
+\tag{13.13}
+$$
+
+因此 $\mathscr Z_D\le10D-\alpha_D+(23/32)\beta_D$，在 72、96 分别等于 $-927/4,-159/2$，均严格负。
+
+再设 $1\le\rho\le3/2$。在 $0\le t\le1$ 上，$R=v_N/j_N$ 严格递减，$v_N/m_N=R/(1+R)$ 也严格递减。故
+
+$$
+v_N^2\partial_t\mathscr Z_D
+=-\alpha_D(\rho^2-1)R^2+\beta_D\rho^2
+ -\gamma_D(2\rho^2-1)\bigl(R/(1+R)\bigr)^2
+\tag{13.14}
+$$
+
+随 $t$ 严格递增。这使 $\partial_t\mathscr Z_D$ 的符号至多从负变正一次，所以 $\mathscr Z_D$ 在 $[0,1]$ 上的最大值位于端点。此处仅连续延伸到 $t=0$ 作估计，不将该边界当作合法世界。在 $t=0$，
+
+$$
+\mathscr Z_D(0,\rho)=10D-\frac{\alpha_D}{\rho}
+ +\frac{\beta_D}{1+\rho}-\frac{\gamma_D}{1+2\rho}
+\tag{13.15}
+$$
+
+关于 $\rho$ 严格递增，因为其导数是
+$\alpha_D/\rho^2-\beta_D/(1+\rho)^2+2\gamma_D/(1+2\rho)^2>0$。
+故该端点不大于 $\mathscr Z_D(0,3/2)$，在 72、96 分别为 $-48,-72$。另一端点满足
+
+$$
+\mathscr Z_D(1,\rho)
+ <10D-\alpha_D+\frac23\beta_D,
+\tag{13.16}
+$$
+
+右端在 72、96 分别为 $-288,-192$。于是两个端点同时严格负，证得 (i)。
+
+最后证 (ii)。由已证的 $\rho$ 严格递减性和 (iii)，
+
+$$
+\mathscr Z_D(t,\rho)\le\mathscr Z_D(t,\rho_0)
+ <\lim_{T\to\infty}\mathscr Z_D(T,\rho_0)
+ =10D-\alpha_D\rho_0+\beta_D
+             -\frac{\gamma_D\rho_0}{1+\rho_0}.
+\tag{13.17}
+$$
+
+最后一项在 $D=72,96$ 分别为 $-4100/23,-1090/23$，并关于 $D$ 仿射，故在整个闭区间严格负。∎
+
+**定理 13.3（两个窗口上的全合法 BC 注入）。** 在本卷完整 $H_*$ 世界类 $\mathcal K_{\mathbf c,d}$ 上，若
+
+$$
+d\in(24,48)\cup(72,96),
+\tag{13.18}
+$$
+
+则 $W\mapsto(B(W),C(W))$ 注入。
+
+**证明。** 假设两个不同世界具有相同 $B,C$。第 3—5 节使用同一对世界的全部六个祖先方程、零六次与非零七次，给出 $w\ne0$ 和 $3<\theta<6$；在第二窗口使用 (5.2) 的 $\mathsf A_-$ 行。两个终端增益同号，故引理 13.1 适用。每个世界的真实源都满足
+
+$$
+Z_{P_i}(d)=f_i(6)=0,
+\tag{13.19}
+$$
+
+其中 $Z_P$ 是 (6.6)，由真实前四增益样本插值得到。
+
+先设 $24<d<48$。第 6 节的估计给出两个源区域：
+
+$$
+\begin{array}{ll}
+0<t\le1,\quad0<\rho<3/2
+ &\Longrightarrow Z_P(24)<0,\ Z_P(48)<0;\\
+t\ge1,\quad\rho\ge7/10
+ &\Longrightarrow Z_P(24)<0,\ Z_P(48)<0.
+\end{array}
+\tag{13.20}
+$$
+
+第一行就是估计 A。第二行由 $p<1/t\le1$ 和 (6.7)—(6.8) 得到 24 的负性；在 48，(6.10) 的 $B_\rho<0,D_\rho\le-11/100$ 和 $N(1)<0$ 给出所有 $t\ge1$ 的负性，不需要估计 B 的其余分支。
+
+交叉公式保证这两个区域至少包含一个固定实际源。若 $\theta\ge13/4$，有一个 $x_i\le2/5$ 时，该源满足
+$\rho_i<\Phi_{13/4}(1/2)=3/2$，落入第一行；否则两个 $x_i>2/5$，并且
+$\rho_i>\Phi_6(2/5)=17/23>7/10$，落入第二行。
+若 $\theta<13/4$，有一个 $x_i\ge2/5$ 时，该源满足
+$\rho_i>\Phi_{13/4}(1/3)=25/23>7/10$，落入第二行；否则两个 $x_i<2/5$，并且
+$\rho_i<\Phi_3(2/5)=11/8<3/2$，落入第一行。
+这些分支包括 $x_i=2/5$ 和 $\theta=13/4$。对所选同一实际源，$Z_P(D)$ 关于 $D$ 仿射，两个端点严格负给出 $Z_P(d)<0$，与 (13.19) 矛盾。
+
+再设 $72<d<96$。由 (13.3) 和引理 13.2，每个满足 (13.19) 的实际源必须遵守
+
+$$
+t_i\le1\Longrightarrow\rho_i>3/2,\qquad
+ t_i\ge1\Longrightarrow\rho_i<25/23.
+\tag{13.21}
+$$
+
+所以 $t_i=1$ 不可能。若两个 $t_i<1$，则两个 $x_i<2/5$，交叉公式给 $\rho_i<11/8<3/2$，矛盾。若恰有一个 $t_i<1$，其 $\rho_i>3/2$ 联合 $x_{3-i}<1/2$ 强制 $\theta<13/4$，否则 $\rho_i<\Phi_{13/4}(1/2)=3/2$。另一个源于是满足
+
+$$
+\rho_{3-i}=\Phi_\theta(x_i)
+ >\Phi_{13/4}(1/3)=25/23,
+\tag{13.22}
+$$
+
+与其 $t_{3-i}>1$ 所需的 (13.21) 矛盾。
+
+只剩两个 $t_i>1$、两个 $\rho_i<25/23$。重标号使 $t_1>t_2$，引理 13.1 给 $\rho_1<\rho_2$。在连接这些参数的两个线段上，引理 13.2(iii) 全程适用，从而
+
+$$
+0=\mathscr Z_d(t_1,\rho_1)
+ >\mathscr Z_d(t_2,\rho_1)
+ >\mathscr Z_d(t_2,\rho_2)=0,
+\tag{13.23}
+$$
+
+再次矛盾。两个窗口均已排除不同 BC 对。
+
+证明没有约去任何祖先增益、首项系数或根差；(13.19) 使用次数至多三的完整插值恒等式。因此所有允许的降次、采样根、重根及终端增益的两个符号都在量词内。后两真实读数用于推出 $3<\theta<6$，并未被删除或另行拟合。∎
+
+**推论 13.4（同时 BC 环与固定祖先的小集结论）。** 不存在 (9.1)—(9.2) 中满足 (13.18) 及命题 8.1 的 BC 行的合法三世界。更一般地，固定 $H_*^{D_0,\lambda}$ 上，任意已给的至多三个合法完整世界组成的共同漂移、终端非零集合 $K$ 都满足 $\neg L_2(K,H_*^{D_0,\lambda})$，并有至多两次后续即时读数的完整目标恢复策略。
+
+**证明。** BC 行要求世界一、三构成不同 BC 碰撞对，直接违反定理 13.3。这是否定同一三世界同时系统，不是分别排除或拼接独立边。
+
+对于一般三元 $K$，调用 [非零终端碰撞稀疏卷](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md) 推论 12.1：若 $L_2$，则同一三个世界全部满足 $f_i(6)=0$，共同归一化漂移在 (13.18)，且四列均不注入。本卷命题 8.1 和第 8 节必要表在这两个窗口只保留 BC 行，已被排除。二元 $K$ 若为 $L_2$，同一对必须在全部四个终端列相等，与该卷引理 2.3 的完整世界逆映射矛盾。空集和单元集直接处理。
+
+对非单元已给 $K$，按 $J,M$ 的顺序选择第一个使每个原始响应子集都不满足 $L_1$ 的第六动作；在每个非单元子集上按 $J,M$ 选择第一个注入的第七动作，单元子集可停止。$\neg L_2$ 与 (9.3) 保证这些选择；每个可达最终子集至多一个完整世界，返回其整个 $(P,g,\delta)$。六个祖先读数加至多两个后续读数，共至多八次。
+
+仿射双射 $r\mapsto D_0+\lambda r$ 对两种 $\lambda$ 符号保存全部相等关系和实际子集。四个终端列仍是同一世界的反事实函数，策略仅执行选中的一条轨迹；此结论依赖已给的完整 $K$ 与共同漂移、终端非零承诺，不从祖先取得这些标签。它不涉及不同漂移、更大集合、其他祖先或原始根节点的八对九判定。∎

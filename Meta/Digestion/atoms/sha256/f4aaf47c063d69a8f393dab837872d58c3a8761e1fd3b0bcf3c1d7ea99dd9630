@@ -1,0 +1,8 @@
+**原文来源与结论归属。** [S] [固定对半及完整一般 EJA 条件桥](../../../Library/QuantumStates/mullerududec2012selfduality.md)，其 *Complete conditional candidate and its scope* 与 *Appendix: a fixed-half pure–mixed entrance to S* 的同载体定理按本章明列的全部原态、全效应及混态余项使用；一般分类接口为 H. Barnum、M. P. Müller、C. Ududec，*Higher-order interference and single-system postulates characterizing quantum theory*，[arXiv:1403.4147v4, Theorem 16](https://arxiv.org/html/1403.4147v4#Thmtheorem16)，保留有限维、项目性、对称转移概率及滤波纯性条件，不挪用其 Theorem 17 的额外对称性。
+
+[E] H. Umegaki，*Conditional expectation in an operator algebra*，Tohoku Mathematical Journal (2) **6** (1954), 177–181，[原文](https://www.jstage.jst.go.jp/article/tmj1949/6/2-3/6_2-3_177/_pdf)，Theorem 1、p.178 的迹配对式 (1) 与模性质；R. Nicoara，*A finiteness result for commuting squares of matrix algebras*，[arXiv:math/0404301v1, Definition 2.1](https://arxiv.org/pdf/math/0404301v1)，以忠实归一迹和有限维 von Neumann 子代数定义交换方块，其条件期望复合为底部交集的期望。它们的结合代数前件不由本章预先假设；式 (86.14) 由原迹配对直接证明所需 Jordan 性质。正交投影、谱分解、极化及观察纤维上的因子分解判据均为成熟工具。
+
+[R] [第四卷](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)65.3、66.2—66.11、67.7、70.1—70.3、72.3／72.7—72.8，及本卷 79、83—85，固定原文取 [e89e225089c41f14090d9e8d36b5046967044d32](https://github.com/the-omega-institute/trureturing/tree/e89e225089c41f14090d9e8d36b5046967044d32)。原满迹等距接口、校准、前 C13 方向分类、逆向、坏 qubit 元组、逐合格原混态检测和共同锚点 CP 消费者分别归于上述原结果。Choi、Jamiołkowski 与矩形 Kraus 的原文按 82.8／85.11 引用，不把它们当作本章新增工具。
+
+本章的纸面推导集中于同原 $H,p^*$ 的完整重叠公式、它们在原观察纤维中丢失交叉方向的严格消费，以及一个指定直和表示的 Jordan／结合／CP 边界。单位校准重述、成熟期望理论、原反模型及旧余循环分类不另计新内容；不主张文献穷尽、全球原创、全局最小标记、独立物理公理最少或物理可得性。所有结论均保留所列完整原模型与附加来源条件。
+

@@ -1,0 +1,64 @@
+**定理 122.9（全效应双向极限、维数降落与正缺口）。** 仍用定理122.8的同一 $w_t$，定义整个
+
+$$
+\mathcal B(q)=\{h\in\mathcal E:h(q)=0\},\qquad
+\mathcal T_v=\operatorname{conv}\{0,e_p,u-e_{q_v}\}.
+\tag{Q122.22}
+$$
+
+在原效应空间的范数 $\|h\|_K=\max_K|h|$ 下，
+
+$$
+d_H(\mathcal B(q_{w_t}),\mathcal T_v)\longrightarrow0.
+\tag{Q122.23}
+$$
+
+每个 $\mathcal B(q_{w_t})$ 及 $\mathcal B(q_v)$ 的线性张成均为四维；$\mathcal T_v$ 的两个非零顶点线性独立，故极限的线性张成与仿射维数均为二。特别地
+
+$$
+\delta_v:=\max_{h\in\mathcal B(q_v)}
+\operatorname{dist}_K(h,\mathcal T_v)>0,
+\qquad
+d_H(\mathcal B(q_{w_t}),\mathcal B(q_v))\longrightarrow\delta_v.
+\tag{Q122.24}
+$$
+
+证明。先证全部上极限。任取 $t_j\downarrow0$、$h_j\in\mathcal B(q_{w_{t_j}})$。紧 $\mathcal E$ 允许取子列 $h_j\to h\in\mathcal E$。评价连续给 $h(q_v)=0$。原最大值公式与整球塌缩给
+
+$$
+\max_Kh_j=\max_{F_{w_{t_j}}}h_j\longrightarrow h(p),
+\qquad \max_Kh=h(p).
+\tag{Q122.25}
+$$
+
+这里效应收敛在紧 $K$ 上一致，故移动最大值的极限成立。若 $h=0$，已经在三角形内。否则 $a_0=h(p)=\max_Kh>0$，因为 $K$ 张成 $V$；且 $a_0\le1$。于是 $b=h/a_0$ 是原效应，$b(p)=1,b(q_v)=0$。对(Q122.8)的完整原边区间取补，准确得到
+
+$$
+\{b\in\mathcal E:b(p)=1,b(q_v)=0\}
+=[u-e_{q_v},e_p].
+\tag{Q122.26}
+$$
+
+所以 $h=a_0b\in\mathcal T_v$。任何聚点均在三角形；紧性反证遂给
+$\sup_{h\in\mathcal B(q_{w_t})}\operatorname{dist}_K(h,\mathcal T_v)\to0$，这是完整上包含。
+
+再证全部下极限。对每个 $t$，三个真实效应
+$0,e_p,u-e_{q_{w_t}}$ 均零于 $q_{w_t}$，其凸包属于整个 $\mathcal B(q_{w_t})$。前两个顶点固定，第三个依(Q122.7)趋于 $u-e_{q_v}$。对任意三角形点使用相同三个凸系数，误差至多 $\|e_{q_{w_t}}-e_{q_v}\|_K$，统一趋零。于是三角形的每一点均由实际零效应逼近，且给所需下Hausdorff包含。(Q122.23)成立。
+
+对任意 $q\in P_0$，$\mathcal B(q)$ 张成 $N_q$ 的张成空间：任一非零 $h\in N_q$ 可除以 $\max_Kh>0$ 成为 $\mathcal B(q)$ 中的效应。IX120.8给其维数四；全部 $q_w$ 已由IX120.12属于 $P_0$。
+
+$e_p$ 与 $u-e_{q_v}$ 都在 $p$ 读一。若成比例，只能相等。然而 $e_p$ 零于整个 $D_p$，$u-e_{q_v}$ 在 $K$ 中只零于 $q_v$；在 $D_p\setminus\{q_v\}$ 取点就得矛盾。故二者独立。三角形含零，故确为二维。
+
+三个顶点在 $q_v$ 也读零，所以 $\mathcal T_v\subset\mathcal B(q_v)$；四维张成不可能包含于该二维平面，存在严格正距离的效应，紧性给达到的 $\delta_v>0$。最后Hausdorff距离满足
+
+$$
+\left|d_H(\mathcal B(q_{w_t}),\mathcal B(q_v))
+-d_H(\mathcal T_v,\mathcal B(q_v))\right|
+\le d_H(\mathcal B(q_{w_t}),\mathcal T_v)\to0.
+\tag{Q122.27}
+$$
+
+包含关系使中间的固定距离等于 $\delta_v$，完成严格正的不连续缺口。证毕。
+
+这些是整个原 $\mathcal E$ 的零集合，不是确认效应的抽样极限。$\mathcal T_v$ 是效应空间中的凸三角形，其顶点不被解释为三个共同结果；$e_p$ 与 $u-e_{q_v}$ 都在 $p$ 读一，尤其不能据此把三角形装成一台三结果仪器。
+

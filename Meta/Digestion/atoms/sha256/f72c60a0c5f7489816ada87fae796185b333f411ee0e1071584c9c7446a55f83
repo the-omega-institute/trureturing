@@ -1,0 +1,31 @@
+**定理 1.2（引理 4.15 的核心不等式对全部 $\kappa>1$ 成立）。** 设 $\kappa>1$，$y>1$，则
+
+$$
+\bigl[(y^2+2)^\kappa-2^\kappa\bigr]\bigl[(y+1)^\kappa-1\bigr]^2>\bigl[(y^2+y+1)^\kappa-(y+1)^\kappa\bigr]^2 .
+\tag{1.3}
+$$
+
+进而，以该文定义 4.2 的
+
+$$
+F^{[\kappa]}(x,a)=\frac{1}{\kappa\log x}\log\frac{(x^{a+1}-1)^\kappa-(x^a-1)^\kappa}{(x^{a+1}-x)^\kappa-(x^a-x)^\kappa}\qquad(x>1,\ a\ge1),
+$$
+
+对一切 $\kappa>1$ 与 $y>2$，有 $F^{[\kappa]}(y,2)<F^{[\kappa]}(y^2/2,1)$。
+
+**证明。** 令 $s=1/y$、$h=1/y^2$，则
+
+$$
+(y^2+2)^\kappa-2^\kappa=y^{2\kappa}C_\kappa(2h),\qquad(y+1)^\kappa-1=y^\kappa C_\kappa(s),\qquad(y^2+y+1)^\kappa-(y+1)^\kappa=y^{2\kappa}C_\kappa(s+h),
+$$
+
+所以 (1.3) 等价于 $B_\kappa(s+h)-B_\kappa(s)<\frac12B_\kappa(2h)$。由 $y>1$ 得 $0<h<s$。四点 $h<2h$、$s<s+h$ 都在 $(0,\infty)$ 内，而严格凹函数在等长区间上的增量随起点严格递减，故 $B_\kappa(s+h)-B_\kappa(s)<B_\kappa(2h)-B_\kappa(h)$。由 $[0,\infty)$ 上的凹性与 $B_\kappa(0)=0$，$B_\kappa(h)\ge\frac12B_\kappa(2h)$，即 $B_\kappa(2h)-B_\kappa(h)\le\frac12B_\kappa(2h)$。合并即得 (1.3)。
+
+记 $A=(y^2+2)^\kappa-2^\kappa$、$B=(y^2+y+1)^\kappa-(y+1)^\kappa$、$C=(y+1)^\kappa-1$。因式分解 $y^3-1=(y-1)(y^2+y+1)$、$y^2-1=(y-1)(y+1)$、$y^3-y=y(y-1)(y+1)$、$y^2-y=y(y-1)$ 给出
+
+$$
+F^{[\kappa]}(y^2/2,1)=\frac{\log\bigl(A/y^{2\kappa}\bigr)}{\kappa\log(y^2/2)},\qquad F^{[\kappa]}(y,2)=\frac{\log\bigl(B/(Cy^\kappa)\bigr)}{\kappa\log y}.
+$$
+
+对 $u,v>0$ 与 $\kappa>1$ 有 $(u+v)^\kappa>u^\kappa+v^\kappa$，故 $A>y^{2\kappa}$，$\log(A/y^{2\kappa})>0$。$y>2$ 时 $0<\log(y^2/2)<2\log y$，所以 $F^{[\kappa]}(y^2/2,1)>\log(A/y^{2\kappa})/(2\kappa\log y)$。由 (1.3)，$A/y^{2\kappa}>\bigl(B/(Cy^\kappa)\bigr)^2$，取对数后除以 $2\kappa\log y>0$ 即得 $F^{[\kappa]}(y^2/2,1)>F^{[\kappa]}(y,2)$。证毕。
+

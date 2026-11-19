@@ -1,0 +1,10 @@
+**假设 C-9.1（共同纯记录）。** 另供同一个复 Hilbert 载体、归一化记录 $`o,u_0,v_0`$ 及可取得的关系条目。内积共轭线性于第一槽、线性于第二槽。置 $`a=\langle o,u_0\rangle,b=\langle o,v_0\rangle,c=\langle u_0,v_0\rangle`$。已知 𝑎,𝑏、待补 𝑐 的 Gram 为
+
+
+```math
+G_{\rm rec}=\begin{pmatrix}1&a&b\\\bar a&1&c\\\bar b&\bar c&1\end{pmatrix}.
+```
+
+
+[C-R4] §109 的退相干记录矩阵 $`\Gamma_{ij}=\langle e_j,e_i\rangle`$ 是通常 Gram 的转置；正性和秩相同，密度非对角因子的索引约定仍须保持。
+

@@ -1,0 +1,126 @@
+**定理 150.1（任意原混合输入的横向旧输出）。** 对147.1背景下每个原 $x\in E$，同一个旧总映射满足
+
+$$
+\boxed{P_{\rm tr}D(h,x)=T P_{\rm tr}x=iQh P_{\rm tr}x.}
+\tag{150.1}
+$$
+
+不要求 $x$ 的平方、任一系数平方或混合Gram为标量、中央、可逆或有限谱。
+
+证明。固定149.1的 $\sigma,\xi$ 及任一实际锚。记实数和固定向量
+
+$$
+a=\operatorname{Re}\langle\eta,v\xi\rangle,\qquad
+w=p\xi,\qquad z_\pm=\mathfrak p_\eta((v\pm g)\xi),\qquad
+b=\operatorname{Re}\langle w,g\xi\rangle.
+\tag{150.2}
+$$
+
+$\|w\|=1$ 且 $\operatorname{Re}\langle\eta,w\rangle=0$。成熟的Hilbert范数一次项对任意固定向量 $z$ 给
+
+$$
+\|rw+z\|-r
+=\frac{2r\operatorname{Re}\langle w,z\rangle+\|z\|^2}
+{\|rw+z\|+r}
+\longrightarrow\operatorname{Re}\langle w,z\rangle
+\quad(r\to+\infty).
+\tag{150.3}
+$$
+
+分母除以 $r$ 后趋于二，因为 $|\|rw+z\|-r|\le\|z\|$。这里仅对显式固定向量范数使用平方差恒等式。
+
+在(149.4)取 $t=r\to+\infty$，两份右侧范数减去 $2r$ 的极限为
+
+$$
+-\operatorname{Re}\langle w,z_+\rangle
++\operatorname{Re}\langle w,z_-\rangle=-2b;
+$$
+
+左侧减去 $2r$ 的极限为 $2a$，故 $a\le-b$。再取 $t=-r\to-\infty$，两份右侧范数减去 $2r$ 的极限为 $2b$，左侧为 $-2a$，故 $a\ge-b$。两端一起迫使
+
+$$
+\operatorname{Re}\langle\eta,v\xi\rangle
+=-\operatorname{Re}\langle p\xi,g\xi\rangle.
+\tag{150.4}
+$$
+
+在这些等式中，$\operatorname{Re}\langle w,\mathfrak p_\eta z\rangle
+=\operatorname{Re}\langle w,z\rangle$，所以没有将未知 $g$ 换成横向投影再求预算。由(149.5)及内积约定，(150.4)等价于
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,v\xi\rangle.
+\tag{150.5}
+$$
+
+先取 $(p,q)=(e,j)$，写
+
+$$
+A_\xi=\langle j\xi,v\xi\rangle,\qquad
+B_\xi=\langle j\xi,g\xi\rangle.
+$$
+
+第一锚给 $\operatorname{Im}B_\xi=\sigma\operatorname{Re}A_\xi$。第二锚 $(p,q)=(j,-e)$ 给 $\eta'=-e\xi=i\sigma j\xi$，因此
+
+$$
+A'_\xi=-i\sigma A_\xi,\qquad B'_\xi=-i\sigma B_\xi.
+$$
+
+将它们代入第二份(150.5)，得到
+
+$$
+-\sigma\operatorname{Re}B_\xi=\operatorname{Im}A_\xi.
+$$
+
+联合两份实等式，准确为
+
+$$
+\boxed{B_\xi=i\sigma A_\xi,\qquad
+\langle j\xi,(g-i\sigma v)\xi\rangle=0.}
+\tag{150.6}
+$$
+
+两种实际锚各自使用148.3–148.7的一次PB及同一读取的两张P2，不假定它们的未知外层输出相等。
+
+为将全部二次读取接回完整压缩，令 $E_\sigma=(I+\sigma Q)/2$、$P_\pm=(I\pm h)/2$，只在数学表示中使用这些投影；它们不成为原输入。$E_\sigma$ 与所有原元素交换。令
+
+$$
+M_\sigma=E_\sigma P_-\,j(g-i\sigma v)\,P_-E_\sigma.
+\tag{150.7}
+$$
+
+(150.6)对 $H_{\sigma,-}$ 中每个单位向量成立，再以固定算子的二次齐次性推广到全部向量。普通复极化不需要 $M_\sigma$ 自伴：若 $q_M(\zeta)=\langle\zeta,M_\sigma\zeta\rangle$，则对任意 $\zeta,\omega\in H_{\sigma,-}$，
+
+$$
+\begin{aligned}
+4\langle\zeta,M_\sigma\omega\rangle
+&=q_M(\zeta+\omega)-q_M(\zeta-\omega)\\
+&\quad-iq_M(\zeta+i\omega)+iq_M(\zeta-i\omega)=0.
+\end{aligned}
+\tag{150.8}
+$$
+
+所以 $M_\sigma=0$。$j$ 将 $H_{\sigma,-}$ 酉地送到 $H_{\sigma,+}=E_\sigma P_+H$，且 $j^2=I$；左乘 $j$ 即给
+
+$$
+E_\sigma P_+gP_-E_\sigma
+=i\sigma E_\sigma P_+vP_-E_\sigma.
+\tag{150.9}
+$$
+
+$g,v$ 自伴，故伴随确定反向块：
+
+$$
+E_\sigma P_-gP_+E_\sigma
+=-i\sigma E_\sigma P_-vP_+E_\sigma.
+\tag{150.10}
+$$
+
+这里的反号正是 $i\sigma hv$ 在反向块上的反号；没有声称完整 $g=i\sigma v$。$Q$ 中央排除不同 $\sigma$ 谱空间之间的任何原元素块。又
+
+$$
+P_{\rm tr}g=\tfrac12(g-hgh)=P_+gP_-+P_-gP_+,
+$$
+
+故(150.9)–(150.10)在两份 $Q$ 谱空间上共同给 $P_{\rm tr}g=iQhv$。空谱空间无须读取；若某份 $h$ 负空间为空，$j$ 的酉对应使其正空间也为空。忠实性把这个环境等式认回原元素，最后用147.2的已有原 $Tv=iQhv$ 得(150.1)。全部未知旧值只在有限原标签上出现，未使用任何 $D$ 的可加性或输入连续性。∎
+

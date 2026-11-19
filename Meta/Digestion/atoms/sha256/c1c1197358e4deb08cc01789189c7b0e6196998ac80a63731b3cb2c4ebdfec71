@@ -1,0 +1,23 @@
+**Theorem 41.2 (the almost-sure hard tube is impossible).**
+For every deterministic $0<\eta<\pi$, no policy of Definition 41.1
+satisfies $D_{\max}(\bar q^{\rm N},\bar q)\le\eta$ almost surely.
+
+Proof. Before the first positive Read $R_1$, or through the horizon if
+there is none, the entire actual numerical execution is determined by
+$U$ and the clock. Its own cutoff is determined by that same numerical
+execution. Conditional on $U$, choose a positive time
+$t<\min(R_1,T)$, for example half that minimum, interpreting a missing
+$R_1$ as infinity. The event $\{\tau>t\}$ has positive conditional
+probability and depends only on $W^1$. Independently, $W^2_t$ has a
+nondegenerate centered normal distribution with variance $2t$, so
+$\mathbb P(|b(t)-W^2_t|>2\eta\mid U)>0$.
+
+On a complete native tube of radius $\eta<\pi$, continuity of the two
+phase lifts from their common initial representatives forces
+$|b-W^2_{\cdot\wedge S}|\le2\eta$ on the whole interval, by exactly
+the connected-lift argument of Theorem 13.2. Hence the intersection of
+the two preceding events violates the tube. Its conditional probability
+is strictly positive for almost every $U$, and therefore its probability
+is positive. Clock-driven bends, arbitrary numerical AC profiles and a
+very small first waiting time do not change this argument. $\square$
+

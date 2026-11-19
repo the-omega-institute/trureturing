@@ -1,0 +1,23 @@
+**定理 77.21（同一原模型类与完整静态消费者）。** 定义 77.20 的回路平衡单独入口及混合余项入口，与定义 73.15 具有完全相同的实际 $(A,D,E,C_X,u_X,L,p)$ 模型类；其结论恰复用定理 73.16 及 (73.33)—(73.34)。存在有限非空扇区集及 $n_i\ge1$，在保持原迹、全部原态、全部原效应的坐标中
+
+$$
+\begin{gathered}
+A=\bigoplus_iH_{n_i}(\mathbb C),\quad
+D=\bigoplus_{i,j}H_{n_in_j}(\mathbb C),\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),\\
+M(a,b)_{ij}=a_i\otimes b_j,\qquad
+L(d,c)_{ijk}=d_{ij}\otimes c_k,\\
+(pz)_{jk}=\sum_i\operatorname{Tr}_i z_{ijk},\qquad
+(p_{13}z)_{ik}=\sum_j\operatorname{Tr}_jz_{ijk},\qquad
+p_{13}=(I^{\rm raw})^*,\\
+\Pr(f\mid\rho)=\sum_\lambda\operatorname{Tr}(f_\lambda\rho_\lambda),\quad
+\rho_\lambda\ge0,\quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,\quad
+0\le f_\lambda\le I_\lambda.
+\end{gathered}
+\tag{77.19}
+$$
+
+全部有序标签、重复标签、经典标量扇区、不等和零中心质量、实际相关与纠缠输入均保留。上述二份、三份与偏迹属于这些指定的原接口，不自动识别独立另一括号或四份以上组合。
+
+**证明。** 在同一 $A,D,E$ 上逐个使用定理 77.19，由回路平衡本身或 $\mathrm B_{\rm mix}$ 恢复且仅恢复原完整 $S$；互反无需另作前件，全部其余未改前件给定义 73.15。其既有 Library 桥在这个顺序后使用，不把矩阵概率预置到比较定义中。71.6 与 71.8a 先从 NB 得原 C13；73.8 从四个正补全得原 $M$ 的滤子为单位、原 $L$ 仅剩一个共同正标量；73.10—73.11 的原锚消去该标量。于是 73.16 给实际普通乘积与两个唯一全实读回。原 Born 配对则已经由完整比较桥和 66.3、66.8 获得，73.9 明确它不是重置的新后果。逆向，定义 73.15 的完整 $S$ 给两个替代入口及纯互反，其他对象原封不动；所以这是同模型类等价，而非另造一个兼容量子模型。∎
+

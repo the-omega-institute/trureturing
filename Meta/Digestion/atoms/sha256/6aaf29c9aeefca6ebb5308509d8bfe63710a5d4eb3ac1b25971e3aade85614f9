@@ -1,0 +1,32 @@
+**定理 9.2（纠偏配方生成商像中的负元）。**在定理 9.1 的条件下，令 $\gamma(a)=\beta(a)\bmod W$，$A=\gamma(M)\subseteq V/W$，$\rho$ 为 $R$ 诱导的算子，$\tau=\gamma(p_1)$。则 $A$ 为加法群，$\rho$ 限制为 $A$ 的自同构，且
+
+$$
+\gamma(a\cdot b)=\gamma(a)+\gamma(b),\qquad
+\gamma(Ua)=\rho\gamma(a)+\tau,\qquad I+\rho+\rho^2=0.
+\tag{9.6}
+$$
+
+**证明。**$RW=W$ 使 $\rho$ 合法；$T$ 的定义使乘法像为加法，故 $A$ 初为加法幺半群，零元为 $\gamma(1)$。沿用 (4.2) 的原始括号，置
+
+$$
+V_U(a)=U(a\cdot p_2),\qquad V_U^2(a)=V_U(V_U(a)).
+\tag{9.7}
+$$
+
+因 $\gamma(p_2)=(I+\rho)\tau$，有
+
+$$
+\gamma(V_U(a))
+=\rho\bigl(\gamma(a)+(I+\rho)\tau\bigr)+\tau
+=\rho\gamma(a).
+$$
+
+因此指定的二元项
+
+$$
+d_a=V_U(a)\cdot V_U^2(a)
+\tag{9.8}
+$$
+
+满足 $\gamma(d_a)=(\rho+\rho^2)\gamma(a)=-\gamma(a)$。每个像元素的负元都在 $A$ 中，故 $A$ 为加法群。$V_U$ 及其二次迭代又分别实现 $\rho$ 和 $\rho^2=\rho^{-1}$，所以 $\rho A=A$。这里只在向量商的像中取得群；未改变 $M$ 的任何次序、括号或运算律。
+

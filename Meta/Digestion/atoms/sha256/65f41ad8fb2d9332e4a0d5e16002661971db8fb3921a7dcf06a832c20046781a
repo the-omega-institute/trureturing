@@ -1,0 +1,49 @@
+**定义 22.2（准确采用AH12.2的三阶分支）。** 固定非空紧Hausdorff空间 $X$ 和局部平凡复 $*$-代数丛 $\mathfrak B\to X$，纤维为 $M_3(\mathbb C)$，过渡为连续保单位复 $*$-同构。取同一完整原域
+
+$$
+M=\Gamma(X,\mathfrak B),\qquad E=M_{\rm sa},\qquad
+S(a,b)=a\circ b=(ab+ba)/2,\quad u=1,
+$$
+
+$$
+C=\{a\in E:a(x)\ge0\ (x\in X)\},\qquad
+N(a)=\sup_{x\in X}\|a(x)\|.
+\tag{22.1}
+$$
+
+原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定 $C$；全部原质量 $m_\gamma=\gamma(u)$，包括零、不等、次归一及原表示意义下的非正常评价，原样保留。$D:E^2\to E$ 始终是同一给定总映射。完整原A1/P2要求全部实际 $a,b$、两种次序及每份原评价的二表
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{22.2}
+$$
+
+A2为每个相加三表 $(a+b,a,b)$ 及全部排列的实部在整个 $\mathbb R^3$ 上半正定，指定相加向量 $(1,-1,-1)$ 及其相应排列准确给零。A3保留 $u^2=u$ 和同一固定有理 $0<\vartheta\le1$ 上全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。不先给复三表正性。
+
+对每个实际三元组 $(h;a,b)$，仅用同一个旧映射定义
+
+$$
+v=D(h,a)-h\circ b,\quad w=h\circ a+D(h,b),\quad
+r_\pm=a\pm v,\quad s_\pm=b\pm w.
+$$
+
+完整PB是对全部这些实际三元组及全部原评价要求
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+\tag{22.3}
+$$
+
+零、重复、任意幅度、缩放、平移、背景、嵌套调用及四个实际外层标签都在量词内。由原评价分离和已知Jordan双线性，其准确元素式为
+
+$$
+D(a+v,b+w)-D(a-v,b-w)=-2a\circ v-2b\circ w.
+\tag{22.4}
+$$
+
+在旧值识别完成前，不输入 $D$ 的可加、齐次、连续、可测、协变、局部性、中央模线性、商下降或完成延拓；不扩大原域，不用padding，不以截断输入替换原输入。
+

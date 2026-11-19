@@ -1,0 +1,7 @@
+**定理 490.6（移动剖面均方定律）。** 设 $E$ 局部有界 Borel 可测，$0<\alpha<\theta<\beta<1$，(490.2) 成立，$g\in L^1(0,1)$ 实值。则
+
+$$
+\lim_{X\to\infty}\frac1{X^{1-\theta}\log X}\int_X^{2X}\mathcal T_{\theta,g}(x)^2\,\frac{dx}x=Q(g)\bigl(2^{1-\theta}-1\bigr).
+\tag{490.3}
+$$
+

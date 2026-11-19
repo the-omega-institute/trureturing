@@ -1,0 +1,82 @@
+**引理 102.3（中央局部正读取的固定平方预算）。** 若中央投影 $c$、全局输入 $Y\in M$ 和全局等距 $w$ 满足
+
+$$
+cY=cwA,\qquad A=|Y|,
+\tag{102.8}
+$$
+
+则 $c\mathfrak F(Y)=0$。
+
+证明。对102.2的同一网令
+
+$$
+W_e=U_e^*Y=x_e+Jy_e,\qquad x_e,y_e\in E.
+$$
+
+101.2对每个有限阶段给同一元素的精确等式
+
+$$
+\mathfrak F(W_e)=\mathfrak F(Y),\qquad
+\|x_e\|,\|y_e\|\le\|Y\|.
+\tag{102.9}
+$$
+
+现在只取任意支撑在 $c$ 的数学正规正泛函 $\phi$，即 $\phi(X)=\phi(cX)$。不对未知映射作中央限制。102.8及中央性使
+
+$$
+cW_e=c(1+\delta_e)A,\qquad
+cy_e=-\frac J2c(B_e-B_e^*),\quad B_e=\delta_e A.
+\tag{102.10}
+$$
+
+由102.4，自伴的支撑等式给
+
+$$
+\delta_e^*\delta_e\le4(1-e),\qquad
+\delta_e\delta_e^*\le4(1-e).
+$$
+
+设 $\eta_e=-J(B_e-B_e^*)/2$。$J$ 中央、酉且反自伴，所以 $\eta_e$ 自伴，并由 $(B_e+B_e^*)^2\ge0$ 得
+
+$$
+\begin{aligned}
+\eta_e^2&\le\tfrac12(B_e^*B_e+B_eB_e^*),\\
+B_e^*B_e&\le4A(1-e)A,\qquad
+B_eB_e^*\le4\|A\|^2(1-e).
+\end{aligned}
+\tag{102.11}
+$$
+
+$c y_e=c\eta_e$、$\phi$ 支撑在 $c$，因此 SF92.5–92.6 的同一 normal-square 预算现在准确变成
+
+$$
+\phi(y_e^2)=\phi(\eta_e^2)
+\le2\phi(A(1-e)A)+2\|A\|^2\phi(1-e)\longrightarrow0.
+\tag{102.12}
+$$
+
+只用 $e\uparrow1$、$AeA\uparrow A^2$ 和 $\phi$ 正规。全局虚部无须在另一个中央部分趋零；只有这份支撑读数的已知平方预算取极限。
+
+为核对中央 $J$ 不改变交换子预算，对任意数学正 $\phi$ 及自伴 $x,y$，C* Cauchy–Schwarz分别用于 $Jxy$ 与 $Jyx$，因为 $J^*J=1$ 且 $J$ 中央，给
+
+$$
+|\phi(Jxy)|,\ |\phi(Jyx)|
+\le\sqrt{\phi(x^2)\phi(y^2)},\qquad
+|\phi K(x,y)|\le\sqrt{\phi(x^2)\phi(y^2)}.
+\tag{102.13}
+$$
+
+例如第一式取 Cauchy–Schwarz 的第一元为 $-Jx$、第二元为 $y$，其第一平方就是 $x^2$；第二式互换 $x,y$。由98.5、102.9和102.13，
+
+$$
+\begin{aligned}
+|\phi\mathfrak F(Y)|
+&=|\phi\mathfrak F(W_e)|\\
+&\le2\sqrt{\phi(x_e^2)\phi(y_e^2)}
+\le2\|Y\|\sqrt{\phi(1)\phi(y_e^2)}\longrightarrow0.
+\end{aligned}
+\tag{102.14}
+$$
+
+左端始终为同一个固定旧缺陷的读数，故为零；$\phi(1)=0$ 时泛函恒零，不除法。任意 $cM$ 上的正规正泛函 $\psi$ 都可延拓为 $X\mapsto\psi(cX)$，所以这些支撑在 $c$ 的正规正泛函分离 $(cM)_{\rm sa}$，给 $c\mathfrak F(Y)=0$。这应用的是两个全局标签 $x_e,y_e$ 的原 P2，绝不是 $D(cx_e,cy_e)$ 的读数。没有把极限穿过 $D$。∎
+

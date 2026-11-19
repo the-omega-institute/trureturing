@@ -1,0 +1,50 @@
+**命题 C-3.3（同均值纤维的响应体积）。** 对随机占位 $`R=(x,y,z)^{𝖳}`$，
+
+
+```math
+C=\mathrm{Cov}R=
+\begin{pmatrix}
+X(1-X)&\kappa-XY&-XZ\\
+\kappa-XY&Y(1-Y)&-YZ\\
+-XZ&-YZ&Zr
+\end{pmatrix}.
+```
+
+
+令 $`D=\det C`$。在 $`r\gt 0`$ 时
+
+
+<table><tbody><tr><td>
+
+```math
+D=\frac Zr\{XY(r-X)(r-Y)-\Delta^2\}.
+```
+
+</td></tr></tbody></table>
+
+
+全部闭域上不用除法的式子为
+
+
+<table><tbody><tr><td>
+
+```math
+D=Z(p_0p_1p_3+p_0p_1p_{13}+p_0p_3p_{13}+p_1p_3p_{13}).
+```
+
+</td></tr></tbody></table>
+
+
+$`\mathrm{rank}C`$ 等于正质量顶点支撑的仿射维数；𝐷 是中心化响应 Gram 体积平方，区别于坐标金字塔固定体积 1/3。
+
+**证明。** 使用 $`x^2=x,xz=yz=0`$ 得矩阵。把每个顶点补为 $`\widetilde v=(1,v)^{𝖳}`$，置 $`H=\sum p_\sigma\widetilde v_\sigma\widetilde v_\sigma^{𝖳}`$。减去均值的单位行列式消元给 $`\det H=D`$。Cauchy–Binet 在此可由行列式多线性直接展开：
+
+
+```math
+\det H=\sum_{|I|=4}\Bigl(\prod_{i\in I}p_i\Bigr)
+\det(\widetilde v_i:i\in I)^2.
+```
+
+
+四底角共面给零，顶点加任意三底角的齐次行列式绝对值一，即四面体体积 1/6，得到四项式。代入逆式或对 𝑧 作 Schur 消元给含 Δ 式。又 $`a^{𝖳}Ca=\sum p_i[a\cdot(v_i-𝔼 R)]^2`$，零空间恰为支撑差向量的正交补，证明秩式。若正底角数为 𝑘，𝑍=1 时秩零；𝑍=0 时秩 $`\min(k-1,2)`$；$`0\lt Z\lt 1`$ 时秩 $`\min(k,3)`$。故 $`D\gt 0`$ 恰当且仅当顶点正且至少三底角正。□
+

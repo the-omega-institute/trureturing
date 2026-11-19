@@ -1,0 +1,26 @@
+#### 定理 10.5：概念确定不要求概念秩一
+
+以投影 $P$ 表示某个二元概念判断。则
+
+$$
+\operatorname{tr}(\rho P)=1
+ \quad\Longleftrightarrow\quad
+ \operatorname{supp}\rho\subseteq\operatorname{ran}P.
+$$
+
+给定完备 Kraus 族 $\{K_b\}$， 对每个支撑于 $P$ 的初态都无分支泄漏到 $Q=I-P$， 当且仅当
+
+$$
+QK_bP=0\quad\text{对每个 }b.
+$$
+
+**证明。**
+
+$\operatorname{tr}(\rho P)=1$ 等价于 $\operatorname{tr}(\rho Q)=\left\|Q\rho^{1/2}\right\|_{\rm HS}^2=0$， 也就等价于支撑包含。 若 $QK_bP=0$，任意支撑于 $P$ 的态在每个分支后仍支撑于 $P$。 反过来，对每个 $v\in\operatorname{ran}P$， 分支泄漏范数为 $\left\|QK_bv\right\|^2$； 若它总为零，则 $QK_bP=0$。
+
+$\square$
+
+当 $\operatorname{rank}P>1$ 时，$P$ 内可有不同方向、相对相位及干涉读出， 同时概念判断始终为真。 这与上一节的芝诺子空间例子形成同一结构： 一个稳定可重复的标签，并不排除该标签所覆盖的内部关系继续变化。 因此可以把“概念粒子性”限定为 *某些读出下的稳定标签* ， 把“概念波动性”限定为 *需要额外比较菜单才能显现的关系* 。 对真实语言概念，仍须经验地确定状态空间、程序与观测量； 语义标签本身不会自动提供量子模型。
+
+<a id="section-11"></a>
+

@@ -1,0 +1,2 @@
+**第三步：取点。** $J^{++}$ 的长度为 $4L+4$，故存在 $u\in J^{++}$ 使 $f(u)^2\gg ML^2/(4L+4)\gg ML$。令 $x=e^u$，则 $e^{-2}M^{16}\le x\le e^2M^{20}$，$x^{1/40}\sqrt{\log x}\le e^{1/20}M^{1/2}\sqrt{20L+2}\ll\sqrt{ML}\ll|\mathcal T(x)|$；$M\to\infty$ 时这些 $x$ 任意大。最后由 $T_\psi(x,x^{4/5})=x^{11/10}\mathcal T(x)$ 与 $\frac{11}{10}+\frac1{40}=\frac98$ 得最后一式。证毕。
+

@@ -1,0 +1,18 @@
+**定理 186.3（精确删除使全部实际面暴露）。** 在186.1的原域内，全部原实际面均闭且暴露，并各有固定其整个锥的正投影。因此，若另给实际 L2，则185.1的 $\mathsf E_2$ 是结论，无需再输入。
+
+证明。只在本接合内部使用一个有限维凸几何工具：每个全局暴露面若有正线性收回并固定该面，就能把该面内的相对暴露测试延拓为全局正测试。具体地，设 $F=K\cap\ker k_F$，$k_F\in C^*$，且 $P_F(C)=\operatorname{cone}F$、$P_F|_{\operatorname{cone}F}=\operatorname{id}$。若 $M$ 是 $F$ 内的相对暴露子面，取 $\operatorname{span}(\operatorname{cone}F)$ 上线性 $h_F$，使 $h_F\ge0$ 于 $\operatorname{cone}F$，$M=F\cap\ker h_F$。$h_F$ 由相对仿射支撑函数以原 $u$ 齐次化取得，不假设任意原局部效应能无条件正延拓。现在该特定延拓明确为
+
+$$
+\boxed{\quad
+k_M=k_F+h_F\circ P_F\in C^*,\qquad
+K\cap\ker k_M=M.
+\quad}
+\tag{186.9}
+$$
+
+两项非负先迫零点属于 $F$，然后 $P_F$ 固定 $F$ 使第二项恰恢复原 $h_F$，故零集没有球外或面外附加点。这是由已经构造的同一正收回供应延拓，不以局部图示代替。
+
+取任意非空原实际面 $G$，不预先假设它闭，选 $x\in\operatorname{ri}G$。从 $F=K$、$k_F=0$、$P_F=\operatorname{id}$ 开始。若当前闭暴露面 $F$ 严格包含 $G$，则 $x\notin\operatorname{ri}F$：否则沿任意 $y\in F$ 到 $x$ 的方向稍越过 $x$，用 $G$ 的面性质就会迫 $y\in G$，与严格包含矛盾。因此 $x$ 在 $F$ 的相对边界，有相对非负支撑函数在 $x$ 取零，形成真相对暴露面 $M\subsetneq F$。
+
+这个 $M$ 包含 $G$。事实上，对任意 $g\in G$，$x\in\operatorname{ri}G$ 使 $x$ 可写成 $g$ 与某个 $z\in G$ 的严格凸组合；支撑函数非负且在 $x$ 为零，便也在 $g$ 为零。使用(186.9)，$M$ 成为全局暴露面；186.2重新供应 $P_M$。每次 $\dim\operatorname{aff}M<\dim\operatorname{aff}F$，故有限次下降必到 $G$。这同时证明 $G$ 本身闭且暴露，不把这些性质偷偷加在下降起点。其正投影再由186.2供应；空面按前条约定。一般下降工具只作证明中的中间步骤，新增接合是186.2支付其全部原正收回前件。$\square$
+

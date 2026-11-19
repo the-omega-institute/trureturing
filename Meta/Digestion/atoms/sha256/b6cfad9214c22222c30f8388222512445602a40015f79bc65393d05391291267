@@ -1,0 +1,49 @@
+### 14.1 一个带非零方向项的三维输入
+
+取
+
+$$
+C=\operatorname{diag}(1,2),\qquad D=(0),\qquad
+V=\begin{pmatrix}1\\\sqrt2\end{pmatrix},\qquad
+B=\begin{pmatrix}0&i\sqrt2\\-i\sqrt2&0\end{pmatrix},\qquad
+t=\begin{pmatrix}0&i\sqrt2&1\\-i\sqrt2&0&\sqrt2\\1&\sqrt2&0\end{pmatrix}.
+\tag{14.1}
+$$
+
+这里 $r=1$，取 $q=1$、$e=(1,-1)^{\mathsf T}/\sqrt2$、$n=(1,1)^{\mathsf T}/\sqrt2$、$\gamma=\sqrt2$。因 $D^\dagger=0$，$H=B$，在 $U=[e,n]$ 中
+
+$$
+A=\begin{pmatrix}0&i\\-i&0\end{pmatrix},\qquad a=0,\quad b=i,\quad\omega=1,
+$$
+
+$$
+G=\begin{pmatrix}1/\sqrt2&-1/2&-i/\sqrt2\\0&0&1/\sqrt2\end{pmatrix},\qquad
+GG^*=\begin{pmatrix}5/4&-i/2\\i/2&1/2\end{pmatrix}.
+\tag{14.2}
+$$
+
+其行列式为 $3/8$，故普通二阶逆给
+
+$$
+Q=\begin{pmatrix}4/3&4i/3\\-4i/3&10/3\end{pmatrix},\qquad
+R=\frac{2\sqrt{10}}3,\quad \Delta=\frac83,\quad J=-\frac43.
+\tag{14.3}
+$$
+
+对 $s=\rho\operatorname{diag}(1,-2,0)$，定理 13.1 因而给出准确充要条件
+
+$$
+\frac{2\sigma-\sqrt{10}}3\le\rho\le
+\frac{2\sigma+\sqrt{10}}3.
+\tag{14.4}
+$$
+
+例如左端点由 $-\Delta/[2(R-\sigma J)]=-2/(\sqrt{10}+2\sigma)=(2\sigma-\sqrt{10})/3$ 得到；右端点同理由 $2/(\sqrt{10}-2\sigma)$ 得到。分别要求两种取向时，两个不同区间的交集正是
+
+$$
+|\rho|\le\frac{\sqrt{10}-2}{3}.
+\tag{14.5}
+$$
+
+这是一个固定三维输入的全正泛函 P2 结论。它展示 $b\ne0$ 通过原空间行度量产生 $J\ne0$，使单个取向的允许区间偏离对称；不构成全部 PB、完整 $\mathsf H_A(D)$ 或未知总响应的反模型。
+

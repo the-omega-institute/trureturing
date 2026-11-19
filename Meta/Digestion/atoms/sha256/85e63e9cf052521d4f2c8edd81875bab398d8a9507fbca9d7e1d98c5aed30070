@@ -1,0 +1,25 @@
+**定理 94.2（同一复ROG域内的完整分类）。** 在定义94.1的表示域内，(94.2)保原 $u$ 运输整个锥、基、纯点、最小面和全部 proper 效应，原 $\mathrm B$ 自动成立，全部不同二纯点的整个最小面为 $B^1,B^2$ 或 $B^3$。以下条件等价：
+
+1. 固定补态条件 $\mathrm{FC}$。
+2. 完整混态条件 $\mathrm{Z0}$。
+3. 在(94.2)坐标中，所有纯 $p,q$ 满足 $p\perp q\Rightarrow\operatorname{tr}(pq)=0$。
+4. 在同一坐标中，每个 $Z\in L$ 的普通Hermitian正负谱部分 $Z_+,Z_-$ 都在 $L$。
+5. 在同一坐标中，$I_n\in L$ 且 $A\circ B=(AB+BA)/2\in L$ 对全部 $A,B\in L$ 成立。
+6. 完整 $S$。
+7. 存在有限组正整数大小 $r_\alpha,s_\beta$ 及保持整个原锥、原 $u$ 的实线性同构
+   $$
+   \begin{gathered}
+   \Theta:V\longrightarrow
+   \bigoplus_{\alpha}\operatorname{Sym}_{r_\alpha}(\mathbb R)
+   \ \oplus\
+   \bigoplus_{\beta}\operatorname{Herm}_{s_\beta}(\mathbb C),\\
+   \Theta(C)=
+   \bigoplus_{\alpha}\operatorname{PSD}_{r_\alpha}(\mathbb R)
+   \ \oplus\
+   \bigoplus_{\beta}\operatorname{Herm}_{s_\beta,+}(\mathbb C),\qquad
+   u(X)=\operatorname{tr}\Theta(X).
+   \end{gathered}
+   \tag{94.5}
+   $$
+   可取 $\sum_\alpha r_\alpha+\sum_\beta s_\beta=n$；在(94.2)后，仅需酉换基及按坐标分块即得到这种形式。标量块只列一次，复块可约定 $s_\beta\ge2$。
+

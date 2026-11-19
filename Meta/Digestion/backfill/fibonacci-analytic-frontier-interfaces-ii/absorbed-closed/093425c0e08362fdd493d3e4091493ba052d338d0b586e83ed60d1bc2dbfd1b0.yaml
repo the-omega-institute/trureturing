@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:093425c0e08362fdd493d3e4091493ba052d338d0b586e83ed60d1bc2dbfd1b0
+  normalized_sha256: sha256:093425c0e08362fdd493d3e4091493ba052d338d0b586e83ed60d1bc2dbfd1b0
+cas_ref: sha256:093425c0e08362fdd493d3e4091493ba052d338d0b586e83ed60d1bc2dbfd1b0
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic
+    target_statement_id: sha256:2643826e6aa6c101de4df3e2576c7b621367677aff29605e5c45de1a7af0d6b8
+receipts:
+  unresolved_subitems: []

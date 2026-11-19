@@ -1,0 +1,12 @@
+**Definition 1.2 (maximal zero runs and records).** Fix a prime $p$. A zero
+run is a finite nonempty maximal interval $[a,b]$ of consecutive nonnegative
+indices on which $R_{3,1}(n)\equiv0\pmod p$. Thus $R_{3,1}(b+1)$ is nonzero
+modulo $p$, and either $a=0$ or $R_{3,1}(a-1)$ is nonzero modulo $p$.
+Its length is $b-a+1$. In fact $R_{3,1}(0)=1$, so $a=0$ never occurs.
+A run is a record if its length is at least every earlier run length,
+with ties allowed. The distinct positive record spectrum lists each such
+length once. An integer interval with lower endpoint exceeding its upper
+endpoint is empty and contributes no run. This is the record convention
+of Eu–Huang–Kao, [§1.2](https://arxiv.org/html/2609.25742v1), also recorded
+in the [corresponding Library note](../../../Library/Recurrence/euhuangkao2026zerorun.md).
+

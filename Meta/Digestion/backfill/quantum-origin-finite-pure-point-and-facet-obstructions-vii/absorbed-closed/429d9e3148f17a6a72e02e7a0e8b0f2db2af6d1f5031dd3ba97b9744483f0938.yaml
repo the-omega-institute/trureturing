@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:429d9e3148f17a6a72e02e7a0e8b0f2db2af6d1f5031dd3ba97b9744483f0938
+  normalized_sha256: sha256:429d9e3148f17a6a72e02e7a0e8b0f2db2af6d1f5031dd3ba97b9744483f0938
+cas_ref: sha256:429d9e3148f17a6a72e02e7a0e8b0f2db2af6d1f5031dd3ba97b9744483f0938
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/FacetZeroGluing.whole_facet_injection
+    target_statement_id: sha256:114e56f228bc987ee5de1b761e9c801f1c3619962adc725ae6fdaf82f341b080
+receipts:
+  unresolved_subitems: []
