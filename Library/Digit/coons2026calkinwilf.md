@@ -9,6 +9,7 @@ claim: "Section 3 asks whether the logarithmic limsup growth exponent strictly i
 strata_touched:
   - D5/S1/Digit/CoonsAdjacentGrowthRefutation
   - D5/S1/Digit/DigitCapPowerGF
+  - D5/S1/Digit/DigitCapSubcritical
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -119,3 +120,13 @@ No negative finding about that chapter's theorems follows. The full Coons
 joint-spectral-radius paper, Coons–Tyler paper, underlying Defant paper and
 subsequent citing literature are not covered by these fulltext readings.
 No worldwide openness, exhaustive absence, novelty or priority claim is made.
+
+## Subcritical caps (CW2)
+
+Section 3 of the same version also asks how the counts behave below the critical caps
+ell^r − 1. The uniform bound formalized in `DigitCapSubcritical` is not asserted in this
+source: for k ≤ ell^r − 2 and n < ell^(m+1), b(k, ell, n) ≤ Q^(m mod 2) H^⌊m/2⌋ with
+Q = ell^(r−1) and H = Q² − Q/ell, so b(k, ell, n) = O(n^((log_ell H)/2)) with
+(log_ell H)/2 < r − 1. It is Theorem 1, equation (3), of the outreach note registered in
+the-omega-institute/trureturing-requests#300, which generalizes the radix-four bound of
+`CoonsAdjacentGrowthRefutation`.
