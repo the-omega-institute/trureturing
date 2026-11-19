@@ -3,16 +3,19 @@
    mirror-B: D5/B/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures
    mirror-E: none(waiver:symbolic-asymptotic-density)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.claim; result=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.result; claim=D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures.claim
    digest: Primitive non-deficient integers are sparse in each radical component set. -/
 
 import D5.S3.Arith.Abundancy.ZelinskyZhangDoublePrimitive
+import D5.S3.Arith.Abundancy.ZelinskyRadicalComponentDensity
 import D5.S3.Arith.Abundancy.StrongPseudoperfectEulerDensity
 import D5.S3.Arith.Robin.PrimeFiberPropagation
 import D5.S3.Weil.Mertens.Third
 import Mathlib.Data.Nat.Squarefree
 import Mathlib.Data.Nat.GCD.BigOperators
 import Mathlib.Data.ZMod.Basic
+
+/-! Primitive non-deficient integers and radical-component counting ratios. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,6 +29,7 @@ namespace D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
 open ZelinskyZhangDoublePrimitive
 open ZelinskyZhangKLPrimitive (Deficient sig sig_prime_mul)
 open D5.S3.Arith.Robin.PrimeFiberPropagation (divisorRatio edge_excess divisorRatio_pos)
+open ZelinskyRadicalComponentDensity (count radicalComponentSet radicalComponentCount)
 
 attribute [local instance] Classical.propDecidable
 
@@ -250,7 +254,10 @@ private lemma interval_prime_product_limit (K : ℕ) (hK : 2 ≤ K) :
   filter_upwards [eventually_ge_atTop K] with L hL
   have hsplit : (Ioc 0 L).filter Nat.Prime = A ∪ primeInterval K L := by
     ext p
-    by_cases hprime : p.Prime <;> simp [A, primeInterval, hprime] <;> omega
+    by_cases hprime : p.Prime
+    · simp [A, primeInterval, hprime]
+      omega
+    · simp [A, primeInterval, hprime]
   have hdis : Disjoint A (primeInterval K L) := by
     apply disjoint_left.mpr
     intro p hp hq
@@ -435,5 +442,66 @@ theorem primitive_density_zero :
     linarith
   simpa only [Real.dist_eq, sub_zero,
     abs_of_nonneg (by positivity : (0 : ℝ) ≤ (primitiveCount X : ℝ) / X)] using hbound
+
+private lemma subset_relative_density_zero (lam : ℝ) (hlam : 0 < lam)
+    (S : Set ℕ) (hS : ∀ n ∈ S, PrimitiveNonDeficient n) :
+    Tendsto (fun X : ℕ =>
+      (count (radicalComponentSet lam ∩ S) X : ℝ) / radicalComponentCount lam X)
+        atTop (𝓝 0) := by
+  classical
+  have hpositive : 0 < 1 - log 2 := by linarith [Real.log_two_lt_d9]
+  have hlim : Tendsto (fun X : ℕ =>
+      ((primitiveCount X : ℝ) / X) / ((radicalComponentCount lam X : ℝ) / X))
+        atTop (𝓝 0) := by
+    have h := primitive_density_zero.div
+      (ZelinskyRadicalComponentDensity.result lam hlam) hpositive.ne'
+    simp only [zero_div] at h
+    apply h.congr
+    intro X
+    rfl
+  have hupper : Tendsto (fun X : ℕ =>
+      (primitiveCount X : ℝ) / radicalComponentCount lam X) atTop (𝓝 0) := by
+    apply hlim.congr'
+    filter_upwards [eventually_ge_atTop (1 : ℕ)] with X hX
+    exact div_div_div_cancel_right₀ (by exact_mod_cast (by omega : X ≠ 0)) _ _
+  apply squeeze_zero' (Eventually.of_forall (fun X => by positivity)) ?_ hupper
+  apply Eventually.of_forall
+  intro X
+  have hcard : count (radicalComponentSet lam ∩ S) X ≤ primitiveCount X := by
+    unfold count primitiveCount
+    apply card_le_card
+    intro n hn
+    simp only [mem_filter] at hn ⊢
+    exact ⟨hn.1, hS n hn.2.2⟩
+  exact div_le_div_of_nonneg_right (by exact_mod_cast hcard) (Nat.cast_nonneg _)
+
+/-- Conjectures 10, 12 and 14, retaining the source's prime-set quantifiers. -/
+theorem conjectures :
+    Tendsto (fun X : ℕ =>
+      (count (radicalComponentSet 2 ∩ {n | PrimitiveNonDeficient n}) X : ℝ) /
+        radicalComponentCount 2 X) atTop (𝓝 0) ∧
+    Tendsto (fun X : ℕ =>
+      (count (radicalComponentSet 2 ∩ {n | PrimitiveNonDeficient n ∧ Odd n}) X : ℝ) /
+        radicalComponentCount 2 X) atTop (𝓝 0) ∧
+    ∀ M : Finset ℕ, M.Nonempty → (∀ p ∈ M, p.Prime) →
+      Tendsto (fun X : ℕ =>
+        (count (radicalComponentSet 2 ∩
+          {n | PrimitiveNonDeficient n ∧ ∀ p ∈ M, ¬ p ∣ n}) X : ℝ) /
+            radicalComponentCount 2 X) atTop (𝓝 0) := by
+  refine ⟨subset_relative_density_zero 2 (by norm_num) _ (fun n hn => hn),
+    subset_relative_density_zero 2 (by norm_num) _ (fun n hn => hn.1), ?_⟩
+  intro M _hM _hprime
+  exact subset_relative_density_zero 2 (by norm_num) _ (fun n hn => hn.1)
+
+/-- The source's assertion that its set B has natural density zero. -/
+def claim : Prop :=
+  Tendsto (fun X : ℕ => (radicalComponentCount 2 X : ℝ) / X) atTop (𝓝 0)
+
+/-- The positive density of B contradicts the zero-density assertion. -/
+theorem result : ¬ claim := by
+  intro hzero
+  have hlimit := ZelinskyRadicalComponentDensity.result 2 (by norm_num)
+  have heq : 1 - log (2 : ℝ) = 0 := tendsto_nhds_unique hlimit hzero
+  linarith [Real.log_two_lt_d9]
 
 end D5.S3.Arith.Abundancy.ZelinskyRadicalComponentConjectures
