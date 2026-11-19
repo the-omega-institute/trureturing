@@ -582,7 +582,7 @@ private theorem weight_le_four (S : Finset ℤ) : weight S ≤ 4 := by
   split_ifs <;> omega
 
 /-- The uniform combinatorial bound on arbitrary signed exponent sets. -/
-private theorem count_bound (E : Finset ℤ) (hn : 10 ≤ E.card) :
+theorem count_bound (E : Finset ℤ) (hn : 10 ≤ E.card) :
     count E + 26 ≤ 4 * E.card := by
   induction E using Finset.induction_on_max with
   | empty => simp at hn
