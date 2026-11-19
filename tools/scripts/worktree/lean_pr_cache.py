@@ -353,9 +353,20 @@ def consumer_context(root):
 
 
 def download(repository, artifact_id, destination):
-    with destination.open("wb") as stream:
-        subprocess.run(["gh", "api", "repos/" + repository + "/actions/artifacts/" + str(artifact_id) + "/zip"],
-                       stdout=stream, check=True)
+    command = ["gh", "api", "repos/" + repository + "/actions/artifacts/" + str(artifact_id) + "/zip"]
+    for attempt in (1, 2):
+        try:
+            with destination.open("wb") as stream:
+                subprocess.run(command, stdout=stream, stderr=subprocess.PIPE, check=True)
+            return
+        except subprocess.CalledProcessError as error:
+            interrupted = re.search(
+                rb"(?:^|: )(unexpected EOF|connection timed out|connection reset by peer|i/o timeout|TLS handshake timeout)$",
+                (error.stderr or b"").strip(),
+            )
+            if attempt == 2 or interrupted is None:
+                raise
+            print(f"PR_CACHE_RETRY artifact {artifact_id}: {interrupted[1].decode('ascii')}", file=sys.stderr)
 
 
 def validate_preparation(root, value, context, artifact, *, sharded=False):

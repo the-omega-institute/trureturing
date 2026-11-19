@@ -22,7 +22,7 @@ import lean_actions_shards as shards
 class PrCacheContracts(CacheFixture, unittest.TestCase):
     def test_slow_artifact_transfer_has_no_whole_artifact_deadline(self):
         destination = self.root / "artifact.zip"
-        def transfer(command, *, stdout, check, timeout=None):
+        def transfer(command, *, stdout, stderr, check, timeout=None):
             if timeout is not None and timeout < 601:
                 raise subprocess.TimeoutExpired(command, timeout)
             self.assertTrue(check)
@@ -33,10 +33,29 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
 
     def test_native_artifact_transfer_failure_propagates(self):
         error = subprocess.CalledProcessError(23, ["gh", "api"])
-        with mock.patch.object(producer.subprocess, "run", side_effect=error):
+        with mock.patch.object(producer.subprocess, "run", side_effect=error) as run:
             with self.assertRaises(subprocess.CalledProcessError) as caught:
                 producer.download("owner/repository", 81, self.root / "artifact.zip")
+        run.assert_called_once()
         self.assertIs(error, caught.exception)
+
+    def test_native_artifact_interruption_retries_same_id_and_discards_partial_bytes(self):
+        destination = self.root / "artifact.zip"
+        timeout = b"read tcp runner:1234->artifact:443: read: connection timed out\n"
+        attempts = []
+
+        def transfer(command, *, stdout, stderr, check):
+            attempts.append(command)
+            if len(attempts) == 1:
+                stdout.write(b"incomplete archive with extra bytes")
+                raise subprocess.CalledProcessError(1, command, stderr=timeout)
+            stdout.write(b"valid archive")
+
+        with mock.patch.object(producer.subprocess, "run", side_effect=transfer):
+            producer.download("owner/repository", 81, destination)
+        self.assertEqual(2, len(attempts))
+        self.assertEqual(attempts[0], attempts[1])
+        self.assertEqual(b"valid archive", destination.read_bytes())
 
     def setUp(self):
         super().setUp()
