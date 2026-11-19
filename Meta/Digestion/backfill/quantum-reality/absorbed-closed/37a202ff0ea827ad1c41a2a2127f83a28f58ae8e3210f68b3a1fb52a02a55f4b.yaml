@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:37a202ff0ea827ad1c41a2a2127f83a28f58ae8e3210f68b3a1fb52a02a55f4b
-  normalized_sha256: sha256:37a202ff0ea827ad1c41a2a2127f83a28f58ae8e3210f68b3a1fb52a02a55f4b
-cas_ref: sha256:37a202ff0ea827ad1c41a2a2127f83a28f58ae8e3210f68b3a1fb52a02a55f4b
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.local_factor_eq_zero_iff
-    target_statement_id: sha256:c3a9f24c85bb481a108dd608341c21cd9580e190ae3ea6e6df79f3682e7f7f10
-receipts:
-  unresolved_subitems: []

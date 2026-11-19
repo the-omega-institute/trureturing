@@ -1,0 +1,41 @@
+**同一映射的完整静态字典。** 对(MC125.25)中的同一个 $\Psi$，令 $\rho=\Psi x$，则
+
+$$
+\begin{gathered}
+\Psi(C)=\operatorname{PSD}_3,\qquad
+\Psi(K)=\{\rho\succeq0:\operatorname{Tr}\rho=1\},\\
+\Psi(P)=\{vv^*:v\in\mathbb C^3,\ v^*v=1\},\\
+\mathcal E=\{f_A:f_A(x)=\operatorname{Tr}(A\Psi x),\quad0\preceq A\preceq I_3\}.
+\end{gathered}
+\tag{MC125.26}
+$$
+
+$\mathbb C^3$ 的全部非零向量按复相位及非零缩放识别成全部原纯射线；单位向量参数给迹一原纯点，无纯轨道缩减。对每个原 $p$，写 $\Psi p=vv^*$、$v^*v=1$，则
+
+$$
+\begin{gathered}
+\mathcal F_p=\{f_A:A=vv^*\oplus B
+\text{ 于 }\mathbb Cv\oplus v^\perp,\quad0\preceq B\preceq I_{v^\perp}\},\\
+\mathcal T_p(x)=v^*\Psi(x)v\quad(x\in C),\\
+D_p=\Psi^{-1}\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho v=0\},\\
+\mathcal T_p(q)=|v^*z|^2\quad\text{若 }\Psi q=zz^*,\ z^*z=1.
+\end{gathered}
+\tag{MC125.27}
+$$
+
+这些公式直接消费124.8的完整全效应运输，其输入只需同锥同单位表示，因此取 $C$ 替代其中的特定族 $C_\tau$ 即可。具体而言，对偶双射整个正泛函锥，保迹双射整个效应区间及其确认切片；$0\preceq I-A$ 与 $v^*(I-A)v=0$ 给 $(I-A)v=0$，从而确认族确为上述全补块。每个补块在全部PSD输入上非负，$B=0$ 可取，最低值于是恰由秩一效应取得。PSD性给 $v^*\rho v=0\Longleftrightarrow\rho v=0$，所以是整个二能级密度三球，不是所选球片或纯零图。
+
+对每个有限结果数，全部 $f_j\in C^*$、$\sum_jf_j=u$ 恰对应全部 $A_j\succeq0$、$\sum_jA_j=I_3$，原评价逐项为Born值 $f_j(x)=\operatorname{Tr}(A_j\rho)$。若 $x\ne0$，其原质量 $m=u(x)>0$，唯一归一态为 $\rho/m$；若 $x=0$，则 $\rho=0$、全部读数及最低值为零，不强定零质量的归一条件态。效应补、零效应、单位效应与全部有限凸混合均由这一映射保持。
+
+| 通常的量子公理或对象 | 该几何候选的准确对应与范围 |
+| --- | --- |
+| 复三维Hilbert空间及相位射线 | 所得同一表示中的 $\mathbb C^3$ 与全部 $\mathbb{CP}^2$ |
+| 全部密度态与混合 | 整个原 $K$ 对应全部迹一PSD矩阵，原线性凸混合原样运输 |
+| 全效应、Born规则与数学POVM | 整个 $[0,u]$ 及全部有限单位和效应族，原读数为迹配对 |
+| 确认、最低比较与完整排除 | 全确认族、秩一least、全部纯—纯模方及完整二能级密度三球 |
+| 单位、中心、谱与Jordan结构 | 原 $u$ 为迹，中心为 $\Psi^{-1}(I_3/3)$，成熟谱及Jordan积在所得完整模型中使用 |
+| 正交框架与数学面压缩 | 全部正交完备基及 $X\mapsto QXQ$；原过程中的实现另有合同 |
+| 全有限纠缠联合与全旁观CP | 单体结论未供应其原锥、产品、资源与共同表示，仍需125.11的完整输入 |
+| 实际事件、仪器、Lüders与记录 | 保留事件提升、预算、接线、饱和与校准条件；数学POVM不替代它们 |
+| 原时间、Hamiltonian、能量与 $\hbar$ | 继续由实际动态来源与单位标定承担；静态几何不选择数值或动力学 |
+

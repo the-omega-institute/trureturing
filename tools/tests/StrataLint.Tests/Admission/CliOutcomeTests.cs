@@ -150,7 +150,7 @@ public sealed class CliOutcomeTests
     private static AdmissionOutcome Admitted()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         var context = fixture.Build();
         var loadedPolicy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(

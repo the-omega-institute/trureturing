@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8b0887d7b3ba4286b1eb11a54a2f76bf9b62af448fc90a5317b5b2ffb8a73024
-  normalized_sha256: sha256:8b0887d7b3ba4286b1eb11a54a2f76bf9b62af448fc90a5317b5b2ffb8a73024
-cas_ref: sha256:8b0887d7b3ba4286b1eb11a54a2f76bf9b62af448fc90a5317b5b2ffb8a73024
-coverage_gids:
-  - gid: D5/S3/Arith/Additive/PlasticLargeEquality.whole_large_equality
-    target_statement_id: sha256:e0b70cb900c7f2a3be0d077acbb0f8cf06d57799c2f407a2cf53400672a97fcc
-receipts:
-  unresolved_subitems: []

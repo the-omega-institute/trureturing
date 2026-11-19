@@ -1,4 +1,0 @@
-**Proposition 7.4 (a fixed-weight strict-positive boundary failure).** At $d=1$ take $w(\alpha)=1$ and $w(\beta)=w(C_0)=0$. Then $\Omega_1(w)=1$, but Definition 7.1 rejects cap $C=1$ at this weight.
-
-Proof. The max/sum bounds both equal one. The full list includes one locally owned root seed with declared domain $\{\alpha,\beta,\mathsf{branch}\}$ and owner table $(2,1),(1,0),(0,0)$, respectively. Its relation consists only of the alpha assignment. At $k=0,C=1$, its inequality is $1\le Q(\alpha)$. A positive normalized three-entry row has $Q(\alpha)<1$, making this impossible. The unused declared outcomes cannot be deleted: all full rows of this original type are required. The closed real row $(1,0,0)$ attains its local boundary. For every rational $C>1$, Corollary 2.2 gives positive rational arrays for all types. This is a fixed-weight example, not a claim of failure at every probability at the optimized depth-one boundary. $\square$
-

@@ -1,0 +1,21 @@
+**Definition 115.1 (Intrinsic pair overlap).** For distinct $p,q\in P$,
+let $F=F_K(p,q)$. Its solid ellipsoid has a unique center $c_F$.
+Let $L_F=\operatorname{span}_{\mathbb R}(F-c_F)$ and define its
+centered Minkowski norm by
+
+$$
+g_F(w)=\inf\{r>0:w\in r(F-c_F)\}\qquad(w\in L_F).
+\tag{115.1}
+$$
+
+Define
+
+$$
+t(p,p)=1,\qquad
+t(p,q)=g_F\left(\frac{p+q}{2}-c_F\right)^2\quad(p\ne q).
+\tag{115.2}
+$$
+
+These definitions refer to the actual original face and its entire
+centered body. They do not choose a coordinate chart on its sphere.
+

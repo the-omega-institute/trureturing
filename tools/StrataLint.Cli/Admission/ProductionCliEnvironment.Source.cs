@@ -19,7 +19,6 @@ internal sealed partial class ProductionCliEnvironment
             var baselineRaw = prepared is null ? null : AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision);
             if (prepared is not null)
             {
-                raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository, raw, baselineRaw!, prepared.Changes);
                 var failure = EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out observations);
                 if (failure is not null)
                     return new(2, RenderPlaneObservations(observations), failure.Message + "\n");

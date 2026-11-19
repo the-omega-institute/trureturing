@@ -11,24 +11,18 @@ namespace StrataLint.RepositoryContract.Tests;
 // 以判定引用是否可解析。断言在进程内执行,不启动 CLI 子进程。
 public sealed class CliVerbLinkageTests
 {
-    // 正则允许 `@` 与 `dotnet run` 之间有前缀,以识别同一行上的「二进制缺失即建」检查。
-    // 交给 CLI 的动词仍须逐字匹配 Makefile 字面并已注册。
     [Fact]
-    public void SettleMakeTargetsLinkToRegisteredVerb()
+    public void DepositWorkflowInvokesRegisteredFreezeCommands()
     {
-        Assert.Contains("settle-atom", CliApplication.ImplementedCommands);
-        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Equal(2, Regex.Matches(makefile, @"--\s+settle-atom(?:\s|$)", RegexOptions.CultureInvariant).Count);
-        Assert.Matches(@"(?m)^settle:\r?\n\t@[^\r\n]*dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --request ", makefile);
-        Assert.Matches(@"(?m)^settle-clear:\r?\n\t@[^\r\n]*dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --clear ", makefile);
-    }
-
-    [Fact]
-    public void AtomContextMakeTargetLinksToRegisteredVerb()
-    {
-        Assert.Contains("atom-context", CliApplication.ImplementedCommands);
-        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Matches(@"(?m)^atom-context:\r?\n\t@[^\r\n]*dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- atom-context --atom-id ", makefile);
+        var calls = CollectInvocations(TestRepositoryLayout.FindRoot())
+            .Where(invocation => invocation.File == "tools/scripts/workflow/playbook-workflows.sh")
+            .Select(invocation => invocation.Verb)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var verb in new[] { "deposit-header-check", "ledger-frozen", "ledger-align" })
+        {
+            Assert.Contains(verb, calls);
+            Assert.Contains(verb, CliApplication.ImplementedCommands);
+        }
     }
 
     // 提取器至少应认出这么多次调用。低于此,说明提取器自己坏了(路径变了、调用形态变了),

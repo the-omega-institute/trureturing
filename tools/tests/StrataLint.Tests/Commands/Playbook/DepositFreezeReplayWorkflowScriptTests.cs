@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed class DepositFreezeReplayWorkflowScriptTests
 {
     [Fact]
-    public void DepositForUnregisteredModuleRegistersAndCoversInOneMakeInvocation()
+    public void DepositForUnregisteredModuleRegistersInOneMakeInvocation()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -24,15 +24,14 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
             [
                 "make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit",
                 "dotnet:ledger-frozen", "dotnet:ledger-align", "dotnet:ledger-frozen",
-                "dotnet:cover-atom --lean-inputs", "dotnet:cover-atom",
             ],
             fixture.CallKinds());
-        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Contains("coverage: false", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.DoesNotContain("module-already-frozen", Diagnostics(result), StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DepositWithUnchangedStatePinSkipsFreezeAndCovers()
+    public void DepositWithUnchangedStatePinSkipsFreeze()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -48,7 +47,7 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
         Assert.Equal(pinBefore, fixture.StatePinContents());
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
         Assert.Contains("module-already-frozen", Diagnostics(result), StringComparison.Ordinal);
-        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Contains("coverage: false", fixture.BackfillContents(), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -69,12 +68,12 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
         Assert.Equal(
             [
                 "make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit",
-                "dotnet:ledger-frozen", "dotnet:cover-atom --lean-inputs", "dotnet:cover-atom",
+                "dotnet:ledger-frozen",
             ],
             fixture.CallKinds());
         Assert.Contains("module-already-frozen", Diagnostics(result), StringComparison.Ordinal);
         Assert.DoesNotContain("LEDGER_FROZEN_INVALID", Diagnostics(result), StringComparison.Ordinal);
-        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Contains("coverage: false", fixture.BackfillContents(), StringComparison.Ordinal);
     }
 
 }

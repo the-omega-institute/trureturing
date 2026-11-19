@@ -1,9 +1,0 @@
-更一般地，任意块 iid 权重 $(p_r)$ 对原始窗口 $w=W(a)1^j$ 给出
-
-$$
-\Pr([w]_{X_k})
-=\left(\prod_{i<|a|}p_{a_i}\right)
-\left(\sum_{r=j}^{k-1}p_r\right).
-$$
-
-$j=0$ 时最后一因子为一。

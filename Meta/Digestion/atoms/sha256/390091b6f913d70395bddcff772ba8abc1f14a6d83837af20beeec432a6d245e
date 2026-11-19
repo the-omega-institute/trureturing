@@ -1,0 +1,17 @@
+**Corollary 112.2 (Rigidity for $2\le n\le5$).** In these dimensions,
+Definition 109.1 alone implies $N=0$, hence (109.6).
+
+Proof. A nonzero kernel matrix would have at least six nonzero
+eigenvalues by (112.1), impossible in dimension at most five.
+Surjectivity, the entire cone-image identity and the trace identity
+then give (109.6). ∎
+
+The mature comparison is [Carmeli–Heinosaari–Schultz–Toigo,
+§4.1, Theorem 1(a)][CHST], source arXiv:1308.5502v2: rank-at-most-$t$
+states distinguished from all states require the minimum of the two
+sign ranks of each nonzero self-adjoint annihilator element to be at
+least $t+1$. Here $t=2$ and the elementary traceless-kernel argument
+is given directly. No observable or native POVM is manufactured from
+$\pi$. The weaker comparison between two rank-restricted classes
+does not replace this all-state criterion.
+

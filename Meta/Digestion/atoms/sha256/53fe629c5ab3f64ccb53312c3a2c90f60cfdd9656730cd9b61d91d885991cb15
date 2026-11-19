@@ -1,8 +1,0 @@
-所以 \(F_5\) 是一个非常自然的实验对象：
-
-* 测度非负；
-* 几何周期为黄金最短闭轨；
-* 算术端读取 \(\zeta_{\mathbb Q(\sqrt5)}\) 或其部分通道；
-* regulator 为 \(\log\varphi\)；
-* Fourier 模式给出 Hecke twists。
-

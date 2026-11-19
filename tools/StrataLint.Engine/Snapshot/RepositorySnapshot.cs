@@ -186,7 +186,7 @@ public static class SnapshotDecoder
                     throw new FormatException($"Repository path is duplicated or case-colliding: {path.Value}.");
                 }
 
-                var isOpaque = DigestionOpaquePathPolicy.IsOpaque(path);
+                var isOpaque = HistoricalTheoryPaths.IsOpaque(path);
                 if (!isOpaque)
                 {
                     try

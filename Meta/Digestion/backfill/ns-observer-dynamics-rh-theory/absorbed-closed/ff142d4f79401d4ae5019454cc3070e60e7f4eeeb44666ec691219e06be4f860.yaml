@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ff142d4f79401d4ae5019454cc3070e60e7f4eeeb44666ec691219e06be4f860
-  normalized_sha256: sha256:ff142d4f79401d4ae5019454cc3070e60e7f4eeeb44666ec691219e06be4f860
-cas_ref: sha256:ff142d4f79401d4ae5019454cc3070e60e7f4eeeb44666ec691219e06be4f860
-coverage_gids:
-  - gid: D5/S1/Words/Mechanical/MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound
-    target_statement_id: sha256:ae5c03ecae8ce575308eb4072fd637ff78f2917f57de945667c4772a48a00d3d
-receipts:
-  unresolved_subitems: []

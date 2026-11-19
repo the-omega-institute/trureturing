@@ -1,7 +1,0 @@
-还必须控制：
-
-* trace norm；
-* determinant normalization；
-* 边界无零；
-* divisor 的 Hurwitz 稳定性。
-
