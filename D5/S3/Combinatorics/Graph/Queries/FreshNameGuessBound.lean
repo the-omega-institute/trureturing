@@ -27,13 +27,6 @@ namespace D5.S3.Combinatorics.Graph.Queries.FreshNameGuessBound
 
 variable {V N : Type*}
 
-private theorem absent_disjoint_range (G : SimpleGraph V) (p : Protocol N) (f : V ↪ N) :
-    Disjoint (Set.range f) (absentNames (runPassiveProtocol (nameReply G) p f)) := by
-  rw [Set.disjoint_left]
-  intro q hq hm
-  have hReply := (replay_iff (nameReply G) p f f).mp rfl ⟨q, none⟩ hm
-  exact ((answer_eq_none G f q).mp hReply) hq
-
 private theorem absent_ncard_le_length [Finite N] (T : Record N) :
     (absentNames T).ncard ≤ T.length := by
   classical
@@ -122,7 +115,8 @@ private theorem remaining_counts [Fintype V] [Fintype N] (G : SimpleGraph V)
   intro T S B d K D
   have hInitS : initial ⊆ S := Set.subset_union_left
   have hS : S ⊆ Set.range ref := Set.union_subset hinit (known_subset_range _ _ _)
-  have hDis := absent_disjoint_range G (truncate p i) ref
+  have hDis := (same_history_iff_avoids_absent G (truncate p i) ref ref ∅
+    (fun _ _ => rfl)).mp rfl
   have hRange : (Set.range ref).ncard = Fintype.card V := by
     rw [Set.ncard_range_of_injective ref.injective, Nat.card_eq_fintype_card]
   have hSCard : S.ncard ≤ Fintype.card V := by
@@ -365,7 +359,9 @@ private theorem prefix_fiber_card_step [Fintype V] [Fintype N]
           subst k
           have he := (hprior f).1 hf
           have hMissing : q ∈ absentNames (T f) := he.1.symm ▸ hAbsent
-          exact (Set.disjoint_left.mp (absent_disjoint_range G (truncate p i) f) hkr hMissing).elim)]
+          have hDis := (same_history_iff_avoids_absent G (truncate p i) f f ∅
+            (fun _ _ => rfl)).mp rfl
+          exact (Set.disjoint_left.mp hDis hkr hMissing).elim)]
       exact Nat.mul_le_mul_right _ hb
     have hFresh : q ∉ S ∪ B := fun h => h.elim hSeen hAbsent
     let missed : Set C := {f | q ∉ Set.range f.1}

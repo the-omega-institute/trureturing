@@ -29,7 +29,7 @@ internal sealed class FreshNameGuessBoundDocument : IScribeDocumentDefinition
                     "Partition the surviving namings by their query transcripts. The next query "
                     + "is fixed within each part. If it uses a fresh name, the conditional hit "
                     + "probability is the ratio of the remaining hidden vertices to the fresh "
-                    + "names. Revealing additional valid names can only lower the baseline hazard, "
+                    + "names. Revealing additional valid names decreases the baseline hit bound, "
                     + "and the number of distinct failed names is at most the number of preceding "
                     + "queries. Summing over transcripts bounds the decrease in survival at each "
                     + "step. The product of the corresponding miss probabilities reduces to the "
