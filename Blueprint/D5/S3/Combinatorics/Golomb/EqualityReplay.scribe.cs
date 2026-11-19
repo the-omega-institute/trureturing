@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Golomb;
 internal sealed class GolombEqualityReplayDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Golomb/EqualityReplay.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/notik2026golomb");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/notik2026singergolomb");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         GeneralHeader("D5/S3/Combinatorics/Golomb/EqualityReplay",

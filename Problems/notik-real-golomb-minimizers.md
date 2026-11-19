@@ -1,6 +1,6 @@
 ---
 slug: notik-real-golomb-minimizers
-bibkey: notik2026golomb
+bibkey: notik2026singergolomb
 doi: 10.48550/arXiv.2611.22656
 url: https://arxiv.org/abs/2611.22656v1
 triage: theorem
@@ -35,7 +35,7 @@ A feasible normalized real tuple at one of the three verified minimum lengths wi
 
 ## Evidence
 
-`D5/S3/Combinatorics/Golomb/NotikMinimizers.result` states all three sizes using the real carrier throughout and integer attainment at each target. The lower-bound replay and the equality replay use the same tree literals. The equality tables cover 349, 1,235, and 1,209 tied leaves, respectively. Lean checks the finite certificates and the soundness of their use on arbitrary real tuples. The translation of archive bytes and generation of equality certificates take place outside Lean. [Source citation](../Library/FiniteGeometry/notik2026golomb.md) · [Data attribution](../docs/reports/licenses/notik-golomb-archive.md)
+`D5/S3/Combinatorics/Golomb/NotikMinimizers.result` states all three sizes using the real carrier throughout and integer attainment at each target. The lower-bound replay and the equality replay use the same tree literals. The equality tables cover 349, 1,235, and 1,209 tied leaves, respectively. Lean checks the finite certificates and the soundness of their use on arbitrary real tuples. The translation of archive bytes and generation of equality certificates take place outside Lean. [Source citation](../Library/FiniteGeometry/notik2026singergolomb.md) · [Data attribution](../docs/reports/licenses/notik-golomb-archive.md)
 
 ## Triage
 

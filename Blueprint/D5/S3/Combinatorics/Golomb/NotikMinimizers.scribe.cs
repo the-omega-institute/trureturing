@@ -8,7 +8,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Golomb;
 internal sealed class NotikMinimizersDocument : IScribeDocumentDefinition
 {
     private const string Gid = "D5/S3/Combinatorics/Golomb/NotikMinimizers";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/notik2026golomb");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/notik2026singergolomb");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "All normalized real Golomb minimizers at eight, nine, and ten marks are integral.",
