@@ -553,11 +553,12 @@ private def successors (a : Col) : List Col :=
 private def next (a : Col) : Finset Col := (successors a).toFinset
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 20000000 in
--- Check the complete raw successor list at each of the 729 columns.
+-- Check all 729 successor lists in nine slices of the first two coordinates.
 set_option maxSynthPendingDepth 100 in
 private theorem row_certificate : ∀ a : Col,
     allCols.filter (fun b => decide (compatible a b)) = successors a := by
-  decide +kernel
+  rintro ⟨p, q, tail⟩
+  fin_cases p <;> fin_cases q <;> revert tail <;> decide +kernel
 private theorem next_eq (a : Col) :
     next a = Finset.univ.filter (compatible a) := by
   have hu : allCols.toFinset = (Finset.univ : Finset Col) := by
@@ -778,10 +779,25 @@ private theorem table_zero : W 0 = (1 : Col → ℤ) := by
   exact congrFun h (cls a)
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 20000000 in
--- The identity checks all raw states and exact integer table coordinates.
+-- The literal successor lists are duplicate-free, so the checker can sum them directly.
 private theorem sparse_steps : ∀ k : Fin 16, ∀ a : Col,
     W k.succ a = ∑ b ∈ next a, W k.castSucc b := by
-  decide +kernel
+  have checked : ∀ p : Fin 3,
+      (List.finRange 16).all (fun k => (allCols.filter (fun a => a.1 == p)).all fun a =>
+        W k.succ a == ((successors a).map (W k.castSucc)).sum) = true := by
+    intro p
+    fin_cases p <;> decide +kernel
+  intro k a
+  have h := List.nodup_finRange 3
+  have hcols : allCols.Nodup := h.product (h.product (h.product (h.product (h.product h))))
+  have hs : (successors a).Nodup := row_certificate a ▸ hcols.filter _
+  rw [next, List.sum_toFinset _ hs]
+  have ha : a ∈ allCols := by
+    rcases a with ⟨p, q, r, s, t, u⟩
+    simp [allCols]
+  have hm : a ∈ allCols.filter (fun b => b.1 == a.1) := List.mem_filter.mpr ⟨ha, by simp⟩
+  exact beq_iff_eq.mp (List.all_eq_true.mp
+    (List.all_eq_true.mp (checked a.1) k (List.mem_finRange k)) a hm)
 private theorem table_steps (k : Fin 16) : W k.succ = T.mulVec (W k.castSucc) := by
   funext a
   rw [sparse_mulVec]
