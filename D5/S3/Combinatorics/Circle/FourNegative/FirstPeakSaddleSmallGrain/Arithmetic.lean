@@ -13,7 +13,6 @@ The exceptional all-one mask and the even-s/r=1-or-2 submask are retained. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain
-open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 open private phase_cover from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.ModTen
 open private
   margin Margins chart_K1_J1_0 chart_K1_J1_1
@@ -62,9 +61,9 @@ private def choice_of_margins (a b d s r h v : ℕ) (hd : 3≤d) (hdb : d<b)
   have h17 := hm 17
   have h18 := hm 18
   dsimp [margin] at h12 h13 h14 h15 h17 h18
-  have hx := half_power a (by omega)
-  have hy := half_power b (by omega)
-  have ht := half_power d (by omega)
+  have hx := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
+  have hy := (mul_pow_sub_one (show b ≠ 0 by omega) (2 : ℤ)).symm
+  have ht := (mul_pow_sub_one (show d ≠ 0 by omega) (2 : ℤ)).symm
   refine ⟨s,r,h,v,?_,hb,hm⟩
   constructor
   · exact_mod_cast (show (1:ℤ)≤r by omega)
@@ -137,7 +136,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -192,7 +191,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -213,7 +212,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -276,7 +275,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -331,7 +330,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -352,7 +351,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -415,7 +414,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -470,7 +469,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn
@@ -491,7 +490,7 @@ private theorem select_chart (a b d K J : ℕ) (hd : 3≤d) (hdb : d<b) (hba : b
         convert hc using 1 <;> dsimp [s,r,h,v] <;> push_cast <;> (try simp only [hxi,hyi,hti]) <;> ring
       refine ⟨?_⟩
       apply choice_of_margins a b d s r h v hd hdb hba hm
-      have hh := half_power a (by omega)
+      have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
       have hhn : (2:ℕ)^a=2*2^(a-1) := by exact_mod_cast hh
       have hs : s=2^(a-1) := by
         rw [hx,ht] at hhn

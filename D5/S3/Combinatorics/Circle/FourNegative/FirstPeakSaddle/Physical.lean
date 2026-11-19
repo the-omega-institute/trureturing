@@ -32,7 +32,6 @@ open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 /- Native original occurrence sets and exact geometric masses. -/
 open MaxPlusTwo.Chambers
@@ -362,9 +361,9 @@ private theorem actualSource_of_nativeChoice
     dsimp [k,N,sourceMod,modulus]
     simp only [pow_add, pow_succ]
     ring
-  have hxhalf : x=2*(2:ℤ)^(a-1) := half_power a (by omega)
-  have hthalf : t=2*(2:ℤ)^(d-1) := half_power d (by omega)
-  have hzhalf : z=2*(2:ℤ)^(c-1) := half_power c (by omega)
+  have hxhalf : x=2*(2:ℤ)^(a-1) := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
+  have hthalf : t=2*(2:ℤ)^(d-1) := (mul_pow_sub_one (show d ≠ 0 by omega) (2 : ℤ)).symm
+  have hzhalf : z=2*(2:ℤ)^(c-1) := (mul_pow_sub_one (show c ≠ 0 by omega) (2 : ℤ)).symm
   have parity := source_parity a b c d (by omega) (by omega) hc (by omega)
   have bounded := source_centered_bounds a b c d (by omega) (by omega) hc (by omega)
   have recurrence := source_recurrences a b c d

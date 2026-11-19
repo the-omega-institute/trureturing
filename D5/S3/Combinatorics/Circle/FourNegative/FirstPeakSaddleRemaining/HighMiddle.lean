@@ -17,7 +17,6 @@ set_option maxHeartbeats 8000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q high_margin scaled_to_rectangle
   ArithmeticSelection ArithmeticSelection.mk NativeChoice native_of_selection dyadic_time_cases from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
-open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 set_option linter.unusedVariables false in
 private theorem high_h_zero (X Y Z T : ℤ) (hX : 0≤X) (hY : 0≤Y) (hZ : 0≤Z) (hT : 0≤T) :
@@ -351,7 +350,7 @@ private theorem high_middle_choice_exists (a b c d : ℕ)
     omega
   have ht := dyadic_time_cases c d hcd
   have he : (2:ℤ)^d%2=0 := by
-    rw [half_power d (by omega)]
+    rw [← mul_pow_sub_one (show d ≠ 0 by omega) (2 : ℤ)]
     omega
   obtain ⟨sel⟩ := high_arithmetic W J (2^c) (2^d) hW hJ hz ht he
   refine ⟨native_of_selection a b c d hc hcd hdb hba ?_⟩

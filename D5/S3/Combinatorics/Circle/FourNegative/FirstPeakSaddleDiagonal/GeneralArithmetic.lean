@@ -6,8 +6,10 @@
    utility: none
    digest: Arbitrary-grain diagonal choice and general z>=4 rectangle-to-twelve proof. -/
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.CyclicArithmetic
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictCertificates
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.LargeKCertificates
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.LargeJCertificates
 
 /-! All strict/equality diagonal selections are native.
 rectangle_to_twelve is proved here for every z>=4; its proof uses positive
@@ -21,11 +23,23 @@ open private
   D A B L M Bn
   Ln Mn grain reserve C E0
   H0 pivot scaledMargin rectangleMargin boundaryMargin gateMargin
-  chart_strict_neg1 chart_strict_negg chart_strict_pos11 chart_strict_pos1max
-  chart_strict_posmax1 chart_strict_posmaxmax chart_strict_boundary chart_equality_Klarge_neg1 chart_equality_Klarge_pos11 chart_equality_Klarge_pos1max
-  chart_equality_Klarge_posmax1 chart_equality_Klarge_posmaxmax chart_equality_Klarge_boundary chart_equality_Jlarge_neg1 chart_equality_Jlarge_pos11 chart_equality_Jlarge_pos1max
-  chart_equality_Jlarge_posmax1 chart_equality_Jlarge_posmaxmax chart_equality_Jlarge_boundary
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.Certificates
+
+open private
+  chart_strict_neg1 chart_strict_negg chart_strict_pos11
+  chart_strict_pos1max chart_strict_posmax1 chart_strict_posmaxmax
+  chart_strict_boundary
+  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictCertificates
+
+open private
+  chart_equality_Klarge_neg1 chart_equality_Klarge_pos11 chart_equality_Klarge_pos1max
+  chart_equality_Klarge_posmax1 chart_equality_Klarge_posmaxmax chart_equality_Klarge_boundary
+  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.LargeKCertificates
+
+open private
+  chart_equality_Jlarge_neg1 chart_equality_Jlarge_pos11 chart_equality_Jlarge_pos1max
+  chart_equality_Jlarge_posmax1 chart_equality_Jlarge_posmaxmax chart_equality_Jlarge_boundary
+  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.LargeJCertificates
 
 open private euclidean_gap_hit cyclic_cover odd_successor_not_dvd_pow equality_residue
   native_hr linear_interval scaled_affine scaled_rectangle from
@@ -721,7 +735,7 @@ private theorem parameterChoice (a b c d : ℕ) (hc : 3≤c) (hcd : c<d)
   have hzm : z=g*m := by
     rw [hgpow]; dsimp [z,m]
     rw [←pow_add]; congr 1; omega
-  have hτ : t=2*τ := Descending.half_power d (by omega)
+  have hτ : t=2*τ := (mul_pow_sub_one (show d ≠ 0 by omega) (2 : ℤ)).symm
   have hz8 : 8≤z := by
     have hp := pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) hc
     norm_num at hp
@@ -813,7 +827,7 @@ private theorem parameterChoice (a b c d : ℕ) (hc : 3≤c) (hcd : c<d)
   have hq : 2*reserve K J t=x-2*g := by dsimp [reserve,g,grain]; rw [hxt]; dsimp [g,grain]; ring
   have hss : 2*(sN:ℤ)≤x := by
     have heq : (sN:ℤ)≤(2:ℤ)^(a-1) := by exact_mod_cast hsN
-    have hh := Descending.half_power a (by omega)
+    have hh := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
     dsimp [x]; omega
   have hgateN : ∀ i,0≤gateMargin x y z t sN rN hN vN i := by
     apply rectangle_to_twelve x y z t g (reserve K J t) sN rN hN vN

@@ -18,7 +18,6 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q half_margin scaled_to_rectangle
   ArithmeticSelection ArithmeticSelection.mk NativeChoice native_of_selection dyadic_time_cases from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
-open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 open private half_K4_negative half_K4_p11 half_K4_p1r half_K4_ph1 half_K4_phr
   half_K4_boundary from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.HalfK4Certificates
@@ -301,7 +300,7 @@ private theorem half_step_choice_exists (a b c d : ℕ)
     rcases dyadic_time_cases c d hcd with h|h
     · left; rw [hz] at h; nlinarith only [h]
     · right; rw [hz] at h; nlinarith only [h]
-  have ht2 : (2:ℤ)^d%2=0 := by rw [half_power d (by omega)]; omega
+  have ht2 : (2:ℤ)^d%2=0 := by rw [← mul_pow_sub_one (show d ≠ 0 by omega) (2 : ℤ)]; omega
   obtain ⟨sel⟩ := half_arithmetic K F e (2^d) hK hF he hz8 hregion ht ht2
   refine ⟨native_of_selection a b c d (by omega) hcd hdb hba ?_⟩
   simpa only [K,hz,hJ] using sel

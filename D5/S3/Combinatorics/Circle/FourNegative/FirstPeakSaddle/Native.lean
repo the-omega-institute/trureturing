@@ -46,7 +46,6 @@ open private margin Margins from
 open private Choice Choice.s Choice.r Choice.h Choice.v Choice.bounds Choice.submask
   Choice.good arithmetic_choice_exists from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain.Arithmetic
-open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 -- The diagonal interface orders powers as x,y,z,t; the physical one as t,z,x,y.
 private theorem gate_agrees (t z x y s r h v : ℤ) :
@@ -100,7 +99,7 @@ private def remaining_joint_choice (a b c d : ℕ)
     congr 1
     omega
   have hq : 2*(((NativeChoice.s ch):ℤ)-((NativeChoice.r ch):ℤ))=(2:ℤ)^a-2*(2:ℤ)^(a-d) := by
-    rw [half_power d (by omega)] at hprod
+    rw [← mul_pow_sub_one (show d ≠ 0 by omega) (2 : ℤ)] at hprod
     rw [hs]
     nlinarith only [hprod]
   have hq0 : 0≤((NativeChoice.s ch):ℤ)-((NativeChoice.r ch):ℤ) := by
@@ -109,7 +108,7 @@ private def remaining_joint_choice (a b c d : ℕ)
   have hr : (1:ℤ)≤((NativeChoice.r ch):ℤ) := by exact_mod_cast (NativeChoice.bounds ch).1
   have hsc : 2*((NativeChoice.s ch):ℤ)≤(2:ℤ)^a := by
     have hh : ((NativeChoice.s ch):ℤ)≤(2:ℤ)^(a-1) := by exact_mod_cast (NativeChoice.bounds ch).2.2.1
-    rw [half_power a (by omega)]
+    rw [← mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)]
     omega
   have hR : (2:ℤ)^b=2*(2:ℤ)^c*(2:ℤ)^(b-c-1) := by
     have he : b=c+(b-c-1)+1 := by omega

@@ -6,7 +6,6 @@
    utility: none
    digest: Eight exact source recurrences, odd representatives and centered successor bounds. -/
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.Structure
-import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
 
 /-! All rows, offsets and lengths are those of the existing
 PacketNormalForm.Source, whose chain_values consumes MaxPlusTwo.SourceTable.source_table.
@@ -25,7 +24,6 @@ open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase chai
 open private sourceMod charge nextBase nextNewBase
   chain_values new_base_bounds
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 private theorem source_recurrences (a b c d : ℕ) :
     ∀ j : Fin 4,
@@ -44,7 +42,7 @@ private theorem source_parity (a b c d : ℕ)
     (∀ j : Fin 4, base a b c d j%2=1) ∧
     (∀ j : Fin 4, nextNewBase a b c d j%2=1) := by
   have even (n : ℕ) (hn : 1≤n) : (2:ℤ)^n%2=0 := by
-    rw [half_power n hn]
+    rw [← mul_pow_sub_one (Nat.ne_of_gt hn) (2 : ℤ)]
     omega
   have hpa := even a (by omega)
   have hpb := even b (by omega)

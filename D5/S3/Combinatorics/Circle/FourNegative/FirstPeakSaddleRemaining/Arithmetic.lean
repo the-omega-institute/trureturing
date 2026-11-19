@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Native integer selection interface for three strict saddle chambers. -/
-import D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+import Batteries.Tactic.OpenPrivate
 import Mathlib.Data.Nat.Bitwise
 import Mathlib.Tactic
 
@@ -18,7 +18,6 @@ external certificate verdict. Attribution: caller-derived saddle construction. -
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
-open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 private def rectangle (t z x y g q r h v : ℤ) : Fin 4 → ℤ :=
   let D := y*(z+1)+1
@@ -118,8 +117,8 @@ private noncomputable def native_of_selection (a b c d : ℕ)
   let vn := sel.v.toNat
   let sn := g*Q+rn
   obtain ⟨hy,hx,hg⟩ := ratio_identities a b d hdb hba
-  have ht := half_power d (by omega)
-  have hax := half_power a (by omega)
+  have ht := (mul_pow_sub_one (show d ≠ 0 by omega) (2 : ℤ)).symm
+  have hax := (mul_pow_sub_one (show a ≠ 0 by omega) (2 : ℤ)).symm
   have hQ : (Q:ℤ)=(2:ℤ)^(d-1)-1 := by
     dsimp [Q]
     rw [Nat.cast_sub Nat.one_le_two_pow]
