@@ -11,7 +11,7 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyT
 open Finset SimpleGraph
 open private cycleLabel pairingModel singleton_class_cycle from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoCompression
-open private attachment solid hollow from
+open private attachment solid hollow labels hollowEdges from
   D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonPlacements
 open private SideHigh compressed from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointCompression
@@ -216,5 +216,52 @@ theorem singleton_model {V : Type*} [Fintype V] [DecidableEq V]
       simpa only [pr, pc] using hx.2
 
 #print axioms singleton_model
+
+private theorem mem_hollowEdges (b : Bool) (e : Fin 10 × Fin 10) :
+    e ∈ hollowEdges b ↔ e.1 < e.2 ∧ hollow b e.1 e.2 = true := by
+  rcases e with ⟨i, j⟩
+  simp [hollowEdges, labels, List.mem_flatMap, List.mem_map]
+
+/-- Choose the twelve distinct subdivision vertices, with their exact
+two-element neighborhoods, from a realization of the singleton model. -/
+theorem select_subdivision_vertices {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) (b : Bool) (p : Fin 10 ↪ V)
+    (hmid : ∀ i j, hollow b i j = true →
+      ∃ m, G.degree m = 2 ∧ G.Adj (p i) m ∧ G.Adj (p j) m) :
+    ∃ f : Fin 10 × Fin 10 → V,
+      (∀ e ∈ hollowEdges b, G.degree (f e) = 2 ∧ G.neighborFinset (f e) = {p e.1, p e.2}) ∧
+      Set.InjOn f {e | e ∈ hollowEdges b} := by
+  have hp (e : Fin 10 × Fin 10) (he : hollow b e.1 e.2 = true) :
+      ∃ m, G.degree m = 2 ∧ G.Adj (p e.1) m ∧ G.Adj (p e.2) m := hmid _ _ he
+  let f (e : Fin 10 × Fin 10) : V :=
+    if he : hollow b e.1 e.2 = true then Classical.choose (hp e he) else p 0
+  have hf (e : Fin 10 × Fin 10) (he : e ∈ hollowEdges b) :
+      G.degree (f e) = 2 ∧ G.neighborFinset (f e) = {p e.1, p e.2} := by
+    obtain ⟨hlt, he'⟩ := (mem_hollowEdges b e).mp he
+    have hdata : G.degree (f e) = 2 ∧ G.Adj (p e.1) (f e) ∧ G.Adj (p e.2) (f e) := by
+      have hfe : f e = Classical.choose (hp e he') := dite_eq_left he'
+      rw [hfe]
+      exact Classical.choose_spec (hp e he')
+    refine ⟨hdata.1, (Finset.eq_of_subset_of_card_le ?_ ?_).symm⟩
+    · rw [Finset.insert_subset_iff, Finset.singleton_subset_iff]
+      exact ⟨(G.mem_neighborFinset _ _).mpr hdata.2.1.symm,
+        (G.mem_neighborFinset _ _).mpr hdata.2.2.symm⟩
+    · simp [G.card_neighborFinset_eq_degree, hdata.1, p.injective.ne hlt.ne]
+  refine ⟨f, hf, ?_⟩
+  intro e he d hd hed
+  have he' := (mem_hollowEdges b e).mp he
+  have hd' := (mem_hollowEdges b d).mp hd
+  have heq : ({p e.1, p e.2} : Finset V) = {p d.1, p d.2} := by
+    rw [← (hf e he).2, hed, (hf d hd).2]
+  have h1 : p e.1 ∈ ({p d.1, p d.2} : Finset V) := by rw [← heq]; exact mem_insert_self _ _
+  have h2 : p e.2 ∈ ({p d.1, p d.2} : Finset V) := by rw [← heq]; simp
+  simp only [Finset.mem_insert, Finset.mem_singleton, p.injective.eq_iff] at h1 h2
+  rcases h1 with h1 | h1 <;> rcases h2 with h2 | h2
+  · exact (he'.1.ne (h1.trans h2.symm)).elim
+  · exact Prod.ext h1 h2
+  · exact (he'.1.not_ge (h2.trans_lt (hd'.1.trans_eq h1.symm)).le).elim
+  · exact (he'.1.ne (h1.trans h2.symm)).elim
+
+#print axioms select_subdivision_vertices
 
 end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoSingletonLabels
