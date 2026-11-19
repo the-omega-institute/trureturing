@@ -13,7 +13,7 @@ public sealed partial class OrdinaryInstanceCliTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = InstanceFixture("kind=certified-instance; basis=terminal=gid:D5/S0/Carrier/Ring.fixed_sum");
-        fixture.AddBackfillTargets();
+
         ProductionEnvironmentTests.InstallDefaultAdmissionPlaneFileMap(fixture);
         var paths = new List<string> { RuleFixture.RingPath };
         if (freeze) paths.Add(AddCandidateState(fixture));

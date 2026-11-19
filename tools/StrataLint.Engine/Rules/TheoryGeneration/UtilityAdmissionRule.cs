@@ -273,7 +273,6 @@ internal static class UtilityAdmissionRule
         UtilityValidationFailure.PremisesMissing => "UTILITY-PREMISES-MISSING",
         UtilityValidationFailure.InputUnknown => "UTILITY-INPUT-UNKNOWN",
         UtilityValidationFailure.TargetDangling => "UTILITY-TARGET-DANGLING",
-        UtilityValidationFailure.RefutesAtomNoCoverage => "UTILITY-REFUTES-ATOM-NO-COVERAGE",
         UtilityValidationFailure.ConsumerUnreachable => "UTILITY-CONSUMER-UNREACHABLE",
         UtilityValidationFailure.OrdinaryInstanceForbidden => "UTILITY-ORDINARY-INSTANCE-BANNED",
         UtilityValidationFailure.ClassificationDowngrade => "UTILITY-CLASSIFICATION-DOWNGRADE",

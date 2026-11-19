@@ -101,8 +101,6 @@ internal sealed partial class RuleFixture
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestFileMap.Domains,
-            [FixtureBackfillSourcePath] = FixtureBackfillSource,
-            [FixtureBackfillAtomPath] = FixtureBackfillAtom,
             ["Meta/FILEMAP.toml"] = TestFileMap.Canonical,
             ["Meta/ci-checks.json"] = """
                 {"schema":"ci-check-input-registration-v2","checks":[
@@ -117,7 +115,6 @@ internal sealed partial class RuleFixture
             [BlueprintPath] = "# Golden ring\n",
             [BlueprintSourcePath] = "// synthetic Scribe definition\n",
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
-            [FixtureCasPath] = FixtureDigestionSource,
             [ScribeProjectPath] = """
                 <Project Sdk="Microsoft.NET.Sdk">
                   <ItemGroup><Compile Include="../../Blueprint/**/*.scribe.cs" /></ItemGroup>
@@ -192,17 +189,17 @@ internal sealed partial class RuleFixture
         foreach (var files in new[] { Files, Baseline })
         {
             RemoveDigestionLedger(files);
-            files[BackfillInventoryLoader.RelativePath] = FixtureBackfill;
+            files["Meta/BACKFILL.yaml"] = FixtureBackfill;
         }
     }
 
     internal void UseSyntheticDirectoryBackfill()
     {
         RemoveDigestionLedger(Files);
-        Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
+        Files["Meta/Digestion/backfill/delta-v0.1/source.toml"] =
             $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n"
             + "genre_registry_check = \"no-registry\"\nunregistered_genres = []\n";
-        Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/"
+        Files["Meta/Digestion/backfill/delta-v0.1/residual-open/"
             + "0000000000000000000000000000000000000000000000000000000000000000.yaml"] = """
             fingerprints:
               raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
@@ -240,8 +237,8 @@ internal sealed partial class RuleFixture
         foreach (var files in new[] { Files, Baseline })
         {
             RemoveDigestionLedger(files);
-            files[BackfillInventoryLoader.RootPath + sourcePath] = source;
-            files[BackfillInventoryLoader.RootPath + atomPath] = atom;
+            files["Meta/Digestion/backfill/" + sourcePath] = source;
+            files["Meta/Digestion/backfill/" + atomPath] = atom;
         }
     }
 
@@ -518,90 +515,6 @@ internal sealed partial class RuleFixture
         Reports[path] = Report();
     }
 
-    internal void AddBackfillTargets()
-    {
-        var inventory = BackfillInventoryLoader.Load(Decode(Files));
-        var ticketsByGid = inventory.RequireTickets()
-            .GroupBy(static ticket => ticket.Gid, StringComparer.Ordinal)
-            .ToDictionary(
-                static group => group.Key,
-                static group => group.Select(static ticket => ticket.CaseId).ToArray(),
-                StringComparer.Ordinal);
-        foreach (var gidText in inventory.RequireReferencedGids())
-        {
-            if (!Gid.TryParse(gidText, out var gid))
-            {
-                throw new FormatException($"canonical BACKFILL contains invalid GID {gidText}");
-            }
-
-            var path = gid.Path.Value;
-            if (!path.EndsWith(".lean", StringComparison.Ordinal))
-            {
-                if (path == ValuesProjectionPath)
-                {
-                    AddValuesProjection();
-                }
-
-                continue;
-            }
-
-            if (!Files.TryGetValue(path, out var text))
-            {
-                text = HeaderFor(gidText, path.Contains("/S0/", StringComparison.Ordinal) ? "G" : "E")
-                    + (path.Contains("/X_Frontier/", StringComparison.Ordinal) ? "-- D5-T9999\n" : string.Empty)
-                    + "def protectedTargetFixture : Unit := ()\n";
-                Reports[path] = Report();
-                if (path == ThreeDistancePath)
-                {
-                    const string debtGid = "D5/X_Assumptions/AxiomDebt";
-                    const string debtModule = "D5.X_Assumptions.AxiomDebt";
-                    const string debtAxiom = "D5.X_Assumptions.AxiomDebt.three_gap_classic";
-                    Files[AssumptionDebtPath] = HeaderFor(debtGid, "G")
-                        + "axiom three_gap_classic : True\n";
-                    Reports[AssumptionDebtPath] = Report(declarations:
-                    [
-                        new LeanDeclaration(
-                            debtAxiom,
-                            "axiom",
-                            "True",
-                            [debtAxiom]),
-                    ]);
-                    text = HeaderFor(gidText, "E")
-                        + $"import {debtModule}\n\n"
-                        + $"-- {debtGid}\n"
-                        + "theorem three_gap : True := by trivial\n";
-                    Reports[path] = Report(
-                        imports: [debtModule],
-                        declarations:
-                    [
-                        new LeanDeclaration(
-                            "three_gap",
-                            "theorem",
-                            "True",
-                            [debtAxiom]),
-                    ]);
-                }
-            }
-
-            if (ticketsByGid.TryGetValue(gidText, out var cases))
-            {
-                text += string.Concat(cases.Where(caseId =>
-                        !text.Contains($"TASK {caseId}", StringComparison.Ordinal))
-                    .Select(static caseId =>
-                    $"/-- TASK {caseId}\n"
-                    + "    Fixture task. -/\n"
-                    + $"def fixtureTask{caseId[4..]} : Unit := ()\n"));
-            }
-
-            Files[path] = text;
-            if (path == HeartsPath)
-            {
-                Baseline[path] = text;
-                BaselineReports[path] = Reports[path];
-            }
-        }
-    }
-
     internal void AddValuesProjection()
     {
         Files[ValuesProjectionPath] = "{}\n";
@@ -636,9 +549,9 @@ internal sealed partial class RuleFixture
 
     private static void RemoveDigestionLedger(IDictionary<string, string> files)
     {
-        files.Remove(BackfillInventoryLoader.RelativePath);
+        files.Remove("Meta/BACKFILL.yaml");
         foreach (var path in files.Keys
-                     .Where(BackfillInventoryLoader.IsCanonicalPath)
+                     .Where(static path => path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal))
                      .ToArray())
         {
             files.Remove(path);
@@ -669,7 +582,7 @@ internal sealed partial class RuleFixture
         return key;
     }
 
-    private static string HeaderFor(string gid, string generality) => $"""
+    internal static string HeaderFor(string gid, string generality) => $"""
         /- GID: {gid}
            generality: {generality}
            mirror-B: none(waiver:test-fixture)

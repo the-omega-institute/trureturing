@@ -1,0 +1,36 @@
+**Lemma 116.1 (The entire pure space and its intrinsic symmetries).**
+Under Definition 109.1, $b:\mathcal R_n\to P$ is a homeomorphism,
+$P$ is compact and connected, and $\operatorname{span}_{\mathbb R}P=V$.
+Every $h\in\operatorname{Aut}(C,u)$ induces the bijection
+
+$$
+f_h=b^{-1}\circ h\circ b:\mathcal R_n\longrightarrow\mathcal R_n,
+\tag{116.1}
+$$
+
+and it preserves $\operatorname{Tr}(QR)$ for every pair.
+
+Proof. The entire rank-one projector space $\mathcal R_n$ is compact
+and connected, as the continuous image of the complex unit sphere.
+The map $b$ is a continuous bijection to the Hausdorff subspace $P$
+of $V$, hence a homeomorphism. Rank-one projectors span
+$\operatorname{Herm}_n(\mathbb C)$ over $\mathbb R$, by the spectral
+decomposition of every Hermitian matrix. Surjectivity of $\pi$
+therefore gives the spanning assertion for $P$.
+
+The linear map $h$ restricts to an affine automorphism of $K$ and
+maps extreme points bijectively to extreme points. The image of an
+actual minimal face is the actual minimal face of the image pair:
+apply $h$ and $h^{-1}$ to the defining face inclusions. It carries
+the unique center to the unique center, and its linear restriction
+carries the entire centered ellipsoid onto the target centered
+ellipsoid. Consequently
+
+$$
+g_{hF}(hw)=g_F(w),\qquad t(hp,hq)=t(p,q).
+\tag{116.2}
+$$
+
+Together with Proposition 115.2, this proves all-pair transition
+probability preservation for (116.1). ∎
+

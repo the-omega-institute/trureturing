@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d212f681a8b8e652c5f24a5f09b91cb1c66c2280301b61404cd71a841c44f605
-  normalized_sha256: sha256:d212f681a8b8e652c5f24a5f09b91cb1c66c2280301b61404cd71a841c44f605
-cas_ref: sha256:d212f681a8b8e652c5f24a5f09b91cb1c66c2280301b61404cd71a841c44f605
-coverage_gids:
-  - gid: D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch_geometry_of_isHermitian
-    target_statement_id: sha256:83d661a0894d6aa818f6656c1a27b81c5e8d71503d0493a3736f7f2f2f26a642
-receipts:
-  unresolved_subitems: []

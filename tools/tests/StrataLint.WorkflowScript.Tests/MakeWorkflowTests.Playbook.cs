@@ -12,22 +12,8 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         var script = File.ReadAllText(Path.Combine(root, PlaybookWorkflowScriptPath));
 
-        Assert.Contains(
-            "scripts/workflow/playbook-workflows.sh deposit \"$(BASE)\" \"$(ATOM_ID)\" \"$(GID)\"",
-            makefile,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "scripts/workflow/playbook-workflows.sh cover \"$(ATOM_ID)\" \"$(GID)\"",
-            makefile,
-            StringComparison.Ordinal);
-        Assert.Equal(
-            $"\t@/bin/bash {PlaybookWorkflowScriptPath} deposit-uncovered \"$(BASE)\" \"$(GID)\"",
-            Recipe(makefile, "deposit-uncovered"));
-
-        Assert.Contains(
-            "scripts/workflow/playbook-workflows.sh cover-batch \"$(ATOMS)\"",
-            makefile,
-            StringComparison.Ordinal);
+        foreach (var target in new[] { "deposit", "deposit-uncovered" })
+            Assert.Equal($"\t@/bin/bash {PlaybookWorkflowScriptPath} {target} \"$(BASE)\" \"$(GID)\"", Recipe(makefile, target));
 
         Assert.Contains(
             "ledger-align --add \"$MODULE_PATH\" --candidate-lean-report \"$REPORT\"",

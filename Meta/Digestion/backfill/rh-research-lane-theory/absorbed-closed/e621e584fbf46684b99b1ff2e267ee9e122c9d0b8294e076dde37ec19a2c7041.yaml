@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e621e584fbf46684b99b1ff2e267ee9e122c9d0b8294e076dde37ec19a2c7041
-  normalized_sha256: sha256:e621e584fbf46684b99b1ff2e267ee9e122c9d0b8294e076dde37ec19a2c7041
-cas_ref: sha256:e621e584fbf46684b99b1ff2e267ee9e122c9d0b8294e076dde37ec19a2c7041
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/PairCalibratedSecondMagnusObservability.pairCalibratedTime
-    target_statement_id: sha256:0955b7af3b33a7522d6b0911de3e3bcb58040b76b80185265fa963f0a848f54c
-receipts:
-  unresolved_subitems: []

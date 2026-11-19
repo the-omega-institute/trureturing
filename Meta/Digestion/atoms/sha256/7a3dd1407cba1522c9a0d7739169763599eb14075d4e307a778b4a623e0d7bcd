@@ -1,0 +1,29 @@
+**Proposition 111.1 (Entire normalized positive preimage).** In the
+notation of Proposition 110.2,
+
+$$
+\pi^{-1}\bigl(F_K(b(Q),b(R))\bigr)\cap\mathcal D_n
+=\mathcal D(S).
+\tag{111.1}
+$$
+
+Proof. The inclusion from right to left is (110.2). Conversely take
+$\rho\in\mathcal D_n$ whose image belongs to that face $F$. A source
+spectral decomposition has the form
+
+$$
+\rho=\sum_{i=1}^r\lambda_i P_i,\qquad
+\lambda_i>0,\quad\sum_i\lambda_i=1,\quad P_i\in\mathcal R_n.
+\tag{111.2}
+$$
+
+The face property gives $b(P_i)\in F$ for each positive-weight term.
+For a single term this is immediate; for more terms isolate each one
+as one endpoint of a two-term convex combination. Each $b(P_i)$ is
+globally pure, hence extreme in $F$. The affine bijection
+$\mathcal D(S)\to F$ in (110.2) identifies the extreme points of
+these two bodies. It therefore supplies a rank-one $Q_i$ supported
+on $S$ with $b(Q_i)=b(P_i)$. Injectivity of the entire pure labeling
+$b$ gives $Q_i=P_i$. Every term in (111.2) is supported on $S$,
+and so is $\rho$. ∎
+

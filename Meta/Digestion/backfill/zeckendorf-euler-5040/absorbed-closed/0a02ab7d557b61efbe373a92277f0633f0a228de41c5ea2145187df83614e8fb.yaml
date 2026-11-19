@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0a02ab7d557b61efbe373a92277f0633f0a228de41c5ea2145187df83614e8fb
-  normalized_sha256: sha256:0a02ab7d557b61efbe373a92277f0633f0a228de41c5ea2145187df83614e8fb
-cas_ref: sha256:0a02ab7d557b61efbe373a92277f0633f0a228de41c5ea2145187df83614e8fb
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenResource5040PriceInterval.golden_resource_5040_unique_maximum_of_price_interval
-    target_statement_id: sha256:56d1fe995397544a89849ab81bb95afd04df1b78fb4bb78fff0dc86b82fdb0f9
-receipts:
-  unresolved_subitems: []

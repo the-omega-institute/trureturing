@@ -1,9 +1,0 @@
-**Definition 35.1 (observing the marked specimen).** On the actual earned $u$, construct $J,K,C$ by Definition 31.1. Here $J$ may be in raw order using the earned bijection, or in canonical order through its actual forwarding; use the same order consistently in $K,C$ and the calls. Starting from the final held cut of Definition 34.2, Read all $b$ terminals. For $r=1,\ldots,I$, actually Tick, Hold and Read all $b$ terminals. There is no Add during this observation. Stack the literal replies as $y$ and calculate
-
-$$
-x_{\rm mark}=C^{\mathsf T}y,\qquad x_d=A^Ix_{\rm mark}.
-\tag{NLBAII.44}
-$$
-
-Install $x_d$, the actually advanced field, as the synchronized predictive vector. This recovers the field at the start of this observation, not the arbitrary field at attachment before marking and growth.
-

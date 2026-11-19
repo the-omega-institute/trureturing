@@ -87,7 +87,7 @@ public sealed class UtilityDepositEntryTests
             "PLAYBOOK_TEST_FREEZE_PROBES=" + Path.Combine(root, "freeze-probes"),
             "STRATALINT_LEAN_REPORT=" + report,
             "/usr/bin/make", "deposit", "BASE=" + baseline,
-            "ATOM_ID=" + TransactionFixture.AtomId, "GID=" + TransactionFixture.Gid,
+            "GID=" + TransactionFixture.Gid,
         ], root, TestBudgets.LeanProcessHangGuard, 1024 * 1024);
         var output = Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError);
         Assert.Equal(2, result.ExitCode);
