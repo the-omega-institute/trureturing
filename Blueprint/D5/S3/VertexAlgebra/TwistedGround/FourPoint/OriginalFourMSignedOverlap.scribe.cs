@@ -49,5 +49,34 @@ internal sealed class OriginalFourMSignedOverlapDocument : IScribeDocumentDefini
                 + "the chart's half-differential at the corresponding puncture."),
             Result("chart-chosen-source-signs", "chart_chosen_source_signs", "Relative puncture signs",
                 "In the common physical puncture order, the A to B signs are positive except at S "
-                + "and the A to D signs are negative at Q and R."))));
+                + "and the A to D signs are negative at Q and R."),
+            Result("chosen-chart-source-native", "chosen_chart_source_eq_native", "Native source germ on A and B",
+                "The selected normalized root agrees with the literal signed source germ wherever "
+                + "the A or B period parameter belongs to the native disk."),
+            Result("chosen-chart-source-analytic", "chosen_chart_source_analytic", "Source at all three puncture charts",
+                "The normalized square root defines an analytic germ at the origin of each spatial coordinate."),
+            Result("chart-covariance-native", "chart_covariance_eq_native", "Native covariance germ on A and B",
+                "The chart kernels agree with the native J-plus-free and minus-T series on their initial "
+                + "A and B convergence overlaps, including both mode origins."),
+            Result("chart-covariance-analytic", "chart_covariance_analytic", "Regular chart covariance",
+                "With the chosen source roots and actual period corrections, every signed covariance is "
+                + "jointly analytic at the pair of mode origins in A, B and D."),
+            Result("chart-d-source-boundary", "chartD_source_boundary", "Signed source on the D lip",
+                "The selected source is the one-sided limit of the normalized slit source from the "
+                + "matched D half-plane, with the actual root and its sign."),
+            Result("chart-d-covariance-boundary", "chartD_covariance_boundary", "Signed covariance on the D lip",
+                "The signed covariance has the corresponding one-sided limit using the actual D "
+                + "period and derivative. The branch and denominator conditions specify its spatial domain."),
+            Result("chart-spatial-overlap", "chart_spatial_overlap", "Elliptic covariance on all three charts",
+                "The continued signed kernels use the actual elliptic rational kernel and period correction "
+                + "on their punctured domains. The mixed same-leg term includes the native free contraction."),
+            Result("chart-same-slot-covariance", "chart_same_slot_covariance", "Physical normal-ordering correction",
+                "The physical Cauchy subtraction differs from the native equal-orientation subtraction "
+                + "by the regular correction for the chosen scale at the actual puncture."),
+            Result("chart-same-slot-origin", "chart_same_slot_origin", "Finite covariance at a coincident puncture",
+                "The same-slot covariance tends to the regular value at the native mode origins in "
+                + "each chart, with the selected period correction and orientation."),
+            Result("slit-covariance-native", "slit_covariance_eq_native", "Original germ of the slit covariance",
+                "The slit expression used in the D boundary theorem agrees with the original "
+                + "signed mode generator near both mode origins throughout the native radial disk."))));
 }

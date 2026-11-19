@@ -11,6 +11,8 @@ import D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPeriodSource
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianSewnAnalytic
 import Mathlib.Analysis.Analytic.Uniqueness
 
+/-! The native signed Gaussian entries and their elliptic overlap formulas. -/
+
 noncomputable section
 open scoped Topology ENNReal NNReal
 open Filter
@@ -658,5 +660,587 @@ theorem chart_chosen_source_signs {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
   simp only [chart_source_at_puncture hz hz1]
   rw [← hB, ← hD]
   exact OriginalFourMActualChart.half_differential_signs hz hz1 _
+
+open private source_closed source_analytic from
+  D5.S3.VertexAlgebra.TwistedGround.Signed.CandidateSource
+
+private theorem normalizedBranch_zero (e : Bool) {r : ℂ} (hr : 1 - r ≠ 0) :
+    normalizedBranch e 0 r = 1 := by
+  cases e <;> simp [normalizedBranch, h, b, hr]
+
+private theorem normalizedBranch_analytic (e : Bool) {r : ℂ} (hr : 1 - r ≠ 0) :
+    AnalyticAt ℂ (fun u => normalizedBranch e u r) 0 := by
+  cases e
+  · exact (analyticAt_const.sub analyticAt_id).div
+      ((analyticAt_const.sub analyticAt_id).mul analyticAt_const) (by simpa [b] using hr)
+  · exact (analyticAt_const.sub (analyticAt_const.mul analyticAt_id)).div
+      (analyticAt_const.sub analyticAt_id) (by simp [b])
+
+private theorem analyticAt_local_cpow {F : ℂ → ℂ} {u a : ℂ}
+    (hF : AnalyticAt ℂ F u) (hF0 : F u ∈ Complex.slitPlane) :
+    AnalyticAt ℂ (fun t => F t ^ a) u := by
+  have he := ((hF.clog hF0).mul (analyticAt_const (v := a))).cexp'
+  apply he.congr
+  filter_upwards [hF.continuousAt.eventually_ne (Complex.slitPlane_ne_zero hF0)] with x hx
+  exact (Complex.cpow_def_of_ne_zero hx a).symm
+
+private def normalizedSource (e : Bool) (r root u : ℂ) : ℂ :=
+  (1 / (b u * (if e then 1 else root))) *
+    normalizedBranch e u r ^ (-1 / 2 : ℂ)
+
+private theorem normalizedSource_analytic (e : Bool) {r root : ℂ}
+    (hr : 1 - r ≠ 0) (hroot : root ≠ 0) :
+    AnalyticAt ℂ (normalizedSource e r root) 0 := by
+  have hb : AnalyticAt ℂ (fun u => b u * (if e then 1 else root)) 0 :=
+    (analyticAt_const.sub analyticAt_id).mul analyticAt_const
+  have h0 : b 0 * (if e then 1 else root) ≠ 0 := by cases e <;> simp [b, hroot]
+  have hn := analyticAt_local_cpow (a := -1/2)
+    (normalizedBranch_analytic e hr) (by rw [normalizedBranch_zero e hr]; simp)
+  exact (analyticAt_const.div hb h0).mul hn
+
+private theorem normalizedSource_square (e : Bool) {r root u : ℂ}
+    (hroot : root ^ 2 = 1 - r) (hd : 1 - r ≠ 0) (hb : b u ≠ 0) (hh : h e u r ≠ 0) :
+    normalizedSource e r root u ^ 2 = 1 / (b u * h e u r) := by
+  have hpow (x : ℂ) : (x ^ (-1 / 2 : ℂ)) ^ 2 = 1 / x := by
+    rw [← Complex.cpow_mul_nat]
+    norm_num [Complex.cpow_neg_one]
+  unfold normalizedSource
+  rw [mul_pow, div_pow, hpow, mul_pow]
+  cases e <;> simp only [normalizedBranch, Bool.false_eq_true, ite_false, ite_true,
+    hroot, one_pow, mul_one, one_div_div] <;> field_simp [hb, hh, hd] <;> ring
+
+private theorem native_source_zero (e : Bool) {r : ℂ} (hr : ‖r‖ < 1) :
+    sourceMode e 0 r = if e then 1 else ((1 - r) ^ (1 / 2 : ℂ))⁻¹ := by
+  rw [source_closed e (by simpa using hr)]
+  cases e <;> simp [normalizedArgument, b, show (-1 / 2 : ℂ) = -(1 / 2) by ring,
+    Complex.cpow_neg]
+
+private theorem normalizedSource_eq_native (e : Bool) {r : ℂ} (hr : ‖r‖ < 1) :
+    normalizedSource e r ((1 - r) ^ (1 / 2 : ℂ)) =ᶠ[𝓝 0] (fun u => sourceMode e u r) := by
+  have hd : 1 - r ≠ 0 := by
+    simpa using (mode_factors_ne_zero (u := (0 : ℂ)) (by simpa using hr)).2.2
+  let root := (1 - r) ^ (1 / 2 : ℂ)
+  have hroot : root ^ 2 = 1 - r := by
+    dsimp [root]
+    rw [← Complex.cpow_mul_nat]
+    norm_num
+  have hroot0 : root ≠ 0 := fun h => hd (by simpa [h] using hroot.symm)
+  have hc0 : normalizedSource e r root 0 = sourceMode e 0 r := by
+    rw [native_source_zero e hr, normalizedSource, normalizedBranch_zero e hd]
+    cases e <;> simp [b, root]
+  have hn := (normalizedSource_analytic e hd hroot0).continuousAt
+  have hs := (source_analytic e (u := 0) (by simpa using hr)).continuousAt
+  have hp : normalizedSource e r root 0 + sourceMode e 0 r ≠ 0 := by
+    rw [hc0, ← two_mul, native_source_zero e hr]
+    apply mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0)
+    cases e
+    · exact inv_ne_zero hroot0
+    · exact one_ne_zero
+  have hs0 : ∀ᶠ u : ℂ in 𝓝 0, ‖u‖ + ‖r‖ < 1 :=
+    (isOpen_lt (continuous_norm.add continuous_const) continuous_const).mem_nhds
+      (by simpa using hr)
+  filter_upwards [hs0, (hn.add hs).eventually_ne hp] with u hu hsum
+  have hb := (mode_factors_ne_zero hu).1
+  have hh := h_ne_zero e hu
+  have hsq : sourceMode e u r ^ 2 = 1 / (b u * h e u r) := by
+    cases e
+    · exact (sourceMode_square hu).2
+    · exact (sourceMode_square hu).1
+  have hprod : (normalizedSource e r root u - sourceMode e u r) *
+      (normalizedSource e r root u + sourceMode e u r) = 0 := by
+    rw [mul_comm, ← sq_sub_sq, normalizedSource_square e hroot hd hb hh, hsq, sub_self]
+  exact sub_eq_zero.mp ((mul_eq_zero.mp hprod).resolve_right hsum)
+
+private theorem chart_period_root_eq {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (c : Chart) (hc : c = .A ∨ c = .B) :
+    periodRoot c z = (1 - parameter c (z : ℂ)) ^ (1 / 2 : ℂ) := by
+  have he (t : ℝ) (ht : 0 ≤ t) : (Real.sqrt t : ℂ) = (t : ℂ) ^ (1 / 2 : ℂ) := by
+    rw [Real.sqrt_eq_rpow, Complex.ofReal_cpow ht]
+    norm_num
+  rcases hc with rfl | rfl
+  · change ((Real.sqrt z : ℂ))⁻¹ = (1 - (1 - (z : ℂ)⁻¹)) ^ (1 / 2 : ℂ)
+    rw [sub_sub_cancel, ← Complex.ofReal_inv z, ← he z⁻¹ (inv_nonneg.mpr hz.le),
+      Real.sqrt_inv, Complex.ofReal_inv]
+  · change (Real.sqrt (1 - z) : ℂ) = (1 - (z : ℂ)) ^ (1 / 2 : ℂ)
+    simpa only [Complex.ofReal_sub, Complex.ofReal_one] using he (1 - z) (sub_nonneg.mpr hz1.le)
+
+/-- On the native A and B convergence overlap, the selected chart branch
+is the actual source germ in the original signed coordinate. -/
+theorem chosen_chart_source_eq_native {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (c : Chart) (hc : c = .A ∨ c = .B) (e : Bool)
+    (hr : ‖parameter c (z : ℂ)‖ < 1) :
+    chosenChartSource c z e =ᶠ[𝓝 0] (fun u => sourceMode e u (parameter c z)) := by
+  change normalizedSource e (parameter c z) (periodRoot c z) =ᶠ[𝓝 0] _
+  rw [chart_period_root_eq hz hz1 c hc]
+  exact normalizedSource_eq_native e hr
+
+/-- The selected signed source at the D boundary uses the same normalized
+local branch and is analytic in the spatial coordinate, including at zero. -/
+theorem chosen_chart_source_analytic {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (c : Chart) (e : Bool) : AnalyticAt ℂ (chosenChartSource c z e) 0 := by
+  have hd := chart_parameter_ne_one hz hz1 c
+  have hs := (OriginalFourMActualChart.chosen_roots hz hz1 c .S).2
+  have hroot : periodRoot c z ≠ 0 := by
+    intro h
+    rw [h, zero_pow (by decide : 2 ≠ 0)] at hs
+    exact hd hs.symm
+  exact normalizedSource_analytic e hd hroot
+
+private theorem chart_parameter_ne_zero {z : ℝ} (hz : 0 < z) (hz1 : z < 1) (c : Chart) :
+    parameter c (z : ℂ) ≠ 0 := by
+  have h0 : (z : ℂ) ≠ 0 := by exact_mod_cast hz.ne'
+  have h1 : (z : ℂ) ≠ 1 := by exact_mod_cast hz1.ne
+  cases c
+  · exact sub_ne_zero.mpr (fun h => h1 (inv_eq_one.mp h.symm))
+  · exact h0
+  · exact inv_ne_zero h0
+
+private def chartW (c : Chart) (z : ℝ) (e : Bool) (u : ℂ) : ℂ :=
+  h e u (parameter c z) * chosenChartSource c z e u
+
+private theorem chartW_zero {z : ℝ} (hz : 0 < z) (hz1 : z < 1) (c : Chart) (e : Bool) :
+    chartW c z e 0 = if e then 1 else periodRoot c z := by
+  have hd := chart_parameter_ne_one hz hz1 c
+  have hs : periodRoot c z ^ 2 = 1 - parameter c z :=
+    (OriginalFourMActualChart.chosen_roots hz hz1 c .S).2
+  have h0 : periodRoot c z ≠ 0 := by
+    intro he
+    exact hd (by simpa [he] using hs.symm)
+  unfold chartW
+  rw [chartSource_zero hz hz1]
+  cases e
+  · simp only [h, Bool.false_eq_true, ite_false, sub_zero]
+    rw [← hs, pow_two,
+      mul_assoc, mul_inv_cancel₀ h0, mul_one]
+  · simp [h]
+
+private theorem chartW_analytic {z : ℝ} (hz : 0 < z) (hz1 : z < 1) (c : Chart) (e : Bool) :
+    AnalyticAt ℂ (chartW c z e) 0 := by
+  have hh : AnalyticAt ℂ (fun u => h e u (parameter c z)) 0 := by
+    cases e
+    · exact analyticAt_const.sub analyticAt_id
+    · exact analyticAt_const.sub (analyticAt_const.mul analyticAt_id)
+  exact hh.mul (chosen_chart_source_analytic hz hz1 c e)
+
+private theorem chartW_sum_ne_zero {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (c : Chart) (e f : Bool) : chartW c z e 0 + chartW c z f 0 ≠ 0 := by
+  have hs : periodRoot c z ^ 2 = 1 - parameter c z :=
+    (OriginalFourMActualChart.chosen_roots hz hz1 c .S).2
+  have hd := chart_parameter_ne_one hz hz1 c
+  have hr := chart_parameter_ne_zero hz hz1 c
+  have h0 : periodRoot c z ≠ 0 := fun he => hd (by simpa [he] using hs.symm)
+  have h1 : periodRoot c z + 1 ≠ 0 := by
+    intro he
+    have he' : periodRoot c z = -1 := eq_neg_of_add_eq_zero_left he
+    rw [he', neg_sq, one_pow] at hs
+    exact hr (by linear_combination hs)
+  rw [chartW_zero hz hz1 c e, chartW_zero hz hz1 c f]
+  have h1' : 1 + periodRoot c z ≠ 0 := by rwa [add_comm]
+  cases e <;> cases f <;> simp [h1, h1', h0, ← two_mul]
+
+/-- The concrete continued J-plus-free and minus-T generators. Equal
+orientations use the regular J formula directly at the diagonal. -/
+def chartCovariance (upperA : Bool) (c : Chart) (z : ℝ) (l k e f : Bool)
+    (u v : ℂ) : ℂ :=
+  let r := parameter c z
+  let C := chartCorrection upperA c z
+  let m := chosenChartSource c z e u * chosenChartSource c z f v
+  if l = k then
+    m * (r / 4 - C + r ^ 2 * rho e f u v /
+      (4 * b u * b v * (chartW c z e u + chartW c z f v) ^ 2)) +
+      (if e = f then 0 else cauchy e f u v)
+  else - (m * (rationalT e f u v r - C))
+
+/-- The continued kernel gives the very same native Taylor germ wherever
+A or B lies in the original radial disk, for every signed pair of legs. -/
+theorem chart_covariance_eq_native {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (upperA : Bool) (c : Chart) (hc : c = .A ∨ c = .B) (l k e f : Bool)
+    (hr : ‖parameter c (z : ℂ)‖ < 1) :
+    (fun p : ℂ × ℂ => chartCovariance upperA c z l k e f p.1 p.2) =ᶠ[𝓝 (0, 0)]
+      (fun p => covarianceMode l k e f p.1 p.2 (parameter c z)) := by
+  have he := chosen_chart_source_eq_native hz hz1 c hc e hr
+  have hf := chosen_chart_source_eq_native hz hz1 c hc f hr
+  have hfe : ∀ᶠ p : ℂ × ℂ in 𝓝 (0, 0),
+      chosenChartSource c z e p.1 = sourceMode e p.1 (parameter c z) :=
+    continuous_fst.continuousAt (x := ((0 : ℂ), (0 : ℂ))).eventually he
+  have hff : ∀ᶠ p : ℂ × ℂ in 𝓝 (0, 0),
+      chosenChartSource c z f p.2 = sourceMode f p.2 (parameter c z) :=
+    continuous_snd.continuousAt (x := ((0 : ℂ), (0 : ℂ))).eventually hf
+  have hC : chartCorrection upperA c z = correction (parameter c z) := by
+    rcases hc with rfl | rfl <;> exact (slit_correction_eq hr).symm
+  filter_upwards [hfe, hff] with p hpe hpf
+  simp [chartCovariance, covarianceMode, candidateJ, candidateT, chartW, W, hC, hpe, hpf]
+
+/-- At each actual A, B and D parameter, every signed generator is
+jointly analytic at the two external punctures, including the coincident
+same-orientation puncture. -/
+theorem chart_covariance_analytic {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (upperA : Bool) (c : Chart) (l k e f : Bool) :
+    AnalyticAt ℂ (fun p : ℂ × ℂ => chartCovariance upperA c z l k e f p.1 p.2) (0, 0) := by
+  let r := parameter c (z : ℂ)
+  let x : ℂ × ℂ := (0, 0)
+  have hu : AnalyticAt ℂ Prod.fst x := analyticAt_fst
+  have hv : AnalyticAt ℂ Prod.snd x := analyticAt_snd
+  have hMe : AnalyticAt ℂ (fun p : ℂ × ℂ => chosenChartSource c z e p.1) x :=
+    AnalyticAt.comp (f := Prod.fst) (x := x) (chosen_chart_source_analytic hz hz1 c e) hu
+  have hMf : AnalyticAt ℂ (fun p : ℂ × ℂ => chosenChartSource c z f p.2) x :=
+    AnalyticAt.comp (f := Prod.snd) (x := x) (chosen_chart_source_analytic hz hz1 c f) hv
+  have hWe : AnalyticAt ℂ (fun p : ℂ × ℂ => chartW c z e p.1) x :=
+    AnalyticAt.comp (f := Prod.fst) (x := x) (chartW_analytic hz hz1 c e) hu
+  have hWf : AnalyticAt ℂ (fun p : ℂ × ℂ => chartW c z f p.2) x :=
+    AnalyticAt.comp (f := Prod.snd) (x := x) (chartW_analytic hz hz1 c f) hv
+  have hm := hMe.mul hMf
+  have hW := hWe.add hWf
+  have hb₁ : AnalyticAt ℂ (fun p : ℂ × ℂ => b p.1) x := analyticAt_const.sub hu
+  have hb₂ : AnalyticAt ℂ (fun p : ℂ × ℂ => b p.2) x := analyticAt_const.sub hv
+  have hrho : AnalyticAt ℂ (fun p : ℂ × ℂ => rho e f p.1 p.2) x := by
+    by_cases hef : e = f
+    · simp only [rho, hef, ite_true]
+      exact hu.add hv
+    · simp only [rho, hef, ite_false]
+      exact (analyticAt_const.add (hu.mul hv)).neg
+  have he : AnalyticAt ℂ (fun p : ℂ × ℂ => E e f p.1 p.2 r) x := by
+    have hk : AnalyticAt ℂ (fun p : ℂ × ℂ => K e f p.1 p.2) x := by
+      cases e <;> cases f <;> simp only [K, Bool.false_eq_true, ite_false, ite_true]
+      exact analyticAt_const
+      exact hv.neg
+      exact hu.neg
+      exact hu.mul hv
+    exact (hb₁.mul hb₂).sub (analyticAt_const.mul hk)
+  have he0 : E e f 0 0 r ≠ 0 := by
+    have hd := chart_parameter_ne_one hz hz1 c
+    cases e <;> cases f <;> simp [E, b, K, r, hd]
+  by_cases hl : l = k
+  · have hden : AnalyticAt ℂ (fun p : ℂ × ℂ => 4 * b p.1 * b p.2 *
+        (chartW c z e p.1 + chartW c z f p.2) ^ 2) x :=
+        ((analyticAt_const.mul hb₁).mul hb₂).mul (hW.pow 2)
+    have hden0 : 4 * b (0 : ℂ) * b (0 : ℂ) *
+        (chartW c z e 0 + chartW c z f 0) ^ 2 ≠ 0 := by
+      simpa [b] using chartW_sum_ne_zero hz hz1 c e f
+    have hj : AnalyticAt ℂ (fun p : ℂ × ℂ =>
+        chosenChartSource c z e p.1 * chosenChartSource c z f p.2 *
+          (r / 4 - chartCorrection upperA c z + r ^ 2 * rho e f p.1 p.2 /
+            (4 * b p.1 * b p.2 * (chartW c z e p.1 + chartW c z f p.2) ^ 2))) x :=
+      hm.mul (analyticAt_const.add ((analyticAt_const.mul hrho).div hden hden0))
+    by_cases hef : e = f
+    · simpa [chartCovariance, hl, hef, r] using hj
+    · have hc : AnalyticAt ℂ (fun p : ℂ × ℂ => cauchy e f p.1 p.2) x := by
+        unfold cauchy
+        apply hrho.div
+        · simp only [G, hef, ite_false]
+          exact analyticAt_const.mul ((analyticAt_const.sub (hu.mul hv)).pow 2)
+        · simp [x, G, hef]
+      simp only [chartCovariance, hl, hef, ite_true, ite_false]
+      exact hj.add hc
+  · have hn : AnalyticAt ℂ (fun p : ℂ × ℂ => N e f p.1 p.2 r) x := by
+      cases e <;> cases f <;> simp only [N, Bool.false_eq_true, ite_false, ite_true]
+      exact analyticAt_const.add (hu.mul hv)
+      exact (hu.add (analyticAt_const.mul hv)).neg
+      exact ((analyticAt_const.mul hu).add hv).neg
+      exact analyticAt_const.add ((analyticAt_const.mul hu).mul hv)
+    have hrT : AnalyticAt ℂ (fun p : ℂ × ℂ => rationalT e f p.1 p.2 r) x := by
+      exact ((analyticAt_const.mul hn).div (analyticAt_const.mul he)
+        (mul_ne_zero (by norm_num) he0)).add
+          (((analyticAt_const.mul hu).mul hv).div (he.pow 2) (pow_ne_zero 2 he0))
+    simp only [chartCovariance, hl, ite_false]
+    exact (hm.mul (hrT.sub analyticAt_const)).neg
+
+open OriginalFourMPeriodSource (dLip)
+open private dPeriod_ne_zero from
+  D5.S3.VertexAlgebra.TwistedGround.FourPoint.OriginalFourMPeriodSource
+
+private def slitSource (e : Bool) (u r : ℂ) : ℂ :=
+  normalizedSource e r ((1 - r) ^ (1 / 2 : ℂ)) u
+
+private theorem normalizedBranch_radial_continuous (e : Bool) {u r : ℂ}
+    (hb : b u ≠ 0) (hr : 1 - r ≠ 0) :
+    ContinuousAt (fun t => normalizedBranch e u t) r := by
+  have h₁ : ContinuousAt (fun t : ℂ => 1 - t) r := continuous_const.sub continuous_id |>.continuousAt
+  cases e
+  · exact (h₁.sub continuousAt_const).div (continuousAt_const.mul h₁) (mul_ne_zero hb hr)
+  · exact (continuousAt_const.sub (h₁.mul continuousAt_const)).div continuousAt_const hb
+
+/-- The spatial source on the matched D lip converges to the chosen D
+source. The sign of the root is supplied by the actual D period chart. -/
+theorem chartD_source_boundary {z : ℝ} (hz : 0 < z) (hz1 : z < 1) (e : Bool)
+    {u : ℂ} (hb : b u ≠ 0)
+    (hu : normalizedBranch e u (parameter .D (z : ℂ)) ∈ Complex.slitPlane) :
+    Tendsto (slitSource e u) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (chosenChartSource .D z e u)) := by
+  let r := parameter .D (z : ℂ)
+  have hroot : Tendsto (fun t : ℂ => (1 - t) ^ (1 / 2 : ℂ))
+      (𝓝[dLip true] r) (𝓝 (periodRoot .D z)) := by
+    have h := OriginalFourMPeriodSource.chartD_root_boundary true hz hz1
+    change Tendsto _ (𝓝[dLip true] r) (𝓝 ((if true then 1 else -1) * periodRoot .D z)) at h
+    simpa using h
+  have hne : periodRoot .D z ≠ 0 := by
+    have hsq : periodRoot .D z ^ 2 = 1 - r :=
+      (OriginalFourMActualChart.chosen_roots hz hz1 .D .S).2
+    exact fun h => chart_parameter_ne_one hz hz1 .D (by simpa [h] using hsq.symm)
+  have ha := normalizedBranch_radial_continuous e hb (chart_parameter_ne_one hz hz1 .D)
+  have hp := (ha.cpow (g := fun _ => (-1 / 2 : ℂ)) continuousAt_const hu).tendsto.mono_left
+    (nhdsWithin_le_nhds (s := dLip true) (a := r))
+  cases e
+  · have hd := hroot.const_mul (b u)
+    change Tendsto (fun t => (1 / (b u * (1 - t) ^ (1 / 2 : ℂ))) *
+        normalizedBranch false u t ^ (-1 / 2 : ℂ)) (𝓝[dLip true] r)
+      (𝓝 ((1 / (b u * periodRoot .D z)) * normalizedBranch false u r ^ (-1 / 2 : ℂ)))
+    exact (tendsto_const_nhds.div hd (mul_ne_zero hb hne)).mul hp
+  · change Tendsto (fun t => slitSource true u t) _ _
+    simp only [slitSource, normalizedSource, chosenChartSource, ite_true, mul_one]
+    exact hp.const_mul (1 / b u)
+
+private theorem dCorrection_boundary {z : ℝ} (hz : 0 < z) (hz1 : z < 1) :
+    Tendsto (periodCorrection slitPeriod) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (chartCorrection true .D z)) := by
+  have ht : 1 < z⁻¹ := (one_lt_inv₀ hz).2 hz1
+  obtain ⟨hP, hP'⟩ := OriginalFourMPeriodSource.dPeriod_boundary true ht
+  rw [Complex.ofReal_inv] at hP hP'
+  have hI : Tendsto (fun t : ℂ => t) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (parameter .D (z : ℂ))) := nhdsWithin_le_nhds
+  have hne := dPeriod_ne_zero true ht
+  rw [Complex.ofReal_inv] at hne
+  exact ((hI.mul (tendsto_const_nhds.sub hI)).mul hP').div hP hne
+
+private def slitCovariance (l k e f : Bool) (u v r : ℂ) : ℂ :=
+  let m := slitSource e u r * slitSource f v r
+  let C := periodCorrection slitPeriod r
+  let Wu := h e u r * slitSource e u r
+  let Wv := h f v r * slitSource f v r
+  if l = k then
+    m * (r / 4 - C + r ^ 2 * rho e f u v / (4 * b u * b v * (Wu + Wv) ^ 2)) +
+      (if e = f then 0 else cauchy e f u v)
+  else -(m * (rationalT e f u v r - C))
+
+/-- One-sided continuation of the literal signed covariance to the
+matched D lip. The branch and denominator conditions hold on a
+neighborhood of the pair of native mode origins. -/
+theorem chartD_covariance_boundary {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (l k e f : Bool) {u v : ℂ} (hbu : b u ≠ 0) (hbv : b v ≠ 0)
+    (hu : normalizedBranch e u (parameter .D (z : ℂ)) ∈ Complex.slitPlane)
+    (hv : normalizedBranch f v (parameter .D (z : ℂ)) ∈ Complex.slitPlane)
+    (hJ : chartW .D z e u + chartW .D z f v ≠ 0)
+    (hT : E e f u v (parameter .D (z : ℂ)) ≠ 0) :
+    Tendsto (slitCovariance l k e f u v) (𝓝[dLip true] (parameter .D (z : ℂ)))
+      (𝓝 (chartCovariance true .D z l k e f u v)) := by
+  let r := parameter .D (z : ℂ)
+  have hI : Tendsto (fun t : ℂ => t) (𝓝[dLip true] r) (𝓝 r) := nhdsWithin_le_nhds
+  have h₁ : Tendsto (fun t : ℂ => 1 - t) (𝓝[dLip true] r) (𝓝 (1 - r)) :=
+    tendsto_const_nhds.sub hI
+  have hc := dCorrection_boundary hz hz1
+  have hMu := chartD_source_boundary hz hz1 e hbu hu
+  have hMv := chartD_source_boundary hz hz1 f hbv hv
+  have hm := hMu.mul hMv
+  change Tendsto (fun t => slitCovariance l k e f u v t) _ _
+  by_cases hl : l = k
+  · have hH (s : Bool) (w : ℂ) :
+        Tendsto (fun t => h s w t) (𝓝[dLip true] r) (𝓝 (h s w r)) := by
+      cases s
+      · exact h₁.sub tendsto_const_nhds
+      · exact tendsto_const_nhds.sub (h₁.mul tendsto_const_nhds)
+    have hW := ((hH e u).mul hMu).add ((hH f v).mul hMv)
+    have hden : 4 * b u * b v * (chartW .D z e u + chartW .D z f v) ^ 2 ≠ 0 :=
+      mul_ne_zero (mul_ne_zero (mul_ne_zero (by norm_num) hbu) hbv) (pow_ne_zero 2 hJ)
+    simpa only [slitCovariance, chartCovariance, chartW, hl, ite_true, Pi.div_apply] using
+      (hm.mul (((hI.div_const 4).sub hc).add
+        (((hI.pow 2).mul (tendsto_const_nhds (x := rho e f u v))).div
+          (tendsto_const_nhds.mul (hW.pow 2)) hden))).add
+            (tendsto_const_nhds (x := if e = f then 0 else cauchy e f u v))
+  · have hE : Tendsto (fun t => E e f u v t) (𝓝[dLip true] r) (𝓝 (E e f u v r)) :=
+      tendsto_const_nhds.sub (hI.mul tendsto_const_nhds)
+    have hN : Tendsto (fun t => N e f u v t) (𝓝[dLip true] r) (𝓝 (N e f u v r)) := by
+      cases e <;> cases f <;> simp only [N, Bool.false_eq_true, ite_false, ite_true]
+      exact h₁.add tendsto_const_nhds
+      exact (tendsto_const_nhds.add (h₁.mul tendsto_const_nhds)).neg
+      exact ((h₁.mul tendsto_const_nhds).add tendsto_const_nhds).neg
+      exact tendsto_const_nhds.add ((h₁.mul tendsto_const_nhds).mul tendsto_const_nhds)
+    have hRat : Tendsto (fun t => rationalT e f u v t) (𝓝[dLip true] r)
+        (𝓝 (rationalT e f u v r)) := by
+      exact ((hI.mul hN).div (tendsto_const_nhds.mul hE)
+        (mul_ne_zero (by norm_num) hT)).add
+          ((((hI.pow 2).mul tendsto_const_nhds).mul tendsto_const_nhds).div
+            (hE.pow 2) (pow_ne_zero 2 hT))
+    simpa only [slitCovariance, chartCovariance, hl, ite_false] using
+      (hm.mul (hRat.sub hc)).neg
+
+/- The factorization is the algebra in Signed.JSpatial.candidateJ_chart,
+with the two normalized source squares supplied by the chosen chart. -/
+private theorem regularJ_chart_algebra (e f : Bool) {u v r me mf U V : ℂ}
+    (hbu : b u ≠ 0) (hbv : b v ≠ 0) (hs : U + V ≠ 0) (hg : G e f u v ≠ 0)
+    (hwu : U ≠ 0) (hwv : V ≠ 0)
+    (hU : U ^ 2 * b u = h e u r) (hV : V ^ 2 * b v = h f v r)
+    (hmu : me * b u * U = 1) (hmv : mf * b v * V = 1) :
+    me * mf * rationalJ e f u v r - cauchy e f u v =
+      me * mf * (r / 4 + r ^ 2 * rho e f u v / (4 * b u * b v * (U + V) ^ 2)) := by
+  have hB : me * mf = 1 / (b u * b v * U * V) := by
+    apply (eq_div_iff (by aesop : b u * b v * U * V ≠ 0)).2
+    calc
+      _ = (me * b u * U) * (mf * b v * V) := by ring
+      _ = 1 := by rw [hmu, hmv, one_mul]
+  have hpoly : b v * h e u r - b u * h f v r =
+      (if e then r else -r) * G e f u v := by
+    cases e <;> cases f <;> simp only [h, G, b, Bool.false_eq_true, Bool.true_eq_false,
+      ite_true, ite_false, ite_true, ite_false] <;> ring
+  have hdiff : U - V =
+      (if e then r else -r) * G e f u v / (b u * b v * (U + V)) := by
+    apply (eq_div_iff (mul_ne_zero (mul_ne_zero hbu hbv) hs)).2
+    linear_combination b v * hU - b u * hV + hpoly
+  have hchart : me * mf * rationalJ e f u v r - cauchy e f u v =
+      me * mf * Qconstant e f r +
+      chartSign e f * (U - V) * chartLinear e f u v (U) (V) /
+        (2 * G e f u v ^ 2 * U * V) := by
+    rw [hB]
+    unfold rationalJ cauchy jN
+    -- Treat h_e, h_f as their PROVED quadratic expressions, then ring only.
+    rw [← hU, ← hV]
+    cases e <;> cases f <;>
+      simp only [chartSign, chartLinear, rho, Bool.false_eq_true, Bool.true_eq_false,
+        ite_true, ite_false, ite_true, ite_false, Bool.and_false, Bool.and_true,
+        Bool.not_false, Bool.not_true] <;>
+      field_simp [hbu, hbv, hwu, hwv, hg] <;> ring
+  have hlin : chartLinear e f u v (U) (V) =
+      if e = f then
+        ((u - v) * (U + V) + (u + v) * (U - V)) / 2
+      else if e then
+        ((1 - u * v) * (U + V) + (1 + u * v) * (U - V)) / 2
+      else
+        ((1 - u * v) * (U + V) - (1 + u * v) * (U - V)) / 2 := by
+    cases e <;> cases f <;>
+      simp only [chartLinear, Bool.false_eq_true, Bool.true_eq_false, ite_true, ite_false,
+        ite_true, ite_false] <;> ring
+  have hregular : me * mf * rationalJ e f u v r - cauchy e f u v =
+      me * mf *
+        (r / 4 + r ^ 2 * rho e f u v / (4 * b u * b v * (U + V) ^ 2)) := by
+    rw [hchart, hlin, hdiff, hB]
+    cases e <;> cases f <;>
+      simp only [chartSign, Qconstant, rho, Bool.false_eq_true, Bool.true_eq_false,
+        ite_true, ite_false, ite_true, ite_false, Bool.and_false, Bool.and_true,
+        Bool.not_false, Bool.not_true] <;>
+      field_simp [hbu, hbv, hwu, hwv, hs, hg] <;> unfold G <;>
+      simp only [Bool.false_eq_true, Bool.true_eq_false, ite_true, ite_false] <;> ring
+  exact hregular
+
+private theorem chart_source_normalization {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (c : Chart) (e : Bool) {u : ℂ} (hb : b u ≠ 0) (hh : h e u (parameter c z) ≠ 0) :
+    chartW c z e u ^ 2 * b u = h e u (parameter c z) ∧
+    chosenChartSource c z e u * b u * chartW c z e u = 1 ∧ chartW c z e u ≠ 0 := by
+  have hroot := (OriginalFourMActualChart.chosen_roots hz hz1 c .S).2
+  have hs : chosenChartSource c z e u ^ 2 = 1 / (b u * h e u (parameter c z)) :=
+    normalizedSource_square e hroot (chart_parameter_ne_one hz hz1 c) hb hh
+  have hW : chartW c z e u ^ 2 * b u = h e u (parameter c z) := by
+    unfold chartW
+    rw [mul_pow, hs]
+    field_simp [hb, hh]
+  refine ⟨hW, ?_, ?_⟩
+  · calc
+      _ = chosenChartSource c z e u ^ 2 * (b u * h e u (parameter c z)) := by unfold chartW; ring
+      _ = 1 := by rw [hs]; exact one_div_mul_cancel (mul_ne_zero hb hh)
+  · intro he
+    rw [he, zero_pow (by decide : 2 ≠ 0), zero_mul] at hW
+    exact hh hW.symm
+
+/-- The continued A, B and D generators have the same geometric kernel
+on the punctured overlap. The equal-orientation subtraction persists
+and the mixed-orientation subtraction is restored by the free block. -/
+theorem chart_spatial_overlap {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (upperA : Bool) (c : Chart) (e f : Bool) {u v : ℂ}
+    (hu : u ≠ 0) (hv : v ≠ 0) (hbu : b u ≠ 0) (hbv : b v ≠ 0)
+    (hhu : h e u (parameter c z) ≠ 0) (hhv : h f v (parameter c z) ≠ 0)
+    (hW : chartW c z e u + chartW c z f v ≠ 0)
+    (hG : G e f u v ≠ 0) (hE : E e f u v (parameter c z) ≠ 0) :
+    let r := parameter c z
+    let C := chartCorrection upperA c z
+    let m := chosenChartSource c z e u * chosenChartSource c z f v
+    (∀ l, chartCovariance upperA c z l l e f u v =
+        m * (spatialKernel (1 - r) (rightChart e u) (rightChart f v) - C) -
+        (if e = f then cauchy e f u v else 0)) ∧
+    (∀ l k, l ≠ k → chartCovariance upperA c z l k e f u v =
+      -m * (spatialKernel (1 - r) (rightChart e u) (leftChart f r v) - C)) := by
+  dsimp only
+  obtain ⟨hU, hmu, hU0⟩ := chart_source_normalization hz hz1 c e hbu hhu
+  obtain ⟨hV, hmv, hV0⟩ := chart_source_normalization hz hz1 c f hbv hhv
+  have hJ := regularJ_chart_algebra e f hbu hbv hW hG hU0 hV0 hU hV hmu hmv
+  rw [ratJ_spatial e f hu hv hG] at hJ
+  constructor
+  · intro l
+    rw [chartCovariance, ite_eq_left rfl]
+    by_cases hef : e = f
+    · simp only [hef, ite_true, add_zero]
+      rw [hef] at hJ
+      linear_combination -hJ
+    · simp only [hef, ite_false, sub_zero]
+      linear_combination -hJ
+  · intro l k hl
+    rw [chartCovariance, ite_eq_right hl, ratT_spatial e f hu hbv hE]
+    ring
+
+open OriginalFourMActualChart (loweringParameter)
+
+/-- At the same physical puncture the native subtraction, expressed in
+the physical coordinate, differs by the actual regular Cauchy correction.
+This is the correction for the same signed J block, including the detector. -/
+theorem chart_same_slot_covariance {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (upperA : Bool) (c : Chart) (l e : Bool) {u v b₁ b₂ : ℂ}
+    (hu : u ≠ 0) (hv : v ≠ 0) (huv : u ≠ v)
+    (hbu : b u ≠ 0) (hbv : b v ≠ 0)
+    (hhu : h e u (parameter c z) ≠ 0) (hhv : h e v (parameter c z) ≠ 0)
+    (hW : chartW c z e u + chartW c z e v ≠ 0)
+    (hE : E e e u v (parameter c z) ≠ 0)
+    (hb₁ : b₁^2 = 1 - loweringParameter c (chartPuncture c l e) * u)
+    (hb₂ : b₂^2 = 1 - loweringParameter c (chartPuncture c l e) * v)
+    (hb₁0 : b₁ ≠ 0) (hb₂0 : b₂ ≠ 0) (hb₁₂ : b₁ + b₂ ≠ 0) :
+    let i := chartPuncture c l e
+    let r := parameter c z
+    let m := chosenChartSource c z e u * chosenChartSource c z e v
+    let fu := localCoordinate c z i u
+    let fv := localCoordinate c z i v
+    let src := scaleRoot c z i
+    chartCovariance upperA c z l l e e u v =
+      m * (spatialKernel (1 - r) (rightChart e u) (rightChart e v) -
+        chartCorrection upperA c z) -
+      (src/b₁^3) * (src/b₂^3) * ((fu+fv)/(2*(fu-fv)^2)) +
+      loweringParameter c i * (1+b₁*b₂)/(2*b₁*b₂*(b₁+b₂)^2) := by
+  dsimp only
+  have hG : G e e u v ≠ 0 := by simpa only [G, ite_true] using sub_ne_zero.mpr huv
+  have hJ := (chart_spatial_overlap hz hz1 upperA c e e hu hv hbu hbv hhu hhv hW hG hE).1 l
+  have hc := OriginalFourMActualChart.puncture_cauchy_correction hz hz1 c (chartPuncture c l e)
+    hb₁ hb₂ hb₁0 hb₂0 hb₁₂ huv
+  simp only [cauchy, G, rho, ite_true] at hJ
+  linear_combination hJ + hc
+
+/-- The same-slot covariance has a finite value at the pair of native
+mode origins in every chart, including the D boundary. -/
+theorem chart_same_slot_origin {z : ℝ} (hz : 0 < z) (hz1 : z < 1)
+    (upperA : Bool) (c : Chart) (l e : Bool) :
+    Tendsto (fun p : ℂ × ℂ => chartCovariance upperA c z l l e e p.1 p.2)
+      (𝓝 (0, 0))
+      (𝓝 ((parameter c z / 4 - chartCorrection upperA c z) /
+        (if e then 1 else 1 - parameter c z))) := by
+  have h0 : chartCovariance upperA c z l l e e 0 0 =
+      (parameter c z / 4 - chartCorrection upperA c z) /
+        (if e then 1 else 1 - parameter c z) := by
+    unfold chartCovariance
+    simp only [rho, ite_true, add_zero, mul_zero, zero_div]
+    rw [chartSource_zero hz hz1, ← pow_two, inv_pow]
+    have hs : periodRoot c z ^ 2 = 1 - parameter c z :=
+      (OriginalFourMActualChart.chosen_roots hz hz1 c .S).2
+    cases e <;> simp [hs, div_eq_mul_inv, mul_comm]
+  rw [← h0]
+  exact (chart_covariance_analytic hz hz1 upperA c l l e e).continuousAt.tendsto
+
+/-- The same slit covariance used in the D limit equals the original
+signed covariance germ on the native convergence disk. -/
+theorem slit_covariance_eq_native (l k e f : Bool) {r : ℂ} (hr : ‖r‖ < 1) :
+    (fun p : ℂ × ℂ => slitCovariance l k e f p.1 p.2 r) =ᶠ[𝓝 (0, 0)]
+      (fun p => covarianceMode l k e f p.1 p.2 r) := by
+  have he := normalizedSource_eq_native e hr
+  have hf := normalizedSource_eq_native f hr
+  have hfe : ∀ᶠ p : ℂ × ℂ in 𝓝 (0, 0), slitSource e p.1 r = sourceMode e p.1 r :=
+    continuous_fst.continuousAt (x := ((0 : ℂ), (0 : ℂ))).eventually he
+  have hff : ∀ᶠ p : ℂ × ℂ in 𝓝 (0, 0), slitSource f p.2 r = sourceMode f p.2 r :=
+    continuous_snd.continuousAt (x := ((0 : ℂ), (0 : ℂ))).eventually hf
+  filter_upwards [hfe, hff] with p hpe hpf
+  simp [slitCovariance, covarianceMode, candidateJ, candidateT, W,
+    ← slit_correction_eq hr, hpe, hpf]
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalFourMSignedOverlap
