@@ -787,4 +787,86 @@ theorem cube_lifted_agreement_row {C : Finset (Q 9)}
 #print axioms cube_lifted_incidence_rows
 #print axioms cube_lifted_agreement_row
 
+private lemma sum_cube_membership_property (C : Finset (Q 9)) (P : Q 9 → Prop)
+    [DecidablePred P] :
+    (∑ x ∈ univ.filter P, cubeMembership C x) = ((C.filter P).card : ℤ) := by
+  rw [sum_cube_membership]
+  have he : (univ.filter P).filter (· ∈ C) = C.filter P := by
+    ext x
+    simp [and_comm]
+  rw [he]
+
+/-- Cardinalities of the support, parity classes, literal halves and
+direction edges give the equality rows of the lifted system. -/
+theorem cube_lifted_cardinality_rows {C : Finset (Q 9)} {r : Fin 9 → ℤ}
+    (hC : C.card = 66)
+    (hparity : ∀ b, (C.filter (fun x => cubeParity x = b)).card = 33)
+    (hhalf : ∀ i, ((C.filter (fun x => x i = true)).card : ℤ) + 2 * r i = 33)
+    (hedge : ∀ i, directionEdges C i = 11) :
+    (∑ x : Q 9, cubeMembership C x) = 66 ∧
+    (∀ b, (∑ x ∈ univ.filter (fun x => cubeParity x = b), cubeMembership C x) = 33) ∧
+    (∀ i, (∑ x ∈ univ.filter (fun x => x i = true), cubeMembership C x) = 33 - 2 * r i) ∧
+    ∀ i, (∑ x ∈ univ.filter (fun x => x i = false), cubePairMembership C x (flip x i)) = 11 := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [sum_cube_membership]
+    have he : (univ : Finset (Q 9)).filter (· ∈ C) = C := by ext x; simp
+    simp [he, hC]
+  · intro b
+    rw [sum_cube_membership_property C (fun x => cubeParity x = b), hparity b]
+    rfl
+  · intro i
+    rw [sum_cube_membership_property C (fun x => x i = true)]
+    linarith only [hhalf i]
+  · intro i
+    have hpoint (x : Q 9) : cubePairMembership C x (flip x i) =
+        if x ∈ C ∧ flip x i ∈ C then 1 else 0 := by
+      by_cases hx : x ∈ C <;> by_cases hy : flip x i ∈ C <;>
+        simp [cubePairMembership, cubeMembership, hx, hy]
+    have hfilter : ((univ.filter (fun x : Q 9 => x i = false)).filter
+        (fun x => x ∈ C ∧ flip x i ∈ C)) =
+        C.filter (fun x => x i = false ∧ flip x i ∈ C) := by
+      ext x
+      simp only [mem_filter, mem_univ, true_and]
+      tauto
+    simp_rw [hpoint]
+    rw [← sum_filter, sum_const, hfilter]
+    change (directionEdges C i : ℤ) • (1 : ℤ) = 11
+    rw [zsmul_eq_mul, hedge i]
+    rfl
+
+/-- The membership and pair variables of an actual support satisfy the
+three inequalities used to lift a two-vertex product. -/
+theorem cube_lifted_pair_rows (C : Finset (Q 9)) (x y : Q 9) :
+    cubePairMembership C x y ≤ cubeMembership C x ∧
+    cubePairMembership C x y ≤ cubeMembership C y ∧
+    cubeMembership C x + cubeMembership C y - cubePairMembership C x y ≤ 1 := by
+  by_cases hx : x ∈ C <;> by_cases hy : y ∈ C <;>
+    norm_num [cubePairMembership, cubeMembership, hx, hy]
+
+/-- A forbidden pair contributes at most one vertex to the support. -/
+theorem cube_lifted_forbidden_pair_row (C : Finset (Q 9)) (x y : Q 9)
+    (h : x ∈ C → y ∉ C) :
+    cubeMembership C x + cubeMembership C y ≤ 1 := by
+  by_cases hx : x ∈ C
+  · simp [cubeMembership, hx, h hx]
+  · by_cases hy : y ∈ C <;> simp [cubeMembership, hx, hy]
+
+/-- The original Huang signing gives a linear inequality on each cube square. -/
+theorem cube_lifted_square_row {C : Finset (Q 9)} (hb : IsBalanced C) (x : Q 9)
+    {i j : Fin 9} (hij : i ≠ j) :
+    cubeMembership C x + cubeMembership C (flip x i) + cubeMembership C (flip x j) +
+      cubeMembership C (flip (flip x i) j) ≤ 3 := by
+  by_cases hx : x ∈ C <;> by_cases hi : flip x i ∈ C <;> by_cases hj : flip x j ∈ C
+  all_goals
+    first
+    | have hf := BalancedCubeGirth.no_selected_square hb hij hx hi hj
+      norm_num [cubeMembership, hx, hi, hj, hf]
+    | by_cases hf : flip (flip x i) j ∈ C <;>
+        norm_num [cubeMembership, hx, hi, hj, hf]
+
+#print axioms cube_lifted_cardinality_rows
+#print axioms cube_lifted_pair_rows
+#print axioms cube_lifted_forbidden_pair_row
+#print axioms cube_lifted_square_row
+
 end D5.S3.Combinatorics.Graph.HypercubeCritical
