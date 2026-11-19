@@ -415,7 +415,7 @@ internal sealed partial class TransactionFixture
     internal ProcessOutput Run(
         string command,
         string gid = Gid,
-        string? atomId = AtomId,
+        string? atomId = null,
         bool staleReport = false,
         bool coverDispositionFailure = false,
         TimeSpan? timeout = null,

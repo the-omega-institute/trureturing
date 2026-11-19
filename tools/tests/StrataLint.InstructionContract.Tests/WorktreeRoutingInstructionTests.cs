@@ -64,7 +64,6 @@ public sealed class WorktreeRoutingInstructionTests
 
     [Theory]
     [InlineData("skills/codex-formalize/SKILL.md")]
-    [InlineData("skills/codex-theory-ingest/SKILL.md")]
     public void EditingSkillsReuseSuitableTreesAndDoNotBuildForInspection(string path)
     {
         var environment = Section(Read(path), "### 0.", "### 1.");

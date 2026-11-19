@@ -1,8 +1,0 @@
-**Definition 3.2 (finite-epoch response representation).** A future-row
-representation of $u$ is a finite description of a procedure which, for
-each requested integer $n\ge0$, terminates and returns the entire
-$R_P(\rho^n u)$. Representations are compared by the rows they return,
-not by equality of program syntax. A finite list of requests need not
-be chronological. Such a description is not an infinite stored list
-of rows, an executed update sequence, or an archive of actual read events.
-

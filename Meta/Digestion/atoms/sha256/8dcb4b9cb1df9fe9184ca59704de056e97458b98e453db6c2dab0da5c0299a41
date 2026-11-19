@@ -1,6 +1,0 @@
-**定理 15.1（Exact sourcewise criterion and the later layer）。** Fix $x\in X$ with composite $n=q(x)$ and a positive unbounded divisibility tower $(L_r)$. The following are equivalent:
-
-1. There exists $r_0$ with $\gcd(n,L_{r_0})>1$.
-2. There exists $R$ with $C_R(x)\subseteq X\setminus P$.
-3. There exists $R$ such that $C_r(x)\subseteq X\setminus P$ for every $r\ge R$.
-

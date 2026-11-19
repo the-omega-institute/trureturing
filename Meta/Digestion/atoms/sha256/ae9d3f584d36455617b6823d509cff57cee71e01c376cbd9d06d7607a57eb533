@@ -1,8 +1,0 @@
-### 241.1 A metric-doubling replacement for the volume hypothesis
-
-Uniform lower masses for disjoint small balls, together with an upper mass
-bound for their enclosing ball, are one sufficient way to turn a resolved
-occurrence set into a packing bound. The measure is not essential to that
-counting step. The following version uses only a uniform metric covering
-property and therefore has a different scope.
-

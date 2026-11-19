@@ -1,6 +1,0 @@
-对每个地址赋值 $a$，存在可有效构造的**同一个**赋值 $a^\flat$，使每个 $|a^\flat(q)|\le D_0$ 且 $|a^\flat(q)|\le|a(q)|$，并同时满足下列结论。
-
-1. $J_{a^\flat}=J_a$；准备骨架和服务表不变。
-2. 对全部 $\theta\in\Theta_K$，以及全部调用上预算 $P,L\in\mathbb N_0$，$\theta$ 在 $a$ 下是成功 SOME-preparer，当且仅当在 $a^\flat$ 下是成功 SOME-preparer。
-3. 更强地，联合族关系
-

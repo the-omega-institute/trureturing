@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8179fd32ea893ffb97e13c497bf95b20d1afb817e17cb7e6623e5fe8796a8eef
-  normalized_sha256: sha256:8179fd32ea893ffb97e13c497bf95b20d1afb817e17cb7e6623e5fe8796a8eef
-cas_ref: sha256:8179fd32ea893ffb97e13c497bf95b20d1afb817e17cb7e6623e5fe8796a8eef
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Dynamics/FiniteObservabilityOrthogonalDuality.finite_unobservable_eq_observable_orthogonal
-    target_statement_id: sha256:2d3a87490f72b080d6e9d58944036c1f59653f144b398d027494d98aa9d887a0
-receipts:
-  unresolved_subitems: []

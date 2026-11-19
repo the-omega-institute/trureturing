@@ -10,6 +10,8 @@ strata_touched:
   - D5/S3/Arith/PrimeFactorization
   - D5/S3/Weil/EulerProduct
   - D5/S3/Zeros/EulerWindows
+  - D5/S3/PrimeGaps/ChiFourWeightedMangoldt
+  - D5/S3/PrimeGaps/ModFourChebyshev
 license: citation-only
 triage: anchor
 ---
@@ -51,6 +53,19 @@ denominator-zero lattice. That totalization qualification is repo-derived.
 The formal statement also omits the source volume's empirical finite-window
 certificate and does not claim a meromorphic pole order.
 
+Chapter 7, "Dirichlet's theorem on primes in arithmetic progressions", states
+Theorem 7.3 (p. 148): for k > 0 and gcd(h,k) = 1, the sum of log(p)/p over
+primes p <= x congruent to h modulo k is log(x)/phi(k) + O(1). Its k = 4,
+h = 1 case anchors the classical weighted Mertens estimate in
+`D5/S3/PrimeGaps/ModFourChebyshev`. The chapter also supplies the classical
+boundedness of the nonprincipal-character sum chi(n)*Lambda(n)/n used in the
+proof of Theorem 7.3, anchoring `D5/S3/PrimeGaps/ChiFourWeightedMangoldt` at
+chapter level; no separate page or lemma number is asserted for that step.
+Only the classical statements are attributed to Apostol. The explicit error
+constants twelve, the finite-convolution presentation, the threshold exp(50),
+and the fixed-ratio-window deduction pi(x;4,1) >= exp(-50)*x/log(x) are
+repo-derived quantitative details.
+
 ## Search log
 
 - 2026-07-17: Queried NyxID/Tavily for `"finite Euler product" zero-free
@@ -85,6 +100,14 @@ certificate and does not claim a meromorphic pole order.
   new `D5/S3/Arith/EuclidLemma` declaration (PZG Lemma 9.1). The DOI
   `10.1007/978-1-4757-5579-4` and title were already verified above; no new
   online lookup was required for this in-book locator.
+
+- 2026-11-19: The orchestrator verified the page and theorem number through
+  the verbatim citation "[Ap, p.148, Theorem 7.3]" and its weighted
+  arithmetic-progression prime-sum formula in arXiv:2309.16007,
+  *Sums of Powers of Primes in Arithmetic Progression*. This verifies the
+  locator for the classical O(1) statement, not the repository's explicit
+  constants. The intermediate twisted Mangoldt estimate is cited only at
+  Chapter 7 level; its separate page and lemma number have not been verified.
 
 ## Verified locator
 

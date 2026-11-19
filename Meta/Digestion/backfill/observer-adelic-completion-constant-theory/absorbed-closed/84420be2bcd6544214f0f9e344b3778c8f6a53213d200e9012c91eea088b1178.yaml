@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:84420be2bcd6544214f0f9e344b3778c8f6a53213d200e9012c91eea088b1178
-  normalized_sha256: sha256:84420be2bcd6544214f0f9e344b3778c8f6a53213d200e9012c91eea088b1178
-cas_ref: sha256:84420be2bcd6544214f0f9e344b3778c8f6a53213d200e9012c91eea088b1178
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor
-    target_statement_id: sha256:97128c8df67784b4c3dbd76c9c1278eadc17053904d7c12fcd97adadae7c9bfd
-receipts:
-  unresolved_subitems: []

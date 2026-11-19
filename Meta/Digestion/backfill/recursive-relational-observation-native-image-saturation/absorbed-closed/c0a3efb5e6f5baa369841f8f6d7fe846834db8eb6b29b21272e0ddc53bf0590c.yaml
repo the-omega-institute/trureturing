@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c0a3efb5e6f5baa369841f8f6d7fe846834db8eb6b29b21272e0ddc53bf0590c
-  normalized_sha256: sha256:c0a3efb5e6f5baa369841f8f6d7fe846834db8eb6b29b21272e0ddc53bf0590c
-cas_ref: sha256:c0a3efb5e6f5baa369841f8f6d7fe846834db8eb6b29b21272e0ddc53bf0590c
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeEffectiveImageGuard.original_effective_image_guard
-    target_statement_id: sha256:1f8f4544be5dd9d7ddd865f4d19973157f07ea0257978d0dbcf81e51a7e480b8
-receipts:
-  unresolved_subitems: []

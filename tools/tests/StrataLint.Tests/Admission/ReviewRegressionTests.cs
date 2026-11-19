@@ -347,7 +347,7 @@ public sealed partial class ReviewRegressionTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         ProductionEnvironmentTests.InstallDefaultAdmissionPlaneFileMap(fixture);
         fixture.SetRingDeclaration("invented", "theorem", "unregistered.axiom");
         var currentReport = LeanAxiomReport.Create(fixture.Reports);

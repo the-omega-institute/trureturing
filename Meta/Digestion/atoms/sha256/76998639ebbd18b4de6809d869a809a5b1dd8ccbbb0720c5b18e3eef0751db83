@@ -1,2 +1,0 @@
-**Convention 2.3 (Graph forms).** For a symmetric matrix $\Gamma\in\mathbb F_2^{N\times N}$ with zero diagonal, the graph state is $|\Gamma\rangle=2^{-N/2}\sum_{x\in\{0,1\}^N}(-1)^{\sum_{u<v}\Gamma_{uv}x_ux_v}|x\rangle$. Every stabilizer state equals $\lambda\,(U_1\otimes\cdots\otimes U_N)|\Gamma\rangle$ for some such $\Gamma$, single-qubit Clifford unitaries $U_u$ and a scalar $\lambda$ with $|\lambda|=1$ (Van den Nest, Dehaene and De Moor, Theorem 1). Such a $\Gamma$ is called a graph form of $\psi$.
-

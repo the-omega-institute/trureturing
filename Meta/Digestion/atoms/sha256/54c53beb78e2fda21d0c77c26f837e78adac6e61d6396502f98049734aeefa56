@@ -1,0 +1,62 @@
+**Theorem 117.1 (Compact graph with the exact phase kernel).** Define
+
+$$
+\mathcal L=\{(h,W)\in H\times U^{\pm}(n):\pi\Gamma_W=h\pi\}.
+\tag{117.2}
+$$
+
+Its image $\widetilde G$ under projection to $U^{\pm}(n)$ is a
+compact subgroup, and the graph gives a continuous surjection
+$\widetilde\psi:\widetilde G\to H$ with exact sequence
+
+$$
+1\longrightarrow\mathbb T\longrightarrow\widetilde G
+\overset{\widetilde\psi}{\longrightarrow}H\longrightarrow1.
+\tag{117.3}
+$$
+
+In particular $H\cong\widetilde G/\mathbb T$ as a topological group,
+faithfully embedded in
+
+$$
+U^{\pm}(n)/\mathbb T\cong PU(n)\rtimes\mathbb Z_2.
+\tag{117.4}
+$$
+
+Proof. The equation in (117.2) is closed: all maps are continuous
+in finite-dimensional matrix coordinates, and equality of linear
+maps can be checked on a fixed finite basis. Conjugation composes
+as $\Gamma_{W_1W_2}=\Gamma_{W_1}\Gamma_{W_2}$, so $\mathcal L$
+is a closed subgroup of a compact group. Projection to $H$ is onto
+by Proposition 116.2. Projection to $U^{\pm}(n)$ is injective,
+because surjectivity of $\pi$ makes $h$ uniquely determined by $W$
+in the intertwining equation. The compact-to-Hausdorff continuous
+bijection $\mathcal L\to\widetilde G$ is a homeomorphism. The
+other projection therefore defines the continuous surjective
+homomorphism $\widetilde\psi$.
+
+All scalar phases belong to its kernel. Conversely, if
+$\widetilde\psi(W)=1$, then for every $Q\in\mathcal R_n$,
+
+$$
+b(\Gamma_W(Q))=\pi\Gamma_W(Q)=\pi(Q)=b(Q).
+\tag{117.5}
+$$
+
+Since $\Gamma_W(Q)$ is again rank one, the injectivity of the
+**entire** $b$ implies $\Gamma_W(Q)=Q$. Thus $W$ fixes every ray.
+A unitary fixing every ray is scalar: coordinate rays make it
+diagonal, and the rays of sums of coordinate vectors make all
+diagonal phases equal. An antiunitary cannot fix every ray when
+$n\ge2$. On two coordinate rays write $We_j=\alpha_j e_j$;
+fixing the ray of $e_1+e_2$ forces $\alpha_1=\alpha_2$.
+Antilinearity then sends $e_1+i e_2$ to
+$\alpha_1(e_1-i e_2)$, a different ray. Hence the kernel is exactly
+$\mathbb T$.
+
+The quotient of the compact $\widetilde G$ by this closed kernel
+maps continuously and bijectively to the Hausdorff $H$, so it is
+topologically isomorphic to $H$. Inclusion in the ambient quotient
+is faithful. Fixing $\kappa$ identifies that ambient quotient with
+the semidirect product in (117.4). ∎
+

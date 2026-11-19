@@ -1,9 +1,0 @@
-#### 定义 7.1：方向的量子几何张量
-
-对 $P_n=(1_2+n\cdot\boldsymbol{\sigma})/2$ 及 $u,v\in T_nS^2$，令
-
-$$
-\mathcal Q_n(u,v)=
- \operatorname{tr}\!\bigl(P_n\,\mathrm dP_n(u)\,\mathrm dP_n(v)\bigr).
-$$
-

@@ -8,28 +8,6 @@ namespace StrataLint.Tests;
 
 public sealed class CanonicalSnapshotTests
 {
-    [Theory]
-    [InlineData(RuleFixture.FixtureBackfillAtomPath)]
-    [InlineData(RuleFixture.FixtureBackfillSourcePath)]
-    [InlineData(RuleFixture.FixtureCasPath)]
-    [InlineData("docs/develop/theory/unrelated.yaml")]
-    public void AuxiliaryDigestionInputDoesNotBlockLeanAdmission(string path)
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[path] = "failure: [invalid\n";
-        fixture.Files[RuleFixture.RingPath] += "-- candidate content\n";
-        fixture.Files[RuleFixture.RingPath] = UtilityAdmissionTestSupport.WithUtility(
-            fixture.Files[RuleFixture.RingPath], "none");
-        var changes = RawChangeSet.Create([RuleFixture.RingPath]);
-        var context = fixture.Build(changes);
-        var outcome = AdmissionPipeline.Evaluate(context.Current, context.Baseline,
-            context.Policy, context.Lean, changes,
-            Assert.IsType<BootstrapOutcome.Clear>(BootstrapGate.Evaluate(changes)).Capability);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-    }
-
     [Fact]
     public void NonDigestionMalformedYamlStillBlocksAdmission()
     {
@@ -71,45 +49,6 @@ public sealed class CanonicalSnapshotTests
         Assert.Equal(firstIdentity.Sha256, secondIdentity.Sha256);
         Assert.DoesNotContain(Convert.ToHexStringLower(Encoding.UTF8.GetBytes(auxiliaryPath)),
             Encoding.UTF8.GetString(firstIdentity.Bytes.AsSpan()), StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData(false, RuleFixture.FixtureBackfillAtomPath)]
-    [InlineData(false, RuleFixture.FixtureBackfillSourcePath)]
-    [InlineData(true, RuleFixture.FixtureBackfillAtomPath)]
-    [InlineData(true, RuleFixture.FixtureBackfillSourcePath)]
-    public void AdmissionIdentityBindsSelectedUtilityInputs(bool firstFreeze, string changedInput)
-    {
-        var fixture = UtilityAdmissionTestSupport.AtomUtilityFixture(targetStatementId: null);
-        var policy = fixture.Build().Policy;
-        const string unrelated = "Meta/Digestion/backfill/unrelated/partial-open/"
-            + "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.yaml";
-        fixture.Files[unrelated] = "failure: [invalid\n";
-        var changedPath = firstFreeze
-            ? UtilityAdmissionTestSupport.AddCandidateState(fixture)
-            : RuleFixture.RingPath;
-        var changes = RawChangeSet.Create([changedPath]);
-
-        CanonicalFixedPoint Identity()
-        {
-            IRepositoryGateway repository = new FakeRepositoryGateway(changes,
-                UtilityAdmissionTestSupport.Raw(fixture.Files), UtilityAdmissionTestSupport.Raw(fixture.Baseline));
-            var raw = AdmissionRepositoryInputs.ReadDeltaInputs(repository,
-                AdmissionRepositoryInputs.ReadCurrent(repository),
-                AdmissionRepositoryInputs.ReadBaseline(repository, "baseline"), changes);
-            var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-            Assert.True(snapshot.Files[RepoPath.CreateKnown(RuleFixture.FixtureBackfillAtomPath)].ContentWasRead);
-            Assert.True(snapshot.Files[RepoPath.CreateKnown(RuleFixture.FixtureBackfillSourcePath)].ContentWasRead);
-            Assert.False(snapshot.Files[RepoPath.CreateKnown(unrelated)].ContentWasRead);
-            return Assert.IsType<CanonicalizationOutcome.Accepted>(
-                RepositoryCanonicalizer.Validate(snapshot, policy)).Capability;
-        }
-
-        var first = Identity();
-        fixture.Files[changedInput] += "\n";
-        var second = Identity();
-
-        Assert.NotEqual(first.Sha256, second.Sha256);
     }
 
     [Fact]
@@ -271,7 +210,7 @@ public sealed class CanonicalSnapshotTests
     public void UnchangedNoncanonicalStructuredArtifactDoesNotReplayItsFixedPoint()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+
         fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"alpha\":1, \"omega\":2}\n";
         var changes = RawChangeSet.Create(["notes/unrelated.txt"]);
         var context = fixture.Build(changes);
