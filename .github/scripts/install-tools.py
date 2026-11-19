@@ -100,15 +100,19 @@ def preserve_extra_files(entries):
         parent = pending.pop()
         for item in (ROOT / parent).iterdir():
             relative = parent / item.name
-            if not item.is_symlink():
-                if relative in directories and item.is_dir():
+            try:
+                mode = item.lstat().st_mode
+            except FileNotFoundError:
+                continue
+            if stat.S_ISDIR(mode):
+                if relative in directories:
                     pending.append(relative)
                     continue
-                if relative in build_dirs and item.is_dir():
+                if relative in build_dirs:
                     continue
-                if item.is_file() and (relative in files or
-                                       (parent in python_caches and
-                                        re.fullmatch(r".+\.pyc(?:\.[0-9]+)?", item.name))):
+            if stat.S_ISREG(mode):
+                bytecode = parent in python_caches and re.fullmatch(r".+\.pyc(?:\.[0-9]+)?", item.name)
+                if relative in files or bytecode:
                     continue
             if backup is None:
                 backup = Path(tempfile.mkdtemp(prefix="previous-", dir=CACHE))
