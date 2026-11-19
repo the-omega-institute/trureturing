@@ -188,19 +188,4 @@ theorem visibleCompression_sub_le (V : Submodule ℂ E) [V.HasOrthogonalProjecti
 
 #print axioms visibleCompression_sub_le
 
-/-- The compression estimate at the bounded-operator heat evolution. -/
-example (V : Submodule ℂ E) [V.HasOrthogonalProjection]
-    (A L : E →L[ℂ] E) (R : E →L[ℂ] V) (hA : A.IsSymmetric)
-    {l u : ℝ} (hl : 0 < l) (hlu : l ≤ u)
-    (hLower : (l : ℂ) • (1 : E →L[ℂ] E) ≤ A)
-    (hUpper : A ≤ (u : ℂ) • (1 : E →L[ℂ] E))
-    (hFix : ∀ v : V, R v = v)
-    (hOrth : ∀ x v, v ∈ V → ⟪v, A (x - (R x : E))⟫_ℂ = 0)
-    (t : ℝ) :
-    let T := NormedSpace.exp ((t : ℂ) • L)
-    ‖R.comp (T.comp V.subtypeL) - visibleInternalBlock V T‖ ≤
-      ((u - l) / (2 * Real.sqrt (u * l))) * ‖visibleResidualLeakage V T‖ :=
-  visibleCompression_sub_le V A R hA hl hlu hLower hUpper hFix hOrth _
-
-
 end D5.S3.HilbertOperators.RelativeMetricProjectionStability
