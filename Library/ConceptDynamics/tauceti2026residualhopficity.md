@@ -12,6 +12,16 @@ license: Apache-2.0
 triage: anchor
 ---
 
+## Verified locator
+
+Source: https://github.com/TauCetiProject/TauCeti/blob/d91980bdc255e6e50506be147ad9bcb88eb9fcc0/TauCeti/GroupTheory/ResiduallyFinite.lean
+
+Immutable revision: `d91980bdc255e6e50506be147ad9bcb88eb9fcc0`.
+
+Code artifact: `TauCeti/GroupTheory/ResiduallyFinite.lean`, theorem
+`Group.ResiduallyFinite.injective_of_surjective`, by The Tau Ceti contributors
+(Apache-2.0).
+
 # Malcev Hopficity: immutable formal source
 
 The Tau Ceti contributors' `Group.ResiduallyFinite.injective_of_surjective`

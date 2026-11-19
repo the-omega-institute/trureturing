@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Faithfulness;
 
@@ -13,7 +14,7 @@ internal sealed class FiniteQuotientHopficityDocument : IScribeDocumentDefinitio
                 "D5/S3/ConceptDynamics/Faithfulness/FiniteQuotientHopficity."
                     + "surjective_endomorphism_injective"),
             H("Surjective endomorphisms are injective"),
-            StatementSource.FromLean(),
+            StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromLiterature(
                 LibraryNoteRef.Create("D5/L/ConceptDynamics/tauceti2026residualhopficity")),
             Blocks(
@@ -57,4 +58,31 @@ internal sealed class FiniteQuotientHopficityDocument : IScribeDocumentDefinitio
                         + "The source code attests the exact formal statement; its "
                         + "citation of Malcev's article is not a primary-text attestation."))),
             DescribeRole.Theorem))));
+
+    private static Formula TheoremFormula()
+    {
+        Formula universe = F.Id("u");
+        Formula group = F.Id("G");
+        Formula endomorphism = F.Id("f");
+        Formula Qualified(string owner, string member) =>
+            F.Seq(F.Id(owner), F.Dot, F.Id(member));
+        Formula Apply(Formula function, params Formula[] arguments) =>
+            new Formula.Apply(function, [.. arguments]);
+        Formula All(string variable, Formula domain, Formula body) =>
+            new Formula.Bind(
+                FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+
+        Formula conclusion = new Formula.Logic(
+            Apply(Qualified("Function", "Surjective"), endomorphism),
+            FormulaLogicOperator.Implies,
+            Apply(Qualified("Function", "Injective"), endomorphism));
+
+        return F.Disp(All("u", F.Id("UniverseLevel"),
+            All("G", Apply(F.Id("Type"), universe),
+                All("instGroup", Call("Group", group),
+                    All("instFG", Apply(Qualified("Group", "FG"), group),
+                        All("instRF", Apply(Qualified("Group", "ResiduallyFinite"), group),
+                            All("f", Call("MonoidHom", group, group), conclusion)))))));
+    }
+
 }
