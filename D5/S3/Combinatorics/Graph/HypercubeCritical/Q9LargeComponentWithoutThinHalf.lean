@@ -1,9 +1,10 @@
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9ThinPairedCertificate
 import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9TwoGrayComponents
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.BalancedHalfCardinality
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyTwoPairedExclusion
 
 /-! The surviving large component in a hypothetical 258-vertex candidate
-has coordinate halves of even cardinality between 22 and 50 when its order is 72. -/
+has coordinate halves of even cardinality between 24 and 48 when its order is 72. -/
 
 set_option autoImplicit false
 
@@ -51,9 +52,22 @@ private theorem no_twenty_half {U C : Finset (Q 9)} (hU : U.card = 258) (hC : C.
     rw [hf, Finset.card_image_of_injective _ g.injective]
     exact hdeg a ha
 
+private theorem no_twenty_two_half {C : Finset (Q 9)} (hC : C.card = 72)
+    (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3) (hb : IsBalanced C)
+    (j : Fin 9) (b : Bool) (hs : (C.filter (fun x => x j = b)).card = 22) : False := by
+  classical
+  let p := Equiv.swap j (0 : Fin 9)
+  let g := reindex p
+  have hC' : (C.image g).card = 72 := by rw [Finset.card_image_of_injective _ g.injective, hC]
+  have hs' : (coordinateSlice (C.image g) b).card = 22 := by
+    change (coordinateSlice (C.image (reindex (Equiv.swap j 0))) b).card = 22
+    rw [reindex_slice, Finset.card_image_of_injective _ g.injective, hs]
+  exact CoordinateHalves.Q9TwentyTwoPairedExclusion.no_twenty_two_half hC'
+    (reindex_regular hr p) (reindex_balanced hb p) b hs'
+
 /-- A 258-vertex induced subcubic set has a Huang-balanced cubic component
 of order at least 72. If that component has order 72, every coordinate
-half has even cardinality between 22 and 50, inclusive. -/
+half has even cardinality between 24 and 48, inclusive. -/
 theorem exists_large_component_without_thin_half (U : Finset (Q 9)) (hU : U.card = 258)
     (hdeg : ∀ v : (U : Set (Q 9)), ((hypercube 9).induce (U : Set (Q 9))).degree v ≤ 3) :
     ∃ K : ((hypercube 9).induce (U : Set (Q 9))).ConnectedComponent,
@@ -61,7 +75,7 @@ theorem exists_large_component_without_thin_half (U : Finset (Q 9)) (hU : U.card
       ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3 ∧
         IsBalanced C ∧ 72 ≤ C.card ∧ (C.card = 72 → ∀ (j : Fin 9) (b : Bool),
           let N := (C.filter (fun x => x j = b)).card
-          22 ≤ N ∧ N ≤ 50 ∧ N % 2 = 0) := by
+          24 ≤ N ∧ N ≤ 48 ∧ N % 2 = 0) := by
   classical
   obtain ⟨K, hr, hb, hc⟩ := Q9TwoGrayComponents.exists_large_balanced_component U hU hdeg
   refine ⟨K, hr, hb, hc, fun heq j b => ?_⟩
@@ -73,11 +87,13 @@ theorem exists_large_component_without_thin_half (U : Finset (Q 9)) (hU : U.card
     exact hdeg ⟨x, hx⟩
   let C := componentFinset U K
   have h72 : C.card = 6 * 12 := heq
-  have half_min (side : Bool) : 22 ≤ (C.filter (fun x => x j = side)).card := by
+  have half_min (side : Bool) : 24 ≤ (C.filter (fun x => x j = side)).card := by
     obtain ⟨hbound, hparity⟩ :=
       CoordinateHalves.BalancedHalfCardinality.half_cardinality h72 hr hb j side
     have htwenty := no_twenty_half hU heq hr hb (componentFinset_subset U K)
       (componentFinset_neighbor_closed U K) hdegree j side
+    have htwentyTwo : (C.filter (fun x => x j = side)).card ≠ 22 :=
+      no_twenty_two_half heq hr hb j side
     change 5 * 12 ≤ 3 * (C.filter (fun x => x j = side)).card at hbound
     change (C.filter (fun x => x j = side)).card % 2 = 12 % 2 at hparity
     change (C.filter (fun x => x j = side)).card ≠ 20 at htwenty
@@ -99,8 +115,8 @@ theorem exists_large_component_without_thin_half (U : Finset (Q 9)) (hU : U.card
   have hmin := half_min b
   have hother := half_min (!b)
   change C.card = 72 at heq
-  change 22 ≤ (C.filter (fun x => x j = b)).card ∧
-    (C.filter (fun x => x j = b)).card ≤ 50 ∧
+  change 24 ≤ (C.filter (fun x => x j = b)).card ∧
+    (C.filter (fun x => x j = b)).card ≤ 48 ∧
     (C.filter (fun x => x j = b)).card % 2 = 0
   omega
 
