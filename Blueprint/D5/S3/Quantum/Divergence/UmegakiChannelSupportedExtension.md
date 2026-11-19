@@ -132,7 +132,6 @@ The left-endpoint coefficient c₀ equals the complete coefficient ηᶜ, which 
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension.variationalMetricCoefficient_bounds`
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension.variationalMetricCoefficient_chain`
 - Dependency: [D5/S3/Quantum/Divergence/CanonicalChannelDPI](CanonicalChannelDPI.md)
-- Dependency: [D5/S3/Quantum/Divergence/FannesRootFidelityHolevo](FannesRootFidelityHolevo.md)
 - Dependency: [D5/S3/Quantum/Divergence/UmegakiConditionalBKM](UmegakiConditionalBKM.md)
 - Dependency: [D5/S3/Quantum/Divergence/UmegakiFaithfulLowerRatio](UmegakiFaithfulLowerRatio.md)
 - Dependency: [D5/S3/Quantum/Divergence/UmegakiSupportedNoise](UmegakiSupportedNoise.md)

@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Divergence.AlphaZAffine.Result
 import D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Order
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Order
 
@@ -35,9 +35,16 @@ open D5.S3.Quantum.Divergence.AlphaZAffine (cross_log_regularization_tendsto)
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (density_posSemidef)
-open D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation (density_le_one)
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
+
+private theorem density_le_one {A : Matrix n n ℂ} (hA : A.PosSemidef) (htr : A.trace = 1) :
+    (1 - A).PosSemidef := by
+  let H : HermitianMat n ℂ := ⟨A, hA.isHermitian⟩
+  have h := HermitianMat.le_trace_smul_one (HermitianMat.zero_le_iff.mpr hA : 0 ≤ H)
+  change A ≤ A.trace.re • (1 : Matrix n n ℂ) at h
+  rw [htr, Complex.one_re, one_smul] at h
+  exact Matrix.le_iff.mp h
 
 omit [DecidableEq n] in
 private lemma continuous_reTrace : Continuous (fun A : Matrix n n ℂ => A.trace.re) := by

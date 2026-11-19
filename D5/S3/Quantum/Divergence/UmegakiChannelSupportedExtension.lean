@@ -10,7 +10,6 @@ import D5.S3.Quantum.Divergence.UmegakiConditionalBKM
 import D5.S3.Quantum.Divergence.UmegakiFaithfulLowerRatio
 import D5.S3.Quantum.Divergence.UmegakiSupportedNoise
 import D5.S3.Quantum.Divergence.CanonicalChannelDPI
-import D5.S3.Quantum.Divergence.FannesRootFidelityHolevo
 import D5.S3.Quantum.Foundation.FinitePreparationChannel
 import D5.S3.Quantum.Recovery.QubitCenteredTransport
 
@@ -51,7 +50,6 @@ open D5.S3.Quantum.Divergence.UmegakiConditionalBKM
 open D5.S3.Quantum.Divergence.UmegakiReferenceTransport (amp_posDef)
 open D5.S3.Quantum.Divergence.UmegakiSupportedNoise
 open D5.S3.Quantum.Recovery.QubitResidualRounding (referenceState_comp)
-open D5.S3.Quantum.Divergence.FannesRootFidelityHolevo (exists_eraseChannel)
 
 universe u
 variable {n R a b : Type u}
@@ -61,6 +59,30 @@ variable {n R a b : Type u}
 private abbrev Weight := Set.Ioo (0 : ℝ) 1
 
 private abbrev raw (X : DensityState n) : Matrix n n ℂ := CStarMatrix.ofMatrix.symm X.1
+
+-- This is the coordinate Kraus construction used in FannesRootFidelityHolevo.
+private theorem exists_eraseChannel {ι : Type u} [Fintype ι] [DecidableEq ι] :
+    ∃ E : QuantumChannel (n × ι) n,
+      ∀ X : Matrix (n × ι) (n × ι) ℂ,
+        CStarMatrix.ofMatrix.symm (E.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+          ∑ i : ι, X.submatrix (fun j => (j, i)) (fun j => (j, i)) := by
+  let K (i : ι) : Matrix n (n × ι) ℂ :=
+    (1 : Matrix (n × ι) (n × ι) ℂ).submatrix (fun j => (j, i)) (Equiv.refl _)
+  have hcomplete : ∑ i, (K i)ᴴ * K i = 1 := by
+    ext ⟨j, i⟩ ⟨k, l⟩
+    simp [K, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Matrix.submatrix_apply, Matrix.one_apply, Prod.mk.injEq, apply_ite, ite_and, eq_comm]
+    split_ifs <;> simp_all
+  obtain ⟨E, hE⟩ := D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
+    K hcomplete
+  refine ⟨E, fun X => ?_⟩
+  rw [hE]
+  apply Finset.sum_congr rfl
+  intro i _
+  dsimp only [K]
+  rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_one,
+    Matrix.one_submatrix_mul _ (Equiv.refl _) X, Matrix.mul_submatrix_one (Equiv.refl _)]
+  rfl
 
 private lemma density_nonempty (X : DensityState n) : Nonempty n :=
   state_nonempty ⟨density_posSemidef X, X.2.2⟩
