@@ -27,6 +27,7 @@ open D5.S1.Deficit.AlmostAdditivity (primeRadical)
 open D5.S3.Analytic.ZetaEntropyPlane.PrimeDensityEvidenceOrthogonality
   (naturalCountingRatio primeNaturals primeNaturals_countingRatio sparse_prime_support_diverges)
 open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
+open StrongPseudoperfectEulerDensity (largeSquares)
 attribute [local instance] Classical.propDecidable
 
 /-- Integers whose prime-power components are strictly below the radical threshold. -/
@@ -39,9 +40,6 @@ def count (S : Set ℕ) (X : ℕ) : ℕ := ((Icc 1 X).filter (fun n => n ∈ S))
 
 /-- The counting function of the radical component set. -/
 def radicalComponentCount (lam : ℝ) (X : ℕ) : ℕ := count (radicalComponentSet lam) X
-
-private def criticalSet (c : ℝ) : Set ℕ :=
-  {n | 2 ≤ n ∧ (largestPrime n : ℝ) ^ 2 < c * n}
 
 
 private lemma largestPrime_mem {n : ℕ} (hn : 2 ≤ n) :
@@ -229,9 +227,9 @@ private lemma prime_window_limit :
       simp only [Nat.mem_primesLE]
       constructor
       · rintro ⟨⟨hpX, hp⟩, hn⟩
-        exact ⟨⟨hpX, hp⟩, by omega⟩
+        exact ⟨⟨hpX, hp⟩, lt_of_not_ge (fun hps => hn ⟨hps, hp⟩)⟩
       · rintro ⟨⟨hpX, hp⟩, hs⟩
-        exact ⟨⟨hpX, hp⟩, by omega⟩
+        exact ⟨⟨hpX, hp⟩, fun h => (not_lt_of_ge h.1) hs⟩
     rw [hw]
     ring
   exact h.congr (fun X => heq X)
@@ -318,5 +316,457 @@ private lemma critical_density :
       simpa only [mul_comm] using hfloor
     rw [critical_count_split, Nat.cast_add, add_div]
     exact (add_le_add hsmall hf).trans_eq (add_comm _ _)
+
+private def criticalShell (a b : ℝ) (X : ℕ) : Finset ℕ :=
+  (Icc 2 X).filter fun n =>
+    a * n ≤ (largestPrime n : ℝ) ^ 2 ∧
+      (largestPrime n : ℝ) ^ 2 ≤ b * n
+
+private lemma critical_shell_bound (a b : ℝ) (ha : 0 < a) (hb : 0 ≤ b) (X : ℕ) :
+    (criticalShell a b X).card ≤
+      Nat.primeCounting ⌊Real.sqrt (b * X)⌋₊ *
+        ⌊(⌊Real.sqrt (b * X)⌋₊ : ℝ) / a⌋₊ := by
+  let Y := ⌊Real.sqrt (b * X)⌋₊
+  let Z := ⌊(Y : ℝ) / a⌋₊
+  have hbound : (criticalShell a b X).card ≤
+      ((Nat.primesLE Y) ×ˢ Icc 1 Z).card := by
+    apply Finset.card_le_card_of_injOn
+      (fun n => (largestPrime n, n / largestPrime n))
+    · intro n hn
+      change n ∈ criticalShell a b X at hn
+      simp only [criticalShell, mem_filter, mem_Icc] at hn
+      have hPmem := largestPrime_mem hn.1.1
+      have hp := Nat.prime_of_mem_primeFactors hPmem
+      have hpdvd := Nat.dvd_of_mem_primeFactors hPmem
+      have hn0 : 0 < n := by omega
+      have hpR : (0 : ℝ) < largestPrime n := by exact_mod_cast hp.pos
+      have hm : largestPrime n * (n / largestPrime n) = n :=
+        Nat.mul_div_cancel' hpdvd
+      have hmR : (largestPrime n : ℝ) * (n / largestPrime n : ℕ) = n :=
+        by exact_mod_cast hm
+      have hnX : (n : ℝ) ≤ X := by exact_mod_cast hn.1.2
+      have hpY : largestPrime n ≤ Y := by
+        apply Nat.le_floor
+        have hsq := Real.sq_sqrt (mul_nonneg hb (Nat.cast_nonneg X))
+        have hnonneg := Real.sqrt_nonneg (b * X)
+        have hle := mul_le_mul_of_nonneg_left hnX hb
+        nlinarith [hn.2.2]
+      have hmZ : n / largestPrime n ≤ Z := by
+        apply Nat.le_floor
+        apply (le_div_iff₀ ha).mpr
+        have hpY' : (largestPrime n : ℝ) ≤ Y := by exact_mod_cast hpY
+        have hsmall : a * (n / largestPrime n : ℕ) ≤ largestPrime n := by
+          apply (mul_le_mul_iff_left₀ hpR).mp
+          have hlow := hn.2.1
+          rw [← hmR] at hlow
+          simpa only [pow_two, mul_assoc, mul_comm, mul_left_comm] using hlow
+        nlinarith
+      change (largestPrime n, n / largestPrime n) ∈
+        (Nat.primesLE Y) ×ˢ Icc 1 Z
+      simp only [mem_product, Nat.mem_primesLE, mem_Icc]
+      refine ⟨⟨hpY, hp⟩, ?_, hmZ⟩
+      exact Nat.div_pos (Nat.le_of_dvd hn0 hpdvd) hp.pos
+    · intro n hn m hm he
+      have hn' := mem_filter.mp hn
+      have hm' := mem_filter.mp hm
+      have hndvd := Nat.dvd_of_mem_primeFactors
+        (largestPrime_mem (mem_Icc.mp hn'.1).1)
+      have hmdvd := Nat.dvd_of_mem_primeFactors
+        (largestPrime_mem (mem_Icc.mp hm'.1).1)
+      have he1 := congrArg Prod.fst he
+      have he2 := congrArg Prod.snd he
+      have hnrec := Nat.mul_div_cancel' hndvd
+      have hmrec := Nat.mul_div_cancel' hmdvd
+      change largestPrime n = largestPrime m at he1
+      change n / largestPrime n = m / largestPrime m at he2
+      rw [he2, he1] at hnrec
+      exact hnrec.symm.trans hmrec
+  simpa only [Finset.card_product, Nat.primesLE_card_eq_primeCounting,
+    Nat.card_Icc, Nat.add_sub_cancel] using hbound
+
+private def subcriticalNumbers (c : ℝ) (X : ℕ) : Finset ℕ :=
+  (Icc 2 X).filter fun n => (largestPrime n : ℝ) ^ 2 < c * n
+
+private lemma subcritical_difference_cover (c : ℝ) (X : ℕ) :
+    (subcriticalNumbers c X \ subcriticalNumbers 1 X) ∪
+      (subcriticalNumbers 1 X \ subcriticalNumbers c X) ⊆
+        criticalShell (min 1 c) (max 1 c) X := by
+  intro n hn
+  rw [Finset.mem_union, Finset.mem_sdiff, Finset.mem_sdiff] at hn
+  simp only [subcriticalNumbers, mem_filter, mem_Icc] at hn
+  simp only [criticalShell, mem_filter, mem_Icc]
+  have hmin1 := mul_le_mul_of_nonneg_right (min_le_left (1 : ℝ) c)
+    (Nat.cast_nonneg n)
+  have hminc := mul_le_mul_of_nonneg_right (min_le_right (1 : ℝ) c)
+    (Nat.cast_nonneg n)
+  have hmax1 := mul_le_mul_of_nonneg_right (le_max_left (1 : ℝ) c)
+    (Nat.cast_nonneg n)
+  have hmaxc := mul_le_mul_of_nonneg_right (le_max_right (1 : ℝ) c)
+    (Nat.cast_nonneg n)
+  rcases hn with ⟨hnc, hn1⟩ | ⟨hn1, hnc⟩
+  · refine ⟨hnc.1, ?_, ?_⟩
+    · have hnot : ¬ (largestPrime n : ℝ) ^ 2 < (1 : ℝ) * n := by
+        exact fun h => hn1 ⟨hnc.1, h⟩
+      linarith
+    · linarith [hnc.2]
+  · refine ⟨hn1.1, ?_, ?_⟩
+    · have hnot : ¬ (largestPrime n : ℝ) ^ 2 < c * n := by
+        exact fun h => hnc ⟨hn1.1, h⟩
+      linarith
+    · linarith [hn1.2]
+
+private lemma subcritical_one_partition (X : ℕ) :
+    (subcriticalNumbers 1 X).card + (criticalNumbers X).card = X - 1 := by
+  have h := Finset.card_filter_add_card_filter_not
+    (s := Icc 2 X) (fun n => n ≤ largestPrime n ^ 2)
+  have hfilter : (Icc 2 X).filter (fun n => ¬ n ≤ largestPrime n ^ 2) =
+      subcriticalNumbers 1 X := by
+    ext n
+    simp only [mem_filter, subcriticalNumbers, mem_Icc, one_mul, not_le]
+    norm_cast
+  rw [hfilter] at h
+  have hcard : (Icc 2 X).card = X - 1 := by
+    rw [Nat.card_Icc]
+    omega
+  rw [hcard] at h
+  change (criticalNumbers X).card + (subcriticalNumbers 1 X).card = X - 1 at h
+  omega
+
+private lemma subcritical_count_difference_bound (c : ℝ) (hc : 0 < c) (X : ℕ) :
+    |((subcriticalNumbers c X).card : ℝ) - (subcriticalNumbers 1 X).card| ≤
+      (Nat.primeCounting ⌊Real.sqrt (max 1 c * X)⌋₊ : ℝ) *
+        ((⌊Real.sqrt (max 1 c * X)⌋₊ : ℝ) / min 1 c) := by
+  let A := subcriticalNumbers c X
+  let B := subcriticalNumbers 1 X
+  let S := criticalShell (min 1 c) (max 1 c) X
+  let Y := ⌊Real.sqrt (max 1 c * X)⌋₊
+  have hcover := subcritical_difference_cover c X
+  have hAB : A ⊆ B ∪ S := by
+    intro n hn
+    by_cases hnB : n ∈ B
+    · exact mem_union_left S hnB
+    · exact mem_union_right B (hcover (mem_union_left _ (mem_sdiff.mpr ⟨hn, hnB⟩)))
+  have hBA : B ⊆ A ∪ S := by
+    intro n hn
+    by_cases hnA : n ∈ A
+    · exact mem_union_left S hnA
+    · exact mem_union_right A (hcover (mem_union_right _ (mem_sdiff.mpr ⟨hn, hnA⟩)))
+  have hcardAB := (card_le_card hAB).trans (card_union_le B S)
+  have hcardBA := (card_le_card hBA).trans (card_union_le A S)
+  have hdiff : |(A.card : ℝ) - B.card| ≤ S.card := by
+    have h1 : (A.card : ℝ) ≤ B.card + S.card := by exact_mod_cast hcardAB
+    have h2 : (B.card : ℝ) ≤ A.card + S.card := by exact_mod_cast hcardBA
+    exact abs_le.mpr ⟨by linarith, by linarith⟩
+  have ha : 0 < min (1 : ℝ) c := lt_min (by norm_num) hc
+  have hb : 0 ≤ max (1 : ℝ) c := le_trans (by norm_num) (le_max_left _ _)
+  have hS := critical_shell_bound (min 1 c) (max 1 c) ha hb X
+  have hSR : (S.card : ℝ) ≤
+      (Nat.primeCounting Y : ℝ) * ⌊(Y : ℝ) / min 1 c⌋₊ := by exact_mod_cast hS
+  apply hdiff.trans (hSR.trans ?_)
+  exact mul_le_mul_of_nonneg_left
+    (Nat.floor_le (div_nonneg (Nat.cast_nonneg Y) ha.le)) (Nat.cast_nonneg _)
+
+
+private lemma squarefree_le_radical {a n : ℕ} (ha : Squarefree a)
+    (hn : 0 < n) (had : a ∣ n) : a ≤ primeRadical n := by
+  have hsub := Nat.primeFactors_mono had hn.ne'
+  have hd : a ∣ primeRadical n := by
+    rw [← Nat.prod_primeFactors_of_squarefree ha]
+    exact Finset.prod_dvd_prod_of_subset _ _ _ hsub
+  apply Nat.le_of_dvd _ hd
+  unfold primeRadical
+  exact Finset.prod_pos fun p hp => (Nat.prime_of_mem_primeFactors hp).pos
+
+private lemma bounded_square_radical {n a b T : ℕ}
+    (hn : 0 < n) (he : b ^ 2 * a = n) (ha : Squarefree a) (hbT : b ≤ T) :
+    n ≤ T ^ 2 * primeRadical n := by
+  have had : a ∣ n := by
+    rw [← he]
+    exact dvd_mul_left a (b ^ 2)
+  have har : a ≤ primeRadical n := squarefree_le_radical ha hn had
+  calc
+    n = b ^ 2 * a := he.symm
+    _ ≤ T ^ 2 * primeRadical n :=
+      Nat.mul_le_mul (Nat.pow_le_pow_left hbT 2) har
+
+private lemma repeated_prime_bound {n a b p : ℕ}
+    (hn : 0 < n) (he : b ^ 2 * a = n) (ha : Squarefree a)
+    (hp : p.Prime) (hk : 2 ≤ n.factorization p) :
+    p ^ (n.factorization p + 1) ≤ b ^ 4 := by
+  have hb : b ≠ 0 := by intro h; simp [h] at he; omega
+  have hfac : n.factorization p = 2 * b.factorization p + a.factorization p := by
+    rw [← he, Nat.factorization_mul (pow_ne_zero _ hb) ha.ne_zero,
+      Finsupp.add_apply, Nat.factorization_pow]
+    simp only [Finsupp.smul_apply, smul_eq_mul]
+  have has := ha.natFactorization_le_one p
+  have hexp : n.factorization p + 1 ≤ b.factorization p * 4 := by omega
+  have hpow : p ^ b.factorization p ≤ b :=
+    Nat.le_of_dvd (Nat.pos_of_ne_zero hb)
+      ((hp.pow_dvd_iff_le_factorization hb).mpr le_rfl)
+  calc
+    p ^ (n.factorization p + 1) ≤ p ^ (b.factorization p * 4) :=
+      Nat.pow_le_pow_right hp.pos hexp
+    _ = (p ^ b.factorization p) ^ 4 := pow_mul _ _ _
+    _ ≤ b ^ 4 := Nat.pow_le_pow_left hpow 4
+
+private lemma square_decomposition_small {n X T : ℕ}
+    (hn : 0 < n) (hnX : n ≤ X) (hnot : n ∉ largeSquares X T) :
+    ∃ a b : ℕ, Squarefree a ∧ 0 < b ∧ b ≤ T ∧ b ^ 2 * a = n := by
+  obtain ⟨b, a, he, ha⟩ := exists_sq_mul_squarefree n
+  have hb : 0 < b := by
+    apply Nat.pos_of_ne_zero
+    intro hb
+    simp [hb] at he
+    omega
+  refine ⟨a, b, ha, hb, ?_, he⟩
+  by_contra! hbT
+  apply hnot
+  apply mem_biUnion.mpr
+  have hapos : 0 < a := Nat.pos_of_ne_zero ha.ne_zero
+  have hbX : b ≤ X := by
+    have hbb : b ≤ b ^ 2 := Nat.le_self_pow (by decide : 2 ≠ 0) b
+    nlinarith
+  refine ⟨b, mem_Icc.mpr ⟨by omega, hbX⟩, mem_image.mpr ?_⟩
+  refine ⟨a, mem_Icc.mpr ⟨hapos, ?_⟩, ?_⟩
+  · apply (Nat.le_div_iff_mul_le (pow_pos hb 2)).mpr
+    nlinarith
+  · simpa [mul_comm] using he
+
+private lemma radical_sandwich {lam : ℝ} {n X T : ℕ}
+    (hlam : 0 < lam) (hn : 2 ≤ n) (hnX : n ≤ X)
+    (hnot : n ∉ largeSquares X T)
+    (hlarge : (T : ℝ) ^ 6 < lam * n)
+    (hcritical : (largestPrime n : ℝ) ^ 2 <
+      (lam / (T : ℝ) ^ 2) * n) :
+    ∀ p ∈ n.primeFactors,
+      (p : ℝ) ^ (n.factorization p + 1) < lam * primeRadical n := by
+  obtain ⟨a, b, ha, hb, hbT, he⟩ := square_decomposition_small (by omega) hnX hnot
+  have hT : 0 < T := lt_of_lt_of_le hb hbT
+  have hTR : (0 : ℝ) < T := by exact_mod_cast hT
+  have hnrad : (n : ℝ) ≤ (T : ℝ) ^ 2 * primeRadical n := by
+    exact_mod_cast bounded_square_radical (by omega : 0 < n) he ha hbT
+  intro p hp
+  have hpp := Nat.prime_of_mem_primeFactors hp
+  have hk : 1 ≤ n.factorization p :=
+    hpp.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hp)
+  by_cases hk1 : n.factorization p = 1
+  · have hpmax : p ≤ largestPrime n := Finset.le_sup (f := id) hp
+    have hpr : (p : ℝ) ≤ largestPrime n := by exact_mod_cast hpmax
+    have hsquare : (p : ℝ) ^ 2 ≤ (largestPrime n : ℝ) ^ 2 := by
+      gcongr
+    rw [hk1]
+    norm_num only [Nat.reduceAdd]
+    apply hsquare.trans_lt (hcritical.trans_le ?_)
+    apply (mul_le_mul_iff_left₀ (sq_pos_of_pos hTR)).mp
+    calc
+      lam / (T : ℝ) ^ 2 * n * (T : ℝ) ^ 2 = lam * n := by field_simp
+      _ ≤ lam * ((T : ℝ) ^ 2 * primeRadical n) :=
+        mul_le_mul_of_nonneg_left hnrad hlam.le
+      _ = lam * primeRadical n * (T : ℝ) ^ 2 := by ring
+  · have hpbound : (p : ℝ) ^ (n.factorization p + 1) ≤ (T : ℝ) ^ 4 := by
+      have hh := repeated_prime_bound (by omega : 0 < n) he ha hpp (by omega)
+      exact_mod_cast hh.trans (Nat.pow_le_pow_left hbT 4)
+    apply hpbound.trans_lt
+    have hmul := mul_le_mul_of_nonneg_left hnrad hlam.le
+    have hlt : (T : ℝ) ^ 6 < (T : ℝ) ^ 2 * (lam * primeRadical n) := by
+      nlinarith
+    have hpow : (T : ℝ) ^ 6 = (T : ℝ) ^ 2 * (T : ℝ) ^ 4 := by ring
+    rw [hpow] at hlt
+    exact (mul_lt_mul_iff_right₀ (sq_pos_of_pos hTR)).mp hlt
+
+private lemma scaled_sqrt_prime_error (b : ℝ) (hb : 0 < b)
+    (hpi : Tendsto (fun X : ℕ => (Nat.primeCounting X : ℝ) / X)
+      atTop (𝓝 0)) :
+    Tendsto (fun X : ℕ =>
+      (⌊sqrt (b * X)⌋₊ : ℝ) * Nat.primeCounting ⌊sqrt (b * X)⌋₊ / X)
+      atTop (𝓝 0) := by
+  let Y : ℕ → ℕ := fun X => ⌊sqrt (b * X)⌋₊
+  have hnat : Tendsto (fun X : ℕ => (X : ℝ)) atTop atTop :=
+    tendsto_natCast_atTop_atTop
+  have hY : Tendsto Y atTop atTop :=
+    tendsto_nat_floor_atTop.comp (tendsto_sqrt_atTop.comp (hnat.const_mul_atTop hb))
+  have hlim : Tendsto (fun X => b * ((Nat.primeCounting (Y X) : ℝ) / Y X))
+      atTop (𝓝 0) := by
+    simpa only [mul_zero, Function.comp_def] using (hpi.comp hY).const_mul b
+  apply squeeze_zero' (Eventually.of_forall (fun X => by positivity)) ?_ hlim
+  filter_upwards [eventually_ge_atTop (1 : ℕ), hY.eventually_ge_atTop 1] with X hX hy
+  have hx : (0 : ℝ) < X := by exact_mod_cast (by omega : 0 < X)
+  have hyR : (0 : ℝ) < Y X := by exact_mod_cast (by omega : 0 < Y X)
+  have hfloor : (Y X : ℝ) ≤ sqrt (b * X) := Nat.floor_le (sqrt_nonneg _)
+  have hysq : (Y X : ℝ) ^ 2 ≤ b * X := by
+    calc
+      (Y X : ℝ) ^ 2 ≤ (sqrt (b * X)) ^ 2 := by gcongr
+      _ = b * X := sq_sqrt (mul_nonneg hb.le hx.le)
+  change (Y X : ℝ) * Nat.primeCounting (Y X) / X ≤
+    b * ((Nat.primeCounting (Y X) : ℝ) / Y X)
+  apply (div_le_iff₀ hx).mpr
+  apply (mul_le_mul_iff_left₀ hyR).mp
+  calc
+    (Y X : ℝ) * Nat.primeCounting (Y X) * Y X =
+        (Y X : ℝ) ^ 2 * Nat.primeCounting (Y X) := by ring
+    _ ≤ (b * X) * Nat.primeCounting (Y X) :=
+      mul_le_mul_of_nonneg_right hysq (by positivity)
+    _ = b * ((Nat.primeCounting (Y X) : ℝ) / Y X) * X * Y X := by
+      field_simp
+      <;> ring
+
+
+private lemma subcritical_one_density :
+    Tendsto (fun X : ℕ => ((subcriticalNumbers 1 X).card : ℝ) / X)
+      atTop (𝓝 (1 - log 2)) := by
+  have htotal : Tendsto (fun X : ℕ => ((X - 1 : ℕ) : ℝ) / X)
+      atTop (𝓝 (1 : ℝ)) := by
+    have h := (tendsto_const_nhds :
+      Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1)).sub
+      (tendsto_natCast_atTop_atTop.const_div_atTop (1 : ℝ))
+    simp only [sub_zero] at h
+    apply h.congr'
+    filter_upwards [eventually_ge_atTop (1 : ℕ)] with X hX
+    have hXR : (0 : ℝ) < X := by exact_mod_cast hX
+    rw [Nat.cast_sub hX, Nat.cast_one]
+    field_simp
+  have h := htotal.sub critical_density
+  apply h.congr
+  intro X
+  have hpart : ((subcriticalNumbers 1 X).card : ℝ) +
+      (criticalNumbers X).card = (X - 1 : ℕ) := by
+    exact_mod_cast subcritical_one_partition X
+  rw [← hpart, add_div]
+  ring
+
+private lemma subcritical_density (c : ℝ) (hc : 0 < c) :
+    Tendsto (fun X : ℕ => ((subcriticalNumbers c X).card : ℝ) / X)
+      atTop (𝓝 (1 - log 2)) := by
+  let a := min (1 : ℝ) c
+  let b := max (1 : ℝ) c
+  let E : ℕ → ℝ := fun X =>
+    (Nat.primeCounting ⌊sqrt (b * X)⌋₊ : ℝ) * (⌊sqrt (b * X)⌋₊ : ℝ) / a / X
+  have hb : 0 < b := lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) (le_max_left _ _)
+  have hE : Tendsto E atTop (𝓝 0) := by
+    have h := (scaled_sqrt_prime_error b hb prime_count_ratio).div_const a
+    simp only [zero_div] at h
+    convert h using 1
+    funext X
+    dsimp [E]
+    ring
+  have hlow := subcritical_one_density.sub hE
+  have hhigh := subcritical_one_density.add hE
+  simp only [sub_zero, add_zero] at hlow hhigh
+  have hbound : ∀ᶠ X : ℕ in atTop,
+      |((subcriticalNumbers c X).card : ℝ) / X -
+        (subcriticalNumbers 1 X).card / X| ≤ E X := by
+    filter_upwards [eventually_ge_atTop (1 : ℕ)] with X hX
+    have hXR : (0 : ℝ) < X := by exact_mod_cast hX
+    rw [← sub_div, abs_div, abs_of_pos hXR]
+    have h := div_le_div_of_nonneg_right
+      (subcritical_count_difference_bound c hc X) hXR.le
+    convert h using 1 <;> dsimp [E, a, b] <;> ring
+  apply tendsto_of_tendsto_of_tendsto_of_le_of_le' hlow hhigh
+  · filter_upwards [hbound] with X hX
+    have := (abs_le.mp hX).1
+    linarith
+  · filter_upwards [hbound] with X hX
+    have := (abs_le.mp hX).2
+    linarith
+
+private lemma radical_count_upper (lam : ℝ) (hlam : 0 < lam) (X : ℕ) :
+    radicalComponentCount lam X ≤ (subcriticalNumbers lam X).card := by
+  change ((Icc 1 X).filter (fun n => n ∈ radicalComponentSet lam)).card ≤ _
+  apply card_le_card
+  intro n hn
+  obtain ⟨hnI, hn2, hnB⟩ := mem_filter.mp hn
+  have hp := largestPrime_mem hn2
+  have hpp := Nat.prime_of_mem_primeFactors hp
+  have he : 1 ≤ n.factorization (largestPrime n) :=
+    hpp.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hp)
+  have hpower : (largestPrime n : ℝ) ^ 2 ≤
+      (largestPrime n : ℝ) ^ (n.factorization (largestPrime n) + 1) := by
+    apply pow_le_pow_right₀ (by exact_mod_cast hpp.one_le)
+    omega
+  have hrad : primeRadical n ≤ n :=
+    Nat.le_of_dvd (by omega) (Nat.prod_primeFactors_dvd n)
+  have hradR : (primeRadical n : ℝ) ≤ n := by exact_mod_cast hrad
+  apply mem_filter.mpr
+  refine ⟨mem_Icc.mpr ⟨hn2, (mem_Icc.mp hnI).2⟩, ?_⟩
+  exact (hpower.trans_lt (hnB _ hp)).trans_le
+    (mul_le_mul_of_nonneg_left hradR hlam.le)
+
+private lemma radical_count_lower (lam : ℝ) (hlam : 0 < lam) (T : ℕ)
+    (hT : 0 < T) : ∃ N : ℕ, ∀ X : ℕ,
+      ((subcriticalNumbers (lam / (T : ℝ) ^ 2) X).card : ℝ) ≤
+        radicalComponentCount lam X + 2 * (X : ℝ) / (T + 1) + N := by
+  obtain ⟨N, hN⟩ := exists_nat_gt ((T : ℝ) ^ 6 / lam)
+  refine ⟨N, fun X => ?_⟩
+  have hcover : subcriticalNumbers (lam / (T : ℝ) ^ 2) X ⊆
+      ((Icc 1 X).filter (fun n => n ∈ radicalComponentSet lam)) ∪
+        StrongPseudoperfectEulerDensity.largeSquares X T ∪ Icc 1 N := by
+    intro n hn
+    have hn' := mem_filter.mp hn
+    have hnI := mem_Icc.mp hn'.1
+    by_cases hsmall : n ≤ N
+    · exact mem_union_right _ (mem_Icc.mpr ⟨by omega, hsmall⟩)
+    apply mem_union_left
+    by_cases hsq : n ∈ StrongPseudoperfectEulerDensity.largeSquares X T
+    · exact mem_union_right _ hsq
+    apply mem_union_left
+    apply mem_filter.mpr
+    refine ⟨mem_Icc.mpr ⟨by omega, hnI.2⟩, hnI.1, ?_⟩
+    have hlarge : (T : ℝ) ^ 6 < lam * n := by
+      have hnR : (N : ℝ) < n := by exact_mod_cast (lt_of_not_ge hsmall)
+      have h := (div_lt_iff₀ hlam).mp (hN.trans hnR)
+      simpa only [mul_comm] using h
+    exact radical_sandwich hlam hnI.1 hnI.2 hsq hlarge hn'.2
+  have hc := (card_le_card hcover).trans
+    ((card_union_le _ _).trans
+      (Nat.add_le_add_right (card_union_le _ _) _))
+  have hcR : ((subcriticalNumbers (lam / (T : ℝ) ^ 2) X).card : ℝ) ≤
+      radicalComponentCount lam X +
+        (StrongPseudoperfectEulerDensity.largeSquares X T).card + N := by
+    have hc' : (subcriticalNumbers (lam / (T : ℝ) ^ 2) X).card ≤
+        radicalComponentCount lam X +
+          (StrongPseudoperfectEulerDensity.largeSquares X T).card + N := by
+      simpa only [radicalComponentCount, count, Nat.card_Icc, Nat.add_sub_cancel] using hc
+    exact_mod_cast hc'
+  have hs := StrongPseudoperfectEulerDensity.largeSquares_card X T
+  linarith
+
+/-- Every positive radical threshold has the same natural density. -/
+theorem result (lam : ℝ) (hlam : 0 < lam) :
+    Tendsto (fun X : ℕ => (radicalComponentCount lam X : ℝ) / X)
+      atTop (𝓝 (1 - log 2)) := by
+  refine tendsto_order.mpr ⟨?_, ?_⟩
+  · intro l hl
+    obtain ⟨T, hT⟩ := exists_nat_gt (max 1 (2 / ((1 - log 2) - l)))
+    have hTpos : 0 < T := by
+      have h := (le_max_left (1 : ℝ) _).trans_lt hT
+      exact_mod_cast (by linarith : (0 : ℝ) < T)
+    have hTR : (0 : ℝ) < T := by exact_mod_cast hTpos
+    have hgap : 2 / ((T : ℝ) + 1) < (1 - log 2) - l := by
+      have hg : 0 < (1 - log 2) - l := by linarith
+      have ht := (le_max_right (1 : ℝ) _).trans_lt hT
+      have hm := (div_lt_iff₀ hg).mp ht
+      apply (div_lt_iff₀ (by positivity : (0 : ℝ) < T + 1)).mpr
+      nlinarith
+    obtain ⟨N, hN⟩ := radical_count_lower lam hlam T hTpos
+    have hc : 0 < lam / (T : ℝ) ^ 2 := div_pos hlam (sq_pos_of_pos hTR)
+    have hlim := ((subcritical_density _ hc).sub
+      (tendsto_natCast_atTop_atTop.const_div_atTop (N : ℝ))).sub_const
+        (2 / ((T : ℝ) + 1))
+    simp only [sub_zero] at hlim
+    have hevent := hlim.eventually (eventually_gt_nhds (by linarith :
+      l < (1 - log 2) - 2 / ((T : ℝ) + 1)))
+    filter_upwards [hevent, eventually_ge_atTop (1 : ℕ)] with X hX hXpos
+    have hXR : (0 : ℝ) < X := by exact_mod_cast hXpos
+    have hb := div_le_div_of_nonneg_right (hN X) hXR.le
+    have he : (2 * (X : ℝ) / ((T : ℝ) + 1)) / X = 2 / ((T : ℝ) + 1) := by
+      field_simp
+    rw [add_div, add_div, he] at hb
+    linarith
+  · intro u hu
+    have he := (subcritical_density lam hlam).eventually (eventually_lt_nhds hu)
+    filter_upwards [he, eventually_ge_atTop (1 : ℕ)] with X hX hXpos
+    have hXR : (0 : ℝ) ≤ X := Nat.cast_nonneg _
+    exact lt_of_le_of_lt (div_le_div_of_nonneg_right
+      (by exact_mod_cast radical_count_upper lam hlam X) hXR) hX
 
 end D5.S3.Arith.Abundancy.ZelinskyRadicalComponentDensity
