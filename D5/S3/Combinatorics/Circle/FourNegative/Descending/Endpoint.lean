@@ -23,7 +23,7 @@ open private reserve_bounds from D5.S3.Combinatorics.Circle.FourNegative.Descend
 open private bank shift mem_shift selected selected_good remainder_eq image_range first_card selected_mass
   from D5.S3.Combinatorics.Circle.FourNegative.Descending.Banks
 
-private theorem half_power (n : ℕ) (hn : 1 ≤ n) :
+theorem half_power (n : ℕ) (hn : 1 ≤ n) :
     (2 : ℤ)^n = 2*2^(n-1) := by
   conv_lhs => rw [show n = (n-1)+1 by omega,pow_succ]
   ring
