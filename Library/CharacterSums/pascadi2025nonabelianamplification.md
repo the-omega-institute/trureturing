@@ -27,6 +27,7 @@ strata_touched:
   - D5/S3/Arith/CharacterSums/PascadiRankFourBadDegreeAverage
   - D5/S3/Arith/CharacterSums/PascadiMixedQuotientFourier
   - D5/S3/Arith/CharacterSums/PascadiTorusConductor
+  - D5/S3/Arith/CharacterSums/PascadiAffineVariance
 license: source-reference
 triage: anchor
 ---
@@ -82,6 +83,16 @@ is onto with kernel of order `p`. The cube word mass therefore equals
 the square word mass divided by `p`, plus the signed primitive cubic
 character contribution. The quantitative bound for that contribution
 remains open.
+
+The repository module `PascadiAffineVariance` gives a centered coverage
+bound for complex weights on affine lines over `ZMod p`. If each
+nonzero Fourier mode annihilates at most `k` of the allowed directions,
+the variance is at most `k*p` times the sum of squared line weights. At
+a fixed third physical row the cubic word reduces modulo `p` to
+`u₁+u₂+1=D*u₁*u₂`, with `D=g*x₃*y₃`. For `D` a unit and `D ≠ -1`,
+the direction set is a nondegenerate hyperbola, yielding `k=2`.
+The weighted correlations between different pivot products remain
+part of the open fixed-coefficient estimate.
 
 The journal version is *Geometric and Functional Analysis* 36 (2026),
 1174–1243, <https://doi.org/10.1007/s00039-026-00746-0>.
