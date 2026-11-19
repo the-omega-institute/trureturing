@@ -115,9 +115,69 @@ private def Page (p : Fin 73) : Prop := ∀ r : Fin 64,
   List.Perm (successors s) (quotientSuccessors (classOf s)) ∧
     BarkerMinimalGridTransfer.terminal s = BarkerMinimalGridQuotient.terminal (classOf s)
 
-private instance pageDecidable (p : Fin 73) : Decidable (Page p) := by
-  unfold Page
-  infer_instance
+open private closed from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
+
+private def windowVertices : List (Vertex 5) :=
+  (List.finRange 3).flatMap fun r => (List.finRange 5).map fun c => (r, c)
+
+private theorem mem_windowVertices (v : Vertex 5) : v ∈ windowVertices := by
+  obtain ⟨r, c⟩ := v
+  exact List.mem_flatMap.mpr ⟨r, List.mem_finRange r,
+    List.mem_map.mpr ⟨c, List.mem_finRange c, rfl⟩⟩
+
+private theorem boolImp_iff (a b : Bool) :
+    (!a || b) = true ↔ (a = true → b = true) := by
+  cases a <;> simp
+
+private def nearby (v : Vertex 5) : List (Vertex 5) :=
+  windowVertices.filter (closed v)
+
+private theorem mem_nearby (u v : Vertex 5) : u ∈ nearby v ↔ closed v u = true := by
+  simp only [nearby, List.mem_filter, mem_windowVertices, true_and]
+
+private theorem closed_symm (u v : Vertex 5) : closed u v = closed v u := by
+  simp only [closed, Nat.dist_comm v.1 u.1, Nat.dist_comm v.2 u.2]
+
+/-- Evaluate the local tests by scanning only the closed neighborhoods they reference. -/
+private def acceptsCheck (w : Window) : Bool :=
+  ((List.finRange 3).all fun r => (nearby (r, 2)).any fun z => present w z && selected w z) &&
+  ((List.finRange 3).all fun r => !selected w (r, 2) ||
+    ((nearby (r, 2)).any fun z => present w z &&
+      ((nearby z).all fun u => !selected w u || u == (r, 2))))
+
+private theorem acceptsCheck_eq (w : Window) : acceptsCheck w = accepts w := by
+  apply Bool.eq_iff_iff.mpr
+  simp only [acceptsCheck, accepts, decide_eq_true_eq, Local, Bool.and_eq_true_iff,
+    List.all_eq_true, List.any_eq_true, List.mem_finRange, mem_nearby,
+    true_implies, boolImp_iff, beq_iff_eq]
+  refine and_congr (forall_congr' fun r => exists_congr fun z => ?_) ?_
+  · exact ⟨fun ⟨hc, hp, hs⟩ => ⟨hp, hs, hc⟩, fun ⟨hp, hs, hc⟩ => ⟨hc, hp, hs⟩⟩
+  · refine forall_congr' fun r => imp_congr_right fun _ => exists_congr fun z => ?_
+    rw [closed_symm (r, 2) z]
+    exact ⟨fun ⟨hc, hp, hn⟩ => ⟨hp, hc, fun u hs hu => hn u hu hs⟩,
+      fun ⟨hp, hc, hn⟩ => ⟨hc, hp, fun u hu hs => hn u hs hu⟩⟩
+
+private def stateCheck (s : State) : Bool :=
+  let masks := (List.finRange 8).filter fun m => acceptsCheck (window s ⟨m.val, by omega⟩)
+  let classes := masks.map fun m => classOf (append s m)
+  let weight : ℤ :=
+    if acceptsCheck (window s 8) && acceptsCheck ![columns s 1, columns s 2, columns s 3, 8, 8]
+    then 1 else 0
+  classes.isPerm (quotientSuccessors (classOf s)) &&
+    (weight == BarkerMinimalGridQuotient.terminal (classOf s))
+
+private theorem stateCheck_iff (s : State) : stateCheck s = true ↔
+    List.Perm (successors s) (quotientSuccessors (classOf s)) ∧
+      BarkerMinimalGridTransfer.terminal s = BarkerMinimalGridQuotient.terminal (classOf s) := by
+  simp only [stateCheck, acceptsCheck_eq, successors, BarkerMinimalGridTransfer.terminal,
+    Bool.and_eq_true_iff, List.isPerm_iff, beq_iff_eq]
+
+private def pageCheck (p : Fin 73) : Bool :=
+  (List.finRange 64).all fun r => stateCheck ⟨64 * p.val + r.val, by omega⟩
+
+private instance pageDecidable (p : Fin 73) : Decidable (Page p) :=
+  decidable_of_iff (pageCheck p = true) (by
+    simp only [pageCheck, Page, List.all_eq_true, List.mem_finRange, true_implies, stateCheck_iff])
 
 private theorem page_0 : Page 0 := by decide +kernel
 
