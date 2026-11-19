@@ -12,7 +12,8 @@ escape_witness: center_card_le (central values never outnumber points, and equal
   central graph complete) with center_card (the capped round-robin space has c+2 central values)
 proof_shape:
   d, Capped: definitions; consumers: the lemmas below and minimum_order.
-  center_card_le, center_iff, center_card: content; consumer: minimum_order.
+  center_card_le, center_iff, center_card: content; consumer: minimum_order (center_sub_range and
+    center_card_le are also consumed by CentralSizeEdgeMinima).
   center_sub_range, d_self, d_ne, d_bounds, d_comm: bind-only helpers; consumers: the metric
     instance, center_card_le, center_iff, center_card.
   minimum_order: content; the odd lower bound reads the forward direction of
@@ -46,12 +47,12 @@ open D5.S3.Combinatorics.Geometry.CompleteCentralParity
 noncomputable section
 
 /-- The central values are the distances to a fixed point that every point realizes. -/
-private lemma center_sub_range (X : Type) [MetricSpace X] (p : X) :
+lemma center_sub_range (X : Type) [MetricSpace X] (p : X) :
     center X ⊆ Set.range fun y => dist y p := fun _ ht => ht.2 p
 
 /-- A finite metric space has at most as many central values as points, and if the counts
 agree, every distance is central. -/
-private lemma center_card_le (X : Type) [Fintype X] [MetricSpace X] [Nonempty X] :
+lemma center_card_le (X : Type) [Fintype X] [MetricSpace X] [Nonempty X] :
     Nat.card (center X) ≤ Fintype.card X ∧
       (Nat.card (center X) = Fintype.card X → centralGraph X = ⊤) := by
   have hrange : ∀ p : X, (Set.range fun y => dist y p).ncard ≤ Fintype.card X := fun p => by
