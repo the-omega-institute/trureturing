@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ArithSums;
 
 internal sealed class HannaLaurentDivisorFormulaDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/ArithSums/hanna2025a391810");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coefficients of the A391810 bilateral Laurent sum are divisor sums of signed "
             + "binomial coefficients.",
@@ -14,7 +17,7 @@ internal sealed class HannaLaurentDivisorFormulaDocument : IScribeDocumentDefini
                 "D5/S3/ArithSums/HannaLaurentDivisorFormula.divisor_formula"),
             H("Divisor formula and the first five columns"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromRepo(Source),
             Blocks(
                 Paragraph(Text(
                     "For n≥1 let T(n,k) be the coefficient of x^(−k) in the formal Laurent "
@@ -24,8 +27,9 @@ internal sealed class HannaLaurentDivisorFormulaDocument : IScribeDocumentDefini
                     + "T(n,1)=1, T(n,2)=−(n−2) for n≥2, T(n,3)=n(n−3)/2+2 for n≥3 and "
                     + "T(n,4)=−(n−3)(n²−3n+8)/6 for n≥4.")),
                 Paragraph(Text(
-                    "The nonpositive coefficients of the Laurent sum are those of the integer "
-                    + "polynomial −1+Σ_{h=1}^{n} y^h(1−y^h)^(n−h) in the inverse variable y. "
+                    "The coefficients of the nonpositive powers in the Laurent sum are those "
+                    + "of the integer polynomial −1+Σ_{h=1}^{n} y^h(1−y^h)^(n−h) in the inverse "
+                    + "variable y. "
                     + "Since (1−y)^m has coefficients (−1)^r·C(m,r), substituting y^h for y "
                     + "shows that y^h(1−y^h)^(n−h) contributes (−1)^(k/h−1)·C(n−h,k/h−1) to "
                     + "y^k exactly when h divides k, and nothing otherwise. Summing over h "
