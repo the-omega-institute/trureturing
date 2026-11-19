@@ -224,7 +224,21 @@ $$\forall (n: \operatorname{Nat}), (\operatorname{D5}.\operatorname{S3}.\operato
 
 Labelled three-colour count.
 
-**Theorem 1.17 (Omitting a label forces constant columns).**
+**Definition 1.17 (Column-parity colouring).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.alternating`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.alternating` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233260: five-row complementary-pair antidiagonal arrays*. URL: <https://oeis.org/A233260>.
+
+*Commentary.*
+
+For any width and two labels a and b, the array has label a at every even column and label b at every odd column.
+
+**Theorem 1.18 (Omitting a label forces constant columns).**
 
 $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow (\forall (P: (\operatorname{Fin}\left(5\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{Proper}\left(P\right)) \Rightarrow (\forall (d: \operatorname{Fin}\left(3\right)), ((\forall (i: (\operatorname{Fin}\left(5\right)) \times (\operatorname{Fin}\left(n\right))), (P\left(i\right) \ne d)) \Rightarrow (\forall (j: \operatorname{Fin}\left(n\right)), (\forall (r: \operatorname{Fin}\left(5\right)), (P\left((r, j)\right) = P\left(((0: \operatorname{Fin}\left(5\right)), j)\right)))))))))$$
 
@@ -238,7 +252,21 @@ $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow (\forall (P: (\operato
 
 Omitting a label forces constant columns.
 
-**Theorem 1.18 (Exact complementary-pair count).**
+**Theorem 1.19 (Two remaining labels alternate with column parity).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.two_label_classification`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.two_label_classification` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233260: five-row complementary-pair antidiagonal arrays*. URL: <https://oeis.org/A233260>.
+
+*Commentary.*
+
+For every width n at least two and every proper Fin 5 by Fin n array P into Fin 3 omitting a label d, there are distinct labels a and b such that P(r,j) is a at even j and b at odd j. Properness uses exactly the horizontal and antidiagonal bonds defined here. The classification applies to any stronger edge predicate containing those bonds.
+
+**Theorem 1.20 (Exact complementary-pair count).**
 
 $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(n\right): \operatorname{Int})) = ((32: \operatorname{Int})^{n}) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(n\right): \operatorname{Int})) + (6))))$$
 
@@ -254,7 +282,7 @@ Exact complementary-pair count.
 
 The pair labels identify {0,5}, {1,4}, and {2,3}. Canonical first occurrences fix the pair names and the first side of each used pair. A pattern with k used pairs has 2^(5*n-k) lifts. At width at least two, every proper pattern uses two or three labels, and every orbit under label permutations has six members. When one label is omitted, the common neighbours of consecutive rows force each column to be constant, including the last column. The two remaining labels alternate with column parity. Exactly one such pattern is canonical. Summing the two possible lift weights gives the displayed identity.
 
-**Theorem 1.19 (The first pair-label recurrence).**
+**Theorem 1.21 (The first pair-label recurrence).**
 
 $$((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(12\right): \operatorname{Int})) + (6) = (((((((16) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(11\right): \operatorname{Int})) + (6))) - ((64) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(10\right): \operatorname{Int})) + (6)))) + ((76) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(9\right): \operatorname{Int})) + (6)))) + ((17) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(8\right): \operatorname{Int})) + (6)))) - ((84) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(7\right): \operatorname{Int})) + (6)))) + ((48) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(6\right): \operatorname{Int})) + (6)))) - ((8) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left(5\right): \operatorname{Int})) + (6)))$$
 
@@ -268,7 +296,7 @@ $$((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorna
 
 The first pair-label recurrence.
 
-**Theorem 1.20 (The pair-label recurrence at every larger width).**
+**Theorem 1.22 (The pair-label recurrence at every larger width).**
 
 $$\forall (n: \operatorname{Nat}), (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (13)\right): \operatorname{Int})) + (6) = (((((((16) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (12)\right): \operatorname{Int})) + (6))) - ((64) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (11)\right): \operatorname{Int})) + (6)))) + ((76) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (10)\right): \operatorname{Int})) + (6)))) + ((17) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (9)\right): \operatorname{Int})) + (6)))) - ((84) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (8)\right): \operatorname{Int})) + (6)))) + ((48) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (7)\right): \operatorname{Int})) + (6)))) - ((8) \cdot (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{L}\left((n) + (6)\right): \operatorname{Int})) + (6))))$$
 
@@ -282,7 +310,7 @@ $$\forall (n: \operatorname{Nat}), (((\operatorname{D5}.\operatorname{S3}.\opera
 
 The pair-label recurrence at every larger width.
 
-**Theorem 1.21 (The seven-lag integer recurrence).**
+**Theorem 1.23 (The seven-lag integer recurrence).**
 
 $$\forall (n: \operatorname{Int}), ((11 < n) \Rightarrow ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left(n\right)\right): \operatorname{Int}) = (((((((512) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (1)\right)\right): \operatorname{Int}))) - ((65536) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (2)\right)\right): \operatorname{Int})))) + ((2490368) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (3)\right)\right): \operatorname{Int})))) + ((17825792) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (4)\right)\right): \operatorname{Int})))) - ((2818572288) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (5)\right)\right): \operatorname{Int})))) + ((51539607552) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (6)\right)\right): \operatorname{Int})))) - ((274877906944) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233260Literal}.\operatorname{a}\left(\operatorname{Int}.\operatorname{toNat}\left((n) - (7)\right)\right): \operatorname{Int})))))$$
 
@@ -311,6 +339,7 @@ Column states record five independent pair labels. Relabelling reduces their tra
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.Q`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.W`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.alternating`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.classWeights`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.class_relabel`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.cls`
@@ -325,6 +354,7 @@ Column states record five independent pair labels. Relabelling reduces their tra
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.quotient_rows`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.relabel`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.two_label_classification`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
