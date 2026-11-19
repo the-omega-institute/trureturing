@@ -4,12 +4,23 @@
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
    utility: none
-   digest: For 0<X≤Y≤Z and 1≤s≤Z/Y, N(X,Y,Z)≥s/2+2/(1+s), with equality iff X=Y, Z=sY. -/
+   digest: For 0<X≤Y≤Z, 1≤s≤Z/Y: N(X,Y,Z)≥s/2+2/(1+s); for s>1, equality iff X=Y, Z=sY. -/
+
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#331)
+escape_witness: nesbitt_gap (N(x,1,t) ≥ G(t) for 0<x≤1≤t, strict unless x=1 once t>1)
+proof_shape:
+  nesbitt_gap: content; consumer: opposite_gap.
+  G_mono: content (monotonicity of G on [1,∞), strict for s>1); consumer: opposite_gap.
+  opposite_gap: content via nesbitt_gap.
+Direct frozen dependencies: none (Mathlib-only imports).
+The reciprocal-product half of #331 is the reciprocal instance of the existing
+ordered_reciprocal_bound and its upstream equality case; it is not re-proved here.
+-/
 
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
