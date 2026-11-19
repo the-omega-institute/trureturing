@@ -96,7 +96,7 @@ private theorem mobiusDyadicMellinSymbol_continuousAt {s : ℂ} (hs : 0 ≤ s.re
   have hI := hZ.continuousAt.inv₀ hZn
   exact hS.mul (continuousAt_const.sub (continuousAt_id.mul hI))
 
-private theorem measurable_unitWeight_mobiusPartialSum : Measurable mobiusPartialSum :=
+theorem measurable_unitWeight_mobiusPartialSum : Measurable mobiusPartialSum :=
   (measurable_of_countable
     (fun k : ℕ => ∑ n ∈ Finset.Icc 1 k, (ArithmeticFunction.moebius n : ℝ) / (n : ℝ))).comp
     Nat.measurable_floor
@@ -113,7 +113,7 @@ private theorem norm_mobiusPartialSum_exp_le {u : ℝ} (hu : 0 ≤ u) :
 private def unitWeightTilt (δ : ℝ) (g : ℝ → ℝ) : ℝ → ℂ :=
   (Ici 0).indicator (fun u => (Real.exp (-δ * u) : ℂ) * (g (Real.exp u) : ℂ))
 
-private theorem measurable_unitWeightTilt (δ : ℝ) {g : ℝ → ℝ} (hg : Measurable g) :
+theorem measurable_unitWeightTilt (δ : ℝ) {g : ℝ → ℝ} (hg : Measurable g) :
     Measurable (unitWeightTilt δ g) := by
   have he : Measurable (fun u : ℝ => (Real.exp (-δ * u) : ℂ)) := by fun_prop
   exact (he.mul (Complex.continuous_ofReal.measurable.comp
@@ -204,7 +204,7 @@ private theorem unitWeightSection_im (δ ξ : ℝ) :
     (unitWeightSection δ ξ).im = 2 * Real.pi * ξ := by
   simp [unitWeightSection, Complex.mul_im]
 
-private theorem fourier_unitWeightTilt (δ ξ : ℝ) (g : ℝ → ℝ) :
+theorem fourier_unitWeightTilt (δ ξ : ℝ) (g : ℝ → ℝ) :
     𝓕 (unitWeightTilt δ g) ξ = halfLineMellin (fun x => (g x : ℂ)) (unitWeightSection δ ξ) := by
   let s := unitWeightSection δ ξ
   have hphase (u : ℝ) :
@@ -484,7 +484,7 @@ private theorem unitWeightDelta_antitone : Antitone unitWeightDelta := by
 private theorem unitWeightDelta_tendsto : Tendsto unitWeightDelta atTop (𝓝 0) :=
   tendsto_one_div_add_atTop_nhds_zero_nat
 
-private theorem measurable_unitWeight_difference : Measurable D :=
+theorem measurable_unitWeight_difference : Measurable D :=
   measurable_unitWeight_mobiusPartialSum.sub
     (measurable_unitWeight_mobiusPartialSum.comp (by fun_prop))
 

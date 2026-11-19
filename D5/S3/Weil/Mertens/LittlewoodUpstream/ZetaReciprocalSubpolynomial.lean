@@ -1,4 +1,4 @@
-/- GID: D5/S3/Weil/Mertens/LittlewoodUpstream/MathlibPR_ZetaInvSubpolynomial
+/- GID: D5/S3/Weil/Mertens/LittlewoodUpstream/ZetaReciprocalSubpolynomial
    generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -10,7 +10,7 @@
 Copyright (c) 2026 Qamar Munawer. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Qamar Munawer
-Source: Qamarbajwa/RiemannBlueprint@1cf9572a7cdc5dbae1860dcb7c80729f614549a4
+Source: https://github.com/Qamarbajwa/RiemannBlueprint/blob/1cf9572a7cdc5dbae1860dcb7c80729f614549a4/RiemannBlueprint/MathlibPR_ZetaInvSubpolynomial.lean
 Adapted to a parameterized zero-free half-plane.
 The strip estimate uses the repository's fractional-part Mellin identity.
 -/
@@ -26,6 +26,7 @@ import Mathlib.NumberTheory.LSeries.Dirichlet
 import Mathlib.NumberTheory.LSeries.Nonvanishing
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.LSeries.SumCoeff
+import D5.S3.Weil.Mertens.Cryptids.VonMangoldtCount.Integral
 import D5.S3.Weil.ZetaPntBounds.NymanFractionalMellin
 
 /-!
@@ -44,6 +45,8 @@ section
 
 open scoped LSeries.notation Topology
 open Asymptotics Complex Filter MeasureTheory Metric Set Real
+open ConjectureMachines.Semantics.Riemann.VonMangoldtCount
+  (norm_riemannZeta_sub_one_le_three_fourths)
 
 /-! ### Fractional-part bound for the strip estimate -/
 
@@ -182,106 +185,10 @@ private theorem norm_riemannZeta_le_three_mul_norm {s : ℂ}
     _ ≤ ‖s‖ + 2 * ‖s‖ := add_le_add h1 h2
     _ = 3 * ‖s‖ := by ring
 
-/-- Telescoping tail bound `∑_{n ≥ 2} n^{-2} ≤ 3/4 < 1`, giving uniform lower/upper bounds
-on `ζ(2 + it)`. -/
-private lemma norm_riemannZeta_sub_one_le_of_two_le_re {s : ℂ} (hs : 2 ≤ s.re) :
-    ‖riemannZeta s - 1‖ ≤ 3 / 4 := by
-  have hs1 : 1 < s.re := by linarith
-  rw [zeta_eq_tsum_one_div_nat_add_one_cpow hs1]
-  have hsum : Summable (fun n : ℕ => 1 / ((n : ℂ) + 1) ^ s) := by
-    have h_norm : Summable (fun n : ℕ => ‖1 / ((n : ℂ) + 1) ^ s‖) := by
-      have h_ev : (fun n : ℕ => ‖1 / ((n : ℂ) + 1) ^ s‖) =
-          fun n : ℕ => ((n : ℝ) + 1) ^ (-s.re) := by
-        ext n
-        rw [norm_div, norm_one, one_div]
-        have hn : (0 : ℝ) < (n : ℝ) + 1 := by positivity
-        rw [← Complex.ofReal_natCast, ← Complex.ofReal_one, ← Complex.ofReal_add,
-          Complex.norm_cpow_eq_rpow_re_of_pos hn, Real.rpow_neg hn.le]
-      rw [h_ev]
-      exact (Real.summable_nat_rpow_inv.mpr hs1).comp_injective
-        Nat.succ_injective |>.congr fun n => by
-        simp [Real.rpow_neg (by positivity : (0 : ℝ) ≤ (n : ℝ) + 1)]
-    exact h_norm.of_norm
-  rw [Summable.tsum_eq_zero_add hsum]
-  simp only [Nat.cast_zero, zero_add, one_cpow, div_one, add_sub_cancel_left]
-  have hsum1 : Summable (fun n : ℕ => 1 / (((n + 1 : ℕ) : ℂ) + 1) ^ s) :=
-    hsum.comp_injective Nat.succ_injective
-  rw [Summable.tsum_eq_zero_add hsum1]
-  have h_zero : 1 / (((0 + 1 : ℕ) : ℂ) + 1) ^ s = 1 / (2 : ℂ) ^ s := by
-    norm_num
-  rw [h_zero]
-  have hsum2 : Summable (fun n : ℕ => 1 / ((n : ℂ) + 3) ^ s) :=
-    (hsum1.comp_injective Nat.succ_injective).congr fun n => by
-      simp only [Function.comp_apply]
-      congr 2
-      push_cast
-      ring
-  have h_shift : (∑' b : ℕ, 1 / ((((b + 1) + 1 : ℕ) : ℂ) + 1) ^ s) =
-      ∑' n : ℕ, 1 / ((n : ℂ) + 3) ^ s := by
-    refine tsum_congr fun n => ?_
-    congr 2
-    push_cast
-    ring
-  rw [h_shift]
-  have h_tele_hasSum : HasSum (fun n : ℕ => (1 : ℝ) / (((n : ℝ) + 2) * ((n : ℝ) + 3))) (1 / 2) := by
-    rw [hasSum_iff_tendsto_nat_of_nonneg (fun _ => by positivity)]
-    have h_part : ∀ N : ℕ, ∑ n ∈ Finset.range N, (1 : ℝ) / (((n : ℝ) + 2) * ((n : ℝ) + 3)) =
-        1 / 2 - 1 / ((N : ℝ) + 2) := by
-      intro N
-      have hterm : ∀ n : ℕ, (1 : ℝ) / (((n : ℝ) + 2) * ((n : ℝ) + 3)) =
-          1 / ((n : ℝ) + 2) - 1 / (((n + 1 : ℕ) : ℝ) + 2) := by
-        intro n; push_cast
-        have h2 : (n : ℝ) + 2 ≠ 0 := by positivity
-        have h3 : (n : ℝ) + 3 ≠ 0 := by positivity
-        field_simp [h2, h3]; ring
-      simp_rw [hterm]
-      rw [Finset.sum_range_sub' (fun n : ℕ => 1 / ((n : ℝ) + 2))]
-      norm_num
-    simp_rw [h_part]
-    have h_inv_lim : Tendsto (fun N : ℕ => 1 / ((N : ℝ) + 2)) atTop (𝓝 0) :=
-      tendsto_const_nhds.div_atTop (tendsto_natCast_atTop_atTop.atTop_add tendsto_const_nhds)
-    simpa using tendsto_const_nhds.sub h_inv_lim
-  have h_re_le : ∀ n : ℕ, ‖1 / ((n : ℂ) + 3) ^ s‖ ≤ (1 : ℝ) / (((n : ℝ) + 2) * ((n : ℝ) + 3)) := by
-    intro n
-    rw [norm_div, norm_one]
-    have hn : (1 : ℝ) ≤ (n : ℝ) + 3 := by linarith [Nat.cast_nonneg (α := ℝ) n]
-    rw [← Complex.ofReal_natCast, ← Complex.ofReal_ofNat, ← Complex.ofReal_add,
-      Complex.norm_cpow_eq_rpow_re_of_pos (by positivity)]
-    have hpow2 : ((n : ℝ) + 3) ^ (2 : ℝ) ≤ ((n : ℝ) + 3) ^ s.re :=
-      Real.rpow_le_rpow_of_exponent_le hn hs
-    have hmul : ((n : ℝ) + 2) * ((n : ℝ) + 3) ≤ ((n : ℝ) + 3) ^ (2 : ℝ) := by
-      rw [Real.rpow_two]
-      nlinarith
-    have h_mul_pos : 0 < ((n : ℝ) + 2) * ((n : ℝ) + 3) := by positivity
-    exact one_div_le_one_div_of_le h_mul_pos (hmul.trans hpow2)
-  have hnorm_sum : ‖1 / (2 : ℂ) ^ s + ∑' n : ℕ, 1 / ((n : ℂ) + 3) ^ s‖ ≤ 3 / 4 := by
-    have h_first : ‖1 / (2 : ℂ) ^ s‖ ≤ 1 / 4 := by
-      rw [norm_div, norm_one, ← Complex.ofReal_ofNat,
-        Complex.norm_cpow_eq_rpow_re_of_pos (by positivity)]
-      have h2 : (2 : ℝ) ^ (2 : ℝ) ≤ (2 : ℝ) ^ s.re :=
-        Real.rpow_le_rpow_of_exponent_le (by norm_num) hs
-      calc 1 / (2 : ℝ) ^ s.re ≤ 1 / ((2 : ℝ) ^ (2 : ℝ)) :=
-            one_div_le_one_div_of_le (by positivity) h2
-        _ = 1 / 4 := by norm_num
-    have h_tail : ‖∑' n : ℕ, 1 / ((n : ℂ) + 3) ^ s‖ ≤ 1 / 2 := by
-      have h_tri_neg : ∀ n : ℕ, 0 ≤ ‖1 / ((n : ℂ) + 3) ^ s‖ := fun _ => norm_nonneg _
-      have h_le_pos : ∀ n : ℕ, 0 ≤ (1 : ℝ) / (((n : ℝ) + 2) * ((n : ℝ) + 3)) :=
-        fun _ => by positivity
-      calc ‖∑' n : ℕ, 1 / ((n : ℂ) + 3) ^ s‖
-          ≤ ∑' n : ℕ, ‖1 / ((n : ℂ) + 3) ^ s‖ := norm_tsum_le_tsum_norm hsum2.norm
-        _ ≤ ∑' n : ℕ, (1 : ℝ) / (((n : ℝ) + 2) * ((n : ℝ) + 3)) :=
-            Summable.tsum_le_tsum h_re_le hsum2.norm h_tele_hasSum.summable
-        _ = 1 / 2 := h_tele_hasSum.tsum_eq
-    calc ‖1 / (2 : ℂ) ^ s + ∑' n : ℕ, 1 / ((n : ℂ) + 3) ^ s‖
-        ≤ ‖1 / (2 : ℂ) ^ s‖ + ‖∑' n : ℕ, 1 / ((n : ℂ) + 3) ^ s‖ := norm_add_le _ _
-      _ ≤ 1 / 4 + 1 / 2 := add_le_add h_first h_tail
-      _ = 3 / 4 := by norm_num
-  simpa using hnorm_sum
-
 /-- For `2 ≤ s.re`, `1 / 4 ≤ ‖ζ(s)‖`, `‖ζ(s)‖ ≤ 7 / 4`, and `‖zetaInv s‖ ≤ 4`. -/
 private lemma norm_zeta_lower_of_two_le_re {s : ℂ} (hs : 2 ≤ s.re) :
     1 / 4 ≤ ‖riemannZeta s‖ ∧ ‖riemannZeta s‖ ≤ 7 / 4 ∧ ‖zetaInv s‖ ≤ 4 := by
-  have hsub := norm_riemannZeta_sub_one_le_of_two_le_re hs
+  have hsub := norm_riemannZeta_sub_one_le_three_fourths hs
   have h_lo : 1 / 4 ≤ ‖riemannZeta s‖ := by
     have htri := norm_sub_norm_le (1 : ℂ) (riemannZeta s)
     rw [norm_one, norm_sub_rev] at htri

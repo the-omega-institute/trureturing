@@ -13,7 +13,8 @@ import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import D5.S3.Analytic.Laplace.CausalExponentialStripTransfer
 import D5.S3.Arith.MoebiusLogarithmic.ReciprocalBound
-import D5.S3.Weil.Mertens.LittlewoodUpstream.MathlibPR_ZetaInvSubpolynomial
+import D5.S3.Weil.Mertens.LittlewoodUpstream.ZetaReciprocalSubpolynomial
+import D5.S3.Weil.ZetaPntBounds.MobiusDyadicUnitWeightParseval
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
 import Mathlib.MeasureTheory.Function.Floor
@@ -39,6 +40,9 @@ open scoped BigOperators ENNReal FourierTransform Topology
 namespace D5.S3.Weil.ZetaPntBounds.MobiusPartialSumL2Divergence
 
 open D5.S3.Analytic.Laplace.CausalExponentialStripTransfer
+open D5.S3.Weil.ZetaPntBounds.MobiusDyadicUnitWeightParseval
+  (fourier_unitWeightTilt measurable_unitWeight_difference measurable_unitWeight_mobiusPartialSum
+    measurable_unitWeightTilt)
 open D5.S3.Arith.MoebiusLogarithmic (reciprocalSum abs_reciprocalSum_le_one)
 open D5.S3.Weil.Mertens.MobiusDyadicEnergy (mobiusDyadicDifference mobiusDyadicShellEnergy)
 
@@ -46,17 +50,8 @@ open D5.S3.Weil.Mertens.MobiusDyadicEnergy (mobiusDyadicDifference mobiusDyadicS
 private def mobiusLogProfile (σ : ℝ) : ℝ → ℂ :=
   (Ici 0).indicator (fun t => (Real.exp (-σ * t) : ℂ) * (mobiusPartialSum (Real.exp t) : ℂ))
 
-private theorem measurable_mobiusPartialSum : Measurable mobiusPartialSum := by
-  exact (measurable_of_countable
-    (fun k : ℕ => ∑ n ∈ Finset.Icc 1 k, (ArithmeticFunction.moebius n : ℝ) / (n : ℝ))).comp
-    Nat.measurable_floor
-
-private theorem measurable_mobiusLogProfile (σ : ℝ) : Measurable (mobiusLogProfile σ) := by
-  have he : Measurable (fun t : ℝ => (Real.exp (-σ * t) : ℂ)) := by fun_prop
-  have hm : Measurable (fun t : ℝ => (mobiusPartialSum (Real.exp t) : ℂ)) :=
-    Complex.continuous_ofReal.measurable.comp
-      (measurable_mobiusPartialSum.comp Real.continuous_exp.measurable)
-  exact (he.mul hm).indicator measurableSet_Ici
+private theorem measurable_mobiusLogProfile (σ : ℝ) : Measurable (mobiusLogProfile σ) :=
+  measurable_unitWeightTilt σ measurable_unitWeight_mobiusPartialSum
 
 private theorem mobiusLogProfile_eq_zero (σ : ℝ) {t : ℝ} (ht : t < 0) :
     mobiusLogProfile σ t = 0 :=
@@ -147,18 +142,6 @@ private theorem tilt_mobiusLogProfile_one (σ : ℝ) :
       show -(1 - σ) * t + -σ * t = -(1 : ℝ) * t by ring]
   · simp [tilt, mobiusLogProfile, ht]
 
-private theorem exp_smul_mobiusMellinIntegrand (s : ℂ) (t : ℝ) :
-    Real.exp t • ((mobiusPartialSum (Real.exp t) : ℂ) * (Real.exp t : ℂ) ^ (-(s + 1))) =
-      Complex.exp (-s * (t : ℂ)) * (mobiusPartialSum (Real.exp t) : ℂ) := by
-  have hn : (Real.exp t : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (Real.exp_pos t).ne'
-  rw [Complex.cpow_def_of_ne_zero hn, ← Complex.ofReal_log (Real.exp_nonneg t),
-    Real.log_exp, Complex.real_smul, Complex.ofReal_exp]
-  calc
-    _ = (Complex.exp (t : ℂ) * Complex.exp ((t : ℂ) * -(s + 1))) *
-        (mobiusPartialSum (Real.exp t) : ℂ) := by ring
-    _ = _ := by
-      rw [← Complex.exp_add, show (t : ℂ) + (t : ℂ) * -(s + 1) = -s * (t : ℂ) by ring]
-
 private theorem fourier_mobiusLogProfile_one :
     𝓕 (mobiusLogProfile 1) = sectionAt regularizedZetaReciprocal 1 := by
   funext ξ
@@ -169,34 +152,9 @@ private theorem fourier_mobiusLogProfile_one :
   have hs : s ≠ 0 := by
     intro hz
     simp [hz] at hs_pos
-  have hphase (t : ℝ) :
-      ((-2 * Real.pi * (t * ξ) : ℝ) : ℂ) * I + ((-(1 : ℝ) * t : ℝ) : ℂ) =
-        -s * (t : ℂ) := by
-    dsimp [s]
-    push_cast
-    ring
   calc
-    𝓕 (mobiusLogProfile 1) ξ =
-        ∫ t : ℝ, (Ici (0 : ℝ)).indicator
-          (fun u : ℝ => Complex.exp (-s * (u : ℂ)) *
-            (mobiusPartialSum (Real.exp u) : ℂ)) t := by
-      rw [Real.fourier_eq']
-      apply integral_congr_ae
-      filter_upwards with t
-      simp only [Real.inner_apply, smul_eq_mul]
-      by_cases ht : t ∈ Ici (0 : ℝ)
-      · simp only [mobiusLogProfile, indicator_of_mem ht, Complex.ofReal_exp]
-        rw [← mul_assoc, ← Complex.exp_add, hphase]
-      · simp [mobiusLogProfile, ht]
-    _ = ∫ t : ℝ in Ioi 0, Real.exp t • ((mobiusPartialSum (Real.exp t) : ℂ) *
-          (Real.exp t : ℂ) ^ (-(s + 1))) := by
-      rw [integral_indicator measurableSet_Ici, integral_Ici_eq_integral_Ioi]
-      exact setIntegral_congr_fun measurableSet_Ioi
-        (fun t _ => (exp_smul_mobiusMellinIntegrand s t).symm)
-    _ = mobiusMellin s := by
-      simpa only [Real.exp_zero, mobiusMellin] using
-        (integral_comp_exp_Ioi (fun x : ℝ => (mobiusPartialSum x : ℂ) *
-          (x : ℂ) ^ (-(s + 1))) 0)
+    𝓕 (mobiusLogProfile 1) ξ = mobiusMellin s :=
+      fourier_unitWeightTilt 1 ξ mobiusPartialSum
     _ = regularizedZetaReciprocal s := by
       rw [regularizedZetaReciprocal_eq hs, add_comm (1 : ℂ) s]
       have hz : riemannZeta (s + 1) ≠ 0 :=
@@ -299,9 +257,6 @@ theorem mobiusPartialSum_weightedEnergy_integrable_of_zero_free {θ α : ℝ}
       _ = _ := by rw [Real.exp_add]; ring
   simpa only [Real.exp_zero, f] using (integrableOn_comp_exp_Ioi f 0).mp hsub
 
-private theorem measurable_mobiusDyadicDifference : Measurable mobiusDyadicDifference :=
-  measurable_mobiusPartialSum.sub (measurable_mobiusPartialSum.comp (by fun_prop))
-
 /-- Dilation preserves weighted integrability of the squared partial sum. -/
 private theorem mobiusPartialSum_weightedEnergy_dilate {α : ℝ}
     (hm : IntegrableOn (fun x : ℝ => mobiusPartialSum x ^ 2 * x ^ (-α)) (Ioi 1)) :
@@ -332,7 +287,7 @@ theorem mobiusDyadicDifference_weightedEnergy_integrable_of_zero_free {θ α : �
     hθ_half hθ_lt_one hzero hα_lo hα_hi
   have hd := mobiusPartialSum_weightedEnergy_dilate hm
   refine ((hm.add hd).const_mul (2 : ℝ)).mono' ?_ ?_
-  · exact ((measurable_mobiusDyadicDifference.pow_const 2).mul
+  · exact ((measurable_unitWeight_difference.pow_const 2).mul
       (by fun_prop : Measurable (fun x : ℝ => x ^ (-α)))).aestronglyMeasurable
   · filter_upwards [ae_restrict_mem (measurableSet_Ioi (a := (1 : ℝ)))] with x hx
     have hw : 0 ≤ x ^ (-α) := Real.rpow_nonneg (zero_le_one.trans (le_of_lt hx)) _
@@ -385,7 +340,7 @@ theorem mobiusDyadicShellEnergy_normalized_tendsto_zero_of_zero_free {θ α : �
       Real.rpow_le_rpow_of_nonpos (ha₀.trans hx.1) hx.2 (neg_nonpos.mpr hα)
     have hconstInt : IntegrableOn (fun x => w * mobiusDyadicDifference x ^ 2) (Ioc a b) := by
       refine hShellInt.mono'
-        ((measurable_mobiusDyadicDifference.pow_const (2 : ℕ)).const_mul w).aestronglyMeasurable ?_
+        ((measurable_unitWeight_difference.pow_const (2 : ℕ)).const_mul w).aestronglyMeasurable ?_
       filter_upwards [ae_restrict_mem (measurableSet_Ioc (a := a) (b := b))] with x hx
       rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg hw.le (sq_nonneg _))]
       simpa only [f, mul_comm] using mul_le_mul_of_nonneg_right (hweight x hx) (sq_nonneg (mobiusDyadicDifference x))
