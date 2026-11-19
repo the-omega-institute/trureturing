@@ -24,6 +24,8 @@ open private compressed_edge_count from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointSymmetric
 open private side_high_neighbors_card high_neighbors_compressed_separated from
   D5.S3.Combinatorics.Graph.HypercubeCritical.TwentyPointTheta
+open private two_neighbor_table from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.FifteenSliceStructure
 open private SimpleGraph.cycle_iso_of_connected_degree_le_two from
   D5.S3.Combinatorics.Graph.Brooks.General
 
@@ -35,6 +37,7 @@ private def cycleLabel (shift : Fin 6) (reverse : Bool) (i : Fin 6) : Fin 6 :=
 
 set_option maxRecDepth 8192 in
 set_option maxHeartbeats 8000000 in
+-- Check the six possible first values separately in the kernel.
 private theorem checked_pairing_values (a : Fin 6) :
     ∀ b c d e f : Fin 6,
       let m : Fin 6 → Fin 6 := ![a, b, c, d, e, f]
@@ -258,6 +261,59 @@ private theorem six_vertex_cycle {V : Type*} [Fintype V] (H : SimpleGraph V)
   have hl : p.length = 6 := by rw [← hp.support_toFinset_card, hu, card_univ, hV]
   exact hl ▸ hiso
 
+private theorem normalize_cycle_attachments {V : Type*} [Fintype V] [DecidableEq V]
+    {H : SimpleGraph V} {A B : Finset V}
+    (e : cycleGraph 6 ≃g H.induce (B : Set V))
+    (hdegree : ∀ x ∈ A, H.degree x = 2 ∧ H.neighborFinset x ⊆ B)
+    (hunique : ∀ y ∈ B, ∃! x, x ∈ A ∧ H.Adj y x)
+    (htriangle : ∀ x y z, H.Adj x y → H.Adj y z → H.Adj z x → False) :
+    ∃ (shift : Fin 6) (reverse opposite : Bool), ∀ i,
+      ∃ x ∈ A, H.neighborFinset x =
+        {(e (cycleLabel shift reverse i)).val,
+          (e (cycleLabel shift reverse (pairingModel opposite i))).val} := by
+  have he {i j : Fin 6} (h : (e i).val = (e j).val) : i = j :=
+    e.injective (Subtype.ext h)
+  have hpair (i : Fin 6) : ∃ j : Fin 6, j ≠ i ∧
+      ∃ x ∈ A, H.neighborFinset x = {(e i).val, (e j).val} := by
+    obtain ⟨x, ⟨hx, hix⟩, _⟩ := hunique (e i).val (e i).property
+    obtain ⟨y, hyi, hyx, hN⟩ := two_neighbor_table (hdegree x hx).1 hix
+    have hyB := (hdegree x hx).2 ((H.mem_neighborFinset x y).mpr hyx.symm)
+    let j := e.symm ⟨y, hyB⟩
+    have hj : (e j).val = y := congrArg Subtype.val (e.apply_symm_apply ⟨y, hyB⟩)
+    refine ⟨j, fun h => hyi (hj.symm.trans (congrArg (fun z => (e z).val) h)), x, hx, ?_⟩
+    rwa [hj]
+  choose m hm using hpair
+  have hends {x : V} {i j : Fin 6}
+      (h : H.neighborFinset x = {(e i).val, (e j).val}) :
+      H.Adj (e i).val x ∧ H.Adj (e j).val x := by
+    constructor
+    · have hi : (e i).val ∈ H.neighborFinset x := by
+        rw [h]
+        exact mem_insert_self _ _
+      exact ((H.mem_neighborFinset _ _).mp hi).symm
+    · have hj : (e j).val ∈ H.neighborFinset x := by
+        rw [h]
+        exact mem_insert_of_mem (mem_singleton_self _)
+      exact ((H.mem_neighborFinset _ _).mp hj).symm
+  have hvalid (i : Fin 6) :
+      m (m i) = i ∧ m i ≠ i ∧ ¬(cycleGraph 6).Adj i (m i) := by
+    obtain ⟨hi, x, hx, hN⟩ := hm i
+    obtain ⟨hj, y, hy, hM⟩ := hm (m i)
+    have hxy := (hunique (e (m i)).val (e (m i)).property).unique
+      ⟨hx, (hends hN).2⟩ ⟨hy, (hends hM).1⟩
+    subst y
+    have hmem := (H.mem_neighborFinset x _).mpr (hends hM).2.symm
+    rw [hN, mem_insert, mem_singleton] at hmem
+    refine ⟨hmem.elim he (fun h => (hj (he h)).elim), hi, ?_⟩
+    intro ha
+    have ha' : H.Adj (e i).val (e (m i)).val := e.map_rel_iff.mpr ha
+    exact htriangle _ _ _ ha' (hends hN).2 (hends hN).1.symm
+  obtain ⟨shift, reverse, opposite, h⟩ := cycle_pairing_normal_form m hvalid
+  refine ⟨shift, reverse, opposite, fun i => ?_⟩
+  obtain ⟨_, x, hx, hN⟩ := hm (cycleLabel shift reverse i)
+  rw [h i] at hN
+  exact ⟨x, hx, hN⟩
+
 private theorem singleton_class_cycle
     {V : Type*} [Fintype V] [DecidableEq V] {G : SimpleGraph V} {L R : Finset V}
     (hp : G.IsBipartiteWith (L : Set V) (R : Set V))
@@ -273,14 +329,20 @@ private theorem singleton_class_cycle
       A.card = 3 ∧
       (∀ x ∈ A, H.degree x = 2 ∧ H.neighborFinset x ⊆ B) ∧
       (∀ y ∈ B, ∃! x, x ∈ A ∧ H.Adj y x) ∧
-      Nonempty (cycleGraph 6 ≃g H.induce (B : Set _)) := by
+      ∃ (e : cycleGraph 6 ≃g H.induce (B : Set _))
+        (shift : Fin 6) (reverse opposite : Bool), ∀ i,
+          ∃ x ∈ A, H.neighborFinset x =
+            {(e (cycleLabel shift reverse i)).val,
+              (e (cycleLabel shift reverse (pairingModel opposite i))).val} := by
   obtain ⟨r, ha, hb, hneighbors, hmatch, hreg⟩ :=
     singleton_class_remainder hp hdeg (fun hxy hx hy => hlow hxy hx hy) hg hL hR
-  refine ⟨r, ha, hneighbors, hmatch, six_vertex_cycle _ ?_ hreg ?_⟩
-  · rw [← Nat.card_eq_fintype_card]
-    exact (Nat.card_eq_fintype_card.trans (Fintype.card_coe _)).trans hb
-  · intro x y z
-    exact compressed_triangle_free hp.symm hg x.val y.val z.val
+  have he := six_vertex_cycle _ (hreg := hreg) (hV := by
+    rw [← Nat.card_eq_fintype_card]
+    exact (Nat.card_eq_fintype_card.trans (Fintype.card_coe _)).trans hb)
+    (fun x y z => compressed_triangle_free hp.symm hg x.val y.val z.val)
+  obtain ⟨e⟩ := he
+  exact ⟨r, ha, hneighbors, hmatch, e,
+    normalize_cycle_attachments e hneighbors hmatch (compressed_triangle_free hp.symm hg)⟩
 
 /-- A 22-vertex coordinate half compresses to parity classes of orders 1 and 9,
 with three disjoint pairs attached to a six-cycle, or to
@@ -300,7 +362,11 @@ theorem half_compression {C : Finset (Q 9)} (hC : C.card = 72)
         A.card = 3 ∧
         (∀ x ∈ A, H.degree x = 2 ∧ H.neighborFinset x ⊆ B) ∧
         (∀ y ∈ B, ∃! x, x ∈ A ∧ H.Adj y x) ∧
-        Nonempty (cycleGraph 6 ≃g H.induce (B : Set _))) ∨
+        (∃ (e : cycleGraph 6 ≃g H.induce (B : Set _))
+          (shift : Fin 6) (reverse opposite : Bool), ∀ i,
+            ∃ x ∈ A, H.neighborFinset x =
+              {(e (cycleLabel shift reverse i)).val,
+                (e (cycleLabel shift reverse (pairingModel opposite i))).val})) ∨
       (Nonempty (compressed G L ≃g turanGraph 5 2) ∧
         Nonempty (compressed G R ≃g turanGraph 5 2)) := by
   let S := coordinateSlice C b
