@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:643755435c633503eee858577823253874fcebab60537791bcd9f8f37d68b879
   normalized_sha256: sha256:643755435c633503eee858577823253874fcebab60537791bcd9f8f37d68b879
 cas_ref: sha256:643755435c633503eee858577823253874fcebab60537791bcd9f8f37d68b879
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Words/ReturnWords/ShortReturnWidthTransport.paired_singleton_short_return_width
+    target_statement_id: sha256:d5af1d277071774313550f43425c3694199dbee4c86633dfe38b409ca893ddbb
 receipts:
   unresolved_subitems: []
   chain_atoms:
