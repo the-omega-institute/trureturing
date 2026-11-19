@@ -172,6 +172,51 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                         + "return maps, and the separation of whole guard cylinders as premises. "
                         + "Application to Proposition 51.3 requires deriving those premises and the "
                         + "second-label phase from the original legal graph."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legal-word-open-cylinders-disjoint"),
+                DeclarationHandle.Create(Prefix + "legal_word_open_cylinders_disjoint"),
+                H("Disjoint open cylinders for distinct legal words"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Two distinct words of the same length start in a common guard. "
+                        + "Each word is legal through its own terminal guard. The image of "
+                        + "the open interval of the first terminal guard under its word map is "
+                        + "disjoint from the corresponding open image for the second word.")),
+                    Paragraph(Text(
+                        "At the first differing label, the open images lie in distinct intervals "
+                        + "of the original five-branch partition. A common preceding label "
+                        + "determines the next guard and acts by an injective affine map. "
+                        + "Closed cylinders can share endpoints."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("width-at-original-first-piece"),
+                DeclarationHandle.Create(Prefix + "width_at_original_first_piece"),
+                H("Width bound using the original first-projection edges"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Fix a vertex of a finite cyclic strongly connected component with "
+                        + "incoherent first labels. Assume each arrow projects to an edge of "
+                        + "the original endpoint graph with that label, and assume a positive "
+                        + "phase modulus p with increment one on each arrow. Take n to be "
+                        + "the component size, d the full guard width at the base vertex, "
+                        + "w the width of its first piece, and g the positive contraction "
+                        + "magnitude of the original three-bit deletion.")),
+                    Paragraph(Text("Set M equal to "),
+                        Math(Bound),
+                        Text(". Then w is at least "),
+                        Math(Mul(Ratio(F.Id("M")), D)),
+                        Text(".")),
+                    Paragraph(Text(
+                        "Edge containment gives the affine transport of each original piece "
+                        + "along a full return, and the guard law makes its output word legal. "
+                        + "The open-cylinder theorem supplies separation for the synchronized "
+                        + "returns in the width argument. Proposition 51.3 still requires a "
+                        + "phase constructed from the original second-label projection."))),
                 DescribeRole.Theorem))));
 
     private static Formula X(Formula i) => Call("x", i);

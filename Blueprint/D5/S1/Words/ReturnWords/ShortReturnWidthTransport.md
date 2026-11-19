@@ -100,13 +100,47 @@ The independently supplied phase has modulus p and increases by one on every edg
 
 The statement takes the original piece and guard intervals, their affine return maps, and the separation of whole guard cylinders as premises. Application to Proposition 51.3 requires deriving those premises and the second-label phase from the original legal graph.
 
+**Theorem 1.8 (Disjoint open cylinders for distinct legal words).**
+
+Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.legal_word_open_cylinders_disjoint`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.legal_word_open_cylinders_disjoint` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two distinct words of the same length start in a common guard. Each word is legal through its own terminal guard. The image of the open interval of the first terminal guard under its word map is disjoint from the corresponding open image for the second word.
+
+At the first differing label, the open images lie in distinct intervals of the original five-branch partition. A common preceding label determines the next guard and acts by an injective affine map. Closed cylinders can share endpoints.
+
+**Theorem 1.9 (Width bound using the original first-projection edges).**
+
+Lean statement: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_original_first_piece`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_original_first_piece` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix a vertex of a finite cyclic strongly connected component with incoherent first labels. Assume each arrow projects to an edge of the original endpoint graph with that label, and assume a positive phase modulus p with increment one on each arrow. Take n to be the component size, d the full guard width at the base vertex, w the width of its first piece, and g the positive contraction magnitude of the original three-bit deletion.
+
+Set M equal to $p \cdot \lfloor\frac{n}{p}\rfloor \cdot \lfloor\frac{2 \cdot n - 1}{p}\rfloor$. Then w is at least $\frac{g^{M}}{1 - g^{M}} \cdot d$.
+
+Edge containment gives the affine transport of each original piece along a full return, and the guard law makes its output word legal. The open-cylinder theorem supplies separation for the synchronized returns in the width argument. Proposition 51.3 still requires a phase constructed from the original second-label projection.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.affine_cylinder_chain_packing`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.contraction_ratio_antitone`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.finite_interval_chain_packing`
+- Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.legal_word_open_cylinders_disjoint`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.short_return_width_lower_bound`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.short_return_width_lower_bound_of_chain`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.synchronized_length_le_phase_bound`
 - Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_incoherent_basepoint`
+- Truth anchor: `D5/S1/Words/ReturnWords/ShortReturnWidthTransport.width_at_original_first_piece`
+- Dependency: [D5/S1/Digit/Infinite/FixedTailClosedBudget](../../Digit/Infinite/FixedTailClosedBudget.md)
+- Dependency: [D5/S1/Digit/Infinite/OddColorThreeSource](../../Digit/Infinite/OddColorThreeSource.md)
 - Dependency: [D5/S1/Words/ReturnWords/CoherentReturnPathTemplates](CoherentReturnPathTemplates.md)

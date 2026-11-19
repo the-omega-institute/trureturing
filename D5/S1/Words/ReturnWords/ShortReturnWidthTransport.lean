@@ -7,6 +7,8 @@
    digest: Finite interval chains supply packing bounds for short-return width transport. -/
 
 import D5.S1.Words.ReturnWords.CoherentReturnPathTemplates
+import D5.S1.Digit.Infinite.FixedTailClosedBudget
+import D5.S1.Digit.Infinite.OddColorThreeSource
 import Mathlib.Data.Nat.GCD.Basic
 import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.Order.Field.Basic
@@ -465,5 +467,176 @@ theorem width_at_incoherent_basepoint
   exact short_return_width_lower_bound hg hg1 (sub_nonneg.mpr hguard.le) hp
     hCpos hDpos (phase_dvd_return phase hphase C) (phase_dvd_return phase hphase D)
     hCb hDb hpack
+
+section LegalCylinders
+
+open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
+open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
+open D5.S1.Digit.Infinite.FixedTailClosedBudget
+open D5.S1.Digit.Infinite.OddColorThreeSource (label_cases golden_relations)
+
+private noncomputable def openGuard (s : Bool) : Set ℝ :=
+  Ioo (-1) (if s then t else 1 + t)
+
+private theorem branch_into_open_bounds (l : Label) {a b x : ℝ}
+    (hc : branch l '' stateInterval (outgoing l) = Icc a b)
+    (hx : x ∈ openGuard (outgoing l)) : branch l x ∈ Ioo a b := by
+  change -1 < x ∧ x < (if outgoing l then t else 1 + t) at hx
+  have h₁ : branch l (-1) ∈ Icc a b := by
+    rw [← hc]
+    exact ⟨-1, ⟨le_rfl, hx.1.le.trans hx.2.le⟩, rfl⟩
+  have h₂ : branch l (if outgoing l then t else 1 + t) ∈ Icc a b := by
+    rw [← hc]
+    exact ⟨_, ⟨hx.1.le.trans hx.2.le, le_rfl⟩, rfl⟩
+  have hg : 0 < g := pow_pos golden_relations.1 3
+  change a < branch l x ∧ branch l x < b
+  unfold branch at h₁ h₂ ⊢
+  exact ⟨h₂.1.trans_lt (by linarith [mul_lt_mul_of_pos_left hx.2 hg]),
+    (by linarith [mul_lt_mul_of_pos_left hx.1 hg] : _ < _).trans_le h₁.2⟩
+
+private theorem branch_into_open_guard {s s' : Bool} {l : Label}
+    (hl : lawful s l s') : MapsTo (branch l) (openGuard s') (openGuard s) := by
+  intro x hx
+  rw [hl.2] at hx
+  have h := branch_into_open_bounds l (closed_observation_graph_realization.2.2.2.2.2.2.2.2 l) hx
+  obtain ⟨ht, ht1, _, hg, hh⟩ := golden_relations
+  rcases label_cases l with rfl | rfl | rfl | rfl | rfl <;> cases s
+  all_goals
+    norm_num [lawful, nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel,
+      Fin.val_natCast] at hl
+  all_goals
+    norm_num [nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel, openGuard,
+      Set.mem_Ioo, Fin.val_natCast] at h ⊢
+  all_goals constructor <;> linarith
+
+private theorem distinct_open_branches {l m : Label} (hne : l ≠ m) :
+    Disjoint (branch l '' openGuard (outgoing l)) (branch m '' openGuard (outgoing m)) := by
+  rw [Set.disjoint_left]
+  rintro _ ⟨x, hx, rfl⟩ ⟨y, hy, heq⟩
+  have h₁ := branch_into_open_bounds l (closed_observation_graph_realization.2.2.2.2.2.2.2.2 l) hx
+  have h₂ := branch_into_open_bounds m (closed_observation_graph_realization.2.2.2.2.2.2.2.2 m) hy
+  rw [heq] at h₂
+  obtain ⟨ht, ht1, _, hg, _⟩ := golden_relations
+  rcases label_cases l with rfl | rfl | rfl | rfl | rfl <;>
+    rcases label_cases m with rfl | rfl | rfl | rfl | rfl
+  all_goals first
+    | exact hne rfl
+    | norm_num [nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel,
+        Fin.val_natCast, Set.mem_Ioo] at h₁ h₂
+      linarith
+
+private theorem word_open_guard {s s' : Bool} {w : List Label}
+    (hw : SourcePath s w s') : MapsTo (wordScalar w) (openGuard s') (openGuard s) := by
+  induction hw with
+  | nil s => exact fun _ hx => hx
+  | cons hl _ ih => exact (branch_into_open_guard hl).comp ih
+
+/-- Distinct equal-length legal words from the same guard have disjoint images of
+their open terminal guards, retaining endpoint contact in the closed cylinders. -/
+theorem legal_word_open_cylinders_disjoint {s s₁ s₂ : Bool} {u v : List Label}
+    (hu : SourcePath s u s₁) (hv : SourcePath s v s₂)
+    (hlen : u.length = v.length) (hne : u ≠ v) :
+    Disjoint (wordScalar u '' Ioo (-1) (if s₁ then t else 1 + t))
+      (wordScalar v '' Ioo (-1) (if s₂ then t else 1 + t)) := by
+  change Disjoint (wordScalar u '' openGuard s₁) (wordScalar v '' openGuard s₂)
+  induction hu generalizing v s₂ with
+  | nil s =>
+    have hvnil : v = [] := List.length_eq_zero_iff.mp hlen.symm
+    exact (hne hvnil.symm).elim
+  | @cons s a s₁ l u hl hu ih =>
+    cases hv with
+    | nil => simp at hlen
+    | @cons _ b _ m v hm hv =>
+      have htail : u.length = v.length := Nat.succ.inj hlen
+      by_cases hfirst : l = m
+      · subst m
+        have hab : a = b := hl.2.trans hm.2.symm
+        subst b
+        have hdis := ih hv htail (fun h => hne (congrArg (List.cons l) h))
+        rw [Set.disjoint_left] at hdis ⊢
+        rintro _ ⟨x, hx, rfl⟩ ⟨y, hy, hxy⟩
+        change branch l (wordScalar v y) = branch l (wordScalar u x) at hxy
+        have hg : 0 < g := pow_pos golden_relations.1 3
+        have he : wordScalar v y = wordScalar u x := by
+          unfold branch at hxy
+          exact (mul_left_cancel₀ hg.ne' (sub_right_inj.mp hxy))
+        exact hdis ⟨x, hx, rfl⟩ ⟨y, hy, he⟩
+      · have hdis := distinct_open_branches hfirst
+        rw [Set.disjoint_left] at hdis ⊢
+        rintro _ ⟨x, hx, rfl⟩ ⟨y, hy, hxy⟩
+        have hx' := word_open_guard hu hx
+        have hy' := word_open_guard hv hy
+        rw [hl.2] at hx'
+        rw [hm.2] at hy'
+        exact hdis ⟨wordScalar u x, hx', rfl⟩ ⟨wordScalar v y, hy', hxy⟩
+
+
+/-- When every first-projection arrow is an original endpoint-graph edge, the
+return maps preserve the original piece and distinct equal-length guard cylinders
+have disjoint interiors. A phase of the other projection remains an input. -/
+theorem width_at_original_first_piece {V : Type u} [Quiver.{v} V] [Finite V]
+    (label : EdgeLabel V Label) (S : StronglyConnectedComponent V)
+    (hcyclic : Cyclic S) (hbad : ¬ Coherent label S) (q : Component S)
+    {Q : ℕ} {R : ℝ} (first : Component S → Vertex Q R)
+    (hedge : ∀ {a b : Component S} (e : a ⟶ b),
+      edge (first a) (componentLabel label S e) (first b))
+    {p : ℕ} (hp : 0 < p) (phase : Component S → ZMod p)
+    (hphase : ∀ {a b : Component S}, (a ⟶ b) → phase b = phase a + 1) :
+    g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p)) /
+      (1 - g ^ (p * (Nat.card (Component S) / p) * ((2 * Nat.card (Component S) - 1) / p))) *
+      ((if (first q).val.1 then t else 1 + t) - (-1)) ≤
+      (first q).val.2.2 - (first q).val.2.1 := by
+  let ℓ : EdgeLabel (Component S) Label := componentLabel label S
+  have hg : 0 < g := pow_pos golden_relations.1 3
+  have hlt : g < 1 := by
+    rw [golden_relations.2.2.2.1]
+    linarith [golden_relations.2.1]
+  have hpath {a b : Component S} (P : Path a b) :
+      SourcePath (first a).val.1 (output ℓ P) (first b).val.1 ∧
+      MapsTo (wordScalar (output ℓ P)) (piece (first b)) (piece (first a)) ∧
+      (output ℓ P).length = P.length := by
+    induction P with
+    | nil =>
+      have hout : output ℓ (Path.nil : Path a a) = [] := by simp [output]
+      rw [hout]
+      exact ⟨.nil _, fun _ h => h, rfl⟩
+    | @cons b c P e ih =>
+      have he := hedge e
+      have hstep : MapsTo (branch (ℓ e)) (piece (first c)) (piece (first b)) := by
+        intro x hx
+        obtain ⟨y, hy, rfl⟩ := he.2.2 hx
+        have hinv : branch (ℓ e) (inverseBranch (ℓ e) y) = y := by
+          unfold branch inverseBranch
+          field_simp [hg.ne']
+          <;> ring
+        exact hinv.symm ▸ hy
+      have ho : output ℓ (P.cons e) = output ℓ P ++ [ℓ e] := by
+        simp only [output, Path.weight_cons, FreeMonoid.toList_mul, FreeMonoid.of,
+          FreeMonoid.toList_ofList]
+      rw [ho]
+      refine ⟨path_append ih.1 (.cons he.1 (.nil _)), ?_, ?_⟩
+      · intro x hx
+        rw [wordScalar_append]
+        exact ih.2.1 (hstep hx)
+      · simp [ih.2.2]
+  have hguard : (-1 : ℝ) < if (first q).val.1 then t else 1 + t := by
+    split <;> linarith [golden_relations.1]
+  have hpiece := (first q).property.2.2.2.2.1
+  have hscalar (C : Path q q) :
+      wordScalar (output ℓ C) =
+        fun x => wordScalar (output ℓ C) 0 + (-g) ^ C.length * x := by
+    funext x
+    rw [wordScalar_affine, (hpath C).2.2]
+  apply width_at_incoherent_basepoint label S hcyclic hbad q hg hlt hguard hpiece
+    hp phase hphase (fun C => wordScalar (output ℓ C) 0)
+  · intro C
+    rw [← hscalar C]
+    exact (hpath C).2.1
+  · intro C D hlen hwords
+    rw [← hscalar C, ← hscalar D]
+    apply legal_word_open_cylinders_disjoint (hpath C).1 (hpath D).1 _ hwords
+    simpa only [(hpath C).2.2, (hpath D).2.2] using hlen
+
+end LegalCylinders
 
 end D5.S1.Words.ReturnWords.ShortReturnWidthTransport
