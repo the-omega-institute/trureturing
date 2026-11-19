@@ -19,10 +19,10 @@ internal sealed class BrowneA164660RootCountDocument : IScribeDocumentDefinition
                 + "Proposition 3 of H. Ma and W. Zhang on A. Browne's final formula for "
                 + "OEIS A164660; the square, cube and fourth-power counts are OEIS A000188, "
                 + "A000189 and A000190.")),
-            Node("D", "The ceiling-exponent divisor", "D",
+            Node("divisor", "The ceiling-exponent divisor", "D",
                 "D_r(n)=∏_{p∣n} p^⌈e_p/r⌉, built from the ceiling exponents (e_p+r−1)/r.",
                 DescribeRole.Definition),
-            Node("C", "The root count", "C", "C_r(n)=n/D_r(n), with natural division.",
+            Node("count", "The root count", "C", "C_r(n)=n/D_r(n), with natural division.",
                 DescribeRole.Definition),
             Node("dvd", "Roots of zero modulo n", "dvd_pow_iff",
                 "For every integer k, n ∣ k^r if and only if D_r(n) ∣ k. For k=0 both hold. "
