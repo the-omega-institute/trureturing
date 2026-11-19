@@ -203,8 +203,10 @@ theorem zero_powers (i : Fin 22) :
       (HardinA233177PairTransfer.Q ^ (n + 7)).mulVec (1 : Fin 14 → ℤ) =
         ∑ j : Fin 6, HardinA233177PairTransfer.coefficients j •
           (HardinA233177PairTransfer.Q ^ (n + 1 + j.val)).mulVec (1 : Fin 14 → ℤ) := by
-    simpa only [Nat.add_assoc] using
-      TransferMatrix.vector_relation_shift HardinA233177PairTransfer.Q 6 1
+    funext k
+    simpa only [single_one_dotProduct, Finset.sum_apply, Pi.smul_apply,
+      smul_eq_mul, Nat.add_assoc] using
+      TransferMatrix.scalarRelationShift HardinA233177PairTransfer.Q (Pi.single k 1) 6 1
         HardinA233177PairTransfer.coefficients HardinA233177PairTransfer.power_polynomial n
   have go (n : ℕ) (hn : n < 22) :
       (HardinA233177PairTransfer.Q ^ n).mulVec (1 : Fin 14 → ℤ) = Z ⟨n, hn⟩ := by
@@ -306,9 +308,10 @@ private theorem tail_polynomial (j : Fin 14) :
       ((HardinA233177PairTransfer.Q ^ (n + 7)).mulVec (1 : Fin 14 → ℤ)) j =
         (∑ k : Fin 6, HardinA233177PairTransfer.coefficients k •
           (HardinA233177PairTransfer.Q ^ (n + 1 + k.val)).mulVec (1 : Fin 14 → ℤ)) j := by
-    simpa only [Nat.add_assoc] using congrFun
-      (TransferMatrix.vector_relation_shift HardinA233177PairTransfer.Q 6 1
-        HardinA233177PairTransfer.coefficients HardinA233177PairTransfer.power_polynomial n) j
+    simpa only [single_one_dotProduct, Finset.sum_apply, Pi.smul_apply,
+      smul_eq_mul, Nat.add_assoc] using
+      TransferMatrix.scalarRelationShift HardinA233177PairTransfer.Q (Pi.single j 1) 6 1
+        HardinA233177PairTransfer.coefficients HardinA233177PairTransfer.power_polynomial n
   have h0 := rel 1
   have h1 := rel 2
   have h2 := rel 3
