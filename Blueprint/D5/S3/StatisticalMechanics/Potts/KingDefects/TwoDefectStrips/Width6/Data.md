@@ -44,7 +44,7 @@ $$\operatorname{horizontal} = \operatorname{StripDefects}.\operatorname{HardinA2
 
 *Commentary.*
 
-The Lean type is Finset (Fin 6 x Fin 6). The five ordered bonds join consecutive columns. This consumed alias delegates to StripDefects.HardinA229584StripData.horizontal. It is bind-only.
+The Lean type is Finset (Fin 6 x Fin 6). The five ordered bonds join consecutive columns. It is defined as StripDefects.HardinA229584StripData.horizontal.
 
 **Definition 1.4 (between).**
 
