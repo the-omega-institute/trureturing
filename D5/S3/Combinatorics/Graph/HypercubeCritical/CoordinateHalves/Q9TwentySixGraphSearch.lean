@@ -1,0 +1,204 @@
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphEncoding
+import Batteries.Tactic.OpenPrivate
+
+/-! Check that the discovery search on fourteen vertices has the listed graph representatives. -/
+
+set_option autoImplicit false
+
+namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentySixGraphSearch
+
+open private Graph adjacent labels search from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphSearch
+open private encode encoded_adj witnessPerm from
+  D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentyFourGraphEncoding
+
+private def decode (code : Nat) : Graph :=
+  ((List.range 14).map fun i => (code >>> (14 * i)) &&& 0x3fff).toArray
+
+private def representatives : Array Nat := #[
+  0x1c0064016002a0064007001f800d002a0038011801600380,
+  0x1c007001a001c001c00b001f800e00340034006800e00380,
+  0x1c00680160034001c00b001f800d002c0064006800e00380,
+  0x1c00680070064004c00b001f400d002a006400c800e00380,
+  0x1600380190064004c00b001ec007003200c400c800e00380,
+  0x1c0068015002a005400b001f800d002a005400a801600380,
+  0x1c0068015000e00c400b001f800c802a005400c801600380,
+  0x1a0070007004600c400b001f400c801a00a400c801600380,
+  0x1a005800d004600c400b001f400a801a00c400c801600380,
+  0xe0068015004600c400b001dc00c802a00c400c801600380,
+  0x1a0064007005200c400b001f400c800e00a4018801600380,
+  0x13006800d005200c400b001f4006800e00c4028801600380,
+  0x14804c00d002a0184019001f200380290054018809200380,
+  0x38007000e001c0038007800f001e001c0038007000e001c0,
+  0x1c003800a40c4005800e100e401e00320064007000e008c0,
+  0x2a00380150025014800e800ca01d001a00c400d000e004c0,
+  0x2c007001a001c001c00b8019801e00340034006800e00340,
+  0x2c003801a0054001c00b8018c01e00340064006800e00340,
+  0x38007000e0016003400b801b001e001c002c006801600340,
+  0x1c006200b0098005400b101b001e0026003400a804600340,
+  0x2c0038019000d014800b8018a01e0032005400c800e00540,
+  0x2a002c0150031014800b8018a01d000e00c4018800e00540,
+  0x19001c02a0031014800b201a201b00160064030800e00540,
+  0xc40b001a0058001c00e4018c01e00340034003800e02240,
+  0xc407001a0098001c00e1019801e00340034003800e02240,
+  0xc403801c00c8001c00e1018c01e00380054003800e02240,
+  0xc403801a00d0001c00e1018c01e00340064003800e02240,
+  0xa403801c00d0001c00e1018c01e001c00c4003800e02240,
+  0x1c00b000c404c002c00e401a401e0038001c005800e00a40,
+  0x38007000c4019003800e801b001e001c001c003800e00c40,
+  0x1c007000c4089003800e101b001e0038001c003800e00c40,
+  0x1a007000c4089005800e101b001e001a0094003800e00c40,
+  0x1c006800640a1005800e101b001d002a0064003800e00c40,
+  0x1c005800a40a1005800e101b001b00320064003800e00c40,
+  0x1c00b0013002a001c019401a801d0031003400a801a00340,
+  0x1c00e000d000e002c019401b001e0029001c00c801a00340,
+  0x1c00b0019000e002c019401a801e0031001c00c801a00340,
+  0xb006401480b0002c0191019801d000d008c030802a00340,
+  0x15006400a8098008c019101b001680250034030802a00340,
+  0x1c005400380a8008c019101b001980310034018802a00340,
+  0x19005400680a8008c019101b001980190034030802a00340,
+  0xd005401280a8008c0191019801980310034030802a00340,
+  0x2c0034011804a00a40198018c01c8031001c018803200340,
+  0x38007000b0015002c01a801b001e0015002c00c800e00640,
+  0xc40700190089003801a1019801e0031001c00a800e02440,
+  0x1a0034034000d008c01a201a801c80190094014800e00640,
+  0x1900e00070019008c01a401b001c800d0034028800e00640,
+  0x380064005401900a801a801b001c800d001c018800e00c40,
+  0xe007001c000e001c0890419801e00380094006801a00340,
+  0x19007000e001a001c089041b001e001c0034022801a00340,
+  0xd007001a0016002c0890419801e0034002c024801a00340,
+  0x19003401c001a002c089041a801e001c001c030801a00340,
+  0xd00640160032002c0890419801d002c002c030801a00340,
+  0x1c003400d004a002c089041a401e0038001c018801a00340,
+  0xd00380190052002c0890418c01e0034004c028801a00340,
+  0x1c006400e000e004c089041b001e002a0034014801a00340,
+  0x1a006400e0016004c089041b001e000e00a4014801a00340,
+  0xe00680150026004c0890419801d002a00c400c801a00340,
+  0x1c0064007002a004c089041b001d002a0034018801a00340,
+  0x15007000b002a004c089041b001700320034028801a00340,
+  0x15006400e002a004c089041b0017002a0034030801a00340,
+  0x1c0034013002a004c089041a801d00320034018801a00340,
+  0x190034016002a004c089041a801d001a0034030801a00340,
+  0x15003401a002a004c089041a801700320034030801a00340,
+  0x1c003400b004a004c089041a401e00320034018801a00340,
+  0xd006400e004a004c0890419401e002a0034030801a00340,
+  0x1c0070009800e0064089041b001e0032001c00c803200340,
+  0x190034018801a0064089041a801e0016001c030803200340,
+  0x1c0064005802a0064089041b001d002a001c018803200340,
+  0x15006400c802a0064089041b0017002a001c030803200340,
+  0x1a006400580320064089041b001d000e008c018803200340,
+  0x11806400c80380064089041b0017000e001c03080a200340,
+  0x9403401c004a00680890418c01e001a001c030801a02140,
+  0x19002c014801a00c4089041a801c800e0054030803200340,
+  0xd0070009404a002c0980419401e0031001c028801a00a40,
+  0x1c006400c400b0038098041b001e0029001c012801a00c40,
+  0x488032026000d01920182014203c8019003400680c1004c0,
+  0x340098006402a0190007c012202180780070003801500920,
+  0x26005800640a2019000790112021807800e0003801500920,
+  0x3400b001a001c001c00bc012802600740034006800d00320,
+  0x380070026001c001c00ba013002c005c0034006800d00320,
+  0x2c00d0016002c001c00bc011802900780034006800d00320,
+  0x34009801a0034001c00bc012802300740064006800d00320,
+  0x34009800e0064001c00bc012402300780064006800d00320,
+  0x1c005402600a8001c00b3013002900780034012800d00320,
+  0x3400b000c804c003400bc01240260078001c006802500320,
+  0x2c00920160064003400bc010c0290078002c006804500320,
+  0x380064026001c004c00ba013002c004e0034014800d00320,
+  0x2a00580248064005400ba0114029005a00c4006802500320,
+  0x2600580288064005400ba0114023007200c4006802500320,
+  0x3400c800e0015009800bc0130022806c0064006800d00520,
+  0x34009801a0015009800bc012802280740064006800d00520,
+  0x3400c800d000d00c800bc0130022806a005400c800d00520,
+  0x340098019000d00c800bc01280228072005400c800d00520,
+  0x2600c8019001500c800bc0118022806600c400c800d00520,
+  0x2c00c8015002a001c019c01180290069005400a801900320,
+  0x1500d002a002a001c0196013002300710034022801900320,
+  0x3400b000a804c001c019c012402600710034006802900320,
+  0x2c0070022804c001c019a011402c00710034006802900320,
+  0x3800d000d000e002c019c013002a0059001c00c801900320,
+  0x1900e00260016002c0196013002c004d002c024801900320,
+  0x34005402a0026002c019a01300230071002c014801900320,
+  0x3800a2015000e0064019c012802c004b001c00c805100320,
+  0x1a005404c008a004c80c1017002a005a00940118019002a0,
+  0x580070007008a001e0181017002c0059003400a8019002a0,
+  0x4900700130092002e0181015802c0055002c0288019002a0,
+  0x52002a01c0091001e01410328026004d00c2003804900620,
+  0x1c0032052008300348141032802c0071002a003805100620,
+  0x34003201a01030034414803280260071002a003805100620,
+  0x12410a0190032024501408328023004700c2009805102220]
+
+private def relabels (graph : Graph) (witness : Nat) : Bool :=
+  let index := witness >>> 56
+  let rep := representatives[index]!
+  let vertices := List.range 14
+  index < representatives.size &&
+    vertices.all (fun i => labels witness i < 14) &&
+    (vertices.map (labels witness)).eraseDups.length == 14 &&
+    vertices.all (fun i =>
+      let row := graph[i]!
+      let repRow := rep >>> (14 * labels witness i)
+      vertices.all fun j => row.testBit j == repRow.testBit (labels witness j))
+
+private def relabelingCheck (branch : Nat × Nat × List Nat) : Bool :=
+  let (code, discovered, certificates) := branch
+  let results := search 14 8 6 discovered (decode code)
+  results.length == certificates.length && (results.zipWith relabels certificates).all id
+
+private theorem relabels_sound {V : Type*} (G : SimpleGraph V) [DecidableRel G.Adj]
+    (number : Fin 14 ≃ V) (word : Nat)
+    (hw : relabels (encode fun i j => decide (G.Adj (number i) (number j))) word = true) :
+    ∃ (index : Fin 110) (label : Fin 14 ≃ V), ∀ i j : Fin 14,
+      (representatives[index.val]! >>> (14 * i.val)).testBit j.val = true ↔
+        G.Adj (label i) (label j) := by
+  let edge : Fin 14 → Fin 14 → Bool := fun i j => decide (G.Adj (number i) (number j))
+  let index := word >>> 56
+  change (((decide (index < representatives.size) &&
+    (List.range 14).all (fun i => decide (labels word i < 14))) &&
+    (((List.range 14).map (labels word)).eraseDups.length == 14)) &&
+    (List.range 14).all (fun i => (List.range 14).all fun j =>
+      adjacent (encode edge) i j ==
+        (representatives[index]! >>> (14 * labels word i)).testBit (labels word j))) =
+    true at hw
+  obtain ⟨⟨⟨hindex, hbound⟩, hn⟩, hmatrix⟩ := by
+    simpa only [Bool.and_eq_true_iff] using hw
+  let p := witnessPerm (order := 14) word
+    (fun i hi => of_decide_eq_true (List.all_eq_true.mp hbound _ (List.mem_range.mpr hi)))
+    (beq_iff_eq.mp hn)
+  have hr : representatives.size = 110 := rfl
+  let idx : Fin 110 := ⟨index, hr ▸ of_decide_eq_true hindex⟩
+  refine ⟨idx, p.symm.trans number, fun i j => ?_⟩
+  let a := p.symm i
+  let b := p.symm j
+  have h := List.all_eq_true.mp
+    (List.all_eq_true.mp hmatrix _ (List.mem_range.mpr a.isLt)) _ (List.mem_range.mpr b.isLt)
+  have ha : labels word a.val = i.val := congrArg Fin.val (p.apply_symm_apply i)
+  have hb : labels word b.val = j.val := congrArg Fin.val (p.apply_symm_apply j)
+  have he := beq_iff_eq.mp h
+  rw [ha, hb, encoded_adj edge a b] at he
+  change (representatives[index]! >>> (14 * i.val)).testBit j.val = true ↔
+    G.Adj (number a) (number b)
+  rw [← he]
+  exact decide_eq_true_iff
+
+private theorem witness_of_branch (branch : Nat × Nat × List Nat)
+    (check : relabelingCheck branch = true) {graph : Graph}
+    (hg : graph ∈ search 14 8 6 branch.2.1 (decode branch.1)) :
+    ∃ witness, relabels graph witness = true := by
+  let results := search 14 8 6 branch.2.1 (decode branch.1)
+  let certificates := branch.2.2
+  change (results.length == certificates.length &&
+    (results.zipWith relabels certificates).all id) = true at check
+  obtain ⟨hlen, hchecks⟩ := Bool.and_eq_true_iff.mp check
+  have hl : results.length = certificates.length := beq_iff_eq.mp hlen
+  obtain ⟨i, hi, hgi⟩ := List.mem_iff_getElem.mp hg
+  change i < results.length at hi
+  have hj : i < certificates.length := hl ▸ hi
+  have hk : i < (results.zipWith relabels certificates).length := by
+    simpa [List.length_zipWith, ← hl] using hi
+  have hc := List.all_eq_true.mp hchecks _
+    (List.getElem_mem (l := results.zipWith relabels certificates) hk)
+  simp only [List.getElem_zipWith, id_eq] at hc
+  change results[i] = graph at hgi
+  exact ⟨certificates[i], hgi ▸ hc⟩
+
+end D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TwentySixGraphSearch

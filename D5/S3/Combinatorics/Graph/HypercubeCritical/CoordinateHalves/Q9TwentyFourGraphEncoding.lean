@@ -601,12 +601,12 @@ termination_by xs.length
 decreasing_by
   exact Nat.lt_succ_of_le (List.length_filter_le _ _)
 
-private noncomputable def witnessPerm (word : Nat) (hb : ∀ i < 12, labels word i < 12)
-    (hn : ((List.range 12).map (labels word)).eraseDups.length = 12) : Equiv.Perm (Fin 12) := by
-  let f := fun i : Fin 12 => (⟨labels word i.val, hb i.val i.isLt⟩ : Fin 12)
-  let l := (List.range 12).map (labels word)
+private noncomputable def witnessPerm (word : Nat) (hb : ∀ i < order, labels word i < order)
+    (hn : ((List.range order).map (labels word)).eraseDups.length = order) : Equiv.Perm (Fin order) := by
+  let f := fun i : Fin order => (⟨labels word i.val, hb i.val i.isLt⟩ : Fin order)
+  let l := (List.range order).map (labels word)
   have spec := eraseDups_spec l
-  have hlen : l.length = 12 := by simp [l]
+  have hlen : l.length = order := by simp [l]
   have hself := spec.1.length_eq.mp (hn.trans hlen.symm)
   have hnd : l.Nodup := hself ▸ spec.2
   have hi := (List.nodup_map_iff_inj_on List.nodup_range).mp hnd
@@ -636,7 +636,7 @@ private theorem representative_of_graph {V : Type*} [Fintype V] (G : SimpleGraph
       adjacent (decode representatives[index]!) (labels word i) (labels word j))) = true at hw
   obtain ⟨⟨⟨hindex, hbound⟩, hnodup⟩, hmatrix⟩ := by
     simpa only [Bool.and_eq_true_iff] using hw
-  let p := witnessPerm word (fun i hi =>
+  let p := witnessPerm (order := 12) word (fun i hi =>
     of_decide_eq_true (List.all_eq_true.mp hbound _ (List.mem_range.mpr hi)))
     (beq_iff_eq.mp hnodup)
   have hr : representatives.size = 22 := rfl
