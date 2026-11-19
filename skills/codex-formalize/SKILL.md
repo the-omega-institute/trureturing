@@ -150,8 +150,6 @@ theorem`; the other carried its bucket's 24-file count, its implementation base 
 went where it did. That kind of sentence belongs in the pull request body, which is where the
 provenance account is required anyway.
 
-The cost of getting this wrong is a whole redo, not an edit: the coverage receipt binds the Scribe
-bytes, so prose fixed after `make cover` invalidates the deposit and the lane pays for a second one.
 Read the prose once before depositing and ask of every sentence whether it would still make sense to a
 reader who has never heard of this repository's ledger.
 
@@ -197,8 +195,10 @@ Obtain exact statement, axiom and material evidence through
 needed). Targets must be explicit and nonempty; the scope includes their named utility inputs, and Lake owns each import closure and incremental
 compilation. Run `make emit PATHS=<NUL-separated selected Lean/Scribe paths>` to generate the
 canonical projections; it builds only the selected Scribe Lean inputs, their named utility inputs and imports. Never hand-write
-a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scope from the GID, and
-`cover-batch` from all batch GIDs. Coverage also selects existing targets of those atoms and their transitive chain atoms, checking current identities before writing. These local doors require no full report or full build. CI and
+a mirror or placeholder. In the main checkout, `deposit` and `deposit-uncovered` select the module from the GID.
+After the declaration is frozen on main's `dev`, run `make cover ATOM_ID=… GID=…` or
+`make cover-batch ATOMS=…` in the source theories checkout. The coverage writer resolves the main
+branch once per invocation and records the frozen declaration for each atom. CI and
 explicit whole-repository verification retain their required scope. Do not run full compilation unless an explicit whole-repository request or a concrete integration obligation cannot be met by scoped checks. State the need and pass `FULL_BUILD=1` in every full-build invocation (`make lean FULL_BUILD=1`, `make lean-report FULL_BUILD=1`, `make test FULL_BUILD=1`, `make warm-donor FULL_BUILD=1`), including indirect entries and any gate selected by `make gate-plan` that triggers a full build. Direct scripts use a command-local `FULL_BUILD=1` environment assignment. Make full-build entries and their direct scripts reject calls without `FULL_BUILD=1`; cache failure, retries and final verification do not supply permission to broaden scope. Required CI does not require a duplicate local full build.
 
 Scoped deposit retains SL-031's compiled utility checks. A target's named utility references
@@ -394,7 +394,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 
 - **Merge `origin/dev` and verify before changing the working tree**: the only trustworthy sync check is `git merge-base --is-ancestor origin/dev HEAD` — a piped or prettified merge command has silently failed and sent validation onto a stale base.
 - **A capacity or baseline red may be the baseline's fault, not yours**: a candidate diffed against an older base once made another driver's new file look like this lane's twelfth — the remedy was merging newer `dev` and re-pushing, not restructuring. Before treating a structural red as yours, re-sync and re-run.
-- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself and follow the repository's merge-only synchronization policy. Never force-push. Checkpoint recoverable deposit and cover changes locally, including before long checks and hand-off; publish only after Step 7's complete publication boundary, identified by its base, tip and cumulative diff.
+- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself and follow the repository's merge-only synchronization policy. Never force-push. Checkpoint recoverable changes in their owning repositories, including before long checks and hand-off; publish only after Step 7's complete publication boundary, identified by its base, tip and cumulative diff.
 
 ### Process honesty
 
@@ -423,6 +423,6 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Capacity limits are owned by `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`.
 - Lean header shape is owned by the live harness and demonstrated by current tracked neighbours.
 - Import direction is owned by the repository specification and its StrataLint rules.
-- Admission, freezing, coverage, and status are owned by the canonical `make` doors and `tools/`.
+- Main owns admission and freezing. The source theories repository owns atom coverage and digestion status.
 
 This skill names each concern's owner without reproducing its definitions or thresholds. The prohibitions above are pointers that carry the owner's name. Discover each concern's current form from its owner; the harness is the judge.
