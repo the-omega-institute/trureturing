@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Sharp relative metric stability for projections onto one subspace. -/
+   digest: Relative metric stability for projections onto one subspace. -/
 
 import Mathlib.Analysis.InnerProductSpace.StarOrder
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Instances

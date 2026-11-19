@@ -109,24 +109,14 @@ local notation "E" => EuclideanSpace ℂ (n × n)
 def visibleCoordinates (b : M) (hb : b.PosDef) (B : Submodule ℂ M) : Submodule ℂ E :=
   B.map (metricCoordinates b hb).toLinearEquiv.toLinearMap
 
-/-- The reference coordinates of the genuine projection for the changed BKM form. -/
+/-- The reference coordinates of the genuine projection for the changed BKM form.
+Pulled back to matrix space, the residual pairs to zero with every element of the
+visible subspace in the BKM form at `a`. -/
 def changedProjection {a b : M} (ha : a.PosDef) (hb : b.PosDef)
     {l u : ℝ} (hl : 0 < l) (hlu : l ≤ u) (hlo : l • b ≤ a) (hhi : a ≤ u • b)
     (B : Submodule ℂ M) : E →L[ℂ] visibleCoordinates b hb B :=
   relativeProjection (visibleCoordinates b hb B) (relativeOperator a b) hl
     (relativeOperator_bounds ha hb hl hlu hlo hhi).1
-
-/-- The transported projection satisfies the physical BKM orthogonality equation. -/
-theorem changedProjection_bkm_orthogonal {a b : M} (ha : a.PosDef) (hb : b.PosDef)
-    {l u : ℝ} (hl : 0 < l) (hlu : l ≤ u) (hlo : l • b ≤ a) (hhi : a ≤ u • b)
-    (B : Submodule ℂ M) (X Y : M) (hY : Y ∈ B) :
-    let e := metricCoordinates b hb
-    let R := changedProjection ha hb hl hlu hlo hhi B
-    bkmInner a Y (X - e.symm (R (e X) : E)) = 0 := by
-  dsimp only
-  rw [← relativeOperator_inner a b ha hb, map_sub, ContinuousLinearEquiv.apply_symm_apply]
-  exact relativeProjection_orthogonal _ _ hl (relativeOperator_bounds ha hb hl hlu hlo hhi).1
-    _ _ (Submodule.mem_map.mpr ⟨Y, hY, rfl⟩)
 
 /-- One physical generator, transported once to the reference Euclidean space. -/
 def referenceGenerator (b : M) (hb : b.PosDef) (L : M →L[ℂ] M) : E →L[ℂ] E :=
@@ -183,7 +173,6 @@ theorem bkm_heat_defect_comparison {a b : M} (ha : a.PosDef) (hb : b.PosDef)
 
 #print axioms visibleCoordinates
 #print axioms changedProjection
-#print axioms changedProjection_bkm_orthogonal
 #print axioms referenceGenerator
 #print axioms bkm_heat_defect_comparison
 

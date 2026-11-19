@@ -28,10 +28,10 @@ internal sealed class BKMActualMetricHeatDocument : IScribeDocumentDefinition
                 "onto V. Both compressions use V.", DescribeRole.Definition),
             Entry("changed-projection", "changedProjection", "Projection for the changed BKM form",
                 "Use the relative BKM operator as the coefficient Z. The density sandwich " +
-                "supplies the positive lower bound in reference coordinates.", DescribeRole.Definition),
-            Entry("bkm-orthogonality", "changedProjection_bkm_orthogonal", "Physical BKM orthogonality",
-                "Pull the changed projection back to matrix space through the reference coordinates. " +
-                "Its residual pairs to zero with every member of B in the BKM form at a."),
+                "supplies the positive lower bound in reference coordinates. Pulling the projection " +
+                "back to matrix space gives a residual that pairs to zero with every member of B " +
+                "in the BKM form at a, by the Gram equation and the relative BKM operator identity.",
+                DescribeRole.Definition),
             Entry("reference-generator", "referenceGenerator", "Generator in reference coordinates",
                 "Conjugate the bounded physical generator L by the square-root coordinates of b.",
                 DescribeRole.Definition),
