@@ -13,7 +13,8 @@ internal sealed class HardinA229537StripDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name,Formula formula,bool theorem) => Describe.Lean(
         DescribeId.Create(name.Replace("_","-").ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name),
         StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/SpinModels/hardin2013a229537")),
-        Blocks(Paragraph(Text("The filter counts every actual four-by-n array over Fin 3 with one monochromatic HDA bond and row-major canonical colour introduction. All counts in the recurrence are cast from Nat to Int. Colour relabelling contributes a factor six because at least two colours occur in this range. The recurrence holds at every index at least fifteen."))),theorem?DescribeRole.Theorem:DescribeRole.Definition);
+        Blocks(Paragraph(Text("The filter counts every actual four-by-n array over Fin 3 with one monochromatic HDA bond and row-major canonical colour introduction. All counts in the recurrence are cast from Nat to Int. Colour relabelling contributes a factor six because at least two colours occur in this range. The recurrence holds at every index at least fifteen."))),theorem?DescribeRole.Theorem:DescribeRole.Definition,
+        name=="result"?new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin229537"), ResolutionKind.Proved):null);
     private static Formula N(long n) => n<0 ? Parenthesized(Seq(Minus,N(-n))) : new Formula.Number(n);
     private static Formula V(string n) => F.Id(n);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((p,i)=>i==0?new[]{Seq(Operatorname,Grp(V(p)))}:new[]{Dot,Seq(Operatorname,Grp(V(p)))}).ToArray());
