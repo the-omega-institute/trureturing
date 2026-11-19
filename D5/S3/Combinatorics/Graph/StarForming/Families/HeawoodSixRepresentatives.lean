@@ -1,15 +1,15 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodSixRepresentatives
-   generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodSixRepresentatives
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodSixRepresentatives
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/HeawoodSixRepresentatives
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
    digest: Six explicit signings cover every connected binary lift of the Heawood graph. -/
 
 import D5.S1.Eigenstructure.BinaryTraceZeroSimilarity
-import D5.S3.Combinatorics.Graph.StarForming.HeawoodMatrixAction
+import D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodMatrixAction
 
-namespace D5.S3.Combinatorics.Graph.StarForming.HeawoodSixRepresentatives
+namespace D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodSixRepresentatives
 
 open HeawoodSwitching HeawoodLift
 open D5.S1.Eigenstructure
@@ -43,4 +43,4 @@ theorem exists_representative (s : Signing) (h : (graph s).Preconnected) :
   obtain ⟨e⟩ := HeawoodMatrixAction.isomorphic_of_phi_conjugate (representative k) s g he
   exact ⟨k, ⟨e.symm⟩⟩
 
-end D5.S3.Combinatorics.Graph.StarForming.HeawoodSixRepresentatives
+end D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodSixRepresentatives

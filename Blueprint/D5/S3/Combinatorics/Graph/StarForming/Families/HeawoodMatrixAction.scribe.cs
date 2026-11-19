@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming.Families;
 
 internal sealed class HeawoodMatrixActionDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class HeawoodMatrixActionDocument : IScribeDocumentDefinition
         "Conjugating the Fano flag gain transports the actual two-sheet graph.",
         H("Coordinate transport of Heawood double covers"), Blocks(
         Describe.Lean(DescribeId.Create("isomorphic-of-phi-conjugate"),
-            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/StarForming/HeawoodMatrixAction.isomorphic_of_phi_conjugate"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodMatrixAction.isomorphic_of_phi_conjugate"),
             H("Conjugate gains give isomorphic double covers"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("Let s and t be signings of the twenty-one flags of the binary Fano plane. If the linear gain of t equals g times the gain of s times the inverse of g for an invertible binary three-by-three matrix g, the two-sheet graphs of s and t are isomorphic.")),

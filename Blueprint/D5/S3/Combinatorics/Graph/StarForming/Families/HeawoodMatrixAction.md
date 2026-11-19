@@ -6,9 +6,9 @@ Conjugating the Fano flag gain transports the actual two-sheet graph.
 
 **Theorem 1.1 (Conjugate gains give isomorphic double covers).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodMatrixAction.isomorphic_of_phi_conjugate`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodMatrixAction.isomorphic_of_phi_conjugate`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodMatrixAction.isomorphic_of_phi_conjugate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodMatrixAction.isomorphic_of_phi_conjugate` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -22,5 +22,5 @@ Source: Heawood double-cover gain, linear conjugacy. https://github.com/the-omeg
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodMatrixAction.isomorphic_of_phi_conjugate`
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodLift](HeawoodLift.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodMatrixAction.isomorphic_of_phi_conjugate`
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodLift](../HeawoodLift.md)

@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming.Families;
 
 internal sealed class HeawoodSixRepresentativesDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Certificates/omega2026starformingfamily");
 
-    private const string Owner = "D5/S3/Combinatorics/Graph/StarForming/HeawoodSixRepresentatives.";
+    private const string Owner = "D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodSixRepresentatives.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every connected binary Heawood lift is represented by six explicit flag signings.",

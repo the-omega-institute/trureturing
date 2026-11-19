@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/StarForming/HeawoodMatrixAction
-   generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodMatrixAction
+/- GID: D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodMatrixAction
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/Families/HeawoodMatrixAction
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Graph.StarForming.HeawoodLift
 
 /-! An invertible point coordinate change acts contragrediently on lines. -/
 
-namespace D5.S3.Combinatorics.Graph.StarForming.HeawoodMatrixAction
+namespace D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodMatrixAction
 
 open HeawoodSwitching HeawoodLift Matrix
 open scoped BigOperators
@@ -204,4 +204,4 @@ theorem isomorphic_of_phi_conjugate (s t : Signing) (g : Matˣ)
   exact ⟨(liftIso g s).trans e⟩
 
 end
-end D5.S3.Combinatorics.Graph.StarForming.HeawoodMatrixAction
+end D5.S3.Combinatorics.Graph.StarForming.Families.HeawoodMatrixAction

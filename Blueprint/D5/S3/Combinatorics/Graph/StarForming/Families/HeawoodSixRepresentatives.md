@@ -6,9 +6,9 @@ Every connected binary Heawood lift is represented by six explicit flag signings
 
 **Theorem 1.1 (Connected signings have one of six representatives).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodSixRepresentatives.exists_representative`
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodSixRepresentatives.exists_representative`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodSixRepresentatives.exists_representative` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodSixRepresentatives.exists_representative` (`✓ std3`). ∎
 
 *Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
 
@@ -22,6 +22,6 @@ Pairwise nonisomorphism of the six graphs under arbitrary graph isomorphisms is 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodSixRepresentatives.exists_representative`
-- Dependency: [D5/S1/Eigenstructure/BinaryTraceZeroSimilarity](../../../../S1/Eigenstructure/BinaryTraceZeroSimilarity.md)
-- Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodMatrixAction](HeawoodMatrixAction.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodSixRepresentatives.exists_representative`
+- Dependency: [D5/S1/Eigenstructure/BinaryTraceZeroSimilarity](../../../../../S1/Eigenstructure/BinaryTraceZeroSimilarity.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/Families/HeawoodMatrixAction](HeawoodMatrixAction.md)
