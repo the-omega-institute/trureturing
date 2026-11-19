@@ -166,22 +166,125 @@ theorem compressed_cube_or_wagner {C : Finset (Q 9)} (hC : C.card = 72)
 def modelRootNeighbors (wagner : Bool) : Fin 3 → Fin 8 :=
   if wagner then ![1, 4, 7] else ![1, 2, 4]
 
+/-- Canonical second axes when the three first axes are numbered 1, 2, 3
+and the cut axis is numbered 0. -/
+def rootSecondAxes (pattern : Fin 5) : Fin 3 → Fin 9 :=
+  ![![4, 4, 4], ![4, 4, 5], ![4, 5, 4], ![4, 5, 5], ![4, 5, 6]] pattern
+
+private theorem second_axes_pattern (second : Fin 3 → Fin 9) :
+    ∃ pattern : Fin 5, ∀ i j, second i = second j ↔
+      rootSecondAxes pattern i = rootSecondAxes pattern j := by
+  have ordered (pattern : Fin 5)
+      (h : ∀ (i j : Fin 3), i ≤ j → (second i = second j ↔
+        rootSecondAxes pattern i = rootSecondAxes pattern j)) (i j : Fin 3) :
+      second i = second j ↔ rootSecondAxes pattern i = rootSecondAxes pattern j := by
+    rcases le_total i j with hij | hji
+    · exact h i j hij
+    · rw [eq_comm (a := second i), eq_comm (a := rootSecondAxes pattern i)]
+      exact h j i hji
+  by_cases h01 : second 0 = second 1
+  · by_cases h02 : second 0 = second 2
+    · have h12 := h01.symm.trans h02
+      refine ⟨0, ordered 0 ?_⟩
+      intro i j hij
+      fin_cases i <;> fin_cases j <;> simp [rootSecondAxes, h01, h12] at hij ⊢
+    · have h12 : second 1 ≠ second 2 := fun h => h02 (h01.trans h)
+      refine ⟨1, ordered 1 ?_⟩
+      intro i j hij
+      fin_cases i <;> fin_cases j <;> simp [rootSecondAxes, h01, h12] at hij ⊢
+  · by_cases h02 : second 0 = second 2
+    · have h12 : second 1 ≠ second 2 := fun h => h01 (h02.trans h.symm)
+      refine ⟨2, ordered 2 ?_⟩
+      intro i j hij
+      fin_cases i <;> fin_cases j <;> simp [rootSecondAxes, h02, h12, h12.symm] at hij ⊢
+    · by_cases h12 : second 1 = second 2
+      · refine ⟨3, ordered 3 ?_⟩
+        intro i j hij
+        fin_cases i <;> fin_cases j <;> simp [rootSecondAxes, h02, h12] at hij ⊢
+      · refine ⟨4, ordered 4 ?_⟩
+        intro i j hij
+        fin_cases i <;> fin_cases j <;> simp [rootSecondAxes, h01, h02, h12] at hij ⊢
+
+private theorem root_axis_permutation (first : Fin 3 ↪ Fin 9) (second : Fin 3 → Fin 9)
+    (hnz : ∀ a, first a ≠ 0 ∧ second a ≠ 0) (hsep : ∀ a d, second a ≠ first d) :
+    ∃ (σ : Equiv.Perm (Fin 9)) (pattern : Fin 5), σ 0 = 0 ∧
+      ∀ a, (σ (first a)).val = a.val + 1 ∧ σ (second a) = rootSecondAxes pattern a := by
+  classical
+  obtain ⟨pattern, hpattern⟩ := second_axes_pattern second
+  let first' (a : Fin 3) : Fin 9 := ⟨a.val + 1, by omega⟩
+  have hsecond' (k : Fin 5) (a : Fin 3) : 4 ≤ (rootSecondAxes k a).val := by
+    fin_cases k <;> fin_cases a <;> decide
+  have hfirst_zero (a : Fin 3) : first' a ≠ 0 := by
+    intro h
+    have hv := congrArg Fin.val h
+    change a.val + 1 = 0 at hv
+    omega
+  have hsecond_zero (a : Fin 3) : rootSecondAxes pattern a ≠ 0 := by
+    intro h
+    have hv := hsecond' pattern a
+    rw [h] at hv
+    contradiction
+  have hsep' (a d : Fin 3) : rootSecondAxes pattern a ≠ first' d := by
+    intro h
+    have hv := hsecond' pattern a
+    rw [h] at hv
+    change 4 ≤ d.val + 1 at hv
+    omega
+  let actual : Option (Fin 3 ⊕ Fin 3) → Fin 9 := fun a => a.elim 0 (Sum.elim first second)
+  let canonical : Option (Fin 3 ⊕ Fin 3) → Fin 9 :=
+    fun a => a.elim 0 (Sum.elim first' (rootSecondAxes pattern))
+  have heq (a d : Option (Fin 3 ⊕ Fin 3)) :
+      actual a = actual d ↔ canonical a = canonical d := by
+    rcases a with _ | a <;> rcases d with _ | d
+    · rfl
+    · rcases d with d | d
+      · simp [actual, canonical, (hnz d).1.symm, (hfirst_zero d).symm]
+      · simp [actual, canonical, (hnz d).2.symm, (hsecond_zero d).symm]
+    · rcases a with a | a
+      · simp [actual, canonical, (hnz a).1, hfirst_zero a]
+      · simp [actual, canonical, (hnz a).2, hsecond_zero a]
+    · rcases a with a | a <;> rcases d with d | d
+      · change first a = first d ↔ first' a = first' d
+        rw [first.injective.eq_iff]
+        exact ⟨congrArg first', fun h => Fin.ext (by
+          have hv := congrArg Fin.val h
+          change a.val + 1 = d.val + 1 at hv
+          omega)⟩
+      · simp [actual, canonical, (hsep d a).symm, (hsep' d a).symm]
+      · simp [actual, canonical, hsep a d, hsep' a d]
+      · exact hpattern a d
+  let relabel (x : Set.range actual) : Fin 9 := canonical (Classical.choose x.property)
+  have hinj : Function.Injective relabel := by
+    intro x y h
+    apply Subtype.ext
+    exact (Classical.choose_spec x.property).symm.trans
+      (((heq _ _).mpr h).trans (Classical.choose_spec y.property))
+  obtain ⟨σ, hσ⟩ := Equiv.Perm.exists_extending_pair
+    (fun x : Set.range actual => x.val) relabel Subtype.val_injective hinj
+  have hmap (a : Option (Fin 3 ⊕ Fin 3)) : σ (actual a) = canonical a :=
+    let x : Set.range actual := ⟨actual a, a, rfl⟩
+    (hσ x).trans ((heq _ _).mp (Classical.choose_spec x.property))
+  refine ⟨σ, pattern, hmap none, fun a => ⟨?_, hmap (some (.inr a))⟩⟩
+  exact congrArg Fin.val (hmap (some (.inl a)))
+
 /-- In either model, the three two-edge paths out of the root use distinct
-first axes. Each second axis lies outside the first three axes. No axis is
-the coordinate defining the half. -/
+first axes. Up to a coordinate permutation fixing the cut, the second axes
+belong to one of the five equality patterns. -/
 theorem compressed_root_axes {C : Finset (Q 9)} (hC : C.card = 72)
     (hr : ((hypercube 9).induce (C : Set (Q 9))).IsRegularOfDegree 3)
     (hb : IsBalanced C) (b : Bool) (hs : (coordinateSlice C b).card = 20) :
     let S := coordinateSlice C b
     let G := (hypercube 9).induce (S : Set (Q 9))
     ∃ (wagner : Bool) (vertices : Fin 8 ↪ (S : Set (Q 9)))
-      (first : Fin 3 ↪ Fin 9) (second : Fin 3 → Fin 9),
+      (first : Fin 3 ↪ Fin 9) (second : Fin 3 → Fin 9)
+      (σ : Equiv.Perm (Fin 9)) (pattern : Fin 5),
       (∀ x y, Q9EightCubicGraphCertificate.modelAdj wagner x y = true ↔
         x ≠ y ∧ ∃ m, G.degree m = 2 ∧ G.Adj (vertices x) m ∧ G.Adj (vertices y) m) ∧
-      (∀ a, ((vertices (modelRootNeighbors wagner a)).val : Q 9) =
-        flip (flip (vertices 0).val (first a)) (second a)) ∧
-      (∀ a, first a ≠ 0 ∧ second a ≠ 0) ∧
-      ∀ a d, second a ≠ first d := by
+      (∀ a, flip (vertices 0).val (first a) ∈ S ∧
+        (vertices (modelRootNeighbors wagner a)).val =
+          flip (flip (vertices 0).val (first a)) (second a)) ∧
+      σ 0 = 0 ∧ ∀ a, (σ (first a)).val = a.val + 1 ∧
+        σ (second a) = rootSecondAxes pattern a := by
   classical
   let S := coordinateSlice C b
   let G := (hypercube 9).induce (S : Set (Q 9))
@@ -230,14 +333,8 @@ theorem compressed_root_axes {C : Finset (Q 9)} (hC : C.card = 72)
     have hzero := congrFun h (0 : Fin 9)
     rw [BalancedCriticalSpectrum.flip_apply_same, hx, hy] at hzero
     cases b <;> contradiction
-  refine ⟨wagner, vertices, ⟨first, hfirst_inj⟩, second, hrealize, ?_, ?_, ?_⟩
-  · intro a
-    change (vertices (leaf a)).val = flip (flip (vertices 0).val (first a)) (second a)
-    rw [hsecond a, hfirst a]
-  · intro a
-    exact ⟨hflip _ _ _ (hfirst a), hflip _ _ _ (hsecond a)⟩
-  · intro a d had
-    change second a = first d at had
+  have hsep (a d : Fin 3) : second a ≠ first d := by
+    intro had
     have hlast := (hsecond a).trans
       (congrArg (fun x => BalancedCriticalSpectrum.flip x (second a)) (hfirst a))
     rw [had] at hlast
@@ -250,6 +347,13 @@ theorem compressed_root_axes {C : Finset (Q 9)} (hC : C.card = 72)
     exact BalancedCubeGirth.no_selected_square hb hne
       (hm (vertices 0)) (hfirst a ▸ hm (middle a)) (hfirst d ▸ hm (middle d))
       (hlast ▸ hm (vertices (leaf a)))
+  let firstEmbedding : Fin 3 ↪ Fin 9 := ⟨first, hfirst_inj⟩
+  obtain ⟨σ, pattern, hcut, hlabels⟩ := root_axis_permutation firstEmbedding second
+    (fun a => ⟨hflip _ _ _ (hfirst a), hflip _ _ _ (hsecond a)⟩) hsep
+  refine ⟨wagner, vertices, firstEmbedding, second, σ, pattern, hrealize, ?_, hcut, hlabels⟩
+  intro a
+  exact ⟨hfirst a ▸ (middle a).property,
+    (hsecond a).trans (congrArg (fun x => BalancedCriticalSpectrum.flip x (second a)) (hfirst a))⟩
 
 #print axioms compressed_root_axes
 
