@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A real repair for a totally unimodular integer matrix gives an integer repair of no greater l1 cost and a modular repair of bounded support. -/
+   digest: L1 rounding and modular support bounds for totally unimodular integer matrices. -/
 
 import D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
@@ -61,7 +61,7 @@ theorem fromCols_neg_isTotallyUnimodular (A : Matrix M N ℤ)
       Matrix.of (fun i j => (signs j : ℤ) * U i j) := by
     ext i j
     cases hcol : cols j <;>
-      simp [signs, U, underlying, hcol, SignType.coe_one, SignType.coe_neg_one]
+      simp [signs, U, underlying, hcol, SignType.coe_one]
   refine ⟨(∏ j, signs j) * s, ?_⟩
   rw [hminor, Matrix.det_mul_row, ← hs, SignType.coe_mul]
   exact congrArg (fun c : ℤ => c * (s : ℤ))
@@ -90,7 +90,7 @@ private theorem mulVec_extendByZero [Fintype N] (A : Matrix M N ℝ)
   calc
     (∑ j : s, A i j * v j) = ∑ j : s, A i j * extendByZero s v j := by
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [extendByZero, dif_pos j.property]
+      rw [extendByZero, dite_eq_left j.property]
     _ = ∑ j ∈ s, A i j * extendByZero s v j :=
       Finset.sum_coe_sort s (fun j => A i j * extendByZero s v j)
     _ = ∑ j : N, A i j * extendByZero s v j := by
@@ -150,7 +150,7 @@ private theorem eliminate_support_coordinate [Fintype N] (A : Matrix M N ℝ)
     · exact add_nonneg (hw j) (mul_nonneg ht.le (le_of_not_gt hj))
   · dsimp only [y]
     rw [Matrix.mulVec_add, Matrix.mulVec_smul, ha, smul_zero, add_zero]
-  · change (∑ j, w j + t * a j) ≤ ∑ j, w j
+  · change (∑ j, (w j + t * a j)) ≤ (∑ j, w j)
     rw [Finset.sum_add_distrib, ← Finset.mul_sum]
     exact add_le_of_nonpos_right (mul_nonpos_of_nonneg_of_nonpos ht.le hacost)
   · have hsubset : nonzeroSupport y ⊆ nonzeroSupport w := by
@@ -251,8 +251,8 @@ private theorem exists_nonnegative_integer_repair [Fintype M] [Fintype N]
       have hzcast (j : N) : (z j : ℝ) = u j := by
         rw [← hvext]
         by_cases hj : j ∈ s
-        · simpa only [z, extendByZero, dif_pos hj] using hzs ⟨j, hj⟩
-        · simp only [z, extendByZero, dif_neg hj, Int.cast_zero]
+        · simpa only [z, extendByZero, dite_eq_left hj] using hzs ⟨j, hj⟩
+        · simp only [z, extendByZero, dite_eq_right hj, Int.cast_zero]
       refine ⟨z, ?_, ?_, ?_⟩
       · intro j
         apply (Int.cast_nonneg_iff (R := ℝ)).mp
@@ -288,7 +288,8 @@ theorem exists_integer_l1_repair [Fintype M] [Fintype N]
   let C := Matrix.fromCols A (-A)
   let f := Int.castRingHom ℝ
   have hmap : C.map f = Matrix.fromCols (A.map f) (-(A.map f)) := by
-    rw [C, Matrix.fromCols_map]
+    change (Matrix.fromCols A (-A)).map f = _
+    rw [Matrix.fromCols_map]
     ext i j
     cases j <;> simp only [Matrix.fromCols_apply_inl, Matrix.fromCols_apply_inr,
       Matrix.map_apply, Matrix.neg_apply, map_neg]
@@ -316,6 +317,7 @@ theorem exists_integer_l1_repair [Fintype M] [Fintype N]
         rw [Fintype.sum_sum_type, Finset.sum_add_distrib]
       _ ≤ ∑ j, |x j| := hvcost.trans_eq hwcost
 
+/-- Each nonzero integer coordinate contributes at least one to the l1 cost. -/
 theorem support_card_le_sum_abs [Fintype N] (z : N → ℤ) :
     ((nonzeroSupport z).card : ℝ) ≤ ∑ j, |(z j : ℝ)| := by
   classical
@@ -343,6 +345,7 @@ theorem reduce_integer_solution [Fintype N] (A : Matrix M N ℤ) (b : M → ℤ)
     intro hzero
     exact (mem_nonzeroSupport.mp hj) (by simp [hzero])
 
+/-- Reducing the integer repair bounds the modular support by the real l1 cost. -/
 theorem exists_zmod_repair_with_support_bound [Fintype M] [Fintype N]
     (A : Matrix M N ℤ) (hA : A.IsTotallyUnimodular) (b : M → ℤ) (x : N → ℝ)
     (hsol : A.map (Int.castRingHom ℝ) *ᵥ x = fun i => (b i : ℝ)) (n : ℕ) :
