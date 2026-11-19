@@ -351,7 +351,7 @@ private theorem inventory_transport (e : C ≃ A) (s d : A → Bool) (a b : Bool
     inventory (s ∘ e) (d ∘ e) a b = inventory s d a b :=
   Nat.card_congr (Equiv.subtypeEquivOfSubtype (p := fun x : A => s x = a ∧ d x = b) e)
 
-private theorem side_transport (e : C ≃ A) (s : A → Bool) (a : Bool) :
+theorem side_transport (e : C ≃ A) (s : A → Bool) (a : Bool) :
     Nat.card (Side (s ∘ e) a) = Nat.card (Side s a) :=
   Nat.card_congr (Equiv.subtypeEquivOfSubtype (p := fun x : A => s x = a) e)
 
