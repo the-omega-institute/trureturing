@@ -26,7 +26,6 @@ internal sealed class WeightLayerParityDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For a 66-vertex Huang-balanced induced cubic support, write each coordinate true-half size as thirty-three minus twice its deficit. The sum of the nine deficits is even."))),
                 DescribeRole.Theorem)),
         [
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeComponentBoundary")),
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/CubicFiftyFourReconstruction"))
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/Graph/HypercubeCritical/BalancedCubeComponentBoundary"))
         ]));
 }

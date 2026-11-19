@@ -25,9 +25,9 @@ open BalancedCriticalSpectrum (Q flip)
 open private intA intCoeff intCoeff_cast intCoeff_sign_of_adj
   intCoeff_zero_of_not_adj from
   D5.S3.Combinatorics.Graph.HypercubeCritical.HuangIntegralNormGap
-open private no_singleton_row intCoeff_symmetric from
-  D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap
-open private directions mem_directions directions_card flip_injective from
+open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
+  (directions)
+open private no_singleton_row intCoeff_symmetric from D5.S3.Combinatorics.Graph.HypercubeCritical.HuangUnitSupportGap open private mem_directions directions_card flip_injective from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeComponentBoundary
 open private flip_comm adjacent_exists_flip from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
