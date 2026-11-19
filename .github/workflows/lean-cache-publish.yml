@@ -268,32 +268,17 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: project
-        if: steps.keys.outputs.project_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional validated seeds
+        uses: ./.github/actions/lean-cache-release-seed
         env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          GH_TOKEN: ${{ github.token }}
+        with:
+          mode: ${{ vars.LEAN_CACHE_SHARDS_REF == 'dev' && 'auto' || 'legacy' }}
+          cache-keys: ${{ toJSON(steps.keys.outputs) }}
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_INDEXED: ${{ vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && '1' || '0' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: make lean-cache-to-github-without-mathlib FULL_BUILD=1
 
@@ -391,30 +376,15 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: project
-        if: steps.keys.outputs.project_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional validated seeds
+        uses: ./.github/actions/lean-cache-release-seed
         env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          GH_TOKEN: ${{ github.token }}
+        with:
+          mode: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_SHARDS_REF == 'dev' && 'auto' || 'legacy' }}
+          cache-keys: ${{ toJSON(steps.keys.outputs) }}
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
+          LEAN_CACHE_INDEXED: ${{ github.ref == 'refs/heads/dev' && vars.LEAN_CACHE_RELEASE_INDEXED_REF == 'dev' && '1' || '0' }}
         run: make lean-cache-to-github-without-mathlib FULL_BUILD=1

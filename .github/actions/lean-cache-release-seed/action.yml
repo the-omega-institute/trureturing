@@ -1,0 +1,65 @@
+name: Restore Lean Release build seeds
+description: Restore optional Actions material for a Release producer
+inputs:
+  mode:
+    description: Automatic selection, legacy project cache, or a complete, partial, or absent verification seed
+    required: true
+  cache-keys:
+    description: JSON outputs from the Actions cache key selector
+    required: true
+runs:
+  using: composite
+  steps:
+    - id: dependency
+      if: fromJSON(inputs.cache-keys).dependency_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ fromJSON(inputs.cache-keys).dependency_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys).dependency_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys).dependency_restore_prefix }}
+    - id: sharded
+      if: contains(fromJSON('["auto","complete","partial"]'), inputs.mode)
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      with:
+        operation: restore
+        require-complete: ${{ inputs.mode == 'complete' }}
+        targets: ${{ inputs.mode == 'partial' && 'D5.S0.Tower.GoldenGapWord' || '' }}
+    - id: project
+      if: fromJSON(inputs.cache-keys).project_key != '' && (inputs.mode == 'legacy' || (inputs.mode == 'auto' && (steps.sharded.outputs.available == '' || steps.sharded.outputs.available == '0')))
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ fromJSON(inputs.cache-keys).project_archive_path }}
+        key: ${{ fromJSON(inputs.cache-keys).project_key }}
+        restore-keys: ${{ fromJSON(inputs.cache-keys).project_restore_prefix }}
+    - name: Validate and install the selected seeds
+      shell: bash
+      env:
+        HANDOFF: ${{ inputs.mode }}
+        AVAILABLE: ${{ steps.sharded.outputs.available || '0' }}
+        COMPLETE: ${{ steps.sharded.outputs.complete || 'false' }}
+        DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+        DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+        PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+        PROJECT_OUTCOME: ${{ steps.project.outcome }}
+      run: |
+        case "$HANDOFF" in
+          auto|legacy) ;;
+          complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
+          partial) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]] ;;
+          none) [[ ! -e .lake/build ]] ;;
+          *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
+        esac
+        echo "LEAN_RELEASE_HANDOFF seed=$HANDOFF available=$AVAILABLE complete=$COMPLETE"
+        args=(--dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME")
+        if [[ "$AVAILABLE" == 0 ]]; then
+          args+=(--project-key "$PROJECT_KEY" --project-outcome "$PROJECT_OUTCOME")
+        else
+          args+=(--layers dependency)
+        fi
+        python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" "${args[@]}"
+        if [[ "$COMPLETE" == true ]]; then
+          echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+        fi
