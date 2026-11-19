@@ -34,7 +34,7 @@ open private selected_neighbor_card from
   D5.S3.Combinatorics.Graph.HypercubeCritical.SupportedEigenSaturation
 
 open Classical in
-private def directions {n : Nat} (C : Finset (Q n)) (x : Q n) : Finset (Fin n) :=
+def directions {n : Nat} (C : Finset (Q n)) (x : Q n) : Finset (Fin n) :=
   Finset.univ.filter fun i => BalancedCriticalSpectrum.flip x i ∈ C
 
 @[simp] private theorem mem_directions {n : Nat} (C : Finset (Q n)) (x : Q n)
@@ -62,7 +62,7 @@ private theorem directions_card {n : Nat} (C : Finset (Q n)) (x : Q n) :
     exact ⟨i, (mem_directions C x i).mpr (Finset.mem_filter.mp hy).1, rfl⟩
 
 open Classical in
-private theorem regular_directions {n : Nat} (C : Finset (Q n))
+theorem regular_directions {n : Nat} (C : Finset (Q n))
     (hr : ((hypercube n).induce (C : Set _)).IsRegularOfDegree 3)
     {x : Q n} (hx : x ∈ C) : (directions C x).card = 3 := by
   rw [directions_card]
@@ -90,7 +90,7 @@ private theorem signed_sum_even {α : Type*} (N : Finset α) (a : α → Real)
   exact ⟨P.card, hn⟩
 
 open Classical in
-private theorem exterior_even (C : Finset (Q 9))
+theorem exterior_even (C : Finset (Q 9))
     (hr : ((hypercube 9).induce (C : Set _)).IsRegularOfDegree 3)
     (hb : IsBalanced C) (v : Q 9) (hv : v ∉ C) :
     Even (directions C v).card := by
