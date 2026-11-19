@@ -240,7 +240,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.ac
 
 *Commentary.*
 
-For every natural k, the actual labelled inclusion-minimal dominating subset count of the open grid of width k+2, cast to the integers, equals evaluate(orbit k). The proof uses the all-length actual word count and the total partition certificates, with no assumed recurrence or count relation.
+For every natural k, the actual labelled inclusion-minimal dominating subset count of the open grid of width k+2, cast to the integers, equals evaluate(orbit k). The proof uses Transfer.actualCount_fullOrbit, whose runWeight_iff_tests invariant checks every suffix length and both terminal centres, and the total partition certificates, with no assumed recurrence or count relation.
 
 **Definition 1.18 (The actual-subset series).**
 
@@ -298,4 +298,4 @@ The initial finite range and the shifted annihilator cover disjoint, exhaustive 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.quotientSeries_mul_Q`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.whole_identity`
 - Dependency: [D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridPartition](BarkerMinimalGridPartition.md)
-- Dependency: [D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridPaths](BarkerMinimalGridPaths.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer](BarkerMinimalGridTransfer.md)

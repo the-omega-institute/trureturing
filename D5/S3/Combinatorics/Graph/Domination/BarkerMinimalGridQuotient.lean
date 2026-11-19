@@ -148,7 +148,9 @@ def values : Fin 49 → Vector :=
 /-- Every coefficient of the original denominator, in increasing degree order. -/
 def denominator : Fin 49 → ℤ := ![1, -2, -2, -4, 8, -2, -2, -23, 14, 31, 31, -45, 50, 83, 122, -141, -54, -105, 36, -85, -275, -222, 63, 90, -140, 253, 399, 234, 190, -87, 59, -219, -222, -189, -270, 152, 56, 123, 158, -41, 75, -62, -12, 21, -30, 7, 4, -3, 1]
 
-private def rowEval : List (Fin 59 × ℤ) → Vector → ℤ
+/-- Evaluate a sparse integer row by summing each listed weight times the
+vector coordinate at its column. -/
+def rowEval : List (Fin 59 × ℤ) → Vector → ℤ
   | [], _ => 0
   | (j, a) :: rest, v => a * v j + rowEval rest v
 
@@ -188,7 +190,9 @@ def orbit : ℕ → Vector
   | 0 => terminal
   | n + 1 => step (orbit n)
 
-private theorem orbit_values (k : Fin 49) : orbit k.val = values k := by
+/-- The first 49 iterates of the terminal vector equal the corresponding
+entries of the finite power certificate. -/
+theorem orbit_values (k : Fin 49) : orbit k.val = values k := by
   induction k using Fin.induction with
   | zero => exact initial_vector.symm
   | succ k ih =>

@@ -46,7 +46,19 @@ Positive spectral floors for A and B give a common positive floor c along the cl
 
 For equal traces the correction Re Tr(A-B) is zero by linearity, in particular for normalized density states. Positive definiteness is essential to this delivered scope; no singular endpoint limit is asserted.
 
-**Theorem 1.4 (The conditional block-family identity).**
+**Theorem 1.4 (Integrability of the weighted BKM path).**
+
+Lean statement: `D5/S3/Quantum/Divergence/UmegakiBKMPath.weighted_bkm_integrable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/UmegakiBKMPath.weighted_bkm_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive definite complex A and B on Fin n, the real trace of (A-B) times the logarithmic derivative at B+t(A-B) in direction A-B, weighted by 1-t, is interval integrable on [0,1]. The faithful conditional proof transports this integrability to arbitrary finite carriers for the joint and marginal paths.
+
+**Theorem 1.5 (The conditional block-family identity).**
 
 Lean statement: `D5/S3/Quantum/Divergence/UmegakiBKMPath.conditional_relativeEntropy_eq_integral_bkm`
 
@@ -68,5 +80,6 @@ This bridge serves the Umegaki complete-versus-conditional question in Hirche, G
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiBKMPath.conditional_relativeEntropy_eq_integral_bkm`
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiBKMPath.continuousOn_logDeriv_of_floor`
 - Truth anchor: `D5/S3/Quantum/Divergence/UmegakiBKMPath.relativeEntropy_eq_integral_bkm`
+- Truth anchor: `D5/S3/Quantum/Divergence/UmegakiBKMPath.weighted_bkm_integrable`
 - Dependency: [D5/S3/Divergence/AudenaertBinaryHolevoBound](../../Divergence/AudenaertBinaryHolevoBound.md)
 - Dependency: [D5/S3/Quantum/Divergence/TraceEntropyCalculus](TraceEntropyCalculus.md)

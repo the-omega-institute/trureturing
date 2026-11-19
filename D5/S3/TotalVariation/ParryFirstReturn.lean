@@ -44,7 +44,7 @@ private theorem measurable_relationShift : Measurable (@relationShift k) := by
   apply Measurable.subtype_mk
   exact Measurable.of_eval fun t => (measurable_pi_apply (t + 1)).comp measurable_subtype_coe
 
-private theorem shift_iterate (r : RelationPath k) (n : ℕ) (t : ℤ) :
+theorem shift_iterate (r : RelationPath k) (n : ℕ) (t : ℤ) :
     (relationShift^[n] r).val t = r.val (t + n) := by
   induction n generalizing r t with
   | zero => simp
@@ -59,7 +59,7 @@ private theorem measurable_zeroSection : MeasurableSet (zeroSection k) := by
     (measurable_pi_apply (-1)).comp measurable_subtype_coe
   exact hm (measurableSet_singleton false)
 
-private theorem measurable_returnTime : Measurable (@returnTime k) := by
+theorem measurable_returnTime : Measurable (@returnTime k) := by
   unfold returnTime
   have hm : Measurable (fun r : RelationPath k => Nat.find (nextZero_exists r)) := by
     apply measurable_find
@@ -74,7 +74,7 @@ private theorem measurable_returnMap : Measurable (@returnMap k) := by
     measurable_from_prod_countable_right (fun n : ℕ => measurable_relationShift.iterate n)
   exact hm.comp (measurable_returnTime.prodMk measurable_id)
 
-private theorem returnTime_spec (r : RelationPath k) :
+theorem returnTime_spec (r : RelationPath k) :
     0 < returnTime r ∧ returnTime r ≤ k ∧
     returnMap r ∈ zeroSection k ∧
     ∀ n : ℕ, 0 < n → n < returnTime r → relationShift^[n] r ∉ zeroSection k := by
@@ -290,13 +290,12 @@ private theorem suffix_eq_of_window
       let j := ((e z).val t).2.val
       z.2.val (t - (j : ℤ) - 1) = false ∧
       ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
-    (r : RelationPath k) (n : ℕ)
-    (hz : r.val (-(n : ℤ) - 1) = false)
-    (ho : ∀ i : ℕ, i < n → r.val (-(i : ℤ) - 1) = true) :
-    ((e (false, r)).val 0).2.val = n := by
-  have hs := hsuffix (false, r) 0
+    (r : RelationPath k) (t : ℤ) (n : ℕ)
+    (hz : r.val (t - (n : ℤ) - 1) = false)
+    (ho : ∀ i : ℕ, i < n → r.val (t - (i : ℤ) - 1) = true) :
+    ((e (false, r)).val t).2.val = n := by
+  have hs := hsuffix (false, r) t
   dsimp only at hs
-  simp only [zero_sub] at hs
   apply le_antisymm
   · by_contra h
     have hh := hs.2 n (Nat.lt_of_not_ge h)
@@ -322,11 +321,13 @@ private theorem actual_return_floor
   · rintro ⟨s, hs, rfl⟩
     apply Fin.ext
     apply suffix_eq_of_window e hsuffix
-    · change s.val (-(i.val : ℤ) - 1 + i.val) = false
+    · change s.val (0 - (i.val : ℤ) - 1 + i.val) = false
+      simp only [zero_sub]
       simpa only [show -(i.val : ℤ) - 1 + i.val = -1 by omega]
         using (show s.val (-1) = false from hs.1)
     · intro j hj
-      change s.val (-(j : ℤ) - 1 + i.val) = true
+      change s.val (0 - (j : ℤ) - 1 + i.val) = true
+      simp only [zero_sub]
       have hmin := Nat.find_min (nextZero_exists s)
         (show i.val - j - 1 < Nat.find (nextZero_exists s) by
           dsimp [returnTime] at hs
@@ -486,5 +487,382 @@ theorem actual_first_return_system (hk : 2 ≤ k)
     (returnMap_preserves_restrict (μ : Measure (RelationPath k)) hμ).smul_measure _,
     by rw [Finset.smul_sum]; simp_rw [hnormalize]; exact hoccupation,
     returnTime_spec⟩
+
+private theorem reset_loop_kernel_product (hk : 2 ≤ k) {m : ℕ}
+    (word : Fin (m + 1) → Fin k)
+    (initial : (word 0).val = 0) (terminal : (word (Fin.last m)).val = 0)
+    (allowed : ∀ i : Fin m,
+      (word i.succ).val = 0 ∨ (word i.succ).val = (word i.castSucc).val + 1) :
+    ∏ i : Fin m, suffixKernel k (word i.castSucc) (word i.succ) =
+      parryParameter k ^ m := by
+  classical
+  let p := parryParameter k
+  let weight := suffixWeight k p
+  have parameters := parry_stationary_law k hk
+  have hp : 0 < p := lt_trans (by norm_num) parameters.1.1
+  have positive (j : Fin k) : 0 < weight j := lt_of_lt_of_le hp (parameters.2.1 j).1
+  have atZero (j : Fin k) (hj : j.val = 0) : weight j = 1 := by
+    simpa [weight, suffixWeight, hj, rootSum] using parameters.1.2.2
+  have factor (i : Fin m) :
+      suffixKernel k (word i.castSucc) (word i.succ) =
+        p * weight (word i.succ) / weight (word i.castSucc) := by
+    rcases allowed i with hzero | hsucc
+    · simp [suffixKernel, hzero, atZero _ hzero, p, weight]
+    · simp [suffixKernel, hsucc, p, weight]
+  have equalProducts :
+      (∏ i : Fin m, weight (word i.succ)) =
+        ∏ i : Fin m, weight (word i.castSucc) := by
+    calc
+      (∏ i : Fin m, weight (word i.succ)) = ∏ j : Fin (m + 1), weight (word j) := by
+        rw [Fin.prod_univ_succ, atZero _ initial, one_mul]
+      _ = ∏ i : Fin m, weight (word i.castSucc) := by
+        rw [Fin.prod_univ_castSucc, atZero _ terminal, mul_one]
+  have denominator : (∏ i : Fin m, weight (word i.castSucc)) ≠ 0 :=
+    (Finset.prod_pos fun i _ => positive (word i.castSucc)).ne'
+  calc
+    (∏ i : Fin m, suffixKernel k (word i.castSucc) (word i.succ)) =
+        ∏ i : Fin m, p * weight (word i.succ) / weight (word i.castSucc) :=
+      Finset.prod_congr rfl (fun i _ => factor i)
+    _ = p ^ m := by
+      rw [Finset.prod_div_distrib, Finset.prod_mul_distrib, equalProducts,
+        mul_div_cancel_right₀ _ denominator]
+      simp
+
+private def returnSuffixBlock (length : Fin k) (t : Fin (length.val + 2)) : Fin k :=
+  if h : t.val ≤ length.val then ⟨t.val, h.trans_lt length.isLt⟩
+  else ⟨0, by have := length.isLt; omega⟩
+
+private theorem return_suffix_block_iff
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (r : RelationPath k) (length : Fin k) :
+    (r ∈ zeroSection k ∧ returnTime r = length.val + 1) ↔
+      ∀ t : Fin (length.val + 2), ((e (false, r)).val (t.val : ℤ)).2 =
+        returnSuffixBlock length t := by
+  constructor
+  · rintro ⟨hsection, hreturn⟩ t
+    have hfind : Nat.find (nextZero_exists r) = length.val :=
+      Nat.add_right_cancel hreturn
+    have terminal : r.val (length.val : ℤ) = false := by
+      simpa only [hfind] using Nat.find_spec (nextZero_exists r)
+    have consecutive (i : ℕ) (hi : i < length.val) : r.val (i : ℤ) = true := by
+      have hnot := Nat.find_min (nextZero_exists r) (hfind ▸ hi)
+      cases hb : r.val (i : ℤ) <;> simp_all
+    apply Fin.ext
+    by_cases ht : t.val ≤ length.val
+    · simp only [returnSuffixBlock, dite_eq_left ht]
+      apply suffix_eq_of_window e hsuffix
+      · simpa only [sub_self, zero_sub] using (show r.val (-1) = false from hsection)
+      · intro i hi
+        have index : ((t.val - i - 1 : ℕ) : ℤ) = (t.val : ℤ) - i - 1 := by omega
+        rw [← index]
+        exact consecutive _ (by omega)
+    · simp only [returnSuffixBlock, dite_eq_right ht]
+      apply (suffix_zero_iff e hsuffix r _).2
+      have index : (t.val : ℤ) - 1 = length.val := by
+        have := t.isLt
+        omega
+      simpa only [index] using terminal
+  · intro cylinder
+    have initial := congrArg Fin.val (cylinder 0)
+    have hstart : r ∈ zeroSection k := by
+      apply (suffix_zero_iff e hsuffix r 0).1
+      simpa [returnSuffixBlock] using initial
+    refine ⟨hstart, returnTime_eq r (length.val + 1) (by omega) ?_ ?_⟩
+    · let last : Fin (length.val + 2) := ⟨length.val + 1, by omega⟩
+      have hlast := congrArg Fin.val (cylinder last)
+      have hzero : ((e (false, r)).val ((length.val + 1 : ℕ) : ℤ)).2.val = 0 := by
+        simpa [last, returnSuffixBlock] using hlast
+      have hb := (suffix_zero_iff e hsuffix r _).1 hzero
+      simpa using hb
+    · intro i hi
+      let t : Fin (length.val + 2) := ⟨i + 1, by omega⟩
+      have hvalue := congrArg Fin.val (cylinder t)
+      have hvalue' : ((e (false, r)).val ((i + 1 : ℕ) : ℤ)).2.val = i + 1 := by
+        simpa [t, returnSuffixBlock, show i + 1 ≤ length.val by omega] using hvalue
+      cases hb : r.val (i : ℤ)
+      · have hj := (suffix_zero_iff e hsuffix r ((i + 1 : ℕ) : ℤ)).2 (by simpa using hb)
+        omega
+      · rfl
+
+private theorem suffix_iterate_shift
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (r : RelationPath k) (n : ℕ) (t : ℤ) :
+    ((e (false, relationShift^[n] r)).val t).2 = ((e (false, r)).val (t + n)).2 := by
+  apply Fin.ext
+  apply suffix_eq_of_window e hsuffix
+  · rw [shift_iterate]
+    convert (hsuffix (false, r) (t + n)).1 using 2
+    omega
+  · intro i hi
+    rw [shift_iterate]
+    convert (hsuffix (false, r) (t + n)).2 i hi using 2
+    omega
+
+private theorem conditioned_reset_loop (hk : 2 ≤ k)
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (μ : ProbabilityMeasure (RelationPath k))
+    (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (hμ : (μ : Measure (RelationPath k)).map relationShift = μ)
+    (hcylinder : ∀ (ell : ℤ) (m : ℕ) (v : Fin (m + 1) → Fin k),
+      (μ : Measure (RelationPath k))
+        {r | (fun i : Fin (m + 1) => ((e (false, r)).val (ell + i.val)).2) = v} =
+        ENNReal.ofReal (suffixLaw k (v 0)) * ∏ i : Fin m,
+          ENNReal.ofReal (suffixKernel k (v i.castSucc) (v i.succ)))
+    {m : ℕ} (word : Fin (m + 1) → Fin k)
+    (initial : (word 0).val = 0) (terminal : (word (Fin.last m)).val = 0)
+    (allowed : ∀ i : Fin m,
+      (word i.succ).val = 0 ∨ (word i.succ).val = (word i.castSucc).val + 1) :
+    sectionMeasure (μ : Measure (RelationPath k))
+      {r | (fun i : Fin (m + 1) => ((e (false, r)).val (i.val : ℤ)).2) = word} =
+        ENNReal.ofReal (parryParameter k ^ m) := by
+  let C : Set (RelationPath k) :=
+    {r | (fun i : Fin (m + 1) => ((e (false, r)).val (i.val : ℤ)).2) = word}
+  change sectionMeasure (μ : Measure (RelationPath k)) C = _
+  have contained : C ⊆ zeroSection k := by
+    intro r hr
+    have hzero := congrArg (fun v : Fin (m + 1) → Fin k => (v 0).val) hr
+    apply (suffix_zero_iff e hsuffix r 0).1
+    simpa [initial, Fin.val_zero] using hzero
+  have hsystem := actual_first_return_system hk e μ hsuffix hμ hcylinder
+  have hC := hcylinder 0 m word
+  simp only [zero_add] at hC
+  change (μ : Measure (RelationPath k)) C = _ at hC
+  have hp : 0 < parryParameter k := lt_trans (by norm_num) (parry_stationary_law k hk).1.1
+  have positive (j : Fin k) : 0 < suffixWeight k (parryParameter k) j :=
+    lt_of_lt_of_le hp ((parry_stationary_law k hk).2.1 j).1
+  have nonnegative (i : Fin m) :
+      0 ≤ suffixKernel k (word i.castSucc) (word i.succ) := by
+    unfold suffixKernel
+    split_ifs
+    · exact div_nonneg hp.le (positive _).le
+    · exact div_nonneg (mul_nonneg hp.le (positive _).le) (positive _).le
+    · exact le_rfl
+  have weight0 : suffixWeight k (parryParameter k) (word 0) = 1 := by
+    simpa [suffixWeight, initial, rootSum] using (parry_stationary_law k hk).1.2.2
+  have startMass : suffixLaw k (word 0) = 1 / normalizer k := by
+    simp [suffixLaw, initial, weight0]
+  have noInfinite : (μ : Measure (RelationPath k)) (zeroSection k) ≠ ∞ :=
+    measure_ne_top _ _
+  rw [sectionMeasure, ProbabilityTheory.cond_apply measurable_zeroSection,
+    inter_eq_right.mpr contained, hC, startMass, ← hsystem.2.1,
+    ← ENNReal.ofReal_prod_of_nonneg (fun i _ => nonnegative i),
+    reset_loop_kernel_product hk word initial terminal allowed, ← mul_assoc,
+    ENNReal.inv_mul_cancel hsystem.2.2.1.ne' noInfinite, one_mul]
+
+private def returnSpan : List (Fin k) → ℕ
+  | [] => 0
+  | n :: ns => n.val + 1 + returnSpan ns
+
+private def returnWord (hk : 0 < k) :
+    (ns : List (Fin k)) → Fin (returnSpan ns + 1) → Fin k
+  | [], _ => ⟨0, hk⟩
+  | n :: ns, i =>
+    if hi : i.val ≤ n.val then ⟨i.val, hi.trans_lt n.isLt⟩
+    else returnWord hk ns ⟨i.val - (n.val + 1), by
+      have h := i.isLt
+      simp only [returnSpan] at h
+      omega⟩
+
+private theorem returnWord_initial (hk : 0 < k) (ns : List (Fin k)) :
+    (returnWord hk ns 0).val = 0 := by
+  cases ns <;> simp [returnWord]
+
+private theorem returnWord_terminal (hk : 0 < k) (ns : List (Fin k)) :
+    (returnWord hk ns (Fin.last (returnSpan ns))).val = 0 := by
+  induction ns with
+  | nil => rfl
+  | cons n ns ih =>
+    have h : ¬(Fin.last (returnSpan (n :: ns))).val ≤ n.val := by
+      simp only [Fin.val_last, returnSpan]
+      omega
+    rw [returnWord, dite_eq_right h]
+    convert ih using 3
+    apply Fin.ext
+    simp [returnSpan]
+
+private theorem returnWord_allowed (hk : 0 < k) (ns : List (Fin k)) :
+    ∀ i : Fin (returnSpan ns),
+      (returnWord hk ns i.succ).val = 0 ∨
+        (returnWord hk ns i.succ).val = (returnWord hk ns i.castSucc).val + 1 := by
+  induction ns with
+  | nil =>
+    intro i
+    have hi := i.isLt
+    simp [returnSpan] at hi
+  | cons n ns ih =>
+    intro i
+    by_cases hin : i.val + 1 ≤ n.val
+    · right
+      simp [returnWord, hin, show i.val ≤ n.val by omega]
+    by_cases hcut : i.val ≤ n.val
+    · left
+      have he : i.val + 1 - (n.val + 1) = 0 := by omega
+      simp [returnWord, hin, he, returnWord_initial]
+    let j : Fin (returnSpan ns) := ⟨i.val - (n.val + 1), by
+      have h := i.isLt
+      simp only [returnSpan] at h
+      omega⟩
+    have hfirst : (returnWord hk (n :: ns) i.castSucc).val =
+        (returnWord hk ns j.castSucc).val := by
+      simp only [returnWord, Fin.val_castSucc, dite_eq_right hcut]
+      rfl
+    have hnext : (returnWord hk (n :: ns) i.succ).val =
+        (returnWord hk ns j.succ).val := by
+      simp only [returnWord, Fin.val_succ, dite_eq_right hin]
+      congr 2
+      apply Fin.ext
+      dsimp [j]
+      omega
+    simpa only [hfirst, hnext] using ih j
+
+/-- Match the first successive positive return times, with each entry stored
+one below its duration so that the alphabet is `Fin k`. -/
+noncomputable def matchesReturnTimes (r : RelationPath k) : List (Fin k) → Bool
+  | [] => true
+  | n :: ns => decide (returnTime r = n.val + 1) && matchesReturnTimes (returnMap r) ns
+
+private theorem matchesReturnTimes_cons (r : RelationPath k) (n : Fin k) (ns : List (Fin k)) :
+    matchesReturnTimes r (n :: ns) = true ↔
+      returnTime r = n.val + 1 ∧ matchesReturnTimes (returnMap r) ns = true := by
+  simp [matchesReturnTimes, Bool.and_eq_true]
+
+private theorem returnWord_head (hk : 0 < k) (n : Fin k) (ns : List (Fin k))
+    (t : Fin (n.val + 2)) (u : Fin (returnSpan (n :: ns) + 1))
+    (same : u.val = t.val) :
+    returnWord hk (n :: ns) u = returnSuffixBlock n t := by
+  apply Fin.ext
+  by_cases ht : t.val ≤ n.val
+  · simp [returnWord, returnSuffixBlock, ht, same]
+  · have index : t.val - (n.val + 1) = 0 := by
+      have h := t.isLt
+      omega
+    simp [returnWord, returnSuffixBlock, ht, same, index, returnWord_initial]
+
+private theorem returnWord_tail (hk : 0 < k) (n : Fin k) (ns : List (Fin k))
+    (t : Fin (returnSpan ns + 1)) (u : Fin (returnSpan (n :: ns) + 1))
+    (index : u.val = t.val + (n.val + 1)) :
+    returnWord hk (n :: ns) u = returnWord hk ns t := by
+  have outside : ¬u.val ≤ n.val := by omega
+  rw [returnWord, dite_eq_right outside]
+  congr 1
+  apply Fin.ext
+  simp [index]
+
+private theorem return_word_iff (hk : 0 < k)
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (ns : List (Fin k)) (r : RelationPath k) :
+    (r ∈ zeroSection k ∧ matchesReturnTimes r ns = true) ↔
+      ∀ i : Fin (returnSpan ns + 1), ((e (false, r)).val (i.val : ℤ)).2 =
+        returnWord hk ns i := by
+  induction ns generalizing r with
+  | nil =>
+    constructor
+    · rintro ⟨hr, _⟩ i
+      have index : i.val = 0 := by
+        have hi := i.isLt
+        simp only [returnSpan] at hi
+        omega
+      apply Fin.ext
+      simpa [returnWord, index] using (suffix_zero_iff e hsuffix r 0).2 hr
+    · intro h
+      refine ⟨(suffix_zero_iff e hsuffix r 0).1 ?_, rfl⟩
+      simpa [returnWord] using congrArg Fin.val (h 0)
+  | cons n ns ih =>
+    constructor
+    · rintro ⟨hsection, htimes⟩ i
+      obtain ⟨hreturn, htail⟩ := (matchesReturnTimes_cons r n ns).1 htimes
+      by_cases hhead : i.val ≤ n.val
+      · let t : Fin (n.val + 2) := ⟨i.val, by omega⟩
+        rw [returnWord_head hk n ns t i rfl]
+        exact (return_suffix_block_iff e hsuffix r n).1 ⟨hsection, hreturn⟩ t
+      · let t : Fin (returnSpan ns + 1) := ⟨i.val - (n.val + 1), by
+          have hi := i.isLt
+          simp only [returnSpan] at hi
+          omega⟩
+        have index : i.val = t.val + (n.val + 1) := by dsimp [t]; omega
+        rw [returnWord_tail hk n ns t i index]
+        have hshifted := (ih (returnMap r)).1 ⟨(returnTime_spec r).2.2.1, htail⟩ t
+        rw [returnMap, hreturn, suffix_iterate_shift e hsuffix] at hshifted
+        have indexZ : (i.val : ℤ) = (t.val : ℤ) + ((n.val + 1 : ℕ) : ℤ) := by omega
+        simpa only [indexZ] using hshifted
+    · intro h
+      have hblock : ∀ t : Fin (n.val + 2),
+          ((e (false, r)).val (t.val : ℤ)).2 = returnSuffixBlock n t := by
+        intro t
+        let u : Fin (returnSpan (n :: ns) + 1) := ⟨t.val, by
+          have ht := t.isLt
+          simp only [returnSpan]
+          omega⟩
+        simpa only [returnWord_head hk n ns t u rfl] using h u
+      obtain ⟨hsection, hreturn⟩ := (return_suffix_block_iff e hsuffix r n).2 hblock
+      refine ⟨hsection, (matchesReturnTimes_cons r n ns).2
+        ⟨hreturn, ((ih (returnMap r)).2 (fun t => ?_)).2⟩⟩
+      let u : Fin (returnSpan (n :: ns) + 1) := ⟨t.val + (n.val + 1), by
+        have ht := t.isLt
+        simp only [returnSpan]
+        omega⟩
+      rw [returnMap, hreturn, suffix_iterate_shift e hsuffix]
+      have indexZ : (u.val : ℤ) = (t.val : ℤ) + ((n.val + 1 : ℕ) : ℤ) := by
+        dsimp [u]
+      simpa only [indexZ, returnWord_tail hk n ns t u rfl] using h u
+
+private theorem returnSpan_weight (p : ℝ) (ns : List (Fin k)) :
+    p ^ returnSpan ns = (ns.map fun n => p ^ (n.val + 1)).prod := by
+  induction ns with
+  | nil => simp [returnSpan]
+  | cons n ns ih => simp [returnSpan, pow_add, ih]
+
+/-- The conditioned bilateral Parry law assigns a product of geometric
+weights to every finite prefix of actual successive return times. -/
+theorem return_time_cylinder_probability (hk : 2 ≤ k)
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (μ : ProbabilityMeasure (RelationPath k))
+    (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (hμ : (μ : Measure (RelationPath k)).map relationShift = μ)
+    (hcylinder : ∀ (ell : ℤ) (m : ℕ) (v : Fin (m + 1) → Fin k),
+      (μ : Measure (RelationPath k))
+        {r | (fun i : Fin (m + 1) => ((e (false, r)).val (ell + i.val)).2) = v} =
+        ENNReal.ofReal (suffixLaw k (v 0)) * ∏ i : Fin m,
+          ENNReal.ofReal (suffixKernel k (v i.castSucc) (v i.succ)))
+    (ns : List (Fin k)) :
+    sectionMeasure (μ : Measure (RelationPath k)) {r | matchesReturnTimes r ns = true} =
+      ENNReal.ofReal ((ns.map fun n => parryParameter k ^ (n.val + 1)).prod) := by
+  have hkpos : 0 < k := by omega
+  have events :
+      zeroSection k ∩ {r | matchesReturnTimes r ns = true} =
+      {r | (fun i : Fin (returnSpan ns + 1) => ((e (false, r)).val (i.val : ℤ)).2) =
+        returnWord hkpos ns} := by
+    ext r
+    change (r ∈ zeroSection k ∧ matchesReturnTimes r ns = true) ↔ _
+    rw [return_word_iff hkpos e hsuffix]
+    exact ⟨funext, fun h i => congrFun h i⟩
+  have support :
+      sectionMeasure (μ : Measure (RelationPath k))
+        (zeroSection k ∩ {r | matchesReturnTimes r ns = true}) =
+      sectionMeasure (μ : Measure (RelationPath k)) {r | matchesReturnTimes r ns = true} :=
+    ProbabilityTheory.cond_inter_self measurable_zeroSection _ _
+  rw [← support, events,
+    conditioned_reset_loop hk e μ hsuffix hμ hcylinder (returnWord hkpos ns)
+      (returnWord_initial hkpos ns) (returnWord_terminal hkpos ns)
+      (returnWord_allowed hkpos ns),
+    returnSpan_weight]
 
 end D5.S3.TotalVariation.ParryFirstReturn

@@ -19,7 +19,20 @@ internal sealed class GeneratorDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Entropy/KolmogorovSinai/Generator.ksEntropy_eq_ksEntropyPartition_of_generating"),
                 H("ksEntropy eq ksEntropyPartition of generating"), StatementSource.FromAuthor(Presentation1()),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The definitions and conventions in the introduction apply."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The definitions and conventions in the introduction apply."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-partition-refinement-entropy"),
+                DeclarationHandle.Create("D5/S3/Entropy/KolmogorovSinai/Generator.entropy_le_of_partition_refinement"),
+                H("Entropy under finite partition refinement"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The entropy of the coarser partition is bounded by the entropy of its refinement. The common join has the entropy of the refining partition."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ks-entropy-increasing-saturations"),
+                DeclarationHandle.Create("D5/S3/Entropy/KolmogorovSinai/Generator.ksEntropy_le_of_increasing_partition_saturations"),
+                H("Entropy bounds from increasing partition saturations"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "A uniform entropy bound for finite observations bounds the full system entropy when their forward orbit sigma algebras increase to the ambient sigma algebra. The partition-relative conditional entropy of any fixed test partition tends to zero. The comparison uses the finite-window argument of Morgenstern's two-sided generator theorem."))),
+                DescribeRole.Theorem))));
 
     private static Formula Presentation0() => Disp(Seq(Forall, Sp, OpenBrace, Alpha, Sp, Colon, Sp, F.Id("Type"), CloseBrace,
             Sp, OpenBrace, Iota, Sp, Colon, Sp, F.Id("Type"), CloseBrace, Sp,

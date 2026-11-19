@@ -7,10 +7,10 @@
    digest: The full literal Barker numerator follows from the exact quotient annihilator and initial convolutions. -/
 
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
+import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.RingTheory.PowerSeries.Inverse
-import Batteries.Tactic.OpenPrivate
-import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
+import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 
 /-! The reproduced formula is attributed to Colin Barker, OEIS A286848,
 https://oeis.org/A286848, under CC-BY-SA-4.0,
@@ -28,8 +28,6 @@ open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
-open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
-open private rowEval orbit_values from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 
 /-- Lift a quotient vector to every full state in its literal class. -/
 def lift : Vector →ₗ[ℤ] (State → ℤ) where
@@ -121,12 +119,28 @@ private theorem coefficient_initial (n : Fin 50) :
   · congr 1
     exact orbit_values ⟨n.val - 2, by omega⟩
 
+/-- The initial scalar coefficients, checked once before the convolution sums. -/
+private def initialCoefficientTable : Fin 50 → ℤ :=
+  ![0, 2, 7, 16, 53, 154, 436, 1268, 3660, 10610, 30744, 89079, 258251, 748420, 2169219, 6287336,
+    18222901, 52817261, 153084840, 443698814, 1286012537, 3727362387, 10803344089, 31312289784,
+    90755170545, 263043739916, 762402920030, 2209739758798, 6404684091893, 18563261978785,
+    53803543012955, 155943564477794, 451985016668827, 1310028125051553, 3796970308484783,
+    11005094659891731, 31897038596447728, 92450006350049086, 267956025082697789,
+    776640632195725546, 2251006191740310258, 6524290212500485659, 18909927006459689238,
+    54808312895782100771, 158855777785736934710, 460425742056537820014, 1334492625343835347486,
+    3867877932156118889721, 11210612493422688225322, 32492709098404287550203]
+
+private theorem initialCoefficientTable_eq : ∀ n : Fin 50,
+    initialCoefficientTable n = initialCoefficient n := by
+  decide +kernel
+
 /-- Every initial convolution, in degrees zero through 49, equals the complete
 numerator; the extra degree 49 is checked to be zero. -/
 theorem initial_convolutions : ∀ m : Fin 50,
     (∑ j : Fin 49, if j.val ≤ m.val then
       denominator j * initialCoefficient ⟨m.val - j.val, by omega⟩ else 0) =
       if h : m.val < 49 then numerator ⟨m.val, h⟩ else 0 := by
+  simp_rw [← initialCoefficientTable_eq]
   decide +kernel
 
 /-- The denominator recurrence holds at every coefficient from degree 50 onward. -/
@@ -218,7 +232,7 @@ theorem quotientSeries_identity : quotientSeries = P * Q⁻¹ :=
 /-- The original actual counts equal the certified quotient evaluation at every
 width at least two, with no assumed count relation or recurrence. -/
 theorem actualCount_quotient (k : ℕ) :
-    (BarkerMinimalGridEncoding.actualCount (k + 2) : ℤ) = evaluate (orbit k) := by
+    (BarkerMinimalGridTransfer.actualCount (k + 2) : ℤ) = evaluate (orbit k) := by
   calc
     _ = ∑ s : Fin 64, fullOrbit k ⟨s.val, by omega⟩ := actualCount_fullOrbit k
     _ = ∑ s : Fin 64, orbit k (classOf ⟨s.val, by omega⟩) := by
@@ -229,7 +243,7 @@ theorem actualCount_quotient (k : ℕ) :
 /-- The requested series has the actual subset count at each positive width and
 constant coefficient zero; no empty-grid count is redefined. -/
 noncomputable def actualSeries : PowerSeries ℚ := PowerSeries.mk fun n =>
-  if n = 0 then 0 else (BarkerMinimalGridEncoding.actualCount n : ℚ)
+  if n = 0 then 0 else (BarkerMinimalGridTransfer.actualCount n : ℚ)
 
 private theorem actualSeries_eq_quotientSeries : actualSeries = quotientSeries := by
   apply PowerSeries.ext
