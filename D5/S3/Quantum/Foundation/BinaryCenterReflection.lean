@@ -138,13 +138,13 @@ exclusion ball or an exact nonfacial interior section. Neither alternative
 is discarded. -/
 theorem original_reflected_alternatives [Nontrivial V]
     (h3 : threeBallExclusions C u)
-    (hBC : binaryCompatible (CommonOldExclusionConfirmation.three_implies_balls h3))
+    (hBC : binaryCompatible (OriginalExclusionLimits.ballHyp h3))
     (p : pure C u) (hp : SingleLabel C u p) :
     ∃ b : ExclusionChart C u p, b.dim = 3 ∧
     ∃ g k : EuclideanSpace ℝ (Fin b.dim) →ᵃ[ℝ] V,
       (∀ x (hx : ‖x‖ = 1), g x = center
-        (CommonOldExclusionConfirmation.three_implies_balls h3)
-        (chartPure hc hs hg (CommonOldExclusionConfirmation.three_implies_balls h3) p b x hx)) ∧
+        (OriginalExclusionLimits.ballHyp h3)
+        (chartPure hc hs hg (OriginalExclusionLimits.ballHyp h3) p b x hx)) ∧
       (∀ x, k x = (2 : ℝ) • g x - p) ∧ Function.Injective k ∧
       Module.finrank ℝ k.linear.range = 3 ∧
       k '' Metric.closedBall 0 1 ⊆ base C u ∧
@@ -161,9 +161,9 @@ theorem original_reflected_alternatives [Nontrivial V]
       (k '' Metric.closedBall 0 1 = exclusion C u p ↔
         ∀ x (hx : ‖x‖ = 1), g x =
           (1/2 : ℝ) • ((p : V) + (2 : ℝ) • center
-            (CommonOldExclusionConfirmation.three_implies_balls h3) p - b.param x)) := by
+            (OriginalExclusionLimits.ballHyp h3) p - b.param x)) := by
   classical
-  let B := CommonOldExclusionConfirmation.three_implies_balls h3
+  let B := OriginalExclusionLimits.ballHyp h3
   let chart (r : pure C u) : ExclusionChart C u r :=
     ⟨3, by norm_num, CommonOldExclusionConfirmation.oldChart h3 r,
       (h3 r).choose_spec.1, (h3 r).choose_spec.2⟩

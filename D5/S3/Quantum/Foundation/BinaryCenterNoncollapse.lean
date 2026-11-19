@@ -7,8 +7,7 @@
    digest: Binary original compatibility bounds center variation on each fixed sphere. -/
 
 import D5.S3.Quantum.Foundation.BinaryCenterGeometry
-import D5.S3.Quantum.Foundation.CommonOldExclusionConfirmation
-import D5.S3.Quantum.Foundation.CommonSourceLiftObstruction
+import D5.S3.Quantum.Foundation.OriginalRowSaturation
 
 /-! Quantitative variation and attained distance on each fixed original sphere. -/
 
@@ -436,41 +435,21 @@ theorem affine_ball_frontier {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [Nontrivial E]
     (g : E →ᵃ[ℝ] V) (hi : Function.Injective g) :
     intrinsicFrontier ℝ (g '' Metric.closedBall 0 1) = g '' Metric.sphere 0 1 := by
-  have htop : affineSpan ℝ (Metric.closedBall (0 : E) 1) = ⊤ :=
-    (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp
-      ⟨0, mem_interior_iff_mem_nhds.mpr (Metric.closedBall_mem_nhds (0 : E) zero_lt_one)⟩
-  have hint : intrinsicInterior ℝ (Metric.closedBall (0 : E) 1) = Metric.ball 0 1 := by
-    let A := affineSpan ℝ (Metric.closedBall (0 : E) 1)
-    let e := AffineIsometryEquiv.ofTop A htop
-    have he : (e : A → E) = ((↑) : A → E) := by
-      funext x
-      exact AffineIsometryEquiv.ofTop_apply htop x
-    change ((↑) : A → E) '' interior (((↑) : A → E) ⁻¹' Metric.closedBall 0 1) = _
-    rw [← he]
-    change e.toHomeomorph '' interior (e.toHomeomorph ⁻¹' Metric.closedBall 0 1) = _
-    rw [e.toHomeomorph.image_interior]
-    change interior ((e : A → E) '' ((e : A → E) ⁻¹' Metric.closedBall 0 1)) = _
-    rw [Set.image_preimage_eq _ e.surjective, interior_closedBall]
-    norm_num
-  have hc : IsClosed (g '' Metric.closedBall (0 : E) 1) :=
-    ((isCompact_closedBall _ _).image g.continuous_of_finiteDimensional).isClosed
-  rw [← closure_sdiff_intrinsicInterior, hc.closure_eq,
-    CommonSourceLiftObstruction.intrinsic_interior_image g hi, hint,
-    ← Set.image_sdiff hi, Metric.closedBall_sdiff_ball]
+  rw [ExclusionIncidence.intrinsic_image g hi, ExclusionIncidence.intrinsic_ball]
 
 include hc hs hg in
 /-- The complete singleton center-section geometry in the original EB3 model.
 The dimension bound and existence are on the same original normalized base. -/
 theorem original_center_sections [Nontrivial V] (h3 : threeBallExclusions C u)
-    (hBC : binaryCompatible (CommonOldExclusionConfirmation.three_implies_balls h3)) :
+    (hBC : binaryCompatible (OriginalExclusionLimits.ballHyp h3)) :
     6 ≤ Module.finrank ℝ (affineSpan ℝ (base C u)).direction ∧
     (∃ p : pure C u, SingleLabel C u p) ∧
     ∀ p : pure C u, SingleLabel C u p →
       ∃ b : ExclusionChart C u p, b.dim = 3 ∧
       ∃ g : EuclideanSpace ℝ (Fin b.dim) →ᵃ[ℝ] V,
         (∀ x (hx : ‖x‖ = 1), g x = center
-          (CommonOldExclusionConfirmation.three_implies_balls h3)
-          (chartPure hc hs hg (CommonOldExclusionConfirmation.three_implies_balls h3) p b x hx)) ∧
+          (OriginalExclusionLimits.ballHyp h3)
+          (chartPure hc hs hg (OriginalExclusionLimits.ballHyp h3) p b x hx)) ∧
         Function.Injective g ∧ Module.finrank ℝ g.linear.range = 3 ∧
         (∀ x, ‖x‖ < 1 → g x ∈ intrinsicInterior ℝ (base C u)) ∧
         g '' Metric.closedBall 0 1 =
@@ -478,9 +457,9 @@ theorem original_center_sections [Nontrivial V] (h3 : threeBallExclusions C u)
         intrinsicFrontier ℝ (g '' Metric.closedBall 0 1) = g '' Metric.sphere 0 1 ∧
         g '' Metric.sphere 0 1 ⊆ intrinsicFrontier ℝ (base C u) ∧
         (∀ x (hx : ‖x‖ = 1), Disjoint g.linear.range
-          ((CommonOldExclusionConfirmation.three_implies_balls h3)
-            (chartPure hc hs hg (CommonOldExclusionConfirmation.three_implies_balls h3) p b x hx)).some.param.linear.range) := by
-  let B := CommonOldExclusionConfirmation.three_implies_balls h3
+          ((OriginalExclusionLimits.ballHyp h3)
+            (chartPure hc hs hg (OriginalExclusionLimits.ballHyp h3) p b x hx)).some.param.linear.range) := by
+  let B := OriginalExclusionLimits.ballHyp h3
   let chart (p : pure C u) : ExclusionChart C u p :=
     ⟨3, by norm_num, CommonOldExclusionConfirmation.oldChart h3 p,
       (h3 p).choose_spec.1, (h3 p).choose_spec.2⟩
@@ -611,19 +590,19 @@ include hc hs hg in
 constant bounds every whole exclusion with label on that sphere, and a
 diameter-zero sequence eventually avoids that fixed sphere. -/
 theorem fixed_sphere_noncollapse (h3 : threeBallExclusions C u)
-    (hBC : binaryCompatible (CommonOldExclusionConfirmation.three_implies_balls h3))
+    (hBC : binaryCompatible (OriginalExclusionLimits.ballHyp h3))
     (p : pure C u) :
     ∃ δ : ℝ, 0 < δ ∧
       (∃ q₀ : pure C u, (q₀ : V) ∈ exclusion C u p ∧
-        δ = 2 * ‖(p : V) - center (CommonOldExclusionConfirmation.three_implies_balls h3) q₀‖ ∧
+        δ = 2 * ‖(p : V) - center (OriginalExclusionLimits.ballHyp h3) q₀‖ ∧
         ∀ q : pure C u, (q : V) ∈ exclusion C u p →
-          δ ≤ 2 * ‖(p : V) - center (CommonOldExclusionConfirmation.three_implies_balls h3) q‖) ∧
+          δ ≤ 2 * ‖(p : V) - center (OriginalExclusionLimits.ballHyp h3) q‖) ∧
       (∀ q : pure C u, (q : V) ∈ exclusion C u p → δ ≤ Metric.diam (exclusion C u q)) ∧
       ∀ an : ℕ → pure C u,
         Tendsto (fun n => Metric.diam (exclusion C u (an n))) atTop (𝓝 0) →
         ∀ᶠ n in atTop, (an n : V) ∉ exclusion C u p := by
   classical
-  let B := CommonOldExclusionConfirmation.three_implies_balls h3
+  let B := OriginalExclusionLimits.ballHyp h3
   let b := (B p).some
   let E := EuclideanSpace ℝ (Fin b.dim)
   let S := Metric.sphere (0 : E) 1

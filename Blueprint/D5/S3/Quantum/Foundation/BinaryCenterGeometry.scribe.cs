@@ -45,7 +45,7 @@ internal sealed class BinaryCenterGeometryDocument : IScribeDocumentDefinition
         var law=All("p",P,All("q",P,All("r",P,All("s",P,All("t",R,All("v",R,
             Imp(Conj(Unit(t),Unit(v),Eq(Combo(t,p,q),Combo(v,r,s))),
                 Eq(Combo(t,Center(p),Center(q)),Combo(v,Center(r),Center(s))))))))));
-        return All("V",Id("Types"),F.Seq(Inst("NormedAddCommGroup",V),Inst("NormedSpace",R,V),Inst("FiniteDimensional",R,V),
+        return All("V",Id("Types"),F.Seq(Inst("NormedAddCommGroup",V),Inst("NormedSpace",R,V),
             All("C",Call("PointedCone",R,V),All("u",Call("LinearMaps",R,V,R),All("B",Call("exclusionBalls",C,U),
                 Iff(Call("binaryCompatible",Id("B")),law))))));
     }
