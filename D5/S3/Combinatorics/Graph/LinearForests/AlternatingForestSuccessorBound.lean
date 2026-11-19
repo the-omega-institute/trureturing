@@ -16,6 +16,7 @@ set_option relaxedAutoImplicit false
 open D5.S3.Combinatorics.Graph.LinearForests
 open CompatibleCycleInventory DirectedForestCompletion AlternatingSuccessorSetBound Relation
 open Equiv
+open D5.S0.Diagonal.Probability.EquivariantEscape (uniformPmf)
 open scoped ENNReal
 
 namespace D5.S3.Combinatorics.Graph.LinearForests.AlternatingForestSuccessorBound
@@ -76,7 +77,9 @@ private theorem heads_card_ge (E : V → V → Prop) (k : V → Bool) (b : Bool)
   change color.ncard - Nat.card {p : V × V // E p.1 p.2} ≤ (color \ seen).ncard
   exact (Nat.sub_le_sub_left hSeen _).trans (Set.le_ncard_sdiff seen color)
 
-/-- The prescribed edges leave at least `n - |E|` heads of each color. -/
+/-- A uniform alternating completion sends a component's tail to the heads of a set of
+other components with mass at most the number of targets divided by `n - |E| - 1`.
+Here `n` is the size of each color class and `|E|` is the number of prescribed edges. -/
 theorem mass_of_successor_components (E : V → V → Prop) (k : V → Bool) (n : ℕ)
     (h0 : Nat.card (Side k false) = n) (h1 : Nat.card (Side k true) = n)
     (hsize : Nat.card {p : V × V // E p.1 p.2} + 2 ≤ n)
@@ -109,23 +112,26 @@ theorem mass_of_successor_components (E : V → V → Prop) (k : V → Bool) (n 
   let d : Component E → Bool := fun A => !(k (t A))
   let K := Compatible s d
   let ν : PMF K := μ.map Φ
+  let : Fintype (AlternatingCompletion E k) := Fintype.ofFinite _
+  let : Fintype K := Fintype.ofFinite _
+  let : Nonempty (AlternatingCompletion E k) := ⟨ref⟩
+  let : Nonempty K := ⟨Φ ref⟩
+  have hUniform : μ = uniformPmf (AlternatingCompletion E k) := by
+    apply PMF.ext
+    intro σ
+    simpa only [uniformPmf, PMF.ofFintype_apply, ← Nat.card_eq_fintype_card] using hμ σ
   have hν (σ : K) : ν σ = (Nat.card K : ℝ≥0∞)⁻¹ := by
-    rw [← Nat.card_congr Φ]
-    change (μ.map Φ) σ = _
-    rw [PMF.map_apply]
-    have he (a : AlternatingCompletion E k) : σ = Φ a ↔ a = Φ.symm σ := by
-      constructor
-      · intro he
-        exact (Φ.symm_apply_apply a).symm.trans (congrArg Φ.symm he).symm
-      · intro he
-        rw [he, Φ.apply_symm_apply]
-    simp only [he, tsum_ite_eq]
-    exact hμ _
+    let e : AlternatingCompletion E k ≃ K := Φ
+    have hMap : μ.map e = uniformPmf K := by
+      rw [hUniform, uniform_equiv e]
+    change (μ.map e) σ = _
+    rw [hMap]
+    simp only [uniformPmf, PMF.ofFintype_apply, Nat.card_eq_fintype_card]
   have side_ge (b : Bool) :
       n - Nat.card {p : V × V // E p.1 p.2} ≤ Nat.card (Side s b) := by
     have cardColor : Nat.card (Side k b) = n := by cases b <;> assumption
     have hs : Nat.card (Side s b) = Nat.card {x : Head E // k x = b} :=
-      Nat.card_congr (Equiv.subtypeEquiv h (fun _ => Iff.rfl))
+      side_transport h (fun x : Head E => k x) b
     rw [hs, ← cardColor]
     exact heads_card_ge E k b
   have hcolors (b : Bool) : 2 ≤ Nat.card (Side s b) := by
