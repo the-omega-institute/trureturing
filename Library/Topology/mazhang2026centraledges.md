@@ -8,6 +8,7 @@ url: "https://doi.org/10.5281/zenodo.24369118"
 claim: "Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
+  - D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum
 license: citation-only
 triage: anchor
 ---
@@ -27,3 +28,9 @@ every point has another point, or itself when t = 0, at distance t. The central 
 distinct points whose distance lies in C(X). If |C(X)| = k then the central graph has at least
 (k-1)⌈n/2⌉ edges: for each nonzero central value the edges of that length cover every point,
 and edges of different lengths are distinct.
+
+Theorem 4 (Section 3): for n >= 4 the least number of central edges of a three-central
+n-point ultrametric is 2n-4+⌈n/2⌉, with equality exactly when the diametrical graph is complete
+bipartite with parts of sizes 2 and n-2 and the other positive central distance has ⌈n/2⌉ edges.
+The diameter classes are fully joined at the diameter, and merging classes reduces to two parts
+with p(n-p) - 2(n-2) = (p-2)(n-p-2) >= 0; a nested pair/triple ultrametric attains the bound.

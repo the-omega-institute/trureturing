@@ -167,7 +167,7 @@ theorem closedBall_order (c : ℕ → ℝ) (b : ℕ → ℕ) (h : ℕ) (hc0 : c 
     rw [closedBall_card_eq, hb _ le_rfl]
 
 /-- The maximum distance in a finite nonempty ultrametric is central. -/
-private theorem exists_central_bound [Nonempty X] :
+theorem exists_central_bound [Nonempty X] :
     ∃ d ∈ center X, ∀ x y : X, dist x y ≤ d := by
   classical
   let _ : Fintype X := Fintype.ofFinite X
