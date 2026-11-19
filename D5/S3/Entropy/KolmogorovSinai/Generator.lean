@@ -15,6 +15,7 @@
    repository's pinned mathlib revision, replacing consumers by direct imports. -/
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30545. -/
+/- Partition comparison audit: https://github.com/the-omega-institute/trureturing/issues/31572. -/
 
 import D5.S3.Entropy.KolmogorovSinai.GeneratorConditioning
 

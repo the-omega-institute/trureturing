@@ -6,6 +6,8 @@
    utility: none
    digest: Entropy of the induced bilateral Parry return system. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31572. -/
+
 import D5.S3.TotalVariation.ParryFirstReturn
 import D5.S3.Entropy.KolmogorovSinai.Bernoulli
 
@@ -17,6 +19,7 @@ open Function MeasurableSpace MeasureTheory Set
 open D5.S3.TotalVariation.ParryBilateralLaw
 open D5.S3.TotalVariation.ParryFirstReturn
 open D5.S3.TotalVariation.ParryResetLaw
+open D5.S3.TotalVariation.TwistedResetPaths
 open D5.S3.Entropy.KolmogorovSinai
 open D5.S3.Entropy.BernoulliShift (negMulLog_prod_eq_sum sum_prod_mul_neg_log_eq_sum_negMulLog)
 open scoped ENNReal
@@ -408,5 +411,104 @@ private theorem ksEntropy_eq_of_geometric_gap_mass (hk : 2 ≤ k)
   rw [Finset.sum_comm]
   simp_rw [sum_prod_mul_neg_log_eq_sum_negMulLog p hp]
   rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+
+private theorem matchesReturnTimes_ofFn_iff (r : RelationPath k) (n : ℕ) (f : Fin n → Fin k) :
+    matchesReturnTimes r (List.ofFn f) = true ↔ gapName n r = f := by
+  induction n generalizing r with
+  | zero =>
+    simp [matchesReturnTimes, funext_iff]
+  | succ n ih =>
+    rw [List.ofFn_succ]
+    simp only [matchesReturnTimes, Bool.and_eq_true, decide_eq_true_eq]
+    rw [ih (returnMap r)]
+    simp only [funext_iff, Fin.forall_fin_succ]
+    constructor
+    · rintro ⟨hfirst, hrest⟩
+      refine ⟨Fin.ext ?_, fun i => ?_⟩
+      · have hz := returnSymbol_succ r
+        change (returnSymbol r).val = (f 0).val
+        omega
+      · change returnSymbol (returnMap^[i.val + 1] r) = f i.succ
+        simpa only [gapName, Function.iterate_succ_apply] using hrest i
+    · rintro ⟨hfirst, hrest⟩
+      refine ⟨?_, fun i => ?_⟩
+      · change returnSymbol r = f 0 at hfirst
+        simpa only [hfirst] using (returnSymbol_succ r).symm
+      · have hi := hrest i
+        change returnSymbol (returnMap^[i.val + 1] r) = f i.succ at hi
+        simpa only [gapName, Function.iterate_succ_apply] using hi
+
+private theorem weighted_suffix_sum (p : ℝ) (n : ℕ) :
+    (∑ j ∈ Finset.range n, p ^ j * ∑ i ∈ Finset.range (n - j), p ^ (i + 1)) =
+      ∑ i ∈ Finset.range n, (i + 1 : ℕ) * p ^ (i + 1) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Finset.sum_range_succ, Finset.sum_range_succ]
+    have hsum : (∑ j ∈ Finset.range n, p ^ j * ∑ i ∈ Finset.range (n + 1 - j), p ^ (i + 1)) =
+        Finset.sum (Finset.range n)
+          (fun j => p ^ j * (∑ i ∈ Finset.range (n - j), p ^ (i + 1)) + p ^ (n + 1)) := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      have hjn := Finset.mem_range.mp hj
+      rw [show n + 1 - j = n - j + 1 by omega, Finset.sum_range_succ, mul_add, ← pow_add]
+      rw [show j + (n - j + 1) = n + 1 by omega]
+    rw [hsum, Finset.sum_add_distrib, ih]
+    rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    rw [show n + 1 - n = 1 by omega]
+    simp [pow_succ]
+    ring
+
+private theorem geometric_duration_entropy (hk : 2 ≤ k) :
+    (∑ a : Fin k, Real.negMulLog (parryParameter k ^ (a.val + 1))) =
+      (-Real.log (parryParameter k)) * normalizer k := by
+  let p := parryParameter k
+  have hsum : normalizer k =
+      ∑ a : Fin k, (a.val + 1 : ℕ) * p ^ (a.val + 1) := by
+    calc normalizer k =
+        ∑ j ∈ Finset.range k, p ^ j * ∑ i ∈ Finset.range (k - j), p ^ (i + 1) :=
+          Fin.sum_univ_eq_sum_range
+            (fun j => p ^ j * ∑ i ∈ Finset.range (k - j), p ^ (i + 1)) k
+      _ = ∑ a : Fin k, (a.val + 1 : ℕ) * p ^ (a.val + 1) :=
+        (weighted_suffix_sum p k).trans
+          (Fin.sum_univ_eq_sum_range (fun i => (i + 1 : ℕ) * p ^ (i + 1)) k).symm
+  rw [hsum, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [Real.negMulLog, Real.log_pow]
+  ring
+
+/-- The Kolmogorov–Sinai entropy of the native zero-section return map of the
+bilateral Parry source is the Shannon entropy of its geometric return law. -/
+theorem actual_return_entropy (hk : 2 ≤ k)
+    (e : (Bool × RelationPath k) ≃ᵐ ResetPath k)
+    (μ : ProbabilityMeasure (RelationPath k))
+    (hsuffix : ∀ (z : Bool × RelationPath k) (t : ℤ),
+      let j := ((e z).val t).2.val
+      z.2.val (t - (j : ℤ) - 1) = false ∧
+      ∀ i : ℕ, i < j → z.2.val (t - (i : ℤ) - 1) = true)
+    (hμ : (μ : Measure (RelationPath k)).map relationShift = μ)
+    (hcylinder : ∀ (ell : ℤ) (m : ℕ) (v : Fin (m + 1) → Fin k),
+      (μ : Measure (RelationPath k))
+        {r | (fun i : Fin (m + 1) => ((e (false, r)).val (ell + i.val)).2) = v} =
+        ENNReal.ofReal (suffixLaw k (v 0)) * ∏ i : Fin m,
+          ENNReal.ofReal (suffixKernel k (v i.castSucc) (v i.succ))) :
+    ∃ hprob : IsProbabilityMeasure (sectionMeasure (μ : Measure (RelationPath k))),
+      ∃ hreturn : MeasurePreserving returnMap (sectionMeasure (μ : Measure (RelationPath k)))
+          (sectionMeasure (μ : Measure (RelationPath k))),
+        @ksEntropy (RelationPath k) _ _ hprob _ hreturn =
+          ((∑ a : Fin k, Real.negMulLog (parryParameter k ^ (a.val + 1)) : ℝ) : EReal) ∧
+        @ksEntropy (RelationPath k) _ _ hprob _ hreturn =
+          ((-Real.log (parryParameter k) /
+            ((μ : Measure (RelationPath k)) (zeroSection k)).toReal : ℝ) : EReal) := by
+  obtain ⟨_, hmass, _, hprob, hreturn, _, _⟩ := actual_first_return_system hk e μ hsuffix hμ hcylinder
+  have hentropy := ksEntropy_eq_of_geometric_gap_mass hk _ hreturn (fun n f => by
+    have hcyl := return_time_cylinder_probability hk e μ hsuffix hμ hcylinder (List.ofFn f)
+    simpa only [List.map_ofFn, List.prod_ofFn, Function.comp_apply,
+      matchesReturnTimes_ofFn_iff] using hcyl)
+  refine ⟨hprob, hreturn, hentropy, ?_⟩
+  have hnormalizer : 0 < normalizer k :=
+    lt_of_lt_of_le zero_lt_one (parry_stationary_law k hk).2.2.1
+  rw [hentropy, geometric_duration_entropy hk, hmass,
+    ENNReal.toReal_ofReal (one_div_nonneg.mpr hnormalizer.le), one_div, div_inv_eq_mul]
 
 end D5.S3.TotalVariation.ParryInducedEntropy
