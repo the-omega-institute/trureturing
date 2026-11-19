@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/Queries/AlternatingWeldQueryBound
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Queries/AlternatingWeldQueryBound
    mirror-E: none(waiver:symbolic-probability-estimate)
    anchors: []
