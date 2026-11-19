@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaPntBounds;
 
@@ -18,15 +19,15 @@ internal sealed class MobiusDyadicBoundaryDocument : IScribeDocumentDefinition
                 DescribeId.Create("weighted-reciprocal-zeta-square-bound"),
                 DeclarationHandle.Create(Owner + ".weighted_reciprocal_zeta_sq_bound_of_mobiusDyadicEnergy"),
                 H("Square-integrability of the weighted reciprocal"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(F.Disp(ReciprocalBound())),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Use the actual signed difference D(x) = S(x) − S(2x), where S(x) is the finite "
                         + "sum of μ(n)/n over positive integers n ≤ x. Fix 0 ≤ θ < 2 with θ ≠ 1 "
                         + "and assume that ζ has no zeros on the line of real part θ. If the integral "
-                        + "of D(x)² x⁻⁽²θ⁻¹⁾ over x > 1 is finite, the theorem bounds the whole-line "
-                        + "integral of 1/((1+|y|)² |ζ(θ+iy)|²) by the displayed expression.")),
+                        + "E of D(x)² x⁻⁽²θ⁻¹⁾ over x > 1 is finite, the weighted reciprocal belongs "
+                        + "to L¹ on the whole real line and its integral satisfies the displayed bound.")),
                     Paragraph(Text(
                         "The change of variables x = exp u gives a causal function in L². "
                         + "Damping it by exp(−hu) yields L¹ and L² and preserves the L² bound. "
@@ -46,4 +47,23 @@ internal sealed class MobiusDyadicBoundaryDocument : IScribeDocumentDefinition
             DocumentEdge.Dependency.Create(GidRef.Create(PartialSum)),
             DocumentEdge.Dependency.Create(GidRef.Create(DyadicEnergy))
         ]));
+
+    private static Formula ReciprocalBound()
+    {
+        var y = F.Id("y");
+        var absY = F.Seq(F.Vert, F.Sp, y, F.Vert);
+        var zeta = new Formula.Apply(F.Zeta, [F.Seq(F.Theta, F.Plus, F.Id("i"), y)]);
+        var square = F.Seq(F.Caret, F.Grp(F.D(2)));
+        var denominator = F.Seq(
+            F.Open, F.D(1), F.Plus, absY, F.Close, square,
+            F.Thin, F.Vert, F.Sp, zeta, F.Vert, square);
+        var dyadicGap = F.Seq(
+            F.Open, F.D(1), F.Minus, F.D(2), F.Caret, F.Grp(F.Theta, F.Minus, F.D(1)),
+            F.Close, square);
+        return F.Seq(
+            F.Int, F.Underscore, F.Grp(F.Mathbb, F.Grp(F.Id("R"))), F.Thin,
+            F.Frac, F.Grp(F.D(1)), F.Grp(denominator), F.Thin, F.Mathrm, F.Grp(F.Id("d")), y,
+            F.Leq, F.D(4), F.Plus,
+            F.Frac, F.Grp(F.D(4), F.Pi, F.Sp, F.Id("E")), F.Grp(dyadicGap));
+    }
 }
