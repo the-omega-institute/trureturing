@@ -14,8 +14,12 @@ escape_witness: class_bound (the class of points below the diameter from a fixed
   tree_edges_le (the hierarchical ultrametric has at most 2n-4+⌈n/2⌉ central edges).
 proof_shape:
   part, comp, pos, td, Tree, oneEdge: definitions; consumers: the Tree lemmas and the theorem.
-  center_shape, class_bound, general, td_ultra, tree_center, one_hit, tree_edges_le: content;
-    consumers: general and ultra_three_central_minimum.
+  center_shape, class_bound: content; consumer: general.
+  general: content; consumer: ultra_three_central_minimum.
+  td_ultra: content; consumers: td_triangle, the IsUltrametricDist instance.
+  tree_center: content; consumers: tree_center_card, tree_edges_le.
+  one_hit: content; consumer: tree_edges_le.
+  tree_edges_le: content; consumer: ultra_three_central_minimum.
   edges_split, mem_lengthEdges_iff, mem_lengthEdges_D, mem_image_pairs, image_pairs_card,
     diam_adj_iff, sdiff_edges, td_self, td_comm, td_pos, td_nonneg, td_triangle, td_eq_two,
     td_eq_one, td_central, td_row_zero, tree_center_card: bind-only helpers; consumers:
@@ -29,6 +33,9 @@ Direct frozen dependencies: D5/S3/Combinatorics/Geometry/CentralEdgeCover (len, 
 Search record (§3.1): the maximum distance of a finite ultrametric being central and the
   per-length cover bound were private in frozen modules and are made public instead of
   re-proved; no frozen module bounds the diameter edges of an ultrametric.
+  UltrametricConstantJoin (ConstantCrossDistance.Join, crossDist_triangle_max, center_eq) was
+  considered for building Tree n as nested joins, but the number of components depends on n
+  and odd n needs the triple with an inner distance, so the four-level metric is direct.
 -/
 
 import D5.S3.Combinatorics.Geometry.CentralEdgeCover

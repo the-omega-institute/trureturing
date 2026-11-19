@@ -5,7 +5,7 @@ year: 2026
 title: "Refuting Dovgoshey–Rovenska Conjecture 4.2, arXiv:2610.11596v1, Section 4, p. 13: sharp bounds and corollaries of Petrov (2022) and Dovgoshey et al. (2026)"
 doi: "10.5281/zenodo.24369118"
 url: "https://doi.org/10.5281/zenodo.24369118"
-claim: "Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges."
+claim: "Lemma 2: a finite metric space with n points and k central distances (zero included) has at least (k-1)⌈n/2⌉ central edges; Theorem 4: three-central n-point ultrametrics have at least 2n-4+⌈n/2⌉ central edges, sharply."
 strata_touched:
   - D5/S3/Combinatorics/Geometry/CentralEdgeCover
   - D5/S3/Combinatorics/Geometry/UltrametricThreeCentralMinimum
