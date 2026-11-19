@@ -119,8 +119,16 @@ Each private theorem below has `proof_shape: bind-only` and is admitted only as 
 
 **Proved:** a faithful finite real-valued divergence and actual finite CPTP channel satisfy $\eta^c_D(N)\le1/4<5/12\le\eta^\Delta_D(N)$ with unrestricted finite quantum references and heterogeneous data processing. The mechanism is equal-marginal block cancellation plus contractive pinching, together with a conditional witness whose marginal subtraction produces the larger ratio.
 
+
+For Umegaki relative entropy, every finite CPTP channel has equal complete and
+conditional coefficients on the supported finite branch of Definition 2 and
+Remark 2. This excludes a Umegaki example for the strict separation in the
+second bullet of §9. Both optimizations use strictly positive finite
+denominators and assign zero to an empty feasible set.
+[Lean theorem](../D5/S3/Quantum/Divergence/UmegakiChannelSupportedExtension.lean#L560)
+
 ## ASSUMED-UNVERIFIED
 
-**Unresolved:** neither exact optimal coefficient is asserted. The relative-entropy case remains unresolved. The positive-result audit remains unfinished as specified above. Source novelty beyond the bounded search is unverified.
+**Unresolved:** neither exact optimal coefficient is asserted. The positive-result audit remains unfinished as specified above. Source novelty beyond the bounded search is unverified.
 
 **Candidate only:** whether a faithful divergence satisfying additional source-independent structural laws, such as a specified direct-sum law, admits such a separation. This requires a new precisely quantified question, library/literature screening and preregistration; it is not proved or started by this result.

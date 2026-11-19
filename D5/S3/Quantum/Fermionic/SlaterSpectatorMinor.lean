@@ -134,7 +134,7 @@ theorem occupiedMinor_append {k : ℕ} (V : Matrix ι (Fin k) ℂ)
     · simpa [occupiedMinor, hS] using minor_without_spectator V p S hS hp
     · simp [occupiedMinor, hS]
 
-private theorem append_gram {k : ℕ} [Fintype ι] (V : Matrix ι (Fin k) ℂ)
+theorem append_gram {k : ℕ} [Fintype ι] (V : Matrix ι (Fin k) ℂ)
     (p : ι) (hV : V.conjTranspose * V = 1) (hp : ∀ i, V p i = 0) :
     (appendOrbital V p).conjTranspose * appendOrbital V p = 1 := by
   classical
