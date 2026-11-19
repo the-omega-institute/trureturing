@@ -16,13 +16,15 @@ The private polynomial recurrence is ring-parametric; the scalar H owner does
 not supply this polynomial construction or its coefficient statements.
 
 Declarations (same-delivery helpers expanded when assessing proof_shape):
-sourcePolynomial: proof_shape: bind-only; kind: definition; consumers: IsSourceSequence,
-  source_Q, source_prime_support, source_divisor_closed, source_one, source_three_pow.
+sourcePolynomial: proof_shape: bind-only; kind: definition; consumers: IsSourceSequence, source_Q, source_prime_support, source_divisor_closed,
+  source_one, source_three_pow, source_sequence_exists, source_sequence_one,
+  result.
 IsSourceSequence: proof_shape: bind-only; kind: definition; consumers: claim,
   source_sequence_exists, source_sequence_one, result.
 claim: proof_shape: bind-only; kind: definition; consumer: result.
-Q: proof_shape: bind-only; kind: recursive definition; consumers: Q_sum, source_Q,
-  Q_coeff, Q_map, Q_reset, Q_reduce, source_prime_support, source_three_pow.
+Q: proof_shape: bind-only; kind: recursive definition; consumers: Q_sum, source_Q, Q_coeff, Q_map,
+  Q_reset, Q_reduce, source_prime_support, source_divisor_closed,
+  source_three_pow.
 Q_sum: proof_shape: content; escape_witness: Q_sum;
   Direct frozen dependencies: none; consumers: source_Q.
 source_Q: proof_shape: content; escape_witness: Q_sum;

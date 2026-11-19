@@ -50,10 +50,12 @@ zero. Composite means greater than one and not prime; equal factors and equal
 indices are permitted. The theorem includes existence of the enumeration.
 
 The top coefficient is $n^{n-1}$, as follows from the defining polynomial.
-Taylor's preceding comment prints $n^n$; this exponent is not used. Its
-coefficient-coprimality criterion and the known scalar factorial recurrence
-are background, not new claims. The polynomial prime-support argument proves
-positive-divisor closure, and powers of three establish infinitude.
+Taylor's preceding comment prints $n^n$. Every coefficient of positive
+degree is divisible by $n$, and every prime dividing all coefficients
+must divide $n$ by the leading coefficient when $n>1$. Thus $P_n$ is
+primitive exactly when $\gcd(n,P_n(0))=1$. For $n=1$, $P_1=1$.
+The polynomial prime-support argument proves positive-divisor closure,
+and powers of three establish infinitude.
 
 The related factorial-recurrence source is Sondow and Schalm,
 https://arxiv.org/abs/0709.0671v3, Proposition A.5. It is not the source of
