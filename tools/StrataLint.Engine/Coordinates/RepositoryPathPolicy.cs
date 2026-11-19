@@ -150,9 +150,7 @@ internal static partial class RepositoryPathPolicy
             && !value.StartsWith("Library/", StringComparison.Ordinal)
             && !value.StartsWith("Papers/", StringComparison.Ordinal)
             && !value.StartsWith("Chronicle/", StringComparison.Ordinal)
-            && (!value.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
-                || value.StartsWith("Meta/Digestion/atoms/sha256/", StringComparison.Ordinal)
-                || value.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal))
+            && !value.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
             && !value.StartsWith("Golden/", StringComparison.Ordinal))
             return null;
 
@@ -180,7 +178,8 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith(ReportsRootPath, StringComparison.Ordinal)
             // Retained report licenses and the entrypoint still require FILEMAP coverage.
-            || value.StartsWith(HistoricalTheoryPaths.TheoryRootPath, StringComparison.Ordinal)
+            || HistoricalTheoryPaths.IsOpaque(path)
+            || value.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
             || value.StartsWith("docs/develop/archive/theory/", StringComparison.Ordinal)
                 && value.EndsWith(".md", StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
