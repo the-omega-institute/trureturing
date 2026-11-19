@@ -270,6 +270,9 @@ async function save(cache, cacheVersion, identity) {
     extra.push('--index', indexPath, '--available', available);
   }
 
+  if (!previous && process.env['INPUT_REQUIRE-EXISTING-INDEX'] === 'true') {
+    throw new Error('indexed publication requires the previous layout; the long producer can bootstrap');
+  }
   const record = python('prepare', extra);
   const digests = [...new Set(Object.values(record.entries))];
   const confirmed = new Set(digests.filter(digest => known.has(digest)));

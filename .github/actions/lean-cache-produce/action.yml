@@ -22,7 +22,10 @@ inputs:
 outputs:
   project-key:
     description: 'Newly published or accepted restored project seed'
-    value: ${{ steps.sharded_project.outputs.complete == 'true' && steps.sharded_project.outputs.key || steps.sharded_seed.outputs.complete == 'true' && steps.sharded_seed.outputs.key || steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.project.outputs.cache-matched-key }}
+    value: >-
+      ${{ steps.sharded_project.outputs.key || steps.sharded_seed.outputs.key
+          || (inputs.shard-history-anchor == '' && (steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key
+              || steps.project.outputs.cache-matched-key)) || '' }}
   dependency-key:
     description: 'Newly published or retained dependency seed'
     value: ${{ steps.dependency_snapshot.outputs.dependency_ready == 'true' && steps.keys.outputs.dependency_key || steps.dependency.outputs.cache-matched-key }}
@@ -234,6 +237,7 @@ runs:
         STRATALINT_CACHE_WRITES: 'true'
         STRATALINT_REPORT_SUCCEEDED: 'true'
         STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
+        STRATALINT_MIGRATE_NATIVE_PROJECT: ${{ steps.project.outcome == 'success' && steps.project.outputs.cache-matched-key != '' }}
       with:
         operation: save
         anchor: ${{ inputs.shard-history-anchor }}

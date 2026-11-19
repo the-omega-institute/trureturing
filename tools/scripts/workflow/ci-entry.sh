@@ -6,7 +6,8 @@
 # when it matches an including pattern and no excluding one), GITHUB_EVENT_NAME, GITHUB_SHA,
 # GITHUB_OUTPUT, CI_PR_HEAD (pull_request), CI_PUSH_BEFORE (push), and optionally
 # CI_CHANGED_PATHS_FILE, which receives the NUL-separated changed paths whenever
-# a base commit exists and is removed otherwise.
+# a base commit exists and is removed otherwise. Long Lean cache producers may
+# set CI_LEAN_SHARD_HISTORY_ANCHOR to fetch a fixed layout history before cleanup.
 # Output: hit=true|false in GITHUB_OUTPUT. Pull requests compare the event's
 # merge commit M with its first parent B; pushes compare event.before with the
 # pushed commit. A push range that cannot be read hits. Any other failure
@@ -18,6 +19,12 @@ ZERO=0000000000000000000000000000000000000000
 fail() { echo "CI_ENTRY_ERROR $*" >&2; exit 2; }
 finish() {
   local hit="$1" reason="$2" remotes refs remote ref
+  local anchor="${CI_LEAN_SHARD_HISTORY_ANCHOR:-}"
+  if [[ "$hit" == true && -n "$anchor" ]]; then
+    [[ "$anchor" =~ ^[0-9a-f]{40}$ && "$anchor" != "$ZERO" ]] || fail "invalid Lean shard history anchor"
+    git fetch --no-tags --depth=2002 origin "$anchor" || fail "cannot fetch Lean shard history"
+    [[ "$(git rev-parse FETCH_HEAD)" == "$anchor" ]] || fail "Lean shard history anchor changed"
+  fi
   # Checks use only the checked-out candidate and fixed objects (§9.5). Any
   # cleanup failure is red: the hit result is written only after it succeeds.
   remotes="$(git remote)" || fail "cannot enumerate remotes"

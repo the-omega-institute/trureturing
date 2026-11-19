@@ -65,6 +65,23 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                     required = {key: sorted(map(str, compiler_paths)), "report": sorted(report_paths)}
                     self.assertEqual(required if state == "complete" else {}, decoded["required"])
 
+    def test_zero_work_index_bootstrap_requires_an_accepted_native_seed(self):
+        self.restore_owner()
+        shards = importlib.import_module("lean_actions_shards")
+        env = self.env | {"GITHUB_REF_PROTECTED": "true", "STRATALINT_MIGRATE_NATIVE_PROJECT": "true"}
+        with mock.patch.dict(os.environ, env, clear=True), \
+                mock.patch.object(shards, "project_publication", return_value=(False, "no-build-work", 0)), \
+                mock.patch.object(shards, "actions_keys", return_value={"project_save_allowed": True}), \
+                mock.patch.object(shards, "manual_source_is_valid", return_value=False), \
+                mock.patch.object(shards, "resume_verified", return_value=False), \
+                mock.patch.object(shards.report_reuse, "capture"), \
+                mock.patch.object(shards.report_reuse, "read_receipt", side_effect=ValueError("receipt rejected")):
+            with self.assertRaisesRegex(ValueError, "publication denied: no-build-work"):
+                shards.prepare(self.root, {}, "complete", None, "a" * 40)
+            with mock.patch.dict(os.environ, {"STRATALINT_ACTIONS_CACHE_SEEDED": "1"}):
+                with self.assertRaisesRegex(ValueError, "receipt rejected"):
+                    shards.prepare(self.root, {}, "complete", None, "a" * 40)
+
     def test_sharded_resume_recovers_verified_entries_and_reports_eviction(self):
         self.restore_owner()
         shards = importlib.import_module("lean_actions_shards")

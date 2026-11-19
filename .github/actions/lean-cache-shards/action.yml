@@ -12,6 +12,9 @@ inputs:
   require-complete:
     description: Skip installation when any requested project shard is missing
     default: 'false'
+  require-existing-index:
+    description: Use the prior index layout for a short push publication
+    default: 'false'
   sharded-adoption:
     description: Search for sharded PR preparation artifacts in addition to native preparations
     default: 'false'

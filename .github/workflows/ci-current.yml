@@ -470,6 +470,7 @@ jobs:
         with:
           operation: save
           anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+          require-existing-index: 'true'
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.sharded_project_push.outputs.complete != 'true' && steps.lean_report.outcome == 'success' }}
@@ -549,11 +550,12 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
-          fetch-depth: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' && 2002 || 2 }}
+          fetch-depth: 2
           persist-credentials: false
       - name: Validate the protected push and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
+          CI_LEAN_SHARD_HISTORY_ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
