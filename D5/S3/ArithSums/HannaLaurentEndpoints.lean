@@ -37,10 +37,6 @@ private lemma mem_S {n k h : ℕ} :
     h ∈ (Nat.divisors k).filter (· ≤ n) ↔ (h ∣ k ∧ k ≠ 0) ∧ h ≤ n := by
   simp [Nat.mem_divisors]
 
-/-- Complementary divisor arithmetic: if `h * q = k` then `k / h = q`. -/
-private lemma div_of_mul {h q k : ℕ} (hh : 0 < h) (e : h * q = k) : k / h = q := by
-  rw [← e, Nat.mul_div_cancel_left _ hh]
-
 private lemma sq_case {h q m : ℕ} (e : h * q = m ^ 2) (hs : h + q ≤ 2 * m) : h = m := by
   have hz : ((h : ℤ) - q) ^ 2 ≤ 0 := by
     have e' : (h : ℤ) * q = (m : ℤ) ^ 2 := by exact_mod_cast e
@@ -202,9 +198,9 @@ theorem endpoints (m : ℕ) (hm : 1 ≤ m) :
     have e1 := pred_mul m hm
     rw [coeff_eq _ _ _ hk1, Finset.sum_eq_add (m - 1) (m + 1) (by omega)]
     · unfold term
-      rw [show (m ^ 2 - 1) / (m - 1) = m + 1 from div_of_mul (by omega) e1,
-        show (m ^ 2 - 1) / (m + 1) = m - 1 from div_of_mul (by omega)
-          (by rw [Nat.mul_comm]; exact e1),
+      rw [show (m ^ 2 - 1) / (m - 1) = m + 1 from Nat.div_eq_of_eq_mul_right (by omega) e1.symm,
+        show (m ^ 2 - 1) / (m + 1) = m - 1 from Nat.div_eq_of_eq_mul_right (by omega)
+          (by rw [Nat.mul_comm]; exact e1.symm),
         show 2 * m - 1 - (m - 1) = m by omega, show m + 1 - 1 = m by omega,
         show 2 * m - 1 - (m + 1) = m - 2 by omega, show m - 1 - 1 = m - 2 by omega,
         Nat.choose_self, Nat.choose_self]
@@ -231,9 +227,9 @@ theorem endpoints (m : ℕ) (hm : 1 ≤ m) :
       have : 4 ≤ m ^ 2 := by nlinarith
       omega
     have e1 := pred_mul m hm
-    have hq1 : (m ^ 2 - 1) / (m - 1) = m + 1 := div_of_mul (by omega) e1
+    have hq1 : (m ^ 2 - 1) / (m - 1) = m + 1 := Nat.div_eq_of_eq_mul_right (by omega) e1.symm
     have hq2 : (m ^ 2 - 1) / (m + 1) = m - 1 :=
-      div_of_mul (by omega) (by rw [Nat.mul_comm]; exact e1)
+      Nat.div_eq_of_eq_mul_right (by omega) (by rw [Nat.mul_comm]; exact e1.symm)
     rw [coeff_eq _ _ _ hk1, restrict _ _]
     set S0 := ((Nat.divisors (m ^ 2 - 1)).filter (· ≤ 2 * m)).filter
       (fun h => h + (m ^ 2 - 1) / h ≤ 2 * m + 1) with hS0
