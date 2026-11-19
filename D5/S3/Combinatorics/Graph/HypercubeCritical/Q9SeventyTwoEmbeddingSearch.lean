@@ -34,23 +34,37 @@ private theorem hasTwoSetBits_of_two_toggles (i j : Fin 9) (h : i ≠ j) :
     hasTwoSetBits (toggle (toggle 0 i) j) = true := by
   fin_cases i <;> fin_cases j <;> first | contradiction | decide +kernel
 
+private def hasOneSetBit (d : BitVec 9) : Bool :=
+  d != 0 && (d &&& (d - 1)) == 0
+
+private theorem hasOneSetBit_iff (d : BitVec 9) :
+    hasOneSetBit d = true ↔ ∃ i : Fin 9, d = BitVec.ofNat 9 (2 ^ i.val) := by
+  have h : ∀ a : Fin (2 ^ 9),
+      hasOneSetBit (BitVec.ofFin a) = true ↔
+        ∃ i : Fin 9, BitVec.ofFin a = BitVec.ofNat 9 (2 ^ i.val) := by
+    decide +kernel
+  exact h d.toFin
+
 private def adjacent (x y : BitVec 9) : Bool :=
-  (List.finRange 9).any (fun i => toggle x i == y)
+  hasOneSetBit (x ^^^ y)
 
 private theorem adjacent_iff (x y : BitVec 9) :
     adjacent x y = true ↔ (hypercube 9).Adj (cubeBitVec 9 x) (cubeBitVec 9 y) := by
-  rw [adjacent, List.any_eq_true]
+  rw [adjacent, hasOneSetBit_iff]
   constructor
-  · rintro ⟨i, _, hi⟩
-    have hx := beq_iff_eq.mp hi
+  · rintro ⟨i, hi⟩
+    have hx : toggle x i = y := by
+      rw [toggle, ← hi, ← BitVec.xor_assoc, BitVec.xor_self, BitVec.zero_xor]
     rw [← hx, toggle, cubeBitVec_xor_single]
     exact flip_adj _ _
   · intro h
     obtain ⟨i, hi⟩ := adjacent_exists_flip h
-    refine ⟨i, List.mem_finRange i, beq_iff_eq.mpr ?_⟩
-    apply (cubeBitVec 9).injective
-    rw [toggle, cubeBitVec_xor_single, hi]
-    rfl
+    have hx : toggle x i = y := by
+      apply (cubeBitVec 9).injective
+      rw [toggle, cubeBitVec_xor_single, hi]
+      rfl
+    refine ⟨i, ?_⟩
+    rw [← hx, toggle, ← BitVec.xor_assoc, BitVec.xor_self, BitVec.zero_xor]
 
 private def permitsMiddle (placed : List (Fin 8)) (p : Placement)
     (i j : Fin 8) : Bool :=
