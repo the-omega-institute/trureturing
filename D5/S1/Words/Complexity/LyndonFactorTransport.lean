@@ -6,7 +6,6 @@
    utility: none
    digest: Suffix-minimum scanning computes the actual distinct contiguous Lyndon factors. -/
 
-import D5.S1.Words.Complexity.LyndonFactorChristoffelMinimumRefutation
 import Mathlib.Data.List.Infix
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonStandardFactorization
 
@@ -18,9 +17,8 @@ positive instances, numeric reductions, or certificate/reflection infrastructure
 The scan produces factor strings, rather than checking a supplied certificate.
 
 Consumed bind-only organization: lt_leastSuffix -> scan_accept_iff -> mem_suffixScan ->
-mem_factorScan -> factorScan_eq_occurrence_image -> distinctLyndon_eq_scan.
-The first two helpers and mem_suffixScan contain the suffix-minimum induction; the set/count
-endpoints consume that induction and reconstruct actual occurrence indices, not a counting proxy.
+mem_factorScan. The suffix-minimum induction supplies all accepted suffixes, and the
+prefix sweep turns them into exactly the distinct contiguous Lyndon factors.
 elementaryLeft_order is content (first differing image/continuation comparison) and is used
 in elementaryLeft_lyndon_iff and elementaryLeft_factor_growth. The latter consumes actual
 Lyndon preservation, infix transport, injectivity and the additional letter outside the image.
@@ -28,8 +26,6 @@ These are genuine universal content paths, with no new independent finite instan
 
 Existing frozen proof owners: LyndonOrder.isLyndon_iff_lt_suffix, isLyndon_append,
 its private list_lt_self_append, and LyndonStandardFactorization.isLyndon_standardLeft.
-The finite-index bridge uses factor, lyndonOccurrences and distinctLyndon from
-LyndonFactorChristoffelMinimumRefutation.
 New public audit targets are disclosed individually under #29680 if registration is unfinished.
 -/
 
@@ -38,7 +34,6 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S1.Words.Complexity.LyndonFactorTransport
 open D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
-open D5.S1.Words.Complexity.LyndonFactorChristoffelMinimumRefutation
 variable {A : Type*} [LinearOrder A]
 
 /-- Minimum among nonempty suffixes; the empty input has a harmless empty sentinel. -/
@@ -157,38 +152,6 @@ theorem mem_factorScan (u w : List A) :
   · rintro ⟨hu, hi⟩
     rcases List.infix_iff_suffix_prefix.mp hi with ⟨t, hs, ht⟩
     exact ⟨t, ht, hu, hs⟩
-
-/-- The scan computes precisely the occurrence image used by the original certificate. -/
-theorem factorScan_eq_occurrence_image {σ n : ℕ} (w : Fin n → Fin σ) :
-    factorScan ((List.finRange n).map w) =
-      (lyndonOccurrences w).image (fun p => factor w p.1 p.2) := by
-  classical
-  ext u
-  rw [mem_factorScan, Finset.mem_image]
-  constructor
-  · rintro ⟨hu, ⟨l, r, he⟩⟩
-    have hlen := congrArg List.length he
-    simp only [List.length_append, List.length_map, List.length_finRange] at hlen
-    have hup := List.length_pos_of_ne_nil hu.1
-    have hf : factor w l.length u.length = u := by
-      unfold factor
-      rw [← he]
-      simp
-    refine ⟨(l.length, u.length), ?_, hf⟩
-    simp only [lyndonOccurrences, Finset.mem_filter, Finset.mem_product,
-      Finset.mem_range]
-    exact ⟨⟨by omega, by omega⟩, by omega, by omega, by simpa [hf] using hu⟩
-  · rintro ⟨⟨i, k⟩, hp, rfl⟩
-    simp only [lyndonOccurrences, Finset.mem_filter, Finset.mem_product,
-      Finset.mem_range] at hp
-    refine ⟨hp.2.2.2, ?_⟩
-    exact (List.take_prefix k _).isInfix.trans (List.drop_suffix i _).isInfix
-
-/-- Counts identify equal strings; this is the original count, not an occurrence proxy. -/
-theorem distinctLyndon_eq_scan {σ n : ℕ} (w : Fin n → Fin σ) :
-    distinctLyndon w = (factorScan ((List.finRange n).map w)).card := by
-  rw [factorScan_eq_occurrence_image]
-  rfl
 
 def mapWord (f : Fin 2 → List (Fin 2)) (w : List (Fin 2)) : List (Fin 2) :=
   w.flatMap f

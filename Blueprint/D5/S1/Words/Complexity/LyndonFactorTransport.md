@@ -4,7 +4,7 @@
 
 A suffix-minimum scan computes distinct contiguous Lyndon factor strings.
 
-All scan statements quantify over an arbitrary linearly ordered alphabet A and finite lists. Lexicographic order treats a proper prefix as smaller. The scan is related to the original refutation's finite-index factor, occurrence and distinct-count definitions. The supplied Ma–Zhang manuscript gives the suffix-minimum scan argument. The elementary morphism is the classical lambda(a)=a, lambda(b)=ab; its proof uses the existing actual two-factor standard factorization. Richomme's Lyndon-morphism theory is prior literature; no novelty or global priority is asserted.
+All scan statements quantify over an arbitrary linearly ordered alphabet A and finite lists. Lexicographic order treats a proper prefix as smaller. The supplied Ma–Zhang manuscript gives the suffix-minimum scan argument. The elementary morphism is the classical lambda(a)=a, lambda(b)=ab; its proof uses the existing actual two-factor standard factorization. Richomme's Lyndon-morphism theory is prior literature; no novelty or global priority is asserted.
 
 **Definition 1.1 (Minimum nonempty suffix).**
 
@@ -76,35 +76,7 @@ $$\forall u w,u\in\operatorname{factorScan}\left(w\right)\iff\operatorname{IsLyn
 
 For every u,w : List A, membership is exactly Lyndonness and contiguous occurrence. A substring is a suffix of a prefix. Empty strings are excluded by Lyndonness, while letters and a Lyndon whole word are included.
 
-**Theorem 1.6 (The original occurrence image).**
-
-$$\forall \sigma: \mathbb{N}, \forall n: \mathbb{N}, \forall w: \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(\sigma\right), \operatorname{factorScan}\left(\operatorname{List.map}\left(w, \operatorname{List.finRange}\left(n\right)\right)\right) = \operatorname{Finset.image}\left((p: \mathbb{N}\times\mathbb{N} \mapsto \operatorname{factor}\left(w, p.1, p.2\right)), \operatorname{lyndonOccurrences}\left(w\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonFactorTransport.factorScan_eq_occurrence_image` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Amy Glen, Jamie Simpson, and W. F. Smyth (2017). *Counting Lyndon factors*. DOI: [10.37236/6915](https://doi.org/10.37236/6915). URL: <https://arxiv.org/abs/1701.00928v1>.
-
-*Commentary.*
-
-For every sigma,n and w : Fin n -> Fin sigma, the scan set equals the image sending each valid pair (i,l) in lyndonOccurrences w to factor w i l. The proof reconstructs a valid slice from an arbitrary contiguous occurrence; its nonemptiness gives l>=1 and its enclosing word gives i+l<=n.
-
-**Theorem 1.7 (The original distinct count).**
-
-$$\forall \sigma: \mathbb{N}, \forall n: \mathbb{N}, \forall w: \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(\sigma\right), \operatorname{distinctLyndon}\left(w\right) = \operatorname{Finset.card}\left(\operatorname{factorScan}\left(\operatorname{List.map}\left(w, \operatorname{List.finRange}\left(n\right)\right)\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonFactorTransport.distinctLyndon_eq_scan` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Amy Glen, Jamie Simpson, and W. F. Smyth (2017). *Counting Lyndon factors*. DOI: [10.37236/6915](https://doi.org/10.37236/6915). URL: <https://arxiv.org/abs/1701.00928v1>.
-
-*Commentary.*
-
-The original distinctLyndon count is exactly the cardinality of the scan set. This is an equality of the actual factor objects, with no count recurrence or occurrence-count replacement.
-
-**Definition 1.8 (Letter-image morphism).**
+**Definition 1.6 (Letter-image morphism).**
 
 $$\operatorname{mapWord}\left(f, w\right) = \operatorname{List.flatMap}\left(f, w\right)$$
 
@@ -118,7 +90,7 @@ $$\operatorname{mapWord}\left(f, w\right) = \operatorname{List.flatMap}\left(f, 
 
 For f : Fin 2 -> List (Fin 2), concatenate the letter images in their input order.
 
-**Definition 1.9 (The elementary left morphism).**
+**Definition 1.7 (The elementary left morphism).**
 
 $$\operatorname{elementaryLeft}\left(a\right) = \operatorname{lambda}\left(a\right)$$
 
@@ -132,7 +104,7 @@ $$\operatorname{elementaryLeft}\left(a\right) = \operatorname{lambda}\left(a\rig
 
 The smaller letter 0 maps to [0], and the larger letter 1 maps to [0,1].
 
-**Theorem 1.10 (Actual elementary preservation and reflection).**
+**Theorem 1.8 (Actual elementary preservation and reflection).**
 
 $$\forall w,\operatorname{IsLyndon}\left(\operatorname{mapWord}\left(\operatorname{elementaryLeft}, w\right)\right)\iff\operatorname{IsLyndon}\left(w\right)$$
 
@@ -146,7 +118,7 @@ $$\forall w,\operatorname{IsLyndon}\left(\operatorname{mapWord}\left(\operatorna
 
 For every binary list w, including letters and the empty list, lambda(w) is Lyndon iff w is Lyndon. Preservation inducts through the actual standard left and right Lyndon factors; reflection uses strict order preservation and actual concatenated images of rotations. This does not assert a factor-set identity on the wider domain.
 
-**Theorem 1.11 (An additional factor outside the morphism image).**
+**Theorem 1.9 (An additional factor outside the morphism image).**
 
 $$\forall w,1\in w\Rightarrow\operatorname{card}\left(\operatorname{factorScan}\left(w\right)\right)+1\leq\operatorname{card}\left(\operatorname{factorScan}\left(\operatorname{mapWord}\left(\operatorname{elementaryLeft}, w\right)\right)\right)$$
 
@@ -164,16 +136,13 @@ Open boundaries: general block factor sets/counts, rho and arbitrary composite t
 
 ## References
 
-- Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.distinctLyndon_eq_scan`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.elementaryLeft`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.elementaryLeft_factor_growth`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.elementaryLeft_lyndon_iff`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.factorScan`
-- Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.factorScan_eq_occurrence_image`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.leastSuffix`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.mapWord`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.mem_factorScan`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.mem_suffixScan`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonFactorTransport.suffixScan`
 - Dependency: [D5/S1/Words/Complexity/LyndonBrackets/LyndonStandardFactorization](LyndonBrackets/LyndonStandardFactorization.md)
-- Dependency: [D5/S1/Words/Complexity/LyndonFactorChristoffelMinimumRefutation](LyndonFactorChristoffelMinimumRefutation.md)
