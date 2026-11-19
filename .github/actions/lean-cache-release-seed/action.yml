@@ -42,12 +42,13 @@ runs:
         fi
     - name: Download this verification run's checkpoint artifact
       if: steps.previous_checkpoint.outputs.artifact != ''
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         artifact-ids: ${{ steps.previous_checkpoint.outputs.artifact }}
         path: ${{ runner.temp }}/lean-release-checkpoint-in
         github-token: ${{ github.token }}
         run-id: ${{ github.run_id }}
+        digest-mismatch: error
     - id: resumed
       name: Verify and restore this verification run's build progress
       if: steps.previous_checkpoint.outputs.artifact != ''
@@ -59,6 +60,7 @@ runs:
       run: |
         python3 tools/scripts/worktree/lean_actions_shards.py checkpoint-restore --state resume \
           --artifact-directory "$RUNNER_TEMP/lean-release-checkpoint-in" --previous-attempt "$PREVIOUS_ATTEMPT"
+        rm -rf -- "$RUNNER_TEMP/lean-release-checkpoint-in/payload"
     - id: sharded
       if: contains(fromJSON('["auto","complete","partial"]'), inputs.mode) && (steps.resumed.outputs.available == '' || steps.resumed.outputs.available == '0')
       continue-on-error: true
