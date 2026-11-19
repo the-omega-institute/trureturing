@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: certificate (computed terminal value and backward matrix updates used by powers_table and polynomial relation used by result)
+escape_witness: none (consumed helpers of the settlement on the live path of result)
 flags: proof_shape=bind-only; consumers=normal_iff, good_bound, finish_flags, prefix_cons
 lift: proof_shape=bind-only; consumers=row, normal_iff, prefix_cons
 row: proof_shape=bind-only; consumers=good_bound, finish_flags, prefix_cons
@@ -35,8 +35,8 @@ transfer_counts: proof_shape=bind-only; consumers=count_matrix
 count_matrix: proof_shape=content; consumers=result
 literal_bridge: proof_shape=content; consumers=result
 backwardTable: proof_shape=bind-only; consumers=certificate, powers_table
-powers_table: proof_shape=content; consumers=result
-certificate: proof_shape=content; consumers=powers_table, result
+powers_table: proof_shape=bind-only; consumers=result
+certificate: proof_shape=bind-only; consumers=powers_table, result
 result: proof_shape=content; consumers=none (external open-problem-resolution #30655 C1)
 -/
 

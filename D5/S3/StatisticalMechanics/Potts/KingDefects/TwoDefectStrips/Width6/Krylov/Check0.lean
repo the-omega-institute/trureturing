@@ -7,8 +7,8 @@
    digest: Coordinate certificates for the width-six transfer. -/
 /-
 admission_basis: open-problem-resolution (#30655; Proved)
-escape_witness: certificate (computed matrix updates and recurrence equality at coordinates 0 through 11)
-certificate: proof_shape=content; consumers=Width6.Krylov.Check1.certificate
+escape_witness: none (consumed bind-only helpers on the live path of HardinA229753.result)
+certificate: proof_shape=bind-only; consumers=Width6.Krylov.Check1.certificate
 -/
 import D5.S3.StatisticalMechanics.Potts.KingDefects.TwoDefectStrips.Width6.Data
 /-! Finite coordinate identities for exact-budget transfer. -/
