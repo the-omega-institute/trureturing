@@ -10,6 +10,7 @@ import subprocess
 import shutil
 import tarfile
 import tempfile
+import time
 import zipfile
 from datetime import datetime
 import sys
@@ -208,10 +209,73 @@ def confirm(root, identity, artifact_id):
     return receipt("prepared", identity, runtime=runtime, artifact=artifact_id)
 
 
-def paged(repository, path, field=None):
+class InterruptedAssociationRead(ValueError):
+    """The association page can be fetched again within its original deadline."""
+
+
+def association_response(result):
+    # gh prints the status line before the headers and body, including on HTTP errors.
+    headers, separator, body = result.stdout.replace(b"\r\n", b"\n").partition(b"\n\n")
+    status_line = re.fullmatch(rb"HTTP/\d+(?:\.\d+)? ([1-5]\d\d)(?: .*)?",
+                              headers.split(b"\n", 1)[0])
+    status = int(status_line[1]) if status_line else None
+    if status in (500, 502, 503, 504):
+        raise InterruptedAssociationRead(f"HTTP {status} (gh exit {result.returncode})")
+    if status is not None and status != 200:
+        raise ValueError(f"HTTP {status} (gh exit {result.returncode})")
+    if result.returncode and (status == 200 or not result.stdout):
+        transport = re.search(rb"(?:^|: )(unexpected EOF|connection reset by peer|i/o timeout|TLS handshake timeout)$",
+                              result.stderr.strip())
+        if transport:
+            response = "HTTP 200" if status == 200 else "no HTTP status"
+            raise InterruptedAssociationRead(f"{response} (gh exit {result.returncode}): {transport[1].decode('ascii')}")
+    require(status is not None, f"no HTTP status (gh exit {result.returncode})")
+    require(separator and not result.returncode, f"HTTP 200 response incomplete (gh exit {result.returncode})")
+    if not body.strip():
+        raise InterruptedAssociationRead("HTTP 200 with empty body")
+    try:
+        value = json.loads(body.decode("utf-8"))
+    except json.JSONDecodeError as error:
+        tail = error.doc[error.pos:].rstrip()
+        if (not tail or error.msg.startswith("Unterminated string")
+                or error.msg == "Expecting value" and any(word.startswith(tail) for word in ("true", "false", "null", "-"))):
+            raise InterruptedAssociationRead("HTTP 200 with truncated JSON") from None
+        raise ValueError(f"HTTP 200 with invalid JSON at character {error.pos}") from None
+    except UnicodeDecodeError as error:
+        if error.reason == "unexpected end of data" and error.end == len(body):
+            raise InterruptedAssociationRead("HTTP 200 with truncated JSON encoding") from None
+        raise ValueError("HTTP 200 with invalid JSON encoding") from None
+    require(isinstance(value, list) and all(isinstance(pr, dict) for pr in value),
+            "HTTP 200 with invalid API listing")
+    return value
+
+
+def association_page(repository, path, page):
+    command = ["gh", "api", "repos/" + repository + "/" + path, "--include"]
+    deadline = time.monotonic() + 60
+    delay = 0.25
+    for attempt in (1, 2):
+        try:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise ValueError("page deadline exceeded")
+            return association_response(subprocess.run(command, capture_output=True, timeout=remaining))
+        except (InterruptedAssociationRead, subprocess.TimeoutExpired) as error:
+            reason = "gh timed out" if isinstance(error, subprocess.TimeoutExpired) else str(error)
+            detail = f"commit PR association page {page}, attempt {attempt}: {reason}"
+            if attempt == 2 or time.monotonic() + delay >= deadline:
+                raise ValueError(detail) from None
+            print("PR_CACHE_RETRY " + detail, file=sys.stderr)
+            time.sleep(delay)
+        except ValueError as error:
+            raise ValueError(f"commit PR association page {page}, attempt {attempt}: {error}") from None
+
+
+def paged(repository, path, field=None, *, read_association=False):
     rows, page = [], 1
     while True:
-        value = api(repository, path + ("&" if "?" in path else "?") + urlencode(dict(per_page=100, page=page)))
+        page_path = path + ("&" if "?" in path else "?") + urlencode(dict(per_page=100, page=page))
+        value = association_page(repository, page_path, page) if read_association else api(repository, page_path)
         batch = value[field] if field else value
         require(isinstance(batch, list), "invalid API listing: " + path)
         rows.extend(batch)
@@ -242,7 +306,7 @@ def consumer_context(root):
         else:
             require(checkout == os.environ["STRATALINT_CACHE_CHECKED_OUT_SHA"], "manual consumer checkout mismatch")
         require(re.fullmatch(r"refs/heads/(dev|integration-[A-Za-z0-9._/-]+)", ref), "invalid target consumer ref")
-        prs = paged(repository, "commits/" + checkout + "/pulls")
+        prs = paged(repository, "commits/" + checkout + "/pulls", read_association=True)
         matching = [pr for pr in prs if pr.get("merged_at") and pr.get("merge_commit_sha") == checkout
                     and "refs/heads/" + pr["base"]["ref"] == ref
                     and pr["base"]["repo"]["full_name"] == repository]
