@@ -25,7 +25,19 @@ internal sealed class DigitCapPowerGFDocument : IScribeDocumentDefinition
                 + "(1−z)·G_{r+1}(z)=G_r(z^ell), since ⌊n/ell⌋ increases exactly when ell divides "
                 + "n. Also den ell (r+1)=(1−z)·den ell r evaluated at z^ell. Substituting z^ell "
                 + "is a ring homomorphism of power series, so den·gf at r+1 is the substituted "
-                + "den·gf at r, which is 1.", DescribeRole.Theorem))));
+                + "den·gf at r, which is 1.", DescribeRole.Theorem),
+            Node("bounds", "Explicit growth bounds", "count_bounds",
+                "For ell≥2, every r and every n, C(⌊n/ell^r⌋+r, r) ≤ count (ell^(r+1)−1) ell n ≤ "
+                + "(n+1)^r. Both follow by induction on r from the summation identity, starting "
+                + "from count (ell−1) ell n=1. For the upper bound each of the ⌊n/ell⌋+1 summands "
+                + "is at most (n+1)^r. For the lower bound the summands at t=s·ell^r with "
+                + "s≤⌊n/ell^(r+1)⌋ already give the hockey-stick sum of C(s+r, r), which is "
+                + "C(⌊n/ell^(r+1)⌋+r+1, r+1).", DescribeRole.Theorem),
+            Node("theta", "Polynomial growth of order r", "count_isTheta",
+                "For ell≥2 and every r, count (ell^(r+1)−1) ell n is Θ(n^r) as n→∞; with the "
+                + "cap written as ell^r−1 the order is n^(r−1). The upper constant is 2^r for "
+                + "n≥1, and the lower bound uses C(m+r, r) ≥ (m+1)^r/r! with m=⌊n/ell^r⌋ and "
+                + "n ≤ ell^r(m+1).", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         string prose, DescribeRole role) =>
