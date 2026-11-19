@@ -53,13 +53,7 @@ internal sealed class DichromaticPartitionExpansionDocument : IScribeDocumentDef
             Node("small-order", "Orders zero and one", "dichromaticPolynomial_small",
                 "At orders zero and one the polynomial is the nth power of the variable for an acyclic "
                 + "digraph, and zero if there is a loop. Injectivity bounds the length of a cycle by n.",
-                DescribeRole.Theorem),
-            Node("weight-total", "Partition weights sum to one", "sum_partitionWeight",
-                "The empty-arc digraph admits every partition and every colour map. Dividing its "
-                + "polynomial by the nonzero normalizing power gives total weight one.", DescribeRole.Theorem),
-            Node("weight-nonnegative", "Nonnegative weights on the real interval", "partitionWeight_nonneg",
-                "For n at least two and x at least n minus one, each falling factorial is nonnegative "
-                + "because its length is at most n. The normalizing power is positive.", DescribeRole.Theorem)), []));
+                DescribeRole.Theorem)), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
         DescribeRole role) => Describe.Lean(DescribeId.Create(id),

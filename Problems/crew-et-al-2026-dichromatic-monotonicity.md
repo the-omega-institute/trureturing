@@ -32,6 +32,7 @@ The paper's Theorem 7 bounds the evaluations of $P_D$ at $n-1$ and $n$.
 The conjecture compares the normalized values at every pair of real arguments
 in the closed ray. The sign of each individual partition weight derivative
 can vary, so the argument requires control of the sum over acyclic partitions.
+[Theorem 7](https://arxiv.org/html/2611.13273v1#Thmthm7)
 
 ## Route
 
@@ -63,11 +64,12 @@ comparisons at adjacent points $n-1+i/16$ for $0\le i\le64$ and full-domain
 derivative sign checks for orders two through four.
 [Original preregistration](https://github.com/the-omega-institute/trureturing/issues/31546)
 
-The colouring bridge is `eval_dichromaticPolynomial_nat` in
-`D5.S3.Combinatorics.Graph.Coloring.DichromaticPartitionExpansion`. The
-all-order Lean theorem is `normalizedDichromaticPolynomial_monotoneOn` in
-`D5.S3.Combinatorics.Graph.Coloring.DichromaticMonotonicity`. The derivation
-in the all-order candidate supplies the transfer argument.
+The colouring bridge `eval_dichromaticPolynomial_nat` identifies the polynomial
+by its counts at every natural palette size. The Lean theorem
+`normalizedDichromaticPolynomial_monotoneOn` proves the inequality on the
+closed real ray. The all-order derivation supplies the transfer argument.
+[Colouring bridge](../Blueprint/D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.md)
+[Lean theorem and typed resolution](../Blueprint/D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.md)
 [All-order derivation](https://github.com/the-omega-institute/trureturing/issues/31546#issuecomment-7022343508)
 
 ## Triage

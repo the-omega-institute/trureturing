@@ -236,15 +236,6 @@ private theorem kernel_eq_scaled_integral {ι : Type*} (s : Finset ι) (b : ι �
   unfold coefficient c
   ring
 
-private theorem falling_pos {x : ℝ} {k : ℕ} (hx : (k : ℝ) + 1 ≤ x) :
-    0 < fall (x - 1) k := by
-  dsimp only
-  rw [descPochhammer_eval_eq_prod_range]
-  apply Finset.prod_pos
-  intro i hi
-  have hi' : (i : ℝ) < (k : ℝ) := by exact_mod_cast Finset.mem_range.mp hi
-  linarith
-
 private theorem weighted_kernel_bound {ι : Type*} (s : Finset ι) (b : ι → ℕ)
     {x : ℝ} {r : ℕ} (hr : 2 ≤ r) (hb : ∀ i ∈ s, 1 ≤ b i)
     (hx : (∑ i ∈ s, (b i : ℝ)) + 1 ≤ x) (hcard : (s.card : ℝ) + 1 ≤ x) :
@@ -252,7 +243,8 @@ private theorem weighted_kernel_bound {ι : Type*} (s : Finset ι) (b : ι → �
       fall (x - 1) s.card * (x / (x + 1)) := by
   have hx1 : 1 ≤ x := by linarith [Nat.cast_nonneg (α := ℝ) s.card]
   have hd : 1 ≤ x - s.card := by linarith
-  have hfall := falling_pos hcard
+  have hfall : 0 < fall (x - 1) s.card :=
+    descPochhammer_pos (n := s.card) (s := x - 1) (by linarith)
   have hnorm : fall x (s.card + 1) = x * fall (x - 1) s.card := by
     dsimp only
     rw [descPochhammer_succ_left]
@@ -369,7 +361,9 @@ private theorem weight_bounds {ι : Type*} (s : Finset ι) (b : ι → ℕ) {r :
         field_simp [hden.ne']
         ring
       _ ≤ _ := sub_le_sub_left hw _
-  exact ⟨hbound, (div_pos (falling_pos hcard) hden).trans_le hbound⟩
+  have hfall : 0 < fall (x - 1) s.card :=
+    descPochhammer_pos (n := s.card) (s := x - 1) (by linarith)
+  exact ⟨hbound, (div_pos hfall hden).trans_le hbound⟩
 
 end
 end CrewSingletonSplit
@@ -389,15 +383,6 @@ private theorem smeval_desc (x : ℝ) (k : ℕ) :
   intro n _
   exact zsmul_eq_mul _ _
 
-private theorem falling_neg_one (k : ℕ) :
-    (descPochhammer ℝ k).eval (-1) = (-1 : ℝ) ^ k * k.factorial := by
-  induction k with
-  | zero => simp
-  | succ k ih =>
-    rw [descPochhammer_succ_eval, ih, pow_succ, Nat.factorial_succ, Nat.cast_mul,
-      Nat.cast_succ]
-    ring
-
 private def logCoefficient (x : ℝ) (k j : ℕ) : ℝ :=
   if j = 0 then 0 else (-1 : ℝ) ^ (j - 1) * ((j - 1).factorial : ℝ) *
     (descPochhammer ℝ (k - j)).eval x
@@ -408,8 +393,13 @@ private theorem deriv_zero_falling (j : ℕ) :
   cases j with
   | zero => simp
   | succ j =>
+    have h := ascPochhammer_eval_neg_eq_descPochhammer ℝ (-1) j
+    rw [neg_neg, ascPochhammer_eval_one] at h
+    have hfall : (descPochhammer ℝ j).eval (-1) = (-1 : ℝ) ^ j * j.factorial := by
+      rw [h, ← mul_assoc, ← mul_pow]
+      simp
     rw [descPochhammer_succ_left, derivative_mul]
-    simp [eval_comp, falling_neg_one]
+    simp [eval_comp, hfall]
 
 /-- Differentiating finite Vandermonde at the second variable zero gives the
 signed factorial coefficient for each nonempty subset of the blocks. -/

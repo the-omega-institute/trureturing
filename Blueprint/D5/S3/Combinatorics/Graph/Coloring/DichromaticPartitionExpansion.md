@@ -174,34 +174,6 @@ Lean statement: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansio
 
 At orders zero and one the polynomial is the nth power of the variable for an acyclic digraph, and zero if there is a loop. Injectivity bounds the length of a cycle by n.
 
-**Theorem 1.13 (Partition weights sum to one).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.sum_partitionWeight`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.sum_partitionWeight` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Lila Crew, Benjamin Keller, Katharina Kuehr, Shao Yuan Lin, Megan Ixchel Monroy Rodríguez, Tabitha Williams (2026). *Properties of the Dichromatic Polynomial*. DOI: [10.48550/arXiv.2611.13273](https://doi.org/10.48550/arXiv.2611.13273). URL: <https://arxiv.org/abs/2611.13273v1>.
-
-*Commentary.*
-
-The empty-arc digraph admits every partition and every colour map. Dividing its polynomial by the nonzero normalizing power gives total weight one.
-
-**Theorem 1.14 (Nonnegative weights on the real interval).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.partitionWeight_nonneg`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.partitionWeight_nonneg` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Lila Crew, Benjamin Keller, Katharina Kuehr, Shao Yuan Lin, Megan Ixchel Monroy Rodríguez, Tabitha Williams (2026). *Properties of the Dichromatic Polynomial*. DOI: [10.48550/arXiv.2611.13273](https://doi.org/10.48550/arXiv.2611.13273). URL: <https://arxiv.org/abs/2611.13273v1>.
-
-*Commentary.*
-
-For n at least two and x at least n minus one, each falling factorial is nonnegative because its length is at most n. The normalizing power is positive.
-
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.AcyclicColoring`
@@ -216,5 +188,3 @@ For n at least two and x at least n minus one, each falling factorial is nonnega
 - Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.eval_dichromaticPolynomial_nat`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.isAcyclic_of_le`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.partitionWeight`
-- Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.partitionWeight_nonneg`
-- Truth anchor: `D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.sum_partitionWeight`

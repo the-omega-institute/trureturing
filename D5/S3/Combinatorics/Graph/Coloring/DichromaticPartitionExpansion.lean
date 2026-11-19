@@ -234,30 +234,5 @@ theorem dichromaticPolynomial_small (D : Digraph V) (hn : Fintype.card V ≤ 1) 
     subst k
     exact loops ⟨v 0, by simpa only [show (0 + 1 : Fin 1) = 0 by decide] using hadj 0⟩
 
-/-- The total weight of all partitions is one wherever the normalizing power is nonzero. -/
-theorem sum_partitionWeight (x : ℝ) (hx : x ^ Fintype.card V ≠ 0) :
-    ∑ P : VertexPartition V, partitionWeight x P = 1 := by
-  classical
-  let D : Digraph V := ⊥
-  have acyclic (s : Set V) : AcyclicOn D s := by
-    intro k v _ _ h
-    exact h 0
-  have h := dichromaticPolynomial_div_eq_sum_weight D x
-  rw [dichromaticPolynomial_eq_pow_of_acyclic D (acyclic _), eval_pow, eval_X, div_self hx] at h
-  simpa only [IsAcyclic, acyclic, implies_true, ite_true] using h.symm
-
-/-- Each real partition weight is nonnegative in the interval of the conjecture
-for digraphs of order at least two. -/
-theorem partitionWeight_nonneg (P : VertexPartition V) {x : ℝ}
-    (hn : 2 ≤ Fintype.card V) (hx : (Fintype.card V : ℝ) - 1 ≤ x) :
-    0 ≤ partitionWeight x P := by
-  have hb : (P.parts.card : ℝ) ≤ Fintype.card V := by
-    exact_mod_cast (P.card_parts_le_card.trans_eq Finset.card_univ)
-  have hn' : (2 : ℝ) ≤ Fintype.card V := by exact_mod_cast hn
-  have hn'' : (1 : ℝ) ≤ (Fintype.card V : ℝ) - 1 := by
-    exact (le_sub_iff_add_le).2 (by simpa only [one_add_one_eq_two] using hn')
-  exact div_nonneg (descPochhammer_nonneg ((sub_le_sub_right hb 1).trans hx))
-    (pow_nonneg (zero_le_one.trans (hn''.trans hx)) _)
-
 end
 end D5.S3.Combinatorics.Graph.Coloring.DichromaticPartitionExpansion
