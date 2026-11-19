@@ -6,7 +6,7 @@
 [Examples](#three-places-to-look) · [Truth and computation](#truth-and-computation) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [Evidence](#what-is-proved-and-what-is-open) · [First run](#first-run) ·
-[Lean source](D5/) · [Book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
+[Lean source](D5/) · [Theory and literature reader](https://the-omega-institute.github.io/trureturing-source-theories/) · [Book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
 trureturing develops a scientific method for AI to turn gaps in knowledge into
