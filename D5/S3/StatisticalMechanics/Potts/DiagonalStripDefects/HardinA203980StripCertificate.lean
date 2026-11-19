@@ -9,9 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#31593; Proved)
 escape_witness: none (consumed bind-only helpers of the settlement on the live path of HardinA203980Strip.result)
-representative_counts: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507StripCertificate.finite_certificate
-counts: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507StripCertificate.finite_certificate
-initial_counts: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507StripCertificate.finite_certificate
+representative_counts: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507Strip.counting_bridge
+counts: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507Strip.counting_bridge
+initial_counts: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507Strip.counting_bridge
 W: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507StripCertificate.finite_certificate
 powers: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507StripCertificate.finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=HardinA203980Strip.result, HardinA229507StripCertificate.finite_certificate
