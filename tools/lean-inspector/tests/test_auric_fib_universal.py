@@ -322,7 +322,7 @@ end AuricFibUniversalProduction
                 self.assertEqual(reading['continuation_target']['uses_delta'], compiled['uses_delta'])
         # Replaying JSON at the public arithmetic entry acquires no theorem.
         strict = self.first['Law.Separation.strict']['request']
-        result = subprocess.run([str(ROOT / '.lake/build/lean-inspector/reg/bin/auricFibAnalysis')],
+        result = subprocess.run([str(ROOT / 'tools/scripts/auric-fib-analysis.sh')],
                                 input=json.dumps(strict), text=True, capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         public = json.loads(result.stdout)
@@ -390,7 +390,7 @@ end AuricFibUniversalProduction
         original = json.loads(self.report.read_text())['modules'][0]
         full = copy.deepcopy(original)
         stats = fib_analysis.produce(full, self.directory / 'no-prior-artifact.zip',
-            ROOT / '.lake/build/lean-inspector/reg/bin/auricFibAnalysis')
+            ROOT / 'tools/scripts/auric-fib-analysis.sh')
         self.assertEqual(stats['reused'], 0)
         self.assertEqual(full['fib_analysis'], original['fib_analysis'])
         incremental = copy.deepcopy(original)
