@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.2611.13273
 url: https://arxiv.org/abs/2611.13273v1
 claim: Conjecture 2 asks for monotonicity of the dichromatic polynomial divided by the palette size to the power of the vertex count.
 strata_touched:
+  - D5/S3/Combinatorics/Graph/Coloring/CrewSingletonSplit
   - D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity
   - D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion
 license: citation-only

@@ -7,7 +7,7 @@ internal sealed class DichromaticMonotonicityDocument : IScribeDocumentDefinitio
     private const string Prefix = "D5/S3/Combinatorics/Graph/Coloring/DichromaticMonotonicity.";
     private const string ProblemSlug = "crew-et-al-2026-dichromatic-monotonicity";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/GraphInvariants/crew2026dichromatic");
+        LibraryNoteRef.Create("D5/L/GraphColoring/crew2026dichromatic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive transfers along singleton splits give real dichromatic monotonicity.",

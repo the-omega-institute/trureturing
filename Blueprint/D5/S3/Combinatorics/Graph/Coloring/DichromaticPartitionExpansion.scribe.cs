@@ -6,7 +6,7 @@ internal sealed class DichromaticPartitionExpansionDocument : IScribeDocumentDef
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Coloring/DichromaticPartitionExpansion.";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/GraphInvariants/crew2026dichromatic");
+        LibraryNoteRef.Create("D5/L/GraphColoring/crew2026dichromatic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Acyclic colourings of a finite digraph give a falling-factorial expansion.",
