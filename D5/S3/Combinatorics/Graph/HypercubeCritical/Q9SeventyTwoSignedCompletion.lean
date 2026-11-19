@@ -213,6 +213,68 @@ def survives (wagner : Bool) (p : Fin 8 → Q 9) (bits : Fin 8 → Bool) : Bool 
             decide ((hypercube 9).Adj m (p k) ↔ k = i ∨ k = j)
       else true
 
+private def permits (p : Fin 8 → Q 9) (i j : Fin 8) (different : Bool) : Bool :=
+  match firstFlip (p i) (p j) (unitSign different) with
+  | none => false
+  | some a =>
+    let mid := flip (p i) a
+    !mid 0 && (List.finRange 8).all fun k =>
+      decide ((hypercube 9).Adj mid (p k) ↔ k = i ∨ k = j)
+
+/-- A fixed placement supplies two tests per compressed edge, one for
+equal endpoint signs and one for opposite signs. -/
+def signConstraints (wagner : Bool) (p : Fin 8 → Q 9) :
+    List (Fin 8 × Fin 8 × Bool × Bool) :=
+  (List.finRange 8).flatMap fun i => (List.finRange 8).filterMap fun j =>
+    if i < j ∧ modelAdj wagner i j = true then
+      some (i, j, permits p i j false, permits p i j true)
+    else none
+
+/-- Screening a signing uses only the parity on each pair of endpoints.
+The midpoint tests can be shared across all assignments to the highs. -/
+theorem survives_eq_all_signConstraints (wagner : Bool) (p : Fin 8 → Q 9)
+    (bits : Fin 8 → Bool) :
+    survives wagner p bits =
+      (signConstraints wagner p).all (fun row =>
+        if bits row.1 != bits row.2.1 then row.2.2.2 else row.2.2.1) := by
+  have parity_sign (a b : Bool) : unitSign (a != b) = unitSign a * unitSign b := by
+    cases a <;> cases b <;> decide +kernel
+  rw [Bool.eq_iff_iff]
+  unfold survives signConstraints
+  simp only [List.all_eq_true, List.mem_flatMap, List.mem_filterMap]
+  constructor
+  · intro h row hrow
+    obtain ⟨i, hi, j, hj, hrow⟩ := hrow
+    split at hrow
+    · rename_i hij
+      rw [Option.some.injEq] at hrow
+      subst row
+      have hpath := h i hi j hj
+      rw [ite_eq_left hij] at hpath
+      change (if bits i != bits j then permits p i j true else permits p i j false) = true
+      have he :
+          (if bits i != bits j then permits p i j true else permits p i j false) =
+            permits p i j (bits i != bits j) := by
+        cases hbits : (bits i != bits j) <;> rfl
+      rw [he, permits, parity_sign]
+      cases hf : firstFlip (p i) (p j) (unitSign (bits i) * unitSign (bits j)) <;>
+        simpa [signedMiddle, hf] using hpath
+    · simp at hrow
+  · intro h i hi j hj
+    split
+    · rename_i hij
+      have ha := h (i, j, permits p i j false, permits p i j true)
+        ⟨i, hi, j, hj, by rw [ite_eq_left hij]⟩
+      change (if bits i != bits j then permits p i j true else permits p i j false) = true at ha
+      have he :
+          (if bits i != bits j then permits p i j true else permits p i j false) =
+            permits p i j (bits i != bits j) := by
+        cases hbits : (bits i != bits j) <;> rfl
+      rw [he, permits, parity_sign] at ha
+      cases hf : firstFlip (p i) (p j) (unitSign (bits i) * unitSign (bits j)) <;>
+        simpa [signedMiddle, hf] using ha
+    · rfl
+
 end
 
 /-- Nonzero vertices of the reconstructed signed vector. -/
