@@ -32,7 +32,7 @@ The source defines goodness by the four entries of each adjacent square: the max
 
 ## Motivation
 
-The source establishes which dimensions can admit universal good permutations and asks for the missing count and characterization. The proof identifies an order-theoretic mechanism: local sign constraints force one transition in a two-row array, and overlapping local squares constrain the three-row case. This gives a uniform description of the positive cases and a finite exact count for the exceptional $3\times3$ case.
+The source establishes which dimensions can admit universal good permutations and asks for the missing count and characterization. The proof identifies an order-theoretic mechanism: the column signs of a good two-row array have a unique split, with at most one adjacent sign change, and overlapping local squares constrain the three-row case. This gives a uniform description of the positive cases and a finite exact count for the exceptional $3\times3$ case.
 
 ## Gap
 
@@ -58,7 +58,7 @@ The escape audit is unfinished for the public theorem targets named in [issue #3
 
 ## Triage
 
-1. **Proved — Mechanism.** Local sign constraints forbid a negative-to-positive transition, and the unique transition cuts the two rows into disjoint increasing chains. Evidence: kernel-checked `D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure.pairgood_sign_split` and `pairgood_iff_chains`.
+1. **Proved — Mechanism.** Local sign constraints forbid a negative-to-positive transition. The unique split cuts the two rows into disjoint increasing chains and includes the endpoint splits with one empty chain. Evidence: kernel-checked `D5.S3.Combinatorics.Permutation.OnnGoodPermutationStructure.pairgood_sign_split` and `pairgood_iff_chains`.
 2. **Proved — Uniform count.** Good two-row rank arrays are equivalent to even-cardinality subsets of $\mathrm{Fin}(2n)$ for every positive width; no positive enumeration is used. Evidence: kernel-checked `D5.S3.Combinatorics.Permutation.OnnGoodPermutationCount.rowsEvenEquiv` and `count_two`, using the repinned `D5.S3.Combinatorics.SubsetSpectrum.parity_counts`.
 3. **Proved — Dimension three.** Four compatible local squares give exactly `TypeA` or `TypeB`; each has center label $5$ and two independent ordered two-chain interleavings, giving $36+36$. Evidence: kernel-checked `three_good_iff`, `typeA_center`, `typeA_card`, `typeB_card`, and `count_three`.
 4. **Proved — Known obstruction.** Overlapping $3\times3$ blocks rule out $3\times4$ and larger rectangles, with transposition covering the opposite orientation. Evidence: kernel-checked `no_three_four`, `no_good_large`, and `result`.
