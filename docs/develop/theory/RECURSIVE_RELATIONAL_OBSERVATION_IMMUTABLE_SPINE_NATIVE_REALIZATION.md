@@ -2513,7 +2513,7 @@ unreduced words. If the actual mixture numerator is zero the old ratio
 absence bit remains zero. Otherwise the same positive denominator
 and cross-products give $Z(D\wedge C)/Z(D)$. No ratio at a null
 conditioning event is introduced. This termwise equality establishes
-the whole original domain, beyond the finite component checks.
+the whole original domain under the source hypotheses.
 $\square$
 
 ## 20. The changed image and its common-cut populations

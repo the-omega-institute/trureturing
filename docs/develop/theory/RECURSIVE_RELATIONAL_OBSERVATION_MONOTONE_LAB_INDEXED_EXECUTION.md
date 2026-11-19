@@ -2903,18 +2903,13 @@ The full evaluator and its resource account require the initial
 allocation, field and control rights of ML-I. The native field and
 installation graphs operate only with those supplied rights.
 
-**Definition 20.5 (source correspondence and evidence use).** The
-executable definitions are `native_engine.Core.build` and
-`NativeEngine.microtick` for §§18–18.5, `native_install.Installer` and
-`native_bits.initialize` for §19, and their actual directory traversal
-and event counters for §20. The connected caller composes the unchanged
+**Definition 20.5 (source correspondence).** The executable definitions
+are `native_engine.Core.build` and `NativeEngine.microtick` for §§18–18.5,
+`native_install.Installer` and `native_bits.initialize` for §19, and their
+directory traversal and event counters for §20. The service caller composes
 `field_decoder.lower`, `field_graph.loader/driver/growth` and
-`field_io.conversions/output_decoder/print_buffer`. Its production mode
-is the original conversion/driver/output path. Its additional probe
-mode is a real installed caller of the same decoder, transferring its
-actual result fields with End/Ack/Return; it does not inject an
-instruction into the production driver. Native conversion and output
-checks consume these installed primitive paths.
+`field_io.conversions/output_decoder/print_buffer` on the original
+conversion, execution and output path.
 
 All-image byte provenance and the A interface are unchanged. The source
 and license scope in §9 and §§10–14 remains: NWMG and the licensed stack
