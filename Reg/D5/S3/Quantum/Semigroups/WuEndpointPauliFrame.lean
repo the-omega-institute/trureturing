@@ -148,9 +148,11 @@ end TailOverlap
 
 namespace GenericOverlap
 
+universe u v
+
 private abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {E J : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [Fintype J]
+  Law R := ∀ {E : Type u} {J : Type v} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [Fintype J]
     (T : J → E →ₗ[ℂ] E) (hsym : ∀ j, (T j).IsSymmetric)
     (hsq : ∀ j x, T j (T j x) = x)
     (hanti : ∀ i j, i ≠ j → ∀ x, T i (T j x) = -(T j (T i x))) (u v : E),
@@ -162,16 +164,16 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact h (J := Empty) (fun j => nomatch j) (fun j => nomatch j)
     (fun j => nomatch j) (fun i => nomatch i) (0 : ℂ) 0
 
-def family : Registration arena (type_of% @WuEndpointPauliFrame.overlap_le.{0, 0}) where
+def family : Registration arena (type_of% @WuEndpointPauliFrame.overlap_le.{u, v}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@WuEndpointPauliFrame.overlap_le.{0, 0}, rejected, rejected_law⟩
+  variation := ⟨@WuEndpointPauliFrame.overlap_le.{u, v}, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@WuEndpointPauliFrame.overlap_le.{0, 0}) (Realization signature) Unit Unit where
+    (@WuEndpointPauliFrame.overlap_le.{u, v}) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Semigroups.WuEndpointPauliFrame.overlap_le.audit
   realizationName := `Reg.D5.S3.Quantum.Semigroups.WuEndpointPauliFrame.GenericOverlap.family
   realizationSource := none
@@ -453,6 +455,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨(), 0, 1, ?_⟩
   intro h
+  change endpointU 0 = endpointU 1 at h
   have hs := endpointU_anticommute 0 1 (by decide)
   rw [← h, endpointU_sq 0] at hs
   have he := congrArg (fun A : TwoMode => (A (0, 0) (0, 0)).re) hs
@@ -468,7 +471,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := (h 0).apply (0, 0) (0, 0)
   have hi := congrArg Complex.im he
-  norm_num [Matrix.one_apply, Complex.star_def] at hi
+  norm_num [rejected, realize, Matrix.one_apply, Complex.star_def] at hi
 
 def family : Registration arena (type_of% @endpointU_hermitian) where
   actual := actual
@@ -503,6 +506,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "arg"]
       stateBinder := 0
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

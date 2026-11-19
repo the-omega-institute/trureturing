@@ -440,7 +440,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := (h 0 Matrix.isHermitian_zero).apply (0, 0) (0, 0)
   have hi := congrArg Complex.im he
-  norm_num [Matrix.one_apply, Complex.star_def] at hi
+  norm_num [rejected, realize, Matrix.one_apply, Complex.star_def] at hi
 
 def family : Registration arena (type_of% @A₁_isHermitian) where
   actual := actual
@@ -475,6 +475,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "arg"]
       stateBinder := 0
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
@@ -500,10 +501,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨(), 0, 1, ?_⟩
   intro h
+  change endpointClassical 0 = endpointClassical 1 at h
   have h0 := congrFun h 0
   have hs := congrArg (fun x : ℝ => x ^ 2) endpointAlpha_add_beta
   simp [endpointClassical] at h0
-  linarith [sq_nonneg endpointAlpha, sq_nonneg endpointBeta]
+  nlinarith
 
 namespace Source
 
@@ -549,6 +551,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     readouts := #[{
       path := #["body", "body", "arg"]
       stateBinder := 0
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
