@@ -1,0 +1,65 @@
+**定理 190.2（原有限配对与正删除的精确等价）。** 在190.1的原域，固定 $a$，(190.2)当且仅当存在原实线性映射 $Q:V\to V$，满足
+
+$$
+Q(C)\subseteq C,\qquad Qa=0,\qquad Qb=b\quad(b\in N_a).
+\tag{190.3}
+$$
+
+证明。若有这样的 $Q$，以它收缩(190.2)的张量等式，左侧为非负数 $\sum_i t_i f_i(Qp_i)$，右侧为 $\sum_j g_j(b_j)$，必要性成立。
+
+反向先让空正和排除隐藏的线性冲突。置 $W=\operatorname{span}N_a$。若 $a\in W$，可选至多 $d$ 个线性独立邻点，使 $a=\sum_j c_jb_j$。取 $k=0$、$g_0=u$、$g_j=-c_ju$，得到零张量等式，但右侧读数为 $-\sum_jc_j=-u(a)=-1$，违背(190.2)。所以
+
+$$
+a\notin W,\qquad S=\mathbb Ra\oplus W,
+\qquad \delta(a)=0,\quad\delta|_W=I
+\tag{190.4}
+$$
+
+是良定义的证明内构造。取 $N_a$ 的一组基 $b_1,\ldots,b_m$，此时 $m\le d-1$。前端保留 $r\le d$ 是为了此前排除 $W=V$ 时也不漏检。
+
+关键是 $S$ 不需先有零面或 $\mathsf Z_2$ 就已包含原内点。令 $e=a+\sum_{j=1}^m b_j\in C$。若 $e$ 不在 $\operatorname{int}C$，支撑分离给非零 $h\in C^*$、$h(e)=0$。各正加项都被它消去，故 $h(a)=0$ 且 $h$ 消去整个 $W$。因 $C$ 生成，$M=\max_Kh>0$。在真实最大面取一个原纯最大点 $b$；原全菜单中的 $u-h/M$ 确认 $a$ 并排除 $b$，所以 $b\in N_a$。这与 $h|_W=0$、$h(b)=M$ 矛盾。因此
+
+$$
+e\in S\cap\operatorname{int}C.
+\tag{190.5}
+$$
+
+这里的纯最大点存在由有限维紧凸生成给出，不要求原纯集闭。
+
+余下把成熟正锥对偶工具用于这个已内生的 $S$。记 $\mathcal P=\{Q\in\operatorname{End}V:Q(C)\subseteq C\}$、$\rho(Q)=Q|_S$。其限制像 $\rho(\mathcal P)$ 是闭凸锥。具体地，若 $\rho(Q_n)\to R$，则 $Q_ne$ 有界。对每个固定基向量 $v$，内点性给 $-te\le_Cv\le_Cte$，正性给 $-tQ_ne\le_CQ_nv\le_CtQ_ne$。由基范数定义，$\|Q_nv\|_K\le t\,u(Q_ne)$，所以 $Q_n$ 算子有界。收敛子列的极限仍正且限制为 $R$。此处没有用一般线性锥像必闭的错误断言。
+
+正算子锥的成熟对偶公式是精确有限生成
+
+$$
+\mathcal P^*
+ =\operatorname{cone}\{x\otimes h:x\in C,\ h\in C^*\}.
+\tag{190.6}
+$$
+
+按C183所引Gritzmann–Klee–Tam引理2.1复用其秩一生成；这里说明不遗漏闭包的理由。选 $\eta\in\operatorname{int}C^*$，把非零 $x,h$ 分别归一到紧底 $\eta(x)=1$、$h(e)=1$。归一秩一张量的凸包紧，线性泛函 $L(x\otimes h)=\eta(x)h(e)$ 在该凸包恒为一，故其锥闭。与每个正算子配对非负的双锥关系遂给(190.6)。
+
+若 $\delta$ 无正延拓，闭锥分离给 $\ell\in\operatorname{Hom}(S,V)^*$，在 $\rho(\mathcal P)$ 上非负且 $\ell(\delta)<0$。限制映射的对偶是在输入因子上的包含，因而
+
+$$
+Z=\rho^*\ell\in\mathcal P^*\cap(S\otimes V^*),\qquad
+\langle Z,\delta\rangle<0.
+\tag{190.7}
+$$
+
+先按(190.6)取有限秩一正分解，再逐个正输入作原纯点的有限分解，逐个非零正泛函按 $\max_Kh$ 归一成原效应。于是 $Z$ 已有有限个原纯点—效应正配对的精确表示。最后在 $d^2$ 维张量空间对这批有限生成元用锥Carathéodory，删去冗余项，得到
+
+$$
+Z=\sum_{i=1}^k t_ip_i\otimes f_i,\qquad k\le d^2.
+\tag{190.8}
+$$
+
+不要求原纯点集紧，不取纯点的极限，也不把近似证书冒充精确等式。另一方面，沿(190.4)的原基展开同一个总张量，有
+
+$$
+Z=a\otimes g_0+\sum_{j=1}^m b_j\otimes g_j,\qquad
+\langle Z,\delta\rangle=\sum_{j=1}^m g_j(b_j)<0.
+\tag{190.9}
+$$
+
+(190.8)—(190.9)正是(190.2)禁止的有限关系，矛盾。所以 $\delta$ 有正延拓，它对全部 $N_a$ 恒等，给(190.3)。总张量属于 $S\otimes V^*$ 即可；没有把(190.8)的每个 $p_i$ 偷限在 $S$ 内。$\square$
+

@@ -1,0 +1,46 @@
+**定理 153.4（严格差距处的塌缩边界与纯路径实现）。** 固定原纯 $p,s$，假设
+
+$$
+\delta:=\Delta_p(s)>0,\qquad \mathscr L(p)\ne\varnothing.
+\tag{XII153.14}
+$$
+
+按定理152.2—152.3，记 $r=r_p(s)$，则 $\mathscr L(p)=\{r\}$。在 $p$ 的任意指定纯邻域中，可选道路连通开帽 $U\ni p$ 及 $\varepsilon>0$，使每个 $a\in U$ 恰属下列一支：
+
+$$
+d_H(D_a,D_p)<\varepsilon,
+\qquad\text{或}\qquad
+D_a\subset B_\varepsilon(r).
+\tag{XII153.15}
+$$
+
+令 $O=\{a\in U:D_a\subset B_\varepsilon(r)\}$、$Z=\partial_UO$。则 $O$ 非空且相对开，$p\in Z$；每个 $b\in Z$ 都满足
+
+$$
+\Delta_b(s)>\delta/2,\qquad
+\mathscr L(b)=\{r_b(s)\},
+\tag{XII153.16}
+$$
+
+且 $b\mapsto r_b(s)$ 在 $Z$ 上连续。还存在 $b\in Z$ 与连续原纯路径 $\sigma:[0,1]\to U$，使
+
+$$
+\sigma(0)=b,\qquad \sigma(t)\in O\quad(t>0),
+\qquad D_{\sigma(t)}\xrightarrow[t\downarrow0]{H}\{r_b(s)\}.
+\tag{XII153.17}
+$$
+
+沿此路径 $\beta_{D_{\sigma(t)}}\to\infty$，接收标签 $b$ 自身的预算仍有限。
+
+证明。定理152.3的整球并合差距保留，先给出一个标签邻域及 Hausdorff 容差，使邻近 $p$ 且 $D_a$ 足够接近 $D_p$ 时，$\Delta_a(s)>\delta/2$；否则可用同时趋向 $p,D_p$ 的反例序列违反(XII152.9)。取 $\varepsilon<\operatorname{diam}D_p/8$ 并满足该容差。
+
+[IX115.5][Q153IX]的准确整球极限二择与单落点限制给某个标签邻域，使(XII153.15)成立。否则取趋向 $p$ 且违反二择的标签序列，再取 Hausdorff 子列；极限只能是 $D_p$ 或 $\{r\}$，两者都与违反二择矛盾。利用定理153.2在该邻域及指定邻域内选道路连通开帽 $U$。两支互斥，因为第一支的球直径大于 $\operatorname{diam}D_p-2\varepsilon>6\varepsilon$，第二支的球直径小于 $2\varepsilon$。
+
+整球上半连续性使 $O$ 相对开；已有入射塌缩使 $O\ne\varnothing$ 且 $p\in\overline O$，而直径界给 $p\notin O$，故 $p\in Z$。每个 $b\in Z\subseteq U\setminus O$ 属于整球支，因此其差距大于 $\delta/2$、球直径大于 $6\varepsilon$。对任意 $a_i\in O\to b$，球直径至多 $2\varepsilon$，故其任何 Hausdorff 子列极限都不能是整个 $D_b$。准确极限二择只留下单点，再由定理152.3将全部单点极限固定为 $r_b(s)$。于是 $D_{a_i}\to\{r_b(s)\}$，并给出(XII153.16)。
+
+为核对落点连续性，取 $b_i\in Z\to b\in Z$、$f_i\in M_{b_i}(s)$。由各处严格差距，$Z(f_i)=\{r_{b_i}(s)\}$；定理152.2在固定接收标签 $b$ 的邻近标签零点控制，遂给 $r_{b_i}(s)\to r_b(s)$。
+
+最后取 $a\in O$，在 $U$ 中选从 $p$ 到 $a$ 的连续纯路径 $\gamma$。闭集 $\{t:\gamma(t)\notin O\}$ 非空且不含一；令其最大元为 $t_0<1$，则 $b=\gamma(t_0)\in Z$，且其后路径全在 $O$。重参数化，并消费刚证明的边界极限，即得(XII153.17)。[IX115.3][Q153IX]的统一原效应范数界给 $2a_{D_{\sigma(t)}}\le L\operatorname{diam}D_{\sigma(t)}\to0$，故 $\beta=1/(2a)\to\infty$；每张实际完整球自身的 $a$ 仍严格正。证毕。
+
+此处 $b$ 可在 $p$ 的任意近处取得，但没有强行令 $b=p$。$Z$ 也没有被断言为把 $U$ 分成两个非空开侧的分离子；整球支可能没有内部。塌缩路径与连续落点给单落点分支的实际局部形状，未将其排除。
+

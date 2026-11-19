@@ -1,0 +1,25 @@
+**定理 151.5（原零图分量的有限层与整个边界）。** 只保留完整 EB3+PR。令 $d_G$ 为实际零图距离，$\Gamma(p)$ 为有限零路分量，并置
+
+$$
+A_n(p)=\{q\in P:d_G(p,q)\le n\},\qquad
+B_\Gamma=\bigcup_{s\in\Gamma}D_s.
+\tag{XII151.9}
+$$
+
+则每个 $A_n(p)$ 紧，$\Gamma(p)=\bigcup_{n\ge0}A_n(p)$ 为 $F_\sigma$；若 $q_i\in\Gamma(p)$、$q_i\to q\notin\Gamma(p)$，必有 $d_G(p,q_i)\to\infty$。此外每个分量的凸包包含原 $K$ 的一个相对内点，且
+
+$$
+B_\Gamma=\partial_{\rm rel}K\cap\operatorname{conv}\Gamma.
+\tag{XII151.10}
+$$
+
+各 $B_\Gamma$ 两两不交并覆盖整个原边界。
+
+证明。长度不超过 $n$ 的路径分别是紧 $P^{k+1}$ 中闭零边条件的投影，$0\le k\le n$；有限并仍紧。若一个不可达极限有图距离有界的子列，该子列落在某个紧 $A_N(p)$ 中，极限仍可达，矛盾。
+
+固定 $p\in\Gamma$，以 $c_p$ 为完整 $D_p$ 的球心。$D_p=\operatorname{conv}S_p\subset\operatorname{conv}\Gamma$，故 $x=(p+c_p)/2$ 在该凸包。若 $x$ 在原边界，过 $x$ 的真支撑面同时含 $p,c_p$；因 $c_p\in\operatorname{ri}D_p$，此面含整个 $D_p$。极大真面性迫它等于 $D_p$，却又含 $p\notin D_p$，矛盾。因此 $x\in\operatorname{ri}K$。
+
+式(XII151.10)的从左到右包含由每个 $D_s=\operatorname{conv}S_s$ 直接给出。反向令边界点 $x$ 为 $\Gamma$ 中纯点的有限正权混合，取过 $x$ 的真支撑面 $F$。所有纯分量均在 $F$。若 $F=D_s$，任一纯分量与 $s$ 有零边，故 $s\in\Gamma$、$x\in B_\Gamma$。若 $F=\{x\}$，则 $x\in\Gamma$；取 $s\in S_x$，零对称给 $x\in D_s$ 且 $s\in\Gamma$。同样，任意两分量若贡献同一边界点，过该点的真支撑面中的纯分量就会经其标签至多两步互达，故它们原是同一分量。全部原边界点所在真面为纯单点或完整球，所以这些集合还覆盖整个边界。证毕。
+
+若 $W_\Gamma=\operatorname{span}_{\mathbb R}\Gamma$，上面的内点给 $W_\Gamma\cap\operatorname{int}C\ne\varnothing$，因而 $W_\Gamma^\perp\cap C^\ast=\{0\}$：非零正泛函不能在原锥内点消失。这没有给 $W_\Gamma=V$，原内点可以位于真线性子空间中。也没有给 $\Gamma$ 或 $B_\Gamma$ 闭；无限个紧可达层的并不能代替紧集。
+

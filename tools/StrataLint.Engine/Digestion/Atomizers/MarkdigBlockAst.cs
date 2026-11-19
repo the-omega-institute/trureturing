@@ -118,7 +118,7 @@ internal static class MarkdigBlockAst
     /// line inside it can otherwise turn the preceding formula lines into a Setext heading.
     /// Paired delimiters make the range structural and keep its contents opaque to claim discovery.
     /// </summary>
-    private static ImmutableArray<SourceSpan> LegacyDisplaySpans(string source)
+    internal static ImmutableArray<SourceSpan> LegacyDisplaySpans(string source)
     {
         var spans = ImmutableArray.CreateBuilder<SourceSpan>();
         int? displayStart = null;
@@ -249,7 +249,7 @@ internal static class MarkdigBlockAst
     private static string Slice(string source, MarkdownObject block) =>
         source[block.Span.Start..Math.Min(End(block), source.Length)];
 
-    private sealed record SourceSpan(int Start, int End);
+    internal sealed record SourceSpan(int Start, int End);
 }
 
 internal sealed record MarkdownGovernedBlock(int Start, int End, int LeadStart, string Kind)

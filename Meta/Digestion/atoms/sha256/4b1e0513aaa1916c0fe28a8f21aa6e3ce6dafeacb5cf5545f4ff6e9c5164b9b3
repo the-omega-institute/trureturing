@@ -1,0 +1,27 @@
+**Corollary 12 (Sharp multiplicity classification).**
+For every $q,m\ge1$, the quotient and full group are given by the
+following disjoint cases:
+
+| Parameters | $U$ | $G$ | Order |
+| --- | --- | --- | --- |
+| $m=1$ | $\mathbb Z^{2q}$ | $\operatorname{Sym}(3)^q\rtimes\operatorname{Sym}(q)$ | $6^q q!$ |
+| $q=1,m=2$ | $\mathbb Z^2$ | $\operatorname{Sym}(2)^3\rtimes\operatorname{Sym}(3)$ | $48$ |
+| $q\ge2,m\ge2$, or $q=1,m\ge3$ | $\mathbb Z/M$ | $\operatorname{Sym}(m)^\ell\rtimes C_\ell$ | $\ell(m!)^\ell$ |
+
+*Proof.* The cases exhaust the positive integers and follow respectively
+from Theorems 9, 10, and 6–8 together with Theorem 11. For $m=1$, the
+double-copy masks do not exist. For $q=1$, the proposed $D_n$ in (9)
+would repeat the vertex $a_n$, since $2q+1=3q$; its four-term equation
+is therefore not the sum over that set. At $m=2$, the three-copy
+four-masks (24) do not exist, and Theorem 10 lists all actual zero subsets,
+so no other actual row supplies their missing relations. At $m\ge3$,
+(24) supplies them. Thus multiplicity changes the integral quotient and
+its support group as well as the factors $m_v!$. $\square$
+
+*Mathematical citation 12.1.* The parameter-specific mask reconstruction,
+binary-block zero-set descriptions, and their combination with the
+integer relation quotient in Theorems 6–12 are repo-derived. The free
+abelian, quotient, and wreath-product constructions used in the proofs
+are the established mathematics cited in [1]–[3]; no originality or
+priority assertion is made for this combination.
+

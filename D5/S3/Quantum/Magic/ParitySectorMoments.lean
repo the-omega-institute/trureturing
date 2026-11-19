@@ -364,7 +364,7 @@ private theorem paper_from_disp {d : ℕ} [NeZero d] (U : Matrix (ZMod d) (ZMod 
         (tau d ^ (b.1.val * b.2.val) * star (tau d ^ (b.1.val * b.2.val))) := by
           rw [tau_pow_unit, mul_one]
     _ = _ := by ring
-private theorem disp_apply {d : ℕ} [NeZero d] (a b i j : ZMod d) :
+theorem disp_apply {d : ℕ} [NeZero d] (a b i j : ZMod d) :
     displacement d a b i j = if i - j = a then windowRoot d ^ (b * j).val else 0 := by
   have hsh (n : ℕ) (r s : ZMod d) :
       (shiftMatrix d ^ n) r s = if r - s = (n : ZMod d) then 1 else 0 := by

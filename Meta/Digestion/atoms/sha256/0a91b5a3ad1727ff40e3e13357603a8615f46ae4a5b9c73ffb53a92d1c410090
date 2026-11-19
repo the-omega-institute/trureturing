@@ -1,0 +1,55 @@
+**引理 139.4（指定根球族的非塌缩与连续性）。** 分别对引理139.3中的 $r=o,q$，映射 $s\mapsto D_s$ 在整个 $S_r$ 上 Hausdorff 连续。对任意固定辅助欧氏内积，其球心、形状算子和三维方向空间均连续。
+
+证明。两种情形均有 $Q(r)=Q$；固定相应横截球面 $T$，令
+
+$$
+z_s=(\pi_r|_T)^{-1}(s)\in S_s\cap T.
+\tag{XI139.9}
+$$
+
+$z_s$ 连续且从不等于 $r$。任取 $s_n\to s$，在辅助欧氏空间 $H_0=\ker u$ 内写
+
+$$
+D_{s_n}=c_n+B_n\overline{\mathbb B}^3,
+\qquad B_n:\mathbb R^3\longrightarrow H_0\text{ 单射}.
+\tag{XI139.10}
+$$
+
+可以逐球选择正交半轴为 $B_n$ 的列；这里只作有界选择，尚不假定这些选择连续。所有中心在紧 $K$ 中，半轴长不超过 $\operatorname{diam}K/2$。任意子列遂可再取 $c_n\to c,B_n\to B$，于是整个球 Hausdorff 收敛到
+
+$$
+F=c+B\overline{\mathbb B}^3.
+\tag{XI139.11}
+$$
+
+选原共同零确认效应 $e_n\in\mathcal F_{s_n}$、$e_n|_{D_{s_n}}=0$；它们由完整面接口供应。紧 $\mathcal E$ 给进一步子列极限 $e$，且 $e(s)=1,e|_F=0$，故 $F\subseteq D_s$。同时 $r,z_{s_n}\in D_{s_n}$，所以 $r,z_s\in F$，两点不同。
+
+对每个 $v\in S^2$，点 $c_n+B_nv$ 都在 $S_{s_n}\subseteq Q$；紧纯集 $Q$ 给
+
+$$
+c+BS^2\subseteq Q\subseteq P.
+\tag{XI139.12}
+$$
+
+若 $\operatorname{rank}B<3$，沿非零核方向把任意单位闭球中的向量补到单位球面，得到 $B S^2=B\overline{\mathbb B}^3$。于是整个凸集 $F$ 都由原极点组成，只能是单点，与 $r\ne z_s$ 矛盾。因此 $\operatorname{rank}B=3$。
+
+此时 $\partial_{\rm rel}F=c+B S^2\subseteq P\cap D_s=S_s$。$F,D_s$ 都是三维椭球且 $F\subseteq D_s$，所以仿射包相同。若包含严格，取 $y\in\operatorname{ri}F$ 及 $w\in\operatorname{ri}D_s\setminus F$，线段从 $y$ 首次离开 $F$ 的点既在 $\partial_{\rm rel}F$ 又在 $\operatorname{ri}D_s$，不可能同时原纯与非纯。故 $F=D_s$。任意子列的再极限均如此，整球连续性得证。
+
+每颗完整椭球唯一写为
+
+$$
+D_s=c_s+A_s^{1/2}\overline B_{H_0},\qquad A_s\ge0,\quad\operatorname{rank}A_s=3,
+\qquad Z_s=\operatorname{im}A_s.
+\tag{XI139.13}
+$$
+
+若 $h_s(v)=\max_{x\in D_s}\langle v,x\rangle$，则
+
+$$
+h_s(v)-h_s(-v)=2\langle v,c_s\rangle,\qquad
+\left(\frac{h_s(v)+h_s(-v)}2\right)^2=\langle A_sv,v\rangle.
+\tag{XI139.14}
+$$
+
+Hausdorff 连续使支持函数连续；有限个坐标与极化给 $c_s,A_s$ 连续。秩恒三，正特征值在每点附近与零谱有间隙，故像投影、伪逆及其平方根连续。投影固定环境向量并作连续 Gram–Schmidt，给 $Z_s$ 的局部标架。这是 IX116.11中已陈述的成熟参数工具；本引理新增的是在指定原球族上由紧纯 $Q$ 和完整横截球面支付它的非退化入口，没有输入全 $P$ 紧性或全局球族连续。证毕。
+

@@ -67,7 +67,7 @@ private def liftRepresentation (rho : Representation R G V) :
 
 /- No finite-index or unit hypothesis is needed in this direction. The universe lift permits
    the existing res/coind adjunction and supplies Small for the module/category conversion. -/
-private theorem projective_restrict (rho : Representation R G V) (H : Subgroup G)
+theorem projective_restrict (rho : Representation R G V) (H : Subgroup G)
     (hproj : Module.Projective R[G] rho.asModule) :
     Module.Projective R[H] (Representation.asModule (rho.comp H.subtype)) := by
   letI : Module.Projective R[G] rho.asModule := hproj

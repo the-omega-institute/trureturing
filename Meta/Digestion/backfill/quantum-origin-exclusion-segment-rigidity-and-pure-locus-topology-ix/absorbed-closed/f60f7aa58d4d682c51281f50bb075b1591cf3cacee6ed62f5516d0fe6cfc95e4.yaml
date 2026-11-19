@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f60f7aa58d4d682c51281f50bb075b1591cf3cacee6ed62f5516d0fe6cfc95e4
+  normalized_sha256: sha256:f60f7aa58d4d682c51281f50bb075b1591cf3cacee6ed62f5516d0fe6cfc95e4
+cas_ref: sha256:f60f7aa58d4d682c51281f50bb075b1591cf3cacee6ed62f5516d0fe6cfc95e4
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallBundle.whole_exclusion_continuous
+    target_statement_id: sha256:e73f6ec5f55105e57ec7f70a93abb7cbb2143cc3173d7f27d087ab1e5744665c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,21 @@
+**定义 19.1（原移动质量的几何预算）。** 保持定义 18.1 的全部实际对象与参数：固定的 $F,E_0,P_1,P_2$、正实嵌入、$\theta,\alpha$、全部有限地方的原过滤 $U_v$、$M,a_0,c_0,\beta,\gamma$、原函数 $h,\rho$ 以及 (18.2) 的 $S_X,L_X$ 均不变。特别地，每个成功条件仍由同一个整数 $n$ 实现，目标仍取遍
+
+$$
+u\in a_0+M\widehat{\mathbb Z},\qquad z\in\mathbb T^2.
+$$
+
+令 $A>0,\mu>0$ 为定理 17.2 的固定常数。对正整数 $X$ 和任意实数 $r>0$，定义
+
+$$
+\begin{aligned}
+q_+&=q(h(2X),h(2X);M),\\
+r_X&=\rho(2X),\qquad \overline r_X=\rho(X+1),\\
+T_X(r)&=\max\left\{\frac1X,
+       (AXr^\mu)^{-1/(\mu+1)}\right\},\\
+T_X&=T_X(r_X),\qquad \Theta_X=q_+T_X.
+\end{aligned}
+\tag{19.1}
+$$
+
+$T_X(r)$ 随 $r$ 非增。以上仅定义证明所用的预算，不以端点模数或端点半径替换 $L_X$ 中任何一个整数的自身权重。圆上的 Haar 测度仍使 $\mathbb T$ 的总质量为 $1$，故半径 $r\le1/4$ 的二维开窗质量仍为 $4r^2$。
+

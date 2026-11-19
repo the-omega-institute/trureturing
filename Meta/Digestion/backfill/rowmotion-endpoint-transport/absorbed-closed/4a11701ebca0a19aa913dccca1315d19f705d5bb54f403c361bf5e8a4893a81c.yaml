@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4a11701ebca0a19aa913dccca1315d19f705d5bb54f403c361bf5e8a4893a81c
+  normalized_sha256: sha256:4a11701ebca0a19aa913dccca1315d19f705d5bb54f403c361bf5e8a4893a81c
+cas_ref: sha256:4a11701ebca0a19aa913dccca1315d19f705d5bb54f403c361bf5e8a4893a81c
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Geometry/RowmotionGlobalFormula.trace_eq_formula
+    target_statement_id: sha256:91ce6480a2e2aa4a8c9bfaeb2d4892f842601482991f859e9fe4ffb288d36242
+receipts:
+  unresolved_subitems: []

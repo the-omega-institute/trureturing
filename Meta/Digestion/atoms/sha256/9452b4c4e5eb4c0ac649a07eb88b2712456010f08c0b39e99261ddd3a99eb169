@@ -1,0 +1,31 @@
+**命题 3.2（The named two-dimensional flag does not read actual edges）。** The realization $V_2$ fails exact positive-edge discrimination even with its successor available, and its unread reduced map is different from the published orthogonal-edge channel. More precisely, its environment basis read has conditional probabilities
+
+$$
+\begin{array}{c|cc}
+\text{edge class}&\Pr(f_0)&\Pr(f_1)\\\hline
+\text{four loops at }0,1,2,3\text{ and two leaf edges}&1&0\\
+\text{eight non-loop square edges}&0&1\\
+4\to4&A/C&t/C
+\end{array}
+\tag{3.4}
+$$
+
+Every input has the same unconditional flag probabilities $B,t$.
+
+**证明。** Equation (3.4) is obtained from the assigned vectors, including (2.2). At successor $0$ one has
+
+$$
+e_{00}=e_{04}=f_0,\qquad e_{01}=e_{03}=f_1.
+$$
+
+Each listed edge is positive in $\mathcal D$. Identical vectors cannot be perfectly distinguished, so the actual successor does not resolve these pairs. An unknown internal output cannot serve as an extra distinguishable label: for any common unit vector $\phi$, choose the incoming internal vector for edge $i\to j$ to be $U_{ji}^\dagger\phi$. Its output is then the same $\phi$ on all compared edges. This respects the required arbitrary internal-input domain.
+
+Let $\mathcal E_{\mathrm{edge}}(\rho)=\sum_{ji}K_{ji}\rho K_{ji}^\dagger$, with $K_{ji}=\sqrt{P_{ij}}|j\rangle\langle i|\otimes U_{ji}$ as in source §130. From source $1$ and any nonzero internal density operator $\rho$, the $(0,2)$ configuration block of $\Phi_2(|1\rangle\langle1|\otimes\rho)$ is
+
+$$
+\sqrt{pq}\,a^\dagger\rho c^\dagger\ne0,
+\tag{3.5}
+$$
+
+since $1\to0$ and $1\to2$ have the same record $f_1$. The corresponding block of $\mathcal E_{\mathrm{edge}}$ is zero. The flag totals are $B,t$ either by (2.11) or by summing (3.4) with the outgoing row probabilities: at $0$, $A+r=B$; at $1,2,3$, the loop is $B$; and at $4$, $r+A=B$. $\square$
+

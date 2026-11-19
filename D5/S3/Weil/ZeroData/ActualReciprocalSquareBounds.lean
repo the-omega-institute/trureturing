@@ -323,7 +323,7 @@ theorem firstLiMass_split : firstLiMass =
     (Real.sqrt_pos.2 Real.pi_pos).ne', Real.log_sqrt Real.pi_pos.le]
   ring
 
-private theorem firstLiMass_lt_third : firstLiMass < 1 / 3 := by
+theorem firstLiMass_lt_third : firstLiMass < 1 / 3 := by
   have h2 : (2 / 3 : ℝ) < Real.log 2 :=
     lt_trans (by norm_num) Real.log_two_gt_d9
   have h3 : (1 : ℝ) < Real.log 3 :=

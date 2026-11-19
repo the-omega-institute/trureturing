@@ -1,0 +1,33 @@
+**定义 146.1（完整原域中的零邻域）。** 保留144.1的全部原域：$V$ 为非零有限维实空间，$C\subset V$ 为闭尖生成凸锥，$u$ 在 $C\setminus\{0\}$ 上严格正，且
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(z)=\min_{f\in\mathcal F_p}f(z),\quad
+D_p=\{z\in K:T_p(z)=0\},\quad S_p=P\cap D_p.
+\end{gathered}
+\tag{XI146.1}
+$$
+
+$T_p$ 在全部原混态上取整个紧确认菜单的已达到最小值。EB3 要求每个完整 $D_p$ 是非退化仿射实心三球，中心为 $c_p$；$\mathsf{Conn}$ 要求任意原纯对有有限原零边路。以下保留 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$，其中
+
+$$
+\forall a\in P\ \exists\kappa_a\ \forall x\in S_a:\quad
+e_a(c_x)+e_a(c_{2c_a-x})=\kappa_a.
+\tag{XI146.2}
+$$
+
+这里 $e_p$ 是144.1式(XI144.2)所引既有结果供应的唯一整球零确认：$e_p(p)=1$、$e_p|_{D_p}=0$。其完整零面为 $D_p$，唯一一值点为 $p$；不把整个 $\mathcal F_p$ 缩成单点，不预设 least、$T_p=e_p$ 或正限制逆。全部非空真面只有纯单点或完整排除球，球标签单射，不同完整球至多交于一个原纯点。这些接口均沿用144.1的准确来源。
+
+定义实际原邻域、有限层及二步载体为
+
+$$
+\mathcal N(A)=\bigcup_{x\in A}S_x,\qquad
+H_0(a)=\{a\},\quad H_{m+1}(a)=H_m(a)\cup\mathcal N(H_m(a)),\qquad
+Q(a)=\mathcal N(S_a).
+\tag{XI146.3}
+$$
+
+固定辅助欧氏尺。由144.2，$1\le\kappa_a<2$，每张固定 $S_a$ 上中心连续；由144.3，$Q(a)$ 环境紧且全纯，整球在每张固定 $S_a$ 上连续。下文新增的是从一整层到下一整层的连续性推进，不将逐层常数预先统一于全部 $P$。
+

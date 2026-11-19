@@ -1,0 +1,78 @@
+**定理 144.4（同一上端余量排除全部原球塌缩）。** 在定义144.1的完整 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$ 域，若
+
+$$
+\exists\varepsilon>0\ \forall a\in P:\quad \kappa_a\le2-\varepsilon,
+\tag{XI144.12}
+$$
+
+则 $\inf_{a\in P}\operatorname{diam}D_a>0$，因而由既有 IX118.8 的第二项到第四项，存在同原锥、同原单位的复三能级表示。$\varepsilon$ 在全部标签之前选定，不能替换为144.3的逐根 $\delta_a$。
+
+证明。先排除纯标签的混极限。设 $a_n\to z\notin P$。IX118.4使所有整球聚点均为同一个 $\{q\}$，其中 $q\in P$、$z\in\operatorname{ri}D_q$；唯一性由不同原球不能交于混点及标签单射给出。若 $e_{a_n}\to h$ 于某子列，则 $h(z)=1,h(q)=0$。非负效应 $u-h$ 在 $D_q$ 的相对内点为零，故在整个 $D_q$ 为零，并在 $q$ 为一；(XI144.2)于是给
+
+$$
+e_{a_n}\longrightarrow g_q.
+\tag{XI144.13}
+$$
+
+任选 $D_{a_n}$ 的一对对径 $x_n,x_n'$；两者都趋于 $q$。纯标签处上关联使 $c_{x_n},c_{x_n'}$ 的每个聚点都在 $D_q$，而 $g_q$ 在整个该球上为一。故 $\kappa_{a_n}\to2$，违反(XI144.12)。所以 $P$ 在紧 $K$ 中闭而紧。
+
+反设尚有 $\operatorname{diam}D_{a_n}\to0$。取共同子列使
+
+$$
+a_n\to a\in P,\qquad D_{a_n}\longrightarrow\{q\},\qquad q\in P\cap D_a.
+\tag{XI144.14}
+$$
+
+$q$ 的纯性来自球缘点极限和刚得的 $P$ 紧性。对任意选择 $x_n\in S_{a_n}$ 都有 $x_n\to q$、$a_n\in D_{x_n}$。其整球任意极限 $G$ 满足 $a\in G\subseteq D_q$。与144.3同样的有界椭球参数及纯球缘极限论证排除秩一、二；秩三迫 $G=D_q$，秩零迫 $G=\{a\}$。因此所有邻球极限只有
+
+$$
+G=\{a\}\quad\text{或}\quad G=D_q,
+\qquad c_G=a\quad\text{或}\quad c_G=c_q.
+\tag{XI144.15}
+$$
+
+每张 $S_{a_n}$ 上的中心映射由144.2连续，故其像连通。任选一对对径，从(XI144.12)至少选出一端 $x_n^0$ 使 $e_{a_n}(c_{x_n^0})\le1-\varepsilon/2$。因 $e_{a_n}(a)\to1$，这些中心不可能有趋于 $a$ 的子列；(XI144.15)遂使它们趋于 $c_q$。若还有其他中心趋于 $a$，连通像和距离到 $a$ 的中值定理将给第三种中心极限，例如到 $a$ 距离为 $\|c_q-a\|/2$，违反(XI144.15)。因此
+
+$$
+\sup_{x\in S_{a_n}}\|c_x-c_q\|\longrightarrow0,
+\qquad D_{x_n}\longrightarrow D_q
+\quad\text{对任意 }x_n\in S_{a_n}.
+\tag{XI144.16}
+$$
+
+对后一列完整球选 $e_{x_n}$ 的任意聚点，整球收敛、$x_n\to q$ 和(XI144.2)迫该聚点为 $e_q$，故 $e_{x_n}\to e_q$。
+
+选 $S_{a_n}$ 的任意一对对径 $x_n,z_n$。在该球坐标里令这对端点的坐标为 $s=\pm1$，写
+
+$$
+e_{x_n}|_{D_{a_n}}=1-\beta_n+\beta_n s,\qquad
+e_{z_n}|_{D_{a_n}}=1-\gamma_n-\gamma_n s,
+\qquad \beta_n,\gamma_n>0.
+\tag{XI144.17}
+$$
+
+唯一一值面保证非恒定及正斜率。两效应及 $g_{a_n}$ 都在 $L_{a_n}$；消去球上斜率，使用 $R_{a_n}$ 单射，得到整个 $V^*$ 上的既有双球恒等式 IX120.24：
+
+$$
+\gamma_ne_{x_n}+\beta_ne_{z_n}
+=(\beta_n+\gamma_n-2\beta_n\gamma_n)g_{a_n}.
+\tag{XI144.18}
+$$
+
+参数对应为 $\beta_n=(1+\rho_+)^{-1}$、$\gamma_n=(1+\rho_-)^{-1}$；不使用正限制逆。固定辅助范数并令 $M=\max_{f\in\mathcal E}\|f\|_*<\infty$。整球振幅给
+
+$$
+2\beta_n,\ 2\gamma_n\le M\operatorname{diam}D_{a_n}\longrightarrow0.
+\tag{XI144.19}
+$$
+
+将(XI144.18)除以 $\beta_n+\gamma_n$。左端是两个均趋于 $e_q$ 的原效应的凸组合，右端是 $(1-t_n)g_{a_n}$，其中
+
+$$
+t_n=\frac{2\beta_n\gamma_n}{\beta_n+\gamma_n}
+\le\frac{\beta_n+\gamma_n}{2}\longrightarrow0.
+\tag{XI144.20}
+$$
+
+无需控制两个正系数的比值，就有 $g_{a_n}\to e_q$、$e_{a_n}\to g_q$。结合(XI144.16)，ZC 再给 $\kappa_{a_n}\to2g_q(c_q)=2$，矛盾。全部塌缩被排除。此后才消费 IX118.8；分类本身不是本章的新定理。证毕。
+

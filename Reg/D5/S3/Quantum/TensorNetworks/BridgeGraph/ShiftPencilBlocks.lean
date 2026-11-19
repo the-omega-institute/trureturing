@@ -4,6 +4,7 @@ import Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 import Reg.Support.BridgeGraphRelations
 import Reg.Support.BridgeGraphOriginalLaws
 import Reg.Support.BridgeGraphEqualityFamilies
+import Reg.D5.S3.Quantum.Entanglement.PartialTransposeSaturation.Reuse
 
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles

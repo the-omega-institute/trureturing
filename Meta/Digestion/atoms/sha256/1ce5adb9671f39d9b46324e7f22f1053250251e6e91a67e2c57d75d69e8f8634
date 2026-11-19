@@ -1,0 +1,11 @@
+**三、唯一零点映射与纤维。** 若 $h_j\to h\in O$，在紧 $K$ 中取 $p_j=\pi(h_j)$ 的任意收敛子列 $p_{j_\ell}\to p$。评价连续使 $h(p)=\lim_\ell h_{j_\ell}(p_{j_\ell})=0$，故 $p=\pi(h)$。每个子列都有这个唯一聚点，所以 $p_j\to\pi(h)$。$\pi:O\to Q$ 连续，所用拓扑正是原子空间拓扑。
+
+对 $p\in\pi(O)$ 有完整集合等式
+
+$$
+\pi^{-1}(p)=O\cap F_p^*\subseteq\{h\in L_p:h(z)=1\}.
+\tag{XI141.11}
+$$
+
+评价 $z$ 在 $L_p$ 上非零，因为这条纤维中已有 $h(z)=1$ 的元素。$\dim_{\mathbb R}L_p=4$，所以右端是三维仿射平面。不需要 $p\mapsto L_p$ 或 $p\mapsto N_p$ 连续。
+

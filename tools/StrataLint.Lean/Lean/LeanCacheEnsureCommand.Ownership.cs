@@ -71,7 +71,9 @@ internal static partial class LeanCacheEnsureCommand
             removePartial: null,
             continueOnCacheGetFailure: true,
             stateProbe,
-            out var cacheState, donorRepository, refreshWarmArchive: false);
+            out var cacheState, donorRepository, refreshWarmArchive: false,
+            readColdBuildConsent: () => string.Equals(
+                readEnvironment(ColdBuildConsentVariable), "1", StringComparison.Ordinal));
         if (!ensured.Success) return ensured;
 
         var receipt = ensured.Output;
@@ -124,7 +126,8 @@ internal static partial class LeanCacheEnsureCommand
                     "COLD_BUILD_REFUSED project olean cache is cold.\n"
                     + $"Fetch caches with: make -C {target} lean-cache-ensure\n"
                     + "To accept this cold build once, run: "
-                    + $"{ColdBuildConsentVariable}=1 make -C {target} lean\n");
+                    + $"{ColdBuildConsentVariable}=1 make -C {target} lean LEAN_TARGETS=\"<nonempty module list>\"\n"
+                    + "Replace the target placeholder; a full build still requires FULL_BUILD=1.\n");
             }
             receipt = RecordColdBuildConsent(receipt);
         }

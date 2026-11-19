@@ -1,0 +1,47 @@
+**定义 145.1（完整原域、真实零确认与固定根）。** 取非零有限维实空间 $V$、闭尖生成凸锥
+$C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的 $u\in V^\ast$。始终使用
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+C^\ast=\{f\in V^\ast:f(C)\subseteq\mathbb R_+\},\qquad
+\mathcal E=[0,u]_{C^\ast},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(z)=\min_{f\in\mathcal F_p}f(z),\qquad
+D_p=\{z\in K:T_p(z)=0\},\qquad S_p=P\cap D_p.
+\end{gathered}
+\tag{XII145.1}
+$$
+
+标签 $p$ 遍历全部 $P$，第二端点 $z$ 遍历整个 $K$。$K,\mathcal E,\mathcal F_p$ 的紧性与 minimum 达到沿用
+[IX114.1—114.2][Q145IX]、[X133.1][Q145X]；确认族不缩成某个预选效应族。
+以下 EB3 总指对每个原 $p\in P$，整个 $D_p$ 都仿射等价于完整闭三球。
+纯零关系 $p\perp r\Longleftrightarrow T_p(r)=0$ 由补效应对称，且反自反。
+纯 PR 则另指全部纯对的 $T_p(r)=T_r(p)$，不交换混态上的正读数。
+
+复用 IX114.2、IX120.1、X133.1 的原面接口：每个 $D_p$ 是非点紧暴露极大真面，
+$S_p=\partial_{\rm rel}D_p\cong S^2$，$D_p=\operatorname{conv}S_p$；
+不同完整球的交为空或一个原纯单点，全部非空真面只有这些球与原纯单点。
+记 $c_p$ 为 $D_p$ 的唯一中心，$I(F)=\{p\in P:D_p=F\}$，并记
+
+$$
+\mathcal A_p=\{e\in\mathcal F_p:K\cap\ker e=D_p\}.
+\tag{XII145.2}
+$$
+
+此族非空。具体地，在 $c_p$ 取一张达到 $T_p(c_p)=0$ 的原效应 $e$；对任意
+$z\in D_p$，其球心反射 $z'=2c_p-z$ 仍在 $D_p$，非负性与
+$0=e(c_p)=(e(z)+e(z'))/2$ 使 $e$ 零于整个球。反向由 $0\le T_p\le e$ 得到准确零集。
+这只是上述真实暴露接口的复用，不把 $e$ 说成全部确认效应的 least。
+同样复用球上极值事实：若一张原效应在同一完整球的两点取一、零，这两点必是球的对径纯点。
+
+在所有目标之前固定原 $o\in P$，置
+
+$$
+A=D_o,\qquad S=S_o,\qquad B=\bigcup_{s\in S}D_s,\qquad
+w=o+2c_o.
+\tag{XII145.3}
+$$
+
+这里 $w\in V$ 且 $u(w)=3$，不是归一状态；$B$ 收齐每个末球的全部混态。
+

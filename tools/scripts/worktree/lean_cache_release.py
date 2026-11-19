@@ -28,7 +28,7 @@ except ImportError:
 
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
-from lean_cache_release_io import (OperationBudget, remaining, ArchiveOutput, ArchiveInput, archive_sha,
+from lean_cache_release_io import (OperationBudget, remaining, MultipartArchiveOutput, ArchiveInput, archive_sha,
                                    copy_chunks, extract_members)
 
 # Use the report entry's declared format and execution capture, never program hashes.
@@ -362,31 +362,6 @@ def valid_publication_id(value):
         r"ci-[1-9][0-9]*-[1-9][0-9]*|local-[0-9a-f]{12}-[0-9]{8}T[0-9]{12}Z", value) is not None
 
 
-def archive_parts(stage, deadline):
-    archive = stage / ASSET
-    size = archive.stat().st_size
-    count = (size + CHUNK_BYTES - 1) // CHUNK_BYTES
-    if not 1 <= count <= 100:
-        raise ValueError("archive must fit in 1 to 100 parts")
-    paths = [archive]
-    if count > 1:
-        paths = []
-        with archive.open("rb") as source:
-            for index in range(count):
-                path = stage / f"{ASSET}.part-{index:02d}"
-                bytes_left = min(CHUNK_BYTES, size - index * CHUNK_BYTES)
-                with path.open("wb") as target:
-                    while bytes_left:
-                        remaining(deadline)
-                        block = source.read(min(bytes_left, 1024 * 1024))
-                        if not block:
-                            raise ValueError("archive ended before its declared size")
-                        target.write(block)
-                        bytes_left -= len(block)
-                paths.append(path)
-    return [{"name": path.name, "sha256": archive_sha(path, deadline), "bytes": path.stat().st_size} for path in paths]
-
-
 def declared_parts(manifest, maximum_bytes=CHUNK_BYTES):
     parts = manifest.get("parts")
     if not isinstance(parts, list) or not 1 <= len(parts) <= 100:
@@ -566,10 +541,13 @@ def fetch_staging_cleanup(root, *, now):
 
 
 def publish(root, partition, verification=None, *, build_report=True):
-    # Build/content failures remain failures. Production transport is optional;
+    # Build/content and local archive failures remain failures. Remote transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
     if build_report:
+        if os.environ.get("FULL_BUILD") != "1":
+            print("cache production requires explicit FULL_BUILD=1", file=sys.stderr)
+            return 2
         build = subprocess.run(["make", "lean-report",
             "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
             "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
@@ -579,6 +557,7 @@ def publish(root, partition, verification=None, *, build_report=True):
             return build.returncode
     report = root / ".lake/build/stratalint/raw-lean-report.json"
     content_validated = False
+    preparing = False
     try:
         deadline = operation_deadline()
         with contextlib.ExitStack() as lifetime, tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
@@ -608,15 +587,18 @@ def publish(root, partition, verification=None, *, build_report=True):
                     receipt("publish", "exists", tag=tag, release_target=existing.get("target_commitish"), **identity)
                     return 0
                 # Level 1 keeps the gzip protocol within the transport window.
-                with (stage / ASSET).open("wb") as output:
+                preparing = True
+                with MultipartArchiveOutput(stage, ASSET, CHUNK_BYTES, deadline) as output:
                     with tarfile.open(stage / ASSET, "w:gz", compresslevel=1,
-                                      fileobj=ArchiveOutput(output, deadline)) as archive:
-                        archive.add(root / ".lake/build", arcname="build")
+                                      fileobj=output) as archive:
+                        archive.add(root / ".lake/build", arcname="build",
+                                    filter=lambda member: None if member.isfile()
+                                    and member.name.endswith(".setup.json") else member)
             metadata = {"schema": "lean-release-seed-v4", "partition": partition, "cache_key": cache_key,
-                **identity,
-                "archive_sha256": archive_sha(stage / ASSET, deadline), "archive_bytes": (stage / ASSET).stat().st_size,
-                "parts": archive_parts(stage, deadline)}
+                **identity, **output.metadata()}
             (stage / MANIFEST).write_text(json.dumps(metadata, sort_keys=True) + "\n")
+            remaining(deadline)
+            preparing = False
             # Never clobber an existing snapshot. Failed/racing publishers leave
             # at most a draft, which fetch never considers an applicable seed.
             # The server's default branch anchors only the storage container.
@@ -648,7 +630,7 @@ def publish(root, partition, verification=None, *, build_report=True):
                         if not restore_snapshot(target, partition, tag, downloaded, deadline, metadata,
                                                 cache_key=cache_key):
                             raise ValueError("native verification did not install the remote build")
-                        remaining(deadline)
+                        # Restore has completed under its fresh post-transfer budget.
                         (target / ".lake/build").rename(build)
                 else:
                     # Local candidate publication also verifies, but owns no
@@ -671,7 +653,7 @@ def publish(root, partition, verification=None, *, build_report=True):
         return 1 if verification is not None else 0
     except report_reuse.INVALID_SEED + (EOFError, subprocess.SubprocessError, tarfile.TarError) as error:
         receipt("publish", "failed", _error=error, reason=str(error))
-        return 1 if verification is not None else (0 if content_validated else 2)
+        return 1 if verification is not None else (0 if content_validated and not preparing else 2)
     return 0
 
 

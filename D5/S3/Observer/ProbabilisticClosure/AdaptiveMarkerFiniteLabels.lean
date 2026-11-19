@@ -418,7 +418,7 @@ private theorem randomizedChain_congr {ξ : Type*} (g : ξ → α) (f : α → �
       ih (fun i hi => h i (hi.trans (Nat.le_succ n)))]
 variable {ξ Ω : Type*} [MeasurableSpace ξ] [MeasurableSpace Ω]
 @[fun_prop]
-private theorem measurable_randomizedChain {g : ξ → α} {f : α → ξ → α}
+theorem measurable_randomizedChain {g : ξ → α} {f : α → ξ → α}
     (hg : Measurable g) (hf : Measurable (uncurry f)) :
     Measurable (randomizedChain g f) := by
   apply measurable_pi_iff.mpr
@@ -616,7 +616,7 @@ private lemma measurable_originalSource (qL qR : unitInterval) (x : Bool) :
       (show Measurable (fun v : Noise => fun k : ℕ+ => v (false,k)) by fun_prop)).prodMk
     (measurable_pi_iff.mpr fun n => ((measurable_pi_apply (n+1)).comp (measurable_Z qR x)).comp
       (show Measurable (fun v : Noise => fun k : ℕ+ => v (true,k)) by fun_prop))
-private theorem originalSource_law (qL qR : unitInterval) (x : Bool) :
+theorem originalSource_law (qL qR : unitInterval) (x : Bool) :
     noiseLaw.map (originalSource qL qR x) = reference qL qR x := by
   let splitNoise (v : Noise) : ArmNoise × ArmNoise := (fun k => v (false,k), fun k => v (true,k))
   have hs : Measurable splitNoise := by fun_prop

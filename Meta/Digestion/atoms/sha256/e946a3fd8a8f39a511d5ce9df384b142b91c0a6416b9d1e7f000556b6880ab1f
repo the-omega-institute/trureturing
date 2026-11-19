@@ -1,0 +1,42 @@
+### 2.3. The binary automaton
+Modulo $2$, the denominator $2n+1$ is odd, so the nonzero condition is
+that $\binom{3n}{n}$ be odd. Lucas' theorem, or the binary carry formula
+for this binomial coefficient, says precisely that adding $n$ to $2n$
+has no carries. This is equivalent to
+$$
+ n\mathbin{\&}(2n)=0,
+$$
+where $\&$ is bitwise AND: the binary expansion of $n$ has no adjacent
+ones. For completeness, the valuation identity
+$\nu_2\binom{a+b}{a}=s_2(a)+s_2(b)-s_2(a+b)$ counts the carries;
+here $s_2(t)$ is the sum of the binary digits of $t$, and one obtains
+it from $\nu_2(t!)=t-s_2(t)$. A carry occurs if and only if
+there is a first position with a one in both summands, giving
+the binary condition in §2.3. The associated digit automaton records whether the
+preceding digit was one and rejects a second consecutive one.
+
+Let $S_m$ be its accepted integers below $2^m$. Then
+$$
+ S_0=\{0\},\quad S_1=\{0,1\},\quad
+ S_m=S_{m-1}\ \cup\ (2^{m-1}+S_{m-2})\quad(m\geq2).
+$$
+Its greatest element is
+$M_m=\left\lfloor 2^{m+1}/3\right\rfloor$: this holds at $m=0,1$, and the recurrence
+$M_m=2^{m-1}+M_{m-2}$ proves it for every $m$.
+Adjoin the next accepted integer $2^m$ to $S_m$, and let $G_m$ be the
+set of positive numbers of zeros between consecutive accepted integers
+in this augmented set. The first block through the first integer of
+the second block gives exactly $G_{m-1}$. Internal gaps of the second
+block are translated gaps between integers in $S_{m-2}$, hence belong
+to $G_{m-2}\subseteq G_{m-1}$. The only remaining gap is the terminal
+gap from $M_m$ to $2^m$, of length
+$$
+ \ell_m=2^m-1-M_m=\left\lfloor 2^m/3\right\rfloor.
+$$
+Thus $G_m=G_{m-1}\cup\{\ell_m\}$ when $\ell_m>0$, with no positive
+gaps at $m=0,1$. The values $\ell_m$ strictly increase for $m\geq2$.
+All gaps before the terminal one have length at most $\ell_{m-1}$;
+therefore its interval $[M_m+1,2^m-1]=[\left\lceil 2^{m+1}/3\right\rceil,2^m-1]$
+is the first occurrence of the new record. Every finite gap appears
+in an augmented prefix. This proves all claims for $p=2$.
+

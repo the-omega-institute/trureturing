@@ -1,0 +1,8 @@
+**范围。** 外部输入如下：
+- Nicolas 2012 命题 2.1（RH 下显式）；
+- Fan–Kobayashi–Molnar 定理 1.5、5.2；
+- RH 下 $\theta(t)=t+O(\sqrt t\log^2t)$；
+- 素数定理与 Chebyshev 上界。
+
+本仓推导的是定理 2.3、推论 2.4 及注记 2.5 的分解。在所查范围（该文第 8 节把阈值问题列为 future work；Molnar arXiv:2610.12816v1；arXiv 标题检索）内未见此结论，本节不主张文献优先权。
+

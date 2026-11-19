@@ -1,0 +1,81 @@
+**引理 149.4（球心互易到共同原恒等式）。** 假设定理149.3左侧成立。取 $P_{\rm s}$ 中任意一个实际零图连通分支 $Q$，则它非空、满足(149.3)，且有一个 $1\le\kappa<2$ 满足(149.4)。
+
+证明。[IX 定理116.6][S149IX]给 $P_{\rm s}\ne\varnothing$，并给其沿实际零边封闭；因此每个这样的分支都满足(149.3)。固定 $p\in Q$。XII147 对 $p$ 及其全部有限步邻点供应
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e_p\},\quad g_p=u-e_p\in\operatorname{ri}N_p,\quad
+K\cap\{e_p=0\}=D_p,\quad K\cap\{e_p=1\}=\{p\},\\
+\dim L_p=4,\qquad L_p\longrightarrow\operatorname{Aff}(D_p)
+\text{ 为限制线性同构}.
+\end{gathered}
+\tag{149.7}
+$$
+
+写 $D_p=c_p+B\overline B^3$，对 $v\in S^2$ 记 $q_v=c_p+Bv$，并唯一取 $H_i\in L_p$ 使 $H(c_p+Bw)=w$。置
+
+$$
+\rho(v)=\sup_{x\in K\setminus\{p\}}\frac{-v\cdot H(x)}{g_p(x)},\quad
+Z=\{H(x)/g_p(x):x\in K\setminus\{p\}\},\quad
+a_v=2c_{q_v}-p,\quad m(v)=g_p(a_v).
+\tag{149.8}
+$$
+
+其中 $\rho$ 定义在全部 $\mathbb R^3$，$a_v,m(v)$ 及以下带单位方向的式子取 $v,w\in S^2$。
+
+这里 $q_v\in Q$、$a_v\in S_{q_v}\subset Q$ 都是实际原纯点。XII 命题147.6给有限 Lipschitz 支撑函数 $\rho\ge\|\cdot\|$、有界凸影像 $Z$，及整个原 $V$ 上的
+
+$$
+e_{q_v}=\frac{\rho(v)g_p+v\cdot H}{1+\rho(v)}.
+\tag{149.9}
+$$
+
+以下展开 [XI149.2—149.3][S149XI149] 的单根推导在此处的前件。任意 $h\in N_p$ 在实际球 $D_{q_v}$ 上非负且零于球缘点 $p$，故其球限制是同一支持仿射函数的非负倍数；由 $L_p=\operatorname{span}N_p$，有 $H=z_vg_p$ 于整个 $D_{q_v}$，其中 $z_v=H(a_v)/m(v)$。$g_p$ 唯一零于 $p$，所以 $0<m(v)\le1$，且在这个球上唯一最大于 $a_v$。式(149.9)给 $(-v)\cdot z_v=\rho(v)$。若某个实际比值达到该支撑值，其原态必零于 $e_{q_v}$，故属于整个 $D_{q_v}$；实际接触值只有 $z_v$。这正是 [THREE_COPY VII 定理122.4][S149TC] 的证明所用接口：只需要(149.7)、(149.9)及这个邻球的完整零面，不需要分支外的 Inj。
+
+球心互易现在给
+
+$$
+1-\frac{m(v)}2=e_p(c_{q_v})=e_{q_v}(c_p)
+=\frac{\rho(v)}{1+\rho(v)},\qquad
+m(v)=\frac2{1+\rho(v)}\ge\sigma_p:=\frac2{1+\max_{S^2}\rho}>0.
+\tag{149.10}
+$$
+
+紧集 $A=\{H(x)/g_p(x):x\in K,\ g_p(x)\ge\sigma_p\}$ 也是凸集：混合两个比值时，用权重正比于 $t/g_p(x_1)$、$(1-t)/g_p(x_2)$ 的实际原混态，其新 $g_p$ 值是相应调和平均，仍至少 $\sigma_p$。每个 $z_v$ 由 $a_v$ 在 $A$ 中实现。于是 $A\subseteq Z\subseteq\overline Z$ 的全部支撑值相同，有限维分离给 $A=Z=\overline Z$。完整支撑面现在才由唯一实际接触判为单点。紧性、唯一性及支撑不等式给支撑点连续，并给
+
+$$
+\rho\in C^1(\mathbb R^3\setminus\{0\}),\qquad \nabla\rho(v)=-z_v.
+\tag{149.11}
+$$
+
+具体地，若 $z(n)$ 是紧凸体在非零方向 $n$ 的唯一支撑点，则
+$0\le h(n+k)-h(n)-k\cdot z(n)\le k\cdot(z(n+k)-z(n))=o(\|k\|)$，支付所用微分结论。
+
+再令 $d(v)=e_{a_v}(p)\in[0,1)$、$R_v=u-e_p-e_{q_v}$。在 $q_v$ 的完整球图中，对球缘对径 $p,a_v$ 分别用(149.9)的对应公式，消去同一组三个坐标泛函，得到 [SAME_READBACK 定理123.3][S149SR123] 的全原空间消元式
+
+$$
+e_{a_v}=d(v)e_p+\left(d(v)+\frac{1-d(v)}{m(v)}\right)R_v,
+\qquad R_v=\frac{g_p-v\cdot H}{1+\rho(v)}.
+\tag{149.12}
+$$
+
+其两个球图所需限制同构、确认唯一性及一值面，分别由 $p,q_v,a_v\in Q\subset P_{\rm s}$ 的(149.7)供应。没有假设 $R_v$ 正。令
+$\mathfrak B(v,w)=\rho(v)-\rho(w)-\nabla\rho(w)\cdot(v-w)\ge0$。将(149.12)代入实际原效应上界 $e_{a_v}(a_w)\le1$，如 [SAME_READBACK 定理124.3][S149SR123] 的同一消元，得到
+
+$$
+(1-d(v))(m(w)-m(v))
+\le\frac{\mathfrak B(v,w)}{1+\rho(v)}.
+\tag{149.13}
+$$
+
+确切的代入是 $R_v(a_w)=m(w)(1-\mathfrak B(v,w)/(1+\rho(v)))$；移项所得右端还带系数 $(d(v)m(v)+1-d(v))m(w)\le1$。所以这里只用了同一实现中的原上界。
+
+沿任何经过 $v$ 的双向光滑球面弧，(149.11)给 $\mathfrak B(v,w(t))=o(|t|)$，而(149.10)已给 $m$ 为 $C^1$。式(149.13)在 $t>0$、$t<0$ 分别除以 $t$，且 $1-d(v)>0$，迫所有切向导数为零。于是 $S^2$ 的连通性给 $\rho|_{S^2}=R_p\ge1$，并有
+
+$$
+e_p(c_q)=\frac{R_p}{1+R_p}\quad(q\in S_p).
+\tag{149.14}
+$$
+
+实际零边上的(149.2)使 $R_p=R_q$；沿分支内有限零路，全部 $R_p$ 等于同一个有限 $R\ge1$。取 $\kappa=2R/(1+R)<2$，将(149.9)在 $v,-v$ 相加即得(149.4)，且该等式在整个原 $V$ 上成立。上述转移只调用实际单标签处的完整接口；XI149 的全域 Conn 和其全域 UC 分类均未在此作为前件或结论使用。证毕。
+

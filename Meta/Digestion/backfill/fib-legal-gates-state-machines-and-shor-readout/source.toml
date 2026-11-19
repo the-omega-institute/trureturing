@@ -1,0 +1,5 @@
+source_id = "fib-legal-gates-state-machines-and-shor-readout"
+path = "docs/develop/theory/FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

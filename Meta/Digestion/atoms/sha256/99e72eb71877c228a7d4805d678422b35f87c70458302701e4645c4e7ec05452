@@ -1,0 +1,39 @@
+**定义 142.1（原对象及定型的两类标签）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原质量泛函 $u\in V^*$。始终取整个原域
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+C^*=\{h\in V^*:h(C)\subseteq\mathbb R_+\},\qquad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(z)=\min_{f\in\mathcal F_p}f(z),\qquad
+D_p=\{z\in K:T_p(z)=0\},\qquad S_p=P\cap D_p,\\
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\qquad
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p.
+\end{gathered}
+\tag{XI142.1}
+$$
+
+$K$ 是紧基且张成 $V$；完整效应区间在有限维中紧，$\mathcal F_p$ 非空紧，所以 minimum 对每个原混输入 $z\in K$ 都达到。纯关系 $p\perp q\Longleftrightarrow q\in S_p$ 由补效应对称，且反自反。完整 EB3 的含义是：对每个原 $p\in P$，整个 $D_p$ 都仿射等价于非退化闭三球。它本身不声称 $T_p$ 仿射、$e_p$ 为 least 或 $\mathcal F_p$ 为单点。
+
+保留原零图条件 $\mathsf{Conn}$：任意两个原纯点由有限条原零边连接，长度可依端点改变。在全部目标之前固定同一个 $o\in P$，置
+
+$$
+\begin{gathered}
+Q(r)=\bigcup_{s\in S_r}S_s,\qquad Q=Q(o),\qquad
+\Lambda=\{a\in P:S_a\subseteq Q\},\\
+\mathsf G(o):\quad \exists W\subset V\text{ 开},\quad o\in W,\quad W\cap P\subseteq Q.
+\end{gathered}
+\tag{XI142.2}
+$$
+
+在尚未取得相等之前，$Q$ 与 $\Lambda$ 始终分别定型。$x\in Q$ 是原纯点，故其原球 $D_x$ 有定义；这不表示 $x\in\Lambda$。$a\in\Lambda$ 表示整个 $S_a$ 留在 $Q$，不表示标签 $a\in Q$。
+
+以下仓内来源统一取固定提交 `088113172f8caa47dd61617f69e908a7f370fab1` 的正文。所用源接口及其量词如下。
+
+* [VII103.2][Q142VII]及[IX116.1—116.2][Q142IX]给每个 $D_p$ 为非点紧暴露极大真面，$S_p=\partial_{\rm rel}D_p\cong S^2$，$D_p=\operatorname{conv}S_p$；全部非空原真面只有纯单点和完整排除球。不同完整球至多交于一个原纯点。这些结论不输入全 Pair。
+* [THREE_COPY VIII130.2][Q142TC]、[IX119.10、120.2、120.7—120.8][Q142IX]及[XI137.2][Q142XI]在完整 EB3+$\mathsf{Conn}$ 下给全部原标签的 Inj、$\mathcal A_p=\{e_p\}$、$\dim L_p=4$。特别地，这里的 $p$ 遍历整个 $P$，不是只遍历 $Q$。$g_p=u-e_p$ 只在 $p$ 为零，限制 $L_p\to\operatorname{Aff}(D_p)$ 为线性同构；此时不预付其逆的正性。
+* [XI137.3、137.7—137.8及139.2第1、2项、139.5、139.8][Q142XI]给紧纯集 $Q\subset P$，其原子空间拓扑为无边界四维拓扑流形；存在同一个环境开集 $U_0\ni o$，使 $Q(p)=Q$ 对每个 $p\in U_0\cap P$ 成立。$\Lambda$ 紧，$a\mapsto D_a$ 在整个 $\Lambda$ 上 Hausdorff 连续，且 $S_p\subseteq\Lambda$ 对这些近根 $p$ 成立。
+* [XI141.2][Q142XI]在这些相同原前件和源接口下给 $\dim_{\mathbb R}V=9$。其上界使用原对偶边界中的实际开集与 Hurewicz 紧闭映射定理，下界使用 Alberti 整个奇异集的图覆盖。这里复用该完整维数结论，不重新将九维设作前件。
+
+取辅助欧氏结构，记 $A=\operatorname{aff}K=\{u=1\}\cong\mathbb R^8$，$H_0=\ker u$，$M=\partial_AK$。凸体内点的径向投影给 $M\cong S^7$。辅助尺只用于距离、连续性及图覆盖。
+

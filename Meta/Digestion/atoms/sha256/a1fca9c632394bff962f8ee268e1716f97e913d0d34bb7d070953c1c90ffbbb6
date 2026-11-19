@@ -1,0 +1,64 @@
+**既有条件应用 137.4。** 在(XI137.1)的全部原域上，完整 EB3 与(XI137.32)的 $\mathsf R_1$ 是一条既有完整静态候选。直接复用 [X133定理133.6及命题133.7][Q137X]，它等价于存在同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad C=\Phi(\mathrm{PSD}_3),\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI137.34}
+$$
+
+另一条既有完整静态候选是 [本卷定义135.1、定理135.2—135.5及条件应用135.6][Q137XI135] 的完整 EB3+$\mathsf{MC}$。记每个完整原 $D_p$ 的唯一仿射球心为 $c_p$；$\mathsf{MC}$ 准确要求：任意正整数 $m,n$、全部原纯点 $p_i,q_j\in P$ 和非负实权重 $\lambda_i,\mu_j$，均满足
+
+$$
+\begin{gathered}
+\sum_{i=1}^m\lambda_i=\sum_{j=1}^n\mu_j=1,\qquad
+\sum_{i=1}^m\lambda_i p_i=\sum_{j=1}^n\mu_j q_j\\
+\Longrightarrow\qquad
+\sum_{i=1}^m\lambda_i c_{p_i}=\sum_{j=1}^n\mu_j c_{q_j}.
+\end{gathered}
+\tag{XI137.34a}
+$$
+
+零权、重复标签和同一原态的所有有限纯分解均在量词内。这是球心替换保持原混态相等关系，不只是重排同一份表达，也不是顺序测量交换。
+
+该来源的承重链直接引用而不重证：在完整 EB3 下，同一原 $f\in\mathcal E$ 满足 $f(p)=1,f(q)=0$ 时有 $f(c_p)\le1/2\le f(c_q)$ 且 $f(c_p)<f(c_q)$，由此迫使 $\operatorname{aff}\{c_p:p\in P\}=\operatorname{aff}K$、$\operatorname{span}\{c_p:p\in P\}=V$。另付 $\mathsf{MC}$ 才使生成元赋值唯一下降为实线性 $R:V\to V$，满足 $R(p)=c_p$、$R(C)\subseteq C$、$uR=u$；全张成使 $R$ 满射而可逆，进而给 Inj，不声称 $R^{-1}$ 正。若原纯标签趋向混态，先由紧 $K$ 取整球 Hausdorff 收敛子列，IX引理118.4使该极限只能塌成一个原纯点，连续球心图于是把该混态送到纯点；正、保质量且单射的 $R$ 排除这一分支。因此全部原 $P$ 闭而紧，且对任意辅助欧氏范数，$\delta=\operatorname{dist}(P,R(P))>0$、$\inf_{p\in P}\operatorname{diam}D_p\ge2\delta>0$。此时才复用 IX118.6—118.8 的分类，取得同一个(XI137.34)；没有在纯紧性前预用紧 $P$。球心图 $R:V\to V$ 与限制图 $R_o:L_o\to\operatorname{Aff}(D_o)$ 不同型。
+
+同一完整 EB3+$\mathsf{MC}$ 分支也可直接消费[本卷定义136.1、定理136.2—136.3及条件应用136.4][Q137XI136]的短桥：只使用135.2—135.4在纯点闭性论证之前已取得的实际仿射 $R|_K:K\to K$、$R(p)=c_p$ 与原球标签 Inj，不使用135.4的纯点紧性或135.5的矩阵分类。相应关系及判别结论为
+
+$$
+\begin{gathered}
+\Gamma_R=\{(x,f)\in K\times\mathcal E:f(x)=1,\ f(Rx)=0\},\qquad
+d_R(x)=\max_{f\in\mathcal E}\bigl(f(x)-f(Rx)\bigr),\\
+P=\operatorname{pr}_K\Gamma_R=d_R^{-1}(\{1\}).
+\end{gathered}
+\tag{XI137.34b}
+$$
+
+所消费证明的关键是同一张原全效应的两端饱和。任取 $p\in P$、$f\in\mathcal F_p$，若 $f(c_p)=0$，中心反射及全域非负性便给 $f|_{D_p}=0$，反向由最低定义给 $D_p=K\cap\ker f$。$c_p\in D_p$ 和达到的原 minimum 总供应这样的效应，故 $P\subseteq\operatorname{pr}_K\Gamma_R$。若 $(x,f)\in\Gamma_R$，取有限纯分解 $x=\sum_i\lambda_i p_i$，$\lambda_i>0$、$\sum_i\lambda_i=1$；实际仿射性和全效应界使 $1=\sum_i\lambda_i f(p_i)$、$0=\sum_i\lambda_i f(c_{p_i})$ 逐项饱和。因此所有 $D_{p_i}$ 都等于同一零面 $K\cap\ker f$，Inj 迫使所有 $p_i$ 相同，故 $x$ 纯。紧 $K\times\mathcal E$ 中的 $\Gamma_R$ 闭，投影遂紧；最大值达到使间隙一恰等于两端饱和，给(XI137.34b)。这不预用紧 $P$，也不选择任何极限球。原效应紧性和 $R$ 的连续性还给连续 $d_R:K\to[0,1]$；对每个 $\eta>0$，紧的 $\{x\in K:\operatorname{dist}(x,P)\ge\eta\}$ 上最大间隙严格小于一，故存在 $\varepsilon>0$，使全部原 $x\in K$ 满足 $d_R(x)>1-\varepsilon\Rightarrow\operatorname{dist}(x,P)<\eta$；该紧集为空时结论直接成立。
+
+由此，$P$ 与连续像 $R(P)$ 是不交紧集：球心均为正维原面的非纯相对内点。对任意固定辅助欧氏范数，令 $Z_p=\operatorname{lin}(D_p-c_p)$，便有
+
+$$
+\delta=\operatorname{dist}(P,R(P))>0,\qquad
+c_p+\delta\,\overline B_{Z_p}\subseteq D_p\quad(p\in P),\qquad
+\operatorname{diam}D_p\ge2\delta.
+\tag{XI137.34c}
+$$
+
+确实，每个完整球的所有相对边界点都原纯，到其球心的距离至少为 $\delta$；从中心沿 $Z_p$ 的每条单位射线取首次边界点，凸性给整个半径 $\delta$ 的内球，中心反射再给直径界。因此不仅直径，辅助尺下全部半轴都统一非塌缩。这里的 $Z_p$ 不与本章法向张成 $L_p$ 混型。此短桥只省去纯点紧性及非塌缩入口处的极限球选择；随后仍消费 IX118.8，包括其既有分类的极限球依赖，不重证拓扑或 Jordan 分类。136.1本身允许正维可变维球并把实际仿射 $R$、Inj 列为前件；本章只在完整 EB3+$\mathsf{MC}$ 已支付它们的接口复用，不从局部 $\mathsf G(o)$ 取得 $R$ 或 $\mathsf{MC}$。
+
+EB3+$\mathsf R_1$ 路线仍由 IX120.4—120.5消费 IX116定理116.17及定义应用116.18；EB3+$\mathsf{MC}$ 路线可经本卷136.4的短桥复用135.5。两条完整候选均与同原锥、同原单位的(XI137.34)等价；本章不新增分类。其球心公式仅在分类后为 $U=\Phi(I_3)$、$c_p=(U-p)/2$、$R(x)=(u(x)U-x)/2$（$x\in V$）；这些公式不逆用为支持定理的前件。该静态正球心图也不因此成为实际事件，仍须137.11的全旁观及事件合同。
+
+定理137.3的前件仅为完整 EB3+$\mathsf{Conn}$+$\mathsf G(o)$，不假设 $\mathsf{MC}$，也不以先取得完整矩阵表示来证明四项支持结论。$\mathsf G(o)$ 只约束一个固定根附近的纯零关联，$\mathsf{MC}$ 则约束全部原纯混合表达；EB3+$\mathsf{Conn}$+$\mathsf G(o)\Rightarrow\mathsf{MC}$ 以及从同一前件取得全域 $\mathsf R_1$ 均未证明。仅引用这些完整候选，不能从未付 $\mathsf{MC}$ 或 $\mathsf R_1$ 的根芽前件取得内外接触或全域覆盖。
+
+只在上述任一路线取得同一个 $\Phi$ 时，令 $P_v=vv^\ast$、$v^\ast v=1$、$Q_v=I_3-P_v$、$p_v=\Phi(P_v)$，有完整对应：
+
+| 通常静态量子对象 | 同一原表示中的准确对应 |
+| --- | --- |
+| 全锥、质量、单位 | $\dim_{\mathbb R}V=9$，全部 $X\succeq0$ 连同零与任意非负质量由 $\Phi$ 运输；$u(\Phi X)=\operatorname{Tr}X$。原泛函 $u$ 与派生 Jordan 单位 $U=\Phi(I_3)\in V$ 不混型。 |
+| 全态、凸混合、纯射线 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，保持全部凸混合；$P=\{p_v\}\cong\mathbb{CP}^2$。任意 $z\ne0$ 对应 $\Phi(zz^\ast/(z^\ast z))$，非零复倍数给同一纯标签。 |
+| 全效应与全部混态 Born 评价 | $f_M(\Phi X)=\operatorname{Tr}(MX)$，恰遍历 $0\preceq M\preceq I_3$；零、单位、补、序均保持。全部实线性读数由任意 Hermitian $M$ 表示。 |
+| 完整确认、least、minimum | $\mathcal F_{p_v}$ 恰为 $f_{P_v+B}$，$B=Q_vBQ_v$、$0\preceq B\preceq Q_v$；least 是 $f_{P_v}$。每个原混态满足 $T_{p_v}(\Phi\rho)=\operatorname{Tr}(P_v\rho)=v^\ast\rho v$，并非确认菜单单点。 |
+| 纯比较与完整排除三球 | $T_{p_v}(p_w)=|v^\ast w|^2$；未归一向量须除以两范数平方之积。$D_{p_v}=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1,\rho v=0\}$，含全部混态；其纯球缘为 $\mathbb{CP}^1\cong S^2$，球心为 $\Phi(Q_v/2)$。 |
+| 维数、中心、完整正交框架 | $\dim_{\rm aff}K=8$，纯域实维四，完整排除球实维三；中心为 $U/3$。原零三角对应三个和为 $I_3$ 的正交秩一投影，least 效应和为 $u$；每条原零边有唯一第三纯点，数学完美区别容量为三。 |
+| 全部有限数学测量 | 任意有限结果族 $f_j\in C^\ast,\sum_j f_j=u$ 恰对应全部 $M_j\succeq0,\sum_jM_j=I_3$ 的 POVM；对全部原输入概率为 $\operatorname{Tr}(M_j\rho)$，允许零效应。 |
+| 谱、Jordan、自对偶 | 每态有三项正交谱分解，允许零权及重谱；全部 Hermitian 可观测量有实谱及谱效应。$\langle\Phi X,\Phi Y\rangle_\Phi=\operatorname{Tr}(XY)$ 下 $C$ 自对偶，$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$，单位为 $U$。 |

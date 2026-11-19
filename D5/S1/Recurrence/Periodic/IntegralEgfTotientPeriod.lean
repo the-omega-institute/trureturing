@@ -16,7 +16,7 @@ import Mathlib.Topology.Instances.Rat
 
 For every integral power series G, the factorial-scaled coefficients of
 G(exp(X) - 1) are the factorial-weighted Stirling transform of its coefficients.
-This proves the broader conjecture in `Library/ArithSums/bala2022egfgeneral.md`.
+This proves the broader conjecture in `Library/ArithSums/bala2022a305550.md`.
 The same broader sentence on A305550 and A004123 is one conjecture, settled once.
 
 For A305550, Q counts Mathlib's distinct-part partitions. Its ordinary generating

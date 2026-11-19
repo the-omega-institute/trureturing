@@ -623,7 +623,7 @@ private theorem wordField_swap (D : LatticeData) (hu : IsUnit D.G.det)
     exact congrArg (fun A : Module.End ℂ (ActualTensor D hu) => A v)
       (flatCoefficient_swap D hu F i j w l r t e)
 
-private theorem wordField_perm (D : LatticeData) (hu : IsUnit D.G.det)
+theorem wordField_perm (D : LatticeData) (hu : IsUnit D.G.det)
     (F : NativeField D hu) (w u : List (Index D)) (h : w.Perm u) :
     wordField D hu F w = wordField D hu F u := by
   induction h with
