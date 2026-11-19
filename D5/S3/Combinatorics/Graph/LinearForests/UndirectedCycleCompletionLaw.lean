@@ -295,12 +295,14 @@ private theorem forget_fiber (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
     · rfl
     · exact forget_reverse hn a
 
-/-- A completed undirected cycle has exactly two oriented lifts. -/
-theorem forget_fiber_card (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
+/-- A completed undirected cycle has one oriented lift for each direction. -/
+noncomputable def forgetFiberEquiv (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
     (C : CompletedGraph F) :
-    Nat.card {l : Lift F // forget hn l = C} = 2 := by
+    {l : Lift F // forget hn l = C} ≃ Bool := by
   classical
-  obtain ⟨l, hl⟩ := forget_surjective hn F C
+  have preimage := forget_surjective hn F C
+  let l := preimage.choose
+  have hl : forget hn l = C := preimage.choose_spec
   let pick (b : Bool) : {a : Lift F // forget hn a = C} :=
     if b then ⟨reverseLift l, (forget_reverse hn l).trans hl⟩ else ⟨l, hl⟩
   have hpick : Function.Bijective pick := by
@@ -315,7 +317,7 @@ theorem forget_fiber_card (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
       rcases (forget_fiber hn l a).mp (a.property.trans hl.symm) with ha | ha
       · exact ⟨false, Subtype.ext ha.symm⟩
       · exact ⟨true, Subtype.ext ha.symm⟩
-  exact (Nat.card_congr (Equiv.ofBijective pick hpick).symm).trans (by simp)
+  exact (Equiv.ofBijective pick hpick).symm
 
 open scoped ENNReal
 open D5.S0.Diagonal.Probability.EquivariantEscape (uniformPmf)
@@ -363,6 +365,7 @@ theorem uniform_undirected_completion (hn : 3 ≤ Fintype.card V) (F : SimpleGra
   refine ⟨uniformPmf _, uniformPmf _, ?_, ?_, ?_⟩
   · simp [uniformPmf, Nat.card_eq_fintype_card]
   · simp [uniformPmf, Nat.card_eq_fintype_card]
-  · exact uniform_map_of_two_preimages (forget hn) (forget_fiber_card hn)
+  · exact uniform_map_of_two_preimages (forget hn) fun C => by
+      simpa using Nat.card_congr (forgetFiberEquiv hn C)
 
 end D5.S3.Combinatorics.Graph.LinearForests.UndirectedCycleCompletionLaw

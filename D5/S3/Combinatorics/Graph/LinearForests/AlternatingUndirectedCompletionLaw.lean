@@ -128,8 +128,8 @@ private theorem colored_card (hn : 3 ≤ Fintype.card V) (k : V → Bool) (F : S
   let f : ColoredLift hn k F → AlternatingCompletedGraph k F := coloredForget hn k
   let (C : AlternatingCompletedGraph k F) : Fintype {l : ColoredLift hn k F // f l = C} := Fintype.ofFinite _
   have hc (C : AlternatingCompletedGraph k F) : Fintype.card {l : ColoredLift hn k F // f l = C} = 2 :=
-    Nat.card_eq_fintype_card.symm.trans <|
-      (Nat.card_congr (coloredFiberEquiv hn k C)).trans (forget_fiber_card hn C.1)
+    Nat.card_eq_fintype_card.symm.trans <| by
+      simpa using Nat.card_congr ((coloredFiberEquiv hn k C).trans (forgetFiberEquiv hn C.1))
   rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card,
     ← Fintype.card_congr (Equiv.sigmaFiberEquiv f), Fintype.card_sigma]
   simp [hc, Nat.mul_comm]
