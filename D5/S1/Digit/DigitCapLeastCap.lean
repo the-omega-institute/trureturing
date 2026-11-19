@@ -52,7 +52,8 @@ private lemma lower_poly (ell s n : ℕ) (hell : 2 ≤ ell) :
     ((n : ℝ) / (ell : ℝ) ^ s) ^ s / (s.factorial : ℝ) ≤ count (ell ^ (s + 1) - 1) ell n := by
   have hc := (DigitCapPowerGF.count_bounds ell s n hell).1
   have hch := Nat.pow_le_choose (α := ℝ) s (n / ell ^ s + s)
-  rw [show n / ell ^ s + s + 1 - s = n / ell ^ s + 1 by rw [Nat.add_right_comm, Nat.add_sub_cancel]] at hch
+  rw [show n / ell ^ s + s + 1 - s = n / ell ^ s + 1 by
+    rw [Nat.add_right_comm, Nat.add_sub_cancel]] at hch
   have hpos : (0 : ℝ) < (ell : ℝ) ^ s := by positivity
   have hfl : (n : ℝ) / (ell : ℝ) ^ s ≤ ((n / ell ^ s + 1 : ℕ) : ℝ) := by
     rw [div_le_iff₀ hpos]
