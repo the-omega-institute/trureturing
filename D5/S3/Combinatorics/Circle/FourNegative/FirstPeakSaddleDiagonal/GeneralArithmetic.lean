@@ -8,6 +8,12 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.CyclicArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictCertificates
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictNegativeGrain
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUnitCorner
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUpperColumnCorner
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUpperRowCorner
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUpperCorner
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictBoundary
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.LargeKCertificates
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.LargeJCertificates
 
@@ -25,11 +31,13 @@ open private
   H0 pivot scaledMargin rectangleMargin boundaryMargin gateMargin
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.Certificates
 
-open private
-  chart_strict_neg1 chart_strict_negg chart_strict_pos11
-  chart_strict_pos1max chart_strict_posmax1 chart_strict_posmaxmax
-  chart_strict_boundary
-  from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictCertificates
+open private chart_strict_neg1 from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictCertificates
+open private chart_strict_negg from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictNegativeGrain
+open private chart_strict_pos11 from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUnitCorner
+open private chart_strict_pos1max from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUpperColumnCorner
+open private chart_strict_posmax1 from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUpperRowCorner
+open private chart_strict_posmaxmax from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictUpperCorner
+open private chart_strict_boundary from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleDiagonal.StrictBoundary
 
 open private
   chart_equality_Klarge_neg1 chart_equality_Klarge_pos11 chart_equality_Klarge_pos1max
