@@ -7,6 +7,9 @@ inputs:
   cache-keys:
     description: JSON outputs from the Actions cache key selector
     required: true
+  verification-history-anchor:
+    description: Pinned dev history anchor for resumable cold verification on a protected integration push
+    default: ''
 runs:
   using: composite
   steps:
@@ -18,8 +21,18 @@ runs:
         path: ${{ fromJSON(inputs.cache-keys).dependency_archive_path }}
         key: ${{ fromJSON(inputs.cache-keys).dependency_key }}
         restore-keys: ${{ fromJSON(inputs.cache-keys).dependency_restore_prefix }}
+    - id: resumed
+      name: Restore this verification run's build progress
+      if: inputs.verification-history-anchor != ''
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        STRATALINT_CACHE_WRITES: 'true'
+        STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
+      with:
+        operation: restore
+        state: resume
     - id: sharded
-      if: contains(fromJSON('["auto","complete","partial"]'), inputs.mode)
+      if: contains(fromJSON('["auto","complete","partial"]'), inputs.mode) && (steps.resumed.outputs.available == '' || steps.resumed.outputs.available == '0')
       continue-on-error: true
       uses: ./.github/actions/lean-cache-shards
       with:
@@ -40,24 +53,29 @@ runs:
         HANDOFF: ${{ inputs.mode }}
         AVAILABLE: ${{ steps.sharded.outputs.available || '0' }}
         COMPLETE: ${{ steps.sharded.outputs.complete || 'false' }}
+        RESUMED: ${{ steps.resumed.outputs.available || '0' }}
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
         PROJECT_OUTCOME: ${{ steps.project.outcome }}
       run: |
-        case "$HANDOFF" in
-          auto|legacy) ;;
-          complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
-          partial)
-            [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
-            test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
-            ;;
-          none) [[ ! -e .lake/build ]] ;;
-          *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
-        esac
-        echo "LEAN_RELEASE_HANDOFF seed=$HANDOFF available=$AVAILABLE complete=$COMPLETE"
+        if [[ "$RESUMED" == 0 ]]; then
+          case "$HANDOFF" in
+            auto|legacy) ;;
+            complete) [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == true ]] ;;
+            partial)
+              [[ "$AVAILABLE" =~ ^[1-9][0-9]*$ && "$COMPLETE" == false ]]
+              test -s .lake/build/lib/lean/D5/S0/Tower/GoldenGapWord.olean
+              ;;
+            none) [[ ! -e .lake/build ]] ;;
+            *) echo "LEAN_RELEASE_HANDOFF_ERROR invalid seed mode" >&2; exit 2 ;;
+          esac
+        else
+          [[ "$RESUMED" =~ ^[1-9][0-9]*$ && ( "$HANDOFF" == none || "$HANDOFF" == partial ) ]]
+        fi
+        echo "LEAN_RELEASE_HANDOFF seed=$HANDOFF available=$AVAILABLE complete=$COMPLETE resumed=$RESUMED"
         args=(--dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME")
-        if [[ "$AVAILABLE" == 0 ]]; then
+        if [[ "$AVAILABLE" == 0 && "$RESUMED" == 0 ]]; then
           args+=(--project-key "$PROJECT_KEY" --project-outcome "$PROJECT_OUTCOME")
         else
           args+=(--layers dependency)
@@ -67,8 +85,46 @@ runs:
           echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
         fi
     - name: Complete missing project artifacts with Lake
-      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1'
+      if: env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && inputs.verification-history-anchor == ''
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
       shell: bash
       run: make lean FULL_BUILD=1
+    - id: cold_build
+      name: Build and validate a slice of the cold Release
+      if: inputs.verification-history-anchor != ''
+      env:
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: '2700'
+      shell: bash
+      run: |
+        result=0
+        bash tools/scripts/report/report-supervisor.sh --role lean-release-build -- bash -e -c '
+          make lean FULL_BUILD=1
+          make lean-report FULL_BUILD=1 LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+        ' || result=$?
+        if [[ "$result" == 124 ]]; then
+          echo 'checkpoint=true' >> "$GITHUB_OUTPUT"
+        else
+          exit "$result"
+        fi
+    - id: checkpoint
+      name: Save this verification run's build progress
+      if: steps.cold_build.outputs.checkpoint == 'true'
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        STRATALINT_CACHE_WRITES: 'true'
+        STRATALINT_SHARD_VERIFICATION: release-${{ inputs.mode }}
+      with:
+        operation: save
+        state: resume
+        anchor: ${{ inputs.verification-history-anchor }}
+    - name: Require the cold verification build to be ready for publication
+      if: steps.cold_build.outputs.checkpoint == 'true'
+      env:
+        SAVED: ${{ steps.checkpoint.outputs.available }}
+      shell: bash
+      run: |
+        [[ "$SAVED" =~ ^[1-9][0-9]*$ ]] || { echo 'LEAN_RELEASE_HANDOFF_ERROR cold checkpoint is empty' >&2; exit 2; }
+        echo "LEAN_RELEASE_HANDOFF checkpoint=$SAVED; rerun this verification run to continue" >&2
+        exit 1

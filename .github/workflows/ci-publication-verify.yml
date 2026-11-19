@@ -27,6 +27,14 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+      - name: Fetch the fixed dev history for cold build checkpoints
+        if: contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != ''
+        env:
+          ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+        run: |
+          [[ "$ANCHOR" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags --depth=2002 origin "$ANCHOR"
+          [[ "$(git rev-parse FETCH_HEAD)" == "$ANCHOR" ]]
       - id: entry
         name: Validate candidate, check the input patterns and strip checkout remote
         env:
@@ -121,6 +129,7 @@ jobs:
         with:
           mode: ${{ env.SHARD_HANDOFF }}
           cache-keys: ${{ toJSON(steps.keys.outputs) }}
+          verification-history-anchor: ${{ contains(fromJSON('["none","partial"]'), env.SHARD_HANDOFF) && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR || '' }}
       - id: publish
         if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
@@ -183,6 +192,7 @@ jobs:
     env:
       STRATALINT_CACHE_WRITES: 'true'
       CACHE_SCOPE: D5.S0.Tower.GoldenGapWord
+      STRATALINT_SHARD_VERIFICATION: scoped-eviction
     steps:
       - uses: actions/checkout@v5
         with:
