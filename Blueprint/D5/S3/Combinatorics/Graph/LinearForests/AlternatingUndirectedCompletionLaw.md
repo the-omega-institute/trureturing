@@ -20,7 +20,7 @@ A finite labelled vertex set has n vertices of each of two colors, with at least
 
 Let F be any prescribed simple graph on the same vertices. The event that every edge of F is present consists of the alternating completed graphs extending F. Its uniform ambient probability is the number of those completions divided by the ambient count. The event has positive probability exactly when a completion exists. At positive probability, the uniform mass on those completions gives the conditioned law by inclusion into the ambient carrier.
 
-A full-cycle successor permutation alternates precisely when its undirected shadow has cross-color edges. Restricting the shadow to alternating lifts therefore preserves its two-element fibers. The directed alternating count divided by two gives the ambient count. The inclusion of completed graphs identifies the fixed-edge law with uniform mass on the corresponding subset.
+A full-cycle successor permutation alternates precisely when its undirected shadow has cross-color endpoints on every edge. Restricting to alternating lifts therefore preserves its two-element fibers. The directed alternating count divided by two gives the ambient count. The inclusion of completed graphs identifies the fixed-edge law with uniform mass on the corresponding subset.
 
 ## References
 

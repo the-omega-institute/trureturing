@@ -127,9 +127,21 @@ private theorem colored_card (hn : 3 ≤ Fintype.card V) (k : V → Bool) (F : S
   let : Fintype (AlternatingCompletedGraph k F) := Fintype.ofFinite _
   let f : ColoredLift hn k F → AlternatingCompletedGraph k F := coloredForget hn k
   let (C : AlternatingCompletedGraph k F) : Fintype {l : ColoredLift hn k F // f l = C} := Fintype.ofFinite _
-  have hc (C : AlternatingCompletedGraph k F) : Fintype.card {l : ColoredLift hn k F // f l = C} = 2 :=
-    Nat.card_eq_fintype_card.symm.trans <| by
-      simpa using Nat.card_congr ((coloredFiberEquiv hn k C).trans (forgetFiberEquiv hn C.1))
+  have hc (C : AlternatingCompletedGraph k F) :
+      Fintype.card {l : ColoredLift hn k F // f l = C} = 2 := by
+    obtain ⟨l, hl⟩ := forget_surjective hn F C.1
+    let fiber : Set (Lift F) := {a | forget hn a = C.1}
+    have hfiber : fiber = {l, reverseLift l} := by
+      ext a
+      simpa only [fiber, Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff, hl]
+        using (forget_fiber hn l a)
+    calc
+      Fintype.card {a : ColoredLift hn k F // f a = C} =
+          Nat.card fiber :=
+        Nat.card_eq_fintype_card.symm.trans (Nat.card_congr (coloredFiberEquiv hn k C))
+      _ = 2 := by
+        rw [Nat.card_coe_set_eq, hfiber]
+        exact Set.ncard_pair (reverse_distinct hn l)
   rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card,
     ← Fintype.card_congr (Equiv.sigmaFiberEquiv f), Fintype.card_sigma]
   simp [hc, Nat.mul_comm]

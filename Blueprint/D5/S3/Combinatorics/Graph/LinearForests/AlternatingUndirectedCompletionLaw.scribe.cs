@@ -35,8 +35,8 @@ internal sealed class AlternatingUndirectedCompletionLawDocument : IScribeDocume
                     + "conditioned law by inclusion into the ambient carrier.")),
                 Paragraph(Text(
                     "A full-cycle successor permutation alternates precisely when its "
-                    + "undirected shadow has cross-color edges. Restricting the shadow to "
-                    + "alternating lifts therefore preserves its two-element fibers. The "
+                    + "undirected shadow has cross-color endpoints on every edge. Restricting "
+                    + "to alternating lifts therefore preserves its two-element fibers. The "
                     + "directed alternating count divided by two gives the ambient count. "
                     + "The inclusion of completed graphs identifies the fixed-edge law "
                     + "with uniform mass on the corresponding subset."))),

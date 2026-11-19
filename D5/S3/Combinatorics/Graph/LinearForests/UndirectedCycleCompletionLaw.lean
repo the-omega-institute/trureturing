@@ -170,7 +170,7 @@ structure Lift (F : SimpleGraph V) where
   full : σ.IsCycleOn Set.univ
   extension : ∀ x y, E x y → σ x = y
 
-private def reverseLift {F : SimpleGraph V} (l : Lift F) : Lift F where
+def reverseLift {F : SimpleGraph V} (l : Lift F) : Lift F where
   E x y := l.E y x
   σ := l.σ⁻¹
   edge x y h := (l.edge y x h).symm
@@ -221,7 +221,7 @@ private def canonicalLift (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
   full := hf
   extension _ _ h := h.2
 
-private theorem reverse_distinct {F : SimpleGraph V} (hn : 3 ≤ Fintype.card V)
+theorem reverse_distinct {F : SimpleGraph V} (hn : 3 ≤ Fintype.card V)
     (l : Lift F) : l ≠ reverseLift l := by
   intro h
   have he := congrArg Lift.σ h
@@ -265,7 +265,7 @@ theorem forget_surjective (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) :
   ext x y
   exact (shadow_adj hn σ hσ x y).trans (hgraph x y).symm
 
-private theorem forget_fiber (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
+theorem forget_fiber (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
     (a b : Lift F) : forget hn b = forget hn a ↔ b = a ∨ b = reverseLift a := by
   constructor
   · intro h
@@ -294,30 +294,6 @@ private theorem forget_fiber (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
   · rintro (rfl | rfl)
     · rfl
     · exact forget_reverse hn a
-
-/-- A completed undirected cycle has one oriented lift for each direction. -/
-noncomputable def forgetFiberEquiv (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
-    (C : CompletedGraph F) :
-    {l : Lift F // forget hn l = C} ≃ Bool := by
-  classical
-  have preimage := forget_surjective hn F C
-  let l := preimage.choose
-  have hl : forget hn l = C := preimage.choose_spec
-  let pick (b : Bool) : {a : Lift F // forget hn a = C} :=
-    if b then ⟨reverseLift l, (forget_reverse hn l).trans hl⟩ else ⟨l, hl⟩
-  have hpick : Function.Bijective pick := by
-    constructor
-    · intro a b h
-      cases a <;> cases b
-      · rfl
-      · exact (reverse_distinct hn l (congrArg Subtype.val h)).elim
-      · exact (reverse_distinct hn l (congrArg Subtype.val h).symm).elim
-      · rfl
-    · intro a
-      rcases (forget_fiber hn l a).mp (a.property.trans hl.symm) with ha | ha
-      · exact ⟨false, Subtype.ext ha.symm⟩
-      · exact ⟨true, Subtype.ext ha.symm⟩
-  exact (Equiv.ofBijective pick hpick).symm
 
 open scoped ENNReal
 open D5.S0.Diagonal.Probability.EquivariantEscape (uniformPmf)
@@ -365,7 +341,23 @@ theorem uniform_undirected_completion (hn : 3 ≤ Fintype.card V) (F : SimpleGra
   refine ⟨uniformPmf _, uniformPmf _, ?_, ?_, ?_⟩
   · simp [uniformPmf, Nat.card_eq_fintype_card]
   · simp [uniformPmf, Nat.card_eq_fintype_card]
-  · exact uniform_map_of_two_preimages (forget hn) fun C => by
-      simpa using Nat.card_congr (forgetFiberEquiv hn C)
+  · apply uniform_map_of_two_preimages
+    intro C
+    obtain ⟨l, hl⟩ := forget_surjective hn F C
+    let pick (b : Bool) : {a : Lift F // forget hn a = C} :=
+      if b then ⟨reverseLift l, (forget_reverse hn l).trans hl⟩ else ⟨l, hl⟩
+    have hpick : Function.Bijective pick := by
+      constructor
+      · intro a b h
+        cases a <;> cases b
+        · rfl
+        · exact (reverse_distinct hn l (congrArg Subtype.val h)).elim
+        · exact (reverse_distinct hn l (congrArg Subtype.val h).symm).elim
+        · rfl
+      · intro a
+        rcases (forget_fiber hn l a).mp (a.property.trans hl.symm) with ha | ha
+        · exact ⟨false, Subtype.ext ha.symm⟩
+        · exact ⟨true, Subtype.ext ha.symm⟩
+    exact (Nat.card_congr (Equiv.ofBijective pick hpick).symm).trans (by simp)
 
 end D5.S3.Combinatorics.Graph.LinearForests.UndirectedCycleCompletionLaw
