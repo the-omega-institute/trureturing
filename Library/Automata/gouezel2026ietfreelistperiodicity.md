@@ -12,7 +12,9 @@ license: Apache-2.0
 triage: anchor
 ---
 
-## Primary software source
+## Verified locator
+
+Source: https://github.com/sgouezel/IETFree/blob/48a23a630f39ae7c439b9efcbd03e729c18406fd/IETFree/ListPeriodicity.lean
 
 Sébastien Gouëzel, IETFree/ListPeriodicity.lean, immutable revision
 `48a23a630f39ae7c439b9efcbd03e729c18406fd`. This reference identifies a
