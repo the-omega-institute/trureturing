@@ -77,7 +77,7 @@ theorem replay_iff {S : Type*} (read : N → S → Option (Set N))
       exact congrArg (List.cons ⟨q, read q t⟩) ((ih _).mpr
         fun entry he => hreplay entry (List.mem_cons_of_mem _ he))
 
-private theorem same_history_iff_avoids_absent (G : SimpleGraph V)
+theorem same_history_iff_avoids_absent (G : SimpleGraph V)
     (p : PassiveProtocol N (fun _ => Option (Set N))) (f ref : V ↪ N)
     (initial : Set N)
     (agree : ∀ v, ref v ∈ initial ∪ revealedNames (runPassiveProtocol (nameReply G) p ref) → f v = ref v) :
