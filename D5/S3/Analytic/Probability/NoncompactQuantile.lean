@@ -26,7 +26,7 @@ noncomputable section
 
 namespace Econlib.Probability.NoncompactQuantile
 
-open DiscreteLaw (bin_endpoints volume_real_bin bins_pairwise_disjoint_Ioc)
+open Econlib.Probability.DiscreteLaw (bin_endpoints volume_real_bin bins_pairwise_disjoint_Ioc)
 open MeasureTheory.Measure (integrable_quantile_Ioc integral_quantile_Ioo_split
   upperIntegratedQuantile_le_stopLoss_add upperIntegratedQuantile_eq_stopLoss_add)
 
