@@ -87,8 +87,6 @@ internal sealed class Figure26PrismaticityDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, Bound(name, type), Comma, Sp, body);
     private static Formula Lambda(string name, Formula type, Formula body) =>
         Seq(Bound(name, type), Sp, Mapsto, Sp, body);
-    private static Formula SetOf(string name, Formula type, Formula body) =>
-        Seq(OpenBrace, F.Id(name), Sp, Colon, Sp, type, Sp, Mid, Sp, body, CloseBrace);
     private static Formula Rel(Formula a, FormulaRelationOperator op, Formula b) => new Formula.Relation(a, op, b);
     private static Formula EqTo(Formula a, Formula b) => Rel(a, FormulaRelationOperator.Equal, b);
     private static Formula Mem(Formula a, Formula b) => Rel(a, FormulaRelationOperator.MemberOf, b);
