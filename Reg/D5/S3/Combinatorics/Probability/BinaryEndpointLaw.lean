@@ -14,17 +14,23 @@ namespace Reg.D5.S3.Combinatorics.Probability.BinaryEndpointLaw
 noncomputable section
 universe u v
 
-private structure Parameters where
-  Index : Type u
-  Space : Type v
-  [finiteIndex : Fintype Index]
-  [finiteSpace : Fintype Space]
-  [additiveSpace : AddCommGroup Space]
-  [binarySpace : Module (ZMod 2) Space]
-  generator : Index → Space
+private abbrev Parameters :=
+  Σ ι : Type u, Σ V : Type v, Σ _ : Fintype ι, Σ _ : AddCommGroup V, (ι → V)
 
-attribute [instance] Parameters.finiteIndex Parameters.finiteSpace
-  Parameters.additiveSpace Parameters.binarySpace
+private abbrev Parameters.Index (c : Parameters.{u, v}) : Type u := c.1
+
+private abbrev Parameters.Space (c : Parameters.{u, v}) : Type v := c.2.1
+
+private instance (c : Parameters.{u, v}) : Fintype c.Index := c.2.2.1
+
+private instance (c : Parameters.{u, v}) : AddCommGroup c.Space := c.2.2.2.1
+
+private abbrev Parameters.generator (c : Parameters.{u, v}) : c.Index → c.Space :=
+  c.2.2.2.2
+
+private abbrev parameters {ι : Type u} {V : Type v} [Fintype ι]
+    [AddCommGroup V] (a : ι → V) : Parameters.{u, v} :=
+  ⟨ι, V, inferInstance, inferInstance, a⟩
 
 private abbrev signature : Signature where
   Params := Parameters.{u, v}
@@ -36,33 +42,35 @@ private abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-private def uniform (c : Parameters.{u, v}) : c.Space → ℂ :=
-  fun _ => (Fintype.card c.Space : ℂ)⁻¹
-
 private def actual : Realization signature.{u, v} :=
   realize signature (fun _ c p => mass c.generator p) (fun e => nomatch e)
 
 private def rejected : Realization signature.{u, v} :=
-  realize signature (fun _ c _ => uniform c) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
 
 private abbrev arena : Arena where
   signature := signature.{u, v}
   Law R := ∀ {ι : Type u} {V : Type v} [Fintype ι] [Fintype V]
     [AddCommGroup V] [Module (ZMod 2) V] (a : ι → V) (p : ι → ℂ),
-    let c : Parameters := ⟨ι, V, a⟩
-    (R.readout () c p = uniform c) ↔
+    (R.readout () (parameters a) p = fun _ => (Fintype.card V : ℂ)⁻¹) ↔
       Submodule.span (ZMod 2) {v | ∃ i, p i = 1 / 2 ∧ a i = v} = ⊤
 
 private def exampleParameters : Parameters.{u, v} :=
-  ⟨ULift.{u} Unit, ULift.{v} (ZMod 2), fun _ => ⟨1⟩⟩
+  parameters (fun _ : ULift.{u} Unit => (⟨1⟩ : ULift.{v} (ZMod 2)))
+
+private instance : Module (ZMod 2) exampleParameters.{u, v}.Space :=
+  inferInstanceAs (Module (ZMod 2) (ULift.{v} (ZMod 2)))
+
+private instance : Fintype exampleParameters.{u, v}.Space :=
+  inferInstanceAs (Fintype (ULift.{v} (ZMod 2)))
 
 private theorem zero_not_fair :
     Submodule.span (ZMod 2) {x : exampleParameters.{u, v}.Space |
       ∃ i : exampleParameters.{u, v}.Index,
         (0 : ℂ) = 1 / 2 ∧ exampleParameters.{u, v}.generator i = x} ≠ ⊤ := by
   have h : (0 : ℂ) ≠ 1 / 2 := by norm_num
-  simpa [h] using
-    (bot_ne_top : (⊥ : Submodule (ZMod 2) (ULift.{v} (ZMod 2))) ≠ ⊤)
+  simp only [h, false_and, exists_false, Set.setOf_false, Submodule.span_empty]
+  exact (bot_ne_top : (⊥ : Submodule (ZMod 2) (ULift.{v} (ZMod 2))) ≠ ⊤)
 
 private theorem fair_spans :
     Submodule.span (ZMod 2) {x : exampleParameters.{u, v}.Space |
@@ -75,12 +83,17 @@ private theorem fair_spans :
         ∃ i : exampleParameters.{u, v}.Index,
           (1 / 2 : ℂ) = 1 / 2 ∧ exampleParameters.{u, v}.generator i = x} :=
     Submodule.subset_span ⟨⟨()⟩, rfl, rfl⟩
-  convert (Submodule.span (ZMod 2) _).smul_mem x.down hgen using 1
-  exact ULift.ext _ _ (by simp)
+  have hx : x.down • (⟨1⟩ : exampleParameters.{u, v}.Space) = x :=
+    ULift.ext (mul_one x.down)
+  rw [← hx]
+  exact (Submodule.span (ZMod 2) _).smul_mem x.down hgen
 
 private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
-  exact zero_not_fair ((h exampleParameters.generator (fun _ => 0)).mp rfl)
+  have he := (h exampleParameters.generator (fun _ => 1 / 2)).mpr fair_spans
+  have hz : (0 : ℂ) = (Fintype.card exampleParameters.{u, v}.Space : ℂ)⁻¹ :=
+    congrFun he ⟨0⟩
+  exact (inv_ne_zero (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)) hz.symm
 
 private theorem actual_varies :
     actual.{u, v}.readout () exampleParameters (fun _ => 0) ≠
@@ -120,7 +133,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Probability.BinaryEndpointLaw
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "fn", "arg"]

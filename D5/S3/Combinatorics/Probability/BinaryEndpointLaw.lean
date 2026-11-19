@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Probability/BinaryEndpointLaw
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Uniform binary images of independent endpoint choices and spanning by fair generators. -/
 
 import Mathlib.Algebra.BigOperators.Ring.Finset
