@@ -44,7 +44,23 @@ internal sealed class HardinLargeTransferCertificatesDocument : IScribeDocumentD
                 + "where c_j is the jth height-five coefficient displayed above. The sum of the c_j is one, "
                 + "so L(n) + 6 satisfies the same identity. Each lagged width n − j is at least 2. "
                 + "Substituting the connected-strip formula and using 32^n = 32^j 32^(n − j) gives "
-                + "T(5,n) = sum over j from 1 through 10 of 32^j c_j T(5,n − j)."))
+                + "T(5,n) = sum over j from 1 through 10 of 32^j c_j T(5,n − j).")),
+            Paragraph(Text(
+                "For the height-seven row of A233174 and the order-47 formula linked from A233180, let T(7,n) "
+                + "count literal row-major normalized arrays with horizontal bonds and both diagonal bonds. "
+                + "HardinThinGraphTransport.literalEquiv identifies these arrays with the normalized graph colourings. "
+                + "For n at least 2 the graph is connected and bipartite by column parity, so "
+                + "HardinGraphNormalization.connected_count gives 48 T(7,n) = 128^n (L(n) + 6), where L(n) "
+                + "counts the proper three-colourings. HardinColumnContinuations.coloringEquiv reads each colouring "
+                + "as a sequence of columns. HardinActualTransfers.column_count sums the C7 power on ones at "
+                + "exponent n − 1 over all 2187 unrestricted first columns.")),
+            Paragraph(Text(
+                "For every natural n at least 49, apply C7^(n − 49) to the height-seven vector relation "
+                + "and sum the entries. The left exponent becomes n − 1 and the right exponent at lag j "
+                + "becomes n − j − 1. The coefficient sum is one, so L(n) + 6 satisfies the same relation. "
+                + "Since n − j is at least 2 for each j from 1 through 47, the connected-strip formula applies "
+                + "to every term. Substituting it and using 128^n = 128^j 128^(n − j) gives "
+                + "T(7,n) = sum over j from 1 through 47 of 128^j c_j T(7,n − j), using the signed coefficients above."))
         )));
 
     private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string statement) =>
