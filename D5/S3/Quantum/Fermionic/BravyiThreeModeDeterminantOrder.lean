@@ -10,7 +10,12 @@ import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 /-!
 # Shifted determinants of the three-mode Bravyi blocks
@@ -47,23 +52,23 @@ private def sparse4 (a b d e u v w f g : ℝ) : Matrix (Fin 4) (Fin 4) ℝ :=
   !![a, u, v, w; u, b, f, 0; v, f, d, g; w, 0, g, e]
 
 /-- The real chiral block, in the basis of equation (12). -/
-def chiral (λ c p q : ℝ) : Matrix (Fin 4) (Fin 4) ℝ :=
-  let t := λ ^ 2
+def chiral (lam c p q : ℝ) : Matrix (Fin 4) (Fin 4) ℝ :=
+  let t := lam ^ 2
   sparse4
     (kPlus t (c ^ 2) + aCoeff t * c ^ 2 - bCoeff t * p ^ 2)
     (kPlus t (c ^ 2) - bCoeff t * q ^ 2)
     (kMinus t (c ^ 2) + aCoeff t * p ^ 2 - bCoeff t * c ^ 2)
     (kMinus t (c ^ 2) + aCoeff t * q ^ 2)
     (-bCoeff t * p * q)
-    (λ ^ 3 * c * p)
-    (λ * cCoeff t * c * q)
-    (-λ * dCoeff t * c * q)
+    (lam ^ 3 * c * p)
+    (lam * cCoeff t * c * q)
+    (-lam * dCoeff t * c * q)
     (aCoeff t * p * q)
 
 /-- The complementary block of equation (9), occurring twice in the reduction. -/
-def complement (λ c q : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  let t := λ ^ 2
-  let v := λ * (1 - t ^ 2) * c * q / 4
+def complement (lam c q : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  let t := lam ^ 2
+  let v := lam * (1 - t ^ 2) * c * q / 4
   !![kPlus t (c ^ 2), v; v, kMinus t (c ^ 2)]
 
 def comparatorAmplitude : ℝ := Real.sqrt (1 / 2)
@@ -71,11 +76,11 @@ def comparatorAmplitude : ℝ := Real.sqrt (1 / 2)
 private theorem sq_comparatorAmplitude : comparatorAmplitude ^ 2 = 1 / 2 :=
   Real.sq_sqrt (by norm_num)
 
-def chiralComparator (λ : ℝ) : Matrix (Fin 4) (Fin 4) ℝ :=
-  chiral λ comparatorAmplitude 0 comparatorAmplitude
+def chiralComparator (lam : ℝ) : Matrix (Fin 4) (Fin 4) ℝ :=
+  chiral lam comparatorAmplitude 0 comparatorAmplitude
 
-def complementComparator (λ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  complement λ comparatorAmplitude comparatorAmplitude
+def complementComparator (lam : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  complement lam comparatorAmplitude comparatorAmplitude
 
 def invariantX (c : ℝ) : ℝ := (2 * c ^ 2 - 1) ^ 2
 def invariantZ (c p : ℝ) : ℝ := 4 * c ^ 2 * p ^ 2
@@ -158,7 +163,8 @@ private theorem det_sparse4 (a b d e u v w f g : ℝ) :
         + 2 * u * v * f * e + 2 * v * w * g * b := by
   rw [Matrix.det_succ_row_zero, Fin.sum_univ_four]
   norm_num [Matrix.det_fin_three, Matrix.submatrix_apply, Fin.succAbove, sparse4,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.empty_val'] <;> ring
+    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.empty_val']
+  ring
 
 -- In every term of the Laplace expansion the amplitudes occur to even powers.
 private def chiralExpanded (s t x y z : ℝ) : ℝ :=
@@ -173,9 +179,9 @@ private def chiralExpanded (s t x y z : ℝ) : ℝ :=
     + 2 * bCoeff t * t ^ 2 * dCoeff t * x * y * z * e
     + 2 * t ^ 2 * cCoeff t * aCoeff t * x * y * z * b
 
-private theorem chiral_det_expand (s λ c p q : ℝ) :
-    (Matrix.scalar (Fin 4) s + chiral λ c p q).det =
-      chiralExpanded s (λ ^ 2) (c ^ 2) (p ^ 2) (q ^ 2) := by
+private theorem chiral_det_expand (s lam c p q : ℝ) :
+    (Matrix.scalar (Fin 4) s + chiral lam c p q).det =
+      chiralExpanded s (lam ^ 2) (c ^ 2) (p ^ 2) (q ^ 2) := by
   rw [chiral, scalar_add_sparse4, det_sparse4]
   dsimp only [chiralExpanded]
   ring
@@ -195,8 +201,8 @@ private theorem chiral_base_eval (s t : ℝ) :
         + (1 - t) ^ 6 * (1 + t) ^ 4 / 4096 := by
   simp [chiralBase]
 
-private theorem chiral_comparator_det_polynomial (λ : ℝ) :
-    shiftedDetPolynomial (chiralComparator λ) = chiralBase (λ ^ 2) := by
+private theorem chiral_comparator_det_polynomial (lam : ℝ) :
+    shiftedDetPolynomial (chiralComparator lam) = chiralBase (lam ^ 2) := by
   apply Polynomial.funext
   intro s
   rw [eval_shiftedDetPolynomial, chiralComparator, chiral_det_expand, sq_comparatorAmplitude,
@@ -204,6 +210,7 @@ private theorem chiral_comparator_det_polynomial (λ : ℝ) :
   norm_num [chiralExpanded, aCoeff, bCoeff, cCoeff, dCoeff, kPlus, kMinus] <;> ring
 
 set_option maxHeartbeats 2000000 in
+-- Normalize the expanded chiral determinant after eliminating the third square.
 private theorem chiral_expanded_normalized (s t x y : ℝ) :
     chiralExpanded s t x y (1 - x - y) =
       (chiralBase t).eval s
@@ -216,12 +223,12 @@ private theorem chiral_expanded_normalized (s t x y : ℝ) :
   ring
 
 /-- The literal determinant polynomial difference with the bracket of equation (23). -/
-private theorem chiral_det_polynomial_difference_raw {λ c p q : ℝ}
+private theorem chiral_det_polynomial_difference_raw {lam c p q : ℝ}
     (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1) :
-    shiftedDetPolynomial (chiral λ c p q) - shiftedDetPolynomial (chiralComparator λ) =
-      C (delta2 (λ ^ 2) (invariantX c) (invariantZ c p)) * X ^ 2
-        + C (delta3 (λ ^ 2) (invariantX c) (invariantZ c p)) * X
-        + C (delta4Factor (λ ^ 2) * rawBracket (λ ^ 2) (invariantX c) (invariantZ c p)) := by
+    shiftedDetPolynomial (chiral lam c p q) - shiftedDetPolynomial (chiralComparator lam) =
+      C (delta2 (lam ^ 2) (invariantX c) (invariantZ c p)) * X ^ 2
+        + C (delta3 (lam ^ 2) (invariantX c) (invariantZ c p)) * X
+        + C (delta4Factor (lam ^ 2) * rawBracket (lam ^ 2) (invariantX c) (invariantZ c p)) := by
   have hq : q ^ 2 = 1 - c ^ 2 - p ^ 2 := by linarith only [hn]
   rw [chiral_comparator_det_polynomial]
   apply Polynomial.funext
@@ -232,29 +239,29 @@ private theorem chiral_det_polynomial_difference_raw {λ c p q : ℝ}
     invariantX, invariantZ] <;> ring
 
 /-- Equations (19)–(22) as an identity of actual shifted determinant polynomials. -/
-theorem chiral_det_polynomial_difference {λ c p q : ℝ} (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1) :
-    shiftedDetPolynomial (chiral λ c p q) - shiftedDetPolynomial (chiralComparator λ) =
-      C (delta2 (λ ^ 2) (invariantX c) (invariantZ c p)) * X ^ 2
-        + C (delta3 (λ ^ 2) (invariantX c) (invariantZ c p)) * X
-        + C (delta4 (λ ^ 2) (invariantX c) (invariantZ c p) (invariantR c q)) := by
+theorem chiral_det_polynomial_difference {lam c p q : ℝ} (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1) :
+    shiftedDetPolynomial (chiral lam c p q) - shiftedDetPolynomial (chiralComparator lam) =
+      C (delta2 (lam ^ 2) (invariantX c) (invariantZ c p)) * X ^ 2
+        + C (delta3 (lam ^ 2) (invariantX c) (invariantZ c p)) * X
+        + C (delta4 (lam ^ 2) (invariantX c) (invariantZ c p) (invariantR c q)) := by
   rw [chiral_det_polynomial_difference_raw hn,
-    rawBracket_eq_homogeneous (λ ^ 2) _ _ _ (invariants_sum hn), delta4]
+    rawBracket_eq_homogeneous (lam ^ 2) _ _ _ (invariants_sum hn), delta4]
 
 private def complementBase (s t : ℝ) : ℝ :=
   s ^ 2 + (1 - t ^ 2) / 4 * s + (1 - t ^ 2) ^ 2 / 64 * (1 - t)
 
-private theorem complement_det_expand (s λ c q : ℝ) :
-    (Matrix.scalar (Fin 2) s + complement λ c q).det =
-      s ^ 2 + (1 - (λ ^ 2) ^ 2) / 4 * s
-        + (1 - (λ ^ 2) ^ 2) ^ 2 / 64 *
-          (1 - (λ ^ 2) ^ 2 * invariantX c - λ ^ 2 * invariantR c q) := by
+private theorem complement_det_expand (s lam c q : ℝ) :
+    (Matrix.scalar (Fin 2) s + complement lam c q).det =
+      s ^ 2 + (1 - (lam ^ 2) ^ 2) / 4 * s
+        + (1 - (lam ^ 2) ^ 2) ^ 2 / 64 *
+          (1 - (lam ^ 2) ^ 2 * invariantX c - lam ^ 2 * invariantR c q) := by
   norm_num [complement, Matrix.det_fin_two, Matrix.scalar_apply, Matrix.diagonal_apply,
     Matrix.add_apply, kPlus, kMinus, invariantX, invariantR] <;> ring
 
-private theorem complement_det_normalized (s : ℝ) {λ c p q : ℝ}
+private theorem complement_det_normalized (s : ℝ) {lam c p q : ℝ}
     (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1) :
-    (Matrix.scalar (Fin 2) s + complement λ c q).det =
-      complementBase s (λ ^ 2) + complementDelta (λ ^ 2) (invariantX c) (invariantZ c p) := by
+    (Matrix.scalar (Fin 2) s + complement lam c q).det =
+      complementBase s (lam ^ 2) + complementDelta (lam ^ 2) (invariantX c) (invariantZ c p) := by
   have hr : invariantR c q = 1 - invariantX c - invariantZ c p := by
     linarith only [invariants_sum hn]
   rw [complement_det_expand, hr]
@@ -265,16 +272,16 @@ private theorem comparator_norm : comparatorAmplitude ^ 2 + (0 : ℝ) ^ 2 +
     comparatorAmplitude ^ 2 = 1 := by
   norm_num [sq_comparatorAmplitude]
 
-private theorem complement_comparator_det (s λ : ℝ) :
-    (Matrix.scalar (Fin 2) s + complementComparator λ).det = complementBase s (λ ^ 2) := by
+private theorem complement_comparator_det (s lam : ℝ) :
+    (Matrix.scalar (Fin 2) s + complementComparator lam).det = complementBase s (lam ^ 2) := by
   rw [complementComparator, complement_det_normalized s comparator_norm]
   norm_num [complementDelta, invariantX, invariantZ, sq_comparatorAmplitude]
 
 /-- The complementary determinant polynomial difference is constant in the shift. -/
-theorem complement_det_polynomial_difference {λ c p q : ℝ}
+theorem complement_det_polynomial_difference {lam c p q : ℝ}
     (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1) :
-    shiftedDetPolynomial (complement λ c q) - shiftedDetPolynomial (complementComparator λ) =
-      C (complementDelta (λ ^ 2) (invariantX c) (invariantZ c p)) := by
+    shiftedDetPolynomial (complement lam c q) - shiftedDetPolynomial (complementComparator lam) =
+      C (complementDelta (lam ^ 2) (invariantX c) (invariantZ c p)) := by
   apply Polynomial.funext
   intro s
   simp only [Polynomial.eval_sub, eval_shiftedDetPolynomial, complement_det_normalized s hn,
@@ -299,33 +306,33 @@ private theorem chiral_deltas_nonneg {t x z r : ℝ} (ht : 0 ≤ t) (ht1 : t ≤
   unfold delta2 delta3 delta4 delta4Factor homogeneousBracket
   exact ⟨by positivity, by positivity, by positivity⟩
 
-private theorem chiral_input_deltas_nonneg {λ : ℝ} (hλ : 0 ≤ λ) (hλ1 : λ ≤ 1)
+private theorem chiral_input_deltas_nonneg {lam : ℝ} (hlam : 0 ≤ lam) (hlam1 : lam ≤ 1)
     (c p q : ℝ) :
-    0 ≤ delta2 (λ ^ 2) (invariantX c) (invariantZ c p) ∧
-      0 ≤ delta3 (λ ^ 2) (invariantX c) (invariantZ c p) ∧
-      0 ≤ delta4 (λ ^ 2) (invariantX c) (invariantZ c p) (invariantR c q) :=
-  chiral_deltas_nonneg (sq_nonneg λ) (pow_le_one₀ hλ hλ1)
+    0 ≤ delta2 (lam ^ 2) (invariantX c) (invariantZ c p) ∧
+      0 ≤ delta3 (lam ^ 2) (invariantX c) (invariantZ c p) ∧
+      0 ≤ delta4 (lam ^ 2) (invariantX c) (invariantZ c p) (invariantR c q) :=
+  chiral_deltas_nonneg (sq_nonneg lam) (pow_le_one₀ hlam hlam1)
     (by unfold invariantX; positivity) (by unfold invariantZ; positivity)
     (by unfold invariantR; positivity)
 
-private theorem complement_input_delta_nonneg {λ : ℝ} (hλ : 0 ≤ λ) (hλ1 : λ ≤ 1)
-    (c p : ℝ) : 0 ≤ complementDelta (λ ^ 2) (invariantX c) (invariantZ c p) := by
-  have ht : 0 ≤ 1 - λ ^ 2 := sub_nonneg.mpr (pow_le_one₀ hλ hλ1)
+private theorem complement_input_delta_nonneg {lam : ℝ} (hlam : 0 ≤ lam) (hlam1 : lam ≤ 1)
+    (c p : ℝ) : 0 ≤ complementDelta (lam ^ 2) (invariantX c) (invariantZ c p) := by
+  have ht : 0 ≤ 1 - lam ^ 2 := sub_nonneg.mpr (pow_le_one₀ hlam hlam1)
   unfold complementDelta invariantX invariantZ
   positivity
 
 /-- The shifted determinant of each block is at least its comparator's for every
 `s ≥ 0` and `λ ∈ [0,1]`. The amplitude conclusion holds on the whole real unit sphere. -/
-theorem det_shift_order {s λ c p q : ℝ} (hs : 0 ≤ s) (hλ : 0 ≤ λ) (hλ1 : λ ≤ 1)
+theorem det_shift_order {s lam c p q : ℝ} (hs : 0 ≤ s) (hlam : 0 ≤ lam) (hlam1 : lam ≤ 1)
     (hn : c ^ 2 + p ^ 2 + q ^ 2 = 1) :
-    (s • (1 : Matrix (Fin 4) (Fin 4) ℝ) + chiralComparator λ).det ≤
-        (s • (1 : Matrix (Fin 4) (Fin 4) ℝ) + chiral λ c p q).det ∧
-      (s • (1 : Matrix (Fin 2) (Fin 2) ℝ) + complementComparator λ).det ≤
-        (s • (1 : Matrix (Fin 2) (Fin 2) ℝ) + complement λ c q).det := by
-  obtain ⟨h2, h3, h4⟩ := chiral_input_deltas_nonneg hλ hλ1 c p q
-  have hN := complement_input_delta_nonneg hλ hλ1 c p
-  have hMpoly := congrArg (Polynomial.eval s) (chiral_det_polynomial_difference (λ := λ) hn)
-  have hNpoly := congrArg (Polynomial.eval s) (complement_det_polynomial_difference (λ := λ) hn)
+    (s • (1 : Matrix (Fin 4) (Fin 4) ℝ) + chiralComparator lam).det ≤
+        (s • (1 : Matrix (Fin 4) (Fin 4) ℝ) + chiral lam c p q).det ∧
+      (s • (1 : Matrix (Fin 2) (Fin 2) ℝ) + complementComparator lam).det ≤
+        (s • (1 : Matrix (Fin 2) (Fin 2) ℝ) + complement lam c q).det := by
+  obtain ⟨h2, h3, h4⟩ := chiral_input_deltas_nonneg hlam hlam1 c p q
+  have hN := complement_input_delta_nonneg hlam hlam1 c p
+  have hMpoly := congrArg (Polynomial.eval s) (chiral_det_polynomial_difference (lam := lam) hn)
+  have hNpoly := congrArg (Polynomial.eval s) (complement_det_polynomial_difference (lam := lam) hn)
   simp only [Polynomial.eval_sub, eval_shiftedDetPolynomial, Polynomial.eval_add,
     Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X,
     Matrix.scalar_apply, ← Matrix.smul_one_eq_diagonal] at hMpoly hNpoly
