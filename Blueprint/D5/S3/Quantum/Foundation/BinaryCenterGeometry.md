@@ -58,6 +58,8 @@ Apply BC and the same affine J to a proposed active crossing. Agreement on all t
 
 These are original repeated-block results and prerequisites for the XI138 local geometry. They do not construct the BC boundary-center affine graph on each whole ball or prove its rank dichotomy, exact interior section, reflected sphere dichotomy or fixed-sphere quantitative minimum. BC to MC, global injectivity, global noncollapse, equality of a reflected ball with its source, cross-ball vector gluing and two-outside crossings remain outside these conclusions. No quantum classification, literature priority or physical realization is asserted.
 
+Source §138.6 of Quantum Origin XI. https://github.com/the-omega-institute/trureturing-source-theories/blob/2a39da5107abbfa3a72cc883486dbc15a15994a1/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md#L1403-L1421
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/BinaryCenterGeometry.repeated_block_finite_compatibility`
