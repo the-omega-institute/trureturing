@@ -5,7 +5,7 @@ year: 2026
 title: "Must a Primitive Non-Deficient Number Always Have a Small Component?"
 doi: 10.48550/arXiv.2005.12115
 url: https://arxiv.org/abs/2005.12115v5
-claim: "Section 3, pages 9–10, defines B by p_i^(a_i+1)<2 rad(n), asserts density zero, and states Conjectures 10, 12 and 14 with denominator B(x)."
+claim: "Section 3, pp. 9–10 defines B and states its zero density and Conjectures 10, 12, 14."
 strata_touched:
   - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentDensity
   - D5/S3/Arith/Abundancy/ZelinskyRadicalComponentConjectures
