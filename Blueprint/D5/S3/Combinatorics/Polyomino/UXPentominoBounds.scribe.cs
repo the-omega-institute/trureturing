@@ -32,15 +32,18 @@ internal sealed class UXPentominoBoundsDocument : IScribeDocumentDefinition
             Node("u_board_of_x_board", "Compressing X boards to U boards", Transfer(),
                 "Stack each diagonal column at height zero while preserving its cardinality. An original board edge changes x + y by one, so original paths give paths along the new bottom row. Stacking the translation-anchor fibers fits every U arm by the same column bound."),
             Node("same_minimum", "Equality for every positive threshold", Equality(),
-                "The U lower bound bounds the slack above N + 2. In coordinates (x + y, x − y), a balanced checkerboard rectangle realizes the corresponding anchor capacity. Trim a suffix of its last anchor row and delete the associated cells of the outer board row. Each deleted outer cell could only support deleted anchors. The full lower rows connect the resulting X board. The area-preserving transfer gives the other direction.")),
+                "The U lower bound bounds the slack above N + 2. In coordinates (x + y, x − y), a balanced checkerboard rectangle realizes the corresponding anchor capacity. Trim a suffix of its last anchor row and delete the associated cells of the outer board row. Each deleted outer cell could only support deleted anchors. The full lower rows connect the resulting X board. The area-preserving transfer gives the other direction.",
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("condon-dugan-goldman-williams-2026-ux-pentomino-instance-sequence"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
-        string prose, DescribeRole role = DescribeRole.Theorem) =>
+        string prose, DescribeRole role = DescribeRole.Theorem, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("ux-pentomino-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(Disp(formula)),
             role == DescribeRole.Definition ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula BoardBound(string shape)
     {
