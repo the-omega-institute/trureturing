@@ -6,6 +6,7 @@ internal sealed class HardinA229457StripDataDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.";
     private const string Note = "D5/L/SpinModels/hardin2013a229457";
+    private const string LeanSource = "../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229457StripData.lean";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Square-lattice strip transfer.", H("Six-column square-lattice strip"), Blocks(
             Describe.Lean(DescribeId.Create("valid"), DeclarationHandle.Create(Prefix + "Valid"),
@@ -31,7 +32,7 @@ internal sealed class HardinA229457StripDataDocument : IScribeDocumentDefinition
                     Paragraph(Text("For i, j : Fin 42, write i and j for their natural values in the index ranges below. All matrix entries are integers. The indices 0 through 9 and 10 through 19 are the proper-row classes with positive and zero residual budget, respectively. Indices 20 through 41 are the rows with one horizontal defect.")),
                     Paragraph(Text("If i and j are both below 10, the entry is ProperTransfer.T i j. If i is below 10 and j is at least 10, the entry is at row i and column j − 10 of the new 10 by 32 crossing table.")),
                     Paragraph(Text("If i and j are both in 10 through 19, the entry is ProperTransfer.T (i − 10) (j − 10). If i is at least 20 and j is in 10 through 19, the entry is at row i − 20 and column j − 10 of the new 22 by 10 table for rows with one horizontal defect. Every other entry is 0.")),
-                    Paragraph(Text("HardinA229457StripClasses.transition_counts pins the entries of the two new integer tables to the successor sums."))), DescribeRole.Definition),
+                    Paragraph(Text("HardinA229457StripClasses.transition_counts identifies the entries with the successor sums. The literal entries are given by [crossing and lastRows](" + LeanSource + "#L83-L116)."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("initial"), DeclarationHandle.Create(Prefix + "initial"),
                 H("initial"), StatementSource.FromAuthor(Disp(Typed(Call("HardinA229457StripData.initial"), Arrow(Call("Fin", Num("42")), Call("Int"))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -42,14 +43,14 @@ internal sealed class HardinA229457StripDataDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("terminal"), DeclarationHandle.Create(Prefix + "terminal"),
                 H("terminal"), StatementSource.FromAuthor(Disp(Eq(Call("HardinA229457StripData.terminal"), Matrix(new Formula[][] { new Formula[] { Num("0"), Num("0"), Num("0"), Num("0"), Num("0"), Num("0"), Num("0"), Num("0"), Num("0"), Num("0"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1"), Num("1") } })))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("This one by 42 row vector accepts precisely residual budget zero. Fin.append joins ten zeros, the ten proper-coordinate entries of HardinA233127SquareStrip.w 0, and 22 ones for the rows with a horizontal defect."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For a row p and residual d satisfying HardinA229457StripData.Valid p d, the terminal entry at HardinA229457StripData.cl p d is 1 exactly when d is zero. The vector has 42 integer coordinates. Fin.append joins ten zeros, the ten proper-coordinate entries of HardinA233127SquareStrip.w 0, and 22 ones for the rows with a horizontal defect."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("w"), DeclarationHandle.Create(Prefix + "W"),
                 H("W"), StatementSource.FromAuthor(Disp(Typed(Call("HardinA229457StripData.W"), Arrow(Call("Fin", Num("26")), Arrow(Call("Fin", Num("42")), Call("Int")))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(
                     Paragraph(Text("For k : Fin 26 and j : Fin 42, use their natural values in the index arithmetic. For j below 10, W k j equals initial j times HardinA233127SquareStrip.w k (j + 1), divided in Int by 64 raised to k. This block inherits the scanner vectors with the first-row multiplicity and scale shown here.")),
                     Paragraph(Text("For j at least 10 and k = 0, W k j is initial j. For j at least 10 and k at least 1, W k j is at row k − 1 and column j − 10 of the new 25 by 32 integer table.")),
-                    Paragraph(Text("HardinA229457StripPowers.steps pins the new rows by giving the initial row and the product of each preceding row with T."))), DescribeRole.Definition))));
+                    Paragraph(Text("HardinA229457StripPowers.steps gives the initial row and the product of each preceding row with T. The 25 by 32 table is the literal tail of the Fin.cons argument to [W](" + LeanSource + "#L141)."))), DescribeRole.Definition))));
     private static Formula Num(string s) => D(s.Select(c => (byte)(c - '0')).ToArray());
     private static Formula FullEqualityPatternCode()
     {

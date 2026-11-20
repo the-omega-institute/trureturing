@@ -6,6 +6,7 @@ internal sealed class HardinA229604StripDataDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripData.";
     private const string Note = "D5/L/SpinModels/hardin2013a229604";
+    private const string LeanSource = "../../../../../../D5/S3/StatisticalMechanics/Potts/SquareStripDefects/HardinA229604StripData.lean";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Square-lattice strip transfer.", H("Six-column square-lattice strip"), Blocks(
             Describe.Lean(DescribeId.Create("valid"), DeclarationHandle.Create(Prefix + "Valid"),
@@ -25,10 +26,11 @@ internal sealed class HardinA229604StripDataDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(
                     Paragraph(Text("For i, j : Fin 96, index ranges and offsets use the natural values of i and j. All matrix entries are integers. For i, j below 42, the entry is HardinA229457StripData.T i j. For i at least 42 and j below 42, it is 0.")),
-                    Paragraph(Text("For i below 10 and j at least 42, the entry is at row i and column j − 42 of the new 32 by 54 integer crossing table. For i from 20 through 41 and j at least 42, it is at row i − 10 and column j − 42 of that table.")),
+                    Paragraph(Text("The 32 by 54 crossing table has a 10 by 54 upper block. For i below 10 and j at least 42, use row i and column j − 42 of that block. The bottom 22 rows consist of a 22 by 32 integer block followed by 22 zero columns. For i from 20 through 41 and j from 42 through 73, use row i − 20 and column j − 42 of the 22 by 32 block. For the same source rows and j from 74 through 95, the entry is 0.")),
                     Paragraph(Text("For i from 10 through 19 and j from 42 through 73, the entry is HardinA229457StripData.T (i − 10) (j − 32). For i and j both from 42 through 73, it is HardinA229457StripData.T (i − 32) (j − 32). These are the inherited crossing and terminal blocks.")),
                     Paragraph(Text("For i at least 74 and j from 42 through 51, the entry is at row i − 74 and column j − 42 of the new 22 by 10 integer table for rows with two horizontal defects. Every other entry is 0.")),
-                    Paragraph(Text("HardinA229604StripClasses.transition_counts pins the entries used from the new tables to the successor sums. The retained 96 classes refine the 94-class coarsest lumping."))), DescribeRole.Definition),
+                    Paragraph(Text("HardinA229604StripClasses.transition_counts identifies the entries with the successor sums. The literal entries are given by [crossing and lastRows](" + LeanSource + "#L70-L128).")),
+                    Paragraph(Text("Finite partition refinement of the 96 states, starting with terminal acceptance and splitting by successor counts into each block, stabilizes at 94 classes."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("initial"), DeclarationHandle.Create(Prefix + "initial"),
                 H("initial"), StatementSource.FromAuthor(Disp(Typed(Call("HardinA229604StripData.initial"), Arrow(Call("Fin", Num("96")), Call("Int"))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
@@ -45,7 +47,7 @@ internal sealed class HardinA229604StripDataDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("For k : Fin 25 and j : Fin 96, use the natural values of the indices in these ranges. For j below 42, W k j equals HardinA229457StripData.W (Fin.castAdd 1 k) j, with j read in Fin 42. The cast embeds k into Fin 26 with the same value.")),
                     Paragraph(Text("For j at least 42 and k = 0, W k j is initial j. For j at least 42 and k at least 1, W k j is at row k − 1 and column j − 42 of the new 24 by 54 integer table.")),
-                    Paragraph(Text("HardinA229604StripPowers.steps pins the new rows by giving the initial row and the product of each preceding row with T."))), DescribeRole.Definition),
+                    Paragraph(Text("HardinA229604StripPowers.steps gives the initial row and the product of each preceding row with T. The 24 by 54 table is the literal tail of the Fin.cons argument to [W](" + LeanSource + "#L153)."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("leading-block"), DeclarationHandle.Create(Prefix + "leading_block"),
                 H("leading block"), StatementSource.FromAuthor(Disp(All("i", Call("Fin", Num("42")), All("j", Call("Fin", Num("42")), Eq(Call("HardinA229604StripData.T", Call("Fin.castAdd", Num("54"), V("i")), Call("Fin.castAdd", Num("54"), V("j"))), Call("HardinA229457StripData.T", V("i"), V("j"))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
