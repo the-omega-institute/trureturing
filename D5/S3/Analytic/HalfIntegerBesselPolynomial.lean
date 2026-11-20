@@ -32,7 +32,7 @@ def coefficient (m k : ℕ) : ℚ :=
   if k ≤ m then ((m + k)! : ℚ) / (2 ^ k * (k ! : ℚ) * ((m - k)! : ℚ)) else 0
 
 /-- The polynomial evaluated at the reciprocal argument of the decaying carrier. -/
-def carrier (m : ℕ) : ℚ[X] :=
+noncomputable def carrier (m : ℕ) : ℚ[X] :=
   ∑ k ∈ Finset.range (m + 1), monomial k (coefficient m k)
 
 private theorem coefficient_zero (m : ℕ) : coefficient m 0 = 1 := by
@@ -46,8 +46,11 @@ theorem coefficient_succ (m k : ℕ) :
   · have hs : k + 1 ≤ m := h
     have hsub : m - k = (m - (k + 1)) + 1 := by omega
     have hcast : (↑(m - (k + 1)) : ℚ) + 1 = (m : ℚ) - k := by
-      rw [← Nat.cast_one, ← Nat.cast_add, ← hsub, Nat.cast_sub h.le]
-    rw [coefficient, if_pos hs, coefficient, if_pos h.le]
+      calc
+        (↑(m - (k + 1)) : ℚ) + 1 = ((m - k : ℕ) : ℚ) := by
+          exact_mod_cast hsub.symm
+        _ = (m : ℚ) - k := Nat.cast_sub h.le
+    rw [coefficient, ite_eq_left hs, coefficient, ite_eq_left h.le]
     rw [show m + (k + 1) = m + k + 1 by omega, hsub]
     simp only [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
     rw [hcast]
@@ -56,8 +59,7 @@ theorem coefficient_succ (m k : ℕ) :
     have hfact (j : ℕ) : (j ! : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero j
     have hpow : (2 : ℚ)^k ≠ 0 := by positivity
     field_simp
-    <;> ring
-  · rw [coefficient, if_neg (by omega)]
+  · rw [coefficient, ite_eq_right (by omega)]
     rcases (le_of_not_gt h).eq_or_lt with heq | hlt
     · subst m
       simp
@@ -65,8 +67,8 @@ theorem coefficient_succ (m k : ℕ) :
 
 private theorem coeff_carrier (m k : ℕ) : (carrier m).coeff k = coefficient m k := by
   by_cases h : k ≤ m
-  · simp [carrier, coeff_monomial, Finset.mem_range, Nat.lt_succ_iff, h]
-  · simp [carrier, coeff_monomial, Finset.mem_range, Nat.lt_succ_iff, coefficient, h]
+  · simp [carrier, coeff_monomial, Finset.mem_range, h]
+  · simp [carrier, coeff_monomial, Finset.mem_range, coefficient, h]
 
 /-- The differential equation in the reciprocal argument. -/
 theorem carrier_ode (m : ℕ) :
@@ -76,7 +78,7 @@ theorem carrier_ode (m : ℕ) :
   have first (p : ℚ[X]) (k : ℕ) : (X * p.derivative).coeff k = p.coeff k * k := by
     cases k with
     | zero => simp
-    | succ k => rw [coeff_X_mul, coeff_derivative]
+    | succ k => rw [coeff_X_mul, coeff_derivative, Nat.cast_succ]
   have second (p : ℚ[X]) (k : ℕ) :
       (X ^ 2 * p.derivative.derivative).coeff k = p.coeff k * k * ((k : ℚ) - 1) := by
     rcases k with _ | _ | k
@@ -88,7 +90,7 @@ theorem carrier_ode (m : ℕ) :
   ext k
   rw [add_mul, mul_assoc, coeff_add, coeff_add, second, coeff_C_mul, first,
     coeff_C_mul, coeff_derivative, coeff_C_mul]
-  simp only [coeff_carrier, Nat.cast_add, Nat.cast_one]
+  simp only [coeff_carrier]
   linear_combination coefficient_succ m k
 
 private theorem derivative_reflection (p : ℚ[X]) :
@@ -102,7 +104,8 @@ private theorem reflected_ode (m : ℕ) :
   have h := congrArg (fun p : ℚ[X] => p.comp (-X)) (carrier_ode m)
   simp only [add_comp, mul_comp, pow_comp, C_comp, X_comp] at h
   simp only [derivative_reflection, derivative_neg, neg_neg]
-  convert h using 1 <;> ring
+  convert h using 1
+  ring
 
 /-- The reflected polynomial Wronskian, normalized by the constant term of the carrier. -/
 theorem reflected_wronskian (m : ℕ) :
@@ -115,19 +118,22 @@ theorem reflected_wronskian (m : ℕ) :
   change w = C 2
   have hp := carrier_ode m
   have hq := reflected_ode m
-  fold p at hp
+  change X ^ 2 * p.derivative.derivative + (C 2 * X + C 2) * p.derivative =
+    C ((m : ℚ) * (m + 1)) * p at hp
   change X ^ 2 * q.derivative.derivative + (C 2 * X - C 2) * q.derivative =
     C ((m : ℚ) * (m + 1)) * q at hq
   have hw : w.derivative = 0 := by
     simp only [w, derivative_sub, derivative_mul, derivative_C, zero_mul, zero_add,
       derivative_X_sq]
     linear_combination q * hp - p * hq
-  have hp0 : p.coeff 0 = 1 := (coeff_carrier m 0).trans (coefficient_zero m)
-  have hq0 : q.coeff 0 = 1 := by
-    rw [← eval_zero_eq_coeff_zero, q, eval_comp, eval_neg, eval_X, neg_zero,
-      eval_zero_eq_coeff_zero, hp0]
+  have hp0 : p.eval 0 = 1 := by
+    rw [← coeff_zero_eq_eval_zero]
+    exact (coeff_carrier m 0).trans (coefficient_zero m)
+  have hq0 : q.eval 0 = 1 := by
+    simp [q, eval_comp, hp0]
   have hw0 : w.coeff 0 = 2 := by
-    simp [w, coeff_mul_zero, coeff_X_pow_mul', hp0, hq0]
+    rw [coeff_zero_eq_eval_zero]
+    simp [w, hp0, hq0]
   rw [eq_C_of_derivative_eq_zero hw, hw0]
 
 end D5.S3.Analytic.HalfIntegerBesselPolynomial
