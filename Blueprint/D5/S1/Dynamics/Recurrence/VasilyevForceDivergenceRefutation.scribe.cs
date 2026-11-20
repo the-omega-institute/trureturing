@@ -50,7 +50,7 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "Definition 1.1 selects the up or down map by membership in the chosen set. "
-                    + "Lean uses classical decidability for this choice and defines the map on all naturals."))),
+                    + "Lean uses classical decidability for this choice and defines a natural-to-natural map."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("vasilyev-force-divergent"),
@@ -88,7 +88,9 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
                         Text(" such that "),
                         Math(new Formula.Subscript(F.Id("T"), F.Id("S"))),
                         Text(" is unbounded for all "),
-                        Math(Seq(F.Id("S"), Sp, Supseteq, Sp, F.Id("A"))),
+                        Math(F.Id("S")),
+                        Text(" ⊇ "),
+                        Math(F.Id("A")),
                         Text(", contain a tail of a chain?”")),
                     Paragraph(Text(
                         "Let P be the positive integers. At x in P the up and down steps are the "
@@ -160,7 +162,7 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
         Formula member = Member(x, s);
         Formula cases = Seq(Begin, Grp(F.Id("cases")),
             Call("U", x), Amp, member, RowBreak,
-            Call("D", x), Amp, new Formula.Not(member),
+            Call("D", x), Amp, Neg, Sp, Parenthesized(member),
             End, Grp(F.Id("cases")));
         return Bind(FormulaQuantifier.ForAll, "S", NaturalSets,
             Bind(FormulaQuantifier.ForAll, "x", Naturals,
@@ -202,6 +204,8 @@ internal sealed class VasilyevForceDivergenceRefutationDocument : IScribeDocumen
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
 
     private static Formula Bind(FormulaQuantifier quantifier, string name, Formula domain, Formula body) =>
         new Formula.Bind(quantifier, FormulaIdentifier.Create(name), domain, body);
