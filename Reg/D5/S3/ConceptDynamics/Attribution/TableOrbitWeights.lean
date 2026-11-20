@@ -178,7 +178,7 @@ def family : Registration arena.{g,t,i} (type_of% (@maximal_invariant_event_mass
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@maximal_invariant_event_mass) (Realization signature.{i}) Unit Unit where
-  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.TableOrbitWeights.EventMaximum.registration
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.TableOrbitWeights.EventMaximum.optimalEventMass
   realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.TableOrbitWeights.EventMaximum.family
   realizationSource := none
   generated := false
@@ -300,7 +300,7 @@ def family : Registration arena.{g,x,y,s} (type_of% (@maximal_table_fixed_mass))
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@maximal_table_fixed_mass) (Realization kernelSignature.{x,y}) Unit Unit where
-  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.TableOrbitWeights.TableMaximum.registration
+  unitName := `Reg.D5.S3.ConceptDynamics.Attribution.TableOrbitWeights.TableMaximum.optimalFixedMass
   realizationName := `Reg.D5.S3.ConceptDynamics.Attribution.TableOrbitWeights.TableMaximum.family
   realizationSource := none
   generated := false
@@ -319,7 +319,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Attribution.TableOrbitWeights
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[2, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg",
