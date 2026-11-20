@@ -12,6 +12,14 @@ internal sealed class KingGridDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite colourings with exactly one monochromatic king bond.", H("One-defect king colourings: KingGrid"),
         Blocks(
+            Node("instDecidableEqEdge", "Decidable equality of king bonds",
+                All("n", Call("Nat"), All("k", Call("Nat"), Call("DecidableEq", Call("KingGrid.Edge",V("n"),V("k"))))),
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                "The derived instance is used by finite bond counts in importing modules."),
+            Node("instFintypeEdge", "Finite enumeration of king bonds",
+                All("n", Call("Nat"), All("k", Call("Nat"), Call("Fintype", Call("KingGrid.Edge",V("n"),V("k"))))),
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                "The derived instance is used by finite bond counts in importing modules."),
             Node("Cell", "Cells of the rectangle", Formula0(),
                 DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source),

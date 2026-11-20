@@ -84,7 +84,9 @@ filemap:
 	@dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- filemap
 
 filemap-conform:
-	@$(MAKE) -C tools filemap-conform
+	@python3 .github/scripts/filemap-release.py
+filemap-conform: export FILEMAP_SCOPE := $(value FILEMAP_SCOPE)
+filemap-conform: export FILEMAP_PRODUCER := $(value FILEMAP_PRODUCER)
 
 scribe-release:
 	@/bin/bash tools/scripts/scribe-release.sh
