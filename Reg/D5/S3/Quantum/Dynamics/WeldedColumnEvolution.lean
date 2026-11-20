@@ -9,7 +9,7 @@ namespace Reg.D5.S3.Quantum.Dynamics.WeldedColumnEvolution
 open _root_.D5.S3.Quantum.Dynamics.WeldedColumnEvolution
 open _root_.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap (centralDefect)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.LeanInformationAudit
+open _root_.LeanInformationAudit _root_.Matrix
 open scoped Matrix.Norms.Operator
 
 set_option autoImplicit false
@@ -18,7 +18,7 @@ noncomputable section
 universe u
 
 private abbrev signature : Signature where
-  Params := Type u × ℕ
+  Params := Σ _V : Type u, ℕ
   State p := p.1 → Column p.2
   Role := Unit
   finiteRole := inferInstance
@@ -41,7 +41,7 @@ private abbrev arena : Arena where
     (_hdegree : ∀ v j,
       ((G.neighborFinset v).filter (fun w => col w = j)).card = columnDegree d (col v) j)
     (t : ℝ),
-    let Q := R.readout () (V, d) col
+    let Q := R.readout () ⟨V, d⟩ col
     let H := (((Real.sqrt 2)⁻¹ : ℝ) : ℂ) • G.adjMatrix ℂ
     let J := (centralDefect (d + 1) (by omega)).map Complex.ofReal
     let U := NormedSpace.exp ((-Complex.I * (t : ℂ)) • H)
@@ -54,14 +54,16 @@ private abbrev Sample := ULift.{u} (Fin 6)
 private def sampleColumn (v : Sample.{u}) : Column 1 :=
   if v.down.val = 0 then 0 else if v.down.val ≤ 2 then 1 else if v.down.val ≤ 4 then 2 else 3
 
-private def sampleGraph : SimpleGraph Sample.{u} :=
-  SimpleGraph.fromRel fun v w => (sampleColumn v).val + 1 = (sampleColumn w).val
+private def sampleGraph : SimpleGraph Sample.{u} where
+  Adj v w := (sampleColumn v).val + 1 = (sampleColumn w).val ∨
+    (sampleColumn w).val + 1 = (sampleColumn v).val
+  symm := ⟨fun _ _ h => h.symm⟩
+  loopless := ⟨fun v => by
+    rintro (h | h) <;> omega⟩
 
 private instance : DecidableRel (sampleGraph.{u}).Adj := fun v w =>
-  decidable_of_iff
-    (v ≠ w ∧ ((sampleColumn v).val + 1 = (sampleColumn w).val ∨
-      (sampleColumn w).val + 1 = (sampleColumn v).val))
-    (SimpleGraph.fromRel_adj _ _ _).symm
+  inferInstanceAs (Decidable ((sampleColumn v).val + 1 = (sampleColumn w).val ∨
+    (sampleColumn w).val + 1 = (sampleColumn v).val))
 
 private theorem sample_size :
     ∀ j, (Finset.univ.filter (fun v : Sample.{u} => sampleColumn v = j)).card =
@@ -70,15 +72,18 @@ private theorem sample_size :
 private theorem sample_degree :
     ∀ (v : Sample.{u}) j,
       ((sampleGraph.neighborFinset v).filter (fun w => sampleColumn w = j)).card =
-        columnDegree 1 (sampleColumn v) j := by decide
+        columnDegree 1 (sampleColumn v) j := by
+  simp_rw [SimpleGraph.neighborFinset_eq_filter]
+  decide
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hz := (h 1 sampleGraph sampleColumn sample_size sample_degree 0).1
-  change (0 : Matrix Sample.{u} (Column 1) ℂ)ᴴ * 0 = 1 at hz
+  change (0 : Matrix Sample.{u} (Column 1) ℂ)ᴴ *
+    (0 : Matrix Sample.{u} (Column 1) ℂ) = (1 : Matrix (Column 1) (Column 1) ℂ) at hz
   simpa using congrArg (fun M : Matrix (Column 1) (Column 1) ℂ => M 0 0) hz
 
-private def evidence : Registration arena.{u} (type_of% @central_defect_column_evolution.{u}) where
+def evidence : Registration arena.{u} (type_of% @central_defect_column_evolution.{u}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨central_defect_column_evolution, rejected, rejected_law⟩
@@ -86,10 +91,12 @@ private def evidence : Registration arena.{u} (type_of% @central_defect_column_e
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨(Sample.{u}, 1), sampleColumn, (fun _ => 3), ?_⟩
+    refine ⟨⟨Sample.{u}, 1⟩, sampleColumn, (fun _ => 3), ?_⟩
     intro he
     have hv := congrArg (fun M : Matrix Sample.{u} (Column 1) ℂ => M (ULift.up 0) 0) he
     norm_num [actual, realize, normalizedColumns, sampleColumn, columnDepth] at hv
+    change (Real.sqrt (2 : ℝ) ^ (0 : ℕ))⁻¹ = 0 at hv
+    simp at hv
 
 def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -115,7 +122,8 @@ def registration :
     definition := none
     coordinates := #[0, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "value"]
       stateBinder := 6
       functionOperand := false
       stateOperand := none
