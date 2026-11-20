@@ -24,7 +24,7 @@ proof_shape:
     ChenChenRealStepSigns.result.
 Direct frozen dependencies:
   D5/S1/Recurrence/Algebraic/ChenChenRealStepRowSums (Source, reflection)
-    sha256:babe59678caa4efa35d42893011defa557b4e926070bb618982cee210a4d67c0
+    sha256:fde75bfb8d2b7bfc317975eb38085bb690254dbf83381913d713ceef50488835
   D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns (result)
     sha256:c78f33a81b52b954c31e8cf7b15c8712256186bd64e332743f86a1ce590edce4
 Search record (§3.1): Mathlib has no Eneström–Kakeya theorem (no hit for Enestrom or Kakeya
