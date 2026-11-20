@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Polynomial;
 
 internal sealed class DiagonalPadeExponentialDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Analytic/DiagonalPadeExponential.";
+    private const string Prefix = "D5/S3/Analytic/Polynomial/DiagonalPadeExponential.";
     private static readonly LibraryNoteRef Scardino =
-        LibraryNoteRef.Create("D5/L/Analytic/scardino2026pade");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/scardino2026pade");
     private static readonly LibraryNoteRef Dlmf =
         LibraryNoteRef.Create("D5/L/Analytic/dlmf2010halfintbessel");
 

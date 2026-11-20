@@ -78,7 +78,19 @@ Lean statement: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_coeff_zero`
 
 The constant coefficient of the finite reciprocal carrier is one for every order.
 
-**Theorem 1.7 (Reflected polynomial Wronskian).**
+**Theorem 1.7 (Carrier coefficient extraction).**
+
+Lean statement: `D5/S3/Analytic/HalfIntegerBesselPolynomial.coeff_carrier`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/HalfIntegerBesselPolynomial.coeff_carrier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At every index the coefficient agrees with the zero-extended factorial formula.
+
+**Theorem 1.8 (Reflected polynomial Wronskian).**
 
 Lean statement: `D5/S3/Analytic/HalfIntegerBesselPolynomial.reflected_wronskian`
 
@@ -95,6 +107,7 @@ For every natural m, let P be its carrier and Q(X) = P(-X). Then 2 P Q - X^2 (P 
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_coeff_zero`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.carrier_ode`
+- Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.coeff_carrier`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.coefficient`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.coefficient_succ`
 - Truth anchor: `D5/S3/Analytic/HalfIntegerBesselPolynomial.natDegree_carrier`

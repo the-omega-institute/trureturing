@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/DiagonalPadeExponential
+/- GID: D5/S3/Analytic/Polynomial/DiagonalPadeExponential
    generality: G
-   mirror-B: D5/B/S3/Analytic/DiagonalPadeExponential
+   mirror-B: D5/B/S3/Analytic/Polynomial/DiagonalPadeExponential
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -23,6 +23,9 @@ import Mathlib.Tactic.Ring
 
 The rational polynomial is the diagonal specialization of Scardino's formula (1.1).
 Its reversed Bessel representation uses the principal square root on `0 < z.re`.
+
+Escape audit unfinished for the three public theorems.
+https://github.com/the-omega-institute/trureturing/issues/32304
 -/
 
 public section
@@ -33,7 +36,7 @@ open D5.S3.Analytic.HalfIntegerBessel (I K L prefactor reverse_eval sqrt_real_mu
 open D5.S3.Analytic.HalfIntegerBesselPolynomial
   (carrier coefficient coeff_carrier natDegree_carrier)
 
-namespace D5.S3.Analytic.DiagonalPadeExponential
+namespace D5.S3.Analytic.Polynomial.DiagonalPadeExponential
 
 /-- The denominator of the diagonal exponential Padé approximant, normalized at zero. -/
 noncomputable def denominator (m : ℕ) : ℚ[X] :=
@@ -236,4 +239,4 @@ theorem hasFPowerSeriesAt_reciprocal (m : ℕ) :
     simp [FormalMultilinearSeries.ofScalars, FormalMultilinearSeries.apply_eq_prod_smul_coeff, hcoeff]
   exact hseries ▸ hp.hasFPowerSeriesAt
 
-end D5.S3.Analytic.DiagonalPadeExponential
+end D5.S3.Analytic.Polynomial.DiagonalPadeExponential

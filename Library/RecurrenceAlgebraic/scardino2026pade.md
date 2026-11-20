@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2610.39051
 url: https://arxiv.org/pdf/2610.39051v1#page=1
 claim: "Equations (1.1) and (1.3) give the normalized exponential Padé denominator and the Taylor coefficients of its reciprocal."
 strata_touched:
-  - D5/S3/Analytic/DiagonalPadeExponential
+  - D5/S3/Analytic/Polynomial/DiagonalPadeExponential
 license: citation-only
 triage: anchor
 ---
