@@ -66,7 +66,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Attribution.EightOutcomeGridSupport
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "arg", "arg"]
       stateBinder := 0
