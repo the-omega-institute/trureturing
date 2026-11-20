@@ -62,6 +62,12 @@ def check(manifest, protected_base=None, scope_file=None):
             raise ValueError("invalid Lean module in PR scope")
         print(f"CI_PR_LEAN report_targets={len(targets)} program_targets={len(programs)}", flush=True)
         environment = dict(os.environ, FULL_BUILD="0")
+        # Hosted current restores the judge for this source key or builds it on a fresh runner.
+        if ((programs or targets) and environment.get("GITHUB_EVENT_NAME") in ("pull_request", "push")
+                and not environment.get("STRATALINT_LEAN_PRODUCER_DLL")):
+            producer = subprocess.run(["bash", "tools/scripts/workflow/judge-lean-producer.sh",
+                                       str(Path(CLI).parent)], stdout=subprocess.PIPE, text=True, check=True)
+            environment["STRATALINT_LEAN_PRODUCER_DLL"] = producer.stdout.strip()
         if programs:
             subprocess.run(["bash", "tools/scripts/worktree/lean-cache-run.sh", "lake",
                             "-d", "tools/lean-inspector-reg", "build",
@@ -71,7 +77,9 @@ def check(manifest, protected_base=None, scope_file=None):
             batch = directory / str(index)
             batch.mkdir()
             report = batch / "scoped-lean-report.json"
-            subprocess.run(["make", "lean-report-scoped", "LEAN_TARGETS=" + " ".join(targets)],
+            pinned_targets = "LEAN_TARGETS=" + " ".join(targets)
+            subprocess.run(["make", "lean-report-prepare", pinned_targets], env=environment, check=True)
+            subprocess.run(["make", "lean-report-scoped", pinned_targets],
                            env=dict(environment, LEAN_REPORT=str(report), LEAN_NUM_THREADS="1"), check=True)
             reports.append(str(report))
             roots = batch / "roots"

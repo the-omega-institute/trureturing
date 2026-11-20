@@ -2,8 +2,8 @@
 # 统一落地器(铸器,替代 sed 克隆链;器律③)
 # 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N]
 # 语义: [等待 PR N 合入] → cd LANE → checkout/建 BRANCH(自 origin/dev,已存在则合 dev)
-#       → make lean-report(合 dev 可能带进新 D5 模块)
-#       → make gate → builder commit → push → pr-open → 等 MERGED。
+#       → [FULL_BUILD=1 时运行 make check-lean-report FULL_BUILD=1]
+#       → make gate BASE=<基线> → builder commit → push → pr-open → 等 MERGED。
 set -x
 LAND_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/$(basename "${BASH_SOURCE[0]}")"
 [ "$#" -ge 3 ] || { echo LAND_ARGUMENTS_REQUIRED; exit 64; }
@@ -59,7 +59,7 @@ if [ -n "${LAND_VALIDATION_HELD:-}" ]; then
   exit 0
 fi
 cd "$LANE" || exit 90
-L="${LAND_LOG_DIR:-${TMPDIR:-/tmp}/land-logs}"
+L="${LAND_LOG_DIR:-$LANE/build/land-logs}"
 TAG=$(basename "$MSG" .msg)
 export LC_ALL=C LANG=C
 BASE=${LAND_BASE:-$(git rev-parse origin/dev)}
@@ -122,10 +122,13 @@ os.close(descriptor)
 os.execvpe(command[0], command, protocol.git_environment())
 PY_LANDING_CHILD
 }
-landing_child "$L/flights/$TAG-leanreport.log" make lean-report; R=$?
-echo "LEANREPORT_EXIT=$R"
-[ "$R" -eq 0 ] || { echo HALT_LEAN_REPORT; exit 97; }
-python3 -B "$PROTOCOL" --source "$LANE" with --path "$LANE" -- make gate BASE="$BASE" > "$L/flights/$TAG-gate.log" 2>&1; P=$?; echo "GATE_EXIT=$P"
+if [ "${FULL_BUILD:-0}" = 1 ]; then
+  landing_child "$L/flights/$TAG-leanreport.log" make check-lean-report FULL_BUILD=1; R=$?
+  echo "LEANREPORT_EXIT=$R"
+  [ "$R" -eq 0 ] || { echo HALT_LEAN_REPORT; exit 97; }
+fi
+landing_child "$L/flights/$TAG-gate.log" python3 -B "$PROTOCOL" --source "$LANE" with --path "$LANE" -- make gate BASE="$BASE"
+P=$?; echo "GATE_EXIT=$P"
 [ "$P" -eq 0 ] || { echo HALT_GATE; exit 94; }
 python3 -B "$PROTOCOL" --source "$LANE" checkpoint --path "$LANE" \
   --message-file "$MSG" || { echo HALT_LAND_CHECKPOINT; exit 98; }

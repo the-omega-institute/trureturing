@@ -57,6 +57,18 @@ class ScopedContracts(unittest.TestCase):
         producer.write_sidecars(report, producer.capture(self.root, self.scope), origins)
         return report
 
+    def test_prepare_selects_external_utility_roots_and_contract_tools(self):
+        producer = api(self)
+        rows = [dict(module='D5.A', imports=['D5.B']), dict(module='D5.B', imports=[]),
+                dict(module='D5.Utility', imports=['D5.B'])]
+        scope = dict(roots=['D5.A'], dependencies=rows)
+        self.assertEqual(producer.preparation_targets(scope), ['+D5.A', '+D5.Utility'])
+        for contract, tool in [('AuricFib', 'regInspector/auricFibAnalysis'),
+                               ('Catalog', '+LeanInformationAudit.TemplateEnrollment')]:
+            name = 'LeanInformationAuditInterface.Contract.' + contract
+            scope['dependencies'] = [*rows, dict(module=name, imports=[])]
+            self.assertIn(tool, producer.preparation_targets(scope))
+
     def test_selected_utility_discovery_uses_production_reader(self):
         producer = api(self)
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
@@ -236,18 +248,10 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.output = self.root / 'reports/scoped report.json'
         self.logs = self.root / 'scoped logs'
 
+    def prepare(self, *modules):
+        return self.prepare_report_modules(*modules, workspace='tools/lean-inspector-reg')
+
     def scoped(self, targets, success=True):
-        self.compiler_preparation = ''
-        if self.compiler_seed is not None:
-            # Restore both tools in the workspace used by scoped production.
-            # Compiler preparation must not compile any project/report inputs.
-            # Rebuild the reader whose source may have changed; the staged
-            # report reader remains available to the scoped production entry.
-            prepared = self.run_lake('-d', 'tools/lean-inspector-reg', 'build',
-                                     'leanInspector/inputDiscovery')
-            self.compiler_preparation = prepared.stdout + prepared.stderr
-            self.record_result('compiler-restore', dict(raw_exit=prepared.returncode,
-                stdout=prepared.stdout, stderr=prepared.stderr))
         result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/report/lean-report-scoped.sh'),
             '--targets', targets, '--output', str(self.output), '--log-dir', str(self.logs)], cwd=self.root, env=self.env)
         if success:
@@ -255,7 +259,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         return result
 
     def reader_build_output(self):
-        return self.compiler_preparation + ''.join(
+        return ''.join(
             (self.logs / (phase + '.' + stream + '.log')).read_text()
             for phase in ('scope', 'report') for stream in ('stdout', 'stderr'))
 
@@ -294,6 +298,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
                               cwd=self.root, capture_output=True, text=True)
         self.assertEqual(full.returncode, 2, full.stdout + full.stderr)
         self.assertIn('Refutation claim source is absent', full.stderr)
+        self.prepare('D5.A')
         self.scoped('D5.A')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'})
         self.verify('D5.A')
@@ -302,12 +307,99 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertIn('D5/S0/Carrier/Missing.lean', failed.stdout + failed.stderr)
         self.assertFalse(publication.member(self.output, '.input.attestation').exists())
 
+    def test_native_prepare_same_named_library_keeps_module_scope(self):
+        self.copy('tools/lean-inspector/build_inputs.py')
+        self.write('D5/Alone.lean', 'this unrelated sibling deliberately does not compile\n')
+        self.ensure()
+        self.restore_compiler()
+        # An earlier full seed may name a previous pin. Scoped work judges the live checkout.
+        stamp = self.root / '.lake/.stratalint-lean-cache-stamp.json'
+        seeded = json.loads(stamp.read_text())
+        seeded['mathlib_revision'] = '0' * 40
+        stamp.write_text(json.dumps(seeded))
+        result = self.guarded_command(['make', 'lean-report-prepare', 'LEAN_TARGETS=Fixture'],
+                                      cwd=self.root, env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        directory = self.root / '.lake/build/lib/lean'
+        for module in ('Fixture', 'D5/A', 'D5/B', 'External', 'ClaimSupport'):
+            self.assertTrue((directory / (module + '.olean')).is_file(), module)
+        self.assertFalse((directory / 'D5/Alone.olean').exists())
+        self.scoped('Fixture')
+        self.assertEqual(set(self.rows()), {'Fixture', 'D5.A', 'D5.B'})
+        self.assertEqual(json.loads(stamp.read_text()), seeded)
+
+    def test_native_prepare_from_empty_cache_uses_one_locked_workspace(self):
+        self.copy('tools/lean-inspector/build_inputs.py')
+        shutil.rmtree(self.root / '.lake')
+        self.write('D5/Alone.lean', 'this unrelated sibling deliberately does not compile\n')
+        wrapper = self.root / 'bin/scope-lake'
+        self.write('bin/scope-lake', '''#!/usr/bin/env python3
+import fcntl, json, os, sys
+from pathlib import Path
+sys.path.insert(0, str(Path.cwd() / "tools/scripts/worktree"))
+from lean_cache_release import cache_guard
+with Path(".git/stratalint-lean-build.lock").open("a") as lock:
+    try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError: pass
+    else: raise SystemExit("missing shared build lock")
+try:
+    with cache_guard(Path.cwd()): raise SystemExit("missing private cache writer")
+except BlockingIOError: pass
+with Path("scope-commands").open("a") as out: print(json.dumps(sys.argv[1:]), file=out)
+os.execv(os.environ["FIXTURE_LAKE"], [os.environ["FIXTURE_LAKE"], *sys.argv[1:]])
+''')
+        wrapper.chmod(0o755)
+        env = dict(self.env, LAKE_BIN=str(wrapper), FIXTURE_LAKE=self.lake, FULL_BUILD='1')
+        env.pop('STRATALINT_ACCEPT_COLD_BUILD', None)
+        result = self.guarded_command(['make', 'lean-report-prepare', 'LEAN_TARGETS=Fixture'], env=env)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        discover, build = [json.loads(line) for line in (self.root / 'scope-commands').read_text().splitlines()]
+        workspace = ['-d', str((self.root / 'tools/lean-inspector-reg').resolve())]
+        self.assertEqual(discover[:5], [*workspace, 'script', 'run', 'leanInspector/reportScope'])
+        self.assertEqual(build[:4], [*workspace, '--log-level=error', 'build'])
+        self.assertEqual(set(build[4:]), {'+Fixture', '+External', 'leanInspector/inputDiscovery',
+                                           'leanInspector/reportInspector'})
+        self.scoped('Fixture')
+        self.assertEqual(set(self.rows()), {'Fixture', 'D5.A', 'D5.B'})
+        self.assertFalse((self.root / '.lake/build/lib/lean/D5/Alone.olean').exists())
+
+    def test_native_explicit_module_preparation(self):
+        request = self.root / 'requested modules.json'
+        request.write_text(json.dumps(['D5.A', 'External']))
+        command = ('-d', 'tools/lean-inspector-reg', 'script', 'run',
+                   'leanInspector/compileReportModules', str(request))
+        dependency = self.root / 'ClaimSupport.lean'
+        info = 'preparedModuleInfoMarker'
+        original = dependency.read_text()
+        dependency.write_text(original + f'def {info} := 1\n#check {info}\n')
+        cold = self.run_lake(*command)
+        self.assertNotIn(info, cold.stdout + cold.stderr)
+        self.assertRegex(cold.stdout + cold.stderr, r'\bBuilt ClaimSupport(?=[ (]|$)')
+        visible = self.run_lake('build', '+ClaimSupport')
+        self.assertIn(info, visible.stdout + visible.stderr)
+        warm = self.run_lake(*command)
+        self.assertNotIn(info, warm.stdout + warm.stderr)
+        self.assertNotIn('Built ClaimSupport', warm.stdout + warm.stderr)
+        directory = self.root / '.lake/build/lib/lean'
+        for name in ('D5/A', 'D5/B', 'External', 'ClaimSupport'):
+            self.assertTrue((directory / (name + '.olean')).is_file())
+        self.assertFalse((directory / 'D5/Alone.olean').exists())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/modules').exists())
+        dependency.write_text(original + 'def broken : Nat := missingCompilationInput\n')
+        broken = self.run_lake(*command, success=False)
+        self.assertIn('missingCompilationInput', broken.stdout + broken.stderr)
+        request.write_text(json.dumps(['D5.Alone', 'Undeclared.Missing']))
+        error = self.run_lake(*command, success=False)
+        self.assertIn('unknown Lean module Undeclared.Missing', error.stdout + error.stderr)
+        self.assertFalse((directory / 'D5/Alone.olean').exists())
+
     def test_native_scope_reuses_unchanged_staged_readers(self):
+        self.prepare('D5.A')
         self.scoped('D5.A')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'})
         work = json.loads((self.logs / 'work.json').read_text())
         self.assertEqual(work['extracted_module_names'], ['D5.A', 'D5.B'])
-        self.assertEqual(work['compiled_module_names'], ['D5.A', 'D5.B'],
+        self.assertEqual(work['compiled_module_names'], [],
                          '[FAIL] scoped_entry_reuses_unchanged_staged_readers')
         self.assertNotRegex(self.reader_build_output(),
             r'(?m)^[^\s]+ \[\d+/\d+\](?: \(Optional\))? Built '
@@ -321,7 +413,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
 
     def test_native_scope_uses_only_explicit_module_facets(self):
         self.ensure()
-        # A changed reader must rebuild even when its prior compiler artifact is staged.
+        # A changed reader and target are compiled by the separate preparation step.
         reader = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
         reader.write_text(reader.read_text() + '\n-- scoped reader input change\n')
         canonical = self.root / '.lake/build/stratalint/raw-lean-report.json'
@@ -339,12 +431,16 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.write('D5/A.lean', 'import D5.B\n/- import D5.Alone /- nested comment -/ -/\ndef value : Nat := D5.hidden\n')
         self.write('D5/Alone.lean', 'this sibling deliberately does not compile\n')
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = '["reg/Reg"]'
+        missing = self.scoped('D5.A', success=False)
+        self.assertNotEqual(missing.returncode, 0)
+        self.assertFalse((self.root / '.lake/build/lib/lean/D5/A.olean').exists())
+        self.prepare('D5.A')
         self.scoped('D5.A')
-        self.assertRegex(self.reader_build_output(),
+        self.assertNotRegex(self.reader_build_output(),
             r'(?m)^[^\s]+ \[\d+/\d+\](?: \(Optional\))? Built '
             r'(?:leanInspector/)?LeanInformationAudit\.Contract\.InputDiscovery(?::lean)?'
             r'(?: \([^()\r\n]*\))?$',
-            '[FAIL] changed_staged_reader_is_rebuilt_across_setup_and_scope')
+            '[FAIL] report_does_not_compile_reader')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'}, '[FAIL] report_is_exact_import_closure')
         phases = [json.loads(line) for line in (self.logs / 'native-phases.jsonl').read_text().splitlines()]
         inspections = [row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start']
@@ -356,8 +452,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
             self.logs / 'report.stdout.log', self.logs / 'report.stderr.log'])
         self.assertIn('Built Inspector native production batch', build_log)
         self.assertEqual(cold_work['extracted_module_names'], ['D5.A', 'D5.B'])
-        self.assertEqual(cold_work['compiled_module_names'],
-                         ['D5.A', 'D5.B'])
+        self.assertEqual(cold_work['compiled_module_names'], [])
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
                          '[FAIL] unrelated_module_is_never_extracted')
         self.assertEqual(before, [path.read_bytes() for path in protected],
@@ -372,13 +467,19 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertIsInstance(work['compiled_modules'], int)
 
     def test_native_scope_tracks_changed_imports_and_external_utility_claims(self):
-        self.ensure()
+        self.prepare('D5.A')
         self.scoped('D5.A')
         self.write('D5/A.lean', 'import D5.Alone\ndef value : Nat := 7\n')
         self.verify('D5.A', success=False)
+        artifact = self.root / '.lake/build/lib/lean/D5/A.olean'
+        original = artifact.read_bytes()
+        self.assertNotEqual(self.scoped('D5.A', success=False).returncode, 0)
+        self.assertEqual(artifact.read_bytes(), original)
+        self.prepare('D5.A')
         self.scoped('D5.A')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.Alone'})
         self.verify('D5.A')
+        self.prepare('Fixture', 'External')
         self.scoped('Fixture')
         self.assertEqual(set(self.rows()), {'Fixture', 'D5.A', 'D5.Alone'})
         scope = json.loads((self.logs / 'selected-modules.json').read_text())
@@ -389,6 +490,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.verify('Fixture', success=False)
 
     def test_native_aged_warm_scope_reuses_cache_without_archive_refresh(self):
+        self.prepare('D5.A')
         self.scoped('D5.A')
         marker = self.root / '.lake/build/.release-refreshed-at'
         marker.write_text('2000-01-01T00:00:00+00:00\n')
@@ -402,20 +504,37 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertFalse(attempted.exists(), '[FAIL] warm_scope_needs_no_archive_transport')
         self.assertEqual(marker.read_bytes(), before, '[FAIL] scope_does_not_rejuvenate_archive_age')
         self.assertEqual(json.loads((self.logs / 'work.json').read_text())['extracted_modules'], 0)
-        receipt = next(line.removeprefix('LEAN_CACHE ') for line in
-                       (self.logs / 'scope.stdout.log').read_text().splitlines() if line.startswith('LEAN_CACHE '))
-        self.assertEqual(json.loads(receipt)['archive_status'], 'not_attempted')
-
         # Explicit cache maintenance keeps its refresh behavior on the same cache.
         self.ensure()
         self.assertTrue(attempted.exists(), '[FAIL] standalone_ensure_still_refreshes_aged_cache')
 
-    def test_native_cached_scope_still_builds_program_and_clears_failure_seal(self):
-        self.ensure()
+    def test_native_scope_requires_current_prebuilt_reader(self):
+        self.prepare('D5.A')
         self.scoped('D5.A')
         before = (self.root / '.lake/build/lean-inspector/modules/D5.A.zip').read_bytes()
+        config = self.root / 'tools/lean-inspector/lakefile.lean'
+        original = config.read_bytes()
+        # If a reader elaborates this stale config, even in a scratch directory,
+        # the command runs before Lake can validate or build a module facet.
+        marker = self.root / 'config-elaborated'
+        config.write_bytes(original + b'\nrun_cmd IO.FS.writeFile '
+                           + json.dumps(str(marker)).encode() + b' "yes"\n')
+        cached = self.root / 'tools/lean-inspector-reg/.lake/config'
+        prepared = self.inventory(cached)
+        failed = self.scoped('D5.A', success=False)
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertIn('make lean-report-prepare', failed.stderr)
+        self.assertFalse(marker.exists())
+        self.assertEqual(self.inventory(cached), prepared)
+        self.assertEqual(list(cached.parents[2].glob('.report-workspace-*')), [])
+        self.run_lake('-d', 'tools/lean-inspector-reg', 'script', 'list')
+        self.assertEqual(marker.read_text(), 'yes')
+        config.write_bytes(original)
+        self.run_lake('-d', 'tools/lean-inspector-reg', 'script', 'list')
         inspector = self.root / 'tools/lean-inspector/Inspector.lean'
         inspector.write_text(inspector.read_text() + '\n-- compatible producer edit\n')
+        self.assertNotEqual(self.scoped('D5.A', success=False).returncode, 0)
+        self.prepare('D5.A')
         self.scoped('D5.A')
         self.assertEqual(json.loads((self.logs / 'work.json').read_text())['extracted_modules'], 0,
                          '[FAIL] program_bytes_do_not_invalidate_scoped_module_data')
@@ -435,6 +554,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.write('scope-inputs.json', json.dumps([
             dict(modulePath='D5/A.lean', inputModules=['D5.Consumer']),
             dict(modulePath='D5/B.lean', inputModules=['D5.Alone'])]))
+        self.prepare('D5.Consumer')
         self.scoped('D5.A')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B', 'D5.Consumer', 'D5.ConsumerSupport'},
                          '[FAIL] selected_target_consumer_and_imports_are_reported')
@@ -443,6 +563,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.verify('D5.A')
         self.write('D5/ConsumerSupport.lean', 'def consumerSupport : Nat := 2\n')
         self.verify('D5.A', success=False)
+        self.prepare('D5.Consumer')
         self.scoped('D5.A')
         self.write('D5/Consumer.lean', 'this selected consumer deliberately does not compile\n')
         self.assertNotEqual(self.scoped('D5.A', success=False).returncode, 0,

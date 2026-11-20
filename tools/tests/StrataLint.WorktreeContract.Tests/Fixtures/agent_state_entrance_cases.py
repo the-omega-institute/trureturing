@@ -27,6 +27,57 @@ class AgentEntranceTests(unittest.TestCase):
     local = cases.AgentStateTests.local
     saved = cases.AgentStateTests.saved
 
+    def test_landing_checks_merged_inputs_before_checkpoint(self):
+        lane = self.root / "landing lane"
+        branch = "lane/governance/landing"
+        cases.run(self.main, "worktree", "add", "-b", branch, lane)
+        cases.run(self.main, "remote", "add", "origin", self.root / "remote.git")
+        shutil.copy2(cases.ROOT / "lean-report-inputs.json", self.main)
+        (self.main / "Makefile").write_text(
+            "check-lean-report:\n"
+            "\t@echo 'report $(FULL_BUILD) $(origin FULL_BUILD)'\n"
+            "\t@test \"$$REPORT_EXIT\" != 1\n"
+            "gate:\n"
+            "\t@echo 'gate $(BASE)'\n"
+            "\t@false\n")
+        cases.run(self.main, "add", "Makefile", "lean-report-inputs.json")
+        cases.run(self.main, "commit", "-m", "Add landing check inputs on dev")
+        cases.run(self.main, "push", "origin", "dev")
+        base = cases.run(self.main, "rev-parse", "HEAD").stdout.strip()
+        bin_dir = self.root / "bin"
+        bin_dir.mkdir()
+        (bin_dir / "dotnet").symlink_to(shutil.which("true"))
+        environment = {"PATH": str(bin_dir) + os.pathsep + os.environ["PATH"]}
+        for tag, options, status in (
+            ("scoped", {}, 94),
+            ("full", {"FULL_BUILD": "1", "LAND_LOG_DIR": "build/custom logs"}, 94),
+            ("report-failure", {"FULL_BUILD": "1", "REPORT_EXIT": "1"}, 97),
+            ("outside", {"LAND_LOG_DIR": str(self.root / "outside")}, 94),
+        ):
+            with self.subTest(tag=tag):
+                message = self.root / (tag + ".msg")
+                message.write_text("Landing fixture\n")
+                result = subprocess.run(["/bin/bash", cases.ROOT / "tools/scripts/agent/land.sh",
+                    lane, branch, message], cwd=self.main, env=environment | options,
+                    text=True, capture_output=True, timeout=30)
+                self.assertEqual(result.returncode, status, result.stderr)
+                self.assertEqual(cases.run(lane, "rev-parse", "HEAD").stdout.strip(), base)
+                logs = lane / options.get("LAND_LOG_DIR", "build/land-logs") / "flights"
+                if tag == "outside":
+                    self.assertIn("landing_input_outside_tree", result.stderr)
+                    self.assertFalse(logs.exists())
+                    continue
+                report = logs / (tag + "-leanreport.log")
+                gate = logs / (tag + "-gate.log")
+                if tag == "scoped":
+                    self.assertFalse(report.exists())
+                else:
+                    self.assertIn("report 1 command line", report.read_text())
+                if tag == "report-failure":
+                    self.assertFalse(gate.exists())
+                else:
+                    self.assertIn("gate " + base, gate.read_text())
+
     def test_with_reminder_reaches_caller_while_child_waits_for_release(self):
         tree = self.root / "waiting"
         child = ("import socket, sys; s = socket.socket(socket.AF_UNIX); "

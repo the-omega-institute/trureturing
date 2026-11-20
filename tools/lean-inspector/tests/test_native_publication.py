@@ -59,6 +59,7 @@ class NativePublicationConsumerTests:
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
         self.write('lean-report-inputs.json', json.dumps(policy))
+        self.prepare_report_modules(workspace='tools/lean-inspector-reg')
         self.build()
         state = native.state(self.root)
         artifact = state / 'modules/D5.Alone.zip'
@@ -106,22 +107,13 @@ class NativePublicationConsumerTests:
                         path.name in ('reportInspector', 'inputDiscovery'))}
         self.assertTrue(programs)
         self.write('activity.jsonl', '')
-        # Recover through the canonical entry while the invalid predecessor is
-        # still physically published. The real native report is rebuilt here;
-        # the suite is a counted process because these transport fixtures have
-        # no mathematical FIB library.
-        self.write('bin/make', '#!/bin/sh\n'
-            '[ "$1" = -C ] && [ "$2" = "$PWD" ] && [ "$3" = compiled-fib-test ] || exit 97\n'
-            'printf "regressions\\n" >> fib-regression-calls\n')
-        (self.root / 'bin/make').chmod(0o755)
+        # Re-extract from compiled artifacts while an invalid predecessor is published.
         recovered = self.guarded_command(['bash', 'tools/lean-inspector/inspect.sh',
             '--repository', str(self.root), '--output', str(self.root / 'public.json'),
             '--regenerate-report-artifacts', '1'],
             env=dict(self.env, STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_FIB_REGRESSIONS_SELECTED='false'))
         self.assertEqual(recovered.returncode, 0, recovered.stdout + recovered.stderr)
-        self.assertEqual((self.root / 'fib-regression-calls').read_text(), 'regressions\n')
         self.assertTrue(publication.member(self.root / 'public.json', '.reuse.json').exists())
-        (self.root / 'bin/make').unlink()
         publication.validate_bundle(self.root / 'public.json', publication.coordinates(self.root), self.root)
         self.assertEqual(programs, {path: (publication.digest(path), path.stat().st_mtime_ns)
                                     for path in programs})
@@ -657,6 +649,7 @@ class NativeArtifactConsumerTests:
         before = self.stamps()
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- content after producer changes\n')
         self.write('activity.jsonl', '')
+        self.prepare_report_modules('D5.B')
         self.run_lake('build', 'D5.B:report', ':report')
         records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
         self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), 1)

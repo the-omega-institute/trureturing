@@ -14,7 +14,7 @@ from unittest.mock import patch
 
 from lean_seed_transport_fake import FAKE_GH
 
-from lean_seed_support import OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, prepare_release_report, write
+from lean_seed_support import REPORT_BUILD, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, prepare_release_report, write
 
 sys.path.insert(0, str(PUBLISH.parent))
 from lean_cache_release import checkout_topology
@@ -32,7 +32,7 @@ class ReleaseTransportCases(PartitionFixture):
               '{"modules":[],"schema":"stratalint-raw-lean-report-v3"}\n')
         write(self.bin / "make", '''#!/bin/sh
 printf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"
-if [ "$1" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
+if [ "$1" = "check-lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
     if [ "${FAKE_REPORT_PRESERVE:-0}" != "1" ]; then
         python3 -B "$FAKE_REPORT_FACTORY" write-release-report "$PWD"
     fi
@@ -925,7 +925,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual([1] * len(self.gh_budgets()),
                                      [call["timeout"] for call in self.gh_budgets()])
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 6,
+        self.assertEqual([REPORT_BUILD] + ["-C " + str(self.root) + " lean"] * 6,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_deadline_is_shared_across_snapshots(self):
@@ -1031,7 +1031,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual(build_exit, result.returncode, result.stdout + result.stderr)
                     self.assertIn('"status":"miss"', result.stdout)
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 4,
+        self.assertEqual([REPORT_BUILD] + ["-C " + str(self.root) + " lean"] * 4,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_optional_fetch_valid_seed_still_reaches_build(self):
@@ -1040,7 +1040,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         result = self.fetch_then_build()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"unpacked"', result.stdout)
-        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "-C " + str(self.root) + " lean"],
+        self.assertEqual([REPORT_BUILD, "-C " + str(self.root) + " lean"],
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_unavailable_lock_is_an_explicit_fetch_miss(self):
@@ -1063,7 +1063,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         failed = self.transport("publish", PYTHONPATH=str(self.bin), FAKE_BUILD_EXIT="19")
         self.assertEqual(19, failed.returncode, failed.stdout + failed.stderr)
         self.assertEqual([], list(self.remote.iterdir()))
-        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual([REPORT_BUILD, REPORT_BUILD], (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_cannot_enable_cross_partition_selection(self):
         self.assertEqual(0, self.transport("publish").returncode)

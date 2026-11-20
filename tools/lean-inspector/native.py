@@ -31,6 +31,15 @@ UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'cla
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
 
+def check_workspace_producer(root):
+    project = Path(root) / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'
+    result = subprocess.run(['dotnet', 'msbuild', str(project), '-question',
+                             '-p:Configuration=Release', '-nologo', '-v:quiet'])
+    if result.returncode:
+        raise ValueError('prebuilt utility reader needs a build; run make lean-report-prepare '
+                         'with the same LEAN_TARGETS or FULL_BUILD=1')
+
+
 def batch_modules():
     """Runtime capacity only: keep report identities and reusable rows unchanged."""
     value = os.environ.get('STRATALINT_NATIVE_BATCH_MODULES', str(NATIVE_BATCH_MODULES))
@@ -140,14 +149,75 @@ def state(root):
     return Path(root) / '.lake/build/lean-inspector'
 
 
+def prebuilt_workspace(root, *command):
+    """Run the report against Lake's existing configuration oleans inside the cache guard."""
+    host = Path(root).resolve() / 'tools/lean-inspector-reg'
+    args = list(command)
+    directory = args.index('-d') + 1
+    if Path(args[directory]).resolve() != host:
+        raise ValueError('expected the report Lake workspace')
+
+    # Keep the same relative paths to Reg, source packages and their real build outputs.
+    with tempfile.TemporaryDirectory(prefix='.report-workspace-', dir=host.parent) as temp:
+        view = Path(temp)
+        for member in host.iterdir():
+            if member.name != '.lake':
+                (view / member.name).symlink_to(member)
+        cache = view / '.lake'
+        cache.mkdir()
+        original = host / '.lake'
+        if original.is_dir():
+            for member in original.iterdir():
+                if member.name != 'config':
+                    (cache / member.name).symlink_to(member)
+        manifest = json.loads((host / 'lake-manifest.json').read_text())
+        entries = manifest['packages']
+        overrides = original / 'package-overrides.json'
+        if overrides.exists():
+            entries = entries + json.loads(overrides.read_text())['packages']
+        root_config = host / 'lakefile.lean'
+        names = {'lakefile.olean', root_config.resolve().with_suffix('.olean').name}
+        packages = host / manifest.get('packagesDir', '.lake/packages')
+        for entry in entries:
+            package = (host / entry['dir'] if entry['type'] == 'path' and not entry.get('copy')
+                       else packages / entry['name'] / (entry.get('subDir') or ''))
+            source = package / entry.get('configFile', 'lakefile')
+            if not source.suffix:
+                source = source.with_suffix('.lean')
+            if source.suffix == '.lean':
+                names.update((source.with_suffix('.olean').name, source.resolve().with_suffix('.olean').name))
+        # Lake 4.35 loads at most the root and one package per manifest name. On
+        # a cache miss it opens the trace for creation or a lock for writing BEFORE
+        # elaboration. Directories at these paths reject both operations, even as root.
+        for index in range(len(entries) + 1):
+            target = cache / 'config' / str(index)
+            target.mkdir(parents=True)
+            for name in names:
+                saved = original / 'config' / str(index) / name
+                trace = saved.with_suffix('.olean.trace')
+                if trace.is_file():
+                    (target / trace.name).symlink_to(trace)
+                else:
+                    (target / trace.name).mkdir()
+                if saved.is_file():
+                    (target / name).symlink_to(saved)
+                (target / (name + '.lock')).mkdir()
+        args[directory] = str(view)
+        status = subprocess.run(args).returncode
+        if status:
+            print('For missing or stale Lake configurations, run make lean-report-prepare '
+                  'with the same LEAN_TARGETS or FULL_BUILD=1.',
+                  file=sys.stderr)
+            raise SystemExit(status if status >= 0 else 128 - status)
+
+
 def regenerate(root, *command):
     """Explicit report-only rebuild, called inside lean-cache-run's writer guard.
 
     Remove generated report leaves, traces and the aggregate, retaining native
     program directories and compiler input projections. Mathematical Lean and
-    dependency build directories lie outside this report state. Disable Lake's
-    content-store restoration for this invocation so
-    identical input traces cannot resurrect the discarded report artifacts.
+    dependency build directories lie outside this report state. Only report ZIP
+    facets bypass content-store lookup during regeneration.
     """
     if not command:
         raise ValueError('report regeneration requires a build command')
@@ -163,7 +233,7 @@ def regenerate(root, *command):
             else:
                 path.unlink()
     subprocess.run(command, cwd=root, check=True,
-                   env=dict(os.environ, LAKE_ARTIFACT_CACHE='false', LAKE_RESTORE_ARTIFACTS='false'))
+                   env=dict(os.environ, STRATALINT_INSPECTOR_REGENERATE_REPORTS='1'))
 
 
 def write_if_changed(path, data):
@@ -733,7 +803,8 @@ def main():
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
                'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
                'aggregate': aggregate, 'publish': publish, 'batch': batch,
-               'regenerate': regenerate}
+               'regenerate': regenerate, 'prebuilt-workspace': prebuilt_workspace,
+               'check-workspace-producer': check_workspace_producer}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     with phase('native-' + sys.argv[1]):
