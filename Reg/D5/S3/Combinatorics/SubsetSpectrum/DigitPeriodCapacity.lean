@@ -49,14 +49,15 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     · exact ⟨fun _ => 0, by norm_num [w]⟩
     · exact ⟨fun _ => 2, by norm_num [w]⟩
   have impossible := h (r := 0) (k := 2) (n := 2) (B := 1) (M := 1)
-    (by decide) w short nonintegral covers
+    (by decide) w short (by simpa only [Nat.cast_one] using nonintegral) covers
   exact (by decide : ¬ (2 : ℕ) ≤ 1) impossible
 
 def family : Registration arena (type_of% (@integral_range_le_period_blocks)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨integral_range_le_period_blocks, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity :=
+    Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro role
     exact ⟨(), 1, 2, (by decide : (1 : ℕ) ≠ 2)⟩
