@@ -29,7 +29,7 @@ on:
         options: [build, release]
         default: build
       release_seed_tag:
-        description: 'Optional exact local candidate Release for the long build'
+        description: 'Optional exact published Release tag to seed the protected build'
         type: string
       release_seed_producer:
         description: 'Immutable producer commit of release_seed_tag'
@@ -145,6 +145,9 @@ jobs:
           bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
+        env:
+          STRATALINT_RELEASE_SEED_TAG: ${{ inputs.release_seed_tag }}
+          STRATALINT_RELEASE_SEED_PRODUCER: ${{ inputs.release_seed_producer }}
         with:
           shard-history-anchor: ${{ inputs.shard_history_anchor || (vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR) || '' }}
           regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts && 'true' || 'false' }}

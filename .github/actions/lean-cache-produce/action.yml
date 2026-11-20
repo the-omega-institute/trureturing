@@ -2,10 +2,10 @@ name: Produce the Lean Actions cache
 description: Resume long builds separately and publish only complete validated Lean seeds, completing dependency-scoped FIB regressions required by report production.
 inputs:
   release-seed-tag:
-    description: Exact local candidate Release to restore before the long build
+    description: Exact published Release tag to restore before the long build
     default: ''
   release-seed-producer:
-    description: Immutable commit that produced the selected local Release
+    description: Immutable commit that produced the selected Release
     default: ''
   shard-history-anchor:
     description: Pinned dev anchor for the sharded project cache, empty selects native cache transport
@@ -43,6 +43,7 @@ runs:
       shell: bash
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
     - id: prepared
+      if: inputs.release-seed-tag == '' && inputs.release-seed-producer == ''
       env:
         GH_TOKEN: ${{ github.token }}
       uses: ./.github/actions/lean-cache-shards
@@ -107,15 +108,6 @@ runs:
         else
           python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
         fi
-    - id: release
-      name: Restore the explicitly selected local Release
-      if: steps.prepared.outputs.adopted != 'true' && (inputs.release-seed-tag != '' || inputs.release-seed-producer != '')
-      env:
-        GH_TOKEN: ${{ github.token }}
-        RELEASE_TAG: ${{ inputs.release-seed-tag }}
-        RELEASE_PRODUCER: ${{ inputs.release-seed-producer }}
-      shell: bash
-      run: make lean-cache-from-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_TAG="$RELEASE_TAG" LEAN_CACHE_SOURCE_COMMIT="$RELEASE_PRODUCER"
     - id: sharded_resume
       name: Restore sharded producer progress
       if: steps.prepared.outputs.adopted != 'true' && inputs.shard-history-anchor != '' && inputs.release-seed-tag == ''
@@ -132,7 +124,7 @@ runs:
       run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
     - id: resume_lookup
       name: Find the producer continuation without extracting
-      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true' && steps.sharded_seed.outputs.complete != 'true' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
+      if: steps.prepared.outputs.adopted != 'true' && steps.sharded_seed.outputs.complete != 'true' && (steps.sharded_resume.outputs.available == '' || steps.sharded_resume.outputs.available == '0')
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -159,7 +151,30 @@ runs:
         python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
         if [[ -f "$GITHUB_WORKSPACE/build/lean-cache/producer-resume-restored.json" ]]; then
           echo 'restored=true' >> "$GITHUB_OUTPUT"
+          echo "attempt=${RESUME_KEY##*-}" >> "$GITHUB_OUTPUT"
         fi
+    - id: release
+      name: Restore the explicitly selected Release
+      if: steps.native_resume.outputs.restored != 'true' && (inputs.release-seed-tag != '' || inputs.release-seed-producer != '')
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RELEASE_TAG: ${{ inputs.release-seed-tag }}
+        RELEASE_PRODUCER: ${{ inputs.release-seed-producer }}
+      shell: bash
+      run: make lean-cache-from-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_TAG="$RELEASE_TAG" LEAN_CACHE_SOURCE_COMMIT="$RELEASE_PRODUCER"
+    - id: release_resume
+      name: Restore progress from an earlier attempt of this Release rebuild
+      if: >-
+        inputs.release-seed-tag != '' && inputs.shard-history-anchor != '' && fromJSON(github.run_attempt) > 1 &&
+        (steps.release.outputs.restored == 'true' || steps.native_resume.outputs.restored == 'true')
+      continue-on-error: true
+      uses: ./.github/actions/lean-cache-shards
+      env:
+        GH_TOKEN: ${{ github.token }}
+      with:
+        operation: restore
+        state: resume
+        resume-after-attempt: ${{ steps.native_resume.outputs.attempt || '0' }}
     - id: build
       name: Build the report and cacheable audit programs
       continue-on-error: true
@@ -169,6 +184,7 @@ runs:
         PARTIAL_INDEXED_PROJECT: >-
           ${{ ((steps.sharded_seed.outputs.available || '0') != '0' && steps.sharded_seed.outputs.complete != 'true')
               || (steps.sharded_resume.outputs.available || '0') != '0'
+              || (steps.release_resume.outputs.available || '0') != '0'
               || (inputs.shard-history-anchor != '' && steps.native_resume.outputs.restored == 'true') }}
         REGENERATE_REPORTS: ${{ inputs.regenerate-report-artifacts }}
         STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
@@ -233,7 +249,7 @@ runs:
       shell: bash
       run: |
         if [[ "$BUILD_EXIT" == 124 ]]; then
-          echo "CACHE_PRODUCER_INCOMPLETE build slice ended; rerun the producer with the same dependency pins to continue" >&2
+          echo "CACHE_PRODUCER_INCOMPLETE build slice ended; retry the failed producer with gh run rerun $GITHUB_RUN_ID --failed" >&2
         else
           echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress does not validate the report" >&2
         fi
