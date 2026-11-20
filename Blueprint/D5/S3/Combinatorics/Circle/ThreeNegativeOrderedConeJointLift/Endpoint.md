@@ -33,4 +33,5 @@ The theorem covers the complete ordered cone 2<=a<b<=c of the joint-order proble
 - Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift/Endpoint.actualSource_three_negative_ordered_cone_joint_lift`
 - Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](../ThreeBitSource.md)
 - Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](../ThreeNegativeEqualOuterJointLift.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge](../ThreeNegativeEqualOuterSourceBridge.md)
 - Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeMinimumTwoJointLift](../ThreeNegativeMinimumTwoJointLift.md)
