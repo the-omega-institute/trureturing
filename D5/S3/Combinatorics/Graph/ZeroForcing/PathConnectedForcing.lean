@@ -7,6 +7,7 @@
    digest: The connected forcing polynomial of the path P_n is 2x + sum_(i=2)^n (n-i+1) x^i. -/
 
 import D5.S3.Combinatorics.Graph.ZeroForcing.ConnectedForcingCrossingRefutation
+import Mathlib.Combinatorics.SimpleGraph.Hasse
 
 /-! The connected forcing polynomial of the path, Proposition 7.7 of B. Brimkov, Graph Coloring,
 Zero Forcing, and Related Problems (PhD thesis, Rice University, 2017): for `n ≥ 2`,
