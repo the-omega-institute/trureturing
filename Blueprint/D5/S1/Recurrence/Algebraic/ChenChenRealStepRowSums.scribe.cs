@@ -20,7 +20,9 @@ internal sealed class ChenChenRealStepRowSumsDocument : IScribeDocumentDefinitio
                 Blocks(Paragraph(Text(
                     "Let m be real and let T satisfy T(n,1)=T(n,n)=1 for n ≥ 1 and "
                     + "T(n,k)=(m(n−k)+1)T(n−1,k−1)+(m(k−1)+1)T(n−1,k) for 1<k<n, the "
-                    + "step-m Eulerian triangle of X. Chen and Y. Chen (OEIS A392664–A392666). "
+                    + "step-m Eulerian triangle; OEIS A392664–A392666 (X. Chen and Y. Chen) are "
+                    + "the integer steps m=−3,−4,−5. Such a T exists for every real m, built "
+                    + "recursively row by row. "
                     + "Then for every n ≥ 1, ∑_{k=1}^{n} T(n,k)=∏_{j=0}^{n−2}(mj+2); and for "
                     + "every even n, ∑_{k=1}^{n} (−1)^{k−1}T(n,k)=0, so the entries at odd "
                     + "positions and the entries at even positions each sum to half the row "

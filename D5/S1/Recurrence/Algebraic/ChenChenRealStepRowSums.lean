@@ -15,16 +15,21 @@ escape_witness: row_sum (padding the previous row by zero, the recursion holds a
   so the alternating row sum equals its own negative).
 proof_shape:
   Source, claim: source definitions; consumers: the theorems below.
+  triangle: private definition (the recursive solution); consumer: source_exists.
+  source_exists: bind-only helper (the recursion holds by unfolding triangle); consumers:
+    result and D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns.result.
   P: private definition (zero padding); consumers: padded_rec, sum_eq_range, row_sum.
-  padded_rec: content (the boundary values agree with the recursion under zero padding);
+  padded_rec: bind-only helper (case split on k, instantiation of Source, simp and ring);
     consumer: row_sum.
   sum_eq_range: bind-only helper (reindexing Icc 1 n to range n); consumer: row_sum.
   row_sum: content; consumer: result.
-  reflection: content (T n k = T n (n+1-k) by strong induction on rows); consumer:
-    alternating_zero.
+  reflection: content (T n k = T n (n+1-k) by strong induction on rows; the escape content
+    behind the even-row clauses); consumers: alternating_zero and
+    D5/S1/Recurrence/Algebraic/ChenChenRealStepSigns.positive_rows.
   alternating_zero: content; consumer: result.
-  result: content only through row_sum and alternating_zero; the parity sums follow from
-    the split of the row into odd and even positions by linear arithmetic.
+  result: content only through row_sum and alternating_zero; existence is source_exists, and
+    the parity sums follow from the split of the row into odd and even positions by linear
+    arithmetic.
 Direct frozen dependencies: none (Mathlib-only imports).
 Search record (§3.1): D5/S1/Recurrence/Algebraic/ChenChenParityPositivity treats integer
   steps over ℤ and proves even-row positivity; its private reflection lemma is stated for
@@ -45,7 +50,8 @@ import Mathlib.Tactic.Ring
 
 Chen and Chen's step-`m` Eulerian triangle has `T(n,1) = T(n,n) = 1` and, for `1 < k < n`,
 `T(n,k) = (m(n-k)+1) T(n-1,k-1) + (m(k-1)+1) T(n-1,k)`. For every real `m` and every
-function satisfying these rules, the `n`-th row sums to `∏_{j=0}^{n-2} (mj+2)`. In an even row
+function satisfying these rules (one exists for every `m`), the `n`-th row sums to
+`∏_{j=0}^{n-2} (mj+2)`. In an even row
 the alternating sum `∑ (-1)^(k-1) T(n,k)` vanishes, so the entries at odd and at even positions
 each sum to half the row sum.
 -/
@@ -62,10 +68,10 @@ def Source (m : ℝ) (T : ℕ → ℕ → ℝ) : Prop :=
     T n k = (m * ((n : ℝ) - (k : ℝ)) + 1) * T (n - 1) (k - 1) +
       (m * ((k : ℝ) - 1) + 1) * T (n - 1) k
 
-/-- Row sums, even-row alternating sums and even-row parity sums, for every real step and
-every function satisfying the recursion. -/
+/-- Existence of a solution, and the row sums, even-row alternating sums and even-row parity
+sums of every solution, for every real step. -/
 def claim : Prop :=
-  ∀ (m : ℝ) (T : ℕ → ℕ → ℝ), Source m T →
+  ∀ m : ℝ, (∃ T, Source m T) ∧ ∀ T : ℕ → ℕ → ℝ, Source m T →
     (∀ n, 1 ≤ n → ∑ k ∈ Finset.Icc 1 n, T n k = ∏ j ∈ Finset.range (n - 1), (m * j + 2)) ∧
     (∀ n, 1 ≤ n → Even n →
       ∑ k ∈ Finset.Icc 1 n, T n k * (-1) ^ (k - 1) = 0 ∧
@@ -73,6 +79,23 @@ def claim : Prop :=
         (1 / 2) * ∑ k ∈ Finset.Icc 1 n, T n k ∧
       ∑ k ∈ (Finset.Icc 1 n).filter Even, T n k =
         (1 / 2) * ∑ k ∈ Finset.Icc 1 n, T n k)
+
+/-- The recursively built triangle, zero outside the triangle and in row zero. -/
+private noncomputable def triangle (m : ℝ) : ℕ → ℕ → ℝ
+  | 0, _ => 0
+  | n + 1, k => if k = 1 ∨ k = n + 1 then 1 else
+      (m * ((n + 1 : ℕ) - (k : ℝ)) + 1) * triangle m n (k - 1) +
+        (m * ((k : ℝ) - 1) + 1) * triangle m n k
+
+/-- For every real step the recursion has a solution. -/
+theorem source_exists (m : ℝ) : ∃ T, Source m T := by
+  refine ⟨triangle m, ?_, ?_⟩
+  · intro n hn
+    obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
+    simp [triangle]
+  · intro n k hk hkn
+    obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
+    simp [triangle, show k ≠ 1 by omega, show k ≠ n + 1 by omega]
 
 /-- The triangle padded by zero outside `1 ≤ k ≤ n`. -/
 private noncomputable def P (T : ℕ → ℕ → ℝ) (n k : ℕ) : ℝ :=
@@ -139,7 +162,9 @@ private theorem row_sum {m : ℝ} {T : ℕ → ℕ → ℝ} (h : Source m T) :
     push_cast [Nat.cast_sub (by omega : 1 ≤ n)]
     ring
 
-private theorem reflection {m : ℝ} {T : ℕ → ℕ → ℝ} (h : Source m T)
+/-- The two recursion coefficients exchange under `k ↦ n + 1 - k`, so every solution is
+symmetric in each row. -/
+theorem reflection {m : ℝ} {T : ℕ → ℕ → ℝ} (h : Source m T)
     (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) (hkn : k ≤ n) :
     T n k = T n (n + 1 - k) := by
   induction n using Nat.strong_induction_on generalizing k with
@@ -201,7 +226,8 @@ private theorem alternating_zero {m : ℝ} {T : ℕ → ℕ → ℝ} (h : Source
 
 /-- The row-sum and parity identities hold. -/
 theorem result : claim := by
-  intro m T h
+  intro m
+  refine ⟨source_exists m, fun T h => ?_⟩
   refine ⟨row_sum h, fun n hn he => ?_⟩
   have hR := alternating_zero h hn he
   have hsplit : ∑ k ∈ Finset.Icc 1 n, T n k * (-1) ^ (k - 1) =
