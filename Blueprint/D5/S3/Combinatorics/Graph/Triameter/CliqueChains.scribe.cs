@@ -31,11 +31,10 @@ internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
             Definition("clique-chain-block", "block",
                 ForAll(Eqn(Block(F.Id("x")), Seq(Qualified("if"), Sp, Eqn(Depth(F.Id("x")), D(0)),
                     Sp, Qualified("then"), Sp, Qualified("none"), Sp, Qualified("else"), Sp,
-                    ApplyName("some", Seq(Langle, Leg(F.Id("x")), Comma, Sp,
-                        ApplyName("Nat.div", Seq(Depth(F.Id("x")), Minus, D(1)), D(2)),
-                        Rangle)))), Bound("q", QType), ModelVertex("x")),
+                    PositiveBlock(F.Id("x")))), Bound("q", QType), ModelVertex("x")),
                 "For x : EvenLegTriangle.Vertex q, block x returns a BlockIndex q. At positive depth, "
-                    + "natural division by two after subtracting one gives the index in Fin (q i)."),
+                    + "hbound is the displayed range proof. It follows from the depth bound "
+                    + "Fin.val (Sigma.snd x) < 2 * q (Sigma.fst x) + 1 and the positive-depth condition."),
             Definition("clique-chain-interface", "Interface",
                 ForAll(Seq(ApplyName("Interface", F.Id("x"), F.Id("y")), Sp, Leftrightarrow, Sp,
                     SameLeg, Sp, Land, Sp, Parenthesized(Seq(
@@ -99,6 +98,14 @@ internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
 
     private static Formula Chains => ApplyName("CliqueChains", F.Id("G"), F.Id("q"), F.Id("f"));
     private static Formula Block(Formula x) => ApplyName("block", x);
+    private static Formula PositiveBlock(Formula x)
+    {
+        var leg = Leg(x);
+        var index = ApplyName("Nat.div", Seq(Depth(x), Minus, D(1)), D(2));
+        var bound = Bound("hbound", Seq(index, Sp, Lt, Sp, ApplyName("q", leg)));
+        return ApplyName("some", Seq(Langle, leg, Comma, Sp, ApplyName("Fin.mk", index, bound), Rangle));
+    }
+
     private static Formula SameBlock => Eqn(Block(Image(F.Id("x"))), Block(Image(F.Id("y"))));
     private static Formula OrientedInterface(Formula x, Formula y) =>
         Seq(Eqn(ApplyName("Nat.mod", Depth(x), D(2)), D(0)), Sp, Land, Sp, Step(x, y));

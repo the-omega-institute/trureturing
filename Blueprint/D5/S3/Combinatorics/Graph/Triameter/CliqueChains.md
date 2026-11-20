@@ -22,7 +22,7 @@ For q : Fin 3 → ℕ, none indexes the central clique. A pair of leg i and inde
 
 **Definition 1.2 (block).**
 
-$$\forall (q: \operatorname{Fin}(3) \to \mathbb{N}) (x: \operatorname{EvenLegTriangle.Vertex}(q)), \operatorname{block}(x) = \operatorname{if} \operatorname{Fin.val}(\operatorname{Sigma.snd}(x)) = 0 \operatorname{then} \operatorname{none} \operatorname{else} \operatorname{some}(\langle\operatorname{Sigma.fst}(x), \operatorname{Nat.div}(\operatorname{Fin.val}(\operatorname{Sigma.snd}(x))-1, 2)\rangle)$$
+$$\forall (q: \operatorname{Fin}(3) \to \mathbb{N}) (x: \operatorname{EvenLegTriangle.Vertex}(q)), \operatorname{block}(x) = \operatorname{if} \operatorname{Fin.val}(\operatorname{Sigma.snd}(x)) = 0 \operatorname{then} \operatorname{none} \operatorname{else} \operatorname{some}(\langle\operatorname{Sigma.fst}(x), \operatorname{Fin.mk}(\operatorname{Nat.div}(\operatorname{Fin.val}(\operatorname{Sigma.snd}(x))-1, 2), (hbound: \operatorname{Nat.div}(\operatorname{Fin.val}(\operatorname{Sigma.snd}(x))-1, 2) < \operatorname{q}(\operatorname{Sigma.fst}(x))))\rangle)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Triameter/CliqueChains.block` (`✓ std3`).
 
@@ -32,7 +32,7 @@ $$\forall (q: \operatorname{Fin}(3) \to \mathbb{N}) (x: \operatorname{EvenLegTri
 
 *Commentary.*
 
-For x : EvenLegTriangle.Vertex q, block x returns a BlockIndex q. At positive depth, natural division by two after subtracting one gives the index in Fin (q i).
+For x : EvenLegTriangle.Vertex q, block x returns a BlockIndex q. At positive depth, hbound is the displayed range proof. It follows from the depth bound Fin.val (Sigma.snd x) < 2 * q (Sigma.fst x) + 1 and the positive-depth condition.
 
 **Definition 1.3 (Interface).**
 
