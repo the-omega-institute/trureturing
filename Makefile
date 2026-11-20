@@ -65,7 +65,8 @@ lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: exp
 lean-cache-to-github-without-mathlib: export LEAN_CACHE_PUBLISH_ONLY ?= 0
 lean-cache-from-github-without-mathlib: export LEAN_CACHE_APPROVED_TAG ?=
 lean-cache-from-github-without-mathlib: export LEAN_CACHE_APPROVED_PRODUCER ?=
-lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: export LEAN_CACHE_INDEXED ?= 0
+lean-cache-to-github-without-mathlib: export LEAN_CACHE_INDEXED ?= 0
+lean-cache-from-github-without-mathlib: export LEAN_CACHE_INDEXED ?= $(if $(filter production,$(LEAN_CACHE_MODE)),1,0)
 lean-cache-from-github-without-mathlib: export LEAN_CACHE_TARGETS ?=
 lean-cache-from-github-without-mathlib: export LEAN_CACHE_LOCAL_ASSETS ?=
 
