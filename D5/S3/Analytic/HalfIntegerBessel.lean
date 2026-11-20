@@ -10,6 +10,7 @@ module
 public import D5.S3.Analytic.HalfIntegerBesselPolynomial
 public import Mathlib.Analysis.Calculus.Deriv.Polynomial
 public import Mathlib.Analysis.Complex.SqrtDeriv
+import Mathlib.Algebra.Polynomial.Reverse
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
@@ -989,6 +990,133 @@ theorem sector_K_estimate (m : ℕ) {κ : ℝ} (hκ : 0 < κ) (hm : 4 * sectorMa
   have habs := hbound.trans hhalf
   rw [hz, zero_sub, norm_neg, norm_one] at habs
   norm_num at habs
+
+/-- The normalized regular amplitude in the phase variable. -/
+noncomputable def F_I (m : ℕ) (w : ℂ) : ℂ :=
+  (Real.sqrt (2 * Real.pi * order m) : ℂ) * Complex.sqrt (S w) *
+    Complex.exp (-(order m : ℂ) * eta w) * I m ((order m : ℂ) * w)
+
+private theorem sqrt_I_scale (m : ℕ) :
+    Real.sqrt (2 * Real.pi * order m) = Real.pi * Real.sqrt (2 * order m / Real.pi) := by
+  calc
+    _ = Real.sqrt (Real.pi ^ 2 * (2 * order m / Real.pi)) := by
+      congr 1
+      field_simp [Real.pi_ne_zero]
+    _ = _ := by rw [Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq Real.pi_pos.le]
+
+/-- The relative amplitude is the normalized quotient where the decaying carrier is nonzero. -/
+theorem F_I_div_F_K (m : ℕ) {w : ℂ} (hw : 0 < w.re)
+    (hK : K m ((order m : ℂ) * w) ≠ 0) :
+    F_I m w / F_K m w =
+      (Real.pi : ℂ) * Complex.exp (-2 * (order m : ℂ) * eta w) *
+        (I m ((order m : ℂ) * w) / K m ((order m : ℂ) * w)) := by
+  have hS : Complex.sqrt (S w) ≠ 0 := arg_ne_zero
+    (sqrt_re_pos_of_mem_slitPlane (Complex.mem_slitPlane_iff.mpr (Or.inl (S_re_pos hw))))
+  have hN : (Real.sqrt (2 * order m / Real.pi) : ℂ) ≠ 0 := by
+    have hp := order_pos m
+    exact_mod_cast (show Real.sqrt (2 * order m / Real.pi) ≠ 0 by positivity)
+  rw [F_I, F_K, sqrt_I_scale, Complex.ofReal_mul,
+    show -2 * (order m : ℂ) * eta w = -((order m : ℂ) * eta w) - (order m : ℂ) * eta w by ring,
+    Complex.exp_sub, neg_mul]
+  field_simp [hS, hK, hN, Complex.exp_ne_zero]
+
+private theorem reverse_eval (m : ℕ) {z : ℂ} (hz : z ≠ 0) :
+    aeval z (carrier m).reverse = z ^ m * aeval z⁻¹ (carrier m) := by
+  have : Invertible z⁻¹ := invertibleOfNonzero (inv_ne_zero hz)
+  have h := eval₂_reverse_mul_pow (algebraMap ℚ ℂ) z⁻¹ (carrier m)
+  rw [invOf_eq_inv, inv_inv, HalfIntegerBesselPolynomial.natDegree_carrier] at h
+  simp_rw [aeval_def]
+  rw [← h, inv_pow, mul_left_comm, mul_inv_cancel₀ (pow_ne_zero m hz), mul_one]
+
+private theorem regularQuotient_extension (m : ℕ) {z : ℂ} (hz : 0 < z.re)
+    (hB : aeval z (carrier m).reverse ≠ 0) :
+    I m z / K m z =
+      ((-1 : ℂ) ^ m * (Complex.exp (2 * z) * aeval (-z) (carrier m).reverse /
+        aeval z (carrier m).reverse - 1)) / (Real.pi : ℂ) := by
+  let B : ℂ → ℂ := fun t => aeval t (carrier m).reverse
+  have hz0 := arg_ne_zero hz
+  have hP : aeval z⁻¹ (carrier m) = B z / z ^ m := by
+    apply (eq_div_iff (pow_ne_zero m hz0)).mpr
+    change _ = aeval z (carrier m).reverse
+    rw [reverse_eval m hz0, mul_comm]
+  have hQ : aeval z⁻¹ ((carrier m).comp (-X)) = B (-z) / (-z) ^ m := by
+    rw [aeval_comp, map_neg, aeval_X, ← inv_neg]
+    apply (eq_div_iff (pow_ne_zero m (neg_ne_zero.mpr hz0))).mpr
+    change _ = aeval (-z) (carrier m).reverse
+    rw [reverse_eval m (neg_ne_zero.mpr hz0), mul_comm]
+  change B z ≠ 0 at hB
+  have hπ : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
+  have hroot : Complex.sqrt z ≠ 0 := arg_ne_zero
+    (sqrt_re_pos_of_mem_slitPlane (Complex.mem_slitPlane_iff.mpr (Or.inl hz)))
+  have hnorm : (Real.sqrt (Real.pi / 2) : ℂ) ≠ 0 := by
+    exact_mod_cast (show Real.sqrt (Real.pi / 2) ≠ 0 by positivity)
+  have hA : prefactor z ≠ 0 := div_ne_zero hnorm hroot
+  have hsign : ((-1 : ℂ) ^ m)⁻¹ = (-1 : ℂ) ^ m := by rw [← inv_pow, inv_neg, inv_one]
+  change I m z / K m z = ((-1 : ℂ) ^ m * (Complex.exp (2 * z) * B (-z) / B z - 1)) / _
+  have hneg : (-z) ^ m = (-1 : ℂ) ^ m * z ^ m := by rw [← neg_one_mul z, mul_pow]
+  rw [I, L, K, hP, hQ, hneg, div_eq_mul_inv (B (-z)), mul_inv_rev, hsign]
+  rw [show (2 : ℂ) * z = z - (-z) by ring, Complex.exp_sub]
+  field_simp [hπ, hB, hA, hz0, Complex.exp_ne_zero]
+
+/-- The unnormalized quotient of the regular and decaying carriers tends to zero at the origin. -/
+theorem radial_I_div_K_zero (m : ℕ) {u : ℂ} (hu : 0 < u.re) :
+    Filter.Tendsto (fun r : ℝ => I m ((order m : ℂ) * ((r : ℂ) * u)) /
+      K m ((order m : ℂ) * ((r : ℂ) * u))) (𝓝[>] 0) (𝓝 0) := by
+  let B (z : ℂ) := aeval z (carrier m).reverse
+  let H (z : ℂ) := ((-1 : ℂ)^m * (Complex.exp (2 * z) * B (-z) / B z - 1)) / (Real.pi : ℂ)
+  have hB0 : B 0 ≠ 0 := by
+    have hp : carrier m ≠ 0 := by
+      intro hp
+      have hc := HalfIntegerBesselPolynomial.carrier_coeff_zero m
+      simp [hp] at hc
+    change aeval (0 : ℂ) (carrier m).reverse ≠ 0
+    rw [aeval_def, eval₂_at_zero, coeff_zero_reverse]
+    exact (map_ne_zero_iff _ (RingHom.injective _)).mpr (leadingCoeff_ne_zero.mpr hp)
+  have hB : Continuous B := continuous_iff_continuousAt.mpr fun z => by
+    change ContinuousAt (fun t : ℂ => aeval t (carrier m).reverse) z
+    exact ((carrier m).reverse.hasDerivAt_aeval z).continuousAt
+  have hH : ContinuousAt H 0 := by
+    unfold H
+    refine (((ContinuousAt.div (by fun_prop (disch := assumption)) hB.continuousAt hB0).sub
+      continuousAt_const).const_mul _).div_const _
+  have hH0 : H 0 = 0 := by simp [H, hB0]
+  let z (r : ℝ) := (order m : ℂ) * ((r : ℂ) * u)
+  have hz0 : z 0 = 0 := by simp [z]
+  have hz : Filter.Tendsto z (𝓝[>] 0) (𝓝 0) := by
+    have hc : ContinuousAt z 0 := by unfold z; fun_prop
+    rw [← hz0]
+    exact hc.tendsto.mono_left nhdsWithin_le_nhds
+  have ht := hH.tendsto.comp hz
+  rw [hH0] at ht
+  refine ht.congr' ?_
+  have hBN := hz.eventually (hB.continuousAt.eventually_ne hB0)
+  filter_upwards [self_mem_nhdsWithin, hBN] with r hr hb
+  exact (regularQuotient_extension m (scaled_re_pos m (ray_re_pos hu hr)) hb).symm
+
+/-- The real part of the phase diverges to negative infinity on each unit ray at the origin. -/
+theorem radial_eta_re_atBot {u : ℂ} (hu : ‖u‖ = 1) :
+    Filter.Tendsto (fun r : ℝ => (eta ((r : ℂ) * u)).re) (𝓝[>] 0) Filter.atBot := by
+  let ray (r : ℝ) := (r : ℂ) * u
+  have hS : ContinuousAt (fun r : ℝ => S (ray r)) 0 := by
+    have harg : ContinuousAt (fun r : ℝ => 1 + (ray r)^2) 0 := by unfold ray; fun_prop
+    have hroot : ContinuousAt Complex.sqrt (1 : ℂ) :=
+      Complex.continuousAt_sqrt (Or.inl (by norm_num))
+    exact hroot.comp_of_eq harg (by simp [ray])
+  have hlog : ContinuousAt (fun r : ℝ => Complex.log (1 + S (ray r))) 0 := by
+    have harg : ContinuousAt (fun r : ℝ => 1 + S (ray r)) 0 := continuousAt_const.add hS
+    have hroot : ContinuousAt Complex.log (2 : ℂ) := (Complex.hasDerivAt_log
+      (Complex.mem_slitPlane_iff.mpr (Or.inl (by norm_num)))).continuousAt
+    exact hroot.comp_of_eq harg (by norm_num [ray, S_zero])
+  have hcor : ContinuousAt (fun r : ℝ => (S (ray r)).re - (Complex.log (1 + S (ray r))).re) 0 :=
+    (Complex.continuous_re.continuousAt.comp' hS).sub
+      (Complex.continuous_re.continuousAt.comp' hlog)
+  have ht := (hcor.tendsto.mono_left nhdsWithin_le_nhds).add_atBot Real.tendsto_log_nhdsGT_zero
+  refine ht.congr' ?_
+  filter_upwards [self_mem_nhdsWithin (a := (0 : ℝ)) (s := Set.Ioi 0)] with r hr
+  have hn : ‖ray r‖ = r := ray_norm hu (le_of_lt hr)
+  change _ = (eta (ray r)).re
+  rw [eta, Complex.sub_re, Complex.add_re, Complex.log_re, Complex.log_re, hn]
+  ring
 
 end LiouvilleGreen
 

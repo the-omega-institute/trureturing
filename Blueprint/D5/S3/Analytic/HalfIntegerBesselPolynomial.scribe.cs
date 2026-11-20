@@ -31,6 +31,10 @@ internal sealed class HalfIntegerBesselPolynomialDocument : IScribeDocumentDefin
                 + "identity X^2 P'' + (2X+2) P' = m(m+1) P. Each coefficient of this "
                 + "identity reduces to the factorial recurrence.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("natDegree_carrier", "Degree of the finite carrier",
+                "The carrier P_m has natural degree m. Its coefficient at m is nonzero "
+                + "and all coefficients at larger indices vanish.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("carrier_coeff_zero", "Carrier constant coefficient",
                 "The constant coefficient of the finite reciprocal carrier is one for every order.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),

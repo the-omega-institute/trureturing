@@ -7,6 +7,7 @@
    digest: The normalized Bessel polynomials and their reflected Wronskian. -/
 module
 
+import Mathlib.Algebra.Polynomial.Degree.Lemmas
 public import Mathlib.Algebra.Polynomial.Derivative
 public import Mathlib.Data.Nat.Factorial.Basic
 public import Mathlib.Data.Rat.Cast.CharZero
@@ -73,6 +74,18 @@ private theorem coeff_carrier (m k : ℕ) : (carrier m).coeff k = coefficient m 
 /-- The finite reciprocal carrier has constant coefficient one. -/
 theorem carrier_coeff_zero (m : ℕ) : (carrier m).coeff 0 = 1 :=
   (coeff_carrier m 0).trans (coefficient_zero m)
+
+/-- The order is the degree of the finite reciprocal carrier. -/
+theorem natDegree_carrier (m : ℕ) : (carrier m).natDegree = m := by
+  apply le_antisymm
+  · refine natDegree_le_iff_coeff_eq_zero.mpr fun k hk => ?_
+    simp [coeff_carrier, coefficient, not_le.mpr hk]
+  · apply le_natDegree_of_ne_zero
+    rw [coeff_carrier, coefficient, ite_eq_left le_rfl]
+    refine div_ne_zero (by exact_mod_cast Nat.factorial_ne_zero (m + m)) ?_
+    refine mul_ne_zero (mul_ne_zero (pow_ne_zero _ (by norm_num)) ?_) ?_
+    · exact_mod_cast Nat.factorial_ne_zero m
+    · exact_mod_cast Nat.factorial_ne_zero (m - m)
 
 /-- The differential equation in the reciprocal argument. -/
 theorem carrier_ode (m : ℕ) :

@@ -131,6 +131,25 @@ internal sealed class HalfIntegerBesselDocument : IScribeDocumentDefinition
                 "For kappa > 0 and nu at least 4 V_kappa, at every nonzero w with "
                 + "Re w at least kappa |w|, the norm of F_K(w) - 1 is at most "
                 + "2 V_kappa / nu, which is at most 1/2, and K_m(nu w) is nonzero.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("F_I", "Normalized regular amplitude",
+                "F_I is sqrt(2 pi nu) sqrt(S(w)) exp(-nu eta(w)) I_m(nu w). "
+                + "The first root is real and the second is principal complex.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Dlmf)),
+            Node("F_I_div_F_K", "Relative amplitude normalization",
+                "On Re w > 0 with K_m(nu w) nonzero, the ratio F_I / F_K equals "
+                + "pi exp(-2 nu eta(w)) I_m(nu w) / K_m(nu w).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("radial_I_div_K_zero", "Carrier quotient at the origin",
+                "For Re u > 0, I_m(nu r u) / K_m(nu r u) tends to zero as r decreases to zero. "
+                + "Reversing the degree-m carrier P_m gives B_m with B_m(0) nonzero. "
+                + "The analytic expression for the quotient near zero is "
+                + "(-1)^m (exp(2z) B_m(-z) / B_m(z) - 1) / pi at z = nu r u.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("radial_eta_re_atBot", "Phase at the origin",
+                "On a unit ray, Re eta(r u) tends to negative infinity as r decreases "
+                + "to zero. Its log(r) term diverges and the remaining terms are continuous "
+                + "at zero.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
 
     private static DocumentBlock Node(string name, string title, string prose,
