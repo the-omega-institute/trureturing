@@ -41,10 +41,11 @@ theorem result : ¬ claim := by
         Odd n ∧ Squarefree n ∧ PrimitiveNonDeficient n ∧
           ∀ p ∈ (∅ : Finset ℕ), ¬ p ∣ n)).card ≤
         count {n | PrimitiveNonDeficient n ∧ Odd n} X := by
+      unfold count
       apply card_le_card
       intro n hn
-      obtain ⟨hnI, hnodd, _, hnC, _⟩ := mem_filter.mp hn
-      exact mem_filter.mpr ⟨hnI, hnC, hnodd⟩
+      simp only [mem_filter, Set.mem_setOf_eq] at hn ⊢
+      exact ⟨hn.1, hn.2.2.2.1, hn.2.1⟩
     exact (hX₀ X hX).trans (by exact_mod_cast hcard)
   have hone := ZelinskyRadicalComponentConjecture11.relative_density_one
     {n | PrimitiveNonDeficient n ∧ Odd n} (fun _ hn => hn.1) hlower

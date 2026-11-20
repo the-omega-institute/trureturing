@@ -36,7 +36,11 @@ def claim : Prop :=
 theorem result : ¬ claim := by
   intro hclaim
   let M : Finset ℕ := {2}
-  have hprime : ∀ p ∈ M, p.Prime := by simp [M]
+  have hprime : ∀ p ∈ M, p.Prime := by
+    intro p hp
+    have hp2 : p = 2 := by simpa only [M, mem_singleton] using hp
+    subst p
+    exact Nat.prime_two
   have hzero := hclaim M (by simp [M]) hprime
   have hlower : ∀ᶠ X : ℕ in atTop, (X : ℝ) ^ (79 / 80 : ℝ) ≤
       (count {n | PrimitiveNonDeficient n ∧ ∀ p ∈ M, ¬ p ∣ n} X : ℝ) := by
@@ -45,10 +49,11 @@ theorem result : ¬ claim := by
     have hcard : ((Icc 1 X).filter (fun n =>
         Odd n ∧ Squarefree n ∧ PrimitiveNonDeficient n ∧ ∀ p ∈ M, ¬ p ∣ n)).card ≤
         count {n | PrimitiveNonDeficient n ∧ ∀ p ∈ M, ¬ p ∣ n} X := by
+      unfold count
       apply card_le_card
       intro n hn
-      obtain ⟨hnI, _, _, hnC, havoid⟩ := mem_filter.mp hn
-      exact mem_filter.mpr ⟨hnI, hnC, havoid⟩
+      simp only [mem_filter, Set.mem_setOf_eq] at hn ⊢
+      exact ⟨hn.1, hn.2.2.2.1, hn.2.2.2.2⟩
     exact (hX₀ X hX).trans (by exact_mod_cast hcard)
   have hone := ZelinskyRadicalComponentConjecture11.relative_density_one
     {n | PrimitiveNonDeficient n ∧ ∀ p ∈ M, ¬ p ∣ n} (fun _ hn => hn.1) hlower
