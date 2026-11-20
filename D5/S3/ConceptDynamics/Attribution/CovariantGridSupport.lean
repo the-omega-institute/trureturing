@@ -27,11 +27,11 @@ namespace D5.S3.ConceptDynamics.Attribution.CovariantGridSupport
 
 open Finset
 
-private def capacity (d n : ℕ) : ℕ :=
+def capacity (d n : ℕ) : ℕ :=
   ∑ i ∈ Finset.range n, (d + 1)^i
 
 /-- Adding a weight no larger than one plus the old representable range introduces no gaps. -/
-private theorem split_digit {d old new k : ℕ} (hnew : new ≤ d * old + 1)
+theorem split_digit {d old new k : ℕ} (hnew : new ≤ d * old + 1)
     (hk : k ≤ d * (old + new)) :
     ∃ x ≤ d, ∃ r ≤ d * old, r + x * new = k := by
   by_cases new_zero : new = 0
