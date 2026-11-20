@@ -80,7 +80,8 @@ def scheduled (K : ℝ) (s : State) : List ℝ → List (ℝ × Bool)
   | [] => []
   | a :: rest => (a, reset K s a) :: scheduled K (advance K s a) rest
 
-private theorem scheduled_cost (K : ℝ) (s : State) (xs : List ℝ) :
+/-- Computing bills from the recorded decisions gives the policy cost. -/
+theorem scheduled_cost (K : ℝ) (s : State) (xs : List ℝ) :
     comparatorCost K s.carry (scheduled K s xs) = policyCost K s xs := by
   induction xs generalizing s with
   | nil => rfl
@@ -118,7 +119,9 @@ private theorem reserve_le (K : ℝ) (s : State) (hK : 0 ≤ K) :
   unfold reserve
   split <;> linarith
 
-private theorem billed_cycle {K e A o q a : ℝ} {r : Bool}
+/-- A comparator's bills account for all newly seen increments, and either include a reset
+price or dominate the rents of the online policy while both schedules retain their carry. -/
+theorem billed_cycle {K e A o q a : ℝ} {r : Bool}
     (hK : 0 ≤ K) (hEA : e ≤ A) (ho : 0 ≤ o)
     (hcycle : e + K ≤ q ∨ (A ≤ q ∧ e ≤ o)) :
     e + a + K ≤ q + bill K o a r ∨
