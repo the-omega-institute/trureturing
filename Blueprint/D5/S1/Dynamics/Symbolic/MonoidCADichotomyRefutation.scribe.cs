@@ -22,7 +22,7 @@ internal sealed class MonoidCADichotomyRefutationDocument : IScribeDocumentDefin
                 + "first clause, with both alternatives of Theorem 6 (p. 21) retained.")),
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Owner + "claim"),
                 H("The finite-monoid extension of Theorem 6"),
-                StatementSource.FromAuthor(Disp(new Formula.Aligned(ClaimLines()))),
+                StatementSource.FromAuthor(Disp(new Formula.Aligned([.. ClaimLines()]))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -125,5 +125,5 @@ internal sealed class MonoidCADichotomyRefutationDocument : IScribeDocumentDefin
     ];
 
     private static Formula ExpandedNegation() =>
-        Seq(Neg, Sp, Left, Open, new Formula.Aligned(ClaimLines()), Right, Close);
+        Seq(Neg, Sp, Left, Open, new Formula.Aligned([.. ClaimLines()]), Right, Close);
 }
