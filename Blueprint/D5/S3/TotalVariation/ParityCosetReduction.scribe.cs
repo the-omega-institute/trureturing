@@ -22,7 +22,9 @@ internal sealed class ParityCosetReductionDocument : IScribeDocumentDefinition
                     + "f be an additive homomorphism from F to A. The shift a and the second "
                     + "readout b depend on the state z. The mass of each source pair (z,u) is "
                     + "w(z) divided by the cardinality of F. Its output is (a(z)+f(u),b(z)). "
-                    + "The reference is uniform on A against the second-coordinate mass function r.")),
+                    + "The reference is uniform on A against the second-coordinate mass function r. "
+                    + "The formulas allow arbitrary real weights and apply to probability laws "
+                    + "when w and r are nonnegative and sum to one.")),
                 Paragraph(Text(
                     "Write Q for the quotient of A by the image of f, and project the first "
                     + "coordinate to its coset while preserving the second coordinate. The "
@@ -30,7 +32,19 @@ internal sealed class ParityCosetReductionDocument : IScribeDocumentDefinition
                     + "readouts. The projected reference is uniform on Q against r. Translating "
                     + "the uniform source by a preimage of a coset displacement proves that the "
                     + "joint mass is constant inside each fiber. The reference mass is likewise "
-                    + "constant there, so projection preserves total variation."))),
+                    + "constant there, so projection preserves total variation.")),
+                Paragraph(Text(
+                    "For the affine binary parity outputs of section 35.6.8 in Quantum Geometry, "
+                    + "take F to be the binary vector space of fair input assignments and Z to "
+                    + "be the assignments of the biased bits with their product mass w. Let A "
+                    + "and B be the binary vector spaces on the output indices that meet a fair "
+                    + "input and those that use biased inputs only, respectively. The fair-input "
+                    + "coefficient map is f. The shifts a and the outputs b include the "
+                    + "biased contributions and the affine offsets. Each row in A has a nonzero "
+                    + "fair coefficient. Flipping that fair bit exchanges the two values of "
+                    + "the row while preserving input mass, giving a fair marginal. Thus the "
+                    + "product of all output marginals is uniform on A times r, where r is "
+                    + "the product of the marginal masses of the outputs in B."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()
