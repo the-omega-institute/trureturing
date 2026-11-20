@@ -679,14 +679,15 @@ def compressed_member(archive, info):
 
 
 def append_compressed(archive, info, data):
-    """Lay out a deflated member exactly as ZipFile.open(info, 'w') does."""
+    """Write a member whose deflated bytes and final sizes are already known."""
     info.compress_size = len(data)
     info.flag_bits = 0
     archive.fp.seek(archive.start_dir)
     info.header_offset = archive.fp.tell()
     archive._writecheck(info)
     archive._didModify = True
-    archive.fp.write(info.FileHeader(False))
+    zip64 = info.file_size > zipfile.ZIP64_LIMIT or info.compress_size > zipfile.ZIP64_LIMIT
+    archive.fp.write(info.FileHeader(zip64))
     archive.fp.write(data)
     archive.start_dir = archive.fp.tell()
     archive.filelist.append(info)
