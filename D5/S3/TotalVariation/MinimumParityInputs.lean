@@ -192,7 +192,8 @@ theorem visibleBias_recovered (two : ∀ a : A, a + a = 0)
   have hgroup : 0 < groupBias f r u := Finset.prod_pos (fun i _ => hpos i)
   rw [← hEq, Real.exp_log hgroup, hg]
 
-private theorem signed_offsets_agree_modulo_annihilator (two : ∀ a : A, a + a = 0)
+/-- Two offsets correcting the same surviving signs differ by an element of the spectral annihilator. -/
+theorem signed_offsets_agree_modulo_annihilator (two : ∀ a : A, a + a = 0)
     (μ : A → ℝ) (s t : A)
     (hs : ∀ χ : AddChar A ℂ, moment μ χ ≠ 0 → 0 < sign χ s * moment μ χ)
     (ht : ∀ χ : AddChar A ℂ, moment μ χ ≠ 0 → 0 < sign χ t * moment μ χ) :

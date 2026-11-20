@@ -45,7 +45,7 @@ theorem moment_from_inputs (two : ∀ a : A, a + a = 0)
     intro i hi
     simp [(Finset.mem_filter.mp hi).2, ha]
 
-private theorem sign_phase_and_magnitude (two : ∀ a : A, a + a = 0)
+theorem sign_phase_and_magnitude (two : ∀ a : A, a + a = 0)
     (c : I → A) (s : A) (q : I → ℝ) :
     let s' := s + ∑ i with q i < 0, c i
     ∀ χ, moment (law c s q) χ =
