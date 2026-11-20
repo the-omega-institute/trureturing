@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9PairProjection
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TripleProjection
+import D5.S3.Combinatorics.Graph.HypercubeCritical.Q9OrbitCertificateProbe
 
 /-! Antipodal complementary edges force eight occupied patterns in the four-cube.
 For Hong–Wu–Xia, §7 Problem 2, the missing pair and triple restrictions give

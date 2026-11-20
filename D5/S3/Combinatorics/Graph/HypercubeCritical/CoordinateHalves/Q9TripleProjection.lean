@@ -7,8 +7,9 @@
    digest: A half-size bound from two omitted triple patterns at distance two. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangBalancedSymmetry
-import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9SignedProjection
+import D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.HuangIntegralSwitching
 import Batteries.Tactic.OpenPrivate
+import Mathlib.Logic.Equiv.Fintype
 
 /-! Exterior signed rows for the omitted patterns `001` and `111`
 give two disjoint translations of the TRUE half into the FALSE half.
@@ -24,7 +25,6 @@ namespace D5.S3.Combinatorics.Graph.HypercubeCritical.CoordinateHalves.Q9TripleP
 open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Hypercube (hypercube)
 open BalancedCriticalSpectrum (Q IsBalanced flip flip_apply_same flip_flip)
-open Q9SignedProjection (signedRow)
 open private flip_comm from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCubeGirth
 
@@ -66,7 +66,7 @@ end PrefixSigns
 
 private theorem row_three (z : Q 9 → ℤ) (x : Q 9)
     (hzero : ∀ y : Q 9, y 0 = x 0 → y 1 = x 1 → y 2 = x 2 → z y = 0) :
-    signedRow z x =
+    (∑ i : Fin 9, truePrefixSign x i * z (flip x i)) =
       z (flip x 0) + truePrefixSign x 1 * z (flip x 1) +
         truePrefixSign x 2 * z (flip x 2) := by
   have htail (i : Fin 6) : z (flip x (i.natAdd 3)) = 0 := by
@@ -77,7 +77,7 @@ private theorem row_three (z : Q 9 → ℤ) (x : Q 9)
       omega
     exact hzero _ (flip_apply_of_ne x (hne 0 (by decide)))
       (flip_apply_of_ne x (hne 1 (by decide))) (flip_apply_of_ne x (hne 2 (by decide)))
-  rw [signedRow, Fin.sum_univ_add (a := 3) (b := 6), Fin.sum_univ_three]
+  rw [Fin.sum_univ_add (a := 3) (b := 6), Fin.sum_univ_three]
   change truePrefixSign x 0 * z (flip x 0) + truePrefixSign x 1 * z (flip x 1) +
     truePrefixSign x 2 * z (flip x 2) +
     (∑ i : Fin 6, truePrefixSign x (i.natAdd 3) * z (flip x (i.natAdd 3))) = _
@@ -122,7 +122,7 @@ theorem true_half_card_le_of_missing_001_111 {S : Finset (Q 9)} (hsize : S.card 
   have exterior_row (y : Q 9) (h01 : y 0 = y 1) (h2 : y 2 = true) :
       z (flip y 0) + truePrefixSign y 1 * z (flip y 1) +
         truePrefixSign y 2 * z (flip y 2) = 0 := by
-    have hrow : signedRow z y = 3 * z y := hz y
+    have hrow := hz y
     have hvanish (t : Q 9) (h0 : t 0 = y 0) (h1 : t 1 = y 1) (h2' : t 2 = y 2) :
         z t = 0 :=
       hzero t (exterior t (h0.trans (h01.trans h1.symm)) (h2'.trans h2))
