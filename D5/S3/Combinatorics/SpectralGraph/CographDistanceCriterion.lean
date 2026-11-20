@@ -309,6 +309,115 @@ theorem width_one_attains {V : Type} [Finite V] {G : SimpleGraph V}
     exact ⟨x, hel, (distanceMultiplicity_eq_width_iff_width_one hc hP hw hel).mpr ⟨y, hne, he⟩⟩
 
 
+private def combineCotreeStates {ι : Type} [Fintype ι]
+    (s : ι → ℕ × Option ℝ) (t : ℝ) : ℕ × Option ℝ :=
+  open Classical in
+  let K := ∑ i, (s i).1
+  if ∃ i, (s i).2 = none then (K - 1, some (1 / t))
+  else
+    let S := ∑ i, (s i).2.getD 0
+    if 1 + t * S = 0 then (K + 1, none)
+    else (K, some (S / (1 + t * S)))
+
+/-- At a fixed real shift, compute the nullity together with a scalar response.
+The `none` case records a kernel vector of nonzero coordinate sum. -/
+def cotreeScalarState {V : Type} {G : SimpleGraph V} {kind : Option Bool}
+    (tree : Cotree G kind) (x : ℝ) : ∀ [Finite V], ℝ → ℕ × Option ℝ := by
+  classical
+  induction tree with
+  | leaf _ _ =>
+    intro _ q
+    exact if x + q = 0 then (1, none) else (0, some (-1 / (x + q)))
+  | node join _ _ _ _ ih =>
+    intro _ q
+    exact combineCotreeStates (fun i => ih i (label join)) (label join - q)
+
+/-- The three scalar transitions recover the native state at every real shift,
+including simultaneous guard roots and poles. The coupling is nonzero at each
+internal node when its parent label differs from its own. -/
+theorem cotreeScalarState_spec {V : Type} {G : SimpleGraph V} {kind : Option Bool}
+    (tree : Cotree G kind) (x : ℝ) :
+    ∀ [Finite V] (q : ℝ), (∀ b, kind = some b → label b ≠ q) →
+      let s := cotreeScalarState tree x q
+      s.1 = kernelCount G q x ∧
+        match s.2 with
+        | none => HasNonzeroPairing (localOperator G q x) (oneVector V)
+        | some g => ScalarResponse (localOperator G q x) (oneVector V) g := by
+  classical
+  induction tree with
+  | @leaf V G v unique =>
+    intro _ q _
+    have hs := leaf_states (Cotree.leaf (G := G) v unique) q x
+    by_cases hp : x + q = 0
+    · simpa only [cotreeScalarState, ite_eq_left hp] using
+        And.intro ((ite_eq_left hp).mp hs).1.symm ((ite_eq_left hp).mp hs).2
+    · simpa only [cotreeScalarState, ite_eq_right hp] using
+        And.intro ((ite_eq_right hp).mp hs).1.symm ((ite_eq_right hp).mp hs).2
+  | @node V G join arity kind alternates child ih =>
+    intro _ q hq
+    let I := (cutGraph G join).ConnectedComponent
+    let A (i : I) := localOperator (G.induce i.supp) (label join) x
+    let u : PiLp 2 (fun i : I => EuclideanSpace ℝ i.supp) :=
+      WithLp.toLp 2 (fun i => oneVector i.supp)
+    let s (i : I) := cotreeScalarState (child i) x (label join)
+    let t := label join - q
+    let K := ∑ i, (s i).1
+    let parent := combineCotreeStates s t
+    change parent.1 = kernelCount G q x ∧
+      match parent.2 with
+      | none => HasNonzeroPairing (localOperator G q x) (oneVector V)
+      | some g => ScalarResponse (localOperator G q x) (oneVector V) g
+    have hs (i : I) := ih i (label join) (label_ne (alternates i))
+    obtain ⟨hsymm, hsum, hflag, hresponse⟩ := blockDiagonal_states
+      (F := fun i : I => EuclideanSpace ℝ i.supp)
+      A (fun i => localOperator_symmetric (G.induce i.supp) (label join) x) u
+    have hK : Module.finrank ℝ (LinearMap.ker (blockDiagonal A)) = K :=
+      hsum.trans (Finset.sum_congr rfl (fun i _ => (hs i).1.symm))
+    have hn := localOperator_node_states G join q x
+    dsimp only at hn
+    rw [componentCoordinates_oneVector] at hn
+    by_cases h : ∃ i, (s i).2 = none
+    · have hr : parent = (K - 1, some (1 / t)) := by
+        simp only [parent, combineCotreeStates, ite_eq_left h, K]
+      obtain ⟨i, hi⟩ := h
+      have hsi := (hs i).2
+      change (match (s i).2 with
+        | none => HasNonzeroPairing (A i) (u i)
+        | some g => ScalarResponse (A i) (u i) g) at hsi
+      rw [hi] at hsi
+      obtain ⟨hk, hg⟩ := update_of_nonzero_pairing hsymm
+        (sub_ne_zero.mpr (hq join rfl)) (hflag.mpr ⟨i, hsi⟩)
+      have hcount := hn.1
+      rw [hr]
+      change K - 1 = kernelCount G q x ∧
+        ScalarResponse (localOperator G q x) (oneVector V) (1 / t)
+      refine ⟨?_, (hn.2.2 _).mpr hg⟩
+      exact (Nat.eq_sub_of_add_eq (hk.trans hK)).symm.trans hcount.symm
+    · let g (i : I) := (s i).2.getD 0
+      have hg (i : I) : ScalarResponse (A i) (u i) (g i) := by
+        have hsi := (hs i).2
+        change (match (s i).2 with
+          | none => HasNonzeroPairing (A i) (u i)
+          | some g => ScalarResponse (A i) (u i) g) at hsi
+        cases hi : (s i).2 with
+        | none => exact (h ⟨i, hi⟩).elim
+        | some v => simpa only [g, hi, Option.getD_some] using hsi
+      let S := ∑ i, g i
+      by_cases hr : 1 + t * S = 0
+      · have hp : parent = (K + 1, none) := by
+          simp only [parent, combineCotreeStates, ite_eq_right h, ite_eq_left hr, S, g, K]
+        obtain ⟨hk, hf⟩ := update_of_resonance hsymm (hresponse g hg) hr
+        rw [hp]
+        exact ⟨(hk.trans (congrArg (· + 1) hK)).symm.trans hn.1.symm, hn.2.1.mpr hf⟩
+      · have hp : parent = (K, some (S / (1 + t * S))) := by
+          simp only [parent, combineCotreeStates, ite_eq_right h, ite_eq_right hr, S, g, K]
+        obtain ⟨hk, hsc⟩ := update_of_nonresonance hsymm (hresponse g hg) hr
+        rw [hp]
+        refine ⟨?_, (hn.2.2 _).mpr hsc⟩
+        calc
+          K = Module.finrank ℝ (LinearMap.ker (blockDiagonal A)) := hK.symm
+          _ = _ := by rw [← hk]; exact hn.1.symm
+
 open Polynomial
 
 private def integralLabel (join : Bool) : ℤ := if join then 1 else 2
@@ -462,28 +571,47 @@ theorem cotreeGuardData_off_roots {V : Type} {G : SimpleGraph V} {kind : Option 
     rw [componentCoordinates_oneVector] at hn
     exact ⟨hn.1.trans hb.1, (hn.2.2 _).mpr hb.2⟩
 
-/-- All attained eligible shifts occur among the distinct real roots of the
-uncancelled guards. The degree sum bounds the number of candidates. -/
+/-- At each real shift, eligible equality is equivalent to membership in the
+finite set of guard roots together with eligible equality of the recursively
+computed count. The sum of the guard degrees bounds the number of candidates. -/
 theorem distanceMultiplicity_guard_candidates {V : Type} [Finite V]
     {G : SimpleGraph V} {kind : Option Bool} (tree : Cotree G kind)
     (hc : G.Connected) (hP : ¬(pathGraph 4).IsIndContained G) :
     let s := (cotreeGuardData tree 0).subtreeGuards
     let candidates := realGuardCandidates s id
     candidates.card ≤ ∑ p ∈ s, p.natDegree ∧
-      ((∃ x, Eligible x ∧ distanceMultiplicity G x = width G) ↔
-        ∃ x ∈ candidates, Eligible x ∧ distanceMultiplicity G x = width G) := by
+      ∀ x : ℝ, (Eligible x ∧ distanceMultiplicity G x = width G) ↔
+        x ∈ candidates ∧ Eligible x ∧ (cotreeScalarState tree x 0).1 = width G := by
   classical
+  let s := (cotreeGuardData tree 0).subtreeGuards
   have hwidth : 0 < width G := by
     cases tree with
     | leaf v unique => rw [(Cotree.leaf (G := G) v unique).width_leaf]; decide
     | node join arity kind _ child => rw [width_eq_max join kind child arity]; omega
-  apply realGuardCandidates_spec _ id
-    (fun p hp => ((cotreeGuardData_degrees tree 0).2.2.2.2.2 p hp).ne_zero)
-  intro x hoff hx
-  have hz := (cotreeGuardData_off_roots tree x 0 hoff).1
-  rw [Int.cast_zero] at hz
-  rw [distanceMultiplicity_eq hc hP, hz] at hx
-  exact hwidth.ne hx.2
+  have hnonzero (p) (hp : p ∈ s) : p ≠ 0 :=
+    ((cotreeGuardData_degrees tree 0).2.2.2.2.2 p hp).ne_zero
+  have hoff (x : ℝ) (h : ∀ p ∈ s, p.eval₂ (Int.castRingHom ℝ) x ≠ 0) :
+      distanceMultiplicity G x ≠ width G := by
+    have hz := (cotreeGuardData_off_roots tree x 0 h).1
+    rw [Int.cast_zero] at hz
+    rw [distanceMultiplicity_eq hc hP, hz]
+    exact hwidth.ne
+  have hsize := (realGuardCandidates_spec s id hnonzero
+    (fun x => distanceMultiplicity G x = width G) hoff).1
+  refine ⟨hsize, fun x => ?_⟩
+  have hstate : (cotreeScalarState tree x 0).1 = distanceMultiplicity G x :=
+    (cotreeScalarState_spec tree x 0 (fun join _ => by cases join <;> norm_num [label])).1.trans
+      (distanceMultiplicity_eq hc hP x).symm
+  rw [hstate]
+  constructor
+  · rintro ⟨hel, he⟩
+    have hfinite := (realGuardCandidates_spec s id hnonzero
+      (fun y => y = x ∧ distanceMultiplicity G y = width G)
+      (fun y hy hey => hoff y hy hey.2)).2
+    obtain ⟨y, hy, rfl, _⟩ := hfinite.mp ⟨x, rfl, he⟩
+    exact ⟨hy, hel, he⟩
+  · rintro ⟨_, hel, he⟩
+    exact ⟨hel, he⟩
 
 /-- A connected cograph attains at an eligible shift exactly when its width is
 one, or an eligible candidate shift satisfies the native join-root formula. -/
@@ -509,10 +637,10 @@ theorem distanceMultiplicity_attains_iff {V : Type} [Finite V] {G : SimpleGraph 
   | node _ arity kind alternates child =>
     have hwide : 1 < width G := by rw [width_eq_max true kind child arity] at hw ⊢; omega
     constructor
-    · intro h
+    · rintro ⟨x, hx, he⟩
       have hfinite :=
-        (distanceMultiplicity_guard_candidates (.node true arity kind alternates child) hc hP).2
-      obtain ⟨x, hxc, hx, he⟩ := hfinite.mp h
+        (distanceMultiplicity_guard_candidates (.node true arity kind alternates child) hc hP).2 x
+      have hxc := (hfinite.mp ⟨hx, he⟩).1
       have hroot :=
         distanceMultiplicity_eq_width_iff_joinRoot hc hP hwide arity kind alternates child hx
       exact Or.inr ⟨hwide, arity, kind, alternates, child, x, hxc, hx,
