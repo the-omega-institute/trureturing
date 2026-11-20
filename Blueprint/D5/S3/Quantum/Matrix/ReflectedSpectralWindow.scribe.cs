@@ -14,7 +14,7 @@ internal sealed class ReflectedSpectralWindowDocument : IScribeDocumentDefinitio
                     "D5/S3/Quantum/Matrix/ReflectedSpectralWindow.central_defect_endpoint_average"),
                 H("The central-defect endpoint average"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(
+                AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/Eigenstructure/childs2003gluedtrees")),
                 Blocks(
                     Paragraph(Text(
