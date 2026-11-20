@@ -16,11 +16,9 @@ to produce a nonzero eigenvector of the native distance matrix inside the forbid
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Tactic
 
 /-! A family of counterexamples to Manna–Mandal–Tura, Open Problem 14.2(i). -/
 

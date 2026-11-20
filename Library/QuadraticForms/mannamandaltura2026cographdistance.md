@@ -24,8 +24,10 @@ arXiv:2611.06981v1, Open Problem 14.2(i), printed p. 22.
 
 Section 1, printed p. 2, defines cographs as finite simple graphs containing
 no induced path on four vertices. The distance matrix has shortest-path edge
-counts as its entries. Proposition 2.6 gives its diameter-two form, and
-Theorem 6.5 gives the right-hand gap (−2, −1). Section 6.1 exhibits
+counts as its entries. Proposition 2.6, printed p. 5 of arXiv:2611.06981v1,
+gives diameter at most two for connected cographs on at least two vertices.
+Section 6, printed p. 14, states D = 2J − 2I − A. Theorem 6.5 gives the
+right-hand gap (−2, −1). Section 6.1 exhibits
 K₁ ∨ (K₁ ∪ 3K₂) as a numerical example below −2.
 
 The family K₁ ∨ (K₁ ∪ rK₂) supplies real distance eigenvalues arbitrarily

@@ -27,7 +27,7 @@ internal sealed class MannaMandalTuraCographDistanceGapRefutationDocument : IScr
                 "Section 1, printed p. 2, defines a cograph as “a finite simple graph containing no induced path on four vertices P₄.” A graph embedding preserves and reflects adjacency, so the predicate excludes exactly induced copies of the native four-vertex path.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("distanceMatrix", "Shortest-path distance matrix", DistanceFormula(),
-                "The real matrix casts the native shortest-path edge count, including the diagonal zero. The source uses this distance in Proposition 2.6, printed p. 5.",
+                "The real matrix casts the native shortest-path edge count, including the diagonal zero. For a connected cograph on at least two vertices, Proposition 2.6 (printed p. 5 of arXiv:2611.06981v1) gives diameter at most two. Section 6 (printed p. 14) states the identity D = 2J − 2I − A.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("registered_family_counters_gap", "An eigenvalue in every open left neighborhood", CounterexampleFormula(),
                 "The universal vertex gives connectedness and a walk of length two between distinct nonadjacent vertices. Each vertex of an induced P₄ has a nonneighbor among the other three, so the path avoids the universal vertex. The remaining vertices have at most one neighbor each. On the orbit-constant subspace, the distance quotient has rows (0, 1, 2r), (1, 0, 4r), and (1, 2, 4r−3). For t = λ + 2 its characteristic determinant is (t+1)(t−1)(t−3) + (6−4t)rt. At t = 0 this is 3. With r = q > 0 and t = −1/q it is −((1+1/q)³+2). Continuity gives a root in the strict interior. Choose 1/q < ε and lift a nonzero quotient kernel vector to the three nonempty orbits.",
@@ -72,7 +72,7 @@ internal sealed class MannaMandalTuraCographDistanceGapRefutationDocument : IScr
     private static Formula Lower(Formula epsilon) => Seq(MinusTwo(), Sp, Minus, Sp, epsilon);
     private static Formula Positive(Formula value) => Less(D(0), value);
     private static Formula Conn(Formula graph) => Qualified("SimpleGraph", "Connected", graph);
-    private static Formula Free(Formula graph) => App(Seq(Symbol("P"), D(4), Symbol("Free")), graph);
+    private static Formula Free(Formula graph) => Call("P4Free", graph);
     private static Formula Eigenvalue(Formula graph, Formula lam) =>
         App(Seq(Symbol("Module"), Dot, Symbol("End"), Dot, Symbol("HasEigenvalue")),
             Qualified("Matrix", "mulVecLin", Call("distanceMatrix", graph)), lam);
