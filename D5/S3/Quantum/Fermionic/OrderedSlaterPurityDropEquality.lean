@@ -93,7 +93,7 @@ private theorem active_difference {U V : Type*} [Fintype U] [DecidableEq U] [Fin
       simp_rw [term, hrow, hmass]
 
 open Classical in
-private theorem difference_eq_weighted_fiber {U V : Type*} [Fintype U] [DecidableEq U] [Fintype V]
+theorem difference_eq_weighted_fiber {U V : Type*} [Fintype U] [DecidableEq U] [Fintype V]
     (A : Matrix U V (ZMod 2)) (p : U → ℝ) (q : V → ℝ) (i : U)
     (hq0 : ∀ j, 0 ≤ q j) (hq1 : ∀ j, q j ≤ 1) :
     let L := {j : V // 0 < q j ∧ q j < 1}
