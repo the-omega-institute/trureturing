@@ -196,6 +196,8 @@ jobs:
     outputs:
       unit: ${{ steps.checked.outputs.unit }}
     env:
+      INDEXED_PROJECT_PUSH: ${{ github.event_name == 'push' && github.ref_protected && vars.LEAN_CACHE_SHARDS_REF == github.ref_name && vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR != '' }}
+      INDEXED_PROJECT_PR: ${{ github.event_name == 'pull_request' && vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == github.base_ref }}
       STRATALINT_ACCEPT_COLD_BUILD: '1'
       REPORT: .lake/build/stratalint/raw-lean-report.json
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
@@ -210,6 +212,14 @@ jobs:
           persist-credentials: false
       - name: Install the pinned tools release
         run: python3 .github/scripts/install-tools.py
+      - name: Fetch the fixed dev history for the shard layout
+        if: env.INDEXED_PROJECT_PUSH == 'true'
+        env:
+          ANCHOR: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+        run: |
+          [[ "$ANCHOR" =~ ^[0-9a-f]{40}$ ]]
+          git fetch --no-tags --depth=2002 origin "$ANCHOR"
+          [[ "$(git rev-parse FETCH_HEAD)" == "$ANCHOR" ]]
       - name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
@@ -255,9 +265,13 @@ jobs:
       - id: prepared
         name: Adopt a matching PR preparation for this event
         if: needs.detect.outputs.report == 'true'
+        uses: ./.github/actions/lean-cache-shards
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+        with:
+          operation: adopt-preparation
+          sharded-adoption: ${{ vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name) }}
+          require-pr-opt-in: ${{ env.INDEXED_PROJECT_PR == 'true' }}
       - id: keys
         if: needs.detect.outputs.report == 'true'
         env:
@@ -281,8 +295,17 @@ jobs:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: sharded_project
+        name: Restore the indexed Lean project seed
+        if: needs.detect.outputs.report == 'true' && steps.prepared.outputs.adopted != 'true' && env.INDEXED_PROJECT_PUSH == 'true'
+        continue-on-error: true
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
       - id: project
-        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
+        if: env.INDEXED_PROJECT_PR != 'true' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != '' && (steps.sharded_project.outputs.available || '0') == '0'
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -298,7 +321,17 @@ jobs:
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          SHARDS_INSTALLED: ${{ steps.sharded_project.outputs.available || '0' }}
+          SHARDED_COMPLETE: ${{ steps.sharded_project.outputs.complete }}
+        run: |
+          if [[ "$SHARDS_INSTALLED" != 0 ]]; then
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+            if [[ "$SHARDED_COMPLETE" == true ]]; then
+              echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+            fi
+          else
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          fi
       - id: compute_budget
         name: Resume the cumulative current compute allowance
         env:
@@ -320,6 +353,27 @@ jobs:
       - name: Theory-only file and capacity checks
         if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - id: pr_cache_scope
+        name: Select the project cache for affected PR modules
+        if: env.INDEXED_PROJECT_PR == 'true' && steps.prepared.outputs.adopted != 'true' && steps.lean_seeds.outcome == 'success'
+        env:
+          BASE: ${{ needs.detect.outputs.base }}
+        run: |
+          targets="$RUNNER_TEMP/pr-cache-targets"
+          python3 tools/scripts/workflow/ci_compute.py run -- \
+            python3 tools/scripts/workflow/ci_pr_lean.py "$RUNNER_TEMP/changed-paths" --cache-targets --base "$BASE" > "$targets"
+          if [[ -s "$targets" ]]; then
+            echo "targets-file=$targets" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Restore indexed project artifacts for the PR
+        if: steps.pr_cache_scope.outputs.targets-file != ''
+        continue-on-error: true
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          targets-file: ${{ steps.pr_cache_scope.outputs.targets-file }}
       - id: pr_lean
         name: Check affected PR modules and Scribe inputs
         if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
@@ -330,6 +384,7 @@ jobs:
         env:
           LEAN_NUM_THREADS: '1'
           GH_TOKEN: ${{ github.token }}
+          PARTIAL_INDEXED_PROJECT: ${{ env.INDEXED_PROJECT_PUSH == 'true' && (steps.sharded_project.outputs.available || '0') != '0' && steps.sharded_project.outputs.complete != 'true' }}
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report
       - name: Run selected PR FIB regressions
@@ -362,9 +417,29 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ needs.source.outputs.judge_key }}
+      - name: Validate the complete push report before indexed publication
+        if: env.INDEXED_PROJECT_PUSH == 'true' && steps.lean_report.outcome == 'success'
+        run: python3 tools/lean-inspector/publication.py validate "$REPORT" --repository "$GITHUB_WORKSPACE"
+      - id: sharded_project_push
+        name: Publish and confirm the indexed push project seed
+        if: env.INDEXED_PROJECT_PUSH == 'true' && steps.lean_report.outcome == 'success'
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
+          STRATALINT_REPORT_SUCCEEDED: 'true'
+          STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
+        with:
+          operation: save
+          anchor: ${{ vars.LEAN_CACHE_SHARDS_HISTORY_ANCHOR }}
+      - name: Require the indexed push seed
+        if: env.INDEXED_PROJECT_PUSH == 'true'
+        env:
+          COMPLETE: ${{ steps.sharded_project_push.outputs.complete }}
+        run: test "$COMPLETE" = true
       - id: project_snapshot_push
         name: Prepare the project seed
-        if: env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success'
+        if: env.CACHE_WRITES == 'true' && env.INDEXED_PROJECT_PUSH != 'true' && steps.lean_report.outcome == 'success'
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_REPORT_SUCCEEDED: 'true'
@@ -380,7 +455,7 @@ jobs:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - name: Confirm the protected push published its project seed
-        if: env.CACHE_WRITES == 'true'
+        if: env.CACHE_WRITES == 'true' && env.INDEXED_PROJECT_PUSH != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           CACHE_KEY: ${{ steps.keys.outputs.project_key }}

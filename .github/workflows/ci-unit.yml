@@ -102,8 +102,18 @@ jobs:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: sharded_project
+        name: Restore the indexed Lean project seed
+        if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.prepared.outputs.adopted != 'true' && vars.LEAN_CACHE_SHARDS_REF != '' && vars.LEAN_CACHE_SHARDS_REF == (github.base_ref || github.ref_name)
+        continue-on-error: true
+        uses: ./.github/actions/lean-cache-shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          operation: restore
+          require-complete: 'true'
       - id: project
-        if: steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.project_key != ''
+        if: steps.sharded_project.outputs.complete != 'true' && steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -118,7 +128,14 @@ jobs:
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          SHARDED_PROJECT: ${{ steps.sharded_project.outputs.complete }}
+        run: |
+          if [[ "$SHARDED_PROJECT" == true ]]; then
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers dependency --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+            echo 'STRATALINT_ACTIONS_CACHE_SEEDED=1' >> "$GITHUB_ENV"
+          else
+            python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+          fi
       - name: Restore selected .NET dependencies
         if: fromJSON(steps.definition.outputs.definition).dotnet
         env:
