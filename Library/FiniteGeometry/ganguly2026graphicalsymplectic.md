@@ -16,10 +16,10 @@ triage: anchor
 
 ## Verified locator
 
-Source: https://arxiv.org/abs/2611.01241v2
-
-Question 9.2 is in §9, printed PDF p. 39, and in the v2 TeX source,
-`main.tex` lines 1486–1490, label `q:sums`.
+- DOI: https://doi.org/10.48550/arXiv.2611.01241
+- URL: https://arxiv.org/abs/2611.01241v2
+- Version and location: arXiv:2611.01241v2, §9, printed PDF p. 39.
+  The TeX source is `main.tex`, lines 1486–1490, label `q:sums`.
 
 > Over fields of characteristic 2 with at least 4 elements, is representability of 𝒮(G) preserved under 1-sums and under joining two graphs by a bridge?
 
