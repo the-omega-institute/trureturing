@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9c414d99e714cb0b457eb423d93f819180a83bdf0eec643688adb1b3933474eb
-  normalized_sha256: sha256:9c414d99e714cb0b457eb423d93f819180a83bdf0eec643688adb1b3933474eb
-cas_ref: sha256:9c414d99e714cb0b457eb423d93f819180a83bdf0eec643688adb1b3933474eb
-coverage_gids:
-  - gid: D5/S3/Observer/Naturality/SelfSimilarGeneratingSystem.exists_bool_self_similar_generating_system
-    target_statement_id: sha256:16d72a4feaa73456a28ab063ed80388ff2603950b36cb1892bbe4498e2b0f0d0
-receipts:
-  unresolved_subitems: []

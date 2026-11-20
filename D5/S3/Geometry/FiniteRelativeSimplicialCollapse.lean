@@ -13,7 +13,7 @@ primitives 1–3 and the three cases of independent_two_path_proof.txt, SHA256
 The present bridge concerns general complexes, not the graph arithmetic.
 -/
 import D5.S3.Geometry.FiniteElementaryCollapse
-import D5.S3.Geometry.FiniteComponentClosure.Models
+import D5.S3.Geometry.FiniteVertexCylinder
 import Mathlib.Data.List.Forall2
 import Mathlib.Data.List.GetD
 

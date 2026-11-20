@@ -1,2 +1,0 @@
-**假设 116.5（一般任务所需的统一取得界）。** 该端口的加速依赖固定有限求值代数及可计算短代表。把它推广到增长维数的通用控制、SAT 完成或包含中间环境的任务，需要另外提供保持相应未来任务的统一编译器，并按原输入长度计入等价识别、参数取得、执行、存储和最终读取成本。当前两条编译定理不提供这些一般界。对显式小商的充分构造可采用[有效分层编码](../../../Library/ConceptDynamics/bryant1986boolean.md#3-a-small-effective-layered-representation)及[跨界子句满足掩码](../../../Library/ConceptDynamics/dechter1996bucket.md#5-cnf-crossing-clause-satisfaction-masks)；它们分别保留其统一成本和宽度条件。经典确定性求解与一般有界错误量子求解的能力归属仍按 Cook 与 Watrous 的不同模型定义。
-

@@ -1,7 +1,0 @@
-\[
-E_{\lambda,J}(x,y)
-=
-\sum_{p\in J}
-E_{\lambda,p}(x,y).
-\]
-

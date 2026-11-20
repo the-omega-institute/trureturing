@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:483d4fe4d96921efc1629d074a27443a065eb9aa485d8e0fa742a66a65078360
-  normalized_sha256: sha256:483d4fe4d96921efc1629d074a27443a065eb9aa485d8e0fa742a66a65078360
-cas_ref: sha256:483d4fe4d96921efc1629d074a27443a065eb9aa485d8e0fa742a66a65078360
-coverage_gids:
-  - gid: D5/S0/Automata/TwoStateCertificateWidth.two_state_certificate_width
-    target_statement_id: sha256:01d1dc7aef8d887bc28218ab6eb7e0b569228788c0ba72f158b36a7debc5909f
-receipts:
-  unresolved_subitems: []

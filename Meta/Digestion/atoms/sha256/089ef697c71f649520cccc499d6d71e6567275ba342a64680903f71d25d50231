@@ -1,2 +1,0 @@
-**候签定理 6.221(旋转直和之幂避免 2143 的全幂判据)**〔open;落 `D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance`(新子桶,随首个工件出生,实施席复核 routing);新定理,`FromRepo`,Describe 以 Archer–Bourne 2026 为猜想出处(文献注 arXiv:2505.05218 / DOI 10.46298/dmtcs.17199 作语境)〕。设 d 为正自然数的有限列(组成),ε_m 为 Fin m 上的旋转 x ↦ x + 1 (mod m)(即 23…m1),π_d 为各 ε_{d_i} 的块直和(块标位置按字典序),r : ℕ。则 π_d^r 避免模式 2143 当且仅当 `#{i | ¬ d_i ∣ r} ≤ 1`。推论(同模块具名伴随):π_d³ 避免 2143 当且仅当 `#{i | d_i ≠ 1 ∧ d_i ≠ 3} ≤ 1`。
-

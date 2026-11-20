@@ -7,6 +7,11 @@ internal sealed class UmegakiKernelContractionDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A uniform endpoint estimate implies the arithmetic inverse-form estimate at every parameter.",
         H("Endpoint contraction on the partial-trace kernel"), Blocks(
+            Describe.Lean(DescribeId.Create("arithmetic-positive"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.arithmetic_positive"),
+                H("Positivity of the arithmetic operator"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a positive semidefinite base and t in [0,1], the Hilbert–Schmidt arithmetic interpolation is positive. This applies to singular bases and supplies the range argument for the supported Moore–Penrose form."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("arithmetic"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.arithmetic"),
                 H("Arithmetic interpolation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -109,30 +114,6 @@ internal sealed class UmegakiKernelContractionDocument : IScribeDocumentDefiniti
                 Blocks(
                     Paragraph(Text("Tr((X tensor I) adjoint V) equals Tr(X adjoint P(V)) for arbitrary complex matrices, using the ordinary partial trace. This preserves the pairing on zero-partial-trace directions when the reference center is subtracted."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("amp-kronecker"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_kronecker"),
-                H("Amplification on an elementary tensor"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("For a finite channel N and arbitrary complex X and Z on the reference and input, the amplification sends X tensor Z to X tensor N(Z). This computes the channel image of the identity in the positivity argument."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("amp-mono"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_mono"),
-                H("Amplification preserves matrix order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("For the canonical finite channel, input matrix order X ≤ Z implies the same order for their amplified images. This transports a strictly positive lower bound."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("positive-floor"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.positive_floor"),
-                H("Positive lower bound by the identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("Every positive definite complex matrix on a finite carrier dominates m times the identity for some real m > 0. On the empty carrier the proof chooses m = 1. Amplification uses this lower bound."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("amp-posdef"),
-                DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_posDef"),
-                H("Faithfulness under amplification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("If N(I) is positive definite, the amplified channel sends each positive definite joint Z to a positive definite matrix for every finite reference. The assertion includes correlated input and the empty reference. The inverse-form and density-state proofs use this implication."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("amp-mul-embed"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/UmegakiKernelContraction.amp_mul_embed"),
                 H("Right reference multiplication under amplification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -170,6 +151,6 @@ internal sealed class UmegakiKernelContractionDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Let N be a canonical finite channel between nonempty carriers with N(I) positive definite. Let 0 ≤ c ≤ 1 and assume EndpointBound(N,c). For every finite reference, correlated positive definite Z, complex V with zero ordinary partial trace, and u in [0,1], q(amp(N,Z),amp(N,V),u) ≤ c q(Z,V,u). The reference may be empty.")),
                     Paragraph(Text("For c < 1, take the endpoint reference center X = (PZ) inverse P(Z PhiR(Y)). The direction Z times (PhiR(Y) minus X tensor I) has zero partial trace. The endpoint inequality and weighted Cauchy–Schwarz bound the centered energy by k times the channel defect, where k = c/(1-c). This gives a universal trace test for the common-state scalarizer.")),
                     Paragraph(Text("The scalarizer supplies one state and both residual Gram bounds. With p the input inverse form, q the output inverse form, f the uncentered input energy and d = q-f, the two pairings bound q squared by f p and k d p. For q > 0 their combination yields (1+k)q ≤ k p. The proof handles q = 0 before cancellation, includes c = 0, and at c = 1 uses the uncentered bound and d ≥ 0.")),
-                    Paragraph(Text("This estimate is used on the actual joint-minus-marginal residual in the faithful density-state theorem. The premise still requires a uniform endpoint bound for all references and complex kernel directions. The coefficient equality for all supported pairs and all channels remains open."))),
+                    Paragraph(Text("The faithful density-state theorem applies this estimate to the actual joint-minus-marginal residual. Its premise requires a uniform endpoint bound for all references and complex kernel directions. The supported extension applies the faithful theorem to output-regularized channels and proves the coefficient equality for arbitrary finite channels."))),
                 DescribeRole.Theorem))));
 }

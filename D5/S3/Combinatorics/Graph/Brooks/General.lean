@@ -244,7 +244,7 @@ private theorem eq_cycle_spanningCoe_of_connected_degree_le_two {V : Type*} [Fin
 
 /-- A cycle in a finite connected graph of maximum degree at most two gives an actual
 isomorphism with the cycle graph of its length. -/
-private theorem cycle_iso_of_connected_degree_le_two {V : Type*} [Fintype V]
+theorem cycle_iso_of_connected_degree_le_two {V : Type*} [Fintype V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hc : G.Connected)
     (hd : G.maxDegree ≤ 2) {u : V} (p : G.Walk u u) (hp : p.IsCycle) :
     Nonempty (cycleGraph p.length ≃g G) := by

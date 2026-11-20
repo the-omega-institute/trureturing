@@ -1,7 +1,0 @@
-### 6.2 Heralded alternative without a correlated record
-
-Keep the same promised pair but remove the source record.  Allow a complete
-instrument with a success flag, equal success probability $p$ on the two
-histories, exact target system state on success, and an arbitrary retained
-failure event.
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9ec2fc1ff65dd58bb080ed90050550ca65790e0f80b7aa559f922c704ae1a03f
-  normalized_sha256: sha256:9ec2fc1ff65dd58bb080ed90050550ca65790e0f80b7aa559f922c704ae1a03f
-cas_ref: sha256:9ec2fc1ff65dd58bb080ed90050550ca65790e0f80b7aa559f922c704ae1a03f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementGeometry/ThreeLevelQuantifierSeparation.local_witnesses_do_not_imply_compatible_family_exists
-    target_statement_id: sha256:5c92af0de373e7d75fb2caa1a3174f3d46967e3e1192fbeadc2d6681ef2e3712
-receipts:
-  unresolved_subitems: []

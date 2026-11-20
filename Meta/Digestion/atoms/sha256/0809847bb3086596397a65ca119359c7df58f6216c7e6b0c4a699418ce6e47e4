@@ -1,6 +1,0 @@
-\[
-C(P,Q)
-=
-\sup_{\lambda\in[0,1]}E_\lambda(P,Q).
-\]
-

@@ -1,7 +1,0 @@
-它正是共同未来 profile 的 kernel。仓内 `PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient` 直接给出四个条件：
-
-1. 完成投影的 kernel 是 $K_\infty$；
-2. $K_\infty$ 是当前读出核内的最大前向不变关系；
-3. 当前读出唯一下降到该商；
-4. 更新唯一下降到该商上的更新。
-

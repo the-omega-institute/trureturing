@@ -1,9 +1,0 @@
-**Proposition 3.3 (exact refinement incidence).** For $0\le d\le e\le k$,
-the same actual prefixes induce an onto comparison map
-
-$$
-\rho_{e,d}:Q_{k,e}\to Q_{k,d},\qquad
-(S,wt)\longmapsto(\partial_wS,t),\qquad |w|=e-d,\ |t|=d.
-\tag{3.4}
-$$
-

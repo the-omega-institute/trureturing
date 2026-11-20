@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7abf0aa3c714d5746f2d25b9235cdbcc018229bfedd81c2bdd3f28620bc80c1b
-  normalized_sha256: sha256:7abf0aa3c714d5746f2d25b9235cdbcc018229bfedd81c2bdd3f28620bc80c1b
-cas_ref: sha256:7abf0aa3c714d5746f2d25b9235cdbcc018229bfedd81c2bdd3f28620bc80c1b
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Gluing/LocalDescentGlobalCompatibility.escaping_thread_not_in_global_image
-    target_statement_id: sha256:e039ceee8c1f176be205de14586feb5a40fbc6e16db481a1a893e677e71a7fa9
-receipts:
-  unresolved_subitems: []
