@@ -270,7 +270,7 @@ private theorem fiber_capacity {G : Type*} [AddCommGroup G] {r k : ℕ} (w : Fin
 
 /-- The reduced denominator of the total weight bounds how many distinct integer levels
 can be covered by bounded digits. -/
-theorem integral_levels_capacity {r k n b A : ℕ} (positive : 0 < b) (coprime : A.Coprime b)
+theorem integral_levels_capacity {r k n b : ℕ} {A : ℤ} (positive : 0 < b) (coprime : A.natAbs.Coprime b)
     (w : Fin (r + 1) → ℝ) (total : (∑ j, w j) = (A : ℝ) / b)
     (level : Fin n → ℤ) (distinct : Function.Injective level)
     (cover : ∀ x : Fin n, ∃ d : Fin (r+1) → Fin (k+1),
@@ -302,7 +302,7 @@ theorem integral_levels_capacity {r k n b A : ℕ} (positive : 0 < b) (coprime :
   have order : addOrderOf (∑ j, wt j) = b := by
     rw [weight]
     change addOrderOf (((A : ℝ) / b : ℝ) : AddCircle (1 : ℝ)) = b
-    simpa only [mul_one] using AddCircle.addOrderOf_div_of_gcd_eq_one (p := (1 : ℝ)) positive coprime
+    simpa only [mul_one] using AddCircle.addOrderOf_div_of_gcd_eq_one' (p := (1 : ℝ)) positive coprime
   have bound := fiber_capacity (k := k) wt 0
   dsimp only at bound
   rw [order] at bound

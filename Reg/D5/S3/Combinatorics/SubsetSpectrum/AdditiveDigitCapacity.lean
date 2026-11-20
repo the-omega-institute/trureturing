@@ -23,7 +23,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {r k n b A : ℕ}, 0 < b → A.Coprime b → ∀ w : Fin (r + 1) → ℝ,
+  Law R := ∀ {r k n b : ℕ} {A : ℤ}, 0 < b → A.natAbs.Coprime b → ∀ w : Fin (r + 1) → ℝ,
     (∑ j, w j) = (A : ℝ) / b → ∀ level : Fin n → ℤ, Function.Injective level →
     (∀ x : Fin n, ∃ d : Fin (r + 1) → Fin (k + 1),
       (∑ j, ((d j).val : ℝ) * w j) = (level x : ℝ)) →
@@ -37,7 +37,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     intro x y eq
     change (x.val : ℤ) = (y.val : ℤ) at eq
     exact Fin.ext (by exact_mod_cast eq)
-  have total : (∑ j, w j) = ((1 : ℕ) : ℝ) / ((1 : ℕ) : ℝ) := by norm_num [w]
+  have total : (∑ j, w j) = ((1 : ℤ) : ℝ) / ((1 : ℕ) : ℝ) := by norm_num [w]
   have cover (x : Fin 2) : ∃ d : Fin 1 → Fin 2,
       (∑ j, ((d j).val : ℝ) * w j) = (level x : ℝ) := by
     exact ⟨fun _ => x, by simp [w, level]⟩
