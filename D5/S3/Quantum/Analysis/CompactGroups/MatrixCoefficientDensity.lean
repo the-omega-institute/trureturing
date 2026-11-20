@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Matrix coefficients of unitary representations of a compact group are dense in C(G). -/
+   digest: The span of unitary matrix coefficients of a compact group is dense in C(G). -/
 
 import D5.S3.Quantum.Analysis.CompactGroups.UnitaryRepresentationKernel
 import Mathlib.Algebra.Algebra.Operations

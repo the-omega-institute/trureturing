@@ -16,10 +16,10 @@ internal sealed class LowDimensionalBorsukUlamDocument : IScribeDocumentDefiniti
         Blocks(
             Node("exists-eq-neg-of-le-two", "exists_eq_neg_of_le_two",
                 "Antipodal coincidence in dimensions at most two",
-                StatementSource.FromAuthor(AntipodalFormula()), AssessedProvenance.FromRepo(Borsuk),
+                StatementSource.FromAuthor(AntipodalFormula()), AssessedProvenance.FromLiterature(Borsuk),
                 "Let d <= 2 and let f be a map from Euclidean space of dimension d + 1 to Euclidean space of dimension d that is continuous on the unit sphere. "
                     + "Then f x = f (-x) for some point x of the unit sphere. "
-                    + "These are the cases n <= 2 of the classical Borsuk-Ulam theorem (Borsuk's Satz II); the theorem for general n is not stated here, and it is not available in the underlying formal library. "
+                    + "This is Borsuk's Satz II, the classical Borsuk-Ulam theorem, in the cases d <= 2 (Satz II for the d-dimensional sphere); the theorem for general d is not stated here, and it is not available in the underlying formal library. "
                     + "For d = 0 the target is a single point. "
                     + "For d = 1 the function g x = f x - f (-x) with values in the real line is continuous on the unit circle and odd, g (-x) = -g x, so it takes a value of each sign at the antipodal points of a fixed point; since the circle is connected, the intermediate value theorem gives a zero of g. "
                     + "For d = 2 the plane is identified isometrically with the complex numbers, and the map x -> f x - f (-x) becomes a continuous odd complex-valued map on the unit sphere of three-space; such a map has a zero, which is the required point.",
@@ -29,7 +29,7 @@ internal sealed class LowDimensionalBorsukUlamDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(InjectionFormula()), AssessedProvenance.FromRepo(),
                 "Let d <= 2 and d < m, let U be a nonempty open subset of Euclidean space of dimension m, and let f be a map from Euclidean space of dimension m to Euclidean space of dimension d that is continuous on U. "
                     + "Then f is not injective on U. "
-                    + "This is the statement of invariance of domain in the cases d <= 2 only; the general invariance of domain theorem is not stated here. "
+                    + "This is the classical consequence of invariance of domain that a nonempty open subset of Euclidean space of dimension m admits no continuous injection into Euclidean space of dimension d < m, here only for d <= 2; invariance of domain itself, the openness of the image of a continuous injection between open subsets of the same Euclidean space, is not stated. "
                     + "Choose a point p of U and a radius r with the ball of radius r about p contained in U. "
                     + "Write m = d + 1 + k and embed Euclidean space of dimension d + 1 isometrically as the first d + 1 coordinates; scaling the unit sphere of dimension d by a positive factor t smaller than r and translating it to p gives a sphere y -> p + t y inside U. "
                     + "The composition of f with this map is continuous on the unit sphere of dimension d, so it takes equal values at some antipodal pair x and -x. "

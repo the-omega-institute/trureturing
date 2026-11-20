@@ -12,6 +12,8 @@ import D5.S3.Quantum.AURICOmega.InvariantGramRepresentation
 import D5.S3.Quantum.AURICOmega.TernaryComparisonGroup
 import D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive
 import D5.S3.Quantum.Algebra.InvariantMetric.LowDimensionInvariantMetric
+import Mathlib.Algebra.Lie.Matrix
+import Mathlib.Algebra.Lie.TraceForm
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.GroupTheory.Subgroup.Centralizer
@@ -32,8 +34,9 @@ normed algebra.
 
 * The one-parameter generators of `ρ` are skew-adjoint: `star (exp (t • X)) * exp (t • X) = 1`
   for all real `t`, and the derivative at `t = 0` gives `star X + X = 0`.
-* The trace form `(X, Y) ↦ tr (X * Y)` is invariant on every Lie algebra of matrices, by
-  cyclicity of the trace, and it is separating on skew-adjoint matrices, since
+* The trace form of the action of a Lie algebra of matrices on column vectors
+  (`LieModule.traceForm`) is `(X, Y) ↦ tr (X * Y)`; it is invariant
+  (`LieModule.traceForm_lieInvariant`), and it is separating on skew-adjoint matrices, since
   `tr (X * X) = -tr (Xᴴ * X)`. By the low-dimensional theorem for invariant forms, a generator
   algebra of dimension at most two is abelian.
 * If the generator algebra is abelian, the exponential chart maps an open neighbourhood of `0`
@@ -44,19 +47,19 @@ normed algebra.
   open subset of `ℝ^m` into `ℝ^d`, which the low-dimensional Borsuk--Ulam theorem excludes when
   `d ≤ 2 < m`.
 
-A ternary comparison structure on a preconnected space whose reading is continuous in each
-variable is chain-connected (`chainConnected_of_connected`): a reading close to one is an open
-condition near the diagonal.
+A ternary comparison structure on a preconnected space whose reading `kappa x` is continuous at
+`x` for every `x` is chain-connected (`chainConnected_of_connected`): a reading close to one is an
+open condition near the diagonal.
 
 Let the structure live on a preconnected, locally compact space, with continuous transfer and a
-reading continuous in each variable, and let a neighbourhood `V` of a point `o` admit a map into
-`ℝ^d` that is continuous and injective on `V`. The group `groupAt o`, whose identity is `o`, is a
-topological group. A feature map `φ` of rank `r`, `kappa x y = ⟪φ x, φ y⟫`, satisfies
-`‖φ x - φ y‖ ^ 2 = 2 - 2 * kappa y x`, so it is continuous and injective, and its Gram kernel is
-left invariant. The orthogonal representation of the invariant Gram kernel has the stabilizer of
-the family `φ` as its kernel, which is trivial since `φ` is injective. A noncommutative structure
-therefore has `3 ≤ d`, and, being chain-connected, feature rank `5 ≤ r`
-(`three_le_dim_of_hasFeatureRank`).
+reading `kappa x` continuous at `x` for every `x`, and let a neighbourhood `V` of a point `o`
+admit a map into `ℝ^d` that is continuous and injective on `V`. The group `groupAt o`, whose
+identity is `o`, is a topological group. A feature map `φ` of rank `r`,
+`kappa x y = ⟪φ x, φ y⟫`, satisfies `‖φ x - φ y‖ ^ 2 = 2 - 2 * kappa y x`, so it is continuous
+and injective, and its Gram kernel is left invariant. The orthogonal representation of the
+invariant Gram kernel has the stabilizer of the family `φ` as its kernel, which is trivial since
+`φ` is injective. A noncommutative structure therefore has `3 ≤ d`, and, being chain-connected,
+feature rank `5 ≤ r` (`three_le_dim_of_hasFeatureRank`).
 -/
 
 open Filter Set
@@ -191,35 +194,29 @@ attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebr
 
 variable {n : ℕ}
 
-/-- The trace form `(X, Y) ↦ tr (X * Y)` on a Lie subalgebra of real square matrices. -/
-private noncomputable def traceForm (L : LieSubalgebra ℝ (Matrix (Fin n) (Fin n) ℝ)) :
-    LinearMap.BilinForm ℝ L :=
-  ((LinearMap.mul ℝ (Matrix (Fin n) (Fin n) ℝ)).compr₂
-    (Matrix.traceLinearMap (Fin n) ℝ ℝ)).compl₁₂ L.incl.toLinearMap L.incl.toLinearMap
-
-private theorem traceForm_apply (L : LieSubalgebra ℝ (Matrix (Fin n) (Fin n) ℝ)) (X Y : L) :
-    traceForm L X Y =
-      Matrix.trace ((X : Matrix (Fin n) (Fin n) ℝ) * (Y : Matrix (Fin n) (Fin n) ℝ)) := rfl
-
-/-- The trace form is invariant: `tr ((X * Y - Y * X) * Z) = -tr (Y * (X * Z - Z * X))`, by
-cyclicity of the trace. -/
-private theorem traceForm_lieInvariant (L : LieSubalgebra ℝ (Matrix (Fin n) (Fin n) ℝ)) :
-    (traceForm L).lieInvariant L := by
-  intro X Y Z
-  simp only [traceForm_apply, LieSubalgebra.coe_bracket, Ring.lie_def, sub_mul, mul_sub,
-    Matrix.trace_sub, mul_assoc]
-  have h := Matrix.trace_mul_comm (X : Matrix (Fin n) (Fin n) ℝ)
-    ((Y : Matrix (Fin n) (Fin n) ℝ) * (Z : Matrix (Fin n) (Fin n) ℝ))
-  rw [mul_assoc] at h
-  linarith
+/-- For a Lie algebra of real matrices acting on column vectors, the trace form is
+`(X, Y) ↦ tr (X * Y)`: the action of `X` is `Matrix.toLin' X`. -/
+private theorem traceForm_apply_eq_trace (L : LieSubalgebra ℝ (Matrix (Fin n) (Fin n) ℝ))
+    (X Y : L) : LieModule.traceForm ℝ L (Fin n → ℝ) X Y =
+      Matrix.trace ((X : Matrix (Fin n) (Fin n) ℝ) * (Y : Matrix (Fin n) (Fin n) ℝ)) := by
+  rw [LieModule.traceForm_apply_apply]
+  have hX : LieModule.toEnd ℝ L (Fin n → ℝ) X = Matrix.toLin' (X : Matrix (Fin n) (Fin n) ℝ) := by
+    ext v i
+    rfl
+  have hY : LieModule.toEnd ℝ L (Fin n → ℝ) Y = Matrix.toLin' (Y : Matrix (Fin n) (Fin n) ℝ) := by
+    ext v i
+    rfl
+  rw [hX, hY, ← Matrix.toLin'_mul, LinearMap.trace_eq_matrix_trace ℝ (Pi.basisFun ℝ (Fin n)),
+    LinearMap.toMatrix_eq_toMatrix', LinearMap.toMatrix'_toLin']
 
 /-- On a Lie algebra of skew-adjoint real matrices the trace form is separating:
 `tr (X * X) = -tr (Xᴴ * X)` vanishes only for `X = 0`. -/
 private theorem traceForm_separatingLeft (L : LieSubalgebra ℝ (Matrix (Fin n) (Fin n) ℝ))
-    (hL : ∀ X ∈ L, star X = -X) : LinearMap.SeparatingLeft (traceForm L) := by
+    (hL : ∀ X ∈ L, star X = -X) :
+    LinearMap.SeparatingLeft (LieModule.traceForm ℝ L (Fin n → ℝ)) := by
   intro X hX
   have h0 := hX X
-  rw [traceForm_apply] at h0
+  rw [traceForm_apply_eq_trace] at h0
   have h1 : ((X : Matrix (Fin n) (Fin n) ℝ)ᴴ * X).trace = 0 := by
     rw [← Matrix.star_eq_conjTranspose, hL X X.2, neg_mul, Matrix.trace_neg, h0, neg_zero]
   exact Subtype.ext (Matrix.trace_conjTranspose_mul_self_eq_zero_iff.1 h1)
@@ -246,22 +243,11 @@ private theorem three_le_finrank [PreconnectedSpace G]
   by_contra h
   obtain ⟨a, b, hab⟩ := hnc
   exact hab (mul_comm_of_isLieAbelian (Unitary.toUnits.comp ρ) (continuous_toUnits_comp ρ hc)
-    (Unitary.toUnits_injective.comp hi) (isLieAbelian_of_finrank_le_two (traceForm _)
-      (traceForm_lieInvariant _) (traceForm_separatingLeft _ fun _ hX =>
+    (Unitary.toUnits_injective.comp hi) (isLieAbelian_of_finrank_le_two
+      (LieModule.traceForm ℝ _ (Fin n → ℝ)) (LieModule.traceForm_lieInvariant ℝ _ (Fin n → ℝ))
+      (traceForm_separatingLeft _ fun _ hX =>
         star_eq_neg_of_isOneParameterGenerator (Unitary.toUnits.comp ρ) (fun g => (ρ g).2.1) hX)
       (by omega)) a b)
-
-/-- The dimension bound: the generator algebra has dimension at least three, and at most `d`
-if `d ≤ 2`. -/
-private theorem three_le_of_orthogonal_aux {d : ℕ} [PreconnectedSpace G] {V : Set G}
-    (hV : V ∈ 𝓝 (1 : G)) (f : G → EuclideanSpace ℝ (Fin d)) (hf : ContinuousOn f V)
-    (hfi : Set.InjOn f V) (ρ : G →* Matrix.orthogonalGroup (Fin n) ℝ) (hc : Continuous ρ)
-    (hi : Function.Injective ρ) (hnc : ∃ a b : G, a * b ≠ b * a) : 3 ≤ d := by
-  by_contra hd
-  have h3 := three_le_finrank ρ hc hi hnc
-  have h2 := finrank_le_of_le_two hV f hf hfi (by omega : d ≤ 2) (Unitary.toUnits.comp ρ)
-    (continuous_toUnits_comp ρ hc) (Unitary.toUnits_injective.comp hi)
-  omega
 
 end Orthogonal
 
@@ -272,21 +258,27 @@ theorem three_le_of_orthogonal {d n : ℕ} {G : Type*} [TopologicalSpace G] [Gro
     [IsTopologicalGroup G] [LocallyCompactSpace G] [PreconnectedSpace G] {V : Set G}
     (hV : V ∈ 𝓝 (1 : G)) (f : G → EuclideanSpace ℝ (Fin d)) (hf : ContinuousOn f V)
     (hfi : Set.InjOn f V) (ρ : G →* Matrix.orthogonalGroup (Fin n) ℝ) (hc : Continuous ρ)
-    (hi : Function.Injective ρ) (hnc : ∃ a b : G, a * b ≠ b * a) : 3 ≤ d :=
-  three_le_of_orthogonal_aux hV f hf hfi ρ hc hi hnc
+    (hi : Function.Injective ρ) (hnc : ∃ a b : G, a * b ≠ b * a) : 3 ≤ d := by
+  let _ : NormedRing (Matrix (Fin n) (Fin n) ℝ) := Matrix.linftyOpNormedRing
+  let _ : NormedAlgebra ℝ (Matrix (Fin n) (Fin n) ℝ) := Matrix.linftyOpNormedAlgebra
+  by_contra hd
+  exact hd (le_trans (three_le_finrank ρ hc hi hnc) (finrank_le_of_le_two hV f hf hfi
+    (by omega) (Unitary.toUnits.comp ρ) (continuous_toUnits_comp ρ hc)
+    (Unitary.toUnits_injective.comp hi)))
 
-/-- On a preconnected space, a ternary comparison structure whose reading is continuous in each
-variable is chain-connected: for every `a`, the points `b` with `1 - ε < kappa a b` form a
-neighbourhood of `a`, since `kappa a a = 1`. -/
+/-- On a preconnected space, a ternary comparison structure whose reading `kappa x` is
+continuous at `x` for every `x` is chain-connected: for every `a`, the points `b` with
+`1 - ε < kappa a b` form a neighbourhood of `a`, since `kappa a a = 1`. -/
 theorem chainConnected_of_connected {M : Type*} [TopologicalSpace M] [PreconnectedSpace M]
-    (C : TernaryComparison M) (hkappa : ∀ x, Continuous (C.kappa x)) : C.ChainConnected := by
+    (C : TernaryComparison M) (hkappa : ∀ x, ContinuousAt (C.kappa x) x) :
+    C.ChainConnected := by
   intro ε hε x y
   refine PreconnectedSpace.induction₂' _ (fun a => ?_)
     ⟨fun _ _ _ => Relation.ReflTransGen.trans⟩ x y
   have hlt : 1 - ε < C.kappa a a := by
     rw [C.kappa_self]
     linarith
-  filter_upwards [((hkappa a).tendsto a).eventually (lt_mem_nhds hlt)] with b hb
+  filter_upwards [(hkappa a).eventually (lt_mem_nhds hlt)] with b hb
   exact ⟨Relation.ReflTransGen.single hb,
     Relation.ReflTransGen.single (by rwa [C.kappa_symm])⟩
 
@@ -300,10 +292,10 @@ private theorem isTopologicalGroup_groupAt {M : Type*} [TopologicalSpace M]
   { continuous_mul := htri.comp (continuous_fst.prodMk (continuous_const.prodMk continuous_snd))
     continuous_inv := htri.comp (continuous_const.prodMk (continuous_id.prodMk continuous_const)) }
 
-/-- A feature map of a reading that is continuous in each variable is continuous:
+/-- A feature map of a reading `kappa y` that is continuous at `y` for every `y` is continuous:
 `‖φ x - φ y‖ = √(2 - 2 * kappa y x)` tends to `0` as `x` tends to `y`. -/
 private theorem continuous_feature {M : Type*} [TopologicalSpace M] (C : TernaryComparison M)
-    (hkappa : ∀ x, Continuous (C.kappa x)) {r : ℕ} (φ : M → EuclideanSpace ℝ (Fin r))
+    (hkappa : ∀ x, ContinuousAt (C.kappa x) x) {r : ℕ} (φ : M → EuclideanSpace ℝ (Fin r))
     (hφ : ∀ x y : M, C.kappa x y = ⟪φ x, φ y⟫_ℝ) : Continuous φ := by
   have hnorm : ∀ x y : M, ‖φ x - φ y‖ = Real.sqrt (2 - 2 * C.kappa y x) := by
     intro x y
@@ -316,20 +308,20 @@ private theorem continuous_feature {M : Type*} [TopologicalSpace M] (C : Ternary
   refine continuous_iff_continuousAt.2 fun y => tendsto_iff_norm_sub_tendsto_zero.2 ?_
   simp only [hnorm]
   have h : Tendsto (fun x => 2 - 2 * C.kappa y x) (𝓝 y) (𝓝 (2 - 2 * C.kappa y y)) :=
-    tendsto_const_nhds.sub (tendsto_const_nhds.mul ((hkappa y).tendsto y))
+    tendsto_const_nhds.sub (tendsto_const_nhds.mul (hkappa y))
   rw [C.kappa_self, mul_one, sub_self] at h
   have h' := (Real.continuous_sqrt.tendsto 0).comp h
   rw [Real.sqrt_zero] at h'
   exact h'
 
 /-- A noncommutative ternary comparison structure of finite feature rank `r` on a preconnected,
-locally compact space, with continuous transfer and a reading continuous in each variable, one
-neighbourhood of which admits a map into `ℝ^d` that is continuous and injective on it, has
-`d ≥ 3` and `r ≥ 5`. -/
+locally compact space, with continuous transfer and a reading `kappa x` continuous at `x` for
+every `x`, one neighbourhood of which admits a map into `ℝ^d` that is continuous and injective
+on it, has `d ≥ 3` and `r ≥ 5`. -/
 theorem three_le_dim_of_hasFeatureRank {d : ℕ} {M : Type*} [TopologicalSpace M]
     [LocallyCompactSpace M] [PreconnectedSpace M] (C : TernaryComparison M)
     (htri : Continuous fun p : M × M × M => C.tri p.1 p.2.1 p.2.2)
-    (hkappa : ∀ x, Continuous (C.kappa x))
+    (hkappa : ∀ x, ContinuousAt (C.kappa x) x)
     (hnc : C.Noncommutative) {r : ℕ} (hr : C.HasFeatureRank r)
     {o : M} {V : Set M} (hV : V ∈ 𝓝 o) (f : M → EuclideanSpace ℝ (Fin d))
     (hf : ContinuousOn f V) (hfi : Set.InjOn f V) : 3 ≤ d ∧ 5 ≤ r := by

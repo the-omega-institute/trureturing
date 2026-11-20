@@ -46,7 +46,8 @@ abbrev arena : Arena where
       ∀ r s, Real.cosh (dist (Φ r) (Φ s)) = kleinCosh r s) ∧
     (∀ r : EuclideanSpace ℝ (Fin 3), filter 1 r = r) ∧
     (∀ g : Matrix (Fin 2) (Fin 2) ℂ, g.det ≠ 0 →
-      (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ρ.readout () () (filter g r) < 1 ∧
+      (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ρ.readout () () (filter g r) < 1) ∧
+      (∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 →
         ∀ h : Matrix (Fin 2) (Fin 2) ℂ, filter h (filter g r) = filter (h * g) r) ∧
       ∀ r s : EuclideanSpace ℝ (Fin 3), ‖r‖ < 1 → ‖s‖ < 1 →
         kleinCosh (filter g r) (filter g s) = kleinCosh r s) ∧
@@ -56,7 +57,7 @@ abbrev arena : Arena where
 /-- For the identity matrix and the centre the rejected reading would give `2 < 1`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := ((h.2.2.1 1 (by simp)).1 0 (by simp)).1
+  have hh := (h.2.2.1 1 (by simp)).1 0 (by simp)
   change (2 : ℝ) < 1 at hh
   norm_num at hh
 
@@ -109,7 +110,7 @@ def bloch_ball_hyperbolic_registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "body", "body", "fn", "arg", "fn", "arg"]
+      path := #["arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/AURICOmega/TangentInvariantForms
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/AURICOmega/TangentInvariantForms
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,10 +7,11 @@
    digest: Invariant bilinear forms on pure quaternions under unit quaternion conjugations. -/
 
 import D5.S3.Geometry.AlgebraicBoundary.TauCeti.FieldTheory.IsRealClosed.Real
-import D5.S3.QuadraticForms.OddDimensionZeroDivisor
 import D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
+import Mathlib.Algebra.Star.UnitaryStarAlgAut
 import Mathlib.Analysis.InnerProductSpace.Projection.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.FieldTheory.IsRealClosed.Basic
+import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 
 /-! Bilinear forms on the pure quaternions that are invariant under conjugation by unit
 quaternions.
@@ -20,7 +21,7 @@ to irreducibility of the conjugation action of `S` on the pure quaternions, for 
 symmetric forms. The conjugations by all unit quaternions act irreducibly. A single conjugation
 by `u` with `u.re ≠ 0` and `u.im ≠ 0` (a rotation through an angle outside `πℤ` about `u.im`)
 leaves exactly the three-parameter family `α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫`,
-`n = u.im`, invariant. -/
+`n = u.im`, invariant, and the three parameters are determined by the form. -/
 
 open scoped InnerProductSpace Quaternion
 
@@ -30,7 +31,6 @@ namespace D5.S3.Quantum.AURICOmega.TangentInvariantForms
 
 open D5.S3.Quantum.AURICOmega.QuaternionComparisonModel
 open D5.S3.Quantum.AURICOmega.QuaternionTwoPointHomogeneity
-open D5.S3.QuadraticForms.OddDimensionZeroDivisor
 
 /-! ### Conjugation by a unit quaternion -/
 
@@ -42,32 +42,32 @@ private lemma re_conj {q : ℍ[ℝ]} (hq : star q * q = 1) (z : ℍ[ℝ]) :
     QuaternionAlgebra.re_one] at h ⊢
   linear_combination z.re * h
 
-private lemma cancel_left {q : ℍ[ℝ]} (hq : star q * q = 1) (z : ℍ[ℝ]) :
-    star q * (q * z) = z := by
-  rw [← mul_assoc, hq, one_mul]
+private lemma conj_mul_conj (u : unitary ℍ[ℝ]) (z w : ℍ[ℝ]) :
+    (u : ℍ[ℝ]) * z * star (u : ℍ[ℝ]) * ((u : ℍ[ℝ]) * w * star (u : ℍ[ℝ])) =
+      (u : ℍ[ℝ]) * (z * w) * star (u : ℍ[ℝ]) :=
+  (map_mul (Unitary.conjStarAlgAut ℝ ℍ[ℝ] u) z w).symm
 
-private lemma inner_conj {q : ℍ[ℝ]} (hq : star q * q = 1) (z w : ℍ[ℝ]) :
-    ⟪q * z * star q, q * w * star q⟫_ℝ = ⟪z, w⟫_ℝ := by
-  rw [Quaternion.inner_def, Quaternion.inner_def, star_mul, star_mul, star_star]
-  have : q * z * star q * (q * (star w * star q)) = q * (z * star w) * star q := by
-    simp only [mul_assoc, cancel_left hq]
-  rw [this, re_conj hq]
+/-- The conjugation by `star u` undoes the conjugation by `u`. -/
+private lemma conj_star_conj (u : unitary ℍ[ℝ]) (z : ℍ[ℝ]) :
+    (u : ℍ[ℝ]) * (star (u : ℍ[ℝ]) * z * (u : ℍ[ℝ])) * star (u : ℍ[ℝ]) = z :=
+  (Unitary.conjStarAlgAut ℝ ℍ[ℝ] u).apply_symm_apply z
 
-private lemma conj_mul_conj {q : ℍ[ℝ]} (hq : star q * q = 1) (z w : ℍ[ℝ]) :
-    q * z * star q * (q * w * star q) = q * (z * w) * star q := by
-  simp only [mul_assoc, cancel_left hq]
+private lemma star_conj_conj (u : unitary ℍ[ℝ]) (z : ℍ[ℝ]) :
+    star (u : ℍ[ℝ]) * ((u : ℍ[ℝ]) * z * star (u : ℍ[ℝ])) * (u : ℍ[ℝ]) = z :=
+  (Unitary.conjStarAlgAut ℝ ℍ[ℝ] u).symm_apply_apply z
 
-/-- The conjugation by `star q` undoes the conjugation by `q`. -/
-private lemma conj_star_conj {q : ℍ[ℝ]} (hq : q * star q = 1) (z : ℍ[ℝ]) :
-    q * (star q * z * q) * star q = z := by
-  simp only [mul_assoc, hq, mul_one]
-  rw [← mul_assoc, hq, one_mul]
+private lemma inner_conj (u : unitary ℍ[ℝ]) (z w : ℍ[ℝ]) :
+    ⟪(u : ℍ[ℝ]) * z * star (u : ℍ[ℝ]), (u : ℍ[ℝ]) * w * star (u : ℍ[ℝ])⟫_ℝ = ⟪z, w⟫_ℝ := by
+  have hw : star ((u : ℍ[ℝ]) * w * star (u : ℍ[ℝ])) = (u : ℍ[ℝ]) * star w * star (u : ℍ[ℝ]) := by
+    rw [star_mul, star_mul, star_star, ← mul_assoc]
+  rw [Quaternion.inner_def, Quaternion.inner_def, hw, conj_mul_conj,
+    re_conj (Unitary.star_mul_self_of_mem u.2)]
 
 private lemma inner_conj_left (u : unitary ℍ[ℝ]) (p y : ℍ[ℝ]) :
     ⟪(u : ℍ[ℝ]) * p * star (u : ℍ[ℝ]), y⟫_ℝ =
       ⟪p, star (u : ℍ[ℝ]) * y * (u : ℍ[ℝ])⟫_ℝ := by
-  conv_lhs => rw [← conj_star_conj (Unitary.mul_star_self_of_mem u.2) y]
-  exact inner_conj (Unitary.star_mul_self_of_mem u.2) _ _
+  conv_lhs => rw [← conj_star_conj u y]
+  exact inner_conj u _ _
 
 /-! ### Pure quaternions -/
 
@@ -83,8 +83,23 @@ private lemma eq_zero_of_inner_pure {d : ℍ[ℝ]} (hd : d.re = 0)
     (h : ∀ y : ℍ[ℝ], y.re = 0 → ⟪d, y⟫_ℝ = 0) : d = 0 :=
   inner_self_eq_zero.1 (h d hd)
 
+private lemma mem_unitary_of_ne_zero {z : ℍ[ℝ]} (hz : z ≠ 0) : ‖z‖⁻¹ • z ∈ unitary ℍ[ℝ] := by
+  rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm, norm_smul,
+    norm_inv, norm_norm, inv_mul_cancel₀ (norm_ne_zero_iff.2 hz)]
+
+/-- A unit quaternion whose conjugation carries `i` to the unit vector of a nonzero pure
+quaternion `n`. -/
+private lemma exists_frame {n : ℍ[ℝ]} (hn : n.re = 0) (hn0 : n ≠ 0) :
+    ∃ q : unitary ℍ[ℝ], (q : ℍ[ℝ]) * qI * star (q : ℍ[ℝ]) = ‖n‖⁻¹ • n := by
+  obtain ⟨q, hq⟩ := exists_unitary_mul_eq_mul unitI ⟨_, mem_unitary_of_ne_zero hn0⟩
+    (by simp [unitI, hn])
+  refine ⟨q, ?_⟩
+  have h : (q : ℍ[ℝ]) * qI = (‖n‖⁻¹ • n) * q := congrArg Subtype.val hq
+  rw [h, mul_assoc, Unitary.mul_star_self_of_mem q.2, mul_one]
+
 /-- The pure quaternions as a submodule. -/
-private abbrev pureSub : Submodule ℝ ℍ[ℝ] := LinearMap.ker (QuaternionAlgebra.reₗ (-1 : ℝ) 0 (-1))
+private abbrev pureSub : Submodule ℝ ℍ[ℝ] :=
+  LinearMap.ker (QuaternionAlgebra.reₗ (-1 : ℝ) 0 (-1))
 
 private lemma mem_pure {x : ℍ[ℝ]} : x ∈ pureSub ↔ x.re = 0 := by
   simp [pureSub]
@@ -118,7 +133,7 @@ private lemma inner_opOf (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (x 
   ring
 
 /-- Invariance of `B` on pure quaternions under conjugation by `u`. -/
-private def Inv (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (u : unitary ℍ[ℝ]) : Prop :=
+private def IsInv (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (u : unitary ℍ[ℝ]) : Prop :=
   ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
     B ((u : ℍ[ℝ]) * x * star (u : ℍ[ℝ])) ((u : ℍ[ℝ]) * y * star (u : ℍ[ℝ])) = B x y
 
@@ -133,7 +148,7 @@ private lemma re_conj_star_unit (u : unitary ℍ[ℝ]) (z : ℍ[ℝ]) :
   simpa only [star_star] using re_conj h z
 
 /-- The operator of an invariant form commutes with the conjugation on pure quaternions. -/
-private lemma opOf_conj (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (u : unitary ℍ[ℝ]) (hB : Inv B u)
+private lemma opOf_conj (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (u : unitary ℍ[ℝ]) (hB : IsInv B u)
     {x : ℍ[ℝ]} (hx : x.re = 0) :
     opOf B ((u : ℍ[ℝ]) * x * star (u : ℍ[ℝ])) =
       (u : ℍ[ℝ]) * opOf B x * star (u : ℍ[ℝ]) := by
@@ -143,16 +158,19 @@ private lemma opOf_conj (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (u :
   · have hy' : (star (u : ℍ[ℝ]) * y * (u : ℍ[ℝ])).re = 0 := by rw [re_conj_star_unit, hy]
     rw [inner_sub_left, inner_opOf _ _ hy, inner_conj_left, inner_opOf _ _ hy']
     have h := hB x _ hx hy'
-    rw [conj_star_conj (Unitary.mul_star_self_of_mem u.2) y] at h
+    rw [conj_star_conj u y] at h
     rw [h, sub_self]
 
 /-! ### Uniqueness of invariant forms and irreducibility -/
 
-private lemma star_conj_conj (u : unitary ℍ[ℝ]) (z : ℍ[ℝ]) :
-    star (u : ℍ[ℝ]) * ((u : ℍ[ℝ]) * z * star (u : ℍ[ℝ])) * (u : ℍ[ℝ]) = z := by
-  have h : star (u : ℍ[ℝ]) * star (star (u : ℍ[ℝ])) = 1 := by
-    rw [star_star]; exact Unitary.star_mul_self_of_mem u.2
-  simpa only [star_star] using conj_star_conj h z
+/-- An endomorphism of a real vector space of odd finite dimension has an eigenvalue: its
+characteristic polynomial has odd degree. -/
+private lemma exists_hasEigenvalue_of_odd {U : Type*} [AddCommGroup U] [Module ℝ U]
+    [FiniteDimensional ℝ U] (f : Module.End ℝ U) (h : Odd (Module.finrank ℝ U)) :
+    ∃ μ : ℝ, f.HasEigenvalue μ :=
+  (IsRealClosed.exists_isRoot_of_odd_natDegree (f := f.charpoly)
+      (by rwa [LinearMap.charpoly_natDegree])).imp
+    fun μ hμ => (Module.End.hasEigenvalue_iff_isRoot_charpoly f μ).2 hμ
 
 /-- If the conjugations leave no proper nonzero subspace of the pure quaternions invariant, an
 invariant form is a multiple of the inner product there: the operator of the form commutes with
@@ -162,10 +180,10 @@ private lemma smul_inner_of_irreducible (S : Set (unitary ℍ[ℝ]))
     (h3 : ∀ W : Submodule ℝ ℍ[ℝ], (∀ w ∈ W, w.re = 0) →
       (∀ u ∈ S, ∀ w ∈ W, (u : ℍ[ℝ]) * w * star (u : ℍ[ℝ]) ∈ W) →
       W = ⊥ ∨ ∀ x : ℍ[ℝ], x.re = 0 → x ∈ W)
-    (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (hB : ∀ u ∈ S, Inv B u) :
+    (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (hB : ∀ u ∈ S, IsInv B u) :
     ∃ c : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 → B x y = c * ⟪x, y⟫_ℝ := by
   have hAP : ∀ x ∈ pureSub, opOf B x ∈ pureSub := fun x _ => mem_pure.2 (re_opOf B x)
-  obtain ⟨μ, hμ⟩ := exists_hasEigenvalue_of_odd_finrank ((opOf B).restrict hAP)
+  obtain ⟨μ, hμ⟩ := exists_hasEigenvalue_of_odd ((opOf B).restrict hAP)
     (by rw [finrank_pure]; decide)
   obtain ⟨v, hv⟩ := hμ.exists_hasEigenvector
   have hv1 : opOf B v = μ • (v : ℍ[ℝ]) :=
@@ -191,7 +209,7 @@ quaternions, the conjugations leave no proper nonzero subspace of them invariant
 orthogonal projection onto an invariant subspace commutes with the conjugations and gives an
 invariant symmetric form. -/
 private lemma irreducible_of_symm (S : Set (unitary ℍ[ℝ]))
-    (h2 : ∀ B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ, (∀ x y, B x y = B y x) → (∀ u ∈ S, Inv B u) →
+    (h2 : ∀ B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ, (∀ x y, B x y = B y x) → (∀ u ∈ S, IsInv B u) →
       ∃ c : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 → B x y = c * ⟪x, y⟫_ℝ)
     (W : Submodule ℝ ℍ[ℝ]) (hWre : ∀ w ∈ W, w.re = 0)
     (hWinv : ∀ u ∈ S, ∀ w ∈ W, (u : ℍ[ℝ]) * w * star (u : ℍ[ℝ]) ∈ W) :
@@ -218,14 +236,14 @@ private lemma irreducible_of_symm (S : Set (unitary ℍ[ℝ]))
     refine Submodule.eq_starProjection_of_mem_of_inner_eq_zero
       (hWinv u hu _ (W.starProjection_apply_mem x)) fun z hz => ?_
     obtain ⟨z', hz'W, rfl⟩ := hsurj u hu z hz
-    rw [← sub_mul, ← mul_sub, inner_conj (Unitary.star_mul_self_of_mem u.2),
+    rw [← sub_mul, ← mul_sub, inner_conj u,
       Submodule.starProjection_inner_eq_zero x z' hz'W]
   let Bw : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ := innerₗ ℍ[ℝ] ∘ₗ (W.starProjection : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ])
   have hBw : ∀ x y, Bw x y = ⟪W.starProjection x, y⟫_ℝ := fun _ _ => rfl
   obtain ⟨c, hc⟩ := h2 Bw
     (fun x y => by rw [hBw, hBw, Submodule.inner_starProjection_left_eq_right, real_inner_comm])
     (fun u hu x y _ _ => by
-      rw [hBw, hBw, hcomm u hu, inner_conj (Unitary.star_mul_self_of_mem u.2)])
+      rw [hBw, hBw, hcomm u hu, inner_conj u])
   have hc1 : c = 1 := by
     have h := hc w w (hWre w hwW) (hWre w hwW)
     rw [hBw, Submodule.starProjection_eq_self_iff.2 hwW] at h
@@ -253,10 +271,8 @@ private lemma irreducible_univ (W : Submodule ℝ ℍ[ℝ]) (hWre : ∀ w ∈ W,
   intro x hx
   by_cases hx0 : x = 0
   · rw [hx0]; exact W.zero_mem
-  have hunit : ∀ z : ℍ[ℝ], z ≠ 0 → ‖z‖⁻¹ • z ∈ unitary ℍ[ℝ] := fun z hz => by
-    rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm, norm_smul,
-      norm_inv, norm_norm, inv_mul_cancel₀ (norm_ne_zero_iff.2 hz)]
-  obtain ⟨c, hc⟩ := exists_unitary_mul_eq_mul ⟨_, hunit w hw0⟩ ⟨_, hunit x hx0⟩
+  obtain ⟨c, hc⟩ := exists_unitary_mul_eq_mul ⟨_, mem_unitary_of_ne_zero hw0⟩
+    ⟨_, mem_unitary_of_ne_zero hx0⟩
     (by simp [hWre w hwW, hx])
   have hc' : ‖w‖⁻¹ • ((c : ℍ[ℝ]) * w * star (c : ℍ[ℝ])) = ‖x‖⁻¹ • x := by
     have h : (c : ℍ[ℝ]) * (‖w‖⁻¹ • w) = (‖x‖⁻¹ • x) * c := congrArg Subtype.val hc
@@ -352,36 +368,24 @@ private lemma classify_std (r b : ℝ) (hr : r ≠ 0) (hb : b ≠ 0) (hrb : r ^ 
 
 private lemma inner_conj_star (u : unitary ℍ[ℝ]) (x y : ℍ[ℝ]) :
     ⟪star (u : ℍ[ℝ]) * x * (u : ℍ[ℝ]), star (u : ℍ[ℝ]) * y * (u : ℍ[ℝ])⟫_ℝ = ⟪x, y⟫_ℝ := by
-  have h : star (star (u : ℍ[ℝ])) * star (u : ℍ[ℝ]) = 1 := by
-    rw [star_star]; exact Unitary.mul_star_self_of_mem u.2
-  simpa only [star_star] using inner_conj h x y
+  rw [← inner_conj u, conj_star_conj, conj_star_conj]
 
 private lemma conj_star_mul (u : unitary ℍ[ℝ]) (x y : ℍ[ℝ]) :
     star (u : ℍ[ℝ]) * x * (u : ℍ[ℝ]) * (star (u : ℍ[ℝ]) * y * (u : ℍ[ℝ])) =
-      star (u : ℍ[ℝ]) * (x * y) * (u : ℍ[ℝ]) := by
-  have h : star (star (u : ℍ[ℝ])) * star (u : ℍ[ℝ]) = 1 := by
-    rw [star_star]; exact Unitary.mul_star_self_of_mem u.2
-  simpa only [star_star] using conj_mul_conj h x y
-
-private lemma mem_unitary_of_ne_zero {z : ℍ[ℝ]} (hz : z ≠ 0) : ‖z‖⁻¹ • z ∈ unitary ℍ[ℝ] := by
-  rw [← SetLike.mem_coe, coe_unitary_eq_sphere, mem_sphere_zero_iff_norm, norm_smul,
-    norm_inv, norm_norm, inv_mul_cancel₀ (norm_ne_zero_iff.2 hz)]
+      star (u : ℍ[ℝ]) * (x * y) * (u : ℍ[ℝ]) :=
+  (map_mul (Unitary.conjStarAlgAut ℝ ℍ[ℝ] u).symm x y).symm
 
 /-- A form invariant under the conjugation by a unit quaternion `u` with `u.re ≠ 0` and
 `u.im ≠ 0` lies in the span of the three invariant forms: conjugating by a unit quaternion that
 carries `i` to the unit vector of `u.im` reduces to the axis `i`. -/
 private lemma classify (u : unitary ℍ[ℝ]) (hre : (u : ℍ[ℝ]).re ≠ 0) (him : (u : ℍ[ℝ]).im ≠ 0)
-    (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (hB : Inv B u) :
+    (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) (hB : IsInv B u) :
     ∃ α β γ : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
       B x y = α * ⟪x, y⟫_ℝ + β * ⟪(u : ℍ[ℝ]).im, x⟫_ℝ * ⟪(u : ℍ[ℝ]).im, y⟫_ℝ +
         γ * ⟪(u : ℍ[ℝ]).im, x * y⟫_ℝ := by
   set n := (u : ℍ[ℝ]).im
   have hn0 : ‖n‖ ≠ 0 := norm_ne_zero_iff.2 him
-  obtain ⟨q, hq⟩ := exists_unitary_mul_eq_mul unitI ⟨_, mem_unitary_of_ne_zero him⟩
-    (by simp [unitI, n])
-  have hqI : (q : ℍ[ℝ]) * qI * star (q : ℍ[ℝ]) = ‖n‖⁻¹ • n := by
-    have h : (q : ℍ[ℝ]) * qI = (‖n‖⁻¹ • n) * q := congrArg Subtype.val hq
-    rw [h, mul_assoc, Unitary.mul_star_self_of_mem q.2, mul_one]
+  obtain ⟨q, hqI⟩ := exists_frame (n := n) (by simp [n]) him
   have hm : (q : ℍ[ℝ]) * (⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]) * star (q : ℍ[ℝ]) = n := by
     have : (⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]) = ‖n‖ • qI := by ext <;> simp [qI]
     rw [this, mul_smul_comm, smul_mul_assoc, hqI, smul_smul, mul_inv_cancel₀ hn0, one_smul]
@@ -420,7 +424,7 @@ private lemma classify (u : unitary ℍ[ℝ]) (hre : (u : ℍ[ℝ]).re ≠ 0) (h
   have hx' : (star (q : ℍ[ℝ]) * x * q).re = 0 := by rw [re_conj_star_unit, hx]
   have hy' : (star (q : ℍ[ℝ]) * y * q).re = 0 := by rw [re_conj_star_unit, hy]
   have hback : ∀ z : ℍ[ℝ], (q : ℍ[ℝ]) * (star (q : ℍ[ℝ]) * z * q) * star (q : ℍ[ℝ]) = z :=
-    conj_star_conj (Unitary.mul_star_self_of_mem q.2)
+    conj_star_conj q
   have hmz : ∀ z : ℍ[ℝ], ⟪(⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]), star (q : ℍ[ℝ]) * z * q⟫_ℝ = ⟪n, z⟫_ℝ :=
     fun z => by rw [← inner_conj_left, hm]
   have := h _ _ hx' hy'
@@ -436,6 +440,43 @@ private lemma inner_im_conj (u : unitary ℍ[ℝ]) (z : ℍ[ℝ]) :
   have hn : star (u : ℍ[ℝ]) * (u : ℍ[ℝ]).im * (u : ℍ[ℝ]) = (u : ℍ[ℝ]).im := by
     rw [mul_assoc, ← hc, ← mul_assoc, Unitary.star_mul_self_of_mem u.2, one_mul]
   rw [real_inner_comm, inner_conj_left, hn, real_inner_comm]
+
+/-- The forms `⟪x, y⟫`, `⟪n, x⟫ ⟪n, y⟫` and `⟪n, x * y⟫` are linearly independent on the pure
+quaternions for a nonzero pure `n`: in a frame carrying `i` to `n / ‖n‖`, the pairs `(j, j)`,
+`(i, i)` and `(j, k)` separate the three coefficients. -/
+private lemma coeff_unique {n : ℍ[ℝ]} (hn : n.re = 0) (hn0 : n ≠ 0) (c d : ℝ × ℝ × ℝ)
+    (h : ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
+      c.1 * ⟪x, y⟫_ℝ + c.2.1 * ⟪n, x⟫_ℝ * ⟪n, y⟫_ℝ + c.2.2 * ⟪n, x * y⟫_ℝ =
+        d.1 * ⟪x, y⟫_ℝ + d.2.1 * ⟪n, x⟫_ℝ * ⟪n, y⟫_ℝ + d.2.2 * ⟪n, x * y⟫_ℝ) :
+    c = d := by
+  obtain ⟨q, hqI⟩ := exists_frame hn hn0
+  have ha : ‖n‖ ≠ 0 := norm_ne_zero_iff.2 hn0
+  have hm : (q : ℍ[ℝ]) * (⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]) * star (q : ℍ[ℝ]) = n := by
+    have : (⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]) = ‖n‖ • qI := by ext <;> simp [qI]
+    rw [this, mul_smul_comm, smul_mul_assoc, hqI, smul_smul, mul_inv_cancel₀ ha, one_smul]
+  have h' : ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
+      c.1 * ⟪x, y⟫_ℝ + c.2.1 * ⟪(⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]), x⟫_ℝ * ⟪(⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]), y⟫_ℝ +
+          c.2.2 * ⟪(⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]), x * y⟫_ℝ =
+        d.1 * ⟪x, y⟫_ℝ + d.2.1 * ⟪(⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]), x⟫_ℝ *
+            ⟪(⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]), y⟫_ℝ +
+          d.2.2 * ⟪(⟨0, ‖n‖, 0, 0⟩ : ℍ[ℝ]), x * y⟫_ℝ := fun x y hx hy => by
+    have := h ((q : ℍ[ℝ]) * x * star (q : ℍ[ℝ])) ((q : ℍ[ℝ]) * y * star (q : ℍ[ℝ]))
+      (by rw [re_conj_unit, hx]) (by rw [re_conj_unit, hy])
+    rw [conj_mul_conj, ← hm] at this
+    simp only [inner_conj] at this
+    exact this
+  obtain ⟨c1, c2, c3⟩ := c
+  obtain ⟨d1, d2, d3⟩ := d
+  have e1 := h' qJ qJ rfl rfl
+  have e2 := h' qI qI rfl rfl
+  have e3 := h' qJ qK rfl rfl
+  simp [qI, qJ, qK, inner_eq_components] at e1 e2 e3
+  have hJ : (⟨0, 0, 1, 0⟩ : ℍ[ℝ]) ≠ 0 := fun h0 => by
+    simpa using congrArg QuaternionAlgebra.imJ h0
+  obtain rfl : c1 = d1 := e1.resolve_right hJ
+  obtain rfl : c3 = d3 := e3.resolve_right hn0
+  obtain rfl : c2 = d2 := mul_right_cancel₀ (mul_ne_zero ha ha) (by linear_combination e2)
+  rfl
 
 /-! ### Main statements -/
 
@@ -473,18 +514,22 @@ theorem conj_invariant_bilinear_eq_smul_inner (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ]
 
 /-- For a unit quaternion `u` that is neither `±1` nor pure (`u.re ≠ 0`, `u.im ≠ 0`), a bilinear
 form is invariant on the pure quaternions under the conjugation by `u` exactly when it equals
-`α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫` there, with `n = u.im`. -/
+`α ⟪x, y⟫ + β ⟪n, x⟫ ⟪n, y⟫ + γ ⟪n, x * y⟫` there, with `n = u.im`, for exactly one triple
+`(α, β, γ)`. -/
 theorem conj_invariant_bilinear_iff (u : unitary ℍ[ℝ]) (hre : (u : ℍ[ℝ]).re ≠ 0)
     (him : (u : ℍ[ℝ]).im ≠ 0) (B : ℍ[ℝ] →ₗ[ℝ] ℍ[ℝ] →ₗ[ℝ] ℝ) :
     (∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
         B ((u : ℍ[ℝ]) * x * star (u : ℍ[ℝ])) ((u : ℍ[ℝ]) * y * star (u : ℍ[ℝ])) = B x y) ↔
-      ∃ α β γ : ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
-        B x y = α * ⟪x, y⟫_ℝ + β * ⟪(u : ℍ[ℝ]).im, x⟫_ℝ * ⟪(u : ℍ[ℝ]).im, y⟫_ℝ +
-          γ * ⟪(u : ℍ[ℝ]).im, x * y⟫_ℝ := by
-  refine ⟨classify u hre him B, ?_⟩
-  rintro ⟨α, β, γ, h⟩ x y hx hy
-  rw [h _ _ (by rw [re_conj_unit, hx]) (by rw [re_conj_unit, hy]), h x y hx hy,
-    inner_conj (Unitary.star_mul_self_of_mem u.2),
-    conj_mul_conj (Unitary.star_mul_self_of_mem u.2), inner_im_conj, inner_im_conj, inner_im_conj]
+      ∃! c : ℝ × ℝ × ℝ, ∀ x y : ℍ[ℝ], x.re = 0 → y.re = 0 →
+        B x y = c.1 * ⟪x, y⟫_ℝ + c.2.1 * ⟪(u : ℍ[ℝ]).im, x⟫_ℝ * ⟪(u : ℍ[ℝ]).im, y⟫_ℝ +
+          c.2.2 * ⟪(u : ℍ[ℝ]).im, x * y⟫_ℝ := by
+  constructor
+  · intro hB
+    obtain ⟨α, β, γ, h⟩ := classify u hre him B hB
+    refine ⟨(α, β, γ), h, fun c hc => coeff_unique (Quaternion.re_im _) him c (α, β, γ)
+      fun x y hx hy => (hc x y hx hy).symm.trans (h x y hx hy)⟩
+  · rintro ⟨⟨α, β, γ⟩, h, -⟩ x y hx hy
+    rw [h _ _ (by rw [re_conj_unit, hx]) (by rw [re_conj_unit, hy]), h x y hx hy,
+      inner_conj u, conj_mul_conj u, inner_im_conj, inner_im_conj, inner_im_conj]
 
 end D5.S3.Quantum.AURICOmega.TangentInvariantForms

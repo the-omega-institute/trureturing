@@ -9,14 +9,15 @@ internal sealed class PrimeVersineSumsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Analytic/Asymptotics/PrimeVersineSums.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "For sigma >= 0 the series of 1 - cos p^(-sigma) over the primes converges exactly when sigma > 1/2, and its difference from half the series of p^(-2 sigma) converges exactly when sigma > 1/4, with partial sums tending to minus infinity for sigma <= 1/4; on the line sigma = 1/2 the versine sum up to x differs from half the sum of the reciprocals of the primes up to x by a quantity within 5/(48 (floor(x) + 1)) of its limit.",
+        "For sigma >= 0 the series of 1 - cos p^(-sigma) over the primes converges exactly when sigma > 1/2; for every real sigma its difference from half the series of p^(-2 sigma) converges exactly when sigma > 1/4, with partial sums tending to minus infinity for sigma <= 1/4; on the line sigma = 1/2 the versine sum up to x differs from half the sum of the reciprocals of the primes up to x by a quantity within 1/(12 (floor(x) + 1)) of its limit.",
         H("Versine sums over the primes"),
         Blocks(
             Paragraph(Text(
                 "P denotes the set of primes. For real sigma and x, the versine sum is the finite sum "
                 + "of 1 - cos(p^(-sigma)) over the primes p in the interval (0, floor(x)], where "
                 + "floor(x) is the natural-number floor of x, so the sum is empty for x < 2. For "
-                + "sigma >= 0 the argument t = p^(-sigma) satisfies 0 < t <= 1.")),
+                + "sigma >= 0 the argument t = p^(-sigma) satisfies 0 < t <= 1; for sigma < 0 it "
+                + "exceeds 1.")),
             Node("definition", "primeVersineSum", "The versine sum over the primes up to x",
                 StatementSource.FromAuthor(DefinitionFormula()), AssessedProvenance.FromRepo(),
                 DescribeRole.Definition,
@@ -30,36 +31,47 @@ internal sealed class PrimeVersineSumsDocument : IScribeDocumentDefinition
                 + "delta(p) = 1/(2p) - (1 - cos(p^(-1/2))), and the limit of minus infinity is taken "
                 + "as the real variable x tends to plus infinity. "
                 + "The theorem has four conjuncts. For sigma >= 0, the series of 1 - cos(p^(-sigma)) "
-                + "over the primes is summable if and only if sigma > 1/2. For sigma >= 0, the series "
-                + "of 1 - cos(p^(-sigma)) - p^(-2 sigma)/2 is summable if and only if sigma > 1/4. "
-                + "For 0 <= sigma <= 1/4, the versine sum up to x minus half the sum of p^(-2 sigma) "
-                + "over the primes up to x tends to minus infinity. For every real x, the difference "
-                + "between half the sum of 1/p over the primes up to x and the versine sum at "
-                + "sigma = 1/2 lies between the sum of delta over all primes minus "
-                + "5/(48 (floor(x) + 1)) and that sum.",
-                "Put t = p^(-sigma), so 0 < t <= 1. The Mathlib bounds 1 - t^2/2 <= cos t and "
-                + "|cos t - (1 - t^2/2)| <= 5 t^4/96 for |t| <= 1 give "
-                + "(43/96) t^2 <= 1 - cos t <= t^2/2, so the first series converges exactly when the "
-                + "series of p^(-2 sigma) over the primes does, which by Mathlib happens exactly "
-                + "when -2 sigma < -1. "
-                + "The second and third conjuncts rest on the lower bound "
-                + "t^4/30 <= cos t - (1 - t^2/2) for |t| <= 1, proved here from the half-angle "
+                + "over the primes is summable if and only if sigma > 1/2. For every real sigma, the "
+                + "series of 1 - cos(p^(-sigma)) - p^(-2 sigma)/2 is summable if and only if "
+                + "sigma > 1/4. For every real sigma <= 1/4, the versine sum up to x minus half the "
+                + "sum of p^(-2 sigma) over the primes up to x tends to minus infinity. For every real "
+                + "x, the difference between half the sum of 1/p over the primes up to x and the "
+                + "versine sum at sigma = 1/2 lies between the sum of delta over all primes minus "
+                + "1/(12 (floor(x) + 1)) and that sum.",
+                "Put t = p^(-sigma). Two pointwise bounds hold for every real t: the Mathlib "
+                + "inequality 1 - t^2/2 <= cos t, and the quartic lower bound "
+                + "t^2/2 - t^4/24 <= 1 - cos t for the versine, proved in the module of accumulated "
+                + "versines of equal angle steps and reused here. Hence the fourth-order defect "
+                + "cos t - (1 - t^2/2) lies between 0 and t^4/24. For sigma >= 0 one has "
+                + "0 < t <= 1, so t^4 <= t^2 and (11/24) t^2 <= 1 - cos t <= t^2/2; the first "
+                + "series therefore converges exactly when the series of p^(-2 sigma) over the "
+                + "primes does, which by Mathlib happens exactly when -2 sigma < -1. "
+                + "The summand of the second series is minus the defect. If sigma > 1/4 the defect is "
+                + "at most p^(-4 sigma)/24 and the series of p^(-4 sigma) converges, so the second "
+                + "series converges. For 0 <= sigma <= 1/4 the defect is at least t^4/30, by the "
+                + "bound t^4/30 <= cos t - (1 - t^2/2) for |t| <= 1 proved here from the half-angle "
                 + "identity cos t = 1 - 2 sin^2(t/2), the Mathlib fifth-order bound for the sine and a "
-                + "polynomial inequality. The summand of the second series is minus this fourth-order "
-                + "defect, which lies between t^4/30 and 5 t^4/96; so the second series converges "
-                + "exactly when the series of p^(-4 sigma) does, that is when sigma > 1/4. For "
-                + "sigma <= 1/4 the defect series has nonnegative terms and diverges, so its partial "
-                + "sums tend to plus infinity, and the third conjunct follows. "
+                + "polynomial inequality; comparison with the divergent series of p^(-4 sigma) shows "
+                + "that the defect series diverges. For sigma < 0 the defect is at least "
+                + "p^(-2 sigma)/2 - 2, which tends to plus infinity, so its terms do not tend to 0 "
+                + "and the defect series diverges as well. Thus for every sigma <= 1/4 the defect "
+                + "series has nonnegative terms and diverges, its partial sums tend to plus infinity, "
+                + "and the third conjunct follows. The third conjunct also gives the forward "
+                + "direction of the second: for sigma <= 1/4 the summands of the second series are "
+                + "nonpositive and their partial sums tend to minus infinity, so that series is not "
+                + "summable. "
                 + "On the line sigma = 1/2 one has t^2 = 1/p, so delta(p) is the defect at "
-                + "t = p^(-1/2), nonnegative and at most 5/(96 p^2). Comparing the tail over n > N of "
-                + "5/(96 n^2) with 2/(N + 1) bounds the tail of the defect series beyond N = floor(x) "
-                + "by 5/(48 (N + 1)), which is the fourth conjunct.",
-                "The hypothesis sigma >= 0 is used to keep t in [0, 1]; at sigma = 0 every term of the "
-                + "first series is the positive constant 1 - cos 1 and every term of the second is the "
-                + "nonzero constant 1/2 - cos 1, so both series diverge, in agreement with both "
-                + "equivalences. For sigma < 0 the arguments p^(-sigma) are unbounded and the "
-                + "behaviour depends on the distribution of p^(-sigma) modulo 2 pi; no claim is made "
-                + "for sigma < 0. Each threshold is sharp because it is stated as an equivalence.",
+                + "t = p^(-1/2), nonnegative and at most 1/(24 p^2). Comparing the tail over n > N of "
+                + "1/(24 n^2) with 2/(N + 1) bounds the tail of the defect series beyond N = floor(x) "
+                + "by 1/(12 (N + 1)), which is the fourth conjunct.",
+                "The hypothesis sigma >= 0 of the first conjunct keeps t in (0, 1]; at sigma = 0 "
+                + "every term of the first series is the positive constant 1 - cos 1, so it diverges, "
+                + "in agreement with the first equivalence. For sigma < 0 the arguments p^(-sigma) "
+                + "of the first series are unbounded, its behaviour depends on the distribution of "
+                + "p^(-sigma) modulo 2 pi, and no claim is made about it. The second series needs no "
+                + "such hypothesis: for sigma < 0 its summands tend to minus infinity, so it diverges "
+                + "and its partial sums tend to minus infinity, as the second and third conjuncts "
+                + "state. Each threshold is sharp because it is stated as an equivalence.",
                 "Combined with the Mertens estimate Mertens.E₂p.bound, which states that the sum of "
                 + "1/p over the primes up to x equals log log x + M + O(1/log x) with the Mertens "
                 + "constant M, the fourth conjunct gives, as x tends to infinity, that the sum of "
@@ -133,15 +145,15 @@ internal sealed class PrimeVersineSumsDocument : IScribeDocumentDefinition
         Formula nonnegative = LeRel(D(0), Sigma);
         Formula first = ForAllSigma(Implies(nonnegative,
             Iff(Summable(Versine(MinusSigma)), Lt(Half, Sigma))));
-        Formula second = ForAllSigma(Implies(nonnegative,
-            Iff(Summable(Sub(Versine(MinusSigma), HalfPower)), Lt(Quarter, Sigma))));
+        Formula second = ForAllSigma(
+            Iff(Summable(Sub(Versine(MinusSigma), HalfPower)), Lt(Quarter, Sigma)));
         Formula limit = Seq(Lim, Underscore, Grp(X, Sp, To, Sp, Infty), Sp,
             Open, Sub(VersineSum(Sigma), SumUpTo(HalfPower)), Close);
-        Formula third = ForAllSigma(Implies(nonnegative, Implies(LeRel(Sigma, Quarter),
-            Equal(limit, Seq(Minus, Infty)))));
+        Formula third = ForAllSigma(Implies(LeRel(Sigma, Quarter),
+            Equal(limit, Seq(Minus, Infty))));
         Formula gap = Sub(SumUpTo(Frac(D(1), Mul(D(2), P))), VersineSum(Half));
         Formula total = SumOverPrimes(Delta);
-        Formula tail = Frac(D(5), Seq(D(4, 8), Open, Add(NatFloor, D(1)), Close));
+        Formula tail = Frac(D(1), Seq(D(1, 2), Open, Add(NatFloor, D(1)), Close));
         Formula fourth = ForAll("x", Reals, Seq(Sub(total, tail), Sp, F.Le, Sp, gap, Sp, F.Le, Sp,
             total));
         Formula deltaDefinition = Seq(

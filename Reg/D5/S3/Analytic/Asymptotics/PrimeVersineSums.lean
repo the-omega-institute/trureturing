@@ -34,15 +34,15 @@ abbrev arena : Arena where
   Law r :=
     (∀ σ : ℝ, 0 ≤ σ →
       (Summable (fun p : Nat.Primes => 1 - Real.cos ((p : ℝ) ^ (-σ))) ↔ 1 / 2 < σ)) ∧
-    (∀ σ : ℝ, 0 ≤ σ →
+    (∀ σ : ℝ,
       (Summable (fun p : Nat.Primes => 1 - Real.cos ((p : ℝ) ^ (-σ)) - (p : ℝ) ^ (-(2 * σ)) / 2) ↔
         1 / 4 < σ)) ∧
-    (∀ σ : ℝ, 0 ≤ σ → σ ≤ 1 / 4 →
+    (∀ σ : ℝ, σ ≤ 1 / 4 →
       Tendsto (fun x : ℝ => primeVersineSum σ x -
         r.readout () x (fun p : ℕ => (p : ℝ) ^ (-(2 * σ)) / 2)) atTop atBot) ∧
     ∀ x : ℝ,
       (∑' p : Nat.Primes, (1 / (2 * (p : ℝ)) - (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ)))))) -
-          5 / (48 * ((⌊x⌋₊ : ℝ) + 1)) ≤
+          1 / (12 * ((⌊x⌋₊ : ℝ) + 1)) ≤
         (∑ p ∈ Finset.Ioc 0 ⌊x⌋₊ with p.Prime, 1 / (2 * (p : ℝ))) - primeVersineSum (1 / 2) x ∧
       (∑ p ∈ Finset.Ioc 0 ⌊x⌋₊ with p.Prime, 1 / (2 * (p : ℝ))) - primeVersineSum (1 / 2) x ≤
         ∑' p : Nat.Primes, (1 / (2 * (p : ℝ)) - (1 - Real.cos ((p : ℝ) ^ (-(1 / 2 : ℝ)))))
@@ -54,7 +54,7 @@ theorem primeVersineSum_nonneg (σ x : ℝ) : 0 ≤ primeVersineSum σ x :=
 /-- At `σ = 0`, a nonnegative function cannot tend to `-∞`. -/
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have h3 := h.2.2.1 0 le_rfl (by norm_num)
+  have h3 := h.2.2.1 0 (by norm_num)
   simp only [rejected, realize, sub_zero] at h3
   obtain ⟨x, hx⟩ := ((Filter.tendsto_atBot.mp h3 (-1)).and
     (Filter.Eventually.of_forall fun x => primeVersineSum_nonneg 0 x)).exists
@@ -106,10 +106,9 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.Analytic.Asymptotics.PrimeVersineSums
     definition := none
-    coordinates := #[3]
+    coordinates := #[2]
     readouts := #[{
-      path := #["arg", "arg", "fn", "arg", "body", "body", "body", "fn", "fn", "arg", "body",
-        "arg"]
+      path := #["arg", "arg", "fn", "arg", "body", "body", "fn", "fn", "arg", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

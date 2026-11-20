@@ -57,7 +57,7 @@ internal sealed class PointwiseStabilizerDocument : IScribeDocumentDefinition
                 + "isometry that is the identity on K and -1 on K^perp has determinant 1 on E and "
                 + "-1 on K^perp; this example is a remark and is not formalised. "
                 + "The hypothesis that K has an orthogonal projection is equivalent to the "
-                + "statement that K and K^perp together span E, which surjectivity needs; this "
+                + "statement that K and K^perp together span E, which the surjectivity step uses; this "
                 + "equivalence is a remark and is not formalised. "
                 + "The result is an elementary fact of linear algebra; it is stated here for every "
                 + "RCLike field and for spaces of any dimension."))));

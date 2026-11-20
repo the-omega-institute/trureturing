@@ -23,12 +23,22 @@ universe u
 /-! ## `dense_span_unitary_coefficients`: the matrix coefficient at a group element -/
 namespace Coefficient
 
+/-- A compact-group coefficient datum: a group with its topology, a continuous unitary
+representation of dimension `n`, and a pair of matrix indices. -/
+structure Parameters : Type (u + 1) where
+  G : Type u
+  [group : Group G]
+  [topology : TopologicalSpace G]
+  n : ℕ
+  ρ : G →ₜ* Matrix.unitaryGroup (Fin n) ℂ
+  i : Fin n
+  j : Fin n
+
 /-- The entry `(ρ g) i j` of the value of a continuous unitary representation at a group
 element. -/
 abbrev signature : Signature where
-  Params := Σ G : Type u, Σ _ : Group G, Σ _ : TopologicalSpace G, Σ n : ℕ,
-    Σ _ : G →ₜ* Matrix.unitaryGroup (Fin n) ℂ, Σ _ : Fin n, Fin n
-  State p := p.1
+  Params := Parameters.{u}
+  State p := p.G
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -37,8 +47,8 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p g => letI := p.2.1; letI := p.2.2.1;
-    (p.2.2.2.2.1 g : Matrix (Fin p.2.2.2.1) (Fin p.2.2.2.1) ℂ) p.2.2.2.2.2.1 p.2.2.2.2.2.2)
+  realize signature (fun _ p g => letI := p.group; letI := p.topology;
+    (p.ρ g : Matrix (Fin p.n) (Fin p.n) ℂ) p.i p.j)
     (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
@@ -52,7 +62,7 @@ abbrev arena : Arena where
     [CompactSpace G],
     Dense (Submodule.span ℂ {f : C(G, ℂ) | ∃ (n : ℕ)
       (ρ : G →ₜ* Matrix.unitaryGroup (Fin n) ℂ) (i j : Fin n),
-        ∀ g, f g = r.readout () ⟨G, iG, tG, n, ρ, i, j⟩ g} : Set C(G, ℂ))
+        ∀ g, f g = r.readout () (@Parameters.mk G iG tG n ρ i j) g} : Set C(G, ℂ))
 
 /-- If every coefficient were read as `0`, the span would be the zero subspace, which is not
 dense in the continuous functions on the two-element discrete group. -/
@@ -82,7 +92,7 @@ the matrix `-1`. -/
 theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   cases i
-  refine ⟨⟨Circle.{u}, inferInstance, inferInstance, 1, taut, 0, 0⟩, 1, ⟨negOne⟩, ?_⟩
+  refine ⟨@Parameters.mk Circle.{u} _ _ 1 taut 0 0, 1, ⟨negOne⟩, ?_⟩
   change ((taut.{u} 1 : Matrix (Fin 1) (Fin 1) ℂ) 0 0) ≠
     ((taut.{u} ⟨negOne⟩ : Matrix (Fin 1) (Fin 1) ℂ) 0 0)
   rw [map_one]
@@ -121,8 +131,8 @@ def dense_span_unitary_coefficients_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize Coefficient.signature.{u}
-    (fun _ p g => letI := p.2.1; letI := p.2.2.1;
-      (p.2.2.2.2.1 g : Matrix (Fin p.2.2.2.1) (Fin p.2.2.2.1) ℂ) p.2.2.2.2.2.1 p.2.2.2.2.2.2)
+    (fun _ p g => letI := p.group; letI := p.topology;
+      (p.ρ g : Matrix (Fin p.n) (Fin p.n) ℂ) p.i p.j)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent

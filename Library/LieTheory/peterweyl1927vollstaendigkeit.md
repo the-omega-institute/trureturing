@@ -4,8 +4,9 @@ authors: F. Peter and H. Weyl
 year: 1927
 title: "Die Vollständigkeit der primitiven Darstellungen einer geschlossenen kontinuierlichen Gruppe"
 doi: 10.1007/BF01447892
-claim: "Standard attribution: the completeness of the finite-dimensional unitary representations of a compact Hausdorff group, whose separation form says that every element other than the identity is moved by some continuous finite-dimensional unitary representation, is attributed to this article; the article interior was not read, and the note acknowledges it as classical background of the repository theorem."
+claim: "Standard attribution: the completeness of the finite-dimensional unitary representations of a compact Hausdorff group, whose separation form says that every element other than the identity is moved by some continuous finite-dimensional unitary representation, is attributed to this article; the article interior was not read, and the note acknowledges it as classical background of the repository theorems."
 strata_touched:
+  - D5/S3/Quantum/Analysis/CompactGroups/MatrixCoefficientDensity
   - D5/S3/Quantum/Analysis/CompactGroups/UnitaryRepresentationKernel
 license: citation-only
 triage: anchor
@@ -46,11 +47,21 @@ article. The neighbourhood form, the absence of a separation axiom and the
 proof route belong to the repository statement; whether the article states
 them is not attested here.
 
+The repository theorem `dense_span_unitary_coefficients` assumes a compact
+topological group with no separation axiom and states that the complex span of
+the matrix coefficients of the continuous homomorphisms into the groups of
+unitary n x n complex matrices is dense in the continuous complex functions
+with the uniform norm. Its proof is a repository derivation from the theorem
+above and the Stone-Weierstrass theorem; it does not use the cited article.
+The approximation theorem is standardly attributed to the same article;
+whether and in what form the article states it is not attested here.
+
 ## What this note does and does not attest
 
 Attested here: the bibliographic record, DOI and publisher resolution of the
 1927 article, and the subject named in its title.
 
 Not attested here: any statement inside the 1927 article. The attribution of
-the separation theorem to this article is the standard one in secondary
-sources; it was not checked against the article itself.
+the separation theorem and of the approximation theorem to this article is
+the standard one in secondary sources; it was not checked against the article
+itself.

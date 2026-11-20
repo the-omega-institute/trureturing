@@ -27,11 +27,6 @@ abbrev LiftReal := ULift.{u} ℝ
 /-- The real line lifted to universe `v`, an inner product space over `LiftReal`. -/
 abbrev Line := ULift.{v} ℝ
 
-/-- The zero subspace of the line has an orthogonal projection. -/
-instance botHasOrthogonalProjection :
-    (⊥ : Submodule LiftReal.{u} Line.{v}).HasOrthogonalProjection :=
-  ⟨fun _ => ⟨0, Submodule.zero_mem _, by rw [Submodule.bot_orthogonal_eq_top]; trivial⟩⟩
-
 /-- The vector `1` of the line, as an element of the orthogonal complement of `⊥`. -/
 def oneVec : ↥(⊥ : Submodule LiftReal.{u} Line.{v})ᗮ :=
   ⟨⟨1⟩, by rw [Submodule.bot_orthogonal_eq_top]; trivial⟩

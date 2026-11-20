@@ -54,11 +54,6 @@ local instance : CompactSpace (unitary ℍ[ℝ]) :=
 local instance : LocallyCompactSpace Quat.{u} :=
   Homeomorph.ulift.isOpenEmbedding.locallyCompactSpace
 
-local instance : IsTopologicalGroup Quat.{u} where
-  continuous_mul := continuous_uliftUp.comp
-    ((continuous_uliftDown.comp continuous_fst).mul (continuous_uliftDown.comp continuous_snd))
-  continuous_inv := continuous_uliftUp.comp (continuous_uliftDown.inv)
-
 /-- The unit quaternion as a quaternion. -/
 def val (q : Quat.{u}) : ℍ[ℝ] := (q.down : ℍ[ℝ])
 
@@ -111,9 +106,10 @@ theorem liftedModel_tri_continuous :
     (ULift.up (p.1.down * p.2.1.down⁻¹ * p.2.2.down) : Quat.{u})
   fun_prop
 
-theorem liftedModel_kappa_continuous (x : Quat.{u}) : Continuous (liftedModel.kappa x) := by
-  change Continuous fun y : Quat.{u} => (1 + ⟪(x.down : ℍ[ℝ]), (y.down : ℍ[ℝ])⟫_ℝ) / 2
-  fun_prop
+theorem liftedModel_kappa_continuousAt (x : Quat.{u}) : ContinuousAt (liftedModel.kappa x) x := by
+  have h : Continuous fun y : Quat.{u} => (1 + ⟪(x.down : ℍ[ℝ]), (y.down : ℍ[ℝ])⟫_ℝ) / 2 := by
+    fun_prop
+  exact h.continuousAt
 
 /-! The dimension `d` in the conclusion `3 ≤ d` of `three_le_of_orthogonal`. -/
 namespace GroupBound
@@ -188,14 +184,14 @@ abbrev arena : Arena where
   signature := GroupBound.signature
   Law rd := ∀ {d : ℕ} {M : Type u} [TopologicalSpace M] [LocallyCompactSpace M]
     [PreconnectedSpace M] (C : TernaryComparison M),
-    Continuous (fun p : M × M × M => C.tri p.1 p.2.1 p.2.2) → (∀ x, Continuous (C.kappa x)) →
+    Continuous (fun p : M × M × M => C.tri p.1 p.2.1 p.2.2) → (∀ x, ContinuousAt (C.kappa x) x) →
     C.Noncommutative → ∀ {r : ℕ}, C.HasFeatureRank r → ∀ {o : M} {V : Set M}, V ∈ 𝓝 o →
     ∀ (f : M → EuclideanSpace ℝ (Fin d)), ContinuousOn f V → Set.InjOn f V →
     3 ≤ rd.readout () () d ∧ 5 ≤ r
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hh := h liftedModel.{u} liftedModel_tri_continuous liftedModel_kappa_continuous
+  have hh := h liftedModel.{u} liftedModel_tri_continuous liftedModel_kappa_continuousAt
     liftedModel_noncommutative liftedModel_hasFeatureRank_five (o := ⟨1⟩) (V := Set.univ)
     Filter.univ_mem coords.{u} coords_continuous.continuousOn coords_injective.injOn
   exact absurd hh.1 (by decide)
@@ -324,7 +320,7 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law rd := ∀ {M : Type u} [TopologicalSpace M] [PreconnectedSpace M] (C : TernaryComparison M),
-    (∀ x, Continuous (C.kappa x)) → (rd.readout () M C).ChainConnected
+    (∀ x, ContinuousAt (C.kappa x) x) → (rd.readout () M C).ChainConnected
 
 theorem one_ne_negOne : (⟨1⟩ : Quat.{u}) ≠ ⟨-1⟩ := fun h =>
   Reg.D5.S3.Quantum.AURICOmega.TernaryComparisonRankFive.one_ne_neg_one (congrArg ULift.down h)
@@ -332,7 +328,7 @@ theorem one_ne_negOne : (⟨1⟩ : Quat.{u}) ≠ ⟨-1⟩ := fun h =>
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact discrete_not_chainConnected liftedModel.{u} one_ne_negOne
-    (h liftedModel.{u} liftedModel_kappa_continuous)
+    (h liftedModel.{u} liftedModel_kappa_continuousAt)
 
 theorem unitary_one_ne_unitI : (1 : unitary ℍ[ℝ]) ≠ unitI := by
   intro h

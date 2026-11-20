@@ -6,17 +6,17 @@
    utility: none
    digest: Bilinear maps have zero divisors when polynomials of the source degree have roots. -/
 
-import Mathlib.FieldTheory.IsRealClosed.Basic
 import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 /-!
 # Zero divisors of bilinear maps
 
-Let `m : U × V → W` be bilinear over a field `K` with `dim W ≤ dim U` and `dim V ≥ 2`. If
-`dim W < dim U`, or if `dim W = dim U` and every polynomial over `K` whose degree is `dim U` has
-a root, then `m a b = 0` for some nonzero `a`, `b`. Over the real numbers the root condition
-holds in every odd dimension of `U`; over an algebraically closed field in every dimension.
+Let `m : U × V → W` be bilinear over a field `K` with `dim W ≤ dim U` and `V` of rank at
+least two (possibly infinite-dimensional). If `dim W < dim U`, or if `dim W = dim U` and every
+polynomial over `K` whose degree is `dim U` has a root, then `m a b = 0` for some nonzero `a`,
+`b`. Over the real numbers the root condition holds in every odd dimension of `U`; over an
+algebraically closed field in every positive dimension.
 
 The argument: choose linearly independent `b`, `c`. If `m(·, b)` is not injective it has a
 nonzero kernel vector. Otherwise it is an isomorphism `U ≃ W`, and an eigenvector `a` of
@@ -27,24 +27,15 @@ namespace D5.S3.QuadraticForms.OddDimensionZeroDivisor
 
 open Module
 
-/-- Over a real closed field, every endomorphism of a space of odd finite dimension has an
-eigenvalue: its characteristic polynomial has odd degree. -/
-theorem exists_hasEigenvalue_of_odd_finrank {K U : Type*} [Field K] [IsRealClosed K]
-    [AddCommGroup U] [Module K U] [FiniteDimensional K U] (f : Module.End K U)
-    (h : Odd (Module.finrank K U)) : ∃ μ : K, f.HasEigenvalue μ :=
-  (IsRealClosed.exists_isRoot_of_odd_natDegree (f := f.charpoly)
-      (by rwa [LinearMap.charpoly_natDegree])).imp
-    fun μ hμ => (Module.End.hasEigenvalue_iff_isRoot_charpoly f μ).2 hμ
-
-/-- A bilinear map `m : U × V → W` with `dim W ≤ dim U` and `dim V ≥ 2` has a zero divisor when
-`dim W < dim U`, or when `dim W = dim U` and every polynomial of degree `dim U` has a root. -/
+/-- A bilinear map `m : U × V → W` with `dim W ≤ dim U` and `1 < rank V` has a zero divisor
+when `dim W < dim U`, or when `dim W = dim U` and every polynomial of degree `dim U` has a root. -/
 theorem exists_zero_divisor {K U V W : Type*} [Field K]
     [AddCommGroup U] [Module K U] [AddCommGroup V] [Module K V]
     [AddCommGroup W] [Module K W] [FiniteDimensional K W]
     (m : U →ₗ[K] V →ₗ[K] W)
     (hroot : Module.finrank K W = Module.finrank K U →
       ∀ f : Polynomial K, f.natDegree = Module.finrank K U → ∃ x, f.IsRoot x)
-    (hW : Module.finrank K W ≤ Module.finrank K U) (hV : 2 ≤ Module.finrank K V) :
+    (hW : Module.finrank K W ≤ Module.finrank K U) (hV : 1 < Module.rank K V) :
     ∃ a b, a ≠ 0 ∧ b ≠ 0 ∧ m a b = 0 := by
   classical
   -- `dim U = 0` (in particular `U` infinite-dimensional) forces `dim W = 0 = dim U`, and then
@@ -55,9 +46,9 @@ theorem exists_zero_divisor {K U V W : Type*} [Field K]
       simp at hx
     · exact hpos
   have : FiniteDimensional K U := Module.finite_of_finrank_pos hUpos
-  have : Nontrivial V := Module.nontrivial_of_finrank_pos (R := K) (by omega)
+  have : Nontrivial V := rank_pos_iff_nontrivial.1 (zero_lt_one.trans hV)
   obtain ⟨b, hb⟩ := exists_ne (0 : V)
-  obtain ⟨c, hbc⟩ := exists_linearIndependent_pair_of_one_lt_finrank (R := K) (by omega) hb
+  obtain ⟨c, hbc⟩ := exists_linearIndependent_pair_of_one_lt_rank hV hb
   by_cases hinj : Function.Injective (m.flip b)
   · have hdim : finrank K U = finrank K W :=
       le_antisymm (LinearMap.finrank_le_finrank_of_injective hinj) hW

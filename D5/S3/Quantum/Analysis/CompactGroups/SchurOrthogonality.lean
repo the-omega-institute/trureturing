@@ -4,71 +4,71 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Schur orthogonality of matrix coefficients for a finite left-invariant measure on a compact group. -/
+   digest: Schur orthogonality relations for matrix coefficients on a compact group. -/
 
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.LinearAlgebra.Trace
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import Mathlib.MeasureTheory.Group.Integral
-import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
-import Mathlib.MeasureTheory.Measure.Haar.Basic
 import Mathlib.RepresentationTheory.Irreducible
-import Mathlib.Topology.Algebra.Module.FiniteDimension
 
 /-!
 # Schur orthogonality of matrix coefficients on compact groups
 
-Let `G` be a compact topological group with a finite left-invariant measure `μ`, let `ρ` be a
-continuous irreducible representation of `G` on a finite-dimensional complex normed space `V`, and
-let `σ` be an irreducible representation of `G` on a complex vector space `W`. For linear
-functionals `φ` on `V` and `ψ` on `W` such that every coefficient `g ↦ ψ (σ g w)` is continuous,
-`v : V` and `w : W`:
+Let `G` be a compact topological group with a finite left-invariant measure `μ`, let `𝕜` be the
+field of real or of complex numbers, let `ρ` be a continuous irreducible representation of `G`
+on a finite-dimensional normed space `V` over `𝕜`, and let `σ` be an irreducible representation
+of `G` on a vector space `W` over `𝕜`. For linear functionals `φ` on `V` and `ψ` on `W` such that
+every coefficient `g ↦ ψ (σ g w)` is continuous, `v : V` and `w : W`:
 
 * if `ρ` and `σ` are not equivalent, then `∫ g, φ (ρ g v) * ψ (σ g⁻¹ w) ∂μ = 0`;
-* for linear functionals `φ`, `ψ` on `V`,
+* for `𝕜 = ℂ` and linear functionals `φ`, `ψ` on `V`,
   `∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ = μ(G) * (φ w * ψ v) / dim V`.
 
 For fixed `v` and `ψ` the map `T x = ∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ` is linear and, by left
 invariance of `μ`, intertwines `σ` with `ρ`; applying `φ` to `T w` gives the integral. Schur's
-lemma makes `T` zero for inequivalent representations and a scalar `c` for `σ = ρ`. In a basis
-`b` of `V`, the trace of `T` is the integral of `∑ i, b.coord i (ψ (ρ g⁻¹ (b i)) • ρ g v)`,
-which is `ψ (ρ g⁻¹ (ρ g v)) = ψ v`; hence `dim V * c = μ(G) * ψ v`.
+lemma makes `T` zero for inequivalent representations and, over the algebraically closed field
+`ℂ`, a scalar `c` for `σ = ρ`. In a basis `b` of `V`, the trace of `T` is the integral of
+`∑ i, b.coord i (ψ (ρ g⁻¹ (b i)) • ρ g v)`, which is `ψ (ρ g⁻¹ (ρ g v)) = ψ v`; hence
+`dim V * c = μ(G) * ψ v`. The vector-valued integrals are taken for the real structure of `V`
+obtained by restricting scalars from `𝕜`.
 -/
 
 open MeasureTheory
 
 namespace D5.S3.Quantum.Analysis.CompactGroups.SchurOrthogonality
 
-variable {G V W : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
-  [MeasurableSpace G] [BorelSpace G] (μ : Measure G) [μ.IsMulLeftInvariant] [IsFiniteMeasure μ]
-  [NormedAddCommGroup V] [NormedSpace ℂ V] [FiniteDimensional ℂ V]
-  [AddCommGroup W] [Module ℂ W]
+variable {𝕜 G V W : Type*} [RCLike 𝕜] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
+  [CompactSpace G] [MeasurableSpace G] [BorelSpace G] (μ : Measure G) [μ.IsMulLeftInvariant]
+  [IsFiniteMeasure μ] [NormedAddCommGroup V] [NormedSpace 𝕜 V] [FiniteDimensional 𝕜 V]
+  [AddCommGroup W] [Module 𝕜 W]
 
-omit [IsTopologicalGroup G] [FiniteDimensional ℂ V] [μ.IsMulLeftInvariant] in
+omit [IsTopologicalGroup G] [FiniteDimensional 𝕜 V] [μ.IsMulLeftInvariant] in
 /-- A continuous scalar function times a continuous orbit `g ↦ ρ g v` is integrable on the
 compact group. -/
-private lemma integrable_smul (ρ : Representation ℂ G V) (hρc : ∀ v, Continuous fun g => ρ g v)
-    {f : G → ℂ} (hf : Continuous f) (v : V) : Integrable (fun g => f g • ρ g v) μ :=
+private lemma integrable_smul (ρ : Representation 𝕜 G V) (hρc : ∀ v, Continuous fun g => ρ g v)
+    {f : G → 𝕜} (hf : Continuous f) (v : V) : Integrable (fun g => f g • ρ g v) μ :=
   (hf.smul (hρc v)).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
 
 /-- The average `x ↦ ∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ` of continuous coefficients is an intertwining
-map from `σ` to `ρ`. -/
-private lemma exists_intertwiningMap (ρ : Representation ℂ G V) (σ : Representation ℂ G W)
-    (hρc : ∀ v, Continuous fun g => ρ g v) (ψ : W →ₗ[ℂ] ℂ)
+map from `σ` to `ρ`, for any real normed space structure on `V`. -/
+private lemma exists_intertwiningMap [NormedSpace ℝ V] (ρ : Representation 𝕜 G V)
+    (σ : Representation 𝕜 G W) (hρc : ∀ v, Continuous fun g => ρ g v) (ψ : Module.Dual 𝕜 W)
     (hψ : ∀ x, Continuous fun g => ψ (σ g⁻¹ x)) (v : V) :
     ∃ T : Representation.IntertwiningMap σ ρ,
       ∀ x, T x = ∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ := by
   have hint : ∀ x, Integrable (fun g => ψ (σ g⁻¹ x) • ρ g v) μ := fun x =>
     integrable_smul μ ρ hρc (hψ x) v
-  let L : W →ₗ[ℂ] V :=
+  have : CompleteSpace V := FiniteDimensional.complete 𝕜 V
+  let L : W →ₗ[𝕜] V :=
     { toFun := fun x => ∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ
       map_add' := fun x y => by
         simp only [map_add, add_smul]
         exact integral_add (hint x) (hint y)
       map_smul' := fun c x => by
         simp only [map_smul, smul_eq_mul, mul_smul, RingHom.id_apply]
-        exact integral_smul c _ }
-  have : CompleteSpace V := FiniteDimensional.complete ℂ V
+        have h := ContinuousLinearMap.integral_comp_comm
+          (c • ContinuousLinearMap.id 𝕜 V) (hint x)
+        simpa only [smul_apply, ContinuousLinearMap.id_apply] using h }
   refine ⟨L.intertwiningMap_of_isIntertwiningMap σ ρ fun h x => ?_, fun x => rfl⟩
   show ∫ g, ψ (σ g⁻¹ (σ h x)) • ρ g v ∂μ = ρ h (∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ)
   calc ∫ g, ψ (σ g⁻¹ (σ h x)) • ρ g v ∂μ
@@ -85,26 +85,27 @@ private lemma exists_intertwiningMap (ρ : Representation ℂ G V) (σ : Represe
 omit [IsTopologicalGroup G] [μ.IsMulLeftInvariant] in
 /-- Applying a linear functional `φ` to `∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ` gives the integral of the
 product of coefficients. -/
-private lemma integral_mul_eq_apply (ρ : Representation ℂ G V) (σ : Representation ℂ G W)
-    (hρc : ∀ v, Continuous fun g => ρ g v) (ψ : W →ₗ[ℂ] ℂ)
-    (hψ : ∀ x, Continuous fun g => ψ (σ g⁻¹ x)) (φ : Module.Dual ℂ V) (v : V) (x : W) :
+private lemma integral_mul_eq_apply [NormedSpace ℝ V] (ρ : Representation 𝕜 G V)
+    (σ : Representation 𝕜 G W) (hρc : ∀ v, Continuous fun g => ρ g v) (ψ : Module.Dual 𝕜 W)
+    (hψ : ∀ x, Continuous fun g => ψ (σ g⁻¹ x)) (φ : Module.Dual 𝕜 V) (v : V) (x : W) :
     ∫ g, φ (ρ g v) * ψ (σ g⁻¹ x) ∂μ = φ (∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ) := by
-  have : CompleteSpace V := FiniteDimensional.complete ℂ V
+  have : CompleteSpace V := FiniteDimensional.complete 𝕜 V
   rw [← LinearMap.coe_toContinuousLinearMap' φ, ← ContinuousLinearMap.integral_comp_comm _
     (integrable_smul μ ρ hρc (hψ x) v)]
   congr 1
   funext g
   rw [LinearMap.coe_toContinuousLinearMap', map_smul, smul_eq_mul, mul_comm]
 
-/-- Schur orthogonality for inequivalent representations: for linear functionals `φ` on `V` and
-`ψ` on `W` with continuous coefficients `g ↦ ψ (σ g w)`, the product of coefficients integrates to
-zero. -/
-theorem integral_dual_mul_dual_inv_eq_zero (ρ : Representation ℂ G V) (σ : Representation ℂ G W)
-    [ρ.IsIrreducible] [σ.IsIrreducible] (hne : IsEmpty (ρ.Equiv σ))
+/-- Schur orthogonality for inequivalent representations over the real or the complex numbers:
+for linear functionals `φ` on `V` and `ψ` on `W` with continuous coefficients `g ↦ ψ (σ g w)`,
+the product of coefficients integrates to zero. -/
+theorem integral_dual_mul_dual_inv_eq_zero (ρ : Representation 𝕜 G V)
+    (σ : Representation 𝕜 G W) [ρ.IsIrreducible] [σ.IsIrreducible] (hne : IsEmpty (ρ.Equiv σ))
     (hρc : ∀ v, Continuous fun g => ρ g v)
-    (φ : Module.Dual ℂ V) (ψ : Module.Dual ℂ W) (hψc : ∀ w, Continuous fun g => ψ (σ g w))
+    (φ : Module.Dual 𝕜 V) (ψ : Module.Dual 𝕜 W) (hψc : ∀ w, Continuous fun g => ψ (σ g w))
     (v : V) (w : W) :
     ∫ g, φ (ρ g v) * ψ (σ g⁻¹ w) ∂μ = 0 := by
+  let : NormedSpace ℝ V := NormedSpace.restrictScalars ℝ 𝕜 V
   have : IsEmpty (σ.Equiv ρ) := ⟨fun e => hne.false e.symm⟩
   have hψ : ∀ x, Continuous fun g => ψ (σ g⁻¹ x) := fun x => (hψc x).comp continuous_inv
   obtain ⟨T, hT⟩ := exists_intertwiningMap μ ρ σ hρc ψ hψ v
@@ -114,7 +115,8 @@ theorem integral_dual_mul_dual_inv_eq_zero (ρ : Representation ℂ G V) (σ : R
 
 /-- Schur orthogonality for one representation: for a finite left-invariant measure `μ`,
 `∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ = μ(G) * (φ w * ψ v) / dim V`. -/
-theorem integral_dual_mul_dual_inv_self (ρ : Representation ℂ G V)
+theorem integral_dual_mul_dual_inv_self [NormedSpace ℂ V] [FiniteDimensional ℂ V]
+    (ρ : Representation ℂ G V)
     [ρ.IsIrreducible] (hρc : ∀ v, Continuous fun g => ρ g v)
     (φ ψ : Module.Dual ℂ V) (v w : V) :
     ∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ =

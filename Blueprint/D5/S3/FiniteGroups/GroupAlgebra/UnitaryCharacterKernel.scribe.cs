@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.GroupAlgebra;
 internal sealed class UnitaryCharacterKernelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/FiniteGroups/GroupAlgebra/UnitaryCharacterKernel.";
-    private static LibraryNoteRef Folland => LibraryNoteRef.Create("D5/L/FiniteGroups/folland2016course");
+    private static LibraryNoteRef Folland => LibraryNoteRef.Create("D5/L/Fourier/folland2016course");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A representation of a monoid by isometries of a finite-dimensional real or complex inner product space is semisimple; a weighted sum of the characters of finitely many representations of a group by isometries is a positive semidefinite kernel when every weight is nonnegative, and for pairwise inequivalent irreducible representations exactly when every weight is nonnegative.",
