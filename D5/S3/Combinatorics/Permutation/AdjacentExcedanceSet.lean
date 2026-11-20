@@ -282,6 +282,7 @@ theorem adjacentBA {n : ℕ} (a : Fin (n + 1)) (S : Set (Fin (n + 2)))
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
   let swapped := swapCast.trans ((swapPositions a.castSucc a.succ).subtypeEquiv
+    (q := fun p => HasExactExcedances p ((Equiv.swap a.castSucc a.succ) ⁻¹' S))
     (exact_swap_iff a S hl hr))
   let partition := (Equiv.sumCompl fixesRight).symm.trans
     (Equiv.sumCongr right ((Equiv.sumCompl hitsRightFromLeft).symm.trans (Equiv.sumCongr left swapped)))

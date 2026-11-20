@@ -223,9 +223,11 @@ private theorem zero_row (i : ℕ) : signedCoefficient 0 i = T 0 i := by
     · by_cases h2 : i = 2
       · subst i
         rw [signedCoefficient, wt_zero, hq, T]
-        norm_num [map_sub, coord_basis]
+        simp only [map_sub, coord_basis]
+        norm_num
       · rw [signedCoefficient, hq, T]
-        simp [map_sub, coord_basis, h0, h1, h2, Ne.symm h1, Ne.symm h2]
+        simp only [map_sub, coord_basis]
+        simp [h0, h1, h2, Ne.symm h1, Ne.symm h2]
 
 private theorem signed_odd (n j : ℕ) :
     signedCoefficient (2 * n + 1) (j + 1) =
