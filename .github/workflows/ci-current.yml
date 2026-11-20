@@ -385,12 +385,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           # Bound Lake's concurrent compilers on the hosted ARM runner.
           LEAN_NUM_THREADS: '1'
+          STRATALINT_RUNNER_DIAGNOSTICS: ${{ runner.debug == '1' || contains(github.event.pull_request.labels.*.name, 'lean-cache-diagnostics') }}
           # This supervisor also encloses preparation; compute phases share the file above.
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
           STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
         run: |
           rc=0
-          FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
+          FULL_BUILD=1 python3 tools/scripts/report/runner-diagnostics.py --report-resources -- python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
           if [[ "$rc" != 0 ]]; then
             echo "::error title=Lean report failed::Inspect the preceding error. A missing compatible native seed requires the independent lean-cache-produce long job; wait for its successful exact-head production and retry."
           fi
