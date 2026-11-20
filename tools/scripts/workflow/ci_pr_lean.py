@@ -56,7 +56,7 @@ def check(paths):
         if any(not MODULE.fullmatch(module) for module in [*targets, *programs]):
             raise ValueError("invalid Lean module in PR scope")
         print(f"CI_PR_LEAN report_targets={len(targets)} program_targets={len(programs)}", flush=True)
-        environment = dict(os.environ, STRATALINT_ACCEPT_COLD_BUILD="1")
+        environment = dict(os.environ, FULL_BUILD="0")
         if programs:
             subprocess.run(["bash", "tools/scripts/worktree/lean-cache-run.sh", "lake",
                             "-d", "tools/lean-inspector-reg", "build",

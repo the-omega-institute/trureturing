@@ -725,7 +725,7 @@ internal static class GitWorktreeInventory
         var reason = $"main checkout {state}";
         if (!string.IsNullOrWhiteSpace(detail)) reason += $" ({detail})";
         reason += "; sync dev and warm the dev cache: "
-            + $"make -C {ShellQuote(main)} warm-donor";
+            + $"make -C {ShellQuote(main)} warm-donor FULL_BUILD=1";
         return new LeanCacheDonorSelection(null, reason);
     }
 

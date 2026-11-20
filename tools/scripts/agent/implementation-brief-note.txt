@@ -1,9 +1,15 @@
 实施席 brief 的常设纪律段。派实施席时把本段接在题目之后。
 本 note **不含题目信息**;题目只由 brief 头部指定,正文以 atom / 源文件为唯一真源。
 
-## 构建:走 serial-lean,禁裸 make lean
+## 构建
 
-    bash tools/scripts/agent/serial-lean.sh <本树绝对路径>
+默认按本次修改选择模块：
+
+    make lean LEAN_TARGETS="<目标模块列表>"
+
+显式需要整库串行编译时使用：
+
+    FULL_BUILD=1 bash tools/scripts/agent/serial-lean.sh <本树绝对路径>
 
 Lake 5.0.0 **没有 job 数旋钮**(`-j` 表示 `--json`,
 `lake build --help` 无 job/parallel 选项),`LEAN_NUM_THREADS` 只限单进程内线程、

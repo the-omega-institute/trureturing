@@ -59,7 +59,7 @@ public sealed class WarmDonorScriptTests
         AssertReceipt(run.Process, "warmed", "complete", null);
         var calls = ScriptHarnessScratch.ReadScratchLines(run.Calls);
         Assert.Equal("git pull --ff-only origin dev", calls[2]);
-        Assert.EndsWith(" lean", calls[3], StringComparison.Ordinal);
+        Assert.EndsWith(" lean FULL_BUILD=1 LEAN_TARGETS=", calls[3], StringComparison.Ordinal);
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public sealed class WarmDonorScriptTests
         Assert.Equal("git pull --ff-only origin dev", calls[2]);
         Assert.Contains("python3 -B", calls[3], StringComparison.Ordinal);
         Assert.Contains(" refresh-stale-seed --repository ", calls[3], StringComparison.Ordinal);
-        Assert.EndsWith(" lean", calls[4], StringComparison.Ordinal);
+        Assert.EndsWith(" lean FULL_BUILD=1 LEAN_TARGETS=", calls[4], StringComparison.Ordinal);
     }
 
     [Theory]

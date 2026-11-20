@@ -26,7 +26,7 @@ public sealed class LeanCacheEnsureScriptTests
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
         var result = TestProcessRunner.Run("/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" exec make lean-cache-ensure RESTORE_DEPENDENCIES=\"$3\"",
+            ["-c", "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" exec make lean-cache-ensure FULL_BUILD=1 RESTORE_DEPENDENCIES=\"$3\"",
                 "restore-option-test", installed.Bin, installed.ArgumentsPath, option],
             installed.Repository, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
 
@@ -64,7 +64,7 @@ public sealed class LeanCacheEnsureScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" exec /bin/bash \"$4\"",
+                "PATH=\"$1:$PATH\" FULL_BUILD=1 DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" exec /bin/bash \"$4\"",
                 "lean-cache-test",
                 installed.Bin,
                 installed.ArgumentsPath,
@@ -179,7 +179,7 @@ public sealed class LeanCacheEnsureScriptTests
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         return TestProcessRunner.Run(
             "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" DOTNET_MARKER=\"$2\" exec /bin/bash \"$3\"", "lean-cache-test", bin, marker, script],
+            ["-c", "PATH=\"$1:$PATH\" FULL_BUILD=1 DOTNET_MARKER=\"$2\" exec /bin/bash \"$3\"", "lean-cache-test", bin, marker, script],
             workingDirectory,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
