@@ -384,6 +384,33 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void PrepareUsesCandidateContentsAndModesAfterIndexRemoval()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        string FilePath(string path) => Path.Combine(repository.Path, path);
+        string[] removed = ["retained.md", "changed.md", "mode.sh", "ignored.md"];
+        foreach (var path in removed.Append("edited.md")) File.WriteAllText(FilePath(path), path + "\n");
+        File.WriteAllText(FilePath(".gitignore"), "ignored.md\n");
+        TestGit.Run(repository.Path, "add", "-f", ".");
+        TestGit.Run(repository.Path, "commit", "-qm", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, ["rm", "--cached", "--", .. removed]);
+        File.WriteAllText(FilePath("edited.md"), "genuine edit\n");
+        File.WriteAllText(FilePath("changed.md"), "changed after index removal\n");
+        if (!OperatingSystem.IsWindows())
+            File.SetUnixFileMode(FilePath("mode.sh"), File.GetUnixFileMode(FilePath("mode.sh")) | UnixFileMode.UserExecute);
+
+        var prepared = new GitRepositoryGateway(repository.Path).Prepare(baseline);
+        var changes = prepared.Changes.Entries.ToDictionary(entry => entry.Path.Value, entry => entry.Kind);
+        Assert.DoesNotContain("retained.md", changes.Keys);
+        Assert.Equal(RawChangeKind.Modified, changes["changed.md"]);
+        Assert.Equal(RawChangeKind.Modified, changes["edited.md"]);
+        Assert.Equal(RawChangeKind.Deleted, changes["ignored.md"]);
+        if (!OperatingSystem.IsWindows()) Assert.Equal(RawChangeKind.Modified, changes["mode.sh"]);
+    }
+
+    [Fact]
     public void ReadCurrentChangesReportsOnlyWorkingTreeDeltaFromHead()
     {
         using var repository = new TemporaryDirectory();
