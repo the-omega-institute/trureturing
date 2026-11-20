@@ -192,6 +192,33 @@ private theorem normalized_columns_isometry {V : Type*} [Fintype V] {d : ℕ}
     · simp [Matrix.conjTranspose_apply, normalizedColumns, hv, hij]
     · simp [Matrix.conjTranspose_apply, normalizedColumns, hv]
 
+private theorem endpoint_entry_of_intertwining {V : Type*} [Fintype V] {d : ℕ}
+    (col : V → Column d)
+    (hsize : ∀ j, (Finset.univ.filter (fun v => col v = j)).card = 2 ^ columnDepth d j)
+    (A : Matrix V V ℂ) (B : Matrix (Column d) (Column d) ℂ)
+    (h : A * normalizedColumns col = normalizedColumns col * B)
+    (x y : V) (hx : col x = 0) (hy : col y = Fin.last _) :
+    A y x = B (Fin.last _) 0 := by
+  classical
+  have hzero : columnDepth d (0 : Column d) = 0 := by simp [columnDepth]
+  have hlast : columnDepth d (Fin.last (2 * (d + 1) - 1)) = 0 := by
+    simp only [columnDepth, Fin.val_last]
+    omega
+  have hcard := hsize 0
+  rw [hzero, pow_zero] at hcard
+  obtain ⟨v, hv⟩ := Finset.card_eq_one.mp hcard
+  have he : x = v := by
+    have hm : x ∈ Finset.univ.filter (fun u => col u = 0) :=
+      Finset.mem_filter.mpr ⟨Finset.mem_univ _, hx⟩
+    rw [hv] at hm
+    exact Finset.mem_singleton.mp hm
+  have hentry := congrArg (fun M : Matrix V (Column d) ℂ => M y 0) h
+  change (A * normalizedColumns col) y 0 = (normalizedColumns col * B) y 0 at hentry
+  simp only [Matrix.mul_apply, normalizedColumns, columnWeight, hzero, hy, pow_zero,
+    inv_one, Complex.ofReal_one, mul_ite, ite_mul, mul_one, one_mul, mul_zero, zero_mul] at hentry
+  rw [← Finset.sum_filter, hv, Finset.sum_singleton, ← he] at hentry
+  simpa [Finset.sum_ite_eq, hlast] using hentry
+
 /-- The normalized columns of a two-tree weld with the binary neighbor profile are orthonormal.
 Their actual time evolution intertwines with the central square-root-two defect path. -/
 theorem central_defect_column_evolution {V : Type*} [Fintype V] [DecidableEq V]
@@ -203,13 +230,21 @@ theorem central_defect_column_evolution {V : Type*} [Fintype V] [DecidableEq V]
     let Q := normalizedColumns col
     let H := (((Real.sqrt 2)⁻¹ : ℝ) : ℂ) • G.adjMatrix ℂ
     let J := (centralDefect (d + 1) (by omega)).map Complex.ofReal
-    Qᴴ * Q = 1 ∧
-      NormedSpace.exp ((-Complex.I * (t : ℂ)) • H) * Q =
-        Q * NormedSpace.exp ((-Complex.I * (t : ℂ)) • J) := by
+    let U := NormedSpace.exp ((-Complex.I * (t : ℂ)) • H)
+    let P := NormedSpace.exp ((-Complex.I * (t : ℂ)) • J)
+    Qᴴ * Q = 1 ∧ U * Q = Q * P ∧
+      ∀ x y, col x = 0 → col y = Fin.last _ → U y x = P (Fin.last _) 0 := by
   dsimp only
-  constructor
-  · exact normalized_columns_isometry col hsize
-  · apply exp_intertwines
-    rw [Matrix.smul_mul, Matrix.mul_smul, adjacency_mul_columns d G col hdegree]
+  refine ⟨normalized_columns_isometry col hsize, ?_⟩
+  have hAction := adjacency_mul_columns d G col hdegree
+  let phase := -Complex.I * (t : ℂ)
+  have hTime :
+      NormedSpace.exp (phase • ((((Real.sqrt 2)⁻¹ : ℝ) : ℂ) • G.adjMatrix ℂ)) *
+          normalizedColumns col =
+        normalizedColumns col *
+          NormedSpace.exp (phase • (centralDefect (d + 1) (by omega)).map Complex.ofReal) := by
+    apply exp_intertwines
+    rw [Matrix.smul_mul, Matrix.mul_smul, hAction]
+  exact ⟨hTime, endpoint_entry_of_intertwining col hsize _ _ hTime⟩
 
 end D5.S3.Quantum.Dynamics.WeldedColumnEvolution
