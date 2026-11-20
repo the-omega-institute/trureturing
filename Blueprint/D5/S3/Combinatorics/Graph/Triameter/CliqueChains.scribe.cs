@@ -88,7 +88,9 @@ internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
                         + "also lifts each interface edge. Conversely, each clique contributes at most one "
                         + "vertex to an independent set, and vertices at the ends of the three chains certify "
                         + "the required lower bound on triameter. The general bound then forces equality."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hak-kozerenko-2026-triameter-question-one"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock.Describe Definition(string id, string name, Formula statement, string prose) =>
