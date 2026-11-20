@@ -233,7 +233,7 @@ private def choices (h : Fin 5 → Fin 4) : Finset (Fin 4) :=
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
-private theorem choices_card : ∀ h : Fin 5 → Fin 4,
+theorem choices_card : ∀ h : Fin 5 → Fin 4,
     (∀ j, h j ≠ 0) → (∃ v, v ≠ 0 ∧ ∀ j, h j ≠ v) →
     (choices h).card = if ∀ j, h j = h 0 then 2 else 1 := by
   intro h
@@ -352,7 +352,7 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
 open private first_occurrence First firstEquiv canonical_unique from
   D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
-private def colourEquiv8 : Fin 8 ≃ Fin 4 × Bool where
+def colourEquiv8 : Fin 8 ≃ Fin 4 × Bool where
   toFun x := (beta x, decide (4 ≤ x.val))
   invFun p := if p.2 then ⟨7 - p.1.val, by have := p.1.isLt; omega⟩
     else ⟨p.1.val, by have := p.1.isLt; omega⟩

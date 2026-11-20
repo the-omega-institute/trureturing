@@ -26,6 +26,10 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 "An offset word starts at zero and has no zero adjacent xor increment.", DescribeRole.Definition),
             Node("offset-choices", "Allowed vertical shifts", "offsetChoices",
                 "The allowed shifts are the nonzero colours absent from all adjacent offset increments.", DescribeRole.Definition),
+            Node("choices-card", "Cardinality of the allowed shifts", "choices_card",
+                "Let h be five nonzero xor increments, and suppose a nonzero shift is absent from them. The allowed shift set has two elements when all increments agree and one element otherwise. The set consists of the nonzero colours v such that h(j) differs from v for every j.", DescribeRole.Theorem),
+            Node("colour-equiv-eight", "Pair colours and Boolean signs", "colourEquiv8",
+                "Each of the eight colours is uniquely determined by its complementary pair and a Boolean sign. The pair coordinate is beta, and the sign is true exactly for colours at least four.", DescribeRole.Definition),
             Node("zones-iff", "Zone data through offset choices", "zones_iff",
                 "A zone is equivalent to an admissible offset word whose adjacent first-column increments lie in its allowed shift set.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("legal"), DeclarationHandle.Create(Prefix + "Legal"),
@@ -240,6 +244,13 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
 
     private static Formula NodeFormula(string declaration) => declaration switch
     {
+        "choices_card" => All("h", Arrow(Fin(5), Fin(4)),
+            Imp(All("j", Fin(5), Ne(App(V("h"), V("j")), D(0))),
+                Imp(Ex("v", Fin(4), And(Ne(V("v"), D(0)), All("j", Fin(5), Ne(App(V("h"), V("j")), V("v"))))),
+                    Eq(Call("Finset.card", Call("Finset.filter", Lam("v", Fin(4), And(Ne(V("v"), D(0)), All("j", Fin(5), Ne(App(V("h"), V("j")), V("v"))))), Call("Finset.univ"))),
+                        Call("ite", All("j", Fin(5), Eq(App(V("h"), V("j")), App(V("h"), D(0)))), D(2), D(1)))))),
+        "colourEquiv8" => And(Seq(Call("colourEquiv8"), Colon, Sp, Call("Equiv", Fin(8), Product(Fin(4), Call("Bool")))),
+            All("x", Fin(8), Eq(App(Call("colourEquiv8"), V("x")), Pair(Call("beta", V("x")), Call("decide", Le(D(4), Val(V("x")))))))),
         "xor_cancel" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), All("c", Call("Fin", Digits("4")), Iff(Eq(Call("Fin.xor", V("a"), V("b")), Call("Fin.xor", V("a"), V("c"))), Eq(V("b"), V("c")))))),
         "xor_nonzero" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), Iff(Ne(Call("Fin.xor", V("a"), V("b")), Digits("0")), Ne(V("a"), V("b"))))),
         "xor_shift" => All("a", Call("Fin", Digits("4")), All("b", Call("Fin", Digits("4")), All("c", Call("Fin", Digits("4")), Eq(Call("Fin.xor", Call("Fin.xor", V("a"), V("b")), Call("Fin.xor", V("a"), V("c"))), Call("Fin.xor", V("b"), V("c")))))),

@@ -13,7 +13,7 @@ Row: proof_shape=bind-only; consumers=result
 horizontal: proof_shape=bind-only; consumers=result
 between: proof_shape=bind-only; consumers=result
 Valid: proof_shape=bind-only; consumers=result
-decidableValid: proof_shape=bind-only; consumers=result
+decidableValid: proof_shape=bind-only; consumers=finite_certificate._proof_2
 cl: proof_shape=bind-only; consumers=result
 T: proof_shape=bind-only; consumers=result
 initial: proof_shape=bind-only; consumers=result
@@ -43,7 +43,7 @@ set_option Elab.async false
 
 private abbrev Row := Fin 3 → Fin 3
 private def horizontal : Finset (Fin 3 × Fin 3) := HardinA229588Strip.horizontal
-private def between : Finset (Fin 3 × Fin 3) := {(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2)}
+def between : Finset (Fin 3 × Fin 3) := {(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 1), (2, 2)}
 private def Valid (p : Row) (d : ℕ) : Prop :=
   d ≤ 1 ∧ bondDefects horizontal p p ≤ 1 - d
 private instance decidableValid (p : Row) (d : ℕ) : Decidable (Valid p d) :=
