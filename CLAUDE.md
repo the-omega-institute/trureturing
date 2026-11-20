@@ -57,7 +57,7 @@ Lean → 编译报告与冻结状态 → truth-export → 理论源仓的覆盖�
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
-- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)维护。并行合并带回的正文与消化账本副本可暂留主仓，后续按批次归并。新消化工作在理论源仓 `dev` 进行。普通主仓检出、构建、CI 和首次冻结均独立运行。
+- 理论正文、归档、atom、上下文、覆盖与消化命令由[理论源仓](https://github.com/the-omega-institute/trureturing-source-theories/tree/dev)维护。新消化工作在理论源仓 `dev` 进行。普通主仓检出、构建、CI 和首次冻结均独立运行。
 
 ### 1.3 真值图、冻结与两个偏序
 
