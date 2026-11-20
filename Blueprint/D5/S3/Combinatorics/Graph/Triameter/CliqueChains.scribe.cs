@@ -55,20 +55,20 @@ internal sealed class CliqueChainsDocument : IScribeDocumentDefinition
 
     private static Formula Statement() => F.Seq(
         Forall, Sp, Bound("V", Op("Type")), Sp,
-        OpenBracket, Call("Fintype", Id("V")), CloseBracket, Sp,
-        Bound("G", Call("SimpleGraph", Id("V"))), Comma, Sp,
-        Call("Connected", Id("G")), Sp, Longrightarrow, Sp, Open,
-        Call("tr", Id("G")), Sp, Eq, Sp, D(4), Alpha, Sp, Open, Id("G"), Close, Sp, Minus, Sp, D(1),
+        OpenBracket, Call("Fintype", F.Id("V")), CloseBracket, Sp,
+        Bound("G", Call("SimpleGraph", F.Id("V"))), Comma, Sp,
+        Call("Connected", F.Id("G")), Sp, Longrightarrow, Sp, Open,
+        Call("tr", F.Id("G")), Sp, Eq, Sp, D(4), Alpha, Sp, Open, F.Id("G"), Close, Sp, Minus, Sp, D(1),
         Sp, Leftrightarrow, Sp, Exists, Sp,
-        Bound("q", F.Seq(Call("Fin", D(3)), Sp, To, Sp, Mathbb, Grp(Id("N")))), Sp,
-        Bound("f", F.Seq(Id("V"), Sp, To, Sp, Call("Layers", Id("q")))), Comma, Sp,
-        Call("CliqueChains", F.Seq(Id("G"), Comma, Sp, Id("q"), Comma, Sp, Id("f"))), Close);
+        Bound("q", F.Seq(Call("Fin", D(3)), Sp, To, Sp, Mathbb, Grp(F.Id("N")))), Sp,
+        Bound("f", F.Seq(F.Id("V"), Sp, To, Sp, Call("Layers", F.Id("q")))), Comma, Sp,
+        Call("CliqueChains", F.Seq(F.Id("G"), Comma, Sp, F.Id("q"), Comma, Sp, F.Id("f"))), Close);
 
     private static Formula Bound(string name, Formula type) =>
-        F.Seq(Open, Id(name), Sp, Colon, Sp, type, Close);
+        F.Seq(Open, F.Id(name), Sp, Colon, Sp, type, Close);
 
     private static Formula Call(string name, Formula argument) =>
         F.Seq(Op(name), Open, argument, Close);
 
-    private static Formula Op(string name) => F.Seq(Operatorname, Grp(Id(name)));
+    private static Formula Op(string name) => F.Seq(Operatorname, Grp(F.Id(name)));
 }
