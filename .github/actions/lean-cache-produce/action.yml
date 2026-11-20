@@ -7,9 +7,6 @@ inputs:
   release-seed-producer:
     description: Immutable commit that produced the selected local Release
     default: ''
-  preparation-only:
-    description: Build for isolated PR artifact transport without ordinary cache publication
-    default: 'false'
   regenerate-report-artifacts:
     description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
     default: 'false'
@@ -39,7 +36,6 @@ runs:
       shell: bash
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
     - id: prepared
-      if: inputs.preparation-only != 'true'
       env:
         GH_TOKEN: ${{ github.token }}
       shell: bash
@@ -161,7 +157,7 @@ runs:
     - id: resume_snapshot
       name: Prepare producer progress
       # A tolerated nonzero build has a successful step conclusion.
-      if: ${{ !cancelled() && steps.build.conclusion == 'success' && (steps.build.outcome != 'success' || inputs.preparation-only == 'true') }}
+      if: ${{ !cancelled() && steps.build.conclusion == 'success' && steps.build.outcome != 'success' }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
     - name: Save producer progress
@@ -183,7 +179,6 @@ runs:
         fi
         exit 1
     - id: project_snapshot
-      if: inputs.preparation-only != 'true'
       name: Prepare the project seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
@@ -192,7 +187,6 @@ runs:
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
     - name: Require a usable project seed
-      if: inputs.preparation-only != 'true'
       env:
         READY: ${{ steps.project_snapshot.outputs.project_ready }}
         SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
@@ -209,7 +203,6 @@ runs:
         path: ${{ steps.keys.outputs.project_archive_path }}
         key: ${{ steps.keys.outputs.project_key }}
     - id: dependency_snapshot
-      if: inputs.preparation-only != 'true'
       name: Prepare the dependency seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
@@ -237,7 +230,7 @@ runs:
         path: ${{ steps.keys.outputs.dependency_archive_path }}
         key: ${{ steps.keys.outputs.dependency_key }}
     - name: Publish the toolchain seed
-      if: inputs.preparation-only != 'true' && steps.elan.outputs.cache-hit != 'true'
+      if: steps.elan.outputs.cache-hit != 'true'
       uses: actions/cache/save@v5
       with:
         path: ~/.elan
