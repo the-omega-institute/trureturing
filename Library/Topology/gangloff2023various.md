@@ -12,6 +12,7 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/DendriteObstruction
   - D5/S1/Dynamics/Shadowing/InvarianceGluedSheets
   - D5/S1/Dynamics/Shadowing/CantorCircleExpansivity
+  - D5/S1/Dynamics/Shadowing/BouquetExactExpansivity
   - D5/S3/Topology/CoveringDimension/GluedCircle
 license: citation-only
 triage: anchor
@@ -91,6 +92,27 @@ system.
 Remark 3.10 of the arXiv version realizes each exact finite order on a
 finite bouquet of circles. At order N at least two on the bouquet of N
 circles, the displayed map has image equal to its last circle.
+
+The repository also constructs a topologically exact continuous surjection
+of exact positive expansivity order N on the bouquet of N circles for every
+N at least two. On each circle the map runs through all N circles in order.
+The projection forgetting the circle label semiconjugates the map to
+multiplication by N on the circle. Each nonempty open set projects to a
+set containing an arc, whose image under sufficiently many iterates
+covers the circle. The next application of the traversal covers the
+whole bouquet. Distinct points with the same phase close to the common
+vertex coalesce in one step and witness all N points in a forward Bowen ball.
+[Finite bouquet construction](../../Blueprint/D5/S1/Dynamics/Shadowing/BouquetExactExpansivity.md)
+
+Hisao Kato constructs a surjective positively pseudo-expansive map on every
+finite connected graph containing a simple closed curve. His condition (P1)
+gives a finite closed cover with a positive separation scale on each member.
+A forward Bowen ball at less than half the minimum of those scales meets each
+member in at most one point, giving a uniform finite cardinal bound. The
+relevant locators are §2, pp. 202–203 and Theorem (4.3), pp. 207–208. The
+explicit bouquet traversal above specifies the exact order and proves
+topological exactness.
+[Kato 1991](https://doi.org/10.4064/fm-137-3-201-210)
 
 For each integer N at least two, the repository constructs a compact connected
 metric space of covering dimension one with a continuous surjection of least
