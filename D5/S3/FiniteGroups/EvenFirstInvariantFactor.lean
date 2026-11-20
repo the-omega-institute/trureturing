@@ -1,4 +1,43 @@
+/- GID: D5/S3/FiniteGroups/EvenFirstInvariantFactor
+   generality: G
+   mirror-B: D5/B/S3/FiniteGroups/EvenFirstInvariantFactor
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: []
+   utility: none
+   digest: An s-spanning pair of Z/c × Z/ck with c even forces c²k ≤ 2s², equality only if c ∣ s. -/
+
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#134)
+escape_witness: square_cover (when every relation has even coordinates, a Lee cover of radius s
+  turns into a cover of the rotated lattice by the square [0,s)², for both parities of s), and
+  the equality step of even_factor (near-square rigidity with defect 0 forces (s,s) or
+  (s,−s) into the relation lattice, hence c ∣ s).
+proof_shape:
+  square_cover: content; consumer: even_factor.
+  even_factor: content via square_cover and NearSquareLatticeRigidity.near_square_rigidity.
+Direct frozen dependencies:
+  D5/S3/FiniteGroups/LeeSquareCompression (kernel_coordinates_dvd, kernel_index, mapped_index,
+  rectangle_index_bound, lee_iff_square, Target), module statement_id re-pinned in this delivery;
+  D5/S3/FiniteGroups/NearSquareLatticeRigidity (near_square_rigidity, RectangleCovers), module
+  sha256:fd275fcbd775e3907a4d5fe1c42e6a223fb06ded31b1960b904c9f2f5126714c;
+  D5/S3/FiniteGroups/BajnokBeattyCayleyNecessity (sumDiff).
+kernel_index and rectangle_index_bound were private in LeeSquareCompression; they are made public
+and the owner re-pinned instead of being re-proved.
+Search: LeeSquareCompression.arbitrary_pair_upper_bound gives c²k ≤ 2s² for even c only when
+s ≥ 3 and says nothing about equality; BajnokBeattyCayleyNecessity.oddLattice_cover is the same
+square cover for the target Z/2 × Z/2k with even radius only. No frozen declaration states the
+all-radius even-c bound or the equality divisibility.
+-/
+
 import D5.S3.FiniteGroups.LeeSquareCompression
+
+/-! # The even first invariant factor
+
+Let `c ≥ 2` be even and `k, s ≥ 1`. If every element of `G = ℤ/c × ℤ/(ck)` is `x•a + y•b`
+with `|x| + |y| ≤ s`, then `|G| = c²k ≤ 2s²`; equality forces `c ∣ s`; and for odd `s`,
+`|G| ≤ 2s² − 2`. Pulling the relation lattice back along `(u,v) ↦ (u+v,u−v)` halves its index
+and, since every relation is even, turns the Lee cover into a cover by the square `[0,s)²`.
+-/
 
 set_option autoImplicit false
 
@@ -23,29 +62,36 @@ private theorem square_cover (K : Submodule ℤ Plane) {s : ℤ}
     rw [lee_iff_square, abs_le, abs_le] at hr
     change 2 ∣ v 0 - r 0 at h0
     change 2 ∣ v 1 - r 1 at h1
-    simp only [v, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons] at h0 h1
+    simp only [v, Matrix.cons_val_zero, Matrix.cons_val_one] at h0 h1
     obtain ⟨i, hi⟩ : 2 ∣ r 0 + r 1 - 1 := by omega
     obtain ⟨j, hj⟩ : 2 ∣ r 0 - r 1 - 1 := by omega
     refine ⟨i + t, j + t, by omega, by omega, by omega, by omega, ?_⟩
     rw [Submodule.mem_comap]
     convert hvr using 1
     ext l
-    fin_cases l <;> simp [sumDiff, v] <;> omega
+    fin_cases l <;>
+      simp only [sumDiff, v, LinearMap.coe_mk, AddHom.coe_mk, Pi.sub_apply, Fin.zero_eta,
+        Fin.mk_one, Matrix.cons_val_zero, Matrix.cons_val_one] <;> omega
   · let v : Plane := ![z 0 - t + (z 1 - t), z 0 - t - (z 1 - t)]
     obtain ⟨r, hr, hvr⟩ := hcover v
     obtain ⟨h0, h1⟩ := heven _ hvr
     rw [lee_iff_square, abs_le, abs_le] at hr
     change 2 ∣ v 0 - r 0 at h0
     change 2 ∣ v 1 - r 1 at h1
-    simp only [v, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons] at h0 h1
+    simp only [v, Matrix.cons_val_zero, Matrix.cons_val_one] at h0 h1
     obtain ⟨i, hi⟩ : 2 ∣ r 0 + r 1 := by omega
     obtain ⟨j, hj⟩ : 2 ∣ r 0 - r 1 := by omega
     refine ⟨i + t, j + t, by omega, by omega, by omega, by omega, ?_⟩
     rw [Submodule.mem_comap]
     convert hvr using 1
     ext l
-    fin_cases l <;> simp [sumDiff, v] <;> omega
+    fin_cases l <;>
+      simp only [sumDiff, v, LinearMap.coe_mk, AddHom.coe_mk, Pi.sub_apply, Fin.zero_eta,
+        Fin.mk_one, Matrix.cons_val_zero, Matrix.cons_val_one] <;> omega
 
+/-- For even `c ≥ 2`, `k, s ≥ 1` and a pair `a, b` whose signed combinations of `ℓ¹`-length at
+most `s` cover `ℤ/c × ℤ/(ck)`: `c²k ≤ 2s²`, equality forces `c ∣ s`, and odd `s` gives
+`c²k ≤ 2s² − 2`. -/
 theorem even_factor {c k : ℕ} {s : ℤ} (hc : 2 ≤ c) (hceven : Even c) (_hk : 1 ≤ k)
     (hs : 1 ≤ s) (a b : Target c k)
     (hcover : ∀ g : Target c k, ∃ x y : ℤ, |x| + |y| ≤ s ∧ x • a + y • b = g) :
@@ -116,12 +162,9 @@ theorem even_factor {c k : ℕ} {s : ℤ} (hc : 2 ≤ c) (hceven : Even c) (_hk 
     rcases mul_eq_zero.1 hab with ha0 | hb0
     · have hK := hKdiv _ (Submodule.mem_comap.1 hw)
       simp [sumDiff, ha0] at hK
-      rcases hε with rfl | rfl
-      · simpa using hK.1
-      · simpa using hK.1
+      rcases hε with rfl | rfl <;> simpa using hK
     · have hK := hKdiv _ (Submodule.mem_comap.1 hu)
-      simp [sumDiff, hb0] at hK
-      exact hK.1
+      simpa [sumDiff, hb0] using hK.1
   refine ⟨hle, heq, fun hodd => ?_⟩
   have hne : (c : ℤ) ^ 2 * k ≠ 2 * s ^ 2 := by
     intro he
