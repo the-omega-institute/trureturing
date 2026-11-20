@@ -18,6 +18,20 @@ permissions:
   actions: read
   pull-requests: read
 
+env:
+  CACHE_WRITES: ${{ github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) }}
+  JUDGE_LOCKFILES: |
+    tools/StrataLint.Cli/packages.lock.json
+    tools/StrataLint.Configuration/packages.lock.json
+    tools/StrataLint.Engine/packages.lock.json
+    tools/StrataLint.Engineering/packages.lock.json
+    tools/StrataLint.Runtime/packages.lock.json
+    tools/StrataLint.FileMap/packages.lock.json
+    tools/StrataLint.Lean/packages.lock.json
+    tools/StrataLint.Scribe/packages.lock.json
+    tools/StrataLint.TestEvidence/packages.lock.json
+    tools/Trureturing.Truth/packages.lock.json
+
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -68,7 +82,6 @@ jobs:
       judge_key: ${{ steps.judge_key.outputs.key }}
       compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
     env:
-      CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
       CI_PUSH_BEFORE: ${{ github.event.before }}
     steps:
       - uses: actions/checkout@v5
@@ -97,18 +110,19 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: true
-          cache-dependency-path: |
-            tools/StrataLint.Cli/packages.lock.json
-            tools/StrataLint.Configuration/packages.lock.json
-            tools/StrataLint.Engine/packages.lock.json
-            tools/StrataLint.Engineering/packages.lock.json
-            tools/StrataLint.Runtime/packages.lock.json
-            tools/StrataLint.FileMap/packages.lock.json
-            tools/StrataLint.Lean/packages.lock.json
-            tools/StrataLint.Scribe/packages.lock.json
-            tools/StrataLint.TestEvidence/packages.lock.json
-            tools/Trureturing.Truth/packages.lock.json
+          cache: ${{ env.CACHE_WRITES == 'true' }}
+          cache-dependency-path: ${{ env.JUDGE_LOCKFILES }}
+      - id: nuget
+        if: env.CACHE_WRITES != 'true'
+        run: |
+          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
+          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - name: Restore the NuGet packages read-only
+        if: env.CACHE_WRITES != 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.nuget.outputs.path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: judge_key
         env:
           JUDGE_INPUTS: |
@@ -238,9 +252,8 @@ jobs:
         if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
         run: python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
 
-  # Lean report, current-tree rules and Scribe checks; on pull requests also the
-  # delta rules against B = first parent of the event merge commit. The report is
-  # built once and consumed by both rule sets inside this one job.
+  # PRs verify affected targets. Pushes share a complete report across the
+  # tree-wide checks and delta rules for the actual push range.
   current:
     needs: [detect, source]
     if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
@@ -248,13 +261,10 @@ jobs:
     # Platform wall-clock cap, separate from the shared 120-minute compute allowance.
     timeout-minutes: 360
     outputs:
-      lean_required: ${{ needs.detect.outputs.report }}
       unit: ${{ steps.checked.outputs.unit }}
-      project_seed_available: ${{ steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
     env:
-      # This job writes project seeds only on dev/integration pushes.
-      # Dependency and elan writes also use the PR's own merge-ref scope.
-      CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
+      STRATALINT_ACCEPT_COLD_BUILD: '1'
+      LEAN_NUM_THREADS: '1'
       REPORT: .lake/build/stratalint/raw-lean-report.json
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
       SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
@@ -287,18 +297,19 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
-          cache: true
-          cache-dependency-path: |
-            tools/StrataLint.Cli/packages.lock.json
-            tools/StrataLint.Configuration/packages.lock.json
-            tools/StrataLint.Engine/packages.lock.json
-            tools/StrataLint.Engineering/packages.lock.json
-            tools/StrataLint.Runtime/packages.lock.json
-            tools/StrataLint.FileMap/packages.lock.json
-            tools/StrataLint.Lean/packages.lock.json
-            tools/StrataLint.Scribe/packages.lock.json
-            tools/StrataLint.TestEvidence/packages.lock.json
-            tools/Trureturing.Truth/packages.lock.json
+          cache: ${{ env.CACHE_WRITES == 'true' }}
+          cache-dependency-path: ${{ env.JUDGE_LOCKFILES }}
+      - id: nuget
+        if: env.CACHE_WRITES != 'true'
+        run: |
+          packages="$(dotnet nuget locals global-packages --list --force-english-output)"
+          echo "path=${packages#global-packages: }" >> "$GITHUB_OUTPUT"
+      - name: Restore the NuGet packages read-only
+        if: env.CACHE_WRITES != 'true'
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.nuget.outputs.path }}
+          key: dotnet-cache-${{ runner.os }}-${{ hashFiles(env.JUDGE_LOCKFILES) }}
       - id: judge
         if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
         continue-on-error: true
@@ -375,31 +386,25 @@ jobs:
         run: python3 tools/scripts/workflow/ci_checks.py current build-judge
       - name: Theory-only file and capacity checks
         if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
-        env:
-          CI_PUSH_BEFORE: ${{ github.event.before }}
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - id: pr_lean
+        name: Check affected PR modules and Scribe inputs
+        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-lean
       - id: lean_report
-        name: Build the Lean report
-        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+        name: Build the complete push Lean report
+        if: ${{ !cancelled() && github.event_name == 'push' && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
-          # Bound Lake's concurrent compilers on the hosted ARM runner.
-          LEAN_NUM_THREADS: '1'
-          # This supervisor also encloses preparation; compute phases share the file above.
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
-          STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
-        run: |
-          rc=0
-          FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
-          if [[ "$rc" != 0 ]]; then
-            echo "::error title=Lean report failed::Inspect the preceding error. A missing compatible native seed requires the independent lean-cache-produce long job; wait for its successful exact-head production and retry."
-          fi
-          exit "$rc"
+        run: FULL_BUILD=1 python3 tools/scripts/workflow/ci_checks.py current lean-report
+      - name: Run selected PR FIB regressions
+        if: steps.pr_lean.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib']
+        run: python3 tools/scripts/workflow/ci_checks.py current pr-fib
       - name: Verify production source binding artifacts
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && (steps.lean_report.outcome == 'success' || steps.pr_lean.outcome == 'success') && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
         env:
           CI_DOTNET_PREPARED: '1'
-          FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
         run: python3 tools/scripts/workflow/ci_checks.py current source-evidence
       - name: Scribe content
         if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
@@ -411,7 +416,7 @@ jobs:
         if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && needs.detect.outputs.delta == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
         run: python3 tools/scripts/workflow/ci_checks.py current check-delta
       - name: Run the compiled audit checks
-        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && (steps.lean_report.outcome == 'success' || steps.pr_lean.outcome == 'success') && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
         run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
       # A successful judge build can be published after ready diagnostics,
       # independently of their verdicts or report validity.
@@ -425,28 +430,33 @@ jobs:
           key: ${{ needs.source.outputs.judge_key }}
       - id: project_snapshot_push
         name: Prepare the project seed
-        if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
-        continue-on-error: true
+        if: env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success'
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_REPORT_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
+          STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
+        run: |
+          python3 tools/lean-inspector/publication.py validate "$REPORT" --repository "$GITHUB_WORKSPACE"
+          python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
       - id: project_save
         name: Publish the push project seed
-        if: ${{ !cancelled() && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
-        continue-on-error: true
+        if: steps.project_snapshot_push.outputs.project_ready == 'true'
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
-      - id: project_published
-        name: Confirm the push seed is available to automatic production
-        if: ${{ !cancelled() && github.event_name == 'push' && steps.project_snapshot_push.outputs.project_ready == 'true' && steps.project_save.outcome == 'success' }}
-        continue-on-error: true
+      - name: Confirm the protected push published its project seed
+        if: env.CACHE_WRITES == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           CACHE_KEY: ${{ steps.keys.outputs.project_key }}
+          READY: ${{ steps.project_snapshot_push.outputs.project_ready }}
+          SKIP_REASON: ${{ steps.project_snapshot_push.outputs.project_skip_reason }}
         run: |
+          [[ "$READY" == true && -n "$CACHE_KEY" ]] || {
+            echo "CACHE_SEED_ERROR validated push has no project snapshot: ${SKIP_REASON:-unavailable}" >&2
+            exit 1
+          }
           saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
           jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
             'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
@@ -478,37 +488,6 @@ jobs:
       - id: checked
         name: Confirm selected current checks succeeded
         run: echo 'unit=current' >> "$GITHUB_OUTPUT"
-
-  # Reuse a validated seed when no build work occurred, or publish the increment.
-  # Missing usable seeds still get the long producer outside required checks.
-  cache-producer:
-    name: Produce the protected push Lean cache
-    needs: current
-    if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && needs.current.outputs.lean_required == 'true' && needs.current.outputs.project_seed_available != 'true' }}
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 360
-    permissions:
-      contents: read
-      actions: read
-      pull-requests: read
-    concurrency:
-      group: lean-cache-branch-${{ github.ref }}
-      cancel-in-progress: false
-    env:
-      STRATALINT_CACHE_WRITES: 'true'
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 2
-          persist-credentials: false
-      - name: Validate the protected push and strip checkout remote
-        env:
-          CI_HIT_PATHS: '*'
-          CI_PUSH_BEFORE: ${{ github.event.before }}
-        run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Produce the Actions cache
-        uses: ./.github/actions/lean-cache-produce
 
   banned-api-proof:
     needs: [detect, source]
