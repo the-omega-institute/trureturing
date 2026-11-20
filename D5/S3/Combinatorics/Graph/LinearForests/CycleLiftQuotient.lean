@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.LinearForests.UndirectedCycleCompletionLaw
 import Mathlib.Combinatorics.SimpleGraph.Operations
+import Mathlib.Order.Setoid.Basic
 
 /-! Restricting or extending prescribed edges keeps the successor permutation. -/
 
@@ -21,27 +22,8 @@ open UndirectedCycleCompletionLaw
 variable {V : Type*} [Fintype V]
 
 /-- Equal shadows identify precisely the reversal classes of lifts. -/
-def reversalSetoid (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) : Setoid (Lift F) where
-  r a b := forget hn a = forget hn b
-  iseqv := ⟨fun _ => rfl, fun h => h.symm, fun h₁ h₂ => h₁.trans h₂⟩
-
-private def quotientShadow (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) :
-    Quotient (reversalSetoid hn F) → CompletedGraph F :=
-  Quotient.lift (forget hn) (fun _ _ h => h)
-
-private theorem quotientShadow_bijective (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) :
-    Function.Bijective (quotientShadow hn F) := by
-  constructor
-  · intro a b
-    induction a using Quotient.inductionOn with
-    | _ a =>
-      induction b using Quotient.inductionOn with
-      | _ b =>
-        intro h
-        exact Quotient.sound h
-  · intro C
-    obtain ⟨l, hl⟩ := forget_surjective hn F C
-    exact ⟨Quotient.mk _ l, hl⟩
+abbrev reversalSetoid (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) : Setoid (Lift F) :=
+  Setoid.ker (forget hn)
 
 private def liftWithEdges (hn : 3 ≤ Fintype.card V) {F G : SimpleGraph V}
     (l : Lift F) (hG : G ≤ shadow l.σ) : Lift G :=
@@ -90,7 +72,8 @@ theorem reversal_quotient_and_added_edges (hn : 3 ≤ Fintype.card V) (F : Simpl
     apply lift_ext hn
     change (a.σ⁻¹)⁻¹ = a.σ
     exact inv_inv a.σ
-  · exact ⟨Equiv.ofBijective _ (quotientShadow_bijective hn F), fun _ => rfl⟩
+  · exact ⟨Setoid.quotientKerEquivOfSurjective (forget hn) (forget_surjective hn F),
+      fun _ => rfl⟩
   · intro u v hne
     refine ⟨singleEdgeEquiv hn F hne, fun _ => ⟨rfl, rfl⟩, fun a => ?_⟩
     exact lift_ext hn rfl
