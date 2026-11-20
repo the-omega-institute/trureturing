@@ -16,8 +16,6 @@ The public phi keeps the preregistered power of −1. The proofs use complexSign
 and identify the two forms at phi_outer_entry via complex_sign_val.
 Direct frozen dependencies are declaration identities at base 3476ce98dd3c4326181683b37fc2ddad3e33a743.
 The publicized selectors retain their base private declaration identities until canonical re-pin.
-  F1: D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.partialTraceFirst
-    statement_id: sha256:60de08083a292a636d655dff7f5b06843146c051021ffe2d0b604db457edc565
   F2: D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.pure_trace
     statement_id: sha256:10a7dafe6e7a6b1cf2bcce71b142fca1562280cfd40a3330284db5fc95180878
   F3: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap
@@ -54,6 +52,10 @@ The publicized selectors retain their base private declaration identities until 
   F20: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.sign_one
   F21: D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.complex_sign_val
   F22: Matrix.trace_submatrix
+  F23: D5/S3/Quantum/FixedPointProjection.Choi.fromBipartitePairing
+  F24: D5/S3/Quantum/FixedPointProjection.Marginal.traceLocalLeft
+  F25: D5/S3/Quantum/TensorNetworks/CZXParentLindbladianAveraging.avg
+  F26: D5/S3/Quantum/TensorNetworks/CZXParentLindbladianAveraging.avg_univ
 proof_shape: sign_sq: bind-only; consumers: moment_two, moment_four
   Direct frozen dependencies: F17, F18
 proof_shape: sign_flip: bind-only; consumers: moment_two, moment_four
@@ -104,10 +106,8 @@ proof_shape: meanFidelity: bind-only; consumers: claim, meanFidelity_pair, resul
   Direct frozen dependencies: F12, F8, F11, F7
 proof_shape: claim: bind-only; consumers: result
   Direct frozen dependencies: F12, F8, F11, F7
-proof_shape: channelMap_trace: bind-only; consumers: choi_trace
-  Direct frozen dependencies: F9, F8, F15, F3, F7
 proof_shape: choi_trace: bind-only; consumers: result
-  Direct frozen dependencies: F9, F8, F15, F3, F7, F14
+  Direct frozen dependencies: F9, F8, F15, F3, F7, F14, F23
 proof_shape: choi_reindex: bind-only; consumers: choi_gram, perf_pair
   Direct frozen dependencies: F8, F15, F7, F14
 proof_shape: choi_gram: bind-only; consumers: result
@@ -115,25 +115,25 @@ proof_shape: choi_gram: bind-only; consumers: result
 proof_shape: choi_tensor_pair: bind-only; consumers: perf_pair
   Direct frozen dependencies: F13, F3, F22
 proof_shape: trace_right_pair: bind-only; consumers: perf_pair
-  Direct frozen dependencies: F12, F1, F10, F22
+  Direct frozen dependencies: F12, F24
 proof_shape: trace_left_pair: bind-only; consumers: perf_pair
   Direct frozen dependencies: F11, F10
 proof_shape: perf: bind-only; consumers: performance, perf_pair, perf_entry, performance_eq_L, meanFidelity_pair
   Direct frozen dependencies: none
 proof_shape: performance: bind-only; consumers: performance_eq_L, meanFidelity_pair, result
-  Direct frozen dependencies: none
+  Direct frozen dependencies: F25
 proof_shape: phi_outer_entry: bind-only; consumers: rho_entry
   Direct frozen dependencies: F17, F21
 proof_shape: rho_entry: bind-only; consumers: perf_entry
   Direct frozen dependencies: F17, F21
 proof_shape: perf_pair: bind-only; consumers: meanFidelity_pair
-  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10, F22
+  Direct frozen dependencies: F12, F8, F15, F13, F3, F11, F7, F14, F10, F22, F24
 proof_shape: perf_entry: bind-only; consumers: performance_eq_L
   Direct frozen dependencies: F17, F21
 proof_shape: performance_eq_L: bind-only; consumers: result
-  Direct frozen dependencies: F17, F18, F19, F20, F21
+  Direct frozen dependencies: F17, F18, F19, F20, F21, F25, F26
 proof_shape: meanFidelity_pair: bind-only; consumers: result
-  Direct frozen dependencies: F12, F1, F8, F15, F13, F3, F11, F7, F14, F10, F22
+  Direct frozen dependencies: F12, F8, F15, F13, F3, F11, F7, F14, F10, F22, F24, F25, F26
 proof_shape: trace_outer_re: bind-only; consumers: trace_L_gram_bound
   Direct frozen dependencies: F2
 proof_shape: trace_L_outer: bind-only; consumers: trace_L_gram_bound
@@ -141,17 +141,19 @@ proof_shape: trace_L_outer: bind-only; consumers: trace_L_gram_bound
 proof_shape: trace_L_gram_bound: bind-only; consumers: result
   Direct frozen dependencies: F2, F16
 proof_shape: result: bind-only; consumers: settling result
-  Direct frozen dependencies: F4, F12, F5, F9, F1, F6, F8, F15, F2, F13, F3, F11, F7, F14, F10, F16, F17, F18, F19, F20, F21, F22
+  Direct frozen dependencies: F4, F12, F5, F9, F6, F8, F15, F2, F13, F3, F11, F7, F14, F10, F16,
+    F17, F18, F19, F20, F21, F22, F23, F24, F25, F26
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/31047
 -/
 
 import D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue
+import D5.S3.Quantum.FixedPointProjection
 import D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
+import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
 import D5.S3.Quantum.Information.HedgingMajorityThreshold
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
-import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth
 import D5.S3.Weil.ProjectiveRayleigh.ScaledComplexQuadraticRowBound
 import D5.S3.Quantum.Foundation.FiniteStateChannel
@@ -196,11 +198,21 @@ private theorem sign_flip {n : ℕ} (i j : Fin n) (x : Fin n → Fin 2) :
 
 private theorem sum_flip_zero {n : ℕ} (i : Fin n) (f : (Fin n → Fin 2) → ℂ)
     (hf : ∀ x, f ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _)) x) = -f x) : ∑ x, f x = 0 := by
-  have hs : ∑ x, f x = -(∑ x, f x) := by
-    calc
-      _ = ∑ x, f ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _)) x) := (Equiv.sum_comp ((Equiv.piCongrRight (fun j => if j = i then finRotate 2 else Equiv.refl _))) f).symm
-      _ = _ := by simp_rw [hf]; rw [Finset.sum_neg_distrib]
-  linear_combination hs / 2
+  let e := Equiv.piCongrRight (fun j : Fin n => if j = i then finRotate 2 else Equiv.refl _)
+  refine Finset.sum_ninvolution e (fun x => by rw [hf x, add_neg_cancel]) ?_
+    (fun _ => Finset.mem_univ _) ?_
+  · intro x hfx hfix
+    apply hfx
+    have hx := hf x
+    change f (e x) = -f x at hx
+    rw [hfix] at hx
+    exact CharZero.eq_neg_self_iff.mp hx
+  · intro x
+    funext j
+    by_cases h : j = i
+    · simp only [e, Equiv.piCongrRight_apply, Pi.map_apply, if_pos h, finRotate_apply]
+      rw [add_assoc, show (1 : Fin 2) + 1 = 0 by decide, add_zero]
+    · simp only [e, Equiv.piCongrRight_apply, Pi.map_apply, if_neg h, Equiv.refl_apply]
 
 private theorem moment_two {n : ℕ} (a b : Fin n) :
     (∑ x : Fin n → Fin 2, complexSign ((x a).val : ZMod 2) * complexSign ((x b).val : ZMod 2)) =
@@ -435,26 +447,29 @@ end D5.S3.Quantum.QuantumChannels.AmiriArrazolaHiddenMatchingCloningBound
 
 namespace D5.S3.Quantum.QuantumChannels.AmiriArrazolaHiddenMatchingCloningBound
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
-open scoped BigOperators Matrix CStarAlgebra ComplexOrder MatrixOrder
+open scoped BigOperators Matrix CStarAlgebra ComplexOrder MatrixOrder Kronecker
 open Matrix
 open D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation (matrixAction inputFirstChoi)
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 noncomputable section
 
-private theorem channelMap_trace {a b : Type*} [Fintype a] [DecidableEq a]
-    [Fintype b] [DecidableEq b] (Ψ : QuantumChannel a b) (M : Matrix a a ℂ) :
-    Matrix.trace ((matrixAction Ψ.toCompletelyPositiveMap) M) = Matrix.trace M :=
-  Ψ.trace_preserving (CStarMatrix.ofMatrix M)
-
 private theorem choi_trace (n : ℕ) (Ψ : QuantumChannel (Fin n) (Fin n × Fin n)) :
     Matrix.trace ((inputFirstChoi (matrixAction Ψ.toCompletelyPositiveMap))) = n := by
+  let N := matrixAction Ψ.toCompletelyPositiveMap
+  let J := inputFirstChoi N
+  have hswap : J.submatrix Prod.swap Prod.swap = MatrixMap.choi_matrix N := rfl
+  have h := D5.S3.Quantum.FixedPointProjection.Choi.fromBipartitePairing J
+    (1 : Matrix (Fin n) (Fin n) ℂ) (1 : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ)
+  change trace (MatrixMap.of_choi_matrix (J.submatrix Prod.swap Prod.swap) 1 * 1) =
+    trace (((1 : Matrix (Fin n) (Fin n) ℂ)ᵀ ⊗ₖ
+      (1 : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ)) * J) at h
+  rw [hswap, MatrixMap.choi_map_inv, mul_one, Matrix.transpose_one,
+    Matrix.one_kronecker_one, one_mul] at h
   calc
-    _ = ∑ i, Matrix.trace ((matrixAction Ψ.toCompletelyPositiveMap) (Matrix.single i i 1)) := by
-      simp only [Matrix.trace, Matrix.diag_apply, inputFirstChoi, Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.prodComm_symm, Equiv.prodComm_apply, Prod.swap,
-        MatrixMap.choi_matrix, Fintype.sum_prod_type]
-    _ = ∑ i : Fin n, Matrix.trace (Matrix.single i i (1 : ℂ)) := by
-      simp_rw [channelMap_trace]
+    _ = trace (N 1) := h.symm
+    _ = trace (1 : Matrix (Fin n) (Fin n) ℂ) :=
+      Ψ.trace_preserving (CStarMatrix.ofMatrix 1)
     _ = _ := by simp
 
 /-- Input-first order is the explicit swap of the canonical output-first Choi owner. -/
@@ -526,20 +541,8 @@ private theorem choi_tensor_pair {a : ℕ} {B : Type*} [Fintype B]
 private theorem trace_right_pair {A B : Type*} [Fintype A] [Fintype B]
     [DecidableEq A] [DecidableEq B] (P : Matrix A A ℂ)
     (O : Matrix (A × B) (A × B) ℂ) :
-    trace ((P ⊗ₖ (1 : Matrix B B ℂ)) * O) = trace (P * partialTraceRight O) := by
-  let e := Equiv.prodComm B A
-  have h := D5.S3.Quantum.Information.HedgingMajorityThreshold.trace_retained
-    (O.submatrix e e) P
-  have hprod : ((1 : Matrix B B ℂ) ⊗ₖ P) =
-      (P ⊗ₖ (1 : Matrix B B ℂ)).submatrix e e := by
-    ext p q
-    simp only [Matrix.submatrix_apply, kroneckerMap_apply, e, Equiv.prodComm_apply, Prod.swap]
-    ring
-  rw [hprod, Matrix.submatrix_mul_equiv] at h
-  have htr : trace (((P ⊗ₖ (1 : Matrix B B ℂ)) * O).submatrix e e) =
-      trace ((P ⊗ₖ (1 : Matrix B B ℂ)) * O) :=
-    Matrix.trace_submatrix ((P ⊗ₖ (1 : Matrix B B ℂ)) * O) e
-  exact htr.symm.trans h
+    trace ((P ⊗ₖ (1 : Matrix B B ℂ)) * O) = trace (P * partialTraceRight O) :=
+  D5.S3.Quantum.FixedPointProjection.Marginal.traceLocalLeft O P
 
 
 private theorem trace_left_pair {A B : Type*} [Fintype A] [Fintype B]
@@ -559,6 +562,7 @@ open scoped BigOperators Kronecker ComplexConjugate
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
+open D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging (avg avg_univ)
 noncomputable section
 
 private def perf (n : ℕ) (x : (Fin n → Fin 2)) : Matrix ((Fin n × Fin n × Fin n)) ((Fin n × Fin n × Fin n)) ℂ :=
@@ -567,7 +571,7 @@ private def perf (n : ℕ) (x : (Fin n → Fin 2)) : Matrix ((Fin n × Fin n × 
       (CStarMatrix.ofMatrix.symm (rho n x))ᵀ).submatrix Prod.swap Prod.swap
 
 private def performance (n : ℕ) : Matrix ((Fin n × Fin n × Fin n)) ((Fin n × Fin n × Fin n)) ℂ :=
-  (((2 : ℂ)^n)⁻¹ / 2) • ∑ x : (Fin n → Fin 2), perf n x
+  (2 : ℂ)⁻¹ • avg n Finset.univ (perf n) (fun _ => 0)
 
 private theorem phi_outer_entry (n : ℕ) (x : (Fin n → Fin 2)) (i j : Fin n) :
     phi n x i * star (phi n x j) = (n : ℂ)⁻¹ * complexSign ((x i).val : ZMod 2) * complexSign ((x j).val : ZMod 2) := by
@@ -632,8 +636,9 @@ private theorem performance_eq_L (n : ℕ) (hn : 2 ≤ n) :
     performance n = (1 / (2 * (n : ℂ)^2)) • (Matrix.of (fun p q => (L n p q : ℂ))) := by
   have hpow : (2 : ℂ)^n ≠ 0 := pow_ne_zero _ (by norm_num)
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
+  rw [performance, avg_univ, smul_smul, mul_comm (2 : ℂ)⁻¹, ← div_eq_mul_inv]
   ext p q
-  simp only [performance, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul, Matrix.sum_apply,
+  simp only [Matrix.of_apply, Matrix.smul_apply, smul_eq_mul, Matrix.sum_apply,
     perf_entry n, ← Finset.mul_sum, Finset.sum_add_distrib]
   by_cases hy : p.2.1 = q.2.1 <;> by_cases hz : p.2.2 = q.2.2 <;>
     simp only [hy, hz, if_true, if_false, Finset.sum_const_zero, add_zero, zero_add,
@@ -649,7 +654,8 @@ private theorem meanFidelity_pair (n : ℕ) (Ψ : QuantumChannel (Fin n) (Fin n 
   have hc : ((2 : ℂ)^n)⁻¹ / 2 = ((((2 : ℝ)^n)⁻¹ / 2 : ℝ) : ℂ) := by
     simp only [Complex.ofReal_div, Complex.ofReal_inv, Complex.ofReal_pow,
       Complex.ofReal_ofNat]
-  simp only [performance, Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_sum,
+  rw [performance, avg_univ, smul_smul, mul_comm (2 : ℂ)⁻¹, ← div_eq_mul_inv]
+  simp only [Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_sum,
     Matrix.trace_sum, perf_pair, hc, smul_eq_mul, Complex.mul_re, Complex.ofReal_re,
     Complex.ofReal_im, zero_mul, sub_zero, Complex.re_sum, Complex.add_re]
   unfold meanFidelity
@@ -680,12 +686,13 @@ private theorem trace_outer_re {ι : Type*} [Fintype ι] (z : ι → ℂ) :
 private theorem trace_L_outer (n : ℕ) (z : (Fin n × Fin n × Fin n) → ℂ) :
     Matrix.trace ((Matrix.of (fun p q => (L n p q : ℂ))) * Matrix.vecMulVec z (star z)) =
       ∑ p, ∑ q, star (z p) * z q * (L n p q : ℂ) := by
-  simp only [Matrix.of_apply, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.vecMulVec,
-    Pi.star_apply]
+  rw [Matrix.mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_comm,
+    Matrix.dot_mulVec_eq_sum_sum, Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro p _
   apply Finset.sum_congr rfl
   intro q _
+  simp only [Matrix.of_apply, Pi.star_apply]
   ring
 
 private theorem trace_L_gram_bound (n : ℕ) (hn : 2 ≤ n) {κ : Type*} [Fintype κ]
