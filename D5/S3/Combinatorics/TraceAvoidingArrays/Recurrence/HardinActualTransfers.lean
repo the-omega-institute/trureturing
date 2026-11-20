@@ -120,28 +120,36 @@ theorem column_count (h m : ℕ) :
       ∑ p : Column h, ((C h)^m).mulVec (1 : Column h → ℤ) p := by
   simp only [column_power, graph_count, Nat.cast_sum]
 
-/-- Exact solution of the continuation powers under a colour-class quotient.
-Every fibre contributes exactly its row count, including for a state with no successors. -/
-theorem powerOnes_of_rows {A B : Type*} [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
-    (T : Matrix A A ℤ) (Q : Matrix B B ℤ) (cls : A → B)
-    (rows : ∀ a b, (∑ x : A, if cls x = b then T a x else 0) = Q (cls a) b)
-    (m : ℕ) (a : A) :
-    (T ^ m).mulVec (1 : A → ℤ) a = (Q ^ m).mulVec (1 : B → ℤ) (cls a) := by
-  induction m generalizing a with
-  | zero => simp
-  | succ m ih =>
-    rw [pow_succ', ← Matrix.mulVec_mulVec, pow_succ', ← Matrix.mulVec_mulVec]
-    change (∑ x, T a x * (T ^ m).mulVec (1 : A → ℤ) x) =
-      ∑ y, Q (cls a) y * (Q ^ m).mulVec (1 : B → ℤ) y
-    simp only [ih, ← rows, Finset.sum_mul]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro x _
-    simp only [ite_mul, zero_mul]
-    simp
+/-- Matching row totals in each fibre is equivalent to transport of all quotient
+power actions on pulled-back vectors. For the reverse direction, one step on
+the indicator of each class suffices. -/
+theorem row_fibres_iff_pow_mulVec {A B : Type*}
+    [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
+    (T : Matrix A A ℤ) (Q : Matrix B B ℤ) (cls : A → B) :
+    (∀ a b, (∑ x : A, if cls x = b then T a x else 0) = Q (cls a) b) ↔
+      ∀ (v : B → ℤ) (m : ℕ) (a : A),
+        (T ^ m).mulVec (v ∘ cls) a = (Q ^ m).mulVec v (cls a) := by
+  constructor
+  · intro rows v m
+    induction m with
+    | zero => simp
+    | succ m ih =>
+      intro a
+      rw [pow_succ', ← Matrix.mulVec_mulVec, pow_succ', ← Matrix.mulVec_mulVec]
+      change (∑ x, T a x * (T ^ m).mulVec (v ∘ cls) x) =
+        ∑ y, Q (cls a) y * (Q ^ m).mulVec v y
+      simp only [ih, ← rows, Finset.sum_mul]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro x _
+      simp only [ite_mul, zero_mul]
+      simp
+  · intro powers a b
+    let indicator (i : B) : ℤ := if i = b then 1 else 0
+    simpa [indicator, Matrix.mulVec, dotProduct, mul_ite] using powers indicator 1 a
 
-/-- Source lag coefficients in order from one to the full degree. The row shift
-is one, and the proper-word shift is zero. -/
+/-- Source lag coefficients in order from one to the full degree. The manuscript
+uses shift one for columns and shift zero for proper words. -/
 def IsLagRelation {A : Type*} [Fintype A] [DecidableEq A]
     (T : Matrix A A ℤ) (b : ℕ) {d : ℕ} (c : Fin d → ℤ) : Prop :=
   (T ^ (b + d)).mulVec (1 : A → ℤ) =

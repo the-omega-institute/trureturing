@@ -51,7 +51,11 @@ private theorem quotientPowers {A : Type} [Fintype A] [DecidableEq A] {N K : ℕ
     (m : ℕ) (a : A) :
     (T ^ m).mulVec (1 : A → ℤ) a =
       ((quotientTransfer rows) ^ m).mulVec (1 : Fin K → ℤ) labels[(encode a).val] := by
-  apply powerOnes_of_rows T (quotientTransfer rows) (fun a => labels[(encode a).val]) _ m a
+  let cls (a : A) := labels[(encode a).val]
+  suffices hrows : ∀ a j, (∑ x : A, if cls x = j then T a x else 0) =
+      quotientTransfer rows (cls a) j by
+    simpa [cls] using (row_fibres_iff_pow_mulVec T (quotientTransfer rows) cls).mp
+      hrows (1 : Fin K → ℤ) m a
   intro a j
   calc
     _ = T.mulVec (fun q => if labels[(encode q).val] = j then 1 else 0) a := by

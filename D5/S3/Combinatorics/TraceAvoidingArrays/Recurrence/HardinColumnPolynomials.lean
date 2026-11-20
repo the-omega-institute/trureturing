@@ -41,7 +41,8 @@ private theorem column_pullback {A B : Type} [Fintype A] [Fintype B] [DecidableE
     unfold C
     simp only [agree]
     split_ifs <;> simp_all
-  simpa using powerOnes_of_rows (C h) Q (cls ∘ e.symm) hrows m (e a)
+  simpa using (row_fibres_iff_pow_mulVec (C h) Q (cls ∘ e.symm)).mp
+    hrows (1 : B → ℤ) m (e a)
 
 private theorem of_ascending {A : Type} [Fintype A] [DecidableEq A]
     (T : Matrix A A ℤ) (b : ℕ) {d : ℕ} (c : Fin d → ℤ)
