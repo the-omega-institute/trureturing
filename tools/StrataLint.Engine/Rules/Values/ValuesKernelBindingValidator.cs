@@ -14,10 +14,27 @@ internal static partial class ValuesKernelBindingValidator
     internal static ImmutableArray<RuleFinding> Validate(string text, LeanAxiomReport report)
         => Validate(text, report, changes: null);
 
+    internal static IEnumerable<RepoPath> ModulePaths(string text)
+    {
+        ImmutableArray<ValueBinding> bindings;
+        try
+        {
+            bindings = Parse(text);
+        }
+        catch (FormatException)
+        {
+            // The current values rule reports malformed binding data even with no Lean inputs.
+            return [];
+        }
+        return bindings.Select(binding => Gid.TryParse(binding.LeanGid, out var gid) ? gid.Path : null)
+            .OfType<RepoPath>().Distinct();
+    }
+
     internal static ImmutableArray<RuleFinding> Validate(
         string text,
         LeanAxiomReport report,
-        RawChangeSet? changes)
+        RawChangeSet? changes,
+        RepositorySnapshot? current = null)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         ImmutableArray<ValueBinding> bindings;
@@ -38,7 +55,7 @@ internal static partial class ValuesKernelBindingValidator
         foreach (var binding in bindings.Where(binding =>
                      validateAll || BindingInputChanged(binding, report, changes!)))
         {
-            Validate(binding, report, findings);
+            Validate(binding, report, current, findings);
         }
 
         return findings.ToImmutable();
@@ -73,6 +90,7 @@ internal static partial class ValuesKernelBindingValidator
     private static void Validate(
         ValueBinding binding,
         LeanAxiomReport report,
+        RepositorySnapshot? current,
         ImmutableArray<RuleFinding>.Builder findings)
     {
         if (!Gid.TryParse(binding.LeanGid, out var gid)
@@ -84,6 +102,12 @@ internal static partial class ValuesKernelBindingValidator
 
         if (!report.Files.TryGetValue(gid.Path, out var module))
         {
+            if (report.IsScoped && current is not null && current.Files.ContainsKey(gid.Path))
+            {
+                if (!Sha256Pattern().IsMatch(binding.StatementSha256))
+                    findings.Add(Finding(binding, "statement SHA-256 must be 64 lowercase hexadecimal characters"));
+                return;
+            }
             findings.Add(Finding(binding, $"GID matched 0 declarations; candidate report has no module {gid.Path.Value}"));
             return;
         }

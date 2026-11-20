@@ -48,39 +48,39 @@ internal static class LeanImportClosure
     internal static bool ImportsExternalModule(
         LeanAxiomReport report,
         string startModule,
+        string targetModule) =>
+        ImportsExternalModule(ImportGraph(report), startModule, targetModule);
+
+    internal static Dictionary<string, ImmutableArray<string>> ImportGraph(LeanAxiomReport report) =>
+        report.Files.ToDictionary(static item => ModuleName(item.Key),
+            static item => item.Value.Imports, StringComparer.Ordinal);
+
+    internal static bool ImportsExternalModule(
+        IReadOnlyDictionary<string, ImmutableArray<string>> imports,
+        string startModule,
         string targetModule)
     {
-        ArgumentNullException.ThrowIfNull(report);
         ArgumentException.ThrowIfNullOrWhiteSpace(startModule);
         ArgumentException.ThrowIfNullOrWhiteSpace(targetModule);
-
-        var reportsByModule = report.Files.ToDictionary(
-            static item => ModuleName(item.Key),
-            static item => item.Value,
-            StringComparer.Ordinal);
-        if (!reportsByModule.ContainsKey(startModule))
-        {
-            return false;
-        }
 
         var pending = new Stack<string>();
         var visited = new HashSet<string>(StringComparer.Ordinal);
         pending.Push(startModule);
         while (pending.TryPop(out var module))
         {
-            if (!visited.Add(module) || !reportsByModule.TryGetValue(module, out var file))
+            if (!visited.Add(module) || !imports.TryGetValue(module, out var dependencies))
             {
                 continue;
             }
 
-            foreach (var import in file.Imports)
+            foreach (var import in dependencies)
             {
                 if (string.Equals(import, targetModule, StringComparison.Ordinal))
                 {
                     return true;
                 }
 
-                if (reportsByModule.ContainsKey(import) && !visited.Contains(import))
+                if (imports.ContainsKey(import) && !visited.Contains(import))
                 {
                     pending.Push(import);
                 }
