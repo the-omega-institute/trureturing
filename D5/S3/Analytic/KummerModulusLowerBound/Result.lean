@@ -42,7 +42,8 @@ Per declaration: name | proof_shape | consumers | frozen deps / W exposure.
   witness_zero | bind-only | result | C, W
   witness_pos | bind-only | result | R, C, W
   result | bind-only | settling result | R, C, W
-The only public theorem is the designated result; all helpers have consumers.
+Public theorems: result, and complex_closed, real_closed, witness_zero and witness_pos,
+which state the closed form and the witness values; all declarations have consumers.
 The computational utility is certified-instance with basis refutes.
 -/
 
@@ -104,7 +105,7 @@ private lemma second_exp_hasSum (z : ℂ) :
     ring
   · ring
 
-private lemma complex_closed (z : ℂ) :
+theorem complex_closed (z : ℂ) :
     kummerC (1/2) (-3/2) z = Complex.exp z * (1 - 4*z/3 + 4*z^2/3) := by
   have h0 : HasSum (fun n : ℕ => z^n / (n.factorial:ℂ)) (Complex.exp z) := by
     simpa only [Complex.exp_eq_exp_ℂ] using NormedSpace.expSeries_div_hasSum_exp z
@@ -119,21 +120,21 @@ private lemma complex_closed (z : ℂ) :
     ring
   · ring
 
-private lemma real_closed (x : ℝ) :
+theorem real_closed (x : ℝ) :
     kummer (1/2) (-3/2) x = Real.exp x * (1 - 4*x/3 + 4*x^2/3) := by
   apply Complex.ofReal_injective
   push_cast
   rw [kummer, Complex.ofReal_tsum]
   simpa only [kummerC, Complex.ofReal_mul, Complex.ofReal_pow, Complex.ofReal_exp] using complex_closed (x:ℂ)
 
-private lemma witness_zero :
+theorem witness_zero :
     kummerC (1/2) (-3/2) ((1/2:ℂ) + (Real.sqrt 2 / 2 : ℝ) * Complex.I) = 0 := by
   rw [complex_closed]
   suffices 1 - 4*((1/2:ℂ)+(Real.sqrt 2/2:ℝ)*Complex.I)/3 +
       4*((1/2:ℂ)+(Real.sqrt 2/2:ℝ)*Complex.I)^2/3 = 0 by rw [this, mul_zero]
   apply Complex.ext <;> simp [pow_two] <;> nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)]
 
-private lemma witness_pos : 0 < kummer (1/2) (-3/2) (1/2) := by
+theorem witness_pos : 0 < kummer (1/2) (-3/2) (1/2) := by
   rw [real_closed]
   norm_num
   positivity
