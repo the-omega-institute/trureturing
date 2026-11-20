@@ -32,7 +32,7 @@ def run (choices : P → S → Bool → V) (next : P → S → V → S)
     let value := choices p state (f p b)
     ((p, b), state, value) :: run choices next f slots (next p state value)
 
-private theorem replay_iff (candidate reference : P → S → Bool → V)
+theorem replay_iff (candidate reference : P → S → Bool → V)
     (next : P → S → V → S) (table ref : P → Equiv.Perm Bool)
     (slots : Schedule P) (initial : S) :
     run candidate next table slots initial = run reference next ref slots initial ↔
