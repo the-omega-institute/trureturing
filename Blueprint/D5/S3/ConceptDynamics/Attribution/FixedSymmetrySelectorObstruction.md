@@ -18,6 +18,10 @@ A single group element and state are quantified together. The element fixes that
 
 Any everywhere-admissible equivariant selector would choose an action in that set. Equivariance at the fixed state would force the chosen action to be fixed by the same element, contradicting the public premise.
 
+For a binary test, take the group of permutations of the two labels. It acts on a pair of weights by permuting its entries and on the two admissible actions by permuting their labels. On any swap-invariant domain of normalized weight pairs, a deterministic equivariant selector exists exactly when the equal-weight pair is absent. If it is present, the swap fixes that input and moves both outputs, giving the theorem's premise. On the unequal-weight domain, the unique larger entry selects a label that is carried along by every permutation.
+
+The equal-weight input occurs for the pure qubit (|0> + |1>) / sqrt(2) tested in the computational basis. Its squared amplitudes are both 1/2. The Pauli X operation fixes the preparation and exchanges the two test rays. A probability rule that assigns each label its weight is equivariant as a distribution. The fixed-symmetry theorem concerns deterministic selection from the stated input.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Attribution/FixedSymmetrySelectorObstruction.no_equivariant_selector_of_common_fixed_symmetry`
