@@ -464,12 +464,10 @@ theorem orderedMarginal_purity_drop_lower_bound {ι : Type*} [LinearOrder ι] [F
   refine (mul_le_mul_of_nonneg_left hpivot
     (mul_nonneg (sq_nonneg _) (Finset.prod_nonneg fun _ _ => sq_nonneg _))).trans ?_
   convert hdrop using 2
-  apply Finset.sum_congr rfl
-  intro w _
-  by_cases hw : C *ᵥ w = target
-  · simp [C, target] at hw ⊢
-    simp [hw]
-  · simp [C, target] at hw ⊢
-    simp [hw]
+  · rfl
+  · apply Finset.sum_congr rfl
+    intro w _
+    dsimp only [C, target]
+    split <;> simp_all
 
 end D5.S3.Quantum.Fermionic.WeightedSlaterPurityDropBound
