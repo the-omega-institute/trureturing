@@ -66,7 +66,7 @@ private theorem forwardBridge : (type_of% (@avoidance_implies_adapted)) ↔
   simp [forwardArena, actual, realize]
 
 private theorem iffBridge : (type_of% (@conjecture410)) ↔ iffArena.Law actual := by
-  simp [iffArena, actual, realize]
+  simp [claim, iffArena, actual, realize]
 
 noncomputable def forwardFamily :
     D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration
@@ -140,7 +140,10 @@ noncomputable def conjecture410Registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Words.Permutations.FriedenAdaptedWords
-    definition := none
+    definition := some {
+      owner := `D5.S1.Words.Permutations.FriedenAdaptedWords
+      name := `D5.S1.Words.Permutations.Frieden.claim
+      path := #[] }
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg"]

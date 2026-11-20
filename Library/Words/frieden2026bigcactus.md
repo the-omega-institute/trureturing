@@ -27,10 +27,14 @@ original time order with each generator numbered by position within the
 selected order. Its forbidden set is
 $X=\{123212,321232,212321,232123\}$.
 
-Theorem 4.9 gives avoidance for knitting words. Conjecture 4.10 asks
-whether a reduced reversal word is $X$-avoiding exactly when it is adapted
-to an orientation of $A_{n-1}$. The formalized equivalence uses a
-four-wire obstruction for sufficiency and the direction changes of
-individual wires for necessity.
+Theorem 4.9 gives avoidance for knitting words. The first sentence of
+Conjecture 4.10 (p. 15) states:
 
-[Pinned source](https://arxiv.org/html/2610.24842v1#S4.SS4)
+> A reduced word for $w_0 \in \mathfrak{S}_n$ is $X$-avoiding if and only if it is adapted to an orientation of $A_{n-1}$.
+
+The Lean result proves this avoidance formulation using a four-wire
+obstruction for sufficiency and the direction changes of individual
+wires for necessity. The paper also gives a numerical formulation via
+Meng's identity.
+
+[Pinned source](https://arxiv.org/html/2610.24842v1#S4.Thmtheorem10)

@@ -6,6 +6,17 @@
    utility: none
    digest: Four-wire avoidance characterizes source-flip adaptedness for reduced reversal words. -/
 
+/-
+admission_basis: open-problem-resolution (#32071, Frieden–Pylyavskyy–Rybnikov Conjecture 4.10).
+avoidance_implies_adapted: proof_shape: content. The live escape_witness is forcedQuartet,
+which extracts a literal forbidden four-wire restriction from a failed edge alternation.
+conjecture410: proof_shape: content after expanding the two same-delivery implications.
+The outer Iff constructor assembles them. A live escape_witness in the reverse direction is
+restricted_directions_sublist, which embeds each selected wire's restricted movements into
+its full direction record.
+Direct frozen dependencies: none. FriedenSortingNetwork is part of the same delivery.
+-/
+
 import Mathlib.Data.Finset.Sort
 import Mathlib.Order.Interval.Finset.Fin
 import D5.S1.Words.Permutations.FriedenSortingNetwork
@@ -673,9 +684,12 @@ private theorem adapted_implies_avoidance (n : Nat) (w : Word n)
   rw [hr, ← restrict, hd] at hsub
   exact adapted_no_double_turn w hw had a d hsub
 
-/-- Conjecture 4.10 of Frieden, Pylyavskyy and Rybnikov. -/
-theorem conjecture410 (n : Nat) (w : Word n) (hw : ReducedReversal w) :
-    AvoidsX w ↔ Adapted w :=
-  ⟨avoidance_implies_adapted n w hw, adapted_implies_avoidance n w hw⟩
+/-- The avoidance and adaptedness formulation of Frieden, Pylyavskyy and Rybnikov's
+Conjecture 4.10. -/
+def claim : Prop :=
+  ∀ (n : Nat) (w : Word n), ReducedReversal w → (AvoidsX w ↔ Adapted w)
+
+theorem conjecture410 : claim :=
+  fun n w hw => ⟨avoidance_implies_adapted n w hw, adapted_implies_avoidance n w hw⟩
 
 end D5.S1.Words.Permutations.Frieden

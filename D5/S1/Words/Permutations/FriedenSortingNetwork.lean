@@ -6,6 +6,12 @@
    utility: none
    digest: Chronological restriction of a reduced reversal word and its four-wire obstruction. -/
 
+/- admission_basis: escape-witness.
+   quartet_left: proof_shape: content. Its live escape_witness increasing_trace orders
+   the labels of each crossing of a reduced reversal and constrains the retained word.
+   left_ne_right: proof_shape: bind-only. Consumers include rank_step_move_right and mirror_step.
+   Direct frozen dependencies: none. -/
+
 import Mathlib.Data.Fin.Rev
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Fintype.Card
