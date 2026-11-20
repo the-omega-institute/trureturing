@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Schur orthogonality of matrix coefficients of irreducible representations. -/
+   digest: Schur orthogonality of matrix coefficients for a finite left-invariant measure on a compact group. -/
 
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.LinearAlgebra.Trace
@@ -18,20 +18,21 @@ import Mathlib.Topology.Algebra.Module.FiniteDimension
 /-!
 # Schur orthogonality of matrix coefficients on compact groups
 
-Let `G` be a compact topological group with a left Haar measure `μ`, let `ρ` be a continuous
-irreducible representation of `G` on a finite-dimensional complex normed space `V`, and let `σ` be
-an irreducible representation of `G` on a complex vector space `W`. For linear functionals `φ` on
-`V` and `ψ` on `W` such that every coefficient `g ↦ ψ (σ g w)` is continuous, `v : V` and `w : W`:
+Let `G` be a compact topological group with a finite left-invariant measure `μ`, let `ρ` be a
+continuous irreducible representation of `G` on a finite-dimensional complex normed space `V`, and
+let `σ` be an irreducible representation of `G` on a complex vector space `W`. For linear
+functionals `φ` on `V` and `ψ` on `W` such that every coefficient `g ↦ ψ (σ g w)` is continuous,
+`v : V` and `w : W`:
 
 * if `ρ` and `σ` are not equivalent, then `∫ g, φ (ρ g v) * ψ (σ g⁻¹ w) ∂μ = 0`;
-* if `μ` is a probability measure, then
-  `∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ = φ w * ψ v / dim V` for linear functionals `φ`, `ψ` on `V`.
+* for linear functionals `φ`, `ψ` on `V`,
+  `∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ = μ(G) * (φ w * ψ v) / dim V`.
 
 For fixed `v` and `ψ` the map `T x = ∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ` is linear and, by left
 invariance of `μ`, intertwines `σ` with `ρ`; applying `φ` to `T w` gives the integral. Schur's
 lemma makes `T` zero for inequivalent representations and a scalar `c` for `σ = ρ`. In a basis
 `b` of `V`, the trace of `T` is the integral of `∑ i, b.coord i (ψ (ρ g⁻¹ (b i)) • ρ g v)`,
-which is `ψ (ρ g⁻¹ (ρ g v)) = ψ v`; hence `dim V * c = ψ v`.
+which is `ψ (ρ g⁻¹ (ρ g v)) = ψ v`; hence `dim V * c = μ(G) * ψ v`.
 -/
 
 open MeasureTheory
@@ -39,11 +40,11 @@ open MeasureTheory
 namespace D5.S3.Quantum.Analysis.CompactGroups.SchurOrthogonality
 
 variable {G V W : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
-  [MeasurableSpace G] [BorelSpace G] (μ : Measure G) [μ.IsHaarMeasure]
+  [MeasurableSpace G] [BorelSpace G] (μ : Measure G) [μ.IsMulLeftInvariant] [IsFiniteMeasure μ]
   [NormedAddCommGroup V] [NormedSpace ℂ V] [FiniteDimensional ℂ V]
   [AddCommGroup W] [Module ℂ W]
 
-omit [IsTopologicalGroup G] [FiniteDimensional ℂ V] in
+omit [IsTopologicalGroup G] [FiniteDimensional ℂ V] [μ.IsMulLeftInvariant] in
 /-- A continuous scalar function times a continuous orbit `g ↦ ρ g v` is integrable on the
 compact group. -/
 private lemma integrable_smul (ρ : Representation ℂ G V) (hρc : ∀ v, Continuous fun g => ρ g v)
@@ -81,7 +82,7 @@ private lemma exists_intertwiningMap (ρ : Representation ℂ G V) (σ : Represe
     _ = ρ h (∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ) :=
         ContinuousLinearMap.integral_comp_comm _ (hint x)
 
-omit [IsTopologicalGroup G] in
+omit [IsTopologicalGroup G] [μ.IsMulLeftInvariant] in
 /-- Applying a linear functional `φ` to `∫ g, ψ (σ g⁻¹ x) • ρ g v ∂μ` gives the integral of the
 product of coefficients. -/
 private lemma integral_mul_eq_apply (ρ : Representation ℂ G V) (σ : Representation ℂ G W)
@@ -111,12 +112,13 @@ theorem integral_dual_mul_dual_inv_eq_zero (ρ : Representation ℂ G V) (σ : R
   rw [integral_mul_eq_apply μ ρ σ hρc ψ hψ φ v w, ← hT, hT0,
     Representation.IntertwiningMap.coe_zero, Pi.zero_apply, map_zero]
 
-/-- Schur orthogonality for one representation: for the Haar probability measure,
-`∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ = φ w * ψ v / dim V`. -/
-theorem integral_dual_mul_dual_inv_self [IsProbabilityMeasure μ] (ρ : Representation ℂ G V)
+/-- Schur orthogonality for one representation: for a finite left-invariant measure `μ`,
+`∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ = μ(G) * (φ w * ψ v) / dim V`. -/
+theorem integral_dual_mul_dual_inv_self (ρ : Representation ℂ G V)
     [ρ.IsIrreducible] (hρc : ∀ v, Continuous fun g => ρ g v)
     (φ ψ : Module.Dual ℂ V) (v w : V) :
-    ∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ = φ w * ψ v / Module.finrank ℂ V := by
+    ∫ g, φ (ρ g v) * ψ (ρ g⁻¹ w) ∂μ =
+      (μ.real Set.univ : ℂ) * (φ w * ψ v) / Module.finrank ℂ V := by
   have : CompleteSpace V := FiniteDimensional.complete ℂ V
   have hψ : ∀ x, Continuous fun g => ψ (ρ g⁻¹ x) := fun x =>
     (LinearMap.continuous_of_finiteDimensional ψ).comp ((hρc x).comp continuous_inv)
@@ -129,7 +131,7 @@ theorem integral_dual_mul_dual_inv_self [IsProbabilityMeasure μ] (ρ : Represen
     rfl
   have hlin : T.toLinearMap = c • LinearMap.id := LinearMap.ext fun x => hTc x
   let b := Module.finBasis ℂ V
-  have htr : (Module.finrank ℂ V : ℂ) * c = ψ v := by
+  have htr : (Module.finrank ℂ V : ℂ) * c = (μ.real Set.univ : ℂ) * ψ v := by
     calc (Module.finrank ℂ V : ℂ) * c = LinearMap.trace ℂ V T.toLinearMap := by
           rw [hlin, map_smul, LinearMap.trace_id, smul_eq_mul, mul_comm]
       _ = ∑ i, b.coord i (T (b i)) := by
@@ -155,10 +157,11 @@ theorem integral_dual_mul_dual_inv_self [IsProbabilityMeasure μ] (ρ : Represen
                 rw [map_smul, map_smul, map_smul, Module.Basis.coord_apply, smul_eq_mul,
                   smul_eq_mul, mul_comm]
             _ = ψ v := by rw [b.sum_repr, Representation.inv_self_apply]
-      _ = ψ v := by simp
+      _ = (μ.real Set.univ : ℂ) * ψ v := by rw [integral_const, Complex.real_smul]
   have : Nontrivial V := IsSimpleModule.nontrivial (MonoidAlgebra ℂ G) ρ.asModule
   have hd : (Module.finrank ℂ V : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Module.finrank_pos.ne'
-  rw [integral_mul_eq_apply μ ρ ρ hρc ψ hψ φ v w, ← hT, hTc, map_smul, smul_eq_mul, ← htr]
-  field_simp
+  rw [integral_mul_eq_apply μ ρ ρ hρc ψ hψ φ v w, ← hT, hTc, map_smul, smul_eq_mul,
+    eq_div_iff hd]
+  linear_combination φ w * htr
 
 end D5.S3.Quantum.Analysis.CompactGroups.SchurOrthogonality

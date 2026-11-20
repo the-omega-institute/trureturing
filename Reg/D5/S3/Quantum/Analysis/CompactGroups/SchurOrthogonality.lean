@@ -136,7 +136,8 @@ abbrev arenaZero : Arena where
   signature := signature.{u, v}
   Law r := ∀ {G : Type u} {V : Type v} {W : Type w} [iG : Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [CompactSpace G] [MeasurableSpace G] [BorelSpace G]
-    (μ : Measure G) [μ.IsHaarMeasure] [iV : NormedAddCommGroup V] [iS : NormedSpace ℂ V]
+    (μ : Measure G) [μ.IsMulLeftInvariant] [IsFiniteMeasure μ] [iV : NormedAddCommGroup V]
+    [iS : NormedSpace ℂ V]
     [FiniteDimensional ℂ V] [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ G V)
     (σ : Representation ℂ G W) [ρ.IsIrreducible] [σ.IsIrreducible],
     IsEmpty (ρ.Equiv σ) → (∀ v, Continuous fun g => ρ g v) →
@@ -191,16 +192,17 @@ abbrev arenaSelf : Arena where
   signature := signature.{u, v}
   Law r := ∀ {G : Type u} {V : Type v} [iG : Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [CompactSpace G] [MeasurableSpace G] [BorelSpace G]
-    (μ : Measure G) [μ.IsHaarMeasure] [iV : NormedAddCommGroup V] [iS : NormedSpace ℂ V]
-    [FiniteDimensional ℂ V] [IsProbabilityMeasure μ] (ρ : Representation ℂ G V)
+    (μ : Measure G) [μ.IsMulLeftInvariant] [IsFiniteMeasure μ] [iV : NormedAddCommGroup V]
+    [iS : NormedSpace ℂ V]
+    [FiniteDimensional ℂ V] (ρ : Representation ℂ G V)
     [ρ.IsIrreducible], (∀ v, Continuous fun g => ρ g v) →
       ∀ (φ ψ : Module.Dual ℂ V) (v w : V),
         ∫ g, r.readout () ⟨G, V, iG, iV, iS, ρ, φ, v⟩ g * ψ (ρ g⁻¹ w) ∂μ =
-          φ w * ψ v / Module.finrank ℂ V
+          (μ.real Set.univ : ℂ) * (φ w * ψ v) / Module.finrank ℂ V
 
 /-- With the indicator of the identity in place of the coefficient of the trivial representation
 and the zero functional for `φ`, the left side is the positive mass of the identity while the
-right side is `0`. -/
+right side is `0`, for a Haar measure on the two-element group. -/
 theorem rejected_self : ¬ arenaSelf.{u, v}.Law rejected := by
   intro h
   let _ := twoTop.{u}
@@ -211,15 +213,11 @@ theorem rejected_self : ¬ arenaSelf.{u, v}.Law rejected := by
   have : BorelSpace Two.{u} := ⟨rfl⟩
   have := line_finiteDimensional.{v}
   have := trivial_irreducible.{u, v}
-  have hp : IsProbabilityMeasure (Measure.haarMeasure (⊤ : TopologicalSpace.PositiveCompacts Two.{u})) :=
-    ⟨by simpa using Measure.haarMeasure_self (K₀ := (⊤ : TopologicalSpace.PositiveCompacts Two.{u}))⟩
-  have hz := h (G := Two.{u}) (V := Line.{v})
-    (Measure.haarMeasure (⊤ : TopologicalSpace.PositiveCompacts Two.{u}))
+  have hz := h (G := Two.{u}) (V := Line.{v}) (Measure.haar : Measure Two.{u})
     (Representation.trivial ℂ Two.{u} Line.{v}) (fun _ => continuous_of_discreteTopology)
     0 coord 1 1
-  apply integral_indicator_one_ne_zero
-    (Measure.haarMeasure (⊤ : TopologicalSpace.PositiveCompacts Two.{u}))
-  rw [LinearMap.zero_apply, zero_mul, zero_div] at hz
+  apply integral_indicator_one_ne_zero (Measure.haar : Measure Two.{u})
+  simp only [LinearMap.zero_apply, zero_mul, mul_zero, zero_div] at hz
   rw [← hz]
   congr 1
   funext g
@@ -270,13 +268,13 @@ def integral_dual_mul_dual_inv_eq_zero_registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.CompactGroups.SchurOrthogonality
     definition := none
-    coordinates := #[0, 1, 16, 22, 25]
+    coordinates := #[0, 1, 17, 23, 26]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "arg", "body", "fn", "arg"]
-      stateBinder := 27
+      stateBinder := 28
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
