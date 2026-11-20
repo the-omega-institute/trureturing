@@ -77,7 +77,7 @@ private lemma kl_two_prime {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) (a : ℕ) :
   rw [sigma_two]
   ring
 
-private lemma log_bounds {p : ℕ} (hp : 2 ≤ p) :
+lemma log_bounds {p : ℕ} (hp : 2 ≤ p) :
     1 / (p : ℝ) ≤ log ((p : ℝ) / (p - 1)) ∧
       log ((p : ℝ) / (p - 1)) ≤ 1 / ((p : ℝ) - 1) := by
   have hpR : (2 : ℝ) ≤ p := by exact_mod_cast hp
