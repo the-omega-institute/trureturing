@@ -21,7 +21,8 @@ vertices forces outward from both ends; an end vertex forces its unique neighbou
 vertex alone forces nothing.
 
 admission_basis: escape-witness. Escape witnesses: walk_hits with convex_of_connected (connected
-induced subgraphs of the path are intervals), forcing_interval and forcing_end (the forcing
+induced subgraphs of the path are intervals), interval_connected (intervals induce connected
+subgraphs), forcing_interval and forcing_end (the forcing
 chains), interior_black (an interior singleton stays alone), coeff_ge and coeff_one (the
 interval counts). -/
 

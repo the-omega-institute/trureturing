@@ -39,4 +39,6 @@ the connected forcing sets of ConnectedForcingCrossingRefutation (zero forcing s
 connected subgraph): z_c(P_n; 0) = 0, z_c(P_n; 1) = 2, and z_c(P_n; i) = n + 1 − i for every
 i ≥ 2, which is 0 for i > n. PathConnectedForcing.connected_forcing_iff characterizes the
 connected forcing sets of P_n, n ≥ 2: the intervals with at least two vertices and the two end
-vertices. An interior vertex alone forces nothing, which the source's count uses implicitly.
+vertices. The source's Theorem 7.2(6) states that either end of P_n, n ≥ 2, is a zero forcing set;
+that an interior vertex alone forces nothing is used in its count without a separate statement and
+is proved here. The coefficient z_c(P_n; 0) = 0 holds for every n.
