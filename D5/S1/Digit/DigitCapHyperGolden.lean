@@ -1,5 +1,64 @@
+/- GID: D5/S1/Digit/DigitCapHyperGolden
+   generality: I
+   mirror-B: D5/B/S1/Digit/DigitCapHyperGolden
+   mirror-E: none(waiver:no-numeric-experiment-declared)
+   anchors: []
+   utility: none
+   digest: The digit cap ell at radix ell has upper growth exponent log_ell φ, also with the n-1 index. -/
+
+/-
+admission_basis: escape-witness (the-omega-institute/trureturing-requests#309)
+escape_witness: upper (of two consecutive integers at most one is divisible by ell, so the pair
+  window satisfies x' <= x + y and single values y' <= x below ell ^ m, a Fibonacci envelope),
+  and qs_rec (along alternating last digits 0, 1 the pair window satisfies
+  v(k + 2) = v(k + 1) + v k exactly, through win_at_one and win_at_zero).
+proof_shape:
+  win, lifts, env, qs: private definitions; consumers: the lemmas below.
+  hyperExponent, claim: source definitions; consumer: result.
+  cap_iff, pred_mod: bind-only helpers (arithmetic); consumers: count_digit, upper.
+  count_digit: content (lowest-digit recursion for the cap ell via count_rec); consumers:
+    count_zero_digit, count_pos_digit, count_le_win.
+  win_one, win_two_zero, win_two, count_zero_digit, count_pos_digit, count_one_le, qs_pos,
+    win_two_pos: bind-only helpers; consumers: count_le_win, count_eq_parent, upper,
+    win_at_one, win_at_zero, qs_rec, qs_lower, ratio_upper, ratio_lower, result.
+  count_le_win, count_eq_parent: content; consumer: upper.
+  upper: content; consumer: count_upper.
+  env_bound: content; consumer: count_upper.
+  count_upper: content; consumer: ratio_upper.
+  qs_bounds: content; consumers: qs_pos, result.
+  win_at_one, win_at_zero: content (exact pair-window identities); consumer: qs_rec.
+  qs_rec, qs_lower: content; consumer: ratio_lower.
+  ratio_upper, ratio_lower: content; consumer: result.
+  sandwich: content (squeeze of the infimum of tail suprema); consumer: result.
+  result: content.
+Direct frozen dependencies: D5/S1/Digit/CoonsAdjacentGrowthRefutation (count, readout,
+  exponent, count_positive; statement_id
+  sha256:adc04d4c318958807e0c995604326199d16ca889d5bd0f774bec45e46b1859ac),
+  D5/S1/Digit/DigitCapSubcritical (low, count_rec; statement_id
+  sha256:e524f68bf6834f7515db762f20a2777e9a5631b8b13a55b9baecaee54427d524, public since
+  the DigitCapNearSquare delivery).
+Search record (§3.1): D5/S1/Digit has exact exponents on the plateaus
+  (q-1)(ell+1) <= k <= q ell - 1 (DigitCapPlateau, q >= 2), at the caps ell^r - 1 and at
+  ell^2 - 2 (DigitCapNearSquare); the cap ell lies between ell - 1 (exponent 0) and the
+  plateau q = 2 starting at ell + 1. Mathlib supplies goldenRatio, goldenRatio_sq and
+  one_lt_goldenRatio; it has no Stern sequence growth result.
+-/
+
 import D5.S1.Digit.DigitCapSubcritical
 import Mathlib.NumberTheory.Real.GoldenRatio
+
+/-! # The digit cap `ell`: hyper-`ell`-ary expansions
+
+For a radix `ell ≥ 2` let `b(n)` count representations of `n` with digits `0, …, ell`.
+Then `b(ell q) = b(q) + b(q - 1)` and `b(ell q + r) = b(q)` for `1 ≤ r < ell`. Of two
+consecutive integers at most one is divisible by `ell`, so the pair window `b(q) + b(q - 1)`
+and the single values below `ell ^ m` obey Fibonacci envelopes, and `b(n) = O(φ ^ m)` below
+`ell ^ (m + 1)`. Along quotients whose last digits alternate `0, 1` the pair window satisfies
+`v(k + 2) = v(k + 1) + v k` exactly. Hence the upper growth exponent is `log_ell φ`, both for
+`b(n)` and for the source convention `s_ell(n) = b(n - 1)` of Coons and Spiegelhofer.
+-/
+
+set_option autoImplicit false
 
 namespace D5.S1.Digit.DigitCapHyperGolden
 
