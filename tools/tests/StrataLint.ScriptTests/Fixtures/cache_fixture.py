@@ -16,7 +16,7 @@ class CacheFixture:
         self.temp = tempfile.TemporaryDirectory(prefix="ci-contract-")
         self.root = pathlib.Path(self.temp.name)
         self.env = dict(os.environ, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
-                        GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev",
+                        GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev", GITHUB_REF_PROTECTED="true",
                         CI_WORKFLOW_INPUTS="", GITHUB_EVENT_PATH="",
                         STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_REPORT_SUCCEEDED="true",
                         STRATALINT_CACHE_WRITES="true",
