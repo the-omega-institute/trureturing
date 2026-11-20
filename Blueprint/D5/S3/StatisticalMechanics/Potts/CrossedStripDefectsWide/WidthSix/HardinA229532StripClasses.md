@@ -4,7 +4,35 @@
 
 Exact width-six HDA transfer.
 
-**Theorem 1.1 (All target classes).**
+**Theorem 1.1 (Colour permutation preserves the residual-budget class).**
+
+$$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\operatorname{\mathit{Fin}}\left(3\right)\right), (\forall p: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\forall d: \operatorname{\mathit{Nat}}, (\operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{cl}}\left(\operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(e, p\right), d\right) = \operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{cl}}\left(p, d\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses.class_relabel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229532: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229532>.
+
+*Commentary.*
+
+For every natural residual budget and every six-column row, permuting the three colours preserves its class. The classifier depends only on equalities between colours and the number of monochromatic horizontal bonds.
+
+**Theorem 1.2 (Colour permutation preserves bond counts).**
+
+$$\forall e: \operatorname{\mathit{Equiv}}.\operatorname{\mathit{Perm}}\left(\operatorname{\mathit{Fin}}\left(3\right)\right), (\forall g: \operatorname{\mathit{Finset}}\left((\operatorname{\mathit{Fin}}\left(6\right) \times \operatorname{\mathit{Fin}}\left(6\right))\right), (\forall p: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\forall r: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(g, \operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(e, p\right), \operatorname{\mathit{Function}}.\operatorname{\mathit{comp}}\left(e, r\right)\right) = \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(g, p, r\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses.bond_relabel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A229532: exact-defect canonical three-colour arrays*. URL: <https://oeis.org/A229532>.
+
+*Commentary.*
+
+Every permutation of the three colours preserves the number of monochromatic bonds, for every finite bond set and pair of six-column rows.
+
+**Theorem 1.3 (All target classes).**
 
 $$\forall p: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathit{Fin}}\left(3\right), (\forall d: \operatorname{\mathit{Fin}}\left(2\right), ((\operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{Valid}}\left(p, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right)\right)) \implies (\forall s: \operatorname{\mathit{Fin}}\left(31\right), (\sum_{r: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathit{Fin}}\left(3\right)} (((\operatorname{\mathit{if}} ((\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{between}}, p, r\right) + \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229584StripData}}.\operatorname{\mathit{horizontal}}, r, r\right) \le \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right)) \land (\operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{cl}}\left(r, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right) - (\operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{between}}, p, r\right) + \operatorname{\mathit{DefectTransfer}}.\operatorname{\mathit{bondDefects}}\left(\operatorname{\mathit{HardinA229584StripData}}.\operatorname{\mathit{horizontal}}, r, r\right))\right) = s)) \operatorname{\mathit{then}} (1) \operatorname{\mathit{else}} (0)): \operatorname{\mathit{Int}})) = \operatorname{\mathit{HardinA229532StripData}}.\operatorname{T}\left(\operatorname{\mathit{HardinA229532StripData}}.\operatorname{\mathit{cl}}\left(p, \operatorname{\mathit{Fin}}.\operatorname{\mathit{val}}\left(d\right)\right), s\right)))))$$
 
@@ -16,10 +44,12 @@ $$\forall p: \operatorname{\mathit{Fin}}\left(6\right) \to \operatorname{\mathit
 
 *Commentary.*
 
-For every actual row p, residual d : Fin 2 and target s : Fin 31, Valid p (Fin.val d) implies that the actual permitted successor sum is T (cl p (Fin.val d)) s. The proof transports a canonical representative back by a colour permutation; every new target case applies its checked canonical-row theorem; the final recurrence consumes the combined identity.
+For every row p, residual d : Fin 2 and target s : Fin 31, Valid p (Fin.val d) implies that the permitted successor sum is T (cl p (Fin.val d)) s. A colour permutation transports a canonical representative back to the given row while preserving bond counts and the residual-budget class.
 
 ## References
 
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses.bond_relabel`
+- Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses.class_relabel`
 - Truth anchor: `D5/S3/StatisticalMechanics/Potts/CrossedStripDefectsWide/WidthSix/HardinA229532StripClasses.transition_counts`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233172DiagonalStrip](../../../../Combinatorics/TraceAvoidingArrays/HardinA233172DiagonalStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](../../../../Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.md)
