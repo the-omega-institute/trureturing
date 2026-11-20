@@ -36,7 +36,7 @@ open D5.S3.Analytic.HalfIntegerBesselPolynomial (carrier)
 namespace D5.S3.Analytic.HalfIntegerBessel
 
 /-- The common normalization, with the principal square root of the argument. -/
-noncomputable def prefactor (z : ℂ) : ℂ :=
+@[expose] noncomputable def prefactor (z : ℂ) : ℂ :=
   (Real.sqrt (Real.pi / 2) : ℂ) / Complex.sqrt z
 
 /-- The decaying finite carrier of order `m + 1/2`. -/
@@ -44,11 +44,11 @@ noncomputable def K (m : ℕ) (z : ℂ) : ℂ :=
   prefactor z * Complex.exp (-z) * aeval z⁻¹ (carrier m)
 
 /-- The growing reflected finite carrier of order `m + 1/2`. -/
-noncomputable def L (m : ℕ) (z : ℂ) : ℂ :=
+@[expose] noncomputable def L (m : ℕ) (z : ℂ) : ℂ :=
   prefactor z * Complex.exp z * aeval z⁻¹ ((carrier m).comp (-X))
 
 /-- The regular finite carrier of order `m + 1/2`. -/
-noncomputable def I (m : ℕ) (z : ℂ) : ℂ :=
+@[expose] noncomputable def I (m : ℕ) (z : ℂ) : ℂ :=
   (L m z - (-1 : ℂ)^m * K m z) / (Real.pi : ℂ)
 
 private theorem arg_ne_zero {z : ℂ} (hz : 0 < z.re) : z ≠ 0 := by
@@ -298,7 +298,8 @@ theorem hasDerivAt_eta {w : ℂ} (hw : 0 < w.re) :
   field_simp [arg_ne_zero hw, arg_ne_zero (S_re_pos hw), arg_ne_zero (one_add_S_re_pos hw)]
   linear_combination -(S w) * S_sq w
 
-private theorem sqrt_real_mul {a : ℝ} (ha : 0 < a) {w : ℂ} (hw : 0 < w.re) :
+/-- Positive real scaling factors out of the principal square root on the right half-plane. -/
+theorem sqrt_real_mul {a : ℝ} (ha : 0 < a) {w : ℂ} (hw : 0 < w.re) :
     Complex.sqrt ((a : ℂ) * w) = (Real.sqrt a : ℂ) * Complex.sqrt w := by
   have hr : 0 < ((Real.sqrt a : ℂ) * Complex.sqrt w).re := by
     simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
@@ -1020,7 +1021,8 @@ theorem F_I_div_F_K (m : ℕ) {w : ℂ} (hw : 0 < w.re)
     Complex.exp_sub, neg_mul]
   field_simp [hS, hK, hN, Complex.exp_ne_zero]
 
-private theorem reverse_eval (m : ℕ) {z : ℂ} (hz : z ≠ 0) :
+/-- Reversal replaces the argument by its reciprocal and clears the degree power. -/
+theorem reverse_eval (m : ℕ) {z : ℂ} (hz : z ≠ 0) :
     aeval z (carrier m).reverse = z ^ m * aeval z⁻¹ (carrier m) := by
   have : Invertible z⁻¹ := invertibleOfNonzero (inv_ne_zero hz)
   have h := eval₂_reverse_mul_pow (algebraMap ℚ ℂ) z⁻¹ (carrier m)

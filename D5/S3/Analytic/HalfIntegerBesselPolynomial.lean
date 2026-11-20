@@ -29,7 +29,7 @@ open scoped Nat
 namespace D5.S3.Analytic.HalfIntegerBesselPolynomial
 
 /-- The normalized coefficient, extended by zero past the degree. -/
-def coefficient (m k : ℕ) : ℚ :=
+@[expose] def coefficient (m k : ℕ) : ℚ :=
   if k ≤ m then ((m + k)! : ℚ) / (2 ^ k * (k ! : ℚ) * ((m - k)! : ℚ)) else 0
 
 /-- The polynomial evaluated at the reciprocal argument of the decaying carrier. -/
@@ -66,7 +66,8 @@ theorem coefficient_succ (m k : ℕ) :
       simp
     · simp [coefficient, not_le.mpr hlt]
 
-private theorem coeff_carrier (m k : ℕ) : (carrier m).coeff k = coefficient m k := by
+/-- The carrier coefficients agree with the zero extension of the factorial coefficients. -/
+theorem coeff_carrier (m k : ℕ) : (carrier m).coeff k = coefficient m k := by
   by_cases h : k ≤ m
   · simp [carrier, coeff_monomial, Finset.mem_range, h]
   · simp [carrier, coeff_monomial, Finset.mem_range, coefficient, h]

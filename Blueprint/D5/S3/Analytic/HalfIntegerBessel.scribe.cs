@@ -67,6 +67,13 @@ internal sealed class HalfIntegerBesselDocument : IScribeDocumentDefinition
             Node("hasDerivAt_eta", "Phase derivative",
                 "On Re w > 0 the derivative of the phase is S(w) / w.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("sqrt_real_mul", "Principal square root under positive scaling",
+                "For a > 0 and Re w > 0, the principal root of a w equals the real root of a "
+                + "times the principal root of w.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("reverse_eval", "Evaluation of the reversed carrier",
+                "At nonzero z the reversed carrier evaluates to z^m times P_m(1/z).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("F_K", "Normalized decaying amplitude",
                 "F_K is sqrt(2 nu / pi) sqrt(S(w)) exp(nu eta(w)) K_m(nu w). "
                 + "The first root is real and the second is principal complex.",

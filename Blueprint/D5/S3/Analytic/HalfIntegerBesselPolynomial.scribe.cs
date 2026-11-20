@@ -38,6 +38,9 @@ internal sealed class HalfIntegerBesselPolynomialDocument : IScribeDocumentDefin
             Node("carrier_coeff_zero", "Carrier constant coefficient",
                 "The constant coefficient of the finite reciprocal carrier is one for every order.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("coeff_carrier", "Carrier coefficient extraction",
+                "At every index the coefficient agrees with the zero-extended factorial formula.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("reflected_wronskian", "Reflected polynomial Wronskian",
                 "For every natural m, let P be its carrier and Q(X) = P(-X). "
                 + "Then 2 P Q - X^2 (P Q' - P' Q) = 2 in the rational polynomial ring. "
