@@ -107,8 +107,8 @@ This theorem removes the n ≤ 14 restriction for equation (21). It does not ass
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/AmiriArrazolaHiddenMatchingCloningBound.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/AmiriArrazolaHiddenMatchingCloningBound.rho`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/AmiriArrazolaHiddenMatchingCloningBound.tau`
-- Dependency: [D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence](../Entanglement/LocalObservationPartialTraceEquivalence.md)
 - Dependency: [D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth](../Entanglement/UniversalReplacementCapacityGrowth.md)
+- Dependency: [D5/S3/Quantum/FixedPointProjection](../FixedPointProjection.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
@@ -117,5 +117,6 @@ This theorem removes the n ≤ 14 restriction for equation (21). It does not ass
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/EntanglementAssistedCommunicationValue](EntanglementAssistedCommunicationValue.md)
 - Dependency: [D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation](../Recovery/LiJiangPolarPairOptimalityRefutation.md)
+- Dependency: [D5/S3/Quantum/TensorNetworks/CZXParentLindbladianAveraging](../TensorNetworks/CZXParentLindbladianAveraging.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](../../VertexAlgebra/LatticeTwistedGroundRealization.md)
 - Dependency: [D5/S3/Weil/ProjectiveRayleigh/ScaledComplexQuadraticRowBound](../../Weil/ProjectiveRayleigh/ScaledComplexQuadraticRowBound.md)
