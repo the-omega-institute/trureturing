@@ -12,7 +12,6 @@ escape_witness: transition_counts
 transition_counts: proof_shape=content; consumers=HardinA229604Strip.finite_certificate
 -/
 
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripClasses
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229604StripData
@@ -62,7 +61,7 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 set_option Elab.async false
 open HardinA229604StripData
-open D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData (equalityPatternCode)
+open HardinA229457StripData (equalityPatternCode)
 open HardinA233177Canonical (canonical_exists_unique)
 theorem transition_counts : ∀ p (d : Fin 3), Valid p d.val → ∀ s : Fin 96,
     (∑ r : Row, if bondDefects ProperTransfer.between p r + bondDefects horizontal r r ≤ d.val ∧

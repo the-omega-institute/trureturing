@@ -22,7 +22,6 @@ leading_block: proof_shape=bind-only; consumers=HardinA229604StripCut.leading_co
 terminal_block: proof_shape=bind-only; consumers=HardinA229604StripCut.terminal_counts
 -/
 
-import D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData
 import D5.S3.StatisticalMechanics.Potts.SquareStripDefects.HardinA229457StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.HardinA229584StripData
 import D5.S3.StatisticalMechanics.Potts.StripDefects.DefectTransfer
@@ -45,7 +44,7 @@ def cl (p : Row) (d : ℕ) : Fin 96 :=
       have := (HardinA229457StripData.cl p 0).isLt
       omega⟩
   else
-  let code := D5.S3.StatisticalMechanics.Potts.CrossedStripDefectsWide.WidthSix.HardinA229532StripData.equalityPatternCode p
+  let code := HardinA229457StripData.equalityPatternCode p
   if code ∈ ({9387, 29122} : Finset ℕ) then 74 else
   if code ∈ ({1195, 29120} : Finset ℕ) then 75 else
   if code ∈ ({2355, 28700} : Finset ℕ) then 76 else

@@ -57,10 +57,8 @@ open HardinA229532StripData
 open HardinA233177Canonical (canonical_exists_unique)
 theorem class_relabel (e : Equiv.Perm (Fin 3)) (p : Row) (d : ℕ) :
     cl (e ∘ p) d = cl p d := by
-  have hcode : equalityPatternCode (e ∘ p) = equalityPatternCode p := by
-    simp only [equalityPatternCode, Function.comp_apply, e.injective.eq_iff]
-  simp only [cl, hcode, HardinA233172DiagonalStrip.boundaryClass,
-    bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff] <;> rfl
+  simp only [cl, HardinA233172DiagonalStrip.boundaryClass,
+    bondDefects, Function.comp_apply, ne_eq, e.injective.eq_iff]
 
 theorem bond_relabel (e : Equiv.Perm (Fin 3))
     (E : Finset (Fin 6 × Fin 6)) (p r : Row) :
