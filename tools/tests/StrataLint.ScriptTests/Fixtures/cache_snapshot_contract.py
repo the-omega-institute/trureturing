@@ -333,6 +333,54 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                 self.assertGreater(opened.call_args.kwargs["timeout"], 0)
                 self.assertNotIn("synthetic-token", json.dumps(receipt))
 
+    def test_source_preference_requires_live_payload_and_correct_ref(self):
+        owner = self.restore_owner()
+        tree = "b" * 40
+        parent = "c" * 40
+        ref = "refs/pull/42/merge"
+        own = self.cache_row("300-1", ref=ref)
+        payload = self.cache_row("100-1")
+        marker = self.cache_row(f"source-{tree}-100-1")
+        parent_marker = self.cache_row(f"source-{parent}-100-1")
+        for rows, key, source in (
+                ([marker, payload], payload["key"], "checkout"),
+                ([parent_marker, payload], payload["key"], "pr-base"),
+                ([marker], own["key"], "unbound"),
+                ([self.cache_row(f"source-{tree}-300-1")], own["key"], "unbound")):
+            with self.subTest(source=source, rows=rows), mock.patch.object(owner, "project_source_trees",
+                                                                         return_value=(tree, parent)):
+                values, receipt, _ = self.lookup_keys([self.cache_page([own]), self.cache_page(rows)],
+                    GITHUB_EVENT_NAME="pull_request", GITHUB_REF=ref, GITHUB_BASE_REF="dev")
+                self.assertEqual(key, values["project_restore_key"])
+                self.assertEqual(key if source == "checkout" else None, values.get("project_exact_key"))
+                self.assertEqual(source, receipt["source_match"])
+
+    def test_previous_push_attempt_beats_newer_unrelated_run_without_a_marker(self):
+        tree = "b" * 40
+        with mock.patch.object(self.restore_owner(), "project_source_trees", return_value=(tree,)):
+            rows = [self.cache_row("17-1"), self.cache_row("250-3")]
+            values, _, _ = self.lookup_keys([self.cache_page(rows)])
+            self.assertEqual(rows[0]["key"], values["project_exact_key"])
+            self.assertEqual(rows[0]["key"], values["project_restore_key"])
+            self.assertTrue(values["project_source_marker"].endswith(f"source-{tree}-17-2"))
+
+    def test_source_tree_uses_checkout_and_pr_first_parent(self):
+        git = lambda *args: subprocess.check_output(["git", *args], cwd=self.root, text=True).strip()
+        git("init", "-q")
+        git("add", ".")
+        for message in ("base", "candidate"):
+            git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.org",
+                "commit", "--allow-empty", "-qm", message)
+            (self.root / "module.lean").write_text(message)
+            git("add", "module.lean")
+        head = git("rev-parse", "HEAD")
+        owner = self.restore_owner()
+        with mock.patch.dict(os.environ, dict(self.env, GITHUB_EVENT_NAME="pull_request", GITHUB_SHA=head), clear=True):
+            self.assertEqual((git("rev-parse", "HEAD^{tree}"), git("rev-parse", "HEAD^1^{tree}")),
+                             owner.project_source_trees(self.root))
+        with mock.patch.dict(os.environ, dict(self.env, GITHUB_SHA="f" * 40), clear=True):
+            self.assertEqual((), owner.project_source_trees(self.root))
+
     def test_pr_producer_seed_takes_precedence_over_the_base_seed(self):
         own_ref = "refs/pull/42/merge"
         row = self.cache_row("123-1", ref=own_ref)
@@ -729,35 +777,37 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
 
         for seeded in ("0", "1"):
             for adopted in ("false", "true"):
-                for released in ("false", "true"):
-                    with self.subTest(seeded=seeded, adopted=adopted, released=released):
-                        env = dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED=seeded,
-                                   STRATALINT_REPORT_SUCCEEDED="false")
-                        values = {"steps.prepared.outputs.adopted": adopted,
-                                  "env.STRATALINT_ACTIONS_CACHE_SEEDED": seeded,
-                                  "steps.release.outputs.restored": released}
-                        with mock.patch.dict(os.environ, env, clear=True), \
-                                contextlib.redirect_stdout(io.StringIO()) as receipts:
-                            owner.resume_record(self.root).unlink(missing_ok=True)
-                            spec = owner.resume_spec(self.root)
-                            owner.resume_snapshot(self.root, spec)
-                            lookup = selected("id: resume_lookup", values)
-                            values["steps.resume_lookup.outputs.cache-matched-key"] = spec["key"] if lookup else ""
-                            extracted = selected("id: resume", values)
-                            if selected("name: Validate the producer continuation", values):
-                                owner.resume_restore(self.root, spec, spec["key"] if extracted else "",
-                                                     "success" if extracted else "skipped")
-                            expected = adopted == "false" and released == "false"
-                            self.assertEqual(expected, lookup)
-                            self.assertEqual(expected, extracted)
-                            self.assertEqual(expected, owner.resume_verified(self.root))
-                            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
-                            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
-                            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
-                        self.assertIn('"complete": false', receipts.getvalue())
-                        self.assertIn("project_ready=false", receipts.getvalue())
-                        self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
-        self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
+                for matched in ("false", "true"):
+                    for released in ("false", "true"):
+                        with self.subTest(seeded=seeded, adopted=adopted, released=released, matched=matched):
+                            env = dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED=seeded,
+                                       STRATALINT_REPORT_SUCCEEDED="false")
+                            values = {"steps.prepared.outputs.adopted": adopted,
+                                      "steps.prepared.outputs.matched": matched,
+                                      "env.STRATALINT_ACTIONS_CACHE_SEEDED": seeded,
+                                      "steps.release.outputs.restored": released}
+                            with mock.patch.dict(os.environ, env, clear=True), \
+                                    contextlib.redirect_stdout(io.StringIO()) as receipts:
+                                owner.resume_record(self.root).unlink(missing_ok=True)
+                                spec = owner.resume_spec(self.root)
+                                owner.resume_snapshot(self.root, spec)
+                                lookup = selected("id: resume_lookup", values)
+                                values["steps.resume_lookup.outputs.cache-matched-key"] = spec["key"] if lookup else ""
+                                extracted = selected("id: resume", values)
+                                if selected("name: Validate the producer continuation", values):
+                                    owner.resume_restore(self.root, spec, spec["key"] if extracted else "",
+                                                         "success" if extracted else "skipped")
+                                expected = adopted == released == matched == "false"
+                                self.assertEqual(expected, lookup)
+                                self.assertEqual(expected, extracted)
+                                self.assertEqual(expected, owner.resume_verified(self.root))
+                                self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+                                self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+                                owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+                            self.assertIn('"complete": false', receipts.getvalue())
+                            self.assertIn("project_ready=false", receipts.getvalue())
+                            self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
+            self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
 
     def test_incompatible_or_failed_resume_restore_discards_material_and_cannot_promote(self):
         for defect in ("foreign-key", "foreign-ref", "missing-marker", "transport-failed", "duplicate-marker"):

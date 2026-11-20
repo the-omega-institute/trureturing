@@ -308,17 +308,19 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ needs.source.outputs.judge_key }}
-      - id: prepared
-        name: Adopt a matching PR preparation for this event
-        if: needs.detect.outputs.report == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
       - id: keys
         if: needs.detect.outputs.report == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: prepared
+        if: needs.detect.outputs.report == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        uses: ./.github/actions/lean-project-restore
+        with:
+          project-key: ${{ steps.keys.outputs.project_exact_key }}
+          project-paths: ${{ steps.keys.outputs.project_archive_path }}
       - id: elan
         if: steps.keys.outputs.elan_key != ''
         continue-on-error: true
@@ -338,7 +340,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.project-key == '' && steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -350,10 +352,10 @@ jobs:
         name: Restore optional Lean build seeds
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+          PROJECT_OUTCOME: ${{ steps.prepared.outputs.project-key != '' && 'success' || steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - id: compute_budget
         name: Resume the cumulative current compute allowance
@@ -448,6 +450,13 @@ jobs:
           saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
           jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
             'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
+      - name: Index the published project seed by source tree
+        if: steps.project_published.outcome == 'success' && steps.keys.outputs.project_source_marker != ''
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: lean-toolchain
+          key: ${{ steps.keys.outputs.project_source_marker }}
       # Dependency and elan caches follow successful checks.
       - id: snapshot
         if: ${{ success() && needs.detect.outputs.report == 'true' && env.CACHE_WRITES == 'true' }}

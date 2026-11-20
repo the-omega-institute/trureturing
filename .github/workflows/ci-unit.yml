@@ -59,17 +59,19 @@ jobs:
           dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: true
           cache-dependency-path: ${{ fromJSON(steps.definition.outputs.definition)['cache-dependency-path'] }}
-      - id: prepared
-        name: Adopt a matching PR preparation for this event
-        if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
       - id: keys
         if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none'
         env:
           GH_TOKEN: ${{ fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && github.token || '' }}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: prepared
+        if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        uses: ./.github/actions/lean-project-restore
+        with:
+          project-key: ${{ steps.keys.outputs.project_exact_key }}
+          project-paths: ${{ steps.keys.outputs.project_archive_path }}
       - id: elan
         if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
@@ -88,7 +90,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.project-key == '' && steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -99,10 +101,10 @@ jobs:
         if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+          PROJECT_OUTCOME: ${{ steps.prepared.outputs.project-key != '' && 'success' || steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Restore selected .NET dependencies
         if: fromJSON(steps.definition.outputs.definition).dotnet

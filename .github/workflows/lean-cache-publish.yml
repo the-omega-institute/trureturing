@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     concurrency:
-      group: lean-cache-branch-${{ github.ref }}
+      group: lean-cache-recovery-${{ github.ref }}-${{ inputs.source_sha }}
       cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'true'

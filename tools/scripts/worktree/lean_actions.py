@@ -8,6 +8,7 @@ import os
 import pathlib
 import re
 import shutil
+import subprocess
 import tempfile
 import threading
 import urllib.error
@@ -196,12 +197,42 @@ def guarded_seed_lookup(lookup):
     return key
 
 
-def lookup_project_seed(spec, ref, token, repository, api):
+def project_source_trees(root):
+    """Source addresses for the tested checkout and, for PRs, its actual merge base parent."""
+    event = os.environ.get("GITHUB_EVENT_NAME")
+    expected = os.environ.get("GITHUB_SHA", "")
+    if event == "workflow_dispatch":
+        if not (manual_source_is_valid() or preparation_source_is_valid()):
+            return ()
+        expected = os.environ["STRATALINT_CACHE_CHECKED_OUT_SHA"]
+    elif event not in ("push", "pull_request"):
+        return ()
+    if not re.fullmatch(r"[0-9a-f]{40}", expected):
+        return ()
+    result = subprocess.run(["git", "rev-parse", "--verify", "HEAD"], cwd=root,
+                            capture_output=True, text=True)
+    if result.returncode or result.stdout.strip() != expected:
+        return ()
+    revisions = ["HEAD^{tree}"]
+    if event == "pull_request" or preparation_source_is_valid():
+        revisions.append("HEAD^1^{tree}")
+    result = subprocess.run(["git", "rev-parse", *revisions], cwd=root, capture_output=True, text=True)
+    trees = result.stdout.splitlines()
+    if result.returncode or len(trees) != len(revisions) or not all(re.fullmatch(r"[0-9a-f]{40}", t) for t in trees):
+        return ()
+    return tuple(trees)
+
+
+def lookup_project_seed(spec, ref, token, repository, api, trees=(), previous_run=None):
     endpoint = api + "/repos/" + repository + "/actions/caches"
     query = dict(key=spec["restore_prefix"], ref=ref, per_page="100", sort="created_at", direction="desc")
     url = endpoint + "?" + urllib.parse.urlencode(query)
-    total, seen, page, best = None, set(), 1, None
+    total, seen, page = None, set(), 1
+    payloads = {}
+    bindings = {}
     pattern = re.compile(re.escape(spec["restore_prefix"]) + r"([1-9][0-9]*)-([1-9][0-9]*)")
+
+    marker = re.compile(re.escape(spec["restore_prefix"]) + r"source-([0-9a-f]{40})-([1-9][0-9]*)-([1-9][0-9]*)")
 
     def unique(pairs):
         result = {}
@@ -239,11 +270,13 @@ def lookup_project_seed(spec, ref, token, repository, api):
             if type(cache_id) is not int or cache_id <= 0 or cache_id in seen:
                 raise SeedLookupUnavailable("lookup-incomplete-listing")
             seen.add(cache_id)
+            if row["ref"] != ref:
+                continue
             match = pattern.fullmatch(row["key"])
-            if row["ref"] == ref and match:
-                candidate = (int(match[1]), int(match[2]), row["key"])
-                if best is None or candidate[:2] > best[:2]:
-                    best = candidate
+            if match:
+                payloads[int(match[1]), int(match[2])] = row["key"]
+            elif (match := marker.fullmatch(row["key"])) and match[1] in trees:
+                bindings[int(match[2]), int(match[3])] = match[1]
         if len(seen) > total or not isinstance(link, str):
             raise SeedLookupUnavailable("lookup-incomplete-listing")
         links = {}
@@ -264,12 +297,21 @@ def lookup_project_seed(spec, ref, token, repository, api):
                     **{key: [item] for key, item in query.items()}, "page": [str(page + 1)]}):
             raise SeedLookupUnavailable("lookup-incomplete-listing")
         url, page = next_url, page + 1
-    if best is None:
+    if not payloads:
         raise SeedLookupUnavailable("lookup-no-eligible-seed")
-    return best[2]
+    def rank(version):
+        tree = bindings.get(version)
+        if trees and (tree == trees[0] or previous_run and version[0] == previous_run):
+            return 2
+        if len(trees) > 1 and tree == trees[1]:
+            return 1
+        return 0
+
+    version = max(payloads, key=lambda v: (rank(v), v))
+    return payloads[version], rank(version)
 
 
-def project_restore_key(keys):
+def project_restore_key(keys, trees=()):
     spec = keys["project"]
     fallback = spec["key"]
     token = os.environ.get("GH_TOKEN", "")
@@ -282,26 +324,37 @@ def project_restore_key(keys):
         if re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref):
             refs.append(ref)
         refs.append("refs/heads/" + base)
-    elif event == "push" and ref:
+    elif (event == "push" or manual_source_is_valid() or preparation_source_is_valid()) and ref:
         refs.append(ref)
 
     def preferred_seed():
+        best = None
         for candidate_ref in refs:
             try:
-                key = lookup_project_seed(spec, candidate_ref, token, repository, api)
-                return candidate_ref, key
+                # A rerun of a protected push checks out the same SHA on every attempt.
+                previous_run = int(os.environ["GITHUB_RUN_ID"]) if event == "push" and trees else None
+                key, rank = lookup_project_seed(spec, candidate_ref, token, repository, api, trees, previous_run)
+                if best is None or rank > best[2]:
+                    best = candidate_ref, key, rank
+                if rank == 2 or not trees:
+                    break
             except SeedLookupUnavailable as error:
                 if str(error) != "lookup-no-eligible-seed":
                     raise
-        raise SeedLookupUnavailable("lookup-no-eligible-seed")
+        if best is None:
+            raise SeedLookupUnavailable("lookup-no-eligible-seed")
+        return best
 
     reason = "lookup-not-configured"
     try:
         if not token or not repository or not refs:
             raise SeedLookupUnavailable(reason)
         api = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
-        selected_ref, preferred = guarded_seed_lookup(preferred_seed)
-        receipt("project", "restore-preference", base_ref=selected_ref, requested_key=preferred)
+        selected_ref, preferred, rank = guarded_seed_lookup(preferred_seed)
+        if rank == 2:
+            spec["exact_key"] = preferred
+        receipt("project", "restore-preference", base_ref=selected_ref, requested_key=preferred,
+                source_match=("checkout" if rank == 2 else "pr-base" if rank == 1 else "unbound"))
         return preferred
     except SeedLookupUnavailable as error:
         reason = str(error)
@@ -648,7 +701,12 @@ def main():
         elif args.command == "keys":
             archive_paths = native_archive_paths(root, args.layers)
             if "project" in args.layers:
-                keys["project"]["restore_key"] = project_restore_key(keys)
+                trees = project_source_trees(root)
+                project = keys["project"]
+                if trees:
+                    version = project["key"].removeprefix(project["restore_prefix"])
+                    project["source_marker"] = f"{project['restore_prefix']}source-{trees[0]}-{version}"
+                project["restore_key"] = project_restore_key(keys, trees)
             values = {key: keys[key] for key in ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")}
             values["elan_key"] = elan_key(root)
             for layer in args.layers:

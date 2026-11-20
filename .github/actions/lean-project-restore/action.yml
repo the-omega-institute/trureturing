@@ -1,0 +1,43 @@
+name: Restore a source-matched Lean project or PR preparation
+description: Check the restored report before giving it precedence over the PR preparation
+inputs:
+  project-key:
+    description: Project cache key bound to the checked-out source
+    required: false
+  project-paths:
+    description: Registered project archive paths
+    required: true
+  allow-preparation:
+    description: Whether this consumer can adopt its PR preparation
+    default: 'true'
+outputs:
+  adopted:
+    description: Whether the PR preparation was installed
+    value: ${{ steps.artifact.outputs.adopted }}
+  matched:
+    description: Whether the checked-out report inputs and bundle matched
+    value: ${{ steps.probe.outputs.matched }}
+  project-key:
+    description: Successfully transferred project key
+    value: ${{ steps.exact.outcome == 'success' && steps.exact.outputs.cache-hit == 'true' && steps.exact.outputs.cache-matched-key || '' }}
+runs:
+  using: composite
+  steps:
+    - id: exact
+      if: inputs.project-key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ inputs.project-paths }}
+        key: ${{ inputs.project-key }}
+    - id: probe
+      if: steps.exact.outcome == 'success' && steps.exact.outputs.cache-hit == 'true'
+      shell: bash
+      run: |
+        decision="$(python3 tools/lean-inspector/reuse.py probe --repository "$GITHUB_WORKSPACE" --report .lake/build/stratalint/raw-lean-report.json)"
+        echo "LEAN_SOURCE_SEED $decision"
+        jq -er '"matched=" + (.needs_lake == false | tostring)' <<< "$decision" >> "$GITHUB_OUTPUT"
+    - id: artifact
+      if: inputs.allow-preparation == 'true' && steps.probe.outputs.matched != 'true'
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"

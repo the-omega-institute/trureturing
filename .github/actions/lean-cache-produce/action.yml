@@ -19,7 +19,7 @@ inputs:
 outputs:
   project-key:
     description: 'Newly published or accepted restored project seed'
-    value: ${{ steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.project.outputs.cache-matched-key }}
+    value: ${{ steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
   dependency-key:
     description: 'Newly published or retained dependency seed'
     value: ${{ steps.dependency_snapshot.outputs.dependency_ready == 'true' && steps.keys.outputs.dependency_key || steps.dependency.outputs.cache-matched-key }}
@@ -38,17 +38,19 @@ runs:
     - name: Build the Lean producer for the cache seed
       shell: bash
       run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
-    - id: prepared
-      if: inputs.preparation-only != 'true'
-      env:
-        GH_TOKEN: ${{ github.token }}
-      shell: bash
-      run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
     - id: keys
       env:
         GH_TOKEN: ${{ github.token }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+    - id: prepared
+      env:
+        GH_TOKEN: ${{ github.token }}
+      uses: ./.github/actions/lean-project-restore
+      with:
+        project-key: ${{ inputs.release-seed-tag == '' && steps.keys.outputs.project_exact_key || '' }}
+        project-paths: ${{ steps.keys.outputs.project_archive_path }}
+        allow-preparation: ${{ inputs.preparation-only != 'true' }}
     - id: elan
       if: steps.keys.outputs.elan_key != ''
       continue-on-error: true
@@ -67,7 +69,7 @@ runs:
         key: ${{ steps.keys.outputs.dependency_key }}
         restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
     - id: project
-      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != ''
+      if: steps.prepared.outputs.project-key == '' && steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -77,10 +79,10 @@ runs:
     - name: Restore optional validated seeds
       env:
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-        PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+        PROJECT_KEY: ${{ steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
         PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-        PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        PROJECT_OUTCOME: ${{ steps.prepared.outputs.project-key != '' && 'success' || steps.project.outcome }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
     - id: release
@@ -98,7 +100,7 @@ runs:
       run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
     - id: resume_lookup
       name: Find the producer continuation without extracting
-      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.prepared.outputs.matched != 'true' && steps.release.outputs.restored != 'true'
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
@@ -115,7 +117,7 @@ runs:
         key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
         fail-on-cache-miss: true
     - name: Validate the producer continuation
-      if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
+      if: steps.prepared.outputs.adopted != 'true' && steps.prepared.outputs.matched != 'true' && steps.release.outputs.restored != 'true'
       env:
         RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
@@ -229,6 +231,13 @@ runs:
             echo "CACHE_SEED_ERROR project cache was not published to the producer ref" >&2
             exit 1
           }
+    - name: Index the published project seed by source tree
+      if: steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_source_marker != ''
+      continue-on-error: true
+      uses: actions/cache/save@v5
+      with:
+        path: lean-toolchain
+        key: ${{ steps.keys.outputs.project_source_marker }}
     - name: Publish the dependency seed
       if: steps.dependency_snapshot.outputs.dependency_ready == 'true'
       uses: actions/cache/save@v5
