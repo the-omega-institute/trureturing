@@ -32,6 +32,8 @@ internal static partial class LeanCacheEnsureCommand
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
         ArgumentNullException.ThrowIfNull(readEnvironment);
+        var prebuilt = arguments.FirstOrDefault() == "--prebuilt";
+        if (prebuilt) arguments = arguments.Skip(1).ToArray();
         if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command, out var donorRepository))
         {
             return new CommandResult(false, string.Empty, WriterUsage + "\n");
@@ -59,6 +61,19 @@ internal static partial class LeanCacheEnsureCommand
                 method: "none",
                 pins.Sha256,
                 "canonical cache writer guard is busy");
+        }
+
+        if (prebuilt)
+        {
+            var lake = Path.Combine(root, ".lake");
+            if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+            if (!Directory.Exists(Path.Combine(lake, "build")))
+                return new CommandResult(false, string.Empty,
+                    "Prebuilt Lake artifacts are missing. Run make lean-report-prepare for the selected scope.\n");
+            var stamp = LeanCacheStamp.Inspect(lake, pins);
+            if (stamp.State is LeanCacheStampState.Mismatch or LeanCacheStampState.Corrupt)
+                return new CommandResult(false, string.Empty, $"Incompatible prebuilt Lake artifacts: {stamp.Reason}\n");
+            return RunGuardedCommand(root, command, runner, string.Empty, standardOutput, standardError);
         }
 
         var ensured = EnsureLocked(
@@ -132,6 +147,12 @@ internal static partial class LeanCacheEnsureCommand
             receipt = RecordColdBuildConsent(receipt);
         }
 
+        return RunGuardedCommand(root, command, runner, receipt, standardOutput, standardError);
+    }
+
+    private static CommandResult RunGuardedCommand(string root, string[] command,
+        IWorktreeProcessRunner runner, string receipt, Stream? standardOutput, Stream? standardError)
+    {
         try
         {
             if (standardOutput is not null)

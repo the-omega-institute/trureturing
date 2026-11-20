@@ -5,7 +5,6 @@ import io
 import json
 import os
 from pathlib import Path
-import shlex
 import shutil
 import subprocess
 import sys
@@ -476,30 +475,16 @@ class ReuseTests(unittest.TestCase):
         self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
         self.assertEqual(receipt, publication.member(self.report, api.SUFFIX).read_bytes())
 
-    def test_standalone_program_entry_builds_the_producer_once_before_ensure(self):
+    def test_report_hit_reuses_without_preparing_a_producer(self):
         process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)
-        self.assertNotIn('bad-producer-build-args', calls, '[FAIL] producer_build_uses_target_path_contract')
         self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
-        self.assertEqual(calls[:2], ['producer-build', 'ensure'], '[FAIL] standalone_entry_builds_producer_before_ensure')
-        self.assertEqual(len(calls), 3)
-        self.assertTrue(calls[2].endswith(' build leanInspector/LeanInformationAudit'))
-        self.assertEqual((self.root / 'ensure-producer').read_text(), 'producer.dll\n',
-                         '[FAIL] ensure_runs_the_built_producer')
+        self.assertEqual(calls, [])
 
-    def test_standalone_entry_fails_when_the_producer_build_reports_no_usable_dll(self):
-        for case in ['no output', 'relative path', 'absent absolute path']:
-            with self.subTest(case=case):
-                # Each case starts from a fresh cold fixture.
-                self.setUp()
-                stdout = {'no output': '', 'relative path': 'producer.dll\n',
-                          'absent absolute path': f'{self.root}/absent/producer.dll\n'}[case]
-                process, calls = self.entry_with_program_build(
-                    ['leanInspector/LeanInformationAudit'], prebuilt=False, producer_stdout=stdout)
-                self.assertEqual(process.returncode, 2, '[FAIL] pathless_producer_build_fails_entry: '
-                                 + process.stdout + process.stderr)
-                self.assertIn('the producer build reported no existing absolute DLL', process.stderr,
-                              '[FAIL] pathless_producer_build_names_the_defect')
-                self.assertEqual(calls, ['producer-build'], '[FAIL] pathless_producer_build_runs_no_later_step')
+    def test_report_miss_requires_prebuilt_producer(self):
+        process, calls = self.entry_with_program_build([], seed=False, prebuilt=False)
+        self.assertEqual(process.returncode, 2, process.stdout + process.stderr)
+        self.assertIn('missing prebuilt producer', process.stderr)
+        self.assertEqual(calls, [])
 
     def test_probe_cli_reports_misses_but_rejects_invalid_registration(self):
         self.receipt()
@@ -767,8 +752,7 @@ class ReuseTests(unittest.TestCase):
             api.reuse(self.root, self.report, self.output)
 
     def entry_with_program_build(self, targets, *, seed=True, build_exit=0,
-                                 existing_output=False, registered_targets=('FixtureAudit',), prebuilt=True,
-                                 producer_stdout=None):
+                                 existing_output=False, registered_targets=('FixtureAudit',), prebuilt=True):
         # Exercise the actual shell entry and report receipt, replacing only the
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/native.py',
@@ -809,21 +793,9 @@ class ReuseTests(unittest.TestCase):
             STRATALINT_LEAN_REPORT_REUSE=str(self.report),
             STRATALINT_LEAN_BUILD_TARGETS=targets if isinstance(targets, str) else json.dumps(targets))
         if not prebuilt:
-            # A standalone entry builds the producer and reports its DLL, unless the
-            # test substitutes the build's whole standard output. The stub answers
-            # only the entry's contract: the csproj's own TargetPath.
             dotnet = self.root / 'dotnet-bin/dotnet'
             dotnet.parent.mkdir()
-            dotnet.write_text('#!/bin/sh\n'
-                              'bad() { printf "bad-producer-build-args\\n" >> build-calls; exit 64; }\n'
-                              '[ "$1" = build ] || bad\n'
-                              'for required in " --configuration Release " " -t:Build " " -getProperty:TargetPath " '
-                              '"/StrataLint.Lean/StrataLint.Lean.csproj "; do\n'
-                              '  case " $* " in *"$required"*) ;; *) bad ;; esac\n'
-                              'done\n'
-                              'printf "producer-build\\n" >> build-calls\n'
-                              + ('printf "%s\\n" "$PWD/producer.dll"\n' if producer_stdout is None
-                                 else 'printf %s ' + shlex.quote(producer_stdout) + '\n'))
+            dotnet.write_text('#!/bin/sh\nprintf "unexpected dotnet %s\\n" "$*" >> build-calls\nexit 64\n')
             dotnet.chmod(0o755)
             environment.pop('STRATALINT_LEAN_PRODUCER_DLL')
             environment['PATH'] = str(dotnet.parent) + os.pathsep + environment['PATH']

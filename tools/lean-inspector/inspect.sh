@@ -7,8 +7,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY="" OUTPUT="" LOG_DIR=""
 CACHE_MISS_POLICY=reuse-or-build
 REGENERATE_REPORT_ARTIFACTS=0
-BUILD_TARGETS=()
-PROGRAM_BUILD_PENDING=0
 BUILD_PHASES=()
 ACTIVE_PHASE=""
 while [[ $# -gt 0 ]]; do
@@ -53,15 +51,14 @@ BUILD_WORK_FILE="${STRATALINT_LEAN_BUILD_WORK_FILE:-$REPOSITORY/build/lean-cache
 rm -f -- "$BUILD_WORK_FILE"
 source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
 resource_observe lean-inspector-start "$REPOSITORY" || true
-# Default output/log paths are inside .lake. Creating them before ensure would
-# remove a cold worktree's eligibility for donor clonefile seeding.
+# Keep diagnostics in a temporary directory until the input and reuse checks complete.
 FINAL_LOG_DIR="$LOG_DIR"
 STARTUP_LOG_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-inspector-startup.XXXXXXXX")"
 LOG_DIR="$STARTUP_LOG_DIR"
 finish() {
   local rc=$?
   trap - EXIT
-  if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
+  if [[ "$rc" == 0 ]]; then
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   fi
   if [[ "$rc" != 0 ]]; then
@@ -91,7 +88,7 @@ run_phase() {
   local phase="$1" status=0
   local phase_started="${SECONDS:-unavailable}" phase_finished phase_elapsed=unavailable
   shift
-  case "$phase" in report|programs) BUILD_PHASES+=("$phase") ;; esac
+  case "$phase" in report) BUILD_PHASES+=("$phase") ;; esac
   # Observations never participate in report reuse or change a phase's verdict.
   [[ "$phase_started" =~ ^[0-9]+$ ]] || phase_started=unavailable
   printf 'LEAN_INSPECTOR_PHASE phase=%s status=started clock=shell-seconds start_seconds=%s\n' \
@@ -100,9 +97,9 @@ run_phase() {
   local budget=()
   if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
     case "$phase" in
-      # Native report/program commands are charged by the cache reader after
+      # Native report commands are charged by the cache reader after
       # its own lazy provisioning. These phases must not be charged twice.
-      toolchain|producer-restore|ensure|reuse|report|programs) ;;
+      toolchain|reuse|report) ;;
       *) budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --) ;;
     esac
   fi
@@ -123,11 +120,6 @@ run_phase() {
     cat "$LOG_DIR/$phase.stdout.log" "$LOG_DIR/$phase.stderr.log" >&2
     return "$status"
   fi
-  if [[ "$phase" == fib-regressions ]]; then
-    # The consumer flushes its decision before tests can emit nested decisions.
-    grep -m 1 -E '^LEAN_INSPECTOR_FIB_REGRESSIONS changed=(true|false) selected=(true|false)$' \
-      "$LOG_DIR/$phase.stdout.log" >&2 || true
-  fi
 }
 
 # Validate required authored inputs before provisioning or consuming artifacts.
@@ -138,33 +130,11 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
     || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
 fi
 workspace=(-d "$REPOSITORY/tools/lean-inspector-reg")
-# Direct report calls own these program obligations; scoped callers may override them.
-if [[ "${STRATALINT_LEAN_BUILD_TARGETS-}" != '[]' ]]; then
-  python3 -B - > "$STARTUP_LOG_DIR/build-targets" <<'PY_TARGETS' || exit 2
-import json, os, re
-default_targets = [
-    "leanInspector/LeanInformationAudit",
-    "leanInspector/reportInspector",
-    "leanInspectorInterface/LeanInformationAuditInterface",
-    "reg/Reg",
-]
-targets = json.loads(os.environ['STRATALINT_LEAN_BUILD_TARGETS']) if 'STRATALINT_LEAN_BUILD_TARGETS' in os.environ else default_targets
-if (not isinstance(targets, list)
-        or any(not isinstance(target, str) or not re.fullmatch(
-            r"[A-Za-z][A-Za-z0-9_.]*(?:/[A-Za-z][A-Za-z0-9_.]*)?", target) for target in targets)
-        or targets != sorted(set(targets))):
-    raise ValueError("lean_targets requires sorted unique Lean module or package/target names")
-for target in targets:
-    print(target)
-PY_TARGETS
-  while IFS= read -r target; do BUILD_TARGETS+=("$target"); done < "$STARTUP_LOG_DIR/build-targets"
-fi
-# Provision before reuse publication creates .lake, preserving cold donor seeding.
 require_lake() {
   LAKE="${LAKE_BIN:-$(command -v lake || true)}"
   if [[ -z "$LAKE" ]]; then
     # A seed can fail publication after resource planning. Obtain the normal
-    # toolchain only when actual compilation is required, including that miss.
+    # toolchain only when report extraction is required, including that miss.
     run_phase toolchain "$REPOSITORY/tools/scripts/workflow/install-lean-toolchain.sh" \
       "$REPOSITORY/lean-toolchain" --github-path "$STARTUP_LOG_DIR/toolchain-path"
     local toolchain_directory
@@ -175,33 +145,6 @@ require_lake() {
     || { echo 'inspect.sh: an absolute executable lake path is required (LAKE_BIN)' >&2; return 2; }
   export LAKE_BIN="$LAKE"
 }
-# A standalone call builds the producer once; every later step runs that DLL
-# instead of refreshing the project through `dotnet run`.
-require_producer() {
-  [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]] || return 0
-  local restore_args=()
-  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
-    run_phase producer-restore dotnet restore "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" --locked-mode
-    restore_args=(--no-restore)
-  fi
-  run_phase producer-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
-    ${restore_args[@]+"${restore_args[@]}"} --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
-  local producer
-  producer="$(tail -n 1 "$LOG_DIR/producer-build.stdout.log")"
-  [[ "$producer" == /* && -f "$producer" ]] \
-    || { echo 'inspect.sh: the producer build reported no existing absolute DLL' >&2; return 2; }
-  export STRATALINT_LEAN_PRODUCER_DLL="$producer"
-  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 && -n "${GITHUB_ENV:-}" ]]; then
-    printf 'STRATALINT_LEAN_PRODUCER_DLL=%s\n' "$producer" >> "$GITHUB_ENV"
-  fi
-}
-# The local guard runs before provisioning or any selected program build.
-# Direct inspect callers retain reuse-or-build unless they select the local policy.
-if [[ "$CACHE_MISS_POLICY" != fetch-or-fail && ${#BUILD_TARGETS[@]} -gt 0 ]]; then
-  require_lake
-  require_producer
-  run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
-fi
 open_logs() {
   mkdir -p "$(dirname "$OUTPUT")" "$FINAL_LOG_DIR"
   mv -f -- "$STARTUP_LOG_DIR"/* "$FINAL_LOG_DIR/"
@@ -230,26 +173,7 @@ reuse_report() {
 run_phase reuse reuse_report
 cat "$LOG_DIR/reuse.stdout.log"
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
-  if [[ "$CACHE_MISS_POLICY" == fetch-or-fail && ${#BUILD_TARGETS[@]} -gt 0 ]]; then
-    require_lake
-    require_producer
-    run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
-  fi
   open_logs
-  if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
-    PROGRAM_BUILD_PENDING=1
-    run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
-      "$LAKE" --log-level=error "${workspace[@]}" build "${BUILD_TARGETS[@]}"
-    PROGRAM_BUILD_PENDING=0
-  fi
-  if [[ "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}" != false ]]; then
-    run_phase fib-regressions python3 -B "$SCRIPT_DIR/fib_analysis.py" "$OUTPUT" \
-      --regressions "$REPOSITORY" --previous "$OUTPUT" \
-      --selected "$STRATALINT_FIB_REGRESSIONS_SELECTED"
-  else
-    # Accepted identical inputs and no explicit selection need no FIB consumer.
-    printf 'LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=false\n' >&2 || true
-  fi
   exit 0
 fi
 require_lake
@@ -257,26 +181,19 @@ run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOS
   --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
 run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT"
-if [[ ${#BUILD_TARGETS[@]} == 0 || "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
-  require_producer
-  run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
-fi
+export STRATALINT_LEAN_PRODUCER_DLL="${STRATALINT_LEAN_PRODUCER_DLL:-$REPOSITORY/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll}"
+[[ -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || {
+  echo "inspect.sh: missing prebuilt producer $STRATALINT_LEAN_PRODUCER_DLL; run dotnet build tools/StrataLint.Lean -c Release" >&2
+  exit 2
+}
 open_logs
-# The package facet owns report modules; explicit targets own program checks.
-# The writer owns the private clonefile-seeded .lake through the native build.
+# Lake schedules report extraction and reuse from existing compiler artifacts.
 REPORT_COMMAND=()
 if [[ "$REGENERATE_REPORT_ARTIFACTS" == 1 ]]; then
-  # Ensure and the existing writer guard enclose cleanup and the native build.
+  # The cache guard encloses cleanup and the native report facet.
   REPORT_COMMAND=(python3 -B "$SCRIPT_DIR/native.py" regenerate "$REPOSITORY")
 fi
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" --log-level=error "${workspace[@]}" build :report \
-  ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
-# The writer has returned. Complete regressions before replacing the published
-# report, sharing one invocation with explicit compiler/analyzer unit coverage.
-run_phase fib-regressions env REGENERATE_REPORT_ARTIFACTS="$REGENERATE_REPORT_ARTIFACTS" \
-  python3 -B "$SCRIPT_DIR/fib_analysis.py" \
-  "$REPOSITORY/.lake/build/lean-inspector/report.zip" --regressions "$REPOSITORY" \
-  --previous "$OUTPUT" --selected "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}"
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" --prebuilt ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" --log-level=error "${workspace[@]}" build :report
 # Publication and seal share one canonical cache guard.
 run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
   "$LOG_DIR/entry-inputs.json"

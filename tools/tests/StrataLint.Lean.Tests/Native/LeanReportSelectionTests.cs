@@ -123,7 +123,7 @@ public sealed class LeanReportSelectionTests
     }
 
     [Fact]
-    public void DamagedReportAfterResourceProbeStillObtainsToolchainAndRunsNormalBuild()
+    public void DamagedReportAfterResourceProbeStillObtainsToolchainAndRequestsReportFacet()
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
@@ -179,26 +179,23 @@ public sealed class LeanReportSelectionTests
         Assert.False(outcome.RootElement.GetProperty("probe").GetProperty("needs_lake").GetBoolean());
         Assert.True(outcome.RootElement.GetProperty("exit").GetInt32() == 37, text);
         var calls = outcome.RootElement.GetProperty("calls").EnumerateArray().Select(item => item.GetString()).ToArray();
-        Assert.Equal(3, calls.Length);
+        Assert.Equal(2, calls.Length);
         Assert.Equal("toolchain", calls[0]);
-        Assert.Equal("ensure", calls[1]);
-        Assert.EndsWith(" build :report", calls[2]);
+        Assert.StartsWith("--prebuilt ", calls[1]);
+        Assert.EndsWith(" build :report", calls[1]);
     }
 
     public static IEnumerable<object[]> InspectorPhaseCases()
     {
-        foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
-        foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
-                     : new[] { "", "inputs", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" })
-            yield return [failedPhase, unavailableClock, buildProducer];
+        foreach (var failedPhase in new[] { "", "inputs", "reuse", "capture", "prepare", "report", "publish" })
+            yield return [failedPhase, unavailableClock];
     }
 
     [Theory]
     [MemberData(nameof(InspectorPhaseCases))]
     public void InspectorPhaseTimingPreservesProductionAndFailure(
-        string failedPhase, bool unavailableClock, bool buildProducer)
+        string failedPhase, bool unavailableClock)
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
@@ -217,7 +214,6 @@ public sealed class LeanReportSelectionTests
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
               */native.py) phase="$2" ;;
-              */fib_analysis.py) phase=fib-regressions ;;
               */build_work.py) exit 0 ;;
               */reuse.py) phase="$2" ;;
               *) exit 97 ;;
@@ -236,18 +232,9 @@ public sealed class LeanReportSelectionTests
               printf 'fixture report published\n'
             fi
             """);
-        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(stubDirectory, "dotnet"), """
-            printf 'producer-build\n' >> "$INSPECTOR_TEST_PHASES"
-            [[ "$INSPECTOR_TEST_FAILURE" != producer-build ]] || exit 23
-            printf '%s\n' "$PWD/fixture-producer.dll"
-            """);
-        // Every later step runs the producer the entry built or received.
-        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(fixture, "tools/scripts/worktree/lean-cache-ensure.sh"), """
-            printf 'ensure\n' >> "$INSPECTOR_TEST_PHASES"
-            [[ "$INSPECTOR_TEST_FAILURE" != ensure ]] || exit 23
-            [[ "${STRATALINT_LEAN_PRODUCER_DLL##*/}" == fixture-producer.dll ]] || exit 29
-            """);
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(fixture, "tools/scripts/worktree/lean-cache-run.sh"), """
+            [[ "$1" == --prebuilt ]] || exit 29
+            shift
             printf 'report\n' >> "$INSPECTOR_TEST_PHASES"
             [[ "$INSPECTOR_TEST_FAILURE" != report ]] || exit 23
             "$@"
@@ -269,7 +256,7 @@ public sealed class LeanReportSelectionTests
             "BASH_ENV=" + shellEnvironment,
             "PATH=" + stubDirectory + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
         };
-        if (!buildProducer) arguments.Add("STRATALINT_LEAN_PRODUCER_DLL=" + producer);
+        arguments.Add("STRATALINT_LEAN_PRODUCER_DLL=" + producer);
         arguments.AddRange(["bash", inspector, "--repository", fixture, "--output", report, "--log-dir", logs]);
         var result = TestProcessRunner.Run("env", arguments,
             temporary.Path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
@@ -278,9 +265,7 @@ public sealed class LeanReportSelectionTests
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}\nstdout:\n{standardOutput}\nstderr:\n{error}");
-        var allPhases = buildProducer
-            ? new[] { "inputs", "batch-size", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
-            : new[] { "inputs", "batch-size", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" };
+        var allPhases = new[] { "inputs", "batch-size", "reuse", "capture", "prepare", "report", "publish" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
         Assert.Equal(failedPhase.Length == 0, File.Exists(report));
@@ -352,7 +337,7 @@ public sealed class LeanReportSelectionTests
                 --repository) repository="$2" ;;
                 --output) output="$2" ;;
                 --log-dir) log_dir="$2" ;;
-                --cache-miss-policy) [[ "$2" == fetch-or-fail ]] || exit 97 ;;
+                --cache-miss-policy) [[ "$2" == reuse-or-build ]] || exit 97 ;;
                 --regenerate-report-artifacts) [[ "$2" == 0 || "$2" == 1 ]] || exit 97 ;;
                 *) exit 97 ;;
               esac
@@ -392,7 +377,7 @@ public sealed class LeanReportSelectionTests
         Assert.True(recorded.Length >= 4, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(fixture, ScriptHarnessScratch.ReadScratchText(Path.Combine(recorded[1], "fixture.identity")));
         var expected = new List<string> { "--repository", recorded[1], "--output", output,
-            "--cache-miss-policy", "fetch-or-fail", "--regenerate-report-artifacts", "0" };
+            "--cache-miss-policy", "reuse-or-build", "--regenerate-report-artifacts", "0" };
         if (!string.IsNullOrEmpty(logDirectory)) expected.AddRange(["--log-dir", logDirectory]);
         Assert.Equal(expected, recorded);
         var expectedLogDirectory = string.IsNullOrEmpty(logDirectory) ? output + ".logs" : logDirectory;

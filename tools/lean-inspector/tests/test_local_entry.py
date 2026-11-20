@@ -202,7 +202,7 @@ class LocalEntryFixture:
     def run_entry(self, *options, direct=False):
         command = (['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(self.root), '--output', str(self.output), *options]
-                   if direct else ['make', '--no-print-directory', 'lean-report', *options])
+                   if direct else ['make', '--no-print-directory', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail', *options])
         try:
             result = subprocess.run(command, cwd=self.root, env=self.environment,
                                     text=True, capture_output=True, timeout=30)
@@ -353,18 +353,18 @@ class LocalEntryTests(LocalEntryFixture, SeedGenerationTests, LocalEntryReleaseC
         self.damage('format')
         result = self.run_entry('REBUILD_REPORT_CACHE=1')
         self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr)
-        self.assertEqual(len(self.calls), 2)
-        self.assertEqual(self.calls[0], 'ensure')
-        self.assertIn('build :report', self.calls[1])
+        self.assertEqual(len(self.calls), 1)
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '))
+        self.assertIn('build :report', self.calls[0])
 
     def test_linked_reuse_or_build_never_fetches(self):
         self.linked_checkout()
         self.damage('format')
         result = self.run_entry('--cache-miss-policy', 'reuse-or-build', direct=True)
         self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr)
-        self.assertEqual(len(self.calls), 2)
-        self.assertEqual(self.calls[0], 'ensure')
-        self.assertIn('build :report', self.calls[1])
+        self.assertEqual(len(self.calls), 1)
+        self.assertTrue(self.calls[0].startswith('lake --prebuilt '))
+        self.assertIn('build :report', self.calls[0])
 
     def test_linked_matching_seed_reuses_without_fetch_or_lake(self):
         self.linked_checkout()
@@ -499,6 +499,9 @@ class FullBuildConfirmationTests(unittest.TestCase):
                      'tools/scripts/worktree/warm-donor.sh', 'tools/scripts/report/lean-report.sh',
                      'tools/scripts/worktree/lean-cache-publish.sh'):
             self.stub(path)
+        outer = self.root / 'tools/lean-inspector/build_inputs.py'
+        outer.parent.mkdir(parents=True, exist_ok=True)
+        outer.write_text('import sys\nassert sys.argv[1] == "check"\n')
         self.stub('bin/git')
         self.stub('bin/dotnet')
         self.env['PATH'] = str(self.root / 'bin') + os.pathsep + os.environ['PATH']

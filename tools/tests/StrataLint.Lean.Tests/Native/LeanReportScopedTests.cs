@@ -6,6 +6,7 @@ namespace StrataLint.Lean.Tests;
 public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
     [Theory]
+    [InlineData("test_prepare_selects_external_utility_roots_and_contract_tools")]
     [InlineData("test_selected_utility_discovery_uses_production_reader")]
     [InlineData("test_rejects_empty_targets_and_canonical_destination")]
     [InlineData("test_cache_replacement_preserves_scoped_discovery_logs")]
@@ -19,11 +20,12 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     [Theory]
     [InlineData("test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation")]
     [InlineData("test_native_scope_uses_only_explicit_module_facets")]
+    [InlineData("test_native_explicit_module_preparation")]
     [InlineData("test_native_scope_reuses_unchanged_staged_readers")]
     [InlineData("test_native_scope_tracks_changed_imports_and_external_utility_claims")]
     [InlineData("test_native_aged_warm_scope_reuses_cache_without_archive_refresh")]
     [InlineData("test_native_scope_includes_external_consumer_and_checks_its_closure")]
-    [InlineData("test_native_cached_scope_still_builds_program_and_clears_failure_seal")]
+    [InlineData("test_native_scope_requires_current_prebuilt_reader")]
     public void ScopedProducerNativeContract(string scenario) => Run(scenario, native: true);
 
     private void Run(string scenario, bool native)

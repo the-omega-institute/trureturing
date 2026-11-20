@@ -86,8 +86,11 @@ def unobservedFamily : Application (@D5.S0.Diagonal.PigeonholeFiber.finite_readi
     acquisition := .unavailable "no finite presentation requested" }
 end AuricFibUniversalProduction
 ''')
+        subprocess.run(['make', 'lean', 'LEAN_TARGETS=' + ' '.join([
+            MODULE, PLAIN_MODULE, 'leanInspector/inputDiscovery', 'leanInspector/reportInspector',
+            'LeanInformationAudit.TemplateEnrollment', 'regInspector/auricFibAnalysis'])], cwd=ROOT, check=True)
         subprocess.run(['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
-            'tools/lean-inspector-reg', 'build', 'leanInspector/reportInspector',
+            'tools/lean-inspector-reg', 'build',
             MODULE + ':report', PLAIN_MODULE + ':report'],
             cwd=ROOT, env=dict(os.environ, GIT_OPTIONAL_LOCKS='0'), check=True)
         cls.report = cls.directory / 'raw-lean-report.json'
@@ -360,6 +363,8 @@ end AuricFibUniversalProduction
         def build():
             activity.write_text('')
             phases.write_text('')
+            subprocess.run(['make', 'lean', 'LEAN_TARGETS=' + ' '.join(
+                [MODULE, PLAIN_MODULE, *(item.removesuffix(':report') for item in extra_targets)])], cwd=ROOT, check=True)
             result = subprocess.run(['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
                 'tools/lean-inspector-reg', 'build', MODULE + ':report', PLAIN_MODULE + ':report',
                 *extra_targets],

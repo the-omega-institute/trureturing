@@ -10,7 +10,7 @@ complete seed with the current report format before allowing that entry;
 malformed authored registration remains an error.
 """
 import argparse
-from contextlib import nullcontext
+from contextlib import contextmanager, nullcontext
 import json
 import os
 from pathlib import Path
@@ -536,8 +536,9 @@ def refresh_stale_seed(repository):
     return 0
 
 
-def recover_and_reuse(repository, report, output):
-    """Restore and consume a checked seed under the existing private-cache lock."""
+@contextmanager
+def compatible_seed(repository, report):
+    """Select and check a required seed under the existing private-cache lock."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
     from lean_cache_release import cache_guard, checkout_topology, warm_dev_remediation
     # Authored registration failures must precede optional network recovery.
@@ -587,9 +588,14 @@ def recover_and_reuse(repository, report, output):
                     raise CacheIncompatible(local['report_format'], checked['report_format'],
                                             'seed-unavailable-after-refresh')
             # Input differences select Lake's incremental path, not a new cache key.
-            return _reuse(repository, report, output)
+            yield report
     except BlockingIOError as error:
         raise CacheIncompatible(local['report_format'], 'unavailable', 'cache-busy', remediation) from error
+
+
+def recover_and_reuse(repository, report, output):
+    with compatible_seed(repository, report) as seed:
+        return _reuse(repository, seed, output)
 
 
 def main():

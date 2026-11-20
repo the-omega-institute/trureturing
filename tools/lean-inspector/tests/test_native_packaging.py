@@ -32,6 +32,10 @@ class NativeReleaseSupport:
     def release_fixture(self):
         """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
         self.reg_package()
+        self.copy('tools/lean-inspector/build_inputs.py')
+        self.write('tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean',
+                   'def main : IO Unit := pure ()\n')
+
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py', 'lean_cache_release_io.py', 'lean_cache_topology.py'):
             self.copy('tools/scripts/worktree/' + name)
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
@@ -198,12 +202,12 @@ class NativeCompilerConsumerTests:
         config = self.root / 'tools/lean-inspector/lakefile.lean'
         source = config.read_text()
         # Record a registration only after Lake returns the native job handle.
-        fetch = 'sources.mapM (·.exportInfo.fetch)'
+        fetch = 'sources.mapM fun mod => prebuilt mod.exportInfo.fetch'
         self.assertEqual(source.count(fetch), 1)
         source = source.replace(fetch, '''do
     observePhase "test-exports" "group"
     sources.mapM fun source => do
-      let job ← source.exportInfo.fetch
+      let job ← prebuilt source.exportInfo.fetch
       observePhase "test-exports" "registered" source.name.toString
       job.mapM fun info => do
         observePhase "test-exports" "finish" source.name.toString
@@ -263,7 +267,7 @@ class NativeCompilerConsumerTests:
             + entry))
         built = self.build()
         for module in compiler_modules:
-            self.assertEqual((built.stdout + built.stderr).count(f'Built {module} ('), 1)
+            self.assertNotIn(f'Built {module} (', built.stdout + built.stderr)
 
         def check_order():
             observations = [json.loads(line) for line in phases.read_text().splitlines()]
@@ -383,6 +387,7 @@ class NativeCompilerConsumerTests:
 
     def test_native_facet_supplies_toolchain_environment(self):
         self.env.pop('LEAN_SYSROOT', None)
+        self.prepare_report_modules()
         result = self.run_lake('build', ':report', success=None)
         self.assertEqual(result.returncode, 0,
             '[FAIL] native_toolchain_search_path\n' + result.stdout + result.stderr)
@@ -406,6 +411,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         self.assertEqual(expected, self.report()[1:])
         before = self.stamps()
         self.write('D5/Alone.lean', 'def alone : Nat := 9\n')
+        self.prepare_report_modules('D5.Alone')
         result = self.run_lake('build', 'D5.Alone:report')
         self.assertIn('LEAN_INSPECTOR_EXTRACT module=D5.Alone', result.stdout + result.stderr)
         self.assertEqual({n for n, value in self.stamps().items() if value != before[n]}, {'D5.Alone'})
@@ -451,7 +457,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             self.assertIn('schema_version', rejected.stderr)
             self.assertFalse((clone / '.lake').exists(), 'rejected inputs must preserve donor eligibility')
             self.write('lean-report-inputs.json', manifest)
-            result = subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], cwd=clone, env=self.env,
+            result = subprocess.run(['make', 'lean-cache-ensure'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             if sys.platform != 'darwin':
                 self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -469,10 +475,13 @@ class NativePackageConsumerTests(NativeReleaseSupport):
                     for p in (donor / '.lake').rglob('*') if p.is_file()})
                 return
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            receipt = json.loads(next(line.removeprefix('LEAN_CACHE ') for line in result.stdout.splitlines()
+                                      if line.startswith('LEAN_CACHE ')))
+            result = subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'],
+                cwd=clone, env=self.env, text=True, capture_output=True, timeout=120)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             output = clone / '.lake/build/stratalint/raw-lean-report.json'
             logs = Path(str(output) + '.logs')
-            receipt = json.loads(next(line.removeprefix('LEAN_CACHE ')
-                for line in (logs / 'ensure.stdout.log').read_text().splitlines() if line.startswith('LEAN_CACHE ')))
             self.assertEqual(receipt['status'], 'seeded')
             self.assertEqual(receipt['method'], 'clonefile')
             self.assertEqual(Path(receipt['donor']).resolve(), donor.resolve())
@@ -482,7 +491,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             publication.validate_bundle(output, publication.coordinates(clone), clone)
             self.assertEqual(output.read_bytes(), expected[0])
             self.assertEqual(publication.member(output, '.materials.zip').read_bytes(), expected[1])
-            for phase in ['inputs', 'producer-build', 'ensure', 'report', 'publish']:
+            for phase in ['inputs', 'report', 'publish']:
                 self.assertEqual((logs / (phase + '.exit.log')).read_text(), '0\n')
             row = Path('.lake/build/lean-inspector/modules/D5.Alone.zip')
             self.assertNotEqual((donor / row).stat().st_ino, (clone / row).stat().st_ino)
@@ -582,7 +591,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         receipt_before_failure = publication.member(output, '.reuse.json').read_bytes()
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
-        self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
+        self.assertNotIn('phase=programs ', failed.stderr)
         self.assertIn('error: Audit.lean:', failed.stderr)
         self.assertEqual(receipt_before_failure, publication.member(output, '.reuse.json').read_bytes(),
                          '[FAIL] program_failure_preserves_successful_report_receipt')

@@ -388,7 +388,7 @@ class NativeCompilerOptionsTests:
         records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
         extracted = sum(r['count'] for r in records if r['kind'] == 'extract')
         compiled = [name for name in sorted(stamps) if f'Built {name} (' in rebuilt.stdout + rebuilt.stderr]
-        self.assertEqual(compiled, sorted(stamps))
+        self.assertEqual(compiled, [])
         self.assertEqual(extracted, len(stamps))
         self.assertEqual(publication.digest(executable), producer)
         self.publish()
@@ -528,6 +528,7 @@ class NativeSemanticConsumerTests:
 
         # An unrelated judge is not demanded by a module without own inputs.
         self.write('LeanInformationAudit/TemplateEnrollment.lean', driver + 'unknown_command\n')
+        self.prepare_report_modules('D5.Alone')
         self.run_lake('build', 'D5.Alone:report')
         self.assertEqual(before, self.stamps())
 
