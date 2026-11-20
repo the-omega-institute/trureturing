@@ -16,10 +16,12 @@ namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.CompleteMangoldtMoments
 
 def arena : Arena where
   signature := signature
-  Law V := ∀ k : ℕ, ∀ {s : ℂ}, 1 < s.re →
+  Law V :=
+    let Φ := V.readout () ()
+    ∀ k : ℕ, ∀ {s : ℂ}, 1 < s.re →
     IntegrableOn (fun u : ℝ => (-(u : ℂ)) ^ k *
       (Complex.exp (-s * u) * (U (Real.exp u) : ℂ))) (Ioi 0) ∧
-    iteratedDeriv k (V.readout () ()) s =
+    iteratedDeriv k Φ s =
       ∫ u : ℝ in Ioi 0, (-(u : ℂ)) ^ k * (Complex.exp (-s * u) * (U (Real.exp u) : ℂ))
 
 private theorem shifted_fails : ¬ arena.Law shifted := by
