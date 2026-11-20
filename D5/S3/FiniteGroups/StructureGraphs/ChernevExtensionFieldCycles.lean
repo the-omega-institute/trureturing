@@ -1,18 +1,21 @@
 /- GID: D5/S3/FiniteGroups/StructureGraphs/ChernevExtensionFieldCycles
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/StructureGraphs/ChernevExtensionFieldCycles
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Nontrivial directed cycles in finite extension fields outside order four. -/
 
+/-
+proof_shape: result: content
+escape_witness: cycle_of_odd_degree, via the invariant complement of the prime field.
+admission_basis: open-problem-resolution (#27776, Proved)
+Direct frozen dependency: D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.finite_orbit_and_readout_eventually_periodic
+Frozen module statement_id: sha256:259d232d95c1ca485bdaeb0bf7eb8d9a839164d9e3964dab0743ddec9dc41953
+-/
+
 import D5.S3.ObserverMemory.Prediction.FiniteOrbitPeriodBound
-import Mathlib.Algebra.CharP.Two
 import Mathlib.Combinatorics.Digraph.Basic
-import Mathlib.Data.Nat.Factors
-import Mathlib.Dynamics.PeriodicPts.Defs
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 
 /-! Chernev–Chernev, arXiv:2611.07521v1, Definition 3.1 and Hypothesis 6.1. -/
 
