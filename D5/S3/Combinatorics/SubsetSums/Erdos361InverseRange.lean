@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Erdos361InverseRange
+/- GID: D5/S3/Combinatorics/SubsetSums/Erdos361InverseRange
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Erdos361InverseRange
+   mirror-B: D5/B/S3/Combinatorics/SubsetSums/Erdos361InverseRange
    mirror-E: none(waiver:integer-counterexample)
    anchors: []
    utility: none
@@ -15,7 +15,7 @@ import Mathlib.Tactic
 
 /-! Modulo-five obstructions for the inverse theorem with the fixed factor six. -/
 
-namespace D5.S3.Combinatorics.Erdos361InverseRange
+namespace D5.S3.Combinatorics.SubsetSums.Erdos361InverseRange
 
 public section
 
@@ -171,4 +171,4 @@ theorem every_range_below_three_fails (theta : ℝ) (htheta : theta < 3) :
 
 end
 
-end D5.S3.Combinatorics.Erdos361InverseRange
+end D5.S3.Combinatorics.SubsetSums.Erdos361InverseRange

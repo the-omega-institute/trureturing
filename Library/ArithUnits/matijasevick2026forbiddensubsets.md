@@ -7,12 +7,12 @@ doi: 10.48550/arXiv.2611.17205
 url: https://arxiv.org/html/2611.17205v1#S9
 claim: "Problems 9.1 and 9.2 ask for limits on additional least-nondivisor classes and for the optimal range constant in the inverse theorem."
 strata_touched:
-  - D5/S3/Combinatorics/Erdos361InverseRange
+  - D5/S3/Combinatorics/SubsetSums/Erdos361InverseRange
 license: citation-only
 triage: anchor
 ---
 
-<!-- GID: D5/L/Combinatorics/matijasevick2026forbiddensubsets -->
+<!-- GID: D5/L/ArithUnits/matijasevick2026forbiddensubsets -->
 
 # The range in the forbidden-subset-sum inverse theorem
 

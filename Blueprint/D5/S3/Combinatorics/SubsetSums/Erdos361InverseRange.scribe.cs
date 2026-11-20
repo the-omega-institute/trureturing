@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SubsetSums;
 
 internal sealed class Erdos361InverseRangeDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/matijasevick2026forbiddensubsets");
+        LibraryNoteRef.Create("D5/L/ArithUnits/matijasevick2026forbiddensubsets");
 
     private static Formula RangeObstruction()
     {
@@ -40,7 +40,7 @@ internal sealed class Erdos361InverseRangeDocument : IScribeDocumentDefinition
         H("A sharp obstruction for least nondivisor four"),
         Blocks(Describe.Lean(
             DescribeId.Create("every-range-below-three-fails"),
-            DeclarationHandle.Create("D5/S3/Combinatorics/Erdos361InverseRange.every_range_below_three_fails"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/SubsetSums/Erdos361InverseRange.every_range_below_three_fails"),
             H("Every range constant below three fails"),
             StatementSource.FromAuthor(RangeObstruction()),
             AssessedProvenance.FromRepo(Source),

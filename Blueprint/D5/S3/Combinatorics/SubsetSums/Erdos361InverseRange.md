@@ -8,7 +8,7 @@ For the factor six, every range constant below three fails in the subset-sum inv
 
 $$\forall\theta\in\mathbb{R},\theta<3\implies\exists\varepsilon>0,\forall K\in\mathbb{N},\exists E,T\in\mathbb{N},\exists A\subseteq[1,E],(K\leq T\land1\leq E\land\theta E\leq6T\land \frac{E}{4}+\varepsilon T\leq\Vert A\Vert\land(\forall B\subseteq A,\sum_{x\in B}x\neq6T))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Erdos361InverseRange.every_range_below_three_fails` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubsetSums/Erdos361InverseRange.every_range_below_three_fails` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,4 +20,4 @@ Use all multiples of five in the interval and add a terminal segment of the resi
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Erdos361InverseRange.every_range_below_three_fails`
+- Truth anchor: `D5/S3/Combinatorics/SubsetSums/Erdos361InverseRange.every_range_below_three_fails`
