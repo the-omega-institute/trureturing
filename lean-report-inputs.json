@@ -14,6 +14,8 @@
     "lean-report": {
       "include": [
         {"pattern": "lean-report-inputs.json", "optional": false},
+        {"pattern": "Meta/tools-release.json", "optional": false},
+        {"pattern": ".github/scripts/install-tools.py", "optional": false},
         {"pattern": "tools/scripts/report/lean-report-selection.py", "optional": false},
         {"pattern": "tools/StrataLint.Lean/**/*.cs", "optional": false},
         {"pattern": "tools/StrataLint.Engine/**/*.cs", "optional": false},

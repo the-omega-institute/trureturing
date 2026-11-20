@@ -10,6 +10,9 @@ strata_touched:
   - D5/S1/Dynamics/Shadowing/IntervalObstruction
   - D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness
   - D5/S1/Dynamics/Shadowing/DendriteObstruction
+  - D5/S1/Dynamics/Shadowing/InvarianceGluedSheets
+  - D5/S1/Dynamics/Shadowing/CantorCircleExpansivity
+  - D5/S3/Topology/CoveringDimension/GluedCircle
 license: citation-only
 triage: anchor
 ---
@@ -69,6 +72,38 @@ The Lean package proves and consumes this static input through
 ProperExpansion, CoconnectedOpening and TentObstruction; it does not assume
 it as an axiom or claim it as a new static theorem.
 
+## Exact expansion order for a gluing construction
+
+Question 3.2 asks which one-dimensional continua admit finitely
+positively expansive systems. The theorem
+`InvarianceGluedSheets.exact_order_infDist` treats a concrete
+construction over a positively expansive base. Take $N\geq 2$ graphs
+of integer multiples of distance to a nonempty compact forward-invariant
+set $K$. A sufficiently small strict forward Bowen ball lies in a
+single fiber of the projection, so its cardinality is at most $N$.
+The map is positively expansive exactly when $K$ is the set of points
+whose entire forward orbits stay in some open neighborhood of $K$.
+Otherwise, for every positive radius there are $N$ distinct points in
+one fiber that stay pairwise closer than that radius under every
+forward iterate. This gives the exact expansion order of the glued
+system.
+
+Remark 3.10 of the arXiv version realizes each exact finite order on a
+finite bouquet of circles. At order N at least two on the bouquet of N
+circles, the displayed map has image equal to its last circle.
+
+For each integer N at least two, the repository constructs a compact connected
+metric space of covering dimension one with a continuous surjection of least
+positive expansivity order N. It glues N circles along the image of the
+ternary Cantor set and applies tripling on each circle. For positive Cantor
+points x tending to zero, (1 + x)/3 lies in the open middle third and enters
+the Cantor image in one step. These points give fibers that witness failure
+of every scale of order N − 1. The closed finite-to-one projection onto the
+circle gives the upper covering-dimension bound, and connectedness gives the
+lower bound. The result combines surjectivity with exact order on a
+one-dimensional continuum. The classification in Question 3.2 remains open.
+[Construction and covering dimension](../../Blueprint/D5/S3/Topology/CoveringDimension/GluedCircle.md)
+
 The GGO journal DOI
 [10.1016/j.topol.2025.109597](https://doi.org/10.1016/j.topol.2025.109597)
 is confirmed bibliographic metadata. The question and theorem locators here
@@ -80,5 +115,8 @@ claim follows from this repository result.
 ## Verified locator
 
 - https://arxiv.org/abs/2310.17241v1
+- https://doi.org/10.1016/j.topol.2025.109597
 - Question 3.1, Section 3, page 7.
+- Question 3.2, Section 3, page 7.
 - Theorem 3.8, Section 3.1, page 9.
+- Remark 3.10, Section 3.2, page 9.

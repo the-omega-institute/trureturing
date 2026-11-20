@@ -1274,6 +1274,8 @@
   ],
   "historical_projects": [],
   "rule_build_inputs": [
+    "Meta/tools-release.json",
+    ".github/scripts/install-tools.py",
     "global.json",
     "Directory.Build.props",
     "Directory.Packages.props",

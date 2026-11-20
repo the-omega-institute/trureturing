@@ -4,7 +4,31 @@
 
 A closed, noncommutative subgroup of the unit quaternions in which any two elements are joined, for every positive tolerance, by a chain of elements of the subgroup with consecutive readings of the quaternion comparison model within that tolerance of one, is the whole group.
 
-**Theorem 1.1 (A closed, chain-connected, noncommutative subgroup is the whole group).**
+**Lemma 1.1 (A quaternion of squared norm one is a unit quaternion).**
+
+$$\forall u \in \mathbb{H}[\mathbb{R}],\; \operatorname{normSq}\left(u\right) = 1 \Rightarrow u \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/UnitQuaternionClosedSubgroup.mem_unitary_of_normSq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Here normSq(u) is the squared norm u * star u, the sum of the squares of the four components of u, regarded as a real number. Both star u * u and u * star u equal normSq(u), which is 1, so u is a unitary element of the real quaternion algebra.
+
+**Lemma 1.2 (The components of a unit quaternion have squares summing to one).**
+
+$$\forall u \in \operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right),\; \operatorname{re}\left(u\right)^{2} + \operatorname{imI}\left(u\right)^{2} + \operatorname{imJ}\left(u\right)^{2} + \operatorname{imK}\left(u\right)^{2} = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/AURICOmega/UnitQuaternionClosedSubgroup.sq_add_sq_coe_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A unit quaternion u has norm one, so its squared norm u * star u is 1; and the squared norm of a quaternion is the sum of the squares of its real part and its three imaginary components re, imI, imJ and imK.
+
+**Theorem 1.3 (A closed, chain-connected, noncommutative subgroup is the whole group).**
 
 $$\forall H \in \operatorname{Subgroup}\left(\operatorname{unitary}\left(\mathbb{H}[\mathbb{R}]\right)\right),\; \operatorname{IsClosed}\left(H\right) \Rightarrow \left(\left(\forall e \in \mathbb{R},\; 0 < e \Rightarrow \left(\forall x \in H, y \in H,\; \operatorname{ReflTransGen}\left(\lambda a b. b \in H \land 1 - e < \operatorname{kappa}\left(\operatorname{quaternionModel}, a, b\right), x, y\right)\right)\right) \Rightarrow \left(\left(\exists x \in H, y \in H,\; x \cdot y \ne y \cdot x\right) \Rightarrow H = \operatorname{top}\right)\right)$$
 
@@ -19,6 +43,8 @@ Here unitary(H[R]) is the group of unit quaternions, IsClosed(H) says that H is 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/AURICOmega/UnitQuaternionClosedSubgroup.eq_top_of_isClosed_of_chainConnected`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/UnitQuaternionClosedSubgroup.mem_unitary_of_normSq`
+- Truth anchor: `D5/S3/Quantum/AURICOmega/UnitQuaternionClosedSubgroup.sq_add_sq_coe_unitary`
 - Dependency: [D5/S3/Quantum/AURICOmega/QuaternionComparisonModel](QuaternionComparisonModel.md)
 - Dependency: [D5/S3/Quantum/AURICOmega/QuaternionTwoPointHomogeneity](QuaternionTwoPointHomogeneity.md)
 - Dependency: [D5/S3/Quantum/AURICOmega/UnitQuaternionPolar](UnitQuaternionPolar.md)

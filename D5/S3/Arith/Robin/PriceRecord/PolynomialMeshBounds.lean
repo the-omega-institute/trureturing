@@ -10,7 +10,7 @@ import D5.S3.Arith.Robin.ActualTwoPriceDefect
 import D5.S3.Arith.Robin.ActualRobinInterval
 import Mathlib.Tactic
 
-/-! Polynomial mesh bounds consumed by the full canonical-record strip criterion. -/
+/-! Pressure interpolation for increasing real meshes, with polynomial specializations. -/
 
 noncomputable section
 set_option autoImplicit false
@@ -28,12 +28,24 @@ lemma power_large (r : ℕ) (hr : 2 ≤ r) {k : ℕ} (hk : 4 ≤ k) :
     16 ≤ k ^ 2 := by simpa using Nat.pow_le_pow_left hk 2
     _ ≤ k ^ r := pow_le_pow_right₀ (by omega : 1 ≤ k) hr
 
-lemma power_atTop (r : ℕ) (hr : 2 ≤ r) :
-    Tendsto (fun k : ℕ => ((k ^ r : ℕ) : ℝ)) atTop atTop := by
-  simpa only [Nat.cast_pow, Function.comp_def] using
-    (tendsto_pow_atTop (by omega : r ≠ 0)).comp
-      (tendsto_natCast_atTop_atTop : Tendsto (fun k : ℕ => (k : ℝ)) atTop atTop)
+lemma power_strictMono (r : ℕ) (hr : 2 ≤ r) : StrictMono (fun k : ℕ => k ^ r) := by
+  intro i j hij
+  exact pow_lt_pow_left₀ hij (Nat.zero_le i) (by omega : r ≠ 0)
 
+private lemma power_cast_strictMono (r : ℕ) (hr : 2 ≤ r) :
+    StrictMono (fun k : ℕ => ((k ^ r : ℕ) : ℝ)) := by
+  intro i j hij
+  change ((i ^ r : ℕ) : ℝ) < ((j ^ r : ℕ) : ℝ)
+  exact_mod_cast (power_strictMono r hr hij : i ^ r < j ^ r)
+
+lemma mesh_atTop {N : ℕ → ℕ} (hN : StrictMono N) :
+    Tendsto (fun k : ℕ => (N k : ℝ)) atTop atTop :=
+  (tendsto_natCast_atTop_atTop : Tendsto (fun n : ℕ => (n : ℝ)) atTop atTop).comp
+    hN.tendsto_atTop
+
+lemma power_atTop (r : ℕ) (hr : 2 ≤ r) :
+    Tendsto (fun k : ℕ => ((k ^ r : ℕ) : ℝ)) atTop atTop :=
+  mesh_atTop (power_strictMono r hr)
 
 lemma price_gap {a b : ℝ} (ha : 1 < a) (hab : a ≤ b)
     (hlog : 1 ≤ Real.log a) :
@@ -126,31 +138,54 @@ lemma mesh_geometry (r : ℕ) (hr : 2 ≤ r) {k : ℕ} (hk : 4 ≤ k) :
       ((k : ℝ) + 1) ^ r ≤ ((k : ℝ) ^ 2) ^ r := hh
       _ = ((k : ℝ) ^ r) ^ 2 := by simp only [← pow_mul]; congr 1; omega
 
-lemma mesh_bracket (r : ℕ) (hr : 2 ≤ r) (K : ℕ) {X : ℝ}
-    (hX : ((K ^ r : ℕ) : ℝ) ≤ X) :
-    ∃ k : ℕ, K ≤ k ∧ ((k ^ r : ℕ) : ℝ) ≤ X ∧
-      X < (((k + 1) ^ r : ℕ) : ℝ) := by
+private lemma mesh_bracket_of_strictMono {mesh : ℕ → ℝ} (hmesh : StrictMono mesh)
+    (hmeshTop : Tendsto mesh atTop atTop) (K : ℕ) {X : ℝ} (hX : mesh K ≤ X) :
+    ∃ k : ℕ, K ≤ k ∧ mesh k ≤ X ∧ X < mesh (k + 1) := by
   classical
-  have hex : ∃ j : ℕ, X < (((j + 1) ^ r : ℕ) : ℝ) := by
-    obtain ⟨j, hj⟩ := eventually_atTop.mp ((power_atTop r hr).eventually
-      (eventually_gt_atTop X))
-    refine ⟨j, (hj j le_rfl).trans_le ?_⟩
-    exact_mod_cast Nat.pow_le_pow_left (Nat.le_succ j) r
+  have hex : ∃ j : ℕ, X < mesh (j + 1) := by
+    obtain ⟨j, hj⟩ := eventually_atTop.mp (hmeshTop.eventually (eventually_gt_atTop X))
+    exact ⟨j, hj (j + 1) (Nat.le_succ j)⟩
   let k := Nat.find hex
-  have hupper : X < (((k + 1) ^ r : ℕ) : ℝ) := Nat.find_spec hex
+  have hupper : X < mesh (k + 1) := Nat.find_spec hex
   have hK : K ≤ k := by
     by_contra h
     have hle : k + 1 ≤ K := by omega
-    have hp : (((k + 1) ^ r : ℕ) : ℝ) ≤ ((K ^ r : ℕ) : ℝ) := by
-      exact_mod_cast Nat.pow_le_pow_left hle r
-    linarith
+    exact (not_lt_of_ge ((hmesh.monotone hle).trans hX)) hupper
   refine ⟨k, hK, ?_, hupper⟩
   by_cases hk : k = 0
-  · have hX0 : 0 ≤ X := (Nat.cast_nonneg (K ^ r)).trans hX
-    simpa only [hk, zero_pow (by omega : r ≠ 0), Nat.cast_zero] using hX0
-  · have hmin : ¬ X < ((((k - 1) + 1) ^ r : ℕ) : ℝ) :=
-      Nat.find_min hex (show k - 1 < Nat.find hex by change k - 1 < k; omega)
+  · rw [hk]
+    exact (hmesh.monotone (Nat.zero_le K)).trans hX
+  · have hprev : k - 1 < Nat.find hex := by
+      change k - 1 < k
+      omega
+    have hmin : ¬ X < mesh ((k - 1) + 1) := Nat.find_min hex hprev
     simpa only [Nat.sub_add_cancel (show 1 ≤ k by omega)] using le_of_not_gt hmin
+
+lemma mesh_bracket (r : ℕ) (hr : 2 ≤ r) (K : ℕ) {X : ℝ}
+    (hX : ((K ^ r : ℕ) : ℝ) ≤ X) :
+    ∃ k : ℕ, K ≤ k ∧ ((k ^ r : ℕ) : ℝ) ≤ X ∧
+      X < (((k + 1) ^ r : ℕ) : ℝ) :=
+  mesh_bracket_of_strictMono (power_cast_strictMono r hr) (power_atTop r hr) K hX
+
+lemma polynomial_gap (r : ℕ) (hr : 2 ≤ r) :
+    ∀ᶠ k : ℕ in atTop, (((k + 1) ^ r : ℕ) : ℝ) - ((k ^ r : ℕ) : ℝ) ≤
+      ((r : ℝ) * (2 : ℝ) ^ (r - 1)) *
+        Real.rpow ((k ^ r : ℕ) : ℝ) (1 - 1 / (r : ℝ)) := by
+  filter_upwards [eventually_ge_atTop (4 : ℕ)] with k hk
+  have hr0 : r ≠ 0 := by omega
+  have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
+  have hN0 : 0 < ((k ^ r : ℕ) : ℝ) := by
+    have hlarge := power_large r hr hk
+    exact_mod_cast (show 0 < k ^ r by omega)
+  have hroot : Real.rpow ((k ^ r : ℕ) : ℝ) (1 / (r : ℝ)) = (k : ℝ) := by
+    simpa only [Nat.cast_pow, Real.rpow_eq_pow, one_div] using
+      (Real.pow_rpow_inv_natCast hk0 hr0)
+  have hwidth : Real.rpow ((k ^ r : ℕ) : ℝ) (1 - 1 / (r : ℝ)) =
+      ((k ^ r : ℕ) : ℝ) / (k : ℝ) := by
+    simp only [Real.rpow_eq_pow] at hroot ⊢
+    rw [Real.rpow_sub hN0, Real.rpow_one, hroot]
+  rw [hwidth]
+  exact (mesh_geometry r hr hk).2.1
 
 lemma mesh_power_balance (r : ℕ) {alpha beta : ℝ}
     (hbalance : (r : ℝ) * (alpha + beta) ≤ (r : ℝ) + 1)
@@ -306,72 +341,70 @@ private lemma pressure_clock_interval_modulus {a b E : ℝ}
     _ = E * (price a - price b) := by
       rw [intervalIntegral.integral_const_mul, weight_integral ha hb]
 
-lemma pressure_samples_to_all (r : ℕ) (hr : 2 ≤ r)
-    (beta sigma C A : ℝ) (hC : 0 ≤ C) (hA : 0 ≤ A)
-    (hsigma0 : 1 / 2 < sigma) (hsigma1 : sigma < 1)
-    (hbeta : 0 ≤ beta) (hgap : beta - 1 / (r : ℝ) < sigma)
+/-- A power-saving gap interpolates a pressure lower bound when the
+weight and clock exponents satisfy `alpha + beta - eta ≤ 1`. -/
+lemma pressure_mesh_samples_to_all {mesh : ℕ → ℝ} (hmesh : StrictMono mesh)
+    (hmeshTop : Tendsto mesh atTop atTop)
+    {G eta alpha beta C A : ℝ} (hG : 0 ≤ G) (heta : 0 < eta)
+    (halpha : 0 ≤ alpha) (halpha1 : alpha ≤ 1) (hbeta : 0 ≤ beta)
+    (hC : 0 ≤ C) (hA : 0 ≤ A) (hbalance : alpha + beta - eta ≤ 1)
+    (hgap : ∀ᶠ k : ℕ in atTop,
+      mesh (k + 1) - mesh k ≤ G * Real.rpow (mesh k) (1 - eta))
     (hclock : ∀ X : ℝ, 2 ≤ X → |X - clock X| ≤ C * Real.rpow X beta)
     (hsample : ∀ᶠ k : ℕ in atTop,
-      -A ≤ (Real.rpow ((k ^ r : ℕ) : ℝ) (1 - sigma) *
-        Real.log ((k ^ r : ℕ) : ℝ)) *
-        (Real.eulerMascheroniConstant + Real.log (Real.log ((k ^ r : ℕ) : ℝ)) -
-        1 / Real.log ((k ^ r : ℕ) : ℝ) - pressure (price ((k ^ r : ℕ) : ℝ)))) :
+      -A ≤ (Real.rpow (mesh k) alpha * Real.log (mesh k)) *
+        (Real.eulerMascheroniConstant + Real.log (Real.log (mesh k)) -
+          1 / Real.log (mesh k) - pressure (price (mesh k)))) :
     ∃ B : ℝ, 0 ≤ B ∧ ∃ T : ℝ, ∀ X : ℝ, T ≤ X →
-      -B ≤ (Real.rpow X (1 - sigma) * Real.log X) *
+      -B ≤ (Real.rpow X alpha * Real.log X) *
         (Real.eulerMascheroniConstant + Real.log (Real.log X) -
-        1 / Real.log X - pressure (price X)) := by
-  let alpha : ℝ := 1 - sigma
-  let H : ℝ := (2 : ℝ) ^ r
-  let G : ℝ := (r : ℝ) * (2 : ℝ) ^ (r - 1)
+          1 / Real.log X - pressure (price X)) := by
+  let H : ℝ := 1 + G
   let E0 : ℝ := 2 * C * Real.rpow H beta
   let B0 : ℝ := E0 * G
-  have halpha : 0 < alpha := by dsimp [alpha]; linarith
-  have halpha1 : alpha ≤ 1 := by linarith
-  have hr0 : (0 : ℝ) < r := by exact_mod_cast (show 0 < r by omega)
-  have hH : 1 ≤ H := one_le_pow₀ (by norm_num : (1 : ℝ) ≤ 2)
-  have hG : 0 ≤ G := by dsimp [G]; positivity
-  have hE0 : 0 ≤ E0 := by dsimp [E0]; positivity
+  have hH : 1 ≤ H := by
+    dsimp only [H]
+    linarith only [hG]
+  have hH0 : 0 ≤ H := zero_le_one.trans hH
+  have hE0 : 0 ≤ E0 :=
+    mul_nonneg (mul_nonneg (by norm_num) hC) (Real.rpow_nonneg hH0 _)
   have hB0 : 0 ≤ B0 := mul_nonneg hE0 hG
-  have hbalance : (r : ℝ) * (alpha + beta) ≤ (r : ℝ) + 1 := by
-    have hh : (r : ℝ) * (beta - sigma) < 1 := by
-      have ht : beta - sigma < 1 / (r : ℝ) := by linarith only [hgap]
-      have hm := (lt_div_iff₀ hr0).mp ht
-      nlinarith only [hm]
-    dsimp only [alpha]
-    nlinarith only [hh]
-  obtain ⟨K0, hK0⟩ := eventually_atTop.mp hsample
-  let K := max K0 4
-  refine ⟨(2 * H) * (A + B0), by positivity, ((K ^ r : ℕ) : ℝ), ?_⟩
+  have hlarge : ∀ᶠ k : ℕ in atTop, 3 ≤ mesh k ∧ H ≤ mesh k :=
+    (hmeshTop.eventually (eventually_ge_atTop (3 : ℝ))).and
+      (hmeshTop.eventually (eventually_ge_atTop H))
+  obtain ⟨K, hK⟩ := eventually_atTop.mp (hlarge.and (hgap.and hsample))
+  have hScale : 0 ≤ 2 * H := mul_nonneg (by norm_num) hH0
+  refine ⟨(2 * H) * (A + B0), mul_nonneg hScale (add_nonneg hA hB0), mesh K, ?_⟩
   intro X hX
-  obtain ⟨k, hkK, hNX, hXNplus⟩ := mesh_bracket r hr K hX
-  have hk : 4 ≤ k := (le_max_right K0 4).trans hkK
-  have hk0 : K0 ≤ k := (le_max_left K0 4).trans hkK
-  let N : ℝ := ((k ^ r : ℕ) : ℝ)
-  have hN16 : 16 ≤ N := by
-    change (16 : ℝ) ≤ ((k ^ r : ℕ) : ℝ)
-    exact_mod_cast power_large r hr hk
+  obtain ⟨k, hkK, hNX, hXNplus⟩ := mesh_bracket_of_strictMono hmesh hmeshTop K hX
+  obtain ⟨⟨hk3, hkH⟩, hkGap, hkSample⟩ := hK k hkK
+  let N : ℝ := mesh k
+  have hN3 : 3 ≤ N := hk3
   have hN1 : 1 < N := by linarith
   have hN0 : 0 < N := by linarith
-  have ht : (0 : ℝ) < k := by exact_mod_cast (show 0 < k by omega)
-  have hlogN : 1 ≤ Real.log N :=
-    (ActualRobinInterval.log_gt_one (show 3 ≤ k ^ r by
-      have := power_large r hr hk; omega)).le
-  have hgeom := mesh_geometry r hr hk
-  change (((k + 1) ^ r : ℕ) : ℝ) ≤ H * N ∧
-    (((k + 1) ^ r : ℕ) : ℝ) - N ≤ G * (N / (k : ℝ)) ∧
-    (((k + 1) ^ r : ℕ) : ℝ) ≤ N ^ 2 at hgeom
+  have hlog3 : 1 < Real.log (3 : ℝ) := by
+    simpa only [Nat.cast_ofNat] using (ActualRobinInterval.log_gt_one (n := 3) le_rfl)
+  have hlogN : 1 ≤ Real.log N := hlog3.le.trans (Real.log_le_log (by norm_num) hN3)
   have hNX' : N ≤ X := hNX
-  have hXH : X ≤ H * N := hXNplus.le.trans hgeom.1
-  have hXsq : X ≤ N ^ 2 := hXNplus.le.trans hgeom.2.2
-  have hwidth : X - N ≤ G * (N / (k : ℝ)) := by
-    linarith only [hXNplus, hgeom.2.1]
+  have hwidth : X - N ≤ G * Real.rpow N (1 - eta) :=
+    (sub_le_sub_right hXNplus.le N).trans hkGap
+  have hwidthN : X - N ≤ G * N := by
+    apply hwidth.trans
+    apply mul_le_mul_of_nonneg_left _ hG
+    simpa only [Real.rpow_eq_pow, Real.rpow_one] using
+      Real.rpow_le_rpow_of_exponent_le hN1.le (show 1 - eta ≤ 1 by linarith)
+  have hXH : X ≤ H * N := by
+    dsimp only [H]
+    nlinarith only [hwidthN]
+  have hXsq : X ≤ N ^ 2 := hXH.trans (by
+    simpa only [pow_two] using mul_le_mul_of_nonneg_right hkH hN0.le)
   have hX1 : 1 < X := hN1.trans_le hNX'
   have hWX : W alpha X ≤ (2 * H) * W alpha N := by
     have hp : Real.rpow X alpha ≤ H * Real.rpow N alpha := by
       calc
         Real.rpow X alpha ≤ Real.rpow (H * N) alpha :=
-          Real.rpow_le_rpow (by linarith) hXH halpha.le
-        _ = Real.rpow H alpha * Real.rpow N alpha := Real.mul_rpow (by linarith) hN0.le
+          Real.rpow_le_rpow (hN0.le.trans hNX') hXH halpha
+        _ = Real.rpow H alpha * Real.rpow N alpha := Real.mul_rpow hH0 hN0.le
         _ ≤ H * Real.rpow N alpha := by
           apply mul_le_mul_of_nonneg_right _ (Real.rpow_nonneg hN0.le _)
           simpa only [Real.rpow_one, Real.rpow_eq_pow] using
@@ -380,10 +413,10 @@ lemma pressure_samples_to_all (r : ℕ) (hr : 2 ≤ r)
       have hh := Real.log_le_log (by linarith : 0 < X) hXsq
       simpa only [Real.log_pow, Nat.cast_ofNat] using hh
     have hh := mul_le_mul hp hl (Real.log_pos hX1).le
-      (mul_nonneg (by linarith : 0 ≤ H) (Real.rpow_nonneg hN0.le _))
+      (mul_nonneg hH0 (Real.rpow_nonneg hN0.le _))
     dsimp only [W]
     nlinarith only [hh]
-  have hsampleN : -A ≤ W alpha N * S N := hK0 k hk0
+  have hsampleN : -A ≤ W alpha N * S N := hkSample
   have hmod := pressure_clock_interval_modulus hN1 hNX' (E := C * Real.rpow (H * N) beta)
     (by
       intro u hu
@@ -396,24 +429,27 @@ lemma pressure_samples_to_all (r : ℕ) (hr : 2 ≤ r)
   have hraw : |S X - S N| ≤
       C * Real.rpow (H * N) beta * (2 * (X - N) / (N ^ 2 * Real.log N)) :=
     hmod.trans (mul_le_mul_of_nonneg_left hprice
-      (mul_nonneg hC (Real.rpow_nonneg (mul_nonneg (by linarith) hN0.le) _)))
-  have hprod : Real.rpow N alpha * Real.rpow N beta ≤ N * (k : ℝ) :=
-    mesh_power_balance r hbalance (show 1 ≤ k by omega)
-  have hwidth' : (X - N) * (k : ℝ) ≤ G * N := by
-    have hh := (le_div_iff₀ ht).mp (show X - N ≤ G * N / (k : ℝ) by
-      simpa only [mul_div_assoc] using hwidth)
-    exact hh
+      (mul_nonneg hC (Real.rpow_nonneg (mul_nonneg hH0 hN0.le) _)))
   have hnum : (Real.rpow N alpha * Real.rpow N beta) * (X - N) ≤ G * N ^ 2 := by
-    have h1 := mul_le_mul_of_nonneg_right hprod (sub_nonneg.mpr hNX')
-    have h2 := mul_le_mul_of_nonneg_left hwidth' hN0.le
-    nlinarith only [h1, h2]
+    calc
+      _ ≤ (Real.rpow N alpha * Real.rpow N beta) * (G * Real.rpow N (1 - eta)) :=
+        mul_le_mul_of_nonneg_left hwidth
+          (mul_nonneg (Real.rpow_nonneg hN0.le _) (Real.rpow_nonneg hN0.le _))
+      _ = G * Real.rpow N (alpha + beta + (1 - eta)) := by
+        simp only [Real.rpow_eq_pow, Real.rpow_add hN0]
+        ring
+      _ ≤ G * N ^ 2 := by
+        apply mul_le_mul_of_nonneg_left _ hG
+        have hb := Real.rpow_le_rpow_of_exponent_le hN1.le
+          (show alpha + beta + (1 - eta) ≤ (2 : ℝ) by linarith only [hbalance])
+        simpa only [Real.rpow_eq_pow, Real.rpow_two] using hb
   have hquot : ((Real.rpow N alpha * Real.rpow N beta) * (X - N)) / N ^ 2 ≤ G :=
     (div_le_iff₀ (pow_pos hN0 2)).mpr hnum
   have hid : W alpha N *
       (C * Real.rpow (H * N) beta * (2 * (X - N) / (N ^ 2 * Real.log N))) =
       E0 * (((Real.rpow N alpha * Real.rpow N beta) * (X - N)) / N ^ 2) := by
     simp only [Real.rpow_eq_pow]
-    rw [Real.mul_rpow (by linarith : 0 ≤ H) hN0.le]
+    rw [Real.mul_rpow hH0 hN0.le]
     dsimp only [W, E0]
     simp only [Real.rpow_eq_pow]
     field_simp [hN0.ne', (Real.log_pos hN1).ne'] <;> ring
@@ -428,8 +464,27 @@ lemma pressure_samples_to_all (r : ℕ) (hr : 2 ≤ r)
     have hsign := mul_le_mul_of_nonneg_left (neg_le_abs (S X - S N))
       (w_pos alpha hN1).le
     nlinarith only [hsampleN, herr, hsign]
-  exact rescale_lower (add_nonneg hA hB0) (by positivity : 0 ≤ 2 * H)
+  exact rescale_lower (add_nonneg hA hB0) hScale
     (w_pos alpha hX1).le hWX hlower
 
+lemma pressure_samples_to_all (r : ℕ) (hr : 2 ≤ r)
+    (beta sigma C A : ℝ) (hC : 0 ≤ C) (hA : 0 ≤ A)
+    (hsigma0 : 1 / 2 < sigma) (hsigma1 : sigma < 1)
+    (hbeta : 0 ≤ beta) (hgap : beta - 1 / (r : ℝ) < sigma)
+    (hclock : ∀ X : ℝ, 2 ≤ X → |X - clock X| ≤ C * Real.rpow X beta)
+    (hsample : ∀ᶠ k : ℕ in atTop,
+      -A ≤ (Real.rpow ((k ^ r : ℕ) : ℝ) (1 - sigma) *
+        Real.log ((k ^ r : ℕ) : ℝ)) *
+        (Real.eulerMascheroniConstant + Real.log (Real.log ((k ^ r : ℕ) : ℝ)) -
+        1 / Real.log ((k ^ r : ℕ) : ℝ) - pressure (price ((k ^ r : ℕ) : ℝ)))) :
+    ∃ B : ℝ, 0 ≤ B ∧ ∃ T : ℝ, ∀ X : ℝ, T ≤ X →
+      -B ≤ (Real.rpow X (1 - sigma) * Real.log X) *
+        (Real.eulerMascheroniConstant + Real.log (Real.log X) -
+        1 / Real.log X - pressure (price X)) := by
+  have hr0 : (0 : ℝ) < r := by exact_mod_cast (show 0 < r by omega)
+  exact pressure_mesh_samples_to_all (power_cast_strictMono r hr) (power_atTop r hr)
+    (G := (r : ℝ) * (2 : ℝ) ^ (r - 1)) (eta := 1 / (r : ℝ)) (alpha := 1 - sigma)
+    (by positivity) (one_div_pos.mpr hr0) (by linarith) (by linarith) hbeta hC hA
+    (by linarith only [hgap]) (polynomial_gap r hr) hclock hsample
 
 end D5.S3.Arith.Robin.PriceRecord.PolynomialMeshBounds

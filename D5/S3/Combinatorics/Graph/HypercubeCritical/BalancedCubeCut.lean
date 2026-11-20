@@ -23,7 +23,8 @@ open D5.S3.Combinatorics.Graph.Hypercube
 open D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 open D5.S3.Combinatorics.Graph.HypercubeCritical.HuangIntegralNormGap (Q9)
 open private huangMatrix from D5.S3.Combinatorics.Graph.HypercubeSubQuorum
-open private switching_sq inside_equation matrix_support from
+open BalancedCriticalSpectrum (switching_sq)
+open private inside_equation matrix_support from
   D5.S3.Combinatorics.Graph.HypercubeCritical.BalancedCriticalSpectrum
 
 open Classical in

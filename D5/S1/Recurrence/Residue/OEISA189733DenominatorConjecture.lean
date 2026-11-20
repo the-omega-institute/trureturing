@@ -150,7 +150,8 @@ private theorem l_eval_period (k r : ℕ) : (l (6 * k + r)).eval 1 = (l r).eval 
   | succ k ih =>
       rw [show 6 * (k + 1) + r = (6 * k + r) + 6 by omega, l_eval_six, ih]
 
-private theorem triangle_six (k : ℕ) :
+/-- The zeroth row of the triangle in the six residue classes modulo `6`. -/
+theorem triangle_six (k : ℕ) :
     triangle 0 (6 * k) = 0 ∧
     triangle 0 (6 * k + 1) = 1 / (3 * k + 1 : ℚ) ∧
     triangle 0 (6 * k + 2) = 1 / (2 * k + 1 : ℚ) ∧
