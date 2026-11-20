@@ -252,6 +252,8 @@ jobs:
       - id: lean_plan
         name: Select affected Lean inputs and test prerequisites
         if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.compute_budget.outcome == 'success' }}
+        env:
+          CI_BASE: ${{ steps.entry.outputs.base }}
         run: python3 tools/scripts/workflow/ci_checks.py current lean-plan --scope-file "$RUNNER_TEMP/current-lean-plan.json"
       - id: prepared
         name: Adopt a matching PR preparation for this event
