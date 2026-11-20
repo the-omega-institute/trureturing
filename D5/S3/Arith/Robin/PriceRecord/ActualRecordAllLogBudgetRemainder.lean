@@ -26,6 +26,7 @@ import D5.S3.Arith.Robin.PriceRecord.ActualRecordCriticalResidual
 import D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff
 import D5.S3.Arith.Robin.PrimeValuation5040Bridge
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
+import D5.S3.Arith.Robin.ThetaTailRobinWitness
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
@@ -361,6 +362,164 @@ private theorem theta_crossing {Y : ℝ}
   · intro n hn
     rw [hsucc]
     exact Nat.find_min' hex hn
+
+/-- Sample the first natural index whose actual theta value strictly exceeds `x`.
+The overshoot is at most one jump, and the displacement on the log scale tends to zero. -/
+theorem exists_actual_theta_crossing_sampler :
+    ∃ n : ℝ → ℕ,
+      (∀ᶠ x : ℝ in atTop,
+        2 ≤ n x ∧ Chebyshev.theta ((n x - 1 : ℕ) : ℝ) ≤ x ∧
+        x < Chebyshev.theta (n x : ℝ) ∧
+        Chebyshev.theta (n x : ℝ) - x ≤ Real.log (n x : ℝ) ∧
+        ∀ m : ℕ, x < Chebyshev.theta (m : ℝ) → n x ≤ m) ∧
+      Tendsto (fun x : ℝ => (n x : ℝ) / x) atTop (𝓝 1) ∧
+      Tendsto (fun x : ℝ => Real.log (n x : ℝ) - Real.log x) atTop (𝓝 0) := by
+  classical
+  have hcross (x : ℝ) :=
+    theta_crossing (Y := max x (Chebyshev.theta (2 : ℝ))) (le_max_right _ _)
+  let n : ℝ → ℕ := fun x => Classical.choose (hcross x) + 1
+  have hsample : ∀ᶠ x : ℝ in atTop,
+      2 ≤ n x ∧ Chebyshev.theta ((n x - 1 : ℕ) : ℝ) ≤ x ∧
+      x < Chebyshev.theta (n x : ℝ) ∧
+      Chebyshev.theta (n x : ℝ) - x ≤ Real.log (n x : ℝ) ∧
+      ∀ m : ℕ, x < Chebyshev.theta (m : ℝ) → n x ≤ m := by
+    filter_upwards [eventually_ge_atTop (Chebyshev.theta (2 : ℝ))] with x hx
+    let Q := Classical.choose (hcross x)
+    obtain ⟨hQ, hlo, hhi, _, hmin⟩ := Classical.choose_spec (hcross x)
+    change 2 ≤ Q at hQ
+    change Chebyshev.theta (Q : ℝ) ≤ max x (Chebyshev.theta (2 : ℝ)) at hlo
+    change max x (Chebyshev.theta (2 : ℝ)) < Chebyshev.theta ((Q + 1 : ℕ) : ℝ) at hhi
+    change ∀ m : ℕ, max x (Chebyshev.theta (2 : ℝ)) < Chebyshev.theta (m : ℝ) →
+      Q + 1 ≤ m at hmin
+    rw [max_eq_left hx] at hlo hhi hmin
+    have hpred : n x - 1 = Q := by
+      change Q + 1 - 1 = Q
+      omega
+    have hn2 : 2 ≤ n x := by
+      change 2 ≤ Q + 1
+      omega
+    refine ⟨hn2, ?_, hhi, ?_, hmin⟩
+    · rw [hpred]
+      exact hlo
+    · change Chebyshev.theta ((Q + 1 : ℕ) : ℝ) - x ≤ Real.log ((Q + 1 : ℕ) : ℝ)
+      exact (sub_le_sub_left (show Chebyshev.theta (Q : ℝ) ≤ x from hlo) _).trans
+        (theta_step_bound hQ)
+  have hnTop : Tendsto n atTop atTop := by
+    refine tendsto_atTop.mpr (fun m => ?_)
+    filter_upwards [hsample, eventually_ge_atTop (Chebyshev.theta (m : ℝ))] with x hx hm
+    by_contra! hsmall
+    have hcast : (n x : ℝ) ≤ (m : ℝ) := by exact_mod_cast hsmall.le
+    exact (not_lt_of_ge ((Chebyshev.theta_mono hcast).trans hm)) hx.2.2.1
+  have hnRealTop : Tendsto (fun x : ℝ => (n x : ℝ)) atTop atTop :=
+    tendsto_natCast_atTop_atTop.comp hnTop
+  have hthetaRatio : Tendsto (fun x : ℝ => Chebyshev.theta (n x : ℝ) / (n x : ℝ))
+      atTop (𝓝 1) :=
+    D5.S3.Arith.Robin.EulerLayerRootCorrection.prime_number_limits.2.comp hnRealTop
+  have hlogOverId : Tendsto (fun t : ℝ => Real.log t / t) atTop (𝓝 0) :=
+    Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero
+  have hlogOverN : Tendsto (fun x : ℝ => Real.log (n x : ℝ) / (n x : ℝ))
+      atTop (𝓝 0) := hlogOverId.comp hnRealTop
+  have hnPos {x : ℝ} (hx : 2 ≤ n x) : (0 : ℝ) < (n x : ℝ) :=
+    Nat.cast_pos.mpr ((by decide : 0 < (2 : ℕ)).trans_le hx)
+  have hovershootBounds : ∀ᶠ x : ℝ in atTop,
+      0 ≤ (Chebyshev.theta (n x : ℝ) - x) / (n x : ℝ) ∧
+      (Chebyshev.theta (n x : ℝ) - x) / (n x : ℝ) ≤
+        Real.log (n x : ℝ) / (n x : ℝ) := by
+    filter_upwards [hsample] with x hx
+    have hn0 := (hnPos hx.1).le
+    exact ⟨div_nonneg (sub_nonneg.mpr hx.2.2.1.le) hn0,
+      div_le_div_of_nonneg_right hx.2.2.2.1 hn0⟩
+  have hovershoot : Tendsto (fun x : ℝ => (Chebyshev.theta (n x : ℝ) - x) / (n x : ℝ))
+      atTop (𝓝 0) :=
+    tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hlogOverN
+      (hovershootBounds.mono fun _ hx => hx.1) (hovershootBounds.mono fun _ hx => hx.2)
+  have hxOverN : Tendsto (fun x : ℝ => x / (n x : ℝ)) atTop (𝓝 1) := by
+    have h := hthetaRatio.sub hovershoot
+    rw [sub_zero] at h
+    refine h.congr' (Eventually.of_forall fun x => ?_)
+    change Chebyshev.theta (n x : ℝ) / (n x : ℝ) -
+        (Chebyshev.theta (n x : ℝ) - x) / (n x : ℝ) = x / (n x : ℝ)
+    rw [sub_div, sub_sub_cancel]
+  have hratio : Tendsto (fun x : ℝ => (n x : ℝ) / x) atTop (𝓝 1) := by
+    simpa only [inv_div, inv_one] using hxOverN.inv₀ one_ne_zero
+  have hlog : Tendsto (fun x : ℝ => Real.log ((n x : ℝ) / x)) atTop (𝓝 0) := by
+    simpa only [Function.comp_def, Real.log_one] using
+      (Real.continuousAt_log (one_ne_zero : (1 : ℝ) ≠ 0)).tendsto.comp hratio
+  refine ⟨n, hsample, hratio, hlog.congr' ?_⟩
+  filter_upwards [hsample, eventually_gt_atTop (0 : ℝ)] with x hx hx0
+  exact Real.log_div (hnPos hx.1).ne' hx0.ne'
+
+open scoped Interval in
+/-- Uniform modulus for the actual signed theta tail over every sufficiently late
+ordered interval. -/
+theorem actual_theta_tail_local_modulus :
+    ∀ᶠ u : ℝ in atTop, ∀ v : ℝ, u ≤ v →
+      |D5.S3.Weil.Mertens.ActualThetaTailLaplace.F v -
+        D5.S3.Weil.Mertens.ActualThetaTailLaplace.F u| ≤
+        2 * (v - u) / (u * Real.log u) := by
+  let F := D5.S3.Weil.Mertens.ActualThetaTailLaplace.F
+  let w := D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity
+  let kernel : ℝ → ℝ := fun t => (Chebyshev.theta t - t) * w t
+  have htheta := D5.S3.Arith.Robin.EulerLayerRootCorrection.prime_number_limits.2
+  have herror : ∀ᶠ t : ℝ in atTop, |Chebyshev.theta t - t| ≤ t := by
+    have hupper := htheta.eventually (Iio_mem_nhds (by norm_num : (1 : ℝ) < 2))
+    filter_upwards [eventually_gt_atTop (0 : ℝ), hupper] with t ht hratio
+    have hthetaUpper : Chebyshev.theta t < 2 * t :=
+      (div_lt_iff₀ ht).mp (Set.mem_Iio.mp hratio)
+    exact abs_le.mpr ⟨by linarith [Chebyshev.theta_nonneg t], by linarith⟩
+  obtain ⟨R, hR⟩ := eventually_atTop.mp herror
+  refine (eventually_ge_atTop (max R (max 2 (Real.exp 1)))).mono ?_
+  intro u hu v huv
+  have hRu : R ≤ u := (le_max_left _ _).trans hu
+  have hu2 : 2 ≤ u := (le_max_left (2 : ℝ) (Real.exp 1)).trans ((le_max_right _ _).trans hu)
+  have hExpU : Real.exp 1 ≤ u :=
+    (le_max_right (2 : ℝ) (Real.exp 1)).trans ((le_max_right _ _).trans hu)
+  have hu0 : 0 < u := by linarith
+  have hlogu : 0 < Real.log u := Real.log_pos (by linarith)
+  have huInt : MeasureTheory.IntegrableOn kernel (Set.Ioi u) :=
+    (D5.S3.Arith.Robin.ThetaTailRobinWitness.theta_tail_mertens_robin u hu2).1
+  have hvInt : MeasureTheory.IntegrableOn kernel (Set.Ioi v) :=
+    huInt.mono_set (Set.Ioi_subset_Ioi huv)
+  have hdiff : F v - F u = ∫ t in u..v, kernel t := by
+    change -(∫ t in Set.Ioi v, kernel t) - (-(∫ t in Set.Ioi u, kernel t)) = _
+    rw [neg_sub_neg]
+    exact intervalIntegral.integral_Ioi_sub_Ioi' huInt hvInt
+  have hkernel (t : ℝ) (hut : u ≤ t) : ‖kernel t‖ ≤ 2 / (u * Real.log u) := by
+    have ht0 : 0 < t := hu0.trans_le hut
+    have hlogt : 0 < Real.log t := hlogu.trans_le (Real.log_le_log hu0 hut)
+    have hlogt1 : 1 ≤ Real.log t := by
+      simpa only [Real.log_exp] using Real.log_le_log (Real.exp_pos 1) (hExpU.trans hut)
+    have hw : 0 ≤ w t := by
+      change 0 ≤ (Real.log t + 1) / (t ^ 2 * Real.log t ^ 2)
+      positivity
+    have hdensity : t * w t ≤ 2 / (t * Real.log t) := by
+      change t * ((Real.log t + 1) / (t ^ 2 * Real.log t ^ 2)) ≤ _
+      calc
+        _ ≤ t * ((2 * Real.log t) / (t ^ 2 * Real.log t ^ 2)) :=
+          mul_le_mul_of_nonneg_left
+            (div_le_div_of_nonneg_right (by linarith) (by positivity)) ht0.le
+        _ = _ := by field_simp [ht0.ne', hlogt.ne']
+    have hden : u * Real.log u ≤ t * Real.log t :=
+      mul_le_mul hut (Real.log_le_log hu0 hut) hlogu.le ht0.le
+    change ‖(Chebyshev.theta t - t) * w t‖ ≤ _
+    rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hw]
+    calc
+      _ ≤ t * w t := mul_le_mul_of_nonneg_right (hR t (hRu.trans hut)) hw
+      _ ≤ 2 / (t * Real.log t) := hdensity
+      _ ≤ 2 / (u * Real.log u) :=
+        div_le_div_of_nonneg_left (by norm_num) (mul_pos hu0 hlogu) hden
+  have hnorm : ‖∫ t in u..v, kernel t‖ ≤ (2 / (u * Real.log u)) * |v - u| := by
+    apply intervalIntegral.norm_integral_le_of_norm_le_const
+    intro t ht
+    rw [Set.uIoc_of_le huv] at ht
+    exact hkernel t (Set.mem_Ioc.mp ht).1.le
+  change |F v - F u| ≤ 2 * (v - u) / (u * Real.log u)
+  calc
+    |F v - F u| = ‖∫ t in u..v, kernel t‖ := by rw [hdiff, Real.norm_eq_abs]
+    _ ≤ (2 / (u * Real.log u)) * |v - u| := hnorm
+    _ = _ := by
+      rw [abs_of_nonneg (sub_nonneg.mpr huv)]
+      ring
 
 /- This auxiliary inequality is only logarithmic shell arithmetic, not a new
    PNT transfer theorem. Its consumers are localization and the rate estimate. -/

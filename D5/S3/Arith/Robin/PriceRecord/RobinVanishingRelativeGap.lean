@@ -8,10 +8,13 @@
 
 import Mathlib.MeasureTheory.Function.Floor
 import D5.S3.Analytic.Asymptotics.VanishingGapSignTransfer
+import D5.S3.Analytic.Asymptotics.CanonicalThresholdWindowTransfer
 import D5.S3.Analytic.Laplace.MaximalRealPartProjection
 import D5.S3.Arith.Robin.ActualTwoPriceDefect
 import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
 import D5.S3.Arith.Robin.Analytic.ZeroFreeStripMertensEnvelope
+import D5.S3.Arith.Robin.Analytic.ActualUnattainedThetaWindows
+import D5.S3.Arith.Robin.PriceRecord.ActualRecordAllLogBudgetRemainder
 import D5.S3.Arith.Robin.PriceRecord.RHSharpOriginalRecordMargin
 import D5.S3.Arith.Robin.ThetaTailRobinWitness
 import D5.S3.Weil.Mertens.CriticalThetaTailPeak
@@ -730,5 +733,265 @@ theorem actual_canonical_log_window_lower_bound_iff {h α : ℝ} (hh : 0 < h)
     rw [hnormalize] at hscaled
     rw [hshift]
     exact hscaled
+
+open CanonicalThresholdWindowTransfer (tailScale)
+open D5.S3.Weil.Mertens.ActualThetaTailLaplace (F)
+open D5.S3.Arith.Robin.Analytic.ThetaReparametrizedSandwich (actual_theta_reparametrized_sandwich)
+open ActualRecordAllLogBudgetRemainder
+  (exists_actual_theta_crossing_sampler actual_theta_tail_local_modulus)
+
+private abbrev canonicalMargin (n : ℕ) := robinLogMargin (canonicalRecord n)
+
+private lemma eventually_canonical_correction :
+    ∀ᶠ n : ℕ in atTop, 0 ≤ D (n : ℝ) * (canonicalMargin n - B (n : ℝ)) ∧
+      D (n : ℝ) * (canonicalMargin n - B (n : ℝ)) ≤ 2 * (2 * Real.sqrt 2 + 1) := by
+  exact eventually_canonical_root_correction
+    (N := id) (tendsto_natCast_atTop_atTop (R := ℝ))
+
+private lemma eventually_D_le_id : ∀ᶠ x : ℝ in atTop, D x ≤ x := by
+  have h := (_root_.isLittleO_log_rpow_atTop one_half_pos).tendsto_div_nhds_zero.eventually
+    (Iio_mem_nhds (by norm_num : (0 : ℝ) < 1))
+  filter_upwards [h, eventually_gt_atTop (0 : ℝ)] with x hx hx0
+  change Real.log x / x ^ (1 / 2 : ℝ) < 1 at hx
+  rw [← Real.sqrt_eq_rpow] at hx
+  have hs := Real.sqrt_pos.mpr hx0
+  have hl := (div_lt_iff₀ hs).mp hx
+  rw [one_mul] at hl
+  calc
+    D x ≤ Real.sqrt x * Real.sqrt x := mul_le_mul_of_nonneg_left hl.le hs.le
+    _ = x := Real.mul_self_sqrt hx0.le
+
+private lemma root_error_eventually_le_tail {b c L : ℝ} (hb : 1 / 2 < b) (hc : 0 < c) :
+    ∀ᶠ x : ℝ in atTop, L / D x ≤ (c / 2) * tailScale b x := by
+  have he : Tendsto (fun x : ℝ => L * x ^ (1 / 2 - b : ℝ)) atTop (𝓝 0) := by
+    simpa only [neg_sub, mul_zero] using
+      (tendsto_rpow_neg_atTop (sub_pos.mpr hb)).const_mul L
+  filter_upwards [he.eventually_lt_const (half_pos hc), eventually_gt_atTop (1 : ℝ)]
+    with x hx hx1
+  have hx0 : 0 < x := by linarith
+  have hfactor : L / D x = (L * x ^ (1 / 2 - b : ℝ)) * tailScale b x := by
+    rw [D, tailScale, Real.sqrt_eq_rpow, ← mul_div_assoc, mul_assoc, ← Real.rpow_add hx0]
+    rw [show 1 / 2 - b + (b - 1) = -(1 / 2 : ℝ) by ring, Real.rpow_neg hx0.le]
+    ring
+  rw [hfactor]
+  exact mul_le_mul_of_nonneg_right hx.le
+    (div_nonneg (Real.rpow_nonneg hx0.le _) (Real.log_pos hx1).le)
+
+private lemma eventually_tailScale_sample_le {n : ℝ → ℕ} {b : ℝ}
+    (hratio : Tendsto (fun x : ℝ => (n x : ℝ) / x) atTop (𝓝 1))
+    (hshift : Tendsto (fun x : ℝ => Real.log (n x : ℝ) - Real.log x) atTop (𝓝 0)) :
+    ∀ᶠ x : ℝ in atTop, tailScale b (n x : ℝ) ≤ 2 * tailScale b x := by
+  have h := (CanonicalThresholdWindowTransfer.tendsto_tailScale_ratio b hratio hshift).eventually
+    (Iio_mem_nhds (by norm_num : (1 : ℝ) < 2))
+  filter_upwards [h, eventually_gt_atTop (1 : ℝ)] with x hx hx1
+  have hpos : 0 < tailScale b x := by
+    unfold tailScale
+    exact div_pos (Real.rpow_pos_of_pos (by linarith) _) (Real.log_pos hx1)
+  exact ((div_lt_iff₀ hpos).mp hx).le
+
+private theorem eventually_positive_canonical_sample {n : ℝ → ℕ}
+    (hsample : ∀ᶠ x : ℝ in atTop,
+      2 ≤ n x ∧ Chebyshev.theta ((n x - 1 : ℕ) : ℝ) ≤ x ∧
+      x < Chebyshev.theta (n x : ℝ) ∧
+      Chebyshev.theta (n x : ℝ) - x ≤ Real.log (n x : ℝ) ∧
+      ∀ m : ℕ, x < Chebyshev.theta (m : ℝ) → n x ≤ m)
+    (hratio : Tendsto (fun x : ℝ => (n x : ℝ) / x) atTop (𝓝 1))
+    (hshift : Tendsto (fun x : ℝ => Real.log (n x : ℝ) - Real.log x) atTop (𝓝 0)) :
+    ∀ᶠ x : ℝ in atTop, -F x - 12 / D x ≤ canonicalMargin (n x) := by
+  have hratioHalf := hratio.eventually (Ioi_mem_nhds (by norm_num : (1 / 2 : ℝ) < 1))
+  have hcastTop : Tendsto (fun x : ℝ => (n x : ℝ)) atTop atTop := by
+    apply tendsto_atTop.2
+    intro a
+    filter_upwards [hratioHalf, eventually_gt_atTop (max 1 (2 * a))] with x hr hx
+    have hx0 := zero_lt_one.trans_le ((le_max_left _ _).trans hx.le)
+    have hlow := (lt_div_iff₀ hx0).mp (Set.mem_Ioi.mp hr)
+    linarith only [hlow, (le_max_right _ _).trans hx.le]
+  have hnTop : Tendsto n atTop atTop := tendsto_natCast_atTop_iff.mp hcastTop
+  filter_upwards [hsample, hratioHalf, hshift.eventually_lt_const zero_lt_one,
+    hnTop.eventually eventually_canonical_correction, actual_theta_tail_local_modulus,
+    eventually_D_le_id, eventually_gt_atTop (max 4 (Real.exp 1))] with x hs hr hshiftx
+      hcorr hmod hDx hx
+  let N := n x
+  have hx4 : 4 < x := (le_max_left _ _).trans_lt hx
+  have hx0 : 0 < x := by linarith
+  have hxlog : 1 ≤ Real.log x := by
+    simpa only [Real.log_exp] using Real.log_le_log (Real.exp_pos 1)
+      ((le_max_right _ _).trans hx.le)
+  have hNlow : x / 2 < (N : ℝ) := by
+    have h := (lt_div_iff₀ hx0).mp (Set.mem_Ioi.mp hr)
+    linarith only [h]
+  have hN2 : 2 < (N : ℝ) := by linarith only [hx4, hNlow]
+  have hθ : 2 < Chebyshev.theta (N : ℝ) := (by linarith : 2 < x).trans hs.2.2.1
+  have hlogx : 0 < Real.log x := by linarith only [hxlog]
+  have hDxPos : 0 < D x := mul_pos (Real.sqrt_pos.mpr hx0) hlogx
+  have hD : 0 < D (N : ℝ) :=
+    mul_pos (Real.sqrt_pos.mpr (by linarith)) (Real.log_pos (by linarith))
+  have hG : B (N : ℝ) ≤ canonicalMargin N :=
+    sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hD).mp hcorr.1)
+  have hB := (actual_theta_reparametrized_sandwich hN2 hθ).1
+  have hE := (abs_le.mp (finite_cancellation hN2.le)).1
+  have hF := hmod (Chebyshev.theta (N : ℝ)) hs.2.2.1.le
+  have hLog : Real.log (N : ℝ) ≤ 2 * Real.log x := by linarith only [hshiftx, hxlog]
+  have hmove : F (Chebyshev.theta (N : ℝ)) - F x ≤ 4 / x := by
+    refine (le_abs_self _).trans (hF.trans ?_)
+    apply (div_le_iff₀ (mul_pos hx0 (by linarith))).2
+    rw [show (4 / x) * (x * Real.log x) = 4 * Real.log x by field_simp]
+    linarith only [hs.2.2.2.1, hLog]
+  have hcost : 4 / (N : ℝ) ≤ 8 / x := by
+    calc
+      _ ≤ 4 / (x / 2) := div_le_div_of_nonneg_left (by norm_num) (by positivity) hNlow.le
+      _ = _ := by ring
+  have hroot : 12 / x ≤ 12 / D x :=
+    div_le_div_of_nonneg_left (by norm_num) hDxPos hDx
+  have hsum : 4 / x + 8 / x = 12 / x := by ring
+  linarith only [hG, hB, hE, hmove, hcost, hroot, hsum]
+
+private theorem eventually_negative_canonical_sample :
+    ∀ᶠ x : ℝ in atTop, canonicalMargin ⌈x⌉₊ ≤
+      -F x + (6 + 2 * (2 * Real.sqrt 2 + 1)) / D x := by
+  have hθ := D5.S3.Arith.Robin.EulerLayerRootCorrection.prime_number_limits.2
+  have hθTop : Tendsto Chebyshev.theta atTop atTop := by
+    apply (hθ.pos_mul_atTop (by norm_num : (0 : ℝ) < 1) tendsto_id).congr'
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
+    exact div_mul_cancel₀ _ hx.ne'
+  filter_upwards [eventually_gt_atTop (max 2 (Real.exp 1)), hθTop.eventually_gt_atTop 2,
+    tendsto_nat_ceil_atTop.eventually eventually_canonical_correction,
+    actual_theta_tail_local_modulus,
+    eventually_D_le_id] with x hx hθx hcorr hmod hDx
+  let N : ℕ := ⌈x⌉₊
+  have hx2 : 2 < x := (le_max_left _ _).trans_lt hx
+  have hx0 : 0 < x := by linarith
+  have hN := Nat.le_ceil x
+  have hN2 : 2 < (N : ℝ) := hx2.trans_le hN
+  have hNclose : (N : ℝ) < x + 1 := Nat.ceil_lt_add_one hx0.le
+  have hlogx : 0 < Real.log x := Real.log_pos (by linarith)
+  have hD : 0 < D x := mul_pos (Real.sqrt_pos.mpr hx0) hlogx
+  have hD_N : D x ≤ D (N : ℝ) := by
+    unfold D
+    exact mul_le_mul (Real.sqrt_le_sqrt hN) (Real.log_le_log hx0 hN)
+      (Real.log_pos (by linarith)).le (Real.sqrt_nonneg _)
+  have hDpos := hD.trans_le hD_N
+  let L : ℝ := 2 * (2 * Real.sqrt 2 + 1)
+  have hG : canonicalMargin N - B (N : ℝ) ≤ L / D x := by
+    have h : canonicalMargin N - B (N : ℝ) ≤ L / D (N : ℝ) := by
+      apply (le_div_iff₀ hDpos).2
+      rw [mul_comm]
+      exact hcorr.2
+    exact h.trans (div_le_div_of_nonneg_left (by unfold L; positivity) hD hD_N)
+  have hB := (actual_theta_reparametrized_sandwich hN2
+    (hθx.trans_le (Chebyshev.theta_mono hN))).2
+  have hE := (abs_le.mp (finite_cancellation hN2.le)).2
+  have hcost : 4 / (N : ℝ) ≤ 4 / D x :=
+    div_le_div_of_nonneg_left (by norm_num) hD (hDx.trans hN)
+  have hmove : F x - F (N : ℝ) ≤ 2 / D x := by
+    have hLocal := (neg_le_abs _).trans (hmod (N : ℝ) hN)
+    rw [neg_sub] at hLocal
+    have hden : D x ≤ x * Real.log x := by
+      unfold D
+      have hs : Real.sqrt x ≤ x := by
+        simpa only [Real.sqrt_sq (by linarith : 0 ≤ x)] using
+          Real.sqrt_le_sqrt (show x ≤ x ^ 2 by nlinarith)
+      exact mul_le_mul_of_nonneg_right hs (Real.log_pos (by linarith)).le
+    calc
+      _ ≤ 2 * ((N : ℝ) - x) / (x * Real.log x) := hLocal
+      _ ≤ 2 / (x * Real.log x) :=
+        div_le_div_of_nonneg_right (by linarith) (mul_nonneg hx0.le hlogx.le)
+      _ ≤ 2 / D x := div_le_div_of_nonneg_left (by norm_num) hD hden
+  have hsum : 2 / D x + 4 / D x + L / D x = (6 + L) / D x := by ring
+  change canonicalMargin N ≤ -F x + (6 + L) / D x
+  linarith only [hG, hB, hE, hcost, hmove, hsum]
+
+open D5.S3.Arith.Robin.ForwardKernel.KappaGap (zeroAbscissa)
+open D5.S3.Arith.Robin.Analytic.ActualUnattainedThetaWindows
+open CanonicalThresholdWindowTransfer (normalizedMargin)
+
+private theorem theta_windows_at_prescribed_scale {b h : ℝ}
+    (hb : 1 / 2 < b) (hbΘ : b < zeroAbscissa) (hh : 0 < h)
+    (hun : ∀ z : ℂ, IsNontrivialZero z → z.re < zeroAbscissa) :
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ T : ℝ in atTop,
+      (∃ t ∈ Icc T (T + h), c * tailScale b (Real.exp t) ≤ -F (Real.exp t)) ∧
+      (∃ t ∈ Icc T (T + h), c * tailScale b (Real.exp t) ≤ F (Real.exp t)) := by
+  obtain ⟨β, hβb, hβ₁, c, hc, hwindow⟩ :=
+    eventually_actual_weighted_theta_tail_two_signs hb hbΘ hh hun
+  refine ⟨c, hc, ?_⟩
+  filter_upwards [hwindow, eventually_gt_atTop (0 : ℝ)] with T hwin hT
+  have hscale (t : ℝ) (ht : T ≤ t) :
+      c * tailScale b (Real.exp t) ≤ c * Real.exp ((β - 1) * T) / T := by
+    have hExp : Real.exp ((b - 1) * t) ≤ Real.exp ((β - 1) * T) := by
+      apply Real.exp_le_exp.mpr
+      exact (mul_le_mul_of_nonpos_left ht (sub_nonpos.mpr (hβb.trans hβ₁).le)).trans
+        (mul_le_mul_of_nonneg_right (sub_le_sub_right hβb.le 1) hT.le)
+    rw [tailScale, Real.log_exp, ← Real.exp_mul, mul_comm t, ← mul_div_assoc]
+    exact (div_le_div_of_nonneg_left (by positivity) hT ht).trans
+      (div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hExp hc.le) hT.le)
+  obtain ⟨⟨p, hp, hpF⟩, ⟨m, hm, hmF⟩⟩ := hwin
+  exact ⟨⟨p, hp, (hscale p hp.1).trans hpF.le⟩,
+    ⟨m, hm, (hscale m hm.1).trans (by linarith only [hmF])⟩⟩
+
+private theorem eventually_sample_transfer {n : ℝ → ℕ} {L b : ℝ}
+    (G : ℕ → ℝ) (K : ℝ → ℝ) (hb : 1 / 2 < b)
+    (hbound : ∀ᶠ x : ℝ in atTop, K x - L / D x ≤ G (n x))
+    (hratio : Tendsto (fun x : ℝ => (n x : ℝ) / x) atTop (𝓝 1))
+    (hshift : Tendsto (fun x : ℝ => Real.log (n x : ℝ) - Real.log x) atTop (𝓝 0))
+    (c : ℝ) (hc : 0 < c) :
+    ∀ᶠ x : ℝ in atTop, c * tailScale b x ≤ K x →
+      (c / 4) * tailScale b (n x : ℝ) ≤ G (n x) := by
+  filter_upwards [hbound, root_error_eventually_le_tail (L := L) hb hc,
+    eventually_tailScale_sample_le (b := b) hratio hshift] with x hx he hs hw
+  have hscale := mul_le_mul_of_nonneg_left hs (show 0 ≤ c / 4 by positivity)
+  have hdouble : c / 4 * (2 * tailScale b x) = c / 2 * tailScale b x := by ring
+  have hmargin : c * tailScale b x = 2 * ((c / 2) * tailScale b x) := by ring
+  rw [hdouble] at hscale
+  rw [hmargin] at hw
+  linarith only [hx, he, hscale, hw]
+
+/-- Under unattainment, actual canonical Robin records admit two strictly increasing
+integer meshes with adjacent ratios tending to one. For any exponent `α` between
+`1 - zeroAbscissa` and `1/2`, the literal normalized margins tend to opposite infinities. -/
+theorem actual_canonical_two_signed_ratio_one_meshes {α : ℝ}
+    (hα : 1 - zeroAbscissa < α) (hαhalf : α < 1 / 2)
+    (hun : ∀ z : ℂ, IsNontrivialZero z → z.re < zeroAbscissa) :
+    ∃ Npos Nneg : ℕ → ℕ, StrictMono Npos ∧ StrictMono Nneg ∧
+      Tendsto (fun k => (Npos (k + 1) : ℝ) / (Npos k : ℝ)) atTop (𝓝 1) ∧
+      Tendsto (fun k => (Nneg (k + 1) : ℝ) / (Nneg k : ℝ)) atTop (𝓝 1) ∧
+      Tendsto (fun k => weight α (Npos k : ℝ) *
+        robinLogMargin (strictInteger (firstLayerPrice ((Npos k : ℝ) + 1)))) atTop atTop ∧
+      Tendsto (fun k => weight α (Nneg k : ℝ) *
+        robinLogMargin (strictInteger (firstLayerPrice ((Nneg k : ℝ) + 1)))) atTop atBot := by
+  obtain ⟨b, hb, hbΘ⟩ := exists_between (by linarith only [hα] : 1 - α < zeroAbscissa)
+  have hbHalf : 1 / 2 < b := by linarith only [hb, hαhalf]
+  have hexponent : 0 < α + b - 1 := by linarith only [hb]
+  let δ := (α + b - 1) / 2
+  obtain ⟨n, hn, hratio, hlog⟩ := exists_actual_theta_crossing_sampler
+  let m : ℝ → ℕ := Nat.ceil
+  have hmRatio : Tendsto (fun x : ℝ => (m x : ℝ) / x) atTop (𝓝 1) :=
+    tendsto_nat_ceil_div_atTop
+  have hmLog : Tendsto (fun x : ℝ => Real.log (m x : ℝ) - Real.log x) atTop (𝓝 0) := by
+    have h := (Real.continuousAt_log (one_ne_zero : (1 : ℝ) ≠ 0)).tendsto.comp hmRatio
+    rw [Real.log_one] at h
+    apply h.congr'
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with x hx
+    have hx₀ : 0 < x := by linarith
+    exact Real.log_div (hx₀.trans_le (Nat.le_ceil x)).ne' hx₀.ne'
+  have hpos := eventually_sample_transfer canonicalMargin (fun x => -F x) hbHalf
+    (eventually_positive_canonical_sample hn hratio hlog) hratio hlog
+  have hnegBound : ∀ᶠ x : ℝ in atTop,
+      F x - (6 + 2 * (2 * Real.sqrt 2 + 1)) / D x ≤ -canonicalMargin (m x) := by
+    filter_upwards [eventually_negative_canonical_sample] with x hx
+    change canonicalMargin (m x) ≤ -F x + (6 + 2 * (2 * Real.sqrt 2 + 1)) / D x at hx
+    linarith only [hx]
+  have hneg := eventually_sample_transfer (fun n => -canonicalMargin n) F hbHalf
+    hnegBound hmRatio hmLog
+  have hwindow : ∀ h : ℝ, 0 < h → ∃ c : ℝ, 0 < c ∧ ∀ᶠ T : ℝ in atTop,
+      (∃ t ∈ Icc T (T + h), c * tailScale b (Real.exp t) ≤ -F (Real.exp t)) ∧
+      (∃ t ∈ Icc T (T + h), c * tailScale b (Real.exp t) ≤ -(-F (Real.exp t))) := by
+    intro h hh
+    simpa only [neg_neg] using theta_windows_at_prescribed_scale hbHalf hbΘ hh hun
+  obtain ⟨_, _, np, nm, hnp, hnm, _, _, hrp, hrm, hlimp, hlimm⟩ :=
+    CanonicalThresholdWindowTransfer.threshold_grids_of_two_signed_samplings
+      (δ := δ) (half_pos hexponent) (half_lt_self hexponent)
+      (fun x => -F x) canonicalMargin n m hwindow hratio hmRatio hlog hmLog hpos
+      (by simpa only [neg_neg] using hneg)
+  exact ⟨np, nm, hnp, hnm, hrp, hrm, hlimp, hlimm⟩
 
 end D5.S3.Arith.Robin.PriceRecord.RobinVanishingRelativeGap
