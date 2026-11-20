@@ -39,13 +39,15 @@ internal sealed class UltrametricCenterMinimumOrderDocument : IScribeDocumentDef
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
-                        "Let A be a finite set of reals. Some finite ultrametric space has distance set "
-                        + "D(X) = A and center C(X) = A exactly when 0 ∈ A and every element of A is "
-                        + "nonnegative. For such A, 2^(|A|−1) is the least order of a finite ultrametric space "
-                        + "with C(X) = A, and it is attained by a space with D(X) = C(X) = A.")),
+                        "Let A be a finite set of reals. The following are equivalent: A is the center C(X) "
+                        + "of some finite ultrametric space; A is both the distance set D(X) and the center "
+                        + "C(X) of some finite ultrametric space; 0 ∈ A and every element of A is nonnegative. "
+                        + "For such A, 2^(|A|−1) is the least order of a finite ultrametric space with "
+                        + "C(X) = A, and it is attained by a space with D(X) = C(X) = A.")),
                     Paragraph(Text(
                         "Necessity: an empty space has C = [0, ∞), which is not finite, so X is nonempty; then "
-                        + "0 = d(x, x) ∈ D(X) = A and C(X) ⊆ [0, ∞). Sufficiency: list A as "
+                        + "0 ∈ C(X) because every point is at distance 0 from itself, and C(X) ⊆ [0, ∞). "
+                        + "Sufficiency: list A as "
                         + "0 = a₀ < a₁ < … < aₙ with n = |A| − 1, take the 2ⁿ binary words of length n, and "
                         + "let the distance of two different words be a_j, where j is one plus the highest "
                         + "position where they differ. Positions where u and w differ are positions where u, v "

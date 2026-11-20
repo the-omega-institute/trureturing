@@ -18,15 +18,13 @@ triage: anchor
 
 DOI: 10.48550/arXiv.2603.25850
 
-Source: https://arxiv.org/abs/2603.25850v1 (PDF text extracted locally with layout preserved,
-57,073 characters). Corollary 3.12 and Example 3.13 are in Section 3; Conjecture 4.4 is in
-Section 4.
+Source: https://arxiv.org/abs/2603.25850v1. Corollary 3.12 and Example 3.13 are in Section 3;
+Conjecture 4.4 is in Section 4.
 
 The conjecture is proved in O. Dovgoshey, N. S. Jaiswal, S. P. S. Kainth, G. Kaur and
 O. Rovenska, "Maximal Center of Distances of Finite Ultrametric Spaces and Perfect Binary Trees",
-arXiv:2609.11384v1, https://arxiv.org/abs/2609.11384v1 (PDF text extracted locally, 60,766
-characters), Proposition 4.5 and Corollary 4.6; its Remark 4.7 records that Corollary 4.6 is
-Conjecture 4.4.
+arXiv:2609.11384v1, https://arxiv.org/abs/2609.11384v1, Proposition 4.5 and Corollary 4.6; its
+Remark 4.7 records that Corollary 4.6 is Conjecture 4.4.
 
 ## Source statements
 
@@ -56,9 +54,9 @@ and for every k ≥ 1 some finite ultrametric space has |C(X)| = k and exactly 2
 proof splits the space at its diameter m: the open m-balls around two points at distance m are
 disjoint, and the center of each contains C(X) \ {m}, so induction on the order applies.
 
-UltrametricCenterMinimumOrder.result is Conjecture 4.4 with the minimum order. A finite set A of
-reals is D(X) = C(X) for some finite ultrametric space exactly when 0 ∈ A and A ⊆ [0, ∞); for such
-A, the least order of a finite ultrametric space with C(X) = A is 2^(|A|−1), attained by a space
+UltrametricCenterMinimumOrder.result is Conjecture 4.4 with the minimum order. For a finite set A
+of reals, being C(X) for some finite ultrametric space, being D(X) = C(X) for some finite
+ultrametric space, and 0 ∈ A ⊆ [0, ∞) are equivalent; for such A, the least order of a finite ultrametric space with C(X) = A is 2^(|A|−1), attained by a space
 with D(X) = C(X) = A. The realization uses binary words of length |A| − 1, with the distance of two
 words the element of A indexed by one plus the highest position where they differ. It replaces the
 labelled perfect binary tree of Proposition 4.5 by this explicit word metric; the uniqueness up to

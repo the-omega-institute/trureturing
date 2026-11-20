@@ -18,9 +18,10 @@ arXiv:2603.25850, Definition 1.1).
 ultrametric space with `|C(X)| = k ≥ 1` has at least `2^(k-1)` points, and this order is attained
 for every `k ≥ 1`. `result` is Conjecture 4.4 of arXiv:2603.25850, proved as Proposition 4.5 and
 Corollary 4.6 of O. Dovgoshey, N. S. Jaiswal, S. P. S. Kainth, G. Kaur and O. Rovenska
-(arXiv:2609.11384): a finite set `A` is the distance set and the center of some finite ultrametric
-space exactly when `0 ∈ A ⊆ [0, ∞)`, and then the least order of a finite ultrametric space with
-center `A` is `2^(|A|-1)`, attained with distance set `A` as well.
+(arXiv:2609.11384): for a finite set `A`, being the center of some finite ultrametric space, being
+its distance set and center at once, and `0 ∈ A ⊆ [0, ∞)` are equivalent, and then the least order
+of a finite ultrametric space with center `A` is `2^(|A|-1)`, attained with distance set `A` as
+well.
 
 The lower bound splits a finite ultrametric space at its diameter `m`: the open `m`-balls around
 two points at distance `m` are disjoint and each has center containing `C(X) \ {m}`. The
@@ -327,13 +328,16 @@ theorem lower_bound :
 
 /-- Conjecture 4.4 of Dovgoshey–Rovenska (arXiv:2603.25850), proved as Proposition 4.5 and
 Corollary 4.6 of Dovgoshey, Jaiswal, Kainth, Kaur and Rovenska (arXiv:2609.11384), with the
-minimum order: a finite set `A` is the distance set and the center of a finite ultrametric space
-exactly when `0 ∈ A ⊆ [0, ∞)`; then `2^(|A|-1)` is the least order of a finite ultrametric space
-with center `A`, attained by one whose distance set is also `A`. -/
+minimum order: for a finite set `A`, being the center of a finite ultrametric space, being its
+distance set and center at once, and `0 ∈ A ⊆ [0, ∞)` are equivalent; then `2^(|A|-1)` is the
+least order of a finite ultrametric space with center `A`, attained by one whose distance set is
+also `A`. -/
 theorem result (A : Finset ℝ) :
-    ((∃ (X : Type) (_ : Fintype X) (_ : MetricSpace X), IsUltrametricDist X ∧
-        {r | ∃ x y : X, dist x y = r} = ↑A ∧ center X = ↑A) ↔
-      0 ∈ A ∧ ∀ a ∈ A, 0 ≤ a) ∧
+    List.TFAE [∃ (X : Type) (_ : Fintype X) (_ : MetricSpace X), IsUltrametricDist X ∧
+        center X = ↑A,
+      ∃ (X : Type) (_ : Fintype X) (_ : MetricSpace X), IsUltrametricDist X ∧
+        {r | ∃ x y : X, dist x y = r} = ↑A ∧ center X = ↑A,
+      0 ∈ A ∧ ∀ a ∈ A, 0 ≤ a] ∧
     (0 ∈ A → (∀ a ∈ A, 0 ≤ a) →
       IsLeast {n | ∃ (X : Type) (_ : Fintype X) (_ : MetricSpace X), IsUltrametricDist X ∧
           center X = ↑A ∧ Fintype.card X = n} (2 ^ (A.card - 1)) ∧
@@ -346,20 +350,28 @@ theorem result (A : Finset ℝ) :
         Fintype.card X = 2 ^ (A.card - 1) := fun h0 hnn =>
     ⟨Space _ (scaleOf A h0 hnn), inferInstance, inferInstance, inferInstance,
       by rw [dist_set, range_scaleOf], by rw [center_space, range_scaleOf], card_space _⟩
-  refine ⟨⟨?_, fun ⟨h0, hnn⟩ => ?_⟩, fun h0 hnn => ⟨⟨?_, ?_⟩, build h0 hnn⟩⟩
-  · rintro ⟨X, _, _, _, hD, hC⟩
-    by_cases hX : Nonempty X
-    · obtain ⟨x⟩ := hX
-      have h0 : (0 : ℝ) ∈ A := by
-        rw [← Finset.mem_coe, ← hD]; exact ⟨x, x, dist_self x⟩
-      refine ⟨h0, fun a ha => ?_⟩
-      rw [← Finset.mem_coe, ← hC] at ha; exact ha.1
-    · rw [not_nonempty_iff] at hX
-      have : center X = Set.Ici 0 := by ext t; simp [center, Set.mem_Ici]
-      rw [this] at hC
-      exact absurd (hC ▸ Finset.finite_toSet A) (Set.Ici_infinite 0)
-  · obtain ⟨X, i1, i2, i3, hD, hC, -⟩ := build h0 hnn
-    exact ⟨X, i1, i2, i3, hD, hC⟩
+  have tfae : List.TFAE [∃ (X : Type) (_ : Fintype X) (_ : MetricSpace X), IsUltrametricDist X ∧
+        center X = ↑A,
+      ∃ (X : Type) (_ : Fintype X) (_ : MetricSpace X), IsUltrametricDist X ∧
+        {r | ∃ x y : X, dist x y = r} = ↑A ∧ center X = ↑A,
+      0 ∈ A ∧ ∀ a ∈ A, 0 ≤ a] := by
+    tfae_have 2 → 1 := fun ⟨X, i1, i2, hu, _, hC⟩ => ⟨X, i1, i2, hu, hC⟩
+    tfae_have 1 → 3 := by
+      rintro ⟨X, _, _, _, hC⟩
+      by_cases hX : Nonempty X
+      · obtain ⟨x⟩ := hX
+        refine ⟨?_, fun a ha => ?_⟩
+        · rw [← Finset.mem_coe, ← hC]; exact ⟨le_rfl, fun p => ⟨p, dist_self p⟩⟩
+        · rw [← Finset.mem_coe, ← hC] at ha; exact ha.1
+      · rw [not_nonempty_iff] at hX
+        have : center X = Set.Ici 0 := by ext t; simp [center, Set.mem_Ici]
+        rw [this] at hC
+        exact absurd (hC ▸ Finset.finite_toSet A) (Set.Ici_infinite 0)
+    tfae_have 3 → 2 := fun ⟨h0, hnn⟩ => by
+      obtain ⟨X, i1, i2, i3, hD, hC, -⟩ := build h0 hnn
+      exact ⟨X, i1, i2, i3, hD, hC⟩
+    tfae_finish
+  refine ⟨tfae, fun h0 hnn => ⟨⟨?_, ?_⟩, build h0 hnn⟩⟩
   · obtain ⟨X, i1, i2, i3, -, hC, hcard⟩ := build h0 hnn
     exact ⟨X, i1, i2, i3, hC, hcard⟩
   · rintro n ⟨X, _, _, _, hC, rfl⟩
