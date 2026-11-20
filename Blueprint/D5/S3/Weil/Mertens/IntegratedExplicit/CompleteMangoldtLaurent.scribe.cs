@@ -22,13 +22,14 @@ internal sealed class CompleteMangoldtLaurentDocument : IScribeDocumentDefinitio
                 StatementSource.FromAuthor(Claim()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("On Re(s)>1 the complete half-plane transform theorem gives the "
-                        + "absolutely convergent integral. At a zero ρ, the expansion concerns the explicit "
-                        + "transform function. The values of the actual zeta function at 0 and 1 exclude those two points.")),
-                    Paragraph(Text("Write ζ(s)=(s−ρ)ᵐu(s) near ρ, where u is analytic and u(ρ) is nonzero. "
-                        + "Its logarithmic derivative splits as m/(s−ρ)+u′(s)/u(s). With d(s)=s(1−s), "
-                        + "the identity d(ρ)−d(s)=(s−ρ)(s+ρ−1) absorbs exactly the varying denominator. "
-                        + "The analytic remainder is m(s+ρ−1)/(d(s)d(ρ))+(u′(s)/u(s))/d(s) "
-                        + "−1/(s−1)²+(1+γ)/(s−1). The residue m/d(ρ) is nonzero even at a multiple zero."))),
+                        + "absolutely convergent integral. At a zero z, the expansion concerns the explicit "
+                        + "transform function. Since ζ(0)=−1/2, zero is excluded. Classically ζ has a pole at 1. "
+                        + "Lean assigns ζ(1) a nonzero value, so the zero hypothesis excludes 1 as well.")),
+                    Paragraph(Text("Write ζ(s)=(s−z)ᵐu(s) near z, where u is analytic and u(z) is nonzero. "
+                        + "Its logarithmic derivative splits as m/(s−z)+u′(s)/u(s). With d(s)=s(1−s), "
+                        + "the identity d(z)−d(s)=(s−z)(s+z−1) absorbs exactly the varying denominator. "
+                        + "The analytic remainder is m(s+z−1)/(d(s)d(z))+(u′(s)/u(s))/d(s) "
+                        + "−1/(s−1)²+(1+γ)/(s−1). The residue m/d(z) is nonzero even at a multiple zero."))),
                 DescribeRole.Theorem))));
 
     private static Formula Complex => F.Seq(F.Mathbb, F.Grp(F.Id("C")));
@@ -61,7 +62,7 @@ internal sealed class CompleteMangoldtLaurentDocument : IScribeDocumentDefinitio
     {
         var y = F.Id("y");
         var s = F.Id("s");
-        var rho = F.Id("rho");
+        var rho = F.Id("z");
         var radius = F.Id("r");
         var order = Call("analyticOrderNatAt", F.Zeta, rho);
         var residue = Frac(order, Multiply(rho, Subtract(F.D(1), rho)));
@@ -77,7 +78,7 @@ internal sealed class CompleteMangoldtLaurentDocument : IScribeDocumentDefinitio
             More("s", Complex, If(And(Nonzero(distance), Less(distance, radius)), equality))), exists: true);
         var holomorphic = More("H", F.Seq(Complex,F.Sp,F.To,F.Sp,Complex),
             And(Call("AnalyticAt", Complex, F.Id("H"), rho), punctured), exists: true);
-        var local = More("rho", Complex, If(Equal(new Formula.Apply(F.Zeta,[rho]), F.D(0)),
+        var local = More("z", Complex, If(Equal(new Formula.Apply(F.Zeta,[rho]), F.D(0)),
             And(Nonzero(order), And(Nonzero(residue), holomorphic))));
         return F.Disp(And(halfPlane, local));
     }
