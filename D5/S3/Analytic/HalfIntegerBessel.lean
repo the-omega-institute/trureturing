@@ -4,13 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite complex half-integer Bessel carriers, Wronskians, and Liouville–Green normalization. -/
+   digest: Half-integer Bessel carriers and their Liouville–Green equation. -/
 module
 
 public import D5.S3.Analytic.HalfIntegerBesselPolynomial
 public import Mathlib.Analysis.Calculus.Deriv.Polynomial
 public import Mathlib.Analysis.Complex.SqrtDeriv
 import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic.FieldSimp
@@ -330,8 +331,250 @@ theorem F_K_eq_carrier (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
         (Real.sqrt (order m) : ℂ)⁻¹ *
         ((Complex.sqrt (S w) * (Complex.sqrt w)⁻¹) *
           (Complex.exp ((order m : ℂ) * eta w) * (Complex.exp ((order m : ℂ) * w))⁻¹) *
-          aeval (((order m : ℂ) * w)⁻¹) (carrier m)) := by ring
+          aeval (((order m : ℂ) * w)⁻¹) (carrier m)) := by ring_nf
     _ = _ := by rw [hnorm, mul_inv_cancel₀ hνsqrt, one_mul]
+
+/-- Differentiation in the Liouville–Green phase variable. -/
+noncomputable def D (f : ℂ → ℂ) (w : ℂ) : ℂ := (w / S w) * deriv f w
+
+/-- The rational potential in the transformed equation. -/
+noncomputable def psi (w : ℂ) : ℂ :=
+  w ^ 2 * (4 - w ^ 2) / (4 * (1 + w ^ 2) ^ 3)
+
+private theorem hasDerivAt_phaseFactor {w : ℂ} (hw : 0 < w.re) :
+    HasDerivAt (fun z : ℂ => z / S z) (1 / S w ^ 3) w := by
+  have hs := arg_ne_zero (S_re_pos hw)
+  refine ((hasDerivAt_id w).div (hasDerivAt_S hw) hs).congr_deriv ?_
+  change (1 * S w - w * (w / S w)) / S w ^ 2 = 1 / S w ^ 3
+  field_simp [hs]
+  linear_combination S_sq w
+
+private theorem hasDerivAt_sqrtS {w : ℂ} (hw : 0 < w.re) :
+    HasDerivAt (fun z => Complex.sqrt (S z))
+      (Complex.sqrt (S w) * (w / (2 * (1 + w ^ 2)))) w := by
+  have hs := arg_ne_zero (S_re_pos hw)
+  have hsqrt : Complex.sqrt (S w) ≠ 0 := by
+    intro h
+    exact hs (by simpa [h] using (sqrt_sq (S w)).symm)
+  have h := hasDerivAt_principalSqrt (Complex.mem_slitPlane_iff.mpr (Or.inl (S_re_pos hw)))
+  refine (h.comp w (hasDerivAt_S hw)).congr_deriv ?_
+  change 1 / (2 * Complex.sqrt (S w)) * (w / S w) = _
+  rw [← S_sq w]
+  field_simp [hs, hsqrt]
+  linear_combination -w * sqrt_sq (S w)
+
+private theorem hasDerivAt_sqrtSlope {w : ℂ} (hw : 0 < w.re) :
+    HasDerivAt (fun z : ℂ => z / (2 * (1 + z ^ 2)))
+      ((1 - w ^ 2) / (2 * (1 + w ^ 2) ^ 2)) w := by
+  have hA := Complex.slitPlane_ne_zero (one_add_sq_mem_slitPlane hw)
+  have harg : HasDerivAt (fun z : ℂ => 2 * (1 + z ^ 2)) (2 * (2 * w)) w := by
+    have h : HasDerivAt (fun z : ℂ => 1 + z ^ 2) (2 * w) w := by
+      simpa using ((hasDerivAt_id w).pow 2).const_add 1
+    exact h.const_mul 2
+  refine ((hasDerivAt_id w).div harg (mul_ne_zero (by norm_num) hA)).congr_deriv ?_
+  change (1 * (2 * (1 + w ^ 2)) - w * (2 * (2 * w))) / (2 * (1 + w ^ 2)) ^ 2 = _
+  field_simp [hA]
+  ring
+
+private theorem scaled_re_pos (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    0 < ((order m : ℂ) * w).re := by
+  simpa only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    using mul_pos (order_pos m) hw
+
+private theorem hasDerivAt_scaledK (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    HasDerivAt (fun z => K m ((order m : ℂ) * z))
+      (deriv (K m) ((order m : ℂ) * w) * (order m : ℂ)) w := by
+  have harg : HasDerivAt (fun z : ℂ => (order m : ℂ) * z) (order m : ℂ) w := by
+    simpa using (hasDerivAt_id w).const_mul (order m : ℂ)
+  exact (hasDerivAt_K m (scaled_re_pos m hw)).differentiableAt.hasDerivAt.comp w harg
+
+private theorem hasDerivAt_scaledK' (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    let y (z : ℂ) := K m ((order m : ℂ) * z)
+    HasDerivAt (deriv y)
+      (((order m : ℂ) ^ 2 * (1 + w ^ 2) / w ^ 2) * y w - deriv y w / w) w := by
+  intro y
+  let ν : ℂ := order m
+  have hν : ν ≠ 0 := by
+    change (order m : ℂ) ≠ 0
+    exact_mod_cast (order_pos m).ne'
+  have hνcast : (m : ℂ) + 1 / 2 = ν := by
+    simp [ν, order]
+  have hevent : ∀ᶠ z in 𝓝 w, 0 < z.re :=
+    (isOpen_lt continuous_const Complex.continuous_re).mem_nhds hw
+  have hformula : (deriv y) =ᶠ[𝓝 w] (fun z => deriv (K m) (ν * z) * ν) :=
+    hevent.mono fun _ hz => (hasDerivAt_scaledK m hz).deriv
+  have h := ((hasDerivAt_deriv_K m (scaled_re_pos m hw)).comp w
+    ((hasDerivAt_id w).const_mul ν)).mul_const ν
+  refine (h.congr_of_eventuallyEq hformula).congr_deriv ?_
+  rw [(hasDerivAt_scaledK m hw).deriv]
+  simp only [mul_one]
+  change ((1 + ((m : ℂ) + 1 / 2) ^ 2 / (ν * w) ^ 2) * y w -
+      deriv (K m) (ν * w) / (ν * w)) * ν * ν =
+    ν ^ 2 * (1 + w ^ 2) / w ^ 2 * y w - (deriv (K m) (ν * w) * ν) / w
+  rw [hνcast]
+  field_simp [hν, arg_ne_zero hw]
+  ring
+
+private theorem hasDerivAt_sqrtScaledK (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    let y (z : ℂ) := K m ((order m : ℂ) * z)
+    let U (z : ℂ) := Complex.sqrt (S z) * y z
+    HasDerivAt U (Complex.sqrt (S w) * (deriv y w + w / (2 * (1 + w ^ 2)) * y w)) w := by
+  intro y U
+  have hy : DifferentiableAt ℂ y w := (hasDerivAt_scaledK m hw).differentiableAt
+  refine ((hasDerivAt_sqrtS hw).mul hy.hasDerivAt).congr_deriv ?_
+  change Complex.sqrt (S w) * (w / (2 * (1 + w ^ 2))) * y w +
+    Complex.sqrt (S w) * deriv y w = _
+  ring
+
+private theorem hasDerivAt_D_sqrtScaledK (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    let U (z : ℂ) := Complex.sqrt (S z) * K m ((order m : ℂ) * z)
+    HasDerivAt (D U) ((S w / w) * (((order m : ℂ) ^ 2 + psi w) * U w)) w := by
+  intro U
+  let ν : ℂ := order m
+  let y (z : ℂ) := K m (ν * z)
+  let a (z : ℂ) := Complex.sqrt (S z)
+  let b (z : ℂ) := z / (2 * (1 + z ^ 2))
+  let c (z : ℂ) := z / S z
+  have hy : HasDerivAt y (deriv y w) w := (hasDerivAt_scaledK m hw).differentiableAt.hasDerivAt
+  have hy' : HasDerivAt (deriv y)
+      (ν ^ 2 * (1 + w ^ 2) / w ^ 2 * y w - deriv y w / w) w :=
+    hasDerivAt_scaledK' m hw
+  have ha : HasDerivAt a (a w * b w) w := hasDerivAt_sqrtS hw
+  have hb : HasDerivAt b ((1 - w ^ 2) / (2 * (1 + w ^ 2) ^ 2)) w := hasDerivAt_sqrtSlope hw
+  have hc : HasDerivAt c (1 / S w ^ 3) w := hasDerivAt_phaseFactor hw
+  have hevent : ∀ᶠ z in 𝓝 w, 0 < z.re :=
+    (isOpen_lt continuous_const Complex.continuous_re).mem_nhds hw
+  have hformula : D U =ᶠ[𝓝 w] (fun z => c z * a z * (deriv y z + b z * y z)) := by
+    filter_upwards [hevent] with z hz
+    change c z * deriv U z = _
+    rw [(hasDerivAt_sqrtScaledK m hz).deriv]
+    change c z * (a z * (deriv y z + b z * y z)) = _
+    rw [mul_assoc]
+  have h := (hc.mul ha).mul (hy'.add (hb.mul hy))
+  refine (h.congr_of_eventuallyEq hformula).congr_deriv ?_
+  change (1 / S w ^ 3 * a w + c w * (a w * b w)) * (deriv y w + b w * y w) +
+    c w * a w * (ν ^ 2 * (1 + w ^ 2) / w ^ 2 * y w - deriv y w / w +
+      ((1 - w ^ 2) / (2 * (1 + w ^ 2) ^ 2) * y w + b w * deriv y w)) = _
+  have hs := arg_ne_zero (S_re_pos hw)
+  have hw0 := arg_ne_zero hw
+  have hfirst : 1 / S w ^ 3 + 2 * c w * b w - c w / w = 0 := by
+    dsimp [b, c]
+    rw [← S_sq w]
+    field_simp [hs, hw0]
+    linear_combination -(S_sq w)
+  have hzero : (1 / S w ^ 3 + c w * b w) * b w +
+      c w * (ν ^ 2 * (1 + w ^ 2) / w ^ 2 + (1 - w ^ 2) / (2 * (1 + w ^ 2) ^ 2)) =
+      S w / w * (ν ^ 2 + psi w) := by
+    dsimp [b, c, psi]
+    rw [← S_sq w]
+    field_simp [hs, hw0]
+    ring
+  change _ = S w / w * ((ν ^ 2 + psi w) * (a w * y w))
+  linear_combination a w * deriv y w * hfirst + a w * y w * hzero
+
+private theorem hasDerivAt_D_F_K (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    HasDerivAt (D (F_K m))
+      (S w / w * (2 * (order m : ℂ) * D (F_K m) w + psi w * F_K m w)) w := by
+  let ν : ℂ := order m
+  let U (z : ℂ) := Complex.sqrt (S z) * K m (ν * z)
+  let E (z : ℂ) := (Real.sqrt (2 * order m / Real.pi) : ℂ) * Complex.exp (ν * eta z)
+  have hF (z : ℂ) : F_K m z = E z * U z := by
+    unfold F_K E U ν
+    ring
+  have hE (z : ℂ) (hz : 0 < z.re) : HasDerivAt E (E z * ν * (S z / z)) z := by
+    have h := ((Complex.hasDerivAt_exp (ν * eta z)).comp z
+      ((hasDerivAt_eta hz).const_mul ν)).const_mul (Real.sqrt (2 * order m / Real.pi) : ℂ)
+    refine h.congr_deriv ?_
+    dsimp only [Function.comp_apply, E]
+    ring
+  have hU (z : ℂ) (hz : 0 < z.re) : HasDerivAt U (deriv U z) z :=
+    (hasDerivAt_sqrtScaledK m hz).differentiableAt.hasDerivAt
+  have hdF (z : ℂ) (hz : 0 < z.re) : D (F_K m) z = E z * (D U z + ν * U z) := by
+    have h := (hE z hz).mul (hU z hz)
+    have heq : F_K m = E * U := funext hF
+    unfold D
+    rw [heq, h.deriv]
+    field_simp [arg_ne_zero hz, arg_ne_zero (S_re_pos hz)]
+    ring
+  have hUne (z : ℂ) (hz : 0 < z.re) : deriv U z = S z / z * D U z := by
+    unfold D
+    field_simp [arg_ne_zero hz, arg_ne_zero (S_re_pos hz)]
+  have hevent : ∀ᶠ z in 𝓝 w, 0 < z.re :=
+    (isOpen_lt continuous_const Complex.continuous_re).mem_nhds hw
+  have hformula : D (F_K m) =ᶠ[𝓝 w] (fun z => E z * (D U z + ν * U z)) :=
+    hevent.mono hdF
+  have h := (hE w hw).mul ((hasDerivAt_D_sqrtScaledK m hw).add ((hU w hw).const_mul ν))
+  refine (h.congr_of_eventuallyEq hformula).congr_deriv ?_
+  rw [hdF w hw, hF w, hUne w hw]
+  change E w * ν * (S w / w) * (D U w + ν * U w) +
+    E w * (S w / w * ((ν ^ 2 + psi w) * U w) + ν * (S w / w * D U w)) = _
+  ring
+
+/-- The scaled decaying carrier solves the Liouville–Green equation on the right half-plane. -/
+theorem liouvilleGreen_K (m : ℕ) {w : ℂ} (hw : 0 < w.re) :
+    D (D (F_K m)) w - 2 * (order m : ℂ) * D (F_K m) w = psi w * F_K m w := by
+  change w / S w * deriv (D (F_K m)) w - 2 * (order m : ℂ) * D (F_K m) w = _
+  rw [(hasDerivAt_D_F_K m hw).deriv]
+  field_simp [arg_ne_zero hw, arg_ne_zero (S_re_pos hw)]
+  ring
+
+/-- The phase derivative along the real radius on a fixed ray. -/
+noncomputable def radialP (u : ℂ) (r : ℝ) : ℂ := S ((r : ℂ) * u) / (r : ℂ)
+
+/-- The coefficient of the amplitude in the radial equation for its phase derivative. -/
+noncomputable def radialQ (u : ℂ) (r : ℝ) : ℂ := radialP u r * psi ((r : ℂ) * u)
+
+private theorem ray_re_pos {u : ℂ} (hu : 0 < u.re) {r : ℝ} (hr : 0 < r) :
+    0 < ((r : ℂ) * u).re := by
+  simpa only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    using mul_pos hr hu
+
+private theorem radialP_re_pos {u : ℂ} (hu : 0 < u.re) {r : ℝ} (hr : 0 < r) :
+    0 < (radialP u r).re := by
+  have hS := S_re_pos (ray_re_pos hu hr)
+  simp only [radialP, Complex.div_re, Complex.ofReal_re, Complex.ofReal_im,
+    Complex.normSq_ofReal, mul_zero]
+  positivity
+
+/-- On a ray, the phase and the normalized decaying amplitude satisfy the radial Volterra system. -/
+theorem radialSystem_K (m : ℕ) {u : ℂ} (hu : 0 < u.re) {r : ℝ} (hr : 0 < r) :
+    let phase (t : ℝ) := eta ((t : ℂ) * u)
+    let F (t : ℝ) := F_K m ((t : ℂ) * u)
+    let G (t : ℝ) := D (F_K m) ((t : ℂ) * u)
+    HasDerivAt phase (radialP u r) r ∧
+    HasDerivAt F (radialP u r * G r) r ∧
+    HasDerivAt G (2 * (order m : ℂ) * radialP u r * G r + radialQ u r * F r) r ∧
+    0 < (radialP u r).re := by
+  intro phase F G
+  let w := (r : ℂ) * u
+  have hw : 0 < w.re := ray_re_pos hu hr
+  have hr0 : (r : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hr.ne'
+  have hu0 := arg_ne_zero hu
+  have hS0 := arg_ne_zero (S_re_pos hw)
+  have harg : HasDerivAt (fun t : ℝ => (t : ℂ) * u) u r := by
+    simpa using (Complex.ofRealCLM.hasFDerivAt (x := r)).hasDerivAt.mul_const u
+  have hF : DifferentiableAt ℂ (F_K m) w := by
+    unfold F_K
+    have hE := (Complex.hasDerivAt_exp ((order m : ℂ) * eta w)).comp w
+      ((hasDerivAt_eta hw).const_mul (order m : ℂ))
+    exact (((hasDerivAt_sqrtS hw).const_mul (Real.sqrt (2 * order m / Real.pi) : ℂ)).mul
+      hE |>.mul (hasDerivAt_scaledK m hw)).differentiableAt
+  have hp : (S w / w) * u = radialP u r := by
+    dsimp [w, radialP]
+    field_simp [hr0, hu0]
+  have hphase : HasDerivAt phase (u * (S w / w)) r := by
+    change HasDerivAt (eta ∘ fun t : ℝ => (t : ℂ) * u) (u • (S w / w)) r
+    exact (hasDerivAt_eta hw).scomp r harg
+  refine ⟨hphase.congr_deriv (by rwa [mul_comm u]), ?_, ?_, radialP_re_pos hu hr⟩
+  · refine (hF.hasDerivAt.scomp r harg).congr_deriv ?_
+    change u * deriv (F_K m) w = radialP u r * (w / S w * deriv (F_K m) w)
+    rw [← hp]
+    field_simp [arg_ne_zero hw, hS0]
+  · refine ((hasDerivAt_D_F_K m hw).scomp r harg).congr_deriv ?_
+    change u * ((S w / w) * (2 * (order m : ℂ) * G r + psi w * F r)) =
+      2 * (order m : ℂ) * radialP u r * G r + radialP u r * psi w * F r
+    rw [← hp]
+    ring
 
 end LiouvilleGreen
 

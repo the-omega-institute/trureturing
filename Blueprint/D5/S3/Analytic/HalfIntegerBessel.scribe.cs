@@ -74,6 +74,26 @@ internal sealed class HalfIntegerBesselDocument : IScribeDocumentDefinition
             Node("F_K_eq_carrier", "Canceled normalization of the decaying amplitude",
                 "On Re w > 0, F_K is sqrt(S(w)) / sqrt(w) times exp(nu (eta(w) - w)) "
                 + "times P_m(1 / (nu w)). Positive real scaling factors out of the principal root.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("D", "Phase differentiation",
+                "D applies the complex derivative and multiplies by w / S(w).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("psi", "Liouville–Green potential",
+                "The potential is w^2 (4 - w^2) / (4 (1 + w^2)^3).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("liouvilleGreen_K", "Scaled equation for the decaying amplitude",
+                "On Re w > 0, D^2 F_K - 2 nu D F_K = psi F_K. The scaled ordinary "
+                + "equation for K_m first gives D^2 U = (nu^2 + psi) U for "
+                + "U = sqrt(S(w)) K_m(nu w). The exponential factor gives the equation for F_K.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)),
+            Node("radialP", "Radial phase coefficient", "For the ray r u, p(r) is S(r u) / r.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("radialQ", "Radial potential coefficient", "On the ray, q(r) is p(r) psi(r u).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("radialSystem_K", "Radial system for the decaying amplitude",
+                "For Re u > 0 and r > 0, eta(r u) has derivative p(r). With F(r) = F_K(r u) "
+                + "and G(r) = (D F_K)(r u), the real derivatives are F' = p G "
+                + "and G' = 2 nu p G + q F. Also Re p > 0.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
 
     private static DocumentBlock Node(string name, string title, string prose,
