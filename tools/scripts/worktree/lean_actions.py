@@ -560,15 +560,48 @@ def resume_spec(root):
     elif manual_source_is_valid() and os.environ["STRATALINT_CACHE_SOURCE_COMMIT"] != os.environ.get("GITHUB_SHA"):
         binding["source_commit"] = os.environ["STRATALINT_CACHE_SOURCE_COMMIT"]
     identity = hashlib.sha256(json.dumps(binding, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-    prefix = f"lean-producer-resume-v1-{keys['mathlib_revision']}-{keys['os']}-{keys['arch']}-{identity}-"
+    family = f"lean-producer-resume-v1-{keys['mathlib_revision']}-{keys['os']}-{keys['arch']}-"
+    branch_writer = not preparation_source_is_valid() and "source_commit" not in binding
+    legacy = family + identity + "-" if branch_writer else ""
+    prefix = family + ("branch-" if branch_writer else "") + identity + "-"
     paths = native_archive_paths(root, LAYERS)
-    return {"identity": identity, "restore_prefix": prefix,
+    return {"identity": identity, "restore_prefix": prefix, "legacy_prefix": legacy,
             "key": prefix + os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"],
             "paths": sorted(set(path for group in paths.values() for path in group))}
 
 
 def resume_key_matches(spec, key):
     return re.fullmatch(re.escape(spec["restore_prefix"]) + r"[1-9][0-9]*-[1-9][0-9]*", key) is not None
+
+
+def legacy_resume_run(spec, key):
+    prefix = spec["legacy_prefix"]
+    match = prefix and re.fullmatch(re.escape(prefix) + r"([1-9][0-9]*)-[1-9][0-9]*", key)
+    return match[1] if match else None
+
+
+def select_resume_key(spec, key):
+    if resume_key_matches(spec, key):
+        return key
+    run = legacy_resume_run(spec, key)
+    if not run:
+        return ""
+    if run == os.environ["GITHUB_RUN_ID"]:
+        return key
+    # Old manual pins wrote into the same namespace as automatic pushes.
+    try:
+        repository = os.environ["GITHUB_REPOSITORY"]
+        response = subprocess.run(["gh", "api", f"repos/{repository}/actions/runs/{run}"],
+                                  capture_output=True, check=True, text=True, timeout=10)
+        value = json.loads(response.stdout)
+        if (str(value["id"]) == run and value["event"] == "push"
+                and "refs/heads/" + value["head_branch"] == os.environ["GITHUB_REF"]
+                and value["repository"]["full_name"] == repository):
+            return key
+    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError):
+        pass
+    receipt("resume", "miss", reason="legacy checkpoint has no verified push origin", key=key)
+    return ""
 
 
 def resume_snapshot(root, spec):
@@ -584,14 +617,15 @@ def resume_snapshot(root, spec):
     output({"resume_ready": True})
 
 
-def resume_restore(root, spec, key, outcome):
+def resume_restore(root, spec, key, outcome, selected=""):
     resume_record(root).unlink(missing_ok=True)
     # A lookup miss skips extraction; every attempted restore must supply its key.
     if outcome in ("", "skipped"):
         receipt("resume", "miss", reason="Actions supplied no continuation")
         return
     try:
-        if outcome != "success" or not resume_key_matches(spec, key):
+        if outcome != "success" or not (resume_key_matches(spec, key) or
+                                        (selected == key and legacy_resume_run(spec, key))):
             raise ValueError("resume transport failed or identity is incompatible")
         marker = read_resume_record(resume_marker(root))
         if (set(marker) != {"schema_version", "identity", "key"}
@@ -623,7 +657,7 @@ def resume_verified(root):
         return (set(value) == {"schema_version", "identity", "snapshot_key", "matched_key"}
                 and type(value["schema_version"]) is int and value["schema_version"] == 1
                 and value["identity"] == spec["identity"] and value["snapshot_key"] == spec["key"]
-                and resume_key_matches(spec, value["matched_key"]))
+                and (resume_key_matches(spec, value["matched_key"]) or bool(legacy_resume_run(spec, value["matched_key"]))))
     except (OSError, ValueError, TypeError, KeyError):
         return False
 
@@ -714,11 +748,12 @@ def snapshot(root, keys, layers=LAYERS):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("keys", "index-key", "restore", "snapshot", "resume-keys", "resume-restore", "resume-snapshot"))
+    parser.add_argument("command", choices=("keys", "index-key", "restore", "snapshot", "resume-keys", "resume-select", "resume-restore", "resume-snapshot"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--layers", choices=LAYERS, nargs="+")
     parser.add_argument("--project-restore-key", default="")
     parser.add_argument("--resume-key", default="")
+    parser.add_argument("--selected-key", default="")
     parser.add_argument("--resume-outcome", default="", choices=("", "success", "failure", "cancelled", "skipped"))
     for layer in LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
@@ -732,10 +767,15 @@ def main():
             spec = resume_spec(root)
             if args.command == "resume-keys":
                 output({"resume_key": spec["key"], "resume_restore_prefix": spec["restore_prefix"],
-                        "resume_run_prefix": spec["restore_prefix"] + os.environ["GITHUB_RUN_ID"] + "-"})
+                        "resume_run_prefix": spec["restore_prefix"] + os.environ["GITHUB_RUN_ID"] + "-",
+                        "legacy_prefix": spec["legacy_prefix"],
+                        "legacy_run_prefix": spec["legacy_prefix"] + os.environ["GITHUB_RUN_ID"] + "-"
+                        if spec["legacy_prefix"] else ""})
                 output_archive_paths("resume", spec["paths"])
+            elif args.command == "resume-select":
+                output({"key": select_resume_key(spec, args.resume_key)})
             elif args.command == "resume-restore":
-                resume_restore(root, spec, args.resume_key, args.resume_outcome)
+                resume_restore(root, spec, args.resume_key, args.resume_outcome, args.selected_key)
             else:
                 resume_snapshot(root, spec)
         elif args.command == "keys":

@@ -800,6 +800,24 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                 with mock.patch.dict(os.environ, {"GITHUB_RUN_ATTEMPT": "3"}):
                     self.assertTrue(owner.resume_key_matches(owner.resume_spec(self.root), recovery["key"]))
 
+    def test_legacy_checkpoint_needs_a_verified_push_before_extraction(self):
+        owner = self.resume_setup()
+        with mock.patch.dict(os.environ, self.env, clear=True):
+            spec = owner.resume_spec(self.root)
+            key = spec["legacy_prefix"] + "90-2"
+            self.assertFalse(owner.resume_key_matches(spec, key))
+            self.assertNotEqual(spec["legacy_prefix"], spec["restore_prefix"])
+            for event, expected in (("workflow_dispatch", ""), ("push", key)):
+                run = {"id": 90, "event": event, "head_branch": "dev",
+                       "repository": {"full_name": os.environ["GITHUB_REPOSITORY"]}}
+                response = subprocess.CompletedProcess([], 0, json.dumps(run))
+                with mock.patch.object(owner.subprocess, "run", return_value=response):
+                    self.assertEqual(expected, owner.select_resume_key(spec, key))
+            with mock.patch.object(owner.subprocess, "run", side_effect=OSError):
+                self.assertEqual("", owner.select_resume_key(spec, key))
+                own = spec["legacy_prefix"] + os.environ["GITHUB_RUN_ID"] + "-1"
+                self.assertEqual(own, owner.select_resume_key(spec, own))
+
     def test_resume_restore_preserves_partial_native_work_without_certifying_a_report(self):
         owner = self.resume_setup()
         env = dict(self.env, STRATALINT_REPORT_SUCCEEDED="false")
@@ -850,6 +868,8 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
                                 owner.resume_snapshot(self.root, spec)
                                 lookup = selected("id: resume_lookup", values)
                                 values["steps.resume_lookup.outputs.cache-matched-key"] = spec["key"] if lookup else ""
+                                values["steps.resume_selected.outputs.key"] = owner.select_resume_key(
+                                    spec, values["steps.resume_lookup.outputs.cache-matched-key"])
                                 extracted = selected("id: resume", values)
                                 if selected("name: Validate the producer continuation", values):
                                     owner.resume_restore(self.root, spec, spec["key"] if extracted else "",

@@ -10,6 +10,12 @@ inputs:
   project-paths:
     description: Registered project archive paths
     required: true
+  fallback-key:
+    description: Preferred untried project payload
+    required: false
+  fallback-prefix:
+    description: Native prefix for default-branch fallback
+    required: false
   allow-preparation:
     description: Whether this consumer can adopt its PR preparation
     default: 'true'
@@ -20,6 +26,12 @@ outputs:
   matched:
     description: Whether the checked-out report inputs and bundle matched
     value: ${{ steps.primary.outputs.matched == 'true' || steps.alternate.outputs.matched == 'true' }}
+  fallback-key:
+    description: Untried native key identified by fallback lookup
+    value: ${{ steps.remaining.outputs.cache-matched-key }}
+  exhausted:
+    description: The lookup found no native payload beyond those already tried
+    value: ${{ steps.remaining.outcome == 'success' && (steps.remaining.outputs.cache-matched-key == '' || steps.remaining.outputs.cache-matched-key == inputs.project-key || steps.remaining.outputs.cache-matched-key == inputs.alternate-key) }}
   project-key:
     description: Key of the retained native material
     value: ${{ steps.artifact.outputs.adopted != 'true' && (steps.primary.outputs.key || steps.alternate.outputs.key) || '' }}
@@ -42,3 +54,12 @@ runs:
       if: inputs.allow-preparation == 'true' && steps.primary.outputs.matched != 'true' && steps.alternate.outputs.matched != 'true'
       shell: bash
       run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+    - id: remaining
+      if: inputs.project-key != '' && inputs.fallback-key != '' && steps.primary.outputs.key == '' && steps.alternate.outputs.key == '' && steps.artifact.outputs.adopted != 'true'
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        lookup-only: true
+        path: ${{ inputs.project-paths }}
+        key: ${{ inputs.fallback-key }}
+        restore-keys: ${{ inputs.fallback-prefix }}

@@ -73,6 +73,8 @@ jobs:
           project-key: ${{ steps.keys.outputs.project_probe_key }}
           alternate-key: ${{ steps.keys.outputs.project_alternate_key }}
           project-paths: ${{ steps.keys.outputs.project_archive_path }}
+          fallback-key: ${{ steps.keys.outputs.project_fallback_key }}
+          fallback-prefix: ${{ steps.keys.outputs.project_restore_prefix }}
       - id: elan
         if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
@@ -91,19 +93,19 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.prepared.outputs.project-key == '' && steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.exhausted != 'true' && steps.prepared.outputs.project-key == '' && steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+          key: ${{ steps.prepared.outputs.fallback-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
+          restore-keys: ${{ steps.prepared.outputs.fallback-key == '' && steps.keys.outputs.project_restore_prefix || '' }}
       - name: Restore optional Lean build seeds
         if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
-          PROJECT_RESTORE_KEY: ${{ steps.prepared.outputs.project-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
+          PROJECT_RESTORE_KEY: ${{ steps.prepared.outputs.project-key || steps.prepared.outputs.fallback-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.prepared.outputs.project-key != '' && 'success' || steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"

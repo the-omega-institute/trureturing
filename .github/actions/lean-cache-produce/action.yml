@@ -51,6 +51,8 @@ runs:
         project-key: ${{ inputs.release-seed-tag == '' && steps.keys.outputs.project_probe_key || '' }}
         alternate-key: ${{ inputs.release-seed-tag == '' && steps.keys.outputs.project_alternate_key || '' }}
         project-paths: ${{ steps.keys.outputs.project_archive_path }}
+        fallback-key: ${{ steps.keys.outputs.project_fallback_key }}
+        fallback-prefix: ${{ steps.keys.outputs.project_restore_prefix }}
         allow-preparation: ${{ inputs.preparation-only != 'true' }}
     - id: elan
       if: steps.keys.outputs.elan_key != ''
@@ -70,18 +72,18 @@ runs:
         key: ${{ steps.keys.outputs.dependency_key }}
         restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
     - id: project
-      if: steps.prepared.outputs.project-key == '' && steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != ''
+      if: steps.prepared.outputs.exhausted != 'true' && steps.prepared.outputs.project-key == '' && steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
         path: ${{ steps.keys.outputs.project_archive_path }}
-        key: ${{ steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
-        restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+        key: ${{ steps.prepared.outputs.fallback-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
+        restore-keys: ${{ steps.prepared.outputs.fallback-key == '' && steps.keys.outputs.project_restore_prefix || '' }}
     - name: Restore optional validated seeds
       env:
         DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
         PROJECT_KEY: ${{ steps.prepared.outputs.project-key || steps.project.outputs.cache-matched-key }}
-        PROJECT_RESTORE_KEY: ${{ steps.prepared.outputs.project-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
+        PROJECT_RESTORE_KEY: ${{ steps.prepared.outputs.project-key || steps.prepared.outputs.fallback-key || steps.keys.outputs.project_fallback_key || steps.keys.outputs.project_restore_key }}
         DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
         PROJECT_OUTCOME: ${{ steps.prepared.outputs.project-key != '' && 'success' || steps.project.outcome }}
       shell: bash
@@ -107,23 +109,33 @@ runs:
       with:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
         key: ${{ steps.resume_keys.outputs.resume_key }}
-        restore-keys: ${{ steps.prepared.outputs.matched == 'true' && steps.resume_keys.outputs.resume_run_prefix || steps.resume_keys.outputs.resume_restore_prefix }}
+        restore-keys: |
+          ${{ steps.prepared.outputs.matched == 'true' && steps.resume_keys.outputs.resume_run_prefix || steps.resume_keys.outputs.resume_restore_prefix }}
+          ${{ steps.prepared.outputs.matched == 'true' && steps.resume_keys.outputs.legacy_run_prefix || steps.resume_keys.outputs.legacy_prefix }}
         lookup-only: true
-    - id: resume
+    - id: resume_selected
       if: steps.resume_lookup.outputs.cache-matched-key != ''
+      env:
+        GH_TOKEN: ${{ github.token }}
+        CANDIDATE: ${{ steps.resume_lookup.outputs.cache-matched-key }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py resume-select --repository "$GITHUB_WORKSPACE" --resume-key "$CANDIDATE"
+    - id: resume
+      if: steps.resume_selected.outputs.key != ''
       continue-on-error: true
       uses: actions/cache/restore@v5
       with:
         path: ${{ steps.resume_keys.outputs.resume_archive_path }}
-        key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
+        key: ${{ steps.resume_selected.outputs.key }}
         fail-on-cache-miss: true
     - name: Validate the producer continuation
       if: steps.prepared.outputs.adopted != 'true' && steps.release.outputs.restored != 'true'
       env:
         RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
         RESUME_OUTCOME: ${{ steps.resume.outcome }}
+        SELECTED: ${{ steps.resume_selected.outputs.key }}
       shell: bash
-      run: python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+      run: python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME" --selected-key "$SELECTED"
     - id: build
       name: Build the report and cacheable audit programs
       continue-on-error: true
