@@ -16,10 +16,11 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base oldValue newValue)
-open private banks terminals pre post word marked
-  from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Banks
-open private physical_word from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Physical
-open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private banks terminals pre post word marked from
+  D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Banks open private physical_word from
+  D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Physical open private
+  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private zero_period_transport from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
 /-- The unchanged original seed, a permutation of every original physical label,

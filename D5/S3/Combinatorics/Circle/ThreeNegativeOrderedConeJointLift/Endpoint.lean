@@ -6,8 +6,8 @@
    utility: none
    digest: A physical floor-mask joint constructor for the ordered cone 2 <= a < b <= c. -/
 import D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift.Preparation
-import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 
@@ -17,21 +17,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
-open private label lift_order marked_word from
-  D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-open private mask_labels mask_labels_bound mask_labels_sum labelled_permutation from
-  D5.S3.Combinatorics.Circle.ThreeBitSource
-
-open private
-  list_map_cons_sum
-  int_half_two_mul fresh_prefix_sum_bridge fresh_prefix_bounds
-  fresh_prefix_bounds_sub add_bound_of_eq ordered_schedule
-  floor_tail_bound mul_le_mul_left_int beta_block_bound
-  one_le_of_add_one_le floor_tail_bound_mul core_from_floor
-  new_margin_bounds cone_length_old cone_length_new
-  split_sum_zero old_beta_bounds nat_cast_nonneg_mul
-  doubled_source_zero_cast
-  from D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift.Preparation
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open ThreeBitSource (mask_labels mask_labels_bound mask_labels_sum labelled_permutation)
 
 set_option maxHeartbeats 10000000 in
 /-- The full ordered cone 2 <= a < b <= c has one physical joint permutation and

@@ -11,7 +11,8 @@ import D5.S3.Combinatorics.Circle.ThreeBitSource
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond
-open private mask_labels mask_labels_mem mask_labels_sum mask_labels_disjoint
+open ThreeBitSource (mask_labels mask_labels_sum)
+open private mask_labels_mem mask_labels_disjoint
   from D5.S3.Combinatorics.Circle.ThreeBitSource
 
 private def shift (off : ℕ) (S : Finset ℕ) : Finset ℕ := S.image (off+·)

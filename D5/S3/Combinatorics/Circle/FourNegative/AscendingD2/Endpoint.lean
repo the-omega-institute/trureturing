@@ -12,15 +12,16 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.AscendingD2
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private Table Table.u Table.un Table.v Table.vn Table.w Table.wn Table.x Table.xn
-  Table.nu Table.nun Table.nv Table.nvn Table.nw Table.nwn Table.nx Table.nxn paired_table
-  from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
-open private shiftedSupport shifted_good shifted_sum table_positive four_perm four_strip
-  from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private Choice Choice.p Choice.q Choice.r Choice.pq Choice.pr Choice.qr Choice.good coeff
-  from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private Coeff oldMass newMass margins from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private Table Table.u Table.un Table.v Table.vn Table.w Table.wn Table.x Table.xn Table.nu
+  Table.nun Table.nv Table.nvn Table.nw Table.nwn Table.nx Table.nxn paired_table from
+  D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source open private shiftedSupport
+  shifted_good shifted_sum table_positive four_perm four_strip from
+  D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule open private Choice Choice.p Choice.q
+  Choice.r Choice.pq Choice.pr Choice.qr Choice.good coeff from
+  D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule open private Coeff oldMass newMass
+  margins from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule open private
+  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 set_option maxHeartbeats 1600000 in
 private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)

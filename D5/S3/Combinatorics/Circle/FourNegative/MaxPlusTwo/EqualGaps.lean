@@ -14,13 +14,13 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGaps
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private source_table from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
-open private endpoints from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGapsArithmetic
-open private Gates four_strip
-  from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
-open private negative_step
-  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift
-open private label lift_order marked_word ladder_sum
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private source_table from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable open
+  private endpoints from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.EqualGapsArithmetic open
+  private Gates four_strip from
+  D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule open private
+  negative_step from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventualJointLift open
+  private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private theorem reserve_inventory (a d s : ℕ) (ha : 2 ≤ a) (hd : a + 2 ≤ d)

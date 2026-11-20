@@ -15,8 +15,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.EqualShortGapsOneLong
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private label lift_order marked_word
-  from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 
 /-- The physical size, including the long gap and all short gaps. -/
 def size (a p d : ℕ) : ℕ := d + a * (p - 1)

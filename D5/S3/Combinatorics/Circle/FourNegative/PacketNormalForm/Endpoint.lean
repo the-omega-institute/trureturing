@@ -16,11 +16,12 @@ open SourceWidth PeriodicShortening RunFirstEarTransport
 open private seed sourceMod source_signs source_totals chain_values negatives_nodup actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase oldValue newValue negatives weightedMask packet_masses)
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 open private strip_of_prefix from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
-open private DataCertificate from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open private physical_packet_equivalence
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Equivalence
-open private label lift_order marked_word
+  open private DataCertificate from
+  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate open private
+  physical_packet_equivalence from
+  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Equivalence open private
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private def oldMass (a b c d : ℕ) (P : Finset ℕ) : ℤ :=

@@ -13,11 +13,15 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentFarRight
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private label lift_order marked_word ladder_sum
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-open private Gates four_strip from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
-open private coefficient_bounds chains from D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentSource
-open private mask_labels mask_labels_mem mask_labels_bound mask_labels_sum
+open ThreeBitSource (mask_labels mask_labels_bound mask_labels_sum)
+open private Gates four_strip from
+  D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule open private
+  coefficient_bounds chains from
+  D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentSource open private
+  mask_labels_mem
   from D5.S3.Combinatorics.Circle.ThreeBitSource
 
 private theorem ceiling_multiple (R B T : ℤ) (hR : 0 < R) (hB : 0 < B)

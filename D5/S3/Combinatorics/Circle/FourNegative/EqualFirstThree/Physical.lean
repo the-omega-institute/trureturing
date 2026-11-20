@@ -14,15 +14,15 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private seed_bounds from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
-open private seed eta vcoef wcoef xcoef Table paired_table
-  from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Source
-open private label lift_order marked_word ladder_sum
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private seed_bounds from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source open
+  private seed eta vcoef wcoef xcoef Table paired_table from
+  D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Source open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private chainMask chainMask_sum chainMask_partition four_mask_inventory
-  from D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual
-open private mask_labels mask_labels_mem
+open ThreeBitSource (mask_labels)
+open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule open
+  private chainMask chainMask_sum chainMask_partition four_mask_inventory from
+  D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual open private mask_labels_mem
   from D5.S3.Combinatorics.Circle.ThreeBitSource
 
 private def rank (s d : ℕ) : ℕ := 3 * s + d

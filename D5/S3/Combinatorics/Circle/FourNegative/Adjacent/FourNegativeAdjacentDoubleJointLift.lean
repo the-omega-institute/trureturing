@@ -18,7 +18,8 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentD
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private centered_ladder positive_block_strip
   from D5.S3.Combinatorics.Circle.ThreeBitSource
-open private label lift_order marked_word ladder_sum
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
+open private ladder_sum
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 private theorem shift (N u v : ℤ) (len i : ℕ)

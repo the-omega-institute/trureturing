@@ -20,7 +20,7 @@ open private rank amplitude delta heads newHeads successor newSuccessor start le
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo.Source
 open private source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base oldValue newValue)
-open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+open ThreeNegativeEqualOuterJointLift (label lift_order marked_word)
 open private inserted_perm from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
 
 open private shift_sum sum_range_two sum_Ico_two from D5.S3.Combinatorics.Circle.FourNegative.Descending.Banks
