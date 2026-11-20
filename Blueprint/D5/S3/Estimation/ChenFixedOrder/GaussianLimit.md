@@ -4,19 +4,7 @@
 
 A Gaussian limit for the balanced-sign estimator under uniform fixed-size sampling.
 
-**Definition 1.1 (Standard Gaussian probability law).**
-
-$$\operatorname{standardGaussian} : \operatorname{ProbabilityMeasure}\left(\mathbb{R}\right), (\operatorname{standardGaussian} : \operatorname{Measure}\left(\mathbb{R}\right)) = \operatorname{gaussianReal}\left(0, 1\right)$$
-
-*Formalization.* `D5/S3/Estimation/ChenFixedOrder/GaussianLimit.standardGaussian` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-This is the Gaussian limit of the balanced-sign estimator.
-
-**Theorem 1.2 (Estimator law on uniform subsets).**
+**Theorem 1.1 (Estimator law on uniform subsets).**
 
 $$\operatorname{Tendsto}\left(m \mapsto \operatorname{ProbabilityMeasure.map}\left(\operatorname{uniformSampleMeasure}\left(m\right), \operatorname{estimator}\left(m\right)\right), \operatorname{atTop}, \operatorname{nhds}\left(\operatorname{standardGaussian}\right)\right)$$
 
@@ -34,6 +22,6 @@ Erasing order takes the conditioned draw law to the uniform law on fixed-size su
 
 ## References
 
-- Truth anchor: `D5/S3/Estimation/ChenFixedOrder/GaussianLimit.standardGaussian`
 - Truth anchor: `D5/S3/Estimation/ChenFixedOrder/GaussianLimit.uniformSampleLaw_tendsto`
 - Dependency: [D5/S3/Analytic/Probability/ChenFixedOrderSampling](../../Analytic/Probability/ChenFixedOrderSampling.md)
+- Dependency: [D5/S3/Analytic/Probability/MomentPerturbation](../../Analytic/Probability/MomentPerturbation.md)

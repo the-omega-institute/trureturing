@@ -8,24 +8,12 @@ internal sealed class GaussianLimitDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Estimation/ChenFixedOrder/GaussianLimit.";
     private static Formula V(string name) => F.Id(name);
-    private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Gaussian => Seq(Operatorname, Grp(V("standardGaussian")));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A Gaussian limit for the balanced-sign estimator under uniform fixed-size sampling.",
         H("Gaussian limit for balanced finite populations"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("chen-baseline-gaussian"),
-                DeclarationHandle.Create(Prefix + "standardGaussian"),
-                H("Standard Gaussian probability law"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Gaussian, Sp, Colon, Sp, Call("ProbabilityMeasure", Real), Comma, Sp,
-                    Open, Gaussian, Sp, Colon, Sp, Call("Measure", Real), Close, Sp, Eq, Sp,
-                    Call("gaussianReal", D(0), D(1))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("This is the Gaussian limit of the balanced-sign estimator."))),
-                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("chen-uniform-subset-gaussian-limit"),
                 DeclarationHandle.Create(Prefix + "uniformSampleLaw_tendsto"),

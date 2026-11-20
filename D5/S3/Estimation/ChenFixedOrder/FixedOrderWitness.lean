@@ -17,9 +17,10 @@ fixedOrderWitness_holds
   proof_shape: content, expanding the same-delivery inclusion and limit arguments.
   escape_witness: tiltedSample_spec identifies both the real pushforward and exact
     stage-wise event agreement, using exists_inclusionPolynomial on the same samples.
-  Live support: sampleSize_pos and populationMean_eq_zero give the growth and centering
-    clauses. uniformSampleLaw_tendsto gives the common Gaussian baseline using
-    map_eraseOrder_cond_uniform. continuous_density, density_bounds, integral_density
+  Live support: sampleSize_tendsto and sampleSize_le_stratumSize give the growth clauses,
+    and populationMean_eq_zero gives centering. uniformSampleLaw_tendsto gives the
+    common Gaussian baseline using map_eraseOrder_cond_uniform.
+    continuous_density, density_bounds, integral_density
     and integral_eval_mul_density_sub_one supply the lift premises. continuous_tilted
     gives convergence of the lifted law and tilted_gaussian_separation distinguishes
     the limit from the baseline using gaussian_gram_posDef.
@@ -60,21 +61,16 @@ def fixedOrderWitness : Prop :=
       ν ≠ standardGaussian
 
 theorem fixedOrderWitness_holds : fixedOrderWitness := by
-  have hSize : Tendsto sampleSize atTop atTop :=
-    tendsto_atTop_mono (fun m : ℕ => by dsimp [sampleSize]; nlinarith) tendsto_id
   have hPopulation : Tendsto (fun m => Fintype.card (Population m)) atTop atTop := by
-    refine tendsto_atTop_mono (fun m => ?_) hSize
+    refine tendsto_atTop_mono (fun m => ?_) sampleSize_tendsto
     simp only [Population, Fintype.card_prod, Fintype.card_fin]
-    have h := Nat.pow_le_pow_right (sampleSize_pos m) (show 1 ≤ 3 by decide)
-    exact (by simpa only [pow_one] using h : sampleSize m ≤ stratumSize m).trans
-      (by omega)
-  refine ⟨hSize, hPopulation, populationMean_eq_zero, ?_⟩
+    exact (sampleSize_le_stratumSize m).trans (by omega)
+  refine ⟨sampleSize_tendsto, hPopulation, populationMean_eq_zero, ?_⟩
   intro r _
   let R := max r 2
   let μ (m : ℕ) : ProbabilityMeasure ℝ := (uniformSampleMeasure m).map (estimator m)
-  have hGaussian : GaussianLimit.standardGaussian = standardGaussian := rfl
   have hBaseline : Tendsto μ atTop (𝓝 standardGaussian) :=
-    hGaussian ▸ GaussianLimit.uniformSampleLaw_tendsto
+    GaussianLimit.uniformSampleLaw_tendsto
   have hNonneg (m : ℕ) (x : ℝ) : 0 ≤ density R (μ m) x :=
     (by norm_num : (0 : ℝ) ≤ 1 / 2).trans (density_bounds R (μ m) x).1
   have hMeasurable (m : ℕ) : Measurable (density R (μ m)) :=

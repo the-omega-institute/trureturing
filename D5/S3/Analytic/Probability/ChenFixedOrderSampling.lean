@@ -18,7 +18,7 @@ import Mathlib.RingTheory.Polynomial.Pochhammer
 
 namespace ChenFixedOrderSampling
 
-open MeasureTheory ProbabilityTheory
+open Filter MeasureTheory ProbabilityTheory
 open scoped ENNReal
 
 abbrev sampleSize (m : ℕ) : ℕ := (m + 1)^2
@@ -42,8 +42,12 @@ def inclusion (m : ℕ) (A : Finset (Population m)) : Set (Sample m) :=
 theorem sampleSize_pos (m : ℕ) : 0 < sampleSize m := by
   positivity
 
-private theorem sampleSize_le_stratumSize (m : ℕ) : sampleSize m ≤ stratumSize m := by
+theorem sampleSize_le_stratumSize (m : ℕ) : sampleSize m ≤ stratumSize m := by
   simpa using (Nat.le_pow (a := sampleSize m) (b := 3) (by decide : 0 < 3))
+
+theorem sampleSize_tendsto : Tendsto sampleSize atTop atTop := by
+  exact (tendsto_pow_atTop (α := ℕ) (by decide : (2 : ℕ) ≠ 0)).comp
+    (tendsto_atTop_mono (fun m : ℕ => Nat.le_succ m) tendsto_id)
 
 instance (m : ℕ) : Nonempty (Sample m) := by
   classical

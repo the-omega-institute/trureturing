@@ -157,7 +157,11 @@ internal sealed class MomentPerturbationDocument : IScribeDocumentDefinition
                     Parenthesized(Seq(Tilt(Gaussian), Sp, Neq, Sp, Gaussian))
                 ]))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The Gaussian Gram determinant is positive, so the residual polynomial is nonzero. The perturbation itself has a strictly positive squared expectation. Its expectation increases by the positive scale times that squared expectation, which separates the two laws."))),
+                Blocks(Paragraph(Text(
+                    "The Gaussian Gram determinant is positive, so the residual polynomial is nonzero. "
+                    + "The perturbation h has Gaussian expectation E[h] = 0 by degree-zero cancellation. "
+                    + "Its Gaussian second moment E[h²] is strictly positive. Tilting increases the "
+                    + "expectation of h by the positive step times E[h²], which separates the two laws."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Definition(

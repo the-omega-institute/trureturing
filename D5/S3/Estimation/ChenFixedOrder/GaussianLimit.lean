@@ -10,6 +10,7 @@ import Mathlib.Probability.CentralLimitTheorem
 import Mathlib.Probability.Distributions.Bernoulli
 import Mathlib.Probability.Independence.InfinitePi
 import D5.S3.Analytic.Probability.ChenFixedOrderSampling
+import D5.S3.Analytic.Probability.MomentPerturbation
 
 /-! The Gaussian limit of the centered estimator for the balanced finite populations in
 the fixed-order sampling construction. -/
@@ -18,6 +19,8 @@ open ChenFixedOrderSampling MeasureTheory ProbabilityTheory Filter
 open scoped ENNReal Topology Finset
 
 namespace D5.S3.Estimation.ChenFixedOrder.GaussianLimit
+
+open D5.S3.Analytic.Probability.MomentPerturbation (standardGaussian)
 
 noncomputable section
 
@@ -42,13 +45,6 @@ private theorem drawMeasure_eq_pi (m : ℕ) :
 
 private def withReplacementLaw (m : ℕ) : ProbabilityMeasure ℝ :=
   ProbabilityMeasure.map ⟨drawMeasure m, inferInstance⟩ (orderedEstimator m)
-
-def standardGaussian : ProbabilityMeasure ℝ :=
-  ⟨gaussianReal 0 1, inferInstance⟩
-
-private theorem sampleSize_tendsto : Tendsto sampleSize atTop atTop := by
-  exact (tendsto_pow_atTop (α := ℕ) (by decide : (2 : ℕ) ≠ 0)).comp
-    (tendsto_atTop_mono (fun m : ℕ => Nat.le_succ m) tendsto_id)
 
 private def half : unitInterval := ⟨1 / 2, by constructor <;> norm_num⟩
 

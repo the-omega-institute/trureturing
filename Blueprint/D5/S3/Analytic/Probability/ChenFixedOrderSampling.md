@@ -160,7 +160,31 @@ $$\forall m : \mathbb{N}, 0 < \operatorname{sampleSize}\left(m\right)$$
 
 The sample size is positive at every stage.
 
-**Theorem 1.14 (Zero population mean).**
+**Theorem 1.14 (Sample size bounded by stratum size).**
+
+$$\forall m : \mathbb{N}, \operatorname{sampleSize}\left(m\right) \leq \operatorname{stratumSize}\left(m\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/ChenFixedOrderSampling.sampleSize_le_stratumSize` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sample fits within either stratum since each stratum has the cube of the sample size.
+
+**Theorem 1.15 (Divergence of sample sizes).**
+
+$$\operatorname{Tendsto}\left(\operatorname{sampleSize}, \operatorname{atTop}, \operatorname{atTop}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/ChenFixedOrderSampling.sampleSize_tendsto` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The squares of the positive stage indices tend to infinity.
+
+**Theorem 1.16 (Zero population mean).**
 
 $$\forall m : \mathbb{N}, \operatorname{populationMean}\left(m\right) = 0$$
 
@@ -172,7 +196,7 @@ $$\forall m : \mathbb{N}, \operatorname{populationMean}\left(m\right) = 0$$
 
 The two strata have equal size and opposite values, so the population mean is zero.
 
-**Theorem 1.15 (Finite image of a distinct draw).**
+**Theorem 1.17 (Finite image of a distinct draw).**
 
 $$\forall m : \mathbb{N}, \forall d : \operatorname{Draw}\left(m\right), d \in \operatorname{distinct}\left(m\right) \Rightarrow \operatorname{eraseOrder}\left(m, d\right).val = \operatorname{Finset.image}\left(d, \operatorname{Finset.univ}\right)$$
 
@@ -184,7 +208,7 @@ $$\forall m : \mathbb{N}, \forall d : \operatorname{Draw}\left(m\right), d \in \
 
 For each injective ordered draw, its unordered sample is exactly the finite image of the draw.
 
-**Theorem 1.16 (Uniform law on fixed-size subsets).**
+**Theorem 1.18 (Uniform law on fixed-size subsets).**
 
 $$\forall m : \mathbb{N}, \operatorname{Measure.map}\left(\operatorname{eraseOrder}\left(m\right), \operatorname{ProbabilityTheory.cond}\left(\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Draw}\left(m\right)\right)\right)\right), \operatorname{distinct}\left(m\right)\right)\right) = \operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right)$$
 
@@ -196,7 +220,7 @@ $$\forall m : \mathbb{N}, \operatorname{Measure.map}\left(\operatorname{eraseOrd
 
 Condition the uniform law of ordered draws on having distinct labels, then erase order. Every subset of the required size has the same number of orderings, giving the uniform subset law.
 
-**Theorem 1.17 (Inclusion polynomial).**
+**Theorem 1.19 (Inclusion polynomial).**
 
 $$\begin{aligned}\forall m : \mathbb{N}, \forall A : \operatorname{Finset}\left(\operatorname{Population}\left(m\right)\right), \exists p : \operatorname{Polynomial}\left(\mathbb{R}\right), \operatorname{natDegree}\left(p\right) \leq \operatorname{card}\left(A\right) \land\\\left(\begin{aligned}\forall f : \mathbb{R} \to \mathbb{R}, \int S \in \operatorname{inclusion}\left(m, A\right), \operatorname{f}\left(\operatorname{estimator}\left(m, S\right)\right) d\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right) =\\\quad\int S : \operatorname{Sample}\left(m\right), \operatorname{Polynomial.eval}\left(\operatorname{estimator}\left(m, S\right), p\right) \cdot \operatorname{f}\left(\operatorname{estimator}\left(m, S\right)\right) d\operatorname{uniformOn}\left(\left(\operatorname{Set.univ} : \operatorname{Set}\left(\operatorname{Sample}\left(m\right)\right)\right)\right)\end{aligned}\right)\end{aligned}$$
 
@@ -224,6 +248,8 @@ On each cell of fixed positive-stratum count, the inclusion fraction is the prod
 - Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.populationMean_eq_zero`
 - Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.populationValue`
 - Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.sampleSize`
+- Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.sampleSize_le_stratumSize`
 - Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.sampleSize_pos`
+- Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.sampleSize_tendsto`
 - Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.stratumSize`
 - Truth anchor: `D5/S3/Analytic/Probability/ChenFixedOrderSampling.uniformSampleMeasure`
