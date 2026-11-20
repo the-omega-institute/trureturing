@@ -175,4 +175,111 @@ theorem common_weights_for_allocations {k n q : ℕ} (kpos : 0 < k)
   rw [← geom_sum_mul_add k n, Nat.mul_comm (∑ i ∈ range n, (k + 1) ^ i) k] at budget
   exact cover_by_capacity (Nat.le_of_mul_le_mul_left (Nat.le_of_add_le_add_right budget) kpos)
 
+private theorem bundle_last_weight {k n q p b t U : ℕ} {w : Fin n → ℕ}
+    (cover : CoversAllocations k q w) (ppos : 0 < p)
+    (whole : b ∣ U) (tpos : 0 < t) (block_bound : k * (t - 1) ≤ U)
+    (rounding : (t - 1) * (p - 1) ≤ U * q)
+    (x : Fin t → ℕ) (total : ∑ i, x i = U * q + (U / b) * p) :
+    ∃ a : Fin (n + 1) → Fin t → ℕ,
+      (∀ j, ∑ i, a j i = U) ∧
+      (∀ i, ∑ j, a j i * (Fin.snoc (α := fun _ => ℕ) (fun j => b * w j) p j) = b * x i) := by
+  let _ : Nonempty (Fin t) := ⟨⟨0, tpos⟩⟩
+  have hround : (Fintype.card (Fin t) - 1) * (p - 1) ≤ U * q := by
+    simpa only [Fintype.card_fin] using rounding
+  obtain ⟨bundles, all_bundles, fits, leftover⟩ :=
+    extend_block_allocation x ppos hround total
+  obtain ⟨old, old_count, old_mass⟩ := cover t U tpos block_bound
+    (fun i => x i - bundles i * p) leftover
+  refine ⟨Fin.snoc old (fun i => b * bundles i), ?_, ?_⟩
+  · intro j
+    refine Fin.lastCases ?_ (fun j => ?_) j
+    · simp only [Fin.snoc_last, ← Finset.mul_sum, all_bundles]
+      rw [Nat.mul_comm, Nat.div_mul_cancel whole]
+    · simpa only [Fin.snoc_castSucc] using old_count j
+  · intro i
+    simp only [Fin.sum_univ_castSucc, Fin.snoc_castSucc, Fin.snoc_last]
+    have old_scaled : (∑ j, old j i * (b * w j)) = b * (x i - bundles i * p) := by
+      rw [← old_mass i, Finset.mul_sum]
+      exact Finset.sum_congr rfl fun j _ => by ac_rfl
+    rw [old_scaled, Nat.mul_assoc, ← Nat.mul_add, Nat.sub_add_cancel (fits i)]
+
+/-- A common allocation realizes fractional demands when the last weight can use bundles
+of fixed size. The other weights are integer multiples of the bundle size. -/
+theorem common_fractional_allocations {k n A b K : ℕ}
+    (kPositive : 0 < k) (bPositive : 0 < b) (KPositive : 0 < K)
+    (factor : K * b = k) (atLeastOne : b ≤ A) (fractional : ¬ b ∣ A)
+    (capacity : K * A + 1 ≤ (K + 1) * (k + 1)^n) :
+    ∃ w : Fin (n + 1) → ℕ, (∑ j, w j = A) ∧
+      ∀ t U : ℕ, 0 < t → k * (t - 1) ≤ U → b ∣ U → ∀ x : Fin t → ℕ,
+        b * (∑ i, x i) = U * A →
+        ∃ a : Fin (n + 1) → Fin t → ℕ, (∀ j, ∑ i, a j i = U) ∧
+          (∀ i, ∑ j, a j i * w j = b * x i) := by
+  let C := ∑ i ∈ range n, (k + 1)^i
+  let T := min (A / b) C
+  let p := A - b * T
+  have C_eq : k * C + 1 = (k + 1)^n := by
+    dsimp [C]
+    rw [Nat.mul_comm]
+    exact geom_sum_mul_add k n
+  have bT : b * T ≤ A := by
+    calc
+      b * T ≤ b * (A / b) := Nat.mul_le_mul_left b (min_le_left _ _)
+      _ ≤ A := by simpa only [Nat.mul_comm] using Nat.div_mul_le_self A b
+  have decomposition : b * T + p = A := Nat.add_sub_of_le bT
+  have pPositive : 0 < p := by
+    by_contra! nonpos
+    have zero : p = 0 := by omega
+    apply fractional
+    exact ⟨T, by simpa [zero] using decomposition.symm⟩
+  have bound : p ≤ k * T + 1 := by
+    by_cases h : A / b ≤ C
+    · have Teq : T = A / b := min_eq_left h
+      have oneLe : 1 ≤ T := by
+        rw [Teq]
+        exact (Nat.le_div_iff_mul_le bPositive).mpr (by simpa using atLeastOne)
+      have pb : p < b := by
+        have split := Nat.mod_add_div A b
+        rw [← Teq] at split
+        have modLT := Nat.mod_lt A bPositive
+        omega
+      have bk : b ≤ k := by
+        calc
+          b = 1 * b := (Nat.one_mul _).symm
+          _ ≤ K * b := Nat.mul_le_mul_right _ (by omega)
+          _ = k := factor
+      have kT : k ≤ k * T := by simpa using Nat.mul_le_mul_left k oneLe
+      omega
+    · have Teq : T = C := min_eq_right (le_of_not_ge h)
+      have c : K * (b * C + p) + 1 ≤ (K + 1) * (k * C + 1) := by
+        rw [← C_eq] at capacity
+        simpa only [Teq] using (show K * (b * T + p) + 1 ≤ (K + 1) * (k * C + 1) from
+          decomposition ▸ capacity)
+      rw [Nat.mul_add, ← Nat.mul_assoc, factor, Nat.add_mul, Nat.one_mul] at c
+      have product : K * p ≤ K * (k * C + 1) := by omega
+      simpa only [Teq] using Nat.le_of_mul_le_mul_left product KPositive
+  have Tcapacity : k * T + 1 ≤ (k + 1)^n := by
+    rw [← C_eq]
+    exact Nat.add_le_add_right (Nat.mul_le_mul_left _ (min_le_right _ _)) _
+  obtain ⟨w, total, cover⟩ := common_weights_for_allocations kPositive Tcapacity
+  refine ⟨Fin.snoc (α := fun _ => ℕ) (fun j => b * w j) p, ?_, ?_⟩
+  · rw [Fin.sum_univ_castSucc]
+    simp only [Fin.snoc_castSucc, Fin.snoc_last]
+    rw [← Finset.mul_sum, total, decomposition]
+  · intro t U tpos blocks whole x exactTotal
+    have hUB : b * (U / b) = U := by
+      rw [Nat.mul_comm, Nat.div_mul_cancel whole]
+    have normalized : (∑ i, x i) = U * T + (U / b) * p := by
+      apply Nat.eq_of_mul_eq_mul_left bPositive
+      rw [exactTotal, Nat.mul_add, ← Nat.mul_assoc b (U / b) p, hUB]
+      rw [← decomposition, Nat.mul_add]
+      congr 1
+      ac_rfl
+    have round : (t - 1) * (p - 1) ≤ U * T := by
+      have p_le : p - 1 ≤ k * T := by omega
+      calc
+        _ ≤ (t - 1) * (k * T) := Nat.mul_le_mul_left _ p_le
+        _ = (k * (t - 1)) * T := by ac_rfl
+        _ ≤ _ := Nat.mul_le_mul_right _ blocks
+    exact bundle_last_weight cover pPositive whole tpos blocks round x normalized
+
 end D5.S3.Combinatorics.Partitions.CommonBlockWeights
