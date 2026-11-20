@@ -71,6 +71,6 @@ theorem u_div_rpow_tendsto_zero_iff (hRH : RiemannHypothesis) (θ : ℝ) :
       exact mul_le_mul_of_nonneg_right hy.le (Real.exp_nonneg _)
     apply (hlogScale.comp Real.tendsto_log_atTop).congr'
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx
-    simp [Function.comp_def, Real.exp_log hx]
+    simp [Real.exp_log hx]
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.RHPowerThreshold
