@@ -333,10 +333,12 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         dependency.write_text(original + f'def {info} := 1\n#check {info}\n')
         cold = self.run_lake(*command)
         self.assertNotIn(info, cold.stdout + cold.stderr)
+        self.assertRegex(cold.stdout + cold.stderr, r'\bBuilt ClaimSupport(?=[ (]|$)')
         visible = self.run_lake('build', '+ClaimSupport')
         self.assertIn(info, visible.stdout + visible.stderr)
         warm = self.run_lake(*command)
         self.assertNotIn(info, warm.stdout + warm.stderr)
+        self.assertNotIn('Built ClaimSupport', warm.stdout + warm.stderr)
         directory = self.root / '.lake/build/lib/lean'
         for name in ('D5/A', 'D5/B', 'External', 'ClaimSupport'):
             self.assertTrue((directory / (name + '.olean')).is_file())

@@ -512,7 +512,7 @@ script compileReportModules args do
     let some mod := ws.findModule? name.toName
       | throw <| IO.userError s!"prepare: unknown Lean module {name}"
     return mod
-  runBuild (cfg := {outLv := .error, verbosity := .quiet}) do
+  runBuild (cfg := {outLv := .error}) do
     return mixModuleJobs (← modules.mapM (·.leanArts.fetch))
   return 0
 
