@@ -6,7 +6,7 @@ internal sealed class GeometricSpineSolutionsDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Geometry/DiscreteGravity/GeometricSpineSolutions.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/DiscreteGravity/mazhang2026treeequations");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/mazhang2026treeequations");
 
     private static DocumentBlock Def(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
@@ -50,7 +50,8 @@ internal sealed class GeometricSpineSolutionsDocument : IScribeDocumentDefinitio
                         "For every integer q ≥ 2 the graph is a tree in which every vertex has degree "
                         + "q + 1. Here c_i, d_i are the sums of 1/ℓ and 1/ℓ² over incident edges, "
                         + "R_i = c_i/d_i, and the tree equation on an edge is (R_i² + R_j²)/ℓ_ij − R_i − "
-                        + "R_j = 0. For positive spine lengths L, the extension has ratio R_n at the spine "
+                        + "R_j = 0. For positive spine lengths L, the extended lengths are symmetric and "
+                        + "positive, the extension has ratio R_n at the spine "
                         + "vertex n and throughout the branches at n, every incident length at a branch "
                         + "vertex is R_n, and the extension solves the tree equations exactly when every "
                         + "line residual vanishes. For β(n) ∈ {2, 3} and L₀ > 0 there is exactly one "

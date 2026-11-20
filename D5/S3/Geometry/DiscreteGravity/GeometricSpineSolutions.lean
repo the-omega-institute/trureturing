@@ -322,7 +322,7 @@ private theorem two_three_residual {L : ℤ → ℝ} (hL : ∀ n, 0 < L n) (β :
     unfold lineRatio; rw [hrec n]; field_simp; ring
   have hm : lineRatio L (n - 1) = L (n - 1) * (6 / 5) := by
     unfold lineRatio
-    rw [show n - 1 - 1 = n - 1 - 1 from rfl, hrec (n - 1)]
+    rw [hrec (n - 1)]
     rcases hβ (n - 1) with h | h <;> rw [h] <;> field_simp <;> ring
   unfold lineResidual
   rw [hn, hm]
@@ -529,7 +529,7 @@ private theorem constant_iff {t r : ℝ} (ht : 0 < t) (hr : 0 < r) :
     rcases i with n | ⟨n, b, w⟩ <;> rcases j with m | ⟨m, b', z⟩ <;>
       simp [lengths, scale]
 
-private theorem curvature_branch (hq : 1 ≤ q) {t r : ℝ} (ht : 0 < t) (hr : 0 < r) (n : ℤ)
+private theorem curvature_branch {t r : ℝ} (ht : 0 < t) (hr : 0 < r) (n : ℤ)
     (b : Fin (q - 1)) (w : List (Fin q)) (c : Fin q) :
     curvature q (lengths q t r) (Sum.inr (n, b, w)) (Sum.inr (n, b, c :: w)) = 4 / (q + 1) - 2 := by
   have hsn : 0 < scale t r n := mul_pos ht (zpow_pos hr n)
@@ -611,7 +611,7 @@ private theorem curvature_constant_iff (hq : 2 ≤ q) {t r : ℝ} (ht : 0 < t) (
     have c0 : Fin q := ⟨0, by omega⟩
     have e1 := h (Sum.inr (0, b0, [])) (Sum.inr (0, b0, [c0])) ((graph_adj _ _).mpr (Or.inr rfl))
     have e2 := h (Sum.inl 0) (Sum.inr (0, b0, [])) ((graph_adj _ _).mpr (Or.inr rfl))
-    rw [curvature_branch (by omega) ht hr] at e1
+    rw [curvature_branch ht hr] at e1
     rw [curvature_attach (by omega) ht hr] at e2
     by_contra hne
     have := (attach_gt_iff (q := q) (by omega) hr).mpr hne
@@ -716,6 +716,8 @@ theorem result (q : ℕ) (hq : 2 ≤ q) {t r : ℝ} (ht : 0 < t) (hr : 0 < r) :
         r = 1)) ∧
     ((∃ c, ∀ i j, (graph q).Adj i j → curvature q (lengths q t r) i j = c) ↔ r = 1) ∧
     (∀ L : ℤ → ℝ, (∀ n, 0 < L n) →
+      (∀ i j, (graph q).Adj i j → spineLengths q L i j = spineLengths q L j i ∧
+        0 < spineLengths q L i j) ∧
       ((∀ i j, (graph q).Adj i j → tEoM (graph q) (spineLengths q L) i j = 0) ↔
         ∀ n, lineResidual L n = 0) ∧
       (∀ n, (graph q).Adj (Sum.inl (n - 1)) (Sum.inl n) ∧
@@ -737,9 +739,10 @@ theorem result (q : ℕ) (hq : 2 ≤ q) {t r : ℝ} (ht : 0 < t) (hr : 0 < r) :
     residuals hq1 ht hr i j h⟩, fun n => ⟨(graph_adj _ _).mpr (Or.inr (by simp [parent])), ?_,
     ratio_spine hq1 ht hr n⟩, fun n b w => ⟨ratio_branch t r ht hr n b w,
     star_branch ht hr n b w⟩, constant_iff ht hr, fun n b w c => ⟨(graph_adj _ _).mpr
-    (Or.inr rfl), curvature_branch hq1 ht hr n b w c⟩, fun n b => ⟨(graph_adj _ _).mpr
+    (Or.inr rfl), curvature_branch ht hr n b w c⟩, fun n b => ⟨(graph_adj _ _).mpr
     (Or.inr rfl), curvature_attach hq1 ht hr n b⟩, attach_eq_iff hq1 hr,
-    curvature_constant_iff hq ht hr, fun L hL => ⟨gsolves_iff hq1 hL, fun n =>
+    curvature_constant_iff hq ht hr, fun L hL => ⟨fun i j _ => ⟨spine_lengths_symm L i j,
+    spine_lengths_pos hL i j⟩, gsolves_iff hq1 hL, fun n =>
     ⟨(graph_adj _ _).mpr (Or.inr rfl), by simp [spineLengths], gratio_spine hq1 hL n⟩,
     fun n b w => ⟨gratio_branch hL n b w, gstar_branch L n b w⟩⟩,
     fun β hβ => ⟨fun L0 h0 => two_choice_lengths β hβ h0, fun L h0 hrec => ?_⟩⟩
