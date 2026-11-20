@@ -39,14 +39,16 @@ The proof runs as follows.
   `B j = c j • 1` by Schur's lemma.
 * Positive semidefiniteness of the kernel makes every `c j` nonnegative
   (`UnitaryCharacterKernel.posSemidef_sum_character_kernel_iff`); the representations with
-  `c j = 0` are dropped. The rank formula is `CharacterKernelRank.finrank_span_sum_character_kernel`,
-  and its proof shows that the span of the sections is the span of all matrix coefficients.
+  `c j = 0` are dropped. The rank formula is
+  `CharacterKernelRank.finrank_span_sum_character_kernel`; the same Burnside argument shows that
+  the span of the sections is the span of all matrix coefficients of the family.
 
 No hypothesis can be dropped: on `ℤ`, `φ n = n` is a class function of finite rank whose
 kernel is not positive semidefinite; a diagonal matrix coefficient of the defining
 representation of `SU(2)`, as an abstract group, is positive semidefinite of rank two but not a
-class function; and on `ℤ` the indicator of `0` is a positive semidefinite class function of
-infinite rank.
+class function, and `2` is not a sum of squared dimensions of pairwise inequivalent irreducible
+representations of this perfect group; on `ℤ` the indicator of `0` is a positive semidefinite
+class function of infinite rank.
 -/
 
 namespace D5.S3.FiniteGroups.GroupAlgebra.PositiveDefiniteClassFunction
@@ -231,7 +233,7 @@ private theorem isIrreducible_of_equiv {V W : Type*} [AddCommGroup V] [Module �
   rw [Representation.irreducible_iff_isSimpleModule_asModule]
   let F := IntertwiningMap.equivLinearMapAsModule ρ σ e.toIntertwiningMap
   let F' := IntertwiningMap.equivLinearMapAsModule σ ρ e.symm.toIntertwiningMap
-  exact IsSimpleModule.congr (LinearEquiv.ofLinear F' F
+  exact IsSimpleModule.congr (LinearEquiv.ofLinearMap (f := F') (g := F)
     (LinearMap.ext fun v => e.symm_apply_apply v) (LinearMap.ext fun v => e.apply_symm_apply v))
 
 /-- Trace coefficients of an irreducible unitary representation on a finite-dimensional inner
@@ -284,8 +286,8 @@ private theorem isTraceSum_apply (d : ℕ) :
     ⟨⟨⊥, ⊤, fun h => bot_ne_top (congrArg Subrepresentation.toSubmodule h)⟩⟩
   obtain ⟨σ, hσb, hσt⟩ : ∃ σ : Subrepresentation π, σ ≠ ⊥ ∧ σ ≠ ⊤ := by
     by_contra hcon
-    push_neg at hcon
-    exact hirr { eq_bot_or_eq_top := fun σ => (em (σ = ⊥)).imp id (hcon σ) }
+    exact hirr { eq_bot_or_eq_top := fun σ =>
+      Classical.byContradiction fun h => hcon ⟨σ, not_or.1 h⟩ }
   obtain ⟨τ, hτ⟩ := (isSemisimpleRepresentation_of_norm_map π hπ).exists_isCompl σ
   have hτt : τ ≠ ⊤ := fun h => hσb (disjoint_top.1 (h ▸ hτ.disjoint))
   have hu : u ∈ σ.toSubmodule ⊔ τ.toSubmodule := by
@@ -366,18 +368,19 @@ private theorem exists_eq_smul_one {Q : Type} [Fintype Q] {n : Q → ℕ}
   classical
   have hcomm : ∀ q g, ρ q g⁻¹ * A q * ρ q g = A q := by
     intro q g
-    have hD : (fun q => ρ q g⁻¹ * A q * ρ q g - A q :
-        ∀ q, Module.End ℂ (EuclideanSpace ℂ (Fin (n q)))) = 0 := by
-      refine eq_zero_of_tracePairing (fun _ => (1 : ℂ)) (fun _ => one_ne_zero) _ fun B => ?_
+    let D : ∀ q, Module.End ℂ (EuclideanSpace ℂ (Fin (n q))) :=
+      fun q => ρ q g⁻¹ * A q * ρ q g - A q
+    have hD : D = 0 := by
+      refine eq_zero_of_tracePairing (fun _ => (1 : ℂ)) (fun _ => one_ne_zero) D fun B => ?_
       have hext := LinearMap.ext_on_range (span_range_pi_eq_top ρ hne)
-        (f := (tracePairing fun _ => (1 : ℂ)).flip
-          (fun q => ρ q g⁻¹ * A q * ρ q g - A q)) (g := 0) fun x => by
-          simp only [LinearMap.flip_apply, tracePairing, LinearMap.mk₂_apply, one_mul,
+        (f := (tracePairing (W := fun q => EuclideanSpace ℂ (Fin (n q)))
+          fun _ : Q => (1 : ℂ)).flip D) (g := 0) fun x => by
+          simp only [D, LinearMap.flip_apply, tracePairing, LinearMap.mk₂_apply, one_mul,
             LinearMap.zero_apply, mul_sub, map_sub, Finset.sum_sub_distrib]
           rw [sub_eq_zero, ← hclass g x]
           refine Finset.sum_congr rfl fun q _ => ?_
-          rw [map_mul, map_mul, LinearMap.trace_mul_comm ℂ (ρ q x), mul_assoc, mul_assoc,
-            LinearMap.trace_mul_comm ℂ (ρ q g)]
+          rw [map_mul (ρ q), map_mul (ρ q), show ρ q x * (ρ q g⁻¹ * A q * ρ q g) =
+            ρ q x * ρ q g⁻¹ * A q * ρ q g by simp only [mul_assoc], LinearMap.trace_mul_comm]
           simp only [mul_assoc]
       exact LinearMap.congr_fun hext B
     exact sub_eq_zero.1 (congr_fun hD q)
@@ -385,14 +388,13 @@ private theorem exists_eq_smul_one {Q : Type} [Fintype Q] {n : Q → ℕ}
     intro q
     let T : IntertwiningMap (ρ q) (ρ q) :=
       (A q).intertwiningMap_of_isIntertwiningMap _ _ fun g v => by
-        rw [← hcomm q g]
-        simp only [Module.End.mul_apply, ← Module.End.mul_apply (ρ q g) (ρ q g⁻¹), ← map_mul,
-          mul_inv_cancel, map_one, Module.End.one_apply]
+        have h : ρ q g * (ρ q g⁻¹ * A q * ρ q g) = A q * ρ q g := by
+          rw [← mul_assoc, ← mul_assoc, ← map_mul, mul_inv_cancel, map_one, one_mul]
+        rw [hcomm q g] at h
+        exact (LinearMap.congr_fun h v).symm
     obtain ⟨c, hc⟩ :=
       (IsIrreducible.algebraMap_intertwiningMap_bijective_of_isAlgClosed (ρ := ρ q)).2 T
-    refine ⟨c, ?_⟩
-    have := congrArg IntertwiningMap.toLinearMap hc
-    simpa using this.symm
+    exact ⟨c, (congrArg IntertwiningMap.toLinearMap hc).symm⟩
   choose c hc using hint
   exact ⟨c, hc⟩
 
@@ -417,6 +419,78 @@ theorem exists_sum_character_of_finiteDimensional {G : Type*} [Group G] (φ : G 
         Submodule.span ℂ (Set.range fun y : G => fun x : G => φ (x * y⁻¹))) ∧
       Module.finrank ℂ (Submodule.span ℂ (Set.range fun y : G => fun x : G => φ (x * y⁻¹))) =
         ∑ i, n i ^ 2 := by
-  sorry
+  classical
+  obtain ⟨E, _, _, _, π, u, f, hπ, hφ⟩ := exists_unitary_model φ hpsd hfin
+  have hts : IsTraceSum φ := by
+    have h := isTraceSum_apply _ E rfl π hπ f u
+    rwa [show (fun x => f (π x u)) = φ from funext fun x => (hφ x).symm] at h
+  obtain ⟨Q, _, n, ρ, A, hirr, hne, hunit, hA⟩ := exists_inequivalent_of_isTraceSum hts
+  have : ∀ q, (ρ q).IsIrreducible := hirr
+  obtain ⟨c, hc⟩ := exists_eq_smul_one ρ hne A fun g x => by rw [← hA, ← hA, hclass]
+  have hφc : ∀ x, φ x = ∑ q, c q * (ρ q).character x := by
+    intro x
+    rw [hA x]
+    refine Finset.sum_congr rfl fun q _ => ?_
+    rw [hc q, mul_smul_comm, mul_one, map_smul, smul_eq_mul]
+    rfl
+  -- Positivity of the kernel makes the weights nonnegative.
+  have hc0 : ∀ q, 0 ≤ c q := by
+    rw [← posSemidef_sum_character_kernel_iff ρ hne hunit c]
+    have : (Matrix.of fun x y : G => ∑ q, c q * (ρ q).character (x * y⁻¹)) =
+        Matrix.of fun x y : G => φ (x * y⁻¹) := by
+      ext x y
+      simp only [Matrix.of_apply, hφc]
+    rw [this]
+    exact hpsd
+  have hre : ∀ q, ((c q).re : ℂ) = c q := fun q =>
+    Complex.ext (by simp) (by simpa using (Complex.nonneg_iff.1 (hc0 q)).2)
+  -- Drop the representations with weight zero and index the others by `Fin m`.
+  let e : Fin (Fintype.card {q // c q ≠ 0}) ≃ {q // c q ≠ 0} :=
+    (Fintype.equivFin {q // c q ≠ 0}).symm
+  let n' : Fin (Fintype.card {q // c q ≠ 0}) → ℕ := fun i => n (e i).1
+  let ρ' : ∀ i, Representation ℂ G (EuclideanSpace ℂ (Fin (n' i))) := fun i => ρ (e i).1
+  let c' : Fin (Fintype.card {q // c q ≠ 0}) → ℝ := fun i => (c (e i).1).re
+  have hirr' : ∀ i, (ρ' i).IsIrreducible := fun i => hirr _
+  have hne' : ∀ i j, i ≠ j → IsEmpty ((ρ' i).Equiv (ρ' j)) :=
+    fun i j hij => hne _ _ fun h => hij (e.injective (Subtype.ext h))
+  have hpos : ∀ i, 0 < c' i := fun i => by
+    refine lt_of_le_of_ne (Complex.nonneg_iff.1 (hc0 (e i).1)).1 fun h => (e i).2 ?_
+    rw [← hre, show (c (e i).1).re = 0 from h.symm, Complex.ofReal_zero]
+  have hc'ne : ∀ i, (c' i : ℂ) ≠ 0 := fun i => Complex.ofReal_ne_zero.2 (hpos i).ne'
+  have hφ' : ∀ x, φ x = ∑ i, (c' i : ℂ) * (ρ' i).character x := by
+    intro x
+    have h0 : ∑ q : {q // ¬c q ≠ 0}, c q.1 * (ρ q.1).character x = 0 :=
+      Finset.sum_eq_zero fun q _ => by rw [not_not.1 q.2, zero_mul]
+    rw [hφc x, ← Fintype.sum_subtype_add_sum_subtype (fun q => c q ≠ 0), h0, add_zero,
+      ← e.sum_comp]
+    exact Finset.sum_congr rfl fun i _ => by simp only [c', ρ', hre]
+  have hsec : (fun y : G => fun x : G => φ (x * y⁻¹)) =
+      fun y x => ∑ i, (c' i : ℂ) * (ρ' i).character (x * y⁻¹) :=
+    funext fun y => funext fun x => hφ' _
+  -- The span of the sections is the span of all matrix coefficients of the family.
+  let Φ : (∀ i, Module.End ℂ (EuclideanSpace ℂ (Fin (n' i)))) →ₗ[ℂ] G → ℂ :=
+    LinearMap.pi fun x => tracePairing (fun i => (c' i : ℂ)) (fun i => ρ' i x)
+  have hspan : Submodule.span ℂ (Set.range fun y : G => fun x : G => φ (x * y⁻¹)) =
+      LinearMap.range Φ := by
+    have hsec2 : (fun y : G => fun x : G => φ (x * y⁻¹)) =
+        Φ ∘ (fun g : G => (fun i => ρ' i g : ∀ i, Module.End ℂ _)) ∘ (·⁻¹) := by
+      rw [hsec]
+      funext y x
+      simp only [Φ, tracePairing, LinearMap.pi_apply, LinearMap.mk₂_apply, Function.comp_apply,
+        Representation.character, map_mul]
+    rw [hsec2, Set.range_comp, inv_surjective.range_comp, Submodule.span_image,
+      span_range_pi_eq_top ρ' hne', Submodule.map_top]
+  refine ⟨Fintype.card {q // c q ≠ 0}, n', ρ', c', hirr', hne', fun i => hunit _, hpos, hφ',
+    fun i v w => ?_, ?_⟩
+  · rw [hspan, LinearMap.mem_range]
+    refine ⟨Pi.single i ((c' i : ℂ)⁻¹ • (innerₛₗ ℂ w).smulRight v), funext fun g => ?_⟩
+    simp only [Φ, LinearMap.pi_apply, tracePairing, LinearMap.mk₂_apply]
+    rw [Finset.sum_eq_single i (fun j _ hj => by rw [Pi.single_eq_of_ne hj, mul_zero, map_zero,
+      mul_zero]) (fun h => absurd (Finset.mem_univ i) h), Pi.single_eq_same, mul_smul_comm,
+      map_smul, smul_eq_mul, ← mul_assoc, mul_inv_cancel₀ (hc'ne i), one_mul,
+      show ρ' i g * (innerₛₗ ℂ w).smulRight v = (innerₛₗ ℂ w).smulRight (ρ' i g v) from
+        LinearMap.ext fun z => by simp, LinearMap.trace_smulRight, innerₛₗ_apply_apply]
+  · rw [hsec, finrank_span_sum_character_kernel ρ' hne' (fun i => (c' i : ℂ)) hc'ne]
+    simp [n']
 
 end D5.S3.FiniteGroups.GroupAlgebra.PositiveDefiniteClassFunction

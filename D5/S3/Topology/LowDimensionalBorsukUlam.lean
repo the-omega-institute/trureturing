@@ -75,8 +75,8 @@ private theorem exists_eq_neg_two (f : EuclideanSpace ℝ (Fin 3) → EuclideanS
   obtain ⟨v, hv, hz⟩ :=
     D5.S3.Geometry.Lorentz.ChiralEventParityMinimality.planar_odd_map_zero
       (fun x => e (f x - f (-x)))
-    (e.continuous.comp_continuousOn (hf.sub (hf.comp continuous_neg.continuousOn hneg)))
-    (fun v _ => by simp only [neg_neg, ← map_neg, neg_sub])
+      (e.continuous.comp_continuousOn (hf.sub (hf.comp continuous_neg.continuousOn hneg)))
+      (fun v _ => by simp only [neg_neg, ← map_neg, neg_sub])
   refine ⟨v, hv, sub_eq_zero.mp (e.injective ?_)⟩
   rw [hz, map_zero]
 

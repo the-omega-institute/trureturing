@@ -17,6 +17,24 @@ internal sealed class TernaryComparisonIsomorphismDocument : IScribeDocumentDefi
                 "The reading of a ternary comparison structure C on M is complete when every sequence x of points of M whose readings kappa(C, x m, x n) exceed 1 - e for all m and n beyond some N, for every e > 0, has a point a whose readings kappa(C, x n, a) with the sequence exceed 1 - e for all n beyond some N, for every e > 0. "
                     + "Reading values close to one play the role of small distances, so this is completeness of M for the closeness measured by the reading. "
                     + "The condition holds for the quaternion comparison model, because its reading is one minus a quarter of the squared distance, 1 - |x - y|^2 / 4, and the unit quaternions are a closed subset of the complete space of quaternions; this consequence is not among the formal statements of the module."),
+            Node("kappa-distance", "kappa_eq_one_sub_dist_sq", "The quaternion reading in terms of distance",
+                StatementSource.FromAuthor(DistanceFormula()), DescribeRole.Lemma,
+                "For unit quaternions a and b, the reading of the quaternion comparison model is (1 + <a, b>) / 2, where <a, b> is the real inner product. "
+                    + "Since |a - b|^2 = |a|^2 - 2 <a, b> + |b|^2 and both norms are one, <a, b> = 1 - |a - b|^2 / 2, and the reading is 1 - |a - b|^2 / 4. "
+                    + "Here dist(a, b) is the distance |a - b| of a and b as quaternions."),
+            Node("normalized-embedding", "exists_normalized_embedding", "A normalized embedding into the unit quaternions",
+                StatementSource.FromAuthor(NormalizedEmbeddingFormula()), DescribeRole.Lemma,
+                "Let C be a ternary comparison structure on M whose transfer is order sensitive and whose reading is chain connected, takes values arbitrarily close to zero and is the Gram kernel of a map into Euclidean 5-space, and let o be a point of M. "
+                    + "Then there is an injective map v from M into the unit quaternions with v(o) = 1 that carries the transfer to v(tri(C, x, y, z)) = v(x) * v(y)^-1 * v(z) and preserves the reading, kappa(C, x, y) = kappa(quaternionModel, v(x), v(y)). "
+                    + "The feature-rank embedding gives an injective map w with the same transfer law and with kappa(C, x, y) = (1 + <w(x), w(y)>) / 2. "
+                    + "The map v(x) = w(o)^-1 * w(x) is injective and sends o to 1; the transfer law follows from the group identity (w(o)^-1 * p) * (w(o)^-1 * q)^-1 * (w(o)^-1 * r) = w(o)^-1 * (p * q^-1 * r), and the reading is preserved because left multiplication by a unit quaternion preserves the real inner product."),
+            Node("closed-range", "isClosed_range", "Under a complete reading the image is closed",
+                StatementSource.FromAuthor(ClosedRangeFormula()), DescribeRole.Lemma,
+                "Let C be a ternary comparison structure on M with complete reading and let v be a map from M into the unit quaternions with kappa(C, x, y) = kappa(quaternionModel, v(x), v(y)) for all x and y. "
+                    + "Then the image of v is a closed subset of the unit quaternions. "
+                    + "Let v(x n) converge to a unit quaternion q. The reading between unit quaternions is 1 - dist^2 / 4, so the readings kappa(C, x m, x n) are within e of one for all large m and n, for every e > 0. "
+                    + "Completeness gives a point a whose readings kappa(C, x n, a) tend to one; then dist(v(x n), v(a)) tends to zero, so v(x n) converges to v(a), and q = v(a) lies in the image. "
+                    + "Sequentially closed subsets of a metric space are closed."),
             Node("exists-unit-quaternion-equiv", "exists_unitQuaternion_equiv",
                 "Complete structures of feature rank five are the unit quaternions",
                 StatementSource.FromAuthor(EquivFormula()), DescribeRole.Theorem,
@@ -85,6 +103,47 @@ internal sealed class TernaryComparisonIsomorphismDocument : IScribeDocumentDefi
             Implies(AtMost(bigN, n), CloseToOne(Call("kappa", C, At(x, n), a))))));
         return OverStructure(Logic(Call("ReadingComplete", C), FormulaLogicOperator.Iff,
             ForAll("x", new Formula.TypeArrow(Naturals, M), Implies(cauchy, limit))));
+    }
+
+    private static Formula Div(Formula x, Formula y) => Seq(Frac, Grp(x), Grp(y));
+    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
+    private static Formula Inv(Formula x) => new Formula.Power(x, Seq(Minus, D(1)));
+    private static Formula MapsToUnits => new Formula.TypeArrow(M, Units);
+
+    private static Formula DistanceFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b");
+        return Disp(ForAllMany(Units,
+            Equal(Call("kappa", Model, a, b),
+                Sub(D(1), Div(new Formula.Power(Call("dist", a, b), D(2)), D(4)))), "a", "b"));
+    }
+
+    /// <summary>The reading of C is the quaternion reading along v.</summary>
+    private static Formula ReadingPreserved(Formula v)
+    {
+        Formula x = F.Id("x"), y = F.Id("y");
+        return ForAllMany(M, Equal(Call("kappa", C, x, y), Call("kappa", Model, At(v, x), At(v, y))), "x", "y");
+    }
+
+    private static Formula NormalizedEmbeddingFormula()
+    {
+        Formula v = F.Id("v"), o = F.Id("o"), x = F.Id("x"), y = F.Id("y"), z = F.Id("z");
+        Formula transfer = ForAllMany(M,
+            Equal(At(v, Call("tri", C, x, y, z)), Mul(Mul(At(v, x), Inv(At(v, y))), At(v, z))),
+            "x", "y", "z");
+        Formula embedding = Exists("v", MapsToUnits,
+            And(Call("Injective", v), And(Equal(At(v, o), D(1)), And(transfer, ReadingPreserved(v)))));
+        return OverStructure(Implies(Call("Noncommutative", C), Implies(Call("ChainConnected", C),
+            Implies(Call("TouchesZero", C), Implies(Call("HasFeatureRank", C, D(5)),
+                ForAll("o", M, embedding))))));
+    }
+
+    private static Formula ClosedRangeFormula()
+    {
+        Formula v = F.Id("v");
+        return OverStructure(ForAll("v", MapsToUnits,
+            Implies(ReadingPreserved(v), Implies(Call("ReadingComplete", C),
+                Call("IsClosed", Call("range", v))))));
     }
 
     private static Formula EquivFormula()
