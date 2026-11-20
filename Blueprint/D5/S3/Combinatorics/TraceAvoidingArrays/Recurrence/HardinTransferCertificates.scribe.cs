@@ -11,28 +11,17 @@ internal sealed class HardinTransferCertificatesDocument : IScribeDocumentDefini
         H("Continuation polynomials"),
         Blocks(
             Node("row1", "rowOne", "Full-state relation at height 1", DescribeRole.Theorem,
-                "On all 3 unrestricted columns at height 1, the power at exponent 3 on ones equals the source lag-weighted sum of the power vectors at exponents 2 down to 1. The coefficient sum is one. The coefficients are (3, −2)."),
-            Node("row2-lags", "rowTwoCoefficients", "Source lag coefficients", DescribeRole.Definition,
-                "The coefficients at lags one through 3 are (3, 0, −2)."),
-            Node("row2", "rowTwo", "Full-state relation at height 2", DescribeRole.Theorem,
-                "On all 9 unrestricted columns at height 2, the power at exponent 4 on ones equals the source lag-weighted sum of the power vectors at exponents 3 down to 1. The coefficient sum is one."),
-            Node("row3-lags", "rowThreeCoefficients", "Source lag coefficients", DescribeRole.Definition,
-                "The coefficients at lags one through 4 are (4, 1, −6, 2)."),
-            Node("row3", "rowThree", "Full-state relation at height 3", DescribeRole.Theorem,
-                "On all 27 unrestricted columns at height 3, the power at exponent 5 on ones equals the source lag-weighted sum of the power vectors at exponents 4 down to 1. The coefficient sum is one."),
-            Node("column2", "wordTwo", "Full-state relation at width 2", DescribeRole.Theorem,
-                "On all 6 proper words at width 2, the power at exponent 2 on ones equals the source lag-weighted sum of the power vectors at exponents 1 down to 0. The coefficient sum is one. The coefficients are (4, −3). The diagonal and vertical-bond square matrices each satisfy this identity."),
-            Node("column3-lags", "wordThreeCoefficients", "Source lag coefficients", DescribeRole.Definition,
-                "The coefficients at lags one through 3 are (6, −7, 2)."),
-            Node("column3", "wordThree", "Full-state relation at width 3", DescribeRole.Theorem,
-                "On all 12 proper words at width 3, the power at exponent 3 on ones equals the source lag-weighted sum of the power vectors at exponents 2 down to 0. The coefficient sum is one. The diagonal and vertical-bond square matrices each satisfy this identity."),
+                "On all three unrestricted columns at height one, the entries of the powers on ones at exponents 0, 1 and 2 are 1, 2 and 4, respectively. Thus C²1 = 3C1 − 2·1. The coefficient sum is one. Multiplying by C gives the manuscript relation at shift one."),
             Node("column4-lags", "wordFourCoefficients", "Source lag coefficients", DescribeRole.Definition,
                 "The coefficients at lags one through 3 are (8, −11, 4)."),
             Node("column4", "wordFour", "Full-state relation at width 4", DescribeRole.Theorem,
-                "On all 24 proper words at width 4, the power at exponent 3 on ones equals the source lag-weighted sum of the power vectors at exponents 2 down to 0. The coefficient sum is one."),
-            Node("row-two-radical", "rowTwoRadical", "The two-row quadratic relation", DescribeRole.Theorem,
-                "For all nine columns, applying C²−2C−2I to ones gives the zero vector. The identity uses exponent zero on every column and supplies the source radical formula."),
-            Paragraph(Text("For each source state, the allowed labels at each successor position exclude the labels on all incident cross-bonds. For a proper-word transfer also require adjacent successor labels to differ. Horner evaluation of the integer relation verifies the zero residual at every actual state."))
+                "On all 24 proper words at width four, the diagonal transfer power at exponent 3 on ones equals the source lag-weighted sum of the power vectors at exponents 2 down to 0. The coefficient sum is one. For each state, the permitted successors exclude the labels on all incident cross-bonds and require adjacent labels to differ. Horner evaluation gives zero residual at each proper word."),
+            new DocumentBlock.Section(H("Consequences of the low-width continuations"), Blocks(
+                Paragraph(Text("HardinActualTransfers identifies the powers on ones with the corresponding continuations, including the empty tail at exponent zero. For each of the six proper width-two words, HardinThinGraphTransport.continuation_two, from transition_counts, gives 3^m for both the diagonal and square vertical-bond rules. The vectors at exponents 0, 1 and 2 therefore have entries 1, 3 and 9, and 9=4·3−3·1. The lag list (4, −3) sums to one.")),
+                Paragraph(Text("For all twelve proper width-three words and both bond rules, HardinThinGraphTransport.continuation_three uses the same K=[[3,2],[2,2]] on the equal-endpoint and unequal-endpoint classes in that order. The vectors at exponents 0 through 3 are (1,1), (5,4), (23,18), (105,82). In these coordinates v₃=6v₂−7v₁+2v₀, so the identity holds at every original proper word. The lag list (6, −7, 2) sums to one.")),
+                Paragraph(Text("For all nine unrestricted height-two columns, HardinColumnContinuations.continuation_B and HardinActualTransfers.column_power give the power vectors via B=[[2,2],[1,0]], in equal-label and unequal-label classes. The vectors at exponents 0 through 4 are (1,1), (4,1), (10,4), (28,10), (76,28). Since v₂=2v₁+2v₀, the quadratic (C²−2C−2I)1 is zero on all nine columns, giving the vector premise for the two-row radical. Since v₃=3v₂−2v₀, the source list (3, 0, −2) holds at shift zero. Applying C gives v₄=3v₃−2v₁. The list sums to one.")),
+                Paragraph(Text("For all 27 unrestricted height-three columns, HardinColumnContinuations.continuation_H uses Hfull on the four classes: all equal, exactly one adjacent equality, endpoints only equal, and all distinct. The last class is isolated, with an empty tail at exponent zero and no continuations at positive exponents. The vectors at exponents 0 through 5 are (1,1,1,1), (8,2,1,0), (26,10,8,0), (108,36,26,0), (412,144,108,0), (1616,556,412,0). The identity v₅=4v₄+v₃−6v₂+2v₁ gives the source relation on all columns. The list (4, 1, −6, 2) sums to one.")),
+                Paragraph(Text("The zero shifts concern the three-label vectors. For the literal normalized row counts, the connected-rectangle identity applies only at widths at least two. For height one the counts at widths 1, 2 and 3 are 1, 1 and 3, so the equation with lags (6, −8) fails at width 3. For height two the counts at widths 1 through 4 are 3, 8, 80 and 800, so the equation with lags (12, 0, −128) fails at width 4. The literal recurrences begin at widths 4 and 5 respectively."))))
         )));
 
     private static DocumentBlock Node(string id, string name, string title, DescribeRole role, string statement) =>

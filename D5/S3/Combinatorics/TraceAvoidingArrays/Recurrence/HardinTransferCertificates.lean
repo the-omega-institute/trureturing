@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=terminal=gid:D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.rowTwoRadical; instance=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.rowTwoRadical
+   utility: kind=checker; basis=terminal=gid:D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFour; instance=D5/S3/Combinatorics/TraceAvoidingArrays/Recurrence/HardinTransferCertificates.wordFour
    digest: Exact integer continuation polynomials certified by their compatible successors. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers
@@ -15,7 +15,7 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinTransferCertificates
 
 open HardinActualTransfers
-open HardinColumnContinuations (Column cross)
+open HardinColumnContinuations (Column cross columnV)
 open HardinThinGraphTransport (Row proper compatible)
 open private sum_words cross_iff from
   D5.S3.Combinatorics.TraceAvoidingArrays.Recurrence.HardinActualTransfers
@@ -167,22 +167,7 @@ private theorem check_residual {A : Type} [Fintype A] [DecidableEq A] {N : ℕ}
   rw [res, Vector.getElem_replicate] at h
   exact sub_eq_zero.mp h.symm
 
-private def columnEdges (h : ℕ) := Vector.ofFn (columnSuccessors h)
 private def wordEdges (d : Bool) (k : ℕ) := Vector.ofFn (wordSuccessors d k)
-
-private def columnStart (h : ℕ) := step (columnEdges h) (Vector.replicate (3 ^ (h + 1)) 1)
-
-private theorem check_columns (h : ℕ) {d : ℕ} (c : Fin d → ℤ)
-    (res : residual (columnEdges h) (columnStart h) c = Vector.replicate (3 ^ (h + 1)) 0) :
-    IsLagRelation (C h) 1 c := by
-  have action (p : Column h) (v : Fin (3 ^ (h + 1)) → ℤ) :
-      (∑ j ∈ (columnEdges h)[(code (h + 1) p).val], v j) =
-        (C h).mulVec (fun q => v (code (h + 1) q)) p := by
-    simpa [columnEdges] using column_action h p v
-  apply check_residual (C h) (code (h + 1)) _ action _ 1 _ c res
-  intro p
-  simpa only [columnStart, step, Vector.getElem_ofFn, Vector.getElem_replicate, pow_one, Pi.one_def]
-    using action p (fun _ => 1)
 
 private def wordStart (k : ℕ) : Vector ℤ (3 ^ (k + 1)) :=
   Vector.ofFn fun a => if proper ((code (k + 1)).symm a) then 1 else 0
@@ -197,44 +182,17 @@ private theorem check_words (d : Bool) (k : ℕ) {r : ℕ} (c : Fin r → ℤ)
   · intro p
     simp [wordStart, p.property]
 
-/-- The shifted degree-two relation on the unrestricted one-row columns. -/
+/-- The degree-two relation already holds at shift zero on all one-row columns. -/
 theorem rowOne :
-    IsLagRelation (C 0) 1 ![3, -2] ∧
+    IsLagRelation (C 0) 0 ![3, -2] ∧
     (∑ j : Fin 2, (![3, -2] : Fin 2 → ℤ) j) = 1 := by
-  exact ⟨check_columns 0 _ (by decide +kernel), by decide⟩
-
-/-- The degree-two relation on the six proper words, for either bond rule. -/
-theorem wordTwo (d : Bool) :
-    IsLagRelation (wordTransfer d 1) 0 ![4, -3] ∧
-    (∑ j : Fin 2, (![4, -3] : Fin 2 → ℤ) j) = 1 := by
-  cases d <;> exact ⟨check_words _ 1 _ (by decide +kernel), by decide⟩
-
-/-- Source degree-3 coefficient list for the unrestricted columns. -/
-def rowTwoCoefficients : Fin 3 → ℤ :=
-  ![3, 0, -2]
-/-- Source polynomial of degree 3 with one initial transfer. -/
-theorem rowTwo :
-    IsLagRelation (C 1) 1 rowTwoCoefficients ∧
-    (∑ j, rowTwoCoefficients j) = 1 := by
-  exact ⟨check_columns 1 _ (by decide +kernel), by decide⟩
-
-/-- Source degree-4 coefficient list for the unrestricted columns. -/
-def rowThreeCoefficients : Fin 4 → ℤ :=
-  ![4, 1, -6, 2]
-/-- Source polynomial of degree 4 with one initial transfer. -/
-theorem rowThree :
-    IsLagRelation (C 2) 1 rowThreeCoefficients ∧
-    (∑ j, rowThreeCoefficients j) = 1 := by
-  exact ⟨check_columns 2 _ (by decide +kernel), by decide⟩
-
-/-- Source degree-3 coefficient list for the proper-word transfer. -/
-def wordThreeCoefficients : Fin 3 → ℤ :=
-  ![6, -7, 2]
-/-- Source polynomial of degree 3 with no initial shift. -/
-theorem wordThree (d : Bool) :
-    IsLagRelation (wordTransfer d 2) 0 wordThreeCoefficients ∧
-    (∑ j, wordThreeCoefficients j) = 1 := by
-  cases d <;> exact ⟨check_words _ 2 _ (by decide +kernel), by decide⟩
+  refine ⟨?_, by decide⟩
+  have values : ∀ p : Column 0, columnV 1 p = 2 ∧ columnV 2 p = 4 := by
+    decide +kernel
+  unfold IsLagRelation
+  funext p
+  norm_num [Fin.sum_univ_succ, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    column_power, HardinColumnContinuations.columnV, (values p).1, (values p).2]
 
 /-- Source degree-3 coefficient list for the proper-word transfer. -/
 def wordFourCoefficients : Fin 3 → ℤ :=
@@ -244,25 +202,5 @@ theorem wordFour :
     IsLagRelation (wordTransfer true 3) 0 wordFourCoefficients ∧
     (∑ j, wordFourCoefficients j) = 1 := by
   exact ⟨check_words true 3 _ (by decide +kernel), by decide⟩
-
-/-- The quadratic identity for the two-row radical formula on all nine states. -/
-theorem rowTwoRadical :
-    (((C 1) ^ 2) - (2 : ℤ) • C 1 - (2 : ℤ) • (1 : Matrix (Column 1) (Column 1) ℤ)).mulVec
-      (1 : Column 1 → ℤ) = 0 := by
-  have h : IsLagRelation (C 1) 0 ![2, 2] := by
-    have action (p : Column 1) (v : Fin 9 → ℤ) :
-        (∑ j ∈ (columnEdges 1)[(code 2 p).val], v j) =
-          (C 1).mulVec (fun q => v (code 2 q)) p := by
-      simpa [columnEdges] using column_action 1 p v
-    exact check_residual (C 1) (code 2) (columnEdges 1) action (Vector.replicate 9 1) 0
-      (by intro p; simp) ![2, 2] (by decide +kernel)
-  unfold IsLagRelation at h
-  rw [Matrix.sub_mulVec, Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.smul_mulVec,
-    Matrix.one_mulVec]
-  funext a
-  have ha := congrFun h a
-  norm_num [Fin.sum_univ_succ, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at ha
-  simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply, Pi.one_apply]
-  linear_combination ha
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinTransferCertificates

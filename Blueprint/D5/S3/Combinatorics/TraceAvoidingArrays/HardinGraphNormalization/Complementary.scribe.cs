@@ -5,9 +5,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays.Ha
 internal sealed class ComplementaryDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization/Complementary.";
-    private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/Automata/hardin2013a233170");
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal complementary-colour normalization by partition and free signs.",
         H("Arbitrary palettes on finite ordered graphs"),
@@ -47,7 +44,7 @@ internal sealed class ComplementaryDocument : IScribeDocumentDefinition
             PairNode("free-card", "free_card", "Exactly N−k free signs over a k-block partition", DescribeRole.Theorem,
                 "For every finite linearly ordered vertex type and each independent partition with k≤p blocks, the free-vertex type of the canonical word reconstructed from the partition has cardinality N−k. Each block has a unique least vertex. Removing these k vertices leaves N−k independent Boolean choices and therefore 2^(N−k) assignments over the partition."),
             PairNode("arbitrary-p-count", "card_eq_sum", "The weighted graphical Stirling sum for the actual palette", DescribeRole.Theorem,
-                "For every nonempty finite linearly ordered simple graph and every natural p, the cardinality of Legal G p is the sum of 2^(N−k) S_G(k) over 1≤k≤min(p,N). Here S_G(k) counts the actual unlabelled independent partitions into k blocks. The cardinality is invariant under changing the vertex order, since N and the independent partitions use only the underlying graph."),
+                "For every nonempty finite linearly ordered simple graph and every natural p, the cardinality of Legal G p is the sum of 2^(N−k) S_G(k) over 1≤k≤min(p,N). Here S_G(k) counts the actual unlabelled independent partitions into k blocks. The graphical Stirling expansion is due to Biggs and is presented by Duncan and Peele in Bell and Stirling Numbers for Graphs. The weights here count the normalized complementary-colour lifts. The cardinality is invariant under changing the vertex order, since N and the independent partitions use only the underlying graph."),
             PairNode("three-pair-scanner", "scannerEquiv", "The original six-colour scanner at p=3", DescribeRole.Definition,
                 "The equivalence is the identity on the literal word. The fixed scanner characterization normal_iff supplies both directions. The original three-pair count and chromatic reduction apply under this identification."),
             Paragraph(Text("A singleton has literal colour zero and count one for every positive p. For p=1 the unique pair word is constant. Its count is 2^(N−1) on an edgeless nonempty graph and zero on a graph with an edge. The empty carrier has one empty assignment. The sum beginning at k=1 applies to nonempty carriers, and the strip series retain their zero constant-term convention.")))));
@@ -55,6 +52,6 @@ internal sealed class ComplementaryDocument : IScribeDocumentDefinition
     private static DocumentBlock PairNode(string id, string name, string title,
         DescribeRole role, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }
