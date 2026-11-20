@@ -63,7 +63,7 @@ internal sealed class ParityCosetReductionDocument : IScribeDocumentDefinition
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, Typed(Ftype, type), Typed(aType, type), Typed(bType, type),
                 Typed(zType, type), Comma),
-            Seq(Instance("AddCommGroup", Ftype), Instance("AddCommGroup", aType),
+            Seq(Grp(), Instance("AddCommGroup", Ftype), Instance("AddCommGroup", aType),
                 Instance("Fintype", Ftype), Instance("Fintype", aType),
                 Instance("Fintype", bType), Instance("Fintype", zType), Comma),
             Seq(Typed(f, At(Name("AddMonoidHom"), Seq(Ftype, Comma, aType))),
