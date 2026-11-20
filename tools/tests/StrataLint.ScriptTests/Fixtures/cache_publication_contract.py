@@ -10,6 +10,21 @@ class PublicationCases:
         self.assertEqual("no-build-work", ready["project_skip_reason"])
         self.assertEqual("no-build-work", receipts["project"]["reason"])
 
+    def test_validated_protected_push_publishes_its_own_key_with_zero_new_work(self):
+        self.native_seed("project")
+        self.work(0, 0)
+        self.env["STRATALINT_CACHE_PRODUCER_COMPLETE"] = "true"
+        ready, receipts = self.snapshot_result()
+        self.assertEqual("true", ready["project_ready"])
+        self.assertEqual(0, receipts["project"]["build_work"])
+        self.assertTrue(receipts["project"]["key"].endswith("-17-2"))
+        for field in ("GITHUB_REF_PROTECTED", "STRATALINT_REPORT_SUCCEEDED"):
+            with self.subTest(field=field):
+                self.env[field] = "false"
+                ready, _ = self.snapshot_result()
+                self.assertEqual("false", ready["project_ready"])
+                self.env[field] = "true"
+
     def test_explicit_release_seed_can_warm_protected_actions_cache_without_recompilation(self):
         self.native_seed("project")
         self.work(0, 0)
@@ -71,7 +86,7 @@ class PublicationCases:
         self.assertEqual("false", ready["project_ready"])
         self.assertEqual("build-work-unknown", receipts["project"]["reason"])
 
-    def test_ordinary_pull_requests_never_publish_project_seeds_even_with_build_work(self):
+    def test_pull_requests_never_publish_project_or_dependency_seeds_even_with_build_work(self):
         self.native_seed("project")
         self.native_seed("dependency")
         self.env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge")
@@ -81,7 +96,7 @@ class PublicationCases:
                 ready, receipts = self.snapshot_result()
                 self.assertEqual("false", ready["project_ready"])
                 self.assertEqual("pull-requests-do-not-publish-project-seeds", receipts["project"]["reason"])
-                self.assertEqual("true", ready["dependency_ready"])
+                self.assertEqual("false", ready["dependency_ready"])
 
     def test_pr_dispatch_never_publishes_candidate_to_ordinary_native_prefix(self):
         _, _, target = self.native_seed("project")
