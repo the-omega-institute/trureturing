@@ -125,7 +125,7 @@ runs:
       if: inputs.verification-history-anchor != ''
       env:
         STRATALINT_ACCEPT_COLD_BUILD: '1'
-        STRATALINT_BUILD_TIMEOUT_SECONDS: '900'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: '420'
       shell: bash
       run: |
         result=0
