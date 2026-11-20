@@ -15,6 +15,12 @@ triage: anchor
 
 # Radical component density and primitive non-deficient integers
 
+## Verified locator
+
+- Locator: arXiv:2005.12115v5, section 3, pages 9–10, definition of B and Conjectures 10–15.
+- DOI: 10.48550/arXiv.2005.12115
+- URL: https://arxiv.org/abs/2005.12115v5
+
 ## Source
 
 Joshua Zelinsky, *Must a Primitive Non-Deficient Number Always Have a Small Component?*,
